@@ -85,6 +85,8 @@
 #include "../sp-text.h"
 #include "../style.h"
 #include "../svg/css-ostringstream.h"
+#include "../text-context.h"
+#include "../text-editing.h"
 #include "../tools-switch.h"
 #include "../tweak-context.h"
 #include "../spray-context.h"
@@ -490,6 +492,9 @@ static gchar const * ui_descr =
         "    <toolitem action='TextLineHeightAction' />"
         "    <toolitem action='TextLetterSpacingAction' />"
         "    <toolitem action='TextWordSpacingAction' />"
+        "    <toolitem action='TextDxAction' />"
+        "    <toolitem action='TextDyAction' />"
+        "    <toolitem action='TextRotationAction' />"
         "    <separator />"
         "    <toolitem action='TextOrientationAction' />"
         "  </toolbar>"
@@ -6869,6 +6874,82 @@ static void sp_text_letterspacing_value_changed( GtkAdjustment *adj, GObject *tb
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
+
+static void sp_text_dx_value_changed( GtkAdjustment *adj, GObject *tbl )
+{
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    gdouble new_dx = adj->value;
+
+    SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
+    if( tc ) {
+        unsigned char_index = -1;
+        TextTagAttributes *attributes =
+            text_tag_attributes_at_position( tc->text, std::min(tc->text_sel_start, tc->text_sel_end), &char_index );
+        if( attributes ) {
+            double old_dx = attributes->getDx( char_index );
+            double delta_dx = new_dx - old_dx;
+            sp_te_adjust_dx( tc->text, tc->text_sel_start, tc->text_sel_end, SP_ACTIVE_DESKTOP, delta_dx );
+        }
+    }
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
+static void sp_text_dy_value_changed( GtkAdjustment *adj, GObject *tbl )
+{
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    gdouble new_dy = adj->value;
+
+    SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
+    if( tc ) {
+        unsigned char_index = -1;
+        TextTagAttributes *attributes =
+            text_tag_attributes_at_position( tc->text, std::min(tc->text_sel_start, tc->text_sel_end), &char_index );
+        if( attributes ) {
+            double old_dy = attributes->getDy( char_index );
+            double delta_dy = new_dy - old_dy;
+            sp_te_adjust_dy( tc->text, tc->text_sel_start, tc->text_sel_end, SP_ACTIVE_DESKTOP, delta_dy );
+        }
+    }
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
+static void sp_text_rotation_value_changed( GtkAdjustment *adj, GObject *tbl )
+{
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    gdouble new_degrees = adj->value;
+
+    SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
+    if( tc ) {
+        unsigned char_index = -1;
+        TextTagAttributes *attributes =
+            text_tag_attributes_at_position( tc->text, std::min(tc->text_sel_start, tc->text_sel_end), &char_index );
+        if( attributes ) {
+            double old_degrees = attributes->getRotate( char_index );
+            double delta_deg = new_degrees - old_degrees;
+            sp_te_adjust_rotation( tc->text, tc->text_sel_start, tc->text_sel_end, SP_ACTIVE_DESKTOP, delta_deg );
+        }
+    }
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
 static void sp_text_orientation_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 {
     // quit if run by the _changed callbacks
@@ -6938,6 +7019,9 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         const gchar* id = SP_OBJECT_ID((SPItem *) items->data);
         std::cout << "    " << id << std::endl;
     }
+    Glib::ustring selected_text = sp_text_get_selected_text((SP_ACTIVE_DESKTOP)->event_context);
+    std::cout << "  Selected text:" << std::endl;
+    std::cout << selected_text << std::endl;
 #endif
 
     // quit if run by the _changed callbacks
@@ -7116,7 +7200,6 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
             ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( letterSpacingAction ));
         gtk_adjustment_set_value( letterSpacingAdjustment, letterSpacing );
 
-
         // Orientation
         int activeButton2 = (query->writing_mode.computed == SP_CSS_WRITING_MODE_LR_TB ? 0 : 1);
 
@@ -7146,11 +7229,51 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
               << "  letter_spacing.value: "    << query->letter_spacing.value
               << "  letter_spacing.unit: "     << query->letter_spacing.unit  << std::endl;
     std::cout << "    GUI: writing_mode.computed: " << query->writing_mode.computed << std::endl;
-    std::cout << "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" << std::endl;
-    std::cout << std::endl;
 #endif
 
     sp_style_unref(query);
+
+    // Kerning (xshift), yshift, rotation.  NB: These are not CSS attributes.
+    SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
+    if( tc ) {
+        unsigned char_index = -1;
+        TextTagAttributes *attributes =
+            text_tag_attributes_at_position( tc->text, std::min(tc->text_sel_start, tc->text_sel_end), &char_index );
+        if( attributes ) {
+
+            // Dx
+            double dx = attributes->getDx( char_index );
+            GtkAction* dxAction = GTK_ACTION( g_object_get_data( tbl, "TextDxAction" ));
+            GtkAdjustment *dxAdjustment =
+                ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( dxAction ));
+            gtk_adjustment_set_value( dxAdjustment, dx );
+
+            // Dy
+            double dy = attributes->getDy( char_index );
+            GtkAction* dyAction = GTK_ACTION( g_object_get_data( tbl, "TextDyAction" ));
+            GtkAdjustment *dyAdjustment =
+                ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( dyAction ));
+            gtk_adjustment_set_value( dyAdjustment, dy );
+
+            // Rotation
+            double rotation = attributes->getRotate( char_index );
+            GtkAction* rotationAction = GTK_ACTION( g_object_get_data( tbl, "TextRotationAction" ));
+            GtkAdjustment *rotationAdjustment =
+                ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( rotationAction ));
+            gtk_adjustment_set_value( rotationAdjustment, rotation );
+
+#ifdef DEBUG_TEXT
+            std::cout << "    GUI: Dx: " << dx << std::endl;
+            std::cout << "    GUI: Dy: " << dy << std::endl;
+            std::cout << "    GUI: Rotation: " << rotation << std::endl;
+#endif
+        }
+    }
+
+#ifdef DEBUG_TEXT
+    std::cout << "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" << std::endl;
+    std::cout << std::endl;
+#endif
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 
@@ -7450,6 +7573,96 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "TextLetterSpacingAction", eact );
+    }
+
+    /* Character kerning (horizontal shift) */
+    {
+        // Drop down menu
+        gchar const* labels[] = {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 };
+        gdouble values[]      = { -2.0, -1.5, -1.0, -0.5,   0,  0.5,  1.0,  1.5,  2.0, 2.5 };
+
+        EgeAdjustmentAction *eact = create_adjustment_action(
+            "TextDxAction",                       /* name */
+            _("Kerning"),                         /* label */
+            _("Kern:"),                           /* short label */
+            _("Kerning (horizontal shift of characters)."), /* tooltip */
+            "/tools/text/dx",                     /* path? */
+            0.0,                                  /* default */
+            GTK_WIDGET(desktop->canvas),          /* focusTarget */
+            NULL,                                 /* unit selector */
+            holder,                               /* dataKludge */
+            FALSE,                                /* set alt-x keyboard shortcut? */
+            NULL,                                 /* altx_mark */
+            -100.0, 100.0, 0.01, 0.1,             /* lower, upper, step (arrow up/down), page up/down */
+            labels, values, G_N_ELEMENTS(labels), /* drop down menu */
+            sp_text_dx_value_changed,             /* callback */
+            0.1,                                  /* step (used?) */
+            2,                                    /* digits to show */
+            1.0                                   /* factor (multiplies default) */
+            );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        g_object_set_data( holder, "TextDxAction", eact );
+    }
+
+    /* Character vertical shift */
+    {
+        // Drop down menu
+        gchar const* labels[] = {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 };
+        gdouble values[]      = { -2.0, -1.5, -1.0, -0.5,   0,  0.5,  1.0,  1.5,  2.0, 2.5 };
+
+        EgeAdjustmentAction *eact = create_adjustment_action(
+            "TextDyAction",                       /* name */
+            _("Vertical Shift"),                  /* label */
+            _("Vert:"),                           /* short label */
+            _("Vertical shift of characters."),   /* tooltip */
+            "/tools/text/dy",                     /* path? */
+            0.0,                                  /* default */
+            GTK_WIDGET(desktop->canvas),          /* focusTarget */
+            NULL,                                 /* unit selector */
+            holder,                               /* dataKludge */
+            FALSE,                                /* set alt-x keyboard shortcut? */
+            NULL,                                 /* altx_mark */
+            -100.0, 100.0, 0.01, 0.1,             /* lower, upper, step (arrow up/down), page up/down */
+            labels, values, G_N_ELEMENTS(labels), /* drop down menu */
+            sp_text_dy_value_changed,             /* callback */
+            0.1,                                  /* step (used?) */
+            2,                                    /* digits to show */
+            1.0                                   /* factor (multiplies default) */
+            );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        g_object_set_data( holder, "TextDyAction", eact );
+    }
+
+    /* Character rotation */
+    {
+        // Drop down menu
+        gchar const* labels[] = {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 };
+        gdouble values[]      = { -90, -45, -30, -15,   0,  15,  30,  45,  90, 180 };
+
+        EgeAdjustmentAction *eact = create_adjustment_action(
+            "TextRotationAction",                 /* name */
+            _("Letter rotation"),                 /* label */
+            _("Rot:"),                            /* short label */
+            _("Rotation of selected characters (degrees)."),/* tooltip */
+            "/tools/text/letterspacing",          /* path? */
+            0.0,                                  /* default */
+            GTK_WIDGET(desktop->canvas),          /* focusTarget */
+            NULL,                                 /* unit selector */
+            holder,                               /* dataKludge */
+            FALSE,                                /* set alt-x keyboard shortcut? */
+            NULL,                                 /* altx_mark */
+            -180.0, 180.0, 0.1, 1.0,              /* lower, upper, step (arrow up/down), page up/down */
+            labels, values, G_N_ELEMENTS(labels), /* drop down menu */
+            sp_text_rotation_value_changed,       /* callback */
+            0.1,                                  /* step (used?) */
+            2,                                    /* digits to show */
+            1.0                                   /* factor (multiplies default) */
+            );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        g_object_set_data( holder, "TextRotationAction", eact );
     }
 
     // Is this necessary to call? Shouldn't hurt.

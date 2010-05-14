@@ -926,6 +926,50 @@ void TextTagAttributes::transform(Geom::Matrix const &matrix, double scale_x, do
         *it = it->computed * scale_y;
 }
 
+double TextTagAttributes::getDx(unsigned index)
+{
+    if( attributes.dx.size() == 0 ) {
+        return 0.0;
+    }
+    if( index < attributes.dx.size() ) {
+        return attributes.dx[index].computed;
+    } else {
+        return 0.0; // attributes.dx.back().computed;
+    }
+}
+
+
+double TextTagAttributes::getDy(unsigned index)
+{
+    if( attributes.dy.size() == 0 ) {
+        return 0.0;
+    }
+    if( index < attributes.dy.size() ) {
+        return attributes.dy[index].computed;
+    } else {
+        return 0.0; // attributes.dy.back().computed;
+    }
+}
+
+
+void TextTagAttributes::addToDx(unsigned index, double delta)
+{
+    SVGLength zero_length;
+    zero_length = 0.0;
+
+    if (attributes.dx.size() < index + 1) attributes.dx.resize(index + 1, zero_length);
+    attributes.dx[index] = attributes.dx[index].computed + delta;
+}
+
+void TextTagAttributes::addToDy(unsigned index, double delta)
+{
+    SVGLength zero_length;
+    zero_length = 0.0;
+
+    if (attributes.dy.size() < index + 1) attributes.dy.resize(index + 1, zero_length);
+    attributes.dy[index] = attributes.dy[index].computed + delta;
+}
+
 void TextTagAttributes::addToDxDy(unsigned index, Geom::Point const &adjust)
 {
     SVGLength zero_length;
@@ -941,6 +985,19 @@ void TextTagAttributes::addToDxDy(unsigned index, Geom::Point const &adjust)
     }
 }
 
+double TextTagAttributes::getRotate(unsigned index)
+{
+    if( attributes.rotate.size() == 0 ) {
+        return 0.0;
+    }
+    if( index < attributes.rotate.size() ) {
+        return attributes.rotate[index].computed;
+    } else {
+        return attributes.rotate.back().computed;
+    }
+}
+
+
 void TextTagAttributes::addToRotate(unsigned index, double delta)
 {
     SVGLength zero_length;
@@ -953,6 +1010,21 @@ void TextTagAttributes::addToRotate(unsigned index, double delta)
             attributes.rotate.resize(index + 2, attributes.rotate.back());
     }
     attributes.rotate[index] = mod360(attributes.rotate[index].computed + delta);
+}
+
+
+void TextTagAttributes::setRotate(unsigned index, double angle)
+{
+    SVGLength zero_length;
+    zero_length = 0.0;
+
+    if (attributes.rotate.size() < index + 2) {
+        if (attributes.rotate.empty())
+            attributes.rotate.resize(index + 2, zero_length);
+        else
+            attributes.rotate.resize(index + 2, attributes.rotate.back());
+    }
+    attributes.rotate[index] = mod360(angle);
 }
 
 

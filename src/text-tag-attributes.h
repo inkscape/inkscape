@@ -90,14 +90,35 @@ public:
     position. */
     void transform(Geom::Matrix const &matrix, double scale_x, double scale_y, bool extend_zero_length = false);
 
+    /** Gets current value of dx vector at \a index. */
+    double getDx(unsigned index);
+
+    /** Gets current value of dy vector at \a index. */
+    double getDy(unsigned index);
+
+    /** Adds the given value to the dx vector at the given
+    \a index. The vector is extended if necessary. */
+    void addToDx(unsigned index, double delta);
+
+    /** Adds the given value to the dy vector at the given
+    \a index. The vector is extended if necessary. */
+    void addToDy(unsigned index, double delta);
+
     /** Adds the given values to the dx and dy vectors at the given
     \a index. The vectors are extended if necessary. */
     void addToDxDy(unsigned index, Geom::Point const &adjust);
+
+    /** Gets current value of rotate vector at \a index. */
+    double getRotate(unsigned index);
 
     /** Adds the given value to the rotate vector at the given \a index. The
     vector is extended if necessary. Delta is measured in degrees, clockwise
     positive. */
     void addToRotate(unsigned index, double delta);
+
+    /** Sets rotate vector at the given \a index. The vector is extended if
+    necessary. Angle is measured in degrees, clockwise positive. */
+    void setRotate(unsigned index, double angle);
 
     /** Returns the first coordinates in the x and y vectors. If either
     is zero length, 0.0 is used for that coordinate. */
