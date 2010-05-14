@@ -1175,6 +1175,7 @@ Fixme: is this template still in use? -->
 	</xsl:call-template>
     </xsl:attribute></xsl:if>
     <xsl:apply-templates mode="id" select="." />
+    <xsl:apply-templates mode="filter_effect" select="." />
     <xsl:apply-templates mode="desc" select="." />
     <xsl:apply-templates mode="clip" select="." />
     <!--xsl:apply-templates mode="transform" select="." /-->
@@ -1200,7 +1201,7 @@ Fixme: is this template still in use? -->
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
-
+    <xsl:apply-templates mode="filter_effect" select="." />
     <xsl:apply-templates mode="desc" select="." />
 
     <xsl:apply-templates mode="transform" select=".">
@@ -1275,7 +1276,7 @@ Fixme: is this template still in use? -->
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
-
+    <xsl:apply-templates mode="filter_effect" select="." />
     <xsl:apply-templates mode="desc" select="." />
 
     <xsl:apply-templates mode="transform" select=".">
@@ -1300,7 +1301,7 @@ Fixme: is this template still in use? -->
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
-
+    <xsl:apply-templates mode="filter_effect" select="." />
     <xsl:apply-templates mode="desc" select="." />
 
     <xsl:apply-templates mode="transform" select=".">
@@ -1323,7 +1324,7 @@ Fixme: is this template still in use? -->
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
-
+    <xsl:apply-templates mode="filter_effect" select="." />
     <xsl:apply-templates mode="desc" select="." />
 
     <xsl:if test="@d">
@@ -1386,7 +1387,7 @@ Fixme: is this template still in use? -->
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
-
+    <xsl:apply-templates mode="filter_effect" select="." />
     <xsl:apply-templates mode="desc" select="." />
     <xsl:apply-templates mode="clip" select="." />
 
@@ -1428,7 +1429,7 @@ Fixme: is this template still in use? -->
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
-
+    <xsl:apply-templates mode="filter_effect" select="." />
     <xsl:apply-templates mode="desc" select="." />
     <xsl:apply-templates mode="clip" select="." />
 
