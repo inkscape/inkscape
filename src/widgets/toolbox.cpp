@@ -6885,15 +6885,17 @@ static void sp_text_dx_value_changed( GtkAdjustment *adj, GObject *tbl )
 
     gdouble new_dx = adj->value;
 
-    SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
-    if( tc ) {
-        unsigned char_index = -1;
-        TextTagAttributes *attributes =
-            text_tag_attributes_at_position( tc->text, std::min(tc->text_sel_start, tc->text_sel_end), &char_index );
-        if( attributes ) {
-            double old_dx = attributes->getDx( char_index );
-            double delta_dx = new_dx - old_dx;
-            sp_te_adjust_dx( tc->text, tc->text_sel_start, tc->text_sel_end, SP_ACTIVE_DESKTOP, delta_dx );
+    if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
+        SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
+        if( tc ) {
+            unsigned char_index = -1;
+            TextTagAttributes *attributes =
+                text_tag_attributes_at_position( tc->text, std::min(tc->text_sel_start, tc->text_sel_end), &char_index );
+            if( attributes ) {
+                double old_dx = attributes->getDx( char_index );
+                double delta_dx = new_dx - old_dx;
+                sp_te_adjust_dx( tc->text, tc->text_sel_start, tc->text_sel_end, SP_ACTIVE_DESKTOP, delta_dx );
+            }
         }
     }
 
@@ -6910,15 +6912,17 @@ static void sp_text_dy_value_changed( GtkAdjustment *adj, GObject *tbl )
 
     gdouble new_dy = adj->value;
 
-    SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
-    if( tc ) {
-        unsigned char_index = -1;
-        TextTagAttributes *attributes =
-            text_tag_attributes_at_position( tc->text, std::min(tc->text_sel_start, tc->text_sel_end), &char_index );
-        if( attributes ) {
-            double old_dy = attributes->getDy( char_index );
-            double delta_dy = new_dy - old_dy;
-            sp_te_adjust_dy( tc->text, tc->text_sel_start, tc->text_sel_end, SP_ACTIVE_DESKTOP, delta_dy );
+    if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
+        SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
+        if( tc ) {
+            unsigned char_index = -1;
+            TextTagAttributes *attributes =
+                text_tag_attributes_at_position( tc->text, std::min(tc->text_sel_start, tc->text_sel_end), &char_index );
+            if( attributes ) {
+                double old_dy = attributes->getDy( char_index );
+                double delta_dy = new_dy - old_dy;
+                sp_te_adjust_dy( tc->text, tc->text_sel_start, tc->text_sel_end, SP_ACTIVE_DESKTOP, delta_dy );
+            }
         }
     }
 
@@ -6935,15 +6939,17 @@ static void sp_text_rotation_value_changed( GtkAdjustment *adj, GObject *tbl )
 
     gdouble new_degrees = adj->value;
 
-    SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
-    if( tc ) {
-        unsigned char_index = -1;
-        TextTagAttributes *attributes =
-            text_tag_attributes_at_position( tc->text, std::min(tc->text_sel_start, tc->text_sel_end), &char_index );
-        if( attributes ) {
-            double old_degrees = attributes->getRotate( char_index );
-            double delta_deg = new_degrees - old_degrees;
-            sp_te_adjust_rotation( tc->text, tc->text_sel_start, tc->text_sel_end, SP_ACTIVE_DESKTOP, delta_deg );
+    if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
+        SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
+        if( tc ) {
+            unsigned char_index = -1;
+            TextTagAttributes *attributes =
+                text_tag_attributes_at_position( tc->text, std::min(tc->text_sel_start, tc->text_sel_end), &char_index );
+            if( attributes ) {
+                double old_degrees = attributes->getRotate( char_index );
+                double delta_deg = new_degrees - old_degrees;
+                sp_te_adjust_rotation( tc->text, tc->text_sel_start, tc->text_sel_end, SP_ACTIVE_DESKTOP, delta_deg );
+            } 
         }
     }
 
@@ -7091,6 +7097,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
             ink_comboboxentry_action_set_active_text( fontFamilyAction, fontFamily );
         }
 
+
         // Size (average of text selected)
         double size = query->font_size.computed;
         gchar size_text[G_ASCII_DTOSTR_BUF_SIZE];
@@ -7099,6 +7106,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         Ink_ComboBoxEntry_Action* fontSizeAction =
             INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontSizeAction" ) );
         ink_comboboxentry_action_set_active_text( fontSizeAction, size_text );
+
 
         // Weight (Bold)
         // Note: in the enumeration, normal and lighter come at the end so we must explicitly test for them.
@@ -7115,8 +7123,6 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
 
         InkToggleAction* textItalicAction = INK_TOGGLE_ACTION( g_object_get_data( tbl, "TextItalicAction" ) );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(textItalicAction), italicSet );
-
-
 
         EgeSelectOneAction* textAlignAction = EGE_SELECT_ONE_ACTION( g_object_get_data( tbl, "TextAlignAction" ) );
         // Alignment
@@ -7200,6 +7206,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
             ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( letterSpacingAction ));
         gtk_adjustment_set_value( letterSpacingAdjustment, letterSpacing );
 
+
         // Orientation
         int activeButton2 = (query->writing_mode.computed == SP_CSS_WRITING_MODE_LR_TB ? 0 : 1);
 
@@ -7234,42 +7241,45 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     sp_style_unref(query);
 
     // Kerning (xshift), yshift, rotation.  NB: These are not CSS attributes.
-    SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
-    if( tc ) {
-        unsigned char_index = -1;
-        TextTagAttributes *attributes =
-            text_tag_attributes_at_position( tc->text, std::min(tc->text_sel_start, tc->text_sel_end), &char_index );
-        if( attributes ) {
+    if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
+        SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
+        if( tc ) {
+            unsigned char_index = -1;
+            TextTagAttributes *attributes =
+                text_tag_attributes_at_position( tc->text, std::min(tc->text_sel_start, tc->text_sel_end), &char_index );
+            if( attributes ) {
 
-            // Dx
-            double dx = attributes->getDx( char_index );
-            GtkAction* dxAction = GTK_ACTION( g_object_get_data( tbl, "TextDxAction" ));
-            GtkAdjustment *dxAdjustment =
-                ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( dxAction ));
-            gtk_adjustment_set_value( dxAdjustment, dx );
+                // Dx
+                double dx = attributes->getDx( char_index );
+                GtkAction* dxAction = GTK_ACTION( g_object_get_data( tbl, "TextDxAction" ));
+                GtkAdjustment *dxAdjustment =
+                    ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( dxAction ));
+                gtk_adjustment_set_value( dxAdjustment, dx );
 
-            // Dy
-            double dy = attributes->getDy( char_index );
-            GtkAction* dyAction = GTK_ACTION( g_object_get_data( tbl, "TextDyAction" ));
-            GtkAdjustment *dyAdjustment =
-                ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( dyAction ));
-            gtk_adjustment_set_value( dyAdjustment, dy );
+                // Dy
+                double dy = attributes->getDy( char_index );
+                GtkAction* dyAction = GTK_ACTION( g_object_get_data( tbl, "TextDyAction" ));
+                GtkAdjustment *dyAdjustment =
+                    ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( dyAction ));
+                gtk_adjustment_set_value( dyAdjustment, dy );
 
-            // Rotation
-            double rotation = attributes->getRotate( char_index );
-            GtkAction* rotationAction = GTK_ACTION( g_object_get_data( tbl, "TextRotationAction" ));
-            GtkAdjustment *rotationAdjustment =
-                ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( rotationAction ));
-            gtk_adjustment_set_value( rotationAdjustment, rotation );
+                // Rotation
+                double rotation = attributes->getRotate( char_index );
+                /* SVG value is between 0 and 360 but we're using -180 to 180 in widget */
+                if( rotation > 180.0 ) rotation -= 360.0;
+                GtkAction* rotationAction = GTK_ACTION( g_object_get_data( tbl, "TextRotationAction" ));
+                GtkAdjustment *rotationAdjustment =
+                    ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( rotationAction ));
+                gtk_adjustment_set_value( rotationAdjustment, rotation );
 
 #ifdef DEBUG_TEXT
-            std::cout << "    GUI: Dx: " << dx << std::endl;
-            std::cout << "    GUI: Dy: " << dy << std::endl;
-            std::cout << "    GUI: Rotation: " << rotation << std::endl;
+                std::cout << "    GUI: Dx: " << dx << std::endl;
+                std::cout << "    GUI: Dy: " << dy << std::endl;
+                std::cout << "    GUI: Rotation: " << rotation << std::endl;
 #endif
+            }
         }
     }
-
 #ifdef DEBUG_TEXT
     std::cout << "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" << std::endl;
     std::cout << std::endl;
