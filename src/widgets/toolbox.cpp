@@ -6776,6 +6776,16 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     sp_desktop_set_style (desktop, css, true, true);
 
+
+    // Until deprecated sodipodi:linespacing purged:
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    GSList const *items = selection->itemList();
+    for (; items != NULL; items = items->next) {
+        if (SP_IS_TEXT (items->data)) {
+            SP_OBJECT_REPR(items->data)->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
+        }
+    }
+
     // Save for undo
     sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:line-height", SP_VERB_NONE,
                                    _("Text: Change line-height"));
@@ -6899,6 +6909,10 @@ static void sp_text_dx_value_changed( GtkAdjustment *adj, GObject *tbl )
         }
     }
 
+    // Save for undo
+    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:dx", SP_VERB_NONE,
+                                   _("Text: Change dx (kern)"));
+
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
@@ -6926,6 +6940,10 @@ static void sp_text_dy_value_changed( GtkAdjustment *adj, GObject *tbl )
         }
     }
 
+    // Save for undo
+    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:dy", SP_VERB_NONE,
+                                   _("Text: Change dy"));
+
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
@@ -6952,6 +6970,10 @@ static void sp_text_rotation_value_changed( GtkAdjustment *adj, GObject *tbl )
             } 
         }
     }
+
+    // Save for undo
+    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:rotate", SP_VERB_NONE,
+                                   _("Text: Change rotate"));
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
