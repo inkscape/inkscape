@@ -92,6 +92,7 @@ nr_arena_image_init (NRArenaImage *image)
     image->grid2px.setIdentity();
 
     image->style = 0;
+    image->render_opacity = TRUE;
 }
 
 static void
