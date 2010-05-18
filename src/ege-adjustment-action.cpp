@@ -60,6 +60,8 @@
 #include <gtk/gtktooltips.h>
 #include <gtk/gtkradiomenuitem.h>
 
+#include "widgets/icon.h"
+#include "icon-size.h"
 #include "ege-adjustment-action.h"
 
 
@@ -132,6 +134,8 @@ struct _EgeAdjustmentActionPrivate
     gboolean transferFocus;
     GList* descriptions;
     gchar* appearance;
+    gchar* iconId;
+    Inkscape::IconSize iconSize;
 };
 
 #define EGE_ADJUSTMENT_ACTION_GET_PRIVATE( o ) ( G_TYPE_INSTANCE_GET_PRIVATE( (o), EGE_ADJUSTMENT_ACTION_TYPE, EgeAdjustmentActionPrivate ) )
@@ -143,7 +147,9 @@ enum {
     PROP_DIGITS,
     PROP_SELFID,
     PROP_TOOL_POST,
-    PROP_APPEARANCE
+    PROP_APPEARANCE,
+    PROP_ICON_ID,
+    PROP_ICON_SIZE
 };
 
 enum {
@@ -253,6 +259,24 @@ static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass )
                                                               "",
                                                               (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
+        g_object_class_install_property( objClass,
+                                         PROP_ICON_ID,
+                                         g_param_spec_string( "iconId",
+                                                              "Icon ID",
+                                                              "The id for the icon",
+                                                              "",
+                                                              (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
+        g_object_class_install_property( objClass,
+                                         PROP_ICON_SIZE,
+                                         g_param_spec_int( "iconSize",
+                                                           "Icon Size",
+                                                           "The size the icon",
+                                                           (int)Inkscape::ICON_SIZE_MENU,
+                                                           (int)Inkscape::ICON_SIZE_DECORATION,
+                                                           (int)Inkscape::ICON_SIZE_SMALL_TOOLBAR,
+                                                           (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
         g_type_class_add_private( klass, sizeof(EgeAdjustmentActionClass) );
     }
 }
@@ -276,6 +300,8 @@ static void ege_adjustment_action_init( EgeAdjustmentAction* action )
     action->private_data->transferFocus = FALSE;
     action->private_data->descriptions = 0;
     action->private_data->appearance = 0;
+    action->private_data->iconId = 0;
+    action->private_data->iconSize = Inkscape::ICON_SIZE_SMALL_TOOLBAR;
 }
 
 static void ege_adjustment_action_finalize( GObject* object )
@@ -352,6 +378,14 @@ static void ege_adjustment_action_get_property( GObject* obj, guint propId, GVal
         case PROP_APPEARANCE:
             g_value_set_string( value, action->private_data->appearance );
             break;
+
+        case PROP_ICON_ID:
+            g_value_set_string( value, action->private_data->iconId );
+	    break;
+
+        case PROP_ICON_SIZE:
+            g_value_set_int( value, action->private_data->iconSize );
+	    break;
 
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID( obj, propId, pspec );
@@ -437,6 +471,20 @@ void ege_adjustment_action_set_property( GObject* obj, guint propId, const GValu
             } else {
                 action->private_data->appearanceMode = APPEARANCE_UNKNOWN;
             }
+        }
+        break;
+
+        case PROP_ICON_ID:
+        {
+            gchar* tmp = action->private_data->iconId;
+            action->private_data->iconId = g_value_dup_string( value );
+            g_free( tmp );
+        }
+        break;
+
+        case PROP_ICON_SIZE:
+        {
+            action->private_data->iconSize = (Inkscape::IconSize)g_value_get_int( value );
         }
         break;
 
@@ -791,7 +839,8 @@ static GtkWidget* create_tool_item( GtkAction* action )
         const gchar* sss = g_value_get_string( &value );
 
         if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
-            spinbutton = gtk_hscale_new( act->private_data->adj);
+	    // Slider
+	    spinbutton = gtk_hscale_new( act->private_data->adj);
             gtk_widget_set_size_request(spinbutton, 100, -1);
             gtk_scale_set_digits (GTK_SCALE(spinbutton), 0);
             gtk_signal_connect(GTK_OBJECT(spinbutton), "format-value", GTK_SIGNAL_FUNC(slider_format_falue), (void *) sss);
@@ -823,11 +872,18 @@ static GtkWidget* create_tool_item( GtkAction* action )
         }
 
         if ( act->private_data->appearanceMode != APPEARANCE_FULL ) {
-            GtkWidget* lbl = gtk_label_new( sss ? sss : "wwww" );
-            GtkWidget* filler1 = gtk_label_new(" ");
-            gtk_misc_set_alignment( GTK_MISC(lbl), 1.0, 0.5 );
-            gtk_box_pack_start( GTK_BOX(hb), filler1, FALSE, FALSE, 0 );
-            gtk_box_pack_start( GTK_BOX(hb), lbl, FALSE, FALSE, 0 );
+	    GtkWidget* filler1 = gtk_label_new(" ");
+	    gtk_box_pack_start( GTK_BOX(hb), filler1, FALSE, FALSE, 0 );
+
+	    // Use an icon if available or use short-label
+	    if ( act->private_data->iconId && strcmp( act->private_data->iconId, "" ) != 0 ) {
+                GtkWidget* icon = sp_icon_new( act->private_data->iconSize, act->private_data->iconId );
+                gtk_box_pack_start( GTK_BOX(hb), icon, FALSE, FALSE, 0 );
+	    } else {
+                GtkWidget* lbl = gtk_label_new( sss ? sss : "wwww" );
+                gtk_misc_set_alignment( GTK_MISC(lbl), 1.0, 0.5 );
+                gtk_box_pack_start( GTK_BOX(hb), lbl, FALSE, FALSE, 0 );
+	    }
         }
 
         if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {

@@ -7381,7 +7381,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
         Ink_ComboBoxEntry_Action* act = ink_comboboxentry_action_new( "TextFontSizeAction",
                                                                       _("Font Size"),
-                                                                      _("Select Font Size"),
+                                                                      _("Select Font Size (px)"),
                                                                       NULL,
                                                                       GTK_TREE_MODEL(model_size),
                                                                       4 ); // Width in characters
@@ -7527,7 +7527,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             "TextLineHeightAction",               /* name */
             _("Line Height"),                     /* label */
             _("Line:"),                           /* short label */
-            _("Spacing between lines."),          /* tooltip */
+            _("Spacing between lines (%)."),      /* tooltip */
             "/tools/text/lineheight",             /* path? */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
@@ -7545,6 +7545,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "TextLineHeightAction", eact );
+        g_object_set( G_OBJECT(eact), "iconId", "text_line_spacing", NULL );
     }
 
     /* Word spacing */
@@ -7557,7 +7558,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             "TextWordSpacingAction",              /* name */
             _("Word spacing"),                    /* label */
             _("Word:"),                           /* short label */
-            _("Spacing between words."),          /* tooltip */
+            _("Spacing between words (px)."),     /* tooltip */
             "/tools/text/wordspacing",            /* path? */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
@@ -7575,6 +7576,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "TextWordSpacingAction", eact );
+        g_object_set( G_OBJECT(eact), "iconId", "text_word_spacing", NULL );
     }
 
     /* Letter spacing */
@@ -7587,7 +7589,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             "TextLetterSpacingAction",            /* name */
             _("Letter spacing"),                  /* label */
             _("Letter:"),                         /* short label */
-            _("Spacing between letters."),        /* tooltip */
+            _("Spacing between letters (px)."),   /* tooltip */
             "/tools/text/letterspacing",          /* path? */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
@@ -7605,6 +7607,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "TextLetterSpacingAction", eact );
+        g_object_set( G_OBJECT(eact), "iconId", "text_letter_spacing", NULL );
     }
 
     /* Character kerning (horizontal shift) */
@@ -7617,7 +7620,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             "TextDxAction",                       /* name */
             _("Kerning"),                         /* label */
             _("Kern:"),                           /* short label */
-            _("Kerning (horizontal shift of characters)."), /* tooltip */
+            _("Kerning (horizontal shift of characters) (px)."), /* tooltip */
             "/tools/text/dx",                     /* path? */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
@@ -7635,6 +7638,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "TextDxAction", eact );
+        g_object_set( G_OBJECT(eact), "iconId", "text_horz_kern", NULL );
     }
 
     /* Character vertical shift */
@@ -7647,7 +7651,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             "TextDyAction",                       /* name */
             _("Vertical Shift"),                  /* label */
             _("Vert:"),                           /* short label */
-            _("Vertical shift of characters."),   /* tooltip */
+            _("Vertical shift of characters (px)."),   /* tooltip */
             "/tools/text/dy",                     /* path? */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
@@ -7665,6 +7669,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "TextDyAction", eact );
+        g_object_set( G_OBJECT(eact), "iconId", "text_vert_kern", NULL );
     }
 
     /* Character rotation */
@@ -7695,6 +7700,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "TextRotationAction", eact );
+        g_object_set( G_OBJECT(eact), "iconId", "text_rotation", NULL );
     }
 
     // Is this necessary to call? Shouldn't hurt.
