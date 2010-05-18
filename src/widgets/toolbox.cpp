@@ -7381,7 +7381,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
         Ink_ComboBoxEntry_Action* act = ink_comboboxentry_action_new( "TextFontSizeAction",
                                                                       _("Font Size"),
-                                                                      _("Select Font Size (px)"),
+                                                                      _("Font size (px)"),
                                                                       NULL,
                                                                       GTK_TREE_MODEL(model_size),
                                                                       4 ); // Width in characters
@@ -7394,7 +7394,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     {
         InkToggleAction* act = ink_toggle_action_new( "TextBoldAction",               // Name
                                                       _("Toggle Bold"),               // Label
-                                                      _("Toggle On/Off Bold Style"),  // Tooltip
+                                                      _("Toggle bold or normal weight"),  // Tooltip
                                                       GTK_STOCK_BOLD,                 // Icon (inkId)
                                                       secondarySize );                // Icon size
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
@@ -7407,7 +7407,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     {
         InkToggleAction* act = ink_toggle_action_new( "TextItalicAction",                     // Name
                                                       _("Toggle Italic/Oblique"),             // Label
-                                                      _("Toggle On/Off Italic/Oblique Style"),// Tooltip
+                                                      _("Toggle italic/oblique style"),// Tooltip
                                                       GTK_STOCK_ITALIC,                       // Icon (inkId)
                                                       secondarySize );                        // Icon size
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
@@ -7449,14 +7449,14 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Justify"),
-                            1, _("Justify - Only flowed text"),
+                            1, _("Justify (only flowed text)"),
                             2, GTK_STOCK_JUSTIFY_FILL,
                             3, false,
                             -1 );
 
         EgeSelectOneAction* act = ege_select_one_action_new( "TextAlignAction",       // Name
                                                              _("Alignment"),          // Label
-                                                             _("Text Alignment"),     // Tooltip
+                                                             _("Text alignment"),     // Tooltip
                                                              NULL,                    // StockID
                                                              GTK_TREE_MODEL(model) ); // Model
         g_object_set( act, "short_label", "NotUsed", NULL );
@@ -7484,20 +7484,20 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Horizontal"),
-                            1, _("Horizontal Text"),
+                            1, _("Horizontal text"),
                             2, INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_HORIZONTAL,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Vertical"),
-                            1, _("Vertical Text"),
+                            1, _("Vertical text"),
                             2, INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_VERTICAL,
                             -1 );
 
         EgeSelectOneAction* act = ege_select_one_action_new( "TextOrientationAction", // Name
                                                              _("Orientation"),        // Label
-                                                             _("Text Orientation"),   // Tooltip
+                                                             _("Text orientation"),   // Tooltip
                                                              NULL,                    // StockID
                                                              GTK_TREE_MODEL(model) ); // Model
 
@@ -7527,7 +7527,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             "TextLineHeightAction",               /* name */
             _("Line Height"),                     /* label */
             _("Line:"),                           /* short label */
-            _("Spacing between lines (%)."),      /* tooltip */
+            _("Spacing between lines (times font size)"),      /* tooltip */
             "/tools/text/lineheight",             /* path? */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
@@ -7558,7 +7558,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             "TextWordSpacingAction",              /* name */
             _("Word spacing"),                    /* label */
             _("Word:"),                           /* short label */
-            _("Spacing between words (px)."),     /* tooltip */
+            _("Spacing between words (px)"),     /* tooltip */
             "/tools/text/wordspacing",            /* path? */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
@@ -7589,7 +7589,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             "TextLetterSpacingAction",            /* name */
             _("Letter spacing"),                  /* label */
             _("Letter:"),                         /* short label */
-            _("Spacing between letters (px)."),   /* tooltip */
+            _("Spacing between letters (px)"),   /* tooltip */
             "/tools/text/letterspacing",          /* path? */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
@@ -7620,7 +7620,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             "TextDxAction",                       /* name */
             _("Kerning"),                         /* label */
             _("Kern:"),                           /* short label */
-            _("Kerning (horizontal shift of characters) (px)."), /* tooltip */
+            _("Horizontal kerning (px)"), /* tooltip */
             "/tools/text/dx",                     /* path? */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
@@ -7651,7 +7651,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             "TextDyAction",                       /* name */
             _("Vertical Shift"),                  /* label */
             _("Vert:"),                           /* short label */
-            _("Vertical shift of characters (px)."),   /* tooltip */
+            _("Vertical shift (px)"),   /* tooltip */
             "/tools/text/dy",                     /* path? */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
@@ -7682,7 +7682,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             "TextRotationAction",                 /* name */
             _("Letter rotation"),                 /* label */
             _("Rot:"),                            /* short label */
-            _("Rotation of selected characters (degrees)."),/* tooltip */
+            _("Character rotation (degrees)"),/* tooltip */
             "/tools/text/letterspacing",          /* path? */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
