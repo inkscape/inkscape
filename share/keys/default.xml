@@ -8,7 +8,7 @@ This file contains the default Inkscape keyboard shortcuts. In each "bind" eleme
 <gdk/gdkkeysyms.h> header file but without the leading "GDK_". If you don't have GDK
 source locally, you can view that file at:
 
-  http://cvs.gnome.org/viewcvs/gtk%2B/gdk/gdkkeysyms.h?view=markup
+  http://git.gnome.org/browse/gtk+/plain/gdk/gdkkeysyms.h
 
 - The "modifiers" attribute contains a comma-separated list of modifiers, which can be
 one or more of: "Ctrl", "Shift", "Alt".
