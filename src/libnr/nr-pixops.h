@@ -53,6 +53,7 @@ static inline unsigned int NR_COMPOSENNP_11113(unsigned int fc, unsigned int fa,
 static inline unsigned int NR_COMPOSENNP_11111(unsigned int fc, unsigned int fa, unsigned int bc, unsigned int ba) { return NR_NORMALIZE_31(NR_COMPOSENNP_11113(fc, fa, bc, ba)); }
 
 // Operation: (1 - fa) * bc * ba + fc
+static inline unsigned int NR_COMPOSEPNP_32114(unsigned int fc, unsigned int fa, unsigned int bc, unsigned int ba) { return (255*255 - fa) * ba * bc + 255 * fc; }
 static inline unsigned int NR_COMPOSEPNP_22114(unsigned int fc, unsigned int fa, unsigned int bc, unsigned int ba) { return (255*255 - fa) * ba * bc + 255*255 * fc; }
 static inline unsigned int NR_COMPOSEPNP_11113(unsigned int fc, unsigned int fa, unsigned int bc, unsigned int ba) { return (255 - fa) * ba * bc + 255*255 * fc; }
 static inline unsigned int NR_COMPOSEPNP_22111(unsigned int fc, unsigned int fa, unsigned int bc, unsigned int ba) { return NR_NORMALIZE_41(NR_COMPOSEPNP_22114(fc, fa, bc, ba)); }
@@ -65,6 +66,7 @@ static inline unsigned int NR_COMPOSENNN_111121(unsigned int fc, unsigned int fa
 
 // Operation: ((1 - fa) * bc * ba + fc)/a
 //   Reuses non-normalized versions of NR_COMPOSEPNP
+static inline unsigned int NR_COMPOSEPNN_321131(unsigned int fc, unsigned int fa, unsigned int bc, unsigned int ba, unsigned int a) { return DIV_ROUND(NR_COMPOSEPNP_32114(fc, fa, bc, ba), a); }
 static inline unsigned int NR_COMPOSEPNN_221131(unsigned int fc, unsigned int fa, unsigned int bc, unsigned int ba, unsigned int a) { return DIV_ROUND(NR_COMPOSEPNP_22114(fc, fa, bc, ba), a); }
 static inline unsigned int NR_COMPOSEPNN_111121(unsigned int fc, unsigned int fa, unsigned int bc, unsigned int ba, unsigned int a) { return DIV_ROUND(NR_COMPOSEPNP_11113(fc, fa, bc, ba), a); }
 
@@ -81,13 +83,15 @@ static inline unsigned int NR_COMPOSENPP_1111(unsigned int fc, unsigned int fa, 
 // Operation: (1 - fa) * bc + fc
 //   (1-fa)*bc+fc = bc-fa*bc+fc = (bc+fc)-fa*bc
 // This rewritten form results in faster code (found out through testing)
-static inline unsigned int NR_COMPOSEPPP_2224(unsigned int fc, unsigned int fa, unsigned int bc) { return 255*255*(bc+fc) - fa*bc; }
+static inline unsigned int NR_COMPOSEPPP_2224(unsigned int fc, unsigned int fa, unsigned int bc) { return 255*255*(bc+fc) - fa*bc; } // Note that this can temporarily overflow (but it probably doesn't cause problems)
   // NR_COMPOSEPPP_2224 assumes that fa and fc have a common component (fa=a*x and fc=c*x), because then the maximum value is: 
   //   (255*255-255*x)*255*255 + 255*x*255*255 = 255*255*( (255*255-255*x) + 255*x ) = 255*255*255*( (255-x)+x ) = 255*255*255*255
+static inline unsigned int NR_COMPOSEPPP_3213(unsigned int fc, unsigned int fa, unsigned int bc) { return 255*255*bc + fc - fa*bc; }
 static inline unsigned int NR_COMPOSEPPP_2213(unsigned int fc, unsigned int fa, unsigned int bc) { return 255*(255*bc+fc) - fa*bc; }
 static inline unsigned int NR_COMPOSEPPP_1213(unsigned int fc, unsigned int fa, unsigned int bc) { return 255*255*(bc+fc) - fa*bc; }
 static inline unsigned int NR_COMPOSEPPP_1112(unsigned int fc, unsigned int fa, unsigned int bc) { return 255*(bc+fc) - fa*bc; }
 static inline unsigned int NR_COMPOSEPPP_2221(unsigned int fc, unsigned int fa, unsigned int bc) { return NR_NORMALIZE_41(NR_COMPOSEPPP_2224(fc, fa, bc)); }
+static inline unsigned int NR_COMPOSEPPP_3211(unsigned int fc, unsigned int fa, unsigned int bc) { return NR_NORMALIZE_31(NR_COMPOSEPPP_3213(fc, fa, bc)); }
 static inline unsigned int NR_COMPOSEPPP_2211(unsigned int fc, unsigned int fa, unsigned int bc) { return NR_NORMALIZE_31(NR_COMPOSEPPP_2213(fc, fa, bc)); }
 static inline unsigned int NR_COMPOSEPPP_1211(unsigned int fc, unsigned int fa, unsigned int bc) { return NR_NORMALIZE_21(NR_COMPOSEPPP_1213(fc, fa, bc)); }
 static inline unsigned int NR_COMPOSEPPP_1111(unsigned int fc, unsigned int fa, unsigned int bc) { return NR_NORMALIZE_21(NR_COMPOSEPPP_1112(fc, fa, bc)); }

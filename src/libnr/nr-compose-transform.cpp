@@ -65,11 +65,14 @@ nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, int h, 
 	int x, y;
 
 	if (alpha == 0) return;
+    if (alpha>255) {
+        g_warning("In transform PPN alpha=%u>255",alpha);
+    }
 
-    // Both alpha and color components are stored temporarily with a range of [0,255^2], so more supersampling and we get an overflow
-    if (xd+yd>16) {
-        xd = 8;
-        yd = 8;
+    // The color component is stored temporarily with a range of [0,255^3], so more supersampling and we get an overflow (fortunately Inkscape's preferences also doesn't allow a higher setting)
+    if (xd+yd>8) {
+        xd = 4;
+        yd = 4;
     }
 
 	xsize = (1 << xd);
@@ -122,38 +125,42 @@ nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, int h, 
 					if ((sy >= 0) && (sy < sh)) {
 						const unsigned char *s;
 						s = spx + sy * srs + sx * 4;
-						r += NR_PREMUL_112 (s[0], s[3]);
+						r += NR_PREMUL_112 (s[0], s[3]); // s in [0,255]
 						g += NR_PREMUL_112 (s[1], s[3]);
 						b += NR_PREMUL_112 (s[2], s[3]);
 						a += s[3];
+                        // a=sum(s3)
+                        // r,g,b in [0,sum(s3)*255]
 					}
 				}
 			}
 			a = (a*alpha + rounding_fix) >> dbits;
+            // a=sum(s3)*alpha/size=avg(s3)*alpha
             // Compare to nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_P
 			if (a != 0) {
-				r = (r + rounding_fix) >> dbits;
-				g = (g + rounding_fix) >> dbits;
-				b = (b + rounding_fix) >> dbits;
+				r = (r*alpha + rounding_fix) >> dbits;
+				g = (g*alpha + rounding_fix) >> dbits;
+				b = (b*alpha + rounding_fix) >> dbits;
+                // r,g,b in [0,avg(s3)*alpha*255]=[0,a*255]
                 if (a == 255*255) {
 					/* Full coverage, demul src */
-					d[0] = NR_NORMALIZE_21(r);
-					d[1] = NR_NORMALIZE_21(g);
-					d[2] = NR_NORMALIZE_21(b);
+					d[0] = NR_NORMALIZE_31(r);
+					d[1] = NR_NORMALIZE_31(g);
+					d[2] = NR_NORMALIZE_31(b);
 					d[3] = NR_NORMALIZE_21(a);
                 } else if (d[3] == 0) {
                     /* Only foreground, demul src */
-                    d[0] = NR_DEMUL_221(r,a);
-                    d[1] = NR_DEMUL_221(g,a);
-                    d[2] = NR_DEMUL_221(b,a);
+                    d[0] = NR_DEMUL_321(r,a);
+                    d[1] = NR_DEMUL_321(g,a);
+                    d[2] = NR_DEMUL_321(b,a);
                     d[3] = NR_NORMALIZE_21(a);
 				} else {
 					unsigned int ca;
 					/* Full composition */
 					ca = NR_COMPOSEA_213(a, d[3]);
-					d[0] = NR_COMPOSEPNN_221131 (r, a, d[0], d[3], ca);
-					d[1] = NR_COMPOSEPNN_221131 (g, a, d[1], d[3], ca);
-					d[2] = NR_COMPOSEPNN_221131 (b, a, d[2], d[3], ca);
+					d[0] = NR_COMPOSEPNN_321131 (r, a, d[0], d[3], ca);
+					d[1] = NR_COMPOSEPNN_321131 (g, a, d[1], d[3], ca);
+					d[2] = NR_COMPOSEPNN_321131 (b, a, d[2], d[3], ca);
 					d[3] = NR_NORMALIZE_31(ca);
 				}
 			}
@@ -272,19 +279,19 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_n (unsigned char *px, int w, int h
 			}
 			a = (a*alpha + rounding_fix) >> dbits;
 			if (a != 0) {
-				r = (r + rounding_fix) >> dbits;
-				g = (g + rounding_fix) >> dbits;
-				b = (b + rounding_fix) >> dbits;
+				r = (r*alpha + rounding_fix) >> dbits;
+				g = (g*alpha + rounding_fix) >> dbits;
+				b = (b*alpha + rounding_fix) >> dbits;
 				if ((a == 255*255) || (d[3] == 0)) {
 					/* Transparent BG, premul src */
-					d[0] = NR_NORMALIZE_21(r);
-					d[1] = NR_NORMALIZE_21(g);
-					d[2] = NR_NORMALIZE_21(b);
+					d[0] = NR_NORMALIZE_31(r);
+					d[1] = NR_NORMALIZE_31(g);
+					d[2] = NR_NORMALIZE_31(b);
 					d[3] = NR_NORMALIZE_21(a);
 				} else {
-					d[0] = NR_COMPOSEPPP_2211 (r, a, d[0]);
-					d[1] = NR_COMPOSEPPP_2211 (g, a, d[1]);
-					d[2] = NR_COMPOSEPPP_2211 (b, a, d[2]);
+					d[0] = NR_COMPOSEPPP_3211 (r, a, d[0]);
+					d[1] = NR_COMPOSEPPP_3211 (g, a, d[1]);
+					d[2] = NR_COMPOSEPPP_3211 (b, a, d[2]);
 					d[3] = NR_COMPOSEA_211(a, d[3]);
 				}
 			}
@@ -309,11 +316,14 @@ void nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, in
 	int i;
 
 	if (alpha == 0) return;
+    if (alpha>255) {
+        g_warning("In transform PPN alpha=%u>255",alpha);
+    }
 
-    // Both alpha and color components are stored temporarily with a range of [0,255^2], so more supersampling and we get an overflow
-    if (xd+yd>16) {
-        xd = 8;
-        yd = 8;
+    // The color component is stored temporarily with a range of [0,255^3], so more supersampling and we get an overflow (fortunately Inkscape's preferences also doesn't allow a higher setting)
+    if (xd+yd>8) {
+        xd = 4;
+        yd = 4;
     }
 
     dbits = xd + yd;
