@@ -795,6 +795,42 @@ void sp_lpe_item_replace_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * 
     SP_OBJECT_REPR(lpeitem)->setAttribute("inkscape:path-effect", r.c_str());
 }
 
+/**
+ *  Check all effects in the stack if they are used by other items, and fork them if so.
+ *  It is not recommended to fork the effects by yourself calling LivePathEffectObject::fork_private_if_necessary,
+ *  use this method instead.
+ *  Returns true if one or more effects were forked; returns false if nothing was done.
+ */
+bool sp_lpe_item_fork_path_effects_if_necessary(SPLPEItem *lpeitem, unsigned int nr_of_allowed_users)
+{
+    bool forked = false;
+
+    if ( sp_lpe_item_has_path_effect(lpeitem) ) {
+        // If one of the path effects is used by 2 or more items, fork it
+        // so that each object has its own independent copy of the effect.
+        // Forking messes up the path effect list, so after each fork,
+        // reload the list and recheck if more forking is required.
+        do {
+            forked = false;
+            PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);
+            for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); it++)
+            {
+                LivePathEffectObject *lpeobj = (*it)->lpeobject;
+                if (lpeobj) {
+                    LivePathEffectObject *new_lpeobj = lpeobj->fork_private_if_necessary(nr_of_allowed_users);
+                    if (new_lpeobj != lpeobj) {
+                        sp_lpe_item_replace_path_effect(lpeitem, lpeobj, new_lpeobj);
+                        forked = true;
+                        break;  // forked, so break the for-loop and recheck
+                    }
+                }
+            }
+        } while (forked);
+    }
+
+    return forked;
+}
+
 // Enable or disable the path effects of the item.
 // The counter allows nested calls
 static void sp_lpe_item_enable_path_effects(SPLPEItem *lpeitem, bool enable)

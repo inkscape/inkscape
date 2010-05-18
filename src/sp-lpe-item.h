@@ -59,6 +59,7 @@ void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset);
 void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * new_lpeobj);
 void sp_lpe_item_replace_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * old_lpeobj,
                                         LivePathEffectObject * new_lpeobj);
+bool sp_lpe_item_fork_path_effects_if_necessary(SPLPEItem *lpeitem, unsigned int nr_of_allowed_users = 1);
 void sp_lpe_item_remove_all_path_effects(SPLPEItem *lpeitem, bool keep_paths);
 void sp_lpe_item_remove_current_path_effect(SPLPEItem *lpeitem, bool keep_paths);
 void sp_lpe_item_down_current_path_effect(SPLPEItem *lpeitem);

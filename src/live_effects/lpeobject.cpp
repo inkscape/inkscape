@@ -245,6 +245,7 @@ livepatheffect_on_repr_attr_changed ( Inkscape::XML::Node * /*repr*/,
 /**
  * If this has other users, create a new private duplicate and return it
  * returns 'this' when no forking was necessary (and therefore no duplicate was made)
+ * Check out sp_lpe_item_fork_path_effects_if_necessary !
  */
 LivePathEffectObject *
 LivePathEffectObject::fork_private_if_necessary(unsigned int nr_of_allowed_users)
