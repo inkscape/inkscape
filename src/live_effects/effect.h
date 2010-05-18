@@ -15,8 +15,6 @@
 #include <glibmm/ustring.h>
 #include <2geom/forward.h>
 #include "ui/widget/registry.h"
-#include "sp-lpe-item.h"
-//#include "knotholder.h"
 #include "parameter/bool.h"
 #include "effect-enum.h"
 
@@ -30,6 +28,7 @@ struct LivePathEffectObject;
 class SPLPEItem;
 class KnotHolder;
 class KnotHolderEntity;
+class SPPath;
 
 namespace Gtk {
     class Widget;

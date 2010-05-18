@@ -220,7 +220,7 @@ LPEGears::LPEGears(LivePathEffectObject *lpeobject) :
      */
 
     teeth.param_make_integer();
-    teeth.param_set_range(3, NR_HUGE);
+    teeth.param_set_range(3, 1e10);
     registerParameter( dynamic_cast<Parameter *>(&teeth) );
     registerParameter( dynamic_cast<Parameter *>(&phi) );
 }

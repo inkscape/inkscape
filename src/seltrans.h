@@ -24,6 +24,7 @@
 #include "selcue.h"
 #include "message-context.h"
 #include <vector>
+#include "sp-item.h"
 
 struct SPKnot;
 class SPDesktop;

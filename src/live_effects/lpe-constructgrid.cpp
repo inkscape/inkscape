@@ -31,8 +31,8 @@ LPEConstructGrid::LPEConstructGrid(LivePathEffectObject *lpeobject) :
 
     nr_x.param_make_integer();
     nr_y.param_make_integer();
-    nr_x.param_set_range(1, NR_HUGE);
-    nr_y.param_set_range(1, NR_HUGE);
+    nr_x.param_set_range(1, 1e10);
+    nr_y.param_set_range(1, 1e10);
 }
 
 LPEConstructGrid::~LPEConstructGrid()
