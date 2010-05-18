@@ -123,6 +123,8 @@ private:
     
     SPLPEItem * current_lpeitem;
 
+    friend void lpeeditor_selection_changed (Inkscape::Selection * selection, gpointer data);
+
     LivePathEffectEditor(LivePathEffectEditor const &d);
     LivePathEffectEditor& operator=(LivePathEffectEditor const &d);
 };

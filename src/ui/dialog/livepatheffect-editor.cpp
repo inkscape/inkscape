@@ -51,9 +51,10 @@ namespace Dialog {
 /*####################
  * Callback functions
  */
-static void lpeeditor_selection_changed (Inkscape::Selection * selection, gpointer data)
+void lpeeditor_selection_changed (Inkscape::Selection * selection, gpointer data)
 {
     LivePathEffectEditor *lpeeditor = static_cast<LivePathEffectEditor *>(data);
+    lpeeditor->lpe_list_locked = false;
     lpeeditor->onSelectionChanged(selection);
 }
 
@@ -327,6 +328,7 @@ LivePathEffectEditor::setDesktop(SPDesktop *desktop)
         selection_modified_connection.disconnect();
     }
 
+    lpe_list_locked = false;
     current_desktop = desktop;
     if (desktop) {
         Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -373,6 +375,7 @@ LivePathEffectEditor::onApply()
             sp_document_done(doc, SP_VERB_DIALOG_LIVE_PATH_EFFECT,
                      _("Create and apply path effect"));
 
+            lpe_list_locked = false;
             onSelectionChanged(sel);
         }
     }
