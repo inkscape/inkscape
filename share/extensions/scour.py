@@ -34,7 +34,6 @@
 #    at rounded corners)
 
 # Next Up:
-# - Bug 511186: option to keep XML comments between prolog and root element
 # - only remove unreferenced elements if they are not children of a referenced element
 # - add an option to remove ids if they match the Inkscape-style of IDs
 # - investigate point-reducing algorithms
@@ -72,7 +71,7 @@ except ImportError:
 	pass
 
 APP = 'scour'
-VER = '0.24'
+VER = '0.25r171'
 COPYRIGHT = 'Copyright Jeff Schiller, 2010'
 
 NS = { 	'SVG': 		'http://www.w3.org/2000/svg', 
@@ -116,6 +115,7 @@ svgAttributes = [
 				'stop-color',
 				'stop-opacity',
 				'stroke',
+				'stroke-dasharray',
 				'stroke-dashoffset',
 				'stroke-linecap',
 				'stroke-linejoin',
@@ -1355,7 +1355,7 @@ def cleanPath(element) :
 	else:
 		# we have a move and then 1 or more coords for lines
 		N = len(path[0][1])
-		if path[0] == 'M':
+		if path[0][0] == 'M':
 			# take the last pair of coordinates for the starting point
 			x = path[0][1][N-2]
 			y = path[0][1][N-1]
@@ -1624,13 +1624,14 @@ def cleanPath(element) :
 	for (cmd,data) in path[1:]:
 		# flush the previous command if it is not the same type as the current command
 		if prevCmd != '':
-			if cmd != prevCmd:
+			if cmd != prevCmd or cmd == 'm':
 				newPath.append( (prevCmd, prevData) )
 				prevCmd = ''
 				prevData = []
 		
 		# if the previous and current commands are the same type, collapse
-		if cmd == prevCmd: 
+		# but only if they are not move commands (since move can contain implicit lineto commands)
+		if cmd == prevCmd and cmd != 'm':
 			for coord in data:
 				prevData.append(coord)
 		
@@ -1757,13 +1758,13 @@ def cleanPath(element) :
 	for (cmd,data) in path[1:]:
 		# flush the previous command if it is not the same type as the current command
 		if prevCmd != '':
-			if cmd != prevCmd:
+			if cmd != prevCmd or cmd == 'm':
 				newPath.append( (prevCmd, prevData) )
 				prevCmd = ''
 				prevData = []
 		
 		# if the previous and current commands are the same type, collapse
-		if cmd == prevCmd: 
+		if cmd == prevCmd and cmd != 'm':
 			for coord in data:
 				prevData.append(coord)
 		
@@ -1786,12 +1787,43 @@ def parseListOfPoints(s):
 	
 		Returns a list of containing an even number of coordinate strings
 	"""
+	i = 0
+	points = []
+	
 	# (wsp)? comma-or-wsp-separated coordinate pairs (wsp)?
 	# coordinate-pair = coordinate comma-or-wsp coordinate
 	# coordinate = sign? integer
-	nums = re.split("\\s*\\,?\\s*", s.strip())
+	# comma-wsp: (wsp+ comma? wsp*) | (comma wsp*)
+	ws_nums = re.split("\\s*\\,?\\s*", s.strip())
+	nums = []
+	
+	# also, if 100-100 is found, split it into two also
+    #  <polygon points="100,-100,100-100,100-100-100,-100-100" />
+	for i in range(len(ws_nums)):
+		negcoords = re.split("\\-", ws_nums[i]);
+		
+		# this string didn't have any negative coordinates
+		if len(negcoords) == 1:
+			nums.append(negcoords[0])
+		# we got negative coords
+		else:
+			for j in range(len(negcoords)):
+				# first number could be positive
+				if j == 0:
+					if negcoords[0] != '':
+						nums.append(negcoords[0])
+				# otherwise all other strings will be negative
+				else:
+					# unless we accidentally split a number that was in scientific notation
+					# and had a negative exponent (500.00e-1)
+					prev = nums[len(nums)-1]
+					if prev[len(prev)-1] == 'e' or prev[len(prev)-1] == 'E':
+						nums[len(nums)-1] = prev + '-' + negcoords[j]
+					else:
+						nums.append( '-'+negcoords[j] )
+
+	# now resolve into SVGLength values
 	i = 0
-	points = []
 	while i < len(nums):
 		x = SVGLength(nums[i])
 		# if we had an odd number of points, return empty
@@ -1803,7 +1835,7 @@ def parseListOfPoints(s):
 		points.append( str(x.value) )
 		points.append( str(y.value) )
 		i += 2
-	
+
 	return points
 	
 def cleanPolygon(elem):
@@ -1820,14 +1852,14 @@ def cleanPolygon(elem):
 		if startx == endx and starty == endy:
 			pts = pts[:-2]
 			numPointsRemovedFromPolygon += 1		
-	elem.setAttribute('points', scourCoordinates(pts))
+	elem.setAttribute('points', scourCoordinates(pts,True))
 
 def cleanPolyline(elem):
 	"""
 		Scour the polyline points attribute
 	"""
 	pts = parseListOfPoints(elem.getAttribute('points'))		
-	elem.setAttribute('points', scourCoordinates(pts))
+	elem.setAttribute('points', scourCoordinates(pts,True))
 	
 def serializePath(pathObj):
 	"""
@@ -2449,5 +2481,3 @@ if __name__ == '__main__':
 	sizediff = (newsize / oldsize) * 100
 	print >>sys.stderr, ' Original file size:', oldsize, 'bytes;', \
 		'new file size:', newsize, 'bytes (' + str(sizediff)[:5] + '%)'
-
-
