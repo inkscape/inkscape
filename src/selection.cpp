@@ -424,14 +424,15 @@ boost::optional<Geom::Point> Selection::center() const {
 }
 
 /**
- * Compute the list of points in the selection that are to be considered for snapping.
+ * Compute the list of points in the selection that are to be considered for snapping from.
  */
 std::vector<Inkscape::SnapCandidatePoint> Selection::getSnapPoints(SnapPreferences const *snapprefs) const {
     GSList const *items = const_cast<Selection *>(this)->itemList();
 
     SnapPreferences snapprefs_dummy = *snapprefs; // create a local copy of the snapping prefs
     snapprefs_dummy.setIncludeItemCenter(false); // locally disable snapping to the item center
-
+    snapprefs_dummy.setSnapToItemNode(true); // consider any type of nodes as a snap source
+    snapprefs_dummy.setSnapSmoothNodes(true); // i.e. disregard the smooth / cusp node preference
     std::vector<Inkscape::SnapCandidatePoint> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
         SPItem *this_item = SP_ITEM(iter->data);
@@ -446,13 +447,18 @@ std::vector<Inkscape::SnapCandidatePoint> Selection::getSnapPoints(SnapPreferenc
 
     return p;
 }
-
+// TODO: both getSnapPoints and getSnapPointsConvexHull are called, subsequently. Can we do this more efficient?
+// Why do we need to include the transformation center in one case and not the other?
 std::vector<Inkscape::SnapCandidatePoint> Selection::getSnapPointsConvexHull(SnapPreferences const *snapprefs) const {
     GSList const *items = const_cast<Selection *>(this)->itemList();
 
+    SnapPreferences snapprefs_dummy = *snapprefs; // create a local copy of the snapping prefs
+    snapprefs_dummy.setSnapToItemNode(true); // consider any type of nodes as a snap source
+    snapprefs_dummy.setSnapSmoothNodes(true); // i.e. disregard the smooth / cusp node preference
+
     std::vector<Inkscape::SnapCandidatePoint> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
-        sp_item_snappoints(SP_ITEM(iter->data), p, snapprefs);
+        sp_item_snappoints(SP_ITEM(iter->data), p, &snapprefs_dummy);
     }
 
     std::vector<Inkscape::SnapCandidatePoint> pHull;

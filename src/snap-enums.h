@@ -58,7 +58,7 @@ enum SnapSourceType {
     //-------------------------------------------------------------------
     // For the same reason, nodes will not snap to bbox points
     SNAPSOURCE_NODE_CATEGORY = 512, // will be used as a flag and must therefore be a power of two
-    SNAPSOURCE_NODE_SMOOTH,
+    SNAPSOURCE_NODE_SMOOTH, // Symmetrical nodes are also considered to be smooth; there's no dedicated type for symm. nodes
     SNAPSOURCE_NODE_CUSP,
     SNAPSOURCE_LINE_MIDPOINT,
     SNAPSOURCE_PATH_INTERSECTION,

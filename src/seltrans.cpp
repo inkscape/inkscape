@@ -289,13 +289,9 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 
     // Next, get all points to consider for snapping
     SnapManager const &m = _desktop->namedview->snap_manager;
-    Inkscape::SnapPreferences local_snapprefs = m.snapprefs;
-    local_snapprefs.setSnapToItemNode(true); // We should get at least the cusp nodes here. This might
-    // have been turned off because (for example) the user only want paths as a snap target, not nodes
-    // but as a snap source we still need some nodes though!
     _snap_points.clear();
-    _snap_points = selection->getSnapPoints(&local_snapprefs);
-    std::vector<Inkscape::SnapCandidatePoint> snap_points_hull = selection->getSnapPointsConvexHull(&local_snapprefs);
+    _snap_points = selection->getSnapPoints(&m.snapprefs);
+    std::vector<Inkscape::SnapCandidatePoint> snap_points_hull = selection->getSnapPointsConvexHull(&m.snapprefs);
     if (_snap_points.size() > 200) {
         /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
         An average user would rarely ever try to snap such a large number of nodes anyway, because

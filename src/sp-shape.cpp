@@ -1227,7 +1227,24 @@ static void sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::SnapCa
             bool c2 = snapprefs->getSnapSmoothNodes() && (nodetype == Geom::NODE_SMOOTH || nodetype == Geom::NODE_SYMM);
 
             if (c1 || c2) {
-                p.push_back(Inkscape::SnapCandidatePoint(curve_it1->finalPoint() * i2d, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
+                Inkscape::SnapSourceType sst;
+                Inkscape::SnapTargetType stt;
+                switch (nodetype) {
+                case Geom::NODE_CUSP:
+                    sst = Inkscape::SNAPSOURCE_NODE_CUSP;
+                    stt = Inkscape::SNAPTARGET_NODE_CUSP;
+                    break;
+                case Geom::NODE_SMOOTH:
+                case Geom::NODE_SYMM:
+                    sst = Inkscape::SNAPSOURCE_NODE_SMOOTH;
+                    stt = Inkscape::SNAPTARGET_NODE_SMOOTH;
+                    break;
+                default:
+                    sst = Inkscape::SNAPSOURCE_UNDEFINED;
+                    stt = Inkscape::SNAPTARGET_UNDEFINED;
+                    break;
+                }
+                p.push_back(Inkscape::SnapCandidatePoint(curve_it1->finalPoint() * i2d, sst, stt));
             }
 
             // Consider midpoints of line segments for snapping
