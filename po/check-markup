@@ -32,8 +32,8 @@ sub po_error ($) {
 }
 
 # Returns true iff successful.
-sub check_str ($) {
-    my ($str) = @_;
+sub check_str ($$) {
+    my ($certainly_pango_str, $str) = @_;
 
     $str =~ s/\A"// or die "Bug: No leading `\"' in `$str'";
     $str =~ s/"\Z// or die "Bug: No trailing `\"' in `$str'";
@@ -97,7 +97,7 @@ sub check_str ($) {
 	return 0;
     }
 
-    if (!$is_xml) {
+    if (!$is_xml and !$certainly_pango_str) {
 	$str =~ s/<(?:defs|image|rect|svg)>//g;
 	$str =~ s/<[ 01]//g;
 	$str =~ s/\A>+//;
@@ -116,7 +116,7 @@ sub check_str ($) {
     $str =~ s/[^<>]*\Z//;
 
     if ($str =~ /\A([<>])\Z/) {
-	if ($is_xml) {
+	if ($is_xml or $certainly_pango_str) {
 	    po_error("Unescaped `$1'");
 	    return 0;
 	} else {
@@ -132,17 +132,20 @@ sub check_str ($) {
     return 1;
 }
 
-sub check_strs (@) {
+sub check_strs ($@) {
+    my $is_pango_str = shift(@_);
     if ($#_ < 1) {
 	die "check_strs: expecting >= 2 strings";
     }
     if ((($_[0] eq '""') && ($_[1] =~ /Project-Id-Version:.*POT-Creation-Date:/s))
-	or ($_[0] eq '"> and < scale by:"')) {
+    or ($_[0] eq '"> and < scale by:"')
+    or $is_pango_str == 0)
+    {
 	# Not a Pango string.
 	return 1;
     }
     foreach my $str (@_) {
-	$str eq '""' or check_str($str) or return 0;
+	$str eq '""' or check_str($is_pango_str - 1, $str) or return 0;
     }
     return 1;
 }
@@ -170,16 +173,29 @@ ENTRY: while(<>) {
 	    next ENTRY;
 	}
 
-	if (m{\n\#,\ fuzzy}) {
+	if (m{\n\#(?:,\ [-a-z0-9]+)*,\ fuzzy}) {
 	    # Fuzzy entries aren't used, so ignore them.
 	    # (This prevents warnings about mismatching <>/ pattern.)
 	    next ENTRY;
 	}
 
+	# 0 for known not pango format, 2 for known pango format.
+	my $is_pango_format = 1;
+    	if (m{\n\#\.\ .*\bxgettext:(no-)?pango-format\s}) {
+            $is_pango_format = ( defined($1) ? 0 : 2 );
+	}
+	if (m{\n\#(?:,\ [-a-z0-9+])*,\ (no-)?pango-format[,\n]}) {
+	    $is_pango_format = ( defined($1) ? 0 : 2 );
+	}
+	if (m{\n\#:\ \.\./share/extensions/[-a-zA-Z0-9_]+\.inx(?:\.h)?:}) {
+	    $is_pango_format = 0;
+	}
+
+
 	if (m{\A${com}*msgid\ (${str})\n
 	      ${com}*msgstr\ (${str})\n
 	      ${com}*\Z}x) {
-	    check_strs($1, $2) or next ENTRY;
+	    check_strs($is_pango_format, $1, $2) or next ENTRY;
 	}
 	elsif (m{\A${com}*msgid\ (${str})\n
 		 ${com}*msgid_plural\ (${str})\n
@@ -190,7 +206,7 @@ ENTRY: while(<>) {
 		push @strs, ($1);
 	    }
 	    $rest eq '' or die "BUG: unparsed plural entries `$rest'";
-	    check_strs(@strs) or next ENTRY;
+	    check_strs($is_pango_format, @strs) or next ENTRY;
 	}
 	elsif (m{$str[ \t]}) {
 	    po_error('Trailing whitespace');
@@ -203,3 +219,6 @@ ENTRY: while(<>) {
 # Some makefiles (currently the top-level Makefile.am) expect this script to
 # exit 1 if any problems found.
 exit $rc;
+
+
+# vi: set autoindent shiftwidth=4 tabstop=8 encoding=utf-8 softtabstop=4 filetype=perl :
