@@ -153,6 +153,8 @@ class Layout::Calculator
         unsigned whitespace_count;
         bool ends_with_whitespace;
         double each_whitespace_width;
+        double letter_spacing; // Save so we can subtract from width at end of line (for center justification)
+        double word_spacing;
         void setZero();
     };
 
@@ -340,12 +342,21 @@ class Layout::Calculator
 
             span->end.increment();
 
-            if (span->width > maximum_width && !char_attributes.is_white) {       // whitespaces don't matter, we can put as many as we want at eol
+            // Width should not include letter_spacing (or word_spacing) after last letter at end of line.
+            // word_spacing is attached to white space that is already removed from line end (?)
+            double test_width = span->width - text_source->style->letter_spacing.computed;
+
+            // Save letter_spacing and word_spacing for subtraction later if span is last span in line.
+            span->letter_spacing = text_source->style->letter_spacing.computed;
+            span->word_spacing   = text_source->style->word_spacing.computed;
+
+            if (test_width > maximum_width && !char_attributes.is_white) { // whitespaces don't matter, we can put as many as we want at eol
                 TRACE(("span %d exceeded scanrun; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
                 return false;
             }
 
         } while (span->end.char_byte != 0);  // while we haven't wrapped to the next span
+
         TRACE(("fitted span %d width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
         return true;
     }
@@ -369,7 +380,7 @@ class Layout::Calculator
                 case RIGHT:
                     return it_chunk->x - it_chunk->text_width;
                 case CENTER:
-                    return it_chunk->x - it_chunk->text_width / 2;
+                    return it_chunk->x - it_chunk->text_width/ 2;
             }
         }
 
@@ -1335,6 +1346,13 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
         chunk_info->back().broken_spans.back().whitespace_count--;
         chunk_info->back().text_width -= chunk_info->back().broken_spans.back().each_whitespace_width;
         chunk_info->back().whitespace_count--;
+    }
+
+    if (!chunk_info->empty() && !chunk_info->back().broken_spans.empty() ) {
+        // for justification we need to discard line-spacing and word-spacing at end of the chunk
+        chunk_info->back().broken_spans.back().width -= chunk_info->back().broken_spans.back().letter_spacing;
+        chunk_info->back().text_width -= chunk_info->back().broken_spans.back().letter_spacing;
+        TRACE(("width after subtracting last letter_spacing: %f\n", chunk_info->back().broken_spans.back().width));
     }
 
     return true;
