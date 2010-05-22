@@ -732,7 +732,7 @@ GtkWidget* create_tool_item( GtkAction* action )
                 if ( act->private_data->sensitiveColumn >= 0 ) {
                     gtk_action_set_sensitive( GTK_ACTION(ract), sens );
                 }
- 
+
                 gtk_radio_action_set_group( ract, group );
                 group = gtk_radio_action_get_group( ract );
 
@@ -931,6 +931,7 @@ void resync_sensitive( EgeSelectOneAction* act )
                         GSList* group = (GSList*)data;
                         // List is backwards in group as compared to GtkTreeModel, we better do matching.
                         while ( group ) {
+#if GTK_CHECK_VERSION(2,16,0)
                             GtkRadioAction* ract = GTK_RADIO_ACTION(group->data);
                             const gchar* label = gtk_action_get_label( GTK_ACTION( ract ) );
 
@@ -959,6 +960,7 @@ void resync_sensitive( EgeSelectOneAction* act )
                             }
 
                             gtk_action_set_sensitive( GTK_ACTION(ract), sens );
+#endif
 
                             group = g_slist_next(group);
                         }
@@ -968,7 +970,7 @@ void resync_sensitive( EgeSelectOneAction* act )
         } else if ( GTK_IS_MENU_ITEM(proxies->data) ) {
             /* Not implemented */
         }
-        
+
         proxies = g_slist_next( proxies );
     }
 
