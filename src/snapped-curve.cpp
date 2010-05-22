@@ -12,8 +12,10 @@
 #include <2geom/crossing.h>
 #include <2geom/path-intersection.h>
 
-Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve, SnapSourceType source, long source_num, SnapTargetType target, Geom::OptRect target_bbox)
+Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, int num_path, int num_segm, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve, SnapSourceType source, long source_num, SnapTargetType target, Geom::OptRect target_bbox)
 {
+    _num_path = num_path;
+    _num_segm = num_segm;
     _distance = snapped_distance;
     _tolerance = std::max(snapped_tolerance, 1.0);
     _always_snap = always_snap;
@@ -32,6 +34,8 @@ Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coo
 
 Inkscape::SnappedCurve::SnappedCurve()
 {
+    _num_path = 0;
+    _num_segm = 0;
     _distance = NR_HUGE;
     _tolerance = 1;
     _always_snap = false;
@@ -68,6 +72,16 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
         for (Geom::Crossings::const_iterator i = cs.begin(); i != cs.end(); i++) {
             Geom::Point p_ix = this->_curve->pointAt((*i).ta);
             Geom::Coord dist = Geom::distance(p_ix, p);
+
+            // Test if we have two segments (curves) from the same path..
+            if (this->_num_path == curve._num_path) {
+                // Never try to intersect a segment with itself
+                if (this->_num_segm == curve._num_segm) continue;
+                // Two subsequent segments (curves) in a path will have a common node; this node is not considered to be an intersection
+                if (this->_num_segm == curve._num_segm + 1 && (*i).ta == 0 && (*i).tb == 1) continue;
+                if (this->_num_segm + 1 == curve._num_segm && (*i).ta == 1 && (*i).tb == 0) continue;
+            }
+
             if (dist < best_dist) {
                 best_dist = dist;
                 best_p = p_ix;

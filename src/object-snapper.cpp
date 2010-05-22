@@ -441,6 +441,9 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
         }
     }
 
+    int num_path = 0;
+    int num_segm = 0;
+
     for (std::vector<Inkscape::SnapCandidatePath >::const_iterator it_p = _paths_to_snap_to->begin(); it_p != _paths_to_snap_to->end(); it_p++) {
         bool const being_edited = node_tool_active && (*it_p).currently_being_edited;
         //if true then this pathvector it_pv is currently being edited in the node tool
@@ -482,11 +485,13 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                 if (!being_edited || (c1 && c2)) {
                     Geom::Coord const dist = Geom::distance(sp_doc, p_doc);
                     if (dist < getSnapperTolerance()) {
-                        sc.curves.push_back(Inkscape::SnappedCurve(sp_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve, p.getSourceType(), p.getSourceNum(), it_p->target_type, it_p->target_bbox));
+                        sc.curves.push_back(Inkscape::SnappedCurve(sp_dt, num_path, num_segm, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve, p.getSourceType(), p.getSourceNum(), it_p->target_type, it_p->target_bbox));
                     }
                 }
             }
+            num_segm++;
         } // End of: for (Geom::PathVector::iterator ....)
+        num_path++;
     }
 }
 
