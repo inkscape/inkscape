@@ -21,6 +21,7 @@ from webslicer_effect import *
 import inkex
 import gettext
 import os.path
+import subprocess
 import tempfile
 import commands
 
@@ -45,7 +46,11 @@ class WebSlicer_Export(WebSlicer_Effect):
                                      dest="with_code",
                                      help="")
 
-    def effect(self):
+
+    svgNS = '{http://www.w3.org/2000/svg}'
+
+
+    def validate_inputs(self):
         # The user must supply a directory to export:
         if is_empty( self.options.dir ):
             inkex.errormsg(_('You must to give a directory to export the slices.'))
@@ -66,32 +71,69 @@ class WebSlicer_Export(WebSlicer_Effect):
             else:
                 inkex.errormsg(_('The directory "%s" does not exists.') % self.options.dir)
                 return
-        # Create HTML and CSS files, if the user wants:
-        if self.options.with_code:
-            try:
-                self.html = open(os.path.join(self.options.dir,'layout.html'), 'w')
-                self.css  = open(os.path.join(self.options.dir,'style.css'), 'w')
-                self.html.write('Only a test yet\n\n')
-                self.css.write('/* Only a test yet */\n\n')
-            except Exception as e:
-                inkex.errormsg( _('Can\'t create code files.') )
-                inkex.errormsg( _('Error: %s') % e )
-                return {'error':'Can\'t create code files.'}
+        self.unique_html_id( self.get_slicer_layer() )
+        return None
+
+
+    _html_ids = []
+    def unique_html_id(self, el):
+        for child in el.getchildren():
+            if child.tag in [ self.svgNS+'rect', self.svgNS+'path',
+                              self.svgNS+'circle', self.svgNS+'g' ]:
+                conf = self.get_el_conf(child)
+                if conf['html-id'] in self._html_ids:
+                    inkex.errormsg(
+                        _('You have more than one element with "%s" html-id.') %
+                        conf['html-id'] )
+                    n = 2
+                    while (conf['html-id']+"-"+str(n)) in self._html_ids: n += 1
+                    conf['html-id'] += "-"+str(n)
+                self._html_ids.append( conf['html-id'] )
+                self.save_conf( conf, child )
+                self.unique_html_id( child )
+
+
+    def effect(self):
+        error = self.validate_inputs()
+        if error: return error
+        # Register the basic CSS code:
+        self.reg_css( 'body', 'text-align', 'center' )
         # Create the temporary SVG with invisible Slicer layer to export image pieces
         self.create_the_temporary_svg()
         # Start what we really want!
         self.export_chids_of( self.get_slicer_layer() )
-        # Close the HTML and CSS files:
+        # Write the HTML and CSS files if asked for:
         if self.options.with_code:
-            self.html.close()
-            self.css.write( self.css_code() )
-            self.css.close()
+            self.make_html_file()
+            self.make_css_file()
         # Delete the temporary SVG with invisible Slicer layer
         self.delete_the_temporary_svg()
         #TODO: prevent inkex to return svg code to update Inkscape
 
 
-    svgNS = '{http://www.w3.org/2000/svg}'
+    def make_html_file(self):
+        f = open(os.path.join(self.options.dir,'layout.html'), 'w')
+        f.write(
+            '<html>\n<head>\n'                           +\
+            '  <title>Web Layout Testing</title>\n'      +\
+            '  <style type="text/css" media="screen">\n' +\
+            '    @import url("style.css")\n'             +\
+            '  </style>\n'                               +\
+            '</head>\n<body>\n'                          +\
+            self.html_code()                             +\
+            '</body>\n</html>' )
+        f.close()
+
+
+    def make_css_file(self):
+        f = open(os.path.join(self.options.dir,'style.css'), 'w')
+        f.write(
+            '/*\n'                                                    +\
+            '** This CSS code is not done to the web.\n'              +\
+            '** The automatic HTML and CSS code are only a helper.\n' +\
+            '*/\n'                                                    +\
+            self.css_code() )
+        f.close()
 
 
     def create_the_temporary_svg(self):
@@ -109,7 +151,7 @@ class WebSlicer_Export(WebSlicer_Effect):
 
     noid_element_count = 0
     def get_el_conf(self, el):
-        desc = el.find('{http://www.w3.org/2000/svg}desc')
+        desc = el.find(self.svgNS+'desc')
         conf = {}
         if desc is None:
             desc = inkex.etree.SubElement(el, 'desc')
@@ -129,6 +171,15 @@ class WebSlicer_Export(WebSlicer_Effect):
         return conf
 
 
+    def save_conf(self, conf, el):
+        desc = el.find('{http://www.w3.org/2000/svg}desc')
+        if desc is not None:
+            conf_a = []
+            for k in conf:
+                conf_a.append( k+' : '+conf[k] )
+            desc.text = "\n".join(conf_a)
+
+
     def export_chids_of(self, parent):
         parent_id = self.get_el_conf( parent )['html-id']
         for el in parent.getchildren():
@@ -145,37 +196,111 @@ class WebSlicer_Export(WebSlicer_Effect):
 
 
     def register_group_code(self, group, conf):
-        #inkex.errormsg( 'group CSS and HTML' )
-        self.html.write( '<div id="G">\n' )
-        for att in conf:
-            self.html.write( '  <!-- {att} : {val} -->\n'.format(att=att, val=conf[att]) )
+        self.reg_html('div', group)
+        selec = '#'+conf['html-id']
+        self.reg_css( selec, 'position', 'absolute' )
+        geometry = self.get_relative_el_geometry(group)
+        self.reg_css( selec, 'top', str(int(geometry['y']))+'px' )
+        self.reg_css( selec, 'left', str(int(geometry['x']))+'px' )
+        self.reg_css( selec, 'width', str(int(geometry['w']))+'px' )
+        self.reg_css( selec, 'height', str(int(geometry['h']))+'px' )
         self.export_chids_of( group )
-        self.html.write( '</div><!-- end id="G" -->\n' )
+
+
+    def __validate_slice_conf(self, conf):
+        if not 'layout-disposition' in conf:
+            conf['layout-disposition'] = 'bg-el-norepeat'
+        if not 'layout-position-anchor' in conf:
+            conf['layout-position-anchor'] = 'mc'
+        return conf
 
 
     def register_unity_code(self, el, conf, parent_id):
-        #inkex.errormsg( 'unity CSS and HTML' )
+        conf = self.__validate_slice_conf(conf)
         css_selector = '#'+conf['html-id']
-        if not 'layout-disposition' in conf:
-            conf['layout-disposition'] = 'bg-el-norepeat'
-        if conf['layout-disposition'][0:9] == 'bg-parent':
-            if parent_id == '#body#':
-                css_selector = 'body'
-            else:
-                css_selector = '#'+parent_id
-            for att in conf:
-                self.html.write( '<!-- bg {att} : {val} -->\n'.format(att=att, val=conf[att]) )
-        else:
-            self.html.write( '<div id="image">\n' )
-            for att in conf:
-                self.html.write( '  <!-- {att} : {val} -->\n'.format(att=att, val=conf[att]) )
-            self.html.write( '</div><!-- end id="image" -->\n' )
-        self.reg_css( css_selector, 'background',
-                      'url("%s")' % self.img_name(el, conf) )
+        bg_repeat = 'no-repeat'
+        img_name = self.img_name(el, conf)
+        if conf['layout-disposition'][0:2] == 'bg':
+            if conf['layout-disposition'][0:9] == 'bg-parent':
+                if parent_id == '#body#':
+                    css_selector = 'body'
+                else:
+                    css_selector = '#'+parent_id
+                if conf['layout-disposition'] == 'bg-parent-repeat':
+                    bg_repeat = 'repeat'
+                if conf['layout-disposition'] == 'bg-parent-repeat-x':
+                    bg_repeat = 'repeat-x'
+                if conf['layout-disposition'] == 'bg-parent-repeat-y':
+                    bg_repeat = 'repeat-y'
+                lay_anchor = conf['layout-position-anchor']
+                if lay_anchor == 'tl': lay_anchor = 'top left'
+                if lay_anchor == 'tc': lay_anchor = 'top center'
+                if lay_anchor == 'tr': lay_anchor = 'top right'
+                if lay_anchor == 'ml': lay_anchor = 'middle left'
+                if lay_anchor == 'mc': lay_anchor = 'middle center'
+                if lay_anchor == 'mr': lay_anchor = 'middle right'
+                if lay_anchor == 'bl': lay_anchor = 'bottom left'
+                if lay_anchor == 'bc': lay_anchor = 'bottom center'
+                if lay_anchor == 'br': lay_anchor = 'bottom right'
+                self.reg_css( css_selector, 'background',
+                              'url("%s") %s %s' % (img_name, bg_repeat, lay_anchor) )
+            else: # conf['layout-disposition'][0:9] == 'bg-el...'
+                self.reg_html('div', el)
+                self.reg_css( css_selector, 'background',
+                              'url("%s") %s' % (img_name, 'no-repeat') )
+                self.reg_css( css_selector, 'position', 'absolute' )
+                geo = self.get_relative_el_geometry(el,True)
+                self.reg_css( css_selector, 'top', geo['y'] )
+                self.reg_css( css_selector, 'left', geo['x'] )
+                self.reg_css( css_selector, 'width', geo['w'] )
+                self.reg_css( css_selector, 'height', geo['h'] )
+        else: # conf['layout-disposition'] == 'img...'
+                self.reg_html('img', el)
+                if conf['layout-disposition'] == 'img-pos':
+                    self.reg_css( css_selector, 'position', 'absolute' )
+                    geo = self.get_relative_el_geometry(el)
+                    self.reg_css( css_selector, 'left', str(geo['x'])+'px' )
+                    self.reg_css( css_selector, 'top', str(geo['y'])+'px' )
+                if conf['layout-disposition'] == 'img-float-left':
+                    self.reg_css( css_selector, 'float', 'right' )
+                if conf['layout-disposition'] == 'img-float-right':
+                    self.reg_css( css_selector, 'float', 'right' )
+
+
+    el_geo = { }
+    def register_all_els_geometry(self):
+        ink_cmm = 'inkscape --query-all '+self.tmp_svg
+        (status, output) = commands.getstatusoutput( ink_cmm )
+        self.el_geo = { }
+        if status == 0:
+            for el in output.split('\n'):
+                el = el.split(',')
+                if len(el) == 5:
+                    self.el_geo[el[0]] = { 'x':float(el[1]), 'y':float(el[2]),
+                                           'w':float(el[3]), 'h':float(el[4]) }
+        doc_w = inkex.unittouu( self.document.getroot().get('width') )
+        doc_h = inkex.unittouu( self.document.getroot().get('height') )
+        self.el_geo['webslicer-layer'] = { 'x':0, 'y':0, 'w':doc_w, 'h':doc_h }
+
+
+    def get_relative_el_geometry(self, el, value_to_css=False):
+        # This method return a dictionary with x, y, w and h keys.
+        # All values are float, if value_to_css is False, otherwise
+        # that is a string ended with "px". The x and y values are
+        # relative to parent position.
+        if not self.el_geo: self.register_all_els_geometry()
+        parent = self.getParentNode(el)
+        geometry = self.el_geo[el.attrib['id']]
+        geometry['x'] -= self.el_geo[parent.attrib['id']]['x']
+        geometry['y'] -= self.el_geo[parent.attrib['id']]['y']
+        if value_to_css:
+            for k in geometry: geometry[k] = str(int(geometry[k]))+'px'
+        return geometry
 
 
     def img_name(self, el, conf):
         return el.attrib['id']+'.png'
+
 
     def export_img(self, el, conf):
         (status, output) = commands.getstatusoutput(
@@ -189,20 +314,64 @@ class WebSlicer_Export(WebSlicer_Effect):
         #inkex.errormsg( output )
 
 
-    _css = {}
+    _html = {}
+    def reg_html(self, el_tag, el):
+        parent = self.getParentNode( el )
+        parent_id = self.get_el_conf( parent )['html-id']
+        if parent == self.get_slicer_layer(): parent_id = 'body'
+        el_id = self.get_el_conf( el )['html-id']
+        if not parent_id in self._html: self._html[parent_id] = []
+        self._html[parent_id].append({ 'tag':el_tag, 'id':el_id })
+
+
+    def html_code(self, parent='body', ident='  '):
+        #inkex.errormsg( self._html )
+        if not parent in self._html: return ''
+        code = ''
+        for el in self._html[parent]:
+            child_code = self.html_code(el['id'], ident+'  ')
+            if el['tag'] == 'img':
+                code += ident+'<img id="'+el['id']+'"'+\
+                        ' src="'+self.img_name(el, self.get_el_conf(el))+'"/>\n'
+            else:
+                code += ident+'<'+el['tag']+' id="'+el['id']+'">\n'
+                if child_code:
+                    code += child_code
+                else:
+                    code += ident+'  Element '+el['id']+'\n'
+                code += ident+'</'+el['tag']+'><!-- id="'+el['id']+'" -->\n'
+        return code
+
+
+    _css = []
     def reg_css(self, selector, att, val):
-        if not selector in self._css: self._css[selector] = {}
-        if not att in self._css[selector]: self._css[selector][att] = []
-        self._css[selector][att].append( val )
+        pos = i = -1
+        for s in self._css:
+            i += 1
+            if s['selector'] == selector: pos = i
+        if pos == -1:
+            pos = i + 1
+            self._css.append({ 'selector':selector, 'atts':{} })
+        if not att in self._css[pos]['atts']: self._css[pos]['atts'][att] = []
+        self._css[pos]['atts'][att].append( val )
+
 
     def css_code(self):
         code = ''
-        for selector in self._css:
-            code += '\n'+selector+' {\n'
-            for att in self._css[selector]:
-                code += '  '+ att +': '+ (', '.join(self._css[selector][att])) +';\n'
+        for s in self._css:
+            code += '\n'+s['selector']+' {\n'
+            for att in s['atts']:
+                val = s['atts'][att]
+                if att == 'background' and len(val) > 1:
+                    code += '  /* the next attribute needs a CSS3 enabled browser */\n'
+                code += '  '+ att +': '+ (', '.join(val)) +';\n'
             code += '}\n'
         return code
+
+
+    def output(self):
+        # Cancel document serialization to stdout
+        pass
 
 
 if __name__ == '__main__':
