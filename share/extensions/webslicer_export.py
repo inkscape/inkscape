@@ -93,7 +93,13 @@ class WebSlicer_Export(WebSlicer_Effect):
                 self.unique_html_id( child )
 
 
+    def test_if_has_imagemagick(self):
+        (status, output) = commands.getstatusoutput('convert --version')
+        self.has_magick = ( status == 0 and 'ImageMagick' in output )
+
+
     def effect(self):
+        self.test_if_has_imagemagick()
         error = self.validate_inputs()
         if error: return error
         # Register the basic CSS code:
@@ -114,14 +120,17 @@ class WebSlicer_Export(WebSlicer_Effect):
     def make_html_file(self):
         f = open(os.path.join(self.options.dir,'layout.html'), 'w')
         f.write(
-            '<html>\n<head>\n'                           +\
-            '  <title>Web Layout Testing</title>\n'      +\
-            '  <style type="text/css" media="screen">\n' +\
-            '    @import url("style.css")\n'             +\
-            '  </style>\n'                               +\
-            '</head>\n<body>\n'                          +\
-            self.html_code()                             +\
-            '</body>\n</html>' )
+            '<html>\n<head>\n'                                     +\
+            '  <title>Web Layout Testing</title>\n'                +\
+            '  <style type="text/css" media="screen">\n'           +\
+            '    @import url("style.css")\n'                       +\
+            '  </style>\n'                                         +\
+            '</head>\n<body>\n'                                    +\
+            self.html_code()                                       +\
+            '  <p style="position:absolute; bottom:10px">\n'       +\
+            '  This HTML code is not done to the web. <br/>\n'     +\
+            '  The automatic HTML and CSS code are only a helper.' +\
+            '</p>\n</body>\n</html>' )
         f.close()
 
 
@@ -299,19 +308,45 @@ class WebSlicer_Export(WebSlicer_Effect):
 
 
     def img_name(self, el, conf):
-        return el.attrib['id']+'.png'
+        return el.attrib['id']+'.'+conf['format']
 
 
     def export_img(self, el, conf):
+        if not self.has_magick:
+            inkex.errormsg(_('You must install the ImageMagick to get JPG and GIF.'))
+            conf['format'] = 'png'
+        img_name = os.path.join( self.options.dir, self.img_name(el, conf) )
+        img_name_png = img_name
+        if conf['format'] != 'png':
+            img_name_png = img_name+'.png'
+        opts = ''
+        if 'bg-color' in conf: opts += ' -b "'+conf['bg-color']+'" -y 1'
+        if 'dpi' in conf: opts += ' -d '+conf['dpi']
+        if 'dimension' in conf:
+            dim = conf['dimension'].split('x')
+            opts += ' -w '+dim[0]+' -h '+dim[1]
         (status, output) = commands.getstatusoutput(
-            "inkscape -i '%s' -e '%s' '%s'" % (
-                el.attrib['id'],
-                os.path.join( self.options.dir, self.img_name(el, conf) ),
-                self.tmp_svg
+            'inkscape %s -i "%s" -e "%s" "%s"' % (
+                opts, el.attrib['id'], img_name_png, self.tmp_svg
             )
         )
-        #inkex.errormsg( status )
-        #inkex.errormsg( output )
+        if conf['format'] != 'png':
+            opts = ''
+            if conf['format'] == 'jpg':
+                opts += ' -quality '+str(conf['quality'])
+            if conf['format'] == 'gif':
+                if conf['gif-type'] == 'grayscale':
+                    opts += ' -type Grayscale'
+                else:
+                    opts += ' -type Palette'
+                if conf['palette-size'] < 256:
+                    opts += ' -colors '+str(conf['palette-size'])
+            (status, output) = commands.getstatusoutput(
+                'convert "%s" %s "%s"' % ( img_name_png, opts, img_name )
+            )
+            if status != 0:
+                inkex.errormsg('Upss... ImageMagick error: '+output)
+            os.remove(img_name_png)
 
 
     _html = {}
@@ -319,9 +354,14 @@ class WebSlicer_Export(WebSlicer_Effect):
         parent = self.getParentNode( el )
         parent_id = self.get_el_conf( parent )['html-id']
         if parent == self.get_slicer_layer(): parent_id = 'body'
-        el_id = self.get_el_conf( el )['html-id']
+        conf = self.get_el_conf( el )
+        el_id = conf['html-id']
+        if 'html-class' in conf:
+          el_class = conf['html-class']
+        else:
+          el_class = ''
         if not parent_id in self._html: self._html[parent_id] = []
-        self._html[parent_id].append({ 'tag':el_tag, 'id':el_id })
+        self._html[parent_id].append({ 'tag':el_tag, 'id':el_id, 'class':el_class })
 
 
     def html_code(self, parent='body', ident='  '):
@@ -330,11 +370,13 @@ class WebSlicer_Export(WebSlicer_Effect):
         code = ''
         for el in self._html[parent]:
             child_code = self.html_code(el['id'], ident+'  ')
+            tag_class = ''
+            if el['class'] != '': tag_class = ' class="'+el['class']+'"'
             if el['tag'] == 'img':
-                code += ident+'<img id="'+el['id']+'"'+\
+                code += ident+'<img id="'+el['id']+'"'+tag_class+\
                         ' src="'+self.img_name(el, self.get_el_conf(el))+'"/>\n'
             else:
-                code += ident+'<'+el['tag']+' id="'+el['id']+'">\n'
+                code += ident+'<'+el['tag']+' id="'+el['id']+'"'+tag_class+'>\n'
                 if child_code:
                     code += child_code
                 else:
