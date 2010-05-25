@@ -109,7 +109,6 @@
 [type: gettext/xml] share/extensions/text_lowercase.inx
 [type: gettext/xml] share/extensions/text_randomcase.inx
 [type: gettext/xml] share/extensions/text_replace.inx
-[type: gettext/xml] share/extensions/text_sentencecase.inx
 [type: gettext/xml] share/extensions/text_titlecase.inx
 [type: gettext/xml] share/extensions/text_uppercase.inx
 [type: gettext/xml] share/extensions/triangle.inx
@@ -326,10 +325,12 @@ src/sp-line.cpp
 src/sp-lpe-item.cpp
 src/sp-namedview.cpp
 src/sp-offset.cpp
+src/sp-path.cpp
 src/sp-polygon.cpp
 src/sp-polyline.cpp
 src/sp-rect.cpp
 src/sp-spiral.cpp
+src/sp-star.cpp
 src/sp-text.cpp
 src/sp-tref.cpp
 src/sp-tspan.cpp

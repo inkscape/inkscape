@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-24 11:08+0200\n"
+"POT-Creation-Date: 2010-05-25 23:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1545,12 +1545,12 @@ msgstr ""
 #: ../share/extensions/text_lowercase.inx.h:1
 #: ../share/extensions/text_randomcase.inx.h:1
 #: ../share/extensions/text_replace.inx.h:4
-#: ../share/extensions/text_sentencecase.inx.h:2
 #: ../share/extensions/text_titlecase.inx.h:1
 #: ../share/extensions/text_uppercase.inx.h:1 ../src/dialogs/text-edit.cpp:375
 #: ../src/selection-describer.cpp:69
 #: ../src/ui/dialog/inkscape-preferences.cpp:547 ../src/verbs.cpp:2477
 #: ../share/extensions/render_barcode_datamatrix.inx.h:6
+#: ../share/extensions/text_sentencecase.inx.h:2
 msgid "Text"
 msgstr ""
 
@@ -2755,10 +2755,6 @@ msgstr ""
 
 #: ../share/extensions/text_replace.inx.h:3
 msgid "Replace:"
-msgstr ""
-
-#: ../share/extensions/text_sentencecase.inx.h:1
-msgid "Sentence case"
 msgstr ""
 
 #: ../share/extensions/text_titlecase.inx.h:2
@@ -12698,6 +12694,20 @@ msgstr ""
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr ""
 
+#: ../src/sp-path.cpp:156
+#, c-format
+msgid "<b>Path</b> (%i node, path effect: %s)"
+msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/sp-path.cpp:159
+#, c-format
+msgid "<b>Path</b> (%i node)"
+msgid_plural "<b>Path</b> (%i nodes)"
+msgstr[0] ""
+msgstr[1] ""
+
 #: ../src/sp-polygon.cpp:226
 msgid "<b>Polygon</b>"
 msgstr ""
@@ -12716,6 +12726,20 @@ msgstr ""
 #, c-format
 msgid "<b>Spiral</b> with %3f turns"
 msgstr ""
+
+#: ../src/sp-star.cpp:309
+#, c-format
+msgid "<b>Star</b> with %d vertex"
+msgid_plural "<b>Star</b> with %d vertices"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/sp-star.cpp:313
+#, c-format
+msgid "<b>Polygon</b> with %d vertex"
+msgid_plural "<b>Polygon</b> with %d vertices"
+msgstr[0] ""
+msgstr[1] ""
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:419
@@ -24464,6 +24488,10 @@ msgstr ""
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:5
 msgid "Square Size / px"
+msgstr ""
+
+#: ../share/extensions/text_sentencecase.inx.h:1
+msgid "Sentence case"
 msgstr ""
 
 #: ../share/extensions/wireframe_sphere.inx.h:1
