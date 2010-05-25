@@ -160,15 +160,37 @@ ENTRY: while(<>) {
 	    next ENTRY;
 	}
 
-	s/"\n"//g;
+	# Concatenate multi-line string literals.
+	s/"\n\s*"//g;
 
-	if (!m{\A${com}*msgid[^\n]*\n${com}*msgstr[^\n]*\n${com}*\Z} &&
-	    !m{\A${com}*msgid[^\n]*\n${com}*msgid_plural[^\n]*\n${com}*(msgstr\[[^\n]*\n${com}*)+\Z}) {
+	if (!m{\A${com}*
+	       (?:msgctxt[^\n]*\n)?
+	       msgid[^\n]*\n
+	       ${com}*
+	       (?:
+	           msgstr[^\n]*\n
+		   ${com}*
+	         | msgid_plural[^\n]*\n
+		   ${com}*
+		   (?:msgstr\[[^\n]*\n${com}*)+
+	        )\Z}x)
+	{
 	    po_error('Not in msg format');
 	    next ENTRY;
 	}
-	if (!m{\A${com}*msgid ${str}\s*\n${com}*msgstr ${str}\s*\n${com}*\Z} &&
-	       !m{\A${com}*msgid ${str}\s*\n${com}*msgid_plural ${str}\s*\n${com}*(msgstr\[\d+\] ${str}\s*\n${com}*)+\Z}) {
+	if (!m{
+		\A${com}*
+	        (?:msgctxt\ ${str}\s*\n)?
+		msgid\ ${str}\s*\n
+		${com}*
+		(?:
+		    msgstr\ ${str}\s*\n
+		    ${com}*
+		  | msgid_plural\ ${str}\s*\n
+		    ${com}*
+		    (?:msgstr\[\d+\]\ ${str}\s*\n${com}*)+
+		)\Z}x)
+	{
 	    po_error('Mismatched quotes');
 	    next ENTRY;
 	}
@@ -192,14 +214,26 @@ ENTRY: while(<>) {
 	}
 
 
-	if (m{\A${com}*msgid\ (${str})\n
-	      ${com}*msgstr\ (${str})\n
-	      ${com}*\Z}x) {
+	if (m{\A
+	        ${com}*
+	        (?:msgctxt\ ${str}\s*\n)?
+	        msgid\ (${str})\n
+	        ${com}*
+	        msgstr\ (${str})\n
+	        ${com}*
+	      \Z}x)
+	{
 	    check_strs($is_pango_format, $1, $2) or next ENTRY;
 	}
-	elsif (m{\A${com}*msgid\ (${str})\n
-		 ${com}*msgid_plural\ (${str})\n
-		 ((?:${com}*msgstr\[\d+\]\ ${str}\n${com}*)+)\Z}x) {
+	elsif (m{\A
+	           ${com}*
+	           (?:msgctxt\ ${str}\s*\n)?
+		   msgid\ (${str})\n
+		   ${com}*
+		   msgid_plural\ (${str})\n
+		   ((?:${com}*msgstr\[\d+\]\ ${str}\n${com}*)+)
+		 \Z}x)
+	{
 	    my ($s1, $s2, $rest) = ($1, $2, $3);
 	    my @strs = ($s1, $s2);
 	    while ($rest =~ s/\A${com}*msgstr\[\d+\]\ (${str})\n${com}*//) {
