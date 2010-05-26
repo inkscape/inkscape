@@ -744,12 +744,12 @@
     <copy todir="${dist}" file="${devlibs}/perl/bin/perl58.dll"/>
 
     <!-- PYTHON -->
-    <copy todir="${dist}" file="${devlibs}/python/python25.dll"/>
+    <copy todir="${dist}" file="${devlibs}/python/python26.dll"/>
     <copy todir="${dist}/python" file="${devlibs}/python/python.exe" />
     <copy todir="${dist}/python" file="${devlibs}/python/pythonw.exe"/>
     <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/Lib"/> </copy>
     <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/DLLs"/> </copy>
-    <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/Scripts"/> </copy>
+    <!-- <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/Scripts"/> </copy> -->
 
     <!--<copy file="${devlibs}/share/themes/MS-Windows/gtk-2.0/gtkrc" todir="${dist}/etc/gtk-2.0"/>-->
     <makefile file="${dist}/etc/gtk-2.0/gtkrc">
