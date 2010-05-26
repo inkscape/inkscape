@@ -810,6 +810,7 @@ bool sp_lpe_item_fork_path_effects_if_necessary(SPLPEItem *lpeitem, unsigned int
         // so that each object has its own independent copy of the effect.
         // Forking messes up the path effect list, so after each fork,
         // reload the list and recheck if more forking is required.
+        int maxloops = 20;
         do {
             forked = false;
             PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);
@@ -825,7 +826,7 @@ bool sp_lpe_item_fork_path_effects_if_necessary(SPLPEItem *lpeitem, unsigned int
                     }
                 }
             }
-        } while (forked);
+        } while (forked && (maxloops-- > 1));
     }
 
     return forked;
