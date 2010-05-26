@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-21 15:05+0200\n"
-"PO-Revision-Date: 2010-05-21 15:13+0100\n"
+"POT-Creation-Date: 2010-05-26 22:13+0200\n"
+"PO-Revision-Date: 2010-05-26 22:26+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -815,7 +815,7 @@ msgstr "Générer à partir du chemin"
 #: ../share/extensions/extrude.inx.h:3
 #: ../share/extensions/split.inx.h:2
 msgid "Lines"
-msgstr "Ligne"
+msgstr "Lignes"
 
 #: ../share/extensions/extrude.inx.h:4
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2171
@@ -827,7 +827,7 @@ msgstr "Mode :"
 
 #: ../share/extensions/extrude.inx.h:5
 msgid "Polygons"
-msgstr "Polygone"
+msgstr "Polygones"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -1489,7 +1489,7 @@ msgstr "Autre type d'attribut"
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 #: ../src/live_effects/lpe-sketch.cpp:55
 #: ../src/selection-chemistry.cpp:1657
-#: ../src/seltrans.cpp:531
+#: ../src/seltrans.cpp:527
 #: ../src/ui/dialog/transformation.cpp:738
 msgid "Scale"
 msgstr "Échelle"
@@ -1633,7 +1633,6 @@ msgstr "Phrases par paragrahe"
 #: ../share/extensions/text_lowercase.inx.h:1
 #: ../share/extensions/text_randomcase.inx.h:1
 #: ../share/extensions/text_replace.inx.h:4
-#: ../share/extensions/text_sentencecase.inx.h:2
 #: ../share/extensions/text_titlecase.inx.h:1
 #: ../share/extensions/text_uppercase.inx.h:1
 #: ../src/dialogs/text-edit.cpp:375
@@ -1641,6 +1640,7 @@ msgstr "Phrases par paragrahe"
 #: ../src/ui/dialog/inkscape-preferences.cpp:547
 #: ../src/verbs.cpp:2477
 #: ../share/extensions/render_barcode_datamatrix.inx.h:6
+#: ../share/extensions/text_sentencecase.inx.h:2
 msgid "Text"
 msgstr "Texte"
 
@@ -2622,7 +2622,7 @@ msgstr "r - Rayon de l'engrenage (px)"
 
 #: ../share/extensions/split.inx.h:1
 msgid "Letters"
-msgstr "Lettre"
+msgstr "Lettres"
 
 #: ../share/extensions/split.inx.h:3
 msgid "Preserve original text?"
@@ -2850,10 +2850,6 @@ msgstr "Remplace le texte"
 #: ../share/extensions/text_replace.inx.h:3
 msgid "Replace:"
 msgstr "Remplacer :"
-
-#: ../share/extensions/text_sentencecase.inx.h:1
-msgid "Sentence case"
-msgstr "Casse des phrases"
 
 #: ../share/extensions/text_titlecase.inx.h:2
 msgid "Title Case"
@@ -9379,7 +9375,7 @@ msgstr "<b>Trop de contraction</b>, le résultat est vide."
 #, c-format
 msgid "Area filled, path with <b>%d</b> node created and unioned with selection."
 msgid_plural "Area filled, path with <b>%d</b> nodes created and unioned with selection."
-msgstr[0] "Zone remplie, création d'un chemin de <b>%d</b> noeud, ajouté à la sélection."
+msgstr[0] "Zone remplie, création d'un chemin de <b>%d</b> nœud, ajouté à la sélection."
 msgstr[1] "Zone remplie, création d'un chemin de <b>%d</b> noeuds, ajouté à la sélection."
 
 #: ../src/flood-context.cpp:513
@@ -12246,7 +12242,7 @@ msgid "Rotate 90&#176; CW"
 msgstr "Tourner de 90&#176; dans le sens horaire"
 
 #: ../src/selection-chemistry.cpp:1580
-#: ../src/seltrans.cpp:534
+#: ../src/seltrans.cpp:530
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Tourner"
@@ -12269,7 +12265,7 @@ msgstr "Déplacer horizontalement"
 
 #: ../src/selection-chemistry.cpp:1703
 #: ../src/selection-chemistry.cpp:1729
-#: ../src/seltrans.cpp:528
+#: ../src/seltrans.cpp:524
 #: ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Déplacer"
@@ -12609,72 +12605,72 @@ msgstr[1] "<b>%i</b> objets de <b>%i</b> types"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:537
+#: ../src/seltrans.cpp:533
 #: ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "Incliner"
 
-#: ../src/seltrans.cpp:549
+#: ../src/seltrans.cpp:545
 msgid "Set center"
 msgstr "Définir le centre"
 
-#: ../src/seltrans.cpp:624
+#: ../src/seltrans.cpp:620
 msgid "Stamp"
 msgstr "Tamponner"
 
-#: ../src/seltrans.cpp:646
+#: ../src/seltrans.cpp:642
 msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
 msgstr "<b>Centre</b> de rotation/inclinaison : cliquer-déplacer pour le déplacer; redimensionner avec <b>Maj</b> utilise aussi ce centre"
 
-#: ../src/seltrans.cpp:673
+#: ../src/seltrans.cpp:669
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr "<b>Agrandir ou rétrécir</b> la sélection; <b>Ctrl</b> pour redimensionner uniformément; <b>Maj</b> pour redimensionner autour du centre de rotation"
+msgstr "<b>Agrandir ou rétrécir</b> la sélection ; <b>Ctrl</b> pour redimensionner uniformément; <b>Maj</b> pour redimensionner autour du centre de rotation"
+
+#: ../src/seltrans.cpp:670
+msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
+msgstr "<b>Redimensionner</b> la sélection ; <b>Ctrl</b> pour redimensionner uniformément autour du centre de rotation"
 
 #: ../src/seltrans.cpp:674
-msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr "<b>Redimensionner</b> la sélection; <b>Ctrl</b> pour redimensionner uniformément autour du centre de rotation"
-
-#: ../src/seltrans.cpp:678
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
-msgstr "<b>Incliner</b> la sélection; <b>Ctrl</b> pour incliner par incréments; <b>Maj</b> pour incliner autour du coin opposé"
+msgstr "<b>Incliner</b> la sélection ; <b>Ctrl</b> pour incliner par incréments ; <b>Maj</b> pour incliner autour du coin opposé"
 
-#: ../src/seltrans.cpp:679
+#: ../src/seltrans.cpp:675
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
-msgstr "<b>Tourner</b> la sélection; <b>Ctrl</b> pour tourner par incréments; <b>Maj</b> pour tourner autour du coin opposé"
+msgstr "<b>Tourner</b> la sélection ; <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour tourner autour du coin opposé"
 
-#: ../src/seltrans.cpp:813
+#: ../src/seltrans.cpp:809
 msgid "Reset center"
 msgstr "Rétablir le centre"
 
-#: ../src/seltrans.cpp:1046
-#: ../src/seltrans.cpp:1141
+#: ../src/seltrans.cpp:1042
+#: ../src/seltrans.cpp:1137
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
-msgstr "<b>Redimensionnement</b> : %0.2f%% x %0.2f%%; <b>Ctrl</b> pour préserver le ratio"
+msgstr "<b>Redimensionnement</b> : %0.2f%% x %0.2f%% ; <b>Ctrl</b> pour préserver le ratio"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1253
+#: ../src/seltrans.cpp:1249
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Inclinaison</b> : %0.2f&#176;; <b>Ctrl</b> pour incliner par incréments"
+msgstr "<b>Inclinaison</b> : %0.2f&#176; ; <b>Ctrl</b> pour incliner par incréments"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1313
+#: ../src/seltrans.cpp:1309
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Rotation</b> : %0.2f&#176;; <b>Ctrl</b> pour tourner par incréments"
+msgstr "<b>Rotation</b> : %0.2f&#176; ; <b>Ctrl</b> pour tourner par incréments"
 
-#: ../src/seltrans.cpp:1355
+#: ../src/seltrans.cpp:1351
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Déplacer le <b>centre</b> en %s, %s"
 
-#: ../src/seltrans.cpp:1528
+#: ../src/seltrans.cpp:1524
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
-msgstr "<b>Déplacer</b> de %s, %s; <b>Ctrl</b> restreindre à l'horizontale/verticale; <b>Maj</b> désactiver le magnétisme"
+msgstr "<b>Déplacer</b> de %s, %s ; <b>Ctrl</b> restreindre à l'horizontale/verticale; <b>Maj</b> désactiver le magnétisme"
 
 #: ../src/sp-anchor.cpp:178
 #, c-format
@@ -12815,6 +12811,20 @@ msgstr "contracté"
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Offset dynamique</b>, %s de %f pt"
 
+#: ../src/sp-path.cpp:156
+#, c-format
+msgid "<b>Path</b> (%i node, path effect: %s)"
+msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
+msgstr[0] "<b>Chemin</b> (%i nœud, effet de chemin : %s)"
+msgstr[1] "<b>Chemin</b> (%i nœuds, effet de chemin : %s)"
+
+#: ../src/sp-path.cpp:159
+#, c-format
+msgid "<b>Path</b> (%i node)"
+msgid_plural "<b>Path</b> (%i nodes)"
+msgstr[0] "<b>Chemin</b> (%i nœud)"
+msgstr[1] "<b>Chemin</b> (%i nœuds)"
+
 #: ../src/sp-polygon.cpp:226
 msgid "<b>Polygon</b>"
 msgstr "<b>Polygone</b>"
@@ -12833,6 +12843,20 @@ msgstr "<b>Rectangle</b>"
 #, c-format
 msgid "<b>Spiral</b> with %3f turns"
 msgstr "<b>Spirale</b> à %3f tours"
+
+#: ../src/sp-star.cpp:309
+#, c-format
+msgid "<b>Star</b> with %d vertex"
+msgid_plural "<b>Star</b> with %d vertices"
+msgstr[0] "<b>Étoile</b> à %d branche"
+msgstr[1] "<b>Étoile</b> à %d branches"
+
+#: ../src/sp-star.cpp:313
+#, c-format
+msgid "<b>Polygon</b> with %d vertex"
+msgid_plural "<b>Polygon</b> with %d vertices"
+msgstr[0] "<b>Polygone</b> à %d sommet"
+msgstr[1] "<b>Polygone</b> à %d sommets"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:419
@@ -12892,7 +12916,7 @@ msgstr "<b>Alt</b> : verrouiller le rayon de la spirale"
 #: ../src/spiral-context.cpp:458
 #, c-format
 msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Spirale</b> : rayon %s, angle %5g&#176;; avec <b>Ctrl</b> pour tourner par incréments"
+msgstr "<b>Spirale</b> : rayon %s, angle %5g&#176; ; avec <b>Ctrl</b> pour tourner par incréments"
 
 #: ../src/spiral-context.cpp:484
 msgid "Create spiral"
@@ -13064,12 +13088,12 @@ msgstr "<b>Ctrl</b> pour tourner par incréments; forcer la radialité des branc
 #: ../src/star-context.cpp:469
 #, c-format
 msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Polygone</b> : rayon %s, angle %5g&#176;; <b>Ctrl</b> pour tourner par incréments"
+msgstr "<b>Polygone</b> : rayon %s, angle %5g&#176; ; <b>Ctrl</b> pour tourner par incréments"
 
 #: ../src/star-context.cpp:470
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Étoile</b> : rayon %s, angle %5g&#176;; <b>Ctrl</b> pour tourner/incliner par incréments"
+msgstr "<b>Étoile</b> : rayon %s, angle %5g&#176; ; <b>Ctrl</b> pour tourner/incliner par incréments"
 
 #: ../src/star-context.cpp:503
 msgid "Create star"
@@ -13681,7 +13705,7 @@ msgstr "_Licence"
 #. should be in UTF-*8..
 #: ../src/ui/dialog/aboutbox.cpp:149
 msgid "about.svg"
-msgstr "about.fr.svg"
+msgstr "about.svg"
 
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of: name surname (email). Use \n for newline.
@@ -15892,7 +15916,7 @@ msgstr "La molette de la souris zoome par défaut"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:218
 msgid "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when off, it zooms with Ctrl and scrolls without Ctrl"
-msgstr "Si coché, la molette de la souris zoome sans la touche Ctrl et fait défiler la zone de travail avec Ctr l; si décoché, elle zoome avec Ctrl et fait défiler sans Ctrl."
+msgstr "Si coché, la molette de la souris zoome sans la touche Ctrl et fait défiler la zone de travail avec Ctrl ; si décoché, elle zoome avec Ctrl et fait défiler sans Ctrl."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:224
 msgid "Enable snap indicator"
@@ -16704,7 +16728,7 @@ msgstr "Qualité médiocre (le plus rapide)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:744
 msgid "Gaussian blur quality for display:"
-msgstr "Qualidé d'affichage du flou gaussien :"
+msgstr "Qualité d'affichage du flou gaussien :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:746
 #: ../src/ui/dialog/inkscape-preferences.cpp:770
@@ -18662,6 +18686,26 @@ msgstr "Déplacer la courbe"
 msgid "Add node"
 msgstr "Ajouter un nœud"
 
+#: ../src/ui/tool/curve-drag-point.cpp:167
+msgctxt "Path segment tip"
+msgid "<b>Shift</b>: click to toggle segment selection"
+msgstr "<b>Maj</b> : cliquer pour inverser l'état de sélection"
+
+#: ../src/ui/tool/curve-drag-point.cpp:171
+msgctxt "Path segment tip"
+msgid "<b>Ctrl+Alt</b>: click to insert a node"
+msgstr "<b>Ctrl+Alt</b> : cliquer pour insérer un nœud"
+
+#: ../src/ui/tool/curve-drag-point.cpp:175
+msgctxt "Path segment tip"
+msgid "<b>Linear segment</b>: drag to convert to a Bezier segment, doubleclick to insert node, click to select (more: Shift, Ctrl+Alt)"
+msgstr "<b>Segment linéaire</b> : cliquer-déplacer pour convertir en segment de Bézier, double-cliquer pour insérer un nœud, cliquer pour sélectionner (modificateurs : Maj, Ctrl+Alt)"
+
+#: ../src/ui/tool/curve-drag-point.cpp:179
+msgctxt "Path segment tip"
+msgid "<b>Bezier segment</b>: drag to shape the segment, doubleclick to insert node, click to select (more: Shift, Ctrl+Alt)"
+msgstr "<b>Segment de Bézier</b> : cliquer-déplacer pour modeler le segment, double-cliquer pour insérer un nœud, cliquer pour sélectionner (modificateurs : Maj, Ctrl+Alt)"
+
 #: ../src/ui/tool/multi-path-manipulator.cpp:227
 msgid "Change node type"
 msgstr "Modifier le type de nœud"
@@ -18734,6 +18778,48 @@ msgstr "Retourner les nœuds horizontalement"
 msgid "Flip nodes vertically"
 msgstr "Retourner les nœud verticalement"
 
+#: ../src/ui/tool/node-tool.cpp:537
+msgctxt "Node tool tip"
+msgid "<b>Shift</b>: drag to add nodes to the selection, click to toggle object selection"
+msgstr "<b>Maj :</b> cliquer-déplacer pour ajouter des nœuds à la sélection, cliquer pour inverser l'état de sélection de l'objet"
+
+#: ../src/ui/tool/node-tool.cpp:541
+msgctxt "Node tool tip"
+msgid "<b>Shift</b>: drag to add nodes to the selection"
+msgstr "<b>Maj</b> : cliquer-déplacer pour ajouter des nœuds à la sélection"
+
+#: ../src/ui/tool/node-tool.cpp:551
+#, c-format
+msgctxt "Node tool tip"
+msgid "<b>%u of %u nodes</b> selected. Drag to select nodes, click to edit only this object (more: Shift)"
+msgstr "<b>%u sur %u nœuds</b> sélectionnés. Cliquer-glisser pour sélectionner des nœuds, cliquer pour éditer seulement cet objet (modificateur : Maj)"
+
+#: ../src/ui/tool/node-tool.cpp:557
+#, c-format
+msgctxt "Node tool tip"
+msgid "<b>%u of %u nodes</b> selected. Drag to select nodes, click clear the selection"
+msgstr "<b>%u sur %u nœuds</b> sélectionnés. Cliquer-glisser pour sélectionner des nœuds, cliquer libérer la sélection"
+
+#: ../src/ui/tool/node-tool.cpp:565
+msgctxt "Node tool tip"
+msgid "Drag to select nodes, click to edit only this object"
+msgstr "Cliquer-glisser pour sélectionner des nœuds, cliquer pour sélectionner seulement cet objet"
+
+#: ../src/ui/tool/node-tool.cpp:568
+msgctxt "Node tool tip"
+msgid "Drag to select nodes, click to clear the selection"
+msgstr "Cliquer-glisser pour sélectionner des nœuds, cliquer pour libérer la sélection"
+
+#: ../src/ui/tool/node-tool.cpp:573
+msgctxt "Node tool tip"
+msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
+msgstr "Cliquer-glisser pour sélectionner les objets à éditer, cliquer pour éditer les objets (modificateur : Maj)"
+
+#: ../src/ui/tool/node-tool.cpp:576
+msgctxt "Node tool tip"
+msgid "Drag to select objects to edit"
+msgstr "Cliquer-glisser pour sélectionner les objets à éditer"
+
 #: ../src/ui/tool/node.cpp:207
 msgid "Cusp node handle"
 msgstr "Poignée de point de rebroussement"
@@ -18749,6 +18835,124 @@ msgstr "Poignée de nœud symétrique"
 #: ../src/ui/tool/node.cpp:210
 msgid "Auto-smooth node handle"
 msgstr "Poignée de nœud automatique"
+
+#: ../src/ui/tool/node.cpp:341
+msgctxt "Path handle tip"
+msgid "more: Shift, Ctrl, Alt"
+msgstr "modificateurs : Maj, Ctrl, Alt"
+
+#: ../src/ui/tool/node.cpp:343
+msgctxt "Path handle tip"
+msgid "more: Ctrl, Alt"
+msgstr "modificateurs : Ctrl, Alt"
+
+#: ../src/ui/tool/node.cpp:349
+#, c-format
+msgctxt "Path handle tip"
+msgid "<b>Shift+Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments while rotating both handles"
+msgstr "<b>Maj+Ctrl+Alt</b> : préserver la longueur et forcer l'incrément de l'angle de rotation à %g ° lorsque les deux poignées sont tournées"
+
+#: ../src/ui/tool/node.cpp:354
+#, c-format
+msgctxt "Path handle tip"
+msgid "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"
+msgstr "<b>Ctrl+Alt</b> : préserver la longueur et forcer l'incrément de l'angle de rotation à %g °"
+
+#: ../src/ui/tool/node.cpp:360
+msgctxt "Path handle tip"
+msgid "<b>Shift+Alt</b>: preserve handle length and rotate both handles"
+msgstr "<b>Maj+Alt</b> : préserver la longueur des poignées et tourner les deux poignées"
+
+#: ../src/ui/tool/node.cpp:363
+msgctxt "Path handle tip"
+msgid "<b>Alt</b>: preserve handle length while dragging"
+msgstr "<b>Alt</b> : préserver la longueur des poignées lors des déplacements"
+
+#: ../src/ui/tool/node.cpp:370
+#, c-format
+msgctxt "Path handle tip"
+msgid "<b>Shift+Ctrl</b>: snap rotation angle to %g° increments and rotate both handles"
+msgstr "<b>Maj+Ctrl</b> : forcer l'incrément de l'angle de rotation à %g ° et tourner les deux poignées"
+
+#: ../src/ui/tool/node.cpp:374
+#, c-format
+msgctxt "Path handle tip"
+msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
+msgstr "<b>Ctrl</b> : forcer l'incrément de l'angle de rotation à %g °, cliquer pour rétracter"
+
+#: ../src/ui/tool/node.cpp:379
+#, fuzzy
+msgctxt "Path hande tip"
+msgid "<b>Shift</b>: rotate both handles by the same angle"
+msgstr "<b>Maj</b> : dessiner autour du point de départ"
+
+#: ../src/ui/tool/node.cpp:386
+#, c-format
+msgctxt "Path handle tip"
+msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
+msgstr "<b>Poignées de nœud automatique</b> : cliquer-déplacer pour convertir en nœud doux (%s)"
+
+#: ../src/ui/tool/node.cpp:389
+#, c-format
+msgctxt "Path handle tip"
+msgid "<b>%s</b>: drag to shape the segment (%s)"
+msgstr "<b>%s</b> : cliquer-déplacer pour modeler le segment (%s)"
+
+#: ../src/ui/tool/node.cpp:405
+#, c-format
+msgctxt "Path handle tip"
+msgid "Move handle by %s, %s; angle %.2f°, length %s"
+msgstr "Déplacement des poignées de %s, %s; angle %.2f°, longueur %s"
+
+#: ../src/ui/tool/node.cpp:1144
+#, fuzzy
+msgctxt "Path node tip"
+msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
+msgstr "<b>Maj</b> : cliquer pour inverser l'état de sélection, cliquer-déplacer pour activer la sélection rectangle"
+
+#: ../src/ui/tool/node.cpp:1146
+msgctxt "Path node tip"
+msgid "<b>Shift</b>: click to toggle selection"
+msgstr "<b>Maj</b> : cliquer pour inverser l'état de sélection"
+
+#: ../src/ui/tool/node.cpp:1151
+msgctxt "Path node tip"
+msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
+msgstr "<b>Ctrl+Alt</b> : déplacer le long des lignes des poignées, cliquer pour effacer le nœud"
+
+#: ../src/ui/tool/node.cpp:1154
+msgctxt "Path node tip"
+msgid "<b>Ctrl</b>: move along axes, click to change node type"
+msgstr "<b>Ctrl</b> : déplacer le long des axes, cliquer pour changer de type de nœud"
+
+#: ../src/ui/tool/node.cpp:1158
+msgctxt "Path node tip"
+msgid "<b>Alt</b>: sculpt nodes"
+msgstr "<b>Alt</b> : sculpter les nœuds"
+
+#: ../src/ui/tool/node.cpp:1166
+#, c-format
+msgctxt "Path node tip"
+msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
+msgstr "<b>%s</b> : cliquer-déplacer pour modeler le chemin (modificateurs : Maj, Ctrl, Alt)"
+
+#: ../src/ui/tool/node.cpp:1169
+#, c-format
+msgctxt "Path node tip"
+msgid "<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles (more: Shift, Ctrl, Alt)"
+msgstr "<b>%s</b> : cliquer-déplacer pour modeler le chemin, cliquer pour basculer entre les poignées de sélection et de rotation (modificateurs : Maj, Ctrl, Alt)"
+
+#: ../src/ui/tool/node.cpp:1172
+#, c-format
+msgctxt "Path node tip"
+msgid "<b>%s</b>: drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt)"
+msgstr "<b>%s</b> : cliquer-déplacer pour modeler le chemin, cliquer pour sélectionner seulement ce nœud (modificateurs : Maj, Ctrl, Alt)"
+
+#: ../src/ui/tool/node.cpp:1180
+#, c-format
+msgctxt "Path node tip"
+msgid "Move node by %s, %s"
+msgstr "Déplacement du nœud de %s, %s"
 
 #: ../src/ui/tool/node.cpp:1192
 msgid "Symmetric node"
@@ -18783,6 +18987,118 @@ msgstr "Étirer la poignée"
 #: ../src/ui/tool/path-manipulator.cpp:1328
 msgid "Retract handle"
 msgstr "Retracter la poignée"
+
+#: ../src/ui/tool/transform-handle-set.cpp:137
+#, fuzzy
+msgctxt "Transform handle tip"
+msgid "<b>Shift+Ctrl</b>: scale uniformly about the rotation center"
+msgstr "<b>Redimensionner</b> la sélection; <b>Ctrl</b> pour redimensionner uniformément autour du centre de rotation"
+
+#: ../src/ui/tool/transform-handle-set.cpp:139
+msgctxt "Transform handle tip"
+msgid "<b>Ctrl:</b> scale uniformly"
+msgstr "<b>Ctrl</b> : redimensionner uniformément"
+
+#: ../src/ui/tool/transform-handle-set.cpp:144
+#, fuzzy
+msgctxt "Transform handle tip"
+msgid "<b>Shift+Alt</b>: scale using an integer ratio about the rotation center"
+msgstr "<b>Redimensionner</b> la sélection; <b>Ctrl</b> pour redimensionner uniformément autour du centre de rotation"
+
+#: ../src/ui/tool/transform-handle-set.cpp:146
+msgctxt "Transform handle tip"
+msgid "<b>Shift</b>: scale from the rotation center"
+msgstr "<b>Maj</b> : redimensionner à partir du centre de rotation"
+
+#: ../src/ui/tool/transform-handle-set.cpp:149
+#, fuzzy
+msgctxt "Transform handle tip"
+msgid "<b>Alt</b>: scale using an integer ratio"
+msgstr "<b>Alt</b> : verrouiller le rayon de la spirale"
+
+#: ../src/ui/tool/transform-handle-set.cpp:151
+#, fuzzy
+msgctxt "Transform handle tip"
+msgid "<b>Scale handle</b>: drag to scale the selection"
+msgstr "<b>Aucun chemin</b> à inverser dans la sélection."
+
+#: ../src/ui/tool/transform-handle-set.cpp:156
+#, c-format
+msgctxt "Transform handle tip"
+msgid "Scale by %.2f%% x %.2f%%"
+msgstr "Redimensionnement de %.2f%% x %.2f%%"
+
+#: ../src/ui/tool/transform-handle-set.cpp:311
+#, fuzzy, c-format
+msgctxt "Transform handle tip"
+msgid "<b>Shift+Ctrl</b>: rotate around the opposite corner and snap angle to %f° increments"
+msgstr "<b>Maj</b> : dessiner autour du point de départ"
+
+#: ../src/ui/tool/transform-handle-set.cpp:314
+#, fuzzy
+msgctxt "Transform handle tip"
+msgid "<b>Shift</b>: rotate around the opposite corner"
+msgstr "<b>Maj</b> : dessiner autour du point de départ"
+
+#: ../src/ui/tool/transform-handle-set.cpp:318
+#, fuzzy, c-format
+msgctxt "Transform handle tip"
+msgid "<b>Ctrl</b>: snap angle to %f° increments"
+msgstr "<b>Ctrl</b> : pour tourner par incréments"
+
+#: ../src/ui/tool/transform-handle-set.cpp:320
+#, fuzzy
+msgctxt "Transform handle tip"
+msgid "<b>Rotation handle</b>: drag to rotate the selection around the rotation center"
+msgstr "<b>Aucun chemin</b> à inverser dans la sélection."
+
+#. event
+#: ../src/ui/tool/transform-handle-set.cpp:325
+#, c-format
+msgctxt "Transform handle tip"
+msgid "Rotate by %.2f°"
+msgstr "Rotation de %.2f °"
+
+#: ../src/ui/tool/transform-handle-set.cpp:419
+#, fuzzy, c-format
+msgctxt "Transform handle tip"
+msgid "<b>Shift+Ctrl</b>: skew about the rotation center with snapping to %f° increments"
+msgstr "<b>Maj</b> : dessiner autour du point de départ"
+
+#: ../src/ui/tool/transform-handle-set.cpp:422
+#, fuzzy
+msgctxt "Transform handle tip"
+msgid "<b>Shift</b>: skew about the rotation center"
+msgstr "<b>Maj</b> : dessiner autour du point de départ"
+
+#: ../src/ui/tool/transform-handle-set.cpp:426
+#, fuzzy, c-format
+msgctxt "Transform handle tip"
+msgid "<b>Ctrl</b>: snap skew angle to %f° increments"
+msgstr "<b>Ctrl</b> : pour tourner par incréments"
+
+#: ../src/ui/tool/transform-handle-set.cpp:429
+#, fuzzy
+msgctxt "Transform handle tip"
+msgid "<b>Skew handle</b>: drag to skew (shear) selection about the opposite handle"
+msgstr "<b>Aucun chemin</b> à inverser dans la sélection."
+
+#: ../src/ui/tool/transform-handle-set.cpp:435
+#, fuzzy, c-format
+msgctxt "Transform handle tip"
+msgid "Skew horizontally by %.2f°"
+msgstr "Déplacer horizontalement par pixels"
+
+#: ../src/ui/tool/transform-handle-set.cpp:438
+#, fuzzy, c-format
+msgctxt "Transform handle tip"
+msgid "Skew vertically by %.2f°"
+msgstr "Déplacer verticalement par pixels"
+
+#: ../src/ui/tool/transform-handle-set.cpp:479
+msgctxt "Transform handle tip"
+msgid "<b>Rotation center</b>: drag to change the origin of transforms"
+msgstr ""
 
 #: ../src/ui/view/edit-widget.cpp:330
 #: ../src/ui/view/edit-widget.cpp:335
@@ -20183,15 +20499,15 @@ msgstr "_Dilater le chemin de 1px"
 
 #: ../src/verbs.cpp:2346
 msgid "Outset selected paths by 1 px"
-msgstr "Dilater les chemins sélectionnés de 1px"
+msgstr "Dilater les chemins sélectionnés de 1 px"
 
 #: ../src/verbs.cpp:2348
 msgid "O_utset Path by 10 px"
-msgstr "_Dilater le chemin de 10px"
+msgstr "_Dilater le chemin de 10 px"
 
 #: ../src/verbs.cpp:2349
 msgid "Outset selected paths by 10 px"
-msgstr "Dilater les chemins sélectionnés de 10px"
+msgstr "Dilater les chemins sélectionnés de 10 px"
 
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -20206,19 +20522,19 @@ msgstr "Contracter les chemins sélectionnés"
 
 #: ../src/verbs.cpp:2356
 msgid "I_nset Path by 1 px"
-msgstr "Co_ntracter le chemin de 1px"
+msgstr "Co_ntracter le chemin de 1 px"
 
 #: ../src/verbs.cpp:2357
 msgid "Inset selected paths by 1 px"
-msgstr "Contracter les chemins sélectionnés de 1px"
+msgstr "Contracter les chemins sélectionnés de 1 px"
 
 #: ../src/verbs.cpp:2359
 msgid "I_nset Path by 10 px"
-msgstr "Co_ntracter le chemin de 10px"
+msgstr "Co_ntracter le chemin de 10 px"
 
 #: ../src/verbs.cpp:2360
 msgid "Inset selected paths by 10 px"
-msgstr "Contracter les chemins sélectionnés de 10px"
+msgstr "Contracter les chemins sélectionnés de 10 px"
 
 #: ../src/verbs.cpp:2362
 msgid "D_ynamic Offset"
@@ -24078,6 +24394,10 @@ msgstr "Lignes"
 msgid "Square Size / px"
 msgstr "Taille du carré (px)"
 
+#: ../share/extensions/text_sentencecase.inx.h:1
+msgid "Sentence case"
+msgstr "Casse des phrases"
+
 #: ../share/extensions/wireframe_sphere.inx.h:1
 msgid "Hide lines behind the sphere"
 msgstr "Cacher les lignes derrière la sphère"
@@ -24106,6 +24426,33 @@ msgstr "Inclinaison (deg)"
 msgid "Wireframe Sphere"
 msgstr "Sphère fil de fer"
 
+#~ msgctxt "split"
+#~ msgid "Lines"
+#~ msgstr "Lignes"
+
+#, fuzzy
+#~ msgid "Path segment tip"
+#~ msgstr "Joindre par un segment"
+
+#, fuzzy
+#~ msgid "Node tool tip"
+#~ msgstr "Doux"
+
+#, fuzzy
+#~ msgid "Path handle tip"
+#~ msgstr "Faire tourner la poignée"
+
+#, fuzzy
+#~ msgid "Path hande tip"
+#~ msgstr "Données de chemin"
+
+#, fuzzy
+#~ msgid "Path node tip"
+#~ msgstr "Contour de chemin"
+
+#, fuzzy
+#~ msgid "Transform handle tip"
+#~ msgstr "Transformer les dégradés"
 #~ msgid "Select Font Size"
 #~ msgstr "Définir la taille de la police"
 #~ msgid "Toggle On/Off Bold Style"

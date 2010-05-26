@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-25 23:11+0200\n"
+"POT-Creation-Date: 2010-05-26 22:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18767,25 +18767,25 @@ msgstr ""
 
 #: ../src/ui/tool/curve-drag-point.cpp:167
 msgctxt "Path segment tip"
-msgid "<b>Shift:</b> click to toggle segment selection"
+msgid "<b>Shift</b>: click to toggle segment selection"
 msgstr ""
 
 #: ../src/ui/tool/curve-drag-point.cpp:171
 msgctxt "Path segment tip"
-msgid "<b>Ctrl+Alt:</b> click to insert a node"
+msgid "<b>Ctrl+Alt</b>: click to insert a node"
 msgstr ""
 
 #: ../src/ui/tool/curve-drag-point.cpp:175
 msgctxt "Path segment tip"
 msgid ""
-"<b>Linear segment:</b> drag to convert to a Bezier segment, doubleclick to "
+"<b>Linear segment</b>: drag to convert to a Bezier segment, doubleclick to "
 "insert node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
 
 #: ../src/ui/tool/curve-drag-point.cpp:179
 msgctxt "Path segment tip"
 msgid ""
-"<b>Bezier segment:</b> drag to shape the segment, doubleclick to insert "
+"<b>Bezier segment</b>: drag to shape the segment, doubleclick to insert "
 "node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
 
@@ -18864,13 +18864,13 @@ msgstr ""
 #: ../src/ui/tool/node-tool.cpp:537
 msgctxt "Node tool tip"
 msgid ""
-"<b>Shift:</b> drag to add nodes to the selection, click to toggle object "
+"<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
 "selection"
 msgstr ""
 
 #: ../src/ui/tool/node-tool.cpp:541
 msgctxt "Node tool tip"
-msgid "<b>Shift:</b> drag to add nodes to the selection"
+msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr ""
 
 #: ../src/ui/tool/node-tool.cpp:551
@@ -18952,26 +18952,26 @@ msgstr ""
 
 #: ../src/ui/tool/node.cpp:360
 msgctxt "Path handle tip"
-msgid "<b>Shift+Alt:</b> preserve handle length and rotate both handles"
+msgid "<b>Shift+Alt</b>: preserve handle length and rotate both handles"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:363
 msgctxt "Path handle tip"
-msgid "<b>Alt:</b> preserve handle length while dragging"
+msgid "<b>Alt</b>: preserve handle length while dragging"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:370
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
-"<b>Shift+Ctrl:</b> snap rotation angle to %g° increments and rotate both "
+"<b>Shift+Ctrl</b>: snap rotation angle to %g° increments and rotate both "
 "handles"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:374
 #, c-format
 msgctxt "Path handle tip"
-msgid "<b>Ctrl:</b> snap rotation angle to %g° increments, click to retract"
+msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:379
@@ -18982,13 +18982,13 @@ msgstr ""
 #: ../src/ui/tool/node.cpp:386
 #, c-format
 msgctxt "Path handle tip"
-msgid "<b>Auto node handle:</b> drag to convert to smooth node (%s)"
+msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:389
 #, c-format
 msgctxt "Path handle tip"
-msgid "<b>%s:</b> drag to shape the segment (%s)"
+msgid "<b>%s</b>: drag to shape the segment (%s)"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:405
@@ -18999,40 +18999,40 @@ msgstr ""
 
 #: ../src/ui/tool/node.cpp:1144
 msgctxt "Path node tip"
-msgid "<b>Shift:</b> drag out a handle, click to toggle selection"
+msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:1146
 msgctxt "Path node tip"
-msgid "<b>Shift:</b> click to toggle selection"
+msgid "<b>Shift</b>: click to toggle selection"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:1151
 msgctxt "Path node tip"
-msgid "<b>Ctrl+Alt:</b> move along handle lines, click to delete node"
+msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:1154
 msgctxt "Path node tip"
-msgid "<b>Ctrl:</b> move along axes, click to change node type"
+msgid "<b>Ctrl</b>: move along axes, click to change node type"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:1158
 msgctxt "Path node tip"
-msgid "<b>Alt:</b> sculpt nodes"
+msgid "<b>Alt</b>: sculpt nodes"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:1166
 #, c-format
 msgctxt "Path node tip"
-msgid "<b>%s:</b> drag to shape the path (more: Shift, Ctrl, Alt)"
+msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:1169
 #, c-format
 msgctxt "Path node tip"
 msgid ""
-"<b>%s:</b> drag to shape the path, click to toggle scale/rotation handles "
+"<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles "
 "(more: Shift, Ctrl, Alt)"
 msgstr ""
 
@@ -19040,7 +19040,7 @@ msgstr ""
 #, c-format
 msgctxt "Path node tip"
 msgid ""
-"<b>%s:</b> drag to shape the path, click to select only this node (more: "
+"<b>%s</b>: drag to shape the path, click to select only this node (more: "
 "Shift, Ctrl, Alt)"
 msgstr ""
 
@@ -19085,7 +19085,7 @@ msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:137
 msgctxt "Transform handle tip"
-msgid "<b>Shift+Ctrl:</b> scale uniformly about the rotation center"
+msgid "<b>Shift+Ctrl</b>: scale uniformly about the rotation center"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:139
@@ -19096,22 +19096,22 @@ msgstr ""
 #: ../src/ui/tool/transform-handle-set.cpp:144
 msgctxt "Transform handle tip"
 msgid ""
-"<b>Shift+Alt:</b> scale using an integer ratio about the rotation center"
+"<b>Shift+Alt</b>: scale using an integer ratio about the rotation center"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:146
 msgctxt "Transform handle tip"
-msgid "<b>Shift:</b> scale from the rotation center"
+msgid "<b>Shift</b>: scale from the rotation center"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:149
 msgctxt "Transform handle tip"
-msgid "<b>Alt:</b> scale using an integer ratio"
+msgid "<b>Alt</b>: scale using an integer ratio"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:151
 msgctxt "Transform handle tip"
-msgid "<b>Scale handle:</b> drag to scale the selection"
+msgid "<b>Scale handle</b>: drag to scale the selection"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:156
@@ -19124,25 +19124,25 @@ msgstr ""
 #, c-format
 msgctxt "Transform handle tip"
 msgid ""
-"<b>Shift+Ctrl:</b> rotate around the opposite corner and snap angle to %f° "
+"<b>Shift+Ctrl</b>: rotate around the opposite corner and snap angle to %f° "
 "increments"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:314
 msgctxt "Transform handle tip"
-msgid "<b>Shift:</b> rotate around the opposite corner"
+msgid "<b>Shift</b>: rotate around the opposite corner"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:318
 #, c-format
 msgctxt "Transform handle tip"
-msgid "<b>Ctrl:</b> snap angle to %f° increments"
+msgid "<b>Ctrl</b>: snap angle to %f° increments"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:320
 msgctxt "Transform handle tip"
 msgid ""
-"<b>Rotation handle:</b> drag to rotate the selection around the rotation "
+"<b>Rotation handle</b>: drag to rotate the selection around the rotation "
 "center"
 msgstr ""
 
@@ -19157,25 +19157,25 @@ msgstr ""
 #, c-format
 msgctxt "Transform handle tip"
 msgid ""
-"<b>Shift+Ctrl:</b> skew about the rotation center with snapping to %f° "
+"<b>Shift+Ctrl</b>: skew about the rotation center with snapping to %f° "
 "increments"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:422
 msgctxt "Transform handle tip"
-msgid "<b>Shift:</b> skew about the rotation center"
+msgid "<b>Shift</b>: skew about the rotation center"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:426
 #, c-format
 msgctxt "Transform handle tip"
-msgid "<b>Ctrl:</b> snap skew angle to %f° increments"
+msgid "<b>Ctrl</b>: snap skew angle to %f° increments"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:429
 msgctxt "Transform handle tip"
 msgid ""
-"<b>Skew handle:</b> drag to skew (shear) selection about the opposite handle"
+"<b>Skew handle</b>: drag to skew (shear) selection about the opposite handle"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:435
@@ -19192,7 +19192,7 @@ msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:479
 msgctxt "Transform handle tip"
-msgid "<b>Rotation center:</b> drag to change the origin of transforms"
+msgid "<b>Rotation center</b>: drag to change the origin of transforms"
 msgstr ""
 
 #: ../src/ui/view/edit-widget.cpp:330 ../src/ui/view/edit-widget.cpp:335
