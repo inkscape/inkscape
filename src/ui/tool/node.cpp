@@ -357,21 +357,21 @@ Glib::ustring Handle::_getTip(unsigned state)
         } else {
             if (state_held_shift(state) && can_shift_rotate) {
                 return C_("Path handle tip",
-                    "<b>Shift+Alt:</b> preserve handle length and rotate both handles");
+                    "<b>Shift+Alt</b>: preserve handle length and rotate both handles");
             } else {
                 return C_("Path handle tip",
-                    "<b>Alt:</b> preserve handle length while dragging");
+                    "<b>Alt</b>: preserve handle length while dragging");
             }
         }
     } else {
         if (state_held_control(state)) {
             if (state_held_shift(state) && can_shift_rotate) {
                 return format_tip(C_("Path handle tip",
-                    "<b>Shift+Ctrl:</b> snap rotation angle to %g° increments and rotate both handles"),
+                    "<b>Shift+Ctrl</b>: snap rotation angle to %g° increments and rotate both handles"),
                     snap_increment_degrees());
             } else {
                 return format_tip(C_("Path handle tip",
-                    "<b>Ctrl:</b> snap rotation angle to %g° increments, click to retract"),
+                    "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"),
                     snap_increment_degrees());
             }
         } else if (state_held_shift(state) && can_shift_rotate) {
@@ -383,10 +383,10 @@ Glib::ustring Handle::_getTip(unsigned state)
     switch (_parent->type()) {
     case NODE_AUTO:
         return format_tip(C_("Path handle tip",
-            "<b>Auto node handle:</b> drag to convert to smooth node (%s)"), more);
+            "<b>Auto node handle</b>: drag to convert to smooth node (%s)"), more);
     default:
         return format_tip(C_("Path handle tip",
-            "<b>%s:</b> drag to shape the segment (%s)"),
+            "<b>%s</b>: drag to shape the segment (%s)"),
             handle_type_to_localized_string(_parent->type()), more);
     }
 }
@@ -1141,21 +1141,21 @@ Glib::ustring Node::_getTip(unsigned state)
                     "to %f° increments"), snap_increment_degrees());
             }*/
             return C_("Path node tip",
-                "<b>Shift:</b> drag out a handle, click to toggle selection");
+                "<b>Shift</b>: drag out a handle, click to toggle selection");
         }
-        return C_("Path node tip", "<b>Shift:</b> click to toggle selection");
+        return C_("Path node tip", "<b>Shift</b>: click to toggle selection");
     }
 
     if (state_held_control(state)) {
         if (state_held_alt(state)) {
-            return C_("Path node tip", "<b>Ctrl+Alt:</b> move along handle lines, click to delete node");
+            return C_("Path node tip", "<b>Ctrl+Alt</b>: move along handle lines, click to delete node");
         }
         return C_("Path node tip",
-            "<b>Ctrl:</b> move along axes, click to change node type");
+            "<b>Ctrl</b>: move along axes, click to change node type");
     }
 
     if (state_held_alt(state)) {
-        return C_("Path node tip", "<b>Alt:</b> sculpt nodes");
+        return C_("Path node tip", "<b>Alt</b>: sculpt nodes");
     }
 
     // No modifiers: assemble tip from node type
@@ -1163,13 +1163,13 @@ Glib::ustring Node::_getTip(unsigned state)
     if (_selection.transformHandlesEnabled() && selected()) {
         if (_selection.size() == 1) {
             return format_tip(C_("Path node tip",
-                "<b>%s:</b> drag to shape the path (more: Shift, Ctrl, Alt)"), nodetype);
+                "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"), nodetype);
         }
         return format_tip(C_("Path node tip",
-            "<b>%s:</b> drag to shape the path, click to toggle scale/rotation handles (more: Shift, Ctrl, Alt)"), nodetype);
+            "<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles (more: Shift, Ctrl, Alt)"), nodetype);
     }
     return format_tip(C_("Path node tip",
-        "<b>%s:</b> drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt)"), nodetype);
+        "<b>%s</b>: drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt)"), nodetype);
 }
 
 Glib::ustring Node::_getDragTip(GdkEventMotion */*event*/)

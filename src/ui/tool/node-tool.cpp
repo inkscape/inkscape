@@ -534,11 +534,11 @@ void ink_node_tool_update_tip(InkNodeTool *nt, GdkEvent *event)
         if (state_held_shift(new_state)) {
             if (nt->_last_over) {
                 nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE,
-                    C_("Node tool tip", "<b>Shift:</b> drag to add nodes to the selection, "
+                    C_("Node tool tip", "<b>Shift</b>: drag to add nodes to the selection, "
                     "click to toggle object selection"));
             } else {
                 nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE,
-                    C_("Node tool tip", "<b>Shift:</b> drag to add nodes to the selection"));
+                    C_("Node tool tip", "<b>Shift</b>: drag to add nodes to the selection"));
             }
             return;
         }

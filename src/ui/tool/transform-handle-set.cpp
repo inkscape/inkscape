@@ -134,21 +134,21 @@ protected:
         if (state_held_control(state)) {
             if (state_held_shift(state)) {
                 return C_("Transform handle tip",
-                    "<b>Shift+Ctrl:</b> scale uniformly about the rotation center");
+                    "<b>Shift+Ctrl</b>: scale uniformly about the rotation center");
             }
             return C_("Transform handle tip", "<b>Ctrl:</b> scale uniformly");
         }
         if (state_held_shift(state)) {
             if (state_held_alt(state)) {
                 return C_("Transform handle tip",
-                    "<b>Shift+Alt:</b> scale using an integer ratio about the rotation center");
+                    "<b>Shift+Alt</b>: scale using an integer ratio about the rotation center");
             }
-            return C_("Transform handle tip", "<b>Shift:</b> scale from the rotation center");
+            return C_("Transform handle tip", "<b>Shift</b>: scale from the rotation center");
         }
         if (state_held_alt(state)) {
-            return C_("Transform handle tip", "<b>Alt:</b> scale using an integer ratio");
+            return C_("Transform handle tip", "<b>Alt</b>: scale using an integer ratio");
         }
-        return C_("Transform handle tip", "<b>Scale handle:</b> drag to scale the selection");
+        return C_("Transform handle tip", "<b>Scale handle</b>: drag to scale the selection");
     }
 
     virtual Glib::ustring _getDragTip(GdkEventMotion */*event*/) {
@@ -308,16 +308,16 @@ protected:
         if (state_held_shift(state)) {
             if (state_held_control(state)) {
                 return format_tip(C_("Transform handle tip",
-                    "<b>Shift+Ctrl:</b> rotate around the opposite corner and snap "
+                    "<b>Shift+Ctrl</b>: rotate around the opposite corner and snap "
                     "angle to %f° increments"), snap_increment_degrees());
             }
-            return C_("Transform handle tip", "<b>Shift:</b> rotate around the opposite corner");
+            return C_("Transform handle tip", "<b>Shift</b>: rotate around the opposite corner");
         }
         if (state_held_control(state)) {
             return format_tip(C_("Transform handle tip",
-                "<b>Ctrl:</b> snap angle to %f° increments"), snap_increment_degrees());
+                "<b>Ctrl</b>: snap angle to %f° increments"), snap_increment_degrees());
         }
-        return C_("Transform handle tip", "<b>Rotation handle:</b> drag to rotate "
+        return C_("Transform handle tip", "<b>Rotation handle</b>: drag to rotate "
             "the selection around the rotation center");
     }
 
@@ -416,17 +416,17 @@ protected:
         if (state_held_shift(state)) {
             if (state_held_control(state)) {
                 return format_tip(C_("Transform handle tip",
-                    "<b>Shift+Ctrl:</b> skew about the rotation center with snapping "
+                    "<b>Shift+Ctrl</b>: skew about the rotation center with snapping "
                     "to %f° increments"), snap_increment_degrees());
             }
-            return C_("Transform handle tip", "<b>Shift:</b> skew about the rotation center");
+            return C_("Transform handle tip", "<b>Shift</b>: skew about the rotation center");
         }
         if (state_held_control(state)) {
             return format_tip(C_("Transform handle tip",
-                "<b>Ctrl:</b> snap skew angle to %f° increments"), snap_increment_degrees());
+                "<b>Ctrl</b>: snap skew angle to %f° increments"), snap_increment_degrees());
         }
         return C_("Transform handle tip",
-            "<b>Skew handle:</b> drag to skew (shear) selection about "
+            "<b>Skew handle</b>: drag to skew (shear) selection about "
             "the opposite handle");
     }
 
@@ -476,7 +476,7 @@ protected:
 
     virtual Glib::ustring _getTip(unsigned /*state*/) {
         return C_("Transform handle tip",
-            "<b>Rotation center:</b> drag to change the origin of transforms");
+            "<b>Rotation center</b>: drag to change the origin of transforms");
     }
 
 private:
