@@ -51,12 +51,13 @@ Snow::get_filter_text (Inkscape::Extension::Extension * ext)
 {
 	if (_filter != NULL) g_free((void *)_filter);
 
-	float drift = ext->get_param_float("drift");
+        std::ostringstream drift;
+        drift << ext->get_param_float("drift");
 
 	_filter = g_strdup_printf(
 				"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Snow\">\n"
 					"<feConvolveMatrix order=\"3 3\" kernelMatrix=\"1 1 1 0 0 0 -1 -1 -1\" preserveAlpha=\"false\" divisor=\"3\"/>\n"
-					"<feMorphology operator=\"dilate\" radius=\"1 %f\"/>\n"
+					"<feMorphology operator=\"dilate\" radius=\"1 %s\"/>\n"
 					"<feGaussianBlur stdDeviation=\"1.6270889487870621\" result=\"result0\"/>\n"
 					"<feColorMatrix values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 10 0\" result=\"result1\"/>\n"
 					"<feOffset dx=\"0\" dy=\"1\" result=\"result5\"/>\n"
@@ -67,7 +68,7 @@ Snow::get_filter_text (Inkscape::Extension::Extension * ext)
 					"<feColorMatrix values=\"0.4 0 0 0 0.6 0 0.4 0 0 0.6 0 0 0 0 1 0 0 0 1 0\" result=\"result4\"/>\n"
 					"<feComposite in2=\"result5\" in=\"result4\"/>\n"
 					"<feComposite in2=\"SourceGraphic\"/>\n"
-				"</filter>\n", drift);
+				"</filter>\n", drift.str().c_str());
 
 	return _filter;
 };

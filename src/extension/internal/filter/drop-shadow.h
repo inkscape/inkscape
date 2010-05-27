@@ -57,21 +57,26 @@ DropShadow::get_filter_text (Inkscape::Extension::Extension * ext)
 {
 	if (_filter != NULL) g_free((void *)_filter);
 
-	float blur = ext->get_param_float("blur");
-	float opacity = ext->get_param_float("opacity") / 100;
-	float x = ext->get_param_float("xoffset");
-	float y = ext->get_param_float("yoffset");
+        std::ostringstream blur;
+        std::ostringstream opacity;
+        std::ostringstream x;
+        std::ostringstream y;
+
+        blur << ext->get_param_float("blur");
+        opacity << ext->get_param_float("opacity") / 100;
+        x << ext->get_param_float("xoffset");
+        y << ext->get_param_float("yoffset");
 
 	_filter = g_strdup_printf(
 		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Drop shadow\" width=\"1.5\" height=\"1.5\" x=\"-.25\" y=\"-.25\">\n"
-			"<feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"%f\" result=\"blur\"/>\n"
-                        "<feColorMatrix result=\"bluralpha\" type=\"matrix\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %f 0 \" />\n"
-			"<feOffset in=\"bluralpha\" dx=\"%f\" dy=\"%f\" result=\"offsetBlur\"/>\n"
+			"<feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"%s\" result=\"blur\"/>\n"
+                        "<feColorMatrix result=\"bluralpha\" type=\"matrix\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s 0 \" />\n"
+			"<feOffset in=\"bluralpha\" dx=\"%s\" dy=\"%s\" result=\"offsetBlur\"/>\n"
 			"<feMerge>\n"
 				"<feMergeNode in=\"offsetBlur\"/>\n"
 				"<feMergeNode in=\"SourceGraphic\"/>\n"
 			"</feMerge>\n"
-		"</filter>\n", blur, opacity, x, y);
+		"</filter>\n", blur.str().c_str(), opacity.str().c_str(), x.str().c_str(), y.str().c_str());
 
 	return _filter;
 };
@@ -112,21 +117,26 @@ DropGlow::get_filter_text (Inkscape::Extension::Extension * ext)
 {
 	if (_filter != NULL) g_free((void *)_filter);
 
-	float blur = ext->get_param_float("blur");
-	float opacity = ext->get_param_float("opacity") / 100;
-	float x = ext->get_param_float("xoffset");
-	float y = ext->get_param_float("yoffset");
+        std::ostringstream blur;
+        std::ostringstream opacity;
+        std::ostringstream x;
+        std::ostringstream y;
+
+        blur << ext->get_param_float("blur");
+        opacity << ext->get_param_float("opacity") / 100;
+        x << ext->get_param_float("xoffset");
+        y << ext->get_param_float("yoffset");
 
 	_filter = g_strdup_printf(
 		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Drop shadow\" width=\"1.5\" height=\"1.5\" x=\"-.25\" y=\"-.25\">\n"
-			"<feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"%f\" result=\"blur\"/>\n"
-                        "<feColorMatrix result=\"bluralpha\" type=\"matrix\" values=\"-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 %f 0 \" />\n"
-			"<feOffset in=\"bluralpha\" dx=\"%f\" dy=\"%f\" result=\"offsetBlur\"/>\n"
+			"<feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"%s\" result=\"blur\"/>\n"
+                        "<feColorMatrix result=\"bluralpha\" type=\"matrix\" values=\"-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 %s 0 \" />\n"
+			"<feOffset in=\"bluralpha\" dx=\"%s\" dy=\"%s\" result=\"offsetBlur\"/>\n"
 			"<feMerge>\n"
 				"<feMergeNode in=\"offsetBlur\"/>\n"
 				"<feMergeNode in=\"SourceGraphic\"/>\n"
 			"</feMerge>\n"
-		"</filter>\n", blur, opacity, x, y);
+		"</filter>\n", blur.str().c_str(), opacity.str().c_str(), x.str().c_str(), y.str().c_str());
 
 	return _filter;
 };

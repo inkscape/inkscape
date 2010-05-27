@@ -120,7 +120,9 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
     Glib::ustring style("fill:none;fill-opacity:0.75000000;fill-rule:evenodd;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000");
     style += ";stroke-width:";
     gchar floatstring[64];
-    sprintf(floatstring, "%f", line_width);
+    std::ostringstream stringstream;
+    stringstream << line_width;
+    sprintf(floatstring, "%s", stringstream.str().c_str());
     style += floatstring;
     style += "pt";
     path->setAttribute("style", style.c_str());
