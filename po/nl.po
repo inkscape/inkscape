@@ -50,8 +50,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-24 11:08+0200\n"
-"PO-Revision-Date: 2010-05-24 12:41+0200\n"
+"POT-Creation-Date: 2010-05-26 22:13+0200\n"
+"PO-Revision-Date: 2010-05-28 20:23+0200\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -1640,12 +1640,12 @@ msgstr "Zinnen per alinea"
 #: ../share/extensions/text_lowercase.inx.h:1
 #: ../share/extensions/text_randomcase.inx.h:1
 #: ../share/extensions/text_replace.inx.h:4
-#: ../share/extensions/text_sentencecase.inx.h:2
 #: ../share/extensions/text_titlecase.inx.h:1
 #: ../share/extensions/text_uppercase.inx.h:1 ../src/dialogs/text-edit.cpp:375
 #: ../src/selection-describer.cpp:69
 #: ../src/ui/dialog/inkscape-preferences.cpp:547 ../src/verbs.cpp:2477
 #: ../share/extensions/render_barcode_datamatrix.inx.h:6
+#: ../share/extensions/text_sentencecase.inx.h:2
 msgid "Text"
 msgstr "Tekst"
 
@@ -2845,10 +2845,6 @@ msgstr "Tekst vervangen"
 #: ../share/extensions/text_replace.inx.h:3
 msgid "Replace:"
 msgstr "Vervangen:"
-
-#: ../share/extensions/text_sentencecase.inx.h:1
-msgid "Sentence case"
-msgstr "Eerste woord in zin met hoofdletter"
 
 #: ../share/extensions/text_titlecase.inx.h:2
 msgid "Title Case"
@@ -11731,7 +11727,7 @@ msgstr "<b>Rechthoek</b>: %s &#215; %s (gulden snede 1:1,618); gebruik <b>Shift<
 #: ../src/rect-context.cpp:524
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"
-msgstr "<b>Rechthoek</b>: %s &#215; %s; gebruik <b>Ctrl</b> om een vierkant of een rechthoek te maken; gebruik <b>Shift</b> om rondom het startpunt te tekenen"
+msgstr "<b>Rechthoek</b>: %s &#215; %s; gebruik <b>Ctrl</b> om een vierkant of een rechthoek te maken; gebruik <b>Shift</b> om rond het startpunt te tekenen"
 
 #: ../src/rect-context.cpp:549
 msgid "Create rectangle"
@@ -12491,6 +12487,20 @@ msgstr "vernauwing"
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Dynamische rand</b>, %s met %f pt"
 
+#: ../src/sp-path.cpp:156
+#, c-format
+msgid "<b>Path</b> (%i node, path effect: %s)"
+msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
+msgstr[0] "<b>Pad</b> (%i knoop, padeffect: %s)"
+msgstr[1] "<b>Pad</b> (%i knopen, padeffect: %s)"
+
+#: ../src/sp-path.cpp:159
+#, c-format
+msgid "<b>Path</b> (%i node)"
+msgid_plural "<b>Path</b> (%i nodes)"
+msgstr[0] "<b>Pad</b> (%i knoop)"
+msgstr[1] "<b>Pad</b> (%i knopen)"
+
 #: ../src/sp-polygon.cpp:226
 msgid "<b>Polygon</b>"
 msgstr "<b>Veelhoek</b>"
@@ -12509,6 +12519,20 @@ msgstr "<b>Rechthoek</b>"
 #, c-format
 msgid "<b>Spiral</b> with %3f turns"
 msgstr "<b>Spiraal</b> met %3f omwentelingen"
+
+#: ../src/sp-star.cpp:309
+#, c-format
+msgid "<b>Star</b> with %d vertex"
+msgid_plural "<b>Star</b> with %d vertices"
+msgstr[0] "<b>Ster</b> met %d punt"
+msgstr[1] "<b>Ster</b> met %d punten"
+
+#: ../src/sp-star.cpp:313
+#, c-format
+msgid "<b>Polygon</b> with %d vertex"
+msgid_plural "<b>Polygon</b> with %d vertices"
+msgstr[0] "<b>Veelhoek</b> met %d hoek"
+msgstr[1] "<b>Veelhoek</b> met %d hoeken"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:419
@@ -18248,23 +18272,23 @@ msgstr "Knooppunt toevoegen"
 
 #: ../src/ui/tool/curve-drag-point.cpp:167
 msgctxt "Path segment tip"
-msgid "<b>Shift:</b> click to toggle segment selection"
+msgid "<b>Shift</b>: click to toggle segment selection"
 msgstr "<b>Shift</b>: klik voor veranderen van segmentselectie"
 
 #: ../src/ui/tool/curve-drag-point.cpp:171
 msgctxt "Path segment tip"
-msgid "<b>Ctrl+Alt:</b> click to insert a node"
-msgstr "<b>Ctrl+Alt:</b>: klik om knooppunt in te voegen"
+msgid "<b>Ctrl+Alt</b>: click to insert a node"
+msgstr "<b>Ctrl+Alt</b>: klik om knooppunt in te voegen"
 
 #: ../src/ui/tool/curve-drag-point.cpp:175
 msgctxt "Path segment tip"
-msgid "<b>Linear segment:</b> drag to convert to a Bezier segment, doubleclick to insert node, click to select (more: Shift, Ctrl+Alt)"
-msgstr "<b>Recht segment:</b> sleep om te converteren naar een Beziersegment, dubbelklik om een knooppunt in te voegen, klik om te selecteren (meer: Shift, Ctrl+Alt)"
+msgid "<b>Linear segment</b>: drag to convert to a Bezier segment, doubleclick to insert node, click to select (more: Shift, Ctrl+Alt)"
+msgstr "<b>Recht segment</b>: sleep om te converteren naar een Beziersegment, dubbelklik om een knooppunt in te voegen, klik om te selecteren (toetscombinaties: Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/curve-drag-point.cpp:179
 msgctxt "Path segment tip"
-msgid "<b>Bezier segment:</b> drag to shape the segment, doubleclick to insert node, click to select (more: Shift, Ctrl+Alt)"
-msgstr "<b>Beziersegment:</b> sleep om het segment te vervormen, dubbelklik om een knooppunt in te voegen, klik om te selecteren (meer: Shift, Ctrl+Alt)"
+msgid "<b>Bezier segment</b>: drag to shape the segment, doubleclick to insert node, click to select (more: Shift, Ctrl+Alt)"
+msgstr "<b>Beziersegment</b>: sleep om het segment te vervormen, dubbelklik om een knooppunt in te voegen, klik om te selecteren (toetscombinaties: Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:227
 msgid "Change node type"
@@ -18340,19 +18364,19 @@ msgstr "Knooppunten verticaal spiegelen"
 
 #: ../src/ui/tool/node-tool.cpp:537
 msgctxt "Node tool tip"
-msgid "<b>Shift:</b> drag to add nodes to the selection, click to toggle object selection"
-msgstr "<b>Shift:</b> sleep om knooppunten aan de selectie toe te voegen, klik om objectselectie te veranderen"
+msgid "<b>Shift</b>: drag to add nodes to the selection, click to toggle object selection"
+msgstr "<b>Shift</b>: sleep om knooppunten aan de selectie toe te voegen, klik om objectselectie te veranderen"
 
 #: ../src/ui/tool/node-tool.cpp:541
 msgctxt "Node tool tip"
-msgid "<b>Shift:</b> drag to add nodes to the selection"
+msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr "<b>Shift</b>: drag to add nodes to the selection"
 
 #: ../src/ui/tool/node-tool.cpp:551
 #, c-format
 msgctxt "Node tool tip"
 msgid "<b>%u of %u nodes</b> selected. Drag to select nodes, click to edit only this object (more: Shift)"
-msgstr "<b>%u van %u knooppunten</b> geselecteerd. Sleep om knooppunten te selecteren, klik om enkel dit object te bewerken (meer: Shift)"
+msgstr "<b>%u van %u knooppunten</b> geselecteerd. Sleep om knooppunten te selecteren, klik om enkel dit object te bewerken (toetscombinatie: Shift)"
 
 #: ../src/ui/tool/node-tool.cpp:557
 #, c-format
@@ -18373,7 +18397,7 @@ msgstr "Sleep om knooppunten te selecteren, klik voor deselectie"
 #: ../src/ui/tool/node-tool.cpp:573
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
-msgstr "Sleep om te bewerken objecten te selecteren, klik om dit object te bewerken (meer: Shift)"
+msgstr "Sleep om te bewerken objecten te selecteren, klik om dit object te bewerken (toetscombinatie: Shift)"
 
 #: ../src/ui/tool/node-tool.cpp:576
 msgctxt "Node tool tip"
@@ -18420,25 +18444,25 @@ msgstr "<b>Ctrl+Alt</b>: lengte behouden en draaihoek beperken tot stappen van %
 
 #: ../src/ui/tool/node.cpp:360
 msgctxt "Path handle tip"
-msgid "<b>Shift+Alt:</b> preserve handle length and rotate both handles"
-msgstr "<b>Shift+Alt:</b> handvatlengte behouden en beide handvatten roteren"
+msgid "<b>Shift+Alt</b>: preserve handle length and rotate both handles"
+msgstr "<b>Shift+Alt</b>: handvatlengte behouden en beide handvatten roteren"
 
 #: ../src/ui/tool/node.cpp:363
 msgctxt "Path handle tip"
-msgid "<b>Alt:</b> preserve handle length while dragging"
-msgstr "<b>Alt:</b> handvatlengte behouden tijdens slepen"
+msgid "<b>Alt</b>: preserve handle length while dragging"
+msgstr "<b>Alt</b>: handvatlengte behouden tijdens slepen"
 
 #: ../src/ui/tool/node.cpp:370
 #, c-format
 msgctxt "Path handle tip"
-msgid "<b>Shift+Ctrl:</b> snap rotation angle to %g° increments and rotate both handles"
-msgstr "<b>Shift+Ctrl:</b> draaihoek beperken tot stappen van %g° en handvatten roteren"
+msgid "<b>Shift+Ctrl</b>: snap rotation angle to %g° increments and rotate both handles"
+msgstr "<b>Shift+Ctrl</b>: draaihoek beperken tot stappen van %g° en handvatten roteren"
 
 #: ../src/ui/tool/node.cpp:374
 #, c-format
 msgctxt "Path handle tip"
-msgid "<b>Ctrl:</b> snap rotation angle to %g° increments, click to retract"
-msgstr "<b>Ctrl:</b> draaihoek beperken tot stappen van %g°, klik voor intrekken"
+msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
+msgstr "<b>Ctrl</b>: draaihoek beperken tot stappen van %g°, klik voor intrekken"
 
 #: ../src/ui/tool/node.cpp:379
 msgctxt "Path hande tip"
@@ -18448,14 +18472,14 @@ msgstr "<b>Shift</b>: beide handvatten met dezelfde hoek roteren"
 #: ../src/ui/tool/node.cpp:386
 #, c-format
 msgctxt "Path handle tip"
-msgid "<b>Auto node handle:</b> drag to convert to smooth node (%s)"
-msgstr "<b>Automatischknooppunthandvat:</b> sleep om om te zetten naar een glad knooppunt (%s)"
+msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
+msgstr "<b>Automatischknooppunthandvat</b>: sleep om om te zetten naar een glad knooppunt (%s)"
 
 #: ../src/ui/tool/node.cpp:389
 #, c-format
 msgctxt "Path handle tip"
-msgid "<b>%s:</b> drag to shape the segment (%s)"
-msgstr "<b>%s:</b> sleep om het segment te vervormen (%s)"
+msgid "<b>%s</b>: drag to shape the segment (%s)"
+msgstr "<b>%s</b>: sleep om het segment te vervormen (%s)"
 
 #: ../src/ui/tool/node.cpp:405
 #, c-format
@@ -18465,46 +18489,46 @@ msgstr "Handvat verplaatsen met %s, %s; hoek %.2f°, lengte %s"
 
 #: ../src/ui/tool/node.cpp:1144
 msgctxt "Path node tip"
-msgid "<b>Shift:</b> drag out a handle, click to toggle selection"
-msgstr "<b>Shift:</b> sleep een handvat, klik voor selectieverandering"
+msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
+msgstr "<b>Shift</b>: sleep een handvat, klik voor verandering selectie"
 
 #: ../src/ui/tool/node.cpp:1146
 msgctxt "Path node tip"
-msgid "<b>Shift:</b> click to toggle selection"
-msgstr "<b>Shift:</b>: klik voor selectieverandering"
+msgid "<b>Shift</b>: click to toggle selection"
+msgstr "<b>Shift</b>: klik voor verandering selectie"
 
 #: ../src/ui/tool/node.cpp:1151
 msgctxt "Path node tip"
-msgid "<b>Ctrl+Alt:</b> move along handle lines, click to delete node"
+msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
 msgstr "<b>Ctrl+Alt:</b> verplaatsen langs handvatlijnen, klik om knooppunt te verwijderen"
 
 #: ../src/ui/tool/node.cpp:1154
 msgctxt "Path node tip"
-msgid "<b>Ctrl:</b> move along axes, click to change node type"
-msgstr "<b>Ctrl:</b> verplaatsen langs assen, klik om knooppuntty^pe te veranderen"
+msgid "<b>Ctrl</b>: move along axes, click to change node type"
+msgstr "<b>Ctrl</b>: verplaatsen langs assen, klik om knooppuntty^pe te veranderen"
 
 #: ../src/ui/tool/node.cpp:1158
 msgctxt "Path node tip"
-msgid "<b>Alt:</b> sculpt nodes"
-msgstr "<b>Alt:</b> knooppunten boetseren"
+msgid "<b>Alt</b>: sculpt nodes"
+msgstr "<b>Alt</b>: knooppunten boetseren"
 
 #: ../src/ui/tool/node.cpp:1166
 #, c-format
 msgctxt "Path node tip"
-msgid "<b>%s:</b> drag to shape the path (more: Shift, Ctrl, Alt)"
-msgstr "<b>%s:</b> sleep om het pad te vervormen (meer: Shift, Ctrl, Alt)"
+msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
+msgstr "<b>%s</b>: sleep om het pad te vervormen (toetscombinatie: Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1169
 #, c-format
 msgctxt "Path node tip"
-msgid "<b>%s:</b> drag to shape the path, click to toggle scale/rotation handles (more: Shift, Ctrl, Alt)"
-msgstr "<b>%s:</b> sleep om het pad te vervormen, klik om te schakelen tussen schalings- en rotatiehandvatten (meer: Shift, Ctrl, Alt)"
+msgid "<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles (more: Shift, Ctrl, Alt)"
+msgstr "<b>%s</b>: sleep om het pad te vervormen, klik om te schakelen tussen schalings- en rotatiehandvatten (toetscombinaties: Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1172
 #, c-format
 msgctxt "Path node tip"
-msgid "<b>%s:</b> drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt)"
-msgstr "<b>%s:</b> sleep om het pad te vervormen, klik om enkel dit knooppunt te selecteren (more: Shift, Ctrl, Alt)"
+msgid "<b>%s</b>: drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt)"
+msgstr "<b>%s</b>: sleep om het pad te vervormen, klik om enkel dit knooppunt te selecteren (toetscombinaties: Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1180
 #, c-format
@@ -18547,8 +18571,8 @@ msgstr "Handvat intrekken"
 
 #: ../src/ui/tool/transform-handle-set.cpp:137
 msgctxt "Transform handle tip"
-msgid "<b>Shift+Ctrl:</b> scale uniformly about the rotation center"
-msgstr "<b>Shift+Ctrl:</b> uniform schalen rond het rotatiecentrum"
+msgid "<b>Shift+Ctrl</b>: scale uniformly about the rotation center"
+msgstr "<b>Shift+Ctrl</b>: uniform schalen rond het rotatiecentrum"
 
 #: ../src/ui/tool/transform-handle-set.cpp:139
 msgctxt "Transform handle tip"
@@ -18557,23 +18581,23 @@ msgstr "<b>Ctrl:</b> uniform schalen"
 
 #: ../src/ui/tool/transform-handle-set.cpp:144
 msgctxt "Transform handle tip"
-msgid "<b>Shift+Alt:</b> scale using an integer ratio about the rotation center"
-msgstr "<b>Shift+Alt:</b> schalen met een gehele verhouding rond het rotatiecentrum"
+msgid "<b>Shift+Alt</b>: scale using an integer ratio about the rotation center"
+msgstr "<b>Shift+Alt</b>: schalen met een gehele verhouding rond het rotatiecentrum"
 
 #: ../src/ui/tool/transform-handle-set.cpp:146
 msgctxt "Transform handle tip"
-msgid "<b>Shift:</b> scale from the rotation center"
-msgstr "<b>Shift:</b> schalen rond het rotatiecentrum"
+msgid "<b>Shift</b>: scale from the rotation center"
+msgstr "<b>Shift</b>: schalen rond het rotatiecentrum"
 
 #: ../src/ui/tool/transform-handle-set.cpp:149
 msgctxt "Transform handle tip"
-msgid "<b>Alt:</b> scale using an integer ratio"
-msgstr "<b>Alt:</b> schalen met een gehele verhouding"
+msgid "<b>Alt</b>: scale using an integer ratio"
+msgstr "<b>Alt</b>: schalen met een gehele verhouding"
 
 #: ../src/ui/tool/transform-handle-set.cpp:151
 msgctxt "Transform handle tip"
-msgid "<b>Scale handle:</b> drag to scale the selection"
-msgstr "<b>Schaalhandvat:</b> sleep om de selectie te schalen"
+msgid "<b>Scale handle</b>: drag to scale the selection"
+msgstr "<b>Schaalhandvat</b>: sleep om de selectie te schalen"
 
 #: ../src/ui/tool/transform-handle-set.cpp:156
 #, c-format
@@ -18584,24 +18608,24 @@ msgstr "Schaal met %.2f%% x %.2f%%"
 #: ../src/ui/tool/transform-handle-set.cpp:311
 #, c-format
 msgctxt "Transform handle tip"
-msgid "<b>Shift+Ctrl:</b> rotate around the opposite corner and snap angle to %f° increments"
-msgstr "<b>Shift+Ctrl:</b> roteren rond de tegenoverliggende hoek en hoek beperken tot stappen van %f°"
+msgid "<b>Shift+Ctrl</b>: rotate around the opposite corner and snap angle to %f° increments"
+msgstr "<b>Shift+Ctrl</b>: roteren rond de tegenoverliggende hoek en hoek beperken tot stappen van %f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:314
 msgctxt "Transform handle tip"
-msgid "<b>Shift:</b> rotate around the opposite corner"
-msgstr "<b>Shift:</b> roteren rond de tegenoverliggende hoek"
+msgid "<b>Shift</b>: rotate around the opposite corner"
+msgstr "<b>Shift</b>: roteren rond de tegenoverliggende hoek"
 
 #: ../src/ui/tool/transform-handle-set.cpp:318
 #, c-format
 msgctxt "Transform handle tip"
-msgid "<b>Ctrl:</b> snap angle to %f° increments"
-msgstr "<b>Ctrl:</b> hoek beperken tot stappen van %f°"
+msgid "<b>Ctrl</b>: snap angle to %f° increments"
+msgstr "<b>Ctrl</b>: hoek beperken tot stappen van %f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:320
 msgctxt "Transform handle tip"
-msgid "<b>Rotation handle:</b> drag to rotate the selection around the rotation center"
-msgstr "<b>Rotatiehandvat:</b> sleep om de selectie te roteren rond het rotatiecentrum"
+msgid "<b>Rotation handle</b>: drag to rotate the selection around the rotation center"
+msgstr "<b>Rotatiehandvat</b>: sleep om de selectie te roteren rond het rotatiecentrum"
 
 #. event
 #: ../src/ui/tool/transform-handle-set.cpp:325
@@ -18613,24 +18637,24 @@ msgstr "Roteren met %.2f°"
 #: ../src/ui/tool/transform-handle-set.cpp:419
 #, c-format
 msgctxt "Transform handle tip"
-msgid "<b>Shift+Ctrl:</b> skew about the rotation center with snapping to %f° increments"
-msgstr "<b>Shift+Ctrl:</b> scheeftrekken rond het rotatiecentrum met stappen van %f°"
+msgid "<b>Shift+Ctrl</b>: skew about the rotation center with snapping to %f° increments"
+msgstr "<b>Shift+Ctrl</b>: scheeftrekken rond het rotatiecentrum met stappen van %f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:422
 msgctxt "Transform handle tip"
-msgid "<b>Shift:</b> skew about the rotation center"
-msgstr "<b>Shift:</b>: scheeftrekken rond het rotatiecentrum"
+msgid "<b>Shift</b>: skew about the rotation center"
+msgstr "<b>Shift</b>: scheeftrekken rond het rotatiecentrum"
 
 #: ../src/ui/tool/transform-handle-set.cpp:426
 #, c-format
 msgctxt "Transform handle tip"
-msgid "<b>Ctrl:</b> snap skew angle to %f° increments"
-msgstr "<b>Ctrl:</b> scheeftrekken met stappen van %f°"
+msgid "<b>Ctrl</b>: snap skew angle to %f° increments"
+msgstr "<b>Ctrl</b>: scheeftrekken met stappen van %f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:429
 msgctxt "Transform handle tip"
-msgid "<b>Skew handle:</b> drag to skew (shear) selection about the opposite handle"
-msgstr "<b>Hellingshandvat:</b> sleep om de selectie scheef te trekken rond het tegenovergestelde handvat"
+msgid "<b>Skew handle</b>: drag to skew (shear) selection about the opposite handle"
+msgstr "<b>Hellingshandvat</b>: sleep om de selectie scheef te trekken rond het tegenovergestelde handvat"
 
 #: ../src/ui/tool/transform-handle-set.cpp:435
 #, c-format
@@ -18646,8 +18670,8 @@ msgstr "Verticaal scheeftrekken met %.2f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:479
 msgctxt "Transform handle tip"
-msgid "<b>Rotation center:</b> drag to change the origin of transforms"
-msgstr "<b>Rotatiecentrum:</b> sleep om de oorsprong van transformaties aan te passen"
+msgid "<b>Rotation center</b>: drag to change the origin of transforms"
+msgstr "<b>Rotatiecentrum</b>: sleep om de oorsprong van transformaties aan te passen"
 
 #: ../src/ui/view/edit-widget.cpp:330 ../src/ui/view/edit-widget.cpp:335
 #: ../src/ui/view/edit-widget.cpp:343 ../src/ui/view/edit-widget.cpp:348
@@ -23857,6 +23881,10 @@ msgstr "Rijen"
 msgid "Square Size / px"
 msgstr "Grootte vierkant (px)"
 
+#: ../share/extensions/text_sentencecase.inx.h:1
+msgid "Sentence case"
+msgstr "Eerste woord in zin met hoofdletter"
+
 #: ../share/extensions/wireframe_sphere.inx.h:1
 msgid "Hide lines behind the sphere"
 msgstr "Lijnen achter de sfeer verbergen"
@@ -24063,21 +24091,6 @@ msgstr "Draadmodel sfeer"
 
 #~ msgid "The selection has no applied mask."
 #~ msgstr "De selectie bevat geen toegepast masker."
-
-#~ msgid "<b>Path</b> (%i node, path effect: %s)"
-#~ msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
-#~ msgstr[0] "<b>Pad</b> (%i knoop, padeffect: %s)"
-#~ msgstr[1] "<b>Pad</b> (%i knopen, padeffect: %s)"
-
-#~ msgid "<b>Star</b> with %d vertex"
-#~ msgid_plural "<b>Star</b> with %d vertices"
-#~ msgstr[0] "<b>Ster</b> met %d punt"
-#~ msgstr[1] "<b>Ster</b> met %d punten"
-
-#~ msgid "<b>Polygon</b> with %d vertex"
-#~ msgid_plural "<b>Polygon</b> with %d vertices"
-#~ msgstr[0] "<b>Veelhoek</b> met %d hoek"
-#~ msgstr[1] "<b>Veelhoek</b> met %d hoeken"
 
 #~ msgid "<b>Conditional group</b> of <b>%d</b> object"
 #~ msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
