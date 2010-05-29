@@ -428,7 +428,7 @@ et en arrondissant la zone à exporter aux valeurs entières juste supérieures 
 unités utilisateur SVG (afin de préserver l'alignement des objets sur des pixels
 et minimiser l'anti-crénelage) :
 
-    inkscape nomdefichier.svg --export-id=text1555 --export-png=texte.png --export-snap-area
+    inkscape nomdefichier.svg --export-id=text1555 --export-png=texte.png --export-area-snap
 
 Convertir un document du format SVG Inkscape au format SVG brut :
 

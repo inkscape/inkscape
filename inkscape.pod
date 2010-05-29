@@ -404,7 +404,7 @@ Same, but use the default 90 dpi resolution, specify the filename,
 and snap the exported area outwards to the nearest whole SVG user unit values 
 (to preserve pixel-alignment of objects and thus minimize aliasing):
 
-    inkscape filename.svg --export-id=text1555 --export-png=text.png --export-snap-area
+    inkscape filename.svg --export-id=text1555 --export-png=text.png --export-area-snap
 
 Convert an Inkscape SVG document to plain SVG:
 

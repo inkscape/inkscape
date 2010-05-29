@@ -391,7 +391,7 @@ To isté, ale použiť rozlíšenie 90 dpi, určiť názov súboru a prichytiť
 exportovanú oblasť smerom von k najbližšej celej hodnte používateľskej jednotky
 SVG (aby sa zachovalo zarovnanie objektov na pixle a tak minimalizoval aliasing):
 
-    inkscape subor.svg --export-id=text1555 --export-png=text.png --export-snap-area
+    inkscape subor.svg --export-id=text1555 --export-png=text.png --export-area-snap
 
 Previesť Inkscape SVG na čistý SVG dokument:
 
