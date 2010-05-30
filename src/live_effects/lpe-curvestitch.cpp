@@ -192,6 +192,7 @@ LPECurveStitch::resetDefaults(SPItem * item)
 /** /todo check whether this special case is necessary. It seems to "bug" editing behavior:
  * scaling an object with transforms preserved behaves differently from scaling with
  * transforms optimized (difference caused by this special method).
+ * special casing is probably needed, because rotation should not be propagated to the strokepath.
  */
 void
 LPECurveStitch::transform_multiply(Geom::Matrix const& postmul, bool set)
