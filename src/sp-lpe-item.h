@@ -35,7 +35,8 @@ namespace LivePathEffect{
 
 typedef std::list<Inkscape::LivePathEffect::LPEObjectReference *> PathEffectList;
 
-struct SPLPEItem : public SPItem {
+class SPLPEItem : public SPItem {
+public:
     int path_effects_enabled;
 
     PathEffectList* path_effect_list;
@@ -43,6 +44,9 @@ struct SPLPEItem : public SPItem {
 
     Inkscape::LivePathEffect::LPEObjectReference* current_path_effect;
     std::vector<Inkscape::Display::TemporaryItem*> lpe_helperpaths;
+
+    void replacePathEffects( std::vector<LivePathEffectObject const *> const old_lpeobjs,
+                             std::vector<LivePathEffectObject const *> const new_lpeobjs );
 };
 
 struct SPLPEItemClass {
@@ -57,8 +61,6 @@ void sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool wri
 bool sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve);
 void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset);
 void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * new_lpeobj);
-void sp_lpe_item_replace_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * old_lpeobj,
-                                        LivePathEffectObject * new_lpeobj);
 bool sp_lpe_item_fork_path_effects_if_necessary(SPLPEItem *lpeitem, unsigned int nr_of_allowed_users = 1);
 void sp_lpe_item_remove_all_path_effects(SPLPEItem *lpeitem, bool keep_paths);
 void sp_lpe_item_remove_current_path_effect(SPLPEItem *lpeitem, bool keep_paths);
