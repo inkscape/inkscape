@@ -7063,6 +7063,21 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
+    // Only flowed text can be justified, only normal text can be kerned...
+    // Find out if we have flowed text now so we can use it several places
+    gboolean isFlow = false;
+    for (GSList const *items = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
+         items != NULL;
+         items = items->next) {
+        // const gchar* id = SP_OBJECT_ID((SPItem *) items->data);
+        // std::cout << "    " << id << std::endl;
+        if( SP_IS_FLOWTEXT(( SPItem *) items->data )) {
+            isFlow = true;
+            // std::cout << "   Found flowed text" << std::endl;
+            break;
+        }
+    }
+
     /*
      * Query from current selection:
      *   Font family (font-family)
@@ -7151,19 +7166,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         // Note: SVG 1.1 doesn't include text-align, SVG 1.2 Tiny doesn't include text-align="justify"
         // text-align="justify" was a draft SVG 1.2 item (along with flowed text).
         // Only flowed text can be left and right justified at the same time.
-        // Check if we have flowed text and disable botton.
-        gboolean isFlow = false;
-        for (GSList const *items = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
-             items != NULL;
-             items = items->next) {
-            // const gchar* id = SP_OBJECT_ID((SPItem *) items->data);
-            // std::cout << "    " << id << std::endl;
-            if( SP_IS_FLOWTEXT(( SPItem *) items->data )) {
-                isFlow = true;
-                // std::cout << "   Found flowed text" << std::endl;
-                break;
-            }
-        }
+        // Disable button if we don't have flowed text.
 
         // The GtkTreeModel class doesn't have a set function so we can't
         // simply add an ege_select_one_action_set_sensitive method!
@@ -7216,7 +7219,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         GtkAdjustment *wordSpacingAdjustment =
             ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( wordSpacingAction ));
         gtk_adjustment_set_value( wordSpacingAdjustment, wordSpacing );
- 
+
 
         // Letter spacing
         double letterSpacing;
@@ -7302,6 +7305,19 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
             }
         }
     }
+
+    {
+        // Set these here as we don't always have kerning/rotating attributes
+        GtkAction* dxAction = GTK_ACTION( g_object_get_data( tbl, "TextDxAction" ));
+        gtk_action_set_sensitive( GTK_ACTION(dxAction), !isFlow );
+
+        GtkAction* dyAction = GTK_ACTION( g_object_get_data( tbl, "TextDyAction" ));
+        gtk_action_set_sensitive( GTK_ACTION(dyAction), !isFlow );
+
+        GtkAction* rotationAction = GTK_ACTION( g_object_get_data( tbl, "TextRotationAction" ));
+        gtk_action_set_sensitive( GTK_ACTION(rotationAction), !isFlow );
+    }
+
 #ifdef DEBUG_TEXT
     std::cout << "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" << std::endl;
     std::cout << std::endl;
@@ -7528,7 +7544,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             _("Line Height"),                     /* label */
             _("Line:"),                           /* short label */
             _("Spacing between lines (times font size)"),      /* tooltip */
-            "/tools/text/lineheight",             /* path? */
+            "/tools/text/lineheight",             /* preferences path */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
             NULL,                                 /* unit selector */
@@ -7559,7 +7575,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             _("Word spacing"),                    /* label */
             _("Word:"),                           /* short label */
             _("Spacing between words (px)"),     /* tooltip */
-            "/tools/text/wordspacing",            /* path? */
+            "/tools/text/wordspacing",            /* preferences path */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
             NULL,                                 /* unit selector */
@@ -7590,7 +7606,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             _("Letter spacing"),                  /* label */
             _("Letter:"),                         /* short label */
             _("Spacing between letters (px)"),   /* tooltip */
-            "/tools/text/letterspacing",          /* path? */
+            "/tools/text/letterspacing",          /* preferences path */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
             NULL,                                 /* unit selector */
@@ -7621,7 +7637,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             _("Kerning"),                         /* label */
             _("Kern:"),                           /* short label */
             _("Horizontal kerning (px)"), /* tooltip */
-            "/tools/text/dx",                     /* path? */
+            "/tools/text/dx",                     /* preferences path */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
             NULL,                                 /* unit selector */
@@ -7652,7 +7668,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             _("Vertical Shift"),                  /* label */
             _("Vert:"),                           /* short label */
             _("Vertical shift (px)"),   /* tooltip */
-            "/tools/text/dy",                     /* path? */
+            "/tools/text/dy",                     /* preferences path */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
             NULL,                                 /* unit selector */
@@ -7683,7 +7699,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             _("Letter rotation"),                 /* label */
             _("Rot:"),                            /* short label */
             _("Character rotation (degrees)"),/* tooltip */
-            "/tools/text/letterspacing",          /* path? */
+            "/tools/text/rotation",               /* preferences path */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
             NULL,                                 /* unit selector */
