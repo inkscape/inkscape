@@ -203,6 +203,7 @@ protected:
     RegisteredUnitMenu   _dimensionUnits;
     RegisteredScalarUnit _dimensionWidth;
     RegisteredScalarUnit _dimensionHeight;
+    GList *              _dimTabOrderGList;
 
     //### Fit Page options
     Gtk::Expander        _fitPageMarginExpander;
