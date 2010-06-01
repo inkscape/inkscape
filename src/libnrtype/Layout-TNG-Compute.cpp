@@ -76,7 +76,14 @@ class Layout::Calculator
 
     /** for y= attributes in tspan elements et al, we do the adjustment by moving each
     glyph individually by this number. The spec means that this is maintained across
-    paragraphs. */
+    paragraphs.
+
+    To do non-flow text layout, only the first "y" attribute is normally used. If there is only one
+    "y" attribute in a <tspan> other than the first <tspan>, it is ignored. This allows Inkscape to
+    insert a new line anywhere. On output, the Inkscape determined "y" is written out so other SVG
+    viewers know where to place the <tspans>.
+    */
+
     double _y_offset;
 
     /** to stop pango from hinting its output, the font factory creates all fonts very large.
@@ -158,7 +165,9 @@ class Layout::Calculator
         void setZero();
     };
 
-    /** The definition of a chunk used here is the same as that used in Layout. */
+    /** The definition of a chunk used here is the same as that used in Layout:
+    A collection of contiguous broken spans on the same line. (One chunk per line
+    unless shape splits line into several sections... then one chunk per section. */
     struct ChunkInfo {
         std::vector<BrokenSpan> broken_spans;
         double scanrun_width;
@@ -410,6 +419,7 @@ class Layout::Calculator
     */
     void _outputLine(ParagraphInfo const &para, LineHeight const &line_height, std::vector<ChunkInfo> const &chunk_info)
     {
+        TRACE(("Start _outputLine\n"));
         if (chunk_info.empty()) {
             TRACE(("line too short to fit anything on it, go to next\n"));
             return;
@@ -429,19 +439,45 @@ class Layout::Calculator
             // add the chunk to the list
             Layout::Chunk new_chunk;
             new_chunk.in_line = _flow._lines.size() - 1;
+            TRACE(("  New chunk: in_line: %d\n", new_chunk.in_line));
             new_chunk.left_x = _getChunkLeftWithAlignment(para, it_chunk, &add_to_each_whitespace);
+
             // we may also have y move orders to deal with here (dx, dy and rotate are done per span)
-            if (!it_chunk->broken_spans.empty()    // this one only happens for empty paragraphs
-                && it_chunk->broken_spans.front().start.char_byte == 0
-                && it_chunk->broken_spans.front().start.iter_span->y._set) {
-                // if this is the start of a line, we should change the baseline rather than each glyph individually
-                if (_flow._characters.empty() || _flow._characters.back().chunk(&_flow).in_line != _flow._lines.size() - 1) {
-                    new_line.baseline_y = it_chunk->broken_spans.front().start.iter_span->y.computed;
-                    _flow._lines.back().baseline_y = new_line.baseline_y;
+
+            // Comment added:  1 June 2010:
+            // The first line in a normal <text> object is placed by the read-in "y" value. The rest are
+            // determined by Inkscape. This is to allow insertation of new lines in the middle
+            // of a <text> object. New "y" values are then stored in each <tspan> that represents
+            // a new line. The line spacing should depend only on font-size and line-height (and not
+            // on any y-kerning). Line spacing is already handled by the calling routine. Note that
+            // this may render improperly any SVG with <tspan>s created/edited by other programs.
+            if (!it_chunk->broken_spans.empty()                               // Not empty paragraph
+                && it_chunk->broken_spans.front().start.char_byte == 0 ) {    // Beginning of unbroken span
+
+                // If empty or new line
+                if( _flow._characters.empty() ||
+                    _flow._characters.back().chunk(&_flow).in_line != _flow._lines.size() - 1) {
+
+                    // If <tspan> "y" attribute is set, use it (initial "y" attributes in
+                    // <tspans> other than the first have already been stripped).
+                    if( it_chunk->broken_spans.front().start.iter_span->y._set ) {
+
+                        // Use set "y" attribute
+                        new_line.baseline_y = it_chunk->broken_spans.front().start.iter_span->y.computed;
+
+                        // Save baseline
+                        _flow._lines.back().baseline_y = new_line.baseline_y;
+
+                        // Save new <tspan> y coordinate
+                        _scanline_maker->setNewYCoordinate(new_line.baseline_y - line_height.ascent);
+
+                    }
+
+                    // Reset relative y_offset ("dy" attribute is relative but should be reset at
+                    // the beginning of each <tspan>.)
                     _y_offset = 0.0;
-                    _scanline_maker->setNewYCoordinate(new_line.baseline_y - line_height.ascent);
-                } else
-                    _y_offset = it_chunk->broken_spans.front().start.iter_span->y.computed - new_line.baseline_y;
+
+                }
             }
             _flow._chunks.push_back(new_chunk);
 
@@ -466,7 +502,8 @@ class Layout::Calculator
                 UnbrokenSpan const &unbroken_span = *it_span->start.iter_span;
 
                 if (it_span->start.char_byte == 0) {
-                    // start of an unbroken span, we might have dx, dy or rotate still to process (x and y are done per chunk)
+                    // Start of an unbroken span, we might have dx, dy or rotate still to process
+                    // (x and y are done per chunk)
                     if (unbroken_span.dx._set) x += unbroken_span.dx.computed;
                     if (unbroken_span.dy._set) _y_offset += unbroken_span.dy.computed;
                     if (unbroken_span.rotate._set) glyph_rotate = unbroken_span.rotate.computed * (M_PI/180);
@@ -984,6 +1021,7 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
             }
         } else if (_flow._input_stream[input_index]->Type() == TEXT_SOURCE && pango_item_index < para->pango_items.size()) {
             Layout::InputStreamTextSource const *text_source = static_cast<Layout::InputStreamTextSource const *>(_flow._input_stream[input_index]);
+
             unsigned char_index_in_source = 0;
 
             unsigned span_start_byte_in_source = 0;
@@ -1000,6 +1038,7 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                 unsigned const text_source_bytes = ( text_source->text_end.base()
                                                      - text_source->text_begin.base()
                                                      - span_start_byte_in_source );
+                TRACE(("New Span\n"));
                 UnbrokenSpan new_span;
                 new_span.text_bytes = std::min(text_source_bytes, pango_item_bytes);
                 new_span.input_stream_first_character = Glib::ustring::const_iterator(text_source->text_begin.base() + span_start_byte_in_source);
@@ -1385,7 +1424,7 @@ bool Layout::Calculator::calculate()
     _createFirstScanlineMaker();
 
     ParagraphInfo para;
-    LineHeight line_height;     // needs to be maintained across paragraphs to be able to deal with blank paras (this is wrong)
+    LineHeight line_height; // needs to be maintained across paragraphs to be able to deal with blank paras
     for(para.first_input_index = 0 ; para.first_input_index < _flow._input_stream.size() ; ) {
         // jump to the next wrap shape if this is a SHAPE_BREAK control code
         if (_flow._input_stream[para.first_input_index]->Type() == CONTROL_CODE) {
@@ -1426,7 +1465,7 @@ bool Layout::Calculator::calculate()
                 break;   // out of shapes to wrap in to
 
             _outputLine(para, line_height, line_chunk_info);
-            _scanline_maker->completeLine();
+            _scanline_maker->completeLine(); // Increments y by line height
         } while (span_pos.iter_span != para.unbroken_spans.end());
 
         TRACE(("para %d end\n\n", _flow._paragraphs.size() - 1));
