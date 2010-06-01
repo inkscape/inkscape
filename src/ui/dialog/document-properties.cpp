@@ -825,6 +825,7 @@ DocumentProperties::update()
     double const doc_w_px = sp_document_width(sp_desktop_document(dt));
     double const doc_h_px = sp_document_height(sp_desktop_document(dt));
     _page_sizer.setDim (doc_w_px, doc_h_px);
+    _page_sizer.updateFitMarginsUI(SP_OBJECT_REPR(nv));
 
     //-----------------------------------------------------------guide page
 

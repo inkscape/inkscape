@@ -682,7 +682,7 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
                 margin_units = sp_unit_get_by_abbreviation(units_abbr);
             }
             if (margin_units == NULL) {
-                margin_units = &sp_unit_get_by_id(SP_UNIT_PX);
+                margin_units = &px;
             }
             margin_top = getMarginLength(nv_repr, "fit-margin-top",
                                          margin_units, &px, w, h, false);

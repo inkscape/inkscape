@@ -14,10 +14,11 @@
 
 #include <gtkmm.h>
 #include <sigc++/sigc++.h>
+
+#include "helper/units.h"
 #include "ui/widget/registry.h"
 #include "ui/widget/registered-widget.h"
-#include "helper/units.h"
-
+#include "xml/node.h"
 
 namespace Inkscape {    
 namespace UI {
@@ -141,6 +142,12 @@ public:
      * true, then reset the paper size list to the closest match
      */
     void setDim (double w, double h, bool changeList=true);
+    
+    /**
+     * Updates the scalar widgets for the fit margins.  (Just changes the value
+     * of the ui widgets to match the xml).
+     */
+    void updateFitMarginsUI(Inkscape::XML::Node *nv_repr);
  
 protected:
 
