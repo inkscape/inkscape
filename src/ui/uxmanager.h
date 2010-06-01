@@ -34,19 +34,22 @@ public:
     static UXManager* getInstance();
     virtual ~UXManager();
 
-    void addTrack( SPDesktopWidget* dtw );
-    void delTrack( SPDesktopWidget* dtw );
+    virtual void addTrack( SPDesktopWidget* dtw ) = 0;
+    virtual void delTrack( SPDesktopWidget* dtw ) = 0;
 
-    void connectToDesktop( std::vector<GtkWidget *> const & toolboxes, SPDesktop *desktop );
+    virtual void connectToDesktop( std::vector<GtkWidget *> const & toolboxes, SPDesktop *desktop ) = 0;
 
-    void setTask(SPDesktop* dt, gint val);
+    virtual void setTask(SPDesktop* dt, gint val) = 0;
 
-    bool isFloatWindowProblem() const;
+    virtual bool isFloatWindowProblem() const = 0;
+    virtual bool isWidescreen() const = 0;
 
-private:
+protected:
     UXManager();
 
-    bool floatwindowIssues;
+private:
+    UXManager( UXManager const & );
+    UXManager & operator=( UXManager const & );
 };
 
 } // namespace UI
