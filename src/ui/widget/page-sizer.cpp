@@ -312,9 +312,9 @@ PageSizer::PageSizer(Registry & _wr)
     _customDimTable.attach(_fitPageMarginExpander, 0,2, 2,3);
     
     _dimTabOrderGList = NULL;
-    _dimTabOrderGList = g_list_append(_dimTabOrderGList, _dimensionUnits.gobj());
     _dimTabOrderGList = g_list_append(_dimTabOrderGList, _dimensionWidth.gobj());
     _dimTabOrderGList = g_list_append(_dimTabOrderGList, _dimensionHeight.gobj());
+    _dimTabOrderGList = g_list_append(_dimTabOrderGList, _dimensionUnits.gobj());
     _dimTabOrderGList = g_list_append(_dimTabOrderGList, _fitPageMarginExpander.gobj());
     Glib::ListHandle<Widget *> dimFocusChain(_dimTabOrderGList, Glib::OWNERSHIP_NONE);
     _customDimTable.set_focus_chain(dimFocusChain);    
