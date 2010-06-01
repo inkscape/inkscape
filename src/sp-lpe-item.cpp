@@ -814,6 +814,10 @@ bool sp_lpe_item_fork_path_effects_if_necessary(SPLPEItem *lpeitem, unsigned int
         // so that each object has its own independent copy of the effect.
         // Note: replacing path effects messes up the path effect list
 
+        // Clones of the LPEItem will increase the refcount of the lpeobjects.
+        // Therefore, nr_of_allowed_users should be increased with the number of clones (i.e. refs to the lpeitem)
+        nr_of_allowed_users += SP_OBJECT(lpeitem)->hrefcount;
+
         std::vector<LivePathEffectObject const *> old_lpeobjs, new_lpeobjs;
         PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);
         for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); it++)
