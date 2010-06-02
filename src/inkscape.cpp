@@ -595,6 +595,8 @@ inkscape_crash_handler (int /*signum*/)
     strftime (sptstr, 256, "%Y_%m_%d_%H_%M_%S", sptm);
 
     gint count = 0;
+    gchar *curdir = g_get_current_dir(); // This one needs to be freed explicitly
+    gchar *inkscapedir = g_path_get_dirname(INKSCAPE->argv0); // Needs to be freed
     GSList *savednames = NULL;
     GSList *failednames = NULL;
     for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin();
@@ -604,55 +606,57 @@ inkscape_crash_handler (int /*signum*/)
         Inkscape::XML::Node *repr;
         repr = sp_document_repr_root (doc);
         if (doc->isModifiedSinceSave()) {
-            const gchar *docname, *d0, *d;
-            gchar n[64], c[1024];
-            FILE *file;
+            const gchar *docname;
 
             /* originally, the document name was retrieved from
              * the sodipod:docname attribute */
             docname = doc->name;
             if (docname) {
-                /* fixme: Quick hack to remove emergency file suffix */
-                d0 = strrchr ((char*)docname, '.');
+                /* Removes an emergency save suffix if present: /(.*)\.[0-9_]*\.[0-9_]*\.[~\.]*$/\1/ */
+                const char* d0 = strrchr ((char*)docname, '.');
                 if (d0 && (d0 > docname)) {
-                    d0 = strrchr ((char*)(d0 - 1), '.');
-                    if (d0 && (d0 > docname)) {
-                        d = d0;
-                        while (isdigit (*d) || (*d == '.') || (*d == '_')) d += 1;
-                        if (*d) {
-                            memcpy (n, docname, MIN (d0 - docname - 1, 64));
-                            n[63] = '\0';
-                            docname = n;
-                        }
+                    const char* d = d0;
+                    unsigned int dots = 0;
+                    while ((isdigit (*d) || *d=='_' || *d=='.') && d>docname && dots<2) {
+                        d -= 1;
+                        if (*d=='.') dots++;
+                    }
+                    if (*d=='.' && d>docname && dots==2) {
+                        char n[64];
+                        size_t len = MIN (d - docname, 63);
+                        memcpy (n, docname, len);
+                        n[len] = '\0';
+                        docname = n;
                     }
                 }
             }
-
             if (!docname || !*docname) docname = "emergency";
-            // try saving to the profile location
+
+            // Emergency filename
+            char c[1024];
             g_snprintf (c, 1024, "%.256s.%s.%d.svg", docname, sptstr, count);
-            gchar * location = homedir_path(c);
-            Inkscape::IO::dump_fopen_call(location, "E");
-            file = Inkscape::IO::fopen_utf8name(location, "w");
-            g_snprintf (c, 1024, "%s", location); // we want the complete path to be stored in c (for reporting purposes)
-            g_free(location);
-            if (!file) {
-                // try saving to /tmp
-                g_snprintf (c, 1024, "/tmp/inkscape-%.256s.%s.%d.svg", docname, sptstr, count);
-                Inkscape::IO::dump_fopen_call(c, "G");
-                file = Inkscape::IO::fopen_utf8name(c, "w");
+
+            // Find a location
+            const char* locations[] = {
+                doc->base,
+                g_get_home_dir(),
+                g_get_tmp_dir(),
+                curdir,
+                inkscapedir
+            };
+            FILE *file;
+            for(size_t i=0; i<sizeof(locations)/sizeof(*locations); i++) {
+                if (!locations[i]) continue; // It seems to be okay, but just in case
+                gchar * filename = g_build_filename(locations[i], c, NULL);
+                Inkscape::IO::dump_fopen_call(filename, "E");
+                file = Inkscape::IO::fopen_utf8name(filename, "w");
+                if (file) {
+                    g_snprintf (c, 1024, "%s", filename); // we want the complete path to be stored in c (for reporting purposes)
+                    break;
+                }
             }
-            if (!file) {
-                // try saving to the current directory
-                gchar *curdir = g_get_current_dir();
-                g_snprintf (c, 1024, "inkscape-%.256s.%s.%d.svg", docname, sptstr, count);
-                Inkscape::IO::dump_fopen_call(c, "F");
-                file = Inkscape::IO::fopen_utf8name(c, "w");
-                // store the complete path in c so that it can be reported later
-                gchar * location = g_build_filename(curdir, c, NULL);
-                g_snprintf (c, 1024, "%s", location);
-                g_free(location);
-            }
+
+            // Save
             if (file) {
                 sp_repr_save_stream (repr->document(), file, SP_SVG_NS_URI);
                 savednames = g_slist_prepend (savednames, g_strdup (c));
@@ -663,6 +667,8 @@ inkscape_crash_handler (int /*signum*/)
             count++;
         }
     }
+    g_free(curdir);
+    g_free(inkscapedir);
 
     savednames = g_slist_reverse (savednames);
     failednames = g_slist_reverse (failednames);
