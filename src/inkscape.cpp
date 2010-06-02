@@ -644,7 +644,7 @@ inkscape_crash_handler (int /*signum*/)
                 curdir,
                 inkscapedir
             };
-            FILE *file;
+            FILE *file = 0;
             for(size_t i=0; i<sizeof(locations)/sizeof(*locations); i++) {
                 if (!locations[i]) continue; // It seems to be okay, but just in case
                 gchar * filename = g_build_filename(locations[i], c, NULL);
