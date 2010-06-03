@@ -14755,7 +14755,7 @@ msgstr "_Licenza"
 #. should be in UTF-*8..
 #: ../src/ui/dialog/aboutbox.cpp:149
 msgid "about.svg"
-msgstr "about.gl.svg"
+msgstr "about.svg"
 
 # Créditos dos tradutores
 #. TRANSLATORS: Put here your name (and other national contributors')

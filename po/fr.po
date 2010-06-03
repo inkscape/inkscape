@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-05-26 22:13+0200\n"
-"PO-Revision-Date: 2010-05-26 22:26+0100\n"
+"PO-Revision-Date: 2010-06-03 21:22+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -8683,7 +8683,7 @@ msgstr "lier"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:155
 msgid "Embed results in stand-alone, larger SVG files. Link references a file outside this SVG document and all files must be moved together."
-msgstr "Incorporer génère un fichier SVG unique, mais plus volumineux. Lier crée une référence vers un fichier externe au document SVG qui doit être déplacés avec le fichier SVG."
+msgstr "Incorporer génère un fichier SVG unique, mais plus volumineux. Lier crée une référence vers un fichier externe au document SVG qui doit être déplacé avec le fichier SVG."
 
 #: ../src/extension/internal/gimpgrad.cpp:274
 msgid "GIMP Gradients"
@@ -9910,7 +9910,7 @@ msgstr "<b>Redimensionner</b> le motif de remplissage ; uniformiser en maintena
 
 #: ../src/knotholder.cpp:256
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Tourner</b> le motif de remplissage; <b>Ctrl</b> pour tourner par incréments"
+msgstr "<b>Tourner</b> le motif de remplissage ; <b>Ctrl</b> pour tourner par incréments"
 
 #: ../src/libgdl/gdl-dock-bar.c:108
 msgid "Master"
@@ -18881,10 +18881,9 @@ msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
 msgstr "<b>Ctrl</b> : forcer l'incrément de l'angle de rotation à %g °, cliquer pour rétracter"
 
 #: ../src/ui/tool/node.cpp:379
-#, fuzzy
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: rotate both handles by the same angle"
-msgstr "<b>Maj</b> : dessiner autour du point de départ"
+msgstr "<b>Maj</b> : applique une rotation d'angle identique aux deux poignées"
 
 #: ../src/ui/tool/node.cpp:386
 #, c-format
@@ -18905,10 +18904,9 @@ msgid "Move handle by %s, %s; angle %.2f°, length %s"
 msgstr "Déplacement des poignées de %s, %s; angle %.2f°, longueur %s"
 
 #: ../src/ui/tool/node.cpp:1144
-#, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
-msgstr "<b>Maj</b> : cliquer pour inverser l'état de sélection, cliquer-déplacer pour activer la sélection rectangle"
+msgstr "<b>Maj</b> : cliquer-déplacer pour étirer une poignée, cliquer pour inverser l'état de sélection"
 
 #: ../src/ui/tool/node.cpp:1146
 msgctxt "Path node tip"
@@ -18989,10 +18987,9 @@ msgid "Retract handle"
 msgstr "Retracter la poignée"
 
 #: ../src/ui/tool/transform-handle-set.cpp:137
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift+Ctrl</b>: scale uniformly about the rotation center"
-msgstr "<b>Redimensionner</b> la sélection; <b>Ctrl</b> pour redimensionner uniformément autour du centre de rotation"
+msgstr "<b>Maj+Ctrl</b> : redimensionne uniformément autour du centre de rotation"
 
 #: ../src/ui/tool/transform-handle-set.cpp:139
 msgctxt "Transform handle tip"
@@ -19000,10 +18997,9 @@ msgid "<b>Ctrl:</b> scale uniformly"
 msgstr "<b>Ctrl</b> : redimensionner uniformément"
 
 #: ../src/ui/tool/transform-handle-set.cpp:144
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift+Alt</b>: scale using an integer ratio about the rotation center"
-msgstr "<b>Redimensionner</b> la sélection; <b>Ctrl</b> pour redimensionner uniformément autour du centre de rotation"
+msgstr "<b>Maj+Alt</b> : redimensionne conformément à un rapport entier autour du centre de rotation"
 
 #: ../src/ui/tool/transform-handle-set.cpp:146
 msgctxt "Transform handle tip"
@@ -19011,16 +19007,14 @@ msgid "<b>Shift</b>: scale from the rotation center"
 msgstr "<b>Maj</b> : redimensionner à partir du centre de rotation"
 
 #: ../src/ui/tool/transform-handle-set.cpp:149
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Alt</b>: scale using an integer ratio"
-msgstr "<b>Alt</b> : verrouiller le rayon de la spirale"
+msgstr "<b>Alt</b> : redimensionne conformément à un rapport entier"
 
 #: ../src/ui/tool/transform-handle-set.cpp:151
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Scale handle</b>: drag to scale the selection"
-msgstr "<b>Aucun chemin</b> à inverser dans la sélection."
+msgstr "<b>Poignée de redimensionnement</b> : cliquer-déplacer pour redimensionner la sélection"
 
 #: ../src/ui/tool/transform-handle-set.cpp:156
 #, c-format
@@ -19029,28 +19023,26 @@ msgid "Scale by %.2f%% x %.2f%%"
 msgstr "Redimensionnement de %.2f%% x %.2f%%"
 
 #: ../src/ui/tool/transform-handle-set.cpp:311
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Shift+Ctrl</b>: rotate around the opposite corner and snap angle to %f° increments"
-msgstr "<b>Maj</b> : dessiner autour du point de départ"
+msgstr "<b>Maj+Ctrl</b> : tourne autour du coin opposé par incréments de %f °"
 
 #: ../src/ui/tool/transform-handle-set.cpp:314
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: rotate around the opposite corner"
-msgstr "<b>Maj</b> : dessiner autour du point de départ"
+msgstr "<b>Maj</b> : tourne autour du coin opposé"
 
 #: ../src/ui/tool/transform-handle-set.cpp:318
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap angle to %f° increments"
-msgstr "<b>Ctrl</b> : pour tourner par incréments"
+msgstr "<b>Ctrl</b> : tourner par incréments de %f °"
 
 #: ../src/ui/tool/transform-handle-set.cpp:320
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Rotation handle</b>: drag to rotate the selection around the rotation center"
-msgstr "<b>Aucun chemin</b> à inverser dans la sélection."
+msgstr "<b>Poignée de rotation</b> : cliquer-déplacer pour faire tourner la sélection autour du centre de rotation"
 
 #. event
 #: ../src/ui/tool/transform-handle-set.cpp:325
@@ -19060,45 +19052,43 @@ msgid "Rotate by %.2f°"
 msgstr "Rotation de %.2f °"
 
 #: ../src/ui/tool/transform-handle-set.cpp:419
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Shift+Ctrl</b>: skew about the rotation center with snapping to %f° increments"
-msgstr "<b>Maj</b> : dessiner autour du point de départ"
+msgstr "<b>Maj+Ctrl</b> : incliner par rapport au centre de rotation par incréments de %f °"
 
 #: ../src/ui/tool/transform-handle-set.cpp:422
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: skew about the rotation center"
-msgstr "<b>Maj</b> : dessiner autour du point de départ"
+msgstr "<b>Maj</b> : incliner par rapport au centre de rotation"
 
 #: ../src/ui/tool/transform-handle-set.cpp:426
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap skew angle to %f° increments"
-msgstr "<b>Ctrl</b> : pour tourner par incréments"
+msgstr "<b>Ctrl</b> : incliner par incréments de %f °"
 
 #: ../src/ui/tool/transform-handle-set.cpp:429
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Skew handle</b>: drag to skew (shear) selection about the opposite handle"
-msgstr "<b>Aucun chemin</b> à inverser dans la sélection."
+msgstr "<b>Poignée d'inclinaison</b> : cliquer-déplacer pour incliner la sélection par rapport à la poignée opposée"
 
 #: ../src/ui/tool/transform-handle-set.cpp:435
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "Skew horizontally by %.2f°"
-msgstr "Déplacer horizontalement par pixels"
+msgstr "Incline horizontalement de %.2f °"
 
 #: ../src/ui/tool/transform-handle-set.cpp:438
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "Skew vertically by %.2f°"
-msgstr "Déplacer verticalement par pixels"
+msgstr "Incline verticalement de %.2f °"
 
 #: ../src/ui/tool/transform-handle-set.cpp:479
 msgctxt "Transform handle tip"
 msgid "<b>Rotation center</b>: drag to change the origin of transforms"
-msgstr ""
+msgstr "<b>Centre de rotation</b> : cliquer-déplacer pour modifier l'origine des transformations"
 
 #: ../src/ui/view/edit-widget.cpp:330
 #: ../src/ui/view/edit-widget.cpp:335

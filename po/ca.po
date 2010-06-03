@@ -14271,7 +14271,7 @@ msgstr "_Llicència"
 #. should be in UTF-*8..
 #: ../src/ui/dialog/aboutbox.cpp:149
 msgid "about.svg"
-msgstr "about.ca.svg"
+msgstr "about.svg"
 
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of: name surname (email). Use \n for newline.
@@ -18049,7 +18049,7 @@ msgid ""
 "If set and zoomed out, the gridlines will be shown in normal color instead "
 "of major grid line color"
 msgstr ""
-"Si l'opció està marcada i redueixes l'ampliació, les línies de la graella es  mostraran amb un color normal en comptes del color destacat."
+"Si l'opció està marcada i redueixes l'ampliació, les línies de la graella es mostraran amb un color normal en comptes del color destacat."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1027
 msgid "Default grid settings"
@@ -20236,7 +20236,7 @@ msgid ""
 "Reseed the random number generator; this creates a different sequence of "
 "random numbers."
 msgstr ""
-"Torna a iniciar el generador de números aleatoris; això crearà una seqüència  diferent de números aleatoris."
+"Torna a iniciar el generador de números aleatoris; això crearà una seqüència diferent de números aleatoris."
 
 #: ../src/ui/widget/rendering-options.cpp:39
 msgid "Backend"
@@ -20263,7 +20263,7 @@ msgid ""
 "Render using Cairo vector operations.  The resulting image is usually "
 "smaller in file size and can be arbitrarily scaled, but some filter effects "
 "will not be correctly rendered."
-msgstr "Dibuixa utilitzant operacions vectorials Cairo. La imatge resultant  normalment ocupa menys i es pot escalar a qualsevol mida,  tot i que alguns filtres d'efectes no serviran."
+msgstr "Dibuixa utilitzant operacions vectorials Cairo. La imatge resultant normalment ocupa menys i es pot escalar a qualsevol mida, tot i que alguns filtres d'efectes no serviran."
 
 #: ../src/ui/widget/rendering-options.cpp:57
 msgid ""
@@ -20674,7 +20674,7 @@ msgid_plural ""
 msgstr[0] "El punt volàtil <b>finit</b> el comparteix <b>%d</b> capsa"
 msgstr[1] ""
 "El punt volàtil <b>finit</b> el comparteixen <b>%d</b> capses; arrossegueu-"
-"lo amb <b>Maj</b>  per a separar les capses seleccionades"
+"lo amb <b>Maj</b> per a separar les capses seleccionades"
 
 #. This won't make sense any more when infinite VPs are not shown on the canvas,
 #. but currently we update the status message anyway
@@ -20687,7 +20687,7 @@ msgid_plural ""
 msgstr[0] "El punt volàtil <b>infinit</b> el comparteix <b>%d</b> capsa"
 msgstr[1] ""
 "El punt volàtil <b>infinit</b> el comparteixen <b>%d</b> capses; arrossegueu-"
-"lo amb <b>Maj</b>  per a separar les capses seleccionades"
+"lo amb <b>Maj</b> per a separar les capses seleccionades"
 
 #: ../src/vanishing-point.cpp:320
 #, c-format
@@ -24464,7 +24464,7 @@ msgid ""
 "generate a lot of new nodes"
 msgstr ""
 "Una fidelitat baixa simplifica els camins; una fidelitat alta preserva les "
-"propietats del camí  però pot generar una gran quantitat de nodes"
+"propietats del camí però pot generar una gran quantitat de nodes"
 
 #: ../src/widgets/toolbox.cpp:4535 ../src/widgets/toolbox.cpp:4719
 #: ../src/widgets/toolbox.cpp:5253
