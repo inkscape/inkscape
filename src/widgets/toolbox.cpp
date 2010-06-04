@@ -489,6 +489,9 @@ static gchar const * ui_descr =
         "    <separator />"
         "    <toolitem action='TextAlignAction' />"
         "    <separator />"
+        "    <toolitem action='TextSuperscriptAction' />"
+        "    <toolitem action='TextSubscriptAction' />"
+        "    <separator />"
         "    <toolitem action='TextLineHeightAction' />"
         "    <toolitem action='TextLetterSpacingAction' />"
         "    <toolitem action='TextWordSpacingAction' />"
@@ -6610,6 +6613,79 @@ static void sp_text_style_changed( InkToggleAction* act, GObject *tbl )
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
+// Handles both Superscripts and Subscripts
+static void sp_text_script_changed( InkToggleAction* act, GObject *tbl )
+{
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    // Called by Superscript or Subscript button?
+    const gchar* name = gtk_action_get_name( GTK_ACTION( act ) );
+    gint prop = (strcmp(name, "TextSuperscriptAction") == 0) ? 0 : 1;
+
+#ifdef DEBUG_TEXT
+    std::cout << "sp_text_script_changed: " << prop << std::endl;
+#endif
+
+    // Query baseline
+    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
+    int result_baseline = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_BASELINES);
+
+    bool setSuper = false;
+    bool setSub   = false;
+
+    if(result_baseline == QUERY_STYLE_NOTHING || result_baseline == QUERY_STYLE_MULTIPLE_DIFFERENT ) {
+        // If not set or mixed, turn on superscript or subscript
+        if( prop == 0 ) {
+            setSuper = true;
+        } else {
+            setSub = true;
+        }
+    } else {
+        // Superscript
+        gboolean superscriptSet = (query->baseline_shift.set &&
+                                   query->baseline_shift.type == SP_BASELINE_SHIFT_LITERAL &&
+                                   query->baseline_shift.literal == SP_CSS_BASELINE_SHIFT_SUPER );
+
+        // Subscript
+        gboolean subscriptSet = (query->baseline_shift.set &&
+                                 query->baseline_shift.type == SP_BASELINE_SHIFT_LITERAL &&
+                                 query->baseline_shift.literal == SP_CSS_BASELINE_SHIFT_SUB );
+
+        setSuper = !superscriptSet && prop == 0;
+        setSub   = !subscriptSet   && prop == 1;
+    }
+
+    // Set css properties
+    SPCSSAttr *css = sp_repr_css_attr_new ();
+    if( setSuper || setSub ) {
+        // Openoffice 2.3 and Adobe use 58%, Microsoft Word 2002 uses 65%.
+        sp_repr_css_set_property (css, "font-size", "58%");
+    } else {
+        sp_repr_css_set_property (css, "font-size", "");
+    }
+    if( setSuper ) {
+        sp_repr_css_set_property (css, "baseline-shift", "super");
+    } else if( setSub ) {
+        sp_repr_css_set_property (css, "baseline-shift", "sub");
+    } else {
+        sp_repr_css_set_property (css, "baseline-shift", "baseline");
+    }
+
+    // Apply css to selected objects.
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    sp_desktop_set_style (desktop, css, true, true);
+
+    // Save for undo
+    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:script", SP_VERB_NONE,
+                                   _("Text: Change superscript or subscript"));
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
 static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 {
     // quit if run by the _changed callbacks
@@ -7090,6 +7166,8 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     int result_family   = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
     int result_style    = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
     int result_numbers  = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    int result_baseline = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_BASELINES);
+
     // Used later:
     sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
@@ -7161,8 +7239,32 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         InkToggleAction* textItalicAction = INK_TOGGLE_ACTION( g_object_get_data( tbl, "TextItalicAction" ) );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(textItalicAction), italicSet );
 
-        EgeSelectOneAction* textAlignAction = EGE_SELECT_ONE_ACTION( g_object_get_data( tbl, "TextAlignAction" ) );
+
+        // Superscript
+        gboolean superscriptSet =
+            ((result_baseline == QUERY_STYLE_SINGLE || result_baseline == QUERY_STYLE_MULTIPLE_SAME ) && 
+             query->baseline_shift.set &&
+             query->baseline_shift.type == SP_BASELINE_SHIFT_LITERAL &&
+             query->baseline_shift.literal == SP_CSS_BASELINE_SHIFT_SUPER );
+
+        InkToggleAction* textSuperscriptAction = INK_TOGGLE_ACTION( g_object_get_data( tbl, "TextSuperscriptAction" ) );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(textSuperscriptAction), superscriptSet );
+
+
+        // Subscript
+        gboolean subscriptSet =
+            ((result_baseline == QUERY_STYLE_SINGLE || result_baseline == QUERY_STYLE_MULTIPLE_SAME ) && 
+             query->baseline_shift.set &&
+             query->baseline_shift.type == SP_BASELINE_SHIFT_LITERAL &&
+             query->baseline_shift.literal == SP_CSS_BASELINE_SHIFT_SUB );
+
+        InkToggleAction* textSubscriptAction = INK_TOGGLE_ACTION( g_object_get_data( tbl, "TextSubscriptAction" ) );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(textSubscriptAction), subscriptSet );
+
+
         // Alignment
+        EgeSelectOneAction* textAlignAction = EGE_SELECT_ONE_ACTION( g_object_get_data( tbl, "TextAlignAction" ) );
+
         // Note: SVG 1.1 doesn't include text-align, SVG 1.2 Tiny doesn't include text-align="justify"
         // text-align="justify" was a draft SVG 1.2 item (along with flowed text).
         // Only flowed text can be left and right justified at the same time.
@@ -7430,6 +7532,32 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_text_style_changed), holder );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/text/italic", false) );
         g_object_set_data( holder, "TextItalicAction", act );
+    }
+
+    /* Style - Superscript */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "TextSuperscriptAction",             // Name
+                                                      _("Toggle Superscript"),             // Label
+                                                      _("Toggle superscript"),             // Tooltip
+                                                      GTK_STOCK_ITALIC,                    // Icon (inkId)
+                                                      secondarySize );                     // Icon size
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_text_script_changed), holder );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/text/super", false) );
+        g_object_set_data( holder, "TextSuperscriptAction", act );
+    }
+
+    /* Style - Subscript */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "TextSubscriptAction",             // Name
+                                                      _("Toggle Subscript"),             // Label
+                                                      _("Toggle subscript"),             // Tooltip
+                                                      GTK_STOCK_ITALIC,                    // Icon (inkId)
+                                                      secondarySize );                     // Icon size
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_text_script_changed), holder );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/text/sub", false) );
+        g_object_set_data( holder, "TextSubscriptAction", act );
     }
 
     /* Alignment */

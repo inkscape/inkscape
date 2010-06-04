@@ -43,6 +43,7 @@ class SPIString;
 class SPILength;
 class SPIPaint;
 class SPIFontSize;
+class SPIBaselineShift;
 
 /// Float type internal to SPStyle.
 struct SPIFloat {
@@ -190,6 +191,12 @@ enum {
     SP_FONT_SIZE_PERCENTAGE
 };
 
+enum {
+    SP_BASELINE_SHIFT_LITERAL,
+    SP_BASELINE_SHIFT_LENGTH,
+    SP_BASELINE_SHIFT_PERCENTAGE
+};
+
 #define SP_FONT_SIZE ((1 << 24) - 1)
 
 #define SP_F8_16_TO_FLOAT(v) ((gdouble) (v) / (1 << 16))
@@ -205,6 +212,17 @@ struct SPIFontSize {
     unsigned inherit : 1;
     unsigned type : 2;
     unsigned value : 24;
+    float computed;
+};
+
+/// Baseline shift type internal to SPStyle.
+struct SPIBaselineShift {
+    unsigned set : 1;
+    unsigned inherit : 1;
+    unsigned type : 2;
+    unsigned unit : 4;
+    unsigned literal: 2;
+    float value; // Can be negative
     float computed;
 };
 
@@ -287,6 +305,8 @@ struct SPStyle {
     SPIEnum block_progression;
     /** Writing mode (css3 text 3.2 and svg1.1 10.7.2) */
     SPIEnum writing_mode;
+    /** Baseline shift (svg1.1 10.9.2) */
+    SPIBaselineShift baseline_shift;
 
     /* SVG */
     /** Anchor of the text (svg1.1 10.9.1) */
@@ -498,6 +518,12 @@ enum SPTextAnchor {
     SP_CSS_TEXT_ANCHOR_START,
     SP_CSS_TEXT_ANCHOR_MIDDLE,
     SP_CSS_TEXT_ANCHOR_END
+};
+
+enum SPCSSBaselineShift {
+  SP_CSS_BASELINE_SHIFT_BASELINE,
+  SP_CSS_BASELINE_SHIFT_SUB,
+  SP_CSS_BASELINE_SHIFT_SUPER
 };
 
 enum SPVisibility {

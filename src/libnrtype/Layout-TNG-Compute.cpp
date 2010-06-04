@@ -124,8 +124,9 @@ class Layout::Calculator
         unsigned input_index;         /// index into Layout::_input_stream
         Glib::ustring::const_iterator input_stream_first_character;
         double font_size;
-        LineHeight line_height;
+        LineHeight line_height;         /// This is not the CSS line-height attribute!
         double line_height_multiplier;  /// calculated from the font-height css property
+        double baseline_shift;          /// calculated from the baseline-shift css property
         unsigned text_bytes;
         unsigned char_index_in_para;    /// the index of the first character in this span in the paragraph, for looking up char_attributes
         SVGLength x, y, dx, dy, rotate;  // these are reoriented copies of the <tspan> attributes. We change span when we encounter one.
@@ -521,7 +522,7 @@ class Layout::Calculator
                 new_span.in_chunk = _flow._chunks.size() - 1;
                 new_span.line_height = unbroken_span.line_height;
                 new_span.in_input_stream_item = unbroken_span.input_index;
-                new_span.baseline_shift = _y_offset;
+                new_span.baseline_shift = 0.0;
                 new_span.block_progression = _block_progression;
                 if ((_flow._input_stream[unbroken_span.input_index]->Type() == TEXT_SOURCE) && (new_span.font = para.pango_items[unbroken_span.pango_item_index].font))
                     {
@@ -604,11 +605,16 @@ class Layout::Calculator
 
                         if (_block_progression == LEFT_TO_RIGHT || _block_progression == RIGHT_TO_LEFT) {
                             new_glyph.x = x + unbroken_span.glyph_string->glyphs[glyph_index].geometry.x_offset * font_size_multiplier + new_span.line_height.ascent;
-                            new_glyph.y = _y_offset + (unbroken_span.glyph_string->glyphs[glyph_index].geometry.y_offset - unbroken_span.glyph_string->glyphs[glyph_index].geometry.width * 0.5) * font_size_multiplier;
+                            new_glyph.y = _y_offset -
+                                unbroken_span.baseline_shift +
+                                (unbroken_span.glyph_string->glyphs[glyph_index].geometry.y_offset -
+                                 unbroken_span.glyph_string->glyphs[glyph_index].geometry.width * 0.5) * font_size_multiplier;
                             new_glyph.width = new_span.font_size * para.pango_items[unbroken_span.pango_item_index].font->Advance(unbroken_span.glyph_string->glyphs[glyph_index].glyph, true);
                         } else {
                             new_glyph.x = x + unbroken_span.glyph_string->glyphs[glyph_index].geometry.x_offset * font_size_multiplier;
-                            new_glyph.y = _y_offset + unbroken_span.glyph_string->glyphs[glyph_index].geometry.y_offset * font_size_multiplier;
+                            new_glyph.y = _y_offset -
+                                unbroken_span.baseline_shift +
+                                unbroken_span.glyph_string->glyphs[glyph_index].geometry.y_offset * font_size_multiplier;
                             new_glyph.width = unbroken_span.glyph_string->glyphs[glyph_index].geometry.width * font_size_multiplier;
                             if ((new_glyph.width == 0) && (para.pango_items[unbroken_span.pango_item_index].font))
                                 new_glyph.width = new_span.font_size * para.pango_items[unbroken_span.pango_item_index].font->Advance(unbroken_span.glyph_string->glyphs[glyph_index].glyph, false);
@@ -984,6 +990,7 @@ void Layout::Calculator::_computeFontLineHeight(font_instance *font, double font
     *line_height_multiplier = LINE_HEIGHT_NORMAL * font_size / line_height->total();
 }
 
+
 /**
  * Split the paragraph into spans. Also call pango_shape() on them.
  *
@@ -1130,6 +1137,11 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                     }
                     new_span.pango_item_index = pango_item_index;
                     _computeFontLineHeight(para->pango_items[pango_item_index].font, new_span.font_size, text_source->style, &new_span.line_height, &new_span.line_height_multiplier);
+
+                    // At some point we may want to calculate baseline_shift here (to take advantage
+                    // of otm features like superscript baseline), but for now we use style baseline_shift.
+                    new_span.baseline_shift = text_source->style->baseline_shift.computed;
+
                     // TODO: metrics for vertical text
                     TRACE(("add text span %d \"%s\"\n", para->unbroken_spans.size(), text_source->text->raw().substr(span_start_byte_in_source, new_span.text_bytes).c_str()));
                     TRACE(("  %d glyphs\n", new_span.glyph_string->num_glyphs));

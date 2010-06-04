@@ -88,11 +88,13 @@ static void sp_style_read_itextdecoration(SPITextDecoration *val, gchar const *s
 static void sp_style_read_icolor(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocument *document);
 static void sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocument *document);
 static void sp_style_read_ifontsize(SPIFontSize *val, gchar const *str);
+static void sp_style_read_ibaselineshift(SPIBaselineShift *val, gchar const *str);
 static void sp_style_read_ifilter(gchar const *str, SPStyle *style, SPDocument *document);
 
 static void sp_style_read_penum(SPIEnum *val, Inkscape::XML::Node *repr, gchar const *key, SPStyleEnum const *dict, bool can_explicitly_inherit);
 static void sp_style_read_plength(SPILength *val, Inkscape::XML::Node *repr, gchar const *key);
 static void sp_style_read_pfontsize(SPIFontSize *val, Inkscape::XML::Node *repr, gchar const *key);
+static void sp_style_read_pbaselineshift(SPIBaselineShift *val, Inkscape::XML::Node *repr, gchar const *key);
 static void sp_style_read_pfloat(SPIFloat *val, Inkscape::XML::Node *repr, gchar const *key);
 
 static gint sp_style_write_ifloat(gchar *p, gint len, gchar const *key, SPIFloat const *val, SPIFloat const *base, guint flags);
@@ -102,6 +104,7 @@ static gint sp_style_write_istring(gchar *p, gint len, gchar const *key, SPIStri
 static gint sp_style_write_ilength(gchar *p, gint len, gchar const *key, SPILength const *val, SPILength const *base, guint flags);
 static gint sp_style_write_ipaint(gchar *b, gint len, gchar const *key, SPIPaint const *paint, SPIPaint const *base, guint flags);
 static gint sp_style_write_ifontsize(gchar *p, gint len, gchar const *key, SPIFontSize const *val, SPIFontSize const *base, guint flags);
+static gint sp_style_write_ibaselineshift(gchar *p, gint len, gchar const *key, SPIBaselineShift const *val, SPIBaselineShift const *base, guint flags);
 static gint sp_style_write_ilengthornormal(gchar *p, gint const len, gchar const *const key, SPILengthOrNormal const *const val, SPILengthOrNormal const *const base, guint const flags);
 static gint sp_style_write_itextdecoration(gchar *p, gint const len, gchar const *const key, SPITextDecoration const *const val, SPITextDecoration const *const base, guint const flags);
 static gint sp_style_write_ifilter(gchar *b, gint len, gchar const *key, SPIFilter const *filter, SPIFilter const *base, guint flags);
@@ -118,6 +121,9 @@ static void sp_style_filter_clear(SPStyle *style);
 
 #define SPS_READ_IFONTSIZE_IF_UNSET(v,s) if (!(v)->set) {sp_style_read_ifontsize((v), (s));}
 #define SPS_READ_PFONTSIZE_IF_UNSET(v,r,k) if (!(v)->set) {sp_style_read_pfontsize((v), (r), (k));}
+
+#define SPS_READ_IBASELINE_SHIFT_IF_UNSET(v,s) if (!(v)->set) {sp_style_read_ibaselineshift((v), (s));}
+#define SPS_READ_PBASELINE_SHIFT_IF_UNSET(v,r,k) if (!(v)->set) {sp_style_read_pbaselineshift((v), (r), (k));}
 
 static void sp_style_merge_from_object_stylesheet(SPStyle *, SPObject const *);
 
@@ -256,6 +262,13 @@ static SPStyleEnum const enum_writing_mode[] = {
     {"lr", SP_CSS_WRITING_MODE_LR_TB},
     {"rl", SP_CSS_WRITING_MODE_RL_TB},
     {"tb", SP_CSS_WRITING_MODE_TB_RL},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_baseline_shift[] = {
+    {"baseline", SP_CSS_BASELINE_SHIFT_BASELINE},
+    {"sub",      SP_CSS_BASELINE_SHIFT_SUB},
+    {"super",    SP_CSS_BASELINE_SHIFT_SUPER},
     {NULL, -1}
 };
 
@@ -628,6 +641,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
                             enum_writing_mode, true);
     SPS_READ_PENUM_IF_UNSET(&style->text_anchor, repr, "text-anchor",
                             enum_text_anchor, true);
+    SPS_READ_PBASELINE_SHIFT_IF_UNSET(&style->baseline_shift, repr, "baseline-shift");
 
     /* opacity */
     if (!style->opacity.set) {
@@ -945,6 +959,9 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
         case SP_PROP_TEXT_ANCHOR:
             SPS_READ_IENUM_IF_UNSET(&style->text_anchor, val, enum_text_anchor, true);
             break;
+        case SP_PROP_BASELINE_SHIFT:
+            SPS_READ_IBASELINE_SHIFT_IF_UNSET(&style->baseline_shift, val);
+            break;
             /* Text (unimplemented) */
         case SP_PROP_TEXT_RENDERING: {
             /* Ignore the hint. */
@@ -954,9 +971,6 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
         }
         case SP_PROP_ALIGNMENT_BASELINE:
             g_warning("Unimplemented style property SP_PROP_ALIGNMENT_BASELINE: value: %s", val);
-            break;
-        case SP_PROP_BASELINE_SHIFT:
-            g_warning("Unimplemented style property SP_PROP_BASELINE_SHIFT: value: %s", val);
             break;
         case SP_PROP_DOMINANT_BASELINE:
             g_warning("Unimplemented style property SP_PROP_DOMINANT_BASELINE: value: %s", val);
@@ -1342,6 +1356,48 @@ sp_style_merge_font_size_from_parent(SPIFontSize &child, SPIFontSize const &pare
     }
 }
 
+// Some shifts are defined relative to parent.
+static void
+sp_style_merge_baseline_shift_from_parent(SPIBaselineShift &child, SPIBaselineShift const &parent,
+                                          SPIFontSize const &pfont_size)
+{
+    /* 'baseline-shift' */
+    if (!child.set || child.inherit) {
+        /* Inherit the computed value.  Reference: http://www.w3.org/TR/SVG11/styling.html#Inheritance */
+        child.computed = parent.computed;  // Does this make sense (applying a shift a second time)?
+    } else if (child.type == SP_BASELINE_SHIFT_LITERAL) {
+        if( child.literal == SP_CSS_BASELINE_SHIFT_BASELINE ) {
+            child.computed = 0; // No change
+        } else if (child.literal == SP_CSS_BASELINE_SHIFT_SUB ) {
+            // Should use subscript position from font relative to alphabetic baseline
+            // In mean time use values from OpenOffice and Adobe
+            child.computed = -0.33 * pfont_size.computed; 
+        } else if (child.literal == SP_CSS_BASELINE_SHIFT_SUPER ) {
+            // Should use superscript position from font relative to alphabetic baseline
+            // In mean time use values from OpenOffice and Adobe
+            child.computed =  0.33 * pfont_size.computed; 
+        } else {
+            /* Illegal value */
+        }
+    } else if (child.type == SP_BASELINE_SHIFT_PERCENTAGE) {
+        // Percentage for baseline shift is relative to computed "line-height"
+        // which is just font-size (see SVG1.1 'font').
+        child.computed = pfont_size.computed * child.value;
+    } else if (child.type == SP_BASELINE_SHIFT_LENGTH) {
+        switch (child.unit) {
+            case SP_CSS_UNIT_EM:
+                child.computed = child.value * pfont_size.computed; 
+                break;
+            case SP_CSS_UNIT_EX:
+                child.computed = child.value * 0.5 * pfont_size.computed; 
+                break;
+            default:
+                /* No change */
+                break;
+        }
+    }
+}
+
 /**
  * Sets computed values in \a style, which may involve inheriting from (or in some other way
  * calculating from) corresponding computed values of \a parent.
@@ -1482,6 +1538,10 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
     if (!style->text_anchor.set || style->text_anchor.inherit) {
         style->text_anchor.computed = parent->text_anchor.computed;
     }
+
+    /* Baseline Shift... Some shifts are relative to parent. */
+    sp_style_merge_baseline_shift_from_parent(style->baseline_shift, parent->baseline_shift,
+                                              parent->font_size);
 
     if (style->opacity.inherit) {
         style->opacity.value = parent->opacity.value;
@@ -2269,6 +2329,8 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
     p += sp_style_write_ienum(p, c + BMAX - p, "writing-mode", enum_writing_mode, &style->writing_mode, NULL, flags);
 
     p += sp_style_write_ienum(p, c + BMAX - p, "text-anchor", enum_text_anchor, &style->text_anchor, NULL, flags);
+    p += sp_style_write_ibaselineshift(p, c + BMAX - p, "baseline-shift", &style->baseline_shift, NULL, flags);
+
 
     /// \todo fixme: Per type methods need default flag too (lauris)
 
@@ -2433,6 +2495,7 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
     p += sp_style_write_ienum(p, c + BMAX - p, "writing-mode", enum_writing_mode, &from->writing_mode, &to->writing_mode, SP_STYLE_FLAG_IFDIFF);
 
     p += sp_style_write_ienum(p, c + BMAX - p, "text-anchor", enum_text_anchor, &from->text_anchor, &to->text_anchor, SP_STYLE_FLAG_IFDIFF);
+    p += sp_style_write_ibaselineshift(p, c + BMAX - p, "baseline-shift", &from->baseline_shift, &to->baseline_shift, SP_STYLE_FLAG_IFDIFF);
 
     /// \todo fixme: Per type methods need default flag too
     if (from->opacity.set && from->opacity.value != SP_SCALE24_MAX) {
@@ -2650,6 +2713,13 @@ sp_style_clear(SPStyle *style)
     style->word_spacing.normal = TRUE;
     style->word_spacing.value = style->word_spacing.computed = 0.0;
 
+    style->baseline_shift.set = FALSE;
+    style->baseline_shift.type = SP_BASELINE_SHIFT_LITERAL;
+    style->baseline_shift.unit = SP_CSS_UNIT_NONE;
+    style->baseline_shift.literal = SP_CSS_BASELINE_SHIFT_BASELINE; 
+    style->baseline_shift.value = 0.0;
+    style->baseline_shift.computed = 0.0;
+
     style->text_transform.set = FALSE;
     style->text_transform.value = style->text_transform.computed = SP_CSS_TEXT_TRANSFORM_NONE;
 
@@ -2661,7 +2731,6 @@ sp_style_clear(SPStyle *style)
 
     style->writing_mode.set = FALSE;
     style->writing_mode.value = style->writing_mode.computed = SP_CSS_WRITING_MODE_LR_TB;
-
 
     style->text_anchor.set = FALSE;
     style->text_anchor.value = style->text_anchor.computed = SP_CSS_TEXT_ANCHOR_START;
@@ -3216,6 +3285,7 @@ sp_style_read_ifontsize(SPIFontSize *val, gchar const *str)
         val->set = TRUE;
         val->inherit = TRUE;
     } else if ((*str == 'x') || (*str == 's') || (*str == 'm') || (*str == 'l')) {
+        // xx-small, x-small, etc.
         for (unsigned i = 0; enum_font_size[i].key; i++) {
             if (!strcmp(str, enum_font_size[i].key)) {
                 val->set = TRUE;
@@ -3270,6 +3340,45 @@ sp_style_read_ifontsize(SPIFontSize *val, gchar const *str)
     }
 }
 
+
+/**
+ * Set SPIBaselineShift object from string.
+ */
+static void
+sp_style_read_ibaselineshift(SPIBaselineShift *val, gchar const *str)
+{
+    if (!strcmp(str, "inherit")) {
+        val->set = TRUE;
+        val->inherit = TRUE;
+    } else if ((*str == 'b') || (*str == 's')) {
+        // baseline or sub or super
+        for (unsigned i = 0; enum_baseline_shift[i].key; i++) {
+            if (!strcmp(str, enum_baseline_shift[i].key)) {
+                val->set = TRUE;
+                val->inherit = FALSE;
+                val->type = SP_BASELINE_SHIFT_LITERAL;
+                val->literal = enum_baseline_shift[i].value;
+                return;
+            }
+        }
+        /* Invalid */
+        return;
+    } else {
+        SPILength length;
+        sp_style_read_ilength(&length, str);
+        val->set      = length.set;
+        val->inherit  = length.inherit;
+        val->unit     = length.unit;
+        val->value    = length.value;
+        val->computed = length.computed;
+        if( val->unit == SP_CSS_UNIT_PERCENT ) {
+            val->type = SP_BASELINE_SHIFT_PERCENTAGE;
+        } else {
+            val->type = SP_BASELINE_SHIFT_LENGTH;
+        }
+        return;
+    }
+}
 
 
 /**
@@ -3364,6 +3473,19 @@ sp_style_read_pfontsize(SPIFontSize *val, Inkscape::XML::Node *repr, gchar const
     gchar const *str = repr->attribute(key);
     if (str) {
         sp_style_read_ifontsize(val, str);
+    }
+}
+
+
+/**
+ * Set SPIBaselineShift object from repr attribute.
+ */
+static void
+sp_style_read_pbaselineshift(SPIBaselineShift *val, Inkscape::XML::Node *repr, gchar const *key)
+{
+    gchar const *str = repr->attribute(key);
+    if (str) {
+        sp_style_read_ibaselineshift(val, str);
     }
 }
 
@@ -3829,6 +3951,77 @@ sp_style_write_ifontsize(gchar *p, gint const len, gchar const *key,
 
 
 /**
+ *
+ */
+static bool
+sp_baseline_shift_differ(SPIBaselineShift const *const a, SPIBaselineShift const *const b)
+{
+    if (a->type != b->type)
+        return true;
+    if (a->type == SP_BASELINE_SHIFT_LITERAL ) {
+        if (a->literal != b->literal)
+            return true;
+    }
+    if (a->type == SP_BASELINE_SHIFT_LENGTH) {
+        if (a->unit == SP_CSS_UNIT_EM || a->unit == SP_CSS_UNIT_EX ) {
+            if( a->value != b->value )
+                return true;
+        } else {
+            if (a->computed != b->computed)
+            return true;
+        }
+    }
+    if (a->type == SP_BASELINE_SHIFT_PERCENTAGE) {
+        if (a->value != b->value)
+            return true;
+    }
+    return false;
+}
+
+
+/**
+ * Write SPIBaselineShift object into string.
+ */
+static gint
+sp_style_write_ibaselineshift(gchar *p, gint const len, gchar const *key,
+                              SPIBaselineShift const *const val, SPIBaselineShift const *const base,
+                              guint const flags)
+{
+    if ((flags & SP_STYLE_FLAG_ALWAYS)
+        || ((flags & SP_STYLE_FLAG_IFSET) && val->set)
+        || ((flags & SP_STYLE_FLAG_IFDIFF) && val->set
+            && (!base->set || sp_baseline_shift_differ(val, base))))
+    {
+        if (val->inherit) {
+            return g_snprintf(p, len, "%s:inherit;", key);
+        } else if (val->type == SP_BASELINE_SHIFT_LITERAL) {
+            for (unsigned i = 0; enum_baseline_shift[i].key; i++) {
+                if (enum_baseline_shift[i].value == static_cast< gint > (val->value) ) {
+                    return g_snprintf(p, len, "%s:%s;", key, enum_baseline_shift[i].key);
+                }
+            }
+        } else if (val->type == SP_BASELINE_SHIFT_LENGTH) {
+            if( val->unit == SP_CSS_UNIT_EM || val->unit == SP_CSS_UNIT_EX ) {
+                Inkscape::CSSOStringStream os;
+                os << key << ":" << val->value << (val->unit == SP_CSS_UNIT_EM ? "em;" : "ex;");
+                return g_strlcpy(p, os.str().c_str(), len);
+            } else {
+                Inkscape::CSSOStringStream os;
+                os << key << ":" << val->computed << "px;";      // must specify px, see inkscape bug 1221626, mozilla bug 234789
+                return g_strlcpy(p, os.str().c_str(), len);
+            }
+        } else if (val->type == SP_BASELINE_SHIFT_PERCENTAGE) {
+            Inkscape::CSSOStringStream os;
+            os << key << ":" << (val->value * 100.0) << "%;";
+            return g_strlcpy(p, os.str().c_str(), len);
+        }
+    }
+    return 0;
+}
+
+
+
+/**
  * Write SPIFilter object into string.
  */
 static gint
@@ -4052,7 +4245,7 @@ sp_css_attr_unset_text(SPCSSAttr *css)
     sp_repr_css_set_property(css, "kerning", NULL); // not implemented yet
     sp_repr_css_set_property(css, "dominant-baseline", NULL); // not implemented yet
     sp_repr_css_set_property(css, "alignment-baseline", NULL); // not implemented yet
-    sp_repr_css_set_property(css, "baseline-shift", NULL); // not implemented yet
+    sp_repr_css_set_property(css, "baseline-shift", NULL);
 
     return css;
 }

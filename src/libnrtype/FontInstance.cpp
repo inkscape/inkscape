@@ -412,7 +412,7 @@ void font_instance::InitTheFace()
     SetGraphicsMode(daddy->hScreenDC, GM_COMPATIBLE);
     SelectObject(daddy->hScreenDC,theFace);
 #else
-    theFace=pango_ft2_font_get_face(pFont);
+    theFace=pango_ft2_font_get_face(pFont); // Deprecated, use pango_fc_font_lock_face() instead
     if ( theFace ) {
         FT_Select_Charmap(theFace,ft_encoding_unicode) && FT_Select_Charmap(theFace,ft_encoding_symbol);
     }
@@ -662,6 +662,7 @@ bool font_instance::FontMetrics(double &ascent,double &descent,double &leading)
     ascent=fabs(otm.otmAscent*scale);
     descent=fabs(otm.otmDescent*scale);
     leading=fabs(otm.otmLineGap*scale);
+    //otmSubscriptSize, otmSubscriptOffset, otmSuperscriptSize, otmSuperscriptOffset, 
 #else
     if ( theFace->units_per_EM == 0 ) {
         return false; // bitmap font

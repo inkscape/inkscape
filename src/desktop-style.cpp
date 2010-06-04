@@ -1052,6 +1052,101 @@ objects_query_fontstyle (GSList *objects, SPStyle *style_res)
 }
 
 /**
+ * Write to style_res the baseline numbers.
+ */
+int
+objects_query_baselines (GSList *objects, SPStyle *style_res)
+{
+    bool different = false;
+
+    // Only baseline-shift at the moment
+    // We will return:
+    //   If baseline-shift is same for all objects:
+    //     The full baseline-shift data (used for subscripts and superscripts)
+    //   If baseline-shift is different:
+    //     The average baseline-shift (not implemented at the moment as this is complicated June 2010)
+    SPIBaselineShift old;
+    old.value = 0.0;
+    old.computed = 0.0;
+
+    // double baselineshift = 0.0;
+    bool set = false;
+
+    int texts = 0;
+
+    for (GSList const *i = objects; i != NULL; i = i->next) {
+        SPObject *obj = SP_OBJECT (i->data);
+
+        if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
+            && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
+            && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj))
+            continue;
+
+        SPStyle *style = SP_OBJECT_STYLE (obj);
+        if (!style) continue;
+
+        texts ++;
+
+        SPIBaselineShift current;
+        if(style->baseline_shift.set) {
+
+            current.set      = style->baseline_shift.set;
+            current.inherit  = style->baseline_shift.inherit;
+            current.type     = style->baseline_shift.type;
+            current.literal  = style->baseline_shift.literal;
+            current.value    = style->baseline_shift.value;
+            current.computed = style->baseline_shift.computed;
+
+            if( set ) {
+                if( current.set      != old.set ||
+                    current.inherit  != old.inherit ||
+                    current.type     != old.type ||
+                    current.literal  != old.literal ||
+                    current.value    != old.value ||
+                    current.computed != old.computed ) {
+                    // Maybe this needs to be better thought out.
+                    different = true;
+                }
+            }
+
+            set = true;
+
+            old.set      = current.set;
+            old.inherit  = current.inherit;
+            old.type     = current.type;
+            old.literal  = current.literal;
+            old.value    = current.value;
+            old.computed = current.computed;
+        }
+    }
+
+    if (different || !set ) {
+        style_res->baseline_shift.set = false;
+        style_res->baseline_shift.computed = 0.0;
+    } else {
+        style_res->baseline_shift.set      = old.set;
+        style_res->baseline_shift.inherit  = old.inherit;
+        style_res->baseline_shift.type     = old.type;
+        style_res->baseline_shift.literal  = old.literal;
+        style_res->baseline_shift.value    = old.value;
+        style_res->baseline_shift.computed = old.computed;
+    }
+
+    if (texts == 0 || !set)
+        return QUERY_STYLE_NOTHING;
+
+    if (texts > 1) {
+        if (different) {
+            return QUERY_STYLE_MULTIPLE_DIFFERENT;
+        } else {
+            return QUERY_STYLE_MULTIPLE_SAME;
+        }
+    } else {
+        return QUERY_STYLE_SINGLE;
+    }
+}
+
+/**
  * Write to style_res the average font family of objects.
  */
 int
@@ -1346,6 +1441,8 @@ sp_desktop_query_style_from_list (GSList *list, SPStyle *style, int property)
         return objects_query_fontstyle (list, style);
     } else if (property == QUERY_STYLE_PROPERTY_FONTNUMBERS) {
         return objects_query_fontnumbers (list, style);
+    } else if (property == QUERY_STYLE_PROPERTY_BASELINES) {
+        return objects_query_baselines (list, style);
 
     } else if (property == QUERY_STYLE_PROPERTY_BLEND) {
         return objects_query_blend (list, style);
