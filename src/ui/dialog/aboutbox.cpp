@@ -287,6 +287,7 @@ void AboutBox::initStrings() {
     "Aurélio A. Heckert\n"
     "Carl Hetherington\n"
     "Jos Hirth\n"
+    "Hannes Hochreiner\n"
     "Thomas Holder\n"
     "Joel Holdsworth\n"
     "Alan Horkan\n"

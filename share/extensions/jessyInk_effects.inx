@@ -1,0 +1,41 @@
+<inkscape-extension>
+  <_name>effects</_name>
+  <id>jessyink.effects</id>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <dependency type="executable" location="extensions">jessyInk_effects.py</dependency>
+  <param name="tab" type="notebook">
+    <page name="settings" _gui-text="Settings">
+			<param name="effectInLabel" type="description">Build-in effect:</param>
+			<param name="effectInOrder" type="int" min="1" max="100" _gui-text="order">1</param>
+			<param name="effectInDuration" precision="1" type="float" min="0.1" max="10.0" _gui-text="duration in seconds">0.8</param>
+			<param name="effectIn" type="optiongroup" _gui-text="type">
+        <_option value="none">none (default)</_option>
+        <_option value="appear">appear</_option>
+        <_option value="fade">fade</_option>
+        <_option value="pop">pop</_option>
+			</param>
+			<param name="effectOutLabel" type="description">Build-out effect:</param>
+			<param name="effectOutOrder" type="int" min="1" max="100" _gui-text="order">1</param>
+			<param name="effectOutDuration" precision="1" type="float" min="0.1" max="10.0" _gui-text="duration in seconds">0.8</param>
+			<param name="effectOut" type="optiongroup" _gui-text="type">
+        <_option value="none">none (default)</_option>
+        <_option value="appear">appear</_option>
+        <_option value="fade">fade</_option>
+        <_option value="pop">pop</_option>
+			</param>
+		</page>
+    <page name="help" _gui-text="Help">
+      <param name="help_text" type="description">This extensions allows you to install, update and remove object effects for a JessyInk presentation. Please see code.google.com/p/jessyink for more details.</param>
+    </page>
+  </param>
+  <effect>
+    <object-type>all</object-type>
+      <effects-menu>
+        <submenu _name="JessyInk"/>
+      </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">jessyInk_effects.py</command>
+  </script>
+</inkscape-extension>
+
