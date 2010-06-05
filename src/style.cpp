@@ -3950,34 +3950,24 @@ sp_style_write_ifontsize(gchar *p, gint const len, gchar const *key,
 }
 
 
-/**
- *
+/*
+ * baseline-shift is relative to parent. The only time it should
+ * not be written out is if it is zero (or not set).
  */
 static bool
-sp_baseline_shift_differ(SPIBaselineShift const *const a, SPIBaselineShift const *const b)
+sp_baseline_shift_notzero(SPIBaselineShift const *const a )
 {
-    if (a->type != b->type)
-        return true;
-    if (a->type == SP_BASELINE_SHIFT_LITERAL ) {
-        if (a->literal != b->literal)
-            return true;
-    }
-    if (a->type == SP_BASELINE_SHIFT_LENGTH) {
-        if (a->unit == SP_CSS_UNIT_EM || a->unit == SP_CSS_UNIT_EX ) {
-            if( a->value != b->value )
-                return true;
-        } else {
-            if (a->computed != b->computed)
-            return true;
+    if( a->type == SP_BASELINE_SHIFT_LITERAL ) {
+        if( a->literal == SP_CSS_BASELINE_SHIFT_BASELINE ) {
+            return false;
+        }
+    } else {
+        if( a->value == 0.0 ) {
+            return false;
         }
     }
-    if (a->type == SP_BASELINE_SHIFT_PERCENTAGE) {
-        if (a->value != b->value)
-            return true;
-    }
-    return false;
+    return true;
 }
-
 
 /**
  * Write SPIBaselineShift object into string.
@@ -3990,13 +3980,13 @@ sp_style_write_ibaselineshift(gchar *p, gint const len, gchar const *key,
     if ((flags & SP_STYLE_FLAG_ALWAYS)
         || ((flags & SP_STYLE_FLAG_IFSET) && val->set)
         || ((flags & SP_STYLE_FLAG_IFDIFF) && val->set
-            && (!base->set || sp_baseline_shift_differ(val, base))))
+            && (!base->set || sp_baseline_shift_notzero(val) )))
     {
         if (val->inherit) {
             return g_snprintf(p, len, "%s:inherit;", key);
         } else if (val->type == SP_BASELINE_SHIFT_LITERAL) {
             for (unsigned i = 0; enum_baseline_shift[i].key; i++) {
-                if (enum_baseline_shift[i].value == static_cast< gint > (val->value) ) {
+                if (enum_baseline_shift[i].value == static_cast< gint > (val->literal) ) {
                     return g_snprintf(p, len, "%s:%s;", key, enum_baseline_shift[i].key);
                 }
             }
