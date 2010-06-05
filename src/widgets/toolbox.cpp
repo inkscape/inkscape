@@ -1861,26 +1861,40 @@ void setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
     gchar const * descr =
         "<ui>"
         "  <toolbar name='ToolToolbar'>"
+
+        "   <!-- Basics -->"
         "    <toolitem action='ToolSelector' />"
         "    <toolitem action='ToolNode' />"
         "    <toolitem action='ToolTweak' />"
-        "    <toolitem action='ToolSpray' />"
         "    <toolitem action='ToolZoom' />"
+
+        "   <!-- Shapes -->"
         "    <toolitem action='ToolRect' />"
         "    <toolitem action='Tool3DBox' />"
         "    <toolitem action='ToolArc' />"
         "    <toolitem action='ToolStar' />"
         "    <toolitem action='ToolSpiral' />"
+
+        "   <!-- Paths -->"
         "    <toolitem action='ToolPencil' />"
         "    <toolitem action='ToolPen' />"
         "    <toolitem action='ToolCalligraphic' />"
-        "    <toolitem action='ToolEraser' />"
-//        "    <toolitem action='ToolLPETool' />"
-        "    <toolitem action='ToolPaintBucket' />"
+
+        "   <!-- Text -->"
         "    <toolitem action='ToolText' />"
-        "    <toolitem action='ToolConnector' />"
+
+        "   <!-- Paint large areas -->"
+        "    <toolitem action='ToolSpray' />"
+        "    <toolitem action='ToolEraser' />"
+
+        "   <!-- Fill -->"
+        "    <toolitem action='ToolPaintBucket' />"
         "    <toolitem action='ToolGradient' />"
         "    <toolitem action='ToolDropper' />"
+
+        "    <toolitem action='ToolConnector' />"
+
+//        "    <toolitem action='ToolLPETool' />"
         "  </toolbar>"
         "</ui>";
 
