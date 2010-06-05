@@ -29,7 +29,7 @@ class InterpAttG(inkex.Effect):
         self.OptionParser.add_option("-o", "--att-other",
                         action="store", type="string",
                         dest="att_other",
-                        help="Other atribute (for a limited UI).")
+                        help="Other attribute (for a limited UI).")
         self.OptionParser.add_option("-t", "--att-other-type",
                         action="store", type="string",
                         dest="att_other_type",

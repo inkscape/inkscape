@@ -6,8 +6,8 @@
   <dependency type="executable" location="extensions">webslicer_create_group.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <_param name="about" type="description">Layout Group is only about to help a better code generation (if you need it). To use this, you must to select some "Slicer rectangles" first.</_param>
-  <param name="html-id" type="string" _gui-text="HTML id atribute:"></param>
-  <param name="html-class" type="string" _gui-text="HTML class atribute:"></param>
+  <param name="html-id" type="string" _gui-text="HTML id attribute:"></param>
+  <param name="html-class" type="string" _gui-text="HTML class attribute:"></param>
   <param name="width-unity" type="enum" _gui-text="Width unit:">
     <_item value="px">Pixel (fixed)</_item>
     <_item value="percent">Percent (relative to parent size)</_item>

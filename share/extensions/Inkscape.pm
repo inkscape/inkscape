@@ -166,14 +166,14 @@ sub generateSearchRegExp {
 
 =head3 setElAttribute
 
-    # Setting an atribute in a tag localizated it's id:
+    # Setting an attribute in a tag localizated it's id:
     $svg->setElAttribute {id=>'myDrawing'}, 'width', $w * 2;
-    # Setting an atribute in a tag localizated it's position:
+    # Setting an attribute in a tag localizated it's position:
     $svg->setElAttribute {tag=>'svg',pos=>0}, 'width', $w * 2;
-    # Setting an atribute in some tags localizated by atributes:
+    # Setting an attribute in some tags localizated by attributes:
     $svg->setElAttribute {tag=>'circle',r=>10}, 'r', 50;
 
-This method will set an atribute in a tag or in a colection of tags, selected
+This method will set an attribute in a tag or in a colection of tags, selected
 by the localizator hash.
 
 =cut

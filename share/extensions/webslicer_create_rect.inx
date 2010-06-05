@@ -32,8 +32,8 @@
       <param name="palette-size" type="int" min="2" max="256" _gui-text="Palette size:">256</param>
     </page>
     <page name="tabHTML" gui-text="HTML">
-      <param name="html-id" type="string" _gui-text="HTML id atribute:"></param>
-      <param name="html-class" type="string" _gui-text="HTML class atribute:"></param>
+      <param name="html-id" type="string" _gui-text="HTML id attribute:"></param>
+      <param name="html-class" type="string" _gui-text="HTML class attribute:"></param>
       <_param name="help-gif" type="description">Options for HTML export</_param>
       <param name="layout-disposition" type="enum" _gui-text="Layout disposition:">
         <_item value="bg-el-norepeat">Positioned html block element with the image as Background</_item>
