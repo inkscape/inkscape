@@ -76,6 +76,21 @@ extensions = \
 	inkweb.js \
 	interp.py \
 	interp_att_g.py \
+	jessyInk.js \
+	jessyInk_autoTexts.py \
+	jessyInk_core_mouseHandler_noclick.js \
+	jessyInk_core_mouseHandler_zoomControl.js \
+	jessyInk_effects.py \
+	jessyInk_export.py \
+	jessyInk_install.py \
+	jessyInk_keyBindings.py \
+	jessyInk_masterSlide.py \
+	jessyInk_mouseHandler.py \
+	jessyInk_summary.py \
+	jessyInk_transitions.py \
+	jessyInk_uninstall.py \
+	jessyInk_video.py \
+	jessyInk_view.py \
 	launch_webbrowser.py \
 	lindenmayer.py \
 	lorem_ipsum.py \
@@ -148,6 +163,7 @@ extensions = \
 otherstuff = \
 	aisvg.xslt \
 	colors.xml \
+	jessyInk_video.svg \
 	svg2xaml.xsl \
 	xaml2svg.xsl
 
@@ -217,6 +233,18 @@ modules = \
 	inkscape_help_keys.inx \
 	interp.inx \
 	interp_att_g.inx \
+	jessyInk_autoTexts.inx \
+	jessyInk_effects.inx \
+	jessyInk_export.inx \
+	jessyInk_install.inx \
+	jessyInk_keyBindings.inx \
+	jessyInk_masterSlide.inx \
+	jessyInk_mouseHandler.inx \
+	jessyInk_summary.inx \
+	jessyInk_transitions.inx \
+	jessyInk_uninstall.inx \
+	jessyInk_video.inx \
+	jessyInk_view.inx \
 	lindenmayer.inx \
 	lorem_ipsum.inx \
 	markers_strokepaint.inx \
