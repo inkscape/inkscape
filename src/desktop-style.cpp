@@ -196,10 +196,29 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
 
 // 3. If nobody has intercepted the signal, apply the style to the selection
     if (!intercepted) {
+
+        // Remove text attributes if not text...
+        // Do this once in case a zillion objects are selected.
+        SPCSSAttr *css_no_text = sp_repr_css_attr_new();
+        sp_repr_css_merge(css_no_text, css);
+        css_no_text = sp_css_attr_unset_text(css_no_text);
+
         for (GSList const *i = desktop->selection->itemList(); i != NULL; i = i->next) {
-            /// \todo if the style is text-only, apply only to texts?
-            sp_desktop_apply_css_recursive(SP_OBJECT(i->data), css, true);
+
+            // If not text, don't apply text attributes (can a group have text attributes?)
+            if ( SP_IS_TEXT(i->data) || SP_IS_FLOWTEXT(i->data)
+                || SP_IS_TSPAN(i->data) || SP_IS_TREF(i->data) || SP_IS_TEXTPATH(i->data)
+                || SP_IS_FLOWDIV(i->data) || SP_IS_FLOWPARA(i->data) || SP_IS_FLOWTSPAN(i->data)) {
+
+                sp_desktop_apply_css_recursive(SP_OBJECT(i->data), css, true);
+
+            } else {
+
+                sp_desktop_apply_css_recursive(SP_OBJECT(i->data), css_no_text, true);
+
+            }
         }
+        sp_repr_css_attr_unref(css_no_text);
     }
 }
 
