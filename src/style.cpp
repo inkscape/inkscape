@@ -1396,6 +1396,8 @@ sp_style_merge_baseline_shift_from_parent(SPIBaselineShift &child, SPIBaselineSh
                 break;
         }
     }
+    // baseline-shifts are relative to parent baseline
+    child.computed += parent.computed;
 }
 
 /**
