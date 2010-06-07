@@ -1370,12 +1370,12 @@ sp_style_merge_baseline_shift_from_parent(SPIBaselineShift &child, SPIBaselineSh
             child.computed = 0; // No change
         } else if (child.literal == SP_CSS_BASELINE_SHIFT_SUB ) {
             // Should use subscript position from font relative to alphabetic baseline
-            // In mean time use values from OpenOffice and Adobe
-            child.computed = -0.33 * pfont_size.computed; 
+            // OpenOffice, Adobe: -0.33, Word -0.14, LaTex about -0.2.
+            child.computed = -0.2 * pfont_size.computed; 
         } else if (child.literal == SP_CSS_BASELINE_SHIFT_SUPER ) {
             // Should use superscript position from font relative to alphabetic baseline
-            // In mean time use values from OpenOffice and Adobe
-            child.computed =  0.33 * pfont_size.computed; 
+            // OpenOffice, Adobe: 0.33, Word 0.35, LaTex about 0.45.
+            child.computed =  0.4 * pfont_size.computed; 
         } else {
             /* Illegal value */
         }

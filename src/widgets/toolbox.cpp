@@ -6676,8 +6676,11 @@ static void sp_text_script_changed( InkToggleAction* act, GObject *tbl )
     // Set css properties
     SPCSSAttr *css = sp_repr_css_attr_new ();
     if( setSuper || setSub ) {
-        // Openoffice 2.3 and Adobe use 58%, Microsoft Word 2002 uses 65%.
-        sp_repr_css_set_property (css, "font-size", "58%");
+        // Openoffice 2.3 and Adobe use 58%, Microsoft Word 2002 uses 65%, LaTex about 70%.
+        // 58% looks too small to me, especially if a superscript is placed on a superscript.
+        // If you make a change here, consider making a change to baseline-shift amount
+        // in style.cpp.
+        sp_repr_css_set_property (css, "font-size", "65%");
     } else {
         sp_repr_css_set_property (css, "font-size", "");
     }
@@ -6691,7 +6694,7 @@ static void sp_text_script_changed( InkToggleAction* act, GObject *tbl )
 
     // Apply css to selected objects.
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    sp_desktop_set_style (desktop, css, true, true);
+    sp_desktop_set_style (desktop, css, true, false);
 
     // Save for undo
     sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:script", SP_VERB_NONE,
@@ -6864,7 +6867,7 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
 
     // Apply line-height to selected objects.
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    sp_desktop_set_style (desktop, css, true, true);
+    sp_desktop_set_style (desktop, css, true, false);
 
 
     // Until deprecated sodipodi:linespacing purged:
@@ -6913,7 +6916,7 @@ static void sp_text_wordspacing_value_changed( GtkAdjustment *adj, GObject *tbl 
 
     // Apply word-spacing to selected objects.
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    sp_desktop_set_style (desktop, css, true, true);
+    sp_desktop_set_style (desktop, css, true, false);
 
     // Save for undo
     sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:word-spacing", SP_VERB_NONE,
@@ -6952,7 +6955,7 @@ static void sp_text_letterspacing_value_changed( GtkAdjustment *adj, GObject *tb
 
     // Apply letter-spacing to selected objects.
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    sp_desktop_set_style (desktop, css, true, true);
+    sp_desktop_set_style (desktop, css, true, false);
 
     // Save for undo
     sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:letter-spacing", SP_VERB_NONE,
