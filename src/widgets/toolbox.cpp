@@ -7556,7 +7556,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkToggleAction* act = ink_toggle_action_new( "TextSuperscriptAction",             // Name
                                                       _("Toggle Superscript"),             // Label
                                                       _("Toggle superscript"),             // Tooltip
-                                                      GTK_STOCK_ITALIC,                    // Icon (inkId)
+                                                      "text_superscript",                  // Icon (inkId)
                                                       secondarySize );                     // Icon size
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_text_script_changed), holder );
@@ -7569,7 +7569,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkToggleAction* act = ink_toggle_action_new( "TextSubscriptAction",             // Name
                                                       _("Toggle Subscript"),             // Label
                                                       _("Toggle subscript"),             // Tooltip
-                                                      GTK_STOCK_ITALIC,                    // Icon (inkId)
+                                                      "text_subscript",                  // Icon (inkId)
                                                       secondarySize );                     // Icon size
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_text_script_changed), holder );
