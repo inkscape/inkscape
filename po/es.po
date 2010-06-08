@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-25 18:48+0200\n"
-"PO-Revision-Date: 2010-06-01 12:15+0200\n"
+"PO-Revision-Date: 2010-06-08 11:11+0200\n"
 "Last-Translator: Lucas Vieites Fariña <lucas@codexion.com>\n"
 "Language-Team:  Inkscape Translators <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -16065,11 +16065,11 @@ msgstr "Símbolos de monedas"
 
 #: ../src/ui/dialog/glyphs.cpp:220
 msgid "Combining Diacritical Marks for Symbols"
-msgstr ""
+msgstr "Marcas diacríticas combinadas para símbolos"
 
 #: ../src/ui/dialog/glyphs.cpp:221
 msgid "Letterlike Symbols"
-msgstr ""
+msgstr "Símbolos similares a letras"
 
 #: ../src/ui/dialog/glyphs.cpp:222
 msgid "Number Forms"
@@ -16149,7 +16149,7 @@ msgstr "Símbolos y flechas variados"
 
 #: ../src/ui/dialog/glyphs.cpp:242
 msgid "Latin Extended-C"
-msgstr "Latin Extended-C"
+msgstr "Latino extendido-C"
 
 #: ../src/ui/dialog/glyphs.cpp:244
 msgid "Georgian Supplement"
@@ -16161,7 +16161,7 @@ msgstr "Etíope extendido"
 
 #: ../src/ui/dialog/glyphs.cpp:247
 msgid "Cyrillic Extended-A"
-msgstr ""
+msgstr "Cirílico extendido-A"
 
 #: ../src/ui/dialog/glyphs.cpp:248
 msgid "Supplemental Punctuation"
@@ -16169,91 +16169,91 @@ msgstr "Puntuación adicional"
 
 #: ../src/ui/dialog/glyphs.cpp:249
 msgid "CJK Radicals Supplement"
-msgstr ""
+msgstr "Suplemento de radicales CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:250
 msgid "Kangxi Radicals"
-msgstr ""
+msgstr "Radicales Kangxi"
 
 #: ../src/ui/dialog/glyphs.cpp:251
 msgid "Ideographic Description Characters"
-msgstr ""
+msgstr "Caracteres de descripción de ideogramas"
 
 #: ../src/ui/dialog/glyphs.cpp:252
 msgid "CJK Symbols and Punctuation"
-msgstr ""
+msgstr "Símbolos y puntuación CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:256
 msgid "Hangul Compatibility Jamo"
-msgstr ""
+msgstr "Jamo de compatibilidad Hangul"
 
 #: ../src/ui/dialog/glyphs.cpp:257
 msgid "Kanbun"
-msgstr ""
+msgstr "Kanbun"
 
 #: ../src/ui/dialog/glyphs.cpp:258
 msgid "Bopomofo Extended"
-msgstr ""
+msgstr "Bopomofo Extendido"
 
 #: ../src/ui/dialog/glyphs.cpp:259
 msgid "CJK Strokes"
-msgstr ""
+msgstr "Trazos CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:260
 msgid "Katakana Phonetic Extensions"
-msgstr ""
+msgstr "Extensiones fonéticas Katakana"
 
 #: ../src/ui/dialog/glyphs.cpp:261
 msgid "Enclosed CJK Letters and Months"
-msgstr ""
+msgstr "Letras y meses incluidas CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:262
 msgid "CJK Compatibility"
-msgstr ""
+msgstr "Compatibilidad CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:263
 msgid "CJK Unified Ideographs Extension A"
-msgstr ""
+msgstr "Extensión A de ideogramas unificados CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:264
 msgid "Yijing Hexagram Symbols"
-msgstr ""
+msgstr "Símbolos hexagramas Yijing"
 
 #: ../src/ui/dialog/glyphs.cpp:265
 msgid "CJK Unified Ideographs"
-msgstr ""
+msgstr "Ideogramas unificados CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:266
 msgid "Yi Syllables"
-msgstr ""
+msgstr "Sílabas Yi"
 
 #: ../src/ui/dialog/glyphs.cpp:267
 msgid "Yi Radicals"
-msgstr ""
+msgstr "Radicales Yi"
 
 #: ../src/ui/dialog/glyphs.cpp:268
 msgid "Lisu"
-msgstr ""
+msgstr "Lisu"
 
 #: ../src/ui/dialog/glyphs.cpp:270
 msgid "Cyrillic Extended-B"
-msgstr ""
+msgstr "Cirílico extendido-B"
 
 #: ../src/ui/dialog/glyphs.cpp:271
 msgid "Bamum"
-msgstr ""
+msgstr "Bamum"
 
 #: ../src/ui/dialog/glyphs.cpp:272
 msgid "Modifier Tone Letters"
-msgstr ""
+msgstr "Letras de modificación de tono"
 
 #: ../src/ui/dialog/glyphs.cpp:273
 msgid "Latin Extended-D"
-msgstr ""
+msgstr "Latino extendido D"
 
 #: ../src/ui/dialog/glyphs.cpp:275
 msgid "Common Indic Number Forms"
-msgstr ""
+msgstr "Formas numéricas indias comunes"
 
 #: ../src/ui/dialog/glyphs.cpp:278
 msgid "Devanagari Extended"
@@ -16261,59 +16261,59 @@ msgstr "Devanagari extendido"
 
 #: ../src/ui/dialog/glyphs.cpp:281
 msgid "Hangul Jamo Extended-A"
-msgstr ""
+msgstr "Hangul Jamo extendido-A"
 
 #: ../src/ui/dialog/glyphs.cpp:282
 msgid "Javanese"
-msgstr ""
+msgstr "Javanés"
 
 #: ../src/ui/dialog/glyphs.cpp:284
 msgid "Myanmar Extended-A"
-msgstr ""
+msgstr "Myanmar extendido-A"
 
 #: ../src/ui/dialog/glyphs.cpp:285
 msgid "Tai Viet"
-msgstr ""
+msgstr "Tai Viet"
 
 #: ../src/ui/dialog/glyphs.cpp:286
 msgid "Meetei Mayek"
-msgstr ""
+msgstr "Meitei-mayek"
 
 #: ../src/ui/dialog/glyphs.cpp:287
 msgid "Hangul Syllables"
-msgstr ""
+msgstr "Sílabas Hangul"
 
 #: ../src/ui/dialog/glyphs.cpp:288
 msgid "Hangul Jamo Extended-B"
-msgstr ""
+msgstr "Hangul Jamo extendido-B"
 
 #: ../src/ui/dialog/glyphs.cpp:289
 msgid "High Surrogates"
-msgstr ""
+msgstr "Sustitutos altos"
 
 #: ../src/ui/dialog/glyphs.cpp:290
 msgid "High Private Use Surrogates"
-msgstr ""
+msgstr "Sustitutos altos de uso privado"
 
 #: ../src/ui/dialog/glyphs.cpp:291
 msgid "Low Surrogates"
-msgstr ""
+msgstr "Sustitutos bajos"
 
 #: ../src/ui/dialog/glyphs.cpp:292
 msgid "Private Use Area"
-msgstr ""
+msgstr "Área de uso privado"
 
 #: ../src/ui/dialog/glyphs.cpp:293
 msgid "CJK Compatibility Ideographs"
-msgstr ""
+msgstr "Ideogramas de compatibilidad CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:294
 msgid "Alphabetic Presentation Forms"
-msgstr ""
+msgstr "Formas de presentación alfabética"
 
 #: ../src/ui/dialog/glyphs.cpp:295
 msgid "Arabic Presentation Forms-A"
-msgstr ""
+msgstr "Forma de presentación árabe-A"
 
 #: ../src/ui/dialog/glyphs.cpp:296
 msgid "Variation Selectors"
@@ -16325,23 +16325,23 @@ msgstr "Formas verticales"
 
 #: ../src/ui/dialog/glyphs.cpp:298
 msgid "Combining Half Marks"
-msgstr ""
+msgstr "Combinación de marcas medias"
 
 #: ../src/ui/dialog/glyphs.cpp:299
 msgid "CJK Compatibility Forms"
-msgstr ""
+msgstr "Formas de compatibilidad CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:300
 msgid "Small Form Variants"
-msgstr ""
+msgstr "Variantes de forma pequeña"
 
 #: ../src/ui/dialog/glyphs.cpp:301
 msgid "Arabic Presentation Forms-B"
-msgstr ""
+msgstr "Forma de presentación árabe-B"
 
 #: ../src/ui/dialog/glyphs.cpp:302
 msgid "Halfwidth and Fullwidth Forms"
-msgstr ""
+msgstr "Formas de media anchura y de ancho total"
 
 #: ../src/ui/dialog/glyphs.cpp:303
 msgid "Specials"
@@ -19666,7 +19666,7 @@ msgstr "Reflejar los nodos verticalmente"
 
 #: ../src/ui/tool/node.cpp:207
 msgid "Cusp node handle"
-msgstr ""
+msgstr "Tirador del nodo vértice"
 
 #: ../src/ui/tool/node.cpp:208
 msgid "Smooth node handle"
