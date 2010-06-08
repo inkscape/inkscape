@@ -11,15 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-05 13:35+0300\n"
+"POT-Creation-Date: 2010-06-08 21:39+0200\n"
 "PO-Revision-Date: 2010-06-05 16:09+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 1.1\n"
 
 #: ../share/extensions/addnodes.inx.h:1
@@ -444,6 +444,18 @@ msgstr "Точка Жергона"
 #: ../share/extensions/draw_from_triangle.inx.h:20
 #: ../share/extensions/dxf_input.inx.h:9
 #: ../share/extensions/dxf_outlines.inx.h:9
+#: ../share/extensions/jessyInk_autoTexts.inx.h:3
+#: ../share/extensions/jessyInk_effects.inx.h:7
+#: ../share/extensions/jessyInk_export.inx.h:2
+#: ../share/extensions/jessyInk_install.inx.h:1
+#: ../share/extensions/jessyInk_keyBindings.inx.h:7
+#: ../share/extensions/jessyInk_masterSlide.inx.h:1
+#: ../share/extensions/jessyInk_mouseHandler.inx.h:3
+#: ../share/extensions/jessyInk_summary.inx.h:1
+#: ../share/extensions/jessyInk_transitions.inx.h:5
+#: ../share/extensions/jessyInk_uninstall.inx.h:1
+#: ../share/extensions/jessyInk_video.inx.h:1
+#: ../share/extensions/jessyInk_view.inx.h:3
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:3 ../share/extensions/scour.inx.h:5
 #: ../src/ui/dialog/extension-editor.cpp:81
@@ -633,6 +645,7 @@ msgstr "Імпорт у форматі обміну документами AutoC
 #. ## end option page
 #: ../share/extensions/dxf_input.inx.h:11
 #: ../share/extensions/dxf_outlines.inx.h:10
+#: ../share/extensions/jessyInk_uninstall.inx.h:3
 #: ../share/extensions/scour.inx.h:11 ../src/ui/dialog/tracedialog.cpp:617
 #: ../src/ui/dialog/tracedialog.cpp:623
 msgid "Options"
@@ -793,8 +806,8 @@ msgid ""
 "home directory."
 msgstr ""
 "* Не вказуйте суфікс назви файла, його буде додано автоматично.\n"
-"* Слід вказувати відносний шлях у домашньому каталозі користувача або вказати "
-"назву файла без назви каталогів."
+"* Слід вказувати відносний шлях у домашньому каталозі користувача або "
+"вказати назву файла без назви каталогів."
 
 #: ../share/extensions/extractimage.inx.h:3
 msgid "Extract Image"
@@ -809,7 +822,7 @@ msgid "Extrude"
 msgstr "Тиснення"
 
 #: ../share/extensions/extrude.inx.h:2
-#: ../share/extensions/generate_voronoi.inx.h:4
+#: ../share/extensions/generate_voronoi.inx.h:3
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:2
 #: ../share/extensions/pathalongpath.inx.h:4
 #: ../share/extensions/pathscatter.inx.h:5
@@ -1049,14 +1062,11 @@ msgid "Pressure angle"
 msgstr "Кут зчеплення зубців"
 
 #: ../share/extensions/generate_voronoi.inx.h:1
-msgid " Average size of cell (px) "
+#, fuzzy
+msgid "Average size of cell (px)"
 msgstr " Середній розмір комірки (у пікселях) "
 
 #: ../share/extensions/generate_voronoi.inx.h:2
-msgid " Size of Border (px) "
-msgstr " Товщина межі (у пікселях) "
-
-#: ../share/extensions/generate_voronoi.inx.h:3
 msgid ""
 "Generate a random pattern of Voronoi cells. The pattern will be accessible "
 "in the Fill and Stroke dialog. You must select an object or a group."
@@ -1065,7 +1075,7 @@ msgstr ""
 "буде за допомогою діалогового вікна «Заповнення і штрих). Перед вибором вам "
 "слід позначити об’єкт або групу."
 
-#: ../share/extensions/generate_voronoi.inx.h:5
+#: ../share/extensions/generate_voronoi.inx.h:4
 msgid ""
 "If border is zero, the pattern will be discontinuous at the edges. Use a "
 "positive border, preferably greater than the cell size, to produce a smooth "
@@ -1077,6 +1087,11 @@ msgstr ""
 "отримати плавний перехід між частинами візерунка на краях. Використання "
 "від’ємного значення товщини відповідає візерунку меншого розміру з межею "
 "нульової товщини."
+
+#: ../share/extensions/generate_voronoi.inx.h:5
+#, fuzzy
+msgid "Size of Border (px)"
+msgstr " Товщина межі (у пікселях) "
 
 #: ../share/extensions/generate_voronoi.inx.h:6
 msgid "Voronoi Pattern"
@@ -1108,11 +1123,13 @@ msgstr "Декартова сітка"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr "Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr ""
+"Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:4
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr "Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr ""
+"Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
@@ -1549,6 +1566,553 @@ msgstr "До чого застосовувати?"
 msgid "••••••••••••••••••••••••••••••••••••••••••••••••"
 msgstr "••••••••••••••••••••••••••••••••••••••••••••••••"
 
+#: ../share/extensions/jessyInk_autoTexts.inx.h:1
+msgid "Auto-Text:"
+msgstr ""
+
+#: ../share/extensions/jessyInk_autoTexts.inx.h:2
+msgid "Auto-texts"
+msgstr ""
+
+#: ../share/extensions/jessyInk_autoTexts.inx.h:4
+#: ../share/extensions/jessyInk_effects.inx.h:8
+#: ../share/extensions/jessyInk_install.inx.h:3
+#: ../share/extensions/jessyInk_keyBindings.inx.h:10
+#: ../share/extensions/jessyInk_masterSlide.inx.h:3
+#: ../share/extensions/jessyInk_mouseHandler.inx.h:4
+#: ../share/extensions/jessyInk_summary.inx.h:2
+#: ../share/extensions/jessyInk_transitions.inx.h:6
+#: ../share/extensions/jessyInk_uninstall.inx.h:2
+#: ../share/extensions/jessyInk_video.inx.h:2
+#: ../share/extensions/jessyInk_view.inx.h:4
+msgid "JessyInk"
+msgstr ""
+
+#: ../share/extensions/jessyInk_autoTexts.inx.h:5
+#, fuzzy
+msgid "None (remove)"
+msgstr "вилучити"
+
+#: ../share/extensions/jessyInk_autoTexts.inx.h:6
+#, fuzzy
+msgid "Number of slides"
+msgstr "Кількість вибірок"
+
+#: ../share/extensions/jessyInk_autoTexts.inx.h:7
+#: ../share/extensions/jessyInk_effects.inx.h:12
+#: ../share/extensions/jessyInk_export.inx.h:8
+#: ../share/extensions/jessyInk_masterSlide.inx.h:6
+#: ../share/extensions/jessyInk_transitions.inx.h:9
+#: ../share/extensions/jessyInk_view.inx.h:7
+#, fuzzy
+msgid "Settings"
+msgstr "Позначення"
+
+#: ../share/extensions/jessyInk_autoTexts.inx.h:8
+#, fuzzy
+msgid "Slide number"
+msgstr "Номер пера"
+
+#: ../share/extensions/jessyInk_autoTexts.inx.h:9
+msgid "Slide title"
+msgstr ""
+
+#: ../share/extensions/jessyInk_autoTexts.inx.h:10
+msgid ""
+"This extension allows you to install, update and remove auto-texts for a "
+"JessyInk presentation. Please see code.google.com/p/jessyink for more "
+"details."
+msgstr ""
+
+#: ../share/extensions/jessyInk_effects.inx.h:1
+#: ../share/extensions/jessyInk_transitions.inx.h:1
+#, fuzzy
+msgid "Appear"
+msgstr "Додати"
+
+#: ../share/extensions/jessyInk_effects.inx.h:2
+#, fuzzy
+msgid "Build-in effect"
+msgstr "Поточний ефект"
+
+#: ../share/extensions/jessyInk_effects.inx.h:3
+#, fuzzy
+msgid "Build-out effect"
+msgstr "Без ефекту"
+
+#: ../share/extensions/jessyInk_effects.inx.h:4
+#: ../share/extensions/jessyInk_transitions.inx.h:3
+#: ../share/extensions/jessyInk_view.inx.h:2
+#, fuzzy
+msgid "Duration in seconds:"
+msgstr "Малювання завершено"
+
+#: ../share/extensions/jessyInk_effects.inx.h:5
+#, fuzzy
+msgid "Effects"
+msgstr "_Ефект"
+
+#: ../share/extensions/jessyInk_effects.inx.h:6
+#: ../share/extensions/jessyInk_transitions.inx.h:4
+#, fuzzy
+msgid "Fade"
+msgstr "Грані"
+
+#: ../share/extensions/jessyInk_effects.inx.h:9
+#, fuzzy
+msgid "None (default)"
+msgstr "(типова)"
+
+#: ../share/extensions/jessyInk_effects.inx.h:10
+#: ../share/extensions/jessyInk_view.inx.h:5
+#, fuzzy
+msgid "Order:"
+msgstr "Порядок"
+
+#: ../share/extensions/jessyInk_effects.inx.h:11
+#: ../share/extensions/jessyInk_transitions.inx.h:8
+#, fuzzy
+msgid "Pop"
+msgstr "Верх"
+
+#: ../share/extensions/jessyInk_effects.inx.h:13
+msgid ""
+"This extension allows you to install, update and remove object effects for a "
+"JessyInk presentation. Please see code.google.com/p/jessyink for more "
+"details."
+msgstr ""
+
+#. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
+#: ../share/extensions/jessyInk_effects.inx.h:14
+#: ../share/extensions/jessyInk_export.inx.h:10
+#: ../share/extensions/jessyInk_transitions.inx.h:14
+#: ../share/extensions/webslicer_create_rect.inx.h:40
+#: ../src/dialogs/object-attributes.cpp:34
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2174
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2252
+msgid "Type:"
+msgstr "Тип:"
+
+#: ../share/extensions/jessyInk_export.inx.h:1
+msgid ""
+"Creates a zip file containing pdfs or pngs of all slides of a JessyInk "
+"presentation."
+msgstr ""
+
+#: ../share/extensions/jessyInk_export.inx.h:3
+msgid "JessyInk zipped pdf or png output"
+msgstr ""
+
+#: ../share/extensions/jessyInk_export.inx.h:4
+msgid "JessyInk zipped pdf or png output (*.zip)"
+msgstr ""
+
+#: ../share/extensions/jessyInk_export.inx.h:5
+#, fuzzy
+msgid "PDF"
+msgstr "PDF 1.4"
+
+#: ../share/extensions/jessyInk_export.inx.h:6
+msgid "PNG"
+msgstr ""
+
+#: ../share/extensions/jessyInk_export.inx.h:7
+#, fuzzy
+msgid "Resolution:"
+msgstr "Роздільна здатність (у т/дюйм)"
+
+#: ../share/extensions/jessyInk_export.inx.h:9
+msgid ""
+"This extension allows you to export a JessyInk presentation once you created "
+"an export layer in your browser. Please see code.google.com/p/jessyink for "
+"more details."
+msgstr ""
+
+#: ../share/extensions/jessyInk_install.inx.h:2
+msgid "Install/update"
+msgstr ""
+
+#: ../share/extensions/jessyInk_install.inx.h:4
+msgid ""
+"This extension allows you to install or update the JessyInk script in order "
+"to turn your SVG file into a presentation. Please see code.google.com/p/"
+"jessyink for more details."
+msgstr ""
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:1
+#, fuzzy
+msgid "Add slide:"
+msgstr "Друга сторона"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:2
+msgid "Back (with effects):"
+msgstr ""
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:3
+#, fuzzy
+msgid "Back (without effects):"
+msgstr "Показувати обрис контуру (без ефектів контуру)"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:4
+#, fuzzy
+msgid "Decrease number of columns:"
+msgstr "Кількість стовпчиків"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:5
+#, fuzzy
+msgid "Drawing mode"
+msgstr "Малюнок"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:6
+#, fuzzy
+msgid "First slide:"
+msgstr "Перший позначений"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:8
+#, fuzzy
+msgid "Increase number of columns:"
+msgstr "Кількість стовпчиків"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:9
+#, fuzzy
+msgid "Index mode"
+msgstr "Перемістити від кореня"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:11
+#, fuzzy
+msgid "Key bindings"
+msgstr "Кернінґ"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:12
+#, fuzzy
+msgid "Last slide:"
+msgstr "Вставити розмір"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:13
+#, fuzzy
+msgid "Next (with effects):"
+msgstr "Ефект неонового світла"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:14
+#, fuzzy
+msgid "Next (without effects):"
+msgstr "Ефект неонового світла"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:15
+#, fuzzy
+msgid "Next page:"
+msgstr "Обрати сторінку:"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:16
+#, fuzzy
+msgid "Previous page:"
+msgstr "П_опередній масштаб"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:17
+#, fuzzy
+msgid "Reset timer:"
+msgstr "Повернення до початкового центру"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:18
+msgid "Select the slide above:"
+msgstr ""
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:19
+msgid "Select the slide below:"
+msgstr ""
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:20
+#, fuzzy
+msgid "Select the slide to the left:"
+msgstr "Виберіть файл для збереження"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:21
+#, fuzzy
+msgid "Select the slide to the right:"
+msgstr "Підганяє полотно під вже намальоване"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:22
+#, fuzzy
+msgid "Set duration:"
+msgstr "Насиченість"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:23
+#, fuzzy
+msgid "Set number of columns to default:"
+msgstr "Кількість стовпчиків"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:24
+#, fuzzy
+msgid "Set path color to black:"
+msgstr "Зняти колір з штриха"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:25
+#, fuzzy
+msgid "Set path color to blue:"
+msgstr "Зняти колір з штриха"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:26
+#, fuzzy
+msgid "Set path color to cyan:"
+msgstr "Зняти колір з штриха"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:27
+#, fuzzy
+msgid "Set path color to green:"
+msgstr "Зняти колір з штриха"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:28
+#, fuzzy
+msgid "Set path color to magenta:"
+msgstr "Зняти колір з штриха"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:29
+#, fuzzy
+msgid "Set path color to orange:"
+msgstr "Зняти колір з штриха"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:30
+#, fuzzy
+msgid "Set path color to red:"
+msgstr "Зняти колір з штриха"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:31
+#, fuzzy
+msgid "Set path color to white:"
+msgstr "Зняти колір з штриха"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:32
+#, fuzzy
+msgid "Set path color to yellow:"
+msgstr "Зняти колір з штриха"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:33
+#, fuzzy
+msgid "Set path width to 1:"
+msgstr "Встановити товщину:"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:34
+#, fuzzy
+msgid "Set path width to 3:"
+msgstr "Встановити товщину:"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:35
+#, fuzzy
+msgid "Set path width to 5:"
+msgstr "Встановити товщину:"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:36
+#, fuzzy
+msgid "Set path width to 7:"
+msgstr "Встановити товщину:"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:37
+#, fuzzy
+msgid "Set path width to 9:"
+msgstr "Встановити товщину:"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:38
+#, fuzzy
+msgid "Set path width to default:"
+msgstr "Зберегти типовим"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:39
+#, fuzzy
+msgid "Slide mode"
+msgstr "Режим масштабування"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:40
+#, fuzzy
+msgid "Switch to drawing mode:"
+msgstr "Перемикання на звичайний режим відображення"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:41
+#, fuzzy
+msgid "Switch to index mode:"
+msgstr "Перемкнутися на наступний шар"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:42
+#, fuzzy
+msgid "Switch to slide mode:"
+msgstr "Перемикання на звичайний режим відображення"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:43
+msgid ""
+"This extension allows you customise the key bindings JessyInk uses. Please "
+"see code.google.com/p/jessyink for more details."
+msgstr ""
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:44
+msgid "Toggle progress bar:"
+msgstr ""
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:45
+#, fuzzy
+msgid "Undo last path segment:"
+msgstr "Скасувати останню операцію"
+
+#: ../share/extensions/jessyInk_masterSlide.inx.h:2
+msgid "If no layer name is supplied, the master slide is unset."
+msgstr ""
+
+#: ../share/extensions/jessyInk_masterSlide.inx.h:4
+#, fuzzy
+msgid "Master slide"
+msgstr "Вставити розмір"
+
+#: ../share/extensions/jessyInk_masterSlide.inx.h:5
+#: ../share/extensions/jessyInk_transitions.inx.h:7
+#, fuzzy
+msgid "Name of layer:"
+msgstr "Перейменувати Шар"
+
+#: ../share/extensions/jessyInk_masterSlide.inx.h:7
+msgid ""
+"This extension allows you to change the master slide JessyInk uses. Please "
+"see code.google.com/p/jessyink for more details."
+msgstr ""
+
+#. File
+#: ../share/extensions/jessyInk_mouseHandler.inx.h:1
+#: ../share/extensions/jessyInk_transitions.inx.h:2 ../src/filter-enums.cpp:72
+#: ../src/verbs.cpp:2195 ../src/widgets/toolbox.cpp:988
+msgid "Default"
+msgstr "Типовий"
+
+#: ../share/extensions/jessyInk_mouseHandler.inx.h:2
+#, fuzzy
+msgid "Dragging/zoom"
+msgstr "Малюнок"
+
+#: ../share/extensions/jessyInk_mouseHandler.inx.h:5
+#, fuzzy
+msgid "Mouse handler"
+msgstr "Перемістити вус"
+
+#: ../share/extensions/jessyInk_mouseHandler.inx.h:6
+#, fuzzy
+msgid "Mouse settings:"
+msgstr "Параметри сторінки"
+
+#: ../share/extensions/jessyInk_mouseHandler.inx.h:7
+#, fuzzy
+msgid "No-click"
+msgstr "при клацанні"
+
+#: ../share/extensions/jessyInk_mouseHandler.inx.h:8
+msgid ""
+"This extension allows you customise the mouse handler JessyInk uses. Please "
+"see code.google.com/p/jessyink for more details."
+msgstr ""
+
+#: ../share/extensions/jessyInk_summary.inx.h:3
+#, fuzzy
+msgid "Summary"
+msgstr "Си_метрія"
+
+#: ../share/extensions/jessyInk_summary.inx.h:4
+msgid ""
+"This extension allows you to obtain information about the JessyInk script, "
+"effects and transitions contained in this SVG file. Please see code.google."
+"com/p/jessyink for more details."
+msgstr ""
+
+#: ../share/extensions/jessyInk_transitions.inx.h:10
+msgid ""
+"This extension allows you to change the transition JessyInk uses for the "
+"selected layer. Please see code.google.com/p/jessyink for more details."
+msgstr ""
+
+#: ../share/extensions/jessyInk_transitions.inx.h:11
+msgid "Transition in effect"
+msgstr ""
+
+#: ../share/extensions/jessyInk_transitions.inx.h:12
+#, fuzzy
+msgid "Transition out effect"
+msgstr "Вставити ефект динамічного контуру"
+
+#: ../share/extensions/jessyInk_transitions.inx.h:13
+#, fuzzy
+msgid "Transitions"
+msgstr "Перетворення"
+
+#: ../share/extensions/jessyInk_uninstall.inx.h:4
+msgid "Please select the parts of JessyInk you want to uninstall/remove."
+msgstr ""
+
+#: ../share/extensions/jessyInk_uninstall.inx.h:5
+#, fuzzy
+msgid "Remove auto-texts"
+msgstr "Вилучити штрих"
+
+#: ../share/extensions/jessyInk_uninstall.inx.h:6
+#, fuzzy
+msgid "Remove effects"
+msgstr "Вилучити ефект контуру"
+
+#: ../share/extensions/jessyInk_uninstall.inx.h:7
+#, fuzzy
+msgid "Remove master slide assignment"
+msgstr "Вилучити маску з позначеного"
+
+#: ../share/extensions/jessyInk_uninstall.inx.h:8
+#, fuzzy
+msgid "Remove script"
+msgstr "Вилучити сітку"
+
+#: ../share/extensions/jessyInk_uninstall.inx.h:9
+#, fuzzy
+msgid "Remove transitions"
+msgstr "Прибрати _трансформацію"
+
+#: ../share/extensions/jessyInk_uninstall.inx.h:10
+#, fuzzy
+msgid "Remove views"
+msgstr "Вилучити фільтри"
+
+#: ../share/extensions/jessyInk_uninstall.inx.h:11
+msgid ""
+"This extension allows you to uninstall the JessyInk script. Please see code."
+"google.com/p/jessyink for more details."
+msgstr ""
+
+#: ../share/extensions/jessyInk_uninstall.inx.h:12
+msgid "Uninstall/remove"
+msgstr ""
+
+#: ../share/extensions/jessyInk_video.inx.h:3
+msgid ""
+"This extension puts a JessyInk video element on the current slide (layer). "
+"This element allows you to integrate a video into your JessyInk "
+"presentation. Please see code.google.com/p/jessyink for more details."
+msgstr ""
+
+#: ../share/extensions/jessyInk_video.inx.h:4
+#, fuzzy
+msgid "Video"
+msgstr "Перегляд"
+
+#: ../share/extensions/jessyInk_view.inx.h:1
+msgid "Choose order number 0 to set the initial view of a slide."
+msgstr ""
+
+#: ../share/extensions/jessyInk_view.inx.h:6
+#, fuzzy
+msgid "Remove view"
+msgstr "Вилучити червону компоненту"
+
+#: ../share/extensions/jessyInk_view.inx.h:8
+msgid ""
+"This extension allows you to set, update and remove views for a JessyInk "
+"presentation. Please see code.google.com/p/jessyink for more details."
+msgstr ""
+
+#: ../share/extensions/jessyInk_view.inx.h:9
+#: ../share/extensions/polyhedron_3d.inx.h:52
+msgid "View"
+msgstr "Перегляд"
+
 #: ../share/extensions/lindenmayer.inx.h:1
 msgid ""
 "\n"
@@ -1746,8 +2310,8 @@ msgstr ""
 "  * Параметр «Масштаб» можна використовувати для вимірювань масштабованих "
 "елементів. Наприклад, якщо на рисунку 1 см рівний 2,5 м, слід вказати 250.\n"
 "  * Під час обчислення площі ви отримуватимете точні значення для "
-"багатокутників та кривих Безьє. Площу кіл буде обчислено з відносною похибкою "
-"0.03%."
+"багатокутників та кривих Безьє. Площу кіл буде обчислено з відносною "
+"похибкою 0.03%."
 
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
 msgid "Angle"
@@ -2257,10 +2821,6 @@ msgstr "Обрізаний тетраедр"
 #: ../share/extensions/polyhedron_3d.inx.h:51
 msgid "Vertices"
 msgstr "Вершини"
-
-#: ../share/extensions/polyhedron_3d.inx.h:52
-msgid "View"
-msgstr "Перегляд"
 
 #: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "X-Axis"
@@ -3206,14 +3766,6 @@ msgstr "Вгорі ліворуч"
 msgid "Top and right"
 msgstr "Вгорі праворуч"
 
-#. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
-#: ../share/extensions/webslicer_create_rect.inx.h:40
-#: ../src/dialogs/object-attributes.cpp:34
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2174
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2252
-msgid "Type:"
-msgstr "Тип:"
-
 #: ../share/extensions/webslicer_export.inx.h:1
 msgid ""
 "All sliced images, and optionaly code, will be generated as you had "
@@ -3741,7 +4293,8 @@ msgstr "Фаски"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Same as Matte jelly but with more controls"
-msgstr "Те саме, що і Матове покриття, але з додатковими можливостями керування"
+msgstr ""
+"Те саме, що і Матове покриття, але з додатковими можливостями керування"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Metal casting"
@@ -4360,7 +4913,8 @@ msgstr "Металізована фарба"
 #: ../share/filters/filters.svg.h:67
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr "Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
+msgstr ""
+"Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Dragee"
@@ -4556,7 +5110,8 @@ msgid "Electronic microscopy"
 msgstr "Електронна мікроскопія"
 
 #: ../share/filters/filters.svg.h:89
-msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
+msgid ""
+"Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
 "Навскісне, грубе освітлення, знебарвлення і сяйво схоже на фотографії, "
 "зроблені за допомогою електронного мікроскопа."
@@ -4834,7 +5389,8 @@ msgstr "Контурне сяйво"
 
 #: ../share/filters/filters.svg.h:119
 msgid "In and out glow with a possible offset and colorizable flood"
-msgstr "Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
+msgstr ""
+"Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
 
 #: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
@@ -4942,7 +5498,8 @@ msgid "Felt"
 msgstr "Фетр"
 
 #: ../share/filters/filters.svg.h:132
-msgid "Felt like texture with color turbulence and slightly darker at the edges"
+msgid ""
+"Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "Текстура, схожа на фетр з кольоровим шумом, трохи темніша на краях"
 
 #: ../share/filters/filters.svg.h:133
@@ -4975,7 +5532,8 @@ msgstr "Вигнутий метал"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Bright, polished uneven metal casting, colorizable"
-msgstr "Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
+msgstr ""
+"Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Comics draft"
@@ -5243,7 +5801,8 @@ msgstr "Жувачка"
 msgid ""
 "Creates colorizable blotches which smoothly flow over the edges of the lines "
 "at their crossings"
-msgstr "Створює однотонні брижі, які плавно обтікають краї ліній та їх перетини"
+msgstr ""
+"Створює однотонні брижі, які плавно обтікають краї ліній та їх перетини"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Black outline"
@@ -5487,7 +6046,8 @@ msgid "Alpha engraving B"
 msgstr "Альфа-гравірування B"
 
 #: ../share/filters/filters.svg.h:193
-msgid "Gives a controllable roughness engraving effect to bitmaps and materials"
+msgid ""
+"Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr ""
 "Надає ефекту гравірування з керованим рівнем нерівності растровим "
 "зображенням і матеріалам"
@@ -6020,11 +6580,11 @@ msgstr ""
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Позначте <b>принаймні два об'єкти</b> для з'єднання."
 
-#: ../src/connector-context.cpp:1936 ../src/widgets/toolbox.cpp:8188
+#: ../src/connector-context.cpp:1936 ../src/widgets/toolbox.cpp:8191
 msgid "Make connectors avoid selected objects"
 msgstr "Змусити лінії огинати обрані об'єкти"
 
-#: ../src/connector-context.cpp:1937 ../src/widgets/toolbox.cpp:8198
+#: ../src/connector-context.cpp:1937 ../src/widgets/toolbox.cpp:8201
 msgid "Make connectors ignore selected objects"
 msgstr "Змусити лінії ігнорувати обрані об'єкти"
 
@@ -6705,7 +7265,8 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2767
 msgid "Each clone's opacity is determined by the picked value in that point"
-msgstr "Прозорість кожного кольору визначається значенням, взятим у даній точці"
+msgstr ""
+"Прозорість кожного кольору визначається значенням, взятим у даній точці"
 
 #: ../src/dialogs/clonetiler.cpp:2794
 msgid "How many rows in the tiling"
@@ -7173,7 +7734,8 @@ msgstr "_Id"
 #: ../src/dialogs/item-properties.cpp:129
 msgid ""
 "The id= attribute (only letters, digits, and the characters .-_: allowed)"
-msgstr "Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
+msgstr ""
+"Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
 
 #. Button for setting the object's id, label, title and description.
 #: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2439
@@ -7433,11 +7995,11 @@ msgstr "Вирівняти рядки за правою межею"
 msgid "Justify lines"
 msgstr "Вирівнювання рядків"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:7645
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:7648
 msgid "Horizontal text"
 msgstr "Горизонтальний текст"
 
-#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:7652
+#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:7655
 msgid "Vertical text"
 msgstr "Вертикальний текст"
 
@@ -8163,7 +8725,7 @@ msgstr ""
 "відвідайте сайт Inkscape або запитайте у списках листування, якщо у вас "
 "виникли питання, що стосуються цього додатка."
 
-#: ../src/extension/implementation/script.cpp:985
+#: ../src/extension/implementation/script.cpp:990
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -8173,13 +8735,13 @@ msgstr ""
 "повернув код помилки, проте це може означати, що результат не такий як "
 "очікувався."
 
-#: ../src/extension/init.cpp:274
+#: ../src/extension/init.cpp:276
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr ""
 "Порожнє поле назви каталогу зовнішнього модуля. Модулі не будуть "
 "завантажуватись."
 
-#: ../src/extension/init.cpp:288
+#: ../src/extension/init.cpp:290
 #: ../src/extension/internal/filter/filter-file.cpp:56
 #, c-format
 msgid ""
@@ -9480,12 +10042,6 @@ msgstr "Обертання відтінку"
 msgid "Luminance to Alpha"
 msgstr "Освітленість до прозорості"
 
-#. File
-#: ../src/filter-enums.cpp:72 ../src/verbs.cpp:2195
-#: ../src/widgets/toolbox.cpp:988
-msgid "Default"
-msgstr "Типовий"
-
 #: ../src/filter-enums.cpp:73
 msgid "Over"
 msgstr "Над"
@@ -9719,7 +10275,8 @@ msgstr[2] " у %d позначених об’єктах"
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
 #: ../src/gradient-context.cpp:174
 #, c-format
-msgid "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
+msgid ""
+"One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
 msgid_plural ""
 "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
 msgstr[0] ""
@@ -9868,7 +10425,7 @@ msgstr "Вилучити опорні точки градієнта"
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:504
 #: ../src/widgets/toolbox.cpp:1619 ../src/widgets/toolbox.cpp:3358
-#: ../src/widgets/toolbox.cpp:6082 ../src/widgets/toolbox.cpp:8446
+#: ../src/widgets/toolbox.cpp:6082 ../src/widgets/toolbox.cpp:8449
 msgid "Units"
 msgstr "Одиниці"
 
@@ -10227,7 +10784,7 @@ msgid "Dockitem which 'owns' this grip"
 msgstr "Елемент, що є «володарем» цього"
 
 #. Name
-#: ../src/libgdl/gdl-dock-item.c:287 ../src/widgets/toolbox.cpp:7657
+#: ../src/libgdl/gdl-dock-item.c:287 ../src/widgets/toolbox.cpp:7660
 msgid "Orientation"
 msgstr "Орієнтація"
 
@@ -11484,7 +12041,8 @@ msgstr "Випадковість розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "0: evenly distributed construction lines, 1: purely random placement"
-msgstr "0: регулярно розподілені ліній побудови, 1: суто випадкове розташування"
+msgstr ""
+"0: регулярно розподілені ліній побудови, 1: суто випадкове розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 msgid "k_min"
@@ -12170,7 +12728,8 @@ msgstr "<b>Клацання</b> або <b>перетягування</b> зак�
 #: ../src/pen-context.cpp:676
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
-msgstr "<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
+msgstr ""
+"<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
 
 #: ../src/pen-context.cpp:1285
 #, c-format
@@ -14042,7 +14601,8 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:221
 msgid "<b>Click and drag</b> between shapes to create a connector."
-msgstr "<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
+msgstr ""
+"<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
 
 #: ../src/tools-switch.cpp:227
 msgid ""
@@ -14440,12 +15000,12 @@ msgstr "В:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:510
 #: ../src/ui/dialog/align-and-distribute.cpp:795
-#: ../src/widgets/toolbox.cpp:8285
+#: ../src/widgets/toolbox.cpp:8288
 msgid "Remove overlaps"
 msgstr "Вилучити перекриття"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:541
-#: ../src/widgets/toolbox.cpp:8074
+#: ../src/widgets/toolbox.cpp:8077
 msgid "Arrange connector network"
 msgstr "Впорядкувати сітку з'єднувальних ліній"
 
@@ -14586,7 +15146,7 @@ msgid ""
 msgstr "Переміщувати об'єкти якомога менше, так щоб їх рамки не перекривалися"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:899
-#: ../src/widgets/toolbox.cpp:8247
+#: ../src/widgets/toolbox.cpp:8250
 msgid "Nicely arrange selected connector network"
 msgstr "Гармонійно розташувати обране з'єднання об'єктів"
 
@@ -15843,7 +16403,8 @@ msgstr ""
 "до глядача, а прозоріші — віддаляються."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2340
-msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
+msgid ""
+"The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 "Примітив фільтра <b>feTile</b> заповнює область мозаїкою у формі вхідного "
 "графічного зображення"
@@ -16762,7 +17323,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:211
 #: ../src/ui/dialog/tracedialog.cpp:420 ../src/ui/dialog/tracedialog.cpp:453
-#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:8427
+#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:8430
 msgid "Threshold:"
 msgstr "Поріг:"
 
@@ -16799,8 +17360,7 @@ msgid ""
 msgstr ""
 "Якщо позначити, коліща мишки змінюватиме масштаб без Ctrl і виконуватиме "
 "гортання з Ctrl; якщо зняти позначку, воно змінюватиме масштаб з Ctrl і "
-"гортатиме "
-"без Ctrl."
+"гортатиме без Ctrl."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:224
 msgid "Enable snap indicator"
@@ -16830,7 +17390,8 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Прилипання лише до вузла, найближчого до вказівника"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:234
-msgid "Only try to snap the node that is initially closest to the mouse pointer"
+msgid ""
+"Only try to snap the node that is initially closest to the mouse pointer"
 msgstr "Виконувати прилипання лише до вузла, найближчого до вказівника миші"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:237
@@ -17359,7 +17920,8 @@ msgid "Show font samples in the drop-down list"
 msgstr "Показувати зразки шрифтів у спадному списку"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:553
-msgid "Show font samples alongside font names in the drop-down list in Text bar"
+msgid ""
+"Show font samples alongside font names in the drop-down list in Text bar"
 msgstr ""
 "Показувати зразки шрифтів поряд з назвами шрифтів у спадному списку панелі "
 "тексту."
@@ -17386,7 +17948,8 @@ msgstr "Піпетка"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:574
 msgid "Save and restore window geometry for each document"
-msgstr "Запам’ятовувати і використовувати геометрію вікна для кожного документа"
+msgstr ""
+"Запам’ятовувати і використовувати геометрію вікна для кожного документа"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:575
 msgid "Remember and use last window's geometry"
@@ -17414,8 +17977,8 @@ msgid "Show close button on dialogs"
 msgstr "Показувати кнопку закриття у діалогах"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:585
-#: ../src/widgets/toolbox.cpp:7681 ../src/widgets/toolbox.cpp:7712
-#: ../src/widgets/toolbox.cpp:7743
+#: ../src/widgets/toolbox.cpp:7684 ../src/widgets/toolbox.cpp:7715
+#: ../src/widgets/toolbox.cpp:7746
 msgid "Normal"
 msgstr "Звичайно"
 
@@ -19508,7 +20071,8 @@ msgstr "Визначення меж"
 
 #: ../src/ui/dialog/tracedialog.cpp:434
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
-msgstr "Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
+msgstr ""
+"Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
 
 #: ../src/ui/dialog/tracedialog.cpp:451
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
@@ -19892,8 +20456,8 @@ msgid ""
 "insert node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
 "<b>Лінійний сегмент кривої</b>: перетягніть, щоб перетворити на сегмент "
-"кривої Безьє, двічі клацніть лівою кнопкою миші, щоб вставити вузол, клацніть "
-"один раз, щоб позначити (більше: Shift, Ctrl+Alt)"
+"кривої Безьє, двічі клацніть лівою кнопкою миші, щоб вставити вузол, "
+"клацніть один раз, щоб позначити (більше: Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/curve-drag-point.cpp:179
 msgctxt "Path segment tip"
@@ -20068,8 +20632,8 @@ msgid ""
 "<b>Shift+Ctrl+Alt</b>: preserve length and snap rotation angle to %g° "
 "increments while rotating both handles"
 msgstr ""
-"<b>Shift+Ctrl+Alt</b>: зберігати довжину, змінювати кут обертання кроками у "
-"%g°, обертати обидва елементи керування"
+"<b>Shift+Ctrl+Alt</b>: зберігати довжину, змінювати кут обертання кроками у %"
+"g°, обертати обидва елементи керування"
 
 #: ../src/ui/tool/node.cpp:354
 #, c-format
@@ -20138,8 +20702,8 @@ msgstr "Пересунути елемент керування на %s, %s; ку
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr ""
-"<b>Shift</b>: перетягніть елемент керування, клацніть, щоб увімкнути/вимкнути "
-"режим позначення"
+"<b>Shift</b>: перетягніть елемент керування, клацніть, щоб увімкнути/"
+"вимкнути режим позначення"
 
 #: ../src/ui/tool/node.cpp:1146
 msgctxt "Path node tip"
@@ -20242,7 +20806,8 @@ msgstr "<b>Ctrl:</b> рівномірне масштабування"
 
 #: ../src/ui/tool/transform-handle-set.cpp:144
 msgctxt "Transform handle tip"
-msgid "<b>Shift+Alt</b>: scale using an integer ratio about the rotation center"
+msgid ""
+"<b>Shift+Alt</b>: scale using an integer ratio about the rotation center"
 msgstr "<b>Shift+Alt</b>: кратне масштабування відносно центра обертання"
 
 #: ../src/ui/tool/transform-handle-set.cpp:146
@@ -20311,7 +20876,8 @@ msgctxt "Transform handle tip"
 msgid ""
 "<b>Shift+Ctrl</b>: skew about the rotation center with snapping to %f° "
 "increments"
-msgstr "<b>Shift+Ctrl</b>: перекошування навколо центра обертання кроками у %f°"
+msgstr ""
+"<b>Shift+Ctrl</b>: перекошування навколо центра обертання кроками у %f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:422
 msgctxt "Transform handle tip"
@@ -24299,7 +24865,7 @@ msgid "Scatter randomly the corners and angles"
 msgstr "Випадковим чином перемістити кути та повернути радіуси"
 
 #: ../src/widgets/toolbox.cpp:3037 ../src/widgets/toolbox.cpp:3970
-#: ../src/widgets/toolbox.cpp:4225 ../src/widgets/toolbox.cpp:8492
+#: ../src/widgets/toolbox.cpp:4225 ../src/widgets/toolbox.cpp:8495
 msgid "Defaults"
 msgstr "Типово"
 
@@ -25416,47 +25982,47 @@ msgstr "Текст: Зміна розміру шрифту"
 msgid "Text: Change font style"
 msgstr "Текст: Зміна нарису шрифту"
 
-#: ../src/widgets/toolbox.cpp:6698
+#: ../src/widgets/toolbox.cpp:6701
 msgid "Text: Change superscript or subscript"
 msgstr "Текст: змінити на верхній або нижній індекс"
 
-#: ../src/widgets/toolbox.cpp:6842
+#: ../src/widgets/toolbox.cpp:6845
 msgid "Text: Change alignment"
 msgstr "Текст: Зміна вирівнювання"
 
-#: ../src/widgets/toolbox.cpp:6881
+#: ../src/widgets/toolbox.cpp:6884
 msgid "Text: Change line-height"
 msgstr "Текст: Зміна висоти рядків"
 
-#: ../src/widgets/toolbox.cpp:6920
+#: ../src/widgets/toolbox.cpp:6923
 msgid "Text: Change word-spacing"
 msgstr "Текст: Зміна інтервалів між словами"
 
-#: ../src/widgets/toolbox.cpp:6959
+#: ../src/widgets/toolbox.cpp:6962
 msgid "Text: Change letter-spacing"
 msgstr "Текст: Зміна інтервалів між літерами"
 
-#: ../src/widgets/toolbox.cpp:7004
+#: ../src/widgets/toolbox.cpp:7007
 msgid "Text: Change dx (kern)"
 msgstr "Текст: Зміна приросту за x (керна)"
 
-#: ../src/widgets/toolbox.cpp:7035
+#: ../src/widgets/toolbox.cpp:7038
 msgid "Text: Change dy"
 msgstr "Текст: Зміна приросту за y"
 
-#: ../src/widgets/toolbox.cpp:7066
+#: ../src/widgets/toolbox.cpp:7069
 msgid "Text: Change rotate"
 msgstr "Текст: Зміна кута обертання"
 
-#: ../src/widgets/toolbox.cpp:7111
+#: ../src/widgets/toolbox.cpp:7114
 msgid "Text: Change orientation"
 msgstr "Текст: Зміна орієнтації"
 
-#: ../src/widgets/toolbox.cpp:7475
+#: ../src/widgets/toolbox.cpp:7478
 msgid "Font Family"
 msgstr "Гарнітура шрифту"
 
-#: ../src/widgets/toolbox.cpp:7476
+#: ../src/widgets/toolbox.cpp:7479
 msgid "Select Font Family (Alt-X to access)"
 msgstr "Виберіть гарнітуру шрифту (Alt-X для доступу)"
 
@@ -25464,332 +26030,333 @@ msgstr "Виберіть гарнітуру шрифту (Alt-X для дост�
 #. Extra list width
 #. Cell layout
 #. Enable entry completion
-#: ../src/widgets/toolbox.cpp:7483
+#: ../src/widgets/toolbox.cpp:7486
 msgid "Font not found on system"
 msgstr "Шрифту у системі не виявлено"
 
-#: ../src/widgets/toolbox.cpp:7515
+#: ../src/widgets/toolbox.cpp:7518
 msgid "Font Size"
 msgstr "Розмір шрифту"
 
-#: ../src/widgets/toolbox.cpp:7516
+#: ../src/widgets/toolbox.cpp:7519
 msgid "Font size (px)"
 msgstr "Розмір шрифту (у пікселях)"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7528
+#: ../src/widgets/toolbox.cpp:7531
 msgid "Toggle Bold"
 msgstr "Увімкнути/Вимкнути напівжирний нарис"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7529
+#: ../src/widgets/toolbox.cpp:7532
 msgid "Toggle bold or normal weight"
 msgstr "Перемкнутися між звичайним та напівжирним нарисом"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7541
+#: ../src/widgets/toolbox.cpp:7544
 msgid "Toggle Italic/Oblique"
 msgstr "Перемкнутися між курсивним та прямим нарисом"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7542
+#: ../src/widgets/toolbox.cpp:7545
 msgid "Toggle italic/oblique style"
 msgstr "Перемкнутися між курсивним та прямим нарисом"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7554
+#: ../src/widgets/toolbox.cpp:7557
 msgid "Toggle Superscript"
 msgstr "Увімкнути/Вимкнути режим верхнього індексу"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7555
+#: ../src/widgets/toolbox.cpp:7558
 msgid "Toggle superscript"
 msgstr "Увімкнути/Вимкнути режим верхнього індексу"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7567
+#: ../src/widgets/toolbox.cpp:7570
 msgid "Toggle Subscript"
 msgstr "Увімкнути/Вимкнути режим нижнього індексу"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7568
+#: ../src/widgets/toolbox.cpp:7571
 msgid "Toggle subscript"
 msgstr "Увімкнути/Вимкнути режим нижнього індексу"
 
-#: ../src/widgets/toolbox.cpp:7585 ../src/widgets/toolbox.cpp:7586
+#: ../src/widgets/toolbox.cpp:7588 ../src/widgets/toolbox.cpp:7589
 msgid "Align left"
 msgstr "Вирівнювання ліворуч"
 
-#: ../src/widgets/toolbox.cpp:7593 ../src/widgets/toolbox.cpp:7594
+#: ../src/widgets/toolbox.cpp:7596 ../src/widgets/toolbox.cpp:7597
 msgid "Align center"
 msgstr "Посередині"
 
-#: ../src/widgets/toolbox.cpp:7601 ../src/widgets/toolbox.cpp:7602
+#: ../src/widgets/toolbox.cpp:7604 ../src/widgets/toolbox.cpp:7605
 msgid "Align right"
 msgstr "Вирівнювання праворуч"
 
-#: ../src/widgets/toolbox.cpp:7609
+#: ../src/widgets/toolbox.cpp:7612
 msgid "Justify"
 msgstr "Вирівняти з заповненням"
 
-#: ../src/widgets/toolbox.cpp:7610
+#: ../src/widgets/toolbox.cpp:7613
 msgid "Justify (only flowed text)"
 msgstr "Вирівняти раз шириною (лише неконтурний текст)"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7616
+#: ../src/widgets/toolbox.cpp:7619
 msgid "Alignment"
 msgstr "Вирівнювання"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7617
+#: ../src/widgets/toolbox.cpp:7620
 msgid "Text alignment"
 msgstr "Вирівнювання тексту"
 
-#: ../src/widgets/toolbox.cpp:7644
+#: ../src/widgets/toolbox.cpp:7647
 msgid "Horizontal"
 msgstr "Горизонтально"
 
-#: ../src/widgets/toolbox.cpp:7651
+#: ../src/widgets/toolbox.cpp:7654
 msgid "Vertical"
 msgstr "Вертикально"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7658
+#: ../src/widgets/toolbox.cpp:7661
 msgid "Text orientation"
 msgstr "Орієнтація тексту"
 
 #. Drop down menu
-#: ../src/widgets/toolbox.cpp:7681
+#: ../src/widgets/toolbox.cpp:7684
 msgid "Smaller spacing"
 msgstr "Менший інтервал"
 
-#: ../src/widgets/toolbox.cpp:7681
+#: ../src/widgets/toolbox.cpp:7684
 msgid "Larger spacing"
 msgstr "Більший інтервал"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7686
+#: ../src/widgets/toolbox.cpp:7689
 msgid "Line Height"
 msgstr "Висота рядка"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7687
+#: ../src/widgets/toolbox.cpp:7690
 msgid "Line:"
 msgstr "Рядок:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7688
+#: ../src/widgets/toolbox.cpp:7691
 msgid "Spacing between lines (times font size)"
 msgstr "Інтервал між рядками (у одиницях розміру шрифту)"
 
 #. Drop down menu
-#: ../src/widgets/toolbox.cpp:7712 ../src/widgets/toolbox.cpp:7743
+#: ../src/widgets/toolbox.cpp:7715 ../src/widgets/toolbox.cpp:7746
 msgid "Negative spacing"
 msgstr "Від’ємний інтервал"
 
-#: ../src/widgets/toolbox.cpp:7712 ../src/widgets/toolbox.cpp:7743
+#: ../src/widgets/toolbox.cpp:7715 ../src/widgets/toolbox.cpp:7746
 msgid "Positive spacing"
 msgstr "Додатний інтервал"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7717
+#: ../src/widgets/toolbox.cpp:7720
 msgid "Word spacing"
 msgstr "Інтервал між словами"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7718
+#: ../src/widgets/toolbox.cpp:7721
 msgid "Word:"
 msgstr "Слово:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7719
+#: ../src/widgets/toolbox.cpp:7722
 msgid "Spacing between words (px)"
 msgstr "Інтервал між словами (у пікселях)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7748
+#: ../src/widgets/toolbox.cpp:7751
 msgid "Letter spacing"
 msgstr "Інтервал між літерами"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7749
+#: ../src/widgets/toolbox.cpp:7752
 msgid "Letter:"
 msgstr "Літера:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7750
+#: ../src/widgets/toolbox.cpp:7753
 msgid "Spacing between letters (px)"
 msgstr "Інтервал між літерами (у пікселях)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7779
+#: ../src/widgets/toolbox.cpp:7782
 msgid "Kerning"
 msgstr "Кернінґ"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7780
+#: ../src/widgets/toolbox.cpp:7783
 msgid "Kern:"
 msgstr "Керн:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7781
+#: ../src/widgets/toolbox.cpp:7784
 msgid "Horizontal kerning (px)"
 msgstr "Горизонтальний кернінґ (у пікселях)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7810
+#: ../src/widgets/toolbox.cpp:7813
 msgid "Vertical Shift"
 msgstr "Вертикальний зсув"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7811
+#: ../src/widgets/toolbox.cpp:7814
 msgid "Vert:"
 msgstr "Верт.:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7812
+#: ../src/widgets/toolbox.cpp:7815
 msgid "Vertical shift (px)"
 msgstr "Вертикальний зсув (у пікселях)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7841
+#: ../src/widgets/toolbox.cpp:7844
 msgid "Letter rotation"
 msgstr "Обертання літер"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7842
+#: ../src/widgets/toolbox.cpp:7845
 msgid "Rot:"
 msgstr "Обер.:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7843
+#: ../src/widgets/toolbox.cpp:7846
 msgid "Character rotation (degrees)"
 msgstr "Обертання символів (у градусах)"
 
-#: ../src/widgets/toolbox.cpp:7958
+#: ../src/widgets/toolbox.cpp:7961
 msgid "Set connector type: orthogonal"
 msgstr "Встановити тип з’єднання: під прямим кутом"
 
-#: ../src/widgets/toolbox.cpp:7958
+#: ../src/widgets/toolbox.cpp:7961
 msgid "Set connector type: polyline"
 msgstr "Встановити тип з’єднання: ламана"
 
-#: ../src/widgets/toolbox.cpp:8006
+#: ../src/widgets/toolbox.cpp:8009
 msgid "Change connector curvature"
 msgstr "Змінити кривину з’єднання"
 
-#: ../src/widgets/toolbox.cpp:8054
+#: ../src/widgets/toolbox.cpp:8057
 msgid "Change connector spacing"
 msgstr "Зміна відстаней для лінії з'єднання"
 
-#: ../src/widgets/toolbox.cpp:8172
+#: ../src/widgets/toolbox.cpp:8175
 msgid "EditMode"
 msgstr "Режим редагування"
 
-#: ../src/widgets/toolbox.cpp:8173
+#: ../src/widgets/toolbox.cpp:8176
 msgid "Switch between connection point editing and connector drawing mode"
 msgstr ""
 "Перемкнути між редагуванням параметрів точки з’єднання і режимом малювання "
 "з’єднання"
 
-#: ../src/widgets/toolbox.cpp:8187
+#: ../src/widgets/toolbox.cpp:8190
 msgid "Avoid"
 msgstr "Уникати"
 
-#: ../src/widgets/toolbox.cpp:8197
+#: ../src/widgets/toolbox.cpp:8200
 msgid "Ignore"
 msgstr "Ігнорувати"
 
-#: ../src/widgets/toolbox.cpp:8208
+#: ../src/widgets/toolbox.cpp:8211
 msgid "Orthogonal"
 msgstr "Під прямим кутом"
 
-#: ../src/widgets/toolbox.cpp:8209
+#: ../src/widgets/toolbox.cpp:8212
 msgid "Make connector orthogonal or polyline"
 msgstr "Зробити з’єднання з’єднанням під прямим кутом або з’єднанням у ламаній"
 
-#: ../src/widgets/toolbox.cpp:8223
+#: ../src/widgets/toolbox.cpp:8226
 msgid "Connector Curvature"
 msgstr "Кривина з’єднання"
 
-#: ../src/widgets/toolbox.cpp:8223
+#: ../src/widgets/toolbox.cpp:8226
 msgid "Curvature:"
 msgstr "Кривина:"
 
-#: ../src/widgets/toolbox.cpp:8224
+#: ../src/widgets/toolbox.cpp:8227
 msgid "The amount of connectors curvature"
 msgstr "Кривина з’єднань"
 
-#: ../src/widgets/toolbox.cpp:8234
+#: ../src/widgets/toolbox.cpp:8237
 msgid "Connector Spacing"
 msgstr "Відстань для з'єднання"
 
-#: ../src/widgets/toolbox.cpp:8234
+#: ../src/widgets/toolbox.cpp:8237
 msgid "Spacing:"
 msgstr "Інтервал:"
 
-#: ../src/widgets/toolbox.cpp:8235
+#: ../src/widgets/toolbox.cpp:8238
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Простір, що залишається навколо об'єктів під час автоз'єднання"
 
-#: ../src/widgets/toolbox.cpp:8246
+#: ../src/widgets/toolbox.cpp:8249
 msgid "Graph"
 msgstr "Графік"
 
-#: ../src/widgets/toolbox.cpp:8256
+#: ../src/widgets/toolbox.cpp:8259
 msgid "Connector Length"
 msgstr "Довжина з'єднання"
 
-#: ../src/widgets/toolbox.cpp:8256
+#: ../src/widgets/toolbox.cpp:8259
 msgid "Length:"
 msgstr "Довжина:"
 
-#: ../src/widgets/toolbox.cpp:8257
+#: ../src/widgets/toolbox.cpp:8260
 msgid "Ideal length for connectors when layout is applied"
-msgstr "Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
+msgstr ""
+"Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
 
-#: ../src/widgets/toolbox.cpp:8269
+#: ../src/widgets/toolbox.cpp:8272
 msgid "Downwards"
 msgstr "Вниз"
 
-#: ../src/widgets/toolbox.cpp:8270
+#: ../src/widgets/toolbox.cpp:8273
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Змусити кінцеві стрілки ліній з'єднання вказувати вниз"
 
-#: ../src/widgets/toolbox.cpp:8286
+#: ../src/widgets/toolbox.cpp:8289
 msgid "Do not allow overlapping shapes"
 msgstr "Не дозволяти перекриття форм"
 
-#: ../src/widgets/toolbox.cpp:8301
+#: ../src/widgets/toolbox.cpp:8304
 msgid "New connection point"
 msgstr "Створити точку з’єднання"
 
-#: ../src/widgets/toolbox.cpp:8302
+#: ../src/widgets/toolbox.cpp:8305
 msgid "Add a new connection point to the currently selected item"
 msgstr "Додати нову точку з’єднання до поточного позначеного об’єкта"
 
-#: ../src/widgets/toolbox.cpp:8313
+#: ../src/widgets/toolbox.cpp:8316
 msgid "Remove connection point"
 msgstr "Вилучити точку з’єднання"
 
-#: ../src/widgets/toolbox.cpp:8314
+#: ../src/widgets/toolbox.cpp:8317
 msgid "Remove the currently selected connection point"
 msgstr "Вилучити поточну позначену точку з’єднання"
 
-#: ../src/widgets/toolbox.cpp:8414
+#: ../src/widgets/toolbox.cpp:8417
 msgid "Fill by"
 msgstr "Залити"
 
-#: ../src/widgets/toolbox.cpp:8415
+#: ../src/widgets/toolbox.cpp:8418
 msgid "Fill by:"
 msgstr "Чим залити:"
 
-#: ../src/widgets/toolbox.cpp:8427
+#: ../src/widgets/toolbox.cpp:8430
 msgid "Fill Threshold"
 msgstr "Поріг залиття"
 
-#: ../src/widgets/toolbox.cpp:8428
+#: ../src/widgets/toolbox.cpp:8431
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
@@ -25797,29 +26364,30 @@ msgstr ""
 "Максимальна допустима різниця між точкою, на якій клацнули та сусідніми "
 "точками які обчислені у заповненні"
 
-#: ../src/widgets/toolbox.cpp:8454
+#: ../src/widgets/toolbox.cpp:8457
 msgid "Grow/shrink by"
 msgstr "Збільшити/зменшити на"
 
-#: ../src/widgets/toolbox.cpp:8454
+#: ../src/widgets/toolbox.cpp:8457
 msgid "Grow/shrink by:"
 msgstr "Збільшити/зменшити на:"
 
-#: ../src/widgets/toolbox.cpp:8455
-msgid "The amount to grow (positive) or shrink (negative) the created fill path"
+#: ../src/widgets/toolbox.cpp:8458
+msgid ""
+"The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Величина збільшення (додатне число) або зменшення (від'ємне) створеного "
 "контуру заповнення"
 
-#: ../src/widgets/toolbox.cpp:8480
+#: ../src/widgets/toolbox.cpp:8483
 msgid "Close gaps"
 msgstr "Закрити проміжки"
 
-#: ../src/widgets/toolbox.cpp:8481
+#: ../src/widgets/toolbox.cpp:8484
 msgid "Close gaps:"
 msgstr "Закриті проміжки:"
 
-#: ../src/widgets/toolbox.cpp:8493
+#: ../src/widgets/toolbox.cpp:8496
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
