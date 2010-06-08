@@ -1,19 +1,20 @@
-<inkscape-extension>
-  <_name>auto-texts</_name>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Auto-texts</_name>
   <id>jessyink.autotexts</id>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <dependency type="executable" location="extensions">jessyInk_autoTexts.py</dependency>
   <param name="tab" type="notebook">
     <page name="settings" _gui-text="Settings">
-			<param name="autoText" type="optiongroup" _gui-text="Auto-Text">
-        <_option value="none">none (remove)</_option>
-        <_option value="slideTitle">slide title</_option>
-        <_option value="slideNumber">slide number</_option>
-        <_option value="numberOfSlides">number of slides</_option>
+			<param name="autoText" type="optiongroup" _gui-text="Auto-Text:">
+        <_option value="none">None (remove)</_option>
+        <_option value="slideTitle">Slide title</_option>
+        <_option value="slideNumber">Slide number</_option>
+        <_option value="numberOfSlides">Number of slides</_option>
 			</param>
 		</page>
     <page name="help" _gui-text="Help">
-      <param name="help_text" type="description">This extensions allows you to install, update and remove auto-texts for a JessyInk presentation. Please see code.google.com/p/jessyink for more details.</param>
+      <_param name="help_text" type="description">This extension allows you to install, update and remove auto-texts for a JessyInk presentation. Please see code.google.com/p/jessyink for more details.</_param>
     </page>
   </param>
   <effect>

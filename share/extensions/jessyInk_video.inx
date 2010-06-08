@@ -1,11 +1,12 @@
-<inkscape-extension>
-  <_name>video</_name>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Video</_name>
   <id>jessyink.core.video</id>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <dependency type="executable" location="extensions">jessyInk_video.py</dependency>
   <param name="tab" type="notebook">
     <page name="help" _gui-text="Help">
-      <param name="help_text" type="description">This extensions puts a JessyInk video element on the current slide (layer). This element allows you to integrate a video into your JessyInk presentation. Please see code.google.com/p/jessyink for more details.</param>
+      <_param name="help_text" type="description">This extension puts a JessyInk video element on the current slide (layer). This element allows you to integrate a video into your JessyInk presentation. Please see code.google.com/p/jessyink for more details.</_param>
     </page>
   </param>
   <effect>

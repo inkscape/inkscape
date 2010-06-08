@@ -1,30 +1,31 @@
-<inkscape-extension>
-  <_name>transitions</_name>
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Transitions</_name>
   <id>jessyink.transitions</id>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <dependency type="executable" location="extensions">jessyInk_transitions.py</dependency>
   <param name="tab" type="notebook">
     <page name="settings" _gui-text="Settings">
-			<param name="layerName" type="string" _gui-text="Name of Layer"></param>
-			<param name="effectInLabel" type="description">Transition in effect:</param>
-			<param name="effectInDuration" precision="1" type="float" min="0.1" max="10.0" _gui-text="duration in seconds">0.8</param>
-			<param name="effectIn" type="optiongroup" _gui-text="type">
-        <_option value="default">default</_option>
-        <_option value="appear">appear</_option>
-        <_option value="fade">fade</_option>
-        <_option value="pop">pop</_option>
+			<param name="layerName" type="string" _gui-text="Name of layer:"></param>
+			<_param name="effectInLabel" type="description">Transition in effect</_param>
+			<param name="effectInDuration" precision="1" type="float" min="0.1" max="10.0" _gui-text="Duration in seconds:">0.8</param>
+			<param name="effectIn" type="optiongroup" _gui-text="Type:">
+        <_option value="default">Default</_option>
+        <_option value="appear">Appear</_option>
+        <_option value="fade">Fade</_option>
+        <_option value="pop">Pop</_option>
 			</param>
-			<param name="effectOutLabel" type="description">Transition out effect:</param>
-			<param name="effectOutDuration" precision="1" type="float" min="0.1" max="10.0" _gui-text="duration in seconds">0.8</param>
-			<param name="effectOut" type="optiongroup" _gui-text="type">
-        <_option value="default">default</_option>
-        <_option value="appear">appear</_option>
-        <_option value="fade">fade</_option>
-        <_option value="pop">pop</_option>
+			<_param name="effectOutLabel" type="description">Transition out effect</_param>
+			<param name="effectOutDuration" precision="1" type="float" min="0.1" max="10.0" _gui-text="Duration in seconds:">0.8</param>
+			<param name="effectOut" type="optiongroup" _gui-text="Type:">
+        <_option value="default">Default</_option>
+        <_option value="appear">Appear</_option>
+        <_option value="fade">Fade</_option>
+        <_option value="pop">Pop</_option>
 			</param>
 		</page>
     <page name="help" _gui-text="Help">
-      <param name="help_text" type="description">This extensions allows you to change the transition JessyInk uses for the selected layer. Please see code.google.com/p/jessyink for more details.</param>
+      <_param name="help_text" type="description">This extension allows you to change the transition JessyInk uses for the selected layer. Please see code.google.com/p/jessyink for more details.</_param>
     </page>
   </param>
   <effect>
