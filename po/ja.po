@@ -2,8 +2,8 @@
 # This file is distributed under the same license as the Inkscape package.
 #
 # Copyright (C) 2000-2010 Free Software Foundation, Inc.
-# Yukihiro Nakai <nakai@gnome.gr.jp>, 2000, 2003.
 # Takeshi Aihana <aihana@muc.biglobe.ne.jp>, 2000-2001.
+# Yukihiro Nakai <nakai@gnome.gr.jp>, 2000, 2003.
 # Mitsuru Oka <oka@debian.or.jp>, 2001.
 # Junichi Uekawa <dancer@debian.org>, 2002.
 # Mitsuru Oka <oka326@parkcity.ne.jp>, 2002.
@@ -11,20 +11,20 @@
 # shivaken <shivaken@owls-nest.net>, 2004, 2005.
 # KATSURAGAWA Naoki <naopon@private.email.ne.jp>, 2006.
 # Kenji Inoue <kenz@oct.zaq.ne.jp>, 2006-2007.
-# Masato Hashimoto <cabezon.hashimoto@gmail.com>, 2009, 2010.
+# Masato Hashimoto <cabezon.hashimoto@gmail.com>, 2009-2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-05-31 21:48+0900\n"
+"POT-Creation-Date: 2010-06-09 22:43+0900\n"
+"PO-Revision-Date: 2010-06-09 22:42+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../share/extensions/addnodes.inx.h:1
@@ -830,9 +830,10 @@ msgstr "押し出し"
 msgid "Generate from Path"
 msgstr "パスから生成"
 
+# FIXME: bug #585730
 #: ../share/extensions/extrude.inx.h:3 ../share/extensions/split.inx.h:2
 msgid "Lines"
-msgstr "直線"
+msgstr "直線/行"
 
 #: ../share/extensions/extrude.inx.h:4
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2171
@@ -1061,9 +1062,8 @@ msgid "Pressure angle"
 msgstr "圧力角"
 
 #: ../share/extensions/generate_voronoi.inx.h:1
-#, fuzzy
 msgid "Average size of cell (px)"
-msgstr " セルの平均サイズ (px) "
+msgstr "セルの平均サイズ (px)"
 
 #: ../share/extensions/generate_voronoi.inx.h:2
 msgid ""
@@ -1085,9 +1085,8 @@ msgstr ""
 "くなり、空の枠ができます。"
 
 #: ../share/extensions/generate_voronoi.inx.h:5
-#, fuzzy
 msgid "Size of Border (px)"
-msgstr " 枠のサイズ (px) "
+msgstr "枠のサイズ (px)"
 
 #: ../share/extensions/generate_voronoi.inx.h:6
 msgid "Voronoi Pattern"
@@ -1559,11 +1558,11 @@ msgstr "••••••••••••••••••••••••
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:1
 msgid "Auto-Text:"
-msgstr ""
+msgstr "オートテキスト:"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:2
 msgid "Auto-texts"
-msgstr ""
+msgstr "オートテキスト"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:4
 #: ../share/extensions/jessyInk_effects.inx.h:8
@@ -1577,17 +1576,15 @@ msgstr ""
 #: ../share/extensions/jessyInk_video.inx.h:2
 #: ../share/extensions/jessyInk_view.inx.h:4
 msgid "JessyInk"
-msgstr ""
+msgstr "JessyInk"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:5
-#, fuzzy
 msgid "None (remove)"
-msgstr "削除"
+msgstr "なし (除去)"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:6
-#, fuzzy
 msgid "Number of slides"
-msgstr "サンプル数"
+msgstr "スライド数"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:7
 #: ../share/extensions/jessyInk_effects.inx.h:12
@@ -1595,18 +1592,16 @@ msgstr "サンプル数"
 #: ../share/extensions/jessyInk_masterSlide.inx.h:6
 #: ../share/extensions/jessyInk_transitions.inx.h:9
 #: ../share/extensions/jessyInk_view.inx.h:7
-#, fuzzy
 msgid "Settings"
-msgstr "選択"
+msgstr "設定"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:8
-#, fuzzy
 msgid "Slide number"
-msgstr "ペン番号"
+msgstr "スライド番号"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:9
 msgid "Slide title"
-msgstr ""
+msgstr "スライドタイトル"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:10
 msgid ""
@@ -1614,57 +1609,50 @@ msgid ""
 "JessyInk presentation. Please see code.google.com/p/jessyink for more "
 "details."
 msgstr ""
+"このエクステンションは、JessyInk プレゼンテーションのオートテキストの組み込"
+"み、更新、および除去を行ないます。"
 
 #: ../share/extensions/jessyInk_effects.inx.h:1
 #: ../share/extensions/jessyInk_transitions.inx.h:1
-#, fuzzy
 msgid "Appear"
-msgstr "追加"
+msgstr "登場"
 
 #: ../share/extensions/jessyInk_effects.inx.h:2
-#, fuzzy
 msgid "Build-in effect"
-msgstr "現在のエフェクト"
+msgstr "表示エフェクト"
 
 #: ../share/extensions/jessyInk_effects.inx.h:3
-#, fuzzy
 msgid "Build-out effect"
-msgstr "オフセットなし"
+msgstr "消去エフェクト"
 
 #: ../share/extensions/jessyInk_effects.inx.h:4
 #: ../share/extensions/jessyInk_transitions.inx.h:3
 #: ../share/extensions/jessyInk_view.inx.h:2
-#, fuzzy
 msgid "Duration in seconds:"
-msgstr "描画完了"
+msgstr "時間 (秒):"
 
 #: ../share/extensions/jessyInk_effects.inx.h:5
-#, fuzzy
 msgid "Effects"
-msgstr "エフェクト(_E)"
+msgstr "エフェクト"
 
 #: ../share/extensions/jessyInk_effects.inx.h:6
 #: ../share/extensions/jessyInk_transitions.inx.h:4
-#, fuzzy
 msgid "Fade"
-msgstr "フェイス"
+msgstr "フェード"
 
 #: ../share/extensions/jessyInk_effects.inx.h:9
-#, fuzzy
 msgid "None (default)"
-msgstr "(デフォルト)"
+msgstr "なし (デフォルト)"
 
 #: ../share/extensions/jessyInk_effects.inx.h:10
 #: ../share/extensions/jessyInk_view.inx.h:5
-#, fuzzy
 msgid "Order:"
-msgstr "回数"
+msgstr "順番:"
 
 #: ../share/extensions/jessyInk_effects.inx.h:11
 #: ../share/extensions/jessyInk_transitions.inx.h:8
-#, fuzzy
 msgid "Pop"
-msgstr "最前面"
+msgstr "ポップ"
 
 #: ../share/extensions/jessyInk_effects.inx.h:13
 msgid ""
@@ -1672,6 +1660,9 @@ msgid ""
 "JessyInk presentation. Please see code.google.com/p/jessyink for more "
 "details."
 msgstr ""
+"このエクステンションは、JessyInk プレゼンテーションのオブジェクトエフェクトの"
+"組み込み、更新、および除去を行ないます。詳しくは code.google.com/p/jessyink "
+"をご覧ください。"
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../share/extensions/jessyInk_effects.inx.h:14
@@ -1689,28 +1680,28 @@ msgid ""
 "Creates a zip file containing pdfs or pngs of all slides of a JessyInk "
 "presentation."
 msgstr ""
+"JessyInk プレゼンテーションの全スライドを PDF または PNG に変換し、ZIP ファイ"
+"ルを生成します。"
 
 #: ../share/extensions/jessyInk_export.inx.h:3
 msgid "JessyInk zipped pdf or png output"
-msgstr ""
+msgstr "JessyInk PDF または PNG の ZIP 出力"
 
 #: ../share/extensions/jessyInk_export.inx.h:4
 msgid "JessyInk zipped pdf or png output (*.zip)"
-msgstr ""
+msgstr "JessyInk PDF または PNG の ZIP 出力 (*.zip)"
 
 #: ../share/extensions/jessyInk_export.inx.h:5
-#, fuzzy
 msgid "PDF"
-msgstr "PDF 1.4"
+msgstr "PDF"
 
 #: ../share/extensions/jessyInk_export.inx.h:6
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #: ../share/extensions/jessyInk_export.inx.h:7
-#, fuzzy
 msgid "Resolution:"
-msgstr "解像度 (dpi)"
+msgstr "解像度:"
 
 #: ../share/extensions/jessyInk_export.inx.h:9
 msgid ""
@@ -1718,10 +1709,12 @@ msgid ""
 "an export layer in your browser. Please see code.google.com/p/jessyink for "
 "more details."
 msgstr ""
+"このエクステンションは、JessyInk プレゼンテーションをレイヤーごとに分けてエク"
+"スポートします。詳しくは code.google.com/p/jessyink をご覧ください。"
 
 #: ../share/extensions/jessyInk_install.inx.h:2
 msgid "Install/update"
-msgstr ""
+msgstr "インストール/アップデート"
 
 #: ../share/extensions/jessyInk_install.inx.h:4
 msgid ""
@@ -1729,239 +1722,206 @@ msgid ""
 "to turn your SVG file into a presentation. Please see code.google.com/p/"
 "jessyink for more details."
 msgstr ""
+"このエクステンションは、SVG ファイルをプレゼンテーションにする JessyInk スク"
+"リプトのインストールあるいはアップデートを行ないます。詳しくは code.google."
+"com/p/jessyink をご覧ください。"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:1
-#, fuzzy
 msgid "Add slide:"
-msgstr "2 次側"
+msgstr "スライドの追加:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:2
 msgid "Back (with effects):"
-msgstr ""
+msgstr "戻る (エフェクトあり):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:3
-#, fuzzy
 msgid "Back (without effects):"
-msgstr "パスのアウトラインを表示 (パスエフェクトなし)"
+msgstr "戻る (エフェクトなし):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:4
-#, fuzzy
 msgid "Decrease number of columns:"
-msgstr "列の数"
+msgstr "カラム数を減らす:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:5
-#, fuzzy
 msgid "Drawing mode"
-msgstr "描画"
+msgstr "描画モード"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:6
-#, fuzzy
 msgid "First slide:"
-msgstr "最初の選択部分"
+msgstr "最初のスライド:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:8
-#, fuzzy
 msgid "Increase number of columns:"
-msgstr "列の数"
+msgstr "カラム数を増やす:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:9
-#, fuzzy
 msgid "Index mode"
-msgstr "ノードをインデント"
+msgstr "インデックスモード"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:11
-#, fuzzy
 msgid "Key bindings"
-msgstr "カーニング"
+msgstr "キーバインド"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:12
-#, fuzzy
 msgid "Last slide:"
-msgstr "サイズを貼り付け"
+msgstr "最後のスライド:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:13
-#, fuzzy
 msgid "Next (with effects):"
-msgstr "ネオン光のエフェクトです。"
+msgstr "すすむ (エフェクトあり):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:14
-#, fuzzy
 msgid "Next (without effects):"
-msgstr "ネオン光のエフェクトです。"
+msgstr "すすむ (エフェクトなし):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:15
-#, fuzzy
 msgid "Next page:"
-msgstr "選択ページ:"
+msgstr "次のページ:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:16
-#, fuzzy
 msgid "Previous page:"
-msgstr "前のズーム(_V)"
+msgstr "前のページ:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:17
-#, fuzzy
 msgid "Reset timer:"
-msgstr "中心をリセット"
+msgstr "タイマーのリセット:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:18
 msgid "Select the slide above:"
-msgstr ""
+msgstr "上のスライドの選択:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:19
 msgid "Select the slide below:"
-msgstr ""
+msgstr "下のスライドの選択:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:20
-#, fuzzy
 msgid "Select the slide to the left:"
-msgstr "ファイルの保存先の選択"
+msgstr "左のスライドの選択:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:21
-#, fuzzy
 msgid "Select the slide to the right:"
-msgstr "ページを描画全体にあわせる"
+msgstr "右のスライドの選択:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:22
-#, fuzzy
 msgid "Set duration:"
-msgstr "彩度"
+msgstr "継続時間の設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:23
-#, fuzzy
 msgid "Set number of columns to default:"
-msgstr "列の数"
+msgstr "デフォルトのカラム数の設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:24
-#, fuzzy
 msgid "Set path color to black:"
-msgstr "ストロークの色を塗りなしへ"
+msgstr "パスの色を黒に設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:25
-#, fuzzy
 msgid "Set path color to blue:"
-msgstr "ストロークの色を塗りなしへ"
+msgstr "パスの色を青に設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:26
-#, fuzzy
 msgid "Set path color to cyan:"
-msgstr "ストロークの色を塗りなしへ"
+msgstr "パスの色をシアンに設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:27
-#, fuzzy
 msgid "Set path color to green:"
-msgstr "ストロークの色を塗りなしへ"
+msgstr "パスの色を緑に設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:28
-#, fuzzy
 msgid "Set path color to magenta:"
-msgstr "ストロークの色を塗りなしへ"
+msgstr "パスの色をマゼンダに設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:29
-#, fuzzy
 msgid "Set path color to orange:"
-msgstr "ストロークの色を塗りなしへ"
+msgstr "パスの色をオレンジに設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:30
-#, fuzzy
 msgid "Set path color to red:"
-msgstr "ストロークの色を塗りなしへ"
+msgstr "パスの色を赤に設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:31
-#, fuzzy
 msgid "Set path color to white:"
-msgstr "ストロークの色を塗りなしへ"
+msgstr "パスの色を白に設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:32
-#, fuzzy
 msgid "Set path color to yellow:"
-msgstr "ストロークの色を塗りなしへ"
+msgstr "パスの色を黄に設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:33
-#, fuzzy
 msgid "Set path width to 1:"
-msgstr "幅:"
+msgstr "パスの幅を 1 に設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:34
-#, fuzzy
 msgid "Set path width to 3:"
-msgstr "幅:"
+msgstr "パスの幅を 3 に設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:35
-#, fuzzy
 msgid "Set path width to 5:"
-msgstr "幅:"
+msgstr "パスの幅を 5 に設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:36
-#, fuzzy
 msgid "Set path width to 7:"
-msgstr "幅:"
+msgstr "パスの幅を 7 に設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:37
-#, fuzzy
 msgid "Set path width to 9:"
-msgstr "幅:"
+msgstr "パスの幅を 9 に設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:38
-#, fuzzy
 msgid "Set path width to default:"
-msgstr "デフォルトとして設定"
+msgstr "パスの幅をデフォルトに設定:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:39
-#, fuzzy
 msgid "Slide mode"
-msgstr "拡大縮小モード"
+msgstr "スライドモード"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:40
-#, fuzzy
 msgid "Switch to drawing mode:"
-msgstr "通常の表示モードに切り替えます。"
+msgstr "描画モードへ切り替え:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:41
-#, fuzzy
 msgid "Switch to index mode:"
-msgstr "次のレイヤーに切り替え"
+msgstr "インデックスモードへ切り替え:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:42
-#, fuzzy
 msgid "Switch to slide mode:"
-msgstr "通常の表示モードに切り替えます。"
+msgstr "スライドモードへ切り替え:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:43
 msgid ""
 "This extension allows you customise the key bindings JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"このエクステンションで JessyInk 使用時のキーバインドをカスタマイズできます。"
+"詳しくは code.google.com/p/jessyink をご覧ください。"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:44
 msgid "Toggle progress bar:"
-msgstr ""
+msgstr "プログレスバーの切り替え:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:45
-#, fuzzy
 msgid "Undo last path segment:"
-msgstr "最後の操作を元へ戻す"
+msgstr "最後のパスセグメントを取り消し:"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:2
 msgid "If no layer name is supplied, the master slide is unset."
-msgstr ""
+msgstr "レイヤー名が指定されなかった場合はマスタースライドが解除されます。"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:4
-#, fuzzy
 msgid "Master slide"
-msgstr "サイズを貼り付け"
+msgstr "マスタースライド"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:5
 #: ../share/extensions/jessyInk_transitions.inx.h:7
-#, fuzzy
 msgid "Name of layer:"
-msgstr "レイヤー名を変更"
+msgstr "レイヤー名:"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:7
 msgid ""
 "This extension allows you to change the master slide JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"このエクステンションは、JessyInk プレゼンテーションのマスタースライドを変更し"
+"ます。詳しくは code.google.com/p/jessyink をご覧ください。"
 
 #. File
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:1
@@ -1971,35 +1931,32 @@ msgid "Default"
 msgstr "デフォルト"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:2
-#, fuzzy
 msgid "Dragging/zoom"
-msgstr "描画"
+msgstr "ドラッグ/ズーム"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:5
-#, fuzzy
 msgid "Mouse handler"
-msgstr "ハンドルの移動"
+msgstr "マウスハンドラ"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:6
-#, fuzzy
 msgid "Mouse settings:"
-msgstr "ページ設定"
+msgstr "マウス設定:"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:7
-#, fuzzy
 msgid "No-click"
-msgstr "クリックした時"
+msgstr "クリックなし"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:8
 msgid ""
 "This extension allows you customise the mouse handler JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"このエクステンションで JessyInk 使用時のマウスハンドラをカスタマイズできま"
+"す。詳しくは code.google.com/p/jessyink をご覧ください。"
 
 #: ../share/extensions/jessyInk_summary.inx.h:3
-#, fuzzy
 msgid "Summary"
-msgstr "対称化(_S)"
+msgstr "サマリ"
 
 #: ../share/extensions/jessyInk_summary.inx.h:4
 msgid ""
@@ -2007,70 +1964,69 @@ msgid ""
 "effects and transitions contained in this SVG file. Please see code.google."
 "com/p/jessyink for more details."
 msgstr ""
+"このエクステンションは、この SVG ファイル内の JessyInk スクリプト、エフェク"
+"ト、およびトランジションの情報を取得します。詳しくは code.google.com/p/"
+"jessyink をご覧ください。"
 
 #: ../share/extensions/jessyInk_transitions.inx.h:10
 msgid ""
 "This extension allows you to change the transition JessyInk uses for the "
 "selected layer. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"このエクステンションは、選択したレイヤーの JessyInk 使用時のトランジションを"
+"変更します。詳しくは code.google.com/p/jessyink をご覧ください。"
 
 #: ../share/extensions/jessyInk_transitions.inx.h:11
 msgid "Transition in effect"
-msgstr ""
+msgstr "前のスライドから/へのトランジション"
 
 #: ../share/extensions/jessyInk_transitions.inx.h:12
-#, fuzzy
 msgid "Transition out effect"
-msgstr "ライブパスエフェクトの貼り付け"
+msgstr "次のスライドへ/からのトランジション"
 
 #: ../share/extensions/jessyInk_transitions.inx.h:13
-#, fuzzy
 msgid "Transitions"
-msgstr "移動/変形"
+msgstr "トランジション"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:4
 msgid "Please select the parts of JessyInk you want to uninstall/remove."
-msgstr ""
+msgstr "アンインストール/除去する JessyInk パーツを選択してください。"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:5
-#, fuzzy
 msgid "Remove auto-texts"
-msgstr "ストロークを削除"
+msgstr "オートテキストの除去"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:6
-#, fuzzy
 msgid "Remove effects"
-msgstr "パスエフェクトの除去"
+msgstr "エフェクトの除去"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:7
-#, fuzzy
 msgid "Remove master slide assignment"
-msgstr "選択オブジェクトからマスクを削除します。"
+msgstr "マスタースライド割り当ての解除"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:8
-#, fuzzy
 msgid "Remove script"
-msgstr "グリッドの削除"
+msgstr "スクリプトの除去"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:9
-#, fuzzy
 msgid "Remove transitions"
-msgstr "変形を解除(_T)"
+msgstr "トランジションの除去"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:10
-#, fuzzy
 msgid "Remove views"
-msgstr "フィルタを除去"
+msgstr "ビューの除去"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:11
 msgid ""
 "This extension allows you to uninstall the JessyInk script. Please see code."
 "google.com/p/jessyink for more details."
 msgstr ""
+"このエクステンションで JessyInk スクリプトをアンインストールできます。詳しく"
+"は code.google.com/p/jessyink をご覧ください。"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:12
 msgid "Uninstall/remove"
-msgstr ""
+msgstr "アンインストール/除去"
 
 #: ../share/extensions/jessyInk_video.inx.h:3
 msgid ""
@@ -2078,31 +2034,34 @@ msgid ""
 "This element allows you to integrate a video into your JessyInk "
 "presentation. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"このエクステンションは、現在のスライド (レイヤー) に JessyInk video 要素を配"
+"置します。この要素により JessyInk プレゼンテーションに動画を統合できます。詳"
+"しくは code.google.com/p/jessyink をご覧ください。"
 
 #: ../share/extensions/jessyInk_video.inx.h:4
-#, fuzzy
 msgid "Video"
-msgstr "表示"
+msgstr "ビデオ"
 
 #: ../share/extensions/jessyInk_view.inx.h:1
 msgid "Choose order number 0 to set the initial view of a slide."
-msgstr ""
+msgstr "順番に 0 を指定するとスライドの初期表示になります。"
 
 #: ../share/extensions/jessyInk_view.inx.h:6
-#, fuzzy
 msgid "Remove view"
-msgstr "赤色成分を除去"
+msgstr "ビューを除去"
 
 #: ../share/extensions/jessyInk_view.inx.h:8
 msgid ""
 "This extension allows you to set, update and remove views for a JessyInk "
 "presentation. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"このエクステンションは、JessyInk プレゼンテーションのビューの設定、更新、ある"
+"いは除去を行ないます。詳しくは code.google.com/p/jessyink をご覧ください。"
 
 #: ../share/extensions/jessyInk_view.inx.h:9
 #: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "View"
-msgstr "表示"
+msgstr "ビュー"
 
 #: ../share/extensions/lindenmayer.inx.h:1
 msgid ""
@@ -3553,13 +3512,11 @@ msgstr "背景色:"
 
 #: ../share/extensions/webslicer_create_group.inx.h:2
 #: ../share/extensions/webslicer_create_rect.inx.h:17
-#, fuzzy
 msgid "HTML class attribute:"
 msgstr "HTML class 属性:"
 
 #: ../share/extensions/webslicer_create_group.inx.h:3
 #: ../share/extensions/webslicer_create_rect.inx.h:18
-#, fuzzy
 msgid "HTML id attribute:"
 msgstr "HTML id 属性:"
 
@@ -3751,20 +3708,18 @@ msgid "Top and right"
 msgstr "右上"
 
 #: ../share/extensions/webslicer_export.inx.h:1
-#, fuzzy
 msgid ""
 "All sliced images, and optionaly code, will be generated as you had "
 "configured and saved to one directory."
 msgstr ""
-"生成された全てのスライスされた画像とオプションコードは一つのディレクトリに保"
-"存されます。"
+"生成される全てのスライス画像とオプションコードは一つのディレクトリに保存され"
+"ます。"
 
 #: ../share/extensions/webslicer_export.inx.h:2
 msgid "Create directory, if it does not exists"
 msgstr "ディレクトリがないときに作成する"
 
 #: ../share/extensions/webslicer_export.inx.h:3
-#, fuzzy
 msgid "Directory path to export"
 msgstr "エクスポート先ディレクトリパス:"
 
@@ -6375,7 +6330,7 @@ msgid "Defines the direction and magnitude of the extrusion"
 msgstr "押し出す量と方向を設定してください。"
 
 #: ../src/sp-flowtext.cpp:378 ../src/sp-text.cpp:427
-#: ../src/text-context.cpp:1604
+#: ../src/text-context.cpp:1621
 msgid " [truncated]"
 msgstr " [溢れあり]"
 
@@ -7475,11 +7430,11 @@ msgstr "星形"
 
 #: ../src/dialogs/find.cpp:580 ../src/ui/dialog/find.cpp:74
 msgid "Search spirals"
-msgstr "螺旋を検索します"
+msgstr "らせんを検索します"
 
 #: ../src/dialogs/find.cpp:580 ../src/ui/dialog/find.cpp:74
 msgid "Spirals"
-msgstr "螺旋"
+msgstr "らせん"
 
 #. TRANSLATORS: polyline is a set of connected straight line segments
 #. http://www.w3.org/TR/SVG11/shapes.html#PolylineElement
@@ -7908,7 +7863,7 @@ msgstr "行送り:"
 msgid "Set as default"
 msgstr "デフォルトとして設定"
 
-#: ../src/dialogs/text-edit.cpp:665 ../src/text-context.cpp:1500
+#: ../src/dialogs/text-edit.cpp:665 ../src/text-context.cpp:1511
 msgid "Set text style"
 msgstr "テキストスタイルの設定"
 
@@ -8515,7 +8470,7 @@ msgstr "  文字列: "
 
 #: ../src/extension/dependency.cpp:252
 msgid "  description: "
-msgstr "  記述: "
+msgstr "  説明: "
 
 #: ../src/extension/effect.cpp:39
 msgid " (No preferences)"
@@ -8622,7 +8577,7 @@ msgstr ""
 "関する質問がある場合は、Inkscape のウェブサイトを見るか、メーリングリストで尋"
 "ねてみてください。"
 
-#: ../src/extension/implementation/script.cpp:990
+#: ../src/extension/implementation/script.cpp:985
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -8632,12 +8587,12 @@ msgstr ""
 "ラーを返しませんでしたが、実行結果が意図しないものになっていることを示唆して"
 "いる可能性があります。"
 
-#: ../src/extension/init.cpp:276
+#: ../src/extension/init.cpp:274
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr ""
 "外部モジュールのディレクトリ名が NULL です。モジュールはロードされません。"
 
-#: ../src/extension/init.cpp:290
+#: ../src/extension/init.cpp:288
 #: ../src/extension/internal/filter/filter-file.cpp:56
 #, c-format
 msgid ""
@@ -10469,7 +10424,7 @@ msgstr "コマンドバー"
 
 #: ../src/interface.cpp:872
 msgid "Show or hide the Commands bar (under the menu)"
-msgstr "コマンドバー (メニューの下側) の表示/非表示を切り替えます。"
+msgstr "コマンドバー (メニューの下) の表示/非表示を切り替えます。"
 
 #: ../src/interface.cpp:874
 msgid "Snap Controls Bar"
@@ -12438,15 +12393,15 @@ msgid ""
 "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to converge/diverge"
 msgstr ""
-"螺旋の<b>内側</b>の巻き/巻きの解除を行います。<b>Ctrl</b> で角度をスナップ、"
-"<b>Alt</b> で収れん/発散します。"
+"らせんの<b>内側</b>の巻きを増減します。<b>Ctrl</b> で角度をスナップ、<b>Alt</"
+"b> で収れん/発散します。"
 
 #: ../src/object-edit.cpp:1275
 msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate"
 msgstr ""
-"螺旋の<b>外側</b>の巻き/巻の解除を行います。<b>Ctrl</b> で角度をスナップ、"
+"らせんの<b>外側</b>の巻きを増減します。<b>Ctrl</b> で角度をスナップ、"
 "<b>Shift</b> で拡大縮小/回転します。"
 
 #: ../src/object-edit.cpp:1319
@@ -13006,7 +12961,7 @@ msgstr "テキストを削除"
 msgid "<b>Nothing</b> was deleted."
 msgstr "何も削除されませんでした。"
 
-#: ../src/selection-chemistry.cpp:330 ../src/text-context.cpp:1002
+#: ../src/selection-chemistry.cpp:330 ../src/text-context.cpp:1013
 #: ../src/ui/dialog/swatches.cpp:220 ../src/widgets/toolbox.cpp:1408
 #: ../src/widgets/toolbox.cpp:6174
 msgid "Delete"
@@ -13430,7 +13385,7 @@ msgstr "オフセットパス"
 #: ../src/selection-describer.cpp:80
 #: ../src/ui/dialog/inkscape-preferences.cpp:507 ../src/verbs.cpp:2469
 msgid "Spiral"
-msgstr "螺旋"
+msgstr "らせん"
 
 #. Star
 #: ../src/selection-describer.cpp:82
@@ -13790,7 +13745,7 @@ msgstr "<b>矩形</b>"
 #: ../src/sp-spiral.cpp:325
 #, c-format
 msgid "<b>Spiral</b> with %3f turns"
-msgstr "<b>螺旋</b> (%3f回転)"
+msgstr "<b>らせん</b> (%3f回転)"
 
 #: ../src/sp-star.cpp:309
 #, c-format
@@ -13857,18 +13812,18 @@ msgstr "<b>Ctrl</b> で角度をスナップします。"
 
 #: ../src/spiral-context.cpp:326
 msgid "<b>Alt</b>: lock spiral radius"
-msgstr "<b>Alt</b> で螺旋の半径を固定します。"
+msgstr "<b>Alt</b> でらせんの半径を固定します。"
 
 #: ../src/spiral-context.cpp:458
 #, c-format
 msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
-"<b>螺旋</b>: 半径%s, 角度%5g&#176;。<b>Ctrl</b> で角度をスナップします。"
+"<b>らせん</b>: 半径%s, 角度%5g&#176;。<b>Ctrl</b> で角度をスナップします。"
 
 #: ../src/spiral-context.cpp:484
 msgid "Create spiral"
-msgstr "螺旋を作成"
+msgstr "らせんを作成"
 
 #: ../src/splivarot.cpp:66 ../src/splivarot.cpp:72
 msgid "Union"
@@ -14181,30 +14136,30 @@ msgstr "Unicode 文字を挿入"
 #: ../src/text-context.cpp:579
 #, c-format
 msgid "Unicode (<b>Enter</b> to finish): %s: %s"
-msgstr "Unicode (<b>Enter</b> で終了): %s: %s"
+msgstr "Unicode (<b>Enter</b> で完了): %s: %s"
 
-#: ../src/text-context.cpp:581 ../src/text-context.cpp:856
+#: ../src/text-context.cpp:581 ../src/text-context.cpp:867
 msgid "Unicode (<b>Enter</b> to finish): "
-msgstr "Unicode (<b>Enter</b> で終了): "
+msgstr "Unicode (<b>Enter</b> で完了): "
 
 #: ../src/text-context.cpp:656
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>流し込みテキストのフレーム</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:688
+#: ../src/text-context.cpp:699
 msgid "Type text; <b>Enter</b> to start new line."
-msgstr "テキストをキーボードから入力して下さい。<b>Enter</b>で新しい行を開始。"
+msgstr "テキストをキーボードから入力して下さい。<b>Enter</b> で改行します。"
 
-#: ../src/text-context.cpp:701
+#: ../src/text-context.cpp:712
 msgid "Flowed text is created."
 msgstr "流し込みテキストが作成されました。"
 
-#: ../src/text-context.cpp:703
+#: ../src/text-context.cpp:714
 msgid "Create flowed text"
 msgstr "流し込みテキストの作成"
 
-#: ../src/text-context.cpp:705
+#: ../src/text-context.cpp:716
 msgid ""
 "The frame is <b>too small</b> for the current font size. Flowed text not "
 "created."
@@ -14212,90 +14167,89 @@ msgstr ""
 "その枠は現在のフォントサイズに対して<b>小さすぎます</b>。流し込みテキストは作"
 "成されません。"
 
-#: ../src/text-context.cpp:841
+#: ../src/text-context.cpp:852
 msgid "No-break space"
 msgstr "ノーブレークスペース"
 
-#: ../src/text-context.cpp:843
+#: ../src/text-context.cpp:854
 msgid "Insert no-break space"
 msgstr "ノーブレークスペースの挿入"
 
-#: ../src/text-context.cpp:880
+#: ../src/text-context.cpp:891
 msgid "Make bold"
 msgstr "太字にする"
 
-#: ../src/text-context.cpp:898
+#: ../src/text-context.cpp:909
 msgid "Make italic"
 msgstr "斜体にする"
 
-#: ../src/text-context.cpp:937
+#: ../src/text-context.cpp:948
 msgid "New line"
 msgstr "改行"
 
-#: ../src/text-context.cpp:971
+#: ../src/text-context.cpp:982
 msgid "Backspace"
 msgstr "バックスペース"
 
-#: ../src/text-context.cpp:1019
+#: ../src/text-context.cpp:1030
 msgid "Kern to the left"
 msgstr "左に揃える"
 
-#: ../src/text-context.cpp:1044
+#: ../src/text-context.cpp:1055
 msgid "Kern to the right"
 msgstr "右に揃える"
 
-#: ../src/text-context.cpp:1069
+#: ../src/text-context.cpp:1080
 msgid "Kern up"
 msgstr "上に詰める"
 
-#: ../src/text-context.cpp:1095
+#: ../src/text-context.cpp:1106
 msgid "Kern down"
 msgstr "下に詰める"
 
-#: ../src/text-context.cpp:1172
+#: ../src/text-context.cpp:1183
 msgid "Rotate counterclockwise"
 msgstr "反時計回りに回転"
 
-#: ../src/text-context.cpp:1193
+#: ../src/text-context.cpp:1204
 msgid "Rotate clockwise"
 msgstr "時計回りに回転"
 
-#: ../src/text-context.cpp:1210
+#: ../src/text-context.cpp:1221
 msgid "Contract line spacing"
 msgstr "行間隔を縮める"
 
-#: ../src/text-context.cpp:1218
+#: ../src/text-context.cpp:1229
 msgid "Contract letter spacing"
 msgstr "文字間隔を縮める"
 
-#: ../src/text-context.cpp:1237
+#: ../src/text-context.cpp:1248
 msgid "Expand line spacing"
 msgstr "行間隔を広げる"
 
-#: ../src/text-context.cpp:1245
+#: ../src/text-context.cpp:1256
 msgid "Expand letter spacing"
 msgstr "文字間隔を広げる"
 
-#: ../src/text-context.cpp:1375
+#: ../src/text-context.cpp:1386
 msgid "Paste text"
 msgstr "テキストの貼り付け"
 
-#: ../src/text-context.cpp:1621
+#: ../src/text-context.cpp:1638
 #, c-format
 msgid ""
 "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new "
 "paragraph."
 msgstr ""
-"流し込みテキストの編集 (%d 個の文字%s); <b>Enter</b>キーで新しい段落を開始し"
-"ます。"
+"流し込みテキストの編集 (%d 個の文字%s); <b>Enter</b> で新しい段落を開始しま"
+"す。"
 
-#: ../src/text-context.cpp:1623
+#: ../src/text-context.cpp:1640
 #, c-format
 msgid "Type or edit text (%d characters%s); <b>Enter</b> to start new line."
-msgstr ""
-"テキストの編集 (%d 個の文字%s); <b>Enter</b>キーで新しい行を開始します。"
+msgstr "テキストの編集 (%d 個の文字%s); <b>Enter</b> で改行します。"
 
-#: ../src/text-context.cpp:1631 ../src/tools-switch.cpp:197
+#: ../src/text-context.cpp:1648 ../src/tools-switch.cpp:197
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -14303,7 +14257,7 @@ msgstr ""
 "<b>クリック</b>でテキストを選択または作成、<b>ドラッグ</b>で流し込みテキスト"
 "を作成します。その後に入力して下さい。"
 
-#: ../src/text-context.cpp:1741
+#: ../src/text-context.cpp:1755
 msgid "Type text"
 msgstr "テキストの入力"
 
@@ -14357,8 +14311,8 @@ msgid ""
 "<b>Drag</b> to create a spiral. <b>Drag controls</b> to edit the spiral "
 "shape. <b>Click</b> to select."
 msgstr ""
-"<b>ドラッグ</b>で螺旋を作成します。<b>コントロールをドラッグ</b>して螺旋の形"
-"状を編集、<b>クリック</b>で選択します。"
+"<b>ドラッグ</b>でらせんを作成します。<b>コントロールをドラッグ</b>してらせん"
+"の形状を編集、<b>クリック</b>で選択します。"
 
 #: ../src/tools-switch.cpp:179
 msgid ""
@@ -14768,14 +14722,14 @@ msgstr "about.svg"
 msgid "translator-credits"
 msgstr ""
 "Takeshi Aihana, 2000-2001.\n"
+"Yukihiro Nakai, 2000, 2003.\n"
 "Mitsuru Oka, 2001.\n"
 "Junichi Uekawa, 2002.\n"
 "Masatake YAMATO, 2002.\n"
 "shivaken, 2004, 2005.\n"
 "KATSURAGAWA Naoki, 2006.\n"
-"Yukihiro Nakai, 2006.\n"
 "Kenji Inoue, 2006-2007.\n"
-"Masato Hashimoto, 2009, 2010."
+"Masato Hashimoto, 2009-2010."
 
 #: ../src/ui/dialog/align-and-distribute.cpp:238
 #: ../src/ui/dialog/align-and-distribute.cpp:793
@@ -16107,10 +16061,10 @@ msgid ""
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
 msgstr ""
-"<b>feDiffuseLighting</b> および feSpecularLighting フィルタプリミティヴは、"
-"\"エンボス\" シェーディングを作成します。入力のアルファチャンネルは深度情報の"
-"提供に使用されます: 透明度の高い領域は見る側からから遠ざかり、低い領域は見る"
-"側に近づきます。"
+"<b>feDiffuseLighting</b> および feSpecularLighting フィルタプリミティヴ"
+"は、\"エンボス\" シェーディングを作成します。入力のアルファチャンネルは深度情"
+"報の提供に使用されます: 透明度の高い領域は見る側からから遠ざかり、低い領域は"
+"見る側に近づきます。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2308
 msgid ""
@@ -16188,10 +16142,10 @@ msgid ""
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
 msgstr ""
-"feDiffuseLighting および <b>feSpecularLighting</b> フィルタプリミティヴは、"
-"\"エンボス\" シェーディングを作成します。入力のアルファチャンネルは深度情報の"
-"提供に使用されます: 透明度の高い領域は見る側からから遠ざかり、低い領域は見る"
-"側に近づきます。"
+"feDiffuseLighting および <b>feSpecularLighting</b> フィルタプリミティヴ"
+"は、\"エンボス\" シェーディングを作成します。入力のアルファチャンネルは深度情"
+"報の提供に使用されます: 透明度の高い領域は見る側からから遠ざかり、低い領域は"
+"見る側に近づきます。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2340
 msgid ""
@@ -17258,8 +17212,8 @@ msgid ""
 "counterclockwise"
 msgstr ""
 "チェックマークをつけると、角度は北で 0 となり、時計回りに正の向きで 0 から "
-"360 の範囲で表示されます。つけないと、東で 0 となり、反時計回りに正の向きで -"
-"180 から 180 の範囲で表示されます"
+"360 の範囲で表示されます。つけないと、東で 0 となり、反時計回りに正の向きで "
+"-180 から 180 の範囲で表示されます"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:270
 msgid "Rotation snaps every:"
@@ -20226,7 +20180,7 @@ msgid ""
 "<b>Bezier segment</b>: drag to shape the segment, doubleclick to insert "
 "node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
-"<b>ベジエセグメント</b>: ドラッグでセグメントを調整、ダブルクリックでノードを"
+"<b>ベジエセグメント</b>: ドラッグでセグメントを成形、ダブルクリックでノードを"
 "追加、クリックで選択します。(もっと: Shift、Ctrl+Alt)"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:227
@@ -20441,7 +20395,7 @@ msgstr "<b>自動ノードハンドル</b>: ドラッグでスムーズノード
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>%s</b>: drag to shape the segment (%s)"
-msgstr "<b>%s</b>: ドラッグでセグメントを調整します。(%s)"
+msgstr "<b>%s</b>: ドラッグでセグメントを成形します。(%s)"
 
 #: ../src/ui/tool/node.cpp:405
 #, c-format
@@ -20453,13 +20407,13 @@ msgstr "ハンドルの移動: %s, %s; 角度 %.2f°, 長さ %s"
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr ""
-"<b>Shift</b>: ドラッグでハンドルを引き出し、クリックで選択領域を切り替えま"
+"<b>Shift</b>: ドラッグでハンドルを引き出し、クリックで選択状態を切り替えま"
 "す。"
 
 #: ../src/ui/tool/node.cpp:1146
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: click to toggle selection"
-msgstr "<b>Shift</b>: クリックで選択領域を切り替えます。"
+msgstr "<b>Shift</b>: クリックで選択状態を切り替えます。"
 
 #: ../src/ui/tool/node.cpp:1151
 msgctxt "Path node tip"
@@ -20477,13 +20431,13 @@ msgstr ""
 #: ../src/ui/tool/node.cpp:1158
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
-msgstr "<b>Alt</b>: 複数ノードを形を整えながら調整します (スカルプトモード)。"
+msgstr "<b>Alt</b>: 複数ノードを形を整えながら成形します (スカルプトモード)。"
 
 #: ../src/ui/tool/node.cpp:1166
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
-msgstr "<b>%s</b>: ドラッグでパスを調整します。(もっと: Shift、Ctrl、Alt)"
+msgstr "<b>%s</b>: ドラッグでパスを成形します。(もっと: Shift、Ctrl、Alt)"
 
 #: ../src/ui/tool/node.cpp:1169
 #, c-format
@@ -20492,7 +20446,7 @@ msgid ""
 "<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles "
 "(more: Shift, Ctrl, Alt)"
 msgstr ""
-"<b>%s</b>: ドラッグでパスを調整します。クリックで拡大縮小/回転ハンドルに切り"
+"<b>%s</b>: ドラッグでパスを成形します。クリックで拡大縮小/回転ハンドルに切り"
 "替えます。(もっと: Shift、Ctrl、Alt)"
 
 #: ../src/ui/tool/node.cpp:1172
@@ -20502,7 +20456,7 @@ msgid ""
 "<b>%s</b>: drag to shape the path, click to select only this node (more: "
 "Shift, Ctrl, Alt)"
 msgstr ""
-"<b>%s</b>: ドラッグでパスを調整します。クリックでこのノードのみを選択します。"
+"<b>%s</b>: ドラッグでパスを成形します。クリックでこのノードのみを選択します。"
 "(もっと: Shift、Ctrl、Alt)"
 
 #: ../src/ui/tool/node.cpp:1180
@@ -22447,7 +22401,7 @@ msgstr "選択"
 
 #: ../src/verbs.cpp:2454
 msgid "Select and transform objects"
-msgstr "オブジェクトを選択/移動/変形"
+msgstr "選択ツール (オブジェクトを選択/移動/変形)"
 
 #: ../src/verbs.cpp:2455
 msgid "Node Edit"
@@ -22455,71 +22409,71 @@ msgstr "ノード編集"
 
 #: ../src/verbs.cpp:2456
 msgid "Edit paths by nodes"
-msgstr "ノードでパスを編集"
+msgstr "ノードツール (ノードでパスを編集)"
 
 #: ../src/verbs.cpp:2458
 msgid "Tweak objects by sculpting or painting"
-msgstr "オブジェクトを微調整"
+msgstr "微調整ツール (オブジェクトを微調整)"
 
 #: ../src/verbs.cpp:2460
 msgid "Spray objects by sculpting or painting"
-msgstr "オブジェクトをスプレー"
+msgstr "スプレーツール (オブジェクトをスプレー)"
 
 #: ../src/verbs.cpp:2462
 msgid "Create rectangles and squares"
-msgstr "矩形を作成"
+msgstr "矩形ツール (矩形を作成)"
 
 #: ../src/verbs.cpp:2464
 msgid "Create 3D boxes"
-msgstr "3D ボックスを作成"
+msgstr "3D ボックスツール (3D ボックスを作成)"
 
 #: ../src/verbs.cpp:2466
 msgid "Create circles, ellipses, and arcs"
-msgstr "円/弧を作成"
+msgstr "円/弧ツール (円/弧を作成)"
 
 #: ../src/verbs.cpp:2468
 msgid "Create stars and polygons"
-msgstr "星形や多角形を作成"
+msgstr "星形ツール (星形や多角形を作成)"
 
 #: ../src/verbs.cpp:2470
 msgid "Create spirals"
-msgstr "螺旋を作成"
+msgstr "らせんツール (らせんを作成)"
 
 #: ../src/verbs.cpp:2472
 msgid "Draw freehand lines"
-msgstr "フリーハンド線を描く"
+msgstr "鉛筆ツール (フリーハンド線を描く)"
 
 #: ../src/verbs.cpp:2474
 msgid "Draw Bezier curves and straight lines"
-msgstr "ベジエ曲線/直線を描く"
+msgstr "ペンツール (ベジエ曲線/直線を描く)"
 
 #: ../src/verbs.cpp:2476
 msgid "Draw calligraphic or brush strokes"
-msgstr "カリグラフィやブラシで線を描く"
+msgstr "カリグラフィツール (カリグラフィやブラシで線を描く)"
 
 #: ../src/verbs.cpp:2478
 msgid "Create and edit text objects"
-msgstr "テキストを作成/編集"
+msgstr "テキストツール (テキストを作成/編集)"
 
 #: ../src/verbs.cpp:2480
 msgid "Create and edit gradients"
-msgstr "グラデーションを作成/編集"
+msgstr "グラデーションツール (グラデーションを作成/編集)"
 
 #: ../src/verbs.cpp:2482
 msgid "Zoom in or out"
-msgstr "ズームイン/アウト"
+msgstr "ズームツール (ズームイン/アウト)"
 
 #: ../src/verbs.cpp:2484
 msgid "Pick colors from image"
-msgstr "イメージから色を採取"
+msgstr "スポイトツール (イメージから色を採取)"
 
 #: ../src/verbs.cpp:2486
 msgid "Create diagram connectors"
-msgstr "ダイアグラムコネクタを作成"
+msgstr "コネクタツール (ダイアグラムコネクタを作成)"
 
 #: ../src/verbs.cpp:2488
 msgid "Fill bounded areas"
-msgstr "境界の中を塗りつぶす"
+msgstr "バケツツール (境界の中を塗りつぶす)"
 
 #: ../src/verbs.cpp:2489
 msgid "LPE Edit"
@@ -22531,7 +22485,7 @@ msgstr "パスエフェクトパラメータを編集します。"
 
 #: ../src/verbs.cpp:2492
 msgid "Erase existing paths"
-msgstr "既存のパスを消す"
+msgstr "消しゴムツール (既存のパスを消す)"
 
 #: ../src/verbs.cpp:2494
 msgid "Do geometric constructions"
@@ -22604,11 +22558,11 @@ msgstr "星形ツールの設定を開く"
 
 #: ../src/verbs.cpp:2512
 msgid "Spiral Preferences"
-msgstr "螺旋の設定"
+msgstr "らせんの設定"
 
 #: ../src/verbs.cpp:2513
 msgid "Open Preferences for the Spiral tool"
-msgstr "螺旋ツールの設定を開く"
+msgstr "らせんツールの設定を開く"
 
 #: ../src/verbs.cpp:2514
 msgid "Pencil Preferences"
@@ -24064,7 +24018,7 @@ msgstr "色の微調整で使用する色/不透明度"
 
 #: ../src/widgets/toolbox.cpp:222
 msgid "Style of new stars"
-msgstr "新規星型のスタイル"
+msgstr "新規星形のスタイル"
 
 #: ../src/widgets/toolbox.cpp:224
 msgid "Style of new rectangles"
@@ -24080,7 +24034,7 @@ msgstr "新規円のスタイル"
 
 #: ../src/widgets/toolbox.cpp:230
 msgid "Style of new spirals"
-msgstr "新規螺旋のスタイル"
+msgstr "新規らせんのスタイル"
 
 #: ../src/widgets/toolbox.cpp:232
 msgid "Style of new paths created by Pencil"
@@ -24400,7 +24354,7 @@ msgstr "ガイドにスナップ"
 
 #: ../src/widgets/toolbox.cpp:2577
 msgid "Star: Change number of corners"
-msgstr "星型: 角の数の変更"
+msgstr "星形: 角の数の変更"
 
 #: ../src/widgets/toolbox.cpp:2624
 msgid "Star: Change spoke ratio"
@@ -24706,7 +24660,7 @@ msgstr "Z 軸方向の消失点の「有限」と「無限」(=平行) の切り
 
 #: ../src/widgets/toolbox.cpp:3788
 msgid "Change spiral"
-msgstr "螺旋の変更"
+msgstr "らせんの変更"
 
 #: ../src/widgets/toolbox.cpp:3927
 msgid "just a curve"
@@ -24787,7 +24741,7 @@ msgstr "内半径:"
 
 #: ../src/widgets/toolbox.cpp:3958
 msgid "Radius of the innermost revolution (relative to the spiral size)"
-msgstr "最も内側の回転半径 (螺旋のサイズに対する相対値)"
+msgstr "最も内側の回転半径 (らせんのサイズに対する相対値)"
 
 #: ../src/widgets/toolbox.cpp:4030
 msgid "Bezier"
@@ -24839,7 +24793,7 @@ msgstr "クリップボードから"
 
 #: ../src/widgets/toolbox.cpp:4118 ../src/widgets/toolbox.cpp:4119
 msgid "Shape:"
-msgstr "形状:"
+msgstr "成形:"
 
 #: ../src/widgets/toolbox.cpp:4118
 msgid "Shape of new paths drawn by this tool"
@@ -25192,11 +25146,11 @@ msgstr "スプレーオブジェクト量の変更に入力デバイスの筆圧
 #. Rotation
 #: ../src/widgets/toolbox.cpp:4754
 msgid "(low rotation variation)"
-msgstr "(小さな回転変動)"
+msgstr "(小さな角度変化)"
 
 #: ../src/widgets/toolbox.cpp:4754
 msgid "(high rotation variation)"
-msgstr "(大きな回転変動)"
+msgstr "(大きな角度変化)"
 
 #: ../src/widgets/toolbox.cpp:4757
 msgid "Rotation"
@@ -25218,11 +25172,11 @@ msgstr ""
 #. Scale
 #: ../src/widgets/toolbox.cpp:4772
 msgid "(low scale variation)"
-msgstr "(小さな拡縮変動)"
+msgstr "(小さなサイズ変化)"
 
 #: ../src/widgets/toolbox.cpp:4772
 msgid "(high scale variation)"
-msgstr "(大きな拡縮変動)"
+msgstr "(大きなサイズ変化)"
 
 #: ../src/widgets/toolbox.cpp:4778
 msgid "Toolbox|Scale"
@@ -25670,9 +25624,8 @@ msgid "Text: Change font style"
 msgstr "テキスト: フォントスタイルの変更"
 
 #: ../src/widgets/toolbox.cpp:6701
-#, fuzzy
 msgid "Text: Change superscript or subscript"
-msgstr "上付き・下付き"
+msgstr "テキスト: 上付き文字/下付き文字の切り替え"
 
 #: ../src/widgets/toolbox.cpp:6845
 msgid "Text: Change alignment"
@@ -25753,22 +25706,22 @@ msgstr "斜体"
 #. Name
 #: ../src/widgets/toolbox.cpp:7557
 msgid "Toggle Superscript"
-msgstr ""
+msgstr "上付き文字の切り替え"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7558
 msgid "Toggle superscript"
-msgstr ""
+msgstr "上付き"
 
 #. Name
 #: ../src/widgets/toolbox.cpp:7570
 msgid "Toggle Subscript"
-msgstr ""
+msgstr "下付き文字の切り替え"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7571
 msgid "Toggle subscript"
-msgstr ""
+msgstr "下付き"
 
 #: ../src/widgets/toolbox.cpp:7588 ../src/widgets/toolbox.cpp:7589
 msgid "Align left"
@@ -26361,8 +26314,8 @@ msgstr "ワイヤーフレーム球体"
 #~ "<b>%i</b> 個のノードが選択されています (<b>%i</b> 個の中から) 。%s。%s。"
 
 #~ msgid ""
-#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %"
-#~ "s."
+#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. "
+#~ "%s."
 #~ msgid_plural ""
 #~ "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. "
 #~ "%s."
