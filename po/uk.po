@@ -11,15 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-06-05 16:09+0300\n"
+"POT-Creation-Date: 2010-06-09 00:03+0300\n"
+"PO-Revision-Date: 2010-06-09 07:51+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 1.1\n"
 
 #: ../share/extensions/addnodes.inx.h:1
@@ -1062,9 +1062,8 @@ msgid "Pressure angle"
 msgstr "Кут зчеплення зубців"
 
 #: ../share/extensions/generate_voronoi.inx.h:1
-#, fuzzy
 msgid "Average size of cell (px)"
-msgstr " Середній розмір комірки (у пікселях) "
+msgstr "Середній розмір комірки (у пікселях)"
 
 #: ../share/extensions/generate_voronoi.inx.h:2
 msgid ""
@@ -1089,9 +1088,8 @@ msgstr ""
 "нульової товщини."
 
 #: ../share/extensions/generate_voronoi.inx.h:5
-#, fuzzy
 msgid "Size of Border (px)"
-msgstr " Товщина межі (у пікселях) "
+msgstr "Товщина межі (у пікселях)"
 
 #: ../share/extensions/generate_voronoi.inx.h:6
 msgid "Voronoi Pattern"
@@ -1123,13 +1121,11 @@ msgstr "Декартова сітка"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
-"Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr "Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:4
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
-"Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr "Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
@@ -1568,11 +1564,11 @@ msgstr "••••••••••••••••••••••••
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:1
 msgid "Auto-Text:"
-msgstr ""
+msgstr "Автотекст:"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:2
 msgid "Auto-texts"
-msgstr ""
+msgstr "Автотекст"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:4
 #: ../share/extensions/jessyInk_effects.inx.h:8
@@ -1586,17 +1582,15 @@ msgstr ""
 #: ../share/extensions/jessyInk_video.inx.h:2
 #: ../share/extensions/jessyInk_view.inx.h:4
 msgid "JessyInk"
-msgstr ""
+msgstr "JessyInk"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:5
-#, fuzzy
 msgid "None (remove)"
-msgstr "вилучити"
+msgstr "Немає (вилучити)"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:6
-#, fuzzy
 msgid "Number of slides"
-msgstr "Кількість вибірок"
+msgstr "Кількість слайдів"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:7
 #: ../share/extensions/jessyInk_effects.inx.h:12
@@ -1604,18 +1598,16 @@ msgstr "Кількість вибірок"
 #: ../share/extensions/jessyInk_masterSlide.inx.h:6
 #: ../share/extensions/jessyInk_transitions.inx.h:9
 #: ../share/extensions/jessyInk_view.inx.h:7
-#, fuzzy
 msgid "Settings"
-msgstr "Позначення"
+msgstr "Параметри"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:8
-#, fuzzy
 msgid "Slide number"
-msgstr "Номер пера"
+msgstr "Номер слайда"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:9
 msgid "Slide title"
-msgstr ""
+msgstr "Назва слайда"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:10
 msgid ""
@@ -1623,57 +1615,51 @@ msgid ""
 "JessyInk presentation. Please see code.google.com/p/jessyink for more "
 "details."
 msgstr ""
+"За допомогою цього додатка ви зможете встановити, оновити або вилучити "
+"шаблони автоматичного додавання тексту (автотекст) для презентацій JessyInk. "
+"Докладніші відомості можна знайти за адресою code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_effects.inx.h:1
 #: ../share/extensions/jessyInk_transitions.inx.h:1
-#, fuzzy
 msgid "Appear"
-msgstr "Додати"
+msgstr "Поява"
 
 #: ../share/extensions/jessyInk_effects.inx.h:2
-#, fuzzy
 msgid "Build-in effect"
-msgstr "Поточний ефект"
+msgstr "Вбудований ефект"
 
 #: ../share/extensions/jessyInk_effects.inx.h:3
-#, fuzzy
 msgid "Build-out effect"
-msgstr "Без ефекту"
+msgstr "Зовнішній ефект"
 
 #: ../share/extensions/jessyInk_effects.inx.h:4
 #: ../share/extensions/jessyInk_transitions.inx.h:3
 #: ../share/extensions/jessyInk_view.inx.h:2
-#, fuzzy
 msgid "Duration in seconds:"
-msgstr "Малювання завершено"
+msgstr "Тривалість (у секундах):"
 
 #: ../share/extensions/jessyInk_effects.inx.h:5
-#, fuzzy
 msgid "Effects"
-msgstr "_Ефект"
+msgstr "Ефекти"
 
 #: ../share/extensions/jessyInk_effects.inx.h:6
 #: ../share/extensions/jessyInk_transitions.inx.h:4
-#, fuzzy
 msgid "Fade"
-msgstr "Грані"
+msgstr "Згасання"
 
 #: ../share/extensions/jessyInk_effects.inx.h:9
-#, fuzzy
 msgid "None (default)"
-msgstr "(типова)"
+msgstr "Немає (типовий)"
 
 #: ../share/extensions/jessyInk_effects.inx.h:10
 #: ../share/extensions/jessyInk_view.inx.h:5
-#, fuzzy
 msgid "Order:"
-msgstr "Порядок"
+msgstr "Порядок:"
 
 #: ../share/extensions/jessyInk_effects.inx.h:11
 #: ../share/extensions/jessyInk_transitions.inx.h:8
-#, fuzzy
 msgid "Pop"
-msgstr "Верх"
+msgstr "Виринання"
 
 #: ../share/extensions/jessyInk_effects.inx.h:13
 msgid ""
@@ -1681,6 +1667,9 @@ msgid ""
 "JessyInk presentation. Please see code.google.com/p/jessyink for more "
 "details."
 msgstr ""
+"За допомогою цього додатка ви зможете встановити, оновити або вилучити ефекти "
+"роботи з об’єктами для презентацій JessyInk. Докладніші відомості можна "
+"знайти за адресою code.google.com/p/jessyink."
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../share/extensions/jessyInk_effects.inx.h:14
@@ -1698,28 +1687,27 @@ msgid ""
 "Creates a zip file containing pdfs or pngs of all slides of a JessyInk "
 "presentation."
 msgstr ""
+"Створює zip-архів з файлами pdf або png всіх слайдів презентації JessyInk."
 
 #: ../share/extensions/jessyInk_export.inx.h:3
 msgid "JessyInk zipped pdf or png output"
-msgstr ""
+msgstr "Експорт у форматі стисненого zip pdf або png JessyInk"
 
 #: ../share/extensions/jessyInk_export.inx.h:4
 msgid "JessyInk zipped pdf or png output (*.zip)"
-msgstr ""
+msgstr "Експорт у форматі стисненого zip pdf або png JessyInk (*.zip)"
 
 #: ../share/extensions/jessyInk_export.inx.h:5
-#, fuzzy
 msgid "PDF"
-msgstr "PDF 1.4"
+msgstr "PDF"
 
 #: ../share/extensions/jessyInk_export.inx.h:6
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #: ../share/extensions/jessyInk_export.inx.h:7
-#, fuzzy
 msgid "Resolution:"
-msgstr "Роздільна здатність (у т/дюйм)"
+msgstr "Роздільна здатність:"
 
 #: ../share/extensions/jessyInk_export.inx.h:9
 msgid ""
@@ -1727,10 +1715,13 @@ msgid ""
 "an export layer in your browser. Please see code.google.com/p/jessyink for "
 "more details."
 msgstr ""
+"За допомогою цього додатка ви зможете експортувати презентацію JessyInk після "
+"створення шару експортування у програмі для перегляду. Докладніші відомості "
+"можна знайти за адресою code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_install.inx.h:2
 msgid "Install/update"
-msgstr ""
+msgstr "Встановити/Оновити"
 
 #: ../share/extensions/jessyInk_install.inx.h:4
 msgid ""
@@ -1738,239 +1729,207 @@ msgid ""
 "to turn your SVG file into a presentation. Please see code.google.com/p/"
 "jessyink for more details."
 msgstr ""
+"За допомогою цього додатка ви зможете встановлювати або оновлювати скрипти "
+"JessyInk, призначені для перетворення вашого файла SVG на презентацію. "
+"Докладніші відомості можна знайти за адресою code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:1
-#, fuzzy
 msgid "Add slide:"
-msgstr "Друга сторона"
+msgstr "Додати слайд:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:2
 msgid "Back (with effects):"
-msgstr ""
+msgstr "Назад (з ефектами):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:3
-#, fuzzy
 msgid "Back (without effects):"
-msgstr "Показувати обрис контуру (без ефектів контуру)"
+msgstr "Назад (без ефектів):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:4
-#, fuzzy
 msgid "Decrease number of columns:"
-msgstr "Кількість стовпчиків"
+msgstr "Зменшити кількість стовпчиків:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:5
-#, fuzzy
 msgid "Drawing mode"
-msgstr "Малюнок"
+msgstr "Режим малювання"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:6
-#, fuzzy
 msgid "First slide:"
-msgstr "Перший позначений"
+msgstr "Перший слайд:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:8
-#, fuzzy
 msgid "Increase number of columns:"
-msgstr "Кількість стовпчиків"
+msgstr "Збільшити кількість стовпчиків:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:9
-#, fuzzy
 msgid "Index mode"
-msgstr "Перемістити від кореня"
+msgstr "Режим покажчика"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:11
-#, fuzzy
 msgid "Key bindings"
-msgstr "Кернінґ"
+msgstr "Прив’язка клавіш"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:12
-#, fuzzy
 msgid "Last slide:"
-msgstr "Вставити розмір"
+msgstr "Останній слайд:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:13
-#, fuzzy
 msgid "Next (with effects):"
-msgstr "Ефект неонового світла"
+msgstr "Далі (з ефектами):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:14
-#, fuzzy
 msgid "Next (without effects):"
-msgstr "Ефект неонового світла"
+msgstr "Далі (без ефектів):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:15
-#, fuzzy
 msgid "Next page:"
-msgstr "Обрати сторінку:"
+msgstr "Наступна сторінка:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:16
-#, fuzzy
 msgid "Previous page:"
-msgstr "П_опередній масштаб"
+msgstr "Попередня сторінка:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:17
-#, fuzzy
 msgid "Reset timer:"
-msgstr "Повернення до початкового центру"
+msgstr "Скидання таймера:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:18
 msgid "Select the slide above:"
-msgstr ""
+msgstr "Позначити слайд згори:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:19
 msgid "Select the slide below:"
-msgstr ""
+msgstr "Виберіть один зі слайдів зі списку:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:20
-#, fuzzy
 msgid "Select the slide to the left:"
-msgstr "Виберіть файл для збереження"
+msgstr "Позначити слайд ліворуч:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:21
-#, fuzzy
 msgid "Select the slide to the right:"
-msgstr "Підганяє полотно під вже намальоване"
+msgstr "Позначити слайд праворуч:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:22
-#, fuzzy
 msgid "Set duration:"
-msgstr "Насиченість"
+msgstr "Встановити тривалість:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:23
-#, fuzzy
 msgid "Set number of columns to default:"
-msgstr "Кількість стовпчиків"
+msgstr "Встановити типову кількість стовпчиків:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:24
-#, fuzzy
 msgid "Set path color to black:"
-msgstr "Зняти колір з штриха"
+msgstr "Встановити чорний колір контуру:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:25
-#, fuzzy
 msgid "Set path color to blue:"
-msgstr "Зняти колір з штриха"
+msgstr "Встановити синій колір контуру:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:26
-#, fuzzy
 msgid "Set path color to cyan:"
-msgstr "Зняти колір з штриха"
+msgstr "Встановити блакитний колір контуру:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:27
-#, fuzzy
 msgid "Set path color to green:"
-msgstr "Зняти колір з штриха"
+msgstr "Встановити зелений колір контуру:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:28
-#, fuzzy
 msgid "Set path color to magenta:"
-msgstr "Зняти колір з штриха"
+msgstr "Встановити малиновий колір контуру:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:29
-#, fuzzy
 msgid "Set path color to orange:"
-msgstr "Зняти колір з штриха"
+msgstr "Встановити помаранчевий колір контуру:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:30
-#, fuzzy
 msgid "Set path color to red:"
-msgstr "Зняти колір з штриха"
+msgstr "Встановити червоний колір контуру:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:31
-#, fuzzy
 msgid "Set path color to white:"
-msgstr "Зняти колір з штриха"
+msgstr "Встановити білий колір контуру:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:32
-#, fuzzy
 msgid "Set path color to yellow:"
-msgstr "Зняти колір з штриха"
+msgstr "Встановити жовтий колір контуру:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:33
-#, fuzzy
 msgid "Set path width to 1:"
-msgstr "Встановити товщину:"
+msgstr "Встановити товщину контуру 1:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:34
-#, fuzzy
 msgid "Set path width to 3:"
-msgstr "Встановити товщину:"
+msgstr "Встановити товщину контуру 3:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:35
-#, fuzzy
 msgid "Set path width to 5:"
-msgstr "Встановити товщину:"
+msgstr "Встановити товщину контуру 5:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:36
-#, fuzzy
 msgid "Set path width to 7:"
-msgstr "Встановити товщину:"
+msgstr "Встановити товщину контуру 7:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:37
-#, fuzzy
 msgid "Set path width to 9:"
-msgstr "Встановити товщину:"
+msgstr "Встановити товщину контуру 9:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:38
-#, fuzzy
 msgid "Set path width to default:"
-msgstr "Зберегти типовим"
+msgstr "Встановити типову товщину контуру:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:39
-#, fuzzy
 msgid "Slide mode"
-msgstr "Режим масштабування"
+msgstr "Режим слайда"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:40
-#, fuzzy
 msgid "Switch to drawing mode:"
-msgstr "Перемикання на звичайний режим відображення"
+msgstr "Перемкнутися у режим малювання:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:41
-#, fuzzy
 msgid "Switch to index mode:"
-msgstr "Перемкнутися на наступний шар"
+msgstr "Перемкнутися у режим покажчика:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:42
-#, fuzzy
 msgid "Switch to slide mode:"
-msgstr "Перемикання на звичайний режим відображення"
+msgstr "Перемкнутися у режим слайдів:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:43
 msgid ""
 "This extension allows you customise the key bindings JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"За допомогою цього додатка ви зможете налаштувати використані у JessyInk "
+"клавіатурні скорочення. Докладніші відомості можна знайти за адресою code."
+"google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:44
 msgid "Toggle progress bar:"
-msgstr ""
+msgstr "Увімкнути/Вимкнути смужку поступу:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:45
-#, fuzzy
 msgid "Undo last path segment:"
-msgstr "Скасувати останню операцію"
+msgstr "Скасувати додавання останнього сегмента:"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:2
 msgid "If no layer name is supplied, the master slide is unset."
-msgstr ""
+msgstr "Якщо не буде вказано назви шару, основний слайд не буде визначено."
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:4
-#, fuzzy
 msgid "Master slide"
-msgstr "Вставити розмір"
+msgstr "Основний слайд"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:5
 #: ../share/extensions/jessyInk_transitions.inx.h:7
-#, fuzzy
 msgid "Name of layer:"
-msgstr "Перейменувати Шар"
+msgstr "Назва шару:"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:7
 msgid ""
 "This extension allows you to change the master slide JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"За допомогою цього додатка ви зможете змінити основний слайд JessyInk. "
+"Докладніші відомості можна знайти за адресою code.google.com/p/jessyink."
 
 #. File
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:1
@@ -1980,35 +1939,32 @@ msgid "Default"
 msgstr "Типовий"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:2
-#, fuzzy
 msgid "Dragging/zoom"
-msgstr "Малюнок"
+msgstr "Перетягування/Масштабування"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:5
-#, fuzzy
 msgid "Mouse handler"
-msgstr "Перемістити вус"
+msgstr "Керування мишею"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:6
-#, fuzzy
 msgid "Mouse settings:"
-msgstr "Параметри сторінки"
+msgstr "Налаштування миші:"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:7
-#, fuzzy
 msgid "No-click"
-msgstr "при клацанні"
+msgstr "Без клацань"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:8
 msgid ""
 "This extension allows you customise the mouse handler JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"За допомогою цього додатка ви зможете налаштувати роботу миші JessyInk. "
+"Докладніші відомості можна знайти за адресою code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_summary.inx.h:3
-#, fuzzy
 msgid "Summary"
-msgstr "Си_метрія"
+msgstr "Резюме"
 
 #: ../share/extensions/jessyInk_summary.inx.h:4
 msgid ""
@@ -2016,70 +1972,70 @@ msgid ""
 "effects and transitions contained in this SVG file. Please see code.google."
 "com/p/jessyink for more details."
 msgstr ""
+"За допомогою цього додатка ви зможете переглянути відомості щодо скриптів, "
+"ефектів та переходів, що містяться у цьому файлі SVG JessyInk. Докладніші "
+"відомості можна знайти за адресою code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_transitions.inx.h:10
 msgid ""
 "This extension allows you to change the transition JessyInk uses for the "
 "selected layer. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"За допомогою цього додатка ви зможете змінити ефект переходу, який JessyInk "
+"використовуватиме для позначеного шару. Докладніші відомості можна знайти за "
+"адресою code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_transitions.inx.h:11
 msgid "Transition in effect"
-msgstr ""
+msgstr "Ефект появи"
 
 #: ../share/extensions/jessyInk_transitions.inx.h:12
-#, fuzzy
 msgid "Transition out effect"
-msgstr "Вставити ефект динамічного контуру"
+msgstr "Ефекти зникання"
 
 #: ../share/extensions/jessyInk_transitions.inx.h:13
-#, fuzzy
 msgid "Transitions"
-msgstr "Перетворення"
+msgstr "Переходи"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:4
 msgid "Please select the parts of JessyInk you want to uninstall/remove."
-msgstr ""
+msgstr "Будь ласка, вкажіть частини JessyInk, які слід вилучити."
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:5
-#, fuzzy
 msgid "Remove auto-texts"
-msgstr "Вилучити штрих"
+msgstr "Вилучити автотекст"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:6
-#, fuzzy
 msgid "Remove effects"
-msgstr "Вилучити ефект контуру"
+msgstr "Вилучити ефекти"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:7
-#, fuzzy
 msgid "Remove master slide assignment"
-msgstr "Вилучити маску з позначеного"
+msgstr "Вилучити прив’язку до основного слайда"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:8
-#, fuzzy
 msgid "Remove script"
-msgstr "Вилучити сітку"
+msgstr "Вилучити скрипт"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:9
-#, fuzzy
 msgid "Remove transitions"
-msgstr "Прибрати _трансформацію"
+msgstr "Вилучити переходи"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:10
-#, fuzzy
 msgid "Remove views"
-msgstr "Вилучити фільтри"
+msgstr "Вилучити області"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:11
 msgid ""
 "This extension allows you to uninstall the JessyInk script. Please see code."
 "google.com/p/jessyink for more details."
 msgstr ""
+"За допомогою цього додатка ви зможете вилучати скрипти JessyInk. Докладніші "
+"відомості можна знайти за адресою code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:12
 msgid "Uninstall/remove"
-msgstr ""
+msgstr "Вилучити"
 
 #: ../share/extensions/jessyInk_video.inx.h:3
 msgid ""
@@ -2087,26 +2043,33 @@ msgid ""
 "This element allows you to integrate a video into your JessyInk "
 "presentation. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"За допомогою цього додатка можна вставити елемент відео JessyInk на поточний "
+"слайд (шар). "
+"Відео буде вбудовано у презентацію JessyInk. Докладніше про це можна "
+"дізнатися за адресою code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_video.inx.h:4
-#, fuzzy
 msgid "Video"
-msgstr "Перегляд"
+msgstr "Відео"
 
 #: ../share/extensions/jessyInk_view.inx.h:1
 msgid "Choose order number 0 to set the initial view of a slide."
 msgstr ""
+"Якщо буде вибрано порядковий номер 0, слайд буде повернуто до початкового "
+"вигляду."
 
 #: ../share/extensions/jessyInk_view.inx.h:6
-#, fuzzy
 msgid "Remove view"
-msgstr "Вилучити червону компоненту"
+msgstr "Вилучити область"
 
 #: ../share/extensions/jessyInk_view.inx.h:8
 msgid ""
 "This extension allows you to set, update and remove views for a JessyInk "
 "presentation. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"За допомогою цього додатка ви зможете налаштувати, оновити або вилучити "
+"області перегляду презентацій JessyInk. Докладніші відомості можна знайти за "
+"адресою code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_view.inx.h:9
 #: ../share/extensions/polyhedron_3d.inx.h:52
@@ -4293,8 +4256,7 @@ msgstr "Фаски"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Same as Matte jelly but with more controls"
-msgstr ""
-"Те саме, що і Матове покриття, але з додатковими можливостями керування"
+msgstr "Те саме, що і Матове покриття, але з додатковими можливостями керування"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Metal casting"
@@ -4913,8 +4875,7 @@ msgstr "Металізована фарба"
 #: ../share/filters/filters.svg.h:67
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr ""
-"Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
+msgstr "Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Dragee"
@@ -5110,8 +5071,7 @@ msgid "Electronic microscopy"
 msgstr "Електронна мікроскопія"
 
 #: ../share/filters/filters.svg.h:89
-msgid ""
-"Bevel, crude light, discoloration and glow like in electronic microscopy"
+msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
 "Навскісне, грубе освітлення, знебарвлення і сяйво схоже на фотографії, "
 "зроблені за допомогою електронного мікроскопа."
@@ -5389,8 +5349,7 @@ msgstr "Контурне сяйво"
 
 #: ../share/filters/filters.svg.h:119
 msgid "In and out glow with a possible offset and colorizable flood"
-msgstr ""
-"Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
+msgstr "Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
 
 #: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
@@ -5498,8 +5457,7 @@ msgid "Felt"
 msgstr "Фетр"
 
 #: ../share/filters/filters.svg.h:132
-msgid ""
-"Felt like texture with color turbulence and slightly darker at the edges"
+msgid "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "Текстура, схожа на фетр з кольоровим шумом, трохи темніша на краях"
 
 #: ../share/filters/filters.svg.h:133
@@ -5532,8 +5490,7 @@ msgstr "Вигнутий метал"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Bright, polished uneven metal casting, colorizable"
-msgstr ""
-"Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
+msgstr "Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Comics draft"
@@ -5801,8 +5758,7 @@ msgstr "Жувачка"
 msgid ""
 "Creates colorizable blotches which smoothly flow over the edges of the lines "
 "at their crossings"
-msgstr ""
-"Створює однотонні брижі, які плавно обтікають краї ліній та їх перетини"
+msgstr "Створює однотонні брижі, які плавно обтікають краї ліній та їх перетини"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Black outline"
@@ -6046,8 +6002,7 @@ msgid "Alpha engraving B"
 msgstr "Альфа-гравірування B"
 
 #: ../share/filters/filters.svg.h:193
-msgid ""
-"Gives a controllable roughness engraving effect to bitmaps and materials"
+msgid "Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr ""
 "Надає ефекту гравірування з керованим рівнем нерівності растровим "
 "зображенням і матеріалам"
@@ -7265,8 +7220,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2767
 msgid "Each clone's opacity is determined by the picked value in that point"
-msgstr ""
-"Прозорість кожного кольору визначається значенням, взятим у даній точці"
+msgstr "Прозорість кожного кольору визначається значенням, взятим у даній точці"
 
 #: ../src/dialogs/clonetiler.cpp:2794
 msgid "How many rows in the tiling"
@@ -7734,8 +7688,7 @@ msgstr "_Id"
 #: ../src/dialogs/item-properties.cpp:129
 msgid ""
 "The id= attribute (only letters, digits, and the characters .-_: allowed)"
-msgstr ""
-"Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
+msgstr "Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
 
 #. Button for setting the object's id, label, title and description.
 #: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2439
@@ -8725,7 +8678,7 @@ msgstr ""
 "відвідайте сайт Inkscape або запитайте у списках листування, якщо у вас "
 "виникли питання, що стосуються цього додатка."
 
-#: ../src/extension/implementation/script.cpp:990
+#: ../src/extension/implementation/script.cpp:985
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -8735,13 +8688,13 @@ msgstr ""
 "повернув код помилки, проте це може означати, що результат не такий як "
 "очікувався."
 
-#: ../src/extension/init.cpp:276
+#: ../src/extension/init.cpp:274
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr ""
 "Порожнє поле назви каталогу зовнішнього модуля. Модулі не будуть "
 "завантажуватись."
 
-#: ../src/extension/init.cpp:290
+#: ../src/extension/init.cpp:288
 #: ../src/extension/internal/filter/filter-file.cpp:56
 #, c-format
 msgid ""
@@ -10275,8 +10228,7 @@ msgstr[2] " у %d позначених об’єктах"
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
 #: ../src/gradient-context.cpp:174
 #, c-format
-msgid ""
-"One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
+msgid "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
 msgid_plural ""
 "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
 msgstr[0] ""
@@ -12041,8 +11993,7 @@ msgstr "Випадковість розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "0: evenly distributed construction lines, 1: purely random placement"
-msgstr ""
-"0: регулярно розподілені ліній побудови, 1: суто випадкове розташування"
+msgstr "0: регулярно розподілені ліній побудови, 1: суто випадкове розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 msgid "k_min"
@@ -12514,7 +12465,7 @@ msgstr "Філ_ьтри"
 
 #: ../src/menus-skeleton.h:251
 msgid "Exte_nsions"
-msgstr "Д_одатки"
+msgstr "Дод_атки"
 
 #: ../src/menus-skeleton.h:258
 msgid "Whiteboa_rd"
@@ -12728,8 +12679,7 @@ msgstr "<b>Клацання</b> або <b>перетягування</b> зак�
 #: ../src/pen-context.cpp:676
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
-msgstr ""
-"<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
+msgstr "<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
 
 #: ../src/pen-context.cpp:1285
 #, c-format
@@ -14601,8 +14551,7 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:221
 msgid "<b>Click and drag</b> between shapes to create a connector."
-msgstr ""
-"<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
+msgstr "<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
 
 #: ../src/tools-switch.cpp:227
 msgid ""
@@ -16403,8 +16352,7 @@ msgstr ""
 "до глядача, а прозоріші — віддаляються."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2340
-msgid ""
-"The <b>feTile</b> filter primitive tiles a region with its input graphic"
+msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 "Примітив фільтра <b>feTile</b> заповнює область мозаїкою у формі вхідного "
 "графічного зображення"
@@ -17390,8 +17338,7 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Прилипання лише до вузла, найближчого до вказівника"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:234
-msgid ""
-"Only try to snap the node that is initially closest to the mouse pointer"
+msgid "Only try to snap the node that is initially closest to the mouse pointer"
 msgstr "Виконувати прилипання лише до вузла, найближчого до вказівника миші"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:237
@@ -17920,8 +17867,7 @@ msgid "Show font samples in the drop-down list"
 msgstr "Показувати зразки шрифтів у спадному списку"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:553
-msgid ""
-"Show font samples alongside font names in the drop-down list in Text bar"
+msgid "Show font samples alongside font names in the drop-down list in Text bar"
 msgstr ""
 "Показувати зразки шрифтів поряд з назвами шрифтів у спадному списку панелі "
 "тексту."
@@ -17948,8 +17894,7 @@ msgstr "Піпетка"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:574
 msgid "Save and restore window geometry for each document"
-msgstr ""
-"Запам’ятовувати і використовувати геометрію вікна для кожного документа"
+msgstr "Запам’ятовувати і використовувати геометрію вікна для кожного документа"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:575
 msgid "Remember and use last window's geometry"
@@ -19496,7 +19441,7 @@ msgstr "Пере_йменувати"
 
 #: ../src/ui/dialog/layer-properties.cpp:192
 msgid "Rename layer"
-msgstr "Перейменувати Шар"
+msgstr "Перейменувати шар"
 
 #. TRANSLATORS: This means "The layer has been renamed"
 #: ../src/ui/dialog/layer-properties.cpp:194
@@ -20071,8 +20016,7 @@ msgstr "Визначення меж"
 
 #: ../src/ui/dialog/tracedialog.cpp:434
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
-msgstr ""
-"Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
+msgstr "Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
 
 #: ../src/ui/dialog/tracedialog.cpp:451
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
@@ -20806,8 +20750,7 @@ msgstr "<b>Ctrl:</b> рівномірне масштабування"
 
 #: ../src/ui/tool/transform-handle-set.cpp:144
 msgctxt "Transform handle tip"
-msgid ""
-"<b>Shift+Alt</b>: scale using an integer ratio about the rotation center"
+msgid "<b>Shift+Alt</b>: scale using an integer ratio about the rotation center"
 msgstr "<b>Shift+Alt</b>: кратне масштабування відносно центра обертання"
 
 #: ../src/ui/tool/transform-handle-set.cpp:146
@@ -20876,8 +20819,7 @@ msgctxt "Transform handle tip"
 msgid ""
 "<b>Shift+Ctrl</b>: skew about the rotation center with snapping to %f° "
 "increments"
-msgstr ""
-"<b>Shift+Ctrl</b>: перекошування навколо центра обертання кроками у %f°"
+msgstr "<b>Shift+Ctrl</b>: перекошування навколо центра обертання кроками у %f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:422
 msgctxt "Transform handle tip"
@@ -26313,8 +26255,7 @@ msgstr "Довжина:"
 
 #: ../src/widgets/toolbox.cpp:8260
 msgid "Ideal length for connectors when layout is applied"
-msgstr ""
-"Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
+msgstr "Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
 
 #: ../src/widgets/toolbox.cpp:8272
 msgid "Downwards"
@@ -26373,8 +26314,7 @@ msgid "Grow/shrink by:"
 msgstr "Збільшити/зменшити на:"
 
 #: ../src/widgets/toolbox.cpp:8458
-msgid ""
-"The amount to grow (positive) or shrink (negative) the created fill path"
+msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Величина збільшення (додатне число) або зменшення (від'ємне) створеного "
 "контуру заповнення"
@@ -26452,3 +26392,4 @@ msgstr "Нахил (у градусах)"
 #: ../share/extensions/wireframe_sphere.inx.h:8
 msgid "Wireframe Sphere"
 msgstr "Каркас сфери"
+
