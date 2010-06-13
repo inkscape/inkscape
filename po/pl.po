@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-05-20 21:23+0100\n"
-"Last-Translator: Leszek(teo)Życzkowski <leszekz@gmail.com>\n"
+"PO-Revision-Date: 2010-06-13 22:20+0100\n"
+"Last-Translator: Marcin Floryan <mfloryan@mm.waw.pl>\n"
 "Language-Team: Polish Inkscape Translation Team\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,6 +20,7 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Poedit-Basepath: ../../inkscape/scr\n"
 
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
@@ -1062,9 +1063,8 @@ msgid "Pressure angle"
 msgstr "Kąt przyporu"
 
 #: ../share/extensions/generate_voronoi.inx.h:1
-#, fuzzy
 msgid "Average size of cell (px)"
-msgstr " Średnia wielkość komórki (px) "
+msgstr "Średnia wielkość komórki (px) "
 
 #: ../share/extensions/generate_voronoi.inx.h:2
 msgid ""
@@ -1088,9 +1088,8 @@ msgstr ""
 "wielkość desenia i otrzymać pustą krawędź użyj wartości ujemnych."
 
 #: ../share/extensions/generate_voronoi.inx.h:5
-#, fuzzy
 msgid "Size of Border (px)"
-msgstr " Wielkość krawędzi (px) "
+msgstr "Wielkość krawędzi (px) "
 
 #: ../share/extensions/generate_voronoi.inx.h:6
 msgid "Voronoi Pattern"
@@ -1569,7 +1568,7 @@ msgstr "Gdzie zastosować?"
 #: ../share/extensions/web-set-att.inx.h:28
 #: ../share/extensions/web-transmit-att.inx.h:26
 msgid "••••••••••••••••••••••••••••••••••••••••••••••••"
-msgstr "•••••••••••••••••••••••••••••••••••••••••••••••"
+msgstr "••••••••••••••••••••••••••••••••••••••••••••••••"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:1
 msgid "Auto-Text:"
@@ -1594,9 +1593,8 @@ msgid "JessyInk"
 msgstr ""
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:5
-#, fuzzy
 msgid "None (remove)"
-msgstr "usuń"
+msgstr ""
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:6
 #, fuzzy
@@ -1713,18 +1711,16 @@ msgid "JessyInk zipped pdf or png output (*.zip)"
 msgstr ""
 
 #: ../share/extensions/jessyInk_export.inx.h:5
-#, fuzzy
 msgid "PDF"
-msgstr "PDF 1.4"
+msgstr "PDF"
 
 #: ../share/extensions/jessyInk_export.inx.h:6
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #: ../share/extensions/jessyInk_export.inx.h:7
-#, fuzzy
 msgid "Resolution:"
-msgstr "Rozdzielczość (w dpi)"
+msgstr ""
 
 #: ../share/extensions/jessyInk_export.inx.h:9
 msgid ""
@@ -1745,9 +1741,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:1
-#, fuzzy
 msgid "Add slide:"
-msgstr "2. strona"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:2
 msgid "Back (with effects):"
@@ -1756,7 +1751,7 @@ msgstr ""
 #: ../share/extensions/jessyInk_keyBindings.inx.h:3
 #, fuzzy
 msgid "Back (without effects):"
-msgstr "Wyświetl zarys ścieżki (bez efektów ścieżki)"
+msgstr "Wyświetla zarys ścieżki (bez efektów ścieżki)"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:4
 #, fuzzy
@@ -1809,9 +1804,8 @@ msgid "Next page:"
 msgstr "Wybierz stronę:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:16
-#, fuzzy
 msgid "Previous page:"
-msgstr "_Poprzedni zoom"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:17
 #, fuzzy
@@ -1837,59 +1831,57 @@ msgid "Select the slide to the right:"
 msgstr "Dopasuj stronę do rysunku"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:22
-#, fuzzy
 msgid "Set duration:"
-msgstr "Nasycenie"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:23
-#, fuzzy
 msgid "Set number of columns to default:"
-msgstr "Liczba kolumn"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:24
 #, fuzzy
 msgid "Set path color to black:"
-msgstr "Ustaw kolor konturu na brak"
+msgstr "Ustaw kontur na brak koloru"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:25
 #, fuzzy
 msgid "Set path color to blue:"
-msgstr "Ustaw kolor konturu na brak"
+msgstr "Ustaw kontur na brak koloru"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:26
 #, fuzzy
 msgid "Set path color to cyan:"
-msgstr "Ustaw kolor konturu na brak"
+msgstr "Ustaw kontur na brak koloru"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:27
 #, fuzzy
 msgid "Set path color to green:"
-msgstr "Ustaw kolor konturu na brak"
+msgstr "Ustaw kontur na brak koloru"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:28
 #, fuzzy
 msgid "Set path color to magenta:"
-msgstr "Ustaw kolor konturu na brak"
+msgstr "Ustaw kontur na brak koloru"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:29
 #, fuzzy
 msgid "Set path color to orange:"
-msgstr "Ustaw kolor konturu na brak"
+msgstr "Ustaw kontur na brak koloru"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:30
 #, fuzzy
 msgid "Set path color to red:"
-msgstr "Ustaw kolor konturu na brak"
+msgstr "Ustaw kontur na brak koloru"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:31
 #, fuzzy
 msgid "Set path color to white:"
-msgstr "Ustaw kolor konturu na brak"
+msgstr "Ustaw kontur na brak koloru"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:32
 #, fuzzy
 msgid "Set path color to yellow:"
-msgstr "Ustaw kolor konturu na brak"
+msgstr "Ustaw kontur na brak koloru"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:33
 #, fuzzy
@@ -1927,19 +1919,16 @@ msgid "Slide mode"
 msgstr "Tryb skalowania"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:40
-#, fuzzy
 msgid "Switch to drawing mode:"
-msgstr "Przełącza do normalnego widoku"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:41
-#, fuzzy
 msgid "Switch to index mode:"
-msgstr "Przenieś do następnej warstwy"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:42
-#, fuzzy
 msgid "Switch to slide mode:"
-msgstr "Przełącza do normalnego widoku"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:43
 msgid ""
@@ -1952,24 +1941,21 @@ msgid "Toggle progress bar:"
 msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:45
-#, fuzzy
 msgid "Undo last path segment:"
-msgstr "Wycofuje ostatnio wykonaną operację"
+msgstr ""
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:2
 msgid "If no layer name is supplied, the master slide is unset."
 msgstr ""
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:4
-#, fuzzy
 msgid "Master slide"
-msgstr "Wklej rozmiar"
+msgstr ""
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:5
 #: ../share/extensions/jessyInk_transitions.inx.h:7
-#, fuzzy
 msgid "Name of layer:"
-msgstr "Zmień nazwę warstwy"
+msgstr "Nazwa warstwy:"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:7
 msgid ""
@@ -1985,24 +1971,20 @@ msgid "Default"
 msgstr "Domyślny"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:2
-#, fuzzy
 msgid "Dragging/zoom"
-msgstr "Rysunek"
+msgstr ""
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:5
-#, fuzzy
 msgid "Mouse handler"
-msgstr "Przesuń uchwyt"
+msgstr ""
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:6
-#, fuzzy
 msgid "Mouse settings:"
-msgstr "Ustawienia strony:"
+msgstr ""
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:7
-#, fuzzy
 msgid "No-click"
-msgstr "po kliknięciu"
+msgstr ""
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:8
 msgid ""
@@ -2011,9 +1993,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.inx.h:3
-#, fuzzy
 msgid "Summary"
-msgstr "_Symetria"
+msgstr ""
 
 #: ../share/extensions/jessyInk_summary.inx.h:4
 msgid ""
@@ -2062,9 +2043,8 @@ msgid "Remove master slide assignment"
 msgstr "Zdejmuje maskę z zaznaczonych obiektów"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:8
-#, fuzzy
 msgid "Remove script"
-msgstr "Usuń siatkę"
+msgstr ""
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:9
 #, fuzzy
@@ -2072,9 +2052,8 @@ msgid "Remove transitions"
 msgstr "Usuń przekształcenia"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:10
-#, fuzzy
 msgid "Remove views"
-msgstr "Usuń filtry"
+msgstr ""
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:11
 msgid ""
@@ -2094,18 +2073,16 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/jessyInk_video.inx.h:4
-#, fuzzy
 msgid "Video"
-msgstr "Widok"
+msgstr ""
 
 #: ../share/extensions/jessyInk_view.inx.h:1
 msgid "Choose order number 0 to set the initial view of a slide."
 msgstr ""
 
 #: ../share/extensions/jessyInk_view.inx.h:6
-#, fuzzy
 msgid "Remove view"
-msgstr "Usuń czerwony"
+msgstr ""
 
 #: ../share/extensions/jessyInk_view.inx.h:8
 msgid ""
@@ -2610,13 +2587,12 @@ msgid "PixelSnap"
 msgstr "Przyciąganie do pikseli"
 
 #: ../share/extensions/pixelsnap.inx.h:3
-#, fuzzy
 msgid ""
 "Snap all paths in selection to pixels. Snaps borders to half-points and "
 "fills to full points"
 msgstr ""
 "Przyciąga wszystkie ścieżki w zaznaczeniu do pikseli. Przyciąga krawędzie do "
-"pół punktów i wypełnia do pełnych punktów"
+"pół-punktów i wypełnia do pełnych punktów"
 
 #: ../share/extensions/plt_input.inx.h:1
 msgid "AutoCAD Plot Input"
@@ -6434,17 +6410,14 @@ msgid "Old paint (bitmap)"
 msgstr "Stara farba (bitmapa)"
 
 #: ../src/conn-avoid-ref.cpp:237
-#, fuzzy
 msgid "Add a new connection point"
 msgstr "Dodaj nowy punkt połączenia"
 
 #: ../src/conn-avoid-ref.cpp:262
-#, fuzzy
 msgid "Move a connection point"
 msgstr "Przesuń punkt połączenia"
 
 #: ../src/conn-avoid-ref.cpp:282
-#, fuzzy
 msgid "Remove a connection point"
 msgstr "Usuń punkt połączenia"
 
@@ -6453,7 +6426,6 @@ msgid "Direction"
 msgstr "Kierunek"
 
 #: ../src/live_effects/lpe-extrude.cpp:28
-#, fuzzy
 msgid "Defines the direction and magnitude of the extrusion"
 msgstr "Definiuje kierunek i rozmiar wytłaczania"
 
@@ -8444,7 +8416,7 @@ msgstr "kąt wymuszony"
 #: ../src/display/snap-indicator.cpp:155
 #, fuzzy
 msgid "constraint"
-msgstr "wymuszenie"
+msgstr "ograniczenie"
 
 #: ../src/display/snap-indicator.cpp:168
 msgid "Bounding box corner"
@@ -8515,7 +8487,6 @@ msgid "Text baseline"
 msgstr "Linia bazowa tekstu"
 
 #: ../src/display/snap-indicator.cpp:220
-#, fuzzy
 msgid "Multiple of grid spacing"
 msgstr "Wielokrotność odstępów siatki"
 
@@ -12370,15 +12341,14 @@ msgid "Export document to a PDF file"
 msgstr "Eksportuje dokument do pliku PDF"
 
 #: ../src/main.cpp:381
-#, fuzzy
 msgid ""
 "Export PDF/PS/EPS without text. Besides the PDF/PS/EPS, a LaTeX file is "
 "exported, putting the text on top of the PDF/PS/EPS file. Include the result "
 "in LaTeX like: \\input{latexfile.tex}"
 msgstr ""
-"Eksport PDF/PS/EPS bez tekstu. Ponadto pliki PDF/PS/EPS i LaTeX są "
-"eksportowane umieszczając tekst na górze plików PDF/PS/EPS. Wynik zawarty w "
-"LaTeX-ie wygląda jak: \\input{latexfile.tex}"
+"Eksport PDF/PS/EPS bez tekstu. Oprócz pliku PDF/PS/EPS eksportowany jest "
+"także plik LaTeX zawierający nakładkę na plik PDF/PS/EPS z tekstem. "
+"Dołączany plik w LaTeX-u ma nazwę podobną do: \\input{latexfile.tex}"
 
 #: ../src/main.cpp:387
 msgid "Export document to an Enhanced Metafile (EMF) File"
@@ -14008,20 +13978,20 @@ msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Odsunięcie dynamiczne</b>, %s o %f pkt"
 
 #: ../src/sp-path.cpp:156
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node, path effect: %s)"
 msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
-msgstr[0] "Wklej efekt żywej ścieżki"
-msgstr[1] "Wklej efekt żywej ścieżki"
-msgstr[2] "Wklej efekt żywej ścieżki"
+msgstr[0] "<b>Ścieżka</b> (%i węzeł, efekt ścieżki: %s)"
+msgstr[1] "<b>Ścieżka</b> (%i węzły, efekt ścieżki: %s)"
+msgstr[2] "<b>Ścieżka</b> (%i węzełów, efekt ścieżki: %s)"
 
 #: ../src/sp-path.cpp:159
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
-msgstr[0] "<b>Tekst</b>%s (%s, %s)"
-msgstr[1] "<b>Tekst</b>%s (%s, %s)"
-msgstr[2] "<b>Tekst</b>%s (%s, %s)"
+msgstr[0] "<b>Ścieżka</b> (%i węzeł)"
+msgstr[1] "<b>Ścieżka</b> (%i węzły)"
+msgstr[2] "<b>Ścieżka</b> (%i węzłów)"
 
 #: ../src/sp-polygon.cpp:226
 msgid "<b>Polygon</b>"
@@ -14043,20 +14013,20 @@ msgid "<b>Spiral</b> with %3f turns"
 msgstr "<b>Spirala</b> z %3f obrotami"
 
 #: ../src/sp-star.cpp:309
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
-msgstr[0] "<b>Spirala</b> z %3f obrotami"
-msgstr[1] "<b>Spirala</b> z %3f obrotami"
-msgstr[2] "<b>Spirala</b> z %3f obrotami"
+msgstr[0] "<b>Gwiazda</b> z %d wierzchołkiem"
+msgstr[1] "<b>Gwiazda</b> z %d wierzchołkami"
+msgstr[2] "<b>Gwiazda</b> z %d wierzchołkami"
 
 #: ../src/sp-star.cpp:313
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
-msgstr[0] "<b>Wielokąt</b>:"
-msgstr[1] "<b>Wielokąt</b>:"
-msgstr[2] "<b>Wielokąt</b>:"
+msgstr[0] "<b>Wielokąt</b> z %d wierzchołkiem"
+msgstr[1] "<b>Wielokąt</b> z %d wierzchołkami"
+msgstr[2] "<b>Wielokąt</b> z %d wierzchołkami"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:419
@@ -15280,39 +15250,32 @@ msgstr ""
 "+kliknięcie</b>, by określić kontur"
 
 #: ../src/ui/dialog/color-item.cpp:490
-#, fuzzy
 msgid "Change color definition"
 msgstr "Zmień określenie koloru"
 
 #: ../src/ui/dialog/color-item.cpp:695
-#, fuzzy
 msgid "Remove stroke color"
 msgstr "Usuń kolor konturu"
 
 #: ../src/ui/dialog/color-item.cpp:695
-#, fuzzy
 msgid "Remove fill color"
 msgstr "Usuń kolor wypełnienia"
 
 #: ../src/ui/dialog/color-item.cpp:700
-#, fuzzy
 msgid "Set stroke color to none"
-msgstr "Ustaw kolor konturu na brak"
+msgstr "Ustaw kontur na brak koloru"
 
 #: ../src/ui/dialog/color-item.cpp:700
-#, fuzzy
 msgid "Set fill color to none"
-msgstr "Ustaw kolor wypełnienia na brak"
+msgstr "Ustaw wypełnienie na brak koloru"
 
 #: ../src/ui/dialog/color-item.cpp:716
-#, fuzzy
 msgid "Set stroke color from swatch"
-msgstr "Ustaw kolor konturu z palety"
+msgstr "Ustaw kolor konturu z próbki"
 
 #: ../src/ui/dialog/color-item.cpp:716
-#, fuzzy
 msgid "Set fill color from swatch"
-msgstr "Ustaw kolor wypełnienia z palety"
+msgstr "Ustaw kolor wypełnienia z próbki"
 
 #: ../src/ui/dialog/debug.cpp:68
 msgid "Messages"
@@ -15396,7 +15359,7 @@ msgstr "Kolor konturu strony"
 
 #: ../src/ui/dialog/document-properties.cpp:95
 msgid "Default _units:"
-msgstr "_Domyślne jednostki:"
+msgstr "Do_myślne jednostki:"
 
 #. ---------------------------------------------------------------
 #. General snap options
@@ -16958,14 +16921,12 @@ msgid "Enclosed Alphanumerics"
 msgstr "Otoczone symbole alfanumeryczne"
 
 #: ../src/ui/dialog/glyphs.cpp:229
-#, fuzzy
 msgid "Box Drawing"
-msgstr "Pole rysunku"
+msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:230
-#, fuzzy
 msgid "Block Elements"
-msgstr "Elementy blokowe"
+msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:231
 msgid "Geometric Shapes"
@@ -17932,7 +17893,7 @@ msgstr "Maluj obiekty stosując:"
 #. Spray
 #: ../src/ui/dialog/inkscape-preferences.cpp:473 ../src/verbs.cpp:2459
 msgid "Spray"
-msgstr "Spray"
+msgstr "Natryskiwanie"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:478
@@ -18695,7 +18656,7 @@ msgstr "Sposób renderowania używany do kalibracji urządzenia wyjściowego"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:947
 msgid "Black point compensation"
-msgstr "Kompensuj punktu czerni"
+msgstr "Kompensuj punkt czerni"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:949
 msgid "Enables black point compensation"
@@ -18871,9 +18832,8 @@ msgid "Numeric precision:"
 msgstr "Precyzja"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1098
-#, fuzzy
 msgid "Significant figures of the values written to the SVG file"
-msgstr "Ważne dane wartości zapisywane w pliku SVG"
+msgstr "Liczba cyfr znaczących dla wartości zapisywanych w pliku SVG"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid "Minimum exponent:"
@@ -19529,18 +19489,16 @@ msgid "Misc"
 msgstr "Różne"
 
 #: ../src/ui/dialog/input.cpp:346 ../src/ui/dialog/input.cpp:358
-#, fuzzy
 msgid "Disabled"
-msgstr "Włączona"
+msgstr "Wyłączona"
 
 #: ../src/ui/dialog/input.cpp:348 ../src/ui/dialog/input.cpp:360
 msgid "Window"
 msgstr "Okno"
 
 #: ../src/ui/dialog/input.cpp:524
-#, fuzzy
 msgid "Test Area"
-msgstr "Obszar testowy"
+msgstr "Obszar do testowania"
 
 #: ../src/ui/dialog/input.cpp:578 ../src/ui/dialog/input.cpp:728
 msgid "Hardware"
@@ -19559,9 +19517,8 @@ msgid "axis:"
 msgstr "osie:"
 
 #: ../src/ui/dialog/input.cpp:646
-#, fuzzy
 msgid "Button count:"
-msgstr "Przycisk"
+msgstr "Liczba przycisków:"
 
 #: ../src/ui/dialog/input.cpp:732
 msgid "Tablet"
@@ -20550,18 +20507,14 @@ msgid "Add node"
 msgstr "Dodaj węzeł"
 
 #: ../src/ui/tool/curve-drag-point.cpp:167
-#, fuzzy
 msgctxt "Path segment tip"
 msgid "<b>Shift</b>: click to toggle segment selection"
-msgstr ""
-"<b>Shift</b> + kliknięcie, aby przełączyć zaznaczenie, ciągnięcie, aby "
-"elastycznie zaznaczyć"
+msgstr "<b>Shift</b>: kliknij, by przełączyć zaznaczenie odcinka"
 
 #: ../src/ui/tool/curve-drag-point.cpp:171
-#, fuzzy
 msgctxt "Path segment tip"
 msgid "<b>Ctrl+Alt</b>: click to insert a node"
-msgstr "<b>Punkt połączenia</b> – kliknij, by zaznaczyć, ciągnij, by przenieść"
+msgstr "<b>Ctrl+Alt</b>: kliknij, by wstawić węzeł"
 
 #: ../src/ui/tool/curve-drag-point.cpp:175
 msgctxt "Path segment tip"
@@ -20569,6 +20522,9 @@ msgid ""
 "<b>Linear segment</b>: drag to convert to a Bezier segment, doubleclick to "
 "insert node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
+"<b>Odcinek prosty</b>: ciągnij, by zmienić na odcinek krzywych, kliknij "
+"dwukrotnie, by wstawić węzeł, kliknij, by zaznaczyć (więcej z: Shift, Ctrl"
+"+Alt)"
 
 #: ../src/ui/tool/curve-drag-point.cpp:179
 msgctxt "Path segment tip"
@@ -20576,6 +20532,8 @@ msgid ""
 "<b>Bezier segment</b>: drag to shape the segment, doubleclick to insert "
 "node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
+"<b>Odcinek krzywych</b>: ciągnij, by formować odcinek, kliknij dwukrotnie, "
+"by wstawić węzeł, kliknij, by zaznaczyć (więcej z: Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:227
 msgid "Change node type"
@@ -20655,12 +20613,13 @@ msgid ""
 "<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
 "selection"
 msgstr ""
+"<b>Shift</b>: wykonaj ciągnięcie, by dodać węzły do zaznaczenia, kliknij, by "
+"przełączyć zaznaczenie obiektu"
 
 #: ../src/ui/tool/node-tool.cpp:541
-#, fuzzy
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
-msgstr "<b>Shift</b>: rysowanie od punktu startowego we wszystkich kierunkach"
+msgstr "<b>Shift</b>: wykonaj ciągnięcie, by dodać węzły do zaznaczenia"
 
 #: ../src/ui/tool/node-tool.cpp:551
 #, c-format
@@ -20669,6 +20628,8 @@ msgid ""
 "<b>%u of %u nodes</b> selected. Drag to select nodes, click to edit only "
 "this object (more: Shift)"
 msgstr ""
+"Zaznaczono <b>%u z %u węzłów</b>. Wykonaj ciągnięcie, by zaznaczyć węzły, "
+"kliknij, by edytować tylko ten obiekt (więcej z: Shift)"
 
 #: ../src/ui/tool/node-tool.cpp:557
 #, c-format
@@ -20677,58 +20638,58 @@ msgid ""
 "<b>%u of %u nodes</b> selected. Drag to select nodes, click clear the "
 "selection"
 msgstr ""
+"Zaznaczono <b>%u z %u węzłów</b>. Wykonaj ciągnięcie, by zaznaczyć węzły, "
+"kliknij, by usunąć zaznaczenie"
 
 #: ../src/ui/tool/node-tool.cpp:565
-#, fuzzy
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
-msgstr "Ciągnij, aby zaznaczyć przecięcie, kliknij, aby zmienić jego położenie"
+msgstr ""
+"Wykonaj ciągnięcie, by zaznaczyć węzły, kliknij, by edytować tylko dany "
+"obiekt"
 
 #: ../src/ui/tool/node-tool.cpp:568
-#, fuzzy
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
-msgstr "Ciągnij, aby zaznaczyć przecięcie, kliknij, aby zmienić jego położenie"
+msgstr "Wykonaj ciągnięcie, by zaznaczyć węzły, kliknij, by usunąć zaznaczenie"
 
 #: ../src/ui/tool/node-tool.cpp:573
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr ""
+"Wykonaj ciągnięcie, by zaznaczać obiekty, kliknij, by edytować dany obiekt "
+"(więcej z: Shift)"
 
 #: ../src/ui/tool/node-tool.cpp:576
-#, fuzzy
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
-msgstr "Konwertuj zaznaczone obiekty w ścieżki"
+msgstr "Wykonaj ciągnięcie, by zaznaczyć obiekty do edycji"
 
 #: ../src/ui/tool/node.cpp:207
 msgid "Cusp node handle"
 msgstr "Uchwyt ostrego węzła"
 
 #: ../src/ui/tool/node.cpp:208
-#, fuzzy
 msgid "Smooth node handle"
 msgstr "Uchwyt gładkiego węzła"
 
 #: ../src/ui/tool/node.cpp:209
-#, fuzzy
 msgid "Symmetric node handle"
 msgstr "Uchwyt symetrycznego węzła"
 
 #: ../src/ui/tool/node.cpp:210
-#, fuzzy
 msgid "Auto-smooth node handle"
 msgstr "Uchwyt automatycznie wygładzanego węzła"
 
 #: ../src/ui/tool/node.cpp:341
 msgctxt "Path handle tip"
 msgid "more: Shift, Ctrl, Alt"
-msgstr ""
+msgstr "więcej: Shift, Ctrl, Alt"
 
 #: ../src/ui/tool/node.cpp:343
 msgctxt "Path handle tip"
 msgid "more: Ctrl, Alt"
-msgstr ""
+msgstr "więcej: Ctrl, Alt"
 
 #: ../src/ui/tool/node.cpp:349
 #, c-format
@@ -20737,6 +20698,8 @@ msgid ""
 "<b>Shift+Ctrl+Alt</b>: preserve length and snap rotation angle to %g° "
 "increments while rotating both handles"
 msgstr ""
+"<b>Shift+Ctrl+Alt</b>: zachowuje długość i przyciąganie kąta obrotu do %g° "
+"przyrostów podczas obracania obu uchwytów"
 
 #: ../src/ui/tool/node.cpp:354
 #, c-format
@@ -20744,16 +20707,18 @@ msgctxt "Path handle tip"
 msgid ""
 "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"
 msgstr ""
+"<b>Ctrl+Alt</b>: zachowuje długość i przyciąganie kąta obrotu do %g° "
+"przyrostów"
 
 #: ../src/ui/tool/node.cpp:360
 msgctxt "Path handle tip"
 msgid "<b>Shift+Alt</b>: preserve handle length and rotate both handles"
-msgstr ""
+msgstr "<b>Shift+Alt</b>: zachowuje długość uchwytu i rotację obu uchwytów"
 
 #: ../src/ui/tool/node.cpp:363
 msgctxt "Path handle tip"
 msgid "<b>Alt</b>: preserve handle length while dragging"
-msgstr ""
+msgstr "<b>Alt</b>: zachowuje długość uchwytu podczas ciągnięcia"
 
 #: ../src/ui/tool/node.cpp:370
 #, c-format
@@ -20762,74 +20727,72 @@ msgid ""
 "<b>Shift+Ctrl</b>: snap rotation angle to %g° increments and rotate both "
 "handles"
 msgstr ""
+"<b>Shift+Ctrl</b>: przyciąga kąt obrotu do %g° przyrostów i obraca oba "
+"uchwyty"
 
 #: ../src/ui/tool/node.cpp:374
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
-msgstr ""
+msgstr "<b>Ctrl</b>: przyciąga kąt obrotu do %g° przyrostów"
 
 #: ../src/ui/tool/node.cpp:379
-#, fuzzy
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: rotate both handles by the same angle"
-msgstr "<b>Shift</b>: rysowanie od punktu startowego we wszystkich kierunkach"
+msgstr "<b>Shift</b>: obraca oba uchwyty o ten sam kąt"
 
 #: ../src/ui/tool/node.cpp:386
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
 msgstr ""
+"<b>Automatyczny uchwyt węzła</b>: ciągnij, by przekształcić w gładki węzeł (%"
+"s)"
 
 #: ../src/ui/tool/node.cpp:389
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>%s</b>: drag to shape the segment (%s)"
-msgstr ""
+msgstr "<b>%s</b>: ciągnij, by kształować odcinek (%s)"
 
 #: ../src/ui/tool/node.cpp:405
 #, c-format
 msgctxt "Path handle tip"
 msgid "Move handle by %s, %s; angle %.2f°, length %s"
-msgstr ""
+msgstr "Przesuń uchwyt o %s, %s; kąt %.2f°, długość %s"
 
 #: ../src/ui/tool/node.cpp:1144
-#, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr ""
-"<b>Shift</b> + kliknięcie, aby przełączyć zaznaczenie, ciągnięcie, aby "
-"elastycznie zaznaczyć"
+"<b>Shift</b>: ciągnij uchwyt na zewnątrz , kliknij, by przełączyć zaznaczenie"
 
 #: ../src/ui/tool/node.cpp:1146
-#, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: click to toggle selection"
-msgstr ""
-"<b>Shift</b> + kliknięcie, aby przełączyć zaznaczenie, ciągnięcie, aby "
-"elastycznie zaznaczyć"
+msgstr "<b>Shift</b>: kliknij, by przełączyć zaznaczenie"
 
 #: ../src/ui/tool/node.cpp:1151
 msgctxt "Path node tip"
 msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
 msgstr ""
+"<b>Ctrl+Alt</b>: przesuwa wzdłuż linii uchwytu, kliknij, by usunąć węzeł"
 
 #: ../src/ui/tool/node.cpp:1154
 msgctxt "Path node tip"
 msgid "<b>Ctrl</b>: move along axes, click to change node type"
-msgstr ""
+msgstr "<b>Ctrl</b>: przesuwa wzdłuż osi, kliknij, by zmienić typ węzła"
 
 #: ../src/ui/tool/node.cpp:1158
-#, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
-msgstr "<b>Ctrl</b> - przyciąganie do kąta"
+msgstr "<b>Alt</b>: doskonalenie węzłów"
 
 #: ../src/ui/tool/node.cpp:1166
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
-msgstr ""
+msgstr "<b>%s</b>: ciągnij, by kształować ścieżkę (więcej z: Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1169
 #, c-format
@@ -20838,6 +20801,8 @@ msgid ""
 "<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles "
 "(more: Shift, Ctrl, Alt)"
 msgstr ""
+"<b>%s</b>: ciągnij, by kształować ścieżkę, kliknij, by przełączyć uchwyty "
+"skali/rotacji (więcej z: Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1172
 #, c-format
@@ -20846,31 +20811,30 @@ msgid ""
 "<b>%s</b>: drag to shape the path, click to select only this node (more: "
 "Shift, Ctrl, Alt)"
 msgstr ""
+"<b>%s</b>: ciągnij, by kształować ścieżkę, kliknij, by zaznaczyć dany węzeł "
+"(więcej z: Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1180
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path node tip"
 msgid "Move node by %s, %s"
-msgstr "Przesuń węzły"
+msgstr "Przesuń węzły o %s, %s"
 
 #: ../src/ui/tool/node.cpp:1192
 msgid "Symmetric node"
 msgstr "Węzeł symetryczny"
 
 #: ../src/ui/tool/node.cpp:1193
-#, fuzzy
 msgid "Auto-smooth node"
 msgstr "Węzeł automatycznie wygładzany"
 
 #: ../src/ui/tool/path-manipulator.cpp:763
-#, fuzzy
 msgid "Scale handle"
-msgstr "Skaluj uchwyt"
+msgstr "Uchwyt skalowania"
 
 #: ../src/ui/tool/path-manipulator.cpp:787
-#, fuzzy
 msgid "Rotate handle"
-msgstr "Obróć uchwyt"
+msgstr "Uchwyt obrotu"
 
 #. We need to call MPM's method because it could have been our last node
 #: ../src/ui/tool/path-manipulator.cpp:1290 ../src/widgets/toolbox.cpp:1404
@@ -20878,9 +20842,8 @@ msgid "Delete node"
 msgstr "Usuń węzeł"
 
 #: ../src/ui/tool/path-manipulator.cpp:1305
-#, fuzzy
 msgid "Cycle node type"
-msgstr "Typ cyklu węzła"
+msgstr "Zmiana rodzaju węzła"
 
 #: ../src/ui/tool/path-manipulator.cpp:1319
 msgid "Drag handle"
@@ -20891,47 +20854,41 @@ msgid "Retract handle"
 msgstr "Cofnij uchwyt"
 
 #: ../src/ui/tool/transform-handle-set.cpp:137
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift+Ctrl</b>: scale uniformly about the rotation center"
-msgstr "<b>Shift</b>: rysowanie od punktu startowego we wszystkich kierunkach"
+msgstr "<b>Shift+Ctrl</b>: skalowanie jednakowe wokół środka obrotu"
 
 #: ../src/ui/tool/transform-handle-set.cpp:139
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl:</b> scale uniformly"
-msgstr "<b>Ctrl</b> - przyciąganie do kąta"
+msgstr "<b>Ctrl:</b> skalowanie jednakowe"
 
 #: ../src/ui/tool/transform-handle-set.cpp:144
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid ""
 "<b>Shift+Alt</b>: scale using an integer ratio about the rotation center"
-msgstr "<b>Shift</b>: rysowanie gradientu wokół punktu początkowego"
+msgstr "<b>Shift+Alt</b>: skalowanie z użyciem proporcji wokół środka obrotu"
 
 #: ../src/ui/tool/transform-handle-set.cpp:146
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: scale from the rotation center"
-msgstr "<b>Shift</b>: rysowanie od punktu startowego we wszystkich kierunkach"
+msgstr "<b>Shift</b>: skalowanie ze środka obrotu"
 
 #: ../src/ui/tool/transform-handle-set.cpp:149
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Alt</b>: scale using an integer ratio"
-msgstr "<b>Alt</b> - blokada promienia spirali"
+msgstr "<b>Alt</b>: skalowanie z użyciem proporcji"
 
 #: ../src/ui/tool/transform-handle-set.cpp:151
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Scale handle</b>: drag to scale the selection"
-msgstr "W zaznaczeniu <b>brak ścieżek</b>, którym można odwrócić kierunek"
+msgstr "<b>Uchwyt skalowania</b>: ciągnij, by skalować zaznaczenie"
 
 #: ../src/ui/tool/transform-handle-set.cpp:156
 #, c-format
 msgctxt "Transform handle tip"
 msgid "Scale by %.2f%% x %.2f%%"
-msgstr ""
+msgstr "Saluj o %.2f%% x %.2f%%"
 
 #: ../src/ui/tool/transform-handle-set.cpp:311
 #, c-format
@@ -20940,18 +20897,19 @@ msgid ""
 "<b>Shift+Ctrl</b>: rotate around the opposite corner and snap angle to %f° "
 "increments"
 msgstr ""
+"<b>Shift+Ctrl</b>: obraca wokół przeciwległego narożnika i przyciąga kąt do %"
+"f° przyrostów"
 
 #: ../src/ui/tool/transform-handle-set.cpp:314
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: rotate around the opposite corner"
-msgstr "<b>Shift</b>: rysowanie od punktu startowego we wszystkich kierunkach"
+msgstr "<b>Shift</b>: obraca wokół przeciwległego narożnika"
 
 #: ../src/ui/tool/transform-handle-set.cpp:318
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap angle to %f° increments"
-msgstr "<b>Ctrl</b> - przyciąganie do kąta"
+msgstr "<b>Ctrl</b>:  przyciąga kąt do %f° przyrostów"
 
 #: ../src/ui/tool/transform-handle-set.cpp:320
 msgctxt "Transform handle tip"
@@ -20959,13 +20917,14 @@ msgid ""
 "<b>Rotation handle</b>: drag to rotate the selection around the rotation "
 "center"
 msgstr ""
+"<b>Uchwyt obrotu</b>: ciągnij, by obrócić zaznaczenie wokół środka obrotu"
 
 #. event
 #: ../src/ui/tool/transform-handle-set.cpp:325
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "Rotate by %.2f°"
-msgstr "Obróć wg pikseli"
+msgstr "Obróć wg %.2f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:419
 #, c-format
@@ -20974,41 +20933,44 @@ msgid ""
 "<b>Shift+Ctrl</b>: skew about the rotation center with snapping to %f° "
 "increments"
 msgstr ""
+"<b>Shift+Ctrl</b>: pochyla w kierunku środka obrotu z przyciąganiem do %f° "
+"przyrostów"
 
 #: ../src/ui/tool/transform-handle-set.cpp:422
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: skew about the rotation center"
-msgstr "<b>Shift</b>: rysowanie od punktu startowego we wszystkich kierunkach"
+msgstr "<b>Shift</b>: pochyla wokół środka obrotu"
 
 #: ../src/ui/tool/transform-handle-set.cpp:426
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap skew angle to %f° increments"
-msgstr "<b>Ctrl</b> - przyciąganie do kąta"
+msgstr "<b>Ctrl</b>: przyciąga kąt pochylenia do %f° przyrostów"
 
 #: ../src/ui/tool/transform-handle-set.cpp:429
 msgctxt "Transform handle tip"
 msgid ""
 "<b>Skew handle</b>: drag to skew (shear) selection about the opposite handle"
 msgstr ""
+"<b>Uchwyt pochylania</b>: ciągnij, by pochylić  zaznaczenie w kierunku "
+"przeciwległego uchwytu"
 
 #: ../src/ui/tool/transform-handle-set.cpp:435
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "Skew horizontally by %.2f°"
-msgstr "Przesuwa w poziomie o zadaną wartość podaną w pikselach"
+msgstr "Pochyla w poziomie wg %.2f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:438
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "Skew vertically by %.2f°"
-msgstr "Przesuwa w pionie o zadaną wartość podaną w pikselach"
+msgstr "Pochyla w pionie wg %.2f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:479
 msgctxt "Transform handle tip"
 msgid "<b>Rotation center</b>: drag to change the origin of transforms"
-msgstr ""
+msgstr "<b>Środek obrotu</b>: ciągnij, by zmienić źródło transformacji"
 
 #: ../src/ui/view/edit-widget.cpp:330 ../src/ui/view/edit-widget.cpp:335
 #: ../src/ui/view/edit-widget.cpp:343 ../src/ui/view/edit-widget.cpp:348
@@ -21122,7 +21084,7 @@ msgstr "Zmień krycie"
 
 #: ../src/ui/widget/page-sizer.cpp:230
 msgid "U_nits:"
-msgstr "J_ednostki:"
+msgstr "_Jednostki:"
 
 #: ../src/ui/widget/page-sizer.cpp:231
 msgid "Width of paper"
@@ -21133,7 +21095,6 @@ msgid "Height of paper"
 msgstr "Wysokość papieru"
 
 #: ../src/ui/widget/page-sizer.cpp:233
-#, fuzzy
 msgid "T_op margin:"
 msgstr "_Górny margines:"
 
@@ -21143,7 +21104,7 @@ msgstr "Górny margines"
 
 #: ../src/ui/widget/page-sizer.cpp:234
 msgid "L_eft:"
-msgstr "L_ewa:"
+msgstr "_Lewy:"
 
 #: ../src/ui/widget/page-sizer.cpp:234
 msgid "Left margin"
@@ -21151,16 +21112,15 @@ msgstr "Lewy margines"
 
 #: ../src/ui/widget/page-sizer.cpp:235
 msgid "Ri_ght:"
-msgstr "_Prawa:"
+msgstr "P_rawy:"
 
 #: ../src/ui/widget/page-sizer.cpp:235
 msgid "Right margin"
 msgstr "Prawy margines"
 
 #: ../src/ui/widget/page-sizer.cpp:236
-#, fuzzy
 msgid "Botto_m:"
-msgstr "_Dół:"
+msgstr "D_olny:"
 
 #: ../src/ui/widget/page-sizer.cpp:236
 msgid "Bottom margin"
@@ -21184,14 +21144,12 @@ msgid "Custom size"
 msgstr "Rozmiar niestandardowy"
 
 #: ../src/ui/widget/page-sizer.cpp:324
-#, fuzzy
 msgid "Resi_ze page to content..."
-msgstr "_Dopasuj stronę do zawartości…"
+msgstr "Dopas_uj stronę do zawartości…"
 
 #: ../src/ui/widget/page-sizer.cpp:350
-#, fuzzy
 msgid "_Resize page to drawing or selection"
-msgstr "D_opasuj stronę do rysunku lub zaznaczenia"
+msgstr "Dop_asuj stronę do rysunku lub zaznaczenia"
 
 #: ../src/ui/widget/page-sizer.cpp:351
 msgid ""
@@ -22943,7 +22901,7 @@ msgstr "Otwiera okno ustawień dla narzędzia „Ulepszanie”"
 
 #: ../src/verbs.cpp:2502
 msgid "Spray Tool Preferences"
-msgstr "Ustawienia narzędzia „Natrysk”"
+msgstr "Ustawienia narzędzia „Natryskiwanie”"
 
 #: ../src/verbs.cpp:2503
 msgid "Open Preferences for the Spray tool"
@@ -23350,12 +23308,14 @@ msgstr "W_yrównaj i rozmieść…"
 msgid "Align and distribute objects"
 msgstr "Okno dialogowe Wyrównaj i rozmieść…"
 
+# Natryskiwanie to fatalne tłumaczenie. Poprawnym polskim słowem w tym kontekscie jest spray.
 #: ../src/verbs.cpp:2609
 #, fuzzy
 msgid "_Spray options..."
 msgstr "Opcje _natryskiwania…"
 
 #: ../src/verbs.cpp:2610
+#, fuzzy
 msgid "Some options for the spray"
 msgstr "Niektóre opcje natryskiwania"
 
@@ -23972,7 +23932,7 @@ msgstr "Gradient radialny"
 
 #: ../src/widgets/paint-selector.cpp:241
 msgid "Swatch"
-msgstr "Paleta"
+msgstr "Próbka"
 
 #: ../src/widgets/paint-selector.cpp:243
 msgid "Unset paint (make it undefined so it can be inherited)"
@@ -24447,10 +24407,10 @@ msgstr "Znaczniki końcowe są rysowane na ostatnim węźle ścieżki lub kszta�
 msgid "Set stroke style"
 msgstr "Określ styl konturu"
 
+# Informacja do undo
 #: ../src/widgets/swatch-selector.cpp:139
-#, fuzzy
 msgid "Change swatch color"
-msgstr "Zmień kolor palety"
+msgstr "Zmiana koloru palety"
 
 #: ../src/widgets/toolbox.cpp:216
 msgid "Color/opacity used for color tweaking"
@@ -24496,11 +24456,13 @@ msgstr "TBD"
 msgid "Style of Paint Bucket fill objects"
 msgstr "Styl wypełniania obiektów"
 
+# Raczej chodzi o całą konfigurację niż poszczególne ustawienia
 #: ../src/widgets/toolbox.cpp:989
 #, fuzzy
 msgid "Default interface setup"
-msgstr "Domyślne ustawienia interfejsu"
+msgstr "Domyślna konfiguracja interfejsu"
 
+# Tutaj nie chodzi o "zadanie" ale raczej o "tryb" pracy.
 #: ../src/widgets/toolbox.cpp:995
 #, fuzzy
 msgid "Set the custom task"
@@ -24511,7 +24473,6 @@ msgid "Wide"
 msgstr "Szeroki"
 
 #: ../src/widgets/toolbox.cpp:1001
-#, fuzzy
 msgid "Setup for widescreen work"
 msgstr "Ustawienia trybu panoramicznego"
 
@@ -24620,36 +24581,32 @@ msgid "Show Transform Handles"
 msgstr "Wyświetl uchwyty przekształceń"
 
 #: ../src/widgets/toolbox.cpp:1518
-#, fuzzy
 msgid "Show transformation handles for selected nodes"
-msgstr "Wyświetlaj uchwyty przekształcania dla wybranych węzłów"
+msgstr "Wyświetla uchwyty przekształcania dla wybranych węzłów"
 
 #: ../src/widgets/toolbox.cpp:1528
 msgid "Show Handles"
 msgstr "Wyświetl uchwyty"
 
 #: ../src/widgets/toolbox.cpp:1529
-#, fuzzy
 msgid "Show Bezier handles of selected nodes"
-msgstr "Wyświetl uchwyty kontrolne krzywej Beziera zaznaczonych węzłów"
+msgstr "Wyświetla uchwyty krzywej zaznaczonych węzłów"
 
 #: ../src/widgets/toolbox.cpp:1539
 msgid "Show Outline"
 msgstr "Wyświetl zarys"
 
 #: ../src/widgets/toolbox.cpp:1540
-#, fuzzy
 msgid "Show path outline (without path effects)"
-msgstr "Wyświetl zarys ścieżki (bez efektów ścieżki)"
+msgstr "Wyświetla zarys ścieżki (bez efektów ścieżki)"
 
 #: ../src/widgets/toolbox.cpp:1550
 msgid "Next path effect parameter"
 msgstr "Następny parametr efektu ścieżki"
 
 #: ../src/widgets/toolbox.cpp:1551
-#, fuzzy
 msgid "Show next editable path effect parameter"
-msgstr "Wyświetl następny edytowalny parametr efektu ścieżki"
+msgstr "Wyświetla następny edytowalny parametr efektu ścieżki"
 
 #: ../src/widgets/toolbox.cpp:1561
 msgid "Edit clipping paths"
@@ -25572,7 +25529,7 @@ msgstr "Natryskuj klony początkowego zaznaczenia"
 
 #: ../src/widgets/toolbox.cpp:4700
 msgid "Spray single path"
-msgstr "Natryskuj pojedynczą ścieżekę"
+msgstr "Natryskuj pojedynczą ścieżkę"
 
 #: ../src/widgets/toolbox.cpp:4701
 msgid "Spray objects in a single path"
@@ -25983,7 +25940,7 @@ msgid ""
 "pick only the visible color premultiplied by alpha"
 msgstr ""
 "Wybiera zarówno kolor jak i krycie (przezroczystość) obiektów wskazanych "
-"przez kursor myszy. W pozostałych przypadkach wskazuje tylko widziany kolor "
+"przez kursor. W pozostałych przypadkach wskazuje tylko widziany kolor "
 "zwielokrotniony przez kanał alfa."
 
 #: ../src/widgets/toolbox.cpp:5733
@@ -26098,9 +26055,8 @@ msgid "Text: Change font style"
 msgstr "Tekst: Zmień styl czcionki"
 
 #: ../src/widgets/toolbox.cpp:6701
-#, fuzzy
 msgid "Text: Change superscript or subscript"
-msgstr "Indeksy górne i dolne"
+msgstr "Tekst: Zmień indeks górny lub dolny"
 
 #: ../src/widgets/toolbox.cpp:6845
 msgid "Text: Change alignment"
