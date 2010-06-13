@@ -216,7 +216,7 @@ void AboutBox::initStrings() {
      * To update it, execute this snippet of sed magic in the toplevel
      * source directory:
      *
-     * sed -e 's/^\(.*\) \([^ ]*\)*$/\2_ \1/' ../../../AUTHORS
+     * sed -e 's/^\(.*\) \([^ ]*\)*$/\2_ \1/' AUTHORS
            | sort
            | sed -e 's/^\([^_]*\)_ \(.*\)$/\2 \1/;s/^.*$/"\0\\n"/;$s/\\n//'
            | zenity --text-info
@@ -397,14 +397,20 @@ void AboutBox::initStrings() {
         translators_text.append("\n\n\n");
     }
 
-    /**
-     * This list is copied from the TRANSLATORS file.  It should
-     * be periodically updated.
-     */              
+    /* This text is copied from the TRANSLATORS file.
+     * To update it, execute this snippet of sed magic in the toplevel
+     * source directory:
+     *
+     * sed -e 's/^\(.*\) \([^ ]*\)*$/\2_ \1/' TRANSLATORS
+           | sed -e 's/^\([^_]*\)_ \(.*\)$/\2 \1/;s/^.*$/"\0\\n"/;$s/\\n//'
+           | zenity --text-info
+     *
+     * and paste the result from the combo box here.
+     */          
     gchar const *allTranslators =
     "3ARRANO.com <3arrano@3arrano.com>, 2005.\n"
     "Adib Taraben <theadib@googlemail.com>, 2004.\n"
-    "Alan Monfort <alan.monfort@free.fr>, 2009.\n"
+    "Alan Monfort <alan.monfort@free.fr>, 2009-2010.\n"
     "Alastair McKinstry <mckinstry@computer.org>, 2000.\n"
     "Aleksandar Urošević <urke@users.sourceforge.net>, 2004, 2005, 2006.\n"
     "Alessio Frusciante <algol@firenze.linux.it>, 2002, 2003.\n"
@@ -505,7 +511,7 @@ void AboutBox::initStrings() {
     "Stefan Graubner <pflaumenmus92@gmx.net>, 2005.\n"
     "Supranee Thirawatthanasuk <supranee@opentle.org>, 2006.\n"
     "Takeshi Aihana <aihana@muc.biglobe.ne.jp>, 2000, 2001.\n"
-    "Tim Sheridan <tim.sheridan@gmail.com>, 2007-2009.\n"
+    "Tim Sheridan <tim.sheridan@gmail.com>, 2007-2010.\n"
     "Theppitak Karoonboonyanan <thep@linux.thai.net>, 2006.\n"
     "Thiago Pimentel <thiago.merces@gmail.com>, 2006.\n"
     "Toshifumi Sato <sato@centrosystem.com>, 2005.\n"
