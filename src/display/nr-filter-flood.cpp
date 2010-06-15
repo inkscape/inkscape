@@ -32,7 +32,7 @@ FilterFlood::~FilterFlood()
 {}
 
 int FilterFlood::render(FilterSlot &slot, FilterUnits const &/*units*/) {
-g_message("rendering feflood");
+//g_message("rendering feflood");
     NRPixBlock *in = slot.get(_input);
     if (!in) {
         g_warning("Missing source image for feFlood (in=%d)", _input);
@@ -60,7 +60,7 @@ g_message("rendering feflood");
 
 #if ENABLE_LCMS
         icc_color_to_sRGB(icc, &r, &g, &b);
-g_message("result: r:%d g:%d b:%d", r, g, b);
+//g_message("result: r:%d g:%d b:%d", r, g, b);
 #endif //ENABLE_LCMS
 
     for(i=0; i < 4*in_h*in_w; i+=4){
