@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-06-13 22:20+0100\n"
+"PO-Revision-Date: 2010-06-15 20:34+0100\n"
 "Last-Translator: Marcin Floryan <mfloryan@mm.waw.pl>\n"
 "Language-Team: Polish Inkscape Translation Team\n"
 "MIME-Version: 1.0\n"
@@ -1572,11 +1572,11 @@ msgstr "••••••••••••••••••••••••
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:1
 msgid "Auto-Text:"
-msgstr ""
+msgstr "Tekst automatyczny:"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:2
 msgid "Auto-texts"
-msgstr ""
+msgstr "Teksty automatyczne"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:4
 #: ../share/extensions/jessyInk_effects.inx.h:8
@@ -1590,16 +1590,15 @@ msgstr ""
 #: ../share/extensions/jessyInk_video.inx.h:2
 #: ../share/extensions/jessyInk_view.inx.h:4
 msgid "JessyInk"
-msgstr ""
+msgstr "JessyInk"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:5
 msgid "None (remove)"
-msgstr ""
+msgstr "Brak (usuń)"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:6
-#, fuzzy
 msgid "Number of slides"
-msgstr "Liczba wzorów"
+msgstr "Liczba slajdów"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:7
 #: ../share/extensions/jessyInk_effects.inx.h:12
@@ -1607,18 +1606,16 @@ msgstr "Liczba wzorów"
 #: ../share/extensions/jessyInk_masterSlide.inx.h:6
 #: ../share/extensions/jessyInk_transitions.inx.h:9
 #: ../share/extensions/jessyInk_view.inx.h:7
-#, fuzzy
 msgid "Settings"
-msgstr "Zaznaczanie"
+msgstr "Ustawienia"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:8
-#, fuzzy
 msgid "Slide number"
-msgstr "Numer pióra"
+msgstr "Numer slajdu"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:9
 msgid "Slide title"
-msgstr ""
+msgstr "Tytuł slajdu"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:10
 msgid ""
@@ -1626,57 +1623,53 @@ msgid ""
 "JessyInk presentation. Please see code.google.com/p/jessyink for more "
 "details."
 msgstr ""
+"To rozszerzenie umożliwia instalację, aktualizację i usuwanie automatycznego "
+"tekstu używanego w prezentacji. Więcej informacji uzyskasz na stronie code."
+"google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_effects.inx.h:1
 #: ../share/extensions/jessyInk_transitions.inx.h:1
-#, fuzzy
 msgid "Appear"
-msgstr "Dołącz"
+msgstr "Bez animacji"
 
 #: ../share/extensions/jessyInk_effects.inx.h:2
 #, fuzzy
 msgid "Build-in effect"
-msgstr "Aktualny efekt"
+msgstr "Wbudowany efekt"
 
 #: ../share/extensions/jessyInk_effects.inx.h:3
 #, fuzzy
 msgid "Build-out effect"
-msgstr "Brak efektu"
+msgstr "Zewnętrzny efekt"
 
 #: ../share/extensions/jessyInk_effects.inx.h:4
 #: ../share/extensions/jessyInk_transitions.inx.h:3
 #: ../share/extensions/jessyInk_view.inx.h:2
-#, fuzzy
 msgid "Duration in seconds:"
-msgstr "Zakończono rysowanie"
+msgstr "Czas trwania w sekundach:"
 
 #: ../share/extensions/jessyInk_effects.inx.h:5
-#, fuzzy
 msgid "Effects"
-msgstr "_Efekt"
+msgstr "Efekty"
 
 #: ../share/extensions/jessyInk_effects.inx.h:6
-#: ../share/extensions/jessyInk_transitions.inx.h:4
-#, fuzzy
+#: ../share/extensions/jessyInk_transitions.inx.h:4msgid "Fade"
 msgid "Fade"
-msgstr "Ściany"
+msgstr "Zanikanie"
 
 #: ../share/extensions/jessyInk_effects.inx.h:9
-#, fuzzy
 msgid "None (default)"
-msgstr "(domyślny)"
+msgstr "Brak (domyślny)"
 
 #: ../share/extensions/jessyInk_effects.inx.h:10
 #: ../share/extensions/jessyInk_view.inx.h:5
-#, fuzzy
 msgid "Order:"
-msgstr "Porządek"
+msgstr "Kolejność:"
 
 #: ../share/extensions/jessyInk_effects.inx.h:11
 #: ../share/extensions/jessyInk_transitions.inx.h:8
-#, fuzzy
 msgid "Pop"
-msgstr "Na wierzch"
+msgstr "Skokowo"
 
 #: ../share/extensions/jessyInk_effects.inx.h:13
 msgid ""
@@ -1684,6 +1677,9 @@ msgid ""
 "JessyInk presentation. Please see code.google.com/p/jessyink for more "
 "details."
 msgstr ""
+"To rozszerzenie umożliwia instalację, aktualizację i usuwanie efektów "
+"obiektu prezentacji. Więcej informacji uzyskasz na stronie code.google.com/p/"
+"jessyink."
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../share/extensions/jessyInk_effects.inx.h:14
@@ -1701,14 +1697,16 @@ msgid ""
 "Creates a zip file containing pdfs or pngs of all slides of a JessyInk "
 "presentation."
 msgstr ""
+"Tworzy skompresowany plik zawierający wszystkie slajdy prezentacji JessyInk "
+"w formacie PDF lub PNG."
 
 #: ../share/extensions/jessyInk_export.inx.h:3
 msgid "JessyInk zipped pdf or png output"
-msgstr ""
+msgstr "Skompresowany zapis pdf lub png"
 
 #: ../share/extensions/jessyInk_export.inx.h:4
 msgid "JessyInk zipped pdf or png output (*.zip)"
-msgstr ""
+msgstr "Skompresowany zapis pdf lub png (*.zip)"
 
 #: ../share/extensions/jessyInk_export.inx.h:5
 msgid "PDF"
@@ -1720,7 +1718,7 @@ msgstr "PNG"
 
 #: ../share/extensions/jessyInk_export.inx.h:7
 msgid "Resolution:"
-msgstr ""
+msgstr "Rozdzielczość:"
 
 #: ../share/extensions/jessyInk_export.inx.h:9
 msgid ""
@@ -1728,10 +1726,12 @@ msgid ""
 "an export layer in your browser. Please see code.google.com/p/jessyink for "
 "more details."
 msgstr ""
+"To rozszerzenie umożliwia eksport utworzonej prezentacji. Więcej informacji "
+"uzyskasz na stronie code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_install.inx.h:2
 msgid "Install/update"
-msgstr ""
+msgstr "Instaluj/Aktualizuj"
 
 #: ../share/extensions/jessyInk_install.inx.h:4
 msgid ""
@@ -1739,218 +1739,194 @@ msgid ""
 "to turn your SVG file into a presentation. Please see code.google.com/p/"
 "jessyink for more details."
 msgstr ""
+"To rozszerzenie umożliwia instalację lub aktualizację skryptu JessyInk, "
+"który zmienia plik SVG w prezentację. Więcej informacji uzyskasz na stronie "
+"code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:1
 msgid "Add slide:"
-msgstr ""
+msgstr "Dodaj slajd:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:2
 msgid "Back (with effects):"
-msgstr ""
+msgstr "Poprzedni slajd (z efektami):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:3
-#, fuzzy
 msgid "Back (without effects):"
-msgstr "Wyświetla zarys ścieżki (bez efektów ścieżki)"
+msgstr "Poprzedni slajd (bez efektów):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:4
-#, fuzzy
 msgid "Decrease number of columns:"
-msgstr "Liczba kolumn"
+msgstr "Zmniejszenie liczby kolumn:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:5
-#, fuzzy
 msgid "Drawing mode"
-msgstr "Rysunek"
+msgstr "Tryb rysowania"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:6
-#, fuzzy
 msgid "First slide:"
-msgstr "Pierwszy zaznaczony"
+msgstr "Pierwszy slajd:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:8
-#, fuzzy
 msgid "Increase number of columns:"
-msgstr "Liczba kolumn"
+msgstr "Zwiększenie liczby kolumn:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:9
-#, fuzzy
 msgid "Index mode"
-msgstr "Utwórz wcięcie"
+msgstr "Tryb indeksu"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:11
-#, fuzzy
 msgid "Key bindings"
-msgstr "Kerning"
+msgstr "Skróty klawiszowe"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:12
-#, fuzzy
 msgid "Last slide:"
-msgstr "Wklej rozmiar"
+msgstr "Ostatni slajd:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:13
-#, fuzzy
 msgid "Next (with effects):"
-msgstr "Efekt światła neonowego"
+msgstr "Następny slajd (z efektami):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:14
-#, fuzzy
 msgid "Next (without effects):"
-msgstr "Efekt światła neonowego"
+msgstr "Następny slajd (bez efektów):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:15
-#, fuzzy
 msgid "Next page:"
-msgstr "Wybierz stronę:"
+msgstr "Następna strona:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:16
 msgid "Previous page:"
-msgstr ""
+msgstr "Poprzednia strona:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:17
-#, fuzzy
 msgid "Reset timer:"
-msgstr "Resetuj środek"
+msgstr "Resetowanie czasomierza:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:18
 msgid "Select the slide above:"
-msgstr ""
+msgstr "Wybranie slajdu powyżej:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:19
 msgid "Select the slide below:"
-msgstr ""
+msgstr "Wybranie slajdu poniżej:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:20
-#, fuzzy
 msgid "Select the slide to the left:"
-msgstr "Zapisz plik jako"
+msgstr "Wybranie slajdu po lewej:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:21
-#, fuzzy
 msgid "Select the slide to the right:"
-msgstr "Dopasuj stronę do rysunku"
+msgstr "Wybranie slajdu po prawej:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:22
 msgid "Set duration:"
-msgstr ""
+msgstr "Ustawienie czasu wyświetlania:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:23
 msgid "Set number of columns to default:"
-msgstr ""
+msgstr "Ustawienie domyślnej liczby kolumn:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:24
-#, fuzzy
 msgid "Set path color to black:"
-msgstr "Ustaw kontur na brak koloru"
+msgstr "Ustawienie czarnego koloru ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:25
-#, fuzzy
 msgid "Set path color to blue:"
-msgstr "Ustaw kontur na brak koloru"
+msgstr "Ustawienie niebieskiego koloru ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:26
-#, fuzzy
 msgid "Set path color to cyan:"
-msgstr "Ustaw kontur na brak koloru"
+msgstr "Ustawienie cyjan jako koloru ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:27
-#, fuzzy
 msgid "Set path color to green:"
-msgstr "Ustaw kontur na brak koloru"
+msgstr "Ustawienie zielonego koloru ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:28
-#, fuzzy
 msgid "Set path color to magenta:"
-msgstr "Ustaw kontur na brak koloru"
+msgstr "Ustawienie magenta jako koloru ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:29
-#, fuzzy
 msgid "Set path color to orange:"
-msgstr "Ustaw kontur na brak koloru"
+msgstr "Ustawienie pomarańczowego koloru ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:30
-#, fuzzy
 msgid "Set path color to red:"
-msgstr "Ustaw kontur na brak koloru"
+msgstr "Ustawienie czerwonego koloru ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:31
-#, fuzzy
 msgid "Set path color to white:"
-msgstr "Ustaw kontur na brak koloru"
+msgstr "Ustawienie białego koloru ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:32
-#, fuzzy
 msgid "Set path color to yellow:"
-msgstr "Ustaw kontur na brak koloru"
+msgstr "Ustawienie żółtego koloru ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:33
-#, fuzzy
 msgid "Set path width to 1:"
-msgstr "Określ szerokość:"
+msgstr "Ustawienie 1 jako szerokości ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:34
-#, fuzzy
 msgid "Set path width to 3:"
-msgstr "Określ szerokość:"
+msgstr "Ustawienie 3 jako szerokości ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:35
-#, fuzzy
 msgid "Set path width to 5:"
-msgstr "Określ szerokość:"
+msgstr "Ustawienie 5 jako szerokości ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:36
-#, fuzzy
 msgid "Set path width to 7:"
-msgstr "Określ szerokość:"
+msgstr "Ustawienie 7 jako szerokości ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:37
-#, fuzzy
 msgid "Set path width to 9:"
-msgstr "Określ szerokość:"
+msgstr "Ustawienie 9 jako szerokości ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:38
-#, fuzzy
 msgid "Set path width to default:"
-msgstr "Zapisz jako domyślne"
+msgstr "Ustawienie domyślnej szerokości ścieżki:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:39
-#, fuzzy
 msgid "Slide mode"
-msgstr "Tryb skalowania"
+msgstr "Tryb slajdów"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:40
 msgid "Switch to drawing mode:"
-msgstr ""
+msgstr "Przełączenie w tryb rysowania:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:41
 msgid "Switch to index mode:"
-msgstr ""
+msgstr "Przełączenie w tryb indeksu:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:42
 msgid "Switch to slide mode:"
-msgstr ""
+msgstr "Przełączenie w tryb slajdów:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:43
 msgid ""
 "This extension allows you customise the key bindings JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"To rozszerzenie umożliwia dostosowanie skrótów klawiszowych. Więcej "
+"informacji uzyskasz na stronie code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:44
 msgid "Toggle progress bar:"
-msgstr ""
+msgstr "Przełączenie paska postępu:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:45
 msgid "Undo last path segment:"
-msgstr ""
+msgstr "Wycofanie ostatniego segmentu ścieżki:"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:2
 msgid "If no layer name is supplied, the master slide is unset."
 msgstr ""
+"Jeśli nie zostanie podana nazwa warstwy, szablon slajdów nie będzie użyty."
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:4
 msgid "Master slide"
-msgstr ""
+msgstr "Szablon slajdów"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:5
 #: ../share/extensions/jessyInk_transitions.inx.h:7
@@ -1962,6 +1938,8 @@ msgid ""
 "This extension allows you to change the master slide JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"To rozszerzenie umożliwia zmianę szablonu slajdów używanego przez JessyInk. "
+"Więcej informacji uzyskasz na stronie code.google.com/p/jessyink."
 
 #. File
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:1
@@ -1972,29 +1950,31 @@ msgstr "Domyślny"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:2
 msgid "Dragging/zoom"
-msgstr ""
+msgstr "Przeciąganie/Zoom"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:5
 msgid "Mouse handler"
-msgstr ""
+msgstr "Obsługa myszy"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:6
 msgid "Mouse settings:"
-msgstr ""
+msgstr "Działanie myszy:"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:7
 msgid "No-click"
-msgstr ""
+msgstr "Bez kliknięć"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:8
 msgid ""
 "This extension allows you customise the mouse handler JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"To rozszerzenie umożliwia dostosowanie działania myszy. Więcej informacji "
+"uzyskasz na stronie code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_summary.inx.h:3
 msgid "Summary"
-msgstr ""
+msgstr "Informacje"
 
 #: ../share/extensions/jessyInk_summary.inx.h:4
 msgid ""
@@ -2002,68 +1982,69 @@ msgid ""
 "effects and transitions contained in this SVG file. Please see code.google."
 "com/p/jessyink for more details."
 msgstr ""
+"To rozszerzenie umożliwia otrzymanie informacji o skrypcie JessyInk, "
+"efektach i przejściach zawartych w tym pliku SVG. Więcej informacji uzyskasz "
+"na stronie code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_transitions.inx.h:10
 msgid ""
 "This extension allows you to change the transition JessyInk uses for the "
 "selected layer. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"To rozszerzenie umożliwia zmianę przejścia użytego dla wybranej warstwy. "
+"Więcej informacji uzyskasz na stronie code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_transitions.inx.h:11
 msgid "Transition in effect"
-msgstr ""
+msgstr "Efekt wejścia"
 
 #: ../share/extensions/jessyInk_transitions.inx.h:12
-#, fuzzy
 msgid "Transition out effect"
-msgstr "Wklej efekt żywej ścieżki"
+msgstr "Efekt wyjścia"
 
 #: ../share/extensions/jessyInk_transitions.inx.h:13
-#, fuzzy
 msgid "Transitions"
-msgstr "Transformacja"
+msgstr "Efekty przejścia"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:4
 msgid "Please select the parts of JessyInk you want to uninstall/remove."
-msgstr ""
+msgstr "Wybierz elementy JessyInk, które chcesz odinstalować/usunąć."
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:5
-#, fuzzy
 msgid "Remove auto-texts"
-msgstr "Usuń kontur"
+msgstr "Usuń teksty automatyczne"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:6
-#, fuzzy
 msgid "Remove effects"
-msgstr "Usuń efekt ścieżki"
+msgstr "Usuń efekty"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:7
-#, fuzzy
 msgid "Remove master slide assignment"
-msgstr "Zdejmuje maskę z zaznaczonych obiektów"
+msgstr "Usuń przypisany szablon prezentacji"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:8
 msgid "Remove script"
-msgstr ""
+msgstr "Usuń skrypt"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:9
-#, fuzzy
 msgid "Remove transitions"
-msgstr "Usuń przekształcenia"
+msgstr "Usuń efekty przejścia"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:10
 msgid "Remove views"
-msgstr ""
+msgstr "Usuń widoki"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:11
 msgid ""
 "This extension allows you to uninstall the JessyInk script. Please see code."
 "google.com/p/jessyink for more details."
 msgstr ""
+"To rozszerzenie umożliwia deinstalację skryptu JessyInk. Więcej informacji "
+"uzyskasz na stronie code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:12
 msgid "Uninstall/remove"
-msgstr ""
+msgstr "Odinstaluj/Usuń"
 
 #: ../share/extensions/jessyInk_video.inx.h:3
 msgid ""
@@ -2071,24 +2052,31 @@ msgid ""
 "This element allows you to integrate a video into your JessyInk "
 "presentation. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"To rozszerzenie umieszcza element wideo w aktywnym slajdzie (warstwie). "
+"Element ten umożliwia integrację wideo z prezentacją. Więcej informacji "
+"uzyskasz na stronie code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_video.inx.h:4
 msgid "Video"
-msgstr ""
+msgstr "Wideo"
 
 #: ../share/extensions/jessyInk_view.inx.h:1
+#, fuzzy
 msgid "Choose order number 0 to set the initial view of a slide."
-msgstr ""
+msgstr "Wybierz 0, by określić początkowy widok slajdu."
 
 #: ../share/extensions/jessyInk_view.inx.h:6
 msgid "Remove view"
-msgstr ""
+msgstr "Usuń widok"
 
 #: ../share/extensions/jessyInk_view.inx.h:8
 msgid ""
 "This extension allows you to set, update and remove views for a JessyInk "
 "presentation. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"To rozszerzenie umożliwia określenie, aktualizację i usunięcie widoków "
+"prezentacji. Więcej informacji uzyskasz na stronie code.google.com/p/"
+"jessyink."
 
 #: ../share/extensions/jessyInk_view.inx.h:9
 #: ../share/extensions/polyhedron_3d.inx.h:52
@@ -3540,24 +3528,22 @@ msgstr "Plik tekstowy (*.txt)"
 
 #: ../share/extensions/txt2svg.inx.h:3
 msgid "Text Input"
-msgstr "Źródło tekstowe"
+msgstr "Plik tekstowy"
 
 #: ../share/extensions/webslicer_create_group.inx.h:1
 #: ../share/extensions/webslicer_create_rect.inx.h:2
 msgid "Background color:"
-msgstr "Kolor tła"
+msgstr "Kolor tła:"
 
 #: ../share/extensions/webslicer_create_group.inx.h:2
 #: ../share/extensions/webslicer_create_rect.inx.h:17
-#, fuzzy
 msgid "HTML class attribute:"
-msgstr "Atrybut HTML class"
+msgstr "Atrybut HTML \"class\":"
 
 #: ../share/extensions/webslicer_create_group.inx.h:3
 #: ../share/extensions/webslicer_create_rect.inx.h:18
-#, fuzzy
 msgid "HTML id attribute:"
-msgstr "Atrybut HTML id"
+msgstr "Atrybut HTML \"id\":"
 
 #: ../share/extensions/webslicer_create_group.inx.h:4
 msgid "Height unit:"
@@ -3568,7 +3554,7 @@ msgid ""
 "Layout Group is only about to help a better code generation (if you need "
 "it). To use this, you must to select some \"Slicer rectangles\" first."
 msgstr ""
-"Grupa makiety jest tylko po to, by pomóć w wygenerowaniu lepszego kodu "
+"Grupa makiety jest tylko po to, by pomóc w wygenerowaniu lepszego kodu "
 "(jeśli jest potrzebny). Aby ją użyć, należy najpierw zaznaczyć kilka "
 "plasterków."
 
@@ -3586,11 +3572,11 @@ msgstr "Określ grupę makiety"
 
 #: ../share/extensions/webslicer_create_group.inx.h:9
 msgid "Slicer"
-msgstr "Plasterki"
+msgstr "Cięcie"
 
 #: ../share/extensions/webslicer_create_group.inx.h:10
 msgid "Undefined (relative to non-floating content size)"
-msgstr "Niezdefiniowane (relatywnie do wielkości nieopływającej treści)"
+msgstr "Niezdefiniowane (względem wielkości nieopływającej treści)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:11
 #: ../share/extensions/webslicer_create_rect.inx.h:41
@@ -3610,33 +3596,34 @@ msgid ""
 "quality but least effective compression"
 msgstr ""
 "Wartość 0 oznacza najniższą jakość obrazka i najwyższą kompresję, a 100 "
-"najlepszą jakość, ale co najmniej skuteczną kompresję."
+"najlepszą jakość, ale najmniej skuteczną kompresję."
 
 #: ../share/extensions/webslicer_create_rect.inx.h:3
+#, fuzzy
 msgid "Background — no repeat (on parent group)"
 msgstr "Tło – nie powtarzaj (na grupie macierzystej)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:4
+#, fuzzy
 msgid "Background — repeat horizontally (on parent group)"
 msgstr "Tło – powtarzaj w poziomie (na grupie macierzystej)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:5
+#, fuzzy
 msgid "Background — repeat vertically (on parent group)"
 msgstr "Tło – powtarzaj w pionie (na grupie macierzystej)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:6
 msgid "Bottom and Center"
-msgstr "Dół i środek"
+msgstr "Na dole po środku"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:7
-#, fuzzy
 msgid "Bottom and Left"
-msgstr "Dół i lewa"
+msgstr "Na dole po lewej"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:8
-#, fuzzy
 msgid "Bottom and Right"
-msgstr "Dół i prawa"
+msgstr "Na dole po prawej"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:9
 msgid "Create a slicer rectangle"
@@ -3680,19 +3667,16 @@ msgid "Left Floated Image"
 msgstr "Obrazek opływany z lewej strony"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:23
-#, fuzzy
 msgid "Middle and Center"
-msgstr "Środek i centrum"
+msgstr "W samym centrum"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:24
-#, fuzzy
 msgid "Middle and Left"
-msgstr "Środek i lewa"
+msgstr "Na środku po lewej"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:25
-#, fuzzy
 msgid "Middle and Right"
-msgstr "Środek i prawa"
+msgstr "Na środku po prawej"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:26
 #: ../src/extension/extension.cpp:740 ../src/ui/dialog/input.cpp:586
@@ -3717,7 +3701,7 @@ msgstr "Rozmiar palety"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:31
 msgid "Position anchor:"
-msgstr "Pozycja kotwicy:"
+msgstr "Zakotwiczenie pozycji:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:32
 msgid "Positioned Image"
@@ -3736,26 +3720,23 @@ msgid "Right Floated Image"
 msgstr "Obrazek opływany z prawej strony"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:36
+#, fuzzy
 msgid "Tiled Background (on parent group)"
 msgstr "Kafelkowane tło (brak grupy macierzystej)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:37
-#, fuzzy
 msgid "Top and Center"
-msgstr "Góra i środek"
+msgstr "Na górze na środku"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:38
-#, fuzzy
 msgid "Top and Left"
-msgstr "Góra i lewa"
+msgstr "Na górze po lewej"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:39
-#, fuzzy
 msgid "Top and right"
-msgstr "Góra i prawa"
+msgstr "Na górze po prawej"
 
 #: ../share/extensions/webslicer_export.inx.h:1
-#, fuzzy
 msgid ""
 "All sliced images, and optionaly code, will be generated as you had "
 "configured and saved to one directory."
@@ -3768,9 +3749,8 @@ msgid "Create directory, if it does not exists"
 msgstr "Utwórz katalog, jeśli nie istnieje"
 
 #: ../share/extensions/webslicer_export.inx.h:3
-#, fuzzy
 msgid "Directory path to export"
-msgstr "Ścieżka do katalogu eksportu:"
+msgstr "Ścieżka do katalogu eksportu"
 
 #: ../share/extensions/webslicer_export.inx.h:4
 msgid "Export layout pieces and HTML+CSS code"
@@ -8416,7 +8396,7 @@ msgstr "kąt wymuszony"
 #: ../src/display/snap-indicator.cpp:155
 #, fuzzy
 msgid "constraint"
-msgstr "ograniczenie"
+msgstr "wymuszenie"
 
 #: ../src/display/snap-indicator.cpp:168
 msgid "Bounding box corner"
@@ -9484,12 +9464,11 @@ msgid "link"
 msgstr "łącze"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:155
-#, fuzzy
 msgid ""
 "Embed results in stand-alone, larger SVG files. Link references a file "
 "outside this SVG document and all files must be moved together."
 msgstr ""
-"Osadza wyniki w oddzielnych dużych plikach SVG. Tworzy łącze do pliku na "
+"Osadza wyniki w oddzielnych dużych plikach SVG. Tworzy odwołanie do pliku na "
 "zewnątrz tego dokumentu SVG i wszystkie pliki muszą być przenoszone razem."
 
 #: ../src/extension/internal/gimpgrad.cpp:274
@@ -12082,7 +12061,7 @@ msgstr "Generowanie ścieżki"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "Path whose segments define the iterated transforms"
-msgstr "Ścieżka, której odcinki definiują przekształceń iteracyjnych"
+msgstr "Ścieżka, której odcinki definiują przekształcenia iteracyjne"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
 msgid "Use uniform transforms only"
@@ -16921,12 +16900,14 @@ msgid "Enclosed Alphanumerics"
 msgstr "Otoczone symbole alfanumeryczne"
 
 #: ../src/ui/dialog/glyphs.cpp:229
+#, fuzzy
 msgid "Box Drawing"
-msgstr ""
+msgstr "Obszar rysowania"
 
 #: ../src/ui/dialog/glyphs.cpp:230
+#, fuzzy
 msgid "Block Elements"
-msgstr ""
+msgstr "Elementy blokowe"
 
 #: ../src/ui/dialog/glyphs.cpp:231
 msgid "Geometric Shapes"
@@ -23315,7 +23296,6 @@ msgid "_Spray options..."
 msgstr "Opcje _natryskiwania…"
 
 #: ../src/verbs.cpp:2610
-#, fuzzy
 msgid "Some options for the spray"
 msgstr "Niektóre opcje natryskiwania"
 
@@ -24407,8 +24387,8 @@ msgstr "Znaczniki końcowe są rysowane na ostatnim węźle ścieżki lub kszta�
 msgid "Set stroke style"
 msgstr "Określ styl konturu"
 
-# Informacja do undo
 #: ../src/widgets/swatch-selector.cpp:139
+#, fuzzy
 msgid "Change swatch color"
 msgstr "Zmiana koloru palety"
 
@@ -24456,11 +24436,9 @@ msgstr "TBD"
 msgid "Style of Paint Bucket fill objects"
 msgstr "Styl wypełniania obiektów"
 
-# Raczej chodzi o całą konfigurację niż poszczególne ustawienia
 #: ../src/widgets/toolbox.cpp:989
-#, fuzzy
 msgid "Default interface setup"
-msgstr "Domyślna konfiguracja interfejsu"
+msgstr "Domyślne ustawienia interfejsu"
 
 # Tutaj nie chodzi o "zadanie" ale raczej o "tryb" pracy.
 #: ../src/widgets/toolbox.cpp:995
@@ -26137,22 +26115,22 @@ msgstr "Włącz/wyłącz kursywę"
 #. Name
 #: ../src/widgets/toolbox.cpp:7557
 msgid "Toggle Superscript"
-msgstr ""
+msgstr "Włącz/wyłącz indeks górny"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7558
 msgid "Toggle superscript"
-msgstr ""
+msgstr "Włącz/wyłącz indeks górny"
 
 #. Name
 #: ../src/widgets/toolbox.cpp:7570
 msgid "Toggle Subscript"
-msgstr ""
+msgstr "Włącz/wyłącz indeks dolny"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7571
 msgid "Toggle subscript"
-msgstr ""
+msgstr "Włącz/wyłącz indeks dolny"
 
 #: ../src/widgets/toolbox.cpp:7588 ../src/widgets/toolbox.cpp:7589
 msgid "Align left"
@@ -26356,7 +26334,6 @@ msgid "Curvature:"
 msgstr "Krzywizna:"
 
 #: ../src/widgets/toolbox.cpp:8227
-#, fuzzy
 msgid "The amount of connectors curvature"
 msgstr "Stopień zakrzywienia łączników"
 
@@ -26523,4 +26500,4 @@ msgstr "Nachylenie (°)"
 
 #: ../share/extensions/wireframe_sphere.inx.h:8
 msgid "Wireframe Sphere"
-msgstr "Makieta kuli"
+msgstr "Szkielet kuli"
