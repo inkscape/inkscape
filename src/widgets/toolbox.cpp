@@ -108,7 +108,6 @@
 
 #include "toolbox.h"
 
-#define ENABLE_TASK_SUPPORT 1
 //#define DEBUG_TEXT
 
 using Inkscape::UnitTracker;
@@ -146,14 +145,6 @@ static void       sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup
 static void       sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
-
-#if ENABLE_TASK_SUPPORT
-static void fireTaskChange( EgeSelectOneAction *act, SPDesktop *dt )
-{
-    gint selected = ege_select_one_action_get_active( act );
-    UXManager::getInstance()->setTask(dt, selected);
-}
-#endif // ENABLE_TASK_SUPPORT
 
 using Inkscape::UI::ToolboxFactory;
 
@@ -977,44 +968,6 @@ static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* deskto
             }
         }
     }
-
-#if ENABLE_TASK_SUPPORT
-    if ( !mainActions->get_action("TaskSetAction") ) {
-        GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_STRING );
-
-        GtkTreeIter iter;
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter,
-                            0, _("Default"),
-                            1, _("Default interface setup"),
-                            -1 );
-
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter,
-                            0, _("Custom"),
-                            1, _("Set the custom task"),
-                            -1 );
-
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter,
-                            0, _("Wide"),
-                            1, _("Setup for widescreen work"),
-                            -1 );
-
-        EgeSelectOneAction* act = ege_select_one_action_new( "TaskSetAction", _("Task"), (""), NULL, GTK_TREE_MODEL(model) );
-        g_object_set( act, "short_label", _("Task:"), NULL );
-        mainActions->add(Glib::wrap(GTK_ACTION(act)));
-        //g_object_set_data( holder, "mode_action", act );
-
-        ege_select_one_action_set_appearance( act, "minimal" );
-        ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
-        //ege_select_one_action_set_icon_size( act, secondarySize );
-        ege_select_one_action_set_tooltip_column( act, 1  );
-
-        //ege_select_one_action_set_active( act, mode );
-        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(fireTaskChange), desktop );
-    }
-#endif // ENABLE_TASK_SUPPORT
 
     return mainActions;
 }
@@ -2061,10 +2014,6 @@ void setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <separator />"
         "    <toolitem action='DialogPreferences' />"
         "    <toolitem action='DialogDocumentProperties' />"
-#if ENABLE_TASK_SUPPORT
-        "    <separator />"
-        "    <toolitem action='TaskSetAction' />"
-#endif // ENABLE_TASK_SUPPORT
         "  </toolbar>"
         "</ui>";
 

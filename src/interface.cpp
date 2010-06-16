@@ -53,6 +53,7 @@
 #include "io/sys.h"
 #include "dialogs/dialog-events.h"
 #include "message-context.h"
+#include "ui/uxmanager.h"
 
 // Added for color drag-n-drop
 #if ENABLE_LCMS
@@ -634,20 +635,28 @@ sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::
 } // end of sp_ui_menu_append_item_from_verb
 
 
+static Glib::ustring getLayoutPrefPath( Inkscape::UI::View::View *view )
+{
+    Glib::ustring prefPath;
+
+    if (reinterpret_cast<SPDesktop*>(view)->is_focusMode()) {
+        prefPath = "/focus/";
+    } else if (reinterpret_cast<SPDesktop*>(view)->is_fullscreen()) {
+        prefPath = "/fullscreen/";
+    } else {
+        prefPath = "/window/";
+    }
+
+    return prefPath;
+}
+
 static void
 checkitem_toggled(GtkCheckMenuItem *menuitem, gpointer user_data)
 {
     gchar const *pref = (gchar const *) user_data;
     Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(menuitem), "view");
 
-    Glib::ustring pref_path;
-    if (reinterpret_cast<SPDesktop*>(view)->is_focusMode()) {
-        pref_path = "/focus/";
-    } else if (reinterpret_cast<SPDesktop*>(view)->is_fullscreen()) {
-        pref_path = "/fullscreen/";
-    } else {
-        pref_path = "/window/";
-    }
+    Glib::ustring pref_path = getLayoutPrefPath( view );
     pref_path += pref;
     pref_path += "/state";
 
@@ -666,12 +675,9 @@ checkitem_update(GtkWidget *widget, GdkEventExpose */*event*/, gpointer user_dat
     gchar const *pref = (gchar const *) user_data;
     Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(menuitem), "view");
 
-    Glib::ustring pref_path;
-    if ((static_cast<SPDesktop*>(view))->is_fullscreen()) {
-        pref_path = "/fullscreen/";
-    } else {
-        pref_path = "/window/";
-    }
+    Glib::ustring pref_path = getLayoutPrefPath( view );
+    pref_path += pref;
+    pref_path += "/state";
     pref_path += pref;
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -683,6 +689,20 @@ checkitem_update(GtkWidget *widget, GdkEventExpose */*event*/, gpointer user_dat
 
     return FALSE;
 }
+
+static void taskToggled(GtkCheckMenuItem *menuitem, gpointer userData)
+{
+    if ( gtk_check_menu_item_get_active(menuitem) ) {
+        gint taskNum = GPOINTER_TO_INT(userData);
+        taskNum = (taskNum < 0) ? 0 : (taskNum > 2) ? 2 : taskNum;
+
+        Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(menuitem), "view");
+
+        // note: this will change once more options are in the task set support:
+        Inkscape::UI::UXManager::getInstance()->setTask( dynamic_cast<SPDesktop*>(view), taskNum );
+    }
+}
+
 
 /**
  *  \brief Callback function to update the status of the radio buttons in the View -> Display mode menu (Normal, No Filters, Outline)
@@ -731,15 +751,9 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
                                        gboolean (*callback_update)(GtkWidget *widget, GdkEventExpose *event, gpointer user_data),
                                        Inkscape::Verb *verb)
 {
-    GtkWidget *item;
-
-    unsigned int shortcut = 0;
-    SPAction *action = NULL;
-
-    if (verb) {
-        shortcut = sp_shortcut_get_primary(verb);
-        action = verb->get_action(view);
-    }
+    unsigned int shortcut = (verb) ? sp_shortcut_get_primary(verb) : 0;
+    SPAction *action = (verb) ? verb->get_action(view) : 0;
+    GtkWidget *item = gtk_check_menu_item_new();
 
     if (verb && shortcut) {
         gchar c[256];
@@ -761,12 +775,10 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
 
         gtk_widget_show_all(hb);
 
-        item = gtk_check_menu_item_new();
         gtk_container_add((GtkContainer *) item, hb);
     } else {
         GtkWidget *l = gtk_label_new_with_mnemonic(action ? action->name : label);
         gtk_misc_set_alignment((GtkMisc *) l, 0.0, 0.5);
-        item = gtk_check_menu_item_new();
         gtk_container_add((GtkContainer *) item, l);
     }
 #if 0
@@ -886,6 +898,39 @@ sp_ui_checkboxes_menus(GtkMenu *m, Inkscape::UI::View::View *view)
     sp_ui_menu_append_check_item_from_verb(m, view, _("_Statusbar"), _("Show or hide the statusbar (at the bottom of the window)"), "statusbar",
                                            checkitem_toggled, checkitem_update, 0);
 }
+
+
+void addTaskMenuItems(GtkMenu *menu, Inkscape::UI::View::View *view)
+{
+    gchar const* data[] = {
+        _("Default"), _("Default interface setup"),
+        _("Custom"), _("Set the custom task"),
+        _("Wide"), _("Setup for widescreen work."),
+        0, 0
+    };
+
+    GSList *group = 0;
+    int count = 0;
+    gint active = Inkscape::UI::UXManager::getInstance()->getDefaultTask( dynamic_cast<SPDesktop*>(view) );
+    for (gchar const **strs = data; strs[0]; strs += 2, count++)
+    {
+        GtkWidget *item = gtk_radio_menu_item_new_with_label( group, strs[0] );
+        group = gtk_radio_menu_item_get_group( GTK_RADIO_MENU_ITEM(item) );
+        if ( count == active )
+        {
+            gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(item), TRUE );
+        }
+
+        g_object_set_data( G_OBJECT(item), "view", view );
+        g_signal_connect( G_OBJECT(item), "toggled", reinterpret_cast<GCallback>(taskToggled), GINT_TO_POINTER(count) );
+        g_signal_connect( G_OBJECT(item), "select", G_CALLBACK(sp_ui_menu_select), const_cast<gchar*>(strs[1]) );
+        g_signal_connect( G_OBJECT(item), "deselect", G_CALLBACK(sp_ui_menu_deselect), 0 );
+
+        gtk_widget_show( item );
+        gtk_menu_shell_append( GTK_MENU_SHELL(menu), item );
+    }
+}
+
 
 /** @brief Observer that updates the recent list's max document count */
 class MaxRecentObserver : public Inkscape::Preferences::Observer {
@@ -1010,6 +1055,10 @@ sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI:
         }
         if (!strcmp(menu_pntr->name(), "objects-checkboxes")) {
             sp_ui_checkboxes_menus(GTK_MENU(menu), view);
+            continue;
+        }
+        if (!strcmp(menu_pntr->name(), "task-checkboxes")) {
+            addTaskMenuItems(GTK_MENU(menu), view);
             continue;
         }
     }

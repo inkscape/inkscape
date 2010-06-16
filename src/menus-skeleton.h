@@ -133,6 +133,8 @@ static char const menus_skeleton[] =
 "       <verb verb-id=\"ViewNew\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"FullScreen\" />\n"
+"       <separator/>\n"
+"       <task-checkboxes/>\n"
 // Not quite ready to be in the menus.
 // "       <verb verb-id=\"FocusToggle\" />\n"
 "   </submenu>\n"

@@ -1393,8 +1393,6 @@ SPViewWidget *sp_desktop_widget_new( SPNamedView *namedview )
 {
     SPDesktopWidget* dtw = SPDesktopWidget::createInstance(namedview);
 
-    UXManager::getInstance()->addTrack(dtw);
-
     return SP_VIEW_WIDGET(dtw);
 }
 
@@ -1440,9 +1438,11 @@ SPDesktopWidget* SPDesktopWidget::createInstance(SPNamedView *namedview)
     toolboxes.push_back(dtw->aux_toolbox);
     toolboxes.push_back(dtw->commands_toolbox);
     toolboxes.push_back(dtw->snap_toolbox);
-    UXManager::getInstance()->connectToDesktop( toolboxes, dtw->desktop );
 
     dtw->panels->setDesktop( dtw->desktop );
+
+    UXManager::getInstance()->addTrack(dtw);
+    UXManager::getInstance()->connectToDesktop( toolboxes, dtw->desktop );
 
     return dtw;
 }
