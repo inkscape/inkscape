@@ -519,6 +519,7 @@ void ColorNotebook::_rgbaEntryChanged(GtkEntry* entry)
     }
 }
 
+// TODO pass in param so as to avoid the need for SP_ACTIVE_DOCUMENT
 void ColorNotebook::_updateRgbaEntry( const SPColor& color, gfloat alpha )
 {
     g_return_if_fail( ( 0.0 <= alpha ) && ( alpha <= 1.0 ) );
@@ -539,7 +540,7 @@ void ColorNotebook::_updateRgbaEntry( const SPColor& color, gfloat alpha )
     gtk_widget_set_sensitive (_box_toomuchink, false);
     if (color.icc){
         Inkscape::ColorProfile* prof = SP_ACTIVE_DOCUMENT->profileManager->find(color.icc->colorProfile.c_str());
-        if (prof->getColorSpace() == icSigCmykData || prof->getColorSpace() == icSigCmyData){
+        if ( prof && ( (prof->getColorSpace() == icSigCmykData) || (prof->getColorSpace() == icSigCmyData) ) ) {
             gtk_widget_show(GTK_WIDGET(_box_toomuchink));
             double ink_sum = 0;
             for (unsigned int i=0; i<color.icc->colors.size(); i++){
