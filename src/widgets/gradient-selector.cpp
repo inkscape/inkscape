@@ -208,25 +208,26 @@ sp_gradient_selector_new (void)
     return (GtkWidget *) sel;
 }
 
+static void removeWidget( GtkWidget *& widget )
+{
+    if (widget) {
+        GtkWidget *parent = gtk_widget_get_parent(widget);
+        if (parent) {
+            gtk_container_remove(GTK_CONTAINER(parent), widget);
+            widget = 0;
+        }
+    }
+}
+
 void SPGradientSelector::setMode(SelectorMode mode)
 {
     if (mode != this->mode) {
         this->mode = mode;
         if (mode == MODE_SWATCH) {
-            if (spread) {
-                GtkWidget *parent = gtk_widget_get_parent(spread);
-                if (parent) {
-                    gtk_container_remove(GTK_CONTAINER(parent), spread);
-                    spread = 0;
-                }
-            }
-            if (spreadLbl) {
-                GtkWidget *parent = gtk_widget_get_parent(spreadLbl);
-                if (parent) {
-                    gtk_container_remove(GTK_CONTAINER(parent), spreadLbl);
-                    spreadLbl = 0;
-                }
-            }
+            removeWidget(add);
+            removeWidget(edit);
+            removeWidget(spread);
+            removeWidget(spreadLbl);
 
             SPGradientVectorSelector* vs = SP_GRADIENT_VECTOR_SELECTOR(vectors);
             vs->setSwatched();
@@ -268,11 +269,19 @@ void SPGradientSelector::setVector(SPDocument *doc, SPGradient *vector)
     sp_gradient_vector_selector_set_gradient(SP_GRADIENT_VECTOR_SELECTOR(vectors), doc, vector);
 
     if (vector) {
-        gtk_widget_set_sensitive(edit, TRUE);
-        gtk_widget_set_sensitive(add, TRUE);
+        if (edit) {
+            gtk_widget_set_sensitive(edit, TRUE);
+        }
+        if (add) {
+            gtk_widget_set_sensitive(add, TRUE);
+        }
     } else {
-        gtk_widget_set_sensitive(edit, FALSE);
-        gtk_widget_set_sensitive(add, (doc != NULL));
+        if (edit) {
+            gtk_widget_set_sensitive(edit, FALSE);
+        }
+        if (add) {
+            gtk_widget_set_sensitive(add, (doc != NULL));
+        }
     }
 }
 
