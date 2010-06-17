@@ -678,10 +678,9 @@ checkitem_update(GtkWidget *widget, GdkEventExpose */*event*/, gpointer user_dat
     Glib::ustring pref_path = getLayoutPrefPath( view );
     pref_path += pref;
     pref_path += "/state";
-    pref_path += pref;
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool ison = prefs->getBool(pref_path + "/state", true);
+    bool ison = prefs->getBool(pref_path, true);
 
     g_signal_handlers_block_by_func(G_OBJECT(menuitem), (gpointer)(GCallback)checkitem_toggled, user_data);
     gtk_check_menu_item_set_active(menuitem, ison);
