@@ -52,7 +52,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-06-07 22:37+0100\n"
+"PO-Revision-Date: 2010-06-08 22:37+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -1100,9 +1100,8 @@ msgid "Pressure angle"
 msgstr "Drukhoek"
 
 #: ../share/extensions/generate_voronoi.inx.h:1
-#, fuzzy
 msgid "Average size of cell (px)"
-msgstr " Gemiddelde celgrootte (px) "
+msgstr "Gemiddelde celgrootte (px)"
 
 #: ../share/extensions/generate_voronoi.inx.h:2
 msgid ""
@@ -1127,9 +1126,8 @@ msgstr ""
 "verkrijgen."
 
 #: ../share/extensions/generate_voronoi.inx.h:5
-#, fuzzy
 msgid "Size of Border (px)"
-msgstr " Randgrootte (px) "
+msgstr "Randgrootte (px)"
 
 #: ../share/extensions/generate_voronoi.inx.h:6
 msgid "Voronoi Pattern"
@@ -1608,11 +1606,11 @@ msgstr "••••••••••••••••••••••••
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:1
 msgid "Auto-Text:"
-msgstr ""
+msgstr "Autotekst:"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:2
 msgid "Auto-texts"
-msgstr ""
+msgstr "Autoteksten"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:4
 #: ../share/extensions/jessyInk_effects.inx.h:8
@@ -1626,17 +1624,15 @@ msgstr ""
 #: ../share/extensions/jessyInk_video.inx.h:2
 #: ../share/extensions/jessyInk_view.inx.h:4
 msgid "JessyInk"
-msgstr ""
+msgstr "JessyInk"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:5
-#, fuzzy
 msgid "None (remove)"
-msgstr "verwijderen"
+msgstr "Geen (verwijderen)"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:6
-#, fuzzy
 msgid "Number of slides"
-msgstr "Aantal waarden"
+msgstr "Aantal slides"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:7
 #: ../share/extensions/jessyInk_effects.inx.h:12
@@ -1644,18 +1640,16 @@ msgstr "Aantal waarden"
 #: ../share/extensions/jessyInk_masterSlide.inx.h:6
 #: ../share/extensions/jessyInk_transitions.inx.h:9
 #: ../share/extensions/jessyInk_view.inx.h:7
-#, fuzzy
 msgid "Settings"
-msgstr "Selecteren"
+msgstr "Instellingen"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:8
-#, fuzzy
 msgid "Slide number"
-msgstr "Nummer pen"
+msgstr "Slidenummer"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:9
 msgid "Slide title"
-msgstr ""
+msgstr "Titel"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:10
 msgid ""
@@ -1663,57 +1657,51 @@ msgid ""
 "JessyInk presentation. Please see code.google.com/p/jessyink for more "
 "details."
 msgstr ""
+"Deze extensie laat je toe om autoteksten te installeren, updaten en verwijderen "
+"voor een JessyInk presentatie. Zie ook de code op code.google.com/p/jessyink "
+"voor details."
 
 #: ../share/extensions/jessyInk_effects.inx.h:1
 #: ../share/extensions/jessyInk_transitions.inx.h:1
-#, fuzzy
 msgid "Appear"
-msgstr "Toevoegen"
+msgstr "Verschijnen"
 
 #: ../share/extensions/jessyInk_effects.inx.h:2
-#, fuzzy
 msgid "Build-in effect"
-msgstr "Huidige effect"
+msgstr ""
 
 #: ../share/extensions/jessyInk_effects.inx.h:3
-#, fuzzy
 msgid "Build-out effect"
-msgstr "Geen effect"
+msgstr ""
 
 #: ../share/extensions/jessyInk_effects.inx.h:4
 #: ../share/extensions/jessyInk_transitions.inx.h:3
 #: ../share/extensions/jessyInk_view.inx.h:2
-#, fuzzy
 msgid "Duration in seconds:"
-msgstr "Tekenen is voltooid"
+msgstr "Duur in seconden:"
 
 #: ../share/extensions/jessyInk_effects.inx.h:5
-#, fuzzy
 msgid "Effects"
-msgstr "_Effect"
+msgstr "Effecten"
 
 #: ../share/extensions/jessyInk_effects.inx.h:6
 #: ../share/extensions/jessyInk_transitions.inx.h:4
-#, fuzzy
 msgid "Fade"
-msgstr "Zijden"
+msgstr "Vervagen"
 
 #: ../share/extensions/jessyInk_effects.inx.h:9
-#, fuzzy
 msgid "None (default)"
-msgstr "(standaard)"
+msgstr "Geen (standaard)"
 
 #: ../share/extensions/jessyInk_effects.inx.h:10
 #: ../share/extensions/jessyInk_view.inx.h:5
-#, fuzzy
 msgid "Order:"
-msgstr "Mate"
+msgstr "Volgorde:"
 
 #: ../share/extensions/jessyInk_effects.inx.h:11
 #: ../share/extensions/jessyInk_transitions.inx.h:8
-#, fuzzy
 msgid "Pop"
-msgstr "Bov"
+msgstr ""
 
 #: ../share/extensions/jessyInk_effects.inx.h:13
 msgid ""
@@ -1721,6 +1709,9 @@ msgid ""
 "JessyInk presentation. Please see code.google.com/p/jessyink for more "
 "details."
 msgstr ""
+"Deze extensie laat je toe om objecteffecten te installeren, updaten en verwijderen "
+"voor een JessyInk presentatie. Zie ook de code op code.google.com/p/jessyink "
+"voor details."
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../share/extensions/jessyInk_effects.inx.h:14
@@ -1731,35 +1722,35 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2174
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2252
 msgid "Type:"
-msgstr "type:"
+msgstr "Type:"
 
 #: ../share/extensions/jessyInk_export.inx.h:1
 msgid ""
 "Creates a zip file containing pdfs or pngs of all slides of a JessyInk "
 "presentation."
 msgstr ""
+"Maakt een zip-bestand aan dat de pdf's of png's van alle slides van een "
+"JessyInk presentatie bevat."
 
 #: ../share/extensions/jessyInk_export.inx.h:3
 msgid "JessyInk zipped pdf or png output"
-msgstr ""
+msgstr "JessyInk gecomprimeerde pdf of png uitvoer"
 
 #: ../share/extensions/jessyInk_export.inx.h:4
 msgid "JessyInk zipped pdf or png output (*.zip)"
-msgstr ""
+msgstr "JessyInk gecomprimeerde pdf of png uitvoer (*.zip)"
 
 #: ../share/extensions/jessyInk_export.inx.h:5
-#, fuzzy
 msgid "PDF"
-msgstr "PDF 1.4"
+msgstr "PDF"
 
 #: ../share/extensions/jessyInk_export.inx.h:6
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #: ../share/extensions/jessyInk_export.inx.h:7
-#, fuzzy
 msgid "Resolution:"
-msgstr "Resolutie (ppi)"
+msgstr "Resolutie:"
 
 #: ../share/extensions/jessyInk_export.inx.h:9
 msgid ""
@@ -1767,10 +1758,13 @@ msgid ""
 "an export layer in your browser. Please see code.google.com/p/jessyink for "
 "more details."
 msgstr ""
+"Deze extensie laat je toe om een JessyInk presentatie te exporteren zodra je "
+"een exportlaag in je browser hebt gemaakt. Zie ook de code op "
+"code.google.com/p/jessyink voor details."
 
 #: ../share/extensions/jessyInk_install.inx.h:2
 msgid "Install/update"
-msgstr ""
+msgstr "Installeren/updaten"
 
 #: ../share/extensions/jessyInk_install.inx.h:4
 msgid ""
@@ -1778,81 +1772,69 @@ msgid ""
 "to turn your SVG file into a presentation. Please see code.google.com/p/"
 "jessyink for more details."
 msgstr ""
+"Deze extensie laat je toe om het JessyInk script te installeren of updaten "
+"om een SVG-bestand om te vormen tot een presentatie. Zie ook de code op "
+"code.google.com/p/jessyink voor details."
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:1
-#, fuzzy
 msgid "Add slide:"
-msgstr "2de zijde"
+msgstr "Slide toevoegen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:2
 msgid "Back (with effects):"
-msgstr ""
+msgstr "Terug (met effecten):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:3
-#, fuzzy
 msgid "Back (without effects):"
-msgstr "Padindicator tonen (zonder padeffecten)"
+msgstr "Terug (zonder effecten):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:4
-#, fuzzy
 msgid "Decrease number of columns:"
-msgstr "Aantal kolommen"
+msgstr "Aantal kolommen verlagen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:5
-#, fuzzy
 msgid "Drawing mode"
-msgstr "Tekening"
+msgstr "Tekenmodus"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:6
-#, fuzzy
 msgid "First slide:"
-msgstr "Eerst geselecteerde"
+msgstr "Eerste slide:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:8
-#, fuzzy
 msgid "Increase number of columns:"
-msgstr "Aantal kolommen"
+msgstr "Aantal kolommen verhogen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:9
-#, fuzzy
 msgid "Index mode"
-msgstr "Item meer inspringen"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:11
-#, fuzzy
 msgid "Key bindings"
-msgstr "Overhang"
+msgstr "Sneltoetsen"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:12
-#, fuzzy
 msgid "Last slide:"
-msgstr "Grootte plakken"
+msgstr "Laatste slide:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:13
-#, fuzzy
 msgid "Next (with effects):"
-msgstr "Neonlicht-effect"
+msgstr "Volgende (met effecten):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:14
-#, fuzzy
 msgid "Next (without effects):"
-msgstr "Neonlicht-effect"
+msgstr "Volgende (zonder effecten):"
 
-# Zonder dubbele punt is duidelijker.
 #: ../share/extensions/jessyInk_keyBindings.inx.h:15
-#, fuzzy
 msgid "Next page:"
-msgstr "Importeer pagina"
+msgstr "volgende pagina:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:16
-#, fuzzy
 msgid "Previous page:"
-msgstr "Vo_rige zoomniveau"
+msgstr "Vorige pagina:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:17
-#, fuzzy
 msgid "Reset timer:"
-msgstr "Centrum herstellen"
+msgstr "Timer resetten:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:18
 msgid "Select the slide above:"
@@ -1863,155 +1845,133 @@ msgid "Select the slide below:"
 msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:20
-#, fuzzy
 msgid "Select the slide to the left:"
-msgstr "Selecteer een bestand om in op te slaan"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:21
-#, fuzzy
 msgid "Select the slide to the right:"
-msgstr "Pas paginaformaat naar huidige tekening aan"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:22
-#, fuzzy
 msgid "Set duration:"
-msgstr "Verzadiging"
+msgstr "Duur instellen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:23
-#, fuzzy
 msgid "Set number of columns to default:"
-msgstr "Aantal kolommen"
+msgstr "Standaard aantal kolommen instellen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:24
-#, fuzzy
 msgid "Set path color to black:"
-msgstr "Lijnkleur op geen instellen"
+msgstr "Lijnkleur op zwart instellen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:25
-#, fuzzy
 msgid "Set path color to blue:"
-msgstr "Lijnkleur op geen instellen"
+msgstr "Lijnkleur op blauw instellen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:26
-#, fuzzy
 msgid "Set path color to cyan:"
-msgstr "Lijnkleur op geen instellen"
+msgstr "Lijnkleur op cyaan instellen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:27
-#, fuzzy
 msgid "Set path color to green:"
-msgstr "Lijnkleur op geen instellen"
+msgstr "Lijnkleur op groen instellen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:28
-#, fuzzy
 msgid "Set path color to magenta:"
-msgstr "Lijnkleur op geen instellen"
+msgstr "Lijnkleur op magenta instellen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:29
-#, fuzzy
 msgid "Set path color to orange:"
-msgstr "Lijnkleur op geen instellen"
+msgstr "Lijnkleur op oranje instellen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:30
-#, fuzzy
 msgid "Set path color to red:"
-msgstr "Lijnkleur op geen instellen"
+msgstr "Lijnkleur op rood instellen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:31
-#, fuzzy
 msgid "Set path color to white:"
-msgstr "Lijnkleur op geen instellen"
+msgstr "Lijnkleur op wit instellen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:32
-#, fuzzy
 msgid "Set path color to yellow:"
-msgstr "Lijnkleur op geen instellen"
+msgstr "Lijnkleur op geel instellen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:33
-#, fuzzy
 msgid "Set path width to 1:"
-msgstr "Breedte instellen"
+msgstr "Padbreedte instellen op 1:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:34
-#, fuzzy
 msgid "Set path width to 3:"
-msgstr "Breedte instellen"
+msgstr "Padbreedte instellen op 3:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:35
-#, fuzzy
 msgid "Set path width to 5:"
-msgstr "Breedte instellen"
+msgstr "Padbreedte instellen op 5:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:36
-#, fuzzy
 msgid "Set path width to 7:"
-msgstr "Breedte instellen"
+msgstr "Padbreedte instellen op71:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:37
-#, fuzzy
 msgid "Set path width to 9:"
-msgstr "Breedte instellen"
+msgstr "Padbreedte instellen op 9:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:38
-#, fuzzy
 msgid "Set path width to default:"
-msgstr "Instellen als standaard"
+msgstr "Padbreedte instellen op de standaardwaarde:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:39
-#, fuzzy
 msgid "Slide mode"
-msgstr "Modus schalen"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:40
-#, fuzzy
 msgid "Switch to drawing mode:"
-msgstr "Overschakelen naar normale weergavemodus"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:41
-#, fuzzy
 msgid "Switch to index mode:"
-msgstr "Verplaats naar de volgende laag"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:42
-#, fuzzy
 msgid "Switch to slide mode:"
-msgstr "Overschakelen naar normale weergavemodus"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:43
 msgid ""
 "This extension allows you customise the key bindings JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"Deze extensie laat je toe om de sneltoetsen van JessyInk aan te passen. "
+"Zie code.google.com/p/jessyink voor details."
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:44
 msgid "Toggle progress bar:"
-msgstr ""
+msgstr "Voortgangsbalk tonen/verbergen:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:45
-#, fuzzy
 msgid "Undo last path segment:"
-msgstr "De laatste bewerking ongedaan maken"
+msgstr "Het laatste padsegment ongedaan maken"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:2
 msgid "If no layer name is supplied, the master slide is unset."
-msgstr ""
+msgstr "Indien geen laagnaam is opgegeven, wordt de masterslide gedesactiveerd"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:4
-#, fuzzy
 msgid "Master slide"
-msgstr "Grootte plakken"
+msgstr "Masterslide"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:5
 #: ../share/extensions/jessyInk_transitions.inx.h:7
-#, fuzzy
 msgid "Name of layer:"
-msgstr "Laag hernoemen"
+msgstr "Naam van de laag:"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:7
 msgid ""
 "This extension allows you to change the master slide JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"Deze extensie laat je toe om de door JessyInk gebruikte masterslide te veranderen. "
+"Zie code.google.com/p/jessyink voor details."
 
 #. File
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:1
@@ -2021,24 +1981,20 @@ msgid "Default"
 msgstr "Standaard"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:2
-#, fuzzy
 msgid "Dragging/zoom"
-msgstr "Tekening"
+msgstr "Verplaatsing/zoom"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:5
-#, fuzzy
 msgid "Mouse handler"
-msgstr "Handvat verplaatsen"
+msgstr "Muisbeweging"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:6
-#, fuzzy
 msgid "Mouse settings:"
-msgstr "Pagina-instellingen"
+msgstr "Muisinstellingen:"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:7
-#, fuzzy
 msgid "No-click"
-msgstr "bij klikken"
+msgstr ""
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:8
 msgid ""
@@ -2047,9 +2003,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.inx.h:3
-#, fuzzy
 msgid "Summary"
-msgstr "_Symmetrie"
+msgstr "Samenvatting"
 
 #: ../share/extensions/jessyInk_summary.inx.h:4
 msgid ""
@@ -2057,70 +2012,69 @@ msgid ""
 "effects and transitions contained in this SVG file. Please see code.google."
 "com/p/jessyink for more details."
 msgstr ""
+"Deze extensie laat je toe informatie te verkrijgen over het JessyInk script, "
+"effecten en transities in dit SVG bestand. Zie code.google.com/p/jessyink voor details."
+
 
 #: ../share/extensions/jessyInk_transitions.inx.h:10
 msgid ""
 "This extension allows you to change the transition JessyInk uses for the "
 "selected layer. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"Deze extensie laat je toe om de transitie van de geselecteerde laag te veranderen. "
+"Zie code.google.com/p/jessyink voor details."
 
 #: ../share/extensions/jessyInk_transitions.inx.h:11
 msgid "Transition in effect"
-msgstr ""
+msgstr "Effect bij tonen"
 
 #: ../share/extensions/jessyInk_transitions.inx.h:12
-#, fuzzy
 msgid "Transition out effect"
-msgstr "Padeffect plakken"
+msgstr "Effect bij verlaten"
 
 #: ../share/extensions/jessyInk_transitions.inx.h:13
-#, fuzzy
 msgid "Transitions"
-msgstr "Transformatie"
+msgstr "Transities"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:4
 msgid "Please select the parts of JessyInk you want to uninstall/remove."
-msgstr ""
+msgstr "Selecteer alstublief de delen van JessyInk die je wil verwijderen."
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:5
-#, fuzzy
 msgid "Remove auto-texts"
-msgstr "Lijn verwijderen"
+msgstr "Autoteksten verwijderen"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:6
-#, fuzzy
 msgid "Remove effects"
-msgstr "Padeffect verwijderen"
+msgstr "Effecten verwijderen"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:7
-#, fuzzy
 msgid "Remove master slide assignment"
-msgstr "Masker uitschakelen"
+msgstr "Toekenning masterslide verwijderen"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:8
-#, fuzzy
 msgid "Remove script"
-msgstr "Raster verwijderen"
+msgstr "Script verwijderen"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:9
-#, fuzzy
 msgid "Remove transitions"
-msgstr "_Transformaties verwijderen"
+msgstr "Transities verwijderen"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:10
-#, fuzzy
 msgid "Remove views"
-msgstr "Filters verwijderen"
+msgstr ""
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:11
 msgid ""
 "This extension allows you to uninstall the JessyInk script. Please see code."
 "google.com/p/jessyink for more details."
 msgstr ""
+"Deze extensie laat je toe om het JessyInk script te verwijderen. "
+"Zie code.google.com/p/jessyink voor details."
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:12
 msgid "Uninstall/remove"
-msgstr ""
+msgstr "Verwijderen"
 
 #: ../share/extensions/jessyInk_video.inx.h:3
 msgid ""
@@ -2128,20 +2082,21 @@ msgid ""
 "This element allows you to integrate a video into your JessyInk "
 "presentation. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"Deze extensie plaatst een JessyInk videoelement op de huidige slide (laag). "
+"Dit laat je toe om een video te integreren in je JessyInk presentatie. "
+"Zie code.google.com/p/jessyink voor details."
 
 #: ../share/extensions/jessyInk_video.inx.h:4
-#, fuzzy
 msgid "Video"
-msgstr "Beeld"
+msgstr "Video"
 
 #: ../share/extensions/jessyInk_view.inx.h:1
 msgid "Choose order number 0 to set the initial view of a slide."
-msgstr ""
+msgstr "Kies volgnummer 0 om het initiële beeld van ee slide in te stellen."
 
 #: ../share/extensions/jessyInk_view.inx.h:6
-#, fuzzy
 msgid "Remove view"
-msgstr "Rood verwijderen"
+msgstr ""
 
 #: ../share/extensions/jessyInk_view.inx.h:8
 msgid ""
