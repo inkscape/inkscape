@@ -118,6 +118,7 @@ ShowUninstDetails hide
 !insertmacro INKLANGFILE Breton
 !insertmacro INKLANGFILE Catalan
 !insertmacro INKLANGFILE Czech
+!insertmacro INKLANGFILE Dutch
 !insertmacro INKLANGFILE Finnish
 !insertmacro INKLANGFILE French
 !insertmacro INKLANGFILE Galician
