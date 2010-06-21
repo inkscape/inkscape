@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-09 00:03+0300\n"
-"PO-Revision-Date: 2010-06-09 07:51+0300\n"
+"POT-Creation-Date: 2010-06-20 17:25+0300\n"
+"PO-Revision-Date: 2010-06-20 17:54+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "MIME-Version: 1.0\n"
@@ -189,9 +189,8 @@ msgstr "Яскравіше"
 msgid "Blue Function"
 msgstr "Функція синього"
 
-#: ../share/extensions/color_custom.inx.h:3
+#: ../share/extensions/color_custom.inx.h:3 ../src/interface.cpp:906
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1418
-#: ../src/widgets/toolbox.cpp:994
 msgid "Custom"
 msgstr "Інше"
 
@@ -250,14 +249,14 @@ msgstr "Негатив"
 #: ../src/flood-context.cpp:250 ../src/widgets/sp-color-icc-selector.cpp:236
 #: ../src/widgets/sp-color-icc-selector.cpp:237
 #: ../src/widgets/sp-color-scales.cpp:438
-#: ../src/widgets/sp-color-scales.cpp:439 ../src/widgets/toolbox.cpp:4471
+#: ../src/widgets/sp-color-scales.cpp:439 ../src/widgets/toolbox.cpp:4420
 msgid "Hue"
 msgstr "Відтінок"
 
 #: ../share/extensions/color_randomize.inx.h:3 ../src/flood-context.cpp:252
 #: ../src/widgets/sp-color-icc-selector.cpp:237
 #: ../src/widgets/sp-color-scales.cpp:444
-#: ../src/widgets/sp-color-scales.cpp:445 ../src/widgets/toolbox.cpp:4503
+#: ../src/widgets/sp-color-scales.cpp:445 ../src/widgets/toolbox.cpp:4452
 msgid "Lightness"
 msgstr "Яскравість"
 
@@ -271,7 +270,7 @@ msgstr "Випадково"
 #: ../src/widgets/sp-color-icc-selector.cpp:236
 #: ../src/widgets/sp-color-icc-selector.cpp:237
 #: ../src/widgets/sp-color-scales.cpp:441
-#: ../src/widgets/sp-color-scales.cpp:442 ../src/widgets/toolbox.cpp:4487
+#: ../src/widgets/sp-color-scales.cpp:442 ../src/widgets/toolbox.cpp:4436
 msgid "Saturation"
 msgstr "Насиченість"
 
@@ -836,8 +835,8 @@ msgstr "Лінії"
 
 #: ../share/extensions/extrude.inx.h:4
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2171
-#: ../src/widgets/toolbox.cpp:4061 ../src/widgets/toolbox.cpp:4439
-#: ../src/widgets/toolbox.cpp:4706
+#: ../src/widgets/toolbox.cpp:4010 ../src/widgets/toolbox.cpp:4388
+#: ../src/widgets/toolbox.cpp:4655
 msgid "Mode:"
 msgstr "Режим:"
 
@@ -883,7 +882,7 @@ msgstr "Придатна для згортання рамка"
 #: ../src/extension/internal/bitmap/raise.cpp:42
 #: ../src/extension/internal/bitmap/sample.cpp:41
 #: ../src/libgdl/gdl-dock-placeholder.c:177 ../src/libgdl/gdl-dock.c:198
-#: ../src/widgets/toolbox.cpp:3314
+#: ../src/widgets/toolbox.cpp:3263
 msgid "Height"
 msgstr "Висота"
 
@@ -911,8 +910,8 @@ msgstr "Одиниця"
 #: ../src/libgdl/gdl-dock-placeholder.c:169 ../src/libgdl/gdl-dock.c:190
 #: ../src/live_effects/lpe-bendpath.cpp:56
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
-#: ../src/widgets/toolbox.cpp:3297 ../src/widgets/toolbox.cpp:4313
-#: ../src/widgets/toolbox.cpp:4633
+#: ../src/widgets/toolbox.cpp:3246 ../src/widgets/toolbox.cpp:4262
+#: ../src/widgets/toolbox.cpp:4582
 msgid "Width"
 msgstr "Ширина"
 
@@ -1113,7 +1112,7 @@ msgstr "Зберігання напрямних:"
 
 #: ../share/extensions/grid_cartesian.inx.h:1
 msgid "Border Thickness [px]"
-msgstr "Товщина меж [пк]"
+msgstr "Товщина меж (у пк)"
 
 #: ../share/extensions/grid_cartesian.inx.h:2
 msgid "Cartesian Grid"
@@ -1137,11 +1136,11 @@ msgstr "Логарифмічне підрозбиття Y. (Базу, вказа
 
 #: ../share/extensions/grid_cartesian.inx.h:7
 msgid "Major X Division Spacing [px]"
-msgstr "Основні інтервали за віссю X [у пк]"
+msgstr "Основні інтервали за віссю X (у пк)"
 
 #: ../share/extensions/grid_cartesian.inx.h:8
 msgid "Major X Division Thickness [px]"
-msgstr "Основна товщина за віссю X [у пк]"
+msgstr "Основна товщина за віссю X (у пк)"
 
 #: ../share/extensions/grid_cartesian.inx.h:9
 msgid "Major X Divisions"
@@ -1149,11 +1148,11 @@ msgstr "Основне ділення за віссю X"
 
 #: ../share/extensions/grid_cartesian.inx.h:10
 msgid "Major Y Division Spacing [px]"
-msgstr "Основні інтервали за віссю X [у пк]"
+msgstr "Основні інтервали за віссю X (у пк)"
 
 #: ../share/extensions/grid_cartesian.inx.h:11
 msgid "Major Y Division Thickness [px]"
-msgstr "Основні інтервали за віссю Y [у пк]"
+msgstr "Основні інтервали за віссю Y (у пк)"
 
 #: ../share/extensions/grid_cartesian.inx.h:12
 msgid "Major Y Divisions"
@@ -1161,11 +1160,11 @@ msgstr "Основне ділення за віссю Y"
 
 #: ../share/extensions/grid_cartesian.inx.h:13
 msgid "Minor X Division Thickness [px]"
-msgstr "Проміжна товщина за віссю X [у пк]"
+msgstr "Проміжна товщина за віссю X (у пк)"
 
 #: ../share/extensions/grid_cartesian.inx.h:14
 msgid "Minor Y Division Thickness [px]"
-msgstr "Проміжна товщина за віссю Y [у пк]"
+msgstr "Проміжна товщина за віссю Y (у пк)"
 
 #: ../share/extensions/grid_cartesian.inx.h:16
 msgid "Subdivisions per Major X Division"
@@ -1177,11 +1176,11 @@ msgstr "Проміжне ділення за віссю Y"
 
 #: ../share/extensions/grid_cartesian.inx.h:18
 msgid "Subminor X Division Thickness [px]"
-msgstr "Підпроміжне ділення за віссю X [у пк]"
+msgstr "Підпроміжне ділення за віссю X (у пк)"
 
 #: ../share/extensions/grid_cartesian.inx.h:19
 msgid "Subminor Y Division Thickness [px]"
-msgstr "Підпроміжне ділення за віссю Y [у пк]"
+msgstr "Підпроміжне ділення за віссю Y (у пк)"
 
 #: ../share/extensions/grid_cartesian.inx.h:20
 msgid "Subsubdivs. per X Subdivision"
@@ -1201,15 +1200,15 @@ msgstr "Кутові поділки у центрі"
 
 #: ../share/extensions/grid_polar.inx.h:3
 msgid "Centre Dot Diameter [px]"
-msgstr "Діаметр точки центра [у пк]"
+msgstr "Діаметр точки центра (у пк)"
 
 #: ../share/extensions/grid_polar.inx.h:4
 msgid "Circumferential Label Outset [px]"
-msgstr "Відступ периферійних міток [у пк]"
+msgstr "Відступ периферійних міток (у пк)"
 
 #: ../share/extensions/grid_polar.inx.h:5
 msgid "Circumferential Label Size [px]"
-msgstr "Розмір периферійних міток [у пк]"
+msgstr "Розмір периферійних міток (у пк)"
 
 #: ../share/extensions/grid_polar.inx.h:6
 msgid "Circumferential Labels"
@@ -1226,15 +1225,15 @@ msgstr "Логарифмічне підрозділення (Базу вказа
 
 #: ../share/extensions/grid_polar.inx.h:9
 msgid "Major Angular Division Thickness [px]"
-msgstr "Товщина основних кутових поділок [у пк]"
+msgstr "Товщина основних кутових поділок (у пк)"
 
 #: ../share/extensions/grid_polar.inx.h:10
 msgid "Major Circular Division Spacing [px]"
-msgstr "Інтервал основний кругових поділок [у пк]"
+msgstr "Інтервал основний кругових поділок (у пк)"
 
 #: ../share/extensions/grid_polar.inx.h:11
 msgid "Major Circular Division Thickness [px]"
-msgstr "Товщина основних кругових поділок [у пк]"
+msgstr "Товщина основних кругових поділок (у пк)"
 
 #: ../share/extensions/grid_polar.inx.h:12
 msgid "Major Circular Divisions"
@@ -1246,11 +1245,11 @@ msgstr "Кінець проміжного поділу кута 'n' поділо
 
 #: ../share/extensions/grid_polar.inx.h:14
 msgid "Minor Angular Division Thickness [px]"
-msgstr "Проміжна товщина кутової поділки [у пк]"
+msgstr "Проміжна товщина кутової поділки (у пк)"
 
 #: ../share/extensions/grid_polar.inx.h:15
 msgid "Minor Circular Division Thickness [px]"
-msgstr "Проміжна товщина кругової поділки [у пк]"
+msgstr "Проміжна товщина кругової поділки (у пк)"
 
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
@@ -1265,7 +1264,7 @@ msgstr "Проміжна товщина кругової поділки [у пк
 #: ../src/ui/dialog/inkscape-preferences.cpp:1279
 #: ../src/ui/dialog/input.cpp:601 ../src/ui/dialog/input.cpp:602
 #: ../src/ui/dialog/input.cpp:1127 ../src/verbs.cpp:2192
-#: ../src/widgets/stroke-style.cpp:362 ../src/widgets/toolbox.cpp:4089
+#: ../src/widgets/stroke-style.cpp:362 ../src/widgets/toolbox.cpp:4038
 msgid "None"
 msgstr "немає"
 
@@ -1494,7 +1493,7 @@ msgstr "Без одиниці"
 #: ../src/dialogs/clonetiler.cpp:2615 ../src/dialogs/clonetiler.cpp:2764
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/widgets/toolbox.cpp:4519
+#: ../src/widgets/toolbox.cpp:4468
 msgid "Opacity"
 msgstr "Непрозорість"
 
@@ -1667,9 +1666,9 @@ msgid ""
 "JessyInk presentation. Please see code.google.com/p/jessyink for more "
 "details."
 msgstr ""
-"За допомогою цього додатка ви зможете встановити, оновити або вилучити ефекти "
-"роботи з об’єктами для презентацій JessyInk. Докладніші відомості можна "
-"знайти за адресою code.google.com/p/jessyink."
+"За допомогою цього додатка ви зможете встановити, оновити або вилучити "
+"ефекти роботи з об’єктами для презентацій JessyInk. Докладніші відомості "
+"можна знайти за адресою code.google.com/p/jessyink."
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../share/extensions/jessyInk_effects.inx.h:14
@@ -1715,9 +1714,9 @@ msgid ""
 "an export layer in your browser. Please see code.google.com/p/jessyink for "
 "more details."
 msgstr ""
-"За допомогою цього додатка ви зможете експортувати презентацію JessyInk після "
-"створення шару експортування у програмі для перегляду. Докладніші відомості "
-"можна знайти за адресою code.google.com/p/jessyink."
+"За допомогою цього додатка ви зможете експортувати презентацію JessyInk "
+"після створення шару експортування у програмі для перегляду. Докладніші "
+"відомості можна знайти за адресою code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_install.inx.h:2
 msgid "Install/update"
@@ -1934,7 +1933,7 @@ msgstr ""
 #. File
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:1
 #: ../share/extensions/jessyInk_transitions.inx.h:2 ../src/filter-enums.cpp:72
-#: ../src/verbs.cpp:2195 ../src/widgets/toolbox.cpp:988
+#: ../src/interface.cpp:905 ../src/verbs.cpp:2195
 msgid "Default"
 msgstr "Типовий"
 
@@ -2044,9 +2043,8 @@ msgid ""
 "presentation. Please see code.google.com/p/jessyink for more details."
 msgstr ""
 "За допомогою цього додатка можна вставити елемент відео JessyInk на поточний "
-"слайд (шар). "
-"Відео буде вбудовано у презентацію JessyInk. Докладніше про це можна "
-"дізнатися за адресою code.google.com/p/jessyink."
+"слайд (шар). Відео буде вбудовано у презентацію JessyInk. Докладніше про це "
+"можна дізнатися за адресою code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_video.inx.h:4
 msgid "Video"
@@ -2214,7 +2212,7 @@ msgstr "Площа"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Font size [px]"
-msgstr "Розмір шрифту [px]"
+msgstr "Розмір шрифту (у пк)"
 
 #: ../share/extensions/measure.inx.h:4
 msgid "Length"
@@ -2239,7 +2237,7 @@ msgstr "Тип вимірювання: "
 
 #: ../share/extensions/measure.inx.h:10
 msgid "Offset [px]"
-msgstr "Відступ [px]"
+msgstr "Відступ (у пк)"
 
 #: ../share/extensions/measure.inx.h:11
 msgid "Precision"
@@ -2935,19 +2933,19 @@ msgstr "База випадковості"
 
 #: ../share/extensions/render_barcode.inx.h:1
 msgid "Bar Height:"
-msgstr "Висота штрих-коду:"
+msgstr "Висота штрихкоду:"
 
 #: ../share/extensions/render_barcode.inx.h:2
 msgid "Barcode"
-msgstr "Штрих-код"
+msgstr "Штрихкод"
 
 #: ../share/extensions/render_barcode.inx.h:3
 msgid "Barcode Data:"
-msgstr "Дані штрих-коду:"
+msgstr "Дані штрихкоду:"
 
 #: ../share/extensions/render_barcode.inx.h:4
 msgid "Barcode Type:"
-msgstr "Тип штрих-коду:"
+msgstr "Тип штрихкоду:"
 
 #: ../share/extensions/restack.inx.h:2
 msgid "Arbitrary Angle:"
@@ -3495,7 +3493,7 @@ msgstr "За трьома сторонами"
 #. # end multiple scan
 #. ## end mode page
 #: ../share/extensions/triangle.inx.h:9 ../src/ui/dialog/tracedialog.cpp:563
-#: ../src/widgets/toolbox.cpp:4438 ../src/widgets/toolbox.cpp:4705
+#: ../src/widgets/toolbox.cpp:4387 ../src/widgets/toolbox.cpp:4654
 msgid "Mode"
 msgstr "Режим"
 
@@ -3775,7 +3773,7 @@ msgstr ""
 "списку пробілом і лише пробілом."
 
 #: ../share/extensions/web-set-att.inx.h:5
-#: ../share/extensions/web-transmit-att.inx.h:5 ../src/interface.cpp:1579
+#: ../share/extensions/web-transmit-att.inx.h:5 ../src/interface.cpp:1627
 msgid "Replace"
 msgstr "Замінити"
 
@@ -6535,11 +6533,11 @@ msgstr ""
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Позначте <b>принаймні два об'єкти</b> для з'єднання."
 
-#: ../src/connector-context.cpp:1936 ../src/widgets/toolbox.cpp:8191
+#: ../src/connector-context.cpp:1936 ../src/widgets/toolbox.cpp:8140
 msgid "Make connectors avoid selected objects"
 msgstr "Змусити лінії огинати обрані об'єкти"
 
-#: ../src/connector-context.cpp:1937 ../src/widgets/toolbox.cpp:8201
+#: ../src/connector-context.cpp:1937 ../src/widgets/toolbox.cpp:8150
 msgid "Make connectors ignore selected objects"
 msgstr "Змусити лінії ігнорувати обрані об'єкти"
 
@@ -7547,7 +7545,7 @@ msgid "Search paths, lines, polylines"
 msgstr "Шукати серед контурів, ліній, поліліній"
 
 #: ../src/dialogs/find.cpp:593 ../src/ui/dialog/find.cpp:75
-#: ../src/widgets/toolbox.cpp:2292
+#: ../src/widgets/toolbox.cpp:2241
 msgid "Paths"
 msgstr "Контури"
 
@@ -7824,21 +7822,21 @@ msgstr "URL:"
 #: ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/object-attributes.cpp:59 ../src/ui/dialog/guides.cpp:43
 #: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:508
-#: ../src/widgets/toolbox.cpp:1587
+#: ../src/widgets/toolbox.cpp:1540
 msgid "X:"
 msgstr "X:"
 
 #: ../src/dialogs/object-attributes.cpp:52
 #: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:44
 #: ../src/ui/view/edit-widget.cpp:1075 ../src/widgets/desktop-widget.cpp:511
-#: ../src/widgets/toolbox.cpp:1605
+#: ../src/widgets/toolbox.cpp:1558
 msgid "Y:"
 msgstr "Y:"
 
 #: ../src/dialogs/object-attributes.cpp:53
-#: ../src/dialogs/object-attributes.cpp:61 ../src/widgets/toolbox.cpp:4313
-#: ../src/widgets/toolbox.cpp:4633 ../src/widgets/toolbox.cpp:5133
-#: ../src/widgets/toolbox.cpp:6156
+#: ../src/dialogs/object-attributes.cpp:61 ../src/widgets/toolbox.cpp:4262
+#: ../src/widgets/toolbox.cpp:4582 ../src/widgets/toolbox.cpp:5082
+#: ../src/widgets/toolbox.cpp:6105
 msgid "Width:"
 msgstr "Ширина:"
 
@@ -7948,11 +7946,11 @@ msgstr "Вирівняти рядки за правою межею"
 msgid "Justify lines"
 msgstr "Вирівнювання рядків"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:7648
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:7597
 msgid "Horizontal text"
 msgstr "Горизонтальний текст"
 
-#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:7655
+#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:7604
 msgid "Vertical text"
 msgstr "Вертикальний текст"
 
@@ -8115,7 +8113,7 @@ msgstr "Базова довжина вісі z"
 
 #: ../src/display/canvas-axonomgrid.cpp:404
 #: ../src/ui/dialog/inkscape-preferences.cpp:1062
-#: ../src/widgets/toolbox.cpp:3628
+#: ../src/widgets/toolbox.cpp:3577
 msgid "Angle X:"
 msgstr "Кут X:"
 
@@ -8126,7 +8124,7 @@ msgstr "Кут вісі x"
 
 #: ../src/display/canvas-axonomgrid.cpp:406
 #: ../src/ui/dialog/inkscape-preferences.cpp:1063
-#: ../src/widgets/toolbox.cpp:3707
+#: ../src/widgets/toolbox.cpp:3656
 msgid "Angle Z:"
 msgstr "Кут Z:"
 
@@ -8913,7 +8911,7 @@ msgstr "Обертання карти кольорів"
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:38
 #: ../src/extension/internal/bitmap/spread.cpp:38
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:44
-#: ../src/widgets/toolbox.cpp:4728
+#: ../src/widgets/toolbox.cpp:4677
 msgid "Amount"
 msgstr "Величина"
 
@@ -10376,8 +10374,8 @@ msgstr "Вилучити опорні точки градієнта"
 
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:504
-#: ../src/widgets/toolbox.cpp:1619 ../src/widgets/toolbox.cpp:3358
-#: ../src/widgets/toolbox.cpp:6082 ../src/widgets/toolbox.cpp:8449
+#: ../src/widgets/toolbox.cpp:1572 ../src/widgets/toolbox.cpp:3307
+#: ../src/widgets/toolbox.cpp:6031 ../src/widgets/toolbox.cpp:8398
 msgid "Units"
 msgstr "Одиниці"
 
@@ -10566,95 +10564,111 @@ msgstr "Не вдається створити резервну копію та�
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:872
+#: ../src/interface.cpp:883
 msgid "Commands Bar"
 msgstr "Панель команд"
 
-#: ../src/interface.cpp:872
+#: ../src/interface.cpp:883
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Показати/сховати панель команд (під меню)"
 
-#: ../src/interface.cpp:874
+#: ../src/interface.cpp:885
 msgid "Snap Controls Bar"
 msgstr "Панель керування прилипанням"
 
-#: ../src/interface.cpp:874
+#: ../src/interface.cpp:885
 msgid "Show or hide the snapping controls"
 msgstr "Показати або сховати інструменти керування прилипанням"
 
-#: ../src/interface.cpp:876
+#: ../src/interface.cpp:887
 msgid "Tool Controls Bar"
 msgstr "Панель параметрів інструментів"
 
-#: ../src/interface.cpp:876
+#: ../src/interface.cpp:887
 msgid "Show or hide the Tool Controls bar"
 msgstr "Показати або сховати панель з параметрами інструментів"
 
-#: ../src/interface.cpp:878
+#: ../src/interface.cpp:889
 msgid "_Toolbox"
 msgstr "Панель _інструментів"
 
-#: ../src/interface.cpp:878
+#: ../src/interface.cpp:889
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "Показати або сховати головну панель інструментів (зліва)"
 
-#: ../src/interface.cpp:884
+#: ../src/interface.cpp:895
 msgid "_Palette"
 msgstr "_Палітру"
 
-#: ../src/interface.cpp:884
+#: ../src/interface.cpp:895
 msgid "Show or hide the color palette"
 msgstr "Показати або сховати панель з палітрою кольорів"
 
-#: ../src/interface.cpp:886
+#: ../src/interface.cpp:897
 msgid "_Statusbar"
 msgstr "_Рядок стану"
 
-#: ../src/interface.cpp:886
+#: ../src/interface.cpp:897
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Показати або сховати рядок стану (внизу вікна)"
 
-#: ../src/interface.cpp:960
+#: ../src/interface.cpp:905
+msgid "Default interface setup"
+msgstr "Типові налаштування інтерфейсу"
+
+#: ../src/interface.cpp:906
+msgid "Set the custom task"
+msgstr "Встановити нетипове завдання"
+
+#: ../src/interface.cpp:907
+msgid "Wide"
+msgstr "Широкий екран"
+
+#: ../src/interface.cpp:907
+msgid "Setup for widescreen work."
+msgstr "Налаштування для широкоекранних моніторів."
+
+#: ../src/interface.cpp:1004
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "Невідоме дієслово «%s»"
 
-#: ../src/interface.cpp:1002
+#: ../src/interface.cpp:1046
 msgid "Open _Recent"
 msgstr "Відкрити не_давній"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1103
+#: ../src/interface.cpp:1151
 #, c-format
 msgid "Enter group #%s"
 msgstr "Увійти у групу №%s"
 
-#: ../src/interface.cpp:1114
+#: ../src/interface.cpp:1162
 msgid "Go to parent"
 msgstr "На рівень вище"
 
-#: ../src/interface.cpp:1205 ../src/interface.cpp:1291
-#: ../src/interface.cpp:1394 ../src/ui/widget/selected-style.cpp:468
+#: ../src/interface.cpp:1253 ../src/interface.cpp:1339
+#: ../src/interface.cpp:1442 ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr "Скинути колір"
 
-#: ../src/interface.cpp:1244 ../src/interface.cpp:1354
+#: ../src/interface.cpp:1292 ../src/interface.cpp:1402
 msgid "Drop color on gradient"
 msgstr "Перенесення кольору на градієнт"
 
-#: ../src/interface.cpp:1407
+#: ../src/interface.cpp:1455
 msgid "Could not parse SVG data"
 msgstr "Не вдається прочитати SVG-дані"
 
-#: ../src/interface.cpp:1446
+#: ../src/interface.cpp:1494
 msgid "Drop SVG"
 msgstr "Скинути SVG"
 
-#: ../src/interface.cpp:1480
+#: ../src/interface.cpp:1528
 msgid "Drop bitmap image"
 msgstr "Скинути растрову картинку"
 
-#: ../src/interface.cpp:1572
+#: ../src/interface.cpp:1620
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -10736,7 +10750,7 @@ msgid "Dockitem which 'owns' this grip"
 msgstr "Елемент, що є «володарем» цього"
 
 #. Name
-#: ../src/libgdl/gdl-dock-item.c:287 ../src/widgets/toolbox.cpp:7660
+#: ../src/libgdl/gdl-dock-item.c:287 ../src/widgets/toolbox.cpp:7609
 msgid "Orientation"
 msgstr "Орієнтація"
 
@@ -11807,11 +11821,11 @@ msgstr ""
 msgid "Both"
 msgstr "Обидва"
 
-#: ../src/live_effects/lpe-ruler.cpp:35 ../src/widgets/toolbox.cpp:5589
+#: ../src/live_effects/lpe-ruler.cpp:35 ../src/widgets/toolbox.cpp:5538
 msgid "Start"
 msgstr "Початок"
 
-#: ../src/live_effects/lpe-ruler.cpp:36 ../src/widgets/toolbox.cpp:5602
+#: ../src/live_effects/lpe-ruler.cpp:36 ../src/widgets/toolbox.cpp:5551
 msgid "End"
 msgstr "Кінець"
 
@@ -12431,51 +12445,51 @@ msgstr "Показати/сховати"
 #. "       <verb verb-id=\"DialogScript\" />\n"
 #. Not quite ready to be in the menus.
 #. "       <verb verb-id=\"FocusToggle\" />\n"
-#: ../src/menus-skeleton.h:139
+#: ../src/menus-skeleton.h:141
 msgid "_Layer"
 msgstr "_Шар"
 
-#: ../src/menus-skeleton.h:159
+#: ../src/menus-skeleton.h:161
 msgid "_Object"
 msgstr "_Об'єкт"
 
-#: ../src/menus-skeleton.h:166
+#: ../src/menus-skeleton.h:168
 msgid "Cli_p"
 msgstr "Відсі_кання"
 
-#: ../src/menus-skeleton.h:170
+#: ../src/menus-skeleton.h:172
 msgid "Mas_k"
 msgstr "Ма_ска"
 
-#: ../src/menus-skeleton.h:174
+#: ../src/menus-skeleton.h:176
 msgid "Patter_n"
 msgstr "В_ізерунок"
 
-#: ../src/menus-skeleton.h:198
+#: ../src/menus-skeleton.h:200
 msgid "_Path"
 msgstr "_Контур"
 
-#: ../src/menus-skeleton.h:225
+#: ../src/menus-skeleton.h:227
 msgid "_Text"
 msgstr "_Текст"
 
-#: ../src/menus-skeleton.h:245
+#: ../src/menus-skeleton.h:247
 msgid "Filter_s"
 msgstr "Філ_ьтри"
 
-#: ../src/menus-skeleton.h:251
+#: ../src/menus-skeleton.h:253
 msgid "Exte_nsions"
 msgstr "Дод_атки"
 
-#: ../src/menus-skeleton.h:258
+#: ../src/menus-skeleton.h:260
 msgid "Whiteboa_rd"
 msgstr "Спільне _малювання"
 
-#: ../src/menus-skeleton.h:262
+#: ../src/menus-skeleton.h:264
 msgid "_Help"
 msgstr "_Довідка"
 
-#: ../src/menus-skeleton.h:266
+#: ../src/menus-skeleton.h:268
 msgid "Tutorials"
 msgstr "Підручники"
 
@@ -12766,27 +12780,27 @@ msgstr "Перемикання точки сходу"
 msgid "Toggle multiple vanishing points"
 msgstr "Перемикання декількох точок сходу"
 
-#: ../src/preferences-skeleton.h:98
+#: ../src/preferences-skeleton.h:101
 msgid "Dip pen"
 msgstr "Крапання"
 
-#: ../src/preferences-skeleton.h:99
+#: ../src/preferences-skeleton.h:102
 msgid "Marker"
 msgstr "Позначка"
 
-#: ../src/preferences-skeleton.h:100
+#: ../src/preferences-skeleton.h:103
 msgid "Brush"
 msgstr "Пензель"
 
-#: ../src/preferences-skeleton.h:101
+#: ../src/preferences-skeleton.h:104
 msgid "Wiggly"
 msgstr "Погойдування"
 
-#: ../src/preferences-skeleton.h:102
+#: ../src/preferences-skeleton.h:105
 msgid "Splotchy"
 msgstr "Плямиста"
 
-#: ../src/preferences-skeleton.h:103
+#: ../src/preferences-skeleton.h:106
 msgid "Tracing"
 msgstr "Трасування"
 
@@ -13139,8 +13153,8 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Нічого</b> не було вилучено."
 
 #: ../src/selection-chemistry.cpp:330 ../src/text-context.cpp:1002
-#: ../src/ui/dialog/swatches.cpp:220 ../src/widgets/toolbox.cpp:1408
-#: ../src/widgets/toolbox.cpp:6174
+#: ../src/ui/dialog/swatches.cpp:220 ../src/widgets/toolbox.cpp:1361
+#: ../src/widgets/toolbox.cpp:6123
 msgid "Delete"
 msgstr "Вилучити"
 
@@ -13505,7 +13519,7 @@ msgstr "Коло"
 #. Ellipse
 #: ../src/selection-describer.cpp:49 ../src/selection-describer.cpp:76
 #: ../src/ui/dialog/inkscape-preferences.cpp:499 ../src/verbs.cpp:2465
-#: ../src/widgets/toolbox.cpp:4092
+#: ../src/widgets/toolbox.cpp:4041
 msgid "Ellipse"
 msgstr "Еліпс"
 
@@ -13521,7 +13535,7 @@ msgstr "Лінія"
 msgid "Path"
 msgstr "Контур"
 
-#: ../src/selection-describer.cpp:61 ../src/widgets/toolbox.cpp:2935
+#: ../src/selection-describer.cpp:61 ../src/widgets/toolbox.cpp:2884
 msgid "Polygon"
 msgstr "Багатокутник"
 
@@ -13561,7 +13575,7 @@ msgstr "Спіраль"
 #. Star
 #: ../src/selection-describer.cpp:82
 #: ../src/ui/dialog/inkscape-preferences.cpp:503 ../src/verbs.cpp:2467
-#: ../src/widgets/toolbox.cpp:2942
+#: ../src/widgets/toolbox.cpp:2891
 msgid "Star"
 msgstr "Зірка"
 
@@ -14179,11 +14193,11 @@ msgstr ""
 msgid "<b>Nothing selected!</b> Select objects to spray."
 msgstr "<b>Нічого не позначено!</b> Позначте об’єкти, які слід розкидати."
 
-#: ../src/spray-context.cpp:881 ../src/widgets/toolbox.cpp:4686
+#: ../src/spray-context.cpp:881 ../src/widgets/toolbox.cpp:4635
 msgid "Spray with copies"
 msgstr "Розкидання копій"
 
-#: ../src/spray-context.cpp:885 ../src/widgets/toolbox.cpp:4693
+#: ../src/spray-context.cpp:885 ../src/widgets/toolbox.cpp:4642
 msgid "Spray with clones"
 msgstr "Розкидання клонів"
 
@@ -14949,12 +14963,12 @@ msgstr "В:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:510
 #: ../src/ui/dialog/align-and-distribute.cpp:795
-#: ../src/widgets/toolbox.cpp:8288
+#: ../src/widgets/toolbox.cpp:8237
 msgid "Remove overlaps"
 msgstr "Вилучити перекриття"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:541
-#: ../src/widgets/toolbox.cpp:8077
+#: ../src/widgets/toolbox.cpp:8026
 msgid "Arrange connector network"
 msgstr "Впорядкувати сітку з'єднувальних ліній"
 
@@ -14979,7 +14993,7 @@ msgid "Connector network layout"
 msgstr "Зовнішній вигляд блок-схем"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:797
-#: ../src/widgets/toolbox.cpp:2284
+#: ../src/widgets/toolbox.cpp:2233
 msgid "Nodes"
 msgstr "Вузли"
 
@@ -15095,7 +15109,7 @@ msgid ""
 msgstr "Переміщувати об'єкти якомога менше, так щоб їх рамки не перекривалися"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:899
-#: ../src/widgets/toolbox.cpp:8250
+#: ../src/widgets/toolbox.cpp:8199
 msgid "Nicely arrange selected connector network"
 msgstr "Гармонійно розташувати обране з'єднання об'єктів"
 
@@ -15344,18 +15358,18 @@ msgid "Remove selected grid."
 msgstr "Вилучити обрану сітку."
 
 #: ../src/ui/dialog/document-properties.cpp:119
-#: ../src/widgets/toolbox.cpp:2373
+#: ../src/widgets/toolbox.cpp:2322
 msgid "Guides"
 msgstr "Напрямні"
 
 #: ../src/ui/dialog/document-properties.cpp:120
 #: ../src/ui/dialog/inkscape-preferences.cpp:1071
-#: ../src/widgets/toolbox.cpp:2364
+#: ../src/widgets/toolbox.cpp:2313
 msgid "Grids"
 msgstr "Сітки"
 
 #: ../src/ui/dialog/document-properties.cpp:121 ../src/verbs.cpp:2544
-#: ../src/widgets/toolbox.cpp:2229
+#: ../src/widgets/toolbox.cpp:2178
 msgid "Snap"
 msgstr "Прилипання"
 
@@ -16113,7 +16127,7 @@ msgid "The whole filter region will be filled with this color."
 msgstr "Всю область дії фільтра буде залито цим кольором."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2220
-#: ../src/widgets/toolbox.cpp:5722
+#: ../src/widgets/toolbox.cpp:5671
 msgid "Opacity:"
 msgstr "Непрозорість:"
 
@@ -17271,7 +17285,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:211
 #: ../src/ui/dialog/tracedialog.cpp:420 ../src/ui/dialog/tracedialog.cpp:453
-#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:8430
+#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:8379
 msgid "Threshold:"
 msgstr "Поріг:"
 
@@ -17437,7 +17451,7 @@ msgid ""
 "[ or ] rotates by this amount"
 msgstr ""
 "Обертання з натиснутою Ctrl обмежує кут значеннями, кратними вибраному; "
-"натиснення [ чи ] повертає на вибраний кут"
+"натискання «[» чи «]» повертає на вибраний кут"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:273
 msgid "Zoom in/out by:"
@@ -17922,8 +17936,8 @@ msgid "Show close button on dialogs"
 msgstr "Показувати кнопку закриття у діалогах"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:585
-#: ../src/widgets/toolbox.cpp:7684 ../src/widgets/toolbox.cpp:7715
-#: ../src/widgets/toolbox.cpp:7746
+#: ../src/widgets/toolbox.cpp:7633 ../src/widgets/toolbox.cpp:7664
+#: ../src/widgets/toolbox.cpp:7695
 msgid "Normal"
 msgstr "Звичайно"
 
@@ -20430,12 +20444,12 @@ msgid "Add nodes"
 msgstr "Додати вузли"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:306
-#: ../src/widgets/toolbox.cpp:1415
+#: ../src/widgets/toolbox.cpp:1368
 msgid "Join nodes"
 msgstr "З'єднати вузли"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:313
-#: ../src/widgets/toolbox.cpp:1426
+#: ../src/widgets/toolbox.cpp:1379
 msgid "Break nodes"
 msgstr "Розрізати вузли"
 
@@ -20722,7 +20736,7 @@ msgid "Rotate handle"
 msgstr "Обертати вус"
 
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1290 ../src/widgets/toolbox.cpp:1404
+#: ../src/ui/tool/path-manipulator.cpp:1290 ../src/widgets/toolbox.cpp:1357
 msgid "Delete node"
 msgstr "Вилучити вузол"
 
@@ -21204,7 +21218,7 @@ msgstr "Без заповнення"
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/style-swatch.cpp:298
 msgid "No stroke"
-msgstr "Штрих відсутній"
+msgstr "Немає штриха"
 
 #: ../src/ui/widget/selected-style.cpp:166
 #: ../src/ui/widget/style-swatch.cpp:277 ../src/widgets/paint-selector.cpp:239
@@ -23708,11 +23722,11 @@ msgstr "<small>Декілька градієнтів</small>"
 msgid "Edit the stops of the gradient"
 msgstr "Змінити опорні точки градієнта"
 
-#: ../src/widgets/gradient-toolbar.cpp:547 ../src/widgets/toolbox.cpp:2837
-#: ../src/widgets/toolbox.cpp:2917 ../src/widgets/toolbox.cpp:3241
-#: ../src/widgets/toolbox.cpp:3279 ../src/widgets/toolbox.cpp:3895
-#: ../src/widgets/toolbox.cpp:3919 ../src/widgets/toolbox.cpp:5551
-#: ../src/widgets/toolbox.cpp:5580
+#: ../src/widgets/gradient-toolbar.cpp:547 ../src/widgets/toolbox.cpp:2786
+#: ../src/widgets/toolbox.cpp:2866 ../src/widgets/toolbox.cpp:3190
+#: ../src/widgets/toolbox.cpp:3228 ../src/widgets/toolbox.cpp:3844
+#: ../src/widgets/toolbox.cpp:3868 ../src/widgets/toolbox.cpp:5500
+#: ../src/widgets/toolbox.cpp:5529
 msgid "<b>New:</b>"
 msgstr "<b>Новий:</b>"
 
@@ -23739,10 +23753,10 @@ msgstr "Створити градієнт у штриху"
 
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-#: ../src/widgets/gradient-toolbar.cpp:630 ../src/widgets/toolbox.cpp:2839
-#: ../src/widgets/toolbox.cpp:3249 ../src/widgets/toolbox.cpp:3267
-#: ../src/widgets/toolbox.cpp:3897 ../src/widgets/toolbox.cpp:3908
-#: ../src/widgets/toolbox.cpp:5554 ../src/widgets/toolbox.cpp:5565
+#: ../src/widgets/gradient-toolbar.cpp:630 ../src/widgets/toolbox.cpp:2788
+#: ../src/widgets/toolbox.cpp:3198 ../src/widgets/toolbox.cpp:3216
+#: ../src/widgets/toolbox.cpp:3846 ../src/widgets/toolbox.cpp:3857
+#: ../src/widgets/toolbox.cpp:5503 ../src/widgets/toolbox.cpp:5514
 msgid "<b>Change:</b>"
 msgstr "<b>Змінити:</b>"
 
@@ -24292,526 +24306,502 @@ msgstr "Встановлення стилю штриха"
 msgid "Change swatch color"
 msgstr "Змінити колір зразка"
 
-#: ../src/widgets/toolbox.cpp:216
+#: ../src/widgets/toolbox.cpp:207
 msgid "Color/opacity used for color tweaking"
 msgstr "Колір/непрозорість, що використовуватимуться для корекції кольору"
 
-#: ../src/widgets/toolbox.cpp:222
+#: ../src/widgets/toolbox.cpp:213
 msgid "Style of new stars"
 msgstr "Стиль нових зірок"
 
-#: ../src/widgets/toolbox.cpp:224
+#: ../src/widgets/toolbox.cpp:215
 msgid "Style of new rectangles"
 msgstr "Стиль нових прямокутників"
 
-#: ../src/widgets/toolbox.cpp:226
+#: ../src/widgets/toolbox.cpp:217
 msgid "Style of new 3D boxes"
 msgstr "Стиль нових просторових об’єктів"
 
-#: ../src/widgets/toolbox.cpp:228
+#: ../src/widgets/toolbox.cpp:219
 msgid "Style of new ellipses"
 msgstr "Стиль нових еліпсів"
 
-#: ../src/widgets/toolbox.cpp:230
+#: ../src/widgets/toolbox.cpp:221
 msgid "Style of new spirals"
 msgstr "Стиль нових спіралей"
 
-#: ../src/widgets/toolbox.cpp:232
+#: ../src/widgets/toolbox.cpp:223
 msgid "Style of new paths created by Pencil"
 msgstr "Стиль нових контурів, що створені Олівцем"
 
-#: ../src/widgets/toolbox.cpp:234
+#: ../src/widgets/toolbox.cpp:225
 msgid "Style of new paths created by Pen"
 msgstr "Стиль нових контурів, що створені Пером"
 
-#: ../src/widgets/toolbox.cpp:236
+#: ../src/widgets/toolbox.cpp:227
 msgid "Style of new calligraphic strokes"
 msgstr "Стиль нових каліграфічних штрихів"
 
-#: ../src/widgets/toolbox.cpp:238 ../src/widgets/toolbox.cpp:240
+#: ../src/widgets/toolbox.cpp:229 ../src/widgets/toolbox.cpp:231
 msgid "TBD"
 msgstr "Ще не визначено"
 
-#: ../src/widgets/toolbox.cpp:250
+#: ../src/widgets/toolbox.cpp:241
 msgid "Style of Paint Bucket fill objects"
 msgstr "Стиль нових об'єктів, що створені інструментом заповнення"
 
-#: ../src/widgets/toolbox.cpp:989
-msgid "Default interface setup"
-msgstr "Типові налаштування інтерфейсу"
-
-#: ../src/widgets/toolbox.cpp:995
-msgid "Set the custom task"
-msgstr "Встановити нетипове завдання"
-
-#: ../src/widgets/toolbox.cpp:1000
-msgid "Wide"
-msgstr "Широкий екран"
-
-#: ../src/widgets/toolbox.cpp:1001
-msgid "Setup for widescreen work"
-msgstr "Налаштування для широкоекранних моніторів"
-
-#: ../src/widgets/toolbox.cpp:1004
-msgid "Task"
-msgstr "Завдання"
-
-#: ../src/widgets/toolbox.cpp:1005
-msgid "Task:"
-msgstr "Завдання?"
-
-#: ../src/widgets/toolbox.cpp:1393
+#: ../src/widgets/toolbox.cpp:1346
 msgid "Insert node"
 msgstr "Вставити вузол"
 
-#: ../src/widgets/toolbox.cpp:1394
+#: ../src/widgets/toolbox.cpp:1347
 msgid "Insert new nodes into selected segments"
 msgstr "Вставити нові вузли у позначені сегменти"
 
-#: ../src/widgets/toolbox.cpp:1397
+#: ../src/widgets/toolbox.cpp:1350
 msgid "Insert"
 msgstr "Вставити"
 
-#: ../src/widgets/toolbox.cpp:1405
+#: ../src/widgets/toolbox.cpp:1358
 msgid "Delete selected nodes"
 msgstr "Вилучити позначені вузли"
 
-#: ../src/widgets/toolbox.cpp:1416
+#: ../src/widgets/toolbox.cpp:1369
 msgid "Join selected nodes"
 msgstr "З'єднати позначені вузли"
 
-#: ../src/widgets/toolbox.cpp:1419
+#: ../src/widgets/toolbox.cpp:1372
 msgid "Join"
 msgstr "З'єднати"
 
-#: ../src/widgets/toolbox.cpp:1427
+#: ../src/widgets/toolbox.cpp:1380
 msgid "Break path at selected nodes"
 msgstr "Розірвати контур у позначеному вузлі"
 
-#: ../src/widgets/toolbox.cpp:1437
+#: ../src/widgets/toolbox.cpp:1390
 msgid "Join with segment"
 msgstr "З’єднати сегментом"
 
-#: ../src/widgets/toolbox.cpp:1438
+#: ../src/widgets/toolbox.cpp:1391
 msgid "Join selected endnodes with a new segment"
 msgstr "З'єднати позначені вузли новим сегментом"
 
-#: ../src/widgets/toolbox.cpp:1447
+#: ../src/widgets/toolbox.cpp:1400
 msgid "Delete segment"
 msgstr "Вилучити сегмент"
 
-#: ../src/widgets/toolbox.cpp:1448
+#: ../src/widgets/toolbox.cpp:1401
 msgid "Delete segment between two non-endpoint nodes"
 msgstr "Вилучити сегмент між двома не кінцевими вузлами"
 
-#: ../src/widgets/toolbox.cpp:1457
+#: ../src/widgets/toolbox.cpp:1410
 msgid "Node Cusp"
 msgstr "Гострі вузли"
 
-#: ../src/widgets/toolbox.cpp:1458
+#: ../src/widgets/toolbox.cpp:1411
 msgid "Make selected nodes corner"
 msgstr "Зробити позначені вузли гострими"
 
-#: ../src/widgets/toolbox.cpp:1467
+#: ../src/widgets/toolbox.cpp:1420
 msgid "Node Smooth"
 msgstr "Згладити вузли"
 
-#: ../src/widgets/toolbox.cpp:1468
+#: ../src/widgets/toolbox.cpp:1421
 msgid "Make selected nodes smooth"
 msgstr "Зробити позначені вузли гладкими"
 
-#: ../src/widgets/toolbox.cpp:1477
+#: ../src/widgets/toolbox.cpp:1430
 msgid "Node Symmetric"
 msgstr "Симетричні вузли"
 
-#: ../src/widgets/toolbox.cpp:1478
+#: ../src/widgets/toolbox.cpp:1431
 msgid "Make selected nodes symmetric"
 msgstr "Зробити позначені вузли симетричними"
 
-#: ../src/widgets/toolbox.cpp:1487
+#: ../src/widgets/toolbox.cpp:1440
 msgid "Node Auto"
 msgstr "Автовузол"
 
-#: ../src/widgets/toolbox.cpp:1488
+#: ../src/widgets/toolbox.cpp:1441
 msgid "Make selected nodes auto-smooth"
 msgstr "Автоматичне згладжування вибраних вузлів"
 
-#: ../src/widgets/toolbox.cpp:1497
+#: ../src/widgets/toolbox.cpp:1450
 msgid "Node Line"
 msgstr "Лінії вузла"
 
-#: ../src/widgets/toolbox.cpp:1498
+#: ../src/widgets/toolbox.cpp:1451
 msgid "Make selected segments lines"
 msgstr "Зробити позначені сегменти прямими"
 
-#: ../src/widgets/toolbox.cpp:1507
+#: ../src/widgets/toolbox.cpp:1460
 msgid "Node Curve"
 msgstr "Криві вузла"
 
-#: ../src/widgets/toolbox.cpp:1508
+#: ../src/widgets/toolbox.cpp:1461
 msgid "Make selected segments curves"
 msgstr "Зробити позначені сегменти кривими"
 
-#: ../src/widgets/toolbox.cpp:1517
+#: ../src/widgets/toolbox.cpp:1470
 msgid "Show Transform Handles"
 msgstr "Показати елементи керування перетворенням"
 
-#: ../src/widgets/toolbox.cpp:1518
+#: ../src/widgets/toolbox.cpp:1471
 msgid "Show transformation handles for selected nodes"
 msgstr "Показувати елементи керування перетворенням для позначених вузлів"
 
-#: ../src/widgets/toolbox.cpp:1528
+#: ../src/widgets/toolbox.cpp:1481
 msgid "Show Handles"
 msgstr "Показувати елементи керування"
 
-#: ../src/widgets/toolbox.cpp:1529
+#: ../src/widgets/toolbox.cpp:1482
 msgid "Show Bezier handles of selected nodes"
 msgstr "Показувати елементи керування кривою Безьє для позначених вузлів"
 
-#: ../src/widgets/toolbox.cpp:1539
+#: ../src/widgets/toolbox.cpp:1492
 msgid "Show Outline"
 msgstr "Показати обрис"
 
-#: ../src/widgets/toolbox.cpp:1540
+#: ../src/widgets/toolbox.cpp:1493
 msgid "Show path outline (without path effects)"
 msgstr "Показувати обрис контуру (без ефектів контуру)"
 
-#: ../src/widgets/toolbox.cpp:1550
+#: ../src/widgets/toolbox.cpp:1503
 msgid "Next path effect parameter"
 msgstr "Наступний параметр ефекту контуру"
 
-#: ../src/widgets/toolbox.cpp:1551
+#: ../src/widgets/toolbox.cpp:1504
 msgid "Show next editable path effect parameter"
 msgstr "Показати наступний придатний до редагування параметр ефекту контуру"
 
-#: ../src/widgets/toolbox.cpp:1561
+#: ../src/widgets/toolbox.cpp:1514
 msgid "Edit clipping paths"
 msgstr "Зміна контурів обрізання"
 
-#: ../src/widgets/toolbox.cpp:1562
+#: ../src/widgets/toolbox.cpp:1515
 msgid "Show clipping path(s) of selected object(s)"
 msgstr "Показувати контури обрізання позначених об’єктів"
 
-#: ../src/widgets/toolbox.cpp:1572
+#: ../src/widgets/toolbox.cpp:1525
 msgid "Edit masks"
 msgstr "Зміна масок"
 
-#: ../src/widgets/toolbox.cpp:1573
+#: ../src/widgets/toolbox.cpp:1526
 msgid "Show mask(s) of selected object(s)"
 msgstr "Показувати маски позначених об’єктів"
 
-#: ../src/widgets/toolbox.cpp:1587
+#: ../src/widgets/toolbox.cpp:1540
 msgid "X coordinate:"
 msgstr "X координата:"
 
-#: ../src/widgets/toolbox.cpp:1587
+#: ../src/widgets/toolbox.cpp:1540
 msgid "X coordinate of selected node(s)"
 msgstr "X-координата обраних вузлів"
 
-#: ../src/widgets/toolbox.cpp:1605
+#: ../src/widgets/toolbox.cpp:1558
 msgid "Y coordinate:"
 msgstr "Y координата:"
 
-#: ../src/widgets/toolbox.cpp:1605
+#: ../src/widgets/toolbox.cpp:1558
 msgid "Y coordinate of selected node(s)"
 msgstr "Y-координата обраних вузлів"
 
-#: ../src/widgets/toolbox.cpp:2229
+#: ../src/widgets/toolbox.cpp:2178
 msgid "Enable snapping"
 msgstr "Дозволити прилипання"
 
-#: ../src/widgets/toolbox.cpp:2238
+#: ../src/widgets/toolbox.cpp:2187
 msgid "Bounding box"
 msgstr "Рамка-обгортка"
 
-#: ../src/widgets/toolbox.cpp:2238
+#: ../src/widgets/toolbox.cpp:2187
 msgid "Snap bounding box corners"
 msgstr "Прилипання до кутів рамок-обгорток"
 
-#: ../src/widgets/toolbox.cpp:2247
+#: ../src/widgets/toolbox.cpp:2196
 msgid "Bounding box edges"
 msgstr "Краї рамок-обгорток"
 
-#: ../src/widgets/toolbox.cpp:2247
+#: ../src/widgets/toolbox.cpp:2196
 msgid "Snap to edges of a bounding box"
 msgstr "Прилипання до країв рамок-обгорток"
 
-#: ../src/widgets/toolbox.cpp:2256
+#: ../src/widgets/toolbox.cpp:2205
 msgid "Bounding box corners"
 msgstr "Кути рамок-обгорток"
 
-#: ../src/widgets/toolbox.cpp:2256
+#: ../src/widgets/toolbox.cpp:2205
 msgid "Snap to bounding box corners"
 msgstr "Прилипання до кутів рамок-обгорток"
 
-#: ../src/widgets/toolbox.cpp:2265
+#: ../src/widgets/toolbox.cpp:2214
 msgid "BBox Edge Midpoints"
 msgstr "Середні точки країв рамки-обгортки"
 
-#: ../src/widgets/toolbox.cpp:2265
+#: ../src/widgets/toolbox.cpp:2214
 msgid "Snap from and to midpoints of bounding box edges"
 msgstr "Прилипання до середніх точок країв рамок-обгорток"
 
-#: ../src/widgets/toolbox.cpp:2275
+#: ../src/widgets/toolbox.cpp:2224
 msgid "BBox Centers"
 msgstr "Центри рамок-обгорток"
 
-#: ../src/widgets/toolbox.cpp:2275
+#: ../src/widgets/toolbox.cpp:2224
 msgid "Snapping from and to centers of bounding boxes"
 msgstr "Прилипання від і до центрів рамок-обгорток"
 
-#: ../src/widgets/toolbox.cpp:2284
+#: ../src/widgets/toolbox.cpp:2233
 msgid "Snap nodes or handles"
 msgstr "Прилипання до вузлів або вусів"
 
-#: ../src/widgets/toolbox.cpp:2292
+#: ../src/widgets/toolbox.cpp:2241
 msgid "Snap to paths"
 msgstr "Прилипання до контурів"
 
-#: ../src/widgets/toolbox.cpp:2301
+#: ../src/widgets/toolbox.cpp:2250
 msgid "Path intersections"
 msgstr "Перетин контурів"
 
-#: ../src/widgets/toolbox.cpp:2301
+#: ../src/widgets/toolbox.cpp:2250
 msgid "Snap to path intersections"
 msgstr "Прилипання до перетинів контурів"
 
-#: ../src/widgets/toolbox.cpp:2310
+#: ../src/widgets/toolbox.cpp:2259
 msgid "To nodes"
 msgstr "До вузлів"
 
-#: ../src/widgets/toolbox.cpp:2310
+#: ../src/widgets/toolbox.cpp:2259
 msgid "Snap to cusp nodes"
 msgstr "Прилипання до вузлів-вершин"
 
-#: ../src/widgets/toolbox.cpp:2319
+#: ../src/widgets/toolbox.cpp:2268
 msgid "Smooth nodes"
 msgstr "Гладкі вузли"
 
-#: ../src/widgets/toolbox.cpp:2319
+#: ../src/widgets/toolbox.cpp:2268
 msgid "Snap to smooth nodes"
 msgstr "Прилипання до гладких вузлів"
 
-#: ../src/widgets/toolbox.cpp:2328
+#: ../src/widgets/toolbox.cpp:2277
 msgid "Line Midpoints"
 msgstr "Середні точки лінії"
 
-#: ../src/widgets/toolbox.cpp:2328
+#: ../src/widgets/toolbox.cpp:2277
 msgid "Snap from and to midpoints of line segments"
 msgstr "Прилипання від і до середніх точок сегментів лінії"
 
-#: ../src/widgets/toolbox.cpp:2337
+#: ../src/widgets/toolbox.cpp:2286
 msgid "Object Centers"
 msgstr "Центри об’єктів"
 
-#: ../src/widgets/toolbox.cpp:2337
+#: ../src/widgets/toolbox.cpp:2286
 msgid "Snap from and to centers of objects"
 msgstr "Прилипання від і до центрів об’єктів"
 
-#: ../src/widgets/toolbox.cpp:2346
+#: ../src/widgets/toolbox.cpp:2295
 msgid "Rotation Centers"
 msgstr "Центри обертання"
 
-#: ../src/widgets/toolbox.cpp:2346
+#: ../src/widgets/toolbox.cpp:2295
 msgid "Snap from and to an item's rotation center"
 msgstr "Прилипання від і до центру обертання елемента"
 
-#: ../src/widgets/toolbox.cpp:2355
+#: ../src/widgets/toolbox.cpp:2304
 msgid "Page border"
 msgstr "Межа сторінки"
 
-#: ../src/widgets/toolbox.cpp:2355
+#: ../src/widgets/toolbox.cpp:2304
 msgid "Snap to the page border"
 msgstr "Прилипання до межі сторінки"
 
-#: ../src/widgets/toolbox.cpp:2364
+#: ../src/widgets/toolbox.cpp:2313
 msgid "Snap to grids"
 msgstr "Прилипання до сітки"
 
-#: ../src/widgets/toolbox.cpp:2373
+#: ../src/widgets/toolbox.cpp:2322
 msgid "Snap to guides"
 msgstr "Прилипання до напрямних"
 
-#: ../src/widgets/toolbox.cpp:2577
+#: ../src/widgets/toolbox.cpp:2526
 msgid "Star: Change number of corners"
 msgstr "Зірка: Зміна кількості кутів"
 
-#: ../src/widgets/toolbox.cpp:2624
+#: ../src/widgets/toolbox.cpp:2573
 msgid "Star: Change spoke ratio"
 msgstr "Зірка: Зміна відношення радіусів"
 
-#: ../src/widgets/toolbox.cpp:2668
+#: ../src/widgets/toolbox.cpp:2617
 msgid "Make polygon"
 msgstr "Перетворення на багатокутник"
 
-#: ../src/widgets/toolbox.cpp:2668
+#: ../src/widgets/toolbox.cpp:2617
 msgid "Make star"
 msgstr "Створення зірки"
 
-#: ../src/widgets/toolbox.cpp:2705
+#: ../src/widgets/toolbox.cpp:2654
 msgid "Star: Change rounding"
 msgstr "Зірка: Зміна заокруглення"
 
-#: ../src/widgets/toolbox.cpp:2742
+#: ../src/widgets/toolbox.cpp:2691
 msgid "Star: Change randomization"
 msgstr "Зірка: Зміна випадковості викривлення"
 
-#: ../src/widgets/toolbox.cpp:2936
+#: ../src/widgets/toolbox.cpp:2885
 msgid "Regular polygon (with one handle) instead of a star"
 msgstr "Правильний багатокутник, а не зірка"
 
-#: ../src/widgets/toolbox.cpp:2943
+#: ../src/widgets/toolbox.cpp:2892
 msgid "Star instead of a regular polygon (with one handle)"
 msgstr "Зірка замість звичайного багатокутника (з одним вусом)"
 
-#: ../src/widgets/toolbox.cpp:2964
+#: ../src/widgets/toolbox.cpp:2913
 msgid "triangle/tri-star"
 msgstr "трикутник/зірка з 3 променями"
 
-#: ../src/widgets/toolbox.cpp:2964
+#: ../src/widgets/toolbox.cpp:2913
 msgid "square/quad-star"
 msgstr "квадрат/зірка з 4 променями"
 
-#: ../src/widgets/toolbox.cpp:2964
+#: ../src/widgets/toolbox.cpp:2913
 msgid "pentagon/five-pointed star"
 msgstr "п’ятикутник/зірка з 5 променями"
 
-#: ../src/widgets/toolbox.cpp:2964
+#: ../src/widgets/toolbox.cpp:2913
 msgid "hexagon/six-pointed star"
 msgstr "шестикутник/зірка з 6 променями"
 
-#: ../src/widgets/toolbox.cpp:2967
+#: ../src/widgets/toolbox.cpp:2916
 msgid "Corners"
 msgstr "Кути"
 
-#: ../src/widgets/toolbox.cpp:2967
+#: ../src/widgets/toolbox.cpp:2916
 msgid "Corners:"
 msgstr "Кути:"
 
-#: ../src/widgets/toolbox.cpp:2967
+#: ../src/widgets/toolbox.cpp:2916
 msgid "Number of corners of a polygon or star"
 msgstr "Кількість кутів багатокутника чи зірки"
 
-#: ../src/widgets/toolbox.cpp:2980
+#: ../src/widgets/toolbox.cpp:2929
 msgid "thin-ray star"
 msgstr "зірка з тонкими променями"
 
-#: ../src/widgets/toolbox.cpp:2980
+#: ../src/widgets/toolbox.cpp:2929
 msgid "pentagram"
 msgstr "пентаграма"
 
-#: ../src/widgets/toolbox.cpp:2980
+#: ../src/widgets/toolbox.cpp:2929
 msgid "hexagram"
 msgstr "гексаграма"
 
-#: ../src/widgets/toolbox.cpp:2980
+#: ../src/widgets/toolbox.cpp:2929
 msgid "heptagram"
 msgstr "гептаграма"
 
-#: ../src/widgets/toolbox.cpp:2980
+#: ../src/widgets/toolbox.cpp:2929
 msgid "octagram"
 msgstr "октаграма"
 
-#: ../src/widgets/toolbox.cpp:2980
+#: ../src/widgets/toolbox.cpp:2929
 msgid "regular polygon"
 msgstr "звичайний багатокутник"
 
-#: ../src/widgets/toolbox.cpp:2983
+#: ../src/widgets/toolbox.cpp:2932
 msgid "Spoke ratio"
 msgstr "Відношення радіусів"
 
-#: ../src/widgets/toolbox.cpp:2983
+#: ../src/widgets/toolbox.cpp:2932
 msgid "Spoke ratio:"
 msgstr "Відношення радіусів:"
 
 #. TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
 #. Base radius is the same for the closest handle.
-#: ../src/widgets/toolbox.cpp:2986
+#: ../src/widgets/toolbox.cpp:2935
 msgid "Base radius to tip radius ratio"
 msgstr "Відношення радіусів основи та вершини променя"
 
-#: ../src/widgets/toolbox.cpp:3004
+#: ../src/widgets/toolbox.cpp:2953
 msgid "stretched"
 msgstr "розтягнений"
 
-#: ../src/widgets/toolbox.cpp:3004
+#: ../src/widgets/toolbox.cpp:2953
 msgid "twisted"
 msgstr "перекручений"
 
-#: ../src/widgets/toolbox.cpp:3004
+#: ../src/widgets/toolbox.cpp:2953
 msgid "slightly pinched"
 msgstr "трохи затиснутий"
 
-#: ../src/widgets/toolbox.cpp:3004
+#: ../src/widgets/toolbox.cpp:2953
 msgid "NOT rounded"
 msgstr "НЕ округлений"
 
-#: ../src/widgets/toolbox.cpp:3004
+#: ../src/widgets/toolbox.cpp:2953
 msgid "slightly rounded"
 msgstr "трохи округлений"
 
-#: ../src/widgets/toolbox.cpp:3004
+#: ../src/widgets/toolbox.cpp:2953
 msgid "visibly rounded"
 msgstr "помітно округлений"
 
-#: ../src/widgets/toolbox.cpp:3004
+#: ../src/widgets/toolbox.cpp:2953
 msgid "well rounded"
 msgstr "значно округлений"
 
-#: ../src/widgets/toolbox.cpp:3004
+#: ../src/widgets/toolbox.cpp:2953
 msgid "amply rounded"
 msgstr "дуже округлений"
 
-#: ../src/widgets/toolbox.cpp:3004 ../src/widgets/toolbox.cpp:3019
+#: ../src/widgets/toolbox.cpp:2953 ../src/widgets/toolbox.cpp:2968
 msgid "blown up"
 msgstr "надутий"
 
-#: ../src/widgets/toolbox.cpp:3007
+#: ../src/widgets/toolbox.cpp:2956
 msgid "Rounded"
 msgstr "Округленість"
 
-#: ../src/widgets/toolbox.cpp:3007
+#: ../src/widgets/toolbox.cpp:2956
 msgid "Rounded:"
 msgstr "Округленість:"
 
-#: ../src/widgets/toolbox.cpp:3007
+#: ../src/widgets/toolbox.cpp:2956
 msgid "How much rounded are the corners (0 for sharp)"
 msgstr "Наскільки згладжені кути (0 — гострі)"
 
-#: ../src/widgets/toolbox.cpp:3019
+#: ../src/widgets/toolbox.cpp:2968
 msgid "NOT randomized"
 msgstr "БЕЗ випадковості"
 
-#: ../src/widgets/toolbox.cpp:3019
+#: ../src/widgets/toolbox.cpp:2968
 msgid "slightly irregular"
 msgstr "трохи неправильно"
 
-#: ../src/widgets/toolbox.cpp:3019
+#: ../src/widgets/toolbox.cpp:2968
 msgid "visibly randomized"
 msgstr "помітно випадково"
 
-#: ../src/widgets/toolbox.cpp:3019
+#: ../src/widgets/toolbox.cpp:2968
 msgid "strongly randomized"
 msgstr "дуже випадково"
 
-#: ../src/widgets/toolbox.cpp:3022
+#: ../src/widgets/toolbox.cpp:2971
 msgid "Randomized"
 msgstr "Випадково"
 
-#: ../src/widgets/toolbox.cpp:3022
+#: ../src/widgets/toolbox.cpp:2971
 msgid "Randomized:"
 msgstr "Викривлено:"
 
-#: ../src/widgets/toolbox.cpp:3022
+#: ../src/widgets/toolbox.cpp:2971
 msgid "Scatter randomly the corners and angles"
 msgstr "Випадковим чином перемістити кути та повернути радіуси"
 
-#: ../src/widgets/toolbox.cpp:3037 ../src/widgets/toolbox.cpp:3970
-#: ../src/widgets/toolbox.cpp:4225 ../src/widgets/toolbox.cpp:8495
+#: ../src/widgets/toolbox.cpp:2986 ../src/widgets/toolbox.cpp:3919
+#: ../src/widgets/toolbox.cpp:4174 ../src/widgets/toolbox.cpp:8444
 msgid "Defaults"
 msgstr "Типово"
 
-#: ../src/widgets/toolbox.cpp:3038 ../src/widgets/toolbox.cpp:3971
+#: ../src/widgets/toolbox.cpp:2987 ../src/widgets/toolbox.cpp:3920
 msgid ""
 "Reset shape parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
@@ -24819,303 +24809,303 @@ msgstr ""
 "Скинути параметри фігури на типові (типові параметри змінюються у вікні "
 "Параметри Inkscape->Інструменти)"
 
-#: ../src/widgets/toolbox.cpp:3110
+#: ../src/widgets/toolbox.cpp:3059
 msgid "Change rectangle"
 msgstr "Змінити прямокутник"
 
-#: ../src/widgets/toolbox.cpp:3297
+#: ../src/widgets/toolbox.cpp:3246
 msgid "W:"
 msgstr "Ш:"
 
-#: ../src/widgets/toolbox.cpp:3297
+#: ../src/widgets/toolbox.cpp:3246
 msgid "Width of rectangle"
 msgstr "Ширина прямокутника"
 
-#: ../src/widgets/toolbox.cpp:3314
+#: ../src/widgets/toolbox.cpp:3263
 msgid "H:"
 msgstr "Г:"
 
-#: ../src/widgets/toolbox.cpp:3314
+#: ../src/widgets/toolbox.cpp:3263
 msgid "Height of rectangle"
 msgstr "Висота прямокутника"
 
-#: ../src/widgets/toolbox.cpp:3328 ../src/widgets/toolbox.cpp:3343
+#: ../src/widgets/toolbox.cpp:3277 ../src/widgets/toolbox.cpp:3292
 msgid "not rounded"
 msgstr "не округлений"
 
-#: ../src/widgets/toolbox.cpp:3331
+#: ../src/widgets/toolbox.cpp:3280
 msgid "Horizontal radius"
 msgstr "Горизонтальний радіус"
 
-#: ../src/widgets/toolbox.cpp:3331
+#: ../src/widgets/toolbox.cpp:3280
 msgid "Rx:"
 msgstr "Гор. радіус:"
 
-#: ../src/widgets/toolbox.cpp:3331
+#: ../src/widgets/toolbox.cpp:3280
 msgid "Horizontal radius of rounded corners"
 msgstr "Горизонтальний радіус округлених кутів"
 
-#: ../src/widgets/toolbox.cpp:3346
+#: ../src/widgets/toolbox.cpp:3295
 msgid "Vertical radius"
 msgstr "Вертикальний радіус"
 
-#: ../src/widgets/toolbox.cpp:3346
+#: ../src/widgets/toolbox.cpp:3295
 msgid "Ry:"
 msgstr "Верт. радіус:"
 
-#: ../src/widgets/toolbox.cpp:3346
+#: ../src/widgets/toolbox.cpp:3295
 msgid "Vertical radius of rounded corners"
 msgstr "Вертикальний радіус округлених кутів"
 
-#: ../src/widgets/toolbox.cpp:3365
+#: ../src/widgets/toolbox.cpp:3314
 msgid "Not rounded"
 msgstr "Не округлений"
 
-#: ../src/widgets/toolbox.cpp:3366
+#: ../src/widgets/toolbox.cpp:3315
 msgid "Make corners sharp"
 msgstr "Прибрати округлення кутів"
 
 #. TODO: use the correct axis here, too
-#: ../src/widgets/toolbox.cpp:3561
+#: ../src/widgets/toolbox.cpp:3510
 msgid "3D Box: Change perspective (angle of infinite axis)"
 msgstr ""
 "Просторовий об’єкт: Зміна перспективи (кута сходження на нескінченності)"
 
-#: ../src/widgets/toolbox.cpp:3628
+#: ../src/widgets/toolbox.cpp:3577
 msgid "Angle in X direction"
 msgstr "Кут у напрямку осі X"
 
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:3630
+#: ../src/widgets/toolbox.cpp:3579
 msgid "Angle of PLs in X direction"
 msgstr "Кут між ЛП у напрямку осі X"
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:3652
+#: ../src/widgets/toolbox.cpp:3601
 msgid "State of VP in X direction"
 msgstr "Стан ТС у напрямку осі X"
 
-#: ../src/widgets/toolbox.cpp:3653
+#: ../src/widgets/toolbox.cpp:3602
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
 "Перемикач ТС у напрямку осі X між значеннями 'скінченна' і "
 "'нескінченна' (=паралельність)"
 
-#: ../src/widgets/toolbox.cpp:3668
+#: ../src/widgets/toolbox.cpp:3617
 msgid "Angle in Y direction"
 msgstr "Кут у напрямку осі Y"
 
-#: ../src/widgets/toolbox.cpp:3668
+#: ../src/widgets/toolbox.cpp:3617
 msgid "Angle Y:"
 msgstr "Кут Y:"
 
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:3670
+#: ../src/widgets/toolbox.cpp:3619
 msgid "Angle of PLs in Y direction"
 msgstr "Перемикач між ЛП у напрямку осі Y"
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:3691
+#: ../src/widgets/toolbox.cpp:3640
 msgid "State of VP in Y direction"
 msgstr "Стан ТС у напрямку осі Y"
 
-#: ../src/widgets/toolbox.cpp:3692
+#: ../src/widgets/toolbox.cpp:3641
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
 "Перемикач ТС у напрямку осі Y між значеннями 'скінченна' і "
 "'нескінченна' (=паралельність)"
 
-#: ../src/widgets/toolbox.cpp:3707
+#: ../src/widgets/toolbox.cpp:3656
 msgid "Angle in Z direction"
 msgstr "Кут у напрямку осі Z"
 
 #. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:3709
+#: ../src/widgets/toolbox.cpp:3658
 msgid "Angle of PLs in Z direction"
 msgstr "Кут між ЛП у напрямку осі Z"
 
 #. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:3730
+#: ../src/widgets/toolbox.cpp:3679
 msgid "State of VP in Z direction"
 msgstr "Стан ТС у напрямку осі Z"
 
-#: ../src/widgets/toolbox.cpp:3731
+#: ../src/widgets/toolbox.cpp:3680
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
 msgstr ""
 "Перемикач ТС у напрямку осі Z між значеннями 'скінченна' і "
 "'нескінченна' (=паралельність)"
 
-#: ../src/widgets/toolbox.cpp:3788
+#: ../src/widgets/toolbox.cpp:3737
 msgid "Change spiral"
 msgstr "Змінити спіраль"
 
-#: ../src/widgets/toolbox.cpp:3927
+#: ../src/widgets/toolbox.cpp:3876
 msgid "just a curve"
 msgstr "просто крива"
 
-#: ../src/widgets/toolbox.cpp:3927
+#: ../src/widgets/toolbox.cpp:3876
 msgid "one full revolution"
 msgstr "один повний оберт"
 
-#: ../src/widgets/toolbox.cpp:3930
+#: ../src/widgets/toolbox.cpp:3879
 msgid "Number of turns"
 msgstr "Кількість витків"
 
-#: ../src/widgets/toolbox.cpp:3930
+#: ../src/widgets/toolbox.cpp:3879
 msgid "Turns:"
 msgstr "Витків:"
 
-#: ../src/widgets/toolbox.cpp:3930
+#: ../src/widgets/toolbox.cpp:3879
 msgid "Number of revolutions"
 msgstr "Кількість витків"
 
-#: ../src/widgets/toolbox.cpp:3941
+#: ../src/widgets/toolbox.cpp:3890
 msgid "circle"
 msgstr "коло"
 
-#: ../src/widgets/toolbox.cpp:3941
+#: ../src/widgets/toolbox.cpp:3890
 msgid "edge is much denser"
 msgstr "біля краю набагато частіше"
 
-#: ../src/widgets/toolbox.cpp:3941
+#: ../src/widgets/toolbox.cpp:3890
 msgid "edge is denser"
 msgstr "біля краю частіше"
 
-#: ../src/widgets/toolbox.cpp:3941
+#: ../src/widgets/toolbox.cpp:3890
 msgid "even"
 msgstr "рівна спіраль"
 
-#: ../src/widgets/toolbox.cpp:3941
+#: ../src/widgets/toolbox.cpp:3890
 msgid "center is denser"
 msgstr "біля центру частіше"
 
-#: ../src/widgets/toolbox.cpp:3941
+#: ../src/widgets/toolbox.cpp:3890
 msgid "center is much denser"
 msgstr "біля центру набагато частіше"
 
-#: ../src/widgets/toolbox.cpp:3944
+#: ../src/widgets/toolbox.cpp:3893
 msgid "Divergence"
 msgstr "Розходження"
 
-#: ../src/widgets/toolbox.cpp:3944
+#: ../src/widgets/toolbox.cpp:3893
 msgid "Divergence:"
 msgstr "Розходження:"
 
-#: ../src/widgets/toolbox.cpp:3944
+#: ../src/widgets/toolbox.cpp:3893
 msgid "How much denser/sparser are outer revolutions; 1 = uniform"
 msgstr "Ступінь збільшення/зменшення відстані між витками; 1 = рівномірно"
 
-#: ../src/widgets/toolbox.cpp:3955
+#: ../src/widgets/toolbox.cpp:3904
 msgid "starts from center"
 msgstr "почати від центру"
 
-#: ../src/widgets/toolbox.cpp:3955
+#: ../src/widgets/toolbox.cpp:3904
 msgid "starts mid-way"
 msgstr "почати на півдорозі"
 
-#: ../src/widgets/toolbox.cpp:3955
+#: ../src/widgets/toolbox.cpp:3904
 msgid "starts near edge"
 msgstr "почати поряд з краєм"
 
-#: ../src/widgets/toolbox.cpp:3958
+#: ../src/widgets/toolbox.cpp:3907
 msgid "Inner radius"
 msgstr "Внутрішній радіус"
 
-#: ../src/widgets/toolbox.cpp:3958
+#: ../src/widgets/toolbox.cpp:3907
 msgid "Inner radius:"
 msgstr "Внутрішній радіус:"
 
-#: ../src/widgets/toolbox.cpp:3958
+#: ../src/widgets/toolbox.cpp:3907
 msgid "Radius of the innermost revolution (relative to the spiral size)"
 msgstr "Радіус першого внутрішнього витка (відносно розміру спіралі)"
 
-#: ../src/widgets/toolbox.cpp:4030
+#: ../src/widgets/toolbox.cpp:3979
 msgid "Bezier"
 msgstr "Крива Безьє"
 
-#: ../src/widgets/toolbox.cpp:4031
+#: ../src/widgets/toolbox.cpp:3980
 msgid "Create regular Bezier path"
 msgstr "Створення регулярного контуру Безьє"
 
-#: ../src/widgets/toolbox.cpp:4037
+#: ../src/widgets/toolbox.cpp:3986
 msgid "Spiro"
 msgstr "Криві Спіро"
 
-#: ../src/widgets/toolbox.cpp:4038
+#: ../src/widgets/toolbox.cpp:3987
 msgid "Create Spiro path"
 msgstr "Створення контуру Спіро"
 
-#: ../src/widgets/toolbox.cpp:4045
+#: ../src/widgets/toolbox.cpp:3994
 msgid "Zigzag"
 msgstr "Зиґзаґ"
 
-#: ../src/widgets/toolbox.cpp:4046
+#: ../src/widgets/toolbox.cpp:3995
 msgid "Create a sequence of straight line segments"
 msgstr "Створити послідовність прямих сегментів лінії"
 
-#: ../src/widgets/toolbox.cpp:4052
+#: ../src/widgets/toolbox.cpp:4001
 msgid "Paraxial"
 msgstr "Приосьовий режим"
 
-#: ../src/widgets/toolbox.cpp:4053
+#: ../src/widgets/toolbox.cpp:4002
 msgid "Create a sequence of paraxial line segments"
 msgstr "Створити послідовність парааксіальних сегментів лінії"
 
-#: ../src/widgets/toolbox.cpp:4061
+#: ../src/widgets/toolbox.cpp:4010
 msgid "Mode of new lines drawn by this tool"
 msgstr "Режим малювання нових ліній за допомогою цього інструмента"
 
-#: ../src/widgets/toolbox.cpp:4090
+#: ../src/widgets/toolbox.cpp:4039
 msgid "Triangle in"
 msgstr "Послаблення"
 
-#: ../src/widgets/toolbox.cpp:4091
+#: ../src/widgets/toolbox.cpp:4040
 msgid "Triangle out"
 msgstr "Посилення"
 
-#: ../src/widgets/toolbox.cpp:4093
+#: ../src/widgets/toolbox.cpp:4042
 msgid "From clipboard"
 msgstr "З буфера обміну даними"
 
-#: ../src/widgets/toolbox.cpp:4118 ../src/widgets/toolbox.cpp:4119
+#: ../src/widgets/toolbox.cpp:4067 ../src/widgets/toolbox.cpp:4068
 msgid "Shape:"
 msgstr "Форма:"
 
-#: ../src/widgets/toolbox.cpp:4118
+#: ../src/widgets/toolbox.cpp:4067
 msgid "Shape of new paths drawn by this tool"
 msgstr "Форма нових контурів, створений за допомогою цього інструмента"
 
-#: ../src/widgets/toolbox.cpp:4202
+#: ../src/widgets/toolbox.cpp:4151
 msgid "(many nodes, rough)"
 msgstr "(багато вузлів, груба)"
 
-#: ../src/widgets/toolbox.cpp:4202 ../src/widgets/toolbox.cpp:4310
-#: ../src/widgets/toolbox.cpp:4327 ../src/widgets/toolbox.cpp:4535
-#: ../src/widgets/toolbox.cpp:4630 ../src/widgets/toolbox.cpp:4646
-#: ../src/widgets/toolbox.cpp:4662 ../src/widgets/toolbox.cpp:4725
-#: ../src/widgets/toolbox.cpp:4754 ../src/widgets/toolbox.cpp:4772
-#: ../src/widgets/toolbox.cpp:5130 ../src/widgets/toolbox.cpp:5163
-#: ../src/widgets/toolbox.cpp:6153
+#: ../src/widgets/toolbox.cpp:4151 ../src/widgets/toolbox.cpp:4259
+#: ../src/widgets/toolbox.cpp:4276 ../src/widgets/toolbox.cpp:4484
+#: ../src/widgets/toolbox.cpp:4579 ../src/widgets/toolbox.cpp:4595
+#: ../src/widgets/toolbox.cpp:4611 ../src/widgets/toolbox.cpp:4674
+#: ../src/widgets/toolbox.cpp:4703 ../src/widgets/toolbox.cpp:4721
+#: ../src/widgets/toolbox.cpp:5079 ../src/widgets/toolbox.cpp:5112
+#: ../src/widgets/toolbox.cpp:6102
 msgid "(default)"
 msgstr "(типова)"
 
-#: ../src/widgets/toolbox.cpp:4202
+#: ../src/widgets/toolbox.cpp:4151
 msgid "(few nodes, smooth)"
 msgstr "(мало вузлів, гладка)"
 
-#: ../src/widgets/toolbox.cpp:4205
+#: ../src/widgets/toolbox.cpp:4154
 msgid "Smoothing:"
 msgstr "Згладжування:"
 
-#: ../src/widgets/toolbox.cpp:4205
+#: ../src/widgets/toolbox.cpp:4154
 msgid "Smoothing: "
 msgstr "Згладжування: "
 
-#: ../src/widgets/toolbox.cpp:4206
+#: ../src/widgets/toolbox.cpp:4155
 msgid "How much smoothing (simplifying) is applied to the line"
 msgstr "Міра згладжування (спрощення), яку буде застосовано до лінії"
 
-#: ../src/widgets/toolbox.cpp:4226
+#: ../src/widgets/toolbox.cpp:4175
 msgid ""
 "Reset pencil parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
@@ -25124,201 +25114,201 @@ msgstr ""
 "Параметри Inkscape->Інструменти)"
 
 #. Width
-#: ../src/widgets/toolbox.cpp:4310
+#: ../src/widgets/toolbox.cpp:4259
 msgid "(pinch tweak)"
 msgstr "(легка корекція)"
 
-#: ../src/widgets/toolbox.cpp:4310
+#: ../src/widgets/toolbox.cpp:4259
 msgid "(broad tweak)"
 msgstr "(широка корекція)"
 
-#: ../src/widgets/toolbox.cpp:4313
+#: ../src/widgets/toolbox.cpp:4262
 msgid "The width of the tweak area (relative to the visible canvas area)"
 msgstr "Ширина області корекції (відносно видимої області полотна)"
 
 #. Force
-#: ../src/widgets/toolbox.cpp:4327
+#: ../src/widgets/toolbox.cpp:4276
 msgid "(minimum force)"
 msgstr "(максимальна сила)"
 
-#: ../src/widgets/toolbox.cpp:4327
+#: ../src/widgets/toolbox.cpp:4276
 msgid "(maximum force)"
 msgstr "(максимальна сила)"
 
-#: ../src/widgets/toolbox.cpp:4330
+#: ../src/widgets/toolbox.cpp:4279
 msgid "Force"
 msgstr "Сила"
 
-#: ../src/widgets/toolbox.cpp:4330
+#: ../src/widgets/toolbox.cpp:4279
 msgid "Force:"
 msgstr "Сила:"
 
-#: ../src/widgets/toolbox.cpp:4330
+#: ../src/widgets/toolbox.cpp:4279
 msgid "The force of the tweak action"
 msgstr "Сила дії інструмента корекції"
 
-#: ../src/widgets/toolbox.cpp:4348
+#: ../src/widgets/toolbox.cpp:4297
 msgid "Move mode"
 msgstr "Режим пересування"
 
-#: ../src/widgets/toolbox.cpp:4349
+#: ../src/widgets/toolbox.cpp:4298
 msgid "Move objects in any direction"
 msgstr "Пересунути об’єкти у довільному напрямку"
 
-#: ../src/widgets/toolbox.cpp:4355
+#: ../src/widgets/toolbox.cpp:4304
 msgid "Move in/out mode"
 msgstr "Режим пересування всередину/назовні"
 
-#: ../src/widgets/toolbox.cpp:4356
+#: ../src/widgets/toolbox.cpp:4305
 msgid "Move objects towards cursor; with Shift from cursor"
 msgstr "Пересунути об’єкти у напрямку вказівника; з Shift — від вказівника"
 
-#: ../src/widgets/toolbox.cpp:4362
+#: ../src/widgets/toolbox.cpp:4311
 msgid "Move jitter mode"
 msgstr "Режим дисперсії пересування"
 
-#: ../src/widgets/toolbox.cpp:4363
+#: ../src/widgets/toolbox.cpp:4312
 msgid "Move objects in random directions"
 msgstr "Пересунути об’єкти у випадкових напрямках"
 
-#: ../src/widgets/toolbox.cpp:4369
+#: ../src/widgets/toolbox.cpp:4318
 msgid "Scale mode"
 msgstr "Режим масштабування"
 
-#: ../src/widgets/toolbox.cpp:4370
+#: ../src/widgets/toolbox.cpp:4319
 msgid "Shrink objects, with Shift enlarge"
 msgstr "Стиснути об’єкти, з Shift — збільшити"
 
-#: ../src/widgets/toolbox.cpp:4376
+#: ../src/widgets/toolbox.cpp:4325
 msgid "Rotate mode"
 msgstr "Режим обертання"
 
-#: ../src/widgets/toolbox.cpp:4377
+#: ../src/widgets/toolbox.cpp:4326
 msgid "Rotate objects, with Shift counterclockwise"
 msgstr "Обертання об’єктів, з Shift — проти годинникової стрілки"
 
-#: ../src/widgets/toolbox.cpp:4383
+#: ../src/widgets/toolbox.cpp:4332
 msgid "Duplicate/delete mode"
 msgstr "Режим дублювання/вилучення"
 
-#: ../src/widgets/toolbox.cpp:4384
+#: ../src/widgets/toolbox.cpp:4333
 msgid "Duplicate objects, with Shift delete"
 msgstr "Дублювати об’єкти, з Shift — вилучити"
 
-#: ../src/widgets/toolbox.cpp:4390
+#: ../src/widgets/toolbox.cpp:4339
 msgid "Push mode"
 msgstr "Режим штовхання"
 
-#: ../src/widgets/toolbox.cpp:4391
+#: ../src/widgets/toolbox.cpp:4340
 msgid "Push parts of paths in any direction"
 msgstr "Виштовхування частин контурів у довільному напрямку"
 
-#: ../src/widgets/toolbox.cpp:4397
+#: ../src/widgets/toolbox.cpp:4346
 msgid "Shrink/grow mode"
 msgstr "Режим втягування/розтягування"
 
-#: ../src/widgets/toolbox.cpp:4398
+#: ../src/widgets/toolbox.cpp:4347
 msgid "Shrink (inset) parts of paths; with Shift grow (outset)"
 msgstr "Втягування частин контурів; з Shift розтягування"
 
-#: ../src/widgets/toolbox.cpp:4404
+#: ../src/widgets/toolbox.cpp:4353
 msgid "Attract/repel mode"
 msgstr "Режим притягання/відштовхування"
 
-#: ../src/widgets/toolbox.cpp:4405
+#: ../src/widgets/toolbox.cpp:4354
 msgid "Attract parts of paths towards cursor; with Shift from cursor"
 msgstr "Притягнути частини контуру до курсора, з Shift — від курсора"
 
-#: ../src/widgets/toolbox.cpp:4411
+#: ../src/widgets/toolbox.cpp:4360
 msgid "Roughen mode"
 msgstr "Режим грубішання"
 
-#: ../src/widgets/toolbox.cpp:4412
+#: ../src/widgets/toolbox.cpp:4361
 msgid "Roughen parts of paths"
 msgstr "Грубішання частин контурів"
 
-#: ../src/widgets/toolbox.cpp:4418
+#: ../src/widgets/toolbox.cpp:4367
 msgid "Color paint mode"
 msgstr "Режим малювання кольором"
 
-#: ../src/widgets/toolbox.cpp:4419
+#: ../src/widgets/toolbox.cpp:4368
 msgid "Paint the tool's color upon selected objects"
 msgstr "Малювати кольором інструмента на обраних об’єктах"
 
-#: ../src/widgets/toolbox.cpp:4425
+#: ../src/widgets/toolbox.cpp:4374
 msgid "Color jitter mode"
 msgstr "Режим перебирання кольорів"
 
-#: ../src/widgets/toolbox.cpp:4426
+#: ../src/widgets/toolbox.cpp:4375
 msgid "Jitter the colors of selected objects"
 msgstr "Перебір кольорів обраних об’єктів"
 
-#: ../src/widgets/toolbox.cpp:4432
+#: ../src/widgets/toolbox.cpp:4381
 msgid "Blur mode"
 msgstr "Режим розмивання"
 
-#: ../src/widgets/toolbox.cpp:4433
+#: ../src/widgets/toolbox.cpp:4382
 msgid "Blur selected objects more; with Shift, blur less"
 msgstr "Розмити вибрані об’єкти; з Shift — менше розмивання"
 
-#: ../src/widgets/toolbox.cpp:4460
+#: ../src/widgets/toolbox.cpp:4409
 msgid "Channels:"
 msgstr "Канали:"
 
-#: ../src/widgets/toolbox.cpp:4472
+#: ../src/widgets/toolbox.cpp:4421
 msgid "In color mode, act on objects' hue"
 msgstr "У кольоровому режимі працює як відтінок об'єкта"
 
 #. TRANSLATORS:  "H" here stands for hue
-#: ../src/widgets/toolbox.cpp:4476
+#: ../src/widgets/toolbox.cpp:4425
 msgid "H"
 msgstr "В"
 
-#: ../src/widgets/toolbox.cpp:4488
+#: ../src/widgets/toolbox.cpp:4437
 msgid "In color mode, act on objects' saturation"
 msgstr "У кольоровому режимі працює як насиченість об'єкта"
 
 #. TRANSLATORS: "S" here stands for Saturation
-#: ../src/widgets/toolbox.cpp:4492
+#: ../src/widgets/toolbox.cpp:4441
 msgid "S"
 msgstr "Н"
 
-#: ../src/widgets/toolbox.cpp:4504
+#: ../src/widgets/toolbox.cpp:4453
 msgid "In color mode, act on objects' lightness"
 msgstr "У кольоровому режимі працює як освітленість об'єкта"
 
 #. TRANSLATORS: "L" here stands for Lightness
-#: ../src/widgets/toolbox.cpp:4508
+#: ../src/widgets/toolbox.cpp:4457
 msgid "L"
 msgstr "О"
 
-#: ../src/widgets/toolbox.cpp:4520
+#: ../src/widgets/toolbox.cpp:4469
 msgid "In color mode, act on objects' opacity"
 msgstr "У кольоровому режимі працює як прозорість об'єкта"
 
 #. TRANSLATORS: "O" here stands for Opacity
-#: ../src/widgets/toolbox.cpp:4524
+#: ../src/widgets/toolbox.cpp:4473
 msgid "O"
 msgstr "П"
 
 #. Fidelity
-#: ../src/widgets/toolbox.cpp:4535
+#: ../src/widgets/toolbox.cpp:4484
 msgid "(rough, simplified)"
 msgstr "(грубо, спрощено)"
 
-#: ../src/widgets/toolbox.cpp:4535
+#: ../src/widgets/toolbox.cpp:4484
 msgid "(fine, but many nodes)"
 msgstr "(точно, але багато вузлів)"
 
-#: ../src/widgets/toolbox.cpp:4538
+#: ../src/widgets/toolbox.cpp:4487
 msgid "Fidelity"
 msgstr "Точність"
 
-#: ../src/widgets/toolbox.cpp:4538
+#: ../src/widgets/toolbox.cpp:4487
 msgid "Fidelity:"
 msgstr "Точність:"
 
-#: ../src/widgets/toolbox.cpp:4539
+#: ../src/widgets/toolbox.cpp:4488
 msgid ""
 "Low fidelity simplifies paths; high fidelity preserves path features but may "
 "generate a lot of new nodes"
@@ -25327,131 +25317,131 @@ msgstr ""
 "зберігає особливості контуру, але може призвести до створення великої "
 "кількості вузлів"
 
-#: ../src/widgets/toolbox.cpp:4557 ../src/widgets/toolbox.cpp:4744
-#: ../src/widgets/toolbox.cpp:5281
+#: ../src/widgets/toolbox.cpp:4506 ../src/widgets/toolbox.cpp:4693
+#: ../src/widgets/toolbox.cpp:5230
 msgid "Pressure"
 msgstr "Тиск"
 
-#: ../src/widgets/toolbox.cpp:4558
+#: ../src/widgets/toolbox.cpp:4507
 msgid "Use the pressure of the input device to alter the force of tweak action"
 msgstr ""
 "Використовувати силу натиску пристрою введення для зміни сили дії корекції"
 
 #. Width
-#: ../src/widgets/toolbox.cpp:4630
+#: ../src/widgets/toolbox.cpp:4579
 msgid "(narrow spray)"
 msgstr "(вузьке розкидання)"
 
-#: ../src/widgets/toolbox.cpp:4630
+#: ../src/widgets/toolbox.cpp:4579
 msgid "(broad spray)"
 msgstr "(широке розкидання)"
 
-#: ../src/widgets/toolbox.cpp:4633
+#: ../src/widgets/toolbox.cpp:4582
 msgid "The width of the spray area (relative to the visible canvas area)"
 msgstr "Ширина області розкидання (відносно видимої області полотна)"
 
 #. Mean
-#: ../src/widgets/toolbox.cpp:4646
+#: ../src/widgets/toolbox.cpp:4595
 msgid "(minimum mean)"
 msgstr "(мінімальне середнє)"
 
-#: ../src/widgets/toolbox.cpp:4646
+#: ../src/widgets/toolbox.cpp:4595
 msgid "(maximum mean)"
 msgstr "(максимальне середнє)"
 
-#: ../src/widgets/toolbox.cpp:4649
+#: ../src/widgets/toolbox.cpp:4598
 msgid "Focus"
 msgstr "Фокусування"
 
-#: ../src/widgets/toolbox.cpp:4649
+#: ../src/widgets/toolbox.cpp:4598
 msgid "Focus:"
 msgstr "Фокусування:"
 
-#: ../src/widgets/toolbox.cpp:4649
+#: ../src/widgets/toolbox.cpp:4598
 msgid "0 to spray a spot. Increase to enlarge the ring radius."
 msgstr ""
 "0 призведе до малювання п’ятна. Збільшення значення збільшить радіус кільця."
 
 #. Standard_deviation
-#: ../src/widgets/toolbox.cpp:4662
+#: ../src/widgets/toolbox.cpp:4611
 msgid "(minimum scatter)"
 msgstr "(мінімальне розсіювання)"
 
-#: ../src/widgets/toolbox.cpp:4662
+#: ../src/widgets/toolbox.cpp:4611
 msgid "(maximum scatter)"
 msgstr "(максимальне розсіювання)"
 
-#: ../src/widgets/toolbox.cpp:4668
+#: ../src/widgets/toolbox.cpp:4617
 msgid "Toolbox|Scatter"
 msgstr "Розсіювання"
 
-#: ../src/widgets/toolbox.cpp:4668
+#: ../src/widgets/toolbox.cpp:4617
 msgid "Toolbox|Scatter:"
 msgstr "Розсіювання:"
 
-#: ../src/widgets/toolbox.cpp:4668
+#: ../src/widgets/toolbox.cpp:4617
 msgid "Increase to scatter sprayed objects."
 msgstr "Збільшити розсіювання розкиданих об’єктів."
 
-#: ../src/widgets/toolbox.cpp:4687
+#: ../src/widgets/toolbox.cpp:4636
 msgid "Spray copies of the initial selection"
 msgstr "Розкидати копії початкової позначеної області"
 
-#: ../src/widgets/toolbox.cpp:4694
+#: ../src/widgets/toolbox.cpp:4643
 msgid "Spray clones of the initial selection"
 msgstr "Розкидати клони початкової позначеної області"
 
-#: ../src/widgets/toolbox.cpp:4700
+#: ../src/widgets/toolbox.cpp:4649
 msgid "Spray single path"
 msgstr "Розкидати окремий контур"
 
-#: ../src/widgets/toolbox.cpp:4701
+#: ../src/widgets/toolbox.cpp:4650
 msgid "Spray objects in a single path"
 msgstr "Розкидати об’єкти за окремим контуром"
 
 #. Population
-#: ../src/widgets/toolbox.cpp:4725
+#: ../src/widgets/toolbox.cpp:4674
 msgid "(low population)"
 msgstr "(низька щільність)"
 
-#: ../src/widgets/toolbox.cpp:4725
+#: ../src/widgets/toolbox.cpp:4674
 msgid "(high population)"
 msgstr "(висока щільність)"
 
-#: ../src/widgets/toolbox.cpp:4728
+#: ../src/widgets/toolbox.cpp:4677
 msgid "Amount:"
 msgstr "Кількість:"
 
-#: ../src/widgets/toolbox.cpp:4729
+#: ../src/widgets/toolbox.cpp:4678
 msgid "Adjusts the number of items sprayed per clic."
 msgstr ""
 "За допомогою цього параметра можна вказати кількість об’єктів, які буде "
 "розкидано за одне клацання."
 
-#: ../src/widgets/toolbox.cpp:4745
+#: ../src/widgets/toolbox.cpp:4694
 msgid ""
 "Use the pressure of the input device to alter the amount of sprayed objects."
 msgstr ""
 "Використовувати силу натиску пристрою введення для зміни кількості об’єктів."
 
 #. Rotation
-#: ../src/widgets/toolbox.cpp:4754
+#: ../src/widgets/toolbox.cpp:4703
 msgid "(low rotation variation)"
 msgstr "(незначне відхилення обертання)"
 
-#: ../src/widgets/toolbox.cpp:4754
+#: ../src/widgets/toolbox.cpp:4703
 msgid "(high rotation variation)"
 msgstr "(значне відхилення обертання)"
 
-#: ../src/widgets/toolbox.cpp:4757
+#: ../src/widgets/toolbox.cpp:4706
 msgid "Rotation"
 msgstr "Обертання"
 
-#: ../src/widgets/toolbox.cpp:4757
+#: ../src/widgets/toolbox.cpp:4706
 msgid "Rotation:"
 msgstr "Обертання:"
 
-#: ../src/widgets/toolbox.cpp:4759
+#: ../src/widgets/toolbox.cpp:4708
 #, no-c-format
 msgid ""
 "Variation of the rotation of the sprayed objects. 0% for the same rotation "
@@ -25461,23 +25451,23 @@ msgstr ""
 "призведе до рівності цього кута куту повороту початкового об’єкта."
 
 #. Scale
-#: ../src/widgets/toolbox.cpp:4772
+#: ../src/widgets/toolbox.cpp:4721
 msgid "(low scale variation)"
 msgstr "(незначне відхилення масштабу)"
 
-#: ../src/widgets/toolbox.cpp:4772
+#: ../src/widgets/toolbox.cpp:4721
 msgid "(high scale variation)"
 msgstr "(значне відхилення масштабу)"
 
-#: ../src/widgets/toolbox.cpp:4778
+#: ../src/widgets/toolbox.cpp:4727
 msgid "Toolbox|Scale"
 msgstr "Масштаб"
 
-#: ../src/widgets/toolbox.cpp:4778
+#: ../src/widgets/toolbox.cpp:4727
 msgid "Toolbox|Scale:"
 msgstr "Масштаб:"
 
-#: ../src/widgets/toolbox.cpp:4780
+#: ../src/widgets/toolbox.cpp:4729
 #, no-c-format
 msgid ""
 "Variation in the scale of the sprayed objects. 0% for the same scale than "
@@ -25486,61 +25476,61 @@ msgstr ""
 "Припустиме відхилення у масштабі розкиданих об’єктів. Значення 0% призведе "
 "до рівності цього масштабу масштабу початкового об’єкта."
 
-#: ../src/widgets/toolbox.cpp:4954
+#: ../src/widgets/toolbox.cpp:4903
 msgid "No preset"
 msgstr "Без шаблону"
 
-#: ../src/widgets/toolbox.cpp:4972
+#: ../src/widgets/toolbox.cpp:4921
 msgid "Save..."
 msgstr "Зберегти…"
 
 #. Width
-#: ../src/widgets/toolbox.cpp:5130 ../src/widgets/toolbox.cpp:6153
+#: ../src/widgets/toolbox.cpp:5079 ../src/widgets/toolbox.cpp:6102
 msgid "(hairline)"
 msgstr "(мотузка)"
 
-#: ../src/widgets/toolbox.cpp:5130 ../src/widgets/toolbox.cpp:6153
+#: ../src/widgets/toolbox.cpp:5079 ../src/widgets/toolbox.cpp:6102
 msgid "(broad stroke)"
 msgstr "(широкий штрих)"
 
-#: ../src/widgets/toolbox.cpp:5133 ../src/widgets/toolbox.cpp:6156
+#: ../src/widgets/toolbox.cpp:5082 ../src/widgets/toolbox.cpp:6105
 msgid "Pen Width"
 msgstr "Ширина пера"
 
-#: ../src/widgets/toolbox.cpp:5134
+#: ../src/widgets/toolbox.cpp:5083
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
 msgstr "Ширина каліграфічного пера (відносно видимої області полотна)"
 
 #. Thinning
-#: ../src/widgets/toolbox.cpp:5147
+#: ../src/widgets/toolbox.cpp:5096
 msgid "(speed blows up stroke)"
 msgstr "(швидкість збільшення штриху)"
 
-#: ../src/widgets/toolbox.cpp:5147
+#: ../src/widgets/toolbox.cpp:5096
 msgid "(slight widening)"
 msgstr "(невелике розширення)"
 
-#: ../src/widgets/toolbox.cpp:5147
+#: ../src/widgets/toolbox.cpp:5096
 msgid "(constant width)"
 msgstr "(постійна ширина)"
 
-#: ../src/widgets/toolbox.cpp:5147
+#: ../src/widgets/toolbox.cpp:5096
 msgid "(slight thinning, default)"
 msgstr "(невелике зменшення товщини, типово)"
 
-#: ../src/widgets/toolbox.cpp:5147
+#: ../src/widgets/toolbox.cpp:5096
 msgid "(speed deflates stroke)"
 msgstr "(швидкість зменшення штриху)"
 
-#: ../src/widgets/toolbox.cpp:5150
+#: ../src/widgets/toolbox.cpp:5099
 msgid "Stroke Thinning"
 msgstr "Звуження штриха"
 
-#: ../src/widgets/toolbox.cpp:5150
+#: ../src/widgets/toolbox.cpp:5099
 msgid "Thinning:"
 msgstr "Звуження:"
 
-#: ../src/widgets/toolbox.cpp:5151
+#: ../src/widgets/toolbox.cpp:5100
 msgid ""
 "How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 "
 "makes them broader, 0 makes width independent of velocity)"
@@ -25549,27 +25539,27 @@ msgstr ""
 "штрихи ширше, 0 — ширина штриха не залежить від швидкості)"
 
 #. Angle
-#: ../src/widgets/toolbox.cpp:5163
+#: ../src/widgets/toolbox.cpp:5112
 msgid "(left edge up)"
 msgstr "(піднімати лівий край)"
 
-#: ../src/widgets/toolbox.cpp:5163
+#: ../src/widgets/toolbox.cpp:5112
 msgid "(horizontal)"
 msgstr "(горизонтально)"
 
-#: ../src/widgets/toolbox.cpp:5163
+#: ../src/widgets/toolbox.cpp:5112
 msgid "(right edge up)"
 msgstr "(піднімати правий край)"
 
-#: ../src/widgets/toolbox.cpp:5166
+#: ../src/widgets/toolbox.cpp:5115
 msgid "Pen Angle"
 msgstr "Кут пера"
 
-#: ../src/widgets/toolbox.cpp:5166
+#: ../src/widgets/toolbox.cpp:5115
 msgid "Angle:"
 msgstr "Кут:"
 
-#: ../src/widgets/toolbox.cpp:5167
+#: ../src/widgets/toolbox.cpp:5116
 msgid ""
 "The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if "
 "fixation = 0)"
@@ -25578,27 +25568,27 @@ msgstr ""
 "ефекту)"
 
 #. Fixation
-#: ../src/widgets/toolbox.cpp:5181
+#: ../src/widgets/toolbox.cpp:5130
 msgid "(perpendicular to stroke, \"brush\")"
 msgstr "(перпендикулярно штриху, «щітка»)"
 
-#: ../src/widgets/toolbox.cpp:5181
+#: ../src/widgets/toolbox.cpp:5130
 msgid "(almost fixed, default)"
 msgstr "(майже постійна, типово)"
 
-#: ../src/widgets/toolbox.cpp:5181
+#: ../src/widgets/toolbox.cpp:5130
 msgid "(fixed by Angle, \"pen\")"
 msgstr "(з постійним кутом, «перо»)"
 
-#: ../src/widgets/toolbox.cpp:5184
+#: ../src/widgets/toolbox.cpp:5133
 msgid "Fixation"
 msgstr "Фіксація"
 
-#: ../src/widgets/toolbox.cpp:5184
+#: ../src/widgets/toolbox.cpp:5133
 msgid "Fixation:"
 msgstr "Фіксація:"
 
-#: ../src/widgets/toolbox.cpp:5185
+#: ../src/widgets/toolbox.cpp:5134
 msgid ""
 "Angle behavior (0 = nib always perpendicular to stroke direction, 100 = "
 "fixed angle)"
@@ -25607,31 +25597,31 @@ msgstr ""
 "= фіксований кут)"
 
 #. Cap Rounding
-#: ../src/widgets/toolbox.cpp:5197
+#: ../src/widgets/toolbox.cpp:5146
 msgid "(blunt caps, default)"
 msgstr "(тупі кінці, типово)"
 
-#: ../src/widgets/toolbox.cpp:5197
+#: ../src/widgets/toolbox.cpp:5146
 msgid "(slightly bulging)"
 msgstr "(невелика випуклість)"
 
-#: ../src/widgets/toolbox.cpp:5197
+#: ../src/widgets/toolbox.cpp:5146
 msgid "(approximately round)"
 msgstr "(приблизно коло)"
 
-#: ../src/widgets/toolbox.cpp:5197
+#: ../src/widgets/toolbox.cpp:5146
 msgid "(long protruding caps)"
 msgstr "(довгі виступаючі кінці)"
 
-#: ../src/widgets/toolbox.cpp:5201
+#: ../src/widgets/toolbox.cpp:5150
 msgid "Cap rounding"
 msgstr "Заокруглення вершини"
 
-#: ../src/widgets/toolbox.cpp:5201
+#: ../src/widgets/toolbox.cpp:5150
 msgid "Caps:"
 msgstr "Кінці:"
 
-#: ../src/widgets/toolbox.cpp:5202
+#: ../src/widgets/toolbox.cpp:5151
 msgid ""
 "Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = "
 "round caps)"
@@ -25640,94 +25630,94 @@ msgstr ""
 "кінець)"
 
 #. Tremor
-#: ../src/widgets/toolbox.cpp:5214
+#: ../src/widgets/toolbox.cpp:5163
 msgid "(smooth line)"
 msgstr "(гладка лінія)"
 
-#: ../src/widgets/toolbox.cpp:5214
+#: ../src/widgets/toolbox.cpp:5163
 msgid "(slight tremor)"
 msgstr "(невелика дрижання)"
 
-#: ../src/widgets/toolbox.cpp:5214
+#: ../src/widgets/toolbox.cpp:5163
 msgid "(noticeable tremor)"
 msgstr "(помітне дрижання)"
 
-#: ../src/widgets/toolbox.cpp:5214
+#: ../src/widgets/toolbox.cpp:5163
 msgid "(maximum tremor)"
 msgstr "(максимальне дрижання)"
 
-#: ../src/widgets/toolbox.cpp:5217
+#: ../src/widgets/toolbox.cpp:5166
 msgid "Stroke Tremor"
 msgstr "Дрижання штриха"
 
-#: ../src/widgets/toolbox.cpp:5217
+#: ../src/widgets/toolbox.cpp:5166
 msgid "Tremor:"
 msgstr "Дрижання:"
 
-#: ../src/widgets/toolbox.cpp:5218
+#: ../src/widgets/toolbox.cpp:5167
 msgid "Increase to make strokes rugged and trembling"
 msgstr "Збільшіть, щоб штрихи стали грубими та звивистими"
 
 #. Wiggle
-#: ../src/widgets/toolbox.cpp:5232
+#: ../src/widgets/toolbox.cpp:5181
 msgid "(no wiggle)"
 msgstr "(без погойдування)"
 
-#: ../src/widgets/toolbox.cpp:5232
+#: ../src/widgets/toolbox.cpp:5181
 msgid "(slight deviation)"
 msgstr "(невеликий відхилення)"
 
-#: ../src/widgets/toolbox.cpp:5232
+#: ../src/widgets/toolbox.cpp:5181
 msgid "(wild waves and curls)"
 msgstr "(великі хвилі та завитки)"
 
-#: ../src/widgets/toolbox.cpp:5235
+#: ../src/widgets/toolbox.cpp:5184
 msgid "Pen Wiggle"
 msgstr "Погойдування пера"
 
-#: ../src/widgets/toolbox.cpp:5235
+#: ../src/widgets/toolbox.cpp:5184
 msgid "Wiggle:"
 msgstr "Погойдування:"
 
-#: ../src/widgets/toolbox.cpp:5236
+#: ../src/widgets/toolbox.cpp:5185
 msgid "Increase to make the pen waver and wiggle"
 msgstr "Збільшення параметру збільшує хвилеподібність ліній"
 
 #. Mass
-#: ../src/widgets/toolbox.cpp:5249
+#: ../src/widgets/toolbox.cpp:5198
 msgid "(no inertia)"
 msgstr "(без інерції)"
 
-#: ../src/widgets/toolbox.cpp:5249
+#: ../src/widgets/toolbox.cpp:5198
 msgid "(slight smoothing, default)"
 msgstr "(невелике згладжування, типово)"
 
-#: ../src/widgets/toolbox.cpp:5249
+#: ../src/widgets/toolbox.cpp:5198
 msgid "(noticeable lagging)"
 msgstr "(помітне запізнення)"
 
-#: ../src/widgets/toolbox.cpp:5249
+#: ../src/widgets/toolbox.cpp:5198
 msgid "(maximum inertia)"
 msgstr "(максимальна інерція)"
 
-#: ../src/widgets/toolbox.cpp:5252
+#: ../src/widgets/toolbox.cpp:5201
 msgid "Pen Mass"
 msgstr "Маса пера"
 
-#: ../src/widgets/toolbox.cpp:5252
+#: ../src/widgets/toolbox.cpp:5201
 msgid "Mass:"
 msgstr "Маса:"
 
-#: ../src/widgets/toolbox.cpp:5253
+#: ../src/widgets/toolbox.cpp:5202
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
 msgstr ""
 "Збільшення веде до відставання пензля так, неначе його сповільнює інерція"
 
-#: ../src/widgets/toolbox.cpp:5268
+#: ../src/widgets/toolbox.cpp:5217
 msgid "Trace Background"
 msgstr "Слід на тлі"
 
-#: ../src/widgets/toolbox.cpp:5269
+#: ../src/widgets/toolbox.cpp:5218
 msgid ""
 "Trace the lightness of the background by the width of the pen (white - "
 "minimum width, black - maximum width)"
@@ -25735,75 +25725,75 @@ msgstr ""
 "Залишати слід освітлення на тлі залежно від ширини пера (білий — мінімальна "
 "ширина, чорний — максимальна ширина)"
 
-#: ../src/widgets/toolbox.cpp:5282
+#: ../src/widgets/toolbox.cpp:5231
 msgid "Use the pressure of the input device to alter the width of the pen"
 msgstr "Використовувати силу натиску пристроєм введення для зміни ширини лінії"
 
-#: ../src/widgets/toolbox.cpp:5294
+#: ../src/widgets/toolbox.cpp:5243
 msgid "Tilt"
 msgstr "Нахил"
 
-#: ../src/widgets/toolbox.cpp:5295
+#: ../src/widgets/toolbox.cpp:5244
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
 msgstr "Використовувати нахил пристрою введення для зміни кута"
 
-#: ../src/widgets/toolbox.cpp:5310
+#: ../src/widgets/toolbox.cpp:5259
 msgid "Choose a preset"
 msgstr "Обрати набір"
 
-#: ../src/widgets/toolbox.cpp:5399
+#: ../src/widgets/toolbox.cpp:5348
 msgid "Arc: Change start/end"
 msgstr "Дуга: змінити початок/кінець"
 
-#: ../src/widgets/toolbox.cpp:5463
+#: ../src/widgets/toolbox.cpp:5412
 msgid "Arc: Change open/closed"
 msgstr "Дуга: змінити відкритість/замкненість"
 
-#: ../src/widgets/toolbox.cpp:5589
+#: ../src/widgets/toolbox.cpp:5538
 msgid "Start:"
 msgstr "Початок:"
 
-#: ../src/widgets/toolbox.cpp:5590
+#: ../src/widgets/toolbox.cpp:5539
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
 msgstr "Кут (у градусах) від горизонталі до початкової точки дуги"
 
-#: ../src/widgets/toolbox.cpp:5602
+#: ../src/widgets/toolbox.cpp:5551
 msgid "End:"
 msgstr "Кінець:"
 
-#: ../src/widgets/toolbox.cpp:5603
+#: ../src/widgets/toolbox.cpp:5552
 msgid "The angle (in degrees) from the horizontal to the arc's end point"
 msgstr "Кут (у градусах) від горизонталі до кінцевої точки дуги"
 
-#: ../src/widgets/toolbox.cpp:5619
+#: ../src/widgets/toolbox.cpp:5568
 msgid "Closed arc"
 msgstr "Закрита дуга"
 
-#: ../src/widgets/toolbox.cpp:5620
+#: ../src/widgets/toolbox.cpp:5569
 msgid "Switch to segment (closed shape with two radii)"
 msgstr "Перетворити на сегмент (замкнутої фігури з двома радіусами-сторонами)"
 
-#: ../src/widgets/toolbox.cpp:5626
+#: ../src/widgets/toolbox.cpp:5575
 msgid "Open Arc"
 msgstr "Відкрита дуга"
 
-#: ../src/widgets/toolbox.cpp:5627
+#: ../src/widgets/toolbox.cpp:5576
 msgid "Switch to arc (unclosed shape)"
 msgstr "Перейти до дуги (незакриту фігуру)"
 
-#: ../src/widgets/toolbox.cpp:5650
+#: ../src/widgets/toolbox.cpp:5599
 msgid "Make whole"
 msgstr "Зробити цілим"
 
-#: ../src/widgets/toolbox.cpp:5651
+#: ../src/widgets/toolbox.cpp:5600
 msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr "Робить фігуру цілим еліпсом, а не дугою чи сегментом"
 
-#: ../src/widgets/toolbox.cpp:5729
+#: ../src/widgets/toolbox.cpp:5678
 msgid "Pick opacity"
 msgstr "Непрозорість піпетки"
 
-#: ../src/widgets/toolbox.cpp:5730
+#: ../src/widgets/toolbox.cpp:5679
 msgid ""
 "Pick both the color and the alpha (transparency) under cursor; otherwise, "
 "pick only the visible color premultiplied by alpha"
@@ -25811,62 +25801,62 @@ msgstr ""
 "Підберіть колір та альфу (прозорість) під курсором; інакше підберіть тільки "
 "видимий колір попередньо помножений на альфу"
 
-#: ../src/widgets/toolbox.cpp:5733
+#: ../src/widgets/toolbox.cpp:5682
 msgid "Pick"
 msgstr "Піпетка"
 
-#: ../src/widgets/toolbox.cpp:5742
+#: ../src/widgets/toolbox.cpp:5691
 msgid "Assign opacity"
 msgstr "Призначити непрозорість"
 
-#: ../src/widgets/toolbox.cpp:5743
+#: ../src/widgets/toolbox.cpp:5692
 msgid ""
 "If alpha was picked, assign it to selection as fill or stroke transparency"
 msgstr ""
 "Якщо підібрано альфу, призначити її заповненню чи штриху у позначеній області"
 
-#: ../src/widgets/toolbox.cpp:5746
+#: ../src/widgets/toolbox.cpp:5695
 msgid "Assign"
 msgstr "Призначити"
 
-#: ../src/widgets/toolbox.cpp:5931
+#: ../src/widgets/toolbox.cpp:5880
 msgid "Closed"
 msgstr "Замкнений"
 
-#: ../src/widgets/toolbox.cpp:5933
+#: ../src/widgets/toolbox.cpp:5882
 msgid "Open start"
 msgstr "Відкритий початок"
 
-#: ../src/widgets/toolbox.cpp:5935
+#: ../src/widgets/toolbox.cpp:5884
 msgid "Open end"
 msgstr "Відкритий кінець"
 
-#: ../src/widgets/toolbox.cpp:5937
+#: ../src/widgets/toolbox.cpp:5886
 msgid "Open both"
 msgstr "Відкриті обидва кінці"
 
-#: ../src/widgets/toolbox.cpp:5996
+#: ../src/widgets/toolbox.cpp:5945
 msgid "All inactive"
 msgstr "Всі незадіяні"
 
-#: ../src/widgets/toolbox.cpp:5997
+#: ../src/widgets/toolbox.cpp:5946
 msgid "No geometric tool is active"
 msgstr "Жоден з геометричних інструментів не задіяно"
 
-#: ../src/widgets/toolbox.cpp:6030
+#: ../src/widgets/toolbox.cpp:5979
 msgid "Show limiting bounding box"
 msgstr "Показати контур-обгортку"
 
-#: ../src/widgets/toolbox.cpp:6031
+#: ../src/widgets/toolbox.cpp:5980
 msgid "Show bounding box (used to cut infinite lines)"
 msgstr ""
 "Показувати рамку-обгортку (використовується для вирізання нескінченних ліній)"
 
-#: ../src/widgets/toolbox.cpp:6042
+#: ../src/widgets/toolbox.cpp:5991
 msgid "Get limiting bounding box from selection"
 msgstr "Отримати контур-обгортку з позначених об'єктів"
 
-#: ../src/widgets/toolbox.cpp:6043
+#: ../src/widgets/toolbox.cpp:5992
 msgid ""
 "Set limiting bounding box (used to cut infinite lines) to the bounding box "
 "of current selection"
@@ -25874,97 +25864,97 @@ msgstr ""
 "Вказати обмежувальну рамку-обгортку (використовується для обрізання "
 "нескінченних ліній) до рамки-обгортки поточної вибраної області"
 
-#: ../src/widgets/toolbox.cpp:6055
+#: ../src/widgets/toolbox.cpp:6004
 msgid "Choose a line segment type"
 msgstr "Обрати тип сегмента лінії"
 
-#: ../src/widgets/toolbox.cpp:6071
+#: ../src/widgets/toolbox.cpp:6020
 msgid "Display measuring info"
 msgstr "Показати відомості щодо виміру"
 
-#: ../src/widgets/toolbox.cpp:6072
+#: ../src/widgets/toolbox.cpp:6021
 msgid "Display measuring info for selected items"
 msgstr "Показувати відомості щодо виміру для вибраних елементів"
 
-#: ../src/widgets/toolbox.cpp:6092
+#: ../src/widgets/toolbox.cpp:6041
 msgid "Open LPE dialog"
 msgstr "Відкрити діалогове вікно геометричних побудов"
 
-#: ../src/widgets/toolbox.cpp:6093
+#: ../src/widgets/toolbox.cpp:6042
 msgid "Open LPE dialog (to adapt parameters numerically)"
 msgstr ""
 "Відкрити діалогове вікно геометричних побудов (для числового налаштування "
 "параметрів)"
 
-#: ../src/widgets/toolbox.cpp:6157
+#: ../src/widgets/toolbox.cpp:6106
 msgid "The width of the eraser pen (relative to the visible canvas area)"
 msgstr "Ширина гумки (відносно видимої області полотна)"
 
-#: ../src/widgets/toolbox.cpp:6175
+#: ../src/widgets/toolbox.cpp:6124
 msgid "Delete objects touched by the eraser"
 msgstr "Вилучати об’єкти, яких торкнулася гумка"
 
-#: ../src/widgets/toolbox.cpp:6181
+#: ../src/widgets/toolbox.cpp:6130
 msgid "Cut"
 msgstr "Вирізати"
 
-#: ../src/widgets/toolbox.cpp:6182
+#: ../src/widgets/toolbox.cpp:6131
 msgid "Cut out from objects"
 msgstr "Вирізати з об'єктів"
 
-#: ../src/widgets/toolbox.cpp:6431
+#: ../src/widgets/toolbox.cpp:6380
 msgid "Text: Change font family"
 msgstr "Текст: Зміна сімейства шрифту"
 
-#: ../src/widgets/toolbox.cpp:6478
+#: ../src/widgets/toolbox.cpp:6427
 msgid "Text: Change font size"
 msgstr "Текст: Зміна розміру шрифту"
 
-#: ../src/widgets/toolbox.cpp:6624
+#: ../src/widgets/toolbox.cpp:6573
 msgid "Text: Change font style"
 msgstr "Текст: Зміна нарису шрифту"
 
-#: ../src/widgets/toolbox.cpp:6701
+#: ../src/widgets/toolbox.cpp:6650
 msgid "Text: Change superscript or subscript"
 msgstr "Текст: змінити на верхній або нижній індекс"
 
-#: ../src/widgets/toolbox.cpp:6845
+#: ../src/widgets/toolbox.cpp:6794
 msgid "Text: Change alignment"
 msgstr "Текст: Зміна вирівнювання"
 
-#: ../src/widgets/toolbox.cpp:6884
+#: ../src/widgets/toolbox.cpp:6833
 msgid "Text: Change line-height"
 msgstr "Текст: Зміна висоти рядків"
 
-#: ../src/widgets/toolbox.cpp:6923
+#: ../src/widgets/toolbox.cpp:6872
 msgid "Text: Change word-spacing"
 msgstr "Текст: Зміна інтервалів між словами"
 
-#: ../src/widgets/toolbox.cpp:6962
+#: ../src/widgets/toolbox.cpp:6911
 msgid "Text: Change letter-spacing"
 msgstr "Текст: Зміна інтервалів між літерами"
 
-#: ../src/widgets/toolbox.cpp:7007
+#: ../src/widgets/toolbox.cpp:6956
 msgid "Text: Change dx (kern)"
 msgstr "Текст: Зміна приросту за x (керна)"
 
-#: ../src/widgets/toolbox.cpp:7038
+#: ../src/widgets/toolbox.cpp:6987
 msgid "Text: Change dy"
 msgstr "Текст: Зміна приросту за y"
 
-#: ../src/widgets/toolbox.cpp:7069
+#: ../src/widgets/toolbox.cpp:7018
 msgid "Text: Change rotate"
 msgstr "Текст: Зміна кута обертання"
 
-#: ../src/widgets/toolbox.cpp:7114
+#: ../src/widgets/toolbox.cpp:7063
 msgid "Text: Change orientation"
 msgstr "Текст: Зміна орієнтації"
 
-#: ../src/widgets/toolbox.cpp:7478
+#: ../src/widgets/toolbox.cpp:7427
 msgid "Font Family"
 msgstr "Гарнітура шрифту"
 
-#: ../src/widgets/toolbox.cpp:7479
+#: ../src/widgets/toolbox.cpp:7428
 msgid "Select Font Family (Alt-X to access)"
 msgstr "Виберіть гарнітуру шрифту (Alt-X для доступу)"
 
@@ -25972,332 +25962,332 @@ msgstr "Виберіть гарнітуру шрифту (Alt-X для дост�
 #. Extra list width
 #. Cell layout
 #. Enable entry completion
-#: ../src/widgets/toolbox.cpp:7486
+#: ../src/widgets/toolbox.cpp:7435
 msgid "Font not found on system"
 msgstr "Шрифту у системі не виявлено"
 
-#: ../src/widgets/toolbox.cpp:7518
+#: ../src/widgets/toolbox.cpp:7467
 msgid "Font Size"
 msgstr "Розмір шрифту"
 
-#: ../src/widgets/toolbox.cpp:7519
+#: ../src/widgets/toolbox.cpp:7468
 msgid "Font size (px)"
 msgstr "Розмір шрифту (у пікселях)"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7531
+#: ../src/widgets/toolbox.cpp:7480
 msgid "Toggle Bold"
 msgstr "Увімкнути/Вимкнути напівжирний нарис"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7532
+#: ../src/widgets/toolbox.cpp:7481
 msgid "Toggle bold or normal weight"
 msgstr "Перемкнутися між звичайним та напівжирним нарисом"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7544
+#: ../src/widgets/toolbox.cpp:7493
 msgid "Toggle Italic/Oblique"
 msgstr "Перемкнутися між курсивним та прямим нарисом"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7545
+#: ../src/widgets/toolbox.cpp:7494
 msgid "Toggle italic/oblique style"
 msgstr "Перемкнутися між курсивним та прямим нарисом"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7557
+#: ../src/widgets/toolbox.cpp:7506
 msgid "Toggle Superscript"
 msgstr "Увімкнути/Вимкнути режим верхнього індексу"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7558
+#: ../src/widgets/toolbox.cpp:7507
 msgid "Toggle superscript"
 msgstr "Увімкнути/Вимкнути режим верхнього індексу"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7570
+#: ../src/widgets/toolbox.cpp:7519
 msgid "Toggle Subscript"
 msgstr "Увімкнути/Вимкнути режим нижнього індексу"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7571
+#: ../src/widgets/toolbox.cpp:7520
 msgid "Toggle subscript"
 msgstr "Увімкнути/Вимкнути режим нижнього індексу"
 
-#: ../src/widgets/toolbox.cpp:7588 ../src/widgets/toolbox.cpp:7589
+#: ../src/widgets/toolbox.cpp:7537 ../src/widgets/toolbox.cpp:7538
 msgid "Align left"
 msgstr "Вирівнювання ліворуч"
 
-#: ../src/widgets/toolbox.cpp:7596 ../src/widgets/toolbox.cpp:7597
+#: ../src/widgets/toolbox.cpp:7545 ../src/widgets/toolbox.cpp:7546
 msgid "Align center"
 msgstr "Посередині"
 
-#: ../src/widgets/toolbox.cpp:7604 ../src/widgets/toolbox.cpp:7605
+#: ../src/widgets/toolbox.cpp:7553 ../src/widgets/toolbox.cpp:7554
 msgid "Align right"
 msgstr "Вирівнювання праворуч"
 
-#: ../src/widgets/toolbox.cpp:7612
+#: ../src/widgets/toolbox.cpp:7561
 msgid "Justify"
 msgstr "Вирівняти з заповненням"
 
-#: ../src/widgets/toolbox.cpp:7613
+#: ../src/widgets/toolbox.cpp:7562
 msgid "Justify (only flowed text)"
 msgstr "Вирівняти раз шириною (лише неконтурний текст)"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7619
+#: ../src/widgets/toolbox.cpp:7568
 msgid "Alignment"
 msgstr "Вирівнювання"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7620
+#: ../src/widgets/toolbox.cpp:7569
 msgid "Text alignment"
 msgstr "Вирівнювання тексту"
 
-#: ../src/widgets/toolbox.cpp:7647
+#: ../src/widgets/toolbox.cpp:7596
 msgid "Horizontal"
 msgstr "Горизонтально"
 
-#: ../src/widgets/toolbox.cpp:7654
+#: ../src/widgets/toolbox.cpp:7603
 msgid "Vertical"
 msgstr "Вертикально"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7661
+#: ../src/widgets/toolbox.cpp:7610
 msgid "Text orientation"
 msgstr "Орієнтація тексту"
 
 #. Drop down menu
-#: ../src/widgets/toolbox.cpp:7684
+#: ../src/widgets/toolbox.cpp:7633
 msgid "Smaller spacing"
 msgstr "Менший інтервал"
 
-#: ../src/widgets/toolbox.cpp:7684
+#: ../src/widgets/toolbox.cpp:7633
 msgid "Larger spacing"
 msgstr "Більший інтервал"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7689
+#: ../src/widgets/toolbox.cpp:7638
 msgid "Line Height"
 msgstr "Висота рядка"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7690
+#: ../src/widgets/toolbox.cpp:7639
 msgid "Line:"
 msgstr "Рядок:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7691
+#: ../src/widgets/toolbox.cpp:7640
 msgid "Spacing between lines (times font size)"
 msgstr "Інтервал між рядками (у одиницях розміру шрифту)"
 
 #. Drop down menu
-#: ../src/widgets/toolbox.cpp:7715 ../src/widgets/toolbox.cpp:7746
+#: ../src/widgets/toolbox.cpp:7664 ../src/widgets/toolbox.cpp:7695
 msgid "Negative spacing"
 msgstr "Від’ємний інтервал"
 
-#: ../src/widgets/toolbox.cpp:7715 ../src/widgets/toolbox.cpp:7746
+#: ../src/widgets/toolbox.cpp:7664 ../src/widgets/toolbox.cpp:7695
 msgid "Positive spacing"
 msgstr "Додатний інтервал"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7720
+#: ../src/widgets/toolbox.cpp:7669
 msgid "Word spacing"
 msgstr "Інтервал між словами"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7721
+#: ../src/widgets/toolbox.cpp:7670
 msgid "Word:"
 msgstr "Слово:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7722
+#: ../src/widgets/toolbox.cpp:7671
 msgid "Spacing between words (px)"
 msgstr "Інтервал між словами (у пікселях)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7751
+#: ../src/widgets/toolbox.cpp:7700
 msgid "Letter spacing"
 msgstr "Інтервал між літерами"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7752
+#: ../src/widgets/toolbox.cpp:7701
 msgid "Letter:"
 msgstr "Літера:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7753
+#: ../src/widgets/toolbox.cpp:7702
 msgid "Spacing between letters (px)"
 msgstr "Інтервал між літерами (у пікселях)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7782
+#: ../src/widgets/toolbox.cpp:7731
 msgid "Kerning"
 msgstr "Кернінґ"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7783
+#: ../src/widgets/toolbox.cpp:7732
 msgid "Kern:"
 msgstr "Керн:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7784
+#: ../src/widgets/toolbox.cpp:7733
 msgid "Horizontal kerning (px)"
 msgstr "Горизонтальний кернінґ (у пікселях)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7813
+#: ../src/widgets/toolbox.cpp:7762
 msgid "Vertical Shift"
 msgstr "Вертикальний зсув"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7814
+#: ../src/widgets/toolbox.cpp:7763
 msgid "Vert:"
 msgstr "Верт.:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7815
+#: ../src/widgets/toolbox.cpp:7764
 msgid "Vertical shift (px)"
 msgstr "Вертикальний зсув (у пікселях)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7844
+#: ../src/widgets/toolbox.cpp:7793
 msgid "Letter rotation"
 msgstr "Обертання літер"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7845
+#: ../src/widgets/toolbox.cpp:7794
 msgid "Rot:"
 msgstr "Обер.:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7846
+#: ../src/widgets/toolbox.cpp:7795
 msgid "Character rotation (degrees)"
 msgstr "Обертання символів (у градусах)"
 
-#: ../src/widgets/toolbox.cpp:7961
+#: ../src/widgets/toolbox.cpp:7910
 msgid "Set connector type: orthogonal"
 msgstr "Встановити тип з’єднання: під прямим кутом"
 
-#: ../src/widgets/toolbox.cpp:7961
+#: ../src/widgets/toolbox.cpp:7910
 msgid "Set connector type: polyline"
 msgstr "Встановити тип з’єднання: ламана"
 
-#: ../src/widgets/toolbox.cpp:8009
+#: ../src/widgets/toolbox.cpp:7958
 msgid "Change connector curvature"
 msgstr "Змінити кривину з’єднання"
 
-#: ../src/widgets/toolbox.cpp:8057
+#: ../src/widgets/toolbox.cpp:8006
 msgid "Change connector spacing"
 msgstr "Зміна відстаней для лінії з'єднання"
 
-#: ../src/widgets/toolbox.cpp:8175
+#: ../src/widgets/toolbox.cpp:8124
 msgid "EditMode"
 msgstr "Режим редагування"
 
-#: ../src/widgets/toolbox.cpp:8176
+#: ../src/widgets/toolbox.cpp:8125
 msgid "Switch between connection point editing and connector drawing mode"
 msgstr ""
 "Перемкнути між редагуванням параметрів точки з’єднання і режимом малювання "
 "з’єднання"
 
-#: ../src/widgets/toolbox.cpp:8190
+#: ../src/widgets/toolbox.cpp:8139
 msgid "Avoid"
 msgstr "Уникати"
 
-#: ../src/widgets/toolbox.cpp:8200
+#: ../src/widgets/toolbox.cpp:8149
 msgid "Ignore"
 msgstr "Ігнорувати"
 
-#: ../src/widgets/toolbox.cpp:8211
+#: ../src/widgets/toolbox.cpp:8160
 msgid "Orthogonal"
 msgstr "Під прямим кутом"
 
-#: ../src/widgets/toolbox.cpp:8212
+#: ../src/widgets/toolbox.cpp:8161
 msgid "Make connector orthogonal or polyline"
 msgstr "Зробити з’єднання з’єднанням під прямим кутом або з’єднанням у ламаній"
 
-#: ../src/widgets/toolbox.cpp:8226
+#: ../src/widgets/toolbox.cpp:8175
 msgid "Connector Curvature"
 msgstr "Кривина з’єднання"
 
-#: ../src/widgets/toolbox.cpp:8226
+#: ../src/widgets/toolbox.cpp:8175
 msgid "Curvature:"
 msgstr "Кривина:"
 
-#: ../src/widgets/toolbox.cpp:8227
+#: ../src/widgets/toolbox.cpp:8176
 msgid "The amount of connectors curvature"
 msgstr "Кривина з’єднань"
 
-#: ../src/widgets/toolbox.cpp:8237
+#: ../src/widgets/toolbox.cpp:8186
 msgid "Connector Spacing"
 msgstr "Відстань для з'єднання"
 
-#: ../src/widgets/toolbox.cpp:8237
+#: ../src/widgets/toolbox.cpp:8186
 msgid "Spacing:"
 msgstr "Інтервал:"
 
-#: ../src/widgets/toolbox.cpp:8238
+#: ../src/widgets/toolbox.cpp:8187
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Простір, що залишається навколо об'єктів під час автоз'єднання"
 
-#: ../src/widgets/toolbox.cpp:8249
+#: ../src/widgets/toolbox.cpp:8198
 msgid "Graph"
 msgstr "Графік"
 
-#: ../src/widgets/toolbox.cpp:8259
+#: ../src/widgets/toolbox.cpp:8208
 msgid "Connector Length"
 msgstr "Довжина з'єднання"
 
-#: ../src/widgets/toolbox.cpp:8259
+#: ../src/widgets/toolbox.cpp:8208
 msgid "Length:"
 msgstr "Довжина:"
 
-#: ../src/widgets/toolbox.cpp:8260
+#: ../src/widgets/toolbox.cpp:8209
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
 
-#: ../src/widgets/toolbox.cpp:8272
+#: ../src/widgets/toolbox.cpp:8221
 msgid "Downwards"
 msgstr "Вниз"
 
-#: ../src/widgets/toolbox.cpp:8273
+#: ../src/widgets/toolbox.cpp:8222
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Змусити кінцеві стрілки ліній з'єднання вказувати вниз"
 
-#: ../src/widgets/toolbox.cpp:8289
+#: ../src/widgets/toolbox.cpp:8238
 msgid "Do not allow overlapping shapes"
 msgstr "Не дозволяти перекриття форм"
 
-#: ../src/widgets/toolbox.cpp:8304
+#: ../src/widgets/toolbox.cpp:8253
 msgid "New connection point"
 msgstr "Створити точку з’єднання"
 
-#: ../src/widgets/toolbox.cpp:8305
+#: ../src/widgets/toolbox.cpp:8254
 msgid "Add a new connection point to the currently selected item"
 msgstr "Додати нову точку з’єднання до поточного позначеного об’єкта"
 
-#: ../src/widgets/toolbox.cpp:8316
+#: ../src/widgets/toolbox.cpp:8265
 msgid "Remove connection point"
 msgstr "Вилучити точку з’єднання"
 
-#: ../src/widgets/toolbox.cpp:8317
+#: ../src/widgets/toolbox.cpp:8266
 msgid "Remove the currently selected connection point"
 msgstr "Вилучити поточну позначену точку з’єднання"
 
-#: ../src/widgets/toolbox.cpp:8417
+#: ../src/widgets/toolbox.cpp:8366
 msgid "Fill by"
 msgstr "Залити"
 
-#: ../src/widgets/toolbox.cpp:8418
+#: ../src/widgets/toolbox.cpp:8367
 msgid "Fill by:"
 msgstr "Чим залити:"
 
-#: ../src/widgets/toolbox.cpp:8430
+#: ../src/widgets/toolbox.cpp:8379
 msgid "Fill Threshold"
 msgstr "Поріг залиття"
 
-#: ../src/widgets/toolbox.cpp:8431
+#: ../src/widgets/toolbox.cpp:8380
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
@@ -26305,29 +26295,29 @@ msgstr ""
 "Максимальна допустима різниця між точкою, на якій клацнули та сусідніми "
 "точками які обчислені у заповненні"
 
-#: ../src/widgets/toolbox.cpp:8457
+#: ../src/widgets/toolbox.cpp:8406
 msgid "Grow/shrink by"
 msgstr "Збільшити/зменшити на"
 
-#: ../src/widgets/toolbox.cpp:8457
+#: ../src/widgets/toolbox.cpp:8406
 msgid "Grow/shrink by:"
 msgstr "Збільшити/зменшити на:"
 
-#: ../src/widgets/toolbox.cpp:8458
+#: ../src/widgets/toolbox.cpp:8407
 msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Величина збільшення (додатне число) або зменшення (від'ємне) створеного "
 "контуру заповнення"
 
-#: ../src/widgets/toolbox.cpp:8483
+#: ../src/widgets/toolbox.cpp:8432
 msgid "Close gaps"
 msgstr "Закрити проміжки"
 
-#: ../src/widgets/toolbox.cpp:8484
+#: ../src/widgets/toolbox.cpp:8433
 msgid "Close gaps:"
 msgstr "Закриті проміжки:"
 
-#: ../src/widgets/toolbox.cpp:8496
+#: ../src/widgets/toolbox.cpp:8445
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -26393,3 +26383,8 @@ msgstr "Нахил (у градусах)"
 msgid "Wireframe Sphere"
 msgstr "Каркас сфери"
 
+#~ msgid "Task"
+#~ msgstr "Завдання"
+
+#~ msgid "Task:"
+#~ msgstr "Завдання:"
