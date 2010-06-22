@@ -179,6 +179,13 @@ ${!ifexist} ..\..\.bzr\branch\last-revision
 !if `${BZR_REVISION}` == ``
   !undef BZR_REVISION
 !endif
+; For releases like 0.48pre1, throw away the preN. It's too tricky to deal with
+; it properly so I'll leave it alone. It's just a pre-release, so it doesn't
+; really matter. So long as the final release works properly.
+!ifndef DEVEL
+  !undef INKSCAPE_VERSION_NUMBER
+  !searchparse /noerrors ${INKSCAPE_VERSION} "" INKSCAPE_VERSION_NUMBER "pre" PRE_NUMBER
+!endif
 
 ; Handle display version number and complete X.X version numbers into X.X.X.X {{{3
 !ifdef DEVEL & BZR_REVISION
@@ -188,7 +195,13 @@ ${!ifexist} ..\..\.bzr\branch\last-revision
 ; Handle the installer revision number {{{4
 !else ifdef RELEASE_REVISION
   ${!redef} FILENAME `${FILENAME}-${RELEASE_REVISION}`
-  ${!redef} BrandingText `${BrandingText}, revision ${BZR_REVISION}`
+  ; If we wanted the branding text to be like "Inkscape 0.48pre1 r9505" this'd do it.
+  ;!ifdef BZR_REVISION
+  ;  ${!redef} BrandingText `${BrandingText} r${BZR_REVISION}`
+  ;!endif
+  !if `${RELEASE_REVISION}` != `1`
+    ${!redef} BrandingText `${BrandingText}, revision ${RELEASE_REVISION}`
+  !endif
   !define VERSION_X.X.X.X_REVISION ${RELEASE_REVISION}
 !else
   !define VERSION_X.X.X.X_REVISION 0
