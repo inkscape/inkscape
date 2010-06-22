@@ -164,6 +164,7 @@ EXTRA_DIST = \
 	packaging/win32/languages/Italian.nsh	\
 	packaging/win32/languages/Japanese.nsh	\
 	packaging/win32/languages/Polish.nsh	\
+	packaging/win32/languages/Romanian.nsh	\
 	packaging/win32/languages/Russian.nsh	\
 	packaging/win32/languages/Slovak.nsh	\
 	packaging/win32/languages/Slovenian.nsh	\
@@ -174,10 +175,13 @@ EXTRA_DIST = \
 	packaging/win32/header.svg	\
 	packaging/win32/AdvUninstLog.nsh	\
 	packaging/win32/AdvUninstLog.txt	\
+	packaging/win32/ifexist.nsh \
 	packaging/win32/md5dll.dll	\
 	packaging/win32/md5dll.txt	\
 	packaging/win32/messagebox.dll	\
 	packaging/win32/MessageBox.txt	\
+	packaging/win32/RequireLatestNSIS.nsh \
+	packaging/win32/VersionCompleteXXXX.nsh \
 	packaging/win32/welcomefinish.bmp	\
 	packaging/win32/welcomefinish.svg	\
 	packaging/win32/portable/help.html \
