@@ -1,6 +1,6 @@
 <root xmlns="http://www.inkscape.org/namespaces/keys" 
   title="Inkscape keyboard and mouse reference"
-  ver  ="0.47"
+  ver  ="0.48"
 >
 
 <p>This document describes the default keyboard and mouse shortcuts of Inkscape, corresponding to the
@@ -29,16 +29,17 @@ RFE</a>).</p>
 <keys><key><keyf f="F4"/></key><key>r</key>	 <action>Rectangle tool</action></keys>
 <keys><key><shift/><keyf f="F4"/></key><key>x</key>	 <action>3D box tool</action></keys>
 <keys><key><keyf f="F5"/></key><key>e</key>	 <action>Ellipse/arc tool</action></keys>
+<keys><key><shift/><keyf f="F9"/></key><key>*</key>	 <action>Star tool</action></keys>
+<keys><key><keyf f="F9"/></key><key>i</key>	 <action>Spiral tool</action></keys>
 <keys><key><keyf f="F6"/></key><key>p</key>	 <action>Pencil (Freehand) tool</action></keys>
 <keys><key><shift/><keyf f="F6"/></key><key>b</key>	 <action>Pen (Bezier) tool</action></keys>
 <keys><key><ctrl/><keyf f="F6"/></key><key>c</key>	 <action>Calligraphy tool</action></keys>
+<keys><key><keyf f="F8"/></key><key>t</key>	 <action>Text tool</action></keys>
+<keys><key><shift/><keyf f="F3"/></key><key>a</key>	 <action>Spray tool</action></keys>
 <keys><key><shift/><keyf f="E"/></key><key>c</key>	 <action>Eraser tool</action></keys>
 <keys><key><shift/><keyf f="F7"/></key><key>u</key>	 <action>Paint Bucket tool</action></keys>
 <keys><key><ctrl/><keyf f="F1"/></key><key>g</key>	 <action>Gradient tool</action></keys>
 <keys><key><keyf f="F7"/></key><key>d</key>	 <action>Dropper tool</action></keys>
-<keys><key><keyf f="F8"/></key><key>t</key>	 <action>Text tool</action></keys>
-<keys><key><keyf f="F9"/></key><key>i</key>	 <action>Spiral tool</action></keys>
-<keys><key><shift/><keyf f="F9"/></key><key>*</key>	 <action>Star tool</action></keys>
 <keys><key><ctrl/><keyf f="F2"/></key><key>o</key>	 <action>Connector tool</action></keys>
 <note>Double click on the tool buttons opens the Preferences dialog showing the page of the corresponding tool.</note>
 </group>
@@ -63,6 +64,7 @@ RFE</a>).</p>
 <keys><key><ctrl/>F</key>	 <action>Find</action></keys>
 <keys><key><shift/><alt/>B</key>	 <action>Trace Bitmap</action></keys>
 <keys><key><shift/><ctrl/>7</key>	 <action>Path Effects</action></keys>
+<keys><key><ctrl/><alt/>K</key>	 <action>Check Spelling</action></keys>
 <note>These shortcuts open a new dialog window if it wasn't open yet, otherwise the corresponding dialog gets focus.</note>
 </group>
 
@@ -181,7 +183,7 @@ RFE</a>).</p>
 
 <group>
 <title>Display mode</title>
-<keys><key><ctrl/><misc-wide f="keypad 5"/></key>  <action>toggle normal/outline mode</action></keys>
+<keys><key><ctrl/><misc-wide f="keypad 5"/></key>  <action>toggle normal/no filters/outline/print colors preview mode</action></keys>
 </group>
 </section>
 
