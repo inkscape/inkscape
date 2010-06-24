@@ -123,6 +123,7 @@ ShowUninstDetails hide
 !insertmacro INKLANGFILE French
 !insertmacro INKLANGFILE Galician
 !insertmacro INKLANGFILE German
+!insertmacro INKLANGFILE Indonesian
 !insertmacro INKLANGFILE Italian
 !insertmacro INKLANGFILE Japanese
 !insertmacro INKLANGFILE Polish
@@ -649,6 +650,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro LanguageAutoSelect French        1036
   !insertmacro LanguageAutoSelect Gallegan      1110 ; Galician, but section is called Gallegan
   !insertmacro LanguageAutoSelect German        1031
+  !insertmacro LanguageAutoSelect Indonesian    1057
   !insertmacro LanguageAutoSelect Italian       1040
   !insertmacro LanguageAutoSelect Japanese      1041
   !insertmacro LanguageAutoSelect Polish        1045
