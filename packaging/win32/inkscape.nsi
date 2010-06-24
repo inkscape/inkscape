@@ -556,8 +556,8 @@ SectionGroup "$(Languages)" SecLanguages ; Languages sections {{{
   !insertmacro Language Turkish           tr
   !insertmacro Language Ukrainian         uk
   !insertmacro Language Vietnamese        vi
-  !insertmacro Language ChineseSimplified zh_CN
-  !insertmacro Language ChineseTaiwan     zh_TW
+  !insertmacro Language SimpChinese       zh_CN
+  !insertmacro Language TradChinese       zh_TW
   ; }}}
 SectionGroupEnd ; SecLanguages }}}
 
@@ -647,6 +647,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro LanguageAutoSelect Breton        1150
   !insertmacro LanguageAutoSelect Catalan       1027
   !insertmacro LanguageAutoSelect Czech         1029
+  !insertmacro LanguageAutoSelect Dutch         1043
   !insertmacro LanguageAutoSelect Finnish       1035
   !insertmacro LanguageAutoSelect French        1036
   !insertmacro LanguageAutoSelect Galician      1110
@@ -660,7 +661,8 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro LanguageAutoSelect Slovak        1051
   !insertmacro LanguageAutoSelect Slovenian     1060
   !insertmacro LanguageAutoSelect Spanish       1034
-  !insertmacro LanguageAutoSelect ChineseTaiwan 1028 ; TradChinese, but section is called ChineseTaiwan
+  !insertmacro LanguageAutoSelect SimpChinese   2052
+  !insertmacro LanguageAutoSelect TradChinese   1028
   !insertmacro LanguageAutoSelect Ukrainian     1058
   ; End of language detection }}}
 
@@ -810,8 +812,8 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro Parameter tr             ${SecTurkish}
   !insertmacro Parameter uk             ${SecUkrainian}
   !insertmacro Parameter vi             ${SecVietnamese}
-  !insertmacro Parameter zh_CN          ${SecChineseSimplified}
-  !insertmacro Parameter zh_TW          ${SecChineseTaiwan}
+  !insertmacro Parameter zh_CN          ${SecSimpChinese}
+  !insertmacro Parameter zh_TW          ${SecTradChinese}
 
   ClearErrors
   ${GetOptions} $CMDARGS /? $1
