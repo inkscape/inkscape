@@ -522,7 +522,7 @@ SectionGroup "$(Languages)" SecLanguages ; Languages sections {{{
   !insertmacro Language French            fr
   !insertmacro Language Finnish           fi
   !insertmacro Language Irish             ga
-  !insertmacro Language Gallegan          gl
+  !insertmacro Language Galician          gl
   !insertmacro Language Hebrew            he
   !insertmacro Language Croatian          hr
   !insertmacro Language Hungarian         hu
@@ -648,7 +648,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro LanguageAutoSelect Czech         1029
   !insertmacro LanguageAutoSelect Finnish       1035
   !insertmacro LanguageAutoSelect French        1036
-  !insertmacro LanguageAutoSelect Gallegan      1110 ; Galician, but section is called Gallegan
+  !insertmacro LanguageAutoSelect Galician      1110
   !insertmacro LanguageAutoSelect German        1031
   !insertmacro LanguageAutoSelect Indonesian    1057
   !insertmacro LanguageAutoSelect Italian       1040
@@ -775,7 +775,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro Parameter fi             ${SecFinnish}
   !insertmacro Parameter fr             ${SecFrench}
   !insertmacro Parameter ga             ${SecIrish}
-  !insertmacro Parameter gl             ${SecGallegan}
+  !insertmacro Parameter gl             ${SecGalician}
   !insertmacro Parameter he             ${SecHebrew}
   !insertmacro Parameter hr             ${SecCroatian}
   !insertmacro Parameter hu             ${SecHungarian}
