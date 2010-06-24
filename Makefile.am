@@ -172,6 +172,7 @@ EXTRA_DIST = \
 	packaging/win32/languages/Spanish.nsh	\
 	packaging/win32/languages/SimpChinese.nsh	\
 	packaging/win32/languages/TradChinese.nsh	\
+	packaging/win32/languages/Ukrainian.nsh	\
 	packaging/win32/header.bmp	\
 	packaging/win32/header.svg	\
 	packaging/win32/AdvUninstLog.nsh	\

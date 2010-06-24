@@ -134,6 +134,7 @@ ShowUninstDetails hide
 !insertmacro INKLANGFILE Spanish
 !insertmacro INKLANGFILE SimpChinese
 !insertmacro INKLANGFILE TradChinese
+!insertmacro INKLANGFILE Ukrainian
 !verbose pop
 
 ReserveFile inkscape.nsi.uninstall
@@ -660,6 +661,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro LanguageAutoSelect Slovenian     1060
   !insertmacro LanguageAutoSelect Spanish       1034
   !insertmacro LanguageAutoSelect ChineseTaiwan 1028 ; TradChinese, but section is called ChineseTaiwan
+  !insertmacro LanguageAutoSelect Ukrainian     1058
   ; End of language detection }}}
 
   !insertmacro UNINSTALL.LOG_PREPARE_INSTALL ; prepare advanced uninstallation log script
