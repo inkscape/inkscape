@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-06-17 18:22+0100\n"
+"PO-Revision-Date: 2010-06-25 14:05+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -1430,7 +1430,7 @@ msgstr "Interpolácia"
 
 #: ../share/extensions/interp.inx.h:5
 msgid "Interpolate style"
-msgstr "Štýl interpolácie"
+msgstr "Interpolovať štýl"
 
 #: ../share/extensions/interp.inx.h:6
 msgid "Interpolation method"
