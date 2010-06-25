@@ -99,6 +99,10 @@ int sgn(unsigned int j, unsigned int k)
 */
 void sbasis_to_bezier (Bezier & bz, SBasis const& sb, size_t sz)
 {
+    if (sb.size() == 0) {
+        THROW_RANGEERROR("size of sb is too small");
+    }
+
     size_t q, n;
     bool even;
     if (sz == 0)
