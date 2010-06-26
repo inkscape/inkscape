@@ -43,6 +43,8 @@ public:
     virtual int getSelectedIndex() {return _currentIndex;} // temporary
 
 protected:
+    static void handleGradientsChange(SPDocument *document);
+
     virtual void _updateFromSelection();
     virtual void _handleAction( int setId, int itemId );
     virtual void _setDocument( SPDocument *document );
@@ -55,7 +57,6 @@ private:
     SwatchesPanel &operator=(SwatchesPanel const &); // no assign
 
     static void _trackDocument( SwatchesPanel *panel, SPDocument *document );
-    static void handleGradientsChange(SPDocument *document);
     static void handleDefsModified(SPDocument *document);
 
     PreviewHolder* _holder;
