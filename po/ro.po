@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-06-20 22:45+0200\n"
+"PO-Revision-Date: 2010-06-28 01:56+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -1296,27 +1296,24 @@ msgid "HP Graphics Language file (*.hpgl)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:3
-#, fuzzy
 msgid "HPGL Output"
-msgstr "Ieșire"
+msgstr "Ieșire HPGL"
 
 #: ../share/extensions/hpgl_output.inx.h:4
 msgid "Mirror Y-axis"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:5
-#, fuzzy
 msgid "Pen number"
-msgstr "Unghiul conului"
+msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:6
 msgid "Plot invisible layers"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:7
-#, fuzzy
 msgid "Resolution (dpi)"
-msgstr "Rotație (grade)"
+msgstr "Rezoluție (dpi)"
 
 #: ../share/extensions/hpgl_output.inx.h:8
 msgid "X-origin (px)"
@@ -1375,9 +1372,8 @@ msgid "Interpolate"
 msgstr ""
 
 #: ../share/extensions/interp.inx.h:5
-#, fuzzy
 msgid "Interpolate style"
-msgstr "St_il contur"
+msgstr ""
 
 #: ../share/extensions/interp.inx.h:6
 msgid "Interpolation method"
@@ -1388,9 +1384,8 @@ msgid "Interpolation steps"
 msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:1
-#, fuzzy
 msgid "Attribute to Interpolate"
-msgstr "Nume atribut"
+msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:3
 msgid "End Value"
@@ -1403,9 +1398,8 @@ msgid "Fill"
 msgstr "Umplere"
 
 #: ../share/extensions/interp_att_g.inx.h:5
-#, fuzzy
 msgid "Float Number"
-msgstr "Parametrii"
+msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:7
 msgid "If you select \"Other\", you must know the SVG attributes to identify here this \"other\":"
@@ -1516,14 +1510,12 @@ msgid "JessyInk"
 msgstr ""
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:5
-#, fuzzy
 msgid "None (remove)"
-msgstr "elimină"
+msgstr ""
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:6
-#, fuzzy
 msgid "Number of slides"
-msgstr "numărul de rânduri"
+msgstr ""
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:7
 #: ../share/extensions/jessyInk_effects.inx.h:12
@@ -1531,14 +1523,12 @@ msgstr "numărul de rânduri"
 #: ../share/extensions/jessyInk_masterSlide.inx.h:6
 #: ../share/extensions/jessyInk_transitions.inx.h:9
 #: ../share/extensions/jessyInk_view.inx.h:7
-#, fuzzy
 msgid "Settings"
-msgstr "Selectare"
+msgstr "Configurări"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:8
-#, fuzzy
 msgid "Slide number"
-msgstr "Unghiul conului"
+msgstr ""
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:9
 msgid "Slide title"
@@ -1550,9 +1540,8 @@ msgstr ""
 
 #: ../share/extensions/jessyInk_effects.inx.h:1
 #: ../share/extensions/jessyInk_transitions.inx.h:1
-#, fuzzy
 msgid "Appear"
-msgstr "Contopește"
+msgstr ""
 
 #: ../share/extensions/jessyInk_effects.inx.h:2
 msgid "Build-in effect"
@@ -1569,20 +1558,17 @@ msgid "Duration in seconds:"
 msgstr ""
 
 #: ../share/extensions/jessyInk_effects.inx.h:5
-#, fuzzy
 msgid "Effects"
-msgstr "_Efect"
+msgstr "Efecte"
 
 #: ../share/extensions/jessyInk_effects.inx.h:6
 #: ../share/extensions/jessyInk_transitions.inx.h:4
-#, fuzzy
 msgid "Fade"
-msgstr "Fețe"
+msgstr ""
 
 #: ../share/extensions/jessyInk_effects.inx.h:9
-#, fuzzy
 msgid "None (default)"
-msgstr "(implicit)"
+msgstr ""
 
 #: ../share/extensions/jessyInk_effects.inx.h:10
 #: ../share/extensions/jessyInk_view.inx.h:5
@@ -1681,44 +1667,36 @@ msgid "Increase number of columns:"
 msgstr "Numărul de coloane"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:9
-#, fuzzy
 msgid "Index mode"
-msgstr "Nod"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:11
-#, fuzzy
 msgid "Key bindings"
-msgstr "Kerning"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:12
-#, fuzzy
 msgid "Last slide:"
-msgstr "Lipește stilul"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:13
-#, fuzzy
 msgid "Next (with effects):"
-msgstr "Șterge efectul de traseu"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:14
-#, fuzzy
 msgid "Next (without effects):"
-msgstr "Șterge efectul de traseu"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:15
-#, fuzzy
 msgid "Next page:"
-msgstr "Selectare"
+msgstr "Pagina următoare:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:16
-#, fuzzy
 msgid "Previous page:"
-msgstr "Fereastra anterioară"
+msgstr "Pagina precedentă:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:17
-#, fuzzy
 msgid "Reset timer:"
-msgstr "Resetare centru"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:18
 msgid "Select the slide above:"
@@ -5001,18 +4979,16 @@ msgid "Glow of object's own color at the edges"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:96
-#, fuzzy
 msgid "Outline"
-msgstr "C_ontur"
+msgstr "Contur"
 
 #: ../share/filters/filters.svg.h:96
 msgid "Adds a glowing blur and removes the shape"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:97
-#, fuzzy
 msgid "Color emboss"
-msgstr "Culori"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:97
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
@@ -5020,27 +4996,25 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:98
 #: ../src/extension/internal/bitmap/solarize.cpp:38
-#, fuzzy
 msgid "Solarize"
-msgstr "Mărime"
+msgstr "Solarizează"
 
 #: ../share/filters/filters.svg.h:98
 msgid "Classical photographic solarization effect"
 msgstr ""
 
+# hm ? :)
 #: ../share/filters/filters.svg.h:99
-#, fuzzy
 msgid "Moonarize"
-msgstr "Culoare"
+msgstr "Selenarizează"
 
 #: ../share/filters/filters.svg.h:99
 msgid "An effect between solarize and invert which often preserves sky and water lights"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:100
-#, fuzzy
 msgid "Soft focus lens"
-msgstr "Capăt rotunjit"
+msgstr "Lentilă de șarf delicat"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Glowing image content without blurring it"
@@ -5063,9 +5037,8 @@ msgid "Illuminated glass effect with light coming from beneath"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:103
-#, fuzzy
 msgid "HSL Bumps alpha"
-msgstr "0 (transparent)"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:103
 #: ../share/filters/filters.svg.h:104
@@ -5080,9 +5053,8 @@ msgstr "0 (transparent)"
 #: ../share/filters/filters.svg.h:191
 #: ../share/filters/filters.svg.h:193
 #: ../share/filters/filters.svg.h:204
-#, fuzzy
 msgid "Image effects, transparent"
-msgstr "Imagini"
+msgstr "Efecte de imagine, transparent"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Same as HSL Bumps but with transparent highlights"
@@ -5097,9 +5069,8 @@ msgid "Same as Bubbly Bumps but with transparent highlights"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:105
-#, fuzzy
 msgid "Smooth edges"
-msgstr "Fin"
+msgstr "Muchii netede"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Smooth the outside of shapes and pictures without altering their contents"
@@ -5107,9 +5078,8 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:106
 #: ../share/filters/filters.svg.h:128
-#, fuzzy
 msgid "Torn edges"
-msgstr "Unire noduri"
+msgstr "Muchii ascuțite"
 
 #: ../share/filters/filters.svg.h:106
 #: ../share/filters/filters.svg.h:128
@@ -5117,9 +5087,8 @@ msgid "Displace the outside of shapes and pictures without altering their conten
 msgstr ""
 
 #: ../share/filters/filters.svg.h:107
-#, fuzzy
 msgid "Feather"
-msgstr "Metru"
+msgstr "Estompează"
 
 #: ../share/filters/filters.svg.h:107
 msgid "Blurred mask on the edge without altering the contents"
@@ -5167,9 +5136,8 @@ msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:113
-#, fuzzy
 msgid "People"
-msgstr "Înlocuiește"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:113
 msgid "Colorized blotches, like a crowd of people"
@@ -5184,9 +5152,8 @@ msgid "Colorized mountain tops out of the fog"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:115
-#, fuzzy
 msgid "Noise transparency"
-msgstr "0 (transparent)"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:115
 msgid "Basic noise transparency texture"
@@ -6046,7 +6013,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:214
 msgid "Inner Glow"
-msgstr ""
+msgstr "Strălucire interioară"
 
 #: ../share/filters/filters.svg.h:214
 msgid "Adds a colorizable glow inside"
@@ -7048,7 +7015,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2744
 msgid "Size"
-msgstr "Mărime"
+msgstr "Dimensiune"
 
 #: ../src/dialogs/clonetiler.cpp:2747
 msgid "Each clone's size is determined by the picked value in that point"
@@ -7195,7 +7162,7 @@ msgstr "Î_nălțime:"
 
 #: ../src/dialogs/export.cpp:471
 msgid "<big><b>Bitmap size</b></big>"
-msgstr "<big><b>Mărime bitmap</b></big>"
+msgstr "<big><b>Dimensiune bitmap</b></big>"
 
 #: ../src/dialogs/export.cpp:484
 #: ../src/ui/widget/page-sizer.cpp:231
@@ -10513,7 +10480,7 @@ msgstr "Arată sau ascunde paleta de culori"
 
 #: ../src/interface.cpp:886
 msgid "_Statusbar"
-msgstr "Bara de _statut"
+msgstr "Bara de _stare"
 
 #: ../src/interface.cpp:886
 msgid "Show or hide the statusbar (at the bottom of the window)"
@@ -11195,54 +11162,48 @@ msgid "Rotates the original 90 degrees, before bending it along the bend path"
 msgstr ""
 
 #: ../src/live_effects/lpe-constructgrid.cpp:26
-#, fuzzy
 msgid "Size X"
-msgstr "Mărime"
+msgstr "Dimensiune X"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:26
 msgid "The size of the grid in X direction."
-msgstr "Mărimea grilei pe direcția X"
+msgstr "Dimensiunea grilei pe direcția X"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:27
-#, fuzzy
 msgid "Size Y"
-msgstr "Mărime"
+msgstr "Dimensiune Y"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:27
 msgid "The size of the grid in Y direction."
-msgstr "Mărimea grilei pe direcția Y"
+msgstr "Dimensiunea grilei pe direcția Y"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
-#, fuzzy
 msgid "Stitch path"
-msgstr "Stea"
+msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
-#, fuzzy
 msgid "Number of paths"
-msgstr "numărul de rânduri"
+msgstr "Număr de trasee"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "The number of paths that will be generated."
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
-#, fuzzy
 msgid "Start edge variance"
-msgstr "Preferințe Stea"
+msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "The amount of random jitter to move the start points of the stitches inside & outside the guide path"
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
-#, fuzzy
 msgid "Start spacing variance"
-msgstr "Varierea punctului de pornire"
+msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "The amount of random shifting to move the start points of the stitches back & forth along the guide path"
@@ -11257,18 +11218,16 @@ msgid "The amount of randomness that moves the end points of the stitches inside
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
-#, fuzzy
 msgid "End spacing variance"
-msgstr "Varierea punctului de sfârșit"
+msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "The amount of random shifting to move the end points of the stitches back & forth along the guide path"
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
-#, fuzzy
 msgid "Scale width"
-msgstr "Sursă"
+msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
 #, fuzzy
@@ -11462,9 +11421,8 @@ msgid "Scale the width of the pattern in units of its length"
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:68
-#, fuzzy
 msgid "Spacing"
-msgstr "Forme"
+msgstr "Spațiere"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
 #, no-c-format
@@ -12218,7 +12176,7 @@ msgstr "_Editare"
 #: ../src/menus-skeleton.h:57
 #: ../src/verbs.cpp:2241
 msgid "Paste Si_ze"
-msgstr "_Lipește dimensiunea"
+msgstr "Lipește _dimensiunea"
 
 #: ../src/menus-skeleton.h:69
 msgid "Clo_ne"
@@ -12972,15 +12930,15 @@ msgstr "Elimină filtrul"
 
 #: ../src/selection-chemistry.cpp:1150
 msgid "Paste size"
-msgstr ""
+msgstr "Lipește dimensiunea"
 
 #: ../src/selection-chemistry.cpp:1159
 msgid "Paste size separately"
-msgstr ""
+msgstr "Lipește dimensiunea separat"
 
 #: ../src/selection-chemistry.cpp:1169
 msgid "Select <b>object(s)</b> to move to the layer above."
-msgstr ""
+msgstr "Selectați <b>obiectele</b> de mutat la stratul de deasupra."
 
 #: ../src/selection-chemistry.cpp:1195
 msgid "Raise to next layer"
@@ -12988,19 +12946,19 @@ msgstr "Ridică la stratul următor"
 
 #: ../src/selection-chemistry.cpp:1202
 msgid "No more layers above."
-msgstr ""
+msgstr "Nu mai sunt straturi deasupra."
 
 #: ../src/selection-chemistry.cpp:1214
 msgid "Select <b>object(s)</b> to move to the layer below."
-msgstr ""
+msgstr "Selectați <b>obiectele</b> de mutat la stratul de dedesubt."
 
 #: ../src/selection-chemistry.cpp:1240
 msgid "Lower to previous layer"
-msgstr ""
+msgstr "Coboară la stratul precedent"
 
 #: ../src/selection-chemistry.cpp:1247
 msgid "No more layers below."
-msgstr ""
+msgstr "Nu mai sunt straturi dedesubt."
 
 #: ../src/selection-chemistry.cpp:1456
 msgid "Remove transform"
@@ -13026,11 +12984,11 @@ msgstr "Rotește după pixeli"
 
 #: ../src/selection-chemistry.cpp:1682
 msgid "Scale by whole factor"
-msgstr ""
+msgstr "Scalează cu factorul întreg"
 
 #: ../src/selection-chemistry.cpp:1697
 msgid "Move vertically"
-msgstr ""
+msgstr "Mută vertical"
 
 #: ../src/selection-chemistry.cpp:1700
 msgid "Move horizontally"
@@ -13041,7 +12999,7 @@ msgstr "Mută pe orizontală"
 #: ../src/seltrans.cpp:524
 #: ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
-msgstr ""
+msgstr "Mută"
 
 #: ../src/selection-chemistry.cpp:1723
 msgid "Move vertically by pixels"
@@ -14373,30 +14331,25 @@ msgstr ""
 
 #: ../src/ui/clipboard.cpp:403
 #: ../src/ui/clipboard.cpp:421
-#, fuzzy
 msgid "No style on the clipboard."
-msgstr "Copie selecția în clipboard"
+msgstr ""
 
 #: ../src/ui/clipboard.cpp:446
-#, fuzzy
 msgid "Select <b>object(s)</b> to paste size to."
-msgstr "Selectează un <b>obiect</b> pentru a fi clonat."
+msgstr ""
 
 #: ../src/ui/clipboard.cpp:453
-#, fuzzy
 msgid "No size on the clipboard."
-msgstr "Copie selecția în clipboard"
+msgstr ""
 
 #: ../src/ui/clipboard.cpp:506
-#, fuzzy
 msgid "Select <b>object(s)</b> to paste live path effect to."
-msgstr "Selectează un <b>obiect</b> pentru a fi clonat."
+msgstr ""
 
 #. no_effect:
 #: ../src/ui/clipboard.cpp:531
-#, fuzzy
 msgid "No effect on the clipboard."
-msgstr "Copie selecția în clipboard"
+msgstr ""
 
 #: ../src/ui/clipboard.cpp:551
 #: ../src/ui/clipboard.cpp:579
@@ -14420,9 +14373,8 @@ msgstr "_Creează o legătură"
 
 #. Set mask
 #: ../src/ui/context-menu.cpp:132
-#, fuzzy
 msgid "Set Mask"
-msgstr "Stele"
+msgstr ""
 
 #. Release mask
 #: ../src/ui/context-menu.cpp:143
@@ -14540,9 +14492,8 @@ msgstr ""
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "H:" stands for horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:471
-#, fuzzy
 msgid "gap|H:"
-msgstr "Capăt:"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:479
 msgid "Minimum vertical gap (in px units) between bounding boxes"
@@ -14561,9 +14512,8 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:541
 #: ../src/widgets/toolbox.cpp:8077
-#, fuzzy
 msgid "Arrange connector network"
-msgstr "Creez un nou conector"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:572
 msgid "Unclump"
@@ -14578,9 +14528,8 @@ msgid "Distribute text baselines"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:765
-#, fuzzy
 msgid "Align text baselines"
-msgstr "Aliniază liniile pe stânga"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:796
 msgid "Connector network layout"
@@ -14604,9 +14553,8 @@ msgid "Align right edges of objects to the left edge of the anchor"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:813
-#, fuzzy
 msgid "Align left edges"
-msgstr "Aliniere stânga"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:816
 msgid "Center on vertical axis"
@@ -14625,18 +14573,16 @@ msgid "Align bottom edges of objects to the top edge of the anchor"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:828
-#, fuzzy
 msgid "Align top edges"
-msgstr "Aliniază liniile pe stânga"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:831
 msgid "Center on horizontal axis"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:834
-#, fuzzy
 msgid "Align bottom edges"
-msgstr "Aliniază liniile pe stânga"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:837
 msgid "Align top edges of objects to the bottom edge of the anchor"
@@ -14647,9 +14593,8 @@ msgid "Align baseline anchors of texts horizontally"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:845
-#, fuzzy
 msgid "Align baselines of texts"
-msgstr "Aliniază liniile pe stânga"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:850
 msgid "Make horizontal gaps between objects equal"
@@ -14672,9 +14617,8 @@ msgid "Make vertical gaps between objects equal"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:868
-#, fuzzy
 msgid "Distribute top edges equidistantly"
-msgstr "Distribuire noduri"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:871
 msgid "Distribute centers equidistantly vertically"
@@ -14735,14 +14679,12 @@ msgid "First selected"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:923
-#, fuzzy
 msgid "Biggest object"
-msgstr "Ignoră obiectele ascunse"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:924
-#, fuzzy
 msgid "Smallest object"
-msgstr "Creează noi obiecte cu:"
+msgstr ""
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
 msgid "Profile name:"
@@ -14763,9 +14705,8 @@ msgstr ""
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:52
 #: ../src/ui/dialog/inkscape-preferences.cpp:1208
 #: ../src/ui/dialog/input.cpp:786
-#, fuzzy
 msgid "Save"
-msgstr "_Salvează"
+msgstr "Salvează"
 
 #: ../src/ui/dialog/color-item.cpp:116
 #, c-format
@@ -14777,24 +14718,20 @@ msgid "Change color definition"
 msgstr ""
 
 #: ../src/ui/dialog/color-item.cpp:695
-#, fuzzy
 msgid "Remove stroke color"
-msgstr "Șterge conturul"
+msgstr ""
 
 #: ../src/ui/dialog/color-item.cpp:695
-#, fuzzy
 msgid "Remove fill color"
-msgstr "Culoarea inițială: "
+msgstr ""
 
 #: ../src/ui/dialog/color-item.cpp:700
-#, fuzzy
 msgid "Set stroke color to none"
-msgstr "Alege culoarea conturului"
+msgstr ""
 
 #: ../src/ui/dialog/color-item.cpp:700
-#, fuzzy
 msgid "Set fill color to none"
-msgstr "Culoarea inițială: "
+msgstr ""
 
 #: ../src/ui/dialog/color-item.cpp:716
 msgid "Set stroke color from swatch"
@@ -14836,9 +14773,8 @@ msgstr "<b>Licență</b>"
 
 #. ---------------------------------------------------------------
 #: ../src/ui/dialog/document-properties.cpp:90
-#, fuzzy
 msgid "Show page _border"
-msgstr "Arată umbra paginii"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:90
 msgid "If set, rectangular page border is shown"
@@ -14853,18 +14789,16 @@ msgid "If set, border is always on top of the drawing"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:92
-#, fuzzy
 msgid "_Show border shadow"
-msgstr "Arată umbra paginii"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:92
 msgid "If set, page border shows a shadow on its right and lower side"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:93
-#, fuzzy
 msgid "Back_ground:"
-msgstr "Fundal:"
+msgstr "_Fundal:"
 
 #: ../src/ui/dialog/document-properties.cpp:93
 msgid "Background color"
@@ -14875,14 +14809,12 @@ msgid "Color and transparency of the page background (also used for bitmap expor
 msgstr "Culoarea și transparența fundalului paginii (folosit de asemenea la exportul imaginii bitmap)"
 
 #: ../src/ui/dialog/document-properties.cpp:94
-#, fuzzy
 msgid "Border _color:"
-msgstr "Culoarea bordurii:"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:94
-#, fuzzy
 msgid "Page border color"
-msgstr "Culoarea bordurii:"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:94
 #, fuzzy
@@ -14966,11 +14898,12 @@ msgstr "Ghidaje"
 msgid "Grids"
 msgstr "Grile"
 
+# este o stare comutabilă, nu o acțiune
 #: ../src/ui/dialog/document-properties.cpp:121
 #: ../src/verbs.cpp:2544
 #: ../src/widgets/toolbox.cpp:2229
 msgid "Snap"
-msgstr "Acroșează"
+msgstr "Acroșare"
 
 #: ../src/ui/dialog/document-properties.cpp:122
 msgid "Color Management"
@@ -15516,7 +15449,7 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 #: ../src/ui/dialog/tracedialog.cpp:581
 msgid "Size:"
-msgstr "Mărime:"
+msgstr "Dimensiune:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "width of the convolve matrix"
@@ -15802,7 +15735,7 @@ msgstr "toate"
 
 #: ../src/ui/dialog/glyphs.cpp:58
 msgid "common"
-msgstr ""
+msgstr "comun"
 
 #: ../src/ui/dialog/glyphs.cpp:59
 msgid "inherited"
@@ -15811,7 +15744,7 @@ msgstr ""
 #: ../src/ui/dialog/glyphs.cpp:60
 #: ../src/ui/dialog/glyphs.cpp:166
 msgid "Arabic"
-msgstr ""
+msgstr "Arabă"
 
 # hm ? tot ce urmează nu știu dacă să fie traduse sau nu
 #: ../src/ui/dialog/glyphs.cpp:61
@@ -15822,12 +15755,12 @@ msgstr "Armenă"
 #: ../src/ui/dialog/glyphs.cpp:62
 #: ../src/ui/dialog/glyphs.cpp:173
 msgid "Bengali"
-msgstr ""
+msgstr "Bengaleză"
 
 #: ../src/ui/dialog/glyphs.cpp:63
 #: ../src/ui/dialog/glyphs.cpp:255
 msgid "Bopomofo"
-msgstr ""
+msgstr "Bopomofo"
 
 #: ../src/ui/dialog/glyphs.cpp:64
 #: ../src/ui/dialog/glyphs.cpp:190
@@ -15842,7 +15775,7 @@ msgstr "Coptic"
 #: ../src/ui/dialog/glyphs.cpp:66
 #: ../src/ui/dialog/glyphs.cpp:162
 msgid "Cyrillic"
-msgstr ""
+msgstr "Chirilică"
 
 #: ../src/ui/dialog/glyphs.cpp:67
 msgid "Deseret"
@@ -15851,12 +15784,12 @@ msgstr "Deseret"
 #: ../src/ui/dialog/glyphs.cpp:68
 #: ../src/ui/dialog/glyphs.cpp:172
 msgid "Devanagari"
-msgstr ""
+msgstr "Devanagari"
 
 #: ../src/ui/dialog/glyphs.cpp:69
 #: ../src/ui/dialog/glyphs.cpp:188
 msgid "Ethiopic"
-msgstr ""
+msgstr "Etiopiană"
 
 #: ../src/ui/dialog/glyphs.cpp:70
 #: ../src/ui/dialog/glyphs.cpp:186
@@ -15874,12 +15807,12 @@ msgstr "Greacă"
 #: ../src/ui/dialog/glyphs.cpp:73
 #: ../src/ui/dialog/glyphs.cpp:175
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujarati"
 
 #: ../src/ui/dialog/glyphs.cpp:74
 #: ../src/ui/dialog/glyphs.cpp:174
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmukhi"
 
 #: ../src/ui/dialog/glyphs.cpp:75
 msgid "Han"
@@ -15892,22 +15825,22 @@ msgstr "Hangul"
 #: ../src/ui/dialog/glyphs.cpp:77
 #: ../src/ui/dialog/glyphs.cpp:165
 msgid "Hebrew"
-msgstr ""
+msgstr "Ebraică"
 
 #: ../src/ui/dialog/glyphs.cpp:78
 #: ../src/ui/dialog/glyphs.cpp:253
 msgid "Hiragana"
-msgstr ""
+msgstr "Hiragana"
 
 #: ../src/ui/dialog/glyphs.cpp:79
 #: ../src/ui/dialog/glyphs.cpp:179
 msgid "Kannada"
-msgstr ""
+msgstr "Kannada"
 
 #: ../src/ui/dialog/glyphs.cpp:80
 #: ../src/ui/dialog/glyphs.cpp:254
 msgid "Katakana"
-msgstr ""
+msgstr "Katakana"
 
 #: ../src/ui/dialog/glyphs.cpp:81
 #: ../src/ui/dialog/glyphs.cpp:198
@@ -15926,36 +15859,36 @@ msgstr "Latin"
 #: ../src/ui/dialog/glyphs.cpp:84
 #: ../src/ui/dialog/glyphs.cpp:180
 msgid "Malayalam"
-msgstr ""
+msgstr "Malayalam"
 
 #: ../src/ui/dialog/glyphs.cpp:85
 #: ../src/ui/dialog/glyphs.cpp:199
 msgid "Mongolian"
-msgstr ""
+msgstr "Mongoliană"
 
 #: ../src/ui/dialog/glyphs.cpp:86
 #: ../src/ui/dialog/glyphs.cpp:185
 msgid "Myanmar"
-msgstr ""
+msgstr "Myanmar"
 
 #: ../src/ui/dialog/glyphs.cpp:87
 #: ../src/ui/dialog/glyphs.cpp:192
 msgid "Ogham"
-msgstr ""
+msgstr "Ogham"
 
 #: ../src/ui/dialog/glyphs.cpp:88
 msgid "Old Italic"
-msgstr ""
+msgstr "Italiană veche"
 
 #: ../src/ui/dialog/glyphs.cpp:89
 #: ../src/ui/dialog/glyphs.cpp:176
 msgid "Oriya"
-msgstr ""
+msgstr "Oriya"
 
 #: ../src/ui/dialog/glyphs.cpp:90
 #: ../src/ui/dialog/glyphs.cpp:193
 msgid "Runic"
-msgstr ""
+msgstr "Runic"
 
 #: ../src/ui/dialog/glyphs.cpp:91
 #: ../src/ui/dialog/glyphs.cpp:181
@@ -15965,7 +15898,7 @@ msgstr "Sinhala"
 #: ../src/ui/dialog/glyphs.cpp:92
 #: ../src/ui/dialog/glyphs.cpp:167
 msgid "Syriac"
-msgstr ""
+msgstr "Syriac"
 
 #: ../src/ui/dialog/glyphs.cpp:93
 #: ../src/ui/dialog/glyphs.cpp:177
@@ -15975,7 +15908,7 @@ msgstr "Tamil"
 #: ../src/ui/dialog/glyphs.cpp:94
 #: ../src/ui/dialog/glyphs.cpp:178
 msgid "Telugu"
-msgstr ""
+msgstr "Telugu"
 
 #: ../src/ui/dialog/glyphs.cpp:95
 #: ../src/ui/dialog/glyphs.cpp:169
@@ -15985,7 +15918,7 @@ msgstr "Thaana"
 #: ../src/ui/dialog/glyphs.cpp:96
 #: ../src/ui/dialog/glyphs.cpp:182
 msgid "Thai"
-msgstr ""
+msgstr "Tailandeză"
 
 #: ../src/ui/dialog/glyphs.cpp:97
 #: ../src/ui/dialog/glyphs.cpp:184
@@ -15994,11 +15927,11 @@ msgstr "Tibetan"
 
 #: ../src/ui/dialog/glyphs.cpp:98
 msgid "Canadian Aboriginal"
-msgstr ""
+msgstr "Canadiană arborigenă"
 
 #: ../src/ui/dialog/glyphs.cpp:99
 msgid "Yi"
-msgstr ""
+msgstr "Yi"
 
 #: ../src/ui/dialog/glyphs.cpp:100
 #: ../src/ui/dialog/glyphs.cpp:194
@@ -16008,7 +15941,7 @@ msgstr "Tagalog"
 #: ../src/ui/dialog/glyphs.cpp:101
 #: ../src/ui/dialog/glyphs.cpp:195
 msgid "Hanunoo"
-msgstr ""
+msgstr "Hanunoo"
 
 #: ../src/ui/dialog/glyphs.cpp:102
 #: ../src/ui/dialog/glyphs.cpp:196
@@ -16018,24 +15951,24 @@ msgstr "Buhid"
 #: ../src/ui/dialog/glyphs.cpp:103
 #: ../src/ui/dialog/glyphs.cpp:197
 msgid "Tagbanwa"
-msgstr ""
+msgstr "Tagbanwa"
 
 #: ../src/ui/dialog/glyphs.cpp:104
 msgid "Braille"
-msgstr ""
+msgstr "Braille"
 
 #: ../src/ui/dialog/glyphs.cpp:105
 msgid "Cypriot"
-msgstr ""
+msgstr "Cipriotă"
 
 #: ../src/ui/dialog/glyphs.cpp:106
 #: ../src/ui/dialog/glyphs.cpp:201
 msgid "Limbu"
-msgstr ""
+msgstr "Limbu"
 
 #: ../src/ui/dialog/glyphs.cpp:107
 msgid "Osmanya"
-msgstr ""
+msgstr "Osmanya"
 
 #: ../src/ui/dialog/glyphs.cpp:108
 msgid "Shavian"
@@ -16052,7 +15985,7 @@ msgstr "Tai Le"
 
 #: ../src/ui/dialog/glyphs.cpp:111
 msgid "Ugaritic"
-msgstr ""
+msgstr "Ugaritic"
 
 #: ../src/ui/dialog/glyphs.cpp:112
 #: ../src/ui/dialog/glyphs.cpp:203
@@ -16067,17 +16000,17 @@ msgstr "Bugineză"
 #: ../src/ui/dialog/glyphs.cpp:114
 #: ../src/ui/dialog/glyphs.cpp:241
 msgid "Glagolitic"
-msgstr ""
+msgstr "Glagolitic"
 
 #: ../src/ui/dialog/glyphs.cpp:115
 #: ../src/ui/dialog/glyphs.cpp:245
 msgid "Tifinagh"
-msgstr ""
+msgstr "Tifinagh"
 
 #: ../src/ui/dialog/glyphs.cpp:116
 #: ../src/ui/dialog/glyphs.cpp:274
 msgid "Syloti Nagri"
-msgstr ""
+msgstr "Syloti Nagri"
 
 #: ../src/ui/dialog/glyphs.cpp:117
 msgid "Old Persian"
@@ -16085,20 +16018,20 @@ msgstr "Persană veche"
 
 #: ../src/ui/dialog/glyphs.cpp:118
 msgid "Kharoshthi"
-msgstr ""
+msgstr "Kharoshthi"
 
 #: ../src/ui/dialog/glyphs.cpp:119
 msgid "unassigned"
-msgstr ""
+msgstr "neatribuit"
 
 #: ../src/ui/dialog/glyphs.cpp:120
 #: ../src/ui/dialog/glyphs.cpp:207
 msgid "Balinese"
-msgstr ""
+msgstr "Balinese"
 
 #: ../src/ui/dialog/glyphs.cpp:121
 msgid "Cuneiform"
-msgstr ""
+msgstr "Cuneiformă"
 
 #: ../src/ui/dialog/glyphs.cpp:122
 msgid "Phoenician"
@@ -16107,21 +16040,21 @@ msgstr "Feniciană"
 #: ../src/ui/dialog/glyphs.cpp:123
 #: ../src/ui/dialog/glyphs.cpp:276
 msgid "Phags-pa"
-msgstr ""
+msgstr "Phags-pa"
 
 #: ../src/ui/dialog/glyphs.cpp:124
 msgid "N'Ko"
-msgstr ""
+msgstr "N'Ko"
 
 #: ../src/ui/dialog/glyphs.cpp:127
 #: ../src/ui/dialog/glyphs.cpp:279
 msgid "Kayah Li"
-msgstr ""
+msgstr "Kayah Li"
 
 #: ../src/ui/dialog/glyphs.cpp:128
 #: ../src/ui/dialog/glyphs.cpp:209
 msgid "Lepcha"
-msgstr ""
+msgstr "Lepcha"
 
 #: ../src/ui/dialog/glyphs.cpp:129
 #: ../src/ui/dialog/glyphs.cpp:280
@@ -16131,7 +16064,7 @@ msgstr "Rejang"
 #: ../src/ui/dialog/glyphs.cpp:130
 #: ../src/ui/dialog/glyphs.cpp:208
 msgid "Sundanese"
-msgstr ""
+msgstr "Sundanese"
 
 #: ../src/ui/dialog/glyphs.cpp:131
 #: ../src/ui/dialog/glyphs.cpp:277
@@ -16146,12 +16079,12 @@ msgstr "Cham"
 #: ../src/ui/dialog/glyphs.cpp:133
 #: ../src/ui/dialog/glyphs.cpp:210
 msgid "Ol Chiki"
-msgstr ""
+msgstr "Ol Chiki"
 
 #: ../src/ui/dialog/glyphs.cpp:134
 #: ../src/ui/dialog/glyphs.cpp:269
 msgid "Vai"
-msgstr ""
+msgstr "Vai"
 
 #: ../src/ui/dialog/glyphs.cpp:135
 msgid "Carian"
@@ -16167,7 +16100,7 @@ msgstr "Lydian"
 
 #: ../src/ui/dialog/glyphs.cpp:154
 msgid "Basic Latin"
-msgstr ""
+msgstr "Basic Latin"
 
 #: ../src/ui/dialog/glyphs.cpp:155
 msgid "Latin-1 Supplement"
@@ -16175,11 +16108,11 @@ msgstr "Latin-1 Supplement"
 
 #: ../src/ui/dialog/glyphs.cpp:156
 msgid "Latin Extended-A"
-msgstr ""
+msgstr "Latin Extended-A"
 
 #: ../src/ui/dialog/glyphs.cpp:157
 msgid "Latin Extended-B"
-msgstr ""
+msgstr "Latin Extended-B"
 
 #: ../src/ui/dialog/glyphs.cpp:158
 msgid "IPA Extensions"
@@ -16199,15 +16132,15 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:163
 msgid "Cyrillic Supplement"
-msgstr ""
+msgstr "Supliment chirilică"
 
 #: ../src/ui/dialog/glyphs.cpp:168
 msgid "Arabic Supplement"
-msgstr ""
+msgstr "Supliment arabă"
 
 #: ../src/ui/dialog/glyphs.cpp:170
 msgid "NKo"
-msgstr ""
+msgstr "NKo"
 
 #: ../src/ui/dialog/glyphs.cpp:171
 msgid "Samaritan"
@@ -16219,7 +16152,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:189
 msgid "Ethiopic Supplement"
-msgstr ""
+msgstr "Supliment etiopiană"
 
 #: ../src/ui/dialog/glyphs.cpp:191
 msgid "Unified Canadian Aboriginal Syllabics"
@@ -16614,7 +16547,7 @@ msgstr "%d x %d"
 
 #: ../src/ui/dialog/icon-preview.cpp:150
 msgid "Magnified:"
-msgstr ""
+msgstr "Mărit:"
 
 #: ../src/ui/dialog/icon-preview.cpp:214
 msgid "Actual Size:"
@@ -16821,7 +16754,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:270
 msgid "Rotation snaps every:"
-msgstr ""
+msgstr "Rotirea acroșează la fiecare:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:270
 msgid "degrees"
@@ -16829,7 +16762,7 @@ msgstr "grade"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:271
 msgid "Rotating with Ctrl pressed snaps every that much degrees; also, pressing [ or ] rotates by this amount"
-msgstr ""
+msgstr "Rotirea cu Ctrl apăsat acroșează la fiecare atâtea grade; de asemenea, apăsând [ sau ] se rotește cu această valoare"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:273
 msgid "Zoom in/out by:"
@@ -16889,11 +16822,11 @@ msgstr "Creează obiecte noi cu:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:361
 msgid "Last used style"
-msgstr ""
+msgstr "Ultimul stil folosit"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:363
 msgid "Apply the style you last set on an object"
-msgstr ""
+msgstr "Aplică stilul care a fost aplicat ultima dată asupra unui obiect"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:368
 msgid "This tool's own style:"
@@ -18569,14 +18502,12 @@ msgid "Icon theme: "
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1410
-#, fuzzy
 msgid "System info"
-msgstr "Setează ca implicit:"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1410
-#, fuzzy
 msgid "General system information"
-msgstr "Informații despre folosirea memoriei"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1412
 msgid "Misc"
@@ -18584,15 +18515,13 @@ msgstr "Diverse"
 
 #: ../src/ui/dialog/input.cpp:346
 #: ../src/ui/dialog/input.cpp:358
-#, fuzzy
 msgid "Disabled"
-msgstr "Titlu"
+msgstr "Dezactivat"
 
 #: ../src/ui/dialog/input.cpp:348
 #: ../src/ui/dialog/input.cpp:360
-#, fuzzy
 msgid "Window"
-msgstr "Ferestre"
+msgstr "Fereastră"
 
 #: ../src/ui/dialog/input.cpp:524
 msgid "Test Area"
@@ -18604,28 +18533,24 @@ msgid "Hardware"
 msgstr ""
 
 #: ../src/ui/dialog/input.cpp:596
-#, fuzzy
 msgid "Link:"
-msgstr "Linie"
+msgstr "Legătură:"
 
 #: ../src/ui/dialog/input.cpp:611
 msgid "Axes count:"
 msgstr ""
 
 #: ../src/ui/dialog/input.cpp:634
-#, fuzzy
 msgid "axis:"
-msgstr "Ridică"
+msgstr "axă:"
 
 #: ../src/ui/dialog/input.cpp:646
-#, fuzzy
 msgid "Button count:"
-msgstr "Buton"
+msgstr ""
 
 #: ../src/ui/dialog/input.cpp:732
-#, fuzzy
 msgid "Tablet"
-msgstr "Titlu"
+msgstr ""
 
 #: ../src/ui/dialog/input.cpp:752
 #: ../src/ui/dialog/input.cpp:1430
@@ -18637,9 +18562,8 @@ msgid "Layer name:"
 msgstr "Nume strat:"
 
 #: ../src/ui/dialog/layer-properties.cpp:109
-#, fuzzy
 msgid "Add layer"
-msgstr "Adaugă Strat"
+msgstr "Adaugă un strat"
 
 #: ../src/ui/dialog/layer-properties.cpp:147
 msgid "Above current"
@@ -18690,15 +18614,13 @@ msgstr "A fost creat un nou Strat"
 
 #: ../src/ui/dialog/layers.cpp:472
 #: ../src/ui/widget/layer-selector.cpp:595
-#, fuzzy
 msgid "Unhide layer"
-msgstr "Strat redenumit"
+msgstr "Dezvăluie stratul"
 
 #: ../src/ui/dialog/layers.cpp:472
 #: ../src/ui/widget/layer-selector.cpp:595
-#, fuzzy
 msgid "Hide layer"
-msgstr "Adaugă Strat"
+msgstr "Ascunde stratul"
 
 #: ../src/ui/dialog/layers.cpp:483
 #: ../src/ui/widget/layer-selector.cpp:587
@@ -18717,9 +18639,8 @@ msgstr "Nou"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/ui/dialog/layers.cpp:641
-#, fuzzy
 msgid "layers|Top"
-msgstr "Strat"
+msgstr "Sus de tot"
 
 #: ../src/ui/dialog/layers.cpp:647
 msgid "Up"
@@ -18730,9 +18651,8 @@ msgid "Dn"
 msgstr "Jos"
 
 #: ../src/ui/dialog/layers.cpp:659
-#, fuzzy
 msgid "Bot"
-msgstr "Paralelipiped"
+msgstr ""
 
 #: ../src/ui/dialog/layers.cpp:669
 msgid "X"
@@ -18748,9 +18668,8 @@ msgid "Current effect"
 msgstr "Efectul curent"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:81
-#, fuzzy
 msgid "Effect list"
-msgstr "Efe_cte"
+msgstr "Listă de efecte"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:270
 msgid "Unknown effect is applied"
@@ -18770,14 +18689,12 @@ msgstr ""
 
 # hm ? sau selecție goală ?
 #: ../src/ui/dialog/livepatheffect-editor.cpp:285
-#, fuzzy
 msgid "Empty selection"
 msgstr "Golește selecția"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:309
-#, fuzzy
 msgid "Unknown effect"
-msgstr "Necunoscut"
+msgstr "Efect necunoscut"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:376
 msgid "Create and apply path effect"
@@ -18788,24 +18705,20 @@ msgid "Remove path effect"
 msgstr "Elimină efectul de traseu"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:410
-#, fuzzy
 msgid "Move path effect up"
-msgstr "Șterge efectul de traseu"
+msgstr ""
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:426
-#, fuzzy
 msgid "Move path effect down"
-msgstr "Șterge efectul de traseu"
+msgstr ""
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:465
-#, fuzzy
 msgid "Activate path effect"
-msgstr "Șterge efectul de traseu"
+msgstr ""
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:465
-#, fuzzy
 msgid "Deactivate path effect"
-msgstr "Șterge efectul de traseu"
+msgstr ""
 
 #: ../src/ui/dialog/memory.cpp:94
 msgid "Heap"
@@ -18861,9 +18774,8 @@ msgid "Server supplied malformed Clip Art feed"
 msgstr ""
 
 #: ../src/ui/dialog/ocaldialogs.cpp:566
-#, fuzzy
 msgid "Search for:"
-msgstr "Căutare"
+msgstr ""
 
 #: ../src/ui/dialog/ocaldialogs.cpp:567
 msgid "No files matched your search"
@@ -18900,9 +18812,8 @@ msgstr "Tipărește"
 
 #. build custom preferences tab
 #: ../src/ui/dialog/print.cpp:219
-#, fuzzy
 msgid "Rendering"
-msgstr "Strat redenumit"
+msgstr "Randare"
 
 #: ../src/ui/dialog/print-colors-preview-dialog.cpp:61
 #: ../src/widgets/sp-color-icc-selector.cpp:238
@@ -18961,40 +18872,34 @@ msgid "Errors"
 msgstr "Erori"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:121
-#, fuzzy
 msgid "Set SVG Font attribute"
-msgstr "Setează atributul"
+msgstr "Stabilește atributul fontului SVG"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:174
 msgid "Adjust kerning value"
 msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:364
-#, fuzzy
 msgid "Family Name:"
-msgstr "Numele stratului:"
+msgstr "Nume de familie:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:374
-#, fuzzy
 msgid "Set width:"
-msgstr "Sursă"
+msgstr "Stabilește lățimea:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:433
-#, fuzzy
 msgid "glyph"
-msgstr "Apfa"
+msgstr "glifă"
 
 #. SPGlyph* glyph =
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:465
-#, fuzzy
 msgid "Add glyph"
-msgstr "Adaugă Strat"
+msgstr "Adaugă o glifă"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:481
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:525
-#, fuzzy
 msgid "Select a <b>path</b> to define the curves of a glyph"
-msgstr "Selectează un <b>obiect</b> pentru a fi clonat."
+msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:489
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:533
@@ -19023,53 +18928,45 @@ msgid "Set glyph unicode"
 msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:608
-#, fuzzy
 msgid "Remove font"
-msgstr "Șterge filtrul"
+msgstr "Elimină fontul"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:623
-#, fuzzy
 msgid "Remove glyph"
-msgstr "Șterge grila"
+msgstr "Elimină glifa"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:638
-#, fuzzy
 msgid "Remove kerning pair"
-msgstr "Șterge ghidajele existente"
+msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:648
 msgid "Missing Glyph:"
 msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:652
-#, fuzzy
 msgid "From selection..."
-msgstr "Preia de la selecție"
+msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:654
 #: ../src/ui/widget/preferences-widget.cpp:590
-#, fuzzy
 msgid "Reset"
-msgstr " R_eset "
+msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:665
-#, fuzzy
 msgid "Glyph name"
-msgstr "Numele stratului:"
+msgstr "Nume de glifă"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:666
 msgid "Matching string"
 msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:669
-#, fuzzy
 msgid "Add Glyph"
-msgstr "Adaugă Strat"
+msgstr "Adaugă o glifă"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:676
-#, fuzzy
 msgid "Get curves from selection..."
-msgstr "Șterge masca din selecție"
+msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:726
 msgid "Add kerning pair"
@@ -19089,9 +18986,8 @@ msgid "2nd Glyph:"
 msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:741
-#, fuzzy
 msgid "Add pair"
-msgstr "Adaugă Strat"
+msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:753
 msgid "First Unicode range"
@@ -19102,66 +18998,56 @@ msgid "Second Unicode range"
 msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:761
-#, fuzzy
 msgid "Kerning value:"
-msgstr "Golește valorile"
+msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:819
 msgid "Set font family"
 msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:828
-#, fuzzy
 msgid "font"
-msgstr "Font"
+msgstr "font"
 
 #. select_font(font);
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:842
-#, fuzzy
 msgid "Add font"
-msgstr "Adaugă filtru"
+msgstr "Adaugă un font"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:862
-#, fuzzy
 msgid "_Font"
-msgstr "Font"
+msgstr "_Font"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:870
-#, fuzzy
 msgid "_Global Settings"
-msgstr "Setări de pagină"
+msgstr "Configurări _globale"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:871
 msgid "_Glyphs"
 msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:872
-#, fuzzy
 msgid "_Kerning"
-msgstr "_Desen"
+msgstr "_Kerning"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:879
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:880
-#, fuzzy
 msgid "Sample Text"
-msgstr "Scalează"
+msgstr "Eșantion de text"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:884
-#, fuzzy
 msgid "Preview Text:"
-msgstr "Previzualizare"
+msgstr "Previzualizare text:"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:192
-#, fuzzy
 msgid "Set fill"
-msgstr "Culoarea inițială: "
+msgstr ""
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:200
-#, fuzzy
 msgid "Set stroke"
-msgstr "desetează conturul"
+msgstr ""
 
 #: ../src/ui/dialog/swatches.cpp:225
 #: ../src/widgets/gradient-selector.cpp:146
@@ -19170,9 +19056,8 @@ msgid "Edit..."
 msgstr ""
 
 #: ../src/ui/dialog/swatches.cpp:237
-#, fuzzy
 msgid "Convert"
-msgstr "Copertă"
+msgstr "Convertește"
 
 #: ../src/ui/dialog/swatches.cpp:435
 #, c-format
@@ -19237,9 +19122,8 @@ msgid "Vertical spacing between rows (px units)"
 msgstr ""
 
 #: ../src/ui/dialog/tile.cpp:846
-#, fuzzy
 msgid "Horizontal spacing between columns (px units)"
-msgstr "Decalajul orizontal pe coloană (în % din tile width)"
+msgstr ""
 
 #. ## The OK button
 #: ../src/ui/dialog/tile.cpp:869
@@ -19247,9 +19131,8 @@ msgid "tileClonesDialog|Arrange"
 msgstr ""
 
 #: ../src/ui/dialog/tile.cpp:870
-#, fuzzy
 msgid "Arrange selected objects"
-msgstr "Ignoră obiectele blocate"
+msgstr ""
 
 #. #### begin left panel
 #. ### begin notebook
@@ -19419,14 +19302,13 @@ msgstr "Toleranță:"
 
 #. ### credits
 #: ../src/ui/dialog/tracedialog.cpp:627
-#, fuzzy
 msgid ""
 "Inkscape bitmap tracing\n"
 "is based on Potrace,\n"
 "created by Peter Selinger\n"
 "\n"
 "http://potrace.sourceforge.net"
-msgstr "Mulțumiri lui Peter Selinger, http://potrace.sourceforge.net"
+msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:630
 msgid "Credits"
@@ -19538,9 +19420,8 @@ msgid "Transformation matrix element F"
 msgstr "Elementul F al matriței de transformare"
 
 #: ../src/ui/dialog/transformation.cpp:104
-#, fuzzy
 msgid "Rela_tive move"
-msgstr "Relație"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:104
 msgid "Add the specified relative displacement to the current position; otherwise, edit the current absolute position directly"
@@ -19556,7 +19437,7 @@ msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:106
 msgid "Apply to each _object separately"
-msgstr ""
+msgstr "Aplică la fiecare _obiect separat"
 
 #: ../src/ui/dialog/transformation.cpp:106
 msgid "Apply the scale/rotate/skew to each selected object separately; otherwise, transform the selection as a whole"
@@ -19656,9 +19537,8 @@ msgstr "Unire noduri"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:313
 #: ../src/widgets/toolbox.cpp:1426
-#, fuzzy
 msgid "Break nodes"
-msgstr "Mișcare noduri"
+msgstr ""
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:320
 msgid "Delete nodes"
@@ -19683,33 +19563,28 @@ msgstr "Rotire noduri"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:636
 #: ../src/ui/tool/multi-path-manipulator.cpp:642
-#, fuzzy
 msgid "Scale nodes uniformly"
-msgstr "Scalare noduri"
+msgstr ""
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:639
 msgid "Scale nodes"
 msgstr "Scalare noduri"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:646
-#, fuzzy
 msgid "Scale nodes horizontally"
-msgstr "Mișcare noduri orizontal"
+msgstr "Scalează nodurile orizontal"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:650
-#, fuzzy
 msgid "Scale nodes vertically"
-msgstr "Mișcare noduri vertical"
+msgstr "Scalează nodurile vertical"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:654
-#, fuzzy
 msgid "Flip nodes horizontally"
-msgstr "Mișcare noduri orizontal"
+msgstr ""
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:657
-#, fuzzy
 msgid "Flip nodes vertically"
-msgstr "Mișcare noduri vertical"
+msgstr ""
 
 #: ../src/ui/tool/node-tool.cpp:537
 msgctxt "Node tool tip"
@@ -20221,7 +20096,7 @@ msgstr "_Portret"
 #. ## Set up custom size frame
 #: ../src/ui/widget/page-sizer.cpp:301
 msgid "Custom size"
-msgstr "Mărime personalizată"
+msgstr "Dimensiune personalizată"
 
 #: ../src/ui/widget/page-sizer.cpp:324
 msgid "Resi_ze page to content..."
@@ -21072,11 +20947,11 @@ msgstr "Lipește _stilul"
 
 #: ../src/verbs.cpp:2240
 msgid "Apply the style of the copied object to selection"
-msgstr ""
+msgstr "Aplică la selecție stilul obiectului copiat"
 
 #: ../src/verbs.cpp:2242
 msgid "Scale selection to match the size of the copied object"
-msgstr ""
+msgstr "Scalează selecția pentru a se potrivi cu dimensiunea obiectului copiat"
 
 #: ../src/verbs.cpp:2243
 msgid "Paste _Width"
@@ -21084,7 +20959,7 @@ msgstr "Lipește lăț_imea"
 
 #: ../src/verbs.cpp:2244
 msgid "Scale selection horizontally to match the width of the copied object"
-msgstr ""
+msgstr "Scalează selecția orizontal pentru a se potrivi cu lățimea obiectului copiat"
 
 #: ../src/verbs.cpp:2245
 msgid "Paste _Height"
@@ -21092,36 +20967,36 @@ msgstr "Lipește î_nălțimea"
 
 #: ../src/verbs.cpp:2246
 msgid "Scale selection vertically to match the height of the copied object"
-msgstr ""
+msgstr "Scalează selecția vertical pentru a se potrivi cu înălțimea obiectului copiat"
 
 #: ../src/verbs.cpp:2247
 msgid "Paste Size Separately"
-msgstr ""
+msgstr "Lipește dimensiunea separat"
 
 #: ../src/verbs.cpp:2248
 msgid "Scale each selected object to match the size of the copied object"
-msgstr ""
+msgstr "Scalează fiecare obiect selectat pentru a se potrivi cu dimensiunea obiectului copiat"
 
 #: ../src/verbs.cpp:2249
 msgid "Paste Width Separately"
-msgstr ""
+msgstr "Lipește lățimea separat"
 
 #: ../src/verbs.cpp:2250
 msgid "Scale each selected object horizontally to match the width of the copied object"
-msgstr ""
+msgstr "Scalează orizontal fiecare obiect selectat pentru a se potrivi cu lățimea obiectului copiat"
 
 #: ../src/verbs.cpp:2251
 msgid "Paste Height Separately"
-msgstr ""
+msgstr "Lipește înălțimea separat"
 
 #: ../src/verbs.cpp:2252
 msgid "Scale each selected object vertically to match the height of the copied object"
-msgstr ""
+msgstr "Scalează vertical fiecare obiect selectat pentru a se potrivi cu înălțimea obiectului copiat"
 
-# hm ?
+# hm ? zice așa: „Ctrl+Alt+V / paste in place / This places the clipboard objects into the original location from which they were copied.”
 #: ../src/verbs.cpp:2253
 msgid "Paste _In Place"
-msgstr "L_ipește în loc"
+msgstr "Lipește în locul de _origine"
 
 #: ../src/verbs.cpp:2254
 msgid "Paste objects from clipboard to the original location"
@@ -21133,7 +21008,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2256
 msgid "Apply the path effect of the copied object to selection"
-msgstr "Aplică selecției efectul traseului al obiectului copiat"
+msgstr "Aplică la selecție efectul de traseu al obiectului copiat"
 
 #: ../src/verbs.cpp:2257
 msgid "Remove Path _Effect"
@@ -21153,7 +21028,7 @@ msgstr "Elimină orice filtru de la obiectele selctate"
 
 #: ../src/verbs.cpp:2261
 msgid "_Delete"
-msgstr "_Șterge"
+msgstr "Ș_terge"
 
 #: ../src/verbs.cpp:2262
 msgid "Delete selection"
@@ -21161,7 +21036,7 @@ msgstr "Șterge selecția"
 
 #: ../src/verbs.cpp:2263
 msgid "Duplic_ate"
-msgstr "Duplic_ă"
+msgstr "_Duplică"
 
 #: ../src/verbs.cpp:2264
 msgid "Duplicate selected objects"
@@ -21185,19 +21060,19 @@ msgstr "Taie legăturile către original a clonelor selectate, transformându-le
 
 #: ../src/verbs.cpp:2269
 msgid "Relink to Copied"
-msgstr ""
+msgstr "Leagă din nou la obiectul copiat"
 
 #: ../src/verbs.cpp:2270
 msgid "Relink the selected clones to the object currently on the clipboard"
-msgstr ""
+msgstr "Leagă din nou clonele selectate la obiectul actual din clipboard"
 
 #: ../src/verbs.cpp:2271
 msgid "Select _Original"
-msgstr ""
+msgstr "Selectează obiectul _original"
 
 #: ../src/verbs.cpp:2272
 msgid "Select the object to which the selected clone is linked"
-msgstr ""
+msgstr "Selectează obiectul la care este legată clona selectată"
 
 #: ../src/verbs.cpp:2273
 msgid "Objects to _Marker"
@@ -21628,19 +21503,19 @@ msgstr ""
 
 #: ../src/verbs.cpp:2403
 msgid "_Raise Layer"
-msgstr ""
+msgstr "_Ridică stratul"
 
 #: ../src/verbs.cpp:2404
 msgid "Raise the current layer"
-msgstr ""
+msgstr "Ridică stratul actual"
 
 #: ../src/verbs.cpp:2405
 msgid "_Lower Layer"
-msgstr ""
+msgstr "Coboară stratu_l"
 
 #: ../src/verbs.cpp:2406
 msgid "Lower the current layer"
-msgstr ""
+msgstr "Coboară stratul actual"
 
 #: ../src/verbs.cpp:2407
 msgid "Duplicate Current Layer"
@@ -21652,11 +21527,11 @@ msgstr "Duplică un strat existent"
 
 #: ../src/verbs.cpp:2409
 msgid "_Delete Current Layer"
-msgstr ""
+msgstr "Ș_terge stratul actual"
 
 #: ../src/verbs.cpp:2410
 msgid "Delete the current layer"
-msgstr ""
+msgstr "Șterge stratul actual"
 
 #: ../src/verbs.cpp:2411
 msgid "_Show/hide other layers"
@@ -22086,43 +21961,43 @@ msgstr "Comută acroșarea între pornit sau oprit"
 
 #: ../src/verbs.cpp:2545
 msgid "Nex_t Zoom"
-msgstr ""
+msgstr "Zoom-ul _următor"
 
 #: ../src/verbs.cpp:2545
 msgid "Next zoom (from the history of zooms)"
-msgstr ""
+msgstr "Zoom-ul următor (din istoricul zoom-urilor)"
 
 #: ../src/verbs.cpp:2547
 msgid "Pre_vious Zoom"
-msgstr ""
+msgstr "Zoom-ul p_recedent"
 
 #: ../src/verbs.cpp:2547
 msgid "Previous zoom (from the history of zooms)"
-msgstr ""
+msgstr "Zoom-ul precedent (din istoricul zoom-urilor)"
 
 #: ../src/verbs.cpp:2549
 msgid "Zoom 1:_1"
-msgstr ""
+msgstr "Zoom 1:_1"
 
 #: ../src/verbs.cpp:2549
 msgid "Zoom to 1:1"
-msgstr ""
+msgstr "Zoom-ează la 1:1"
 
 #: ../src/verbs.cpp:2551
 msgid "Zoom 1:_2"
-msgstr ""
+msgstr "Zoom 1:_2"
 
 #: ../src/verbs.cpp:2551
 msgid "Zoom to 1:2"
-msgstr ""
+msgstr "Zoom-ează la 1:2"
 
 #: ../src/verbs.cpp:2553
 msgid "_Zoom 2:1"
-msgstr ""
+msgstr "_Zoom 2:1"
 
 #: ../src/verbs.cpp:2553
 msgid "Zoom to 2:1"
-msgstr ""
+msgstr "Zoom-ează la 2:1"
 
 #: ../src/verbs.cpp:2556
 msgid "_Fullscreen"
@@ -22130,7 +22005,7 @@ msgstr "_Pe tot ecranul"
 
 #: ../src/verbs.cpp:2556
 msgid "Stretch this document window to full screen"
-msgstr ""
+msgstr "Întinde această fereastră de document pe tot ecranul"
 
 #: ../src/verbs.cpp:2559
 msgid "Toggle _Focus Mode"
@@ -23402,7 +23277,7 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:1000
 msgid "Wide"
-msgstr ""
+msgstr "Larg"
 
 #: ../src/widgets/toolbox.cpp:1001
 msgid "Setup for widescreen work"
@@ -25037,7 +24912,7 @@ msgstr "Aliniere la stânga"
 #: ../src/widgets/toolbox.cpp:7596
 #: ../src/widgets/toolbox.cpp:7597
 msgid "Align center"
-msgstr ""
+msgstr "Centrează"
 
 #: ../src/widgets/toolbox.cpp:7604
 #: ../src/widgets/toolbox.cpp:7605
@@ -25046,11 +24921,11 @@ msgstr "Aliniere la dreapta"
 
 #: ../src/widgets/toolbox.cpp:7612
 msgid "Justify"
-msgstr ""
+msgstr "Aliniază la ambele margini"
 
 #: ../src/widgets/toolbox.cpp:7613
 msgid "Justify (only flowed text)"
-msgstr ""
+msgstr "Aliniază la ambele margini (numai text fluid)"
 
 #. Name
 #: ../src/widgets/toolbox.cpp:7619
@@ -25097,7 +24972,7 @@ msgstr "Linie:"
 #. short label
 #: ../src/widgets/toolbox.cpp:7691
 msgid "Spacing between lines (times font size)"
-msgstr ""
+msgstr "Spațiere între linii (dimensiune de font Times)"
 
 #. Drop down menu
 #: ../src/widgets/toolbox.cpp:7715
@@ -25183,7 +25058,7 @@ msgstr "Rot:"
 #. short label
 #: ../src/widgets/toolbox.cpp:7846
 msgid "Character rotation (degrees)"
-msgstr ""
+msgstr "Rotație de caracter (grade)"
 
 #: ../src/widgets/toolbox.cpp:7961
 msgid "Set connector type: orthogonal"
@@ -25299,7 +25174,7 @@ msgstr "Umple cu"
 
 #: ../src/widgets/toolbox.cpp:8418
 msgid "Fill by:"
-msgstr ""
+msgstr "Umple după:"
 
 #: ../src/widgets/toolbox.cpp:8430
 msgid "Fill Threshold"
