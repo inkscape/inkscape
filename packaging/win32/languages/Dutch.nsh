@@ -1,7 +1,7 @@
 ;Language: Dutch (1033, ANSI)
 ;By Adib Taraben <theadib@gmail.com>
 ${LangFileString} CaptionDescription "Open Source Scalable Vector Graphics Editor"
-${LangFileString} LICENSE_BOTTOM_TEXT "$(^Name) wordt beschikbaar gesteld onder de GNU General Public License (GPL). De licentie is hieronder ter info weergegeven. $_CLICK"
+${LangFileString} LICENSE_BOTTOM_TEXT "$(^Name) wordt beschikbaar gesteld onder de GNU General Public License (GPL). De licentie is hierboven ter info weergegeven. $_CLICK"
 ${LangFileString} DIFFERENT_USER "Inkscape werd geïnstalleerd door de gebruiker $0.$\r$\nIndien je voortgaat, kan je het mogelijk niet succesvol beëindigen!$\r$\nLog aub. in als $0 en probeer opnieuw."
 ${LangFileString} WANT_UNINSTALL_BEFORE "$R1 werd reeds geïnstalleerd. $\nWil je de vorige versie verwijderen voor de installatie van $(^Name)?"
 ${LangFileString} OK_CANCEL_DESC "$\n$\nDruk op OK om door te gaan en ANNULEREN om te stoppen."
