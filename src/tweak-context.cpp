@@ -837,20 +837,24 @@ tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke,
 
     // Normalize pos to 0..1, taking into accound gradient spread:
     double pos_e = pos;
-    if (gradient->spread == SP_GRADIENT_SPREAD_PAD) {
-        if (pos > 1)
+    if (gradient->getSpread() == SP_GRADIENT_SPREAD_PAD) {
+        if (pos > 1) {
             pos_e = 1;
-        if (pos < 0)
+        }
+        if (pos < 0) {
             pos_e = 0;
-    } else if (gradient->spread == SP_GRADIENT_SPREAD_REPEAT) {
-        if (pos > 1 || pos < 0)
+        }
+    } else if (gradient->getSpread() == SP_GRADIENT_SPREAD_REPEAT) {
+        if (pos > 1 || pos < 0) {
             pos_e = pos - floor(pos);
-    } else if (gradient->spread == SP_GRADIENT_SPREAD_REFLECT) {
+        }
+    } else if (gradient->getSpread() == SP_GRADIENT_SPREAD_REFLECT) {
         if (pos > 1 || pos < 0) {
             bool odd = ((int)(floor(pos)) % 2 == 1);
             pos_e = pos - floor(pos);
-            if (odd)
+            if (odd) {
                 pos_e = 1 - pos_e;
+            }
         }
     }
 

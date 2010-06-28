@@ -262,7 +262,7 @@ void SPGradientSelector::setVector(SPDocument *doc, SPGradient *vector)
     g_return_if_fail(!vector || SP_IS_GRADIENT(vector));
     g_return_if_fail(!vector || (SP_OBJECT_DOCUMENT(vector) == doc));
 
-    if (vector && !SP_GRADIENT_HAS_STOPS(vector)) {
+    if (vector && !vector->hasStops()) {
         return;
     }
 

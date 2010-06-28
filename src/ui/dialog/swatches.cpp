@@ -182,12 +182,12 @@ void SwatchesPanelHook::convertGradient( GtkMenuItem * /*menuitem*/, gpointer us
             for (const GSList *item = gradients; item; item = item->next) {
                 SPGradient* grad = SP_GRADIENT(item->data);
                 if ( targetName == grad->getId() ) {
-                    grad->repr->setAttribute("osb:paint", "solid");
+                    grad->repr->setAttribute("osb:paint", "solid"); // TODO make conditional
 
                     sp_document_done(doc, SP_VERB_CONTEXT_GRADIENT,
                                      _("Add gradient stop"));
 
-                    handleGradientsChange(doc); // work-around for signal not being emmitted
+                    handleGradientsChange(doc); // work-around for signal not being emitted
                     break;
                 }
             }
@@ -310,7 +310,7 @@ gboolean colorItemHandleButtonPress( GtkWidget* widget, GdkEventButton* event, g
                         gint index = 0;
                         for (const GSList *curr = gradients; curr; curr = curr->next) {
                             SPGradient* grad = SP_GRADIENT(curr->data);
-                            if (SP_GRADIENT_HAS_STOPS(grad) && !grad->isSwatch()) {
+                            if ( grad->hasStops() && !grad->isSwatch() ) {
                                 //gl = g_slist_prepend(gl, curr->data);
                                 processed = true;
                                 GtkWidget *child = gtk_menu_item_new_with_label(grad->getId());
@@ -809,7 +809,7 @@ static void recalcSwatchContents(SPDocument* doc,
         for ( std::vector<SPGradient*>::iterator it = newList.begin(); it != newList.end(); ++it )
         {
             SPGradient* grad = *it;
-            sp_gradient_ensure_vector( grad );
+            grad->ensureVector();
             SPGradientStop first = grad->vector.stops[0];
             SPColor color = first.color;
             guint32 together = color.toRGBA32(first.opacity);
@@ -938,11 +938,12 @@ void SwatchesPanel::_updateFromSelection()
                     if ( SP_IS_GRADIENT(server) ) {
                         SPGradient* target = 0;
                         SPGradient* grad = SP_GRADIENT(server);
-                        if (grad->repr->attribute("osb:paint")) {
+
+                        if ( grad->isSwatch() ) {
                             target = grad;
                         } else if ( grad->ref ) {
                             SPGradient *tmp = grad->ref->getObject();
-                            if ( tmp && tmp->repr->attribute("osb:paint") ) {
+                            if ( tmp && tmp->isSwatch() ) {
                                 target = tmp;
                             }
                         }
@@ -969,11 +970,11 @@ void SwatchesPanel::_updateFromSelection()
                     if ( SP_IS_GRADIENT(server) ) {
                         SPGradient* target = 0;
                         SPGradient* grad = SP_GRADIENT(server);
-                        if (grad->repr->attribute("osb:paint")) {
+                        if ( grad->isSwatch() ) {
                             target = grad;
                         } else if ( grad->ref ) {
                             SPGradient *tmp = grad->ref->getObject();
-                            if ( tmp && tmp->repr->attribute("osb:paint") ) {
+                            if ( tmp && tmp->isSwatch() ) {
                                 target = tmp;
                             }
                         }

@@ -181,7 +181,7 @@ void sp_gradient_vector_selector_set_gradient(SPGradientVectorSelector *gvs, SPD
     g_return_if_fail(!gr || (doc != NULL));
     g_return_if_fail(!gr || SP_IS_GRADIENT(gr));
     g_return_if_fail(!gr || (SP_OBJECT_DOCUMENT(gr) == doc));
-    g_return_if_fail(!gr || SP_GRADIENT_HAS_STOPS(gr));
+    g_return_if_fail(!gr || gr->hasStops());
 
     if (doc != gvs->doc) {
         /* Disconnect signals */
@@ -252,7 +252,7 @@ static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
         const GSList *gradients = sp_document_get_resource_list(SP_OBJECT_DOCUMENT(gvs->gr), "gradient");
         for (const GSList *curr = gradients; curr; curr = curr->next) {
             SPGradient* grad = SP_GRADIENT(curr->data);
-            if (SP_GRADIENT_HAS_STOPS(grad) && (grad->isSwatch() == gvs->swatched)) {
+            if ( grad->hasStops() && (grad->isSwatch() == gvs->swatched) ) {
                 gl = g_slist_prepend(gl, curr->data);
             }
         }
@@ -535,7 +535,7 @@ static void update_stop_list( GtkWidget *mnu, SPGradient *gradient, SPStop *new_
     GtkWidget *m = gtk_menu_new();
     gtk_widget_show(m);
     GSList *sl = NULL;
-    if (gradient->has_stops) {
+    if ( gradient->hasStops() ) {
         for ( SPObject *ochild = sp_object_first_child(SP_OBJECT(gradient)) ; ochild != NULL ; ochild = SP_OBJECT_NEXT(ochild) ) {
             if (SP_IS_STOP(ochild)) {
                 sl = g_slist_append(sl, ochild);
@@ -1017,7 +1017,7 @@ static void sp_gradient_vector_widget_load_gradient(GtkWidget *widget, SPGradien
     if (gradient) {
         gtk_widget_set_sensitive(widget, TRUE);
 
-        sp_gradient_ensure_vector(gradient);
+        gradient->ensureVector();
 
         GtkOptionMenu *mnu = static_cast<GtkOptionMenu *>(g_object_get_data(G_OBJECT(widget), "stopmenu"));
         SPStop *stop = SP_STOP(g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))), "stop"));
@@ -1140,7 +1140,7 @@ static void sp_gradient_vector_color_dragged(SPColorSelector *csel, GtkObject *o
         sp_gradient_vector_widget_load_gradient(GTK_WIDGET(object), ngr);
     }
 
-    sp_gradient_ensure_vector(ngr);
+    ngr->ensureVector();
 
     GtkOptionMenu *mnu = static_cast<GtkOptionMenu *>(g_object_get_data(G_OBJECT(object), "stopmenu"));
     SPStop *stop = SP_STOP(g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))), "stop"));
@@ -1175,7 +1175,7 @@ static void sp_gradient_vector_color_changed(SPColorSelector *csel, GtkObject *o
         sp_gradient_vector_widget_load_gradient(GTK_WIDGET(object), ngr);
     }
 
-    sp_gradient_ensure_vector(ngr);
+    ngr->ensureVector();
 
     /* Set start parameters */
     /* We rely on normalized vector, i.e. stops HAVE to exist */

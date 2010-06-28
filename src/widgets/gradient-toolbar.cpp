@@ -175,7 +175,7 @@ GtkWidget *gr_vector_list(SPDesktop *desktop, bool selection_empty, SPGradient *
     const GSList *gradients = sp_document_get_resource_list (document, "gradient");
     for (const GSList *i = gradients; i != NULL; i = i->next) {
         SPGradient *grad = SP_GRADIENT(i->data);
-        if (SP_GRADIENT_HAS_STOPS(grad) && !grad->isSolid()) {
+        if ( grad->hasStops() && !grad->isSolid() ) {
             gl = g_slist_prepend (gl, i->data);
         }
     }
@@ -316,7 +316,7 @@ void gr_read_selection( Inkscape::Selection *selection,
             SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
             if (SP_IS_GRADIENT(server)) {
                 SPGradient *gradient = SP_GRADIENT(server)->getVector();
-                SPGradientSpread spread = sp_gradient_get_spread (SP_GRADIENT (server));
+                SPGradientSpread spread = SP_GRADIENT(server)->fetchSpread();
 
                 if (gradient && gradient->isSolid()) {
                     gradient = 0;
@@ -342,7 +342,7 @@ void gr_read_selection( Inkscape::Selection *selection,
             SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
             if (SP_IS_GRADIENT(server)) {
                 SPGradient *gradient = SP_GRADIENT(server)->getVector();
-                SPGradientSpread spread = sp_gradient_get_spread (SP_GRADIENT (server));
+                SPGradientSpread spread = SP_GRADIENT(server)->fetchSpread();
 
                 if (gradient && gradient->isSolid()) {
                     gradient = 0;

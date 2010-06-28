@@ -1120,11 +1120,11 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
 
             SPLinearGradient *lg=SP_LINEARGRADIENT(paintserver);
 
-            sp_gradient_ensure_vector(SP_GRADIENT(lg)); // when exporting from commandline, vector is not built
+            SP_GRADIENT(lg)->ensureVector(); // when exporting from commandline, vector is not built
 
             Geom::Point p1 (lg->x1.computed, lg->y1.computed);
             Geom::Point p2 (lg->x2.computed, lg->y2.computed);
-            if (pbox && SP_GRADIENT(lg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
+            if (pbox && SP_GRADIENT(lg)->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
                 // convert to userspace
                 Geom::Matrix bbox2user(pbox->x1 - pbox->x0, 0, 0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
                 p1 *= bbox2user;
@@ -1144,12 +1144,12 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
 
         SPRadialGradient *rg=SP_RADIALGRADIENT(paintserver);
 
-        sp_gradient_ensure_vector(SP_GRADIENT(rg)); // when exporting from commandline, vector is not built
+        SP_GRADIENT(rg)->ensureVector(); // when exporting from commandline, vector is not built
 
         Geom::Point c (rg->cx.computed, rg->cy.computed);
         Geom::Point f (rg->fx.computed, rg->fy.computed);
         double r = rg->r.computed;
-        if (pbox && SP_GRADIENT(rg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX)
+        if (pbox && SP_GRADIENT(rg)->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX)
             apply_bbox2user = true;
 
         // create radial gradient pattern
@@ -1172,7 +1172,7 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
         SPGradient *g = SP_GRADIENT(paintserver);
 
         // set extend type
-        SPGradientSpread spread = sp_gradient_get_spread(g);
+        SPGradientSpread spread = g->fetchSpread();
         switch (spread) {
             case SP_GRADIENT_SPREAD_REPEAT: {
                 cairo_pattern_set_extend(pattern, CAIRO_EXTEND_REPEAT);

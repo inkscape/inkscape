@@ -268,15 +268,15 @@ void FillNStroke::performUpdate()
                     psel->setGradientLinear( vector );
 
                     SPLinearGradient *lg = SP_LINEARGRADIENT(server);
-                    psel->setGradientProperties( SP_GRADIENT_UNITS(lg),
-                                                 SP_GRADIENT_SPREAD(lg) );
+                    psel->setGradientProperties( lg->getUnits(),
+                                                 lg->getSpread() );
                 } else if (SP_IS_RADIALGRADIENT(server)) {
                     SPGradient *vector = SP_GRADIENT(server)->getVector();
                     psel->setGradientRadial( vector );
 
                     SPRadialGradient *rg = SP_RADIALGRADIENT(server);
-                    psel->setGradientProperties( SP_GRADIENT_UNITS(rg),
-                                                 SP_GRADIENT_SPREAD(rg) );
+                    psel->setGradientProperties( rg->getUnits(),
+                                                 rg->getSpread() );
                 } else if (SP_IS_PATTERN(server)) {
                     SPPattern *pat = pattern_getroot(SP_PATTERN(server));
                     psel->updatePatternList( pat );

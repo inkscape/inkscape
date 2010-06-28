@@ -381,7 +381,7 @@ sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
         if (SP_IS_GRADIENT (parent)) {
             doc = SP_OBJECT_DOCUMENT (parent);
             sp_vector_add_stop (SP_GRADIENT (parent), this_stop, next_stop, offset);
-            sp_gradient_ensure_vector (SP_GRADIENT (parent));
+            SP_GRADIENT(parent)->ensureVector();
         }
     }
 

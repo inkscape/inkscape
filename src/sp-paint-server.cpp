@@ -160,12 +160,7 @@ bool SPPaintServer::isSwatch() const
     bool swatch = false;
     if (SP_IS_GRADIENT(this)) {
         SPGradient *grad = SP_GRADIENT(this);
-        if ( SP_GRADIENT_HAS_STOPS(grad) ) {
-            gchar const * attr = repr->attribute("osb:paint");
-            if (attr && !strcmp(attr, "solid")) {
-                swatch = true;
-            }
-        }
+        swatch = grad->hasStops() && repr->attribute("osb:paint");
     }
     return swatch;
 }
@@ -175,7 +170,7 @@ bool SPPaintServer::isSolid() const
     bool solid = false;
     if (SP_IS_GRADIENT(this)) {
         SPGradient *grad = SP_GRADIENT(this);
-        if ( SP_GRADIENT_HAS_STOPS(grad) && (grad->getStopCount() == 0) ) {
+        if ( grad->hasStops() && (grad->getStopCount() == 0) ) {
             gchar const * attr = repr->attribute("osb:paint");
             if (attr && !strcmp(attr, "solid")) {
                 solid = true;

@@ -1367,7 +1367,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                         for (const GSList *item = gradients; item; item = item->next) {
                             SPGradient* grad = SP_GRADIENT(item->data);
                             if ( color.descr == grad->getId() ) {
-                                if ( grad->has_stops ) {
+                                if ( grad->hasStops() ) {
                                     matches = grad;
                                     break;
                                 }

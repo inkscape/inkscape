@@ -116,7 +116,7 @@ void SwatchSelector::_changedCb(SPColorSelector */*csel*/, void *data)
                 // TODO replace with proper - sp_gradient_vector_widget_load_gradient(GTK_WIDGET(swsel->_gsel), ngr);
             }
 
-            sp_gradient_ensure_vector(ngr);
+            ngr->ensureVector();
 
 
             SPStop* stop = ngr->getFirstStop();

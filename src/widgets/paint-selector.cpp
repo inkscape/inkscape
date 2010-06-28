@@ -538,8 +538,8 @@ void SPPaintSelector::pushAttrsToGradient( SPGradient *gr ) const
     SPGradientUnits units = SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX;
     SPGradientSpread spread = SP_GRADIENT_SPREAD_PAD;
     getGradientProperties( units, spread );
-    sp_gradient_set_units(gr, units);
-    sp_gradient_set_spread(gr, spread);
+    gr->setUnits(units);
+    gr->setSpread(spread);
     SP_OBJECT(gr)->updateRepr();
 }
 

@@ -13,22 +13,6 @@
 
 class SPGradient;
 
-#define SP_GRADIENT_STATE_IS_SET(g) (SP_GRADIENT(g)->state != SP_GRADIENT_STATE_UNKNOWN)
-#define SP_GRADIENT_IS_VECTOR(g) (SP_GRADIENT(g)->state == SP_GRADIENT_STATE_VECTOR)
-#define SP_GRADIENT_IS_PRIVATE(g) (SP_GRADIENT(g)->state == SP_GRADIENT_STATE_PRIVATE)
-#define SP_GRADIENT_HAS_STOPS(g) (SP_GRADIENT(g)->has_stops)
-#define SP_GRADIENT_SPREAD(g) (SP_GRADIENT(g)->spread)
-#define SP_GRADIENT_UNITS(g) (SP_GRADIENT(g)->units)
-
-/** Forces vector to be built, if not present (i.e. changed) */
-void sp_gradient_ensure_vector(SPGradient *gradient);
-
-/** Ensures that color array is populated */
-void sp_gradient_ensure_colors(SPGradient *gradient);
-
-void sp_gradient_set_units(SPGradient *gr, SPGradientUnits units);
-void sp_gradient_set_spread(SPGradient *gr, SPGradientSpread spread);
-
 SPGradientSpread sp_gradient_get_spread (SPGradient *gradient);
 
 /* Gradient repr methods */

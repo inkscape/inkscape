@@ -348,7 +348,7 @@ GrDrag::addStopNearPoint (SPItem *item, Geom::Point mouse_p, double tolerance)
 
 
         SPStop *newstop = sp_vector_add_stop (vector, prev_stop, next_stop, offset);
-        sp_gradient_ensure_vector (gradient);
+        gradient->ensureVector();
         updateDraggers();
 
         return newstop;

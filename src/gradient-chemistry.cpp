@@ -67,9 +67,9 @@ sp_gradient_ensure_vector_normalized(SPGradient *gr)
     }
 
     /* First make sure we have vector directly defined (i.e. gr has its own stops) */
-    if (!gr->has_stops) {
+    if ( !gr->hasStops() ) {
         /* We do not have stops ourselves, so flatten stops as well */
-        sp_gradient_ensure_vector(gr);
+        gr->ensureVector();
         g_assert(gr->vector.built);
         // this adds stops from gr->vector as children to gr
         sp_gradient_repr_write_vector (gr);
@@ -97,7 +97,7 @@ sp_gradient_get_private_normalized(SPDocument *document, SPGradient *vector, SPG
     g_return_val_if_fail(document != NULL, NULL);
     g_return_val_if_fail(vector != NULL, NULL);
     g_return_val_if_fail(SP_IS_GRADIENT(vector), NULL);
-    g_return_val_if_fail(SP_GRADIENT_HAS_STOPS(vector), NULL);
+    g_return_val_if_fail(vector->hasStops(), NULL);
 
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
 
@@ -177,8 +177,9 @@ sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradient *vector,
     // Orphaned gradient, no vector with stops at the end of the line; this used to be an assert
     // but i think we should not abort on this - maybe just write a validity warning into some sort
     // of log
-    if (!vector || !SP_GRADIENT_HAS_STOPS(vector))
+    if ( !vector || !vector->hasStops() ) {
         return (gr);
+    }
 
     // user is the object that uses this gradient; normally it's item but for tspans, we
     // check its ancestor text so that tspans don't get different gradients from their
@@ -202,7 +203,7 @@ sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradient *vector,
     SPDocument *doc = SP_OBJECT_DOCUMENT(gr);
     SPObject *defs = SP_DOCUMENT_DEFS(doc);
 
-    if ((gr->has_stops) ||
+    if ((gr->hasStops()) ||
         (gr->state != SP_GRADIENT_STATE_UNKNOWN) ||
         (SP_OBJECT_PARENT(gr) != SP_OBJECT(defs)) ||
         (SP_OBJECT_HREFCOUNT(gr) > 1)) {
@@ -339,7 +340,7 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
     gr = sp_gradient_fork_private_if_necessary(gr, gr->getVector(),
                                                SP_IS_RADIALGRADIENT(gr) ? SP_GRADIENT_TYPE_RADIAL : SP_GRADIENT_TYPE_LINEAR, SP_OBJECT(item));
 
-    if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
+    if (gr->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
 
         Inkscape::XML::Node *repr = SP_OBJECT_REPR(gr);
 
@@ -817,7 +818,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, Geom
                 // using X-coordinates only to determine the offset, assuming p has been snapped to the vector from begin to end.
                 double offset = get_offset_between_points (p, Geom::Point(lg->x1.computed, lg->y1.computed), Geom::Point(lg->x2.computed, lg->y2.computed));
                 SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (lg, false);
-                sp_gradient_ensure_vector(lg);
+                lg->ensureVector();
                 lg->vector.stops.at(point_i).offset = offset;
                 SPStop* stopi = sp_get_stop_i(vector, point_i);
                 stopi->offset = offset;
@@ -911,7 +912,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, Geom
                  Geom::Point end   = Geom::Point (rg->cx.computed + rg->r.computed, rg->cy.computed);
                 double offset = get_offset_between_points (p, start, end);
                 SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (rg, false);
-                sp_gradient_ensure_vector(rg);
+                rg->ensureVector();
                 rg->vector.stops.at(point_i).offset = offset;
                 SPStop* stopi = sp_get_stop_i(vector, point_i);
                 stopi->offset = offset;
@@ -927,7 +928,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, Geom
                 Geom::Point end   = Geom::Point (rg->cx.computed, rg->cy.computed - rg->r.computed);
                 double offset = get_offset_between_points (p, start, end);
                 SPGradient *vector = sp_gradient_get_forked_vector_if_necessary(rg, false);
-                sp_gradient_ensure_vector(rg);
+                rg->ensureVector();
                 rg->vector.stops.at(point_i).offset = offset;
                 SPStop* stopi = sp_get_stop_i(vector, point_i);
                 stopi->offset = offset;
@@ -967,11 +968,13 @@ sp_item_gradient_get_vector (SPItem *item, bool fill_or_stroke)
 SPGradientSpread
 sp_item_gradient_get_spread (SPItem *item, bool fill_or_stroke)
 {
+    SPGradientSpread spread = SP_GRADIENT_SPREAD_PAD;
     SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
 
-    if (gradient)
-        return sp_gradient_get_spread (gradient);
-    return SP_GRADIENT_SPREAD_PAD;
+    if (gradient) {
+        spread = gradient->fetchSpread();
+    }
+    return spread;
 }
 
 
@@ -1036,7 +1039,7 @@ sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool
         }
     }
 
-    if (SP_GRADIENT(gradient)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
+    if (SP_GRADIENT(gradient)->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
         sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
         Geom::OptRect bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
         if (bbox) {
