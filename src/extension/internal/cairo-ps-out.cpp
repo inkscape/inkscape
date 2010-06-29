@@ -195,12 +195,7 @@ CairoPsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar con
 
     // Create LaTeX file (if requested)
     if (new_textToLaTeX) {
-        gchar * tex_filename;
-        //strip filename of ".ps", do not add ".tex" here.
-        gsize n = g_str_has_suffix(filename, ".ps") ? strlen(filename)-3 : strlen(filename);
-        tex_filename = g_strndup(filename, n);
-        ret = latex_render_document_text_to_file(doc, tex_filename, new_exportId, new_areaDrawing, new_areaPage, false);
-        g_free(tex_filename);
+        ret = latex_render_document_text_to_file(doc, filename, new_exportId, new_areaDrawing, new_areaPage, false);
 
         if (!ret)
             throw Inkscape::Extension::Output::save_failed();
@@ -283,12 +278,7 @@ CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar co
 
     // Create LaTeX file (if requested)
     if (new_textToLaTeX) {
-        gchar * tex_filename;
-        //strip filename of ".eps", do not add ".tex" here.
-        gsize n = g_str_has_suffix(filename, ".eps") ? strlen(filename)-4 : strlen(filename);
-        tex_filename = g_strndup(filename, n);
-        ret = latex_render_document_text_to_file(doc, tex_filename, new_exportId, new_areaDrawing, new_areaPage, false);
-        g_free(tex_filename);
+        ret = latex_render_document_text_to_file(doc, filename, new_exportId, new_areaDrawing, new_areaPage, false);
 
         if (!ret)
             throw Inkscape::Extension::Output::save_failed();

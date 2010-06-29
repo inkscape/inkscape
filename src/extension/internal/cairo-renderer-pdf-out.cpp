@@ -213,12 +213,7 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
 
     // Create LaTeX file (if requested)
     if (new_textToLaTeX) {
-        gchar * tex_filename;
-        //strip filename of ".pdf", do not add ".tex" here.
-        gsize n = g_str_has_suffix(filename, ".pdf") ? strlen(filename)-4 : strlen(filename);
-        tex_filename = g_strndup(filename, n);
-        ret = latex_render_document_text_to_file(doc, tex_filename, new_exportId, new_exportDrawing, new_exportCanvas, true);
-        g_free(tex_filename);
+        ret = latex_render_document_text_to_file(doc, filename, new_exportId, new_exportDrawing, new_exportCanvas, true);
 
         if (!ret)
             throw Inkscape::Extension::Output::save_failed();

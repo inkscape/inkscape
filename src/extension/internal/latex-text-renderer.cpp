@@ -51,7 +51,7 @@ namespace Internal {
 
 /**
  * This method is called by the PDF, EPS and PS output extensions.
- * @param filename This should be the filename without extension to which the tex code should be written. Output goes to <filename>.tex.
+ * @param filename This should be the filename without '_tex' extension to which the tex code should be written. Output goes to <filename>_tex, note the underscore instead of period.
  */
 bool
 latex_render_document_text_to_file( SPDocument *doc, gchar const *filename,
@@ -132,7 +132,7 @@ LaTeXTextRenderer::setTargetFile(gchar const *filename) {
 
         _filename = g_path_get_basename(filename);
 
-        gchar *filename_ext = g_strdup_printf("%s.tex", filename);
+        gchar *filename_ext = g_strdup_printf("%s_tex", filename);
         Inkscape::IO::dump_fopen_call(filename_ext, "K");
         FILE *osf = Inkscape::IO::fopen_utf8name(filename_ext, "w+");
         if (!osf) {
@@ -176,12 +176,12 @@ LaTeXTextRenderer::setTargetFile(gchar const *filename) {
 
 static char const preamble[] =
 "%% To include the image in your LaTeX document, write\n"
-"%%   \\input{<filename>.tex}\n"
+"%%   \\input{<filename>.pdf_tex}\n"
 "%%  instead of\n"
 "%%   \\includegraphics{<filename>.pdf}\n"
 "%% To scale the image, write\n"
 "%%   \\def{\\svgwidth}{<desired width>}\n"
-"%%   \\input{<filename>.tex}\n"
+"%%   \\input{<filename>.pdf_tex}\n"
 "%%  instead of\n"
 "%%   \\includegraphics[width=<desired width>]{<filename>.pdf}\n"
 "%%\n"
@@ -190,7 +190,7 @@ static char const preamble[] =
 "%% installed) using\n"
 "%%   \\usepackage{import}\n"
 "%% in the preamble, and then including the image with\n"
-"%%   \\import{<path to file>}{<filename>.tex}\n"
+"%%   \\import{<path to file>}{<filename>.pdf_tex}\n"
 "%% Alternatively, one can specify\n"
 "%%   \\graphicspath{{<path to file>/}}\n"
 "%% \n"
