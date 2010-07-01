@@ -91,6 +91,12 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
         return;
     }
 
+    if (_snapmanager->getDesktop() == NULL) {
+        g_warning("desktop == NULL, so we cannot snap; please inform the developpers of this bug");
+        // Apparently the etup() method from the SnapManager class hasn't been called before trying to snap.
+    }
+
+
     if (first_point) {
         _candidates->clear();
     }
@@ -99,7 +105,6 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
     bbox_to_snap_incl.expandBy(getSnapperTolerance()); // see?
 
     for (SPObject* o = sp_object_first_child(parent); o != NULL; o = SP_OBJECT_NEXT(o)) {
-        g_assert(_snapmanager->getDesktop() != NULL);
         if (SP_IS_ITEM(o) && !(_snapmanager->getDesktop()->itemIsHidden(SP_ITEM(o)) && !clip_or_mask)) {
             // Snapping to items in a locked layer is allowed
             // Don't snap to hidden objects, unless they're a clipped path or a mask
