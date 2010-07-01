@@ -52,7 +52,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-06-21 23:10+0100\n"
+"PO-Revision-Date: 2010-07-01 23:08+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -18843,11 +18843,11 @@ msgstr "Geselecteerde objecten ordenen"
 #. brightness
 #: ../src/ui/dialog/tracedialog.cpp:406
 msgid "Brightness cutoff"
-msgstr "Helderheid afsnijding"
+msgstr "Helderheid"
 
 #: ../src/ui/dialog/tracedialog.cpp:410
 msgid "Trace by a given brightness level"
-msgstr "Overtrekken volgens een bepaald helderheid niveau"
+msgstr "Overtrekken volgens een bepaald helderheidsniveau"
 
 #: ../src/ui/dialog/tracedialog.cpp:418
 msgid "Brightness cutoff for black/white"
@@ -18928,12 +18928,12 @@ msgstr "Grijzen"
 
 #: ../src/ui/dialog/tracedialog.cpp:527
 msgid "Same as Colors, but the result is converted to grayscale"
-msgstr "Hetzelfde als 'Kleuren', maar het resultaat wordt omgezet naar grijsschaal"
+msgstr "Hetzelfde als 'Kleuren', maar het resultaat wordt omgezet naar een grijsschaal"
 
 #. TRANSLATORS: "Smooth" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:532
 msgid "Smooth"
-msgstr "Glad maken"
+msgstr "Vervagen"
 
 #: ../src/ui/dialog/tracedialog.cpp:536
 msgid "Apply Gaussian blur to the bitmap before tracing"
@@ -18980,11 +18980,11 @@ msgstr "Hoeken afronden"
 
 #: ../src/ui/dialog/tracedialog.cpp:586
 msgid "Smooth out sharp corners of the trace"
-msgstr "Scherpe hoeken uit de overgetrokken afbeelding afronden"
+msgstr "Scherpe hoeken uit de overtrokken afbeelding afronden"
 
 #: ../src/ui/dialog/tracedialog.cpp:595
 msgid "Increase this to smooth corners more"
-msgstr "Vergroot dit om hoeken meer af te ronden"
+msgstr "Verhoog dit om hoeken meer af te ronden"
 
 #: ../src/ui/dialog/tracedialog.cpp:599
 msgid "Optimize paths"
@@ -18996,7 +18996,7 @@ msgstr "Paden trachten te optimaliseren door aangrenzende bezierboogsegmenten sa
 
 #: ../src/ui/dialog/tracedialog.cpp:610
 msgid "Increase this to reduce the number of nodes in the trace by more aggressive optimization"
-msgstr "Vergroot dit om het aantal knooppunten in de overtrekking door een sterkere optimalisatie te verkleinen"
+msgstr "Verhoog dit om het aantal knooppunten in de overtrek te verkleinen door een aggressievere optimalisatie"
 
 #: ../src/ui/dialog/tracedialog.cpp:611
 msgid "Tolerance:"
