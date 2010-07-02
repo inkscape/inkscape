@@ -131,7 +131,7 @@ UXManagerImpl::UXManagerImpl() :
         int width = defaultScreen->get_width();
         int height = defaultScreen->get_height();
         gdouble aspect = static_cast<gdouble>(width) / static_cast<gdouble>(height);
-        if (aspect > 1.4) {
+        if (aspect > 1.65) {
             _widescreen = true;
         }
     }
