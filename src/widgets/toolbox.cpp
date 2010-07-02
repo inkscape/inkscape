@@ -992,7 +992,8 @@ static GtkWidget* toolboxNewCommon( GtkWidget* tb, BarId id, GtkPositionType han
     gtk_widget_set_sensitive(tb, FALSE);
 
     GtkWidget *hb = 0;
-    if ( UXManager::getInstance()->isFloatWindowProblem() ) {
+    gboolean forceFloatAllowed = Inkscape::Preferences::get()->getBool("/options/workarounds/floatallowed", false);
+    if ( UXManager::getInstance()->isFloatWindowProblem() && !forceFloatAllowed ) {
         hb = gtk_event_box_new(); // A simple, neutral container.
     } else {
         hb = gtk_handle_box_new();
