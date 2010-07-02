@@ -142,6 +142,8 @@ public:
     SPGradientSpread fetchSpread();
     SPGradientUnits fetchUnits();
 
+    void setSwatch();
+
 private:
     bool invalidateVector();
     void rebuildVector();

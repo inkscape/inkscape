@@ -556,8 +556,12 @@ void FillNStroke::updateFromPaint()
                         }
 
                         if (!vector) {
+                            SPGradient *gr = sp_gradient_vector_for_object(document, desktop, SP_OBJECT(i->data), kind == FILL);
+                            if ( gr && (psel->mode == SPPaintSelector::MODE_SWATCH) ) {
+                                gr->setSwatch();
+                            }
                             sp_item_set_gradient(SP_ITEM(i->data),
-                                                 sp_gradient_vector_for_object(document, desktop, SP_OBJECT(i->data), kind == FILL),
+                                                 gr,
                                                  gradient_type, kind == FILL);
                         } else {
                             sp_item_set_gradient(SP_ITEM(i->data), vector, gradient_type, kind == FILL);

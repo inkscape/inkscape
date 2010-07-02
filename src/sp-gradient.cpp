@@ -288,6 +288,18 @@ SPGradientSpread SPGradient::getSpread() const
     return spread;
 }
 
+void SPGradient::setSwatch()
+{
+    if ( !isSwatch() ) {
+        if ( hasStops() && (getStopCount() == 0) ) {
+            repr->setAttribute("osb:paint", "solid");
+        } else {
+            repr->setAttribute("osb:paint", "gradient");
+        }
+        requestModified(SP_OBJECT_MODIFIED_FLAG);
+    }
+}
+
 /**
  * Return stop's color as 32bit value.
  */

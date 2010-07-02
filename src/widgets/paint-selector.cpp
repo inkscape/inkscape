@@ -1102,6 +1102,7 @@ static void sp_paint_selector_set_mode_swatch(SPPaintSelector *psel, SPPaintSele
 
         gtk_frame_set_label(GTK_FRAME(psel->frame), _("Swatch fill"));
     }
+
 #ifdef SP_PS_VERBOSE
     g_print("Swatch req\n");
 #endif

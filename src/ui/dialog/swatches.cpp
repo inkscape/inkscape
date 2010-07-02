@@ -72,7 +72,8 @@ static std::map<SwatchesPanel*, SPDocument*> docPerPanel;
 class SwatchesPanelHook : public SwatchesPanel
 {
 public:
-    static void convertGradient( GtkMenuItem * menuitem, gpointer userData );
+    static void convertGradient( GtkMenuItem *menuitem, gpointer userData );
+    static void addNewGradient( GtkMenuItem *menuitem, gpointer user_data );
 };
 
 static void handleClick( GtkWidget* /*widget*/, gpointer callback_data ) {
@@ -139,7 +140,7 @@ static void editGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
     }
 }
 
-static void addNewGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
+void SwatchesPanelHook::addNewGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
 {
     if ( bounceTarget ) {
         SwatchesPanel* swp = bouncePanel;
@@ -147,21 +148,22 @@ static void addNewGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
         SPDocument *doc = desktop ? desktop->doc() : 0;
         if (doc) {
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+            SPGradient * gr = 0;
+            {
+                Inkscape::XML::Node *repr = xml_doc->createElement("svg:linearGradient");
+                Inkscape::XML::Node *stop = xml_doc->createElement("svg:stop");
+                stop->setAttribute("offset", "0");
+                stop->setAttribute("style", "stop-color:#000;stop-opacity:1;");
+                repr->appendChild(stop);
+                Inkscape::GC::release(stop);
 
-            Inkscape::XML::Node *repr = xml_doc->createElement("svg:linearGradient");
-            repr->setAttribute("osb:paint", "solid");
-            Inkscape::XML::Node *stop = xml_doc->createElement("svg:stop");
-            stop->setAttribute("offset", "0");
-            stop->setAttribute("style", "stop-color:#000;stop-opacity:1;");
-            repr->appendChild(stop);
-            Inkscape::GC::release(stop);
+                SP_OBJECT_REPR( SP_DOCUMENT_DEFS(doc) )->addChild(repr, NULL);
 
-            SP_OBJECT_REPR( SP_DOCUMENT_DEFS(doc) )->addChild(repr, NULL);
+                gr = static_cast<SPGradient *>(doc->getObjectByRepr(repr));
+                Inkscape::GC::release(repr);
+            }
 
-            SPGradient * gr = static_cast<SPGradient *>(doc->getObjectByRepr(repr));
-
-            Inkscape::GC::release(repr);
-
+            gr->setSwatch();
 
             editGradientImpl( gr );
         }
@@ -182,12 +184,9 @@ void SwatchesPanelHook::convertGradient( GtkMenuItem * /*menuitem*/, gpointer us
             for (const GSList *item = gradients; item; item = item->next) {
                 SPGradient* grad = SP_GRADIENT(item->data);
                 if ( targetName == grad->getId() ) {
-                    grad->repr->setAttribute("osb:paint", "solid"); // TODO make conditional
-
+                    grad->setSwatch();
                     sp_document_done(doc, SP_VERB_CONTEXT_GRADIENT,
                                      _("Add gradient stop"));
-
-                    handleGradientsChange(doc); // work-around for signal not being emitted
                     break;
                 }
             }
@@ -253,7 +252,7 @@ gboolean colorItemHandleButtonPress( GtkWidget* widget, GdkEventButton* event, g
             child = gtk_menu_item_new_with_label(_("Add"));
             g_signal_connect( G_OBJECT(child),
                               "activate",
-                              G_CALLBACK(addNewGradient),
+                              G_CALLBACK(SwatchesPanelHook::addNewGradient),
                               user_data );
             gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
             popupExtras.push_back(child);
@@ -887,21 +886,25 @@ void SwatchesPanel::handleDefsModified(SPDocument *document)
         std::map<ColorItem*, SPGradient*> tmpGrads;
         recalcSwatchContents(document, tmpColors, tmpPrevs, tmpGrads);
 
-        int cap = std::min(docPalette->_colors.size(), tmpColors.size());
-        for (int i = 0; i < cap; i++) {
-            ColorItem* newColor = tmpColors[i];
-            ColorItem* oldColor = docPalette->_colors[i];
-            if ( (newColor->def.getType() != oldColor->def.getType()) ||
-                 (newColor->def.getR() != oldColor->def.getR()) ||
-                 (newColor->def.getG() != oldColor->def.getG()) ||
-                 (newColor->def.getB() != oldColor->def.getB()) ) {
-                oldColor->def.setRGB(newColor->def.getR(), newColor->def.getG(), newColor->def.getB());
-            }
-            if (tmpGrads.find(newColor) != tmpGrads.end()) {
-                oldColor->setGradient(tmpGrads[newColor]);
-            }
-            if ( tmpPrevs.find(newColor) != tmpPrevs.end() ) {
-                oldColor->setPixData(tmpPrevs[newColor], PREVIEW_PIXBUF_WIDTH, VBLOCK);
+        if ( tmpColors.size() != docPalette->_colors.size() ) {
+            handleGradientsChange(document);
+        } else {
+            int cap = std::min(docPalette->_colors.size(), tmpColors.size());
+            for (int i = 0; i < cap; i++) {
+                ColorItem* newColor = tmpColors[i];
+                ColorItem* oldColor = docPalette->_colors[i];
+                if ( (newColor->def.getType() != oldColor->def.getType()) ||
+                     (newColor->def.getR() != oldColor->def.getR()) ||
+                     (newColor->def.getG() != oldColor->def.getG()) ||
+                     (newColor->def.getB() != oldColor->def.getB()) ) {
+                    oldColor->def.setRGB(newColor->def.getR(), newColor->def.getG(), newColor->def.getB());
+                }
+                if (tmpGrads.find(newColor) != tmpGrads.end()) {
+                    oldColor->setGradient(tmpGrads[newColor]);
+                }
+                if ( tmpPrevs.find(newColor) != tmpPrevs.end() ) {
+                    oldColor->setPixData(tmpPrevs[newColor], PREVIEW_PIXBUF_WIDTH, VBLOCK);
+                }
             }
         }
     }
