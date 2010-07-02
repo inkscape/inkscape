@@ -20420,7 +20420,7 @@ msgstr "tutorial-advanced.nl.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1873
 msgid "tutorial-tracing.svg"
-msgstr "tutorial-tracing.svg"
+msgstr "tutorial-tracing.nl.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1877

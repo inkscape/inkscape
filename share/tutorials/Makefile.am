@@ -167,6 +167,7 @@ tutorial_DATA = \
     tutorial-tracing.fr.svg \
     tutorial-tracing.hu.svg \
     tutorial-tracing.ja.svg \
+    tutorial-tracing.nl.svg \
     tutorial-tracing.pl.svg \
     tutorial-tracing.pt_BR.svg \
     tutorial-tracing.ru.svg \
