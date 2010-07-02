@@ -180,7 +180,7 @@ static char const preamble[] =
 "%%  instead of\n"
 "%%   \\includegraphics{<filename>.pdf}\n"
 "%% To scale the image, write\n"
-"%%   \\def{\\svgwidth}{<desired width>}\n"
+"%%   \\def\\svgwidth{<desired width>}\n"
 "%%   \\input{<filename>.pdf_tex}\n"
 "%%  instead of\n"
 "%%   \\includegraphics[width=<desired width>]{<filename>.pdf}\n"
