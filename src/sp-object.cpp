@@ -38,6 +38,7 @@
 #include "helper/sp-marshal.h"
 #include "xml/node-event-vector.h"
 #include "attributes.h"
+#include "color-profile-fns.h"
 #include "document.h"
 #include "style.h"
 #include "sp-object-repr.h"
@@ -548,6 +549,8 @@ void SPObject::requestOrphanCollection() {
     } else if (SP_IS_SCRIPT(this)) {
         // leave it
     } else if (SP_IS_PAINT_SERVER(this) && static_cast<SPPaintServer*>(this)->isSwatch() ) {
+        // leave it
+    } else if (IS_COLORPROFILE(this)) {
         // leave it
     } else {
         document->queueForOrphanCollection(this);
