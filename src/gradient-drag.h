@@ -2,7 +2,7 @@
 #define __GRADIENT_DRAG_H__
 
 /*
- * On-canvas gradient dragging 
+ * On-canvas gradient dragging
  *
  * Authors:
  *   bulia byak <bulia@users.sf.net>
@@ -78,7 +78,7 @@ struct GrDragger {
 
     void updateKnotShape();
     void updateTip();
-    
+
     void select();
     void deselect();
     bool isSelected();
@@ -131,9 +131,9 @@ public: // FIXME: make more of this private!
     void deleteSelected (bool just_one = false);
 
     guint32 getColor();
-    
-    bool keep_selection;    
-    
+
+    bool keep_selection;
+
     GrDragger *getDraggerFor (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke);
 
     void grabKnot (GrDragger *dragger, gint x, gint y, guint32 etime);
@@ -165,7 +165,7 @@ public: // FIXME: make more of this private!
 
     void selected_reverse_vector ();
 
-private: 
+private:
     void deselect_all();
 
     void addLine (SPItem *item, Geom::Point p1, Geom::Point p2, guint32 rgba);

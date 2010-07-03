@@ -1624,41 +1624,43 @@ GrDrag::grabKnot (SPItem *item, gint point_type, gint point_i, bool fill_or_stro
 Regenerates the draggers list from the current selection; is called when selection is changed or
 modified, also when a radial dragger needs to update positions of other draggers in the gradient
 */
-void
-GrDrag::updateDraggers ()
+void GrDrag::updateDraggers ()
 {
     while (selected) {
         selected = g_list_remove(selected, selected->data);
     }
     // delete old draggers
     for (GList const* i = this->draggers; i != NULL; i = i->next) {
-        delete ((GrDragger *) i->data);
+        delete static_cast<GrDragger *>(i->data);
     }
-    g_list_free (this->draggers);
+    g_list_free(this->draggers);
     this->draggers = NULL;
 
-    g_return_if_fail (this->selection != NULL);
+    g_return_if_fail(this->selection != NULL);
 
     for (GSList const* i = this->selection->itemList(); i != NULL; i = i->next) {
-
         SPItem *item = SP_ITEM(i->data);
-        SPStyle *style = SP_OBJECT_STYLE (item);
+        SPStyle *style = item->style;
 
         if (style && (style->fill.isPaintserver())) {
-            SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
-            if (SP_IS_LINEARGRADIENT (server)) {
-                addDraggersLinear (SP_LINEARGRADIENT (server), item, true);
-            } else if (SP_IS_RADIALGRADIENT (server)) {
-                addDraggersRadial (SP_RADIALGRADIENT (server), item, true);
+            SPPaintServer *server = style->getFillPaintServer();
+            if ( server && server->isSolid() ) {
+                // Suppress "gradientness" of solid paint
+            } else if ( SP_IS_LINEARGRADIENT(server) ) {
+                addDraggersLinear( SP_LINEARGRADIENT(server), item, true );
+            } else if ( SP_IS_RADIALGRADIENT(server) ) {
+                addDraggersRadial( SP_RADIALGRADIENT(server), item, true );
             }
         }
 
         if (style && (style->stroke.isPaintserver())) {
-            SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
-            if (SP_IS_LINEARGRADIENT (server)) {
-                addDraggersLinear (SP_LINEARGRADIENT (server), item, false);
-            } else if (SP_IS_RADIALGRADIENT (server)) {
-                addDraggersRadial (SP_RADIALGRADIENT (server), item, false);
+            SPPaintServer *server = style->getStrokePaintServer();
+            if ( server && server->isSolid() ) {
+                // Suppress "gradientness" of solid paint
+            } else if ( SP_IS_LINEARGRADIENT(server) ) {
+                addDraggersLinear( SP_LINEARGRADIENT(server), item, false );
+            } else if ( SP_IS_RADIALGRADIENT(server) ) {
+                addDraggersRadial( SP_RADIALGRADIENT(server), item, false );
             }
         }
     }
