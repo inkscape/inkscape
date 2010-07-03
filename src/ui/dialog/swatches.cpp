@@ -14,6 +14,7 @@
 
 #include <errno.h>
 #include <map>
+#include <algorithm>
 
 #include <gtk/gtkdialog.h> //for GTK_RESPONSE* types
 #include <gtk/gtkdnd.h>
@@ -805,6 +806,7 @@ static void recalcSwatchContents(SPDocument* doc,
     }
 
     if ( !newList.empty() ) {
+        std::reverse(newList.begin(), newList.end());
         for ( std::vector<SPGradient*>::iterator it = newList.begin(); it != newList.end(); ++it )
         {
             SPGradient* grad = *it;
