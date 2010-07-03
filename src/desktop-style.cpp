@@ -436,6 +436,20 @@ stroke_average_width (GSList const *objects)
     return avgwidth / (g_slist_length ((GSList *) objects) - n_notstroked);
 }
 
+static bool vectorsClose( std::vector<double> const &lhs, std::vector<double> const &rhs )
+{
+    static double epsilon = 1e-6;
+    bool isClose = false;
+    if ( lhs.size() == rhs.size() ) {
+        isClose = true;
+        for ( size_t i = 0; (i < lhs.size()) && isClose; ++i ) {
+            isClose = fabs(lhs[i] - rhs[i]) < epsilon;
+        }
+    }
+    return isClose;
+}
+
+
 /**
  * Write to style_res the average fill or stroke of list of objects, if applicable.
  */
@@ -536,11 +550,15 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
                 iccColor = paint->value.color.icc;
                 iccSeen = true;
             } else {
-                if (same_color && (prev[0] != d[0] || prev[1] != d[1] || prev[2] != d[2]))
+                if (same_color && (prev[0] != d[0] || prev[1] != d[1] || prev[2] != d[2])) {
                     same_color = false;
-                if ( iccSeen ) {
-                    if(paint->value.color.icc) {
-                        // TODO fix this
+                    iccColor = 0;
+                }
+                if ( iccSeen && iccColor ) {
+                    if ( !paint->value.color.icc
+                         || (iccColor->colorProfile != paint->value.color.icc->colorProfile)
+                         || !vectorsClose(iccColor->colors, paint->value.color.icc->colors) ) {
+                        same_color = false;
                         iccColor = 0;
                     }
                 }

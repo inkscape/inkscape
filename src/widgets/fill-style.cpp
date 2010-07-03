@@ -523,6 +523,7 @@ void FillNStroke::updateFromPaint()
                 SPGradientType const gradient_type = ( psel->mode != SPPaintSelector::MODE_GRADIENT_RADIAL
                                                        ? SP_GRADIENT_TYPE_LINEAR
                                                        : SP_GRADIENT_TYPE_RADIAL );
+                bool createSwatch = (psel->mode == SPPaintSelector::MODE_SWATCH);
 
                 SPCSSAttr *css = 0;
                 if (kind == FILL) {
@@ -537,15 +538,18 @@ void FillNStroke::updateFromPaint()
 
                     SPStyle *query = sp_style_new(desktop->doc());
                     int result = objects_query_fillstroke(const_cast<GSList *>(items), query, kind == FILL);
-                    SPIPaint &targPaint = (kind == FILL) ? query->fill : query->stroke;
-                    guint32 common_rgb = 0;
                     if (result == QUERY_STYLE_MULTIPLE_SAME) {
+                        SPIPaint &targPaint = (kind == FILL) ? query->fill : query->stroke;
+                        SPColor common;
                         if (!targPaint.isColor()) {
-                            common_rgb = sp_desktop_get_color(desktop, kind == FILL);
+                            common = sp_desktop_get_color(desktop, kind == FILL);
                         } else {
-                            common_rgb = targPaint.value.color.toRGBA32( 0xff );
+                            common = targPaint.value.color;
                         }
-                        vector = sp_document_default_gradient_vector(document, common_rgb);
+                        vector = sp_document_default_gradient_vector( document, common, createSwatch );
+                        if ( vector && createSwatch ) {
+                            vector->setSwatch();
+                        }
                     }
                     sp_style_unref(query);
 
@@ -556,8 +560,8 @@ void FillNStroke::updateFromPaint()
                         }
 
                         if (!vector) {
-                            SPGradient *gr = sp_gradient_vector_for_object(document, desktop, SP_OBJECT(i->data), kind == FILL);
-                            if ( gr && (psel->mode == SPPaintSelector::MODE_SWATCH) ) {
+                            SPGradient *gr = sp_gradient_vector_for_object( document, desktop, SP_OBJECT(i->data), kind == FILL, createSwatch );
+                            if ( gr && createSwatch ) {
                                 gr->setSwatch();
                             }
                             sp_item_set_gradient(SP_ITEM(i->data),

@@ -1144,15 +1144,29 @@ static void sp_gradient_repr_set_link(Inkscape::XML::Node *repr, SPGradient *lin
     }
 }
 
+
+static void addStop( Inkscape::XML::Node *parent, Glib::ustring const &color, gint opacity, gchar const *offset )
+{
+    Inkscape::XML::Node *stop = parent->document()->createElement("svg:stop");
+    {
+        gchar *tmp = g_strdup_printf( "stop-color:%s;stop-opacity:%d;", color.c_str(), opacity );
+        stop->setAttribute( "style", tmp );
+        g_free(tmp);
+    }
+
+    stop->setAttribute( "offset", offset );
+
+    parent->appendChild(stop);
+    Inkscape::GC::release(stop);
+}
+
 /*
  * Get default normalized gradient vector of document, create if there is none
  */
-
-SPGradient *
-sp_document_default_gradient_vector(SPDocument *document, guint32 color)
+SPGradient *sp_document_default_gradient_vector( SPDocument *document, SPColor const &color, bool singleStop )
 {
-    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    SPDefs *defs = static_cast<SPDefs *>(SP_DOCUMENT_DEFS(document));
+    Inkscape::XML::Document *xml_doc = document->rdoc;
 
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:linearGradient");
 
@@ -1162,41 +1176,17 @@ sp_document_default_gradient_vector(SPDocument *document, guint32 color)
     // (1) here, search gradients by color and return what is found without duplication
     // (2) in fill & stroke, show only one copy of each gradient in list
 
-    Inkscape::XML::Node *stop = xml_doc->createElement("svg:stop");
-
-    gchar b[64];
-    sp_svg_write_color(b, sizeof(b), color);
-
-    {
-        gchar *t = g_strdup_printf("stop-color:%s;stop-opacity:1;", b);
-        stop->setAttribute("style", t);
-        g_free(t);
+    Glib::ustring colorStr = color.toString();
+    addStop( repr, colorStr, 1, "0" );
+    if ( !singleStop ) {
+        addStop( repr, colorStr, 0, "1" );
     }
-
-    stop->setAttribute("offset", "0");
-
-    repr->appendChild(stop);
-    Inkscape::GC::release(stop);
-
-    stop = xml_doc->createElement("svg:stop");
-
-    {
-        gchar *t = g_strdup_printf("stop-color:%s;stop-opacity:0;", b);
-        stop->setAttribute("style", t);
-        g_free(t);
-    }
-
-    stop->setAttribute("offset", "1");
-
-    repr->appendChild(stop);
-    Inkscape::GC::release(stop);
 
     SP_OBJECT_REPR(defs)->addChild(repr, NULL);
     Inkscape::GC::release(repr);
 
     /* fixme: This does not look like nice */
-    SPGradient *gr;
-    gr = (SPGradient *) document->getObjectByRepr(repr);
+    SPGradient *gr = static_cast<SPGradient *>(document->getObjectByRepr(repr));
     g_assert(gr != NULL);
     g_assert(SP_IS_GRADIENT(gr));
     /* fixme: Maybe add extra sanity check here */
@@ -1209,13 +1199,12 @@ sp_document_default_gradient_vector(SPDocument *document, guint32 color)
 Return the preferred vector for \a o, made from (in order of preference) its current vector,
 current fill or stroke color, or from desktop style if \a o is NULL or doesn't have style.
 */
-SPGradient *
-sp_gradient_vector_for_object(SPDocument *const doc, SPDesktop *const desktop,
-                              SPObject *const o, bool const is_fill)
+SPGradient *sp_gradient_vector_for_object( SPDocument *const doc, SPDesktop *const desktop,
+                                           SPObject *const o, bool const is_fill, bool singleStop )
 {
-    guint32 rgba = 0;
+    SPColor color;
     if (o == NULL || SP_OBJECT_STYLE(o) == NULL) {
-        rgba = sp_desktop_get_color(desktop, is_fill);
+        color = sp_desktop_get_color(desktop, is_fill);
     } else {
         // take the color of the object
         SPStyle const &style = *SP_OBJECT_STYLE(o);
@@ -1227,17 +1216,17 @@ sp_gradient_vector_for_object(SPDocument *const doc, SPDesktop *const desktop,
             if (SP_IS_GRADIENT (server)) {
                 return SP_GRADIENT(server)->getVector(true);
             } else {
-                rgba = sp_desktop_get_color(desktop, is_fill);
+                color = sp_desktop_get_color(desktop, is_fill);
             }
         } else if (paint.isColor()) {
-            rgba = paint.value.color.toRGBA32( 0xff );
+            color = paint.value.color;
         } else {
             // if o doesn't use flat color, then take current color of the desktop.
-            rgba = sp_desktop_get_color(desktop, is_fill);
+            color = sp_desktop_get_color(desktop, is_fill);
         }
     }
 
-    return sp_document_default_gradient_vector(doc, rgba);
+    return sp_document_default_gradient_vector( doc, color, singleStop );
 }
 
 
