@@ -66,10 +66,10 @@ enum SnapSourceType {
     SNAPSOURCE_CONVEX_HULL_CORNER,
     SNAPSOURCE_ELLIPSE_QUADRANT_POINT,
     SNAPSOURCE_NODE_HANDLE, // eg. nodes in the path editor, handles of stars or rectangles, etc. (tied to a stroke)
+    SNAPSOURCE_OBJECT_MIDPOINT,
     //-------------------------------------------------------------------
     // Other points (e.g. guides, gradient knots) will snap to both bounding boxes and nodes
     SNAPSOURCE_OTHER_CATEGORY = 1024, // will be used as a flag and must therefore be a power of two
-    SNAPSOURCE_OBJECT_MIDPOINT,
     SNAPSOURCE_ROTATION_CENTER,
     SNAPSOURCE_CENTER, // of ellipse
     SNAPSOURCE_GUIDE,
