@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-07-04 21:15+0200\n"
+"PO-Revision-Date: 2010-07-05 00:40+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -1562,8 +1562,9 @@ msgid "••••••••••••••••••••••••�
 msgstr "••••••••••••••••••••••••••••••••••••••••••••••••"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:1
+#, fuzzy
 msgid "Auto-Text:"
-msgstr ""
+msgstr "Szöveg:"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:2
 msgid "Auto-texts"
@@ -1943,8 +1944,9 @@ msgid ""
 msgstr "kiterjesztés"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:44
+#, fuzzy
 msgid "Toggle progress bar:"
-msgstr ""
+msgstr "átkapcsolása"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:45
 #, fuzzy
@@ -3649,8 +3651,9 @@ msgid "Background — repeat horizontally (on parent group)"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:5
+#, fuzzy
 msgid "Background — repeat vertically (on parent group)"
-msgstr ""
+msgstr "Függőleges"
 
 # node-ok és szakaszok száma nem változik
 #: ../share/extensions/webslicer_create_rect.inx.h:6
@@ -14319,40 +14322,40 @@ msgstr "<b>Semmi</b> nincs kijelölve"
 #, fuzzy
 msgid ""
 "%s. Drag, click or scroll to spray <b>copies</b> of the initial selection"
-msgstr "húzás"
+msgstr "húzás Festékszóró"
 
 #: ../src/spray-context.cpp:252
 #, fuzzy
 msgid ""
 "%s. Drag, click or scroll to spray <b>clones</b> of the initial selection"
-msgstr "húzás"
+msgstr "húzás Festékszóró"
 
 #: ../src/spray-context.cpp:255
 #, fuzzy
 msgid ""
 "%s. Drag, click or scroll to spray in a <b>single path</b> of the initial "
 "selection"
-msgstr "húzás"
+msgstr "húzás Festékszóró"
 
 #: ../src/spray-context.cpp:773
 #, fuzzy
 msgid "<b>Nothing selected!</b> Select objects to spray."
-msgstr "<b>Semmi nincs kijelölve.</b> Jelölje ki a manipulálandó objektumokat."
+msgstr ""
+"<b>Semmi nincs kijelölve.</b> Jelölje ki a manipulálandó objektumokat. "
+"Festékszóró"
 
 #: ../src/spray-context.cpp:881 ../src/widgets/toolbox.cpp:4686
-#, fuzzy
 msgid "Spray with copies"
-msgstr "Helykihagyás a másolatok között:"
+msgstr "Másolatok felfestése"
 
 #: ../src/spray-context.cpp:885 ../src/widgets/toolbox.cpp:4693
-#, fuzzy
 msgid "Spray with clones"
-msgstr "Keresés klónokra"
+msgstr "Klónok felfestése"
 
 #: ../src/spray-context.cpp:889
 #, fuzzy
 msgid "Spray in single path"
-msgstr "Pont létrehozása"
+msgstr "Pont létrehozása Festékszóró"
 
 #: ../src/star-context.cpp:338
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
@@ -14642,7 +14645,7 @@ msgstr ""
 msgid "To spray a path by pushing, select it and drag over it."
 msgstr ""
 "Egy útvonal eltolásos manipulálásához jelölje ki azt, majd végezzen húzást "
-"felette az egérrel."
+"felette az egérrel. Festékszóró"
 
 #: ../src/tools-switch.cpp:149
 msgid ""
@@ -15184,9 +15187,8 @@ msgid "Align left edges"
 msgstr "Bal szélek igazítása"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:816
-#, fuzzy
 msgid "Center on vertical axis"
-msgstr "Középre igazítás a vízszintes tengelyhez"
+msgstr "Középre igazítás a függőleges tengelyhez"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:819
 msgid "Align right sides"
@@ -16581,13 +16583,12 @@ msgid "Set filter primitive attribute"
 msgstr "Szűrőprimitív tulajdonságának beállítása"
 
 #: ../src/ui/dialog/glyphs.cpp:57 ../src/ui/dialog/glyphs.cpp:153
-#, fuzzy
 msgid "all"
-msgstr "Kicsi"
+msgstr "összes"
 
 #: ../src/ui/dialog/glyphs.cpp:58
 msgid "common"
-msgstr ""
+msgstr "általános"
 
 #: ../src/ui/dialog/glyphs.cpp:59
 msgid "inherited"
@@ -16967,8 +16968,9 @@ msgid "IPA Extensions"
 msgstr "Kiter_jesztések"
 
 #: ../src/ui/dialog/glyphs.cpp:159
+#, fuzzy
 msgid "Spacing Modifier Letters"
-msgstr ""
+msgstr "helykihagyás"
 
 #: ../src/ui/dialog/glyphs.cpp:160
 msgid "Combining Diacritical Marks"
@@ -17054,7 +17056,7 @@ msgstr "Zöld-függvény"
 
 #: ../src/ui/dialog/glyphs.cpp:218
 msgid "Superscripts and Subscripts"
-msgstr ""
+msgstr "Felső indexek és alsó indexek"
 
 #: ../src/ui/dialog/glyphs.cpp:219
 msgid "Currency Symbols"
@@ -17367,24 +17369,20 @@ msgid "Specials"
 msgstr "Spirálok"
 
 #: ../src/ui/dialog/glyphs.cpp:370
-#, fuzzy
 msgid "Script: "
-msgstr "Szkript"
+msgstr "Írásmód: "
 
 #: ../src/ui/dialog/glyphs.cpp:398
-#, fuzzy
 msgid "Range: "
-msgstr "Szög"
+msgstr "Tartomány: "
 
 #: ../src/ui/dialog/glyphs.cpp:463
-#, fuzzy
 msgid "Append"
-msgstr "Tustoll"
+msgstr "Hozzáfűzés"
 
 #: ../src/ui/dialog/glyphs.cpp:574
-#, fuzzy
 msgid "Append text"
-msgstr "Szöveg gépelése"
+msgstr "Szöveg hozzáfűzése"
 
 #: ../src/ui/dialog/guides.cpp:42
 msgid "Unit:"
@@ -17428,14 +17426,12 @@ msgid "%d x %d"
 msgstr "%d x %d"
 
 #: ../src/ui/dialog/icon-preview.cpp:150
-#, fuzzy
 msgid "Magnified:"
-msgstr "Nagyság"
+msgstr "Nagyítva:"
 
 #: ../src/ui/dialog/icon-preview.cpp:214
-#, fuzzy
 msgid "Actual Size:"
-msgstr "Indítás (actuate):"
+msgstr "Tényleges méret:"
 
 #: ../src/ui/dialog/icon-preview.cpp:221
 msgid "Selection only or whole document"
@@ -18117,9 +18113,8 @@ msgstr "Objektumok megrajzolása ezzel:"
 
 #. Spray
 #: ../src/ui/dialog/inkscape-preferences.cpp:473 ../src/verbs.cpp:2459
-#, fuzzy
 msgid "Spray"
-msgstr "Spirál"
+msgstr "Festékszóró"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:478
@@ -18138,7 +18133,6 @@ msgid "Sketch mode"
 msgstr "Vázlatmód"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:517
-#, fuzzy
 msgid ""
 "If on, the sketch result will be the normal average of all sketches made, "
 "instead of averaging the old result with the new sketch"
@@ -18194,12 +18188,14 @@ msgstr "Élő útvonaleffektus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:552
 msgid "Show font samples in the drop-down list"
-msgstr ""
+msgstr "Betűtípus-minták megjelenítése a legördülő listában"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:553
 msgid ""
 "Show font samples alongside font names in the drop-down list in Text bar"
 msgstr ""
+"Betűtípus-minták megjelenítése a betűtípusok neve mellett a szövegsáv "
+"legördülő listájában"
 
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:558 ../src/verbs.cpp:2479
@@ -18378,18 +18374,15 @@ msgid "When the original moves, its clones and linked offsets:"
 msgstr "Az eredeti objektum áthelyezésekor a klónjai és a kapcsolt peremei:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:650
-#, fuzzy
 msgid "Clones are translated by the same vector as their original"
 msgstr ""
 "A klónok ugyanazzal a vektorral lesznek elmozdítva, mint az eredeti objektum"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:652
-#, fuzzy
 msgid "Clones preserve their positions when their original is moved"
 msgstr "A klónok helye nem változik az eredeti objektum elmozdításakor"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:654
-#, fuzzy
 msgid ""
 "Each clone moves according to the value of its transform= attribute; for "
 "example, a rotated clone will move in a different direction than its original"
@@ -18403,12 +18396,10 @@ msgid "When the original is deleted, its clones:"
 msgstr "Az eredeti objektum törlésekor a klónjai:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:657
-#, fuzzy
 msgid "Orphaned clones are converted to regular objects"
 msgstr "Az elárvult klónok normál objektumokká lesznek alakítva"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:659
-#, fuzzy
 msgid "Orphaned clones are deleted along with their original"
 msgstr "Az elárvult klónok az eredeti objektummal együtt törlődnek"
 
@@ -19687,7 +19678,6 @@ msgid "Latency skew:"
 msgstr "Késleltetési tényező:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1350
-#, fuzzy
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)"
@@ -19770,12 +19760,11 @@ msgstr "Ablakok"
 
 #: ../src/ui/dialog/input.cpp:524
 msgid "Test Area"
-msgstr ""
+msgstr "Tesztelési terület"
 
 #: ../src/ui/dialog/input.cpp:578 ../src/ui/dialog/input.cpp:728
-#, fuzzy
 msgid "Hardware"
-msgstr "Szögesdrót"
+msgstr "Hardver"
 
 #: ../src/ui/dialog/input.cpp:596
 #, fuzzy
@@ -20905,7 +20894,7 @@ msgctxt "Node tool tip"
 msgid ""
 "<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
 "selection"
-msgstr "húzás"
+msgstr "húzás átkapcsolása"
 
 #: ../src/ui/tool/node-tool.cpp:541
 #, fuzzy
@@ -21100,7 +21089,7 @@ msgctxt "Path node tip"
 msgid ""
 "<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles "
 "(more: Shift, Ctrl, Alt)"
-msgstr "húzás"
+msgstr "húzás átkapcsolása"
 
 #: ../src/ui/tool/node.cpp:1172
 #, fuzzy
@@ -23102,9 +23091,8 @@ msgid "Tweak objects by sculpting or painting"
 msgstr "Objektumok manipulálása alakítással vagy festéssel"
 
 #: ../src/verbs.cpp:2460
-#, fuzzy
 msgid "Spray objects by sculpting or painting"
-msgstr "Objektumok manipulálása alakítással vagy festéssel"
+msgstr "Objektumok felfestése alakítással vagy festéssel"
 
 #: ../src/verbs.cpp:2462
 msgid "Create rectangles and squares"
@@ -23206,12 +23194,12 @@ msgstr "A manipulálási eszköz beállításainak megnyitása"
 #: ../src/verbs.cpp:2502
 #, fuzzy
 msgid "Spray Tool Preferences"
-msgstr "Spirál-beállítások"
+msgstr "Festékszóró Spirál-beállítások"
 
 #: ../src/verbs.cpp:2503
 #, fuzzy
 msgid "Open Preferences for the Spray tool"
-msgstr "A spiráleszköz beállításainak megnyitása"
+msgstr "Festékszóró A spiráleszköz beállításainak megnyitása"
 
 #: ../src/verbs.cpp:2504
 msgid "Rectangle Preferences"
@@ -23631,13 +23619,14 @@ msgid "Align and distribute objects"
 msgstr "Objektumok igazítása és elrendezése"
 
 #: ../src/verbs.cpp:2609
+#, fuzzy
 msgid "_Spray options..."
-msgstr ""
+msgstr "Festékszóró"
 
 #: ../src/verbs.cpp:2610
 #, fuzzy
 msgid "Some options for the spray"
-msgstr "Az útvonal kontúrjának megjelenítése"
+msgstr "Festékszóró Az útvonal kontúrjának megjelenítése"
 
 #: ../src/verbs.cpp:2611
 msgid "Undo _History..."
@@ -25859,19 +25848,19 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:4630
 #, fuzzy
 msgid "(narrow spray)"
-msgstr "keskenyebb"
+msgstr "keskenyebb Festékszóró"
 
 #: ../src/widgets/toolbox.cpp:4630
 #, fuzzy
 msgid "(broad spray)"
-msgstr "(széles körvonal)"
+msgstr "(széles körvonal) Festékszóró"
 
 #: ../src/widgets/toolbox.cpp:4633
 #, fuzzy
 msgid "The width of the spray area (relative to the visible canvas area)"
 msgstr ""
 "A manipulálási terület szélessége (a látható rajzvászon-területhez "
-"viszonyítva)"
+"viszonyítva) Festékszóró"
 
 #. Mean
 #: ../src/widgets/toolbox.cpp:4646
@@ -25890,57 +25879,53 @@ msgid "Focus"
 msgstr "csúcs"
 
 #: ../src/widgets/toolbox.cpp:4649
-#, fuzzy
 msgid "Focus:"
-msgstr "Erő:"
+msgstr "Fókusz:"
 
 #: ../src/widgets/toolbox.cpp:4649
+#, fuzzy
 msgid "0 to spray a spot. Increase to enlarge the ring radius."
-msgstr ""
+msgstr "Festékszóró"
 
 #. Standard_deviation
 #: ../src/widgets/toolbox.cpp:4662
-#, fuzzy
 msgid "(minimum scatter)"
-msgstr "(minimális erő)"
+msgstr "(minimális szétszórás)"
 
 #: ../src/widgets/toolbox.cpp:4662
-#, fuzzy
 msgid "(maximum scatter)"
-msgstr "(maximális remegés)"
+msgstr "(maximális szétszórás)"
 
 #: ../src/widgets/toolbox.cpp:4668
-#, fuzzy
 msgid "Toolbox|Scatter"
 msgstr "Szétszórás"
 
 #: ../src/widgets/toolbox.cpp:4668
-#, fuzzy
 msgid "Toolbox|Scatter:"
-msgstr "Szétszórás"
+msgstr "Szétszórás:"
 
 #: ../src/widgets/toolbox.cpp:4668
+#, fuzzy
 msgid "Increase to scatter sprayed objects."
-msgstr ""
+msgstr "Szétszórás Festékszóró "
 
 #: ../src/widgets/toolbox.cpp:4687
-#, fuzzy
 msgid "Spray copies of the initial selection"
-msgstr "Útvonal-metszetekhez való illesztés"
+msgstr "A kezdeti kijelölés másolatainak felfestése"
 
 #: ../src/widgets/toolbox.cpp:4694
-#, fuzzy
 msgid "Spray clones of the initial selection"
-msgstr "A kijelölés klónjainak létrehozása és csempézése"
+msgstr "A kezdeti kijelölés klónjainak felfestése"
 
 #: ../src/widgets/toolbox.cpp:4700
 #, fuzzy
 msgid "Spray single path"
-msgstr "Létező útvonalak törlése"
+msgstr "Festékszóró Létező útvonalak törlése"
 
 #: ../src/widgets/toolbox.cpp:4701
+#, fuzzy
 msgid "Spray objects in a single path"
-msgstr ""
+msgstr "Festékszóró"
 
 #. Population
 #: ../src/widgets/toolbox.cpp:4725
@@ -25953,30 +25938,32 @@ msgid "(high population)"
 msgstr "(enyhe elhajlás)"
 
 #: ../src/widgets/toolbox.cpp:4728
-#, fuzzy
 msgid "Amount:"
-msgstr "Mennyiség"
+msgstr "Mennyiség:"
 
 #: ../src/widgets/toolbox.cpp:4729
+#, fuzzy
 msgid "Adjusts the number of items sprayed per clic."
-msgstr ""
+msgstr "Festékszóró"
 
 #: ../src/widgets/toolbox.cpp:4745
 #, fuzzy
 msgid ""
 "Use the pressure of the input device to alter the amount of sprayed objects."
 msgstr ""
-"A beviteli eszköz nyomásának használata a tollszélesség változtatásához"
+"Festékszóró A beviteli eszköz nyomásának használata a tollszélesség "
+"változtatásához"
 
 #. Rotation
 #: ../src/widgets/toolbox.cpp:4754
+#, fuzzy
 msgid "(low rotation variation)"
-msgstr ""
+msgstr "Elforgatás"
 
 #: ../src/widgets/toolbox.cpp:4754
 #, fuzzy
 msgid "(high rotation variation)"
-msgstr "(enyhe elhajlás)"
+msgstr "(enyhe elhajlás) Elforgatás"
 
 #: ../src/widgets/toolbox.cpp:4757
 #, fuzzy
@@ -25984,16 +25971,15 @@ msgid "Rotation"
 msgstr "_Forgatás"
 
 #: ../src/widgets/toolbox.cpp:4757
-#, fuzzy
 msgid "Rotation:"
-msgstr "_Forgatás"
+msgstr "Elforgatás:"
 
 #: ../src/widgets/toolbox.cpp:4759
-#, no-c-format
+#, fuzzy
 msgid ""
 "Variation of the rotation of the sprayed objects. 0% for the same rotation "
 "than the original object."
-msgstr ""
+msgstr "Festékszóró"
 
 #. Scale
 #: ../src/widgets/toolbox.cpp:4772
@@ -26012,16 +25998,15 @@ msgid "Toolbox|Scale"
 msgstr "_Eszköztár"
 
 #: ../src/widgets/toolbox.cpp:4778
-#, fuzzy
 msgid "Toolbox|Scale:"
-msgstr "_Eszköztár"
+msgstr "Méretezés:"
 
 #: ../src/widgets/toolbox.cpp:4780
-#, no-c-format
+#, fuzzy
 msgid ""
 "Variation in the scale of the sprayed objects. 0% for the same scale than "
 "the original object."
-msgstr ""
+msgstr "Festékszóró"
 
 #: ../src/widgets/toolbox.cpp:4954
 msgid "No preset"
@@ -26471,7 +26456,7 @@ msgstr "Szöveg: betűstílus módosítása"
 
 #: ../src/widgets/toolbox.cpp:6701
 msgid "Text: Change superscript or subscript"
-msgstr ""
+msgstr "Szöveg: felső index vagy alsó index módosítása"
 
 #: ../src/widgets/toolbox.cpp:6845
 msgid "Text: Change alignment"
@@ -26485,12 +26470,12 @@ msgstr "Szöveg: igazítás módosítása"
 #: ../src/widgets/toolbox.cpp:6923
 #, fuzzy
 msgid "Text: Change word-spacing"
-msgstr "Szöveg: tájolás módosítása"
+msgstr "Szöveg: szó-helykihagyás módosítása"
 
 #: ../src/widgets/toolbox.cpp:6962
 #, fuzzy
 msgid "Text: Change letter-spacing"
-msgstr "Betűtávolság növelése"
+msgstr "Szöveg: betűtávolság növelése"
 
 #: ../src/widgets/toolbox.cpp:7007
 #, fuzzy
@@ -26512,12 +26497,10 @@ msgid "Text: Change orientation"
 msgstr "Szöveg: tájolás módosítása"
 
 #: ../src/widgets/toolbox.cpp:7478
-#, fuzzy
 msgid "Font Family"
 msgstr "Betűtípus-család"
 
 #: ../src/widgets/toolbox.cpp:7479
-#, fuzzy
 msgid "Select Font Family (Alt-X to access)"
 msgstr "Betűtípus-család kiválasztása (elérés: Alt+X)"
 
@@ -26526,68 +26509,65 @@ msgstr "Betűtípus-család kiválasztása (elérés: Alt+X)"
 #. Cell layout
 #. Enable entry completion
 #: ../src/widgets/toolbox.cpp:7486
+#, fuzzy
 msgid "Font not found on system"
-msgstr ""
+msgstr "Betűtípus"
 
 #: ../src/widgets/toolbox.cpp:7518
-#, fuzzy
 msgid "Font Size"
 msgstr "Betűtípus-méret"
 
 #: ../src/widgets/toolbox.cpp:7519
-#, fuzzy
 msgid "Font size (px)"
 msgstr "Betűtípus-méret (px)"
 
 #. Name
 #: ../src/widgets/toolbox.cpp:7531
-#, fuzzy
 msgid "Toggle Bold"
-msgstr "Át_kapcsolás"
+msgstr "Vastagság átkapcsolása"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7532
 msgid "Toggle bold or normal weight"
-msgstr ""
+msgstr "Átkapcsolás a félkövér és a normál vastagság közt"
 
 #. Name
 #: ../src/widgets/toolbox.cpp:7544
 msgid "Toggle Italic/Oblique"
-msgstr ""
+msgstr "Dőlt/döntött mód átkapcsolása"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7545
 msgid "Toggle italic/oblique style"
-msgstr ""
+msgstr "Dőlt/döntött stílus átkapcsolása"
 
 #. Name
 #: ../src/widgets/toolbox.cpp:7557
 msgid "Toggle Superscript"
-msgstr ""
+msgstr "Felső index átkapcsolása"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7558
 msgid "Toggle superscript"
-msgstr ""
+msgstr "Felső index átkapcsolása"
 
 #. Name
 #: ../src/widgets/toolbox.cpp:7570
 msgid "Toggle Subscript"
-msgstr ""
+msgstr "Alsó index átkapcsolása"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7571
 msgid "Toggle subscript"
-msgstr ""
+msgstr "Alsó index átkapcsolása"
 
 #: ../src/widgets/toolbox.cpp:7588 ../src/widgets/toolbox.cpp:7589
 msgid "Align left"
 msgstr "Balra igazítás"
 
 #: ../src/widgets/toolbox.cpp:7596 ../src/widgets/toolbox.cpp:7597
-#, fuzzy
 msgid "Align center"
-msgstr "Balra igazítás"
+msgstr "Középre igazítás"
 
 #: ../src/widgets/toolbox.cpp:7604 ../src/widgets/toolbox.cpp:7605
 msgid "Align right"
@@ -26598,48 +26578,40 @@ msgid "Justify"
 msgstr "Sorkizárás"
 
 #: ../src/widgets/toolbox.cpp:7613
-#, fuzzy
 msgid "Justify (only flowed text)"
-msgstr "Szöveg tördelésének megszüntetése"
+msgstr "Sorkizárás (csak tördelt szövegre)"
 
 #. Name
 #: ../src/widgets/toolbox.cpp:7619
-#, fuzzy
 msgid "Alignment"
-msgstr "Balra igazítás"
+msgstr "Igazítás"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7620
-#, fuzzy
 msgid "Text alignment"
-msgstr "Szöveg: igazítás módosítása"
+msgstr "Szövegigazítás"
 
 #: ../src/widgets/toolbox.cpp:7647
-#, fuzzy
 msgid "Horizontal"
-msgstr "_Vízszintes"
+msgstr "Vízszintes"
 
 #: ../src/widgets/toolbox.cpp:7654
-#, fuzzy
 msgid "Vertical"
-msgstr "Fü_ggőleges"
+msgstr "Függőleges"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7661
-#, fuzzy
 msgid "Text orientation"
-msgstr "Tájolás"
+msgstr "Szövegtájolás"
 
 #. Drop down menu
 #: ../src/widgets/toolbox.cpp:7684
-#, fuzzy
 msgid "Smaller spacing"
-msgstr "Helykihagyás beállítása:"
+msgstr "Kisebb helykihagyás"
 
 #: ../src/widgets/toolbox.cpp:7684
-#, fuzzy
 msgid "Larger spacing"
-msgstr "Sortávolság:"
+msgstr "Nagyobb helykihagyás"
 
 #. name
 #: ../src/widgets/toolbox.cpp:7689
@@ -26655,9 +26627,8 @@ msgstr "Vonal"
 
 #. short label
 #: ../src/widgets/toolbox.cpp:7691
-#, fuzzy
 msgid "Spacing between lines (times font size)"
-msgstr "Helykihagyás a másolatok között:"
+msgstr "Helykihagyás a sorok között (szorozva a betűtípus-mérettel)"
 
 #. Drop down menu
 #: ../src/widgets/toolbox.cpp:7715 ../src/widgets/toolbox.cpp:7746
@@ -26668,7 +26639,7 @@ msgstr "Helykihagyás beállítása:"
 #: ../src/widgets/toolbox.cpp:7715 ../src/widgets/toolbox.cpp:7746
 #, fuzzy
 msgid "Positive spacing"
-msgstr "Sortávolság:"
+msgstr "helykihagyás Sortávolság:"
 
 #. name
 #: ../src/widgets/toolbox.cpp:7720
@@ -26684,9 +26655,8 @@ msgstr "Mód:"
 
 #. short label
 #: ../src/widgets/toolbox.cpp:7722
-#, fuzzy
 msgid "Spacing between words (px)"
-msgstr "Helykihagyás a másolatok között:"
+msgstr "Helykihagyás a szavak között (px)"
 
 #. name
 #: ../src/widgets/toolbox.cpp:7751
@@ -26702,15 +26672,13 @@ msgstr "Bal oldali:"
 
 #. short label
 #: ../src/widgets/toolbox.cpp:7753
-#, fuzzy
 msgid "Spacing between letters (px)"
-msgstr "Helykihagyás a másolatok között:"
+msgstr "Helykihagyás a betűk között (px)"
 
 #. name
 #: ../src/widgets/toolbox.cpp:7782
-#, fuzzy
 msgid "Kerning"
-msgstr "_Alávágás"
+msgstr "Alávágás"
 
 # kernel: konvolúciós mátrix
 #. label
@@ -26721,15 +26689,13 @@ msgstr "Kernel:"
 
 #. short label
 #: ../src/widgets/toolbox.cpp:7784
-#, fuzzy
 msgid "Horizontal kerning (px)"
-msgstr "Vízszintes szöveg"
+msgstr "Vízszintes alávágás (px)"
 
 #. name
 #: ../src/widgets/toolbox.cpp:7813
-#, fuzzy
 msgid "Vertical Shift"
-msgstr "Függőleges pont:"
+msgstr "Függőleges eltolás"
 
 #. label
 #: ../src/widgets/toolbox.cpp:7814
@@ -26739,15 +26705,13 @@ msgstr "Invertálás:"
 
 #. short label
 #: ../src/widgets/toolbox.cpp:7815
-#, fuzzy
 msgid "Vertical shift (px)"
-msgstr "Függőleges eltolás, px"
+msgstr "Függőleges eltolás (px)"
 
 #. name
 #: ../src/widgets/toolbox.cpp:7844
-#, fuzzy
 msgid "Letter rotation"
-msgstr "Helykihagyás beállítása:"
+msgstr "Betűelforgatás"
 
 # Identifies the type of the related resource with an absolute URI
 #. label
@@ -26758,9 +26722,8 @@ msgstr "Fajta (role):"
 
 #. short label
 #: ../src/widgets/toolbox.cpp:7846
-#, fuzzy
 msgid "Character rotation (degrees)"
-msgstr "Elforgatás, fok"
+msgstr "Karakter-elforgatás (fok)"
 
 #: ../src/widgets/toolbox.cpp:7961
 msgid "Set connector type: orthogonal"
