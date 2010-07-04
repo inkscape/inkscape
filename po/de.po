@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-06-09 12:50+0100\n"
+"PO-Revision-Date: 2010-06-18 14:54+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -93,7 +93,7 @@ msgstr "Adobe-Illustrator-SVG (*.ai.svg)"
 
 #: ../share/extensions/aisvg.inx.h:3
 msgid "Cleans the cruft out of Adobe Illustrator SVGs before opening"
-msgstr "Räumt Adobe-Illustrator-SVGs vor dem öffnen auf"
+msgstr "Räumt Adobe-Illustrator-SVGs vor dem Öffnen auf"
 
 #: ../share/extensions/ccx_input.inx.h:1
 msgid "Corel DRAW Compressed Exchange files (.ccx)"
@@ -101,11 +101,11 @@ msgstr "Corel DRAW Komprimierte Exchange Datei (.ccx)"
 
 #: ../share/extensions/ccx_input.inx.h:2
 msgid "Corel DRAW Compressed Exchange files input"
-msgstr "Corel DRAW Compressed Exchange Datei Eingabe"
+msgstr "Corel DRAW Compressed Exchange Datei einlesen"
 
 #: ../share/extensions/ccx_input.inx.h:3
 msgid "Open compressed exchange files saved in Corel DRAW"
-msgstr "Öffnen einer Presentation Exchange Datei, die in Corel DRAW gespeichert wurde"
+msgstr "Öffnen einer komprimierten Exchange Datei, die in Corel DRAW gespeichert wurde"
 
 #: ../share/extensions/cdr_input.inx.h:1
 msgid "Corel DRAW 7-X4 files (*.cdr)"
@@ -113,7 +113,7 @@ msgstr "Corel DRAW 7-X4 Dateien (*.cdr)"
 
 #: ../share/extensions/cdr_input.inx.h:2
 msgid "Corel DRAW Input"
-msgstr "Corel DRAW Input"
+msgstr "Corel DRAW einlesen"
 
 #: ../share/extensions/cdr_input.inx.h:3
 msgid "Open files saved in Corel DRAW 7-X4"
@@ -125,7 +125,7 @@ msgstr "Corel DRAW 7-13 Vorlagendateien (.cdt)"
 
 #: ../share/extensions/cdt_input.inx.h:2
 msgid "Corel DRAW templates input"
-msgstr "Corel DRAW Vorlagen Input"
+msgstr "Corel DRAW Vorlagen einlesen"
 
 #: ../share/extensions/cdt_input.inx.h:3
 msgid "Open files saved in Corel DRAW 7-13"
@@ -137,11 +137,11 @@ msgstr "Computer Graphics Metafile Datei (.cgm)"
 
 #: ../share/extensions/cgm_input.inx.h:2
 msgid "Computer Graphics Metafile files input"
-msgstr "Computer Graphics Metafile Datei Eingabe"
+msgstr "Computer Graphics Metafile Datei einlesen"
 
 #: ../share/extensions/cgm_input.inx.h:3
 msgid "Open Computer Graphics Metafile files"
-msgstr "Open Computer Graphics Metafile Dateien"
+msgstr "Computer Graphics Metafile Dateien öffnen"
 
 #: ../share/extensions/cmx_input.inx.h:1
 msgid "Corel DRAW Presentation Exchange files (.cmx)"
@@ -149,7 +149,7 @@ msgstr "Corel DRAW Presentations Exchange Datei (.cmx)"
 
 #: ../share/extensions/cmx_input.inx.h:2
 msgid "Corel DRAW Presentation Exchange files input"
-msgstr "Corel DRAW Presentations Exchange Datei Eingabe"
+msgstr "Corel DRAW Presentations Exchange Datei einlesen"
 
 #: ../share/extensions/cmx_input.inx.h:3
 msgid "Open presentation exchange files saved in Corel DRAW"
@@ -157,7 +157,7 @@ msgstr "Öffnen einer Presentation Exchange Datei, die in Corel DRAW gespeichert
 
 #: ../share/extensions/color_blackandwhite.inx.h:1
 msgid "Black and White"
-msgstr "Nur Schwarz-Weiß"
+msgstr "Schwarz-Weiß"
 
 #: ../share/extensions/color_blackandwhite.inx.h:2
 #: ../share/extensions/color_brighter.inx.h:2
@@ -349,7 +349,7 @@ msgstr "Um Dia-Dateien zu importieren, muss Dia selbst installiert sein. Sie kö
 
 #: ../share/extensions/dia.inx.h:5
 msgid "The dia2svg.sh script should be installed with your Inkscape distribution.  If you do not have it, there is likely to be something wrong with your Inkscape installation."
-msgstr "Das Skript »dia2svg.sh« sollte in Ihrer Inkscape-Installation vorhanden sein. Wenn Sie es nicht haben, dann ist wahrscheinlich etwas mit Ihrer Inkscape-Installation nicht in Ordnung."
+msgstr "Das Skript »dia2svg.sh« sollte in Ihrer Inkscape-Installation vorhanden sein. Wenn Sie es nicht haben, ist wahrscheinlich etwas mit Ihrer Inkscape-Installation nicht in Ordnung."
 
 #: ../share/extensions/dimension.inx.h:1
 msgid "Dimensions"
@@ -424,15 +424,15 @@ msgstr "Zeichnet Kreis um diesen Punkt"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
 msgid "Draw From Triangle"
-msgstr "Dreiecksgeometrie"
+msgstr "Zeichnet vom Dreieck"
 
 #: ../share/extensions/draw_from_triangle.inx.h:12
 msgid "Draw Isogonal Conjugate"
-msgstr "Zeichne isogonal Konjugierte"
+msgstr "Zeichnet isogonal Konjugierte"
 
 #: ../share/extensions/draw_from_triangle.inx.h:13
 msgid "Draw Isotomic Conjugate"
-msgstr "Zeichen isotomisch Konjugierte"
+msgstr "Zeichnet isotomisch Konjugierte"
 
 #: ../share/extensions/draw_from_triangle.inx.h:14
 msgid "Draw Marker At This Point"
@@ -440,7 +440,7 @@ msgstr "Zeichnet Markierung an diesem Punkt."
 
 #: ../share/extensions/draw_from_triangle.inx.h:15
 msgid "Excentral Triangle"
-msgstr "Excentral Triangle"
+msgstr "Exzentrisches Dreieck"
 
 #: ../share/extensions/draw_from_triangle.inx.h:16
 msgid "Excentres"
@@ -10424,7 +10424,7 @@ msgstr "Einklappen"
 # "piktogrammifizieren" geht noch besser?
 #: ../src/libgdl/gdl-dock-item-grip.c:395
 msgid "Iconify this dock"
-msgstr "Dieses Dock piktogrammifizieren"
+msgstr "Dieses Dock auf Icongröße verkleinern"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:397
 msgid "Close"
@@ -11524,7 +11524,7 @@ msgstr "Durchschn. Versatz"
 
 #: ../src/live_effects/lpe-sketch.cpp:47
 msgid "Average distance each stroke is away from the original path"
-msgstr "Mittlere Distanz, die ein Strick vom Originalpfad entfernt ist."
+msgstr "Mittlere Distanz, die ein Strich vom Originalpfad entfernt ist."
 
 #: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Max. tremble"
