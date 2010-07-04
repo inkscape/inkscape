@@ -144,8 +144,6 @@ struct SPILength {
 
 #define SP_STYLE_FILL_SERVER(s) (((SPStyle *) (s))->getFillPaintServer())
 #define SP_STYLE_STROKE_SERVER(s) (((SPStyle *) (s))->getStrokePaintServer())
-#define SP_OBJECT_STYLE_FILL_SERVER(o) (SP_OBJECT (o)->style->getFillPaintServer())
-#define SP_OBJECT_STYLE_STROKE_SERVER(o) (SP_OBJECT (o)->style->getStrokePaintServer())
 
 class SVGICCColor;
 
