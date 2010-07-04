@@ -73,18 +73,17 @@ static void gr_toggle_fillstroke (GtkWidget *button, gpointer data) {
     }
 }
 
-void
-gr_apply_gradient_to_item (SPItem *item, SPGradient *gr, SPGradientType new_type, guint new_fill, bool do_fill, bool do_stroke)
+void gr_apply_gradient_to_item( SPItem *item, SPGradient *gr, SPGradientType new_type, guint new_fill, bool do_fill, bool do_stroke )
 {
-    SPStyle *style = SP_OBJECT_STYLE (item);
+    SPStyle *style = item->style;
 
     if (do_fill) {
         if (style && (style->fill.isPaintserver()) &&
-            SP_IS_GRADIENT (SP_OBJECT_STYLE_FILL_SERVER (item))) {
-            SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
-            if (SP_IS_LINEARGRADIENT (server)) {
+            SP_IS_GRADIENT( item->style->getFillPaintServer() )) {
+            SPPaintServer *server = item->style->getFillPaintServer();
+            if ( SP_IS_LINEARGRADIENT(server) ) {
                 sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_LINEAR, true);
-            } else if (SP_IS_RADIALGRADIENT (server)) {
+            } else if ( SP_IS_RADIALGRADIENT(server) ) {
                 sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_RADIAL, true);
             }
         } else if (new_fill) {
@@ -94,11 +93,11 @@ gr_apply_gradient_to_item (SPItem *item, SPGradient *gr, SPGradientType new_type
 
     if (do_stroke) {
         if (style && (style->stroke.isPaintserver()) &&
-            SP_IS_GRADIENT (SP_OBJECT_STYLE_STROKE_SERVER (item))) {
-            SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
-            if (SP_IS_LINEARGRADIENT (server)) {
+            SP_IS_GRADIENT( item->style->getStrokePaintServer() )) {
+            SPPaintServer *server = item->style->getStrokePaintServer();
+            if ( SP_IS_LINEARGRADIENT(server) ) {
                 sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_LINEAR, false);
-            } else if (SP_IS_RADIALGRADIENT (server)) {
+            } else if ( SP_IS_RADIALGRADIENT(server) ) {
                 sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_RADIAL, false);
             }
         } else if (!new_fill) {
@@ -238,7 +237,7 @@ GtkWidget *gr_vector_list(SPDesktop *desktop, bool selection_empty, SPGradient *
 
             GtkWidget *hb = gtk_hbox_new (FALSE, 4);
             GtkWidget *l = gtk_label_new ("");
-            gchar *label = gr_prepare_label (SP_OBJECT(gradient));
+            gchar *label = gr_prepare_label(gradient);
             gtk_label_set_markup (GTK_LABEL(l), label);
             g_free (label);
             gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
@@ -310,11 +309,11 @@ void gr_read_selection( Inkscape::Selection *selection,
    // If no selected dragger, read desktop selection
    for (GSList const* i = selection->itemList(); i; i = i->next) {
         SPItem *item = SP_ITEM(i->data);
-        SPStyle *style = SP_OBJECT_STYLE (item);
+        SPStyle *style = item->style;
 
         if (style && (style->fill.isPaintserver())) {
-            SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
-            if (SP_IS_GRADIENT(server)) {
+            SPPaintServer *server = item->style->getFillPaintServer();
+            if ( SP_IS_GRADIENT(server) ) {
                 SPGradient *gradient = SP_GRADIENT(server)->getVector();
                 SPGradientSpread spread = SP_GRADIENT(server)->fetchSpread();
 
@@ -339,14 +338,13 @@ void gr_read_selection( Inkscape::Selection *selection,
             }
         }
         if (style && (style->stroke.isPaintserver())) {
-            SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
-            if (SP_IS_GRADIENT(server)) {
+            SPPaintServer *server = item->style->getStrokePaintServer();
+            if ( SP_IS_GRADIENT(server) ) {
                 SPGradient *gradient = SP_GRADIENT(server)->getVector();
                 SPGradientSpread spread = SP_GRADIENT(server)->fetchSpread();
 
                 if (gradient && gradient->isSolid()) {
                     gradient = 0;
-
                 }
 
                 if (gradient && (gradient != gr_selected)) {

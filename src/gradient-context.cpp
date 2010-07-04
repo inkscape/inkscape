@@ -1,5 +1,3 @@
-#define __SP_GRADIENT_CONTEXT_C__
-
 /*
  * Gradient drawing and editing tool
  *

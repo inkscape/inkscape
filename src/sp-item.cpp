@@ -191,16 +191,17 @@ bool SPItem::isVisibleAndUnlocked(unsigned display_key) const {
 }
 
 bool SPItem::isLocked() const {
-    for (SPObject *o = SP_OBJECT(this); o != NULL; o = SP_OBJECT_PARENT(o)) {
-        if (SP_IS_ITEM(o) && !(SP_ITEM(o)->sensitive))
+    for (SPObject const *o = this; o != NULL; o = o->parent) {
+        if (SP_IS_ITEM(o) && !(SP_ITEM(o)->sensitive)) {
             return true;
+        }
     }
     return false;
 }
 
 void SPItem::setLocked(bool locked) {
-    SP_OBJECT_REPR(this)->setAttribute("sodipodi:insensitive",
-                     ( locked ? "1" : NULL ));
+    this->repr->setAttribute("sodipodi:insensitive",
+                             ( locked ? "1" : NULL ));
     updateRepr();
 }
 
@@ -250,7 +251,7 @@ void SPItem::resetEvaluated() {
             requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
         }
     } if ( StatusSet == _evaluated_status ) {
-        SPObject const *const parent = SP_OBJECT_PARENT(this);
+        SPObject const *const parent = this->parent;
         if (SP_IS_SWITCH(parent)) {
             SP_SWITCH(parent)->resetChildEvaluated();
         }
@@ -294,7 +295,7 @@ SPItem::setExplicitlyHidden(bool const val) {
 void
 SPItem::setCenter(Geom::Point object_centre) {
     // for getBounds() to work
-    sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(this));
+    sp_document_ensure_up_to_date( this->document );
 
     Geom::OptRect bbox = getBounds(sp_item_i2d_affine(this));
     if (bbox) {
@@ -319,7 +320,7 @@ bool SPItem::isCenterSet() {
 
 Geom::Point SPItem::getCenter() const {
     // for getBounds() to work
-    sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(this));
+    sp_document_ensure_up_to_date( this->document );
 
     Geom::OptRect bbox = getBounds(sp_item_i2d_affine(this));
     if (bbox) {
@@ -342,21 +343,21 @@ void SPItem::raiseToTop() {
     using Inkscape::Algorithms::find_last_if;
 
     SPObject *topmost=find_last_if<SPObject::SiblingIterator>(
-        SP_OBJECT_NEXT(this), NULL, &is_item
+        this->next, NULL, &is_item
     );
     if (topmost) {
-        Inkscape::XML::Node *repr=SP_OBJECT_REPR(this);
-        sp_repr_parent(repr)->changeOrder(repr, SP_OBJECT_REPR(topmost));
+        Inkscape::XML::Node *repr = this->repr;
+        sp_repr_parent(repr)->changeOrder( repr, topmost->repr );
     }
 }
 
 void SPItem::raiseOne() {
     SPObject *next_higher=std::find_if<SPObject::SiblingIterator>(
-        SP_OBJECT_NEXT(this), NULL, &is_item
+        this->next, NULL, &is_item
     );
     if (next_higher) {
-        Inkscape::XML::Node *repr=SP_OBJECT_REPR(this);
-        Inkscape::XML::Node *ref=SP_OBJECT_REPR(next_higher);
+        Inkscape::XML::Node *repr = this->repr;
+        Inkscape::XML::Node *ref = next_higher->repr;
         sp_repr_parent(repr)->changeOrder(repr, ref);
     }
 }
@@ -367,15 +368,15 @@ void SPItem::lowerOne() {
 
     MutableList<SPObject &> next_lower=std::find_if(
         reverse_list<SPObject::SiblingIterator>(
-            SP_OBJECT_PARENT(this)->firstChild(), this
+            this->parent->firstChild(), this
         ),
         MutableList<SPObject &>(),
         &is_item
     );
     if (next_lower) {
         ++next_lower;
-        Inkscape::XML::Node *repr=SP_OBJECT_REPR(this);
-        Inkscape::XML::Node *ref=( next_lower ? SP_OBJECT_REPR(&*next_lower) : NULL );
+        Inkscape::XML::Node *repr = this->repr;
+        Inkscape::XML::Node *ref = ( next_lower ? next_lower->repr : NULL );
         sp_repr_parent(repr)->changeOrder(repr, ref);
     }
 }
@@ -387,15 +388,15 @@ void SPItem::lowerToBottom() {
 
     MutableList<SPObject &> bottom=find_last_if(
         reverse_list<SPObject::SiblingIterator>(
-            SP_OBJECT_PARENT(this)->firstChild(), this
+            this->parent->firstChild(), this
         ),
         MutableList<SPObject &>(),
         &is_item
     );
     if (bottom) {
         ++bottom;
-        Inkscape::XML::Node *repr=SP_OBJECT_REPR(this);
-        Inkscape::XML::Node *ref=( bottom ? SP_OBJECT_REPR(&*bottom) : NULL );
+        Inkscape::XML::Node *repr = this->repr;
+        Inkscape::XML::Node *ref = ( bottom ? bottom->repr : NULL );
         sp_repr_parent(repr)->changeOrder(repr, ref);
     }
 }
@@ -578,7 +579,7 @@ clip_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item)
             nr_arena_item_set_clip(v->arenaitem, ai);
             nr_arena_item_unref(ai);
             sp_clippath_set_bbox(SP_CLIPPATH(clip), NR_ARENA_ITEM_GET_KEY(v->arenaitem), &bbox);
-            SP_OBJECT(clip)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            clip->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
     }
 }
@@ -606,7 +607,7 @@ mask_ref_changed(SPObject *old_mask, SPObject *mask, SPItem *item)
             nr_arena_item_set_mask(v->arenaitem, ai);
             nr_arena_item_unref(ai);
             sp_mask_set_bbox(SP_MASK(mask), NR_ARENA_ITEM_GET_KEY(v->arenaitem), &bbox);
-            SP_OBJECT(mask)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            mask->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
     }
 }
@@ -681,7 +682,7 @@ sp_item_write(SPObject *const object, Inkscape::XML::Document *xml_doc, Inkscape
         Inkscape::XML::Node *crepr;
         GSList *l;
         l = NULL;
-        for (child = sp_object_first_child(object); child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        for (child = sp_object_first_child(object); child != NULL; child = child->next ) {
             if (!SP_IS_TITLE(child) && !SP_IS_DESC(child)) continue;
             crepr = child->updateRepr(xml_doc, NULL, flags);
             if (crepr) l = g_slist_prepend (l, crepr);
@@ -692,7 +693,7 @@ sp_item_write(SPObject *const object, Inkscape::XML::Document *xml_doc, Inkscape
             l = g_slist_remove (l, l->data);
         }
     } else {
-        for (child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        for (child = sp_object_first_child(object) ; child != NULL; child = child->next ) {
             if (!SP_IS_TITLE(child) && !SP_IS_DESC(child)) continue;
             child->updateRepr(flags);
         }
@@ -788,8 +789,8 @@ sp_item_invoke_bbox_full(SPItem const *item, Geom::OptRect &bbox, Geom::Matrix c
 
     // unless this is geometric bbox, extend by filter area and crop the bbox by clip path, if any
     if ((SPItem::BBoxType) flags != SPItem::GEOMETRIC_BBOX) {
-        if (SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->filter.href) {
-            SPObject *filter = SP_OBJECT_STYLE(item)->getFilter();
+        if ( item->style && item->style->filter.href ) {
+            SPObject *filter = item->style->getFilter();
             if (filter && SP_IS_FILTER(filter)) {
                 // default filer area per the SVG spec:
                 double x = -0.1;
@@ -912,14 +913,14 @@ unsigned sp_item_pos_in_parent(SPItem *item)
     g_assert(item != NULL);
     g_assert(SP_IS_ITEM(item));
 
-    SPObject *parent = SP_OBJECT_PARENT(item);
+    SPObject *parent = item->parent;
     g_assert(parent != NULL);
     g_assert(SP_IS_OBJECT(parent));
 
-    SPObject *object = SP_OBJECT(item);
+    SPObject *object = item;
 
-    unsigned pos=0;
-    for ( SPObject *iter = sp_object_first_child(parent) ; iter ; iter = SP_OBJECT_NEXT(iter)) {
+    unsigned pos = 0;
+    for ( SPObject *iter = sp_object_first_child(parent) ; iter ; iter = iter->next) {
         if ( iter == object ) {
             return pos;
         }
@@ -989,8 +990,8 @@ void sp_item_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidateP
     // Get the snappoints of clipping paths and mask, if any
     std::list<SPObject const *> clips_and_masks;
 
-    clips_and_masks.push_back(SP_OBJECT(item->clip_ref->getObject()));
-    clips_and_masks.push_back(SP_OBJECT(item->mask_ref->getObject()));
+    clips_and_masks.push_back(item->clip_ref->getObject());
+    clips_and_masks.push_back(item->mask_ref->getObject());
 
     SPDesktop *desktop = inkscape_active_desktop();
     for (std::list<SPObject const *>::const_iterator o = clips_and_masks.begin(); o != clips_and_masks.end(); o++) {
@@ -1020,9 +1021,9 @@ sp_item_invoke_print(SPItem *item, SPPrintContext *ctx)
     if (!item->isHidden()) {
         if (((SPItemClass *) G_OBJECT_GET_CLASS(item))->print) {
             if (!item->transform.isIdentity()
-                || SP_OBJECT_STYLE(item)->opacity.value != SP_SCALE24_MAX)
+                || item->style->opacity.value != SP_SCALE24_MAX)
             {
-                sp_print_bind(ctx, item->transform, SP_SCALE24_TO_FLOAT(SP_OBJECT_STYLE(item)->opacity.value));
+                sp_print_bind(ctx, item->transform, SP_SCALE24_TO_FLOAT(item->style->opacity.value));
                 ((SPItemClass *) G_OBJECT_GET_CLASS(item))->print(item, ctx);
                 sp_print_release(ctx);
             } else {
@@ -1061,8 +1062,8 @@ sp_item_description(SPItem *item)
             g_free (s);
             s = snew;
         }
-        if (SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->filter.href && SP_OBJECT_STYLE(item)->filter.href->getObject()) {
-            const gchar *label = SP_OBJECT_STYLE(item)->filter.href->getObject()->label();
+        if ( item->style && item->style->filter.href && item->style->filter.href->getObject() ) {
+            const gchar *label = item->style->filter.href->getObject()->label();
             gchar *snew;
             if (label) {
                 snew = g_strdup_printf (_("%s; <i>filtered (%s)</i>"), s, _(label));
@@ -1111,7 +1112,7 @@ sp_item_invoke_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
     if (ai != NULL) {
         item->display = sp_item_view_new_prepend(item->display, item, flags, key, ai);
         nr_arena_item_set_transform(ai, item->transform);
-        nr_arena_item_set_opacity(ai, SP_SCALE24_TO_FLOAT(SP_OBJECT_STYLE(item)->opacity.value));
+        nr_arena_item_set_opacity(ai, SP_SCALE24_TO_FLOAT(item->style->opacity.value));
         nr_arena_item_set_visible(ai, !item->isHidden());
         nr_arena_item_set_sensitive(ai, item->sensitive);
         if (item->clip_ref->getObject()) {
@@ -1131,7 +1132,7 @@ sp_item_invoke_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
             NRRect bbox;
             sp_item_invoke_bbox(item, &bbox, Geom::identity(), TRUE);
             sp_clippath_set_bbox(SP_CLIPPATH(cp), clip_key, &bbox);
-            SP_OBJECT(cp)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            cp->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
         if (item->mask_ref->getObject()) {
             SPMask *mask = item->mask_ref->getObject();
@@ -1150,7 +1151,7 @@ sp_item_invoke_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
             NRRect bbox;
             sp_item_invoke_bbox(item, &bbox, Geom::identity(), TRUE);
             sp_mask_set_bbox(SP_MASK(mask), mask_key, &bbox);
-            SP_OBJECT(mask)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            mask->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
         NR_ARENA_ITEM_SET_DATA(ai, item);
         Geom::OptRect item_bbox;
@@ -1204,34 +1205,32 @@ sp_item_invoke_hide(SPItem *item, unsigned key)
 void
 sp_item_adjust_pattern (SPItem *item, Geom::Matrix const &postmul, bool set)
 {
-    SPStyle *style = SP_OBJECT_STYLE (item);
+    SPStyle *style = item->style;
 
-    if (style && (style->fill.isPaintserver())) {
-        SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
-        if (SP_IS_PATTERN (server)) {
-            SPPattern *pattern = sp_pattern_clone_if_necessary (item, SP_PATTERN (server), "fill");
-            sp_pattern_transform_multiply (pattern, postmul, set);
+    if ( style && style->fill.isPaintserver() ) {
+        SPPaintServer *server = item->style->getFillPaintServer();
+        if ( SP_IS_PATTERN(server) ) {
+            SPPattern *pattern = sp_pattern_clone_if_necessary(item, SP_PATTERN(server), "fill");
+            sp_pattern_transform_multiply(pattern, postmul, set);
         }
     }
 
-    if (style && (style->stroke.isPaintserver())) {
-        SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
-        if (SP_IS_PATTERN (server)) {
-            SPPattern *pattern = sp_pattern_clone_if_necessary (item, SP_PATTERN (server), "stroke");
-            sp_pattern_transform_multiply (pattern, postmul, set);
+    if ( style && style->stroke.isPaintserver() ) {
+        SPPaintServer *server = item->style->getStrokePaintServer();
+        if ( SP_IS_PATTERN(server) ) {
+            SPPattern *pattern = sp_pattern_clone_if_necessary(item, SP_PATTERN(server), "stroke");
+            sp_pattern_transform_multiply(pattern, postmul, set);
         }
     }
-
 }
 
-void
-sp_item_adjust_gradient (SPItem *item, Geom::Matrix const &postmul, bool set)
+void sp_item_adjust_gradient( SPItem *item, Geom::Matrix const &postmul, bool set )
 {
-    SPStyle *style = SP_OBJECT_STYLE (item);
+    SPStyle *style = item->style;
 
-    if (style && (style->fill.isPaintserver())) {
-        SPObject *server = SP_OBJECT_STYLE_FILL_SERVER(item);
-        if (SP_IS_GRADIENT (server)) {
+    if ( style && style->fill.isPaintserver() ) {
+        SPPaintServer *server = item->style->getFillPaintServer();
+        if ( SP_IS_GRADIENT(server) ) {
 
             /**
              * \note Bbox units for a gradient are generally a bad idea because
@@ -1242,40 +1241,37 @@ sp_item_adjust_gradient (SPItem *item, Geom::Matrix const &postmul, bool set)
              * \todo FIXME: convert back to bbox units after transforming with
              * the item, so as to preserve the original units.
              */
-            SPGradient *gradient = sp_gradient_convert_to_userspace (SP_GRADIENT (server), item, "fill");
+            SPGradient *gradient = sp_gradient_convert_to_userspace( SP_GRADIENT(server), item, "fill" );
 
-            sp_gradient_transform_multiply (gradient, postmul, set);
+            sp_gradient_transform_multiply( gradient, postmul, set );
         }
     }
 
-    if (style && (style->stroke.isPaintserver())) {
-        SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER(item);
-        if (SP_IS_GRADIENT (server)) {
-            SPGradient *gradient = sp_gradient_convert_to_userspace (SP_GRADIENT (server), item, "stroke");
-            sp_gradient_transform_multiply (gradient, postmul, set);
+    if ( style && style->stroke.isPaintserver() ) {
+        SPPaintServer *server = item->style->getStrokePaintServer();
+        if ( SP_IS_GRADIENT(server) ) {
+            SPGradient *gradient = sp_gradient_convert_to_userspace( SP_GRADIENT(server), item, "stroke" );
+            sp_gradient_transform_multiply( gradient, postmul, set );
         }
     }
 }
 
-void
-sp_item_adjust_stroke (SPItem *item, gdouble ex)
+void sp_item_adjust_stroke( SPItem *item, gdouble ex )
 {
-    SPStyle *style = SP_OBJECT_STYLE (item);
+    SPStyle *style = item->style;
 
-    if (style && !style->stroke.isNone() && !NR_DF_TEST_CLOSE (ex, 1.0, NR_EPSILON)) {
-
+    if ( style && !style->stroke.isNone() && !NR_DF_TEST_CLOSE(ex, 1.0, NR_EPSILON) ) {
         style->stroke_width.computed *= ex;
         style->stroke_width.set = TRUE;
 
-        if (style->stroke_dash.n_dash != 0) {
-            int i;
-            for (i = 0; i < style->stroke_dash.n_dash; i++) {
+        if ( style->stroke_dash.n_dash != 0 ) {
+            for (int i = 0; i < style->stroke_dash.n_dash; i++) {
                 style->stroke_dash.dash[i] *= ex;
             }
             style->stroke_dash.offset *= ex;
         }
 
-        SP_OBJECT(item)->updateRepr();
+        item->updateRepr();
     }
 }
 
@@ -1286,7 +1282,7 @@ Geom::Matrix
 sp_item_transform_repr (SPItem *item)
 {
     Geom::Matrix t_old(Geom::identity());
-    gchar const *t_attr = SP_OBJECT_REPR(item)->attribute("transform");
+    gchar const *t_attr = item->repr->attribute("transform");
     if (t_attr) {
         Geom::Matrix t;
         if (sp_svg_transform_read(t_attr, &t)) {
@@ -1310,7 +1306,7 @@ sp_item_adjust_stroke_width_recursive(SPItem *item, double expansion)
     if (item && SP_IS_USE(item))
         return;
 
-    for (SPObject *o = SP_OBJECT(item)->children; o != NULL; o = o->next) {
+    for (SPObject *o = item->children; o != NULL; o = o->next) {
         if (SP_IS_ITEM(o))
             sp_item_adjust_stroke_width_recursive(SP_ITEM(o), expansion);
     }
@@ -1326,7 +1322,7 @@ sp_item_adjust_rects_recursive(SPItem *item, Geom::Matrix advertized_transform)
         sp_rect_compensate_rxry (SP_RECT(item), advertized_transform);
     }
 
-    for (SPObject *o = SP_OBJECT(item)->children; o != NULL; o = o->next) {
+    for (SPObject *o = item->children; o != NULL; o = o->next) {
         if (SP_IS_ITEM(o))
             sp_item_adjust_rects_recursive(SP_ITEM(o), advertized_transform);
     }
@@ -1348,7 +1344,7 @@ sp_item_adjust_paint_recursive (SPItem *item, Geom::Matrix advertized_transform,
 // also we do not recurse into clones, because a clone's child is the ghost of its original -
 // we must not touch it
     if (!(item && (SP_IS_TEXT(item) || SP_IS_USE(item)))) {
-        for (SPObject *o = SP_OBJECT(item)->children; o != NULL; o = o->next) {
+        for (SPObject *o = item->children; o != NULL; o = o->next) {
             if (SP_IS_ITEM(o)) {
 // At the level of the transformed item, t_ancestors is identity;
 // below it, it is the accmmulated chain of transforms from this level to the top level
@@ -1452,7 +1448,7 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, Geom::Matrix co
              !preserve && // user did not chose to preserve all transforms
              !item->clip_ref->getObject() && // the object does not have a clippath
              !item->mask_ref->getObject() && // the object does not have a mask
-         !(!transform.isTranslation() && SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->getFilter())
+         !(!transform.isTranslation() && item->style && item->style->getFilter())
              // the object does not have a filter, or the transform is translation (which is supposed to not affect filters)
         ) {
         transform_attr = ((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform(item, transform);
@@ -1463,7 +1459,7 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, Geom::Matrix co
     // it causes clone SPUse's copy of the original object to brought up to
     // date with the original.  Otherwise, sp_use_bbox returns incorrect
     // values if called in code handling the transformed signal.
-    SP_OBJECT(item)->updateRepr();
+    item->updateRepr();
 
     // send the relative transform with a _transformed_signal
     item->_transformed_signal.emit(&advertized_transform, item);
@@ -1534,7 +1530,7 @@ i2anc_affine(SPObject const *object, SPObject const *const ancestor) {
         } else {
             ret *= SP_ITEM(object)->transform;
         }
-        object = SP_OBJECT_PARENT(object);
+        object = object->parent;
     }
     return ret;
 }
@@ -1569,7 +1565,7 @@ Geom::Matrix sp_item_i2d_affine(SPItem const *item)
 
     Geom::Matrix const ret( sp_item_i2doc_affine(item)
                           * Geom::Scale(1, -1)
-                          * Geom::Translate(0, sp_document_height(SP_OBJECT_DOCUMENT(item))) );
+                          * Geom::Translate(0, sp_document_height(item->document)) );
     return ret;
 }
 
@@ -1579,10 +1575,10 @@ void sp_item_set_i2d_affine(SPItem *item, Geom::Matrix const &i2dt)
     g_return_if_fail( SP_IS_ITEM(item) );
 
     Geom::Matrix dt2p; /* desktop to item parent transform */
-    if (SP_OBJECT_PARENT(item)) {
-        dt2p = sp_item_i2d_affine((SPItem *) SP_OBJECT_PARENT(item)).inverse();
+    if (item->parent) {
+        dt2p = sp_item_i2d_affine(static_cast<SPItem *>(item->parent)).inverse();
     } else {
-        dt2p = ( Geom::Translate(0, -sp_document_height(SP_OBJECT_DOCUMENT(item)))
+        dt2p = ( Geom::Translate(0, -sp_document_height(item->document))
                  * Geom::Scale(1, -1) );
     }
 
@@ -1660,16 +1656,17 @@ sp_item_get_arenaitem(SPItem *item, unsigned key)
 int
 sp_item_repr_compare_position(SPItem *first, SPItem *second)
 {
-    return sp_repr_compare_position(SP_OBJECT_REPR(first),
-                                    SP_OBJECT_REPR(second));
+    return sp_repr_compare_position(first->repr,
+                                    second->repr);
 }
 
 SPItem *
 sp_item_first_item_child (SPObject *obj)
 {
-    for ( SPObject *iter = sp_object_first_child(obj) ; iter ; iter = SP_OBJECT_NEXT(iter)) {
-        if (SP_IS_ITEM (iter))
+    for ( SPObject *iter = sp_object_first_child(obj) ; iter ; iter = iter->next) {
+        if ( SP_IS_ITEM(iter) ) {
             return SP_ITEM (iter);
+        }
     }
     return NULL;
 }

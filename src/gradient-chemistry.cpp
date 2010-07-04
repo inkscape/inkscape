@@ -458,24 +458,23 @@ sp_gradient_transform_multiply(SPGradient *gradient, Geom::Matrix postmul, bool 
     g_free(c);
 }
 
-SPGradient *
-sp_item_gradient (SPItem *item, bool fill_or_stroke)
+SPGradient *sp_item_gradient(SPItem *item, bool fill_or_stroke)
 {
-    SPStyle *style = SP_OBJECT_STYLE (item);
-    SPGradient *gradient = NULL;
+    SPStyle *style = item->style;
+    SPGradient *gradient = 0;
 
     if (fill_or_stroke) {
         if (style && (style->fill.isPaintserver())) {
-            SPObject *server = SP_OBJECT_STYLE_FILL_SERVER(item);
-            if (SP_IS_GRADIENT (server)) {
-                gradient = SP_GRADIENT (server);
+            SPPaintServer *server = item->style->getFillPaintServer();
+            if ( SP_IS_GRADIENT(server) ) {
+                gradient = SP_GRADIENT(server);
             }
         }
     } else {
         if (style && (style->stroke.isPaintserver())) {
-            SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER(item);
-            if (SP_IS_GRADIENT (server)) {
-                gradient = SP_GRADIENT (server);
+            SPPaintServer *server = item->style->getStrokePaintServer();
+            if ( SP_IS_GRADIENT(server) ) {
+                gradient = SP_GRADIENT(server);
             }
         }
     }
@@ -1212,8 +1211,8 @@ SPGradient *sp_gradient_vector_for_object( SPDocument *const doc, SPDesktop *con
                                   ? style.fill
                                   : style.stroke );
         if (paint.isPaintserver()) {
-            SPObject *server = is_fill? SP_OBJECT_STYLE_FILL_SERVER(o) : SP_OBJECT_STYLE_STROKE_SERVER(o);
-            if (SP_IS_GRADIENT (server)) {
+            SPObject *server = is_fill? o->style->getFillPaintServer() : o->style->getStrokePaintServer();
+            if ( SP_IS_GRADIENT(server) ) {
                 return SP_GRADIENT(server)->getVector(true);
             } else {
                 color = sp_desktop_get_color(desktop, is_fill);

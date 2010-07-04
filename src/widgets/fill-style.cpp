@@ -556,11 +556,11 @@ void FillNStroke::updateFromPaint()
                     for (GSList const *i = items; i != NULL; i = i->next) {
                         //FIXME: see above
                         if (kind == FILL) {
-                            sp_repr_css_change_recursive(SP_OBJECT_REPR(i->data), css, "style");
+                            sp_repr_css_change_recursive(reinterpret_cast<SPObject*>(i->data)->repr, css, "style");
                         }
 
                         if (!vector) {
-                            SPGradient *gr = sp_gradient_vector_for_object( document, desktop, SP_OBJECT(i->data), kind == FILL, createSwatch );
+                            SPGradient *gr = sp_gradient_vector_for_object( document, desktop, reinterpret_cast<SPObject*>(i->data), kind == FILL, createSwatch );
                             if ( gr && createSwatch ) {
                                 gr->setSwatch();
                             }
@@ -578,7 +578,7 @@ void FillNStroke::updateFromPaint()
                     for (GSList const *i = items; i != NULL; i = i->next) {
                         //FIXME: see above
                         if (kind == FILL) {
-                            sp_repr_css_change_recursive(SP_OBJECT_REPR(i->data), css, "style");
+                            sp_repr_css_change_recursive(reinterpret_cast<SPObject*>(i->data)->repr, css, "style");
                         }
 
                         SPGradient *gr = sp_item_set_gradient(SP_ITEM(i->data), vector, gradient_type, kind == FILL);
@@ -608,7 +608,7 @@ void FillNStroke::updateFromPaint()
                      */
 
                 } else {
-                    Inkscape::XML::Node *patrepr = SP_OBJECT_REPR(pattern);
+                    Inkscape::XML::Node *patrepr = pattern->repr;
                     SPCSSAttr *css = sp_repr_css_attr_new();
                     gchar *urltext = g_strdup_printf("url(#%s)", patrepr->attribute("id"));
                     sp_repr_css_set_property(css, (kind == FILL) ? "fill" : "stroke", urltext);
@@ -622,17 +622,17 @@ void FillNStroke::updateFromPaint()
                     // objects who already have the same root pattern but through a different href
                     // chain. FIXME: move this to a sp_item_set_pattern
                     for (GSList const *i = items; i != NULL; i = i->next) {
-                        Inkscape::XML::Node *selrepr = SP_OBJECT_REPR(i->data);
+                        Inkscape::XML::Node *selrepr = reinterpret_cast<SPObject*>(i->data)->repr;
                         if ( (kind == STROKE) && !selrepr) {
                             continue;
                         }
-                        SPObject *selobj = SP_OBJECT(i->data);
+                        SPObject *selobj = reinterpret_cast<SPObject*>(i->data);
 
-                        SPStyle *style = SP_OBJECT_STYLE(selobj);
+                        SPStyle *style = selobj->style;
                         if (style && ((kind == FILL) ? style->fill : style->stroke).isPaintserver()) {
-                            SPObject *server = (kind == FILL) ?
-                                SP_OBJECT_STYLE_FILL_SERVER(selobj) :
-                                SP_OBJECT_STYLE_STROKE_SERVER(selobj);
+                            SPPaintServer *server = (kind == FILL) ?
+                                selobj->style->getFillPaintServer() :
+                                selobj->style->getStrokePaintServer();
                             if (SP_IS_PATTERN(server) && pattern_getroot(SP_PATTERN(server)) == pattern)
                                 // only if this object's pattern is not rooted in our selected pattern, apply
                                 continue;

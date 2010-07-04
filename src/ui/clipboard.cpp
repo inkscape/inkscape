@@ -653,23 +653,23 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
 void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
 {
     // copy fill and stroke styles (patterns and gradients)
-    SPStyle *style = SP_OBJECT_STYLE(item);
+    SPStyle *style = item->style;
 
     if (style && (style->fill.isPaintserver())) {
-        SPObject *server = SP_OBJECT_STYLE_FILL_SERVER(item);
-        if (SP_IS_LINEARGRADIENT(server) || SP_IS_RADIALGRADIENT(server)) {
+        SPPaintServer *server = item->style->getFillPaintServer();
+        if ( SP_IS_LINEARGRADIENT(server) || SP_IS_RADIALGRADIENT(server) ) {
             _copyGradient(SP_GRADIENT(server));
         }
-        if (SP_IS_PATTERN(server)) {
+        if ( SP_IS_PATTERN(server) ) {
             _copyPattern(SP_PATTERN(server));
         }
     }
     if (style && (style->stroke.isPaintserver())) {
-        SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER(item);
-        if (SP_IS_LINEARGRADIENT(server) || SP_IS_RADIALGRADIENT(server)) {
+        SPPaintServer *server = item->style->getStrokePaintServer();
+        if ( SP_IS_LINEARGRADIENT(server) || SP_IS_RADIALGRADIENT(server) ) {
             _copyGradient(SP_GRADIENT(server));
         }
-        if (SP_IS_PATTERN(server)) {
+        if ( SP_IS_PATTERN(server) ) {
             _copyPattern(SP_PATTERN(server));
         }
     }

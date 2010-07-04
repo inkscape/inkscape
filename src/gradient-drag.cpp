@@ -1,5 +1,3 @@
-#define __GRADIENT_DRAG_C__
-
 /*
  * On-canvas gradient dragging
  *
@@ -503,17 +501,18 @@ GrDraggable::~GrDraggable ()
 }
 
 
-SPObject *
-GrDraggable::getServer ()
+SPObject *GrDraggable::getServer()
 {
-    if (!item)
+    if (!item) {
         return NULL;
+    }
 
     SPObject *server = NULL;
-    if (fill_or_stroke)
-        server = SP_OBJECT_STYLE_FILL_SERVER (item);
-    else
-        server = SP_OBJECT_STYLE_STROKE_SERVER (item);
+    if (fill_or_stroke) {
+        server = item->style->getFillPaintServer();
+    }else {
+        server = item->style->getStrokePaintServer();
+    }
 
     return server;
 }
@@ -1705,10 +1704,12 @@ GrDrag::updateLines ()
         SPStyle *style = SP_OBJECT_STYLE (item);
 
         if (style && (style->fill.isPaintserver())) {
-            SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
-            if (SP_IS_LINEARGRADIENT (server)) {
+            SPPaintServer *server = item->style->getFillPaintServer();
+            if ( server && server->isSolid() ) {
+                // Suppress "gradientness" of solid paint
+            } else if ( SP_IS_LINEARGRADIENT(server) ) {
                 this->addLine (item, sp_item_gradient_get_coords (item, POINT_LG_BEGIN, 0, true), sp_item_gradient_get_coords (item, POINT_LG_END, 0, true), GR_LINE_COLOR_FILL);
-            } else if (SP_IS_RADIALGRADIENT (server)) {
+            } else if ( SP_IS_RADIALGRADIENT(server) ) {
                 Geom::Point center = sp_item_gradient_get_coords (item, POINT_RG_CENTER, 0, true);
                 this->addLine (item, center, sp_item_gradient_get_coords (item, POINT_RG_R1, 0, true), GR_LINE_COLOR_FILL);
                 this->addLine (item, center, sp_item_gradient_get_coords (item, POINT_RG_R2, 0, true), GR_LINE_COLOR_FILL);
@@ -1716,10 +1717,12 @@ GrDrag::updateLines ()
         }
 
         if (style && (style->stroke.isPaintserver())) {
-            SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
-            if (SP_IS_LINEARGRADIENT (server)) {
+            SPPaintServer *server = item->style->getStrokePaintServer();
+            if ( server && server->isSolid() ) {
+                // Suppress "gradientness" of solid paint
+            } else if ( SP_IS_LINEARGRADIENT(server) ) {
                 this->addLine (item, sp_item_gradient_get_coords (item, POINT_LG_BEGIN, 0, false), sp_item_gradient_get_coords (item, POINT_LG_END, 0, false), GR_LINE_COLOR_STROKE);
-            } else if (SP_IS_RADIALGRADIENT (server)) {
+            } else if ( SP_IS_RADIALGRADIENT(server) ) {
                 Geom::Point center = sp_item_gradient_get_coords (item, POINT_RG_CENTER, 0, false);
                 this->addLine (item, center, sp_item_gradient_get_coords (item, POINT_RG_R1, 0, false), GR_LINE_COLOR_STROKE);
                 this->addLine (item, center, sp_item_gradient_get_coords (item, POINT_RG_R2, 0, false), GR_LINE_COLOR_STROKE);
