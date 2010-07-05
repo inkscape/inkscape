@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-07-04 08:04+0400\n"
-"PO-Revision-Date: 2010-07-05 04:08+0400\n"
+"PO-Revision-Date: 2010-07-05 06:36+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1563,11 +1563,11 @@ msgstr "••••••••••••••••••••••••
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:1
 msgid "Auto-Text:"
-msgstr ""
+msgstr "Автотекст:"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:2
 msgid "Auto-texts"
-msgstr ""
+msgstr "Автотекст"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:4
 #: ../share/extensions/jessyInk_effects.inx.h:8
@@ -1581,17 +1581,15 @@ msgstr ""
 #: ../share/extensions/jessyInk_video.inx.h:2
 #: ../share/extensions/jessyInk_view.inx.h:4
 msgid "JessyInk"
-msgstr ""
+msgstr "Создание презентации"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:5
-#, fuzzy
 msgid "None (remove)"
-msgstr "Удалить"
+msgstr "Нет (удалить)"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:6
-#, fuzzy
 msgid "Number of slides"
-msgstr "Количество шагов:"
+msgstr "Количество слайдов"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:7
 #: ../share/extensions/jessyInk_effects.inx.h:12
@@ -1599,18 +1597,16 @@ msgstr "Количество шагов:"
 #: ../share/extensions/jessyInk_masterSlide.inx.h:6
 #: ../share/extensions/jessyInk_transitions.inx.h:9
 #: ../share/extensions/jessyInk_view.inx.h:7
-#, fuzzy
 msgid "Settings"
-msgstr "Сатин"
+msgstr "Параметры"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:8
-#, fuzzy
 msgid "Slide number"
-msgstr "Угол пера"
+msgstr "Номер слайда"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:9
 msgid "Slide title"
-msgstr ""
+msgstr "Название слайда"
 
 #: ../share/extensions/jessyInk_autoTexts.inx.h:10
 msgid ""
@@ -1618,57 +1614,51 @@ msgid ""
 "JessyInk presentation. Please see code.google.com/p/jessyink for more "
 "details."
 msgstr ""
+"Это расширение предназначено для вставки, обновления и удаления автотекста "
+"из презентаций JessyInk. Подробности вы найдёте на сайте code.google.com/p/"
+"jessyink."
 
 #: ../share/extensions/jessyInk_effects.inx.h:1
 #: ../share/extensions/jessyInk_transitions.inx.h:1
-#, fuzzy
 msgid "Appear"
-msgstr "Вставить"
+msgstr "Появление"
 
 #: ../share/extensions/jessyInk_effects.inx.h:2
-#, fuzzy
 msgid "Build-in effect"
-msgstr "Текущий эффект"
+msgstr "Эффект входа"
 
 #: ../share/extensions/jessyInk_effects.inx.h:3
-#, fuzzy
 msgid "Build-out effect"
-msgstr "Без эффекта"
+msgstr "Эффект выхода"
 
 #: ../share/extensions/jessyInk_effects.inx.h:4
 #: ../share/extensions/jessyInk_transitions.inx.h:3
 #: ../share/extensions/jessyInk_view.inx.h:2
-#, fuzzy
 msgid "Duration in seconds:"
-msgstr "Рисование закончено"
+msgstr "Длительность в секундах:"
 
 #: ../share/extensions/jessyInk_effects.inx.h:5
-#, fuzzy
 msgid "Effects"
-msgstr "Эффе_кт"
+msgstr "Эффекты"
 
 #: ../share/extensions/jessyInk_effects.inx.h:6
 #: ../share/extensions/jessyInk_transitions.inx.h:4
-#, fuzzy
 msgid "Fade"
-msgstr "Стороны"
+msgstr "Угасание"
 
 #: ../share/extensions/jessyInk_effects.inx.h:9
-#, fuzzy
 msgid "None (default)"
-msgstr "(по умолчанию)"
+msgstr "Нет (по умолчанию)"
 
 #: ../share/extensions/jessyInk_effects.inx.h:10
 #: ../share/extensions/jessyInk_view.inx.h:5
-#, fuzzy
 msgid "Order:"
-msgstr "Порядок"
+msgstr "Порядок:"
 
 #: ../share/extensions/jessyInk_effects.inx.h:11
 #: ../share/extensions/jessyInk_transitions.inx.h:8
-#, fuzzy
 msgid "Pop"
-msgstr "Верх"
+msgstr "Выскакивание"
 
 #: ../share/extensions/jessyInk_effects.inx.h:13
 msgid ""
@@ -1676,6 +1666,9 @@ msgid ""
 "JessyInk presentation. Please see code.google.com/p/jessyink for more "
 "details."
 msgstr ""
+"Это расширение предназначено для вставки, обновления и удаления эффектов "
+"объектов из презентаций JessyInk. Подробности вы найдёте на сайте code."
+"google.com/p/jessyink."
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../share/extensions/jessyInk_effects.inx.h:14
@@ -1693,28 +1686,27 @@ msgid ""
 "Creates a zip file containing pdfs or pngs of all slides of a JessyInk "
 "presentation."
 msgstr ""
+"Создать архив ZIP с выводом всех слайдов презентации JessyInk в PDF или PNG"
 
 #: ../share/extensions/jessyInk_export.inx.h:3
 msgid "JessyInk zipped pdf or png output"
-msgstr ""
+msgstr "Вывод презентации JessyInk в PDF или PNG"
 
 #: ../share/extensions/jessyInk_export.inx.h:4
 msgid "JessyInk zipped pdf or png output (*.zip)"
-msgstr ""
+msgstr "Вывод презентации JessyInk в PDF или PNG (*.png)"
 
 #: ../share/extensions/jessyInk_export.inx.h:5
-#, fuzzy
 msgid "PDF"
-msgstr "PDF 1.4"
+msgstr "PDF"
 
 #: ../share/extensions/jessyInk_export.inx.h:6
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #: ../share/extensions/jessyInk_export.inx.h:7
-#, fuzzy
 msgid "Resolution:"
-msgstr "Разрешение (dpi)"
+msgstr "Разрешение:"
 
 #: ../share/extensions/jessyInk_export.inx.h:9
 msgid ""
@@ -1722,10 +1714,13 @@ msgid ""
 "an export layer in your browser. Please see code.google.com/p/jessyink for "
 "more details."
 msgstr ""
+"Это расширение предназначено для экспорта презентации JessyInk после "
+"создания слоя экспорта. Подробности вы найдёте на сайте code.google.com/p/"
+"jessyink."
 
 #: ../share/extensions/jessyInk_install.inx.h:2
 msgid "Install/update"
-msgstr ""
+msgstr "Установить/обновить"
 
 #: ../share/extensions/jessyInk_install.inx.h:4
 msgid ""
@@ -1733,239 +1728,207 @@ msgid ""
 "to turn your SVG file into a presentation. Please see code.google.com/p/"
 "jessyink for more details."
 msgstr ""
+"Это расширение предназначено для установки или обновления сценария JessyInk "
+"для превращения документа SVG в презентацию. Подробности вы найдёте на сайте "
+"code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:1
-#, fuzzy
 msgid "Add slide:"
-msgstr "2-ая сторона:"
+msgstr "Добавить слайд:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:2
 msgid "Back (with effects):"
-msgstr ""
+msgstr "Назад (с эффектами):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:3
-#, fuzzy
 msgid "Back (without effects):"
-msgstr "Показать очертания контура"
+msgstr "Назад (без эффектов):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:4
-#, fuzzy
 msgid "Decrease number of columns:"
-msgstr "Сколько столбцов в таблице"
+msgstr "Уменьшить число столбцов:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:5
-#, fuzzy
 msgid "Drawing mode"
-msgstr "Рисунок"
+msgstr "Режим рисования"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:6
-#, fuzzy
 msgid "First slide:"
-msgstr "Первый выделенный"
+msgstr "Первый слайд:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:8
-#, fuzzy
 msgid "Increase number of columns:"
-msgstr "Сколько столбцов в таблице"
+msgstr "Увеличить число столбцов:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:9
-#, fuzzy
 msgid "Index mode"
-msgstr "Переместить от корня"
+msgstr "Режим содержания"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:11
-#, fuzzy
 msgid "Key bindings"
-msgstr "Кернинг"
+msgstr "Клавиатурные комбинации"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:12
-#, fuzzy
 msgid "Last slide:"
-msgstr "Вставить размер"
+msgstr "Последний слайд:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:13
-#, fuzzy
 msgid "Next (with effects):"
-msgstr "Эффект неонового свечения"
+msgstr "Вперёд (с эффектами):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:14
-#, fuzzy
 msgid "Next (without effects):"
-msgstr "Эффект неонового свечения"
+msgstr "Вперёд (без эффектов):"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:15
-#, fuzzy
 msgid "Next page:"
-msgstr "Выберите страницу:"
+msgstr "Следующая страница:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:16
-#, fuzzy
 msgid "Previous page:"
-msgstr "_Предыдущий масштаб"
+msgstr "Предыдущая страница:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:17
-#, fuzzy
 msgid "Reset timer:"
-msgstr "Возврат к исходному центру"
+msgstr "Сбросить таймер:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:18
 msgid "Select the slide above:"
-msgstr ""
+msgstr "Выбрать слайд выше:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:19
 msgid "Select the slide below:"
-msgstr ""
+msgstr "Выбрать слайд ниже:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:20
-#, fuzzy
 msgid "Select the slide to the left:"
-msgstr "Выберите файл для сохранения"
+msgstr "Выбрать слайд слева:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:21
-#, fuzzy
 msgid "Select the slide to the right:"
-msgstr "Откадрировать холст до рисунка"
+msgstr "Выбрать слайд справа:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:22
-#, fuzzy
 msgid "Set duration:"
-msgstr "Насыщенность"
+msgstr "Установить длительность:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:23
-#, fuzzy
 msgid "Set number of columns to default:"
-msgstr "Сколько столбцов в таблице"
+msgstr "Вернуться к исходному числу столбцов:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:24
-#, fuzzy
 msgid "Set path color to black:"
-msgstr "Убрать цвет обводки"
+msgstr "Сделать цвет контура чёрным:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:25
-#, fuzzy
 msgid "Set path color to blue:"
-msgstr "Убрать цвет обводки"
+msgstr "Сделать цвет контура синим:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:26
-#, fuzzy
 msgid "Set path color to cyan:"
-msgstr "Убрать цвет обводки"
+msgstr "Сделать цвет контура циановым:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:27
-#, fuzzy
 msgid "Set path color to green:"
-msgstr "Убрать цвет обводки"
+msgstr "Сделать цвет контура зелёным:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:28
-#, fuzzy
 msgid "Set path color to magenta:"
-msgstr "Убрать цвет обводки"
+msgstr "Сделать цвет контура пурпурным:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:29
-#, fuzzy
 msgid "Set path color to orange:"
-msgstr "Убрать цвет обводки"
+msgstr "Сделать цвет контура оранжевым:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:30
-#, fuzzy
 msgid "Set path color to red:"
-msgstr "Убрать цвет обводки"
+msgstr "Сделать цвет контура красным:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:31
-#, fuzzy
 msgid "Set path color to white:"
-msgstr "Убрать цвет обводки"
+msgstr "Сделать цвет контура белым:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:32
-#, fuzzy
 msgid "Set path color to yellow:"
-msgstr "Убрать цвет обводки"
+msgstr "Сделать цвет контура жёлтым:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:33
-#, fuzzy
 msgid "Set path width to 1:"
-msgstr "Ширина:"
+msgstr "Сделать толщину контура равной 1:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:34
-#, fuzzy
 msgid "Set path width to 3:"
-msgstr "Ширина:"
+msgstr "Сделать толщину контура равной 3:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:35
-#, fuzzy
 msgid "Set path width to 5:"
-msgstr "Ширина:"
+msgstr "Сделать толщину контура равной 5:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:36
-#, fuzzy
 msgid "Set path width to 7:"
-msgstr "Ширина:"
+msgstr "Сделать толщину контура равной 7:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:37
-#, fuzzy
 msgid "Set path width to 9:"
-msgstr "Ширина:"
+msgstr "Сделать толщину контура равной 9:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:38
-#, fuzzy
 msgid "Set path width to default:"
-msgstr "Сохранить как умолчание"
+msgstr "Вернуться к исходной толщине контура:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:39
-#, fuzzy
 msgid "Slide mode"
-msgstr "Масштабирование объектов"
+msgstr "Режим слайдов"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:40
-#, fuzzy
 msgid "Switch to drawing mode:"
-msgstr "Переключиться на обычное отображение"
+msgstr "Переключиться на режим рисования"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:41
-#, fuzzy
 msgid "Switch to index mode:"
-msgstr "Перейти на следующий слой"
+msgstr "Переключиться на режим содержания"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:42
-#, fuzzy
 msgid "Switch to slide mode:"
-msgstr "Переключиться на обычное отображение"
+msgstr "Переключиться на режим слайдов"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:43
 msgid ""
 "This extension allows you customise the key bindings JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"Это расширение предназначено настройки клавиатурных комбинаций, используемых "
+"в презентации JessyInk. Подробности вы найдёте на сайте code.google.com/p/"
+"jessyink."
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:44
 msgid "Toggle progress bar:"
-msgstr ""
+msgstr "Переключить индикатор хода презентации:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:45
-#, fuzzy
 msgid "Undo last path segment:"
-msgstr "Отменить последнее действие"
+msgstr "Отменить последний сегмент контура:"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:2
 msgid "If no layer name is supplied, the master slide is unset."
-msgstr ""
+msgstr "Если имя слайда не указано, определение мастер-слайда снимается"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:4
-#, fuzzy
 msgid "Master slide"
-msgstr "Вставить размер"
+msgstr "Мастер-слайд"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:5
 #: ../share/extensions/jessyInk_transitions.inx.h:7
-#, fuzzy
 msgid "Name of layer:"
-msgstr "Переименование слоя"
+msgstr "Имя слоя:"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:7
 msgid ""
 "This extension allows you to change the master slide JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"Это расширение предназначено для смены используемого JessyInk мастер-слайда. "
+"Подробности вы найдёте на сайте code.google.com/p/jessyink."
 
 #. File
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:1
@@ -1975,35 +1938,32 @@ msgid "Default"
 msgstr "По умолчанию"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:2
-#, fuzzy
 msgid "Dragging/zoom"
-msgstr "Рисунок"
+msgstr "Перетаскивание/масштабирование"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:5
-#, fuzzy
 msgid "Mouse handler"
-msgstr "Смещение рычага"
+msgstr "Обработка действий мышью"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:6
-#, fuzzy
 msgid "Mouse settings:"
-msgstr "Параметры страницы"
+msgstr "Параметры мыши:"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:7
-#, fuzzy
 msgid "No-click"
-msgstr "при щелчке"
+msgstr "Без щелчков"
 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:8
 msgid ""
 "This extension allows you customise the mouse handler JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
+"Это расширение предназначено для настройки обработки действий мышью. "
+"Подробности вы найдёте на сайте code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_summary.inx.h:3
-#, fuzzy
 msgid "Summary"
-msgstr "С_имметрия"
+msgstr "Сводка"
 
 #: ../share/extensions/jessyInk_summary.inx.h:4
 msgid ""
@@ -2011,70 +1971,70 @@ msgid ""
 "effects and transitions contained in this SVG file. Please see code.google."
 "com/p/jessyink for more details."
 msgstr ""
+"Это расширение предназначено для получения информации о сценарии JessyInk, "
+"эффектах и переходах, содержащихся в текущем документе SVG. Подробности вы "
+"найдёте на сайте code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_transitions.inx.h:10
 msgid ""
 "This extension allows you to change the transition JessyInk uses for the "
 "selected layer. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"Это расширение предназначено для изменения перехода, используемого JessyInk "
+"для текущего слоя. Подробности вы найдёте на сайте code.google.com/p/"
+"jessyink."
 
 #: ../share/extensions/jessyInk_transitions.inx.h:11
 msgid "Transition in effect"
-msgstr ""
+msgstr "Эффект перехода для появления"
 
 #: ../share/extensions/jessyInk_transitions.inx.h:12
-#, fuzzy
 msgid "Transition out effect"
-msgstr "Вставить динамический контурный эффект"
+msgstr "Эффект перехода для исчезновения"
 
 #: ../share/extensions/jessyInk_transitions.inx.h:13
-#, fuzzy
 msgid "Transitions"
-msgstr "Преобразование"
+msgstr "Переходы"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:4
 msgid "Please select the parts of JessyInk you want to uninstall/remove."
-msgstr ""
+msgstr "Выберите, какие части JessyInk вы хотите удалить."
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:5
-#, fuzzy
 msgid "Remove auto-texts"
-msgstr "Удалить обводку"
+msgstr "Удалить весь автотекст"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:6
-#, fuzzy
 msgid "Remove effects"
-msgstr "Удаление контурного эффекта"
+msgstr "Удалить эффекты"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:7
-#, fuzzy
 msgid "Remove master slide assignment"
-msgstr "Убрать маску из выделения"
+msgstr "Удалить определение мастер-слайда"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:8
-#, fuzzy
 msgid "Remove script"
-msgstr "Удаление сетки"
+msgstr "Удалить сценарий"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:9
-#, fuzzy
 msgid "Remove transitions"
-msgstr "Убрать _трансформацию"
+msgstr "Удалить переходы"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:10
-#, fuzzy
 msgid "Remove views"
-msgstr "Снять фильтры"
+msgstr "Удалить виды"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:11
 msgid ""
 "This extension allows you to uninstall the JessyInk script. Please see code."
 "google.com/p/jessyink for more details."
 msgstr ""
+"Это расширение предназначено для удаления сценария презентации JessyInk из "
+"документа SVG. Подробности вы найдёте на сайте code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:12
 msgid "Uninstall/remove"
-msgstr ""
+msgstr "Удалить сценарий презентации"
 
 #: ../share/extensions/jessyInk_video.inx.h:3
 msgid ""
@@ -2082,26 +2042,30 @@ msgid ""
 "This element allows you to integrate a video into your JessyInk "
 "presentation. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"Это расширение предназначено для вставки видеоэлемента в текущий слайд "
+"(слой) презентации JessyInk. Подробности вы найдёте на сайте code.google.com/"
+"p/jessyink."
 
 #: ../share/extensions/jessyInk_video.inx.h:4
-#, fuzzy
 msgid "Video"
-msgstr "Вид"
+msgstr "Видео"
 
 #: ../share/extensions/jessyInk_view.inx.h:1
 msgid "Choose order number 0 to set the initial view of a slide."
-msgstr ""
+msgstr "Выберите ноль номером порядка, чтобы установить исходный вид слайда."
 
 #: ../share/extensions/jessyInk_view.inx.h:6
-#, fuzzy
 msgid "Remove view"
-msgstr "Удалить красный компонент"
+msgstr "Удалить вид"
 
 #: ../share/extensions/jessyInk_view.inx.h:8
 msgid ""
 "This extension allows you to set, update and remove views for a JessyInk "
 "presentation. Please see code.google.com/p/jessyink for more details."
 msgstr ""
+"Это расширение предназначено установки, обновления и удаления видов "
+"презентации JessyInk. Подробности вы найдёте на сайте code.google.com/p/"
+"jessyink."
 
 #: ../share/extensions/jessyInk_view.inx.h:9
 #: ../share/extensions/polyhedron_3d.inx.h:52
@@ -20661,15 +20625,14 @@ msgid ""
 "<b>Shift+Ctrl+Alt</b>: preserve length and snap rotation angle to %g° "
 "increments while rotating both handles"
 msgstr ""
-"<b>Shift+Ctrl+Alt</b>: сохраняет длину и ограничивает шаг вращения %g°, "
-"вращая оба рычага"
+"<b>Shift+Ctrl+Alt</b>: сохраняет длину и вращает оба рычага с шагом %g°"
 
 #: ../src/ui/tool/node.cpp:354
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
 "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"
-msgstr "<b>Ctrl+Alt</b>: сохраняет длину и ограничивает шаг вращения %g°"
+msgstr "<b>Ctrl+Alt</b>: сохраняет длину, с шагом вращения %g°"
 
 #: ../src/ui/tool/node.cpp:360
 msgctxt "Path handle tip"
@@ -20687,13 +20650,13 @@ msgctxt "Path handle tip"
 msgid ""
 "<b>Shift+Ctrl</b>: snap rotation angle to %g° increments and rotate both "
 "handles"
-msgstr "<b>Shift+Ctrl</b>: ограничивает шаг вращения %g° и вращает оба рычага"
+msgstr "<b>Shift+Ctrl</b>: вращает оба рычага с шагом по %g°"
 
 #: ../src/ui/tool/node.cpp:374
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
-msgstr "<b>Ctrl</b>: ограничивает шаг вращения %g°, щелчок втягивает"
+msgstr "<b>Ctrl</b>: вращение шагами по %g°, щелчок втягивает"
 
 #: ../src/ui/tool/node.cpp:379
 msgctxt "Path hande tip"
@@ -20717,33 +20680,27 @@ msgstr "<b>%s</b>: перетаскивание меняет форму сегм
 #, c-format
 msgctxt "Path handle tip"
 msgid "Move handle by %s, %s; angle %.2f°, length %s"
-msgstr ""
+msgstr "Перемещение узла на %s, %s; угол %.2f°, длина %s"
 
 #: ../src/ui/tool/node.cpp:1144
-#, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
-msgstr ""
-"<b>Shift</b>: выделить/снять выделение; перетаскивание включает выделение "
-"«липкой лентой»"
+msgstr "<b>Shift</b>: вытаскивает рычаг, щелчок переключает выделение"
 
 #: ../src/ui/tool/node.cpp:1146
-#, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: click to toggle selection"
-msgstr ""
-"<b>Shift</b>: выделить/снять выделение; перетаскивание включает выделение "
-"«липкой лентой»"
+msgstr "<b>Shift</b>: щелчок переключает выделение"
 
 #: ../src/ui/tool/node.cpp:1151
 msgctxt "Path node tip"
 msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
-msgstr ""
+msgstr "<b>Ctrl+Alt</b>: перемещает вдоль линий рычага, щелчок удаляет узел"
 
 #: ../src/ui/tool/node.cpp:1154
 msgctxt "Path node tip"
 msgid "<b>Ctrl</b>: move along axes, click to change node type"
-msgstr ""
+msgstr "<b>Ctrl</b>: перемещает вдоль осей, щелчок меняет тип узла"
 
 #: ../src/ui/tool/node.cpp:1158
 msgctxt "Path node tip"
@@ -20755,6 +20712,7 @@ msgstr "<b>Alt</b>: лепка узлов"
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
 msgstr ""
+"<b>%s</b>: перетаскивание меняет форму контура (попробуйте Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1169
 #, c-format
@@ -20763,6 +20721,8 @@ msgid ""
 "<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles "
 "(more: Shift, Ctrl, Alt)"
 msgstr ""
+"<b>%s</b>: перетаскивание меняет форму контура, щелчок переключает рычаги "
+"масштабирования/вращения (попробуйте Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1172
 #, c-format
@@ -20771,12 +20731,14 @@ msgid ""
 "<b>%s</b>: drag to shape the path, click to select only this node (more: "
 "Shift, Ctrl, Alt)"
 msgstr ""
+"<b>%s</b>: перетаскивание меняет форму контура, щелчок выделяет только этот "
+"узел (попробуйте Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1180
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path node tip"
 msgid "Move node by %s, %s"
-msgstr "Смещение узлов"
+msgstr "Перемещение узла на %s, %s"
 
 #: ../src/ui/tool/node.cpp:1192
 msgid "Symmetric node"
@@ -20813,47 +20775,45 @@ msgid "Retract handle"
 msgstr "Втяжка узла"
 
 #: ../src/ui/tool/transform-handle-set.cpp:137
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift+Ctrl</b>: scale uniformly about the rotation center"
-msgstr "<b>Shift</b>: рисовать вокруг начальной точки"
+msgstr ""
+"<b>Shift+Ctrl</b>: масштабирование относительно точки вращения с сохранением "
+"пропорций"
 
 #: ../src/ui/tool/transform-handle-set.cpp:139
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl:</b> scale uniformly"
-msgstr "<b>Ctrl</b>: ограничить угол"
+msgstr "<b>Shift+Ctrl</b>: масштабирование с сохранением пропорций"
 
 #: ../src/ui/tool/transform-handle-set.cpp:144
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid ""
 "<b>Shift+Alt</b>: scale using an integer ratio about the rotation center"
-msgstr "<b>Shift</b>: рисовать градиент вокруг начальной точки"
+msgstr ""
+"<b>Shift+Alt</b>: масштабирование относительно точки вращения с "
+"коэффициентом соотношения сторон"
 
 #: ../src/ui/tool/transform-handle-set.cpp:146
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: scale from the rotation center"
-msgstr "<b>Shift</b>: рисовать вокруг начальной точки"
+msgstr "<b>Shift</b>: масштабирование относительно точки вращения"
 
 #: ../src/ui/tool/transform-handle-set.cpp:149
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Alt</b>: scale using an integer ratio"
-msgstr "<b>Alt</b>: зафиксировать радиус спирали"
+msgstr "<b>Alt</b>: масштабирование с коэффициентом соотношения сторон"
 
 #: ../src/ui/tool/transform-handle-set.cpp:151
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Scale handle</b>: drag to scale the selection"
-msgstr "В выделении <b>нет контуров</b> для разворота."
+msgstr "<b>Рычаг масштабирования</b>: перетаскивание масштабирует выделение"
 
 #: ../src/ui/tool/transform-handle-set.cpp:156
 #, c-format
 msgctxt "Transform handle tip"
 msgid "Scale by %.2f%% x %.2f%%"
-msgstr ""
+msgstr "Масштабирование на %.2f%%×%.2f%%"
 
 #: ../src/ui/tool/transform-handle-set.cpp:311
 #, c-format
@@ -20862,18 +20822,18 @@ msgid ""
 "<b>Shift+Ctrl</b>: rotate around the opposite corner and snap angle to %f° "
 "increments"
 msgstr ""
+"<b>Shift+Ctrl</b>: вращает относительно противоположного угла с шагом в %f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:314
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: rotate around the opposite corner"
-msgstr "<b>Shift</b>: рисовать вокруг начальной точки"
+msgstr "<b>Shift</b>: вращает относительно противоположного угла"
 
 #: ../src/ui/tool/transform-handle-set.cpp:318
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap angle to %f° increments"
-msgstr "<b>Ctrl</b>: ограничить угол"
+msgstr "<b>Ctrl</b>: вращает с шагом %f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:320
 msgctxt "Transform handle tip"
@@ -20881,6 +20841,8 @@ msgid ""
 "<b>Rotation handle</b>: drag to rotate the selection around the rotation "
 "center"
 msgstr ""
+"<b>Рычаг вращения</b>: перетаскивание вращает выделение относительно центра "
+"вращения"
 
 #. event
 #: ../src/ui/tool/transform-handle-set.cpp:325
@@ -20895,25 +20857,26 @@ msgctxt "Transform handle tip"
 msgid ""
 "<b>Shift+Ctrl</b>: skew about the rotation center with snapping to %f° "
 "increments"
-msgstr ""
+msgstr "<b>Shift+Ctrl</b>: наклон относительно центра вращения шагами по %f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:422
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: skew about the rotation center"
-msgstr "<b>Shift</b>: рисовать вокруг начальной точки"
+msgstr "<b>Shift</b>: наклон относительно центра вращения"
 
 #: ../src/ui/tool/transform-handle-set.cpp:426
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap skew angle to %f° increments"
-msgstr "<b>Ctrl</b>: ограничить угол"
+msgstr "<b>Ctrl</b>: наклон шагами по %f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:429
 msgctxt "Transform handle tip"
 msgid ""
 "<b>Skew handle</b>: drag to skew (shear) selection about the opposite handle"
 msgstr ""
+"<b>Рычаг наклона</b>: перетаскивание наклоняет выделение относительно "
+"противоположного рычага"
 
 #: ../src/ui/tool/transform-handle-set.cpp:435
 #, c-format
