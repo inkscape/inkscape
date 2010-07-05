@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-07-04 08:04+0400\n"
-"PO-Revision-Date: 2010-07-04 09:21+0400\n"
+"PO-Revision-Date: 2010-07-05 04:08+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -662,7 +662,6 @@ msgid "Use automatic scaling to size A4"
 msgstr "Автоматически масштабировать в A4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
-#, fuzzy
 msgid ""
 "- AutoCAD Release 13 format.\n"
 "- assume svg drawing is in pixels, at 90 dpi.\n"
@@ -673,13 +672,15 @@ msgid ""
 "- LWPOLYLINE output is a multiply-connected polyline, disable it to use a "
 "legacy version of the LINE output."
 msgstr ""
-"• поддерживется формат AutoCAD Release 13\n"
-"• предполагается, что рисунок SVG в пикселах, 90dpi\n"
-"• предполагается, что рисунок DXF в миллиметрах\n"
-"• поддерживаются только элементы LWPOLYLINE и SPLINE\n"
-"• параметр ROBO-Master включает создание\n"
-"   специальной кривой, читаемой только просмотрщиками\n"
-"   ROBO-Master и AutoDesk, но не Inkscape."
+"• поддерживается формат AutoCAD Release 13\n"
+"• считается, что рисунок SVG в пикселах, 90dpi\n"
+"• считается, что рисунок DXF в миллиметрах\n"
+"• поддерживаются только линии и кривые\n"
+"• на выводе для ROBO-Master создаётся кривая,\n"
+"  читаемая только просмотрщиками ROBO-Master\n"
+"  и AutoDesk, но не Inkscape.\n"
+"• вывод LWPOLYLINE создаёт полилинию, отключите,\n"
+"  чтобы использовать устаревший тип линии."
 
 #: ../share/extensions/dxf_outlines.inx.h:7
 msgid "Desktop Cutting Plotter"
@@ -691,12 +692,11 @@ msgstr "Файлы для настольных плоттеров (R13) (*.dxf)"
 
 #: ../share/extensions/dxf_outlines.inx.h:11
 msgid "use LWPOLYLINE type of line output"
-msgstr ""
+msgstr "Использовать тип линии LWPOLYLINE на выводе"
 
 #: ../share/extensions/dxf_outlines.inx.h:12
-#, fuzzy
 msgid "use ROBO-Master type of spline output"
-msgstr "Включить вывод для ROBO-Master"
+msgstr "Использовать тип кривой ROBO-Master на выводе"
 
 #: ../share/extensions/dxf_output.inx.h:1
 msgid "AutoCAD DXF R12 (*.dxf)"
@@ -779,7 +779,7 @@ msgstr "Файлы Encapsulated Postscript (*.eps)"
 
 #: ../share/extensions/eqtexsvg.inx.h:1
 msgid "Additional packages (comma-separated): "
-msgstr ""
+msgstr "Дополнительные пакеты (через запятую): "
 
 #: ../share/extensions/eqtexsvg.inx.h:2
 msgid "LaTeX formula"
@@ -807,15 +807,16 @@ msgid ""
 "* A relative path (or a filename without path) is relative to the user's "
 "home directory."
 msgstr ""
+"· не указывайте расширение сами, оно будет автоматически подставлено\n"
+"· относительный путь считается от корня пользовательского каталога"
 
 #: ../share/extensions/extractimage.inx.h:3
 msgid "Extract Image"
 msgstr "Извлечь растровое изображение"
 
 #: ../share/extensions/extractimage.inx.h:5
-#, fuzzy
 msgid "Path to save image:"
-msgstr "Путь для сохраняемого изображения"
+msgstr "Путь для сохраняемого изображения:"
 
 #: ../share/extensions/extrude.inx.h:1 ../src/live_effects/effect.cpp:94
 msgid "Extrude"
@@ -1063,13 +1064,15 @@ msgstr "Угол зацепления"
 
 #: ../share/extensions/generate_voronoi.inx.h:1
 msgid "Average size of cell (px)"
-msgstr ""
+msgstr "Средний размер ячейки (px)"
 
 #: ../share/extensions/generate_voronoi.inx.h:2
 msgid ""
 "Generate a random pattern of Voronoi cells. The pattern will be accessible "
 "in the Fill and Stroke dialog. You must select an object or a group."
 msgstr ""
+"Создать случайную мозаику из ячеек Вороного. Мозаика доступна через диалог "
+"«Заливка и обводка», для чего необходимо выбрать объект или группу."
 
 #: ../share/extensions/generate_voronoi.inx.h:4
 msgid ""
@@ -1081,12 +1084,11 @@ msgstr ""
 
 #: ../share/extensions/generate_voronoi.inx.h:5
 msgid "Size of Border (px)"
-msgstr ""
+msgstr "Толщина границы (px):"
 
 #: ../share/extensions/generate_voronoi.inx.h:6
-#, fuzzy
 msgid "Voronoi Pattern"
-msgstr "Азбука Брейля"
+msgstr "Мозаика Вороного"
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
@@ -1429,7 +1431,7 @@ msgstr "Спецификация на SVG 1.1"
 
 #: ../share/extensions/interp.inx.h:1
 msgid "Duplicate endpaths"
-msgstr "Продублировать конечные контуры"
+msgstr "Продублировать оконечные контуры"
 
 #: ../share/extensions/interp.inx.h:2
 msgid "Exponent"
@@ -1449,7 +1451,7 @@ msgstr "Способ интерполяции"
 
 #: ../share/extensions/interp.inx.h:7
 msgid "Interpolation steps"
-msgstr "Шаги интерполяции"
+msgstr "Шагов интерполяции"
 
 #: ../share/extensions/interp_att_g.inx.h:1
 msgid "Attribute to Interpolate"
@@ -9289,7 +9291,7 @@ msgstr "Текст в кривые Безье"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:324
 msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
-msgstr ""
+msgstr "PS+LaTeX: пропустить текст в PS, создать файл LaTeX"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:325
 #: ../src/extension/internal/cairo-ps-out.cpp:363
@@ -9327,7 +9329,7 @@ msgstr "Файл PostScript"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:362
 msgid "EPS+LaTeX: Omit text in EPS, and create LaTeX file"
-msgstr ""
+msgstr "EPS+LaTeX: пропустить текст в EPS, создать файл LaTeX"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:372
 msgid "Encapsulated PostScript File"
@@ -9343,7 +9345,7 @@ msgstr "PDF 1.4"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:243
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
-msgstr ""
+msgstr "PDF+LaTeX: пропустить текст в PDF, создать файл LaTeX"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:2401
 msgid "EMF Input"
@@ -9475,7 +9477,7 @@ msgid ""
 "Embed results in stand-alone, larger SVG files. Link references a file "
 "outside this SVG document and all files must be moved together."
 msgstr ""
-"Встраивание создаёт самостоятельные большие файлы SVG. Связывание означает, "
+"Внедрение создаёт самостоятельные большие файлы SVG. Связывание означает, "
 "что файл будет вне SVG, их придётся перемещать вместе."
 
 #: ../src/extension/internal/gimpgrad.cpp:274
@@ -20470,19 +20472,14 @@ msgid "Add node"
 msgstr "Добавление узла"
 
 #: ../src/ui/tool/curve-drag-point.cpp:167
-#, fuzzy
 msgctxt "Path segment tip"
 msgid "<b>Shift</b>: click to toggle segment selection"
-msgstr ""
-"<b>Shift</b>: выделить/снять выделение; перетаскивание включает выделение "
-"«липкой лентой»"
+msgstr "<b>Shift</b>: щелчок переключает выделение сегмента"
 
 #: ../src/ui/tool/curve-drag-point.cpp:171
-#, fuzzy
 msgctxt "Path segment tip"
 msgid "<b>Ctrl+Alt</b>: click to insert a node"
-msgstr ""
-"<b>Точка соединения</b>: щёлкните для выделения, перетащите для перемещения"
+msgstr "<b>Ctrl+Alt</b>: щелчок вставляет узел"
 
 #: ../src/ui/tool/curve-drag-point.cpp:175
 msgctxt "Path segment tip"
@@ -20490,6 +20487,8 @@ msgid ""
 "<b>Linear segment</b>: drag to convert to a Bezier segment, doubleclick to "
 "insert node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
+"<b>Линейный сегмент</b>: перетаскивание превращает его в сегмент Безье, "
+"двойной щелчок вставляет узел, щелчок выделяет (попробуйте Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/curve-drag-point.cpp:179
 msgctxt "Path segment tip"
@@ -20497,20 +20496,20 @@ msgid ""
 "<b>Bezier segment</b>: drag to shape the segment, doubleclick to insert "
 "node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
+"<b>Сегмент Безье</b>: перетаскивание меняет форму, двойной щелчок вставляет "
+"узел, щелчок выделяет (попробуйте Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:227
 msgid "Change node type"
 msgstr "Смена типа узла"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:235
-#, fuzzy
 msgid "Straighten segments"
 msgstr "Выпрямить сегменты"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:237
-#, fuzzy
 msgid "Make segments curves"
-msgstr "Сделать выделенные сегменты кривыми"
+msgstr "Сделать сегменты кривыми"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:244
 msgid "Add nodes"
@@ -20549,33 +20548,28 @@ msgstr "Вращение узлов"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:636
 #: ../src/ui/tool/multi-path-manipulator.cpp:642
-#, fuzzy
 msgid "Scale nodes uniformly"
-msgstr "Масштабирование узлов"
+msgstr "Единообразное масштабирование узлов"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:639
 msgid "Scale nodes"
 msgstr "Масштабирование узлов"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:646
-#, fuzzy
 msgid "Scale nodes horizontally"
-msgstr "Смещение узлов по горизонтали"
+msgstr "Горизонтальное масштабирование узлов"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:650
-#, fuzzy
 msgid "Scale nodes vertically"
-msgstr "Смещение узлов по вертикали"
+msgstr "Вертикальное масштабирование узлов"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:654
-#, fuzzy
 msgid "Flip nodes horizontally"
-msgstr "Отразить горизонтально"
+msgstr "Горизонтальное отражение узлов"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:657
-#, fuzzy
 msgid "Flip nodes vertically"
-msgstr "Отразить вертикально"
+msgstr "Вертикальное отражение узлов"
 
 #: ../src/ui/tool/node-tool.cpp:537
 msgctxt "Node tool tip"
@@ -20583,12 +20577,13 @@ msgid ""
 "<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
 "selection"
 msgstr ""
+"<b>Shift</b>: перетаскивание добавляет узлы в выделение, щелчок переключает "
+"выделение"
 
 #: ../src/ui/tool/node-tool.cpp:541
-#, fuzzy
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
-msgstr "<b>Shift</b>: рисовать вокруг начальной точки"
+msgstr "<b>Shift</b>: перетаскивание добавляет узлы в выделение"
 
 #: ../src/ui/tool/node-tool.cpp:551
 #, c-format
@@ -20597,6 +20592,8 @@ msgid ""
 "<b>%u of %u nodes</b> selected. Drag to select nodes, click to edit only "
 "this object (more: Shift)"
 msgstr ""
+"Выделено узлов: <b>%u из %u</b>. Перетаскивание выделяет узлы, щелчок "
+"включает изменение только этого объекта (попробуйте Shift)"
 
 #: ../src/ui/tool/node-tool.cpp:557
 #, c-format
@@ -20605,59 +20602,57 @@ msgid ""
 "<b>%u of %u nodes</b> selected. Drag to select nodes, click clear the "
 "selection"
 msgstr ""
+"Выделено узлов: <b>%u из %u</b>. Перетаскивание выделяет узлы, щелчок "
+"снимает выделение."
 
 #: ../src/ui/tool/node-tool.cpp:565
-#, fuzzy
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
-msgstr "Перетащите для выбора пересечения, щелчком измените его тип"
+msgstr ""
+"Перетаскивание выделяет узлы, щелчок включает изменение только этого объекта"
 
 #: ../src/ui/tool/node-tool.cpp:568
-#, fuzzy
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
-msgstr "Перетащите для выбора пересечения, щелчком измените его тип"
+msgstr "Перетаскивание выделяет узлы, щелчок снимает выделение"
 
 #: ../src/ui/tool/node-tool.cpp:573
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr ""
+"Перетаскивание выделяет объекты для изменения, щелчок включает изменение "
+"объекта (попробуйте Shift)"
 
 #: ../src/ui/tool/node-tool.cpp:576
-#, fuzzy
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
-msgstr "Преобразовать выбранный объект в контур"
+msgstr "Перетаскивание выделяет объекты для изменения"
 
 #: ../src/ui/tool/node.cpp:207
-#, fuzzy
 msgid "Cusp node handle"
-msgstr "Смещение рычага узла"
+msgstr "Рычаг острого узла"
 
 #: ../src/ui/tool/node.cpp:208
-#, fuzzy
 msgid "Smooth node handle"
-msgstr "Смещение рычагов узла"
+msgstr "Рычаг сглаженного узла"
 
 #: ../src/ui/tool/node.cpp:209
-#, fuzzy
 msgid "Symmetric node handle"
-msgstr "Смещение рычагов узла"
+msgstr "Рычаг симметричного узла"
 
 #: ../src/ui/tool/node.cpp:210
-#, fuzzy
 msgid "Auto-smooth node handle"
-msgstr "Смещение рычага узла"
+msgstr "Рычаг автоматически сглаженного узла"
 
 #: ../src/ui/tool/node.cpp:341
 msgctxt "Path handle tip"
 msgid "more: Shift, Ctrl, Alt"
-msgstr ""
+msgstr "попробуйте Shift, Ctrl, Alt"
 
 #: ../src/ui/tool/node.cpp:343
 msgctxt "Path handle tip"
 msgid "more: Ctrl, Alt"
-msgstr ""
+msgstr "попробуйте Ctrl, Alt"
 
 #: ../src/ui/tool/node.cpp:349
 #, c-format
@@ -20666,60 +20661,57 @@ msgid ""
 "<b>Shift+Ctrl+Alt</b>: preserve length and snap rotation angle to %g° "
 "increments while rotating both handles"
 msgstr ""
+"<b>Shift+Ctrl+Alt</b>: сохраняет длину и ограничивает шаг вращения %g°, "
+"вращая оба рычага"
 
 #: ../src/ui/tool/node.cpp:354
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
 "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"
-msgstr ""
+msgstr "<b>Ctrl+Alt</b>: сохраняет длину и ограничивает шаг вращения %g°"
 
 #: ../src/ui/tool/node.cpp:360
-#, fuzzy
 msgctxt "Path handle tip"
 msgid "<b>Shift+Alt</b>: preserve handle length and rotate both handles"
-msgstr ""
-"<b>Shift</b>: выделить/развыделить узел, отключить прилипание, вращать оба "
-"рычага"
+msgstr "<b>Shift+Alt</b>: сохраняет длину рычагов и вращает оба рычага"
 
 #: ../src/ui/tool/node.cpp:363
 msgctxt "Path handle tip"
 msgid "<b>Alt</b>: preserve handle length while dragging"
-msgstr ""
+msgstr "<b>Alt</b>: сохраняет длину рычагов при перетаскивании"
 
 #: ../src/ui/tool/node.cpp:370
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path handle tip"
 msgid ""
 "<b>Shift+Ctrl</b>: snap rotation angle to %g° increments and rotate both "
 "handles"
-msgstr ""
-"<b>Shift</b>: выделить/развыделить узел, отключить прилипание, вращать оба "
-"рычага"
+msgstr "<b>Shift+Ctrl</b>: ограничивает шаг вращения %g° и вращает оба рычага"
 
 #: ../src/ui/tool/node.cpp:374
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
-msgstr ""
+msgstr "<b>Ctrl</b>: ограничивает шаг вращения %g°, щелчок втягивает"
 
 #: ../src/ui/tool/node.cpp:379
-#, fuzzy
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: rotate both handles by the same angle"
-msgstr "<b>Shift</b>: рисовать вокруг начальной точки"
+msgstr "<b>Shift</b>: вращает оба рычага на одинаковый угол"
 
 #: ../src/ui/tool/node.cpp:386
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
 msgstr ""
+"<b>Автоматический рычаг узла</b>: перетаскивание делает узел сглаженным (%s)"
 
 #: ../src/ui/tool/node.cpp:389
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>%s</b>: drag to shape the segment (%s)"
-msgstr ""
+msgstr "<b>%s</b>: перетаскивание меняет форму сегмента (%s)"
 
 #: ../src/ui/tool/node.cpp:405
 #, c-format
@@ -20754,10 +20746,9 @@ msgid "<b>Ctrl</b>: move along axes, click to change node type"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:1158
-#, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
-msgstr "<b>Ctrl</b>: ограничить угол"
+msgstr "<b>Alt</b>: лепка узлов"
 
 #: ../src/ui/tool/node.cpp:1166
 #, c-format
@@ -20796,14 +20787,12 @@ msgid "Auto-smooth node"
 msgstr "Автоматически сглаженный узел"
 
 #: ../src/ui/tool/path-manipulator.cpp:763
-#, fuzzy
 msgid "Scale handle"
-msgstr "Масштабирование узлов"
+msgstr "Рычаг масштабирования"
 
 #: ../src/ui/tool/path-manipulator.cpp:787
-#, fuzzy
 msgid "Rotate handle"
-msgstr "Втяжка узла"
+msgstr "Рычаг вращения"
 
 #. We need to call MPM's method because it could have been our last node
 #: ../src/ui/tool/path-manipulator.cpp:1290 ../src/widgets/toolbox.cpp:1358
@@ -20811,9 +20800,8 @@ msgid "Delete node"
 msgstr "Удалить узел"
 
 #: ../src/ui/tool/path-manipulator.cpp:1305
-#, fuzzy
 msgid "Cycle node type"
-msgstr "Смена типа узла"
+msgstr "Циклически менять тип узла"
 
 #: ../src/ui/tool/path-manipulator.cpp:1319
 #, fuzzy
@@ -20896,10 +20884,10 @@ msgstr ""
 
 #. event
 #: ../src/ui/tool/transform-handle-set.cpp:325
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "Rotate by %.2f°"
-msgstr "Вращение по пикселам"
+msgstr "Вращение на %.2f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:419
 #, c-format
@@ -20928,21 +20916,22 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:435
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "Skew horizontally by %.2f°"
-msgstr "Попиксельное смещение по горизонтали"
+msgstr "Наклонить по горизонтали на %.2f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:438
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "Skew vertically by %.2f°"
-msgstr "Попиксельное смещение по вертикали"
+msgstr "Наклонить по вертикали на %.2f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:479
 msgctxt "Transform handle tip"
 msgid "<b>Rotation center</b>: drag to change the origin of transforms"
 msgstr ""
+"<b>Центр вращения</b>: переместите для смены исходной точки трансформаций"
 
 #: ../src/ui/view/edit-widget.cpp:330 ../src/ui/view/edit-widget.cpp:335
 #: ../src/ui/view/edit-widget.cpp:343 ../src/ui/view/edit-widget.cpp:348
@@ -21810,8 +21799,9 @@ msgstr "tutorial-calligraphy.ru.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1881
+#, fuzzy
 msgid "tutorial-interpolate.svg"
-msgstr "tutorial-interpolate.ru.svg"
+msgstr "tutorial-interpolate.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1885
@@ -23648,14 +23638,12 @@ msgid "%s - Inkscape"
 msgstr "%s — Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:801
-#, fuzzy
 msgid "Color-managed display is <b>enabled</b> in this window"
-msgstr "Включить или выключить управление цветом для этого окна с документом"
+msgstr "Управление цветом <b>включено</b> для этого окна"
 
 #: ../src/widgets/desktop-widget.cpp:803
-#, fuzzy
 msgid "Color-managed display is <b>disabled</b> in this window"
-msgstr "Включить или выключить управление цветом для этого окна с документом"
+msgstr "Управление цветом <b>выключено</b> для этого окна"
 
 #: ../src/widgets/desktop-widget.cpp:914
 #, c-format
@@ -24493,14 +24481,12 @@ msgid "Make selected segments curves"
 msgstr "Сделать выделенные сегменты кривыми"
 
 #: ../src/widgets/toolbox.cpp:1471
-#, fuzzy
 msgid "Show Transform Handles"
-msgstr "Показывать рычаги"
+msgstr "Показывать рычаги трансформации"
 
 #: ../src/widgets/toolbox.cpp:1472
-#, fuzzy
 msgid "Show transformation handles for selected nodes"
-msgstr "Показывать рычаги единичных узлов"
+msgstr "Показывать рычаги трансформации выделенных узлов"
 
 #: ../src/widgets/toolbox.cpp:1482
 msgid "Show Handles"
