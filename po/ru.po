@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-07-04 08:04+0400\n"
-"PO-Revision-Date: 2010-07-05 06:36+0400\n"
+"PO-Revision-Date: 2010-07-05 07:18+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3505,26 +3505,22 @@ msgstr "Импорт текстовых файлов"
 
 #: ../share/extensions/webslicer_create_group.inx.h:1
 #: ../share/extensions/webslicer_create_rect.inx.h:2
-#, fuzzy
 msgid "Background color:"
-msgstr "Цвет фона"
+msgstr "Цвет фона:"
 
 #: ../share/extensions/webslicer_create_group.inx.h:2
 #: ../share/extensions/webslicer_create_rect.inx.h:17
-#, fuzzy
 msgid "HTML class attribute:"
-msgstr "Установить атрибут"
+msgstr "Атрибут класса HTML:"
 
 #: ../share/extensions/webslicer_create_group.inx.h:3
 #: ../share/extensions/webslicer_create_rect.inx.h:18
-#, fuzzy
 msgid "HTML id attribute:"
-msgstr "Установить атрибут"
+msgstr "Атрибут id в HTML:"
 
 #: ../share/extensions/webslicer_create_group.inx.h:4
-#, fuzzy
 msgid "Height unit:"
-msgstr "Высота"
+msgstr "Единица высоты:"
 
 #: ../share/extensions/webslicer_create_group.inx.h:5
 msgid ""
@@ -3533,26 +3529,24 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:6
-#, fuzzy
 msgid "Percent (relative to parent size)"
-msgstr "Ширина масштабируется относительно длины"
+msgstr "Процент (относительная к размеру родительского элемента)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:7
 msgid "Pixel (fixed)"
-msgstr ""
+msgstr "Пиксел (фиксированная)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:8
 msgid "Set a layout group"
-msgstr ""
+msgstr "Установить группу макета"
 
 #: ../share/extensions/webslicer_create_group.inx.h:9
-#, fuzzy
 msgid "Slicer"
-msgstr "Рассеивание"
+msgstr "Нарезка макета"
 
 #: ../share/extensions/webslicer_create_group.inx.h:10
 msgid "Undefined (relative to non-floating content size)"
-msgstr ""
+msgstr "Неопределённая (относительная к размеру неплавающего содержимого)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:11
 #: ../share/extensions/webslicer_create_rect.inx.h:41
@@ -3563,9 +3557,8 @@ msgid "Web"
 msgstr "Веб"
 
 #: ../share/extensions/webslicer_create_group.inx.h:12
-#, fuzzy
 msgid "Width unit:"
-msgstr "Ширина"
+msgstr "Единица ширины:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:1
 msgid ""
@@ -3586,24 +3579,20 @@ msgid "Background — repeat vertically (on parent group)"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:6
-#, fuzzy
 msgid "Bottom and Center"
-msgstr "Нижний контур"
+msgstr "Снизу и по центру"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:7
-#, fuzzy
 msgid "Bottom and Left"
-msgstr "Нижний контур"
+msgstr "Снизу и слева"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:8
-#, fuzzy
 msgid "Bottom and Right"
-msgstr "Нижний контур"
+msgstr "Снизу и справа"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:9
-#, fuzzy
 msgid "Create a slicer rectangle"
-msgstr "Создание прямоугольника"
+msgstr "Установить прямоугольник нарезки"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:10
 msgid "DPI:"
@@ -3612,12 +3601,11 @@ msgstr "dpi:"
 #. i18n. Description duplicated in a fake value attribute in order to make it translatable
 #: ../share/extensions/webslicer_create_rect.inx.h:12
 msgid "Force Dimension must be set as <width>x<height>"
-msgstr ""
+msgstr "Принудительное разрешение должно быть указано как <ширина>x<высота>."
 
 #: ../share/extensions/webslicer_create_rect.inx.h:13
-#, fuzzy
 msgid "Force Dimension:"
-msgstr "Размеры"
+msgstr "Принудительное разрешение:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:14
 msgid "Format:"
@@ -3629,7 +3617,7 @@ msgstr "Специфичные для GIF параметры"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:19
 msgid "If set, this will replace DPI."
-msgstr ""
+msgstr "Если оно установлено, то заменит собой dpi."
 
 #: ../share/extensions/webslicer_create_rect.inx.h:20
 msgid "JPG specific options"
@@ -3637,7 +3625,7 @@ msgstr "Специфичные для JPEG параметры"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:21
 msgid "Layout disposition:"
-msgstr ""
+msgstr "Размещение макета:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:22
 msgid "Left Floated Image"
@@ -3645,17 +3633,15 @@ msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:23
 msgid "Middle and Center"
-msgstr ""
+msgstr "Посередине и по центру"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:24
-#, fuzzy
 msgid "Middle and Left"
-msgstr "Верхний контур"
+msgstr "Посередине и слева"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:25
-#, fuzzy
 msgid "Middle and Right"
-msgstr "Нижний контур"
+msgstr "Посередине и справа"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:26
 #: ../src/extension/extension.cpp:740 ../src/ui/dialog/input.cpp:586
@@ -3669,22 +3655,19 @@ msgstr "Сокращение межстрочного интервала"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:28
 msgid "Options for HTML export"
-msgstr ""
+msgstr "Параметры экспорта в HTML"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:29
-#, fuzzy
 msgid "Palette"
-msgstr "О_бразцы цветов"
+msgstr "Палитра"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:30
-#, fuzzy
 msgid "Palette size:"
-msgstr "Вставить размер"
+msgstr "Размер палитры:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:31
-#, fuzzy
 msgid "Position anchor:"
-msgstr "Положение"
+msgstr "Размещение якоря:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:32
 #, fuzzy
@@ -3709,37 +3692,36 @@ msgid "Tiled Background (on parent group)"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:37
-#, fuzzy
 msgid "Top and Center"
-msgstr "Верхний контур"
+msgstr "Вверху и по центру"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:38
-#, fuzzy
 msgid "Top and Left"
-msgstr "Верхний контур"
+msgstr "Вверху и слева"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:39
-#, fuzzy
 msgid "Top and right"
-msgstr "Inkscape: _Советы и хитрости"
+msgstr "Вверху и справа"
 
 #: ../share/extensions/webslicer_export.inx.h:1
 msgid ""
 "All sliced images, and optionaly code, will be generated as you had "
 "configured and saved to one directory."
 msgstr ""
+"Все нарезанные изображения и, по выбору, код будут созданы по указанным вами "
+"параметрам и сохранены в один каталог."
 
 #: ../share/extensions/webslicer_export.inx.h:2
 msgid "Create directory, if it does not exists"
-msgstr ""
+msgstr "Создать каталог, если его ещё нет"
 
 #: ../share/extensions/webslicer_export.inx.h:3
 msgid "Directory path to export"
-msgstr ""
+msgstr "Каталог для экспорта:"
 
 #: ../share/extensions/webslicer_export.inx.h:4
 msgid "Export layout pieces and HTML+CSS code"
-msgstr ""
+msgstr "Экспортировать части макета в код HTML и CSS"
 
 #: ../share/extensions/webslicer_export.inx.h:6
 msgid "With HTML and CSS"
