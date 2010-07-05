@@ -8256,7 +8256,7 @@ msgstr ""
 
 #: ../src/display/canvas-grid.cpp:329
 msgid "Snap to visible _grid lines only"
-msgstr "Aimanter seulement aux lignes visibles des _grilles"
+msgstr "Aimanter seulement aux lignes visibles de la _grille"
 
 #: ../src/display/canvas-grid.cpp:330
 msgid ""
