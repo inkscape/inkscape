@@ -9,14 +9,14 @@
 # Alexandre Prokoudine <avp@lrn.ru>, 2004, 2005.
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2007.
 # Александр Прокудин <alexandre.prokoudine@gmail.com>, 2010.
-#
+# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-07-04 08:04+0400\n"
-"PO-Revision-Date: 2010-07-05 07:18+0400\n"
-"Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
+"PO-Revision-Date: 2010-07-05 21:02+0400\n"
+"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2207,18 +2207,16 @@ msgid "Color Markers to Match Stroke"
 msgstr "Раскрасить маркеры в цвет обводки"
 
 #: ../share/extensions/measure.inx.h:1
-#, fuzzy
 msgid "Area"
-msgstr "Армянский"
+msgstr "Площадь"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Font size [px]"
-msgstr "Кегль шрифта [px]"
+msgstr "Кегль шрифта (px)"
 
 #: ../share/extensions/measure.inx.h:4
-#, fuzzy
 msgid "Length"
-msgstr "Длина:"
+msgstr "Длина"
 
 #. <param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>
 #: ../share/extensions/measure.inx.h:6
@@ -2235,11 +2233,11 @@ msgstr "Измерить контур"
 
 #: ../share/extensions/measure.inx.h:9
 msgid "Measurement Type: "
-msgstr ""
+msgstr "Тип измерения:"
 
 #: ../share/extensions/measure.inx.h:10
 msgid "Offset [px]"
-msgstr "Смещение [px]"
+msgstr "Смещение (px):"
 
 #: ../share/extensions/measure.inx.h:11
 msgid "Precision"
@@ -3187,9 +3185,8 @@ msgid "r - Gear Radius (px)"
 msgstr "r — радиус шестерёнки (px)"
 
 #: ../share/extensions/split.inx.h:1
-#, fuzzy
 msgid "Letters"
-msgstr "Кернинг:"
+msgstr "Буквы"
 
 #: ../share/extensions/split.inx.h:3
 msgid "Preserve original text?"
@@ -3210,9 +3207,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/split.inx.h:8
-#, fuzzy
 msgid "Words"
-msgstr "Трекинг:"
+msgstr "Слова"
 
 #: ../share/extensions/straightseg.inx.h:1
 msgid "Behavior"
@@ -6341,17 +6337,14 @@ msgid "Old paint (bitmap)"
 msgstr "Старая краска (растровая текстура)"
 
 #: ../src/conn-avoid-ref.cpp:237
-#, fuzzy
 msgid "Add a new connection point"
 msgstr "Создать точку соединения"
 
 #: ../src/conn-avoid-ref.cpp:262
-#, fuzzy
 msgid "Move a connection point"
-msgstr "Удалить точку соединения"
+msgstr "Переместить точку соединения"
 
 #: ../src/conn-avoid-ref.cpp:282
-#, fuzzy
 msgid "Remove a connection point"
 msgstr "Удалить точку соединения"
 
@@ -13181,7 +13174,6 @@ msgstr ""
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "Raise" means "to raise an object" in the undo history
 #: ../src/selection-chemistry.cpp:850
-#, fuzzy
 msgid "undo action|Raise"
 msgstr "Поднятие"
 
@@ -16522,9 +16514,8 @@ msgid "Telugu"
 msgstr "Телугу"
 
 #: ../src/ui/dialog/glyphs.cpp:95 ../src/ui/dialog/glyphs.cpp:169
-#, fuzzy
 msgid "Thaana"
-msgstr "Шотландка"
+msgstr "Таана"
 
 #: ../src/ui/dialog/glyphs.cpp:96 ../src/ui/dialog/glyphs.cpp:182
 msgid "Thai"
@@ -16543,9 +16534,8 @@ msgid "Yi"
 msgstr "Юи"
 
 #: ../src/ui/dialog/glyphs.cpp:100 ../src/ui/dialog/glyphs.cpp:194
-#, fuzzy
 msgid "Tagalog"
-msgstr "Тэг"
+msgstr "Тагальский"
 
 #: ../src/ui/dialog/glyphs.cpp:101 ../src/ui/dialog/glyphs.cpp:195
 msgid "Hanunoo"
@@ -16626,9 +16616,8 @@ msgid "unassigned"
 msgstr "Назначить"
 
 #: ../src/ui/dialog/glyphs.cpp:120 ../src/ui/dialog/glyphs.cpp:207
-#, fuzzy
 msgid "Balinese"
-msgstr "линий"
+msgstr "Балинезийский"
 
 #: ../src/ui/dialog/glyphs.cpp:121
 msgid "Cuneiform"
@@ -16655,18 +16644,16 @@ msgid "Lepcha"
 msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:129 ../src/ui/dialog/glyphs.cpp:280
-#, fuzzy
 msgid "Rejang"
-msgstr "Прямоугольник"
+msgstr "Реджанг"
 
 #: ../src/ui/dialog/glyphs.cpp:130 ../src/ui/dialog/glyphs.cpp:208
 msgid "Sundanese"
 msgstr "Сунданский"
 
 #: ../src/ui/dialog/glyphs.cpp:131 ../src/ui/dialog/glyphs.cpp:277
-#, fuzzy
 msgid "Saurashtra"
-msgstr "Насыщенность"
+msgstr "Саураштра"
 
 #: ../src/ui/dialog/glyphs.cpp:132 ../src/ui/dialog/glyphs.cpp:283
 #, fuzzy
@@ -16767,9 +16754,8 @@ msgid "Tai Tham"
 msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:211
-#, fuzzy
 msgid "Vedic Extensions"
-msgstr "_Расширения"
+msgstr "Ведические расширения"
 
 #: ../src/ui/dialog/glyphs.cpp:212
 msgid "Phonetic Extensions"
@@ -16974,18 +16960,16 @@ msgid "Yi Radicals"
 msgstr "Корни Юи"
 
 #: ../src/ui/dialog/glyphs.cpp:268
-#, fuzzy
 msgid "Lisu"
-msgstr "Список"
+msgstr "Лису"
 
 #: ../src/ui/dialog/glyphs.cpp:270
 msgid "Cyrillic Extended-B"
 msgstr "Кириллический расширенный B"
 
 #: ../src/ui/dialog/glyphs.cpp:271
-#, fuzzy
 msgid "Bamum"
-msgstr "Максимум"
+msgstr "Бамум"
 
 #: ../src/ui/dialog/glyphs.cpp:272
 msgid "Modifier Tone Letters"
@@ -17008,9 +16992,8 @@ msgid "Hangul Jamo Extended-A"
 msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:282
-#, fuzzy
 msgid "Javanese"
-msgstr "Мгновение"
+msgstr "Яванский"
 
 #: ../src/ui/dialog/glyphs.cpp:284
 msgid "Myanmar Extended-A"
@@ -17704,7 +17687,7 @@ msgstr "Всегда показывать абрис"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:447
 msgid "Show outlines for all paths, not only invisible paths"
-msgstr ""
+msgstr "Показывать абрисы для всех контуров, не только невидимых"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:448
 msgid "Update outline when dragging nodes"
@@ -17715,6 +17698,8 @@ msgid ""
 "Update the outline when dragging or transforming nodes; if this is off, the "
 "outline will only update when completing a drag"
 msgstr ""
+"Обновлять абрис при перетаскивании или трансформации узлов. Если выключено, "
+"абрисы обновятся лишь по завершении действия."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:450
 msgid "Update paths when dragging nodes"
@@ -17725,6 +17710,8 @@ msgid ""
 "Update paths when dragging or transforming nodes; if this is off, paths will "
 "only be updated when completing a drag"
 msgstr ""
+"Обновлять контуры при перетаскивании или трансформации узлов. Если "
+"выключено, контуры обновятся лишь по завершении действия."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:452
 msgid "Show path direction on outlines"
@@ -18521,7 +18508,6 @@ msgid "Simulate output on screen"
 msgstr "Имитировать устройство вывода"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:928
-#, fuzzy
 msgid "Simulates output of target device"
 msgstr "Имитировать на экране устройство вывода"
 
@@ -18530,7 +18516,6 @@ msgid "Mark out of gamut colors"
 msgstr "Помечать цвета вне цветового охвата"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:932
-#, fuzzy
 msgid "Highlights colors that are out of gamut for the target device"
 msgstr ""
 "Помечать цвета, выходящие за рамки цветового охвата для данного устройства"
@@ -18540,16 +18525,14 @@ msgid "Out of gamut warning color:"
 msgstr "Цвета вне цветового охвата:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:938
-#, fuzzy
 msgid "Selects the color used for out of gamut warning"
-msgstr "Выберите цвет предупреждения о выходе за цветовой охват."
+msgstr "Выберите цвет предупреждения о выходе за цветовой охват"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:940
 msgid "Device profile:"
 msgstr "Профиль устройства вывода:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:941
-#, fuzzy
 msgid "The ICC profile to use to simulate device output"
 msgstr "ICC-профиль, используемый для имитации устройства вывода"
 
@@ -18567,9 +18550,8 @@ msgid "Black point compensation"
 msgstr "Использовать компенсацию черной точки"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:949
-#, fuzzy
 msgid "Enables black point compensation"
-msgstr "Включить компенсацию черной точки"
+msgstr "Включить компенсацию чёрной точки"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:951
 msgid "Preserve black"
@@ -19401,43 +19383,36 @@ msgid "Disabled"
 msgstr "В_ключена"
 
 #: ../src/ui/dialog/input.cpp:348 ../src/ui/dialog/input.cpp:360
-#, fuzzy
 msgid "Window"
-msgstr "Окна"
+msgstr "Окно"
 
 #: ../src/ui/dialog/input.cpp:524
 msgid "Test Area"
-msgstr ""
+msgstr "Область тестирования"
 
 #: ../src/ui/dialog/input.cpp:578 ../src/ui/dialog/input.cpp:728
-#, fuzzy
 msgid "Hardware"
-msgstr "Колючая проволока"
+msgstr "Устройства"
 
 #: ../src/ui/dialog/input.cpp:596
-#, fuzzy
 msgid "Link:"
-msgstr "Интерлиньяж:"
+msgstr "Связь:"
 
 #: ../src/ui/dialog/input.cpp:611
-#, fuzzy
 msgid "Axes count:"
-msgstr "Количество:"
+msgstr "Число осей:"
 
 #: ../src/ui/dialog/input.cpp:634
-#, fuzzy
 msgid "axis:"
-msgstr "Радиус:"
+msgstr "ось:"
 
 #: ../src/ui/dialog/input.cpp:646
-#, fuzzy
 msgid "Button count:"
-msgstr "Кнопка"
+msgstr "Число кнопок:"
 
 #: ../src/ui/dialog/input.cpp:732
-#, fuzzy
 msgid "Tablet"
-msgstr "Табличная функция"
+msgstr "Планшет"
 
 #: ../src/ui/dialog/input.cpp:752 ../src/ui/dialog/input.cpp:1430
 msgid "pad"
