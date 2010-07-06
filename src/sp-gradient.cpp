@@ -288,15 +288,19 @@ SPGradientSpread SPGradient::getSpread() const
     return spread;
 }
 
-void SPGradient::setSwatch()
+void SPGradient::setSwatch( bool swatch )
 {
-    if ( !isSwatch() ) {
-        if ( hasStops() && (getStopCount() == 0) ) {
-            repr->setAttribute("osb:paint", "solid");
+    if ( swatch != isSwatch() ) {
+        if ( swatch ) {
+            if ( hasStops() && (getStopCount() == 0) ) {
+                repr->setAttribute( "osb:paint", "solid" );
+            } else {
+                repr->setAttribute( "osb:paint", "gradient" );
+            }
         } else {
-            repr->setAttribute("osb:paint", "gradient");
+            repr->setAttribute( "osb:paint", 0 );
         }
-        requestModified(SP_OBJECT_MODIFIED_FLAG);
+        requestModified( SP_OBJECT_MODIFIED_FLAG );
     }
 }
 
@@ -594,12 +598,19 @@ void SPGradientImpl::childAdded(SPObject *object, Inkscape::XML::Node *child, In
 
     gr->invalidateVector();
 
-    if (((SPObjectClass *) gradient_parent_class)->child_added)
+    if (((SPObjectClass *) gradient_parent_class)->child_added) {
         (* ((SPObjectClass *) gradient_parent_class)->child_added)(object, child, ref);
+    }
 
     SPObject *ochild = sp_object_get_child_by_repr(object, child);
     if ( ochild && SP_IS_STOP(ochild) ) {
         gr->has_stops = TRUE;
+        if ( gr->getStopCount() > 0 ) {
+            gchar const * attr = gr->repr->attribute("osb:paint");
+            if ( attr && !strcmp(attr, "solid") ) {
+                gr->repr->setAttribute("osb:paint", "gradient");
+            }
+        }
     }
 
     /// \todo Fixme: should we schedule "modified" here?
@@ -625,6 +636,13 @@ void SPGradientImpl::removeChild(SPObject *object, Inkscape::XML::Node *child)
         if (SP_IS_STOP(ochild)) {
             gr->has_stops = TRUE;
             break;
+        }
+    }
+
+    if ( gr->getStopCount() == 0 ) {
+        gchar const * attr = gr->repr->attribute("osb:paint");
+        if ( attr && !strcmp(attr, "gradient") ) {
+            gr->repr->setAttribute("osb:paint", "solid");
         }
     }
 

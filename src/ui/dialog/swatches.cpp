@@ -74,7 +74,7 @@ class SwatchesPanelHook : public SwatchesPanel
 {
 public:
     static void convertGradient( GtkMenuItem *menuitem, gpointer userData );
-    static void addNewGradient( GtkMenuItem *menuitem, gpointer user_data );
+    static void deleteGradient( GtkMenuItem *menuitem, gpointer userData );
 };
 
 static void handleClick( GtkWidget* /*widget*/, gpointer callback_data ) {
@@ -141,36 +141,6 @@ static void editGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
     }
 }
 
-void SwatchesPanelHook::addNewGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
-{
-    if ( bounceTarget ) {
-        SwatchesPanel* swp = bouncePanel;
-        SPDesktop* desktop = swp ? swp->getDesktop() : 0;
-        SPDocument *doc = desktop ? desktop->doc() : 0;
-        if (doc) {
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
-            SPGradient * gr = 0;
-            {
-                Inkscape::XML::Node *repr = xml_doc->createElement("svg:linearGradient");
-                Inkscape::XML::Node *stop = xml_doc->createElement("svg:stop");
-                stop->setAttribute("offset", "0");
-                stop->setAttribute("style", "stop-color:#000;stop-opacity:1;");
-                repr->appendChild(stop);
-                Inkscape::GC::release(stop);
-
-                SP_OBJECT_REPR( SP_DOCUMENT_DEFS(doc) )->addChild(repr, NULL);
-
-                gr = static_cast<SPGradient *>(doc->getObjectByRepr(repr));
-                Inkscape::GC::release(repr);
-            }
-
-            gr->setSwatch();
-
-            editGradientImpl( gr );
-        }
-    }
-}
-
 void SwatchesPanelHook::convertGradient( GtkMenuItem * /*menuitem*/, gpointer userData )
 {
     if ( bounceTarget ) {
@@ -188,6 +158,29 @@ void SwatchesPanelHook::convertGradient( GtkMenuItem * /*menuitem*/, gpointer us
                     grad->setSwatch();
                     sp_document_done(doc, SP_VERB_CONTEXT_GRADIENT,
                                      _("Add gradient stop"));
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void SwatchesPanelHook::deleteGradient( GtkMenuItem */*menuitem*/, gpointer /*userData*/ )
+{
+    if ( bounceTarget ) {
+        SwatchesPanel* swp = bouncePanel;
+        SPDesktop* desktop = swp ? swp->getDesktop() : 0;
+        SPDocument *doc = desktop ? desktop->doc() : 0;
+        if (doc) {
+            std::string targetName(bounceTarget->def.descr);
+            const GSList *gradients = sp_document_get_resource_list(doc, "gradient");
+            for (const GSList *item = gradients; item; item = item->next) {
+                SPGradient* grad = SP_GRADIENT(item->data);
+                if ( targetName == grad->getId() ) {
+                    //editGradientImpl( grad );
+                    grad->setSwatch(false);
+                    sp_document_done(doc, SP_VERB_CONTEXT_GRADIENT,
+                                     _("Delete"));
                     break;
                 }
             }
@@ -250,17 +243,13 @@ gboolean colorItemHandleButtonPress( GtkWidget* widget, GdkEventButton* event, g
             gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
             popupExtras.push_back(child);
 
-            child = gtk_menu_item_new_with_label(_("Add"));
+            child = gtk_menu_item_new_with_label(_("Delete"));
             g_signal_connect( G_OBJECT(child),
                               "activate",
-                              G_CALLBACK(SwatchesPanelHook::addNewGradient),
+                              G_CALLBACK(SwatchesPanelHook::deleteGradient),
                               user_data );
             gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
             popupExtras.push_back(child);
-
-            child = gtk_menu_item_new_with_label(_("Delete"));
-            gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
-            //popupExtras.push_back(child);
             gtk_widget_set_sensitive( child, FALSE );
 
             child = gtk_menu_item_new_with_label(_("Edit..."));

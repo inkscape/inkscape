@@ -142,7 +142,7 @@ public:
     SPGradientSpread fetchSpread();
     SPGradientUnits fetchUnits();
 
-    void setSwatch();
+    void setSwatch(bool swatch = true);
 
 private:
     bool invalidateVector();
