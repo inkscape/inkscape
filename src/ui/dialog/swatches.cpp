@@ -50,7 +50,7 @@
 #include "widgets/eek-preview.h"
 #include "display/nr-plain-stuff.h"
 #include "sp-gradient-reference.h"
-
+#include "dialog-manager.h"
 
 namespace Inkscape {
 namespace UI {
@@ -113,11 +113,37 @@ static void redirSecondaryClick( GtkMenuItem *menuitem, gpointer /*user_data*/ )
     }
 }
 
-static void editGradientImpl( SPGradient* gr )
+static void editGradientImpl( SPDesktop* desktop, SPGradient* gr )
 {
     if ( gr ) {
-        GtkWidget *dialog = sp_gradient_vector_editor_new( gr );
-        gtk_widget_show( dialog );
+        bool shown = false;
+        if ( desktop && desktop->doc() ) {
+            Inkscape::Selection *selection = sp_desktop_selection( desktop );
+            GSList const *items = selection->itemList();
+            if (items) {
+                SPStyle *query = sp_style_new( desktop->doc() );
+                int result = objects_query_fillstroke(const_cast<GSList *>(items), query, true);
+                if ( (result == QUERY_STYLE_MULTIPLE_SAME) || (result == QUERY_STYLE_SINGLE) ) {
+                    // could be pertinent
+                    if (query->fill.isPaintserver()) {
+                        SPPaintServer* server = query->getFillPaintServer();
+                        if ( SP_IS_GRADIENT(server) ) {
+                            SPGradient* grad = SP_GRADIENT(server);
+                            if ( grad->isSwatch() && grad->getId() == gr->getId()) {
+                                desktop->_dlg_mgr->showDialog("FillAndStroke");
+                                shown = true;
+                            }
+                        }
+                    }
+                }
+                sp_style_unref(query);
+            }
+        }
+
+        if (!shown) {
+            GtkWidget *dialog = sp_gradient_vector_editor_new( gr );
+            gtk_widget_show( dialog );
+        }
     }
 }
 
@@ -133,7 +159,7 @@ static void editGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
             for (const GSList *item = gradients; item; item = item->next) {
                 SPGradient* grad = SP_GRADIENT(item->data);
                 if ( targetName == grad->getId() ) {
-                    editGradientImpl( grad );
+                    editGradientImpl( desktop, grad );
                     break;
                 }
             }
