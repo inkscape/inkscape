@@ -177,7 +177,6 @@ void SwatchesPanelHook::deleteGradient( GtkMenuItem */*menuitem*/, gpointer /*us
             for (const GSList *item = gradients; item; item = item->next) {
                 SPGradient* grad = SP_GRADIENT(item->data);
                 if ( targetName == grad->getId() ) {
-                    //editGradientImpl( grad );
                     grad->setSwatch(false);
                     sp_document_done(doc, SP_VERB_CONTEXT_GRADIENT,
                                      _("Delete"));
