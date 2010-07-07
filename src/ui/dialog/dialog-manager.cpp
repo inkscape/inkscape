@@ -41,7 +41,7 @@
 #include "ui/dialog/icon-preview.h"
 #include "ui/dialog/floating-behavior.h"
 #include "ui/dialog/dock-behavior.h"
-#include "ui/dialog/print-colors-preview-dialog.h"
+//#include "ui/dialog/print-colors-preview-dialog.h"
 #include "preferences.h"
 
 #ifdef ENABLE_SVG_FONTS
@@ -104,7 +104,7 @@ DialogManager::DialogManager() {
         registerFactory("LivePathEffect",      &create<LivePathEffectEditor, FloatingBehavior>);
         registerFactory("Memory",              &create<Memory,               FloatingBehavior>);
         registerFactory("Messages",            &create<Messages,             FloatingBehavior>);
-        registerFactory("PrintColorsPreviewDialog",      &create<PrintColorsPreviewDialog,       FloatingBehavior>);
+//        registerFactory("PrintColorsPreviewDialog",      &create<PrintColorsPreviewDialog,       FloatingBehavior>);
         registerFactory("Script",              &create<ScriptDialog,         FloatingBehavior>);
 #ifdef ENABLE_SVG_FONTS
         registerFactory("SvgFontsDialog",      &create<SvgFontsDialog,       FloatingBehavior>);
@@ -132,7 +132,7 @@ DialogManager::DialogManager() {
         registerFactory("LivePathEffect",      &create<LivePathEffectEditor, DockBehavior>);
         registerFactory("Memory",              &create<Memory,               DockBehavior>);
         registerFactory("Messages",            &create<Messages,             DockBehavior>);
-        registerFactory("PrintColorsPreviewDialog",      &create<PrintColorsPreviewDialog,       DockBehavior>);
+//        registerFactory("PrintColorsPreviewDialog",      &create<PrintColorsPreviewDialog,       DockBehavior>);
         registerFactory("Script",              &create<ScriptDialog,         DockBehavior>);
 #ifdef ENABLE_SVG_FONTS
         registerFactory("SvgFontsDialog",      &create<SvgFontsDialog,       DockBehavior>);

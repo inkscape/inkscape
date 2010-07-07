@@ -7,7 +7,7 @@
  * Copyright (C) 2009 Authors
  * Released under GNU GPLv2 (or later).  Read the file 'COPYING' for more information.
  */
-
+/*
 #include "desktop.h"
 #include "print-colors-preview-dialog.h"
 #include "preferences.h"
@@ -98,3 +98,4 @@ PrintColorsPreviewDialog::~PrintColorsPreviewDialog(){}
 } // namespace Dialog
 } // namespace UI
 } // namespace Inkscape
+*/

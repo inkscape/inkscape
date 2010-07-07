@@ -1682,9 +1682,9 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_VIEW_MODE_OUTLINE:
             dt->setDisplayModeOutline();
             break;
-        case SP_VERB_VIEW_MODE_PRINT_COLORS_PREVIEW:
-            dt->setDisplayModePrintColorsPreview();
-            break;
+//        case SP_VERB_VIEW_MODE_PRINT_COLORS_PREVIEW:
+//            dt->setDisplayModePrintColorsPreview();
+//            break;
         case SP_VERB_VIEW_MODE_TOGGLE:
             dt->displayModeToggle();
             break;
@@ -2569,8 +2569,8 @@ Verb *Verb::_base_verbs[] = {
                  N_("Switch to normal display without filters"), NULL),
     new ZoomVerb(SP_VERB_VIEW_MODE_OUTLINE, "ViewModeOutline", N_("_Outline"),
                  N_("Switch to outline (wireframe) display mode"), NULL),
-    new ZoomVerb(SP_VERB_VIEW_MODE_PRINT_COLORS_PREVIEW, "ViewModePrintColorsPreview", N_("_Print Colors Preview"),
-                 N_("Switch to print colors preview mode"), NULL),
+//    new ZoomVerb(SP_VERB_VIEW_MODE_PRINT_COLORS_PREVIEW, "ViewModePrintColorsPreview", N_("_Print Colors Preview"),
+//                 N_("Switch to print colors preview mode"), NULL),
     new ZoomVerb(SP_VERB_VIEW_MODE_TOGGLE, "ViewModeToggle", N_("_Toggle"),
                  N_("Toggle between normal and outline display modes"), NULL),
 
