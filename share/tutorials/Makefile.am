@@ -129,6 +129,7 @@ tutorial_DATA = \
     tutorial-shapes.fa.svg \
     tutorial-shapes.fr.svg \
     tutorial-shapes.hu.svg \
+    tutorial-shapes.id.svg \
     tutorial-shapes.it.svg \
     tutorial-shapes.ja.svg \
     tutorial-shapes.nl.svg \
