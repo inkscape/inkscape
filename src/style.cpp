@@ -28,7 +28,6 @@
 #include "svg/svg.h"
 #include "svg/svg-color.h"
 #include "svg/svg-icc-color.h"
-#include "svg/svg-device-color.h"
 
 #include "display/canvas-bpath.h"
 #include "attributes.h"
@@ -3258,17 +3257,6 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
                         tmp = 0;
                     }
                     paint->value.color.icc = tmp;
-                }
-                if (strneq(str, "device-gray(", 12) ||
-                    strneq(str, "device-rgb(", 11) ||
-                    strneq(str, "device-cmyk(", 12) ||
-                    strneq(str, "device-nchannel(", 16)) {
-                    SVGDeviceColor* tmp = new SVGDeviceColor();
-                    if ( ! sp_svg_read_device_color( str, &str, tmp ) ) {
-                        delete tmp;
-                        tmp = 0;
-                    }
-                    paint->value.color.device = tmp;
                 }
             }
         }

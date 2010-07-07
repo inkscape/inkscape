@@ -34,7 +34,6 @@
 #define SP_RGBA32_F_COMPOSE(r,g,b,a) SP_RGBA32_U_COMPOSE (SP_COLOR_F_TO_U (r), SP_COLOR_F_TO_U (g), SP_COLOR_F_TO_U (b), SP_COLOR_F_TO_U (a))
 
 struct SVGICCColor;
-struct SVGDeviceColor;
 
 /**
  * An RGB color with optional icc-color part
@@ -60,7 +59,6 @@ struct SPColor {
     std::string toString() const;
 
     SVGICCColor* icc;
-    SVGDeviceColor* device;
     union {
         float c[3];
     } v;

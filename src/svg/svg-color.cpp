@@ -35,7 +35,6 @@
 #include "preferences.h"
 #include "svg-color.h"
 #include "svg-icc-color.h"
-#include "svg-device-color.h"
 
 #if ENABLE_LCMS
 #include <lcms.h>
@@ -606,110 +605,6 @@ bool sp_svg_read_icc_color( gchar const *str, SVGICCColor* dest )
     return sp_svg_read_icc_color(str, NULL, dest);
 }
 
-bool sp_svg_read_device_color( gchar const *str, gchar const **end_ptr, SVGDeviceColor* dest)
-{
-    bool good = true;
-    unsigned int max_colors;
-
-    if ( end_ptr ) {
-        *end_ptr = str;
-    }
-    if ( dest ) {
-        dest->colors.clear();
-    }
-
-    if ( !str ) {
-        // invalid input
-        good = false;
-    } else {
-        while ( g_ascii_isspace(*str) ) {
-            str++;
-        }
-
-        dest->type = DEVICE_COLOR_INVALID;
-        if (strneq( str, "device-gray(", 12 )){
-                dest->type = DEVICE_GRAY;
-                max_colors=1;
-                str += 12;
-        }
-
-        if (strneq( str, "device-rgb(", 11 )){
-                dest->type = DEVICE_RGB;
-                max_colors=3;
-                str += 11;
-        }
-
-        if (strneq( str, "device-cmyk(", 12 )){
-                dest->type = DEVICE_CMYK;
-                max_colors=4;
-                str += 12;
-        }
-
-        if (strneq( str, "device-nchannel(", 16 )){
-                dest->type = DEVICE_NCHANNEL;
-                max_colors=0;
-                str += 16;
-        }
-
-        if ( dest->type != DEVICE_COLOR_INVALID ) {
-            while ( g_ascii_isspace(*str) ) {
-                str++;
-            }
-
-            while ( *str && *str != ')' ) {
-                if ( g_ascii_isdigit(*str) || *str == '.' || *str == '-' || *str == '+') {
-                    gchar* endPtr = 0;
-                    gdouble dbl = g_ascii_strtod( str, &endPtr );
-                    if ( !errno ) {
-                        if ( dest ) {
-                            dest->colors.push_back( dbl );
-                        }
-                        str = endPtr;
-                    } else {
-                        good = false;
-                        break;
-                    }
-
-                    while ( g_ascii_isspace(*str) || *str == ',' ) {
-                        str++;
-                    }
-                } else {
-                    break;
-                }
-            }
-        }
-
-        // We need to have ended on a closing parenthesis
-        if ( good ) {
-            while ( g_ascii_isspace(*str) ) {
-                str++;
-            }
-            good &= (*str == ')');
-        }
-    }
-
-    if ( dest->colors.size() == 0) good=false;
-    if ( dest->type != DEVICE_NCHANNEL && (dest->colors.size() != max_colors)) good=false;
-
-    if ( good ) {
-        if ( end_ptr ) {
-            *end_ptr = str;
-        }
-    } else {
-        if ( dest ) {
-            dest->type = DEVICE_COLOR_INVALID;
-            dest->colors.clear();
-        }
-    }
-
-    return good;
-}
-
-
-bool sp_svg_read_device_color( gchar const *str, SVGDeviceColor* dest)
-{
-    return sp_svg_read_device_color(str, NULL, dest);
-}
 
 /*
   Local Variables:

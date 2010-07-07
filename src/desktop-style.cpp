@@ -44,7 +44,6 @@
 
 #include "desktop-style.h"
 #include "svg/svg-icc-color.h"
-#include "svg/svg-device-color.h"
 #include "box3d-side.h"
 
 /**
@@ -466,7 +465,6 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
     paint_res->set = TRUE;
 
     SVGICCColor* iccColor = 0;
-    SVGDeviceColor* devColor = 0;
 
     bool iccSeen = false;
     gfloat c[4];
@@ -570,22 +568,6 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
             c[2] += d[2];
             c[3] += SP_SCALE24_TO_FLOAT (isfill? style->fill_opacity.value : style->stroke_opacity.value);
 
-            // average device color
-            unsigned int it;
-            if (i==objects /*if this is the first object in the GList*/
-                && paint->value.color.device){
-                devColor = new SVGDeviceColor(*paint->value.color.device);
-                for (it=0; it < paint->value.color.device->colors.size(); it++){
-                    devColor->colors[it] = 0;
-                }
-            }
-
-            if (devColor && paint->value.color.device && paint->value.color.device->type == devColor->type){
-                for (it=0; it < paint->value.color.device->colors.size(); it++){
-                    devColor->colors[it] += paint->value.color.device->colors[it];
-                }
-            }
-
             num ++;
         }
 
@@ -623,14 +605,6 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
             // TODO check for existing
             SVGICCColor* tmp = new SVGICCColor(*iccColor);
             paint_res->value.color.icc = tmp;
-        }
-
-        // divide and store the device-color
-        if (devColor){
-            for (unsigned int it=0; it < devColor->colors.size(); it++){
-                devColor->colors[it] /= num;
-            }
-            paint_res->value.color.device = devColor;
         }
 
         if (num > 1) {

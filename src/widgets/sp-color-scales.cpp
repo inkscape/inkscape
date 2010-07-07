@@ -11,7 +11,6 @@
 #include "../dialogs/dialog-events.h"
 #include "sp-color-scales.h"
 #include "svg/svg-icc-color.h"
-#include "svg/svg-device-color.h"
 
 #define CSC_CHANNEL_R (1 << 0)
 #define CSC_CHANNEL_G (1 << 1)
@@ -232,12 +231,6 @@ void ColorScales::_recalcColor( gboolean changing )
         case SP_COLOR_SCALES_MODE_CMYK:
         {
             _getCmykaFloatv( c );
-            color.device = new SVGDeviceColor();
-            color.device->type=DEVICE_CMYK;
-            color.device->colors.clear();
-            for (int i=0;i<4;i++){
-              color.device->colors.push_back(c[i]);
-            }
 
             float rgb[3];
             sp_color_cmyk_to_rgb_floatv( rgb, c[0], c[1], c[2], c[3] );
@@ -483,19 +476,12 @@ void ColorScales::setMode(SPColorScalesMode mode)
 		gtk_widget_show (_b[4]);
 		_updating = TRUE;
 
-    if (_color.device && _color.device->type == DEVICE_CMYK){
-		  setScaled( _a[0], _color.device->colors[0] );
-		  setScaled( _a[1], _color.device->colors[1] );
-		  setScaled( _a[2], _color.device->colors[2] );
-		  setScaled( _a[3], _color.device->colors[3] );
-    } else {
-      //If we still dont have a device-color, convert from rbga
-		  sp_color_rgb_to_cmyk_floatv (c, rgba[0], rgba[1], rgba[2]);
-		  setScaled( _a[0], c[0] );
-		  setScaled( _a[1], c[1] );
-		  setScaled( _a[2], c[2] );
-		  setScaled( _a[3], c[3] );
-    }
+                sp_color_rgb_to_cmyk_floatv (c, rgba[0], rgba[1], rgba[2]);
+                setScaled( _a[0], c[0] );
+                setScaled( _a[1], c[1] );
+                setScaled( _a[2], c[2] );
+                setScaled( _a[3], c[3] );
+
 		setScaled( _a[4], rgba[3] );
 		_updating = FALSE;
 		_updateSliders( CSC_CHANNELS_ALL );

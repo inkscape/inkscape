@@ -14,7 +14,6 @@ ink_common_sources +=	\
 	svg/svg-affine.cpp	\
 	svg/svg-color.cpp	\
 	svg/svg-color.h 	\
-	svg/svg-device-color.h 	\
 	svg/svg-icc-color.h \
 	svg/svg-length.cpp	\
 	svg/svg-length.h	\
