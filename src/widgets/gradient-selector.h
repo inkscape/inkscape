@@ -17,6 +17,7 @@
 
 #include <glib.h>
 #include <gtk/gtkvbox.h>
+#include <vector>
 #include "sp-gradient.h"
 #include "sp-gradient-spread.h"
 #include "sp-gradient-units.h"
@@ -58,6 +59,9 @@ struct SPGradientSelector {
     /* Spread selector */
     GtkWidget *spread;
     GtkWidget *spreadLbl;
+
+    bool safelyInit;
+    std::vector<GtkWidget*> nonsolid;
 
     void setMode(SelectorMode mode);
     void setUnits(SPGradientUnits units);

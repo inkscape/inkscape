@@ -169,10 +169,9 @@ void SwatchSelector::connectchangedHandler( GCallback handler, void *data )
 void SwatchSelector::setVector(SPDocument */*doc*/, SPGradient *vector)
 {
     //GtkVBox * box = gobj();
-
     _gsel->setVector((vector) ? SP_OBJECT_DOCUMENT(vector) : 0, vector);
 
-    if (vector) {
+    if ( vector && vector->isSolid() ) {
         SPStop* stop = vector->getFirstStop();
 
         guint32 const colorVal = sp_stop_get_rgba32(stop);
@@ -180,6 +179,9 @@ void SwatchSelector::setVector(SPDocument */*doc*/, SPGradient *vector)
         SPColor color( SP_RGBA32_R_F(colorVal), SP_RGBA32_G_F(colorVal), SP_RGBA32_B_F(colorVal) );
         // set its color, from the stored array
         _csel->base->setColor( color );
+        gtk_widget_show_all( GTK_WIDGET(_csel) );
+    } else {
+        gtk_widget_hide( GTK_WIDGET(_csel) );
     }
 
 /*

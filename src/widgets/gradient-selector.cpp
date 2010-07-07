@@ -117,10 +117,10 @@ sp_gradient_selector_class_init (SPGradientSelectorClass *klass)
     object_class->destroy = sp_gradient_selector_destroy;
 }
 
-static void
-sp_gradient_selector_init (SPGradientSelector *sel)
+static void sp_gradient_selector_init(SPGradientSelector *sel)
 {
-    GtkWidget *hb, *m, *mi;
+    sel->safelyInit = true;
+    new (&sel->nonsolid) std::vector<GtkWidget*>();
 
     sel->mode = SPGradientSelector::MODE_LINEAR;
 
@@ -134,39 +134,44 @@ sp_gradient_selector_init (SPGradientSelector *sel)
     g_signal_connect (G_OBJECT (sel->vectors), "vector_set", G_CALLBACK (sp_gradient_selector_vector_set), sel);
 
     /* Create box for buttons */
-    hb = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (sel), hb, FALSE, FALSE, 0);
+    GtkWidget *hb = gtk_hbox_new( FALSE, 0 );
+    sel->nonsolid.push_back(hb);
+    gtk_box_pack_start( GTK_BOX(sel), hb, FALSE, FALSE, 0 );
     GtkTooltips *ttips = gtk_tooltips_new ();
 
     sel->add = gtk_button_new_with_label (_("Duplicate"));
+    sel->nonsolid.push_back(sel->add);
     gtk_box_pack_start (GTK_BOX (hb), sel->add, TRUE, TRUE, 0);
     g_signal_connect (G_OBJECT (sel->add), "clicked", G_CALLBACK (sp_gradient_selector_add_vector_clicked), sel);
     gtk_widget_set_sensitive (sel->add, FALSE);
 
     sel->edit = gtk_button_new_with_label (_("Edit..."));
+    sel->nonsolid.push_back(sel->edit);
     gtk_box_pack_start (GTK_BOX (hb), sel->edit, TRUE, TRUE, 0);
     g_signal_connect (G_OBJECT (sel->edit), "clicked", G_CALLBACK (sp_gradient_selector_edit_vector_clicked), sel);
     gtk_widget_set_sensitive (sel->edit, FALSE);
 
-    gtk_widget_show_all (hb);
+    gtk_widget_show_all(hb);
 
     /* Spread selector */
-    hb = gtk_hbox_new (FALSE, 0);
-    gtk_widget_show (hb);
-    gtk_box_pack_start (GTK_BOX (sel), hb, FALSE, FALSE, 0);
+    hb = gtk_hbox_new( FALSE, 0 );
+    sel->nonsolid.push_back(hb);
+    gtk_widget_show(hb);
+    gtk_box_pack_start( GTK_BOX(sel), hb, FALSE, FALSE, 0 );
 
-    sel->spread = gtk_option_menu_new ();
-    gtk_widget_show (sel->spread);
-    gtk_box_pack_end (GTK_BOX (hb), sel->spread, FALSE, FALSE, 0);
-    gtk_tooltips_set_tip (ttips, sel->spread,
+    sel->spread = gtk_option_menu_new();
+    sel->nonsolid.push_back(sel->spread);
+    gtk_widget_show(sel->spread);
+    gtk_box_pack_end( GTK_BOX(hb), sel->spread, FALSE, FALSE, 0 );
+    gtk_tooltips_set_tip( ttips, sel->spread,
                           // TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
                           _("Whether to fill with flat color beyond the ends of the gradient vector "
                             "(spreadMethod=\"pad\"), or repeat the gradient in the same direction "
                             "(spreadMethod=\"repeat\"), or repeat the gradient in alternating opposite "
                             "directions (spreadMethod=\"reflect\")"), NULL);
 
-    m = gtk_menu_new ();
-    mi = gtk_menu_item_new_with_label (_("none"));
+    GtkWidget *m = gtk_menu_new();
+    GtkWidget *mi = gtk_menu_item_new_with_label(_("none"));
     gtk_menu_append (GTK_MENU (m), mi);
     g_object_set_data (G_OBJECT (mi), "gradientSpread", GUINT_TO_POINTER (SP_GRADIENT_SPREAD_PAD));
     g_signal_connect (G_OBJECT (mi), "activate", G_CALLBACK (sp_gradient_selector_spread_activate), sel);
@@ -180,22 +185,27 @@ sp_gradient_selector_init (SPGradientSelector *sel)
     gtk_menu_append (GTK_MENU (m), mi);
     gtk_widget_show_all (m);
 
-    gtk_option_menu_set_menu (GTK_OPTION_MENU (sel->spread), m);
+    gtk_option_menu_set_menu( GTK_OPTION_MENU(sel->spread), m );
 
-    sel->spreadLbl = gtk_label_new (_("Repeat:"));
-    gtk_widget_show(sel->spreadLbl);
-    gtk_box_pack_end(GTK_BOX(hb), sel->spreadLbl, FALSE, FALSE, 4);
+    sel->spreadLbl = gtk_label_new( _("Repeat:") );
+    sel->nonsolid.push_back(sel->spreadLbl);
+    gtk_widget_show( sel->spreadLbl );
+    gtk_box_pack_end( GTK_BOX(hb), sel->spreadLbl, FALSE, FALSE, 4 );
 }
 
-static void
-sp_gradient_selector_destroy (GtkObject *object)
+static void sp_gradient_selector_destroy(GtkObject *object)
 {
-    SPGradientSelector *sel;
+    SPGradientSelector *sel = SP_GRADIENT_SELECTOR( object );
 
-    sel = SP_GRADIENT_SELECTOR (object);
+    if ( sel->safelyInit ) {
+        sel->safelyInit = false;
+        using std::vector;
+        sel->nonsolid.~vector<GtkWidget*>();
+    }
 
-    if (((GtkObjectClass *) (parent_class))->destroy)
+    if (((GtkObjectClass *) (parent_class))->destroy) {
         (* ((GtkObjectClass *) (parent_class))->destroy) (object);
+    }
 }
 
 GtkWidget *
@@ -208,26 +218,15 @@ sp_gradient_selector_new (void)
     return (GtkWidget *) sel;
 }
 
-static void removeWidget( GtkWidget *& widget )
-{
-    if (widget) {
-        GtkWidget *parent = gtk_widget_get_parent(widget);
-        if (parent) {
-            gtk_container_remove(GTK_CONTAINER(parent), widget);
-            widget = 0;
-        }
-    }
-}
-
 void SPGradientSelector::setMode(SelectorMode mode)
 {
     if (mode != this->mode) {
         this->mode = mode;
         if (mode == MODE_SWATCH) {
-            removeWidget(add);
-            removeWidget(edit);
-            removeWidget(spread);
-            removeWidget(spreadLbl);
+            for (std::vector<GtkWidget*>::iterator it = nonsolid.begin(); it != nonsolid.end(); ++it)
+            {
+                gtk_widget_hide(*it);
+            }
 
             SPGradientVectorSelector* vs = SP_GRADIENT_VECTOR_SELECTOR(vectors);
             vs->setSwatched();
@@ -269,6 +268,20 @@ void SPGradientSelector::setVector(SPDocument *doc, SPGradient *vector)
     sp_gradient_vector_selector_set_gradient(SP_GRADIENT_VECTOR_SELECTOR(vectors), doc, vector);
 
     if (vector) {
+        if ( (mode == MODE_SWATCH) && vector->isSwatch() ) {
+            if ( vector->isSolid() ) {
+                for (std::vector<GtkWidget*>::iterator it = nonsolid.begin(); it != nonsolid.end(); ++it)
+                {
+                    gtk_widget_hide(*it);
+                }
+            } else {
+                for (std::vector<GtkWidget*>::iterator it = nonsolid.begin(); it != nonsolid.end(); ++it)
+                {
+                    gtk_widget_show_all(*it);
+                }
+            }
+        }
+
         if (edit) {
             gtk_widget_set_sensitive(edit, TRUE);
         }

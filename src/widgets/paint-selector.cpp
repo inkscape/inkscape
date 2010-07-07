@@ -1082,11 +1082,10 @@ static void sp_paint_selector_set_mode_swatch(SPPaintSelector *psel, SPPaintSele
     SwatchSelector *swatchsel = 0;
 
     if (psel->mode == SPPaintSelector::MODE_SWATCH){
-        /* Already have pattern menu */
         swatchsel = static_cast<SwatchSelector*>(g_object_get_data(G_OBJECT(psel->selector), "swatch-selector"));
     } else {
         sp_paint_selector_clear_frame(psel);
-        /* Create new gradient selector */
+        // Create new gradient selector
         SwatchSelector *swatchsel = new SwatchSelector();
         swatchsel->show();
 

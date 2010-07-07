@@ -174,6 +174,10 @@ GtkWidget *sp_gradient_vector_selector_new(SPDocument *doc, SPGradient *gr)
 
 void sp_gradient_vector_selector_set_gradient(SPGradientVectorSelector *gvs, SPDocument *doc, SPGradient *gr)
 {
+//     g_message("sp_gradient_vector_selector_set_gradient(%p, %p, %p) [%s] %d %d", gvs, doc, gr,
+//               (gr ? gr->getId():"N/A"),
+//               (gr ? gr->isSwatch() : -1),
+//               (gr ? gr->isSolid() : -1));
     static gboolean suppress = FALSE;
 
     g_return_if_fail(gvs != NULL);
@@ -337,6 +341,7 @@ static void sp_gvs_gradient_activate(GtkMenuItem *mi, SPGradientVectorSelector *
     /* Hmmm - probably we can just re-set it as menuitem data (Lauris) */
 
     //g_print("SPGradientVectorSelector: gradient %s activated\n", SP_OBJECT_ID(gr));
+    //g_message("Setting to gradient %p   swatch:%d   solid:%d", gr, gr->isSwatch(), gr->isSolid());
 
     norm = sp_gradient_ensure_vector_normalized(gr);
     if (norm != gr) {
