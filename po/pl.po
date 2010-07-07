@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-06-20 23:32+0100\n"
+"PO-Revision-Date: 2010-07-07 11:44+0100\n"
 "Last-Translator: Marcin Floryan <mfloryan@mm.waw.pl>\n"
 "Language-Team: Polish Inkscape Translation Team\n"
 "MIME-Version: 1.0\n"
@@ -195,7 +195,7 @@ msgstr "Funkcja składowej b (niebieski)"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1418
 #: ../src/widgets/toolbox.cpp:994
 msgid "Custom"
-msgstr "Dostosuj"
+msgstr "Użytkownika"
 
 #: ../share/extensions/color_custom.inx.h:4
 msgid "Green Function"
@@ -1633,14 +1633,12 @@ msgid "Appear"
 msgstr "Bez animacji"
 
 #: ../share/extensions/jessyInk_effects.inx.h:2
-#, fuzzy
 msgid "Build-in effect"
-msgstr "Efekt przejścia slajdu do wewnątrz"
+msgstr "Przejście slajdu do wewnątrz"
 
 #: ../share/extensions/jessyInk_effects.inx.h:3
-#, fuzzy
 msgid "Build-out effect"
-msgstr "Efekt przejścia slajdu na zewnątrz"
+msgstr "Przejście slajdu na zewnątrz"
 
 #: ../share/extensions/jessyInk_effects.inx.h:4
 #: ../share/extensions/jessyInk_transitions.inx.h:3
@@ -1655,7 +1653,7 @@ msgstr "Efekty"
 #: ../share/extensions/jessyInk_effects.inx.h:6
 #: ../share/extensions/jessyInk_transitions.inx.h:4msgid "Fade"
 msgid "Fade"
-msgstr "Zanikanie"
+msgstr "Ukazywanie"
 
 #: ../share/extensions/jessyInk_effects.inx.h:9
 msgid "None (default)"
@@ -1995,9 +1993,8 @@ msgstr ""
 "warstwy. Więcej informacji uzyskasz na stronie code.google.com/p/jessyink."
 
 #: ../share/extensions/jessyInk_transitions.inx.h:11
-#, fuzzy
 msgid "Transition in effect"
-msgstr "Efekt wejścia"
+msgstr "Efekt przejścia"
 
 #: ../share/extensions/jessyInk_transitions.inx.h:12
 msgid "Transition out effect"
@@ -3599,17 +3596,14 @@ msgstr ""
 "najlepszą jakość, ale najmniej skuteczną kompresję."
 
 #: ../share/extensions/webslicer_create_rect.inx.h:3
-#, fuzzy
 msgid "Background — no repeat (on parent group)"
 msgstr "Tło – nie powtarzaj (na grupie macierzystej)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:4
-#, fuzzy
 msgid "Background — repeat horizontally (on parent group)"
 msgstr "Tło – powtarzaj w poziomie (na grupie macierzystej)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:5
-#, fuzzy
 msgid "Background — repeat vertically (on parent group)"
 msgstr "Tło – powtarzaj w pionie (na grupie macierzystej)"
 
@@ -3720,7 +3714,6 @@ msgid "Right Floated Image"
 msgstr "Obrazek opływany z prawej strony"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:36
-#, fuzzy
 msgid "Tiled Background (on parent group)"
 msgstr "Kafelkowane tło (brak grupy macierzystej)"
 
@@ -6412,7 +6405,7 @@ msgstr "Definiuje kierunek i rozmiar wytłaczania"
 #: ../src/sp-flowtext.cpp:378 ../src/sp-text.cpp:427
 #: ../src/text-context.cpp:1604
 msgid " [truncated]"
-msgstr "[ucięte]"
+msgstr " [ucięte]"
 
 #: ../src/sp-flowtext.cpp:381
 #, c-format
@@ -8389,12 +8382,10 @@ msgid "text baseline"
 msgstr "linia bazowa tekstu"
 
 #: ../src/display/snap-indicator.cpp:152
-#, fuzzy
 msgid "constrained angle"
 msgstr "kąt wymuszony"
 
 #: ../src/display/snap-indicator.cpp:155
-#, fuzzy
 msgid "constraint"
 msgstr "wymuszenie"
 
@@ -16900,12 +16891,10 @@ msgid "Enclosed Alphanumerics"
 msgstr "Otoczone symbole alfanumeryczne"
 
 #: ../src/ui/dialog/glyphs.cpp:229
-#, fuzzy
 msgid "Box Drawing"
 msgstr "Obszar rysowania"
 
 #: ../src/ui/dialog/glyphs.cpp:230
-#, fuzzy
 msgid "Block Elements"
 msgstr "Elementy blokowe"
 
@@ -23289,9 +23278,7 @@ msgstr "W_yrównaj i rozmieść…"
 msgid "Align and distribute objects"
 msgstr "Okno dialogowe Wyrównaj i rozmieść…"
 
-# Natryskiwanie to fatalne tłumaczenie. Poprawnym polskim słowem w tym kontekscie jest spray.
 #: ../src/verbs.cpp:2609
-#, fuzzy
 msgid "_Spray options..."
 msgstr "Opcje _natryskiwania…"
 
@@ -23450,7 +23437,6 @@ msgid "Print Colors..."
 msgstr "Kolory wydruku…"
 
 #: ../src/verbs.cpp:2650
-#, fuzzy
 msgid ""
 "Select which color separations to render in Print Colors Preview rendermode"
 msgstr "Wybierz renderowaną w podglądzie kolorów wydruku separację koloru"
@@ -24439,11 +24425,9 @@ msgstr "Styl wypełniania obiektów"
 msgid "Default interface setup"
 msgstr "Domyślne ustawienia interfejsu"
 
-# Tutaj nie chodzi o "zadanie" ale raczej o "tryb" pracy.
 #: ../src/widgets/toolbox.cpp:995
-#, fuzzy
 msgid "Set the custom task"
-msgstr "Określ własne zadanie"
+msgstr "Ustawienia interfejsu określone przez użytkownika"
 
 #: ../src/widgets/toolbox.cpp:1000
 msgid "Wide"
@@ -24455,11 +24439,11 @@ msgstr "Ustawienia trybu panoramicznego"
 
 #: ../src/widgets/toolbox.cpp:1004
 msgid "Task"
-msgstr "Zadanie"
+msgstr "Zadanie do wykonania"
 
 #: ../src/widgets/toolbox.cpp:1005
 msgid "Task:"
-msgstr "Zadanie:"
+msgstr "Zadanie do wykonania:"
 
 #: ../src/widgets/toolbox.cpp:1393
 msgid "Insert node"
