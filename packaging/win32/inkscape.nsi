@@ -520,6 +520,7 @@ SectionGroup "$(Languages)" SecLanguages ; Languages sections {{{
   !insertmacro Language SpanishMexico     es_MX
   !insertmacro Language Estonian          et
   !insertmacro Language Basque            eu
+  !insertmacro Language Farsi             fa
   !insertmacro Language French            fr
   !insertmacro Language Finnish           fi
   !insertmacro Language Irish             ga
@@ -552,6 +553,7 @@ SectionGroup "$(Languages)" SecLanguages ; Languages sections {{{
   !insertmacro Language Serbian           sr
   !insertmacro Language SerbianLatin      sr@latin
   !insertmacro Language Swedish           sv
+  !insertmacro Language Telugu            te_IN
   !insertmacro Language Thai              th
   !insertmacro Language Turkish           tr
   !insertmacro Language Ukrainian         uk
@@ -776,6 +778,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro Parameter es_MX          ${SecSpanishMexico}
   !insertmacro Parameter et             ${SecEstonian}
   !insertmacro Parameter eu             ${SecBasque}
+  !insertmacro Parameter fa             ${SecFarsi}
   !insertmacro Parameter fi             ${SecFinnish}
   !insertmacro Parameter fr             ${SecFrench}
   !insertmacro Parameter ga             ${SecIrish}
@@ -808,6 +811,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro Parameter sr             ${SecSerbian}
   !insertmacro Parameter sr@latin       ${SecSerbianLatin}
   !insertmacro Parameter sv             ${SecSwedish}
+  !insertmacro Parameter te_IN          ${SecTelugu}
   !insertmacro Parameter th             ${SecThai}
   !insertmacro Parameter tr             ${SecTurkish}
   !insertmacro Parameter uk             ${SecUkrainian}
