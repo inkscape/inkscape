@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-07-05 00:40+0200\n"
+"PO-Revision-Date: 2010-07-08 22:57+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"\n"
 "\n"
 
 #: ../share/extensions/addnodes.inx.h:1
@@ -3182,7 +3183,7 @@ msgid ""
 "    * Strip xml prolog: don't output the xml prolog.\n"
 "    * Set precision: set number of significant digits (default: 5).\n"
 "    * Indent: indentation of the output: none, space, tab (default: space)."
-msgstr "kiterjesztés"
+msgstr "kiterjesztés lényeges számjegyek "
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
@@ -17578,7 +17579,6 @@ msgid "Left mouse button pans when Space is pressed"
 msgstr "Ha a szóközbillentyű le van nyomva, a bal egérgomb pásztázást végez"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:215
-#, fuzzy
 msgid ""
 "When on, pressing and holding Space and dragging with left mouse button pans "
 "canvas (as in Adobe Illustrator); when off, Space temporarily switches to "
@@ -17595,7 +17595,6 @@ msgid "Mouse wheel zooms by default"
 msgstr "Az egérgörgő alapértelmezésben nagyít"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:218
-#, fuzzy
 msgid ""
 "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when "
 "off, it zooms with Ctrl and scrolls without Ctrl"
@@ -18453,44 +18452,45 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:680
 msgid "Before applying clippath/mask:"
-msgstr ""
+msgstr "Vágóútvonal/maszk alkalmazása előtt:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:682
 msgid "Do not group clipped/masked objects"
-msgstr ""
+msgstr "Ne legyenek csoportosítva a vágott/maszkolt objektumok"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:683
 msgid "Enclose every clipped/masked object in its own group"
-msgstr ""
+msgstr "Minden egyes vágott/maszkolt objektum kerüljön be a saját csoportjába"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:684
 msgid "Put all clipped/masked objects into one group"
-msgstr ""
+msgstr "Az összes vágott/maszkolt objektum kerüljön be egy csoportba"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:687
 msgid "Apply clippath/mask to every object"
-msgstr ""
+msgstr "Vágóútvonal/maszk alkalmazása minden egyes objektumra"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:690
 msgid "Apply clippath/mask to groups containing single object"
 msgstr ""
+"Vágóútvonal/maszk alkalmazása egy-egy objektumot tartalmazó csoportokra"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:693
 msgid "Apply clippath/mask to group containing all objects"
 msgstr ""
+"Vágóútvonal/maszk alkalmazása egy, az összes objektumot tartalmazó csoportra"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:695
 msgid "After releasing clippath/mask:"
-msgstr ""
+msgstr "Vágóútvonal/maszk eltávolítása után:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:697
-#, fuzzy
 msgid "Ungroup automatically created groups"
-msgstr "A kijelölt csoportok szétbontása"
+msgstr "Az automatikusan létrehozott csoportok szétbontása"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:699
 msgid "Ungroup groups created when setting clip/mask"
-msgstr ""
+msgstr "A vágás/maszk beállításakor létrehozott csoportok szétbontása"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:701
 msgid "Clippaths and masks"
@@ -18643,7 +18643,6 @@ msgid "Show filter primitives infobox"
 msgstr "Információ megjelenítése a szűrőprimitívekről"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:783
-#, fuzzy
 msgid ""
 "Show icons and descriptions for the filter primitives available at the "
 "filter effects dialog"
@@ -18652,9 +18651,8 @@ msgstr ""
 "ikonok és leírások megjelenítése"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:787
-#, fuzzy
 msgid "Number of Threads:"
-msgstr "A sorok száma"
+msgstr "Szálak száma:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:787
 #: ../src/ui/dialog/inkscape-preferences.cpp:1349
@@ -18665,6 +18663,8 @@ msgstr "(életbelépéshez újraindítás szükséges)"
 msgid ""
 "Configure number of processors/threads to use with rendering of gaussian blur"
 msgstr ""
+"Gauss-elmosás megjelenítéséhez használandó processzorok/szálak számának "
+"beállítása"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:796
 msgid "Select in all layers"
@@ -18759,7 +18759,6 @@ msgid "Open Clip Art Library Server Name:"
 msgstr "Open Clip Art Library-kiszolgálónév:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:829
-#, fuzzy
 msgid ""
 "The server name of the Open Clip Art Library webdav server; it's used by the "
 "Import and Export to OCAL function"
@@ -18772,7 +18771,6 @@ msgid "Open Clip Art Library Username:"
 msgstr "Open Clip Art Library-felhasználónév:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:832
-#, fuzzy
 msgid "The username used to log into Open Clip Art Library"
 msgstr ""
 "Az Open Clip Art Librarybe való bejelentkezéshez használt felhasználónév"
@@ -18782,7 +18780,6 @@ msgid "Open Clip Art Library Password:"
 msgstr "Open Clip Art Library-jelszó:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:835
-#, fuzzy
 msgid "The password used to log into Open Clip Art Library"
 msgstr "Az Open Clip Art Librarybe való bejelentkezéshez használt jelszó"
 
@@ -18830,12 +18827,10 @@ msgid "Retrieve profile from display"
 msgstr "Profil lekérdezése a képernyőtől"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:914
-#, fuzzy
 msgid "Retrieve profiles from those attached to displays via XICC"
 msgstr "Profilok kinyerése XICC-vel a képernyőhöz csatlakoztatottakból"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:916
-#, fuzzy
 msgid "Retrieve profiles from those attached to displays"
 msgstr "Profilok kinyerése a képernyőhöz csatlakoztatottakból"
 
@@ -18844,7 +18839,6 @@ msgid "Display rendering intent:"
 msgstr "Képernyős megjelenítési cél:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:922
-#, fuzzy
 msgid "The rendering intent to use to calibrate display output"
 msgstr "A képernyő kimenetének kalibrálásához használt megjelenítési cél"
 
@@ -18857,7 +18851,6 @@ msgid "Simulate output on screen"
 msgstr "Kimenet szimulálása a képernyőn"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:928
-#, fuzzy
 msgid "Simulates output of target device"
 msgstr "Szimulálja a céleszköz kimenetét"
 
@@ -18866,7 +18859,6 @@ msgid "Mark out of gamut colors"
 msgstr "Színskálán kívüli színek megjelölése"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:932
-#, fuzzy
 msgid "Highlights colors that are out of gamut for the target device"
 msgstr ""
 "Kiemeli azon színeket, amelyek a céleszköznél kívül vannak a színskálán"
@@ -18876,7 +18868,6 @@ msgid "Out of gamut warning color:"
 msgstr "\"Színskálán kívül\" figyelmeztetés színe:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:938
-#, fuzzy
 msgid "Selects the color used for out of gamut warning"
 msgstr ""
 "A színskálán kívül levő színre való figyelmeztetés színének kiválasztása"
@@ -18886,7 +18877,6 @@ msgid "Device profile:"
 msgstr "Eszközprofil:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:941
-#, fuzzy
 msgid "The ICC profile to use to simulate device output"
 msgstr "Az eszközkimenet szimulálásához használt ICC-profil"
 
@@ -18895,16 +18885,14 @@ msgid "Device rendering intent:"
 msgstr "Megjelenítési cél az eszközhöz:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:945
-#, fuzzy
 msgid "The rendering intent to use to calibrate device output"
-msgstr "A képernyő kimenetének kalibrálásához használt megjelenítési cél"
+msgstr "Az eszközkimenet kalibrálásához használt megjelenítési cél"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:947
 msgid "Black point compensation"
 msgstr "Feketepont-kompenzáció"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:949
-#, fuzzy
 msgid "Enables black point compensation"
 msgstr "Feketepont-kompenzáció bekapcsolása"
 
@@ -18939,7 +18927,6 @@ msgid "Don't emphasize gridlines when zoomed out"
 msgstr "Kicsinyített nézetben ne legyenek hangsúlyozva a rácsvonalak"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1024
-#, fuzzy
 msgid ""
 "If set and zoomed out, the gridlines will be shown in normal color instead "
 "of major grid line color"
@@ -19088,14 +19075,13 @@ msgstr "Numerikus pontosság:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1098
 msgid "Significant figures of the values written to the SVG file"
-msgstr ""
+msgstr "Az SVG-fájlba írt értékek lényeges számjegyeinek száma"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid "Minimum exponent:"
 msgstr "Minimális kitevő:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1101
-#, fuzzy
 msgid ""
 "The smallest number written to SVG is 10 to the power of this exponent; "
 "anything smaller is written as zero"
@@ -19381,9 +19367,8 @@ msgid "Smaller"
 msgstr "Kisebb"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1133
-#, fuzzy
 msgid "Toolbox icon size:"
-msgstr "Eszköztár-ikonok mérete"
+msgstr "Eszköztár-ikonok mérete:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1134
 msgid "Set the size for the tool icons (requires restart)"
@@ -19391,9 +19376,8 @@ msgstr ""
 "Az eszközikonok méretének beállítása (életbelépéshez újraindítás szükséges)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1137
-#, fuzzy
 msgid "Control bar icon size:"
-msgstr "Eszközvezérlő-sáv ikonjainak mérete"
+msgstr "Eszközvezérlő-sáv ikonjainak mérete:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1138
 msgid ""
@@ -19403,9 +19387,8 @@ msgstr ""
 "újraindítás szükséges)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1141
-#, fuzzy
 msgid "Secondary toolbar icon size:"
-msgstr "Másodlagos eszköztár ikonjainak mérete"
+msgstr "Másodlagos eszköztár ikonjainak mérete:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1142
 msgid ""
@@ -19415,12 +19398,10 @@ msgstr ""
 "újraindítás szükséges)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1145
-#, fuzzy
 msgid "Work-around color sliders not drawing"
 msgstr "Kerülő megoldás a \"színcsúszkák nem jelennek meg\" problémára"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1147
-#, fuzzy
 msgid ""
 "When on, will attempt to work around bugs in certain GTK themes drawing "
 "color sliders"
@@ -19461,13 +19442,15 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1166
 msgid "Enable dynamic relayout for incomplete sections"
-msgstr ""
+msgstr "Dinamikus újraelrendezés engedélyezése a nem teljes részekre"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1168
 msgid ""
 "When on, will allow dynamic layout of components that are not completely "
 "finished being refactored"
 msgstr ""
+"Ha be van kapcsolva, akkor engedélyezett azon komponensek dinamikus "
+"elrendezése, amelyek átszervezése nincs teljesen befejezve"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1171
 msgid "Interface"
@@ -19478,7 +19461,6 @@ msgid "Use current directory for \"Save As ...\""
 msgstr "Az aktuális könyvtár használata a \"Mentés másként...\" művelethez"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1179
-#, fuzzy
 msgid ""
 "When this option is on, the \"Save as...\" dialog will always open in the "
 "directory where the currently open document is; when it's off, it will open "
@@ -25923,9 +25905,8 @@ msgid "Spray single path"
 msgstr "Festékszóró Létező útvonalak törlése"
 
 #: ../src/widgets/toolbox.cpp:4701
-#, fuzzy
 msgid "Spray objects in a single path"
-msgstr "Festékszóró"
+msgstr "Objektumok felfestése egyetlen útvonalban"
 
 #. Population
 #: ../src/widgets/toolbox.cpp:4725
