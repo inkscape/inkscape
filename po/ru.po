@@ -8,15 +8,16 @@
 # bulia byak <buliabyak@users.sf.net>, 2004.
 # Alexandre Prokoudine <avp@lrn.ru>, 2004, 2005.
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2007.
-# Александр Прокудин <alexandre.prokoudine@gmail.com>, 2010.
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2010.
+# Александр Прокудин <alexandre.prokoudine@gmail.com>, 2010.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-07-04 08:04+0400\n"
-"PO-Revision-Date: 2010-07-05 21:02+0400\n"
-"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
+"PO-Revision-Date: 2010-07-08 05:45+0400\n"
+"Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3045,13 +3046,12 @@ msgid "Enable id stripping"
 msgstr "Вырезать идентификаторы"
 
 #: ../share/extensions/scour.inx.h:3
-#, fuzzy
 msgid "Enable viewboxing"
-msgstr "Включить предпросмотр"
+msgstr "Включить viewbox"
 
 #: ../share/extensions/scour.inx.h:4
 msgid "Group collapsing"
-msgstr ""
+msgstr "Свести группы"
 
 #: ../share/extensions/scour.inx.h:6
 msgid "Indent"
@@ -3087,12 +3087,11 @@ msgstr "Пробел"
 
 #: ../share/extensions/scour.inx.h:16
 msgid "Strip xml prolog"
-msgstr ""
+msgstr "Вырезать вступление XML"
 
 #: ../share/extensions/scour.inx.h:17
-#, fuzzy
 msgid "Style to xml"
-msgstr "_Стиль: "
+msgstr "Стиль в XML"
 
 #: ../share/extensions/scour.inx.h:18
 msgid "Tab"
@@ -3564,15 +3563,15 @@ msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:3
 msgid "Background — no repeat (on parent group)"
-msgstr ""
+msgstr "Фон — без повтора (в родительской группе)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:4
 msgid "Background — repeat horizontally (on parent group)"
-msgstr ""
+msgstr "Фон — горизонтальный повтор (в родительской группе)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:5
 msgid "Background — repeat vertically (on parent group)"
-msgstr ""
+msgstr "Фон — вертикальный повтор (в родительской группе)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:6
 msgid "Bottom and Center"
@@ -3685,7 +3684,7 @@ msgstr "Правый угол"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:36
 msgid "Tiled Background (on parent group)"
-msgstr ""
+msgstr "Мозаичный фон (в родительской группе)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:37
 msgid "Top and Center"
@@ -4021,7 +4020,7 @@ msgstr ""
 #: ../share/extensions/extractimage.py:65
 #, python-format
 msgid "Image extracted to: %s"
-msgstr ""
+msgstr "Изображение извлечено в: %s"
 
 #: ../share/extensions/extractimage.py:72
 msgid "Unable to find image data."
@@ -6354,7 +6353,7 @@ msgstr "Направление"
 
 #: ../src/live_effects/lpe-extrude.cpp:28
 msgid "Defines the direction and magnitude of the extrusion"
-msgstr ""
+msgstr "Определяет направление и силу выдавливания"
 
 #: ../src/sp-flowtext.cpp:378 ../src/sp-text.cpp:427
 #: ../src/text-context.cpp:1604
@@ -10595,13 +10594,12 @@ msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Показать/скрыть строку состояния (внизу окна)"
 
 #: ../src/interface.cpp:905
-#, fuzzy
 msgid "Default interface setup"
-msgstr "Заголовок по умолчанию"
+msgstr "Вид интерфейса по умолчанию"
 
 #: ../src/interface.cpp:906
 msgid "Set the custom task"
-msgstr ""
+msgstr "Назначить заказную задачу"
 
 #: ../src/interface.cpp:907
 msgid "Wide"
@@ -14149,12 +14147,16 @@ msgstr "<b>Ничего</b> не выделено"
 msgid ""
 "%s. Drag, click or scroll to spray <b>copies</b> of the initial selection"
 msgstr ""
+"%s. Потащите, щёлкните или прокрутите для распыления <b>копий</b> исходного "
+"выделения"
 
 #: ../src/spray-context.cpp:252
 #, c-format
 msgid ""
 "%s. Drag, click or scroll to spray <b>clones</b> of the initial selection"
 msgstr ""
+"%s. Потащите, щёлкните или прокрутите для распыления <b>клонов</b> исходного "
+"выделения"
 
 #: ../src/spray-context.cpp:255
 #, c-format
@@ -14162,6 +14164,8 @@ msgid ""
 "%s. Drag, click or scroll to spray in a <b>single path</b> of the initial "
 "selection"
 msgstr ""
+"%s. Потащите, щёлкните или прокрутите для распыления исходного выделения в "
+"<b>единый контур</b>"
 
 #: ../src/spray-context.cpp:773
 msgid "<b>Nothing selected!</b> Select objects to spray."
@@ -14449,9 +14453,9 @@ msgid "To tweak a path by pushing, select it and drag over it."
 msgstr "Для коррекции контура толканием, выберите и проведите по нему мышью"
 
 #: ../src/tools-switch.cpp:143
-#, fuzzy
 msgid "To spray a path by pushing, select it and drag over it."
-msgstr "Для коррекции контура толканием, выберите и проведите по нему мышью"
+msgstr ""
+"Для распыления объекта толканием выделите его и проведите по нему мышью."
 
 #: ../src/tools-switch.cpp:149
 msgid ""
@@ -17297,7 +17301,6 @@ msgid "Mouse wheel zooms by default"
 msgstr "По умолчанию колесо мыши масштабирует вид"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:218
-#, fuzzy
 msgid ""
 "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when "
 "off, it zooms with Ctrl and scrolls without Ctrl"
@@ -17472,7 +17475,6 @@ msgstr ""
 "площадки (BB) используются края"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:294
-#, fuzzy
 msgid ""
 "Converting an object to guides places these along the object's true edges "
 "(imitating the object's shape), not along the bounding box"
@@ -17577,7 +17579,6 @@ msgid "Keep objects after conversion to guides"
 msgstr "Сохранять объекты после преобразования"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:407
-#, fuzzy
 msgid ""
 "When converting an object to guides, don't delete the object after the "
 "conversion"
@@ -17588,7 +17589,6 @@ msgid "Treat groups as a single object"
 msgstr "Считать группы единым объектом"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:410
-#, fuzzy
 msgid ""
 "Treat groups as a single object during conversion to guides rather than "
 "converting each child separately"
@@ -17728,7 +17728,6 @@ msgid "Show temporary path outline"
 msgstr "На время показывать абрис"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:455
-#, fuzzy
 msgid "When hovering over a path, briefly flash its outline"
 msgstr ""
 "Мерцать скелетом контура, когда курсор мыши или иного устройства ввода "
@@ -17747,7 +17746,6 @@ msgid "Flash time"
 msgstr "Длительность мерцания"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:459
-#, fuzzy
 msgid ""
 "Specifies how long the path outline will be visible after a mouse-over (in "
 "milliseconds); specify 0 to have the outline shown until mouse leaves the "
@@ -17765,9 +17763,8 @@ msgid "Show transform handles for single nodes"
 msgstr "Показывать рычаги единичных узлов"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:462
-#, fuzzy
 msgid "Show transform handles even when only a single node is selected"
-msgstr "Показывать рычаги единичных узлов"
+msgstr "Показывать рычаги единичных узлов, даже если выделен только один узел"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:463
 msgid "Deleting nodes preserves shape"
@@ -18042,23 +18039,20 @@ msgid "When the original moves, its clones and linked offsets:"
 msgstr "Когда перемещается оригинал, его клоны и потомки:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:650
-#, fuzzy
 msgid "Clones are translated by the same vector as their original"
-msgstr "Каждый клон сдвигается на тот же вектор, что и его оригинал."
+msgstr "Каждый клон сдвигается по тому же вектору, что и его оригинал."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:652
-#, fuzzy
 msgid "Clones preserve their positions when their original is moved"
-msgstr "Клоны остаются на месте, когда двигаются их оригиналы."
+msgstr "Клоны остаются на месте, когда перемещаются их оригиналы."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:654
-#, fuzzy
 msgid ""
 "Each clone moves according to the value of its transform= attribute; for "
 "example, a rotated clone will move in a different direction than its original"
 msgstr ""
 "Каждый клон двигается в соответствии со значением его атрибута transform=. "
-"Например, повернутый клон будет перемещаться в ином направлении, нежели его "
+"Например, повёрнутый клон будет перемещаться в ином направлении, нежели его "
 "оригинал."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:655
@@ -18066,14 +18060,12 @@ msgid "When the original is deleted, its clones:"
 msgstr "Когда оригинал удаляется, его клоны:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:657
-#, fuzzy
 msgid "Orphaned clones are converted to regular objects"
-msgstr "Осиротевшие клоны преобразуются в обычные объекты."
+msgstr "Осиротевшие клоны преобразуются в обычные объекты"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:659
-#, fuzzy
 msgid "Orphaned clones are deleted along with their original"
-msgstr "Осиротевшие клоны удаляются вместе с их оригиналом."
+msgstr "Осиротевшие клоны удаляются вместе с их оригиналом"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:661
 msgid "When duplicating original+clones:"
@@ -18495,7 +18487,6 @@ msgid "Display rendering intent:"
 msgstr "Цветопередача монитора:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:922
-#, fuzzy
 msgid "The rendering intent to use to calibrate display output"
 msgstr "Цветопередача выводимых на дисплей изображений"
 
@@ -18541,7 +18532,6 @@ msgid "Device rendering intent:"
 msgstr "Цветопередача устройства вывода:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:945
-#, fuzzy
 msgid "The rendering intent to use to calibrate device output"
 msgstr "Цветопередача выводимых на дисплей изображений"
 
@@ -18584,7 +18574,6 @@ msgid "Don't emphasize gridlines when zoomed out"
 msgstr "Не подчеркивать линии сетки на большом удалении"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1024
-#, fuzzy
 msgid ""
 "If set and zoomed out, the gridlines will be shown in normal color instead "
 "of major grid line color"
@@ -18737,7 +18726,6 @@ msgid "Minimum exponent:"
 msgstr "Минимальная экспонента:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1101
-#, fuzzy
 msgid ""
 "The smallest number written to SVG is 10 to the power of this exponent; "
 "anything smaller is written as zero"
