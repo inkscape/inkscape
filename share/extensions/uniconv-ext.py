@@ -23,6 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 import sys
 from run_command import run
+import gettext
+_ = gettext.gettext
 
 cmd = None
 
@@ -49,11 +51,11 @@ if cmd == None:
         import imp
         imp.find_module("uniconvertor")
     except ImportError:
-        sys.stderr.write('You need to install the UniConvertor software.\n'+\
+        sys.stderr.write(_('You need to install the UniConvertor software.\n'+\
                      'For GNU/Linux: install the package python-uniconvertor.\n'+\
                      'For Windows: download it from\n'+\
                      'http://sk1project.org/modules.php?name=Products&product=uniconvertor\n'+\
-                     'and install into your Inkscape\'s Python location\n')
+                     'and install into your Inkscape\'s Python location\n'))
         sys.exit(1)
     cmd = 'python -c "import uniconvertor"'
 

@@ -31,6 +31,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 import os
 import sys
 import tempfile
+import gettext
+_ = gettext.gettext
 
 def run(command_format, prog_name, uniconv_format):
     outfile = tempfile.mktemp(uniconv_format)
