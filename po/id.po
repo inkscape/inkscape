@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-25 18:48+0200\n"
-"PO-Revision-Date: 2010-07-07 21:22+0730\n"
+"PO-Revision-Date: 2010-07-09 23:52+0730\n"
 "Last-Translator: Waluyo Adi Siswanto <was.uthm@gmail.com>\n"
 "Language-Team: Indonesian <was.uthm@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -301,7 +301,7 @@ msgstr "Hapus Merah"
 
 #: ../share/extensions/color_replace.inx.h:1
 msgid "By color (RRGGBB hex):"
-msgstr ""
+msgstr "Dengan warna (RRGGBB hex):"
 
 #: ../share/extensions/color_replace.inx.h:3
 msgid "Replace color"
@@ -309,7 +309,7 @@ msgstr "Ganti warna"
 
 #: ../share/extensions/color_replace.inx.h:4
 msgid "Replace color (RRGGBB hex):"
-msgstr ""
+msgstr "Ganti warna (RRGGBB hex):"
 
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
@@ -603,7 +603,7 @@ msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:12
 msgid "Or, use manual scale factor"
-msgstr ""
+msgstr "Atau, gunakan faktor skala manual"
 
 #: ../share/extensions/dxf_input.inx.h:13
 msgid "Use automatic scaling to size A4"
@@ -621,7 +621,7 @@ msgstr ""
 
 #: ../share/extensions/dxf_outlines.inx.h:7
 msgid "Desktop Cutting Plotter"
-msgstr ""
+msgstr "Desktop Cutting Plotter"
 
 #: ../share/extensions/dxf_outlines.inx.h:8
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
@@ -645,11 +645,11 @@ msgstr "Keluaran DXF"
 
 #: ../share/extensions/dxf_output.inx.h:3
 msgid "DXF file written by pstoedit"
-msgstr ""
+msgstr "Berkas DXF ditulis oleh pstoedit"
 
 #: ../share/extensions/dxf_output.inx.h:4
 msgid "pstoedit must be installed to run; see http://www.pstoedit.net/pstoedit"
-msgstr ""
+msgstr "pstoedit harus dipasang; lihat http://www.pstoedit.net/pstoedit"
 
 #: ../share/extensions/edge3d.inx.h:1
 msgid "Blur height"
@@ -661,11 +661,11 @@ msgstr "stdDeviation Pengaburan"
 
 #: ../share/extensions/edge3d.inx.h:3
 msgid "Blur width"
-msgstr ""
+msgstr "Lebar pengaburan"
 
 #: ../share/extensions/edge3d.inx.h:4
 msgid "Edge 3D"
-msgstr "3D Sudut"
+msgstr "Sisi 3D"
 
 #: ../share/extensions/edge3d.inx.h:5
 msgid "Illumination Angle"
@@ -691,7 +691,7 @@ msgstr "Gambar Cantuman"
 
 #: ../share/extensions/embedimage.inx.h:2
 msgid "Embed only selected images"
-msgstr ""
+msgstr "Tempel hanya gambar yang dipilih"
 
 #: ../share/extensions/embedimage.inx.h:3
 #: ../share/extensions/extractimage.inx.h:4
@@ -716,7 +716,7 @@ msgstr "Encapsulated PostScript (*.eps)"
 
 #: ../share/extensions/eqtexsvg.inx.h:1
 msgid "Additional packages (comma-separated): "
-msgstr ""
+msgstr "Tambahan paket (dipisah tanda koma):"
 
 #: ../share/extensions/eqtexsvg.inx.h:2
 msgid "LaTeX formula"
@@ -732,7 +732,7 @@ msgstr "Ekspor sebagai GIMP Palet"
 
 #: ../share/extensions/export_gimp_palette.inx.h:2
 msgid "Exports the colors of this document as GIMP Palette"
-msgstr ""
+msgstr "Ekspor warna dokumen ini sebagai Palet GIMP"
 
 #: ../share/extensions/export_gimp_palette.inx.h:3
 msgid "GIMP Palette (*.gpl)"
@@ -748,7 +748,7 @@ msgstr ""
 
 #: ../share/extensions/extractimage.inx.h:3
 msgid "Extract Image"
-msgstr "Ekstrak Gambar"
+msgstr "kstrak Gambar"
 
 #: ../share/extensions/extractimage.inx.h:5
 msgid "Path to save image:"
@@ -757,7 +757,7 @@ msgstr "Lokasi untuk menyimpan gambar:"
 #: ../share/extensions/extrude.inx.h:1
 #: ../src/live_effects/effect.cpp:94
 msgid "Extrude"
-msgstr ""
+msgstr "Ekstrut"
 
 #: ../share/extensions/extrude.inx.h:2
 #: ../share/extensions/interp.inx.h:3
@@ -798,11 +798,11 @@ msgstr "Masukan XFIG"
 
 #: ../share/extensions/flatten.inx.h:1
 msgid "Flatness"
-msgstr "Kegepengan"
+msgstr "Kepipihan"
 
 #: ../share/extensions/flatten.inx.h:2
 msgid "Flatten Beziers"
-msgstr ""
+msgstr "Kepipihan Beziers"
 
 #: ../share/extensions/foldablebox.inx.h:1
 msgid "Add Guide Lines"
@@ -861,15 +861,15 @@ msgstr "Lebar"
 
 #: ../share/extensions/fractalize.inx.h:1
 msgid "Fractalize"
-msgstr ""
+msgstr "Pemecahan"
 
 #: ../share/extensions/fractalize.inx.h:3
 msgid "Smoothness"
-msgstr ""
+msgstr "Kehalusan"
 
 #: ../share/extensions/fractalize.inx.h:4
 msgid "Subdivisions"
-msgstr ""
+msgstr "Banyaknya pecahan"
 
 #: ../share/extensions/funcplot.inx.h:1
 msgid "Calculate first derivative numerically"
@@ -1331,27 +1331,27 @@ msgstr "Eksponen"
 
 #: ../share/extensions/interp.inx.h:4
 msgid "Interpolate"
-msgstr ""
+msgstr "Interpolasi"
 
 #: ../share/extensions/interp.inx.h:5
 msgid "Interpolate style"
-msgstr ""
+msgstr "Gaya interpolasi"
 
 #: ../share/extensions/interp.inx.h:6
 msgid "Interpolation method"
-msgstr ""
+msgstr "Metode interpolasi"
 
 #: ../share/extensions/interp.inx.h:7
 msgid "Interpolation steps"
-msgstr ""
+msgstr "Tahapan interpolasi"
 
 #: ../share/extensions/interp_att_g.inx.h:1
 msgid "Attribute to Interpolate"
-msgstr ""
+msgstr "Atribut di interpolasi"
 
 #: ../share/extensions/interp_att_g.inx.h:3
 msgid "End Value"
-msgstr ""
+msgstr "Angka akhir"
 
 #: ../share/extensions/interp_att_g.inx.h:4
 #: ../src/ui/dialog/fill-and-stroke.cpp:57
@@ -1368,7 +1368,7 @@ msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:8
 msgid "Integer Number"
-msgstr ""
+msgstr "Bilangan bulat"
 
 #: ../share/extensions/interp_att_g.inx.h:9
 msgid "Interpolate Attribute in a group"
@@ -1495,12 +1495,12 @@ msgstr ""
 #: ../share/extensions/lindenmayer.inx.h:28
 #, no-c-format
 msgid "Randomize angle (%)"
-msgstr ""
+msgstr "Sudut acak (%)"
 
 #: ../share/extensions/lindenmayer.inx.h:30
 #, no-c-format
 msgid "Randomize step (%)"
-msgstr ""
+msgstr "Tahapan acak (%)"
 
 #: ../share/extensions/lindenmayer.inx.h:32
 msgid "Right angle"
@@ -1512,7 +1512,7 @@ msgstr "Aturan"
 
 #: ../share/extensions/lindenmayer.inx.h:34
 msgid "Step length (px)"
-msgstr ""
+msgstr "Panjang tahap (px)"
 
 #: ../share/extensions/lorem_ipsum.inx.h:1
 msgid "Lorem ipsum"
@@ -1598,7 +1598,7 @@ msgstr "Sudut"
 
 #: ../share/extensions/motion.inx.h:3
 msgid "Magnitude"
-msgstr ""
+msgstr "Besaran"
 
 #: ../share/extensions/motion.inx.h:4
 msgid "Motion"
@@ -1678,46 +1678,46 @@ msgstr "Nilai-y dari atas persegi"
 
 #: ../share/extensions/pathalongpath.inx.h:1
 msgid "Copies of the pattern:"
-msgstr ""
+msgstr "Salinan dari pola:"
 
 #: ../share/extensions/pathalongpath.inx.h:2
 msgid "Deformation type:"
-msgstr ""
+msgstr "Tipe deformasi:"
 
 #: ../share/extensions/pathalongpath.inx.h:3
 #: ../share/extensions/pathscatter.inx.h:3
 msgid "Duplicate the pattern before deformation"
-msgstr ""
+msgstr "Gandakan pola sebelum deformasi"
 
 #: ../share/extensions/pathalongpath.inx.h:5
 #: ../share/extensions/pathscatter.inx.h:7
 #: ../src/live_effects/lpe-patternalongpath.cpp:72
 msgid "Normal offset"
-msgstr ""
+msgstr "Geseran normal"
 
 #: ../share/extensions/pathalongpath.inx.h:6
 msgid "Pattern along Path"
-msgstr ""
+msgstr "Pola sepanjang tapak"
 
 #: ../share/extensions/pathalongpath.inx.h:7
 #: ../share/extensions/pathscatter.inx.h:9
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 msgid "Pattern is vertical"
-msgstr ""
+msgstr "Pola vertikal"
 
 #: ../share/extensions/pathalongpath.inx.h:8
 #: ../src/live_effects/lpe-patternalongpath.cpp:54
 msgid "Repeated"
-msgstr ""
+msgstr "Diulang"
 
 #: ../share/extensions/pathalongpath.inx.h:9
 #: ../src/live_effects/lpe-patternalongpath.cpp:55
 msgid "Repeated, stretched"
-msgstr ""
+msgstr "Diulang, diregang"
 
 #: ../share/extensions/pathalongpath.inx.h:10
 msgid "Ribbon"
-msgstr ""
+msgstr "Pita"
 
 #: ../share/extensions/pathalongpath.inx.h:11
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
@@ -1727,7 +1727,7 @@ msgstr "Single"
 #: ../share/extensions/pathalongpath.inx.h:12
 #: ../src/live_effects/lpe-patternalongpath.cpp:53
 msgid "Single, stretched"
-msgstr ""
+msgstr "Tunggal, diregang"
 
 #: ../share/extensions/pathalongpath.inx.h:13
 msgid "Snake"
@@ -1736,17 +1736,17 @@ msgstr "Ular"
 #: ../share/extensions/pathalongpath.inx.h:14
 #: ../share/extensions/pathscatter.inx.h:11
 msgid "Space between copies:"
-msgstr ""
+msgstr "Spasi antara salinan:"
 
 #: ../share/extensions/pathalongpath.inx.h:15
 #: ../share/extensions/pathscatter.inx.h:13
 #: ../src/live_effects/lpe-patternalongpath.cpp:73
 msgid "Tangential offset"
-msgstr ""
+msgstr "Geseran tangensial"
 
 #: ../share/extensions/pathalongpath.inx.h:16
 msgid "This effect bends a pattern object along arbitrary \"skeleton\" paths. The pattern is the topmost object in the selection. (groups of paths/shapes/clones... allowed)"
-msgstr ""
+msgstr "Memberikan efek menekuk pola obyek sepanjang \"kerangka\" tapak. Pola yang dibuat diletakkan bagian depan dari kerangka. (kelompok tapak/bentuk/gandaan... diijinkan)"
 
 #: ../share/extensions/pathscatter.inx.h:1
 msgid "Cloned"
@@ -1758,7 +1758,7 @@ msgstr "Tersalin"
 
 #: ../share/extensions/pathscatter.inx.h:4
 msgid "Follow path orientation"
-msgstr "ikuti orientasi jalur"
+msgstr "Ikuti orientasi tapak"
 
 #: ../share/extensions/pathscatter.inx.h:6
 msgid "Moved"
@@ -1778,11 +1778,11 @@ msgstr "Menyebar"
 
 #: ../share/extensions/pathscatter.inx.h:12
 msgid "Stretch spaces to fit skeleton length"
-msgstr ""
+msgstr "Rentang spasi untuk menyesuaikan panjang kerangka"
 
 #: ../share/extensions/pathscatter.inx.h:14
 msgid "This effect scatters a pattern along arbitrary \"skeleton\" paths. The pattern must be the topmost object in the selection. Groups of paths, shapes, clones are allowed."
-msgstr ""
+msgstr "Memberikan efek menyebar pola obyek sepanjang \"kerangka\" tapak. Pola yang dibuat diletakkan bagian depan dari kerangka. Kelompok tapak/bentuk/gandaan, diijinkan."
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in)"
@@ -2327,12 +2327,12 @@ msgstr "Kurva (%):"
 
 #: ../share/extensions/rubberstretch.inx.h:4
 msgid "Rubber Stretch"
-msgstr ""
+msgstr "Regangan Karet"
 
 #: ../share/extensions/rubberstretch.inx.h:6
 #, no-c-format
 msgid "Strength (%):"
-msgstr ""
+msgstr "Kekuatan (%):"
 
 #: ../share/extensions/scour.inx.h:1
 msgid "Embed rasters"
@@ -2352,7 +2352,7 @@ msgstr ""
 
 #: ../share/extensions/scour.inx.h:6
 msgid "Indent"
-msgstr "Indent"
+msgstr "Inden"
 
 #: ../share/extensions/scour.inx.h:7
 msgid "Keep editor data"
@@ -2493,21 +2493,21 @@ msgstr ""
 
 #: ../share/extensions/straightseg.inx.h:1
 msgid "Behavior"
-msgstr ""
+msgstr "Perilaku"
 
 #. You can add new elements from this point forward
 #: ../share/extensions/straightseg.inx.h:3
 #: ../src/helper/units.cpp:42
 msgid "Percent"
-msgstr ""
+msgstr "Persen"
 
 #: ../share/extensions/straightseg.inx.h:4
 msgid "Straighten Segments"
-msgstr ""
+msgstr "Meluruskan segmen"
 
 #: ../share/extensions/summersnight.inx.h:1
 msgid "Envelope"
-msgstr ""
+msgstr "Amplop"
 
 #: ../share/extensions/svg2xaml.inx.h:1
 #: ../share/extensions/xaml2svg.inx.h:1
@@ -2517,7 +2517,7 @@ msgstr "Microsoft XAML (*.xaml)"
 #: ../share/extensions/svg2xaml.inx.h:2
 #: ../share/extensions/xaml2svg.inx.h:2
 msgid "Microsoft's GUI definition format"
-msgstr ""
+msgstr "Definisi format GUI Microsoft"
 
 #: ../share/extensions/svg2xaml.inx.h:3
 msgid "XAML Output"
@@ -3129,7 +3129,7 @@ msgstr "Kapan harus dipindahkan"
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
-msgstr ""
+msgstr "Jumlah kocokan"
 
 #: ../share/extensions/whirl.inx.h:3
 msgid "Rotation is clockwise"
@@ -3137,7 +3137,7 @@ msgstr "Putaran searah jaum jam"
 
 #: ../share/extensions/whirl.inx.h:4
 msgid "Whirl"
-msgstr ""
+msgstr "Pengocokan"
 
 #: ../share/extensions/wmf_input.inx.h:1
 #: ../share/extensions/wmf_output.inx.h:1
@@ -7394,7 +7394,6 @@ msgid "grid intersection"
 msgstr "perpotongan garis bantu"
 
 #: ../src/display/snap-indicator.cpp:83
-#, fuzzy
 msgid "guide"
 msgstr "Panduan"
 
@@ -7551,7 +7550,6 @@ msgid "Path intersection"
 msgstr "Pilihan"
 
 #: ../src/display/snap-indicator.cpp:199
-#, fuzzy
 msgid "Guide"
 msgstr "Panduan"
 
@@ -7573,9 +7571,8 @@ msgid "Center"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:214
-#, fuzzy
 msgid "Corner"
-msgstr "Tutup"
+msgstr "Pojok"
 
 #: ../src/display/snap-indicator.cpp:217
 msgid "Text baseline"
@@ -7804,9 +7801,8 @@ msgid "State:"
 msgstr "Bintang"
 
 #: ../src/extension/extension.cpp:742
-#, fuzzy
 msgid "Loaded"
-msgstr "Node"
+msgstr "Dimuat"
 
 #: ../src/extension/extension.cpp:742
 msgid "Unloaded"
@@ -7954,7 +7950,7 @@ msgstr ""
 #: ../src/extension/internal/bitmap/channel.cpp:47
 #: ../src/extension/internal/bitmap/levelChannel.cpp:53
 msgid "Channel"
-msgstr ""
+msgstr "Kanal"
 
 #. TODO: find an unused layer number, forming name from _("Layer ") + "%d"
 #: ../src/extension/internal/bitmap/channel.cpp:49
@@ -7966,37 +7962,37 @@ msgstr "Lapis"
 #: ../src/extension/internal/bitmap/channel.cpp:50
 #: ../src/extension/internal/bitmap/levelChannel.cpp:54
 msgid "Red Channel"
-msgstr ""
+msgstr "Kanal Merah"
 
 #: ../src/extension/internal/bitmap/channel.cpp:51
 #: ../src/extension/internal/bitmap/levelChannel.cpp:55
 msgid "Green Channel"
-msgstr ""
+msgstr "Kanal Hijau"
 
 #: ../src/extension/internal/bitmap/channel.cpp:52
 #: ../src/extension/internal/bitmap/levelChannel.cpp:56
 msgid "Blue Channel"
-msgstr ""
+msgstr "Kanal Biru"
 
 #: ../src/extension/internal/bitmap/channel.cpp:53
 #: ../src/extension/internal/bitmap/levelChannel.cpp:57
 msgid "Cyan Channel"
-msgstr ""
+msgstr "Kanal Biru Muda"
 
 #: ../src/extension/internal/bitmap/channel.cpp:54
 #: ../src/extension/internal/bitmap/levelChannel.cpp:58
 msgid "Magenta Channel"
-msgstr ""
+msgstr "Kanal Merah Mudah"
 
 #: ../src/extension/internal/bitmap/channel.cpp:55
 #: ../src/extension/internal/bitmap/levelChannel.cpp:59
 msgid "Yellow Channel"
-msgstr ""
+msgstr "Kanal Kuning"
 
 #: ../src/extension/internal/bitmap/channel.cpp:56
 #: ../src/extension/internal/bitmap/levelChannel.cpp:60
 msgid "Black Channel"
-msgstr ""
+msgstr "Kanal Hitam"
 
 #: ../src/extension/internal/bitmap/channel.cpp:57
 #: ../src/extension/internal/bitmap/levelChannel.cpp:61
@@ -8007,7 +8003,7 @@ msgstr "_opasitas"
 #: ../src/extension/internal/bitmap/channel.cpp:58
 #: ../src/extension/internal/bitmap/levelChannel.cpp:62
 msgid "Matte Channel"
-msgstr ""
+msgstr "Kanal Redup"
 
 #: ../src/extension/internal/bitmap/channel.cpp:65
 msgid "Extract specific channel from image."
@@ -8026,9 +8022,8 @@ msgid "Colorize selected bitmap(s) with specified color, using given opacity."
 msgstr ""
 
 #: ../src/extension/internal/bitmap/contrast.cpp:39
-#, fuzzy
 msgid "Contrast"
-msgstr "Tutup"
+msgstr "Kontras"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:41
 msgid "Adjust"
@@ -8063,7 +8058,7 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/edge.cpp:36
 msgid "Edge"
-msgstr ""
+msgstr "Sisi"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
 #, fuzzy
@@ -8121,17 +8116,17 @@ msgstr ""
 #: ../src/extension/internal/bitmap/level.cpp:42
 #: ../src/extension/internal/bitmap/levelChannel.cpp:64
 msgid "Black Point"
-msgstr ""
+msgstr "Titik Hitam"
 
 #: ../src/extension/internal/bitmap/level.cpp:43
 #: ../src/extension/internal/bitmap/levelChannel.cpp:65
 msgid "White Point"
-msgstr ""
+msgstr "Titik Putih"
 
 #: ../src/extension/internal/bitmap/level.cpp:44
 #: ../src/extension/internal/bitmap/levelChannel.cpp:66
 msgid "Gamma Correction"
-msgstr ""
+msgstr "Koreksi Gama"
 
 #: ../src/extension/internal/bitmap/level.cpp:50
 msgid "Level selected bitmap(s) by scaling values falling between the given ranges to the full color range."
@@ -8146,9 +8141,8 @@ msgid "Level the specified channel of selected bitmap(s) by scaling values falli
 msgstr ""
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
-#, fuzzy
 msgid "Median"
-msgstr "_File"
+msgstr "Median"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
 msgid "Replace each pixel component with the median color in a circular neighborhood."
@@ -8160,7 +8154,7 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/modulate.cpp:43
 msgid "Brightness"
-msgstr ""
+msgstr "Terang"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:49
 msgid "Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
@@ -8235,9 +8229,8 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
 #: ../src/ui/dialog/filter-effects-dialog.cpp:962
-#, fuzzy
 msgid "Elevation"
-msgstr "Pilihan"
+msgstr "Elevasi"
 
 #: ../src/extension/internal/bitmap/shade.cpp:43
 msgid "Colored Shading"
@@ -8294,35 +8287,36 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/wave.cpp:37
 msgid "Wave"
-msgstr ""
+msgstr "Gelombang"
 
 #: ../src/extension/internal/bitmap/wave.cpp:39
 msgid "Amplitude"
-msgstr ""
+msgstr "Amplitudo"
 
 #: ../src/extension/internal/bitmap/wave.cpp:40
 msgid "Wavelength"
-msgstr ""
+msgstr "Panjang gelombang"
 
 #: ../src/extension/internal/bitmap/wave.cpp:46
 msgid "Alter selected bitmap(s) along sine wave."
 msgstr ""
 
+# Belum menemukan kata yang tepat untuk ini
 #: ../src/extension/internal/bluredge.cpp:134
 msgid "Inset/Outset Halo"
-msgstr ""
+msgstr "Inset/Outset Halo"
 
 #: ../src/extension/internal/bluredge.cpp:136
 msgid "Width in px of the halo"
-msgstr ""
+msgstr "Lebar halo dalam px"
 
 #: ../src/extension/internal/bluredge.cpp:137
 msgid "Number of steps"
-msgstr ""
+msgstr "Jumlah tahap"
 
 #: ../src/extension/internal/bluredge.cpp:137
 msgid "Number of inset/outset copies of the object to make"
-msgstr ""
+msgstr "Jumlah salinan inset/outset dari obyek yang dibuat"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:327
 #: ../src/extension/internal/cairo-ps-out.cpp:365
@@ -8344,7 +8338,7 @@ msgstr "PostScript tingkat 2"
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:247
 #: ../src/extension/internal/emf-win32-inout.cpp:2431
 msgid "Convert texts to paths"
-msgstr ""
+msgstr "Ubah teks ke tapak"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:334
 msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
@@ -8525,9 +8519,8 @@ msgid "Link or embed image:"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:152
-#, fuzzy
 msgid "embed"
-msgstr "Kecepatan"
+msgstr "ditempel"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:153
 msgid "link"
@@ -8656,9 +8649,8 @@ msgid "Clip to:"
 msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:104
-#, fuzzy
 msgid "Page settings"
-msgstr "Orientasi kanvas"
+msgstr "Pengaturan halaman"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:106
 msgid "Precision of approximating gradient meshes:"
@@ -8689,21 +8681,21 @@ msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
-msgstr ""
+msgstr "Tempelan gambar"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:126
 msgid "Import settings"
-msgstr ""
+msgstr "Pengaturan impor"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:248
 msgid "PDF Import Settings"
-msgstr ""
+msgstr "Pengaturan Impor PDF"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:396
 msgid "pdfinput|medium"
-msgstr ""
+msgstr "pdfinput|sedang"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:397
 msgid "fine"
@@ -8759,7 +8751,7 @@ msgstr "Scalable Vector Graphic (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:93
 msgid "Inkscape native file format and W3C standard"
-msgstr ""
+msgstr "Format berkas Inkscape asli dan standar W3C"
 
 #: ../src/extension/internal/svg.cpp:101
 msgid "SVG Output Inkscape"
@@ -8771,7 +8763,7 @@ msgstr "Inkscape SVG (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:107
 msgid "SVG format with Inkscape extensions"
-msgstr ""
+msgstr "Format SVG dengan ekstensi Inkscape"
 
 #: ../src/extension/internal/svg.cpp:115
 msgid "SVG Output"
@@ -8796,7 +8788,7 @@ msgstr "Compressed Inkscape SVG (*.svgz)"
 
 #: ../src/extension/internal/svgz.cpp:54
 msgid "SVG file format compressed with GZip"
-msgstr ""
+msgstr "Format berkas SVG dimampatkan dengan GZip"
 
 #: ../src/extension/internal/svgz.cpp:62
 #: ../src/extension/internal/svgz.cpp:76
@@ -8805,7 +8797,7 @@ msgstr "Keluaran SVGZ"
 
 #: ../src/extension/internal/svgz.cpp:68
 msgid "Inkscape's native file format compressed with GZip"
-msgstr ""
+msgstr "Format berkas Inkscape asli demampatkan dengan GZip"
 
 #: ../src/extension/internal/svgz.cpp:81
 msgid "Compressed plain SVG (*.svgz)"
@@ -8813,7 +8805,7 @@ msgstr "Compressed plain SVG (*.svgz)"
 
 #: ../src/extension/internal/svgz.cpp:82
 msgid "Scalable Vector Graphics format compressed with GZip"
-msgstr ""
+msgstr "Format Scalable Vector Graphics dimampatkan dengan GZip"
 
 #: ../src/extension/internal/win32.cpp:485
 msgid "Windows 32-bit Print"
@@ -8924,12 +8916,12 @@ msgstr "Dokumen telah disimpan."
 #: ../src/file.cpp:1208
 #, c-format
 msgid "drawing%s"
-msgstr ""
+msgstr "menggambar%s"
 
 #: ../src/file.cpp:776
 #, c-format
 msgid "drawing-%d%s"
-msgstr ""
+msgstr "menggambar-%d%s"
 
 #: ../src/file.cpp:780
 #, c-format
@@ -8938,15 +8930,15 @@ msgstr "%s"
 
 #: ../src/file.cpp:795
 msgid "Select file to save a copy to"
-msgstr ""
+msgstr "Pilih berkas untuk disimpan salinannya ke"
 
 #: ../src/file.cpp:797
 msgid "Select file to save to"
-msgstr ""
+msgstr "Pilih berkas untuk disimpan ke"
 
 #: ../src/file.cpp:892
 msgid "No changes need to be saved."
-msgstr ""
+msgstr "Tidak ada perubahan yang perlu disimpan"
 
 #: ../src/file.cpp:909
 msgid "Saving document..."
@@ -8982,9 +8974,8 @@ msgid "Component Transfer"
 msgstr ""
 
 #: ../src/filter-enums.cpp:23
-#, fuzzy
 msgid "Composite"
-msgstr "Ukuran kanvas"
+msgstr "Komposit"
 
 #: ../src/filter-enums.cpp:24
 msgid "Convolve Matrix"
@@ -9065,9 +9056,8 @@ msgid "Screen"
 msgstr ""
 
 #: ../src/filter-enums.cpp:56
-#, fuzzy
 msgid "Darken"
-msgstr "Tanda"
+msgstr "Gelapkan"
 
 #: ../src/filter-enums.cpp:57
 msgid "Lighten"
@@ -9124,7 +9114,7 @@ msgstr ""
 
 #: ../src/filter-enums.cpp:84
 msgid "Identity"
-msgstr ""
+msgstr "Identitas"
 
 #: ../src/filter-enums.cpp:85
 msgid "Table"
@@ -9269,35 +9259,35 @@ msgstr ""
 #: ../src/gradient-context.cpp:132
 #: ../src/gradient-drag.cpp:76
 msgid "Linear gradient <b>start</b>"
-msgstr ""
+msgstr "Gradiasi linier <b>mulai</b>"
 
 #. POINT_LG_BEGIN
 #: ../src/gradient-context.cpp:133
 #: ../src/gradient-drag.cpp:77
 msgid "Linear gradient <b>end</b>"
-msgstr ""
+msgstr "Gradiasi linier <b>akhir</b>"
 
 #: ../src/gradient-context.cpp:134
 #: ../src/gradient-drag.cpp:78
 msgid "Linear gradient <b>mid stop</b>"
-msgstr ""
+msgstr "Gradiasi linier <b>hentian tengah</b>"
 
 #: ../src/gradient-context.cpp:135
 #: ../src/gradient-drag.cpp:79
 msgid "Radial gradient <b>center</b>"
-msgstr ""
+msgstr "Gradiasi radial <b>tengah</b>"
 
 #: ../src/gradient-context.cpp:136
 #: ../src/gradient-context.cpp:137
 #: ../src/gradient-drag.cpp:80
 #: ../src/gradient-drag.cpp:81
 msgid "Radial gradient <b>radius</b>"
-msgstr ""
+msgstr "Gradiasi radial <b>jejari</b>"
 
 #: ../src/gradient-context.cpp:138
 #: ../src/gradient-drag.cpp:82
 msgid "Radial gradient <b>focus</b>"
-msgstr ""
+msgstr "Gradiasi radial  <b>fokus</b>"
 
 #. POINT_RG_FOCUS
 #: ../src/gradient-context.cpp:139
@@ -9305,7 +9295,7 @@ msgstr ""
 #: ../src/gradient-drag.cpp:83
 #: ../src/gradient-drag.cpp:84
 msgid "Radial gradient <b>mid stop</b>"
-msgstr ""
+msgstr "Gradiasi radial  <b>hentian tengah</b>"
 
 #. TRANSLATORS: %s will be substituted with the point name (see previous messages); This is part of a compound message
 #: ../src/gradient-context.cpp:165
@@ -9601,7 +9591,7 @@ msgstr "Ex kuadrat"
 
 #: ../src/inkscape.cpp:328
 msgid "Autosaving documents..."
-msgstr ""
+msgstr "Menyimpan otomatis dokumen..."
 
 #: ../src/inkscape.cpp:399
 msgid "Autosave failed! Could not find inkscape extension to save document."
@@ -9615,7 +9605,7 @@ msgstr ""
 
 #: ../src/inkscape.cpp:424
 msgid "Autosave complete."
-msgstr ""
+msgstr "Selesai menyimpan otomatis."
 
 #: ../src/inkscape.cpp:661
 msgid "Untitled document"
@@ -9878,7 +9868,7 @@ msgstr ""
 #. UnLock menuitem
 #: ../src/libgdl/gdl-dock-item.c:1479
 msgid "UnLock"
-msgstr ""
+msgstr "Lepan kuncian"
 
 #. Hide menuitem.
 #: ../src/libgdl/gdl-dock-item.c:1486
@@ -9889,7 +9879,7 @@ msgstr "Panduan"
 #. Lock menuitem
 #: ../src/libgdl/gdl-dock-item.c:1491
 msgid "Lock"
-msgstr ""
+msgstr "Kunci"
 
 #: ../src/libgdl/gdl-dock-item.c:1717
 #, c-format
@@ -10160,15 +10150,15 @@ msgstr "Tutup"
 
 #: ../src/live_effects/effect.cpp:91
 msgid "Circle (by center and radius)"
-msgstr ""
+msgstr "Lingkaran (dengan tengah dan jejari)"
 
 #: ../src/live_effects/effect.cpp:92
 msgid "Circle by 3 points"
-msgstr ""
+msgstr "Lingkaran dengan 3 titik"
 
 #: ../src/live_effects/effect.cpp:93
 msgid "Dynamic stroke"
-msgstr ""
+msgstr "Sapuan dinamik"
 
 #: ../src/live_effects/effect.cpp:95
 #, fuzzy
@@ -10215,7 +10205,7 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:106
 msgid "Text label"
-msgstr ""
+msgstr "Nama teks"
 
 #. 0.46
 #: ../src/live_effects/effect.cpp:109
@@ -10241,11 +10231,11 @@ msgstr ""
 #. 0.47
 #: ../src/live_effects/effect.cpp:114
 msgid "VonKoch"
-msgstr ""
+msgstr "VonKoch"
 
 #: ../src/live_effects/effect.cpp:115
 msgid "Knot"
-msgstr ""
+msgstr "Simpul"
 
 #: ../src/live_effects/effect.cpp:116
 msgid "Construct grid"
@@ -10288,7 +10278,7 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:299
 msgid "No effect"
-msgstr ""
+msgstr "Tanpa efek"
 
 #: ../src/live_effects/effect.cpp:346
 #, c-format
@@ -10315,7 +10305,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-bendpath.cpp:56
 msgid "Width of the path"
-msgstr ""
+msgstr "Lebar dari tapak"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
@@ -11727,39 +11717,39 @@ msgstr ""
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
-msgstr ""
+msgstr "Pengenalan CC"
 
 #: ../src/rdf.cpp:177
 msgid "CC Attribution-ShareAlike"
-msgstr ""
+msgstr "CC Attribution-ShareAlike"
 
 #: ../src/rdf.cpp:182
 msgid "CC Attribution-NoDerivs"
-msgstr ""
+msgstr "Pengenalan CC--NoDerivs"
 
 #: ../src/rdf.cpp:187
 msgid "CC Attribution-NonCommercial"
-msgstr ""
+msgstr "Pengenalan CC--NonCommercial"
 
 #: ../src/rdf.cpp:192
 msgid "CC Attribution-NonCommercial-ShareAlike"
-msgstr ""
+msgstr "Pengenalan CC--NonCommercial-ShareAlike"
 
 #: ../src/rdf.cpp:197
 msgid "CC Attribution-NonCommercial-NoDerivs"
-msgstr ""
+msgstr "Pengenalan CC--NonCommercial-NoDerivs"
 
 #: ../src/rdf.cpp:202
 msgid "Public Domain"
-msgstr ""
+msgstr "Ranah Publik"
 
 #: ../src/rdf.cpp:207
 msgid "FreeArt"
-msgstr ""
+msgstr "Seni Bebas"
 
 #: ../src/rdf.cpp:212
 msgid "Open Font License"
-msgstr ""
+msgstr "Lisensi Open Font"
 
 #: ../src/rdf.cpp:229
 msgid "Title"
@@ -11787,7 +11777,7 @@ msgstr ""
 
 #: ../src/rdf.cpp:239
 msgid "Type of document (DCMI Type)."
-msgstr ""
+msgstr "Tipe dokumen (Tipe DCMI)."
 
 #: ../src/rdf.cpp:242
 msgid "Creator"
@@ -12002,7 +11992,7 @@ msgstr "Pilih satu <b>objek</b> untuk di clone"
 #: ../src/selection-chemistry.cpp:651
 #: ../src/selection-describer.cpp:53
 msgid "Group"
-msgstr ""
+msgstr "Kelompok"
 
 #: ../src/selection-chemistry.cpp:665
 msgid "Select a <b>group</b> to ungroup."
@@ -12015,7 +12005,7 @@ msgstr ""
 #: ../src/selection-chemistry.cpp:712
 #: ../src/sp-item-group.cpp:500
 msgid "Ungroup"
-msgstr ""
+msgstr "Lepas kelompok"
 
 #: ../src/selection-chemistry.cpp:802
 #, fuzzy
@@ -12138,33 +12128,33 @@ msgstr ""
 
 #: ../src/selection-chemistry.cpp:1456
 msgid "Remove transform"
-msgstr ""
+msgstr "Hapus transformasi"
 
 #: ../src/selection-chemistry.cpp:1559
 msgid "Rotate 90&#176; CCW"
-msgstr ""
+msgstr "Putar 90&#176; BJJ"
 
 #: ../src/selection-chemistry.cpp:1559
 msgid "Rotate 90&#176; CW"
-msgstr ""
+msgstr "Putar 90&#176; SJJ"
 
 #: ../src/selection-chemistry.cpp:1580
 #: ../src/seltrans.cpp:534
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
-msgstr ""
+msgstr "Putar"
 
 #: ../src/selection-chemistry.cpp:1627
 msgid "Rotate by pixels"
-msgstr ""
+msgstr "Putar dengan piksel"
 
 #: ../src/selection-chemistry.cpp:1682
 msgid "Scale by whole factor"
-msgstr ""
+msgstr "Skala dengan faktor total"
 
 #: ../src/selection-chemistry.cpp:1697
 msgid "Move vertically"
-msgstr ""
+msgstr "Geser vertikal"
 
 #: ../src/selection-chemistry.cpp:1700
 #, fuzzy
@@ -12282,11 +12272,11 @@ msgstr ""
 
 #: ../src/selection-chemistry.cpp:2637
 msgid "Rendering bitmap..."
-msgstr ""
+msgstr "Pencitraan bitmap..."
 
 #: ../src/selection-chemistry.cpp:2811
 msgid "Create bitmap"
-msgstr ""
+msgstr "Membuat bitmap"
 
 #: ../src/selection-chemistry.cpp:2843
 #, fuzzy
@@ -12350,7 +12340,7 @@ msgstr ""
 
 #: ../src/selection-describer.cpp:47
 msgid "Circle"
-msgstr ""
+msgstr "Lingkaran"
 
 #. Ellipse
 #: ../src/selection-describer.cpp:49
@@ -12371,12 +12361,12 @@ msgstr "Garis"
 
 #: ../src/selection-describer.cpp:59
 msgid "Path"
-msgstr ""
+msgstr "Tapak"
 
 #: ../src/selection-describer.cpp:61
 #: ../src/widgets/toolbox.cpp:2913
 msgid "Polygon"
-msgstr ""
+msgstr "Poligon"
 
 #: ../src/selection-describer.cpp:63
 msgid "Polyline"
@@ -12520,11 +12510,11 @@ msgstr ""
 #: ../src/seltrans.cpp:537
 #: ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
-msgstr ""
+msgstr "Condong"
 
 #: ../src/seltrans.cpp:549
 msgid "Set center"
-msgstr ""
+msgstr "Tetapkan tengah"
 
 #: ../src/seltrans.cpp:624
 msgid "Stamp"
@@ -12552,7 +12542,7 @@ msgstr ""
 
 #: ../src/seltrans.cpp:813
 msgid "Reset center"
-msgstr ""
+msgstr "Atur ulang tengah"
 
 #: ../src/seltrans.cpp:1046
 #: ../src/seltrans.cpp:1141
@@ -12596,19 +12586,19 @@ msgstr ""
 #: ../src/sp-ellipse.cpp:501
 #: ../src/sp-ellipse.cpp:878
 msgid "<b>Ellipse</b>"
-msgstr ""
+msgstr "<b>Elips</b>"
 
 #: ../src/sp-ellipse.cpp:642
 msgid "<b>Circle</b>"
-msgstr ""
+msgstr "<b>Lingkaran</b>"
 
 #: ../src/sp-ellipse.cpp:873
 msgid "<b>Segment</b>"
-msgstr ""
+msgstr "<b>Segmen</b>"
 
 #: ../src/sp-ellipse.cpp:875
 msgid "<b>Arc</b>"
-msgstr ""
+msgstr "<b>Busur</b>"
 
 #. TRANSLATORS: "Flow region" is an area where text is allowed to flow
 #: ../src/sp-flowregion.cpp:270
@@ -12709,12 +12699,12 @@ msgstr ""
 #: ../src/sp-offset.cpp:427
 #: ../src/sp-offset.cpp:431
 msgid "outset"
-msgstr ""
+msgstr "outset"
 
 #: ../src/sp-offset.cpp:427
 #: ../src/sp-offset.cpp:431
 msgid "inset"
-msgstr ""
+msgstr "inset"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
 #: ../src/sp-offset.cpp:430
@@ -12724,7 +12714,7 @@ msgstr ""
 
 #: ../src/sp-polygon.cpp:226
 msgid "<b>Polygon</b>"
-msgstr ""
+msgstr "<b>Poligon</b>"
 
 #: ../src/sp-polyline.cpp:177
 msgid "<b>Polyline</b>"
@@ -12732,7 +12722,7 @@ msgstr ""
 
 #: ../src/sp-rect.cpp:223
 msgid "<b>Rectangle</b>"
-msgstr ""
+msgstr "<b>Segi empat</b>"
 
 #. TRANSLATORS: since turn count isn't an integer, please adjust the
 #. string as needed to deal with an localized plural forms.
@@ -12804,7 +12794,7 @@ msgstr ""
 
 #: ../src/spiral-context.cpp:484
 msgid "Create spiral"
-msgstr ""
+msgstr "Membuat spiral"
 
 #: ../src/splivarot.cpp:66
 #: ../src/splivarot.cpp:72
@@ -12859,7 +12849,7 @@ msgstr ""
 
 #: ../src/splivarot.cpp:1220
 msgid "Convert stroke to path"
-msgstr ""
+msgstr "Ubah sapuan ke tapak"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:1223
@@ -12983,7 +12973,7 @@ msgstr ""
 
 #: ../src/star-context.cpp:503
 msgid "Create star"
-msgstr ""
+msgstr "Membuat bintang"
 
 #: ../src/text-chemistry.cpp:104
 msgid "Select <b>a text and a path</b> to put text on path."
@@ -13072,7 +13062,7 @@ msgstr ""
 
 #: ../src/text-context.cpp:505
 msgid "Create text"
-msgstr ""
+msgstr "Membuat teks"
 
 #: ../src/text-context.cpp:529
 msgid "Non-printable character"
@@ -13155,11 +13145,11 @@ msgstr ""
 
 #: ../src/text-context.cpp:1172
 msgid "Rotate counterclockwise"
-msgstr ""
+msgstr "Putar berlawanan jarum jam"
 
 #: ../src/text-context.cpp:1193
 msgid "Rotate clockwise"
-msgstr ""
+msgstr "Putar searah jarum jam"
 
 #: ../src/text-context.cpp:1210
 msgid "Contract line spacing"
@@ -13179,7 +13169,7 @@ msgstr ""
 
 #: ../src/text-context.cpp:1375
 msgid "Paste text"
-msgstr ""
+msgstr "Tempel teks"
 
 #: ../src/text-context.cpp:1621
 #, c-format
@@ -13387,7 +13377,7 @@ msgstr ""
 
 #: ../src/tweak-context.cpp:1222
 msgid "<b>Nothing selected!</b> Select objects to tweak."
-msgstr ""
+msgstr "<b>Tidak ada yang dipilih!</b> Pilih obyek untuk diatur."
 
 #: ../src/tweak-context.cpp:1258
 #, fuzzy
@@ -13681,7 +13671,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:797
 #: ../src/widgets/toolbox.cpp:2262
 msgid "Nodes"
-msgstr ""
+msgstr "Nodal"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:803
 msgid "Relative to: "
@@ -13995,14 +13985,12 @@ msgid "Create new grid."
 msgstr "Membuat kisi baru."
 
 #: ../src/ui/dialog/document-properties.cpp:110
-#, fuzzy
 msgid "_Remove"
-msgstr "Pindahkan %s"
+msgstr "Hapus"
 
 #: ../src/ui/dialog/document-properties.cpp:110
-#, fuzzy
 msgid "Remove selected grid."
-msgstr "Terakhir dipilih"
+msgstr "Hapus kisi yang dipilih."
 
 #: ../src/ui/dialog/document-properties.cpp:119
 #: ../src/widgets/toolbox.cpp:2351
@@ -14203,7 +14191,7 @@ msgstr "Informasi"
 
 #: ../src/ui/dialog/extension-editor.cpp:82
 msgid "Parameters"
-msgstr ""
+msgstr "Parameter"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:383
 msgid "No preview"
@@ -14303,7 +14291,7 @@ msgstr ""
 #. ##### Export options buttons/spinners, etc
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1406
 msgid "Document"
-msgstr ""
+msgstr "Dokumen"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1458
 msgid "Cairo"
@@ -14447,7 +14435,7 @@ msgstr "Tampilkan panduan"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1255
 msgid "Apply filter"
-msgstr ""
+msgstr "Terapkan penapis"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1324
 msgid "filter"
@@ -14455,7 +14443,7 @@ msgstr "penapis"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1331
 msgid "Add filter"
-msgstr ""
+msgstr "Tambah penapis"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1357
 msgid "Duplicate filter"
@@ -14484,7 +14472,7 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2070
 msgid "Add Effect:"
-msgstr ""
+msgstr "Tambah efek:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2071
 #, fuzzy
@@ -14498,7 +14486,7 @@ msgstr "Terakhir dipilih"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2110
 msgid "Effect parameters"
-msgstr ""
+msgstr "Parameter efek"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2111
 msgid "Filter General Settings"
@@ -14733,7 +14721,7 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2236
 msgid "Delta X:"
-msgstr ""
+msgstr "Delta X:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2236
 msgid "This is how far the input image gets shifted to the right"
@@ -14741,7 +14729,7 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2237
 msgid "Delta Y:"
-msgstr ""
+msgstr "Delta Y:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2237
 msgid "This is how far the input image gets shifted downwards"
@@ -14767,11 +14755,11 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2253
 msgid "Base Frequency:"
-msgstr ""
+msgstr "Frekuensi Dasar:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2254
 msgid "Octaves:"
-msgstr ""
+msgstr "Oktaf:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2255
 #, fuzzy
@@ -15352,7 +15340,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:221
 msgid "Letterlike Symbols"
-msgstr ""
+msgstr "Simbol mirip huruf"
 
 #: ../src/ui/dialog/glyphs.cpp:222
 #, fuzzy
@@ -15361,11 +15349,11 @@ msgstr "Halaman"
 
 #: ../src/ui/dialog/glyphs.cpp:223
 msgid "Arrows"
-msgstr ""
+msgstr "Tanda Panah"
 
 #: ../src/ui/dialog/glyphs.cpp:224
 msgid "Mathematical Operators"
-msgstr ""
+msgstr "Operator Matematika"
 
 #: ../src/ui/dialog/glyphs.cpp:225
 #, fuzzy
@@ -15382,7 +15370,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:228
 msgid "Enclosed Alphanumerics"
-msgstr ""
+msgstr "Alfanumerik Terbatas"
 
 #: ../src/ui/dialog/glyphs.cpp:229
 msgid "Box Drawing"
@@ -15390,11 +15378,11 @@ msgstr "Gambar Kotak"
 
 #: ../src/ui/dialog/glyphs.cpp:230
 msgid "Block Elements"
-msgstr ""
+msgstr "Unsur Kotak"
 
 #: ../src/ui/dialog/glyphs.cpp:231
 msgid "Geometric Shapes"
-msgstr ""
+msgstr "Bentuk Geometri"
 
 #: ../src/ui/dialog/glyphs.cpp:232
 #, fuzzy
@@ -15403,15 +15391,15 @@ msgstr "Lisensi"
 
 #: ../src/ui/dialog/glyphs.cpp:233
 msgid "Dingbats"
-msgstr ""
+msgstr "Dingbat"
 
 #: ../src/ui/dialog/glyphs.cpp:234
 msgid "Miscellaneous Mathematical Symbols-A"
-msgstr ""
+msgstr "Berbagai Simbol Matematika-A"
 
 #: ../src/ui/dialog/glyphs.cpp:235
 msgid "Supplemental Arrows-A"
-msgstr ""
+msgstr "Tanda Panah Tambahan-A"
 
 #: ../src/ui/dialog/glyphs.cpp:236
 msgid "Braille Patterns"
@@ -15419,67 +15407,67 @@ msgstr "Pola Braille"
 
 #: ../src/ui/dialog/glyphs.cpp:237
 msgid "Supplemental Arrows-B"
-msgstr ""
+msgstr "Tanda Panah Tambahan-B"
 
 #: ../src/ui/dialog/glyphs.cpp:238
 msgid "Miscellaneous Mathematical Symbols-B"
-msgstr ""
+msgstr "Berbagai Simbol Matematika-B"
 
 #: ../src/ui/dialog/glyphs.cpp:239
 msgid "Supplemental Mathematical Operators"
-msgstr ""
+msgstr "Operator Matematika Tambahan"
 
 #: ../src/ui/dialog/glyphs.cpp:240
 msgid "Miscellaneous Symbols and Arrows"
-msgstr ""
+msgstr "Berbagai Simbol dan Tanda Panah"
 
 #: ../src/ui/dialog/glyphs.cpp:242
 msgid "Latin Extended-C"
-msgstr ""
+msgstr "Tambahan Latin-C"
 
 #: ../src/ui/dialog/glyphs.cpp:244
 msgid "Georgian Supplement"
-msgstr ""
+msgstr "Tambahan Georgian"
 
 #: ../src/ui/dialog/glyphs.cpp:246
 msgid "Ethiopic Extended"
-msgstr ""
+msgstr "Etiopik Tambahan"
 
 #: ../src/ui/dialog/glyphs.cpp:247
 msgid "Cyrillic Extended-A"
-msgstr ""
+msgstr "Sirilik Tambahan-A"
 
 #: ../src/ui/dialog/glyphs.cpp:248
 msgid "Supplemental Punctuation"
-msgstr ""
+msgstr "Tanda Seru Tambahan"
 
 #: ../src/ui/dialog/glyphs.cpp:249
 msgid "CJK Radicals Supplement"
-msgstr ""
+msgstr "Tabahan CJK Radikal"
 
 #: ../src/ui/dialog/glyphs.cpp:250
 msgid "Kangxi Radicals"
-msgstr ""
+msgstr "Kangxi Radikal"
 
 #: ../src/ui/dialog/glyphs.cpp:251
 msgid "Ideographic Description Characters"
-msgstr ""
+msgstr "Deskripsi Karakter Ideografik"
 
 #: ../src/ui/dialog/glyphs.cpp:252
 msgid "CJK Symbols and Punctuation"
-msgstr ""
+msgstr "Simbol CJK dan Tanda Seru"
 
 #: ../src/ui/dialog/glyphs.cpp:256
 msgid "Hangul Compatibility Jamo"
-msgstr ""
+msgstr "Hangul Kompatibilitas Jamo"
 
 #: ../src/ui/dialog/glyphs.cpp:257
 msgid "Kanbun"
-msgstr ""
+msgstr "Kanbun"
 
 #: ../src/ui/dialog/glyphs.cpp:258
 msgid "Bopomofo Extended"
-msgstr ""
+msgstr "Bopomofo Tambahan"
 
 #: ../src/ui/dialog/glyphs.cpp:259
 msgid "CJK Strokes"
@@ -15487,35 +15475,35 @@ msgstr "Sapuan CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:260
 msgid "Katakana Phonetic Extensions"
-msgstr ""
+msgstr "Fonetik Katakana Tambahan"
 
 #: ../src/ui/dialog/glyphs.cpp:261
 msgid "Enclosed CJK Letters and Months"
-msgstr ""
+msgstr "Huruf dan Bulan CJK terbatas"
 
 #: ../src/ui/dialog/glyphs.cpp:262
 msgid "CJK Compatibility"
-msgstr ""
+msgstr "Kompatibilitas CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:263
 msgid "CJK Unified Ideographs Extension A"
-msgstr ""
+msgstr "CJK Unified Ideographs Tambahan A"
 
 #: ../src/ui/dialog/glyphs.cpp:264
 msgid "Yijing Hexagram Symbols"
-msgstr ""
+msgstr "Simbol Heksagram Yijing"
 
 #: ../src/ui/dialog/glyphs.cpp:265
 msgid "CJK Unified Ideographs"
-msgstr ""
+msgstr "Ideograf CJK Unified"
 
 #: ../src/ui/dialog/glyphs.cpp:266
 msgid "Yi Syllables"
-msgstr ""
+msgstr "Yi Silabel"
 
 #: ../src/ui/dialog/glyphs.cpp:267
 msgid "Yi Radicals"
-msgstr ""
+msgstr "Yi Radikal"
 
 #: ../src/ui/dialog/glyphs.cpp:268
 #, fuzzy
@@ -15524,43 +15512,43 @@ msgstr "Lisensi"
 
 #: ../src/ui/dialog/glyphs.cpp:270
 msgid "Cyrillic Extended-B"
-msgstr ""
+msgstr "Sirilik Tambahan-B"
 
 #: ../src/ui/dialog/glyphs.cpp:271
 msgid "Bamum"
-msgstr ""
+msgstr "Bamum"
 
 #: ../src/ui/dialog/glyphs.cpp:272
 msgid "Modifier Tone Letters"
-msgstr ""
+msgstr "Huruf Modifier Tone"
 
 #: ../src/ui/dialog/glyphs.cpp:273
 msgid "Latin Extended-D"
-msgstr ""
+msgstr "Latin Tambahan-D"
 
 #: ../src/ui/dialog/glyphs.cpp:275
 msgid "Common Indic Number Forms"
-msgstr ""
+msgstr "Bentuk Angka Umum Indik"
 
 #: ../src/ui/dialog/glyphs.cpp:278
 msgid "Devanagari Extended"
-msgstr ""
+msgstr "Devanagari Tambahan"
 
 #: ../src/ui/dialog/glyphs.cpp:281
 msgid "Hangul Jamo Extended-A"
-msgstr ""
+msgstr "Hangul Jamo Tambahan-A"
 
 #: ../src/ui/dialog/glyphs.cpp:282
 msgid "Javanese"
-msgstr ""
+msgstr "Jawa"
 
 #: ../src/ui/dialog/glyphs.cpp:284
 msgid "Myanmar Extended-A"
-msgstr ""
+msgstr "Myanmar Tambahan-A"
 
 #: ../src/ui/dialog/glyphs.cpp:285
 msgid "Tai Viet"
-msgstr ""
+msgstr "Tai Viet"
 
 #: ../src/ui/dialog/glyphs.cpp:286
 msgid "Meetei Mayek"
@@ -15568,39 +15556,39 @@ msgstr "Meetei Mayek"
 
 #: ../src/ui/dialog/glyphs.cpp:287
 msgid "Hangul Syllables"
-msgstr ""
+msgstr "Hangul Silabel"
 
 #: ../src/ui/dialog/glyphs.cpp:288
 msgid "Hangul Jamo Extended-B"
-msgstr ""
+msgstr "Hangul Jamo Tambahan-B"
 
 #: ../src/ui/dialog/glyphs.cpp:289
 msgid "High Surrogates"
-msgstr ""
+msgstr "High Surrogates"
 
 #: ../src/ui/dialog/glyphs.cpp:290
 msgid "High Private Use Surrogates"
-msgstr ""
+msgstr "High Private Use Surrogates"
 
 #: ../src/ui/dialog/glyphs.cpp:291
 msgid "Low Surrogates"
-msgstr ""
+msgstr "Low Surrogates"
 
 #: ../src/ui/dialog/glyphs.cpp:292
 msgid "Private Use Area"
-msgstr ""
+msgstr "Private Use Area"
 
 #: ../src/ui/dialog/glyphs.cpp:293
 msgid "CJK Compatibility Ideographs"
-msgstr ""
+msgstr "ideograf kompatibilitas CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:294
 msgid "Alphabetic Presentation Forms"
-msgstr ""
+msgstr "Bentuk Presentasi Alfabetik"
 
 #: ../src/ui/dialog/glyphs.cpp:295
 msgid "Arabic Presentation Forms-A"
-msgstr ""
+msgstr "Presentasi Arab Bentuk-A"
 
 #: ../src/ui/dialog/glyphs.cpp:296
 #, fuzzy
@@ -15609,7 +15597,7 @@ msgstr "Pilihan"
 
 #: ../src/ui/dialog/glyphs.cpp:297
 msgid "Vertical Forms"
-msgstr ""
+msgstr "Bentuk Vertikal"
 
 #: ../src/ui/dialog/glyphs.cpp:298
 msgid "Combining Half Marks"
@@ -15625,7 +15613,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:301
 msgid "Arabic Presentation Forms-B"
-msgstr ""
+msgstr "Presentasi Arab Bentuk-B"
 
 #: ../src/ui/dialog/glyphs.cpp:302
 msgid "Halfwidth and Fullwidth Forms"
@@ -15694,7 +15682,7 @@ msgstr "Orientasi kanvas"
 #: ../src/ui/dialog/icon-preview.cpp:129
 #, c-format
 msgid "%d x %d"
-msgstr ""
+msgstr "%d x %d"
 
 #: ../src/ui/dialog/icon-preview.cpp:179
 msgid "Selection only or whole document"
@@ -18577,7 +18565,7 @@ msgstr ""
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:235
 msgid "Straighten segments"
-msgstr ""
+msgstr "Meluruskan segmen"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:237
 msgid "Make segments curves"
