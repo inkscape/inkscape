@@ -280,6 +280,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_GRADIENTUNITS, "gradientUnits"},
     {SP_ATTR_GRADIENTTRANSFORM, "gradientTransform"},
     {SP_ATTR_SPREADMETHOD, "spreadMethod"},
+    {SP_ATTR_OSB_SWATCH, "osb:paint"},
     /* SPRadialGradient */
     {SP_ATTR_FX, "fx"},
     {SP_ATTR_FY, "fy"},

@@ -291,15 +291,10 @@ SPGradientSpread SPGradient::getSpread() const
 void SPGradient::setSwatch( bool swatch )
 {
     if ( swatch != isSwatch() ) {
-        if ( swatch ) {
-            if ( hasStops() && (getStopCount() == 0) ) {
-                repr->setAttribute( "osb:paint", "solid" );
-            } else {
-                repr->setAttribute( "osb:paint", "gradient" );
-            }
-        } else {
-            repr->setAttribute( "osb:paint", 0 );
-        }
+        this->swatch = swatch; // to make isSolid() work, this happens first
+        gchar const* paintVal = swatch ? (isSolid() ? "solid" : "gradient") : 0;
+        sp_object_setAttribute( this, "osb:paint", paintVal, 0 );
+
         requestModified( SP_OBJECT_MODIFIED_FLAG );
     }
 }
@@ -438,11 +433,16 @@ void SPGradientImpl::build(SPObject *object, SPDocument *document, Inkscape::XML
 {
     SPGradient *gradient = SP_GRADIENT(object);
 
-    if (((SPObjectClass *) gradient_parent_class)->build)
-        (* ((SPObjectClass *) gradient_parent_class)->build)(object, document, repr);
+    // Work-around in case a swatch had been marked for immediate collection:
+    if ( repr->attribute("osb:paint") && repr->attribute("inkscape:collect") ) {
+        repr->setAttribute("inkscape:collect", 0);
+    }
 
-    SPObject *ochild;
-    for ( ochild = sp_object_first_child(object) ; ochild ; ochild = SP_OBJECT_NEXT(ochild) ) {
+    if (((SPObjectClass *) gradient_parent_class)->build) {
+        (* ((SPObjectClass *) gradient_parent_class)->build)(object, document, repr);
+    }
+
+    for ( SPObject *ochild = sp_object_first_child(object); ochild; ochild = ochild->next ) {
         if (SP_IS_STOP(ochild)) {
             gradient->has_stops = TRUE;
             break;
@@ -453,6 +453,7 @@ void SPGradientImpl::build(SPObject *object, SPDocument *document, Inkscape::XML
     sp_object_read_attr(object, "gradientTransform");
     sp_object_read_attr(object, "spreadMethod");
     sp_object_read_attr(object, "xlink:href");
+    sp_object_read_attr(object, "osb:paint");
 
     /* Register ourselves */
     sp_document_add_resource(document, "gradient", object);
@@ -553,9 +554,31 @@ void SPGradientImpl::setGradientAttr(SPObject *object, unsigned key, gchar const
                 gr->ref->detach();
             }
             break;
+        case SP_ATTR_OSB_SWATCH:
+        {
+            bool newVal = (value != 0);
+            bool modified = false;
+            if (newVal != gr->swatch) {
+                gr->swatch = newVal;
+                modified = true;
+            }
+            if (newVal) {
+                // Might need to flip solid/gradient
+                Glib::ustring paintVal = ( gr->hasStops() && (gr->getStopCount() == 0) ) ? "solid" : "gradient";
+                if ( paintVal != value ) {
+                    sp_object_setAttribute( gr, "osb:paint", paintVal.c_str(), 0 );
+                    modified = true;
+                }
+            }
+            if (modified) {
+                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
+        }
+            break;
         default:
-            if (((SPObjectClass *) gradient_parent_class)->set)
+            if (((SPObjectClass *) gradient_parent_class)->set) {
                 ((SPObjectClass *) gradient_parent_class)->set(object, key, value);
+            }
             break;
     }
 }
@@ -607,8 +630,8 @@ void SPGradientImpl::childAdded(SPObject *object, Inkscape::XML::Node *child, In
         gr->has_stops = TRUE;
         if ( gr->getStopCount() > 0 ) {
             gchar const * attr = gr->repr->attribute("osb:paint");
-            if ( attr && !strcmp(attr, "solid") ) {
-                gr->repr->setAttribute("osb:paint", "gradient");
+            if ( attr && strcmp(attr, "gradient") ) {
+                sp_object_setAttribute( gr, "osb:paint", "gradient", 0 );
             }
         }
     }
@@ -640,9 +663,10 @@ void SPGradientImpl::removeChild(SPObject *object, Inkscape::XML::Node *child)
     }
 
     if ( gr->getStopCount() == 0 ) {
+        g_message("Check on remove");
         gchar const * attr = gr->repr->attribute("osb:paint");
-        if ( attr && !strcmp(attr, "gradient") ) {
-            gr->repr->setAttribute("osb:paint", "solid");
+        if ( attr && strcmp(attr, "solid") ) {
+            sp_object_setAttribute( gr, "osb:paint", "solid", 0 );
         }
     }
 
@@ -714,15 +738,17 @@ Inkscape::XML::Node *SPGradientImpl::write(SPObject *object, Inkscape::XML::Docu
 {
     SPGradient *gr = SP_GRADIENT(object);
 
-    if (((SPObjectClass *) gradient_parent_class)->write)
+    if (((SPObjectClass *) gradient_parent_class)->write) {
         (* ((SPObjectClass *) gradient_parent_class)->write)(object, xml_doc, repr, flags);
+    }
 
     if (flags & SP_OBJECT_WRITE_BUILD) {
         GSList *l = NULL;
         for (SPObject *child = sp_object_first_child(object); child; child = SP_OBJECT_NEXT(child)) {
-            Inkscape::XML::Node *crepr;
-            crepr = child->updateRepr(xml_doc, NULL, flags);
-            if (crepr) l = g_slist_prepend(l, crepr);
+            Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
+            if (crepr) {
+                l = g_slist_prepend(l, crepr);
+            }
         }
         while (l) {
             repr->addChild((Inkscape::XML::Node *) l->data, NULL);
@@ -769,6 +795,16 @@ Inkscape::XML::Node *SPGradientImpl::write(SPObject *object, Inkscape::XML::Docu
                 repr->setAttribute("spreadMethod", "pad");
                 break;
         }
+    }
+
+    if ( (flags & SP_OBJECT_WRITE_EXT) && gr->isSwatch() ) {
+        if ( gr->isSolid() ) {
+            repr->setAttribute( "osb:paint", "solid" );
+        } else {
+            repr->setAttribute( "osb:paint", "gradient" );
+        }
+    } else {
+        repr->setAttribute( "osb:paint", 0 );
     }
 
     return repr;

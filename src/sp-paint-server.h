@@ -21,7 +21,7 @@
 
 class SPPainter;
 
-#define SP_TYPE_PAINT_SERVER (sp_paint_server_get_type ())
+#define SP_TYPE_PAINT_SERVER (SPPaintServer::getType())
 #define SP_PAINT_SERVER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_PAINT_SERVER, SPPaintServer))
 #define SP_PAINT_SERVER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_PAINT_SERVER, SPPaintServerClass))
 #define SP_IS_PAINT_SERVER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_PAINT_SERVER))
@@ -47,8 +47,17 @@ struct SPPaintServer : public SPObject {
     /** List of paints */
     SPPainter *painters;
 
+protected:
+    bool swatch;
+public:
+
+    static GType getType(void);
+
     bool isSwatch() const;
     bool isSolid() const;
+
+private:
+    static void init(SPPaintServer *ps);
 };
 
 struct SPPaintServerClass {
@@ -58,8 +67,6 @@ struct SPPaintServerClass {
     /** Free SPPaint instance. */
     void (* painter_free) (SPPaintServer *ps, SPPainter *painter);
 };
-
-GType sp_paint_server_get_type (void);
 
 SPPainter *sp_paint_server_painter_new (SPPaintServer *ps, Geom::Matrix const &full_transform, Geom::Matrix const &parent_transform, const NRRect *bbox);
 

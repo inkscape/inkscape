@@ -281,6 +281,7 @@ enum SPAttributeEnum {
     SP_ATTR_GRADIENTUNITS,
     SP_ATTR_GRADIENTTRANSFORM,
     SP_ATTR_SPREADMETHOD,
+    SP_ATTR_OSB_SWATCH,
     /* SPRadialGradient */
     SP_ATTR_FX,
     SP_ATTR_FY,

@@ -21,7 +21,6 @@
 #include "xml/node.h"
 
 static void sp_paint_server_class_init(SPPaintServerClass *psc);
-static void sp_paint_server_init(SPPaintServer *ps);
 
 static void sp_paint_server_release(SPObject *object);
 
@@ -30,7 +29,7 @@ static void sp_painter_stale_fill(SPPainter *painter, NRPixBlock *pb);
 static SPObjectClass *parent_class;
 static GSList *stale_painters = NULL;
 
-GType sp_paint_server_get_type (void)
+GType SPPaintServer::getType(void)
 {
     static GType type = 0;
     if (!type) {
@@ -43,7 +42,7 @@ GType sp_paint_server_get_type (void)
             NULL,       /* class_data */
             sizeof(SPPaintServer),
             16, /* n_preallocs */
-            (GInstanceInitFunc) sp_paint_server_init,
+            (GInstanceInitFunc) SPPaintServer::init,
             NULL,       /* value_table */
         };
         type = g_type_register_static(SP_TYPE_OBJECT, "SPPaintServer", &info, (GTypeFlags) 0);
@@ -58,9 +57,10 @@ static void sp_paint_server_class_init(SPPaintServerClass *psc)
     parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
 }
 
-static void sp_paint_server_init(SPPaintServer *ps)
+void SPPaintServer::init(SPPaintServer *ps)
 {
     ps->painters = NULL;
+    ps->swatch = false;
 }
 
 static void sp_paint_server_release(SPObject *object)
@@ -157,24 +157,16 @@ static void sp_painter_stale_fill(SPPainter */*painter*/, NRPixBlock *pb)
 
 bool SPPaintServer::isSwatch() const
 {
-    bool swatch = false;
-    if (SP_IS_GRADIENT(this)) {
-        SPGradient *grad = SP_GRADIENT(this);
-        swatch = grad->hasStops() && repr->attribute("osb:paint");
-    }
     return swatch;
 }
 
 bool SPPaintServer::isSolid() const
 {
     bool solid = false;
-    if (SP_IS_GRADIENT(this)) {
+    if (swatch && SP_IS_GRADIENT(this)) {
         SPGradient *grad = SP_GRADIENT(this);
         if ( grad->hasStops() && (grad->getStopCount() == 0) ) {
-            gchar const * attr = repr->attribute("osb:paint");
-            if (attr && !strcmp(attr, "solid")) {
-                solid = true;
-            }
+            solid = true;
         }
     }
     return solid;

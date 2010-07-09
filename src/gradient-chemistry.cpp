@@ -1203,11 +1203,13 @@ SPGradient *sp_document_default_gradient_vector( SPDocument *document, SPColor c
 
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:linearGradient");
 
-    repr->setAttribute("inkscape:collect", "always");
-    // set here, but removed when it's edited in the gradient editor
-    // to further reduce clutter, we could
-    // (1) here, search gradients by color and return what is found without duplication
-    // (2) in fill & stroke, show only one copy of each gradient in list
+    if ( !singleStop ) {
+        repr->setAttribute("inkscape:collect", "always");
+        // set here, but removed when it's edited in the gradient editor
+        // to further reduce clutter, we could
+        // (1) here, search gradients by color and return what is found without duplication
+        // (2) in fill & stroke, show only one copy of each gradient in list
+    }
 
     Glib::ustring colorStr = color.toString();
     addStop( repr, colorStr, 1, "0" );
