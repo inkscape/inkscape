@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-07-08 19:35+0200\n"
+"PO-Revision-Date: 2010-07-09 13:18+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -6206,12 +6206,12 @@ msgstr ""
 #: ../src/context-fns.cpp:36
 #: ../src/context-fns.cpp:65
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
-msgstr "<b>Stratul curent este ascuns</b>. Dezvăluie-l pentru a putea desena pe el."
+msgstr "<b>Stratul curent este ascuns</b>. Dezvăluiți-l pentru a putea desena pe el."
 
 #: ../src/context-fns.cpp:42
 #: ../src/context-fns.cpp:71
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
-msgstr "<b>Stratul curent este blocat</b>. Deblochează-l pentru a putea desena pe el."
+msgstr "<b>Stratul curent este blocat</b>. Deblocați-l pentru a putea desena pe el."
 
 #: ../src/desktop-events.cpp:189
 msgid "Create guide"
@@ -6234,15 +6234,15 @@ msgstr "<b>Linii de ghidare</b>: %s"
 
 #: ../src/desktop.cpp:843
 msgid "No previous zoom."
-msgstr ""
+msgstr "Niciun zoom precedent."
 
 #: ../src/desktop.cpp:868
 msgid "No next zoom."
-msgstr ""
+msgstr "Niciun zoom următor."
 
 #: ../src/dialogs/clonetiler.cpp:155
 msgid "<small>Nothing selected.</small>"
-msgstr "<small>Nu este nimic selectat.</small>"
+msgstr "<small>Nu este selectat nimic.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:161
 msgid "<small>More than one object selected.</small>"
@@ -10252,7 +10252,7 @@ msgid ""
 "\n"
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Un fișier denumit „%s” există deja. Vreţi să îl înlocuiți ?</span>\n"
+"<span weight=\"bold\" size=\"larger\">Un fișier denumit „%s” există deja. Vreți să îl înlocuiți ?</span>\n"
 "\n"
 "Fișierul există deja în „%s”. Înlocuirea îi va suprascrie conținutul."
 
@@ -12399,9 +12399,10 @@ msgstr ""
 msgid "Create rectangle"
 msgstr "Creează dreptunghi"
 
+# hm ? sau cursoarele de rotație ? cu mânere a fost și era câh
 #: ../src/select-context.cpp:177
 msgid "Click selection to toggle scale/rotation handles"
-msgstr ""
+msgstr "Clic pe selecție pentru a comuta între controalele de scalare și cele de rotație"
 
 #: ../src/select-context.cpp:178
 msgid "No objects selected. Click, Shift+click, or drag around objects to select."
@@ -12878,12 +12879,12 @@ msgstr "rădăcină"
 #: ../src/selection-describer.cpp:152
 #, c-format
 msgid "layer <b>%s</b>"
-msgstr "strat <b>%s</b>"
+msgstr "stratul <b>%s</b>"
 
 #: ../src/selection-describer.cpp:154
 #, c-format
 msgid "layer <b><i>%s</i></b>"
-msgstr "strat <b><i>%s</i></b>"
+msgstr "stratul <b><i>%s</i></b>"
 
 #: ../src/selection-describer.cpp:163
 #, c-format
@@ -12893,7 +12894,7 @@ msgstr ""
 #: ../src/selection-describer.cpp:172
 #, c-format
 msgid " in %s"
-msgstr " îin %s"
+msgstr " în %s"
 
 #: ../src/selection-describer.cpp:174
 #, c-format
@@ -13040,7 +13041,7 @@ msgstr ""
 #: ../src/seltrans.cpp:1351
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
-msgstr ""
+msgstr "Mută <b>centrul</b> la %s, %s"
 
 #: ../src/seltrans.cpp:1524
 #, c-format
@@ -13050,28 +13051,28 @@ msgstr ""
 #: ../src/sp-anchor.cpp:178
 #, c-format
 msgid "<b>Link</b> to %s"
-msgstr ""
+msgstr "<b>Leagă</b> la %s"
 
 #: ../src/sp-anchor.cpp:182
 msgid "<b>Link</b> without URI"
-msgstr ""
+msgstr "<b>Leagă</b> fără URI"
 
 #: ../src/sp-ellipse.cpp:501
 #: ../src/sp-ellipse.cpp:878
 msgid "<b>Ellipse</b>"
-msgstr ""
+msgstr "<b>Elipsă</b>"
 
 #: ../src/sp-ellipse.cpp:642
 msgid "<b>Circle</b>"
-msgstr ""
+msgstr "<b>Cerc</b>"
 
 #: ../src/sp-ellipse.cpp:873
 msgid "<b>Segment</b>"
-msgstr ""
+msgstr "<b>Segment</b>"
 
 #: ../src/sp-ellipse.cpp:875
 msgid "<b>Arc</b>"
-msgstr ""
+msgstr "<b>Arc</b>"
 
 #. TRANSLATORS: "Flow region" is an area where text is allowed to flow
 #: ../src/sp-flowregion.cpp:270
@@ -13099,12 +13100,12 @@ msgstr ""
 #: ../src/sp-guide.cpp:426
 #, c-format
 msgid "vertical, at %s"
-msgstr ""
+msgstr "vertical, la %s"
 
 #: ../src/sp-guide.cpp:429
 #, c-format
 msgid "horizontal, at %s"
-msgstr ""
+msgstr "horizontal, la %s"
 
 #: ../src/sp-guide.cpp:434
 #, c-format
@@ -13174,69 +13175,69 @@ msgstr ""
 #: ../src/sp-offset.cpp:427
 #: ../src/sp-offset.cpp:431
 msgid "outset"
-msgstr ""
+msgstr "dilatare"
 
 #: ../src/sp-offset.cpp:427
 #: ../src/sp-offset.cpp:431
 msgid "inset"
-msgstr ""
+msgstr "contracție"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
 #: ../src/sp-offset.cpp:430
 #, c-format
 msgid "<b>Dynamic offset</b>, %s by %f pt"
-msgstr ""
+msgstr "<b>Decalaj dinamic</b>, %s pe %f pt"
 
 #: ../src/sp-path.cpp:156
 #, c-format
 msgid "<b>Path</b> (%i node, path effect: %s)"
 msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "<b>Traseu</b> (%i nod, efect de traseu: %s)"
+msgstr[1] "<b>Traseu</b> (%i noduri, efect de traseu: %s)"
+msgstr[2] "<b>Traseu</b> (%i de noduri, efect de traseu: %s)"
 
 #: ../src/sp-path.cpp:159
 #, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "<b>Traseu</b> (%i nod)"
+msgstr[1] "<b>Traseu</b> (%i noduri)"
+msgstr[2] "<b>Traseu</b> (%i de noduri)"
 
 #: ../src/sp-polygon.cpp:226
 msgid "<b>Polygon</b>"
-msgstr ""
+msgstr "<b>Poligon</b>"
 
 #: ../src/sp-polyline.cpp:177
 msgid "<b>Polyline</b>"
-msgstr ""
+msgstr "<b>Polilinie</b>"
 
 #: ../src/sp-rect.cpp:223
 msgid "<b>Rectangle</b>"
-msgstr ""
+msgstr "<b>Dreptunghi</b>"
 
 #. TRANSLATORS: since turn count isn't an integer, please adjust the
 #. string as needed to deal with an localized plural forms.
 #: ../src/sp-spiral.cpp:325
 #, c-format
 msgid "<b>Spiral</b> with %3f turns"
-msgstr ""
+msgstr "<b>Spirală</b> cu %3f spire"
 
 #: ../src/sp-star.cpp:309
 #, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "<b>Stea</b> cu %d colț"
+msgstr[1] "<b>Stea</b> cu %d colțuri"
+msgstr[2] "<b>Stea</b> cu %d de colțuri"
 
 #: ../src/sp-star.cpp:313
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "<b>Poligon</b> cu %d colț"
+msgstr[1] "<b>Poligon</b> cu %d colțuri"
+msgstr[2] "<b>Poligon</b> cu %d de colțuri"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:419
@@ -13261,7 +13262,7 @@ msgstr ""
 
 #: ../src/sp-tref.cpp:369
 msgid " from "
-msgstr ""
+msgstr " de la "
 
 #: ../src/sp-tref.cpp:374
 msgid "<b>Orphaned cloned character data</b>"
@@ -13717,7 +13718,7 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:161
 msgid "<b>Drag</b> to create an ellipse. <b>Drag controls</b> to make an arc or segment. <b>Click</b> to select."
-msgstr ""
+msgstr "<b>Trageți</b> pentru a crea o elipsă. <b>Trageți de controale</b> pentru a face un arc sau segment. <b>Clic</b> pentru a selecta."
 
 #: ../src/tools-switch.cpp:167
 msgid "<b>Drag</b> to create a star. <b>Drag controls</b> to edit the star shape. <b>Click</b> to select."
@@ -14094,9 +14095,9 @@ msgstr "about.svg"
 #: ../src/ui/dialog/aboutbox.cpp:383
 msgid "translator-credits"
 msgstr ""
-"Bogdan Oancea (bogdan.oancea77@gmail.com)\n"
-"Paul S (paulspn@gmail.com)\n"
-"Cristian Secară (cristi@secarica.ro)"
+"Bogdan Oancea (bogdan.oancea77@gmail.com), 2008.\n"
+"Paul S (paulspn@gmail.com), 2009.\n"
+"Cristian Secară (cristi@secarica.ro), 2010."
 
 #: ../src/ui/dialog/align-and-distribute.cpp:238
 #: ../src/ui/dialog/align-and-distribute.cpp:793
@@ -16697,7 +16698,7 @@ msgstr "Pulverizator"
 #: ../src/verbs.cpp:2481
 #: ../src/widgets/desktop-widget.cpp:487
 msgid "Zoom"
-msgstr ""
+msgstr "Zoom"
 
 #. Shapes
 #: ../src/ui/dialog/inkscape-preferences.cpp:483
@@ -16791,24 +16792,25 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:576
 msgid "Don't save window geometry"
-msgstr ""
+msgstr "Nu salva geometria ferestrei"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:578
 #: ../src/ui/dialog/inkscape-preferences.cpp:598
 msgid "Dockable"
-msgstr ""
+msgstr "Docabil"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:581
 msgid "Dialogs are hidden in taskbar"
 msgstr "Casetele de dialog sunt ascunse în bara de sarcini"
 
+# hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/ui/dialog/inkscape-preferences.cpp:582
 msgid "Zoom when window is resized"
-msgstr ""
+msgstr "Folosește zoom-area când se redimensionează ferestra"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:583
 msgid "Show close button on dialogs"
-msgstr ""
+msgstr "Arată butonul de închidere pe dialoguri"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:585
 #: ../src/widgets/toolbox.cpp:7684
@@ -18183,7 +18185,7 @@ msgstr "_Adaugă"
 
 #: ../src/ui/dialog/layer-properties.cpp:225
 msgid "New layer created."
-msgstr "A fost creat un nou Strat"
+msgstr "A fost creat un nou strat."
 
 #: ../src/ui/dialog/layers.cpp:472
 #: ../src/ui/widget/layer-selector.cpp:595
@@ -19489,10 +19491,11 @@ msgstr ""
 msgid "PLACEHOLDER, do not translate"
 msgstr ""
 
+# hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/ui/view/edit-widget.cpp:1051
 #: ../src/widgets/desktop-widget.cpp:383
 msgid "Zoom drawing if window size changes"
-msgstr "Zoomează desenul dacă se modifică dimensiunea ferestrei"
+msgstr "Folosește zoom-area desenului dacă se modifică dimensiunea ferestrei"
 
 #: ../src/ui/view/edit-widget.cpp:1072
 #: ../src/widgets/desktop-widget.cpp:507
@@ -21509,43 +21512,46 @@ msgstr "Comută acroșarea între pornit sau oprit"
 
 #: ../src/verbs.cpp:2545
 msgid "Nex_t Zoom"
-msgstr "Zoomul _următor"
+msgstr "Zoom-ul _următor"
 
 #: ../src/verbs.cpp:2545
 msgid "Next zoom (from the history of zooms)"
-msgstr "Zoomul următor (din istoricul zoomurilor)"
+msgstr "Zoom-ul următor (din istoricul zoom-urilor)"
 
 #: ../src/verbs.cpp:2547
 msgid "Pre_vious Zoom"
-msgstr "Zoomul p_recedent"
+msgstr "Zoom-ul p_recedent"
 
 #: ../src/verbs.cpp:2547
 msgid "Previous zoom (from the history of zooms)"
-msgstr "Zoomul precedent (din istoricul zoomurilor)"
+msgstr "Zoom-ul precedent (din istoricul zoom-urilor)"
 
 #: ../src/verbs.cpp:2549
 msgid "Zoom 1:_1"
 msgstr "Zoom 1:_1"
 
+# hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2549
 msgid "Zoom to 1:1"
-msgstr "Zoomează la 1:1"
+msgstr "Stabilește raportul de zoom la 1:1"
 
 #: ../src/verbs.cpp:2551
 msgid "Zoom 1:_2"
 msgstr "Zoom 1:_2"
 
+# hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2551
 msgid "Zoom to 1:2"
-msgstr "Zoomează la 1:2"
+msgstr "Stabilește raportul de zoom la 1:2"
 
 #: ../src/verbs.cpp:2553
 msgid "_Zoom 2:1"
 msgstr "_Zoom 2:1"
 
+# hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2553
 msgid "Zoom to 2:1"
-msgstr "Zoomează la 2:1"
+msgstr "Stabilește raportul de zoom la 2:1"
 
 #: ../src/verbs.cpp:2556
 msgid "_Fullscreen"
@@ -21636,29 +21642,29 @@ msgstr "Previzualizare ico_nuri..."
 msgid "Open a window to preview objects at different icon resolutions"
 msgstr ""
 
-# hm ? nu este neapărat mărire
+# hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2583
 msgid "Zoom to fit page in window"
-msgstr "Zoomează pentru a potrivi pagina în fereastră"
+msgstr "Folosește zoom-area pentru a potrivi pagina în fereastră"
 
 #: ../src/verbs.cpp:2584
 msgid "Page _Width"
 msgstr "Lățimea pa_ginii"
 
-# hm ? nu este neapărat mărire
+# hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2585
 msgid "Zoom to fit page width in window"
-msgstr "Zoomează pentru a potrivi lățimea paginii în fereastră"
+msgstr "Folosește zoom-area pentru a potrivi lățimea paginii în fereastră"
 
-# hm ? nu este neapărat mărire
+# hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2587
 msgid "Zoom to fit drawing in window"
-msgstr "Zoomează pentru a potrivi desenul în fereastră"
+msgstr "Folosește zoom-area pentru a potrivi desenul în fereastră"
 
-# hm ? nu este neapărat mărire
+# hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2589
 msgid "Zoom to fit selection in window"
-msgstr "Zoomează pentru a potrivi selecția în fereastră"
+msgstr "Folosește zoom-area pentru a potrivi selecția în fereastră"
 
 #. Dialogs
 #: ../src/verbs.cpp:2592
@@ -22414,7 +22420,7 @@ msgstr ""
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:460
 msgid "select toolbar|X position"
-msgstr ""
+msgstr "Poziție X"
 
 #: ../src/widgets/select-toolbar.cpp:460
 msgid "select toolbar|X"
@@ -22428,7 +22434,7 @@ msgstr "Coordonata orizontală a selecției"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:468
 msgid "select toolbar|Y position"
-msgstr ""
+msgstr "Poziție Y"
 
 #: ../src/widgets/select-toolbar.cpp:468
 msgid "select toolbar|Y"
@@ -22454,7 +22460,7 @@ msgstr "Lățimea selecției"
 
 #: ../src/widgets/select-toolbar.cpp:485
 msgid "Lock width and height"
-msgstr "Blochează înălțimea și înălțimea"
+msgstr "Blochează lățimea și înălțimea"
 
 #: ../src/widgets/select-toolbar.cpp:486
 msgid "When locked, change both width and height by the same proportion"
@@ -22464,7 +22470,7 @@ msgstr "Când este bifat, modifică lățimea și înălțimea cu aceeași propo
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:497
 msgid "select toolbar|Height"
-msgstr ""
+msgstr "Înălțime"
 
 #: ../src/widgets/select-toolbar.cpp:497
 msgid "select toolbar|H"
