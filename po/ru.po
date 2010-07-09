@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-07-04 08:04+0400\n"
-"PO-Revision-Date: 2010-07-08 05:45+0400\n"
+"PO-Revision-Date: 2010-07-09 07:34+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1082,6 +1082,10 @@ msgid ""
 "join of the pattern at the edges. Use a negative border to reduce the size "
 "of the pattern and get an empty border."
 msgstr ""
+"Если граница равна нулю, мозаика на краях будет непрерывной. Чтобы получить "
+"ровное соединение на краях мозаики, используйте положительное значение, по "
+"возможности, больше размера ячейки. Для получения пустой границы используйте "
+"отрицательное значение."
 
 #: ../share/extensions/generate_voronoi.inx.h:5
 msgid "Size of Border (px)"
@@ -1374,9 +1378,8 @@ msgid "Mirror Y-axis"
 msgstr "Отразить по оси Y"
 
 #: ../share/extensions/hpgl_output.inx.h:5
-#, fuzzy
 msgid "Pen number"
-msgstr "Угол пера"
+msgstr "Номер цвета"
 
 #: ../share/extensions/hpgl_output.inx.h:6
 msgid "Plot invisible layers"
@@ -2249,7 +2252,7 @@ msgid "Scale Factor (Drawing:Real Length) = 1:"
 msgstr "Масштаб (Рисунок:Реальная длина) = 1:"
 
 #: ../share/extensions/measure.inx.h:14
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "This effect measures the length, or area, of the selected path and adds it "
 "as a text-on-path object with the selected unit.\n"
@@ -2265,11 +2268,14 @@ msgid ""
 "0.03%."
 msgstr ""
 "При помощи этого эффекта можно измерить длину выбранного контура и "
-"прикрепить к этому контуру вычисленный результат в виде текста. Число "
-"значимых цифр контролируется параметром «Точность». Параметр «Смещение» задает "
-"растсояние между текстом и контуром. Параметр «Масштаб» позволяет измерять "
-"предметы с известным масштабом. К примеру, если на рисунке 1 см равен 2,5 м, "
-"необходимо указать 250."
+"прикрепить к этому контуру вычисленный результат в виде текста.\n"
+"\n"
+"  * Число значимых цифр контролируется параметром «Точность».\n"
+"  * Параметр «Смещение» задает расстояние между текстом и контуром.\n"
+"  * Параметр «Масштаб» позволяет измерять предметы с известным масштабом. К "
+"примеру, если на рисунке 1 см равен 2,5 м, необходимо указать 250.\n"
+"  * При расчёте площади результат точен для многоугольников и кривых Безье. "
+"Для окружностей рассчитанная площадь может быть больше реальной на 0,03%."
 
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
 msgid "Angle"
@@ -3087,7 +3093,7 @@ msgstr "Пробел"
 
 #: ../share/extensions/scour.inx.h:16
 msgid "Strip xml prolog"
-msgstr "Вырезать вступление XML"
+msgstr "Вырезать пролог XML"
 
 #: ../share/extensions/scour.inx.h:17
 msgid "Style to xml"
@@ -3113,6 +3119,23 @@ msgid ""
 "    * Set precision: set number of significant digits (default: 5).\n"
 "    * Indent: indentation of the output: none, space, tab (default: space)."
 msgstr ""
+"Это расширение оптимизирует файл SVG со следующими параметрами:\n"
+"    * Упростить цвета: привести все цвета к формату #RRGGBB.\n"
+"    * Стиль в XML: преобразовать стили в атрибуты XML.\n"
+"    * Свести группы: объединить элементы групп.\n"
+"    * вырезать идентификаторы: удалить все атрибуты ID, на которые не "
+"ссылаются.\n"
+"    * Встроить все растровые изображения: встраивать растр кодированным по "
+"base64.\n"
+"    * Сохранить данные редактора: не удалять собственные элементы и атрибуты "
+"разметку Inkscape, Sodipodi или Adobe Illustrator.\n"
+"    * Включить viewboxing: установить размер равным 100%/100% и добавить "
+"viewBox.\n"
+"    * Вырезать пролог XML: не выводить пролог XML.\n"
+"    * Установить точность: установить число значимых цифр  (по умолчанию: "
+"5).\n"
+"    * Отступ: тип отступа в выводе: Нет, Пробел, Табулятор (по умолчанию: "
+"Пробел)"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
@@ -3204,6 +3227,8 @@ msgid ""
 "This effect splits texts into different lines, words or letters. Select "
 "below how your text should be splitted."
 msgstr ""
+"Этот эффект разделяет текстовый блок построчно, пословно или побуквенно. "
+"Выберите предпочитаемый способ."
 
 #: ../share/extensions/split.inx.h:8
 msgid "Words"
@@ -3522,6 +3547,8 @@ msgid ""
 "Layout Group is only about to help a better code generation (if you need "
 "it). To use this, you must to select some \"Slicer rectangles\" first."
 msgstr ""
+"Группа макета необходимо лишь для создания более правильного кода. Чтобы "
+"работать с ней, сначала выделите несколько «прямоугольников нарезки»."
 
 #: ../share/extensions/webslicer_create_group.inx.h:6
 msgid "Percent (relative to parent size)"
@@ -3560,6 +3587,8 @@ msgid ""
 "0 is the lowest image quality and highest compression, and 100 is the best "
 "quality but least effective compression"
 msgstr ""
+"0 — наихудшее качество изображения и наисильнейшее сжатие, 100 — наилучшее "
+"качество и наименьшее сжатие"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:3
 msgid "Background — no repeat (on parent group)"
@@ -3624,7 +3653,7 @@ msgstr "Размещение макета:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:22
 msgid "Left Floated Image"
-msgstr ""
+msgstr "Плавающее слева изображение"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:23
 msgid "Middle and Center"
@@ -3644,9 +3673,8 @@ msgid "Name:"
 msgstr "Имя:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:27
-#, fuzzy
 msgid "Non Positioned Image"
-msgstr "Сокращение межстрочного интервала"
+msgstr "Неразмещённое изображение"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:28
 msgid "Options for HTML export"
@@ -3665,22 +3693,20 @@ msgid "Position anchor:"
 msgstr "Размещение якоря:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:32
-#, fuzzy
 msgid "Positioned Image"
-msgstr "Размещение"
+msgstr "Размещённое изображение"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:33
 msgid "Positioned html block element with the image as Background"
-msgstr ""
+msgstr "Размещённый текстовый блок HTML с изображением как фоном"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:34
 msgid "Quality:"
 msgstr "Качество:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:35
-#, fuzzy
 msgid "Right Floated Image"
-msgstr "Правый угол"
+msgstr "Плавающее справа изображение"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:36
 msgid "Tiled Background (on parent group)"
@@ -6357,9 +6383,8 @@ msgstr "Определяет направление и силу выдавлив
 
 #: ../src/sp-flowtext.cpp:378 ../src/sp-text.cpp:427
 #: ../src/text-context.cpp:1604
-#, fuzzy
 msgid " [truncated]"
-msgstr "Усеченный куб"
+msgstr " [не уместились]"
 
 #: ../src/sp-flowtext.cpp:381
 #, c-format
@@ -12272,6 +12297,10 @@ msgid ""
 "exported, putting the text on top of the PDF/PS/EPS file. Include the result "
 "in LaTeX like: \\input{latexfile.tex}"
 msgstr ""
+"Экспортировать PDF/PS/EPS без текста. Помимо файла PDF/PS/EPS создаётся файл "
+"LaTeX, в котором текст помещается поверх рисунка из файла PDF/PS/EPS. "
+"Полученный файл LaTeX вставляется в другие примерно так:: \\input{latexfile."
+"tex}"
 
 #: ../src/main.cpp:387
 msgid "Export document to an Enhanced Metafile (EMF) File"
@@ -16443,7 +16472,7 @@ msgstr "Рычаг"
 
 #: ../src/ui/dialog/glyphs.cpp:76
 msgid "Hangul"
-msgstr "Хангул"
+msgstr "Хангыль"
 
 #: ../src/ui/dialog/glyphs.cpp:77 ../src/ui/dialog/glyphs.cpp:165
 msgid "Hebrew"
@@ -16483,7 +16512,7 @@ msgstr "Монгольский"
 
 #: ../src/ui/dialog/glyphs.cpp:86 ../src/ui/dialog/glyphs.cpp:185
 msgid "Myanmar"
-msgstr ""
+msgstr "Мьянма"
 
 #: ../src/ui/dialog/glyphs.cpp:87 ../src/ui/dialog/glyphs.cpp:192
 msgid "Ogham"
@@ -16543,12 +16572,11 @@ msgstr "Тагальский"
 
 #: ../src/ui/dialog/glyphs.cpp:101 ../src/ui/dialog/glyphs.cpp:195
 msgid "Hanunoo"
-msgstr ""
+msgstr "Хануноо"
 
 #: ../src/ui/dialog/glyphs.cpp:102 ../src/ui/dialog/glyphs.cpp:196
-#, fuzzy
 msgid "Buhid"
-msgstr "направляющей"
+msgstr "Бухид"
 
 #: ../src/ui/dialog/glyphs.cpp:103 ../src/ui/dialog/glyphs.cpp:197
 msgid "Tagbanwa"
@@ -16564,7 +16592,7 @@ msgstr "Кипрское письмо"
 
 #: ../src/ui/dialog/glyphs.cpp:106 ../src/ui/dialog/glyphs.cpp:201
 msgid "Limbu"
-msgstr ""
+msgstr "Лимбу"
 
 #: ../src/ui/dialog/glyphs.cpp:107
 msgid "Osmanya"
@@ -16604,7 +16632,7 @@ msgstr "Тифинаг (берберский)"
 
 #: ../src/ui/dialog/glyphs.cpp:116 ../src/ui/dialog/glyphs.cpp:274
 msgid "Syloti Nagri"
-msgstr ""
+msgstr "Силоти нагри"
 
 #: ../src/ui/dialog/glyphs.cpp:117
 msgid "Old Persian"
@@ -16612,7 +16640,7 @@ msgstr "Древнеперсидский"
 
 #: ../src/ui/dialog/glyphs.cpp:118
 msgid "Kharoshthi"
-msgstr ""
+msgstr "Кхароштхи"
 
 #: ../src/ui/dialog/glyphs.cpp:119
 #, fuzzy
@@ -16641,11 +16669,11 @@ msgstr "Н'ко"
 
 #: ../src/ui/dialog/glyphs.cpp:127 ../src/ui/dialog/glyphs.cpp:279
 msgid "Kayah Li"
-msgstr ""
+msgstr "Кайях Ли"
 
 #: ../src/ui/dialog/glyphs.cpp:128 ../src/ui/dialog/glyphs.cpp:209
 msgid "Lepcha"
-msgstr ""
+msgstr "Лепча"
 
 #: ../src/ui/dialog/glyphs.cpp:129 ../src/ui/dialog/glyphs.cpp:280
 msgid "Rejang"
@@ -16660,9 +16688,8 @@ msgid "Saurashtra"
 msgstr "Саураштра"
 
 #: ../src/ui/dialog/glyphs.cpp:132 ../src/ui/dialog/glyphs.cpp:283
-#, fuzzy
 msgid "Cham"
-msgstr "Хром"
+msgstr "Тямское письмо "
 
 #: ../src/ui/dialog/glyphs.cpp:133 ../src/ui/dialog/glyphs.cpp:210
 msgid "Ol Chiki"
@@ -16726,12 +16753,11 @@ msgstr "Арабский, дополнение"
 
 #: ../src/ui/dialog/glyphs.cpp:170
 msgid "NKo"
-msgstr ""
+msgstr "Нко"
 
 #: ../src/ui/dialog/glyphs.cpp:171
-#, fuzzy
 msgid "Samaritan"
-msgstr "Шотландка"
+msgstr "Самаритянское письмо "
 
 #: ../src/ui/dialog/glyphs.cpp:187
 msgid "Hangul Jamo"
@@ -16739,7 +16765,7 @@ msgstr "Хангул Ямо"
 
 #: ../src/ui/dialog/glyphs.cpp:189
 msgid "Ethiopic Supplement"
-msgstr ""
+msgstr "Эфиопский, дополнение"
 
 #: ../src/ui/dialog/glyphs.cpp:191
 msgid "Unified Canadian Aboriginal Syllabics"
@@ -16755,7 +16781,7 @@ msgstr "Кхмерские символы"
 
 #: ../src/ui/dialog/glyphs.cpp:206
 msgid "Tai Tham"
-msgstr ""
+msgstr "Тай Там"
 
 #: ../src/ui/dialog/glyphs.cpp:211
 msgid "Vedic Extensions"
@@ -16850,9 +16876,8 @@ msgid "Dingbats"
 msgstr "Условные знаки"
 
 #: ../src/ui/dialog/glyphs.cpp:234
-#, fuzzy
 msgid "Miscellaneous Mathematical Symbols-A"
-msgstr "Различные советы по использованию программы"
+msgstr "Различные математические символы A"
 
 #: ../src/ui/dialog/glyphs.cpp:235
 msgid "Supplemental Arrows-A"
@@ -16867,9 +16892,8 @@ msgid "Supplemental Arrows-B"
 msgstr "Дополнительные стрелки B"
 
 #: ../src/ui/dialog/glyphs.cpp:238
-#, fuzzy
 msgid "Miscellaneous Mathematical Symbols-B"
-msgstr "Различные советы по использованию программы"
+msgstr "Различные математические символы B"
 
 #: ../src/ui/dialog/glyphs.cpp:239
 msgid "Supplemental Mathematical Operators"
@@ -16881,7 +16905,7 @@ msgstr "Различные символы и стрелки"
 
 #: ../src/ui/dialog/glyphs.cpp:242
 msgid "Latin Extended-C"
-msgstr ""
+msgstr "Латиница, расширение C"
 
 #: ../src/ui/dialog/glyphs.cpp:244
 msgid "Georgian Supplement"
@@ -16905,11 +16929,11 @@ msgstr "Корни CJK, дополнение"
 
 #: ../src/ui/dialog/glyphs.cpp:250
 msgid "Kangxi Radicals"
-msgstr ""
+msgstr "Корни Канси"
 
 #: ../src/ui/dialog/glyphs.cpp:251
 msgid "Ideographic Description Characters"
-msgstr ""
+msgstr "Символы идеографического описания"
 
 #: ../src/ui/dialog/glyphs.cpp:252
 msgid "CJK Symbols and Punctuation"
@@ -16921,7 +16945,7 @@ msgstr "Хангул, совместимый с Ямо"
 
 #: ../src/ui/dialog/glyphs.cpp:257
 msgid "Kanbun"
-msgstr ""
+msgstr "Канбун"
 
 #: ../src/ui/dialog/glyphs.cpp:258
 msgid "Bopomofo Extended"
@@ -16929,7 +16953,7 @@ msgstr "Расширенный бопомото"
 
 #: ../src/ui/dialog/glyphs.cpp:259
 msgid "CJK Strokes"
-msgstr ""
+msgstr "Росчерки CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:260
 msgid "Katakana Phonetic Extensions"
@@ -16949,7 +16973,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:264
 msgid "Yijing Hexagram Symbols"
-msgstr ""
+msgstr "Гексаграммы И-Цзин"
 
 #: ../src/ui/dialog/glyphs.cpp:265
 msgid "CJK Unified Ideographs"
@@ -16981,11 +17005,11 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:273
 msgid "Latin Extended-D"
-msgstr ""
+msgstr "Латиница, расширение D"
 
 #: ../src/ui/dialog/glyphs.cpp:275
 msgid "Common Indic Number Forms"
-msgstr ""
+msgstr "Обычные индийские числовые формы"
 
 #: ../src/ui/dialog/glyphs.cpp:278
 msgid "Devanagari Extended"
@@ -16993,7 +17017,7 @@ msgstr "Деванагари, расширение"
 
 #: ../src/ui/dialog/glyphs.cpp:281
 msgid "Hangul Jamo Extended-A"
-msgstr ""
+msgstr "Хангыль Ямо, расширение A"
 
 #: ../src/ui/dialog/glyphs.cpp:282
 msgid "Javanese"
@@ -17001,11 +17025,11 @@ msgstr "Яванский"
 
 #: ../src/ui/dialog/glyphs.cpp:284
 msgid "Myanmar Extended-A"
-msgstr ""
+msgstr "Мьянма, расширение A"
 
 #: ../src/ui/dialog/glyphs.cpp:285
 msgid "Tai Viet"
-msgstr ""
+msgstr "Тай Вьет"
 
 #: ../src/ui/dialog/glyphs.cpp:286
 #, fuzzy
@@ -17018,40 +17042,39 @@ msgstr "Слоги Хангул"
 
 #: ../src/ui/dialog/glyphs.cpp:288
 msgid "Hangul Jamo Extended-B"
-msgstr ""
+msgstr "Хангыль Ямо, расширение B"
 
 #: ../src/ui/dialog/glyphs.cpp:289
 msgid "High Surrogates"
-msgstr ""
+msgstr "Верхняя часть суррогатных пар "
 
 #: ../src/ui/dialog/glyphs.cpp:290
 msgid "High Private Use Surrogates"
-msgstr ""
+msgstr "Верхняя часть суррогатных пар для частного использования"
 
 #: ../src/ui/dialog/glyphs.cpp:291
 msgid "Low Surrogates"
-msgstr ""
+msgstr "Нижняя часть суррогатных пар"
 
 #: ../src/ui/dialog/glyphs.cpp:292
 msgid "Private Use Area"
-msgstr ""
+msgstr "Область для частного использования"
 
 #: ../src/ui/dialog/glyphs.cpp:293
 msgid "CJK Compatibility Ideographs"
-msgstr ""
+msgstr "Совместимые иероглифы CJK"
 
 #: ../src/ui/dialog/glyphs.cpp:294
 msgid "Alphabetic Presentation Forms"
-msgstr ""
+msgstr "Алфавитные формы представления"
 
 #: ../src/ui/dialog/glyphs.cpp:295
 msgid "Arabic Presentation Forms-A"
 msgstr "Арабские формы представления A"
 
 #: ../src/ui/dialog/glyphs.cpp:296
-#, fuzzy
 msgid "Variation Selectors"
-msgstr "Cтраница до выделения"
+msgstr "Селекторы вариантов начертания"
 
 #: ../src/ui/dialog/glyphs.cpp:297
 msgid "Vertical Forms"
@@ -17059,7 +17082,7 @@ msgstr "Вертикальные формы"
 
 #: ../src/ui/dialog/glyphs.cpp:298
 msgid "Combining Half Marks"
-msgstr ""
+msgstr "Комбинируемые половины символов"
 
 #: ../src/ui/dialog/glyphs.cpp:299
 msgid "CJK Compatibility Forms"
@@ -17383,8 +17406,8 @@ msgid ""
 "Pressing an arrow key moves selected object(s) or node(s) by this distance "
 "(in px units)"
 msgstr ""
-"На это расстояние (в SVG пикселах) выделенный объект или\n"
-"узел перемещается по нажатию клавиши со стрелкой"
+"На это расстояние (в SVG пикселах) выделенный объект или узел перемещается "
+"по нажатию клавиши со стрелкой"
 
 #. defaultscale is limited to 1000 in select-context.cpp: use the same limit here
 #: ../src/ui/dialog/inkscape-preferences.cpp:257
@@ -17722,6 +17745,8 @@ msgid ""
 "Visualize the direction of selected paths by drawing small arrows in the "
 "middle of each outline segment"
 msgstr ""
+"Показывать направление выделенных контуров при помощи небольших стрелок "
+"посередине каждого сегмента"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:454
 msgid "Show temporary path outline"
@@ -17740,6 +17765,8 @@ msgstr "На время показывать абрис выделенных к�
 #: ../src/ui/dialog/inkscape-preferences.cpp:457
 msgid "Show temporary outline even when a path is selected for editing"
 msgstr ""
+"На время показывать абрис контура, даже если этот контур выделен для "
+"изменения"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:459
 msgid "Flash time"
@@ -17775,6 +17802,8 @@ msgid ""
 "Move handles next to deleted nodes to resemble original shape; hold Ctrl to "
 "get the other behavior"
 msgstr ""
+"Перемещать рычаги оставшихся после удаления узлов так, чтобы фигура по "
+"возможности сохраняла свою форму; при нажатом Ctrl форма не сохраняется"
 
 #. Tweak
 #: ../src/ui/dialog/inkscape-preferences.cpp:467 ../src/verbs.cpp:2457
@@ -17867,6 +17896,7 @@ msgstr "Показывать образцы шрифтов в раскрываю
 msgid ""
 "Show font samples alongside font names in the drop-down list in Text bar"
 msgstr ""
+"Показывать образцы шрифтов рядом с их названиями в раскрывающемся списке"
 
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:558 ../src/verbs.cpp:2479
@@ -18322,7 +18352,7 @@ msgstr "(требует перезапуска программы)"
 #: ../src/ui/dialog/inkscape-preferences.cpp:788
 msgid ""
 "Configure number of processors/threads to use with rendering of gaussian blur"
-msgstr ""
+msgstr "Количество процессоров/потоков при визуализации гауссова размывания"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:796
 msgid "Select in all layers"
@@ -19081,13 +19111,15 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1166
 msgid "Enable dynamic relayout for incomplete sections"
-msgstr ""
+msgstr "Динамическое размещение недоработанных частей интерфейса"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1168
 msgid ""
 "When on, will allow dynamic layout of components that are not completely "
 "finished being refactored"
 msgstr ""
+"Если включено, будет выполняться динамическое размещение недоработанных "
+"частей интерфейса"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1171
 msgid "Interface"
