@@ -172,6 +172,7 @@ sp_stop_set(SPObject *object, unsigned key, gchar const *value)
                 if (streq(p, "currentColor")) {
                     stop->currentColor = true;
                 } else {
+                    // TODO need to properly read full color, including icc
                     guint32 const color = sp_svg_read_color(p, 0);
                     stop->specified_color.set( color );
                 }

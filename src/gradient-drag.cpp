@@ -176,41 +176,74 @@ gr_drag_style_query (SPStyle *style, int property, gpointer data)
     }
 }
 
-bool
-gr_drag_style_set (const SPCSSAttr *css, gpointer data)
+bool GrDrag::styleSet( const SPCSSAttr *css )
 {
-    GrDrag *drag = (GrDrag *) data;
-
-    if (!drag->selected)
+    if (!selected) {
         return false;
+    }
 
-    SPCSSAttr *stop = sp_repr_css_attr_new ();
+    SPCSSAttr *stop = sp_repr_css_attr_new();
 
     // See if the css contains interesting properties, and if so, translate them into the format
     // acceptable for gradient stops
 
     // any of color properties, in order of increasing priority:
-    if (css->attribute("flood-color"))
+    if (css->attribute("flood-color")) {
         sp_repr_css_set_property (stop, "stop-color", css->attribute("flood-color"));
+    }
 
-    if (css->attribute("lighting-color"))
+    if (css->attribute("lighting-color")) {
         sp_repr_css_set_property (stop, "stop-color", css->attribute("lighting-color"));
+    }
 
-    if (css->attribute("color"))
+    if (css->attribute("color")) {
         sp_repr_css_set_property (stop, "stop-color", css->attribute("color"));
+    }
 
-    if (css->attribute("stroke") && strcmp(css->attribute("stroke"), "none"))
+    if (css->attribute("stroke") && strcmp(css->attribute("stroke"), "none")) {
         sp_repr_css_set_property (stop, "stop-color", css->attribute("stroke"));
+    }
 
-    if (css->attribute("fill") && strcmp(css->attribute("fill"), "none"))
+    if (css->attribute("fill") && strcmp(css->attribute("fill"), "none")) {
         sp_repr_css_set_property (stop, "stop-color", css->attribute("fill"));
+    }
 
-    if (css->attribute("stop-color"))
+    if (css->attribute("stop-color")) {
         sp_repr_css_set_property (stop, "stop-color", css->attribute("stop-color"));
+    }
+
+    // Make sure the style is allowed for gradient stops.
+    if ( !sp_repr_css_property_is_unset( stop, "stop-color") ) {
+        Glib::ustring tmp = sp_repr_css_property( stop, "stop-color", "" );
+        Glib::ustring::size_type pos = tmp.find("url(#");
+        if ( pos != Glib::ustring::npos ) {
+            Glib::ustring targetName = tmp.substr(pos + 5, tmp.length() - 6);
+            const GSList *gradients = sp_document_get_resource_list(desktop->doc(), "gradient");
+            for (const GSList *item = gradients; item; item = item->next) {
+                SPGradient* grad = SP_GRADIENT(item->data);
+                if ( targetName == grad->getId() ) {
+                    SPGradient *vect = grad->getVector();
+                    SPStop *firstStop = (vect) ? vect->getFirstStop() : grad->getFirstStop();
+                    if (firstStop) {
+                        Glib::ustring stopColorStr;
+                        if (firstStop->currentColor) {
+                            stopColorStr = sp_object_get_style_property(firstStop, "color", NULL);
+                        } else {
+                            stopColorStr = firstStop->specified_color.toString();
+                        }
+                        if ( !stopColorStr.empty() ) {
+                            sp_repr_css_set_property( stop, "stop-color", stopColorStr.c_str() );
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    }
 
 
     if (css->attribute("stop-opacity")) { // direct setting of stop-opacity has priority
-        sp_repr_css_set_property (stop, "stop-opacity", css->attribute("stop-opacity"));
+        sp_repr_css_set_property(stop, "stop-opacity", css->attribute("stop-opacity"));
     } else {  // multiply all opacity properties:
         gdouble accumulated = 1.0;
         accumulated *= sp_svg_read_percentage(css->attribute("flood-opacity"), 1.0);
@@ -220,11 +253,12 @@ gr_drag_style_set (const SPCSSAttr *css, gpointer data)
 
         Inkscape::CSSOStringStream os;
         os << accumulated;
-        sp_repr_css_set_property (stop, "stop-opacity", os.str().c_str());
+        sp_repr_css_set_property(stop, "stop-opacity", os.str().c_str());
 
         if ((css->attribute("fill") && !css->attribute("stroke") && !strcmp(css->attribute("fill"), "none")) ||
-            (css->attribute("stroke") && !css->attribute("fill") && !strcmp(css->attribute("stroke"), "none")))
-            sp_repr_css_set_property (stop, "stop-opacity", "0"); // if a single fill/stroke property is set to none, don't change color, set opacity to 0
+            (css->attribute("stroke") && !css->attribute("fill") && !strcmp(css->attribute("stroke"), "none"))) {
+            sp_repr_css_set_property(stop, "stop-opacity", "0"); // if a single fill/stroke property is set to none, don't change color, set opacity to 0
+        }
     }
 
     if (!stop->attributeList()) { // nothing for us here, pass it on
@@ -232,13 +266,13 @@ gr_drag_style_set (const SPCSSAttr *css, gpointer data)
         return false;
     }
 
-    for (GList const* sel = drag->selected; sel != NULL; sel = sel->next) { // for all selected draggers
-        GrDragger* dragger = (GrDragger*) sel->data;
+    for (GList const* sel = selected; sel != NULL; sel = sel->next) { // for all selected draggers
+        GrDragger* dragger = reinterpret_cast<GrDragger*>(sel->data);
         for (GSList const* i = dragger->draggables; i != NULL; i = i->next) { // for all draggables of dragger
-               GrDraggable *draggable = (GrDraggable *) i->data;
+            GrDraggable *draggable = reinterpret_cast<GrDraggable *>(i->data);
 
-               drag->local_change = true;
-               sp_item_gradient_stop_set_style (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke, stop);
+            local_change = true;
+            sp_item_gradient_stop_set_style(draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke, stop);
         }
     }
 
@@ -402,51 +436,47 @@ GrDrag::dropColor(SPItem */*item*/, gchar const *c, Geom::Point p)
 }
 
 
-GrDrag::GrDrag(SPDesktop *desktop) {
-
-    this->desktop = desktop;
-
-    this->selection = sp_desktop_selection(desktop);
-
-    this->draggers = NULL;
-    this->lines = NULL;
-    this->selected = NULL;
-
-    this->hor_levels.clear();
-    this->vert_levels.clear();
-
-    this->local_change = false;
-
-    this->sel_changed_connection = this->selection->connectChanged(
-        sigc::bind (
+GrDrag::GrDrag(SPDesktop *desktop) :
+    selected(0),
+    keep_selection(false),
+    local_change(false),
+    desktop(desktop),
+    hor_levels(),
+    vert_levels(),
+    draggers(0),
+    lines(0),
+    selection(sp_desktop_selection(desktop)),
+    sel_changed_connection(),
+    sel_modified_connection(),
+    style_set_connection(),
+    style_query_connection()
+{
+    sel_changed_connection = selection->connectChanged(
+        sigc::bind(
             sigc::ptr_fun(&gr_drag_sel_changed),
             (gpointer)this )
 
         );
-    this->sel_modified_connection = this->selection->connectModified(
+    sel_modified_connection = selection->connectModified(
         sigc::bind(
             sigc::ptr_fun(&gr_drag_sel_modified),
             (gpointer)this )
         );
 
-    this->style_set_connection = this->desktop->connectSetStyle(
-        sigc::bind(
-            sigc::ptr_fun(&gr_drag_style_set),
-            (gpointer)this )
-        );
+    style_set_connection = desktop->connectSetStyle( sigc::mem_fun(*this, &GrDrag::styleSet) );
 
-    this->style_query_connection = this->desktop->connectQueryStyle(
+    style_query_connection = desktop->connectQueryStyle(
         sigc::bind(
             sigc::ptr_fun(&gr_drag_style_query),
             (gpointer)this )
         );
 
-    this->updateDraggers ();
-    this->updateLines ();
-    this->updateLevels ();
+    updateDraggers();
+    updateLines();
+    updateLevels();
 
     if (desktop->gr_item) {
-        this->setSelected (getDraggerFor (desktop->gr_item, desktop->gr_point_type, desktop->gr_point_i, desktop->gr_fill_or_stroke));
+        setSelected(getDraggerFor(desktop->gr_item, desktop->gr_point_type, desktop->gr_point_i, desktop->gr_fill_or_stroke));
     }
 }
 

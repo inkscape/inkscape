@@ -175,6 +175,8 @@ private:
     void addDraggersRadial (SPRadialGradient *rg, SPItem *item, bool fill_or_stroke);
     void addDraggersLinear (SPLinearGradient *lg, SPItem *item, bool fill_or_stroke);
 
+    bool styleSet( const SPCSSAttr *css );
+
     Inkscape::Selection *selection;
     sigc::connection sel_changed_connection;
     sigc::connection sel_modified_connection;
