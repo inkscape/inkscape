@@ -58,7 +58,7 @@ public:
 
 //private:
     Geom::Point snap_knot_position(Geom::Point const &p);
-    Geom::Point snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::ConstraintLine const &constraint);
+    Geom::Point snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::SnapConstraint const &constraint);
 
     SPKnot *knot;
     SPItem *item;

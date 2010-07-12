@@ -51,7 +51,6 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
     g_assert(_desktop != NULL);
 
     if (!p.getSnapped()) {
-        g_warning("No snapping took place, so no snap target will be displayed");
         return; // If we haven't snapped, then it is of no use to draw a snapindicator
     }
 

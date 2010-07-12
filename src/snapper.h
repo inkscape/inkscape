@@ -15,6 +15,7 @@
 #include <map>
 #include <list>
 #include <boost/optional.hpp>
+#include <glib.h> // for g_assert
 
 #include "snapped-point.h"
 #include "snapped-line.h"
@@ -63,18 +64,29 @@ public:
                           std::vector<SPItem const *> const */*it*/,
                           std::vector<SnapCandidatePoint> */*unselected_nodes*/) const {};
 
-    class ConstraintLine
+    // Class for storing the constraint for constrained snapping; can be
+    // - a line (infinite line with origin, running through _point pointing in _direction)
+    // - a direction (infinite line without origin, i.e. only a direction vector, stored in _direction)
+    // - a circle (_point denotes the center, _radius doesn't need an explanation, _direction contains
+    //      the vector from the origin to the original untransformed point);
+    class SnapConstraint
     {
-    public:
-        ConstraintLine(Geom::Point const &d) : _has_point(false), _direction(d) {}
-        ConstraintLine(Geom::Point const &p, Geom::Point const &d) : _has_point(true), _point(p), _direction(d) {}
-        ConstraintLine(Geom::Line const &l) : _has_point(true), _point(l.origin()), _direction(l.versor()) {}
+    private:
+        enum SnapConstraintType {LINE, DIRECTION, CIRCLE};
 
-        bool hasPoint() const {
-            return _has_point;
-        }
+    public:
+        // Constructs a direction constraint, e.g. horizontal or vertical but without a specified point
+        SnapConstraint(Geom::Point const &d) : _direction(d), _type(DIRECTION) {}
+        // Constructs a linear constraint
+        SnapConstraint(Geom::Point const &p, Geom::Point const &d) : _point(p), _direction(d), _type(LINE) {}
+        SnapConstraint(Geom::Line const &l) : _point(l.origin()), _direction(l.versor()), _type(LINE) {}
+        // Constructs a circular constraint
+        SnapConstraint(Geom::Point const &p, Geom::Point const &d, Geom::Coord const &r) : _point(p), _direction(d), _radius(r), _type(CIRCLE) {}
+
+        bool hasPoint() const {return _type != DIRECTION;}
 
         Geom::Point getPoint() const {
+            g_assert(_type != DIRECTION);
             return _point;
         }
 
@@ -82,28 +94,45 @@ public:
             return _direction;
         }
 
-        void setPoint(Geom::Point const &p) {
-            _point = p;
-            _has_point = true;
+        Geom::Coord getRadius() const {
+            g_assert(_type == CIRCLE);
+            return _radius;
         }
 
-        Geom::Point projection(Geom::Point const &p) const { // returns the projection of p on this constraintline
-            Geom::Point const p1_on_cl = _has_point ? _point : p;
-            Geom::Point const p2_on_cl = p1_on_cl + _direction;
-            return Geom::projection(p, Geom::Line(p1_on_cl, p2_on_cl));
+        bool isCircular() const { return _type == CIRCLE; }
+        bool isLinear() const { return _type == LINE; }
+        bool isDirection() const { return _type == DIRECTION; }
+
+        Geom::Point projection(Geom::Point const &p) const { // returns the projection of p on this constraint
+            if (_type == CIRCLE) {
+                // project on to a circular constraint
+                Geom::Point v_orig = p - _point;
+                Geom::Coord l = Geom::L2(v_orig);
+                if (l > 0) {
+                    return _point + _radius * v_orig/l; // Length of _direction is equal to the radius
+                } else {
+                    // point to be projected is exactly at the center of the circle, so any point on the circle is a projection
+                    return _point + Geom::Point(_radius, 0);
+                }
+            } else {
+                // project on to a linear constraint
+                Geom::Point const p1_on_cl = (_type == LINE) ? _point : p;
+                Geom::Point const p2_on_cl = p1_on_cl + _direction;
+                return Geom::projection(p, Geom::Line(p1_on_cl, p2_on_cl));
+            }
         }
 
     private:
-
-        bool _has_point;
         Geom::Point _point;
         Geom::Point _direction;
+        Geom::Coord _radius;
+        SnapConstraintType _type;
     };
 
     virtual void constrainedSnap(SnappedConstraints &/*sc*/,
                                  Inkscape::SnapCandidatePoint const &/*p*/,
                                  Geom::OptRect const &/*bbox_to_snap*/,
-                                 ConstraintLine const &/*c*/,
+                                 SnapConstraint const &/*c*/,
                                  std::vector<SPItem const *> const */*it*/) const {};
 
 protected:

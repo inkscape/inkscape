@@ -335,7 +335,7 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t, Geom::Point c
 
 void SnapManager::constrainedSnapReturnByRef(Geom::Point &p,
                                              Inkscape::SnapSourceType const source_type,
-                                             Inkscape::Snapper::ConstraintLine const &constraint,
+                                             Inkscape::Snapper::SnapConstraint const &constraint,
                                              Geom::OptRect const &bbox_to_snap) const
 {
     Inkscape::SnappedPoint const s = constrainedSnap(Inkscape::SnapCandidatePoint(p, source_type, 0), constraint, bbox_to_snap);
@@ -359,13 +359,19 @@ void SnapManager::constrainedSnapReturnByRef(Geom::Point &p,
  */
 
 Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint const &p,
-                                                    Inkscape::Snapper::ConstraintLine const &constraint,
+                                                    Inkscape::Snapper::SnapConstraint const &constraint,
                                                     Geom::OptRect const &bbox_to_snap) const
 {
     // First project the mouse pointer onto the constraint
     Geom::Point pp = constraint.projection(p.getPoint());
 
-    Inkscape::SnappedPoint no_snap = Inkscape::SnappedPoint(pp, p.getSourceType(), p.getSourceNum(), Inkscape::SNAPTARGET_CONSTRAINT, Geom::L2(pp - p.getPoint()), 0, false, true, false);
+    Inkscape::SnappedPoint no_snap = Inkscape::SnappedPoint(pp, p.getSourceType(), p.getSourceNum(), Inkscape::SNAPTARGET_CONSTRAINT, NR_HUGE, 0, false, true, false);
+    if (constraint.isCircular()) {
+        Geom::Point v_orig = constraint.getDirection(); // vector from the origin to the original (untransformed) point
+        Geom::Point v_proj = pp - constraint.getPoint(); // vector from the origin to the projected point
+        Geom::Coord angle = atan2(Geom::dot(Geom::rot90(v_orig), v_proj), Geom::dot(v_orig, v_proj));
+        no_snap.setTransformation(Geom::Point(angle, angle)); // Store the rotation (in radians), needed in case of snapping while rotating
+    }
 
     if (!someSnapperMightSnap()) {
         // Always return point on constraint
@@ -464,7 +470,7 @@ void SnapManager::guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline)
 
     // Snap to nodes or paths
     SnappedConstraints sc;
-    Inkscape::Snapper::ConstraintLine cl(guideline.point_on_line, Geom::rot90(guideline.normal_to_line));
+    Inkscape::Snapper::SnapConstraint cl(guideline.point_on_line, Geom::rot90(guideline.normal_to_line));
     if (object.ThisSnapperMightSnap()) {
         object.constrainedSnap(sc, candidate, Geom::OptRect(), cl, NULL);
     }
@@ -509,7 +515,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     std::vector<Inkscape::SnapCandidatePoint> const &points,
     Geom::Point const &pointer,
     bool constrained,
-    Inkscape::Snapper::ConstraintLine const &constraint,
+    Inkscape::Snapper::SnapConstraint const &constraint,
     Transformation transformation_type,
     Geom::Point const &transformation,
     Geom::Point const &origin,
@@ -559,8 +565,17 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     g_assert(best_snapped_point.getAlwaysSnap() == false); // Check initialization of snapped point
     g_assert(best_snapped_point.getAtIntersection() == false);
 
-    std::vector<Inkscape::SnapCandidatePoint>::iterator j = transformed_points.begin();
+    // Warnings for the devs
+    if (constrained && transformation_type == SCALE && !uniform) {
+        g_warning("Non-uniform constrained scaling is not supported!");
+    }
 
+    if (!constrained && transformation_type == ROTATE) {
+        // We do not yet allow for simultaneous rotation and scaling
+        g_warning("Unconstrained rotation is not supported!");
+    }
+
+    std::vector<Inkscape::SnapCandidatePoint>::iterator j = transformed_points.begin();
 
     // std::cout << std::endl;
     bool first_free_snap = true;
@@ -568,27 +583,28 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
 
         /* Snap it */
         Inkscape::SnappedPoint snapped_point;
-        Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
-        Geom::Point const b = ((*i).getPoint() - origin); // vector to original point
+        Inkscape::Snapper::SnapConstraint dedicated_constraint = constraint;
+        Geom::Point const b = ((*i).getPoint() - origin); // vector to original point (not the transformed point! required for rotations!)
 
         if (constrained) {
-            if ((transformation_type == SCALE || transformation_type == STRETCH) && uniform) {
+            if (((transformation_type == SCALE || transformation_type == STRETCH) && uniform)) {
                 // When uniformly scaling, each point will have its own unique constraint line,
                 // running from the scaling origin to the original untransformed point. We will
                 // calculate that line here
-                dedicated_constraint = Inkscape::Snapper::ConstraintLine(origin, b);
+                dedicated_constraint = Inkscape::Snapper::SnapConstraint(origin, b);
+            } else if (transformation_type == ROTATE) {
+                // Geom::L2(b) is the radius of the circular constraint
+                dedicated_constraint = Inkscape::Snapper::SnapConstraint(origin, b, Geom::L2(b));
             } else if (transformation_type == STRETCH) { // when non-uniform stretching {
-                dedicated_constraint = Inkscape::Snapper::ConstraintLine((*i).getPoint(), component_vectors[dim]);
-            } else if (transformation_type == TRANSLATION) {
+                dedicated_constraint = Inkscape::Snapper::SnapConstraint((*i).getPoint(), component_vectors[dim]);
+            } else if (transformation_type == TRANSLATE) {
                 // When doing a constrained translation, all points will move in the same direction, i.e.
                 // either horizontally or vertically. The lines along which they move are therefore all
-                // parallel, but might not be colinear. Therefore we will have to set the point through
-                // which the constraint-line runs here, for each point individually.
-                dedicated_constraint.setPoint((*i).getPoint());
+                // parallel, but might not be colinear. Therefore we will have to specify the point through
+                // which the constraint-line runs here, for each point individually. (we could also have done this
+                // earlier on, e.g. in seltrans.cpp but we're being lazy there and don't want to add an iteration loop)
+                dedicated_constraint = Inkscape::Snapper::SnapConstraint((*i).getPoint(), constraint.getDirection());
             } // else: leave the original constraint, e.g. for skewing
-            if (transformation_type == SCALE && !uniform) {
-                g_warning("Non-uniform constrained scaling is not supported!");
-            }
             snapped_point = constrainedSnap(*j, dedicated_constraint, bbox);
         } else {
             bool const c1 = fabs(b[Geom::X]) < 1e-6;
@@ -597,7 +613,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 // When scaling, a point aligned either horizontally or vertically with the origin can only
                 // move in that specific direction; therefore it should only snap in that direction, otherwise
                 // we will get snapped points with an invalid transformation
-                dedicated_constraint = Inkscape::Snapper::ConstraintLine(origin, component_vectors[c1]);
+                dedicated_constraint = Inkscape::Snapper::SnapConstraint(origin, component_vectors[c1]);
                 snapped_point = constrainedSnap(*j, dedicated_constraint, bbox);
             } else {
                 // If we have a collection of SnapCandidatePoints, with mixed constrained snapping and free snapping
@@ -627,7 +643,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
             //Geom::Point const b = (*i - origin); // vector to original point
 
             switch (transformation_type) {
-                case TRANSLATION:
+                case TRANSLATE:
                     result = snapped_point.getPoint() - (*i).getPoint();
                     /* Consider the case in which a box is almost aligned with a grid in both
                      * horizontal and vertical directions. The distance to the intersection of
@@ -693,6 +709,12 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                     snapped_point.setSnapDistance(std::abs(result[0] - transformation[0]));
                     snapped_point.setSecondSnapDistance(NR_HUGE);
                     break;
+                case ROTATE:
+                    result = snapped_point.getTransformation();
+                    // Store the metric for this transformation as a virtual distance (we're storing an angle)
+                    snapped_point.setSnapDistance(std::abs(result[0] - transformation[0]));
+                    snapped_point.setSecondSnapDistance(NR_HUGE);
+                    break;
                 default:
                     g_assert_not_reached();
             }
@@ -738,22 +760,21 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
  *  \return An instance of the SnappedPoint class, which holds data on the snap source, snap target, and various metrics.
  */
 
-Inkscape::SnappedPoint SnapManager::freeSnapTranslation(std::vector<Inkscape::SnapCandidatePoint> const &p,
+Inkscape::SnappedPoint SnapManager::freeSnapTranslate(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                         Geom::Point const &pointer,
                                                         Geom::Point const &tr) const
 {
     if (p.size() == 1) {
-        Geom::Point pt = _transformPoint(p.at(0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
+        Geom::Point pt = _transformPoint(p.at(0), TRANSLATE, tr, Geom::Point(0,0), Geom::X, false);
         _displaySnapsource(Inkscape::SnapCandidatePoint(pt, p.at(0).getSourceType()));
     }
 
-    return _snapTransformed(p, pointer, false, Geom::Point(0,0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
+    return _snapTransformed(p, pointer, false, Geom::Point(0,0), TRANSLATE, tr, Geom::Point(0,0), Geom::X, false);
 }
 
 /**
  *  \brief Apply a translation to a set of points and try to snap along a constraint
  *
- *  \param point_type Category of points to which the source point belongs: node or bounding box.
  *  \param p Collection of points to snap (snap sources), at their untransformed position, all points undergoing the same transformation. Paired with an identifier of the type of the snap source.
  *  \param pointer Location of the mouse pointer at the time dragging started (i.e. when the selection was still untransformed).
  *  \param constraint The direction or line along which snapping must occur.
@@ -761,24 +782,23 @@ Inkscape::SnappedPoint SnapManager::freeSnapTranslation(std::vector<Inkscape::Sn
  *  \return An instance of the SnappedPoint class, which holds data on the snap source, snap target, and various metrics.
  */
 
-Inkscape::SnappedPoint SnapManager::constrainedSnapTranslation(std::vector<Inkscape::SnapCandidatePoint> const &p,
+Inkscape::SnappedPoint SnapManager::constrainedSnapTranslate(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                                Geom::Point const &pointer,
-                                                               Inkscape::Snapper::ConstraintLine const &constraint,
+                                                               Inkscape::Snapper::SnapConstraint const &constraint,
                                                                Geom::Point const &tr) const
 {
     if (p.size() == 1) {
-        Geom::Point pt = _transformPoint(p.at(0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
+        Geom::Point pt = _transformPoint(p.at(0), TRANSLATE, tr, Geom::Point(0,0), Geom::X, false);
         _displaySnapsource(Inkscape::SnapCandidatePoint(pt, p.at(0).getSourceType()));
     }
 
-    return _snapTransformed(p, pointer, true, constraint, TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
+    return _snapTransformed(p, pointer, true, constraint, TRANSLATE, tr, Geom::Point(0,0), Geom::X, false);
 }
 
 
 /**
  *  \brief Apply a scaling to a set of points and try to snap freely in 2 degrees-of-freedom
  *
- *  \param point_type Category of points to which the source point belongs: node or bounding box.
  *  \param p Collection of points to snap (snap sources), at their untransformed position, all points undergoing the same transformation. Paired with an identifier of the type of the snap source.
  *  \param pointer Location of the mouse pointer at the time dragging started (i.e. when the selection was still untransformed).
  *  \param s Proposed scaling; the final scaling can only be calculated after snapping has occurred
@@ -803,7 +823,6 @@ Inkscape::SnappedPoint SnapManager::freeSnapScale(std::vector<Inkscape::SnapCand
 /**
  *  \brief Apply a scaling to a set of points and snap such that the aspect ratio of the selection is preserved
  *
- *  \param point_type Category of points to which the source point belongs: node or bounding box.
  *  \param p Collection of points to snap (snap sources), at their untransformed position, all points undergoing the same transformation. Paired with an identifier of the type of the snap source.
  *  \param pointer Location of the mouse pointer at the time dragging started (i.e. when the selection was still untransformed).
  *  \param s Proposed scaling; the final scaling can only be calculated after snapping has occurred
@@ -828,7 +847,6 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapScale(std::vector<Inkscape::S
 /**
  *  \brief Apply a stretch to a set of points and snap such that the direction of the stretch is preserved
  *
- *  \param point_type Category of points to which the source point belongs: node or bounding box.
  *  \param p Collection of points to snap (snap sources), at their untransformed position, all points undergoing the same transformation. Paired with an identifier of the type of the snap source.
  *  \param pointer Location of the mouse pointer at the time dragging started (i.e. when the selection was still untransformed).
  *  \param s Proposed stretch; the final stretch can only be calculated after snapping has occurred
@@ -856,7 +874,6 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(std::vector<Inkscape:
 /**
  *  \brief Apply a skew to a set of points and snap such that the direction of the skew is preserved
  *
- *  \param point_type Category of points to which the source point belongs: node or bounding box.
  *  \param p Collection of points to snap (snap sources), at their untransformed position, all points undergoing the same transformation. Paired with an identifier of the type of the snap source.
  *  \param pointer Location of the mouse pointer at the time dragging started (i.e. when the selection was still untransformed).
  *  \param constraint The direction or line along which snapping must occur.
@@ -868,7 +885,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(std::vector<Inkscape:
 
 Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                  Geom::Point const &pointer,
-                                                 Inkscape::Snapper::ConstraintLine const &constraint,
+                                                 Inkscape::Snapper::SnapConstraint const &constraint,
                                                  Geom::Point const &s,
                                                  Geom::Point const &o,
                                                  Geom::Dim2 d) const
@@ -890,6 +907,36 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(std::vector<Inkscape::Sn
     }
 
     return _snapTransformed(p, pointer, true, constraint, SKEW, s, o, d, false);
+}
+
+/**
+ *  \brief Apply a rotation to a set of points and snap, without scaling
+ *
+ *  \param p Collection of points to snap (snap sources), at their untransformed position, all points undergoing the same transformation. Paired with an identifier of the type of the snap source.
+ *  \param pointer Location of the mouse pointer at the time dragging started (i.e. when the selection was still untransformed).
+ *  \param angle Proposed rotation (in radians); the final rotation can only be calculated after snapping has occurred
+ *  \param o Origin of the rotation
+ *  \return An instance of the SnappedPoint class, which holds data on the snap source, snap target, and various metrics.
+ */
+
+Inkscape::SnappedPoint SnapManager::constrainedSnapRotate(std::vector<Inkscape::SnapCandidatePoint> const &p,
+                                                    Geom::Point const &pointer,
+                                                    Geom::Coord const &angle,
+                                                    Geom::Point const &o) const
+{
+    // Snapping the nodes of the bounding box of a selection that is being transformed, will only work if
+    // the transformation of the bounding box is equal to the transformation of the individual nodes. This is
+    // NOT the case for example when rotating or skewing. The bounding box itself cannot possibly rotate or skew,
+    // so it's corners have a different transformation. The snappers cannot handle this, therefore snapping
+    // of bounding boxes is not allowed here.
+
+    if (p.size() == 1) {
+        Geom::Point pt = _transformPoint(p.at(0), ROTATE, Geom::Point(angle, angle), o, Geom::X, false);
+        _displaySnapsource(Inkscape::SnapCandidatePoint(pt, p.at(0).getSourceType()));
+    }
+
+    return _snapTransformed(p, pointer, true, Geom::Point(0,0), ROTATE, Geom::Point(angle, angle), o, Geom::X, false);
+
 }
 
 /**
@@ -1116,7 +1163,7 @@ Geom::Point SnapManager::_transformPoint(Inkscape::SnapCandidatePoint const &p,
     /* Work out the transformed version of this point */
     Geom::Point transformed;
     switch (transformation_type) {
-        case TRANSLATION:
+        case TRANSLATE:
             transformed = p.getPoint() + transformation;
             break;
         case SCALE:
@@ -1140,6 +1187,10 @@ Geom::Point SnapManager::_transformPoint(Inkscape::SnapCandidatePoint const &p,
             // While skewing, mirroring and scaling (by integer multiples) in the opposite direction is also allowed.
             // Apply that scale factor here
             transformed[1-dim] = (p.getPoint() - origin)[1 - dim] * transformation[1] + origin[1 - dim];
+            break;
+        case ROTATE:
+            // for rotations: transformation[0] stores the angle in radians
+            transformed = (p.getPoint() - origin) * Geom::Rotate(transformation[0]) + origin;
             break;
         default:
             g_assert_not_reached();

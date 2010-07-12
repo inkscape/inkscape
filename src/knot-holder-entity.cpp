@@ -101,7 +101,7 @@ KnotHolderEntity::snap_knot_position(Geom::Point const &p)
 }
 
 Geom::Point
-KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::ConstraintLine const &constraint)
+KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::SnapConstraint const &constraint)
 {
     Geom::Matrix const i2d (sp_item_i2d_affine(item));
     Geom::Point s = p * i2d;
@@ -123,7 +123,7 @@ KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape:
     } else {
         // constrainedSnap() will first project the point p onto the constraint line and then try to snap along that line.
         // This way the constraint is already enforced, no need to worry about that later on
-        Inkscape::Snapper::ConstraintLine transformed_constraint = Inkscape::Snapper::ConstraintLine(constraint.getPoint() * i2d, (constraint.getPoint() + constraint.getDirection()) * i2d - constraint.getPoint() * i2d);
+        Inkscape::Snapper::SnapConstraint transformed_constraint = Inkscape::Snapper::SnapConstraint(constraint.getPoint() * i2d, (constraint.getPoint() + constraint.getDirection()) * i2d - constraint.getPoint() * i2d);
         m.constrainedSnapReturnByRef(s, Inkscape::SNAPSOURCE_NODE_HANDLE, transformed_constraint);
     }
 

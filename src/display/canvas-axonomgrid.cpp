@@ -794,9 +794,10 @@ void CanvasAxonomGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Poin
     sc.grid_lines.push_back(dummy);
 }
 
-void CanvasAxonomGridSnapper::_addSnappedPoint(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num, bool constrained_snap) const
+void CanvasAxonomGridSnapper::_addSnappedPoint(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num, bool constrained_snap, Geom::Coord angle) const
 {
     SnappedPoint dummy = SnappedPoint(snapped_point, source, source_num, Inkscape::SNAPTARGET_GRID, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), constrained_snap, true);
+    dummy.setTransformation(Geom::Point(angle, angle)); // Store the rotation (in radians), needed in case of snapping while rotating
     sc.points.push_back(dummy);
 }
 

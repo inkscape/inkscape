@@ -63,7 +63,7 @@ void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
 void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
                                                Inkscape::SnapCandidatePoint const &p,
                                                Geom::OptRect const &/*bbox_to_snap*/,
-                                               ConstraintLine const &c,
+                                               SnapConstraint const &c,
                                                std::vector<SPItem const *> const */*it*/) const
 
 {
@@ -75,20 +75,46 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
     const LineList lines = _getSnapLines(p.getPoint());
 
     for (LineList::const_iterator i = lines.begin(); i != lines.end(); i++) {
-        if (Geom::L2(c.getDirection()) > 0) { // Can't do a constrained snap without a constraint
-            // constraint line
-            Geom::Point const point_on_line = c.hasPoint() ? c.getPoint() : p.getPoint();
-            Geom::Line line1(point_on_line, point_on_line + c.getDirection());
+        Geom::Point const point_on_line = c.hasPoint() ? c.getPoint() : p.getPoint();
+        Geom::Line gridguide_line(i->second, i->second + Geom::rot90(i->first));
 
-            // grid/guide line
-            Geom::Point const p1 = i->second; // point at guide/grid line
-            Geom::Point const p2 = p1 + Geom::rot90(i->first); // 2nd point at guide/grid line
-            Geom::Line line2(p1, p2);
-
+        if (c.isCircular()) {
+            // Find the intersections between the line and the circular constraint
+            // First, project the origin of the circle onto the line
+            Geom::Point const origin = c.getPoint();
+            Geom::Point const p_proj = Geom::projection(origin, gridguide_line);
+            Geom::Point v_orig = c.getDirection(); // vector from the origin to the original (untransformed) point
+            Geom::Point v_proj = p_proj - origin;
+            Geom::Coord dist = Geom::L2(v_proj); // distance from circle origin to constraint line
+            Geom::Coord radius = c.getRadius();
+            Geom::Coord radians = NR_HUGE;
+            if (dist == radius) {
+                // Only one point of intersection;
+                // Calculate the rotation in radians...
+                radians = atan2(Geom::dot(Geom::rot90(v_orig), v_proj), Geom::dot(v_orig, v_proj));
+                _addSnappedPoint(sc, p_proj, Geom::L2(p.getPoint() - p_proj), p.getSourceType(), p.getSourceNum(), true, radians);
+            } else if (dist < radius) {
+                // Two points of intersection, symmetrical with respect to the projected point
+                // Calculate half the length of the linesegment between the two points of intersection
+                Geom::Coord l = sqrt(radius*radius - dist*dist);
+                Geom::Coord d = Geom::L2(gridguide_line.versor()); // length of versor, needed to normalize the versor
+                if (d > 0) {
+                    Geom::Point v = l*gridguide_line.versor()/d;
+                    v_proj = p_proj + v - origin;
+                    radians = atan2(Geom::dot(Geom::rot90(v_orig), v_proj), Geom::dot(v_orig, v_proj));
+                    _addSnappedPoint(sc, p_proj + v, Geom::L2(p.getPoint() - (p_proj + v)), p.getSourceType(), p.getSourceNum(), true, radians);
+                    v_proj = p_proj - v - origin;
+                    radians = atan2(Geom::dot(Geom::rot90(v_orig), v_proj), Geom::dot(v_orig, v_proj));
+                    _addSnappedPoint(sc, p_proj - v, Geom::L2(p.getPoint() - (p_proj - v)), p.getSourceType(), p.getSourceNum(), true, radians);
+                }
+            }
+        } else {
+            // Find the intersections between the line and the linear constraint
+            Geom::Line constraint_line(point_on_line, point_on_line + c.getDirection());
             Geom::OptCrossing inters = Geom::OptCrossing(); // empty by default
             try
             {
-                inters = Geom::intersection(line1, line2);
+                inters = Geom::intersection(constraint_line, gridguide_line);
             }
             catch (Geom::InfiniteSolutions e)
             {
@@ -97,23 +123,14 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
             }
 
             if (inters) {
-                Geom::Point t = line1.pointAt((*inters).ta);
+                Geom::Point t = constraint_line.pointAt((*inters).ta);
                 const Geom::Coord dist = Geom::L2(t - p.getPoint());
                 if (dist < getSnapperTolerance()) {
                     // When doing a constrained snap, we're already at an intersection.
                     // This snappoint is therefore fully constrained, so there's no need
                     // to look for additional intersections; just return the snapped point
                     // and forget about the line
-                    _addSnappedPoint(sc, t, dist, p.getSourceType(), p.getSourceNum(), true);
-                    // For any line that's within range, we will also look at it's "point on line" p1. For guides
-                    // this point coincides with its origin; for grids this is of no use, but we cannot
-                    // discern between grids and guides here
-                    Geom::Coord const dist_p1 = Geom::L2(p1 - p.getPoint());
-                    if (dist_p1 < getSnapperTolerance()) {
-                        _addSnappedLinesOrigin(sc, p1, dist_p1, p.getSourceType(), p.getSourceNum(), true);
-                        // Only relevant for guides; grids don't have an origin per line
-                        // Therefore _addSnappedLinesOrigin() will only be implemented for guides
-                    }
+                    _addSnappedPoint(sc, t, dist, p.getSourceType(), p.getSourceNum(), true, 1);
                 }
             }
         }

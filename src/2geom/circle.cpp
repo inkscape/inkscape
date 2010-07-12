@@ -97,6 +97,23 @@ Circle::arc(Point const& initial, Point const& inner, Point const& final,
     return e.arc(initial, inner, final, _svg_compliant);
 }
 
+void
+Circle::getPath(std::vector<Path> &path_out) {
+    Path pb;
+
+    D2<SBasis> B;
+    Linear bo = Linear(0, 2 * M_PI);
+
+    B[0] = cos(bo,4);
+    B[1] = sin(bo,4);
+
+    B = B * m_ray + m_centre;
+
+    pb.append(SBasisCurve(B));
+
+    path_out.push_back(pb);
+}
+
 
 }  // end namespace Geom
 

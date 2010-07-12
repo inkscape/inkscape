@@ -17,6 +17,7 @@
 
 // You might need to include other 2geom files. You can add them here:
 #include <2geom/path.h>
+#include <2geom/circle.h>
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -28,24 +29,6 @@ LPECircle3Pts::LPECircle3Pts(LivePathEffectObject *lpeobject) :
 
 LPECircle3Pts::~LPECircle3Pts()
 {
-}
-
-static void _circle(Geom::Point center, double radius, std::vector<Geom::Path> &path_out) {
-    using namespace Geom;
-
-    Geom::Path pb;
-
-    D2<SBasis> B;
-    Linear bo = Linear(0, 2 * M_PI);
-
-    B[0] = cos(bo,4);
-    B[1] = sin(bo,4);
-
-    B = B * radius + center;
-
-    pb.append(SBasisCurve(B));
-
-    path_out.push_back(pb);
 }
 
 static void _circle3(Geom::Point const &A, Geom::Point const &B, Geom::Point const &C, std::vector<Geom::Path> &path_out) {
@@ -64,7 +47,8 @@ static void _circle3(Geom::Point const &A, Geom::Point const &B, Geom::Point con
     Point M = D + v * lambda;
     double radius = L2(M - A);
 
-    _circle(M, radius, path_out);
+    Geom::Circle c(M, radius);
+    c.getPath(path_out);
 }
 
 std::vector<Geom::Path>

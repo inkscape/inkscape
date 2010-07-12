@@ -46,7 +46,7 @@ public:
     void guideConstrainedSnap(SnappedConstraints &sc,
                        Geom::Point const &p,
                        Geom::Point const &guide_normal,
-                       ConstraintLine const &c) const;
+                       SnapConstraint const &c) const;
 
     bool ThisSnapperMightSnap() const;
     bool GuidesMightSnap() const;
@@ -63,7 +63,7 @@ public:
     void constrainedSnap(SnappedConstraints &sc,
                   Inkscape::SnapCandidatePoint const &p,
                   Geom::OptRect const &bbox_to_snap,
-                  ConstraintLine const &c,
+                  SnapConstraint const &c,
                   std::vector<SPItem const *> const *it) const;
 
 private:
@@ -98,7 +98,7 @@ private:
 
     void _snapPathsConstrained(SnappedConstraints &sc,
                  Inkscape::SnapCandidatePoint const &p, // in desktop coordinates
-                 ConstraintLine const &c) const;
+                 SnapConstraint const &c) const;
 
     bool isUnselectedNode(Geom::Point const &point, std::vector<Inkscape::SnapCandidatePoint> const *unselected_nodes) const;
 

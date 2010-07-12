@@ -688,7 +688,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
                     snap_vector = get_snap_vector (p, dr_snap, M_PI/snaps, 0);
                 }
                 if (snap_vector) {
-                    Inkscape::Snapper::ConstraintLine cl(dr_snap, p + *snap_vector - dr_snap);
+                    Inkscape::Snapper::SnapConstraint cl(dr_snap, p + *snap_vector - dr_snap);
                     Inkscape::SnappedPoint s = m.constrainedSnap(Inkscape::SnapCandidatePoint(p + *snap_vector, Inkscape::SNAPSOURCE_OTHER_HANDLE), cl);
                     if (s.getSnapped()) {
                         s.setTransformation(s.getPoint() - p);
@@ -838,7 +838,7 @@ gr_knot_moved_midpoint_handler(SPKnot */*knot*/, Geom::Point const &ppointer, gu
     } else {
         p = snap_vector_midpoint (p, low_lim, high_lim, 0);
         if (!(state & GDK_SHIFT_MASK)) {
-            Inkscape::Snapper::ConstraintLine cl(low_lim, high_lim - low_lim);
+            Inkscape::Snapper::SnapConstraint cl(low_lim, high_lim - low_lim);
             SPDesktop *desktop = dragger->parent->desktop;
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop);

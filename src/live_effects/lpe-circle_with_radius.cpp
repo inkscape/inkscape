@@ -18,6 +18,7 @@
 #include <2geom/sbasis.h>
 #include <2geom/bezier-to-sbasis.h>
 #include <2geom/d2.h>
+#include <2geom/circle.h>
 
 using namespace Geom;
 
@@ -38,22 +39,6 @@ LPECircleWithRadius::~LPECircleWithRadius()
 
 }
 
-void _circle(Geom::Point center, double radius, std::vector<Geom::Path> &path_out) {
-    Geom::Path pb;
-
-    D2<SBasis> B;
-    Linear bo = Linear(0, 2 * M_PI);
-
-    B[0] = cos(bo,4);
-    B[1] = sin(bo,4);
-
-    B = B * radius + center;
-
-    pb.append(SBasisCurve(B));
-
-    path_out.push_back(pb);
-}
-
 std::vector<Geom::Path>
 LPECircleWithRadius::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
@@ -64,7 +49,8 @@ LPECircleWithRadius::doEffect_path (std::vector<Geom::Path> const & path_in)
 
     double radius = Geom::L2(pt - center);
 
-    _circle(center, radius, path_out);
+    Geom::Circle c(center, radius);
+    c.getPath(path_out);
 
     return path_out;
 }

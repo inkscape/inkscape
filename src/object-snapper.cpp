@@ -16,6 +16,7 @@
 #include <2geom/point.h>
 #include <2geom/rect.h>
 #include <2geom/line.h>
+#include <2geom/circle.h>
 #include "document.h"
 #include "sp-namedview.h"
 #include "sp-image.h"
@@ -522,7 +523,7 @@ bool Inkscape::ObjectSnapper::isUnselectedNode(Geom::Point const &point, std::ve
 
 void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                                      Inkscape::SnapCandidatePoint const &p,
-                                     ConstraintLine const &c) const
+                                     SnapConstraint const &c) const
 {
 
     _collectPaths(p, p.getSourceNum() == 0);
@@ -537,36 +538,54 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
         direction_vector = Geom::unit_vector(direction_vector);
     }
 
-    // The intersection point of the constraint line with any path,
-    // must lie within two points on the constraintline: p_min_on_cl and p_max_on_cl
-    // The distance between those points is twice the snapping tolerance
+    // The intersection point of the constraint line with any path, must lie within two points on the
+    // SnapConstraint: p_min_on_cl and p_max_on_cl. The distance between those points is twice the snapping tolerance
     Geom::Point const p_proj_on_cl = p.getPoint(); // projection has already been taken care of in constrainedSnap in the snapmanager;
     Geom::Point const p_min_on_cl = _snapmanager->getDesktop()->dt2doc(p_proj_on_cl - getSnapperTolerance() * direction_vector);
     Geom::Point const p_max_on_cl = _snapmanager->getDesktop()->dt2doc(p_proj_on_cl + getSnapperTolerance() * direction_vector);
+    Geom::Coord tolerance = getSnapperTolerance();
 
-    Geom::Path cl;
-    std::vector<Geom::Path> clv;
-    cl.start(p_min_on_cl);
-    cl.appendNew<Geom::LineSegment>(p_max_on_cl);
-    clv.push_back(cl);
+    // PS: Because the paths we're about to snap to are all expressed relative to document coordinate system, we will have
+    // to convert the snapper coordinates from the desktop coordinates to document coordinates
+
+    std::vector<Geom::Path> constraint_path;
+    if (c.isCircular()) {
+        Geom::Circle constraint_circle(_snapmanager->getDesktop()->dt2doc(c.getPoint()), c.getRadius());
+        constraint_circle.getPath(constraint_path);
+    } else {
+        Geom::Path constraint_line;
+        constraint_line.start(p_min_on_cl);
+        constraint_line.appendNew<Geom::LineSegment>(p_max_on_cl);
+        constraint_path.push_back(constraint_line);
+    }
 
     for (std::vector<Inkscape::SnapCandidatePath >::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
         if (k->path_vector) {
-            Geom::CrossingSet cs = Geom::crossings(clv, *(k->path_vector));
-            if (cs.size() > 0) {
-                // We need only the first element of cs, because cl is only a single straight linesegment
-                // This first element contains a vector filled with crossings of cl with k->first
-                for (std::vector<Geom::Crossing>::const_iterator m = cs[0].begin(); m != cs[0].end(); m++) {
-                    if ((*m).ta >= 0 && (*m).ta <= 1 ) {
-                        // Reconstruct the point of intersection
-                        Geom::Point p_inters = p_min_on_cl + ((*m).ta) * (p_max_on_cl - p_min_on_cl);
-                        // When it's within snapping range, then return it
-                        // (within snapping range == between p_min_on_cl and p_max_on_cl == 0 < ta < 1)
-                        Geom::Coord dist = Geom::L2(_snapmanager->getDesktop()->dt2doc(p_proj_on_cl) - p_inters);
-                        SnappedPoint s(_snapmanager->getDesktop()->doc2dt(p_inters), p.getSourceType(), p.getSourceNum(), k->target_type, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true, k->target_bbox);
+            Geom::CrossingSet cs = Geom::crossings(constraint_path, *(k->path_vector));
+            unsigned int index = 0;
+            for (Geom::CrossingSet::const_iterator i = cs.begin(); i != cs.end(); i++) {
+                if (index >= constraint_path.size()) {
+                    break;
+                }
+                for (Geom::Crossings::const_iterator m = (*i).begin(); m != (*i).end(); m++) {
+                    //std::cout << "ta = " << (*m).ta << " | tb = " << (*m).tb << std::endl;
+                    // Reconstruct the point of intersection
+                    Geom::Point p_inters = constraint_path[index].pointAt((*m).ta);
+                    // .. and convert it to desktop coordinates
+                    p_inters = _snapmanager->getDesktop()->doc2dt(p_inters);
+                    Geom::Coord dist = Geom::L2(p_proj_on_cl - p_inters);
+                    SnappedPoint s = SnappedPoint(p_inters, p.getSourceType(), p.getSourceNum(), k->target_type, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true, k->target_bbox);;
+                    if (dist <= tolerance) { // If the intersection is within snapping range, then we might snap to it
+                        if (c.isCircular()) {
+                            Geom::Point v_orig = c.getDirection(); // vector from the origin to the original (untransformed) point
+                            Geom::Point v_inters = p_inters - c.getPoint();
+                            Geom::Coord radians = atan2(Geom::dot(Geom::rot90(v_orig), v_inters), Geom::dot(v_orig, v_inters));
+                            s.setTransformation(Geom::Point(radians, radians));
+                        }
                         sc.points.push_back(s);
                     }
                 }
+                index++;
             }
         }
     }
@@ -622,7 +641,7 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
 void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
                                                   Inkscape::SnapCandidatePoint const &p,
                                                   Geom::OptRect const &bbox_to_snap,
-                                                  ConstraintLine const &c,
+                                                  SnapConstraint const &c,
                                                   std::vector<SPItem const *> const *it) const
 {
     if (_snap_enabled == false || _snapmanager->snapprefs.getSnapFrom(p.getSourceType()) == false) {
@@ -677,7 +696,7 @@ void Inkscape::ObjectSnapper::guideFreeSnap(SnappedConstraints &sc,
 void Inkscape::ObjectSnapper::guideConstrainedSnap(SnappedConstraints &sc,
                                         Geom::Point const &p,
                                         Geom::Point const &guide_normal,
-                                        ConstraintLine const &/*c*/) const
+                                        SnapConstraint const &/*c*/) const
 {
     /* Get a list of all the SPItems that we will try to snap to */
     std::vector<SPItem*> cand;

@@ -38,7 +38,7 @@
 
 #include <2geom/point.h>
 #include <2geom/exception.h>
-
+#include <2geom/path.h>
 
 namespace Geom
 {
@@ -53,6 +53,11 @@ class Circle
 
     Circle(double cx, double cy, double r)
         : m_centre(cx, cy), m_ray(r)
+    {
+    }
+
+    Circle(Point center, double r)
+        : m_centre(center), m_ray(r)
     {
     }
 
@@ -85,6 +90,9 @@ class Circle
     SVGEllipticalArc
     arc(Point const& initial, Point const& inner, Point const& final,
         bool _svg_compliant = true);
+
+    void
+    getPath(std::vector<Path> &path_out);
 
     Point center() const
     {

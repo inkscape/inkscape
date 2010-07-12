@@ -266,7 +266,7 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 
         Node *node_away = (this == &_parent->_front ? _parent->_prev() : _parent->_next());
         if (_parent->type() == NODE_SMOOTH && Node::_is_line_segment(_parent, node_away)) {
-            Inkscape::Snapper::ConstraintLine cl(_parent->position(),
+            Inkscape::Snapper::SnapConstraint cl(_parent->position(),
                 _parent->position() - node_away->position());
             Inkscape::SnappedPoint p;
             p = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos, SNAPSOURCE_NODE_HANDLE), cl);
@@ -974,7 +974,7 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
             // with Ctrl+Alt, constrain to handle lines
             // project the new position onto a handle line that is closer
             boost::optional<Geom::Point> front_point, back_point;
-            boost::optional<Inkscape::Snapper::ConstraintLine> line_front, line_back;
+            boost::optional<Inkscape::Snapper::SnapConstraint> line_front, line_back;
             if (_front.isDegenerate()) {
                 if (_is_line_segment(this, _next()))
                     front_point = _next()->position() - origin;
@@ -988,9 +988,9 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
                 back_point = _back.relativePos();
             }
             if (front_point)
-                line_front = Inkscape::Snapper::ConstraintLine(origin, *front_point);
+                line_front = Inkscape::Snapper::SnapConstraint(origin, *front_point);
             if (back_point)
-                line_back = Inkscape::Snapper::ConstraintLine(origin, *back_point);
+                line_back = Inkscape::Snapper::SnapConstraint(origin, *back_point);
 
             // TODO: combine the snap and non-snap branches by modifying snap.h / snap.cpp
             if (snap) {
@@ -1029,8 +1029,8 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
             // with Ctrl, constrain to axes
             // TODO combine the two branches
             if (snap) {
-                Inkscape::Snapper::ConstraintLine line_x(origin, Geom::Point(1, 0));
-                Inkscape::Snapper::ConstraintLine line_y(origin, Geom::Point(0, 1));
+                Inkscape::Snapper::SnapConstraint line_x(origin, Geom::Point(1, 0));
+                Inkscape::Snapper::SnapConstraint line_y(origin, Geom::Point(0, 1));
                 fp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos, _snapSourceType()), line_x);
                 bp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos, _snapSourceType()), line_y);
             }

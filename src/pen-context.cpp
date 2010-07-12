@@ -1470,7 +1470,7 @@ void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Point &pt
         }
     } else {
         // Create a horizontal or vertical constraint line
-        Inkscape::Snapper::ConstraintLine cl(origin, next_dir ? Geom::Point(0, 1) : Geom::Point(1, 0));
+        Inkscape::Snapper::SnapConstraint cl(origin, next_dir ? Geom::Point(0, 1) : Geom::Point(1, 0));
 
         // Snap along the constraint line; if we didn't snap then still the constraint will be applied
         SnapManager &m = pc->desktop->namedview->snap_manager;
