@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-07-08 22:57+0200\n"
+"PO-Revision-Date: 2010-07-12 22:37+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"\n"
 "\n"
 "\n"
 
@@ -12423,6 +12424,9 @@ msgid ""
 "exported, putting the text on top of the PDF/PS/EPS file. Include the result "
 "in LaTeX like: \\input{latexfile.tex}"
 msgstr ""
+"Exportálás PDF-be/PS-be/EPS-be szöveg nélkül. A PDF-/PS-/EPS-fájl mellett "
+"egy LaTeX-fájl is készül, amelyben a szöveg a PDF-/PS-/EPS-fájl tartalma "
+"fölé kerül. Az eredmény felhasználása LaTeX-ben: \\input{latexfile.tex}."
 
 #: ../src/main.cpp:387
 msgid "Export document to an Enhanced Metafile (EMF) File"
@@ -14323,27 +14327,27 @@ msgstr "<b>Semmi</b> nincs kijelölve"
 #, fuzzy
 msgid ""
 "%s. Drag, click or scroll to spray <b>copies</b> of the initial selection"
-msgstr "húzás Festékszóró"
+msgstr "húzás felfestés "
 
 #: ../src/spray-context.cpp:252
 #, fuzzy
 msgid ""
 "%s. Drag, click or scroll to spray <b>clones</b> of the initial selection"
-msgstr "húzás Festékszóró"
+msgstr "húzás felfestés "
 
 #: ../src/spray-context.cpp:255
 #, fuzzy
 msgid ""
 "%s. Drag, click or scroll to spray in a <b>single path</b> of the initial "
 "selection"
-msgstr "húzás Festékszóró"
+msgstr "húzás felfestés "
 
 #: ../src/spray-context.cpp:773
 #, fuzzy
 msgid "<b>Nothing selected!</b> Select objects to spray."
 msgstr ""
 "<b>Semmi nincs kijelölve.</b> Jelölje ki a manipulálandó objektumokat. "
-"Festékszóró"
+"felfestés "
 
 #: ../src/spray-context.cpp:881 ../src/widgets/toolbox.cpp:4686
 msgid "Spray with copies"
@@ -14356,7 +14360,7 @@ msgstr "Klónok felfestése"
 #: ../src/spray-context.cpp:889
 #, fuzzy
 msgid "Spray in single path"
-msgstr "Pont létrehozása Festékszóró"
+msgstr "felfestés "
 
 #: ../src/star-context.cpp:338
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
@@ -14646,7 +14650,7 @@ msgstr ""
 msgid "To spray a path by pushing, select it and drag over it."
 msgstr ""
 "Egy útvonal eltolásos manipulálásához jelölje ki azt, majd végezzen húzást "
-"felette az egérrel. Festékszóró"
+"felette az egérrel. felfestés "
 
 #: ../src/tools-switch.cpp:149
 msgid ""
@@ -24232,9 +24236,8 @@ msgid "Radial gradient"
 msgstr "Sugárirányú színátmenet"
 
 #: ../src/widgets/paint-selector.cpp:241
-#, fuzzy
 msgid "Swatch"
-msgstr "Vázlat"
+msgstr "Színminta"
 
 #: ../src/widgets/paint-selector.cpp:243
 msgid "Unset paint (make it undefined so it can be inherited)"
@@ -24282,9 +24285,8 @@ msgstr ""
 "Objektumok átalakítása mintává</b> funkciót."
 
 #: ../src/widgets/paint-selector.cpp:1103
-#, fuzzy
 msgid "Swatch fill"
-msgstr "Kitöltés beállítása"
+msgstr "Színmintával való kitöltés"
 
 #: ../src/widgets/select-toolbar.cpp:247
 msgid "Transform by toolbar"
@@ -24725,9 +24727,8 @@ msgid "Set stroke style"
 msgstr "Körvonalstílus beállítása"
 
 #: ../src/widgets/swatch-selector.cpp:139
-#, fuzzy
 msgid "Change swatch color"
-msgstr "Színátmenet-fázis színének módosítása"
+msgstr "Színminta színének módosítása"
 
 #: ../src/widgets/toolbox.cpp:216
 msgid "Color/opacity used for color tweaking"
@@ -25828,21 +25829,17 @@ msgstr ""
 
 #. Width
 #: ../src/widgets/toolbox.cpp:4630
-#, fuzzy
 msgid "(narrow spray)"
-msgstr "keskenyebb Festékszóró"
+msgstr "(keskeny festékszóró)"
 
 #: ../src/widgets/toolbox.cpp:4630
-#, fuzzy
 msgid "(broad spray)"
-msgstr "(széles körvonal) Festékszóró"
+msgstr "(széles festékszóró)"
 
 #: ../src/widgets/toolbox.cpp:4633
-#, fuzzy
 msgid "The width of the spray area (relative to the visible canvas area)"
 msgstr ""
-"A manipulálási terület szélessége (a látható rajzvászon-területhez "
-"viszonyítva) Festékszóró"
+"A felfestési terület szélessége (a látható rajzvászon-területhez viszonyítva)"
 
 #. Mean
 #: ../src/widgets/toolbox.cpp:4646
@@ -25923,17 +25920,15 @@ msgid "Amount:"
 msgstr "Mennyiség:"
 
 #: ../src/widgets/toolbox.cpp:4729
-#, fuzzy
 msgid "Adjusts the number of items sprayed per clic."
-msgstr "Festékszóró"
+msgstr "A kattintásonként felfestett elemek számát állítja be"
 
 #: ../src/widgets/toolbox.cpp:4745
-#, fuzzy
 msgid ""
 "Use the pressure of the input device to alter the amount of sprayed objects."
 msgstr ""
-"Festékszóró A beviteli eszköz nyomásának használata a tollszélesség "
-"változtatásához"
+"A beviteli eszköz nyomásának használata a felfestett objektumok "
+"mennyiségének változtatásához"
 
 #. Rotation
 #: ../src/widgets/toolbox.cpp:4754
@@ -26613,14 +26608,12 @@ msgstr "Helykihagyás a sorok között (szorozva a betűtípus-mérettel)"
 
 #. Drop down menu
 #: ../src/widgets/toolbox.cpp:7715 ../src/widgets/toolbox.cpp:7746
-#, fuzzy
 msgid "Negative spacing"
-msgstr "Helykihagyás beállítása:"
+msgstr "Negatív helykihagyás"
 
 #: ../src/widgets/toolbox.cpp:7715 ../src/widgets/toolbox.cpp:7746
-#, fuzzy
 msgid "Positive spacing"
-msgstr "helykihagyás Sortávolság:"
+msgstr "Pozitív helykihagyás"
 
 #. name
 #: ../src/widgets/toolbox.cpp:7720
