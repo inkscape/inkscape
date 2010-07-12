@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-07-09 13:18+0200\n"
+"PO-Revision-Date: 2010-07-12 19:40+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -890,11 +890,11 @@ msgstr ""
 
 #: ../share/extensions/fractalize.inx.h:3
 msgid "Smoothness"
-msgstr ""
+msgstr "Netezime"
 
 #: ../share/extensions/fractalize.inx.h:4
 msgid "Subdivisions"
-msgstr ""
+msgstr "Subdivisiuni"
 
 #: ../share/extensions/funcplot.inx.h:1
 msgid "Calculate first derivative numerically"
@@ -3044,16 +3044,16 @@ msgstr ""
 #: ../share/extensions/svg2xaml.inx.h:1
 #: ../share/extensions/xaml2svg.inx.h:1
 msgid "Microsoft XAML (*.xaml)"
-msgstr ""
+msgstr "Microsoft XAML (*.xaml)"
 
 #: ../share/extensions/svg2xaml.inx.h:2
 #: ../share/extensions/xaml2svg.inx.h:2
 msgid "Microsoft's GUI definition format"
-msgstr ""
+msgstr "Formatul de definiție GUI al Microsoft"
 
 #: ../share/extensions/svg2xaml.inx.h:3
 msgid "XAML Output"
-msgstr ""
+msgstr "Ieșire XAML"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:1
 msgid "Compressed Inkscape SVG with media (*.zip)"
@@ -3910,7 +3910,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:2
 msgid "Matte jelly"
-msgstr ""
+msgstr "Jeleu mat"
 
 #: ../share/filters/filters.svg.h:2
 #: ../share/filters/filters.svg.h:10
@@ -3923,7 +3923,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:167
 #: ../share/filters/filters.svg.h:206
 msgid "ABCs"
-msgstr ""
+msgstr "ABC-uri"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Bulging, matte jelly covering"
@@ -3956,7 +3956,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:210
 #: ../share/filters/filters.svg.h:211
 msgid "Bevels"
-msgstr "Bizotări"
+msgstr "Teșituri"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Same as Matte jelly but with more controls"
@@ -3968,7 +3968,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:4
 msgid "Smooth drop-like bevel with metallic finish"
-msgstr ""
+msgstr "Teșitură netedă, ca o lacrimă, cu finisaj metalic"
 
 #: ../share/filters/filters.svg.h:5
 msgid "Motion blur, horizontal"
@@ -4030,11 +4030,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:9
 msgid "Jigsaw piece"
-msgstr ""
+msgstr "Piesă în dinte de ferăstrău"
 
 #: ../share/filters/filters.svg.h:9
 msgid "Low, sharp bevel"
-msgstr ""
+msgstr "Teșitură joasă și clară"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Roughen"
@@ -4101,15 +4101,15 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:14
 msgid "Soft, cushion-like bevel with matte highlights"
-msgstr ""
+msgstr "Teșitură slabă, ca o pernă, cu părți luminoase mate"
 
 #: ../share/filters/filters.svg.h:15
 msgid "Ridged border"
-msgstr ""
+msgstr "Chenar în relief"
 
 #: ../share/filters/filters.svg.h:15
 msgid "Ridged border with inner bevel"
-msgstr ""
+msgstr "Chenar în relief, cu teșitură internă"
 
 #: ../share/filters/filters.svg.h:16
 msgid "Ripple"
@@ -4345,19 +4345,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:36
 msgid "Barbed wire"
-msgstr ""
+msgstr "Sârmă ghimpată"
 
 #: ../share/filters/filters.svg.h:36
 msgid "Gray bevelled wires with drop shadows"
-msgstr ""
+msgstr "Sârme gri teșite, cu umbre"
 
 #: ../share/filters/filters.svg.h:37
 msgid "Swiss cheese"
-msgstr ""
+msgstr "Brânză elvețiană"
 
 #: ../share/filters/filters.svg.h:37
 msgid "Random inner-bevel holes"
-msgstr ""
+msgstr "Găuri aleatoare, teșite pe interior"
 
 #: ../share/filters/filters.svg.h:38
 msgid "Blue cheese"
@@ -4373,7 +4373,7 @@ msgstr "Buton"
 
 #: ../share/filters/filters.svg.h:39
 msgid "Soft bevel, slightly depressed middle"
-msgstr ""
+msgstr "Teșirură slabă, apăsată ușor în mijloc"
 
 #: ../share/filters/filters.svg.h:40
 msgid "Inset"
@@ -4409,7 +4409,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:44
 msgid "HSL Bumps"
-msgstr ""
+msgstr "Protuberanțe HSL"
 
 #: ../share/filters/filters.svg.h:44
 #: ../share/filters/filters.svg.h:46
@@ -4432,31 +4432,31 @@ msgstr ""
 #: ../share/filters/filters.svg.h:213
 #: ../share/filters/filters.svg.h:216
 msgid "Bumps"
-msgstr "Stampări"
+msgstr "Protuberanțe"
 
 #: ../share/filters/filters.svg.h:44
 msgid "Highly flexible bump combining diffuse and specular lightings"
-msgstr ""
+msgstr "Protuberanțe de mare flexibilitate, ce combină iluminări difuze și speculare"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
-msgstr ""
+msgstr "Sticlă spartă"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Under a cracked glass"
-msgstr ""
+msgstr "Sub o sticlă spartă"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Bubbly Bumps"
-msgstr ""
+msgstr "Protuberanțe bulbucate"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Flexible bubbles effect with some displacement"
-msgstr ""
+msgstr "Efect de bule cu oarecare deplasament"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Glowing bubble"
-msgstr ""
+msgstr "Bulă strălucitoare"
 
 #: ../share/filters/filters.svg.h:47
 #: ../share/filters/filters.svg.h:52
@@ -4466,11 +4466,11 @@ msgstr ""
 #: ../share/filters/filters.svg.h:68
 #: ../share/filters/filters.svg.h:70
 msgid "Ridges"
-msgstr "Creste"
+msgstr "Reliefuri"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Bubble effect with refraction and glow"
-msgstr ""
+msgstr "Efect de bulă cu refracție și strălucire"
 
 #: ../share/filters/filters.svg.h:48
 msgid "Neon"
@@ -4482,11 +4482,11 @@ msgstr "Efect de lumină de neon"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Molten metal"
-msgstr ""
+msgstr "Metal topit"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Melting parts of object together, with a glossy bevel and a glow"
-msgstr ""
+msgstr "Topirea împreună a obiectelor, cu teșitură lucioasă și o strălucire"
 
 #: ../share/filters/filters.svg.h:50
 msgid "Pressed steel"
@@ -4498,27 +4498,27 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:51
 msgid "Matte bevel"
-msgstr ""
+msgstr "Teșitură mată"
 
 #: ../share/filters/filters.svg.h:51
 msgid "Soft, pastel-colored, blurry bevel"
-msgstr ""
+msgstr "Teșitură slabă, colorată pastelat, neclară"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Thin Membrane"
-msgstr ""
+msgstr "Membrană subțire"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Thin like a soap membrane"
-msgstr ""
+msgstr "Subțire precum membrana unui balon de săpun"
 
 #: ../share/filters/filters.svg.h:53
 msgid "Matte ridge"
-msgstr ""
+msgstr "Relief mat"
 
 #: ../share/filters/filters.svg.h:53
 msgid "Soft pastel ridge"
-msgstr ""
+msgstr "Relief pastelat slab"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Glowing metal"
@@ -4566,7 +4566,7 @@ msgstr "Metal erodat"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
-msgstr ""
+msgstr "Textură de metal erodat cu reliefuri, șanțuri, găuri și protuberanțe"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Cracked Lava"
@@ -4610,19 +4610,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:65
 msgid "Refractive gel A"
-msgstr ""
+msgstr "Gel refractar A"
 
 #: ../share/filters/filters.svg.h:65
 msgid "Gel effect with light refraction"
-msgstr ""
+msgstr "Efect de gel cu refracție slabă"
 
 #: ../share/filters/filters.svg.h:66
 msgid "Refractive gel B"
-msgstr ""
+msgstr "Gel refractar B"
 
 #: ../share/filters/filters.svg.h:66
 msgid "Gel effect with strong refraction"
-msgstr ""
+msgstr "Efect de gel cu refracție puternică"
 
 #: ../share/filters/filters.svg.h:67
 msgid "Metallized paint"
@@ -4630,15 +4630,15 @@ msgstr "Vopsea metalizată"
 
 #: ../share/filters/filters.svg.h:67
 msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr ""
+msgstr "Efect metalizat cu iluminare slabă, ușor translucidă la margini"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Dragee"
-msgstr ""
+msgstr "Drajeu"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Gel Ridge with a pearlescent look"
-msgstr ""
+msgstr "Relief de gel, cu aspect perlat"
 
 #: ../share/filters/filters.svg.h:69
 msgid "Raised border"
@@ -4650,19 +4650,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:70
 msgid "Metallized ridge"
-msgstr ""
+msgstr "Relief metalizat"
 
 #: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge metallized at its top"
-msgstr ""
+msgstr "Relief de gel, metalizat în partea de sus"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Fat oil"
-msgstr ""
+msgstr "Ulei gras"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Fat oil with some adjustable turbulence"
-msgstr ""
+msgstr "Ulei gras cu oarecare turbulență ajustabilă"
 
 #: ../share/filters/filters.svg.h:72
 #: ../src/extension/internal/bitmap/colorize.cpp:49
@@ -4707,19 +4707,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:75
 msgid "Black hole"
-msgstr ""
+msgstr "Gaură neagră"
 
 #: ../share/filters/filters.svg.h:75
 msgid "Creates a black light inside and outside"
-msgstr ""
+msgstr "Creează o lumină neagră înăuntru și afară"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Smooth outline"
-msgstr ""
+msgstr "Contur neted"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Outlining the lines and smoothing their crossings"
-msgstr ""
+msgstr "Conturează liniile și netezește intersecțiile lor"
 
 #: ../share/filters/filters.svg.h:77
 msgid "Cubes"
@@ -4898,7 +4898,7 @@ msgstr "Solarizează"
 msgid "Classical photographic solarization effect"
 msgstr ""
 
-# hm ? :)
+# hm ?
 #: ../share/filters/filters.svg.h:99
 msgid "Moonarize"
 msgstr "Selenarizează"
@@ -4909,7 +4909,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:100
 msgid "Soft focus lens"
-msgstr "Lentilă de șarf delicat"
+msgstr "Lentilă de șarf moale"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Glowing image content without blurring it"
@@ -4933,7 +4933,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:103
 msgid "HSL Bumps alpha"
-msgstr ""
+msgstr "Protuberanțe HSL, cu alfa"
 
 #: ../share/filters/filters.svg.h:103
 #: ../share/filters/filters.svg.h:104
@@ -4953,15 +4953,15 @@ msgstr "Efecte de imagine, transparent"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Same as HSL Bumps but with transparent highlights"
-msgstr ""
+msgstr "La fel ca protuberanțele HSL, dar cu părți luminoase transparente"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Bubbly Bumps alpha"
-msgstr ""
+msgstr "Protuberanțe bulbucate, cu alfa"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Same as Bubbly Bumps but with transparent highlights"
-msgstr ""
+msgstr "La fel ca protuberanțele bulbucate, dar cu părți luminoase transparente"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Smooth edges"
@@ -5088,11 +5088,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
-msgstr ""
+msgstr "Protuberanțe HSL, mate"
 
 #: ../share/filters/filters.svg.h:120
 msgid "Same as HSL bumps but with a diffuse reflection instead of a specular one"
-msgstr ""
+msgstr "La fel ca protuberanțele HSL, dar cu reflexie difuză în loc de una speculară"
 
 #: ../share/filters/filters.svg.h:121
 msgid "Dark Emboss"
@@ -5112,11 +5112,11 @@ msgstr "Blurare gaussiană simplă, aceeași ca glisorul de blurare în dialogur
 
 #: ../share/filters/filters.svg.h:123
 msgid "Bubbly Bumps, matte"
-msgstr ""
+msgstr "Protuberanțe bulbucate, mate"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
-msgstr ""
+msgstr "La fel ca protuberanțele bulbucate, dar cu o lumină difuză în loc de una speculară"
 
 #: ../share/filters/filters.svg.h:124
 #: ../src/extension/internal/bitmap/emboss.cpp:37
@@ -5434,11 +5434,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:161
 msgid "HSL Bumps, transparent"
-msgstr ""
+msgstr "Protuberanțe HSL, transparente"
 
 #: ../share/filters/filters.svg.h:161
 msgid "Highly flexible specular bump with transparency"
-msgstr ""
+msgstr "Protuberanță de mare flexibilitate, cu transparență"
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:926
@@ -5452,11 +5452,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:163
 msgid "Velvet Bumps"
-msgstr ""
+msgstr "Protuberanțe de catifea"
 
 #: ../share/filters/filters.svg.h:163
 msgid "Gives Smooth Bumps velvet like"
-msgstr ""
+msgstr "Creează protuberanțe netede precum catifeaua"
 
 #: ../share/filters/filters.svg.h:164
 msgid "Alpha draw"
@@ -5484,19 +5484,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:167
 msgid "Black outline"
-msgstr ""
+msgstr "Contur negru"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Draws a black outline around"
-msgstr ""
+msgstr "Desenează un contur negru de jur împrejur"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Color outline"
-msgstr ""
+msgstr "Contul color"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Draws a colored outline around"
-msgstr ""
+msgstr "Desenează un contur colorat de jur împrejur"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Inner Shadow"
@@ -5588,11 +5588,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:180
 msgid "Thick paint"
-msgstr ""
+msgstr "Vopsea groasă"
 
 #: ../share/filters/filters.svg.h:180
 msgid "Thick painting effect with turbulence"
-msgstr ""
+msgstr "Efect de vopsea groasă cu turbulență"
 
 #: ../share/filters/filters.svg.h:181
 msgid "Burst"
@@ -5608,31 +5608,31 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:182
 msgid "Combine a HSL edges detection bump with a leathery or woody and colorizable texture"
-msgstr ""
+msgstr "Combină o protuberanță HSL cu detectare de margini, cu o textură colorabilă lemnoasă sau de piele"
 
 #: ../share/filters/filters.svg.h:183
 msgid "Carnaval"
-msgstr ""
+msgstr "Carnaval"
 
 #: ../share/filters/filters.svg.h:183
 msgid "White splotches evocating carnaval masks"
-msgstr ""
+msgstr "Măzgăleli albe care evocă măști de carnaval"
 
 #: ../share/filters/filters.svg.h:184
 msgid "Plastify"
-msgstr ""
+msgstr "Plastifiere"
 
 #: ../share/filters/filters.svg.h:184
 msgid "HSL edges detection bump with a wavy reflective surface effect and variable crumple"
-msgstr ""
+msgstr "Protuberanță HSL cu detectare de margini, cu un efect de suprafață reflectorizantă vălurită și șifonare variabilă"
 
 #: ../share/filters/filters.svg.h:185
 msgid "Plaster"
-msgstr ""
+msgstr "Plasture"
 
 #: ../share/filters/filters.svg.h:185
 msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
-msgstr ""
+msgstr "Combină o protuberanță HSL cu detectare de margini, cu un efect de suprafață mată și șifonată"
 
 #: ../share/filters/filters.svg.h:186
 msgid "Rough transparency"
@@ -5748,11 +5748,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddled"
-msgstr ""
+msgstr "Ciuruit"
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddle the surface and add bump to images"
-msgstr ""
+msgstr "Ciuruiește suprafața și adaugă protuberanțe la imagine"
 
 #: ../share/filters/filters.svg.h:201
 msgid "Wrinkled varnish"
@@ -5764,27 +5764,27 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:202
 msgid "Canvas Bumps"
-msgstr ""
+msgstr "Protuberanțe de canava"
 
 #: ../share/filters/filters.svg.h:202
 msgid "Canvas texture with an HSL sensitive height map"
-msgstr ""
+msgstr "Textură de canava cu o hartă de înălțimi sensibilă HSL"
 
 #: ../share/filters/filters.svg.h:203
 msgid "Canvas Bumps, matte"
-msgstr ""
+msgstr "Protuberanțe de canava, mate"
 
 #: ../share/filters/filters.svg.h:203
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
-msgstr ""
+msgstr "La fel ca protuberanțele de canava, dar cu lumină difuză în loc de una speculară"
 
 #: ../share/filters/filters.svg.h:204
 msgid "Canvas Bumps alpha"
-msgstr ""
+msgstr "Protuberanțe de canava, alfa"
 
 #: ../share/filters/filters.svg.h:204
 msgid "Same as Canvas Bumps but with transparent highlights"
-msgstr ""
+msgstr "La fel ca protuberanțele de canava, dar cu părțile luminoase transparente"
 
 #: ../share/filters/filters.svg.h:205
 msgid "Lightness-Contrast"
@@ -5804,11 +5804,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:207
 msgid "Bright metal"
-msgstr ""
+msgstr "Metal strălucitor"
 
 #: ../share/filters/filters.svg.h:207
 msgid "Bright metallic effect for any color"
-msgstr ""
+msgstr "Efect de metal strălucitor pentru orice culoare"
 
 #: ../share/filters/filters.svg.h:208
 msgid "Deep colors plastic"
@@ -5852,7 +5852,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:213
 msgid "Specular bump which can be easily converted from metallic to molded plastic effects"
-msgstr ""
+msgstr "Protuberanțe speculare care pot fi convertite cu ușurință în efecte de la metalic la plastic turnat"
 
 #: ../share/filters/filters.svg.h:214
 msgid "Inner Glow"
@@ -5864,7 +5864,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:215
 msgid "Soft colors"
-msgstr ""
+msgstr "Culori slabe"
 
 #: ../share/filters/filters.svg.h:215
 msgid "Adds a colorizable edges glow inside objects and pictures"
@@ -5872,11 +5872,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:216
 msgid "Relief print"
-msgstr ""
+msgstr "Tipăritură în relief"
 
 #: ../share/filters/filters.svg.h:216
 msgid "Bumps effect with a bevel, color flood and complex lighting"
-msgstr ""
+msgstr "Efect de protuberanță cu bizotare, revărsare de culoare și iluminare complexă"
 
 #: ../share/filters/filters.svg.h:217
 msgid "Growing cells"
@@ -6987,7 +6987,7 @@ msgstr "y_1:"
 
 #: ../src/dialogs/export.cpp:339
 msgid "Hei_ght:"
-msgstr "Î_nălțime:"
+msgstr "Înălț_ime:"
 
 #: ../src/dialogs/export.cpp:471
 msgid "<big><b>Bitmap size</b></big>"
@@ -7961,7 +7961,7 @@ msgstr "nod ascuțit"
 
 #: ../src/display/snap-indicator.cpp:98
 msgid "smooth node"
-msgstr "nod lin"
+msgstr "nod neted"
 
 #: ../src/display/snap-indicator.cpp:101
 msgid "path"
@@ -9038,7 +9038,6 @@ msgid "Link or embed image:"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:152
-#, fuzzy
 msgid "embed"
 msgstr "înglobat"
 
@@ -10299,11 +10298,11 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-item-grip.c:395
 msgid "Iconify"
-msgstr ""
+msgstr "Minimizează"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:395
 msgid "Iconify this dock"
-msgstr ""
+msgstr "Minimizează această fereastră docabilă"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:397
 msgid "Close"
@@ -11545,7 +11544,7 @@ msgstr "Lipește traseul"
 
 #: ../src/live_effects/parameter/path.cpp:190
 msgid "Link to path"
-msgstr "Linie la traseu"
+msgstr "Leagă la traseu"
 
 #: ../src/live_effects/parameter/path.cpp:418
 msgid "Paste path parameter"
@@ -14404,23 +14403,23 @@ msgstr "Arată _chenarul paginii"
 
 #: ../src/ui/dialog/document-properties.cpp:90
 msgid "If set, rectangular page border is shown"
-msgstr "Dacă opțiunea este activată, este înfățișat chenarul dreptunghiular al paginii"
+msgstr "Dacă este bifat, este înfățișat chenarul dreptunghiular al paginii"
 
 #: ../src/ui/dialog/document-properties.cpp:91
 msgid "Border on _top of drawing"
-msgstr ""
+msgstr "C_henarul deasupra desenului"
 
 #: ../src/ui/dialog/document-properties.cpp:91
 msgid "If set, border is always on top of the drawing"
-msgstr ""
+msgstr "Dacă este bifat, chenarul este întotdeuna deasupra desenului"
 
 #: ../src/ui/dialog/document-properties.cpp:92
 msgid "_Show border shadow"
-msgstr ""
+msgstr "Arată umbra ch_enarului"
 
 #: ../src/ui/dialog/document-properties.cpp:92
 msgid "If set, page border shows a shadow on its right and lower side"
-msgstr ""
+msgstr "Dacă este bifat, chenarul paginii este înfățișat cu o umbră în partea lui dreaptă și stângă"
 
 #: ../src/ui/dialog/document-properties.cpp:93
 msgid "Back_ground:"
@@ -14436,7 +14435,7 @@ msgstr "Culoarea și transparența fundalului paginii (folosit de asemenea la ex
 
 #: ../src/ui/dialog/document-properties.cpp:94
 msgid "Border _color:"
-msgstr ""
+msgstr "Culoare chen_ar:"
 
 #: ../src/ui/dialog/document-properties.cpp:94
 msgid "Page border color"
@@ -14712,7 +14711,7 @@ msgstr "Informații"
 
 #: ../src/ui/dialog/extension-editor.cpp:82
 msgid "Parameters"
-msgstr "Parametrii"
+msgstr "Parametri"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:383
 msgid "No preview"
@@ -15001,7 +15000,7 @@ msgstr "Nu este selectat niciun filtru"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2110
 msgid "Effect parameters"
-msgstr "Parametrii de efect"
+msgstr "Parametri de efect"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2111
 msgid "Filter General Settings"
@@ -15146,12 +15145,12 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2241
 msgid "Surface Scale:"
-msgstr ""
+msgstr "Scală de suprafață:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2241
 msgid "This value amplifies the heights of the bump map defined by the input alpha channel"
-msgstr ""
+msgstr "Această valoare amplifică înălțimile hărții de protuberație (bumpmap) definită de canalul alfa de intrare"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2209
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2242
@@ -16806,7 +16805,7 @@ msgstr "Casetele de dialog sunt ascunse în bara de sarcini"
 # hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/ui/dialog/inkscape-preferences.cpp:582
 msgid "Zoom when window is resized"
-msgstr "Folosește zoom-area când se redimensionează ferestra"
+msgstr "Folosește zoom-ul când se redimensionează ferestra"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:583
 msgid "Show close button on dialogs"
@@ -17058,12 +17057,12 @@ msgstr "La scalarea dreptunghiurilor, scalează și razele colțurilor rotunjite
 #: ../src/ui/dialog/inkscape-preferences.cpp:718
 #: ../src/widgets/select-toolbar.cpp:567
 msgid "Move gradients (in fill or stroke) along with the objects"
-msgstr "Mută degradeurile (de umplere și de contur) odată cu obiectele"
+msgstr "Mută degradeurile (în umplere sau contur) odată cu obiectele"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:720
 #: ../src/widgets/select-toolbar.cpp:578
 msgid "Move patterns (in fill or stroke) along with the objects"
-msgstr "Mută modelele (din umplere sau contur) împreună cu obiectele"
+msgstr "Mută modelele (în umplere sau contur) împreună cu obiectele"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:721
 msgid "Store transformation:"
@@ -18806,7 +18805,7 @@ msgstr ""
 #. TRANSLATORS: "Smooth" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:532
 msgid "Smooth"
-msgstr "Fin"
+msgstr "Neted"
 
 #: ../src/ui/dialog/tracedialog.cpp:536
 msgid "Apply Gaussian blur to the bitmap before tracing"
@@ -19206,7 +19205,7 @@ msgstr ""
 
 #: ../src/ui/tool/node.cpp:208
 msgid "Smooth node handle"
-msgstr "Mâner neted de nod"
+msgstr "Mâner de nod neted"
 
 #: ../src/ui/tool/node.cpp:209
 msgid "Symmetric node handle"
@@ -19495,7 +19494,7 @@ msgstr ""
 #: ../src/ui/view/edit-widget.cpp:1051
 #: ../src/widgets/desktop-widget.cpp:383
 msgid "Zoom drawing if window size changes"
-msgstr "Folosește zoom-area desenului dacă se modifică dimensiunea ferestrei"
+msgstr "Folosește zoom-ul desenului dacă se modifică dimensiunea ferestrei"
 
 #: ../src/ui/view/edit-widget.cpp:1072
 #: ../src/widgets/desktop-widget.cpp:507
@@ -19553,7 +19552,7 @@ msgstr "_Mod de amestec:"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
 msgid "B_lur:"
-msgstr "Î_ncețoșare:"
+msgstr "B_lurează:"
 
 #: ../src/ui/widget/layer-selector.cpp:114
 msgid "Toggle current layer visibility"
@@ -21510,18 +21509,22 @@ msgstr "Arată sau ascunde ghidajele (trageți dintr-o riglă pentru a crea un g
 msgid "Toggle snapping on or off"
 msgstr "Comută acroșarea între pornit sau oprit"
 
+# hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2545
 msgid "Nex_t Zoom"
 msgstr "Zoom-ul _următor"
 
+# hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2545
 msgid "Next zoom (from the history of zooms)"
 msgstr "Zoom-ul următor (din istoricul zoom-urilor)"
 
+# hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2547
 msgid "Pre_vious Zoom"
 msgstr "Zoom-ul p_recedent"
 
+# hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2547
 msgid "Previous zoom (from the history of zooms)"
 msgstr "Zoom-ul precedent (din istoricul zoom-urilor)"
@@ -21645,7 +21648,7 @@ msgstr ""
 # hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2583
 msgid "Zoom to fit page in window"
-msgstr "Folosește zoom-area pentru a potrivi pagina în fereastră"
+msgstr "Folosește zoom-ul pentru a potrivi pagina în fereastră"
 
 #: ../src/verbs.cpp:2584
 msgid "Page _Width"
@@ -21654,17 +21657,17 @@ msgstr "Lățimea pa_ginii"
 # hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2585
 msgid "Zoom to fit page width in window"
-msgstr "Folosește zoom-area pentru a potrivi lățimea paginii în fereastră"
+msgstr "Folosește zoom-ul pentru a potrivi lățimea paginii în fereastră"
 
 # hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2587
 msgid "Zoom to fit drawing in window"
-msgstr "Folosește zoom-area pentru a potrivi desenul în fereastră"
+msgstr "Folosește zoom-ul pentru a potrivi desenul în fereastră"
 
 # hm ? nu se știe dacă este mărire sau micșorare
 #: ../src/verbs.cpp:2589
 msgid "Zoom to fit selection in window"
-msgstr "Folosește zoom-area pentru a potrivi selecția în fereastră"
+msgstr "Folosește zoom-ul pentru a potrivi selecția în fereastră"
 
 #. Dialogs
 #: ../src/verbs.cpp:2592
@@ -22872,7 +22875,7 @@ msgstr "Unește nodurile terminale selectate cu un segment nou"
 
 #: ../src/widgets/toolbox.cpp:1447
 msgid "Delete segment"
-msgstr "Șterge segment"
+msgstr "Șterge segmentul"
 
 #: ../src/widgets/toolbox.cpp:1448
 msgid "Delete segment between two non-endpoint nodes"
@@ -22880,7 +22883,7 @@ msgstr "Șterge segmentul dintre două noduri care nu sunt terminale"
 
 #: ../src/widgets/toolbox.cpp:1457
 msgid "Node Cusp"
-msgstr "Nod Cusp"
+msgstr "Nod ascuțit"
 
 #: ../src/widgets/toolbox.cpp:1458
 msgid "Make selected nodes corner"
@@ -22892,7 +22895,7 @@ msgstr "Nod neted"
 
 #: ../src/widgets/toolbox.cpp:1468
 msgid "Make selected nodes smooth"
-msgstr "Fă netede nodurile selectate"
+msgstr "Nodurile selectate devin netede"
 
 #: ../src/widgets/toolbox.cpp:1477
 msgid "Node Symmetric"
@@ -22900,7 +22903,7 @@ msgstr "Nod simetric"
 
 #: ../src/widgets/toolbox.cpp:1478
 msgid "Make selected nodes symmetric"
-msgstr "Fă simetrice nodurile selectate"
+msgstr "Nodurile selectate devin simetrice"
 
 #: ../src/widgets/toolbox.cpp:1487
 msgid "Node Auto"
@@ -22908,7 +22911,7 @@ msgstr "Nod automat"
 
 #: ../src/widgets/toolbox.cpp:1488
 msgid "Make selected nodes auto-smooth"
-msgstr "Fă neted automat nodurile selectate"
+msgstr "Nodurile selectate devin netede în mod automat"
 
 #: ../src/widgets/toolbox.cpp:1497
 msgid "Node Line"
@@ -23296,12 +23299,12 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:4225
 #: ../src/widgets/toolbox.cpp:8495
 msgid "Defaults"
-msgstr "Implicit"
+msgstr "Valori implicite"
 
 #: ../src/widgets/toolbox.cpp:3038
 #: ../src/widgets/toolbox.cpp:3971
 msgid "Reset shape parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
-msgstr "Resetează parametrii formei la valori implicite (folosiți Proprietăți Inkscape > Instrumente pentru modificarea valorilor implicite)"
+msgstr "Resetează parametrii formei la valorile implicite (folosiți Proprietăți Inkscape > Instrumente pentru modificarea valorilor implicite)"
 
 #: ../src/widgets/toolbox.cpp:3110
 msgid "Change rectangle"
@@ -23602,7 +23605,7 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4226
 msgid "Reset pencil parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
-msgstr "Resetează parametrii formei la valori implicite (folosiți Preferințe Inkscape > Unelte pentru a schimba valorile implicite)"
+msgstr "Resetează parametrii formei la valorile implicite (folosiți Preferințe Inkscape > Unelte pentru a schimba valorile implicite)"
 
 #. Width
 #: ../src/widgets/toolbox.cpp:4310
