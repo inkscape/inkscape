@@ -2,6 +2,7 @@
 # include <config.h>
 #endif
 #include <glib/gprintf.h>
+#include <glibmm/i18n.h>
 #include "document-private.h"
 #include <dir-util.h>
 #include "extension/input.h"
@@ -143,10 +144,10 @@ GdkpixbufInput::init(void)
             if (strcmp(extensions[i], "svg.gz") == 0) {
                 continue;
             }
-
+            gchar *caption = g_strdup_printf(_("%s GDK pixbuf Input"), name);
             gchar *xmlString = g_strdup_printf(
                 "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-                    "<name>" N_("%s GDK pixbuf Input") "</name>\n"
+                    "<name>%s</name>\n"
                     "<id>org.inkscape.input.gdkpixbuf.%s</id>\n"
                     "<param name='link' type='optiongroup'  appearance='full' _gui-text='" N_("Link or embed image:") "' >\n"
                         "<_option value='embed'>" N_("embed") "</_option>\n"
@@ -160,7 +161,7 @@ GdkpixbufInput::init(void)
                         "<filetypetooltip>%s</filetypetooltip>\n"
                     "</input>\n"
                 "</inkscape-extension>",
-                name,
+                caption,
                 extensions[i],
                 extensions[i],
                 mimetypes[j],
@@ -171,6 +172,7 @@ GdkpixbufInput::init(void)
 
             Inkscape::Extension::build_from_mem(xmlString, new GdkpixbufInput());
             g_free(xmlString);
+            g_free(caption);
         }}
 
         g_free(name);
