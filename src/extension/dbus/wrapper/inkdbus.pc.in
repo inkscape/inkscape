@@ -1,0 +1,14 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+bindir=@bindir@
+includedir=@includedir@
+
+Cflags: -I${includedir}/libinkdbus-0.1
+Requires: gobject-2.0 dbus-glib-1
+Libs: -L${libdir} -linkdbus
+
+Name: inkdbus
+Description: Inkscape DBus Interface Wrapper
+Version: @VERSION@
+

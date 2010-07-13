@@ -42,6 +42,8 @@ Inkscape::XML::Node *inkscape_get_menus (Inkscape::Application * inkscape);
 
 Inkscape::Application *inkscape_get_instance();
 
+SPDesktop * inkscape_find_desktop_by_dkey (unsigned int dkey);
+
 #define SP_ACTIVE_EVENTCONTEXT inkscape_active_event_context ()
 SPEventContext * inkscape_active_event_context (void);
 
@@ -57,6 +59,7 @@ gchar *homedir_path(const char *filename);
 gchar *profile_path(const char *filename);
 
 /* Inkscape desktop stuff */
+void inkscape_activate_desktop (SPDesktop * desktop);
 void inkscape_switch_desktops_next ();
 void inkscape_switch_desktops_prev ();
 void inkscape_get_all_desktops (std::list< SPDesktop* >& listbuf);

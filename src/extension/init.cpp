@@ -55,6 +55,9 @@
 #endif
 #include "preferences.h"
 #include "io/sys.h"
+#ifdef WITH_DBUS
+#include "dbus/dbus-init.h"
+#endif
 
 #ifdef WITH_IMAGE_MAGICK
 #include "internal/bitmap/adaptiveThreshold.h"
@@ -186,6 +189,10 @@ init()
     Internal::GimpGrad::init();
     Internal::Grid::init();
 
+#ifdef WITH_DBUS
+    Dbus::init();
+#endif
+	
     /* Raster Effects */
 #ifdef WITH_IMAGE_MAGICK
     Internal::Bitmap::AdaptiveThreshold::init();

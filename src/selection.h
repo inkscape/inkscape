@@ -252,14 +252,16 @@ public:
     /**
      * @brief Returns the bounding rectangle of the selection
      *
-     * \todo how is this different from bounds()?
+     * Gives the coordinates in internal format, does not match onscreen guides.
+     * (0,0 is the upper left corner, not the lower left corner)
      */
     NRRect *boundsInDocument(NRRect *dest, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
 
     /**
      * @brief Returns the bounding rectangle of the selection
      *
-     * \todo how is this different from bounds()?
+     * Gives the coordinates in internal format, does not match onscreen guides.
+     * (0,0 is the upper left corner, not the lower left corner)
      */
     Geom::OptRect boundsInDocument(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
 

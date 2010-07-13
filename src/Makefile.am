@@ -45,6 +45,7 @@ all_libs =			\
 	$(PYTHON_LIBS)		\
 	$(INKBOARD_LIBS)	\
 	$(LIBWPG_LIBS)		\
+	$(DBUS_LIBS)		\
 	$(IMAGEMAGICK_LIBS)
 
 # Add sources common for Inkscape and Inkview to this variable.
@@ -53,6 +54,10 @@ ink_common_sources =
 inkscape_SOURCES =
 # Add Inkview-only sources here.
 inkview_SOURCES =
+# Add sources that are built from meta files
+BUILT_SOURCES =
+# Extra files to distribute
+EXTRA_DIST =
 
 INCLUDES =	\
 	$(PERL_CFLAGS) $(PYTHON_CFLAGS)	\
@@ -62,6 +67,7 @@ INCLUDES =	\
 	$(IMAGEMAGICK_CFLAGS) \
 	$(INKBOARD_CFLAGS) \
 	$(LIBWPG_CFLAGS) \
+	$(DBUS_CFLAGS) \
 	$(XFT_CFLAGS)	\
 	$(LCMS_CFLAGS)	\
 	$(POPPLER_CFLAGS)	\
@@ -72,6 +78,7 @@ INCLUDES =	\
 	$(WIN32_CFLAGS) \
 	-I$(srcdir)/bind/javainc \
 	-I$(srcdir)/bind/javainc/linux \
+	-I$(builddir)/extension/dbus \
 	$(AM_CPPFLAGS)
 
 CXXTEST_TEMPLATE = $(srcdir)/cxxtest-template.tpl
@@ -105,6 +112,7 @@ include dialogs/Makefile_insert
 include display/Makefile_insert
 include dom/Makefile_insert
 include extension/Makefile_insert
+include extension/dbus/Makefile_insert
 include extension/implementation/Makefile_insert
 include extension/internal/Makefile_insert
 include extension/script/Makefile_insert
@@ -138,7 +146,7 @@ include trace/Makefile_insert
 include 2geom/Makefile_insert
 
 # Extra files not mentioned as sources to include in the source tarball
-EXTRA_DIST =	\
+EXTRA_DIST +=	\
 	$(top_srcdir)/Doxyfile	\
 	sp-skeleton.cpp sp-skeleton.h	\
 	util/makefile.in	\

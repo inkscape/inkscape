@@ -30,6 +30,7 @@ AM_PROG_CC_STDC
 AM_PROG_AS
 AC_PROG_RANLIB
 AC_PROG_INTLTOOL(0.22)
+AC_PROG_LIBTOOL
 AC_HEADER_STDC
 INK_BZR_SNAPSHOT_BUILD
 
@@ -687,6 +688,40 @@ AC_SUBST(LIBWPG_LIBS)
 AC_SUBST(LIBWPG_CFLAGS)
 
 dnl ******************************
+dnl Support doing a local install
+dnl   (mostly for distcheck)
+dnl ******************************
+
+with_localinstall="no"
+AC_ARG_ENABLE(localinstall, AS_HELP_STRING([--enable-localinstall], [install system files in the local path (for distcheck)]), with_localinstall=$enableval, with_localinstall=no)
+
+dnl ******************************
+dnl Check for dbus functionality
+dnl ******************************
+
+AC_ARG_ENABLE(dbusapi,
+       [  --enable-dbusapi       compile with support for DBus interface],
+       enable_dbusapi=$enableval,enable_dbusapi=yes)
+AC_DEFINE(WITH_DBUS,1,[Build in dbus])
+
+if test "x$dbusapi" = "xyes"; then
+	PKG_CHECK_MODULES(DBUS, dbus-glib-1, with_dbus=yes, with_dbus=no)
+	if test "x$with_dbus" = "xyes"; then
+		if test "x$with_localinstall" = "xyes"; then
+			DBUSSERVICEDIR="${datadir}/dbus-1/services/"
+		else
+			DBUSSERVICEDIR=`$PKG_CONFIG --variable=session_bus_services_dir dbus-1`
+		fi
+		AC_SUBST(DBUSSERVICEDIR)
+	fi
+
+	AC_SUBST(DBUS_LIBS)
+	AC_SUBST(DBUS_CFLAGS)
+fi
+
+AM_CONDITIONAL(WITH_DBUS, test "x$with_dbus" = "xyes")
+
+dnl ******************************
 dnl Check for ImageMagick Magick++ 
 dnl ******************************
 
@@ -940,6 +975,7 @@ src/extension/implementation/makefile
 src/extension/internal/makefile
 src/extension/makefile
 src/extension/script/makefile
+src/extension/dbus/wrapper/inkdbus.pc
 src/filters/makefile
 src/helper/makefile
 src/io/makefile
@@ -1025,7 +1061,9 @@ Configuration:
         Internal Python:          ${with_python}
         Internal Perl:            ${with_perl}
         Enable LittleCms:         ${enable_lcms}
+        Enable DBUS               ${with_dbus} 
         Enable Poppler-Cairo:     ${enable_poppler_cairo}
         ImageMagick Magick++:     ${magick_ok}
         Libwpg:                   ${with_libwpg}
+        Doing Local Install:      ${with_localinstall}
 "

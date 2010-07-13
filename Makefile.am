@@ -16,6 +16,7 @@ Graphics_DATA = $(Graphics_in_files:.desktop.in=.desktop)
 ##	cp $(srcdir)/AUTHORS $(distdir)
 ##	cp $(srcdir)/NEWS $(distdir)
 
+DISTCHECK_CONFIGURE_FLAGS = --enable-localinstall
 
 man_MANS = inkscape.1 \
 		inkview.1

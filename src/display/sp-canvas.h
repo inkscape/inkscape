@@ -182,6 +182,9 @@ struct SPCanvas {
     // connector tool).  If so, they may temporarily set this flag to
     // 'true'.
     bool gen_all_enter_events;
+    
+    /* For scripting, sometimes we want to delay drawing. */
+    bool drawing_disabled;
 
     int rendermode;
 
