@@ -704,6 +704,7 @@ AC_ARG_ENABLE(dbusapi,
        enable_dbusapi=$enableval,enable_dbusapi=yes)
 AC_DEFINE(WITH_DBUS,1,[Build in dbus])
 
+with_dbus="no"
 if test "x$dbusapi" = "xyes"; then
 	PKG_CHECK_MODULES(DBUS, dbus-glib-1, with_dbus=yes, with_dbus=no)
 	if test "x$with_dbus" = "xyes"; then
