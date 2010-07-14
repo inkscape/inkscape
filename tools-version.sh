@@ -12,7 +12,7 @@ srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
 echo '============================================================================='
-echo 'When you report a trouble about building SVN version of inkscape,            '
+echo 'When you report a trouble about building BZR version of inkscape,            '
 echo 'Please report following information about distro and tools version, too.     '
 echo 
 (echo '--1. distribution------------------------------------------------------------'
