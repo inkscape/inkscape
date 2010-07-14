@@ -3934,7 +3934,7 @@ msgstr ""
 
 #: ../share/extensions/web-transmit-att.inx.h:13
 msgid "Transmit Attributes"
-msgstr "Transmet les attributs"
+msgstr "Transmettre les attributs"
 
 #: ../share/extensions/web-transmit-att.inx.h:15
 msgid "When to transmit"
@@ -9977,7 +9977,7 @@ msgstr "Éclairage diffus"
 
 #: ../src/filter-enums.cpp:26
 msgid "Displacement Map"
-msgstr "Displacement Map"
+msgstr "Carte de déplacement"
 
 #: ../src/filter-enums.cpp:27
 msgid "Flood"
@@ -10649,11 +10649,11 @@ msgstr "Afficher ou non la barre des contrôles du magnétisme"
 
 #: ../src/interface.cpp:876
 msgid "Tool Controls Bar"
-msgstr "Barre des contrôles des outils"
+msgstr "Barre des contrôles d’outils"
 
 #: ../src/interface.cpp:876
 msgid "Show or hide the Tool Controls bar"
-msgstr "Afficher ou non la barre des contrôles des outils"
+msgstr "Afficher ou non la barre des contrôles d’outils"
 
 #: ../src/interface.cpp:878
 msgid "_Toolbox"
@@ -11282,7 +11282,7 @@ msgstr "Von Koch"
 
 #: ../src/live_effects/effect.cpp:115
 msgid "Knot"
-msgstr "Nœud"
+msgstr "Entrelacs"
 
 #: ../src/live_effects/effect.cpp:116
 msgid "Construct grid"
@@ -11633,7 +11633,7 @@ msgstr "Glisser pour sélectionner un croisement, cliquer pour le basculer"
 #. / @todo Is this the right verb?
 #: ../src/live_effects/lpe-knot.cpp:640
 msgid "Change knot crossing"
-msgstr "Modifier le croisement du nœud"
+msgstr "Modifier le croisement de l’entrelacs"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:61
 msgid "Pattern source"
@@ -14692,8 +14692,8 @@ msgid ""
 "<b>Click</b> or <b>drag around an area</b> to zoom in, <b>Shift+click</b> to "
 "zoom out."
 msgstr ""
-"<b>Cliquer</b> ou <b>cliquer-déplacer</b> sur une zone pour zoommer, <b>Maj"
-"+clic</b> pour dézoommer."
+"<b>Cliquer</b> ou <b>cliquer-déplacer</b> sur une zone pour zoomer, <b>Maj"
+"+clic</b> pour dézoomer."
 
 #: ../src/tools-switch.cpp:221
 msgid "<b>Click and drag</b> between shapes to create a connector."
@@ -17471,7 +17471,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:213
 msgid "Left mouse button pans when Space is pressed"
 msgstr ""
-"Le bouton gauche de la souris fait scroller en horizontal quand la touche "
+"Le bouton gauche de la souris fait défiler horizontalement quand la touche "
 "Espace est pressée"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:215
@@ -17629,7 +17629,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:273
 msgid "Zoom in/out by:"
-msgstr "(Dé)Zoommer de :"
+msgstr "(Dé)Zoomer de :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:274
 msgid ""
@@ -17637,7 +17637,7 @@ msgid ""
 "multiplier"
 msgstr ""
 "Les outils de zoom (clic en mode zoom, touches +/-, clic bouton du milieu) "
-"zoomment ou dézoomment selon ce facteur"
+"zooment ou dézooment selon ce facteur"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:280
 msgid "Show selection cue"
@@ -18121,7 +18121,7 @@ msgstr "Les dialogues sont cachés dans la barre des tâches"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:582
 msgid "Zoom when window is resized"
-msgstr "Zoommer quand la fenêtre est redimensionnée"
+msgstr "Zoomer quand la fenêtre est redimensionnée"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:583
 msgid "Show close button on dialogs"
@@ -18215,7 +18215,7 @@ msgid ""
 "(this is the default which can be changed in any window using the button "
 "above the right scrollbar)"
 msgstr ""
-"Si coché, le dessin est rezoommé quand la fenêtre est redimensionnée, pour "
+"Si coché, le dessin est rezoomé quand la fenêtre est redimensionnée, pour "
 "garder visible la même aire (c’est l’option par défaut qui peut être changée "
 "dans toute fenêtre en utilisant le boutton au dessus de la barre de "
 "défilement de droite)"
@@ -22988,7 +22988,7 @@ msgstr "Créer et éditer des dégradés"
 
 #: ../src/verbs.cpp:2482
 msgid "Zoom in or out"
-msgstr "(Dé)zoommer"
+msgstr "(Dé)zoomer"
 
 #: ../src/verbs.cpp:2484
 msgid "Pick colors from image"
@@ -23183,19 +23183,19 @@ msgstr "Ouvrir les préférences de l’outil Effets de chemin en direct"
 #. Zoom/View
 #: ../src/verbs.cpp:2538
 msgid "Zoom In"
-msgstr "Zoommer"
+msgstr "Zoomer"
 
 #: ../src/verbs.cpp:2538
 msgid "Zoom in"
-msgstr "Zoommer"
+msgstr "Zoomer"
 
 #: ../src/verbs.cpp:2539
 msgid "Zoom Out"
-msgstr "Dézoommer"
+msgstr "Dézoomer"
 
 #: ../src/verbs.cpp:2539
 msgid "Zoom out"
-msgstr "Dézoommer"
+msgstr "Dézoomer"
 
 #: ../src/verbs.cpp:2540
 msgid "_Rulers"
@@ -23257,7 +23257,7 @@ msgstr "Zoom 1:_1"
 
 #: ../src/verbs.cpp:2549
 msgid "Zoom to 1:1"
-msgstr "Zoommer à 1:1"
+msgstr "Zoomer à 1:1"
 
 #: ../src/verbs.cpp:2551
 msgid "Zoom 1:_2"
@@ -23265,7 +23265,7 @@ msgstr "Zoom 1:_2"
 
 #: ../src/verbs.cpp:2551
 msgid "Zoom to 1:2"
-msgstr "Zoommer à 1:2"
+msgstr "Zoomer à 1:2"
 
 #: ../src/verbs.cpp:2553
 msgid "_Zoom 2:1"
@@ -23273,7 +23273,7 @@ msgstr "_Zoom 2:1"
 
 #: ../src/verbs.cpp:2553
 msgid "Zoom to 2:1"
-msgstr "Zoommer à 2:1"
+msgstr "Zoomer à 2:1"
 
 #: ../src/verbs.cpp:2556
 msgid "_Fullscreen"
