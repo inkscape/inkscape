@@ -1,5 +1,7 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
+if WITH_DBUS
+
 #############################
 # Sources for DBus interface
 #############################
@@ -87,4 +89,22 @@ libinkdbus_la_LIBADD = \
 
 pkgconfig_DATA = extension/dbus/wrapper/inkdbus.pc
 pkgconfigdir = $(libdir)/pkgconfig
+
+else # WITH_DBUS
+
+EXTRA_DIST += \
+	extension/dbus/dbus-init.cpp  \
+	extension/dbus/dbus-init.h  \
+	extension/dbus/application-interface.cpp  \
+	extension/dbus/application-interface.h  \
+	extension/dbus/document-interface.cpp  \
+	extension/dbus/document-interface.h \
+	extension/dbus/wrapper/inkscape-dbus-wrapper.h \
+	extension/dbus/wrapper/inkscape-dbus-wrapper.c \
+	extension/dbus/wrapper/inkdbus.pc \
+	extension/dbus/org.inkscape.service.in \
+	extension/dbus/application-interface.xml \
+	extension/dbus/document-interface.xml
+
+endif
 

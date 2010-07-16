@@ -702,7 +702,6 @@ dnl ******************************
 AC_ARG_ENABLE(dbusapi,
        [  --enable-dbusapi       compile with support for DBus interface],
        enable_dbusapi=$enableval,enable_dbusapi=yes)
-AC_DEFINE(WITH_DBUS,1,[Build in dbus])
 
 with_dbus="no"
 if test "x$dbusapi" = "xyes"; then
@@ -714,12 +713,11 @@ if test "x$dbusapi" = "xyes"; then
 			DBUSSERVICEDIR=`$PKG_CONFIG --variable=session_bus_services_dir dbus-1`
 		fi
 		AC_SUBST(DBUSSERVICEDIR)
+		AC_DEFINE(WITH_DBUS,1,[Build in dbus])
 	fi
-
-	AC_SUBST(DBUS_LIBS)
-	AC_SUBST(DBUS_CFLAGS)
 fi
-
+AC_SUBST(DBUS_LIBS)
+AC_SUBST(DBUS_CFLAGS)
 AM_CONDITIONAL(WITH_DBUS, test "x$with_dbus" = "xyes")
 
 dnl ******************************
