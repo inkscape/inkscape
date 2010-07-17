@@ -83,16 +83,11 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
             // First, project the origin of the circle onto the line
             Geom::Point const origin = c.getPoint();
             Geom::Point const p_proj = Geom::projection(origin, gridguide_line);
-            Geom::Point v_orig = c.getDirection(); // vector from the origin to the original (untransformed) point
-            Geom::Point v_proj = p_proj - origin;
-            Geom::Coord dist = Geom::L2(v_proj); // distance from circle origin to constraint line
+            Geom::Coord dist = Geom::L2(p_proj - origin); // distance from circle origin to constraint line
             Geom::Coord radius = c.getRadius();
-            Geom::Coord radians = NR_HUGE;
             if (dist == radius) {
                 // Only one point of intersection;
-                // Calculate the rotation in radians...
-                radians = atan2(Geom::dot(Geom::rot90(v_orig), v_proj), Geom::dot(v_orig, v_proj));
-                _addSnappedPoint(sc, p_proj, Geom::L2(p.getPoint() - p_proj), p.getSourceType(), p.getSourceNum(), true, radians);
+                _addSnappedPoint(sc, p_proj, Geom::L2(p.getPoint() - p_proj), p.getSourceType(), p.getSourceNum(), true);
             } else if (dist < radius) {
                 // Two points of intersection, symmetrical with respect to the projected point
                 // Calculate half the length of the linesegment between the two points of intersection
@@ -100,12 +95,8 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
                 Geom::Coord d = Geom::L2(gridguide_line.versor()); // length of versor, needed to normalize the versor
                 if (d > 0) {
                     Geom::Point v = l*gridguide_line.versor()/d;
-                    v_proj = p_proj + v - origin;
-                    radians = atan2(Geom::dot(Geom::rot90(v_orig), v_proj), Geom::dot(v_orig, v_proj));
-                    _addSnappedPoint(sc, p_proj + v, Geom::L2(p.getPoint() - (p_proj + v)), p.getSourceType(), p.getSourceNum(), true, radians);
-                    v_proj = p_proj - v - origin;
-                    radians = atan2(Geom::dot(Geom::rot90(v_orig), v_proj), Geom::dot(v_orig, v_proj));
-                    _addSnappedPoint(sc, p_proj - v, Geom::L2(p.getPoint() - (p_proj - v)), p.getSourceType(), p.getSourceNum(), true, radians);
+                    _addSnappedPoint(sc, p_proj + v, Geom::L2(p.getPoint() - (p_proj + v)), p.getSourceType(), p.getSourceNum(), true);
+                    _addSnappedPoint(sc, p_proj - v, Geom::L2(p.getPoint() - (p_proj - v)), p.getSourceType(), p.getSourceNum(), true);
                 }
             }
         } else {
@@ -130,7 +121,7 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
                     // This snappoint is therefore fully constrained, so there's no need
                     // to look for additional intersections; just return the snapped point
                     // and forget about the line
-                    _addSnappedPoint(sc, t, dist, p.getSourceType(), p.getSourceNum(), true, 1);
+                    _addSnappedPoint(sc, t, dist, p.getSourceType(), p.getSourceNum(), true);
                 }
             }
         }

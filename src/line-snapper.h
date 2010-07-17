@@ -54,7 +54,7 @@ private:
   // Will only be implemented for guide lines, because grid lines don't have an origin
   virtual void _addSnappedLinesOrigin(SnappedConstraints &sc, Geom::Point const origin, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num, bool constrained_snap) const;
 
-  virtual void _addSnappedPoint(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num, bool constrained_snap, Geom::Coord angle) const = 0;
+  virtual void _addSnappedPoint(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num, bool constrained_snap) const = 0;
 };
 
 }

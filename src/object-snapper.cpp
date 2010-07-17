@@ -576,12 +576,6 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                     Geom::Coord dist = Geom::L2(p_proj_on_cl - p_inters);
                     SnappedPoint s = SnappedPoint(p_inters, p.getSourceType(), p.getSourceNum(), k->target_type, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true, k->target_bbox);;
                     if (dist <= tolerance) { // If the intersection is within snapping range, then we might snap to it
-                        if (c.isCircular()) {
-                            Geom::Point v_orig = c.getDirection(); // vector from the origin to the original (untransformed) point
-                            Geom::Point v_inters = p_inters - c.getPoint();
-                            Geom::Coord radians = atan2(Geom::dot(Geom::rot90(v_orig), v_inters), Geom::dot(v_orig, v_inters));
-                            s.setTransformation(Geom::Point(radians, radians));
-                        }
                         sc.points.push_back(s);
                     }
                 }

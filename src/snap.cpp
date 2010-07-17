@@ -366,12 +366,6 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
     Geom::Point pp = constraint.projection(p.getPoint());
 
     Inkscape::SnappedPoint no_snap = Inkscape::SnappedPoint(pp, p.getSourceType(), p.getSourceNum(), Inkscape::SNAPTARGET_CONSTRAINT, NR_HUGE, 0, false, true, false);
-    if (constraint.isCircular()) {
-        Geom::Point v_orig = constraint.getDirection(); // vector from the origin to the original (untransformed) point
-        Geom::Point v_proj = pp - constraint.getPoint(); // vector from the origin to the projected point
-        Geom::Coord angle = atan2(Geom::dot(Geom::rot90(v_orig), v_proj), Geom::dot(v_orig, v_proj));
-        no_snap.setTransformation(Geom::Point(angle, angle)); // Store the rotation (in radians), needed in case of snapping while rotating
-    }
 
     if (!someSnapperMightSnap()) {
         // Always return point on constraint
@@ -639,7 +633,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
             /* We snapped.  Find the transformation that describes where the snapped point has
             ** ended up, and also the metric for this transformation.
             */
-            Geom::Point const a = (snapped_point.getPoint() - origin); // vector to snapped point
+            Geom::Point const a = snapped_point.getPoint() - origin; // vector to snapped point
             //Geom::Point const b = (*i - origin); // vector to original point
 
             switch (transformation_type) {
@@ -703,14 +697,16 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                     snapped_point.setSecondSnapDistance(NR_HUGE);
                     break;
                 case SKEW:
-                    result[0] = (snapped_point.getPoint()[dim] - ((*i).getPoint())[dim]) / (((*i).getPoint())[1 - dim] - origin[1 - dim]); // skew factor
+                    result[0] = (snapped_point.getPoint()[dim] - ((*i).getPoint())[dim]) / b[1 - dim]; // skew factor
                     result[1] = transformation[1]; // scale factor
                     // Store the metric for this transformation as a virtual distance
                     snapped_point.setSnapDistance(std::abs(result[0] - transformation[0]));
                     snapped_point.setSecondSnapDistance(NR_HUGE);
                     break;
                 case ROTATE:
-                    result = snapped_point.getTransformation();
+					// a is vector to snapped point; b is vector to original point; now lets calculate angle between a and b
+                	result[0] = atan2(Geom::dot(Geom::rot90(b), a), Geom::dot(b, a));
+					result[1] = result[1]; // how else should we store an angle in a point ;-)
                     // Store the metric for this transformation as a virtual distance (we're storing an angle)
                     snapped_point.setSnapDistance(std::abs(result[0] - transformation[0]));
                     snapped_point.setSecondSnapDistance(NR_HUGE);
