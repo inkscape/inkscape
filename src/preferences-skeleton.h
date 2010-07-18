@@ -193,7 +193,7 @@ static char const preferences_skeleton[] =
 "      <group id=\"exportarea\"/>\n"
 "      <group id=\"defaultxdpi\"/>\n"
 "    </group>\n"
-"    <group id=\"save_as\" default=\"\" append_extension=\"1\" enable_preview=\"1\" path=\"\"/>\n"
+"    <group id=\"save_as\" default=\"\" append_extension=\"1\" enable_preview=\"1\" path=\"\" use_current_dir=\"1\"/>\n"
 "    <group id=\"save_copy\" default=\"\" append_extension=\"1\" enable_preview=\"1\" path=\"\"/>\n"
 "    <group id=\"open\" enable_preview=\"1\" path=\"\"/>\n"
 "    <group id=\"import\" enable_preview=\"1\" path=\"\"/>\n"

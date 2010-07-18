@@ -589,7 +589,7 @@ get_file_save_path (SPDocument *doc, FileSaveMethod method) {
     switch (method) {
         case FILE_SAVE_METHOD_SAVE_AS:
         {
-            bool use_current_dir = prefs->getBool("/dialogs/save_as/use_current_dir");
+            bool use_current_dir = prefs->getBool("/dialogs/save_as/use_current_dir", true);
             if (doc->uri && use_current_dir) {
                 path = Glib::path_get_dirname(doc->uri);
             } else {
