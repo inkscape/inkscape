@@ -2,7 +2,7 @@
 # include "config.h"
 #endif
 
-#define DEBUG_LCMS
+#define noDEBUG_LCMS
 
 #include <glib/gstdio.h>
 #include <sys/fcntl.h>
