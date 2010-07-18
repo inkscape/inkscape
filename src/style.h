@@ -159,6 +159,7 @@ struct SPIPaint {
          SPColor color;
     } value;
 
+    SPIPaint();
 
     bool isSet() const { return true; /* set || colorSet*/}
     bool isSameType( SPIPaint const & other ) const {return (isPaintserver() == other.isPaintserver()) && (colorSet == other.colorSet) && (currentcolor == other.currentcolor);}
@@ -174,6 +175,12 @@ struct SPIPaint {
     void setColor( float r, float g, float b ) {value.color.set( r, g, b ); colorSet = true;}
     void setColor( guint32 val ) {value.color.set( val ); colorSet = true;}
     void setColor( SPColor const& color ) {value.color = color; colorSet = true;}
+
+    void read( gchar const *str, SPStyle &tyle, SPDocument *document = 0);
+
+private:
+    SPIPaint(SPIPaint const&);
+    SPIPaint &operator=(SPIPaint const &);
 };
 
 /// Filter type internal to SPStyle

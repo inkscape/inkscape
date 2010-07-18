@@ -386,7 +386,7 @@ bool JavaFXOutput::doStyle(SPStyle *style)
     /**
      * Fill
      */
-    SPIPaint fill = style->fill;
+    SPIPaint const &fill = style->fill;
     if (fill.isColor())
         {
         // see color.h for how to parse SPColor
@@ -423,7 +423,7 @@ bool JavaFXOutput::doStyle(SPStyle *style)
      */
     if (style->stroke_opacity.value > 0)
         {
-        SPIPaint stroke = style->stroke;
+        SPIPaint const &stroke = style->stroke;
         out("            stroke: %s\n",
             rgba(stroke.value.color, SP_SCALE24_TO_FLOAT(style->stroke_opacity.value)).c_str());
         double strokewidth = style->stroke_width.value;

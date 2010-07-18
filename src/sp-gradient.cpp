@@ -45,6 +45,7 @@
 #include "streq.h"
 #include "uri.h"
 #include "xml/repr.h"
+#include "style.h"
 
 #define SP_MACROS_SILENT
 #include "macros.h"
@@ -172,9 +173,7 @@ sp_stop_set(SPObject *object, unsigned key, gchar const *value)
                 if (streq(p, "currentColor")) {
                     stop->currentColor = true;
                 } else {
-                    // TODO need to properly read full color, including icc
-                    guint32 const color = sp_svg_read_color(p, 0);
-                    stop->specified_color.set( color );
+                    stop->specified_color = SPStop::readStopColor( p );
                 }
             }
             {
@@ -192,8 +191,7 @@ sp_stop_set(SPObject *object, unsigned key, gchar const *value)
                     stop->currentColor = true;
                 } else {
                     stop->currentColor = false;
-                    guint32 const color = sp_svg_read_color(p, 0);
-                    stop->specified_color.set( color );
+                    stop->specified_color = SPStop::readStopColor( p );
                 }
             }
             object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
@@ -233,11 +231,12 @@ sp_stop_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
         repr = xml_doc->createElement("svg:stop");
     }
 
-    guint32 specifiedcolor = stop->specified_color.toRGBA32( 255 );
+    Glib::ustring colorStr = stop->specified_color.toString();
     gfloat opacity = stop->opacity;
 
-    if (((SPObjectClass *) stop_parent_class)->write)
+    if (((SPObjectClass *) stop_parent_class)->write) {
         (* ((SPObjectClass *) stop_parent_class)->write)(object, xml_doc, repr, flags);
+    }
 
     // Since we do a hackish style setting here (because SPStyle does not support stop-color and
     // stop-opacity), we must do it AFTER calling the parent write method; otherwise
@@ -248,9 +247,7 @@ sp_stop_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
     if (stop->currentColor) {
         os << "currentColor";
     } else {
-        gchar c[64];
-        sp_svg_write_color(c, sizeof(c), specifiedcolor);
-        os << c;
+        os << colorStr;
     }
     os << ";stop-opacity:" << opacity;
     repr->setAttribute("style", os.str().c_str());
@@ -321,29 +318,6 @@ sp_stop_get_rgba32(SPStop const *const stop)
         return rgb0 | alpha;
     } else {
         return stop->specified_color.toRGBA32( stop->opacity );
-    }
-}
-
-/**
- * Return stop's color as SPColor.
- */
-static SPColor
-sp_stop_get_color(SPStop const *const stop)
-{
-    if (stop->currentColor) {
-        char const *str = sp_object_get_style_property(stop, "color", NULL);
-        guint32 const dfl = 0;
-        /* Default value: arbitrarily black.  (SVG1.1 and CSS2 both say that the initial
-         * value depends on user agent, and don't give any further restrictions that I can
-         * see.) */
-        guint32 color = dfl;
-        if (str) {
-            color = sp_svg_read_color(str, dfl);
-        }
-        SPColor ret( color );
-        return ret;
-    } else {
-        return stop->specified_color;
     }
 }
 
@@ -664,7 +638,6 @@ void SPGradientImpl::removeChild(SPObject *object, Inkscape::XML::Node *child)
     }
 
     if ( gr->getStopCount() == 0 ) {
-        g_message("Check on remove");
         gchar const * attr = gr->repr->attribute("osb:paint");
         if ( attr && strcmp(attr, "solid") ) {
             sp_object_setAttribute( gr, "osb:paint", "solid", 0 );
@@ -1000,9 +973,7 @@ sp_gradient_repr_write_vector(SPGradient *gr)
         sp_repr_set_css_double(child, "offset", gr->vector.stops[i].offset);
         /* strictly speaking, offset an SVG <number> rather than a CSS one, but exponents make no
          * sense for offset proportions. */
-        gchar c[64];
-        sp_svg_write_color(c, sizeof(c), gr->vector.stops[i].color.toRGBA32( 0x00 ));
-        os << "stop-color:" << c << ";stop-opacity:" << gr->vector.stops[i].opacity;
+        os << "stop-color:" << gr->vector.stops[i].color.toString() << ";stop-opacity:" << gr->vector.stops[i].opacity;
         child->setAttribute("style", os.str().c_str());
         /* Order will be reversed here */
         cl = g_slist_prepend(cl, child);
@@ -1099,7 +1070,7 @@ void SPGradient::rebuildVector()
             // down to 100%."
             gstop.offset = CLAMP(gstop.offset, 0, 1);
 
-            gstop.color = sp_stop_get_color(stop);
+            gstop.color = stop->getEffectiveColor();
             gstop.opacity = stop->opacity;
 
             vector.stops.push_back(gstop);

@@ -177,6 +177,8 @@ private:
 
     bool styleSet( const SPCSSAttr *css );
 
+    Glib::ustring makeStopSafeColor( gchar const *str, bool &isNull );
+
     Inkscape::Selection *selection;
     sigc::connection sel_changed_connection;
     sigc::connection sel_modified_connection;

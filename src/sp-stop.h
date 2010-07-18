@@ -9,6 +9,7 @@
  */
 
 #include <glib/gtypes.h>
+#include <glibmm/ustring.h>
 #include "sp-object.h"
 #include "color.h"
 
@@ -43,8 +44,12 @@ struct SPStop : public SPObject {
     gfloat opacity;
 
 
+    static SPColor readStopColor( Glib::ustring const &styleStr, guint32 dfl = 0 );
+
     SPStop* getNextStop();
     SPStop* getPrevStop();
+
+    SPColor getEffectiveColor() const;
 };
 
 /// The SPStop vtable.

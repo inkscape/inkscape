@@ -15,7 +15,7 @@
 
 
 #include "sp-stop.h"
-
+#include "style.h"
 
 // A stop might have some non-stop siblings
 SPStop* SPStop::getNextStop()
@@ -50,6 +50,34 @@ SPStop* SPStop::getPrevStop()
     }
 
     return result;
+}
+
+SPColor SPStop::readStopColor( Glib::ustring const &styleStr, guint32 dfl )
+{
+    SPColor color(dfl);
+    SPStyle* style = sp_style_new(0);
+    SPIPaint paint;
+    paint.read( styleStr.c_str(), *style );
+    if ( paint.isColor() ) {
+        color = paint.value.color;
+    }
+    sp_style_unref(style);
+    return color;
+}
+
+SPColor SPStop::getEffectiveColor() const
+{
+    SPColor ret;
+    if (currentColor) {
+        char const *str = sp_object_get_style_property(this, "color", NULL);
+        /* Default value: arbitrarily black.  (SVG1.1 and CSS2 both say that the initial
+         * value depends on user agent, and don't give any further restrictions that I can
+         * see.) */
+        ret = readStopColor( str, 0 );
+    } else {
+        ret = specified_color;
+    }
+    return ret;
 }
 
 

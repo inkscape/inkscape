@@ -18,6 +18,7 @@
  */
 
 #include <gdk/gdktypes.h>
+#include <glibmm/ustring.h>
 #include "libnr/nr-matrix.h"
 #include "sp-paint-server.h"
 #include "sp-gradient-spread.h"

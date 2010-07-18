@@ -176,6 +176,43 @@ gr_drag_style_query (SPStyle *style, int property, gpointer data)
     }
 }
 
+Glib::ustring GrDrag::makeStopSafeColor( gchar const *str, bool &isNull )
+{
+    Glib::ustring colorStr;
+    if ( str ) {
+        isNull = false;
+        colorStr = str;
+        Glib::ustring::size_type pos = colorStr.find("url(#");
+        if ( pos != Glib::ustring::npos ) {
+            Glib::ustring targetName = colorStr.substr(pos + 5, colorStr.length() - 6);
+            const GSList *gradients = sp_document_get_resource_list(desktop->doc(), "gradient");
+            for (const GSList *item = gradients; item; item = item->next) {
+                SPGradient* grad = SP_GRADIENT(item->data);
+                if ( targetName == grad->getId() ) {
+                    SPGradient *vect = grad->getVector();
+                    SPStop *firstStop = (vect) ? vect->getFirstStop() : grad->getFirstStop();
+                    if (firstStop) {
+                        Glib::ustring stopColorStr;
+                        if (firstStop->currentColor) {
+                            stopColorStr = sp_object_get_style_property(firstStop, "color", NULL);
+                        } else {
+                            stopColorStr = firstStop->specified_color.toString();
+                        }
+                        if ( !stopColorStr.empty() ) {
+                            colorStr = stopColorStr;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    } else {
+        isNull = true;
+    }
+
+    return colorStr;
+}
+
 bool GrDrag::styleSet( const SPCSSAttr *css )
 {
     if (!selected) {
@@ -214,30 +251,10 @@ bool GrDrag::styleSet( const SPCSSAttr *css )
 
     // Make sure the style is allowed for gradient stops.
     if ( !sp_repr_css_property_is_unset( stop, "stop-color") ) {
-        Glib::ustring tmp = sp_repr_css_property( stop, "stop-color", "" );
-        Glib::ustring::size_type pos = tmp.find("url(#");
-        if ( pos != Glib::ustring::npos ) {
-            Glib::ustring targetName = tmp.substr(pos + 5, tmp.length() - 6);
-            const GSList *gradients = sp_document_get_resource_list(desktop->doc(), "gradient");
-            for (const GSList *item = gradients; item; item = item->next) {
-                SPGradient* grad = SP_GRADIENT(item->data);
-                if ( targetName == grad->getId() ) {
-                    SPGradient *vect = grad->getVector();
-                    SPStop *firstStop = (vect) ? vect->getFirstStop() : grad->getFirstStop();
-                    if (firstStop) {
-                        Glib::ustring stopColorStr;
-                        if (firstStop->currentColor) {
-                            stopColorStr = sp_object_get_style_property(firstStop, "color", NULL);
-                        } else {
-                            stopColorStr = firstStop->specified_color.toString();
-                        }
-                        if ( !stopColorStr.empty() ) {
-                            sp_repr_css_set_property( stop, "stop-color", stopColorStr.c_str() );
-                        }
-                    }
-                    break;
-                }
-            }
+        bool stopIsNull = false;
+        Glib::ustring tmp = makeStopSafeColor( sp_repr_css_property( stop, "stop-color", "" ), stopIsNull );
+        if ( !stopIsNull && !tmp.empty() ) {
+            sp_repr_css_set_property( stop, "stop-color", tmp.c_str() );
         }
     }
 
@@ -393,14 +410,18 @@ GrDrag::addStopNearPoint (SPItem *item, Geom::Point mouse_p, double tolerance)
 bool
 GrDrag::dropColor(SPItem */*item*/, gchar const *c, Geom::Point p)
 {
+    // Note: not sure if a null pointer can come in for the style, but handle that just in case
+    bool stopIsNull = false;
+    Glib::ustring toUse = makeStopSafeColor( c, stopIsNull );
+
     // first, see if we can drop onto one of the existing draggers
     for (GList *i = draggers; i != NULL; i = i->next) { // for all draggables of dragger
         GrDragger *d = (GrDragger *) i->data;
 
         if (Geom::L2(p - d->point)*desktop->current_zoom() < 5) {
            SPCSSAttr *stop = sp_repr_css_attr_new ();
-           sp_repr_css_set_property (stop, "stop-color", c);
-           sp_repr_css_set_property (stop, "stop-opacity", "1");
+           sp_repr_css_set_property( stop, "stop-color", stopIsNull ? 0 : toUse.c_str() );
+           sp_repr_css_set_property( stop, "stop-opacity", "1" );
            for (GSList *j = d->draggables; j != NULL; j = j->next) { // for all draggables of dragger
                GrDraggable *draggable = (GrDraggable *) j->data;
                local_change = true;
@@ -423,8 +444,8 @@ GrDrag::dropColor(SPItem */*item*/, gchar const *c, Geom::Point p)
                 SPStop *stop = addStopNearPoint (line->item, p, 5/desktop->current_zoom());
                 if (stop) {
                     SPCSSAttr *css = sp_repr_css_attr_new ();
-                    sp_repr_css_set_property (css, "stop-color", c);
-                    sp_repr_css_set_property (css, "stop-opacity", "1");
+                    sp_repr_css_set_property( css, "stop-color", stopIsNull ? 0 : toUse.c_str() );
+                    sp_repr_css_set_property( css, "stop-opacity", "1" );
                     sp_repr_css_change (SP_OBJECT_REPR (stop), css, "style");
                     return true;
                 }
