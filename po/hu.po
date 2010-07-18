@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-07-13 22:38+0200\n"
+"PO-Revision-Date: 2010-07-18 22:43+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"\n"
 "\n"
 "\n"
 "\n"
@@ -679,7 +680,8 @@ msgstr ""
 "- Feltételezi, hogy a dxf-rajz mm-ben van.\n"
 "- Csak az LWPOLYLINE és a SPLINE elemek vannak támogatva.\n"
 "- A ROBO-Master opció egy speciális spline, amelyet csak a ROBO-Master- és "
-"az AutoDesk-megjelenítők képesek értelmezni, az Inkscape nem."
+"az AutoDesk-megjelenítők képesek értelmezni, az Inkscape nem.Kapcsolódó "
+"vonalak"
 
 #: ../share/extensions/dxf_outlines.inx.h:7
 msgid "Desktop Cutting Plotter"
@@ -807,7 +809,7 @@ msgid ""
 "* Don't type the file extension, it is appended automatically.\n"
 "* A relative path (or a filename without path) is relative to the user's "
 "home directory."
-msgstr "kiterjesztés"
+msgstr "kiterjesztés Útvonal"
 
 #: ../share/extensions/extractimage.inx.h:3
 msgid "Extract Image"
@@ -1622,7 +1624,7 @@ msgid ""
 "This extension allows you to install, update and remove auto-texts for a "
 "JessyInk presentation. Please see code.google.com/p/jessyink for more "
 "details."
-msgstr "kiterjesztés Frissítés"
+msgstr "kiterjesztés Frissítés eltávolítás "
 
 #: ../share/extensions/jessyInk_effects.inx.h:1
 #: ../share/extensions/jessyInk_transitions.inx.h:1
@@ -1681,7 +1683,7 @@ msgid ""
 "This extension allows you to install, update and remove object effects for a "
 "JessyInk presentation. Please see code.google.com/p/jessyink for more "
 "details."
-msgstr "kiterjesztés Frissítés"
+msgstr "kiterjesztés Frissítés eltávolítás "
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../share/extensions/jessyInk_effects.inx.h:14
@@ -1746,7 +1748,7 @@ msgstr "kiterjesztés Frissítés"
 #: ../share/extensions/jessyInk_keyBindings.inx.h:1
 #, fuzzy
 msgid "Add slide:"
-msgstr "2. oldal"
+msgstr "felvétele"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:2
 msgid "Back (with effects):"
@@ -1847,77 +1849,77 @@ msgstr "Az oszlopok száma"
 #: ../share/extensions/jessyInk_keyBindings.inx.h:24
 #, fuzzy
 msgid "Set path color to black:"
-msgstr "Körvonalszín beállítása a \"nincs\" értékre"
+msgstr "Útvonal Körvonalszín beállítása a \"nincs\" értékre"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:25
 #, fuzzy
 msgid "Set path color to blue:"
-msgstr "Körvonalszín beállítása a \"nincs\" értékre"
+msgstr "Útvonal Körvonalszín beállítása a \"nincs\" értékre"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:26
 #, fuzzy
 msgid "Set path color to cyan:"
-msgstr "Körvonalszín beállítása a \"nincs\" értékre"
+msgstr "Útvonal Körvonalszín beállítása a \"nincs\" értékre"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:27
 #, fuzzy
 msgid "Set path color to green:"
-msgstr "Körvonalszín beállítása a \"nincs\" értékre"
+msgstr "Útvonal Körvonalszín beállítása a \"nincs\" értékre"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:28
 #, fuzzy
 msgid "Set path color to magenta:"
-msgstr "Körvonalszín beállítása a \"nincs\" értékre"
+msgstr "Útvonal Körvonalszín beállítása a \"nincs\" értékre"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:29
 #, fuzzy
 msgid "Set path color to orange:"
-msgstr "Körvonalszín beállítása a \"nincs\" értékre"
+msgstr "Útvonal Körvonalszín beállítása a \"nincs\" értékre"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:30
 #, fuzzy
 msgid "Set path color to red:"
-msgstr "Körvonalszín beállítása a \"nincs\" értékre"
+msgstr "Útvonal Körvonalszín beállítása a \"nincs\" értékre"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:31
 #, fuzzy
 msgid "Set path color to white:"
-msgstr "Körvonalszín beállítása a \"nincs\" értékre"
+msgstr "Útvonal Körvonalszín beállítása a \"nincs\" értékre"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:32
 #, fuzzy
 msgid "Set path color to yellow:"
-msgstr "Körvonalszín beállítása a \"nincs\" értékre"
+msgstr "Útvonal Körvonalszín beállítása a \"nincs\" értékre"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:33
 #, fuzzy
 msgid "Set path width to 1:"
-msgstr "Szélesség beállítása:"
+msgstr "Útvonal Szélesség beállítása:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:34
 #, fuzzy
 msgid "Set path width to 3:"
-msgstr "Szélesség beállítása:"
+msgstr "Útvonal Szélesség beállítása:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:35
 #, fuzzy
 msgid "Set path width to 5:"
-msgstr "Szélesség beállítása:"
+msgstr "Útvonal Szélesség beállítása:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:36
 #, fuzzy
 msgid "Set path width to 7:"
-msgstr "Szélesség beállítása:"
+msgstr "Útvonal Szélesség beállítása:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:37
 #, fuzzy
 msgid "Set path width to 9:"
-msgstr "Szélesség beállítása:"
+msgstr "Útvonal Szélesség beállítása:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:38
 #, fuzzy
 msgid "Set path width to default:"
-msgstr "Beállítás alapértelmezésnek"
+msgstr "Útvonal Beállítás alapértelmezésnek"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:39
 #, fuzzy
@@ -1954,7 +1956,7 @@ msgstr "átkapcsolása"
 #: ../share/extensions/jessyInk_keyBindings.inx.h:45
 #, fuzzy
 msgid "Undo last path segment:"
-msgstr "A legutóbbi művelet visszavonása szakasz"
+msgstr "A legutóbbi művelet visszavonása Útvonal szakasz"
 
 #: ../share/extensions/jessyInk_masterSlide.inx.h:2
 msgid "If no layer name is supplied, the master slide is unset."
@@ -2048,8 +2050,9 @@ msgid "Transitions"
 msgstr "Transzformáció"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:4
+#, fuzzy
 msgid "Please select the parts of JessyInk you want to uninstall/remove."
-msgstr ""
+msgstr "eltávolítás "
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:5
 #, fuzzy
@@ -2074,7 +2077,7 @@ msgstr "Rács eltávolítása"
 #: ../share/extensions/jessyInk_uninstall.inx.h:9
 #, fuzzy
 msgid "Remove transitions"
-msgstr "Transzformációk visszavo_nása"
+msgstr "eltávolítása "
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:10
 #, fuzzy
@@ -2089,8 +2092,9 @@ msgid ""
 msgstr "kiterjesztés"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:12
+#, fuzzy
 msgid "Uninstall/remove"
-msgstr ""
+msgstr "eltávolítás "
 
 #: ../share/extensions/jessyInk_video.inx.h:3
 #, fuzzy
@@ -2119,7 +2123,7 @@ msgstr "Vörös eltávolítása"
 msgid ""
 "This extension allows you to set, update and remove views for a JessyInk "
 "presentation. Please see code.google.com/p/jessyink for more details."
-msgstr "kiterjesztés Frissítés"
+msgstr "kiterjesztés Frissítés eltávolítás "
 
 #: ../share/extensions/jessyInk_view.inx.h:9
 #: ../share/extensions/polyhedron_3d.inx.h:52
@@ -3185,7 +3189,7 @@ msgid ""
 "    * Strip xml prolog: don't output the xml prolog.\n"
 "    * Set precision: set number of significant digits (default: 5).\n"
 "    * Indent: indentation of the output: none, space, tab (default: space)."
-msgstr "kiterjesztés lényeges számjegyek "
+msgstr "kiterjesztés lényeges számjegyek eltávolítás "
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
@@ -6461,19 +6465,17 @@ msgid "Old paint (bitmap)"
 msgstr "Régi festés (bitkép)"
 
 #: ../src/conn-avoid-ref.cpp:237
-#, fuzzy
 msgid "Add a new connection point"
-msgstr "Kapcsok helykihagyásának módosítása"
+msgstr "Új kapcsolódási pont felvétele"
 
 #: ../src/conn-avoid-ref.cpp:262
 #, fuzzy
 msgid "Move a connection point"
-msgstr "Új út a kapocshoz"
+msgstr "Kapcsolódási pont áthelyezése"
 
 #: ../src/conn-avoid-ref.cpp:282
-#, fuzzy
 msgid "Remove a connection point"
-msgstr "Új út a kapocshoz"
+msgstr "Kapcsolódási pont eltávolítása"
 
 #: ../src/live_effects/lpe-extrude.cpp:28
 #, fuzzy
@@ -6486,23 +6488,22 @@ msgstr ""
 
 #: ../src/sp-flowtext.cpp:378 ../src/sp-text.cpp:427
 #: ../src/text-context.cpp:1604
-#, fuzzy
 msgid " [truncated]"
-msgstr "Csonkított kocka"
+msgstr " [csonkított]"
 
 #: ../src/sp-flowtext.cpp:381
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Flowed text</b> (%d character%s)"
 msgid_plural "<b>Flowed text</b> (%d characters%s)"
-msgstr[0] "<b>Tördelt szöveg</b> (%d karakter)"
-msgstr[1] "<b>Tördelt szöveg</b> (%d karakter)"
+msgstr[0] "<b>Tördelt szöveg</b> (%d karakter%s)"
+msgstr[1] "<b>Tördelt szöveg</b> (%d karakter%s)"
 
 #: ../src/sp-flowtext.cpp:383
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Linked flowed text</b> (%d character%s)"
 msgid_plural "<b>Linked flowed text</b> (%d characters%s)"
-msgstr[0] "<b>Kapcsolt tördelt szöveg</b> (%d karakter)"
-msgstr[1] "<b>Kapcsolt tördelt szöveg</b> (%d karakter)"
+msgstr[0] "<b>Kapcsolt tördelt szöveg</b> (%d karakter%s)"
+msgstr[1] "<b>Kapcsolt tördelt szöveg</b> (%d karakter%s)"
 
 #: ../src/arc-context.cpp:324
 msgid ""
@@ -6562,10 +6563,9 @@ msgstr ""
 "<b>Kapcsolódási pont</b>. Új kapocs létrehozása: kattintással vagy húzással."
 
 #: ../src/connector-context.cpp:237
-#, fuzzy
 msgid "<b>Connection point</b>: click to select, drag to move"
 msgstr ""
-"<b>Kapcsolódási pont</b>. Új kapocs létrehozása: kattintással vagy húzással."
+"<b>Kapcsolódási pont</b>. Kijelölés: kattintással; áthelyezés: húzással."
 
 #: ../src/connector-context.cpp:781
 msgid "Creating new connector"
@@ -6576,9 +6576,8 @@ msgid "Connector endpoint drag cancelled."
 msgstr "Kapocs végpontjának húzása megszakítva."
 
 #: ../src/connector-context.cpp:1189
-#, fuzzy
 msgid "Connection point drag cancelled."
-msgstr "Kapocs végpontjának húzása megszakítva."
+msgstr "Kapcsolódási pont húzása megszakítva."
 
 #: ../src/connector-context.cpp:1307
 msgid "Reroute connector"
@@ -9526,10 +9525,11 @@ msgid "link"
 msgstr ". vonal"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:155
+#, fuzzy
 msgid ""
 "Embed results in stand-alone, larger SVG files. Link references a file "
 "outside this SVG document and all files must be moved together."
-msgstr ""
+msgstr "áthelyezés"
 
 #: ../src/extension/internal/gimpgrad.cpp:274
 msgid "GIMP Gradients"
@@ -14605,20 +14605,20 @@ msgid "Paste text"
 msgstr "Szöveg beillesztése"
 
 #: ../src/text-context.cpp:1621
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new "
 "paragraph."
 msgstr ""
-"Gépelje be vagy módosítsa a tördelendő szöveget (%d karakter). Új bekezdést "
-"az <b>Enter</b> billentyűvel lehet kezdeni."
+"Gépelje be vagy módosítsa a tördelendő szöveget (%d karakter%s). Új "
+"bekezdést az <b>Enter</b> billentyűvel lehet kezdeni."
 
 #: ../src/text-context.cpp:1623
-#, fuzzy, c-format
+#, c-format
 msgid "Type or edit text (%d characters%s); <b>Enter</b> to start new line."
 msgstr ""
-"Gépelje be vagy módosítsa a szöveget (%d karakter). Új sort az <b>Enter</b> "
-"billentyűvel lehet kezdeni."
+"Gépelje be vagy módosítsa a szöveget (%d karakter%s). Új sort az <b>Enter</"
+"b> billentyűvel lehet kezdeni."
 
 #: ../src/text-context.cpp:1631 ../src/tools-switch.cpp:197
 msgid ""
@@ -14643,11 +14643,9 @@ msgstr ""
 "felette az egérrel."
 
 #: ../src/tools-switch.cpp:143
-#, fuzzy
 msgid "To spray a path by pushing, select it and drag over it."
 msgstr ""
-"Egy útvonal eltolásos manipulálásához jelölje ki azt, majd végezzen húzást "
-"felette az egérrel. felfestés "
+"Egy útvonal felfestéséhez jelölje ki azt, majd végezzen húzást az egérrel."
 
 #: ../src/tools-switch.cpp:149
 msgid ""
@@ -20782,7 +20780,7 @@ msgctxt "Path segment tip"
 msgid ""
 "<b>Linear segment</b>: drag to convert to a Bezier segment, doubleclick to "
 "insert node, click to select (more: Shift, Ctrl+Alt)"
-msgstr "szakasz húzás"
+msgstr "szakasz húzás (továbbiak: Shift) "
 
 #: ../src/ui/tool/curve-drag-point.cpp:179
 #, fuzzy
@@ -20790,7 +20788,9 @@ msgctxt "Path segment tip"
 msgid ""
 "<b>Bezier segment</b>: drag to shape the segment, doubleclick to insert "
 "node, click to select (more: Shift, Ctrl+Alt)"
-msgstr "szakasz húzás"
+msgstr ""
+"<b>%s</b>. Az útvonal alakítása: húzással. Csak ezen csomópont kijelölése: "
+"kattintással (továbbiak: Shift, Ctrl, Alt).szakasz húzás"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:227
 msgid "Change node type"
@@ -20877,53 +20877,55 @@ msgctxt "Node tool tip"
 msgid ""
 "<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
 "selection"
-msgstr "húzás átkapcsolása"
+msgstr "felvétele húzás átkapcsolása"
 
 #: ../src/ui/tool/node-tool.cpp:541
 #, fuzzy
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
-msgstr "<b>Shift</b>: rajzolás a kezdőpont köré húzás"
+msgstr "<b>Shift</b>: rajzolás a kezdőpont köré húzás felvétele"
 
 #: ../src/ui/tool/node-tool.cpp:551
-#, fuzzy
 msgctxt "Node tool tip"
 msgid ""
 "<b>%u of %u nodes</b> selected. Drag to select nodes, click to edit only "
 "this object (more: Shift)"
-msgstr "kijelölt húzás"
+msgstr ""
+"<b>%u csomópont kijelölve (összesen: %u)</b>. Csomópontok kijelölése: "
+"húzással. Csak ezen objektum szerkesztése: kattintással (továbbiak: Shift)."
 
 #: ../src/ui/tool/node-tool.cpp:557
-#, fuzzy
 msgctxt "Node tool tip"
 msgid ""
 "<b>%u of %u nodes</b> selected. Drag to select nodes, click clear the "
 "selection"
-msgstr "kijelölt húzás"
+msgstr ""
+"<b>%u csomópont kijelölve (összesen: %u)</b>. Csomópontok kijelölése: "
+"húzással. Kijelölés törlése: kattintással."
 
 #: ../src/ui/tool/node-tool.cpp:565
-#, fuzzy
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
-msgstr "Kereszteződés kijelölése: húzással. Megfordítás: kattintással."
+msgstr ""
+"Csomópontok kijelölése: húzással. Csak ezen objektum szerkesztése: "
+"kattintással."
 
 #: ../src/ui/tool/node-tool.cpp:568
-#, fuzzy
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
-msgstr "Kereszteződés kijelölése: húzással. Megfordítás: kattintással."
+msgstr "Csomópontok kijelölése: húzással. Kijelölés törlése: kattintással."
 
 #: ../src/ui/tool/node-tool.cpp:573
-#, fuzzy
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
-msgstr "húzás"
+msgstr ""
+"Szerkesztendő objektumok kijelölése: húzással. Ezen objektum szerkesztése: "
+"kattintással (továbbiak: Shift)."
 
 #: ../src/ui/tool/node-tool.cpp:576
-#, fuzzy
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
-msgstr "A kijelölt objektum útvonallá alakítása húzás"
+msgstr "Szerkesztendő objektumok kijelölése: húzással."
 
 # TODO: ellenőrizni
 #: ../src/ui/tool/node.cpp:207
@@ -20950,14 +20952,16 @@ msgid "Auto-smooth node handle"
 msgstr "Csomópont-vezérlőelem áthelyezése"
 
 #: ../src/ui/tool/node.cpp:341
+#, fuzzy
 msgctxt "Path handle tip"
 msgid "more: Shift, Ctrl, Alt"
-msgstr ""
+msgstr "(továbbiak: Shift) "
 
 #: ../src/ui/tool/node.cpp:343
+#, fuzzy
 msgctxt "Path handle tip"
 msgid "more: Ctrl, Alt"
-msgstr ""
+msgstr "továbbiak:"
 
 #: ../src/ui/tool/node.cpp:349
 #, c-format
@@ -21017,16 +21021,15 @@ msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
 msgstr "húzás"
 
 #: ../src/ui/tool/node.cpp:389
-#, fuzzy
 msgctxt "Path handle tip"
 msgid "<b>%s</b>: drag to shape the segment (%s)"
-msgstr "szakasz húzás"
+msgstr "<b>%s</b>. A szakasz alakítása: húzással (%s)."
 
 #: ../src/ui/tool/node.cpp:405
-#, c-format
+#, fuzzy
 msgctxt "Path handle tip"
 msgid "Move handle by %s, %s; angle %.2f°, length %s"
-msgstr ""
+msgstr "áthelyezés "
 
 #: ../src/ui/tool/node.cpp:1144
 #, fuzzy
@@ -21045,14 +21048,16 @@ msgstr ""
 "területkijelölés: húzással"
 
 #: ../src/ui/tool/node.cpp:1151
+#, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
-msgstr ""
+msgstr "áthelyezés "
 
 #: ../src/ui/tool/node.cpp:1154
+#, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Ctrl</b>: move along axes, click to change node type"
-msgstr ""
+msgstr "áthelyezés "
 
 #: ../src/ui/tool/node.cpp:1158
 #, fuzzy
@@ -21061,10 +21066,10 @@ msgid "<b>Alt</b>: sculpt nodes"
 msgstr "<b>Ctrl</b>: szöghöz való illesztés"
 
 #: ../src/ui/tool/node.cpp:1166
-#, fuzzy
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
-msgstr "húzás"
+msgstr ""
+"<b>%s</b>. Az útvonal alakítása: húzással (továbbiak: Shift, Ctrl, Alt)."
 
 #: ../src/ui/tool/node.cpp:1169
 #, fuzzy
@@ -21072,15 +21077,18 @@ msgctxt "Path node tip"
 msgid ""
 "<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles "
 "(more: Shift, Ctrl, Alt)"
-msgstr "húzás átkapcsolása"
+msgstr ""
+"<b>%s</b>. Az útvonal alakítása: húzással. Csak ezen csomópont kijelölése: "
+"kattintással (továbbiak: Shift, Ctrl, Alt).átkapcsolása"
 
 #: ../src/ui/tool/node.cpp:1172
-#, fuzzy
 msgctxt "Path node tip"
 msgid ""
 "<b>%s</b>: drag to shape the path, click to select only this node (more: "
 "Shift, Ctrl, Alt)"
-msgstr "húzás"
+msgstr ""
+"<b>%s</b>. Az útvonal alakítása: húzással. Csak ezen csomópont kijelölése: "
+"kattintással (továbbiak: Shift, Ctrl, Alt)."
 
 #: ../src/ui/tool/node.cpp:1180
 #, fuzzy, c-format
@@ -24355,12 +24363,10 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:460
-#, fuzzy
 msgid "select toolbar|X position"
 msgstr "X-pozíció"
 
 #: ../src/widgets/select-toolbar.cpp:460
-#, fuzzy
 msgid "select toolbar|X"
 msgstr "X"
 
@@ -24371,12 +24377,10 @@ msgstr "A kijelölés vízszintes koordinátája"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:468
-#, fuzzy
 msgid "select toolbar|Y position"
 msgstr "Y-pozíció"
 
 #: ../src/widgets/select-toolbar.cpp:468
-#, fuzzy
 msgid "select toolbar|Y"
 msgstr "Y"
 
@@ -26667,16 +26671,15 @@ msgstr "Karakter-elforgatás (fok)"
 
 #: ../src/widgets/toolbox.cpp:7961
 msgid "Set connector type: orthogonal"
-msgstr ""
+msgstr "Kapocstípus beállítása: derékszögű"
 
 #: ../src/widgets/toolbox.cpp:7961
 msgid "Set connector type: polyline"
-msgstr ""
+msgstr "Kapocstípus beállítása: kapcsolódó vonalak"
 
 #: ../src/widgets/toolbox.cpp:8009
-#, fuzzy
 msgid "Change connector curvature"
-msgstr "Kapcsok helykihagyásának módosítása"
+msgstr "Kapocs görbületének módosítása"
 
 #: ../src/widgets/toolbox.cpp:8057
 msgid "Change connector spacing"
@@ -26688,8 +26691,9 @@ msgid "EditMode"
 msgstr "Szél-üzemmód:"
 
 #: ../src/widgets/toolbox.cpp:8176
+#, fuzzy
 msgid "Switch between connection point editing and connector drawing mode"
-msgstr ""
+msgstr "Kapcsolódási pont kapocs"
 
 #: ../src/widgets/toolbox.cpp:8190
 msgid "Avoid"
@@ -26701,25 +26705,23 @@ msgstr "Figyelmen kívül hagyás"
 
 #: ../src/widgets/toolbox.cpp:8211
 msgid "Orthogonal"
-msgstr ""
+msgstr "Derékszögű"
 
 #: ../src/widgets/toolbox.cpp:8212
 msgid "Make connector orthogonal or polyline"
-msgstr ""
+msgstr "A kapocs derékszögű legyen vagy kapcsolódó vonalakból álljon"
 
 #: ../src/widgets/toolbox.cpp:8226
-#, fuzzy
 msgid "Connector Curvature"
-msgstr "Kapocs-beállítások"
+msgstr "Kapocsgörbület"
 
 #: ../src/widgets/toolbox.cpp:8226
-#, fuzzy
 msgid "Curvature:"
-msgstr "minimális görbület"
+msgstr "Görbület:"
 
 #: ../src/widgets/toolbox.cpp:8227
 msgid "The amount of connectors curvature"
-msgstr ""
+msgstr "A kapcsok görbületének mértéke"
 
 #: ../src/widgets/toolbox.cpp:8237
 msgid "Connector Spacing"
@@ -26764,20 +26766,21 @@ msgstr "Átfedő alakzatok ne legyenek engedélyezve"
 #: ../src/widgets/toolbox.cpp:8304
 #, fuzzy
 msgid "New connection point"
-msgstr "Kapcsok helykihagyásának módosítása"
+msgstr "Kapcsolódási pont "
 
 #: ../src/widgets/toolbox.cpp:8305
+#, fuzzy
 msgid "Add a new connection point to the currently selected item"
-msgstr ""
+msgstr "Kapcsolódási pont felvétele Kijelölés "
 
 #: ../src/widgets/toolbox.cpp:8316
-#, fuzzy
 msgid "Remove connection point"
-msgstr "Új út a kapocshoz"
+msgstr "Kapcsolódási pont eltávolítása"
 
 #: ../src/widgets/toolbox.cpp:8317
+#, fuzzy
 msgid "Remove the currently selected connection point"
-msgstr ""
+msgstr "Kapcsolódási pont eltávolítása"
 
 #: ../src/widgets/toolbox.cpp:8417
 msgid "Fill by"
