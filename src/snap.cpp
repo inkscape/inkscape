@@ -430,8 +430,7 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal,
         (*i)->freeSnap(sc, candidate, Geom::OptRect(), NULL, NULL);
     }
 
-    // Snap to intersections of curves, but not to the curves themselves! (see _snapTranslatingGuideToNodes in object-snapper.cpp)
-    Inkscape::SnappedPoint const s = findBestSnap(candidate, sc, false, true);
+    Inkscape::SnappedPoint const s = findBestSnap(candidate, sc, false, false);
 
     s.getPoint(p);
 }

@@ -281,18 +281,16 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
     }
 }
 
-void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &sc,
+void Inkscape::ObjectSnapper::_snapTranslatingGuide(SnappedConstraints &sc,
                                          Geom::Point const &p,
                                          Geom::Point const &guide_normal) const
 {
     // Iterate through all nodes, find out which one is the closest to this guide, and snap to it!
     _collectNodes(SNAPSOURCE_GUIDE, true);
 
-    // Although we won't snap to paths here (which would give us under constrained snaps) we can still snap to intersections of paths.
     if (_snapmanager->snapprefs.getSnapToItemPath() || _snapmanager->snapprefs.getSnapToBBoxPath() || _snapmanager->snapprefs.getSnapToPageBorder()) {
         _collectPaths(Inkscape::SnapCandidatePoint(p, SNAPSOURCE_GUIDE), true);
         _snapPaths(sc, Inkscape::SnapCandidatePoint(p, SNAPSOURCE_GUIDE), NULL, NULL);
-        // The paths themselves should be discarded in findBestSnap(), as we should only snap to their intersections
     }
 
     SnappedPoint s;
@@ -682,7 +680,7 @@ void Inkscape::ObjectSnapper::guideFreeSnap(SnappedConstraints &sc,
     }
 
     _findCandidates(sp_document_root(_snapmanager->getDocument()), &it, true, Geom::Rect(p, p), snap_dim, false, Geom::identity());
-    _snapTranslatingGuideToNodes(sc, p, guide_normal);
+    _snapTranslatingGuide(sc, p, guide_normal);
 
 }
 
@@ -706,7 +704,7 @@ void Inkscape::ObjectSnapper::guideConstrainedSnap(SnappedConstraints &sc,
     }
 
     _findCandidates(sp_document_root(_snapmanager->getDocument()), &it, true, Geom::Rect(p, p), snap_dim, false, Geom::identity());
-    _snapTranslatingGuideToNodes(sc, p, guide_normal);
+    _snapTranslatingGuide(sc, p, guide_normal);
 
 }
 

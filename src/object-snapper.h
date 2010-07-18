@@ -84,7 +84,7 @@ private:
                       Inkscape::SnapCandidatePoint const &p,
                       std::vector<SnapCandidatePoint> *unselected_nodes) const; // in desktop coordinates
 
-    void _snapTranslatingGuideToNodes(SnappedConstraints &sc,
+    void _snapTranslatingGuide(SnappedConstraints &sc,
                      Geom::Point const &p,
                      Geom::Point const &guide_normal) const;
 

@@ -296,10 +296,9 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     if (!(event->motion.state & GDK_SHIFT_MASK)) {
                         m.guideConstrainedSnap(motion_dt, *guide);
                     }
-                } else if (!(event->motion.state & GDK_SHIFT_MASK)) {
-                    if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
-                        m.guideFreeSnap(motion_dt, guide->normal_to_line, drag_type);
-                    }
+                } else if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
+					// cannot use shift here to disable snapping, because we already use it for rotating the guide
+                	m.guideFreeSnap(motion_dt, guide->normal_to_line, drag_type);
                 }
 
                 switch (drag_type) {
@@ -361,10 +360,9 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         if (!(event->button.state & GDK_SHIFT_MASK)) {
                             m.guideConstrainedSnap(event_dt, *guide);
                         }
-                    } else if (!(event->button.state & GDK_SHIFT_MASK)) {
-                        if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
-                            m.guideFreeSnap(event_dt, guide->normal_to_line, drag_type);
-                        }
+                    } else if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
+                    	// cannot use shift here to disable snapping, because we already use it for rotating the guide
+                    	m.guideFreeSnap(event_dt, guide->normal_to_line, drag_type);
                     }
 
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
