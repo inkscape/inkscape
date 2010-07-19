@@ -2,19 +2,21 @@
 # Copyright (C) 2000-2003, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Inkscape package.
 # Tim Sheridan <tim.sheridan@gmail.com>, 2007-2010.
-#
+# Bruce Cowan <bruce@bcowan.me.uk>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-06-13 15:59-0000\n"
-"Last-Translator: Tim Sheridan <tim.sheridan@gmail.com>\n"
-"Language-Team: en_GB <en_gb@li.org>\n"
+"PO-Revision-Date: 2010-07-19 00:38+0100\n"
+"Last-Translator: Bruce Cowan <bruce@bcowan.me.uk>\n"
+"Language-Team: British English <en@li.org>\n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n !=1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.6.1\n"
 
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
@@ -1054,7 +1056,9 @@ msgstr "Average size of cell (px)"
 
 #: ../share/extensions/generate_voronoi.inx.h:2
 msgid "Generate a random pattern of Voronoi cells. The pattern will be accessible in the Fill and Stroke dialog. You must select an object or a group."
-msgstr "Generate a random pattern of Voronoi cells. The pattern will be accessible in the Fill and Stroke dialog. You must select an object or a group."
+msgstr ""
+"Generate a random pattern of Voronoi cells. The pattern will be accessible "
+"in the Fill and Stroke dialogue. You must select an object or a group."
 
 #: ../share/extensions/generate_voronoi.inx.h:4
 msgid "If border is zero, the pattern will be discontinuous at the edges. Use a positive border, preferably greater than the cell size, to produce a smooth join of the pattern at the edges. Use a negative border to reduce the size of the pattern and get an empty border."
@@ -2998,7 +3002,8 @@ msgstr ""
 "    * Group collapsing: collapse group elements.\n"
 "    * Enable id stripping: remove all un-referenced ID attributes.\n"
 "    * Embed rasters: embed rasters as base64-encoded data.\n"
-"    * Keep editor data: don't remove Inkscape, Sodipodi or Adobe Illustrator elements and attributes.\n"
+"    * Keep editor data: don't remove Inkscape, Sodipodi or Adobe Illustrator "
+"elements and attributes.\n"
 "    * Enable viewboxing: size image to 100%/100% and introduce a viewBox.\n"
 "    * Strip xml prolog: don't output the xml prolog.\n"
 "    * Set precision: set number of significant digits (default: 5).\n"
@@ -4584,7 +4589,7 @@ msgstr "Matte bevel"
 
 #: ../share/filters/filters.svg.h:51
 msgid "Soft, pastel-colored, blurry bevel"
-msgstr "Soft, pastel-colored, blurry bevel"
+msgstr "Soft, pastel-coloured, blurry bevel"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Thin Membrane"
@@ -4749,7 +4754,7 @@ msgstr "Fat oil with some adjustable turbulence"
 #: ../share/filters/filters.svg.h:72
 #: ../src/extension/internal/bitmap/colorize.cpp:49
 msgid "Colorize"
-msgstr "Colorise"
+msgstr "Colourise"
 
 #: ../share/filters/filters.svg.h:72
 msgid "Blend image or object with a flood color and set lightness and contrast"
@@ -4905,7 +4910,8 @@ msgstr "Electronic microscopy"
 
 #: ../share/filters/filters.svg.h:89
 msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
-msgstr "Bevel, crude light, discolouration and glow like in electronic microscopy"
+msgstr ""
+"Bevel, crude light, discolouration and glow like in electronic microscopy"
 
 #: ../share/filters/filters.svg.h:90
 msgid "Tartan"
@@ -5189,7 +5195,8 @@ msgstr "Simple blur"
 
 #: ../share/filters/filters.svg.h:122
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
-msgstr "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
+msgstr ""
+"Simple Gaussian blur, same as the blur slider in Fill and Stroke dialogue"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Bubbly Bumps, matte"
@@ -5206,7 +5213,9 @@ msgstr "Emboss"
 
 #: ../share/filters/filters.svg.h:124
 msgid "Emboss effect : Colors of the original images are preserved or modified by Blend"
-msgstr "Emboss effect : Colours of the original images are preserved or modified by Blend"
+msgstr ""
+"Emboss effect : Colours of the original images are preserved or modified by "
+"Blend"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Blotting paper"
@@ -5262,7 +5271,8 @@ msgstr "Felt"
 
 #: ../share/filters/filters.svg.h:132
 msgid "Felt like texture with color turbulence and slightly darker at the edges"
-msgstr "Felt like texture with colour turbulence and slightly darker at the edges"
+msgstr ""
+"Felt like texture with colour turbulence and slightly darker at the edges"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Ink paint"
@@ -5561,7 +5571,9 @@ msgstr "Chewing gum"
 
 #: ../share/filters/filters.svg.h:166
 msgid "Creates colorizable blotches which smoothly flow over the edges of the lines at their crossings"
-msgstr "Creates colourisable blotches which smoothly flow over the edges of the lines at their crossings"
+msgstr ""
+"Creates colourisable blotches which smoothly flow over the edges of the "
+"lines at their crossings"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Black outline"
@@ -5665,7 +5677,8 @@ msgstr "Smear transparency"
 
 #: ../share/filters/filters.svg.h:179
 msgid "Paint objects with a transparent turbulence which turns around color edges"
-msgstr "Paint objects with a transparent turbulence which turns around colour edges"
+msgstr ""
+"Paint objects with a transparent turbulence which turns around colour edges"
 
 #: ../share/filters/filters.svg.h:180
 msgid "Thick paint"
@@ -5689,7 +5702,9 @@ msgstr "Embossed leather"
 
 #: ../share/filters/filters.svg.h:182
 msgid "Combine a HSL edges detection bump with a leathery or woody and colorizable texture"
-msgstr "Combine a HSL edges detection bump with a leathery or woody and colourisable texture"
+msgstr ""
+"Combine a HSL edges detection bump with a leathery or woody and colourisable "
+"texture"
 
 #: ../share/filters/filters.svg.h:183
 msgid "Carnaval"
@@ -5825,7 +5840,9 @@ msgstr "Saturation map"
 
 #: ../share/filters/filters.svg.h:199
 msgid "Creates an approximative semi-transparent and colorizable image of the saturation levels"
-msgstr "Creates an approximative semi-transparent and colourisable image of the saturation levels"
+msgstr ""
+"Creates an approximative semi-transparent and colourisable image of the "
+"saturation levels"
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddled"
@@ -6745,7 +6762,9 @@ msgstr "Initial colour of tiled clones"
 
 #: ../src/dialogs/clonetiler.cpp:2449
 msgid "Initial color for clones (works only if the original has unset fill or stroke)"
-msgstr "Initial colour for clones (works only if the original has unset fill or stroke)"
+msgstr ""
+"Initial colour for clones (works only if the original has unset fill or "
+"stroke)"
 
 #: ../src/dialogs/clonetiler.cpp:2464
 msgid "<b>H:</b>"
@@ -6855,7 +6874,7 @@ msgstr "Pick the Blue component of the colour"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/dialogs/clonetiler.cpp:2649
 msgid "clonetiler|H"
-msgstr "clonetiler|H"
+msgstr "H"
 
 #: ../src/dialogs/clonetiler.cpp:2650
 msgid "Pick the hue of the color"
@@ -6865,7 +6884,7 @@ msgstr "Pick the hue of the colour"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/dialogs/clonetiler.cpp:2659
 msgid "clonetiler|S"
-msgstr "clonetiler|S"
+msgstr "S"
 
 #: ../src/dialogs/clonetiler.cpp:2660
 msgid "Pick the saturation of the color"
@@ -6875,7 +6894,7 @@ msgstr "Pick the saturation of the colour"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/dialogs/clonetiler.cpp:2669
 msgid "clonetiler|L"
-msgstr "clonetiler|L"
+msgstr "L"
 
 #: ../src/dialogs/clonetiler.cpp:2670
 msgid "Pick the lightness of the color"
@@ -6931,7 +6950,9 @@ msgstr "Each clone's size is determined by the selected value in that point"
 
 #: ../src/dialogs/clonetiler.cpp:2757
 msgid "Each clone is painted by the picked color (the original must have unset fill or stroke)"
-msgstr "Each clone is painted by the selected colour (the original must have unset fill or stroke)"
+msgstr ""
+"Each clone is painted by the picked colour (the original must have unset "
+"fill or stroke)"
 
 #: ../src/dialogs/clonetiler.cpp:2767
 msgid "Each clone's opacity is determined by the picked value in that point"
@@ -7013,7 +7034,9 @@ msgstr " R_eset "
 #. TRANSLATORS: "change" is a noun here
 #: ../src/dialogs/clonetiler.cpp:2981
 msgid "Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"
-msgstr "Reset all shifts, scales, rotates, opacity and colour changes in the dialogue to zero"
+msgstr ""
+"Reset all shifts, scales, rotates, opacity and colour changes in the "
+"dialogue to zero"
 
 #: ../src/dialogs/export.cpp:146
 #: ../src/verbs.cpp:2582
@@ -7305,7 +7328,7 @@ msgstr "Search clones"
 #: ../src/dialogs/find.cpp:612
 #: ../src/ui/dialog/find.cpp:82
 msgid "find|Clones"
-msgstr "find|Clones"
+msgstr "Clones"
 
 #: ../src/dialogs/find.cpp:617
 #: ../src/ui/dialog/find.cpp:83
@@ -7758,7 +7781,7 @@ msgstr "Duplicate node"
 
 #: ../src/dialogs/xml-tree.cpp:347
 msgid "nodeAsInXMLdialogTooltip|Delete node"
-msgstr "nodeAsInXMLdialogTooltip|Delete node"
+msgstr "Delete node"
 
 #: ../src/dialogs/xml-tree.cpp:363
 #: ../src/dialogs/xml-tree.cpp:1571
@@ -7833,7 +7856,7 @@ msgstr "Create new text node"
 
 #: ../src/dialogs/xml-tree.cpp:1426
 msgid "nodeAsInXMLinHistoryDialog|Delete node"
-msgstr "nodeAsInXMLinHistoryDialog|Delete node"
+msgstr "Delete node"
 
 #: ../src/dialogs/xml-tree.cpp:1473
 msgid "Change attribute"
@@ -8255,7 +8278,10 @@ msgstr "<b>Release mouse</b> to set colour."
 #: ../src/dropper-context.cpp:316
 #: ../src/tools-switch.cpp:215
 msgid "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> to copy the color under mouse to clipboard"
-msgstr "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average colour in area; with <b>Alt</b> to pick inverse colour; <b>Ctrl+C</b> to copy the colour under mouse to clipboard"
+msgstr ""
+"<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to "
+"average colour in area; with <b>Alt</b> to pick inverse colour; "
+"<b>Ctrl+C</b> to copy the colour under mouse to clipboard"
 
 #: ../src/dropper-context.cpp:354
 msgid "Set picked color"
@@ -8624,7 +8650,8 @@ msgstr "Apply charcoal stylisation to selected bitmap(s)."
 
 #: ../src/extension/internal/bitmap/colorize.cpp:57
 msgid "Colorize selected bitmap(s) with specified color, using given opacity."
-msgstr "Colourise selected bitmap(s) with specified colour, using given opacity."
+msgstr ""
+"Colourise selected bitmap(s) with specified colour, using given opacity."
 
 #: ../src/extension/internal/bitmap/contrast.cpp:39
 msgid "Contrast"
@@ -8733,7 +8760,9 @@ msgstr "Gamma Correction"
 
 #: ../src/extension/internal/bitmap/level.cpp:50
 msgid "Level selected bitmap(s) by scaling values falling between the given ranges to the full color range."
-msgstr "Level selected bitmap(s) by scaling values falling between the given ranges to the full colour range."
+msgstr ""
+"Level selected bitmap(s) by scaling values falling between the given ranges "
+"to the full colour range."
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:51
 msgid "Level (with Channel)"
@@ -8741,7 +8770,9 @@ msgstr "Level (with Channel)"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:72
 msgid "Level the specified channel of selected bitmap(s) by scaling values falling between the given ranges to the full color range."
-msgstr "Level the specified channel of selected bitmap(s) by scaling values falling between the given ranges to the full colour range."
+msgstr ""
+"Level the specified channel of selected bitmap(s) by scaling values falling "
+"between the given ranges to the full colour range."
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
 msgid "Median"
@@ -8749,7 +8780,9 @@ msgstr "Median"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
 msgid "Replace each pixel component with the median color in a circular neighborhood."
-msgstr "Replace each pixel component with the median colour in a circular neighbourhood."
+msgstr ""
+"Replace each pixel component with the median colour in a circular "
+"neighbourhood."
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
 msgid "HSB Adjust"
@@ -8777,7 +8810,9 @@ msgstr "Normalise"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:42
 msgid "Normalize selected bitmap(s), expanding color range to the full possible range of color."
-msgstr "Normalise selected bitmap(s), expanding colour range to the full possible range of colour."
+msgstr ""
+"Normalise selected bitmap(s), expanding colour range to the full possible "
+"range of colour."
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:36
 msgid "Oil Paint"
@@ -9290,7 +9325,7 @@ msgstr "PDF Import Settings"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:396
 msgid "pdfinput|medium"
-msgstr "pdfinput|medium"
+msgstr "medium"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:397
 msgid "fine"
@@ -9639,7 +9674,7 @@ msgstr "Stroke Paint"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/filter-enums.cpp:53
 msgid "filterBlendMode|Normal"
-msgstr "filterBlendMode|Normal"
+msgstr "Normal"
 
 #: ../src/filter-enums.cpp:54
 msgid "Multiply"
@@ -11753,7 +11788,7 @@ msgstr "Background colour of exported bitmap (any SVG-supported colour string)"
 
 #: ../src/main.cpp:352
 msgid "COLOR"
-msgstr "COLOR"
+msgstr "COLOUR"
 
 #: ../src/main.cpp:356
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
@@ -12564,7 +12599,7 @@ msgstr "You cannot raise/lower objects from <b>different groups</b> or <b>layers
 #. "Raise" means "to raise an object" in the undo history
 #: ../src/selection-chemistry.cpp:850
 msgid "undo action|Raise"
-msgstr "undo action|Raise"
+msgstr "Raise"
 
 #: ../src/selection-chemistry.cpp:862
 msgid "Select <b>object(s)</b> to raise to top."
@@ -12714,7 +12749,7 @@ msgstr "The selection has no applied path effect."
 
 #: ../src/selection-chemistry.cpp:2059
 msgid "action|Clone"
-msgstr "action|Clone"
+msgstr "Clone"
 
 #: ../src/selection-chemistry.cpp:2075
 msgid "Select <b>clones</b> to relink."
@@ -12857,7 +12892,7 @@ msgstr "Fit Page to Selection or Drawing"
 #. "Link" means internet link (anchor)
 #: ../src/selection-describer.cpp:45
 msgid "web|Link"
-msgstr "web|Link"
+msgstr "Link"
 
 #: ../src/selection-describer.cpp:47
 msgid "Circle"
@@ -12912,7 +12947,7 @@ msgstr "3D Box"
 #. "Clone" is a noun, type of object
 #: ../src/selection-describer.cpp:74
 msgid "object|Clone"
-msgstr "object|Clone"
+msgstr "Clone"
 
 #: ../src/selection-describer.cpp:78
 msgid "Offset path"
@@ -14141,7 +14176,9 @@ msgstr "about.svg"
 #. one per line in the form of: name surname (email). Use \n for newline.
 #: ../src/ui/dialog/aboutbox.cpp:383
 msgid "translator-credits"
-msgstr "translator-credits"
+msgstr ""
+"Tim Sheridan (tim.sheridan@gmail.com), 2007-2010.\n"
+"Bruce Cowan (bruce@bcowan.me.uk), 2010."
 
 #: ../src/ui/dialog/align-and-distribute.cpp:238
 #: ../src/ui/dialog/align-and-distribute.cpp:793
@@ -14162,7 +14199,7 @@ msgstr "Minimum horizontal gap (in px units) between bounding boxes"
 #. "H:" stands for horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:471
 msgid "gap|H:"
-msgstr "gap|H:"
+msgstr "H:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:479
 msgid "Minimum vertical gap (in px units) between bounding boxes"
@@ -14311,7 +14348,7 @@ msgstr "Randomise centres in both dimensions"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:890
 msgid "Unclump objects: try to equalize edge-to-edge distances"
-msgstr "Unclump objects: try to equalize edge-to-edge distances"
+msgstr "Unclump objects: try to equalise edge-to-edge distances"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:895
 msgid "Move objects as little as possible so that their bounding boxes do not overlap"
@@ -14380,7 +14417,9 @@ msgstr "Save"
 #: ../src/ui/dialog/color-item.cpp:116
 #, c-format
 msgid "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
-msgstr "Colour: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
+msgstr ""
+"Colour: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set "
+"stroke"
 
 #: ../src/ui/dialog/color-item.cpp:490
 msgid "Change color definition"
@@ -14475,7 +14514,8 @@ msgstr "Background colour"
 
 #: ../src/ui/dialog/document-properties.cpp:93
 msgid "Color and transparency of the page background (also used for bitmap export)"
-msgstr "Colour and transparency of the page background (also used for bitmap export)"
+msgstr ""
+"Colour and transparency of the page background (also used for bitmap export)"
 
 #: ../src/ui/dialog/document-properties.cpp:94
 msgid "Border _color:"
@@ -14540,7 +14580,7 @@ msgstr "Colour of a guideline when it is under mouse"
 #. "New" refers to grid
 #: ../src/ui/dialog/document-properties.cpp:109
 msgid "Grid|_New"
-msgstr "Grid|_New"
+msgstr "_New"
 
 #: ../src/ui/dialog/document-properties.cpp:109
 msgid "Create new grid."
@@ -14888,7 +14928,12 @@ msgstr "Stroke st_yle"
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:471
 msgid "This matrix determines a linear transform on color space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value."
-msgstr "This matrix determines a linear transform on colour space. Each line affects one of the colour components. Each column determines how much of each colour component from the input is passed to the output. The last column does not depend on input colours, so can be used to adjust a constant component value."
+msgstr ""
+"This matrix determines a linear transform on colour space. Each line affects "
+"one of the colour components. Each column determines how much of each "
+"colour component from the input is passed to the output. The last column "
+"does not depend on input colours, so can be used to adjust a constant "
+"component value."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:581
 msgid "Image File"
@@ -15076,7 +15121,11 @@ msgstr "Height of filter effects region"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2174
 msgid "Indicates the type of matrix operation. The keyword 'matrix' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix."
-msgstr "Indicates the type of matrix operation. The keyword 'matrix' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used colour operations to be performed without specifying a complete matrix."
+msgstr ""
+"Indicates the type of matrix operation. The keyword 'matrix' indicates that "
+"a full 5x4 matrix of values will be provided. The other keywords represent "
+"convenience shortcuts to allow commonly used colour operations to be "
+"performed without specifying a complete matrix."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2175
 msgid "Value(s):"
@@ -15138,7 +15187,13 @@ msgstr "Kernel:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2199
 msgid "This matrix describes the convolve operation that is applied to the input image in order to calculate the pixel colors at the output. Different arrangements of values in this matrix result in various possible visual effects. An identity matrix would lead to a motion blur effect (parallel to the matrix diagonal) while a matrix filled with a constant non-zero value would lead to a common blur effect."
-msgstr "This matrix describes the convolve operation that is applied to the input image in order to calculate the pixel colours at the output. Different arrangements of values in this matrix result in various possible visual effects. An identity matrix would lead to a motion blur effect (parallel to the matrix diagonal) while a matrix filled with a constant non-zero value would lead to a common blur effect."
+msgstr ""
+"This matrix describes the convolve operation that is applied to the input "
+"image in order to calculate the pixel colours at the output. Different "
+"arrangements of values in this matrix result in various possible visual "
+"effects. An identity matrix would lead to a motion blur effect (parallel to "
+"the matrix diagonal) while a matrix filled with a constant non-zero value "
+"would lead to a common blur effect."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2201
 msgid "Divisor:"
@@ -15146,7 +15201,11 @@ msgstr "Divisor:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2201
 msgid "After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result."
-msgstr "After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination colour value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall colour intensity of the result."
+msgstr ""
+"After applying the kernelMatrix to the input image to yield a number, that "
+"number is divided by divisor to yield the final destination colour value. A "
+"divisor that is the sum of all the matrix values tends to have an evening "
+"effect on the overall colour intensity of the result."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 msgid "Bias:"
@@ -15162,7 +15221,10 @@ msgstr "Edge Mode:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2203
 msgid "Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image."
-msgstr "Determines how to extend the input image as necessary with colour values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image."
+msgstr ""
+"Determines how to extend the input image as necessary with colour values so "
+"that the matrix operations can be applied when the kernel is positioned at "
+"or near the edge of the input image."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2204
 msgid "Preserve Alpha"
@@ -16670,7 +16732,9 @@ msgstr "Show path direction on outlines"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:453
 msgid "Visualize the direction of selected paths by drawing small arrows in the middle of each outline segment"
-msgstr "Visualise the direction of selected paths by drawing small arrows in the middle of each outline segment"
+msgstr ""
+"Visualise the direction of selected paths by drawing small arrows in the "
+"middle of each outline segment"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:454
 msgid "Show temporary path outline"
@@ -16880,7 +16944,7 @@ msgstr "Save and restore window geometry for each document (saves geometry in th
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:596
 msgid "Dialog behavior (requires restart):"
-msgstr "Dialog behavior (requires restart):"
+msgstr "Dialogue behaviour (requires restart):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:603
 msgid "Dialogs on top:"
@@ -16900,7 +16964,7 @@ msgstr "Same as Normal but may work better with some window managers"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:614
 msgid "Dialog Transparency:"
-msgstr "Dialog Transparency:"
+msgstr "Dialogue Transparency:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:616
 msgid "Opacity when focused:"
@@ -16924,7 +16988,10 @@ msgstr "Whether dialogue windows are to be hidden in the window manager taskbar"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:629
 msgid "Zoom drawing when document window is resized, to keep the same area visible (this is the default which can be changed in any window using the button above the right scrollbar)"
-msgstr "Zoom drawing when document window is resized, to keep the same area visible (this is the default which can be changed in any window using the button above the right scrollbar)"
+msgstr ""
+"Zoom drawing when document window is resized, to keep the same area visible "
+"(this is the default which can be changed in any window using the button "
+"above the right scrollbar)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:631
 msgid "Whether dialog windows have a close button (requires restart)"
@@ -17187,7 +17254,9 @@ msgstr "Show filter primitives infobox"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:783
 msgid "Show icons and descriptions for the filter primitives available at the filter effects dialog"
-msgstr "Show icons and descriptions for the filter primitives available at the filter effects dialog"
+msgstr ""
+"Show icons and descriptions for the filter primitives available at the "
+"filter effects dialogue"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:787
 msgid "Number of Threads:"
@@ -17428,7 +17497,7 @@ msgstr "Major grid line emphasizing"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1023
 msgid "Don't emphasize gridlines when zoomed out"
-msgstr "Don't emphasize gridlines when zoomed out"
+msgstr "Don't emphasise gridlines when zoomed out"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1024
 msgid "If set and zoomed out, the gridlines will be shown in normal color instead of major grid line color"
@@ -17857,7 +17926,8 @@ msgstr "Control bar icon size:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1138
 msgid "Set the size for the icons in tools' control bars to use (requires restart)"
-msgstr "Set the size for the icons in tools' control bars to use (requires restart)"
+msgstr ""
+"Set the size for the icons in tools' control bars to use (requires restart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1141
 msgid "Secondary toolbar icon size:"
@@ -17865,7 +17935,8 @@ msgstr "Secondary toolbar icon size:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1142
 msgid "Set the size for the icons in secondary toolbars to use (requires restart)"
-msgstr "Set the size for the icons in secondary toolbars to use (requires restart)"
+msgstr ""
+"Set the size for the icons in secondary toolbars to use (requires restart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1145
 msgid "Work-around color sliders not drawing"
@@ -17893,7 +17964,10 @@ msgstr "Zoom correction factor (in %):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1163
 msgid "Adjust the slider until the length of the ruler on your screen matches its real length. This information is used when zooming to 1:1, 1:2, etc., to display objects in their true sizes"
-msgstr "Adjust the slider until the length of the ruler on your screen matches its real length. This information is used when zooming to 1:1, 1:2, etc., to display objects in their true sizes"
+msgstr ""
+"Adjust the slider until the length of the ruler on your screen matches its "
+"real length. This information is used when zooming to 1:1, 1:2, etc., to "
+"display objects in their true sizes"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1166
 msgid "Enable dynamic relayout for incomplete sections"
@@ -17913,7 +17987,10 @@ msgstr "Use current directory for \"Save As ...\""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1179
 msgid "When this option is on, the \"Save as...\" dialog will always open in the directory where the currently open document is; when it's off, it will open in the directory where you last saved a file using that dialog"
-msgstr "When this option is on, the \"Save as...\" dialog will always open in the directory where the currently open document is; when it's off, it will open in the directory where you last saved a file using that dialog"
+msgstr ""
+"When this option is on, the \"Save as...\" dialogue will always open in the "
+"directory where the currently open document is; when it's off, it will open "
+"in the directory where you last saved a file using that dialogue"
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1183
@@ -17936,7 +18013,7 @@ msgstr "Interval (in minutes) at which document will be autosaved"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/ui/dialog/inkscape-preferences.cpp:1190
 msgid "filesystem|Path:"
-msgstr "filesystem|Path:"
+msgstr "Path:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1190
 msgid "The directory where autosaves will be written"
@@ -18252,7 +18329,7 @@ msgstr "New"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/ui/dialog/layers.cpp:641
 msgid "layers|Top"
-msgstr "layers|Top"
+msgstr "Top"
 
 #: ../src/ui/dialog/layers.cpp:647
 msgid "Up"
@@ -18370,7 +18447,9 @@ msgstr "Ready."
 
 #: ../src/ui/dialog/messages.cpp:74
 msgid "Enable log display by setting dialogs.debug 'redirect' attribute to 1 in preferences.xml"
-msgstr "Enable log display by setting dialogs.debug 'redirect' attribute to 1 in preferences.xml"
+msgstr ""
+"Enable log display by setting dialogs.debug 'redirect' attribute to 1 in "
+"preferences.xml"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:422
 msgid "Error while reading the Open Clip Art RSS feed"
@@ -18519,7 +18598,7 @@ msgstr "The selected object does not have a <b>path</b> description."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:504
 msgid "No glyph selected in the SVGFonts dialog."
-msgstr "No glyph selected in the SVGFonts dialog."
+msgstr "No glyph selected in the SVGFonts dialogue."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:509
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:551
@@ -18739,7 +18818,7 @@ msgstr "Horizontal spacing between columns (px units)"
 #. ## The OK button
 #: ../src/ui/dialog/tile.cpp:869
 msgid "tileClonesDialog|Arrange"
-msgstr "tileClonesDialog|Arrange"
+msgstr "Arrange"
 
 #: ../src/ui/dialog/tile.cpp:870
 msgid "Arrange selected objects"
@@ -19559,7 +19638,8 @@ msgid ""
 "\n"
 "If you close without saving, your changes will be discarded."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n"
+"<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
+"closing?</span>\n"
 "\n"
 "If you close without saving, your changes will be discarded."
 
@@ -19577,7 +19657,8 @@ msgid ""
 "\n"
 "Do you want to save this file as an Inkscape SVG?"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n"
+"<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) "
+"that may cause data loss!</span>\n"
 "\n"
 "Do you want to save this file as an Inkscape SVG?"
 
@@ -19616,7 +19697,7 @@ msgstr "Proprietary"
 
 #: ../src/ui/widget/licensor.cpp:38
 msgid "MetadataLicence|Other"
-msgstr "MetadataLicence|Other"
+msgstr "Other"
 
 #: ../src/ui/widget/object-composite-settings.cpp:172
 msgid "Change blur"
@@ -19699,7 +19780,9 @@ msgstr "_Resize page to drawing or selection"
 
 #: ../src/ui/widget/page-sizer.cpp:351
 msgid "Resize the page to fit the current selection, or the entire drawing if there is no selection"
-msgstr "Resize the page to fit the current selection, or the entire drawing if there is no selection"
+msgstr ""
+"Resize the page to fit the current selection, or the entire drawing if there "
+"is no selection"
 
 #: ../src/ui/widget/page-sizer.cpp:416
 msgid "Set page size"
@@ -19800,11 +19883,17 @@ msgstr "Preferred resolution of rendering, in dots per inch."
 
 #: ../src/ui/widget/rendering-options.cpp:52
 msgid "Render using Cairo vector operations.  The resulting image is usually smaller in file size and can be arbitrarily scaled, but some filter effects will not be correctly rendered."
-msgstr "Render using Cairo vector operations.  The resulting image is usually smaller in file size and can be arbitrarily scaled, but some filter effects will not be correctly rendered."
+msgstr ""
+"Render using Cairo vector operations.  The resulting image is usually "
+"smaller in file size and can be arbitrarily scaled, but some filter effects "
+"will not be correctly rendered."
 
 #: ../src/ui/widget/rendering-options.cpp:57
 msgid "Render everything as bitmap.  The resulting image is usually larger in file size and cannot be arbitrarily scaled without quality loss, but all objects will be rendered exactly as displayed."
-msgstr "Render everything as bitmap.  The resulting image is usually larger in file size and cannot be arbitrarily scaled without quality loss, but all objects will be rendered exactly as displayed."
+msgstr ""
+"Render everything as bitmap.  The resulting image is usually larger in file "
+"size and cannot be arbitrarily scaled without quality loss, but all objects "
+"will be rendered exactly as displayed."
 
 #: ../src/ui/widget/selected-style.cpp:112
 #: ../src/ui/widget/style-swatch.cpp:117
@@ -20132,7 +20221,7 @@ msgstr "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
 #. "Link" means to _link_ two sliders together
 #: ../src/ui/widget/spin-slider.cpp:120
 msgid "sliders|Link"
-msgstr "sliders|Link"
+msgstr "Link"
 
 #: ../src/ui/widget/style-swatch.cpp:269
 msgid "L Gradient"
@@ -22138,7 +22227,8 @@ msgid ""
 "\n"
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n"
+"<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) "
+"that may cause data loss!</span>\n"
 "\n"
 "Do you want to save this file as Inkscape SVG?"
 
@@ -22192,7 +22282,7 @@ msgstr "Font family"
 #. Style frame
 #: ../src/widgets/font-selector.cpp:190
 msgid "fontselector|Style"
-msgstr "fontselector|Style"
+msgstr "Style"
 
 #: ../src/widgets/font-selector.cpp:228
 msgid "Font size:"
@@ -22445,11 +22535,11 @@ msgstr "Now <b>patterns</b> remain <b>fixed</b> when objects are transformed (mo
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:460
 msgid "select toolbar|X position"
-msgstr "select toolbar|X position"
+msgstr "X position"
 
 #: ../src/widgets/select-toolbar.cpp:460
 msgid "select toolbar|X"
-msgstr "select toolbar|X"
+msgstr "X"
 
 #: ../src/widgets/select-toolbar.cpp:462
 msgid "Horizontal coordinate of selection"
@@ -22459,11 +22549,11 @@ msgstr "Horizontal coordinate of selection"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:468
 msgid "select toolbar|Y position"
-msgstr "select toolbar|Y position"
+msgstr "Y position"
 
 #: ../src/widgets/select-toolbar.cpp:468
 msgid "select toolbar|Y"
-msgstr "select toolbar|Y"
+msgstr "Y"
 
 #: ../src/widgets/select-toolbar.cpp:470
 msgid "Vertical coordinate of selection"
@@ -22473,11 +22563,11 @@ msgstr "Vertical coordinate of selection"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:476
 msgid "select toolbar|Width"
-msgstr "select toolbar|Width"
+msgstr "Width"
 
 #: ../src/widgets/select-toolbar.cpp:476
 msgid "select toolbar|W"
-msgstr "select toolbar|W"
+msgstr "W"
 
 #: ../src/widgets/select-toolbar.cpp:478
 msgid "Width of selection"
@@ -22495,11 +22585,11 @@ msgstr "When locked, change both width and height by the same proportion"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:497
 msgid "select toolbar|Height"
-msgstr "select toolbar|Height"
+msgstr "Height"
 
 #: ../src/widgets/select-toolbar.cpp:497
 msgid "select toolbar|H"
-msgstr "select toolbar|H"
+msgstr "H"
 
 #: ../src/widgets/select-toolbar.cpp:499
 msgid "Height of selection"
@@ -22681,7 +22771,7 @@ msgstr "Set markers"
 #. Stroke width
 #: ../src/widgets/stroke-style.cpp:677
 msgid "StrokeWidth|Width:"
-msgstr "StrokeWidth|Width:"
+msgstr "Width:"
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
@@ -23873,11 +23963,11 @@ msgstr "(maximum scatter)"
 
 #: ../src/widgets/toolbox.cpp:4668
 msgid "Toolbox|Scatter"
-msgstr "Toolbox|Scatter"
+msgstr "Scatter"
 
 #: ../src/widgets/toolbox.cpp:4668
 msgid "Toolbox|Scatter:"
-msgstr "Toolbox|Scatter:"
+msgstr "Scatter:"
 
 #: ../src/widgets/toolbox.cpp:4668
 msgid "Increase to scatter sprayed objects."
@@ -23953,11 +24043,11 @@ msgstr "(high scale variation)"
 
 #: ../src/widgets/toolbox.cpp:4778
 msgid "Toolbox|Scale"
-msgstr "Toolbox|Scale"
+msgstr "Scale"
 
 #: ../src/widgets/toolbox.cpp:4778
 msgid "Toolbox|Scale:"
-msgstr "Toolbox|Scale:"
+msgstr "Scale:"
 
 #: ../src/widgets/toolbox.cpp:4780
 #, no-c-format
@@ -24337,11 +24427,11 @@ msgstr "Display measuring info for selected items"
 
 #: ../src/widgets/toolbox.cpp:6092
 msgid "Open LPE dialog"
-msgstr "Open LPE dialog"
+msgstr "Open LPE dialogue"
 
 #: ../src/widgets/toolbox.cpp:6093
 msgid "Open LPE dialog (to adapt parameters numerically)"
-msgstr "Open LPE dialog (to adapt parameters numerically)"
+msgstr "Open LPE dialogue (to adapt parameters numerically)"
 
 #: ../src/widgets/toolbox.cpp:6157
 msgid "The width of the eraser pen (relative to the visible canvas area)"
@@ -25507,7 +25597,6 @@ msgstr "Wireframe Sphere"
 #~ msgid ""
 #~ "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</"
 #~ "b>, or <b>drag around</b> nodes to select."
-
 #~ msgid_plural ""
 #~ "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</"
 #~ "b>, or <b>drag around</b> nodes to select."
@@ -25522,7 +25611,6 @@ msgstr "Wireframe Sphere"
 #~ msgstr "Drag the handles of the object to modify it."
 
 #~ msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
-
 #~ msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 #~ msgstr[0] "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 #~ msgstr[1] "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
@@ -25530,7 +25618,6 @@ msgstr "Wireframe Sphere"
 #~ msgid ""
 #~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %"
 #~ "s."
-
 #~ msgid_plural ""
 #~ "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. "
 #~ "%s."
@@ -25542,7 +25629,6 @@ msgstr "Wireframe Sphere"
 #~ "%s."
 
 #~ msgid "<b>%i</b> of <b>%i</b> node selected. %s."
-
 #~ msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
 #~ msgstr[0] "<b>%i</b> of <b>%i</b> node selected. %s."
 #~ msgstr[1] "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -25554,7 +25640,6 @@ msgstr "Wireframe Sphere"
 #~ msgstr "The selection has no applied mask."
 
 #~ msgid "<b>Conditional group</b> of <b>%d</b> object"
-
 #~ msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
 #~ msgstr[0] "<b>Conditional group</b> of <b>%d</b> object"
 #~ msgstr[1] "<b>Conditional group</b> of <b>%d</b> objects"
@@ -26233,49 +26318,41 @@ msgstr "Wireframe Sphere"
 #~ msgstr "Fit page to selection"
 
 #~ msgid "<b>Pushing %d</b> selected object"
-
 #~ msgid_plural "<b>Pushing %d</b> selected objects"
 #~ msgstr[0] "<b>Pushing %d</b> selected object"
 #~ msgstr[1] "<b>Pushing %d</b> selected objects"
 
 #~ msgid "<b>Shrinking %d</b> selected object"
-
 #~ msgid_plural "<b>Shrinking %d</b> selected objects"
 #~ msgstr[0] "<b>Shrinking %d</b> selected object"
 #~ msgstr[1] "<b>Shrinking %d</b> selected objects"
 
 #~ msgid "<b>Growing %d</b> selected object"
-
 #~ msgid_plural "<b>Growing %d</b> selected objects"
 #~ msgstr[0] "<b>Growing %d</b> selected object"
 #~ msgstr[1] "<b>Growing %d</b> selected objects"
 
 #~ msgid "<b>Attracting %d</b> selected object"
-
 #~ msgid_plural "<b>Attracting %d</b> selected objects"
 #~ msgstr[0] "<b>Attracting %d</b> selected object"
 #~ msgstr[1] "<b>Attracting %d</b> selected objects"
 
 #~ msgid "<b>Repelling %d</b> selected object"
-
 #~ msgid_plural "<b>Repelling %d</b> selected objects"
 #~ msgstr[0] "<b>Repelling %d</b> selected object"
 #~ msgstr[1] "<b>Repelling %d</b> selected objects"
 
 #~ msgid "<b>Roughening %d</b> selected object"
-
 #~ msgid_plural "<b>Roughening %d</b> selected objects"
 #~ msgstr[0] "<b>Roughening %d</b> selected object"
 #~ msgstr[1] "<b>Roughening %d</b> selected objects"
 
 #~ msgid "<b>Painting %d</b> selected object"
-
 #~ msgid_plural "<b>Painting %d</b> selected objects"
 #~ msgstr[0] "<b>Painting %d</b> selected object"
 #~ msgstr[1] "<b>Painting %d</b> selected objects"
 
 #~ msgid "<b>Jittering colors in %d</b> selected object"
-
 #~ msgid_plural "<b>Jittering colors in %d</b> selected objects"
 #~ msgstr[0] "<b>Jittering colors in %d</b> selected object"
 #~ msgstr[1] "<b>Jittering colors in %d</b> selected objects"
@@ -26532,7 +26609,6 @@ msgstr "Wireframe Sphere"
 #~ msgstr "Preferred resolution (dpi) of bitmaps"
 
 #~ msgid "%s selected out of %d gradient handles on %d selected object"
-
 #~ msgid_plural "%s selected out of %d gradient handles on %d selected objects"
 #~ msgstr[0] "%s selected out of %d gradient handles on %d selected object"
 #~ msgstr[1] "%s selected out of %d gradient handles on %d selected objects"
