@@ -178,9 +178,9 @@ struct SPIPaint {
 
     void read( gchar const *str, SPStyle &tyle, SPDocument *document = 0);
 
-private:
-    SPIPaint(SPIPaint const&);
-    SPIPaint &operator=(SPIPaint const &);
+//private:
+//    SPIPaint(SPIPaint const&);
+//    SPIPaint &operator=(SPIPaint const &);
 };
 
 /// Filter type internal to SPStyle
