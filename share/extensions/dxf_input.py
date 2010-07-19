@@ -65,7 +65,10 @@ def export_MTEXT():
 def export_POINT():
     # mandatory group codes : (10, 20) (x, y)
     if vals[groups['10']] and vals[groups['20']]:
-        generate_ellipse(vals[groups['10']][0], vals[groups['20']][0], w/2, 0.0, 1.0, 0.0, 0.0)
+        if options.gcodetoolspoints:
+            generate_gcodetools_point(vals[groups['10']][0], vals[groups['20']][0])
+        else:
+            generate_ellipse(vals[groups['10']][0], vals[groups['20']][0], w/2, 0.0, 1.0, 0.0, 0.0)
 
 def export_LINE():
     # mandatory group codes : (10, 11, 20, 21) (x1, x2, y1, y2)
@@ -118,6 +121,10 @@ def export_LWPOLYLINE():
             # optional group codes : (42) (bulge)
             iseqs = 0
             ibulge = 0
+            if vals[groups['70']][0] == 1:      # closed path
+                seqs.append('20')
+                vals[groups['10']].append(vals[groups['10']][0])
+                vals[groups['20']].append(vals[groups['20']][0])
             while seqs[iseqs] != '20':
                 iseqs += 1
             path = 'M %f,%f' % (vals[groups['10']][0], vals[groups['20']][0])
@@ -280,6 +287,11 @@ def generate_ellipse(xc, yc, xm, ym, w, a1, a2):
     attribs = {'d': path, 'style': style}
     inkex.etree.SubElement(layer, 'path', attribs)
 
+def generate_gcodetools_point(xc, yc):
+    path= 'm %s,%s 2.9375,-6.34375 0.8125,1.90625 6.84375,-6.84375 0,0 0.6875,0.6875 -6.84375,6.84375 1.90625,0.8125 z' % (xc,yc)
+    attribs = {'d': path, inkex.addNS('dxfpoint','inkscape'):'1', 'style': 'stroke:#ff0000;fill:#ff0000'}
+    inkex.etree.SubElement(layer, 'path', attribs)
+
 def get_line():
     return (stream.readline().strip(), stream.readline().strip())
 
@@ -301,6 +313,7 @@ colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '
 parser = inkex.optparse.OptionParser(usage="usage: %prog [options] SVGfile", option_class=inkex.InkOption)
 parser.add_option("--auto", action="store", type="inkbool", dest="auto", default=True)
 parser.add_option("--scale", action="store", type="string", dest="scale", default="1.0")
+parser.add_option("--gcodetoolspoints", action="store", type="inkbool", dest="gcodetoolspoints", default=True)
 parser.add_option("--encoding", action="store", type="string", dest="input_encode", default="latin_1")
 parser.add_option("--tab", action="store", type="string", dest="tab", default="Options")
 parser.add_option("--inputhelp", action="store", type="string", dest="inputhelp", default="")

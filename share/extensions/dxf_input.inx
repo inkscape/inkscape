@@ -8,6 +8,7 @@
 		<page name="options" _gui-text="Options">
 			<param name="auto" type="boolean" _gui-text="Use automatic scaling to size A4">true</param>
 			<param name="scale" type="string" _gui-text="Or, use manual scale factor">1.0</param>
+			<param name="gcodetoolspoints" type="boolean" _gui-text="Gcodetools compatible point import">false</param>
 			<param name="sep1" type="description">-------------------------------------------------------------------------</param>
 			<param name="encoding" type="enum" _gui-text="Character Encoding">
 				<item value="latin_1">Latin 1</item>
