@@ -1208,51 +1208,57 @@ static void sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::SnapCa
 
     for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
         if (snapprefs->getSnapToItemNode()) {
-            p.push_back(Inkscape::SnapCandidatePoint(path_it->initialPoint() * i2d, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
+        	// Add the first point of the path
+        	p.push_back(Inkscape::SnapCandidatePoint(path_it->initialPoint() * i2d, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
         }
 
         Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
         Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
-        while (curve_it2 != path_it->end_closed())
+        while (curve_it1 != path_it->end_default())
         {
-            /* Test whether to add the node between curve_it1 and curve_it2.
-             * Loop to end_closed (so always including closing segment); the last node to be added
-             * is the node between the closing segment and the segment before that, regardless
-             * of the path being closed or not. If the path is closed, the final point was already added by
-             * adding the initial point. */
+        	// For each path: consider midpoints of line segments for snapping
+			if (snapprefs->getSnapLineMidpoints()) { // only do this when we're snapping nodes (enforces strict snapping)
+				if (Geom::LineSegment const* line_segment = dynamic_cast<Geom::LineSegment const*>(&(*curve_it1))) {
+					p.push_back(Inkscape::SnapCandidatePoint(Geom::middle_point(*line_segment) * i2d, Inkscape::SNAPSOURCE_LINE_MIDPOINT, Inkscape::SNAPTARGET_LINE_MIDPOINT));
+				}
+			}
 
-            Geom::NodeType nodetype = Geom::get_nodetype(*curve_it1, *curve_it2);
+			if (curve_it2 == path_it->end_default()) { // Test will only pass for the last iteration of the while loop
+				if (snapprefs->getSnapToItemNode() && !path_it->closed()) {
+					// Add the last point of the path, but only for open paths
+					// (for closed paths the first and last point will coincide)
+					p.push_back(Inkscape::SnapCandidatePoint((*curve_it1).finalPoint() * i2d, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
+				}
+			} else {
+				/* Test whether to add the node between curve_it1 and curve_it2.
+				 * Loop to end_default (so only iterating through the stroked part); */
 
-            bool c1 = snapprefs->getSnapToItemNode() && (nodetype == Geom::NODE_CUSP || nodetype == Geom::NODE_NONE);
-            bool c2 = snapprefs->getSnapSmoothNodes() && (nodetype == Geom::NODE_SMOOTH || nodetype == Geom::NODE_SYMM);
+				Geom::NodeType nodetype = Geom::get_nodetype(*curve_it1, *curve_it2);
 
-            if (c1 || c2) {
-                Inkscape::SnapSourceType sst;
-                Inkscape::SnapTargetType stt;
-                switch (nodetype) {
-                case Geom::NODE_CUSP:
-                    sst = Inkscape::SNAPSOURCE_NODE_CUSP;
-                    stt = Inkscape::SNAPTARGET_NODE_CUSP;
-                    break;
-                case Geom::NODE_SMOOTH:
-                case Geom::NODE_SYMM:
-                    sst = Inkscape::SNAPSOURCE_NODE_SMOOTH;
-                    stt = Inkscape::SNAPTARGET_NODE_SMOOTH;
-                    break;
-                default:
-                    sst = Inkscape::SNAPSOURCE_UNDEFINED;
-                    stt = Inkscape::SNAPTARGET_UNDEFINED;
-                    break;
-                }
-                p.push_back(Inkscape::SnapCandidatePoint(curve_it1->finalPoint() * i2d, sst, stt));
-            }
+				bool c1 = snapprefs->getSnapToItemNode() && (nodetype == Geom::NODE_CUSP || nodetype == Geom::NODE_NONE);
+				bool c2 = snapprefs->getSnapSmoothNodes() && (nodetype == Geom::NODE_SMOOTH || nodetype == Geom::NODE_SYMM);
 
-            // Consider midpoints of line segments for snapping
-            if (snapprefs->getSnapLineMidpoints()) { // only do this when we're snapping nodes (enforce strict snapping)
-                if (Geom::LineSegment const* line_segment = dynamic_cast<Geom::LineSegment const*>(&(*curve_it1))) {
-                    p.push_back(Inkscape::SnapCandidatePoint(Geom::middle_point(*line_segment) * i2d, Inkscape::SNAPSOURCE_LINE_MIDPOINT, Inkscape::SNAPTARGET_LINE_MIDPOINT));
-                }
-            }
+				if (c1 || c2) {
+					Inkscape::SnapSourceType sst;
+					Inkscape::SnapTargetType stt;
+					switch (nodetype) {
+					case Geom::NODE_CUSP:
+						sst = Inkscape::SNAPSOURCE_NODE_CUSP;
+						stt = Inkscape::SNAPTARGET_NODE_CUSP;
+						break;
+					case Geom::NODE_SMOOTH:
+					case Geom::NODE_SYMM:
+						sst = Inkscape::SNAPSOURCE_NODE_SMOOTH;
+						stt = Inkscape::SNAPTARGET_NODE_SMOOTH;
+						break;
+					default:
+						sst = Inkscape::SNAPSOURCE_UNDEFINED;
+						stt = Inkscape::SNAPTARGET_UNDEFINED;
+						break;
+					}
+					p.push_back(Inkscape::SnapCandidatePoint(curve_it1->finalPoint() * i2d, sst, stt));
+				}
+			}
 
             ++curve_it1;
             ++curve_it2;

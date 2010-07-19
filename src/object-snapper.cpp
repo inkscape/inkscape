@@ -13,6 +13,7 @@
 
 #include "svg/svg.h"
 #include <2geom/path-intersection.h>
+#include <2geom/pathvector.h>
 #include <2geom/point.h>
 #include <2geom/rect.h>
 #include <2geom/line.h>
@@ -386,9 +387,14 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapCandidatePoint const &
                     if (!very_lenghty_prose && !very_complex_path) {
                         SPCurve *curve = curve_for_item(root_item);
                         if (curve) {
-                            // We will get our own copy of the path, which must be freed at some point
-                            Geom::PathVector *borderpathv = pathvector_for_curve(root_item, curve, true, true, Geom::identity(), (*i).additional_affine);
-                            _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(borderpathv, SNAPTARGET_PATH, Geom::OptRect())); // Perhaps for speed, get a reference to the Geom::pathvector, and store the transformation besides it.
+                            // We will get our own copy of the pathvector, which must be freed at some point
+
+                        	// Geom::PathVector *pv = pathvector_for_curve(root_item, curve, true, true, Geom::identity(), (*i).additional_affine);
+
+                        	Geom::PathVector *pv = new Geom::PathVector(curve->get_pathvector());
+                        	(*pv) *= sp_item_i2d_affine(root_item) * (*i).additional_affine * _snapmanager->getDesktop()->doc2dt(); // (_edit_transform * _i2d_transform);
+
+                            _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(pv, SNAPTARGET_PATH, Geom::OptRect())); // Perhaps for speed, get a reference to the Geom::pathvector, and store the transformation besides it.
                             curve->unref();
                         }
                     }
