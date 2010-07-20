@@ -178,9 +178,12 @@ struct SPIPaint {
 
     void read( gchar const *str, SPStyle &tyle, SPDocument *document = 0);
 
-//private:
-//    SPIPaint(SPIPaint const&);
-//    SPIPaint &operator=(SPIPaint const &);
+    // Win32 is a temp work-around until the emf extension is fixed:
+#ifndef WIN32
+private:
+    SPIPaint(SPIPaint const&);
+    SPIPaint &operator=(SPIPaint const &);
+#endif // WIN32
 };
 
 /// Filter type internal to SPStyle
