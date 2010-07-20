@@ -314,6 +314,7 @@
             <exclude name="dom/work/.*"/>
             <exclude name="dom/odf/SvgOdg.cpp"/>
             <exclude name="extension/api.cpp"/>
+            <exclude name="extension/dbus/.*"/>
             <exclude name="extension/dxf2svg/.*"/>
             <exclude name="extension/implementation/plugin.cpp"/>
             <exclude name="extension/script/bindtest.cpp"/>
