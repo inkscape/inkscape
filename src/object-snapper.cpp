@@ -86,10 +86,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                                               bool const clip_or_mask,
                                               Geom::Matrix const additional_affine) const // transformation of the item being clipped / masked
 {
-    bool const c1 = (snap_dim == TRANSL_SNAP_XY) && ThisSnapperMightSnap();
-    bool const c2 = (snap_dim != TRANSL_SNAP_XY) && GuidesMightSnap();
-
-    if (!(c1 || c2)) {
+    if (!((snap_dim == TRANSL_SNAP_XY) && ThisSnapperMightSnap())) {
         return;
     }
 
@@ -97,7 +94,6 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
         g_warning("desktop == NULL, so we cannot snap; please inform the developpers of this bug");
         // Apparently the etup() method from the SnapManager class hasn't been called before trying to snap.
     }
-
 
     if (first_point) {
         _candidates->clear();
@@ -338,7 +334,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapCandidatePoint const &
         }
 
         // Consider the page border for snapping
-        if (_snapmanager->snapprefs.getSnapToPageBorder()) {
+        if (_snapmanager->snapprefs.getSnapToPageBorder() && _snapmanager->snapprefs.getSnapModeBBoxOrNodes()) {
             Geom::PathVector *border_path = _getBorderPathv();
             if (border_path != NULL) {
                 _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(border_path, SNAPTARGET_PAGE_BORDER, Geom::OptRect()));
@@ -363,7 +359,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapCandidatePoint const &
             //Build a list of all paths considered for snapping to
 
             //Add the item's path to snap to
-            if (_snapmanager->snapprefs.getSnapToItemPath()) {
+            if (_snapmanager->snapprefs.getSnapToItemPath() && _snapmanager->snapprefs.getSnapModeNode()) {
                 if (p_is_other || !(_snapmanager->snapprefs.getStrictSnapping() && !p_is_a_node)) {
                     // Snapping to the path of characters is very cool, but for a large
                     // chunk of text this will take ages! So limit snapping to text paths
@@ -402,7 +398,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapCandidatePoint const &
             }
 
             //Add the item's bounding box to snap to
-            if (_snapmanager->snapprefs.getSnapToBBoxPath()) {
+            if (_snapmanager->snapprefs.getSnapToBBoxPath() && _snapmanager->snapprefs.getSnapModeBBox()) {
                 if (p_is_other || !(_snapmanager->snapprefs.getStrictSnapping() && p_is_a_node)) {
                     // Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
                     // of the item AND the bbox of the clipping path at the same time
@@ -606,15 +602,28 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
         _findCandidates(sp_document_root(_snapmanager->getDocument()), it, p.getSourceNum() == 0, local_bbox_to_snap, TRANSL_SNAP_XY, false, Geom::identity());
     }
 
-    if (_snapmanager->snapprefs.getSnapToItemNode() || _snapmanager->snapprefs.getSnapSmoothNodes()
-        || _snapmanager->snapprefs.getSnapToBBoxNode() || _snapmanager->snapprefs.getSnapToPageBorder()
-        || _snapmanager->snapprefs.getSnapLineMidpoints() || _snapmanager->snapprefs.getSnapObjectMidpoints()
-        || _snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() || _snapmanager->snapprefs.getSnapBBoxMidpoints()
-        || _snapmanager->snapprefs.getIncludeItemCenter()) {
+
+    bool snap_nodes = _snapmanager->snapprefs.getSnapModeNode() && (
+							_snapmanager->snapprefs.getSnapToItemNode() ||
+							_snapmanager->snapprefs.getSnapSmoothNodes() ||
+							_snapmanager->snapprefs.getSnapLineMidpoints() ||
+							_snapmanager->snapprefs.getSnapObjectMidpoints()
+						) || _snapmanager->snapprefs.getSnapModeBBox() && (
+							_snapmanager->snapprefs.getSnapToBBoxNode() ||
+							_snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() ||
+							_snapmanager->snapprefs.getSnapBBoxMidpoints()
+						) || _snapmanager->snapprefs.getSnapModeBBoxOrNodes() && (
+							_snapmanager->snapprefs.getIncludeItemCenter() ||
+							_snapmanager->snapprefs.getSnapToPageBorder()
+						);
+
+    if (snap_nodes) {
         _snapNodes(sc, p, unselected_nodes);
     }
 
-    if (_snapmanager->snapprefs.getSnapToItemPath() || _snapmanager->snapprefs.getSnapToBBoxPath() || _snapmanager->snapprefs.getSnapToPageBorder()) {
+    if (_snapmanager->snapprefs.getSnapModeNode() && _snapmanager->snapprefs.getSnapToItemPath() ||
+		_snapmanager->snapprefs.getSnapModeBBox() && _snapmanager->snapprefs.getSnapToBBoxPath() ||
+		_snapmanager->snapprefs.getSnapModeBBoxOrNodes() && _snapmanager->snapprefs.getSnapToPageBorder()) {
         unsigned n = (unselected_nodes == NULL) ? 0 : unselected_nodes->size();
         if (n > 0) {
             /* While editing a path in the node tool, findCandidates must ignore that path because
@@ -719,29 +728,23 @@ void Inkscape::ObjectSnapper::guideConstrainedSnap(SnappedConstraints &sc,
  */
 bool Inkscape::ObjectSnapper::ThisSnapperMightSnap() const
 {
-    bool snap_to_something = _snapmanager->snapprefs.getSnapToItemPath()
-                        || _snapmanager->snapprefs.getSnapToItemNode() || _snapmanager->snapprefs.getSnapSmoothNodes()
-                        || _snapmanager->snapprefs.getSnapToBBoxPath()
-                        || _snapmanager->snapprefs.getSnapToBBoxNode()
-                        || _snapmanager->snapprefs.getSnapToPageBorder()
-                        || _snapmanager->snapprefs.getSnapLineMidpoints() || _snapmanager->snapprefs.getSnapObjectMidpoints()
-                        || _snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() || _snapmanager->snapprefs.getSnapBBoxMidpoints()
-                        || _snapmanager->snapprefs.getIncludeItemCenter();
+    bool snap_to_something = (_snapmanager->snapprefs.getSnapModeNode() && (
+								_snapmanager->snapprefs.getSnapToItemPath() ||
+								_snapmanager->snapprefs.getSnapToItemNode() ||
+								_snapmanager->snapprefs.getSnapSmoothNodes() ||
+								_snapmanager->snapprefs.getSnapLineMidpoints() ||
+								_snapmanager->snapprefs.getSnapObjectMidpoints()
+							)) || (_snapmanager->snapprefs.getSnapModeBBox() && (
+								_snapmanager->snapprefs.getSnapToBBoxPath() ||
+								_snapmanager->snapprefs.getSnapToBBoxNode() ||
+								_snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() ||
+								_snapmanager->snapprefs.getSnapBBoxMidpoints()
+							)) || (_snapmanager->snapprefs.getSnapModeBBoxOrNodes() && (
+								_snapmanager->snapprefs.getSnapToPageBorder() ||
+								_snapmanager->snapprefs.getIncludeItemCenter()
+							));
 
-    return (_snap_enabled && _snapmanager->snapprefs.getSnapModeBBoxOrNodes() && snap_to_something);
-}
-
-bool Inkscape::ObjectSnapper::GuidesMightSnap() const // almost the same as ThisSnapperMightSnap above, but only looking at points (and not paths)
-{
-    bool snap_to_something = _snapmanager->snapprefs.getSnapToItemNode() || _snapmanager->snapprefs.getSnapSmoothNodes()
-                        || _snapmanager->snapprefs.getSnapToPageBorder()
-                        || (_snapmanager->snapprefs.getSnapModeBBox() && _snapmanager->snapprefs.getSnapToBBoxNode())
-                        || (_snapmanager->snapprefs.getSnapModeBBox() && (_snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() || _snapmanager->snapprefs.getSnapBBoxMidpoints()))
-                        || (_snapmanager->snapprefs.getSnapModeNode() && (_snapmanager->snapprefs.getSnapLineMidpoints() || _snapmanager->snapprefs.getSnapObjectMidpoints()))
-                        || (_snapmanager->snapprefs.getSnapModeNode() && _snapmanager->snapprefs.getIncludeItemCenter())
-                        || (_snapmanager->snapprefs.getSnapModeNode() && (_snapmanager->snapprefs.getSnapToItemPath() && _snapmanager->snapprefs.getSnapIntersectionCS()));
-
-    return (_snap_enabled && _snapmanager->snapprefs.getSnapModeGuide() && snap_to_something);
+    return (_snap_enabled && snap_to_something);
 }
 
 void Inkscape::ObjectSnapper::_clear_paths() const

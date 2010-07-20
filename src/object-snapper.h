@@ -49,7 +49,6 @@ public:
                        SnapConstraint const &c) const;
 
     bool ThisSnapperMightSnap() const;
-    bool GuidesMightSnap() const;
 
     Geom::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
     bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance

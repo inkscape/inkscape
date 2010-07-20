@@ -1339,25 +1339,6 @@ gboolean Inkscape::SelTrans::centerRequest(Geom::Point &pt, guint state)
         }
     }
 
-    if ( !(state & GDK_SHIFT_MASK) && _bbox ) {
-        // screen pixels to snap center to bbox
-#define SNAP_DIST 5
-        // FIXME: take from prefs
-        double snap_dist = SNAP_DIST / _desktop->current_zoom();
-
-        for (int i = 0; i < 2; i++) {
-            if (fabs(pt[i] - _bbox->min()[i]) < snap_dist) {
-                pt[i] = _bbox->min()[i];
-            }
-            if (fabs(pt[i] - _bbox->midpoint()[i]) < snap_dist) {
-                pt[i] = _bbox->midpoint()[i];
-            }
-            if (fabs(pt[i] - _bbox->max()[i]) < snap_dist) {
-                pt[i] = _bbox->max()[i];
-            }
-        }
-    }
-
     // status text
     GString *xs = SP_PX_TO_METRIC_STRING(pt[Geom::X], _desktop->namedview->getDefaultMetric());
     GString *ys = SP_PX_TO_METRIC_STRING(pt[Geom::Y], _desktop->namedview->getDefaultMetric());

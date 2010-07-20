@@ -174,7 +174,6 @@ void SnapManager::freeSnapReturnByRef(Geom::Point &p,
                                       Inkscape::SnapSourceType const source_type,
                                       Geom::OptRect const &bbox_to_snap) const
 {
-    //TODO: SnapCandidatePoint and point_type are somewhat redundant; can't we get rid of the point_type parameter?
     Inkscape::SnappedPoint const s = freeSnap(Inkscape::SnapCandidatePoint(p, source_type), bbox_to_snap);
     s.getPoint(p);
 }
@@ -408,7 +407,7 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal,
         return;
     }
 
-    if (!(object.GuidesMightSnap() || snapprefs.getSnapToGuides())) {
+    if (!(object.ThisSnapperMightSnap() || snapprefs.getSnapToGuides())) {
         return;
     }
 
@@ -419,7 +418,7 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal,
 
     // Snap to nodes
     SnappedConstraints sc;
-    if (object.GuidesMightSnap()) {
+    if (object.ThisSnapperMightSnap()) {
         object.guideFreeSnap(sc, p, guide_normal);
     }
 
