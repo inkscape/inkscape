@@ -193,6 +193,7 @@ if test "x$openmp_ok" = "xyes"; then
 	dnl We have it, now set up the flags
 	CXXFLAGS="$CXXFLAGS $OPENMP_CXXFLAGS"
 	AC_CHECK_HEADER(omp.h)
+	AC_DEFINE(HAVE_OPENMP, 1, [Use OpenMP])
 fi
 
 dnl ******************************

@@ -590,7 +590,8 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
     double const deviation_y_org = _deviation_y * trans.expansionY();
     int const PC = NR_PIXBLOCK_BPP(in);
 #if HAVE_OPENMP
-    int const NTHREADS = std::max(1,std::min(8, Inkscape::Preferences::get()->getInt("/options/threading/numthreads", omp_get_num_procs())));
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int const NTHREADS = prefs->getIntLimited("/options/threading/numthreads", omp_get_num_procs(), 1, 256);
 #else
     int const NTHREADS = 1;
 #endif // HAVE_OPENMP
