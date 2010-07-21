@@ -973,8 +973,15 @@ static void sp_item_private_snappoints(SPItem const *item, std::vector<Inkscape:
 
 void sp_item_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
 {
-    g_assert (item != NULL);
-    g_assert (SP_IS_ITEM(item));
+    if (item == NULL) {
+    	g_warning("sp_item_snappoints: cannot snap because no item is being provided");
+    	return;
+    }
+
+    if (!SP_IS_ITEM(item)) {
+    	g_warning("sp_item_snappoints: cannot snap because this is not a SP_ITEM");
+    	return;
+    }
 
     // Get the snappoints of the item
     SPItemClass const &item_class = *(SPItemClass const *) G_OBJECT_GET_CLASS(item);

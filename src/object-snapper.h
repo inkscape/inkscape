@@ -33,12 +33,6 @@ public:
     ObjectSnapper(SnapManager *sm, Geom::Coord const d);
     ~ObjectSnapper();
 
-    enum DimensionToSnap {
-        GUIDE_TRANSL_SNAP_X, // For snapping a vertical guide (normal in the X-direction) to objects,
-        GUIDE_TRANSL_SNAP_Y, // For snapping a horizontal guide (normal in the Y-direction) to objects
-        ANGLED_GUIDE_TRANSL_SNAP, // For snapping an angled guide, while translating it accross the desktop
-        TRANSL_SNAP_XY}; // All other cases; for snapping to objects, other than guides
-
     void guideFreeSnap(SnappedConstraints &sc,
                    Geom::Point const &p,
                    Geom::Point const &guide_normal) const;
@@ -75,7 +69,6 @@ private:
                        std::vector<SPItem const *> const *it,
                        bool const &first_point,
                        Geom::Rect const &bbox_to_snap,
-                       DimensionToSnap snap_dim,
                        bool const _clip_or_mask,
                        Geom::Matrix const additional_affine) const;
 
