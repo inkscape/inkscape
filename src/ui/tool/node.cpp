@@ -969,12 +969,27 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 
     if (held_control(*event)) {
         Geom::Point origin = _last_drag_origin();
-        Inkscape::SnappedPoint fp, bp;
+        Inkscape::SnappedPoint fp, bp, fpp, bpp;
         if (held_alt(*event)) {
             // with Ctrl+Alt, constrain to handle lines
-            // project the new position onto a handle line that is closer
-            boost::optional<Geom::Point> front_point, back_point;
-            boost::optional<Inkscape::Snapper::SnapConstraint> line_front, line_back;
+            // project the new position onto a handle line that is closer;
+            // also snap to perpendiculars of handle lines
+
+            // TODO: this code is repetitive to the point of sillyness. Find a way
+            // to express this concisely by modifying the semantics of snapping calls.
+            // During a non-snap invocation, we should call constrainedSnap()
+            // anyway, but it should just return the closest point matching the constraint
+            // rather than snapping to an object. There should be comparison
+            // operators defined for snap results, to simplify determining the best one,
+            // or the snapping calls should take a reference to a snapping result and
+            // replace it with the current result if it's better.
+
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            int snaps = prefs->getIntLimited("/options/rotationsnapsperpi/value", 12, 1, 1000);
+            double min_angle = M_PI / snaps;
+
+            boost::optional<Geom::Point> front_point, back_point, fperp_point, bperp_point;
+            boost::optional<Inkscape::Snapper::SnapConstraint> line_front, line_back, line_fperp, line_bperp;
             if (_front.isDegenerate()) {
                 if (_is_line_segment(this, _next()))
                     front_point = _next()->position() - origin;
@@ -987,10 +1002,28 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
             } else {
                 back_point = _back.relativePos();
             }
-            if (front_point)
+            if (front_point) {
                 line_front = Inkscape::Snapper::SnapConstraint(origin, *front_point);
-            if (back_point)
+                fperp_point = Geom::rot90(*front_point);
+            }
+            if (back_point) {
                 line_back = Inkscape::Snapper::SnapConstraint(origin, *back_point);
+                bperp_point = Geom::rot90(*back_point);
+            }
+            // perpendiculars only snap when they are further than snap increment away
+            // from the second handle constraint
+            if (fperp_point && (!back_point ||
+                (fabs(Geom::angle_between(*fperp_point, *back_point)) > min_angle &&
+                 fabs(Geom::angle_between(*fperp_point, *back_point)) < M_PI - min_angle)))
+            {
+                line_fperp = Inkscape::Snapper::SnapConstraint(origin, *fperp_point);
+            }
+            if (bperp_point && (!front_point ||
+                (fabs(Geom::angle_between(*bperp_point, *front_point)) > min_angle &&
+                 fabs(Geom::angle_between(*bperp_point, *front_point)) < M_PI - min_angle)))
+            {
+                line_bperp = Inkscape::Snapper::SnapConstraint(origin, *bperp_point);
+            }
 
             // TODO: combine the snap and non-snap branches by modifying snap.h / snap.cpp
             if (snap) {
@@ -1002,10 +1035,24 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
                     bp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos,
                         _snapSourceType()), *line_back);
                 }
+                if (line_fperp) {
+                    fpp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos,
+                        _snapSourceType()), *line_fperp);
+                }
+                if (line_bperp) {
+                    bpp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos,
+                        _snapSourceType()), *line_bperp);
+                }
             }
-            if (fp.getSnapped() || bp.getSnapped()) {
+            if (fp.getSnapped() || bp.getSnapped() || fpp.getSnapped() || bpp.getSnapped()) {
                 if (fp.isOtherSnapBetter(bp, false)) {
                     fp = bp;
+                }
+                if (fp.isOtherSnapBetter(fpp, false)) {
+                    fp = fpp;
+                }
+                if (fp.isOtherSnapBetter(bpp, false)) {
+                    fp = bpp;
                 }
                 fp.getPoint(new_pos);
                 _desktop->snapindicator->set_new_snaptarget(fp);
@@ -1016,6 +1063,16 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
                 }
                 if (line_back) {
                     Geom::Point pos2 = line_back->projection(new_pos);
+                    if (!pos || (pos && Geom::distance(new_pos, *pos) > Geom::distance(new_pos, pos2)))
+                        pos = pos2;
+                }
+                if (line_fperp) {
+                    Geom::Point pos2 = line_fperp->projection(new_pos);
+                    if (!pos || (pos && Geom::distance(new_pos, *pos) > Geom::distance(new_pos, pos2)))
+                        pos = pos2;
+                }
+                if (line_bperp) {
+                    Geom::Point pos2 = line_bperp->projection(new_pos);
                     if (!pos || (pos && Geom::distance(new_pos, *pos) > Geom::distance(new_pos, pos2)))
                         pos = pos2;
                 }
