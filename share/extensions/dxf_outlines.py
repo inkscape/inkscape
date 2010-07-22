@@ -8,6 +8,7 @@ Copyright (C) 2008 Alvin Penner, penner@vaxxine.com
 - ROBO-Master multispline output added Sept 2008
 - LWPOLYLINE output modification added Dec 2008
 - toggle between LINE/LWPOLYLINE added Jan 2010
+- support for transform elements added July 2010
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,7 +24,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, simplepath, simplestyle, cubicsuperpath, coloreffect, dxf_templates, math
+import inkex, simplestyle, simpletransform, cubicsuperpath, coloreffect, dxf_templates, math
 import gettext
 _ = gettext.gettext
 
@@ -147,6 +148,51 @@ class MyEffect(inkex.Effect):
         for i in range(fits):
             self.dxf_add(" 11\n%f\n 21\n%f\n 31\n0.0\n" % (self.xfit[i],self.yfit[i]))
 
+    def process_path(self, node, mat):
+        rgb = (0,0,0)
+        style = node.get('style')
+        if style:
+            style = simplestyle.parseStyle(style)
+            if style.has_key('stroke'):
+                if style['stroke'] and style['stroke'] != 'none':
+                    rgb = simplestyle.parseColor(style['stroke'])
+        hsl = coloreffect.ColorEffect.rgb_to_hsl(coloreffect.ColorEffect(),rgb[0]/255.0,rgb[1]/255.0,rgb[2]/255.0)
+        self.color = 7                                  # default is black
+        if hsl[2]:
+            self.color = 1 + (int(6*hsl[0] + 0.5) % 6)  # use 6 hues
+        d = node.get('d')
+        if d:
+            p = cubicsuperpath.parsePath(d)
+            trans = node.get('transform')
+            if trans:
+                mat = simpletransform.composeTransform(mat, simpletransform.parseTransform(trans))
+            simpletransform.applyTransformToPath(mat, p)
+            for sub in p:
+                for i in range(len(sub)-1):
+                    s = sub[i]
+                    e = sub[i+1]
+                    if s[1] == s[2] and e[0] == e[1]:
+                        if (self.options.POLY == 'true'):
+                            self.LWPOLY_line([s[1],e[1]])
+                        else:
+                            self.dxf_line([s[1],e[1]])
+                    elif (self.options.ROBO == 'true'):
+                        self.ROBO_spline([s[1],s[2],e[0],e[1]])
+                    else:
+                        self.dxf_spline([s[1],s[2],e[0],e[1]])
+
+    def process_group(self, group):
+        trans = group.get('transform')
+        if trans:
+            self.groupmat.append(simpletransform.composeTransform(self.groupmat[-1], simpletransform.parseTransform(trans)))
+        for node in group:
+            if node.tag == inkex.addNS('path','svg'):
+                self.process_path(node, self.groupmat[-1])
+            if node.tag == inkex.addNS('g','svg'):
+                self.process_group(node)
+        if trans:
+            self.groupmat.pop()
+
     def effect(self):
         #References:   Minimum Requirements for Creating a DXF File of a 3D Model By Paul Bourke
         #              NURB Curves: A Guide for the Uninitiated By Philip J. Schneider
@@ -156,38 +202,9 @@ class MyEffect(inkex.Effect):
 
         scale = 25.4/90.0
         h = inkex.unittouu(self.document.getroot().xpath('@height', namespaces=inkex.NSS)[0])
-        path = '//svg:path'
-        for node in self.document.getroot().xpath(path, namespaces=inkex.NSS):
-            rgb = (0,0,0)
-            style = node.get('style')
-            if style:
-                style = simplestyle.parseStyle(style)
-                if style.has_key('stroke'):
-                    if style['stroke'] and style['stroke'] != 'none':
-                        rgb = simplestyle.parseColor(style['stroke'])
-            hsl = coloreffect.ColorEffect.rgb_to_hsl(coloreffect.ColorEffect(),rgb[0]/255.0,rgb[1]/255.0,rgb[2]/255.0)
-            self.color = 7                                  # default is black
-            if hsl[2]:
-                self.color = 1 + (int(6*hsl[0] + 0.5) % 6)  # use 6 hues
-            d = node.get('d')
-            sim = simplepath.parsePath(d)
-            if len(sim):
-                simplepath.scalePath(sim,scale,-scale)
-                simplepath.translatePath(sim,0,h*scale)            
-                p = cubicsuperpath.CubicSuperPath(sim)
-                for sub in p:
-                    for i in range(len(sub)-1):
-                        s = sub[i]
-                        e = sub[i+1]
-                        if s[1] == s[2] and e[0] == e[1]:
-                            if (self.options.POLY == 'true'):
-                                self.LWPOLY_line([s[1],e[1]])
-                            else:
-                                self.dxf_line([s[1],e[1]])
-                        elif (self.options.ROBO == 'true'):
-                            self.ROBO_spline([s[1],s[2],e[0],e[1]])
-                        else:
-                            self.dxf_spline([s[1],s[2],e[0],e[1]])
+        self.groupmat = [[[scale, 0.0, 0.0], [0.0, -scale, h*scale]]]
+        doc = self.document.getroot()
+        self.process_group(doc)
         if self.options.ROBO == 'true':
             self.ROBO_output()
         if self.options.POLY == 'true':
