@@ -273,8 +273,11 @@ void ControlPointSelection::_pointGrabbed(SelectableControlPoint *point)
     _grabbed_point = point;
     _farthest_point = point;
     double maxdist = 0;
+    Geom::Matrix m;
+    m.setIdentity();
     for (iterator i = _points.begin(); i != _points.end(); ++i) {
         _original_positions.insert(std::make_pair(*i, (*i)->position()));
+        _last_trans.insert(std::make_pair(*i, m));
         double dist = Geom::distance(*_grabbed_point, **i);
         if (dist > maxdist) {
             maxdist = dist;
@@ -288,12 +291,52 @@ void ControlPointSelection::_pointDragged(Geom::Point &new_pos, GdkEventMotion *
     Geom::Point abs_delta = new_pos - _original_positions[_grabbed_point];
     double fdist = Geom::distance(_original_positions[_grabbed_point], _original_positions[_farthest_point]);
     if (held_alt(*event) && fdist > 0) {
-        // sculpting
+        // Sculpting
         for (iterator i = _points.begin(); i != _points.end(); ++i) {
             SelectableControlPoint *cur = (*i);
+            Geom::Matrix trans;
+            trans.setIdentity();
             double dist = Geom::distance(_original_positions[cur], _original_positions[_grabbed_point]);
             double deltafrac = 0.5 + 0.5 * cos(M_PI * dist/fdist);
-            cur->move(_original_positions[cur] + abs_delta * deltafrac);
+            if (dist != 0.0) {
+                // The sculpting transformation is not affine, but it can be
+                // locally approximated by one. Here we compute the local
+                // affine approximation of the sculpting transformation near
+                // the currently transformed point. We then transform the point
+                // by this approximation. This gives us sensible behavior for node handles.
+                // NOTE: probably it would be better to transform the node handles,
+                // but ControlPointSelection is supposed to work for any
+                // SelectableControlPoints, not only Nodes. We could create a specialized
+                // NodeSelection class that inherits from this one and move sculpting there.
+                Geom::Point origdx(Geom::EPSILON, 0);
+                Geom::Point origdy(0, Geom::EPSILON);
+                Geom::Point origp = _original_positions[cur];
+                Geom::Point origpx = _original_positions[cur] + origdx;
+                Geom::Point origpy = _original_positions[cur] + origdy;
+                double distdx = Geom::distance(origpx, _original_positions[_grabbed_point]);
+                double distdy = Geom::distance(origpy, _original_positions[_grabbed_point]);
+                double deltafracdx = 0.5 + 0.5 * cos(M_PI * distdx/fdist);
+                double deltafracdy = 0.5 + 0.5 * cos(M_PI * distdy/fdist);
+                Geom::Point newp = origp + abs_delta * deltafrac;
+                Geom::Point newpx = origpx + abs_delta * deltafracdx;
+                Geom::Point newpy = origpy + abs_delta * deltafracdy;
+                Geom::Point newdx = (newpx - newp) / Geom::EPSILON;
+                Geom::Point newdy = (newpy - newp) / Geom::EPSILON;
+
+                Geom::Matrix itrans(newdx[Geom::X], newdx[Geom::Y], newdy[Geom::X], newdy[Geom::Y], 0, 0);
+                if (itrans.isSingular())
+                    itrans.setIdentity();
+
+                trans *= Geom::Translate(-cur->position());
+                trans *= _last_trans[cur].inverse();
+                trans *= itrans;
+                trans *= Geom::Translate(_original_positions[cur] + abs_delta * deltafrac);
+                _last_trans[cur] = itrans;
+            } else {
+                trans *= Geom::Translate(-cur->position() + _original_positions[cur] + abs_delta * deltafrac);
+            }
+            cur->transform(trans);
+            //cur->move(_original_positions[cur] + abs_delta * deltafrac);
         }
     } else {
         Geom::Point delta = new_pos - _grabbed_point->position();
@@ -309,6 +352,7 @@ void ControlPointSelection::_pointDragged(Geom::Point &new_pos, GdkEventMotion *
 void ControlPointSelection::_pointUngrabbed()
 {
     _original_positions.clear();
+    _last_trans.clear();
     _dragging = false;
     _grabbed_point = _farthest_point = NULL;
     _updateBounds();

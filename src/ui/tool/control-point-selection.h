@@ -1,5 +1,5 @@
 /** @file
- * Node selection - stores a set of nodes and applies transformations
+ * Control point selection - stores a set of control points and applies transformations
  * to them
  */
 /* Authors:
@@ -9,8 +9,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifndef SEEN_UI_TOOL_NODE_SELECTION_H
-#define SEEN_UI_TOOL_NODE_SELECTION_H
+#ifndef SEEN_UI_TOOL_CONTROL_POINT_SELECTION_H
+#define SEEN_UI_TOOL_CONTROL_POINT_SELECTION_H
 
 #include <memory>
 #include <boost/optional.hpp>
@@ -132,6 +132,7 @@ private:
     set_type _points;
     set_type _all_points;
     INK_UNORDERED_MAP<SelectableControlPoint *, Geom::Point> _original_positions;
+    INK_UNORDERED_MAP<SelectableControlPoint *, Geom::Matrix> _last_trans;
     boost::optional<double> _rot_radius;
     boost::optional<double> _mouseover_rot_radius;
     Geom::OptRect _bounds;
