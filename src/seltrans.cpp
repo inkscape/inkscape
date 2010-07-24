@@ -883,7 +883,11 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, Geom::Point *position, 
     if (handle.request(this, handle, *position, state)) {
         sp_knot_set_position(knot, *position, state);
         SP_CTRL(_grip)->moveto(*position);
-        SP_CTRL(_norm)->moveto(_origin);
+        if (&handle == &handle_center) {
+            SP_CTRL(_norm)->moveto(*position);
+        } else {
+            SP_CTRL(_norm)->moveto(_origin);
+        }
     }
 
     return TRUE;
@@ -1329,7 +1333,18 @@ gboolean Inkscape::SelTrans::centerRequest(Geom::Point &pt, guint state)
 {
     SnapManager &m = _desktop->namedview->snap_manager;
     m.setup(_desktop);
-    m.freeSnapReturnByRef(pt, Inkscape::SNAPSOURCE_OTHER_HANDLE);
+
+    // Center is being dragged for the first item in the selection only
+    // Find out which item is first ...
+    GSList *items = (GSList *) const_cast<Selection *>(_selection)->itemList();
+    SPItem *first = NULL;
+    if (items) {
+        first = reinterpret_cast<SPItem*>(g_slist_last(items)->data); // from the first item in selection
+    }
+    // ... and store that item because later on we need to make sure that
+    // this transformation center won't snap to itself
+    m.setRotationCenterSource(first);
+    m.freeSnapReturnByRef(pt, Inkscape::SNAPSOURCE_ROTATION_CENTER);
 
     if (state & GDK_CONTROL_MASK) {
         if ( fabs(_point[Geom::X] - pt[Geom::X]) > fabs(_point[Geom::Y] - pt[Geom::Y]) ) {

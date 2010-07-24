@@ -92,10 +92,18 @@ public:
                std::vector<SPItem const *> &items_to_ignore,
                std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes = NULL,
                SPGuide *guide_to_ignore = NULL);
+
     void setupIgnoreSelection(SPDesktop const *desktop,
                               bool snapindicator = true,
                               std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes = NULL,
                               SPGuide *guide_to_ignore = NULL);
+
+    // If we're dragging a rotation center, then setRotationCenterSource() stores the parent item
+    // of this rotation center; this reference is used to make sure that we do not snap a rotation
+    // center to itself
+    // NOTE: Must be called after calling setup(), not before!
+    void setRotationCenterSource(SPItem *item) {_rotation_center_source_item = item;}
+    SPItem* getRotationCenterSource() {return _rotation_center_source_item;}
 
     // freeSnapReturnByRef() is preferred over freeSnap(), because it only returns a
     // point if snapping has occurred (by overwriting p); otherwise p is untouched
@@ -183,6 +191,7 @@ protected:
 
 private:
     std::vector<SPItem const *> _items_to_ignore; ///< Items that should not be snapped to, for example the items that are currently being dragged. Set using the setup() method
+    SPItem *_rotation_center_source_item; // to avoid snapping a rotation center to itself
     SPGuide *_guide_to_ignore; ///< A guide that should not be snapped to, e.g. the guide that is currently being dragged
     SPDesktop const *_desktop;
     bool _snapindicator; ///< When true, an indicator will be drawn at the position that was being snapped to

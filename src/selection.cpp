@@ -406,6 +406,8 @@ Geom::OptRect Selection::boundsInDocument(SPItem::BBoxType type) const {
 }
 
 /** Extract the position of the center from the first selected object */
+// If we have a selection of multiple items, then the center of the first item
+// will be returned; this is also the case in SelTrans::centerRequest()
 boost::optional<Geom::Point> Selection::center() const {
     GSList *items = (GSList *) const_cast<Selection *>(this)->itemList();
     Geom::Point center;

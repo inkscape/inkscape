@@ -228,11 +228,17 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::SnapSourceType const &t,
                     _snapmanager->snapprefs.setSnapIntersectionCS(false);
                 }
 
+                bool old_pref2 = _snapmanager->snapprefs.getIncludeItemCenter();
+                if ((*i).item == _snapmanager->getRotationCenterSource()) {
+                    // don't snap to this item's rotation center
+                    _snapmanager->snapprefs.setIncludeItemCenter(false);
+                }
+
                 sp_item_snappoints(root_item, *_points_to_snap_to, &_snapmanager->snapprefs);
 
-                if (_snapmanager->snapprefs.getSnapToItemPath()) {
-                    _snapmanager->snapprefs.setSnapIntersectionCS(old_pref);
-                }
+                // restore the original snap preferences
+                _snapmanager->snapprefs.setSnapIntersectionCS(old_pref);
+                _snapmanager->snapprefs.setIncludeItemCenter(old_pref2);
             }
 
             //Collect the bounding box's corners so we can snap to them
