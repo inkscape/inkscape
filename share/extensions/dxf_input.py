@@ -35,7 +35,7 @@ def export_MTEXT():
         size = 12                       # default fontsize in px
         if vals[groups['40']]:
             size = scale*vals[groups['40']][0]
-        attribs = {'x': '%f' % x, 'y': '%f' % y, 'style': 'font-size: %.1fpx; fill: %s' % (size, color)}
+        attribs = {'x': '%f' % x, 'y': '%f' % y, 'style': 'font-size: %.1fpx; fill: %s; font-family: %s' % (size, color, options.font)}
         angle = 0                       # default angle in degrees
         if vals[groups['50']]:
             angle = vals[groups['50']][0]
@@ -161,7 +161,7 @@ def export_LWPOLYLINE():
 def export_HATCH():
     # mandatory group codes : (10, 20, 70, 72, 92, 93) (x, y, fill, Edge Type, Path Type, Number of edges)
     if vals[groups['10']] and vals[groups['20']] and vals[groups['70']] and vals[groups['72']] and vals[groups['92']] and vals[groups['93']]:
-        if vals[groups['70']][0] and len(vals[groups['10']]) > 1 and len(vals[groups['20']]) == len(vals[groups['10']]):
+        if len(vals[groups['10']]) > 1 and len(vals[groups['20']]) == len(vals[groups['10']]):
             # optional group codes : (11, 21, 40, 50, 51, 73) (x, y, r, angle1, angle2, CCW)
             i10 = 1    # count start points
             i11 = 0    # count line end points
@@ -205,7 +205,10 @@ def export_HATCH():
                         i72 += 1
                     i10 += 1
                 path += "z "
-            style = simplestyle.formatStyle({'fill': '%s' % color})
+            if vals[groups['70']][0]:
+                style = simplestyle.formatStyle({'fill': '%s' % color})
+            else:
+                style = simplestyle.formatStyle({'fill': 'url(#Hatch)', 'fill-opacity': '1.0'})
             attribs = {'d': path, 'style': style}
             inkex.etree.SubElement(layer, 'path', attribs)
 
@@ -224,7 +227,7 @@ def export_DIMENSION():
             path = 'M %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], vals[groups['10']][0], vals[groups['23']][0])
         else:
             return
-        attribs = {'d': path, 'style': style + '; marker-start: url(#DistanceX); marker-end: url(#DistanceX)'}
+        attribs = {'d': path, 'style': style + '; marker-start: url(#DistanceX); marker-end: url(#DistanceX); stroke-width: 0.25px'}
         inkex.etree.SubElement(layer, 'path', attribs)
         x = scale*(vals[groups['11']][0] - xmin)
         y = - scale*(vals[groups['21']][0] - ymax)
@@ -234,7 +237,7 @@ def export_DIMENSION():
                 size = scale*DIMTXT[vals[groups['3']][0]]
                 if size < 2:
                     size = 2
-        attribs = {'x': '%f' % x, 'y': '%f' % y, 'style': 'font-size: %.1fpx; fill: %s' % (size, color)}
+        attribs = {'x': '%f' % x, 'y': '%f' % y, 'style': 'font-size: %.1fpx; fill: %s; font-family: %s; text-anchor: middle; text-align: center' % (size, color, options.font)}
         if dx == 0:
             attribs.update({'transform': 'rotate (%f %f %f)' % (-90, x, y)})
         node = inkex.etree.SubElement(layer, 'text', attribs)
@@ -315,6 +318,7 @@ parser.add_option("--auto", action="store", type="inkbool", dest="auto", default
 parser.add_option("--scale", action="store", type="string", dest="scale", default="1.0")
 parser.add_option("--gcodetoolspoints", action="store", type="inkbool", dest="gcodetoolspoints", default=True)
 parser.add_option("--encoding", action="store", type="string", dest="input_encode", default="latin_1")
+parser.add_option("--font", action="store", type="string", dest="font", default="Arial")
 parser.add_option("--tab", action="store", type="string", dest="tab", default="Options")
 parser.add_option("--inputhelp", action="store", type="string", dest="inputhelp", default="")
 (options, args) = parser.parse_args(inkex.sys.argv[1:])
@@ -323,6 +327,10 @@ desc = inkex.etree.SubElement(doc.getroot(), 'desc', {})
 defs = inkex.etree.SubElement(doc.getroot(), 'defs', {})
 marker = inkex.etree.SubElement(defs, 'marker', {'id': 'DistanceX', 'orient': 'auto', 'refX': '0.0', 'refY': '0.0', 'style': 'overflow:visible'})
 inkex.etree.SubElement(marker, 'path', {'d': 'M 3,-3 L -3,3 M 0,-5 L  0,5', 'style': 'stroke:#000000; stroke-width:0.5'})
+pattern = inkex.etree.SubElement(defs, 'pattern', {'id': 'Hatch', 'patternUnits': 'userSpaceOnUse', 'width': '8', 'height': '8', 'x': '0', 'y': '0'})
+inkex.etree.SubElement(pattern, 'path', {'d': 'M8 4 l-4,4', 'stroke': '#000000', 'stroke-width': '0.25', 'linecap': 'square'})
+inkex.etree.SubElement(pattern, 'path', {'d': 'M6 2 l-4,4', 'stroke': '#000000', 'stroke-width': '0.25', 'linecap': 'square'})
+inkex.etree.SubElement(pattern, 'path', {'d': 'M4 0 l-4,4', 'stroke': '#000000', 'stroke-width': '0.25', 'linecap': 'square'})
 stream = open(args[0], 'r')
 xmax = xmin = 0.0
 ymax = 297.0                                        # default A4 height in mm
@@ -382,8 +390,14 @@ if not layer_nodes:
 for linename in linetypes.keys():                   # scale the dashed lines
     linetype = ''
     for length in linetypes[linename]:
-        linetype += '%.4f,' % math.fabs(length*scale)
-    linetypes[linename] = 'stroke-dasharray:' + linetype
+        if length == 0:                             # test for dot
+            linetype += ' 0.5,'
+        else:
+            linetype += '%.4f,' % math.fabs(length*scale)
+    if linetype == '':
+        linetypes[linename] = 'stroke-linecap: round'
+    else:
+        linetypes[linename] = 'stroke-dasharray:' + linetype
 
 entity = ''
 block = defs                                        # initiallize with dummy

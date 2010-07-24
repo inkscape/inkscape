@@ -16,6 +16,7 @@
 				<item value="cp1252">CP 1252</item>
 				<item value="utf_8">UTF 8</item>
 			</param>
+			<param name="font" type="string" _gui-text="Text Font">Arial</param>
 		</page>
 		<page name="help" _gui-text="Help">
 			<_param name="inputhelp" type="description" xml:space="preserve">- AutoCAD Release 13 and newer.
