@@ -229,14 +229,14 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
         // Display the snap indicator (i.e. the cross)
         SPCanvasItem * canvasitem = NULL;
         canvasitem = sp_canvas_item_new(sp_desktop_tempgroup (_desktop),
-										SP_TYPE_CTRL,
-										"anchor", GTK_ANCHOR_CENTER,
-										"size", 10.0,
-										"stroked", TRUE,
-										"stroke_color", pre_snap ? 0x7f7f7fff : 0xff0000ff,
-										"mode", SP_KNOT_MODE_XOR,
-										"shape", SP_KNOT_SHAPE_CROSS,
-										NULL );
+                                        SP_TYPE_CTRL,
+                                        "anchor", GTK_ANCHOR_CENTER,
+                                        "size", 10.0,
+                                        "stroked", TRUE,
+                                        "stroke_color", pre_snap ? 0x7f7f7fff : 0xff0000ff,
+                                        "mode", SP_KNOT_MODE_XOR,
+                                        "shape", SP_KNOT_SHAPE_CROSS,
+                                        NULL );
 
         const int timeout_val = 1200; // TODO add preference for snap indicator timeout?
 

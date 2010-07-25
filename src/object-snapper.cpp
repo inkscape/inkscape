@@ -6,7 +6,7 @@
  *   Carl Hetherington <inkscape@carlh.net>
  *   Diederik van Lierop <mail@diedenrezi.nl>
  *
- * Copyright (C) 2005 - 2008 Authors
+ * Copyright (C) 2005 - 2010 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -148,7 +148,8 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                     }
                     if (bbox_of_item) {
                         // See if the item is within range
-                        if (bbox_to_snap_incl.intersects(*bbox_of_item)) {
+                        if (bbox_to_snap_incl.intersects(*bbox_of_item)
+                                || (_snapmanager->snapprefs.getIncludeItemCenter() && bbox_to_snap_incl.contains(item->getCenter()))) { // rotation center might be outside of the bounding box
                             // This item is within snapping range, so record it as a candidate
                             _candidates->push_back(SnapCandidateItem(item, clip_or_mask, additional_affine));
                             // For debugging: print the id of the candidate to the console
@@ -626,9 +627,9 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
         _snapNodes(sc, p, unselected_nodes);
     }
 
-    if (_snapmanager->snapprefs.getSnapModeNode() && _snapmanager->snapprefs.getSnapToItemPath() ||
-        _snapmanager->snapprefs.getSnapModeBBox() && _snapmanager->snapprefs.getSnapToBBoxPath() ||
-        _snapmanager->snapprefs.getSnapModeBBoxOrNodes() && _snapmanager->snapprefs.getSnapToPageBorder()) {
+    if ((_snapmanager->snapprefs.getSnapModeNode() && _snapmanager->snapprefs.getSnapToItemPath()) ||
+        (_snapmanager->snapprefs.getSnapModeBBox() && _snapmanager->snapprefs.getSnapToBBoxPath()) ||
+        (_snapmanager->snapprefs.getSnapModeBBoxOrNodes() && _snapmanager->snapprefs.getSnapToPageBorder())) {
         unsigned n = (unselected_nodes == NULL) ? 0 : unselected_nodes->size();
         if (n > 0) {
             /* While editing a path in the node tool, findCandidates must ignore that path because

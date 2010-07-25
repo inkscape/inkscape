@@ -763,6 +763,8 @@ Inkscape::SnappedPoint SnapManager::freeSnapTranslate(std::vector<Inkscape::Snap
         _displaySnapsource(Inkscape::SnapCandidatePoint(pt, p.at(0).getSourceType()));
     }
 
+
+
     return _snapTransformed(p, pointer, false, Geom::Point(0,0), TRANSLATE, tr, Geom::Point(0,0), Geom::X, false);
 }
 
@@ -1209,8 +1211,9 @@ void SnapManager::_displaySnapsource(Inkscape::SnapCandidatePoint const &p) cons
     if (prefs->getBool("/options/snapclosestonly/value")) {
         bool p_is_a_node = p.getSourceType() & Inkscape::SNAPSOURCE_NODE_CATEGORY;
         bool p_is_a_bbox = p.getSourceType() & Inkscape::SNAPSOURCE_BBOX_CATEGORY;
+        bool p_is_other = p.getSourceType() & Inkscape::SNAPSOURCE_OTHER_CATEGORY;
 
-        if (snapprefs.getSnapEnabledGlobally() && ((p_is_a_node && snapprefs.getSnapModeNode()) || (p_is_a_bbox && snapprefs.getSnapModeBBox()))) {
+        if (snapprefs.getSnapEnabledGlobally() && (p_is_other || (p_is_a_node && snapprefs.getSnapModeNode()) || (p_is_a_bbox && snapprefs.getSnapModeBBox()))) {
             _desktop->snapindicator->set_new_snapsource(p);
         } else {
             _desktop->snapindicator->remove_snapsource();
