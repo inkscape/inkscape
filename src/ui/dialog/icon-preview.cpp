@@ -96,6 +96,8 @@ IconPreviewPanel::IconPreviewPanel() :
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     numEntries = 0;
 
+    bool pack = prefs->getBool("/iconpreview/pack", true);
+
     std::vector<Glib::ustring> pref_sizes = prefs->getAllDirs("/iconpreview/sizes/default");
     std::vector<int> rawSizes;
 
@@ -182,7 +184,7 @@ IconPreviewPanel::IconPreviewPanel() :
         align->add(*buttons[i]);
 
         int pad = 12;
-        if ((avail == 0) && (previous == 0)) {
+        if ( !pack || ( (avail == 0) && (previous == 0) ) ) {
             verts->pack_end(*align, Gtk::PACK_SHRINK);
             previous = sizes[i];
             avail = sizes[i];
