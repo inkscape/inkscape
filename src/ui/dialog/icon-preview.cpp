@@ -171,10 +171,14 @@ IconPreviewPanel::IconPreviewPanel() :
         Glib::ustring label(*labels[i]);
         buttons[i] = new Gtk::ToggleToolButton(label);
         buttons[i]->set_active( i == hot );
-        Gtk::Frame *frame = new Gtk::Frame();
-        frame->set_shadow_type(Gtk::SHADOW_ETCHED_IN);
-        frame->add(*images[i]);
-        buttons[i]->set_icon_widget(*Gtk::manage(frame));
+        if ( prefs->getBool("/iconpreview/showFrames", true) ) {
+            Gtk::Frame *frame = new Gtk::Frame();
+            frame->set_shadow_type(Gtk::SHADOW_ETCHED_IN);
+            frame->add(*images[i]);
+            buttons[i]->set_icon_widget(*Gtk::manage(frame));
+        } else {
+            buttons[i]->set_icon_widget(*images[i]);
+        }
 
         tips.set_tip((*buttons[i]), label);
 
