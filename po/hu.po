@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-07-18 22:43+0200\n"
+"PO-Revision-Date: 2010-07-25 23:15+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -17,10 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"\n"
-"\n"
-"\n"
-"\n"
 "\n"
 
 #: ../share/extensions/addnodes.inx.h:1
@@ -780,8 +776,9 @@ msgid "Encapsulated PostScript (*.eps)"
 msgstr "Encapsulated PostScript (*.eps)"
 
 #: ../share/extensions/eqtexsvg.inx.h:1
+#, fuzzy
 msgid "Additional packages (comma-separated): "
-msgstr ""
+msgstr "további"
 
 #: ../share/extensions/eqtexsvg.inx.h:2
 msgid "LaTeX formula"
@@ -6469,7 +6466,6 @@ msgid "Add a new connection point"
 msgstr "Új kapcsolódási pont felvétele"
 
 #: ../src/conn-avoid-ref.cpp:262
-#, fuzzy
 msgid "Move a connection point"
 msgstr "Kapcsolódási pont áthelyezése"
 
@@ -6478,13 +6474,12 @@ msgid "Remove a connection point"
 msgstr "Kapcsolódási pont eltávolítása"
 
 #: ../src/live_effects/lpe-extrude.cpp:28
-#, fuzzy
 msgid "Direction"
-msgstr "Leírás"
+msgstr "Irány"
 
 #: ../src/live_effects/lpe-extrude.cpp:28
 msgid "Defines the direction and magnitude of the extrusion"
-msgstr ""
+msgstr "A kihúzás irányát és nagyságát adja meg"
 
 #: ../src/sp-flowtext.cpp:378 ../src/sp-text.cpp:427
 #: ../src/text-context.cpp:1604
@@ -8431,14 +8426,12 @@ msgid "text baseline"
 msgstr "szöveg-alapvonal"
 
 #: ../src/display/snap-indicator.cpp:152
-#, fuzzy
 msgid "constrained angle"
-msgstr "Sortávolság csökkentése"
+msgstr "korlátozott szög"
 
 #: ../src/display/snap-indicator.cpp:155
-#, fuzzy
 msgid "constraint"
-msgstr "Konstans:"
+msgstr "korlátozás"
 
 #: ../src/display/snap-indicator.cpp:168
 msgid "Bounding box corner"
@@ -8510,7 +8503,7 @@ msgstr "Szöveg-alapvonal"
 
 #: ../src/display/snap-indicator.cpp:220
 msgid "Multiple of grid spacing"
-msgstr ""
+msgstr "Rácstávolság többszöröse"
 
 #: ../src/display/snap-indicator.cpp:263
 msgid " to "
@@ -12250,9 +12243,8 @@ msgid "Change unit parameter"
 msgstr "Mértékegység-paraméter módosítása"
 
 #: ../src/live_effects/parameter/vector.cpp:96
-#, fuzzy
 msgid "Change vector parameter"
-msgstr "Szövegparaméter módosítása"
+msgstr "Vektorparaméter módosítása"
 
 #: ../src/main-cmdlineact.cpp:49
 #, c-format
@@ -13355,7 +13347,6 @@ msgstr ""
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "Raise" means "to raise an object" in the undo history
 #: ../src/selection-chemistry.cpp:850
-#, fuzzy
 msgid "undo action|Raise"
 msgstr "Feljebb helyezés"
 
@@ -14129,14 +14120,14 @@ msgid "&lt;no name found&gt;"
 msgstr "&lt;név nem található&gt;"
 
 #: ../src/sp-text.cpp:431
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Text on path</b>%s (%s, %s)"
-msgstr "<b>Útvonalon levő szöveg</b> (%s, %s)"
+msgstr "<b>Útvonalon levő szöveg</b>%s (%s, %s)"
 
 #: ../src/sp-text.cpp:432
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Text</b>%s (%s, %s)"
-msgstr "<b>Szöveg</b> (%s, %s)"
+msgstr "<b>Szöveg</b>%s (%s, %s)"
 
 #: ../src/sp-tref.cpp:368
 #, c-format
@@ -14325,23 +14316,26 @@ msgid "<b>Nothing</b> selected"
 msgstr "<b>Semmi</b> nincs kijelölve"
 
 #: ../src/spray-context.cpp:249
-#, fuzzy
 msgid ""
 "%s. Drag, click or scroll to spray <b>copies</b> of the initial selection"
-msgstr "húzás felfestés "
+msgstr ""
+"%s. A kezdeti kijelölés <b>másolatainak</b> felfestése: húzással, "
+"kattintással vagy görgetéssel."
 
 #: ../src/spray-context.cpp:252
-#, fuzzy
 msgid ""
 "%s. Drag, click or scroll to spray <b>clones</b> of the initial selection"
-msgstr "húzás felfestés "
+msgstr ""
+"%s. A kezdeti kijelölés <b>klónjainak</b> felfestése: húzással, kattintással "
+"vagy görgetéssel."
 
 #: ../src/spray-context.cpp:255
-#, fuzzy
 msgid ""
 "%s. Drag, click or scroll to spray in a <b>single path</b> of the initial "
 "selection"
-msgstr "húzás felfestés "
+msgstr ""
+"%s. A kezdeti kijelölés felfestése <b>ugyanazon útvonalban</b>: húzással, "
+"kattintással vagy görgetéssel."
 
 #: ../src/spray-context.cpp:773
 msgid "<b>Nothing selected!</b> Select objects to spray."
@@ -16592,22 +16586,19 @@ msgstr "általános"
 
 #: ../src/ui/dialog/glyphs.cpp:59
 msgid "inherited"
-msgstr ""
+msgstr "örökölt"
 
 #: ../src/ui/dialog/glyphs.cpp:60 ../src/ui/dialog/glyphs.cpp:166
-#, fuzzy
 msgid "Arabic"
-msgstr "Arab (ar)"
+msgstr "Arab"
 
 #: ../src/ui/dialog/glyphs.cpp:61 ../src/ui/dialog/glyphs.cpp:164
-#, fuzzy
 msgid "Armenian"
-msgstr "Örmény (hy)"
+msgstr "Örmény"
 
 #: ../src/ui/dialog/glyphs.cpp:62 ../src/ui/dialog/glyphs.cpp:173
-#, fuzzy
 msgid "Bengali"
-msgstr "Bengáli (bn)"
+msgstr "Bengáli"
 
 #: ../src/ui/dialog/glyphs.cpp:63 ../src/ui/dialog/glyphs.cpp:255
 #, fuzzy
@@ -16620,13 +16611,12 @@ msgid "Cherokee"
 msgstr "Króm"
 
 #: ../src/ui/dialog/glyphs.cpp:65 ../src/ui/dialog/glyphs.cpp:243
-#, fuzzy
 msgid "Coptic"
-msgstr "Másolódik"
+msgstr "Kopt"
 
 #: ../src/ui/dialog/glyphs.cpp:66 ../src/ui/dialog/glyphs.cpp:162
 msgid "Cyrillic"
-msgstr ""
+msgstr "Cirill"
 
 #: ../src/ui/dialog/glyphs.cpp:67
 #, fuzzy
@@ -16639,7 +16629,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:69 ../src/ui/dialog/glyphs.cpp:188
 msgid "Ethiopic"
-msgstr ""
+msgstr "Etióp"
 
 #: ../src/ui/dialog/glyphs.cpp:70 ../src/ui/dialog/glyphs.cpp:186
 #, fuzzy
@@ -16652,9 +16642,8 @@ msgid "Gothic"
 msgstr "Növekedés"
 
 #: ../src/ui/dialog/glyphs.cpp:72
-#, fuzzy
 msgid "Greek"
-msgstr "Zöld"
+msgstr "Görög"
 
 #: ../src/ui/dialog/glyphs.cpp:73 ../src/ui/dialog/glyphs.cpp:175
 msgid "Gujarati"
@@ -16675,9 +16664,8 @@ msgid "Hangul"
 msgstr "Szög"
 
 #: ../src/ui/dialog/glyphs.cpp:77 ../src/ui/dialog/glyphs.cpp:165
-#, fuzzy
 msgid "Hebrew"
-msgstr "Héber (he)"
+msgstr "Héber"
 
 #: ../src/ui/dialog/glyphs.cpp:78 ../src/ui/dialog/glyphs.cpp:253
 msgid "Hiragana"
@@ -16693,9 +16681,8 @@ msgid "Katakana"
 msgstr "Katalán (ca)"
 
 #: ../src/ui/dialog/glyphs.cpp:81 ../src/ui/dialog/glyphs.cpp:198
-#, fuzzy
 msgid "Khmer"
-msgstr "Khmer (km)"
+msgstr "Khmer"
 
 #: ../src/ui/dialog/glyphs.cpp:82 ../src/ui/dialog/glyphs.cpp:183
 #, fuzzy
@@ -16703,18 +16690,16 @@ msgid "Lao"
 msgstr "Elrendezés"
 
 #: ../src/ui/dialog/glyphs.cpp:83
-#, fuzzy
 msgid "Latin"
-msgstr "Szatén"
+msgstr "Latin"
 
 #: ../src/ui/dialog/glyphs.cpp:84 ../src/ui/dialog/glyphs.cpp:180
 msgid "Malayalam"
 msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:85 ../src/ui/dialog/glyphs.cpp:199
-#, fuzzy
 msgid "Mongolian"
-msgstr "Mongol (mn)"
+msgstr "Mongol"
 
 #: ../src/ui/dialog/glyphs.cpp:86 ../src/ui/dialog/glyphs.cpp:185
 msgid "Myanmar"
@@ -16764,14 +16749,12 @@ msgid "Thaana"
 msgstr "Skót minta"
 
 #: ../src/ui/dialog/glyphs.cpp:96 ../src/ui/dialog/glyphs.cpp:182
-#, fuzzy
 msgid "Thai"
-msgstr "Thai (th)"
+msgstr "Thai"
 
 #: ../src/ui/dialog/glyphs.cpp:97 ../src/ui/dialog/glyphs.cpp:184
-#, fuzzy
 msgid "Tibetan"
-msgstr "Skót minta"
+msgstr "Tibeti"
 
 #: ../src/ui/dialog/glyphs.cpp:98
 msgid "Canadian Aboriginal"
@@ -16800,9 +16783,8 @@ msgid "Tagbanwa"
 msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:104
-#, fuzzy
 msgid "Braille"
-msgstr "Párhuzamos"
+msgstr "Braille"
 
 #: ../src/ui/dialog/glyphs.cpp:105
 msgid "Cypriot"
@@ -16822,9 +16804,8 @@ msgid "Shavian"
 msgstr "Árnyalás"
 
 #: ../src/ui/dialog/glyphs.cpp:109
-#, fuzzy
 msgid "Linear B"
-msgstr "Lineáris"
+msgstr "Lineáris B"
 
 # May contain a short, human readable description of the resource as plain, unmarked text.
 #: ../src/ui/dialog/glyphs.cpp:110 ../src/ui/dialog/glyphs.cpp:202
@@ -16868,9 +16849,8 @@ msgid "Kharoshthi"
 msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:119
-#, fuzzy
 msgid "unassigned"
-msgstr "Alkalmazás"
+msgstr "meghatározatlan"
 
 #: ../src/ui/dialog/glyphs.cpp:120 ../src/ui/dialog/glyphs.cpp:207
 #, fuzzy
@@ -16947,46 +16927,43 @@ msgstr "Medián"
 
 #: ../src/ui/dialog/glyphs.cpp:154
 msgid "Basic Latin"
-msgstr ""
+msgstr "Latin alap"
 
 #: ../src/ui/dialog/glyphs.cpp:155
-#, fuzzy
 msgid "Latin-1 Supplement"
-msgstr "Vonalszakasz"
+msgstr "Latin-1 - kiegészítés"
 
 #: ../src/ui/dialog/glyphs.cpp:156
 msgid "Latin Extended-A"
-msgstr ""
+msgstr "Latin bővített - A"
 
 #: ../src/ui/dialog/glyphs.cpp:157
 msgid "Latin Extended-B"
-msgstr ""
+msgstr "Latin bővített - B"
 
 #: ../src/ui/dialog/glyphs.cpp:158
-#, fuzzy
 msgid "IPA Extensions"
-msgstr "Kiter_jesztések"
+msgstr "IPA-kiterjesztések"
 
 #: ../src/ui/dialog/glyphs.cpp:159
-#, fuzzy
 msgid "Spacing Modifier Letters"
-msgstr "helykihagyás"
+msgstr "Térközmódosító-jelek"
 
 #: ../src/ui/dialog/glyphs.cpp:160
 msgid "Combining Diacritical Marks"
-msgstr ""
+msgstr "Összeolvadó diakritikus jelek"
 
 #: ../src/ui/dialog/glyphs.cpp:161
 msgid "Greek and Coptic"
-msgstr ""
+msgstr "Görög és kopt"
 
 #: ../src/ui/dialog/glyphs.cpp:163
 msgid "Cyrillic Supplement"
-msgstr ""
+msgstr "Cirill - kiegészítés"
 
 #: ../src/ui/dialog/glyphs.cpp:168
 msgid "Arabic Supplement"
-msgstr ""
+msgstr "Arab - kiegészítés"
 
 #: ../src/ui/dialog/glyphs.cpp:170
 msgid "NKo"
@@ -17003,20 +16980,21 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:189
 msgid "Ethiopic Supplement"
-msgstr ""
+msgstr "Etióp - kiegészítés"
 
 #: ../src/ui/dialog/glyphs.cpp:191
+#, fuzzy
 msgid "Unified Canadian Aboriginal Syllabics"
-msgstr ""
+msgstr "egységesített"
 
 #: ../src/ui/dialog/glyphs.cpp:200
+#, fuzzy
 msgid "Unified Canadian Aboriginal Syllabics Extended"
-msgstr ""
+msgstr "egységesített bővített"
 
 #: ../src/ui/dialog/glyphs.cpp:204
-#, fuzzy
 msgid "Khmer Symbols"
-msgstr "Khmer (km)"
+msgstr "Khmer szimbólumok"
 
 #: ../src/ui/dialog/glyphs.cpp:206
 msgid "Tai Tham"
@@ -17025,34 +17003,31 @@ msgstr ""
 #: ../src/ui/dialog/glyphs.cpp:211
 #, fuzzy
 msgid "Vedic Extensions"
-msgstr "Kiter_jesztések"
+msgstr "kiterjesztések"
 
 #: ../src/ui/dialog/glyphs.cpp:212
-#, fuzzy
 msgid "Phonetic Extensions"
-msgstr "Információ a _kiterjesztésekről"
+msgstr "Fonetikus kiterjesztések"
 
 #: ../src/ui/dialog/glyphs.cpp:213
-#, fuzzy
 msgid "Phonetic Extensions Supplement"
-msgstr "kiterjesztés"
+msgstr "Fonetikus kiterjesztések - kiegészítés"
 
 #: ../src/ui/dialog/glyphs.cpp:214
 msgid "Combining Diacritical Marks Supplement"
-msgstr ""
+msgstr "Összeolvadó diakritikus jelek - kiegészítés"
 
 #: ../src/ui/dialog/glyphs.cpp:215
 msgid "Latin Extended Additional"
-msgstr ""
+msgstr "Latin bővített - továbbiak"
 
 #: ../src/ui/dialog/glyphs.cpp:216
 msgid "Greek Extended"
-msgstr ""
+msgstr "Görög bővített"
 
 #: ../src/ui/dialog/glyphs.cpp:217
-#, fuzzy
 msgid "General Punctuation"
-msgstr "Zöld-függvény"
+msgstr "Általános központozás"
 
 #: ../src/ui/dialog/glyphs.cpp:218
 msgid "Superscripts and Subscripts"
@@ -17060,150 +17035,142 @@ msgstr "Felső indexek és alsó indexek"
 
 #: ../src/ui/dialog/glyphs.cpp:219
 msgid "Currency Symbols"
-msgstr ""
+msgstr "Pénznemek szimbólumai"
 
 #: ../src/ui/dialog/glyphs.cpp:220
 msgid "Combining Diacritical Marks for Symbols"
-msgstr ""
+msgstr "Összeolvadó diakritikus jelek szimbólumokhoz"
 
 #: ../src/ui/dialog/glyphs.cpp:221
 msgid "Letterlike Symbols"
-msgstr ""
+msgstr "Betűszerű szimbólumok"
 
 #: ../src/ui/dialog/glyphs.cpp:222
-#, fuzzy
 msgid "Number Forms"
-msgstr "A sorok száma"
+msgstr "Számalakok"
 
 #: ../src/ui/dialog/glyphs.cpp:223
-#, fuzzy
 msgid "Arrows"
-msgstr "Hibák"
+msgstr "Nyilak"
 
 #: ../src/ui/dialog/glyphs.cpp:224
 msgid "Mathematical Operators"
-msgstr ""
+msgstr "Matematikai operátorok"
 
 #: ../src/ui/dialog/glyphs.cpp:225
-#, fuzzy
 msgid "Miscellaneous Technical"
-msgstr "Egyéb:"
+msgstr "Egyéb műszaki jelek"
 
 #: ../src/ui/dialog/glyphs.cpp:226
-#, fuzzy
 msgid "Control Pictures"
-msgstr "Közreműködők"
+msgstr "Vezérlőábrák"
 
 #: ../src/ui/dialog/glyphs.cpp:227
 msgid "Optical Character Recognition"
-msgstr ""
+msgstr "Optikai karakterfelismerés"
 
 #: ../src/ui/dialog/glyphs.cpp:228
 msgid "Enclosed Alphanumerics"
-msgstr ""
+msgstr "Zárt alfanumerikusok"
 
 #: ../src/ui/dialog/glyphs.cpp:229
-#, fuzzy
 msgid "Box Drawing"
-msgstr "Rajz"
+msgstr "Téglalaprajzolás"
 
 #: ../src/ui/dialog/glyphs.cpp:230
 msgid "Block Elements"
-msgstr ""
+msgstr "Blokkelemek"
 
 #: ../src/ui/dialog/glyphs.cpp:231
 msgid "Geometric Shapes"
-msgstr ""
+msgstr "Geometriai alakzatok"
 
 #: ../src/ui/dialog/glyphs.cpp:232
-#, fuzzy
 msgid "Miscellaneous Symbols"
-msgstr "Egyéb:"
+msgstr "Egyéb szimbólumok"
 
 #: ../src/ui/dialog/glyphs.cpp:233
 msgid "Dingbats"
 msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:234
-#, fuzzy
 msgid "Miscellaneous Mathematical Symbols-A"
-msgstr "Különböző tippek és trükkök"
+msgstr "Egyéb matematikai szimbólumok - A"
 
 #: ../src/ui/dialog/glyphs.cpp:235
 msgid "Supplemental Arrows-A"
-msgstr ""
+msgstr "Kiegészítő nyilak - A"
 
 #: ../src/ui/dialog/glyphs.cpp:236
-#, fuzzy
 msgid "Braille Patterns"
-msgstr "Minták áthelyezése"
+msgstr "Braille-minták"
 
 #: ../src/ui/dialog/glyphs.cpp:237
 msgid "Supplemental Arrows-B"
-msgstr ""
+msgstr "Kiegészítő nyilak - B"
 
 #: ../src/ui/dialog/glyphs.cpp:238
-#, fuzzy
 msgid "Miscellaneous Mathematical Symbols-B"
-msgstr "Különböző tippek és trükkök"
+msgstr "Egyéb matematikai szimbólumok - B"
 
 #: ../src/ui/dialog/glyphs.cpp:239
 msgid "Supplemental Mathematical Operators"
-msgstr ""
+msgstr "Kiegészítő matematikai operátorok"
 
 #: ../src/ui/dialog/glyphs.cpp:240
-#, fuzzy
 msgid "Miscellaneous Symbols and Arrows"
-msgstr "Különböző tippek és trükkök"
+msgstr "Egyéb szimbólumok és nyilak"
 
 #: ../src/ui/dialog/glyphs.cpp:242
 msgid "Latin Extended-C"
-msgstr ""
+msgstr "Latin bővített - C"
 
 #: ../src/ui/dialog/glyphs.cpp:244
 #, fuzzy
 msgid "Georgian Supplement"
-msgstr "Fogak helye"
+msgstr " - kiegészítés"
 
 #: ../src/ui/dialog/glyphs.cpp:246
 msgid "Ethiopic Extended"
-msgstr ""
+msgstr "Etióp bővített"
 
 #: ../src/ui/dialog/glyphs.cpp:247
 msgid "Cyrillic Extended-A"
-msgstr ""
+msgstr "Cirill bővített - A"
 
 #: ../src/ui/dialog/glyphs.cpp:248
 msgid "Supplemental Punctuation"
-msgstr ""
+msgstr "Kiegészítő központozás"
 
 #: ../src/ui/dialog/glyphs.cpp:249
 msgid "CJK Radicals Supplement"
-msgstr ""
+msgstr "Kiegészítő CJK gyökök"
 
 #: ../src/ui/dialog/glyphs.cpp:250
 msgid "Kangxi Radicals"
-msgstr ""
+msgstr "Kandzsi gyökök"
 
 #: ../src/ui/dialog/glyphs.cpp:251
 msgid "Ideographic Description Characters"
-msgstr ""
+msgstr "Ideogram-leírókarakterek"
 
 #: ../src/ui/dialog/glyphs.cpp:252
 msgid "CJK Symbols and Punctuation"
-msgstr ""
+msgstr "CJK szimbólumok és központozás"
 
 #: ../src/ui/dialog/glyphs.cpp:256
+#, fuzzy
 msgid "Hangul Compatibility Jamo"
-msgstr ""
+msgstr "kompatibilitási"
 
 #: ../src/ui/dialog/glyphs.cpp:257
 msgid "Kanbun"
 msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:258
+#, fuzzy
 msgid "Bopomofo Extended"
-msgstr ""
+msgstr "bővített"
 
 #: ../src/ui/dialog/glyphs.cpp:259
 #, fuzzy
@@ -17213,7 +17180,7 @@ msgstr "Vonások"
 #: ../src/ui/dialog/glyphs.cpp:260
 #, fuzzy
 msgid "Katakana Phonetic Extensions"
-msgstr "kiterjesztés"
+msgstr "Fonetikus kiterjesztések"
 
 #: ../src/ui/dialog/glyphs.cpp:261
 msgid "Enclosed CJK Letters and Months"
@@ -17221,28 +17188,28 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:262
 msgid "CJK Compatibility"
-msgstr ""
+msgstr "CJK - kompatibilitás"
 
 #: ../src/ui/dialog/glyphs.cpp:263
-#, fuzzy
 msgid "CJK Unified Ideographs Extension A"
-msgstr "kiterjesztés"
+msgstr "CJK egységesített ideogramok - \"A\" kiterjesztés"
 
 #: ../src/ui/dialog/glyphs.cpp:264
+#, fuzzy
 msgid "Yijing Hexagram Symbols"
-msgstr ""
+msgstr "szimbólumok"
 
 #: ../src/ui/dialog/glyphs.cpp:265
 msgid "CJK Unified Ideographs"
-msgstr ""
+msgstr "CJK - egységesített ideogramok"
 
 #: ../src/ui/dialog/glyphs.cpp:266
 msgid "Yi Syllables"
-msgstr ""
+msgstr "Yi szótagok"
 
 #: ../src/ui/dialog/glyphs.cpp:267
 msgid "Yi Radicals"
-msgstr ""
+msgstr "Yi gyökök"
 
 #: ../src/ui/dialog/glyphs.cpp:268
 #, fuzzy
@@ -17251,7 +17218,7 @@ msgstr "Lista"
 
 #: ../src/ui/dialog/glyphs.cpp:270
 msgid "Cyrillic Extended-B"
-msgstr ""
+msgstr "Cirill bővített - B"
 
 #: ../src/ui/dialog/glyphs.cpp:271
 #, fuzzy
@@ -17260,23 +17227,26 @@ msgstr "Maximum"
 
 #: ../src/ui/dialog/glyphs.cpp:272
 msgid "Modifier Tone Letters"
-msgstr ""
+msgstr "Hangmódosító jelek"
 
 #: ../src/ui/dialog/glyphs.cpp:273
 msgid "Latin Extended-D"
-msgstr ""
+msgstr "Latin bővített - D"
 
 #: ../src/ui/dialog/glyphs.cpp:275
+#, fuzzy
 msgid "Common Indic Number Forms"
-msgstr ""
+msgstr "Általános számalakok"
 
 #: ../src/ui/dialog/glyphs.cpp:278
+#, fuzzy
 msgid "Devanagari Extended"
-msgstr ""
+msgstr "bővített"
 
 #: ../src/ui/dialog/glyphs.cpp:281
+#, fuzzy
 msgid "Hangul Jamo Extended-A"
-msgstr ""
+msgstr "Latin bővített - A"
 
 #: ../src/ui/dialog/glyphs.cpp:282
 #, fuzzy
@@ -17284,8 +17254,9 @@ msgid "Javanese"
 msgstr "Tűnékeny"
 
 #: ../src/ui/dialog/glyphs.cpp:284
+#, fuzzy
 msgid "Myanmar Extended-A"
-msgstr ""
+msgstr "Latin bővített - A"
 
 #: ../src/ui/dialog/glyphs.cpp:285
 msgid "Tai Viet"
@@ -17298,75 +17269,72 @@ msgstr "Réteg törlése"
 
 #: ../src/ui/dialog/glyphs.cpp:287
 msgid "Hangul Syllables"
-msgstr ""
+msgstr "Hangul szótagok"
 
 #: ../src/ui/dialog/glyphs.cpp:288
+#, fuzzy
 msgid "Hangul Jamo Extended-B"
-msgstr ""
+msgstr "Latin bővített - B"
 
 #: ../src/ui/dialog/glyphs.cpp:289
 msgid "High Surrogates"
-msgstr ""
+msgstr "Felső pótlások"
 
 #: ../src/ui/dialog/glyphs.cpp:290
 msgid "High Private Use Surrogates"
-msgstr ""
+msgstr "Felső pótlások saját használatra"
 
 #: ../src/ui/dialog/glyphs.cpp:291
 msgid "Low Surrogates"
-msgstr ""
+msgstr "Alsó pótlások"
 
 #: ../src/ui/dialog/glyphs.cpp:292
 msgid "Private Use Area"
-msgstr ""
+msgstr "Saját használatra kijelölt tartomány"
 
 #: ../src/ui/dialog/glyphs.cpp:293
 msgid "CJK Compatibility Ideographs"
-msgstr ""
+msgstr "CJK kompatibilitási ideogramok"
 
 #: ../src/ui/dialog/glyphs.cpp:294
 msgid "Alphabetic Presentation Forms"
-msgstr ""
+msgstr "Alfabetikus prezentációs alakok"
 
 #: ../src/ui/dialog/glyphs.cpp:295
 msgid "Arabic Presentation Forms-A"
-msgstr ""
+msgstr "Arab prezentációs alakok - A"
 
 #: ../src/ui/dialog/glyphs.cpp:296
-#, fuzzy
 msgid "Variation Selectors"
-msgstr "ingadozás kijelölés "
+msgstr "Variációválasztók"
 
 #: ../src/ui/dialog/glyphs.cpp:297
-#, fuzzy
 msgid "Vertical Forms"
-msgstr "Függőleges sugár"
+msgstr "Függőleges alakok"
 
 #: ../src/ui/dialog/glyphs.cpp:298
-#, fuzzy
 msgid "Combining Half Marks"
-msgstr "Nyomtatási jelek"
+msgstr "Összeolvadó féljelek"
 
 #: ../src/ui/dialog/glyphs.cpp:299
 msgid "CJK Compatibility Forms"
-msgstr ""
+msgstr "CJK kompatibilitási alakok"
 
 #: ../src/ui/dialog/glyphs.cpp:300
 msgid "Small Form Variants"
-msgstr ""
+msgstr "Kisalakú variánsok"
 
 #: ../src/ui/dialog/glyphs.cpp:301
 msgid "Arabic Presentation Forms-B"
-msgstr ""
+msgstr "Arab prezentációs alakok - B"
 
 #: ../src/ui/dialog/glyphs.cpp:302
 msgid "Halfwidth and Fullwidth Forms"
-msgstr ""
+msgstr "Fél- és teljes szélességű alakok"
 
 #: ../src/ui/dialog/glyphs.cpp:303
-#, fuzzy
 msgid "Specials"
-msgstr "Spirálok"
+msgstr "Speciális"
 
 #: ../src/ui/dialog/glyphs.cpp:370
 msgid "Script: "
@@ -17779,7 +17747,6 @@ msgstr ""
 "helyett"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:294
-#, fuzzy
 msgid ""
 "Converting an object to guides places these along the object's true edges "
 "(imitating the object's shape), not along the bounding box"
