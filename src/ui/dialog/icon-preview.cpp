@@ -307,7 +307,7 @@ void IconPreviewPanel::refreshPreview()
         // Do not refresh too quickly
         queueRefresh();
     } else if ( desktop ) {
-        bool hold = Inkscape::Preferences::get()->getBool("/iconpreview/selectionHold", false);
+        bool hold = Inkscape::Preferences::get()->getBool("/iconpreview/selectionHold", true);
         if ( selectionButton && selectionButton->get_active() )
         {
             SPObject *target = (hold && !targetId.empty()) ? desktop->doc()->getObjectById( targetId.c_str() ) : 0;
