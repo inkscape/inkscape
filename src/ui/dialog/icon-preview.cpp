@@ -41,6 +41,8 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                   const gchar *name, unsigned int psize );
 }
 
+#define noICON_VERBOSE 1
+
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
@@ -85,7 +87,9 @@ IconPreviewPanel::IconPreviewPanel() :
     desktop(0),
     document(0),
     timer(0),
+    renderTimer(0),
     pending(false),
+    minDelay(0.1),
     targetId(),
     hot(1),
     selectionButton(0),
@@ -249,6 +253,11 @@ IconPreviewPanel::~IconPreviewPanel()
         delete timer;
         timer = 0;
     }
+    if ( renderTimer ) {
+        renderTimer->stop();
+        delete renderTimer;
+        renderTimer = 0;
+    }
 
     selChangedConn.disconnect();
     docModConn.disconnect();
@@ -261,6 +270,22 @@ IconPreviewPanel::~IconPreviewPanel()
 //## M E T H O D S
 //#########################################################################
 
+
+#if ICON_VERBOSE
+static Glib::ustring getTimestr()
+{
+    Glib::ustring str;
+    GTimeVal now = {0, 0};
+    g_get_current_time(&now);
+    glong secs = now.tv_sec % 60;
+    glong mins = (now.tv_sec / 60) % 60;
+    gchar *ptr = g_strdup_printf(":%02ld:%02ld.%06ld", mins, secs, now.tv_usec);
+    str = ptr;
+    g_free(ptr);
+    ptr = 0;
+    return str;
+}
+#endif // ICON_VERBOSE
 
 void IconPreviewPanel::setDesktop( SPDesktop* desktop )
 {
@@ -303,14 +328,21 @@ void IconPreviewPanel::refreshPreview()
     if (!timer) {
         timer = new Glib::Timer();
     }
-    if (timer->elapsed() < 0.1) {
+    if (timer->elapsed() < minDelay) {
+#if ICON_VERBOSE
+        g_message( "%s Deferring refresh as too soon. calling queueRefresh()", getTimestr().c_str() );
+#endif //ICON_VERBOSE
         // Do not refresh too quickly
         queueRefresh();
     } else if ( desktop ) {
+#if ICON_VERBOSE
+        g_message( "%s Refreshing preview.", getTimestr().c_str() );
+#endif // ICON_VERBOSE
         bool hold = Inkscape::Preferences::get()->getBool("/iconpreview/selectionHold", true);
+        SPObject *target = 0;
         if ( selectionButton && selectionButton->get_active() )
         {
-            SPObject *target = (hold && !targetId.empty()) ? desktop->doc()->getObjectById( targetId.c_str() ) : 0;
+            target = (hold && !targetId.empty()) ? desktop->doc()->getObjectById( targetId.c_str() ) : 0;
             if ( !target ) {
                 targetId.clear();
                 Inkscape::Selection * sel = sp_desktop_selection(desktop);
@@ -331,15 +363,15 @@ void IconPreviewPanel::refreshPreview()
                     }
                 }
             }
-            if ( target ) {
-                renderPreview(target);
-            }
         } else {
-            SPObject *target = desktop->currentRoot();
-            if ( target ) {
-                renderPreview(target);
-            }
+            target = desktop->currentRoot();
         }
+        if ( target ) {
+            renderPreview(target);
+        }
+#if ICON_VERBOSE
+        g_message( "%s  resetting timer", getTimestr().c_str() );
+#endif // ICON_VERBOSE
         timer->reset();
     }
 }
@@ -350,9 +382,15 @@ bool IconPreviewPanel::refreshCB()
     if (!timer) {
         timer = new Glib::Timer();
     }
-    if ( timer->elapsed() > 0.1 ) {
+    if ( timer->elapsed() > minDelay ) {
+#if ICON_VERBOSE
+        g_message( "%s refreshCB() timer has progressed", getTimestr().c_str() );
+#endif // ICON_VERBOSE
         callAgain = false;
         refreshPreview();
+#if ICON_VERBOSE
+        g_message( "%s refreshCB() setting pending false", getTimestr().c_str() );
+#endif // ICON_VERBOSE
         pending = false;
     }
     return callAgain;
@@ -362,6 +400,9 @@ void IconPreviewPanel::queueRefresh()
 {
     if (!pending) {
         pending = true;
+#if ICON_VERBOSE
+        g_message( "%s queueRefresh() Setting pending true", getTimestr().c_str() );
+#endif // ICON_VERBOSE
         if (!timer) {
             timer = new Glib::Timer();
         }
@@ -385,8 +426,14 @@ void IconPreviewPanel::renderPreview( SPObject* obj )
 {
     SPDocument * doc = SP_OBJECT_DOCUMENT(obj);
     gchar const * id = obj->getId();
+    if ( !renderTimer ) {
+        renderTimer = new Glib::Timer();
+    }
+    renderTimer->reset();
 
-//    g_message(" setting up to render '%s' as the icon", id );
+#if ICON_VERBOSE
+    g_message("%s setting up to render '%s' as the icon", getTimestr().c_str(), id );
+#endif // ICON_VERBOSE
 
     NRArenaItem *root = NULL;
 
@@ -415,6 +462,11 @@ void IconPreviewPanel::renderPreview( SPObject* obj )
 
     sp_item_invoke_hide(SP_ITEM(sp_document_root(doc)), visionkey);
     nr_object_unref((NRObject *) arena);
+    renderTimer->stop();
+    minDelay = std::max( 0.1, renderTimer->elapsed() * 3.0 );
+#if ICON_VERBOSE
+    g_message("  render took %f seconds.", renderTimer->elapsed());
+#endif // ICON_VERBOSE
 }
 
 void IconPreviewPanel::updateMagnify()

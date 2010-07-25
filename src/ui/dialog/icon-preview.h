@@ -61,7 +61,9 @@ private:
     SPDesktop *desktop;
     SPDocument *document;
     Glib::Timer *timer;
+    Glib::Timer *renderTimer;
     bool pending;
+    gdouble minDelay;
 
     Gtk::Tooltips   tips;
 
