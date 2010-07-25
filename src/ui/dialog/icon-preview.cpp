@@ -86,6 +86,7 @@ IconPreviewPanel::IconPreviewPanel() :
     document(0),
     timer(0),
     pending(false),
+    targetId(),
     hot(1),
     selectionButton(0),
     desktopChangeConn(),
@@ -302,27 +303,32 @@ void IconPreviewPanel::refreshPreview()
         // Do not refresh too quickly
         queueRefresh();
     } else if ( desktop ) {
+        bool hold = Inkscape::Preferences::get()->getBool("/iconpreview/selectionHold", false);
         if ( selectionButton && selectionButton->get_active() )
         {
-            Inkscape::Selection * sel = sp_desktop_selection(desktop);
-            if ( sel ) {
-                //g_message("found a selection to play with");
+            SPObject *target = (hold && !targetId.empty()) ? desktop->doc()->getObjectById( targetId.c_str() ) : 0;
+            if ( !target ) {
+                targetId.clear();
+                Inkscape::Selection * sel = sp_desktop_selection(desktop);
+                if ( sel ) {
+                    //g_message("found a selection to play with");
 
-                GSList const *items = sel->itemList();
-                SPObject *target = 0;
-                while ( items && !target ) {
-                    SPItem* item = SP_ITEM( items->data );
-                    SPObject * obj = SP_OBJECT(item);
-                    gchar const *id = obj->getId();
-                    if ( id ) {
-                        target = obj;
+                    GSList const *items = sel->itemList();
+                    while ( items && !target ) {
+                        SPItem* item = SP_ITEM( items->data );
+                        SPObject * obj = SP_OBJECT(item);
+                        gchar const *id = obj->getId();
+                        if ( id ) {
+                            targetId = id;
+                            target = obj;
+                        }
+
+                        items = g_slist_next(items);
                     }
-
-                    items = g_slist_next(items);
                 }
-                if ( target ) {
-                    renderPreview(target);
-                }
+            }
+            if ( target ) {
+                renderPreview(target);
             }
         } else {
             SPObject *target = desktop->currentRoot();
@@ -362,7 +368,11 @@ void IconPreviewPanel::queueRefresh()
 void IconPreviewPanel::modeToggled()
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setBool("/iconpreview/selectionOnly", (selectionButton && selectionButton->get_active()));
+    bool selectionOnly = (selectionButton && selectionButton->get_active());
+    prefs->setBool("/iconpreview/selectionOnly", selectionOnly);
+    if ( !selectionOnly ) {
+        targetId.clear();
+    }
 
     refreshPreview();
 }

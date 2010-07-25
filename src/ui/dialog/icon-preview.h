@@ -68,6 +68,7 @@ private:
     Gtk::VBox       iconBox;
     Gtk::HPaned     splitter;
 
+    Glib::ustring targetId;
     int hot;
     int numEntries;
     int* sizes;

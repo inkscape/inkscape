@@ -393,6 +393,7 @@ static char const preferences_skeleton[] =
 "  <group\n"
 "     id=\"iconpreview\"\n"
 "     pack=\"1\"\n"
+"     selectionHold=\"0\"\n"
 "     selectionOnly=\"0\">\n"
 "    <group\n"
 "       id=\"sizes\">\n"
