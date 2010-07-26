@@ -392,6 +392,7 @@ static char const preferences_skeleton[] =
 "\n"
 "  <group\n"
 "     id=\"iconpreview\"\n"
+"     autoRefresh=\"1\"\n"
 "     pack=\"1\"\n"
 "     selectionHold=\"1\"\n"
 "     showFrames=\"1\"\n"
