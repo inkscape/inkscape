@@ -21,6 +21,7 @@ lpeobject-reference.cpp
 lpe-patternalongpath.cpp
 lpe-perp_bisector.cpp
 lpe-perspective_path.cpp
+lpe-powerstroke.cpp
 lpe-skeleton.cpp
 lpe-sketch.cpp
 lpe-spiro.cpp

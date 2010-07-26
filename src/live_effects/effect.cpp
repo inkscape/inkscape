@@ -75,6 +75,7 @@
 #include "live_effects/lpe-line_segment.h"
 #include "live_effects/lpe-recursiveskeleton.h"
 #include "live_effects/lpe-extrude.h"
+#include "live_effects/lpe-powerstroke.h"
 
 
 namespace Inkscape {
@@ -100,6 +101,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {PATH_LENGTH,           N_("Path length"),             "path_length"},
     {PERP_BISECTOR,         N_("Perpendicular bisector"),  "perp_bisector"},
     {PERSPECTIVE_PATH,      N_("Perspective path"),        "perspective_path"},
+    {POWERSTROKE,           N_("Power stroke"),            "powerstroke"},
     {COPY_ROTATE,           N_("Rotate copies"),           "copy_rotate"},
     {RECURSIVE_SKELETON,    N_("Recursive skeleton"),      "recursive_skeleton"},
     {TANGENT_TO_CURVE,      N_("Tangent to curve"),        "tangent_to_curve"},
@@ -120,6 +122,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {ROUGH_HATCHES,         N_("Hatches (rough)"),         "rough_hatches"},
     {SKETCH,                N_("Sketch"),                  "sketch"},
     {RULER,                 N_("Ruler"),                   "ruler"},
+/* 0.49 */
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(LPETypeData)/sizeof(*LPETypeData));
 
@@ -236,6 +239,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case EXTRUDE:
             neweffect = static_cast<Effect*> ( new LPEExtrude(lpeobj) );
+            break;
+        case POWERSTROKE:
+            neweffect = static_cast<Effect*> ( new LPEPowerStroke(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);

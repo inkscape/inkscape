@@ -67,6 +67,8 @@ ink_common_sources += \
 	live_effects/lpe-parallel.h	\
 	live_effects/lpe-copy_rotate.cpp	\
 	live_effects/lpe-copy_rotate.h	\
+	live_effects/lpe-powerstroke.cpp	\
+	live_effects/lpe-powerstroke.h	\
 	live_effects/lpe-offset.cpp	\
 	live_effects/lpe-offset.h	\
 	live_effects/lpe-ruler.cpp	\
