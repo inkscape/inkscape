@@ -12,6 +12,7 @@
 #include "svg/stringstream.h"
 
 #include <2geom/coord.h>
+#include <2geom/point.h>
 
 namespace Inkscape {
 
@@ -33,6 +34,21 @@ ArrayParam<float>::readsvg(const gchar * str)
     float newx = Geom::infinity();
     sp_svg_number_read_f(str, &newx);
     return newx;
+}
+
+template <>
+Geom::Point
+ArrayParam<Geom::Point>::readsvg(const gchar * str)
+{
+    gchar ** strarray = g_strsplit(str, ",", 2);
+    double newx, newy;
+    unsigned int success = sp_svg_number_read_d(strarray[0], &newx);
+    success += sp_svg_number_read_d(strarray[1], &newy);
+    g_strfreev (strarray);
+    if (success == 2) {
+        return Geom::Point(newx, newy);
+    }
+    return Geom::Point(Geom::infinity(),Geom::infinity());
 }
 
 } /* namespace LivePathEffect */

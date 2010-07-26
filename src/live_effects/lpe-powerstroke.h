@@ -14,19 +14,10 @@
 
 #include "live_effects/effect.h"
 #include "live_effects/parameter/point.h"
-#include "live_effects/parameter/array.h"
+#include "live_effects/parameter/powerstrokepointarray.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
-
-// each knotholder handle for your LPE requires a separate class derived from KnotHolderEntity;
-// define it in lpe-powerstroke.cpp and register it in the effect's constructor
-/**
-namespace PowerStroke {
-  // we need a separate namespace to avoid clashes with other LPEs
-  class KnotHolderEntityMyHandle;
-}
-**/
 
 class LPEPowerStroke : public Effect {
 public:
@@ -37,14 +28,11 @@ public:
 
     virtual void doOnApply(SPLPEItem *lpeitem);
 
-    /* the knotholder entity classes (if any) must be declared friends */
-    //friend class PowerStroke::KnotHolderEntityMyHandle;
-
 private:
     PointParam offset_1;
     PointParam offset_2;
     PointParam offset_3;
-//    ArrayParam<Geom::Point> offset_points;
+    PowerStrokePointArrayParam offset_points;
 
     LPEPowerStroke(const LPEPowerStroke&);
     LPEPowerStroke& operator=(const LPEPowerStroke&);

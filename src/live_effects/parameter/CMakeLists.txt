@@ -5,6 +5,7 @@ parameter.cpp
 path.cpp
 path-reference.cpp
 point.cpp
+powerstrokepointarray.cpp
 random.cpp
 text.cpp
 unit.cpp

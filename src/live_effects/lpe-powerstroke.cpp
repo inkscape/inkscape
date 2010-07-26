@@ -28,18 +28,15 @@ LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     offset_1(_("Start Offset"), _("Handle to control the distance of the offset from the curve"), "offset_1", &wr, this),
     offset_2(_("End Offset"), _("Handle to control the distance of the offset from the curve"), "offset_2", &wr, this),
-    offset_3(_("End Offset"), _("Handle to control the distance of the offset from the curve"), "offset_3", &wr, this)
-//    offset_points(_("Offset points"), _("Offset points"), "offset_points", &wr, this)
+    offset_3(_("End Offset"), _("Handle to control the distance of the offset from the curve"), "offset_3", &wr, this),
+    offset_points(_("Offset points"), _("Offset points"), "offset_points", &wr, this)
 {
     show_orig_path = true;
 
     registerParameter( dynamic_cast<Parameter *>(&offset_1) );
     registerParameter( dynamic_cast<Parameter *>(&offset_2) );
     registerParameter( dynamic_cast<Parameter *>(&offset_3) );
-//    registerParameter( dynamic_cast<Parameter *>(&offset_points) );
-
-    /* register all your knotholder handles here: */
-    //registerKnotHolderHandle(new PowerStroke::KnotHolderEntityAttachMyHandle(), _("help message"));
+    registerParameter( dynamic_cast<Parameter *>(&offset_points) );
 }
 
 LPEPowerStroke::~LPEPowerStroke()
@@ -118,26 +115,6 @@ LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & 
     Piecewise<D2<SBasis> > output = compose(pwd2_in,x) + y*compose(n,x);
     return output;
 }
-
-
-/* ########################
- *  Define the classes for your knotholder handles here
- */
-
-/*
-namespace PowerStroke {
-
-class KnotHolderEntityMyHandle : public LPEKnotHolderEntity
-{
-public:
-    // the set() and get() methods must be implemented, click() is optional
-    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
-    //virtual void knot_click(guint state);
-};
-
-} // namespace PowerStroke
-*/
 
 /* ######################## */
 
