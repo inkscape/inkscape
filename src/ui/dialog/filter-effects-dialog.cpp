@@ -176,7 +176,7 @@ public:
         if (tip_text) {
             _tt.set_tip(*this, tip_text);
         }
-        combo = new ComboBoxEnum<T>(default_value, c, a);
+        combo = new ComboBoxEnum<T>(default_value, c, a, false);
         add(*combo);
         show_all();
     }
