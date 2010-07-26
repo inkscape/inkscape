@@ -299,6 +299,10 @@ LivePathEffectEditor::effect_list_reload(SPLPEItem *lpeitem)
     PathEffectList::iterator it;
     for( it = effectlist.begin() ; it!=effectlist.end(); it++ )
     {
+        if ( !(*it)->lpeobject ) {
+            continue;
+        }
+
         if ((*it)->lpeobject->get_lpe()) {
             Gtk::TreeModel::Row row = *(effectlist_store->append());
             row[columns.col_name] = (*it)->lpeobject->get_lpe()->getName();
