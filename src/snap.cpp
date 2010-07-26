@@ -585,8 +585,18 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 // calculate that line here
                 dedicated_constraint = Inkscape::Snapper::SnapConstraint(origin, b);
             } else if (transformation_type == ROTATE) {
-                // Geom::L2(b) is the radius of the circular constraint
-                dedicated_constraint = Inkscape::Snapper::SnapConstraint(origin, b, Geom::L2(b));
+                Geom::Coord r = Geom::L2(b); // the radius of the circular constraint
+                if (r < 1e-9) { // points too close to the rotation center will not move. Don't try to snap these
+                    // as they will always yield a perfect snap result if they're already snapped beforehand (e.g.
+                    // when the transformation center has been snapped to a grid intersection in the selector tool)
+                    continue; // skip this SnapCandidate and continue with the next one
+                    // PS1: Apparently we don't have to do this for skewing, but why?
+                    // PS2: We cannot easily filter these points upstream, e.g. in the grab() method (seltrans.cpp)
+                    // because the rotation center will change when pressing shift, and grab() won't be recalled.
+                    // Filtering could be done in handleRequest() (again in seltrans.cpp), by iterating through
+                    // the snap candidates. But hey, we're iterating here anyway.
+                }
+                dedicated_constraint = Inkscape::Snapper::SnapConstraint(origin, b, r);
             } else if (transformation_type == STRETCH) { // when non-uniform stretching {
                 dedicated_constraint = Inkscape::Snapper::SnapConstraint((*i).getPoint(), component_vectors[dim]);
             } else if (transformation_type == TRANSLATE) {
@@ -702,9 +712,9 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                     snapped_point.setSecondSnapDistance(NR_HUGE);
                     break;
                 case ROTATE:
-					// a is vector to snapped point; b is vector to original point; now lets calculate angle between a and b
-                	result[0] = atan2(Geom::dot(Geom::rot90(b), a), Geom::dot(b, a));
-					result[1] = result[1]; // how else should we store an angle in a point ;-)
+                    // a is vector to snapped point; b is vector to original point; now lets calculate angle between a and b
+                    result[0] = atan2(Geom::dot(Geom::rot90(b), a), Geom::dot(b, a));
+                    result[1] = result[1]; // how else should we store an angle in a point ;-)
                     // Store the metric for this transformation as a virtual distance (we're storing an angle)
                     snapped_point.setSnapDistance(std::abs(result[0] - transformation[0]));
                     snapped_point.setSecondSnapDistance(NR_HUGE);
