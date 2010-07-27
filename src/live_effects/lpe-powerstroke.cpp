@@ -26,16 +26,10 @@ namespace LivePathEffect {
 
 LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    offset_1(_("Start Offset"), _("Handle to control the distance of the offset from the curve"), "offset_1", &wr, this),
-    offset_2(_("End Offset"), _("Handle to control the distance of the offset from the curve"), "offset_2", &wr, this),
-    offset_3(_("End Offset"), _("Handle to control the distance of the offset from the curve"), "offset_3", &wr, this),
     offset_points(_("Offset points"), _("Offset points"), "offset_points", &wr, this)
 {
     show_orig_path = true;
 
-    registerParameter( dynamic_cast<Parameter *>(&offset_1) );
-    registerParameter( dynamic_cast<Parameter *>(&offset_2) );
-    registerParameter( dynamic_cast<Parameter *>(&offset_3) );
     registerParameter( dynamic_cast<Parameter *>(&offset_points) );
 }
 
@@ -48,9 +42,12 @@ LPEPowerStroke::~LPEPowerStroke()
 void
 LPEPowerStroke::doOnApply(SPLPEItem *lpeitem)
 {
-    offset_1.param_set_and_write_new_value(*(SP_SHAPE(lpeitem)->curve->first_point()));
-    offset_2.param_set_and_write_new_value(*(SP_SHAPE(lpeitem)->curve->last_point()));
-    offset_3.param_set_and_write_new_value(*(SP_SHAPE(lpeitem)->curve->last_point()));
+    std::vector<Geom::Point> points;
+    points.push_back( *(SP_SHAPE(lpeitem)->curve->first_point()) );
+    Geom::Path const *path = SP_SHAPE(lpeitem)->curve->first_path();
+    points.push_back( path->pointAt(path->size()/2) );
+    points.push_back( *(SP_SHAPE(lpeitem)->curve->last_point()) );
+    offset_points.param_set_and_write_new_value(points);
 }
 
 static void append_half_circle(Geom::Piecewise<Geom::D2<Geom::SBasis> > &pwd2,
@@ -68,38 +65,27 @@ LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & 
 {
     using namespace Geom;
 
-    double t1 = nearest_point(offset_1, pwd2_in);
-    double offset1 = L2(pwd2_in.valueAt(t1) - offset_1);
+    std::vector<Geom::Point> ts(offset_points.data().size());
 
-    double t2 = nearest_point(offset_2, pwd2_in);
-    double offset2 = L2(pwd2_in.valueAt(t2) - offset_2);
-
-    double t3 = nearest_point(offset_3, pwd2_in);
-    double offset3 = L2(pwd2_in.valueAt(t3) - offset_3);
-
-    /*
-    unsigned number_of_points = offset_points.data.size();
-    double* t = new double[number_of_points];
-    Point*  offset = new double[number_of_points];
-    for (unsigned i = 0; i < number_of_points; ++i) {
-        t[i] = nearest_point(offset_points.data[i], pwd2_in);
-        Point A = pwd2_in.valueAt(t[i]);
-        offset[i] = L2(A - offset_points.data[i]);
+    for (unsigned int i; i < ts.size(); ++i) {
+        double t = nearest_point(offset_points.data().at(i), pwd2_in);
+        double offset = L2(pwd2_in.valueAt(t) - offset_points.data().at(i));
+        ts.at(i) = Geom::Point(t, offset);
     }
-    */
 
     // create stroke path where points (x,y) = (t, offset)
     Path strokepath;
     strokepath.start( Point(pwd2_in.domain().min(),0) );
-    strokepath.appendNew<Geom::LineSegment>( Point(t1, offset1) );
-    strokepath.appendNew<Geom::LineSegment>( Point(t2, offset2) );
-    strokepath.appendNew<Geom::LineSegment>( Point(t3, offset3) );
+    for (unsigned int i = 0 ; i < ts.size(); ++i) {
+        strokepath.appendNew<Geom::LineSegment>(ts.at(i));
+    }
     strokepath.appendNew<Geom::LineSegment>( Point(pwd2_in.domain().max(), 0) );
-    strokepath.appendNew<Geom::LineSegment>( Point(t3, -offset3) );
-    strokepath.appendNew<Geom::LineSegment>( Point(t2, -offset2) );
-    strokepath.appendNew<Geom::LineSegment>( Point(t1, -offset1) );
+    for (unsigned int i = 0; i < ts.size(); ++i) {
+        Geom::Point temp = ts.at(ts.size() - 1 - i);
+        strokepath.appendNew<Geom::LineSegment>( Geom::Point(temp[X], - temp[Y]) );
+    }
     strokepath.close();
-    
+
     D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(strokepath.toPwSb());
     Piecewise<SBasis> x = Piecewise<SBasis>(patternd2[0]);
     Piecewise<SBasis> y = Piecewise<SBasis>(patternd2[1]);

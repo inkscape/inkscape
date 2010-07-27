@@ -33,7 +33,7 @@ PowerStrokePointArrayParam::PowerStrokePointArrayParam( const Glib::ustring& lab
 {
     knot_shape = SP_KNOT_SHAPE_DIAMOND;
     knot_mode  = SP_KNOT_MODE_XOR;
-    knot_color = 0xffffff00;
+    knot_color = 0xff00ff00;
     handle_tip = g_strdup(htip);
 }
 
@@ -110,15 +110,16 @@ PowerStrokePointArrayParamKnotHolderEntity::PowerStrokePointArrayParamKnotHolder
 void
 PowerStrokePointArrayParamKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
-//    Geom::Point const s = snap_knot_position(p);
-//    pparam->param_setValue(s);
-//    sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
+    Geom::Point const s = snap_knot_position(p);
+    _pparam->_vector.at(_index) = s;
+//    _pparam->param_set_and_write_new_value(_pparam->_vector);
+    sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
 }
 
 Geom::Point
 PowerStrokePointArrayParamKnotHolderEntity::knot_get()
 {
-    Geom::Point canvas_point;
+    Geom::Point canvas_point = _pparam->_vector.at(_index);
     return canvas_point;
 }
 
@@ -131,11 +132,11 @@ PowerStrokePointArrayParamKnotHolderEntity::knot_click(guint /*state*/)
 void
 PowerStrokePointArrayParam::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
 {
-    //PowerStrokePointArrayParamKnotHolderEntity *e = new PowerStrokePointArrayParamKnotHolderEntity(this);
-    // TODO: can we ditch handleTip() etc. because we have access to handle_tip etc. itself???
-    //e->create(desktop, item, knotholder, handleTip(), knot_shape, knot_mode, knot_color);
-    //knotholder->add(e);
-
+    for (unsigned int i = 0; i < _vector.size(); ++i) {
+        PowerStrokePointArrayParamKnotHolderEntity *e = new PowerStrokePointArrayParamKnotHolderEntity(this, i);
+        e->create(desktop, item, knotholder, handle_tip, knot_shape, knot_mode, knot_color);
+        knotholder->add(e);
+    }
 }
 
 } /* namespace LivePathEffect */

@@ -85,10 +85,7 @@ public:
         g_free(str);
     }
 
-private:
-    ArrayParam(const ArrayParam&);
-    ArrayParam& operator=(const ArrayParam&);
-
+protected:
     std::vector<StorageType> _vector;
     size_t _default_size;
 
@@ -103,6 +100,10 @@ private:
     }
 
     StorageType readsvg(const gchar * str);
+
+private:
+    ArrayParam(const ArrayParam&);
+    ArrayParam& operator=(const ArrayParam&);
 };
 
 

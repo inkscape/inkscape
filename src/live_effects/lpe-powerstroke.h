@@ -29,9 +29,6 @@ public:
     virtual void doOnApply(SPLPEItem *lpeitem);
 
 private:
-    PointParam offset_1;
-    PointParam offset_2;
-    PointParam offset_3;
     PowerStrokePointArrayParam offset_points;
 
     LPEPowerStroke(const LPEPowerStroke&);

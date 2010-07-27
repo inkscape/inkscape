@@ -22,6 +22,8 @@ namespace Inkscape {
 
 namespace LivePathEffect {
 
+class PowerStrokePointArrayParamKnotHolderEntity;
+
 class PowerStrokePointArrayParam : public ArrayParam<Geom::Point> {
 public:
     PowerStrokePointArrayParam( const Glib::ustring& label,
@@ -40,6 +42,8 @@ public:
 
     virtual bool providesKnotHolderEntities() { return true; }
     virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
+
+    friend class PowerStrokePointArrayParamKnotHolderEntity;
 
 private:
     PowerStrokePointArrayParam(const PowerStrokePointArrayParam&);
