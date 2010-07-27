@@ -2177,13 +2177,14 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_COMPONENTTRANSFER);
     _settings->add_notimplemented();
+    /*
     //TRANSLATORS: for info on "Slope" and "Intercept", see http://id.mind.net/~zona/mmts/functionInstitute/linearFunctions/lsif.html
-    /*_settings->add_combo(COMPONENTTRANSFER_TYPE_IDENTITY, SP_ATTR_TYPE, _("Type"), ComponentTransferTypeConverter);
-    _ct_slope = _settings->add_spinslider(SP_ATTR_SLOPE, _("Slope"), -100, 100, 1, 0.01, 1);
-    _ct_intercept = _settings->add_spinslider(SP_ATTR_INTERCEPT, _("Intercept"), -100, 100, 1, 0.01, 1);
-    _ct_amplitude = _settings->add_spinslider(SP_ATTR_AMPLITUDE, _("Amplitude"), 0, 100, 1, 0.01, 1);
-    _ct_exponent = _settings->add_spinslider(SP_ATTR_EXPONENT, _("Exponent"), 0, 100, 1, 0.01, 1);
-    _ct_offset = _settings->add_spinslider(SP_ATTR_OFFSET, _("Offset"), -100, 100, 1, 0.01, 1);*/
+    _settings->add_combo(COMPONENTTRANSFER_TYPE_IDENTITY, SP_ATTR_TYPE, _("Type"), ComponentTransferTypeConverter);
+    _ct_slope = _settings->add_spinslider(1, SP_ATTR_SLOPE, _("Slope"), -10, 10, 0.1, 0.01, 2);
+    _ct_intercept = _settings->add_spinslider(0, SP_ATTR_INTERCEPT, _("Intercept"), -10, 10, 0.1, 0.01, 2);
+    _ct_amplitude = _settings->add_spinslider(1, SP_ATTR_AMPLITUDE, _("Amplitude"), 0, 10, 0.1, 0.01, 2);
+    _ct_exponent = _settings->add_spinslider(1, SP_ATTR_EXPONENT, _("Exponent"), 0, 10, 0.1, 0.01, 2);
+    _ct_offset = _settings->add_spinslider(0, SP_ATTR_OFFSET, _("Offset"), -10, 10, 0.1, 0.01, 2);*/
 
     _settings->type(NR_FILTER_COMPOSITE);
     _settings->add_combo(COMPOSITE_OVER, SP_ATTR_OPERATOR, _("Operator:"), CompositeOperatorConverter);
@@ -2205,8 +2206,8 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_DIFFUSELIGHTING);
     _settings->add_color(/*default: white*/ 0xffffffff, SP_PROP_LIGHTING_COLOR, _("Diffuse Color:"), _("Defines the color of the light source"));
-    _settings->add_spinslider(1, SP_ATTR_SURFACESCALE, _("Surface Scale:"), -1000, 1000, 1, 0.01, 1, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
-    _settings->add_spinslider(1, SP_ATTR_DIFFUSECONSTANT, _("Constant:"), 0, 100, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
+    _settings->add_spinslider(1, SP_ATTR_SURFACESCALE, _("Surface Scale:"), -5, 5, 0.01, 0.001, 3, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
+    _settings->add_spinslider(1, SP_ATTR_DIFFUSECONSTANT, _("Constant:"), 0, 5, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
     _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length:"), 0.01, 10, 1, 0.01, 1);
     _settings->add_lightsource();
 
@@ -2238,9 +2239,9 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_SPECULARLIGHTING);
     _settings->add_color(/*default: white*/ 0xffffffff, SP_PROP_LIGHTING_COLOR, _("Specular Color:"), _("Defines the color of the light source"));
-    _settings->add_spinslider(1, SP_ATTR_SURFACESCALE, _("Surface Scale:"), -1000, 1000, 1, 0.01, 1, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
-    _settings->add_spinslider(1, SP_ATTR_SPECULARCONSTANT, _("Constant:"), 0, 100, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
-    _settings->add_spinslider(1, SP_ATTR_SPECULAREXPONENT, _("Exponent:"), 1, 128, 1, 0.01, 1, _("Exponent for specular term, larger is more \"shiny\"."));
+    _settings->add_spinslider(1, SP_ATTR_SURFACESCALE, _("Surface Scale:"), -5, 5, 0.1, 0.01, 2, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
+    _settings->add_spinslider(1, SP_ATTR_SPECULARCONSTANT, _("Constant:"), 0, 5, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
+    _settings->add_spinslider(1, SP_ATTR_SPECULAREXPONENT, _("Exponent:"), 1, 50, 1, 0.01, 1, _("Exponent for specular term, larger is more \"shiny\"."));
     _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length:"), 0.01, 10, 1, 0.01, 1);
     _settings->add_lightsource();
 
