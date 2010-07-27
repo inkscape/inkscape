@@ -26,11 +26,13 @@ namespace LivePathEffect {
 
 LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    offset_points(_("Offset points"), _("Offset points"), "offset_points", &wr, this)
+    offset_points(_("Offset points"), _("Offset points"), "offset_points", &wr, this),
+    sort_points(_("Sort points"), _("Sort offset points according to their time value along the curve."), "sort_points", &wr, this, true)
 {
     show_orig_path = true;
 
     registerParameter( dynamic_cast<Parameter *>(&offset_points) );
+    registerParameter( dynamic_cast<Parameter *>(&sort_points) );
 }
 
 LPEPowerStroke::~LPEPowerStroke()
@@ -60,17 +62,27 @@ static void append_half_circle(Geom::Piecewise<Geom::D2<Geom::SBasis> > &pwd2,
     pwd2.continuousConcat(cap_pwd2);
 }
 
+static bool compare_offsets (Geom::Point first, Geom::Point second)
+{
+    return first[Geom::X] <= second[Geom::X];
+}
+
+
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
     using namespace Geom;
 
+    // perhaps use std::list instead of std::vector?
     std::vector<Geom::Point> ts(offset_points.data().size());
 
     for (unsigned int i; i < ts.size(); ++i) {
         double t = nearest_point(offset_points.data().at(i), pwd2_in);
         double offset = L2(pwd2_in.valueAt(t) - offset_points.data().at(i));
         ts.at(i) = Geom::Point(t, offset);
+    }
+    if (sort_points) {
+        sort(ts.begin(), ts.end(), compare_offsets);
     }
 
     // create stroke path where points (x,y) = (t, offset)

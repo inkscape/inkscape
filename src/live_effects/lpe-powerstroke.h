@@ -13,7 +13,7 @@
 #define INKSCAPE_LPE_POWERSTROKE_H
 
 #include "live_effects/effect.h"
-#include "live_effects/parameter/point.h"
+#include "live_effects/parameter/bool.h"
 #include "live_effects/parameter/powerstrokepointarray.h"
 
 namespace Inkscape {
@@ -30,6 +30,7 @@ public:
 
 private:
     PowerStrokePointArrayParam offset_points;
+    BoolParam sort_points;
 
     LPEPowerStroke(const LPEPowerStroke&);
     LPEPowerStroke& operator=(const LPEPowerStroke&);
