@@ -198,7 +198,9 @@ sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int ev
 		doc->priv->undoStackObservers.notifyUndoCommitEvent(event);
 	}
 
-	doc->actionkey = key;
+        if (doc->actionkey)
+            g_free(doc->actionkey);
+	doc->actionkey = key ? g_strdup(key) : NULL;
 
 	doc->virgin = FALSE;
         doc->setModifiedSinceSave();

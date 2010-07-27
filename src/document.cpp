@@ -211,7 +211,10 @@ SPDocument::~SPDocument() {
         inkscape_unref();
         keepalive = FALSE;
     }
-
+    if (actionkey) {
+        g_free(actionkey);
+        actionkey = NULL;
+    }
     //delete this->_whiteboard_session_manager;
 }
 
