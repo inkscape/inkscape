@@ -92,7 +92,7 @@ SPDocument::SPDocument() :
     base(0),
     name(0),
     priv(0), // reset in ctor
-    actionkey(0),
+    actionkey(),
     modified_id(0),
     rerouting_handler_id(0),
     profileManager(0), // deferred until after other initialization
@@ -211,10 +211,6 @@ SPDocument::~SPDocument() {
         inkscape_unref();
         keepalive = FALSE;
     }
-    if (actionkey) {
-        g_free(actionkey);
-        actionkey = NULL;
-    }
     //delete this->_whiteboard_session_manager;
 }
 
@@ -291,7 +287,7 @@ void SPDocument::collectOrphans() {
 
 void SPDocument::reset_key (void */*dummy*/)
 {
-    actionkey = NULL;
+    actionkey.clear();
 }
 
 SPDocument *

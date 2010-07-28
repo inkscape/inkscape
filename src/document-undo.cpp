@@ -125,11 +125,10 @@ sp_document_done (SPDocument *doc, const unsigned int event_type, Glib::ustring 
         sp_document_maybe_done (doc, NULL, event_type, event_description);
 }
 
-void
-sp_document_reset_key (Inkscape::Application */*inkscape*/, SPDesktop */*desktop*/, GtkObject *base)
+void sp_document_reset_key( Inkscape::Application * /*inkscape*/, SPDesktop * /*desktop*/, GtkObject *base )
 {
-    SPDocument *doc = (SPDocument *) base;
-    doc->actionkey = NULL;
+    SPDocument *doc = reinterpret_cast<SPDocument *>(base);
+    doc->actionkey.clear();
 }
 
 namespace {
@@ -171,6 +170,9 @@ sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int ev
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
 	g_assert (doc->priv->sensitive);
+        if ( key && !*key ) {
+            g_warning("Blank undo key specified.");
+        }
 
         Inkscape::Debug::EventTracker<CommitEvent> tracker(doc, key, event_type);
 
@@ -188,7 +190,7 @@ sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int ev
 		return;
 	}
 
-	if (key && doc->actionkey && !strcmp (key, doc->actionkey) && doc->priv->undo) {
+	if (key && !doc->actionkey.empty() && (doc->actionkey == key) && doc->priv->undo) {
                 ((Inkscape::Event *)doc->priv->undo->data)->event =
                     sp_repr_coalesce_log (((Inkscape::Event *)doc->priv->undo->data)->event, log);
 	} else {
@@ -198,9 +200,11 @@ sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int ev
 		doc->priv->undoStackObservers.notifyUndoCommitEvent(event);
 	}
 
-        if (doc->actionkey)
-            g_free(doc->actionkey);
-	doc->actionkey = key ? g_strdup(key) : NULL;
+        if ( key ) {
+            doc->actionkey = key;
+        } else {
+            doc->actionkey.clear();
+        }
 
 	doc->virgin = FALSE;
         doc->setModifiedSinceSave();
@@ -259,7 +263,7 @@ sp_document_undo (SPDocument *doc)
 	doc->priv->sensitive = FALSE;
         doc->priv->seeking = true;
 
-	doc->actionkey = NULL;
+	doc->actionkey.clear();
 
 	finish_incomplete_transaction(*doc);
 
@@ -305,7 +309,7 @@ sp_document_redo (SPDocument *doc)
 	doc->priv->sensitive = FALSE;
         doc->priv->seeking = true;
 
-	doc->actionkey = NULL;
+	doc->actionkey.clear();
 
 	finish_incomplete_transaction(*doc);
 
