@@ -124,9 +124,17 @@ PowerStrokePointArrayParamKnotHolderEntity::knot_get()
 }
 
 void
-PowerStrokePointArrayParamKnotHolderEntity::knot_click(guint /*state*/)
+PowerStrokePointArrayParamKnotHolderEntity::knot_click(guint state)
 {
     g_print ("This is the %d handle associated to parameter '%s'\n", _index, _pparam->param_key.c_str());
+
+    if (state & GDK_CONTROL_MASK) {
+        std::vector<Geom::Point> & vec = _pparam->_vector;
+        vec.insert(vec.begin() + _index, 1, vec.at(_index));
+        _pparam->param_set_and_write_new_value(vec);
+        g_print ("Added handle %d associated to parameter '%s'\n", _index, _pparam->param_key.c_str());
+        /// @todo  this BUGS ! the knot stuff should be reloaded when adding a new node!
+    }
 }
 
 void
