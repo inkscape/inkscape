@@ -445,22 +445,32 @@ class Layout::Calculator
 
             // we may also have y move orders to deal with here (dx, dy and rotate are done per span)
 
-            // Comment added:  1 June 2010:
-            // The first line in a normal <text> object is placed by the read-in "y" value. The rest are
-            // determined by Inkscape. This is to allow insertation of new lines in the middle
-            // of a <text> object. New "y" values are then stored in each <tspan> that represents
-            // a new line. The line spacing should depend only on font-size and line-height (and not
-            // on any y-kerning). Line spacing is already handled by the calling routine. Note that
-            // this may render improperly any SVG with <tspan>s created/edited by other programs.
+            // Comment updated:  23 July 2010:
+            // We must handle two cases:
+            //
+            //   1. Inkscape SVG where the first line is placed by the read-in "y" value and the
+            //      rest are determined by 'font-size' and 'line-height' (and not by any
+            //      y-kerning). <tspan>s in this case are marked by sodipodi:role="line". This
+            //      allows new lines to be inserted in the middle of a <text> object. On output,
+            //      new "y" values are calculated for each <tspan> that represents a new line. Line
+            //      spacing is already handled by the calling routine.
+            //
+            //   2. Plain SVG where each <text> or <tspan> is placed by its own "x" and "y" values.
+            //      Note that in this case Inkscape treats each <text> object with any included
+            //      <tspan>s as a single line of text. This can be confusing in the code below.
+
             if (!it_chunk->broken_spans.empty()                               // Not empty paragraph
                 && it_chunk->broken_spans.front().start.char_byte == 0 ) {    // Beginning of unbroken span
 
-                // If empty or new line
+                // If empty or new line (sodipode:role="line")
                 if( _flow._characters.empty() ||
                     _flow._characters.back().chunk(&_flow).in_line != _flow._lines.size() - 1) {
 
+                    // This is the Inkscape SVG case.
+                    //
                     // If <tspan> "y" attribute is set, use it (initial "y" attributes in
-                    // <tspans> other than the first have already been stripped).
+                    // <tspans> other than the first have already been stripped for <tspans>
+                    // marked with role="line", see sp-text.cpp: SPText::_buildLayoutInput).
                     if( it_chunk->broken_spans.front().start.iter_span->y._set ) {
 
                         // Use set "y" attribute
@@ -475,9 +485,17 @@ class Layout::Calculator
                     }
 
                     // Reset relative y_offset ("dy" attribute is relative but should be reset at
-                    // the beginning of each <tspan>.)
+                    // the beginning of each line since each line will have a new "y" written out.)
                     _y_offset = 0.0;
 
+                } else {
+
+                    // This is the plain SVG case
+                    //
+                    // "x" and "y" are used to place text, simulating lines as necessary
+                    if( it_chunk->broken_spans.front().start.iter_span->y._set ) {
+                        _y_offset = it_chunk->broken_spans.front().start.iter_span->y.computed - new_line.baseline_y;
+                    }
                 }
             }
             _flow._chunks.push_back(new_chunk);
@@ -1243,8 +1261,9 @@ bool Layout::Calculator::_findChunksForLine(ParagraphInfo const &para,
     UnbrokenSpanPosition span_pos;
     for( ; ; ) {
         std::vector<ScanlineMaker::ScanRun> scan_runs;
-        scan_runs = _scanline_maker->makeScanline(*line_height);
+        scan_runs = _scanline_maker->makeScanline(*line_height); // Only one line with "InfiniteScanlineMaker
         while (scan_runs.empty()) {
+            // Only used by ShapeScanlineMaker
             if (!_goToNextWrapShape()) return false;  // no more shapes to wrap in to
             scan_runs = _scanline_maker->makeScanline(*line_height);
         }

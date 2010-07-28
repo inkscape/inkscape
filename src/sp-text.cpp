@@ -528,7 +528,7 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
     }
     else if (SP_IS_TSPAN(root)) {
         SPTSpan *tspan = SP_TSPAN(root);
-        // x, y attributes are stripped from some tspans as we do our own line layout
+        // x, y attributes are stripped from some tspans marked with role="line" as we do our own line layout.
         // This should be checked carefully, as it can undo line layout in imported SVG files.
         bool use_xy = !in_textpath && (tspan->role == SP_TSPAN_ROLE_UNSPECIFIED || !tspan->attributes.singleXYCoordinates());
         tspan->attributes.mergeInto(&optional_attrs, parent_optional_attrs, parent_attrs_offset, use_xy, true);
