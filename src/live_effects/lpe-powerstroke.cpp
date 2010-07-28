@@ -19,6 +19,7 @@
 #include <2geom/piecewise.h>
 #include <2geom/sbasis-geometric.h>
 #include <2geom/transforms.h>
+#include <2geom/bezier-utils.h>
 
 
 /// @TODO  Move this to 2geom
@@ -44,18 +45,58 @@ public:
     virtual ~Linear() {};
 
     virtual Path interpolateToPath(std::vector<Point> points) {
-        Path strokepath;
-        strokepath.start( points.at(0) );
+        Path path;
+        path.start( points.at(0) );
         for (unsigned int i = 1 ; i < points.size(); ++i) {
-            strokepath.appendNew<Geom::LineSegment>(points.at(i));
+            path.appendNew<Geom::LineSegment>(points.at(i));
         }
-        return strokepath;
+        return path;
     };
 
 private:
     Linear(const Linear&);
     Linear& operator=(const Linear&);
 };
+
+// this class is terrible
+class CubicBezierFit : public Interpolator {
+public:
+    CubicBezierFit() {};
+    virtual ~CubicBezierFit() {};
+
+    virtual Path interpolateToPath(std::vector<Point> points) {
+        unsigned int n_points = points.size();
+        // worst case gives us 2 segment per point
+        int max_segs = 8*n_points;
+        Geom::Point * b = g_new(Geom::Point, max_segs);
+        Geom::Point * points_array = g_new(Geom::Point, 4*n_points);
+        for (unsigned i = 0; i < n_points; ++i) {
+            points_array[i] = points.at(i);
+        }
+
+        double tolerance_sq = 0; // this value is just a random guess
+
+        int const n_segs = Geom::bezier_fit_cubic_r(b, points_array, n_points,
+                                                 tolerance_sq, max_segs);
+
+        Geom::Path fit;
+        if ( n_segs > 0)
+        {
+            fit.start(b[0]);
+            for (int c = 0; c < n_segs; c++) {
+                fit.appendNew<Geom::CubicBezier>(b[4*c+1], b[4*c+2], b[4*c+3]);
+            }
+        }
+        g_free(b);
+        g_free(points_array);
+        return fit;
+    };
+
+private:
+    CubicBezierFit(const CubicBezierFit&);
+    CubicBezierFit& operator=(const CubicBezierFit&);
+};
+
 
 } //namespace Interpolate
 } //namespace Geom
