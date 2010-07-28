@@ -135,6 +135,7 @@ class Pattern(inkex.Effect):
         # plot Voronoi diagram
         sl = voronoi.SiteList(pts)
         voronoi.voronoi(sl, c)
+        path = ""
         for edge in c.edges:
             if edge[1] >= 0 and edge[2] >= 0:       # two vertices
                 [x1, y1, x2, y2] = clip_line(c.vertices[edge[1]][0], c.vertices[edge[1]][1], c.vertices[edge[2]][0], c.vertices[edge[2]][1], q['width'], q['height'])
@@ -161,9 +162,10 @@ class Pattern(inkex.Effect):
                     ytemp = c.lines[edge[0]][2]/c.lines[edge[0]][1]
                 [x1, y1, x2, y2] = clip_line(xtemp, ytemp, c.vertices[edge[2]][0], c.vertices[edge[2]][1], q['width'], q['height'])
             if x1 or x2 or y1 or y2:
-                path = 'M %f,%f %f,%f' % (x1, y1, x2, y2)
-                attribs = {'d': path, 'style': 'stroke:#000000'}
-                inkex.etree.SubElement(pattern, inkex.addNS('path', 'svg'), attribs)
+                path += 'M %.3f,%.3f %.3f,%.3f ' % (x1, y1, x2, y2)
+
+        attribs = {'d': path, 'style': 'stroke:#000000'}
+        inkex.etree.SubElement(pattern, inkex.addNS('path', 'svg'), attribs)
 
         # link selected object to pattern
         obj = self.selected[self.options.ids[0]]
