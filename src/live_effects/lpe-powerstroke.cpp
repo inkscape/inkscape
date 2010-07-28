@@ -97,6 +97,28 @@ private:
     CubicBezierFit& operator=(const CubicBezierFit&);
 };
 
+/// @todo invent name for this class
+class CubicBezierJohan : public Interpolator {
+public:
+    CubicBezierJohan() {};
+    virtual ~CubicBezierJohan() {};
+
+    virtual Path interpolateToPath(std::vector<Point> points) {
+        Path fit;
+        fit.start(points.at(0));
+        for (unsigned int i = 1; i < points.size(); ++i) {
+            Point p0 = points.at(i-1);
+            Point p1 = points.at(i);
+            Point dx = Point(p1[X] - p0[X], 0);
+            fit.appendNew<CubicBezier>(p0+0.2*dx, p1-0.2*dx, p1);
+        }
+        return fit;
+    };
+
+private:
+    CubicBezierJohan(const CubicBezierJohan&);
+    CubicBezierJohan& operator=(const CubicBezierJohan&);
+};
 
 } //namespace Interpolate
 } //namespace Geom
@@ -159,7 +181,7 @@ LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & 
     }
 
     // create stroke path where points (x,y) = (t, offset)
-    Geom::Interpolate::Linear interpolator;
+    Geom::Interpolate::CubicBezierJohan interpolator;
     Path strokepath = interpolator.interpolateToPath(ts);
     Path mirroredpath = strokepath.reverse() * Geom::Scale(1,-1);
     strokepath.append(mirroredpath, Geom::Path::STITCH_DISCONTINUOUS);
