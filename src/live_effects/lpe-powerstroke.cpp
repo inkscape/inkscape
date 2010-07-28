@@ -18,8 +18,47 @@
 #include <2geom/path.h>
 #include <2geom/piecewise.h>
 #include <2geom/sbasis-geometric.h>
-#include <2geom/svg-elliptical-arc.h>
 #include <2geom/transforms.h>
+
+
+/// @TODO  Move this to 2geom
+namespace Geom {
+namespace Interpolate {
+
+class Interpolator {
+public:
+    Interpolator() {};
+    virtual ~Interpolator() {};
+
+//    virtual Piecewise<D2<SBasis> > interpolateToPwD2Sb(std::vector<Point> points) = 0;
+    virtual Path interpolateToPath(std::vector<Point> points) = 0;
+
+private:
+    Interpolator(const Interpolator&);
+    Interpolator& operator=(const Interpolator&);
+};
+
+class Linear : public Interpolator {
+public:
+    Linear() {};
+    virtual ~Linear() {};
+
+    virtual Path interpolateToPath(std::vector<Point> points) {
+        Path strokepath;
+        strokepath.start( points.at(0) );
+        for (unsigned int i = 1 ; i < points.size(); ++i) {
+            strokepath.appendNew<Geom::LineSegment>(points.at(i));
+        }
+        return strokepath;
+    };
+
+private:
+    Linear(const Linear&);
+    Linear& operator=(const Linear&);
+};
+
+} //namespace Interpolate
+} //namespace Geom
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -52,19 +91,9 @@ LPEPowerStroke::doOnApply(SPLPEItem *lpeitem)
     offset_points.param_set_and_write_new_value(points);
 }
 
-static void append_half_circle(Geom::Piecewise<Geom::D2<Geom::SBasis> > &pwd2,
-                               Geom::Point const center, Geom::Point const &dir) {
-    using namespace Geom;
-
-    double r = L2(dir);
-    SVGEllipticalArc cap(center + dir, r, r, angle_between(Point(1,0), dir), false, false, center - dir);
-    Piecewise<D2<SBasis> > cap_pwd2(cap.toSBasis());
-    pwd2.continuousConcat(cap_pwd2);
-}
-
 static bool compare_offsets (Geom::Point first, Geom::Point second)
 {
-    return first[Geom::X] <= second[Geom::X];
+    return first[Geom::X] < second[Geom::X];
 }
 
 
@@ -74,28 +103,25 @@ LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & 
     using namespace Geom;
 
     // perhaps use std::list instead of std::vector?
-    std::vector<Geom::Point> ts(offset_points.data().size());
-
-    for (unsigned int i; i < ts.size(); ++i) {
+    std::vector<Geom::Point> ts(offset_points.data().size() + 2);
+    // first and last point coincide with input path (for now at least)
+    ts.front() = Point(pwd2_in.domain().min(),0);
+    ts.back()  = Point(pwd2_in.domain().max(),0);
+    for (unsigned int i = 0; i < offset_points.data().size(); ++i) {
         double t = nearest_point(offset_points.data().at(i), pwd2_in);
         double offset = L2(pwd2_in.valueAt(t) - offset_points.data().at(i));
-        ts.at(i) = Geom::Point(t, offset);
+        ts.at(i+1) = Geom::Point(t, offset);
     }
+
     if (sort_points) {
         sort(ts.begin(), ts.end(), compare_offsets);
     }
 
     // create stroke path where points (x,y) = (t, offset)
-    Path strokepath;
-    strokepath.start( Point(pwd2_in.domain().min(),0) );
-    for (unsigned int i = 0 ; i < ts.size(); ++i) {
-        strokepath.appendNew<Geom::LineSegment>(ts.at(i));
-    }
-    strokepath.appendNew<Geom::LineSegment>( Point(pwd2_in.domain().max(), 0) );
-    for (unsigned int i = 0; i < ts.size(); ++i) {
-        Geom::Point temp = ts.at(ts.size() - 1 - i);
-        strokepath.appendNew<Geom::LineSegment>( Geom::Point(temp[X], - temp[Y]) );
-    }
+    Geom::Interpolate::Linear interpolator;
+    Path strokepath = interpolator.interpolateToPath(ts);
+    Path mirroredpath = strokepath.reverse() * Geom::Scale(1,-1);
+    strokepath.append(mirroredpath, Geom::Path::STITCH_DISCONTINUOUS);
     strokepath.close();
 
     D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(strokepath.toPwSb());
