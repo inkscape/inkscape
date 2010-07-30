@@ -904,7 +904,7 @@ void addTaskMenuItems(GtkMenu *menu, Inkscape::UI::View::View *view)
     gchar const* data[] = {
         _("Default"), _("Default interface setup"),
         _("Custom"), _("Set the custom task"),
-        _("Wide"), _("Setup for widescreen work."),
+        _("Wide"), _("Setup for widescreen work"),
         0, 0
     };
 
