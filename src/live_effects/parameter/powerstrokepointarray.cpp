@@ -11,13 +11,11 @@
 #include "live_effects/effect.h"
 #include "svg/svg.h"
 #include "svg/stringstream.h"
-#include <gtkmm.h>
-#include "ui/widget/point.h"
-#include "widgets/icon.h"
-#include "ui/widget/registered-widget.h"
-#include "inkscape.h"
-#include "verbs.h"
 #include "knotholder.h"
+#include "sp-lpe-item.h"
+
+#include <2geom/piecewise.h>
+#include <2geom/sbasis-geometric.h>
 
 // needed for on-canvas editting:
 #include "desktop.h"
@@ -110,16 +108,28 @@ PowerStrokePointArrayParamKnotHolderEntity::PowerStrokePointArrayParamKnotHolder
 void
 PowerStrokePointArrayParamKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
+/// @todo how about item transforms???
+    using namespace Geom;
+    Piecewise<D2<SBasis> > const & pwd2 = _pparam->get_pwd2();
+    Piecewise<D2<SBasis> > const & n = _pparam->get_pwd2_normal();
+
     Geom::Point const s = snap_knot_position(p);
-    _pparam->_vector.at(_index) = s;
-//    _pparam->param_set_and_write_new_value(_pparam->_vector);
+    double t = nearest_point(s, pwd2);
+    double offset = dot(s - pwd2.valueAt(t), n.valueAt(t));
+    _pparam->_vector.at(_index) = Geom::Point(t, offset);
     sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
 }
 
 Geom::Point
 PowerStrokePointArrayParamKnotHolderEntity::knot_get()
 {
-    Geom::Point canvas_point = _pparam->_vector.at(_index);
+    using namespace Geom;
+    Piecewise<D2<SBasis> > const & pwd2 = _pparam->get_pwd2();
+    Piecewise<D2<SBasis> > const & n = _pparam->get_pwd2_normal();
+
+    Point offset_point = _pparam->_vector.at(_index);
+
+    Point canvas_point = pwd2.valueAt(offset_point[X]) + offset_point[Y] * n.valueAt(offset_point[X]);
     return canvas_point;
 }
 

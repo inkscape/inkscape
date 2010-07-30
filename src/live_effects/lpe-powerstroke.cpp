@@ -133,6 +133,8 @@ LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
 {
     show_orig_path = true;
 
+    /// @todo offset_points are initialized with empty path, is that bug-save?
+
     registerParameter( dynamic_cast<Parameter *>(&offset_points) );
     registerParameter( dynamic_cast<Parameter *>(&sort_points) );
 }
@@ -147,10 +149,10 @@ void
 LPEPowerStroke::doOnApply(SPLPEItem *lpeitem)
 {
     std::vector<Geom::Point> points;
-    points.push_back( *(SP_SHAPE(lpeitem)->curve->first_point()) );
-    Geom::Path const *path = SP_SHAPE(lpeitem)->curve->first_path();
-    points.push_back( path->pointAt(path->size()/2) );
-    points.push_back( *(SP_SHAPE(lpeitem)->curve->last_point()) );
+    Geom::Path::size_type size = SP_SHAPE(lpeitem)->curve->get_pathvector().front().size_open();
+    points.push_back( Geom::Point(0,0) );
+    points.push_back( Geom::Point(0.5*size,0) );
+    points.push_back( Geom::Point(size,0) );
     offset_points.param_set_and_write_new_value(points);
 }
 
@@ -165,15 +167,15 @@ LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & 
 {
     using namespace Geom;
 
+    offset_points.set_pwd2(pwd2_in);
+
     // perhaps use std::list instead of std::vector?
     std::vector<Geom::Point> ts(offset_points.data().size() + 2);
     // first and last point coincide with input path (for now at least)
     ts.front() = Point(pwd2_in.domain().min(),0);
     ts.back()  = Point(pwd2_in.domain().max(),0);
     for (unsigned int i = 0; i < offset_points.data().size(); ++i) {
-        double t = nearest_point(offset_points.data().at(i), pwd2_in);
-        double offset = L2(pwd2_in.valueAt(t) - offset_points.data().at(i));
-        ts.at(i+1) = Geom::Point(t, offset);
+        ts.at(i+1) = offset_points.data().at(i);
     }
 
     if (sort_points) {
@@ -192,7 +194,8 @@ LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & 
     Piecewise<SBasis> y = Piecewise<SBasis>(patternd2[1]);
 
     Piecewise<D2<SBasis> > der = unitVector(derivative(pwd2_in));
-    Piecewise<D2<SBasis> > n   = rot90(der);
+    Piecewise<D2<SBasis> > n = rot90(der);
+    offset_points.set_pwd2_normal(n);
 
 //    output  = pwd2_in + n * offset;
 //    append_half_circle(output, pwd2_in.lastValue(), n.lastValue() * offset);
