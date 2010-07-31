@@ -169,40 +169,79 @@ LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & 
 
     offset_points.set_pwd2(pwd2_in);
 
-    // perhaps use std::list instead of std::vector?
-    std::vector<Geom::Point> ts(offset_points.data().size() + 2);
-    // first and last point coincide with input path (for now at least)
-    ts.front() = Point(pwd2_in.domain().min(),0);
-    ts.back()  = Point(pwd2_in.domain().max(),0);
-    for (unsigned int i = 0; i < offset_points.data().size(); ++i) {
-        ts.at(i+1) = offset_points.data().at(i);
-    }
-
-    if (sort_points) {
-        sort(ts.begin(), ts.end(), compare_offsets);
-    }
-
-    // create stroke path where points (x,y) = (t, offset)
-    Geom::Interpolate::CubicBezierJohan interpolator;
-    Path strokepath = interpolator.interpolateToPath(ts);
-    Path mirroredpath = strokepath.reverse() * Geom::Scale(1,-1);
-    strokepath.append(mirroredpath, Geom::Path::STITCH_DISCONTINUOUS);
-    strokepath.close();
-
-    D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(strokepath.toPwSb());
-    Piecewise<SBasis> x = Piecewise<SBasis>(patternd2[0]);
-    Piecewise<SBasis> y = Piecewise<SBasis>(patternd2[1]);
-
     Piecewise<D2<SBasis> > der = unitVector(derivative(pwd2_in));
     Piecewise<D2<SBasis> > n = rot90(der);
     offset_points.set_pwd2_normal(n);
 
-//    output  = pwd2_in + n * offset;
-//    append_half_circle(output, pwd2_in.lastValue(), n.lastValue() * offset);
-//    output.continuousConcat(reverse(pwd2_in - n * offset));
-//    append_half_circle(output, pwd2_in.firstValue(), -n.firstValue() * offset);
+        // see if we should treat the path as being closed.
+    bool closed_path = false;
+    if ( are_near(pwd2_in.firstValue(), pwd2_in.lastValue()) ) {
+        closed_path = true;
+    }
 
-    Piecewise<D2<SBasis> > output = compose(pwd2_in,x) + y*compose(n,x);
+    Piecewise<D2<SBasis> > output;
+    if (!closed_path) {
+        // perhaps use std::list instead of std::vector?
+        std::vector<Geom::Point> ts(offset_points.data().size() + 2);
+        // first and last point coincide with input path (for now at least)
+        ts.front() = Point(pwd2_in.domain().min(),0);
+        ts.back()  = Point(pwd2_in.domain().max(),0);
+        for (unsigned int i = 0; i < offset_points.data().size(); ++i) {
+            ts.at(i+1) = offset_points.data().at(i);
+        }
+
+        if (sort_points) {
+            sort(ts.begin(), ts.end(), compare_offsets);
+        }
+
+        // create stroke path where points (x,y) := (t, offset)
+        Geom::Interpolate::CubicBezierJohan interpolator;
+        Path strokepath = interpolator.interpolateToPath(ts);
+        Path mirroredpath = strokepath.reverse() * Geom::Scale(1,-1);
+
+        strokepath.append(mirroredpath, Geom::Path::STITCH_DISCONTINUOUS);
+        strokepath.close();
+
+        D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(strokepath.toPwSb());
+        Piecewise<SBasis> x = Piecewise<SBasis>(patternd2[0]);
+        Piecewise<SBasis> y = Piecewise<SBasis>(patternd2[1]);
+
+        output = compose(pwd2_in,x) + y*compose(n,x);
+    } else {
+        // path is closed
+
+        // perhaps use std::list instead of std::vector?
+        std::vector<Geom::Point> ts = offset_points.data();
+        if (sort_points) {
+            sort(ts.begin(), ts.end(), compare_offsets);
+        }
+        // add extra points for interpolation between first and last point
+        Point first_point = ts.front();
+        Point last_point = ts.back();
+        ts.insert(ts.begin(), last_point - Point(pwd2_in.domain().extent() ,0));
+        ts.push_back( first_point + Point(pwd2_in.domain().extent() ,0) );
+        // create stroke path where points (x,y) := (t, offset)
+        Geom::Interpolate::CubicBezierJohan interpolator;
+        Path strokepath = interpolator.interpolateToPath(ts);
+
+        // output 2 separate paths
+        D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(strokepath.toPwSb());
+        Piecewise<SBasis> x = Piecewise<SBasis>(patternd2[0]);
+        Piecewise<SBasis> y = Piecewise<SBasis>(patternd2[1]);
+        // find time values for which x lies outside path domain
+        // and only take portion of x and y that lies within those time values
+        std::vector< double > rtsmin = roots (x - pwd2_in.domain().min());
+        std::vector< double > rtsmax = roots (x - pwd2_in.domain().max());
+        if ( !rtsmin.empty() && !rtsmax.empty() ) {
+            x = portion(x, rtsmin.at(0), rtsmax.at(0));
+            y = portion(y, rtsmin.at(0), rtsmax.at(0));
+        }
+        output = compose(pwd2_in,x) + y*compose(n,x);
+        x = reverse(x);
+        y = reverse(y);
+        output.concat(compose(pwd2_in,x) - y*compose(n,x));
+    }
+
     return output;
 }
 
