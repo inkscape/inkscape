@@ -196,35 +196,10 @@ Solid line
 ENDTAB
   0
 TABLE
-  2
-LAYER
-  5
-2
-330
-0
-100
-AcDbSymbolTable
- 70
-1
-  0
-LAYER
-  5
-10
-330
-2
-100
-AcDbSymbolTableRecord
-100
-AcDbLayerTableRecord
-  2
-0
- 70
-     0
- 62
-     7
-  6
-CONTINUOUS
-  0
+'''
+
+
+r14_style = '''  0
 ENDTAB
   0
 TABLE
