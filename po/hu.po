@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-07-25 23:15+0200\n"
+"PO-Revision-Date: 2010-08-01 22:25+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"\n"
 
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
@@ -13269,21 +13268,21 @@ msgstr ""
 #: ../src/select-context.cpp:727
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr ""
-"<b>Ctrl</b>: kijelölés csoporton belül: kattintással; vízszintes/függőleges "
-"áthelyezés: húzással"
+"<b>Ctrl</b>. Kijelölés csoporton belül: kattintással. Vízszintes/függőleges "
+"áthelyezés: húzással."
 
 #: ../src/select-context.cpp:728
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr ""
-"<b>Shift</b>: kijelölés bekapcsolása/kikapcsolása: kattintással; "
-"területkijelölés: húzással"
+"<b>Shift</b>. Kijelölés bekapcsolása/kikapcsolása: kattintással. "
+"Területkijelölés: húzással."
 
 #: ../src/select-context.cpp:729
 msgid ""
 "<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr ""
-"<b>Alt</b>: lejjebb levő objektum kijelölése: kattintással; kijelölt "
-"objektumok áthelyezése vagy érintéses kijelölés: húzással"
+"<b>Alt</b>. Lejjebb levő objektum kijelölése: kattintással. Kijelölt "
+"objektumok áthelyezése vagy érintéses kijelölés: húzással."
 
 #: ../src/select-context.cpp:902
 msgid "Selected object is not a group. Cannot enter."
@@ -19695,16 +19694,13 @@ msgstr "Általános rendszerinformáció"
 msgid "Misc"
 msgstr "Egyéb"
 
-# May contain a short, human readable description of the resource as plain, unmarked text.
 #: ../src/ui/dialog/input.cpp:346 ../src/ui/dialog/input.cpp:358
-#, fuzzy
 msgid "Disabled"
-msgstr "Bekapcsol_va"
+msgstr "Kikapcsolva"
 
 #: ../src/ui/dialog/input.cpp:348 ../src/ui/dialog/input.cpp:360
-#, fuzzy
 msgid "Window"
-msgstr "Ablakok"
+msgstr "Ablak"
 
 #: ../src/ui/dialog/input.cpp:524
 msgid "Test Area"
@@ -19715,34 +19711,29 @@ msgid "Hardware"
 msgstr "Hardver"
 
 #: ../src/ui/dialog/input.cpp:596
-#, fuzzy
 msgid "Link:"
-msgstr "Vonal"
+msgstr "Hivatkozás:"
 
 #: ../src/ui/dialog/input.cpp:611
-#, fuzzy
 msgid "Axes count:"
-msgstr "Mennyiség"
+msgstr "Tengelyek száma:"
 
 #: ../src/ui/dialog/input.cpp:634
-#, fuzzy
 msgid "axis:"
-msgstr "Sugár:"
+msgstr "tengely:"
 
 #: ../src/ui/dialog/input.cpp:646
-#, fuzzy
 msgid "Button count:"
-msgstr "Gomb"
+msgstr "Gombok száma:"
 
 # May contain a short, human readable description of the resource as plain, unmarked text.
 #: ../src/ui/dialog/input.cpp:732
-#, fuzzy
 msgid "Tablet"
-msgstr "Táblázat"
+msgstr "Tábla"
 
 #: ../src/ui/dialog/input.cpp:752 ../src/ui/dialog/input.cpp:1430
 msgid "pad"
-msgstr ""
+msgstr "pad"
 
 #: ../src/ui/dialog/layer-properties.cpp:41
 msgid "Layer name:"
@@ -19873,9 +19864,8 @@ msgid "Empty selection"
 msgstr "Üres kijelölés"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:309
-#, fuzzy
 msgid "Unknown effect"
-msgstr "Ismeretlen effektus van alkalmazva"
+msgstr "Ismeretlen effektus"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:376
 msgid "Create and apply path effect"
@@ -20727,51 +20717,47 @@ msgid "Add node"
 msgstr "Csomópont felvétele"
 
 #: ../src/ui/tool/curve-drag-point.cpp:167
-#, fuzzy
 msgctxt "Path segment tip"
 msgid "<b>Shift</b>: click to toggle segment selection"
 msgstr ""
-"<b>Shift</b>: kijelölés bekapcsolása/kikapcsolása: kattintással; "
-"területkijelölés: húzással szakasz"
+"<b>Shift</b>. Szakasz kijelölése, illetve kijelölésének megszüntetése: "
+"kattintással."
 
 #: ../src/ui/tool/curve-drag-point.cpp:171
-#, fuzzy
 msgctxt "Path segment tip"
 msgid "<b>Ctrl+Alt</b>: click to insert a node"
-msgstr ""
-"<b>Kapcsolódási pont</b>. Új kapocs létrehozása: kattintással vagy húzással."
+msgstr "<b>Ctrl+Alt</b>. Csomópont beszúrása: kattintással."
 
 #: ../src/ui/tool/curve-drag-point.cpp:175
-#, fuzzy
 msgctxt "Path segment tip"
 msgid ""
 "<b>Linear segment</b>: drag to convert to a Bezier segment, doubleclick to "
 "insert node, click to select (more: Shift, Ctrl+Alt)"
-msgstr "szakasz húzás (továbbiak: Shift) "
+msgstr ""
+"<b>Lineáris szakasz</b>. Átalakítás Bézier-szakasszá: húzással. Csomópont "
+"beszúrása: dupla kattintással. Kijelölés: kattintással. (Továbbiak: Shift, "
+"Ctrl+Alt.)"
 
 #: ../src/ui/tool/curve-drag-point.cpp:179
-#, fuzzy
 msgctxt "Path segment tip"
 msgid ""
 "<b>Bezier segment</b>: drag to shape the segment, doubleclick to insert "
 "node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
-"<b>%s</b>. Az útvonal alakítása: húzással. Csak ezen csomópont kijelölése: "
-"kattintással (továbbiak: Shift, Ctrl, Alt).szakasz húzás"
+"<b>Bézier-szakasz</b>. A szakasz alakítása: húzással. Csomópont beszúrása: "
+"dupla kattintással. Kijelölés: kattintással. (Továbbiak: Shift, Ctrl+Alt.)"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:227
 msgid "Change node type"
 msgstr "Csomópont-típus módosítása"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:235
-#, fuzzy
 msgid "Straighten segments"
 msgstr "Szakaszok egyenesítése"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:237
-#, fuzzy
 msgid "Make segments curves"
-msgstr "A kijelölt szakaszok görbékké alakítása"
+msgstr "Szakaszok görbékké alakítása"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:244
 msgid "Add nodes"
@@ -20810,47 +20796,42 @@ msgstr "Csomópontok elforgatása"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:636
 #: ../src/ui/tool/multi-path-manipulator.cpp:642
-#, fuzzy
 msgid "Scale nodes uniformly"
-msgstr "Csomópontok átméretezése"
+msgstr "Csomópontok egyenletes átméretezése"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:639
 msgid "Scale nodes"
 msgstr "Csomópontok átméretezése"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:646
-#, fuzzy
 msgid "Scale nodes horizontally"
-msgstr "Csomópontok vízszintes áthelyezése"
+msgstr "Csomópontok vízszintes átméretezése"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:650
-#, fuzzy
 msgid "Scale nodes vertically"
-msgstr "Csomópontok függőleges áthelyezése"
+msgstr "Csomópontok függőleges átméretezése"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:654
-#, fuzzy
 msgid "Flip nodes horizontally"
-msgstr "Vízszintes tükrözés"
+msgstr "Csomópontok vízszintes tükrözése"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:657
-#, fuzzy
 msgid "Flip nodes vertically"
-msgstr "Függőleges tükrözés"
+msgstr "Csomópontok függőleges tükrözése"
 
 #: ../src/ui/tool/node-tool.cpp:537
-#, fuzzy
 msgctxt "Node tool tip"
 msgid ""
 "<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
 "selection"
-msgstr "felvétele húzás átkapcsolása"
+msgstr ""
+"<b>Shift</b>. Csomópontok felvétele a kijelölésbe: húzással. "
+"Objektumkijelölés átkapcsolása: kattintással."
 
 #: ../src/ui/tool/node-tool.cpp:541
-#, fuzzy
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
-msgstr "<b>Shift</b>: rajzolás a kezdőpont köré húzás felvétele"
+msgstr "<b>Shift</b>. Csomópontok felvétele a kijelölésbe: húzással."
 
 #: ../src/ui/tool/node-tool.cpp:551
 msgctxt "Node tool tip"
@@ -20859,7 +20840,7 @@ msgid ""
 "this object (more: Shift)"
 msgstr ""
 "<b>%u csomópont kijelölve (összesen: %u)</b>. Csomópontok kijelölése: "
-"húzással. Csak ezen objektum szerkesztése: kattintással (továbbiak: Shift)."
+"húzással. Csak ezen objektum szerkesztése: kattintással. (Továbbiak: Shift.)"
 
 #: ../src/ui/tool/node-tool.cpp:557
 msgctxt "Node tool tip"
@@ -20887,7 +20868,7 @@ msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr ""
 "Szerkesztendő objektumok kijelölése: húzással. Ezen objektum szerkesztése: "
-"kattintással (továbbiak: Shift)."
+"kattintással. (Továbbiak: Shift.)"
 
 #: ../src/ui/tool/node-tool.cpp:576
 msgctxt "Node tool tip"
@@ -20898,19 +20879,19 @@ msgstr "Szerkesztendő objektumok kijelölése: húzással."
 #: ../src/ui/tool/node.cpp:207
 #, fuzzy
 msgid "Cusp node handle"
-msgstr "Csomópont-vezérlőelem áthelyezése"
+msgstr "csúcs Csomópont-vezérlőelem áthelyezése"
 
 # TODO: ellenőrizni
 #: ../src/ui/tool/node.cpp:208
 #, fuzzy
 msgid "Smooth node handle"
-msgstr "Csomópont-vezérlőelemek elmozdítása"
+msgstr "íves Csomópont-vezérlőelemek elmozdítása"
 
 # TODO: ellenőrizni
 #: ../src/ui/tool/node.cpp:209
 #, fuzzy
 msgid "Symmetric node handle"
-msgstr "Csomópont-vezérlőelemek elmozdítása"
+msgstr "szimmetrikus Csomópont-vezérlőelemek elmozdítása"
 
 # TODO: ellenőrizni
 #: ../src/ui/tool/node.cpp:210
@@ -20922,13 +20903,13 @@ msgstr "Csomópont-vezérlőelem áthelyezése"
 #, fuzzy
 msgctxt "Path handle tip"
 msgid "more: Shift, Ctrl, Alt"
-msgstr "(továbbiak: Shift) "
+msgstr "(Továbbiak: Shift) "
 
 #: ../src/ui/tool/node.cpp:343
 #, fuzzy
 msgctxt "Path handle tip"
 msgid "more: Ctrl, Alt"
-msgstr "továbbiak:"
+msgstr "Továbbiak:"
 
 #: ../src/ui/tool/node.cpp:349
 #, c-format
@@ -21036,7 +21017,7 @@ msgstr "<b>Ctrl</b>: szöghöz való illesztés"
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
 msgstr ""
-"<b>%s</b>. Az útvonal alakítása: húzással (továbbiak: Shift, Ctrl, Alt)."
+"<b>%s</b>. Az útvonal alakítása: húzással. (Továbbiak: Shift, Ctrl, Alt.)"
 
 #: ../src/ui/tool/node.cpp:1169
 #, fuzzy
@@ -21046,7 +21027,7 @@ msgid ""
 "(more: Shift, Ctrl, Alt)"
 msgstr ""
 "<b>%s</b>. Az útvonal alakítása: húzással. Csak ezen csomópont kijelölése: "
-"kattintással (továbbiak: Shift, Ctrl, Alt).átkapcsolása"
+"kattintással (Továbbiak: Shift, Ctrl, Alt).átkapcsolása"
 
 #: ../src/ui/tool/node.cpp:1172
 msgctxt "Path node tip"
@@ -21055,7 +21036,7 @@ msgid ""
 "Shift, Ctrl, Alt)"
 msgstr ""
 "<b>%s</b>. Az útvonal alakítása: húzással. Csak ezen csomópont kijelölése: "
-"kattintással (továbbiak: Shift, Ctrl, Alt)."
+"kattintással. (Továbbiak: Shift, Ctrl, Alt.)"
 
 #: ../src/ui/tool/node.cpp:1180
 #, fuzzy, c-format
@@ -21106,13 +21087,13 @@ msgstr "Vezérlőelem behúzása"
 #, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift+Ctrl</b>: scale uniformly about the rotation center"
-msgstr "<b>Shift</b>: rajzolás a kezdőpont köré"
+msgstr "<b>Shift</b>: rajzolás a kezdőpont köré Egyenletes átméretezés"
 
 #: ../src/ui/tool/transform-handle-set.cpp:139
 #, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl:</b> scale uniformly"
-msgstr "<b>Ctrl</b>: szöghöz való illesztés"
+msgstr "<b>Ctrl</b>: szöghöz való illesztés Egyenletes átméretezés"
 
 #: ../src/ui/tool/transform-handle-set.cpp:144
 #, fuzzy
@@ -24358,12 +24339,10 @@ msgstr "A kijelölés függőleges koordinátája"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:476
-#, fuzzy
 msgid "select toolbar|Width"
 msgstr "Szélesség"
 
 #: ../src/widgets/select-toolbar.cpp:476
-#, fuzzy
 msgid "select toolbar|W"
 msgstr "Sz"
 
@@ -24384,12 +24363,10 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:497
-#, fuzzy
 msgid "select toolbar|Height"
 msgstr "Magasság"
 
 #: ../src/widgets/select-toolbar.cpp:497
-#, fuzzy
 msgid "select toolbar|H"
 msgstr "M"
 
@@ -24894,9 +24871,8 @@ msgid "Show next editable path effect parameter"
 msgstr "A következő szerkeszthető útvonaleffektus-paraméter megjelenítése"
 
 #: ../src/widgets/toolbox.cpp:1561
-#, fuzzy
 msgid "Edit clipping paths"
-msgstr "Vágóútvonal szerkesztése"
+msgstr "Vágóútvonalak szerkesztése"
 
 #: ../src/widgets/toolbox.cpp:1562
 msgid "Show clipping path(s) of selected object(s)"
@@ -24905,9 +24881,8 @@ msgstr ""
 "megjelenítése"
 
 #: ../src/widgets/toolbox.cpp:1572
-#, fuzzy
 msgid "Edit masks"
-msgstr "Maszk szerkesztése"
+msgstr "Maszkok szerkesztése"
 
 #: ../src/widgets/toolbox.cpp:1573
 msgid "Show mask(s) of selected object(s)"
