@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-08-01 22:25+0200\n"
+"PO-Revision-Date: 2010-08-02 22:46+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
 
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
@@ -2618,13 +2631,14 @@ msgstr "Perspektíva"
 #: ../share/extensions/pixelsnap.inx.h:2
 #, fuzzy
 msgid "PixelSnap"
-msgstr "Képpont"
+msgstr "Képpontillesztés"
 
 #: ../share/extensions/pixelsnap.inx.h:3
+#, fuzzy
 msgid ""
 "Snap all paths in selection to pixels. Snaps borders to half-points and "
 "fills to full points"
-msgstr ""
+msgstr "illesztés"
 
 #: ../share/extensions/plt_input.inx.h:1
 msgid "AutoCAD Plot Input"
@@ -3262,8 +3276,9 @@ msgid "Letters"
 msgstr "Bal oldali:"
 
 #: ../share/extensions/split.inx.h:3
+#, fuzzy
 msgid "Preserve original text?"
-msgstr ""
+msgstr "megőrzése"
 
 #: ../share/extensions/split.inx.h:4
 #, fuzzy
@@ -20877,39 +20892,33 @@ msgstr "Szerkesztendő objektumok kijelölése: húzással."
 
 # TODO: ellenőrizni
 #: ../src/ui/tool/node.cpp:207
-#, fuzzy
 msgid "Cusp node handle"
-msgstr "csúcs Csomópont-vezérlőelem áthelyezése"
+msgstr "Csúcs-csomópont vezérlőeleme"
 
 # TODO: ellenőrizni
 #: ../src/ui/tool/node.cpp:208
-#, fuzzy
 msgid "Smooth node handle"
-msgstr "íves Csomópont-vezérlőelemek elmozdítása"
+msgstr "Íves csomópont vezérlőeleme"
 
 # TODO: ellenőrizni
 #: ../src/ui/tool/node.cpp:209
-#, fuzzy
 msgid "Symmetric node handle"
-msgstr "szimmetrikus Csomópont-vezérlőelemek elmozdítása"
+msgstr "Szimmetrikus csomópont vezérlőeleme"
 
 # TODO: ellenőrizni
 #: ../src/ui/tool/node.cpp:210
-#, fuzzy
 msgid "Auto-smooth node handle"
-msgstr "Csomópont-vezérlőelem áthelyezése"
+msgstr "Auto-íves csomópont vezérlőeleme"
 
 #: ../src/ui/tool/node.cpp:341
-#, fuzzy
 msgctxt "Path handle tip"
 msgid "more: Shift, Ctrl, Alt"
-msgstr "(Továbbiak: Shift) "
+msgstr "Továbbiak: Shift, Ctrl, Alt."
 
 #: ../src/ui/tool/node.cpp:343
-#, fuzzy
 msgctxt "Path handle tip"
 msgid "more: Ctrl, Alt"
-msgstr "Továbbiak:"
+msgstr "Továbbiak: Ctrl, Alt."
 
 #: ../src/ui/tool/node.cpp:349
 #, c-format
@@ -20918,6 +20927,8 @@ msgid ""
 "<b>Shift+Ctrl+Alt</b>: preserve length and snap rotation angle to %g° "
 "increments while rotating both handles"
 msgstr ""
+"<b>Shift+Ctrl+Alt</b>: hossz megőrzése és az elforgatási szög illesztése %g°-"
+"onként, mindkét vezérlőelemet elforgatva"
 
 #: ../src/ui/tool/node.cpp:354
 #, c-format
@@ -20925,66 +20936,66 @@ msgctxt "Path handle tip"
 msgid ""
 "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"
 msgstr ""
+"<b>Ctrl+Alt</b>: hossz megőrzése és az elforgatási szög illesztése %g°-onként"
 
 #: ../src/ui/tool/node.cpp:360
-#, fuzzy
 msgctxt "Path handle tip"
 msgid "<b>Shift+Alt</b>: preserve handle length and rotate both handles"
 msgstr ""
-"<b>Shift</b>: csomópontkijelölés bekapcsolása/kikapcsolása; illesztés "
-"kikapcsolása; mindkét vezérlőelem forgatása"
+"<b>Shift+Alt</b>: vezérlőelemek hosszának megőrzése és mindkét vezérlőelem "
+"elforgatása"
 
 #: ../src/ui/tool/node.cpp:363
-#, fuzzy
 msgctxt "Path handle tip"
 msgid "<b>Alt</b>: preserve handle length while dragging"
-msgstr "húzás"
+msgstr "<b>Alt</b>: vezérlőelemek hosszának megőrzése húzás közben"
 
 #: ../src/ui/tool/node.cpp:370
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path handle tip"
 msgid ""
 "<b>Shift+Ctrl</b>: snap rotation angle to %g° increments and rotate both "
 "handles"
 msgstr ""
-"<b>Shift</b>: csomópontkijelölés bekapcsolása/kikapcsolása; illesztés "
-"kikapcsolása; mindkét vezérlőelem forgatása"
+"<b>Shift+Ctrl</b>: elforgatási szög illesztése %g°-onként és mindkét "
+"vezérlőelem elforgatása"
 
 #: ../src/ui/tool/node.cpp:374
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
 msgstr ""
+"<b>Ctrl</b>: elforgatási szög illesztése %g°-onként. Behúzás: kattintással."
 
 #: ../src/ui/tool/node.cpp:379
-#, fuzzy
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: rotate both handles by the same angle"
-msgstr "<b>Shift</b>: rajzolás a kezdőpont köré"
+msgstr "<b>Shift</b>: vezérlőelemek elforgatása azonos szöggel"
 
 #: ../src/ui/tool/node.cpp:386
-#, fuzzy
 msgctxt "Path handle tip"
 msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
-msgstr "húzás"
+msgstr ""
+"<b>Auto-csomópont-vezérlőelem</b>. Átalakítás íves csomóponttá: húzással. (%"
+"s)"
 
 #: ../src/ui/tool/node.cpp:389
 msgctxt "Path handle tip"
 msgid "<b>%s</b>: drag to shape the segment (%s)"
-msgstr "<b>%s</b>. A szakasz alakítása: húzással (%s)."
+msgstr "<b>%s</b>. A szakasz alakítása: húzással. (%s)"
 
 #: ../src/ui/tool/node.cpp:405
 #, fuzzy
 msgctxt "Path handle tip"
 msgid "Move handle by %s, %s; angle %.2f°, length %s"
-msgstr "áthelyezés "
+msgstr "vezérlőelem áthelyezés hossz"
 
 #: ../src/ui/tool/node.cpp:1144
 #, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr ""
-"<b>Shift</b>: kijelölés bekapcsolása/kikapcsolása: kattintással; "
+"vezérlőelem <b>Shift</b>: kijelölés bekapcsolása/kikapcsolása: kattintással; "
 "területkijelölés: húzással"
 
 #: ../src/ui/tool/node.cpp:1146
@@ -20999,19 +21010,19 @@ msgstr ""
 #, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
-msgstr "áthelyezés "
+msgstr "áthelyezés vezérlőelem csomópont"
 
 #: ../src/ui/tool/node.cpp:1154
 #, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Ctrl</b>: move along axes, click to change node type"
-msgstr "áthelyezés "
+msgstr "áthelyezés csomópont"
 
 #: ../src/ui/tool/node.cpp:1158
 #, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
-msgstr "<b>Ctrl</b>: szöghöz való illesztés"
+msgstr "<b>Ctrl</b>: szöghöz való illesztés csomópont"
 
 #: ../src/ui/tool/node.cpp:1166
 msgctxt "Path node tip"
@@ -21027,7 +21038,7 @@ msgid ""
 "(more: Shift, Ctrl, Alt)"
 msgstr ""
 "<b>%s</b>. Az útvonal alakítása: húzással. Csak ezen csomópont kijelölése: "
-"kattintással (Továbbiak: Shift, Ctrl, Alt).átkapcsolása"
+"kattintással (Továbbiak: Shift, Ctrl, Alt).vezérlőelem átkapcsolása"
 
 #: ../src/ui/tool/node.cpp:1172
 msgctxt "Path node tip"
@@ -21045,24 +21056,22 @@ msgid "Move node by %s, %s"
 msgstr "Csomópontok áthelyezése"
 
 #: ../src/ui/tool/node.cpp:1192
-#, fuzzy
 msgid "Symmetric node"
-msgstr "szimmetrikus"
+msgstr "Szimmetrikus csomópont"
 
 #: ../src/ui/tool/node.cpp:1193
-#, fuzzy
 msgid "Auto-smooth node"
-msgstr "íves csomópont"
+msgstr "Auto-íves csomópont"
 
 #: ../src/ui/tool/path-manipulator.cpp:763
 #, fuzzy
 msgid "Scale handle"
-msgstr "Csomópontok átméretezése"
+msgstr "vezérlőelem Csomópontok átméretezése"
 
 #: ../src/ui/tool/path-manipulator.cpp:787
 #, fuzzy
 msgid "Rotate handle"
-msgstr "Vezérlőelem behúzása"
+msgstr "vezérlőelem forgatása"
 
 #. We need to call MPM's method because it could have been our last node
 #: ../src/ui/tool/path-manipulator.cpp:1290 ../src/widgets/toolbox.cpp:1404
@@ -21118,7 +21127,7 @@ msgstr "<b>Alt</b>: a spirál sugarának megőrzése"
 #, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Scale handle</b>: drag to scale the selection"
-msgstr "A kijelölésben <b>nincs megfordítható útvonal</b>. húzás"
+msgstr "A kijelölésben <b>nincs megfordítható útvonal</b>. húzás vezérlőelem "
 
 #: ../src/ui/tool/transform-handle-set.cpp:156
 #, c-format
@@ -21127,12 +21136,12 @@ msgid "Scale by %.2f%% x %.2f%%"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:311
-#, c-format
+#, fuzzy
 msgctxt "Transform handle tip"
 msgid ""
 "<b>Shift+Ctrl</b>: rotate around the opposite corner and snap angle to %f° "
 "increments"
-msgstr ""
+msgstr "illesztés növekmény"
 
 #: ../src/ui/tool/transform-handle-set.cpp:314
 #, fuzzy
@@ -21141,10 +21150,10 @@ msgid "<b>Shift</b>: rotate around the opposite corner"
 msgstr "<b>Shift</b>: rajzolás a kezdőpont köré"
 
 #: ../src/ui/tool/transform-handle-set.cpp:318
-#, fuzzy, c-format
+#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap angle to %f° increments"
-msgstr "<b>Ctrl</b>: szöghöz való illesztés"
+msgstr "<b>Ctrl</b>: szöghöz való illesztés növekmény"
 
 #: ../src/ui/tool/transform-handle-set.cpp:320
 #, fuzzy
@@ -21152,7 +21161,7 @@ msgctxt "Transform handle tip"
 msgid ""
 "<b>Rotation handle</b>: drag to rotate the selection around the rotation "
 "center"
-msgstr "húzás"
+msgstr "vezérlőelem forgatása húzás"
 
 #. event
 #: ../src/ui/tool/transform-handle-set.cpp:325
@@ -21162,12 +21171,12 @@ msgid "Rotate by %.2f°"
 msgstr "Forgatás képpontokkal"
 
 #: ../src/ui/tool/transform-handle-set.cpp:419
-#, c-format
+#, fuzzy
 msgctxt "Transform handle tip"
 msgid ""
 "<b>Shift+Ctrl</b>: skew about the rotation center with snapping to %f° "
 "increments"
-msgstr ""
+msgstr "illesztés növekmény"
 
 #: ../src/ui/tool/transform-handle-set.cpp:422
 #, fuzzy
@@ -21176,17 +21185,17 @@ msgid "<b>Shift</b>: skew about the rotation center"
 msgstr "<b>Shift</b>: rajzolás a kezdőpont köré"
 
 #: ../src/ui/tool/transform-handle-set.cpp:426
-#, fuzzy, c-format
+#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap skew angle to %f° increments"
-msgstr "<b>Ctrl</b>: szöghöz való illesztés"
+msgstr "<b>Ctrl</b>: szöghöz való illesztés növekmény"
 
 #: ../src/ui/tool/transform-handle-set.cpp:429
 #, fuzzy
 msgctxt "Transform handle tip"
 msgid ""
 "<b>Skew handle</b>: drag to skew (shear) selection about the opposite handle"
-msgstr "húzás"
+msgstr "vezérlőelem húzás"
 
 #: ../src/ui/tool/transform-handle-set.cpp:435
 #, fuzzy, c-format
