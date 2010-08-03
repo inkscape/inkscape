@@ -183,7 +183,7 @@ RFE</a>).</p>
 
 <group>
 <title>Display mode</title>
-<keys><key><ctrl/><misc-wide f="keypad 5"/></key>  <action>toggle normal/no filters/outline/print colors preview mode</action></keys>
+<keys><key><ctrl/><misc-wide f="keypad 5"/></key>  <action>toggle normal/no filters/outline mode</action></keys>
 </group>
 </section>
 
@@ -1148,7 +1148,7 @@ with the segment; another Shift+S will expand a second handle</note>
 
 <group>
 <title>Create dots</title>
-<mouse><key><ctrl/><left-click/></key> <action>create a dot</action></mouse>
+<mouse><key><ctrl/><left-click/></key> <action>create a dot (straight line modes only)</action></mouse>
 <note>This creates a small circle. Its size (relative to the current stroke width) can be set in Preferences.</note> 
 <mouse><key><shift/><ctrl/><left-click/></key> <action>create a double-sized dot</action></mouse>
 <mouse><key><alt/><ctrl/><left-click/></key> <action>create a random-sized dot</action></mouse>
