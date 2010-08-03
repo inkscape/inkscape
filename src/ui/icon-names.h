@@ -206,6 +206,12 @@
     "edit-select-original"
 #define INKSCAPE_ICON_EDIT_UNDO_HISTORY \
     "edit-undo-history"
+#define INKSCAPE_ICON_EXCHANGE_POSITIONS \
+    "exchange-positions"
+#define INKSCAPE_ICON_EXCHANGE_POSITIONS_ZORDER \
+    "exchange-positions-zorder"
+#define INKSCAPE_ICON_EXCHANGE_POSITIONS_CLOCKWISE \
+    "exchange-positions-clockwise"
 #define INKSCAPE_ICON_FILL_RULE_EVEN_ODD \
     "fill-rule-even-odd"
 #define INKSCAPE_ICON_FILL_RULE_NONZERO \

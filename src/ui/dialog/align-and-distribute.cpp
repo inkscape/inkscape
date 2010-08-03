@@ -518,8 +518,8 @@ public:
                          guint row,
                          guint column,
                          AlignAndDistribute &dialog) :
-        Action(id, tiptext, row, column + 4,
-               dialog.graphLayout_table(), dialog.tooltips(), dialog)
+        Action(id, tiptext, row, column,
+               dialog.rearrange_table(), dialog.tooltips(), dialog)
     {}
 
 private :
@@ -542,6 +542,101 @@ private :
     }
 };
 
+class ActionExchangePositions : public Action {
+public:
+    enum SortOrder {
+	None,
+	ZOrder,
+	Clockwise
+    };	    
+
+    ActionExchangePositions(Glib::ustring const &id,
+                         Glib::ustring const &tiptext,
+                         guint row,
+                         guint column,
+                         AlignAndDistribute &dialog, SortOrder order = None) :
+        Action(id, tiptext, row, column,
+               dialog.rearrange_table(), dialog.tooltips(), dialog),
+        sortOrder(order)
+    {};
+
+
+private :
+    const SortOrder sortOrder;
+    static boost::optional<Geom::Point> center;
+
+    static bool sort_compare(const SPItem * a,const SPItem * b) {
+        if (a == NULL) return false;
+        if (b == NULL) return true;
+        if (center) {
+            Geom::Point point_a = a->getCenter() - (*center);
+            Geom::Point point_b = b->getCenter() - (*center);
+            // First criteria: Sort according to the angle to the center point
+            double angle_a = atan2(double(point_a[Geom::Y]), double(point_a[Geom::X]));
+            double angle_b = atan2(double(point_b[Geom::Y]), double(point_b[Geom::X]));
+            if (angle_a != angle_b) return (angle_a < angle_b);
+            // Second criteria: Sort according to the distance the center point
+            Geom::Coord length_a = point_a.length();
+            Geom::Coord length_b = point_b.length();
+            if (length_a != length_b) return (length_a > length_b);
+        }
+        // Last criteria: Sort according to the z-coordinate
+        return (a->isSiblingOf(b));
+    }
+
+    virtual void on_button_click()
+    {
+        SPDesktop *desktop = _dialog.getDesktop();
+        if (!desktop) return;
+
+        Inkscape::Selection *selection = sp_desktop_selection(desktop);
+        if (!selection) return;
+
+        using Inkscape::Util::GSListConstIterator;
+        std::list<SPItem *> selected;
+        selected.insert<GSListConstIterator<SPItem *> >(selected.end(), selection->itemList(), NULL);
+        if (selected.empty()) return;
+
+        //Check 2 or more selected objects
+        if (selected.size() < 2) return;
+
+        // see comment in ActionAlign above
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
+        prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
+
+        // sort the list
+	if (sortOrder != None) {
+		if (sortOrder == Clockwise) {
+			center = selection->center();
+		} else { // sorting by ZOrder is outomatically done by not setting the center
+			center.reset();
+		}
+		selected.sort(ActionExchangePositions::sort_compare);
+	}
+	std::list<SPItem *>::iterator it(selected.begin());
+	Geom::Point p1 =  (*it)->getCenter();
+	for (++it ;it != selected.end(); ++it)
+	{
+		Geom::Point p2 = (*it)->getCenter();
+		Geom::Point delta = p1 - p2;
+		sp_item_move_rel((*it),Geom::Translate(delta[Geom::X],delta[Geom::Y] ));
+		p1 = p2;
+	}
+	Geom::Point p2 = selected.front()->getCenter();
+	Geom::Point delta = p1 - p2;
+	sp_item_move_rel(selected.front(),Geom::Translate(delta[Geom::X],delta[Geom::Y] ));
+
+        // restore compensation setting
+        prefs->setInt("/options/clonecompensation/value", saved_compensation);
+
+	sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+                        _("Exchange Positions"));
+    }
+};
+// instantiae the private static member
+boost::optional<Geom::Point> ActionExchangePositions::center;
+
 class ActionUnclump : public Action {
 public :
     ActionUnclump(const Glib::ustring &id,
@@ -550,7 +645,7 @@ public :
                guint column,
                AlignAndDistribute &dialog):
         Action(id, tiptext, row, column,
-               dialog.distribute_table(), dialog.tooltips(), dialog)
+               dialog.rearrange_table(), dialog.tooltips(), dialog)
     {}
 
 private :
@@ -581,7 +676,7 @@ public :
                guint column,
                AlignAndDistribute &dialog):
         Action(id, tiptext, row, column,
-               dialog.distribute_table(), dialog.tooltips(), dialog)
+               dialog.rearrange_table(), dialog.tooltips(), dialog)
     {}
 
 private :
@@ -792,13 +887,13 @@ AlignAndDistribute::AlignAndDistribute()
       randomize_bbox(),
       _alignFrame(_("Align")),
       _distributeFrame(_("Distribute")),
+      _rearrangeFrame(_("Rearrange")),
       _removeOverlapFrame(_("Remove overlaps")),
-      _graphLayoutFrame(_("Connector network layout")),
       _nodesFrame(_("Nodes")),
       _alignTable(2, 6, true),
-      _distributeTable(3, 6, true),
+      _distributeTable(2, 6, true),
+      _rearrangeTable(1, 5, false),
       _removeOverlapTable(1, 5, false),
-      _graphLayoutTable(1, 5, false),
       _nodesTable(1, 4, true),
       _anchorLabel(_("Relative to: ")),
       _selgrpLabel(_("Treat selection as group: "))
@@ -882,21 +977,32 @@ AlignAndDistribute::AlignAndDistribute()
                    _("Distribute baselines of texts vertically"),
                      1, 5, this->distribute_table(), Geom::Y, true);
 
+    // Rearrange
+    //Graph Layout
+    addGraphLayoutButton(INKSCAPE_ICON_DISTRIBUTE_GRAPH,
+                            _("Nicely arrange selected connector network"),
+                            0, 0);
+    addExchangePositionsButton(INKSCAPE_ICON_EXCHANGE_POSITIONS,
+                            _("Exchange positions of selected objects - selection order"),
+                            0, 1);
+    addExchangePositionsByZOrderButton(INKSCAPE_ICON_EXCHANGE_POSITIONS_ZORDER,
+                            _("Exchange positions of selected objects - stacking order"),
+                            0, 2);
+    addExchangePositionsClockwiseButton(INKSCAPE_ICON_EXCHANGE_POSITIONS_CLOCKWISE,
+                            _("Exchange positions of selected objects - clockwise rotate"),
+                            0, 3);
+			    
     //Randomize & Unclump
     addRandomizeButton(INKSCAPE_ICON_DISTRIBUTE_RANDOMIZE,
                         _("Randomize centers in both dimensions"),
-                        2, 2);
+                        0, 4);
     addUnclumpButton(INKSCAPE_ICON_DISTRIBUTE_UNCLUMP,
                         _("Unclump objects: try to equalize edge-to-edge distances"),
-                        2, 4);
+                        0, 5);
 
     //Remove overlaps
     addRemoveOverlapsButton(INKSCAPE_ICON_DISTRIBUTE_REMOVE_OVERLAPS,
                             _("Move objects as little as possible so that their bounding boxes do not overlap"),
-                            0, 0);
-    //Graph Layout
-    addGraphLayoutButton(INKSCAPE_ICON_DISTRIBUTE_GRAPH,
-                            _("Nicely arrange selected connector network"),
                             0, 0);
 
     //Node Mode buttons
@@ -943,8 +1049,8 @@ AlignAndDistribute::AlignAndDistribute()
 
     _alignFrame.add(_alignBox);
     _distributeFrame.add(_distributeTable);
+    _rearrangeFrame.add(_rearrangeTable);
     _removeOverlapFrame.add(_removeOverlapTable);
-    _graphLayoutFrame.add(_graphLayoutTable);
     _nodesFrame.add(_nodesTable);
 
     Gtk::Box *contents = _getContents();
@@ -954,8 +1060,8 @@ AlignAndDistribute::AlignAndDistribute()
 
     contents->pack_start(_alignFrame, true, true);
     contents->pack_start(_distributeFrame, true, true);
+    contents->pack_start(_rearrangeFrame, true, true);
     contents->pack_start(_removeOverlapFrame, true, true);
-    contents->pack_start(_graphLayoutFrame, true, true);
     contents->pack_start(_nodesFrame, true, true);
 
     //Connect to the global tool change signal
@@ -1010,8 +1116,8 @@ void AlignAndDistribute::setMode(bool nodeEdit)
 
     ((_alignFrame).*(mSel))();
     ((_distributeFrame).*(mSel))();
+    ((_rearrangeFrame).*(mSel))();
     ((_removeOverlapFrame).*(mSel))();
-    ((_graphLayoutFrame).*(mSel))();
     ((_nodesFrame).*(mNode))();
 
 }
@@ -1060,6 +1166,33 @@ void AlignAndDistribute::addGraphLayoutButton(const Glib::ustring &id, const Gli
     _actionList.push_back(
         new ActionGraphLayout(
             id, tiptext, row, col, *this)
+        );
+}
+
+void AlignAndDistribute::addExchangePositionsButton(const Glib::ustring &id, const Glib::ustring tiptext,
+                                      guint row, guint col)
+{
+    _actionList.push_back(
+        new ActionExchangePositions(
+            id, tiptext, row, col, *this)
+        );
+}
+
+void AlignAndDistribute::addExchangePositionsByZOrderButton(const Glib::ustring &id, const Glib::ustring tiptext,
+                                      guint row, guint col)
+{
+    _actionList.push_back(
+        new ActionExchangePositions(
+            id, tiptext, row, col, *this, ActionExchangePositions::ZOrder)
+        );
+}
+
+void AlignAndDistribute::addExchangePositionsClockwiseButton(const Glib::ustring &id, const Glib::ustring tiptext,
+                                      guint row, guint col)
+{
+    _actionList.push_back(
+        new ActionExchangePositions(
+            id, tiptext, row, col, *this, ActionExchangePositions::Clockwise)
         );
 }
 

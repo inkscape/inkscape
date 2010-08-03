@@ -55,8 +55,8 @@ public:
 
     Gtk::Table &align_table(){return _alignTable;}
     Gtk::Table &distribute_table(){return _distributeTable;}
+    Gtk::Table &rearrange_table(){return _rearrangeTable;}
     Gtk::Table &removeOverlap_table(){return _removeOverlapTable;}
-    Gtk::Table &graphLayout_table(){return _graphLayoutTable;}
     Gtk::Table &nodes_table(){return _nodesTable;}
     Gtk::Tooltips &tooltips(){return _tooltips;}
 
@@ -82,6 +82,15 @@ protected:
     void addGraphLayoutButton(const Glib::ustring &id,
                         const Glib::ustring tiptext,
                         guint row, guint col);
+    void addExchangePositionsButton(const Glib::ustring &id,
+                        const Glib::ustring tiptext,
+                        guint row, guint col);
+    void addExchangePositionsByZOrderButton(const Glib::ustring &id,
+                        const Glib::ustring tiptext,
+                        guint row, guint col);
+    void addExchangePositionsClockwiseButton(const Glib::ustring &id,
+                        const Glib::ustring tiptext,
+                        guint row, guint col);
     void addUnclumpButton(const Glib::ustring &id, const Glib::ustring tiptext, 
                         guint row, guint col);
     void addRandomizeButton(const Glib::ustring &id, const Glib::ustring tiptext, 
@@ -90,8 +99,8 @@ protected:
                            guint row, guint col, Gtk::Table &table, Geom::Dim2 orientation, bool distribute);
 
     std::list<Action *> _actionList;
-    Gtk::Frame _alignFrame, _distributeFrame, _removeOverlapFrame, _graphLayoutFrame, _nodesFrame;
-    Gtk::Table _alignTable, _distributeTable, _removeOverlapTable, _graphLayoutTable, _nodesTable;
+    Gtk::Frame _alignFrame, _distributeFrame, _rearrangeFrame, _removeOverlapFrame, _nodesFrame;
+    Gtk::Table _alignTable, _distributeTable, _rearrangeTable, _removeOverlapTable, _nodesTable;
     Gtk::HBox _anchorBox;
     Gtk::HBox _selgrpBox;
     Gtk::VBox _alignBox;
