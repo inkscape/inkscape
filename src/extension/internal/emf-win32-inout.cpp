@@ -733,7 +733,7 @@ assert_empty_path(PEMF_CALLBACK_DATA d, const char * /*fun*/)
 
 
 static int CALLBACK
-myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD *lpEMFR, int /*nObj*/, LPARAM lpData)
+myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *lpEMFR, int /*nObj*/, LPARAM lpData)
 {
     PEMF_CALLBACK_DATA d;
     SVGOStringStream tmp_outsvg;
