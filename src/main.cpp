@@ -1345,7 +1345,7 @@ sp_do_export_png(SPDocument *doc)
     if (sp_export_area) {
         /* Try to parse area (given in SVG pixels) */
         gdouble x0,y0,x1,y1;
-        if (!sscanf(sp_export_area, "%lg:%lg:%lg:%lg", &x0, &y0, &x1, &y1) == 4) {
+        if (sscanf(sp_export_area, "%lg:%lg:%lg:%lg", &x0, &y0, &x1, &y1) != 4) {
             g_warning("Cannot parse export area '%s'; use 'x0:y0:x1:y1'. Nothing exported.", sp_export_area);
             return;
         }
