@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, cubicsuperpath, simplepath, simplestyle, cspsubdiv
+import inkex, simpletransform, cubicsuperpath, simplestyle, cspsubdiv
 
 class MyEffect(inkex.Effect):
     def __init__(self):
@@ -52,40 +52,58 @@ class MyEffect(inkex.Effect):
 
     def output(self):
         print ''.join(self.hpgl)
+
+    def process_path(self, node, mat):
+        d = node.get('d')
+        if d:
+            p = cubicsuperpath.parsePath(d)
+            trans = node.get('transform')
+            if trans:
+                mat = simpletransform.composeTransform(mat, simpletransform.parseTransform(trans))
+            simpletransform.applyTransformToPath(mat, p)
+            cspsubdiv.cspsubdiv(p, self.options.flat)
+            for sp in p:
+                first = True
+                for csp in sp:
+                    cmd = 'PD'
+                    if first:
+                        cmd = 'PU'
+                    first = False
+                    self.hpgl.append('%s%d,%d;' % (cmd,csp[1][0],csp[1][1]))
+
+    def process_group(self, group):
+        style = group.get('style')
+        if style:
+            style = simplestyle.parseStyle(style)
+            if style.has_key('display'):
+                if style['display']=='none':
+                    if not self.options.plotInvisibleLayers:
+                        return
+        trans = group.get('transform')
+        if trans:
+            self.groupmat.append(simpletransform.composeTransform(self.groupmat[-1], simpletransform.parseTransform(trans)))
+        for node in group:
+            if node.tag == inkex.addNS('path','svg'):
+                self.process_path(node, self.groupmat[-1])
+            if node.tag == inkex.addNS('g','svg'):
+                self.process_group(node)
+        if trans:
+            self.groupmat.pop()
+
     def effect(self):
         self.hpgl = ['IN;SP%d;' % self.options.pen]
         x0 = self.options.xOrigin
         y0 = self.options.yOrigin
         scale = float(self.options.resolution)/90
+        self.options.flat *= scale
         mirror = 1.0
         if self.options.mirror:
             mirror = -1.0
             if self.document.getroot().get('height'):
                 y0 -= float(self.document.getroot().get('height'))
-        i = 0
-        layerPath = '//svg:g[@inkscape:groupmode="layer"]'
-        for layer in self.document.getroot().xpath(layerPath, namespaces=inkex.NSS):
-            i += 1
-            style = layer.get('style')
-            if style:
-                style = simplestyle.parseStyle(style)
-                if style['display']=='none':
-                    if not self.options.plotInvisibleLayers:
-                        continue
-            nodePath = ('//svg:g[@inkscape:groupmode="layer"][%d]/descendant::svg:path') % i
-            for node in self.document.getroot().xpath(nodePath, namespaces=inkex.NSS):
-                d = node.get('d')
-                if len(simplepath.parsePath(d)):
-                    p = cubicsuperpath.parsePath(d)
-                    cspsubdiv.cspsubdiv(p, self.options.flat)
-                    for sp in p:
-                        first = True
-                        for csp in sp:
-                            cmd = 'PD'
-                            if first:
-                                cmd = 'PU'
-                            first = False
-                            self.hpgl.append('%s%d,%d;' % (cmd,(csp[1][0] - x0)*scale,(csp[1][1]*mirror - y0)*scale))
+        self.groupmat = [[[scale, 0.0, -x0*scale], [0.0, mirror*scale, -y0*scale]]]
+        doc = self.document.getroot()
+        self.process_group(doc)
         self.hpgl.append('PU;')
 
 if __name__ == '__main__':   #pragma: no cover
