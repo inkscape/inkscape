@@ -70,26 +70,22 @@ FilterSlot::FilterSlot(int slots, NRArenaItem const *item)
       blurquality(BLUR_QUALITY_BEST),
       _arena_item(item)
 {
-    _slot_count = ((slots > 0) ? slots : 2);
-    _slot = new NRPixBlock*[_slot_count];
-    _slot_number = new int[_slot_count];
-
-    for (int i = 0 ; i < _slot_count ; i++) {
-        _slot[i] = NULL;
-        _slot_number[i] = NR_FILTER_SLOT_NOT_SET;
-    }
+    _slots.reserve((slots > 0) ? slots : 2);
 }
 
 FilterSlot::~FilterSlot()
 {
-    for (int i = 0 ; i < _slot_count ; i++) {
-        if (_slot[i]) {
-            nr_pixblock_release(_slot[i]);
-            delete _slot[i];
+    for (unsigned int i = 0 ; i < _slots.size() ; i++) {
+        if (_slots[i].owned) {
+            nr_pixblock_release(_slots[i].pb);
+            delete _slots[i].pb;
         }
     }
-    delete[] _slot;
-    delete[] _slot_number;
+}
+
+FilterSlot::slot_entry_t::~slot_entry_t()
+{
+    // It's a bad idea to destruct pixblocks here, as this will also be called upon resizing _slots
 }
 
 NRPixBlock *FilterSlot::get(int slot_nr)
@@ -99,7 +95,7 @@ NRPixBlock *FilterSlot::get(int slot_nr)
 
     /* If we didn't have the specified image, but we could create it
      * from the other information we have, let's do that */
-    if (_slot[index] == NULL
+    if (_slots[index].pb == NULL
         && (slot_nr == NR_FILTER_SOURCEALPHA
             || slot_nr == NR_FILTER_BACKGROUNDIMAGE
             || slot_nr == NR_FILTER_BACKGROUNDALPHA
@@ -112,7 +108,7 @@ NRPixBlock *FilterSlot::get(int slot_nr)
             pb = nr_arena_item_get_background(_arena_item);
             if (pb) {
                 pb->empty = false;
-                this->set(NR_FILTER_BACKGROUNDIMAGE, pb);
+                this->set(NR_FILTER_BACKGROUNDIMAGE, pb, false);
             } else {
                 NRPixBlock *source = this->get(NR_FILTER_SOURCEGRAPHIC);
                 pb = new NRPixBlock();
@@ -145,12 +141,12 @@ NRPixBlock *FilterSlot::get(int slot_nr)
         }
     }
 
-    if (_slot[index]) {
-        _slot[index]->empty = false;
+    if (_slots[index].pb) {
+        _slots[index].pb->empty = false;
     }
 
-    assert(slot_nr == NR_FILTER_SLOT_NOT_SET ||_slot_number[index] == slot_nr);
-    return _slot[index];
+    assert(slot_nr == NR_FILTER_SLOT_NOT_SET ||_slots[index].number == slot_nr);
+    return _slots[index].pb;
 }
 
 void FilterSlot::get_final(int slot_nr, NRPixBlock *result) {
@@ -175,7 +171,7 @@ void FilterSlot::get_final(int slot_nr, NRPixBlock *result) {
     }
 }
 
-void FilterSlot::set(int slot_nr, NRPixBlock *pb)
+void FilterSlot::set(int slot_nr, NRPixBlock *pb, bool takeOwnership)
 {
     /* Unnamed slot is for saving filter primitive results, when parameter
      * 'result' is not set. Only the filter immediately after this one
@@ -189,7 +185,7 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
     assert(index >= 0);
     // Unnamed slot is only for Inkscape::Filters::FilterSlot internal use.
     assert(slot_nr != NR_FILTER_UNNAMED_SLOT);
-    assert(slot_nr == NR_FILTER_SLOT_NOT_SET ||_slot_number[index] == slot_nr);
+    assert(slot_nr == NR_FILTER_SLOT_NOT_SET ||_slots[index].number == slot_nr);
 
     if (slot_nr == NR_FILTER_SOURCEGRAPHIC || slot_nr == NR_FILTER_BACKGROUNDIMAGE) {
         Geom::Matrix trans = units.get_matrix_display2pb();
@@ -225,6 +221,10 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
                  * is not too high, but can get thousands of pixels wide.
                  * Rotate this 45 degrees -> _huge_ image */
                 g_warning("Memory allocation failed in Inkscape::Filters::FilterSlot::set (transform)");
+                if (takeOwnership) {
+                    nr_pixblock_release(pb);
+                    delete pb;
+                }
                 return;
             }
             if (filterquality == FILTER_QUALITY_BEST) {
@@ -232,8 +232,11 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
             } else {
                 NR::transform_nearest(trans_pb, pb, trans);
             }
-            nr_pixblock_release(pb);
-            delete pb;
+            if (takeOwnership) {
+                nr_pixblock_release(pb);
+                delete pb;
+            }
+            takeOwnership = true;
             pb = trans_pb;
         } else if (fabs(trans[0] - 1) > 1e-6 || fabs(trans[3] - 1) > 1e-6) {
             NRPixBlock *trans_pb = new NRPixBlock;
@@ -255,31 +258,34 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
                                    min_x, min_y, max_x, max_y, true);
             if (trans_pb->size != NR_PIXBLOCK_SIZE_TINY && trans_pb->data.px == NULL) {
                 g_warning("Memory allocation failed in Inkscape::Filters::FilterSlot::set (scaling)");
+                if (takeOwnership) {
+                    nr_pixblock_release(pb);
+                    delete pb;
+                }
                 return;
             }
             NR::scale_bicubic(trans_pb, pb, trans);
-            nr_pixblock_release(pb);
-            delete pb;
+            if (takeOwnership) {
+                nr_pixblock_release(pb);
+                delete pb;
+            }
+            takeOwnership = true;
             pb = trans_pb;
         }
     }
 
-    if(_slot[index]) {
-        nr_pixblock_release(_slot[index]);
-        delete _slot[index];
+    if(_slots[index].owned) {
+        nr_pixblock_release(_slots[index].pb);
+        delete _slots[index].pb;
     }
-    _slot[index] = pb;
+    _slots[index].pb = pb;
+    _slots[index].owned = takeOwnership;
     _last_out = index;
 }
 
 int FilterSlot::get_slot_count()
 {
-    int seek = _slot_count;
-    do {
-        seek--;
-    } while (!_slot[seek] && _slot_number[seek] == NR_FILTER_SLOT_NOT_SET);
-
-    return seek + 1;
+    return _slots.size();
 }
 
 NRArenaItem const* FilterSlot::get_arenaitem()
@@ -299,47 +305,22 @@ int FilterSlot::_get_index(int slot_nr)
            slot_nr == NR_FILTER_STROKEPAINT ||
            slot_nr == NR_FILTER_UNNAMED_SLOT);
 
-    int index = -1;
     if (slot_nr == NR_FILTER_SLOT_NOT_SET) {
         return _last_out;
     }
+
     /* Search, if the slot already exists */
-    for (int i = 0 ; i < _slot_count ; i++) {
-        if (_slot_number[i] == slot_nr) {
-            index = i;
-            break;
+    for (int i = 0 ; i < (int)_slots.size() ; i++) {
+        if (_slots[i].number == slot_nr) {
+            return i;
         }
     }
 
     /* If the slot doesn't already exist, create it */
-    if (index == -1) {
-        int seek = _slot_count;
-        do {
-            seek--;
-        } while ((seek >= 0) && (_slot_number[seek] == NR_FILTER_SLOT_NOT_SET));
-        /* If there is no space for more slots, create more space */
-        if (seek == _slot_count - 1) {
-            NRPixBlock **new_slot = new NRPixBlock*[_slot_count * 2];
-            int *new_number = new int[_slot_count * 2];
-            for (int i = 0 ; i < _slot_count ; i++) {
-                new_slot[i] = _slot[i];
-                new_number[i] = _slot_number[i];
-            }
-            for (int i = _slot_count ; i < _slot_count * 2 ; i++) {
-                new_slot[i] = NULL;
-                new_number[i] = NR_FILTER_SLOT_NOT_SET;
-            }
-            delete[] _slot;
-            delete[] _slot_number;
-            _slot = new_slot;
-            _slot_number = new_number;
-            _slot_count *= 2;
-        }
-        /* Now that there is space, create the slot */
-        _slot_number[seek + 1] = slot_nr;
-        index = seek + 1;
-    }
-    return index;
+    slot_entry_t entry;
+    entry.number = slot_nr;
+    _slots.push_back(entry);
+    return (int)_slots.size()-1;
 }
 
 void FilterSlot::set_units(FilterUnits const &units) {

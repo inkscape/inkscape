@@ -17,6 +17,7 @@
 #include "libnr/nr-pixblock.h"
 #include "display/nr-filter-types.h"
 #include "display/nr-filter-units.h"
+#include <vector>
 
 struct NRArenaItem;
 
@@ -59,11 +60,11 @@ public:
      * If there was a pixblock already assigned with this slot,
      * that pixblock is destroyed.
      * Pixblocks passed to this function should be considered
-     * managed by this FilterSlot object.
+     * managed by this FilterSlot object if takeOwnership==true.
      * Pixblocks passed to this function should be reserved with
-     * c++ -style new-operator.
+     * c++ -style new-operator (if managed by FilterSlot).
      */
-    void set(int slot, NRPixBlock *pb);
+    void set(int slot, NRPixBlock *pb, bool takeOwnership=true);
 
     /** Returns the number of slots in use. */
     int get_slot_count();
@@ -84,9 +85,14 @@ public:
     int get_blurquality(void);
 
 private:
-    NRPixBlock **_slot;
-    int *_slot_number;
-    int _slot_count;
+    struct slot_entry_t {
+        NRPixBlock* pb;
+        int number;
+        bool owned;
+        slot_entry_t() : pb(0), number(NR_FILTER_SLOT_NOT_SET), owned(false) {}
+        ~slot_entry_t();
+    };
+    std::vector<slot_entry_t> _slots;
 
     int _last_out;
 

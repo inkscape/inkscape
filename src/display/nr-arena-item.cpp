@@ -323,8 +323,11 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
                            item->state);
 
 #ifdef NR_ARENA_ITEM_VERBOSE
-    printf ("Invoke render %p: %d %d - %d %d\n", item, area->x0, area->y0,
-            area->x1, area->y1);
+    g_message ("Invoke render %p on %p: %d %d - %d %d, %d %d - %d %d", item, pb,
+            area->x0, area->y0,
+            area->x1, area->y1,
+            item->drawbox.x0, item->drawbox.y0,
+            item->drawbox.x1, item->drawbox.y1);
 #endif
 
     /* If we are invisible, just return successfully */
@@ -415,8 +418,7 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
     /* Determine, whether we need temporary buffer */
     if (item->clip || item->mask
         || ((item->opacity != 255) && !item->render_opacity)
-        || (item->filter && filter) || item->background_new
-        || (item->parent && item->parent->background_pb)) {
+        || (item->filter && filter) || item->background_new) {
 
         /* Setup and render item buffer */
         NRPixBlock ipb;
@@ -432,8 +434,7 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
 
         /* If background access is used, save the pixblock address.
          * This address is set to NULL at the end of this block */
-        if (item->background_new ||
-            (item->parent && item->parent->background_pb)) {
+        if (item->background_new) {
             item->background_pb = &ipb;
         }
 
@@ -859,29 +860,15 @@ nr_arena_item_set_item_bbox (NRArenaItem *item, Geom::OptRect &bbox)
 
 /** Returns a background image for use with filter effects. */
 NRPixBlock *
-nr_arena_item_get_background (NRArenaItem const *item, int depth)
+nr_arena_item_get_background (NRArenaItem const *item)
 {
-    NRPixBlock *pb;
-    if (!item->background_pb)
-        return NULL;
     if (item->background_new) {
-        pb = new NRPixBlock ();
-        nr_pixblock_setup_fast (pb, item->background_pb->mode,
-                                item->background_pb->area.x0,
-                                item->background_pb->area.y0,
-                                item->background_pb->area.x1,
-                                item->background_pb->area.y1, true);
-        if (pb->size != NR_PIXBLOCK_SIZE_TINY && pb->data.px == NULL) // allocation failed
-            return NULL;
+        return item->background_pb;
     } else if (item->parent) {
-        pb = nr_arena_item_get_background (item->parent, depth + 1);
-    } else
+        return nr_arena_item_get_background (item->parent);
+    } else {
         return NULL;
-
-    if (depth > 0)
-        nr_blit_pixblock_pixblock (pb, item->background_pb);
-
-    return pb;
+    }
 }
 
 /* Helpers */

@@ -181,7 +181,7 @@ void nr_arena_item_set_mask (NRArenaItem *item, NRArenaItem *mask);
 void nr_arena_item_set_order (NRArenaItem *item, int order);
 void nr_arena_item_set_item_bbox (NRArenaItem *item, Geom::OptRect &bbox);
 
-NRPixBlock *nr_arena_item_get_background (NRArenaItem const *item, int depth = 0);
+NRPixBlock *nr_arena_item_get_background (NRArenaItem const *item);
 
 /* Helpers */
 
