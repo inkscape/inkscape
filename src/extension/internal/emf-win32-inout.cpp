@@ -2353,7 +2353,8 @@ EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
                 d.pDesc[lstrlen(d.pDesc)] = '#';
         }
 
-        EnumEnhMetaFile(NULL, hemf, myEnhMetaFileProc, (LPVOID) &d, NULL);
+        // This ugly reinterpret_cast is to prevent old versions of gcc from whining about a mismatch in the const-ness of the arguments
+        EnumEnhMetaFile(NULL, hemf, reinterpret_cast<ENHMFENUMPROC>(myEnhMetaFileProc), (LPVOID) &d, NULL);
         DeleteEnhMetaFile(hemf);
     }
     else {
