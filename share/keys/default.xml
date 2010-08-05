@@ -206,17 +206,23 @@ override) the bindings in the main default.xml.
   <bind key="KP_Subtract" action="ZoomOut" />
 
   <bind key="1" action="Zoom1:0" display="true" />
+  <bind key="1" modifiers="Shift" action="Zoom1:0" />
   <bind key="KP_1" action="Zoom1:0" />
   <bind key="2" action="Zoom1:2" display="true" />
+  <bind key="2" modifiers="Shift" action="Zoom1:2" />
   <bind key="KP_2" action="Zoom1:2" />
   <bind key="3" action="ZoomSelection" display="true" />
+  <bind key="3" modifiers="Shift" action="ZoomSelection" />
   <bind key="KP_3" action="ZoomSelection" />
   <bind key="4" action="ZoomDrawing" display="true" />
+  <bind key="4" modifiers="Shift" action="ZoomDrawing" />
   <bind key="KP_4" action="ZoomDrawing" />
   <bind key="5" action="ZoomPage" display="true" />
+  <bind key="5" modifiers="Shift" action="ZoomPage" />
   <bind key="KP_5" action="ZoomPage" />
   <bind key="KP_Begin" action="ZoomPage" />
   <bind key="6" action="ZoomPageWidth" display="true" />
+  <bind key="6" modifiers="Shift" action="ZoomPageWidth" />
   <bind key="KP_6" action="ZoomPageWidth" />
 
   <bind key="e" modifiers="Ctrl" action="ZoomPageWidth" />
