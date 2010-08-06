@@ -545,44 +545,48 @@ IndexedMap *rgbMapQuantize(RgbMap *rgbmap, int ncolor)
     assert(rgbmap);
     assert(ncolor > 0);
 
+    IndexedMap *newmap = 0;
+
     pool<Ocnode> pool;
 
-    Ocnode *tree;
+    Ocnode *tree = 0;
     try {
-      tree = octreeBuild(&pool, rgbmap, ncolor);
+        tree = octreeBuild(&pool, rgbmap, ncolor);
     }
-    catch (std::bad_alloc& ex) {
-      return NULL; //should do smthg else?
+    catch (std::bad_alloc &ex) {
+        //should do smthg else?
     }
 
-    RGB *rgbpal = new RGB[ncolor];
-    int indexes = 0;
-    octreeIndex(tree, rgbpal, &indexes);
+    if ( tree ) {
+        RGB *rgbpal = new RGB[ncolor];
+        int indexes = 0;
+        octreeIndex(tree, rgbpal, &indexes);
 
-    octreeDelete(&pool, tree);
+        octreeDelete(&pool, tree);
 
-    // stacking with increasing contrasts
-    qsort((void *)rgbpal, indexes, sizeof(RGB), compRGB);
+        // stacking with increasing contrasts
+        qsort((void *)rgbpal, indexes, sizeof(RGB), compRGB);
 
-    // make the new map
-    IndexedMap *newmap = IndexedMapCreate(rgbmap->width, rgbmap->height);
-    if (!newmap) { delete rgbpal; return NULL; }
+        // make the new map
+        newmap = IndexedMapCreate(rgbmap->width, rgbmap->height);
+        if (newmap) {
+            // fill in the color lookup table
+            for (int i = 0; i < indexes; i++) {
+                newmap->clut[i] = rgbpal[i];
+            }
+            newmap->nrColors = indexes;
 
-    // fill in the color lookup table
-    for (int i = 0; i < indexes; i++) newmap->clut[i] = rgbpal[i];
-    newmap->nrColors = indexes;
-
-    // fill in new map pixels
-    for (int y = 0; y < rgbmap->height; y++)
-        {
-        for (int x = 0; x < rgbmap->width; x++)
-            {
-            RGB rgb = rgbmap->getPixel(rgbmap, x, y);
-            int index = findRGB(rgbpal, ncolor, rgb);
-            newmap->setPixel(newmap, x, y, index);
+            // fill in new map pixels
+            for (int y = 0; y < rgbmap->height; y++) {
+                for (int x = 0; x < rgbmap->width; x++) {
+                    RGB rgb = rgbmap->getPixel(rgbmap, x, y);
+                    int index = findRGB(rgbpal, ncolor, rgb);
+                    newmap->setPixel(newmap, x, y, index);
+                }
             }
         }
+        delete[] rgbpal;
+    }
 
-    delete rgbpal;
     return newmap;
 }
