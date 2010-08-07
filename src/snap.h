@@ -129,6 +129,10 @@ public:
                                            Inkscape::Snapper::SnapConstraint const &constraint,
                                            Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
+    Inkscape::SnappedPoint multipleConstrainedSnaps(Inkscape::SnapCandidatePoint const &p,
+                                                        std::vector<Inkscape::Snapper::SnapConstraint> const &constraints,
+                                                        Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
+
     void guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal, SPGuideDragType drag_type) const;
     void guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline) const;
 

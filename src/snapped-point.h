@@ -54,7 +54,9 @@ public:
      * has occurred; A check should be implemented in the calling code
      * to check for snapping. Use this method only when really needed, e.g.
      * when the calling code is trying to snap multiple points and must
-     * determine itself which point is most appropriate
+     * determine itself which point is most appropriate, or when doing a
+     * constrainedSnap that also enforces projection onto the constraint (in
+     * which case you need the new point anyway, even if we didn't snap)
      */
     Geom::Point getPoint() const {return _point;}
     void setPoint(Geom::Point const &p) {_point = p;}

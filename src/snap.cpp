@@ -389,6 +389,68 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
     return no_snap;
 }
 
+/* See the documentation for constrainedSnap() directly above for more details.
+ * The difference is that multipleConstrainedSnaps() will take a list of constraints instead of a single one,
+ * and will try to snap the SnapCandidatePoint to all of the provided constraints and see which one fits best
+ *  \param p Source point to be snapped
+ *  \param constraints List of directions or lines along which snapping must occur
+ *  \param bbox_to_snap Bounding box hulling the set of points, all from the same selection and having the same transformation
+ */
+
+
+Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandidatePoint const &p,
+                                                    std::vector<Inkscape::Snapper::SnapConstraint> const &constraints,
+                                                    Geom::OptRect const &bbox_to_snap) const
+{
+
+    Inkscape::SnappedPoint no_snap = Inkscape::SnappedPoint(p.getPoint(), p.getSourceType(), p.getSourceNum(), Inkscape::SNAPTARGET_CONSTRAINT, NR_HUGE, 0, false, true, false);
+    if (constraints.size() == 0) {
+        return no_snap;
+    }
+
+    SnappedConstraints sc;
+    SnapperList const snappers = getSnappers();
+    std::vector<Geom::Point> projections;
+    bool snapping_is_futile = !someSnapperMightSnap();
+
+    // Iterate over the constraints
+    for (std::vector<Inkscape::Snapper::SnapConstraint>::const_iterator c = constraints.begin(); c != constraints.end(); c++) {
+        // Project the mouse pointer onto the constraint; In case we don't snap then we will
+        // return the projection onto the constraint, such that the constraint is always enforced
+        Geom::Point pp = (*c).projection(p.getPoint());
+        projections.push_back(pp);
+        // Try to snap to the constraint
+        if (!snapping_is_futile) {
+            for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
+                (*i)->constrainedSnap(sc, p, bbox_to_snap, *c, &_items_to_ignore);
+            }
+        }
+    }
+
+    Inkscape::SnappedPoint result = findBestSnap(p, sc, true);
+
+    if (result.getSnapped()) {
+        // only change the snap indicator if we really snapped to something
+        if (_snapindicator) {
+            _desktop->snapindicator->set_new_snaptarget(result);
+        }
+        return result;
+    }
+
+    // So we didn't snap, but we still need to return a point on one of the constraints
+    // Find out which of the constraints yielded the closest projection of point p
+    no_snap.setPoint(projections.front());
+    for (std::vector<Geom::Point>::iterator pp = projections.begin(); pp != projections.end(); pp++) {
+        if (pp != projections.begin()) {
+            if (Geom::L2(*pp - p.getPoint()) < Geom::L2(no_snap.getPoint() - p.getPoint())) {
+                no_snap.setPoint(*pp);
+            }
+        }
+    }
+
+    return no_snap;
+}
+
 /**
  *  \brief Try to snap a point of a guide to another guide or to a node
  *
