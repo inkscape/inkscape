@@ -36,6 +36,7 @@ tutorial_DATA = \
     tutorial-advanced.fa.svg \
     tutorial-advanced.fr.svg \
     tutorial-advanced.hu.svg \
+    tutorial-advanced.id.svg \
     tutorial-advanced.it.svg \
     tutorial-advanced.ja.svg \
     tutorial-advanced.nl.svg \
