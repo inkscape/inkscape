@@ -41,8 +41,8 @@ class MyEffect(inkex.Effect):
     def effect(self):
         svg_file = self.args[-1]
         docname = self.xpathSingle('/svg:svg/@sodipodi:docname')[:-4]
-	pageHeight = int(self.xpathSingle('/svg:svg/@height').split('.')[0])
-	pageWidth = int(self.xpathSingle('/svg:svg/@width').split('.')[0])
+	pageHeight = int(inkex.unittouu(self.xpathSingle('/svg:svg/@height').split('.')[0]))
+	pageWidth = int(inkex.unittouu(self.xpathSingle('/svg:svg/@width').split('.')[0]))
 
         #create os temp dir
         tmp_dir = tempfile.mkdtemp()
@@ -98,8 +98,7 @@ class MyEffect(inkex.Effect):
         path = "/svg:svg/*[name()='g' or @style][@id]"
         for node in self.document.xpath(path, namespaces=inkex.NSS):
             id = node.get('id')
-            name = "%s.png" % id
-            filename = os.path.join(tmp_dir, name)
+            filename = os.path.join(tmp_dir, "%s.png" % id)
             command = "inkscape -i %s -j %s -e %s %s " % (id, area, filename, svg_file)
             if bsubprocess:
                 p = Popen(command, shell=True, stdout=PIPE, stderr=PIPE)
