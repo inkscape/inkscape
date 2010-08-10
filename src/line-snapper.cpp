@@ -64,7 +64,8 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
                                                Inkscape::SnapCandidatePoint const &p,
                                                Geom::OptRect const &/*bbox_to_snap*/,
                                                SnapConstraint const &c,
-                                               std::vector<SPItem const *> const */*it*/) const
+                                               std::vector<SPItem const *> const */*it*/,
+                                               std::vector<SnapCandidatePoint> */*unselected_nodes*/) const
 
 {
     if (_snap_enabled == false || _snapmanager->snapprefs.getSnapFrom(p.getSourceType()) == false) {

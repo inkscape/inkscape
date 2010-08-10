@@ -374,7 +374,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
     SnappedConstraints sc;
     SnapperList const snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->constrainedSnap(sc, p, bbox_to_snap, constraint, &_items_to_ignore);
+        (*i)->constrainedSnap(sc, p, bbox_to_snap, constraint, &_items_to_ignore, _unselected_nodes);
     }
 
     Inkscape::SnappedPoint result = findBestSnap(p, sc, true);
@@ -422,7 +422,7 @@ Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandi
         // Try to snap to the constraint
         if (!snapping_is_futile) {
             for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-                (*i)->constrainedSnap(sc, p, bbox_to_snap, *c, &_items_to_ignore);
+                (*i)->constrainedSnap(sc, p, bbox_to_snap, *c, &_items_to_ignore,_unselected_nodes);
             }
         }
     }
@@ -526,14 +526,14 @@ void SnapManager::guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline)
     SnappedConstraints sc;
     Inkscape::Snapper::SnapConstraint cl(guideline.point_on_line, Geom::rot90(guideline.normal_to_line));
     if (object.ThisSnapperMightSnap()) {
-        object.constrainedSnap(sc, candidate, Geom::OptRect(), cl, NULL);
+        object.constrainedSnap(sc, candidate, Geom::OptRect(), cl, NULL, NULL);
     }
 
     // Snap to guides & grid lines
     SnapperList snappers = getGridSnappers();
     snappers.push_back(&guide);
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->constrainedSnap(sc, candidate, Geom::OptRect(), cl, NULL);
+        (*i)->constrainedSnap(sc, candidate, Geom::OptRect(), cl, NULL, NULL);
     }
 
     Inkscape::SnappedPoint const s = findBestSnap(candidate, sc, false);

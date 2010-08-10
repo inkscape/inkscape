@@ -72,7 +72,7 @@ public:
     class SnapConstraint
     {
     private:
-        enum SnapConstraintType {LINE, DIRECTION, CIRCLE};
+        enum SnapConstraintType {LINE, DIRECTION, CIRCLE, UNDEFINED};
 
     public:
         // Constructs a direction constraint, e.g. horizontal or vertical but without a specified point
@@ -82,11 +82,13 @@ public:
         SnapConstraint(Geom::Line const &l) : _point(l.origin()), _direction(l.versor()), _type(LINE) {}
         // Constructs a circular constraint
         SnapConstraint(Geom::Point const &p, Geom::Point const &d, Geom::Coord const &r) : _point(p), _direction(d), _radius(r), _type(CIRCLE) {}
+        // Undefined, or empty constraint
+        SnapConstraint() : _type(UNDEFINED) {}
 
-        bool hasPoint() const {return _type != DIRECTION;}
+        bool hasPoint() const {return _type != DIRECTION && _type != UNDEFINED;}
 
         Geom::Point getPoint() const {
-            g_assert(_type != DIRECTION);
+            g_assert(_type != DIRECTION && _type != UNDEFINED);
             return _point;
         }
 
@@ -102,6 +104,7 @@ public:
         bool isCircular() const { return _type == CIRCLE; }
         bool isLinear() const { return _type == LINE; }
         bool isDirection() const { return _type == DIRECTION; }
+        bool isUndefined() const { return _type == UNDEFINED; }
 
         Geom::Point projection(Geom::Point const &p) const { // returns the projection of p on this constraint
             if (_type == CIRCLE) {
@@ -114,11 +117,14 @@ public:
                     // point to be projected is exactly at the center of the circle, so any point on the circle is a projection
                     return _point + Geom::Point(_radius, 0);
                 }
-            } else {
+            } else if (_type != UNDEFINED){
                 // project on to a linear constraint
                 Geom::Point const p1_on_cl = (_type == LINE) ? _point : p;
                 Geom::Point const p2_on_cl = p1_on_cl + _direction;
                 return Geom::projection(p, Geom::Line(p1_on_cl, p2_on_cl));
+            } else {
+                g_warning("Bug: trying to find the projection onto an undefined constraint");
+                return Geom::Point();
             }
         }
 
@@ -133,7 +139,8 @@ public:
                                  Inkscape::SnapCandidatePoint const &/*p*/,
                                  Geom::OptRect const &/*bbox_to_snap*/,
                                  SnapConstraint const &/*c*/,
-                                 std::vector<SPItem const *> const */*it*/) const {};
+                                 std::vector<SPItem const *> const */*it*/,
+                                 std::vector<SnapCandidatePoint> */*unselected_nodes*/) const {};
 
 protected:
     SnapManager *_snapmanager;

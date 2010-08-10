@@ -57,7 +57,8 @@ public:
                   Inkscape::SnapCandidatePoint const &p,
                   Geom::OptRect const &bbox_to_snap,
                   SnapConstraint const &c,
-                  std::vector<SPItem const *> const *it) const;
+                  std::vector<SPItem const *> const *it,
+                  std::vector<SnapCandidatePoint> *unselected_nodes) const;
 
 private:
     //store some lists of candidates, points and paths, so we don't have to rebuild them for each point we want to snap
@@ -74,7 +75,8 @@ private:
 
     void _snapNodes(SnappedConstraints &sc,
                       Inkscape::SnapCandidatePoint const &p,
-                      std::vector<SnapCandidatePoint> *unselected_nodes) const; // in desktop coordinates
+                      std::vector<SnapCandidatePoint> *unselected_nodes,
+                      SnapConstraint const &c = SnapConstraint()) const; // in desktop coordinates
 
     void _snapTranslatingGuide(SnappedConstraints &sc,
                      Geom::Point const &p,

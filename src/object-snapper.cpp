@@ -257,7 +257,8 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::SnapSourceType const &t,
 
 void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
                                          Inkscape::SnapCandidatePoint const &p,
-                                         std::vector<SnapCandidatePoint> *unselected_nodes) const
+                                         std::vector<SnapCandidatePoint> *unselected_nodes,
+                                         SnapConstraint const &c) const
 {
     // Iterate through all nodes, find out which one is the closest to p, and snap to it!
 
@@ -271,9 +272,20 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
     bool success = false;
 
     for (std::vector<SnapCandidatePoint>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
-        Geom::Coord dist = Geom::L2((*k).getPoint() - p.getPoint());
+        Geom::Point target_pt = (*k).getPoint();
+        if (!c.isUndefined()) {
+            // We're snapping to nodes along a constraint only, so find out if this node
+            // is at the constraint, while allowing for a small margin
+            if (Geom::L2(target_pt - c.projection(target_pt)) > 1e-9) {
+                // The distance from the target point to its projection on the constraint
+                // is too large, so this point is not on the constraint. Skip it!
+                continue;
+            }
+        }
+
+        Geom::Coord dist = Geom::L2(target_pt - p.getPoint());
         if (dist < getSnapperTolerance() && dist < s.getSnapDistance()) {
-            s = SnappedPoint((*k).getPoint(), p.getSourceType(), p.getSourceNum(), (*k).getTargetType(), dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, true, (*k).getTargetBBox());
+            s = SnappedPoint(target_pt, p.getSourceType(), p.getSourceNum(), (*k).getTargetType(), dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, true, (*k).getTargetBBox());
             success = true;
         }
     }
@@ -300,13 +312,13 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuide(SnappedConstraints &sc,
     Geom::Coord tol = getSnapperTolerance();
 
     for (std::vector<SnapCandidatePoint>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
-
+        Geom::Point target_pt = (*k).getPoint();
         // Project each node (*k) on the guide line (running through point p)
-        Geom::Point p_proj = Geom::projection((*k).getPoint(), Geom::Line(p, p + Geom::rot90(guide_normal)));
-        Geom::Coord dist = Geom::L2((*k).getPoint() - p_proj); // distance from node to the guide
+        Geom::Point p_proj = Geom::projection(target_pt, Geom::Line(p, p + Geom::rot90(guide_normal)));
+        Geom::Coord dist = Geom::L2(target_pt - p_proj); // distance from node to the guide
         Geom::Coord dist2 = Geom::L2(p - p_proj); // distance from projection of node on the guide, to the mouse location
         if ((dist < tol && dist2 < tol) || getSnapperAlwaysSnap()) {
-            s = SnappedPoint((*k).getPoint(), SNAPSOURCE_GUIDE, 0, (*k).getTargetType(), dist, tol, getSnapperAlwaysSnap(), false, true, (*k).getTargetBBox());
+            s = SnappedPoint(target_pt, SNAPSOURCE_GUIDE, 0, (*k).getTargetType(), dist, tol, getSnapperAlwaysSnap(), false, true, (*k).getTargetBBox());
             sc.points.push_back(s);
         }
     }
@@ -608,7 +620,7 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
         _findCandidates(sp_document_root(_snapmanager->getDocument()), it, p.getSourceNum() == 0, local_bbox_to_snap, false, Geom::identity());
     }
 
-
+    // TODO: Argh, UGLY! Get rid of this here, move this logic to the snap manager
     bool snap_nodes = (_snapmanager->snapprefs.getSnapModeNode() && (
                             _snapmanager->snapprefs.getSnapToItemNode() ||
                             _snapmanager->snapprefs.getSnapSmoothNodes() ||
@@ -655,7 +667,8 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
                                                   Inkscape::SnapCandidatePoint const &p,
                                                   Geom::OptRect const &bbox_to_snap,
                                                   SnapConstraint const &c,
-                                                  std::vector<SPItem const *> const *it) const
+                                                  std::vector<SPItem const *> const *it,
+                                                  std::vector<SnapCandidatePoint> *unselected_nodes) const
 {
     if (_snap_enabled == false || _snapmanager->snapprefs.getSnapFrom(p.getSourceType()) == false) {
         return;
@@ -671,10 +684,24 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
     // This is useful for example when scaling an object while maintaining a fixed aspect ratio. It's
     // nodes are only allowed to move in one direction (i.e. in one degree of freedom).
 
-    // When snapping to objects, we either snap to their nodes or their paths. It is however very
-    // unlikely that any node will be exactly at the constrained line, so for a constrained snap
-    // to objects we will only consider the object's paths. Beside, the nodes will be at these paths,
-    // so we will more or less snap to them anyhow.
+    // TODO: Argh, UGLY! Get rid of this here, move this logic to the snap manager
+    bool snap_nodes = (_snapmanager->snapprefs.getSnapModeNode() && (
+                                _snapmanager->snapprefs.getSnapToItemNode() ||
+                                _snapmanager->snapprefs.getSnapSmoothNodes() ||
+                                _snapmanager->snapprefs.getSnapLineMidpoints() ||
+                                _snapmanager->snapprefs.getSnapObjectMidpoints()
+                            )) || (_snapmanager->snapprefs.getSnapModeBBox() && (
+                                _snapmanager->snapprefs.getSnapToBBoxNode() ||
+                                _snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() ||
+                                _snapmanager->snapprefs.getSnapBBoxMidpoints()
+                            )) || (_snapmanager->snapprefs.getSnapModeBBoxOrNodes() && (
+                                _snapmanager->snapprefs.getIncludeItemCenter() ||
+                                _snapmanager->snapprefs.getSnapToPageBorder()
+                            ));
+
+    if (snap_nodes) {
+        _snapNodes(sc, p, unselected_nodes, c);
+    }
 
     if (_snapmanager->snapprefs.getSnapToItemPath() || _snapmanager->snapprefs.getSnapToBBoxPath() || _snapmanager->snapprefs.getSnapToPageBorder()) {
         _snapPathsConstrained(sc, p, c);
