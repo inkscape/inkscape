@@ -59,7 +59,11 @@ namespace UI
 namespace Dialog
 {
 
-const int PreviewWidening = 150;
+const int PREVIEW_WIDENING = 150;
+const int WINDOW_WIDTH_MINIMUM = 32;
+const int WINDOW_WIDTH_FALLBACK = 450;
+const int WINDOW_HEIGHT_MINIMUM = 32;
+const int WINDOW_HEIGHT_FALLBACK = 360;
 const char PreviewWindowClassName[] = "PreviewWnd";
 const unsigned long MaxPreviewFileSize = 10240; // kB
 
@@ -90,6 +94,21 @@ ustring utf16_to_ustring(const wchar_t *utf16string, int utf16length = -1)
 
     return result;
 }
+
+namespace {
+
+int sanitizeWindowSizeParam( int size, int delta, int minimum, int fallback )
+{
+    int result = size;
+    if ( size < lower ) {
+        g_warning( "Window size %d is less than cutoff.", size );
+        result = fallback - delta;
+    }
+    result += delta;
+    return result;
+}
+
+} // namespace
 
 /*#########################################################################
 ### F I L E     D I A L O G    B A S E    C L A S S
@@ -443,9 +462,9 @@ UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
             RECT rcRect;
             GetWindowRect(hParentWnd, &rcRect);
             MoveWindow(hParentWnd, rcRect.left, rcRect.top,
-                rcRect.right - rcRect.left + PreviewWidening,
-                rcRect.bottom - rcRect.top,
-                FALSE);
+                       rcRect.right - rcRect.left + PREVIEW_WIDENING,
+                       rcRect.bottom - rcRect.top,
+                       FALSE);
 
             // Set the pointer to the object
             OPENFILENAMEW *ofn = (OPENFILENAMEW*)lParam;
@@ -1686,12 +1705,19 @@ UINT_PTR CALLBACK FileSaveDialogImplWin32::GetSaveFileName_hookproc(
             GetWindowRect(GetDlgItem(hParentWnd, stc2), &rST);
             GetWindowRect(hdlg, &rROOT);
             int ydelta = rCB1.top - rEDT1.top;
+            if ( ydelta < 0 ) {
+                g_warning("Negative dialog ydelta");
+                ydelta = 0;
+            }
 
             // Make the window a bit longer
+            // Note: we have a width delta of 1 because there is a suspicion that MoveWindow() to the same size causes zero-width results.
             RECT rcRect;
             GetWindowRect(hParentWnd, &rcRect);
-            MoveWindow(hParentWnd, rcRect.left, rcRect.top, rcRect.right - rcRect.left,
-                       rcRect.bottom - rcRect.top + ydelta, FALSE);
+            MoveWindow(hParentWnd, rcRect.left, rcRect.top,
+                       sanitizeWindowSizeParam( rcRect.right - rcRect.left, 1, WINDOW_WIDTH_MINIMUM, WINDOW_WIDTH_FALLBACK ),
+                       sanitizeWindowSizeParam( rcRect.bottom - rcRect.top, ydelta, WINDOW_HEIGHT_MINIMUM, WINDOW_HEIGHT_FALLBACK ),
+                       FALSE);
 
             // It is not necessary to delete stock objects by calling DeleteObject
             HGDIOBJ dlgFont = GetStockObject(DEFAULT_GUI_FONT);
