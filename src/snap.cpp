@@ -89,7 +89,6 @@ SnapManager::SnapperList
 SnapManager::getGridSnappers() const
 {
     SnapperList s;
-
     if (_desktop && _desktop->gridsEnabled() && snapprefs.getSnapToGrids()) {
         for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
             Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;

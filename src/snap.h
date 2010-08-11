@@ -101,7 +101,6 @@ public:
     void unSetup() {_rotation_center_source_item = NULL;
                     _guide_to_ignore = NULL;
                     _desktop = NULL;
-                    _named_view = NULL;
                     _unselected_nodes = NULL;}
 
     // If we're dragging a rotation center, then setRotationCenterSource() stores the parent item
