@@ -602,6 +602,7 @@ void SvgFontsDialog::glyph_unicode_edit(const Glib::ustring&, const Glib::ustrin
 
 void SvgFontsDialog::remove_selected_font(){
     SPFont* font = get_selected_spfont();
+    if (!font) return;
 
     sp_repr_unparent(font->repr);
     SPDocument* doc = sp_desktop_document(this->getDesktop());
