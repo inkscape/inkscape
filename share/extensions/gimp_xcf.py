@@ -1,6 +1,7 @@
 #!/usr/bin/env python 
 '''
 Copyright (C) 2006 Aaron Spike, aaron@ekips.org
+Copyright (C) 2010 Nicolas Dufour, nicoduf@yahoo.fr (Windows support and various fixes)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,94 +29,108 @@ except:
 class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
-	self.OptionParser.add_option("-d", "--guides",
-                                     action="store", type="inkbool",
-                                     dest="saveGuides", default=False,
-                                     help="Save the Guides with the .XCF")
-	self.OptionParser.add_option("-r", "--grid",
-                                     action="store", type="inkbool",
-                                     dest="saveGrid", default=False,
-                                     help="Save the Grid with the .XCF")
+        self.OptionParser.add_option("-d", "--guides",
+                                         action="store", type="inkbool",
+                                         dest="saveGuides", default=False,
+                                         help="Save the Guides with the .XCF")
+        self.OptionParser.add_option("-r", "--grid",
+                                         action="store", type="inkbool",
+                                         dest="saveGrid", default=False,
+                                         help="Save the Grid with the .XCF")
     def output(self):
         pass
+
     def effect(self):
         svg_file = self.args[-1]
         docname = self.xpathSingle('/svg:svg/@sodipodi:docname')[:-4]
-	pageHeight = int(inkex.unittouu(self.xpathSingle('/svg:svg/@height').split('.')[0]))
-	pageWidth = int(inkex.unittouu(self.xpathSingle('/svg:svg/@width').split('.')[0]))
+        pageHeight = int(inkex.unittouu(self.xpathSingle('/svg:svg/@height').split('.')[0]))
+        pageWidth = int(inkex.unittouu(self.xpathSingle('/svg:svg/@width').split('.')[0]))
 
         #create os temp dir
         tmp_dir = tempfile.mkdtemp()
 
-	hGuides = []
-	vGuides = []
-	if self.options.saveGuides:
-		guideXpath = "sodipodi:namedview/sodipodi:guide" #grab all guide tags in the namedview tag
-		for guideNode in self.document.xpath(guideXpath, namespaces=inkex.NSS):
-			ori = guideNode.get('orientation')
-			if  ori == '0,1':
-				#this is a horizontal guide
-				pos = int(guideNode.get('position').split(',')[1].split('.')[0])
-				#GIMP doesn't like guides that are outside of the image
-				if pos > 0 and pos < pageHeight:
-					#the origin is at the top in GIMP land
-					hGuides.append(str(pageHeight - pos))
-			elif ori == '1,0':
-				#this is a vertical guide
-				pos = int(guideNode.get('position').split(',')[0].split('.')[0])
-				#GIMP doesn't like guides that are outside of the image
-				if pos > 0 and pos < pageWidth:
-					vGuides.append(str(pos))
+        # Guides
+        hGuides = []
+        vGuides = []
+        if self.options.saveGuides:
+            guideXpath = "sodipodi:namedview/sodipodi:guide" #grab all guide tags in the namedview tag
+            for guideNode in self.document.xpath(guideXpath, namespaces=inkex.NSS):
+                ori = guideNode.get('orientation')
+                if  ori == '0,1':
+                    #this is a horizontal guide
+                    pos = int(guideNode.get('position').split(',')[1].split('.')[0])
+                    #GIMP doesn't like guides that are outside of the image
+                    if pos > 0 and pos < pageHeight:
+                        #the origin is at the top in GIMP land
+                        hGuides.append(str(pageHeight - pos))
+                elif ori == '1,0':
+                    #this is a vertical guide
+                    pos = int(guideNode.get('position').split(',')[0].split('.')[0])
+                    #GIMP doesn't like guides that are outside of the image
+                    if pos > 0 and pos < pageWidth:
+                        vGuides.append(str(pos))
 
-	hGList = ' '.join(hGuides)
-	vGList = ' '.join(vGuides)
+        hGList = ' '.join(hGuides)
+        vGList = ' '.join(vGuides)
 
-	gridSpacingFunc = ''
-	gridOriginFunc = '' 
-	#GIMP only allows one rectangular grid
-	if self.options.saveGrid:
-		gridNode = self.xpathSingle("sodipodi:namedview/inkscape:grid[@type='xygrid' and (not(@units) or @units='px')]")
-		if gridNode != None:
-			#these attributes could be nonexistant
-			spacingX = gridNode.get('spacingx')
-			if spacingX == None: spacingX = '1  '
+        # Grid
+        gridSpacingFunc = ''
+        gridOriginFunc = '' 
+        #GIMP only allows one rectangular grid
+        gridXpath = "sodipodi:namedview/inkscape:grid[@type='xygrid' and (not(@units) or @units='px')]"
+        if (self.options.saveGrid and self.document.xpath(gridXpath, namespaces=inkex.NSS)):
+            gridNode = self.xpathSingle(gridXpath)
+            if gridNode != None:
+                #these attributes could be nonexistant
+                spacingX = gridNode.get('spacingx')
+                if spacingX == None: spacingX = '1  '
 
-			spacingY = gridNode.get('spacingy')
-			if spacingY == None: spacingY = '1  '
+                spacingY = gridNode.get('spacingy')
+                if spacingY == None: spacingY = '1  '
 
-			originX = gridNode.get('originx')
-			if originX == None: originX = '0  '
+                originX = gridNode.get('originx')
+                if originX == None: originX = '0  '
 
-			originY = gridNode.get('originy')
-			if originY == None: originY = '0  '
+                originY = gridNode.get('originy')
+                if originY == None: originY = '0  '
 
-			gridSpacingFunc = '(gimp-image-grid-set-spacing img %s %s)' % (spacingX[:-2], spacingY[:-2])
-			gridOriginFunc = '(gimp-image-grid-set-offset img %s %s)'% (originX[:-2], originY[:-2])
+                gridSpacingFunc = '(gimp-image-grid-set-spacing img %s %s)' % (spacingX[:-2], spacingY[:-2])
+                gridOriginFunc = '(gimp-image-grid-set-offset img %s %s)'% (originX[:-2], originY[:-2])
 
+        # Layers
         area = '--export-area-page'
         pngs = []
         names = []
         path = "/svg:svg/*[name()='g' or @style][@id]"
         for node in self.document.xpath(path, namespaces=inkex.NSS):
-            id = node.get('id')
-            filename = os.path.join(tmp_dir, "%s.png" % id)
-            command = "inkscape -i %s -j %s -e %s %s " % (id, area, filename, svg_file)
-            if bsubprocess:
-                p = Popen(command, shell=True, stdout=PIPE, stderr=PIPE)
-                return_code = p.wait()
-                f = p.stdout
-                err = p.stderr
-            else:
-                _,f,err = os.popen3(command,'r')
-            f.read()
-            f.close()
-            err.close()
-            pngs.append(filename)
-            names.append(id)
+            if len(node) > 0: # Get rid of empty layers
+                id = node.get('id')
+                if node.get("{" + inkex.NSS["inkscape"] + "}label"):
+                    name = node.get("{" + inkex.NSS["inkscape"] + "}label")
+                else:
+                    name = id
+                filename = os.path.join(tmp_dir, "%s.png" % id)
+                command = "inkscape -i %s -j %s -e %s %s " % (id, area, filename, svg_file)
+                if bsubprocess:
+                    p = Popen(command, shell=True, stdout=PIPE, stderr=PIPE)
+                    return_code = p.wait()
+                    f = p.stdout
+                    err = p.stderr
+                else:
+                    _,f,err = os.popen3(command,'r')
+                f.read()
+                f.close()
+                err.close()
+                if os.name == 'nt':
+                    filename = filename.replace("\\", "/")
+                pngs.append(filename)
+                names.append(name.encode('utf-8'))
 
         filelist = '"%s"' % '" "'.join(pngs)
         namelist = '"%s"' % '" "'.join(names)
         xcf = os.path.join(tmp_dir, "%s.xcf" % docname)
+        if os.name == 'nt':
+            xcf = xcf.replace("\\", "/")
         script_fu = """
 (tracing 1)
 (define
@@ -175,7 +190,13 @@ class MyEffect(inkex.Effect):
         #inkex.debug(err.read())
         #err.close()
 
-        x = open(xcf, 'r')
+        x = open(xcf, 'rb')
+        if os.name == 'nt':
+            try:
+                import msvcrt
+                msvcrt.setmode(1, os.O_BINARY)
+            except:
+                pass
         sys.stdout.write(x.read())
         x.close()
 
