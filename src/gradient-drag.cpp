@@ -731,6 +731,8 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
         }
     }
 
+    m.unSetup();
+
     drag->keep_selection = (bool) g_list_find(drag->selected, dragger);
     bool scale_radial = (state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK);
 
@@ -864,6 +866,7 @@ gr_knot_moved_midpoint_handler(SPKnot */*knot*/, Geom::Point const &ppointer, gu
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop);
             m.constrainedSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE, cl);
+            m.unSetup();
         }
     }
     Geom::Point displacement = p - dragger->point;

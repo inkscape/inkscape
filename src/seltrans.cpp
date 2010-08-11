@@ -1039,6 +1039,7 @@ gboolean Inkscape::SelTrans::scaleRequest(Geom::Point &pt, guint state)
             geom_scale = Geom::Scale(sn.getTransformation());
             pt = _calcAbsAffineGeom(geom_scale);
         }
+        m.unSetup();
     }
 
     /* Status text */
@@ -1134,6 +1135,8 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, Geom
             // will have to calculate pt taking the stroke width into account
             pt = _calcAbsAffineGeom(geom_scale);
         }
+
+        m.unSetup();
     }
 
     // status text
@@ -1226,6 +1229,8 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, Geom::P
         } else {
             _desktop->snapindicator->remove_snaptarget();
         }
+
+        m.unSetup();
     }
 
     // Update the handle position
@@ -1299,6 +1304,7 @@ gboolean Inkscape::SelTrans::rotateRequest(Geom::Point &pt, guint state)
         m.setup(_desktop, false, _items_const);
         // When rotating, we cannot snap the corners of the bounding box, see the comment in "constrainedSnapRotate" for details
         Inkscape::SnappedPoint sn = m.constrainedSnapRotate(_snap_points, _point, radians, _origin);
+        m.unSetup();
 
         if (sn.getSnapped()) {
             _desktop->snapindicator->set_new_snaptarget(sn);
@@ -1309,6 +1315,7 @@ gboolean Inkscape::SelTrans::rotateRequest(Geom::Point &pt, guint state)
         } else {
             _desktop->snapindicator->remove_snaptarget();
         }
+
     }
 
 
@@ -1331,9 +1338,6 @@ gboolean Inkscape::SelTrans::rotateRequest(Geom::Point &pt, guint state)
 // Move the item's transformation center
 gboolean Inkscape::SelTrans::centerRequest(Geom::Point &pt, guint state)
 {
-    SnapManager &m = _desktop->namedview->snap_manager;
-    m.setup(_desktop);
-
     // Center is being dragged for the first item in the selection only
     // Find out which item is first ...
     GSList *items = (GSList *) const_cast<Selection *>(_selection)->itemList();
@@ -1343,8 +1347,11 @@ gboolean Inkscape::SelTrans::centerRequest(Geom::Point &pt, guint state)
     }
     // ... and store that item because later on we need to make sure that
     // this transformation center won't snap to itself
+    SnapManager &m = _desktop->namedview->snap_manager;
+    m.setup(_desktop);
     m.setRotationCenterSource(first);
     m.freeSnapReturnByRef(pt, Inkscape::SNAPSOURCE_ROTATION_CENTER);
+    m.unSetup();
 
     if (state & GDK_CONTROL_MASK) {
         if ( fabs(_point[Geom::X] - pt[Geom::X]) > fabs(_point[Geom::Y] - pt[Geom::Y]) ) {
@@ -1439,6 +1446,7 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
         }
         m.setup(_desktop, true, _items_const);
         dxy = m.multipleOfGridPitch(dxy, _point);
+        m.unSetup();
     } else if (shift) {
         if (control) { // shift & control: constrained movement without snapping
             if (fabs(dxy[Geom::X]) > fabs(dxy[Geom::Y])) {
@@ -1493,6 +1501,7 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
               double elapsed = ((((double)endtime.tv_sec - starttime.tv_sec) * G_USEC_PER_SEC + (endtime.tv_usec - starttime.tv_usec))) / 1000.0;
               std::cout << "Time spent snapping: " << elapsed << std::endl; */
         }
+        m.unSetup();
 
         /* Pick one */
         Inkscape::SnappedPoint best_snapped_point;

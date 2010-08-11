@@ -98,6 +98,12 @@ public:
                               std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes = NULL,
                               SPGuide *guide_to_ignore = NULL);
 
+    void unSetup() {_rotation_center_source_item = NULL;
+                    _guide_to_ignore = NULL;
+                    _desktop = NULL;
+                    _named_view = NULL;
+                    _unselected_nodes = NULL;}
+
     // If we're dragging a rotation center, then setRotationCenterSource() stores the parent item
     // of this rotation center; this reference is used to make sure that we do not snap a rotation
     // center to itself

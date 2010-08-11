@@ -150,6 +150,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     // Because the guide snapper only looks in the document for guides to snap to,
                     // we don't have to worry about a guide snapping to itself here
                     m.guideFreeSnap(event_dt, normal, SP_DRAG_MOVE_ORIGIN);
+                    m.unSetup();
                 }
 
                 sp_guideline_set_position(SP_GUIDELINE(guide), from_2geom(event_dt));
@@ -172,6 +173,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     // Because the guide snapper only looks in the document for guides to snap to,
                     // we don't have to worry about a guide snapping to itself here
                     m.guideFreeSnap(event_dt, normal, SP_DRAG_MOVE_ORIGIN);
+                    m.unSetup();
                 }
 
                 dragging = false;
@@ -297,9 +299,10 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         m.guideConstrainedSnap(motion_dt, *guide);
                     }
                 } else if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
-					// cannot use shift here to disable snapping, because we already use it for rotating the guide
-                	m.guideFreeSnap(motion_dt, guide->normal_to_line, drag_type);
+                    // cannot use shift here to disable snapping, because we already use it for rotating the guide
+                    m.guideFreeSnap(motion_dt, guide->normal_to_line, drag_type);
                 }
+                m.unSetup();
 
                 switch (drag_type) {
                     case SP_DRAG_TRANSLATE:
@@ -361,9 +364,10 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                             m.guideConstrainedSnap(event_dt, *guide);
                         }
                     } else if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
-                    	// cannot use shift here to disable snapping, because we already use it for rotating the guide
-                    	m.guideFreeSnap(event_dt, guide->normal_to_line, drag_type);
+                        // cannot use shift here to disable snapping, because we already use it for rotating the guide
+                        m.guideFreeSnap(event_dt, guide->normal_to_line, drag_type);
                     }
+                    m.unSetup();
 
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
                         switch (drag_type) {

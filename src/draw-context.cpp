@@ -512,6 +512,7 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p,
             SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
             m.setup(SP_EVENT_CONTEXT_DESKTOP(ec));
             m.constrainedSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE, Inkscape::Snapper::SnapConstraint(o, best));
+            m.unSetup();
         }
     }
 }
@@ -528,6 +529,7 @@ void spdc_endpoint_snap_free(SPEventContext const * const ec, Geom::Point& p, gu
 
     m.setup(dt, true, selection->singleItem());
     m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE);
+    m.unSetup();
 }
 
 static SPCurve *

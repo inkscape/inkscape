@@ -476,6 +476,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                                     SnapManager &m = desktop->namedview->snap_manager;
                                     m.setup(desktop);
                                     m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE);
+                                    m.unSetup();
                                 }
                               spdc_create_single_dot(event_context, p, "/tools/freehand/pen", bevent.state);
                               ret = TRUE;
@@ -633,6 +634,7 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
                         SnapManager &m = dt->namedview->snap_manager;
                         m.setup(dt);
                         m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
+                        m.unSetup();
                     }
                     break;
                 case SP_PEN_CONTEXT_CONTROL:
@@ -683,6 +685,7 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
                             SnapManager &m = dt->namedview->snap_manager;
                             m.setup(dt);
                             m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
+                            m.unSetup();
                         }
                     }
                     break;
@@ -709,6 +712,7 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
                         SnapManager &m = dt->namedview->snap_manager;
                         m.setup(dt);
                         m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
+                        m.unSetup();
                     }
                     break;
             }
@@ -1481,6 +1485,7 @@ void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Point &pt
 
         m.setup(pc->desktop, true, selection->singleItem());
         m.constrainedSnapReturnByRef(pt, Inkscape::SNAPSOURCE_NODE_HANDLE, cl);
+        m.unSetup();
     }
 }
 

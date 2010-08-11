@@ -824,6 +824,7 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
                 default:
                     break;
             }
+            m.unSetup();
         } else if (bevent.button == 3) {
             if (cc->state == SP_CONNECTOR_CONTEXT_REROUTING) {
                 // A context menu is going to be triggered here,
@@ -997,6 +998,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
                 }
                 break;
         }
+        m.unSetup();
     }
     else if ( cc->mode == SP_CONNECTOR_CONTEXT_EDITING_MODE )
     {
@@ -1121,6 +1123,7 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
                     break;
             }
         }
+        m.unSetup();
     }
 
 
@@ -1207,6 +1210,7 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
                         cp.pos = p * sp_item_dt2i_affine(cc->active_shape);
                         cc->active_shape->avoidRef->updateConnectionPoint(cp);
                     }
+                    m.unSetup();
 
                     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
                     ret = TRUE;
@@ -1230,7 +1234,7 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
                     Geom::Point p = cc->selected_handle->pos;
 
                     m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
-
+                    m.unSetup();
                     sp_knot_set_position(cc->selected_handle, p, 0);
 
                     ConnectionPoint cp;

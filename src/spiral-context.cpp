@@ -242,7 +242,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
                 m.freeSnapReturnByRef(sc->center, Inkscape::SNAPSOURCE_NODE_HANDLE);
-
+                m.unSetup();
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     ( GDK_KEY_PRESS_MASK |
                                       GDK_BUTTON_RELEASE_MASK |
@@ -272,6 +272,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop, true, sc->item);
                 m.freeSnapReturnByRef(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
+                m.unSetup();
                 sp_spiral_drag(sc, from_2geom(motion_dt), event->motion.state);
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
@@ -280,10 +281,10 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             } else if (!sp_event_context_knot_mouseover(sc)) {
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
-
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
                 Geom::Point motion_dt(desktop->w2d(motion_w));
                 m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE));
+                m.unSetup();
             }
             break;
         case GDK_BUTTON_RELEASE:
@@ -430,7 +431,7 @@ sp_spiral_drag(SPSpiralContext *sc, Geom::Point p, guint state)
     m.setup(desktop, true, sc->item);
     Geom::Point pt2g = to_2geom(p);
     m.freeSnapReturnByRef(pt2g, Inkscape::SNAPSOURCE_NODE_HANDLE);
-
+    m.unSetup();
     Geom::Point const p0 = desktop->dt2doc(sc->center);
     Geom::Point const p1 = desktop->dt2doc(pt2g);
 

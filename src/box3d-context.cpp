@@ -317,6 +317,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, true, bc->item);
             m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
+            m.unSetup();
             bc->center = from_2geom(button_dt);
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -349,7 +350,6 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, true, bc->item);
             m.freeSnapReturnByRef(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
-
             bc->ctrl_dragged  = event->motion.state & GDK_CONTROL_MASK;
 
             if (event->motion.state & GDK_SHIFT_MASK && !bc->extruded && bc->item) {
@@ -383,6 +383,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                 }
                 m.freeSnapReturnByRef(bc->drag_ptC, Inkscape::SNAPSOURCE_NODE_HANDLE);
             }
+            m.unSetup();
 
             sp_box3d_drag(*bc, event->motion.state);
 
@@ -394,6 +395,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             Geom::Point const motion_w(event->motion.x, event->motion.y);
             Geom::Point motion_dt(desktop->w2d(motion_w));
             m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE));
+            m.unSetup();
         }
         break;
     case GDK_BUTTON_RELEASE:

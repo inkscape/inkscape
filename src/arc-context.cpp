@@ -251,6 +251,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                                     GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
                                     NULL, event->button.time);
                 ret = TRUE;
+                m.unSetup();
             }
             break;
         case GDK_MOTION_NOTIFY:
@@ -281,6 +282,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
                 Geom::Point motion_dt(desktop->w2d(motion_w));
                 m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE));
+                m.unSetup();
             }
             break;
         case GDK_BUTTON_RELEASE:

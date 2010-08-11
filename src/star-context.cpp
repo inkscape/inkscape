@@ -260,7 +260,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, true);
             m.freeSnapReturnByRef(sc->center, Inkscape::SNAPSOURCE_NODE_HANDLE);
-
+            m.unSetup();
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
                                 GDK_POINTER_MOTION_MASK |
@@ -297,7 +297,9 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
 
             Geom::Point const motion_w(event->motion.x, event->motion.y);
             Geom::Point motion_dt(desktop->w2d(motion_w));
+
             m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE));
+            m.unSetup();
         }
         break;
     case GDK_BUTTON_RELEASE:
@@ -443,7 +445,7 @@ static void sp_star_drag(SPStarContext *sc, Geom::Point p, guint state)
     m.setup(desktop, true, sc->item);
     Geom::Point pt2g = to_2geom(p);
     m.freeSnapReturnByRef(pt2g, Inkscape::SNAPSOURCE_NODE_HANDLE);
-
+    m.unSetup();
     Geom::Point const p0 = desktop->dt2doc(sc->center);
     Geom::Point const p1 = desktop->dt2doc(pt2g);
 

@@ -274,7 +274,9 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
         } else {
             sm.freeSnapReturnByRef(new_pos, SNAPSOURCE_NODE_HANDLE);
         }
+        sm.unSetup();
     }
+
 
     // with Shift, if the node is cusp, rotate the other handle as well
     if (_parent->type() == NODE_CUSP && !_drag_out) {

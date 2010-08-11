@@ -290,6 +290,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                         m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE);
                     }
                 }
+                m.unSetup();
                 pc->sa = anchor;
                 spdc_set_startpoint(pc, p);
                 ret = TRUE;
@@ -416,6 +417,7 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                 SnapManager &m = dt->namedview->snap_manager;
                 m.setup(dt);
                 m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
+                m.unSetup();
             }
             break;
     }

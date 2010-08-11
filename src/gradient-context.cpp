@@ -557,6 +557,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
                 m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
+                m.unSetup();
                 rc->origin = from_2geom(button_dt);
             }
 
@@ -597,7 +598,9 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
                 Geom::Point const motion_dt = event_context->desktop->w2d(motion_w);
+
                 m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE));
+                m.unSetup();
             }
 
             bool over_line = false;
