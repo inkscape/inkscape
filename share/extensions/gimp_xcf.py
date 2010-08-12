@@ -29,6 +29,9 @@ except:
 class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
+        self.OptionParser.add_option("--tab",
+                                     action="store", type="string",
+                                     dest="tab")
         self.OptionParser.add_option("-d", "--guides",
                                          action="store", type="inkbool",
                                          dest="saveGuides", default=False,
@@ -37,6 +40,11 @@ class MyEffect(inkex.Effect):
                                          action="store", type="inkbool",
                                          dest="saveGrid", default=False,
                                          help="Save the Grid with the .XCF")
+        self.OptionParser.add_option("-b", "--background",
+                                         action="store", type="inkbool",
+                                         dest="layerBackground", default=False,
+                                         help="Add background color to each layer")
+
     def output(self):
         pass
 
@@ -99,6 +107,11 @@ class MyEffect(inkex.Effect):
 
         # Layers
         area = '--export-area-page'
+        opacity = '--export-background-opacity='
+        if self.options.layerBackground:
+            opacity += "1"
+        else:
+            opacity += "0"
         pngs = []
         names = []
         path = "/svg:svg/*[name()='g' or @style][@id]"
@@ -110,7 +123,7 @@ class MyEffect(inkex.Effect):
                 else:
                     name = id
                 filename = os.path.join(tmp_dir, "%s.png" % id)
-                command = "inkscape -i %s -j %s -e %s %s " % (id, area, filename, svg_file)
+                command = "inkscape -i %s -j %s %s -e %s %s " % (id, area, opacity, filename, svg_file)
                 if bsubprocess:
                     p = Popen(command, shell=True, stdout=PIPE, stderr=PIPE)
                     return_code = p.wait()

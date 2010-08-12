@@ -6,9 +6,21 @@
 	<dependency type="executable" location="extensions">gimp_xcf.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<dependency type="executable" location="path">gimp</dependency>
-	
-	<param name="guides" type="boolean" _gui-text="Save Guides:">false</param>
-	<param name="grid" type="boolean" _gui-text="Save Grid:">false</param>
+	<param name="tab" type="notebook">
+        <page name="Options" _gui-text="Options">
+        <param name="guides" type="boolean" _gui-text="Save Guides:">false</param>
+        <param name="grid" type="boolean" _gui-text="Save Grid:">false</param>
+        <param name="background" type="boolean" _gui-text="Save Background:">false</param>
+        </page>
+        <page name="Help" _gui-text="Help">
+            <_param name="instructions" type="description" xml:space="preserve">This extension exports the document to Gimp XCF format according to the following options:
+    * Save Guides: convert all guides to Gimp guides.
+    * Save Grid: convert the first rectangular grid to a Gimp grid (note that the default Inkscape grid is very narrow when shown in Gimp).
+    * Save Background: add the document background to each converted layer.
+
+Each first level layer is converted to a Gimp layer. Sublayers are are concatenated and converted with their first level parent layer into a single Gimp layer.</_param>
+        </page>
+    </param>        
     <output>
                 <extension>.xcf</extension>
                 <mimetype>application/x-xcf</mimetype>
