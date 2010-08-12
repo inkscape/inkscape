@@ -100,7 +100,7 @@ namespace {
 int sanitizeWindowSizeParam( int size, int delta, int minimum, int fallback )
 {
     int result = size;
-    if ( size < lower ) {
+    if ( size < minimum ) {
         g_warning( "Window size %d is less than cutoff.", size );
         result = fallback - delta;
     }
