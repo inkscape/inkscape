@@ -1,4 +1,3 @@
-# Romanian translation for Inkscape
 # Copyright (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
 # This file is distributed under the same license as the Inkscape package.
 # Bogdan Oancea <bogdan DOT oancea77 AT gmail DOT com>, 2008.
@@ -10,14 +9,14 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-07-28 13:36+0200\n"
+"PO-Revision-Date: 2010-08-12 16:57+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
-"X-Poedit-Bookmarks: 3986,3987,-1,-1,-1,-1,-1,-1,-1,-1\n"
+"X-Poedit-Bookmarks: 2876,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
@@ -787,7 +786,7 @@ msgstr "Calea pentru salvarea imaginii:"
 #: ../share/extensions/extrude.inx.h:1
 #: ../src/live_effects/effect.cpp:94
 msgid "Extrude"
-msgstr ""
+msgstr "Extrudare"
 
 #: ../share/extensions/extrude.inx.h:2
 #: ../share/extensions/generate_voronoi.inx.h:3
@@ -802,7 +801,7 @@ msgstr "Generare din traseu"
 #: ../share/extensions/extrude.inx.h:3
 #: ../share/extensions/split.inx.h:2
 msgid "Lines"
-msgstr ""
+msgstr "Linii"
 
 #: ../share/extensions/extrude.inx.h:4
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2171
@@ -814,19 +813,19 @@ msgstr "Mod:"
 
 #: ../share/extensions/extrude.inx.h:5
 msgid "Polygons"
-msgstr ""
+msgstr "Poligoane"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
-msgstr ""
+msgstr "Deschide fișiere salvate cu XFIG"
 
 #: ../share/extensions/fig_input.inx.h:2
 msgid "XFIG Graphics File (*.fig)"
-msgstr ""
+msgstr "Fișier grafic XFIG (*.fig)"
 
 #: ../share/extensions/fig_input.inx.h:3
 msgid "XFIG Input"
-msgstr ""
+msgstr "Intrare XFIG"
 
 #: ../share/extensions/flatten.inx.h:1
 msgid "Flatness"
@@ -1284,7 +1283,7 @@ msgstr "Creator de linii de ghidare"
 msgid "Horizontal guide each"
 msgstr ""
 
-# hm ? sau prestabilește ?
+# hm ? titlu sau acțiune ?
 #: ../share/extensions/guides_creator.inx.h:16
 msgid "Preset"
 msgstr "Prestabilit"
@@ -1323,7 +1322,7 @@ msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:5
 msgid "Pen number"
-msgstr "Număr peniță"
+msgstr "Număr stilou"
 
 #: ../share/extensions/hpgl_output.inx.h:6
 msgid "Plot invisible layers"
@@ -5452,7 +5451,7 @@ msgstr "Protuberanță de mare flexibilitate, cu transparență"
 #: ../src/ui/dialog/align-and-distribute.cpp:926
 #: ../src/widgets/desktop-widget.cpp:1647
 msgid "Drawing"
-msgstr ""
+msgstr "Desen"
 
 #: ../share/filters/filters.svg.h:162
 msgid "Give lead pencil or chromolithography or engraving or other effects to images and material filled objects"
@@ -6943,8 +6942,8 @@ msgstr " R_esetează "
 #: ../src/dialogs/clonetiler.cpp:2981
 msgid "Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"
 msgstr ""
-"Resetează la zero toate decalajele, scalările, rotațiile, opacitățile \\n"
-" și modificările de culoare din caseta de dialog"
+"Resetează la zero toate decalajele, scalările, rotațiile, opacitățile\\n"
+"și modificările de culoare din caseta de dialog"
 
 #: ../src/dialogs/export.cpp:146
 #: ../src/verbs.cpp:2582
@@ -9175,30 +9174,34 @@ msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:72
 msgid "Select page:"
-msgstr "Selectează pagina:"
+msgstr "Selectați pagina:"
 
+# apare la import pdf la selectați pagina x din i
 #. Display total number of pages
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:86
 #, c-format
 msgid "out of %i"
-msgstr ""
+msgstr "din %i"
 
+# apare la import pdf
+# hm ?
 #. Crop settings
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:92
 msgid "Clip to:"
-msgstr ""
+msgstr "Decupează la:"
 
+# titlu pe chenar
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:104
 msgid "Page settings"
 msgstr "Configurări de pagină"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:106
 msgid "Precision of approximating gradient meshes:"
-msgstr ""
+msgstr "Precizia de aproximare a plaselor de degrade:"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:107
 msgid "<b>Note</b>: setting the precision too high may result in a large SVG file and slow performance."
-msgstr ""
+msgstr "<b>Notă</b>: stabilirea unei precizii prea înalte poate rezulta într-un fișier SVG mare și performanțe scăzute."
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:112
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:393
@@ -9208,7 +9211,7 @@ msgstr "aspru"
 #. Text options
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:116
 msgid "Text handling:"
-msgstr ""
+msgstr "Manipulare de text:"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:118
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:119
@@ -9217,29 +9220,31 @@ msgstr "Importă textul ca text"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:120
 msgid "Replace PDF fonts by closest-named installed fonts"
-msgstr ""
+msgstr "Înlocuiește fonturile PDF cu cele mai apropiate ca nume"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
-msgstr ""
+msgstr "Înglobează imaginile"
 
+# titlu pe chenar
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:126
 msgid "Import settings"
-msgstr "Configurări pentru import"
+msgstr "Configurări de import"
 
+# titlu pe bară
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:248
 msgid "PDF Import Settings"
-msgstr "Configurări pentru import PDF"
+msgstr "Configurări de import PDF"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:396
 msgid "pdfinput|medium"
-msgstr ""
+msgstr "mediu"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:397
 msgid "fine"
-msgstr ""
+msgstr "fin"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:398
 msgid "very fine"
@@ -10328,7 +10333,7 @@ msgstr "Minimizează"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:395
 msgid "Iconify this dock"
-msgstr "Minimizează această fereastră docabilă"
+msgstr "Minimizează această fereastră andocată"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:397
 msgid "Close"
@@ -10336,7 +10341,7 @@ msgstr "Închide"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:397
 msgid "Close this dock"
-msgstr "Închide această fereastră docată"
+msgstr "Închide această fereastră andocată"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:706
 #: ../src/libgdl/gdl-dock-tablabel.c:128
@@ -10598,23 +10603,23 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:191
 msgid "X-Coordinate"
-msgstr ""
+msgstr "Coordonată X"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:192
 msgid "X coordinate for dock when floating"
-msgstr ""
+msgstr "Coordonata X pentru andocare în starea flotantă"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:198
 msgid "Y-Coordinate"
-msgstr ""
+msgstr "Coordonată Y"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:199
 msgid "Y coordinate for dock when floating"
-msgstr ""
+msgstr "Coordonata Y pentru andocare în starea flotantă"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:494
 msgid "Attempt to dock a dock object to an unbound placeholder"
-msgstr ""
+msgstr "Încearcă andocarea unui obiect andocabil la un substituent nelegat"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:618
 #, c-format
@@ -11817,7 +11822,7 @@ msgstr "OBJECT-ID"
 
 #: ../src/main.cpp:463
 msgid "Start Inkscape in interactive shell mode."
-msgstr ""
+msgstr "Pornește Inkscape în mod shell interactiv"
 
 #: ../src/main.cpp:796
 #: ../src/main.cpp:1122
@@ -11826,6 +11831,9 @@ msgid ""
 "\n"
 "Available options:"
 msgstr ""
+"[OPȚIUNI...] [FIȘIER...]\n"
+"\n"
+"Opțiuni disponibile:"
 
 #. ## Add a menu for clear()
 #: ../src/menus-skeleton.h:16
@@ -11924,16 +11932,16 @@ msgstr "Ghiduri practice"
 
 #: ../src/object-edit.cpp:439
 msgid "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the vertical radius the same"
-msgstr ""
+msgstr "Ajustează raza de <b>rotunjire orizontală</b>; <b>Ctrl</b> pentru a proceda la fel cu raza verticală"
 
 #: ../src/object-edit.cpp:443
 msgid "Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the horizontal radius the same"
-msgstr ""
+msgstr "Ajustează raza de <b>rotunjire verticală</b>; <b>Ctrl</b> pentru a proceda la fel cu raza orizontală"
 
 #: ../src/object-edit.cpp:447
 #: ../src/object-edit.cpp:451
 msgid "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to lock ratio or stretch in one dimension only"
-msgstr ""
+msgstr "Ajustează <b>lățimea și înălțimea</b> dreptunghiului; <b>Ctrl</b> pentru a bloca raportul de aspect, sau pentru a întinde numai pe o singură dimensiune"
 
 #: ../src/object-edit.cpp:685
 #: ../src/object-edit.cpp:688
@@ -12046,7 +12054,7 @@ msgstr ""
 
 #: ../src/path-chemistry.cpp:588
 msgid "Select <b>path(s)</b> to reverse."
-msgstr ""
+msgstr "Selectați <b>căile</b> de inversat."
 
 # hm ? comandă sau stare ?
 #: ../src/path-chemistry.cpp:597
@@ -12059,81 +12067,81 @@ msgstr "Inversare traseu"
 
 #: ../src/path-chemistry.cpp:633
 msgid "<b>No paths</b> to reverse in the selection."
-msgstr ""
+msgstr "<b>Nu sunt căi</b> de inversat în selecție."
 
 #: ../src/pen-context.cpp:253
 #: ../src/pencil-context.cpp:551
 msgid "Drawing cancelled"
-msgstr ""
+msgstr "Desenarea a fost anulată"
 
 #: ../src/pen-context.cpp:494
 #: ../src/pencil-context.cpp:278
 msgid "Continuing selected path"
-msgstr ""
+msgstr "Continuarea traseului selectat"
 
 #: ../src/pen-context.cpp:504
 #: ../src/pencil-context.cpp:286
 msgid "Creating new path"
-msgstr ""
+msgstr "Crearea unui traseu nou"
 
 #: ../src/pen-context.cpp:506
 #: ../src/pencil-context.cpp:289
 msgid "Appending to selected path"
-msgstr ""
+msgstr "Adăugare la traseul existent"
 
 #: ../src/pen-context.cpp:666
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
-msgstr ""
+msgstr "<b>Clic</b> sau <b>clic și trageți</b> pentru a închide și finaliza traseul."
 
 #: ../src/pen-context.cpp:676
 msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
-msgstr ""
+msgstr "<b>Clic</b> sau <b>clic și trageți</b> pentru a continua din acest punct."
 
 #: ../src/pen-context.cpp:1285
 #, c-format
 msgid "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr ""
+msgstr "<b>Segmentul de curbă</b>: unghi %3.2f&#176;, distanță %s; <b>Ctrl</b> pentru a acroșa unghiul, <b>Enter</b> pentru a finaliza traseul"
 
 #: ../src/pen-context.cpp:1286
 #, c-format
 msgid "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr ""
+msgstr "<b>Segmentul de linie</b>: unghi %3.2f&#176;, distanță %s; <b>Ctrl</b> pentru a acroșa unghiul, <b>Enter</b> pentru a finaliza traseul"
 
 #: ../src/pen-context.cpp:1304
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Mânerul de curbă</b>: unghi %3.2f&#176;, lungime %s; <b>Ctrl</b> pentru a acroșa unghiul"
 
 #: ../src/pen-context.cpp:1326
 #, c-format
 msgid "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr ""
+msgstr "<b>Mânerul de curbă, simetric</b>: unghi %3.2f&#176;, lungime %s; <b>Ctrl</b> pentru a acroșa unghiul, <b>Shift</b> pentru a muta numai acest mâner"
 
 #: ../src/pen-context.cpp:1327
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr ""
+msgstr "<b>Mânerul curbei</b>: unghi %3.2f&#176;, lungime %s; <b>Ctrl</b> pentru a acroșa unghiul, <b>Shift</b> pentru a muta numai acest mâner"
 
 #: ../src/pen-context.cpp:1375
 msgid "Drawing finished"
-msgstr ""
+msgstr "Desenarea s-a finalizat"
 
 #: ../src/pencil-context.cpp:393
 msgid "<b>Release</b> here to close and finish the path."
-msgstr ""
+msgstr "<b>Eliberați</b> aici pentru a închide și finaliza traseul.."
 
 #: ../src/pencil-context.cpp:399
 msgid "Drawing a freehand path"
-msgstr ""
+msgstr "Desenarea unui traseu cu mâna liberă"
 
 #: ../src/pencil-context.cpp:404
 msgid "<b>Drag</b> to continue the path from this point."
-msgstr ""
+msgstr "<b>Trageți</b> pentru a continua traseul din acest punct."
 
 #. Write curves to object
 #: ../src/pencil-context.cpp:495
 msgid "Finishing freehand"
-msgstr ""
+msgstr "Finalizarea desenării cu mâna liberă"
 
 #: ../src/pencil-context.cpp:601
 msgid "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. Release <b>Alt</b> to finalize."
@@ -12153,7 +12161,7 @@ msgstr ""
 
 #: ../src/preferences-skeleton.h:98
 msgid "Dip pen"
-msgstr ""
+msgstr "Stilou aplecat"
 
 #: ../src/preferences-skeleton.h:99
 msgid "Marker"
@@ -12165,19 +12173,19 @@ msgstr "Penel"
 
 #: ../src/preferences-skeleton.h:101
 msgid "Wiggly"
-msgstr ""
+msgstr "Oscilant"
 
 #: ../src/preferences-skeleton.h:102
 msgid "Splotchy"
-msgstr ""
+msgstr "Mâzgălit"
 
 #: ../src/preferences-skeleton.h:103
 msgid "Tracing"
-msgstr ""
+msgstr "Trasat"
 
 #: ../src/preferences.cpp:130
 msgid "Inkscape will run with default settings, and new settings will not be saved. "
-msgstr ""
+msgstr "Inkscape va rula cu configurările implicite, iar configurările noi nu vor fi salvate."
 
 #. the creation failed
 #. _reportError(Glib::ustring::compose(_("Cannot create profile directory %1."),
@@ -13011,6 +13019,7 @@ msgstr[2] ""
 msgid "%s%s. %s."
 msgstr ""
 
+# hm ? sau înclinat ?
 #: ../src/seltrans.cpp:533
 #: ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
@@ -13018,7 +13027,7 @@ msgstr "Oblic"
 
 #: ../src/seltrans.cpp:545
 msgid "Set center"
-msgstr "Setează centrul"
+msgstr "Stabilește centrul"
 
 #: ../src/seltrans.cpp:620
 msgid "Stamp"
@@ -13026,23 +13035,23 @@ msgstr ""
 
 #: ../src/seltrans.cpp:642
 msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
-msgstr ""
+msgstr "<b>Centrul</b> de rotație și înclinare: trageți pentru a repoziționa; scalarea cu Shift folosește de asemenea acest centru"
 
 #: ../src/seltrans.cpp:669
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr ""
+msgstr "<b>Strânge sau întinde</b> selecția; <b>Ctrl</b> pentru a scala uniform; <b>Shift</b> pentru a scala în jurul centrului de rotație"
 
 #: ../src/seltrans.cpp:670
 msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr ""
+msgstr "<b>Scalează</b> selecția; <b>Ctrl</b> pentru a scala uniform; <b>Shift</b> pentru a scala în jurul centrului de rotație"
 
 #: ../src/seltrans.cpp:674
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
-msgstr ""
+msgstr "<b>Înclină</b> selecția; <b>Ctrl</b> pentru a acroșa unghiul; <b>Shift</b> pentru a înclina în sensul opus"
 
 #: ../src/seltrans.cpp:675
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
-msgstr ""
+msgstr "<b>Rotește</b> selecția; <b>Ctrl</b> pentru a acroșa unghiul; <b>Shift</b> pentru a roti în jurul colțului opus"
 
 #: ../src/seltrans.cpp:809
 msgid "Reset center"
@@ -13741,11 +13750,11 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:149
 msgid "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and resize. <b>Click</b> to select."
-msgstr ""
+msgstr "<b>Trageți</b> pentru a crea un dreptunghi. <b>Trageți de controale</b> pentru a rotunji colțurile și pentru a redimensiona. <b>Clic</b> pentru a selecta."
 
 #: ../src/tools-switch.cpp:155
 msgid "<b>Drag</b> to create a 3D box. <b>Drag controls</b> to resize in perspective. <b>Click</b> to select (with <b>Ctrl+Alt</b> for single faces)."
-msgstr ""
+msgstr "<b>Trageți</b> pentru a crea o cutie 3D. <b>Trageți de controale</b> pentru a redimensiona în perspectivă. <b>Clic</b> pentru a selecta (<b>Ctrl+Alt</b> pentru o singură față)."
 
 #: ../src/tools-switch.cpp:161
 msgid "<b>Drag</b> to create an ellipse. <b>Drag controls</b> to make an arc or segment. <b>Click</b> to select."
@@ -13753,15 +13762,15 @@ msgstr "<b>Trageți</b> pentru a crea o elipsă. <b>Trageți de controale</b> pe
 
 #: ../src/tools-switch.cpp:167
 msgid "<b>Drag</b> to create a star. <b>Drag controls</b> to edit the star shape. <b>Click</b> to select."
-msgstr ""
+msgstr "<b>Trageți</b> pentru a crea o stea. <b>Trageți de controale</b> pentru a edita forma stelei. <b>Clic</b> pentru a selecta."
 
 #: ../src/tools-switch.cpp:173
 msgid "<b>Drag</b> to create a spiral. <b>Drag controls</b> to edit the spiral shape. <b>Click</b> to select."
-msgstr ""
+msgstr "<b>Trageți</b> pentru a crea o spirală. <b>Trageți de controale</b> pentru a edita forma spiralei. <b>Clic</b> pentru a selecta."
 
 #: ../src/tools-switch.cpp:179
 msgid "<b>Drag</b> to create a freehand line. <b>Shift</b> appends to selected path, <b>Alt</b> activates sketch mode."
-msgstr ""
+msgstr "<b>Trageți</b> pentru a crea o linie cu mâna liberă. <b>Shift</b> adaugă la traseul selectat, <b>Alt</b> activează modul schiță."
 
 #: ../src/tools-switch.cpp:185
 msgid "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to append to selected path. <b>Ctrl+click</b> to create single dots (straight line modes only)."
@@ -13769,7 +13778,7 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:191
 msgid "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide path. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
-msgstr ""
+msgstr "<b>Trageți</b> pentru a desena o tușă; <b>Ctrl</b> pentru a urma calea unui un ghidaj. <b>Tastele de săgeți</b> ajustează lățimea(stânga/dreapta) și unghiul (sus/jos)."
 
 #: ../src/tools-switch.cpp:203
 msgid "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, <b>drag handles</b> to adjust gradients."
@@ -13789,7 +13798,7 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:233
 msgid "<b>Drag</b> to erase."
-msgstr ""
+msgstr "<b>Trageți</b> pentru a șterge."
 
 #: ../src/tools-switch.cpp:239
 msgid "Choose a subtool from the toolbar"
@@ -14131,41 +14140,44 @@ msgstr ""
 "Paul S (paulspn@gmail.com), 2009.\n"
 "Cristian Secară (cristi@secarica.ro), 2010."
 
+# titlu pe chenar
 #: ../src/ui/dialog/align-and-distribute.cpp:238
 #: ../src/ui/dialog/align-and-distribute.cpp:793
 msgid "Align"
-msgstr "Aliniază"
+msgstr "Aliniere"
 
+# titlu pe chenar
 #: ../src/ui/dialog/align-and-distribute.cpp:397
 #: ../src/ui/dialog/align-and-distribute.cpp:794
 msgid "Distribute"
-msgstr "Distribuie"
+msgstr "Distribuire"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:467
 msgid "Minimum horizontal gap (in px units) between bounding boxes"
-msgstr ""
+msgstr "Spațiul minim orizontal (în unități de pixel) între chenarele circumscrise"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "H:" stands for horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:471
 msgid "gap|H:"
-msgstr ""
+msgstr "H:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:479
 msgid "Minimum vertical gap (in px units) between bounding boxes"
-msgstr ""
+msgstr "Spațiul minim vertical (în unități de pixel) între chenarele circumscrise"
 
 #. TRANSLATORS: Vertical gap
 #: ../src/ui/dialog/align-and-distribute.cpp:481
 msgid "V:"
 msgstr "V:"
 
+# titlu pe chenar
 #: ../src/ui/dialog/align-and-distribute.cpp:510
 #: ../src/ui/dialog/align-and-distribute.cpp:795
 #: ../src/widgets/toolbox.cpp:8288
 msgid "Remove overlaps"
-msgstr "Elimină suprapunerile"
+msgstr "Eliminare suprapuneri"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:541
 #: ../src/widgets/toolbox.cpp:8077
@@ -14207,147 +14219,151 @@ msgstr "Tratează selecția ca grup:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:810
 msgid "Align right edges of objects to the left edge of the anchor"
-msgstr ""
+msgstr "Aliniază marginile din dreapta ale obiectelor la marginea din stânga a ancorei"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:813
 msgid "Align left edges"
-msgstr ""
+msgstr "Aliniază marginile din stânga"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:816
 msgid "Center on vertical axis"
-msgstr ""
+msgstr "Centrează pe axa verticală"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:819
 msgid "Align right sides"
-msgstr ""
+msgstr "Aliniază marginile din dreapta"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:822
 msgid "Align left edges of objects to the right edge of the anchor"
-msgstr ""
+msgstr "Aliniază marginile din stânga ale obiectelor la marginea din dreapta a ancorei"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:825
 msgid "Align bottom edges of objects to the top edge of the anchor"
-msgstr ""
+msgstr "Aliniază marginile de jos ale obiectelor la marginea de sus a ancorei"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:828
 msgid "Align top edges"
-msgstr ""
+msgstr "Aliniază marginile de sus"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:831
 msgid "Center on horizontal axis"
-msgstr ""
+msgstr "Centrează pe axa orizontală"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:834
 msgid "Align bottom edges"
-msgstr ""
+msgstr "Aliniază marginile de jos"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:837
 msgid "Align top edges of objects to the bottom edge of the anchor"
-msgstr ""
+msgstr "Aliniază marginile de sus ale obiectelor la marginea de jos a ancorei"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:842
 msgid "Align baseline anchors of texts horizontally"
-msgstr ""
+msgstr "Aliniază orizontal ancorele liniei de bază a textelor"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:845
 msgid "Align baselines of texts"
-msgstr ""
+msgstr "Aliniază liniile de bază ale textelor"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:850
 msgid "Make horizontal gaps between objects equal"
-msgstr ""
+msgstr "Egalizează spațiile orizontale dintre obiecte"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:854
 msgid "Distribute left edges equidistantly"
-msgstr ""
+msgstr "Distribuie echidistant marginile din stânga"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:857
 msgid "Distribute centers equidistantly horizontally"
-msgstr ""
+msgstr "Distribuie centrele echidistant pe orizontală"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:860
 msgid "Distribute right edges equidistantly"
-msgstr ""
+msgstr "Distribuie echidistant marginile din dreapta"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:864
 msgid "Make vertical gaps between objects equal"
-msgstr ""
+msgstr "Egalizează spațiile verticale dintre obiecte"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:868
 msgid "Distribute top edges equidistantly"
-msgstr ""
+msgstr "Distribuie echidistant marginile de sus"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:871
 msgid "Distribute centers equidistantly vertically"
-msgstr ""
+msgstr "Distribuie centrele echidistant pe verticală"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:874
 msgid "Distribute bottom edges equidistantly"
-msgstr ""
+msgstr "Distribuie echidistant marginile orizontale"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:879
 msgid "Distribute baseline anchors of texts horizontally"
-msgstr ""
+msgstr "Distribuie orizontal ancorele liniei de bază a textelor"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:882
 msgid "Distribute baselines of texts vertically"
-msgstr ""
+msgstr "Distribuie vertical liniile de bază ale textelor"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:887
 msgid "Randomize centers in both dimensions"
-msgstr ""
+msgstr "Randomizează centrele în ambele dimensiuni"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:890
 msgid "Unclump objects: try to equalize edge-to-edge distances"
-msgstr ""
+msgstr "Răsfiră obiectele: încearcă să egalizeze distanțele margine-la-margine"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:895
 msgid "Move objects as little as possible so that their bounding boxes do not overlap"
-msgstr ""
+msgstr "Mută un pic obiectele doar atât cât chenarele lor circumscrise să nu se suprapună"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:899
 #: ../src/widgets/toolbox.cpp:8250
 msgid "Nicely arrange selected connector network"
-msgstr ""
+msgstr "Aranjează drăguț conectoarele de rețea selectate"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:907
 msgid "Align selected nodes to a common horizontal line"
-msgstr ""
+msgstr "Aliniază nodurile selectate la o linie orizontală comună"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:910
 msgid "Align selected nodes to a common vertical line"
-msgstr ""
+msgstr "Aliniază nodurile selectate la o linie verticală comună"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:913
 msgid "Distribute selected nodes horizontally"
-msgstr ""
+msgstr "Distribuie orizontal nodurile selectate"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:916
 msgid "Distribute selected nodes vertically"
-msgstr ""
+msgstr "Distribuie vertical nodurile selectate"
 
+# hm ? se referă la obiect ?
 #. Rest of the widgetry
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 msgid "Last selected"
-msgstr ""
+msgstr "Ultimul selectat"
 
+# hm ? se referă la obiect ?
 #: ../src/ui/dialog/align-and-distribute.cpp:922
 msgid "First selected"
-msgstr ""
+msgstr "Primul selectat"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:923
 msgid "Biggest object"
-msgstr ""
+msgstr "Cel mai mare obiect"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:924
 msgid "Smallest object"
-msgstr ""
+msgstr "Cel mai mic obiect"
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
 msgid "Profile name:"
-msgstr ""
+msgstr "Nume profil:"
 
-# comun la preferințe și încă în două locuri (de aflat unde)
+# apare în lista de preferințe
+# apare la salvarea profilului la trasee caligrafice
+# apare ... ?
 #. When changing the interval or enabling/disabling the autosave function,
 #. * update our running configuration
 #. *
@@ -14364,7 +14380,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:1208
 #: ../src/ui/dialog/input.cpp:786
 msgid "Save"
-msgstr "Salvare"
+msgstr "Salvează"
 
 #: ../src/ui/dialog/color-item.cpp:116
 #, c-format
@@ -16752,7 +16768,7 @@ msgstr ""
 #: ../src/ui/dialog/input.cpp:1042
 #: ../src/verbs.cpp:2473
 msgid "Pen"
-msgstr "Peniță"
+msgstr "Stilou"
 
 #. Calligraphy
 #: ../src/ui/dialog/inkscape-preferences.cpp:526
@@ -16832,7 +16848,7 @@ msgstr "Nu salva geometria ferestrei"
 #: ../src/ui/dialog/inkscape-preferences.cpp:578
 #: ../src/ui/dialog/inkscape-preferences.cpp:598
 msgid "Dockable"
-msgstr "Docabile"
+msgstr "Andocabile"
 
 # hm ? a fost: casetele de dialog etc.
 #: ../src/ui/dialog/inkscape-preferences.cpp:581
@@ -17900,7 +17916,7 @@ msgstr "Activează repunerea în aranjament a secțiunilor incomplete"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1168
 msgid "When on, will allow dynamic layout of components that are not completely finished being refactored"
-msgstr "Când opțiunea este activată, se va permite reșaparea dinamică a componentelor care nu sunt terminate complet"
+msgstr "Când opțiunea este activată, se va permite reșaparea dinamică a componentelor care nu sunt finalizate complet"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1171
 msgid "Interface"
@@ -18592,23 +18608,23 @@ msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:736
 msgid "1st Glyph:"
-msgstr ""
+msgstr "Prima glifă:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:738
 msgid "2nd Glyph:"
-msgstr ""
+msgstr "A doua glifă:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:741
 msgid "Add pair"
-msgstr ""
+msgstr "Adaugă o pereche"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:753
 msgid "First Unicode range"
-msgstr ""
+msgstr "Primul interval Unicode"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:754
 msgid "Second Unicode range"
-msgstr ""
+msgstr "Al doilea interval Unicode"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:761
 msgid "Kerning value:"
@@ -18734,11 +18750,11 @@ msgstr "Specifică spațierea:"
 
 #: ../src/ui/dialog/tile.cpp:821
 msgid "Vertical spacing between rows (px units)"
-msgstr "Spațiere verticală între rânduri (unități în px)"
+msgstr "Spațiere verticală între rânduri (în unități de pixel)"
 
 #: ../src/ui/dialog/tile.cpp:846
 msgid "Horizontal spacing between columns (px units)"
-msgstr "Spațiere orizontală între rânduri (unități în px)"
+msgstr "Spațiere orizontală între rânduri (în unități de pixel)"
 
 #. ## The OK button
 #: ../src/ui/dialog/tile.cpp:869
@@ -18760,15 +18776,15 @@ msgstr "Decupare pe luminozitate"
 
 #: ../src/ui/dialog/tracedialog.cpp:410
 msgid "Trace by a given brightness level"
-msgstr ""
+msgstr "Vectorizează pe baza unui nivel de luminozitate"
 
 #: ../src/ui/dialog/tracedialog.cpp:418
 msgid "Brightness cutoff for black/white"
-msgstr ""
+msgstr "Nivelul de luminozitate care determină pragul dintre alb și negru"
 
 #: ../src/ui/dialog/tracedialog.cpp:425
 msgid "Single scan: creates a path"
-msgstr ""
+msgstr "Scanare unică: creează un traseu"
 
 #. canny edge detection
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
@@ -18778,11 +18794,11 @@ msgstr "Detectare de margine"
 
 #: ../src/ui/dialog/tracedialog.cpp:434
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
-msgstr ""
+msgstr "Vectorizează cu detectare optimă a marginilor folosind algorituml J. Canny"
 
 #: ../src/ui/dialog/tracedialog.cpp:451
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
-msgstr ""
+msgstr "Nivelul de luminozitate care determină pragul dintre pixelii adiacenți (determină grosimea marginilor)"
 
 #. quantization
 #. TRANSLATORS: Color Quantization: the process of reducing the number
@@ -18794,11 +18810,11 @@ msgstr "Cuantificare de culori"
 
 #: ../src/ui/dialog/tracedialog.cpp:467
 msgid "Trace along the boundaries of reduced colors"
-msgstr ""
+msgstr "Vectorizează în lungul limitei de separație a culorilor reduse"
 
 #: ../src/ui/dialog/tracedialog.cpp:475
 msgid "The number of reduced colors"
-msgstr ""
+msgstr "Numărul culorilor reduse"
 
 #: ../src/ui/dialog/tracedialog.cpp:477
 msgid "Colors:"
@@ -18821,7 +18837,7 @@ msgstr "Trepte de luminozitate"
 
 #: ../src/ui/dialog/tracedialog.cpp:501
 msgid "Trace the given number of brightness levels"
-msgstr ""
+msgstr "Vectorizează numărul dat de niveluri de luminozitate"
 
 #: ../src/ui/dialog/tracedialog.cpp:508
 msgid "Scans:"
@@ -18833,7 +18849,7 @@ msgstr "Numărul dorit de treceri"
 
 #: ../src/ui/dialog/tracedialog.cpp:519
 msgid "Trace the given number of reduced colors"
-msgstr ""
+msgstr "Vectorizează numărul dat de culori reduse"
 
 #: ../src/ui/dialog/tracedialog.cpp:523
 msgid "Grays"
@@ -18846,7 +18862,7 @@ msgstr "La fel ca la culori, dar rezultatul este convertit în scală de gri"
 #. TRANSLATORS: "Smooth" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:532
 msgid "Smooth"
-msgstr "Neted"
+msgstr "Netezește"
 
 #: ../src/ui/dialog/tracedialog.cpp:536
 msgid "Apply Gaussian blur to the bitmap before tracing"
@@ -18855,11 +18871,11 @@ msgstr "Aplică o neclaritate gaussiană asupra bitmapului înainte de vectoriza
 #. TRANSLATORS: "Stack" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:539
 msgid "Stack scans"
-msgstr ""
+msgstr "Stivuiește scanările"
 
 #: ../src/ui/dialog/tracedialog.cpp:542
 msgid "Stack scans on top of one another (no gaps) instead of tiling (usually with gaps)"
-msgstr ""
+msgstr "Stivuiește scanările una peste alta (fără spații), în loc de pavare (uzual cu spații)"
 
 #: ../src/ui/dialog/tracedialog.cpp:545
 msgid "Remove background"
@@ -18867,41 +18883,41 @@ msgstr "Elimină fundalul"
 
 #: ../src/ui/dialog/tracedialog.cpp:550
 msgid "Remove bottom (background) layer when done"
-msgstr ""
+msgstr "Elimină stratul de jos (fundalul) la terminare"
 
 #: ../src/ui/dialog/tracedialog.cpp:554
 msgid "Multiple scans: creates a group of paths"
-msgstr ""
+msgstr "Scanări multiple: creează o grupă de trasee"
 
 #. ## begin option page
 #. # potrace parameters
 #: ../src/ui/dialog/tracedialog.cpp:569
 msgid "Suppress speckles"
-msgstr ""
+msgstr "Suprimă paraziții"
 
 #: ../src/ui/dialog/tracedialog.cpp:571
 msgid "Ignore small spots (speckles) in the bitmap"
-msgstr ""
+msgstr "Ignoră petele mici (paraziții) din bitmap"
 
 #: ../src/ui/dialog/tracedialog.cpp:579
 msgid "Speckles of up to this many pixels will be suppressed"
-msgstr ""
+msgstr "Paraziții de până la atâția pixeli vor fi suprimați"
 
 #: ../src/ui/dialog/tracedialog.cpp:584
 msgid "Smooth corners"
-msgstr ""
+msgstr "Netezește colțurile"
 
 #: ../src/ui/dialog/tracedialog.cpp:586
 msgid "Smooth out sharp corners of the trace"
-msgstr ""
+msgstr "Netezește colțurile ascuțite ale vectorului"
 
 #: ../src/ui/dialog/tracedialog.cpp:595
 msgid "Increase this to smooth corners more"
-msgstr ""
+msgstr "Creșteți această valoare pentru a netezi colțurile mai mult"
 
 #: ../src/ui/dialog/tracedialog.cpp:599
 msgid "Optimize paths"
-msgstr "Optimizare trasee"
+msgstr "Optimizează traseele"
 
 #: ../src/ui/dialog/tracedialog.cpp:602
 msgid "Try to optimize paths by joining adjacent Bezier curve segments"
@@ -18909,7 +18925,7 @@ msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:610
 msgid "Increase this to reduce the number of nodes in the trace by more aggressive optimization"
-msgstr ""
+msgstr "Creșteți această valoare pentru a reduce numărul de noduri în vector printr-o optimizare mai agresivă"
 
 #: ../src/ui/dialog/tracedialog.cpp:611
 msgid "Tolerance:"
@@ -18924,16 +18940,21 @@ msgid ""
 "\n"
 "http://potrace.sourceforge.net"
 msgstr ""
+"Vectorizarea unui bitmap în Inkscape\n"
+"se efectuează pe baza Potrace,\n"
+"creat de Peter Selinger\n"
+"\n"
+"http://potrace.sourceforge.net"
 
 #: ../src/ui/dialog/tracedialog.cpp:630
 msgid "Credits"
-msgstr ""
+msgstr "Autori"
 
 #. #### begin right panel
 #. ## SIOX
 #: ../src/ui/dialog/tracedialog.cpp:644
 msgid "SIOX foreground selection"
-msgstr "Selecție de primplan SIOX"
+msgstr "Selecție de prim-plan SIOX"
 
 #: ../src/ui/dialog/tracedialog.cpp:647
 msgid "Cover the area you want to select as the foreground"
@@ -19109,12 +19130,12 @@ msgstr "Adaugă nod"
 #: ../src/ui/tool/curve-drag-point.cpp:167
 msgctxt "Path segment tip"
 msgid "<b>Shift</b>: click to toggle segment selection"
-msgstr ""
+msgstr "<b>Shift</b>: clic pentru a comuta selecția segmentului"
 
 #: ../src/ui/tool/curve-drag-point.cpp:171
 msgctxt "Path segment tip"
 msgid "<b>Ctrl+Alt</b>: click to insert a node"
-msgstr ""
+msgstr "<b>Ctrl+Alt</b>: clic pentru a insera un nod"
 
 #: ../src/ui/tool/curve-drag-point.cpp:175
 msgctxt "Path segment tip"
@@ -21421,11 +21442,11 @@ msgstr "Deschide preferințele pentru instrumentul Creion"
 
 #: ../src/verbs.cpp:2516
 msgid "Pen Preferences"
-msgstr "Preferințe pentru peniță"
+msgstr "Preferințe pentru stilou"
 
 #: ../src/verbs.cpp:2517
 msgid "Open Preferences for the Pen tool"
-msgstr "Deschide preferințele pentru instrumentul Peniță"
+msgstr "Deschide preferințele pentru instrumentul Stilou"
 
 #: ../src/verbs.cpp:2518
 msgid "Calligraphic Preferences"
@@ -22278,15 +22299,15 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:5551
 #: ../src/widgets/toolbox.cpp:5580
 msgid "<b>New:</b>"
-msgstr ""
+msgstr "<b>Nou:</b>"
 
 #: ../src/widgets/gradient-toolbar.cpp:560
 msgid "Create linear gradient"
-msgstr ""
+msgstr "Creează un degrade liniar"
 
 #: ../src/widgets/gradient-toolbar.cpp:574
 msgid "Create radial (elliptic or circular) gradient"
-msgstr ""
+msgstr "Creează un degrade radial (eliptic sau circular)"
 
 #. TODO replace aux_toolbox_space(tbl, AUX_SPACING);
 #: ../src/widgets/gradient-toolbar.cpp:589
@@ -22301,6 +22322,10 @@ msgstr ""
 msgid "Create gradient in the stroke"
 msgstr ""
 
+# apare la crearea unui dreptunghi
+# apare la crearea unei spirale
+# apare la crearea și editarea unui degrade
+# apare la ... ?
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
 #: ../src/widgets/gradient-toolbar.cpp:630
@@ -22312,7 +22337,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:5554
 #: ../src/widgets/toolbox.cpp:5565
 msgid "<b>Change:</b>"
-msgstr ""
+msgstr "<b>Parametri:</b>"
 
 #: ../src/widgets/gradient-vector.cpp:267
 #: ../src/widgets/paint-selector.cpp:914
@@ -22848,7 +22873,7 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:236
 msgid "Style of new calligraphic strokes"
-msgstr ""
+msgstr "Stilul tușelor caligrafice noi"
 
 #: ../src/widgets/toolbox.cpp:238
 #: ../src/widgets/toolbox.cpp:240
@@ -23348,7 +23373,7 @@ msgstr "Schimbare dreptunghi"
 
 #: ../src/widgets/toolbox.cpp:3297
 msgid "W:"
-msgstr "L:"
+msgstr "W:"
 
 #: ../src/widgets/toolbox.cpp:3297
 msgid "Width of rectangle"
@@ -23356,7 +23381,7 @@ msgstr "Lățimea dreptunghiului"
 
 #: ../src/widgets/toolbox.cpp:3314
 msgid "H:"
-msgstr "Î:"
+msgstr "H:"
 
 #: ../src/widgets/toolbox.cpp:3314
 msgid "Height of rectangle"
@@ -23369,27 +23394,27 @@ msgstr "nu este rotunjit"
 
 #: ../src/widgets/toolbox.cpp:3331
 msgid "Horizontal radius"
-msgstr ""
+msgstr "Raza orizontală"
 
 #: ../src/widgets/toolbox.cpp:3331
 msgid "Rx:"
-msgstr ""
+msgstr "Rx:"
 
 #: ../src/widgets/toolbox.cpp:3331
 msgid "Horizontal radius of rounded corners"
-msgstr ""
+msgstr "Raza orizontală a colțurilor rotunjite"
 
 #: ../src/widgets/toolbox.cpp:3346
 msgid "Vertical radius"
-msgstr ""
+msgstr "Raza verticală"
 
 #: ../src/widgets/toolbox.cpp:3346
 msgid "Ry:"
-msgstr ""
+msgstr "Ry:"
 
 #: ../src/widgets/toolbox.cpp:3346
 msgid "Vertical radius of rounded corners"
-msgstr ""
+msgstr "Raza verticală a colțurilor rotunjite"
 
 #: ../src/widgets/toolbox.cpp:3365
 msgid "Not rounded"
@@ -23397,7 +23422,7 @@ msgstr "Nu este rotunjit"
 
 #: ../src/widgets/toolbox.cpp:3366
 msgid "Make corners sharp"
-msgstr ""
+msgstr "Ascuțește colțurile"
 
 #. TODO: use the correct axis here, too
 #: ../src/widgets/toolbox.cpp:3561
@@ -23464,31 +23489,31 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3788
 msgid "Change spiral"
-msgstr ""
+msgstr "Modifică spirala"
 
 #: ../src/widgets/toolbox.cpp:3927
 msgid "just a curve"
-msgstr ""
+msgstr "numai o curbă"
 
 #: ../src/widgets/toolbox.cpp:3927
 msgid "one full revolution"
-msgstr ""
+msgstr "o revoluție completă"
 
 #: ../src/widgets/toolbox.cpp:3930
 msgid "Number of turns"
-msgstr ""
+msgstr "Numărul de spire"
 
 #: ../src/widgets/toolbox.cpp:3930
 msgid "Turns:"
-msgstr ""
+msgstr "Spire"
 
 #: ../src/widgets/toolbox.cpp:3930
 msgid "Number of revolutions"
-msgstr ""
+msgstr "Numărul de revoluții"
 
 #: ../src/widgets/toolbox.cpp:3941
 msgid "circle"
-msgstr ""
+msgstr "cerc"
 
 #: ../src/widgets/toolbox.cpp:3941
 msgid "edge is much denser"
@@ -23512,15 +23537,15 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3944
 msgid "Divergence"
-msgstr ""
+msgstr "Divergență"
 
 #: ../src/widgets/toolbox.cpp:3944
 msgid "Divergence:"
-msgstr ""
+msgstr "Divergență:"
 
 #: ../src/widgets/toolbox.cpp:3944
 msgid "How much denser/sparser are outer revolutions; 1 = uniform"
-msgstr ""
+msgstr "Cât de dense sau de rare să fie revoluțiile exterioare; 1 = uniform"
 
 #: ../src/widgets/toolbox.cpp:3955
 msgid "starts from center"
@@ -23536,35 +23561,35 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3958
 msgid "Inner radius"
-msgstr ""
+msgstr "Raza internă"
 
 #: ../src/widgets/toolbox.cpp:3958
 msgid "Inner radius:"
-msgstr ""
+msgstr "Rază internă"
 
 #: ../src/widgets/toolbox.cpp:3958
 msgid "Radius of the innermost revolution (relative to the spiral size)"
-msgstr ""
+msgstr "Raza revoluției celei mai din interior (relativ la dimensiunea spiralei)"
 
 #: ../src/widgets/toolbox.cpp:4030
 msgid "Bezier"
-msgstr ""
+msgstr "Bézier"
 
 #: ../src/widgets/toolbox.cpp:4031
 msgid "Create regular Bezier path"
-msgstr ""
+msgstr "Creează un traseu Bézier regulat"
 
 #: ../src/widgets/toolbox.cpp:4037
 msgid "Spiro"
-msgstr ""
+msgstr "Spiro"
 
 #: ../src/widgets/toolbox.cpp:4038
 msgid "Create Spiro path"
-msgstr ""
+msgstr "Creează un traseu spiro"
 
 #: ../src/widgets/toolbox.cpp:4045
 msgid "Zigzag"
-msgstr ""
+msgstr "Zigzag"
 
 #: ../src/widgets/toolbox.cpp:4046
 msgid "Create a sequence of straight line segments"
@@ -23580,28 +23605,28 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4061
 msgid "Mode of new lines drawn by this tool"
-msgstr ""
+msgstr "Modul liniilor noi desenate de acest intrument"
 
 #: ../src/widgets/toolbox.cpp:4090
 msgid "Triangle in"
-msgstr ""
+msgstr "Triunghi descrescător"
 
 #: ../src/widgets/toolbox.cpp:4091
 msgid "Triangle out"
-msgstr ""
+msgstr "Triunghi crescător"
 
 #: ../src/widgets/toolbox.cpp:4093
 msgid "From clipboard"
-msgstr ""
+msgstr "Din clipboard"
 
 #: ../src/widgets/toolbox.cpp:4118
 #: ../src/widgets/toolbox.cpp:4119
 msgid "Shape:"
-msgstr ""
+msgstr "Formă:"
 
 #: ../src/widgets/toolbox.cpp:4118
 msgid "Shape of new paths drawn by this tool"
-msgstr ""
+msgstr "Forma traseelor noi desenate de acest intrument"
 
 #: ../src/widgets/toolbox.cpp:4202
 msgid "(many nodes, rough)"
@@ -23942,7 +23967,7 @@ msgstr "Ajustează numărul de elemente pulverizate per clic."
 
 #: ../src/widgets/toolbox.cpp:4745
 msgid "Use the pressure of the input device to alter the amount of sprayed objects."
-msgstr ""
+msgstr "Folosește presiunea dispozitivului de intrare pentru a altera cantitatea de obiecte pulverizate."
 
 #. Rotation
 #: ../src/widgets/toolbox.cpp:4754
@@ -23990,11 +24015,11 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4954
 msgid "No preset"
-msgstr ""
+msgstr "Fără profil"
 
 #: ../src/widgets/toolbox.cpp:4972
 msgid "Save..."
-msgstr ""
+msgstr "Salvează..."
 
 #. Width
 #: ../src/widgets/toolbox.cpp:5130
@@ -24010,11 +24035,11 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:5133
 #: ../src/widgets/toolbox.cpp:6156
 msgid "Pen Width"
-msgstr ""
+msgstr "Lățimea stiloului"
 
 #: ../src/widgets/toolbox.cpp:5134
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
-msgstr ""
+msgstr "Lățimea stiloului caligrafic (relativ la zona vizibiă a canavalei)"
 
 #. Thinning
 #: ../src/widgets/toolbox.cpp:5147
@@ -24039,15 +24064,15 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5150
 msgid "Stroke Thinning"
-msgstr ""
+msgstr "Îngustarea tușei"
 
 #: ../src/widgets/toolbox.cpp:5150
 msgid "Thinning:"
-msgstr ""
+msgstr "Îngustare:"
 
 #: ../src/widgets/toolbox.cpp:5151
 msgid "How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 makes them broader, 0 makes width independent of velocity)"
-msgstr ""
+msgstr "Lățimea tușei în funcție de viteză (pentru > 0 tușele rapide devin mai înguste, pentru < 0 devin mai late, la 0 lățimea rămâne independentă de viteză)"
 
 #. Angle
 #: ../src/widgets/toolbox.cpp:5163
@@ -24064,15 +24089,15 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5166
 msgid "Pen Angle"
-msgstr ""
+msgstr "Unghiul stiloului"
 
 #: ../src/widgets/toolbox.cpp:5166
 msgid "Angle:"
-msgstr ""
+msgstr "Unghi:"
 
 #: ../src/widgets/toolbox.cpp:5167
 msgid "The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if fixation = 0)"
-msgstr ""
+msgstr "Unghiul peniței stiloului (în grade; 0 = orizontal; nu are efect dacă fixarea = 0)"
 
 #. Fixation
 #: ../src/widgets/toolbox.cpp:5181
@@ -24089,15 +24114,15 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5184
 msgid "Fixation"
-msgstr ""
+msgstr "Fixare"
 
 #: ../src/widgets/toolbox.cpp:5184
 msgid "Fixation:"
-msgstr ""
+msgstr "Fixare:"
 
 #: ../src/widgets/toolbox.cpp:5185
 msgid "Angle behavior (0 = nib always perpendicular to stroke direction, 100 = fixed angle)"
-msgstr ""
+msgstr "Comportamentul unghiului (0 = penița este oricum perpendiculară pe direcția tușei, 100 = unghi fix)"
 
 #. Cap Rounding
 #: ../src/widgets/toolbox.cpp:5197
@@ -24118,15 +24143,15 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5201
 msgid "Cap rounding"
-msgstr ""
+msgstr "Rotunjire de cap"
 
 #: ../src/widgets/toolbox.cpp:5201
 msgid "Caps:"
-msgstr ""
+msgstr "Capete:"
 
 #: ../src/widgets/toolbox.cpp:5202
 msgid "Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = round caps)"
-msgstr ""
+msgstr "Creșterea valorii mărește proeminența capetelor de la sfârșitul tușei (0 = fără capete, 1 = capete rotunde)"
 
 #. Tremor
 #: ../src/widgets/toolbox.cpp:5214
@@ -24151,11 +24176,11 @@ msgstr "Trepidație de contur"
 
 #: ../src/widgets/toolbox.cpp:5217
 msgid "Tremor:"
-msgstr ""
+msgstr "Tremur:"
 
 #: ../src/widgets/toolbox.cpp:5218
 msgid "Increase to make strokes rugged and trembling"
-msgstr ""
+msgstr "Creșteți pentru ca tușele să devină accidentate și tremurânde"
 
 #. Wiggle
 #: ../src/widgets/toolbox.cpp:5232
@@ -24172,15 +24197,15 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5235
 msgid "Pen Wiggle"
-msgstr ""
+msgstr "Oscilația stiloului"
 
 #: ../src/widgets/toolbox.cpp:5235
 msgid "Wiggle:"
-msgstr ""
+msgstr "Oscilare:"
 
 #: ../src/widgets/toolbox.cpp:5236
 msgid "Increase to make the pen waver and wiggle"
-msgstr ""
+msgstr "Creșteți pentru ca stiloul să devină șovăitor și oscilant"
 
 #. Mass
 #: ../src/widgets/toolbox.cpp:5249
@@ -24201,15 +24226,15 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5252
 msgid "Pen Mass"
-msgstr ""
+msgstr "Masa stiloului"
 
 #: ../src/widgets/toolbox.cpp:5252
 msgid "Mass:"
-msgstr ""
+msgstr "Masă:"
 
 #: ../src/widgets/toolbox.cpp:5253
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
-msgstr ""
+msgstr "Creșteți pentru ca stiloul să tragă înapoi, ca atunci când este încetinit de inerție"
 
 #: ../src/widgets/toolbox.cpp:5268
 msgid "Trace Background"
@@ -24217,23 +24242,23 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5269
 msgid "Trace the lightness of the background by the width of the pen (white - minimum width, black - maximum width)"
-msgstr ""
+msgstr "Depistează luminozitatea fundalului pe baza lățimii stiloului (alb - lățime minimă, negru - lățime maximă)"
 
 #: ../src/widgets/toolbox.cpp:5282
 msgid "Use the pressure of the input device to alter the width of the pen"
-msgstr ""
+msgstr "Folosește presiunea dispozitivului de intrare pentru a altera lățimea stiloului"
 
 #: ../src/widgets/toolbox.cpp:5294
 msgid "Tilt"
-msgstr ""
+msgstr "Înclinare"
 
 #: ../src/widgets/toolbox.cpp:5295
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
-msgstr ""
+msgstr "Folosește înclinarea dispozitivului de intrare pentru a altera unghiul peniței stiloului"
 
 #: ../src/widgets/toolbox.cpp:5310
 msgid "Choose a preset"
-msgstr ""
+msgstr "Alegeți un profil"
 
 #: ../src/widgets/toolbox.cpp:5399
 msgid "Arc: Change start/end"
@@ -24792,9 +24817,10 @@ msgstr ""
 msgid "Close gaps"
 msgstr ""
 
+# hm ? sau umple spațiile ?
 #: ../src/widgets/toolbox.cpp:8484
 msgid "Close gaps:"
-msgstr "Închidere găuri"
+msgstr "Închide spațiile:"
 
 #: ../src/widgets/toolbox.cpp:8496
 msgid "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
