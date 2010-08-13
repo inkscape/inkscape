@@ -1908,8 +1908,10 @@ static bool cc_item_is_shape(SPItem *item)
 bool cc_item_is_connector(SPItem *item)
 {
     if (SP_IS_PATH(item)) {
-        if (SP_PATH(item)->connEndPair.isAutoRoutingConn()) {
-            g_assert( SP_PATH(item)->original_curve ? !(SP_PATH(item)->original_curve->is_closed()) : !(SP_PATH(item)->curve->is_closed()) );
+        bool closed = SP_PATH(item)->original_curve ? SP_PATH(item)->original_curve->is_closed() : SP_PATH(item)->curve->is_closed();
+        if (SP_PATH(item)->connEndPair.isAutoRoutingConn() && !closed) {
+            // To be considered a connector, an object must be a non-closed 
+            // path that is marked with a "inkscape:connector-type" attribute.
             return true;
         }
     }
