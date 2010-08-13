@@ -63,8 +63,8 @@ SPAvoidRef::~SPAvoidRef()
     const bool routerInstanceExists = (item->document->router != NULL);
 
     if (shapeRef && routerInstanceExists) {
-        Router *router = shapeRef->router();
-        router->removeShape(shapeRef);
+        // Deleting the shapeRef will remove it completely from 
+        // an existing Router instance.
         delete shapeRef;
     }
     shapeRef = NULL;
@@ -329,7 +329,8 @@ void SPAvoidRef::handleSettingChange(void)
     {
         g_assert(shapeRef);
 
-        router->removeShape(shapeRef);
+        // Deleting the shapeRef will remove it completely from 
+        // an existing Router instance.
         delete shapeRef;
         shapeRef = NULL;
     }
