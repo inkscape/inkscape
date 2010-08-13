@@ -1414,7 +1414,10 @@ void PathManipulator::_updateDragPoint(Geom::Point const &evp)
     NodeList::iterator first = (*spi)->before(pvp->t, &fracpart);
     
     double stroke_tolerance = _getStrokeTolerance();
-    if (first && first.next() && Geom::distance(evp, nearest_point) < stroke_tolerance) {
+    if (first && first.next() &&
+        fracpart != 0.0 &&
+        Geom::distance(evp, nearest_point) < stroke_tolerance)
+    {
         _dragpoint->setVisible(true);
         _dragpoint->setPosition(_desktop->w2d(nearest_point));
         _dragpoint->setSize(2 * stroke_tolerance);
