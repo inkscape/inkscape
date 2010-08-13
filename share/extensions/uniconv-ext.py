@@ -57,7 +57,7 @@ if cmd == None:
                      'http://sk1project.org/modules.php?name=Products&product=uniconvertor\n'+\
                      'and install into your Inkscape\'s Python location\n'))
         sys.exit(1)
-    cmd = 'python -c "import uniconvertor"'
+    cmd = 'python -c "import uniconvertor; uniconvertor.uniconv_run()"'
 
 run((cmd+' "%s" "%%s"') % sys.argv[1].replace("%","%%"), "UniConvertor")
 

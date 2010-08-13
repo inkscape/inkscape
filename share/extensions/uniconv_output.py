@@ -123,7 +123,7 @@ def get_command():
                          'http://sk1project.org/modules.php?name=Products&product=uniconvertor\n'+\
                          'and install into your Inkscape\'s Python location\n'))
             sys.exit(1)
-        cmd = 'python -c "from uniconvertor import uniconv; uniconv();"'
+        cmd = 'python -c "import uniconvertor; uniconvertor.uniconv_run();"'
 
     return cmd
 
