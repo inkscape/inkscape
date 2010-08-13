@@ -38,6 +38,7 @@ var HOME_KEY = 36; // home keycode
 var END_KEY = 35; // end keycode
 var ENTER_KEY = 13; // next slide
 var SPACE_KEY = 32;
+var ESCAPE_KEY = 27;
 
 // Presentation modes.
 var SLIDE_MODE = 1;
@@ -948,7 +949,7 @@ function keydown(e)
 	code = e.keyCode || e.charCode;
 
 	if (!processingEffect && keyCodeDictionary[currentMode] && keyCodeDictionary[currentMode][code])
-		keyCodeDictionary[currentMode][code]();
+		return keyCodeDictionary[currentMode][code]();
 	else
 		document.onkeypress = keypress;
 }
@@ -969,7 +970,7 @@ function keypress(e)
 	str = String.fromCharCode(e.keyCode || e.charCode);
 
 	if (!processingEffect && charCodeDictionary[currentMode] && charCodeDictionary[currentMode][str])
-		charCodeDictionary[currentMode][str]();
+		return charCodeDictionary[currentMode][str]();
 }
 
 /** Function to supply the default char code dictionary.
@@ -984,37 +985,37 @@ function getDefaultCharCodeDictionary()
 	charCodeDict[INDEX_MODE] = new Object();
 	charCodeDict[DRAWING_MODE] = new Object();
 
-	charCodeDict[SLIDE_MODE]["i"] = function () { toggleSlideIndex(); };
-	charCodeDict[SLIDE_MODE]["d"] = function () { slideSwitchToDrawingMode(); };
-	charCodeDict[SLIDE_MODE]["D"] = function () { slideQueryDuration(); };
-	charCodeDict[SLIDE_MODE]["n"] = function () { slideAddSlide(activeSlide); };
-	charCodeDict[SLIDE_MODE]["p"] = function () { slideToggleProgressBarVisibility(); };
-	charCodeDict[SLIDE_MODE]["t"] = function () { slideResetTimer(); };
-	charCodeDict[SLIDE_MODE]["e"] = function () { slideUpdateExportLayer(); };
+	charCodeDict[SLIDE_MODE]["i"] = function () { return toggleSlideIndex(); };
+	charCodeDict[SLIDE_MODE]["d"] = function () { return slideSwitchToDrawingMode(); };
+	charCodeDict[SLIDE_MODE]["D"] = function () { return slideQueryDuration(); };
+	charCodeDict[SLIDE_MODE]["n"] = function () { return slideAddSlide(activeSlide); };
+	charCodeDict[SLIDE_MODE]["p"] = function () { return slideToggleProgressBarVisibility(); };
+	charCodeDict[SLIDE_MODE]["t"] = function () { return slideResetTimer(); };
+	charCodeDict[SLIDE_MODE]["e"] = function () { return slideUpdateExportLayer(); };
 
-	charCodeDict[DRAWING_MODE]["d"] = function () { drawingSwitchToSlideMode(); };
-	charCodeDict[DRAWING_MODE]["0"] = function () { drawingResetPathWidth(); };
-	charCodeDict[DRAWING_MODE]["1"] = function () { drawingSetPathWidth(1.0); };
-	charCodeDict[DRAWING_MODE]["3"] = function () { drawingSetPathWidth(3.0); };
-	charCodeDict[DRAWING_MODE]["5"] = function () { drawingSetPathWidth(5.0); };
-	charCodeDict[DRAWING_MODE]["7"] = function () { drawingSetPathWidth(7.0); };
-	charCodeDict[DRAWING_MODE]["9"] = function () { drawingSetPathWidth(9.0); };
-	charCodeDict[DRAWING_MODE]["b"] = function () { drawingSetPathColour("blue"); };
-	charCodeDict[DRAWING_MODE]["c"] = function () { drawingSetPathColour("cyan"); };
-	charCodeDict[DRAWING_MODE]["g"] = function () { drawingSetPathColour("green"); };
-	charCodeDict[DRAWING_MODE]["k"] = function () { drawingSetPathColour("black"); };
-	charCodeDict[DRAWING_MODE]["m"] = function () { drawingSetPathColour("magenta"); };
-	charCodeDict[DRAWING_MODE]["o"] = function () { drawingSetPathColour("orange"); };
-	charCodeDict[DRAWING_MODE]["r"] = function () { drawingSetPathColour("red"); };
-	charCodeDict[DRAWING_MODE]["w"] = function () { drawingSetPathColour("white"); };
-	charCodeDict[DRAWING_MODE]["y"] = function () { drawingSetPathColour("yellow"); };
-	charCodeDict[DRAWING_MODE]["z"] = function () { drawingUndo(); };
+	charCodeDict[DRAWING_MODE]["d"] = function () { return drawingSwitchToSlideMode(); };
+	charCodeDict[DRAWING_MODE]["0"] = function () { return drawingResetPathWidth(); };
+	charCodeDict[DRAWING_MODE]["1"] = function () { return drawingSetPathWidth(1.0); };
+	charCodeDict[DRAWING_MODE]["3"] = function () { return drawingSetPathWidth(3.0); };
+	charCodeDict[DRAWING_MODE]["5"] = function () { return drawingSetPathWidth(5.0); };
+	charCodeDict[DRAWING_MODE]["7"] = function () { return drawingSetPathWidth(7.0); };
+	charCodeDict[DRAWING_MODE]["9"] = function () { return drawingSetPathWidth(9.0); };
+	charCodeDict[DRAWING_MODE]["b"] = function () { return drawingSetPathColour("blue"); };
+	charCodeDict[DRAWING_MODE]["c"] = function () { return drawingSetPathColour("cyan"); };
+	charCodeDict[DRAWING_MODE]["g"] = function () { return drawingSetPathColour("green"); };
+	charCodeDict[DRAWING_MODE]["k"] = function () { return drawingSetPathColour("black"); };
+	charCodeDict[DRAWING_MODE]["m"] = function () { return drawingSetPathColour("magenta"); };
+	charCodeDict[DRAWING_MODE]["o"] = function () { return drawingSetPathColour("orange"); };
+	charCodeDict[DRAWING_MODE]["r"] = function () { return drawingSetPathColour("red"); };
+	charCodeDict[DRAWING_MODE]["w"] = function () { return drawingSetPathColour("white"); };
+	charCodeDict[DRAWING_MODE]["y"] = function () { return drawingSetPathColour("yellow"); };
+	charCodeDict[DRAWING_MODE]["z"] = function () { return drawingUndo(); };
 
-	charCodeDict[INDEX_MODE]["i"] = function () { toggleSlideIndex(); };
-	charCodeDict[INDEX_MODE]["-"] = function () { indexDecreaseNumberOfColumns(); };
-	charCodeDict[INDEX_MODE]["="] = function () { indexIncreaseNumberOfColumns(); };
-	charCodeDict[INDEX_MODE]["+"] = function () { indexIncreaseNumberOfColumns(); };
-	charCodeDict[INDEX_MODE]["0"] = function () { indexResetNumberOfColumns(); };
+	charCodeDict[INDEX_MODE]["i"] = function () { return toggleSlideIndex(); };
+	charCodeDict[INDEX_MODE]["-"] = function () { return indexDecreaseNumberOfColumns(); };
+	charCodeDict[INDEX_MODE]["="] = function () { return indexIncreaseNumberOfColumns(); };
+	charCodeDict[INDEX_MODE]["+"] = function () { return indexIncreaseNumberOfColumns(); };
+	charCodeDict[INDEX_MODE]["0"] = function () { return indexResetNumberOfColumns(); };
 
 	return charCodeDict;
 }
@@ -1031,25 +1032,27 @@ function getDefaultKeyCodeDictionary()
 	keyCodeDict[INDEX_MODE] = new Object();
 	keyCodeDict[DRAWING_MODE] = new Object();
 
-	keyCodeDict[SLIDE_MODE][LEFT_KEY] = function() { dispatchEffects(-1); };
-	keyCodeDict[SLIDE_MODE][RIGHT_KEY] = function() { dispatchEffects(1); };
-	keyCodeDict[SLIDE_MODE][UP_KEY] = function() { skipEffects(-1); };
-	keyCodeDict[SLIDE_MODE][DOWN_KEY] = function() { skipEffects(1); };
-	keyCodeDict[SLIDE_MODE][PAGE_UP_KEY] = function() { dispatchEffects(-1); };
-	keyCodeDict[SLIDE_MODE][PAGE_DOWN_KEY] = function() { dispatchEffects(1); };
-	keyCodeDict[SLIDE_MODE][HOME_KEY] = function() { slideSetActiveSlide(0); };
-	keyCodeDict[SLIDE_MODE][END_KEY] = function() { slideSetActiveSlide(slides.length - 1); };
-	keyCodeDict[SLIDE_MODE][SPACE_KEY] = function() { dispatchEffects(1); };
+	keyCodeDict[SLIDE_MODE][LEFT_KEY] = function() { return dispatchEffects(-1); };
+	keyCodeDict[SLIDE_MODE][RIGHT_KEY] = function() { return dispatchEffects(1); };
+	keyCodeDict[SLIDE_MODE][UP_KEY] = function() { return skipEffects(-1); };
+	keyCodeDict[SLIDE_MODE][DOWN_KEY] = function() { return skipEffects(1); };
+	keyCodeDict[SLIDE_MODE][PAGE_UP_KEY] = function() { return dispatchEffects(-1); };
+	keyCodeDict[SLIDE_MODE][PAGE_DOWN_KEY] = function() { return dispatchEffects(1); };
+	keyCodeDict[SLIDE_MODE][HOME_KEY] = function() { return slideSetActiveSlide(0); };
+	keyCodeDict[SLIDE_MODE][END_KEY] = function() { return slideSetActiveSlide(slides.length - 1); };
+	keyCodeDict[SLIDE_MODE][SPACE_KEY] = function() { return dispatchEffects(1); };
 
-	keyCodeDict[INDEX_MODE][LEFT_KEY] = function() { indexSetPageSlide(activeSlide - 1); };
-	keyCodeDict[INDEX_MODE][RIGHT_KEY] = function() { indexSetPageSlide(activeSlide + 1); };
-	keyCodeDict[INDEX_MODE][UP_KEY] = function() { indexSetPageSlide(activeSlide - INDEX_COLUMNS); };
-	keyCodeDict[INDEX_MODE][DOWN_KEY] = function() { indexSetPageSlide(activeSlide + INDEX_COLUMNS); };
-	keyCodeDict[INDEX_MODE][PAGE_UP_KEY] = function() { indexSetPageSlide(activeSlide - INDEX_COLUMNS * INDEX_COLUMNS); };
-	keyCodeDict[INDEX_MODE][PAGE_DOWN_KEY] = function() { indexSetPageSlide(activeSlide + INDEX_COLUMNS * INDEX_COLUMNS); };
-	keyCodeDict[INDEX_MODE][HOME_KEY] = function() { indexSetPageSlide(0); };
-	keyCodeDict[INDEX_MODE][END_KEY] = function() { indexSetPageSlide(slides.length - 1); };
-	keyCodeDict[INDEX_MODE][ENTER_KEY] = function() { toggleSlideIndex(); };
+	keyCodeDict[INDEX_MODE][LEFT_KEY] = function() { return indexSetPageSlide(activeSlide - 1); };
+	keyCodeDict[INDEX_MODE][RIGHT_KEY] = function() { return indexSetPageSlide(activeSlide + 1); };
+	keyCodeDict[INDEX_MODE][UP_KEY] = function() { return indexSetPageSlide(activeSlide - INDEX_COLUMNS); };
+	keyCodeDict[INDEX_MODE][DOWN_KEY] = function() { return indexSetPageSlide(activeSlide + INDEX_COLUMNS); };
+	keyCodeDict[INDEX_MODE][PAGE_UP_KEY] = function() { return indexSetPageSlide(activeSlide - INDEX_COLUMNS * INDEX_COLUMNS); };
+	keyCodeDict[INDEX_MODE][PAGE_DOWN_KEY] = function() { return indexSetPageSlide(activeSlide + INDEX_COLUMNS * INDEX_COLUMNS); };
+	keyCodeDict[INDEX_MODE][HOME_KEY] = function() { return indexSetPageSlide(0); };
+	keyCodeDict[INDEX_MODE][END_KEY] = function() { return indexSetPageSlide(slides.length - 1); };
+	keyCodeDict[INDEX_MODE][ENTER_KEY] = function() { return toggleSlideIndex(); };
+
+	keyCodeDict[DRAWING_MODE][ESCAPE_KEY] = function () { return drawingSwitchToSlideMode(); };
 
 	return keyCodeDict;
 }
@@ -1108,14 +1111,14 @@ function getDefaultMouseHandlerDictionary()
 	mouseHandlerDict[INDEX_MODE] = new Object();
 	mouseHandlerDict[DRAWING_MODE] = new Object();
 
-	mouseHandlerDict[SLIDE_MODE][MOUSE_DOWN] = function(evnt) { dispatchEffects(1); };
-	mouseHandlerDict[SLIDE_MODE][MOUSE_WHEEL] = function(evnt) { slideMousewheel(evnt); };
+	mouseHandlerDict[SLIDE_MODE][MOUSE_DOWN] = function(evnt) { return dispatchEffects(1); };
+	mouseHandlerDict[SLIDE_MODE][MOUSE_WHEEL] = function(evnt) { return slideMousewheel(evnt); };
 
-	mouseHandlerDict[INDEX_MODE][MOUSE_DOWN] = function(evnt) { toggleSlideIndex(); };
+	mouseHandlerDict[INDEX_MODE][MOUSE_DOWN] = function(evnt) { return toggleSlideIndex(); };
 
-	mouseHandlerDict[DRAWING_MODE][MOUSE_DOWN] = function(evnt) { drawingMousedown(evnt); };
-	mouseHandlerDict[DRAWING_MODE][MOUSE_UP] = function(evnt) { drawingMouseup(evnt); };
-	mouseHandlerDict[DRAWING_MODE][MOUSE_MOVE] = function(evnt) { drawingMousemove(evnt); };
+	mouseHandlerDict[DRAWING_MODE][MOUSE_DOWN] = function(evnt) { return drawingMousedown(evnt); };
+	mouseHandlerDict[DRAWING_MODE][MOUSE_UP] = function(evnt) { return drawingMouseup(evnt); };
+	mouseHandlerDict[DRAWING_MODE][MOUSE_MOVE] = function(evnt) { return drawingMousemove(evnt); };
 
 	return mouseHandlerDict;
 }
@@ -1405,9 +1408,17 @@ function slideUpdateExportLayer()
 
 	// Serialise the new document.
 	var serializer = new XMLSerializer();
-	var xml = serializer.serializeToString(newDoc);
+	var strm = 
+	{
+		content : "",
+		close : function() {},  
+		flush : function() {},  
+		write : function(str, count) { this.content += str; }  
+	};
 
-	window.open('data:image/svg+xml;base64,' + window.btoa(xml), '_blank');
+	var xml = serializer.serializeToStream(newDoc, strm, 'UTF-8');
+
+	window.open('data:image/svg+xml;base64;charset=utf-8,' + window.btoa(strm.content), '_blank');
 
 	// Unsuspend redraw.
 	ROOT_NODE.unsuspendRedraw(suspendHandle);
@@ -2164,17 +2175,6 @@ function calcCoord(e)
 	var svgPoint = document.documentElement.createSVGPoint();
 	svgPoint.x = e.clientX + window.pageXOffset;
 	svgPoint.y = e.clientY + window.pageYOffset;
-
-	// The following is needed for Google Chrome, but causes problems
-	// with Firefox, as viewport is not implemented in Firefox 3.5.
-	try
-	{
-		svgPoint.x += document.rootElement.viewport.x;
-		svgPoint.y += document.rootElement.viewport.y;
-	}
-	catch (e)
-	{
-	}
 
 	var matrix = slides[activeSlide]["element"].getScreenCTM();
 

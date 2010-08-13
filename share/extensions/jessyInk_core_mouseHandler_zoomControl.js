@@ -90,6 +90,8 @@ function jessyInk_core_mouseHandler_zoomControl(obj)
 		startTime = (new Date()).getTime();
 		lastFrameTime = null;
 		effect(1);
+
+		return false;
 	}
 
 	/** Function to search for the element the user clicked on.
@@ -305,17 +307,6 @@ function jessyInk_core_mouseHandler_zoomControl(obj)
 		var svgPoint = document.documentElement.createSVGPoint();
 		svgPoint.x = e.clientX + window.pageXOffset;
 		svgPoint.y = e.clientY + window.pageYOffset;
-
-		// The following is needed for Google Chrome, but causes problems
-		// with Firefox, as viewport is not implemented in Firefox 3.5.
-		try
-		{
-			svgPoint.x += document.rootElement.viewport.x;
-			svgPoint.y += document.rootElement.viewport.y;
-		}
-		catch (ex)
-		{
-		}
 
 		return svgPoint;
 	}
