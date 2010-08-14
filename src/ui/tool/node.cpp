@@ -966,6 +966,11 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
             }
         }
         sm.setupIgnoreSelection(_desktop, true, &unselected);
+    } else {
+        // even if we won't really snap, we might still call the one of the
+        // constrainedSnap() methods to enforce the constraints, so we need
+        // to setup the snapmanager anyway
+        sm.setup(_desktop);
     }
 
     if (held_control(*event)) {
@@ -1028,6 +1033,8 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
         sp = sm.freeSnap(Inkscape::SnapCandidatePoint(new_pos, _snapSourceType()));
         new_pos = sp.getPoint();
     }
+
+    sm.unSetup();
 
     SelectableControlPoint::dragged(new_pos, event);
 }

@@ -264,7 +264,8 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
 
     _collectNodes(p.getSourceType(), p.getSourceNum() == 0);
 
-    if (unselected_nodes != NULL) {
+    if (unselected_nodes != NULL && unselected_nodes->size() > 0) {
+        g_assert(_points_to_snap_to != NULL);
         _points_to_snap_to->insert(_points_to_snap_to->end(), unselected_nodes->begin(), unselected_nodes->end());
     }
 

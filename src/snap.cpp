@@ -46,7 +46,11 @@ SnapManager::SnapManager(SPNamedView const *v) :
     guide(this, 0),
     object(this, 0),
     snapprefs(),
-    _named_view(v)
+    _named_view(v),
+    _rotation_center_source_item(NULL),
+    _guide_to_ignore(NULL),
+    _desktop(NULL),
+    _unselected_nodes(NULL)
 {
 }
 
@@ -89,6 +93,7 @@ SnapManager::SnapperList
 SnapManager::getGridSnappers() const
 {
     SnapperList s;
+
     if (_desktop && _desktop->gridsEnabled() && snapprefs.getSnapToGrids()) {
         for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
             Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
@@ -219,6 +224,7 @@ void SnapManager::preSnap(Inkscape::SnapCandidatePoint const &p)
     if (_snapindicator) {
         _snapindicator = false; // prevent other methods from drawing a snap indicator; we want to control this here
         Inkscape::SnappedPoint s = freeSnap(p);
+        g_assert(_desktop != NULL);
         if (s.getSnapped()) {
             _desktop->snapindicator->set_new_snaptarget(s, true);
         } else {
@@ -380,7 +386,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
 
     if (result.getSnapped()) {
         // only change the snap indicator if we really snapped to something
-        if (_snapindicator) {
+        if (_snapindicator && _desktop) {
             _desktop->snapindicator->set_new_snaptarget(result);
         }
         return result;
@@ -430,7 +436,7 @@ Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandi
 
     if (result.getSnapped()) {
         // only change the snap indicator if we really snapped to something
-        if (_snapindicator) {
+        if (_snapindicator && _desktop) {
             _desktop->snapindicator->set_new_snaptarget(result);
         }
         return result;
@@ -1024,7 +1030,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
                                                  bool noCurves,
                                                  bool allowOffScreen) const
 {
-
+    g_assert(_desktop != NULL);
 
     /*
     std::cout << "Type and number of snapped constraints: " << std::endl;
@@ -1146,6 +1152,9 @@ void SnapManager::setup(SPDesktop const *desktop,
                         SPGuide *guide_to_ignore)
 {
     g_assert(desktop != NULL);
+    if (_desktop != NULL) {
+        g_warning("The snapmanager has been set up before, but unSetup() hasn't been called afterwards. It possibly held invalid pointers");
+    }
     _items_to_ignore.clear();
     _items_to_ignore.push_back(item_to_ignore);
     _desktop = desktop;
@@ -1178,6 +1187,9 @@ void SnapManager::setup(SPDesktop const *desktop,
                         SPGuide *guide_to_ignore)
 {
     g_assert(desktop != NULL);
+    if (_desktop != NULL) {
+        g_warning("The snapmanager has been set up before, but unSetup() hasn't been called afterwards. It possibly held invalid pointers");
+    }
     _items_to_ignore = items_to_ignore;
     _desktop = desktop;
     _snapindicator = snapindicator;
@@ -1192,6 +1204,11 @@ void SnapManager::setupIgnoreSelection(SPDesktop const *desktop,
                                       std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes,
                                       SPGuide *guide_to_ignore)
 {
+    g_assert(desktop != NULL);
+    if (_desktop != NULL) {
+        // Someone has been naughty here! This is dangerous
+        g_warning("The snapmanager has been set up before, but unSetup() hasn't been called afterwards. It possibly held invalid pointers");
+    }
     _desktop = desktop;
     _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;
@@ -1284,6 +1301,7 @@ void SnapManager::_displaySnapsource(Inkscape::SnapCandidatePoint const &p) cons
         bool p_is_a_bbox = p.getSourceType() & Inkscape::SNAPSOURCE_BBOX_CATEGORY;
         bool p_is_other = p.getSourceType() & Inkscape::SNAPSOURCE_OTHER_CATEGORY;
 
+        g_assert(_desktop != NULL);
         if (snapprefs.getSnapEnabledGlobally() && (p_is_other || (p_is_a_node && snapprefs.getSnapModeNode()) || (p_is_a_bbox && snapprefs.getSnapModeBBox()))) {
             _desktop->snapindicator->set_new_snapsource(p);
         } else {
