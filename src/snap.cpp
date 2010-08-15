@@ -342,7 +342,7 @@ void SnapManager::constrainedSnapReturnByRef(Geom::Point &p,
                                              Inkscape::Snapper::SnapConstraint const &constraint,
                                              Geom::OptRect const &bbox_to_snap) const
 {
-    Inkscape::SnappedPoint const s = constrainedSnap(Inkscape::SnapCandidatePoint(p, source_type, 0), constraint, bbox_to_snap);
+    Inkscape::SnappedPoint const s = constrainedSnap(Inkscape::SnapCandidatePoint(p, source_type), constraint, bbox_to_snap);
     s.getPoint(p);
 }
 
@@ -609,7 +609,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
             bbox.expandTo(transformed);
         }
 
-        transformed_points.push_back(Inkscape::SnapCandidatePoint(transformed, (*i).getSourceType(), source_num));
+        transformed_points.push_back(Inkscape::SnapCandidatePoint(transformed, (*i).getSourceType(), source_num, Inkscape::SNAPTARGET_UNDEFINED, Geom::OptRect()));
         source_num++;
     }
 

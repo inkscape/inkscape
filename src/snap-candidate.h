@@ -42,11 +42,11 @@ public:
         _target_bbox = Geom::OptRect();
     }
 
-    SnapCandidatePoint(Geom::Point const &point, Inkscape::SnapSourceType const source, long const source_num = 0)
+    SnapCandidatePoint(Geom::Point const &point, Inkscape::SnapSourceType const source)
         : _point(point),
         _source_type(source),
         _target_type(Inkscape::SNAPTARGET_UNDEFINED),
-        _source_num(source_num)
+        _source_num(0)
     {
         _target_bbox = Geom::OptRect();
     }

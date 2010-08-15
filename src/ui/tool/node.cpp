@@ -946,6 +946,7 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
     SnapManager &sm = _desktop->namedview->snap_manager;
     bool snap = sm.someSnapperMightSnap();
     Inkscape::SnappedPoint sp;
+    std::vector<Inkscape::SnapCandidatePoint> unselected;
     if (snap) {
         /* setup
          * TODO We are doing this every time a snap happens. It should once be done only once
@@ -955,7 +956,6 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
          * TODO Snapping to unselected segments of selected paths doesn't work yet. */
 
         // Build the list of unselected nodes.
-        std::vector<Inkscape::SnapCandidatePoint> unselected;
         typedef ControlPointSelection::Set Set;
         Set &nodes = _selection.allPoints();
         for (Set::iterator i = nodes.begin(); i != nodes.end(); ++i) {
