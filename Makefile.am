@@ -157,6 +157,7 @@ EXTRA_DIST = \
 	packaging/win32/languages/Breton.nsh	\
 	packaging/win32/languages/Catalan.nsh	\
 	packaging/win32/languages/Czech.nsh	\
+	packaging/win32/languages/Dutch.nsh	\
 	packaging/win32/languages/English.nsh	\
 	packaging/win32/languages/Finnish.nsh	\
 	packaging/win32/languages/French.nsh	\
