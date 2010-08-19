@@ -15,6 +15,7 @@ tutorial_DATA = \
     potrace-eu.png \
     potrace-fr.png \
     potrace-hu.png \
+    potrace-id.png \
     potrace-ja.png \
     potrace-nl.png \
     potrace.png \
@@ -169,6 +170,7 @@ tutorial_DATA = \
     tutorial-tracing.fa.svg \
     tutorial-tracing.fr.svg \
     tutorial-tracing.hu.svg \
+    tutorial-tracing.id.svg \
     tutorial-tracing.ja.svg \
     tutorial-tracing.nl.svg \
     tutorial-tracing.pl.svg \
