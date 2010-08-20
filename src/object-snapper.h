@@ -74,9 +74,10 @@ private:
                        Geom::Matrix const additional_affine) const;
 
     void _snapNodes(SnappedConstraints &sc,
-                      Inkscape::SnapCandidatePoint const &p,
+                      Inkscape::SnapCandidatePoint const &p, // in desktop coordinates
                       std::vector<SnapCandidatePoint> *unselected_nodes,
-                      SnapConstraint const &c = SnapConstraint()) const; // in desktop coordinates
+                      SnapConstraint const &c = SnapConstraint(),
+                      Geom::Point const &p_proj_on_constraint = Geom::Point()) const;
 
     void _snapTranslatingGuide(SnappedConstraints &sc,
                      Geom::Point const &p,
@@ -92,12 +93,14 @@ private:
 
     void _snapPathsConstrained(SnappedConstraints &sc,
                  Inkscape::SnapCandidatePoint const &p, // in desktop coordinates
-                 SnapConstraint const &c) const;
+                 SnapConstraint const &c,
+                 Geom::Point const &p_proj_on_constraint) const;
 
     bool isUnselectedNode(Geom::Point const &point, std::vector<Inkscape::SnapCandidatePoint> const *unselected_nodes) const;
 
-    void _collectPaths(Inkscape::SnapCandidatePoint const &p,
-                  bool const &first_point) const;
+    void _collectPaths(Geom::Point p,
+                      Inkscape::SnapSourceType const source_type,
+                      bool const &first_point) const;
 
     void _clear_paths() const;
     Geom::PathVector* _getBorderPathv() const;
