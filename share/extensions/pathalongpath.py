@@ -216,9 +216,11 @@ class PathAlongPath(pathmodifier.Diffeo):
         if self.options.vertical:
             #flipxy(bbox)...
             bbox=(-bbox[3],-bbox[2],-bbox[1],-bbox[0])
-            
+
         width=bbox[1]-bbox[0]
         dx=width+self.options.space
+        if dx < 0.01:
+            exit(_("The total length of the pattern is too small :\nPlease choose a larger object or set 'Space between copies' > 0"))
 
         for id, node in self.patterns.iteritems():
             if node.tag == inkex.addNS('path','svg') or node.tag=='path':
