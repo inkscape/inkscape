@@ -263,13 +263,14 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
             default:
                 /* Set first point of sequence */
                 SnapManager &m = desktop->namedview->snap_manager;
-                m.setup(desktop);
 
                 if (bevent.state & GDK_CONTROL_MASK) {
+                    m.setup(desktop);
                     if (!(bevent.state & GDK_SHIFT_MASK)) {
                         m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE);
                       }
                     spdc_create_single_dot(event_context, p, "/tools/freehand/pencil", bevent.state);
+                    m.unSetup();
                     ret = true;
                     break;
                 }
@@ -277,7 +278,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                     p = anchor->dp;
                     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Continuing selected path"));
                 } else {
-
+                    m.setup(desktop);
                     if (!(bevent.state & GDK_SHIFT_MASK)) {
                         // This is the first click of a new curve; deselect item so that
                         // this curve is not combined with it (unless it is drawn from its
@@ -289,8 +290,8 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Appending to selected path"));
                         m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE);
                     }
+                    m.unSetup();
                 }
-                m.unSetup();
                 pc->sa = anchor;
                 spdc_set_startpoint(pc, p);
                 ret = TRUE;
