@@ -631,32 +631,30 @@ LayersPanel::LayersPanel() :
     _buttonsRow.set_child_min_width( 16 );
 
     Gtk::Button* btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_NEW, GTK_STOCK_ADD, _("New") );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_NEW, GTK_STOCK_ADD, C_("Layers", "New") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_NEW) );
     _buttonsRow.add( *btn );
 
     btn = manage( new Gtk::Button() );
-    //TRANSLATORS: only translate "string" in "context|string".
-    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_TOP, GTK_STOCK_GOTO_TOP, Q_("layers|Top") );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_TOP, GTK_STOCK_GOTO_TOP, C_("Layers", "Top") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_TOP) );
     _watchingNonTop.push_back( btn );
     _buttonsRow.add( *btn );
 
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_RAISE, GTK_STOCK_GO_UP, _("Up") );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_RAISE, GTK_STOCK_GO_UP, C_("Layers", "Up") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_UP) );
     _watchingNonTop.push_back( btn );
     _buttonsRow.add( *btn );
 
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_LOWER, GTK_STOCK_GO_DOWN, _("Dn") );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_LOWER, GTK_STOCK_GO_DOWN, C_("Layers", "Dn") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_DOWN) );
     _watchingNonBottom.push_back( btn );
     _buttonsRow.add( *btn );
 
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_BOTTOM, GTK_STOCK_GOTO_BOTTOM, _("Bot") );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_BOTTOM, GTK_STOCK_GOTO_BOTTOM, C_("Layers", "Bot") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_BOTTOM) );
     _watchingNonBottom.push_back( btn );
     _buttonsRow.add( *btn );

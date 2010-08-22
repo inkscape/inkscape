@@ -131,20 +131,15 @@ void Panel::_init()
     }
 
     {
-        //TRANSLATORS: only translate "string" in "context|string".
-        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-        Glib::ustring heightItemLabel(Q_("swatches|Size"));
+        Glib::ustring heightItemLabel(C_("Swatches", "Size"));
 
         //TRANSLATORS: Indicates size of colour swatches
         const gchar *heightLabels[] = {
-            N_("tiny"),
-            N_("small"),
-            //TRANSLATORS: only translate "string" in "context|string".
-            // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-            // "medium" indicates size of colour swatches
-            N_("swatchesHeight|medium"),
-            N_("large"),
-            N_("huge")
+            N_("Tiny"),
+            N_("Small"),
+            NC_("Swatches height", "Medium"),
+            N_("Large"),
+            N_("Huge")
         };
 
         Gtk::MenuItem *sizeItem = manage(new Gtk::MenuItem(heightItemLabel));
@@ -166,20 +161,15 @@ void Panel::_init()
     }
 
     {
-        //TRANSLATORS: only translate "string" in "context|string".
-        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-        Glib::ustring widthItemLabel(Q_("swatches|Width"));
+        Glib::ustring widthItemLabel(C_("Swatches", "Width"));
 
         //TRANSLATORS: Indicates width of colour swatches
         const gchar *widthLabels[] = {
-            N_("narrower"),
-            N_("narrow"),
-            //TRANSLATORS: only translate "string" in "context|string".
-            // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-            // "medium" indicates width of colour swatches
-            N_("swatchesWidth|medium"),
-            N_("wide"),
-            N_("wider")
+            N_("Narrower"),
+            N_("Narrow"),
+            NC_("Swatches width", "Medium"),
+            N_("Wide"),
+            N_("Wider")
         };
 
         Gtk::MenuItem *item = manage( new Gtk::MenuItem(widthItemLabel));
@@ -209,10 +199,8 @@ void Panel::_init()
     }
 
     {
-        //TRANSLATORS: only translate "string" in "context|string".
-        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-        // "Wrap" indicates how colour swatches are displayed
-        Glib::ustring wrap_label(Q_("swatches|Wrap"));
+        //TRANSLATORS: "Wrap" indicates how colour swatches are displayed
+        Glib::ustring wrap_label(C_("Swatches","Wrap"));
         Gtk::CheckMenuItem *check = manage(new Gtk::CheckMenuItem(wrap_label));
         check->set_active(panel_wrap);
         _menu->append(*check);

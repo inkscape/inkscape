@@ -184,10 +184,8 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         g_object_set_data (G_OBJECT(fsel), "family-treeview", fsel->family_treeview);
 
 
-        //TRANSLATORS: only translate "string" in "context|string".
-        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
         /* Style frame */
-        f = gtk_frame_new(Q_("fontselector|Style"));
+        f = gtk_frame_new(C_("Font selector", "Style"));
         gtk_widget_show(f);
         gtk_box_pack_start(GTK_BOX (fsel), f, TRUE, TRUE, 0);
 

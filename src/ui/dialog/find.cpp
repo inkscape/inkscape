@@ -76,10 +76,8 @@ Find::Find()
       _check_texts(_("Texts"), _("Search text objects")),
       _check_groups(_("Groups"), _("Search groups")),
       _check_clones(
-                  //TRANSLATORS: only translate "string" in "context|string".
-                  // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-                  // "Clones" is a noun indicating type of object to find
-    		  Q_("find|Clones"), _("Search clones")),
+                  //TRANSLATORS: "Clones" is a noun indicating type of object to find
+    		  C_("Find dialog", "Clones"), _("Search clones")),
       _check_images(_("Images"), _("Search images")),
       _check_offsets(_("Offsets"), _("Search offset objects")),
     

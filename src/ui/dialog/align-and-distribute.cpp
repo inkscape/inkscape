@@ -465,10 +465,8 @@ public:
         removeOverlapXGap.set_value(0);
         dialog.tooltips().set_tip(removeOverlapXGap,
                                   _("Minimum horizontal gap (in px units) between bounding boxes"));
-        //TRANSLATORS: only translate "string" in "context|string".
-        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-        // "H:" stands for horizontal gap
-        removeOverlapXGapLabel.set_label(Q_("gap|H:"));
+        //TRANSLATORS: "H:" stands for horizontal gap
+        removeOverlapXGapLabel.set_label(C_("Gap", "H:"));
 
         removeOverlapYGap.set_digits(1);
         removeOverlapYGap.set_size_request(60, -1);
@@ -478,7 +476,7 @@ public:
         dialog.tooltips().set_tip(removeOverlapYGap,
                                   _("Minimum vertical gap (in px units) between bounding boxes"));
         /* TRANSLATORS: Vertical gap */
-        removeOverlapYGapLabel.set_label(_("V:"));
+        removeOverlapYGapLabel.set_label(C_("Gap", "V:"));
 
         dialog.removeOverlap_table().attach(removeOverlapXGapLabel, column, column+1, row, row+1, Gtk::FILL, Gtk::FILL);
         dialog.removeOverlap_table().attach(removeOverlapXGap, column+1, column+2, row, row+1, Gtk::FILL, Gtk::FILL);

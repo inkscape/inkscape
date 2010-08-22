@@ -103,11 +103,8 @@ DocumentProperties::DocumentProperties()
       _rcp_hgui(_("_Highlight color:"), _("Highlighted guideline color"), _("Color of a guideline when it is under mouse"), "guidehicolor", "guidehiopacity", _wr),
     //---------------------------------------------------------------
       _grids_label_crea("", Gtk::ALIGN_LEFT),
-      //TRANSLATORS: only translate "string" in "context|string".
-      // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-      // "New" refers to grid
-      _grids_button_new(Q_("Grid|_New"), _("Create new grid.")),
-      _grids_button_remove(_("_Remove"), _("Remove selected grid.")),
+      _grids_button_new(C_("Grid", "_New"), _("Create new grid.")),
+      _grids_button_remove(C_("Grid", "_Remove"), _("Remove selected grid.")),
       _grids_label_def("", Gtk::ALIGN_LEFT)
     //---------------------------------------------------------------
 {

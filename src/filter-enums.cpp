@@ -48,13 +48,11 @@ const EnumDataConverter<FilterPrimitiveInput> FPInputConverter(FPInputData, FPIN
 
 // feBlend
 const EnumData<Inkscape::Filters::FilterBlendMode> BlendModeData[Inkscape::Filters::BLEND_ENDMODE] = {
-    //TRANSLATORS: only translate "string" in "context|string".
-    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    {Inkscape::Filters::BLEND_NORMAL,   Q_("filterBlendMode|Normal"),   "normal"},
-    {Inkscape::Filters::BLEND_MULTIPLY, _("Multiply"), "multiply"},
-    {Inkscape::Filters::BLEND_SCREEN,   _("Screen"),   "screen"},
-    {Inkscape::Filters::BLEND_DARKEN,   _("Darken"),   "darken"},
-    {Inkscape::Filters::BLEND_LIGHTEN,  _("Lighten"),  "lighten"}
+    {Inkscape::Filters::BLEND_NORMAL,   C_("Filter blend mode", "Normal"),   "normal"},
+    {Inkscape::Filters::BLEND_MULTIPLY, C_("Filter blend mode", "Multiply"), "multiply"},
+    {Inkscape::Filters::BLEND_SCREEN,   C_("Filter blend mode", "Screen"),   "screen"},
+    {Inkscape::Filters::BLEND_DARKEN,   C_("Filter blend mode", "Darken"),   "darken"},
+    {Inkscape::Filters::BLEND_LIGHTEN,  C_("Filter blend mode", "Lighten"),  "lighten"}
 };
 const EnumDataConverter<Inkscape::Filters::FilterBlendMode> BlendModeConverter(BlendModeData, Inkscape::Filters::BLEND_ENDMODE);
 

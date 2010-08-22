@@ -455,25 +455,19 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
 
     // four spinbuttons
 
-    //TRANSLATORS: only translate "string" in "context|string".
-    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    eact = create_adjustment_action( "XAction", _("select toolbar|X position"), _("select toolbar|X"), "X",
+    eact = create_adjustment_action( "XAction", C_("Select toolbar", "X position"), C_("Select toolbar", "X:"), "X",
                                      -1e6, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Horizontal coordinate of selection"), TRUE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
     contextActions->push_back( GTK_ACTION(eact) );
 
-    //TRANSLATORS: only translate "string" in "context|string".
-    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    eact = create_adjustment_action( "YAction", _("select toolbar|Y position"), _("select toolbar|Y"), "Y",
+    eact = create_adjustment_action( "YAction", C_("Select toolbar", "Y position"), C_("Select toolbar", "Y:"), "Y",
                                      -1e6, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Vertical coordinate of selection"), FALSE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
     contextActions->push_back( GTK_ACTION(eact) );
 
-    //TRANSLATORS: only translate "string" in "context|string".
-    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    eact = create_adjustment_action( "WidthAction", _("select toolbar|Width"), _("select toolbar|W"), "width",
+    eact = create_adjustment_action( "WidthAction", C_("Select toolbar", "Width"), C_("Select toolbar", "W:"), "width",
                                      1e-3, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Width of selection"), FALSE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
@@ -492,9 +486,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     gtk_action_group_add_action( mainActions, GTK_ACTION(itact) );
     }
 
-    //TRANSLATORS: only translate "string" in "context|string".
-    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    eact = create_adjustment_action( "HeightAction", _("select toolbar|Height"), _("select toolbar|H"), "height",
+    eact = create_adjustment_action( "HeightAction", C_("Select toolbar", "Height"), C_("Select toolbar", "H:"), "height",
                                      1e-3, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Height of selection"), FALSE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );

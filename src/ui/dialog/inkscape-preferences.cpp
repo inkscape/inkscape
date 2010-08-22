@@ -1186,9 +1186,7 @@ void InkscapePreferences::initPageSave()
     _save_autosave_interval.init("/options/autosave/interval", 1.0, 10800.0, 1.0, 10.0, 10.0, true, false);
     _page_save.add_line(true, _("Interval (in minutes):"), _save_autosave_interval, "", _("Interval (in minutes) at which document will be autosaved"), false);
     _save_autosave_path.init("/options/autosave/path", true);
-    //TRANSLATORS: only translate "string" in "context|string".
-    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    _page_save.add_line(true, Q_("filesystem|Path:"), _save_autosave_path, "", _("The directory where autosaves will be written"), false);
+    _page_save.add_line(true, C_("Filesystem", "Path:"), _save_autosave_path, "", _("The directory where autosaves will be written"), false);
     _save_autosave_max.init("/options/autosave/max", 1.0, 100.0, 1.0, 10.0, 10.0, true, false);
     _page_save.add_line(true, _("Maximum number of autosaves:"), _save_autosave_max, "", _("Maximum number of autosaved files; use this to limit the storage space used"), false);
 

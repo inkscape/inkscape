@@ -114,10 +114,8 @@ DualSpinSlider::DualSpinSlider(double value, double lower, double upper, double 
     : AttrWidget(a),
       _s1(value, lower, upper, step_inc, climb_rate, digits, SP_ATTR_INVALID, tip_text1),
       _s2(value, lower, upper, step_inc, climb_rate, digits, SP_ATTR_INVALID, tip_text2),
-      //TRANSLATORS: only translate "string" in "context|string".
-      // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-      // "Link" means to _link_ two sliders together
-      _link(Q_("sliders|Link"))
+      //TRANSLATORS: "Link" means to _link_ two sliders together
+      _link(C_("Sliders", "Link"))
 {
     signal_value_changed().connect(signal_attr_changed().make_slot());
 

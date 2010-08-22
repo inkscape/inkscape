@@ -2644,9 +2644,7 @@ clonetiler_dialog (void)
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_B);
                 }
                 {
-                    //TRANSLATORS: only translate "string" in "context|string".
-                    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), Q_("clonetiler|H"));
+                    radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color hue", "H"));
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the hue of the color"), NULL);
                     clonetiler_table_attach (table, radio, 0.0, 1, 3);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
@@ -2654,9 +2652,7 @@ clonetiler_dialog (void)
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_H);
                 }
                 {
-                    //TRANSLATORS: only translate "string" in "context|string".
-                    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), Q_("clonetiler|S"));
+                    radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color saturation", "S"));
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the saturation of the color"), NULL);
                     clonetiler_table_attach (table, radio, 0.0, 2, 3);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
@@ -2664,9 +2660,7 @@ clonetiler_dialog (void)
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_S);
                 }
                 {
-                    //TRANSLATORS: only translate "string" in "context|string".
-                    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), Q_("clonetiler|L"));
+                    radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color lightness", "L"));
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the lightness of the color"), NULL);
                     clonetiler_table_attach (table, radio, 0.0, 3, 3);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",

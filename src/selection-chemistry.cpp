@@ -844,10 +844,8 @@ sp_selection_raise(SPDesktop *desktop)
     }
 
     sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_RAISE,
-                     //TRANSLATORS: only translate "string" in "context|string".
-                     // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-                     // "Raise" means "to raise an object" in the undo history
-                     Q_("undo action|Raise"));
+                     //TRANSLATORS: "Raise" means "to raise an object" in the undo history
+                     C_("Undo action", "Raise"));
 }
 
 void sp_selection_raise_to_top(SPDesktop *desktop)
@@ -2053,10 +2051,8 @@ sp_selection_clone(SPDesktop *desktop)
         Inkscape::GC::release(clone);
     }
 
-    // TRANSLATORS: only translate "string" in "context|string".
-    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
     sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_CLONE,
-                     Q_("action|Clone"));
+                     C_("Action","Clone"));
 
     selection->setReprList(newsel);
 
