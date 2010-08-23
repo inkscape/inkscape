@@ -169,7 +169,7 @@ RFE</a>).</p>
 <note>Drag off the horizontal or vertical ruler to create a new guideline. Drag a guideline onto the ruler to delete it.</note>
 <mouse><key><left-drag/></key> <action>drag a guide to move it</action></mouse>
 <mouse><key><shift/><left-drag/></key> <action>drag a guide (not near anchor) to rotate it</action></mouse>
-<mouse><key><ctrl/><shift/><left-drag/></key> <action>rotate guide with angle snapping</action></mouse>
+<mouse><key><shift/><ctrl/><left-drag/></key> <action>rotate guide with angle snapping</action></mouse>
 <mouse><key><ctrl/><left-click/></key> <action>delete guide</action></mouse>
 <keys><key>|</key> <key><shift/>\</key> <action>toggle guides and snapping to guides</action></keys>
 <note>If you want to see the guides but not snap to them, use the global snapping toggle (% key).</note>
@@ -465,7 +465,7 @@ RFE</a>).</p>
 <title>Select within group, select under</title>
 <mouse><key><ctrl/><left-click/></key> <action>select within group</action></mouse>
 <note>Ctrl+click selects the object at click point disregarding any levels of grouping that this object might belong to.</note>
-<mouse><key><ctrl/><shift/><left-click/></key> <action>toggle selection within group</action></mouse>
+<mouse><key><shift/><ctrl/><left-click/></key> <action>toggle selection within group</action></mouse>
 <mouse><key><alt/><left-click/></key> <action>select under</action></mouse>
 <note>Alt+click selects the object at click point which is beneath (in z-order) the lowest selected object at click point.</note>
 <note>If the bottom object is reached, Alt+click again selects the top object. So, several Alt+clicks cycle through z-order stack at point.</note>
@@ -503,7 +503,7 @@ groups) with the same effect as Alt+click.)</note>
 <mouse><key><shift/><arrows/></key>  <action>move selection by 10x nudge distance</action></mouse>
 <note>The default nudge distance is 2 px (SVG pixel units, not screen pixels).</note>
 <mouse><key><alt/><arrows/></key>  <action>move selection by 1 pixel</action></mouse>
-<mouse><key><alt/><shift/><arrows/></key>  <action>move selection by 10 pixels</action></mouse>
+<mouse><key><shift/><alt/><arrows/></key>  <action>move selection by 10 pixels</action></mouse>
 <note>The actual distance for pixel movements depends on zoom level. Zoom in for finer movement.</note>
 </group>
 
@@ -670,7 +670,7 @@ groups) with the same effect as Alt+click.)</note>
 <mouse><key><shift/><arrows/></key>  <action>move selected node(s) by 10x nudge distance</action></mouse>
 <note>The default nudge distance is 2 px (SVG pixel units, not screen pixels).</note>
 <mouse><key><alt/><arrows/></key>  <action>move selected node(s) by 1 pixel</action></mouse>
-<mouse><key><alt/><shift/><arrows/></key>  <action>move selected node(s) by 10 pixels</action></mouse>
+<mouse><key><shift/><alt/><arrows/></key>  <action>move selected node(s) by 10 pixels</action></mouse>
 <note>The actual distance for pixel movements depends on zoom level. Zoom in for finer movement.</note>
 </group>
 
@@ -851,7 +851,7 @@ with the segment; another Shift+S will expand a second handle</note>
 <mouse><key><left-drag/></key> <action>act on selected paths in the current mode</action></mouse>
 <mouse><key><shift/><left-drag/></key> <action>reverse current mode (when applicable)</action></mouse>
 <mouse><key><ctrl/><left-drag/></key> <action>act temporarily switching to shrink mode</action></mouse>
-<mouse><key><ctrl/><shift/><left-drag/></key> <action>act temporarily switching to grow mode</action></mouse>
+<mouse><key><shift/><ctrl/><left-drag/></key> <action>act temporarily switching to grow mode</action></mouse>
 <note>The amount of tweaking action is the greatest at the center of the circular area and drops off smoothly towards the edges.</note>
 </group>
 
@@ -1106,7 +1106,7 @@ with the segment; another Shift+S will expand a second handle</note>
 <mouse><key><ctrl/><left-click/></key> <action>create a dot</action></mouse>
 <note>This creates a small circle. Its size (relative to the current stroke width) can be set in Preferences.</note> 
 <mouse><key><shift/><ctrl/><left-click/></key> <action>create a double-sized dot</action></mouse>
-<mouse><key><alt/><ctrl/><left-click/></key> <action>create a random-sized dot</action></mouse>
+<mouse><key><ctrl/><alt/><left-click/></key> <action>create a random-sized dot</action></mouse>
 </group>
 </section>
 
@@ -1133,7 +1133,7 @@ with the segment; another Shift+S will expand a second handle</note>
 <mouse><key><shift/><arrows/></key>  <action>move last node by 10x nudge distance</action></mouse>
 <note>The default nudge distance is 2 px (SVG pixel units, not screen pixels).</note>
 <mouse><key><alt/><arrows/></key>  <action>move last node by 1 pixel</action></mouse>
-<mouse><key><alt/><shift/><arrows/></key>  <action>move last node by 10 pixels</action></mouse>
+<mouse><key><shift/><alt/><arrows/></key>  <action>move last node by 10 pixels</action></mouse>
 <note>The actual distance for pixel movements depends on zoom level. Zoom in for finer movement.</note>
 </group>
 
@@ -1151,7 +1151,7 @@ with the segment; another Shift+S will expand a second handle</note>
 <mouse><key><ctrl/><left-click/></key> <action>create a dot (straight line modes only)</action></mouse>
 <note>This creates a small circle. Its size (relative to the current stroke width) can be set in Preferences.</note> 
 <mouse><key><shift/><ctrl/><left-click/></key> <action>create a double-sized dot</action></mouse>
-<mouse><key><alt/><ctrl/><left-click/></key> <action>create a random-sized dot</action></mouse>
+<mouse><key><ctrl/><alt/><left-click/></key> <action>create a random-sized dot</action></mouse>
 </group>
 
 <group>
@@ -1255,7 +1255,7 @@ with the segment; another Shift+S will expand a second handle</note>
 <mouse><key><shift/><arrows/></key>  <action>move selected handle by 10x nudge distance</action></mouse>
 <note>The default nudge distance is 2 px (SVG pixel units, not screen pixels).</note>
 <mouse><key><alt/><arrows/></key>  <action>move selected handle by 1 pixel</action></mouse>
-<mouse><key><alt/><shift/><arrows/></key>  <action>move selected handle by 10 pixels</action></mouse>
+<mouse><key><shift/><alt/><arrows/></key>  <action>move selected handle by 10 pixels</action></mouse>
 <note>If at least one end handle is selected, arrow keys move the end handle to move or resize the gradient line.</note>
 <note>If only mid stops are selected, arrow keys move the selected stops along the gradient line.</note>
 <note>The actual distance for pixel movements depends on zoom level. Zoom in for finer movement.</note>
@@ -1336,7 +1336,7 @@ with the segment; another Shift+S will expand a second handle</note>
 <keys><key><alt/>W</key>	 <action>flow text into frame</action></keys> 
 <note>With a text object and a shape/path selected, this flows text into the shape/path.</note>
 <note>Both remain separate objects, but are linked; editing the shape/path causes the text to reflow.</note>
-<keys><key><alt/><shift/>W</key>	 <action>unflow text from frame</action></keys> 
+<keys><key><shift/><alt/>W</key>	 <action>unflow text from frame</action></keys> 
 <note>This cuts the flowed text's link to the shape/path, producing a single-line regular text object.</note>
 <keys><key><shift/>D</key>	 <action>select external frame</action></keys> 
 <note>To find out which object is the frame of this flowed text, select it and press Shift+D. The frame will be selected.</note>
@@ -1367,9 +1367,9 @@ with the segment; another Shift+S will expand a second handle</note>
 <mouse><key><left-drag/></key> <action>select text</action></mouse>
 <note>Left-dragging over a text object selects a text span.</note>
 <mouse><key><shift/><arrows/></key> <action>select text by character</action></mouse>
-<mouse><key><ctrl/><shift/><arrows/></key> <action>select text by word</action></mouse>
+<mouse><key><shift/><ctrl/><arrows/></key> <action>select text by word</action></mouse>
 <keys><key><shift/><misc f="Home"/></key> <key><shift/><misc f="End"/></key> <action>select to beginning/end of line</action></keys>
-<keys><key><ctrl/><shift/><misc f="Home"/></key> <key><ctrl/><shift/><misc f="End"/></key> <action>select to beginning/end of text</action></keys>
+<keys><key><shift/><ctrl/><misc f="Home"/></key> <key><shift/><ctrl/><misc f="End"/></key> <action>select to beginning/end of text</action></keys>
 <keys><key><shift/><misc f="PgUp"/></key> <key><shift/><misc f="PgDn"/></key> <action>select one screen up/down</action></keys>
 <mouse><key><left-click/><left-click/></key> <action>select word</action></mouse>
 <mouse><key><left-click/><left-click/><left-click/></key> <action>select line</action></mouse>
