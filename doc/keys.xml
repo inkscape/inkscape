@@ -11,7 +11,7 @@ are configurable by the user; see the default.xml file for details on how to do 
 supposed to work the same as corresponding regular keys. If you have a new shortcut
 idea, please contact the developers (by writing to the <a
 href="http://lists.sourceforge.net/lists/listinfo/inkscape-devel">devel mailing list</a>
-or by <a href="http://sourceforge.net/tracker/?group_id=93438&amp;atid=604309">submitting an
+or by <a href="https://bugs.launchpad.net/inkscape">submitting an
 RFE</a>).</p>
 
 <column>
