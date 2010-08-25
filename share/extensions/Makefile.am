@@ -67,6 +67,7 @@ extensions = \
 	grid_cartesian.py \
 	grid_polar.py \
 	guides_creator.py \
+    guillotine.py \
 	handles.py \
 	hpgl_output.py \
 	ill2svg.pl \
@@ -221,6 +222,7 @@ modules = \
 	grid_cartesian.inx \
 	grid_polar.inx \
 	guides_creator.inx \
+    guillotine.inx \
 	handles.inx \
 	hpgl_output.inx \
 	inkscape_help_askaquestion.inx \
