@@ -86,6 +86,7 @@ tutorial_DATA = \
     tutorial-calligraphy.fa.svg \
     tutorial-calligraphy.fr.svg \
     tutorial-calligraphy.hu.svg \
+    tutorial-calligraphy.id.svg \
     tutorial-calligraphy.ja.svg \
     tutorial-calligraphy.pl.svg \
     tutorial-calligraphy.pt_BR.svg \
