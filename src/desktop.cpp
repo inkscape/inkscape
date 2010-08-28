@@ -636,9 +636,15 @@ SPDesktop::set_event_context (GtkType type, const gchar *config)
         event_context = next;
     }
 
+    // The event_context will be null. This means that it will be impossible
+    // to process any event invoked by the lines below. See for example bug
+    // LP #622350. Cutting and undoing again in the node tool resets the event
+    // context to the node tool. In this bug the line bellow invokes GDK_LEAVE_NOTIFY
+    // events which cannot be handled and must be discarded.
     ec = sp_event_context_new (type, this, config, SP_EVENT_CONTEXT_STATIC);
     ec->next = event_context;
     event_context = ec;
+    // Now the event_context has been set again and we can process all events again
     sp_event_context_activate (ec);
     _event_context_changed_signal.emit (this, ec);
 }
@@ -1367,7 +1373,7 @@ SPDesktop::emitToolSubselectionChanged(gpointer data)
 void
 SPDesktop::updateNow()
 {
-  sp_canvas_update_now(canvas);
+    sp_canvas_update_now(canvas);
 }
 
 void

@@ -937,8 +937,12 @@ gint sp_event_context_root_handler(SPEventContext * event_context,
 }
 
 gint sp_event_context_virtual_root_handler(SPEventContext * event_context, GdkEvent * event) {
-    gint ret = ((SPEventContextClass *) G_OBJECT_GET_CLASS(event_context))->root_handler(event_context, event);
-    set_event_location(event_context->desktop, event);
+    gint ret = false;
+    if (event_context) {    // If no event-context is available then do nothing, otherwise Inkscape would crash
+                            // (see the comment in SPDesktop::set_event_context, and bug LP #622350)
+        ret = ((SPEventContextClass *) G_OBJECT_GET_CLASS(event_context))->root_handler(event_context, event);
+        set_event_location(event_context->desktop, event);
+    }
     return ret;
 }
 
@@ -972,12 +976,15 @@ gint sp_event_context_item_handler(SPEventContext * event_context,
 }
 
 gint sp_event_context_virtual_item_handler(SPEventContext * event_context, SPItem * item, GdkEvent * event) {
-    gint ret = ((SPEventContextClass *) G_OBJECT_GET_CLASS(event_context))->item_handler(event_context, item, event);
-
-    if (!ret) {
-        ret = sp_event_context_virtual_root_handler(event_context, event);
-    } else {
-        set_event_location(event_context->desktop, event);
+    gint ret = false;
+    if (event_context) {    // If no event-context is available then do nothing, otherwise Inkscape would crash
+                            // (see the comment in SPDesktop::set_event_context, and bug LP #622350)
+        ret = ((SPEventContextClass *) G_OBJECT_GET_CLASS(event_context))->item_handler(event_context, item, event);
+        if (!ret) {
+            ret = sp_event_context_virtual_root_handler(event_context, event);
+        } else {
+            set_event_location(event_context->desktop, event);
+        }
     }
 
     return ret;
