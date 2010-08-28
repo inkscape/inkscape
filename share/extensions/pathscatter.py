@@ -111,6 +111,14 @@ class PathScatter(pathmodifier.Diffeo):
         self.OptionParser.add_option("-t", "--toffset",
                         action="store", type="float", 
                         dest="toffset", default=0.0, help="tangential offset")
+        self.OptionParser.add_option("-g", "--grouppick",
+                        action="store", type="inkbool", 
+                        dest="grouppick", default=False,
+                        help="if pattern is a group then randomly pick group members")
+        self.OptionParser.add_option("-m", "--pickmode",
+                        action="store", type="string", 
+                        dest="pickmode", default="rand",
+                        help="group pick mode (rand=random seq=sequentially)")
         self.OptionParser.add_option("-f", "--follow",
                         action="store", type="inkbool", 
                         dest="follow", default=True,
@@ -144,7 +152,7 @@ class PathScatter(pathmodifier.Diffeo):
         #id = self.options.ids[-1]
         id = idList[-1]
         self.patternNode=self.selected[id]
-
+		
         self.gNode = etree.Element('{http://www.w3.org/2000/svg}g')
         self.patternNode.getparent().append(self.gNode)
 
@@ -208,7 +216,7 @@ class PathScatter(pathmodifier.Diffeo):
             inkex.errormsg(_("This extension requires two selected paths."))
             return
         self.prepareSelectionList()
-
+        
         #center at (0,0)
         bbox=pathmodifier.computeBBox([self.patternNode])
         mat=[[1,0,-(bbox[0]+bbox[1])/2],[0,1,-(bbox[2]+bbox[3])/2]]
@@ -221,6 +229,18 @@ class PathScatter(pathmodifier.Diffeo):
         width=bbox[1]-bbox[0]
         dx=width+self.options.space
 
+		#check if group and expand it
+        patternList = []
+        if self.options.grouppick and (self.patternNode.tag == inkex.addNS('g','svg') or self.patternNode.tag=='g') :
+            mat=simpletransform.parseTransform(self.patternNode.get("transform"))
+            for child in self.patternNode:
+                simpletransform.applyTransformToNode(mat,child)
+                patternList.append(child)
+        else :
+            patternList.append(self.patternNode)
+        #inkex.debug(patternList)
+                
+        counter=0
         for skelnode in self.skeletons.itervalues(): 
             self.curSekeleton=cubicsuperpath.parsePath(skelnode.get('d'))
             for comp in self.curSekeleton:
@@ -242,11 +262,16 @@ class PathScatter(pathmodifier.Diffeo):
                 s=self.options.toffset
                 while s<=length:
                     mat=self.localTransformAt(s,self.options.follow)
+                    if self.options.pickmode=="rand":
+                        clone=copy.deepcopy(patternList[random.randint(0, len(patternList)-1)])
 
-                    clone=copy.deepcopy(self.patternNode)
+                    if self.options.pickmode=="seq":
+                        clone=copy.deepcopy(patternList[counter])
+                        counter=(counter+1)%len(patternList)
+                        
                     #!!!--> should it be given an id?
                     #seems to work without this!?!
-                    myid = self.patternNode.tag.split('}')[-1]
+                    myid = patternList[random.randint(0, len(patternList)-1)].tag.split('}')[-1]
                     clone.set("id", self.uniqueId(myid))
                     self.gNode.append(clone)
                     

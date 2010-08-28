@@ -18,6 +18,11 @@
     <_option value="clone">Cloned</_option>
   </param>
   <param name="duplicate" type="boolean" _gui-text="Duplicate the pattern before deformation">true</param>
+  <param name="grouppick" type="boolean" _gui-text="If pattern is a group, pick group members">false</param>
+  <param name="pickmode" type="optiongroup" _gui-text="Pick group members:">
+    <_option value="rand">Randomly</_option>
+    <_option value="seq">Sequentially</_option>
+  </param> 
   <effect>
     <object-type>all</object-type>
     <effects-menu>
