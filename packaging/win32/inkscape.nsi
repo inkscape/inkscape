@@ -296,6 +296,7 @@ Section $(Core) SecCore ; Mandatory Inkscape core files section {{{
   SetAutoClose false
 
   File           /a    ..\..\inkscape\ink*.exe
+  File           /a    ..\..\inkscape\inkscape.com
   File           /a    ..\..\inkscape\AUTHORS
   File           /a    ..\..\inkscape\COPYING
   File           /a    ..\..\inkscape\COPYING.LIB
