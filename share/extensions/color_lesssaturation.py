@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import coloreffect, inkex
 
 class C(coloreffect.ColorEffect):

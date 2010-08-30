@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 """
 svg_and_media_zip_output.py
 An extention which collects all images to the documents directory and

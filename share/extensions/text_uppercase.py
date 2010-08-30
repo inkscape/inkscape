@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import chardataeffect, inkex, string
 
 class C(chardataeffect.CharDataEffect):

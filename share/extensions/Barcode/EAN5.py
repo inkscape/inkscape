@@ -1,3 +1,4 @@
+#!/usr/bin/env python 
 ''' 
 Copyright (C) 2007 Martin Owens 
 Copyright (C) 2009 Aaron C Spike 

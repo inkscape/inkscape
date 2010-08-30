@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Syntax format: (raise your hand if you know lisp :-)
 #
 # 'state0':  ("file.svg", ( ( ('state1', dx, dy, T-B, L|R),),

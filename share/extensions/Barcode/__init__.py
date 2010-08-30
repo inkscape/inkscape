@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python
 '''
 Barcodes SVG Extention
 
