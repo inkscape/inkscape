@@ -19,7 +19,7 @@
 	    <_item value="canvas">Canvas</_item>
 	    <_item value="selection">Selection</_item>
       </param>
-      <param name="unit" _gui-text="Unit" type="optiongroup" appearance="minimal">
+      <param name="unit" _gui-text="Unit:" type="optiongroup" appearance="minimal">
 	    <option value="px">px</option>
 		<option value="pt">pt</option>
 		<option value="in">in</option>

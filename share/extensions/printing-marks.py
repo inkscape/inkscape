@@ -36,9 +36,6 @@ class Printing_Marks (inkex.Effect):
 
     def __init__(self):
         inkex.Effect.__init__(self)
-        self.OptionParser.add_option("--tab",
-                                     action="store", type="string",
-                                     dest="tab")
         self.OptionParser.add_option("--where",
                                      action="store", type="string",
                                      dest="where_to_crop", default=True,
@@ -91,7 +88,10 @@ class Printing_Marks (inkex.Effect):
                                      action="store", type="float",
                                      dest="bleed_right", default=0,
                                      help="Bleed Right Size")
-
+        self.OptionParser.add_option("--tab",
+                                     action="store", type="string",
+                                     dest="tab",
+                                     help="The selected UI-tab when OK was pressed")
 
     def draw_crop_line(self, x1, y1, x2, y2, name, parent):
         style = { 'stroke': '#000000', 'stroke-width': str(self.stroke_width),

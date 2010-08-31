@@ -22,9 +22,6 @@ class Dots(inkex.Effect):
 
     def __init__(self):
         inkex.Effect.__init__(self)
-        self.OptionParser.add_option("--tab",
-                        action="store", type="string",
-                        dest="tab")
         self.OptionParser.add_option("-d", "--dotsize",
                         action="store", type="string",
                         dest="dotsize", default="10px",
@@ -41,7 +38,20 @@ class Dots(inkex.Effect):
                         action="store", type="int",
                         dest="step", default="1",
                         help="Numbering step between two nodes")
-                        
+        self.OptionParser.add_option("--tab",
+                        action="store", type="string",
+                        dest="tab",
+                        help="The selected UI-tab when OK was pressed")
+
+    def effect(self):
+        selection = self.selected
+        if (selection):
+            for id, node in selection.iteritems():
+                if node.tag == inkex.addNS('path','svg'):
+                    self.addDot(node)
+        else:
+            inkex.errormsg("Please select an object.")
+
     def separateLastAndFirst(self, p):
         # Separate the last and first dot if they are togheter
         lastDot = -1
@@ -62,47 +72,43 @@ class Dots(inkex.Effect):
                 p[lastDot][1][-2] += x * inkex.unittouu(self.options.dotsize)
                 p[lastDot][1][-1] += y * inkex.unittouu(self.options.dotsize)
 
+    def addDot(self, node):
+        self.group = inkex.etree.SubElement( node.getparent(), inkex.addNS('g','svg') )
+        self.dotGroup = inkex.etree.SubElement( self.group, inkex.addNS('g','svg') )
+        self.numGroup = inkex.etree.SubElement( self.group, inkex.addNS('g','svg') )
+        
+        try:
+            t = node.get('transform')
+            self.group.set('transform', t)
+        except:
+            pass
 
-    def effect(self):
-        for id, node in self.selected.iteritems():
-            if node.tag == inkex.addNS('path','svg'):
-                self.group = inkex.etree.SubElement( node.getparent(), inkex.addNS('g','svg') )
-                self.dotGroup = inkex.etree.SubElement( self.group, inkex.addNS('g','svg') )
-                self.numGroup = inkex.etree.SubElement( self.group, inkex.addNS('g','svg') )
-                
-                try:
-                    t = node.get('transform')
-                    self.group.set('transform', t)
-                except:
-                    pass
+        style = simplestyle.formatStyle({ 'stroke': 'none', 'fill': '#000' })
+        a = []
+        p = simplepath.parsePath(node.get('d'))
 
-                style = simplestyle.formatStyle({ 'stroke': 'none', 'fill': '#000' })
-                a = []
-                p = simplepath.parsePath(node.get('d'))
+        self.separateLastAndFirst(p)
 
-                self.separateLastAndFirst(p)
-
-                num = self.options.start
-                for cmd,params in p:
-                    if cmd != 'Z' and cmd != 'z':
-                        dot_att = {
-                          'style': style,
-                          'r':  str( inkex.unittouu(self.options.dotsize) / 2 ),
-                          'cx': str( params[-2] ),
-                          'cy': str( params[-1] )
-                        }
-                        inkex.etree.SubElement(
-                          self.dotGroup,
-                          inkex.addNS('circle','svg'),
-                          dot_att )
-                        self.addText(
-                          self.numGroup,
-                          params[-2] + ( inkex.unittouu(self.options.dotsize) / 2 ),
-                          params[-1] - ( inkex.unittouu(self.options.dotsize) / 2 ),
-                          num )
-                        num += self.options.step
-                node.getparent().remove( node )
-
+        num = self.options.start
+        for cmd,params in p:
+            if cmd != 'Z' and cmd != 'z':
+                dot_att = {
+                  'style': style,
+                  'r':  str( inkex.unittouu(self.options.dotsize) / 2 ),
+                  'cx': str( params[-2] ),
+                  'cy': str( params[-1] )
+                }
+                inkex.etree.SubElement(
+                  self.dotGroup,
+                  inkex.addNS('circle','svg'),
+                  dot_att )
+                self.addText(
+                  self.numGroup,
+                  params[-2] + ( inkex.unittouu(self.options.dotsize) / 2 ),
+                  params[-1] - ( inkex.unittouu(self.options.dotsize) / 2 ),
+                  num )
+                num += self.options.step
+        node.getparent().remove( node )
 
     def addText(self,node,x,y,text):
                 new = inkex.etree.SubElement(node,inkex.addNS('text','svg'))

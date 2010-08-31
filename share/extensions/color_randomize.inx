@@ -5,9 +5,16 @@
 	<dependency type="executable" location="extensions">coloreffect.py</dependency>
 	<dependency type="executable" location="extensions">color_randomize.py</dependency>
 	<dependency type="executable" location="extensions">simplestyle.py</dependency>
-	<param name="hue" type="boolean" _gui-text="Hue">true</param>
-	<param name="saturation" type="boolean" _gui-text="Saturation">true</param>
-	<param name="lightness" type="boolean" _gui-text="Lightness">true</param>
+	<param name="tab" type="notebook">
+        <page name="Options" _gui-text="Options">
+	        <param name="hue" type="boolean" _gui-text="Hue">true</param>
+	        <param name="saturation" type="boolean" _gui-text="Saturation">true</param>
+	        <param name="lightness" type="boolean" _gui-text="Lightness">true</param>
+        </page>
+        <page name="Help" _gui-text="Help">
+            <_param name="instructions" type="description" xml:space="preserve">Converts to HSL, randomizes hue and/or saturation and/or lightness and converts it back to RGB.</_param>
+        </page>
+    </param>    
 	<effect>
 		<object-type>all</object-type>
 		<effects-menu>
