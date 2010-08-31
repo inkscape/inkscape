@@ -22,6 +22,9 @@ class Dots(inkex.Effect):
 
     def __init__(self):
         inkex.Effect.__init__(self)
+        self.OptionParser.add_option("--tab",
+                        action="store", type="string",
+                        dest="tab")
         self.OptionParser.add_option("-d", "--dotsize",
                         action="store", type="string",
                         dest="dotsize", default="10px",
@@ -30,8 +33,15 @@ class Dots(inkex.Effect):
                         action="store", type="string",
                         dest="fontsize", default="20",
                         help="Size of node label numbers")
-
-
+        self.OptionParser.add_option("-s", "--start",
+                        action="store", type="int",
+                        dest="start", default="1",
+                        help="First number in the sequence, assigned to the first node")
+        self.OptionParser.add_option("-t", "--step",
+                        action="store", type="int",
+                        dest="step", default="1",
+                        help="Numbering step between two nodes")
+                        
     def separateLastAndFirst(self, p):
         # Separate the last and first dot if they are togheter
         lastDot = -1
@@ -72,7 +82,7 @@ class Dots(inkex.Effect):
 
                 self.separateLastAndFirst(p)
 
-                num = 1
+                num = self.options.start
                 for cmd,params in p:
                     if cmd != 'Z' and cmd != 'z':
                         dot_att = {
@@ -90,7 +100,7 @@ class Dots(inkex.Effect):
                           params[-2] + ( inkex.unittouu(self.options.dotsize) / 2 ),
                           params[-1] - ( inkex.unittouu(self.options.dotsize) / 2 ),
                           num )
-                        num += 1
+                        num += self.options.step
                 node.getparent().remove( node )
 
 
