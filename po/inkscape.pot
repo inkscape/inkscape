@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-22 21:25+0200\n"
+"POT-Creation-Date: 2010-09-03 18:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,7 +146,7 @@ msgstr ""
 
 #: ../share/extensions/color_blackandwhite.inx.h:2
 #: ../share/extensions/color_brighter.inx.h:2
-#: ../share/extensions/color_custom.inx.h:2
+#: ../share/extensions/color_custom.inx.h:9
 #: ../share/extensions/color_darker.inx.h:1
 #: ../share/extensions/color_desaturate.inx.h:1
 #: ../share/extensions/color_grayscale.inx.h:1
@@ -181,20 +181,81 @@ msgid "Brighter"
 msgstr ""
 
 #: ../share/extensions/color_custom.inx.h:1
-msgid "Blue Function"
+msgid ""
+"Allows you to evaluate different functions for each channel.\n"
+"r, g and b are the normalized values of the red, green and blue channels. "
+"The resulting RGB values are automatically clamped.\n"
+" \n"
+"Example (half the red, swap green and blue):\n"
+"  Red Function: r*0.5 \n"
+"  Green Function: b \n"
+"  Blue Function: g"
 msgstr ""
 
-#: ../share/extensions/color_custom.inx.h:3 ../src/interface.cpp:906
+#: ../share/extensions/color_custom.inx.h:8
+msgid "Blue Function:"
+msgstr ""
+
+#: ../share/extensions/color_custom.inx.h:10 ../src/interface.cpp:906
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1418
 msgid "Custom"
 msgstr ""
 
-#: ../share/extensions/color_custom.inx.h:4
-msgid "Green Function"
+#: ../share/extensions/color_custom.inx.h:11
+msgid "Function applied to the blue channel"
 msgstr ""
 
-#: ../share/extensions/color_custom.inx.h:5
-msgid "Red Function"
+#: ../share/extensions/color_custom.inx.h:12
+msgid "Function applied to the green channel"
+msgstr ""
+
+#: ../share/extensions/color_custom.inx.h:13
+msgid "Function applied to the red channel"
+msgstr ""
+
+#: ../share/extensions/color_custom.inx.h:14
+msgid "Green Function:"
+msgstr ""
+
+#: ../share/extensions/color_custom.inx.h:15
+#: ../share/extensions/color_randomize.inx.h:3
+#: ../share/extensions/dots.inx.h:3
+#: ../share/extensions/draw_from_triangle.inx.h:20
+#: ../share/extensions/dxf_input.inx.h:10
+#: ../share/extensions/dxf_outlines.inx.h:9
+#: ../share/extensions/gimp_xcf.inx.h:3
+#: ../share/extensions/jessyInk_autoTexts.inx.h:3
+#: ../share/extensions/jessyInk_effects.inx.h:7
+#: ../share/extensions/jessyInk_export.inx.h:2
+#: ../share/extensions/jessyInk_install.inx.h:1
+#: ../share/extensions/jessyInk_keyBindings.inx.h:7
+#: ../share/extensions/jessyInk_masterSlide.inx.h:1
+#: ../share/extensions/jessyInk_mouseHandler.inx.h:3
+#: ../share/extensions/jessyInk_summary.inx.h:1
+#: ../share/extensions/jessyInk_transitions.inx.h:5
+#: ../share/extensions/jessyInk_uninstall.inx.h:1
+#: ../share/extensions/jessyInk_video.inx.h:1
+#: ../share/extensions/jessyInk_view.inx.h:3
+#: ../share/extensions/lindenmayer.inx.h:23
+#: ../share/extensions/measure.inx.h:3 ../share/extensions/scour.inx.h:5
+#: ../src/ui/dialog/extension-editor.cpp:81
+msgid "Help"
+msgstr ""
+
+#. ## end option page
+#: ../share/extensions/color_custom.inx.h:16
+#: ../share/extensions/color_randomize.inx.h:6
+#: ../share/extensions/dots.inx.h:5 ../share/extensions/dxf_input.inx.h:12
+#: ../share/extensions/dxf_outlines.inx.h:10
+#: ../share/extensions/gimp_xcf.inx.h:4
+#: ../share/extensions/jessyInk_uninstall.inx.h:3
+#: ../share/extensions/scour.inx.h:11 ../src/ui/dialog/tracedialog.cpp:617
+#: ../src/ui/dialog/tracedialog.cpp:623
+msgid "Options"
+msgstr ""
+
+#: ../share/extensions/color_custom.inx.h:17
+msgid "Red Function:"
 msgstr ""
 
 #: ../share/extensions/color_darker.inx.h:2
@@ -240,6 +301,12 @@ msgid "Negative"
 msgstr ""
 
 #: ../share/extensions/color_randomize.inx.h:2
+msgid ""
+"Converts to HSL, randomizes hue and/or saturation and/or lightness and "
+"converts it back to RGB."
+msgstr ""
+
+#: ../share/extensions/color_randomize.inx.h:4
 #: ../src/extension/internal/bitmap/modulate.cpp:41
 #: ../src/flood-context.cpp:250 ../src/widgets/sp-color-icc-selector.cpp:236
 #: ../src/widgets/sp-color-icc-selector.cpp:237
@@ -248,18 +315,30 @@ msgstr ""
 msgid "Hue"
 msgstr ""
 
-#: ../share/extensions/color_randomize.inx.h:3 ../src/flood-context.cpp:252
+#: ../share/extensions/color_randomize.inx.h:5 ../src/flood-context.cpp:252
 #: ../src/widgets/sp-color-icc-selector.cpp:237
 #: ../src/widgets/sp-color-scales.cpp:437
 #: ../src/widgets/sp-color-scales.cpp:438 ../src/widgets/toolbox.cpp:4453
 msgid "Lightness"
 msgstr ""
 
-#: ../share/extensions/color_randomize.inx.h:4
+#: ../share/extensions/color_randomize.inx.h:7
 msgid "Randomize"
 msgstr ""
 
-#: ../share/extensions/color_randomize.inx.h:5
+#: ../share/extensions/color_randomize.inx.h:8
+msgid "Randomize hue"
+msgstr ""
+
+#: ../share/extensions/color_randomize.inx.h:9
+msgid "Randomize lightness"
+msgstr ""
+
+#: ../share/extensions/color_randomize.inx.h:10
+msgid "Randomize saturation"
+msgstr ""
+
+#: ../share/extensions/color_randomize.inx.h:11
 #: ../src/extension/internal/bitmap/modulate.cpp:42
 #: ../src/flood-context.cpp:251 ../src/ui/dialog/inkscape-preferences.cpp:888
 #: ../src/widgets/sp-color-icc-selector.cpp:236
@@ -286,10 +365,18 @@ msgid "By color (RRGGBB hex):"
 msgstr ""
 
 #: ../share/extensions/color_replace.inx.h:3
-msgid "Replace color"
+msgid "Color to replace"
 msgstr ""
 
 #: ../share/extensions/color_replace.inx.h:4
+msgid "New color"
+msgstr ""
+
+#: ../share/extensions/color_replace.inx.h:5
+msgid "Replace color"
+msgstr ""
+
+#: ../share/extensions/color_replace.inx.h:6
 msgid "Replace color (RRGGBB hex):"
 msgstr ""
 
@@ -342,7 +429,7 @@ msgstr ""
 msgid "Visual"
 msgstr ""
 
-#: ../share/extensions/dimension.inx.h:5 ../share/extensions/dots.inx.h:4
+#: ../share/extensions/dimension.inx.h:5 ../share/extensions/dots.inx.h:13
 #: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:20
 msgid "Visualize Path"
 msgstr ""
@@ -356,15 +443,34 @@ msgid "Y Offset"
 msgstr ""
 
 #: ../share/extensions/dots.inx.h:1
-msgid "Dot size"
+msgid "Dot size:"
 msgstr ""
 
-#: ../share/extensions/dots.inx.h:2
-msgid "Font size"
+#: ../share/extensions/dots.inx.h:2 ../src/widgets/font-selector.cpp:226
+msgid "Font size:"
 msgstr ""
 
-#: ../share/extensions/dots.inx.h:3
+#: ../share/extensions/dots.inx.h:4
 msgid "Number Nodes"
+msgstr ""
+
+#: ../share/extensions/dots.inx.h:6
+msgid "Starting dot number:"
+msgstr ""
+
+#: ../share/extensions/dots.inx.h:7
+msgid "Step:"
+msgstr ""
+
+#: ../share/extensions/dots.inx.h:8
+msgid ""
+"This extension replaces the selection's nodes with numbered dots according "
+"to the following options:\n"
+"    * Font size: size of the node number labels (20px, 12pt...).\n"
+"    * Dot size: diameter of the dots placed at path nodes (10px, 2mm...).\n"
+"    * Starting dot number: first number in the sequence, assigned to the "
+"first node of the path.\n"
+"    * Step: numbering step between two nodes."
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:1
@@ -441,28 +547,6 @@ msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:19
 msgid "Gergonne Point"
-msgstr ""
-
-#: ../share/extensions/draw_from_triangle.inx.h:20
-#: ../share/extensions/dxf_input.inx.h:10
-#: ../share/extensions/dxf_outlines.inx.h:9
-#: ../share/extensions/gimp_xcf.inx.h:3
-#: ../share/extensions/jessyInk_autoTexts.inx.h:3
-#: ../share/extensions/jessyInk_effects.inx.h:7
-#: ../share/extensions/jessyInk_export.inx.h:2
-#: ../share/extensions/jessyInk_install.inx.h:1
-#: ../share/extensions/jessyInk_keyBindings.inx.h:7
-#: ../share/extensions/jessyInk_masterSlide.inx.h:1
-#: ../share/extensions/jessyInk_mouseHandler.inx.h:3
-#: ../share/extensions/jessyInk_summary.inx.h:1
-#: ../share/extensions/jessyInk_transitions.inx.h:5
-#: ../share/extensions/jessyInk_uninstall.inx.h:1
-#: ../share/extensions/jessyInk_video.inx.h:1
-#: ../share/extensions/jessyInk_view.inx.h:3
-#: ../share/extensions/lindenmayer.inx.h:23
-#: ../share/extensions/measure.inx.h:3 ../share/extensions/scour.inx.h:5
-#: ../src/ui/dialog/extension-editor.cpp:81
-msgid "Help"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:21
@@ -608,16 +692,6 @@ msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:11
 msgid "Import AutoCAD's Document Exchange Format"
-msgstr ""
-
-#. ## end option page
-#: ../share/extensions/dxf_input.inx.h:12
-#: ../share/extensions/dxf_outlines.inx.h:10
-#: ../share/extensions/gimp_xcf.inx.h:4
-#: ../share/extensions/jessyInk_uninstall.inx.h:3
-#: ../share/extensions/scour.inx.h:11 ../src/ui/dialog/tracedialog.cpp:617
-#: ../src/ui/dialog/tracedialog.cpp:623
-msgid "Options"
 msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:13
@@ -855,8 +929,7 @@ msgid "Tab Proportion"
 msgstr ""
 
 #: ../share/extensions/foldablebox.inx.h:8
-#: ../share/extensions/interp_att_g.inx.h:24
-#: ../share/extensions/printing-marks.inx.h:20 ../src/helper/units.cpp:37
+#: ../share/extensions/interp_att_g.inx.h:24 ../src/helper/units.cpp:37
 #: ../src/live_effects/lpe-ruler.cpp:44
 msgid "Unit"
 msgstr ""
@@ -866,7 +939,6 @@ msgstr ""
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:40
 #: ../src/extension/internal/bitmap/raise.cpp:41
 #: ../src/extension/internal/bitmap/sample.cpp:40
-#: ../src/extension/internal/bluredge.cpp:136
 #: ../src/libgdl/gdl-dock-placeholder.c:169 ../src/libgdl/gdl-dock.c:190
 #: ../src/live_effects/lpe-bendpath.cpp:56
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
@@ -1301,6 +1373,26 @@ msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:20
 msgid "Vertical guide each"
+msgstr ""
+
+#: ../share/extensions/guillotine.inx.h:1
+msgid "Directory to save images to"
+msgstr ""
+
+#: ../share/extensions/guillotine.inx.h:2
+msgid "Export"
+msgstr ""
+
+#: ../share/extensions/guillotine.inx.h:3
+msgid "Guillotine"
+msgstr ""
+
+#: ../share/extensions/guillotine.inx.h:4
+msgid "Ignore these settings and use export hints?"
+msgstr ""
+
+#: ../share/extensions/guillotine.inx.h:5
+msgid "Image name (without extension)"
 msgstr ""
 
 #: ../share/extensions/handles.inx.h:1
@@ -2254,7 +2346,7 @@ msgid "Duplicate the pattern before deformation"
 msgstr ""
 
 #: ../share/extensions/pathalongpath.inx.h:5
-#: ../share/extensions/pathscatter.inx.h:7
+#: ../share/extensions/pathscatter.inx.h:8
 #: ../src/live_effects/lpe-patternalongpath.cpp:72
 msgid "Normal offset"
 msgstr ""
@@ -2264,7 +2356,7 @@ msgid "Pattern along Path"
 msgstr ""
 
 #: ../share/extensions/pathalongpath.inx.h:7
-#: ../share/extensions/pathscatter.inx.h:9
+#: ../share/extensions/pathscatter.inx.h:10
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 msgid "Pattern is vertical"
 msgstr ""
@@ -2298,12 +2390,12 @@ msgid "Snake"
 msgstr ""
 
 #: ../share/extensions/pathalongpath.inx.h:14
-#: ../share/extensions/pathscatter.inx.h:11
+#: ../share/extensions/pathscatter.inx.h:15
 msgid "Space between copies:"
 msgstr ""
 
 #: ../share/extensions/pathalongpath.inx.h:15
-#: ../share/extensions/pathscatter.inx.h:13
+#: ../share/extensions/pathscatter.inx.h:17
 #: ../src/live_effects/lpe-patternalongpath.cpp:73
 msgid "Tangential offset"
 msgstr ""
@@ -2328,23 +2420,39 @@ msgid "Follow path orientation"
 msgstr ""
 
 #: ../share/extensions/pathscatter.inx.h:6
+msgid "If pattern is a group, pick group members"
+msgstr ""
+
+#: ../share/extensions/pathscatter.inx.h:7
 msgid "Moved"
 msgstr ""
 
-#: ../share/extensions/pathscatter.inx.h:8
+#: ../share/extensions/pathscatter.inx.h:9
 msgid "Original pattern will be:"
 msgstr ""
 
-#: ../share/extensions/pathscatter.inx.h:10 ../share/filters/filters.svg.h:55
+#: ../share/extensions/pathscatter.inx.h:11
+msgid "Pick group members:"
+msgstr ""
+
+#: ../share/extensions/pathscatter.inx.h:12
+msgid "Randomly"
+msgstr ""
+
+#: ../share/extensions/pathscatter.inx.h:13 ../share/filters/filters.svg.h:55
 #: ../share/filters/filters.svg.h:77 ../share/filters/filters.svg.h:86
 msgid "Scatter"
 msgstr ""
 
-#: ../share/extensions/pathscatter.inx.h:12
+#: ../share/extensions/pathscatter.inx.h:14
+msgid "Sequentially"
+msgstr ""
+
+#: ../share/extensions/pathscatter.inx.h:16
 msgid "Stretch spaces to fit skeleton length"
 msgstr ""
 
-#: ../share/extensions/pathscatter.inx.h:14
+#: ../share/extensions/pathscatter.inx.h:18
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
 "pattern must be the topmost object in the selection. Groups of paths, "
@@ -2742,6 +2850,10 @@ msgstr ""
 
 #: ../share/extensions/printing-marks.inx.h:19
 msgid "Top:"
+msgstr ""
+
+#: ../share/extensions/printing-marks.inx.h:20 ../src/ui/dialog/guides.cpp:42
+msgid "Unit:"
 msgstr ""
 
 #: ../share/extensions/ps_input.inx.h:1
@@ -3897,7 +4009,7 @@ msgid "unable to locate marker: %s"
 msgstr ""
 
 #: ../share/extensions/pathalongpath.py:197
-#: ../share/extensions/pathscatter.py:208
+#: ../share/extensions/pathscatter.py:216
 #: ../share/extensions/perspective.py:61
 msgid "This extension requires two selected paths."
 msgstr ""
@@ -6258,11 +6370,11 @@ msgstr ""
 msgid "<b>Guideline</b>: %s"
 msgstr ""
 
-#: ../src/desktop.cpp:843
+#: ../src/desktop.cpp:849
 msgid "No previous zoom."
 msgstr ""
 
-#: ../src/desktop.cpp:868
+#: ../src/desktop.cpp:874
 msgid "No next zoom."
 msgstr ""
 
@@ -7482,7 +7594,8 @@ msgid "Y:"
 msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:53
-#: ../src/dialogs/object-attributes.cpp:61 ../src/widgets/toolbox.cpp:4263
+#: ../src/dialogs/object-attributes.cpp:61
+#: ../src/extension/internal/bluredge.cpp:136 ../src/widgets/toolbox.cpp:4263
 #: ../src/widgets/toolbox.cpp:4583 ../src/widgets/toolbox.cpp:5083
 #: ../src/widgets/toolbox.cpp:6106
 msgid "Width:"
@@ -8802,7 +8915,7 @@ msgid "Width in px of the halo"
 msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:137
-msgid "Number of steps"
+msgid "Number of steps:"
 msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:137
@@ -13409,74 +13522,74 @@ msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr ""
 
-#: ../src/splivarot.cpp:877
+#: ../src/splivarot.cpp:876
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr ""
 
-#: ../src/splivarot.cpp:1220
+#: ../src/splivarot.cpp:1219
 msgid "Convert stroke to path"
 msgstr ""
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:1223
+#: ../src/splivarot.cpp:1222
 msgid "<b>No stroked paths</b> in the selection."
 msgstr ""
 
-#: ../src/splivarot.cpp:1306
+#: ../src/splivarot.cpp:1305
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr ""
 
-#: ../src/splivarot.cpp:1425 ../src/splivarot.cpp:1494
+#: ../src/splivarot.cpp:1424 ../src/splivarot.cpp:1493
 msgid "Create linked offset"
 msgstr ""
 
-#: ../src/splivarot.cpp:1426 ../src/splivarot.cpp:1495
+#: ../src/splivarot.cpp:1425 ../src/splivarot.cpp:1494
 msgid "Create dynamic offset"
 msgstr ""
 
-#: ../src/splivarot.cpp:1520
+#: ../src/splivarot.cpp:1519
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr ""
 
-#: ../src/splivarot.cpp:1738
+#: ../src/splivarot.cpp:1737
 msgid "Outset path"
 msgstr ""
 
-#: ../src/splivarot.cpp:1738
+#: ../src/splivarot.cpp:1737
 msgid "Inset path"
 msgstr ""
 
-#: ../src/splivarot.cpp:1740
+#: ../src/splivarot.cpp:1739
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr ""
 
-#: ../src/splivarot.cpp:1918
+#: ../src/splivarot.cpp:1917
 msgid "Simplifying paths (separately):"
 msgstr ""
 
-#: ../src/splivarot.cpp:1920
+#: ../src/splivarot.cpp:1919
 msgid "Simplifying paths:"
 msgstr ""
 
-#: ../src/splivarot.cpp:1957
+#: ../src/splivarot.cpp:1956
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr ""
 
-#: ../src/splivarot.cpp:1969
+#: ../src/splivarot.cpp:1968
 #, c-format
 msgid "<b>%d</b> paths simplified."
 msgstr ""
 
-#: ../src/splivarot.cpp:1983
+#: ../src/splivarot.cpp:1982
 msgid "Select <b>path(s)</b> to simplify."
 msgstr ""
 
-#: ../src/splivarot.cpp:1997
+#: ../src/splivarot.cpp:1996
 msgid "Simplify"
 msgstr ""
 
-#: ../src/splivarot.cpp:1999
+#: ../src/splivarot.cpp:1998
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr ""
 
@@ -16264,10 +16377,6 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:574
 msgid "Append text"
-msgstr ""
-
-#: ../src/ui/dialog/guides.cpp:42
-msgid "Unit:"
 msgstr ""
 
 #: ../src/ui/dialog/guides.cpp:45
@@ -22409,10 +22518,6 @@ msgstr ""
 #: ../src/widgets/font-selector.cpp:188
 msgctxt "Font selector"
 msgid "Style"
-msgstr ""
-
-#: ../src/widgets/font-selector.cpp:226
-msgid "Font size:"
 msgstr ""
 
 #. TRANSLATORS: Test string used in text and font dialog (when no
