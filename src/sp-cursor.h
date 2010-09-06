@@ -4,6 +4,7 @@
 #include <gdk/gdk.h>
 
 void sp_cursor_bitmap_and_mask_from_xpm(GdkBitmap **bitmap, GdkBitmap **mask, gchar const *const *xpm);
+GdkPixbuf* sp_cursor_pixbuf_from_xpm(gchar const *const *xpm, GdkColor const& black, GdkColor const& white, guint32 fill, guint32 stroke);
 GdkCursor *sp_cursor_new_from_xpm(gchar const *const *xpm, gint hot_x, gint hot_y);
 
 #endif

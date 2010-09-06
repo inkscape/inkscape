@@ -16,6 +16,8 @@
 #include <cstring>
 #include <string>
 #include <ctype.h>
+#include <map>
+#include "color.h"
 #include "sp-cursor.h"
 
 void
@@ -32,7 +34,7 @@ sp_cursor_bitmap_and_mask_from_xpm(GdkBitmap **bitmap, GdkBitmap **mask, gchar c
     g_return_if_fail (colors >= 3);
 
     int transparent_color = ' ';
-    int black_color = '.';
+    std::string black_colors;
 
     char pixmap_buffer[(32 * 32)/8];
     char mask_buffer[(32 * 32)/8];
@@ -51,12 +53,16 @@ sp_cursor_bitmap_and_mask_from_xpm(GdkBitmap **bitmap, GdkBitmap **mask, gchar c
             p++;
         }
 
-	if (strcmp(p, "None") == 0) {
+        if (strcmp(p, "None") == 0) {
             transparent_color = ccode;
         }
 
+        if (strcmp(p, "Stroke") == 0) {
+            black_colors.push_back(ccode);
+        }
+
         if (strcmp(p, "#000000") == 0) {
-            black_color = ccode;
+            black_colors.push_back(ccode);
         }
     }
 
@@ -67,10 +73,10 @@ sp_cursor_bitmap_and_mask_from_xpm(GdkBitmap **bitmap, GdkBitmap **mask, gchar c
             char maskv = 0;
 			
             for (int pix = 0; pix < 8; pix++, x++){
-                if (xpm[4+y][x] != transparent_color) {
+                if (xpm[1+colors+y][x] != transparent_color) {
                     maskv |= 1 << pix;
 
-                    if (xpm[4+y][x] == black_color) {
+                    if (black_colors.find(xpm[1+colors+y][x]) != std::string::npos) {
                         value |= 1 << pix;
                     }
                 }
@@ -83,6 +89,73 @@ sp_cursor_bitmap_and_mask_from_xpm(GdkBitmap **bitmap, GdkBitmap **mask, gchar c
 
     *bitmap = gdk_bitmap_create_from_data(NULL, pixmap_buffer, 32, 32);
     *mask   = gdk_bitmap_create_from_data(NULL, mask_buffer, 32, 32);
+}
+
+static void free_cursor_data(guchar *pixels, gpointer data) {
+    delete [] reinterpret_cast<guint32*>(pixels);
+}
+
+struct RGBA {
+    guchar v[4];
+    RGBA() { v[0] = 0; v[1] = 0; v[2] = 0; v[3] = 0; }
+    RGBA(guchar r, guchar g, guchar b, guchar a) { v[0] = r; v[1] = g; v[2] = b; v[3] = a; }
+    operator guint32 const () const { return *reinterpret_cast<guint32 const *>(v); }
+};
+
+GdkPixbuf*
+sp_cursor_pixbuf_from_xpm(gchar const *const *xpm, GdkColor const& black, GdkColor const& white, guint32 fill, guint32 stroke)
+{
+    int height;
+    int width;
+    int colors;
+    int pix;
+    sscanf(xpm[0], "%d %d %d %d", &height, &width, &colors, &pix);
+
+    //g_return_if_fail (height == 32);
+    //g_return_if_fail (width == 32);
+    //g_return_if_fail (colors >= 3);
+
+    std::map<char,RGBA> colorMap;
+
+    for (int i = 0; i < colors; i++) {
+
+        char const *p = xpm[1 + i];
+        char const ccode = *p;
+
+        p++;
+        while (isspace(*p)) {
+            p++;
+        }
+        p++;
+        while (isspace(*p)) {
+            p++;
+        }
+
+        if (strcmp(p, "None") == 0) {
+            colorMap.insert(std::make_pair(ccode, RGBA()));
+        } else if (strcmp(p, "Fill") == 0) {
+            colorMap.insert(std::make_pair(ccode, RGBA(SP_RGBA32_R_U(fill),SP_RGBA32_G_U(fill),SP_RGBA32_B_U(fill),SP_RGBA32_A_U(fill))));
+        } else if (strcmp(p, "Stroke") == 0) {
+            colorMap.insert(std::make_pair(ccode, RGBA(SP_RGBA32_R_U(stroke),SP_RGBA32_G_U(stroke),SP_RGBA32_B_U(stroke),SP_RGBA32_A_U(stroke))));
+        } else if (strcmp(p, "#000000") == 0) {
+            colorMap.insert(std::make_pair(ccode, RGBA(black.red,black.green,black.blue,255)));
+        } else if (strcmp(p, "#FFFFFF") == 0) {
+            colorMap.insert(std::make_pair(ccode, RGBA(white.red,white.green,white.blue,255)));
+        } else {
+            colorMap.insert(std::make_pair(ccode, RGBA()));
+        }
+    }
+
+    guint32 *pixmap_buffer = new guint32[width * height];
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            std::map<char,RGBA>::const_iterator it = colorMap.find(xpm[1+colors+y][x]);
+            pixmap_buffer[y * width + x] = it==colorMap.end() ? 0u : it->second;
+        }
+    }
+
+    return gdk_pixbuf_new_from_data(reinterpret_cast<guchar*>(pixmap_buffer), GDK_COLORSPACE_RGB, TRUE, 8, width, height, width*sizeof(guint32), free_cursor_data, NULL);
 }
 
 GdkCursor *

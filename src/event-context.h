@@ -128,6 +128,8 @@ struct SPEventContext : public GObject {
 
     DelayedSnapEvent *_delayed_snap_event;
     bool _dse_callback_in_process;
+
+    char const * tool_url; ///< the (preferences) url for the tool (if a subclass corresponding to a tool is used)
 };
 
 /**

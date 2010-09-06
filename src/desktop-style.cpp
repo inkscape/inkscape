@@ -41,6 +41,7 @@
 #include "xml/repr.h"
 #include "libnrtype/font-style-to-pos.h"
 #include "sp-path.h"
+#include "event-context.h"
 
 #include "desktop-style.h"
 #include "svg/svg-icc-color.h"
@@ -195,6 +196,10 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
 
 // 3. If nobody has intercepted the signal, apply the style to the selection
     if (!intercepted) {
+        // If we have an event context, update its cursor (TODO: it could be neater to do this with the signal sent above, but what if the signal gets intercepted?)
+        if (desktop->event_context) {
+            sp_event_context_update_cursor(desktop->event_context);
+        }
 
         // Remove text attributes if not text...
         // Do this once in case a zillion objects are selected.
