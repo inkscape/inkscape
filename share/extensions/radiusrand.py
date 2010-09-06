@@ -52,6 +52,11 @@ class RadiusRandomize(inkex.Effect):
                         action="store", type="inkbool", 
                         dest="norm", default=True,
                         help="Use normal distribution")
+        self.OptionParser.add_option("--tab",
+                        action="store", type="string",
+                        dest="tab",
+                        help="The selected UI-tab when OK was pressed")
+
     def effect(self):
         for id, node in self.selected.iteritems():
             if node.tag == inkex.addNS('path','svg'):

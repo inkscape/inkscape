@@ -4,13 +4,13 @@
     <id>org.ekips.filter.straightseg</id>
 	<dependency type="executable" location="extensions">straightseg.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
-	<param name="percent" type="float" min="0.0" max="100.0" _gui-text="Percent">50.0</param>
-	<param name="behavior" type="int" min="1" max="2" _gui-text="Behavior">1</param>
+	<param name="percent" type="float" min="0.0" max="100.0" _gui-text="Percent:">50.0</param>
+	<param name="behavior" type="int" min="1" max="2" _gui-text="Behavior:">1</param>
     <effect>
-		<object-type>path</object-type>
-                <effects-menu>
-                    <submenu _name="Modify Path"/>
-                </effects-menu>
+    <object-type>path</object-type>
+        <effects-menu>
+            <submenu _name="Modify Path"/>
+        </effects-menu>
     </effect>
     <script>
         <command reldir="extensions" interpreter="python">straightseg.py</command>

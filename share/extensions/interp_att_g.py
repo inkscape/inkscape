@@ -50,6 +50,10 @@ class InterpAttG(inkex.Effect):
                         action="store", type="string",
                         dest="unit", default="color",
                         help="Values unit.")
+        self.OptionParser.add_option("--tab",
+                        action="store", type="string",
+                        dest="tab",
+                        help="The selected UI-tab when OK was pressed")
 
     def getColorValues(self):
       sv = string.replace( self.options.start_val, '#', '' )
