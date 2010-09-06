@@ -117,6 +117,10 @@ class PathAlongPath(pathmodifier.Diffeo):
                         action="store", type="inkbool", 
                         dest="duplicate", default=False,
                         help="duplicate pattern before deformation")
+        self.OptionParser.add_option("--tab",
+                        action="store", type="string",
+                        dest="tab",
+                        help="The selected UI-tab when OK was pressed")
 
     def prepareSelectionList(self):
 

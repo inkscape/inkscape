@@ -4,8 +4,8 @@
     <id>org.ekips.filter.motion</id>
 	<dependency type="executable" location="extensions">motion.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
-	<param name="magnitude" type="float" min="0" max="1000" _gui-text="Magnitude">100</param>
-	<param name="angle" type="float" min="0.0" max="360.0" _gui-text="Angle">45</param>
+	<param name="magnitude" type="float" min="0" max="1000" _gui-text="Magnitude:">100</param>
+	<param name="angle" type="float" min="0.0" max="360.0" _gui-text="Angle:">45</param>
     <effect>
 		<object-type>path</object-type>
                 <effects-menu>
