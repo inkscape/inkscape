@@ -827,14 +827,14 @@ GtkWidget * sp_toolbox_button_new_from_verb_with_doubleclick(GtkWidget *t, Inksc
 
 
     unsigned int shortcut = sp_shortcut_get_primary(verb);
-    if (shortcut) {
-        gchar key[256];
-        sp_ui_shortcut_string(shortcut, key);
+    if (shortcut!=GDK_VoidSymbol) {
+        gchar* key = sp_shortcut_get_label(shortcut);
         gchar *tip = g_strdup_printf ("%s (%s)", action->tip, key);
         if ( t ) {
             gtk_toolbar_append_widget( GTK_TOOLBAR(t), b, tip, 0 );
         }
         g_free(tip);
+        g_free(key);
     } else {
         if ( t ) {
             gtk_toolbar_append_widget( GTK_TOOLBAR(t), b, action->tip, 0 );

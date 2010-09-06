@@ -339,6 +339,8 @@ private:
     gchar const * _name;
     /** \brief Tooltip for the verb. */
     gchar const * _tip;
+    gchar * _full_tip; // includes shortcut
+    unsigned int _shortcut;
     /** \brief Name of the image that represents the verb. */
     gchar const * _image;
     /** \brief Unique numerical representation of the verb.  In most cases
@@ -409,7 +411,7 @@ public:
          gchar const * name,
          gchar const * tip,
          gchar const * image) :
-        _actions(NULL), _id(id), _name(name), _tip(tip), _image(image), _code(code), _default_sensitive(true) {
+        _actions(NULL), _id(id), _name(name), _tip(tip), _full_tip(0), _image(image), _code(code), _default_sensitive(true) {
         _verbs.insert(VerbTable::value_type(_code, this));
         _verb_ids.insert(VerbIDTable::value_type(_id, this));
     }

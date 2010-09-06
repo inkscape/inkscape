@@ -27,6 +27,8 @@
 #include "shortcuts.h"
 #include "interface.h"
 
+#include <gdk/gdkkeysyms.h>
+
 #include "icon.h"
 #include "button.h"
 
@@ -291,15 +293,15 @@ sp_button_set_composed_tooltip (GtkTooltips *tooltips, GtkWidget *widget, SPActi
 {
 	if (action) {
 		unsigned int shortcut = sp_shortcut_get_primary (action->verb);
-		if (shortcut) {
+		if (shortcut!=GDK_VoidSymbol) {
 			// there's both action and shortcut
 
-			gchar        key[256];
-			sp_ui_shortcut_string (shortcut, key);
+			gchar* key = sp_shortcut_get_label(shortcut);
 
 			gchar *tip = g_strdup_printf ("%s (%s)", action->tip, key);
 			gtk_tooltips_set_tip (tooltips, widget, tip, NULL);
 			g_free (tip);
+            g_free (key);
 
 		} else {
 			// action has no shortcut

@@ -69,8 +69,6 @@ void sp_ui_dialog_title_string (Inkscape::Verb * verb, gchar* c);
 void sp_ui_error_dialog (const gchar * message);
 bool sp_ui_overwrite_file (const gchar * filename);
 
-void sp_ui_shortcut_string (unsigned int shortcut, gchar* c);
-
 #endif
 
 /*

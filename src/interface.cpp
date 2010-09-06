@@ -456,85 +456,12 @@ sp_ui_menu_append_item( GtkMenu *menu, gchar const *stock,
 
 } // end of sp_ui_menu_append_item()
 
-/**
-\brief  a wrapper around gdk_keyval_name producing (when possible) characters, not names
- */
-static gchar const *
-sp_key_name(guint keyval)
-{
-    /* TODO: Compare with the definition of gtk_accel_label_refetch in gtk/gtkaccellabel.c (or
-       simply use GtkAccelLabel as the TODO comment in sp_ui_shortcut_string suggests). */
-    gchar const *n = gdk_keyval_name(gdk_keyval_to_upper(keyval));
-
-    if      (!strcmp(n, "asciicircum"))  return "^";
-    else if (!strcmp(n, "parenleft"  ))  return "(";
-    else if (!strcmp(n, "parenright" ))  return ")";
-    else if (!strcmp(n, "plus"       ))  return "+";
-    else if (!strcmp(n, "minus"      ))  return "-";
-    else if (!strcmp(n, "asterisk"   ))  return "*";
-    else if (!strcmp(n, "KP_Multiply"))  return "*";
-    else if (!strcmp(n, "Delete"     ))  return "Del";
-    else if (!strcmp(n, "Page_Up"    ))  return "PgUp";
-    else if (!strcmp(n, "Page_Down"  ))  return "PgDn";
-    else if (!strcmp(n, "grave"      ))  return "`";
-    else if (!strcmp(n, "numbersign" ))  return "#";
-    else if (!strcmp(n, "bar"        ))  return "|";
-    else if (!strcmp(n, "slash"      ))  return "/";
-    else if (!strcmp(n, "exclam"     ))  return "!";
-    else if (!strcmp(n, "percent"    ))  return "%";
-    else return n;
-}
-
-
-/**
- * \param shortcut A GDK keyval OR'd with SP_SHORTCUT_blah_MASK values.
- * \param c Points to a buffer at least 256 bytes long.
- */
-void
-sp_ui_shortcut_string(unsigned const shortcut, gchar *const c)
-{
-    /* TODO: This function shouldn't exist.  Our callers should use GtkAccelLabel instead of
-     * a generic GtkLabel containing this string, and should call gtk_widget_add_accelerator.
-     * Will probably need to change sp_shortcut_invoke callers.
-     *
-     * The existing gtk_label_new_with_mnemonic call can be replaced with
-     * g_object_new(GTK_TYPE_ACCEL_LABEL, NULL) followed by
-     * gtk_label_set_text_with_mnemonic(lbl, str).
-     */
-    static GtkAccelLabelClass const &accel_lbl_cls
-        = *(GtkAccelLabelClass const *) g_type_class_peek_static(GTK_TYPE_ACCEL_LABEL);
-
-    struct { unsigned test; char const *name; } const modifier_tbl[] = {
-        { SP_SHORTCUT_SHIFT_MASK,   accel_lbl_cls.mod_name_shift   },
-        { SP_SHORTCUT_CONTROL_MASK, accel_lbl_cls.mod_name_control },
-        { SP_SHORTCUT_ALT_MASK,     accel_lbl_cls.mod_name_alt     }
-    };
-
-    gchar *p = c;
-    gchar *end = p + 256;
-
-    for (unsigned i = 0; i < G_N_ELEMENTS(modifier_tbl); ++i) {
-        if ((shortcut & modifier_tbl[i].test)
-            && (p < end))
-        {
-            p += g_snprintf(p, end - p, "%s%s",
-                            modifier_tbl[i].name,
-                            accel_lbl_cls.mod_separator);
-        }
-    }
-    if (p < end) {
-        p += g_snprintf(p, end - p, "%s", sp_key_name(shortcut & 0xffffff));
-    }
-    end[-1] = '\0';  // snprintf doesn't guarantee to nul-terminate the string.
-}
-
 void
 sp_ui_dialog_title_string(Inkscape::Verb *verb, gchar *c)
 {
     SPAction     *action;
     unsigned int shortcut;
     gchar        *s;
-    gchar        key[256];
     gchar        *atitle;
 
     action = verb->get_action(NULL);
@@ -548,11 +475,12 @@ sp_ui_dialog_title_string(Inkscape::Verb *verb, gchar *c)
     g_free(atitle);
 
     shortcut = sp_shortcut_get_primary(verb);
-    if (shortcut) {
+    if (shortcut!=GDK_VoidSymbol) {
+        gchar* key = sp_shortcut_get_label(shortcut);
         s = g_stpcpy(s, " (");
-        sp_ui_shortcut_string(shortcut, key);
         s = g_stpcpy(s, key);
         s = g_stpcpy(s, ")");
+        g_free(key);
     }
 }
 
@@ -582,9 +510,8 @@ sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::
         if (!action) return NULL;
 
         shortcut = sp_shortcut_get_primary(verb);
-        if (shortcut) {
-            gchar c[256];
-            sp_ui_shortcut_string(shortcut, c);
+        if (shortcut!=GDK_VoidSymbol) {
+            gchar* c = sp_shortcut_get_label(shortcut);
             GtkWidget *const hb = gtk_hbox_new(FALSE, 16);
             GtkWidget *const name_lbl = gtk_label_new("");
             gtk_label_set_markup_with_mnemonic(GTK_LABEL(name_lbl), action->name);
@@ -600,6 +527,7 @@ sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::
                 item = gtk_image_menu_item_new();
             }
             gtk_container_add((GtkContainer *) item, hb);
+            g_free(c);
         } else {
             if (radio) {
                 item = gtk_radio_menu_item_new (group);
@@ -754,9 +682,8 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
     SPAction *action = (verb) ? verb->get_action(view) : 0;
     GtkWidget *item = gtk_check_menu_item_new();
 
-    if (verb && shortcut) {
-        gchar c[256];
-        sp_ui_shortcut_string(shortcut, c);
+    if (verb && shortcut!=GDK_VoidSymbol) {
+        gchar* c = sp_shortcut_get_label(shortcut);
 
         GtkWidget *hb = gtk_hbox_new(FALSE, 16);
 
@@ -775,6 +702,7 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
         gtk_widget_show_all(hb);
 
         gtk_container_add((GtkContainer *) item, hb);
+        g_free(c);
     } else {
         GtkWidget *l = gtk_label_new_with_mnemonic(action ? action->name : label);
         gtk_misc_set_alignment((GtkMisc *) l, 0.0, 0.5);

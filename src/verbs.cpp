@@ -63,6 +63,7 @@
 #include "selection-chemistry.h"
 #include "seltrans.h"
 #include "shape-editor.h"
+#include "shortcuts.h"
 #include "sp-flowtext.h"
 #include "sp-guide.h"
 #include "splivarot.h"
@@ -334,7 +335,7 @@ Verb::VerbIDTable Verb::_verb_ids;
     in the \c _verbs hashtable which is indexed by the \c code.
 */
 Verb::Verb(gchar const *id, gchar const *name, gchar const *tip, gchar const *image) :
-    _actions(NULL), _id(id), _name(name), _tip(tip), _image(image)
+    _actions(NULL), _id(id), _name(name), _tip(tip), _full_tip(0), _image(image)
 {
     static int count = SP_VERB_LAST;
 
@@ -357,6 +358,8 @@ Verb::~Verb(void)
     if (_actions != NULL) {
         delete _actions;
     }
+
+    if (_full_tip) g_free(_full_tip);
 
     return;
 }
@@ -631,7 +634,20 @@ Verb::sensitive(SPDocument *in_doc, bool in_sensitive)
 gchar const *
 Verb::get_tip (void)
 {
-	return _(_tip);
+    if (!_tip) return 0;
+    unsigned int shortcut = sp_shortcut_get_primary(this);
+    if (shortcut!=_shortcut || !_full_tip) {
+        if (_full_tip) g_free(_full_tip);
+        _shortcut = shortcut;
+        gchar* shortcutString = sp_shortcut_get_label(shortcut);
+        if (shortcutString) {
+            _full_tip = g_strdup_printf("%s (%s)", _(_tip), shortcutString);
+            g_free(shortcutString);
+        } else {
+	        _full_tip = g_strdup(_(_tip));
+        }
+    }
+    return _full_tip;
 }
 
 void
