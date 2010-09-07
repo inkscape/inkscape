@@ -303,7 +303,7 @@ static gchar const * ui_descr =
         "    <separator />"
         "    <toolitem action='ObjectEditClipPathAction' />"
         "    <toolitem action='ObjectEditMaskPathAction' />"
-        "    <toolitem action='EditNextLPEParameterAction' />"
+        "    <toolitem action='EditNextPathEffectParameter' />"
         "    <separator />"
         "    <toolitem action='NodesShowTransformHandlesAction' />"
         "    <toolitem action='NodesShowHandlesAction' />"
@@ -1500,9 +1500,10 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     }
 
     {
-        InkAction* inky = ink_action_new( "EditNextLPEParameterAction",
-                                          _("Next path effect parameter"),
-                                          _("Show next editable path effect parameter"),
+        Inkscape::Verb* verb = Inkscape::Verb::get(SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER);
+        InkAction* inky = ink_action_new( verb->get_id(),
+                                          verb->get_name(),
+                                          verb->get_tip(),
                                           INKSCAPE_ICON_PATH_EFFECT_PARAMETER_NEXT,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_nextLPEparam), desktop );
@@ -2175,8 +2176,13 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
     Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
 
     {
-        InkToggleAction* act = ink_toggle_action_new("ToggleSnapGlobal",
-                                                     _("Snap"), _("Enable snapping"), INKSCAPE_ICON_SNAP, secondarySize,
+        // TODO: This is a cludge. On the one hand we have verbs+actions,
+        //       on the other we have all these explicit callbacks specified here.
+        //       We should really unify these (should save some lines of code as well).
+        //       For example, this action could be based on the verb(+action) + PrefsPusher.
+        Inkscape::Verb* verb = Inkscape::Verb::get(SP_VERB_TOGGLE_SNAPPING);
+        InkToggleAction* act = ink_toggle_action_new(verb->get_id(),
+                                                     verb->get_name(), verb->get_tip(), INKSCAPE_ICON_SNAP, secondarySize,
                                                      SP_ATTR_INKSCAPE_SNAP_GLOBAL);
 
         gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
