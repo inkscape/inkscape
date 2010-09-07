@@ -2,6 +2,7 @@ SET(extension_param_SRC
 bool.cpp
 color.cpp
 description.cpp
+groupheader.cpp
 enum.cpp
 parameter.cpp
 float.cpp

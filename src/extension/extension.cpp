@@ -669,7 +669,7 @@ public:
     */
     void addWidget (Gtk::Widget * widg, gchar const * tooltip) {
         if (widg == NULL) return;
-        this->pack_start(*widg, true, true, 2);
+        this->pack_start(*widg, false, false, 2);
         if (tooltip != NULL) {
             _tooltips.set_tip(*widg, Glib::ustring(_(tooltip)));
         }

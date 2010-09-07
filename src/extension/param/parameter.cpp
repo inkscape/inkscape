@@ -35,6 +35,7 @@
 #include "bool.h"
 #include "color.h"
 #include "description.h"
+#include "groupheader.h"
 #include "enum.h"
 #include "float.h"
 #include "int.h"
@@ -134,6 +135,8 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
         }
     } else if (!strcmp(type, "description")) {
         param = new ParamDescription(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
+    } else if (!strcmp(type, "groupheader")) {
+        param = new ParamGroupHeader(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);        
     } else if (!strcmp(type, "enum")) {
         param = new ParamComboBox(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "notebook")) {
@@ -294,7 +297,7 @@ Parameter::Parameter (const gchar * name, const gchar * guitext, const gchar * d
     }
     if (desc != NULL) {
         _desc = g_strdup(desc);
-        // printf("Adding description: '%s' on '%s'\n", _desc, _name);
+//        printf("Adding description: '%s' on '%s'\n", _desc, _name);
     }
     if (gui_tip != NULL) {
         _gui_tip = g_strdup(gui_tip);
@@ -315,6 +318,7 @@ Parameter::~Parameter (void)
     g_free(_name);
     g_free(_text);
 	g_free(_gui_tip);
+    g_free(_desc);
 }
 
 /** \brief  Build the name to write the parameter from the extension's

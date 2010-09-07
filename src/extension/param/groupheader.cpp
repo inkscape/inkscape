@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2005-2007 Authors:
+ * Copyright (C) 2005-2010 Authors:
  *   Ted Gould <ted@gould.cx>
  *   Johan Engelen <johan@shouraizou.nl> *
+ *   Nicolas Dufour <nicoduf@yahoo.fr>
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -14,7 +15,7 @@
 #endif
 
 
-#include "description.h"
+#include "groupheader.h"
 
 #include <gtkmm/adjustment.h>
 #include <gtkmm/box.h>
@@ -30,10 +31,10 @@ namespace Extension {
 
 
 /** \brief  Initialize the object, to do that, copy the data. */
-ParamDescription::ParamDescription (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+ParamGroupHeader::ParamGroupHeader (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
     Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext), _value(NULL)
 {
-    // printf("Building Description\n");
+    // printf("Building GroupHeader\n");
     const char * defaultval = NULL;
     if (sp_repr_children(xml) != NULL)
         defaultval = sp_repr_children(xml)->content();
@@ -44,18 +45,20 @@ ParamDescription::ParamDescription (const gchar * name, const gchar * guitext, c
     return;
 }
 
-/** \brief  Create a label for the description */
+/** \brief  Create a label for the GroupHeader */
 Gtk::Widget *
-ParamDescription::get_widget (SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * /*changeSignal*/)
+ParamGroupHeader::get_widget (SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * /*changeSignal*/)
 {
 	if (_gui_hidden) return NULL;
 
-    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_value), Gtk::ALIGN_LEFT));
+    Gtk::Label * label = Gtk::manage(new Gtk::Label(Glib::ustring("<b>") + _(_value) + Glib::ustring("</b>"), Gtk::ALIGN_LEFT));
     label->set_line_wrap();
+    label->set_padding(0,5);
+    label->set_use_markup(true);
     label->show();
 
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
-    hbox->pack_start(*label, true, true, 12);
+    hbox->pack_start(*label, true, true);
     hbox->show();
 
     return hbox;
