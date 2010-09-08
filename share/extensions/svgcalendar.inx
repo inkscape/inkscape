@@ -1,139 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
-  <_name>Calendar</_name>
-  <id>org.inkscape.render.calendar</id>
-
-  <dependency type="executable" location="extensions">svgcalendar.py</dependency>
-  <dependency type="executable" location="extensions">inkex.py</dependency>
-
-  <param name="tab" type="notebook">
-    <page name="tab" _gui-text="Configuration">
-      <param name="month" type="int" min="0" max="12" _gui-text="Month (0 for all)">0</param>
-      <param name="year" type="int" min="0" max="3000" _gui-text="Year (0 for current)">0</param>
-      <param name="fill-empty-day-boxes" type="boolean" _gui-text="Fill empty day boxes with next month's days">true</param>
-      <param name="start-day" type="enum" _gui-text="Week start day">
-        <_item value="sun">Sunday</_item>
-        <_item value="mon">Monday</_item>
-      </param>
-      <param name="weekend" type="enum" _gui-text="Weekend">
-        <_item value="sat+sun">Saturday and Sunday</_item>
-        <_item value="sat">Saturday</_item>
-        <_item value="sun">Sunday</_item>
-      </param>
-    </page>
-    <page name="tab" _gui-text="Layout">
-      <param name="auto-organize" type="boolean" _gui-text="Automatically set size and position">true</param>
-      <_param name="organize-help" type="description">The options below have no influence when the above is checked.</_param>
-      <param name="months-per-line" type="int" min="1" max="12" _gui-text="Months per line">3</param>
-      <param name="month-width" type="string" _gui-text="Month Width">6cm</param>
-      <param name="month-margin" type="string" _gui-text="Month Margin">1cm</param>
-    </page>
-    <page name="tab" _gui-text="Colors">
-      <param name="color-year"     type="string" _gui-text="Year color">#808080</param>
-      <param name="color-month"    type="string" _gui-text="Month color">#686868</param>
-      <param name="color-day-name" type="string" _gui-text="Weekday name color ">#909090</param>
-      <param name="color-day"      type="string" _gui-text="Day color">#000000</param>
-      <param name="color-weekend"  type="string" _gui-text="Weekend day color">#787878</param>
-      <param name="color-nmd"      type="string" _gui-text="Next month day color">#B0B0B0</param>
-    </page>
-    <page name="tab" _gui-text="Localization">
-      <_param name="l10n-help" type="description">You may change the names for other languages:</_param>
-      <_param name="month-names"  type="string" _gui-text="Month names" xml:space="preserve">January February March April May June July August September October November December</_param>
-      <_param name="day-names"  type="string" _gui-text="Day names" xml:space="preserve">Sun Mon Tue Wed Thu Fri Sat</_param>
-      <_param name="day-names-help" type="description">(The day names list must start from Sunday)</_param>
-      <param name="encoding" _gui-text="Char Encoding" type="optiongroup" appearance="minimal">
-	  	<option value="arabic">arabic</option>
-		<option value="big5-tw">big5-tw</option>
-		<option value="big5-hkscs">big5-hkscs</option>
-		<option value="chinese">chinese</option>
-		<option value="cp737">cp737</option>
-		<option value="cp856">cp856</option>
-		<option value="cp874">cp874</option>
-		<option value="cp875">cp875</option>
-		<option value="cp1006">cp1006</option>
-		<option value="cyrillic">cyrillic</option>
-		<option value="cyrillic-asian">cyrillic-asian</option>
-		<option value="eucjis2004">eucjis2004</option>
-		<option value="eucjisx0213">eucjisx0213</option>
-		<option value="gbk">gbk</option>
-		<option value="gb18030-2000">gb18030-2000</option>
-		<option value="greek">greek</option>
-		<option value="hebrew">hebrew</option>
-		<option value="hz-gb">hz-gb</option>
-		<option value="IBM037">IBM037</option>
-		<option value="IBM424">IBM424</option>
-		<option value="IBM437">IBM437</option>
-		<option value="IBM500">IBM500</option>
-		<option value="IBM775">IBM775</option>
-		<option value="IBM850">IBM850</option>
-		<option value="IBM852">IBM852</option>
-		<option value="IBM855">IBM855</option>
-		<option value="IBM857">IBM857</option>
-		<option value="IBM860">IBM860</option>
-		<option value="IBM861">IBM861</option>
-		<option value="IBM862">IBM862</option>
-		<option value="IBM863">IBM863</option>
-		<option value="IBM864">IBM864</option>
-		<option value="IBM865">IBM865</option>
-		<option value="IBM866">IBM866</option>
-		<option value="IBM869">IBM869</option>
-		<option value="IBM1026">IBM1026</option>
-		<option value="IBM1140">IBM1140</option>
-		<option value="iso-2022-jp">iso-2022-jp</option>
-		<option value="iso-2022-jp-1">iso-2022-jp-1</option>
-		<option value="iso-2022-jp-2">iso-2022-jp-2</option>
-		<option value="iso-2022-jp-2004">iso-2022-jp-2004</option>
-		<option value="iso-2022-jp-3">iso-2022-jp-3</option>
-		<option value="iso-2022-jp-ext">iso-2022-jp-ext</option>
-		<option value="iso-2022-kr">iso-2022-kr</option>
-		<option value="johab">johab</option>
-		<option value="korean">korean</option>
-		<option value="koi8_r">koi8_r</option>
-		<option value="koi8_u">koi8_u</option>
-		<option value="latin1">latin1</option>
-		<option value="latin2">latin2</option>
-		<option value="latin3">latin3</option>
-		<option value="latin4">latin4</option>
-		<option value="latin5">latin5</option>
-		<option value="latin6">latin6</option>
-		<option value="latin8">latin8</option>
-		<option value="iso-8859-15">Latin - iso-8859-15 - Western Europe</option>
-		<option value="macgreek">macgreek</option>
-		<option value="maciceland">maciceland</option>
-		<option value="maccentraleurope">maccentraleurope</option>
-		<option value="macroman">macroman</option>
-		<option value="macturkish">macturkish</option>
-		<option value="ms932">ms932</option>
-		<option value="ms949">ms949</option>
-		<option value="ms950">ms950</option>
-		<option value="sjis">sjis</option>
-		<option value="sjis2004">sjis2004</option>
-		<option value="sjisx0213">sjisx0213</option>
-		<option value="u-jis">u-jis</option>
-		<option value="us-ascii">us-ascii</option>
-		<option value="windows-1250">Windows - Central and Eastern Europe</option>
-		<option value="windows-1251">Windows - Russian and more</option>
-		<option value="windows-1252">Windows - Western Europe</option>
-		<option value="windows-1253">Windows - Greek</option>
-		<option value="windows-1254">Windows - Turkish</option>
-		<option value="windows-1255">Windows - Hebrew</option>
-		<option value="windows-1256">Windows - Arabic</option>
-		<option value="windows-1257">Windows - Baltic languages</option>
-		<option value="windows-1258">Windows - Vietnamese</option>
-		<option value="utf_32">UTF-32 - All languages</option>
-		<option value="utf_16">UTF-16 - All languages</option>
-		<option value="utf_8">UTF-8 - All languages</option>
-      </param>
-      <_param name="encoding-help" type="description">(Select your system encoding. More information at http://docs.python.org/library/codecs.html#standard-encodings)</_param>
-    </page>
-  </param>
-  <effect>
-    <object-type>all</object-type>
-    <effects-menu>
-      <submenu _name="Render"/>
-    </effects-menu>
-  </effect>
-  <script>
-    <command reldir="extensions" interpreter="python">svgcalendar.py</command>
-  </script>
+    <_name>Calendar</_name>
+    <id>org.inkscape.render.calendar</id>
+    <dependency type="executable" location="extensions">svgcalendar.py</dependency>
+    <dependency type="executable" location="extensions">inkex.py</dependency>
+    <param name="tab" type="notebook">
+        <page name="config" _gui-text="Configuration">
+            <param name="month" type="int" min="0" max="12" _gui-text="Month (0 for all):">0</param>
+            <param name="year" type="int" min="0" max="3000" _gui-text="Year (0 for current):">0</param>
+            <param name="fill-empty-day-boxes" type="boolean" _gui-text="Fill empty day boxes with next month's days">true</param>
+            <param name="start-day" type="enum" _gui-text="Week start day">
+                <_item value="sun">Sunday</_item>
+                <_item value="mon">Monday</_item>
+            </param>
+            <param name="weekend" type="enum" _gui-text="Weekend:">
+                <_item value="sat+sun">Saturday and Sunday</_item>
+                <_item value="sat">Saturday</_item>
+                <_item value="sun">Sunday</_item>
+            </param>
+        </page>
+        <page name="layout" _gui-text="Layout">
+            <param name="auto-organize" type="boolean" _gui-text="Automatically set size and position">true</param>
+            <_param name="organize-help" type="description">The options below have no influence when the above is checked.</_param>
+            <param name="months-per-line" type="int" min="1" max="12" _gui-text="Months per line:">3</param>
+            <param name="month-width" type="string" _gui-text="Month Width:">6cm</param>
+            <param name="month-margin" type="string" _gui-text="Month Margin:">1cm</param>
+        </page>
+        <page name="colors" _gui-text="Colors">
+            <param name="color-year"     type="string" _gui-text="Year color:">#808080</param>
+            <param name="color-month"    type="string" _gui-text="Month color:">#686868</param>
+            <param name="color-day-name" type="string" _gui-text="Weekday name color:">#909090</param>
+            <param name="color-day"      type="string" _gui-text="Day color:">#000000</param>
+            <param name="color-weekend"  type="string" _gui-text="Weekend day color:">#787878</param>
+            <param name="color-nmd"      type="string" _gui-text="Next month day color:">#B0B0B0</param>
+        </page>
+        <page name="localization" _gui-text="Localization">
+            <_param name="l10n-help" type="description">You may change the names for other languages:</_param>
+            <_param name="month-names"  type="string" _gui-text="Month names:" xml:space="preserve">January February March April May June July August September October November December</_param>
+            <_param name="day-names"  type="string" _gui-text="Day names:" xml:space="preserve">Sun Mon Tue Wed Thu Fri Sat</_param>
+            <_param name="day-names-help" type="description">The day names list must start from Sunday.</_param>
+            <param name="encoding" _gui-text="Char Encoding:" type="enum">
+                <item value="arabic">arabic</item>
+                <item value="big5-tw">big5-tw</item>
+                <item value="big5-hkscs">big5-hkscs</item>
+                <item value="chinese">chinese</item>
+                <item value="cp737">cp737</item>
+                <item value="cp856">cp856</item>
+                <item value="cp874">cp874</item>
+                <item value="cp875">cp875</item>
+                <item value="cp1006">cp1006</item>
+                <item value="cyrillic">cyrillic</item>
+                <item value="cyrillic-asian">cyrillic-asian</item>
+                <item value="eucjis2004">eucjis2004</item>
+                <item value="eucjisx0213">eucjisx0213</item>
+                <item value="gbk">gbk</item>
+                <item value="gb18030-2000">gb18030-2000</item>
+                <item value="greek">greek</item>
+                <item value="hebrew">hebrew</item>
+                <item value="hz-gb">hz-gb</item>
+                <item value="IBM037">IBM037</item>
+                <item value="IBM424">IBM424</item>
+                <item value="IBM437">IBM437</item>
+                <item value="IBM500">IBM500</item>
+                <item value="IBM775">IBM775</item>
+                <item value="IBM850">IBM850</item>
+                <item value="IBM852">IBM852</item>
+                <item value="IBM855">IBM855</item>
+                <item value="IBM857">IBM857</item>
+                <item value="IBM860">IBM860</item>
+                <item value="IBM861">IBM861</item>
+                <item value="IBM862">IBM862</item>
+                <item value="IBM863">IBM863</item>
+                <item value="IBM864">IBM864</item>
+                <item value="IBM865">IBM865</item>
+                <item value="IBM866">IBM866</item>
+                <item value="IBM869">IBM869</item>
+                <item value="IBM1026">IBM1026</item>
+                <item value="IBM1140">IBM1140</item>
+                <item value="iso-2022-jp">iso-2022-jp</item>
+                <item value="iso-2022-jp-1">iso-2022-jp-1</item>
+                <item value="iso-2022-jp-2">iso-2022-jp-2</item>
+                <item value="iso-2022-jp-2004">iso-2022-jp-2004</item>
+                <item value="iso-2022-jp-3">iso-2022-jp-3</item>
+                <item value="iso-2022-jp-ext">iso-2022-jp-ext</item>
+                <item value="iso-2022-kr">iso-2022-kr</item>
+                <item value="johab">johab</item>
+                <item value="korean">korean</item>
+                <item value="koi8_r">koi8_r</item>
+                <item value="koi8_u">koi8_u</item>
+                <item value="latin1">latin1</item>
+                <item value="latin2">latin2</item>
+                <item value="latin3">latin3</item>
+                <item value="latin4">latin4</item>
+                <item value="latin5">latin5</item>
+                <item value="latin6">latin6</item>
+                <item value="latin8">latin8</item>
+                <item value="iso-8859-15">Latin - iso-8859-15 - Western Europe</item>
+                <item value="macgreek">macgreek</item>
+                <item value="maciceland">maciceland</item>
+                <item value="maccentraleurope">maccentraleurope</item>
+                <item value="macroman">macroman</item>
+                <item value="macturkish">macturkish</item>
+                <item value="ms932">ms932</item>
+                <item value="ms949">ms949</item>
+                <item value="ms950">ms950</item>
+                <item value="sjis">sjis</item>
+                <item value="sjis2004">sjis2004</item>
+                <item value="sjisx0213">sjisx0213</item>
+                <item value="u-jis">u-jis</item>
+                <item value="us-ascii">us-ascii</item>
+                <item value="windows-1250">Windows - Central and Eastern Europe</item>
+                <item value="windows-1251">Windows - Russian and more</item>
+                <item value="windows-1252">Windows - Western Europe</item>
+                <item value="windows-1253">Windows - Greek</item>
+                <item value="windows-1254">Windows - Turkish</item>
+                <item value="windows-1255">Windows - Hebrew</item>
+                <item value="windows-1256">Windows - Arabic</item>
+                <item value="windows-1257">Windows - Baltic languages</item>
+                <item value="windows-1258">Windows - Vietnamese</item>
+                <item value="utf_32">UTF-32 - All languages</item>
+                <item value="utf_16">UTF-16 - All languages</item>
+                <item value="utf_8">UTF-8 - All languages</item>
+            </param>
+            <_param name="encoding-help" type="description">Select your system encoding. More information at http://docs.python.org/library/codecs.html#standard-encodings.</_param>
+        </page>
+    </param>
+    <effect>
+        <object-type>all</object-type>
+        <effects-menu>
+          <submenu _name="Render"/>
+        </effects-menu>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">svgcalendar.py</command>
+    </script>
 </inkscape-extension>

@@ -4,25 +4,25 @@
     <id>org.inkscape.filter.restack</id>
 	<dependency type="executable" location="extensions">restack.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
-    <param name="direction" type="optiongroup"  appearance="minimal" _gui-text="Restack Direction:">
-        <_option value="lr">Left to Right (0)</_option>
-        <_option value="bt">Bottom to Top (90)</_option>
-        <_option value="rl">Right to Left (180)</_option>
-        <_option value="tb">Top to Bottom (270)</_option>
-        <_option value="ro">Radial Outward</_option>
-        <_option value="ri">Radial Inward</_option>
-	<_option value="aa">Arbitrary Angle:</_option>
+    <param name="direction" type="enum" _gui-text="Restack Direction:">
+        <_item value="lr">Left to Right (0)</_item>
+        <_item value="bt">Bottom to Top (90)</_item>
+        <_item value="rl">Right to Left (180)</_item>
+        <_item value="tb">Top to Bottom (270)</_item>
+        <_item value="ro">Radial Outward</_item>
+        <_item value="ri">Radial Inward</_item>
+    	<_item value="aa">Arbitrary Angle</_item>
     </param>
-	<param name="angle" type="float" min="0.0" max="360.0" _gui-text="Angle">0.00</param>
-    <param name="xanchor" type="optiongroup"  appearance="minimal" _gui-text="Horizontal Point:">
-        <_option value="l">Left</_option>
-        <_option value="m">Middle</_option>
-        <_option value="r">Right</_option>
+	<param name="angle" type="float" min="0.0" max="360.0" _gui-text="Angle:">0.00</param>
+    <param name="xanchor" type="enum" _gui-text="Horizontal Point:">
+        <_item value="l">Left</_item>
+        <_item value="m">Middle</_item>
+        <_item value="r">Right</_item>
     </param>
-    <param name="yanchor" type="optiongroup"  appearance="minimal" _gui-text="Vertical Point:">
-        <_option value="t">Top</_option>
-        <_option value="m">Middle</_option>
-        <_option value="b">Bottom</_option>
+    <param name="yanchor" type="enum" _gui-text="Vertical Point:">
+        <_item value="t">Top</_item>
+        <_item value="m">Middle</_item>
+        <_item value="b">Bottom</_item>
     </param>
     <effect>
 	<object-type>path</object-type>
