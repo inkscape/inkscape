@@ -44,6 +44,10 @@ class InkWebTransmitAtt(inkwebeffect.InkWebEffect):
                         action="store", type="string",
                         dest="from_and_to", default="g-to-one",
                         help='Who transmit to Who? "g-to-one" All set the last. "one-to-g" The first set all.')
+        self.OptionParser.add_option("--tab",
+                        action="store", type="string",
+                        dest="tab",
+                        help="The selected UI-tab when OK was pressed")
 
     def effect(self):
       self.ensureInkWebSupport()

@@ -30,7 +30,10 @@ class Split(inkex.Effect):
                         action="store", type="inkbool", 
                         dest="preserve", default="True", 
                         help="Preserve original")
-
+        self.OptionParser.add_option("--tab",
+                        action="store", type="string",
+                        dest="tab",
+                        help="The selected UI-tab when OK was pressed")
 
     def split_lines(self, node):
         """Returns a list of lines"""

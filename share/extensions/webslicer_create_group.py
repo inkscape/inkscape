@@ -28,26 +28,29 @@ class WebSlicer_CreateGroup(WebSlicer_Effect):
     def __init__(self):
         WebSlicer_Effect.__init__(self)
         self.OptionParser.add_option("--html-id",
-                                     action="store", type="string",
-                                     dest="html_id",
-                                     help="")
+                        action="store", type="string",
+                        dest="html_id",
+                        help="")
         self.OptionParser.add_option("--html-class",
-                                     action="store", type="string",
-                                     dest="html_class",
-                                     help="")
+                        action="store", type="string",
+                        dest="html_class",
+                        help="")
         self.OptionParser.add_option("--width-unity",
-                                     action="store", type="string",
-                                     dest="width_unity",
-                                     help="")
+                        action="store", type="string",
+                        dest="width_unity",
+                        help="")
         self.OptionParser.add_option("--height-unity",
-                                     action="store", type="string",
-                                     dest="height_unity",
-                                     help="")
+                        action="store", type="string",
+                        dest="height_unity",
+                        help="")
         self.OptionParser.add_option("--bg-color",
-                                     action="store", type="string",
-                                     dest="bg_color",
-                                     help="")
-
+                        action="store", type="string",
+                        dest="bg_color",
+                        help="")
+        self.OptionParser.add_option("--tab",
+                        action="store", type="string",
+                        dest="tab",
+                        help="The selected UI-tab when OK was pressed")
 
     def get_base_elements(self):
         self.layer = self.get_slicer_layer()

@@ -3558,7 +3558,7 @@ msgstr "Unité de hauteur :"
 
 #: ../share/extensions/webslicer_create_group.inx.h:5
 msgid "Layout Group is only about to help a better code generation (if you need it). To use this, you must to select some \"Slicer rectangles\" first."
-msgstr "Le but du groupe de composants est d’aider à générer un meilleur code (si nécessaire). Pour l’utiliser, vous devez d’abord sélectionner des « Rectangles de découpe »."
+msgstr "Le but du groupe de composants est d’aider à générer un meilleur code (si nécessaire). Pour l’utiliser, vous devez d’abord sélectionner des « Rectangles de découpe »."
 
 #: ../share/extensions/webslicer_create_group.inx.h:6
 msgid "Percent (relative to parent size)"

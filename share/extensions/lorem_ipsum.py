@@ -189,6 +189,11 @@ class MyEffect(inkex.Effect):
       action="store", type="int", 
       dest="fluctuation", default=4,
       help="+/-")
+    self.OptionParser.add_option("--tab",
+      action="store", type="string",
+      dest="tab",
+      help="The selected UI-tab when OK was pressed")
+
     self.first_sentence = 1
 
   def makePara(self):
