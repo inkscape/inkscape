@@ -29,14 +29,14 @@
             <param name="nagel_pt"        type="boolean" _gui-text="Nagel Point"></param>
         </page>
         <page name="Custom" _gui-text="Custom Points and Options">
-            <param name="mode" type="optiongroup" _gui-text="Custom Point Specified By:">
-                <_option value="trilin">Trilinear Coordinates</_option>
-                <_option value="tcf">Triangle Function</_option>
+            <param name="mode" type="enum" _gui-text="Custom Point Specified By:">
+                <_item value="trilin">Trilinear Coordinates</_item>
+                <_item value="tcf">Triangle Function</_item>
             </param>
-            <param name="cust_str"      type="string"  _gui-text="Point At">cos(a_a):cos(a_b):cos(a_c)</param>
+            <param name="cust_str"      type="string"  _gui-text="Point At:">cos(a_a):cos(a_b):cos(a_c)</param>
             <param name="cust_pt"       type="boolean" _gui-text="Draw Marker At This Point"></param>
             <param name="cust_radius"   type="boolean" _gui-text="Draw Circle Around This Point"></param>
-            <param name="radius"        type="string"  _gui-text="Radius / px">s_a*s_b*s_c/(4*area)</param>
+            <param name="radius"        type="string"  _gui-text="Radius (px):">s_a*s_b*s_c/(4*area)</param>
             <param name="isogonal_conj" type="boolean" _gui-text="Draw Isogonal Conjugate"></param>
             <param name="isotomic_conj" type="boolean" _gui-text="Draw Isotomic Conjugate"></param>
             <param name="report" type="boolean" _gui-text="Report this triangle's properties"></param>
@@ -68,9 +68,9 @@ You can specify the radius of a circle around a custom point using a formula, wh
     </param>
     <effect>
         <object-type>all</object-type>
-                <effects-menu>
-                    <submenu _name="Render"/>
-                </effects-menu>
+        <effects-menu>
+            <submenu _name="Render"/>
+        </effects-menu>
     </effect>
     <script>
         <command reldir="extensions" interpreter="python">draw_from_triangle.py</command>
