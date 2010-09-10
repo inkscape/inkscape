@@ -38,7 +38,7 @@ Contrast::init(void)
 		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Contrast") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.contrast</id>\n"
-			"<param name=\"sharpen\" gui-text=\"" N_("Adjust") "\" type=\"int\" min=\"0\" max=\"10\">0</param>\n"
+			"<param name=\"sharpen\" gui-text=\"" N_("Adjust:") "\" type=\"int\" min=\"0\" max=\"10\">0</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
