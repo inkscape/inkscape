@@ -23,6 +23,7 @@ Filter::filters_all (void )
 	// Here come the filters which are coded in C++ in order to present a parameters dialog
 	DropShadow::init();
 	DropGlow::init();
+    ColorizableDropShadow::init();
 	Snow::init();
 
 	// Here come the rest of the filters that are read from SVG files in share/filters and
