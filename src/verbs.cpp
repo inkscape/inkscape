@@ -335,7 +335,15 @@ Verb::VerbIDTable Verb::_verb_ids;
     in the \c _verbs hashtable which is indexed by the \c code.
 */
 Verb::Verb(gchar const *id, gchar const *name, gchar const *tip, gchar const *image) :
-    _actions(NULL), _id(id), _name(name), _tip(tip), _full_tip(0), _image(image)
+    _actions(0),
+    _id(id),
+    _name(name),
+    _tip(tip),
+    _full_tip(0),
+    _shortcut(0),
+    _image(image),
+    _code(0),
+    _default_sensitive(false)
 {
     static int count = SP_VERB_LAST;
 
@@ -343,8 +351,6 @@ Verb::Verb(gchar const *id, gchar const *name, gchar const *tip, gchar const *im
     _code = count;
     _verbs.insert(VerbTable::value_type(count, this));
     _verb_ids.insert(VerbIDTable::value_type(_id, this));
-
-    return;
 }
 
 /** \brief  Destroy a verb.
@@ -359,9 +365,10 @@ Verb::~Verb(void)
         delete _actions;
     }
 
-    if (_full_tip) g_free(_full_tip);
-
-    return;
+    if (_full_tip) {
+        g_free(_full_tip);
+        _full_tip = 0;
+    }
 }
 
 /** \brief  Verbs are no good without actions.  This is a place holder
@@ -631,23 +638,30 @@ Verb::sensitive(SPDocument *in_doc, bool in_sensitive)
 }
 
 /** \brief Accessor to get the tooltip for verb as localised string */
-gchar const *
-Verb::get_tip (void)
+gchar const *Verb::get_tip(void)
 {
-    if (!_tip) return 0;
-    unsigned int shortcut = sp_shortcut_get_primary(this);
-    if (shortcut!=_shortcut || !_full_tip) {
-        if (_full_tip) g_free(_full_tip);
-        _shortcut = shortcut;
-        gchar* shortcutString = sp_shortcut_get_label(shortcut);
-        if (shortcutString) {
-            _full_tip = g_strdup_printf("%s (%s)", _(_tip), shortcutString);
-            g_free(shortcutString);
-        } else {
+    gchar const *result = 0;
+    if (_tip) {
+        unsigned int shortcut = sp_shortcut_get_primary(this);
+        if ( (shortcut != _shortcut) || !_full_tip) {
+            if (_full_tip) {
+                g_free(_full_tip);
+                _full_tip = 0;
+            }
+            _shortcut = shortcut;
+            gchar* shortcutString = sp_shortcut_get_label(shortcut);
+            if (shortcutString) {
+                _full_tip = g_strdup_printf("%s (%s)", _(_tip), shortcutString);
+                g_free(shortcutString);
+                shortcutString = 0;
+            } else {
 	        _full_tip = g_strdup(_(_tip));
+            }
         }
+        result = _full_tip;
     }
-    return _full_tip;
+
+    return result;
 }
 
 void

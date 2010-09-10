@@ -303,12 +303,15 @@ class Verb {
 private:
     /** \brief An easy to use defition of the table of verbs by code. */
     typedef std::map<unsigned int, Inkscape::Verb *> VerbTable;
+
     /** \brief A table of all the dynamically created verbs. */
     static VerbTable _verbs;
+
     /** \brief The table of statically created verbs which are mostly
                'base verbs'. */
     static Verb * _base_verbs[SP_VERB_LAST + 1];
     /* Plus one because there is an entry for SP_VERB_LAST */
+
     /** A string comparison function to be used in the Verb ID lookup
         to find the different verbs in the hash map. */
     struct ltstr {
@@ -322,8 +325,10 @@ private:
             }
         }
     };
+
     /** \brief An easy to use definition of the table of verbs by ID. */
     typedef std::map<gchar const *, Verb *, ltstr> VerbIDTable;
+
     /** \brief Quick lookup of verbs by ID */
     static VerbIDTable _verb_ids;
 
@@ -335,14 +340,20 @@ private:
 
     /** \brief A unique textual ID for the verb. */
     gchar const * _id;
+
     /** \brief The full name of the verb.  (shown on menu entries) */
     gchar const * _name;
+
     /** \brief Tooltip for the verb. */
     gchar const * _tip;
+
     gchar * _full_tip; // includes shortcut
+
     unsigned int _shortcut;
+
     /** \brief Name of the image that represents the verb. */
     gchar const * _image;
+
     /** \brief Unique numerical representation of the verb.  In most cases
                it is a value from the anonymous enum at the top of this
                file. */
@@ -351,6 +362,7 @@ private:
     /** \brief Whether this verb is set to default to sensitive or
                insensitive when new actions are created. */
     bool _default_sensitive;
+
 protected:
     /** \brief Allows for preliminary setting of the \c _default_sensitive
                value without effecting existing actions
@@ -411,7 +423,16 @@ public:
          gchar const * name,
          gchar const * tip,
          gchar const * image) :
-        _actions(NULL), _id(id), _name(name), _tip(tip), _full_tip(0), _image(image), _code(code), _default_sensitive(true) {
+        _actions(0),
+        _id(id),
+        _name(name),
+        _tip(tip),
+        _full_tip(0),
+        _shortcut(0),
+        _image(image),
+        _code(code),
+        _default_sensitive(true)
+    {
         _verbs.insert(VerbTable::value_type(_code, this));
         _verb_ids.insert(VerbIDTable::value_type(_id, this));
     }

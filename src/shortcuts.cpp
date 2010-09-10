@@ -199,16 +199,17 @@ sp_shortcut_get_verb(unsigned int shortcut)
     return (Inkscape::Verb *)(g_hash_table_lookup(verbs, GINT_TO_POINTER(shortcut)));
 }
 
-unsigned int
-sp_shortcut_get_primary(Inkscape::Verb *verb)
+unsigned int sp_shortcut_get_primary(Inkscape::Verb *verb)
 {
-    if (!primary_shortcuts) sp_shortcut_init();
-    gpointer value;
-    if (g_hash_table_lookup_extended(primary_shortcuts, (gpointer)(verb), NULL, &value)) {
-        return (unsigned int)GPOINTER_TO_INT(value);
-    } else {
-        return GDK_VoidSymbol;
+    unsigned int result = GDK_VoidSymbol;
+    if (!primary_shortcuts) {
+        sp_shortcut_init();
     }
+    gpointer value = 0;
+    if (g_hash_table_lookup_extended(primary_shortcuts, static_cast<gpointer>(verb), NULL, &value)) {
+        result = static_cast<unsigned int>(GPOINTER_TO_INT(value));
+    }
+    return result;
 }
 
 gchar* sp_shortcut_get_label (unsigned int shortcut)

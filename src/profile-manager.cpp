@@ -23,6 +23,8 @@ ProfileManager::ProfileManager(SPDocument *document) :
 
 ProfileManager::~ProfileManager()
 {
+    _resource_connection.disconnect();
+    _doc = 0;
 }
 
 void ProfileManager::_resourcesChanged()
