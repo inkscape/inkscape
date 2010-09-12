@@ -338,10 +338,6 @@ void ColorSelector::getColorAlpha( SPColor &color, gfloat &alpha ) const
     {
         i++;
     }
-    if ( color.v.c[3] )
-    {
-        i++;
-    }
     if ( alpha )
     {
         i++;
