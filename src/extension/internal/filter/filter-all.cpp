@@ -8,6 +8,7 @@
 #include "filter.h"
 
 /* Put your filter here */
+#include "color.h"
 #include "drop-shadow.h"
 #include "snow.h"
 
@@ -21,6 +22,7 @@ void
 Filter::filters_all (void )
 {
 	// Here come the filters which are coded in C++ in order to present a parameters dialog
+    Bicolorizer::init();
 	DropShadow::init();
 	DropGlow::init();
     ColorizableDropShadow::init();
