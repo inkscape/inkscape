@@ -3501,7 +3501,7 @@ msgstr "DPI:"
 #. i18n. Description duplicated in a fake value attribute in order to make it translatable
 #: ../share/extensions/webslicer_create_rect.inx.h:12
 msgid "Force Dimension must be set as <width>x<height>"
-msgstr "Die erzwungene Dimension muss als  \"&lt;Breite&gt;x&lt;Höhe&gt;\" gesetzt werden."
+msgstr "Die erzwungene Dimension muss als  <Breite>x<Höhe> gesetzt werden."
 
 #: ../share/extensions/webslicer_create_rect.inx.h:13
 msgid "Force Dimension:"
