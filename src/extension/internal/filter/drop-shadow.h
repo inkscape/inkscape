@@ -157,7 +157,7 @@ public:
 				"<param name=\"blur\" gui-text=\"" N_("Blur radius (px):") "\" type=\"float\" min=\"0.0\" max=\"200.0\">3.0</param>\n"
 				"<param name=\"xoffset\" gui-text=\"" N_("Horizontal offset (px):") "\" type=\"float\" min=\"-50.0\" max=\"50.0\">6.0</param>\n"
 				"<param name=\"yoffset\" gui-text=\"" N_("Vertical offset (px):") "\" type=\"float\" min=\"-50.0\" max=\"50.0\">6.0</param>\n"
-				"<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">0</param>\n"
+				"<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">127</param>\n"
 				"<effect>\n"
 					"<object-type>all</object-type>\n"
 					"<effects-menu>\n"

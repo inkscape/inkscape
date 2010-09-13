@@ -22,28 +22,29 @@ namespace Extension {
 namespace Internal {
 namespace Filter {
 
-class Bicolorizer : public Inkscape::Extension::Internal::Filter::Filter {
+class Duochrome : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
 	virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
 
 public:
-	Bicolorizer ( ) : Filter() { };
-	virtual ~Bicolorizer ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+	Duochrome ( ) : Filter() { };
+	virtual ~Duochrome ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
 
 	static void init (void) {
 		Inkscape::Extension::build_from_mem(
 			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-				"<name>" N_("Bicolorizer -EXP-") "</name>\n"
-				"<id>org.inkscape.effect.filter.bicolorizer</id>\n"
+				"<name>" N_("Duochrome, custom -EXP-") "</name>\n"
+				"<id>org.inkscape.effect.filter.Duochrome</id>\n"
 // Using color widgets in tabs makes Inkscape crash...
 //	            "<param name=\"tab\" type=\"notebook\">\n"
 //                    "<page name=\"Color1\" _gui-text=\"Color 1\">\n"
+                        "<param name=\"fluo\" gui-text=\"" N_("Fluorescence") "\" type=\"boolean\">false</param>\n"
                         "<_param name=\"header1\" type=\"groupheader\">Color 1</_param>\n"
-				        "<param name=\"color1\" gui-text=\"" N_("Color 1") "\" type=\"color\">1946122495</param>\n"
+				        "<param name=\"color1\" gui-text=\"" N_("Color 1") "\" type=\"color\">1364325887</param>\n"
 //                    "</page>\n"
 //                    "<page name=\"Color2\" _gui-text=\"Color 2\">\n"
                         "<_param name=\"header2\" type=\"groupheader\">Color 2</_param>\n"
-				        "<param name=\"color2\" gui-text=\"" N_("Color 2") "\" type=\"color\">367387135</param>\n"
+				        "<param name=\"color2\" gui-text=\"" N_("Color 2") "\" type=\"color\">-65281</param>\n"
 //                    "</page>\n"
 //                "</param>\n"
 				"<effect>\n"
@@ -55,13 +56,13 @@ public:
 					"</effects-menu>\n"
 					"<menu-tip>" N_("Change colors to a two colors palette") "</menu-tip>\n"
 				"</effect>\n"
-			"</inkscape-extension>\n", new Bicolorizer());
+			"</inkscape-extension>\n", new Duochrome());
 	};
 
 };
 
 gchar const *
-Bicolorizer::get_filter_text (Inkscape::Extension::Extension * ext)
+Duochrome::get_filter_text (Inkscape::Extension::Extension * ext)
 {
 	if (_filter != NULL) g_free((void *)_filter);
 
@@ -73,9 +74,11 @@ Bicolorizer::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream r2;
     std::ostringstream g2;
     std::ostringstream b2;
+    std::ostringstream fluo;
 
     guint32 color1 = ext->get_param_color("color1");
     guint32 color2 = ext->get_param_color("color2");
+    bool fluorescence = ext->get_param_bool("fluo");
     a1 << (color1 & 0xff) / 255.0F;
     r1 << ((color1 >> 24) & 0xff);
     g1 << ((color1 >> 16) & 0xff);
@@ -84,25 +87,24 @@ Bicolorizer::get_filter_text (Inkscape::Extension::Extension * ext)
     r2 << ((color2 >> 24) & 0xff);
     g2 << ((color2 >> 16) & 0xff);
     b2 << ((color2 >>  8) & 0xff);
+    if (fluorescence) fluo << "";
+    else  fluo << " in=\"result6\"";
 
 	_filter = g_strdup_printf(
-		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Bicolorizer -EXP-\">\n"
-            "<feColorMatrix result=\"fbSourceGraphic\" type=\"luminanceToAlpha\" />\n"
-            "<feFlood flood-opacity=\"%s\" in=\"fbSourceGraphic\" result=\"result1\" flood-color=\"rgb(%s,%s,%s)\" />\n"
-            "<feColorMatrix values=\"0\" result=\"result7\" type=\"hueRotate\" />\n"
-            "<feColorMatrix values=\"1\" type=\"saturate\" result=\"result8\" />\n"
-            "<feComposite result=\"result2\" operator=\"out\" in=\"result8\" in2=\"fbSourceGraphic\" />\n"
-            "<feComposite k2=\"1\" result=\"fbSourceGraphic\" operator=\"arithmetic\" in2=\"SourceGraphic\" />\n"
-            "<feFlood flood-opacity=\"%s\" in=\"fbSourceGraphic\" result=\"result2\" flood-color=\"rgb(%s,%s,%s)\" />\n"
-            "<feColorMatrix result=\"result3\" values=\"0\" type=\"hueRotate\" />\n"
-            "<feColorMatrix values=\"1\" result=\"result9\" type=\"saturate\" />\n"
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Duochrome, custom -EXP-\">\n"
+            "<feColorMatrix type=\"luminanceToAlpha\" result=\"fbSourceGraphic\" />\n"
+            "<feFlood in=\"fbSourceGraphic\" flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"result1\" />\n"
+            "<feComposite in=\"result1\" in2=\"fbSourceGraphic\" operator=\"out\" result=\"result2\" />\n"
+            "<feComposite in2=\"SourceGraphic\" k2=\"1\" result=\"fbSourceGraphic\" operator=\"arithmetic\" />\n"
+            "<feFlood in=\"fbSourceGraphic\" flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"result2\" />\n"
             "<feMerge result=\"result5\">\n"
-                "<feMergeNode in=\"result9\" />\n"
+                "<feMergeNode in=\"result2\" />\n"
                 "<feMergeNode in=\"fbSourceGraphic\" />\n"
             "</feMerge>\n"
-            "<feBlend result=\"result6\" mode=\"normal\" blend=\"normal\" in2=\"fbSourceGraphic\" />\n"
-            "<feComposite result=\"result6\" operator=\"in\" in2=\"SourceGraphic\" />\n"
-        "</filter>\n", a1.str().c_str(), r1.str().c_str(), g1.str().c_str(), b1.str().c_str(), a2.str().c_str(), r2.str().c_str(), g2.str().c_str(), b2.str().c_str());
+            "<feBlend in2=\"fbSourceGraphic\" mode=\"normal\" blend=\"normal\" result=\"result6\" />\n"
+            "<feColorMatrix type=\"matrix\" values=\"2 -1 0 0 0 0 2 -1 0 0 -1 0 2 0 0 0 0 0 1 0 \" result=\"result10\" />\n"
+            "<feComposite %s in2=\"SourceGraphic\" operator=\"in\" result=\"fbSourceGraphic\" />\n"
+        "</filter>\n", a1.str().c_str(), r1.str().c_str(), g1.str().c_str(), b1.str().c_str(), a2.str().c_str(), r2.str().c_str(), g2.str().c_str(), b2.str().c_str(), fluo.str().c_str());
 
 	return _filter;
 };
