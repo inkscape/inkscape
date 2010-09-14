@@ -11,6 +11,7 @@
 #include "color.h"
 #include "drop-shadow.h"
 #include "snow.h"
+#include "experimental.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -27,6 +28,9 @@ Filter::filters_all (void )
 	DropGlow::init();
     ColorizableDropShadow::init();
 	Snow::init();
+    
+    // Experimental!
+    Posterize::init();
 
 	// Here come the rest of the filters that are read from SVG files in share/filters and
 	// .config/Inkscape/filters
