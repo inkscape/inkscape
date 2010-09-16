@@ -30,7 +30,7 @@ from math import *
 from random import *
 
 def drawfunction(xstart, xend, ybottom, ytop, samples, width, height, left, bottom, 
-    fx = "sin(x)", fpx = "cos(x)", fponum = True, times2pi = False, polar = False, isoscale = True, drawaxis = True):
+    fx = "sin(x)", fpx = "cos(x)", fponum = True, times2pi = False, polar = False, isoscale = True, drawaxis = True, endpts = False):
 
     if times2pi == True:
         xstart = 2 * pi * xstart
@@ -122,7 +122,11 @@ def drawfunction(xstart, xend, ybottom, ytop, samples, width, height, left, bott
         dy0 = fp(xstart)
 
     # Start curve
-    a.append([' M ',[coordx(x0), coordy(y0)]]) # initial moveto
+    if endpts:
+        a.append([' M ',[left, coordy(0)]])
+        a.append([' L ',[coordx(x0), coordy(y0)]])
+    else:
+        a.append([' M ',[coordx(x0), coordy(y0)]]) # initial moveto
 
     for i in range(int(samples-1)):
         x1 = (i+1) * step + xstart
@@ -153,7 +157,9 @@ def drawfunction(xstart, xend, ybottom, ytop, samples, width, height, left, bott
         x0  = x1  # Next segment's start is this segments end
         y0  = y1
         dx0 = dx1 # Assume the function is smooth everywhere, so carry over the derivative too
-        dy0 = dy1    
+        dy0 = dy1
+    if endpts:
+        a.append([' L ',[left + width, coordy(0)]])
     return a
 
 class FuncPlot(inkex.Effect):
@@ -211,6 +217,10 @@ class FuncPlot(inkex.Effect):
                         action="store", type="inkbool", 
                         dest="drawaxis", default=True,
                         help="If True, axis are drawn") 
+        self.OptionParser.add_option("--endpts",
+                        action="store", type="inkbool",
+                        dest="endpts", default=False,
+                        help="If True, end points are added")
         self.OptionParser.add_option("--tab",
                         action="store", type="string", 
                         dest="tab", default="sampling",
@@ -257,7 +267,8 @@ class FuncPlot(inkex.Effect):
                                 self.options.times2pi,
                                 self.options.polar,
                                 self.options.isoscale,
-                                self.options.drawaxis)))
+                                self.options.drawaxis,
+                                self.options.endpts)))
                 newpath.set('title', self.options.fofx)
                 
                 #newpath.setAttribute('desc', '!func;' + self.options.fofx + ';' 
