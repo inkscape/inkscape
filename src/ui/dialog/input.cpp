@@ -331,12 +331,14 @@ namespace Dialog {
 class DeviceModelColumns : public Gtk::TreeModel::ColumnRecord
 {
 public:
+    Gtk::TreeModelColumn<bool>                         toggler;
+    Gtk::TreeModelColumn<Glib::ustring>                expander;
     Gtk::TreeModelColumn<Glib::ustring>                description;
-    Gtk::TreeModelColumn< Glib::RefPtr<Gdk::Pixbuf> >  thumbnail;
+    Gtk::TreeModelColumn<Glib::RefPtr<Gdk::Pixbuf> >   thumbnail;
     Gtk::TreeModelColumn<Glib::RefPtr<InputDevice const> > device;
     Gtk::TreeModelColumn<Gdk::InputMode>               mode;
 
-    DeviceModelColumns() { add(description); add(thumbnail); add(device); add(mode); }
+    DeviceModelColumns() { add(toggler), add(expander), add(description); add(thumbnail); add(device); add(mode); }
 };
 
 static std::map<Gdk::InputMode, Glib::ustring> &getModeToString()
@@ -389,6 +391,9 @@ private:
 
         static void commitCellModeChange(Glib::ustring const &path, Glib::ustring const &newText, Glib::RefPtr<Gtk::TreeStore> store);
         static void setModeCellString(Gtk::CellRenderer *rndr, Gtk::TreeIter const &iter);
+
+        static void commitCellStateChange(Glib::ustring const &path, Glib::RefPtr<Gtk::TreeStore> store);
+        static void setCellStateToggle(Gtk::CellRenderer *rndr, Gtk::TreeIter const &iter);
 
         void saveSettings();
         void useExtToggled();
@@ -806,24 +811,39 @@ InputDialogImpl::ConfPanel::ConfPanel() :
     row = *(poppers->append());
     row[foo.one] = getModeToString()[Gdk::MODE_WINDOW];
 
-    Gtk::CellRendererCombo *rendr = new Gtk::CellRendererCombo();
-    rendr->property_model().set_value(poppers);
-    rendr->property_text_column().set_value(0);
-    rendr->property_has_entry() = false;
-
     //Add the TreeView's view columns:
+    {
+        Gtk::CellRendererToggle *rendr = new Gtk::CellRendererToggle();
+        Gtk::TreeViewColumn *col = new Gtk::TreeViewColumn("xx", *rendr);
+        if (col) {
+            tree.append_column(*col);
+            col->set_cell_data_func(*rendr, sigc::ptr_fun(setCellStateToggle));
+            rendr->signal_toggled().connect(sigc::bind(sigc::ptr_fun(commitCellStateChange), store));
+        }
+    }
+
+    int expPos = tree.append_column("", getCols().expander);
+
     tree.append_column("I", getCols().thumbnail);
     tree.append_column("Bar", getCols().description);
-    Gtk::TreeViewColumn *col = new Gtk::TreeViewColumn("X", *rendr);
-    if (col) {
-        tree.append_column(*col);
-        col->set_cell_data_func(*rendr, sigc::ptr_fun(setModeCellString));
-        rendr->signal_edited().connect(sigc::bind(sigc::ptr_fun(commitCellModeChange), store));
-        rendr->property_editable() = true;
+
+    {
+        Gtk::CellRendererCombo *rendr = new Gtk::CellRendererCombo();
+        rendr->property_model().set_value(poppers);
+        rendr->property_text_column().set_value(0);
+        rendr->property_has_entry() = false;
+        Gtk::TreeViewColumn *col = new Gtk::TreeViewColumn("X", *rendr);
+        if (col) {
+            tree.append_column(*col);
+            col->set_cell_data_func(*rendr, sigc::ptr_fun(setModeCellString));
+            rendr->signal_edited().connect(sigc::bind(sigc::ptr_fun(commitCellModeChange), store));
+            rendr->property_editable() = true;
+        }
     }
 
     tree.set_enable_tree_lines();
     tree.set_headers_visible(false);
+    tree.set_expander_column( *tree.get_column(expPos - 1) );
 
     setupTree( store, tabletIter );
 
@@ -870,6 +890,38 @@ void InputDialogImpl::ConfPanel::commitCellModeChange(Glib::ustring const &path,
         if (dev && (getStringToMode().find(newText) != getStringToMode().end())) {
             Gdk::InputMode mode = getStringToMode()[newText];
             Inkscape::DeviceManager::getManager().setMode( dev->getId(), mode );
+        }
+    }
+}
+
+void InputDialogImpl::ConfPanel::setCellStateToggle(Gtk::CellRenderer *rndr, Gtk::TreeIter const &iter)
+{
+    if (iter) {
+        Gtk::CellRendererToggle *toggle = dynamic_cast<Gtk::CellRendererToggle *>(rndr);
+        if (toggle) {
+            Glib::RefPtr<InputDevice const> dev = (*iter)[getCols().device];
+            if (dev) {
+                Gdk::InputMode mode = (*iter)[getCols().mode];
+                toggle->set_active(mode != Gdk::MODE_DISABLED);
+            } else {
+                toggle->set_active(false);
+            }
+        }
+    }
+}
+
+void InputDialogImpl::ConfPanel::commitCellStateChange(Glib::ustring const &path, Glib::RefPtr<Gtk::TreeStore> store)
+{
+    Gtk::TreeIter iter = store->get_iter(path);
+    if (iter) {
+        Glib::RefPtr<InputDevice const> dev = (*iter)[getCols().device];
+        if (dev) {
+            Gdk::InputMode mode = (*iter)[getCols().mode];
+            if (mode == Gdk::MODE_DISABLED) {
+                Inkscape::DeviceManager::getManager().setMode( dev->getId(), Gdk::MODE_SCREEN );
+            } else {
+                Inkscape::DeviceManager::getManager().setMode( dev->getId(), Gdk::MODE_DISABLED );
+            }
         }
     }
 }
