@@ -47,7 +47,7 @@ Level::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Level selected bitmap(s) by scaling values falling between the given ranges to the full color range.") "</menu-tip>\n"
+				"<menu-tip>" N_("Level selected bitmap(s) by scaling values falling between the given ranges to the full color range") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Level());
 }

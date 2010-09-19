@@ -46,7 +46,7 @@ Shade::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Shade selected bitmap(s) simulating distant light source.") "</menu-tip>\n"
+				"<menu-tip>" N_("Shade selected bitmap(s) simulating distant light source") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Shade());
 }

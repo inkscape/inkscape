@@ -46,7 +46,7 @@ Raise::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Alter lightness the edges of selected bitmap(s) to create a raised appearance.") "</menu-tip>\n"
+				"<menu-tip>" N_("Alter lightness the edges of selected bitmap(s) to create a raised appearance") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Raise());
 }
