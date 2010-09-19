@@ -8,9 +8,9 @@
 	<dependency type="executable" location="path">gimp</dependency>
 	<param name="tab" type="notebook">
         <page name="Options" _gui-text="Options">
-        <param name="guides" type="boolean" _gui-text="Save Guides:">false</param>
-        <param name="grid" type="boolean" _gui-text="Save Grid:">false</param>
-        <param name="background" type="boolean" _gui-text="Save Background:">false</param>
+        <param name="guides" type="boolean" _gui-text="Save Guides">false</param>
+        <param name="grid" type="boolean" _gui-text="Save Grid">false</param>
+        <param name="background" type="boolean" _gui-text="Save Background">false</param>
         </page>
         <page name="Help" _gui-text="Help">
             <_param name="instructions" type="description" xml:space="preserve">This extension exports the document to Gimp XCF format according to the following options:
