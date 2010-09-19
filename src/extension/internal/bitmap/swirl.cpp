@@ -41,7 +41,7 @@ Swirl::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Swirl selected bitmap(s) around center point.") "</menu-tip>\n"
+				"<menu-tip>" N_("Swirl selected bitmap(s) around center point") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Swirl());
 }
