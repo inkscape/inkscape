@@ -1691,7 +1691,7 @@
 <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 -3.2 " result="result91" />
 <feComposite operator="out" in="SourceGraphic" result="result4" in2="result91" />
 </filter>
-<filter id="f177" inkscape:label="Canvas transparency" x="0" y="0" width="1" height="1" inkscape:menu="Image effects, transparent" inkscape:menu-tooltip="Gives a canvas like HSL sensitive transparency." color-interpolation-filters="sRGB">
+<filter id="f177" inkscape:label="Canvas transparency" x="0" y="0" width="1" height="1" inkscape:menu="Image effects, transparent" inkscape:menu-tooltip="Gives a canvas like HSL sensitive transparency" color-interpolation-filters="sRGB">
 <feTurbulence result="result1" numOctaves="10" baseFrequency="0.3" type="turbulence" />
 <feColorMatrix result="result0" in="SourceGraphic" type="luminanceToAlpha" />
 <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.4 0 " result="result2" />
