@@ -294,7 +294,7 @@ sp_repr_read_file (const gchar * filename, const gchar *default_ns)
                              &src,
                              localFilename,
                              src.getEncoding(),
-                             XML_PARSE_NOENT );
+                             XML_PARSE_NOENT | XML_PARSE_HUGE);
         }
     }
 
