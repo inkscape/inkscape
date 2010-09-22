@@ -20,6 +20,8 @@
 #include <string>
 #include <stdexcept>
 
+#include <libxml/parser.h>
+
 #include "xml/repr.h"
 #include "xml/attribute-record.h"
 #include "xml/rebase-hrefs.h"
