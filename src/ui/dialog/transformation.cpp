@@ -26,6 +26,7 @@
 #include "selection-chemistry.h"
 #include "verbs.h"
 #include "preferences.h"
+#include "sp-namedview.h"
 #include "sp-item-transform.h"
 #include "macros.h"
 #include "sp-item.h"
@@ -198,6 +199,14 @@ void
 Transformation::layoutPageMove()
 {
     _units_move.setUnitType(UNIT_TYPE_LINEAR);
+    
+    // Setting default unit to document unit
+    SPDesktop *dt = getDesktop();
+    SPNamedView *nv = sp_desktop_namedview(dt);
+    if (nv->doc_units) {
+        _units_move.setUnit(nv->doc_units->abbr);
+    }
+    
     _scalar_move_horizontal.initScalar(-1e6, 1e6);
     _scalar_move_horizontal.setDigits(3);
     _scalar_move_horizontal.setIncrements(0.1, 1.0);
@@ -462,8 +471,9 @@ Transformation::updatePageMove(Inkscape::Selection *selection)
                 double x = bbox->min()[Geom::X];
                 double y = bbox->min()[Geom::Y];
 
-                _scalar_move_horizontal.setValue(x, "px");
-                _scalar_move_vertical.setValue(y, "px");
+                double conversion = _units_move.getConversion("px");
+                _scalar_move_horizontal.setValue(x / conversion);
+                _scalar_move_vertical.setValue(y / conversion);
             }
         } else {
             // do nothing, so you can apply the same relative move to many objects in turn
@@ -871,6 +881,8 @@ Transformation::onMoveRelativeToggled()
     double x = _scalar_move_horizontal.getValue("px");
     double y = _scalar_move_vertical.getValue("px");
 
+    double conversion = _units_move.getConversion("px");
+
     //g_message("onMoveRelativeToggled: %f, %f px\n", x, y);
 
     Geom::OptRect bbox = selection->bounds();
@@ -878,12 +890,12 @@ Transformation::onMoveRelativeToggled()
     if (bbox) {
         if (_check_move_relative.get_active()) {
             // From absolute to relative
-            _scalar_move_horizontal.setValue(x - bbox->min()[Geom::X], "px");
-            _scalar_move_vertical.setValue(  y - bbox->min()[Geom::Y], "px");
+            _scalar_move_horizontal.setValue((x - bbox->min()[Geom::X]) / conversion);
+            _scalar_move_vertical.setValue((  y - bbox->min()[Geom::Y]) / conversion);
         } else {
             // From relative to absolute
-            _scalar_move_horizontal.setValue(bbox->min()[Geom::X] + x, "px");
-            _scalar_move_vertical.setValue(  bbox->min()[Geom::Y] + y, "px");
+            _scalar_move_horizontal.setValue((bbox->min()[Geom::X] + x) / conversion);
+            _scalar_move_vertical.setValue((  bbox->min()[Geom::Y] + y) / conversion);
         }
     }
 
