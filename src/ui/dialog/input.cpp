@@ -10,6 +10,7 @@
 
 #include <map>
 #include <set>
+#include <list>
 #include <glib/gprintf.h>
 #include <glibmm/i18n.h>
 #include <gtkmm/alignment.h>
@@ -725,6 +726,44 @@ InputDialogImpl::InputDialogImpl() :
     show_all_children();
 }
 
+class TabletTmp {
+public:
+    TabletTmp() {}
+
+    Glib::ustring name;
+    std::list<Glib::RefPtr<InputDevice const> > devices;
+};
+
+static Glib::ustring getCommon( std::list<Glib::ustring> const &names )
+{
+    Glib::ustring result;
+
+    if ( !names.empty() ) {
+        size_t pos = 0;
+        bool match = true;
+        while ( match ) {
+            if ( names.begin()->length() > pos ) {
+                gunichar ch = (*names.begin())[pos];
+                for ( std::list<Glib::ustring>::const_iterator it = names.begin(); it != names.end(); ++it ) {
+                    if ( (pos >= it->length())
+                         || ((*it)[pos] != ch) ) {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match) {
+                    result += ch;
+                    pos++;
+                }
+            } else {
+                match = false;
+            }
+        }
+    }
+
+    return result;
+}
+
 void InputDialogImpl::setupTree( Glib::RefPtr<Gtk::TreeStore> store, Gtk::TreeIter &tablet )
 {
     std::list<Glib::RefPtr<InputDevice const> > devList = Inkscape::DeviceManager::getManager().getDevices();
@@ -732,46 +771,97 @@ void InputDialogImpl::setupTree( Glib::RefPtr<Gtk::TreeStore> store, Gtk::TreeIt
         Gtk::TreeModel::Row row = *(store->append());
         row[getCols().description] = _("Hardware");
 
-        tablet = store->append(row.children());
-        Gtk::TreeModel::Row childrow = *tablet;
-        childrow[getCols().description] = _("Tablet");
-        childrow[getCols().thumbnail] = getPix(PIX_TABLET);
+        // Let's make some tablets!!!
+        std::list<TabletTmp> tablets;
+        std::set<Glib::ustring> consumed;
 
+        // Phase 1 - figure out which tablets are present
         for ( std::list<Glib::RefPtr<InputDevice const> >::iterator it = devList.begin(); it != devList.end(); ++it ) {
             Glib::RefPtr<InputDevice const> dev = *it;
             if ( dev ) {
-//                 g_message("device: name[%s] source[0x%x] mode[0x%x] cursor[%s] axis count[%d] key count[%d]", dev->getName().c_str(), dev->getSource(), dev->getMode(),
-//                           dev->hasCursor() ? "Yes":"no", dev->getNumAxes(), dev->getNumKeys());
-
-//                 if ( dev->getSource() != Gdk::SOURCE_MOUSE ) {
-                if ( dev ) {
-                    Gtk::TreeModel::Row deviceRow = *(store->append(childrow.children()));
-                    deviceRow[getCols().description] = dev->getName();
-                    deviceRow[getCols().device] = dev;
-                    deviceRow[getCols().mode] = dev->getMode();
-                    switch ( dev->getSource() ) {
-                        case GDK_SOURCE_MOUSE:
-                            deviceRow[getCols().thumbnail] = getPix(PIX_CORE);
-                            break;
-                        case GDK_SOURCE_PEN:
-                            if (deviceRow[getCols().description] == _("pad")) {
-                                deviceRow[getCols().thumbnail] = getPix(PIX_SIDEBUTTONS);
-                            } else {
-                                deviceRow[getCols().thumbnail] = getPix(PIX_TIP);
-                            }
-                            break;
-                        case GDK_SOURCE_CURSOR:
-                            deviceRow[getCols().thumbnail] = getPix(PIX_MOUSE);
-                            break;
-                        case GDK_SOURCE_ERASER:
-                            deviceRow[getCols().thumbnail] = getPix(PIX_ERASER);
-                            break;
-                        default:
-                            ; // nothing
+                if ( dev->getSource() != Gdk::SOURCE_MOUSE ) {
+                    consumed.insert( dev->getId() );
+                    if ( tablets.empty() ) {
+                        TabletTmp tmp;
+                        tablets.push_back(tmp);
                     }
+                    tablets.back().devices.push_back(dev);
                 }
             } else {
                 g_warning("Null device in list");
+            }
+        }
+
+        // Phase 2 - build a UI for the present devices
+        for ( std::list<TabletTmp>::iterator it = tablets.begin(); it != tablets.end(); ++it ) {
+            tablet = store->append(row.children());
+            Gtk::TreeModel::Row childrow = *tablet;
+            if ( it->name.empty() ) {
+                // Check to see if we can derive one
+                std::list<Glib::ustring> names;
+                for ( std::list<Glib::RefPtr<InputDevice const> >::iterator it2 = it->devices.begin(); it2 != it->devices.end(); ++it2 ) {
+                    names.push_back( (*it2)->getName() );
+                }
+                Glib::ustring common = getCommon(names);
+                if ( !common.empty() ) {
+                    it->name = common;
+                }
+            }
+            childrow[getCols().description] = it->name.empty() ? _("Tablet") : it->name ;
+            childrow[getCols().thumbnail] = getPix(PIX_TABLET);
+
+            // Check if there is an eraser we can link to a pen
+            for ( std::list<Glib::RefPtr<InputDevice const> >::iterator it2 = it->devices.begin(); it2 != it->devices.end(); ++it2 ) {
+                Glib::RefPtr<InputDevice const> dev = *it2;
+                if ( dev->getSource() == Gdk::SOURCE_PEN ) {
+                    for ( std::list<Glib::RefPtr<InputDevice const> >::iterator it3 = it->devices.begin(); it3 != it->devices.end(); ++it3 ) {
+                        Glib::RefPtr<InputDevice const> dev2 = *it3;
+                        if ( dev2->getSource() == Gdk::SOURCE_ERASER ) {
+                            DeviceManager::getManager().setLinkedTo(dev->getId(), dev2->getId());                            
+                            break; // only check the first eraser... for now
+                        }
+                        break; // only check the first pen... for now
+                    }
+                }
+            }
+
+            for ( std::list<Glib::RefPtr<InputDevice const> >::iterator it2 = it->devices.begin(); it2 != it->devices.end(); ++it2 ) {
+                Glib::RefPtr<InputDevice const> dev = *it2;
+                Gtk::TreeModel::Row deviceRow = *(store->append(childrow.children()));
+                deviceRow[getCols().description] = dev->getName();
+                deviceRow[getCols().device] = dev;
+                deviceRow[getCols().mode] = dev->getMode();
+                switch ( dev->getSource() ) {
+                    case GDK_SOURCE_MOUSE:
+                        deviceRow[getCols().thumbnail] = getPix(PIX_CORE);
+                        break;
+                    case GDK_SOURCE_PEN:
+                        if (deviceRow[getCols().description] == _("pad")) {
+                            deviceRow[getCols().thumbnail] = getPix(PIX_SIDEBUTTONS);
+                        } else {
+                            deviceRow[getCols().thumbnail] = getPix(PIX_TIP);
+                        }
+                        break;
+                    case GDK_SOURCE_CURSOR:
+                        deviceRow[getCols().thumbnail] = getPix(PIX_MOUSE);
+                        break;
+                    case GDK_SOURCE_ERASER:
+                        deviceRow[getCols().thumbnail] = getPix(PIX_ERASER);
+                        break;
+                    default:
+                        ; // nothing
+                }
+            }
+        }
+
+        for ( std::list<Glib::RefPtr<InputDevice const> >::iterator it = devList.begin(); it != devList.end(); ++it ) {
+            Glib::RefPtr<InputDevice const> dev = *it;
+            if ( dev && (consumed.find( dev->getId() ) == consumed.end()) ) {
+                Gtk::TreeModel::Row deviceRow = *(store->append(row.children()));
+                deviceRow[getCols().description] = dev->getName();
+                deviceRow[getCols().device] = dev;
+                deviceRow[getCols().mode] = dev->getMode();
+                deviceRow[getCols().thumbnail] = getPix(PIX_CORE);
             }
         }
     } else {
