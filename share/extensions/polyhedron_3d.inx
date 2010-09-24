@@ -36,32 +36,32 @@
                 <_option value="x">X-Axis</_option>
                 <_option value="y">Y-Axis</_option>
                 <_option value="z">Z-Axis</_option></param>
-            <param name="r1_ang" type="float" min="-360" max="360" _gui-text="Rotation (degrees):">0</param>
+            <param name="r1_ang" type="float" min="-360" max="360" _gui-text="Rotation (deg):">0</param>
             <param name="r2_ax" type="optiongroup" appearance="minimal" _gui-text="Then rotate around:">
                 <_option value="x">X-Axis</_option>
                 <_option value="y">Y-Axis</_option>
                 <_option value="z">Z-Axis</_option></param>
-            <param name="r2_ang" type="float" min="-360" max="360" _gui-text="Rotation (degrees):">0</param>
+            <param name="r2_ang" type="float" min="-360" max="360" _gui-text="Rotation (deg):">0</param>
             <param name="r3_ax" type="optiongroup" appearance="minimal" _gui-text="Then rotate around:">
                 <_option value="x">X-Axis</_option>
                 <_option value="y">Y-Axis</_option>
                 <_option value="z">Z-Axis</_option></param>
-            <param name="r3_ang" type="float" min="-360" max="360" _gui-text="Rotation(degrees):">0</param>
+            <param name="r3_ang" type="float" min="-360" max="360" _gui-text="Rotation (deg):">0</param>
             <param name="r4_ax" type="optiongroup" appearance="minimal" _gui-text="Then rotate around:">
                 <_option value="x">X-Axis</_option>
                 <_option value="y">Y-Axis</_option>
                 <_option value="z">Z-Axis</_option></param>
-            <param name="r4_ang" type="float" min="-360" max="360" _gui-text="Rotation(degrees):">0</param>
+            <param name="r4_ang" type="float" min="-360" max="360" _gui-text="Rotation (deg):">0</param>
             <param name="r5_ax" type="optiongroup" appearance="minimal" _gui-text="Then rotate around:">
                 <_option value="x">X-Axis</_option>
                 <_option value="y">Y-Axis</_option>
                 <_option value="z">Z-Axis</_option></param>
-            <param name="r5_ang" type="float" min="-360" max="360" _gui-text="Rotation(degrees):">0</param>
+            <param name="r5_ang" type="float" min="-360" max="360" _gui-text="Rotation (deg):">0</param>
             <param name="r6_ax" type="optiongroup" appearance="minimal" _gui-text="Then rotate around:">
                 <_option value="x">X-Axis</_option>
                 <_option value="y">Y-Axis</_option>
                 <_option value="z">Z-Axis</_option></param>
-            <param name="r6_ang" type="float" min="-360" max="360" _gui-text="Rotation(degrees):">0</param>
+            <param name="r6_ang" type="float" min="-360" max="360" _gui-text="Rotation (deg):">0</param>
         </page>
         <page name="style" _gui-text="Style">
             <param name="scl" type="float" min="0" max="10000" _gui-text="Scaling factor:">100</param>
