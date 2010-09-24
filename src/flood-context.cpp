@@ -261,10 +261,10 @@ GList * flood_channels_dropdown_items_list() {
 GList * flood_autogap_dropdown_items_list() {
     GList *glist = NULL;
 
-    glist = g_list_append (glist, _("None"));
-    glist = g_list_append (glist, _("Small"));
-    glist = g_list_append (glist, _("Medium"));
-    glist = g_list_append (glist, _("Large"));
+    glist = g_list_append (glist, (void*) C_("Flood autogap", "None"));
+    glist = g_list_append (glist, (void*) C_("Flood autogap", "Small"));
+    glist = g_list_append (glist, (void*) C_("Flood autogap", "Medium"));
+    glist = g_list_append (glist, (void*) C_("Flood autogap", "Large"));
 
     return glist;
 }

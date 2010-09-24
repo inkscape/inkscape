@@ -135,11 +135,11 @@ void Panel::_init()
 
         //TRANSLATORS: Indicates size of colour swatches
         const gchar *heightLabels[] = {
-            N_("Tiny"),
-            N_("Small"),
+            NC_("Swatches height", "Tiny"),
+            NC_("Swatches height", "Small"),
             NC_("Swatches height", "Medium"),
-            N_("Large"),
-            N_("Huge")
+            NC_("Swatches height", "Large"),
+            NC_("Swatches height", "Huge")
         };
 
         Gtk::MenuItem *sizeItem = manage(new Gtk::MenuItem(heightItemLabel));
@@ -148,7 +148,7 @@ void Panel::_init()
 
         Gtk::RadioMenuItem::Group heightGroup;
         for (unsigned int i = 0; i < G_N_ELEMENTS(heightLabels); i++) {
-            Glib::ustring _label(Q_(heightLabels[i]));
+            Glib::ustring _label(g_dpgettext2(NULL, "Swatches height", heightLabels[i]));
             Gtk::RadioMenuItem* _item = manage(new Gtk::RadioMenuItem(heightGroup, _label));
             sizeMenu->append(*_item);
             if (i == panel_size) {
@@ -165,11 +165,11 @@ void Panel::_init()
 
         //TRANSLATORS: Indicates width of colour swatches
         const gchar *widthLabels[] = {
-            N_("Narrower"),
-            N_("Narrow"),
+            NC_("Swatches width", "Narrower"),
+            NC_("Swatches width", "Narrow"),
             NC_("Swatches width", "Medium"),
-            N_("Wide"),
-            N_("Wider")
+            NC_("Swatches width", "Wide"),
+            NC_("Swatches width", "Wider")
         };
 
         Gtk::MenuItem *item = manage( new Gtk::MenuItem(widthItemLabel));
@@ -188,7 +188,7 @@ void Panel::_init()
             }
         }
         for ( guint i = 0; i < G_N_ELEMENTS(widthLabels); ++i ) {
-            Glib::ustring _label(Q_(widthLabels[i]));
+            Glib::ustring _label(g_dpgettext2(NULL, "Swatches width", widthLabels[i]));
             Gtk::RadioMenuItem *_item = manage(new Gtk::RadioMenuItem(widthGroup, _label));
             type_menu->append(*_item);
             if ( i <= hot_index ) {
