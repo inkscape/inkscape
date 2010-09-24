@@ -41,6 +41,7 @@
 #include <extension/db.h>
 #include "file.h"
 #include "helper/units.h"
+#include "helper/unit-tracker.h"
 #include "inkscape-private.h"
 #include "interface.h"
 #include "macros.h"
@@ -69,7 +70,7 @@
 using Inkscape::round;
 #endif
 
-
+using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 using Inkscape::UI::ToolboxFactory;
 
@@ -325,7 +326,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->hbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_end( GTK_BOX (dtw->vbox), dtw->hbox, TRUE, TRUE, 0 );
     gtk_widget_show(dtw->hbox);
-
+ 
     dtw->aux_toolbox = ToolboxFactory::createAuxToolbox();
     gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->aux_toolbox, FALSE, TRUE, 0);
 
@@ -1509,6 +1510,40 @@ void SPDesktopWidget::namedviewModified(SPObject *obj, guint flags)
 
         sp_ruler_set_metric(GTK_RULER (this->vruler), nv->getDefaultMetric());
         sp_ruler_set_metric(GTK_RULER (this->hruler), nv->getDefaultMetric());
+
+        /* This loops through all the grandchildren of aux toolbox,
+         * and for each that it finds, it performs an sp_search_by_data_recursive(),
+         * looking for widgets that hold some "tracker" data (this is used by
+         * all toolboxes to refer to the unit selector). The default document units 
+         * is then selected within these unit selectors.
+         *
+         * Of course it would be nice to be able to refer to the toolbox and the
+         * unit selector directly by name, but I don't yet see a way to do that.
+         * 
+         * This should solve: https://bugs.launchpad.net/inkscape/+bug/362995
+         */
+        if (GTK_IS_CONTAINER(aux_toolbox)) {
+            GList *ch = gtk_container_get_children (GTK_CONTAINER(aux_toolbox));
+            for (GList *i = ch; i != NULL; i = i->next) {
+                if (GTK_IS_CONTAINER(i->data)) {
+                    GList *grch = gtk_container_get_children (GTK_CONTAINER(i->data));
+                    for (GList *j = grch; j != NULL; j = j->next) {                        
+                        if (!GTK_IS_WIDGET(j->data)) // wasn't a widget
+                            continue;
+
+                        gpointer t = sp_search_by_data_recursive(GTK_WIDGET(j->data), (gpointer) "tracker");
+                        if (t == NULL) // didn't find any tracker data
+                            continue;
+
+                        UnitTracker *tracker = reinterpret_cast<UnitTracker*>( t );
+                        if (tracker == NULL) // it's null when inkscape is first opened
+                            continue;
+
+                        tracker->setActiveUnit( nv->doc_units );
+                    } // grandchildren
+                } // if child is a container
+            } // children
+        } // if aux_toolbox is a container
 
         gtk_tooltips_set_tip(this->tt, this->hruler_box, gettext(sp_unit_get_plural (nv->doc_units)), NULL);
         gtk_tooltips_set_tip(this->tt, this->vruler_box, gettext(sp_unit_get_plural (nv->doc_units)), NULL);
