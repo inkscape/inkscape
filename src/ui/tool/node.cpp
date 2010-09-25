@@ -944,7 +944,12 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 {
     // For a note on how snapping is implemented in Inkscape, see snap.h.
     SnapManager &sm = _desktop->namedview->snap_manager;
+    // even if we won't really snap, we might still call the one of the
+    // constrainedSnap() methods to enforce the constraints, so we need
+    // to setup the snapmanager anyway; this is also required for someSnapperMightSnap()
+    sm.setup(_desktop);
     bool snap = sm.someSnapperMightSnap();
+
     Inkscape::SnappedPoint sp;
     std::vector<Inkscape::SnapCandidatePoint> unselected;
     if (snap) {
@@ -966,11 +971,6 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
             }
         }
         sm.setupIgnoreSelection(_desktop, true, &unselected);
-    } else {
-        // even if we won't really snap, we might still call the one of the
-        // constrainedSnap() methods to enforce the constraints, so we need
-        // to setup the snapmanager anyway
-        sm.setup(_desktop);
     }
 
     if (held_control(*event)) {
