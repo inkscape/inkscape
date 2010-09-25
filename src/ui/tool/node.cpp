@@ -970,6 +970,7 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
                 unselected.push_back(p);
             }
         }
+        sm.unSetup();
         sm.setupIgnoreSelection(_desktop, true, &unselected);
     }
 
