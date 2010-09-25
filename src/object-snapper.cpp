@@ -583,28 +583,55 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
         constraint_line.appendNew<Geom::LineSegment>(p_max_on_cl);
         constraint_path.push_back(constraint_line);
     }
+    // Length of constraint_path will always be one
 
+    // Find all intersections of the constrained path with the snap target candidates
+    std::vector<Geom::Point> intersections;
     for (std::vector<Inkscape::SnapCandidatePath >::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
         if (k->path_vector) {
+            // Do the intersection math
             Geom::CrossingSet cs = Geom::crossings(constraint_path, *(k->path_vector));
+            // Store the results as intersection points
             unsigned int index = 0;
             for (Geom::CrossingSet::const_iterator i = cs.begin(); i != cs.end(); i++) {
                 if (index >= constraint_path.size()) {
                     break;
                 }
+                // Reconstruct and store the points of intersection
                 for (Geom::Crossings::const_iterator m = (*i).begin(); m != (*i).end(); m++) {
-                    //std::cout << "ta = " << (*m).ta << " | tb = " << (*m).tb << std::endl;
-                    // Reconstruct the point of intersection
-                    Geom::Point p_inters = constraint_path[index].pointAt((*m).ta);
-                    // .. and convert it to desktop coordinates
-                    p_inters = _snapmanager->getDesktop()->doc2dt(p_inters);
-                    Geom::Coord dist = Geom::L2(p_proj_on_constraint - p_inters);
-                    SnappedPoint s = SnappedPoint(p_inters, p.getSourceType(), p.getSourceNum(), k->target_type, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true, k->target_bbox);;
-                    if (dist <= tolerance) { // If the intersection is within snapping range, then we might snap to it
-                        sc.points.push_back(s);
-                    }
+                    intersections.push_back(constraint_path[index].pointAt((*m).ta));
                 }
                 index++;
+            }
+
+            //Geom::crossings will not consider the closing segment apparently, so we'll handle that separately here
+            for(Geom::PathVector::iterator it_pv = k->path_vector->begin(); it_pv != k->path_vector->end(); ++it_pv) {
+                if (it_pv->closed()) {
+                    // Get the closing linesegment and convert it to a path
+                    Geom::Path cls;
+                    cls.close(false);
+                    cls.append(it_pv->back_closed());
+                    // Intersect that closing path with the constrained path
+                    Geom::Crossings cs = Geom::crossings(constraint_path.front(), cls);
+                    // Reconstruct and store the points of intersection
+                    index = 0; // assuming the constraint path vector has only one path
+                    for (Geom::Crossings::const_iterator m = cs.begin(); m != cs.end(); m++) {
+                        intersections.push_back(constraint_path[index].pointAt((*m).ta));
+                    }
+                }
+            }
+
+            // Convert the collected points of intersection to snapped points
+            for (std::vector<Geom::Point>::iterator p_inters = intersections.begin(); p_inters != intersections.end(); p_inters++) {
+                // Convert to desktop coordinates
+                (*p_inters) = _snapmanager->getDesktop()->doc2dt(*p_inters);
+                // Construct a snapped point
+                Geom::Coord dist = Geom::L2(p_proj_on_constraint - *p_inters);
+                SnappedPoint s = SnappedPoint(*p_inters, p.getSourceType(), p.getSourceNum(), k->target_type, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true, k->target_bbox);;
+                // Store the snapped point
+                if (dist <= tolerance) { // If the intersection is within snapping range, then we might snap to it
+                    sc.points.push_back(s);
+                }
             }
         }
     }
