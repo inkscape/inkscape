@@ -22,6 +22,8 @@
 #include "xml/repr.h"
 #include "perspective-line.h"
 #include "shape-editor.h"
+#include "snap.h"
+#include "sp-namedview.h"
 
 namespace Box3D {
 
@@ -76,7 +78,7 @@ have_VPs_of_same_perspective (VPDragger *dr1, VPDragger *dr2)
 }
 
 static void
-vp_knot_moved_handler (SPKnot */*knot*/, Geom::Point const *ppointer, guint state, gpointer data)
+vp_knot_moved_handler (SPKnot *knot, Geom::Point const *ppointer, guint state, gpointer data)
 {
     VPDragger *dragger = (VPDragger *) data;
     VPDrag *drag = dragger->parent;
@@ -170,10 +172,20 @@ vp_knot_moved_handler (SPKnot */*knot*/, Geom::Point const *ppointer, guint stat
                 return;
             }
         }
+
+        // We didn't snap to another dragger, so we'll try a regular snap
+        SPDesktop *desktop = inkscape_active_desktop();
+        SnapManager &m = desktop->namedview->snap_manager;
+        m.setup(desktop);
+        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_OTHER_HANDLE));
+        m.unSetup();
+        if (s.getSnapped()) {
+            p = s.getPoint();
+            sp_knot_moveto(knot, p);
+        }
     }
 
-
-    dragger->point = p; // FIXME: Brauchen wir dragger->point überhaupt?
+    dragger->point = p; // FIXME: Is dragger->point being used at all?
 
     dragger->updateVPs(p);
     dragger->updateBoxDisplays();
