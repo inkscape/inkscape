@@ -20,22 +20,27 @@ class C(coloreffect.ColorEffect):
             action="store", type="string",
             dest="tab",
             help="The selected UI-tab when OK was pressed")
+        self.OptionParser.add_option("--scale",
+            action="store", type="string",
+            dest="scale",
+            help="The input (r,g,b) range")
 
     def normalize(self, v):
         if v<0:
             return 0.0
-        if v>1:
-            return 1.0
+        if v > float(self.options.scale):
+            return float(self.options.scale)
         return v
 
     def _hexstr(self,r,g,b):
-        return '%02x%02x%02x' % (int(round(r*255)),int(round(g*255)),int(round(b*255)))
-      
+        return '%02x%02x%02x' % (int(round(r)),int(round(g)),int(round(b)))
+
     def colmod(self,_r,_g,_b):
-        r=float(_r)/255
-        g=float(_g)/255
-        b=float(_b)/255
-        
+        factor = 255.0/float(self.options.scale)
+        r=float(_r)/factor
+        g=float(_g)/factor
+        b=float(_b)/factor
+
         # add stuff to be accessible from within the custom color function here.
         safeenv = {'__builtins__':{},'r':r,'g':g,'b':b}
 
@@ -44,8 +49,8 @@ class C(coloreffect.ColorEffect):
             g2=self.normalize(eval(self.options.gFunction,safeenv))
             b2=self.normalize(eval(self.options.bFunction,safeenv))
         except:
-            return self._hexstr(1.0,0.0,0.0)
-        return self._hexstr(r2,g2,b2)
+            return self._hexstr(255.0,0.0,0.0)
+        return self._hexstr(r2*factor,g2*factor,b2*factor)
 
 c = C()
 c.affect()
