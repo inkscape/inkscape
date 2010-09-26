@@ -283,6 +283,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
         if ( event->button.button == 1  && !event_context->space_panning) {
             Geom::Point const button_w(event->button.x,
                                        event->button.y);
+            Geom::Point button_dt(desktop->w2d(button_w));
 
             // save drag origin
             event_context->xp = (gint) button_w[Geom::X];
@@ -294,8 +295,12 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
 
             dragging = true;
 
-            /*  */
-            Geom::Point button_dt(desktop->w2d(button_w));
+            SnapManager &m = desktop->namedview->snap_manager;
+            m.setup(desktop, true, bc->item);
+            m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
+            m.unSetup();
+            bc->center = from_2geom(button_dt);
+
             bc->drag_origin = from_2geom(button_dt);
             bc->drag_ptB = from_2geom(button_dt);
             bc->drag_ptC = from_2geom(button_dt);
@@ -312,13 +317,6 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             bc->drag_ptC_proj = bc->drag_origin_proj;
             bc->drag_ptC_proj.normalize();
             bc->drag_ptC_proj[Proj::Z] = 0.25;
-
-            /* Snap center */
-            SnapManager &m = desktop->namedview->snap_manager;
-            m.setup(desktop, true, bc->item);
-            m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
-            m.unSetup();
-            bc->center = from_2geom(button_dt);
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 ( GDK_KEY_PRESS_MASK |
