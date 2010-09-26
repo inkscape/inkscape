@@ -297,6 +297,15 @@ PageSizer::PageSizer(Registry & _wr)
     _portraitButton.set_group (group);
     _portraitButton.set_active (true);
 
+    // Setting default custom unit to document unit
+    SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    SPNamedView *nv = sp_desktop_namedview(dt);
+    if (nv->units) {
+        _dimensionUnits.setUnit(nv->units);
+    } else if (nv->doc_units) {
+        _dimensionUnits.setUnit(nv->doc_units);
+    }
+    
     //## Set up custom size frame
     _customFrame.set_label(_("Custom size"));
     pack_start (_customFrame, false, false, 0);

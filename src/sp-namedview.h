@@ -54,7 +54,8 @@ struct SPNamedView : public SPObjectGroup {
     bool grids_visible;
 
     SPUnit const *doc_units;
-
+    SPUnit const *units;
+    
     GQuark default_layer_id;
 
     double connector_spacing;

@@ -218,6 +218,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     }
 
     sp_object_read_attr(object, "inkscape:document-units");
+    sp_object_read_attr(object, "units");
     sp_object_read_attr(object, "viewonly");
     sp_object_read_attr(object, "showguides");
     sp_object_read_attr(object, "showgrid");
@@ -569,6 +570,30 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
                 }
             }
             nv->doc_units = new_unit;
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+    }
+    case SP_ATTR_UNITS: {
+            SPUnit const *new_unit = NULL;
+
+            if (value) {
+                SPUnit const *const req_unit = sp_unit_get_by_abbreviation(value);
+                if ( req_unit == NULL ) {
+                    g_warning("Unrecognized unit `%s'", value);
+                    /* fixme: Document errors should be reported in the status bar or
+                     * the like (e.g. as per
+                     * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing); g_log
+                     * should be only for programmer errors. */
+                } else if ( req_unit->base == SP_UNIT_ABSOLUTE ||
+                            req_unit->base == SP_UNIT_DEVICE     ) {
+                    new_unit = req_unit;
+                } else {
+                    g_warning("Document units must be absolute like `mm', `pt' or `px', but found `%s'",
+                              value);
+                    /* fixme: Don't use g_log (see above). */
+                }
+            }
+            nv->units = new_unit;
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     }
