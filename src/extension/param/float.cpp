@@ -35,11 +35,11 @@ ParamFloat::ParamFloat (const gchar * name, const gchar * guitext, const gchar *
 
     const char * maxval = xml->attribute("max");
     if (maxval != NULL)
-        _max = atof(maxval);
+        _max = g_ascii_strtod (maxval,NULL);
 
     const char * minval = xml->attribute("min");
     if (minval != NULL)
-        _min = atof(minval);
+        _min = g_ascii_strtod (minval,NULL);
 
     _precision = 1;
     const char * precision = xml->attribute("precision");
