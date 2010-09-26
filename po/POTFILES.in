@@ -103,6 +103,7 @@
 [type: gettext/xml] share/extensions/radiusrand.inx
 [type: gettext/xml] share/extensions/render_alphabetsoup.inx
 [type: gettext/xml] share/extensions/render_barcode.inx
+[type: gettext/xml] share/extensions/replace_font.inx
 [type: gettext/xml] share/extensions/restack.inx
 [type: gettext/xml] share/extensions/rtree.inx
 [type: gettext/xml] share/extensions/rubberstretch.inx
@@ -544,6 +545,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/render_alphabetsoup.inx
 [type: gettext/xml] share/extensions/render_barcode.inx
 [type: gettext/xml] share/extensions/render_barcode_datamatrix.inx
+[type: gettext/xml] share/extensions/replace_font.inx
 [type: gettext/xml] share/extensions/restack.inx
 [type: gettext/xml] share/extensions/rtree.inx
 [type: gettext/xml] share/extensions/rubberstretch.inx

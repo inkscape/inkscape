@@ -67,7 +67,7 @@ extensions = \
 	grid_cartesian.py \
 	grid_polar.py \
 	guides_creator.py \
-    guillotine.py \
+	guillotine.py \
 	handles.py \
 	hpgl_output.py \
 	ill2svg.pl \
@@ -113,6 +113,7 @@ extensions = \
 	ps2pdf-ext.py \
 	pturtle.py \
 	radiusrand.py \
+	replace_font.py \
 	restack.py \
 	render_barcode.py \
 	render_barcode_datamatrix.py \
@@ -222,7 +223,7 @@ modules = \
 	grid_cartesian.inx \
 	grid_polar.inx \
 	guides_creator.inx \
-    guillotine.inx \
+	guillotine.inx \
 	handles.inx \
 	hpgl_output.inx \
 	inkscape_help_askaquestion.inx \
@@ -268,6 +269,7 @@ modules = \
 	render_barcode.inx \
 	render_barcode_datamatrix.inx \
 	render_alphabetsoup.inx \
+	replace_font.inx \
 	restack.inx \
 	rubberstretch.inx \
 	rtree.inx \
