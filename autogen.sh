@@ -182,7 +182,10 @@ attempt_command 'underquoted definition of|[\)\#]Extending' \
 	attempt_command '' autoheader
 }
 
-attempt_command '' libtoolize
+# use glibtoolize if it is available (darwin)
+(glibtoolize --version) < /dev/null > /dev/null 2>&1 && LIBTOOLIZE=glibtoolize || LIBTOOLIZE=libtoolize
+
+attempt_command '' $LIBTOOLIZE
 attempt_command '' $AUTOMAKE --copy --force --add-missing
 attempt_command '' autoconf
 attempt_command '^(Please add the files|  codeset|  progtest|from the|or directly|You will also|ftp://ftp.gnu.org|$)' \
