@@ -14848,7 +14848,7 @@ msgstr "about.svg"
 #: ../src/ui/dialog/aboutbox.cpp:383
 msgid "translator-credits"
 msgstr ""
-"Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Yaron Shahrabani (sh.yaron@gmail.com)\n"
 "Launchpad Contributions:\n"
 "  Yaron https://launchpad.net/~sh-yaron\n"
 "  Leon https://launchpad.net/~leon-mintz"
