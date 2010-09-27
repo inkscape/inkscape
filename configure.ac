@@ -702,7 +702,7 @@ dnl ******************************
 
 AC_ARG_ENABLE(dbusapi,
        [  --enable-dbusapi       compile with support for DBus interface],
-       enable_dbusapi=$enableval,enable_dbusapi=yes)
+       enable_dbusapi=$enableval,enable_dbusapi=no)
 
 with_dbus="no"
 if test "x$enable_dbusapi" = "xyes"; then
