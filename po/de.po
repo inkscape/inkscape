@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-09-03 18:56+0200\n"
-"PO-Revision-Date: 2010-09-13 20:47+0100\n"
-"Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
+"PO-Revision-Date: 2010-09-28 22:17+0100\n"
+"Last-Translator: Uwe Schoeler <oss@oss-marketplace.com>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -355,19 +355,16 @@ msgid "Randomize"
 msgstr "Zufallsänderung"
 
 #: ../share/extensions/color_randomize.inx.h:8
-#, fuzzy
 msgid "Randomize hue"
-msgstr "Zufallsänderung"
+msgstr "Zufallsfarbton"
 
 #: ../share/extensions/color_randomize.inx.h:9
-#, fuzzy
 msgid "Randomize lightness"
-msgstr "Positionen zufällig machen"
+msgstr "Zufallshelligkeit"
 
 #: ../share/extensions/color_randomize.inx.h:10
-#, fuzzy
 msgid "Randomize saturation"
-msgstr "Positionen zufällig machen"
+msgstr "Zufallssättigung"
 
 #: ../share/extensions/color_randomize.inx.h:11
 #: ../src/extension/internal/bitmap/modulate.cpp:42
@@ -398,15 +395,13 @@ msgid "By color (RRGGBB hex):"
 msgstr "mit Farbe (RRGGBB hex):"
 
 #: ../share/extensions/color_replace.inx.h:3
-#, fuzzy
 msgid "Color to replace"
-msgstr "Farbe der Gitterlinien"
+msgstr "Farbe zum Ersetzen"
 
 # !!! correct?
 #: ../share/extensions/color_replace.inx.h:4
-#, fuzzy
 msgid "New color"
-msgstr "Farbe des Jahres"
+msgstr "Neue Farbe"
 
 #: ../share/extensions/color_replace.inx.h:5
 msgid "Replace color"
@@ -445,23 +440,20 @@ msgid "The dia2svg.sh script should be installed with your Inkscape distribution
 msgstr "Das Skript »dia2svg.sh« sollte in Ihrer Inkscape-Installation vorhanden sein. Wenn Sie es nicht haben, ist wahrscheinlich etwas mit Ihrer Inkscape-Installation nicht in Ordnung."
 
 #: ../share/extensions/dimension.inx.h:1
-#, fuzzy
 msgid "Bounding box type : "
-msgstr "Zu verwendende Umrandungsbox:"
+msgstr "Umrandungsbox-Typ:"
 
 #: ../share/extensions/dimension.inx.h:2
 msgid "Dimensions"
 msgstr "Dimensionen"
 
 #: ../share/extensions/dimension.inx.h:3
-#, fuzzy
 msgid "Geometric"
-msgstr "Geometrische Formen"
+msgstr "Geometrisch"
 
 #: ../share/extensions/dimension.inx.h:4
-#, fuzzy
 msgid "Visual"
-msgstr "Pfad visualisieren"
+msgstr "Visuel"
 
 #: ../share/extensions/dimension.inx.h:5
 #: ../share/extensions/dots.inx.h:13
@@ -492,9 +484,8 @@ msgid "Number Nodes"
 msgstr "Knoten nummerieren"
 
 #: ../share/extensions/dots.inx.h:6
-#, fuzzy
 msgid "Starting dot number:"
-msgstr "Foliennummer"
+msgstr "Sartpunkt Knotennummer:"
 
 #: ../share/extensions/dots.inx.h:7
 msgid "Step:"
@@ -759,9 +750,8 @@ msgid "Or, use manual scale factor"
 msgstr "Alternativ wird manueller Skalierungsfaktor verwendet."
 
 #: ../share/extensions/dxf_input.inx.h:14
-#, fuzzy
 msgid "Text Font"
-msgstr "Text einlesen"
+msgstr "Text-Schriftart"
 
 #: ../share/extensions/dxf_input.inx.h:15
 msgid "Use automatic scaling to size A4"
@@ -1187,9 +1177,8 @@ msgstr "GIMP XCF, Ebenen beibehalten (*.XCF)"
 
 # !!!
 #: ../share/extensions/gimp_xcf.inx.h:5
-#, fuzzy
 msgid "Save Background:"
-msgstr "Hintergrund verfolgen"
+msgstr "Hintergrund speichern:"
 
 #: ../share/extensions/gimp_xcf.inx.h:6
 msgid "Save Grid:"
@@ -1458,7 +1447,6 @@ msgid "Vertical guide each"
 msgstr "Vertikale Führungslinie alle"
 
 #: ../share/extensions/guillotine.inx.h:1
-#, fuzzy
 msgid "Directory to save images to"
 msgstr "Pfad zum Speicherort des Bildes:"
 
@@ -1467,9 +1455,8 @@ msgid "Export"
 msgstr "Exportieren"
 
 #: ../share/extensions/guillotine.inx.h:3
-#, fuzzy
 msgid "Guillotine"
-msgstr "Führungslinien"
+msgstr "Guillotine"
 
 #: ../share/extensions/guillotine.inx.h:4
 msgid "Ignore these settings and use export hints?"
@@ -1477,7 +1464,7 @@ msgstr ""
 
 #: ../share/extensions/guillotine.inx.h:5
 msgid "Image name (without extension)"
-msgstr ""
+msgstr "Bildname (ohne Erweiterung)"
 
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
@@ -2502,7 +2489,7 @@ msgstr "Folgen der Pfadausrichtung"
 
 #: ../share/extensions/pathscatter.inx.h:6
 msgid "If pattern is a group, pick group members"
-msgstr ""
+msgstr "Ist das Muster eine Gruppe, wähle die Gruppenobjekte aus."
 
 #: ../share/extensions/pathscatter.inx.h:7
 msgid "Moved"
@@ -2517,7 +2504,6 @@ msgid "Pick group members:"
 msgstr ""
 
 #: ../share/extensions/pathscatter.inx.h:12
-#, fuzzy
 msgid "Randomly"
 msgstr "Zufallsänderung"
 
@@ -2529,9 +2515,8 @@ msgid "Scatter"
 msgstr "Streuung"
 
 #: ../share/extensions/pathscatter.inx.h:14
-#, fuzzy
 msgid "Sequentially"
-msgstr "Füllung festlegen"
+msgstr "Sequentiel"
 
 #: ../share/extensions/pathscatter.inx.h:16
 msgid "Stretch spaces to fit skeleton length"
@@ -3990,9 +3975,8 @@ msgid "Vector Graphics Editor"
 msgstr "Vektorgrafik-Editor"
 
 #: ../share/extensions/dimension.py:105
-#, fuzzy
 msgid "Please select an object."
-msgstr "Gewählte Objekte duplizieren"
+msgstr "Bitte wählen Sie ein Objekt."
 
 #: ../share/extensions/dimension.py:130
 msgid "Unable to process this object.  Try changing it into a path first."
@@ -7080,7 +7064,6 @@ msgid "Pick the Blue component of the color"
 msgstr "Blauanteil der Farbe übernehmen"
 
 #: ../src/dialogs/clonetiler.cpp:2647
-#, fuzzy
 msgctxt "Clonetiler color hue"
 msgid "H"
 msgstr "H"
@@ -7090,7 +7073,6 @@ msgid "Pick the hue of the color"
 msgstr "Farbton des Farbwertes übernehmen"
 
 #: ../src/dialogs/clonetiler.cpp:2655
-#, fuzzy
 msgctxt "Clonetiler color saturation"
 msgid "S"
 msgstr "S"
@@ -7100,7 +7082,6 @@ msgid "Pick the saturation of the color"
 msgstr "Sättigung des Farbwertes übernehmen"
 
 #: ../src/dialogs/clonetiler.cpp:2663
-#, fuzzy
 msgctxt "Clonetiler color lightness"
 msgid "L"
 msgstr "L"
@@ -7531,7 +7512,6 @@ msgstr "Klone durchsuchen"
 #. TRANSLATORS: "Clones" is a noun indicating type of object to find
 #: ../src/dialogs/find.cpp:610
 #: ../src/ui/dialog/find.cpp:80
-#, fuzzy
 msgctxt "Find dialog"
 msgid "Clones"
 msgstr "Klone"
@@ -13011,10 +12991,9 @@ msgid "The selection has no applied path effect."
 msgstr "Auf die Selektion ist kein Pfad-Effekt angewandt."
 
 #: ../src/selection-chemistry.cpp:2055
-#, fuzzy
 msgctxt "Action"
 msgid "Clone"
-msgstr "Geklont"
+msgstr "Klone"
 
 #: ../src/selection-chemistry.cpp:2071
 msgid "Select <b>clones</b> to relink."
@@ -13208,10 +13187,9 @@ msgstr "3D-Box"
 
 #. TRANSLATORS: "Clone" is a noun, type of object
 #: ../src/selection-describer.cpp:70
-#, fuzzy
 msgctxt "Object"
 msgid "Clone"
-msgstr "Geklont"
+msgstr "Klone"
 
 # !!! verb or noun?
 #: ../src/selection-describer.cpp:74
@@ -14512,9 +14490,8 @@ msgid "Arrange connector network"
 msgstr "Netzwerk von Objektverbindern anordnen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:632
-#, fuzzy
 msgid "Exchange Positions"
-msgstr "Positionen zufällig machen"
+msgstr "Positionne verändern"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:665
 msgid "Unclump"
@@ -14644,15 +14621,15 @@ msgstr "Das gewählte Netzwerk von Objektverbindern gefällig anordnen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:984
 msgid "Exchange positions of selected objects - selection order"
-msgstr ""
+msgstr "Ändern der Position der ausgewählten Objekte - Auswahlanordnung"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:987
 msgid "Exchange positions of selected objects - stacking order"
-msgstr ""
+msgstr "Ändern der Position der ausgewählten Objekte - Stapelanordnung"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:990
 msgid "Exchange positions of selected objects - clockwise rotate"
-msgstr ""
+msgstr "Ändern der Position der ausgewählten Objekte - im Uhrzeigersinn rotierend"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:995
 msgid "Randomize centers in both dimensions"
@@ -18283,7 +18260,6 @@ msgid "Interval (in minutes) at which document will be autosaved"
 msgstr "In diesen Zeitabständen (in Minuten) wird das Dokument automatisch gespeichert."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1189
-#, fuzzy
 msgctxt "Filesystem"
 msgid "Path:"
 msgstr "Verzeichnis:"
@@ -20084,7 +20060,6 @@ msgstr "Breiter"
 
 #. TRANSLATORS: "Wrap" indicates how colour swatches are displayed
 #: ../src/ui/widget/panel.cpp:203
-#, fuzzy
 msgctxt "Swatches"
 msgid "Wrap"
 msgstr "Umbrechen"
