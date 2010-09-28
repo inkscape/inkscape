@@ -295,6 +295,19 @@ Effect::effect (Inkscape::UI::View::View * doc)
 void
 Effect::set_last_effect (Effect * in_effect)
 {
+    gchar const * verb_id = in_effect->get_verb()->get_id();
+    gchar const * help_id_prefix = "org.inkscape.help.";
+
+    // We don't want these "effects" to register as the last effect,
+    // this wouldn't be helpful to the user who selects a real effect,
+    // then goes to the help file (implemented as an effect), then goes
+    // back to the effect, only to see it written over by the help file
+    // selection.
+
+    // This snippet should fix this bug:
+    // https://bugs.launchpad.net/inkscape/+bug/600671
+    if (strncmp(verb_id, help_id_prefix, strlen(help_id_prefix)) == 0) return;
+
     if (in_effect == NULL) {
         Inkscape::Verb::get(SP_VERB_EFFECT_LAST)->sensitive(NULL, false);
         Inkscape::Verb::get(SP_VERB_EFFECT_LAST_PREF)->sensitive(NULL, false);
