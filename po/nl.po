@@ -7097,7 +7097,7 @@ msgstr "Selecteer de gesommeerde ondoorzichtigheid"
 
 #: ../src/dialogs/clonetiler.cpp:2623
 msgid "R"
-msgstr "Rood"
+msgstr "R"
 
 #: ../src/dialogs/clonetiler.cpp:2624
 msgid "Pick the Red component of the color"
@@ -7105,7 +7105,7 @@ msgstr "Selecteer de roodcomponent van de kleur"
 
 #: ../src/dialogs/clonetiler.cpp:2631
 msgid "G"
-msgstr "Groen"
+msgstr "G"
 
 #: ../src/dialogs/clonetiler.cpp:2632
 msgid "Pick the Green component of the color"
@@ -7113,7 +7113,7 @@ msgstr "Selecteer de groencomponent van de kleur"
 
 #: ../src/dialogs/clonetiler.cpp:2639
 msgid "B"
-msgstr "Blauw"
+msgstr "B"
 
 #: ../src/dialogs/clonetiler.cpp:2640
 msgid "Pick the Blue component of the color"
