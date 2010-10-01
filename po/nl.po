@@ -558,9 +558,9 @@ msgid ""
 "    * Starting dot number: first number in the sequence, assigned to the first node of the path.\n"
 "    * Step: numbering step between two nodes."
 msgstr ""
-"Deze uitbreiding vervangt de knooppunten van de selectie met genummerde punten met de volgende opties:\n"
+"Deze uitbreiding vervangt de knooppunten van de selectie met genummerde punten met de opties:\n"
 "    * Lettergrootte: grootte van de labels (20px, 12pt, ... ).\n"
-"    * Puntgrootte: diameter van de merktekens op de knooppunten (10px, 2mm, ... ).\n
+"    * Puntgrootte: diameter van de merktekens op de knooppunten (10px, 2mm, ... ).\n"
 "    * Startknooppunt: eerste nummer in de sequentie toegekend aan het eerste knooppunt van het pad.\n"
 "    * Stap: stapgrootte nummering tussen twee knooppunten."
 
