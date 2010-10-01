@@ -245,7 +245,13 @@ msgid ""
 "  Red Function: r*0.5 \n"
 "  Green Function: b \n"
 "  Blue Function: g"
-msgstr ""
+msgstr "Deze uitbreiding laat je toe verschillende functies te evalueren voor elk kleurkanaal\n"
+"R, g en b zijn de genormaliseerde waarden voor het rood-, groen- en blauwkanaal. De resulterende RGB-waarden worden automatisch vastgelegd.\n"
+" \n"
+"Voorbeeld (halveren rood, groen en blauw omwisselen):\n"
+"  Roodfunctie: r*0.5 \n"
+"  Groenfunctie: b \n"
+"  Blauwfunctie: g"
 
 #: ../share/extensions/color_custom.inx.h:8
 msgid "Blue Function:"
@@ -383,7 +389,7 @@ msgstr "Negatief"
 
 #: ../share/extensions/color_randomize.inx.h:2
 msgid "Converts to HSL, randomizes hue and/or saturation and/or lightness and converts it back to RGB."
-msgstr ""
+msgstr "Converteert naar TVH, randomiseert tint en/of verzadiging en/of helderheid"
 
 #: ../share/extensions/color_randomize.inx.h:4
 #: ../src/flood-context.cpp:250
@@ -530,7 +536,7 @@ msgstr "Puntgrootte:"
 #: ../share/extensions/dots.inx.h:2
 #: ../src/widgets/font-selector.cpp:226
 msgid "Font size:"
-msgstr "Grootte:"
+msgstr "Lettergrootte:"
 
 #: ../share/extensions/dots.inx.h:4
 msgid "Number Nodes"
@@ -538,11 +544,11 @@ msgstr "Knooppunten nummeren"
 
 #: ../share/extensions/dots.inx.h:6
 msgid "Starting dot number:"
-msgstr ""
+msgstr "Startknooppunt:"
 
 #: ../share/extensions/dots.inx.h:7
 msgid "Step:"
-msgstr ""
+msgstr "Stap:"
 
 #: ../share/extensions/dots.inx.h:8
 msgid ""
@@ -552,6 +558,11 @@ msgid ""
 "    * Starting dot number: first number in the sequence, assigned to the first node of the path.\n"
 "    * Step: numbering step between two nodes."
 msgstr ""
+"Deze uitbreiding vervangt de knooppunten van de selectie met genummerde punten met de volgende opties:\n"
+"    * Lettergrootte: grootte van de labels (20px, 12pt, ... ).\n"
+"    * Puntgrootte: diameter van de merktekens op de knooppunten (10px, 2mm, ... ).\n
+"    * Startknooppunt: eerste nummer in de sequentie toegekend aan het eerste knooppunt van het pad.\n"
+"    * Stap: stapgrootte nummering tussen twee knooppunten."
 
 #: ../share/extensions/draw_from_triangle.inx.h:1
 msgid "Altitudes"
@@ -792,7 +803,7 @@ msgstr "DXF-invoer"
 
 #: ../share/extensions/dxf_input.inx.h:9
 msgid "Gcodetools compatible point import"
-msgstr ""
+msgstr "Gcodetools compatibele import punten"
 
 #: ../share/extensions/dxf_input.inx.h:11
 msgid "Import AutoCAD's Document Exchange Format"
@@ -1612,7 +1623,7 @@ msgstr "Bedieningsoverzicht"
 
 #: ../share/extensions/inkscape_help_keys.inx.h:2
 msgid "http://inkscape.org/doc/keys048.html"
-msgstr ""
+msgstr "http://inkscape.org/doc/keys048.html"
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
 msgid "Inkscape Manual"
@@ -1684,9 +1695,8 @@ msgid "Height"
 msgstr "Hoogte"
 
 #: ../share/extensions/interp_att_g.inx.h:9
-#, fuzzy
 msgid "If you select \"Other\", you must know the SVG attributes to identify here this \"other\"."
-msgstr "Indien je \"Anders\" selecteert, moet je de SVG-attributen identificeren en hier invullen:"
+msgstr "Indien je \"Anders\" selecteert, moet je de SVG-attributen kennen en hier invullen:"
 
 #: ../share/extensions/interp_att_g.inx.h:10
 msgid "Integer Number"
@@ -2595,7 +2605,7 @@ msgstr "Ad random"
 #: ../share/filters/filters.svg.h:77
 #: ../share/filters/filters.svg.h:86
 msgid "Scatter"
-msgstr "Verspreid"
+msgstr "Verspreiden"
 
 #: ../share/extensions/pathscatter.inx.h:16
 msgid "Sequentially"
@@ -3040,7 +3050,7 @@ msgstr "Knooppunten verschuiven"
 
 #: ../share/extensions/radiusrand.inx.h:9
 msgid "This effect randomly shifts the nodes (and optionally node handles) of the selected path."
-msgstr "Dit effect verschuift op een willekeurige manier de knopen (en eventueel de handvatten) van het geselecteerde pad."
+msgstr "Dit effect verschuift op een willekeurige manier de knooppunten (en eventueel de handvatten) van het geselecteerde pad."
 
 #: ../share/extensions/radiusrand.inx.h:10
 msgid "Use normal distribution"
@@ -4688,7 +4698,7 @@ msgstr "Texturen"
 
 #: ../share/filters/filters.svg.h:35
 msgid "Bulging, knotty, slick 3D surface"
-msgstr "Effen 3D oppervlak, met uitsteeksels en knopen"
+msgstr "Effen 3D oppervlak, met uitsteeksels en knobbels"
 
 #: ../share/filters/filters.svg.h:36
 msgid "Barbed wire"
@@ -4756,7 +4766,7 @@ msgstr "Van Gogh-verfeffect voor bitmaps"
 
 #: ../share/filters/filters.svg.h:44
 msgid "HSL Bumps"
-msgstr "TVL-reliëf"
+msgstr "TVH-reliëf"
 
 # het blijkt hier ook om embossering te gaan: in Inkscape consistent als reliëf aangeduid
 #: ../share/filters/filters.svg.h:44
@@ -5148,7 +5158,7 @@ msgstr "Aerosol"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Convert to small scattered particles with some thickness"
-msgstr "Naar kleine verspreidde deeltjes met enige dikte omzetten"
+msgstr "Naar kleine verspreide deeltjes met enige dikte omzetten"
 
 #: ../share/filters/filters.svg.h:87
 msgid "Warm inside"
@@ -5281,7 +5291,7 @@ msgstr "Verlicht glaseffect met licht van onderuit"
 
 #: ../share/filters/filters.svg.h:103
 msgid "HSL Bumps alpha"
-msgstr "TVL-reliëf, alfa"
+msgstr "TVH-reliëf, alfa"
 
 #: ../share/filters/filters.svg.h:103
 #: ../share/filters/filters.svg.h:104
@@ -5301,7 +5311,7 @@ msgstr "Afbeeldingseffecten, transparant"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Same as HSL Bumps but with transparent highlights"
-msgstr "Gelijk aan TVL-reliëf, maar met transparantie"
+msgstr "Gelijk aan TVH-reliëf, maar met transparantie"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Bubbly Bumps alpha"
@@ -5436,11 +5446,11 @@ msgstr "Gloed naar binnen en buiten met een mogelijke offset en gekleurde vullin
 
 #: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
-msgstr "TVL-reliëf, mat"
+msgstr "TVH-reliëf, mat"
 
 #: ../share/filters/filters.svg.h:120
 msgid "Same as HSL bumps but with a diffuse reflection instead of a specular one"
-msgstr "Gelijk aan TVL-reliëf, maar met een diffuse reflectie in plaats van een spiegelende"
+msgstr "Gelijk aan TVH-reliëf, maar met een diffuse reflectie in plaats van een spiegelende"
 
 #: ../share/filters/filters.svg.h:121
 msgid "Dark Emboss"
@@ -5782,7 +5792,7 @@ msgstr "Een kleine korrel toevoegen"
 
 #: ../share/filters/filters.svg.h:161
 msgid "HSL Bumps, transparent"
-msgstr "TVL-reliëf, transparant"
+msgstr "TVH-reliëf, transparant"
 
 #: ../share/filters/filters.svg.h:161
 msgid "Highly flexible specular bump with transparency"
@@ -5916,7 +5926,7 @@ msgstr "Gepointilliseerde transparantie"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Gives a pointillist HSL sensitive transparency"
-msgstr "Geeft een gepointilliseerde TVL-gevoelige transparantie"
+msgstr "Geeft een gepointilliseerde TVH-gevoelige transparantie"
 
 #: ../share/filters/filters.svg.h:178
 msgid "Canvas transparency"
@@ -5924,7 +5934,7 @@ msgstr "Doekachtige transparantie"
 
 #: ../share/filters/filters.svg.h:178
 msgid "Gives a canvas like HSL sensitive transparency"
-msgstr "Geeft een doekachtige TLV-gevoelige transparantie"
+msgstr "Geeft een doekachtige TVH-gevoelige transparantie"
 
 #: ../share/filters/filters.svg.h:179
 msgid "Smear transparency"
@@ -5956,7 +5966,7 @@ msgstr "Leer met reliëf"
 
 #: ../share/filters/filters.svg.h:182
 msgid "Combine a HSL edges detection bump with a leathery or woody and colorizable texture"
-msgstr "Combineert een TLV-randdetectie met een verkleurbare lederachtige of houten textuur"
+msgstr "Combineert een TVH-randdetectie met een verkleurbare lederachtige of houten textuur"
 
 #: ../share/filters/filters.svg.h:183
 msgid "Carnaval"
@@ -5972,7 +5982,7 @@ msgstr "Plastificeren"
 
 #: ../share/filters/filters.svg.h:184
 msgid "HSL edges detection bump with a wavy reflective surface effect and variable crumple"
-msgstr "TLV-randdetectie met een golvend en spiegelend oppervlakteeffect en variabele kreuken"
+msgstr "TVH-randdetectie met een golvend en spiegelend oppervlakteeffect en variabele kreuken"
 
 #: ../share/filters/filters.svg.h:185
 msgid "Plaster"
@@ -5980,7 +5990,7 @@ msgstr "Bepleisteren"
 
 #: ../share/filters/filters.svg.h:185
 msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
-msgstr "Combineert een TLV-randdetectie met een mat en verkreukeld oppervlakteeffect"
+msgstr "Combineert een TVH-randdetectie met een mat en verkreukeld oppervlakteeffect"
 
 #: ../share/filters/filters.svg.h:186
 msgid "Rough transparency"
@@ -6116,7 +6126,7 @@ msgstr "Gebogen doek"
 
 #: ../share/filters/filters.svg.h:202
 msgid "Canvas texture with an HSL sensitive height map"
-msgstr "Doektextuur met een TLV-gevoelige hoogtekaart"
+msgstr "Doektextuur met een TVH-gevoelige hoogtekaart"
 
 #: ../share/filters/filters.svg.h:203
 msgid "Canvas Bumps, matte"
@@ -7343,11 +7353,11 @@ msgstr "Bree_dte:"
 #: ../src/dialogs/export.cpp:484
 #: ../src/dialogs/export.cpp:498
 msgid "pixels at"
-msgstr "beeldpunten, met"
+msgstr "beeldpunten met"
 
 #: ../src/dialogs/export.cpp:492
 msgid "dp_i"
-msgstr "dp_i"
+msgstr "pp_i"
 
 #: ../src/dialogs/export.cpp:498
 #: ../src/ui/widget/page-sizer.cpp:232
@@ -8806,37 +8816,37 @@ msgstr "Laag:"
 #: ../src/extension/internal/bitmap/channel.cpp:50
 #: ../src/extension/internal/bitmap/levelChannel.cpp:54
 msgid "Red Channel"
-msgstr "Rood kanaal"
+msgstr "Roodkanaal"
 
 #: ../src/extension/internal/bitmap/channel.cpp:51
 #: ../src/extension/internal/bitmap/levelChannel.cpp:55
 msgid "Green Channel"
-msgstr "Groen kanaal"
+msgstr "Groenkanaal"
 
 #: ../src/extension/internal/bitmap/channel.cpp:52
 #: ../src/extension/internal/bitmap/levelChannel.cpp:56
 msgid "Blue Channel"
-msgstr "Blauw kanaal"
+msgstr "Blauwkanaal"
 
 #: ../src/extension/internal/bitmap/channel.cpp:53
 #: ../src/extension/internal/bitmap/levelChannel.cpp:57
 msgid "Cyan Channel"
-msgstr "Cyaan kanaal"
+msgstr "Cyaankanaal"
 
 #: ../src/extension/internal/bitmap/channel.cpp:54
 #: ../src/extension/internal/bitmap/levelChannel.cpp:58
 msgid "Magenta Channel"
-msgstr "Magenta kanaal"
+msgstr "Magentakanaal"
 
 #: ../src/extension/internal/bitmap/channel.cpp:55
 #: ../src/extension/internal/bitmap/levelChannel.cpp:59
 msgid "Yellow Channel"
-msgstr "Geel kanaal"
+msgstr "Geelkanaal"
 
 #: ../src/extension/internal/bitmap/channel.cpp:56
 #: ../src/extension/internal/bitmap/levelChannel.cpp:60
 msgid "Black Channel"
-msgstr "Zwart kanaal"
+msgstr "Zwartkanaal"
 
 #: ../src/extension/internal/bitmap/channel.cpp:57
 #: ../src/extension/internal/bitmap/levelChannel.cpp:61
@@ -10369,7 +10379,7 @@ msgstr "Pc"
 
 #: ../src/helper/units.cpp:40
 msgid "Pixel"
-msgstr "pixel"
+msgstr "Pixel"
 
 #: ../src/helper/units.cpp:40
 #: ../src/ui/dialog/inkscape-preferences.cpp:253
@@ -10381,7 +10391,7 @@ msgstr "px"
 
 #: ../src/helper/units.cpp:40
 msgid "Pixels"
-msgstr "pixels"
+msgstr "Pixels"
 
 #: ../src/helper/units.cpp:40
 msgid "Px"
@@ -14523,7 +14533,7 @@ msgstr "Verdelen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:467
 msgid "Minimum horizontal gap (in px units) between bounding boxes"
-msgstr "Minimum horizontale ruimte (in px-eenheden) tussen omvattende vakken"
+msgstr "Minimum horizontale tussenruimte (in px-eenheden) tussen omvattende vakken"
 
 #. TRANSLATORS: "H:" stands for horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:469
@@ -14533,7 +14543,7 @@ msgstr "H:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:477
 msgid "Minimum vertical gap (in px units) between bounding boxes"
-msgstr "Minimum verticale ruimte (in px-eenheden) tussen omvattende vakken"
+msgstr "Minimum verticale tussenruimte (in px-eenheden) tussen omvattende vakken"
 
 #. TRANSLATORS: Vertical gap
 #: ../src/ui/dialog/align-and-distribute.cpp:479
@@ -14635,7 +14645,7 @@ msgstr "Grondlijnankers teksten horizontaal uitlijnen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:938
 msgid "Align baselines of texts"
-msgstr "Grondlijn van teksten uitlijnen"
+msgstr "Grondlijnen van teksten uitlijnen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:943
 msgid "Make horizontal gaps between objects equal"
@@ -14684,15 +14694,15 @@ msgstr "Het geselecteerde verbindingennetwerk netjes schikken"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:984
 msgid "Exchange positions of selected objects - selection order"
-msgstr ""
+msgstr "Posities van geselecteerde objecten uitwisselen - volgens selectie"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:987
 msgid "Exchange positions of selected objects - stacking order"
-msgstr ""
+msgstr "Posities van geselecteerde objecten uitwisselen - volgens stapeling"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:990
 msgid "Exchange positions of selected objects - clockwise rotate"
-msgstr ""
+msgstr "Posities van geselecteerde objecten uitwisselen - met de klok draaien"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:995
 msgid "Randomize centers in both dimensions"
@@ -14708,19 +14718,19 @@ msgstr "Objecten zo min mogelijk verplaatsen opdat hun omvattende vakken niet ov
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1011
 msgid "Align selected nodes to a common horizontal line"
-msgstr "De geselecteerde knopen uitlijnen op een gemeenschappelijke horizontale lijn"
+msgstr "De geselecteerde knooppunten uitlijnen op een gemeenschappelijke horizontale lijn"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1014
 msgid "Align selected nodes to a common vertical line"
-msgstr "De geselecteerde knopen uitlijnen op een gemeenschappelijke verticale lijn"
+msgstr "De geselecteerde knooppunten uitlijnen op een gemeenschappelijke verticale lijn"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1017
 msgid "Distribute selected nodes horizontally"
-msgstr "De geselecteerde knopen horizontaal verdelen"
+msgstr "De geselecteerde knooppunten horizontaal verdelen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1020
 msgid "Distribute selected nodes vertically"
-msgstr "De geselecteerde knopen verticaal verdelen"
+msgstr "De geselecteerde knooppunten verticaal verdelen"
 
 #. Rest of the widgetry
 #: ../src/ui/dialog/align-and-distribute.cpp:1025
@@ -16610,7 +16620,7 @@ msgstr "pixels"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:179
 msgid "How close on the screen you need to be to an object to be able to grab it with mouse (in screen pixels)"
-msgstr "Hoe dicht u naast een object moet klikken om het te selecteren met de muis (in pixels)"
+msgstr "Hoe dicht u naast een object moet klikken om het te selecteren met de muis (in schermpixels)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:181
 msgid "Click/drag threshold:"
@@ -16618,7 +16628,7 @@ msgstr "Grenswaarde tussen klikken/slepen:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:182
 msgid "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
-msgstr "Maximale verschuiving van de muis (in pixels) die nog als klikken en niet als slepen wordt geïnterpreteerd."
+msgstr "Maximale verschuiving van de muis (in schermpixels) die nog als klikken en niet als slepen wordt geïnterpreteerd."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:184
 #: ../src/ui/dialog/input.cpp:880
@@ -16752,7 +16762,7 @@ msgstr "Pijltjestoetsen verschuiven met:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:254
 msgid "Pressing an arrow key moves selected object(s) or node(s) by this distance (in px units)"
-msgstr "Een pijltjestoets indrukken verplaatst de geselecteerde objecten of knooppunten zoveel (in pixels)"
+msgstr "Een pijltjestoets indrukken verplaatst de geselecteerde objecten of knooppunten zoveel (pixels)"
 
 #. defaultscale is limited to 1000 in select-context.cpp: use the same limit here
 #: ../src/ui/dialog/inkscape-preferences.cpp:257
@@ -16769,7 +16779,7 @@ msgstr "Vernauwen/verwijden met:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:261
 msgid "Inset and Outset commands displace the path by this distance (in px units)"
-msgstr "Vernauwing en verwijding verplaatsen het pad met deze afstand (in pixels)"
+msgstr "Vernauwing en verwijding verplaatsen het pad met deze afstand (pixels)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:262
 msgid "Compass-like display of angles"
@@ -18837,7 +18847,7 @@ msgstr "Fouten"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:121
 msgid "Set SVG Font attribute"
-msgstr "SVG lettertypekenmerk instellen"
+msgstr "SVG-lettertypekenmerk instellen"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:174
 msgid "Adjust kerning value"
@@ -18849,7 +18859,7 @@ msgstr "Familie:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:374
 msgid "Set width:"
-msgstr "Breedte instellen"
+msgstr "Breedte instellen:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:433
 msgid "glyph"
@@ -19084,11 +19094,11 @@ msgstr "Tussenafstand:"
 
 #: ../src/ui/dialog/tile.cpp:821
 msgid "Vertical spacing between rows (px units)"
-msgstr "Verticale ruimte tussen rijen (in pixels)"
+msgstr "Verticale ruimte tussen rijen (pixels)"
 
 #: ../src/ui/dialog/tile.cpp:846
 msgid "Horizontal spacing between columns (px units)"
-msgstr "Horizontale ruimte tussen kolommen (in pixels)"
+msgstr "Horizontale ruimte tussen kolommen (pixels)"
 
 #. ## The OK button
 #: ../src/ui/dialog/tile.cpp:869
@@ -21346,7 +21356,7 @@ msgstr "_Vereenvoudigen"
 
 #: ../src/verbs.cpp:2400
 msgid "Simplify selected paths (remove extra nodes)"
-msgstr "Geselecteerde paden vereenvoudigen (overbodige knopen verwijderen)"
+msgstr "Geselecteerde paden vereenvoudigen (overbodige knooppunten verwijderen)"
 
 #: ../src/verbs.cpp:2401
 msgid "_Reverse"
@@ -23047,7 +23057,7 @@ msgstr "RGB"
 # Tint-Verzadiging-Licht.
 #: ../src/widgets/sp-color-scales.cpp:80
 msgid "HSL"
-msgstr "TVL"
+msgstr "TVH"
 
 #: ../src/widgets/sp-color-scales.cpp:80
 msgid "CMYK"
@@ -24169,7 +24179,7 @@ msgstr "(ruw, vereenvoudigd)"
 
 #: ../src/widgets/toolbox.cpp:4491
 msgid "(fine, but many nodes)"
-msgstr "(fijn, maar veel knopen)"
+msgstr "(fijn, maar veel knooppunten)"
 
 #: ../src/widgets/toolbox.cpp:4494
 msgid "Fidelity"
