@@ -19,12 +19,12 @@
   <param name="bg-color" type="string" _gui-text="Background color:"></param>
   <param name="tab" type="notebook">
     <page name="tabJPG" gui-text="JPG">
-      <_param name="help-jpg" type="description"><b>JPG specific options</b></_param>
+      <_param name="help-jpg" type="groupheader">JPG specific options</_param>
       <param name="quality" type="int" min="0" max="100" _gui-text="Quality:">85</param>
       <_param name="help-quality" type="description">0 is the lowest image quality and highest compression, and 100 is the best quality but least effective compression</_param>
     </page>
     <page name="tabGIF" gui-text="GIF">
-      <_param name="help-gif" type="description"><b>GIF specific options</b></_param>
+      <_param name="help-gif" type="groupheader">GIF specific options</_param>
       <param name="gif-type" type="enum" _gui-text="Type:">
         <_item value="grayscale">Grayscale</_item>
         <_item value="palette">Palette</_item>
@@ -34,7 +34,7 @@
     <page name="tabHTML" gui-text="HTML">
       <param name="html-id" type="string" _gui-text="HTML id attribute:"></param>
       <param name="html-class" type="string" _gui-text="HTML class attribute:"></param>
-      <_param name="help-gif" type="description"><b>Options for HTML export</b></_param>
+      <_param name="help-gif" type="groupheader">Options for HTML export</_param>
       <param name="layout-disposition" type="enum" _gui-text="Layout disposition:">
         <_item value="bg-el-norepeat">Positioned html block element with the image as Background</_item>
         <_item value="bg-parent-repeat">Tiled Background (on parent group)</_item>

@@ -7,7 +7,7 @@
   <param name="tab" type="notebook">
     <page name="settings" _gui-text="Settings">
 			<param name="layerName" type="string" _gui-text="Name of layer:"></param>
-			<_param name="effectInLabel" type="description">Transition in effect</_param>
+			<_param name="effectInLabel" type="groupheader">Transition in effect</_param>
 			<param name="effectInDuration" precision="1" type="float" min="0.1" max="10.0" _gui-text="Duration in seconds:">0.8</param>
 			<param name="effectIn" type="optiongroup" _gui-text="Type:">
         <_option value="default">Default</_option>
@@ -15,7 +15,7 @@
         <_option value="fade">Fade</_option>
         <_option value="pop">Pop</_option>
 			</param>
-			<_param name="effectOutLabel" type="description">Transition out effect</_param>
+			<_param name="effectOutLabel" type="groupheader">Transition out effect</_param>
 			<param name="effectOutDuration" precision="1" type="float" min="0.1" max="10.0" _gui-text="Duration in seconds:">0.8</param>
 			<param name="effectOut" type="optiongroup" _gui-text="Type:">
         <_option value="default">Default</_option>

@@ -6,7 +6,7 @@
   <dependency type="executable" location="extensions">jessyInk_effects.py</dependency>
   <param name="tab" type="notebook">
     <page name="settings" _gui-text="Settings">
-			<_param name="effectInLabel" type="description">Build-in effect</_param>
+			<_param name="effectInLabel" type="groupheader">Build-in effect</_param>
 			<param name="effectInOrder" type="int" min="1" max="100" _gui-text="Order:">1</param>
 			<param name="effectInDuration" precision="1" type="float" min="0.1" max="10.0" _gui-text="Duration in seconds:">0.8</param>
 			<param name="effectIn" type="optiongroup" _gui-text="Type:">
@@ -15,7 +15,7 @@
         <_option value="fade">Fade</_option>
         <_option value="pop">Pop</_option>
 			</param>
-			<_param name="effectOutLabel" type="description">Build-out effect</_param>
+			<_param name="effectOutLabel" type="groupheader">Build-out effect</_param>
 			<param name="effectOutOrder" type="int" min="1" max="100" _gui-text="Order:">1</param>
 			<param name="effectOutDuration" precision="1" type="float" min="0.1" max="10.0" _gui-text="Duration in seconds:">0.8</param>
 			<param name="effectOut" type="optiongroup" _gui-text="Type:">
