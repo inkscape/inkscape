@@ -18,7 +18,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 import inkex
-import sys, os, tempfile
+import sys, os, tempfile, shutil
+import gettext
 
 try:
     from subprocess import Popen, PIPE
@@ -48,14 +49,20 @@ class MyEffect(inkex.Effect):
     def output(self):
         pass
 
+    def clear_tmp(self):
+        shutil.rmtree(self.tmp_dir)
+
     def effect(self):
         svg_file = self.args[-1]
-        docname = self.xpathSingle('/svg:svg/@sodipodi:docname')[:-4]
+        ttmp_orig = self.document.getroot()
+        docname = ttmp_orig.get(inkex.addNS('docname',u'sodipodi'))
+        if docname is None: docname = self.args[-1]
+
         pageHeight = int(inkex.unittouu(self.xpathSingle('/svg:svg/@height').split('.')[0]))
         pageWidth = int(inkex.unittouu(self.xpathSingle('/svg:svg/@width').split('.')[0]))
 
         #create os temp dir
-        tmp_dir = tempfile.mkdtemp()
+        self.tmp_dir = tempfile.mkdtemp()
 
         # Guides
         hGuides = []
@@ -114,15 +121,17 @@ class MyEffect(inkex.Effect):
             opacity += "0"
         pngs = []
         names = []
+        valid = 0
         path = "/svg:svg/*[name()='g' or @style][@id]"
         for node in self.document.xpath(path, namespaces=inkex.NSS):
             if len(node) > 0: # Get rid of empty layers
+                valid=1
                 id = node.get('id')
                 if node.get("{" + inkex.NSS["inkscape"] + "}label"):
                     name = node.get("{" + inkex.NSS["inkscape"] + "}label")
                 else:
                     name = id
-                filename = os.path.join(tmp_dir, "%s.png" % id)
+                filename = os.path.join(self.tmp_dir, "%s.png" % id)
                 command = "inkscape -i %s -j %s %s -e %s %s " % (id, area, opacity, filename, svg_file)
                 if bsubprocess:
                     p = Popen(command, shell=True, stdout=PIPE, stderr=PIPE)
@@ -139,9 +148,14 @@ class MyEffect(inkex.Effect):
                 pngs.append(filename)
                 names.append(name.encode('utf-8'))
 
+        if (valid==0):
+            inkex.errormsg(gettext.gettext('This extension requires at least one non empty layer.'))
+            self.clear_tmp()
+            sys.exit(0)
+
         filelist = '"%s"' % '" "'.join(pngs)
         namelist = '"%s"' % '" "'.join(names)
-        xcf = os.path.join(tmp_dir, "%s.xcf" % docname)
+        xcf = os.path.join(self.tmp_dir, "%s.xcf" % docname)
         if os.name == 'nt':
             xcf = xcf.replace("\\", "/")
         script_fu = """
@@ -194,7 +208,7 @@ class MyEffect(inkex.Effect):
 (gimp-quit 0)
         """ % (filelist, namelist, hGList, vGList, gridSpacingFunc, gridOriginFunc, xcf, xcf)
 
-        junk = os.path.join(tmp_dir, 'junk_from_gimp.txt')
+        junk = os.path.join(self.tmp_dir, 'junk_from_gimp.txt')
         f = os.popen('gimp -i --batch-interpreter plug-in-script-fu-eval -b - > %s 2>&1' % junk,'w')
         f.write(script_fu)
         f.close()
@@ -212,6 +226,8 @@ class MyEffect(inkex.Effect):
                 pass
         sys.stdout.write(x.read())
         x.close()
+        self.clear_tmp()
+
 
 if __name__ == '__main__':
     e = MyEffect()
