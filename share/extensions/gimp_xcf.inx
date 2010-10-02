@@ -18,7 +18,7 @@
     * Save Grid: convert the first rectangular grid to a Gimp grid (note that the default Inkscape grid is very narrow when shown in Gimp).
     * Save Background: add the document background to each converted layer.
 
-Each first level layer is converted to a Gimp layer. Sublayers are are concatenated and converted with their first level parent layer into a single Gimp layer.</_param>
+Each first level layer is converted to a Gimp layer. Sublayers are concatenated and converted with their first level parent layer into a single Gimp layer.</_param>
         </page>
     </param>        
     <output>

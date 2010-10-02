@@ -27,8 +27,8 @@ namespace LivePathEffect {
 
 LPEInterpolate::LPEInterpolate(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    trajectory_path(_("Trajectory"), _("Path along which intermediate steps are created."), "trajectory", &wr, this, "M0,0 L0,0"),
-    number_of_steps(_("Steps"), _("Determines the number of steps from start to end path."), "steps", &wr, this, 5),
+    trajectory_path(_("Trajectory:"), _("Path along which intermediate steps are created."), "trajectory", &wr, this, "M0,0 L0,0"),
+    number_of_steps(_("Steps:"), _("Determines the number of steps from start to end path."), "steps", &wr, this, 5),
     equidistant_spacing(_("Equidistant spacing"), _("If true, the spacing between intermediates is constant along the length of the path. If false, the distance depends on the location of the nodes of the trajectory path."), "equidistant_spacing", &wr, this, true)
 {
     show_orig_path = true;

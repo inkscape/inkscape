@@ -732,7 +732,7 @@ Gtk::VBox* SvgFontsDialog::kerning_tab(){
     create_kerning_pairs_popup_menu(_KerningPairsList, sigc::mem_fun(*this, &SvgFontsDialog::remove_selected_kerning_pair));
 
 //Kerning Setup:
-    kerning_vbox.add(*Gtk::manage(new Gtk::Label(_("<b>Kerning Setup</b>"))));
+    kerning_vbox.add(*Gtk::manage(new Gtk::Label(_("Kerning Setup"))));
     Gtk::HBox* kerning_selector = Gtk::manage(new Gtk::HBox());
     kerning_selector->add(*Gtk::manage(new Gtk::Label(_("1st Glyph:"))));
     kerning_selector->add(first_glyph);

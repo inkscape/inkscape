@@ -32,34 +32,34 @@ LPESketch::LPESketch(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     // initialise your parameters here:
     //testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
-    nbiter_approxstrokes(_("Strokes"), _("Draw that many approximating strokes"), "nbiter_approxstrokes", &wr, this, 5),
-    strokelength(_("Max stroke length"),
+    nbiter_approxstrokes(_("Strokes:"), _("Draw that many approximating strokes"), "nbiter_approxstrokes", &wr, this, 5),
+    strokelength(_("Max stroke length:"),
                  _("Maximum length of approximating strokes"), "strokelength", &wr, this, 100.),
-    strokelength_rdm(_("Stroke length variation"),
+    strokelength_rdm(_("Stroke length variation:"),
                      _("Random variation of stroke length (relative to maximum length)"), "strokelength_rdm", &wr, this, .3),
-    strokeoverlap(_("Max. overlap"),
+    strokeoverlap(_("Max. overlap:"),
                   _("How much successive strokes should overlap (relative to maximum length)"), "strokeoverlap", &wr, this, .3),
-    strokeoverlap_rdm(_("Overlap variation"),
+    strokeoverlap_rdm(_("Overlap variation:"),
                       _("Random variation of overlap (relative to maximum overlap)"), "strokeoverlap_rdm", &wr, this, .3),
-    ends_tolerance(_("Max. end tolerance"),
+    ends_tolerance(_("Max. end tolerance:"),
                    _("Maximum distance between ends of original and approximating paths (relative to maximum length)"), "ends_tolerance", &wr, this, .1),
-    parallel_offset(_("Average offset"),
+    parallel_offset(_("Average offset:"),
                     _("Average distance each stroke is away from the original path"), "parallel_offset", &wr, this, 5.),
-    tremble_size(_("Max. tremble"),
+    tremble_size(_("Max. tremble:"),
                  _("Maximum tremble magnitude"), "tremble_size", &wr, this, 5.),
-    tremble_frequency(_("Tremble frequency"),
+    tremble_frequency(_("Tremble frequency:"),
                       _("Average number of tremble periods in a stroke"), "tremble_frequency", &wr, this, 1.)
 #ifdef LPE_SKETCH_USE_CONSTRUCTION_LINES
-    ,nbtangents(_("Construction lines"),
+    ,nbtangents(_("Construction lines:"),
                _("How many construction lines (tangents) to draw"), "nbtangents", &wr, this, 5),
-    tgtscale(_("Scale"),
+    tgtscale(_("Scale:"),
              _("Scale factor relating curvature and length of construction lines (try 5*offset)"), "tgtscale", &wr, this, 10.0),
-    tgtlength(_("Max. length"), _("Maximum length of construction lines"), "tgtlength", &wr, this, 100.0),
-    tgtlength_rdm(_("Length variation"), _("Random variation of the length of construction lines"), "tgtlength_rdm", &wr, this, .3),
-    tgt_places_rdmness(_("Placement randomness"), _("0: evenly distributed construction lines, 1: purely random placement"), "tgt_places_rdmness", &wr, this, 1.)
+    tgtlength(_("Max. length:"), _("Maximum length of construction lines"), "tgtlength", &wr, this, 100.0),
+    tgtlength_rdm(_("Length variation:"), _("Random variation of the length of construction lines"), "tgtlength_rdm", &wr, this, .3),
+    tgt_places_rdmness(_("Placement randomness:"), _("0: evenly distributed construction lines, 1: purely random placement"), "tgt_places_rdmness", &wr, this, 1.)
 #ifdef LPE_SKETCH_USE_CURVATURE
-    ,min_curvature(_("k_min"), _("min curvature"), "k_min", &wr, this, 4.0)
-    ,max_curvature(_("k_max"), _("max curvature"), "k_max", &wr, this, 1000.0)
+    ,min_curvature(_("k_min:"), _("min curvature"), "k_min", &wr, this, 4.0)
+    ,max_curvature(_("k_max:"), _("max curvature"), "k_max", &wr, this, 1000.0)
 #endif
 #endif
 {

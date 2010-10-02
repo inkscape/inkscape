@@ -40,15 +40,15 @@ static const Util::EnumDataConverter<BorderMarkType> BorderMarkTypeConverter(Bor
 
 LPERuler::LPERuler(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    mark_distance(_("Mark distance"), _("Distance between successive ruler marks"), "mark_distance", &wr, this, 20.0),
-    unit(_("Unit"), _("Unit"), "unit", &wr, this),
-    mark_length(_("Major length"), _("Length of major ruler marks"), "mark_length", &wr, this, 14.0),
-    minor_mark_length(_("Minor length"), _("Length of minor ruler marks"), "minor_mark_length", &wr, this, 7.0),
-    major_mark_steps(_("Major steps"), _("Draw a major mark every ... steps"), "major_mark_steps", &wr, this, 5),
-    shift(_("Shift marks by"), _("Shift marks by this many steps"), "shift", &wr, this, 0),
-    mark_dir(_("Mark direction"), _("Direction of marks (when viewing along the path from start to end)"), "mark_dir", MarkDirTypeConverter, &wr, this, MARKDIR_LEFT),
-    offset(_("Offset"), _("Offset of first mark"), "offset", &wr, this, 0.0),
-    border_marks(_("Border marks"), _("Choose whether to draw marks at the beginning and end of the path"), "border_marks", BorderMarkTypeConverter, &wr, this, BORDERMARK_BOTH)
+    mark_distance(_("Mark distance:"), _("Distance between successive ruler marks"), "mark_distance", &wr, this, 20.0),
+    unit(_("Unit:"), _("Unit"), "unit", &wr, this),
+    mark_length(_("Major length:"), _("Length of major ruler marks"), "mark_length", &wr, this, 14.0),
+    minor_mark_length(_("Minor length:"), _("Length of minor ruler marks"), "minor_mark_length", &wr, this, 7.0),
+    major_mark_steps(_("Major steps:"), _("Draw a major mark every ... steps"), "major_mark_steps", &wr, this, 5),
+    shift(_("Shift marks by:"), _("Shift marks by this many steps"), "shift", &wr, this, 0),
+    mark_dir(_("Mark direction:"), _("Direction of marks (when viewing along the path from start to end)"), "mark_dir", MarkDirTypeConverter, &wr, this, MARKDIR_LEFT),
+    offset(_("Offset:"), _("Offset of first mark"), "offset", &wr, this, 0.0),
+    border_marks(_("Border marks:"), _("Choose whether to draw marks at the beginning and end of the path"), "border_marks", BorderMarkTypeConverter, &wr, this, BORDERMARK_BOTH)
 {
     registerParameter(dynamic_cast<Parameter *>(&unit));
     registerParameter(dynamic_cast<Parameter *>(&mark_distance));
