@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-02 11:32+0200\n"
+"POT-Creation-Date: 2010-10-02 17:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -258,7 +258,7 @@ msgstr ""
 #: ../share/extensions/pathalongpath.inx.h:7
 #: ../share/extensions/pathscatter.inx.h:10
 #: ../share/extensions/radiusrand.inx.h:6 ../share/extensions/scour.inx.h:11
-#: ../share/extensions/split.inx.h:4
+#: ../share/extensions/split.inx.h:2
 #: ../share/extensions/webslicer_create_group.inx.h:7
 #: ../share/extensions/webslicer_export.inx.h:6
 #: ../share/extensions/web-set-att.inx.h:6
@@ -874,7 +874,7 @@ msgstr ""
 msgid "Generate from Path"
 msgstr ""
 
-#: ../share/extensions/extrude.inx.h:3 ../share/extensions/split.inx.h:3
+#: ../share/extensions/extrude.inx.h:3
 msgid "Lines"
 msgstr ""
 
@@ -2212,7 +2212,7 @@ msgstr ""
 #. this->AddNewObjectsStyle(_page_lpetool, "/tools/lpetool");
 #. Text
 #: ../share/extensions/lorem_ipsum.inx.h:7
-#: ../share/extensions/replace_font.inx.h:10 ../share/extensions/split.inx.h:8
+#: ../share/extensions/replace_font.inx.h:10 ../share/extensions/split.inx.h:6
 #: ../share/extensions/text_braille.inx.h:2
 #: ../share/extensions/text_flipcase.inx.h:1
 #: ../share/extensions/text_lowercase.inx.h:1
@@ -3253,27 +3253,34 @@ msgstr ""
 msgid "r - Gear Radius (px):"
 msgstr ""
 
-#: ../share/extensions/split.inx.h:2
-msgid "Letters"
-msgstr ""
-
-#: ../share/extensions/split.inx.h:5
+#: ../share/extensions/split.inx.h:3
 msgid "Preserve original text"
 msgstr ""
 
-#: ../share/extensions/split.inx.h:6
+#: ../share/extensions/split.inx.h:4
 msgid "Split text"
 msgstr ""
 
-#: ../share/extensions/split.inx.h:7
+#: ../share/extensions/split.inx.h:5
 msgid "Split:"
 msgstr ""
 
-#: ../share/extensions/split.inx.h:9
+#: ../share/extensions/split.inx.h:7
 msgid "This effect splits texts into different lines, words or letters."
 msgstr ""
 
+#: ../share/extensions/split.inx.h:8
+msgctxt "split"
+msgid "Letters"
+msgstr ""
+
+#: ../share/extensions/split.inx.h:9
+msgctxt "split"
+msgid "Lines"
+msgstr ""
+
 #: ../share/extensions/split.inx.h:10
+msgctxt "split"
 msgid "Words"
 msgstr ""
 

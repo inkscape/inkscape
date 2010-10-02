@@ -63,12 +63,20 @@ ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const g
                 Glib::ustring newguitext, newvalue;
                 const char * contents = NULL;
                 if (node->firstChild()) contents = node->firstChild()->content();
-                if (contents != NULL)
+                if (contents != NULL) {
                     // don't translate when 'item' but do translate when '_item'
                 	// NOTE: internal extensions use build_from_mem and don't need _item but
                 	//       still need to include if are to be localized
-                     newguitext = !strcmp(chname, INKSCAPE_EXTENSION_NS "_item") ? _(contents) : contents;
-                else
+                    if (!strcmp(chname, INKSCAPE_EXTENSION_NS "_item")) {
+                        if (node->attribute("msgctxt") != NULL) {
+                            newguitext =  g_dpgettext2(NULL, node->attribute("msgctxt"), contents);
+                        } else {
+                            newguitext =  _(contents);
+                        }
+                    } else {
+                        newguitext =  contents;
+                    }
+                } else
                     continue;
 
                 const char * val = node->attribute("value");
