@@ -610,7 +610,14 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                 event_context->within_tolerance = true;
 
                 Geom::Point const button_pt(event->button.x, event->button.y);
-                tc->p0 = desktop->w2d(button_pt);
+                Geom::Point button_dt(desktop->w2d(button_pt));
+
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop);
+                m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
+                m.unSetup();
+
+                tc->p0 = button_dt;
                 Inkscape::Rubberband::get(desktop)->start(desktop, tc->p0);
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK,
@@ -645,7 +652,12 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                 event_context->within_tolerance = false;
 
                 Geom::Point const motion_pt(event->motion.x, event->motion.y);
-                Geom::Point const p = desktop->w2d(motion_pt);
+                Geom::Point p = desktop->w2d(motion_pt);
+
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop);
+                m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE);
+                m.unSetup();
 
                 Inkscape::Rubberband::get(desktop)->move(p);
                 gobble_motion_events(GDK_BUTTON1_MASK);
@@ -657,10 +669,26 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                 g_string_free(xs, FALSE);
                 g_string_free(ys, FALSE);
 
+            } else if (!sp_event_context_knot_mouseover(event_context)) {
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop);
+
+                Geom::Point const motion_w(event->motion.x, event->motion.y);
+                Geom::Point motion_dt(desktop->w2d(motion_w));
+                m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE));
+                m.unSetup();
             }
             break;
         case GDK_BUTTON_RELEASE:
             if (event->button.button == 1 && !event_context->space_panning) {
+                sp_event_context_discard_delayed_snap_event(event_context);
+
+                Geom::Point p1 = desktop->w2d(Geom::Point(event->button.x, event->button.y));
+
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop);
+                m.freeSnapReturnByRef(p1, Inkscape::SNAPSOURCE_NODE_HANDLE);
+                m.unSetup();
 
                 if (tc->grabbed) {
                     sp_canvas_item_ungrab(tc->grabbed, GDK_CURRENT_TIME);
@@ -672,9 +700,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                 if (tc->creating && event_context->within_tolerance) {
                     /* Button 1, set X & Y & new item */
                     sp_desktop_selection(desktop)->clear();
-                    Geom::Point dtp = desktop->w2d(Geom::Point(event->button.x, event->button.y));
-                    tc->pdoc = desktop->dt2doc(dtp);
-
+                    tc->pdoc = desktop->dt2doc(p1);
                     tc->show = TRUE;
                     tc->phase = 1;
                     tc->nascent_object = 1; // new object was just created
@@ -682,15 +708,13 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                     /* Cursor */
                     sp_canvas_item_show(tc->cursor);
                     // Cursor height is defined by the new text object's font size; it needs to be set
-                    // articifically here, for the text object does not exist yet:
+                    // artificially here, for the text object does not exist yet:
                     double cursor_height = sp_desktop_get_font_size_tool(desktop);
-                    sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), dtp, dtp + Geom::Point(0, cursor_height));
+                    sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), p1, p1 + Geom::Point(0, cursor_height));
                     event_context->_message_context->set(Inkscape::NORMAL_MESSAGE, _("Type text; <b>Enter</b> to start new line.")); // FIXME:: this is a copy of a string from _update_cursor below, do not desync
 
                     event_context->within_tolerance = false;
                 } else if (tc->creating) {
-                    Geom::Point const button_pt(event->button.x, event->button.y);
-                    Geom::Point p1 = desktop->w2d(button_pt);
                     double cursor_height = sp_desktop_get_font_size_tool(desktop);
                     if (fabs(p1[Geom::Y] - tc->p0[Geom::Y]) > cursor_height) {
                         // otherwise even one line won't fit; most probably a slip of hand (even if bigger than tolerance)
