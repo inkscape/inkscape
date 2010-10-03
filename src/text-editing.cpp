@@ -972,30 +972,36 @@ sp_te_adjust_kerning_screen (SPItem *item, Inkscape::Text::Layout::iterator cons
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-void
-sp_te_adjust_dx (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, SPDesktop *desktop, double delta)
+void sp_te_adjust_dx(SPItem *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, SPDesktop * /*desktop*/, double delta)
 {
-    unsigned char_index;
+    unsigned char_index = 0;
     TextTagAttributes *attributes = text_tag_attributes_at_position(item, std::min(start, end), &char_index);
-    if (attributes) attributes->addToDx(char_index, delta);
+    if (attributes) {
+        attributes->addToDx(char_index, delta);
+    }
     if (start != end) {
         attributes = text_tag_attributes_at_position(item, std::max(start, end), &char_index);
-        if (attributes) attributes->addToDx(char_index, -delta);
+        if (attributes) {
+            attributes->addToDx(char_index, -delta);
+        }
     }
 
     item->updateRepr();
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-void
-sp_te_adjust_dy (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, SPDesktop *desktop, double delta)
+void sp_te_adjust_dy(SPItem *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, SPDesktop * /*desktop*/, double delta)
 {
-    unsigned char_index;
+    unsigned char_index = 0;
     TextTagAttributes *attributes = text_tag_attributes_at_position(item, std::min(start, end), &char_index);
-    if (attributes) attributes->addToDy(char_index, delta);
+    if (attributes) {
+        attributes->addToDy(char_index, delta);
+    }
     if (start != end) {
         attributes = text_tag_attributes_at_position(item, std::max(start, end), &char_index);
-        if (attributes) attributes->addToDy(char_index, -delta);
+        if (attributes) {
+            attributes->addToDy(char_index, -delta);
+        }
     }
 
     item->updateRepr();
@@ -1041,23 +1047,25 @@ sp_te_adjust_rotation(SPItem *text, Inkscape::Text::Layout::iterator const &star
     text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-void
-sp_te_set_rotation(SPItem *text, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, SPDesktop */*desktop*/, gdouble degrees)
+void sp_te_set_rotation(SPItem *text, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, SPDesktop */*desktop*/, gdouble degrees)
 {
-    unsigned char_index;
+    unsigned char_index = 0;
     TextTagAttributes *attributes = text_tag_attributes_at_position(text, std::min(start, end), &char_index);
-    if (attributes == NULL) return;
-
-    if (start != end) {
-        for (Inkscape::Text::Layout::iterator it = std::min(start, end) ; it != std::max(start, end) ; it.nextCharacter()) {
-            attributes = text_tag_attributes_at_position(text, it, &char_index);
-            if (attributes) attributes->setRotate(char_index, degrees);
+    if (attributes != NULL) {
+        if (start != end) {
+            for (Inkscape::Text::Layout::iterator it = std::min(start, end) ; it != std::max(start, end) ; it.nextCharacter()) {
+                attributes = text_tag_attributes_at_position(text, it, &char_index);
+                if (attributes) {
+                    attributes->setRotate(char_index, degrees);
+                }
+            }
+        } else {
+            attributes->setRotate(char_index, degrees);
         }
-    } else
-        attributes->setRotate(char_index, degrees);
 
-    text->updateRepr();
-    text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        text->updateRepr();
+        text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    }
 }
 
 void
