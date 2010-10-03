@@ -1291,8 +1291,8 @@ void SvgBuilder::_flushText() {
         last_delta_pos = delta_pos;
 
         // Append the character to the text buffer
-	if (0 != glyph.code[0]) {
-            text_buffer.append((char *)&glyph.code, 1);
+	if ( !glyph.code.empty() ) {
+            text_buffer.append(1, glyph.code[0]);
 	}
 
         glyphs_in_a_row++;
@@ -1333,8 +1333,8 @@ void SvgBuilder::addChar(GfxState *state, double x, double y,
          return;
     }
     // Allow only one space in a row
-    if ( is_space && _glyphs[_glyphs.size() - 1].code_size == 1 &&
-         _glyphs[_glyphs.size() - 1].code[0] == 32 ) {
+    if ( is_space && (_glyphs[_glyphs.size() - 1].code.size() == 1) &&
+         (_glyphs[_glyphs.size() - 1].code[0] == 32) ) {
         Geom::Point delta(dx, dy);
         _text_position += delta;
         return;
@@ -1350,18 +1350,21 @@ void SvgBuilder::addChar(GfxState *state, double x, double y,
     _text_position += delta;
 
     // Convert the character to UTF-8 since that's our SVG document's encoding
-    static UnicodeMap *u_map = NULL;
-    if ( u_map == NULL ) {
-        GooString *enc = new GooString("UTF-8");
-        u_map = globalParams->getUnicodeMap(enc);
-        u_map->incRefCnt();
-        delete enc;
+    {
+        gunichar2 uu[8] = {0};
+
+        for (int i = 0; i < uLen; i++) {
+            uu[i] = u[i];
+        }
+
+        gchar *tmp = g_utf16_to_utf8(uu, uLen, NULL, NULL, NULL);
+        if ( tmp && *tmp ) {
+            new_glyph.code = tmp;
+        } else {
+            new_glyph.code.clear();
+        }
+        g_free(tmp);
     }
-    int code_size = 0;
-    for ( int i = 0 ; i < uLen ; i++ ) {
-        code_size += u_map->mapUnicode(u[i], (char *)&new_glyph.code[code_size], sizeof(new_glyph.code) - code_size);
-    }
-    new_glyph.code_size = code_size;
 
     // Copy current style if it has changed since the previous glyph
     if (_invalidated_style || _glyphs.size() == 0 ) {

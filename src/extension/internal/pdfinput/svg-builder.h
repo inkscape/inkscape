@@ -28,6 +28,7 @@ namespace Inkscape {
 
 #include <2geom/point.h>
 #include <2geom/matrix.h>
+#include <glibmm/ustring.h>
 
 #include "CharTypes.h"
 class GooString;
@@ -75,10 +76,10 @@ struct SvgGraphicsState {
 struct SvgGlyph {
     Geom::Point position;    // Absolute glyph coords
     Geom::Point text_position; // Absolute glyph coords in text space
-    double dx, dy;  // Advance values
+    double dx;  // X advance value
+    double dy;  // Y advance value
     double rise;    // Text rise parameter
-    char code[8];   // UTF-8 coded character
-    int code_size;
+    Glib::ustring code;   // UTF-8 coded character
     bool is_space;
 
     bool style_changed;  // Set to true if style has to be reset
