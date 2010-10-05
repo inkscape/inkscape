@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-09-24 18:13+0200\n"
-"PO-Revision-Date: 2010-10-04 14:51+0100\n"
+"PO-Revision-Date: 2010-10-05 09:16+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -844,7 +844,6 @@ msgid "Edge 3D"
 msgstr "3D-Kante"
 
 #: ../share/extensions/edge3d.inx.h:5
-#, fuzzy
 msgid "Illumination Angle:"
 msgstr "Belichtungswinkel"
 
@@ -1049,7 +1048,7 @@ msgstr "Unterteilungen"
 
 #: ../share/extensions/funcplot.inx.h:1
 msgid "Add x-axis endpoints"
-msgstr ""
+msgstr "Fügt Endpunkt auf X-Achse hinzu"
 
 #: ../share/extensions/funcplot.inx.h:2
 msgid "Calculate first derivative numerically"
@@ -1084,7 +1083,7 @@ msgstr "Funktionen"
 #: ../share/extensions/funcplot.inx.h:9
 #: ../share/extensions/param_curves.inx.h:4
 msgid "Isotropic scaling"
-msgstr ""
+msgstr "Isotropische Skalierung"
 
 #: ../share/extensions/funcplot.inx.h:10
 msgid "Multiply X range by 2*pi"
@@ -1139,7 +1138,6 @@ msgid ""
 msgstr "Die folgenden Standard-Mathematik-Funktionen von Python sind verfügbar: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). Die Konstanten pi und e sind ebenfalls verfügbar."
 
 #: ../share/extensions/funcplot.inx.h:32
-#, fuzzy
 msgid "Start X value:"
 msgstr "Beginn X-Wert"
 
@@ -1159,18 +1157,15 @@ msgid "When set, Isotropic scaling uses smallest of width/xrange or height/yrang
 msgstr "Isotropische Skalierung (benutzt Kleinstes: Breite/x-Bereich oder Höhe/y-Bereich)"
 
 #: ../share/extensions/funcplot.inx.h:36
-#, fuzzy
 msgid "Y value of rectangle's bottom:"
 msgstr "y-Wert der unteren Kante des Rechtecks"
 
 #: ../share/extensions/funcplot.inx.h:37
-#, fuzzy
 msgid "Y value of rectangle's top:"
 msgstr "y-Wert der oberen Kante des Rechtecks"
 
 # !!!
 #: ../share/extensions/gears.inx.h:1
-#, fuzzy
 msgid "Circular pitch (px):"
 msgstr "Kreisteilung, px"
 
@@ -1183,7 +1178,6 @@ msgid "Number of teeth:"
 msgstr "Anzahl der Zähne:"
 
 #: ../share/extensions/gears.inx.h:4
-#, fuzzy
 msgid "Pressure angle:"
 msgstr "Flankenwinkel"
 
@@ -1247,12 +1241,10 @@ msgid "Cartesian Grid"
 msgstr "Kartesisches Gitter"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
-#, fuzzy
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only):"
 msgstr "Halbiert X-Unter-Unterteilungsfrequenz nach n Unterteilungen. (nur Logarithmus) "
 
 #: ../share/extensions/grid_cartesian.inx.h:4
-#, fuzzy
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only):"
 msgstr "Halbiert Y-Unter-Unterteilungsfrequenz nach n Unterteilungen. (nur Logarithmus) "
 
@@ -1265,72 +1257,58 @@ msgid "Logarithmic Y Subdiv. (Base given by entry above)"
 msgstr "Logarithmische Y-Unterteilung (Basis wie oben gegeben)"
 
 #: ../share/extensions/grid_cartesian.inx.h:7
-#, fuzzy
 msgid "Major X Division Spacing (px):"
-msgstr "Haupt-X-Teilung Abstand [px]"
+msgstr "Haupt-X-Teilung Abstand (px):"
 
 #: ../share/extensions/grid_cartesian.inx.h:8
-#, fuzzy
 msgid "Major X Division Thickness (px):"
-msgstr "Haupt-X-Teilung Dicke [px]"
+msgstr "Haupt-X-Teilung Dicke (px):"
 
 #: ../share/extensions/grid_cartesian.inx.h:9
-#, fuzzy
 msgid "Major X Divisions:"
-msgstr "Haupt-X-Teilungen"
+msgstr "Haupt-X-Teilungen:"
 
 #: ../share/extensions/grid_cartesian.inx.h:10
-#, fuzzy
 msgid "Major Y Division Spacing (px):"
-msgstr "Haupt-Y-Teilung Abstand [px]"
+msgstr "Haupt-Y-Teilung Abstand (px):"
 
 #: ../share/extensions/grid_cartesian.inx.h:11
-#, fuzzy
 msgid "Major Y Division Thickness (px):"
-msgstr "Haupt-Y-Teilung Dicke [px]"
+msgstr "Haupt-Y-Teilung Dicke (px):"
 
 #: ../share/extensions/grid_cartesian.inx.h:12
-#, fuzzy
 msgid "Major Y Divisions:"
-msgstr "Haupt-Y-Teilungen"
+msgstr "Haupt-Y-Teilungen:"
 
 #: ../share/extensions/grid_cartesian.inx.h:13
-#, fuzzy
 msgid "Minor X Division Thickness (px):"
-msgstr "Nebenteilung X Dicke [px]"
+msgstr "Nebenteilung X Dicke (px):"
 
 #: ../share/extensions/grid_cartesian.inx.h:14
-#, fuzzy
 msgid "Minor Y Division Thickness (px):"
-msgstr "Nebenteilung Y Dicke [px]"
+msgstr "Nebenteilung Y Dicke (px):"
 
 #: ../share/extensions/grid_cartesian.inx.h:16
-#, fuzzy
 msgid "Subdivisions per Major X Division:"
-msgstr "Unterteilungen pro X-Hauptteilung"
+msgstr "Unterteilungen pro X-Hauptteilung:"
 
 #: ../share/extensions/grid_cartesian.inx.h:17
-#, fuzzy
 msgid "Subdivisions per Major Y Division:"
-msgstr "Unterteilungen pro Y-Hauptteilung"
+msgstr "Unterteilungen pro Y-Hauptteilung:"
 
 #: ../share/extensions/grid_cartesian.inx.h:18
-#, fuzzy
 msgid "Subminor X Division Thickness (px):"
 msgstr "Strichstärke untergeordnete X-Teilung [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:19
-#, fuzzy
 msgid "Subminor Y Division Thickness (px):"
 msgstr "Strichstärke untergeordnete Y-Teilung [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:20
-#, fuzzy
 msgid "Subsubdivs. per X Subdivision:"
 msgstr "Unter-Unterteilungen pro X-Unterteilung"
 
 #: ../share/extensions/grid_cartesian.inx.h:21
-#, fuzzy
 msgid "Subsubdivs. per Y Subdivision:"
 msgstr "Unter-Unterteilungen pro Y-Unterteilung"
 
@@ -1351,7 +1329,6 @@ msgid "Angle Divisions:"
 msgstr "Winkelteilung"
 
 #: ../share/extensions/grid_polar.inx.h:3
-#, fuzzy
 msgid "Angular Divisions"
 msgstr "Winkelteilung"
 
@@ -1360,22 +1337,18 @@ msgid "Centre Dot Diameter (px):"
 msgstr "Durchmesser Mittelpunkt [px]"
 
 #: ../share/extensions/grid_polar.inx.h:5
-#, fuzzy
 msgid "Circular Divisions"
 msgstr "Hauptkreisteilung"
 
 #: ../share/extensions/grid_polar.inx.h:6
-#, fuzzy
 msgid "Circumferential Label Outset (px):"
 msgstr "Beginn des umlaufenden Bezeichners [px]"
 
 #: ../share/extensions/grid_polar.inx.h:7
-#, fuzzy
 msgid "Circumferential Label Size (px):"
 msgstr "Größe des umlaufenden Bezeichners [px]"
 
 #: ../share/extensions/grid_polar.inx.h:8
-#, fuzzy
 msgid "Circumferential Labels:"
 msgstr "Umlaufende Bezeichner"
 
@@ -1388,39 +1361,32 @@ msgid "Logarithmic Subdiv. (Base given by entry above)"
 msgstr "Logarithmische Unterteilung (Basis wie oben gegeben)"
 
 #: ../share/extensions/grid_polar.inx.h:11
-#, fuzzy
 msgid "Major Angular Division Thickness (px):"
 msgstr "Strichstärke Winkelteilung [px]"
 
 #: ../share/extensions/grid_polar.inx.h:12
-#, fuzzy
 msgid "Major Circular Division Spacing (px):"
 msgstr "Haupt-Kreis-Teilung Abstand [px]"
 
 #: ../share/extensions/grid_polar.inx.h:13
-#, fuzzy
 msgid "Major Circular Division Thickness (px):"
 msgstr "Strichstärke Kreisteilung [px]"
 
 #: ../share/extensions/grid_polar.inx.h:14
-#, fuzzy
 msgid "Major Circular Divisions:"
-msgstr "Hauptkreisteilung"
+msgstr "Hauptkreisteilung:"
 
 #: ../share/extensions/grid_polar.inx.h:15
-#, fuzzy
 msgid "Minor Angle Division End 'n' Divs. Before Centre:"
-msgstr "Winkel-Nebenteilung endet n Teilstriche vor dem Zentrum"
+msgstr "Winkel-Nebenteilung endet 'n' Teilstriche vor dem Zentrum"
 
 #: ../share/extensions/grid_polar.inx.h:16
-#, fuzzy
 msgid "Minor Angular Division Thickness (px):"
-msgstr "Strichstärke Winkelnebenteilung [px]"
+msgstr "Strichstärke Winkelnebenteilung (px):"
 
 #: ../share/extensions/grid_polar.inx.h:17
-#, fuzzy
 msgid "Minor Circular Division Thickness (px):"
-msgstr "Strichstärke Kreisnebenteilung [px]"
+msgstr "Strichstärke Kreisnebenteilung (px):"
 
 # CHECK
 #: ../share/extensions/grid_polar.inx.h:18
@@ -1449,12 +1415,10 @@ msgid "Polar Grid"
 msgstr "Polargitter"
 
 #: ../share/extensions/grid_polar.inx.h:21
-#, fuzzy
 msgid "Subdivisions per Major Angular Division:"
 msgstr "Nebenteilungen pro Winkelhauptteilung"
 
 #: ../share/extensions/grid_polar.inx.h:22
-#, fuzzy
 msgid "Subdivisions per Major Circular Division:"
 msgstr "Nebenteilungen pro Kreishauptteilung"
 
@@ -1511,9 +1475,8 @@ msgid "Guides creator"
 msgstr "Führungslinien erstellen"
 
 #: ../share/extensions/guides_creator.inx.h:14
-#, fuzzy
 msgid "Horizontal guide each:"
-msgstr "Horizontale Führungslinie alle"
+msgstr "Horizontale Führungslinie alle:"
 
 #: ../share/extensions/guides_creator.inx.h:16
 msgid "Preset:"
@@ -1658,9 +1621,8 @@ msgid "Interpolation steps:"
 msgstr "Interpolationsschritte"
 
 #: ../share/extensions/interp_att_g.inx.h:1
-#, fuzzy
 msgid "Apply to:"
-msgstr "Filter anwenden"
+msgstr "Anwenden auf:"
 
 #: ../share/extensions/interp_att_g.inx.h:2
 msgid "Attribute to Interpolate:"
@@ -1687,7 +1649,6 @@ msgid "Height"
 msgstr "Höhe"
 
 #: ../share/extensions/interp_att_g.inx.h:9
-#, fuzzy
 msgid "If you select \"Other\", you must know the SVG attributes to identify here this \"other\"."
 msgstr "Falls Sie \"Andere\" wählen, so müssen Sie diese Anderen durch deren SVG-Attribute spezifizieren:"
 
@@ -2318,17 +2279,14 @@ msgid "Lorem ipsum"
 msgstr "Lorem ipsum"
 
 #: ../share/extensions/lorem_ipsum.inx.h:3
-#, fuzzy
 msgid "Number of paragraphs:"
 msgstr "Anzahl der Abschnitte"
 
 #: ../share/extensions/lorem_ipsum.inx.h:5
-#, fuzzy
 msgid "Paragraph length fluctuation (sentences):"
 msgstr "Unterschiede in der Länge der Absätze (Sätze)"
 
 #: ../share/extensions/lorem_ipsum.inx.h:6
-#, fuzzy
 msgid "Sentences per paragraph:"
 msgstr "Sätze pro Absatz"
 
@@ -2392,9 +2350,8 @@ msgid "Measurement Type: "
 msgstr "Mess-Typ:"
 
 #: ../share/extensions/measure.inx.h:10
-#, fuzzy
 msgid "Offset (px):"
-msgstr "Versatz x"
+msgstr "Versatz (px):"
 
 #: ../share/extensions/measure.inx.h:11
 msgid "Precision:"
@@ -2814,17 +2771,14 @@ msgid "Icosahedron"
 msgstr "Ikosaeder (Zwanzigflächner)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-#, fuzzy
 msgid "Light X:"
 msgstr "Erhellen X"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-#, fuzzy
 msgid "Light Y:"
 msgstr "Erhellen Y"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-#, fuzzy
 msgid "Light Z:"
 msgstr "Erhellen Z"
 
@@ -3375,7 +3329,6 @@ msgid "Split:"
 msgstr "Teilen:"
 
 #: ../share/extensions/split.inx.h:9
-#, fuzzy
 msgid "This effect splits texts into different lines, words or letters."
 msgstr "Dieser Effekt teilt den Text in unterschiedliche Zeilen, Wörter oder Buchstaben auf. Wählen Sie unten, wie Ihr Text geteilt werden soll."
 
@@ -3503,7 +3456,6 @@ msgid "Months per line:"
 msgstr "Monate per Zeile"
 
 #: ../share/extensions/svgcalendar.inx.h:19
-#, fuzzy
 msgid "Next month day color:"
 msgstr "Farbe des Tages für den nächsten Monat"
 
@@ -4118,9 +4070,8 @@ msgid "Semiperimeter (px): "
 msgstr "Halbdurchmesser in px:"
 
 #: ../share/extensions/draw_from_triangle.py:182
-#, fuzzy
 msgid "Area (px^2): "
-msgstr "Gebiet /px^2:"
+msgstr "Gebiet (px^2):"
 
 #: ../share/extensions/dxf_outlines.py:36
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again."
@@ -5964,7 +5915,6 @@ msgid "Canvas transparency"
 msgstr "Leinwand-Transparenz"
 
 #: ../share/filters/filters.svg.h:178
-#, fuzzy
 msgid "Gives a canvas like HSL sensitive transparency"
 msgstr "Leinwandartige, HSL-empfindliche Transparenz"
 
@@ -8786,7 +8736,6 @@ msgid "Raster"
 msgstr "Bitmap"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:48
-#, fuzzy
 msgid "Apply adaptive thresholding to selected bitmap(s)"
 msgstr "Wende adaptiven Schwellwert auf ausgewählte(s) Bitmap(s) an"
 
@@ -8819,7 +8768,6 @@ msgid "Poisson Noise"
 msgstr "Schrotrauschen"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:59
-#, fuzzy
 msgid "Add random noise to selected bitmap(s)"
 msgstr "Füge den Bitmap(s) zufälliges Rauschen hinzu"
 
@@ -9027,7 +8975,6 @@ msgid "Gamma Correction:"
 msgstr "Gammakorrektur"
 
 #: ../src/extension/internal/bitmap/level.cpp:50
-#, fuzzy
 msgid "Level selected bitmap(s) by scaling values falling between the given ranges to the full color range"
 msgstr "Ausgewählte Bitmap(s) angleichen, in dem Werte im angegebenen Bereich auf die volle Farbskala abgebildet werden"
 
@@ -9036,12 +8983,10 @@ msgid "Level (with Channel)"
 msgstr "Ebene (mit Kanal)"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:53
-#, fuzzy
 msgid "Channel:"
-msgstr "Kanäle:"
+msgstr "Kanal:"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:72
-#, fuzzy
 msgid "Level the specified channel of selected bitmap(s) by scaling values falling between the given ranges to the full color range"
 msgstr "Bestimmten Kanal in ausgewählten Bitmaps angleichen, indem Werte im angegebenen Bereich zum vollen Farbumfang hochskaliert werden."
 
@@ -9050,7 +8995,6 @@ msgid "Median"
 msgstr "Zentralwert"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
-#, fuzzy
 msgid "Replace each pixel component with the median color in a circular neighborhood"
 msgstr "Jede Pixelkomponente mit dem Zentralwert aus einer kreisförmigen Umgebung ersetzen"
 
@@ -9059,17 +9003,14 @@ msgid "HSB Adjust"
 msgstr "HSB anpassen"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:41
-#, fuzzy
 msgid "Hue:"
 msgstr "Farbton"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
-#, fuzzy
 msgid "Saturation:"
 msgstr "Sättigung"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:43
-#, fuzzy
 msgid "Brightness:"
 msgstr "Helligkeit"
 
@@ -9082,7 +9023,6 @@ msgid "Negate"
 msgstr "Negativ"
 
 #: ../src/extension/internal/bitmap/negate.cpp:42
-#, fuzzy
 msgid "Negate (take inverse) selected bitmap(s)"
 msgstr "Gewählte Bitmaps invertieren."
 
@@ -9091,7 +9031,6 @@ msgid "Normalize"
 msgstr "Normalisieren"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:42
-#, fuzzy
 msgid "Normalize selected bitmap(s), expanding color range to the full possible range of color"
 msgstr "Normalisiert die ausgewählten Bitmaps, streckt das Farbspektrum auf die volle Breite."
 
@@ -9132,7 +9071,6 @@ msgid "Reduce Noise"
 msgstr "Rauschen vermindern"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:47
-#, fuzzy
 msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter"
 msgstr "Rauschen in ausgewählten Bitmaps durch Rauschspitzenfilter verringern"
 
@@ -9161,17 +9099,14 @@ msgid "Colored Shading"
 msgstr "Schattenfarbe"
 
 #: ../src/extension/internal/bitmap/shade.cpp:49
-#, fuzzy
 msgid "Shade selected bitmap(s) simulating distant light source"
 msgstr "Ausgewählte Bitmaps mittels simulierter entfernter Lichtquelle tönen"
 
 #: ../src/extension/internal/bitmap/sharpen.cpp:46
-#, fuzzy
 msgid "Sharpen selected bitmap(s)"
-msgstr "Schärft Ausgewählte Bitmaps."
+msgstr "Schärft ausgewählte Bitmap(s)."
 
 #: ../src/extension/internal/bitmap/solarize.cpp:46
-#, fuzzy
 msgid "Solarize selected bitmap(s), like overexposing photographic film"
 msgstr "Ausgewählte Bitmaps solarisieren, wie übersättigter Film"
 
@@ -9192,7 +9127,6 @@ msgid "Degrees:"
 msgstr "Grad"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:44
-#, fuzzy
 msgid "Swirl selected bitmap(s) around center point"
 msgstr "Verwirbelt ausgewählte Bitmap(s) um den Mittelpunkt."
 
@@ -9221,7 +9155,6 @@ msgid "Unsharp Mask"
 msgstr "Unscharfe Maske"
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:51
-#, fuzzy
 msgid "Sharpen selected bitmap(s) using unsharp mask algorithms"
 msgstr "Ausgewählte Bitmaps mittels Unscharfe-Maske-Algorithmen schärfen"
 
