@@ -602,10 +602,14 @@ void Script::save(Inkscape::Extension::Output *module,
 
 
     file_listener fileout;
-    execute(command, params, tempfilename_in, fileout);
+    int data_read = execute(command, params, tempfilename_in, fileout);
+    
+    bool success = false;
 
-    std::string lfilename = Glib::filename_from_utf8(filenameArg);
-    bool success = fileout.toFile(lfilename);
+    if (data_read > 0) {
+        std::string lfilename = Glib::filename_from_utf8(filenameArg);
+        success = fileout.toFile(lfilename);
+    }
 
     // make sure we don't leak file descriptors from g_file_open_tmp
     close(tempfd_in);
