@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-24 18:13+0200\n"
-"PO-Revision-Date: 2010-10-05 09:16+0100\n"
+"POT-Creation-Date: 2010-10-02 17:43+0200\n"
+"PO-Revision-Date: 2010-10-07 09:12+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -226,22 +226,10 @@ msgid "Custom"
 msgstr "Benutzerdefiniert"
 
 #: ../share/extensions/color_custom.inx.h:11
-msgid "Function applied to the blue channel"
-msgstr "Funktion auf den Blau-Kanal angewendet"
-
-#: ../share/extensions/color_custom.inx.h:12
-msgid "Function applied to the green channel"
-msgstr "Funktion auf den Grün-Kanal angewendet"
-
-#: ../share/extensions/color_custom.inx.h:13
-msgid "Function applied to the red channel"
-msgstr "Funktion auf den Rot-Kanal angewendet"
-
-#: ../share/extensions/color_custom.inx.h:14
 msgid "Green Function:"
 msgstr "Grün-Funktion:"
 
-#: ../share/extensions/color_custom.inx.h:15
+#: ../share/extensions/color_custom.inx.h:12
 #: ../share/extensions/color_randomize.inx.h:3
 #: ../share/extensions/dots.inx.h:3
 #: ../share/extensions/draw_from_triangle.inx.h:20
@@ -278,8 +266,12 @@ msgstr "Grün-Funktion:"
 msgid "Help"
 msgstr "Hilfe"
 
+#: ../share/extensions/color_custom.inx.h:13
+msgid "Input (r,g,b) Color Range"
+msgstr ""
+
 #. ## end option page
-#: ../share/extensions/color_custom.inx.h:16
+#: ../share/extensions/color_custom.inx.h:14
 #: ../share/extensions/color_randomize.inx.h:6
 #: ../share/extensions/dots.inx.h:5
 #: ../share/extensions/dxf_input.inx.h:12
@@ -293,7 +285,7 @@ msgstr "Hilfe"
 #: ../share/extensions/pathscatter.inx.h:10
 #: ../share/extensions/radiusrand.inx.h:6
 #: ../share/extensions/scour.inx.h:11
-#: ../share/extensions/split.inx.h:4
+#: ../share/extensions/split.inx.h:2
 #: ../share/extensions/webslicer_create_group.inx.h:7
 #: ../share/extensions/webslicer_export.inx.h:6
 #: ../share/extensions/web-set-att.inx.h:6
@@ -303,7 +295,7 @@ msgstr "Hilfe"
 msgid "Options"
 msgstr "Optionen"
 
-#: ../share/extensions/color_custom.inx.h:17
+#: ../share/extensions/color_custom.inx.h:15
 msgid "Red Function:"
 msgstr "Rot-Funktion:"
 
@@ -945,7 +937,6 @@ msgid "Generate from Path"
 msgstr "Aus Pfad erzeugen"
 
 #: ../share/extensions/extrude.inx.h:3
-#: ../share/extensions/split.inx.h:3
 msgid "Lines"
 msgstr "Linien"
 
@@ -1016,6 +1007,7 @@ msgstr "Klappenproportion"
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:27
 #: ../share/extensions/printing-marks.inx.h:20
+#: ../src/live_effects/lpe-ruler.cpp:44
 #: ../src/ui/dialog/guides.cpp:42
 msgid "Unit:"
 msgstr "Einheit:"
@@ -1027,6 +1019,8 @@ msgstr "Einheit:"
 #: ../src/extension/internal/bitmap/raise.cpp:41
 #: ../src/extension/internal/bitmap/sample.cpp:40
 #: ../src/extension/internal/bluredge.cpp:136
+#: ../src/live_effects/lpe-bendpath.cpp:56
+#: ../src/live_effects/lpe-patternalongpath.cpp:64
 #: ../src/widgets/toolbox.cpp:4269
 #: ../src/widgets/toolbox.cpp:4589
 #: ../src/widgets/toolbox.cpp:5089
@@ -1186,12 +1180,14 @@ msgid "Average size of cell (px):"
 msgstr "Durchschnittliche Größe der Zelle (px)"
 
 #: ../share/extensions/generate_voronoi.inx.h:2
-#, fuzzy
 msgid ""
 "Generate a random pattern of Voronoi cells. The pattern will be accessible in the Fill and Stroke dialog. You must select an object or a group.\n"
 "\n"
 "If border is zero, the pattern will be discontinuous at the edges. Use a positive border, preferably greater than the cell size, to produce a smooth join of the pattern at the edges. Use a negative border to reduce the size of the pattern and get an empty border."
-msgstr "Ist der Rand null, wird das Muster an den Kanten unterbrochen. Nehmen Sie einen positiven Wert, größer als die Zellgröße, um einen weichen Übergang zwischen Zellen und Rand zu schaffen. Nehmen Sie einen negativen Wert, um die Mustergröße zu reduzieren und einen lleren Rand zu erzeugen."
+msgstr ""
+"Erstellt ein zufälliges Muster aus Voronoi-Zellen. Das Muster wird später im Fülungs- und Kontur-Dialog verfügbar seion. Sie müssen dazu ein Objekt oder ein Gruppe auswählen.\n"
+"\n"
+" Ist der Rand null, wird das Muster an den Kanten unterbrochen. Nehmen Sie einen positiven Wert, größer als die Zellgröße, um einen weichen Übergang zwischen Zellen und Rand zu schaffen. Nehmen Sie einen negativen Wert, um die Mustergröße zu reduzieren und einen lleren Rand zu erzeugen."
 
 #: ../share/extensions/generate_voronoi.inx.h:8
 msgid "Size of Border (px):"
@@ -1229,7 +1225,7 @@ msgid ""
 "    * Save Grid: convert the first rectangular grid to a Gimp grid (note that the default Inkscape grid is very narrow when shown in Gimp).\n"
 "    * Save Background: add the document background to each converted layer.\n"
 "\n"
-"Each first level layer is converted to a Gimp layer. Sublayers are are concatenated and converted with their first level parent layer into a single Gimp layer."
+"Each first level layer is converted to a Gimp layer. Sublayers are concatenated and converted with their first level parent layer into a single Gimp layer."
 msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:1
@@ -1577,7 +1573,7 @@ msgstr "Referenz der Tasten- und Maus-Befehle"
 
 #: ../share/extensions/inkscape_help_keys.inx.h:2
 msgid "http://inkscape.org/doc/keys048.html"
-msgstr ""
+msgstr "http://inkscape.org/doc/keys048.html"
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
 msgid "Inkscape Manual"
@@ -1685,7 +1681,6 @@ msgid "Other Attribute:"
 msgstr "Anderes Attribut"
 
 #: ../share/extensions/interp_att_g.inx.h:19
-#: ../src/live_effects/lpe-sketch.cpp:55
 #: ../src/selection-chemistry.cpp:1655
 #: ../src/seltrans.cpp:527
 #: ../src/ui/dialog/transformation.cpp:748
@@ -1706,7 +1701,6 @@ msgid "Tag"
 msgstr "Markierung"
 
 #: ../share/extensions/interp_att_g.inx.h:23
-#, fuzzy
 msgid "This effect applies a value for any interpolatable attribute for all elements inside the selected group or for all elements in a multiple selection."
 msgstr "Dieser Effekt setzt ein beliebiges interpolierbares Attribut für jedes Element innerhalb einer Gruppe oder einer mehrteiligen Auswahl"
 
@@ -1725,8 +1719,6 @@ msgstr "Übersetzer Y"
 #: ../share/extensions/interp_att_g.inx.h:28
 #: ../src/libgdl/gdl-dock-placeholder.c:169
 #: ../src/libgdl/gdl-dock.c:190
-#: ../src/live_effects/lpe-bendpath.cpp:56
-#: ../src/live_effects/lpe-patternalongpath.cpp:64
 #: ../src/widgets/toolbox.cpp:3253
 #: ../src/widgets/toolbox.cpp:4269
 #: ../src/widgets/toolbox.cpp:4589
@@ -2296,7 +2288,8 @@ msgstr "Sätze pro Absatz"
 #. this->AddNewObjectsStyle(_page_lpetool, "/tools/lpetool");
 #. Text
 #: ../share/extensions/lorem_ipsum.inx.h:7
-#: ../share/extensions/split.inx.h:8
+#: ../share/extensions/replace_font.inx.h:10
+#: ../share/extensions/split.inx.h:6
 #: ../share/extensions/text_braille.inx.h:2
 #: ../share/extensions/text_flipcase.inx.h:1
 #: ../share/extensions/text_lowercase.inx.h:1
@@ -2385,9 +2378,8 @@ msgid "Angle:"
 msgstr "Winkel:"
 
 #: ../share/extensions/motion.inx.h:3
-#, fuzzy
 msgid "Magnitude:"
-msgstr "Stärke"
+msgstr "Stärke:"
 
 #: ../share/extensions/motion.inx.h:4
 msgid "Motion"
@@ -2479,6 +2471,7 @@ msgstr "Muster vor der Deformation duplizieren"
 
 #: ../share/extensions/pathalongpath.inx.h:6
 #: ../share/extensions/pathscatter.inx.h:9
+#: ../src/live_effects/lpe-patternalongpath.cpp:72
 msgid "Normal offset:"
 msgstr "Normaler Versatz"
 
@@ -2527,11 +2520,11 @@ msgstr "Abstand zwischen Kopien:"
 
 #: ../share/extensions/pathalongpath.inx.h:17
 #: ../share/extensions/pathscatter.inx.h:19
+#: ../src/live_effects/lpe-patternalongpath.cpp:73
 msgid "Tangential offset:"
 msgstr "Tangentialer Versatz"
 
 #: ../share/extensions/pathalongpath.inx.h:18
-#, fuzzy
 msgid "This effect bends a pattern object along arbitrary \"skeleton\" paths. The pattern is the topmost object in the selection (groups of paths/shapes/clones... allowed)."
 msgstr "Dieser Effekt biegt ein Muster entlang eines beliebigen \"Gerüst-\"Pfades. Das Muster ist das oberste Objekt in einer Auswahl (Gruppierungen von Pfaden/Formen/Klonen... sind erlaubt)."
 
@@ -2561,7 +2554,7 @@ msgstr "Originalmuster ist:"
 
 #: ../share/extensions/pathscatter.inx.h:13
 msgid "Pick group members:"
-msgstr ""
+msgstr "Art der Auswahl:"
 
 #: ../share/extensions/pathscatter.inx.h:14
 msgid "Randomly"
@@ -2671,7 +2664,8 @@ msgid "PixelSnap"
 msgstr "Pixelschnapp"
 
 #: ../share/extensions/pixelsnap.inx.h:3
-msgid "Snap all paths in selection to pixels. Snaps borders to half-points and fills to full points"
+#, fuzzy
+msgid "Snap all paths in selection to pixels. Snaps borders to half-points and fills to full points."
 msgstr "Klappe alle Pfade in der Auswahl zu Pixeln um. Klappe die Umrandung zu Halbpunkten und die Füllung zu Vollpunkten um."
 
 #: ../share/extensions/plt_input.inx.h:1
@@ -2716,7 +2710,6 @@ msgid "Dodecahedron"
 msgstr "Dodecahedron"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-#, fuzzy
 msgid "Draw back-facing polygons:"
 msgstr "Zeichnet rückseitige Polygone"
 
@@ -2942,6 +2935,7 @@ msgstr "Markierungen"
 #. Label
 #: ../share/extensions/printing-marks.inx.h:9
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
+#: ../src/live_effects/lpe-ruler.cpp:50
 #: ../src/widgets/gradient-vector.cpp:821
 msgid "Offset:"
 msgstr "Versatz:"
@@ -3037,6 +3031,7 @@ msgid "Random Seed:"
 msgstr "Zufälliger Keim"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:4
+#: ../src/live_effects/lpe-sketch.cpp:55
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2215
 msgid "Scale:"
 msgstr "Skalierung:"
@@ -3061,6 +3056,47 @@ msgstr "Strichcode-Daten:"
 #: ../share/extensions/render_barcode.inx.h:4
 msgid "Barcode Type:"
 msgstr "Strichcode-Typ:"
+
+#: ../share/extensions/replace_font.inx.h:1
+msgid "And replace with: "
+msgstr "Und ersetze mit:"
+
+#: ../share/extensions/replace_font.inx.h:2
+msgid "Choose this tab if you would like to see a list of the fonts used/found."
+msgstr ""
+
+#: ../share/extensions/replace_font.inx.h:3
+msgid "Entire drawing"
+msgstr "Gesamte Zeichnung"
+
+#: ../share/extensions/replace_font.inx.h:4
+msgid "Find and Replace font"
+msgstr "Schrift Suchen und Ersetzen"
+
+#: ../share/extensions/replace_font.inx.h:5
+msgid "Find this font: "
+msgstr "Finde diese Schrift:"
+
+#: ../share/extensions/replace_font.inx.h:6
+msgid "List all fonts"
+msgstr "Schriftarten auflisten"
+
+#: ../share/extensions/replace_font.inx.h:7
+msgid "Replace all fonts with: "
+msgstr "Ersetze alle Schriftarten mit:"
+
+#: ../share/extensions/replace_font.inx.h:8
+msgid "Replace font"
+msgstr "Schrift ersetzen"
+
+#: ../share/extensions/replace_font.inx.h:9
+msgid "Selected objects only"
+msgstr "Nur ausgewählte Objekte"
+
+#: ../share/extensions/replace_font.inx.h:11
+#, fuzzy
+msgid "Work on:"
+msgstr "Wort:"
 
 #: ../share/extensions/restack.inx.h:2
 msgid "Arbitrary Angle"
@@ -3312,27 +3348,34 @@ msgstr "d - Stiftradius (px)"
 msgid "r - Gear Radius (px):"
 msgstr "r - Zahnradius (px)"
 
-#: ../share/extensions/split.inx.h:2
-msgid "Letters"
-msgstr "Buchstaben"
-
-#: ../share/extensions/split.inx.h:5
+#: ../share/extensions/split.inx.h:3
 msgid "Preserve original text"
 msgstr "Originaltext aufheben?"
 
-#: ../share/extensions/split.inx.h:6
+#: ../share/extensions/split.inx.h:4
 msgid "Split text"
 msgstr "Text teilen"
 
-#: ../share/extensions/split.inx.h:7
+#: ../share/extensions/split.inx.h:5
 msgid "Split:"
 msgstr "Teilen:"
 
-#: ../share/extensions/split.inx.h:9
+#: ../share/extensions/split.inx.h:7
 msgid "This effect splits texts into different lines, words or letters."
 msgstr "Dieser Effekt teilt den Text in unterschiedliche Zeilen, Wörter oder Buchstaben auf. Wählen Sie unten, wie Ihr Text geteilt werden soll."
 
+#: ../share/extensions/split.inx.h:8
+msgctxt "split"
+msgid "Letters"
+msgstr "Buchstaben"
+
+#: ../share/extensions/split.inx.h:9
+msgctxt "split"
+msgid "Lines"
+msgstr "Linien"
+
 #: ../share/extensions/split.inx.h:10
+msgctxt "split"
 msgid "Words"
 msgstr "Wörter"
 
@@ -3468,7 +3511,6 @@ msgid "Saturday and Sunday"
 msgstr "Sonnabend und Sonntag"
 
 #: ../share/extensions/svgcalendar.inx.h:23
-#, fuzzy
 msgid "Select your system encoding. More information at http://docs.python.org/library/codecs.html#standard-encodings."
 msgstr "(Wählen Sie die Systemkodierung. Mehr Informationen dazu unter http://docs.python.org/library/codecs.html#standard-encodings)"
 
@@ -3481,7 +3523,6 @@ msgid "Sunday"
 msgstr "Sonntag"
 
 #: ../share/extensions/svgcalendar.inx.h:26
-#, fuzzy
 msgid "The day names list must start from Sunday."
 msgstr "(Die Liste der Tagesnamen muss mit Sonntag beginnen)"
 
@@ -3868,7 +3909,6 @@ msgid "Set Attributes"
 msgstr "Attribute festlegen"
 
 #: ../share/extensions/web-set-att.inx.h:11
-#, fuzzy
 msgid "Source and destination of setting:"
 msgstr "Quelle und Ziel setzen"
 
@@ -4105,13 +4145,17 @@ msgid "Unable to find image data."
 msgstr "Problem beim Auffinden der Bilderdaten"
 
 #: ../share/extensions/inkex.py:67
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore this extension. Please download and install the latest version from http://cheeseshop.python.org/pypi/lxml/, or install it through your package manager by a command like: sudo apt-get install python-lxml\n"
 "\n"
 "Technical details:\n"
 "%s"
-msgstr "Diese Erweiterung benötigt \"python-lxml\". Diese erhalten Sie unter \"http://cheeseshop.python.org/pypi/lxml/\" oder durch ein Packet ihres Packetmanagers (z.B.: sudo apt-get install python-lxml)"
+msgstr ""
+"Der fantastische lxml-Wrapper für libxml2 wird von inkex.py und dessen Erweiterung benötigt. Diese erhalten Sie unter \"http://cheeseshop.python.org/pypi/lxml/\" oder durch ein Packet ihres Paketmanagers (z.B.: sudo apt-get install python-lxml)\n"
+"\n"
+"Technische Details: \n"
+"%s"
 
 #: ../share/extensions/inkex.py:231
 #, python-format
@@ -6472,21 +6516,21 @@ msgstr "<b>Ellipse</b>: %s &#215; %s; <b>Strg</b> drücken für ganzzahliges Ver
 msgid "Create ellipse"
 msgstr "Ellipse erzeugen"
 
-#: ../src/box3d-context.cpp:442
-#: ../src/box3d-context.cpp:449
-#: ../src/box3d-context.cpp:456
-#: ../src/box3d-context.cpp:463
-#: ../src/box3d-context.cpp:470
-#: ../src/box3d-context.cpp:477
+#: ../src/box3d-context.cpp:440
+#: ../src/box3d-context.cpp:447
+#: ../src/box3d-context.cpp:454
+#: ../src/box3d-context.cpp:461
+#: ../src/box3d-context.cpp:468
+#: ../src/box3d-context.cpp:475
 msgid "Change perspective (angle of PLs)"
 msgstr "Perspektive ändern (Winkel der Perspektivlinien)"
 
 #. status text
-#: ../src/box3d-context.cpp:645
+#: ../src/box3d-context.cpp:643
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr "<b>3D Box</b>; <b>Umschalt</b> um in Z-Richtung zu vergrößern"
 
-#: ../src/box3d-context.cpp:673
+#: ../src/box3d-context.cpp:671
 msgid "Create 3D box"
 msgstr "3D-Quader erzeugen"
 
@@ -8383,12 +8427,12 @@ msgid "Bounding box side midpoint"
 msgstr "Mitte der Umrandungslinie"
 
 #: ../src/display/snap-indicator.cpp:176
-#: ../src/ui/tool/node.cpp:1172
+#: ../src/ui/tool/node.cpp:1173
 msgid "Smooth node"
 msgstr "glatter Knoten"
 
 #: ../src/display/snap-indicator.cpp:179
-#: ../src/ui/tool/node.cpp:1171
+#: ../src/ui/tool/node.cpp:1172
 msgid "Cusp node"
 msgstr "Spitzer Knoten"
 
@@ -9039,7 +9083,6 @@ msgid "Oil Paint"
 msgstr "Ölgemälde"
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:44
-#, fuzzy
 msgid "Stylize selected bitmap(s) so that they appear to be painted with oils"
 msgstr "Lässt ausgewählte Bitmap(s) aussehen, als ob sie mit Ölfarbe gemalt seien."
 
@@ -9382,7 +9425,6 @@ msgid "Snow crest"
 msgstr "Schneekrone"
 
 #: ../src/extension/internal/filter/snow.h:34
-#, fuzzy
 msgid "Drift Size:"
 msgstr "Schneegröße"
 
@@ -9891,7 +9933,6 @@ msgstr "Zusammenführen"
 
 #: ../src/filter-enums.cpp:32
 #: ../src/live_effects/effect.cpp:99
-#: ../src/live_effects/lpe-ruler.cpp:50
 msgid "Offset"
 msgstr "Versatz"
 
@@ -11215,7 +11256,8 @@ msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "Keine Parameter der auf den Pfad angewandten Effekte können auf der Zeichenfläche verändert werden."
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
-msgid "Bend path"
+#, fuzzy
+msgid "Bend path:"
 msgstr "Pfad verbiegen"
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
@@ -11244,7 +11286,7 @@ msgid "Rotates the original 90 degrees, before bending it along the bend path"
 msgstr "Rotiert das Original um 90 Grad bevor es entlang des Pfades gebogen wird"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:26
-msgid "Size X"
+msgid "Size X:"
 msgstr "Größe X"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:26
@@ -11252,7 +11294,7 @@ msgid "The size of the grid in X direction."
 msgstr "Die Größe des Gitters in X-Richtung"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:27
-msgid "Size Y"
+msgid "Size Y:"
 msgstr "Größe Y"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:27
@@ -11260,7 +11302,8 @@ msgid "The size of the grid in Y direction."
 msgstr "Die Größe des Gitters in Y-Richtung"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
-msgid "Stitch path"
+#, fuzzy
+msgid "Stitch path:"
 msgstr "Verändere Pfad"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
@@ -11268,7 +11311,7 @@ msgid "The path that will be used as stitch."
 msgstr "Der Pfad wird als Knoten verwendet"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
-msgid "Number of paths"
+msgid "Number of paths:"
 msgstr "Anzahl der Pfade"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
@@ -11276,7 +11319,7 @@ msgid "The number of paths that will be generated."
 msgstr "Anzahl der zu erzeugenden Pfade"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
-msgid "Start edge variance"
+msgid "Start edge variance:"
 msgstr "Start der Kanten Abweichung"
 
 # Hier "stitches" etwa Kopien? Was ist dieser Effekt?
@@ -11285,7 +11328,7 @@ msgid "The amount of random jitter to move the start points of the stitches insi
 msgstr "Mittlere Größe der Abstände, um die die Startpunkte der Kopien inner- und ausserhalb des Pfades versetzt werden."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
-msgid "Start spacing variance"
+msgid "Start spacing variance:"
 msgstr "Start der Abstands-Abweichung"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
@@ -11293,7 +11336,7 @@ msgid "The amount of random shifting to move the start points of the stitches ba
 msgstr "Mittlere Größe der Abstände, um die die Startpunkte der Kopien entlang des Führungspfades versetzt werden."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
-msgid "End edge variance"
+msgid "End edge variance:"
 msgstr "Ende der Kanten Abweichung"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
@@ -11301,7 +11344,7 @@ msgid "The amount of randomness that moves the end points of the stitches inside
 msgstr "Mittlere Größe der Abstände, um die die Endpunkte der Kopien inner- und außerhalb des Führungspfades versetzt werden."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
-msgid "End spacing variance"
+msgid "End spacing variance:"
 msgstr "Ende der Abstands-Abweichung"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
@@ -11309,7 +11352,7 @@ msgid "The amount of random shifting to move the end points of the stitches back
 msgstr "Mittlere Größe der Abstände, um die die Endpunkte der Kopien entlang des Führungspfades versetzt werden."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
-msgid "Scale width"
+msgid "Scale width:"
 msgstr "Skaliere Breite"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
@@ -11325,7 +11368,7 @@ msgid "Scale the width of the stitch path relative to its length"
 msgstr "Skalieren der Breite des Stichpfades relativ zu seiner Länge"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
-msgid "Top bend path"
+msgid "Top bend path:"
 msgstr "Oberen Pfad verbiegen"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
@@ -11333,7 +11376,7 @@ msgid "Top path along which to bend the original path"
 msgstr "Oberer Pfad, entlang welchem der Originalpfad gebogen wird"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
-msgid "Right bend path"
+msgid "Right bend path:"
 msgstr "Rechten Pfad verbiegen"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
@@ -11341,7 +11384,7 @@ msgid "Right path along which to bend the original path"
 msgstr "Rechter Pfad, entlang welchem der Originalpfad gebogen wird"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
-msgid "Bottom bend path"
+msgid "Bottom bend path:"
 msgstr "Unteren Pfad verbiegen"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
@@ -11349,7 +11392,7 @@ msgid "Bottom path along which to bend the original path"
 msgstr "Unterer Pfad, entlang welchem der Originalpfad gebogen wird"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
-msgid "Left bend path"
+msgid "Left bend path:"
 msgstr "Linken Pfad verbiegen"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
@@ -11373,7 +11416,7 @@ msgid "Enable the top and bottom deformation paths"
 msgstr "Aktiviere obere und untere Verformungs-Pfade"
 
 #: ../src/live_effects/lpe-gears.cpp:212
-msgid "Teeth"
+msgid "Teeth:"
 msgstr "Zähne"
 
 #: ../src/live_effects/lpe-gears.cpp:212
@@ -11381,7 +11424,7 @@ msgid "The number of teeth"
 msgstr "Zahl der Zähne"
 
 #: ../src/live_effects/lpe-gears.cpp:213
-msgid "Phi"
+msgid "Phi:"
 msgstr "Phi"
 
 #: ../src/live_effects/lpe-gears.cpp:213
@@ -11389,7 +11432,8 @@ msgid "Tooth pressure angle (typically 20-25 deg).  The ratio of teeth not in co
 msgstr "Zahnflankenwinkel (typ. 20-25°)."
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
-msgid "Trajectory"
+#, fuzzy
+msgid "Trajectory:"
 msgstr "Kurve"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
@@ -11397,9 +11441,8 @@ msgid "Path along which intermediate steps are created."
 msgstr "Pfad, entlang dem die Zwischenschritte entstehen"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
-#: ../src/ui/dialog/inkscape-preferences.cpp:249
-msgid "Steps"
-msgstr "Schritte"
+msgid "Steps:"
+msgstr "Schritte:"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 msgid "Determines the number of steps from start to end path."
@@ -11415,7 +11458,8 @@ msgstr "Falls gesetzt ist der Abstand zwischen zwei Interpolationen konstant ent
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:331
-msgid "Fixed width"
+#, fuzzy
+msgid "Fixed width:"
 msgstr "Feste Breite"
 
 #: ../src/live_effects/lpe-knot.cpp:331
@@ -11448,7 +11492,8 @@ msgid "Add crossed stroke width to the interruption size"
 msgstr "Addiere Dicke gekreuzter Striche zur Unterbrechungslänge."
 
 #: ../src/live_effects/lpe-knot.cpp:335
-msgid "Switcher size"
+#, fuzzy
+msgid "Switcher size:"
 msgstr "Größe des Drehpfeiles"
 
 #: ../src/live_effects/lpe-knot.cpp:335
@@ -11473,7 +11518,7 @@ msgid "Change knot crossing"
 msgstr "Knotenkreuz ändern"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:61
-msgid "Pattern source"
+msgid "Pattern source:"
 msgstr "Quelle des Musters"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:61
@@ -11481,7 +11526,7 @@ msgid "Path to put along the skeleton path"
 msgstr "Gerüstpfad entlang dieses Pfades setzen"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
-msgid "Pattern copies"
+msgid "Pattern copies:"
 msgstr "Muster-Kopien"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
@@ -11497,21 +11542,14 @@ msgid "Scale the width of the pattern in units of its length"
 msgstr "Breite des Musters in Vielfachen seiner Länge"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:68
-msgid "Spacing"
-msgstr "Abstand"
+#: ../src/widgets/toolbox.cpp:8193
+msgid "Spacing:"
+msgstr "Abstand:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
 #, no-c-format
 msgid "Space between copies of the pattern. Negative values allowed, but are limited to -90% of pattern width."
 msgstr "Abstand zwischen den Kopien. Negative Werte bis -90% der Musterbreite sind erlaubt."
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:72
-msgid "Normal offset"
-msgstr "Normaler Versatz"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:73
-msgid "Tangential offset"
-msgstr "Tangentialer Versatz"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:74
 msgid "Offsets in unit of pattern size"
@@ -11526,7 +11564,8 @@ msgid "Rotate pattern 90 deg before applying"
 msgstr "Muster vor dem Anwenden um 90° drehen"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
-msgid "Fuse nearby ends"
+#, fuzzy
+msgid "Fuse nearby ends:"
 msgstr "Beieinanderliegende Enden verschmelzen"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
@@ -11534,7 +11573,8 @@ msgid "Fuse ends closer than this number. 0 means don't fuse."
 msgstr "Verschmelze Enden näher zusammen als diese Zahl. 0 für keine Verschmelzung."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
-msgid "Frequency randomness"
+#, fuzzy
+msgid "Frequency randomness:"
 msgstr "Zufalls-Frequenz"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
@@ -11542,7 +11582,8 @@ msgid "Variation of distance between hatches, in %."
 msgstr "Variation des Abstands zwischen den Strichen in %"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
-msgid "Growth"
+#, fuzzy
+msgid "Growth:"
 msgstr "Wachstum"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
@@ -11551,7 +11592,7 @@ msgstr "Zunahme des Abstands zwischen den Strichen"
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "Half-turns smoothness: 1st side, in"
+msgid "Half-turns smoothness: 1st side, in:"
 msgstr "Weichheit der Umkehrpunkte: 1. Seite, einlaufend"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
@@ -11559,7 +11600,7 @@ msgid "Set smoothness/sharpness of path when reaching a 'bottom' half-turn. 0=sh
 msgstr "Wählt Glattheit des Pfades bei Einlaufen in \"unteren\" Wendepunkt. 0=spitz, 1=Vorgabe"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
-msgid "1st side, out"
+msgid "1st side, out:"
 msgstr "1. Seite, außen"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
@@ -11567,7 +11608,7 @@ msgid "Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sha
 msgstr "Wählt Glattheit des Pfades bei Auslaufen aus \"unterem\" Wendepunkt. 0=spitz, 1=Vorgabe"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-msgid "2nd side, in"
+msgid "2nd side, in:"
 msgstr "2. Seite, innen"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
@@ -11575,7 +11616,7 @@ msgid "Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp
 msgstr "Wählt Glattheit des Pfades bei Einlaufen in \"oberen\" Wendepunkt. 0=spitz, 1=Vorgabe"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
-msgid "2nd side, out"
+msgid "2nd side, out:"
 msgstr "2. Seite, außen"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
@@ -11583,7 +11624,7 @@ msgid "Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp,
 msgstr "Wählt Glattheit des Pfades bei Auslaufen aus \"oberen\" Wendepunkt. 0=spitz, 1=Vorgabe"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Magnitude jitter: 1st side"
+msgid "Magnitude jitter: 1st side:"
 msgstr "Ausmaß Schwankung: 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
@@ -11593,7 +11634,7 @@ msgstr "Verschiebt zufällig \"untere\" Wendepunkte, um Änderung der Amplitude 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-msgid "2nd side"
+msgid "2nd side:"
 msgstr "2. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
@@ -11601,7 +11642,7 @@ msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr "Verschiebt zufällig \"obere\" Wendepunkte, um Änderung der Amplitude zu erreichen."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
-msgid "Parallelism jitter: 1st side"
+msgid "Parallelism jitter: 1st side:"
 msgstr "Parallelität Schwankung: 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
@@ -11613,7 +11654,7 @@ msgid "Add direction randomness by randomly moving 'top' half-turns tangentially
 msgstr "Ändert Richtung zufällig, in dem \"obere\" Wendepunkte tangential zur Begrenzung bewegt werden."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "Variance: 1st side"
+msgid "Variance: 1st side:"
 msgstr "Varianz: 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
@@ -11642,7 +11683,7 @@ msgid "Add a global bend to the hatches (slower)"
 msgstr "Globale Krümmung zu den Strichen hinzufügen (langsam)."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-msgid "Thickness: at 1st side"
+msgid "Thickness: at 1st side:"
 msgstr "Dicke: auf der 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
@@ -11650,7 +11691,7 @@ msgid "Width at 'bottom' half-turns"
 msgstr "Breite an den \"unteren\" Wendepunkten"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
-msgid "at 2nd side"
+msgid "at 2nd side:"
 msgstr "auf der 2. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
@@ -11659,7 +11700,7 @@ msgstr "Breite an den \"oberen\" Wendepunkten"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-msgid "from 2nd to 1st side"
+msgid "from 2nd to 1st side:"
 msgstr "von der 2. zur 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
@@ -11667,7 +11708,7 @@ msgid "Width from 'top' to 'bottom'"
 msgstr "Breite der Striche von \"oben\" nach \"unten\""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
-msgid "from 1st to 2nd side"
+msgid "from 1st to 2nd side:"
 msgstr "von der 1. zur 2. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
@@ -11708,7 +11749,7 @@ msgid "End"
 msgstr "Ende"
 
 #: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Mark distance"
+msgid "Mark distance:"
 msgstr "Markierungsdistanz"
 
 #: ../src/live_effects/lpe-ruler.cpp:43
@@ -11716,7 +11757,7 @@ msgid "Distance between successive ruler marks"
 msgstr "Abstand zwischen aufeinander folgenden Linealmarkierungen"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Major length"
+msgid "Major length:"
 msgstr "Große Länge"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
@@ -11724,7 +11765,7 @@ msgid "Length of major ruler marks"
 msgstr "Länge der großen Linealmarken"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
-msgid "Minor length"
+msgid "Minor length:"
 msgstr "Kleine Länge"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
@@ -11732,7 +11773,7 @@ msgid "Length of minor ruler marks"
 msgstr "Länge der kleinen Linealmarken"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
-msgid "Major steps"
+msgid "Major steps:"
 msgstr "Große Schritte"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
@@ -11740,15 +11781,15 @@ msgid "Draw a major mark every ... steps"
 msgstr "Zeichne eine große Marke alle ... Schritte"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
-msgid "Shift marks by"
-msgstr "Verschiebe markierung um"
+msgid "Shift marks by:"
+msgstr "Verschiebe Markierung um"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
 msgid "Shift marks by this many steps"
 msgstr "Markierungen um diese Anzahl Schritte verschieben"
 
 #: ../src/live_effects/lpe-ruler.cpp:49
-msgid "Mark direction"
+msgid "Mark direction:"
 msgstr "Markierungsrichtung"
 
 #: ../src/live_effects/lpe-ruler.cpp:49
@@ -11760,8 +11801,8 @@ msgid "Offset of first mark"
 msgstr "Versatz der ersten Markierung"
 
 #: ../src/live_effects/lpe-ruler.cpp:51
-msgid "Border marks"
-msgstr "Beginne Markierung"
+msgid "Border marks:"
+msgstr "Randmarkierungen:"
 
 #: ../src/live_effects/lpe-ruler.cpp:51
 msgid "Choose whether to draw marks at the beginning and end of the path"
@@ -11770,7 +11811,8 @@ msgstr "Wählt Markierungen an Anfang und Ende des Pfades"
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
 #: ../src/live_effects/lpe-sketch.cpp:35
-msgid "Strokes"
+#, fuzzy
+msgid "Strokes:"
 msgstr "Kontur:"
 
 #: ../src/live_effects/lpe-sketch.cpp:35
@@ -11778,7 +11820,7 @@ msgid "Draw that many approximating strokes"
 msgstr "Zeichne diese Zahl an durchschnittlichen Strichen"
 
 #: ../src/live_effects/lpe-sketch.cpp:36
-msgid "Max stroke length"
+msgid "Max stroke length:"
 msgstr "Maximale Konturbreite"
 
 #: ../src/live_effects/lpe-sketch.cpp:37
@@ -11786,7 +11828,7 @@ msgid "Maximum length of approximating strokes"
 msgstr "Maximale Länge der durchschnittlichen Striche"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
-msgid "Stroke length variation"
+msgid "Stroke length variation:"
 msgstr "Strichlängen-Variation"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
@@ -11794,7 +11836,7 @@ msgid "Random variation of stroke length (relative to maximum length)"
 msgstr "Zufällige Variation der Strichlänge (relativ zur max. Länge)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
-msgid "Max. overlap"
+msgid "Max. overlap:"
 msgstr "Max. Überlappung"
 
 #: ../src/live_effects/lpe-sketch.cpp:41
@@ -11802,7 +11844,7 @@ msgid "How much successive strokes should overlap (relative to maximum length)"
 msgstr "Wie viele erfolgreich gezeichnete Striche sollen überlappen (relativ zur max. Länge)"
 
 #: ../src/live_effects/lpe-sketch.cpp:42
-msgid "Overlap variation"
+msgid "Overlap variation:"
 msgstr "Überlappungs-Varaition"
 
 #: ../src/live_effects/lpe-sketch.cpp:43
@@ -11810,7 +11852,7 @@ msgid "Random variation of overlap (relative to maximum overlap)"
 msgstr "Zufällige Variation der Überlappung (relativ zur max. Überlappung)"
 
 #: ../src/live_effects/lpe-sketch.cpp:44
-msgid "Max. end tolerance"
+msgid "Max. end tolerance:"
 msgstr "Max. Endtoleranz"
 
 #: ../src/live_effects/lpe-sketch.cpp:45
@@ -11818,7 +11860,7 @@ msgid "Maximum distance between ends of original and approximating paths (relati
 msgstr "Maximale Distanz zwischen dem Ende der originalen und durschnittlichen Pfade (relativ zur max. Länge)"
 
 #: ../src/live_effects/lpe-sketch.cpp:46
-msgid "Average offset"
+msgid "Average offset:"
 msgstr "Durchschn. Versatz"
 
 #: ../src/live_effects/lpe-sketch.cpp:47
@@ -11826,7 +11868,7 @@ msgid "Average distance each stroke is away from the original path"
 msgstr "Mittlere Distanz, die ein Strich vom Originalpfad entfernt ist."
 
 #: ../src/live_effects/lpe-sketch.cpp:48
-msgid "Max. tremble"
+msgid "Max. tremble:"
 msgstr "Max. Zittern"
 
 #: ../src/live_effects/lpe-sketch.cpp:49
@@ -11834,7 +11876,7 @@ msgid "Maximum tremble magnitude"
 msgstr "Maximales Ausmaß des Zitterns"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
-msgid "Tremble frequency"
+msgid "Tremble frequency:"
 msgstr "Zitterfrequenz"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
@@ -11842,7 +11884,7 @@ msgid "Average number of tremble periods in a stroke"
 msgstr "Durchschnittliche Anzahl der Zitterperioden in einem Strich"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
-msgid "Construction lines"
+msgid "Construction lines:"
 msgstr "Konstruktionslinien"
 
 #: ../src/live_effects/lpe-sketch.cpp:54
@@ -11854,7 +11896,7 @@ msgid "Scale factor relating curvature and length of construction lines (try 5*o
 msgstr "Skalierungsfaktor im Bezug auf Krümmung und Länge der Konstruktionslinien (Versuchen Sie 5*Versatz)"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
-msgid "Max. length"
+msgid "Max. length:"
 msgstr "Max. Länge"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
@@ -11862,7 +11904,7 @@ msgid "Maximum length of construction lines"
 msgstr "Maximale Länge der Konstruktionslinien"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
-msgid "Length variation"
+msgid "Length variation:"
 msgstr "Längenvariation"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
@@ -11870,7 +11912,7 @@ msgid "Random variation of the length of construction lines"
 msgstr "Zufällige Variation der Länge der Konstruktionslinien"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-msgid "Placement randomness"
+msgid "Placement randomness:"
 msgstr "Zufällige Platzierung"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
@@ -11879,7 +11921,8 @@ msgstr "0: gleichmäßig verteilte Konstruktionslinien, 1: absolut zufällige Pl
 
 # !!! maybe use "verbinden"
 #: ../src/live_effects/lpe-sketch.cpp:61
-msgid "k_min"
+#, fuzzy
+msgid "k_min:"
 msgstr "verbinden"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
@@ -11887,7 +11930,8 @@ msgid "min curvature"
 msgstr "min. Krümmung"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
-msgid "k_max"
+#, fuzzy
+msgid "k_max:"
 msgstr "k_max"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
@@ -11895,7 +11939,7 @@ msgid "max curvature"
 msgstr "maximale Krümmung"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:46
-msgid "Nb of generations"
+msgid "Nb of generations:"
 msgstr "Anzahl der Generationen"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:46
@@ -11903,7 +11947,7 @@ msgid "Depth of the recursion --- keep low!!"
 msgstr "Tiefe der Rekursion --- Mit Bedacht!!"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
-msgid "Generating path"
+msgid "Generating path:"
 msgstr "Erzeuge neuen Pfad"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
@@ -11928,7 +11972,7 @@ msgstr "Wenn nicht ausgewählt, wird nur letzte Generation gezeichnet."
 
 #. ,draw_boxes(_("Display boxes"), _("Display boxes instead of paths only"), "draw_boxes", &wr, this, true)
 #: ../src/live_effects/lpe-vonkoch.cpp:51
-msgid "Reference segment"
+msgid "Reference segment:"
 msgstr "Referenz-Segment"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:51
@@ -11939,7 +11983,7 @@ msgstr "Referenzsegment (Vorgabe ist horizontale Mittellinie der Umrandung)"
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
 #. FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
 #: ../src/live_effects/lpe-vonkoch.cpp:55
-msgid "Max complexity"
+msgid "Max complexity:"
 msgstr "Maximale Kompexität"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:55
@@ -16796,6 +16840,10 @@ msgstr "Wird ein Knoten entlang einer festgesetzten Linie gezogen, dann rastet d
 msgid "Snapping"
 msgstr "Einrasten"
 
+#: ../src/ui/dialog/inkscape-preferences.cpp:249
+msgid "Steps"
+msgstr "Schritte"
+
 #. nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
 #: ../src/ui/dialog/inkscape-preferences.cpp:253
 msgid "Arrow keys move by:"
@@ -18994,7 +19042,7 @@ msgstr "Unterschneidungspaar hinzufügen"
 
 #. Kerning Setup:
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:735
-msgid "Kerning Setup:"
+msgid "Kerning Setup"
 msgstr "Unterschneidungseinstellung:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:737
@@ -19745,60 +19793,60 @@ msgctxt "Path handle tip"
 msgid "Move handle by %s, %s; angle %.2f°, length %s"
 msgstr "Anfasser verschieben um %s, %s; Winkel %.2f°, Länge %s"
 
-#: ../src/ui/tool/node.cpp:1125
+#: ../src/ui/tool/node.cpp:1126
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr "<b>Umschalt</b>: Anfasser nach außen ziehen, Klicken um Auswahl umzuschalten"
 
-#: ../src/ui/tool/node.cpp:1127
+#: ../src/ui/tool/node.cpp:1128
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: click to toggle selection"
 msgstr "<b>Umschalt</b>: Klick um Auswahl umzuschalten"
 
-#: ../src/ui/tool/node.cpp:1132
+#: ../src/ui/tool/node.cpp:1133
 msgctxt "Path node tip"
 msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
 msgstr "<b>STRG+Alt</b>: Entlang der Anfasser-Linien verschieben. Klicken, um Knoten zu löschen"
 
-#: ../src/ui/tool/node.cpp:1135
+#: ../src/ui/tool/node.cpp:1136
 msgctxt "Path node tip"
 msgid "<b>Ctrl</b>: move along axes, click to change node type"
 msgstr "<b>STRG</b>: Verschieben entlang der Achsen. Klicken, um Knotentyp zu verändern"
 
-#: ../src/ui/tool/node.cpp:1139
+#: ../src/ui/tool/node.cpp:1140
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
 msgstr "<b>Alt</b>: Knoten formen"
 
-#: ../src/ui/tool/node.cpp:1147
+#: ../src/ui/tool/node.cpp:1148
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>: Ziehen, um den Pfad zu formen (mehr: Umschalt, STRG, Alt)"
 
-#: ../src/ui/tool/node.cpp:1150
+#: ../src/ui/tool/node.cpp:1151
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>:Ziehen, um den Pfad zu formen, Klicken um Skalieren/Rotieren der Anfasser umzuschalten (mehr: Umschalt, Strg, Alt)"
 
-#: ../src/ui/tool/node.cpp:1153
+#: ../src/ui/tool/node.cpp:1154
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>: Ziehen, um den Pfad zu formen, Klicken, um nur diesen Knoten auszuwählen (mehr: Umschalt, Strg, Alt)"
 
-#: ../src/ui/tool/node.cpp:1161
+#: ../src/ui/tool/node.cpp:1162
 #, c-format
 msgctxt "Path node tip"
 msgid "Move node by %s, %s"
 msgstr "Knoten verschieben um %s, %s"
 
-#: ../src/ui/tool/node.cpp:1173
+#: ../src/ui/tool/node.cpp:1174
 msgid "Symmetric node"
 msgstr "symmetrischer Knoten"
 
-#: ../src/ui/tool/node.cpp:1174
+#: ../src/ui/tool/node.cpp:1175
 msgid "Auto-smooth node"
 msgstr "Knoten automatisch glätten"
 
@@ -20613,19 +20661,19 @@ msgstr "O:.%d"
 msgid "Opacity: %.3g"
 msgstr "Deckkraft: %.3g"
 
-#: ../src/vanishing-point.cpp:123
+#: ../src/vanishing-point.cpp:125
 msgid "Split vanishing points"
 msgstr "Fluchtpunkte aufteilen"
 
-#: ../src/vanishing-point.cpp:168
+#: ../src/vanishing-point.cpp:170
 msgid "Merge vanishing points"
 msgstr "Fluchtpunkte zusammenführen"
 
-#: ../src/vanishing-point.cpp:224
+#: ../src/vanishing-point.cpp:236
 msgid "3D box: Move vanishing point"
 msgstr "3D-Box: Fluchtpunkt verschieben"
 
-#: ../src/vanishing-point.cpp:305
+#: ../src/vanishing-point.cpp:317
 #, c-format
 msgid "<b>Finite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural "<b>Finite</b> vanishing point shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box(es)"
@@ -20634,14 +20682,14 @@ msgstr[1] "<b>Endlicher</b> Fluchtpunkt benutzt von <b>%d</b> Boxen; Ziehen mit 
 
 #. This won't make sense any more when infinite VPs are not shown on the canvas,
 #. but currently we update the status message anyway
-#: ../src/vanishing-point.cpp:312
+#: ../src/vanishing-point.cpp:324
 #, c-format
 msgid "<b>Infinite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural "<b>Infinite</b> vanishing point shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box(es)"
 msgstr[0] "<b>Unendlicher</b> Fluchtpunkt benutzt von <b>%d</b> Box"
 msgstr[1] "<b>Unendlicher</b> Fluchtpunkt benutzt von <b>%d</b> Boxen; Ziehen mit <b>Umschalttaste</b> zum Separieren der markierten Boxen"
 
-#: ../src/vanishing-point.cpp:320
+#: ../src/vanishing-point.cpp:332
 #, c-format
 msgid "shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
 msgid_plural "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box(es)"
@@ -22167,7 +22215,6 @@ msgid "_Fill and Stroke..."
 msgstr "Füllung und _Kontur…"
 
 #: ../src/verbs.cpp:2629
-#, fuzzy
 msgid "Edit objects' colors, gradients, arrowheads, and other fill and stroke properties..."
 msgstr "Objektfarben, Farbverläufe, Strichbreiten, Pfeile, Strichmuster usw. ändern"
 
@@ -25126,10 +25173,6 @@ msgstr "Der Krümmungswert der Verbindungslinie"
 msgid "Connector Spacing"
 msgstr "Verbinderabstand"
 
-#: ../src/widgets/toolbox.cpp:8193
-msgid "Spacing:"
-msgstr "Abstand:"
-
 #: ../src/widgets/toolbox.cpp:8194
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Platz, der von den Objektverbindern um Objekte herum gelassen wird"
@@ -25233,9 +25276,8 @@ msgid "Barcode - Datamatrix"
 msgstr "Strichcode-Daten:"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:2
-#, fuzzy
 msgid "Cols:"
-msgstr "Farben"
+msgstr "Spalten:"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:5
 msgid "Square Size (px):"
@@ -25264,6 +25306,24 @@ msgstr "Kippen [Grad]"
 #: ../share/extensions/wireframe_sphere.inx.h:8
 msgid "Wireframe Sphere"
 msgstr "Draht-Sphäre (Kugel)"
+
+#~ msgid "Function applied to the blue channel"
+#~ msgstr "Funktion auf den Blau-Kanal angewendet"
+
+#~ msgid "Function applied to the green channel"
+#~ msgstr "Funktion auf den Grün-Kanal angewendet"
+
+#~ msgid "Function applied to the red channel"
+#~ msgstr "Funktion auf den Rot-Kanal angewendet"
+
+#~ msgid "Spacing"
+#~ msgstr "Abstand"
+
+#~ msgid "Normal offset"
+#~ msgstr "Normaler Versatz"
+
+#~ msgid "Tangential offset"
+#~ msgstr "Tangentialer Versatz"
 
 #~ msgid ""
 #~ "Generate a random pattern of Voronoi cells. The pattern will be "
