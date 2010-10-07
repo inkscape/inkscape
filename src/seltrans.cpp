@@ -1338,18 +1338,15 @@ gboolean Inkscape::SelTrans::rotateRequest(Geom::Point &pt, guint state)
 // Move the item's transformation center
 gboolean Inkscape::SelTrans::centerRequest(Geom::Point &pt, guint state)
 {
-    // Center is being dragged for the first item in the selection only
-    // Find out which item is first ...
-    GSList *items = (GSList *) const_cast<Selection *>(_selection)->itemList();
-    SPItem *first = NULL;
-    if (items) {
-        first = reinterpret_cast<SPItem*>(g_slist_last(items)->data); // from the first item in selection
-    }
-    // ... and store that item because later on we need to make sure that
-    // this transformation center won't snap to itself
     SnapManager &m = _desktop->namedview->snap_manager;
     m.setup(_desktop);
-    m.setRotationCenterSource(first);
+
+    // When dragging the transformation center while multiple items have been selected, then those
+    // items will share a single center. While dragging that single center, it should never snap to the
+    // centers of any of the selected objects. Therefore we will have to pass the list of selected items
+    // to the snapper, to avoid self-snapping of the rotation center
+    GSList *items = (GSList *) const_cast<Selection *>(_selection)->itemList();
+    m.setRotationCenterSource(items);
     m.freeSnapReturnByRef(pt, Inkscape::SNAPSOURCE_ROTATION_CENTER);
     m.unSetup();
 

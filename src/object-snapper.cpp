@@ -229,10 +229,17 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::SnapSourceType const &t,
                     _snapmanager->snapprefs.setSnapIntersectionCS(false);
                 }
 
+                // We should not snap a transformation center to any of the centers of the items in the
+                // current selection (see the comment in SelTrans::centerRequest())
                 bool old_pref2 = _snapmanager->snapprefs.getIncludeItemCenter();
-                if ((*i).item == _snapmanager->getRotationCenterSource()) {
-                    // don't snap to this item's rotation center
-                    _snapmanager->snapprefs.setIncludeItemCenter(false);
+                if (old_pref2) {
+                    for ( GSList const *itemlist = _snapmanager->getRotationCenterSource(); itemlist != NULL; itemlist = g_slist_next(itemlist) ) {
+                        if ((*i).item == reinterpret_cast<SPItem*>(itemlist->data)) {
+                            // don't snap to this item's rotation center
+                            _snapmanager->snapprefs.setIncludeItemCenter(false);
+                            break;
+                        }
+                    }
                 }
 
                 sp_item_snappoints(root_item, *_points_to_snap_to, &_snapmanager->snapprefs);

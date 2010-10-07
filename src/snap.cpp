@@ -47,7 +47,7 @@ SnapManager::SnapManager(SPNamedView const *v) :
     object(this, 0),
     snapprefs(),
     _named_view(v),
-    _rotation_center_source_item(NULL),
+    _rotation_center_source_items(NULL),
     _guide_to_ignore(NULL),
     _desktop(NULL),
     _unselected_nodes(NULL)
@@ -1161,7 +1161,7 @@ void SnapManager::setup(SPDesktop const *desktop,
     _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;
     _guide_to_ignore = guide_to_ignore;
-    _rotation_center_source_item = NULL;
+    _rotation_center_source_items = NULL;
 }
 
 /**
@@ -1195,7 +1195,7 @@ void SnapManager::setup(SPDesktop const *desktop,
     _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;
     _guide_to_ignore = guide_to_ignore;
-    _rotation_center_source_item = NULL;
+    _rotation_center_source_items = NULL;
 }
 
 /// Setup, taking the list of items to ignore from the desktop's selection.
@@ -1213,7 +1213,7 @@ void SnapManager::setupIgnoreSelection(SPDesktop const *desktop,
     _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;
     _guide_to_ignore = guide_to_ignore;
-    _rotation_center_source_item = NULL;
+    _rotation_center_source_items = NULL;
     _items_to_ignore.clear();
 
     Inkscape::Selection *sel = _desktop->selection;
