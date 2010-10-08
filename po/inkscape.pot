@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-02 17:43+0200\n"
+"POT-Creation-Date: 2010-10-08 12:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -238,6 +238,15 @@ msgstr ""
 #: ../share/extensions/web-set-att.inx.h:4
 #: ../share/extensions/web-transmit-att.inx.h:4
 #: ../src/ui/dialog/extension-editor.cpp:81
+#: ../share/extensions/gcodetools_all_in_one.inx.h:25
+#: ../share/extensions/gcodetools_area.inx.h:17
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:5
+#: ../share/extensions/gcodetools_dxf_points.inx.h:13
+#: ../share/extensions/gcodetools_engraving.inx.h:11
+#: ../share/extensions/gcodetools_lathe.inx.h:14
+#: ../share/extensions/gcodetools_orientation_points.inx.h:5
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:11
+#: ../share/extensions/gcodetools_tools_library.inx.h:3
 msgid "Help"
 msgstr ""
 
@@ -264,6 +273,11 @@ msgstr ""
 #: ../share/extensions/web-set-att.inx.h:6
 #: ../share/extensions/web-transmit-att.inx.h:6
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
+#: ../share/extensions/gcodetools_all_in_one.inx.h:33
+#: ../share/extensions/gcodetools_area.inx.h:22
+#: ../share/extensions/gcodetools_engraving.inx.h:16
+#: ../share/extensions/gcodetools_lathe.inx.h:22
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:15
 msgid "Options"
 msgstr ""
 
@@ -2238,6 +2252,8 @@ msgid "Color Markers to Match Stroke"
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:1
+#: ../share/extensions/gcodetools_all_in_one.inx.h:8
+#: ../share/extensions/gcodetools_area.inx.h:5
 msgid "Area"
 msgstr ""
 
@@ -4065,6 +4081,169 @@ msgstr ""
 
 #: ../share/extensions/extractimage.py:72
 msgid "Unable to find image data."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3087
+msgid ""
+"Directory does not exist! Please specify existing directory at Preferences "
+"tab!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3112
+#, python-format
+msgid ""
+"Can not write to specified file!\n"
+"%s"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3240
+#, python-format
+msgid ""
+"Orientation points for '%s' layer have not been found! Please add "
+"orientation points using Orientation tab!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3246
+#, python-format
+msgid "There are more than one orientation point groups in '%s' layer"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3277
+#: ../share/extensions/gcodetools.py:3279
+msgid ""
+"Orientation points are wrong! (if there are two orientation points they "
+"sould not be the same. If there are three orientation points they should not "
+"be in a straight line.)"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3398
+#, python-format
+msgid ""
+"Warning! Found bad orientation points in '%s' layer. Resulting Gcode could "
+"be corrupt!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3411
+msgid ""
+"This extension works with Paths and Dynamic Offsets and groups of them only! "
+"All other objects will be ignored!\n"
+"Solution 1: press Path->Object to path or Shift+Ctrl+C.\n"
+"Solution 2: Path->Dynamic offset or Ctrl+J.\n"
+"Solution 3: export all contours to PostScript level 2 (File->Save As->.ps) "
+"and File->Import this file."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3468
+#, python-format
+msgid ""
+"Warning! Tool's and default tool's parameter's (%s) types are not the same "
+"( type('%s') != type('%s') )."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3471
+#, python-format
+msgid "Warning! Tool has parameter that default tool has not ( '%s': '%s' )."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3485
+#, python-format
+msgid "Layer '%s' contains more than one tool!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3488
+#, python-format
+msgid ""
+"Can not find tool for '%s' layer! Please add one with Tools library tab!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3591
+#: ../share/extensions/gcodetools.py:3672
+msgid "No paths are selected! Trying to work on all available paths."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3610
+#: ../share/extensions/gcodetools.py:3681
+msgid ""
+"Warning: One or more paths dont have 'd' parameter, try to Ungroup (Ctrl"
+"+Shift+G) and Object to Path (Ctrl+Shift+C)!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3640
+msgid ""
+"Noting is selected. Please select something to convert to drill point "
+"(dxfpoint) or clear point sign."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3713
+#: ../share/extensions/gcodetools.py:3807
+msgid "This extension requires at least one selected path."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3719
+#, python-format
+msgid "Tool diameter must be > 0 but tool's diameter on '%s' layer is not!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3730
+msgid "Warning: omitting non-path"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4062
+#, python-format
+msgid "Tool '%s' has no shape!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4072
+msgid "No need to engrave sharp angles."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4085
+msgid ""
+"Active layer already has orientation points! Remove them or select another "
+"layer!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4133
+msgid "Active layer already has a tool! Remove it or select another layer!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4257
+msgid "Selection is empty! Will compute whole drawing."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4317
+msgid ""
+"Tutorials, manuals and support can be found at\n"
+"English support forum:\n"
+"\thttp://www.cnc-club.ru/gcodetools\n"
+"and Russian support forum:\n"
+"\thttp://www.cnc-club.ru/gcodetoolsru"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4362
+msgid "Lathe X and Z axis remap should be 'X', 'Y' or 'Z'. Exiting..."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4365
+msgid "Lathe X and Z axis remap should be the same. Exiting..."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4526
+msgid ""
+"Select one of the active tabs - Path to Gcode, Area, Engraving, DXF points, "
+"Orientation, Offset, Lathe or Tools library."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4532
+msgid ""
+"Orientation points have not been defined! A default set of orientation "
+"points has been automatically added."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4536
+msgid ""
+"Cutting tool has not been defined! A default tool has been automatically "
+"added."
 msgstr ""
 
 #: ../share/extensions/inkex.py:67
@@ -6319,7 +6498,7 @@ msgid "Defines the direction and magnitude of the extrusion"
 msgstr ""
 
 #: ../src/sp-flowtext.cpp:378 ../src/sp-text.cpp:427
-#: ../src/text-context.cpp:1604
+#: ../src/text-context.cpp:1628
 msgid " [truncated]"
 msgstr ""
 
@@ -7797,7 +7976,7 @@ msgstr ""
 msgid "Set as default"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:665 ../src/text-context.cpp:1500
+#: ../src/dialogs/text-edit.cpp:665 ../src/text-context.cpp:1524
 msgid "Set text style"
 msgstr ""
 
@@ -8484,7 +8663,7 @@ msgid ""
 "this extension."
 msgstr ""
 
-#: ../src/extension/implementation/script.cpp:985
+#: ../src/extension/implementation/script.cpp:989
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -10509,6 +10688,8 @@ msgstr ""
 
 #. Name
 #: ../src/libgdl/gdl-dock-item.c:287 ../src/widgets/toolbox.cpp:7616
+#: ../share/extensions/gcodetools_all_in_one.inx.h:34
+#: ../share/extensions/gcodetools_orientation_points.inx.h:6
 msgid "Orientation"
 msgstr ""
 
@@ -12757,7 +12938,7 @@ msgstr ""
 msgid "<b>Nothing</b> was deleted."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:330 ../src/text-context.cpp:1002
+#: ../src/selection-chemistry.cpp:330 ../src/text-context.cpp:1026
 #: ../src/ui/dialog/swatches.cpp:208 ../src/ui/dialog/swatches.cpp:271
 #: ../src/widgets/toolbox.cpp:1362 ../src/widgets/toolbox.cpp:6130
 msgid "Delete"
@@ -13333,12 +13514,12 @@ msgstr ""
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/seltrans.cpp:1367
+#: ../src/seltrans.cpp:1364
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr ""
 
-#: ../src/seltrans.cpp:1542
+#: ../src/seltrans.cpp:1539
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -13878,120 +14059,120 @@ msgstr ""
 msgid "Unicode (<b>Enter</b> to finish): %s: %s"
 msgstr ""
 
-#: ../src/text-context.cpp:581 ../src/text-context.cpp:856
+#: ../src/text-context.cpp:581 ../src/text-context.cpp:880
 msgid "Unicode (<b>Enter</b> to finish): "
 msgstr ""
 
-#: ../src/text-context.cpp:656
+#: ../src/text-context.cpp:668
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr ""
 
-#: ../src/text-context.cpp:688
+#: ../src/text-context.cpp:714
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr ""
 
-#: ../src/text-context.cpp:701
+#: ../src/text-context.cpp:725
 msgid "Flowed text is created."
 msgstr ""
 
-#: ../src/text-context.cpp:703
+#: ../src/text-context.cpp:727
 msgid "Create flowed text"
 msgstr ""
 
-#: ../src/text-context.cpp:705
+#: ../src/text-context.cpp:729
 msgid ""
 "The frame is <b>too small</b> for the current font size. Flowed text not "
 "created."
 msgstr ""
 
-#: ../src/text-context.cpp:841
+#: ../src/text-context.cpp:865
 msgid "No-break space"
 msgstr ""
 
-#: ../src/text-context.cpp:843
+#: ../src/text-context.cpp:867
 msgid "Insert no-break space"
 msgstr ""
 
-#: ../src/text-context.cpp:880
+#: ../src/text-context.cpp:904
 msgid "Make bold"
 msgstr ""
 
-#: ../src/text-context.cpp:898
+#: ../src/text-context.cpp:922
 msgid "Make italic"
 msgstr ""
 
-#: ../src/text-context.cpp:937
+#: ../src/text-context.cpp:961
 msgid "New line"
 msgstr ""
 
-#: ../src/text-context.cpp:971
+#: ../src/text-context.cpp:995
 msgid "Backspace"
 msgstr ""
 
-#: ../src/text-context.cpp:1019
+#: ../src/text-context.cpp:1043
 msgid "Kern to the left"
 msgstr ""
 
-#: ../src/text-context.cpp:1044
+#: ../src/text-context.cpp:1068
 msgid "Kern to the right"
 msgstr ""
 
-#: ../src/text-context.cpp:1069
+#: ../src/text-context.cpp:1093
 msgid "Kern up"
 msgstr ""
 
-#: ../src/text-context.cpp:1095
+#: ../src/text-context.cpp:1119
 msgid "Kern down"
 msgstr ""
 
-#: ../src/text-context.cpp:1172
+#: ../src/text-context.cpp:1196
 msgid "Rotate counterclockwise"
 msgstr ""
 
-#: ../src/text-context.cpp:1193
+#: ../src/text-context.cpp:1217
 msgid "Rotate clockwise"
 msgstr ""
 
-#: ../src/text-context.cpp:1210
+#: ../src/text-context.cpp:1234
 msgid "Contract line spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1218
+#: ../src/text-context.cpp:1242
 msgid "Contract letter spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1237
+#: ../src/text-context.cpp:1261
 msgid "Expand line spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1245
+#: ../src/text-context.cpp:1269
 msgid "Expand letter spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1375
+#: ../src/text-context.cpp:1399
 msgid "Paste text"
 msgstr ""
 
-#: ../src/text-context.cpp:1621
+#: ../src/text-context.cpp:1645
 #, c-format
 msgid ""
 "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new "
 "paragraph."
 msgstr ""
 
-#: ../src/text-context.cpp:1623
+#: ../src/text-context.cpp:1647
 #, c-format
 msgid "Type or edit text (%d characters%s); <b>Enter</b> to start new line."
 msgstr ""
 
-#: ../src/text-context.cpp:1631 ../src/tools-switch.cpp:197
+#: ../src/text-context.cpp:1655 ../src/tools-switch.cpp:197
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
 msgstr ""
 
-#: ../src/text-context.cpp:1741
+#: ../src/text-context.cpp:1765
 msgid "Type text"
 msgstr ""
 
@@ -25265,6 +25446,465 @@ msgstr ""
 #. End:
 #.
 #. vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+#: ../share/extensions/gcodetools_all_in_one.inx.h:1
+#: ../share/extensions/gcodetools_area.inx.h:1
+msgid ""
+"\"Create area offset\": creates several Inkscape path offsets to fill "
+"original path's area up to \"Area radius\" value. Outlines start from \"1/2 D"
+"\" up to \"Area width\" total width with \"D\" steps where D is taken from "
+"the nearest tool definition (\"Tool diameter\" value). Only one offset will "
+"be created if the \"Area width\" is equal to \"1/2 D\"."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:2
+#: ../share/extensions/gcodetools_orientation_points.inx.h:1
+msgid "2-points mode (move and rotate, maintained aspect ratio X/Y)"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:3
+#: ../share/extensions/gcodetools_orientation_points.inx.h:2
+msgid "3-points mode (move, rotate and mirror, different X/Y scale)"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:4
+#: ../share/extensions/gcodetools_area.inx.h:2
+msgid "Action:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:5
+#: ../share/extensions/gcodetools_area.inx.h:3
+#: ../share/extensions/gcodetools_dxf_points.inx.h:1
+#: ../share/extensions/gcodetools_engraving.inx.h:1
+#: ../share/extensions/gcodetools_lathe.inx.h:1
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:1
+msgid "Add numeric suffix to filename"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:6
+#: ../share/extensions/gcodetools_area.inx.h:4
+#: ../share/extensions/gcodetools_dxf_points.inx.h:2
+#: ../share/extensions/gcodetools_engraving.inx.h:2
+#: ../share/extensions/gcodetools_lathe.inx.h:2
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:2
+msgid "Additional post-processor:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:7
+msgid "All in one"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:9
+#: ../share/extensions/gcodetools_area.inx.h:6
+msgid "Area artefacts"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:10
+#: ../share/extensions/gcodetools_area.inx.h:7
+msgid "Area width:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:11
+#: ../share/extensions/gcodetools_area.inx.h:8
+msgid "Artefact diameter:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:12
+#: ../share/extensions/gcodetools_area.inx.h:9
+#: ../share/extensions/gcodetools_lathe.inx.h:3
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:3
+msgid ""
+"Biarc interpolation tolerance is the maximum distance between path and its "
+"approximation. The segment will be split into two segments if the distance "
+"between path's segment and it's approximation exceeds biarc interpolation "
+"tolerance."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:13
+#: ../share/extensions/gcodetools_area.inx.h:10
+#: ../share/extensions/gcodetools_lathe.inx.h:4
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:4
+msgid "Biarc interpolation tolerance:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:14
+#: ../share/extensions/gcodetools_dxf_points.inx.h:3
+msgid ""
+"Convert selected objects to drill points (as dxf_import plugin does). Also "
+"you can save original shape. Only the start point of each curve will be "
+"used. Also you can manually select object, open XML editor (Shift+Ctrl+X) "
+"and add or remove XML tag 'dxfpoint' with any value."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:15
+#: ../share/extensions/gcodetools_dxf_points.inx.h:4
+msgid "Convert selection:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:16
+#: ../share/extensions/gcodetools_dxf_points.inx.h:6
+msgid "DXF points"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:17
+#: ../share/extensions/gcodetools_area.inx.h:11
+#: ../share/extensions/gcodetools_dxf_points.inx.h:7
+#: ../share/extensions/gcodetools_engraving.inx.h:3
+#: ../share/extensions/gcodetools_lathe.inx.h:6
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:5
+msgid "Directory:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:18
+msgid "Draw additional graphics to debug engraving path:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:19
+#: ../share/extensions/gcodetools_engraving.inx.h:5
+msgid "Engraving"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:20
+#: ../share/extensions/gcodetools_area.inx.h:12
+#: ../share/extensions/gcodetools_dxf_points.inx.h:8
+#: ../share/extensions/gcodetools_engraving.inx.h:6
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:6
+msgid "File:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:21
+#: ../share/extensions/gcodetools_area.inx.h:13
+#: ../share/extensions/gcodetools_dxf_points.inx.h:9
+#: ../share/extensions/gcodetools_engraving.inx.h:7
+#: ../share/extensions/gcodetools_lathe.inx.h:10
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:7
+msgid "Full path to log file:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:22
+#: ../share/extensions/gcodetools_area.inx.h:14
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:3
+#: ../share/extensions/gcodetools_dxf_points.inx.h:10
+#: ../share/extensions/gcodetools_engraving.inx.h:8
+#: ../share/extensions/gcodetools_lathe.inx.h:11
+#: ../share/extensions/gcodetools_orientation_points.inx.h:3
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:8
+#: ../share/extensions/gcodetools_tools_library.inx.h:1
+msgid "Gcodetools"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:23
+#: ../share/extensions/gcodetools_area.inx.h:15
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:4
+#: ../share/extensions/gcodetools_dxf_points.inx.h:11
+#: ../share/extensions/gcodetools_engraving.inx.h:9
+#: ../share/extensions/gcodetools_lathe.inx.h:12
+#: ../share/extensions/gcodetools_orientation_points.inx.h:4
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:9
+#: ../share/extensions/gcodetools_tools_library.inx.h:2
+msgid ""
+"Gcodetools plug-in: converts paths to Gcode (using circular interpolation), "
+"makes offset paths and engraves sharp corners using cone cutters. This plug-"
+"in calculates Gcode for paths using circular interpolation or linear motion "
+"when needed. Tutorials, manuals and support can be found at English support "
+"forum: http://www.cnc-club.ru/gcodetools and Russian support forum: http://"
+"www.cnc-club.ru/gcodetoolsru Credits: Nick Drobchenko, Vladimir Kalyaev, "
+"John Brooker, Henry Nicolas. Gcodetools ver. 1.6.01"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:24
+#: ../share/extensions/gcodetools_area.inx.h:16
+#: ../share/extensions/gcodetools_dxf_points.inx.h:12
+#: ../share/extensions/gcodetools_engraving.inx.h:10
+#: ../share/extensions/gcodetools_lathe.inx.h:13
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:10
+msgid "Generate log file"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:26
+#: ../share/extensions/gcodetools_tools_library.inx.h:4
+msgid "Just check tools"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:27
+#: ../share/extensions/gcodetools_area.inx.h:18
+msgid "Maximum area cutting curves:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:28
+#: ../share/extensions/gcodetools_engraving.inx.h:12
+msgid "Maximum distance for engraving:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:29
+#: ../share/extensions/gcodetools_area.inx.h:19
+#: ../share/extensions/gcodetools_lathe.inx.h:19
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:12
+msgid "Maximum splitting depth:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:30
+#: ../share/extensions/gcodetools_area.inx.h:20
+#: ../share/extensions/gcodetools_engraving.inx.h:13
+#: ../share/extensions/gcodetools_lathe.inx.h:20
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:13
+msgid "Minimum arc radius:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:31
+#: ../share/extensions/gcodetools_engraving.inx.h:14
+msgid "Number of sample points used to calculate distance:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:32
+#: ../share/extensions/gcodetools_area.inx.h:21
+#: ../share/extensions/gcodetools_engraving.inx.h:15
+#: ../share/extensions/gcodetools_lathe.inx.h:21
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:14
+msgid "Offset along Z axis:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:35
+#: ../share/extensions/gcodetools_orientation_points.inx.h:8
+msgid ""
+"Orientation points are used to calculate transformation (offset,scale,mirror,"
+"rotation in XY plane) of the path. 3-points mode only: do not put all three "
+"into one line (use 2-points mode instead). You can modify Z surface, Z depth "
+"values later using text tool (3rd coordinates). If there are no orientation "
+"points inside current layer they are taken from the upper layer. Do not "
+"ungroup orientation points! You can select them using double click to enter "
+"the group or by Ctrl+Click. Now press apply to create control points "
+"(independent set for each layer)."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:36
+#: ../share/extensions/gcodetools_orientation_points.inx.h:9
+msgid "Orientation type:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:37
+#: ../share/extensions/gcodetools_area.inx.h:23
+#: ../share/extensions/gcodetools_lathe.inx.h:23
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:16
+msgid "Path to Gcode"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:38
+#: ../share/extensions/gcodetools_area.inx.h:24
+#: ../share/extensions/gcodetools_dxf_points.inx.h:14
+#: ../share/extensions/gcodetools_engraving.inx.h:17
+#: ../share/extensions/gcodetools_lathe.inx.h:24
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:17
+msgid "Post-processor:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:39
+#: ../share/extensions/gcodetools_area.inx.h:25
+#: ../share/extensions/gcodetools_dxf_points.inx.h:15
+#: ../share/extensions/gcodetools_engraving.inx.h:18
+#: ../share/extensions/gcodetools_lathe.inx.h:25
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:18
+msgid "Preferences"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:40
+#: ../share/extensions/gcodetools_area.inx.h:26
+#: ../share/extensions/gcodetools_engraving.inx.h:19
+#: ../share/extensions/gcodetools_lathe.inx.h:26
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:19
+msgid "Scale along Z axis:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:41
+#: ../share/extensions/gcodetools_area.inx.h:27
+#: ../share/extensions/gcodetools_engraving.inx.h:20
+#: ../share/extensions/gcodetools_lathe.inx.h:27
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:20
+msgid "Select all paths if nothing is selected"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:42
+#: ../share/extensions/gcodetools_tools_library.inx.h:5
+msgid ""
+"Selected tool type fills appropriate default values. You can change these "
+"values using the Text tool later on. The topmost (z order) tool in the "
+"active layer is used. If there is no tool inside the current layer it is "
+"taken from the upper layer. Press Apply to create new tool."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:43
+#: ../share/extensions/gcodetools_engraving.inx.h:21
+msgid "Sharp angle tolerance:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:44
+#: ../share/extensions/gcodetools_engraving.inx.h:22
+msgid ""
+"This function creates path to engrave sharp angles. Cutter's shape function "
+"is defined by the tool. Some simple shapes: cone....(45 degrees)...........: "
+"w cone....(height/diameter=10/3).: 10/3 w sphere..(\"r\" diameter).........: "
+"math.sqrt(max(0,r**2-w**2)) ellipse.(R1=r and R2=r*4r).....: math.sqrt(max(0,"
+"r**2-w**2))*4"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:45
+#: ../share/extensions/gcodetools_tools_library.inx.h:6
+msgid "Tools library"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:46
+#: ../share/extensions/gcodetools_tools_library.inx.h:7
+msgid "Tools type:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:47
+#: ../share/extensions/gcodetools_area.inx.h:28
+#: ../share/extensions/gcodetools_dxf_points.inx.h:16
+#: ../share/extensions/gcodetools_engraving.inx.h:23
+#: ../share/extensions/gcodetools_lathe.inx.h:28
+#: ../share/extensions/gcodetools_orientation_points.inx.h:10
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:21
+msgid "Units (mm or in):"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:48
+#: ../share/extensions/gcodetools_area.inx.h:29
+msgid ""
+"Usage: 1. Select all Area Offsets (gray outlines) 2. Object/Ungroup (Shift"
+"+Ctrl+G) 3. Press Apply Suspected small objects will be marked out by "
+"colored arrows."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:49
+#: ../share/extensions/gcodetools_orientation_points.inx.h:11
+msgid "Z depth:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:50
+#: ../share/extensions/gcodetools_area.inx.h:30
+#: ../share/extensions/gcodetools_dxf_points.inx.h:17
+#: ../share/extensions/gcodetools_engraving.inx.h:24
+#: ../share/extensions/gcodetools_lathe.inx.h:29
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:22
+msgid "Z safe height for G00 move over blank:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:51
+#: ../share/extensions/gcodetools_orientation_points.inx.h:12
+msgid "Z surface:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:52
+#: ../share/extensions/gcodetools_dxf_points.inx.h:18
+msgid "clear dxfpoint sign"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:53
+#: ../share/extensions/gcodetools_tools_library.inx.h:8
+msgid "cone"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:54
+#: ../share/extensions/gcodetools_tools_library.inx.h:9
+msgid "cylinder"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:55
+#: ../share/extensions/gcodetools_tools_library.inx.h:10
+msgid "default"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:56
+#: ../share/extensions/gcodetools_area.inx.h:31
+msgid "delete"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:57
+#: ../share/extensions/gcodetools_tools_library.inx.h:11
+msgid "lathe cutter"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:58
+#: ../share/extensions/gcodetools_area.inx.h:32
+msgid "mark with an arrow"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:59
+#: ../share/extensions/gcodetools_area.inx.h:33
+msgid "mark with style"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:60
+#: ../share/extensions/gcodetools_tools_library.inx.h:12
+msgid "plasma"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:61
+#: ../share/extensions/gcodetools_dxf_points.inx.h:19
+msgid "set as dxfpoint and draw arrow"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:62
+#: ../share/extensions/gcodetools_dxf_points.inx.h:20
+msgid "set as dxfpoint and save shape"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:63
+#: ../share/extensions/gcodetools_tools_library.inx.h:13
+msgid "tangent knife"
+msgstr ""
+
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:1
+msgid "Check for Gcodetools latest stable version and try to get the updates."
+msgstr ""
+
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:2
+msgid "Check for updates"
+msgstr ""
+
+#: ../share/extensions/gcodetools_dxf_points.inx.h:5
+msgid "DXF Points"
+msgstr ""
+
+#: ../share/extensions/gcodetools_engraving.inx.h:4
+msgid "Draw additional graphics to debug engraving path"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:5
+msgid "Create fine cut using:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:7
+msgid "File"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:8
+msgid "Fine cut count:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:9
+msgid "Fine cut width:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:15
+msgid "Lathe"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:16
+msgid "Lathe X axis remap:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:17
+msgid "Lathe Z axis remap:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:18
+msgid "Lathe width:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_orientation_points.inx.h:7
+msgid "Orientation points"
+msgstr ""
+
 #: ../share/extensions/render_barcode_datamatrix.inx.h:1
 msgid "Barcode - Datamatrix"
 msgstr ""

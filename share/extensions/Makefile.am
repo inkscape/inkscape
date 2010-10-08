@@ -62,6 +62,7 @@ extensions = \
 	fractalize.py \
 	funcplot.py \
 	gears.py\
+    gcodetools.py\
 	generate_voronoi.py \
 	gimp_xcf.py \
 	grid_cartesian.py \
@@ -218,6 +219,15 @@ modules = \
 	fractalize.inx \
 	funcplot.inx \
 	gears.inx\
+    gcodetools_all_in_one.inx\
+    gcodetools_area.inx\
+    gcodetools_check_for_updates.inx\
+    gcodetools_dxf_points.inx\
+    gcodetools_engraving.inx\
+    gcodetools_lathe.inx\
+    gcodetools_orientation_points.inx\
+    gcodetools_path_to_gcode.inx\
+    gcodetools_tools_library.inx\
 	generate_voronoi.inx \
 	gimp_xcf.inx \
 	grid_cartesian.inx \

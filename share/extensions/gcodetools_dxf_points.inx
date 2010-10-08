@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>DXF Points</_name>
+    <id>ru.cnc-club.filter.gcodetools_dxfpoints_no_options</id>
+	<dependency type="executable" location="extensions">gcodetools.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name='active-tab' type="notebook">
+
+		<page name='dxfpoints' _gui-text='DXF points'>
+			<_param name="help" type="description">
+
+Convert selected objects to drill points (as dxf_import plugin does). Also you can save original shape. Only the start point of each curve will be used.
+
+Also you can manually select object, open XML editor (Shift+Ctrl+X) and add or remove XML tag 'dxfpoint' with any value.
+		  </_param>
+			<param type='optiongroup' name='dxfpoints-action' _gui-text="Convert selection:">
+<_option value='save'>set as dxfpoint and save shape</_option>
+<_option value='replace'>set as dxfpoint and draw arrow</_option>
+<_option value='clear'>clear dxfpoint sign</_option>
+			</param>
+
+		</page>
+
+		<page name='preferences' _gui-text='Preferences'>
+			<param name="filename" type="string" _gui-text="File:">output.ngc</param>
+			<param name="add-numeric-suffix-to-filename" type="boolean" _gui-text="Add numeric suffix to filename">true</param>
+			
+			<param name="directory" type="string" _gui-text="Directory:">/home</param>
+
+			<param name="Zsafe" type="float" precision="5" min="-1000" max="1000" _gui-text="Z safe height for G00 move over blank:">5</param>
+			<param name="unit" type="enum" _gui-text="Units (mm or in):">
+				<item value="G21 (All units in mm)">mm</item>
+				<item value="G20 (All units in inches)">in</item>
+			</param>
+			<param name="postprocessor" type="enum" _gui-text="Post-processor:">
+				<item value=" ">None</item>
+				<item value="parameterize();">Parameterize Gcode</item>
+				<item value="flip(y);parameterize();">Flip y axis and parameterize Gcode</item>
+				<item value="round(4);">Round all values to 4 digits</item>
+			</param>
+			<param name="postprocessor-custom" type="string" _gui-text="Additional post-processor:"></param>			
+			
+
+			<param name="create-log" type="boolean" _gui-text="Generate log file">false</param>			
+			<param name="log-filename" type="string" _gui-text="Full path to log file:"></param>			
+			
+		</page>
+
+		<page name='help' _gui-text='Help'>
+			<_param name="fullhelp" type="description">
+Gcodetools plug-in: converts paths to Gcode (using circular interpolation), makes offset paths and engraves sharp corners using cone cutters. 
+This plug-in calculates Gcode for paths using circular interpolation or linear motion when needed.
+
+Tutorials, manuals and support can be found at
+English support forum:
+	http://www.cnc-club.ru/gcodetools
+	
+and Russian support forum:
+	http://www.cnc-club.ru/gcodetoolsru
+
+Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas.
+
+Gcodetools ver. 1.6.01
+</_param>	
+
+		</page>
+
+	</param>	
+    <effect>
+		<effects-menu>
+			<submenu _name="Gcodetools"/>
+		</effects-menu>
+		<object-type>path</object-type>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">gcodetools.py</command>
+    </script>
+    
+</inkscape-extension>

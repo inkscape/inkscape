@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Lathe</_name>
+    <id>ru.cnc-club.filter.gcodetools_lathe_ptg</id>
+	<dependency type="executable" location="extensions">gcodetools.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name='active-tab' type="notebook">
+
+	<page name='lathe' _gui-text='Lathe'>	
+		<param name="lathe-width" type="float" precision="5" min="0" max="1000" _gui-text="Lathe width:">10</param>
+		<param name="lathe-fine-cut-width" type="float" precision="5" min="0" max="1000" _gui-text="Fine cut width:">1</param>
+		<param name="lathe-fine-cut-count" type="int" min="0" max="1000" _gui-text="Fine cut count:">1</param>
+		<param name="lathe-create-fine-cut-using"  _gui-text="Create fine cut using:" type="optiongroup" appearance="minimal">
+			<option value="Move path">Move path</option>
+			<option value="Offset path">Offset path</option>
+		</param>
+		<param name="lathe-x-axis-remap" type="string" _gui-text="Lathe X axis remap:">X</param>
+		<param name="lathe-z-axis-remap" type="string" _gui-text="Lathe Z axis remap:">Z</param>
+
+		
+	</page>
+
+		<page name='path-to-gcode' _gui-text='Path to Gcode'>	
+				<param name="biarc-tolerance" type='float' precision="5" _gui-text='Biarc interpolation tolerance:'>1</param>
+				<param name="biarc-max-split-depth" type="int" _gui-text="Maximum splitting depth:">4</param>
+				<_param name="help" type="description">
+Biarc interpolation tolerance is the maximum distance between path and its approximation.
+The segment will be split into two segments if the distance between path's segment and it's approximation exceeds biarc interpolation tolerance.
+</_param>
+		</page>
+
+		<page name='options' _gui-text='Options'>
+			<param name="Zscale" type="float" precision="5" min="-100000" max="100000" _gui-text="Scale along Z axis:">1</param>			
+			<param name="Zoffset" type="float" precision="5" min="-100000" max="100000" _gui-text="Offset along Z axis:">0.0</param>
+			<param name="auto_select_paths" type="boolean" _gui-text="Select all paths if nothing is selected">true</param>
+			<param name="min-arc-radius" type="float" precision="5" min="-1000" max="1000"  _gui-text="Minimum arc radius:">0.05</param>
+		</page>
+
+		<page name='preferences' _gui-text='Preferences'>
+			<param name="filename" type="string" _gui-text="File">output.ngc</param>
+			<param name="add-numeric-suffix-to-filename" type="boolean" _gui-text="Add numeric suffix to filename">true</param>
+			
+			<param name="directory" type="string" _gui-text="Directory:">/home</param>
+
+			<param name="Zsafe" type="float" precision="5" min="-1000" max="1000" _gui-text="Z safe height for G00 move over blank:">5</param>
+			<param name="unit" type="enum" _gui-text="Units (mm or in):">
+				<item value="G21 (All units in mm)">mm</item>
+				<item value="G20 (All units in inches)">in</item>
+			</param>
+			<param name="postprocessor" type="enum" _gui-text="Post-processor:">
+				<item value=" ">None</item>
+				<item value="parameterize();">Parameterize Gcode</item>
+				<item value="flip(y);parameterize();">Flip y axis and parameterize Gcode</item>
+				<item value="round(4);">Round all values to 4 digits</item>
+			</param>
+			<param name="postprocessor-custom" type="string" _gui-text="Additional post-processor:"></param>			
+			
+
+			<param name="create-log" type="boolean" _gui-text="Generate log file">false</param>			
+			<param name="log-filename" type="string" _gui-text="Full path to log file:"></param>			
+			
+		</page>
+
+		<page name='help' _gui-text='Help'>
+			<_param name="fullhelp" type="description">
+Gcodetools plug-in: converts paths to Gcode (using circular interpolation), makes offset paths and engraves sharp corners using cone cutters. 
+This plug-in calculates Gcode for paths using circular interpolation or linear motion when needed.
+
+Tutorials, manuals and support can be found at
+English support forum:
+	http://www.cnc-club.ru/gcodetools
+	
+and Russian support forum:
+	http://www.cnc-club.ru/gcodetoolsru
+
+Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas.
+
+Gcodetools ver. 1.6.01
+</_param>	
+
+		</page>
+
+	</param>	
+    <effect>
+		<effects-menu>
+			<submenu _name="Gcodetools"/>
+		</effects-menu>
+		<object-type>path</object-type>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">gcodetools.py</command>
+    </script>
+    
+</inkscape-extension>

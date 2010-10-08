@@ -144,6 +144,7 @@ share/extensions/dxf_outlines.py
 share/extensions/embedimage.py
 share/extensions/export_gimp_palette.py
 share/extensions/extractimage.py
+share/extensions/gcodetools.py
 share/extensions/guides_creator.py
 share/extensions/inkex.py
 share/extensions/markers_strokepaint.py
@@ -508,6 +509,15 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/fractalize.inx
 [type: gettext/xml] share/extensions/funcplot.inx
 [type: gettext/xml] share/extensions/gears.inx
+[type: gettext/xml] share/extensions/gcodetools_all_in_one.inx
+[type: gettext/xml] share/extensions/gcodetools_area.inx
+[type: gettext/xml] share/extensions/gcodetools_check_for_updates.inx
+[type: gettext/xml] share/extensions/gcodetools_dxf_points.inx
+[type: gettext/xml] share/extensions/gcodetools_engraving.inx
+[type: gettext/xml] share/extensions/gcodetools_lathe.inx
+[type: gettext/xml] share/extensions/gcodetools_orientation_points.inx
+[type: gettext/xml] share/extensions/gcodetools_path_to_gcode.inx
+[type: gettext/xml] share/extensions/gcodetools_tools_library.inx
 [type: gettext/xml] share/extensions/gimp_xcf.inx
 [type: gettext/xml] share/extensions/grid_cartesian.inx
 [type: gettext/xml] share/extensions/grid_polar.inx

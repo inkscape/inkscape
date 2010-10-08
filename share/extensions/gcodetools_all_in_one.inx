@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>All in one</_name>
+    <id>ru.cnc-club.filter.gcodetools_ptg_area_area_artefacts_engraving_dxfpoints_tools_library_orientation</id>
+	<dependency type="executable" location="extensions">gcodetools.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name='active-tab' type="notebook">
+
+		<page name='path-to-gcode' _gui-text='Path to Gcode'>	
+				<param name="biarc-tolerance" type='float' precision="5" _gui-text='Biarc interpolation tolerance:'>1</param>
+				<param name="biarc-max-split-depth" type="int" _gui-text="Maximum splitting depth:">4</param>
+				<_param name="help" type="description">
+Biarc interpolation tolerance is the maximum distance between path and its approximation.
+The segment will be split into two segments if the distance between path's segment and it's approximation exceeds biarc interpolation tolerance.
+</_param>
+		</page>
+
+		<page name='area' _gui-text='Area'>	
+			<param name="max-area-curves" type="int" min="0" max="1000" _gui-text="Maximum area cutting curves:">100</param>
+			<param name="area-inkscape-radius" type="float" min="-1000" max="1000" _gui-text="Area width:">-10</param>
+
+			<_param name="help" type="description">
+"Create area offset": creates several Inkscape path offsets to fill original path's area up to "Area radius" value. 
+
+Outlines start from "1/2 D" up to "Area width" total width with "D" steps where D is taken from the nearest tool definition ("Tool diameter" value).
+Only one offset will be created if the "Area width" is equal to "1/2 D".
+			</_param>
+		</page>		
+
+		<page name='area_artefacts' _gui-text='Area artefacts'>	
+			<param name="area-find-artefacts-diameter" type="float" min="0.01" max="1000" _gui-text="Artefact diameter:">5.0</param>
+			<param name="area-find-artefacts-action" type="optiongroup" _gui-text="Action:">
+				<_option value="mark with an arrow">mark with an arrow</_option>
+				<_option value="mark with style">mark with style</_option>
+				<_option value="delete">delete</_option>
+			</param>	
+			<_param name="help" type="description">
+Usage: 
+1. Select all Area Offsets (gray outlines)
+2. Object/Ungroup (Shift+Ctrl+G)
+3. Press Apply
+
+Suspected small objects will be marked out by colored arrows.
+			</_param>
+		</page>		
+
+		<page name='engraving' _gui-text='Engraving'>	
+			<param name="engraving-sharp-angle-tollerance" type="float"  precision="5" min="0" max="180" _gui-text="Sharp angle tolerance:">150</param>
+			<param name="engraving-max-dist" type="float" precision="5" min="0" max="1000" _gui-text="Maximum distance for engraving:">10</param>
+			<param name="engraving-newton-iterations" type="int" min="2" max="10" _gui-text="Number of sample points used to calculate distance:">4</param>
+			<param name="engraving-draw-calculation-paths" type="boolean" _gui-text="Draw additional graphics to debug engraving path:">false</param>
+			
+			<_param name="help" type="description">
+This function creates path to engrave sharp angles.
+Cutter's shape function is defined by the tool. Some simple shapes:
+
+cone....(45 degrees)...........: w
+cone....(height/diameter=10/3).: 10/3 w
+sphere..("r" diameter).........: math.sqrt(max(0,r**2-w**2))
+ellipse.(R1=r and R2=r*4r).....: math.sqrt(max(0,r**2-w**2))*4</_param>
+		</page>
+
+		<page name='dxfpoints' _gui-text='DXF points'>
+			<_param name="help" type="description">
+
+Convert selected objects to drill points (as dxf_import plugin does). Also you can save original shape. Only the start point of each curve will be used.
+
+Also you can manually select object, open XML editor (Shift+Ctrl+X) and add or remove XML tag 'dxfpoint' with any value.
+		  </_param>
+			<param type='optiongroup' name='dxfpoints-action' _gui-text="Convert selection:">
+<_option value='save'>set as dxfpoint and save shape</_option>
+<_option value='replace'>set as dxfpoint and draw arrow</_option>
+<_option value='clear'>clear dxfpoint sign</_option>
+			</param>
+
+		</page>
+
+		<page name='tools_library' _gui-text='Tools library'>	
+			
+			<param type='optiongroup' name='tools-library-type' _gui-text="Tools type:">
+<_option value='default tool'>default</_option>
+<_option value='cylinder cutter'>cylinder</_option>
+<_option value='cone cutter'>cone</_option>
+<_option value='plasma cutter'>plasma</_option>
+<_option value='tangent knife'>tangent knife</_option>
+<_option value='lathe cutter'>lathe cutter</_option>
+
+<_option value='check'>Just check tools</_option>
+
+			</param>
+			
+			<_param name="help" type="description">
+Selected tool type fills appropriate default values. You can change these values using the Text tool later on.
+
+The topmost (z order) tool in the active layer is used. If there is no tool inside the current layer it is taken from the upper layer.
+
+Press Apply to create new tool.
+			</_param>
+	</page>
+
+		<page name='orientation' _gui-text='Orientation'>	
+
+			<param name="orientation-points-count" type="optiongroup" _gui-text="Orientation type:">
+<_option value="2">2-points mode
+(move and rotate,
+maintained aspect ratio X/Y)</_option>
+<_option value="3">3-points mode
+(move, rotate and mirror, 
+different X/Y scale)</_option>
+			</param>
+			<param name="Zsurface" type="float" precision="5" min="-1000" max="1000" _gui-text="Z surface:">0</param>
+			<param name="Zdepth" type="float" precision="5" min="-1000" max="1000" _gui-text="Z depth:">-1</param>
+			<param name="unit" type="enum" _gui-text="Units (mm or in):">
+				<item value="G21 (All units in mm)">mm</item>
+				<item value="G20 (All units in inches)">in</item>
+			</param>
+
+			<_param name="help" type="description">
+Orientation points are used to calculate transformation (offset,scale,mirror,rotation in XY plane) of the path.
+3-points mode only: do not put all three into one line (use 2-points mode instead).
+
+You can modify Z surface, Z depth values later using text tool (3rd coordinates).
+
+If there are no orientation points inside current layer they are taken from the upper layer.
+
+Do not ungroup orientation points! You can select them using double click to enter the group or by Ctrl+Click.
+
+Now press apply to create control points (independent set for each layer).
+			</_param>
+		</page>
+
+		<page name='options' _gui-text='Options'>
+			<param name="Zscale" type="float" precision="5" min="-100000" max="100000" _gui-text="Scale along Z axis:">1</param>			
+			<param name="Zoffset" type="float" precision="5" min="-100000" max="100000" _gui-text="Offset along Z axis:">0.0</param>
+			<param name="auto_select_paths" type="boolean" _gui-text="Select all paths if nothing is selected">true</param>
+			<param name="min-arc-radius" type="float" precision="5" min="-1000" max="1000"  _gui-text="Minimum arc radius:">0.05</param>
+		</page>
+
+		<page name='preferences' _gui-text='Preferences'>
+			<param name="filename" type="string" _gui-text="File:">output.ngc</param>
+			<param name="add-numeric-suffix-to-filename" type="boolean" _gui-text="Add numeric suffix to filename">true</param>
+			
+			<param name="directory" type="string" _gui-text="Directory:">/home</param>
+
+			<param name="Zsafe" type="float" precision="5" min="-1000" max="1000" _gui-text="Z safe height for G00 move over blank:">5</param>
+			<param name="unit" type="enum" _gui-text="Units (mm or in):">
+				<item value="G21 (All units in mm)">mm</item>
+				<item value="G20 (All units in inches)">in</item>
+			</param>
+			<param name="postprocessor" type="enum" _gui-text="Post-processor:">
+				<item value=" ">None</item>
+				<item value="parameterize();">Parameterize Gcode</item>
+				<item value="flip(y);parameterize();">Flip y axis and parameterize Gcode</item>
+				<item value="round(4);">Round all values to 4 digits</item>
+			</param>
+			<param name="postprocessor-custom" type="string" _gui-text="Additional post-processor:"></param>			
+			
+
+			<param name="create-log" type="boolean" _gui-text="Generate log file">false</param>			
+			<param name="log-filename" type="string" _gui-text="Full path to log file:"></param>			
+			
+		</page>
+
+		<page name='help' _gui-text='Help'>
+			<_param name="fullhelp" type="description">
+Gcodetools plug-in: converts paths to Gcode (using circular interpolation), makes offset paths and engraves sharp corners using cone cutters. 
+This plug-in calculates Gcode for paths using circular interpolation or linear motion when needed.
+
+Tutorials, manuals and support can be found at
+English support forum:
+	http://www.cnc-club.ru/gcodetools
+	
+and Russian support forum:
+	http://www.cnc-club.ru/gcodetoolsru
+
+Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas.
+
+Gcodetools ver. 1.6.01
+</_param>	
+
+		</page>
+
+	</param>	
+    <effect>
+		<effects-menu>
+			<submenu _name="Gcodetools"/>
+		</effects-menu>
+		<object-type>path</object-type>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">gcodetools.py</command>
+    </script>
+    
+</inkscape-extension>
