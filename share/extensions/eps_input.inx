@@ -5,6 +5,7 @@
     <dependency type="extension">org.inkscape.input.pdf</dependency>    
     <dependency type="executable" location="path">ps2pdf</dependency>
     <dependency type="executable" location="extensions">ps2pdf-ext.py</dependency>
+	<param name="dEPSCrop" type="boolean" gui-hidden="true">true</param>
     <input>
         <extension>.eps</extension>
         <mimetype>image/x-encapsulated-postscript</mimetype>

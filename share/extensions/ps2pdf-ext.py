@@ -24,6 +24,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 import sys
 from run_command import run
 
-run('ps2pdf "%s" "%%s"' % sys.argv[1].replace("%","%%"), "ps2pdf")
+cmd = 'ps2pdf'
+if (sys.argv[1] == "--dEPSCrop=true"): cmd += ' -dEPSCrop '
+
+run((cmd+' "%s" "%%s"') % sys.argv[-1].replace("%","%%"), "ps2pdf")
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
