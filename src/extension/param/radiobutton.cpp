@@ -84,11 +84,21 @@ ParamRadioButton::ParamRadioButton (const gchar * name,
                 Glib::ustring * newvalue = NULL;
                 const char * contents = sp_repr_children(child_repr)->content();
 
-                if (contents != NULL)
-                    // don't translate when 'option' but do translate when '_option'
-                     newguitext = new Glib::ustring( !strcmp(chname, INKSCAPE_EXTENSION_NS "_option") ? _(contents) : contents );
-                else
+                if (contents != NULL) {
+                    // don't translate when 'item' but do translate when '_option'
+                    if (!strcmp(chname, INKSCAPE_EXTENSION_NS "_option")) {
+                        if (child_repr->attribute("msgctxt") != NULL) {
+                            newguitext =  new Glib::ustring(g_dpgettext2(NULL, child_repr->attribute("msgctxt"), contents));
+                        } else {
+                            newguitext =  new Glib::ustring(_(contents));
+                        }
+                    } else {
+                        newguitext =  new Glib::ustring(contents);
+                    }
+                } else
                     continue;
+
+
 
                 const char * val = child_repr->attribute("value");
                 if (val != NULL)

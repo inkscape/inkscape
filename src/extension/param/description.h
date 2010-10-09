@@ -21,6 +21,7 @@ class ParamDescription : public Parameter {
 private:
     /** \brief  Internal value. */
     gchar * _value;
+    const gchar* _context;
 public:
     ParamDescription(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
