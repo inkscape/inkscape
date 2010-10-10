@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-09 08:36+0200\n"
+"POT-Creation-Date: 2010-10-10 09:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4123,85 +4123,96 @@ msgid ""
 "be corrupt!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3468
+#. xgettext:no-pango-format
+#: ../share/extensions/gcodetools.py:3412
+msgid ""
+"This extension works with Paths and Dynamic Offsets and groups of them only! "
+"All other objects will be ignored!\n"
+"Solution 1: press Path->Object to path or Shift+Ctrl+C.\n"
+"Solution 2: Path->Dynamic offset or Ctrl+J.\n"
+"Solution 3: export all contours to PostScript level 2 (File->Save As->.ps) "
+"and File->Import this file."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3469
 #, python-format
 msgid ""
 "Warning! Tool's and default tool's parameter's (%s) types are not the same "
 "( type('%s') != type('%s') )."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3471
+#: ../share/extensions/gcodetools.py:3472
 #, python-format
 msgid "Warning! Tool has parameter that default tool has not ( '%s': '%s' )."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3485
+#: ../share/extensions/gcodetools.py:3486
 #, python-format
 msgid "Layer '%s' contains more than one tool!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3488
+#: ../share/extensions/gcodetools.py:3489
 #, python-format
 msgid ""
 "Can not find tool for '%s' layer! Please add one with Tools library tab!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3591
-#: ../share/extensions/gcodetools.py:3672
+#: ../share/extensions/gcodetools.py:3592
+#: ../share/extensions/gcodetools.py:3673
 msgid "No paths are selected! Trying to work on all available paths."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3610
-#: ../share/extensions/gcodetools.py:3681
+#: ../share/extensions/gcodetools.py:3611
+#: ../share/extensions/gcodetools.py:3682
 msgid ""
 "Warning: One or more paths dont have 'd' parameter, try to Ungroup (Ctrl"
 "+Shift+G) and Object to Path (Ctrl+Shift+C)!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3640
+#: ../share/extensions/gcodetools.py:3641
 msgid ""
 "Noting is selected. Please select something to convert to drill point "
 "(dxfpoint) or clear point sign."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3713
-#: ../share/extensions/gcodetools.py:3807
+#: ../share/extensions/gcodetools.py:3714
+#: ../share/extensions/gcodetools.py:3808
 msgid "This extension requires at least one selected path."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3719
+#: ../share/extensions/gcodetools.py:3720
 #, python-format
 msgid "Tool diameter must be > 0 but tool's diameter on '%s' layer is not!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3730
+#: ../share/extensions/gcodetools.py:3731
 msgid "Warning: omitting non-path"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4062
+#: ../share/extensions/gcodetools.py:4063
 #, python-format
 msgid "Tool '%s' has no shape!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4072
+#: ../share/extensions/gcodetools.py:4073
 msgid "No need to engrave sharp angles."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4085
+#: ../share/extensions/gcodetools.py:4086
 msgid ""
 "Active layer already has orientation points! Remove them or select another "
 "layer!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4133
+#: ../share/extensions/gcodetools.py:4134
 msgid "Active layer already has a tool! Remove it or select another layer!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4257
+#: ../share/extensions/gcodetools.py:4258
 msgid "Selection is empty! Will compute whole drawing."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4317
+#: ../share/extensions/gcodetools.py:4318
 msgid ""
 "Tutorials, manuals and support can be found at\n"
 "English support forum:\n"
@@ -4210,27 +4221,27 @@ msgid ""
 "\thttp://www.cnc-club.ru/gcodetoolsru"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4362
+#: ../share/extensions/gcodetools.py:4363
 msgid "Lathe X and Z axis remap should be 'X', 'Y' or 'Z'. Exiting..."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4365
+#: ../share/extensions/gcodetools.py:4366
 msgid "Lathe X and Z axis remap should be the same. Exiting..."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4526
+#: ../share/extensions/gcodetools.py:4527
 msgid ""
 "Select one of the active tabs - Path to Gcode, Area, Engraving, DXF points, "
 "Orientation, Offset, Lathe or Tools library."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4532
+#: ../share/extensions/gcodetools.py:4533
 msgid ""
 "Orientation points have not been defined! A default set of orientation "
 "points has been automatically added."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4536
+#: ../share/extensions/gcodetools.py:4537
 msgid ""
 "Cutting tool has not been defined! A default tool has been automatically "
 "added."

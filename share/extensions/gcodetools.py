@@ -3408,7 +3408,8 @@ class Gcodetools(inkex.Effect):
 				elif i.tag == inkex.addNS("g",'svg'):
 					recursive_search(i,layer, (i.get("id") in self.selected) )
 				elif i.get("id") in self.selected :
-					self.error(("This extension works with Paths and Dynamic Offsets and groups of them only! All other objects will be ignored!\nSolution 1: press Path->Object to path or Shift+Ctrl+C.\nSolution 2: Path->Dynamic offset or Ctrl+J.\nSolution 3: export all contours to PostScript level 2 (File->Save As->.ps) and File->Import this file."),"selection_contains_objects_that_are_not_paths")
+# xgettext:no-pango-format
+					self.error(_("This extension works with Paths and Dynamic Offsets and groups of them only! All other objects will be ignored!\nSolution 1: press Path->Object to path or Shift+Ctrl+C.\nSolution 2: Path->Dynamic offset or Ctrl+J.\nSolution 3: export all contours to PostScript level 2 (File->Save As->.ps) and File->Import this file."),"selection_contains_objects_that_are_not_paths")
 				
 					
 		recursive_search(self.document.getroot(),self.document.getroot())

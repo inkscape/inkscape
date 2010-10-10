@@ -209,10 +209,9 @@ ENTRY: while(<>) {
 	if (m{\n\#(?:,\ [-a-z0-9+])*,\ (no-)?pango-format[,\n]}) {
 	    $is_pango_format = ( defined($1) ? 0 : 2 );
 	}
-	if (m{\n\#:\ \.\./share/extensions/[-a-zA-Z0-9_]+\.inx(?:\.h)?:}) {
+	if (m{\n\#:\ \.\./share/extensions/[-a-zA-Z0-9_]+\.(?:inx|py)(?:\.h)?:}) {
 	    $is_pango_format = 0;
 	}
-
 
 	if (m{\A
 	        ${com}*
