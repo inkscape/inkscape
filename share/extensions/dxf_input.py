@@ -121,7 +121,7 @@ def export_LWPOLYLINE():
             # optional group codes : (42) (bulge)
             iseqs = 0
             ibulge = 0
-            if vals[groups['70']][0] == 1:      # closed path
+            if vals[groups['70']][0]:           # closed path
                 seqs.append('20')
                 vals[groups['10']].append(vals[groups['10']][0])
                 vals[groups['20']].append(vals[groups['20']][0])
@@ -153,7 +153,7 @@ def export_LWPOLYLINE():
                     path += ' L %f,%f' % (vals[groups['10']][i], vals[groups['20']][i])
                 xold = vals[groups['10']][i]
                 yold = vals[groups['20']][i]
-            if vals[groups['70']][0] == 1:      # closed path
+            if vals[groups['70']][0]:           # closed path
                 path += ' z'
             attribs = {'d': path, 'style': style}
             inkex.etree.SubElement(layer, 'path', attribs)
@@ -307,7 +307,7 @@ def get_group(group):
 
 #   define DXF Entities and specify which Group Codes to monitor
 
-entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'HATCH': export_HATCH, 'DIMENSION': export_DIMENSION, 'INSERT': export_INSERT, 'BLOCK': export_BLOCK, 'ENDBLK': export_ENDBLK, 'ATTDEF': export_ATTDEF, 'DICTIONARY': False}
+entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'HATCH': export_HATCH, 'DIMENSION': export_DIMENSION, 'INSERT': export_INSERT, 'BLOCK': export_BLOCK, 'ENDBLK': export_ENDBLK, 'ATTDEF': export_ATTDEF, 'VIEWPORT': False, 'DICTIONARY': False}
 groups = {'1': 0, '2': 1, '3': 2, '6': 3, '8': 4, '10': 5, '11': 6, '13': 7, '14': 8, '20': 9, '21': 10, '23': 11, '24': 12, '40': 13, '41': 14, '42': 15, '50': 16, '51': 17, '62': 18, '70': 19, '72': 20, '73': 21, '92': 22, '93': 23, '370': 24}
 colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '#0000FF',
             6: '#FF00FF',   8: '#414141',   9: '#808080',  12: '#BD0000',  30: '#FF7F00',
@@ -452,7 +452,8 @@ while line[0] and line[1] != 'DICTIONARY':
             if vals[groups['6']]:                   # Common Linetype
                 if linetypes.has_key(vals[groups['6']][0]):
                     style += ';' + linetypes[vals[groups['6']][0]]
-            entities[entity]()
+            if entities[entity]:
+                entities[entity]()
         entity = line[1]
         vals = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
         seqs = []
