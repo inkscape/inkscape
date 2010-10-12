@@ -580,13 +580,15 @@ void Node::setType(NodeType type, bool update_handles)
             _updateAutoHandles();
             break;
         case NODE_SMOOTH: {
+            // ignore attempts to make smooth endnodes.
+            if (isEndNode()) return;
             // rotate handles to be colinear
             // for degenerate nodes set positions like auto handles
             bool prev_line = _is_line_segment(_prev(), this);
             bool next_line = _is_line_segment(this, _next());
             if (_type == NODE_SMOOTH) {
-                // for a node that is already smooth and has a degenerate handle,
-                // drag out the second handle to 1/3 the length of the linear segment
+                // For a node that is already smooth and has a degenerate handle,
+                // drag out the second handle without changing the direction of the first one.
                 if (_front.isDegenerate()) {
                     double dist = Geom::distance(_next()->position(), position());
                     _front.setRelativePos(Geom::unit_vector(-_back.relativePos()) * dist / 3);

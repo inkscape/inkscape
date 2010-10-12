@@ -1325,17 +1325,11 @@ bool PathManipulator::_nodeClicked(Node *n, GdkEventButton *event)
         return true;
     } else if (held_control(*event)) {
         // Ctrl+click: cycle between node types
-        if (n->isEndNode()) {
-            if (n->type() == NODE_CUSP) {
-                n->setType(NODE_SMOOTH);
-            } else {
-                n->setType(NODE_CUSP);
-            }
-        } else {
+        if (!n->isEndNode()) {
             n->setType(static_cast<NodeType>((n->type() + 1) % NODE_LAST_REAL_TYPE));
+            update();
+            _commit(_("Cycle node type"));
         }
-        update();
-        _commit(_("Cycle node type"));
         return true;
     }
     return false;
