@@ -319,6 +319,39 @@ void PathManipulator::insertNodes()
     }
 }
 
+/** Insert new nodes exactly at the positions of selected nodes while preserving shape.
+ * This is equivalent to breaking, except that it doesn't split into subpaths. */
+void PathManipulator::duplicateNodes()
+{
+    if (_num_selected == 0) return;
+
+    for (SubpathList::iterator i = _subpaths.begin(); i != _subpaths.end(); ++i) {
+        for (NodeList::iterator j = (*i)->begin(); j != (*i)->end(); ++j) {
+            if (j->selected()) {
+                NodeList::iterator k = j.next();
+                Node *n = new Node(_multi_path_manipulator._path_data.node_data, *j);
+
+                // Move the new node to the bottom of the Z-order. This way you can drag all
+                // nodes that were selected before this operation without deselecting
+                // everything because there is a new node above.
+                n->sink();
+
+                n->front()->setPosition(*j->front());
+                j->front()->retract();
+                j->setType(NODE_CUSP, false);
+                (*i)->insert(k, n);
+
+                // We need to manually call the selection change callback to refresh
+                // the handle display correctly.
+                // This call changes num_selected, but we call this once for a selected node
+                // and once for an unselected node, so in the end the number stays correct.
+                _selectionChanged(j.ptr(), true);
+                _selectionChanged(n, false);
+            }
+        }
+    }
+}
+
 /** Replace contiguous selections of nodes in each subpath with one node. */
 void PathManipulator::weldNodes(NodeList::iterator preserve_pos)
 {

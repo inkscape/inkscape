@@ -244,6 +244,12 @@ void MultiPathManipulator::insertNodes()
     _done(_("Add nodes"));
 }
 
+void MultiPathManipulator::duplicateNodes()
+{
+    invokeForAll(&PathManipulator::duplicateNodes);
+    _done(_("Duplicate nodes"));
+}
+
 void MultiPathManipulator::joinNodes()
 {
     invokeForAll(&PathManipulator::hideDragPoint);
@@ -513,6 +519,12 @@ bool MultiPathManipulator::event(GdkEvent *event)
                 return true;
             }
             break;
+        case GDK_d:
+        case GDK_D:
+            if (held_only_shift(event->key)) {
+                duplicateNodes();
+                return true;
+            }
         case GDK_j:
         case GDK_J:
             if (held_only_shift(event->key)) {

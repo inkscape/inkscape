@@ -69,6 +69,7 @@ public:
     void invertSelectionInSubpaths();
 
     void insertNodes();
+    void duplicateNodes();
     void weldNodes(NodeList::iterator preserve_pos = NodeList::iterator());
     void weldSegments();
     void breakNodes();

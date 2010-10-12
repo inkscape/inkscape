@@ -53,6 +53,7 @@ public:
     void setSegmentType(SegmentType t);
 
     void insertNodes();
+    void duplicateNodes();
     void joinNodes();
     void breakNodes();
     void deleteNodes(bool keep_shape = true);
