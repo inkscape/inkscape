@@ -41,8 +41,6 @@
 #include <string>
 #include <cstring>
 
-#include "application/application.h"
-#include "application/editor.h"
 #include "desktop.h"
 #include "dir-util.h"
 #include "display/nr-arena-item.h"
@@ -418,17 +416,11 @@ sp_document_create(Inkscape::XML::Document *rdoc,
     sp_document_set_undo_sensitive(document, true);
 
     // reset undo key when selection changes, so that same-key actions on different objects are not coalesced
-    if (!Inkscape::NSApplication::Application::getNewGui()) {
-        g_signal_connect(G_OBJECT(INKSCAPE), "change_selection",
-                         G_CALLBACK(sp_document_reset_key), document);
-        g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop",
-                         G_CALLBACK(sp_document_reset_key), document);
-        document->oldSignalsConnected = true;
-    } else {
-        document->_selection_changed_connection = Inkscape::NSApplication::Editor::connectSelectionChanged (sigc::mem_fun (*document, &SPDocument::reset_key));
-        document->_desktop_activated_connection = Inkscape::NSApplication::Editor::connectDesktopActivated (sigc::mem_fun (*document, &SPDocument::reset_key));
-        document->oldSignalsConnected = false;
-    }
+    g_signal_connect(G_OBJECT(INKSCAPE), "change_selection",
+                     G_CALLBACK(sp_document_reset_key), document);
+    g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop",
+                     G_CALLBACK(sp_document_reset_key), document);
+    document->oldSignalsConnected = true;
 
     return document;
 }

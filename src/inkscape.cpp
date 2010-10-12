@@ -45,8 +45,6 @@ using Inkscape::Extension::Internal::PrintWin32;
 #include <gtkmm/messagedialog.h>
 #include <signal.h>
 #include <string>
-#include "application/application.h"
-#include "application/editor.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "device-manager.h"
@@ -92,8 +90,6 @@ enum {
 /*################################
 # FORWARD DECLARATIONS
 ################################*/
-
-gboolean inkscape_app_use_gui( Inkscape::Application const * app );
 
 static void inkscape_class_init (Inkscape::ApplicationClass *klass);
 static void inkscape_init (SPObject *object);
@@ -741,7 +737,7 @@ inkscape_crash_handler (int /*signum*/)
     }
     *(b + pos) = '\0';
 
-    if ( inkscape_get_instance() && inkscape_app_use_gui( inkscape_get_instance() ) ) {
+    if ( inkscape_get_instance() && inkscape_use_gui() ) {
         GtkWidget *msgbox = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "%s", b);
         gtk_dialog_run (GTK_DIALOG (msgbox));
         gtk_widget_destroy (msgbox);
@@ -861,9 +857,9 @@ inkscape_get_instance()
         return inkscape;
 }
 
-gboolean inkscape_app_use_gui( Inkscape::Application const * app )
+gboolean inkscape_use_gui()
 {
-    return app->use_gui;
+    return inkscape_get_instance()->use_gui;
 }
 
 /**
@@ -893,10 +889,6 @@ bool inkscape_load_menus (Inkscape::Application */*inkscape*/)
 void
 inkscape_selection_modified (Inkscape::Selection *selection, guint flags)
 {
-    if (Inkscape::NSApplication::Application::getNewGui()) {
-        Inkscape::NSApplication::Editor::selectionModified (selection, flags);
-        return;
-    }
     g_return_if_fail (selection != NULL);
 
     if (DESKTOP_IS_ACTIVE (selection->desktop())) {
@@ -908,10 +900,6 @@ inkscape_selection_modified (Inkscape::Selection *selection, guint flags)
 void
 inkscape_selection_changed (Inkscape::Selection * selection)
 {
-    if (Inkscape::NSApplication::Application::getNewGui()) {
-        Inkscape::NSApplication::Editor::selectionChanged (selection);
-        return;
-    }
     g_return_if_fail (selection != NULL);
 
     if (DESKTOP_IS_ACTIVE (selection->desktop())) {
@@ -922,10 +910,6 @@ inkscape_selection_changed (Inkscape::Selection * selection)
 void
 inkscape_subselection_changed (SPDesktop *desktop)
 {
-    if (Inkscape::NSApplication::Application::getNewGui()) {
-        Inkscape::NSApplication::Editor::subSelectionChanged (desktop);
-        return;
-    }
     g_return_if_fail (desktop != NULL);
 
     if (DESKTOP_IS_ACTIVE (desktop)) {
@@ -937,10 +921,6 @@ inkscape_subselection_changed (SPDesktop *desktop)
 void
 inkscape_selection_set (Inkscape::Selection * selection)
 {
-    if (Inkscape::NSApplication::Application::getNewGui()) {
-        Inkscape::NSApplication::Editor::selectionSet (selection);
-        return;
-    }
     g_return_if_fail (selection != NULL);
 
     if (DESKTOP_IS_ACTIVE (selection->desktop())) {
@@ -953,10 +933,6 @@ inkscape_selection_set (Inkscape::Selection * selection)
 void
 inkscape_eventcontext_set (SPEventContext * eventcontext)
 {
-    if (Inkscape::NSApplication::Application::getNewGui()) {
-        Inkscape::NSApplication::Editor::eventContextSet (eventcontext);
-        return;
-    }
     g_return_if_fail (eventcontext != NULL);
     g_return_if_fail (SP_IS_EVENT_CONTEXT (eventcontext));
 
@@ -970,12 +946,6 @@ void
 inkscape_add_desktop (SPDesktop * desktop)
 {
     g_return_if_fail (desktop != NULL);
-
-    if (Inkscape::NSApplication::Application::getNewGui())
-    {
-        Inkscape::NSApplication::Editor::addDesktop (desktop);
-        return;
-    }
     g_return_if_fail (inkscape != NULL);
 
     g_assert (!g_slist_find (inkscape->desktops, desktop));
@@ -994,11 +964,6 @@ void
 inkscape_remove_desktop (SPDesktop * desktop)
 {
     g_return_if_fail (desktop != NULL);
-    if (Inkscape::NSApplication::Application::getNewGui())
-    {
-        Inkscape::NSApplication::Editor::removeDesktop (desktop);
-        return;
-    }
     g_return_if_fail (inkscape != NULL);
 
     g_assert (g_slist_find (inkscape->desktops, desktop));
@@ -1034,11 +999,6 @@ void
 inkscape_activate_desktop (SPDesktop * desktop)
 {
     g_return_if_fail (desktop != NULL);
-    if (Inkscape::NSApplication::Application::getNewGui())
-    {
-        Inkscape::NSApplication::Editor::activateDesktop (desktop);
-        return;
-    }
     g_return_if_fail (inkscape != NULL);
 
     if (DESKTOP_IS_ACTIVE (desktop)) {
@@ -1068,11 +1028,6 @@ void
 inkscape_reactivate_desktop (SPDesktop * desktop)
 {
     g_return_if_fail (desktop != NULL);
-    if (Inkscape::NSApplication::Application::getNewGui())
-    {
-        Inkscape::NSApplication::Editor::reactivateDesktop (desktop);
-        return;
-    }
     g_return_if_fail (inkscape != NULL);
 
     if (DESKTOP_IS_ACTIVE (desktop))
@@ -1186,13 +1141,8 @@ inkscape_switch_desktops_prev ()
 void
 inkscape_dialogs_hide ()
 {
-    if (Inkscape::NSApplication::Application::getNewGui())
-        Inkscape::NSApplication::Editor::hideDialogs();
-    else
-    {
-        g_signal_emit (G_OBJECT (inkscape), inkscape_signals[DIALOGS_HIDE], 0);
-        inkscape->dialogs_toggle = FALSE;
-    }
+    g_signal_emit (G_OBJECT (inkscape), inkscape_signals[DIALOGS_HIDE], 0);
+    inkscape->dialogs_toggle = FALSE;
 }
 
 
@@ -1200,13 +1150,8 @@ inkscape_dialogs_hide ()
 void
 inkscape_dialogs_unhide ()
 {
-    if (Inkscape::NSApplication::Application::getNewGui())
-        Inkscape::NSApplication::Editor::unhideDialogs();
-    else
-    {
-        g_signal_emit (G_OBJECT (inkscape), inkscape_signals[DIALOGS_UNHIDE], 0);
-        inkscape->dialogs_toggle = TRUE;
-    }
+    g_signal_emit (G_OBJECT (inkscape), inkscape_signals[DIALOGS_UNHIDE], 0);
+    inkscape->dialogs_toggle = TRUE;
 }
 
 
@@ -1237,24 +1182,17 @@ inkscape_add_document (SPDocument *document)
 {
     g_return_if_fail (document != NULL);
 
-    if (!Inkscape::NSApplication::Application::getNewGui())
-    {
-        // try to insert the pair into the list
-        if (!(inkscape->document_set.insert(std::make_pair(document, 1)).second)) {
-            //insert failed, this key (document) is already in the list
-            for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin();
-                   iter != inkscape->document_set.end();
-                   ++iter) {
-                if (iter->first == document) {
-                    // found this document in list, increase its count
-                    iter->second ++;
-                }
-           }
-        }
-    }
-    else
-    {
-        Inkscape::NSApplication::Editor::addDocument (document);
+    // try to insert the pair into the list
+    if (!(inkscape->document_set.insert(std::make_pair(document, 1)).second)) {
+        //insert failed, this key (document) is already in the list
+        for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin();
+               iter != inkscape->document_set.end();
+               ++iter) {
+            if (iter->first == document) {
+                // found this document in list, increase its count
+                iter->second ++;
+            }
+       }
     }
 }
 
@@ -1265,27 +1203,20 @@ inkscape_remove_document (SPDocument *document)
 {
     g_return_val_if_fail (document != NULL, false);
 
-    if (!Inkscape::NSApplication::Application::getNewGui())
-    {
-        for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin();
-                  iter != inkscape->document_set.end();
-                  ++iter) {
-            if (iter->first == document) {
-                // found this document in list, decrease its count
-                iter->second --;
-                if (iter->second < 1) {
-                    // this was the last one, remove the pair from list
-                    inkscape->document_set.erase (iter);
-                    return true;
-                } else {
-                    return false;
-                }
+    for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin();
+              iter != inkscape->document_set.end();
+              ++iter) {
+        if (iter->first == document) {
+            // found this document in list, decrease its count
+            iter->second --;
+            if (iter->second < 1) {
+                // this was the last one, remove the pair from list
+                inkscape->document_set.erase (iter);
+                return true;
+            } else {
+                return false;
             }
         }
-    }
-    else
-    {
-        Inkscape::NSApplication::Editor::removeDocument (document);
     }
 
     return false;
@@ -1294,9 +1225,6 @@ inkscape_remove_document (SPDocument *document)
 SPDesktop *
 inkscape_active_desktop (void)
 {
-    if (Inkscape::NSApplication::Application::getNewGui())
-        return Inkscape::NSApplication::Editor::getActiveDesktop();
-
     if (inkscape->desktops == NULL) {
         return NULL;
     }
@@ -1307,9 +1235,6 @@ inkscape_active_desktop (void)
 SPDocument *
 inkscape_active_document (void)
 {
-    if (Inkscape::NSApplication::Application::getNewGui())
-        return Inkscape::NSApplication::Editor::getActiveDocument();
-
     if (SP_ACTIVE_DESKTOP) {
         return sp_desktop_document (SP_ACTIVE_DESKTOP);
     }

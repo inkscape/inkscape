@@ -31,8 +31,6 @@
 #include <glibmm/i18n.h>
 #include <libnr/nr-pixops.h>
 
-#include "application/application.h"
-#include "application/editor.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "dialogs/export.h"
@@ -126,19 +124,14 @@ sp_file_new(const Glib::ustring &templ)
     g_return_val_if_fail(doc != NULL, NULL);
 
     SPDesktop *dt;
-    if (Inkscape::NSApplication::Application::getNewGui())
-    {
-        dt = Inkscape::NSApplication::Editor::createDesktop (doc);
-    } else {
-        SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL));
-        g_return_val_if_fail(dtw != NULL, NULL);
-        sp_document_unref(doc);
+    SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL));
+    g_return_val_if_fail(dtw != NULL, NULL);
+    sp_document_unref(doc);
 
-        sp_create_window(dtw, TRUE);
-        dt = static_cast<SPDesktop*>(dtw->view);
-        sp_namedview_window_from_document(dt);
-        sp_namedview_update_layers_from_document(dt);
-    }
+    sp_create_window(dtw, TRUE);
+    dt = static_cast<SPDesktop*>(dtw->view);
+    sp_namedview_window_from_document(dt);
+    sp_namedview_update_layers_from_document(dt);
 
 #ifdef WITH_DBUS
     Inkscape::Extension::Dbus::dbus_init_desktop_interface(dt);
@@ -247,14 +240,10 @@ sp_file_open(const Glib::ustring &uri,
             desktop->change_document(doc);
             sp_document_resized_signal_emit (doc, sp_document_width(doc), sp_document_height(doc));
         } else {
-            if (!Inkscape::NSApplication::Application::getNewGui()) {
-                // create a whole new desktop and window
-                SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL));
-                sp_create_window(dtw, TRUE);
-                desktop = static_cast<SPDesktop*>(dtw->view);
-            } else {
-                desktop = Inkscape::NSApplication::Editor::createDesktop (doc);
-            }
+            // create a whole new desktop and window
+            SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL));
+            sp_create_window(dtw, TRUE);
+            desktop = static_cast<SPDesktop*>(dtw->view);
         }
 
         doc->virgin = FALSE;

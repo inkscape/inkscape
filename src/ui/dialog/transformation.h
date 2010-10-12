@@ -19,7 +19,6 @@
 
 
 #include "ui/widget/panel.h"
-#include "application/application.h"
 #include "ui/widget/notebook-page.h"
 #include "ui/widget/scalar-unit.h"
 #include "ui/widget/imageicon.h"
@@ -145,12 +144,6 @@ protected:
 
     virtual void _apply();
     void presentPage(PageType page);
-
-    void onSelectionChanged(Inkscape::NSApplication::Application *inkscape,
-                            Inkscape::Selection *selection);
-    void onSelectionModified(Inkscape::NSApplication::Application *inkscape,
-                             Inkscape::Selection *selection,
-                             int unsigned flags);
     void onSwitchPage(GtkNotebookPage *page,
                     guint pagenum);
 

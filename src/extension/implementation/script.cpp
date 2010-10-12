@@ -39,7 +39,7 @@
 #include "extension/db.h"
 #include "script.h"
 #include "dialogs/dialog-events.h"
-#include "application/application.h"
+#include "inkscape.h"
 #include "xml/node.h"
 #include "xml/attribute-record.h"
 
@@ -983,7 +983,7 @@ int Script::execute (const std::list<std::string> &in_command,
 
     Glib::ustring stderr_data = fileerr.string();
     if (stderr_data.length() != 0 &&
-        Inkscape::NSApplication::Application::getUseGui()
+        inkscape_use_gui()
        ) {
         checkStderr(stderr_data, Gtk::MESSAGE_INFO,
                                  _("Inkscape has received additional data from the script executed.  "

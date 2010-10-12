@@ -27,8 +27,6 @@
 #include <gtkmm/tooltips.h>
 #include <glibmm/i18n.h>
 
-#include "application/application.h"
-#include "application/editor.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "dialog-manager.h"

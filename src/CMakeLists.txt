@@ -206,7 +206,6 @@ ${ONLY_WIN}
 SET(internalfolders
 #algorithms
 #api
-application
 bind
 debug
 dialogs

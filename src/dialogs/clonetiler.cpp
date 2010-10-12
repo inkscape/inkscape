@@ -16,8 +16,6 @@
 #include <gtk/gtk.h>
 #include <glibmm/i18n.h>
 
-#include "application/application.h"
-#include "application/editor.h"
 #include "../desktop.h"
 #include "../desktop-handles.h"
 #include "dialog-events.h"
@@ -83,15 +81,7 @@ static Inkscape::UI::Widget::ColorPicker *color_picker;
 static void
 clonetiler_dialog_destroy( GtkObject */*object*/, gpointer /*data*/ )
 {
-    if (Inkscape::NSApplication::Application::getNewGui())
-    {
-        _shutdown_connection.disconnect();
-        _dialogs_hidden_connection.disconnect();
-        _dialogs_unhidden_connection.disconnect();
-        _desktop_activated_connection.disconnect();
-    } else {
-        sp_signal_disconnect_by_data (INKSCAPE, dlg);
-    }
+    sp_signal_disconnect_by_data (INKSCAPE, dlg);
     _color_changed_connection.disconnect();
 
     delete color_picker;
@@ -1860,18 +1850,10 @@ clonetiler_dialog (void)
         gtk_signal_connect ( GTK_OBJECT (dlg), "destroy", G_CALLBACK (clonetiler_dialog_destroy), dlg);
         gtk_signal_connect ( GTK_OBJECT (dlg), "delete_event", G_CALLBACK (clonetiler_dialog_delete), dlg);
 
-        if (Inkscape::NSApplication::Application::getNewGui())
-        {
-            _shutdown_connection = Inkscape::NSApplication::Editor::connectShutdown (&on_delete);
-            _dialogs_hidden_connection = Inkscape::NSApplication::Editor::connectDialogsHidden (sigc::bind (&on_dialog_hide, dlg));
-            _dialogs_unhidden_connection = Inkscape::NSApplication::Editor::connectDialogsUnhidden (sigc::bind (&on_dialog_unhide, dlg));
-            _desktop_activated_connection = Inkscape::NSApplication::Editor::connectDesktopActivated (sigc::bind (&on_transientize, &wd));
-        } else {
-            g_signal_connect   ( G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (clonetiler_dialog_delete), dlg);
-            g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg);
-            g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg);
-            g_signal_connect   ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd);
-        }
+        g_signal_connect   ( G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (clonetiler_dialog_delete), dlg);
+        g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg);
+        g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg);
+        g_signal_connect   ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd);
 
         GtkTooltips *tt = gtk_tooltips_new();
 

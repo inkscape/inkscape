@@ -964,7 +964,6 @@ AC_CONFIG_FILES([
 Makefile
 src/Makefile
 src/check-header-compile
-src/application/makefile
 src/bind/makefile
 src/debug/makefile
 src/dialogs/makefile

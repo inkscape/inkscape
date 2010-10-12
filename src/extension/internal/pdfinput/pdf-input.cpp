@@ -36,7 +36,7 @@
 #include "pdf-parser.h"
 
 #include "document-private.h"
-#include "application/application.h"
+#include "inkscape.h"
 
 #include "dialogs/dialog-events.h"
 #include <gtk/gtkdialog.h>
@@ -641,7 +641,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     }
 
     PdfImportDialog *dlg = NULL;
-    if (Inkscape::NSApplication::Application::getUseGui()) {
+    if (inkscape_use_gui()) {
         dlg = new PdfImportDialog(pdf_doc, uri);
         if (!dlg->showDialog()) {
             delete dlg;

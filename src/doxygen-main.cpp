@@ -283,7 +283,6 @@ namespace XML {}
 /** \page UI User Interface Classes and Files
  *
  * - Inkscape::UI::View::View [\ref ui/view/view.cpp, \ref ui/view/view.h]
- *   - Inkscape::UI::View::Edit [\ref ui/view/edit.cpp, \ref ui/view/edit.h]
  *   - SPDesktop [\ref desktop.cpp, \ref desktop-events.cpp, \ref desktop-handles.cpp, \ref desktop-style.cpp, \ref desktop.h, \ref desktop-events.h, \ref desktop-handles.h, \ref desktop-style.h]
  *   - SPSVGView [\ref svg-view.cpp, \ref svg-view.h]
  *

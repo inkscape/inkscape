@@ -106,7 +106,6 @@ endif
 
 # Include all partial makefiles from subdirectories
 include Makefile_insert
-include application/Makefile_insert
 include bind/Makefile_insert
 include dialogs/Makefile_insert
 include display/Makefile_insert

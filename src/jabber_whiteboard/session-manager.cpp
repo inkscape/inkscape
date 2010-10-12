@@ -29,9 +29,6 @@
 
 #include "ui/view/view-widget.h"
 
-#include "application/application.h"
-#include "application/editor.h"
-
 #include "document-private.h"
 #include "interface.h"
 #include "sp-namedview.h"
@@ -386,20 +383,14 @@ makeInkboardDesktop(SPDocument* doc)
 {
     SPDesktop* dt;
 
-    if (NSApplication::Application::getNewGui()) 
-        dt = NSApplication::Editor::createDesktop(doc);
+    SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL));
+    g_return_val_if_fail(dtw != NULL, NULL);
+    sp_document_unref(doc);
 
-    else 
-    {
-        SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL));
-        g_return_val_if_fail(dtw != NULL, NULL);
-        sp_document_unref(doc);
-
-        sp_create_window(dtw, TRUE);
-        dt = static_cast<SPDesktop*>(dtw->view);
-        sp_namedview_window_from_document(dt);
-        sp_namedview_update_layers_from_document(dt);
-    }
+    sp_create_window(dtw, TRUE);
+    dt = static_cast<SPDesktop*>(dtw->view);
+    sp_namedview_window_from_document(dt);
+    sp_namedview_update_layers_from_document(dt);
 
     return dt;
 }

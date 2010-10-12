@@ -114,7 +114,6 @@ using Inkscape::Extension::Internal::PrintWin32;
 #define bind_textdomain_codeset(p,c)
 #endif
 
-#include "application/application.h"
 #include "main-cmdlineact.h"
 #include "widgets/icon.h"
 #include "ui/widget/panel.h"
@@ -208,7 +207,6 @@ static gboolean sp_query_width = FALSE;
 static gboolean sp_query_height = FALSE;
 static gboolean sp_query_all = FALSE;
 static gchar *sp_query_id = NULL;
-static int sp_new_gui = FALSE;
 static gboolean sp_shell = FALSE;
 static gboolean sp_vacuum_defs = FALSE;
 
@@ -583,7 +581,7 @@ static void set_extensions_env()
  * architectures it might be called by something else.
  */
 int
-main(int argc, char **argv)
+main(int argc, const char **argv)
 {
 #ifdef HAVE_FPSETMASK
     /* This is inherited from Sodipodi code, where it was in #ifdef __FreeBSD__.  It's probably
@@ -713,10 +711,15 @@ main(int argc, char **argv)
     }
 #endif // WIN32
 
-    /// \todo  Should this be a static object (see inkscape.cpp)?
-    Inkscape::NSApplication::Application app(argc, argv, use_gui, sp_new_gui);
+    int retcode;
 
-    return app.run();
+    if (use_gui) {
+        retcode = sp_main_gui(argc, argv);
+    } else {
+        retcode = sp_main_console(argc, argv);
+    }
+
+    return retcode;
 }
 
 

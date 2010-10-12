@@ -15,8 +15,6 @@
 #include "floating-behavior.h"
 #include "dialog.h"
 
-#include "application/application.h"
-#include "application/editor.h"
 #include "inkscape.h"
 #include "desktop.h"
 #include "dialogs/dialog-events.h"
