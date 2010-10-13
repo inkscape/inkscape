@@ -581,7 +581,7 @@ static void set_extensions_env()
  * architectures it might be called by something else.
  */
 int
-main(int argc, const char **argv)
+main(int argc, char **argv)
 {
 #ifdef HAVE_FPSETMASK
     /* This is inherited from Sodipodi code, where it was in #ifdef __FreeBSD__.  It's probably
@@ -714,9 +714,9 @@ main(int argc, const char **argv)
     int retcode;
 
     if (use_gui) {
-        retcode = sp_main_gui(argc, argv);
+        retcode = sp_main_gui(argc, (const char **) argv);
     } else {
-        retcode = sp_main_console(argc, argv);
+        retcode = sp_main_console(argc, (const char **) argv);
     }
 
     return retcode;
