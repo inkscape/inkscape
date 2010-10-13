@@ -104,6 +104,7 @@ tutorial_DATA = \
     tutorial-elements.fa.svg \
     tutorial-elements.fr.svg \
     tutorial-elements.hu.svg \
+    tutorial-elements.id.svg \
     tutorial-elements.ja.svg \
     tutorial-elements.pl.svg \
     tutorial-elements.pt_BR.svg \
@@ -154,6 +155,7 @@ tutorial_DATA = \
     tutorial-tips.fr.svg \
     tutorial-tips.hu.svg \
     tutorial-tips.ja.svg \
+    tutorial-tips.id.svg \
     tutorial-tips.it.svg \
     tutorial-tips.pl.svg \
     tutorial-tips.pt_BR.svg \
