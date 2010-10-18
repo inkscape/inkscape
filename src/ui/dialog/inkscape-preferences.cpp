@@ -896,7 +896,7 @@ void InkscapePreferences::initPageCMS()
     _page_cms.add_group_header( _("Display adjustment"));
 
     Glib::ustring tmpStr;
-    std::list<Glib::ustring> sources = ColorProfile::getProfileDirs();
+    std::list<Glib::ustring> sources = ColorProfile::getBaseProfileDirs();
     for ( std::list<Glib::ustring>::const_iterator it = sources.begin(); it != sources.end(); ++it ) {
         gchar* part = g_strdup_printf( "\n%s", it->c_str() );
         tmpStr += part;

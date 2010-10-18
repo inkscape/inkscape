@@ -33,7 +33,8 @@ struct ColorProfile : public SPObject {
     static GType getType();
     static void classInit( ColorProfileClass *klass );
 
-    static std::list<Glib::ustring> getProfileDirs();
+    static std::list<Glib::ustring> getBaseProfileDirs();
+    static std::list<Glib::ustring> getProfileFiles();
 #if ENABLE_LCMS
     static cmsHPROFILE getSRGBProfile();
     static cmsHPROFILE getNULLProfile();

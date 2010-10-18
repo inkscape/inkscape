@@ -7,6 +7,7 @@
 #include <glib/gstdio.h>
 #include <sys/fcntl.h>
 #include <gdkmm/color.h>
+#include <glib/gi18n.h>
 
 #ifdef DEBUG_LCMS
 #include <gtk/gtkmessagedialog.h>
@@ -630,7 +631,14 @@ Glib::ustring Inkscape::get_path_for_profile(Glib::ustring const& name)
 }
 #endif // ENABLE_LCMS
 
-std::list<Glib::ustring> ColorProfile::getProfileDirs() {
+std::list<Glib::ustring> ColorProfile::getBaseProfileDirs() {
+#if ENABLE_LCMS
+    static bool warnSet = false;
+    if (!warnSet) {
+        cmsErrorAction( LCMS_ERROR_SHOW );
+        warnSet = true;
+    }
+#endif // ENABLE_LCMS
     std::list<Glib::ustring> sources;
 
     gchar* base = profile_path("XXX");
@@ -655,16 +663,25 @@ std::list<Glib::ustring> ColorProfile::getProfileDirs() {
     }
 
     // On OS X:
-    if ( g_file_test("/Library/ColorSync/Profiles", G_FILE_TEST_EXISTS)  && g_file_test("/Library/ColorSync/Profiles", G_FILE_TEST_IS_DIR) ) {
-        sources.push_back("/Library/ColorSync/Profiles");
-
-        gchar* path = g_build_filename(g_get_home_dir(), "Library", "ColorSync", "Profiles", NULL);
-        if ( g_file_test(path, G_FILE_TEST_EXISTS)  && g_file_test(path, G_FILE_TEST_IS_DIR) ) {
-            sources.push_back(path);
+    {
+        bool onOSX = false;
+        std::list<Glib::ustring> possible;
+        possible.push_back("/System/Library/ColorSync/Profiles");
+        possible.push_back("/Library/ColorSync/Profiles");
+        for ( std::list<Glib::ustring>::const_iterator it = possible.begin(); it != possible.end(); ++it ) {
+            if ( g_file_test(it->c_str(), G_FILE_TEST_EXISTS)  && g_file_test(it->c_str(), G_FILE_TEST_IS_DIR) ) {
+                sources.push_back(it->c_str());
+                onOSX = true;
+            }
         }
-        g_free(path);
+        if ( onOSX ) {
+            gchar* path = g_build_filename(g_get_home_dir(), "Library", "ColorSync", "Profiles", NULL);
+            if ( g_file_test(path, G_FILE_TEST_EXISTS)  && g_file_test(path, G_FILE_TEST_IS_DIR) ) {
+                sources.push_back(path);
+            }
+            g_free(path);
+        }
     }
-
 
 #ifdef WIN32
     wchar_t pathBuf[MAX_PATH + 1];
@@ -685,10 +702,38 @@ std::list<Glib::ustring> ColorProfile::getProfileDirs() {
     return sources;
 }
 
-#if ENABLE_LCMS
-static void findThings() {
-    std::list<Glib::ustring> sources = ColorProfile::getProfileDirs();
+static bool isIccFile( gchar const *filepath )
+{
+    bool isIccFile = false;
+    struct stat st;
+    if ( g_stat(filepath, &st) == 0 && (st.st_size > 128) ) {
+        //0-3 == size
+        //36-39 == 'acsp' 0x61637370
+        int fd = g_open( filepath, O_RDONLY, S_IRWXU);
+        if ( fd != -1 ) {
+            guchar scratch[40] = {0};
+            size_t len = sizeof(scratch);
 
+            //size_t left = 40;
+            ssize_t got = read(fd, scratch, len);
+            if ( got != -1 ) {
+                size_t calcSize = (scratch[0] << 24) | (scratch[1] << 16) | (scratch[2] << 8) | scratch[3];
+                if ( calcSize > 128 && calcSize <= static_cast<size_t>(st.st_size) ) {
+                    isIccFile = (scratch[36] == 'a') && (scratch[37] == 'c') && (scratch[38] == 's') && (scratch[39] == 'p');
+                }
+            }
+
+            close(fd);
+        }
+    }
+    return isIccFile;
+}
+
+std::list<Glib::ustring> ColorProfile::getProfileFiles()
+{
+    std::list<Glib::ustring> files;
+
+    std::list<Glib::ustring> sources = ColorProfile::getBaseProfileDirs();
     for ( std::list<Glib::ustring>::const_iterator it = sources.begin(); it != sources.end(); ++it ) {
         if ( g_file_test( it->c_str(), G_FILE_TEST_EXISTS ) && g_file_test( it->c_str(), G_FILE_TEST_IS_DIR ) ) {
             GError *err = 0;
@@ -697,57 +742,49 @@ static void findThings() {
             if (dir) {
                 for (gchar const *file = g_dir_read_name(dir); file != NULL; file = g_dir_read_name(dir)) {
                     gchar *filepath = g_build_filename(it->c_str(), file, NULL);
-
-
                     if ( g_file_test( filepath, G_FILE_TEST_IS_DIR ) ) {
                         sources.push_back(g_strdup(filepath));
                     } else {
-                        bool isIccFile = false;
-                        struct stat st;
-                        if ( g_stat(filepath, &st) == 0 && (st.st_size > 128) ) {
-                            //0-3 == size
-                            //36-39 == 'acsp' 0x61637370
-                            int fd = g_open( filepath, O_RDONLY, S_IRWXU);
-                            if ( fd != -1 ) {
-                                guchar scratch[40] = {0};
-                                size_t len = sizeof(scratch);
-
-                                //size_t left = 40;
-                                ssize_t got = read(fd, scratch, len);
-                                if ( got != -1 ) {
-                                    size_t calcSize = (scratch[0] << 24) | (scratch[1] << 16) | (scratch[2] << 8) | scratch[3];
-                                    if ( calcSize > 128 && calcSize <= static_cast<size_t>(st.st_size) ) {
-                                        isIccFile = (scratch[36] == 'a') && (scratch[37] == 'c') && (scratch[38] == 's') && (scratch[39] == 'p');
-                                    }
-                                }
-
-                                close(fd);
-                            }
-                        }
-
-                        if ( isIccFile ) {
-                            cmsHPROFILE prof = cmsOpenProfileFromFile( filepath, "r" );
-                            if ( prof ) {
-                                ProfileInfo info( prof, Glib::filename_to_utf8( filepath ) );
-                                cmsCloseProfile( prof );
-
-                                bool sameName = false;
-                                for ( std::vector<ProfileInfo>::iterator it = knownProfiles.begin(); it != knownProfiles.end(); ++it ) {
-                                    if ( it->getName() == info.getName() ) {
-                                        sameName = true;
-                                        break;
-                                    }
-                                }
-
-                                if ( !sameName ) {
-                                    knownProfiles.push_back(info);
-                                }
-                            }
+                        if ( isIccFile( filepath ) ) {
+                            files.push_back( filepath );
                         }
                     }
 
                     g_free(filepath);
                 }
+                g_dir_close(dir);
+                dir = 0;
+            } else {
+                gchar *safeDir = Inkscape::IO::sanitizeString(it->c_str());
+                g_warning(_("Color profiles directory (%s) is unavailable."), safeDir);
+                g_free(safeDir);
+            }
+        }
+    }
+
+    return files;
+}
+
+#if ENABLE_LCMS
+static void findThings() {
+    std::list<Glib::ustring> files = ColorProfile::getProfileFiles();
+
+    for ( std::list<Glib::ustring>::const_iterator it = files.begin(); it != files.end(); ++it ) {
+        cmsHPROFILE prof = cmsOpenProfileFromFile( it->c_str(), "r" );
+        if ( prof ) {
+            ProfileInfo info( prof, Glib::filename_to_utf8( it->c_str() ) );
+            cmsCloseProfile( prof );
+
+            bool sameName = false;
+            for ( std::vector<ProfileInfo>::iterator it = knownProfiles.begin(); it != knownProfiles.end(); ++it ) {
+                if ( it->getName() == info.getName() ) {
+                    sameName = true;
+                    break;
+                }
+            }
+
+            if ( !sameName ) {
+                knownProfiles.push_back(info);
             }
         }
     }
