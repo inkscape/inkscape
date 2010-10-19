@@ -633,7 +633,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                 // Convert to desktop coordinates
                 (*p_inters) = _snapmanager->getDesktop()->doc2dt(*p_inters);
                 // Construct a snapped point
-                Geom::Coord dist = Geom::L2(p_proj_on_constraint - *p_inters);
+                Geom::Coord dist = Geom::L2(p.getPoint() - *p_inters);
                 SnappedPoint s = SnappedPoint(*p_inters, p.getSourceType(), p.getSourceNum(), k->target_type, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true, k->target_bbox);;
                 // Store the snapped point
                 if (dist <= tolerance) { // If the intersection is within snapping range, then we might snap to it

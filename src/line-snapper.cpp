@@ -99,8 +99,8 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
                 Geom::Coord d = Geom::L2(gridguide_line.versor()); // length of versor, needed to normalize the versor
                 if (d > 0) {
                     Geom::Point v = l*gridguide_line.versor()/d;
-                    _addSnappedPoint(sc, p_proj + v, Geom::L2(pp - (p_proj + v)), p.getSourceType(), p.getSourceNum(), true);
-                    _addSnappedPoint(sc, p_proj - v, Geom::L2(pp - (p_proj - v)), p.getSourceType(), p.getSourceNum(), true);
+                    _addSnappedPoint(sc, p_proj + v, Geom::L2(p.getPoint() - (p_proj + v)), p.getSourceType(), p.getSourceNum(), true);
+                    _addSnappedPoint(sc, p_proj - v, Geom::L2(p.getPoint() - (p_proj - v)), p.getSourceType(), p.getSourceNum(), true);
                 }
             }
         } else {
@@ -119,7 +119,7 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
 
             if (inters) {
                 Geom::Point t = constraint_line.pointAt((*inters).ta);
-                const Geom::Coord dist = Geom::L2(t - pp);
+                const Geom::Coord dist = Geom::L2(t - p.getPoint());
                 if (dist < getSnapperTolerance()) {
                     // When doing a constrained snap, we're already at an intersection.
                     // This snappoint is therefore fully constrained, so there's no need
