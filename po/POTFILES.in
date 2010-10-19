@@ -401,7 +401,6 @@ src/ui/tool/node-tool.cpp
 src/ui/tool/node.cpp
 src/ui/tool/path-manipulator.cpp
 src/ui/tool/transform-handle-set.cpp
-src/ui/view/edit-widget.cpp
 src/ui/widget/combo-enums.h
 src/ui/widget/entity-entry.cpp
 src/ui/widget/filter-effect-chooser.cpp
