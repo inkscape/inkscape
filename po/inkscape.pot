@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-19 17:50+0200\n"
+"POT-Creation-Date: 2010-10-20 21:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7858,7 +7858,17 @@ msgstr ""
 msgid "Y:"
 msgstr ""
 
-#: ../src/dialogs/object-attributes.cpp:106
+#: ../src/dialogs/object-attributes.cpp:107
+#, c-format
+msgid "Link Properties"
+msgstr ""
+
+#: ../src/dialogs/object-attributes.cpp:109
+#, c-format
+msgid "Image Properties"
+msgstr ""
+
+#: ../src/dialogs/object-attributes.cpp:111
 #, c-format
 msgid "%s Properties"
 msgstr ""
@@ -14549,7 +14559,7 @@ msgstr ""
 
 #. Item dialog
 #. Fill and Stroke dialog
-#: ../src/ui/context-menu.cpp:507 ../src/ui/context-menu.cpp:542
+#: ../src/ui/context-menu.cpp:509 ../src/ui/context-menu.cpp:527
 #: ../src/verbs.cpp:2628
 msgid "_Fill and Stroke..."
 msgstr ""

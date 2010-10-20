@@ -103,7 +103,14 @@ sp_object_attr_show_dialog ( SPObject *object,
         attrs[i] = desc[i].attribute;
     }
 
-    title = g_strdup_printf (_("%s Properties"), tag);
+    if (!strcmp (tag, "Link")) {
+        title = g_strdup_printf (_("Link Properties"));
+    } else if (!strcmp (tag, "Image")) {
+        title = g_strdup_printf (_("Image Properties"));
+    } else {
+        title = g_strdup_printf (_("%s Properties"), tag);
+    }
+
     w = sp_window_new (title, TRUE);
     g_free (title);
 
