@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-19 17:50+0200\n"
-"PO-Revision-Date: 2010-10-19 17:51+0100\n"
+"POT-Creation-Date: 2010-10-20 21:25+0200\n"
+"PO-Revision-Date: 2010-10-20 22:19+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2555,7 +2555,7 @@ msgstr "Suivre l’orientation du chemin"
 
 #: ../share/extensions/pathscatter.inx.h:7
 msgid "If pattern is a group, pick group members"
-msgstr ""
+msgstr "Si le motif est un groupe, sélectionner les membres du groupe"
 
 #: ../share/extensions/pathscatter.inx.h:8
 msgid "Moved"
@@ -2567,7 +2567,7 @@ msgstr "Le motif d’origine sera :"
 
 #: ../share/extensions/pathscatter.inx.h:13
 msgid "Pick group members:"
-msgstr ""
+msgstr "Sélectionner les membres du groupe :"
 
 #: ../share/extensions/pathscatter.inx.h:14
 msgid "Randomly"
@@ -8028,7 +8028,17 @@ msgstr "X :"
 msgid "Y:"
 msgstr "Y :"
 
-#: ../src/dialogs/object-attributes.cpp:106
+#: ../src/dialogs/object-attributes.cpp:107
+#, c-format
+msgid "Link Properties"
+msgstr "Propriétés du lien"
+
+#: ../src/dialogs/object-attributes.cpp:109
+#, c-format
+msgid "Image Properties"
+msgstr "Propriétés de l’image"
+
+#: ../src/dialogs/object-attributes.cpp:111
 #, c-format
 msgid "%s Properties"
 msgstr "Propriétés de %s"
@@ -9230,7 +9240,7 @@ msgstr "En relief"
 
 #: ../src/extension/internal/bitmap/raise.cpp:49
 msgid "Alter lightness the edges of selected bitmap(s) to create a raised appearance"
-msgstr "Changer la luminosité des bitmaps sélectionnés pour les faire apparaître « en  relief »"
+msgstr "Changer la luminosité des bitmaps sélectionnés pour les faire apparaître « en relief »"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:39
 msgid "Reduce Noise"
@@ -12649,7 +12659,7 @@ msgstr "<b>Poignée de contrôle</b>: angle %3.2f&#176;, longueur %s; <b>Ctrl</b
 #: ../src/pen-context.cpp:1330
 #, c-format
 msgid "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr "<b>Poignée de la courbe, symétrique</b> : angle %3.2f&#176;, longueur %s ; avec  <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
+msgstr "<b>Poignée de la courbe, symétrique</b> : angle %3.2f&#176;, longueur %s ; avec <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
 
 #: ../src/pen-context.cpp:1331
 #, c-format
@@ -13001,7 +13011,7 @@ msgstr "<b>Entourer</b> les objets pour les sélectionner; appuyer sur <b>Alt</b
 
 #: ../src/select-context.cpp:727
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
-msgstr "<b>Ctrl</b> : Cliquer pour sélectionner dans les groupes; cliquer-déplacer  pour déplacer horizontalement/verticalment"
+msgstr "<b>Ctrl</b> : Cliquer pour sélectionner dans les groupes; cliquer-déplacer pour déplacer horizontalement/verticalment"
 
 #: ../src/select-context.cpp:728
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
@@ -14609,8 +14619,8 @@ msgstr "Éditer avec un logiciel externe..."
 
 #. Item dialog
 #. Fill and Stroke dialog
-#: ../src/ui/context-menu.cpp:507
-#: ../src/ui/context-menu.cpp:542
+#: ../src/ui/context-menu.cpp:509
+#: ../src/ui/context-menu.cpp:527
 #: ../src/verbs.cpp:2628
 msgid "_Fill and Stroke..."
 msgstr "_Remplissage et contour..."
@@ -15741,7 +15751,7 @@ msgstr "Constante :"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2241
 msgid "This constant affects the Phong lighting model."
-msgstr "Cette constante agit sur le  modèle d’éclairage Phong."
+msgstr "Cette constante agit sur le modèle d’éclairage Phong."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2209
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2243
@@ -15852,7 +15862,7 @@ msgstr "<b>feBlend</b> fournit quatre modes de fondu d’image : produit, super
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2287
 msgid "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to color of each rendered pixel. This allows for effects like turning object to grayscale, modifying color saturation and changing color hue."
-msgstr "<b>feColorMatrix</b> applique une transformation matricielle à la couleur de chaque pixel. Cela permet des effets comme la  transformation d’objets en niveaux de gris, la modification de la saturation des couleurs et la modification de la teinte des couleurs."
+msgstr "<b>feColorMatrix</b> applique une transformation matricielle à la couleur de chaque pixel. Cela permet des effets comme la transformation d’objets en niveaux de gris, la modification de la saturation des couleurs et la modification de la teinte des couleurs."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2291
 msgid "The <b>feComponentTransfer</b> filter primitive manipulates the input's color components (red, green, blue, and alpha) according to particular transfer functions, allowing operations like brightness and contrast adjustment, color balance, and thresholding."
@@ -18054,7 +18064,7 @@ msgstr "Imposer les commandes répétitives"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1094
 msgid "Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead of 'L 1,2 3,4')"
-msgstr "Si coché, impose la répétition de la même commande de chemin (écrit  'L 1,2 L 3,4' à la place de 'L 1,2 3,4')."
+msgstr "Si coché, impose la répétition de la même commande de chemin (écrit 'L 1,2 L 3,4' à la place de 'L 1,2 3,4')."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1096
 msgid "Numbers"
@@ -19458,7 +19468,7 @@ msgstr "Mettre à jour"
 
 #: ../src/ui/dialog/tracedialog.cpp:658
 msgid "Preview the intermediate bitmap with the current settings, without actual tracing"
-msgstr "Aperçu du bitmap intermédiaire avec les paramètres définis,  sans vectorisation effective"
+msgstr "Aperçu du bitmap intermédiaire avec les paramètres définis, sans vectorisation effective"
 
 #: ../src/ui/dialog/tracedialog.cpp:662
 msgid "Preview"
@@ -19712,7 +19722,7 @@ msgstr "Retourner les nœuds horizontalement"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:669
 msgid "Flip nodes vertically"
-msgstr "Retourner les nœud verticalement"
+msgstr "Retourner les nœuds verticalement"
 
 #: ../src/ui/tool/node-tool.cpp:537
 msgctxt "Node tool tip"
@@ -25080,7 +25090,7 @@ msgstr "Crénage horizontal (px)"
 #. name
 #: ../src/widgets/toolbox.cpp:7769
 msgid "Vertical Shift"
-msgstr "Décalage vertical :"
+msgstr "Décalage vertical"
 
 #. label
 #: ../src/widgets/toolbox.cpp:7770
@@ -25341,9 +25351,8 @@ msgstr ""
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:15
 #: ../share/extensions/gcodetools_dxf_points.inx.h:4
-#, fuzzy
 msgid "Convert selection:"
-msgstr "In_verser la sélection"
+msgstr "Convertir la sélection :"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:16
 #: ../share/extensions/gcodetools_dxf_points.inx.h:6
@@ -25382,9 +25391,8 @@ msgstr "Fichier :"
 #: ../share/extensions/gcodetools_engraving.inx.h:7
 #: ../share/extensions/gcodetools_lathe.inx.h:10
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:7
-#, fuzzy
 msgid "Full path to log file:"
-msgstr "Aplat de remplissage"
+msgstr "Chemin du fichier journal :"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:22
 #: ../share/extensions/gcodetools_area.inx.h:14
@@ -25416,9 +25424,8 @@ msgstr ""
 #: ../share/extensions/gcodetools_engraving.inx.h:10
 #: ../share/extensions/gcodetools_lathe.inx.h:13
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:10
-#, fuzzy
 msgid "Generate log file"
-msgstr "Générer à partir du chemin"
+msgstr "Générer un fichier journal"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:26
 #: ../share/extensions/gcodetools_tools_library.inx.h:4
@@ -25432,9 +25439,8 @@ msgstr ""
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:28
 #: ../share/extensions/gcodetools_engraving.inx.h:12
-#, fuzzy
 msgid "Maximum distance for engraving:"
-msgstr "Déplacement maximum sur l’axe X (px) :"
+msgstr "Distance maximum pour graver :"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:29
 #: ../share/extensions/gcodetools_area.inx.h:19

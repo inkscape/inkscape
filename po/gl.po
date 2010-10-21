@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-08-04 14:12+0200\n"
+"PO-Revision-Date: 2010-10-17 21:39+0100\n"
 "Last-Translator: Leandro Regueiro <leandro.regueiro@gmail.com>\n"
 "Language-Team: Galego <proxecto@trasno.net>\n"
 "Language: gl\n"
@@ -858,7 +858,7 @@ msgstr "Grosor do papel"
 
 #: ../share/extensions/foldablebox.inx.h:7
 msgid "Tab Proportion"
-msgstr "Proporción da lapela"
+msgstr ""
 
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
@@ -1049,7 +1049,7 @@ msgstr "XCF de GIMP conservando as capas (*.XCF)"
 
 #: ../share/extensions/gimp_xcf.inx.h:3
 msgid "Save Grid:"
-msgstr "Gardar a reixa:"
+msgstr "Gardar a grade:"
 
 #: ../share/extensions/gimp_xcf.inx.h:4
 msgid "Save Guides:"
@@ -1061,7 +1061,7 @@ msgstr "Grosor do bordo [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:2
 msgid "Cartesian Grid"
-msgstr "Reixa cartesiana"
+msgstr "Grade cartesiana"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
@@ -1352,7 +1352,7 @@ msgstr "Fáganos unha pregunta"
 
 #: ../share/extensions/inkscape_help_commandline.inx.h:1
 msgid "Command Line Options"
-msgstr "Opcións de liña de comandos"
+msgstr "Opcións de liña de ordes"
 
 #: ../share/extensions/inkscape_help_faq.inx.h:1
 msgid "FAQ"
@@ -3787,7 +3787,7 @@ msgstr "Non se atoparon atributos xlink:href nin sodipodi:absref, ou non apuntan
 #: ../share/extensions/embedimage.py:77
 #, python-format
 msgid "Sorry we could not locate %s"
-msgstr "Non se puido localizar %s"
+msgstr "Non se puido atopar %s"
 
 #: ../share/extensions/embedimage.py:102
 #, python-format
@@ -3824,7 +3824,7 @@ msgstr "Non se atopou ningún atributo de estilo co id: %s"
 #: ../share/extensions/markers_strokepaint.py:56
 #, python-format
 msgid "unable to locate marker: %s"
-msgstr "non foi posible localizar o marcador: %s"
+msgstr "non foi posible atopar o marcador: %s"
 
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
@@ -3839,7 +3839,7 @@ msgstr "Converta primeiro os obxectos a camiños! (Obtívose [%s].)"
 
 #: ../share/extensions/perspective.py:29
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
-msgstr "Produciuse un erro ao importar os módulos numpy ou numpy.linalg. Esta extensión require estes módulos. Instáleos e probe de novo. Nun sistema tipo Debian isto pode facerse co comando 'sudo apt-get install python-numpy'."
+msgstr "Produciuse un erro ao importar os módulos numpy ou numpy.linalg. Esta extensión require estes módulos. Instáleos e probe de novo. Nun sistema tipo Debian isto pode facerse ca orde 'sudo apt-get install python-numpy'."
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:43
@@ -3885,7 +3885,7 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:60
 msgid "Failed to import the numpy module. This module is required by this extension. Please install it and try again.  On a Debian-like system this can be done with the command 'sudo apt-get install python-numpy'."
-msgstr "Produciuse un erro ao importar o módulo numpy. Esta extensión require este módulo. Instáleo e probe de novo. Nun sistema tipo Debian isto pode facerse co comando 'sudo apt-get install python-numpy'."
+msgstr "Produciuse un erro ao importar o módulo numpy. Esta extensión require este módulo. Instáleo e probe de novo. Nun sistema tipo Debian isto pode facerse ca orde 'sudo apt-get install python-numpy'."
 
 #: ../share/extensions/polyhedron_3d.py:331
 msgid "No face data found in specified file."
@@ -3923,7 +3923,7 @@ msgstr ""
 #: ../share/extensions/svg_and_media_zip_output.py:128
 #, python-format
 msgid "Could not locate file: %s"
-msgstr "Non se puido localizar o ficheiro: %s"
+msgstr "Non se puido atopar o ficheiro: %s"
 
 #: ../share/extensions/uniconv_output.py:118
 msgid "You need to install the UniConvertor software.\n"
@@ -6209,7 +6209,7 @@ msgstr[1] "<b>Texto enmarcado ligado</b> (%d caracteres%s)"
 
 #: ../src/arc-context.cpp:324
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
-msgstr "Use <b>Ctrl</b>: crear un círculo ou elipse de proporción enteira, axustar o ángulo do arco/segmento"
+msgstr "Use <b>Ctrl</b>: crear un círculo ou elipse de proporción enteira, axustar o ángulo do arco/sector"
 
 #: ../src/arc-context.cpp:325
 #: ../src/rect-context.cpp:369
@@ -7886,7 +7886,7 @@ msgstr "Cambiar o atributo"
 #: ../src/display/canvas-axonomgrid.cpp:396
 #: ../src/display/canvas-grid.cpp:670
 msgid "Grid _units:"
-msgstr "_Unidades da reixa:"
+msgstr "_Unidades da grade:"
 
 #: ../src/display/canvas-axonomgrid.cpp:398
 #: ../src/display/canvas-grid.cpp:672
@@ -7898,7 +7898,7 @@ msgstr "_Orixe X:"
 #: ../src/ui/dialog/inkscape-preferences.cpp:1035
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "X coordinate of grid origin"
-msgstr "Coordenada X da orixe da reixa"
+msgstr "Coordenada X da orixe da grade"
 
 #: ../src/display/canvas-axonomgrid.cpp:400
 #: ../src/display/canvas-grid.cpp:674
@@ -7910,7 +7910,7 @@ msgstr "Ori_xe Y:"
 #: ../src/ui/dialog/inkscape-preferences.cpp:1036
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Y coordinate of grid origin"
-msgstr "Coordenada Y da orixe da reixa"
+msgstr "Coordenada Y da orixe da grade"
 
 #: ../src/display/canvas-axonomgrid.cpp:402
 #: ../src/display/canvas-grid.cpp:678
@@ -7947,37 +7947,37 @@ msgstr "Ángulo do eixe Z"
 #: ../src/display/canvas-axonomgrid.cpp:410
 #: ../src/display/canvas-grid.cpp:682
 msgid "Grid line _color:"
-msgstr "_Cor das liñas da reixa:"
+msgstr "_Cor das liñas da grade:"
 
 #: ../src/display/canvas-axonomgrid.cpp:410
 #: ../src/display/canvas-grid.cpp:682
 msgid "Grid line color"
-msgstr "Cor das liñas da reixa"
+msgstr "Cor das liñas da grade"
 
 #: ../src/display/canvas-axonomgrid.cpp:410
 #: ../src/display/canvas-grid.cpp:682
 msgid "Color of grid lines"
-msgstr "Cor das liñas da reixa"
+msgstr "Cor das liñas da grade"
 
 #: ../src/display/canvas-axonomgrid.cpp:415
 #: ../src/display/canvas-grid.cpp:687
 msgid "Ma_jor grid line color:"
-msgstr "Cor das _liñas principais da reixa:"
+msgstr "Cor das _liñas principais da grade:"
 
 #: ../src/display/canvas-axonomgrid.cpp:415
 #: ../src/display/canvas-grid.cpp:687
 msgid "Major grid line color"
-msgstr "Cor das liñas principais da reixa"
+msgstr "Cor das liñas principais da grade"
 
 #: ../src/display/canvas-axonomgrid.cpp:416
 #: ../src/display/canvas-grid.cpp:688
 msgid "Color of the major (highlighted) grid lines"
-msgstr "Cor das liñas principais (resaltadas) da reixa"
+msgstr "Cor das liñas principais (resaltadas) da grade"
 
 #: ../src/display/canvas-axonomgrid.cpp:420
 #: ../src/display/canvas-grid.cpp:692
 msgid "_Major grid line every:"
-msgstr "Liña _principal de reixa cada:"
+msgstr "Liña _principal de grade cada:"
 
 #: ../src/display/canvas-axonomgrid.cpp:420
 #: ../src/display/canvas-grid.cpp:692
@@ -7986,15 +7986,15 @@ msgstr " liñas"
 
 #: ../src/display/canvas-grid.cpp:39
 msgid "Rectangular grid"
-msgstr "Reixa rectangular"
+msgstr "Grade rectangular"
 
 #: ../src/display/canvas-grid.cpp:40
 msgid "Axonometric grid"
-msgstr "Reixa axonométrica"
+msgstr "Grade axonométrica"
 
 #: ../src/display/canvas-grid.cpp:258
 msgid "Create new grid"
-msgstr "Crear nova reixa"
+msgstr "Crear nova grade"
 
 #: ../src/display/canvas-grid.cpp:324
 msgid "_Enabled"
@@ -8002,15 +8002,15 @@ msgstr "_Activado"
 
 #: ../src/display/canvas-grid.cpp:325
 msgid "Determines whether to snap to this grid or not. Can be 'on' for invisible grids."
-msgstr "Determina se se axusta a esta reixa ou non. Pode estar 'activado' nas reixas invisibles."
+msgstr "Determina se se axusta a esta grade ou non. Pode estar 'activado' nas grades invisibles."
 
 #: ../src/display/canvas-grid.cpp:329
 msgid "Snap to visible _grid lines only"
-msgstr "Axustar só a liñas de _reixas visibles"
+msgstr "Axustar só a liñas de _grades visibles"
 
 #: ../src/display/canvas-grid.cpp:330
 msgid "When zoomed out, not all grid lines will be displayed. Only the visible ones will be snapped to"
-msgstr "Ao reducir o zoom non se mostrarán todas as liñas de reixa. Só se axustará ás liñas visibles"
+msgstr "Ao reducir o zoom non se mostrarán todas as liñas de grade. Só se axustará ás liñas visibles"
 
 #: ../src/display/canvas-grid.cpp:334
 msgid "_Visible"
@@ -8018,7 +8018,7 @@ msgstr "_Visible"
 
 #: ../src/display/canvas-grid.cpp:335
 msgid "Determines whether the grid is displayed or not. Objects are still snapped to invisible grids."
-msgstr "Determina se se mostra ou non a reixa. Os obxectos permanecerán axustados ás reixas invisibles."
+msgstr "Determina se se mostra ou non a grade. Os obxectos permanecerán axustados ás grades invisibles."
 
 #: ../src/display/canvas-grid.cpp:676
 msgid "Spacing _X:"
@@ -8027,12 +8027,12 @@ msgstr "Espazamento _X:"
 #: ../src/display/canvas-grid.cpp:676
 #: ../src/ui/dialog/inkscape-preferences.cpp:1039
 msgid "Distance between vertical grid lines"
-msgstr "Distancia entre as liñas verticais da reixa"
+msgstr "Distancia entre as liñas verticais da grade"
 
 #: ../src/display/canvas-grid.cpp:678
 #: ../src/ui/dialog/inkscape-preferences.cpp:1040
 msgid "Distance between horizontal grid lines"
-msgstr "Distancia entre as liñas horizontais da reixa"
+msgstr "Distancia entre as liñas horizontais da grade"
 
 #: ../src/display/canvas-grid.cpp:711
 msgid "_Show dots instead of lines"
@@ -8040,7 +8040,7 @@ msgstr "Mo_strar puntos en vez de liñas"
 
 #: ../src/display/canvas-grid.cpp:712
 msgid "If set, displays dots at gridpoints instead of gridlines"
-msgstr "Se está marcada, mostra puntos nas interseccións da reixa en vez de liñas"
+msgstr "Se está marcada, mostra puntos nas interseccións da grade en vez de liñas"
 
 #. TRANSLATORS: undefined target for snapping
 #: ../src/display/snap-indicator.cpp:71
@@ -8052,11 +8052,11 @@ msgstr "NON DEFINIDO"
 
 #: ../src/display/snap-indicator.cpp:77
 msgid "grid line"
-msgstr "liña de reixa"
+msgstr "liña de grade"
 
 #: ../src/display/snap-indicator.cpp:80
 msgid "grid intersection"
-msgstr "intersección de reixas"
+msgstr "intersección de grade"
 
 #: ../src/display/snap-indicator.cpp:83
 msgid "guide"
@@ -8072,7 +8072,7 @@ msgstr "orixe da guía"
 
 #: ../src/display/snap-indicator.cpp:92
 msgid "grid-guide intersection"
-msgstr "intersección de reixa e guía"
+msgstr "intersección de grade e guía"
 
 #: ../src/display/snap-indicator.cpp:95
 msgid "cusp node"
@@ -9197,7 +9197,7 @@ msgstr "Degradados usados en GIMP"
 #: ../src/extension/internal/grid.cpp:196
 #: ../src/ui/widget/panel.cpp:112
 msgid "Grid"
-msgstr "Reixa"
+msgstr "Grade"
 
 #: ../src/extension/internal/grid.cpp:198
 msgid "Line Width"
@@ -9221,7 +9221,7 @@ msgstr "Desprazamento vertical"
 
 #: ../src/extension/internal/grid.cpp:208
 msgid "Draw a path which is a grid"
-msgstr "Debuxar un camiño que é unha reixa"
+msgstr "Debuxar un camiño que é unha grade"
 
 #: ../src/extension/internal/javafx-out.cpp:966
 msgid "JavaFX Output"
@@ -10282,11 +10282,11 @@ msgstr "Produciuse un erro ao facer automaticamente unha copia de seguridade dos
 #. checkitem_toggled, checkitem_update, 0);
 #: ../src/interface.cpp:872
 msgid "Commands Bar"
-msgstr "Barra de comandos"
+msgstr "Barra de ordes"
 
 #: ../src/interface.cpp:872
 msgid "Show or hide the Commands bar (under the menu)"
-msgstr "Mostrar ou ocultar a barra de comandos (debaixo do menú)"
+msgstr "Mostrar ou ocultar a barra de ordes (debaixo do menú)"
 
 #: ../src/interface.cpp:874
 msgid "Snap Controls Bar"
@@ -10326,7 +10326,7 @@ msgstr "Barra de e_stado"
 
 #: ../src/interface.cpp:886
 msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr "Mostrar ou ocultar a barra de estado (no fondo da fiestra)"
+msgstr "Mostrar ou ocultar a barra de estado (no fondo da xanela)"
 
 #: ../src/interface.cpp:960
 #, c-format
@@ -10739,7 +10739,7 @@ msgstr "Flotante"
 
 #: ../src/libgdl/gdl-dock.c:176
 msgid "Whether the dock is floating in its own window"
-msgstr "Indica se o ancorable flota na súa propia fiestra"
+msgstr "Indica se o ancorable flota na súa propia xanela"
 
 #: ../src/libgdl/gdl-dock.c:184
 msgid "Default title for the newly created floating docks"
@@ -10877,7 +10877,7 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:116
 msgid "Construct grid"
-msgstr "Construír reixa"
+msgstr "Construír grade"
 
 #: ../src/live_effects/effect.cpp:117
 msgid "Spiro spline"
@@ -10964,7 +10964,7 @@ msgstr "Tamaño X"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:26
 msgid "The size of the grid in X direction."
-msgstr "O tamaño da reixa na dirección X."
+msgstr "O tamaño da grade na dirección X."
 
 #: ../src/live_effects/lpe-constructgrid.cpp:27
 msgid "Size Y"
@@ -10972,7 +10972,7 @@ msgstr "Tamaño Y"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:27
 msgid "The size of the grid in Y direction."
-msgstr "O tamaño da reixa na dirección Y."
+msgstr "O tamaño da grade na dirección Y."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "Stitch path"
@@ -12076,7 +12076,7 @@ msgstr "Posición do <b>punto final</b> do arco ou sector; use <b>Ctrl</b> para 
 
 #: ../src/object-edit.cpp:1076
 msgid "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to round; with <b>Alt</b> to randomize"
-msgstr ""
+msgstr "Axustar o <b>raio exterior</b> da estrela ou polígono; use <b>Maiús</b> para redondear; use <b>Alt</b> para obter valores aleatorios"
 
 #: ../src/object-edit.cpp:1083
 msgid "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to randomize"
@@ -12084,11 +12084,11 @@ msgstr ""
 
 #: ../src/object-edit.cpp:1272
 msgid "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to converge/diverge"
-msgstr "Enrollar/desenrolar a espiral desde <b>dentro</b>; use <b>Ctrl</b> para axustar o ángulo; use <b>Alt</b> para converxer/diverxer"
+msgstr "Enrolar/desenrolar a espiral desde <b>dentro</b>; use <b>Ctrl</b> para axustar o ángulo; use <b>Alt</b> para converxer/diverxer"
 
 #: ../src/object-edit.cpp:1275
 msgid "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to scale/rotate"
-msgstr "Enrollar/desenrolar a espiral desde <b>fóra</b>; use <b>Ctrl</b> para axustar o ángulo; use <b>Maiús</b> para escalar/rotar"
+msgstr "Enrolar/desenrolar a espiral desde <b>fóra</b>; use <b>Ctrl</b> para axustar o ángulo; use <b>Maiús</b> para escalar/rotar"
 
 #: ../src/object-edit.cpp:1319
 msgid "Adjust the <b>offset distance</b>"
@@ -12537,7 +12537,7 @@ msgstr "Prema na selección para cambiar as asas de escalar polas de rotación"
 
 #: ../src/select-context.cpp:178
 msgid "No objects selected. Click, Shift+click, or drag around objects to select."
-msgstr "Non hai obxectos selecccionados. Prema, Shift+clic, ou arrastre arredor dos obxectos para seleccionalos."
+msgstr "Non hai obxectos selecccionados. Prema, Maiús+clic, ou arrastre arredor dos obxectos para seleccionalos."
 
 #: ../src/select-context.cpp:237
 msgid "Move canceled."
@@ -14621,7 +14621,7 @@ msgstr "_Nova"
 
 #: ../src/ui/dialog/document-properties.cpp:109
 msgid "Create new grid."
-msgstr "Crear unha nova reixa."
+msgstr "Crear unha nova grade."
 
 #: ../src/ui/dialog/document-properties.cpp:110
 msgid "_Remove"
@@ -14629,7 +14629,7 @@ msgstr "_Eliminar"
 
 #: ../src/ui/dialog/document-properties.cpp:110
 msgid "Remove selected grid."
-msgstr "Eliminar a reixa seleccionada."
+msgstr "Eliminar a grade seleccionada."
 
 #: ../src/ui/dialog/document-properties.cpp:119
 #: ../src/widgets/toolbox.cpp:2373
@@ -14640,7 +14640,7 @@ msgstr "Guías"
 #: ../src/ui/dialog/inkscape-preferences.cpp:1071
 #: ../src/widgets/toolbox.cpp:2364
 msgid "Grids"
-msgstr "Reixas"
+msgstr "Grades"
 
 #: ../src/ui/dialog/document-properties.cpp:121
 #: ../src/verbs.cpp:2544
@@ -14709,15 +14709,15 @@ msgstr "Axu_star só cando se está a menos de:"
 
 #: ../src/ui/dialog/document-properties.cpp:279
 msgid "Snapping distance, in screen pixels, for snapping to grid"
-msgstr "Distancia de axuste, en píxels da pantalla, para axustar á reixa"
+msgstr "Distancia de axuste, en píxels da pantalla, para axustar á grade"
 
 #: ../src/ui/dialog/document-properties.cpp:279
 msgid "Always snap to grids, regardless of the distance"
-msgstr "Sempre axustar ás reixas, sen ter en conta a distancia"
+msgstr "Sempre axustar ás grades, sen ter en conta a distancia"
 
 #: ../src/ui/dialog/document-properties.cpp:280
 msgid "If set, objects only snap to a grid line when it's within the range specified below"
-msgstr "Se está marcado, os obxectos só se axustarán a unha liña de reixa cando están a unha distancia inferior á especificada embaixo"
+msgstr "Se está marcado, os obxectos só se axustarán a unha liña de grade cando están a unha distancia inferior á especificada embaixo"
 
 #. Options for snapping to guides
 #: ../src/ui/dialog/document-properties.cpp:284
@@ -14746,7 +14746,7 @@ msgstr "<b>Axustar aos obxectos</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:292
 msgid "<b>Snap to grids</b>"
-msgstr "<b>Axustar ás reixas</b>"
+msgstr "<b>Axustar ás grades</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:294
 msgid "<b>Snap to guides</b>"
@@ -14818,11 +14818,11 @@ msgstr "<b>Creación</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:777
 msgid "<b>Defined grids</b>"
-msgstr "<b>Reixas definidas</b>"
+msgstr "<b>Grades definidas</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:988
 msgid "Remove grid"
-msgstr "Eliminar a reixa"
+msgstr "Eliminar a grade"
 
 #: ../src/ui/dialog/extension-editor.cpp:80
 msgid "Information"
@@ -16902,15 +16902,15 @@ msgstr "Contagotas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:574
 msgid "Save and restore window geometry for each document"
-msgstr "Gardar e restaurar a xeometría da fiestra para cada documento"
+msgstr "Gardar e restaurar a xeometría da xanela para cada documento"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:575
 msgid "Remember and use last window's geometry"
-msgstr "Lembrar e usar a última xeometría das fiestras"
+msgstr "Lembrar e usar a última xeometría das xanelas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:576
 msgid "Don't save window geometry"
-msgstr "Non gardar a xeometría das fiestras"
+msgstr "Non gardar a xeometría das xanelas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:578
 #: ../src/ui/dialog/inkscape-preferences.cpp:598
@@ -16923,7 +16923,7 @@ msgstr "As caixas de diálogo non se mostran na barra de tarefas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:582
 msgid "Zoom when window is resized"
-msgstr "Modificar o zoom cando se redimensiona a fiestra"
+msgstr "Modificar o zoom cando se redimensiona a xanela"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:583
 msgid "Show close button on dialogs"
@@ -16942,19 +16942,19 @@ msgstr "Agresivo"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:588
 msgid "Saving window geometry (size and position):"
-msgstr "Gardar a xeometría das fiestras (tamaño e posición):"
+msgstr "Gardar a xeometría das xanelas (tamaño e posición):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:590
 msgid "Let the window manager determine placement of all windows"
-msgstr "Deixar que o xestor de fiestras determine a situación de todas as fiestras"
+msgstr "Deixar que o xestor de xanelas determine a situación de todas as xanelas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:592
 msgid "Remember and use the last window's geometry (saves geometry to user preferences)"
-msgstr "Lembrar e usar a última xeometría de fiestra (garda a xeometría nas preferencias de usuario)"
+msgstr "Lembrar e usar a última xeometría de xanela (garda a xeometría nas preferencias de usuario)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:594
 msgid "Save and restore window geometry for each document (saves geometry in the document)"
-msgstr "Gardar e restaurar a xeometría de fiestra de cada documento (garda a xeometría no documento)"
+msgstr "Gardar e restaurar a xeometría de xanela de cada documento (garda a xeometría no documento)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:596
 msgid "Dialog behavior (requires restart):"
@@ -16966,15 +16966,15 @@ msgstr "Diálogos enriba:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:606
 msgid "Dialogs are treated as regular windows"
-msgstr "Os diálogos trátanse como fiestras normais"
+msgstr "Os diálogos trátanse como xanelas normais"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:608
 msgid "Dialogs stay on top of document windows"
-msgstr "As caixas de diálogo permanecen enriba das fiestras dos documentos"
+msgstr "As caixas de diálogo permanecen enriba das xanelas dos documentos"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:610
 msgid "Same as Normal but may work better with some window managers"
-msgstr "Como Normal pero podería funcionar mellor con algúns xestores de fiestras"
+msgstr "Como Normal pero podería funcionar mellor con algúns xestores de xanelas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:614
 msgid "Dialog Transparency:"
@@ -16998,19 +16998,19 @@ msgstr "Miscelánea:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:626
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
-msgstr "Indica se as fiestras de diálogo están ocultas na barra de tarefas do xestor de fiestras"
+msgstr "Indica se as xanelas de diálogo están ocultas na barra de tarefas do xestor de xanelas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:629
 msgid "Zoom drawing when document window is resized, to keep the same area visible (this is the default which can be changed in any window using the button above the right scrollbar)"
-msgstr "Modificar o zoom do debuxo cando se redimensiona a fiestra de documento, para manter visible a mesma área (isto ao predeterminado que se pode cambiar en todas as fiestras usando o botón que hai enriba da barra de desprazamento da dereita)"
+msgstr "Modificar o zoom do debuxo cando se redimensiona a xanela de documento, para manter visible a mesma área (isto ao predeterminado que se pode cambiar en todas as xanelas usando o botón que hai enriba da barra de desprazamento da dereita)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:631
 msgid "Whether dialog windows have a close button (requires restart)"
-msgstr "Indica se as fiestras de diálogo teñen un botón para pechalas (require reiniciar)"
+msgstr "Indica se as xanelas de diálogo teñen un botón para pechalas (require reiniciar)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:632
 msgid "Windows"
-msgstr "Fiestras"
+msgstr "Xanelas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:637
 msgid "Move in parallel"
@@ -17311,15 +17311,15 @@ msgstr "Ctrl+A, Tab, Maiús+Tab:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:805
 msgid "Make keyboard selection commands work on objects in all layers"
-msgstr "Facer que os comandos de selección do teclado traballen con obxectos de todas as capas"
+msgstr "Facer que as ordes de selección do teclado traballen con obxectos de todas as capas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:807
 msgid "Make keyboard selection commands work on objects in current layer only"
-msgstr "Facer que os comandos de selección do teclado traballen só con obxectos desta capa"
+msgstr "Facer que as ordes de selección do teclado traballen só con obxectos desta capa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:809
 msgid "Make keyboard selection commands work on objects in current layer and all its sublayers"
-msgstr "Facer que os comandos de selección do teclado traballen só con obxectos desta capa e mailas súas subcapas"
+msgstr "Facer que as ordes de selección do teclado traballen só con obxectos desta capa e mailas súas subcapas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:811
 msgid "Uncheck this to be able to select objects that are hidden (either by themselves or by being in a hidden layer)"
@@ -17505,24 +17505,24 @@ msgstr "Xestión da cor"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1021
 msgid "Major grid line emphasizing"
-msgstr "Realzar as liñas principais da reixa"
+msgstr "Realzar as liñas principais da grade"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1023
 msgid "Don't emphasize gridlines when zoomed out"
-msgstr "Non resaltar as liñas da reixa ao reducir o zoom"
+msgstr "Non resaltar as liñas da grade ao reducir o zoom"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1024
 msgid "If set and zoomed out, the gridlines will be shown in normal color instead of major grid line color"
-msgstr "Se está marcado e se reduce o zoom, mostraranse as liñas da reixa coa cor normal en vez de coa cor da liñas principais da reixa"
+msgstr "Se está marcado e se reduce o zoom, mostraranse as liñas da grade coa cor normal en vez de coa cor da liñas principais da grade"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1026
 msgid "Default grid settings"
-msgstr "Configuración predeterminada da reixa"
+msgstr "Configuración predeterminada da grade"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1032
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Grid units:"
-msgstr "Unidades da reixa:"
+msgstr "Unidades da grade:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1035
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
@@ -17548,29 +17548,29 @@ msgstr "Espazamento Y:"
 #: ../src/ui/dialog/inkscape-preferences.cpp:1064
 #: ../src/ui/dialog/inkscape-preferences.cpp:1065
 msgid "Grid line color:"
-msgstr "Cor das liñas da reixa:"
+msgstr "Cor das liñas da grade:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1043
 #: ../src/ui/dialog/inkscape-preferences.cpp:1065
 msgid "Color used for normal grid lines"
-msgstr "Cor que se usa para as liñas normais da reixa."
+msgstr "Cor que se usa para as liñas normais da grade."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1044
 #: ../src/ui/dialog/inkscape-preferences.cpp:1045
 #: ../src/ui/dialog/inkscape-preferences.cpp:1066
 #: ../src/ui/dialog/inkscape-preferences.cpp:1067
 msgid "Major grid line color:"
-msgstr "Cor das liñas principais da reixa:"
+msgstr "Cor das liñas principais da grade:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1045
 #: ../src/ui/dialog/inkscape-preferences.cpp:1067
 msgid "Color used for major (highlighted) grid lines"
-msgstr "Cor que se usa para as liñas principais (realzadas) da reixa"
+msgstr "Cor que se usa para as liñas principais (realzadas) da grade"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
 #: ../src/ui/dialog/inkscape-preferences.cpp:1069
 msgid "Major grid line every:"
-msgstr "Liña principal de reixa cada:"
+msgstr "Liña principal de grade cada:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
 msgid "Show dots instead of lines"
@@ -17578,7 +17578,7 @@ msgstr "Mostrar puntos en vez de liñas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1049
 msgid "If set, display dots at gridpoints instead of gridlines"
-msgstr "Se está marcado, mostrar puntos nas interseccións da reixa en vez de mostrar as liñas da reixa"
+msgstr "Se está marcado, mostrar puntos nas interseccións da grade en vez de mostrar as liñas da grade"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1076
 msgid "Use named colors"
@@ -18070,7 +18070,7 @@ msgstr "Resolución para crear copias do mapa de bits:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1244
 msgid "Resolution used by the Create Bitmap Copy command"
-msgstr "Resolución que usa o comando Crear copias de mapa de bits"
+msgstr "Resolución que usa a orde Crear copias de mapa de bits"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1246
 msgid "Bitmaps"
@@ -18219,7 +18219,7 @@ msgstr "Desactivado"
 #: ../src/ui/dialog/input.cpp:348
 #: ../src/ui/dialog/input.cpp:360
 msgid "Window"
-msgstr "Fiestra"
+msgstr "Xanela"
 
 #: ../src/ui/dialog/input.cpp:524
 msgid "Test Area"
@@ -18763,7 +18763,7 @@ msgstr "O directorio de paletas (%s) non está dispoñible."
 
 #: ../src/ui/dialog/tile.cpp:348
 msgid "Arrange in a grid"
-msgstr "Dispoñer nunha reixa"
+msgstr "Dispoñer nunha grade"
 
 #: ../src/ui/dialog/tile.cpp:658
 msgid "Rows:"
@@ -19179,7 +19179,7 @@ msgstr "Matri_z"
 
 #: ../src/ui/dialog/transformation.cpp:153
 msgid "Reset the values on the current tab to defaults"
-msgstr "Restablecer os valores da lingüeta actual ós predeterminados"
+msgstr "Restablecer os valores da lapela actual ós predeterminados"
 
 #: ../src/ui/dialog/transformation.cpp:160
 msgid "Apply transformation to selection"
@@ -19626,7 +19626,7 @@ msgstr ""
 #: ../src/ui/view/edit-widget.cpp:1051
 #: ../src/widgets/desktop-widget.cpp:383
 msgid "Zoom drawing if window size changes"
-msgstr "Modificar o zoom do debuxo se cambia o tamaño da fiestra"
+msgstr "Modificar o zoom do debuxo se cambia o tamaño da xanela"
 
 #: ../src/ui/view/edit-widget.cpp:1072
 #: ../src/widgets/desktop-widget.cpp:507
@@ -20560,11 +20560,11 @@ msgstr "Importar un documento desde Open Clip Art Library"
 #. new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_EXPORT_OCAL),
 #: ../src/verbs.cpp:2220
 msgid "N_ext Window"
-msgstr "S_eguinte fiestra"
+msgstr "S_eguinte xanela"
 
 #: ../src/verbs.cpp:2221
 msgid "Switch to the next document window"
-msgstr "Cambiar á seguinte fiestra de documento"
+msgstr "Cambiar á seguinte xanela de documento"
 
 #: ../src/verbs.cpp:2222
 msgid "P_revious Window"
@@ -20572,7 +20572,7 @@ msgstr "Fiest_ra anterior"
 
 #: ../src/verbs.cpp:2223
 msgid "Switch to the previous document window"
-msgstr "Cambiar á fiestra de documento anterior"
+msgstr "Cambiar á xanela de documento anterior"
 
 #: ../src/verbs.cpp:2224
 msgid "_Close"
@@ -20580,7 +20580,7 @@ msgstr "Pe_char"
 
 #: ../src/verbs.cpp:2225
 msgid "Close this document window"
-msgstr "Pechar esta fiestra"
+msgstr "Pechar esta xanela"
 
 #: ../src/verbs.cpp:2226
 msgid "_Quit"
@@ -21621,11 +21621,11 @@ msgstr "Mostrar ou ocultar as barras de desprazamento do lenzo"
 
 #: ../src/verbs.cpp:2542
 msgid "_Grid"
-msgstr "Rei_xa"
+msgstr "_Grade"
 
 #: ../src/verbs.cpp:2542
 msgid "Show or hide the grid"
-msgstr "Mostrar ou ocultar a reixa"
+msgstr "Mostrar ou ocultar a grade"
 
 #: ../src/verbs.cpp:2543
 msgid "G_uides"
@@ -21685,7 +21685,7 @@ msgstr "_Pantalla completa"
 
 #: ../src/verbs.cpp:2556
 msgid "Stretch this document window to full screen"
-msgstr "Estirar esta fiestra de documento para que ocupe toda a pantalla"
+msgstr "Estirar esta xanela de documento para que ocupe toda a pantalla"
 
 #: ../src/verbs.cpp:2559
 msgid "Toggle _Focus Mode"
@@ -21697,11 +21697,11 @@ msgstr "Eliminar o exceso de barras de ferramentas para centrarse no debuxo"
 
 #: ../src/verbs.cpp:2561
 msgid "Duplic_ate Window"
-msgstr "Duplic_ar fiestra"
+msgstr "Duplic_ar xanela"
 
 #: ../src/verbs.cpp:2561
 msgid "Open a new window with the same document"
-msgstr "Abrir unha nova fiestra co mesmo documento"
+msgstr "Abrir unha nova xanela co mesmo documento"
 
 #: ../src/verbs.cpp:2563
 msgid "_New View Preview"
@@ -21766,11 +21766,11 @@ msgstr "Previsualización de ico_nas..."
 
 #: ../src/verbs.cpp:2581
 msgid "Open a window to preview objects at different icon resolutions"
-msgstr "Abre unha fiestra para previsualizar os obxectos seleccionados con diferentes resolucións de iconas"
+msgstr "Abre unha xanela para previsualizar os obxectos seleccionados con diferentes resolucións de iconas"
 
 #: ../src/verbs.cpp:2583
 msgid "Zoom to fit page in window"
-msgstr "Modificar o zoom para que a páxina ocupe toda a fiestra"
+msgstr "Modificar o zoom para que a páxina ocupe toda a xanela"
 
 #: ../src/verbs.cpp:2584
 msgid "Page _Width"
@@ -21778,15 +21778,15 @@ msgstr "_Largura da páxina"
 
 #: ../src/verbs.cpp:2585
 msgid "Zoom to fit page width in window"
-msgstr "Modificar o zoom para que a largura da páxina ocupe toda a fiestra"
+msgstr "Modificar o zoom para que a largura da páxina ocupe toda a xanela"
 
 #: ../src/verbs.cpp:2587
 msgid "Zoom to fit drawing in window"
-msgstr "Modificar o zoom para que o debuxo ocupe toda a fiestra"
+msgstr "Modificar o zoom para que o debuxo ocupe toda a xanela"
 
 #: ../src/verbs.cpp:2589
 msgid "Zoom to fit selection in window"
-msgstr "Modificar o zoom para que a selección ocupe toda a fiestra"
+msgstr "Modificar o zoom para que a selección ocupe toda a xanela"
 
 #. Dialogs
 #: ../src/verbs.cpp:2592
@@ -22040,7 +22040,7 @@ msgstr "Licenza, autores e versión de Inkscape"
 #. Tutorials
 #: ../src/verbs.cpp:2663
 msgid "Inkscape: _Basic"
-msgstr "Inkscape: _básico"
+msgstr "Inkscape: _fundamentos"
 
 #: ../src/verbs.cpp:2664
 msgid "Getting started with Inkscape"
@@ -23225,7 +23225,7 @@ msgstr "Axustar ao bordo de páxina"
 
 #: ../src/widgets/toolbox.cpp:2364
 msgid "Snap to grids"
-msgstr "Axustar ás reixas"
+msgstr "Axustar ás grades"
 
 #: ../src/widgets/toolbox.cpp:2373
 msgid "Snap to guides"
@@ -23327,7 +23327,7 @@ msgstr "Relación de aspecto:"
 #. Base radius is the same for the closest handle.
 #: ../src/widgets/toolbox.cpp:2986
 msgid "Base radius to tip radius ratio"
-msgstr ""
+msgstr "Proporción entre o raio interior e o raio exterior"
 
 #: ../src/widgets/toolbox.cpp:3004
 msgid "stretched"
@@ -24941,5 +24941,4 @@ msgstr "Inclinación [graos]"
 #: ../share/extensions/wireframe_sphere.inx.h:8
 msgid "Wireframe Sphere"
 msgstr ""
-
 

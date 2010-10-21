@@ -14,9 +14,9 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-08 21:39+0200\n"
-"PO-Revision-Date: 2010-06-21 12:42+0200\n"
+"PO-Revision-Date: 2010-10-21 15:30+0200\n"
 "Last-Translator: \n"
-"Language-Team:  <es@li.org>\n"
+"Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -7046,7 +7046,7 @@ msgstr "Seleccionar el componente azul del color"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/dialogs/clonetiler.cpp:2649
 msgid "clonetiler|H"
-msgstr "clonetiler|H"
+msgstr "H"
 
 #: ../src/dialogs/clonetiler.cpp:2650
 msgid "Pick the hue of the color"
@@ -7056,7 +7056,7 @@ msgstr "Seleccionar el tono del color"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/dialogs/clonetiler.cpp:2659
 msgid "clonetiler|S"
-msgstr "clonetiler|S"
+msgstr "S"
 
 #: ../src/dialogs/clonetiler.cpp:2660
 msgid "Pick the saturation of the color"
@@ -7066,7 +7066,7 @@ msgstr "Seleccionar la saturación del color"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/dialogs/clonetiler.cpp:2669
 msgid "clonetiler|L"
-msgstr "clonetiler|L"
+msgstr "L"
 
 #: ../src/dialogs/clonetiler.cpp:2670
 msgid "Pick the lightness of the color"
@@ -7491,7 +7491,7 @@ msgstr "Buscar en clones"
 #. "Clones" is a noun indicating type of object to find
 #: ../src/dialogs/find.cpp:612 ../src/ui/dialog/find.cpp:82
 msgid "find|Clones"
-msgstr "find|Clones"
+msgstr "Clones"
 
 #: ../src/dialogs/find.cpp:617 ../src/ui/dialog/find.cpp:83
 msgid "Search images"
@@ -9466,7 +9466,7 @@ msgstr "fuera de %i"
 #. Crop settings
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:92
 msgid "Clip to:"
-msgstr "Aplicar clip a:"
+msgstr "Aplicar recorte a:"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:104
 msgid "Page settings"
@@ -9519,7 +9519,7 @@ msgstr "Ajustes de importación de PDF"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:396
 msgid "pdfinput|medium"
-msgstr "pdfinput|medio"
+msgstr "medio"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:397
 msgid "fine"
@@ -9864,7 +9864,7 @@ msgstr "Color de trazo"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/filter-enums.cpp:53
 msgid "filterBlendMode|Normal"
-msgstr "filterBlendMode|Normal"
+msgstr "Normal"
 
 #: ../src/filter-enums.cpp:54
 msgid "Multiply"
@@ -12329,7 +12329,7 @@ msgstr "_Objeto"
 
 #: ../src/menus-skeleton.h:166
 msgid "Cli_p"
-msgstr "Cli_p"
+msgstr "_Recorte"
 
 #: ../src/menus-skeleton.h:170
 msgid "Mas_k"
@@ -14736,12 +14736,12 @@ msgstr "Liberar máscara"
 #. Set Clip
 #: ../src/ui/context-menu.cpp:154
 msgid "Set Clip"
-msgstr "Aplicar clip"
+msgstr "Aplicar recorte"
 
 #. Release Clip
 #: ../src/ui/context-menu.cpp:165
 msgid "Release Clip"
-msgstr "Liberar clip"
+msgstr "Liberar recorte"
 
 #: ../src/ui/context-menu.cpp:288
 msgid "Create link"
@@ -15236,7 +15236,7 @@ msgstr "Color de la guía cuando está debajo del ratón"
 #. "New" refers to grid
 #: ../src/ui/dialog/document-properties.cpp:109
 msgid "Grid|_New"
-msgstr "Rejilla|_Nueva"
+msgstr "_Nueva"
 
 #: ../src/ui/dialog/document-properties.cpp:109
 msgid "Create new grid."
@@ -17470,7 +17470,7 @@ msgstr "Herramientas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:396
 msgid "Bounding box to use:"
-msgstr "Cajas de contorno que se utilizará:"
+msgstr "Caja de contorno:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:397
 msgid "Visual bounding box"
@@ -20733,7 +20733,7 @@ msgstr "Inclinar verticalmente %.2f°"
 #: ../src/ui/tool/transform-handle-set.cpp:479
 msgctxt "Transform handle tip"
 msgid "<b>Rotation center</b>: drag to change the origin of transforms"
-msgstr "<b>Centro de rotación</b>: arrastrar para cmabiar el origen de las transformaciones"
+msgstr "<b>Centro de rotación</b>: arrastrar para cambiar el origen de las transformaciones"
 
 #: ../src/ui/view/edit-widget.cpp:330 ../src/ui/view/edit-widget.cpp:335
 #: ../src/ui/view/edit-widget.cpp:343 ../src/ui/view/edit-widget.cpp:348
@@ -20806,7 +20806,7 @@ msgstr "Guardar como _SVG"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:25
 msgid "_Blend mode:"
-msgstr "Modo de me_zcla::"
+msgstr "Modo de me_zcla:"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
 msgid "B_lur:"
