@@ -108,7 +108,7 @@ static cairo_status_t _write_callback(void *closure, const unsigned char *data, 
 
 CairoRenderContext::CairoRenderContext(CairoRenderer *parent) :
     _dpi(72),
-    _pdf_level(0),
+    _pdf_level(1),
     _ps_level(1),
     _eps(false),
     _is_texttopath(FALSE),
@@ -782,6 +782,9 @@ CairoRenderContext::setupSurface(double width, double height)
 #ifdef CAIRO_HAS_PDF_SURFACE
         case CAIRO_SURFACE_TYPE_PDF:
             surface = cairo_pdf_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, width, height);
+#if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 10, 0))
+            cairo_pdf_surface_restrict_to_version(surface, (cairo_pdf_version_t)_pdf_level);	
+#endif
             break;
 #endif
 #ifdef CAIRO_HAS_PS_SURFACE
@@ -791,8 +794,8 @@ CairoRenderContext::setupSurface(double width, double height)
                 return FALSE;
             }
 #if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 5, 2))
-            cairo_ps_surface_restrict_to_level (surface, (cairo_ps_level_t)_ps_level);
-            cairo_ps_surface_set_eps (surface, (cairo_bool_t) _eps);
+            cairo_ps_surface_restrict_to_level(surface, (cairo_ps_level_t)_ps_level);
+            cairo_ps_surface_set_eps(surface, (cairo_bool_t) _eps);
 #endif
             break;
 #endif

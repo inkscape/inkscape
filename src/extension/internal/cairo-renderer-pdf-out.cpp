@@ -135,11 +135,11 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
     int level = 0;
     try {
         new_level = mod->get_param_enum("PDFversion");
-//        if((new_level != NULL) && (g_ascii_strcasecmp("PDF-1.x", new_level) == 0))
-//            level = 1;
+        if((new_level != NULL) && (g_ascii_strcasecmp("PDF-1.5", new_level) == 0))
+            level = 1;
     }
     catch(...) {
-//        g_warning("Parameter <PDFversion> might not exist");
+        g_warning("Parameter <PDFversion> might not exist");
     }
 
     bool new_textToPath  = FALSE;
@@ -237,7 +237,10 @@ CairoRendererPdfOutput::init (void)
 			"<name>Portable Document Format</name>\n"
 			"<id>org.inkscape.output.pdf.cairorenderer</id>\n"
 			"<param name=\"PDFversion\" gui-text=\"" N_("Restrict to PDF version:") "\" type=\"enum\" >\n"
-				"<_item value='PDF14'>" N_("PDF 1.4") "</_item>\n"
+#if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 10, 0))
+				"<_item value='PDF-1.5'>" N_("PDF 1.5") "</_item>\n"
+#endif
+                "<_item value='PDF-1.4'>" N_("PDF 1.4") "</_item>\n"
 			"</param>\n"
 			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"textToLaTeX\" gui-text=\"" N_("PDF+LaTeX: Omit text in PDF, and create LaTeX file") "\" type=\"boolean\">false</param>\n"
