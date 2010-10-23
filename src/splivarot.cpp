@@ -674,6 +674,10 @@ Geom::PathVector* item_outline(SPItem const *item)
         return ret_pathv;
     }
 
+    if (curve->get_pathvector().empty()) {
+        return ret_pathv;
+    }
+
     // remember old stroke style, to be set on fill
     SPStyle *i_style = SP_OBJECT_STYLE(item);
 
@@ -898,6 +902,10 @@ sp_selected_path_outline(SPDesktop *desktop)
             curve = SP_TEXT(item)->getNormalizedBpath();
             if (curve == NULL)
                 continue;
+        }
+
+        if (curve->get_pathvector().empty()) {
+            continue;
         }
 
         // pas de stroke pas de chocolat

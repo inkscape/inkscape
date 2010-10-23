@@ -410,7 +410,9 @@ sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
     // position arguments to sp_marker_show_instance, basically counts the amount of markers.
     int counter[4] = {0};
 
+    if (!shape->curve) return;
     Geom::PathVector const & pathv = shape->curve->get_pathvector();
+    if (pathv.empty()) return;
 
     // the first vertex should get a start marker, the last an end marker, and all the others a mid marker
     // see bug 456148
@@ -585,7 +587,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &
                     }
 
                     // Union with bboxes of the markers, if any
-                    if (sp_shape_has_markers (shape)) {
+                    if (sp_shape_has_markers (shape) && !shape->curve->get_pathvector().empty()) {
                         /** \todo make code prettier! */
                         Geom::PathVector const & pathv = shape->curve->get_pathvector();
                         // START marker
@@ -767,6 +769,9 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 
     if (!shape->curve) return;
 
+    Geom::PathVector const & pathv = shape->curve->get_pathvector();
+    if (pathv.empty()) return;
+
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         gint add_comments = prefs->getBool("/printing/debug/add-label-comments");
         if (add_comments) {
@@ -788,15 +793,14 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
     SPStyle* style = SP_OBJECT_STYLE (item);
 
     if (!style->fill.isNone()) {
-        sp_print_fill (ctx, shape->curve->get_pathvector(), &i2d, style, &pbox, &dbox, &bbox);
+        sp_print_fill (ctx, pathv, &i2d, style, &pbox, &dbox, &bbox);
     }
 
     if (!style->stroke.isNone()) {
-        sp_print_stroke (ctx, shape->curve->get_pathvector(), &i2d, style, &pbox, &dbox, &bbox);
+        sp_print_stroke (ctx, pathv, &i2d, style, &pbox, &dbox, &bbox);
     }
 
     /** \todo make code prettier */
-    Geom::PathVector const & pathv = shape->curve->get_pathvector();
     // START marker
     for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START    
         if ( shape->marker[i] ) {

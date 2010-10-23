@@ -191,6 +191,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
     SPStyle* style = SP_OBJECT_STYLE (item);
 
     Geom::PathVector const & pathv = shape->curve->get_pathvector();
+    if (pathv.empty()) return;
 
     ctx->renderPathVector(pathv, style, &pbox);
 
