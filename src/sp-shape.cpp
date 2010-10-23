@@ -24,6 +24,7 @@
 #include <2geom/transforms.h>
 #include <2geom/pathvector.h>
 #include <2geom/path-intersection.h>
+#include <2geom/exception.h>
 #include "helper/geom.h"
 #include "helper/geom-nodetype.h"
 
@@ -1272,13 +1273,19 @@ static void sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::SnapCa
         // (using "Method 1" as described in Inkscape::ObjectSnapper::_collectNodes())
         if (snapprefs->getSnapIntersectionCS()) {
             Geom::Crossings cs;
-            cs = self_crossings(*path_it);
-            if (cs.size() > 0) { // There might be multiple intersections...
-                for (Geom::Crossings::const_iterator i = cs.begin(); i != cs.end(); i++) {
-                    Geom::Point p_ix = (*path_it).pointAt((*i).ta);
-                    p.push_back(Inkscape::SnapCandidatePoint(p_ix * i2d, Inkscape::SNAPSOURCE_PATH_INTERSECTION, Inkscape::SNAPTARGET_PATH_INTERSECTION));
+            try {
+                cs = self_crossings(*path_it);
+                if (cs.size() > 0) { // There might be multiple intersections...
+                    for (Geom::Crossings::const_iterator i = cs.begin(); i != cs.end(); i++) {
+                        Geom::Point p_ix = (*path_it).pointAt((*i).ta);
+                        p.push_back(Inkscape::SnapCandidatePoint(p_ix * i2d, Inkscape::SNAPSOURCE_PATH_INTERSECTION, Inkscape::SNAPTARGET_PATH_INTERSECTION));
+                    }
                 }
+            } catch (Geom::RangeError &e) {
+                // do nothing
+                // The exception could be Geom::InfiniteSolutions: then no snappoints should be added
             }
+
         }
     }
 
