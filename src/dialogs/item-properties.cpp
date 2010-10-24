@@ -117,7 +117,7 @@ sp_item_widget_new (void)
 
 
     /* Create the label for the object id */
-    l = gtk_label_new_with_mnemonic (_("_Id"));
+    l = gtk_label_new_with_mnemonic (_("_ID:"));
     gtk_misc_set_alignment (GTK_MISC (l), 1, 0.5);
     gtk_table_attach ( GTK_TABLE (t), l, 0, 1, 0, 1,
                        (GtkAttachOptions)( GTK_SHRINK | GTK_FILL ),
@@ -149,7 +149,7 @@ sp_item_widget_new (void)
                          spw );
 
     /* Create the label for the object label */
-    l = gtk_label_new_with_mnemonic (_("_Label"));
+    l = gtk_label_new_with_mnemonic (_("_Label:"));
     gtk_misc_set_alignment (GTK_MISC (l), 1, 0.5);
     gtk_table_attach ( GTK_TABLE (t), l, 0, 1, 1, 2,
                        (GtkAttachOptions)( GTK_SHRINK | GTK_FILL ),
@@ -170,7 +170,7 @@ sp_item_widget_new (void)
     g_signal_connect ( G_OBJECT (tf), "activate", G_CALLBACK (sp_item_widget_label_changed), spw);
 
     /* Create the label for the object title */
-    l = gtk_label_new_with_mnemonic (_("_Title"));
+    l = gtk_label_new_with_mnemonic (_("_Title:"));
     gtk_misc_set_alignment (GTK_MISC (l), 1, 0.5);
     gtk_table_attach ( GTK_TABLE (t), l, 0, 1, 2, 3,
                        (GtkAttachOptions)( GTK_SHRINK | GTK_FILL ),
@@ -331,7 +331,7 @@ sp_item_widget_setup ( SPWidget *spw, Inkscape::Selection *selection )
         gtk_entry_set_text (GTK_ENTRY (w), obj->getId());
         gtk_widget_set_sensitive (w, TRUE);
         w = GTK_WIDGET(gtk_object_get_data (GTK_OBJECT (spw), "id_label"));
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (w), _("_Id"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (w), _("_ID:"));
 
         /* Label */
         w = GTK_WIDGET(gtk_object_get_data (GTK_OBJECT (spw), "label"));
@@ -440,14 +440,14 @@ sp_item_widget_label_changed( GtkWidget */*widget*/, SPWidget *spw )
     g_strcanon (id, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.:", '_');
     GtkWidget *id_label = GTK_WIDGET(gtk_object_get_data (GTK_OBJECT (spw), "id_label"));
     if (!strcmp (id, item->getId())) {
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (id_label), _("_Id"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (id_label), _("_ID:"));
     } else if (!*id || !isalnum (*id)) {
         gtk_label_set_text (GTK_LABEL (id_label), _("Id invalid! "));
     } else if (SP_ACTIVE_DOCUMENT->getObjectById(id) != NULL) {
         gtk_label_set_text (GTK_LABEL (id_label), _("Id exists! "));
     } else {
         SPException ex;
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (id_label), _("_Id"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (id_label), _("_ID:"));
         SP_EXCEPTION_INIT (&ex);
         sp_object_setAttribute (SP_OBJECT (item), "id", id, &ex);
         sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,

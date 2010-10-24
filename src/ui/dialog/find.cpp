@@ -57,10 +57,10 @@ namespace Dialog {
 
 Find::Find()
     : UI::Widget::Panel("", "/dialogs/find", SP_VERB_DIALOG_FIND),
-      _entry_text(_("_Text: "), _("Find objects by their text content (exact or partial match)")),
-      _entry_id(_("_ID: "), _("Find objects by the value of the id attribute (exact or partial match)")),
-      _entry_style(_("_Style: "), _("Find objects by the value of the style attribute (exact or partial match)")),
-      _entry_attribute(_("_Attribute: "), _("Find objects by the name of an attribute (exact or partial match)")),
+      _entry_text(_("_Text:"), _("Find objects by their text content (exact or partial match)")),
+      _entry_id(_("_ID:"), _("Find objects by the value of the id attribute (exact or partial match)")),
+      _entry_style(_("_Style:"), _("Find objects by the value of the style attribute (exact or partial match)")),
+      _entry_attribute(_("_Attribute:"), _("Find objects by the name of an attribute (exact or partial match)")),
       _check_search_selection(_("Search in s_election"), _("Limit search to the current selection")),
       _check_search_layer(_("Search in current _layer"), _("Limit search to the current layer")),
       _check_include_hidden(_("Include _hidden"), _("Include hidden objects in search")),

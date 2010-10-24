@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-20 21:25+0200\n"
+"POT-Creation-Date: 2010-10-24 12:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7619,15 +7619,19 @@ msgid "Offsets"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:685 ../src/ui/dialog/find.cpp:60
-msgid "_Text: "
+msgid "_Text:"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:685 ../src/ui/dialog/find.cpp:60
 msgid "Find objects by their text content (exact or partial match)"
 msgstr ""
 
-#: ../src/dialogs/find.cpp:686 ../src/ui/dialog/find.cpp:61
-msgid "_ID: "
+#. Create the label for the object id
+#: ../src/dialogs/find.cpp:686 ../src/dialogs/item-properties.cpp:120
+#: ../src/dialogs/item-properties.cpp:334
+#: ../src/dialogs/item-properties.cpp:443
+#: ../src/dialogs/item-properties.cpp:450 ../src/ui/dialog/find.cpp:61
+msgid "_ID:"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:686 ../src/ui/dialog/find.cpp:61
@@ -7635,7 +7639,7 @@ msgid "Find objects by the value of the id attribute (exact or partial match)"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:687 ../src/ui/dialog/find.cpp:62
-msgid "_Style: "
+msgid "_Style:"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:687 ../src/ui/dialog/find.cpp:62
@@ -7644,7 +7648,7 @@ msgid ""
 msgstr ""
 
 #: ../src/dialogs/find.cpp:688 ../src/ui/dialog/find.cpp:63
-msgid "_Attribute: "
+msgid "_Attribute:"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:688 ../src/ui/dialog/find.cpp:63
@@ -7702,14 +7706,6 @@ msgstr ""
 msgid "Select objects matching all of the fields you filled in"
 msgstr ""
 
-#. Create the label for the object id
-#: ../src/dialogs/item-properties.cpp:120
-#: ../src/dialogs/item-properties.cpp:334
-#: ../src/dialogs/item-properties.cpp:443
-#: ../src/dialogs/item-properties.cpp:450
-msgid "_Id"
-msgstr ""
-
 #: ../src/dialogs/item-properties.cpp:129
 msgid ""
 "The id= attribute (only letters, digits, and the characters .-_: allowed)"
@@ -7723,7 +7719,7 @@ msgstr ""
 
 #. Create the label for the object label
 #: ../src/dialogs/item-properties.cpp:152
-msgid "_Label"
+msgid "_Label:"
 msgstr ""
 
 #: ../src/dialogs/item-properties.cpp:161
@@ -7732,7 +7728,7 @@ msgstr ""
 
 #. Create the label for the object title
 #: ../src/dialogs/item-properties.cpp:173
-msgid "_Title"
+msgid "_Title:"
 msgstr ""
 
 #. Create the frame for the object description
@@ -9212,7 +9208,7 @@ msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:323
 #: ../src/extension/internal/cairo-ps-out.cpp:361
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:242
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:245
 #: ../src/extension/internal/emf-win32-inout.cpp:2432
 msgid "Convert texts to paths"
 msgstr ""
@@ -9223,31 +9219,31 @@ msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:325
 #: ../src/extension/internal/cairo-ps-out.cpp:363
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:244
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:247
 msgid "Rasterize filter effects"
 msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:326
 #: ../src/extension/internal/cairo-ps-out.cpp:364
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:245
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
 msgid "Resolution for rasterization (dpi):"
 msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:327
 #: ../src/extension/internal/cairo-ps-out.cpp:365
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:246
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:249
 msgid "Export area is drawing"
 msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:328
 #: ../src/extension/internal/cairo-ps-out.cpp:366
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:247
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
 msgid "Export area is page"
 msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:329
 #: ../src/extension/internal/cairo-ps-out.cpp:367
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:251
 msgid "Limit export to the object with ID:"
 msgstr ""
 
@@ -9267,11 +9263,15 @@ msgstr ""
 msgid "Restrict to PDF version:"
 msgstr ""
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:240
-msgid "PDF 1.4"
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:241
+msgid "PDF 1.5"
 msgstr ""
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:243
+msgid "PDF 1.4"
+msgstr ""
+
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:246
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
 msgstr ""
 
@@ -13544,19 +13544,19 @@ msgstr ""
 msgid "<b>Link</b> without URI"
 msgstr ""
 
-#: ../src/sp-ellipse.cpp:501 ../src/sp-ellipse.cpp:878
+#: ../src/sp-ellipse.cpp:503 ../src/sp-ellipse.cpp:880
 msgid "<b>Ellipse</b>"
 msgstr ""
 
-#: ../src/sp-ellipse.cpp:642
+#: ../src/sp-ellipse.cpp:644
 msgid "<b>Circle</b>"
 msgstr ""
 
-#: ../src/sp-ellipse.cpp:873
+#: ../src/sp-ellipse.cpp:875
 msgid "<b>Segment</b>"
 msgstr ""
 
-#: ../src/sp-ellipse.cpp:875
+#: ../src/sp-ellipse.cpp:877
 msgid "<b>Arc</b>"
 msgstr ""
 
@@ -13833,74 +13833,74 @@ msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr ""
 
-#: ../src/splivarot.cpp:876
+#: ../src/splivarot.cpp:880
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr ""
 
-#: ../src/splivarot.cpp:1219
+#: ../src/splivarot.cpp:1227
 msgid "Convert stroke to path"
 msgstr ""
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:1222
+#: ../src/splivarot.cpp:1230
 msgid "<b>No stroked paths</b> in the selection."
 msgstr ""
 
-#: ../src/splivarot.cpp:1305
+#: ../src/splivarot.cpp:1313
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr ""
 
-#: ../src/splivarot.cpp:1424 ../src/splivarot.cpp:1493
+#: ../src/splivarot.cpp:1432 ../src/splivarot.cpp:1501
 msgid "Create linked offset"
 msgstr ""
 
-#: ../src/splivarot.cpp:1425 ../src/splivarot.cpp:1494
+#: ../src/splivarot.cpp:1433 ../src/splivarot.cpp:1502
 msgid "Create dynamic offset"
 msgstr ""
 
-#: ../src/splivarot.cpp:1519
+#: ../src/splivarot.cpp:1527
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr ""
 
-#: ../src/splivarot.cpp:1737
+#: ../src/splivarot.cpp:1745
 msgid "Outset path"
 msgstr ""
 
-#: ../src/splivarot.cpp:1737
+#: ../src/splivarot.cpp:1745
 msgid "Inset path"
 msgstr ""
 
-#: ../src/splivarot.cpp:1739
+#: ../src/splivarot.cpp:1747
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr ""
 
-#: ../src/splivarot.cpp:1917
+#: ../src/splivarot.cpp:1925
 msgid "Simplifying paths (separately):"
 msgstr ""
 
-#: ../src/splivarot.cpp:1919
+#: ../src/splivarot.cpp:1927
 msgid "Simplifying paths:"
 msgstr ""
 
-#: ../src/splivarot.cpp:1956
+#: ../src/splivarot.cpp:1964
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr ""
 
-#: ../src/splivarot.cpp:1968
+#: ../src/splivarot.cpp:1976
 #, c-format
 msgid "<b>%d</b> paths simplified."
 msgstr ""
 
-#: ../src/splivarot.cpp:1982
+#: ../src/splivarot.cpp:1990
 msgid "Select <b>path(s)</b> to simplify."
 msgstr ""
 
-#: ../src/splivarot.cpp:1996
+#: ../src/splivarot.cpp:2004
 msgid "Simplify"
 msgstr ""
 
-#: ../src/splivarot.cpp:1998
+#: ../src/splivarot.cpp:2006
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr ""
 

@@ -682,10 +682,10 @@ sp_find_dialog_old (void)
         GtkWidget *vb = gtk_vbox_new (FALSE, 0);
         gtk_container_add (GTK_CONTAINER (dlg), vb);
 
-        sp_find_new_searchfield (dlg, vb, _("_Text: "), "text", tt, _("Find objects by their text content (exact or partial match)"));
-        sp_find_new_searchfield (dlg, vb, _("_ID: "), "id", tt, _("Find objects by the value of the id attribute (exact or partial match)"));
-        sp_find_new_searchfield (dlg, vb, _("_Style: "), "style", tt, _("Find objects by the value of the style attribute (exact or partial match)"));
-        sp_find_new_searchfield (dlg, vb, _("_Attribute: "), "attr", tt ,_("Find objects by the name of an attribute (exact or partial match)"));
+        sp_find_new_searchfield (dlg, vb, _("_Text:"), "text", tt, _("Find objects by their text content (exact or partial match)"));
+        sp_find_new_searchfield (dlg, vb, _("_ID:"), "id", tt, _("Find objects by the value of the id attribute (exact or partial match)"));
+        sp_find_new_searchfield (dlg, vb, _("_Style:"), "style", tt, _("Find objects by the value of the style attribute (exact or partial match)"));
+        sp_find_new_searchfield (dlg, vb, _("_Attribute:"), "attr", tt ,_("Find objects by the name of an attribute (exact or partial match)"));
 
         gtk_widget_show_all (vb);
 
