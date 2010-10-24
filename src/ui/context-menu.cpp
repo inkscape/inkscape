@@ -54,6 +54,8 @@ sp_object_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu)
 #include "selection-chemistry.h"
 #include "dialogs/item-properties.h"
 #include "dialogs/object-attributes.h"
+#include "dialogs/text-edit.h"
+#include "dialogs/spellcheck.h"
 
 #include "sp-path.h"
 #include "sp-clippath.h"
@@ -513,6 +515,44 @@ sp_shape_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     gtk_menu_append(GTK_MENU(m), w);
 }
 
+/* Edit Text entry */
+
+static void
+sp_text_settings(GtkMenuItem *menuitem, SPItem *item)
+{
+    SPDesktop *desktop;
+
+    g_assert(SP_IS_ITEM(item));
+
+    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    g_return_if_fail(desktop != NULL);
+
+    if (sp_desktop_selection(desktop)->isEmpty()) {
+        sp_desktop_selection(desktop)->set(item);
+    }
+
+    sp_text_edit_dialog();
+}
+
+/* Spellcheck entry */
+
+static void
+sp_spellcheck_settings(GtkMenuItem *menuitem, SPItem *item)
+{
+    SPDesktop *desktop;
+
+    g_assert(SP_IS_ITEM(item));
+
+    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    g_return_if_fail(desktop != NULL);
+
+    if (sp_desktop_selection(desktop)->isEmpty()) {
+        sp_desktop_selection(desktop)->set(item);
+    }
+
+    sp_spellcheck_dialog();
+}
+
 /* SPText */
 
 static void
@@ -530,7 +570,19 @@ sp_text_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     gtk_widget_show(w);
     gtk_menu_append(GTK_MENU(m), w);
     
+    /* Edit Text dialog */
+    w = gtk_menu_item_new_with_mnemonic(_("_Text and Font..."));
+    gtk_object_set_data(GTK_OBJECT(w), "desktop", desktop);
+    gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_text_settings), item);
+    gtk_widget_show(w);
+    gtk_menu_append(GTK_MENU(m), w);
 
+    /* Spellcheck dialog */
+    w = gtk_menu_item_new_with_mnemonic(_("Check Spellin_g..."));
+    gtk_object_set_data(GTK_OBJECT(w), "desktop", desktop);
+    gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_spellcheck_settings), item);
+    gtk_widget_show(w);
+    gtk_menu_append(GTK_MENU(m), w);
 }
 /*
   Local Variables:
