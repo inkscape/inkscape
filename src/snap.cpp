@@ -179,7 +179,7 @@ void SnapManager::freeSnapReturnByRef(Geom::Point &p,
                                       Geom::OptRect const &bbox_to_snap) const
 {
     Inkscape::SnappedPoint const s = freeSnap(Inkscape::SnapCandidatePoint(p, source_type), bbox_to_snap);
-    s.getPoint(p);
+    s.getPointIfSnapped(p);
 }
 
 
@@ -343,7 +343,7 @@ void SnapManager::constrainedSnapReturnByRef(Geom::Point &p,
                                              Geom::OptRect const &bbox_to_snap) const
 {
     Inkscape::SnappedPoint const s = constrainedSnap(Inkscape::SnapCandidatePoint(p, source_type), constraint, bbox_to_snap);
-    s.getPoint(p);
+    p = s.getPoint(); // If we didn't snap, then we will return the point projected onto the constraint
 }
 
 /**
@@ -498,7 +498,7 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal,
 
     Inkscape::SnappedPoint const s = findBestSnap(candidate, sc, false, false);
 
-    s.getPoint(p);
+    s.getPointIfSnapped(p);
 }
 
 /**
@@ -542,7 +542,7 @@ void SnapManager::guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline)
     }
 
     Inkscape::SnappedPoint const s = findBestSnap(candidate, sc, false);
-    s.getPoint(p);
+    s.getPointIfSnapped(p);
 }
 
 /**

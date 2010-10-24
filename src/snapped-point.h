@@ -48,7 +48,7 @@ public:
      * to, because it only returns a point if snapping has actually occurred
      * (by overwriting p)
      */
-    void getPoint(Geom::Point &p) const;
+    void getPointIfSnapped(Geom::Point &p) const;
 
     /* This method however always returns a point, even if no snapping
      * has occurred; A check should be implemented in the calling code

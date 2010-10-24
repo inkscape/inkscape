@@ -100,7 +100,7 @@ Inkscape::SnappedPoint::~SnappedPoint()
 {
 }
 
-void Inkscape::SnappedPoint::getPoint(Geom::Point &p) const
+void Inkscape::SnappedPoint::getPointIfSnapped(Geom::Point &p) const
 {
     // When we have snapped
     if (getSnapped()) {
