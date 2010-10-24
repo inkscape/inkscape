@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-17 16:07+0900\n"
-"PO-Revision-Date: 2010-10-13 17:17+0900\n"
+"POT-Creation-Date: 2010-10-24 21:34+0900\n"
+"PO-Revision-Date: 2010-10-24 21:34+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
 "Language: ja\n"
@@ -453,7 +453,7 @@ msgstr "ジェルゴンヌ点"
 #: ../share/extensions/jessyInk_effects.inx.h:7
 #: ../share/extensions/jessyInk_export.inx.h:2
 #: ../share/extensions/jessyInk_install.inx.h:1
-#: ../share/extensions/jessyInk_keyBindings.inx.h:7
+#: ../share/extensions/jessyInk_keyBindings.inx.h:8
 #: ../share/extensions/jessyInk_masterSlide.inx.h:1
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:3
 #: ../share/extensions/jessyInk_summary.inx.h:1
@@ -1566,7 +1566,7 @@ msgstr "オートテキスト"
 #: ../share/extensions/jessyInk_autoTexts.inx.h:4
 #: ../share/extensions/jessyInk_effects.inx.h:8
 #: ../share/extensions/jessyInk_install.inx.h:3
-#: ../share/extensions/jessyInk_keyBindings.inx.h:10
+#: ../share/extensions/jessyInk_keyBindings.inx.h:11
 #: ../share/extensions/jessyInk_masterSlide.inx.h:3
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:4
 #: ../share/extensions/jessyInk_summary.inx.h:2
@@ -1746,146 +1746,150 @@ msgid "Drawing mode"
 msgstr "描画モード"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:6
+msgid "Export presentation:"
+msgstr "プレゼンテーションのエクスポート:"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:7
 msgid "First slide:"
 msgstr "最初のスライド:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:8
+#: ../share/extensions/jessyInk_keyBindings.inx.h:9
 msgid "Increase number of columns:"
 msgstr "カラム数を増やす:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:9
+#: ../share/extensions/jessyInk_keyBindings.inx.h:10
 msgid "Index mode"
 msgstr "インデックスモード"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:11
+#: ../share/extensions/jessyInk_keyBindings.inx.h:12
 msgid "Key bindings"
 msgstr "キーバインド"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:12
+#: ../share/extensions/jessyInk_keyBindings.inx.h:13
 msgid "Last slide:"
 msgstr "最後のスライド:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:13
+#: ../share/extensions/jessyInk_keyBindings.inx.h:14
 msgid "Next (with effects):"
 msgstr "すすむ (エフェクトあり):"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:14
+#: ../share/extensions/jessyInk_keyBindings.inx.h:15
 msgid "Next (without effects):"
 msgstr "すすむ (エフェクトなし):"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:15
+#: ../share/extensions/jessyInk_keyBindings.inx.h:16
 msgid "Next page:"
 msgstr "次のページ:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:16
+#: ../share/extensions/jessyInk_keyBindings.inx.h:17
 msgid "Previous page:"
 msgstr "前のページ:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:17
+#: ../share/extensions/jessyInk_keyBindings.inx.h:18
 msgid "Reset timer:"
 msgstr "タイマーのリセット:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:18
+#: ../share/extensions/jessyInk_keyBindings.inx.h:19
 msgid "Select the slide above:"
 msgstr "上のスライドの選択:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:19
+#: ../share/extensions/jessyInk_keyBindings.inx.h:20
 msgid "Select the slide below:"
 msgstr "下のスライドの選択:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:20
+#: ../share/extensions/jessyInk_keyBindings.inx.h:21
 msgid "Select the slide to the left:"
 msgstr "左のスライドの選択:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:21
+#: ../share/extensions/jessyInk_keyBindings.inx.h:22
 msgid "Select the slide to the right:"
 msgstr "右のスライドの選択:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:22
+#: ../share/extensions/jessyInk_keyBindings.inx.h:23
 msgid "Set duration:"
 msgstr "継続時間の設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:23
+#: ../share/extensions/jessyInk_keyBindings.inx.h:24
 msgid "Set number of columns to default:"
 msgstr "デフォルトのカラム数の設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:24
+#: ../share/extensions/jessyInk_keyBindings.inx.h:25
 msgid "Set path color to black:"
 msgstr "パスの色を黒に設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:25
+#: ../share/extensions/jessyInk_keyBindings.inx.h:26
 msgid "Set path color to blue:"
 msgstr "パスの色を青に設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:26
+#: ../share/extensions/jessyInk_keyBindings.inx.h:27
 msgid "Set path color to cyan:"
 msgstr "パスの色をシアンに設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:27
+#: ../share/extensions/jessyInk_keyBindings.inx.h:28
 msgid "Set path color to green:"
 msgstr "パスの色を緑に設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:28
+#: ../share/extensions/jessyInk_keyBindings.inx.h:29
 msgid "Set path color to magenta:"
 msgstr "パスの色をマゼンダに設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:29
+#: ../share/extensions/jessyInk_keyBindings.inx.h:30
 msgid "Set path color to orange:"
 msgstr "パスの色をオレンジに設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:30
+#: ../share/extensions/jessyInk_keyBindings.inx.h:31
 msgid "Set path color to red:"
 msgstr "パスの色を赤に設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:31
+#: ../share/extensions/jessyInk_keyBindings.inx.h:32
 msgid "Set path color to white:"
 msgstr "パスの色を白に設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:32
+#: ../share/extensions/jessyInk_keyBindings.inx.h:33
 msgid "Set path color to yellow:"
 msgstr "パスの色を黄に設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:33
+#: ../share/extensions/jessyInk_keyBindings.inx.h:34
 msgid "Set path width to 1:"
 msgstr "パスの幅を 1 に設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:34
+#: ../share/extensions/jessyInk_keyBindings.inx.h:35
 msgid "Set path width to 3:"
 msgstr "パスの幅を 3 に設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:35
+#: ../share/extensions/jessyInk_keyBindings.inx.h:36
 msgid "Set path width to 5:"
 msgstr "パスの幅を 5 に設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:36
+#: ../share/extensions/jessyInk_keyBindings.inx.h:37
 msgid "Set path width to 7:"
 msgstr "パスの幅を 7 に設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:37
+#: ../share/extensions/jessyInk_keyBindings.inx.h:38
 msgid "Set path width to 9:"
 msgstr "パスの幅を 9 に設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:38
+#: ../share/extensions/jessyInk_keyBindings.inx.h:39
 msgid "Set path width to default:"
 msgstr "パスの幅をデフォルトに設定:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:39
+#: ../share/extensions/jessyInk_keyBindings.inx.h:40
 msgid "Slide mode"
 msgstr "スライドモード"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:40
+#: ../share/extensions/jessyInk_keyBindings.inx.h:41
 msgid "Switch to drawing mode:"
 msgstr "描画モードへ切り替え:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:41
+#: ../share/extensions/jessyInk_keyBindings.inx.h:42
 msgid "Switch to index mode:"
 msgstr "インデックスモードへ切り替え:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:42
+#: ../share/extensions/jessyInk_keyBindings.inx.h:43
 msgid "Switch to slide mode:"
 msgstr "スライドモードへ切り替え:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:43
+#: ../share/extensions/jessyInk_keyBindings.inx.h:44
 msgid ""
 "This extension allows you customise the key bindings JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
@@ -1893,11 +1897,11 @@ msgstr ""
 "このエクステンションで JessyInk 使用時のキーバインドをカスタマイズできます。"
 "詳しくは code.google.com/p/jessyink をご覧ください。"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:44
+#: ../share/extensions/jessyInk_keyBindings.inx.h:45
 msgid "Toggle progress bar:"
 msgstr "プログレスバーの切り替え:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:45
+#: ../share/extensions/jessyInk_keyBindings.inx.h:46
 msgid "Undo last path segment:"
 msgstr "最後のパスセグメントを取り消し:"
 
@@ -13608,19 +13612,19 @@ msgstr "%s に<b>リンク</b>"
 msgid "<b>Link</b> without URI"
 msgstr "URIなしで<b>リンク</b>"
 
-#: ../src/sp-ellipse.cpp:501 ../src/sp-ellipse.cpp:878
+#: ../src/sp-ellipse.cpp:503 ../src/sp-ellipse.cpp:880
 msgid "<b>Ellipse</b>"
 msgstr "<b>楕円</b>"
 
-#: ../src/sp-ellipse.cpp:642
+#: ../src/sp-ellipse.cpp:644
 msgid "<b>Circle</b>"
 msgstr "<b>円</b>"
 
-#: ../src/sp-ellipse.cpp:873
+#: ../src/sp-ellipse.cpp:875
 msgid "<b>Segment</b>"
 msgstr "<b>扇形</b>"
 
-#: ../src/sp-ellipse.cpp:875
+#: ../src/sp-ellipse.cpp:877
 msgid "<b>Arc</b>"
 msgstr "<b>弧</b>"
 
@@ -13903,76 +13907,76 @@ msgstr ""
 "オブジェクトの中の少なくとも 1 個が<b>パスではない</b>ため、ブーリアン演算で"
 "きません。"
 
-#: ../src/splivarot.cpp:876
+#: ../src/splivarot.cpp:880
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr "パスに変換する<b>ストロークパス</b>を選択して下さい。"
 
-#: ../src/splivarot.cpp:1219
+#: ../src/splivarot.cpp:1227
 msgid "Convert stroke to path"
 msgstr "ストロークをパスに変換"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:1222
+#: ../src/splivarot.cpp:1230
 msgid "<b>No stroked paths</b> in the selection."
 msgstr "選択オブジェクト内に<b>ストロークパスがありません</b>。"
 
-#: ../src/splivarot.cpp:1305
+#: ../src/splivarot.cpp:1313
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr ""
 "選択オブジェクトは<b>パスでない</b>ため、インセット/アウトセットできません。"
 
-#: ../src/splivarot.cpp:1424 ../src/splivarot.cpp:1493
+#: ../src/splivarot.cpp:1432 ../src/splivarot.cpp:1501
 msgid "Create linked offset"
 msgstr "リンクオフセットを作成"
 
-#: ../src/splivarot.cpp:1425 ../src/splivarot.cpp:1494
+#: ../src/splivarot.cpp:1433 ../src/splivarot.cpp:1502
 msgid "Create dynamic offset"
 msgstr "ダイナミックオフセットを作成"
 
-#: ../src/splivarot.cpp:1519
+#: ../src/splivarot.cpp:1527
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "インセット/アウトセットする<b>パス</b>を選択してください。"
 
-#: ../src/splivarot.cpp:1737
+#: ../src/splivarot.cpp:1745
 msgid "Outset path"
 msgstr "パスをアウトセット"
 
-#: ../src/splivarot.cpp:1737
+#: ../src/splivarot.cpp:1745
 msgid "Inset path"
 msgstr "パスをインセット"
 
-#: ../src/splivarot.cpp:1739
+#: ../src/splivarot.cpp:1747
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr ""
 "選択オブジェクトに、インセット/アウトセットする<b>パスがありません</b>。"
 
-#: ../src/splivarot.cpp:1917
+#: ../src/splivarot.cpp:1925
 msgid "Simplifying paths (separately):"
 msgstr "パスの簡略化 (単独):"
 
-#: ../src/splivarot.cpp:1919
+#: ../src/splivarot.cpp:1927
 msgid "Simplifying paths:"
 msgstr "パスの簡略化:"
 
-#: ../src/splivarot.cpp:1956
+#: ../src/splivarot.cpp:1964
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr "%1$s <b>%3$d</b> 個のパスの内 <b>%2$d</b> 個を簡略化しました..."
 
-#: ../src/splivarot.cpp:1968
+#: ../src/splivarot.cpp:1976
 #, c-format
 msgid "<b>%d</b> paths simplified."
 msgstr "<b>%d</b> 個のパスを簡略化しました。"
 
-#: ../src/splivarot.cpp:1982
+#: ../src/splivarot.cpp:1990
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "簡略化する<b>パス</b>を選択してください。"
 
-#: ../src/splivarot.cpp:1996
+#: ../src/splivarot.cpp:2004
 msgid "Simplify"
 msgstr "パスの簡略化"
 
-#: ../src/splivarot.cpp:1998
+#: ../src/splivarot.cpp:2006
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "選択オブジェクトに簡略化する<b>パスがありません</b>。"
 
@@ -15314,69 +15318,64 @@ msgstr "<b>ガイドにスナップ</b>"
 msgid "(invalid UTF-8 string)"
 msgstr "(不正な UTF-8 文字列)"
 
-#: ../src/ui/dialog/document-properties.cpp:349
-#, c-format
-msgid "Color profiles directory (%s) is unavailable."
-msgstr "カラープロファイルディレクトリ (%s) は利用できません。"
-
 #. TODO check if this next line was sometimes needed. It being there caused an assertion.
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:453 ../src/verbs.cpp:2705
+#: ../src/ui/dialog/document-properties.cpp:432 ../src/verbs.cpp:2705
 msgid "Link Color Profile"
 msgstr "リンクカラープロファイル"
 
-#: ../src/ui/dialog/document-properties.cpp:526
+#: ../src/ui/dialog/document-properties.cpp:505
 msgid "Remove linked color profile"
 msgstr "リンクカラープロファイルの削除"
 
-#: ../src/ui/dialog/document-properties.cpp:540
+#: ../src/ui/dialog/document-properties.cpp:519
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>リンクされたカラープロファイル</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:542
+#: ../src/ui/dialog/document-properties.cpp:521
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>利用可能なカラープロファイル:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:544
+#: ../src/ui/dialog/document-properties.cpp:523
 msgid "Link Profile"
 msgstr "プロファイルをリンク"
 
-#: ../src/ui/dialog/document-properties.cpp:575
+#: ../src/ui/dialog/document-properties.cpp:554
 msgid "Profile Name"
 msgstr "プロファイル名"
 
-#: ../src/ui/dialog/document-properties.cpp:606
+#: ../src/ui/dialog/document-properties.cpp:585
 msgid "<b>External script files:</b>"
 msgstr "<b>外部スクリプトファイル:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:608
+#: ../src/ui/dialog/document-properties.cpp:587
 msgid "Add"
 msgstr "追加"
 
-#: ../src/ui/dialog/document-properties.cpp:631
+#: ../src/ui/dialog/document-properties.cpp:610
 msgid "Filename"
 msgstr "ファイル名"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:671
+#: ../src/ui/dialog/document-properties.cpp:650
 msgid "Add external script..."
 msgstr "外部スクリプトの追加..."
 
-#: ../src/ui/dialog/document-properties.cpp:695
+#: ../src/ui/dialog/document-properties.cpp:674
 msgid "Remove external script"
 msgstr "外部スクリプトの削除"
 
-#: ../src/ui/dialog/document-properties.cpp:776
+#: ../src/ui/dialog/document-properties.cpp:755
 msgid "<b>Creation</b>"
 msgstr " <b>作成</b> "
 
-#: ../src/ui/dialog/document-properties.cpp:777
+#: ../src/ui/dialog/document-properties.cpp:756
 msgid "<b>Defined grids</b>"
 msgstr "<b>定義されたグリッド</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:988
+#: ../src/ui/dialog/document-properties.cpp:967
 msgid "Remove grid"
 msgstr "グリッドの削除"
 
@@ -26069,6 +26068,9 @@ msgstr "傾斜 [度]"
 #: ../share/extensions/wireframe_sphere.inx.h:8
 msgid "Wireframe Sphere"
 msgstr "ワイヤーフレーム球体"
+
+#~ msgid "Color profiles directory (%s) is unavailable."
+#~ msgstr "カラープロファイルディレクトリ (%s) は利用できません。"
 
 #~ msgid "Enable dynamic relayout for incomplete sections"
 #~ msgstr "不完全な部分の動的再配置を有効にする"

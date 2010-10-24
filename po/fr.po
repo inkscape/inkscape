@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-20 21:25+0200\n"
-"PO-Revision-Date: 2010-10-20 22:19+0100\n"
+"POT-Creation-Date: 2010-10-24 14:11+0200\n"
+"PO-Revision-Date: 2010-10-24 14:20+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -364,7 +364,7 @@ msgstr "Négatif"
 
 #: ../share/extensions/color_randomize.inx.h:2
 msgid "Converts to HSL, randomizes hue and/or saturation and/or lightness and converts it back to RGB."
-msgstr ""
+msgstr "Convertit en TSL, modifie aléatoirement la teinte, la saturation ou la luminosité, puis convertit le résultat en RVB."
 
 #: ../share/extensions/color_randomize.inx.h:4
 #: ../src/flood-context.cpp:250
@@ -1243,7 +1243,6 @@ msgid "Save Guides"
 msgstr "Enregistrer les guides"
 
 #: ../share/extensions/gimp_xcf.inx.h:8
-#, fuzzy
 msgid ""
 "This extension exports the document to Gimp XCF format according to the following options:\n"
 "    * Save Guides: convert all guides to Gimp guides.\n"
@@ -1866,6 +1865,7 @@ msgstr "Cette extension vous permet d’installer, mettre à jour ou supprimer d
 #: ../share/extensions/webslicer_create_rect.inx.h:40
 #: ../src/dialogs/object-attributes.cpp:34
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
+#: ../src/rdf.cpp:238
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2172
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2251
 msgid "Type:"
@@ -3758,6 +3758,7 @@ msgid "Force Dimension:"
 msgstr "Imposer la dimension :"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:14
+#: ../src/rdf.cpp:235
 msgid "Format:"
 msgstr "Format :"
 
@@ -4221,9 +4222,8 @@ msgstr ""
 
 #: ../share/extensions/gcodetools.py:3714
 #: ../share/extensions/gcodetools.py:3808
-#, fuzzy
 msgid "This extension requires at least one selected path."
-msgstr "Cette extension nécessite la sélection de deux chemins."
+msgstr "Cette extension nécessite la sélection d’un chemin."
 
 #: ../share/extensions/gcodetools.py:3720
 #, python-format
@@ -7766,18 +7766,23 @@ msgstr "Offsets"
 
 #: ../src/dialogs/find.cpp:685
 #: ../src/ui/dialog/find.cpp:60
-msgid "_Text: "
-msgstr "_Texte : "
+msgid "_Text:"
+msgstr "_Texte :"
 
 #: ../src/dialogs/find.cpp:685
 #: ../src/ui/dialog/find.cpp:60
 msgid "Find objects by their text content (exact or partial match)"
 msgstr "Rechercher des objets par le texte qu’ils contiennent (correspondance exacte ou partielle)"
 
+#. Create the label for the object id
 #: ../src/dialogs/find.cpp:686
+#: ../src/dialogs/item-properties.cpp:120
+#: ../src/dialogs/item-properties.cpp:334
+#: ../src/dialogs/item-properties.cpp:443
+#: ../src/dialogs/item-properties.cpp:450
 #: ../src/ui/dialog/find.cpp:61
-msgid "_ID: "
-msgstr "_ID : "
+msgid "_ID:"
+msgstr "_ID :"
 
 #: ../src/dialogs/find.cpp:686
 #: ../src/ui/dialog/find.cpp:61
@@ -7786,8 +7791,8 @@ msgstr "Rechercher des objets par la valeur de l’attribut id (correspondance e
 
 #: ../src/dialogs/find.cpp:687
 #: ../src/ui/dialog/find.cpp:62
-msgid "_Style: "
-msgstr "_Style : "
+msgid "_Style:"
+msgstr "_Style :"
 
 #: ../src/dialogs/find.cpp:687
 #: ../src/ui/dialog/find.cpp:62
@@ -7796,8 +7801,8 @@ msgstr "Rechercher des objets par la valeur de l’attribut style (correspondanc
 
 #: ../src/dialogs/find.cpp:688
 #: ../src/ui/dialog/find.cpp:63
-msgid "_Attribute: "
-msgstr "_Attribut : "
+msgid "_Attribute:"
+msgstr "_Attribut :"
 
 #: ../src/dialogs/find.cpp:688
 #: ../src/ui/dialog/find.cpp:63
@@ -7868,14 +7873,6 @@ msgstr "_Rechercher"
 msgid "Select objects matching all of the fields you filled in"
 msgstr "Sélectionner les objets qui correspondent à tous les champs que vous avez remplis"
 
-#. Create the label for the object id
-#: ../src/dialogs/item-properties.cpp:120
-#: ../src/dialogs/item-properties.cpp:334
-#: ../src/dialogs/item-properties.cpp:443
-#: ../src/dialogs/item-properties.cpp:450
-msgid "_Id"
-msgstr "_Id"
-
 #: ../src/dialogs/item-properties.cpp:129
 msgid "The id= attribute (only letters, digits, and the characters .-_: allowed)"
 msgstr "L’attribut id= (seuls les chiffres, lettres, et les caractères .-_: sont autorisés)"
@@ -7889,8 +7886,8 @@ msgstr "_Définir"
 
 #. Create the label for the object label
 #: ../src/dialogs/item-properties.cpp:152
-msgid "_Label"
-msgstr "É_tiquette"
+msgid "_Label:"
+msgstr "É_tiquette :"
 
 #: ../src/dialogs/item-properties.cpp:161
 msgid "A freeform label for the object"
@@ -7898,8 +7895,8 @@ msgstr "Une étiquette attribuée à l’objet"
 
 #. Create the label for the object title
 #: ../src/dialogs/item-properties.cpp:173
-msgid "_Title"
-msgstr "_Titre"
+msgid "_Title:"
+msgstr "_Titre :"
 
 #. Create the frame for the object description
 #: ../src/dialogs/item-properties.cpp:191
@@ -8000,6 +7997,7 @@ msgstr "Arc-rôle :"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
 #: ../src/dialogs/object-attributes.cpp:42
+#: ../src/rdf.cpp:229
 msgid "Title:"
 msgstr "Titre :"
 
@@ -9382,7 +9380,7 @@ msgstr "PostScript niveau 2"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:323
 #: ../src/extension/internal/cairo-ps-out.cpp:361
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:242
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:245
 #: ../src/extension/internal/emf-win32-inout.cpp:2432
 msgid "Convert texts to paths"
 msgstr "Convertir les textes en chemins"
@@ -9393,31 +9391,31 @@ msgstr "PS+LaTeX : exclure le texte du fichier PS, et créer un fichier LaTeX"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:325
 #: ../src/extension/internal/cairo-ps-out.cpp:363
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:244
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:247
 msgid "Rasterize filter effects"
 msgstr "Rastériser les effets de filtre"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:326
 #: ../src/extension/internal/cairo-ps-out.cpp:364
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:245
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
 msgid "Resolution for rasterization (dpi):"
 msgstr "Résolution pour la rastérisation (ppp) :"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:327
 #: ../src/extension/internal/cairo-ps-out.cpp:365
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:246
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:249
 msgid "Export area is drawing"
 msgstr "Exporter le dessin"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:328
 #: ../src/extension/internal/cairo-ps-out.cpp:366
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:247
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
 msgid "Export area is page"
 msgstr "Exporter la page"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:329
 #: ../src/extension/internal/cairo-ps-out.cpp:367
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:251
 msgid "Limit export to the object with ID:"
 msgstr "Limiter l’exportation à l’objet ayant l’Id :"
 
@@ -9437,11 +9435,15 @@ msgstr "Fichier PostScript Encapsulé"
 msgid "Restrict to PDF version:"
 msgstr "Restreindre à la version de PDF :"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:240
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:241
+msgid "PDF 1.5"
+msgstr "PDF 1.5"
+
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:243
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:243
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:246
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
 msgstr "PDF+LaTeX : exclure le texte du fichier PDF, et créer un fichier LaTeX"
 
@@ -12813,149 +12815,136 @@ msgstr "ArtLibre"
 msgid "Open Font License"
 msgstr "Open Font Licence (Licence de police libre)"
 
-#: ../src/rdf.cpp:229
-msgid "Title"
-msgstr "Titre"
-
 #: ../src/rdf.cpp:230
-msgid "Name by which this document is formally known."
-msgstr "Nom sous lequel le document est formellement connu."
+msgid "Name by which this document is formally known"
+msgstr "Nom sous lequel le document est formellement connu"
 
 #: ../src/rdf.cpp:232
-msgid "Date"
-msgstr "Date"
+msgid "Date:"
+msgstr "Date :"
 
 #: ../src/rdf.cpp:233
-msgid "Date associated with the creation of this document (YYYY-MM-DD)."
-msgstr "Date associée à la création du document (AAAA-MM-JJ)."
-
-#: ../src/rdf.cpp:235
-msgid "Format"
-msgstr "Format"
+msgid "Date associated with the creation of this document (YYYY-MM-DD)"
+msgstr "Date associée à la création du document (AAAA-MM-JJ)"
 
 #: ../src/rdf.cpp:236
-msgid "The physical or digital manifestation of this document (MIME type)."
-msgstr "La manifestation physique ou numérique de ce document (type MIME)."
-
-#: ../src/rdf.cpp:238
-msgid "Type"
-msgstr "Type"
+msgid "The physical or digital manifestation of this document (MIME type)"
+msgstr "La manifestation physique ou numérique de ce document (type MIME)"
 
 #: ../src/rdf.cpp:239
-msgid "Type of document (DCMI Type)."
-msgstr "Type du document (Type DCMI)."
+msgid "Type of document (DCMI Type)"
+msgstr "Type du document (type DCMI)"
 
 #: ../src/rdf.cpp:242
-msgid "Creator"
-msgstr "Créateur"
+msgid "Creator:"
+msgstr "Créateur :"
 
 #: ../src/rdf.cpp:243
-msgid "Name of entity primarily responsible for making the content of this document."
-msgstr "Entité principalement responsable de la création du contenu de ce document."
+msgid "Name of entity primarily responsible for making the content of this document"
+msgstr "Entité principalement responsable de la création du contenu de ce document"
 
 #: ../src/rdf.cpp:245
-msgid "Rights"
-msgstr "Droits"
+msgid "Rights:"
+msgstr "Droits :"
 
 #: ../src/rdf.cpp:246
-msgid "Name of entity with rights to the Intellectual Property of this document."
-msgstr "Nom de l’entité possédant les droits de Propriété Intellectuelle sur ce document."
+msgid "Name of entity with rights to the Intellectual Property of this document"
+msgstr "Nom de l’entité possédant les droits de Propriété Intellectuelle sur ce document"
 
 #: ../src/rdf.cpp:248
-msgid "Publisher"
-msgstr "Éditeur"
+msgid "Publisher:"
+msgstr "Éditeur :"
 
 #: ../src/rdf.cpp:249
-msgid "Name of entity responsible for making this document available."
-msgstr "Nom de l’entité responsable de la distribution de ce document."
+msgid "Name of entity responsible for making this document available"
+msgstr "Nom de l’entité responsable de la distribution de ce document"
 
 #: ../src/rdf.cpp:252
-msgid "Identifier"
-msgstr "Identifiant"
+msgid "Identifier:"
+msgstr "Identifiant :"
 
 #: ../src/rdf.cpp:253
-msgid "Unique URI to reference this document."
-msgstr "URI unique pour référencer ce document."
+msgid "Unique URI to reference this document"
+msgstr "URI unique pour référencer ce document"
 
 #: ../src/rdf.cpp:255
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1438
-msgid "Source"
-msgstr "Source"
+msgid "Source:"
+msgstr "Source :"
 
 #: ../src/rdf.cpp:256
-msgid "Unique URI to reference the source of this document."
-msgstr "URI unique pour référencer la ressource dont le document actuel est dérivé."
+msgid "Unique URI to reference the source of this document"
+msgstr "URI unique pour référencer la ressource dont le document actuel est dérivé"
 
 #: ../src/rdf.cpp:258
-msgid "Relation"
-msgstr "Relation"
+msgid "Relation:"
+msgstr "Relation :"
 
 #: ../src/rdf.cpp:259
-msgid "Unique URI to a related document."
-msgstr "URI unique vers un document apparenté."
+msgid "Unique URI to a related document"
+msgstr "URI unique vers un document apparenté"
 
 #: ../src/rdf.cpp:261
-msgid "Language"
-msgstr "Langue"
+#: ../src/ui/dialog/inkscape-preferences.cpp:1297
+msgid "Language:"
+msgstr "Langue principale :"
 
 #: ../src/rdf.cpp:262
-msgid "Two-letter language tag with optional subtags for the language of this document.  (e.g. 'en-GB')"
+msgid "Two-letter language tag with optional subtags for the language of this document (e.g. 'en-GB')"
 msgstr "Balise de deux lettres spécifiant la langue de ce document, avec une sous-balise optionnelle de spécification régionale (ex. « fr-FR » )"
 
 #: ../src/rdf.cpp:264
-msgid "Keywords"
-msgstr "Mots clés"
+msgid "Keywords:"
+msgstr "Mots clés :"
 
 #: ../src/rdf.cpp:265
-msgid "The topic of this document as comma-separated key words, phrases, or classifications."
-msgstr "Le sujet de ce document sous forme de mots clés, phrases ou éléments de classification, séparés par des virgules."
+msgid "The topic of this document as comma-separated key words, phrases, or classifications"
+msgstr "Le sujet de ce document sous forme de mots clés, phrases ou éléments de classification, séparés par des virgules"
 
 #. TRANSLATORS: "Coverage": the spatial or temporal characteristics of the content.
 #. For info, see Appendix D of http://www.w3.org/TR/1998/WD-rdf-schema-19980409/
 #: ../src/rdf.cpp:269
-msgid "Coverage"
-msgstr "Portée"
+msgid "Coverage:"
+msgstr "Portée :"
 
 #: ../src/rdf.cpp:270
-msgid "Extent or scope of this document."
-msgstr "Étendue ou portée de ce document."
+msgid "Extent or scope of this document"
+msgstr "Étendue ou portée de ce document"
 
 #: ../src/rdf.cpp:273
-#: ../src/ui/widget/page-sizer.cpp:245
-msgid "Description"
-msgstr "Description"
+msgid "Description:"
+msgstr "Description :"
 
 #: ../src/rdf.cpp:274
-msgid "A short account of the content of this document."
-msgstr "Une courte explication du contenu de ce document."
+msgid "A short account of the content of this document"
+msgstr "Une courte explication du contenu de ce document"
 
 #. FIXME: need to handle 1 agent per line of input
 #: ../src/rdf.cpp:278
-msgid "Contributors"
-msgstr "Collaborateurs"
+msgid "Contributors:"
+msgstr "Collaborateurs :"
 
 #: ../src/rdf.cpp:279
-msgid "Names of entities responsible for making contributions to the content of this document."
-msgstr "Nom des entités ayant contribué au contenu de ce document."
+msgid "Names of entities responsible for making contributions to the content of this document"
+msgstr "Nom des entités ayant contribué au contenu de ce document"
 
 #. TRANSLATORS: URL to a page that defines the license for the document
 #: ../src/rdf.cpp:283
-msgid "URI"
-msgstr "URI"
+msgid "URI:"
+msgstr "URI :"
 
 #. TRANSLATORS: this is where you put a URL to a page that defines the license
 #: ../src/rdf.cpp:285
-msgid "URI to this document's license's namespace definition."
-msgstr "URI de la définition de l’espace de nom de la licence de ce document."
+msgid "URI to this document's license's namespace definition"
+msgstr "URI de la définition de l’espace de nom de la licence de ce document"
 
 #. TRANSLATORS: fragment of XML representing the license of the document
 #: ../src/rdf.cpp:289
-msgid "Fragment"
-msgstr "Fragment"
+msgid "Fragment:"
+msgstr "Fragment :"
 
 #: ../src/rdf.cpp:290
-msgid "XML fragment for the RDF 'License' section."
-msgstr "Fragment XML pour la section « Licence » (RDF)."
+msgid "XML fragment for the RDF 'License' section"
+msgstr "Fragment XML pour la section « Licence » (RDF)"
 
 #: ../src/rect-context.cpp:372
 msgid "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"
@@ -13633,20 +13622,20 @@ msgstr "<b>Lien</b> vers %s"
 msgid "<b>Link</b> without URI"
 msgstr "<b>Lien</b> sans URI"
 
-#: ../src/sp-ellipse.cpp:501
-#: ../src/sp-ellipse.cpp:878
+#: ../src/sp-ellipse.cpp:503
+#: ../src/sp-ellipse.cpp:880
 msgid "<b>Ellipse</b>"
 msgstr "<b>Ellipse</b>"
 
-#: ../src/sp-ellipse.cpp:642
+#: ../src/sp-ellipse.cpp:644
 msgid "<b>Circle</b>"
 msgstr "<b>Cercle</b>"
 
-#: ../src/sp-ellipse.cpp:873
+#: ../src/sp-ellipse.cpp:875
 msgid "<b>Segment</b>"
 msgstr "<b>Camembert</b>"
 
-#: ../src/sp-ellipse.cpp:875
+#: ../src/sp-ellipse.cpp:877
 msgid "<b>Arc</b>"
 msgstr "<b>Arc</b>"
 
@@ -13921,76 +13910,76 @@ msgstr "Impossible de déterminer <b>l’ordre en z</b> des objets sélectionné
 msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "Un des objets n’est <b>pas un chemin</b>, impossible d’effectuer une opération booléenne."
 
-#: ../src/splivarot.cpp:876
+#: ../src/splivarot.cpp:880
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr "Sélectionner des <b>chemin(s) avec contour</b> pour convertir les contours en chemins."
 
-#: ../src/splivarot.cpp:1219
+#: ../src/splivarot.cpp:1227
 msgid "Convert stroke to path"
 msgstr "Convertir un contour en chemin"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:1222
+#: ../src/splivarot.cpp:1230
 msgid "<b>No stroked paths</b> in the selection."
 msgstr "<b>Aucun chemin avec contour</b> dans la sélection."
 
-#: ../src/splivarot.cpp:1305
+#: ../src/splivarot.cpp:1313
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "L’objet sélectionné <b>n’est pas un chemin</b>, impossible de le contracter/dilater."
 
-#: ../src/splivarot.cpp:1424
-#: ../src/splivarot.cpp:1493
+#: ../src/splivarot.cpp:1432
+#: ../src/splivarot.cpp:1501
 msgid "Create linked offset"
 msgstr "Créer un objet offset lié"
 
-#: ../src/splivarot.cpp:1425
-#: ../src/splivarot.cpp:1494
+#: ../src/splivarot.cpp:1433
+#: ../src/splivarot.cpp:1502
 msgid "Create dynamic offset"
 msgstr "Créer un objet offset dynamique"
 
-#: ../src/splivarot.cpp:1519
+#: ../src/splivarot.cpp:1527
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Sélectionner des <b>chemin(s)</b> pour les contracter/dilater."
 
-#: ../src/splivarot.cpp:1737
+#: ../src/splivarot.cpp:1745
 msgid "Outset path"
 msgstr "Dilater le chemin"
 
-#: ../src/splivarot.cpp:1737
+#: ../src/splivarot.cpp:1745
 msgid "Inset path"
 msgstr "Contracter le chemin"
 
-#: ../src/splivarot.cpp:1739
+#: ../src/splivarot.cpp:1747
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "<b>Aucun chemin</b> à contracter/dilater dans la sélection."
 
-#: ../src/splivarot.cpp:1917
+#: ../src/splivarot.cpp:1925
 msgid "Simplifying paths (separately):"
 msgstr "Simplification individuelle des chemins"
 
-#: ../src/splivarot.cpp:1919
+#: ../src/splivarot.cpp:1927
 msgid "Simplifying paths:"
 msgstr "Simplification des chemins :"
 
-#: ../src/splivarot.cpp:1956
+#: ../src/splivarot.cpp:1964
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr "Simplification %s - <b>%d</b> chemins simplifiés sur <b>%d</b>..."
 
-#: ../src/splivarot.cpp:1968
+#: ../src/splivarot.cpp:1976
 #, c-format
 msgid "<b>%d</b> paths simplified."
 msgstr "Fait - <b>%d</b> chemins simplifiés."
 
-#: ../src/splivarot.cpp:1982
+#: ../src/splivarot.cpp:1990
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Sélectionner un ou des <b>chemin(s)</b> à simplifier."
 
-#: ../src/splivarot.cpp:1996
+#: ../src/splivarot.cpp:2004
 msgid "Simplify"
 msgstr "Simplifier"
 
-#: ../src/splivarot.cpp:1998
+#: ../src/splivarot.cpp:2006
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>Aucun chemin</b> à simplifier dans la sélection."
 
@@ -15395,6 +15384,10 @@ msgstr "Résolution (point par pouce)"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1406
 msgid "Document"
 msgstr "Document"
+
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1438
+msgid "Source"
+msgstr "Source"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1458
 msgid "Cairo"
@@ -18524,10 +18517,6 @@ msgstr "Résolution utilisée par la commande Créer une copie bitmap"
 msgid "Bitmaps"
 msgstr "Bitmaps"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1297
-msgid "Language:"
-msgstr "Langue principale :"
-
 #: ../src/ui/dialog/inkscape-preferences.cpp:1298
 msgid "Set the main spell check language"
 msgstr "Définit la langue principale du correcteur orthographique"
@@ -20127,6 +20116,10 @@ msgstr "B_as :"
 #: ../src/ui/widget/page-sizer.cpp:236
 msgid "Bottom margin"
 msgstr "Marge inférieure"
+
+#: ../src/ui/widget/page-sizer.cpp:245
+msgid "Description"
+msgstr "Description"
 
 #: ../src/ui/widget/page-sizer.cpp:286
 msgid "Orientation:"
@@ -25495,7 +25488,7 @@ msgstr "Chemin vers G-code"
 #: ../share/extensions/gcodetools_lathe.inx.h:24
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:17
 msgid "Post-processor:"
-msgstr ""
+msgstr "Post-processeur :"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:39
 #: ../share/extensions/gcodetools_area.inx.h:25
@@ -25557,7 +25550,7 @@ msgstr "Type d'outils : "
 #: ../share/extensions/gcodetools_orientation_points.inx.h:10
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:21
 msgid "Units (mm or in):"
-msgstr ""
+msgstr "Unité (mm ou in) :"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:48
 #: ../share/extensions/gcodetools_area.inx.h:29
@@ -25738,6 +25731,18 @@ msgstr "Inclinaison (deg) :"
 msgid "Wireframe Sphere"
 msgstr "Sphère fil de fer"
 
+#~ msgid "_Id"
+#~ msgstr "_Id"
+#~ msgid "Title"
+#~ msgstr "Titre"
+#~ msgid "Format"
+#~ msgstr "Format"
+#~ msgid "Type"
+#~ msgstr "Type"
+#~ msgid "Rights"
+#~ msgstr "Droits"
+#~ msgid "Language"
+#~ msgstr "Langue"
 #~ msgid "Object _Properties"
 #~ msgstr "_Propriétés de l’objet"
 #~ msgid "_Fill and Stroke"
