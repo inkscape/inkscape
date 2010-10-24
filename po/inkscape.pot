@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-24 12:55+0200\n"
+"POT-Creation-Date: 2010-10-24 14:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1774,7 +1774,7 @@ msgstr ""
 #: ../share/extensions/jessyInk_transitions.inx.h:14
 #: ../share/extensions/webslicer_create_rect.inx.h:40
 #: ../src/dialogs/object-attributes.cpp:34
-#: ../src/extension/internal/bitmap/addNoise.cpp:46
+#: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2172
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2251
 msgid "Type:"
@@ -3679,7 +3679,7 @@ msgstr ""
 msgid "Force Dimension:"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:14
+#: ../share/extensions/webslicer_create_rect.inx.h:14 ../src/rdf.cpp:235
 msgid "Format:"
 msgstr ""
 
@@ -7829,7 +7829,7 @@ msgid "Arcrole:"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
-#: ../src/dialogs/object-attributes.cpp:42
+#: ../src/dialogs/object-attributes.cpp:42 ../src/rdf.cpp:229
 msgid "Title:"
 msgstr ""
 
@@ -12705,154 +12705,142 @@ msgstr ""
 msgid "Open Font License"
 msgstr ""
 
-#: ../src/rdf.cpp:229
-msgid "Title"
-msgstr ""
-
 #: ../src/rdf.cpp:230
-msgid "Name by which this document is formally known."
+msgid "Name by which this document is formally known"
 msgstr ""
 
 #: ../src/rdf.cpp:232
-msgid "Date"
+msgid "Date:"
 msgstr ""
 
 #: ../src/rdf.cpp:233
-msgid "Date associated with the creation of this document (YYYY-MM-DD)."
-msgstr ""
-
-#: ../src/rdf.cpp:235
-msgid "Format"
+msgid "Date associated with the creation of this document (YYYY-MM-DD)"
 msgstr ""
 
 #: ../src/rdf.cpp:236
-msgid "The physical or digital manifestation of this document (MIME type)."
-msgstr ""
-
-#: ../src/rdf.cpp:238
-msgid "Type"
+msgid "The physical or digital manifestation of this document (MIME type)"
 msgstr ""
 
 #: ../src/rdf.cpp:239
-msgid "Type of document (DCMI Type)."
+msgid "Type of document (DCMI Type)"
 msgstr ""
 
 #: ../src/rdf.cpp:242
-msgid "Creator"
+msgid "Creator:"
 msgstr ""
 
 #: ../src/rdf.cpp:243
 msgid ""
-"Name of entity primarily responsible for making the content of this document."
+"Name of entity primarily responsible for making the content of this document"
 msgstr ""
 
 #: ../src/rdf.cpp:245
-msgid "Rights"
+msgid "Rights:"
 msgstr ""
 
 #: ../src/rdf.cpp:246
 msgid ""
-"Name of entity with rights to the Intellectual Property of this document."
+"Name of entity with rights to the Intellectual Property of this document"
 msgstr ""
 
 #: ../src/rdf.cpp:248
-msgid "Publisher"
+msgid "Publisher:"
 msgstr ""
 
 #: ../src/rdf.cpp:249
-msgid "Name of entity responsible for making this document available."
+msgid "Name of entity responsible for making this document available"
 msgstr ""
 
 #: ../src/rdf.cpp:252
-msgid "Identifier"
+msgid "Identifier:"
 msgstr ""
 
 #: ../src/rdf.cpp:253
-msgid "Unique URI to reference this document."
+msgid "Unique URI to reference this document"
 msgstr ""
 
-#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1438
-msgid "Source"
+#: ../src/rdf.cpp:255
+msgid "Source:"
 msgstr ""
 
 #: ../src/rdf.cpp:256
-msgid "Unique URI to reference the source of this document."
+msgid "Unique URI to reference the source of this document"
 msgstr ""
 
 #: ../src/rdf.cpp:258
-msgid "Relation"
+msgid "Relation:"
 msgstr ""
 
 #: ../src/rdf.cpp:259
-msgid "Unique URI to a related document."
+msgid "Unique URI to a related document"
 msgstr ""
 
-#: ../src/rdf.cpp:261
-msgid "Language"
+#: ../src/rdf.cpp:261 ../src/ui/dialog/inkscape-preferences.cpp:1297
+msgid "Language:"
 msgstr ""
 
 #: ../src/rdf.cpp:262
 msgid ""
 "Two-letter language tag with optional subtags for the language of this "
-"document.  (e.g. 'en-GB')"
+"document (e.g. 'en-GB')"
 msgstr ""
 
 #: ../src/rdf.cpp:264
-msgid "Keywords"
+msgid "Keywords:"
 msgstr ""
 
 #: ../src/rdf.cpp:265
 msgid ""
 "The topic of this document as comma-separated key words, phrases, or "
-"classifications."
+"classifications"
 msgstr ""
 
 #. TRANSLATORS: "Coverage": the spatial or temporal characteristics of the content.
 #. For info, see Appendix D of http://www.w3.org/TR/1998/WD-rdf-schema-19980409/
 #: ../src/rdf.cpp:269
-msgid "Coverage"
+msgid "Coverage:"
 msgstr ""
 
 #: ../src/rdf.cpp:270
-msgid "Extent or scope of this document."
+msgid "Extent or scope of this document"
 msgstr ""
 
-#: ../src/rdf.cpp:273 ../src/ui/widget/page-sizer.cpp:245
-msgid "Description"
+#: ../src/rdf.cpp:273
+msgid "Description:"
 msgstr ""
 
 #: ../src/rdf.cpp:274
-msgid "A short account of the content of this document."
+msgid "A short account of the content of this document"
 msgstr ""
 
 #. FIXME: need to handle 1 agent per line of input
 #: ../src/rdf.cpp:278
-msgid "Contributors"
+msgid "Contributors:"
 msgstr ""
 
 #: ../src/rdf.cpp:279
 msgid ""
 "Names of entities responsible for making contributions to the content of "
-"this document."
+"this document"
 msgstr ""
 
 #. TRANSLATORS: URL to a page that defines the license for the document
 #: ../src/rdf.cpp:283
-msgid "URI"
+msgid "URI:"
 msgstr ""
 
 #. TRANSLATORS: this is where you put a URL to a page that defines the license
 #: ../src/rdf.cpp:285
-msgid "URI to this document's license's namespace definition."
+msgid "URI to this document's license's namespace definition"
 msgstr ""
 
 #. TRANSLATORS: fragment of XML representing the license of the document
 #: ../src/rdf.cpp:289
-msgid "Fragment"
+msgid "Fragment:"
 msgstr ""
 
 #: ../src/rdf.cpp:290
-msgid "XML fragment for the RDF 'License' section."
+msgid "XML fragment for the RDF 'License' section"
 msgstr ""
 
 #: ../src/rect-context.cpp:372
@@ -15333,6 +15321,10 @@ msgstr ""
 #. ##### Export options buttons/spinners, etc
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1406
 msgid "Document"
+msgstr ""
+
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1438
+msgid "Source"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1458
@@ -18612,10 +18604,6 @@ msgstr ""
 msgid "Bitmaps"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1297
-msgid "Language:"
-msgstr ""
-
 #: ../src/ui/dialog/inkscape-preferences.cpp:1298
 msgid "Set the main spell check language"
 msgstr ""
@@ -20257,6 +20245,10 @@ msgstr ""
 
 #: ../src/ui/widget/page-sizer.cpp:236
 msgid "Bottom margin"
+msgstr ""
+
+#: ../src/ui/widget/page-sizer.cpp:245
+msgid "Description"
 msgstr ""
 
 #: ../src/ui/widget/page-sizer.cpp:286
