@@ -401,16 +401,16 @@ void ColorScales::setMode(SPColorScalesMode mode)
 	switch (mode) {
 	case SP_COLOR_SCALES_MODE_RGB:
 		_setRangeLimit(255.0);
-		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[0]), _("_R"));
+		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[0]), _("_R:"));
 		gtk_tooltips_set_tip (_tt, _s[0], _("Red"), NULL);
 		gtk_tooltips_set_tip (_tt, _b[0], _("Red"), NULL);
-		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[1]), _("_G"));
+		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[1]), _("_G:"));
 		gtk_tooltips_set_tip (_tt, _s[1], _("Green"), NULL);
 		gtk_tooltips_set_tip (_tt, _b[1], _("Green"), NULL);
-		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[2]), _("_B"));
+		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[2]), _("_B:"));
 		gtk_tooltips_set_tip (_tt, _s[2], _("Blue"), NULL);
 		gtk_tooltips_set_tip (_tt, _b[2], _("Blue"), NULL);
-		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[3]), _("_A"));
+		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[3]), _("_A:"));
 		gtk_tooltips_set_tip (_tt, _s[3], _("Alpha (opacity)"), NULL);
 		gtk_tooltips_set_tip (_tt, _b[3], _("Alpha (opacity)"), NULL);
 		sp_color_slider_set_map (SP_COLOR_SLIDER (_s[0]), NULL);
@@ -427,16 +427,16 @@ void ColorScales::setMode(SPColorScalesMode mode)
 		break;
 	case SP_COLOR_SCALES_MODE_HSV:
 		_setRangeLimit(255.0);
-		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[0]), _("_H"));
+		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[0]), _("_H:"));
 		gtk_tooltips_set_tip (_tt, _s[0], _("Hue"), NULL);
 		gtk_tooltips_set_tip (_tt, _b[0], _("Hue"), NULL);
-		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[1]), _("_S"));
+		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[1]), _("_S:"));
 		gtk_tooltips_set_tip (_tt, _s[1], _("Saturation"), NULL);
 		gtk_tooltips_set_tip (_tt, _b[1], _("Saturation"), NULL);
-		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[2]), _("_L"));
+		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[2]), _("_L:"));
 		gtk_tooltips_set_tip (_tt, _s[2], _("Lightness"), NULL);
 		gtk_tooltips_set_tip (_tt, _b[2], _("Lightness"), NULL);
-		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[3]), _("_A"));
+		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[3]), _("_A:"));
 		gtk_tooltips_set_tip (_tt, _s[3], _("Alpha (opacity)"), NULL);
 		gtk_tooltips_set_tip (_tt, _b[3], _("Alpha (opacity)"), NULL);
 		sp_color_slider_set_map (SP_COLOR_SLIDER (_s[0]), (guchar*)sp_color_scales_hue_map ());
@@ -455,19 +455,19 @@ void ColorScales::setMode(SPColorScalesMode mode)
 		break;
 	case SP_COLOR_SCALES_MODE_CMYK:
 		_setRangeLimit(100.0);
-		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[0]), _("_C"));
+		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[0]), _("_C:"));
 		gtk_tooltips_set_tip (_tt, _s[0], _("Cyan"), NULL);
 		gtk_tooltips_set_tip (_tt, _b[0], _("Cyan"), NULL);
-		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[1]), _("_M"));
+		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[1]), _("_M:"));
 		gtk_tooltips_set_tip (_tt, _s[1], _("Magenta"), NULL);
 		gtk_tooltips_set_tip (_tt, _b[1], _("Magenta"), NULL);
-		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[2]), _("_Y"));
+		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[2]), _("_Y:"));
 		gtk_tooltips_set_tip (_tt, _s[2], _("Yellow"), NULL);
 		gtk_tooltips_set_tip (_tt, _b[2], _("Yellow"), NULL);
-		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[3]), _("_K"));
+		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[3]), _("_K:"));
 		gtk_tooltips_set_tip (_tt, _s[3], _("Black"), NULL);
 		gtk_tooltips_set_tip (_tt, _b[3], _("Black"), NULL);
-		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[4]), _("_A"));
+		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[4]), _("_A:"));
 		gtk_tooltips_set_tip (_tt, _s[4], _("Alpha (opacity)"), NULL);
 		gtk_tooltips_set_tip (_tt, _b[4], _("Alpha (opacity)"), NULL);
 		sp_color_slider_set_map (SP_COLOR_SLIDER (_s[0]), NULL);

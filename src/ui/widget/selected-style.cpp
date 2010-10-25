@@ -1030,8 +1030,8 @@ SelectedStyle::update()
     case QUERY_STYLE_SINGLE:
     case QUERY_STYLE_MULTIPLE_AVERAGED:
     case QUERY_STYLE_MULTIPLE_SAME:
-        _tooltips.set_tip(_opacity_place, _("Opacity, %"));
-        _tooltips.set_tip(_opacity_sb, _("Opacity, %"));
+        _tooltips.set_tip(_opacity_place, _("Opacity (%)"));
+        _tooltips.set_tip(_opacity_sb, _("Opacity (%)"));
         if (_opacity_blocked) break;
         _opacity_blocked = true;
         _opacity_sb.set_sensitive(true);

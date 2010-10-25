@@ -217,12 +217,12 @@ void getThings( DWORD space, gchar const**& namers, gchar const**& tippies, guin
         //
         {"_Y", "C_b", "C_r", "", "", ""},
         {"_Y", "_x", "y", "", "", ""},
-        {_("_R"), _("_G"), _("_B"), "", "", ""},
-        {_("_G"), "", "", "", "", ""},
-        {_("_H"), _("_S"), "_V", "", "", ""},
-        {_("_H"), _("_L"), _("_S"), "", "", ""},
-        {_("_C"), _("_M"), _("_Y"), _("_K"), "", ""},
-        {_("_C"), _("_M"), _("_Y"), "", "", ""},
+        {_("_R:"), _("_G:"), _("_B:"), "", "", ""},
+        {_("_G:"), "", "", "", "", ""},
+        {_("_H:"), _("_S:"), "_V:", "", "", ""},
+        {_("_H:"), _("_L:"), _("_S:"), "", "", ""},
+        {_("_C:"), _("_M:"), _("_Y:"), _("_K:"), "", ""},
+        {_("_C:"), _("_M:"), _("_Y:"), "", "", ""},
     };
 
     static gchar const *tips[][6] = {
@@ -377,7 +377,7 @@ void ColorICCSelector::init()
     }
 
     /* Label */
-    _label = gtk_label_new_with_mnemonic (_("_A"));
+    _label = gtk_label_new_with_mnemonic (_("_A:"));
     gtk_misc_set_alignment (GTK_MISC (_label), 1.0, 0.5);
     gtk_widget_show (_label);
     gtk_table_attach (GTK_TABLE (t), _label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD);

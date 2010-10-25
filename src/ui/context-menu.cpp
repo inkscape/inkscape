@@ -156,7 +156,7 @@ sp_item_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     gtk_widget_show(w);
     gtk_menu_append(GTK_MENU(m), w);
     /* Set Clip */
-    w = gtk_menu_item_new_with_mnemonic(_("Set Clip"));
+    w = gtk_menu_item_new_with_mnemonic(_("Set _Clip"));
     gtk_object_set_data(GTK_OBJECT(w), "desktop", desktop);
     gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_set_clip), item);
     if ((item && item->mask_ref && item->mask_ref->getObject()) || (item->clip_ref && item->clip_ref->getObject())) {
@@ -167,7 +167,7 @@ sp_item_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     gtk_widget_show(w);
     gtk_menu_append(GTK_MENU(m), w);
     /* Release Clip */
-    w = gtk_menu_item_new_with_mnemonic(_("Release Clip"));
+    w = gtk_menu_item_new_with_mnemonic(_("Release C_lip"));
     gtk_object_set_data(GTK_OBJECT(w), "desktop", desktop);
     gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_release_clip), item);
     if (item && item->clip_ref && item->clip_ref->getObject()) {

@@ -80,7 +80,7 @@
                 <_item value="edg">Edges</_item>
                 <_item value="vtx">Vertices</_item>
             </param>
-            <param name="back"  type="boolean" _gui-text="Draw back-facing polygons:">0</param>
+            <param name="back"  type="boolean" _gui-text="Draw back-facing polygons">0</param>
             <param name="z_sort" type="enum"  _gui-text="Z-sort faces by:">
                 <_item value="max">Maximum</_item>
                 <_item value="min">Minimum</_item>
