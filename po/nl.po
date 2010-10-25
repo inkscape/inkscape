@@ -4,10 +4,10 @@
 # Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>, 2003.
 # Jeroen van der Vegt <jvdvegt@gmail.com>, 2003, 2005, 2008.
 # Ruud Steltenpool <svg@steltenpower.com>, 2006.
-# Foppe Benedictus <foppe.benedictus@gmail.com>, 2007, 2008, 2009.
+# Foppe Benedictus <foppe.benedictus@gmail.com>, 2007-2009.
 # Myckel Habets <myckel@sdf.lonestar.org>, 2008
-# Kris De Gussem <kris.DeGussem@gmail.com>, 2008, 2009, 2010.
 # Benno Schulenberg <benno@vertaalt.nl>,  2008.
+# Kris De Gussem <kris.DeGussem@gmail.com>, 2008-2010.
 #
 # *** Stuur een mailtje naar <vertaling@vrijschrift.org>
 # *** voordat je met dit bestand aan de slag gaat,
@@ -51,8 +51,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-02 11:32+0200\n"
-"PO-Revision-Date: 2010-10-02 11:34+0100\n"
+"POT-Creation-Date: 2010-10-25 11:54+0200\n"
+"PO-Revision-Date: 2010-10-25 13:27+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -225,8 +225,8 @@ msgstr "Zwart en wit"
 #: ../share/filters/filters.svg.h:215
 #: ../share/filters/filters.svg.h:218
 #: ../share/filters/filters.svg.h:219
-#: ../src/dialogs/clonetiler.cpp:2607
-#: ../src/dialogs/clonetiler.cpp:2748
+#: ../src/dialogs/clonetiler.cpp:2589
+#: ../src/dialogs/clonetiler.cpp:2730
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../src/extension/internal/filter/drop-shadow.h:160
 msgid "Color"
@@ -302,12 +302,21 @@ msgstr "Groenfunctie:"
 #: ../share/extensions/web-set-att.inx.h:4
 #: ../share/extensions/web-transmit-att.inx.h:4
 #: ../src/ui/dialog/extension-editor.cpp:81
+#: ../share/extensions/gcodetools_all_in_one.inx.h:25
+#: ../share/extensions/gcodetools_area.inx.h:17
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:5
+#: ../share/extensions/gcodetools_dxf_points.inx.h:13
+#: ../share/extensions/gcodetools_engraving.inx.h:11
+#: ../share/extensions/gcodetools_lathe.inx.h:14
+#: ../share/extensions/gcodetools_orientation_points.inx.h:5
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:11
+#: ../share/extensions/gcodetools_tools_library.inx.h:3
 msgid "Help"
 msgstr "Hulp"
 
 #: ../share/extensions/color_custom.inx.h:13
-msgid "Input (r,g,b) Color Range"
-msgstr "Kleurbereik (r,g,b) invoer"
+msgid "Input (r,g,b) Color Range:"
+msgstr "Kleurbereik (r,g,b) invoer:"
 
 #. ## end option page
 #: ../share/extensions/color_custom.inx.h:14
@@ -324,13 +333,18 @@ msgstr "Kleurbereik (r,g,b) invoer"
 #: ../share/extensions/pathscatter.inx.h:10
 #: ../share/extensions/radiusrand.inx.h:6
 #: ../share/extensions/scour.inx.h:11
-#: ../share/extensions/split.inx.h:4
+#: ../share/extensions/split.inx.h:2
 #: ../share/extensions/webslicer_create_group.inx.h:7
 #: ../share/extensions/webslicer_export.inx.h:6
 #: ../share/extensions/web-set-att.inx.h:6
 #: ../share/extensions/web-transmit-att.inx.h:6
 #: ../src/ui/dialog/tracedialog.cpp:617
 #: ../src/ui/dialog/tracedialog.cpp:623
+#: ../share/extensions/gcodetools_all_in_one.inx.h:33
+#: ../share/extensions/gcodetools_area.inx.h:22
+#: ../share/extensions/gcodetools_engraving.inx.h:16
+#: ../share/extensions/gcodetools_lathe.inx.h:22
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:15
 msgid "Options"
 msgstr "Opties"
 
@@ -979,13 +993,12 @@ msgid "Generate from Path"
 msgstr "Genereren uit pad"
 
 #: ../share/extensions/extrude.inx.h:3
-#: ../share/extensions/split.inx.h:3
 msgid "Lines"
 msgstr "Lijnen"
 
 #: ../share/extensions/extrude.inx.h:4
 #: ../share/extensions/triangle.inx.h:9
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2171
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2169
 #: ../src/widgets/toolbox.cpp:4017
 #: ../src/widgets/toolbox.cpp:4395
 #: ../src/widgets/toolbox.cpp:4662
@@ -1443,7 +1456,7 @@ msgstr "Dikte cirkelvormige hulpmarkering (px):"
 #: ../src/filter-enums.cpp:94
 #: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/ui/dialog/document-properties.cpp:324
-#: ../src/ui/dialog/filter-effects-dialog.cpp:474
+#: ../src/ui/dialog/filter-effects-dialog.cpp:472
 #: ../src/ui/dialog/inkscape-preferences.cpp:266
 #: ../src/ui/dialog/inkscape-preferences.cpp:429
 #: ../src/ui/dialog/inkscape-preferences.cpp:585
@@ -1650,7 +1663,7 @@ msgid "Duplicate endpaths"
 msgstr "Eindpaden dupliceren"
 
 #: ../share/extensions/interp.inx.h:2
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2244
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2242
 msgid "Exponent:"
 msgstr "Exponent:"
 
@@ -1715,8 +1728,8 @@ msgid "No Unit"
 msgstr "Geen eenheid"
 
 #: ../share/extensions/interp_att_g.inx.h:14
-#: ../src/dialogs/clonetiler.cpp:2615
-#: ../src/dialogs/clonetiler.cpp:2758
+#: ../src/dialogs/clonetiler.cpp:2597
+#: ../src/dialogs/clonetiler.cpp:2740
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/widgets/toolbox.cpp:4475
 msgid "Opacity"
@@ -1889,8 +1902,9 @@ msgstr "Deze uitbreiding laat je toe om objecteffecten voor een JessyInk present
 #: ../share/extensions/webslicer_create_rect.inx.h:40
 #: ../src/dialogs/object-attributes.cpp:34
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2174
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2253
+#: ../src/rdf.cpp:238
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2172
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2251
 msgid "Type:"
 msgstr "Type:"
 
@@ -2336,7 +2350,7 @@ msgstr "Zinnen per alinea:"
 #. Text
 #: ../share/extensions/lorem_ipsum.inx.h:7
 #: ../share/extensions/replace_font.inx.h:10
-#: ../share/extensions/split.inx.h:8
+#: ../share/extensions/split.inx.h:6
 #: ../share/extensions/text_braille.inx.h:2
 #: ../share/extensions/text_flipcase.inx.h:1
 #: ../share/extensions/text_lowercase.inx.h:1
@@ -2361,6 +2375,8 @@ msgid "Color Markers to Match Stroke"
 msgstr "Markeringen dezelfde kleur als de omlijning geven"
 
 #: ../share/extensions/measure.inx.h:1
+#: ../share/extensions/gcodetools_all_in_one.inx.h:8
+#: ../share/extensions/gcodetools_area.inx.h:5
 msgid "Area"
 msgstr "Oppervlakte"
 
@@ -2570,7 +2586,7 @@ msgstr "Tangentiële verplaatsing:"
 
 #: ../share/extensions/pathalongpath.inx.h:18
 msgid "This effect bends a pattern object along arbitrary \"skeleton\" paths. The pattern is the topmost object in the selection (groups of paths/shapes/clones... allowed)."
-msgstr "Dit effect buigt een patroon langs willekeurige \"skeletpaden\". Het patroon is het bovenste object in de selectie. (groepen van paden/vormen/klonen/... toegestaan)."
+msgstr "Dit effect buigt een patroon langs willekeurige \"skeletpaden\". Het patroon is het bovenste object in de selectie. (groepen van paden, vormen, klonen, ... toegestaan)."
 
 #: ../share/extensions/pathscatter.inx.h:1
 msgid "Cloned"
@@ -2586,7 +2602,7 @@ msgstr "Padoriëntatie volgen"
 
 #: ../share/extensions/pathscatter.inx.h:7
 msgid "If pattern is a group, pick group members"
-msgstr ""
+msgstr "Onderdelen gebruiken, indien het patroon een groep is"
 
 #: ../share/extensions/pathscatter.inx.h:8
 msgid "Moved"
@@ -2598,7 +2614,7 @@ msgstr "Origineel patroon is:"
 
 #: ../share/extensions/pathscatter.inx.h:13
 msgid "Pick group members:"
-msgstr ""
+msgstr "Kiezen onderdeel groep:"
 
 #: ../share/extensions/pathscatter.inx.h:14
 msgid "Randomly"
@@ -2617,7 +2633,7 @@ msgstr "Sequentieel"
 
 #: ../share/extensions/pathscatter.inx.h:18
 msgid "Stretch spaces to fit skeleton length"
-msgstr "Vrij ruimte uitrekken en aanpassen aan het skeletpad"
+msgstr "Vrije ruimte uitrekken tot de lengte van het skeletpad"
 
 #: ../share/extensions/pathscatter.inx.h:20
 msgid "This effect scatters a pattern along arbitrary \"skeleton\" paths. The pattern must be the topmost object in the selection. Groups of paths, shapes, clones are allowed."
@@ -2751,8 +2767,8 @@ msgid "Dodecahedron"
 msgstr "Dodecaëder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-msgid "Draw back-facing polygons:"
-msgstr "Veelhoeken langs achterzijde tekenen:"
+msgid "Draw back-facing polygons"
+msgstr "Veelhoeken langs achterzijde tekenen"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
 msgid "Edge-Specified"
@@ -2868,7 +2884,7 @@ msgstr "Schaduw"
 #: ../share/extensions/polyhedron_3d.inx.h:36
 #: ../src/dialogs/object-attributes.cpp:43
 msgid "Show:"
-msgstr "Toon:"
+msgstr "Tonen:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
@@ -3047,7 +3063,7 @@ msgstr "Maximale verplaatsing in Y-richting (px):"
 
 #: ../share/extensions/radiusrand.inx.h:7
 msgid "Shift node handles"
-msgstr "Knoophandvatten verschuiven"
+msgstr "Knooppunthandvatten verschuiven"
 
 #: ../share/extensions/radiusrand.inx.h:8
 msgid "Shift nodes"
@@ -3071,7 +3087,7 @@ msgstr "Randomisatiewaarde:"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 #: ../src/live_effects/lpe-sketch.cpp:55
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 msgid "Scale:"
 msgstr "Schaal:"
 
@@ -3134,7 +3150,7 @@ msgstr "Alleen geselecteerde objecten"
 
 #: ../share/extensions/replace_font.inx.h:11
 msgid "Work on:"
-msgstr ""
+msgstr "Werken op:"
 
 #: ../share/extensions/restack.inx.h:2
 msgid "Arbitrary Angle"
@@ -3384,27 +3400,34 @@ msgstr "d - Penstraal (px):"
 msgid "r - Gear Radius (px):"
 msgstr "r - Tandwielstraal (px):"
 
-#: ../share/extensions/split.inx.h:2
-msgid "Letters"
-msgstr "Letters"
-
-#: ../share/extensions/split.inx.h:5
+#: ../share/extensions/split.inx.h:3
 msgid "Preserve original text"
 msgstr "Originele tekst behouden"
 
-#: ../share/extensions/split.inx.h:6
+#: ../share/extensions/split.inx.h:4
 msgid "Split text"
 msgstr "Tekst splitsen"
 
-#: ../share/extensions/split.inx.h:7
+#: ../share/extensions/split.inx.h:5
 msgid "Split:"
 msgstr "Splits:"
 
-#: ../share/extensions/split.inx.h:9
+#: ../share/extensions/split.inx.h:7
 msgid "This effect splits texts into different lines, words or letters."
 msgstr "Dit effect splits tekstobjecten in verschillende lijnen, woorden of letters."
 
+#: ../share/extensions/split.inx.h:8
+msgctxt "split"
+msgid "Letters"
+msgstr "Letters"
+
+#: ../share/extensions/split.inx.h:9
+msgctxt "split"
+msgid "Lines"
+msgstr "Lijnen"
+
 #: ../share/extensions/split.inx.h:10
+msgctxt "split"
 msgid "Words"
 msgstr "Woorden"
 
@@ -3782,6 +3805,7 @@ msgid "Force Dimension:"
 msgstr "Dimensie forceren:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:14
+#: ../src/rdf.cpp:235
 msgid "Format:"
 msgstr "Formaat:"
 
@@ -4166,6 +4190,146 @@ msgstr "Afbeelding geëxtraheerd naar: %s"
 #: ../share/extensions/extractimage.py:72
 msgid "Unable to find image data."
 msgstr "Geen afbeeldingsdata gevonden."
+
+#: ../share/extensions/gcodetools.py:3087
+msgid "Directory does not exist! Please specify existing directory at Preferences tab!"
+msgstr "Map bestaat niet! Geef alstublief een bestaande map op in het tabblad Voorkeuren!"
+
+#: ../share/extensions/gcodetools.py:3112
+#, python-format
+msgid ""
+"Can not write to specified file!\n"
+"%s"
+msgstr ""
+"Kan niet schrijven naar opgegeven bestand!\n"
+"%s"
+
+#: ../share/extensions/gcodetools.py:3240
+#, python-format
+msgid "Orientation points for '%s' layer have not been found! Please add orientation points using Orientation tab!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3246
+#, python-format
+msgid "There are more than one orientation point groups in '%s' layer"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3277
+#: ../share/extensions/gcodetools.py:3279
+msgid "Orientation points are wrong! (if there are two orientation points they sould not be the same. If there are three orientation points they should not be in a straight line.)"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3398
+#, python-format
+msgid "Warning! Found bad orientation points in '%s' layer. Resulting Gcode could be corrupt!"
+msgstr ""
+
+#. xgettext:no-pango-format
+#: ../share/extensions/gcodetools.py:3412
+msgid ""
+"This extension works with Paths and Dynamic Offsets and groups of them only! All other objects will be ignored!\n"
+"Solution 1: press Path->Object to path or Shift+Ctrl+C.\n"
+"Solution 2: Path->Dynamic offset or Ctrl+J.\n"
+"Solution 3: export all contours to PostScript level 2 (File->Save As->.ps) and File->Import this file."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3469
+#, python-format
+msgid "Warning! Tool's and default tool's parameter's (%s) types are not the same ( type('%s') != type('%s') )."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3472
+#, python-format
+msgid "Warning! Tool has parameter that default tool has not ( '%s': '%s' )."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3486
+#, python-format
+msgid "Layer '%s' contains more than one tool!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3489
+#, python-format
+msgid "Can not find tool for '%s' layer! Please add one with Tools library tab!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3592
+#: ../share/extensions/gcodetools.py:3673
+msgid "No paths are selected! Trying to work on all available paths."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3611
+#: ../share/extensions/gcodetools.py:3682
+msgid "Warning: One or more paths dont have 'd' parameter, try to Ungroup (Ctrl+Shift+G) and Object to Path (Ctrl+Shift+C)!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3641
+msgid "Noting is selected. Please select something to convert to drill point (dxfpoint) or clear point sign."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3714
+#: ../share/extensions/gcodetools.py:3808
+msgid "This extension requires at least one selected path."
+msgstr "Deze uitbreiding vereist ten minste één geselecteerd pad."
+
+#: ../share/extensions/gcodetools.py:3720
+#, python-format
+msgid "Tool diameter must be > 0 but tool's diameter on '%s' layer is not!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3731
+msgid "Warning: omitting non-path"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4063
+#, python-format
+msgid "Tool '%s' has no shape!"
+msgstr "Gereedschap '%s' heeft geen vorm!"
+
+#: ../share/extensions/gcodetools.py:4073
+msgid "No need to engrave sharp angles."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4086
+msgid "Active layer already has orientation points! Remove them or select another layer!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4134
+msgid "Active layer already has a tool! Remove it or select another layer!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4258
+msgid "Selection is empty! Will compute whole drawing."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4318
+msgid ""
+"Tutorials, manuals and support can be found at\n"
+"English support forum:\n"
+"\thttp://www.cnc-club.ru/gcodetools\n"
+"and Russian support forum:\n"
+"\thttp://www.cnc-club.ru/gcodetoolsru"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4363
+msgid "Lathe X and Z axis remap should be 'X', 'Y' or 'Z'. Exiting..."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4366
+msgid "Lathe X and Z axis remap should be the same. Exiting..."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4527
+msgid "Select one of the active tabs - Path to Gcode, Area, Engraving, DXF points, Orientation, Offset, Lathe or Tools library."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4533
+msgid "Orientation points have not been defined! A default set of orientation points has been automatically added."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4537
+msgid "Cutting tool has not been defined! A default tool has been automatically added."
+msgstr ""
 
 #: ../share/extensions/inkex.py:67
 #, python-format
@@ -6495,7 +6659,7 @@ msgstr "Bepaalt de richting en mate van uitrekking"
 
 #: ../src/sp-flowtext.cpp:378
 #: ../src/sp-text.cpp:427
-#: ../src/text-context.cpp:1604
+#: ../src/text-context.cpp:1628
 msgid " [truncated]"
 msgstr " [afgekort]"
 
@@ -6645,69 +6809,69 @@ msgstr "Er is geen vorige zoom."
 msgid "No next zoom."
 msgstr "Er is geen volgende zoom."
 
-#: ../src/dialogs/clonetiler.cpp:155
+#: ../src/dialogs/clonetiler.cpp:145
 msgid "<small>Nothing selected.</small>"
 msgstr "<small>Niets geselecteerd.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:161
+#: ../src/dialogs/clonetiler.cpp:151
 msgid "<small>More than one object selected.</small>"
 msgstr "<small>Meer dan één object geselecteerd.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:168
+#: ../src/dialogs/clonetiler.cpp:158
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
 msgstr "<small>Het object heeft <b>%d</b> getegelde klonen.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:173
+#: ../src/dialogs/clonetiler.cpp:163
 msgid "<small>Object has no tiled clones.</small>"
 msgstr "<small>Het object heeft geen getegelde klonen.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:976
+#: ../src/dialogs/clonetiler.cpp:966
 msgid "Select <b>one object</b> whose tiled clones to unclump."
 msgstr "Selecteer <b>één object</b> wiens klonen ontklonterd moeten worden."
 
-#: ../src/dialogs/clonetiler.cpp:998
+#: ../src/dialogs/clonetiler.cpp:988
 msgid "Unclump tiled clones"
 msgstr "Getegelde klonen ontklonteren"
 
-#: ../src/dialogs/clonetiler.cpp:1028
+#: ../src/dialogs/clonetiler.cpp:1018
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Selecteer <b>één object</b> waarvan de getegelde klonen verwijderd moeten worden."
 
-#: ../src/dialogs/clonetiler.cpp:1051
+#: ../src/dialogs/clonetiler.cpp:1041
 msgid "Delete tiled clones"
 msgstr "Verwijder getegelde klonen"
 
-#: ../src/dialogs/clonetiler.cpp:1097
+#: ../src/dialogs/clonetiler.cpp:1087
 #: ../src/selection-chemistry.cpp:2021
 msgid "Select an <b>object</b> to clone."
 msgstr "Selecteer een <b>object</b> om te klonen."
 
-#: ../src/dialogs/clonetiler.cpp:1103
+#: ../src/dialogs/clonetiler.cpp:1093
 msgid "If you want to clone several objects, <b>group</b> them and <b>clone the group</b>."
 msgstr "Als u meerdere objecten wilt klonen, <b>groepeer</b> ze dan en <b>kloon de groep</b>."
 
-#: ../src/dialogs/clonetiler.cpp:1112
+#: ../src/dialogs/clonetiler.cpp:1102
 msgid "<small>Creating tiled clones...</small>"
 msgstr "<small>Getegelde klonen maken...</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1515
+#: ../src/dialogs/clonetiler.cpp:1505
 msgid "Create tiled clones"
 msgstr "Tegelen met klonen"
 
-#: ../src/dialogs/clonetiler.cpp:1706
+#: ../src/dialogs/clonetiler.cpp:1696
 msgid "<small>Per row:</small>"
 msgstr "<small>Per rij:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1719
+#: ../src/dialogs/clonetiler.cpp:1709
 msgid "<small>Per column:</small>"
 msgstr "<small>Per kolom:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1727
+#: ../src/dialogs/clonetiler.cpp:1717
 msgid "<small>Randomize:</small>"
 msgstr "<small>Willekeurig:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1888
+#: ../src/dialogs/clonetiler.cpp:1870
 msgid "_Symmetry"
 msgstr "_Symmetrie"
 
@@ -6716,595 +6880,595 @@ msgstr "_Symmetrie"
 #. * http://www.clarku.edu/~djoyce/wallpaper/seventeen.html (English vocabulary); or
 #. * http://membres.lycos.fr/villemingerard/Geometri/Sym1D.htm (French vocabulary).
 #.
-#: ../src/dialogs/clonetiler.cpp:1896
+#: ../src/dialogs/clonetiler.cpp:1878
 msgid "Select one of the 17 symmetry groups for the tiling"
 msgstr "Selecteer één van de 17 symmetriegroepen voor het tegelen"
 
 #. TRANSLATORS: "translation" means "shift" / "displacement" here.
-#: ../src/dialogs/clonetiler.cpp:1907
+#: ../src/dialogs/clonetiler.cpp:1889
 msgid "<b>P1</b>: simple translation"
 msgstr "<b>P1</b>: eenvoudige verplaatsing"
 
-#: ../src/dialogs/clonetiler.cpp:1908
+#: ../src/dialogs/clonetiler.cpp:1890
 msgid "<b>P2</b>: 180&#176; rotation"
 msgstr "<b>P2</b>: 180&#176; draaiing"
 
-#: ../src/dialogs/clonetiler.cpp:1909
+#: ../src/dialogs/clonetiler.cpp:1891
 msgid "<b>PM</b>: reflection"
 msgstr "<b>PM</b>: spiegeling"
 
 #. TRANSLATORS: "glide reflection" is a reflection and a translation combined.
 #. For more info, see http://mathforum.org/sum95/suzanne/symsusan.html
-#: ../src/dialogs/clonetiler.cpp:1912
+#: ../src/dialogs/clonetiler.cpp:1894
 msgid "<b>PG</b>: glide reflection"
 msgstr "<b>PG</b>: schuifspiegeling"
 
-#: ../src/dialogs/clonetiler.cpp:1913
+#: ../src/dialogs/clonetiler.cpp:1895
 msgid "<b>CM</b>: reflection + glide reflection"
 msgstr "<b>CM</b>: spiegeling + schuifspiegeling"
 
-#: ../src/dialogs/clonetiler.cpp:1914
+#: ../src/dialogs/clonetiler.cpp:1896
 msgid "<b>PMM</b>: reflection + reflection"
 msgstr "<b>PMM</b>: spiegeling + spiegeling"
 
-#: ../src/dialogs/clonetiler.cpp:1915
+#: ../src/dialogs/clonetiler.cpp:1897
 msgid "<b>PMG</b>: reflection + 180&#176; rotation"
 msgstr "<b>PMG</b>: spiegeling + 180&#176; draaiing"
 
-#: ../src/dialogs/clonetiler.cpp:1916
+#: ../src/dialogs/clonetiler.cpp:1898
 msgid "<b>PGG</b>: glide reflection + 180&#176; rotation"
 msgstr "<b>PGG</b>: schuifspiegeling + 180&#176; draaiing"
 
-#: ../src/dialogs/clonetiler.cpp:1917
+#: ../src/dialogs/clonetiler.cpp:1899
 msgid "<b>CMM</b>: reflection + reflection + 180&#176; rotation"
 msgstr "<b>CMM</b>: spiegeling + spiegeling + 180&#176; draaiing"
 
-#: ../src/dialogs/clonetiler.cpp:1918
+#: ../src/dialogs/clonetiler.cpp:1900
 msgid "<b>P4</b>: 90&#176; rotation"
 msgstr "<b>P4</b>: 90&#176; draaiing"
 
-#: ../src/dialogs/clonetiler.cpp:1919
+#: ../src/dialogs/clonetiler.cpp:1901
 msgid "<b>P4M</b>: 90&#176; rotation + 45&#176; reflection"
 msgstr "<b>P4M</b>: 90&#176; draaiing + 45&#176; spiegeling"
 
-#: ../src/dialogs/clonetiler.cpp:1920
+#: ../src/dialogs/clonetiler.cpp:1902
 msgid "<b>P4G</b>: 90&#176; rotation + 90&#176; reflection"
 msgstr "<b>P4G</b>: 90&#176; draaiing + 90&#176; spiegeling"
 
-#: ../src/dialogs/clonetiler.cpp:1921
+#: ../src/dialogs/clonetiler.cpp:1903
 msgid "<b>P3</b>: 120&#176; rotation"
 msgstr "<b>P3</b>: 120&#176; draaiing"
 
-#: ../src/dialogs/clonetiler.cpp:1922
+#: ../src/dialogs/clonetiler.cpp:1904
 msgid "<b>P31M</b>: reflection + 120&#176; rotation, dense"
 msgstr "<b>P31M</b>: spiegeling + 120&#176; draaiing, dicht"
 
-#: ../src/dialogs/clonetiler.cpp:1923
+#: ../src/dialogs/clonetiler.cpp:1905
 msgid "<b>P3M1</b>: reflection + 120&#176; rotation, sparse"
 msgstr "<b>P3M1</b>: spiegeling + 120&#176; draaiing, dun"
 
-#: ../src/dialogs/clonetiler.cpp:1924
+#: ../src/dialogs/clonetiler.cpp:1906
 msgid "<b>P6</b>: 60&#176; rotation"
 msgstr "<b>P6</b>: 60&#176; draaiing"
 
-#: ../src/dialogs/clonetiler.cpp:1925
+#: ../src/dialogs/clonetiler.cpp:1907
 msgid "<b>P6M</b>: reflection + 60&#176; rotation"
 msgstr "<b>P6M</b>: spiegeling + 60&#176; draaiing"
 
-#: ../src/dialogs/clonetiler.cpp:1953
+#: ../src/dialogs/clonetiler.cpp:1935
 msgid "S_hift"
 msgstr "Ver_plaatsing"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
-#: ../src/dialogs/clonetiler.cpp:1963
+#: ../src/dialogs/clonetiler.cpp:1945
 #, no-c-format
 msgid "<b>Shift X:</b>"
 msgstr "<b>X-verplaatsing:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1971
+#: ../src/dialogs/clonetiler.cpp:1953
 #, no-c-format
 msgid "Horizontal shift per row (in % of tile width)"
 msgstr "Horizontale verplaatsing voor elke volgende rij (in % van de tegelbreedte)"
 
-#: ../src/dialogs/clonetiler.cpp:1979
+#: ../src/dialogs/clonetiler.cpp:1961
 #, no-c-format
 msgid "Horizontal shift per column (in % of tile width)"
 msgstr "Horizontale verplaatsing voor elke volgende kolom (in % van de tegelbreedte)"
 
-#: ../src/dialogs/clonetiler.cpp:1986
+#: ../src/dialogs/clonetiler.cpp:1968
 msgid "Randomize the horizontal shift by this percentage"
 msgstr "De horizontale positie binnen dit percentage willekeurig aanpassen"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) vertically by this amount
-#: ../src/dialogs/clonetiler.cpp:1996
+#: ../src/dialogs/clonetiler.cpp:1978
 #, no-c-format
 msgid "<b>Shift Y:</b>"
 msgstr "<b>Y-verplaatsing:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2004
+#: ../src/dialogs/clonetiler.cpp:1986
 #, no-c-format
 msgid "Vertical shift per row (in % of tile height)"
 msgstr "Verticale verplaatsing voor elke volgende rij (in % van de tegelhoogte)"
 
-#: ../src/dialogs/clonetiler.cpp:2012
+#: ../src/dialogs/clonetiler.cpp:1994
 #, no-c-format
 msgid "Vertical shift per column (in % of tile height)"
 msgstr "Verticale verplaatsing voor elke volgende kolom (in % van de tegelhoogte)"
 
-#: ../src/dialogs/clonetiler.cpp:2019
+#: ../src/dialogs/clonetiler.cpp:2001
 msgid "Randomize the vertical shift by this percentage"
 msgstr "De verticale positie binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2027
-#: ../src/dialogs/clonetiler.cpp:2175
+#: ../src/dialogs/clonetiler.cpp:2009
+#: ../src/dialogs/clonetiler.cpp:2157
 msgid "<b>Exponent:</b>"
 msgstr "<b>Exponent:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2034
+#: ../src/dialogs/clonetiler.cpp:2016
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "Of de rij-afstand gelijk blijft (1), afneemt (<1) of toeneemt (>1)"
 
-#: ../src/dialogs/clonetiler.cpp:2041
+#: ../src/dialogs/clonetiler.cpp:2023
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "Of de kolom-afstand gelijk blijft (1), afneemt (<1) of toeneemt (>1)"
 
 #. TRANSLATORS: "Alternate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:2049
-#: ../src/dialogs/clonetiler.cpp:2219
-#: ../src/dialogs/clonetiler.cpp:2296
-#: ../src/dialogs/clonetiler.cpp:2372
-#: ../src/dialogs/clonetiler.cpp:2421
-#: ../src/dialogs/clonetiler.cpp:2552
+#: ../src/dialogs/clonetiler.cpp:2031
+#: ../src/dialogs/clonetiler.cpp:2201
+#: ../src/dialogs/clonetiler.cpp:2278
+#: ../src/dialogs/clonetiler.cpp:2354
+#: ../src/dialogs/clonetiler.cpp:2403
+#: ../src/dialogs/clonetiler.cpp:2534
 msgid "<small>Alternate:</small>"
 msgstr "<small>Afwisselen:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:2055
+#: ../src/dialogs/clonetiler.cpp:2037
 msgid "Alternate the sign of shifts for each row"
 msgstr "De verplaatsingen voor elke rij om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2060
+#: ../src/dialogs/clonetiler.cpp:2042
 msgid "Alternate the sign of shifts for each column"
 msgstr "De verplaatsingen voor elke kolom om-en-om afwisselen"
 
 #. TRANSLATORS: "Cumulate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:2067
-#: ../src/dialogs/clonetiler.cpp:2237
-#: ../src/dialogs/clonetiler.cpp:2314
+#: ../src/dialogs/clonetiler.cpp:2049
+#: ../src/dialogs/clonetiler.cpp:2219
+#: ../src/dialogs/clonetiler.cpp:2296
 msgid "<small>Cumulate:</small>"
 msgstr "<small>Optellen:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:2073
+#: ../src/dialogs/clonetiler.cpp:2055
 msgid "Cumulate the shifts for each row"
 msgstr "De verplaatsingen voor elke rij optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2078
+#: ../src/dialogs/clonetiler.cpp:2060
 msgid "Cumulate the shifts for each column"
 msgstr "De verplaatsingen voor elke kolom optellen"
 
 #. TRANSLATORS: "Cumulate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:2085
+#: ../src/dialogs/clonetiler.cpp:2067
 msgid "<small>Exclude tile:</small>"
 msgstr "<small>Tegel uitsluiten:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:2091
+#: ../src/dialogs/clonetiler.cpp:2073
 msgid "Exclude tile height in shift"
 msgstr "Tegelhoogte niet bij verplaatsing optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2096
+#: ../src/dialogs/clonetiler.cpp:2078
 msgid "Exclude tile width in shift"
 msgstr "Tegelbreedte niet bij verplaatsing optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2105
+#: ../src/dialogs/clonetiler.cpp:2087
 msgid "Sc_ale"
 msgstr "_Schalen"
 
-#: ../src/dialogs/clonetiler.cpp:2113
+#: ../src/dialogs/clonetiler.cpp:2095
 msgid "<b>Scale X:</b>"
 msgstr "<b>X-vergroting:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2121
+#: ../src/dialogs/clonetiler.cpp:2103
 #, no-c-format
 msgid "Horizontal scale per row (in % of tile width)"
 msgstr "Horizontale vergroting voor elke volgende rij (in % van de tegelbreedte)"
 
-#: ../src/dialogs/clonetiler.cpp:2129
+#: ../src/dialogs/clonetiler.cpp:2111
 #, no-c-format
 msgid "Horizontal scale per column (in % of tile width)"
 msgstr "Horizontale vergroting voor elke volgende kolom (in % van de tegelbreedte)"
 
-#: ../src/dialogs/clonetiler.cpp:2136
+#: ../src/dialogs/clonetiler.cpp:2118
 msgid "Randomize the horizontal scale by this percentage"
 msgstr "De horizontale afmeting binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2144
+#: ../src/dialogs/clonetiler.cpp:2126
 msgid "<b>Scale Y:</b>"
 msgstr "<b>Y-vergroting:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2152
+#: ../src/dialogs/clonetiler.cpp:2134
 #, no-c-format
 msgid "Vertical scale per row (in % of tile height)"
 msgstr "Verticale vergroting voor elke volgende rij (in % van de tegelhoogte)"
 
-#: ../src/dialogs/clonetiler.cpp:2160
+#: ../src/dialogs/clonetiler.cpp:2142
 #, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
 msgstr "Verticale vergroting voor elke volgende kolom (in % van de tegelhoogte)"
 
-#: ../src/dialogs/clonetiler.cpp:2167
+#: ../src/dialogs/clonetiler.cpp:2149
 msgid "Randomize the vertical scale by this percentage"
 msgstr "De verticale afmeting binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2182
+#: ../src/dialogs/clonetiler.cpp:2164
 msgid "Whether row scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr "Soort rijvergroting: uniform (1), convergent (<1) of divergent (>1)"
 
-#: ../src/dialogs/clonetiler.cpp:2189
+#: ../src/dialogs/clonetiler.cpp:2171
 msgid "Whether column scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr "Soort kolomvergroting: uniform (1), convergent (<1) of divergent (>1)"
 
-#: ../src/dialogs/clonetiler.cpp:2197
+#: ../src/dialogs/clonetiler.cpp:2179
 msgid "<b>Base:</b>"
 msgstr "<b>Grondtal:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2204
-#: ../src/dialogs/clonetiler.cpp:2211
+#: ../src/dialogs/clonetiler.cpp:2186
+#: ../src/dialogs/clonetiler.cpp:2193
 msgid "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
 msgstr "Grondtal voor logaritmische spiraal: ongebruikt (0), convergent (<1) of divergent (>1)"
 
-#: ../src/dialogs/clonetiler.cpp:2225
+#: ../src/dialogs/clonetiler.cpp:2207
 msgid "Alternate the sign of scales for each row"
 msgstr "De vergroting voor elke rij om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2230
+#: ../src/dialogs/clonetiler.cpp:2212
 msgid "Alternate the sign of scales for each column"
 msgstr "De vergroting voor elke kolom om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2243
+#: ../src/dialogs/clonetiler.cpp:2225
 msgid "Cumulate the scales for each row"
 msgstr "De vergrotingen voor elke rij optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2248
+#: ../src/dialogs/clonetiler.cpp:2230
 msgid "Cumulate the scales for each column"
 msgstr "De vergrotingen voor elke kolom optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2257
+#: ../src/dialogs/clonetiler.cpp:2239
 msgid "_Rotation"
 msgstr "_Draaiing"
 
-#: ../src/dialogs/clonetiler.cpp:2265
+#: ../src/dialogs/clonetiler.cpp:2247
 msgid "<b>Angle:</b>"
 msgstr "<b>Hoek:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2273
+#: ../src/dialogs/clonetiler.cpp:2255
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
 msgstr "Elke volgende rij de tegels over deze hoek draaien"
 
-#: ../src/dialogs/clonetiler.cpp:2281
+#: ../src/dialogs/clonetiler.cpp:2263
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
 msgstr "Elke volgende kolom de tegels over deze hoek draaien"
 
-#: ../src/dialogs/clonetiler.cpp:2288
+#: ../src/dialogs/clonetiler.cpp:2270
 msgid "Randomize the rotation angle by this percentage"
 msgstr "De draaihoek binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2302
+#: ../src/dialogs/clonetiler.cpp:2284
 msgid "Alternate the rotation direction for each row"
 msgstr "De draairichting voor elke rij om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2307
+#: ../src/dialogs/clonetiler.cpp:2289
 msgid "Alternate the rotation direction for each column"
 msgstr "De draairichting voor elke kolom om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2320
+#: ../src/dialogs/clonetiler.cpp:2302
 msgid "Cumulate the rotation for each row"
 msgstr "De draaiingen voor elke rij optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2325
+#: ../src/dialogs/clonetiler.cpp:2307
 msgid "Cumulate the rotation for each column"
 msgstr "De draaiingen voor elke kolom optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2334
+#: ../src/dialogs/clonetiler.cpp:2316
 msgid "_Blur & opacity"
 msgstr "_Vervaging & ondoorzichtigheid"
 
-#: ../src/dialogs/clonetiler.cpp:2343
+#: ../src/dialogs/clonetiler.cpp:2325
 msgid "<b>Blur:</b>"
 msgstr "<b>Vervaging:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2350
+#: ../src/dialogs/clonetiler.cpp:2332
 msgid "Blur tiles by this percentage for each row"
 msgstr "De tegels elke volgende rij met dit percentage vervagen"
 
-#: ../src/dialogs/clonetiler.cpp:2357
+#: ../src/dialogs/clonetiler.cpp:2339
 msgid "Blur tiles by this percentage for each column"
 msgstr "De tegels elke volgende kolom met dit percentage vervagen"
 
-#: ../src/dialogs/clonetiler.cpp:2364
+#: ../src/dialogs/clonetiler.cpp:2346
 msgid "Randomize the tile blur by this percentage"
 msgstr "Tegels binnen dit percentage willekeurig vervagen"
 
-#: ../src/dialogs/clonetiler.cpp:2378
+#: ../src/dialogs/clonetiler.cpp:2360
 msgid "Alternate the sign of blur change for each row"
 msgstr "De vervaging voor elke rij om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2383
+#: ../src/dialogs/clonetiler.cpp:2365
 msgid "Alternate the sign of blur change for each column"
 msgstr "De vervaging voor elke kolom om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2392
+#: ../src/dialogs/clonetiler.cpp:2374
 msgid "<b>Fade out:</b>"
 msgstr "<b>Oplossing:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2399
+#: ../src/dialogs/clonetiler.cpp:2381
 msgid "Decrease tile opacity by this percentage for each row"
 msgstr "De ondoorzichtigheid elke volgende rij met dit percentage verminderen"
 
-#: ../src/dialogs/clonetiler.cpp:2406
+#: ../src/dialogs/clonetiler.cpp:2388
 msgid "Decrease tile opacity by this percentage for each column"
 msgstr "De ondoorzichtigheid elke volgende kolom met dit percentage verminderen"
 
-#: ../src/dialogs/clonetiler.cpp:2413
+#: ../src/dialogs/clonetiler.cpp:2395
 msgid "Randomize the tile opacity by this percentage"
 msgstr "De ondoorzichtigheid binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2427
+#: ../src/dialogs/clonetiler.cpp:2409
 msgid "Alternate the sign of opacity change for each row"
 msgstr "De doorzichtigheid voor elke rij om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2432
+#: ../src/dialogs/clonetiler.cpp:2414
 msgid "Alternate the sign of opacity change for each column"
 msgstr "De doorzichtigheid voor elke kolom om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2440
+#: ../src/dialogs/clonetiler.cpp:2422
 msgid "Co_lor"
 msgstr "_Kleur"
 
-#: ../src/dialogs/clonetiler.cpp:2445
+#: ../src/dialogs/clonetiler.cpp:2427
 msgid "Initial color: "
 msgstr "Beginkleur: "
 
-#: ../src/dialogs/clonetiler.cpp:2449
+#: ../src/dialogs/clonetiler.cpp:2431
 msgid "Initial color of tiled clones"
 msgstr "Beginkleur van getegelde klonen"
 
-#: ../src/dialogs/clonetiler.cpp:2449
+#: ../src/dialogs/clonetiler.cpp:2431
 msgid "Initial color for clones (works only if the original has unset fill or stroke)"
 msgstr "Beginkleur van klonen (werkt alleen als het origineel geen vulling of lijn heeft)"
 
-#: ../src/dialogs/clonetiler.cpp:2464
+#: ../src/dialogs/clonetiler.cpp:2446
 msgid "<b>H:</b>"
 msgstr "<b>Tint:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2471
+#: ../src/dialogs/clonetiler.cpp:2453
 msgid "Change the tile hue by this percentage for each row"
 msgstr "De tint elke volgende rij met dit percentage aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2478
+#: ../src/dialogs/clonetiler.cpp:2460
 msgid "Change the tile hue by this percentage for each column"
 msgstr "De tint elke volgende kolom met dit percentage aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2485
+#: ../src/dialogs/clonetiler.cpp:2467
 msgid "Randomize the tile hue by this percentage"
 msgstr "De tint binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2494
+#: ../src/dialogs/clonetiler.cpp:2476
 msgid "<b>S:</b>"
 msgstr "<b>Verzadiging:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2501
+#: ../src/dialogs/clonetiler.cpp:2483
 msgid "Change the color saturation by this percentage for each row"
 msgstr "De verzadiging elke volgende rij met dit percentage aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2508
+#: ../src/dialogs/clonetiler.cpp:2490
 msgid "Change the color saturation by this percentage for each column"
 msgstr "De verzadiging elke volgende kolom met dit percentage aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2515
+#: ../src/dialogs/clonetiler.cpp:2497
 msgid "Randomize the color saturation by this percentage"
 msgstr "De verzadiging binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2523
+#: ../src/dialogs/clonetiler.cpp:2505
 msgid "<b>L:</b>"
 msgstr "<b>Helderheid:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2530
+#: ../src/dialogs/clonetiler.cpp:2512
 msgid "Change the color lightness by this percentage for each row"
 msgstr "De helderheid elke volgende rij met dit percentage aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2537
+#: ../src/dialogs/clonetiler.cpp:2519
 msgid "Change the color lightness by this percentage for each column"
 msgstr "De helderheid elke volgende kolom met dit percentage aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2544
+#: ../src/dialogs/clonetiler.cpp:2526
 msgid "Randomize the color lightness by this percentage"
 msgstr "De helderheid binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2558
+#: ../src/dialogs/clonetiler.cpp:2540
 msgid "Alternate the sign of color changes for each row"
 msgstr "De kleurwijzigingen voor elke rij om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2563
+#: ../src/dialogs/clonetiler.cpp:2545
 msgid "Alternate the sign of color changes for each column"
 msgstr "De kleurwijzigingen voor elke kolom om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2571
+#: ../src/dialogs/clonetiler.cpp:2553
 msgid "_Trace"
 msgstr "_Overtrekken"
 
-#: ../src/dialogs/clonetiler.cpp:2578
+#: ../src/dialogs/clonetiler.cpp:2560
 msgid "Trace the drawing under the tiles"
 msgstr "De tekening onder de tegels gebruiken"
 
-#: ../src/dialogs/clonetiler.cpp:2582
+#: ../src/dialogs/clonetiler.cpp:2564
 msgid "For each clone, pick a value from the drawing in that clone's location and apply it to the clone"
 msgstr "Voor elke kloon een eigenschap van de tekening op dat punt gebruiken om die kloon te beïnvloeden."
 
-#: ../src/dialogs/clonetiler.cpp:2596
+#: ../src/dialogs/clonetiler.cpp:2578
 msgid "1. Pick from the drawing:"
 msgstr "1. Kies een eigenschap uit de tekening:"
 
-#: ../src/dialogs/clonetiler.cpp:2608
+#: ../src/dialogs/clonetiler.cpp:2590
 msgid "Pick the visible color and opacity"
 msgstr "Selecteer de zichtbare kleur en de ondoorzichtigheid"
 
-#: ../src/dialogs/clonetiler.cpp:2616
+#: ../src/dialogs/clonetiler.cpp:2598
 msgid "Pick the total accumulated opacity"
 msgstr "Selecteer de gesommeerde ondoorzichtigheid"
 
-#: ../src/dialogs/clonetiler.cpp:2623
+#: ../src/dialogs/clonetiler.cpp:2605
 msgid "R"
 msgstr "R"
 
-#: ../src/dialogs/clonetiler.cpp:2624
+#: ../src/dialogs/clonetiler.cpp:2606
 msgid "Pick the Red component of the color"
 msgstr "Selecteer de roodcomponent van de kleur"
 
-#: ../src/dialogs/clonetiler.cpp:2631
+#: ../src/dialogs/clonetiler.cpp:2613
 msgid "G"
 msgstr "G"
 
-#: ../src/dialogs/clonetiler.cpp:2632
+#: ../src/dialogs/clonetiler.cpp:2614
 msgid "Pick the Green component of the color"
 msgstr "Selecteer de groencomponent van de kleur"
 
-#: ../src/dialogs/clonetiler.cpp:2639
+#: ../src/dialogs/clonetiler.cpp:2621
 msgid "B"
 msgstr "B"
 
-#: ../src/dialogs/clonetiler.cpp:2640
+#: ../src/dialogs/clonetiler.cpp:2622
 msgid "Pick the Blue component of the color"
 msgstr "Selecteer de blauwcomponent van de kleur"
 
-#: ../src/dialogs/clonetiler.cpp:2647
+#: ../src/dialogs/clonetiler.cpp:2629
 msgctxt "Clonetiler color hue"
 msgid "H"
 msgstr "T"
 
-#: ../src/dialogs/clonetiler.cpp:2648
+#: ../src/dialogs/clonetiler.cpp:2630
 msgid "Pick the hue of the color"
 msgstr "De tint van de kleur kiezen"
 
-#: ../src/dialogs/clonetiler.cpp:2655
+#: ../src/dialogs/clonetiler.cpp:2637
 msgctxt "Clonetiler color saturation"
 msgid "S"
 msgstr "V"
 
-#: ../src/dialogs/clonetiler.cpp:2656
+#: ../src/dialogs/clonetiler.cpp:2638
 msgid "Pick the saturation of the color"
 msgstr "De verzadiging van de kleur kiezen"
 
-#: ../src/dialogs/clonetiler.cpp:2663
+#: ../src/dialogs/clonetiler.cpp:2645
 msgctxt "Clonetiler color lightness"
 msgid "L"
 msgstr "H"
 
-#: ../src/dialogs/clonetiler.cpp:2664
+#: ../src/dialogs/clonetiler.cpp:2646
 msgid "Pick the lightness of the color"
 msgstr "De helderheid van de kleur kiezen"
 
-#: ../src/dialogs/clonetiler.cpp:2674
+#: ../src/dialogs/clonetiler.cpp:2656
 msgid "2. Tweak the picked value:"
 msgstr "2. De geselecteerde eigenschap fijnafstemmen:"
 
-#: ../src/dialogs/clonetiler.cpp:2684
+#: ../src/dialogs/clonetiler.cpp:2666
 msgid "Gamma-correct:"
 msgstr "Gammacorrectie:"
 
-#: ../src/dialogs/clonetiler.cpp:2689
+#: ../src/dialogs/clonetiler.cpp:2671
 msgid "Shift the mid-range of the picked value upwards (>0) or downwards (<0)"
 msgstr "Het middengebied van de gekozen eigenschap verhogen (>0) of verlagen (<0)"
 
-#: ../src/dialogs/clonetiler.cpp:2696
+#: ../src/dialogs/clonetiler.cpp:2678
 msgid "Randomize:"
 msgstr "Willekeur:"
 
-#: ../src/dialogs/clonetiler.cpp:2701
+#: ../src/dialogs/clonetiler.cpp:2683
 msgid "Randomize the picked value by this percentage"
 msgstr "De geselecteerde eigenschap binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2708
+#: ../src/dialogs/clonetiler.cpp:2690
 msgid "Invert:"
 msgstr "Omdraaien:"
 
-#: ../src/dialogs/clonetiler.cpp:2712
+#: ../src/dialogs/clonetiler.cpp:2694
 msgid "Invert the picked value"
 msgstr "Draai de geselecteerde eigenschap om"
 
-#: ../src/dialogs/clonetiler.cpp:2718
+#: ../src/dialogs/clonetiler.cpp:2700
 msgid "3. Apply the value to the clones':"
 msgstr "3. De relatie tussen de eigenschap en de klonen:"
 
-#: ../src/dialogs/clonetiler.cpp:2728
+#: ../src/dialogs/clonetiler.cpp:2710
 msgid "Presence"
 msgstr "Aanwezigheid"
 
-#: ../src/dialogs/clonetiler.cpp:2731
+#: ../src/dialogs/clonetiler.cpp:2713
 msgid "Each clone is created with the probability determined by the picked value in that point"
 msgstr "De kans dat een kloon op een plek wordt gemaakt is afhankelijk van de waarde van de geselecteerde eigenschap op dat punt."
 
-#: ../src/dialogs/clonetiler.cpp:2738
+#: ../src/dialogs/clonetiler.cpp:2720
 msgid "Size"
 msgstr "Afmeting"
 
-#: ../src/dialogs/clonetiler.cpp:2741
+#: ../src/dialogs/clonetiler.cpp:2723
 msgid "Each clone's size is determined by the picked value in that point"
 msgstr "De grootte van een kloon is afhankelijk van de waarde van de geselecteerde eigenschap op dat punt"
 
-#: ../src/dialogs/clonetiler.cpp:2751
+#: ../src/dialogs/clonetiler.cpp:2733
 msgid "Each clone is painted by the picked color (the original must have unset fill or stroke)"
 msgstr "Klonen worden getekend in de geselecteerde kleur (werkt alleen als de kleur van de lijnen of de vulling van het origineel verwijderd is)"
 
-#: ../src/dialogs/clonetiler.cpp:2761
+#: ../src/dialogs/clonetiler.cpp:2743
 msgid "Each clone's opacity is determined by the picked value in that point"
 msgstr "De ondoorzichtigheid van een kloon is afhankelijk van de waarde van de geselecteerde eigenschap op dat punt"
 
-#: ../src/dialogs/clonetiler.cpp:2788
+#: ../src/dialogs/clonetiler.cpp:2770
 msgid "How many rows in the tiling"
 msgstr "Hoeveel rijen er betegeld moeten worden"
 
-#: ../src/dialogs/clonetiler.cpp:2808
+#: ../src/dialogs/clonetiler.cpp:2790
 msgid "How many columns in the tiling"
 msgstr "Hoeveel kolommen er betegeld moeten worden"
 
-#: ../src/dialogs/clonetiler.cpp:2838
+#: ../src/dialogs/clonetiler.cpp:2820
 msgid "Width of the rectangle to be filled"
 msgstr "Breedte van de rechthoek die gevuld moet worden"
 
-#: ../src/dialogs/clonetiler.cpp:2863
+#: ../src/dialogs/clonetiler.cpp:2845
 msgid "Height of the rectangle to be filled"
 msgstr "Hoogte van de rechthoek die gevuld moet worden"
 
-#: ../src/dialogs/clonetiler.cpp:2878
+#: ../src/dialogs/clonetiler.cpp:2860
 msgid "Rows, columns: "
 msgstr "Rijen, kolommen: "
 
-#: ../src/dialogs/clonetiler.cpp:2879
+#: ../src/dialogs/clonetiler.cpp:2861
 msgid "Create the specified number of rows and columns"
 msgstr "Het opgegeven aantal rijen en kolommen aanmaken"
 
-#: ../src/dialogs/clonetiler.cpp:2888
+#: ../src/dialogs/clonetiler.cpp:2870
 msgid "Width, height: "
 msgstr "Breedte, hoogte: "
 
-#: ../src/dialogs/clonetiler.cpp:2889
+#: ../src/dialogs/clonetiler.cpp:2871
 msgid "Fill the specified width and height with the tiling"
 msgstr "Vul een gebied met opgegeven breedte en hoogte met de betegeling"
 
-#: ../src/dialogs/clonetiler.cpp:2905
+#: ../src/dialogs/clonetiler.cpp:2887
 msgid "Use saved size and position of the tile"
 msgstr "De opgeslagen grootte en positie van de tegel gebruiken"
 
-#: ../src/dialogs/clonetiler.cpp:2908
+#: ../src/dialogs/clonetiler.cpp:2890
 msgid "Pretend that the size and position of the tile are the same as the last time you tiled it (if any), instead of using the current size"
 msgstr "Doen alsof de grootte en positie van de tegel hetzelfde zijn als de laatste keer dat u er mee tegelde, in plaats van de huidige grootte en positie te gebruiken."
 
-#: ../src/dialogs/clonetiler.cpp:2932
+#: ../src/dialogs/clonetiler.cpp:2914
 msgid " <b>_Create</b> "
 msgstr " <b>_Aanmaken</b> "
 
-#: ../src/dialogs/clonetiler.cpp:2934
+#: ../src/dialogs/clonetiler.cpp:2916
 msgid "Create and tile the clones of the selection"
 msgstr "Maak klonen van de selectie en gebruik ze als betegeling"
 
@@ -7313,28 +7477,28 @@ msgstr "Maak klonen van de selectie en gebruik ze als betegeling"
 #. diagrams on the left in the following screenshot:
 #. http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
 #. So unclumping is the process of spreading a number of objects out more evenly.
-#: ../src/dialogs/clonetiler.cpp:2949
+#: ../src/dialogs/clonetiler.cpp:2931
 msgid " _Unclump "
 msgstr " _Ontklonteren "
 
-#: ../src/dialogs/clonetiler.cpp:2950
+#: ../src/dialogs/clonetiler.cpp:2932
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
 msgstr "De klonen verspreiden om ze te ontklonteren; kan herhaaldelijk worden toegepast"
 
-#: ../src/dialogs/clonetiler.cpp:2956
+#: ../src/dialogs/clonetiler.cpp:2938
 msgid " Re_move "
-msgstr " _Verwijderen "
+msgstr " Ver_wijderen "
 
-#: ../src/dialogs/clonetiler.cpp:2957
+#: ../src/dialogs/clonetiler.cpp:2939
 msgid "Remove existing tiled clones of the selected object (siblings only)"
 msgstr "Verwijder bestaande getegelde klonen van het geselecteerde object"
 
-#: ../src/dialogs/clonetiler.cpp:2973
+#: ../src/dialogs/clonetiler.cpp:2955
 msgid " R_eset "
 msgstr " _Beginwaarden "
 
 #. TRANSLATORS: "change" is a noun here
-#: ../src/dialogs/clonetiler.cpp:2975
+#: ../src/dialogs/clonetiler.cpp:2957
 msgid "Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"
 msgstr "Alle verplaatsingen, vergrotingen, verdraaiingen en kleurveranderingen in het venster terugzetten op nul"
 
@@ -7394,9 +7558,10 @@ msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>Bitmap-grootte</b></big>"
 
 #: ../src/dialogs/export.cpp:484
+#: ../src/ui/dialog/transformation.cpp:87
 #: ../src/ui/widget/page-sizer.cpp:231
 msgid "_Width:"
-msgstr "Bree_dte:"
+msgstr "_Breedte:"
 
 #: ../src/dialogs/export.cpp:484
 #: ../src/dialogs/export.cpp:498
@@ -7408,6 +7573,7 @@ msgid "dp_i"
 msgstr "pp_i"
 
 #: ../src/dialogs/export.cpp:498
+#: ../src/ui/dialog/transformation.cpp:89
 #: ../src/ui/widget/page-sizer.cpp:232
 msgid "_Height:"
 msgstr "_Hoogte:"
@@ -7646,43 +7812,48 @@ msgstr "Randen"
 
 #: ../src/dialogs/find.cpp:685
 #: ../src/ui/dialog/find.cpp:60
-msgid "_Text: "
-msgstr "_Tekst: "
+msgid "_Text:"
+msgstr "_Tekst:"
 
 #: ../src/dialogs/find.cpp:685
 #: ../src/ui/dialog/find.cpp:60
 msgid "Find objects by their text content (exact or partial match)"
-msgstr "Zoek objecten op hun tekst inhoud (precieze of gedeeltelijke overeenkomst)"
+msgstr "Zoek objecten op tekstinhoud (exacte of gedeeltelijke overeenkomst)"
 
+#. Create the label for the object id
 #: ../src/dialogs/find.cpp:686
+#: ../src/dialogs/item-properties.cpp:120
+#: ../src/dialogs/item-properties.cpp:334
+#: ../src/dialogs/item-properties.cpp:443
+#: ../src/dialogs/item-properties.cpp:450
 #: ../src/ui/dialog/find.cpp:61
-msgid "_ID: "
-msgstr "_ID: "
+msgid "_ID:"
+msgstr "_ID:"
 
 #: ../src/dialogs/find.cpp:686
 #: ../src/ui/dialog/find.cpp:61
 msgid "Find objects by the value of the id attribute (exact or partial match)"
-msgstr "Zoek objecten op naam of op het ID-attribuut (precieze of gedeeltelijke overeenkomst)"
+msgstr "Zoek objecten op naam of op het ID-attribuut (exacte of gedeeltelijke overeenkomst)"
 
 #: ../src/dialogs/find.cpp:687
 #: ../src/ui/dialog/find.cpp:62
-msgid "_Style: "
-msgstr "_Stijl: "
+msgid "_Style:"
+msgstr "_Stijl:"
 
 #: ../src/dialogs/find.cpp:687
 #: ../src/ui/dialog/find.cpp:62
 msgid "Find objects by the value of the style attribute (exact or partial match)"
-msgstr "Zoek objecten op naam of op het stijl-attribuut (precieze of gedeeltelijke overeenkomst)"
+msgstr "Zoek objecten op naam of op het stijl-attribuut (exacte of gedeeltelijke overeenkomst)"
 
 #: ../src/dialogs/find.cpp:688
 #: ../src/ui/dialog/find.cpp:63
-msgid "_Attribute: "
-msgstr "_Attribuut: "
+msgid "_Attribute:"
+msgstr "_Attribuut:"
 
 #: ../src/dialogs/find.cpp:688
 #: ../src/ui/dialog/find.cpp:63
 msgid "Find objects by the name of an attribute (exact or partial match)"
-msgstr "Zoek objecten op naam of op attribuut (precieze of gedeeltelijke overeenkomst)"
+msgstr "Zoek objecten op naam of op attribuut (exacte of gedeeltelijke overeenkomst)"
 
 #: ../src/dialogs/find.cpp:702
 #: ../src/ui/dialog/find.cpp:64
@@ -7707,7 +7878,7 @@ msgstr "Het zoeken beperken tot de huidige laag"
 #: ../src/dialogs/find.cpp:720
 #: ../src/ui/dialog/find.cpp:66
 msgid "Include _hidden"
-msgstr "Ver_borgen objecten ook doorzoeken"
+msgstr "Ver_borgen objecten doorzoeken"
 
 #: ../src/dialogs/find.cpp:724
 #: ../src/ui/dialog/find.cpp:66
@@ -7717,7 +7888,7 @@ msgstr "Ook zoeken in verborgen objecten"
 #: ../src/dialogs/find.cpp:729
 #: ../src/ui/dialog/find.cpp:67
 msgid "Include l_ocked"
-msgstr "Ver_grendelde objecten ook doorzoeken"
+msgstr "Ver_grendelde objecten doorzoeken"
 
 #: ../src/dialogs/find.cpp:733
 #: ../src/ui/dialog/find.cpp:67
@@ -7748,14 +7919,6 @@ msgstr "_Zoeken"
 msgid "Select objects matching all of the fields you filled in"
 msgstr "Alle objecten selecteren met de hierboven ingevulde eigenschappen"
 
-#. Create the label for the object id
-#: ../src/dialogs/item-properties.cpp:120
-#: ../src/dialogs/item-properties.cpp:334
-#: ../src/dialogs/item-properties.cpp:443
-#: ../src/dialogs/item-properties.cpp:450
-msgid "_Id"
-msgstr "_ID"
-
 #: ../src/dialogs/item-properties.cpp:129
 msgid "The id= attribute (only letters, digits, and the characters .-_: allowed)"
 msgstr "Het 'id='-attribuut (alleen letters, cijfers en de tekens .-_: zijn toegestaan)"
@@ -7769,8 +7932,8 @@ msgstr "In_stellen"
 
 #. Create the label for the object label
 #: ../src/dialogs/item-properties.cpp:152
-msgid "_Label"
-msgstr "_Label"
+msgid "_Label:"
+msgstr "_Label:"
 
 #: ../src/dialogs/item-properties.cpp:161
 msgid "A freeform label for the object"
@@ -7778,8 +7941,8 @@ msgstr "Een vrij te kiezen label"
 
 #. Create the label for the object title
 #: ../src/dialogs/item-properties.cpp:173
-msgid "_Title"
-msgstr "_Titel"
+msgid "_Title:"
+msgstr "_Titel:"
 
 #. Create the frame for the object description
 #: ../src/dialogs/item-properties.cpp:191
@@ -7855,40 +8018,39 @@ msgstr "Objecttitel instellen"
 msgid "Set object description"
 msgstr "Objectomschrijving instellen"
 
-# De volgende acht strings zijn onvertaald en in kleine letters,
-# omdat het letterlijke xml-attributen zijn.
 #: ../src/dialogs/object-attributes.cpp:32
 msgid "Href:"
-msgstr "href:"
+msgstr "Href:"
 
 #. default x:
 #. default y:
 #: ../src/dialogs/object-attributes.cpp:33
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "Target:"
-msgstr "target:"
+msgstr "Doel:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkRoleAttribute
 #. Identifies the type of the related resource with an absolute URI
 #: ../src/dialogs/object-attributes.cpp:37
 msgid "Role:"
-msgstr "role:"
+msgstr "Role:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
 #: ../src/dialogs/object-attributes.cpp:40
 msgid "Arcrole:"
-msgstr "arcrole:"
+msgstr "Arcrole:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
 #: ../src/dialogs/object-attributes.cpp:42
+#: ../src/rdf.cpp:229
 msgid "Title:"
-msgstr "title:"
+msgstr "Titel:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
 #: ../src/dialogs/object-attributes.cpp:45
 msgid "Actuate:"
-msgstr "actuate:"
+msgstr "Activatie:"
 
 #: ../src/dialogs/object-attributes.cpp:50
 msgid "URL:"
@@ -7897,7 +8059,6 @@ msgstr "URL:"
 #: ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/object-attributes.cpp:59
 #: ../src/ui/dialog/guides.cpp:43
-#: ../src/ui/view/edit-widget.cpp:1074
 #: ../src/widgets/desktop-widget.cpp:509
 #: ../src/widgets/toolbox.cpp:1542
 msgid "X:"
@@ -7906,13 +8067,22 @@ msgstr "X:"
 #: ../src/dialogs/object-attributes.cpp:52
 #: ../src/dialogs/object-attributes.cpp:60
 #: ../src/ui/dialog/guides.cpp:44
-#: ../src/ui/view/edit-widget.cpp:1075
 #: ../src/widgets/desktop-widget.cpp:512
 #: ../src/widgets/toolbox.cpp:1560
 msgid "Y:"
 msgstr "Y:"
 
-#: ../src/dialogs/object-attributes.cpp:106
+#: ../src/dialogs/object-attributes.cpp:107
+#, c-format
+msgid "Link Properties"
+msgstr "Linkeigenschappen"
+
+#: ../src/dialogs/object-attributes.cpp:109
+#, c-format
+msgid "Image Properties"
+msgstr "Afbeeldingseigenschappen"
+
+#: ../src/dialogs/object-attributes.cpp:111
 #, c-format
 msgid "%s Properties"
 msgstr "Eigenschappen van %s"
@@ -8032,7 +8202,7 @@ msgid "Set as default"
 msgstr "Instellen als standaard"
 
 #: ../src/dialogs/text-edit.cpp:665
-#: ../src/text-context.cpp:1500
+#: ../src/text-context.cpp:1524
 msgid "Set text style"
 msgstr "Tekststijl instellen"
 
@@ -8437,12 +8607,12 @@ msgid "Bounding box side midpoint"
 msgstr "Midden rand omvattend vak"
 
 #: ../src/display/snap-indicator.cpp:176
-#: ../src/ui/tool/node.cpp:1173
+#: ../src/ui/tool/node.cpp:1178
 msgid "Smooth node"
 msgstr "Afgevlakt knooppunt"
 
 #: ../src/display/snap-indicator.cpp:179
-#: ../src/ui/tool/node.cpp:1172
+#: ../src/ui/tool/node.cpp:1177
 msgid "Cusp node"
 msgstr "Hoekig knooppunt"
 
@@ -8502,17 +8672,17 @@ msgstr "Veelvoud van rasterafstand"
 msgid " to "
 msgstr " met "
 
-#: ../src/document.cpp:477
+#: ../src/document.cpp:469
 #, c-format
 msgid "New document %d"
 msgstr "Nieuw document %d"
 
-#: ../src/document.cpp:509
+#: ../src/document.cpp:501
 #, c-format
 msgid "Memory document %d"
 msgstr "Omvang van document in het geheugen %d"
 
-#: ../src/document.cpp:739
+#: ../src/document.cpp:731
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Naamloos document %d"
@@ -8622,7 +8792,7 @@ msgstr "_Ongedaan maken"
 #: ../src/event-log.cpp:278
 #: ../src/verbs.cpp:2261
 msgid "_Redo"
-msgstr "O_pnieuw"
+msgstr "Opn_ieuw"
 
 #: ../src/extension/dependency.cpp:246
 msgid "Dependency:"
@@ -8732,7 +8902,7 @@ msgstr "Uitgeschakeld"
 msgid "Currently there is no help available for this Extension.  Please look on the Inkscape website or ask on the mailing lists if you have questions regarding this extension."
 msgstr "Er is momenteel geen help beschikbaar voor deze uitbreiding. Kijk aub. op de Inkscape website of vraag op de mailinglijsten indien je vragen hebt over deze uitbreiding."
 
-#: ../src/extension/implementation/script.cpp:985
+#: ../src/extension/implementation/script.cpp:989
 msgid "Inkscape has received additional data from the script executed.  The script did not return an error, but this may indicate the results will not be as expected."
 msgstr "Inkscape heeft extra informatie ontvangen van het script dat was aangeroepen. Het script gaf geen foutmelding, maar dit zou kunnen betekenen dat de resultaten anders zijn dan verwacht."
 
@@ -8835,7 +9005,7 @@ msgstr "Vervagen"
 #: ../src/extension/internal/bitmap/oilPaint.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
 msgid "Radius:"
 msgstr "Straal:"
 
@@ -9097,7 +9267,7 @@ msgid "Stylize selected bitmap(s) so that they appear to be painted with oils"
 msgstr "Geselecteerde bitmap(s) stileren, zodat ze eruit zien als een olieverfschilderij"
 
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2221
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
 #: ../src/widgets/toolbox.cpp:5678
 msgid "Opacity:"
 msgstr "Ondoorzichtigheid:"
@@ -9261,7 +9431,7 @@ msgstr "PostScript niveau 2"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:323
 #: ../src/extension/internal/cairo-ps-out.cpp:361
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:242
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:245
 #: ../src/extension/internal/emf-win32-inout.cpp:2432
 msgid "Convert texts to paths"
 msgstr "Tekst naar paden omzetten"
@@ -9272,31 +9442,31 @@ msgstr "PS+LaTeX: tekst in PS negeren en LaTeX-bestand maken"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:325
 #: ../src/extension/internal/cairo-ps-out.cpp:363
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:244
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:247
 msgid "Rasterize filter effects"
 msgstr "SVG-filtereffecten rasteriseren"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:326
 #: ../src/extension/internal/cairo-ps-out.cpp:364
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:245
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
 msgid "Resolution for rasterization (dpi):"
 msgstr "Resolutie voor rasteriseren (ppi):"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:327
 #: ../src/extension/internal/cairo-ps-out.cpp:365
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:246
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:249
 msgid "Export area is drawing"
 msgstr "Het geëxporteerde gebied is de tekening"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:328
 #: ../src/extension/internal/cairo-ps-out.cpp:366
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:247
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
 msgid "Export area is page"
 msgstr "Het geëxporteerde gebied is de pagina"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:329
 #: ../src/extension/internal/cairo-ps-out.cpp:367
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:251
 msgid "Limit export to the object with ID:"
 msgstr "Export limiteren tot het object met ID:"
 
@@ -9316,11 +9486,15 @@ msgstr "Encapsulated Postscript File"
 msgid "Restrict to PDF version:"
 msgstr "Beperken tot PDF-versie:"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:240
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:241
+msgid "PDF 1.5"
+msgstr "PDF 1.5"
+
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:243
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:243
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:246
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
 msgstr "PDF+LaTeX: tekst in PDF negeren en LaTeX-bestand maken"
 
@@ -9372,6 +9546,7 @@ msgstr "Straal vervagen (px):"
 
 #: ../src/extension/internal/filter/drop-shadow.h:38
 #: ../src/extension/internal/filter/drop-shadow.h:98
+#: ../src/ui/widget/object-composite-settings.cpp:62
 msgid "Opacity (%):"
 msgstr "Ondoorzichtigheid (%):"
 
@@ -9778,125 +9953,125 @@ msgstr "Het effect live voorvertonen op het canvas?"
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "Het automatisch detecteren van de bestandsindeling is mislukt. Het bestand wordt geopend als SVG."
 
-#: ../src/file.cpp:156
+#: ../src/file.cpp:149
 msgid "default.svg"
 msgstr "default.nl.svg"
 
-#: ../src/file.cpp:274
-#: ../src/file.cpp:1080
+#: ../src/file.cpp:263
+#: ../src/file.cpp:1069
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Het laden van het gevraagde bestand %s is mislukt"
 
-#: ../src/file.cpp:299
+#: ../src/file.cpp:288
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Het bestand is nog niet opgeslagen.  Kan het niet terugdraaien."
 
-#: ../src/file.cpp:305
+#: ../src/file.cpp:294
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr "Wijzigingen zullen verloren gaan!  Weet u zeker dat u bestand %s opnieuw wilt laden?"
 
-#: ../src/file.cpp:334
+#: ../src/file.cpp:323
 msgid "Document reverted."
 msgstr "Het bestand is teruggezet."
 
-#: ../src/file.cpp:336
+#: ../src/file.cpp:325
 msgid "Document not reverted."
 msgstr "Het bestand is niet teruggezet."
 
-#: ../src/file.cpp:486
+#: ../src/file.cpp:475
 msgid "Select file to open"
 msgstr "Selecteer een bestand om te openen"
 
-#: ../src/file.cpp:573
+#: ../src/file.cpp:562
 msgid "Vacuum &lt;defs&gt;"
 msgstr "&lt;Defs&gt; opruimen"
 
-#: ../src/file.cpp:578
+#: ../src/file.cpp:567
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "In &lt;defs&gt; is <b>%i</b> ongebruikte definitie verwijderd."
 msgstr[1] "In &lt;defs&gt; zijn <b>%i</b> ongebruikte definities verwijderd."
 
-#: ../src/file.cpp:583
+#: ../src/file.cpp:572
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Er zijn geen ongebruikte definities in &lt;defs&gt;."
 
-#: ../src/file.cpp:614
+#: ../src/file.cpp:603
 #, c-format
 msgid "No Inkscape extension found to save document (%s).  This may have been caused by an unknown filename extension."
 msgstr "Er werd geen Inkscape-uitbreiding aangetroffen om het bestand (%s) op te slaan.  Dit kan komen door een onbekende bestandsextensie."
 
-#: ../src/file.cpp:615
-#: ../src/file.cpp:623
+#: ../src/file.cpp:604
+#: ../src/file.cpp:612
+#: ../src/file.cpp:620
+#: ../src/file.cpp:626
 #: ../src/file.cpp:631
-#: ../src/file.cpp:637
-#: ../src/file.cpp:642
 msgid "Document not saved."
 msgstr "Document is niet opgeslagen."
 
-#: ../src/file.cpp:622
+#: ../src/file.cpp:611
 #, c-format
 msgid "File %s is write protected. Please remove write protection and try again."
 msgstr "Bestand %s is schrijfbeveiligd. Verwijder aub de schrijfbeveiliging en probeer opnieuw."
 
-#: ../src/file.cpp:630
+#: ../src/file.cpp:619
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Bestand %s kon niet worden opgeslagen."
 
-#: ../src/file.cpp:647
+#: ../src/file.cpp:636
 msgid "Document saved."
 msgstr "Document is opgeslagen."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:779
-#: ../src/file.cpp:1217
+#: ../src/file.cpp:768
+#: ../src/file.cpp:1206
 #, c-format
 msgid "drawing%s"
 msgstr "Tekening%s"
 
-#: ../src/file.cpp:785
+#: ../src/file.cpp:774
 #, c-format
 msgid "drawing-%d%s"
 msgstr "Tekening-%d%s"
 
-#: ../src/file.cpp:789
+#: ../src/file.cpp:778
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/file.cpp:804
+#: ../src/file.cpp:793
 msgid "Select file to save a copy to"
 msgstr "Selecteer een bestand om een kopie naar op te slaan"
 
-#: ../src/file.cpp:806
+#: ../src/file.cpp:795
 msgid "Select file to save to"
 msgstr "Selecteer een bestand om in op te slaan"
 
-#: ../src/file.cpp:901
+#: ../src/file.cpp:890
 msgid "No changes need to be saved."
 msgstr "Er zijn geen wijzigingen die opgeslagen hoeven te worden."
 
-#: ../src/file.cpp:918
+#: ../src/file.cpp:907
 msgid "Saving document..."
 msgstr "Opslaan van document..."
 
-#: ../src/file.cpp:1077
+#: ../src/file.cpp:1066
 msgid "Import"
 msgstr "Importeren"
 
-#: ../src/file.cpp:1127
+#: ../src/file.cpp:1116
 msgid "Select file to import"
 msgstr "Selecteer een bestand om te importeren"
 
-#: ../src/file.cpp:1239
+#: ../src/file.cpp:1228
 msgid "Select file to export to"
 msgstr "Selecteer een bestand om naar te exporteren"
 
-#: ../src/file.cpp:1482
+#: ../src/file.cpp:1471
 #: ../src/verbs.cpp:2248
 msgid "Import From Open Clip Art Library"
 msgstr "Uit 'Open Clip Art'-mediatheek importeren"
@@ -10547,38 +10722,38 @@ msgstr "ex"
 msgid "Ex squares"
 msgstr "Ex kwadraat"
 
-#: ../src/inkscape.cpp:328
+#: ../src/inkscape.cpp:324
 msgid "Autosaving documents..."
 msgstr "Auto-opslaan van document..."
 
-#: ../src/inkscape.cpp:399
+#: ../src/inkscape.cpp:395
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr "Auto-opslaan mislukt! Kon de inkscapeuitbreiding om document te bewaren niet vinden."
 
-#: ../src/inkscape.cpp:402
-#: ../src/inkscape.cpp:409
+#: ../src/inkscape.cpp:398
+#: ../src/inkscape.cpp:405
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
 msgstr "Auto-opslaan mislukt! Bestand %s kon niet bewaard worden."
 
-#: ../src/inkscape.cpp:424
+#: ../src/inkscape.cpp:420
 msgid "Autosave complete."
 msgstr "Auto-opslaan afgelopen."
 
-#: ../src/inkscape.cpp:665
+#: ../src/inkscape.cpp:661
 msgid "Untitled document"
 msgstr "Naamloos document"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:697
+#: ../src/inkscape.cpp:693
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Er is een interne fout opgetreden in Inkscape.  Het programma wordt afgesloten.\n"
 
-#: ../src/inkscape.cpp:698
+#: ../src/inkscape.cpp:694
 msgid "Automatic backups of unsaved documents were done to the following locations:\n"
 msgstr "Automatische reservekopieën van niet-opgeslagen documenten werden gemaakt op de volgende locaties:\n"
 
-#: ../src/inkscape.cpp:699
+#: ../src/inkscape.cpp:695
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Het automatisch maken van een reservekopie is mislukt voor de volgende bestanden:\n"
 
@@ -10773,6 +10948,8 @@ msgstr "Paneelitem die dit grijppunt 'beheert'"
 #. Name
 #: ../src/libgdl/gdl-dock-item.c:287
 #: ../src/widgets/toolbox.cpp:7616
+#: ../share/extensions/gcodetools_all_in_one.inx.h:34
+#: ../share/extensions/gcodetools_orientation_points.inx.h:6
 msgid "Orientation"
 msgstr "Oriëntatie"
 
@@ -12046,216 +12223,216 @@ msgstr "Niet in staat verb ID '%s' te vinden zoals opgegeven op de commandoregel
 msgid "Unable to find node ID: '%s'\n"
 msgstr "Kan node-ID '%s' niet vinden.\n"
 
-#: ../src/main.cpp:269
+#: ../src/main.cpp:267
 msgid "Print the Inkscape version number"
 msgstr "Het versienummer van Inkscape tonen"
 
-#: ../src/main.cpp:274
+#: ../src/main.cpp:272
 msgid "Do not use X server (only process files from console)"
 msgstr "X-server niet gebruiken (alleen bestanden van de terminal verwerken)"
 
-#: ../src/main.cpp:279
+#: ../src/main.cpp:277
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr "X-server proberen te gebruiken (zelfs als $DISPLAY geen waarde heeft)"
 
-#: ../src/main.cpp:284
+#: ../src/main.cpp:282
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr "Gegeven document(en) openen (optie-tekenreeks hoeft niet te worden opgegeven)"
 
-#: ../src/main.cpp:285
-#: ../src/main.cpp:290
-#: ../src/main.cpp:295
-#: ../src/main.cpp:362
-#: ../src/main.cpp:367
-#: ../src/main.cpp:372
-#: ../src/main.cpp:377
-#: ../src/main.cpp:388
+#: ../src/main.cpp:283
+#: ../src/main.cpp:288
+#: ../src/main.cpp:293
+#: ../src/main.cpp:360
+#: ../src/main.cpp:365
+#: ../src/main.cpp:370
+#: ../src/main.cpp:375
+#: ../src/main.cpp:386
 msgid "FILENAME"
 msgstr "BESTANDSNAAM"
 
-#: ../src/main.cpp:289
+#: ../src/main.cpp:287
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr "Document(en) afdrukken naar het opgegeven bestand (gebruik '| programma' voor een pijp)"
 
-#: ../src/main.cpp:294
+#: ../src/main.cpp:292
 msgid "Export document to a PNG file"
 msgstr "Document exporteren naar PNG-bestand"
 
-#: ../src/main.cpp:299
+#: ../src/main.cpp:297
 msgid "Resolution for exporting to bitmap and for rasterization of filters in PS/EPS/PDF (default 90)"
 msgstr "Resolutie voor het exporteren van de bitmap en voor rasterisatie van filters in PS/EPS/PDF (standaard 90)"
 
-#: ../src/main.cpp:300
+#: ../src/main.cpp:298
 #: ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
 msgstr "PPI"
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:302
 msgid "Exported area in SVG user units (default is the page; 0,0 is lower-left corner)"
 msgstr "Geëxporteerde oppervlakte in SVG-eenheden (standaard de volledige pagina; 0,0 is de hoek linksonder)"
 
-#: ../src/main.cpp:305
+#: ../src/main.cpp:303
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
-#: ../src/main.cpp:309
+#: ../src/main.cpp:307
 msgid "Exported area is the entire drawing (not page)"
 msgstr "Het geëxporteerde gebied is de volledige tekening (niet de pagina)"
 
-#: ../src/main.cpp:314
+#: ../src/main.cpp:312
 msgid "Exported area is the entire page"
 msgstr "Het geëxporteerde gebied is de volledige pagina"
 
-#: ../src/main.cpp:319
+#: ../src/main.cpp:317
 msgid "Snap the bitmap export area outwards to the nearest integer values (in SVG user units)"
 msgstr "De grootte van het te exporteren bitmap-gebied naar boven afronden op een geheel getal (in SVG-eenheden)"
 
-#: ../src/main.cpp:324
+#: ../src/main.cpp:322
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr "De breedte van de gegenereerde bitmap in pixels (dit negeert de PPI)"
 
-#: ../src/main.cpp:325
+#: ../src/main.cpp:323
 msgid "WIDTH"
 msgstr "BREEDTE"
 
-#: ../src/main.cpp:329
+#: ../src/main.cpp:327
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr "De hoogte van de gegenereerde bitmap in pixels (dit negeert de PPI)"
 
-#: ../src/main.cpp:330
+#: ../src/main.cpp:328
 msgid "HEIGHT"
 msgstr "HOOGTE"
 
-#: ../src/main.cpp:334
+#: ../src/main.cpp:332
 msgid "The ID of the object to export"
 msgstr "Het ID van het te exporteren object"
 
-#: ../src/main.cpp:335
-#: ../src/main.cpp:433
+#: ../src/main.cpp:333
+#: ../src/main.cpp:431
 msgid "ID"
 msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:341
+#: ../src/main.cpp:339
 msgid "Export just the object with export-id, hide all others (only with export-id)"
 msgstr "Alleen het object met het gegeven ID exporteren; alle andere objecten verbergen (alleen samen met '--export-id')"
 
-#: ../src/main.cpp:346
+#: ../src/main.cpp:344
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr "De opgeslagen bestandsnaam en PPI-hints gebruiken bij het exporteren (alleen samen met '--export-id')"
 
-#: ../src/main.cpp:351
+#: ../src/main.cpp:349
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr "Achtergrondkleur van de geëxporteerde bitmap (kan iedere door SVG ondersteunde kleur zijn)"
 
-#: ../src/main.cpp:352
+#: ../src/main.cpp:350
 msgid "COLOR"
 msgstr "KLEUR"
 
-#: ../src/main.cpp:356
+#: ../src/main.cpp:354
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr "Achtergrondondoorzichtigheid van de geëxporteerde bitmap (ofwel tussen 0.0 en 1.0, of tussen 1 en 255)"
 
-#: ../src/main.cpp:357
+#: ../src/main.cpp:355
 msgid "VALUE"
 msgstr "WAARDE"
 
-#: ../src/main.cpp:361
+#: ../src/main.cpp:359
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr "Document exporteren naar gewoon SVG-bestand (geen sodipodi- of inkscape-naamruimte)"
 
-#: ../src/main.cpp:366
+#: ../src/main.cpp:364
 msgid "Export document to a PS file"
 msgstr "Document exporteren naar een PS-bestand"
 
-#: ../src/main.cpp:371
+#: ../src/main.cpp:369
 msgid "Export document to an EPS file"
 msgstr "Document exporteren naar een EPS-bestand"
 
-#: ../src/main.cpp:376
+#: ../src/main.cpp:374
 msgid "Export document to a PDF file"
 msgstr "Document exporteren naar een PDF-bestand"
 
-#: ../src/main.cpp:381
+#: ../src/main.cpp:379
 msgid "Export PDF/PS/EPS without text. Besides the PDF/PS/EPS, a LaTeX file is exported, putting the text on top of the PDF/PS/EPS file. Include the result in LaTeX like: \\input{latexfile.tex}"
 msgstr "PDF/PS/EPS zonder tekst exporteren. Behalve de PDF/PS/EPS wordt een LaTeX-bestand geëxporteerd dat de tekst op het PDF/PS/EPS-bestand plaatst. Voeg het resultaat in LaTeX in met: \\input{latexfile.tex}"
 
-#: ../src/main.cpp:387
+#: ../src/main.cpp:385
 msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr "Document exporteren naar een EMF-bestand (Enhanced Metafile)"
 
-#: ../src/main.cpp:393
+#: ../src/main.cpp:391
 msgid "Convert text object to paths on export (PS, EPS, PDF)"
 msgstr "Tekst omzetten naar paden bij het exporteren (PS, EPS, PDF)"
 
-#: ../src/main.cpp:398
+#: ../src/main.cpp:396
 msgid "Render filtered objects without filters, instead of rasterizing (PS, EPS, PDF)"
 msgstr "Gefilterde objecten renderen zonder filters in plaats van rasteriseren (PS, EPS, PDF)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:404
+#: ../src/main.cpp:402
 msgid "Query the X coordinate of the drawing or, if specified, of the object with --query-id"
 msgstr "De X-coördinaat van de tekening opvragen, of - indien opgegeven met --query-id - van het object"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:410
+#: ../src/main.cpp:408
 msgid "Query the Y coordinate of the drawing or, if specified, of the object with --query-id"
 msgstr "De Y-coördinaat van de tekening opvragen, of - indien opgegeven met --query-id - van het object"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:416
+#: ../src/main.cpp:414
 msgid "Query the width of the drawing or, if specified, of the object with --query-id"
 msgstr "De breedte van de tekening opvragen, of - indien opgegeven met --query-id - van het object"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:422
+#: ../src/main.cpp:420
 msgid "Query the height of the drawing or, if specified, of the object with --query-id"
 msgstr "De hoogte van de tekening opvragen, of - indien opgegeven met --query-id - van het object"
 
-#: ../src/main.cpp:427
+#: ../src/main.cpp:425
 msgid "List id,x,y,w,h for all objects"
 msgstr "Lijst id,x,y,b,h van alle objecten"
 
-#: ../src/main.cpp:432
+#: ../src/main.cpp:430
 msgid "The ID of the object whose dimensions are queried"
 msgstr "Het ID van het object waarvan de informatie wordt opgevraagd"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:438
+#: ../src/main.cpp:436
 msgid "Print out the extension directory and exit"
 msgstr "De naam van de uitbreidingenmap tonen en stoppen"
 
-#: ../src/main.cpp:443
+#: ../src/main.cpp:441
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "Ongebruikte definities uit de 'defs'-onderdelen van het bestand verwijderen"
 
-#: ../src/main.cpp:448
+#: ../src/main.cpp:446
 msgid "List the IDs of all the verbs in Inkscape"
 msgstr "Lijst met ID's van alle verbs in Inkscape"
 
-#: ../src/main.cpp:453
+#: ../src/main.cpp:451
 msgid "Verb to call when Inkscape opens."
 msgstr "Verb om aan te roepen als Inkscape start."
 
-#: ../src/main.cpp:454
+#: ../src/main.cpp:452
 msgid "VERB-ID"
 msgstr "VERB-ID"
 
-#: ../src/main.cpp:458
+#: ../src/main.cpp:456
 msgid "Object ID to select when Inkscape opens."
 msgstr "Te selecteren object-ID wanneer Inkscape opent."
 
-#: ../src/main.cpp:459
+#: ../src/main.cpp:457
 msgid "OBJECT-ID"
 msgstr "OBJECT-ID"
 
-#: ../src/main.cpp:463
+#: ../src/main.cpp:461
 msgid "Start Inkscape in interactive shell mode."
 msgstr "Inkscape in interactieve commandomodus starten."
 
-#: ../src/main.cpp:796
-#: ../src/main.cpp:1122
+#: ../src/main.cpp:799
+#: ../src/main.cpp:1125
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -12695,149 +12872,136 @@ msgstr "Free Art-licentie"
 msgid "Open Font License"
 msgstr "Open Font-licentie"
 
-#: ../src/rdf.cpp:229
-msgid "Title"
-msgstr "Titel"
-
 #: ../src/rdf.cpp:230
-msgid "Name by which this document is formally known."
-msgstr "De naam waaronder dit document officieel bekend is."
+msgid "Name by which this document is formally known"
+msgstr "De naam waaronder dit document officieel bekend is"
 
 #: ../src/rdf.cpp:232
-msgid "Date"
-msgstr "Datum"
+msgid "Date:"
+msgstr "Datum:"
 
 #: ../src/rdf.cpp:233
-msgid "Date associated with the creation of this document (YYYY-MM-DD)."
+msgid "Date associated with the creation of this document (YYYY-MM-DD)"
 msgstr "Datum waarop dit document is aangemaakt (JJJJ-MM-DD)"
 
-#: ../src/rdf.cpp:235
-msgid "Format"
-msgstr "Formaat"
-
 #: ../src/rdf.cpp:236
-msgid "The physical or digital manifestation of this document (MIME type)."
+msgid "The physical or digital manifestation of this document (MIME type)"
 msgstr "De fysieke of digitale verschijningsvorm van dit document (MIME-type)"
 
-#: ../src/rdf.cpp:238
-msgid "Type"
-msgstr "Type"
-
 #: ../src/rdf.cpp:239
-msgid "Type of document (DCMI Type)."
-msgstr "Documenttype (DCMI-type)."
+msgid "Type of document (DCMI Type)"
+msgstr "Documenttype (DCMI-type)"
 
 #: ../src/rdf.cpp:242
-msgid "Creator"
-msgstr "Maker"
+msgid "Creator:"
+msgstr "Maker:"
 
 #: ../src/rdf.cpp:243
-msgid "Name of entity primarily responsible for making the content of this document."
-msgstr "Naam van de eindverantwoordelijke van dit document."
+msgid "Name of entity primarily responsible for making the content of this document"
+msgstr "Naam van de instantie die verantwoordelijk is voor het maken van dit document"
 
 #: ../src/rdf.cpp:245
-msgid "Rights"
-msgstr "Rechten"
+msgid "Rights:"
+msgstr "Rechten:"
 
 #: ../src/rdf.cpp:246
-msgid "Name of entity with rights to the Intellectual Property of this document."
-msgstr "Naam van degene van wie dit document het \"intellectueel eigendom\" is."
+msgid "Name of entity with rights to the Intellectual Property of this document"
+msgstr "Naam van instantie van wie dit document het intellectueel eigendom is"
 
 #: ../src/rdf.cpp:248
-msgid "Publisher"
-msgstr "Uitgever"
+msgid "Publisher:"
+msgstr "Uitgever:"
 
 #: ../src/rdf.cpp:249
-msgid "Name of entity responsible for making this document available."
-msgstr "Naam van de instantie die verantwoordelijk is voor publicatie van dit document."
+msgid "Name of entity responsible for making this document available"
+msgstr "Naam van de instantie die verantwoordelijk is voor publicatie van dit document"
 
 #: ../src/rdf.cpp:252
-msgid "Identifier"
-msgstr "Identificatie"
+msgid "Identifier:"
+msgstr "Identificatie:"
 
 #: ../src/rdf.cpp:253
-msgid "Unique URI to reference this document."
-msgstr "Een unieke URI om aan dit document te refereren."
+msgid "Unique URI to reference this document"
+msgstr "Een unieke URI om aan dit document te refereren"
 
 #: ../src/rdf.cpp:255
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1438
-msgid "Source"
-msgstr "Bron"
+msgid "Source:"
+msgstr "Bron:"
 
 #: ../src/rdf.cpp:256
-msgid "Unique URI to reference the source of this document."
-msgstr "Een unieke URI om aan de bron van dit document te refereren."
+msgid "Unique URI to reference the source of this document"
+msgstr "Een unieke URI om aan de bron van dit document te refereren"
 
 #: ../src/rdf.cpp:258
-msgid "Relation"
-msgstr "Gerelateerd aan"
+msgid "Relation:"
+msgstr "Gerelateerd aan:"
 
 #: ../src/rdf.cpp:259
-msgid "Unique URI to a related document."
-msgstr "Een unieke URI naar een gerelateerd document."
+msgid "Unique URI to a related document"
+msgstr "Een unieke URI naar een gerelateerd document"
 
 #: ../src/rdf.cpp:261
-msgid "Language"
-msgstr "Taal"
+#: ../src/ui/dialog/inkscape-preferences.cpp:1297
+msgid "Language:"
+msgstr "Taal:"
 
 #: ../src/rdf.cpp:262
-msgid "Two-letter language tag with optional subtags for the language of this document.  (e.g. 'en-GB')"
-msgstr "Een tweeletterige aanduiding (met optionele subaanduiding) van de taal van dit document (bijvoorbeeld 'nl-NL')."
+msgid "Two-letter language tag with optional subtags for the language of this document (e.g. 'en-GB')"
+msgstr "Een tweeletterige aanduiding (met optionele subaanduiding) van de taal van dit document (bijvoorbeeld 'nl-NL')"
 
 #: ../src/rdf.cpp:264
-msgid "Keywords"
-msgstr "Sleutelwoorden"
+msgid "Keywords:"
+msgstr "Sleutelwoorden:"
 
 #: ../src/rdf.cpp:265
-msgid "The topic of this document as comma-separated key words, phrases, or classifications."
-msgstr "Het onderwerp van dit document als losse woorden of zinnetjes, gescheiden door komma's."
+msgid "The topic of this document as comma-separated key words, phrases, or classifications"
+msgstr "Het onderwerp van dit document als losse woorden of zinnetjes, gescheiden door komma's"
 
 #. TRANSLATORS: "Coverage": the spatial or temporal characteristics of the content.
 #. For info, see Appendix D of http://www.w3.org/TR/1998/WD-rdf-schema-19980409/
 #: ../src/rdf.cpp:269
-msgid "Coverage"
-msgstr "Dekking"
+msgid "Coverage:"
+msgstr "Dekking:"
 
 #: ../src/rdf.cpp:270
-msgid "Extent or scope of this document."
-msgstr "Dekking of lading van dit document."
+msgid "Extent or scope of this document"
+msgstr "Dekking of lading van dit document"
 
 #: ../src/rdf.cpp:273
-#: ../src/ui/widget/page-sizer.cpp:245
-msgid "Description"
-msgstr "Beschrijving"
+msgid "Description:"
+msgstr "Beschrijving:"
 
 #: ../src/rdf.cpp:274
-msgid "A short account of the content of this document."
-msgstr "Een korte samenvatting van de inhoud van dit document."
+msgid "A short account of the content of this document"
+msgstr "Een korte samenvatting van de inhoud van dit document"
 
 #. FIXME: need to handle 1 agent per line of input
 #: ../src/rdf.cpp:278
-msgid "Contributors"
-msgstr "Met dank aan"
+msgid "Contributors:"
+msgstr "Met dank aan:"
 
 #: ../src/rdf.cpp:279
-msgid "Names of entities responsible for making contributions to the content of this document."
-msgstr "Naam van degenen die bijdragen hebben geleverd aan de inhoud van dit document."
+msgid "Names of entities responsible for making contributions to the content of this document"
+msgstr "Naam van degenen die bijdragen hebben geleverd aan de inhoud van dit document"
 
 #. TRANSLATORS: URL to a page that defines the license for the document
 #: ../src/rdf.cpp:283
-msgid "URI"
-msgstr "URI"
+msgid "URI:"
+msgstr "URI:"
 
 #. TRANSLATORS: this is where you put a URL to a page that defines the license
 #: ../src/rdf.cpp:285
-msgid "URI to this document's license's namespace definition."
+msgid "URI to this document's license's namespace definition"
 msgstr "URI naar de naamsruimtedefinitie van de licentie van dit document"
 
 #. TRANSLATORS: fragment of XML representing the license of the document
 #: ../src/rdf.cpp:289
-msgid "Fragment"
-msgstr "Onderdeel"
+msgid "Fragment:"
+msgstr "Onderdeel:"
 
 #: ../src/rdf.cpp:290
-msgid "XML fragment for the RDF 'License' section."
-msgstr "XML-fragment voor het RDF 'licentie'-deel."
+msgid "XML fragment for the RDF 'License' section"
+msgstr "XML-fragment voor het RDF 'licentie'-deel"
 
 #: ../src/rect-context.cpp:372
 msgid "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"
@@ -12916,7 +13080,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "Er is <b>niets</b> verwijderd."
 
 #: ../src/selection-chemistry.cpp:330
-#: ../src/text-context.cpp:1002
+#: ../src/text-context.cpp:1026
 #: ../src/ui/dialog/swatches.cpp:208
 #: ../src/ui/dialog/swatches.cpp:271
 #: ../src/widgets/toolbox.cpp:1362
@@ -12939,7 +13103,7 @@ msgstr "Selecteer <b>twee objecten of meer objecten</b> om te groeperen."
 #: ../src/selection-chemistry.cpp:651
 #: ../src/selection-describer.cpp:51
 msgid "Group"
-msgstr "Groeperen"
+msgstr "_Groeperen"
 
 #: ../src/selection-chemistry.cpp:665
 msgid "Select a <b>group</b> to ungroup."
@@ -12952,7 +13116,7 @@ msgstr "<b>Geen groepen geselecteerd</b> om op te heffen."
 #: ../src/selection-chemistry.cpp:712
 #: ../src/sp-item-group.cpp:500
 msgid "Ungroup"
-msgstr "Groep opheffen"
+msgstr "_Groep opheffen"
 
 #: ../src/selection-chemistry.cpp:802
 msgid "Select <b>object(s)</b> to raise."
@@ -13028,7 +13192,7 @@ msgid "Select <b>object(s)</b> to remove filters from."
 msgstr "Selecteer <b>object(en)</b> om filters van te verwijderen."
 
 #: ../src/selection-chemistry.cpp:1139
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1342
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1340
 msgid "Remove filter"
 msgstr "Verwijder filter"
 
@@ -13120,7 +13284,7 @@ msgstr "De selectie bevat geen toegepast padeffect."
 #: ../src/selection-chemistry.cpp:2055
 msgctxt "Action"
 msgid "Clone"
-msgstr ""
+msgstr "Kloon"
 
 #: ../src/selection-chemistry.cpp:2071
 msgid "Select <b>clones</b> to relink."
@@ -13316,7 +13480,7 @@ msgstr "3D-kubus"
 #: ../src/selection-describer.cpp:70
 msgctxt "Object"
 msgid "Clone"
-msgstr ""
+msgstr "Kloon"
 
 #: ../src/selection-describer.cpp:74
 msgid "Offset path"
@@ -13496,12 +13660,12 @@ msgstr "<b>Scheeftrekken</b>: %0.2f&#176;; gebruik <b>Ctrl</b> om in stappen te 
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Draaien</b>: %0.2f&#176;; gebruik <b>Ctrl</b> in stappen te draaien"
 
-#: ../src/seltrans.cpp:1367
+#: ../src/seltrans.cpp:1364
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "<b>Centrum</b> verplaatsen naar %s, %s"
 
-#: ../src/seltrans.cpp:1542
+#: ../src/seltrans.cpp:1539
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>Verplaatsen</b> met %s, %s; gebruik <b>Ctrl</b> om het te beperken tot horizontaal en verticaal, gebruik <b>Shift</b> om magnetisch raster uit te zetten."
@@ -13515,20 +13679,20 @@ msgstr "<b>Koppeling</b> naar %s"
 msgid "<b>Link</b> without URI"
 msgstr "<b>Koppeling</b> zonder URI"
 
-#: ../src/sp-ellipse.cpp:501
-#: ../src/sp-ellipse.cpp:878
+#: ../src/sp-ellipse.cpp:503
+#: ../src/sp-ellipse.cpp:880
 msgid "<b>Ellipse</b>"
 msgstr "<b>Ellips</b>"
 
-#: ../src/sp-ellipse.cpp:642
+#: ../src/sp-ellipse.cpp:644
 msgid "<b>Circle</b>"
 msgstr "<b>Cirkel</b>"
 
-#: ../src/sp-ellipse.cpp:873
+#: ../src/sp-ellipse.cpp:875
 msgid "<b>Segment</b>"
 msgstr "<b>Segment</b>"
 
-#: ../src/sp-ellipse.cpp:875
+#: ../src/sp-ellipse.cpp:877
 msgid "<b>Arc</b>"
 msgstr "<b>Boog</b>"
 
@@ -13803,76 +13967,76 @@ msgstr "Er kon niet worden bepaald welk object <b>boven de andere</b> lag om een
 msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "Een van de geselecteerde objecten <b>is geen pad</b>, de booleaansche bewerking kan niet worden uitgevoerd."
 
-#: ../src/splivarot.cpp:876
+#: ../src/splivarot.cpp:880
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr "Selecteer <b>paden</b> waarvan de omlijning omgezet moet worden naar een pad."
 
-#: ../src/splivarot.cpp:1219
+#: ../src/splivarot.cpp:1227
 msgid "Convert stroke to path"
 msgstr "Omlijning omzetten naar pad"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:1222
+#: ../src/splivarot.cpp:1230
 msgid "<b>No stroked paths</b> in the selection."
 msgstr "Er zijn <b>geen omlijnde paden</b> geselecteerd."
 
-#: ../src/splivarot.cpp:1305
+#: ../src/splivarot.cpp:1313
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "Het geselecteerde object is <b>geen pad</b>, en kan dus niet versmalt/verbreed worden."
 
-#: ../src/splivarot.cpp:1424
-#: ../src/splivarot.cpp:1493
+#: ../src/splivarot.cpp:1432
+#: ../src/splivarot.cpp:1501
 msgid "Create linked offset"
 msgstr "Gekoppelde rand aanmaken"
 
-#: ../src/splivarot.cpp:1425
-#: ../src/splivarot.cpp:1494
+#: ../src/splivarot.cpp:1433
+#: ../src/splivarot.cpp:1502
 msgid "Create dynamic offset"
 msgstr "Dynamische rand aanmaken"
 
-#: ../src/splivarot.cpp:1519
+#: ../src/splivarot.cpp:1527
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Selecteer de <b>paden</b> om te versmallen/verbreden."
 
-#: ../src/splivarot.cpp:1737
+#: ../src/splivarot.cpp:1745
 msgid "Outset path"
 msgstr "Pad verbreden"
 
-#: ../src/splivarot.cpp:1737
+#: ../src/splivarot.cpp:1745
 msgid "Inset path"
 msgstr "Pad versmallen"
 
-#: ../src/splivarot.cpp:1739
+#: ../src/splivarot.cpp:1747
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "Er zijn <b>geen paden</b> geselecteerd om te vernauwen/verwijden."
 
-#: ../src/splivarot.cpp:1917
+#: ../src/splivarot.cpp:1925
 msgid "Simplifying paths (separately):"
 msgstr "Vereenvoudigen van paden (apart):"
 
-#: ../src/splivarot.cpp:1919
+#: ../src/splivarot.cpp:1927
 msgid "Simplifying paths:"
 msgstr "Vereenvoudigen van paden:"
 
-#: ../src/splivarot.cpp:1956
+#: ../src/splivarot.cpp:1964
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr "%s <b>%d</b> van <b>%d</b> paden vereenvoudigd..."
 
-#: ../src/splivarot.cpp:1968
+#: ../src/splivarot.cpp:1976
 #, c-format
 msgid "<b>%d</b> paths simplified."
 msgstr "<b>%d</b> paden zijn vereenvoudigd."
 
-#: ../src/splivarot.cpp:1982
+#: ../src/splivarot.cpp:1990
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Selecteer <b>paden</b> om te vereenvoudigen."
 
-#: ../src/splivarot.cpp:1996
+#: ../src/splivarot.cpp:2004
 msgid "Simplify"
 msgstr "Vereenvoudigen"
 
-#: ../src/splivarot.cpp:1998
+#: ../src/splivarot.cpp:2006
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "Er zijn <b>geen paden</b> geselecteerd om te vereenvoudigen."
 
@@ -14035,115 +14199,115 @@ msgid "Unicode (<b>Enter</b> to finish): %s: %s"
 msgstr "Unicode (<b>Enter</b> om te voltooien): %s: %s"
 
 #: ../src/text-context.cpp:581
-#: ../src/text-context.cpp:856
+#: ../src/text-context.cpp:880
 msgid "Unicode (<b>Enter</b> to finish): "
 msgstr "Unicode (<b>Enter</b> om te voltooien): "
 
-#: ../src/text-context.cpp:656
+#: ../src/text-context.cpp:668
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Tekstkader</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:688
+#: ../src/text-context.cpp:714
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Tik uw tekst; <b>Enter</b> begint een nieuwe regel."
 
-#: ../src/text-context.cpp:701
+#: ../src/text-context.cpp:725
 msgid "Flowed text is created."
 msgstr "Ingekaderde tekst is aangemaakt."
 
-#: ../src/text-context.cpp:703
+#: ../src/text-context.cpp:727
 msgid "Create flowed text"
 msgstr "Ingekaderde tekst maken"
 
-#: ../src/text-context.cpp:705
+#: ../src/text-context.cpp:729
 msgid "The frame is <b>too small</b> for the current font size. Flowed text not created."
 msgstr "Het kader is <b>te klein</b> voor de grootte van het huidige lettertype. Er is geen ingekaderde tekst aangemaakt."
 
-#: ../src/text-context.cpp:841
+#: ../src/text-context.cpp:865
 msgid "No-break space"
 msgstr "Harde spatie"
 
-#: ../src/text-context.cpp:843
+#: ../src/text-context.cpp:867
 msgid "Insert no-break space"
 msgstr "Een harde spatie invoegen"
 
-#: ../src/text-context.cpp:880
+#: ../src/text-context.cpp:904
 msgid "Make bold"
 msgstr "Vet maken"
 
-#: ../src/text-context.cpp:898
+#: ../src/text-context.cpp:922
 msgid "Make italic"
 msgstr "Cursief maken"
 
-#: ../src/text-context.cpp:937
+#: ../src/text-context.cpp:961
 msgid "New line"
 msgstr "Nieuwe regel"
 
-#: ../src/text-context.cpp:971
+#: ../src/text-context.cpp:995
 msgid "Backspace"
 msgstr "Backspace"
 
-#: ../src/text-context.cpp:1019
+#: ../src/text-context.cpp:1043
 msgid "Kern to the left"
 msgstr "Overhang naar links"
 
-#: ../src/text-context.cpp:1044
+#: ../src/text-context.cpp:1068
 msgid "Kern to the right"
 msgstr "Overhang naar rechts"
 
-#: ../src/text-context.cpp:1069
+#: ../src/text-context.cpp:1093
 msgid "Kern up"
 msgstr "Overhang naar boven"
 
-#: ../src/text-context.cpp:1095
+#: ../src/text-context.cpp:1119
 msgid "Kern down"
 msgstr "Overhang naar beneden"
 
-#: ../src/text-context.cpp:1172
+#: ../src/text-context.cpp:1196
 msgid "Rotate counterclockwise"
 msgstr "Tegen de klok in draaien"
 
-#: ../src/text-context.cpp:1193
+#: ../src/text-context.cpp:1217
 msgid "Rotate clockwise"
 msgstr "Met de klok mee draaien"
 
-#: ../src/text-context.cpp:1210
+#: ../src/text-context.cpp:1234
 msgid "Contract line spacing"
 msgstr "Regelafstand verkleinen"
 
-#: ../src/text-context.cpp:1218
+#: ../src/text-context.cpp:1242
 msgid "Contract letter spacing"
 msgstr "Letterafstand verkleinen"
 
-#: ../src/text-context.cpp:1237
+#: ../src/text-context.cpp:1261
 msgid "Expand line spacing"
 msgstr "Regelafstand vergroten"
 
-#: ../src/text-context.cpp:1245
+#: ../src/text-context.cpp:1269
 msgid "Expand letter spacing"
 msgstr "Letterafstand vergroten"
 
-#: ../src/text-context.cpp:1375
+#: ../src/text-context.cpp:1399
 msgid "Paste text"
 msgstr "Tekst plakken"
 
-#: ../src/text-context.cpp:1621
+#: ../src/text-context.cpp:1645
 #, c-format
 msgid "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new paragraph."
 msgstr "Tik of wijzig ingekaderde tekst (%d karakters%s); <b>Enter</b> begint een nieuwe paragraaf."
 
-#: ../src/text-context.cpp:1623
+#: ../src/text-context.cpp:1647
 #, c-format
 msgid "Type or edit text (%d characters%s); <b>Enter</b> to start new line."
 msgstr "Tik of wijzig tekst (%d karakters%s); <b>Enter</b> begint een nieuwe regel."
 
-#: ../src/text-context.cpp:1631
+#: ../src/text-context.cpp:1655
 #: ../src/tools-switch.cpp:197
 msgid "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; then type."
 msgstr "<b>Klik</b> om een tekst te beginnen of te selecteren, <b>sleep</b> om ingekaderde tekst te maken; begin vervolgens te tikken."
 
-#: ../src/text-context.cpp:1741
+#: ../src/text-context.cpp:1765
 msgid "Type text"
 msgstr "Tik tekst"
 
@@ -14431,81 +14595,95 @@ msgstr "Geen effect op het klembord."
 msgid "Clipboard does not contain a path."
 msgstr "Klembord bevat geen pad."
 
-# Puntjes toegevoegd omdat dialoog volgt.
 #. Item dialog
-#: ../src/ui/context-menu.cpp:105
-msgid "Object _Properties"
+#: ../src/ui/context-menu.cpp:110
+#: ../src/verbs.cpp:2661
+msgid "_Object Properties..."
 msgstr "Object_eigenschappen..."
 
 #. Select item
-#: ../src/ui/context-menu.cpp:115
+#: ../src/ui/context-menu.cpp:120
 msgid "_Select This"
-msgstr "Dit _selecteren"
+msgstr "Object _selecteren"
 
 #. Create link
-#: ../src/ui/context-menu.cpp:125
+#: ../src/ui/context-menu.cpp:130
 msgid "_Create Link"
 msgstr "Koppeling _maken"
 
 #. Set mask
-#: ../src/ui/context-menu.cpp:132
+#: ../src/ui/context-menu.cpp:137
 msgid "Set Mask"
 msgstr "Masker inschakelen"
 
 #. Release mask
-#: ../src/ui/context-menu.cpp:143
+#: ../src/ui/context-menu.cpp:148
 msgid "Release Mask"
 msgstr "Masker uitschakelen"
 
 #. Set Clip
-#: ../src/ui/context-menu.cpp:154
-msgid "Set Clip"
-msgstr "Afsnijden instellen"
+#: ../src/ui/context-menu.cpp:159
+msgid "Set _Clip"
+msgstr "_Afsnijden instellen"
 
 #. Release Clip
-#: ../src/ui/context-menu.cpp:165
-msgid "Release Clip"
-msgstr "Afsnijden opheffen"
+#: ../src/ui/context-menu.cpp:170
+msgid "Release C_lip"
+msgstr "A_fsnijden opheffen"
 
-#: ../src/ui/context-menu.cpp:288
+#: ../src/ui/context-menu.cpp:293
 msgid "Create link"
 msgstr "Koppeling maken"
 
 #. "Ungroup"
-#: ../src/ui/context-menu.cpp:306
+#: ../src/ui/context-menu.cpp:311
 #: ../src/verbs.cpp:2343
 msgid "_Ungroup"
-msgstr "Groep _opheffen"
+msgstr "Groep op_heffen"
 
 #. Link dialog
-#: ../src/ui/context-menu.cpp:346
-msgid "Link _Properties"
-msgstr "_Eigenschappen koppelen"
+#: ../src/ui/context-menu.cpp:351
+msgid "Link _Properties..."
+msgstr "_Linkeigenschappen..."
 
 #. Select item
-#: ../src/ui/context-menu.cpp:352
+#: ../src/ui/context-menu.cpp:357
 msgid "_Follow Link"
-msgstr "_Koppeling volgen"
+msgstr "Koppeling vo_lgen"
 
 #. Reset transformations
-#: ../src/ui/context-menu.cpp:357
+#: ../src/ui/context-menu.cpp:362
 msgid "_Remove Link"
-msgstr "Koppeling verwijderen"
+msgstr "Koppeling ve_rwijderen"
 
 #. Link dialog
-#: ../src/ui/context-menu.cpp:405
-msgid "Image _Properties"
-msgstr "_Afbeeldingseigenschappen"
+#: ../src/ui/context-menu.cpp:410
+msgid "Image _Properties..."
+msgstr "_Afbeeldingseigenschappen..."
 
-#: ../src/ui/context-menu.cpp:411
+#: ../src/ui/context-menu.cpp:416
 msgid "Edit Externally..."
 msgstr "Extern bewerken..."
 
-# Puntjes toegevoegd omdat dialoog volgt.
 #. Item dialog
-#: ../src/ui/context-menu.cpp:504
-msgid "_Fill and Stroke"
-msgstr "V_ulling en lijn..."
+#. Fill and Stroke dialog
+#: ../src/ui/context-menu.cpp:511
+#: ../src/ui/context-menu.cpp:567
+#: ../src/verbs.cpp:2628
+msgid "_Fill and Stroke..."
+msgstr "_Vulling en lijn..."
+
+#. Edit Text dialog
+#: ../src/ui/context-menu.cpp:574
+#: ../src/verbs.cpp:2643
+msgid "_Text and Font..."
+msgstr "_Tekst en lettertype..."
+
+#. Spellcheck dialog
+#: ../src/ui/context-menu.cpp:581
+#: ../src/verbs.cpp:2651
+msgid "Check Spellin_g..."
+msgstr "Spellin_g controleren..."
 
 #. *
 #. * Constructor
@@ -14550,11 +14728,11 @@ msgstr "about.nl.svg"
 #: ../src/ui/dialog/aboutbox.cpp:383
 msgid "translator-credits"
 msgstr ""
-"Kris De Gussem (Kris.DeGussem@gmail.com), 2008, 2009, 2010.\n"
-"Foppe Benedictus (foppe.benedictus@gmail.com), 2007, 2008, 2009.\n"
-"Myckel Habets (myckel@sdf.lonestar.org), 2008.\n"
+"Kris De Gussem (Kris.DeGussem@gmail.com), 2008-2010.\n"
 "\n"
 "Vorige vertalers:\n"
+"Foppe Benedictus (foppe.benedictus@gmail.com), 2007-2009.\n"
+"Myckel Habets (myckel@sdf.lonestar.org), 2008.\n"
 "Benno Schulenberg (benno@vertaalt.nl), 2008.\n"
 "Ruud Steltenpool (svg@steltenpower.com), 2006.\n"
 "Vincent van Adrighem (V.vanAdrighem@dirck.mine.nu), 2003.\n"
@@ -14884,7 +15062,7 @@ msgstr "Indien aangevinkt, wordt de rechthoekige paginarand getoond"
 
 #: ../src/ui/dialog/document-properties.cpp:91
 msgid "Border on _top of drawing"
-msgstr "Rand altijd _boven de tekening"
+msgstr "Rand altijd boven de _tekening"
 
 #: ../src/ui/dialog/document-properties.cpp:91
 msgid "If set, border is always on top of the drawing"
@@ -15110,71 +15288,66 @@ msgstr "<b>Kleven aan hulplijnen</b>"
 msgid "(invalid UTF-8 string)"
 msgstr "(ongeldige UTF-8 string)"
 
-#: ../src/ui/dialog/document-properties.cpp:346
-#, c-format
-msgid "Color profiles directory (%s) is unavailable."
-msgstr "Map voor kleurprofielen (%s) is onbeschikbaar."
-
 #. TODO check if this next line was sometimes needed. It being there caused an assertion.
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:450
+#: ../src/ui/dialog/document-properties.cpp:429
 #: ../src/verbs.cpp:2734
 msgid "Link Color Profile"
 msgstr "Kleurprofiel linken"
 
-#: ../src/ui/dialog/document-properties.cpp:523
+#: ../src/ui/dialog/document-properties.cpp:502
 msgid "Remove linked color profile"
 msgstr "Gelinkt kleurprofiel verwijderen"
 
-#: ../src/ui/dialog/document-properties.cpp:537
+#: ../src/ui/dialog/document-properties.cpp:516
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>Gelinkte kleurprofielen:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:539
+#: ../src/ui/dialog/document-properties.cpp:518
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>Beschikbare kleurprofielen:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:541
+#: ../src/ui/dialog/document-properties.cpp:520
 msgid "Link Profile"
 msgstr "Kleurprofiel linken"
 
-#: ../src/ui/dialog/document-properties.cpp:572
+#: ../src/ui/dialog/document-properties.cpp:551
 msgid "Profile Name"
 msgstr "Naam profiel"
 
 # zijn dit de uitbreidingen (Engels: external modules)?
-#: ../src/ui/dialog/document-properties.cpp:603
+#: ../src/ui/dialog/document-properties.cpp:582
 msgid "<b>External script files:</b>"
 msgstr "<b>Externe scriptbestanden:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:605
+#: ../src/ui/dialog/document-properties.cpp:584
 msgid "Add"
 msgstr "Toevoegen"
 
-#: ../src/ui/dialog/document-properties.cpp:628
+#: ../src/ui/dialog/document-properties.cpp:607
 msgid "Filename"
 msgstr "Bestandsnaam"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:668
+#: ../src/ui/dialog/document-properties.cpp:647
 msgid "Add external script..."
 msgstr "Extern script toevoegen..."
 
-#: ../src/ui/dialog/document-properties.cpp:692
+#: ../src/ui/dialog/document-properties.cpp:671
 msgid "Remove external script"
 msgstr "Extern script verwijderen"
 
-#: ../src/ui/dialog/document-properties.cpp:773
+#: ../src/ui/dialog/document-properties.cpp:752
 msgid "<b>Creation</b>"
 msgstr "<b>Aanmaken</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:774
+#: ../src/ui/dialog/document-properties.cpp:753
 msgid "<b>Defined grids</b>"
 msgstr "<b>Bestaande rasters</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:985
+#: ../src/ui/dialog/document-properties.cpp:964
 msgid "Remove grid"
 msgstr "Raster verwijderen"
 
@@ -15284,6 +15457,10 @@ msgstr "Resolutie (in punten per inch)"
 msgid "Document"
 msgstr "Document"
 
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1438
+msgid "Source"
+msgstr "Bron"
+
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1458
 msgid "Cairo"
 msgstr "Cairo"
@@ -15317,373 +15494,373 @@ msgid "Stroke st_yle"
 msgstr "Lijn_stijl"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
-#: ../src/ui/dialog/filter-effects-dialog.cpp:471
+#: ../src/ui/dialog/filter-effects-dialog.cpp:469
 msgid "This matrix determines a linear transform on color space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value."
 msgstr "Deze matrix bepaalt een lineaire transformatie van de kleurruimte. Elke lijn beïnvloedt één van de kleurcomponenten. Elke kolom bepaalt hoeveel van elke kleurcomponent van de invoer overgedragen wordt naar de uitvoer. De laatste kolom hangt niet af van de invoerkleuren. Ze kan daarom gebruikt worden om een constante bij de kleurcomponenten toe te voegen."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:581
+#: ../src/ui/dialog/filter-effects-dialog.cpp:579
 msgid "Image File"
 msgstr "Afbeeldingsbestand"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:584
+#: ../src/ui/dialog/filter-effects-dialog.cpp:582
 msgid "Selected SVG Element"
 msgstr "Geselecteerd SVG element"
 
 #. TODO: any image, not just svg
-#: ../src/ui/dialog/filter-effects-dialog.cpp:654
+#: ../src/ui/dialog/filter-effects-dialog.cpp:652
 msgid "Select an image to be used as feImage input"
 msgstr "Selecteer een afbeelding om als feImage-invoer te gebruiken"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:746
+#: ../src/ui/dialog/filter-effects-dialog.cpp:744
 msgid "This SVG filter effect does not require any parameters."
 msgstr "Dit SVG-filtereffect vereist geen parameters."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:752
+#: ../src/ui/dialog/filter-effects-dialog.cpp:750
 msgid "This SVG filter effect is not yet implemented in Inkscape."
 msgstr "Dit SVG-filtereffect is nog niet in Inkscape geimplementeerd."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:944
+#: ../src/ui/dialog/filter-effects-dialog.cpp:942
 msgid "Light Source:"
 msgstr "Lichtbron: "
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
 msgid "Azimuth"
 msgstr "Azimut"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
 msgid "Direction angle for the light source on the XY plane, in degrees"
 msgstr "Richtingshoek voor de lichtbron op het XY-vlak, in graden"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:960
 msgid "Elevation"
 msgstr "Hoogte"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:960
 msgid "Direction angle for the light source on the YZ plane, in degrees"
 msgstr "Richtingshoek voor de lichtbron op het YZ-vlak, in graden"
 
 #. default x:
 #. default y:
 #. default z:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
-#: ../src/ui/dialog/filter-effects-dialog.cpp:968
+#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
 msgid "Location"
 msgstr "Locatie"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
-#: ../src/ui/dialog/filter-effects-dialog.cpp:968
-#: ../src/ui/dialog/filter-effects-dialog.cpp:971
+#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
+#: ../src/ui/dialog/filter-effects-dialog.cpp:969
 msgid "X coordinate"
 msgstr "X-coördinaat"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
-#: ../src/ui/dialog/filter-effects-dialog.cpp:968
-#: ../src/ui/dialog/filter-effects-dialog.cpp:971
+#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
+#: ../src/ui/dialog/filter-effects-dialog.cpp:969
 msgid "Y coordinate"
 msgstr "Y-coördinaat"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
-#: ../src/ui/dialog/filter-effects-dialog.cpp:968
-#: ../src/ui/dialog/filter-effects-dialog.cpp:971
+#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
+#: ../src/ui/dialog/filter-effects-dialog.cpp:969
 msgid "Z coordinate"
 msgstr "Z-coördinaat"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:971
+#: ../src/ui/dialog/filter-effects-dialog.cpp:969
 msgid "Points At"
 msgstr "Punten op"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:972
+#: ../src/ui/dialog/filter-effects-dialog.cpp:970
 msgid "Specular Exponent"
 msgstr "Reflectiefactor"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:972
+#: ../src/ui/dialog/filter-effects-dialog.cpp:970
 msgid "Exponent value controlling the focus for the light source"
 msgstr "Exponentwaarde die de focus van de lichtbron controleert"
 
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
-#: ../src/ui/dialog/filter-effects-dialog.cpp:974
+#: ../src/ui/dialog/filter-effects-dialog.cpp:972
 msgid "Cone Angle"
 msgstr "Kegelhoek"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:974
+#: ../src/ui/dialog/filter-effects-dialog.cpp:972
 msgid "This is the angle between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. No light is projected outside this cone."
 msgstr "Dit is de hoek tussen de as (dit is de as tussen de lichtbron en het punt waarop deze gericht is) en de conus van de lichtbron. Er wordt geen licht buiten de deze conus geprojecteerd."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1035
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1033
 msgid "New light source"
 msgstr "Nieuwe lichtbron"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1076
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1074
 msgid "_Duplicate"
 msgstr "_Dupliceren"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1102
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1100
 msgid "_Filter"
 msgstr "_Filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1116
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1114
 msgid "R_ename"
 msgstr "H_ernoemen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1219
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1217
 msgid "Rename filter"
 msgstr "Hernoem filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1255
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1253
 msgid "Apply filter"
 msgstr "Filter toepassen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1324
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1322
 msgid "filter"
 msgstr "filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1331
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1329
 msgid "Add filter"
 msgstr "Filter toevoegen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1357
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1355
 msgid "Duplicate filter"
 msgstr "Filter dupliceren"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1424
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1422
 msgid "_Effect"
 msgstr "_Effect"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1432
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1430
 msgid "Connections"
 msgstr "Verbindingen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1548
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1546
 msgid "Remove filter primitive"
 msgstr "Filtereffect verwijderen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1920
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1918
 msgid "Remove merge node"
 msgstr "Verwijder samenvoegingsknooppunt"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2036
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2034
 msgid "Reorder filter primitive"
 msgstr "Filtereffect herordenen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2070
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2068
 msgid "Add Effect:"
 msgstr "Effect toevoegen:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2071
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2069
 msgid "No effect selected"
 msgstr "Geen effect geselecteerd"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2072
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2070
 msgid "No filter selected"
 msgstr "Geen filter geselecteerd"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2110
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2108
 msgid "Effect parameters"
 msgstr "Effectparameters"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2111
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2109
 msgid "Filter General Settings"
 msgstr "Algemene filterinstellingen"
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 msgid "Coordinates:"
 msgstr "Coördinaten:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 msgid "X coordinate of the left corners of filter effects region"
 msgstr "X-coördinaat van de linkerhoeken van het filtereffectgebied"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 msgid "Y coordinate of the upper corners of filter effects region"
 msgstr "Y-coördinaat van de linkerhoeken van het filtereffectgebied"
 
 #. default width:
 #. default height:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
 msgid "Dimensions:"
 msgstr "Dimensies:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
 msgid "Width of filter effects region"
 msgstr "Breedte van filtereffectgebied"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
 msgid "Height of filter effects region"
 msgstr "Hoogte van filtereffectgebied"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2174
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2172
 msgid "Indicates the type of matrix operation. The keyword 'matrix' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix."
 msgstr "Geeft het type matrixbewerking aan.  De optie 'matrix' geeft de mogelijkheid een volledige 5x4-matrix op te geven.  De andere opties representeren veelgebruikte kleurbewerkingen zonder dat een volledige matrix hoeft te worden opgegeven."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2175
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2173
 msgid "Value(s):"
 msgstr "Waarde(n):"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2228
 msgid "Operator:"
 msgstr "Operator:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "K1:"
 msgstr "K1:"
 
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2192
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
 msgid "If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."
 msgstr "Als de rekenkundige bewerking is gekozen, wordt elke pixel berekend volgens de formule k1*i1*i2 + k2*i1 + k3*i2 + k4 waarbij i1 en i2 de pixelwaarden van respectievelijk de eerste en tweede invoer zijn."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "K2:"
 msgstr "K2:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid "K3:"
 msgstr "K3:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
 msgid "K4:"
 msgstr "K4:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 #: ../src/ui/dialog/tracedialog.cpp:581
 msgid "Size:"
 msgstr "Grootte:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid "width of the convolve matrix"
 msgstr "Breedte van de convolutiematrix"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid "height of the convolve matrix"
 msgstr "Hoogte van de convolutiematrix"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "X coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."
 msgstr "X-coördinaat van het doelpunt in de convolutiematrix. De convolutie wordt toegepast op pixels rondom dit punt."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "Y coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."
 msgstr "Y-coördinaat van het doelpunt in de convolutiematrix. De convolutie wordt toegepast op pixels rondom dit punt."
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "Kernel:"
 msgstr "Kernmatrix:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "This matrix describes the convolve operation that is applied to the input image in order to calculate the pixel colors at the output. Different arrangements of values in this matrix result in various possible visual effects. An identity matrix would lead to a motion blur effect (parallel to the matrix diagonal) while a matrix filled with a constant non-zero value would lead to a common blur effect."
 msgstr "Deze matrix beschrijft de convolutie die wordt toegepast op de afbeelding om de kleurwaarde van de pixels in het resultaat te berekenen. Verschillende waarden voor de getallen in deze matrix resulteren in verschillende visuele effecten. Een identiteitsmatrix resulteert in bewegingsonscherpte (parallel met de diagonaal) terwijl een matrix met een constante niet-nul waarde resulteert in algemene onscherpte."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
 msgid "Divisor:"
 msgstr "Deler:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
 msgid "After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result."
 msgstr "Na toepassen van de kernmatrix op de afbeelding wordt de kleurwaarde gedeeld door de deler om de uiteindelijke kleurwaarde te bepalen. Een deler die gelijk is aan de som van de kleurwaarden geeft een avondeffect aan de algemene kleurintensiteit van het resultaat."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
 msgid "Bias:"
 msgstr "Vertekening:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
 msgid "This value is added to each component. This is useful to define a constant value as the zero response of the filter."
 msgstr "Deze waarde wordt opgeteld bij elke kleurcomponent. Dit is handig om een constante als nulwaarde van de filterrespons te definiëren."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2204
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 msgid "Edge Mode:"
 msgstr "Randgedrag:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2204
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 msgid "Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image."
 msgstr "Bepaalt hoe de afbeelding wordt vergroot met extra pixels opdat matrixoperaties toegepast kunnen worden wanneer de kernmatrix zich op of nabij de rand van de afbeelding bevindt."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2205
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
 msgid "Preserve Alpha"
 msgstr "Alfa behouden"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2205
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
 msgid "If set, the alpha channel won't be altered by this filter primitive."
 msgstr "Indien aangevinkt, wordt het alfakanaal door dit filter niet aangepast."
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2206
 msgid "Diffuse Color:"
 msgstr "Diffusiekleur:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2241
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2206
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2239
 msgid "Defines the color of the light source"
 msgstr "Definieert de kleur van de lichtbron"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2242
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2240
 msgid "Surface Scale:"
 msgstr "Textuurversterking:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2242
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2240
 msgid "This value amplifies the heights of the bump map defined by the input alpha channel"
 msgstr "Deze waarde versterkt de hoogten in de textuurkaart gedefinieerd door het invoeralfakanaal"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2243
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2241
 msgid "Constant:"
 msgstr "Constante:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2243
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2241
 msgid "This constant affects the Phong lighting model."
 msgstr "Deze constante beïnvloedt het Phong-belichtingsmodel"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2211
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2245
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2243
 msgid "Kernel Unit Length:"
 msgstr "Kerneleenheidslengte:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 msgid "This defines the intensity of the displacement effect."
 msgstr "Dit definieert de intensiteit van het verplaatsingseffect."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2214
 msgid "X displacement:"
 msgstr "X-verplaatsing:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2214
 msgid "Color component that controls the displacement in the X direction"
 msgstr "Kleurcomponent die de verplaatsing in horizontale richting bepaalt."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
 msgid "Y displacement:"
 msgstr "Y-verplaatsing:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
 msgid "Color component that controls the displacement in the Y direction"
 msgstr "Kleurcomponent die de verplaatsing in verticale richting bepaalt."
 
 #. default: black
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2220
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2218
 msgid "Flood Color:"
 msgstr "Vulkleur:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2220
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2218
 msgid "The whole filter region will be filled with this color."
 msgstr "Het hele filtereffectgebied zal worden gevuld met deze kleur."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2224
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 msgid "Standard Deviation:"
 msgstr "Standaarddeviatie:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2224
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 msgid "The standard deviation for the blur operation."
 msgstr "De standaarddeviatie voor de vervagingsbewerking."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2228
 msgid ""
 "Erode: performs \"thinning\" of input image.\n"
 "Dilate: performs \"fattenning\" of input image."
@@ -15691,128 +15868,128 @@ msgstr ""
 "Eroderen: maakt de afbeelding \"vlakker\".\n"
 "Aandikken: maakt de afbeelding \"dikker\"."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2232
 msgid "Source of Image:"
 msgstr "Bron van afbeelding:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 msgid "Delta X:"
 msgstr "Horizontaal verschil:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 msgid "This is how far the input image gets shifted to the right"
 msgstr "Hoe ver de bronafbeelding naar rechts wordt verschoven."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2238
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
 msgid "Delta Y:"
 msgstr "Verticaal verschil:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2238
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
 msgid "This is how far the input image gets shifted downwards"
 msgstr "Hoe ver de bronafbeelding omlaag wordt verschoven."
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2241
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2239
 msgid "Specular Color:"
 msgstr "Lichtbronkleur:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2244
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2242
 msgid "Exponent for specular term, larger is more \"shiny\"."
 msgstr "Exponent van de lichtbronkleur; groter is \"glimmender\"."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2253
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2251
 msgid "Indicates whether the filter primitive should perform a noise or turbulence function."
 msgstr "Geeft aan of het filter een ruis- of turbulentiefunctie toepast."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2254
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2252
 msgid "Base Frequency:"
 msgstr "Basisfrequentie:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2255
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2253
 msgid "Octaves:"
 msgstr "Octaven:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2256
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2254
 msgid "Seed:"
 msgstr "Beginwaarde:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2256
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2254
 msgid "The starting number for the pseudo random number generator."
 msgstr "Het begingetal voor de toevalsgenerator"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2268
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2266
 msgid "Add filter primitive"
 msgstr "Filtereffect toevoegen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2285
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2283
 msgid "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, multiply, darken and lighten."
 msgstr "Het <b>feBlend</b>-filtereffect kent vier mengmanieren voor afbeeldingen: scherm, vermenigvuldigen, donkerder en lichter."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2289
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2287
 msgid "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to color of each rendered pixel. This allows for effects like turning object to grayscale, modifying color saturation and changing color hue."
 msgstr "Het <b>feColorMatrix</b>-filtereffect past een matrixoperatie toe op de kleur van elke gerenderde pixel. Dit maakt effecten mogelijk zoals het omzetten van een object naar grijswaarden, het aanpassen van kleurverzadiging en het veranderen van de tint."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2293
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2291
 msgid "The <b>feComponentTransfer</b> filter primitive manipulates the input's color components (red, green, blue, and alpha) according to particular transfer functions, allowing operations like brightness and contrast adjustment, color balance, and thresholding."
 msgstr "Het <b>feComponentTransfer</b>-filtereffect manipuleert de kleurcomponenten (rood, groen, blauw en alfa) van de invoer aan de hand van bepaalde transferfuncties, hetgeen bewerkingen zoals het aanpassen van helderheid en contrast, kleurbalans, en drempelwaarden mogelijk maakt."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2297
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2295
 msgid "The <b>feComposite</b> filter primitive composites two images using one of the Porter-Duff blending modes or the arithmetic mode described in SVG standard. Porter-Duff blending modes are essentially logical operations between the corresponding pixel values of the images."
 msgstr "Het <b>feComposite</b>-filtereffect verenigt twee afbeeldingen met één van de Porter-Duff-mengmodi of de rekenkundige modus beschreven in de SVG-standaard. Porter-Duff-mengmodi zijn in essentie logische bewerkingen tussen de overeenkomende pixelwaarden van de afbeeldingen."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2301
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2299
 msgid "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on the image. Common effects created using convolution matrices are blur, sharpening, embossing and edge detection. Note that while gaussian blur can be created using this filter primitive, the special gaussian blur primitive is faster and resolution-independent."
 msgstr "Met het <b>feConvolveMatrix</b>-filtereffect kan een convolutie toegepast worden op de afbeelding.  Gebruikelijke effecten die met convolutiematrices gemaakt worden zijn: vervaging, verscherping, reliëf, en randherkenning.  Merk op dat hoewel gaussiaans vervagen mogelijk is met dit filter, het speciale filtereffect hiervoor sneller en resolutie-onafhankelijk is."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2305
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2303
 msgid "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
 msgstr "De <b>feDiffuseLighting</b>- en <i>feSpecularLighting</i>-filtereffecten maken reliëfschaduwen.  Het alfakanaal van de invoer wordt gebruikt voor de diepte-informatie: gebieden met grotere ondoorzichtigheid verrijzen ten opzichte van de kijker en gebieden met lagere ondoorzichtigheid wijken terug."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2309
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2307
 msgid "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the first input using the second input as a displacement map, that shows from how far the pixel should come from. Classical examples are whirl and pinch effects."
 msgstr "Het <b>feDisplacementMap</b>-filtereffect verplaatst de pixels in de eerste invoer, daarbij de tweede invoer gebruikend als een verplaatsingskaart die aangeeft van hoever elk pixel moet komen.  Klassieke voorbeelden zijn draai- en boetseerefffecten"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2313
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2311
 msgid "The <b>feFlood</b> filter primitive fills the region with a given color and opacity.  It is usually used as an input to other filters to apply color to a graphic."
 msgstr "Het <b>feFlood</b>-filtereffect vult een regio met een opgegeven kleur en ondoorzichtigheid.  Het wordt normaal gebruikt als invoer voor andere filters om een kleur toe te passen op een tekening."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2317
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2315
 msgid "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is commonly used together with feOffset to create a drop shadow effect."
 msgstr "Het <b>feGaussianBlur</b>-filtereffect vervaagt de invoer uniform.  Het wordt vaak gebruikt samen met <i>feOffset</i> om een schaduweffect te creëren."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2321
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2319
 msgid "The <b>feImage</b> filter primitive fills the region with an external image or another part of the document."
 msgstr "Het <b>feImage</b>-filtereffect vult een regio met een externe afbeelding of een ander deel van het document."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2325
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2323
 msgid "The <b>feMerge</b> filter primitive composites several temporary images inside the filter primitive to a single image. It uses normal alpha compositing for this. This is equivalent to using several feBlend primitives in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr "Het <b>feMerge</b>-filtereffect verenigt verschillende tijdelijke beelden in het filter tot één afbeelding.  Hiervoor wordt normale alfamenging gebruikt.  Dit is equivalent aan het gebruik van verschillende <i>feBlend</i>-filtereffecten in 'normale' modus of verschillende <i>feComposite</i>-filtereffecten in 'over'-modus."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2329
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2327
 msgid "The <b>feMorphology</b> filter primitive provides erode and dilate effects. For single-color objects erode makes the object thinner and dilate makes it thicker."
 msgstr "Het <b>feMorphology</b>-filtereffect verschaft eroderings- en verdikkingseffecten. Voor objecten met één kleur maakt eroderen het object dunner en verdikken maakt het object dikker."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2333
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2331
 msgid "The <b>feOffset</b> filter primitive offsets the image by an user-defined amount. For example, this is useful for drop shadows, where the shadow is in a slightly different position than the actual object."
 msgstr "Het <b>feOffset</b>-filtereffect verplaatst de afbeelding met een opgegeven hoeveelheid.  Dit is handig om bijvoorbeeld schaduwen te maken, waarbij de schaduw en het actuele object zich op bijna dezelfde positie bevinden."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2337
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2335
 msgid "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
 msgstr "De <i>feDiffuseLighting</i>- en <b>feSpecularLighting</b>-filtereffecten maken reliëfschaduwen.  Het alfakanaal van de invoer wordt gebruikt voor de diepte-informatie: gebieden met grotere ondoorzichtigheid verrijzen ten opzichte van de kijker en gebieden met lagere ondoorzichtigheid wijken terug."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2341
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2339
 msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr "Het <b>feTile</b>-filtereffect maakt klonen van een regio in de bronafbeelding."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2345
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2343
 msgid "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of noise is useful in simulating several nature phenomena like clouds, fire and smoke and in generating complex textures like marble or granite."
 msgstr "Het <b>feTurbulence</b>-filtereffect genereert Perlin-ruis.  Dit type ruis simuleert diverse natuurlijke fenomenen zoals wolken, vuur en rook, en genereert complexe texturen zoals marmer of graniet."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2364
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2362
 msgid "Duplicate filter primitive"
 msgstr "Filtereffect dupliceren"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2417
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2415
 msgid "Set filter primitive attribute"
 msgstr "Eigenschap van filtereffect instellen"
 
@@ -17150,7 +17327,6 @@ msgstr "Verstuiven"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:478
-#: ../src/ui/view/edit-widget.cpp:1062
 #: ../src/verbs.cpp:2511
 #: ../src/widgets/desktop-widget.cpp:488
 msgid "Zoom"
@@ -18418,10 +18594,6 @@ msgstr "Resolutie gebruikt voor het commando Bitmap-kopie Aanmaken:"
 msgid "Bitmaps"
 msgstr "Bitmappen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1297
-msgid "Language:"
-msgstr "Taal:"
-
 #: ../src/ui/dialog/inkscape-preferences.cpp:1298
 msgid "Set the main spell check language"
 msgstr "De hoofdtaal voor spellingscontrole instellen"
@@ -19378,8 +19550,8 @@ msgstr "Het overtrekken starten"
 
 #: ../src/ui/dialog/transformation.cpp:83
 #: ../src/ui/dialog/transformation.cpp:93
-msgid "_Horizontal"
-msgstr "_Horizontaal"
+msgid "_Horizontal:"
+msgstr "_Horizontaal:"
 
 #: ../src/ui/dialog/transformation.cpp:83
 msgid "Horizontal displacement (relative) or position (absolute)"
@@ -19387,32 +19559,24 @@ msgstr "Horizontale verplaatsing (relatief) of positie (absoluut)"
 
 #: ../src/ui/dialog/transformation.cpp:85
 #: ../src/ui/dialog/transformation.cpp:95
-msgid "_Vertical"
-msgstr "_Verticaal"
+msgid "_Vertical:"
+msgstr "_Verticaal:"
 
 #: ../src/ui/dialog/transformation.cpp:85
 msgid "Vertical displacement (relative) or position (absolute)"
 msgstr "Verticale verplaatsing (relatief) of positie (absoluut)"
 
 #: ../src/ui/dialog/transformation.cpp:87
-msgid "_Width"
-msgstr "_Breedte"
-
-#: ../src/ui/dialog/transformation.cpp:87
 msgid "Horizontal size (absolute or percentage of current)"
 msgstr "Horizontale grootte (absoluut of procentueel van huidige)"
-
-#: ../src/ui/dialog/transformation.cpp:89
-msgid "_Height"
-msgstr "_Hoogte"
 
 #: ../src/ui/dialog/transformation.cpp:89
 msgid "Vertical size (absolute or percentage of current)"
 msgstr "Verticale grootte (absoluut of procentueel van huidige)"
 
 #: ../src/ui/dialog/transformation.cpp:91
-msgid "A_ngle"
-msgstr "_Hoek"
+msgid "A_ngle:"
+msgstr "Hoe_k:"
 
 #: ../src/ui/dialog/transformation.cpp:91
 msgid "Rotation angle (positive = counterclockwise)"
@@ -19558,59 +19722,63 @@ msgstr "Van segmenten curven maken"
 msgid "Add nodes"
 msgstr "Knooppunten toevoegen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:306
+#: ../src/ui/tool/multi-path-manipulator.cpp:250
+msgid "Duplicate nodes"
+msgstr "Knooppunten dupliceren"
+
+#: ../src/ui/tool/multi-path-manipulator.cpp:312
 #: ../src/widgets/toolbox.cpp:1369
 msgid "Join nodes"
 msgstr "Knooppunten samenvoegen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:313
+#: ../src/ui/tool/multi-path-manipulator.cpp:319
 #: ../src/widgets/toolbox.cpp:1380
 msgid "Break nodes"
 msgstr "Knooppunten verbreken"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:320
+#: ../src/ui/tool/multi-path-manipulator.cpp:326
 msgid "Delete nodes"
 msgstr "Knooppunten verwijderen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:618
+#: ../src/ui/tool/multi-path-manipulator.cpp:630
 msgid "Move nodes"
 msgstr "Items verplaatsen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:621
+#: ../src/ui/tool/multi-path-manipulator.cpp:633
 msgid "Move nodes horizontally"
 msgstr "Knooppunten horizontaal verplaatsen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:625
+#: ../src/ui/tool/multi-path-manipulator.cpp:637
 msgid "Move nodes vertically"
 msgstr "Knooppunten verticaal verplaatsen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:629
-#: ../src/ui/tool/multi-path-manipulator.cpp:632
+#: ../src/ui/tool/multi-path-manipulator.cpp:641
+#: ../src/ui/tool/multi-path-manipulator.cpp:644
 msgid "Rotate nodes"
 msgstr "Knooppunten roteren"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:636
-#: ../src/ui/tool/multi-path-manipulator.cpp:642
+#: ../src/ui/tool/multi-path-manipulator.cpp:648
+#: ../src/ui/tool/multi-path-manipulator.cpp:654
 msgid "Scale nodes uniformly"
 msgstr "Knooppunten uniform schalen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:639
+#: ../src/ui/tool/multi-path-manipulator.cpp:651
 msgid "Scale nodes"
 msgstr "Knooppunten schalen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:646
+#: ../src/ui/tool/multi-path-manipulator.cpp:658
 msgid "Scale nodes horizontally"
 msgstr "Knooppunten horizontaal schalen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:650
+#: ../src/ui/tool/multi-path-manipulator.cpp:662
 msgid "Scale nodes vertically"
 msgstr "Knooppunten verticaal schalen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:654
+#: ../src/ui/tool/multi-path-manipulator.cpp:666
 msgid "Flip nodes horizontally"
 msgstr "Knooppunten horizontaal spiegelen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:657
+#: ../src/ui/tool/multi-path-manipulator.cpp:669
 msgid "Flip nodes vertically"
 msgstr "Knooppunten verticaal spiegelen"
 
@@ -19739,86 +19907,86 @@ msgctxt "Path handle tip"
 msgid "Move handle by %s, %s; angle %.2f°, length %s"
 msgstr "Handvat verplaatsen met %s, %s; hoek %.2f°, lengte %s"
 
-#: ../src/ui/tool/node.cpp:1126
+#: ../src/ui/tool/node.cpp:1131
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr "<b>Shift</b>: sleep een handvat, klik voor verandering selectie"
 
-#: ../src/ui/tool/node.cpp:1128
+#: ../src/ui/tool/node.cpp:1133
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: click to toggle selection"
 msgstr "<b>Shift</b>: klik voor verandering selectie"
 
-#: ../src/ui/tool/node.cpp:1133
+#: ../src/ui/tool/node.cpp:1138
 msgctxt "Path node tip"
 msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
 msgstr "<b>Ctrl+Alt:</b> verplaatsen langs handvatlijnen, klik om knooppunt te verwijderen"
 
-#: ../src/ui/tool/node.cpp:1136
+#: ../src/ui/tool/node.cpp:1141
 msgctxt "Path node tip"
 msgid "<b>Ctrl</b>: move along axes, click to change node type"
 msgstr "<b>Ctrl</b>: verplaatsen langs assen, klik om knooppunttype te veranderen"
 
-#: ../src/ui/tool/node.cpp:1140
+#: ../src/ui/tool/node.cpp:1145
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
 msgstr "<b>Alt</b>: knooppunten boetseren"
 
-#: ../src/ui/tool/node.cpp:1148
+#: ../src/ui/tool/node.cpp:1153
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>: sleep om het pad te vervormen (toetscombinatie: Shift, Ctrl, Alt)"
 
-#: ../src/ui/tool/node.cpp:1151
+#: ../src/ui/tool/node.cpp:1156
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>: sleep om het pad te vervormen, klik om te schakelen tussen schalings- en rotatiehandvatten (toetscombinaties: Shift, Ctrl, Alt)"
 
-#: ../src/ui/tool/node.cpp:1154
+#: ../src/ui/tool/node.cpp:1159
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>: sleep om het pad te vervormen, klik om enkel dit knooppunt te selecteren (toetscombinaties: Shift, Ctrl, Alt)"
 
-#: ../src/ui/tool/node.cpp:1162
+#: ../src/ui/tool/node.cpp:1167
 #, c-format
 msgctxt "Path node tip"
 msgid "Move node by %s, %s"
 msgstr "Knooppunt verplaatsen met %s, %s"
 
-#: ../src/ui/tool/node.cpp:1174
+#: ../src/ui/tool/node.cpp:1179
 msgid "Symmetric node"
 msgstr "Symmetrisch knooppunt"
 
-#: ../src/ui/tool/node.cpp:1175
+#: ../src/ui/tool/node.cpp:1180
 msgid "Auto-smooth node"
 msgstr "Automatisch glad knooppunt"
 
-#: ../src/ui/tool/path-manipulator.cpp:763
+#: ../src/ui/tool/path-manipulator.cpp:796
 msgid "Scale handle"
 msgstr "Schaalhandvat"
 
-#: ../src/ui/tool/path-manipulator.cpp:787
+#: ../src/ui/tool/path-manipulator.cpp:820
 msgid "Rotate handle"
 msgstr "Roteerhandvat"
 
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1290
+#: ../src/ui/tool/path-manipulator.cpp:1323
 #: ../src/widgets/toolbox.cpp:1358
 msgid "Delete node"
 msgstr "Item verwijderen"
 
-#: ../src/ui/tool/path-manipulator.cpp:1305
+#: ../src/ui/tool/path-manipulator.cpp:1331
 msgid "Cycle node type"
 msgstr "Wisselen van knooppunttype"
 
-#: ../src/ui/tool/path-manipulator.cpp:1319
+#: ../src/ui/tool/path-manipulator.cpp:1346
 msgid "Drag handle"
 msgstr "Handvat slepen"
 
-#: ../src/ui/tool/path-manipulator.cpp:1328
+#: ../src/ui/tool/path-manipulator.cpp:1355
 msgid "Retract handle"
 msgstr "Handvat intrekken"
 
@@ -19926,88 +20094,13 @@ msgctxt "Transform handle tip"
 msgid "<b>Rotation center</b>: drag to change the origin of transforms"
 msgstr "<b>Rotatiecentrum</b>: sleep om de oorsprong van transformaties aan te passen"
 
-#: ../src/ui/view/edit-widget.cpp:330
-#: ../src/ui/view/edit-widget.cpp:335
-#: ../src/ui/view/edit-widget.cpp:343
-#: ../src/ui/view/edit-widget.cpp:348
-#: ../src/ui/view/edit-widget.cpp:353
-#: ../src/ui/view/edit-widget.cpp:368
-#: ../src/ui/view/edit-widget.cpp:381
-#: ../src/ui/view/edit-widget.cpp:386
-#: ../src/ui/view/edit-widget.cpp:400
-#: ../src/ui/view/edit-widget.cpp:404
-#: ../src/ui/view/edit-widget.cpp:412
-#: ../src/ui/view/edit-widget.cpp:416
-#: ../src/ui/view/edit-widget.cpp:420
-#: ../src/ui/view/edit-widget.cpp:756
-#: ../src/ui/view/edit-widget.cpp:761
-#: ../src/ui/view/edit-widget.cpp:867
-#: ../src/ui/view/edit-widget.cpp:871
-#: ../src/ui/view/edit-widget.cpp:992
-msgid "PLACEHOLDER, do not translate"
-msgstr ""
-
-#: ../src/ui/view/edit-widget.cpp:1051
-#: ../src/widgets/desktop-widget.cpp:384
-msgid "Zoom drawing if window size changes"
-msgstr "In- of uitzoomen wanneer venstergrootte verandert"
-
-#: ../src/ui/view/edit-widget.cpp:1072
-#: ../src/widgets/desktop-widget.cpp:508
-msgid "Cursor coordinates"
-msgstr "Cursorcoördinaten"
-
-#: ../src/ui/view/edit-widget.cpp:1082
-#: ../src/widgets/desktop-widget.cpp:523
-msgid "Z:"
-msgstr "Z:"
-
-#: ../src/ui/view/edit-widget.cpp:1089
-msgid "<b>Welcome to Inkscape!</b> Use shape or drawing tools to create objects; use selector (arrow) to move or transform them."
-msgstr "<b>Welkom bij Inkscape!</b> Gebruik vorm- of tekengereedschappen om objecten te maken; gebruik aanwijsgereedschap (pijl) om ze te verplaatsen of te vervormen."
-
-#: ../src/ui/view/edit-widget.cpp:1200
-#: ../src/widgets/desktop-widget.cpp:859
-#, c-format
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n"
-"\n"
-"If you close without saving, your changes will be discarded."
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">De wijzigingen in document \"%s\" opslaan alvorens af te sluiten?</span>\n"
-"\n"
-"Als u afsluit zonder opslaan, gaan de wijzigingen verloren."
-
-#: ../src/ui/view/edit-widget.cpp:1211
-#: ../src/ui/view/edit-widget.cpp:1259
-#: ../src/widgets/desktop-widget.cpp:866
-#: ../src/widgets/desktop-widget.cpp:923
-msgid "Close _without saving"
-msgstr "Sluiten _zonder opslaan"
-
-#: ../src/ui/view/edit-widget.cpp:1247
-#, c-format
-msgid ""
-"<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n"
-"\n"
-"Do you want to save this file as an Inkscape SVG?"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Het bestand \"%s\" was opgeslagen in een formaat (%s), wat gegevensverlies tot gevolg kan hebben!</span>\n"
-"\n"
-"Wilt u dit bestand opslaan in een Inkscape SVG-formaat?"
-
-#: ../src/ui/view/edit-widget.cpp:1262
-#: ../src/widgets/desktop-widget.cpp:926
-msgid "_Save as SVG"
-msgstr "Op_slaan als SVG"
-
 #: ../src/ui/widget/filter-effect-chooser.cpp:25
 msgid "_Blend mode:"
 msgstr "_Mengmodus:"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
-msgid "B_lur:"
-msgstr "_Vervaging:"
+msgid "Blur:"
+msgstr "Vervaging:"
 
 #: ../src/ui/widget/layer-selector.cpp:114
 msgid "Toggle current layer visibility"
@@ -20032,12 +20125,6 @@ msgstr "Niet-vrij"
 #: ../src/ui/widget/licensor.cpp:38
 msgid "MetadataLicence|Other"
 msgstr "Ander"
-
-#: ../src/ui/widget/object-composite-settings.cpp:62
-#: ../src/ui/widget/selected-style.cpp:1033
-#: ../src/ui/widget/selected-style.cpp:1034
-msgid "Opacity, %"
-msgstr "Ondoorzichtigheid (%)"
 
 #: ../src/ui/widget/object-composite-settings.cpp:172
 msgid "Change blur"
@@ -20092,6 +20179,10 @@ msgstr "_Onder:"
 #: ../src/ui/widget/page-sizer.cpp:236
 msgid "Bottom margin"
 msgstr "Ondermarge"
+
+#: ../src/ui/widget/page-sizer.cpp:245
+msgid "Description"
+msgstr "Beschrijving"
 
 #: ../src/ui/widget/page-sizer.cpp:286
 msgid "Orientation:"
@@ -20505,6 +20596,11 @@ msgstr "Lijndikte aanpassen"
 msgid ", drag to adjust"
 msgstr ", sleep om aan te passen"
 
+#: ../src/ui/widget/selected-style.cpp:1033
+#: ../src/ui/widget/selected-style.cpp:1034
+msgid "Opacity (%)"
+msgstr "Ondoorzichtigheid (%)"
+
 #: ../src/ui/widget/selected-style.cpp:1068
 #, c-format
 msgid "Stroke width: %.5g%s%s"
@@ -20563,7 +20659,7 @@ msgstr "<b>Lijndikte aangepast</b>: was %.3g, nu <b>%.3g</b> (verschil %.3g)"
 #: ../src/ui/widget/spin-slider.cpp:118
 msgctxt "Sliders"
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #: ../src/ui/widget/style-swatch.cpp:269
 msgid "L Gradient"
@@ -21312,7 +21408,7 @@ msgstr "_Pad versnijden"
 
 #: ../src/verbs.cpp:2368
 msgid "Cut the bottom path's stroke into pieces, removing fill"
-msgstr "De lijn van het onderste pad in stukken snijden, en vulling verwijderen"
+msgstr "De lijn van het onderste pad in stukken snijden en vulling verwijderen"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -22146,10 +22242,6 @@ msgstr "Document_metagegevens..."
 msgid "Edit document metadata (to be saved with the document)"
 msgstr "Documentmetagegevens bewerken (worden opgeslagen in dit document)"
 
-#: ../src/verbs.cpp:2628
-msgid "_Fill and Stroke..."
-msgstr "_Vulling en lijn..."
-
 #: ../src/verbs.cpp:2629
 msgid "Edit objects' colors, gradients, arrowheads, and other fill and stroke properties..."
 msgstr "Kleuren, kleurverlopen, pijlen en andere lijn- en vullingseigenschappen van objecten bewerken..."
@@ -22203,10 +22295,6 @@ msgstr "Gesc_hiedenis..."
 msgid "Undo History"
 msgstr "Geschiedenis"
 
-#: ../src/verbs.cpp:2643
-msgid "_Text and Font..."
-msgstr "_Tekst en lettertype..."
-
 #: ../src/verbs.cpp:2644
 msgid "View and select font family, font size and other text properties"
 msgstr "Lettertype, lettergrootte, letterstijl en andere teksteigenschappen tonen en instellen"
@@ -22234,10 +22322,6 @@ msgstr "Tekst zoeken en _vervangen..."
 #: ../src/verbs.cpp:2650
 msgid "Find and replace text in document"
 msgstr "Tekst zoeken en vervangen in het document"
-
-#: ../src/verbs.cpp:2651
-msgid "Check Spellin_g..."
-msgstr "Spellin_g controleren..."
 
 #: ../src/verbs.cpp:2652
 msgid "Check spelling of text in document"
@@ -22274,10 +22358,6 @@ msgstr "_Tegelen met klonen..."
 #: ../src/verbs.cpp:2660
 msgid "Create multiple clones of selected object, arranging them into a pattern or scattering"
 msgstr "Van het geselecteerde object meerdere klonen maken en deze rangschikken of verstrooien"
-
-#: ../src/verbs.cpp:2661
-msgid "_Object Properties..."
-msgstr "Object_eigenschappen..."
 
 #: ../src/verbs.cpp:2662
 msgid "Edit the ID, locked and visible status, and other object properties"
@@ -22508,6 +22588,18 @@ msgstr "Streepjespatroon"
 msgid "Pattern offset"
 msgstr "Patroonverplaatsing"
 
+#: ../src/widgets/desktop-widget.cpp:384
+msgid "Zoom drawing if window size changes"
+msgstr "In- of uitzoomen wanneer venstergrootte verandert"
+
+#: ../src/widgets/desktop-widget.cpp:508
+msgid "Cursor coordinates"
+msgstr "Cursorcoördinaten"
+
+#: ../src/widgets/desktop-widget.cpp:523
+msgid "Z:"
+msgstr "Z:"
+
 #. display the initial welcome message in the statusbar
 #: ../src/widgets/desktop-widget.cpp:558
 msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."
@@ -22561,6 +22653,22 @@ msgstr "Kleurmanagementweergave is <b>actief</b>voor dit venster"
 msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr "Kleurmanagementweergave is <b>inactief</b> voor dit venster"
 
+#: ../src/widgets/desktop-widget.cpp:859
+#, c-format
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n"
+"\n"
+"If you close without saving, your changes will be discarded."
+msgstr ""
+"<span weight=\"bold\" size=\"larger\">De wijzigingen in document \"%s\" opslaan alvorens af te sluiten?</span>\n"
+"\n"
+"Als u afsluit zonder opslaan, gaan de wijzigingen verloren."
+
+#: ../src/widgets/desktop-widget.cpp:866
+#: ../src/widgets/desktop-widget.cpp:923
+msgid "Close _without saving"
+msgstr "Sluiten _zonder opslaan"
+
 #: ../src/widgets/desktop-widget.cpp:915
 #, c-format
 msgid ""
@@ -22572,11 +22680,15 @@ msgstr ""
 "\n"
 "Wilt u dit bestand opslaan in het Inkscape SVG-formaat?"
 
+#: ../src/widgets/desktop-widget.cpp:926
+msgid "_Save as SVG"
+msgstr "Op_slaan als SVG"
+
 #: ../src/widgets/ege-paint-def.cpp:70
 #: ../src/widgets/ege-paint-def.cpp:92
 #: ../src/widgets/gradient-selector.cpp:174
 msgid "none"
-msgstr "geen"
+msgstr "Niet"
 
 #: ../src/widgets/ege-paint-def.cpp:89
 msgid "remove"
@@ -22802,12 +22914,12 @@ msgstr "Vulling uitzetten (ongedefinieerd maken zodat het overgenomen kan worden
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:255
 msgid "Any path self-intersections or subpaths create holes in the fill (fill-rule: evenodd)"
-msgstr "Wanneer een pad zichzelf snijdt, ontstaat een gat (vulregel: evenodd)"
+msgstr "Wanneer een pad zichzelf snijdt, ontstaat een gat (vulregel: evenoneven)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:266
 msgid "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
-msgstr "Vulling is zonder gaten (vulregel: nonzero)"
+msgstr "Vulling is zonder gaten (vulregel: nietnul)"
 
 #: ../src/widgets/paint-selector.cpp:581
 msgid "No objects"
@@ -22960,62 +23072,62 @@ msgstr "Kleurbeheersysteem"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:220
 #: ../src/widgets/sp-color-scales.cpp:404
-msgid "_R"
-msgstr "_R"
+msgid "_R:"
+msgstr "_R:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:220
 #: ../src/widgets/sp-color-icc-selector.cpp:221
 #: ../src/widgets/sp-color-scales.cpp:407
-msgid "_G"
-msgstr "_G"
+msgid "_G:"
+msgstr "_G:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:220
 #: ../src/widgets/sp-color-scales.cpp:410
-msgid "_B"
-msgstr "_B"
+msgid "_B:"
+msgstr "_B:"
 
 # Hue - Tint.
 #: ../src/widgets/sp-color-icc-selector.cpp:222
 #: ../src/widgets/sp-color-icc-selector.cpp:223
 #: ../src/widgets/sp-color-scales.cpp:430
-msgid "_H"
-msgstr "_T"
+msgid "_H:"
+msgstr "_T:"
 
 # Saturation - Verzadiging.
 #: ../src/widgets/sp-color-icc-selector.cpp:222
 #: ../src/widgets/sp-color-icc-selector.cpp:223
 #: ../src/widgets/sp-color-scales.cpp:433
-msgid "_S"
-msgstr "_V"
+msgid "_S:"
+msgstr "_V:"
 
 # Lightness - Helderheid.
 #: ../src/widgets/sp-color-icc-selector.cpp:223
 #: ../src/widgets/sp-color-scales.cpp:436
-msgid "_L"
-msgstr "_H"
+msgid "_L:"
+msgstr "_H:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-icc-selector.cpp:225
 #: ../src/widgets/sp-color-scales.cpp:458
-msgid "_C"
-msgstr "_C"
+msgid "_C:"
+msgstr "_C:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-icc-selector.cpp:225
 #: ../src/widgets/sp-color-scales.cpp:461
-msgid "_M"
-msgstr "_M"
+msgid "_M:"
+msgstr "_M:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-icc-selector.cpp:225
 #: ../src/widgets/sp-color-scales.cpp:464
-msgid "_Y"
-msgstr "_Y"
+msgid "_Y:"
+msgstr "_Y:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-scales.cpp:467
-msgid "_K"
-msgstr "_K"
+msgid "_K:"
+msgstr "_K:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:235
 msgid "Gray"
@@ -23040,7 +23152,7 @@ msgstr "Magenta"
 #: ../src/widgets/sp-color-scales.cpp:465
 #: ../src/widgets/sp-color-scales.cpp:466
 msgid "Yellow"
-msgstr "Geel (Y)"
+msgstr "Geel"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:296
 msgid "Fix"
@@ -23056,8 +23168,8 @@ msgstr "RGB-standaardwaarde aanpassen aan waarde van icc-color()."
 #: ../src/widgets/sp-color-scales.cpp:439
 #: ../src/widgets/sp-color-scales.cpp:470
 #: ../src/widgets/sp-color-wheel-selector.cpp:135
-msgid "_A"
-msgstr "_A"
+msgid "_A:"
+msgstr "_A:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:390
 #: ../src/widgets/sp-color-icc-selector.cpp:402
@@ -23140,7 +23252,7 @@ msgstr "Breedte:"
 #. corners of paths. It can be "miter", "round" or "bevel".
 #: ../src/widgets/stroke-style.cpp:712
 msgid "Join:"
-msgstr "Samenvoegen:"
+msgstr "Hoekpunten:"
 
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
@@ -23161,7 +23273,7 @@ msgstr "Afgeronde hoek"
 #. "Join" option (in the Fill and Stroke dialog).
 #: ../src/widgets/stroke-style.cpp:744
 msgid "Bevel join"
-msgstr "Platte hoek"
+msgstr "Schuine hoek"
 
 #. Miterlimit
 #. TRANSLATORS: Miter limit: only for "miter join", this limits the length
@@ -25195,6 +25307,425 @@ msgstr "Herinitialiseer afgebakende gebieden vullen naar standaardwaarden (gebru
 #. End:
 #.
 #. vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+#: ../share/extensions/gcodetools_all_in_one.inx.h:1
+#: ../share/extensions/gcodetools_area.inx.h:1
+msgid "\"Create area offset\": creates several Inkscape path offsets to fill original path's area up to \"Area radius\" value. Outlines start from \"1/2 D\" up to \"Area width\" total width with \"D\" steps where D is taken from the nearest tool definition (\"Tool diameter\" value). Only one offset will be created if the \"Area width\" is equal to \"1/2 D\"."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:2
+#: ../share/extensions/gcodetools_orientation_points.inx.h:1
+msgid "2-points mode (move and rotate, maintained aspect ratio X/Y)"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:3
+#: ../share/extensions/gcodetools_orientation_points.inx.h:2
+msgid "3-points mode (move, rotate and mirror, different X/Y scale)"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:4
+#: ../share/extensions/gcodetools_area.inx.h:2
+msgid "Action:"
+msgstr "Actie:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:5
+#: ../share/extensions/gcodetools_area.inx.h:3
+#: ../share/extensions/gcodetools_dxf_points.inx.h:1
+#: ../share/extensions/gcodetools_engraving.inx.h:1
+#: ../share/extensions/gcodetools_lathe.inx.h:1
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:1
+msgid "Add numeric suffix to filename"
+msgstr "Numeriek achtervoegsel aan bestandsnaam toevoegen"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:6
+#: ../share/extensions/gcodetools_area.inx.h:4
+#: ../share/extensions/gcodetools_dxf_points.inx.h:2
+#: ../share/extensions/gcodetools_engraving.inx.h:2
+#: ../share/extensions/gcodetools_lathe.inx.h:2
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:2
+msgid "Additional post-processor:"
+msgstr "Additionele post-processor:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:7
+msgid "All in one"
+msgstr "Alles in één"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:9
+#: ../share/extensions/gcodetools_area.inx.h:6
+msgid "Area artefacts"
+msgstr "Oppervlakartefacten"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:10
+#: ../share/extensions/gcodetools_area.inx.h:7
+msgid "Area width:"
+msgstr "Breedte oppervlak"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:11
+#: ../share/extensions/gcodetools_area.inx.h:8
+msgid "Artefact diameter:"
+msgstr "Artefactdiameter:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:12
+#: ../share/extensions/gcodetools_area.inx.h:9
+#: ../share/extensions/gcodetools_lathe.inx.h:3
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:3
+msgid "Biarc interpolation tolerance is the maximum distance between path and its approximation. The segment will be split into two segments if the distance between path's segment and it's approximation exceeds biarc interpolation tolerance."
+msgstr "Bicirkelinterpolatietolerantie is de maximum afstand tussen het pad en zijn benadering. Het segment zal opgesplitst worden in twee segmenten indien de afstand tussen het segment en zijn benadering de bicirkelinterpolatietolerantie overschrijdt."
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:13
+#: ../share/extensions/gcodetools_area.inx.h:10
+#: ../share/extensions/gcodetools_lathe.inx.h:4
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:4
+msgid "Biarc interpolation tolerance:"
+msgstr "Bicirkelinterpolatietolerantie"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:14
+#: ../share/extensions/gcodetools_dxf_points.inx.h:3
+msgid "Convert selected objects to drill points (as dxf_import plugin does). Also you can save original shape. Only the start point of each curve will be used. Also you can manually select object, open XML editor (Shift+Ctrl+X) and add or remove XML tag 'dxfpoint' with any value."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:15
+#: ../share/extensions/gcodetools_dxf_points.inx.h:4
+msgid "Convert selection:"
+msgstr "Selectie converteren"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:16
+#: ../share/extensions/gcodetools_dxf_points.inx.h:6
+msgid "DXF points"
+msgstr "DXF-punten"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:17
+#: ../share/extensions/gcodetools_area.inx.h:11
+#: ../share/extensions/gcodetools_dxf_points.inx.h:7
+#: ../share/extensions/gcodetools_engraving.inx.h:3
+#: ../share/extensions/gcodetools_lathe.inx.h:6
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:5
+msgid "Directory:"
+msgstr "Directorie:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:18
+msgid "Draw additional graphics to debug engraving path:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:19
+#: ../share/extensions/gcodetools_engraving.inx.h:5
+msgid "Engraving"
+msgstr "Gravering"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:20
+#: ../share/extensions/gcodetools_area.inx.h:12
+#: ../share/extensions/gcodetools_dxf_points.inx.h:8
+#: ../share/extensions/gcodetools_engraving.inx.h:6
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:6
+msgid "File:"
+msgstr "Bestand:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:21
+#: ../share/extensions/gcodetools_area.inx.h:13
+#: ../share/extensions/gcodetools_dxf_points.inx.h:9
+#: ../share/extensions/gcodetools_engraving.inx.h:7
+#: ../share/extensions/gcodetools_lathe.inx.h:10
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:7
+msgid "Full path to log file:"
+msgstr "Volledig pad naar logbestand:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:22
+#: ../share/extensions/gcodetools_area.inx.h:14
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:3
+#: ../share/extensions/gcodetools_dxf_points.inx.h:10
+#: ../share/extensions/gcodetools_engraving.inx.h:8
+#: ../share/extensions/gcodetools_lathe.inx.h:11
+#: ../share/extensions/gcodetools_orientation_points.inx.h:3
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:8
+#: ../share/extensions/gcodetools_tools_library.inx.h:1
+msgid "Gcodetools"
+msgstr "Gcodetools"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:23
+#: ../share/extensions/gcodetools_area.inx.h:15
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:4
+#: ../share/extensions/gcodetools_dxf_points.inx.h:11
+#: ../share/extensions/gcodetools_engraving.inx.h:9
+#: ../share/extensions/gcodetools_lathe.inx.h:12
+#: ../share/extensions/gcodetools_orientation_points.inx.h:4
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:9
+#: ../share/extensions/gcodetools_tools_library.inx.h:2
+msgid "Gcodetools plug-in: converts paths to Gcode (using circular interpolation), makes offset paths and engraves sharp corners using cone cutters. This plug-in calculates Gcode for paths using circular interpolation or linear motion when needed. Tutorials, manuals and support can be found at English support forum: http://www.cnc-club.ru/gcodetools and Russian support forum: http://www.cnc-club.ru/gcodetoolsru Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas. Gcodetools ver. 1.6.01"
+msgstr "Gcodetools uitbreiding: converteert paden in Gcode (met behulp van cirkelinterpolatie), maakt offsetpaden en graveert scherpe hoeken met conische snijmessen. Deze plugin berekent Gcode voor paden met behulp van cirkelinterpolatie of lineare verplaatsing. Tutorials, handleidingen en ondersteuning zijn beschikbaar op het Engelstalige forum: http://www.cnc-club.ru/gcodetools en op het Russische forum http://www.cnc-club.ru/gcodetoolsru. Auteurs: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas. Gcodetools ver. 1.6.01"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:24
+#: ../share/extensions/gcodetools_area.inx.h:16
+#: ../share/extensions/gcodetools_dxf_points.inx.h:12
+#: ../share/extensions/gcodetools_engraving.inx.h:10
+#: ../share/extensions/gcodetools_lathe.inx.h:13
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:10
+msgid "Generate log file"
+msgstr "Logbestand genereren"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:26
+#: ../share/extensions/gcodetools_tools_library.inx.h:4
+msgid "Just check tools"
+msgstr "Gereedschappen nakijken"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:27
+#: ../share/extensions/gcodetools_area.inx.h:18
+msgid "Maximum area cutting curves:"
+msgstr "Maximum oppervlak snijcurves:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:28
+#: ../share/extensions/gcodetools_engraving.inx.h:12
+msgid "Maximum distance for engraving:"
+msgstr "Maximum afstand voor gravure:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:29
+#: ../share/extensions/gcodetools_area.inx.h:19
+#: ../share/extensions/gcodetools_lathe.inx.h:19
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:12
+msgid "Maximum splitting depth:"
+msgstr "Maximum aantal opdelingen:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:30
+#: ../share/extensions/gcodetools_area.inx.h:20
+#: ../share/extensions/gcodetools_engraving.inx.h:13
+#: ../share/extensions/gcodetools_lathe.inx.h:20
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:13
+msgid "Minimum arc radius:"
+msgstr "Minimum straal boog:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:31
+#: ../share/extensions/gcodetools_engraving.inx.h:14
+msgid "Number of sample points used to calculate distance:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:32
+#: ../share/extensions/gcodetools_area.inx.h:21
+#: ../share/extensions/gcodetools_engraving.inx.h:15
+#: ../share/extensions/gcodetools_lathe.inx.h:21
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:14
+msgid "Offset along Z axis:"
+msgstr "Offset langs Z-as:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:35
+#: ../share/extensions/gcodetools_orientation_points.inx.h:8
+msgid "Orientation points are used to calculate transformation (offset,scale,mirror,rotation in XY plane) of the path. 3-points mode only: do not put all three into one line (use 2-points mode instead). You can modify Z surface, Z depth values later using text tool (3rd coordinates). If there are no orientation points inside current layer they are taken from the upper layer. Do not ungroup orientation points! You can select them using double click to enter the group or by Ctrl+Click. Now press apply to create control points (independent set for each layer)."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:36
+#: ../share/extensions/gcodetools_orientation_points.inx.h:9
+msgid "Orientation type:"
+msgstr "Type oriëntatie:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:37
+#: ../share/extensions/gcodetools_area.inx.h:23
+#: ../share/extensions/gcodetools_lathe.inx.h:23
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:16
+msgid "Path to Gcode"
+msgstr "Pad naar Gcode"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:38
+#: ../share/extensions/gcodetools_area.inx.h:24
+#: ../share/extensions/gcodetools_dxf_points.inx.h:14
+#: ../share/extensions/gcodetools_engraving.inx.h:17
+#: ../share/extensions/gcodetools_lathe.inx.h:24
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:17
+msgid "Post-processor:"
+msgstr "Post-processor:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:39
+#: ../share/extensions/gcodetools_area.inx.h:25
+#: ../share/extensions/gcodetools_dxf_points.inx.h:15
+#: ../share/extensions/gcodetools_engraving.inx.h:18
+#: ../share/extensions/gcodetools_lathe.inx.h:25
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:18
+msgid "Preferences"
+msgstr "Voorkeuren"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:40
+#: ../share/extensions/gcodetools_area.inx.h:26
+#: ../share/extensions/gcodetools_engraving.inx.h:19
+#: ../share/extensions/gcodetools_lathe.inx.h:26
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:19
+msgid "Scale along Z axis:"
+msgstr "Schalen langs Z-as:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:41
+#: ../share/extensions/gcodetools_area.inx.h:27
+#: ../share/extensions/gcodetools_engraving.inx.h:20
+#: ../share/extensions/gcodetools_lathe.inx.h:27
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:20
+msgid "Select all paths if nothing is selected"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:42
+#: ../share/extensions/gcodetools_tools_library.inx.h:5
+msgid "Selected tool type fills appropriate default values. You can change these values using the Text tool later on. The topmost (z order) tool in the active layer is used. If there is no tool inside the current layer it is taken from the upper layer. Press Apply to create new tool."
+msgstr "Het geselecteerde type gereedshap gebruikt de standaardwaarden. Je kan deze waarden nadien veranderen met het tekstgereedschap."
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:43
+#: ../share/extensions/gcodetools_engraving.inx.h:21
+msgid "Sharp angle tolerance:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:44
+#: ../share/extensions/gcodetools_engraving.inx.h:22
+msgid "This function creates path to engrave sharp angles. Cutter's shape function is defined by the tool. Some simple shapes: cone....(45 degrees)...........: w cone....(height/diameter=10/3).: 10/3 w sphere..(\"r\" diameter).........: math.sqrt(max(0,r**2-w**2)) ellipse.(R1=r and R2=r*4r).....: math.sqrt(max(0,r**2-w**2))*4"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:45
+#: ../share/extensions/gcodetools_tools_library.inx.h:6
+msgid "Tools library"
+msgstr "Gereedschappenbibliotheek"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:46
+#: ../share/extensions/gcodetools_tools_library.inx.h:7
+msgid "Tools type:"
+msgstr "Type gereedschap:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:47
+#: ../share/extensions/gcodetools_area.inx.h:28
+#: ../share/extensions/gcodetools_dxf_points.inx.h:16
+#: ../share/extensions/gcodetools_engraving.inx.h:23
+#: ../share/extensions/gcodetools_lathe.inx.h:28
+#: ../share/extensions/gcodetools_orientation_points.inx.h:10
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:21
+msgid "Units (mm or in):"
+msgstr "Eenheden (mm of in):"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:48
+#: ../share/extensions/gcodetools_area.inx.h:29
+msgid "Usage: 1. Select all Area Offsets (gray outlines) 2. Object/Ungroup (Shift+Ctrl+G) 3. Press Apply Suspected small objects will be marked out by colored arrows."
+msgstr "Gebruik: 1. Selecteer alle offsets van het oppervlak (grijze contouren) 2. Objecten degrouperen (Shift+Ctrl+G) 3. Druk op Toepassen Verdachte kleine objecten worden gemarkeerd met gekleurde bogen."
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:49
+#: ../share/extensions/gcodetools_orientation_points.inx.h:11
+msgid "Z depth:"
+msgstr "Z diepte:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:50
+#: ../share/extensions/gcodetools_area.inx.h:30
+#: ../share/extensions/gcodetools_dxf_points.inx.h:17
+#: ../share/extensions/gcodetools_engraving.inx.h:24
+#: ../share/extensions/gcodetools_lathe.inx.h:29
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:22
+msgid "Z safe height for G00 move over blank:"
+msgstr "Veilige Z-hoogte voor G00-verplaatsing over blanco:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:51
+#: ../share/extensions/gcodetools_orientation_points.inx.h:12
+msgid "Z surface:"
+msgstr "Z-oppervlak:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:52
+#: ../share/extensions/gcodetools_dxf_points.inx.h:18
+msgid "clear dxfpoint sign"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:53
+#: ../share/extensions/gcodetools_tools_library.inx.h:8
+msgid "cone"
+msgstr "kegel"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:54
+#: ../share/extensions/gcodetools_tools_library.inx.h:9
+msgid "cylinder"
+msgstr "cilinder"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:55
+#: ../share/extensions/gcodetools_tools_library.inx.h:10
+msgid "default"
+msgstr "standaard"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:56
+#: ../share/extensions/gcodetools_area.inx.h:31
+msgid "delete"
+msgstr "verwijderen"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:57
+#: ../share/extensions/gcodetools_tools_library.inx.h:11
+msgid "lathe cutter"
+msgstr "frees"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:58
+#: ../share/extensions/gcodetools_area.inx.h:32
+msgid "mark with an arrow"
+msgstr "Markeren met een boog"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:59
+#: ../share/extensions/gcodetools_area.inx.h:33
+msgid "mark with style"
+msgstr "Markeren met stijl"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:60
+#: ../share/extensions/gcodetools_tools_library.inx.h:12
+msgid "plasma"
+msgstr "plasma"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:61
+#: ../share/extensions/gcodetools_dxf_points.inx.h:19
+msgid "set as dxfpoint and draw arrow"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:62
+#: ../share/extensions/gcodetools_dxf_points.inx.h:20
+msgid "set as dxfpoint and save shape"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:63
+#: ../share/extensions/gcodetools_tools_library.inx.h:13
+msgid "tangent knife"
+msgstr "tangensmes"
+
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:1
+msgid "Check for Gcodetools latest stable version and try to get the updates."
+msgstr "De laatste stabiele Gcodetools versie controleren en trachten de updates op te halen."
+
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:2
+msgid "Check for updates"
+msgstr "Controleren op updates"
+
+#: ../share/extensions/gcodetools_dxf_points.inx.h:5
+msgid "DXF Points"
+msgstr "DXF-punten"
+
+#: ../share/extensions/gcodetools_engraving.inx.h:4
+msgid "Draw additional graphics to debug engraving path"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:5
+msgid "Create fine cut using:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:7
+msgid "File"
+msgstr "Bestand"
+
+#: ../share/extensions/gcodetools_lathe.inx.h:8
+msgid "Fine cut count:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:9
+msgid "Fine cut width:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:15
+msgid "Lathe"
+msgstr "Draaibank"
+
+#: ../share/extensions/gcodetools_lathe.inx.h:16
+msgid "Lathe X axis remap:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:17
+msgid "Lathe Z axis remap:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:18
+msgid "Lathe width:"
+msgstr "Breedte draaibank:"
+
+#: ../share/extensions/gcodetools_orientation_points.inx.h:7
+msgid "Orientation points"
+msgstr "Oriëntatiepunten"
+
 #: ../share/extensions/render_barcode_datamatrix.inx.h:1
 msgid "Barcode - Datamatrix"
 msgstr "Streepjescode - datamatrix"
@@ -25231,50 +25762,26 @@ msgstr "Helling (graden):"
 msgid "Wireframe Sphere"
 msgstr "Draadmodel sfeer"
 
-#~ msgid "Spacing"
-#~ msgstr "Tussenafstand"
-#~ msgid "Normal offset"
-#~ msgstr "Normale verplaatsing"
-#~ msgid "Tangential offset"
-#~ msgstr "Tangentiële verplaatsing"
-#~ msgid "Function applied to the blue channel"
-#~ msgstr "Functie toegepast op het blauwkanaal"
-#~ msgid "Function applied to the green channel"
-#~ msgstr "Functie toegepast op het groenkanaal"
-#~ msgid "Function applied to the red channel"
-#~ msgstr "Functie toegepast op het roodkanaal"
-#~ msgid ""
-#~ "Generate a random pattern of Voronoi cells. The pattern will be "
-#~ "accessible in the Fill and Stroke dialog. You must select an object or a "
-#~ "group."
-#~ msgstr ""
-#~ "Een random patroon van Voronoicellen genereren. Het patroon is bruikbaar "
-#~ "via het dialoogvenster Opvulling en lijnen. Je moet een object of groep "
-#~ "selecteren."
-#~ msgid "Angle"
-#~ msgstr "Hoek"
-#~ msgid "Radius"
-#~ msgstr "Straal"
-#~ msgid "Next Path Effect Parameter"
-#~ msgstr "Volgende padeffectparameter"
-#~ msgid "Show next Path Effect parameter for editing"
-#~ msgstr "De volgende padeffectparameter tonen voor bewerking"
-#~ msgid "Toggle snapping on or off"
-#~ msgstr "Kleven aan of uit zetten"
-#~ msgid "Connector network layout"
-#~ msgstr "Schikking van verbindingennetwerk"
-#~ msgid "small"
-#~ msgstr "klein"
-#~ msgid "large"
-#~ msgstr "groot"
-#~ msgid "huge"
-#~ msgstr "enorm"
-#~ msgid "wide"
-#~ msgstr "breed"
-#~ msgid "wider"
-#~ msgstr "breder"
-#~ msgid "_Print Colors Preview"
-#~ msgstr "Afdrukvoorbeeld kleuren"
-#~ msgid "Switch to print colors preview mode"
-#~ msgstr "Overschakelen naar afdrukvoorbeeld kleuren"
+#~ msgid "Title"
+#~ msgstr "Titel"
+#~ msgid "Format"
+#~ msgstr "Formaat"
+#~ msgid "Type"
+#~ msgstr "Type"
+#~ msgid "Rights"
+#~ msgstr "Rechten"
+#~ msgid "Language"
+#~ msgstr "Taal"
+#~ msgid "_Width"
+#~ msgstr "_Breedte"
+#~ msgid "_Height"
+#~ msgstr "_Hoogte"
+#~ msgid "A_ngle"
+#~ msgstr "_Hoek"
+#~ msgid "Opacity, %"
+#~ msgstr "_Ondoorzichtigheid (%)"
+#~ msgid "_Y"
+#~ msgstr "_Y"
+#~ msgid "_Id"
+#~ msgstr "_ID"
 

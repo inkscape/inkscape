@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-24 14:11+0200\n"
+"POT-Creation-Date: 2010-10-25 11:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -251,7 +251,7 @@ msgid "Help"
 msgstr ""
 
 #: ../share/extensions/color_custom.inx.h:13
-msgid "Input (r,g,b) Color Range"
+msgid "Input (r,g,b) Color Range:"
 msgstr ""
 
 #. ## end option page
@@ -2646,7 +2646,7 @@ msgid "Dodecahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-msgid "Draw back-facing polygons:"
+msgid "Draw back-facing polygons"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
@@ -7398,7 +7398,8 @@ msgstr ""
 msgid "<big><b>Bitmap size</b></big>"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:484 ../src/ui/widget/page-sizer.cpp:231
+#: ../src/dialogs/export.cpp:484 ../src/ui/dialog/transformation.cpp:87
+#: ../src/ui/widget/page-sizer.cpp:231
 msgid "_Width:"
 msgstr ""
 
@@ -7410,7 +7411,8 @@ msgstr ""
 msgid "dp_i"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:498 ../src/ui/widget/page-sizer.cpp:232
+#: ../src/dialogs/export.cpp:498 ../src/ui/dialog/transformation.cpp:89
+#: ../src/ui/widget/page-sizer.cpp:232
 msgid "_Height:"
 msgstr ""
 
@@ -9323,6 +9325,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/drop-shadow.h:38
 #: ../src/extension/internal/filter/drop-shadow.h:98
+#: ../src/ui/widget/object-composite-settings.cpp:62
 msgid "Opacity (%):"
 msgstr ""
 
@@ -14478,78 +14481,88 @@ msgid "Clipboard does not contain a path."
 msgstr ""
 
 #. Item dialog
-#: ../src/ui/context-menu.cpp:108 ../src/verbs.cpp:2661
+#: ../src/ui/context-menu.cpp:110 ../src/verbs.cpp:2661
 msgid "_Object Properties..."
 msgstr ""
 
 #. Select item
-#: ../src/ui/context-menu.cpp:118
+#: ../src/ui/context-menu.cpp:120
 msgid "_Select This"
 msgstr ""
 
 #. Create link
-#: ../src/ui/context-menu.cpp:128
+#: ../src/ui/context-menu.cpp:130
 msgid "_Create Link"
 msgstr ""
 
 #. Set mask
-#: ../src/ui/context-menu.cpp:135
+#: ../src/ui/context-menu.cpp:137
 msgid "Set Mask"
 msgstr ""
 
 #. Release mask
-#: ../src/ui/context-menu.cpp:146
+#: ../src/ui/context-menu.cpp:148
 msgid "Release Mask"
 msgstr ""
 
 #. Set Clip
-#: ../src/ui/context-menu.cpp:157
-msgid "Set Clip"
+#: ../src/ui/context-menu.cpp:159
+msgid "Set _Clip"
 msgstr ""
 
 #. Release Clip
-#: ../src/ui/context-menu.cpp:168
-msgid "Release Clip"
+#: ../src/ui/context-menu.cpp:170
+msgid "Release C_lip"
 msgstr ""
 
-#: ../src/ui/context-menu.cpp:291
+#: ../src/ui/context-menu.cpp:293
 msgid "Create link"
 msgstr ""
 
 #. "Ungroup"
-#: ../src/ui/context-menu.cpp:309 ../src/verbs.cpp:2343
+#: ../src/ui/context-menu.cpp:311 ../src/verbs.cpp:2343
 msgid "_Ungroup"
 msgstr ""
 
 #. Link dialog
-#: ../src/ui/context-menu.cpp:349
+#: ../src/ui/context-menu.cpp:351
 msgid "Link _Properties..."
 msgstr ""
 
 #. Select item
-#: ../src/ui/context-menu.cpp:355
+#: ../src/ui/context-menu.cpp:357
 msgid "_Follow Link"
 msgstr ""
 
 #. Reset transformations
-#: ../src/ui/context-menu.cpp:360
+#: ../src/ui/context-menu.cpp:362
 msgid "_Remove Link"
 msgstr ""
 
 #. Link dialog
-#: ../src/ui/context-menu.cpp:408
+#: ../src/ui/context-menu.cpp:410
 msgid "Image _Properties..."
 msgstr ""
 
-#: ../src/ui/context-menu.cpp:414
+#: ../src/ui/context-menu.cpp:416
 msgid "Edit Externally..."
 msgstr ""
 
 #. Item dialog
 #. Fill and Stroke dialog
-#: ../src/ui/context-menu.cpp:509 ../src/ui/context-menu.cpp:527
+#: ../src/ui/context-menu.cpp:511 ../src/ui/context-menu.cpp:567
 #: ../src/verbs.cpp:2628
 msgid "_Fill and Stroke..."
+msgstr ""
+
+#. Edit Text dialog
+#: ../src/ui/context-menu.cpp:574 ../src/verbs.cpp:2643
+msgid "_Text and Font..."
+msgstr ""
+
+#. Spellcheck dialog
+#: ../src/ui/context-menu.cpp:581 ../src/verbs.cpp:2651
+msgid "Check Spellin_g..."
 msgstr ""
 
 #. *
@@ -19567,7 +19580,7 @@ msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:83
 #: ../src/ui/dialog/transformation.cpp:93
-msgid "_Horizontal"
+msgid "_Horizontal:"
 msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:83
@@ -19576,7 +19589,7 @@ msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:85
 #: ../src/ui/dialog/transformation.cpp:95
-msgid "_Vertical"
+msgid "_Vertical:"
 msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:85
@@ -19584,15 +19597,7 @@ msgid "Vertical displacement (relative) or position (absolute)"
 msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:87
-msgid "_Width"
-msgstr ""
-
-#: ../src/ui/dialog/transformation.cpp:87
 msgid "Horizontal size (absolute or percentage of current)"
-msgstr ""
-
-#: ../src/ui/dialog/transformation.cpp:89
-msgid "_Height"
 msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:89
@@ -19600,7 +19605,7 @@ msgid "Vertical size (absolute or percentage of current)"
 msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:91
-msgid "A_ngle"
+msgid "A_ngle:"
 msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:91
@@ -20160,7 +20165,7 @@ msgid "_Blend mode:"
 msgstr ""
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
-msgid "B_lur:"
+msgid "Blur:"
 msgstr ""
 
 #: ../src/ui/widget/layer-selector.cpp:114
@@ -20185,12 +20190,6 @@ msgstr ""
 
 #: ../src/ui/widget/licensor.cpp:38
 msgid "MetadataLicence|Other"
-msgstr ""
-
-#: ../src/ui/widget/object-composite-settings.cpp:62
-#: ../src/ui/widget/selected-style.cpp:1033
-#: ../src/ui/widget/selected-style.cpp:1034
-msgid "Opacity, %"
 msgstr ""
 
 #: ../src/ui/widget/object-composite-settings.cpp:172
@@ -20663,6 +20662,11 @@ msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:987
 msgid ", drag to adjust"
+msgstr ""
+
+#: ../src/ui/widget/selected-style.cpp:1033
+#: ../src/ui/widget/selected-style.cpp:1034
+msgid "Opacity (%)"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:1068
@@ -22378,10 +22382,6 @@ msgstr ""
 msgid "Undo History"
 msgstr ""
 
-#: ../src/verbs.cpp:2643
-msgid "_Text and Font..."
-msgstr ""
-
 #: ../src/verbs.cpp:2644
 msgid "View and select font family, font size and other text properties"
 msgstr ""
@@ -22408,10 +22408,6 @@ msgstr ""
 
 #: ../src/verbs.cpp:2650
 msgid "Find and replace text in document"
-msgstr ""
-
-#: ../src/verbs.cpp:2651
-msgid "Check Spellin_g..."
 msgstr ""
 
 #: ../src/verbs.cpp:2652
@@ -23172,58 +23168,58 @@ msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:220
 #: ../src/widgets/sp-color-scales.cpp:404
-msgid "_R"
+msgid "_R:"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:220
 #: ../src/widgets/sp-color-icc-selector.cpp:221
 #: ../src/widgets/sp-color-scales.cpp:407
-msgid "_G"
+msgid "_G:"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:220
 #: ../src/widgets/sp-color-scales.cpp:410
-msgid "_B"
+msgid "_B:"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:222
 #: ../src/widgets/sp-color-icc-selector.cpp:223
 #: ../src/widgets/sp-color-scales.cpp:430
-msgid "_H"
+msgid "_H:"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:222
 #: ../src/widgets/sp-color-icc-selector.cpp:223
 #: ../src/widgets/sp-color-scales.cpp:433
-msgid "_S"
+msgid "_S:"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:223
 #: ../src/widgets/sp-color-scales.cpp:436
-msgid "_L"
+msgid "_L:"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-icc-selector.cpp:225
 #: ../src/widgets/sp-color-scales.cpp:458
-msgid "_C"
+msgid "_C:"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-icc-selector.cpp:225
 #: ../src/widgets/sp-color-scales.cpp:461
-msgid "_M"
+msgid "_M:"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-icc-selector.cpp:225
 #: ../src/widgets/sp-color-scales.cpp:464
-msgid "_Y"
+msgid "_Y:"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-scales.cpp:467
-msgid "_K"
+msgid "_K:"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:235
@@ -23265,7 +23261,7 @@ msgstr ""
 #: ../src/widgets/sp-color-scales.cpp:439
 #: ../src/widgets/sp-color-scales.cpp:470
 #: ../src/widgets/sp-color-wheel-selector.cpp:135
-msgid "_A"
+msgid "_A:"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:390
