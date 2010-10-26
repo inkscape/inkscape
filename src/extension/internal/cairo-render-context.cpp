@@ -797,6 +797,13 @@ CairoRenderContext::setupSurface(double width, double height)
             cairo_ps_surface_restrict_to_level(surface, (cairo_ps_level_t)_ps_level);
             cairo_ps_surface_set_eps(surface, (cairo_bool_t) _eps);
 #endif
+            // Cairo calculates the bounding box itself, however we want to override this. See Launchpad bug #380501
+#if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 11, 2))
+            if (override_bbox) {
+                cairo_ps_dsc_comment(surface, "%%BoundingBox: 100 100 200 200");
+                cairo_ps_dsc_comment(surface, "%%PageBoundingBox: 100 100 200 200");
+            }
+#endif
             break;
 #endif
         default:
