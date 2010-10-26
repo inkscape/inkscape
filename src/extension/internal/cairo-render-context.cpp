@@ -1268,7 +1268,7 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, NRRect const *pbox)
 
         cairo_set_source_rgba(_cr, rgb[0], rgb[1], rgb[2], alpha);
     } else {
-        g_assert( style->fill.isPaintserver()
+        g_assert( style->stroke.isPaintserver()
                   || SP_IS_GRADIENT(SP_STYLE_STROKE_SERVER(style))
                   || SP_IS_PATTERN(SP_STYLE_STROKE_SERVER(style)) );
 
