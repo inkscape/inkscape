@@ -28,6 +28,7 @@
 #include "libavoid/router.h"
 #include "libavoid/connector.h"
 #include "libavoid/geomtypes.h"
+#include "libavoid/shape.h"
 #include "xml/node.h"
 #include "document.h"
 #include "desktop.h"
@@ -389,8 +390,6 @@ Geom::Point SPAvoidRef::getConnectionPointPos(const int type, const int id)
     g_assert(item);
     Geom::Point pos;
     const Geom::Matrix& transform = sp_item_i2doc_affine(item);
-    // TODO investigate why this was asking for the active desktop:
-    SPDesktop *desktop = inkscape_active_desktop();
 
     if ( type == ConnPointDefault )
     {
@@ -447,6 +446,12 @@ static std::vector<Geom::Point> approxCurveWithPoints(SPCurve *curve)
     {
         Geom::Path::const_iterator cit = pit->begin();
         while (cit != pit->end())
+        {
+            if (cit == pit->begin())
+            {
+                poly_points.push_back(cit->initialPoint());
+            }
+
             if (dynamic_cast<Geom::CubicBezier const*>(&*cit))
             {
                 at += seg_size;
@@ -463,6 +468,7 @@ static std::vector<Geom::Point> approxCurveWithPoints(SPCurve *curve)
                 poly_points.push_back(cit->finalPoint());
                 ++cit;
             }
+        }
         ++pit;
     }
     return poly_points;
@@ -521,7 +527,7 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
     prev_parallel_hull_edge.origin(hull_edge.origin()+hull_edge.versor().ccw()*spacing);
     prev_parallel_hull_edge.versor(hull_edge.versor());
     int hull_size = hull.boundary.size();
-    for (int i = 0; i <= hull_size; ++i)
+    for (int i = 0; i < hull_size; ++i)
     {
         hull_edge.setBy2Points(hull[i], hull[i+1]);
         Geom::Line parallel_hull_edge;
