@@ -113,6 +113,18 @@ CrossingGraph create_crossing_graph(std::vector<Path> const &p, Crossings const 
 */
 //}
 
+// provide specific method for Paths because paths can be closed or open. Path::size() is named somewhat wrong...
+std::vector<Rect> bounds(Path const &a) {
+    std::vector<Rect> rs;
+    for (unsigned i = 0; i < a.size_default(); i++) {
+        OptRect bb = a[i].boundsFast();
+        if (bb) {
+            rs.push_back(*bb);
+        }
+    }
+    return rs;
+}
+
 void merge_crossings(Crossings &a, Crossings &b, unsigned i) {
     Crossings n;
     sort_crossings(b, i);
