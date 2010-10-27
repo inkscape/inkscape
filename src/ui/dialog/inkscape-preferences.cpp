@@ -356,7 +356,7 @@ void InkscapePreferences::AddNewObjectsStyle(DialogPage &p, Glib::ustring const 
     if (banner)
         p.add_group_header(banner);
     else
-        p.add_group_header( _("Create new objects with:"));
+        p.add_group_header( _("Style of new objects"));
     PrefRadioButton* current = Gtk::manage( new PrefRadioButton);
     current->init ( _("Last used style"), prefs_path + "/usecurrent", 1, true, 0);
     p.add_line( true, "", *current, "",
@@ -456,7 +456,7 @@ void InkscapePreferences::initPageTools()
     _t_node_pathflash_selected.init ( _("Show temporary outline for selected paths"), "/tools/nodes/pathflash_selected", false);
     _page_node.add_line( true, "", _t_node_pathflash_selected, "", _("Show temporary outline even when a path is selected for editing"));
     _t_node_pathflash_timeout.init("/tools/nodes/pathflash_timeout", 0, 10000.0, 100.0, 100.0, 1000.0, true, false);
-    _page_node.add_line( false, _("Flash time"), _t_node_pathflash_timeout, "ms", _("Specifies how long the path outline will be visible after a mouse-over (in milliseconds); specify 0 to have the outline shown until mouse leaves the path"), false);
+    _page_node.add_line( false, _("Flash time:"), _t_node_pathflash_timeout, "ms", _("Specifies how long the path outline will be visible after a mouse-over (in milliseconds); specify 0 to have the outline shown until mouse leaves the path"), false);
     _page_node.add_group_header(_("Editing preferences"));
     _t_node_single_node_transform_handles.init(_("Show transform handles for single nodes"), "/tools/nodes/single_node_transform_handles", false);
     _page_node.add_line( true, "", _t_node_single_node_transform_handles, "", _("Show transform handles even when only a single node is selected"));
@@ -465,7 +465,7 @@ void InkscapePreferences::initPageTools()
 
     //Tweak
     this->AddPage(_page_tweak, _("Tweak"), iter_tools, PREFS_PAGE_TOOLS_TWEAK);
-    this->AddNewObjectsStyle(_page_tweak, "/tools/tweak", _("Paint objects with:"));
+    this->AddNewObjectsStyle(_page_tweak, "/tools/tweak", _("Object paint style"));
     AddSelcueCheckbox(_page_tweak, "/tools/tweak", true);
     AddGradientCheckbox(_page_tweak, "/tools/tweak", false);
 
@@ -586,7 +586,7 @@ void InkscapePreferences::initPageWindows()
     _win_ontop_normal.init ( _("Normal"), "/options/transientpolicy/value", 1, true, &_win_ontop_none);
     _win_ontop_agressive.init ( _("Aggressive"), "/options/transientpolicy/value", 2, false, &_win_ontop_none);
 
-    _page_windows.add_group_header( _("Saving window geometry (size and position):"));
+    _page_windows.add_group_header( _("Saving window geometry (size and position)"));
     _page_windows.add_line( true, "", _win_save_geom_off, "",
                             _("Let the window manager determine placement of all windows"));
     _page_windows.add_line( true, "", _win_save_geom_prefs, "",
@@ -594,7 +594,7 @@ void InkscapePreferences::initPageWindows()
     _page_windows.add_line( true, "", _win_save_geom, "",
                             _("Save and restore window geometry for each document (saves geometry in the document)"));
 
-    _page_windows.add_group_header( _("Dialog behavior (requires restart):"));
+    _page_windows.add_group_header( _("Dialog behavior (requires restart)"));
     _page_windows.add_line( true, "", _win_dockable, "",
                             _("Dockable"));
     _page_windows.add_line( true, "", _win_floating, "",
@@ -612,7 +612,7 @@ void InkscapePreferences::initPageWindows()
 #endif
 
 #if GTK_VERSION_GE(2, 12)
-    _page_windows.add_group_header( _("Dialog Transparency:"));
+    _page_windows.add_group_header( _("Dialog Transparency"));
     _win_trans_focus.init("/dialogs/transparency/on-focus", 0.5, 1.0, 0.01, 0.1, 1.0, false, false);
     _page_windows.add_line( true, _("Opacity when focused:"), _win_trans_focus, "", "");
     _win_trans_blur.init("/dialogs/transparency/on-blur", 0.0, 1.0, 0.01, 0.1, 0.5, false, false);
@@ -621,7 +621,7 @@ void InkscapePreferences::initPageWindows()
     _page_windows.add_line( true, _("Time of opacity change animation:"), _win_trans_time, "ms", "");
 #endif
 
-    _page_windows.add_group_header( _("Miscellaneous:"));
+    _page_windows.add_group_header( _("Miscellaneous"));
 #ifndef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
     _page_windows.add_line( false, "", _win_hide_task, "",
                             _("Whether dialog windows are to be hidden in the window manager taskbar"));
@@ -678,7 +678,7 @@ void InkscapePreferences::initPageMasks()
     _page_mask.add_line(true, "", _mask_mask_remove, "",
                         _("After applying, remove the object used as the clipping path or mask from the drawing"));
     
-    _page_mask.add_group_header( _("Before applying clippath/mask:"));
+    _page_mask.add_group_header( _("Before applying"));
     
     _mask_grouping_none.init( _("Do not group clipped/masked objects"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_NONE, true, 0);
     _mask_grouping_separate.init( _("Enclose every clipped/masked object in its own group"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_SEPARATE, false, &_mask_grouping_none);
@@ -693,7 +693,7 @@ void InkscapePreferences::initPageMasks()
     _page_mask.add_line(true, "", _mask_grouping_all, "",
                         _("Apply clippath/mask to group containing all objects"));
                         
-    _page_mask.add_group_header( _("After releasing clippath/mask:"));
+    _page_mask.add_group_header( _("After releasing"));
     
     _mask_ungrouping.init ( _("Ungroup automatically created groups"), "/options/maskobject/ungrouping", true);
     _page_mask.add_line(true, "", _mask_ungrouping, "",
@@ -719,7 +719,7 @@ void InkscapePreferences::initPageTransforms()
                                _("Move gradients (in fill or stroke) along with the objects"));
     _page_transforms.add_line( false, "", _trans_pattern, "",
                                _("Move patterns (in fill or stroke) along with the objects"));
-    _page_transforms.add_group_header( _("Store transformation:"));
+    _page_transforms.add_group_header( _("Store transformation"));
     _page_transforms.add_line( true, "", _trans_optimized, "",
                                _("If possible, apply transformation to objects without adding a transform= attribute"));
     _page_transforms.add_line( true, "", _trans_preserved, "",
@@ -742,7 +742,7 @@ void InkscapePreferences::initPageFilters()
     _blur_quality_worst.init ( _("Lowest quality (fastest)"), "/options/blurquality/value",
                                   BLUR_QUALITY_WORST, false, &_blur_quality_best);
 
-    _page_filters.add_group_header( _("Gaussian blur quality for display:"));
+    _page_filters.add_group_header( _("Gaussian blur quality for display"));
     _page_filters.add_line( true, "", _blur_quality_best, "",
                            _("Best quality, but display may be very slow at high zooms (bitmap export always uses best quality)"));
     _page_filters.add_line( true, "", _blur_quality_better, "",
@@ -766,7 +766,7 @@ void InkscapePreferences::initPageFilters()
     _filter_quality_worst.init ( _("Lowest quality (fastest)"), "/options/filterquality/value",
                                   Inkscape::Filters::FILTER_QUALITY_WORST, false, &_filter_quality_best);
 
-    _page_filters.add_group_header( _("Filter effects quality for display:"));
+    _page_filters.add_group_header( _("Filter effects quality for display"));
     _page_filters.add_line( true, "", _filter_quality_best, "",
                            _("Best quality, but display may be very slow at high zooms (bitmap export always uses best quality)"));
     _page_filters.add_line( true, "", _filter_quality_better, "",
@@ -801,7 +801,7 @@ void InkscapePreferences::initPageSelecting()
     _sel_locked.init ( _("Ignore locked objects and layers"), "/options/kbselection/onlysensitive", true);
     _sel_layer_deselects.init ( _("Deselect upon layer change"), "/options/selection/layerdeselect", true);
 
-    _page_select.add_group_header( _("Ctrl+A, Tab, Shift+Tab:"));
+    _page_select.add_group_header( _("Ctrl+A, Tab, Shift+Tab"));
     _page_select.add_line( true, "", _sel_all, "",
                            _("Make keyboard selection commands work on objects in all layers"));
     _page_select.add_line( true, "", _sel_current, "",

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-25 11:54+0200\n"
+"POT-Creation-Date: 2010-10-27 23:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2896,7 +2896,6 @@ msgstr ""
 #: ../share/extensions/printing-marks.inx.h:16
 #: ../src/ui/dialog/align-and-distribute.cpp:1031
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
-#: ../src/ui/dialog/icon-preview.cpp:230
 #: ../src/widgets/desktop-widget.cpp:1686
 msgid "Selection"
 msgstr ""
@@ -6478,15 +6477,15 @@ msgstr ""
 msgid "Old paint (bitmap)"
 msgstr ""
 
-#: ../src/conn-avoid-ref.cpp:237
+#: ../src/conn-avoid-ref.cpp:238
 msgid "Add a new connection point"
 msgstr ""
 
-#: ../src/conn-avoid-ref.cpp:262
+#: ../src/conn-avoid-ref.cpp:263
 msgid "Move a connection point"
 msgstr ""
 
-#: ../src/conn-avoid-ref.cpp:282
+#: ../src/conn-avoid-ref.cpp:283
 msgid "Remove a connection point"
 msgstr ""
 
@@ -7367,7 +7366,7 @@ msgid "<big><b>Export area</b></big>"
 msgstr ""
 
 #: ../src/dialogs/export.cpp:285
-msgid "Units:"
+msgid "_Units:"
 msgstr ""
 
 #: ../src/dialogs/export.cpp:313
@@ -16725,6 +16724,11 @@ msgstr ""
 msgid "Actual Size:"
 msgstr ""
 
+#: ../src/ui/dialog/icon-preview.cpp:230
+msgctxt "Icon preview window"
+msgid "Sele_ction"
+msgstr ""
+
 #: ../src/ui/dialog/icon-preview.cpp:232
 msgid "Selection only or whole document"
 msgstr ""
@@ -17031,7 +17035,7 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:359
-msgid "Create new objects with:"
+msgid "Style of new objects"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:361
@@ -17250,7 +17254,7 @@ msgid "Show temporary outline even when a path is selected for editing"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:459
-msgid "Flash time"
+msgid "Flash time:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:459
@@ -17288,7 +17292,7 @@ msgid "Tweak"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:468
-msgid "Paint objects with:"
+msgid "Object paint style"
 msgstr ""
 
 #. Spray
@@ -17418,7 +17422,7 @@ msgid "Aggressive"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:589
-msgid "Saving window geometry (size and position):"
+msgid "Saving window geometry (size and position)"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:591
@@ -17438,7 +17442,7 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:597
-msgid "Dialog behavior (requires restart):"
+msgid "Dialog behavior (requires restart)"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:604
@@ -17458,7 +17462,7 @@ msgid "Same as Normal but may work better with some window managers"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:615
-msgid "Dialog Transparency:"
+msgid "Dialog Transparency"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:617
@@ -17474,7 +17478,7 @@ msgid "Time of opacity change animation:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:624
-msgid "Miscellaneous:"
+msgid "Miscellaneous"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:627
@@ -17586,7 +17590,7 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:681
-msgid "Before applying clippath/mask:"
+msgid "Before applying"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:683
@@ -17614,7 +17618,7 @@ msgid "Apply clippath/mask to group containing all objects"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:696
-msgid "After releasing clippath/mask:"
+msgid "After releasing"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:698
@@ -17675,7 +17679,7 @@ msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:722
-msgid "Store transformation:"
+msgid "Store transformation"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:724
@@ -17720,7 +17724,7 @@ msgid "Lowest quality (fastest)"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:745
-msgid "Gaussian blur quality for display:"
+msgid "Gaussian blur quality for display"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:747
@@ -17751,7 +17755,7 @@ msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:769
-msgid "Filter effects quality for display:"
+msgid "Filter effects quality for display"
 msgstr ""
 
 #. show infobox
@@ -17804,7 +17808,7 @@ msgid "Deselect upon layer change"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:804
-msgid "Ctrl+A, Tab, Shift+Tab:"
+msgid "Ctrl+A, Tab, Shift+Tab"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:806
