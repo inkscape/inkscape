@@ -90,7 +90,7 @@ findShadowedTime(Geom::Path const &patha, std::vector<Geom::Point> const &pt_and
     std::vector<double> times;
     
     //TODO: explore the path fwd/backward from ta (worth?)
-    for (unsigned i=0; i<patha.size(); i++){
+    for (unsigned i=0; i<patha.size_default(); i++){
         D2<SBasis> f = p[i].toSBasis();
         std::vector<double> times_i, temptimes;
         temptimes = roots(f[Y]-width);
@@ -110,8 +110,8 @@ findShadowedTime(Geom::Path const &patha, std::vector<Geom::Point> const &pt_and
     std::vector<double>::iterator new_end = std::unique( times.begin(),  times.end() );
     times.resize( new_end - times.begin() );
 
-    double tmin = 0, tmax = patha.size();
-    double period = patha.size();//hm... Should this be patha.size()+1? 
+    double tmin = 0, tmax = patha.size_default();
+    double period = patha.size_default();
     if (times.size()>0){
         unsigned rk = upper_bound( times.begin(),  times.end(), ta ) - times.begin();
         if ( rk < times.size() ) 
@@ -141,9 +141,9 @@ namespace LPEKnotNS {//just in case...
 CrossingPoints::CrossingPoints(std::vector<Geom::Path> const &paths) : std::vector<CrossingPoint>(){
 //    std::cout<<"\nCrossingPoints creation from path vector\n";
     for( unsigned i=0; i<paths.size(); i++){
-        for( unsigned ii=0; ii<paths[i].size(); ii++){
+        for( unsigned ii=0; ii<paths[i].size_default(); ii++){
             for( unsigned j=i; j<paths.size(); j++){
-                for( unsigned jj=(i==j?ii:0); jj<paths[j].size(); jj++){
+                for( unsigned jj=(i==j?ii:0); jj<paths[j].size_default(); jj++){
                     std::vector<std::pair<double,double> > times;
                     if ( i==j && ii==jj){
 
@@ -169,7 +169,7 @@ CrossingPoints::CrossingPoints(std::vector<Geom::Path> const &paths) : std::vect
                             if ( i==j && fabs(times[k].first+ii - times[k].second-jj)<=zero ){//this is just end=start of successive curves in a path.
                                 continue;
                             }
-                            if ( i==j && ii == 0 && jj==paths[i].size()-1 &&
+                            if ( i==j && ii == 0 && jj==paths[i].size_default()-1 &&
                                  paths[i].closed() &&
                                  fabs(times[k].first) <= zero && 
                                  fabs(times[k].second - 1) <= zero ){//this is just end=start of a closed path.
@@ -393,7 +393,7 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
         if (i0 == gpaths.size() ) {THROW_EXCEPTION("lpe-knot error: group member not recognized");}// this should not happen...
 
         std::vector<Interval> dom;
-        dom.push_back(Interval(0.,gpaths[i0].size()));
+        dom.push_back(Interval(0.,gpaths[i0].size_default()));
         for (unsigned p = 0; p < crossing_points.size(); p++){
             if (crossing_points[p].i == i0 || crossing_points[p].j == i0){
                 unsigned i = crossing_points[p].i;
@@ -404,13 +404,13 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
                 double curveidx, t;
                 
                 t = modf(ti, &curveidx);
-                if(curveidx == gpaths[i].size() ) { curveidx--; t = 1.;}
-                assert(curveidx >= 0 && curveidx < gpaths[i].size());
+                if(curveidx == gpaths[i].size_default() ) { curveidx--; t = 1.;}
+                assert(curveidx >= 0 && curveidx < gpaths[i].size_default());
                 std::vector<Point> flag_i = gpaths[i][curveidx].pointAndDerivatives(t,1);
 
                 t = modf(tj, &curveidx);
-                if(curveidx == gpaths[j].size() ) { curveidx--; t = 1.;}
-                assert(curveidx >= 0 && curveidx < gpaths[j].size());
+                if(curveidx == gpaths[j].size_default() ) { curveidx--; t = 1.;}
+                assert(curveidx >= 0 && curveidx < gpaths[j].size_default());
                 std::vector<Point> flag_j = gpaths[j][curveidx].pointAndDerivatives(t,1);
 
 
@@ -439,7 +439,7 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
                         width += gstroke_widths[j];
                     }
                     Interval hidden = findShadowedTime(gpaths[i0], flag_j, ti, width/2);
-                    double period  = gpaths[i0].size();//hm... Should this be gpaths[i0].size()+1?
+                    double period  = gpaths[i0].size_default();
                     if (hidden.max() > period ) hidden -= period;
                     if (hidden.min()<0){
                         dom = complementOf( Interval(0,hidden.max()) ,dom);
@@ -458,7 +458,7 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
 
         //If the current path is closed and the last/first point is still there, glue first and last piece.
         unsigned beg_comp = 0, end_comp = dom.size();
-        if ( gpaths[i0].closed() && dom.front().min() == 0 && dom.back().max() ==  gpaths[i0].size() ){
+        if ( gpaths[i0].closed() && dom.front().min() == 0 && dom.back().max() ==  gpaths[i0].size_default() ){
             if ( dom.size() == 1){
                 path_out.push_back(gpaths[i0]);
                 continue;
@@ -473,7 +473,7 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
             }
         }
         for (unsigned comp = beg_comp; comp < end_comp; comp++){
-            assert(dom.at(comp).min() >=0 and dom.at(comp).max() <= gpaths.at(i0).size());
+            assert(dom.at(comp).min() >=0 and dom.at(comp).max() <= gpaths.at(i0).size_default());
             path_out.push_back(gpaths[i0].portion(dom.at(comp)));
         }
     }
