@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-02 17:43+0200\n"
-"PO-Revision-Date: 2010-10-07 09:12+0100\n"
+"POT-Creation-Date: 2010-10-27 23:28+0200\n"
+"PO-Revision-Date: 2010-10-28 19:29+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -193,8 +193,8 @@ msgstr "Schwarz-Weiß"
 #: ../share/filters/filters.svg.h:215
 #: ../share/filters/filters.svg.h:218
 #: ../share/filters/filters.svg.h:219
-#: ../src/dialogs/clonetiler.cpp:2607
-#: ../src/dialogs/clonetiler.cpp:2748
+#: ../src/dialogs/clonetiler.cpp:2589
+#: ../src/dialogs/clonetiler.cpp:2730
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../src/extension/internal/filter/drop-shadow.h:160
 msgid "Color"
@@ -263,12 +263,21 @@ msgstr "Grün-Funktion:"
 #: ../share/extensions/web-set-att.inx.h:4
 #: ../share/extensions/web-transmit-att.inx.h:4
 #: ../src/ui/dialog/extension-editor.cpp:81
+#: ../share/extensions/gcodetools_all_in_one.inx.h:25
+#: ../share/extensions/gcodetools_area.inx.h:17
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:5
+#: ../share/extensions/gcodetools_dxf_points.inx.h:13
+#: ../share/extensions/gcodetools_engraving.inx.h:11
+#: ../share/extensions/gcodetools_lathe.inx.h:14
+#: ../share/extensions/gcodetools_orientation_points.inx.h:5
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:11
+#: ../share/extensions/gcodetools_tools_library.inx.h:3
 msgid "Help"
 msgstr "Hilfe"
 
 #: ../share/extensions/color_custom.inx.h:13
-msgid "Input (r,g,b) Color Range"
-msgstr ""
+msgid "Input (r,g,b) Color Range:"
+msgstr "Eingabe (r,g,b) Farbbereich:"
 
 #. ## end option page
 #: ../share/extensions/color_custom.inx.h:14
@@ -292,6 +301,11 @@ msgstr ""
 #: ../share/extensions/web-transmit-att.inx.h:6
 #: ../src/ui/dialog/tracedialog.cpp:617
 #: ../src/ui/dialog/tracedialog.cpp:623
+#: ../share/extensions/gcodetools_all_in_one.inx.h:33
+#: ../share/extensions/gcodetools_area.inx.h:22
+#: ../share/extensions/gcodetools_engraving.inx.h:16
+#: ../share/extensions/gcodetools_lathe.inx.h:22
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:15
 msgid "Options"
 msgstr "Optionen"
 
@@ -942,7 +956,7 @@ msgstr "Linien"
 
 #: ../share/extensions/extrude.inx.h:4
 #: ../share/extensions/triangle.inx.h:9
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2171
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2169
 #: ../src/widgets/toolbox.cpp:4017
 #: ../src/widgets/toolbox.cpp:4395
 #: ../src/widgets/toolbox.cpp:4662
@@ -1391,7 +1405,7 @@ msgstr "Strichstärke Kreisnebenteilung (px):"
 #: ../src/filter-enums.cpp:94
 #: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/ui/dialog/document-properties.cpp:324
-#: ../src/ui/dialog/filter-effects-dialog.cpp:474
+#: ../src/ui/dialog/filter-effects-dialog.cpp:472
 #: ../src/ui/dialog/inkscape-preferences.cpp:266
 #: ../src/ui/dialog/inkscape-preferences.cpp:429
 #: ../src/ui/dialog/inkscape-preferences.cpp:585
@@ -1596,7 +1610,7 @@ msgid "Duplicate endpaths"
 msgstr "Endpfade duplizieren"
 
 #: ../share/extensions/interp.inx.h:2
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2244
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2242
 msgid "Exponent:"
 msgstr "Exponent:"
 
@@ -1661,8 +1675,8 @@ msgid "No Unit"
 msgstr "Keine Einheit"
 
 #: ../share/extensions/interp_att_g.inx.h:14
-#: ../src/dialogs/clonetiler.cpp:2615
-#: ../src/dialogs/clonetiler.cpp:2758
+#: ../src/dialogs/clonetiler.cpp:2597
+#: ../src/dialogs/clonetiler.cpp:2740
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/widgets/toolbox.cpp:4475
 msgid "Opacity"
@@ -1838,8 +1852,9 @@ msgstr "Diese Erweiterung erlaubt Ihnen Objekt-Effekte für eine JessyInk-Präse
 #: ../share/extensions/webslicer_create_rect.inx.h:40
 #: ../src/dialogs/object-attributes.cpp:34
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2174
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2253
+#: ../src/rdf.cpp:238
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2172
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2251
 msgid "Type:"
 msgstr "Type:"
 
@@ -2314,6 +2329,8 @@ msgid "Color Markers to Match Stroke"
 msgstr "Färbe Markierungen wie Striche"
 
 #: ../share/extensions/measure.inx.h:1
+#: ../share/extensions/gcodetools_all_in_one.inx.h:8
+#: ../share/extensions/gcodetools_area.inx.h:5
 msgid "Area"
 msgstr "Gebiet"
 
@@ -2710,7 +2727,8 @@ msgid "Dodecahedron"
 msgstr "Dodecahedron"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-msgid "Draw back-facing polygons:"
+#, fuzzy
+msgid "Draw back-facing polygons"
 msgstr "Zeichnet rückseitige Polygone"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
@@ -2963,7 +2981,6 @@ msgstr "Rechts:"
 #: ../share/extensions/printing-marks.inx.h:16
 #: ../src/ui/dialog/align-and-distribute.cpp:1031
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
-#: ../src/ui/dialog/icon-preview.cpp:230
 #: ../src/widgets/desktop-widget.cpp:1686
 msgid "Selection"
 msgstr "Auswahl"
@@ -3032,7 +3049,7 @@ msgstr "Zufälliger Keim"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 #: ../src/live_effects/lpe-sketch.cpp:55
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 msgid "Scale:"
 msgstr "Skalierung:"
 
@@ -3756,6 +3773,7 @@ msgid "Force Dimension:"
 msgstr "Erzwungene Dimension:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:14
+#: ../src/rdf.cpp:235
 msgid "Format:"
 msgstr "Format:"
 
@@ -4143,6 +4161,148 @@ msgstr "Image extrahiert zu: %s"
 #: ../share/extensions/extractimage.py:72
 msgid "Unable to find image data."
 msgstr "Problem beim Auffinden der Bilderdaten"
+
+#: ../share/extensions/gcodetools.py:3087
+#, fuzzy
+msgid "Directory does not exist! Please specify existing directory at Preferences tab!"
+msgstr "Das Verzeichnis %s existiert nicht oder ist kein Verzeichnis.\n"
+
+#: ../share/extensions/gcodetools.py:3112
+#, fuzzy, python-format
+msgid ""
+"Can not write to specified file!\n"
+"%s"
+msgstr ""
+"Kann Datei %s nicht schreiben.\n"
+"%s"
+
+#: ../share/extensions/gcodetools.py:3240
+#, python-format
+msgid "Orientation points for '%s' layer have not been found! Please add orientation points using Orientation tab!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3246
+#, python-format
+msgid "There are more than one orientation point groups in '%s' layer"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3277
+#: ../share/extensions/gcodetools.py:3279
+msgid "Orientation points are wrong! (if there are two orientation points they sould not be the same. If there are three orientation points they should not be in a straight line.)"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3398
+#, python-format
+msgid "Warning! Found bad orientation points in '%s' layer. Resulting Gcode could be corrupt!"
+msgstr ""
+
+#. xgettext:no-pango-format
+#: ../share/extensions/gcodetools.py:3412
+msgid ""
+"This extension works with Paths and Dynamic Offsets and groups of them only! All other objects will be ignored!\n"
+"Solution 1: press Path->Object to path or Shift+Ctrl+C.\n"
+"Solution 2: Path->Dynamic offset or Ctrl+J.\n"
+"Solution 3: export all contours to PostScript level 2 (File->Save As->.ps) and File->Import this file."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3469
+#, python-format
+msgid "Warning! Tool's and default tool's parameter's (%s) types are not the same ( type('%s') != type('%s') )."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3472
+#, python-format
+msgid "Warning! Tool has parameter that default tool has not ( '%s': '%s' )."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3486
+#, python-format
+msgid "Layer '%s' contains more than one tool!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3489
+#, python-format
+msgid "Can not find tool for '%s' layer! Please add one with Tools library tab!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3592
+#: ../share/extensions/gcodetools.py:3673
+msgid "No paths are selected! Trying to work on all available paths."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3611
+#: ../share/extensions/gcodetools.py:3682
+msgid "Warning: One or more paths dont have 'd' parameter, try to Ungroup (Ctrl+Shift+G) and Object to Path (Ctrl+Shift+C)!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3641
+msgid "Noting is selected. Please select something to convert to drill point (dxfpoint) or clear point sign."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3714
+#: ../share/extensions/gcodetools.py:3808
+#, fuzzy
+msgid "This extension requires at least one selected path."
+msgstr "Diese Erweiterung benötigt zwei ausgewählte Pfade."
+
+#: ../share/extensions/gcodetools.py:3720
+#, python-format
+msgid "Tool diameter must be > 0 but tool's diameter on '%s' layer is not!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:3731
+msgid "Warning: omitting non-path"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4063
+#, python-format
+msgid "Tool '%s' has no shape!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4073
+msgid "No need to engrave sharp angles."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4086
+msgid "Active layer already has orientation points! Remove them or select another layer!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4134
+msgid "Active layer already has a tool! Remove it or select another layer!"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4258
+msgid "Selection is empty! Will compute whole drawing."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4318
+msgid ""
+"Tutorials, manuals and support can be found at\n"
+"English support forum:\n"
+"\thttp://www.cnc-club.ru/gcodetools\n"
+"and Russian support forum:\n"
+"\thttp://www.cnc-club.ru/gcodetoolsru"
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4363
+msgid "Lathe X and Z axis remap should be 'X', 'Y' or 'Z'. Exiting..."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4366
+msgid "Lathe X and Z axis remap should be the same. Exiting..."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4527
+msgid "Select one of the active tabs - Path to Gcode, Area, Engraving, DXF points, Orientation, Offset, Lathe or Tools library."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4533
+msgid "Orientation points have not been defined! A default set of orientation points has been automatically added."
+msgstr ""
+
+#: ../share/extensions/gcodetools.py:4537
+msgid "Cutting tool has not been defined! A default tool has been automatically added."
+msgstr ""
 
 #: ../share/extensions/inkex.py:67
 #, python-format
@@ -6453,15 +6613,15 @@ msgstr "Stoff (Bitmap"
 msgid "Old paint (bitmap)"
 msgstr "Alte Farbe (Bitmap)"
 
-#: ../src/conn-avoid-ref.cpp:237
+#: ../src/conn-avoid-ref.cpp:238
 msgid "Add a new connection point"
 msgstr "Neuer Verbindungspunkt"
 
-#: ../src/conn-avoid-ref.cpp:262
+#: ../src/conn-avoid-ref.cpp:263
 msgid "Move a connection point"
 msgstr "Verschieben eines Verbindungspunktes"
 
-#: ../src/conn-avoid-ref.cpp:282
+#: ../src/conn-avoid-ref.cpp:283
 msgid "Remove a connection point"
 msgstr "Verbindungspunkt entfernen"
 
@@ -6475,7 +6635,7 @@ msgstr "Definiert Richtung und Ausmaß der Extrusion"
 
 #: ../src/sp-flowtext.cpp:378
 #: ../src/sp-text.cpp:427
-#: ../src/text-context.cpp:1604
+#: ../src/text-context.cpp:1628
 msgid " [truncated]"
 msgstr "[abgestumpft}"
 
@@ -6627,69 +6787,69 @@ msgstr "Kein vorheriger Zoomfaktor."
 msgid "No next zoom."
 msgstr "Kein nächster Zoomfaktor."
 
-#: ../src/dialogs/clonetiler.cpp:155
+#: ../src/dialogs/clonetiler.cpp:145
 msgid "<small>Nothing selected.</small>"
 msgstr "<small>Es wurde nichts ausgewählt.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:161
+#: ../src/dialogs/clonetiler.cpp:151
 msgid "<small>More than one object selected.</small>"
 msgstr "<small>Mehr als ein Objekt</small> ausgewählt."
 
-#: ../src/dialogs/clonetiler.cpp:168
+#: ../src/dialogs/clonetiler.cpp:158
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
 msgstr "<small>Das Objekt hat <b>%d</b> gekachelte Klone.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:173
+#: ../src/dialogs/clonetiler.cpp:163
 msgid "<small>Object has no tiled clones.</small>"
 msgstr "<small>Das Objekt hat keine gekachelten Klone.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:976
+#: ../src/dialogs/clonetiler.cpp:966
 msgid "Select <b>one object</b> whose tiled clones to unclump."
 msgstr "<b>Ein Objekt</b> auswählen, dessen gekachelte Klone entklumpt werden."
 
-#: ../src/dialogs/clonetiler.cpp:998
+#: ../src/dialogs/clonetiler.cpp:988
 msgid "Unclump tiled clones"
 msgstr "Gekachelte Klone entklumpen"
 
-#: ../src/dialogs/clonetiler.cpp:1028
+#: ../src/dialogs/clonetiler.cpp:1018
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "<b>Ein Objekt</b> auswählen, dessen gekachelte Klone entfernt werden."
 
-#: ../src/dialogs/clonetiler.cpp:1051
+#: ../src/dialogs/clonetiler.cpp:1041
 msgid "Delete tiled clones"
 msgstr "Gekachelte Klone löschen"
 
-#: ../src/dialogs/clonetiler.cpp:1097
+#: ../src/dialogs/clonetiler.cpp:1087
 #: ../src/selection-chemistry.cpp:2021
 msgid "Select an <b>object</b> to clone."
 msgstr "Zu klonendes <b>Objekt</b> auswählen."
 
-#: ../src/dialogs/clonetiler.cpp:1103
+#: ../src/dialogs/clonetiler.cpp:1093
 msgid "If you want to clone several objects, <b>group</b> them and <b>clone the group</b>."
 msgstr "Wenn mehrere Objekte geklont werden sollen, sollten sie <b>gruppiert</b> und dann <b>die Gruppe geklont</b> werden."
 
-#: ../src/dialogs/clonetiler.cpp:1112
+#: ../src/dialogs/clonetiler.cpp:1102
 msgid "<small>Creating tiled clones...</small>"
 msgstr "<small>Geschachtelte Klone erstellen...</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1515
+#: ../src/dialogs/clonetiler.cpp:1505
 msgid "Create tiled clones"
 msgstr "Gekachelte Klone erzeugen"
 
-#: ../src/dialogs/clonetiler.cpp:1706
+#: ../src/dialogs/clonetiler.cpp:1696
 msgid "<small>Per row:</small>"
 msgstr "<small>Pro Reihe:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1719
+#: ../src/dialogs/clonetiler.cpp:1709
 msgid "<small>Per column:</small>"
 msgstr "<small>Pro Spalte:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1727
+#: ../src/dialogs/clonetiler.cpp:1717
 msgid "<small>Randomize:</small>"
 msgstr "<small>Zufallsfaktor:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1888
+#: ../src/dialogs/clonetiler.cpp:1870
 msgid "_Symmetry"
 msgstr "_Symmetrie"
 
@@ -6698,602 +6858,602 @@ msgstr "_Symmetrie"
 #. * http://www.clarku.edu/~djoyce/wallpaper/seventeen.html (English vocabulary); or
 #. * http://membres.lycos.fr/villemingerard/Geometri/Sym1D.htm (French vocabulary).
 #.
-#: ../src/dialogs/clonetiler.cpp:1896
+#: ../src/dialogs/clonetiler.cpp:1878
 msgid "Select one of the 17 symmetry groups for the tiling"
 msgstr "Eine der 17 Symmetrie-Gruppen zum Kacheln auswählen"
 
 #. TRANSLATORS: "translation" means "shift" / "displacement" here.
-#: ../src/dialogs/clonetiler.cpp:1907
+#: ../src/dialogs/clonetiler.cpp:1889
 msgid "<b>P1</b>: simple translation"
 msgstr "<b>P1</b>: einfache Verschiebung"
 
-#: ../src/dialogs/clonetiler.cpp:1908
+#: ../src/dialogs/clonetiler.cpp:1890
 msgid "<b>P2</b>: 180&#176; rotation"
 msgstr "<b>P2</b>: 180&#176; Rotation"
 
-#: ../src/dialogs/clonetiler.cpp:1909
+#: ../src/dialogs/clonetiler.cpp:1891
 msgid "<b>PM</b>: reflection"
 msgstr "<b>PM</b>: Reflektion"
 
 #. TRANSLATORS: "glide reflection" is a reflection and a translation combined.
 #. For more info, see http://mathforum.org/sum95/suzanne/symsusan.html
-#: ../src/dialogs/clonetiler.cpp:1912
+#: ../src/dialogs/clonetiler.cpp:1894
 msgid "<b>PG</b>: glide reflection"
 msgstr "<b>PG</b>: gleitende Reflektion"
 
-#: ../src/dialogs/clonetiler.cpp:1913
+#: ../src/dialogs/clonetiler.cpp:1895
 msgid "<b>CM</b>: reflection + glide reflection"
 msgstr "<b>CM</b>: Reflektion + gleitende Reflektion"
 
-#: ../src/dialogs/clonetiler.cpp:1914
+#: ../src/dialogs/clonetiler.cpp:1896
 msgid "<b>PMM</b>: reflection + reflection"
 msgstr "<b>PMM</b>: Reflektion + Reflektion"
 
-#: ../src/dialogs/clonetiler.cpp:1915
+#: ../src/dialogs/clonetiler.cpp:1897
 msgid "<b>PMG</b>: reflection + 180&#176; rotation"
 msgstr "<b>PMG</b>: Reflektion + 180&#176; Rotation"
 
-#: ../src/dialogs/clonetiler.cpp:1916
+#: ../src/dialogs/clonetiler.cpp:1898
 msgid "<b>PGG</b>: glide reflection + 180&#176; rotation"
 msgstr "<b>PGG</b>: gleitende Reflektion + 180&#176; Rotation"
 
-#: ../src/dialogs/clonetiler.cpp:1917
+#: ../src/dialogs/clonetiler.cpp:1899
 msgid "<b>CMM</b>: reflection + reflection + 180&#176; rotation"
 msgstr "<b>CMM</b>: Reflektion + Reflektion + 180&#176; Rotation"
 
-#: ../src/dialogs/clonetiler.cpp:1918
+#: ../src/dialogs/clonetiler.cpp:1900
 msgid "<b>P4</b>: 90&#176; rotation"
 msgstr "<b>P4</b>: 90&#176; Rotation"
 
-#: ../src/dialogs/clonetiler.cpp:1919
+#: ../src/dialogs/clonetiler.cpp:1901
 msgid "<b>P4M</b>: 90&#176; rotation + 45&#176; reflection"
 msgstr "<b>P4M</b>: 90&#176; Rotation + 45&#176; Reflektion"
 
-#: ../src/dialogs/clonetiler.cpp:1920
+#: ../src/dialogs/clonetiler.cpp:1902
 msgid "<b>P4G</b>: 90&#176; rotation + 90&#176; reflection"
 msgstr "<b>P4G</b>: 90&#176; Rotation + 90&#176; Reflektion"
 
-#: ../src/dialogs/clonetiler.cpp:1921
+#: ../src/dialogs/clonetiler.cpp:1903
 msgid "<b>P3</b>: 120&#176; rotation"
 msgstr "<b>P3</b>: 120&#176; Rotation"
 
-#: ../src/dialogs/clonetiler.cpp:1922
+#: ../src/dialogs/clonetiler.cpp:1904
 msgid "<b>P31M</b>: reflection + 120&#176; rotation, dense"
 msgstr "<b>P31M</b>: Reflektion + 120&#176; Rotation, dicht"
 
-#: ../src/dialogs/clonetiler.cpp:1923
+#: ../src/dialogs/clonetiler.cpp:1905
 msgid "<b>P3M1</b>: reflection + 120&#176; rotation, sparse"
 msgstr "<b>P3M1</b>: Reflektion + 120&#176; Rotation, dünn"
 
-#: ../src/dialogs/clonetiler.cpp:1924
+#: ../src/dialogs/clonetiler.cpp:1906
 msgid "<b>P6</b>: 60&#176; rotation"
 msgstr "<b>P6</b>: 60&#176; Rotation"
 
-#: ../src/dialogs/clonetiler.cpp:1925
+#: ../src/dialogs/clonetiler.cpp:1907
 msgid "<b>P6M</b>: reflection + 60&#176; rotation"
 msgstr "<b>P6M</b>: Reflektion + 60&#176; Rotation"
 
 # Translators: This is *not* the key name.
-#: ../src/dialogs/clonetiler.cpp:1953
+#: ../src/dialogs/clonetiler.cpp:1935
 msgid "S_hift"
 msgstr "_Verschiebung"
 
 # !!!
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
-#: ../src/dialogs/clonetiler.cpp:1963
+#: ../src/dialogs/clonetiler.cpp:1945
 #, no-c-format
 msgid "<b>Shift X:</b>"
 msgstr "<b>X-Verschiebung:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1971
+#: ../src/dialogs/clonetiler.cpp:1953
 #, no-c-format
 msgid "Horizontal shift per row (in % of tile width)"
 msgstr "Horizontale Verschiebung pro Reihe (in % der Kachelbreite)"
 
-#: ../src/dialogs/clonetiler.cpp:1979
+#: ../src/dialogs/clonetiler.cpp:1961
 #, no-c-format
 msgid "Horizontal shift per column (in % of tile width)"
 msgstr "Horizontale Verschiebung pro Spalte (in % der Kachelbreite)"
 
-#: ../src/dialogs/clonetiler.cpp:1986
+#: ../src/dialogs/clonetiler.cpp:1968
 msgid "Randomize the horizontal shift by this percentage"
 msgstr "Zufällige horizontale Verschiebung um diesen Prozentsatz"
 
 # !!!
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) vertically by this amount
-#: ../src/dialogs/clonetiler.cpp:1996
+#: ../src/dialogs/clonetiler.cpp:1978
 #, no-c-format
 msgid "<b>Shift Y:</b>"
 msgstr "<b>Y-Verschiebung:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2004
+#: ../src/dialogs/clonetiler.cpp:1986
 #, no-c-format
 msgid "Vertical shift per row (in % of tile height)"
 msgstr "Vertikale Verschiebung pro Reihe (in % der Kachelhöhe)"
 
-#: ../src/dialogs/clonetiler.cpp:2012
+#: ../src/dialogs/clonetiler.cpp:1994
 #, no-c-format
 msgid "Vertical shift per column (in % of tile height)"
 msgstr "Vertikale Verschiebung pro Spalte (in % der Kachelhöhe)"
 
-#: ../src/dialogs/clonetiler.cpp:2019
+#: ../src/dialogs/clonetiler.cpp:2001
 msgid "Randomize the vertical shift by this percentage"
 msgstr "Zufällige vertikale Verschiebung um diesen Prozentsatz"
 
-#: ../src/dialogs/clonetiler.cpp:2027
-#: ../src/dialogs/clonetiler.cpp:2175
+#: ../src/dialogs/clonetiler.cpp:2009
+#: ../src/dialogs/clonetiler.cpp:2157
 msgid "<b>Exponent:</b>"
 msgstr "<b>Exponent:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2034
+#: ../src/dialogs/clonetiler.cpp:2016
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "Reihenabstände bleiben gleich (1), laufen zusammen (<1) oder auseinander (>1)"
 
-#: ../src/dialogs/clonetiler.cpp:2041
+#: ../src/dialogs/clonetiler.cpp:2023
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "Spaltenabstände bleiben gleich (1), laufen zusammen (<1) oder auseinander (>1)"
 
 #. TRANSLATORS: "Alternate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:2049
-#: ../src/dialogs/clonetiler.cpp:2219
-#: ../src/dialogs/clonetiler.cpp:2296
-#: ../src/dialogs/clonetiler.cpp:2372
-#: ../src/dialogs/clonetiler.cpp:2421
-#: ../src/dialogs/clonetiler.cpp:2552
+#: ../src/dialogs/clonetiler.cpp:2031
+#: ../src/dialogs/clonetiler.cpp:2201
+#: ../src/dialogs/clonetiler.cpp:2278
+#: ../src/dialogs/clonetiler.cpp:2354
+#: ../src/dialogs/clonetiler.cpp:2403
+#: ../src/dialogs/clonetiler.cpp:2534
 msgid "<small>Alternate:</small>"
 msgstr "<small>Abwechseln:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:2055
+#: ../src/dialogs/clonetiler.cpp:2037
 msgid "Alternate the sign of shifts for each row"
 msgstr "Vorzeichenumkehrung der Verschiebungen für jede Reihe"
 
-#: ../src/dialogs/clonetiler.cpp:2060
+#: ../src/dialogs/clonetiler.cpp:2042
 msgid "Alternate the sign of shifts for each column"
 msgstr "Vorzeichenumkehrung der Verschiebungen für jede Spalte"
 
 #. TRANSLATORS: "Cumulate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:2067
-#: ../src/dialogs/clonetiler.cpp:2237
-#: ../src/dialogs/clonetiler.cpp:2314
+#: ../src/dialogs/clonetiler.cpp:2049
+#: ../src/dialogs/clonetiler.cpp:2219
+#: ../src/dialogs/clonetiler.cpp:2296
 msgid "<small>Cumulate:</small>"
 msgstr "<small>Anhäufen:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:2073
+#: ../src/dialogs/clonetiler.cpp:2055
 msgid "Cumulate the shifts for each row"
 msgstr "Verschiebungen für sukzessive Reihen aufaddieren"
 
-#: ../src/dialogs/clonetiler.cpp:2078
+#: ../src/dialogs/clonetiler.cpp:2060
 msgid "Cumulate the shifts for each column"
 msgstr "Verschiebungen für sukzessive Spalten aufaddieren"
 
 #. TRANSLATORS: "Cumulate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:2085
+#: ../src/dialogs/clonetiler.cpp:2067
 msgid "<small>Exclude tile:</small>"
 msgstr "<small>Kachel ausschließen:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:2091
+#: ../src/dialogs/clonetiler.cpp:2073
 msgid "Exclude tile height in shift"
 msgstr "Kachelhöhe in Verschiebung nicht einberechnen"
 
-#: ../src/dialogs/clonetiler.cpp:2096
+#: ../src/dialogs/clonetiler.cpp:2078
 msgid "Exclude tile width in shift"
 msgstr "Kachelbreite in Verschiebung nicht einberechnen"
 
-#: ../src/dialogs/clonetiler.cpp:2105
+#: ../src/dialogs/clonetiler.cpp:2087
 msgid "Sc_ale"
 msgstr "_Maßstab"
 
-#: ../src/dialogs/clonetiler.cpp:2113
+#: ../src/dialogs/clonetiler.cpp:2095
 msgid "<b>Scale X:</b>"
 msgstr "<b>X-Skalierung:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2121
+#: ../src/dialogs/clonetiler.cpp:2103
 #, no-c-format
 msgid "Horizontal scale per row (in % of tile width)"
 msgstr "Horizontale Skalierung pro Reihe (in % der Kachelbreite)"
 
-#: ../src/dialogs/clonetiler.cpp:2129
+#: ../src/dialogs/clonetiler.cpp:2111
 #, no-c-format
 msgid "Horizontal scale per column (in % of tile width)"
 msgstr "Horizontale Skalierung pro Spalte (in % der Kachelbreite)"
 
-#: ../src/dialogs/clonetiler.cpp:2136
+#: ../src/dialogs/clonetiler.cpp:2118
 msgid "Randomize the horizontal scale by this percentage"
 msgstr "Horizontale Skalierung um diesen Prozentsatz zufällig verändern"
 
-#: ../src/dialogs/clonetiler.cpp:2144
+#: ../src/dialogs/clonetiler.cpp:2126
 msgid "<b>Scale Y:</b>"
 msgstr "<b>Y-Skalierung:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2152
+#: ../src/dialogs/clonetiler.cpp:2134
 #, no-c-format
 msgid "Vertical scale per row (in % of tile height)"
 msgstr "Vertikale Skalierung pro Reihe (in % der Kachelhöhe)"
 
-#: ../src/dialogs/clonetiler.cpp:2160
+#: ../src/dialogs/clonetiler.cpp:2142
 #, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
 msgstr "Vertikale Skalierung pro Spalte (in % der Kachelhöhe)"
 
-#: ../src/dialogs/clonetiler.cpp:2167
+#: ../src/dialogs/clonetiler.cpp:2149
 msgid "Randomize the vertical scale by this percentage"
 msgstr "Vertikale Skalierung um diesen Prozentsatz zufällig verändern"
 
-#: ../src/dialogs/clonetiler.cpp:2182
+#: ../src/dialogs/clonetiler.cpp:2164
 msgid "Whether row scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr "Reihenabstände bleiben gleich (1), laufen zusammen (<1) oder vergrößern sich (>1)"
 
-#: ../src/dialogs/clonetiler.cpp:2189
+#: ../src/dialogs/clonetiler.cpp:2171
 msgid "Whether column scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr "Spaltenabstände bleiben gleich (1), laufen zusammen (<1) oder vergrößern sich (>1)"
 
-#: ../src/dialogs/clonetiler.cpp:2197
+#: ../src/dialogs/clonetiler.cpp:2179
 msgid "<b>Base:</b>"
 msgstr "<b>Basis:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2204
-#: ../src/dialogs/clonetiler.cpp:2211
+#: ../src/dialogs/clonetiler.cpp:2186
+#: ../src/dialogs/clonetiler.cpp:2193
 msgid "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
 msgstr "Basis einer logarithmischen Spirale: 0 - nicht benutzt, (<1) - konvergent, (>1) - divergent"
 
-#: ../src/dialogs/clonetiler.cpp:2225
+#: ../src/dialogs/clonetiler.cpp:2207
 msgid "Alternate the sign of scales for each row"
 msgstr "Vorzeichen der Skalierungen für jede Reihe umkehren"
 
-#: ../src/dialogs/clonetiler.cpp:2230
+#: ../src/dialogs/clonetiler.cpp:2212
 msgid "Alternate the sign of scales for each column"
 msgstr "Vorzeichen der Skalierungen für jede Spalte umkehren"
 
-#: ../src/dialogs/clonetiler.cpp:2243
+#: ../src/dialogs/clonetiler.cpp:2225
 msgid "Cumulate the scales for each row"
 msgstr "Skalierung für sukzessive Reihen aufaddieren"
 
-#: ../src/dialogs/clonetiler.cpp:2248
+#: ../src/dialogs/clonetiler.cpp:2230
 msgid "Cumulate the scales for each column"
 msgstr "Skalierung für sukzessive Spalten aufaddieren"
 
-#: ../src/dialogs/clonetiler.cpp:2257
+#: ../src/dialogs/clonetiler.cpp:2239
 msgid "_Rotation"
 msgstr "_Rotation"
 
-#: ../src/dialogs/clonetiler.cpp:2265
+#: ../src/dialogs/clonetiler.cpp:2247
 msgid "<b>Angle:</b>"
 msgstr "<b>Winkel:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2273
+#: ../src/dialogs/clonetiler.cpp:2255
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
 msgstr "Kacheln um diesen Winkel für jede Reihe drehen"
 
-#: ../src/dialogs/clonetiler.cpp:2281
+#: ../src/dialogs/clonetiler.cpp:2263
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
 msgstr "Kacheln um diesen Winkel für jede Spalte drehen"
 
-#: ../src/dialogs/clonetiler.cpp:2288
+#: ../src/dialogs/clonetiler.cpp:2270
 msgid "Randomize the rotation angle by this percentage"
 msgstr "Rotationswinkel um diesen Prozentsatz zufällig verändern"
 
-#: ../src/dialogs/clonetiler.cpp:2302
+#: ../src/dialogs/clonetiler.cpp:2284
 msgid "Alternate the rotation direction for each row"
 msgstr "Vorzeichenumkehr des Rotationsfaktors bei jeder Reihe"
 
-#: ../src/dialogs/clonetiler.cpp:2307
+#: ../src/dialogs/clonetiler.cpp:2289
 msgid "Alternate the rotation direction for each column"
 msgstr "Vorzeichenumkehr des Rotationsfaktors bei jeder Spalte"
 
-#: ../src/dialogs/clonetiler.cpp:2320
+#: ../src/dialogs/clonetiler.cpp:2302
 msgid "Cumulate the rotation for each row"
 msgstr "Rotation für sukzessive Reihen aufaddieren"
 
-#: ../src/dialogs/clonetiler.cpp:2325
+#: ../src/dialogs/clonetiler.cpp:2307
 msgid "Cumulate the rotation for each column"
 msgstr "Rotation für sukzessive Spalten aufaddieren"
 
-#: ../src/dialogs/clonetiler.cpp:2334
+#: ../src/dialogs/clonetiler.cpp:2316
 msgid "_Blur & opacity"
 msgstr "_Weichzeichner und Deckkraft"
 
-#: ../src/dialogs/clonetiler.cpp:2343
+#: ../src/dialogs/clonetiler.cpp:2325
 msgid "<b>Blur:</b>"
 msgstr "<b>Weichzeichner:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2350
+#: ../src/dialogs/clonetiler.cpp:2332
 msgid "Blur tiles by this percentage for each row"
 msgstr "Weichzeichnen der Kacheln um diesen Prozentsatz für jede Reihe"
 
-#: ../src/dialogs/clonetiler.cpp:2357
+#: ../src/dialogs/clonetiler.cpp:2339
 msgid "Blur tiles by this percentage for each column"
 msgstr "Weichzeichnen der Kacheln um diesen Prozentsatz für jede Spalte"
 
-#: ../src/dialogs/clonetiler.cpp:2364
+#: ../src/dialogs/clonetiler.cpp:2346
 msgid "Randomize the tile blur by this percentage"
 msgstr "Kachel-Weichzeichnung zufällig um diesen Prozentsatz verändern"
 
-#: ../src/dialogs/clonetiler.cpp:2378
+#: ../src/dialogs/clonetiler.cpp:2360
 msgid "Alternate the sign of blur change for each row"
 msgstr "Vorzeichen der Weichzeichnungs-Änderungen bei jeder Reihe umkehren"
 
-#: ../src/dialogs/clonetiler.cpp:2383
+#: ../src/dialogs/clonetiler.cpp:2365
 msgid "Alternate the sign of blur change for each column"
 msgstr "Vorzeichen der Weichzeichnungs-Änderungen bei jeder Spalte umkehren"
 
 # !!!
-#: ../src/dialogs/clonetiler.cpp:2392
+#: ../src/dialogs/clonetiler.cpp:2374
 msgid "<b>Fade out:</b>"
 msgstr "<b>Ausblenden:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2399
+#: ../src/dialogs/clonetiler.cpp:2381
 msgid "Decrease tile opacity by this percentage for each row"
 msgstr "Verringern der Deckkraft der Kacheln um diesen Prozentsatz für jede Reihe"
 
-#: ../src/dialogs/clonetiler.cpp:2406
+#: ../src/dialogs/clonetiler.cpp:2388
 msgid "Decrease tile opacity by this percentage for each column"
 msgstr "Verringern der Deckkraft der Kacheln um diesen Prozentsatz für jede Spalte"
 
-#: ../src/dialogs/clonetiler.cpp:2413
+#: ../src/dialogs/clonetiler.cpp:2395
 msgid "Randomize the tile opacity by this percentage"
 msgstr "Deckkraft der Kacheln um diesen Prozentsatz zufällig verändern"
 
-#: ../src/dialogs/clonetiler.cpp:2427
+#: ../src/dialogs/clonetiler.cpp:2409
 msgid "Alternate the sign of opacity change for each row"
 msgstr "Vorzeichen des Deckkraftfaktors bei jeder Reihe umkehren"
 
-#: ../src/dialogs/clonetiler.cpp:2432
+#: ../src/dialogs/clonetiler.cpp:2414
 msgid "Alternate the sign of opacity change for each column"
 msgstr "Vorzeichen des Deckkraftfaktors bei jeder Spalte umkehren"
 
-#: ../src/dialogs/clonetiler.cpp:2440
+#: ../src/dialogs/clonetiler.cpp:2422
 msgid "Co_lor"
 msgstr "_Farbe"
 
-#: ../src/dialogs/clonetiler.cpp:2445
+#: ../src/dialogs/clonetiler.cpp:2427
 msgid "Initial color: "
 msgstr "Ursprüngliche Farbe: "
 
-#: ../src/dialogs/clonetiler.cpp:2449
+#: ../src/dialogs/clonetiler.cpp:2431
 msgid "Initial color of tiled clones"
 msgstr "Ursprüngliche Farbe der gekachelten Klone"
 
-#: ../src/dialogs/clonetiler.cpp:2449
+#: ../src/dialogs/clonetiler.cpp:2431
 msgid "Initial color for clones (works only if the original has unset fill or stroke)"
 msgstr "Ursprüngliche Farbe der Klone (Füllung oder Kontur des Originals dürfen nicht gesetzt sein )"
 
 # !!!
-#: ../src/dialogs/clonetiler.cpp:2464
+#: ../src/dialogs/clonetiler.cpp:2446
 msgid "<b>H:</b>"
 msgstr "<b>H:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2471
+#: ../src/dialogs/clonetiler.cpp:2453
 msgid "Change the tile hue by this percentage for each row"
 msgstr "Farbton der Kacheln um diesen Prozentsatz für jede Reihe verändern"
 
-#: ../src/dialogs/clonetiler.cpp:2478
+#: ../src/dialogs/clonetiler.cpp:2460
 msgid "Change the tile hue by this percentage for each column"
 msgstr "Farbton der Kacheln um diesen Prozentsatz für jede Spalte verändern"
 
-#: ../src/dialogs/clonetiler.cpp:2485
+#: ../src/dialogs/clonetiler.cpp:2467
 msgid "Randomize the tile hue by this percentage"
 msgstr "Farbton der Kachel zufällig um diesen Prozentsatz verändern"
 
 # !!!
-#: ../src/dialogs/clonetiler.cpp:2494
+#: ../src/dialogs/clonetiler.cpp:2476
 msgid "<b>S:</b>"
 msgstr "<b>S:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2501
+#: ../src/dialogs/clonetiler.cpp:2483
 msgid "Change the color saturation by this percentage for each row"
 msgstr "Farbsättigung der Kacheln um diesen Prozentsatz für jede Reihe verändern"
 
-#: ../src/dialogs/clonetiler.cpp:2508
+#: ../src/dialogs/clonetiler.cpp:2490
 msgid "Change the color saturation by this percentage for each column"
 msgstr "Farbsättigung der Kacheln um diesen Prozentsatz für jede Spalte verändern"
 
-#: ../src/dialogs/clonetiler.cpp:2515
+#: ../src/dialogs/clonetiler.cpp:2497
 msgid "Randomize the color saturation by this percentage"
 msgstr "Farbsättigung um diesen Prozentsatz zufällig verändern"
 
 # !!!
-#: ../src/dialogs/clonetiler.cpp:2523
+#: ../src/dialogs/clonetiler.cpp:2505
 msgid "<b>L:</b>"
 msgstr "<b>L:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2530
+#: ../src/dialogs/clonetiler.cpp:2512
 msgid "Change the color lightness by this percentage for each row"
 msgstr "Helligkeit der Kacheln um diesen Prozentsatz für jede Reihe verändern"
 
-#: ../src/dialogs/clonetiler.cpp:2537
+#: ../src/dialogs/clonetiler.cpp:2519
 msgid "Change the color lightness by this percentage for each column"
 msgstr "Helligkeit der Kacheln um diesen Prozentsatz für jede Spalte verändern"
 
-#: ../src/dialogs/clonetiler.cpp:2544
+#: ../src/dialogs/clonetiler.cpp:2526
 msgid "Randomize the color lightness by this percentage"
 msgstr "Helligkeitsanteil der Farbe zufällig um diesen Prozentsatz verändern"
 
-#: ../src/dialogs/clonetiler.cpp:2558
+#: ../src/dialogs/clonetiler.cpp:2540
 msgid "Alternate the sign of color changes for each row"
 msgstr "Vorzeichen der Farbänderungen bei jeder Reihe umkehren"
 
-#: ../src/dialogs/clonetiler.cpp:2563
+#: ../src/dialogs/clonetiler.cpp:2545
 msgid "Alternate the sign of color changes for each column"
 msgstr "Vorzeichen der Farbänderungen bei jeder Spalte umkehren"
 
-#: ../src/dialogs/clonetiler.cpp:2571
+#: ../src/dialogs/clonetiler.cpp:2553
 msgid "_Trace"
 msgstr "Bild _vektorisieren"
 
-#: ../src/dialogs/clonetiler.cpp:2578
+#: ../src/dialogs/clonetiler.cpp:2560
 msgid "Trace the drawing under the tiles"
 msgstr "Zeichnung unter den Kacheln vektorisieren"
 
-#: ../src/dialogs/clonetiler.cpp:2582
+#: ../src/dialogs/clonetiler.cpp:2564
 msgid "For each clone, pick a value from the drawing in that clone's location and apply it to the clone"
 msgstr "Für jeden Klon den entsprechenden Wert an dessen Stelle aus der Zeichnung anwenden"
 
-#: ../src/dialogs/clonetiler.cpp:2596
+#: ../src/dialogs/clonetiler.cpp:2578
 msgid "1. Pick from the drawing:"
 msgstr "1. Von der Zeichnung übernehmen:"
 
-#: ../src/dialogs/clonetiler.cpp:2608
+#: ../src/dialogs/clonetiler.cpp:2590
 msgid "Pick the visible color and opacity"
 msgstr "Sichtbare Farbe und Deckkraft übernehmen"
 
-#: ../src/dialogs/clonetiler.cpp:2616
+#: ../src/dialogs/clonetiler.cpp:2598
 msgid "Pick the total accumulated opacity"
 msgstr "Zusammengerechnete Deckkraft übernehmen"
 
-#: ../src/dialogs/clonetiler.cpp:2623
+#: ../src/dialogs/clonetiler.cpp:2605
 msgid "R"
 msgstr "R"
 
-#: ../src/dialogs/clonetiler.cpp:2624
+#: ../src/dialogs/clonetiler.cpp:2606
 msgid "Pick the Red component of the color"
 msgstr "Rotanteil der Farbe übernehmen"
 
-#: ../src/dialogs/clonetiler.cpp:2631
+#: ../src/dialogs/clonetiler.cpp:2613
 msgid "G"
 msgstr "G"
 
-#: ../src/dialogs/clonetiler.cpp:2632
+#: ../src/dialogs/clonetiler.cpp:2614
 msgid "Pick the Green component of the color"
 msgstr "Grünanteil der Farbe übernehmen"
 
-#: ../src/dialogs/clonetiler.cpp:2639
+#: ../src/dialogs/clonetiler.cpp:2621
 msgid "B"
 msgstr "B"
 
-#: ../src/dialogs/clonetiler.cpp:2640
+#: ../src/dialogs/clonetiler.cpp:2622
 msgid "Pick the Blue component of the color"
 msgstr "Blauanteil der Farbe übernehmen"
 
-#: ../src/dialogs/clonetiler.cpp:2647
+#: ../src/dialogs/clonetiler.cpp:2629
 msgctxt "Clonetiler color hue"
 msgid "H"
 msgstr "H"
 
-#: ../src/dialogs/clonetiler.cpp:2648
+#: ../src/dialogs/clonetiler.cpp:2630
 msgid "Pick the hue of the color"
 msgstr "Farbton des Farbwertes übernehmen"
 
-#: ../src/dialogs/clonetiler.cpp:2655
+#: ../src/dialogs/clonetiler.cpp:2637
 msgctxt "Clonetiler color saturation"
 msgid "S"
 msgstr "S"
 
-#: ../src/dialogs/clonetiler.cpp:2656
+#: ../src/dialogs/clonetiler.cpp:2638
 msgid "Pick the saturation of the color"
 msgstr "Sättigung des Farbwertes übernehmen"
 
-#: ../src/dialogs/clonetiler.cpp:2663
+#: ../src/dialogs/clonetiler.cpp:2645
 msgctxt "Clonetiler color lightness"
 msgid "L"
 msgstr "L"
 
-#: ../src/dialogs/clonetiler.cpp:2664
+#: ../src/dialogs/clonetiler.cpp:2646
 msgid "Pick the lightness of the color"
 msgstr "Helligkeit des Farbwertes übernehmen"
 
-#: ../src/dialogs/clonetiler.cpp:2674
+#: ../src/dialogs/clonetiler.cpp:2656
 msgid "2. Tweak the picked value:"
 msgstr "2. Übernommenen Wert feinjustieren:"
 
-#: ../src/dialogs/clonetiler.cpp:2684
+#: ../src/dialogs/clonetiler.cpp:2666
 msgid "Gamma-correct:"
 msgstr "Gammakorrektur:"
 
-#: ../src/dialogs/clonetiler.cpp:2689
+#: ../src/dialogs/clonetiler.cpp:2671
 msgid "Shift the mid-range of the picked value upwards (>0) or downwards (<0)"
 msgstr "Mittenbereich des übernommenen Wertes verschieben; nach oben (>0) oder unten (<0)"
 
-#: ../src/dialogs/clonetiler.cpp:2696
+#: ../src/dialogs/clonetiler.cpp:2678
 msgid "Randomize:"
 msgstr "Zufallsänderung:"
 
-#: ../src/dialogs/clonetiler.cpp:2701
+#: ../src/dialogs/clonetiler.cpp:2683
 msgid "Randomize the picked value by this percentage"
 msgstr "Übernommenen Wert um diesen Prozentsatz zufällig verändern"
 
-#: ../src/dialogs/clonetiler.cpp:2708
+#: ../src/dialogs/clonetiler.cpp:2690
 msgid "Invert:"
 msgstr "Invertieren:"
 
-#: ../src/dialogs/clonetiler.cpp:2712
+#: ../src/dialogs/clonetiler.cpp:2694
 msgid "Invert the picked value"
 msgstr "Übernommenen Wert invertieren"
 
-#: ../src/dialogs/clonetiler.cpp:2718
+#: ../src/dialogs/clonetiler.cpp:2700
 msgid "3. Apply the value to the clones':"
 msgstr "3. Wert auf die Klone anwenden:"
 
-#: ../src/dialogs/clonetiler.cpp:2728
+#: ../src/dialogs/clonetiler.cpp:2710
 msgid "Presence"
 msgstr "Anwesenheit"
 
-#: ../src/dialogs/clonetiler.cpp:2731
+#: ../src/dialogs/clonetiler.cpp:2713
 msgid "Each clone is created with the probability determined by the picked value in that point"
 msgstr "Jeder Klon wird mit der Wahrscheinlichkeit erzeugt, welche sich aus dem Wert an dieser Stelle ergibt"
 
-#: ../src/dialogs/clonetiler.cpp:2738
+#: ../src/dialogs/clonetiler.cpp:2720
 msgid "Size"
 msgstr "Größe"
 
-#: ../src/dialogs/clonetiler.cpp:2741
+#: ../src/dialogs/clonetiler.cpp:2723
 msgid "Each clone's size is determined by the picked value in that point"
 msgstr "Die jeweilige Größe der Klone hängt vom Wert an diesem Punkt ab"
 
-#: ../src/dialogs/clonetiler.cpp:2751
+#: ../src/dialogs/clonetiler.cpp:2733
 msgid "Each clone is painted by the picked color (the original must have unset fill or stroke)"
 msgstr "Jeder Klon wird in der übernommenen Farbe gezeichnet (Füllung oder Kontur des Originals dürfen nicht gesetzt sein)"
 
-#: ../src/dialogs/clonetiler.cpp:2761
+#: ../src/dialogs/clonetiler.cpp:2743
 msgid "Each clone's opacity is determined by the picked value in that point"
 msgstr "Die Deckkraft jedes Klons wird durch den Wert an dieser Stelle bestimmt"
 
-#: ../src/dialogs/clonetiler.cpp:2788
+#: ../src/dialogs/clonetiler.cpp:2770
 msgid "How many rows in the tiling"
 msgstr "Anzahl der Reihen beim Kacheln"
 
-#: ../src/dialogs/clonetiler.cpp:2808
+#: ../src/dialogs/clonetiler.cpp:2790
 msgid "How many columns in the tiling"
 msgstr "Anzahl der Spalten beim Kacheln"
 
-#: ../src/dialogs/clonetiler.cpp:2838
+#: ../src/dialogs/clonetiler.cpp:2820
 msgid "Width of the rectangle to be filled"
 msgstr "Breite des zu füllenden Rechtecks"
 
-#: ../src/dialogs/clonetiler.cpp:2863
+#: ../src/dialogs/clonetiler.cpp:2845
 msgid "Height of the rectangle to be filled"
 msgstr "Höhe des zu füllenden Rechtecks"
 
-#: ../src/dialogs/clonetiler.cpp:2878
+#: ../src/dialogs/clonetiler.cpp:2860
 msgid "Rows, columns: "
 msgstr "Reihen, Spalten: "
 
-#: ../src/dialogs/clonetiler.cpp:2879
+#: ../src/dialogs/clonetiler.cpp:2861
 msgid "Create the specified number of rows and columns"
 msgstr "Angegeben Anzahl von Reihen und Spalten erzeugen"
 
-#: ../src/dialogs/clonetiler.cpp:2888
+#: ../src/dialogs/clonetiler.cpp:2870
 msgid "Width, height: "
 msgstr "Breite, Höhe: "
 
-#: ../src/dialogs/clonetiler.cpp:2889
+#: ../src/dialogs/clonetiler.cpp:2871
 msgid "Fill the specified width and height with the tiling"
 msgstr "Durch Höhe und Breite angegeben Bereich mit Füllmuster versehen"
 
-#: ../src/dialogs/clonetiler.cpp:2905
+#: ../src/dialogs/clonetiler.cpp:2887
 msgid "Use saved size and position of the tile"
 msgstr "Gespeicherte Größe und Position der Kachel verwenden"
 
-#: ../src/dialogs/clonetiler.cpp:2908
+#: ../src/dialogs/clonetiler.cpp:2890
 msgid "Pretend that the size and position of the tile are the same as the last time you tiled it (if any), instead of using the current size"
 msgstr "Anstelle der aktuellen Größe die letzte Position und Größe der Kachel/Musterfüllung vorgeben"
 
-#: ../src/dialogs/clonetiler.cpp:2932
+#: ../src/dialogs/clonetiler.cpp:2914
 msgid " <b>_Create</b> "
 msgstr " <b>_Erzeugen</b> "
 
-#: ../src/dialogs/clonetiler.cpp:2934
+#: ../src/dialogs/clonetiler.cpp:2916
 msgid "Create and tile the clones of the selection"
 msgstr "Klone der Auswahl erzeugen und kacheln"
 
@@ -7302,28 +7462,28 @@ msgstr "Klone der Auswahl erzeugen und kacheln"
 #. diagrams on the left in the following screenshot:
 #. http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
 #. So unclumping is the process of spreading a number of objects out more evenly.
-#: ../src/dialogs/clonetiler.cpp:2949
+#: ../src/dialogs/clonetiler.cpp:2931
 msgid " _Unclump "
 msgstr " Entkl_umpen "
 
-#: ../src/dialogs/clonetiler.cpp:2950
+#: ../src/dialogs/clonetiler.cpp:2932
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
 msgstr "Klone gleichmäßiger verteilen, um das Verklumpen zu verringern; mehrmals anwendbar"
 
-#: ../src/dialogs/clonetiler.cpp:2956
+#: ../src/dialogs/clonetiler.cpp:2938
 msgid " Re_move "
 msgstr " _Entfernen "
 
-#: ../src/dialogs/clonetiler.cpp:2957
+#: ../src/dialogs/clonetiler.cpp:2939
 msgid "Remove existing tiled clones of the selected object (siblings only)"
 msgstr "Vorhandene gekachelte Klone des ausgewählten Objektes entfernen (nur Geschwister)"
 
-#: ../src/dialogs/clonetiler.cpp:2973
+#: ../src/dialogs/clonetiler.cpp:2955
 msgid " R_eset "
 msgstr " _Zurücksetzen "
 
 #. TRANSLATORS: "change" is a noun here
-#: ../src/dialogs/clonetiler.cpp:2975
+#: ../src/dialogs/clonetiler.cpp:2957
 msgid "Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"
 msgstr "Rücksetzen aller Verschiebungen, Skalierungen, Rotationen und Deckkraft- und Farbanpassungen im Dialogfenster"
 
@@ -7351,8 +7511,8 @@ msgid "<big><b>Export area</b></big>"
 msgstr "<big><b>Exportbereich</b></big>"
 
 #: ../src/dialogs/export.cpp:285
-msgid "Units:"
-msgstr "Einheit:"
+msgid "_Units:"
+msgstr "Einheiten:"
 
 #: ../src/dialogs/export.cpp:313
 msgid "_x0:"
@@ -7383,6 +7543,7 @@ msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>Bitmap-Größe</b></big>"
 
 #: ../src/dialogs/export.cpp:484
+#: ../src/ui/dialog/transformation.cpp:87
 #: ../src/ui/widget/page-sizer.cpp:231
 msgid "_Width:"
 msgstr "_Breite:"
@@ -7397,6 +7558,7 @@ msgid "dp_i"
 msgstr "dp_i"
 
 #: ../src/dialogs/export.cpp:498
+#: ../src/ui/dialog/transformation.cpp:89
 #: ../src/ui/widget/page-sizer.cpp:232
 msgid "_Height:"
 msgstr "_Höhe:"
@@ -7636,7 +7798,7 @@ msgstr "Versatz"
 
 #: ../src/dialogs/find.cpp:685
 #: ../src/ui/dialog/find.cpp:60
-msgid "_Text: "
+msgid "_Text:"
 msgstr "_Text: "
 
 #: ../src/dialogs/find.cpp:685
@@ -7644,10 +7806,15 @@ msgstr "_Text: "
 msgid "Find objects by their text content (exact or partial match)"
 msgstr "Objekte nach ihrem Textinhalt finden (exakte oder partielle Übereinstimmung)"
 
+#. Create the label for the object id
 #: ../src/dialogs/find.cpp:686
+#: ../src/dialogs/item-properties.cpp:120
+#: ../src/dialogs/item-properties.cpp:334
+#: ../src/dialogs/item-properties.cpp:443
+#: ../src/dialogs/item-properties.cpp:450
 #: ../src/ui/dialog/find.cpp:61
-msgid "_ID: "
-msgstr "_Kennung: "
+msgid "_ID:"
+msgstr "_ID: "
 
 #: ../src/dialogs/find.cpp:686
 #: ../src/ui/dialog/find.cpp:61
@@ -7656,7 +7823,7 @@ msgstr "Objekte nach dem Wert ihres id-Attributs finden (exakte oder partielle �
 
 #: ../src/dialogs/find.cpp:687
 #: ../src/ui/dialog/find.cpp:62
-msgid "_Style: "
+msgid "_Style:"
 msgstr "_Stil: "
 
 #: ../src/dialogs/find.cpp:687
@@ -7666,7 +7833,7 @@ msgstr "Objekte nach ihren Stilen finden (exakte oder teilweise Übereinstimmung
 
 #: ../src/dialogs/find.cpp:688
 #: ../src/ui/dialog/find.cpp:63
-msgid "_Attribute: "
+msgid "_Attribute:"
 msgstr "_Attribut: "
 
 #: ../src/dialogs/find.cpp:688
@@ -7738,14 +7905,6 @@ msgstr "_Suchen"
 msgid "Select objects matching all of the fields you filled in"
 msgstr "Wähle Objekte aus, die zu allen angegebene Feldern passen"
 
-#. Create the label for the object id
-#: ../src/dialogs/item-properties.cpp:120
-#: ../src/dialogs/item-properties.cpp:334
-#: ../src/dialogs/item-properties.cpp:443
-#: ../src/dialogs/item-properties.cpp:450
-msgid "_Id"
-msgstr "_ID-Kennung"
-
 #: ../src/dialogs/item-properties.cpp:129
 msgid "The id= attribute (only letters, digits, and the characters .-_: allowed)"
 msgstr "Das Kennungsattribut \"id=\" (nur Buchstaben, Ziffern und die Zeichen \".-_:\" zulässig)"
@@ -7759,8 +7918,8 @@ msgstr "_Setzen"
 
 #. Create the label for the object label
 #: ../src/dialogs/item-properties.cpp:152
-msgid "_Label"
-msgstr "_Bezeichner"
+msgid "_Label:"
+msgstr "_Bezeichner:"
 
 #: ../src/dialogs/item-properties.cpp:161
 msgid "A freeform label for the object"
@@ -7768,8 +7927,8 @@ msgstr "Freiform-Bezeichner des Objektes"
 
 #. Create the label for the object title
 #: ../src/dialogs/item-properties.cpp:173
-msgid "_Title"
-msgstr "_Titel"
+msgid "_Title:"
+msgstr "_Titel:"
 
 #. Create the frame for the object description
 #: ../src/dialogs/item-properties.cpp:191
@@ -7852,7 +8011,7 @@ msgstr "Href:"
 #. default x:
 #. default y:
 #: ../src/dialogs/object-attributes.cpp:33
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "Target:"
 msgstr "Target:"
 
@@ -7870,6 +8029,7 @@ msgstr "Arcrole:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
 #: ../src/dialogs/object-attributes.cpp:42
+#: ../src/rdf.cpp:229
 msgid "Title:"
 msgstr "Title:"
 
@@ -7885,7 +8045,6 @@ msgstr "URL:"
 #: ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/object-attributes.cpp:59
 #: ../src/ui/dialog/guides.cpp:43
-#: ../src/ui/view/edit-widget.cpp:1074
 #: ../src/widgets/desktop-widget.cpp:509
 #: ../src/widgets/toolbox.cpp:1542
 msgid "X:"
@@ -7894,13 +8053,22 @@ msgstr "X:"
 #: ../src/dialogs/object-attributes.cpp:52
 #: ../src/dialogs/object-attributes.cpp:60
 #: ../src/ui/dialog/guides.cpp:44
-#: ../src/ui/view/edit-widget.cpp:1075
 #: ../src/widgets/desktop-widget.cpp:512
 #: ../src/widgets/toolbox.cpp:1560
 msgid "Y:"
 msgstr "Y:"
 
-#: ../src/dialogs/object-attributes.cpp:106
+#: ../src/dialogs/object-attributes.cpp:107
+#, c-format
+msgid "Link Properties"
+msgstr "Verknüpfungseigenschaften"
+
+#: ../src/dialogs/object-attributes.cpp:109
+#, c-format
+msgid "Image Properties"
+msgstr "Bildeigenschaften"
+
+#: ../src/dialogs/object-attributes.cpp:111
 #, c-format
 msgid "%s Properties"
 msgstr "%s Eigenschaften"
@@ -8022,7 +8190,7 @@ msgid "Set as default"
 msgstr "Zur Vorgabe machen"
 
 #: ../src/dialogs/text-edit.cpp:665
-#: ../src/text-context.cpp:1500
+#: ../src/text-context.cpp:1524
 msgid "Set text style"
 msgstr "Textstil setzen"
 
@@ -8427,12 +8595,12 @@ msgid "Bounding box side midpoint"
 msgstr "Mitte der Umrandungslinie"
 
 #: ../src/display/snap-indicator.cpp:176
-#: ../src/ui/tool/node.cpp:1173
+#: ../src/ui/tool/node.cpp:1178
 msgid "Smooth node"
 msgstr "glatter Knoten"
 
 #: ../src/display/snap-indicator.cpp:179
-#: ../src/ui/tool/node.cpp:1172
+#: ../src/ui/tool/node.cpp:1177
 msgid "Cusp node"
 msgstr "Spitzer Knoten"
 
@@ -8492,17 +8660,17 @@ msgstr "Mehrfaches der Gitterweite"
 msgid " to "
 msgstr " an "
 
-#: ../src/document.cpp:477
+#: ../src/document.cpp:469
 #, c-format
 msgid "New document %d"
 msgstr "Neues Dokument %d"
 
-#: ../src/document.cpp:509
+#: ../src/document.cpp:501
 #, c-format
 msgid "Memory document %d"
 msgstr "Dokument im Speicher %d"
 
-#: ../src/document.cpp:739
+#: ../src/document.cpp:731
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Unbenanntes Dokument %d"
@@ -8723,7 +8891,7 @@ msgstr "Deaktiviert"
 msgid "Currently there is no help available for this Extension.  Please look on the Inkscape website or ask on the mailing lists if you have questions regarding this extension."
 msgstr "Für diese Erweiterung ist zur Zeit keine Hilfe verfügbar. Besuchen Sie die Inkscape Webseite oder wenden Sie sich an die Mailing List wenn Sie Fragen bezüglich dieser Erweiterung haben."
 
-#: ../src/extension/implementation/script.cpp:985
+#: ../src/extension/implementation/script.cpp:989
 msgid "Inkscape has received additional data from the script executed.  The script did not return an error, but this may indicate the results will not be as expected."
 msgstr "Das aufgerufene Skript hat zusätzliche Daten an Inkscape übergeben. Es wurde keine Fehlermeldung vom Skript zurückgegeben, doch das Resultat ist möglicherweise unbrauchbar."
 
@@ -8827,7 +8995,7 @@ msgstr "Unschärfe"
 #: ../src/extension/internal/bitmap/oilPaint.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
 msgid "Radius:"
 msgstr "Radius:"
 
@@ -9087,7 +9255,7 @@ msgid "Stylize selected bitmap(s) so that they appear to be painted with oils"
 msgstr "Lässt ausgewählte Bitmap(s) aussehen, als ob sie mit Ölfarbe gemalt seien."
 
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2221
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2219
 #: ../src/widgets/toolbox.cpp:5678
 msgid "Opacity:"
 msgstr "Deckkraft:"
@@ -9250,7 +9418,7 @@ msgstr "Postscript Level 2"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:323
 #: ../src/extension/internal/cairo-ps-out.cpp:361
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:242
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:245
 #: ../src/extension/internal/emf-win32-inout.cpp:2432
 msgid "Convert texts to paths"
 msgstr "Texte in Pfade umwandeln"
@@ -9261,31 +9429,31 @@ msgstr "PS+LaTeX: Text in PS weglassen und LaTeX Datei erstellen"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:325
 #: ../src/extension/internal/cairo-ps-out.cpp:363
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:244
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:247
 msgid "Rasterize filter effects"
 msgstr "Filtereffekte in Raster umwandeln"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:326
 #: ../src/extension/internal/cairo-ps-out.cpp:364
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:245
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
 msgid "Resolution for rasterization (dpi):"
 msgstr "Auflösung des Rasters (dpi)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:327
 #: ../src/extension/internal/cairo-ps-out.cpp:365
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:246
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:249
 msgid "Export area is drawing"
 msgstr "Exportierter Bereich ist die gesamte Zeichnung"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:328
 #: ../src/extension/internal/cairo-ps-out.cpp:366
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:247
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
 msgid "Export area is page"
 msgstr "Exportierter Bereich ist die gesamte Seite"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:329
 #: ../src/extension/internal/cairo-ps-out.cpp:367
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:251
 msgid "Limit export to the object with ID:"
 msgstr "Export einschränken auf das Objekt mit ID"
 
@@ -9305,11 +9473,15 @@ msgstr "Encapsulated-Postscript-Datei"
 msgid "Restrict to PDF version:"
 msgstr "Auf PDF Version einschränken"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:240
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:241
+msgid "PDF 1.5"
+msgstr "PDF 1.5"
+
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:243
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:243
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:246
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
 msgstr "PDF+LaTeX: Text in PDF weglassen und LaTeX Datei erstellen"
 
@@ -9362,6 +9534,7 @@ msgstr "Unschärfen Radius"
 
 #: ../src/extension/internal/filter/drop-shadow.h:38
 #: ../src/extension/internal/filter/drop-shadow.h:98
+#: ../src/ui/widget/object-composite-settings.cpp:62
 msgid "Opacity (%):"
 msgstr "Deckkraft, %:"
 
@@ -9767,125 +9940,125 @@ msgstr "Ist Vorschau des Effekts auf Leinwand aktiv?"
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "Die automatische Ermittlung des Formats ist fehlgeschlagen. Die Datei wird als SVG-Dokument geöffnet."
 
-#: ../src/file.cpp:156
+#: ../src/file.cpp:149
 msgid "default.svg"
 msgstr "default.de.svg"
 
-#: ../src/file.cpp:274
-#: ../src/file.cpp:1080
+#: ../src/file.cpp:263
+#: ../src/file.cpp:1069
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Laden der gewünschten Datei %s fehlgeschlagen"
 
-#: ../src/file.cpp:299
+#: ../src/file.cpp:288
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Dokument noch nicht gespeichtert. Kann nicht zurücksetzen."
 
-#: ../src/file.cpp:305
+#: ../src/file.cpp:294
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr "Änderungen gehen verloren! Sind Sie sicher, dass Sie das Dokument %s erneut laden möchten?"
 
-#: ../src/file.cpp:334
+#: ../src/file.cpp:323
 msgid "Document reverted."
 msgstr "Dokument zurückgesetzt."
 
-#: ../src/file.cpp:336
+#: ../src/file.cpp:325
 msgid "Document not reverted."
 msgstr "Dokument nicht zurückgesetzt."
 
-#: ../src/file.cpp:486
+#: ../src/file.cpp:475
 msgid "Select file to open"
 msgstr "Wählen Sie die zu öffnende Datei"
 
-#: ../src/file.cpp:573
+#: ../src/file.cpp:562
 msgid "Vacuum &lt;defs&gt;"
 msgstr "Leere &lt;defs&gt; aufräumen"
 
-#: ../src/file.cpp:578
+#: ../src/file.cpp:567
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "<b>%i</b> überflüssiges Element aus &lt;defs&gt; entfernt."
 msgstr[1] "<b>%i</b> überflüssige Elemente aus &lt;defs&gt; entfernt."
 
-#: ../src/file.cpp:583
+#: ../src/file.cpp:572
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Keine überflüssigen Elemente in &lt;defs&gt;."
 
-#: ../src/file.cpp:614
+#: ../src/file.cpp:603
 #, c-format
 msgid "No Inkscape extension found to save document (%s).  This may have been caused by an unknown filename extension."
 msgstr "Keine vorhandene Erweiterung von Inkscape kann das Dokument (%s) sichern. Dies Ursache dafür ist möglicherweise eine unbekannte Dateinamenendung."
 
-#: ../src/file.cpp:615
-#: ../src/file.cpp:623
+#: ../src/file.cpp:604
+#: ../src/file.cpp:612
+#: ../src/file.cpp:620
+#: ../src/file.cpp:626
 #: ../src/file.cpp:631
-#: ../src/file.cpp:637
-#: ../src/file.cpp:642
 msgid "Document not saved."
 msgstr "Dokument wurde nicht gespeichert."
 
-#: ../src/file.cpp:622
+#: ../src/file.cpp:611
 #, c-format
 msgid "File %s is write protected. Please remove write protection and try again."
 msgstr "Datei %s ist schreibgeschützt! Bitte entfernen Sie den Schreibschutz und versuchen es dann erneut."
 
-#: ../src/file.cpp:630
+#: ../src/file.cpp:619
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Datei %s konnte nicht gespeichert werden."
 
-#: ../src/file.cpp:647
+#: ../src/file.cpp:636
 msgid "Document saved."
 msgstr "Dokument wurde gespeichert."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:779
-#: ../src/file.cpp:1217
+#: ../src/file.cpp:768
+#: ../src/file.cpp:1206
 #, c-format
 msgid "drawing%s"
 msgstr "Zeichnung%s"
 
-#: ../src/file.cpp:785
+#: ../src/file.cpp:774
 #, c-format
 msgid "drawing-%d%s"
 msgstr "Zeichnung-%d%s"
 
-#: ../src/file.cpp:789
+#: ../src/file.cpp:778
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/file.cpp:804
+#: ../src/file.cpp:793
 msgid "Select file to save a copy to"
 msgstr "Datei wählen, in die eine Kopie gespeichert werden soll"
 
-#: ../src/file.cpp:806
+#: ../src/file.cpp:795
 msgid "Select file to save to"
 msgstr "Datei wählen, in die gespeichert werden soll"
 
-#: ../src/file.cpp:901
+#: ../src/file.cpp:890
 msgid "No changes need to be saved."
 msgstr "Es müssen keine Änderungen gespeichert werden."
 
-#: ../src/file.cpp:918
+#: ../src/file.cpp:907
 msgid "Saving document..."
 msgstr "Dokument wird gespeichert…"
 
-#: ../src/file.cpp:1077
+#: ../src/file.cpp:1066
 msgid "Import"
 msgstr "Importieren"
 
-#: ../src/file.cpp:1127
+#: ../src/file.cpp:1116
 msgid "Select file to import"
 msgstr "Wählen Sie die zu importierende Datei"
 
-#: ../src/file.cpp:1239
+#: ../src/file.cpp:1228
 msgid "Select file to export to"
 msgstr "Wählen Sie die Datei, in die exportiert werden soll"
 
-#: ../src/file.cpp:1482
+#: ../src/file.cpp:1471
 #: ../src/verbs.cpp:2248
 msgid "Import From Open Clip Art Library"
 msgstr "Import aus der Open Clip Art Library"
@@ -10539,38 +10712,38 @@ msgstr "ex"
 msgid "Ex squares"
 msgstr "Ix-Quadrate"
 
-#: ../src/inkscape.cpp:328
+#: ../src/inkscape.cpp:324
 msgid "Autosaving documents..."
 msgstr "Dokument wird automatisch gespeichert…"
 
-#: ../src/inkscape.cpp:399
+#: ../src/inkscape.cpp:395
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr "Automatisches Speichern fehlgeschlagen! Inkscape-Endung konnte nicht gefunden werden."
 
-#: ../src/inkscape.cpp:402
-#: ../src/inkscape.cpp:409
+#: ../src/inkscape.cpp:398
+#: ../src/inkscape.cpp:405
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
 msgstr "Automatisches Speichern fehlgeschlagen! Datei %s konnte nicht gespeichert werden."
 
-#: ../src/inkscape.cpp:424
+#: ../src/inkscape.cpp:420
 msgid "Autosave complete."
 msgstr "Automatisches Speichern abgeschlossen."
 
-#: ../src/inkscape.cpp:665
+#: ../src/inkscape.cpp:661
 msgid "Untitled document"
 msgstr "Unbenanntes Dokument"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:697
+#: ../src/inkscape.cpp:693
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Inkscape ist auf einen internen Fehler gestoßen und wird nun geschlossen.\n"
 
-#: ../src/inkscape.cpp:698
+#: ../src/inkscape.cpp:694
 msgid "Automatic backups of unsaved documents were done to the following locations:\n"
 msgstr "Unter folgenden Speicherorten wurden automatische Sicherungskopien nicht gespeicherter Dokumente angelegt:\n"
 
-#: ../src/inkscape.cpp:699
+#: ../src/inkscape.cpp:695
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Anlegen von automatischen Sicherungskopien folgender Dokumente fehlgeschlagen:\n"
 
@@ -10769,6 +10942,8 @@ msgstr "Dockobjekt, das diesen Griff \"besitzt\""
 #. Name
 #: ../src/libgdl/gdl-dock-item.c:287
 #: ../src/widgets/toolbox.cpp:7616
+#: ../share/extensions/gcodetools_all_in_one.inx.h:34
+#: ../share/extensions/gcodetools_orientation_points.inx.h:6
 msgid "Orientation"
 msgstr "Ausrichtung"
 
@@ -11256,7 +11431,6 @@ msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "Keine Parameter der auf den Pfad angewandten Effekte können auf der Zeichenfläche verändert werden."
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
-#, fuzzy
 msgid "Bend path:"
 msgstr "Pfad verbiegen"
 
@@ -11582,7 +11756,6 @@ msgid "Variation of distance between hatches, in %."
 msgstr "Variation des Abstands zwischen den Strichen in %"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
-#, fuzzy
 msgid "Growth:"
 msgstr "Wachstum"
 
@@ -12056,216 +12229,216 @@ msgstr "Kann Verben-Kennung »%s«, die per Kommandozeile übergeben wurde, nich
 msgid "Unable to find node ID: '%s'\n"
 msgstr "Kann Knoten-Kennung »%s« nicht finden.\n"
 
-#: ../src/main.cpp:269
+#: ../src/main.cpp:267
 msgid "Print the Inkscape version number"
 msgstr "Versionsnummer von Inkscape ausgeben"
 
-#: ../src/main.cpp:274
+#: ../src/main.cpp:272
 msgid "Do not use X server (only process files from console)"
 msgstr "X-Server nicht verwenden (Dateien nur mittels Konsole verarbeiten)"
 
-#: ../src/main.cpp:279
+#: ../src/main.cpp:277
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr "Versuche, den X-Server zu verwenden (auch wenn die Umgebungsvariable »$DISPLAY« nicht gesetzt wurde)"
 
-#: ../src/main.cpp:284
+#: ../src/main.cpp:282
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr "Angegebene Dokumente öffnen (Optionszeichenkette muss nicht übergeben werden)"
 
-#: ../src/main.cpp:285
-#: ../src/main.cpp:290
-#: ../src/main.cpp:295
-#: ../src/main.cpp:362
-#: ../src/main.cpp:367
-#: ../src/main.cpp:372
-#: ../src/main.cpp:377
-#: ../src/main.cpp:388
+#: ../src/main.cpp:283
+#: ../src/main.cpp:288
+#: ../src/main.cpp:293
+#: ../src/main.cpp:360
+#: ../src/main.cpp:365
+#: ../src/main.cpp:370
+#: ../src/main.cpp:375
+#: ../src/main.cpp:386
 msgid "FILENAME"
 msgstr "DATEINAME"
 
-#: ../src/main.cpp:289
+#: ../src/main.cpp:287
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr "Dokumente in angegebene Ausgabedatei drucken (verwenden Sie »| Programm« zur Weiterleitung)"
 
-#: ../src/main.cpp:294
+#: ../src/main.cpp:292
 msgid "Export document to a PNG file"
 msgstr "Das Dokument in eine PNG-Datei exportieren"
 
-#: ../src/main.cpp:299
+#: ../src/main.cpp:297
 msgid "Resolution for exporting to bitmap and for rasterization of filters in PS/EPS/PDF (default 90)"
 msgstr "Auflösung beim Exportieren von Bitmaps und Rasterisierung von Filtern in PS/EPS/PDF (Vorgabe ist 90)"
 
-#: ../src/main.cpp:300
+#: ../src/main.cpp:298
 #: ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
 msgstr "DPI"
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:302
 msgid "Exported area in SVG user units (default is the page; 0,0 is lower-left corner)"
 msgstr "Exportierter Bereich in SVG-Benutzereinheiten (Vorgabe: gesamte Zeichenfläche, »0,0« ist die untere linke Ecke)"
 
-#: ../src/main.cpp:305
+#: ../src/main.cpp:303
 msgid "x0:y0:x1:y1"
 msgstr "X0:Y0:X1:Y1"
 
-#: ../src/main.cpp:309
+#: ../src/main.cpp:307
 msgid "Exported area is the entire drawing (not page)"
 msgstr "Exportierter Bereich ist die gesamte Zeichnung, nicht die Zeichenfläche"
 
-#: ../src/main.cpp:314
+#: ../src/main.cpp:312
 msgid "Exported area is the entire page"
 msgstr "Exportierter Bereich ist die gesamte Zeichenfläche"
 
-#: ../src/main.cpp:319
+#: ../src/main.cpp:317
 msgid "Snap the bitmap export area outwards to the nearest integer values (in SVG user units)"
 msgstr "Die Fläche für den Export einer Bitmap nach außen auf die nächsten Ganzzahlen aufrunden (in SVG-Benutzereinheiten)"
 
-#: ../src/main.cpp:324
+#: ../src/main.cpp:322
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr "Breite der erzeugten Bitmap in Pixeln (überschreibt Export-dpi)"
 
-#: ../src/main.cpp:325
+#: ../src/main.cpp:323
 msgid "WIDTH"
 msgstr "BREITE"
 
-#: ../src/main.cpp:329
+#: ../src/main.cpp:327
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr "Höhe der erzeugten Bitmap in Pixeln (überschreibt Export-dpi)"
 
-#: ../src/main.cpp:330
+#: ../src/main.cpp:328
 msgid "HEIGHT"
 msgstr "HÖHE"
 
-#: ../src/main.cpp:334
+#: ../src/main.cpp:332
 msgid "The ID of the object to export"
 msgstr "Kennung des zu exportierenden Objektes"
 
-#: ../src/main.cpp:335
-#: ../src/main.cpp:433
+#: ../src/main.cpp:333
+#: ../src/main.cpp:431
 msgid "ID"
 msgstr "Kennung"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:341
+#: ../src/main.cpp:339
 msgid "Export just the object with export-id, hide all others (only with export-id)"
 msgstr "Nur das Objekt mit der angegebenen Export-ID exportieren, alle anderen auslassen"
 
-#: ../src/main.cpp:346
+#: ../src/main.cpp:344
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr "Verwende gespeicherten Dateinamen und DPI-Hinweise zum Exportieren (nur mit Export-ID)"
 
-#: ../src/main.cpp:351
+#: ../src/main.cpp:349
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr "Hintergrundfarbe der exportierten Bitmap (jede von SVG unterstützte Farbzeichenkette)"
 
-#: ../src/main.cpp:352
+#: ../src/main.cpp:350
 msgid "COLOR"
 msgstr "FARBE"
 
-#: ../src/main.cpp:356
+#: ../src/main.cpp:354
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr "Hintergrunddeckkraft der exportierten Bitmap (0,0 bis 1,0 oder 1 bis 255)"
 
-#: ../src/main.cpp:357
+#: ../src/main.cpp:355
 msgid "VALUE"
 msgstr "WERT"
 
-#: ../src/main.cpp:361
+#: ../src/main.cpp:359
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr "Dokument in reine SVG-Datei exportieren (ohne Sodipodi- oder Inkscape-Namensräume)"
 
-#: ../src/main.cpp:366
+#: ../src/main.cpp:364
 msgid "Export document to a PS file"
 msgstr "Das Dokument in eine PS-Datei exportieren"
 
-#: ../src/main.cpp:371
+#: ../src/main.cpp:369
 msgid "Export document to an EPS file"
 msgstr "Das Dokument in eine EPS-Datei exportieren"
 
-#: ../src/main.cpp:376
+#: ../src/main.cpp:374
 msgid "Export document to a PDF file"
 msgstr "Das Dokument in eine PDF-Datei exportieren"
 
-#: ../src/main.cpp:381
+#: ../src/main.cpp:379
 msgid "Export PDF/PS/EPS without text. Besides the PDF/PS/EPS, a LaTeX file is exported, putting the text on top of the PDF/PS/EPS file. Include the result in LaTeX like: \\input{latexfile.tex}"
 msgstr "Exportiere PDF/PS/EPS ohne Text. Neben PDF/PS/EPS wird eine LaTeX Datei exportiert, die den Text oben auf die PDF/PS/EPS Datei legt. Einbinden des Ergebnisses in Latex mit: \\input{latexfile.tex}"
 
-#: ../src/main.cpp:387
+#: ../src/main.cpp:385
 msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr "Das Dokument in eine EMF-Datei exportieren"
 
-#: ../src/main.cpp:393
+#: ../src/main.cpp:391
 msgid "Convert text object to paths on export (PS, EPS, PDF)"
 msgstr "Textelemente beim PS-/EPS-/PDF-Export in Pfade umwandeln "
 
-#: ../src/main.cpp:398
+#: ../src/main.cpp:396
 msgid "Render filtered objects without filters, instead of rasterizing (PS, EPS, PDF)"
 msgstr "Objekte ohne Filter zeichnen, statt Rasterisierung (PS, EPS, PDF)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:404
+#: ../src/main.cpp:402
 msgid "Query the X coordinate of the drawing or, if specified, of the object with --query-id"
 msgstr "Abfragen der X-Koordinate der Zeichnung oder des mit --query-id angegebenen Objektes"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:410
+#: ../src/main.cpp:408
 msgid "Query the Y coordinate of the drawing or, if specified, of the object with --query-id"
 msgstr "Abfragen der Y-Koordinate der Zeichnung oder des mit --query-id angegebenen Objektes"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:416
+#: ../src/main.cpp:414
 msgid "Query the width of the drawing or, if specified, of the object with --query-id"
 msgstr "Abfragen der Breite der Zeichnung oder des mit --query-id angegebenen Objektes"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:422
+#: ../src/main.cpp:420
 msgid "Query the height of the drawing or, if specified, of the object with --query-id"
 msgstr "Abfragen der Höhe der Zeichnung oder des mit --query-id angegebenen Objektes"
 
-#: ../src/main.cpp:427
+#: ../src/main.cpp:425
 msgid "List id,x,y,w,h for all objects"
 msgstr "id, x, y, w und h für alle Objekte auflisten"
 
-#: ../src/main.cpp:432
+#: ../src/main.cpp:430
 msgid "The ID of the object whose dimensions are queried"
 msgstr "Objekt-ID-Kennung, dessen Abmessungen abgefragt werden"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:438
+#: ../src/main.cpp:436
 msgid "Print out the extension directory and exit"
 msgstr "Erweiterungsverzeichnis ausgeben und beenden"
 
-#: ../src/main.cpp:443
+#: ../src/main.cpp:441
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "Unbenutzte Elemente aus den &lt;defs&gt; des Dokuments entfernen"
 
-#: ../src/main.cpp:448
+#: ../src/main.cpp:446
 msgid "List the IDs of all the verbs in Inkscape"
 msgstr "Liste die Kennungen von allen Verben in Inkscape"
 
-#: ../src/main.cpp:453
+#: ../src/main.cpp:451
 msgid "Verb to call when Inkscape opens."
 msgstr "Aufzurufendes Verb wenn Inkscape startet."
 
-#: ../src/main.cpp:454
+#: ../src/main.cpp:452
 msgid "VERB-ID"
 msgstr "VERB-ID"
 
-#: ../src/main.cpp:458
+#: ../src/main.cpp:456
 msgid "Object ID to select when Inkscape opens."
 msgstr "Auszuwählende Objekt-Kennung wenn Inkscape startet."
 
-#: ../src/main.cpp:459
+#: ../src/main.cpp:457
 msgid "OBJECT-ID"
 msgstr "OBJECT-ID"
 
-#: ../src/main.cpp:463
+#: ../src/main.cpp:461
 msgid "Start Inkscape in interactive shell mode."
 msgstr "Inkscape in interaktivem Konsolenmodus starten."
 
-#: ../src/main.cpp:796
-#: ../src/main.cpp:1122
+#: ../src/main.cpp:799
+#: ../src/main.cpp:1125
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -12713,151 +12886,143 @@ msgstr "FreeArt"
 msgid "Open Font License"
 msgstr "Open-Font-Lizenz"
 
-#: ../src/rdf.cpp:229
-msgid "Title"
-msgstr "Titel"
-
 #: ../src/rdf.cpp:230
-msgid "Name by which this document is formally known."
+#, fuzzy
+msgid "Name by which this document is formally known"
 msgstr "Name, unter dem dieses Dokument formal bekannt ist."
 
 #: ../src/rdf.cpp:232
-msgid "Date"
-msgstr "Datum"
+msgid "Date:"
+msgstr "Datum:"
 
 #: ../src/rdf.cpp:233
-msgid "Date associated with the creation of this document (YYYY-MM-DD)."
+#, fuzzy
+msgid "Date associated with the creation of this document (YYYY-MM-DD)"
 msgstr "Datum, das mit der Erstellung dieses Dokuments assoziiert ist (JJJJ-MM-TT)."
 
-#: ../src/rdf.cpp:235
-msgid "Format"
-msgstr "Format"
-
 #: ../src/rdf.cpp:236
-msgid "The physical or digital manifestation of this document (MIME type)."
+#, fuzzy
+msgid "The physical or digital manifestation of this document (MIME type)"
 msgstr "Die physische oder digitale Erscheinungsform dieses Dokuments (MIME-Typ)."
 
-#: ../src/rdf.cpp:238
-msgid "Type"
-msgstr "Typ"
-
 #: ../src/rdf.cpp:239
-msgid "Type of document (DCMI Type)."
+msgid "Type of document (DCMI Type)"
 msgstr "Typ des Dokuments (DCMI-Typ)."
 
 # !!! Urheber?
 #: ../src/rdf.cpp:242
-msgid "Creator"
-msgstr "Autor/Urheber"
+msgid "Creator:"
+msgstr "Autor/Urheber:"
 
 #: ../src/rdf.cpp:243
-msgid "Name of entity primarily responsible for making the content of this document."
+msgid "Name of entity primarily responsible for making the content of this document"
 msgstr "Name der Person oder Organisation, die hauptsächlich für die Erstellung des Dokumenteninhalts verantwortlich ist."
 
 #: ../src/rdf.cpp:245
-msgid "Rights"
-msgstr "Rechte"
+msgid "Rights:"
+msgstr "Rechte:"
 
 #: ../src/rdf.cpp:246
-msgid "Name of entity with rights to the Intellectual Property of this document."
+msgid "Name of entity with rights to the Intellectual Property of this document"
 msgstr "Name der Person oder Organisation, welche die Urheberrechte (Intellectual Property) an diesem Dokument hält."
 
 #: ../src/rdf.cpp:248
-msgid "Publisher"
-msgstr "Herausgeber"
+msgid "Publisher:"
+msgstr "Herausgeber:"
 
 #: ../src/rdf.cpp:249
-msgid "Name of entity responsible for making this document available."
+msgid "Name of entity responsible for making this document available"
 msgstr "Name der Person oder Organisation, die für die Verfügbarmachung des Dokuments verantwortlich ist."
 
 #: ../src/rdf.cpp:252
-msgid "Identifier"
-msgstr "Identifikator"
+msgid "Identifier:"
+msgstr "Identifikator:"
 
 #: ../src/rdf.cpp:253
-msgid "Unique URI to reference this document."
+msgid "Unique URI to reference this document"
 msgstr "Eindeutige URI, um dieses Dokument zu referenzieren."
 
 #: ../src/rdf.cpp:255
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1438
-msgid "Source"
-msgstr "Quelle"
+msgid "Source:"
+msgstr "Quelle:"
 
 #: ../src/rdf.cpp:256
-msgid "Unique URI to reference the source of this document."
+msgid "Unique URI to reference the source of this document"
 msgstr "Eindeutige URI, um die Quelle dieses Dokuments zu referenzieren."
 
 #: ../src/rdf.cpp:258
-msgid "Relation"
-msgstr "Beziehung"
+msgid "Relation:"
+msgstr "Beziehung:"
 
 #: ../src/rdf.cpp:259
-msgid "Unique URI to a related document."
+msgid "Unique URI to a related document"
 msgstr "Eindeutige URI zu einem verwandten Dokument."
 
 #: ../src/rdf.cpp:261
-msgid "Language"
-msgstr "Sprache"
+#: ../src/ui/dialog/inkscape-preferences.cpp:1297
+msgid "Language:"
+msgstr "Sprache:"
 
 # !!! pull parenthesis inside sentenc
 #: ../src/rdf.cpp:262
-msgid "Two-letter language tag with optional subtags for the language of this document.  (e.g. 'en-GB')"
+#, fuzzy
+msgid "Two-letter language tag with optional subtags for the language of this document (e.g. 'en-GB')"
 msgstr "Zweibuchstabiges Sprachsymbol mit optionalen Untersymbolen für die Sprache dieses Dokuments (z.B. »de-CH«)"
 
 #: ../src/rdf.cpp:264
-msgid "Keywords"
-msgstr "Schlagworte"
+msgid "Keywords:"
+msgstr "Schlagworte:"
 
 #: ../src/rdf.cpp:265
-msgid "The topic of this document as comma-separated key words, phrases, or classifications."
+msgid "The topic of this document as comma-separated key words, phrases, or classifications"
 msgstr "Das Thema dieses Dokuments als Schlagworte, Phrasen oder Klassifikation."
 
 # !!! not the best translation
 #. TRANSLATORS: "Coverage": the spatial or temporal characteristics of the content.
 #. For info, see Appendix D of http://www.w3.org/TR/1998/WD-rdf-schema-19980409/
 #: ../src/rdf.cpp:269
-msgid "Coverage"
+#, fuzzy
+msgid "Coverage:"
 msgstr "Abdeckung"
 
 #: ../src/rdf.cpp:270
-msgid "Extent or scope of this document."
+msgid "Extent or scope of this document"
 msgstr "Umfang oder Abdeckungsbereich dieses Dokuments."
 
 #: ../src/rdf.cpp:273
-#: ../src/ui/widget/page-sizer.cpp:245
-msgid "Description"
-msgstr "Beschreibung"
+msgid "Description:"
+msgstr "Beschreibung:"
 
 #: ../src/rdf.cpp:274
-msgid "A short account of the content of this document."
+msgid "A short account of the content of this document"
 msgstr "Kurzer Abriß des Inhalts dieses Dokuments."
 
 #. FIXME: need to handle 1 agent per line of input
 #: ../src/rdf.cpp:278
-msgid "Contributors"
-msgstr "Mitwirkende"
+msgid "Contributors:"
+msgstr "Mitwirkende:"
 
 #: ../src/rdf.cpp:279
-msgid "Names of entities responsible for making contributions to the content of this document."
+msgid "Names of entities responsible for making contributions to the content of this document"
 msgstr "Namen von Personen oder Organisationen, die am Inhalt dieses Dokuments mitgewirkt haben."
 
 #. TRANSLATORS: URL to a page that defines the license for the document
 #: ../src/rdf.cpp:283
-msgid "URI"
-msgstr "URI"
+msgid "URI:"
+msgstr "URI:"
 
 #. TRANSLATORS: this is where you put a URL to a page that defines the license
 #: ../src/rdf.cpp:285
-msgid "URI to this document's license's namespace definition."
+msgid "URI to this document's license's namespace definition"
 msgstr "URI, unter dem die Lizenzdefinition (license namespace) dieses Dokuments zu finden ist."
 
 #. TRANSLATORS: fragment of XML representing the license of the document
 #: ../src/rdf.cpp:289
-msgid "Fragment"
-msgstr "Fragment"
+msgid "Fragment:"
+msgstr "Fragment:"
 
 #: ../src/rdf.cpp:290
-msgid "XML fragment for the RDF 'License' section."
+msgid "XML fragment for the RDF 'License' section"
 msgstr "XML-Fragment für den RDF-Abschnitt »Lizenz«."
 
 #: ../src/rect-context.cpp:372
@@ -12939,7 +13104,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "Es wurde <b>nichts</b> gelöscht."
 
 #: ../src/selection-chemistry.cpp:330
-#: ../src/text-context.cpp:1002
+#: ../src/text-context.cpp:1026
 #: ../src/ui/dialog/swatches.cpp:208
 #: ../src/ui/dialog/swatches.cpp:271
 #: ../src/widgets/toolbox.cpp:1362
@@ -13053,7 +13218,7 @@ msgid "Select <b>object(s)</b> to remove filters from."
 msgstr "<b>Text</b> auswählen, um Filter zu entfernen."
 
 #: ../src/selection-chemistry.cpp:1139
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1342
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1340
 msgid "Remove filter"
 msgstr "Filter entfernen"
 
@@ -13523,12 +13688,12 @@ msgstr "<b>Scheren</b>: %0.2f &#176;; Winkel mit <b>Strg</b> einrasten"
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Drehen</b>: %0.2f&#176;; Winkel mit <b>Strg</b> einrasten"
 
-#: ../src/seltrans.cpp:1367
+#: ../src/seltrans.cpp:1364
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "<b>Mittelpunkt</b> verschieben nach %s, %s"
 
-#: ../src/seltrans.cpp:1542
+#: ../src/seltrans.cpp:1539
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>Verschieben</b> um %s, %s; mit <b>Strg</b> nur horizontale/vertikale Verschiebung; <b>Umschalt</b> deaktiviert Einrasten."
@@ -13543,23 +13708,23 @@ msgid "<b>Link</b> without URI"
 msgstr "<b>Verknüpfung</b> ohne URI"
 
 # !!!
-#: ../src/sp-ellipse.cpp:501
-#: ../src/sp-ellipse.cpp:878
+#: ../src/sp-ellipse.cpp:503
+#: ../src/sp-ellipse.cpp:880
 msgid "<b>Ellipse</b>"
 msgstr "<b>Ellipse</b>"
 
 # !!!
-#: ../src/sp-ellipse.cpp:642
+#: ../src/sp-ellipse.cpp:644
 msgid "<b>Circle</b>"
 msgstr "<b>Kreis</b>"
 
 # !!!
-#: ../src/sp-ellipse.cpp:873
+#: ../src/sp-ellipse.cpp:875
 msgid "<b>Segment</b>"
 msgstr "<b>Segment</b>"
 
 # !!!
-#: ../src/sp-ellipse.cpp:875
+#: ../src/sp-ellipse.cpp:877
 msgid "<b>Arc</b>"
 msgstr "<b>Kreisbogen</b>"
 
@@ -13841,76 +14006,76 @@ msgstr "Die <b>Z-Tiefe</b> der ausgewählten Objekte konnte nicht für die Diffe
 msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "Eines der ausgewählten Objekte ist <b>kein Pfad</b>. Boole'sche Operation wird nicht ausgeführt."
 
-#: ../src/splivarot.cpp:876
+#: ../src/splivarot.cpp:880
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr "<b>Pfade mit Kontur</b> auswählen, um die Konturlinie in einen Pfad umzuwandeln."
 
-#: ../src/splivarot.cpp:1219
+#: ../src/splivarot.cpp:1227
 msgid "Convert stroke to path"
 msgstr "Kontur in Pfad umwandeln"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:1222
+#: ../src/splivarot.cpp:1230
 msgid "<b>No stroked paths</b> in the selection."
 msgstr "<b>Keine Pfade mit Konturlinien</b> in der Auswahl."
 
-#: ../src/splivarot.cpp:1305
+#: ../src/splivarot.cpp:1313
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "Ausgewähltes Objekt ist <b>kein Pfad</b> - kann es nicht schrumpfen/erweitern."
 
-#: ../src/splivarot.cpp:1424
-#: ../src/splivarot.cpp:1493
+#: ../src/splivarot.cpp:1432
+#: ../src/splivarot.cpp:1501
 msgid "Create linked offset"
 msgstr "Verbundenen Versatz erzeugen"
 
-#: ../src/splivarot.cpp:1425
-#: ../src/splivarot.cpp:1494
+#: ../src/splivarot.cpp:1433
+#: ../src/splivarot.cpp:1502
 msgid "Create dynamic offset"
 msgstr "Dynamischen Versatz erzeugen"
 
-#: ../src/splivarot.cpp:1519
+#: ../src/splivarot.cpp:1527
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "<b>Pfad</b> zum Schrumpfen/Erweitern auswählen."
 
-#: ../src/splivarot.cpp:1737
+#: ../src/splivarot.cpp:1745
 msgid "Outset path"
 msgstr "Pfad erweitern"
 
-#: ../src/splivarot.cpp:1737
+#: ../src/splivarot.cpp:1745
 msgid "Inset path"
 msgstr "Pfad schrumpfen"
 
-#: ../src/splivarot.cpp:1739
+#: ../src/splivarot.cpp:1747
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "Die Auswahl enthält <b>keine Pfade</b> zum Schrumpfen/Erweitern."
 
-#: ../src/splivarot.cpp:1917
+#: ../src/splivarot.cpp:1925
 msgid "Simplifying paths (separately):"
 msgstr "Vereinfache Pfade (getrennt):"
 
-#: ../src/splivarot.cpp:1919
+#: ../src/splivarot.cpp:1927
 msgid "Simplifying paths:"
 msgstr "Vereinfache Pfade:"
 
-#: ../src/splivarot.cpp:1956
+#: ../src/splivarot.cpp:1964
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr "%s <b>%d</b> von <b>%d</b> Pfaden vereinfacht…"
 
-#: ../src/splivarot.cpp:1968
+#: ../src/splivarot.cpp:1976
 #, c-format
 msgid "<b>%d</b> paths simplified."
 msgstr "<b>%d</b> Pfade vereinfacht."
 
-#: ../src/splivarot.cpp:1982
+#: ../src/splivarot.cpp:1990
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "<b>Pfad</b> zum Vereinfachen auswählen."
 
-#: ../src/splivarot.cpp:1996
+#: ../src/splivarot.cpp:2004
 msgid "Simplify"
 msgstr "Vereinfachen"
 
-#: ../src/splivarot.cpp:1998
+#: ../src/splivarot.cpp:2006
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "Die Auswahl enthält <b>keine Pfade</b> zum Vereinfachen."
 
@@ -14073,115 +14238,115 @@ msgid "Unicode (<b>Enter</b> to finish): %s: %s"
 msgstr "Unicode (<b>Eingabe</b> zum Abschliessen): %s: %s"
 
 #: ../src/text-context.cpp:581
-#: ../src/text-context.cpp:856
+#: ../src/text-context.cpp:880
 msgid "Unicode (<b>Enter</b> to finish): "
 msgstr "Unicode (<b>Eingabe</b> zum Abschliessen): "
 
-#: ../src/text-context.cpp:656
+#: ../src/text-context.cpp:668
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Fließtext-Rahmen</b>: %s × %s"
 
-#: ../src/text-context.cpp:688
+#: ../src/text-context.cpp:714
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Text schreiben; <b>Eingabe</b>, um eine neue Zeile zu beginnen."
 
-#: ../src/text-context.cpp:701
+#: ../src/text-context.cpp:725
 msgid "Flowed text is created."
 msgstr "Fließtext wird erzeugt."
 
-#: ../src/text-context.cpp:703
+#: ../src/text-context.cpp:727
 msgid "Create flowed text"
 msgstr "Fließtext erstellen"
 
-#: ../src/text-context.cpp:705
+#: ../src/text-context.cpp:729
 msgid "The frame is <b>too small</b> for the current font size. Flowed text not created."
 msgstr "Der Rahmen ist <b>zu klein</b> für die aktuelle Schriftgröße. Der Fließtext wurde nicht erzeugt."
 
-#: ../src/text-context.cpp:841
+#: ../src/text-context.cpp:865
 msgid "No-break space"
 msgstr "Untrennbares Leerzeichen"
 
-#: ../src/text-context.cpp:843
+#: ../src/text-context.cpp:867
 msgid "Insert no-break space"
 msgstr "Untrennbares Leerzeichen einfügen"
 
-#: ../src/text-context.cpp:880
+#: ../src/text-context.cpp:904
 msgid "Make bold"
 msgstr "Fett"
 
-#: ../src/text-context.cpp:898
+#: ../src/text-context.cpp:922
 msgid "Make italic"
 msgstr "Kursiv"
 
-#: ../src/text-context.cpp:937
+#: ../src/text-context.cpp:961
 msgid "New line"
 msgstr "Neue Zeile"
 
-#: ../src/text-context.cpp:971
+#: ../src/text-context.cpp:995
 msgid "Backspace"
 msgstr "Rückschritt"
 
-#: ../src/text-context.cpp:1019
+#: ../src/text-context.cpp:1043
 msgid "Kern to the left"
 msgstr "Unterschneidung nach links"
 
-#: ../src/text-context.cpp:1044
+#: ../src/text-context.cpp:1068
 msgid "Kern to the right"
 msgstr "Unterschneidung nach rechts"
 
-#: ../src/text-context.cpp:1069
+#: ../src/text-context.cpp:1093
 msgid "Kern up"
 msgstr "Unterschneidung nach oben"
 
-#: ../src/text-context.cpp:1095
+#: ../src/text-context.cpp:1119
 msgid "Kern down"
 msgstr "Unterschneidung nach unten"
 
-#: ../src/text-context.cpp:1172
+#: ../src/text-context.cpp:1196
 msgid "Rotate counterclockwise"
 msgstr "Entgegen Uhrzeigersinn drehen"
 
-#: ../src/text-context.cpp:1193
+#: ../src/text-context.cpp:1217
 msgid "Rotate clockwise"
 msgstr "Im Uhrzeigersinn drehen"
 
-#: ../src/text-context.cpp:1210
+#: ../src/text-context.cpp:1234
 msgid "Contract line spacing"
 msgstr "Zeilenabstand vermindern"
 
-#: ../src/text-context.cpp:1218
+#: ../src/text-context.cpp:1242
 msgid "Contract letter spacing"
 msgstr "Zeichenabstand vermindern"
 
-#: ../src/text-context.cpp:1237
+#: ../src/text-context.cpp:1261
 msgid "Expand line spacing"
 msgstr "Zeilenabstand vergrößern"
 
-#: ../src/text-context.cpp:1245
+#: ../src/text-context.cpp:1269
 msgid "Expand letter spacing"
 msgstr "Zeichenabstand vergrößern"
 
-#: ../src/text-context.cpp:1375
+#: ../src/text-context.cpp:1399
 msgid "Paste text"
 msgstr "Text einfügen"
 
-#: ../src/text-context.cpp:1621
+#: ../src/text-context.cpp:1645
 #, c-format
 msgid "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new paragraph."
 msgstr "Fließtext schreiben (%d Zeichen%s); <b>Eingabe</b>, um einen neuen Absatz zu beginnen."
 
-#: ../src/text-context.cpp:1623
+#: ../src/text-context.cpp:1647
 #, c-format
 msgid "Type or edit text (%d characters%s); <b>Enter</b> to start new line."
 msgstr "Text schreiben (%d Zeichen%s); <b>Eingabe</b>, um eine neue Zeile zu beginnen."
 
-#: ../src/text-context.cpp:1631
+#: ../src/text-context.cpp:1655
 #: ../src/tools-switch.cpp:197
 msgid "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; then type."
 msgstr "Zum Auswählen oder Erstellen eines Textobjekts <b>klicken</b>, <b>Ziehen</b> um Fließtext zu erstellen; anschließend schreiben."
 
-#: ../src/text-context.cpp:1741
+#: ../src/text-context.cpp:1765
 msgid "Type text"
 msgstr "Text eingeben"
 
@@ -14469,78 +14634,94 @@ msgid "Clipboard does not contain a path."
 msgstr "Die Zwischenablage enthält keinen Pfad."
 
 #. Item dialog
-#: ../src/ui/context-menu.cpp:105
-msgid "Object _Properties"
-msgstr "Objekt_eigenschaften"
+#: ../src/ui/context-menu.cpp:110
+#: ../src/verbs.cpp:2661
+msgid "_Object Properties..."
+msgstr "Objekt_eigenschaften…"
 
 #. Select item
-#: ../src/ui/context-menu.cpp:115
+#: ../src/ui/context-menu.cpp:120
 msgid "_Select This"
 msgstr "_Dies auswählen"
 
 #. Create link
-#: ../src/ui/context-menu.cpp:125
+#: ../src/ui/context-menu.cpp:130
 msgid "_Create Link"
 msgstr "_Verknüpfung erzeugen"
 
 #. Set mask
-#: ../src/ui/context-menu.cpp:132
+#: ../src/ui/context-menu.cpp:137
 msgid "Set Mask"
 msgstr "Maskierung setzen"
 
 #. Release mask
-#: ../src/ui/context-menu.cpp:143
+#: ../src/ui/context-menu.cpp:148
 msgid "Release Mask"
 msgstr "Maskierung entfernen"
 
 #. Set Clip
-#: ../src/ui/context-menu.cpp:154
-msgid "Set Clip"
-msgstr "Clip setzen"
+#: ../src/ui/context-menu.cpp:159
+msgid "Set _Clip"
+msgstr "_Clip setzen"
 
 #. Release Clip
-#: ../src/ui/context-menu.cpp:165
-msgid "Release Clip"
-msgstr "Clip lösen"
+#: ../src/ui/context-menu.cpp:170
+msgid "Release C_lip"
+msgstr "C_lip lösen"
 
-#: ../src/ui/context-menu.cpp:288
+#: ../src/ui/context-menu.cpp:293
 msgid "Create link"
 msgstr "Verknüpfung erzeugen"
 
 #. "Ungroup"
-#: ../src/ui/context-menu.cpp:306
+#: ../src/ui/context-menu.cpp:311
 #: ../src/verbs.cpp:2343
 msgid "_Ungroup"
 msgstr "Grupp_ierung aufheben"
 
 #. Link dialog
-#: ../src/ui/context-menu.cpp:346
-msgid "Link _Properties"
-msgstr "Verknüpfungs_eigenschaften"
+#: ../src/ui/context-menu.cpp:351
+msgid "Link _Properties..."
+msgstr "Verknüpfungseigenschaften..."
 
 #. Select item
-#: ../src/ui/context-menu.cpp:352
+#: ../src/ui/context-menu.cpp:357
 msgid "_Follow Link"
 msgstr "Verknüpfung _folgen"
 
 #. Reset transformations
-#: ../src/ui/context-menu.cpp:357
+#: ../src/ui/context-menu.cpp:362
 msgid "_Remove Link"
 msgstr "Verknüpfung en_tfernen"
 
 #. Link dialog
-#: ../src/ui/context-menu.cpp:405
-msgid "Image _Properties"
-msgstr "_Bildeigenschaften"
+#: ../src/ui/context-menu.cpp:410
+msgid "Image _Properties..."
+msgstr "Bildeigenschaften..."
 
-#: ../src/ui/context-menu.cpp:411
+#: ../src/ui/context-menu.cpp:416
 msgid "Edit Externally..."
 msgstr "Extern bearbeiten…"
 
 #. Item dialog
-#: ../src/ui/context-menu.cpp:504
-msgid "_Fill and Stroke"
-msgstr "Füllung und _Kontur"
+#. Fill and Stroke dialog
+#: ../src/ui/context-menu.cpp:511
+#: ../src/ui/context-menu.cpp:567
+#: ../src/verbs.cpp:2628
+msgid "_Fill and Stroke..."
+msgstr "Füllung und _Kontur…"
+
+#. Edit Text dialog
+#: ../src/ui/context-menu.cpp:574
+#: ../src/verbs.cpp:2643
+msgid "_Text and Font..."
+msgstr "_Schrift und Text…"
+
+#. Spellcheck dialog
+#: ../src/ui/context-menu.cpp:581
+#: ../src/verbs.cpp:2651
+msgid "Check Spellin_g..."
+msgstr "Rechtschreibprüfun_g..."
 
 #. *
 #. * Constructor
@@ -15155,70 +15336,65 @@ msgstr "<b>An Führungslinien einrasten</b>"
 msgid "(invalid UTF-8 string)"
 msgstr "(ungültiger UTF-8 string)"
 
-#: ../src/ui/dialog/document-properties.cpp:346
-#, c-format
-msgid "Color profiles directory (%s) is unavailable."
-msgstr "Verzeichnis der Farbprofile (%s) nicht auffindbar."
-
 #. TODO check if this next line was sometimes needed. It being there caused an assertion.
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:450
+#: ../src/ui/dialog/document-properties.cpp:429
 #: ../src/verbs.cpp:2734
 msgid "Link Color Profile"
 msgstr "Farb-Profil verknüpfen"
 
-#: ../src/ui/dialog/document-properties.cpp:523
+#: ../src/ui/dialog/document-properties.cpp:502
 msgid "Remove linked color profile"
 msgstr "Verknüpftes Farb-Profil entfernen"
 
-#: ../src/ui/dialog/document-properties.cpp:537
+#: ../src/ui/dialog/document-properties.cpp:516
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>Verknüpfte Farb-Profile:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:539
+#: ../src/ui/dialog/document-properties.cpp:518
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>Verfügbare Farb-Profile:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:541
+#: ../src/ui/dialog/document-properties.cpp:520
 msgid "Link Profile"
 msgstr "Profil verknüpfen"
 
-#: ../src/ui/dialog/document-properties.cpp:572
+#: ../src/ui/dialog/document-properties.cpp:551
 msgid "Profile Name"
 msgstr "Profil-Name"
 
-#: ../src/ui/dialog/document-properties.cpp:603
+#: ../src/ui/dialog/document-properties.cpp:582
 msgid "<b>External script files:</b>"
 msgstr "<b>Externe Script-Dateien:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:605
+#: ../src/ui/dialog/document-properties.cpp:584
 msgid "Add"
 msgstr "_Hinzufügen"
 
-#: ../src/ui/dialog/document-properties.cpp:628
+#: ../src/ui/dialog/document-properties.cpp:607
 msgid "Filename"
 msgstr "Dateiname"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:668
+#: ../src/ui/dialog/document-properties.cpp:647
 msgid "Add external script..."
 msgstr "Füge externes Script hinzu..."
 
-#: ../src/ui/dialog/document-properties.cpp:692
+#: ../src/ui/dialog/document-properties.cpp:671
 msgid "Remove external script"
 msgstr "Lösche externes Script"
 
-#: ../src/ui/dialog/document-properties.cpp:773
+#: ../src/ui/dialog/document-properties.cpp:752
 msgid "<b>Creation</b>"
 msgstr "<b>Erzeugen</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:774
+#: ../src/ui/dialog/document-properties.cpp:753
 msgid "<b>Defined grids</b>"
 msgstr "<b>Definierte Gitter</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:985
+#: ../src/ui/dialog/document-properties.cpp:964
 msgid "Remove grid"
 msgstr "Gitter entfernen"
 
@@ -15328,6 +15504,10 @@ msgstr "Auflösung (Punkte pro Zoll)"
 msgid "Document"
 msgstr "Dokument"
 
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1438
+msgid "Source"
+msgstr "Quelle"
+
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1458
 msgid "Cairo"
 msgstr "Cairo"
@@ -15361,373 +15541,373 @@ msgid "Stroke st_yle"
 msgstr "_Muster der Kontur"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
-#: ../src/ui/dialog/filter-effects-dialog.cpp:471
+#: ../src/ui/dialog/filter-effects-dialog.cpp:469
 msgid "This matrix determines a linear transform on color space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value."
 msgstr "Diese Matrix definiert eine lineare Transformation im Farbraum. Jede Zeile wirkt auf eine der Farbkomponenten des Ausgangs, jede Spalte bestimmt den Einfluß der jeweiligen Eingangskomponente. Die letzte Spalte gibt einen konstanten Grundwert der Ausgangskomponenten vor. "
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:581
+#: ../src/ui/dialog/filter-effects-dialog.cpp:579
 msgid "Image File"
 msgstr "Bild-Datei"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:584
+#: ../src/ui/dialog/filter-effects-dialog.cpp:582
 msgid "Selected SVG Element"
 msgstr "Gewähltes SVG Element"
 
 #. TODO: any image, not just svg
-#: ../src/ui/dialog/filter-effects-dialog.cpp:654
+#: ../src/ui/dialog/filter-effects-dialog.cpp:652
 msgid "Select an image to be used as feImage input"
 msgstr "Wählt ein Bild als Eingabe für feBild"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:746
+#: ../src/ui/dialog/filter-effects-dialog.cpp:744
 msgid "This SVG filter effect does not require any parameters."
 msgstr "Dieser SVG-Filtereffekt benötigt keine Parameter."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:752
+#: ../src/ui/dialog/filter-effects-dialog.cpp:750
 msgid "This SVG filter effect is not yet implemented in Inkscape."
 msgstr "Dieser SVG-Filtereffekt ist noch nicht in Inkscape implementiert."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:944
+#: ../src/ui/dialog/filter-effects-dialog.cpp:942
 msgid "Light Source:"
 msgstr "Lichtquelle:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
 msgid "Azimuth"
 msgstr "Azimut"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
 msgid "Direction angle for the light source on the XY plane, in degrees"
 msgstr "Winkel, aus dem das Licht in der XY-Ebene kommt, in °"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:960
 msgid "Elevation"
 msgstr "Anhebung"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:960
 msgid "Direction angle for the light source on the YZ plane, in degrees"
 msgstr "Winkel, aus dem das Licht in der YZ-Ebene kommt, in °"
 
 #. default x:
 #. default y:
 #. default z:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
-#: ../src/ui/dialog/filter-effects-dialog.cpp:968
+#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
 msgid "Location"
 msgstr "Position"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
-#: ../src/ui/dialog/filter-effects-dialog.cpp:968
-#: ../src/ui/dialog/filter-effects-dialog.cpp:971
+#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
+#: ../src/ui/dialog/filter-effects-dialog.cpp:969
 msgid "X coordinate"
 msgstr "X-Koordinate"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
-#: ../src/ui/dialog/filter-effects-dialog.cpp:968
-#: ../src/ui/dialog/filter-effects-dialog.cpp:971
+#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
+#: ../src/ui/dialog/filter-effects-dialog.cpp:969
 msgid "Y coordinate"
 msgstr "Y-Koordinate"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
-#: ../src/ui/dialog/filter-effects-dialog.cpp:968
-#: ../src/ui/dialog/filter-effects-dialog.cpp:971
+#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
+#: ../src/ui/dialog/filter-effects-dialog.cpp:969
 msgid "Z coordinate"
 msgstr "X-Koordinate"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:971
+#: ../src/ui/dialog/filter-effects-dialog.cpp:969
 msgid "Points At"
 msgstr "Zeigt auf"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:972
+#: ../src/ui/dialog/filter-effects-dialog.cpp:970
 msgid "Specular Exponent"
 msgstr "Glanzpunkt-Exponent"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:972
+#: ../src/ui/dialog/filter-effects-dialog.cpp:970
 msgid "Exponent value controlling the focus for the light source"
 msgstr "Exponent bestimmt den Fokus der Lichtquelle"
 
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
-#: ../src/ui/dialog/filter-effects-dialog.cpp:974
+#: ../src/ui/dialog/filter-effects-dialog.cpp:972
 msgid "Cone Angle"
 msgstr "Konuswinkel"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:974
+#: ../src/ui/dialog/filter-effects-dialog.cpp:972
 msgid "This is the angle between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. No light is projected outside this cone."
 msgstr "Öffnungswinkel des Lichtkonus. Außerhalb des Konus gibt es kein Licht. "
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1035
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1033
 msgid "New light source"
 msgstr "Neue Lichtquelle"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1076
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1074
 msgid "_Duplicate"
 msgstr "_Duplizieren"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1102
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1100
 msgid "_Filter"
 msgstr "_Filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1116
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1114
 msgid "R_ename"
 msgstr "Umb_enennen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1219
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1217
 msgid "Rename filter"
 msgstr "Filter umbenennen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1255
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1253
 msgid "Apply filter"
 msgstr "Filter anwenden"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1324
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1322
 msgid "filter"
 msgstr "Filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1331
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1329
 msgid "Add filter"
 msgstr "Filter hinzufügen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1357
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1355
 msgid "Duplicate filter"
 msgstr "Filter duplizieren"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1424
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1422
 msgid "_Effect"
 msgstr "_Effekt"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1432
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1430
 msgid "Connections"
 msgstr "Verbindungen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1548
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1546
 msgid "Remove filter primitive"
 msgstr "Filterbaustein entfernen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1920
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1918
 msgid "Remove merge node"
 msgstr "Zusammengefassten Knoten löschen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2036
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2034
 msgid "Reorder filter primitive"
 msgstr "Filterbausteine umordnen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2070
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2068
 msgid "Add Effect:"
 msgstr "Effekt hinzufügen:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2071
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2069
 msgid "No effect selected"
 msgstr "Kein Effekt gewählt"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2072
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2070
 msgid "No filter selected"
 msgstr "Kein Filter gewählt"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2110
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2108
 msgid "Effect parameters"
 msgstr "Effektparameter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2111
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2109
 msgid "Filter General Settings"
 msgstr "Allgemeine Filtereinstellungen"
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 msgid "Coordinates:"
 msgstr "Koordinaten:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 msgid "X coordinate of the left corners of filter effects region"
 msgstr "X-Koordinate der linken Ecke des Ausschnitts, auf den Filter wirkt"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 msgid "Y coordinate of the upper corners of filter effects region"
 msgstr "Y-Koordinate der obere Ecke des Ausschnitts, auf den Filter wirkt"
 
 #. default width:
 #. default height:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
 msgid "Dimensions:"
 msgstr "Dimensionen:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
 msgid "Width of filter effects region"
 msgstr "Breite des Filtereffekts"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
 msgid "Height of filter effects region"
 msgstr "Höhe des Filtereffekts"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2174
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2172
 msgid "Indicates the type of matrix operation. The keyword 'matrix' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix."
 msgstr "Gibt den Typ der Matrix vor. Das Schlüsselwort \"matrix\" erzwingt eine volle 5x4-Wertematrix, während andere Schlüsselwörter bequeme Abkürzungen für oft verwendete Farboperationen bereitstellen, ohne eine komplette Matrix angeben zu müssen."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2175
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2173
 msgid "Value(s):"
 msgstr "Wert(e):"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2228
 msgid "Operator:"
 msgstr "Operator:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "K1:"
 msgstr "K1:"
 
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2192
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
 msgid "If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."
 msgstr "Bei gewählter Arithmetischer Verknüpfung wird jeder Zielbildpunkt durch die Formel k1*i1*i2 + k2*i1 + k3*i2 + k4 berechnet, wobei i1 und i2 die Werte der Eingangsbildpunkte sind."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "K2:"
 msgstr "K2:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid "K3:"
 msgstr "K3:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
 msgid "K4:"
 msgstr "K4:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 #: ../src/ui/dialog/tracedialog.cpp:581
 msgid "Size:"
 msgstr "Größe:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid "width of the convolve matrix"
 msgstr "Breite der Faltungsmatrix"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid "height of the convolve matrix"
 msgstr "Höhe der Faltungsmatrix"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "X coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."
 msgstr "X-Koordinate des Zielpunktes der Faltung. Die Faltungsmatrix wirkt auf Pixel um diesen Punkt herum."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "Y coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."
 msgstr "Y-Koordinate des Zielpunktes der Faltung. Die Faltungsmatrix wirkt auf Pixel um diesen Punkt herum."
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "Kernel:"
 msgstr "Faltungsmatrix:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "This matrix describes the convolve operation that is applied to the input image in order to calculate the pixel colors at the output. Different arrangements of values in this matrix result in various possible visual effects. An identity matrix would lead to a motion blur effect (parallel to the matrix diagonal) while a matrix filled with a constant non-zero value would lead to a common blur effect."
 msgstr "Diese Matrize beschreibt die Faltungsoperation, die auf das Eingangsbild angewendet wird, um die Pixelfarben im Ausgang zu erhalten. Verschiedene Anordnungen der Werte in der Matrix resultieren in unterschiedlichen visuellen Effekten. Die 1-Matrix ergibt einen Bewegungsunschärfe-Effekt (entlang der Richtung der Matrixdiagonalen), während eine Matrix mit konstanten Einträgen eine isotrope Unschärfe erzeugt."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
 msgid "Divisor:"
 msgstr "Teiler:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
 msgid "After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result."
 msgstr "Durch diesen Wert wird das Ergebnis der Faltung angewendet auf das Eingangsbild geteilt, um den endgültigen Farbwert des Ausgangspixels zu erhalten. Ist der Divisor die Summe der Matrixeinträge, so wird das Ergebnis eine gemittelte Farbintensität aufweisen."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
 msgid "Bias:"
 msgstr "Grundwert:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
 msgid "This value is added to each component. This is useful to define a constant value as the zero response of the filter."
 msgstr "Dieser Wert wird zu jeder Komponente hinzu addiert. Dies ergibt eine Grundantwort des Filters bei leerer Eingabe."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2204
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 msgid "Edge Mode:"
 msgstr "Kanten-Modus:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2204
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 msgid "Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image."
 msgstr "Legt fest, wie das Eingabebild durch künstliche Farbwerte über die Ränder erweitert wird, damit die Faltungsmatrix bis an die Kanten des Originals angewendet werden kann."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2205
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
 msgid "Preserve Alpha"
 msgstr "Alphawert beibehalten"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2205
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
 msgid "If set, the alpha channel won't be altered by this filter primitive."
 msgstr "Wenn gesetzt, wird der Alphakanal von diesem Filterbaustein nicht beeinflusst."
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2206
 msgid "Diffuse Color:"
 msgstr "Diffusreflektierende Farbe:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2241
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2206
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2239
 msgid "Defines the color of the light source"
 msgstr "Definiert die Farbe der Lichtquelle"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2242
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2240
 msgid "Surface Scale:"
 msgstr "Oberflächenskalierung:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2242
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2240
 msgid "This value amplifies the heights of the bump map defined by the input alpha channel"
 msgstr "Dieser Wert multipliziert die Oberflächenstruktur, die aus dem Alphakanal der Eingabe gewonnen wird."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2243
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2241
 msgid "Constant:"
 msgstr "Konstante:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2243
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2241
 msgid "This constant affects the Phong lighting model."
 msgstr "Diese Größe beeinflusst die Phong-Beleuchtung."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2211
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2245
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2243
 msgid "Kernel Unit Length:"
 msgstr "Größe der Faltungsmatrixeinheit:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 msgid "This defines the intensity of the displacement effect."
 msgstr "Dies bestimmt die Stärke des Versatzeffekts."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2214
 msgid "X displacement:"
 msgstr "X-Verschiebung:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2214
 msgid "Color component that controls the displacement in the X direction"
 msgstr "Farbkomponente, die den Versatz in X-Richtung bestimmt"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
 msgid "Y displacement:"
 msgstr "Y-Verschiebung:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
 msgid "Color component that controls the displacement in the Y direction"
 msgstr "Farbkomponente, die den Versatz in Y-Richtung bestimmt"
 
 #. default: black
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2220
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2218
 msgid "Flood Color:"
 msgstr "Füllfarbe:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2220
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2218
 msgid "The whole filter region will be filled with this color."
 msgstr "Die gesamte Filterregion wird mit dieser Farbe gefüllt."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2224
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 msgid "Standard Deviation:"
 msgstr "Standard Abweichung:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2224
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 msgid "The standard deviation for the blur operation."
 msgstr "Standardabweichung für die Unschärfeoperation"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2228
 msgid ""
 "Erode: performs \"thinning\" of input image.\n"
 "Dilate: performs \"fattenning\" of input image."
@@ -15735,128 +15915,128 @@ msgstr ""
 "Erodieren: \"Verdünnt\" das Eingangsbild.\n"
 "Weiten:\"Verdickt\" das Eingangsbild."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2232
 msgid "Source of Image:"
 msgstr "Bild-Quelle:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 msgid "Delta X:"
 msgstr "Delta X:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 msgid "This is how far the input image gets shifted to the right"
 msgstr "Um diesen Betrag wird das Eingangsbild nach rechts verschoben."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2238
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
 msgid "Delta Y:"
 msgstr "Delta Y:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2238
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
 msgid "This is how far the input image gets shifted downwards"
 msgstr "Um diesen Betrag wird das Eingangsbild nach unten verschoben."
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2241
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2239
 msgid "Specular Color:"
 msgstr "Glanzpunktfarbe:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2244
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2242
 msgid "Exponent for specular term, larger is more \"shiny\"."
 msgstr "Exponent bestimmt Glanzlicht, größer ist \"glänzender\""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2253
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2251
 msgid "Indicates whether the filter primitive should perform a noise or turbulence function."
 msgstr "Zeigt an, ob der Filterbaustein Rauschen oder Turbulenz erzeugt."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2254
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2252
 msgid "Base Frequency:"
 msgstr "Basisfrequenz:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2255
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2253
 msgid "Octaves:"
 msgstr "Oktaven:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2256
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2254
 msgid "Seed:"
 msgstr "Startwert:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2256
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2254
 msgid "The starting number for the pseudo random number generator."
 msgstr "Startwert des Pseudozufallsgenerators"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2268
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2266
 msgid "Add filter primitive"
 msgstr "Filterbaustein hinzufügen"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2285
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2283
 msgid "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, multiply, darken and lighten."
 msgstr "Der <b>Mischen</b> Filterbaustein sieht 4 Bild-Misch-Modi vor: Screen, Multiplizieren, Verdunkeln und Aufhellen."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2289
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2287
 msgid "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to color of each rendered pixel. This allows for effects like turning object to grayscale, modifying color saturation and changing color hue."
 msgstr "Der Filterbaustein <b>Farbmatrix</b> wendet eine Matrix-Transformation auf die Farben der gerenderten Pixel an. Dies erlaubt Effekte wie Umwandeln in Graustufen, Modifizieren der Sättigung und Änderung des Farbwerts."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2293
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2291
 msgid "The <b>feComponentTransfer</b> filter primitive manipulates the input's color components (red, green, blue, and alpha) according to particular transfer functions, allowing operations like brightness and contrast adjustment, color balance, and thresholding."
 msgstr "Der Filterbaustein <b>Komponententransfer</b> beeinflusst die Farbkomponenten des Eingangs (rot, grün, blau und alpha) gemäß festzulegender Transferfunktionen. Dies erlaubt Operationen wie Helligkeits- und Kontrasteinstellung, Farbbalance und Schwellenwerte."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2297
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2295
 msgid "The <b>feComposite</b> filter primitive composites two images using one of the Porter-Duff blending modes or the arithmetic mode described in SVG standard. Porter-Duff blending modes are essentially logical operations between the corresponding pixel values of the images."
 msgstr "Der Filterbaustein <b>Kombinieren</b> kombiniert zwei Bilder mittels einer der Porter-Duff-Misch-Modi oder dem arithmetischen Modus, wie sie im SVG-Standard beschrieben sind. Die Porter-Duff-Misch-Modi bestehen im Wesentlichen aus logischen Operationen zwischen den korrespondierenden Pixel-Werten der Bilder."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2301
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2299
 msgid "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on the image. Common effects created using convolution matrices are blur, sharpening, embossing and edge detection. Note that while gaussian blur can be created using this filter primitive, the special gaussian blur primitive is faster and resolution-independent."
 msgstr "Bei dem Filterbaustein <b>Faltungsmatrix</b> können Sie eine Faltung spezifizieren, die auf das Bild angewendet wird. Mögliche Ergebnisse sind Weichzeichnen, Schärfen, Prägen und Kantenerkennung. Achtung: Zwar kann der gleiche Effekt wie mit dem Gaußschen Weichzeichner erreicht werden, allerdings ist der spezialisierte Effekt schneller und von der Auflösung unabhängig. "
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2305
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2303
 msgid "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
 msgstr "Die Filterbausteine <b>DiffuseBeleuchtung</b> und Punktlichtbeleuchtung erzeugen \"Relief-Schattierungen\". Der Alphakanal des Eingangs wird verwendet, um Höheninformationen zu erhalten: opakere Gebiete werden angehoben, weniger opake abgesenkt."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2309
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2307
 msgid "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the first input using the second input as a displacement map, that shows from how far the pixel should come from. Classical examples are whirl and pinch effects."
 msgstr "Der Filterbaustein <b>VersatzKarte</b> verschiebt die Pixel des ersten Eingangs unter Verwendung des zweiten Eingangs als Versatzkarte. Letztere definiert, woher die Pixel kommen sollen. Klassische Beispiele sind Wirbel- und Quetscheffekte."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2313
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2311
 msgid "The <b>feFlood</b> filter primitive fills the region with a given color and opacity.  It is usually used as an input to other filters to apply color to a graphic."
 msgstr "Der Filterbaustein <b>Füllung</b> füllt einen Bereich mit vorgegebener Farbe und Opazität. Normalerweise wird dies als Eingang für andere Filter verwendet, um so Farben ins Spiel zu bringen."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2317
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2315
 msgid "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is commonly used together with feOffset to create a drop shadow effect."
 msgstr "Der Filterbaustein <b>Gaußscher Weichzeichner</b> zeichnet die Quelle weich. Er wird normalerweise zusammen mit dem Filterbaustein Versatz benutzt, um abgesetzte Schatten zu erzeugen."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2321
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2319
 msgid "The <b>feImage</b> filter primitive fills the region with an external image or another part of the document."
 msgstr "Der Filterbaustein <b>Bild</b> füllt eine Region mit einem externen Bild oder einem anderen Teil des Dokuments."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2325
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2323
 msgid "The <b>feMerge</b> filter primitive composites several temporary images inside the filter primitive to a single image. It uses normal alpha compositing for this. This is equivalent to using several feBlend primitives in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr "Der Filterbaustein <b>Verschmelzen</b> führt mehrere einzelne Bilder unter Verwendung des Alphakanals zu einem einzigen zusammen. Dies ist äquivalent zu den Bausteinen Überblenden im Normalmodus oder Verbund im \"Überlagern\"-Modus."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2329
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2327
 msgid "The <b>feMorphology</b> filter primitive provides erode and dilate effects. For single-color objects erode makes the object thinner and dilate makes it thicker."
 msgstr "Der Filterbaustein <b>Morphologie</b> stellt die Effekte \"Erodieren\" und \"Weiten\" zur Verfügung. Für einfarbige Objekte wirkt \"Erodieren\" ausdünnend und \"Weiten\" verdickend."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2333
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2331
 msgid "The <b>feOffset</b> filter primitive offsets the image by an user-defined amount. For example, this is useful for drop shadows, where the shadow is in a slightly different position than the actual object."
 msgstr "Der Filterbaustein <b>Versatz</b> verschiebt das Bild um einen benutzerdefinierten Betrag. Dies ist z. B. für abgesetzte Schatten nützlich, die sich an einer leicht anderen Position als das eigentliche Objekt befinden."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2337
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2335
 msgid "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
 msgstr "Die Filterbausteine DiffuseBeleuchtung und <b>Punktlichtbeleuchtung</b> erzeugen \"geprägte\" Schattierungen. Der Alphakanal des Eingangs wird verwendet, um Höheninformationen zu erhalten: opakere Gebiete werden angehoben, weniger opake abgesenkt."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2341
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2339
 msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr "Der Filterbaustein <b>Kacheln</b> belegt einen Bereich mit Kopien einer Graphik."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2345
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2343
 msgid "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of noise is useful in simulating several nature phenomena like clouds, fire and smoke and in generating complex textures like marble or granite."
 msgstr "Der Filterbaustein <b>Turbulenz</b> zeichnet Perlin-Rauschen. Diese Art von Rauschen kann verwendet werden, um natürliche Phänomene wie Wolken, Feuer oder Rauch, sowie komplexe Texturen wie Marmor oder Granit nachzubilden."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2364
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2362
 msgid "Duplicate filter primitive"
 msgstr "Filterbaustein duplizieren"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2417
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2415
 msgid "Set filter primitive attribute"
 msgstr "Attribut für Filterbaustein setzen"
 
@@ -16683,6 +16863,11 @@ msgstr "Vergrößert:"
 msgid "Actual Size:"
 msgstr "Aktuelle Größe:"
 
+#: ../src/ui/dialog/icon-preview.cpp:230
+msgctxt "Icon preview window"
+msgid "Sele_ction"
+msgstr "Auswahl"
+
 #: ../src/ui/dialog/icon-preview.cpp:232
 msgid "Selection only or whole document"
 msgstr "Nur Auswahl oder ganzes Dokument"
@@ -16945,8 +17130,8 @@ msgid "<b>More than one object selected.</b>  Cannot take style from multiple ob
 msgstr "<b>Mehr als ein Objekt ausgewählt.</b> Ein Stil kann nicht von mehreren Objekten übernommen werden."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:359
-msgid "Create new objects with:"
-msgstr "Objekte erstellen mit:"
+msgid "Style of new objects"
+msgstr "Stil von neuen Objekten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:361
 msgid "Last used style"
@@ -17152,7 +17337,8 @@ msgid "Show temporary outline even when a path is selected for editing"
 msgstr "Zeigt temporäre Umrandung an, wenn der Pfad zum Bearbeiten ausgewählt wurde."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:459
-msgid "Flash time"
+#, fuzzy
+msgid "Flash time:"
 msgstr "Anzeigedauer"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:459
@@ -17186,8 +17372,8 @@ msgid "Tweak"
 msgstr "Modellieren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:468
-msgid "Paint objects with:"
-msgstr "Objekte erstellen mit:"
+msgid "Object paint style"
+msgstr "Objekt-Farbstil"
 
 #. Spray
 #: ../src/ui/dialog/inkscape-preferences.cpp:473
@@ -17197,7 +17383,6 @@ msgstr "Spray"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:478
-#: ../src/ui/view/edit-widget.cpp:1062
 #: ../src/verbs.cpp:2511
 #: ../src/widgets/desktop-widget.cpp:488
 msgid "Zoom"
@@ -17321,7 +17506,7 @@ msgid "Aggressive"
 msgstr "Aggressiv"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:589
-msgid "Saving window geometry (size and position):"
+msgid "Saving window geometry (size and position)"
 msgstr "Fenstergeometrie speichern (Größe und Position):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:591
@@ -17337,7 +17522,7 @@ msgid "Save and restore window geometry for each document (saves geometry in the
 msgstr "Fenstergeometrie für jedes Dokument speichern und wiederherstellen (speichert Geometrie im Dokument)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:597
-msgid "Dialog behavior (requires restart):"
+msgid "Dialog behavior (requires restart)"
 msgstr "Dialogfensterverhalten (erfordert Neustart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:604
@@ -17357,7 +17542,7 @@ msgid "Same as Normal but may work better with some window managers"
 msgstr "Wie »Normal«, aber funktioniert evtl. besser mit manchen Fenstermanagern"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:615
-msgid "Dialog Transparency:"
+msgid "Dialog Transparency"
 msgstr "Dialog Transparenz:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:617
@@ -17373,7 +17558,7 @@ msgid "Time of opacity change animation:"
 msgstr "Zeit für Transparenz-Änderungsanimation"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:624
-msgid "Miscellaneous:"
+msgid "Miscellaneous"
 msgstr "Verschiedenes:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:627
@@ -17474,7 +17659,8 @@ msgid "After applying, remove the object used as the clipping path or mask from 
 msgstr "Entferne das Objekt von der Zeichnung, welches als Ausschneidepfad oder Maskierung verwendet wird, nach dem Anwenden"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:681
-msgid "Before applying clippath/mask:"
+#, fuzzy
+msgid "Before applying"
 msgstr "Vor dem Anwenden der Ausschneidung/Maske:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:683
@@ -17502,7 +17688,8 @@ msgid "Apply clippath/mask to group containing all objects"
 msgstr "Ausschneidungspfad/Maske auf Gruppen anwenden, die alle Objekte beinhalten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:696
-msgid "After releasing clippath/mask:"
+#, fuzzy
+msgid "After releasing"
 msgstr "Nach dem Lösen von Ausschneidungspfad/Maske:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:698
@@ -17563,7 +17750,7 @@ msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "Muster (in Füllung oder Konturen) zusammen mit den Objekten transformieren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:722
-msgid "Store transformation:"
+msgid "Store transformation"
 msgstr "Transformation speichern:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:724
@@ -17606,7 +17793,7 @@ msgid "Lowest quality (fastest)"
 msgstr "Niedrigste Qualität (am schnellsten)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:745
-msgid "Gaussian blur quality for display:"
+msgid "Gaussian blur quality for display"
 msgstr "Anzeige Qualität des Gaußschen Weichzeichners:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:747
@@ -17635,7 +17822,7 @@ msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr "Niedrigste Qualität (beträchtliche Artefakte), aber schnellste Anzeige"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:769
-msgid "Filter effects quality for display:"
+msgid "Filter effects quality for display"
 msgstr "Effekt-Qualität für Anzeige:"
 
 #. show infobox
@@ -17685,7 +17872,7 @@ msgid "Deselect upon layer change"
 msgstr "Auswahl bei Ebenenwechsel aufheben"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:804
-msgid "Ctrl+A, Tab, Shift+Tab:"
+msgid "Ctrl+A, Tab, Shift+Tab"
 msgstr "Strg+A, Tabulator, Umschalt+Tabulator:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:806
@@ -18465,10 +18652,6 @@ msgstr "Auflösung von Bildern die mit \"Kopiere als Bitmap\" erstellt werden."
 #: ../src/ui/dialog/inkscape-preferences.cpp:1245
 msgid "Bitmaps"
 msgstr "Bitmaps"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1297
-msgid "Language:"
-msgstr "Sprache:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1298
 msgid "Set the main spell check language"
@@ -19432,8 +19615,8 @@ msgstr "Nachzeichnen ausführen"
 
 #: ../src/ui/dialog/transformation.cpp:83
 #: ../src/ui/dialog/transformation.cpp:93
-msgid "_Horizontal"
-msgstr "_Horizontal"
+msgid "_Horizontal:"
+msgstr "_Horizontal:"
 
 #: ../src/ui/dialog/transformation.cpp:83
 msgid "Horizontal displacement (relative) or position (absolute)"
@@ -19441,32 +19624,24 @@ msgstr "Horizontale Verschiebung (relativ) oder Position (absolut)"
 
 #: ../src/ui/dialog/transformation.cpp:85
 #: ../src/ui/dialog/transformation.cpp:95
-msgid "_Vertical"
-msgstr "_Vertikal"
+msgid "_Vertical:"
+msgstr "_Vertikal:"
 
 #: ../src/ui/dialog/transformation.cpp:85
 msgid "Vertical displacement (relative) or position (absolute)"
 msgstr "Vertikale Verschiebung (relativ) oder Position (absolut)"
 
 #: ../src/ui/dialog/transformation.cpp:87
-msgid "_Width"
-msgstr "_Breite"
-
-#: ../src/ui/dialog/transformation.cpp:87
 msgid "Horizontal size (absolute or percentage of current)"
 msgstr "Horizontaler Vergrößerungsschritt (absolut oder prozentual)"
-
-#: ../src/ui/dialog/transformation.cpp:89
-msgid "_Height"
-msgstr "_Höhe"
 
 #: ../src/ui/dialog/transformation.cpp:89
 msgid "Vertical size (absolute or percentage of current)"
 msgstr "Vertikaler Vergrößerungsschritt (absolut oder prozentual)"
 
 #: ../src/ui/dialog/transformation.cpp:91
-msgid "A_ngle"
-msgstr "_Winkel"
+msgid "A_ngle:"
+msgstr "Winkel:"
 
 #: ../src/ui/dialog/transformation.cpp:91
 msgid "Rotation angle (positive = counterclockwise)"
@@ -19612,59 +19787,63 @@ msgstr "Die gewählten Abschnitte in Kurven umwandeln"
 msgid "Add nodes"
 msgstr "Mehrere Knoten hinzufügen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:306
+#: ../src/ui/tool/multi-path-manipulator.cpp:250
+msgid "Duplicate nodes"
+msgstr "Knoten duplizieren"
+
+#: ../src/ui/tool/multi-path-manipulator.cpp:312
 #: ../src/widgets/toolbox.cpp:1369
 msgid "Join nodes"
 msgstr "Knoten verbinden"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:313
+#: ../src/ui/tool/multi-path-manipulator.cpp:319
 #: ../src/widgets/toolbox.cpp:1380
 msgid "Break nodes"
 msgstr "Knoten unterbrechen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:320
+#: ../src/ui/tool/multi-path-manipulator.cpp:326
 msgid "Delete nodes"
 msgstr "Knoten löschen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:618
+#: ../src/ui/tool/multi-path-manipulator.cpp:630
 msgid "Move nodes"
 msgstr "Knoten verschieben"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:621
+#: ../src/ui/tool/multi-path-manipulator.cpp:633
 msgid "Move nodes horizontally"
 msgstr "Knoten horizontal verschieben"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:625
+#: ../src/ui/tool/multi-path-manipulator.cpp:637
 msgid "Move nodes vertically"
 msgstr "Knoten vertikal verschieben"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:629
-#: ../src/ui/tool/multi-path-manipulator.cpp:632
+#: ../src/ui/tool/multi-path-manipulator.cpp:641
+#: ../src/ui/tool/multi-path-manipulator.cpp:644
 msgid "Rotate nodes"
 msgstr "Knoten rotieren"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:636
-#: ../src/ui/tool/multi-path-manipulator.cpp:642
+#: ../src/ui/tool/multi-path-manipulator.cpp:648
+#: ../src/ui/tool/multi-path-manipulator.cpp:654
 msgid "Scale nodes uniformly"
 msgstr "Knoten skalieren"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:639
+#: ../src/ui/tool/multi-path-manipulator.cpp:651
 msgid "Scale nodes"
 msgstr "Knoten skalieren"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:646
+#: ../src/ui/tool/multi-path-manipulator.cpp:658
 msgid "Scale nodes horizontally"
 msgstr "Knoten horizontal skalieren"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:650
+#: ../src/ui/tool/multi-path-manipulator.cpp:662
 msgid "Scale nodes vertically"
 msgstr "Knoten vertikal skalieren"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:654
+#: ../src/ui/tool/multi-path-manipulator.cpp:666
 msgid "Flip nodes horizontally"
 msgstr "Knoten Horizontal umkehren"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:657
+#: ../src/ui/tool/multi-path-manipulator.cpp:669
 msgid "Flip nodes vertically"
 msgstr "Knoten Vertikal umkehren"
 
@@ -19793,86 +19972,86 @@ msgctxt "Path handle tip"
 msgid "Move handle by %s, %s; angle %.2f°, length %s"
 msgstr "Anfasser verschieben um %s, %s; Winkel %.2f°, Länge %s"
 
-#: ../src/ui/tool/node.cpp:1126
+#: ../src/ui/tool/node.cpp:1131
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr "<b>Umschalt</b>: Anfasser nach außen ziehen, Klicken um Auswahl umzuschalten"
 
-#: ../src/ui/tool/node.cpp:1128
+#: ../src/ui/tool/node.cpp:1133
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: click to toggle selection"
 msgstr "<b>Umschalt</b>: Klick um Auswahl umzuschalten"
 
-#: ../src/ui/tool/node.cpp:1133
+#: ../src/ui/tool/node.cpp:1138
 msgctxt "Path node tip"
 msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
 msgstr "<b>STRG+Alt</b>: Entlang der Anfasser-Linien verschieben. Klicken, um Knoten zu löschen"
 
-#: ../src/ui/tool/node.cpp:1136
+#: ../src/ui/tool/node.cpp:1141
 msgctxt "Path node tip"
 msgid "<b>Ctrl</b>: move along axes, click to change node type"
 msgstr "<b>STRG</b>: Verschieben entlang der Achsen. Klicken, um Knotentyp zu verändern"
 
-#: ../src/ui/tool/node.cpp:1140
+#: ../src/ui/tool/node.cpp:1145
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
 msgstr "<b>Alt</b>: Knoten formen"
 
-#: ../src/ui/tool/node.cpp:1148
+#: ../src/ui/tool/node.cpp:1153
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>: Ziehen, um den Pfad zu formen (mehr: Umschalt, STRG, Alt)"
 
-#: ../src/ui/tool/node.cpp:1151
+#: ../src/ui/tool/node.cpp:1156
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>:Ziehen, um den Pfad zu formen, Klicken um Skalieren/Rotieren der Anfasser umzuschalten (mehr: Umschalt, Strg, Alt)"
 
-#: ../src/ui/tool/node.cpp:1154
+#: ../src/ui/tool/node.cpp:1159
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>: Ziehen, um den Pfad zu formen, Klicken, um nur diesen Knoten auszuwählen (mehr: Umschalt, Strg, Alt)"
 
-#: ../src/ui/tool/node.cpp:1162
+#: ../src/ui/tool/node.cpp:1167
 #, c-format
 msgctxt "Path node tip"
 msgid "Move node by %s, %s"
 msgstr "Knoten verschieben um %s, %s"
 
-#: ../src/ui/tool/node.cpp:1174
+#: ../src/ui/tool/node.cpp:1179
 msgid "Symmetric node"
 msgstr "symmetrischer Knoten"
 
-#: ../src/ui/tool/node.cpp:1175
+#: ../src/ui/tool/node.cpp:1180
 msgid "Auto-smooth node"
 msgstr "Knoten automatisch glätten"
 
-#: ../src/ui/tool/path-manipulator.cpp:763
+#: ../src/ui/tool/path-manipulator.cpp:796
 msgid "Scale handle"
 msgstr "Anfasser skalieren"
 
-#: ../src/ui/tool/path-manipulator.cpp:787
+#: ../src/ui/tool/path-manipulator.cpp:820
 msgid "Rotate handle"
 msgstr "Anfasser rotieren"
 
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1290
+#: ../src/ui/tool/path-manipulator.cpp:1323
 #: ../src/widgets/toolbox.cpp:1358
 msgid "Delete node"
 msgstr "Knoten löschen"
 
-#: ../src/ui/tool/path-manipulator.cpp:1305
+#: ../src/ui/tool/path-manipulator.cpp:1331
 msgid "Cycle node type"
 msgstr "Knotentyp ändern"
 
-#: ../src/ui/tool/path-manipulator.cpp:1319
+#: ../src/ui/tool/path-manipulator.cpp:1346
 msgid "Drag handle"
 msgstr "Anfasser ziehen"
 
-#: ../src/ui/tool/path-manipulator.cpp:1328
+#: ../src/ui/tool/path-manipulator.cpp:1355
 msgid "Retract handle"
 msgstr "Anfasser zurückziehen"
 
@@ -19980,87 +20159,12 @@ msgctxt "Transform handle tip"
 msgid "<b>Rotation center</b>: drag to change the origin of transforms"
 msgstr "<b>Rotatioszentrum</b>: Ziehen, um den Ursprung der Transformationen zu ändern"
 
-#: ../src/ui/view/edit-widget.cpp:330
-#: ../src/ui/view/edit-widget.cpp:335
-#: ../src/ui/view/edit-widget.cpp:343
-#: ../src/ui/view/edit-widget.cpp:348
-#: ../src/ui/view/edit-widget.cpp:353
-#: ../src/ui/view/edit-widget.cpp:368
-#: ../src/ui/view/edit-widget.cpp:381
-#: ../src/ui/view/edit-widget.cpp:386
-#: ../src/ui/view/edit-widget.cpp:400
-#: ../src/ui/view/edit-widget.cpp:404
-#: ../src/ui/view/edit-widget.cpp:412
-#: ../src/ui/view/edit-widget.cpp:416
-#: ../src/ui/view/edit-widget.cpp:420
-#: ../src/ui/view/edit-widget.cpp:756
-#: ../src/ui/view/edit-widget.cpp:761
-#: ../src/ui/view/edit-widget.cpp:867
-#: ../src/ui/view/edit-widget.cpp:871
-#: ../src/ui/view/edit-widget.cpp:992
-msgid "PLACEHOLDER, do not translate"
-msgstr "PLACEHOLDER, do not translate"
-
-#: ../src/ui/view/edit-widget.cpp:1051
-#: ../src/widgets/desktop-widget.cpp:384
-msgid "Zoom drawing if window size changes"
-msgstr "Zeichnungsgröße mit Fenstergröße verändern"
-
-#: ../src/ui/view/edit-widget.cpp:1072
-#: ../src/widgets/desktop-widget.cpp:508
-msgid "Cursor coordinates"
-msgstr "Zeigerkoordinaten"
-
-#: ../src/ui/view/edit-widget.cpp:1082
-#: ../src/widgets/desktop-widget.cpp:523
-msgid "Z:"
-msgstr "Z:"
-
-#: ../src/ui/view/edit-widget.cpp:1089
-msgid "<b>Welcome to Inkscape!</b> Use shape or drawing tools to create objects; use selector (arrow) to move or transform them."
-msgstr "<b>Willkommen bei Inkscape!</b> Nutzen Sie Formen- und Zeichenwerkzeuge, um Objekte zu erstellen; das Auswahlwerkzeug (Pfeil) verschiebt und bearbeitet sie."
-
-#: ../src/ui/view/edit-widget.cpp:1200
-#: ../src/widgets/desktop-widget.cpp:859
-#, c-format
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n"
-"\n"
-"If you close without saving, your changes will be discarded."
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Änderungen an Dokument »%s« vor dem Schließen speichern?</span>\n"
-"\n"
-"Wenn Sie schließen, ohne zu speichern, dann gehen Ihre Änderungen verloren."
-
-#: ../src/ui/view/edit-widget.cpp:1211
-#: ../src/ui/view/edit-widget.cpp:1259
-#: ../src/widgets/desktop-widget.cpp:866
-#: ../src/widgets/desktop-widget.cpp:923
-msgid "Close _without saving"
-msgstr "Schließen, _ohne zu speichern"
-
-#: ../src/ui/view/edit-widget.cpp:1247
-#, c-format
-msgid ""
-"<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n"
-"\n"
-"Do you want to save this file as an Inkscape SVG?"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Das Dokument \"%s\" wurde in einem möglicherweise verlustbehafteten Format (%s) gespeichert!</span>\n"
-"\n"
-"Möchten Sie das Dokument als ein Inkscape SVG speichern?"
-
-#: ../src/ui/view/edit-widget.cpp:1262
-#: ../src/widgets/desktop-widget.cpp:926
-msgid "_Save as SVG"
-msgstr "Als _SVG speichern"
-
 #: ../src/ui/widget/filter-effect-chooser.cpp:25
 msgid "_Blend mode:"
 msgstr "Mischmodus:"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
-msgid "B_lur:"
+msgid "Blur:"
 msgstr "Unschärfe:"
 
 #: ../src/ui/widget/layer-selector.cpp:114
@@ -20086,12 +20190,6 @@ msgstr "Proprietär"
 #: ../src/ui/widget/licensor.cpp:38
 msgid "MetadataLicence|Other"
 msgstr "Andere"
-
-#: ../src/ui/widget/object-composite-settings.cpp:62
-#: ../src/ui/widget/selected-style.cpp:1033
-#: ../src/ui/widget/selected-style.cpp:1034
-msgid "Opacity, %"
-msgstr "Deckkraft, %:"
 
 #: ../src/ui/widget/object-composite-settings.cpp:172
 msgid "Change blur"
@@ -20146,6 +20244,10 @@ msgstr "Unten:"
 #: ../src/ui/widget/page-sizer.cpp:236
 msgid "Bottom margin"
 msgstr "Unterer Rand"
+
+#: ../src/ui/widget/page-sizer.cpp:245
+msgid "Description"
+msgstr "Beschreibung"
 
 #: ../src/ui/widget/page-sizer.cpp:286
 msgid "Orientation:"
@@ -20561,6 +20663,11 @@ msgstr "Breite der Kontur ändern"
 #: ../src/ui/widget/selected-style.cpp:987
 msgid ", drag to adjust"
 msgstr ", Ziehen stellt ein"
+
+#: ../src/ui/widget/selected-style.cpp:1033
+#: ../src/ui/widget/selected-style.cpp:1034
+msgid "Opacity (%)"
+msgstr "Deckkraft, %:"
 
 #: ../src/ui/widget/selected-style.cpp:1068
 #, c-format
@@ -22210,10 +22317,6 @@ msgstr "Dokument-_Metadaten…"
 msgid "Edit document metadata (to be saved with the document)"
 msgstr "Dokument-Metadaten bearbeiten, die mit dem Dokument gespeichert werden"
 
-#: ../src/verbs.cpp:2628
-msgid "_Fill and Stroke..."
-msgstr "Füllung und _Kontur…"
-
 #: ../src/verbs.cpp:2629
 msgid "Edit objects' colors, gradients, arrowheads, and other fill and stroke properties..."
 msgstr "Objektfarben, Farbverläufe, Strichbreiten, Pfeile, Strichmuster usw. ändern"
@@ -22267,10 +22370,6 @@ msgstr "Bearbeitungs_historie…"
 msgid "Undo History"
 msgstr "Bearbeitungshistorie"
 
-#: ../src/verbs.cpp:2643
-msgid "_Text and Font..."
-msgstr "_Schrift und Text…"
-
 #: ../src/verbs.cpp:2644
 msgid "View and select font family, font size and other text properties"
 msgstr "Schriftfamilie, Schriftgröße und andere Texteigenschaften ansehen und ändern"
@@ -22298,10 +22397,6 @@ msgstr "Text suchen und e_rsetzen..."
 #: ../src/verbs.cpp:2650
 msgid "Find and replace text in document"
 msgstr "Text im Dokument suchen und ersetzen"
-
-#: ../src/verbs.cpp:2651
-msgid "Check Spellin_g..."
-msgstr "Rechtschreibprüfun_g..."
 
 #: ../src/verbs.cpp:2652
 msgid "Check spelling of text in document"
@@ -22338,10 +22433,6 @@ msgstr "Gekachelte Klone erzeugen…"
 #: ../src/verbs.cpp:2660
 msgid "Create multiple clones of selected object, arranging them into a pattern or scattering"
 msgstr "Mehrere Klone des gewählten Objekts erstellen, die in einem Muster oder verstreut angeordnet sind"
-
-#: ../src/verbs.cpp:2661
-msgid "_Object Properties..."
-msgstr "Objekt_eigenschaften…"
 
 #: ../src/verbs.cpp:2662
 msgid "Edit the ID, locked and visible status, and other object properties"
@@ -22576,6 +22667,18 @@ msgstr "Muster der Strichlinien"
 msgid "Pattern offset"
 msgstr "Versatz des Musters"
 
+#: ../src/widgets/desktop-widget.cpp:384
+msgid "Zoom drawing if window size changes"
+msgstr "Zeichnungsgröße mit Fenstergröße verändern"
+
+#: ../src/widgets/desktop-widget.cpp:508
+msgid "Cursor coordinates"
+msgstr "Zeigerkoordinaten"
+
+#: ../src/widgets/desktop-widget.cpp:523
+msgid "Z:"
+msgstr "Z:"
+
 #. display the initial welcome message in the statusbar
 #: ../src/widgets/desktop-widget.cpp:558
 msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."
@@ -22631,6 +22734,22 @@ msgstr "Farbverwaltungsansicht ist in diesem Fenster <b>eingeschaltet</b>"
 msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr "Farbverwaltungsansicht ist in diesem Fenster <b>ausgeschaltet</b>"
 
+#: ../src/widgets/desktop-widget.cpp:859
+#, c-format
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n"
+"\n"
+"If you close without saving, your changes will be discarded."
+msgstr ""
+"<span weight=\"bold\" size=\"larger\">Änderungen an Dokument »%s« vor dem Schließen speichern?</span>\n"
+"\n"
+"Wenn Sie schließen, ohne zu speichern, dann gehen Ihre Änderungen verloren."
+
+#: ../src/widgets/desktop-widget.cpp:866
+#: ../src/widgets/desktop-widget.cpp:923
+msgid "Close _without saving"
+msgstr "Schließen, _ohne zu speichern"
+
 #: ../src/widgets/desktop-widget.cpp:915
 #, c-format
 msgid ""
@@ -22641,6 +22760,10 @@ msgstr ""
 "<span weight=\"bold\" size=\"larger\">Die Datei \"%s\" wurde in einem möglicherweise verlustbehafteten Format (%s) gespeichert!</span>\n"
 "\n"
 "Möchten Sie das Dokument als ein Inkscape SVG speichern?"
+
+#: ../src/widgets/desktop-widget.cpp:926
+msgid "_Save as SVG"
+msgstr "Als _SVG speichern"
 
 # CHECK
 #: ../src/widgets/ege-paint-def.cpp:70
@@ -23035,59 +23158,59 @@ msgstr "CMS"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:220
 #: ../src/widgets/sp-color-scales.cpp:404
-msgid "_R"
-msgstr "_R"
+msgid "_R:"
+msgstr "_R:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:220
 #: ../src/widgets/sp-color-icc-selector.cpp:221
 #: ../src/widgets/sp-color-scales.cpp:407
-msgid "_G"
-msgstr "_G"
+msgid "_G:"
+msgstr "_G:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:220
 #: ../src/widgets/sp-color-scales.cpp:410
-msgid "_B"
-msgstr "_B"
+msgid "_B:"
+msgstr "_B:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:222
 #: ../src/widgets/sp-color-icc-selector.cpp:223
 #: ../src/widgets/sp-color-scales.cpp:430
-msgid "_H"
-msgstr "_H"
+msgid "_H:"
+msgstr "_H:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:222
 #: ../src/widgets/sp-color-icc-selector.cpp:223
 #: ../src/widgets/sp-color-scales.cpp:433
-msgid "_S"
-msgstr "_S"
+msgid "_S:"
+msgstr "_S:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:223
 #: ../src/widgets/sp-color-scales.cpp:436
-msgid "_L"
-msgstr "_L"
+msgid "_L:"
+msgstr "_L:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-icc-selector.cpp:225
 #: ../src/widgets/sp-color-scales.cpp:458
-msgid "_C"
-msgstr "_C"
+msgid "_C:"
+msgstr "_C:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-icc-selector.cpp:225
 #: ../src/widgets/sp-color-scales.cpp:461
-msgid "_M"
-msgstr "_M"
+msgid "_M:"
+msgstr "_M:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-icc-selector.cpp:225
 #: ../src/widgets/sp-color-scales.cpp:464
-msgid "_Y"
-msgstr "_Y"
+msgid "_Y:"
+msgstr "Y:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-scales.cpp:467
-msgid "_K"
-msgstr "_K"
+msgid "_K:"
+msgstr "_K:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:235
 msgid "Gray"
@@ -23130,8 +23253,8 @@ msgstr "Legt RGB-Ausweichwert für Entsprechung des icc-color()-Parameters fest"
 #: ../src/widgets/sp-color-scales.cpp:439
 #: ../src/widgets/sp-color-scales.cpp:470
 #: ../src/widgets/sp-color-wheel-selector.cpp:135
-msgid "_A"
-msgstr "_A"
+msgid "_A:"
+msgstr "_A:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:390
 #: ../src/widgets/sp-color-icc-selector.cpp:402
@@ -25271,6 +25394,453 @@ msgstr "Die Parameter des Farbeimers auf Vorgabewerte zurücksetzen (Menü Datei
 #. End:
 #.
 #. vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+#: ../share/extensions/gcodetools_all_in_one.inx.h:1
+#: ../share/extensions/gcodetools_area.inx.h:1
+msgid "\"Create area offset\": creates several Inkscape path offsets to fill original path's area up to \"Area radius\" value. Outlines start from \"1/2 D\" up to \"Area width\" total width with \"D\" steps where D is taken from the nearest tool definition (\"Tool diameter\" value). Only one offset will be created if the \"Area width\" is equal to \"1/2 D\"."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:2
+#: ../share/extensions/gcodetools_orientation_points.inx.h:1
+msgid "2-points mode (move and rotate, maintained aspect ratio X/Y)"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:3
+#: ../share/extensions/gcodetools_orientation_points.inx.h:2
+msgid "3-points mode (move, rotate and mirror, different X/Y scale)"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:4
+#: ../share/extensions/gcodetools_area.inx.h:2
+msgid "Action:"
+msgstr "Aktion:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:5
+#: ../share/extensions/gcodetools_area.inx.h:3
+#: ../share/extensions/gcodetools_dxf_points.inx.h:1
+#: ../share/extensions/gcodetools_engraving.inx.h:1
+#: ../share/extensions/gcodetools_lathe.inx.h:1
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:1
+msgid "Add numeric suffix to filename"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:6
+#: ../share/extensions/gcodetools_area.inx.h:4
+#: ../share/extensions/gcodetools_dxf_points.inx.h:2
+#: ../share/extensions/gcodetools_engraving.inx.h:2
+#: ../share/extensions/gcodetools_lathe.inx.h:2
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:2
+#, fuzzy
+msgid "Additional post-processor:"
+msgstr "Zusätzliche Pakete"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:7
+#, fuzzy
+msgid "All in one"
+msgstr "Knoten ausrichten"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:9
+#: ../share/extensions/gcodetools_area.inx.h:6
+msgid "Area artefacts"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:10
+#: ../share/extensions/gcodetools_area.inx.h:7
+#, fuzzy
+msgid "Area width:"
+msgstr "Breite setzen:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:11
+#: ../share/extensions/gcodetools_area.inx.h:8
+msgid "Artefact diameter:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:12
+#: ../share/extensions/gcodetools_area.inx.h:9
+#: ../share/extensions/gcodetools_lathe.inx.h:3
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:3
+msgid "Biarc interpolation tolerance is the maximum distance between path and its approximation. The segment will be split into two segments if the distance between path's segment and it's approximation exceeds biarc interpolation tolerance."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:13
+#: ../share/extensions/gcodetools_area.inx.h:10
+#: ../share/extensions/gcodetools_lathe.inx.h:4
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:4
+#, fuzzy
+msgid "Biarc interpolation tolerance:"
+msgstr "Interpolationsschritte"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:14
+#: ../share/extensions/gcodetools_dxf_points.inx.h:3
+msgid "Convert selected objects to drill points (as dxf_import plugin does). Also you can save original shape. Only the start point of each curve will be used. Also you can manually select object, open XML editor (Shift+Ctrl+X) and add or remove XML tag 'dxfpoint' with any value."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:15
+#: ../share/extensions/gcodetools_dxf_points.inx.h:4
+#, fuzzy
+msgid "Convert selection:"
+msgstr "Auswahl _umkehren"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:16
+#: ../share/extensions/gcodetools_dxf_points.inx.h:6
+#, fuzzy
+msgid "DXF points"
+msgstr "DXF einlesen"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:17
+#: ../share/extensions/gcodetools_area.inx.h:11
+#: ../share/extensions/gcodetools_dxf_points.inx.h:7
+#: ../share/extensions/gcodetools_engraving.inx.h:3
+#: ../share/extensions/gcodetools_lathe.inx.h:6
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:5
+msgid "Directory:"
+msgstr "Verzeichnis:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:18
+msgid "Draw additional graphics to debug engraving path:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:19
+#: ../share/extensions/gcodetools_engraving.inx.h:5
+#, fuzzy
+msgid "Engraving"
+msgstr "Alpha Gravur"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:20
+#: ../share/extensions/gcodetools_area.inx.h:12
+#: ../share/extensions/gcodetools_dxf_points.inx.h:8
+#: ../share/extensions/gcodetools_engraving.inx.h:6
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:6
+msgid "File:"
+msgstr "Datei:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:21
+#: ../share/extensions/gcodetools_area.inx.h:13
+#: ../share/extensions/gcodetools_dxf_points.inx.h:9
+#: ../share/extensions/gcodetools_engraving.inx.h:7
+#: ../share/extensions/gcodetools_lathe.inx.h:10
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:7
+#, fuzzy
+msgid "Full path to log file:"
+msgstr "Einfache Farbe der Füllung"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:22
+#: ../share/extensions/gcodetools_area.inx.h:14
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:3
+#: ../share/extensions/gcodetools_dxf_points.inx.h:10
+#: ../share/extensions/gcodetools_engraving.inx.h:8
+#: ../share/extensions/gcodetools_lathe.inx.h:11
+#: ../share/extensions/gcodetools_orientation_points.inx.h:3
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:8
+#: ../share/extensions/gcodetools_tools_library.inx.h:1
+msgid "Gcodetools"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:23
+#: ../share/extensions/gcodetools_area.inx.h:15
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:4
+#: ../share/extensions/gcodetools_dxf_points.inx.h:11
+#: ../share/extensions/gcodetools_engraving.inx.h:9
+#: ../share/extensions/gcodetools_lathe.inx.h:12
+#: ../share/extensions/gcodetools_orientation_points.inx.h:4
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:9
+#: ../share/extensions/gcodetools_tools_library.inx.h:2
+msgid "Gcodetools plug-in: converts paths to Gcode (using circular interpolation), makes offset paths and engraves sharp corners using cone cutters. This plug-in calculates Gcode for paths using circular interpolation or linear motion when needed. Tutorials, manuals and support can be found at English support forum: http://www.cnc-club.ru/gcodetools and Russian support forum: http://www.cnc-club.ru/gcodetoolsru Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas. Gcodetools ver. 1.6.01"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:24
+#: ../share/extensions/gcodetools_area.inx.h:16
+#: ../share/extensions/gcodetools_dxf_points.inx.h:12
+#: ../share/extensions/gcodetools_engraving.inx.h:10
+#: ../share/extensions/gcodetools_lathe.inx.h:13
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:10
+msgid "Generate log file"
+msgstr "Logfile erstellen"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:26
+#: ../share/extensions/gcodetools_tools_library.inx.h:4
+msgid "Just check tools"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:27
+#: ../share/extensions/gcodetools_area.inx.h:18
+msgid "Maximum area cutting curves:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:28
+#: ../share/extensions/gcodetools_engraving.inx.h:12
+#, fuzzy
+msgid "Maximum distance for engraving:"
+msgstr "Maximale Verschiebung in X, px"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:29
+#: ../share/extensions/gcodetools_area.inx.h:19
+#: ../share/extensions/gcodetools_lathe.inx.h:19
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:12
+#, fuzzy
+msgid "Maximum splitting depth:"
+msgstr "Vereinfache Pfade:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:30
+#: ../share/extensions/gcodetools_area.inx.h:20
+#: ../share/extensions/gcodetools_engraving.inx.h:13
+#: ../share/extensions/gcodetools_lathe.inx.h:20
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:13
+#, fuzzy
+msgid "Minimum arc radius:"
+msgstr "Mindestgröße"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:31
+#: ../share/extensions/gcodetools_engraving.inx.h:14
+msgid "Number of sample points used to calculate distance:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:32
+#: ../share/extensions/gcodetools_area.inx.h:21
+#: ../share/extensions/gcodetools_engraving.inx.h:15
+#: ../share/extensions/gcodetools_lathe.inx.h:21
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:14
+msgid "Offset along Z axis:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:35
+#: ../share/extensions/gcodetools_orientation_points.inx.h:8
+msgid "Orientation points are used to calculate transformation (offset,scale,mirror,rotation in XY plane) of the path. 3-points mode only: do not put all three into one line (use 2-points mode instead). You can modify Z surface, Z depth values later using text tool (3rd coordinates). If there are no orientation points inside current layer they are taken from the upper layer. Do not ungroup orientation points! You can select them using double click to enter the group or by Ctrl+Click. Now press apply to create control points (independent set for each layer)."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:36
+#: ../share/extensions/gcodetools_orientation_points.inx.h:9
+#, fuzzy
+msgid "Orientation type:"
+msgstr "Ausrichtung"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:37
+#: ../share/extensions/gcodetools_area.inx.h:23
+#: ../share/extensions/gcodetools_lathe.inx.h:23
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:16
+#, fuzzy
+msgid "Path to Gcode"
+msgstr "Pfad ist geschlossen."
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:38
+#: ../share/extensions/gcodetools_area.inx.h:24
+#: ../share/extensions/gcodetools_dxf_points.inx.h:14
+#: ../share/extensions/gcodetools_engraving.inx.h:17
+#: ../share/extensions/gcodetools_lathe.inx.h:24
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:17
+msgid "Post-processor:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:39
+#: ../share/extensions/gcodetools_area.inx.h:25
+#: ../share/extensions/gcodetools_dxf_points.inx.h:15
+#: ../share/extensions/gcodetools_engraving.inx.h:18
+#: ../share/extensions/gcodetools_lathe.inx.h:25
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:18
+msgid "Preferences"
+msgstr "Einstellungen"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:40
+#: ../share/extensions/gcodetools_area.inx.h:26
+#: ../share/extensions/gcodetools_engraving.inx.h:19
+#: ../share/extensions/gcodetools_lathe.inx.h:26
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:19
+#, fuzzy
+msgid "Scale along Z axis:"
+msgstr "Basislänge der Z-Achse"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:41
+#: ../share/extensions/gcodetools_area.inx.h:27
+#: ../share/extensions/gcodetools_engraving.inx.h:20
+#: ../share/extensions/gcodetools_lathe.inx.h:27
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:20
+msgid "Select all paths if nothing is selected"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:42
+#: ../share/extensions/gcodetools_tools_library.inx.h:5
+msgid "Selected tool type fills appropriate default values. You can change these values using the Text tool later on. The topmost (z order) tool in the active layer is used. If there is no tool inside the current layer it is taken from the upper layer. Press Apply to create new tool."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:43
+#: ../share/extensions/gcodetools_engraving.inx.h:21
+#, fuzzy
+msgid "Sharp angle tolerance:"
+msgstr "Max. Endtoleranz"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:44
+#: ../share/extensions/gcodetools_engraving.inx.h:22
+msgid "This function creates path to engrave sharp angles. Cutter's shape function is defined by the tool. Some simple shapes: cone....(45 degrees)...........: w cone....(height/diameter=10/3).: 10/3 w sphere..(\"r\" diameter).........: math.sqrt(max(0,r**2-w**2)) ellipse.(R1=r and R2=r*4r).....: math.sqrt(max(0,r**2-w**2))*4"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:45
+#: ../share/extensions/gcodetools_tools_library.inx.h:6
+msgid "Tools library"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:46
+#: ../share/extensions/gcodetools_tools_library.inx.h:7
+#, fuzzy
+msgid "Tools type:"
+msgstr "Operationstyp"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:47
+#: ../share/extensions/gcodetools_area.inx.h:28
+#: ../share/extensions/gcodetools_dxf_points.inx.h:16
+#: ../share/extensions/gcodetools_engraving.inx.h:23
+#: ../share/extensions/gcodetools_lathe.inx.h:28
+#: ../share/extensions/gcodetools_orientation_points.inx.h:10
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:21
+msgid "Units (mm or in):"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:48
+#: ../share/extensions/gcodetools_area.inx.h:29
+msgid "Usage: 1. Select all Area Offsets (gray outlines) 2. Object/Ungroup (Shift+Ctrl+G) 3. Press Apply Suspected small objects will be marked out by colored arrows."
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:49
+#: ../share/extensions/gcodetools_orientation_points.inx.h:11
+#, fuzzy
+msgid "Z depth:"
+msgstr "Tiefe"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:50
+#: ../share/extensions/gcodetools_area.inx.h:30
+#: ../share/extensions/gcodetools_dxf_points.inx.h:17
+#: ../share/extensions/gcodetools_engraving.inx.h:24
+#: ../share/extensions/gcodetools_lathe.inx.h:29
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:22
+msgid "Z safe height for G00 move over blank:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:51
+#: ../share/extensions/gcodetools_orientation_points.inx.h:12
+#, fuzzy
+msgid "Z surface:"
+msgstr "Z-Sortierung der Flächen gemäß:"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:52
+#: ../share/extensions/gcodetools_dxf_points.inx.h:18
+msgid "clear dxfpoint sign"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:53
+#: ../share/extensions/gcodetools_tools_library.inx.h:8
+msgid "cone"
+msgstr "Kegel"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:54
+#: ../share/extensions/gcodetools_tools_library.inx.h:9
+msgid "cylinder"
+msgstr "Zylinder"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:55
+#: ../share/extensions/gcodetools_tools_library.inx.h:10
+msgid "default"
+msgstr "(Vorgabe)"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:56
+#: ../share/extensions/gcodetools_area.inx.h:31
+msgid "delete"
+msgstr "Löschen"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:57
+#: ../share/extensions/gcodetools_tools_library.inx.h:11
+msgid "lathe cutter"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:58
+#: ../share/extensions/gcodetools_area.inx.h:32
+msgid "mark with an arrow"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:59
+#: ../share/extensions/gcodetools_area.inx.h:33
+#, fuzzy
+msgid "mark with style"
+msgstr "Stil des Umschalters"
+
+# !!!
+#: ../share/extensions/gcodetools_all_in_one.inx.h:60
+#: ../share/extensions/gcodetools_tools_library.inx.h:12
+#, fuzzy
+msgid "plasma"
+msgstr "_Splash"
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:61
+#: ../share/extensions/gcodetools_dxf_points.inx.h:19
+msgid "set as dxfpoint and draw arrow"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:62
+#: ../share/extensions/gcodetools_dxf_points.inx.h:20
+msgid "set as dxfpoint and save shape"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:63
+#: ../share/extensions/gcodetools_tools_library.inx.h:13
+#, fuzzy
+msgid "tangent knife"
+msgstr "Tangentialer Versatz"
+
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:1
+msgid "Check for Gcodetools latest stable version and try to get the updates."
+msgstr ""
+
+#: ../share/extensions/gcodetools_check_for_updates.inx.h:2
+msgid "Check for updates"
+msgstr ""
+
+#: ../share/extensions/gcodetools_dxf_points.inx.h:5
+#, fuzzy
+msgid "DXF Points"
+msgstr "Punkte"
+
+#: ../share/extensions/gcodetools_engraving.inx.h:4
+msgid "Draw additional graphics to debug engraving path"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:5
+#, fuzzy
+msgid "Create fine cut using:"
+msgstr "Objekte erstellen mit:"
+
+#: ../share/extensions/gcodetools_lathe.inx.h:7
+msgid "File"
+msgstr "_Datei"
+
+#: ../share/extensions/gcodetools_lathe.inx.h:8
+#, fuzzy
+msgid "Fine cut count:"
+msgstr "Finde diese Schrift:"
+
+#: ../share/extensions/gcodetools_lathe.inx.h:9
+#, fuzzy
+msgid "Fine cut width:"
+msgstr "Feste Breite"
+
+#: ../share/extensions/gcodetools_lathe.inx.h:15
+#, fuzzy
+msgid "Lathe"
+msgstr "Feder"
+
+#: ../share/extensions/gcodetools_lathe.inx.h:16
+msgid "Lathe X axis remap:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:17
+msgid "Lathe Z axis remap:"
+msgstr ""
+
+#: ../share/extensions/gcodetools_lathe.inx.h:18
+#, fuzzy
+msgid "Lathe width:"
+msgstr "Skaliere Breite"
+
+#: ../share/extensions/gcodetools_orientation_points.inx.h:7
+msgid "Orientation points"
+msgstr "Orientierungspunkte"
+
 #: ../share/extensions/render_barcode_datamatrix.inx.h:1
 msgid "Barcode - Datamatrix"
 msgstr "Strichcode-Daten:"
@@ -25307,6 +25877,76 @@ msgstr "Kippen [Grad]"
 msgid "Wireframe Sphere"
 msgstr "Draht-Sphäre (Kugel)"
 
+#~ msgid "_Id"
+#~ msgstr "_ID-Kennung"
+
+#~ msgid "Title"
+#~ msgstr "Titel"
+
+#~ msgid "Format"
+#~ msgstr "Format"
+
+#~ msgid "Type"
+#~ msgstr "Typ"
+
+#~ msgid "Rights"
+#~ msgstr "Rechte"
+
+#~ msgid "Language"
+#~ msgstr "Sprache"
+
+#~ msgid "Object _Properties"
+#~ msgstr "Objekt_eigenschaften"
+
+#~ msgid "_Fill and Stroke"
+#~ msgstr "Füllung und _Kontur"
+
+#~ msgid "Color profiles directory (%s) is unavailable."
+#~ msgstr "Verzeichnis der Farbprofile (%s) nicht auffindbar."
+
+#~ msgid "Create new objects with:"
+#~ msgstr "Objekte erstellen mit:"
+
+#~ msgid "Paint objects with:"
+#~ msgstr "Objekte erstellen mit:"
+
+#~ msgid "_Width"
+#~ msgstr "_Breite"
+
+#~ msgid "_Height"
+#~ msgstr "_Höhe"
+
+#~ msgid "A_ngle"
+#~ msgstr "_Winkel"
+
+#~ msgid "PLACEHOLDER, do not translate"
+#~ msgstr "PLACEHOLDER, do not translate"
+
+#~ msgid ""
+#~ "<b>Welcome to Inkscape!</b> Use shape or drawing tools to create objects; "
+#~ "use selector (arrow) to move or transform them."
+#~ msgstr ""
+#~ "<b>Willkommen bei Inkscape!</b> Nutzen Sie Formen- und Zeichenwerkzeuge, "
+#~ "um Objekte zu erstellen; das Auswahlwerkzeug (Pfeil) verschiebt und "
+#~ "bearbeitet sie."
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
+#~ "format (%s) that may cause data loss!</span>\n"
+#~ "\n"
+#~ "Do you want to save this file as an Inkscape SVG?"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Das Dokument \"%s\" wurde in einem "
+#~ "möglicherweise verlustbehafteten Format (%s) gespeichert!</span>\n"
+#~ "\n"
+#~ "Möchten Sie das Dokument als ein Inkscape SVG speichern?"
+
+#~ msgid "Opacity, %"
+#~ msgstr "Deckkraft, %:"
+
+#~ msgid "_Y"
+#~ msgstr "_Y"
+
 #~ msgid "Function applied to the blue channel"
 #~ msgstr "Funktion auf den Blau-Kanal angewendet"
 
@@ -25321,9 +25961,6 @@ msgstr "Draht-Sphäre (Kugel)"
 
 #~ msgid "Normal offset"
 #~ msgstr "Normaler Versatz"
-
-#~ msgid "Tangential offset"
-#~ msgstr "Tangentialer Versatz"
 
 #~ msgid ""
 #~ "Generate a random pattern of Voronoi cells. The pattern will be "
@@ -25512,9 +26149,6 @@ msgstr "Draht-Sphäre (Kugel)"
 #~ msgid "Italic"
 #~ msgstr "Kursiv"
 
-#~ msgid "Additional packages"
-#~ msgstr "Zusätzliche Pakete"
-
 #~ msgid "Note: The file extension is appended automatically."
 #~ msgstr "Dateierweiterung wird automatisch angehängt"
 
@@ -25595,9 +26229,6 @@ msgstr "Draht-Sphäre (Kugel)"
 #~ msgstr ""
 #~ "Dynamischen Versatz am Objekt erstellen. Verknüpfung zum originalen Pfad "
 #~ "bleibt bestehen."
-
-#~ msgid "Boolop type"
-#~ msgstr "Operationstyp"
 
 #~ msgid "Determines which kind of boolop will be performed."
 #~ msgstr ""
@@ -26006,9 +26637,6 @@ msgstr "Draht-Sphäre (Kugel)"
 #~ "rastet den Winkel ein; <b>Alt</b> behält den Abstand zum Knoten bei; "
 #~ "<b>Umschalt</b> rotiert beide Anfasser symmetrisch"
 
-#~ msgid "Align nodes"
-#~ msgstr "Knoten ausrichten"
-
 # CHECK
 #~ msgid "Distribute nodes"
 #~ msgstr "Knoten ausgleichen"
@@ -26180,8 +26808,6 @@ msgstr "Draht-Sphäre (Kugel)"
 #~ msgstr "Dokument exportiert..."
 #~ msgid "Autosave"
 #~ msgstr "Automatische Sicherung"
-#~ msgid "File"
-#~ msgstr "_Datei"
 #~ msgid "Username:"
 #~ msgstr "_Benutzername:"
 #~ msgid "Password:"
@@ -26560,13 +27186,6 @@ msgstr "Draht-Sphäre (Kugel)"
 #~ "%s"
 
 #~ msgid ""
-#~ "Cannot write file %s.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Kann Datei %s nicht schreiben.\n"
-#~ "%s"
-
-#~ msgid ""
 #~ "Although Inkscape will run, it will use default settings,\n"
 #~ "and any changes made in preferences will not be saved."
 #~ msgstr ""
@@ -26761,10 +27380,6 @@ msgstr "Draht-Sphäre (Kugel)"
 #, fuzzy
 #~ msgid "Major Y Division Spacing"
 #~ msgstr "Horizontale Abstände"
-
-#, fuzzy
-#~ msgid "Generate Template"
-#~ msgstr "Aus Pfad erzeugen"
 
 #, fuzzy
 #~ msgid "Report Normal Vector Information"
