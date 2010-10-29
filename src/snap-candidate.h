@@ -38,7 +38,7 @@ public:
         _source_type(source),
         _target_type(target)
     {
-        _source_num = 0;
+        _source_num = -1;
         _target_bbox = Geom::OptRect();
     }
 
@@ -46,13 +46,14 @@ public:
         : _point(point),
         _source_type(source),
         _target_type(Inkscape::SNAPTARGET_UNDEFINED),
-        _source_num(0)
+        _source_num(-1)
     {
         _target_bbox = Geom::OptRect();
     }
 
     inline Geom::Point const & getPoint() const {return _point;}
     inline Inkscape::SnapSourceType getSourceType() const {return _source_type;}
+    bool isSingleHandle() const {return (_source_type == SNAPSOURCE_NODE_HANDLE || _source_type == SNAPSOURCE_OTHER_HANDLE) && _source_num == -1;}
     inline Inkscape::SnapTargetType getTargetType() const {return _target_type;}
     inline long getSourceNum() const {return _source_num;}
     void setSourceNum(long num) {_source_num = num;}
@@ -68,7 +69,9 @@ private:
     Inkscape::SnapSourceType _source_type;
     Inkscape::SnapTargetType _target_type;
 
-    //Sequence number of the source point within the set of points that is to be snapped. Starting at zero
+    //Sequence number of the source point within the set of points that is to be snapped.
+    // - Starts counting at zero, but only if there might be more points following (e.g. in the selector tool)
+    // - Minus one (-1) if we're sure that we have only a single point
     long _source_num;
 
     // If this is a target and it belongs to a bounding box, e.g. when the target type is

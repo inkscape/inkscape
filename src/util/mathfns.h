@@ -48,7 +48,7 @@ inline double round_to_nearest_multiple_plus(double x, double const c1, double c
  * If c1==0 (and c0 is finite), then returns +/-inf.  This makes grid spacing of zero
  * mean "ignore the grid in this dimension".
  */
-inline double round_to_lower_multiple_plus(double x, double const c1, double const c0)
+inline double round_to_lower_multiple_plus(double x, double const c1, double const c0 = 0)
 {
     return floor((x - c0) / c1) * c1 + c0;
 }
@@ -60,7 +60,7 @@ inline double round_to_lower_multiple_plus(double x, double const c1, double con
  * If c1==0 (and c0 is finite), then returns +/-inf.  This makes grid spacing of zero
  * mean "ignore the grid in this dimension".
  */
-inline double round_to_upper_multiple_plus(double x, double const c1, double const c0)
+inline double round_to_upper_multiple_plus(double x, double const c1, double const c0 = 0)
 {
     return ceil((x - c0) / c1) * c1 + c0;
 }

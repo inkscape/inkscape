@@ -376,13 +376,34 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
         return no_snap;
     }
 
+    Inkscape::SnappedPoint result = no_snap;
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if ((prefs->getBool("/options/snapmousepointer/value", false)) && p.isSingleHandle()) {
+        // Snapping the mouse pointer instead of the constrained position of the knot allows
+        // to snap to things which don't intersect with the constraint line; this is basically
+        // then just a freesnap with the constraint applied afterwards
+        // We'll only to this if we're dragging a single handle, and for example not when transforming an object in the selector tool
+        result = freeSnap(p, bbox_to_snap);
+        if (result.getSnapped()) {
+            // only change the snap indicator if we really snapped to something
+            if (_snapindicator && _desktop) {
+                _desktop->snapindicator->set_new_snaptarget(result);
+            }
+            // Apply the constraint
+            result.setPoint(constraint.projection(result.getPoint()));
+            return result;
+        }
+        return no_snap;
+    }
+
     SnappedConstraints sc;
     SnapperList const snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
         (*i)->constrainedSnap(sc, p, bbox_to_snap, constraint, &_items_to_ignore, _unselected_nodes);
     }
 
-    Inkscape::SnappedPoint result = findBestSnap(p, sc, true);
+    result = findBestSnap(p, sc, true);
 
     if (result.getSnapped()) {
         // only change the snap indicator if we really snapped to something
@@ -418,38 +439,67 @@ Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandi
     std::vector<Geom::Point> projections;
     bool snapping_is_futile = !someSnapperMightSnap();
 
-    // Iterate over the constraints
+    Inkscape::SnappedPoint result = no_snap;
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool snap_mouse = prefs->getBool("/options/snapmousepointer/value", false);
+
     for (std::vector<Inkscape::Snapper::SnapConstraint>::const_iterator c = constraints.begin(); c != constraints.end(); c++) {
         // Project the mouse pointer onto the constraint; In case we don't snap then we will
         // return the projection onto the constraint, such that the constraint is always enforced
         Geom::Point pp = (*c).projection(p.getPoint());
         projections.push_back(pp);
-        // Try to snap to the constraint
-        if (!snapping_is_futile) {
-            for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-                (*i)->constrainedSnap(sc, p, bbox_to_snap, *c, &_items_to_ignore,_unselected_nodes);
-            }
-        }
     }
 
-    Inkscape::SnappedPoint result = findBestSnap(p, sc, true);
+    if (snap_mouse && p.isSingleHandle()) {
+        // Snapping the mouse pointer instead of the constrained position of the knot allows
+        // to snap to things which don't intersect with the constraint line; this is basically
+        // then just a freesnap with the constraint applied afterwards
+        // We'll only to this if we're dragging a single handle, and for example not when transforming an object in the selector tool
+        result = freeSnap(p, bbox_to_snap);
+    } else {
+        // Iterate over the constraints
+        for (std::vector<Inkscape::Snapper::SnapConstraint>::const_iterator c = constraints.begin(); c != constraints.end(); c++) {
+            // Try to snap to the constraint
+            if (!snapping_is_futile) {
+                for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
+                    (*i)->constrainedSnap(sc, p, bbox_to_snap, *c, &_items_to_ignore,_unselected_nodes);
+                }
+            }
+        }
+        result = findBestSnap(p, sc, true);
+    }
 
     if (result.getSnapped()) {
         // only change the snap indicator if we really snapped to something
         if (_snapindicator && _desktop) {
             _desktop->snapindicator->set_new_snaptarget(result);
         }
+        if (snap_mouse) {
+            // We still have to apply the constraint, because so far we only tried a freeSnap
+            Geom::Point result_closest;
+            for (std::vector<Inkscape::Snapper::SnapConstraint>::const_iterator c = constraints.begin(); c != constraints.end(); c++) {
+                // Project the mouse pointer onto the constraint; In case we don't snap then we will
+                // return the projection onto the constraint, such that the constraint is always enforced
+                Geom::Point result_p = (*c).projection(result.getPoint());
+                if (c == constraints.begin() || (Geom::L2(result_p - p.getPoint()) < Geom::L2(result_closest - p.getPoint()))) {
+                    result_closest = result_p;
+                }
+            }
+            result.setPoint(result_closest);
+        }
         return result;
     }
 
     // So we didn't snap, but we still need to return a point on one of the constraints
     // Find out which of the constraints yielded the closest projection of point p
-    no_snap.setPoint(projections.front());
     for (std::vector<Geom::Point>::iterator pp = projections.begin(); pp != projections.end(); pp++) {
         if (pp != projections.begin()) {
             if (Geom::L2(*pp - p.getPoint()) < Geom::L2(no_snap.getPoint() - p.getPoint())) {
                 no_snap.setPoint(*pp);
             }
+        } else {
+            no_snap.setPoint(projections.front());
         }
     }
 

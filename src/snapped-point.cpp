@@ -61,7 +61,7 @@ Inkscape::SnappedPoint::SnappedPoint()
 {
     _point = Geom::Point(0,0);
     _source = SNAPSOURCE_UNDEFINED,
-    _source_num = 0,
+    _source_num = -1,
     _target = SNAPTARGET_UNDEFINED,
     _at_intersection = false;
     _constrained_snap = false;
@@ -81,7 +81,7 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p)
 {
     _point = p;
     _source = SNAPSOURCE_UNDEFINED,
-    _source_num = 0,
+    _source_num = -1,
     _target = SNAPTARGET_UNDEFINED,
     _at_intersection = false;
     _fully_constrained = false;

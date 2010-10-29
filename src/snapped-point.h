@@ -97,7 +97,7 @@ public:
 protected:
     Geom::Point _point; // Location of the snapped point
     SnapSourceType _source; // Describes what snapped
-    long _source_num; // Sequence number of the source point that snapped, if that point is part of a set of points. (starting at zero)
+    long _source_num; // Sequence number of the source point that snapped, if that point is part of a set of points. (starting at zero if we might have a set of points; -1 if we only have a single point)
     SnapTargetType _target; // Describes to what we've snapped to
     bool _at_intersection; // If true, the snapped point is at an intersection
     bool _constrained_snap; // If true, then the snapped point was found when looking for a constrained snap

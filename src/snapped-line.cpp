@@ -33,7 +33,7 @@ Inkscape::SnappedLineSegment::SnappedLineSegment()
     _end_point_of_line = Geom::Point(0,0);
     _point = Geom::Point(0,0);
     _source = SNAPSOURCE_UNDEFINED;
-    _source_num = 0;
+    _source_num = -1;
     _target = SNAPTARGET_UNDEFINED;
     _distance = NR_HUGE;
     _tolerance = 1;
@@ -111,7 +111,7 @@ Inkscape::SnappedLine::SnappedLine()
     _normal_to_line = Geom::Point(0,0);
     _point_on_line = Geom::Point(0,0);
     _source = SNAPSOURCE_UNDEFINED;
-    _source_num = 0;
+    _source_num = -1;
     _target = SNAPTARGET_UNDEFINED;
     _distance = NR_HUGE;
     _tolerance = 1;

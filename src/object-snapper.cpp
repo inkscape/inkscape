@@ -270,7 +270,7 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
 {
     // Iterate through all nodes, find out which one is the closest to p, and snap to it!
 
-    _collectNodes(p.getSourceType(), p.getSourceNum() == 0);
+    _collectNodes(p.getSourceType(), p.getSourceNum() <= 0);
 
     if (unselected_nodes != NULL && unselected_nodes->size() > 0) {
         g_assert(_points_to_snap_to != NULL);
@@ -454,7 +454,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                                      std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes,
                                      SPPath const *selected_path) const
 {
-    _collectPaths(p.getPoint(), p.getSourceType(), p.getSourceNum() == 0);
+    _collectPaths(p.getPoint(), p.getSourceType(), p.getSourceNum() <= 0);
     // Now we can finally do the real snapping, using the paths collected above
 
     g_assert(_snapmanager->getDesktop() != NULL);
@@ -462,7 +462,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
 
     bool const node_tool_active = _snapmanager->snapprefs.getSnapToItemPath() && selected_path != NULL;
 
-    if (p.getSourceNum() == 0) {
+    if (p.getSourceNum() <= 0) {
         /* findCandidates() is used for snapping to both paths and nodes. It ignores the path that is
          * currently being edited, because that path requires special care: when snapping to nodes
          * only the unselected nodes of that path should be considered, and these will be passed on separately.
@@ -559,7 +559,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                                      Geom::Point const &p_proj_on_constraint) const
 {
 
-    _collectPaths(p_proj_on_constraint, p.getSourceType(), p.getSourceNum() == 0);
+    _collectPaths(p_proj_on_constraint, p.getSourceType(), p.getSourceNum() <= 0);
 
     // Now we can finally do the real snapping, using the paths collected above
 
@@ -612,6 +612,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
             }
 
             //Geom::crossings will not consider the closing segment apparently, so we'll handle that separately here
+            //TODO: This should have been fixed in rev. #9859, which makes this workaround obsolete
             for(Geom::PathVector::iterator it_pv = k->path_vector->begin(); it_pv != k->path_vector->end(); ++it_pv) {
                 if (it_pv->closed()) {
                     // Get the closing linesegment and convert it to a path
@@ -656,9 +657,9 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
     }
 
     /* Get a list of all the SPItems that we will try to snap to */
-    if (p.getSourceNum() == 0) {
+    if (p.getSourceNum() <= 0) {
         Geom::Rect const local_bbox_to_snap = bbox_to_snap ? *bbox_to_snap : Geom::Rect(p.getPoint(), p.getPoint());
-        _findCandidates(sp_document_root(_snapmanager->getDocument()), it, p.getSourceNum() == 0, local_bbox_to_snap, false, Geom::identity());
+        _findCandidates(sp_document_root(_snapmanager->getDocument()), it, p.getSourceNum() <= 0, local_bbox_to_snap, false, Geom::identity());
     }
 
     // TODO: Argh, UGLY! Get rid of this here, move this logic to the snap manager
@@ -719,9 +720,9 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
     Geom::Point pp = c.projection(p.getPoint());
 
     /* Get a list of all the SPItems that we will try to snap to */
-    if (p.getSourceNum() == 0) {
+    if (p.getSourceNum() <= 0) {
         Geom::Rect const local_bbox_to_snap = bbox_to_snap ? *bbox_to_snap : Geom::Rect(pp, pp);
-        _findCandidates(sp_document_root(_snapmanager->getDocument()), it, p.getSourceNum() == 0, local_bbox_to_snap, false, Geom::identity());
+        _findCandidates(sp_document_root(_snapmanager->getDocument()), it, p.getSourceNum() <= 0, local_bbox_to_snap, false, Geom::identity());
     }
 
     // A constrained snap, is a snap in only one degree of freedom (specified by the constraint line).
@@ -852,15 +853,15 @@ void Inkscape::getBBoxPoints(Geom::OptRect const bbox,
         // collect the corners of the bounding box
         for ( unsigned k = 0 ; k < 4 ; k++ ) {
             if (includeCorners) {
-                points->push_back(Inkscape::SnapCandidatePoint(bbox->corner(k), Inkscape::SNAPSOURCE_BBOX_CORNER, 0, Inkscape::SNAPTARGET_BBOX_CORNER, *bbox));
+                points->push_back(Inkscape::SnapCandidatePoint(bbox->corner(k), Inkscape::SNAPSOURCE_BBOX_CORNER, -1, Inkscape::SNAPTARGET_BBOX_CORNER, *bbox));
             }
             // optionally, collect the midpoints of the bounding box's edges too
             if (includeLineMidpoints) {
-                points->push_back(Inkscape::SnapCandidatePoint((bbox->corner(k) + bbox->corner((k+1) % 4))/2, Inkscape::SNAPSOURCE_BBOX_EDGE_MIDPOINT, 0, Inkscape::SNAPTARGET_BBOX_EDGE_MIDPOINT, *bbox));
+                points->push_back(Inkscape::SnapCandidatePoint((bbox->corner(k) + bbox->corner((k+1) % 4))/2, Inkscape::SNAPSOURCE_BBOX_EDGE_MIDPOINT, -1, Inkscape::SNAPTARGET_BBOX_EDGE_MIDPOINT, *bbox));
             }
         }
         if (includeObjectMidpoints) {
-            points->push_back(Inkscape::SnapCandidatePoint(bbox->midpoint(), Inkscape::SNAPSOURCE_BBOX_MIDPOINT, 0, Inkscape::SNAPTARGET_BBOX_MIDPOINT, *bbox));
+            points->push_back(Inkscape::SnapCandidatePoint(bbox->midpoint(), Inkscape::SNAPSOURCE_BBOX_MIDPOINT, -1, Inkscape::SNAPTARGET_BBOX_MIDPOINT, *bbox));
         }
     }
 }

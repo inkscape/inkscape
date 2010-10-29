@@ -47,7 +47,7 @@ Inkscape::SnappedCurve::SnappedCurve()
     _at_intersection = false;
     _fully_constrained = false;
     _source = SNAPSOURCE_UNDEFINED;
-    _source_num = 0;
+    _source_num = -1;
     _target = SNAPTARGET_UNDEFINED;
     _target_bbox = Geom::OptRect();
 }

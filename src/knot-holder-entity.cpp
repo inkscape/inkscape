@@ -110,22 +110,10 @@ KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape:
     m.setup(desktop, true, item);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if ((prefs->getBool("/options/snapmousepointer/value", false))) { // legacy behavior (pre v0.47)
-        // Snapping the mouse pointer instead of the constrained position of the knot allows to snap to
-        // things which don't intersect with the constraint line. This should be handled by the
-        // smart dynamic guides which are yet to be implemented, making this behavior more clean and
-        // transparent. With the current implementation it leads to unexpected results, and it doesn't
-        // allow accurately controlling what is being snapped to.
-
-        // freeSnap() will try snapping point p. This will not take into account the constraint, which
-        // is therefore to be enforced after snap_knot_position_constrained() has finished
-        m.freeSnapReturnByRef(s, Inkscape::SNAPSOURCE_NODE_HANDLE);
-    } else {
-        // constrainedSnap() will first project the point p onto the constraint line and then try to snap along that line.
-        // This way the constraint is already enforced, no need to worry about that later on
-        Inkscape::Snapper::SnapConstraint transformed_constraint = Inkscape::Snapper::SnapConstraint(constraint.getPoint() * i2d, (constraint.getPoint() + constraint.getDirection()) * i2d - constraint.getPoint() * i2d);
-        m.constrainedSnapReturnByRef(s, Inkscape::SNAPSOURCE_NODE_HANDLE, transformed_constraint);
-    }
+    // constrainedSnap() will first project the point p onto the constraint line and then try to snap along that line.
+    // This way the constraint is already enforced, no need to worry about that later on
+    Inkscape::Snapper::SnapConstraint transformed_constraint = Inkscape::Snapper::SnapConstraint(constraint.getPoint() * i2d, (constraint.getPoint() + constraint.getDirection()) * i2d - constraint.getPoint() * i2d);
+    m.constrainedSnapReturnByRef(s, Inkscape::SNAPSOURCE_NODE_HANDLE, transformed_constraint);
     m.unSetup();
 
     return s * i2d.inverse();

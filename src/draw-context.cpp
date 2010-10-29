@@ -42,6 +42,7 @@
 #include "sp-namedview.h"
 #include "live_effects/lpe-patternalongpath.h"
 #include "style.h"
+#include "util/mathfns.h"
 
 static void sp_draw_context_class_init(SPDrawContextClass *klass);
 static void sp_draw_context_init(SPDrawContext *dc);
@@ -468,7 +469,7 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
  *  \param dc draw context
  *  \param p cursor point (to be changed by snapping)
  *  \param o origin point
- *  \param state  keyboard state to check if ctrl was pressed
+ *  \param state  keyboard state to check if ctrl or shift was pressed
 */
 
 void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p, Geom::Point const &o,
@@ -476,43 +477,41 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p,
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     unsigned const snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
-    /* 0 means no snapping. */
 
-    /* mirrored by fabs, so this corresponds to 15 degrees */
-    Geom::Point best; /* best solution */
-    double bn = NR_HUGE; /* best normal */
-    double bdot = 0;
-    Geom::Point v = Geom::Point(0, 1);
-    double const r00 = cos(M_PI / snaps), r01 = sin(M_PI / snaps);
-    double const r10 = -r01, r11 = r00;
+    if (snaps > 0) { // 0 means no snapping
+        // p is at an arbitrary angle. Now we should snap this angle to specific increments.
+        // For this we'll calculate the closest two angles, one at each side of the current angle
+        Geom::Line y_axis(Geom::Point(0, 0), Geom::Point(0, 1));
+        Geom::Line p_line(o, p);
+        double angle = Geom::angle_between(y_axis, p_line);
+        double angle_incr = M_PI / snaps;
+        double angle_ceil = round_to_upper_multiple_plus(angle, angle_incr);
+        double angle_floor = round_to_lower_multiple_plus(angle, angle_incr);
+        // We have to angles now. The constrained snapper will try each of them and return the closest
+        // But first we should setup the snapper
 
-    Geom::Point delta = p - o;
-
-    for (unsigned i = 0; i < snaps; i++) {
-        double const ndot = fabs(dot(v,Geom::rot90(delta)));
-        Geom::Point t(r00*v[Geom::X] + r01*v[Geom::Y],
-                    r10*v[Geom::X] + r11*v[Geom::Y]);
-        if (ndot < bn) {
-            /* I think it is better numerically to use the normal, rather than the dot product
-             * to assess solutions, but I haven't proven it. */
-            bn = ndot;
-            best = v;
-            bdot = dot(v, delta);
+        SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
+        m.setup(SP_EVENT_CONTEXT_DESKTOP(ec));
+        bool snap_enabled = m.snapprefs.getSnapEnabledGlobally();
+        if (state & GDK_SHIFT_MASK) {
+            // SHIFT disables all snapping, except the angular snapping. After all, the user explicitly asked for angular
+            // snapping by pressing CTRL, otherwise we wouldn't have arrived here. But although we temporarily disable
+            // the snapping here, we must still call for a constrained snap in order to apply the constraints (i.e. round
+            // to the nearest angle increment)
+            m.snapprefs.setSnapEnabledGlobally(false);
         }
-        v = t;
-    }
 
-    if (fabs(bdot) > 0) {
-        p = o + bdot * best;
+        // Now do the snapping...
+        std::vector<Inkscape::Snapper::SnapConstraint> constraints;
+        constraints.push_back(Inkscape::Snapper::SnapConstraint(Geom::Line(o, angle_ceil - M_PI/2)));
+        constraints.push_back(Inkscape::Snapper::SnapConstraint(Geom::Line(o, angle_floor - M_PI/2)));
 
-        if (!(state & GDK_SHIFT_MASK)) { //SHIFT disables all snapping, except the angular snapping above
-                                         //After all, the user explicitly asked for angular snapping by
-                                         //pressing CTRL
-            /* Snap it along best vector */
-            SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
-            m.setup(SP_EVENT_CONTEXT_DESKTOP(ec));
-            m.constrainedSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE, Inkscape::Snapper::SnapConstraint(o, best));
-            m.unSetup();
+        Inkscape::SnappedPoint sp = m.multipleConstrainedSnaps(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE), constraints);
+        p = sp.getPoint();
+
+        m.unSetup();
+        if (state & GDK_SHIFT_MASK) {
+            m.snapprefs.setSnapEnabledGlobally(snap_enabled); // restore the original setting
         }
     }
 }
