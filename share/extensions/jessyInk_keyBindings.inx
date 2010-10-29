@@ -18,9 +18,10 @@
 			<param name="slide_addSlide" type="string" _gui-text="Add slide:">n</param>
 			<param name="slide_toggleProgressBar" type="string" _gui-text="Toggle progress bar:">p</param>
 			<param name="slide_resetTimer" type="string" _gui-text="Reset timer:">t</param>
+			<param name="slide_export" type="string" _gui-text="Export presentation:">e</param>
 		</page>
     <page name="settings" _gui-text="Drawing mode">
-			<param name="drawing_switchToSlideMode" type="string" _gui-text="Switch to slide mode:">d</param>
+			<param name="drawing_switchToSlideMode" type="string" _gui-text="Switch to slide mode:">ESCAPE, d</param>
 			<param name="drawing_pathWidthDefault" type="string" _gui-text="Set path width to default:">0</param>
 			<param name="drawing_pathWidth1" type="string" _gui-text="Set path width to 1:">1</param>
 			<param name="drawing_pathWidth3" type="string" _gui-text="Set path width to 3:">3</param>

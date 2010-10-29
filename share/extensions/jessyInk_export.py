@@ -30,6 +30,8 @@ import os
 import zipfile
 import glob
 import re
+import gettext
+_ = gettext.gettext
 
 def propStrToDict(inStr):
 	dictio = {}
@@ -77,7 +79,7 @@ class MyEffect(inkex.Effect):
 		self.inkscapeCommand = self.findInkscapeCommand()
 
 		if (self.inkscapeCommand == None):
-			sys.stderr.write("Could not find Inkscape command.\n")
+			inkex.errormsg(_("Could not find Inkscape command.\n"))
 			sys.exit(1)
 
 	def output(self):
@@ -91,7 +93,7 @@ class MyEffect(inkex.Effect):
 		scriptNodes = self.document.xpath("//svg:script[@jessyink:version]", namespaces=inkex.NSS)
 
 		if len(scriptNodes) != 0:
-			sys.stderr.write("The JessyInk-script is present in this SVG file. This indicates that the presentation has not been properly exported. Please visit code.goolge.com/p/jessyink to find information on how to export a JessyInk presentation.\n\n")
+			inkex.errormsg(_("The JessyInk script is not installed in this SVG file or has a different version than the JessyInk extensions. Please select \"install/update...\" from the \"JessyInk\" sub-menu of the \"Extensions\" menu to install or update the JessyInk script.\n\n"))
 
 		zipFileDesc, zpFile = tempfile.mkstemp(suffix=".zip", prefix="jessyInk__")
 

@@ -60,7 +60,7 @@ class JessyInk_Install(inkex.Effect):
 		scriptElm = inkex.etree.Element(inkex.addNS("script", "svg"))
 		scriptElm.text = open(os.path.join(os.path.dirname(__file__),	"jessyInk.js")).read()
 		scriptElm.set("id","JessyInk")
-		scriptElm.set("{" + inkex.NSS["jessyink"] + "}version", "1.5.1")
+		scriptElm.set("{" + inkex.NSS["jessyink"] + "}version", '1.5.4')
 		self.document.getroot().append(scriptElm)
 
 		# Remove "jessyInkInit()" in the "onload" attribute, if present.

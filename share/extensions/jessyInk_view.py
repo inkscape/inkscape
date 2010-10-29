@@ -25,6 +25,8 @@ sys.path.append('C:\Program Files\Inkscape\share\extensions')
 
 # We will use the inkex module with the predefined Effect base class.
 import inkex
+import gettext
+_ = gettext.gettext
 
 def propStrToList(str):
 	list = []
@@ -59,10 +61,10 @@ class JessyInk_Effects(inkex.Effect):
 
 	def effect(self):
 		# Check version.
-		scriptNodes = self.document.xpath("//svg:script[@jessyink:version='1.5.1']", namespaces=inkex.NSS)
+		scriptNodes = self.document.xpath("//svg:script[@jessyink:version='1.5.4']", namespaces=inkex.NSS)
 
 		if len(scriptNodes) != 1:
-			sys.stderr.write("The JessyInk script is not installed in this SVG file or has a different version than the JessyInk extensions. Please select \"install/update...\" from the \"JessyInk\" sub-menu of the \"Effects\" menu to install or update the JessyInk script.\n\n")
+			inkex.errormsg(_("The JessyInk script is not installed in this SVG file or has a different version than the JessyInk extensions. Please select \"install/update...\" from the \"JessyInk\" sub-menu of the \"Extensions\" menu to install or update the JessyInk script.\n\n"))
 
 		rect = None
 
@@ -70,11 +72,11 @@ class JessyInk_Effects(inkex.Effect):
 			if rect == None:
 				rect = node
 			else:
-				sys.stderr.write("More than one object selected. Please select only one object.\n")
+				inkex.errormsg(_("More than one object selected. Please select only one object.\n"))
 				exit()
 
 		if rect == None:
-			sys.stderr.write("No object selected. Please select the object you want to assign a view to and then press apply.\n")
+			inkex.errormsg(_("No object selected. Please select the object you want to assign a view to and then press apply.\n"))
 			exit()
 
 		if not self.options.removeView:

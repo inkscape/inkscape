@@ -25,10 +25,12 @@ sys.path.append('C:\Program Files\Inkscape\share\extensions')
 
 # We will use the inkex module with the predefined Effect base class.
 import inkex
+import gettext
+_ = gettext.gettext
 
 class	JessyInk_CustomKeyBindings(inkex.Effect):
 	modes = ('slide', 'index', 'drawing')
-	keyCodes = ('LEFT', 'RIGHT', 'DOWN', 'UP', 'HOME', 'END', 'ENTER', 'SPACE', 'PAGE_UP', 'PAGE_DOWN')
+	keyCodes = ('LEFT', 'RIGHT', 'DOWN', 'UP', 'HOME', 'END', 'ENTER', 'SPACE', 'PAGE_UP', 'PAGE_DOWN', 'ESCAPE')
 	slideActions = {}
 	slideCharCodes = {}
 	slideKeyCodes = {}
@@ -57,6 +59,7 @@ class	JessyInk_CustomKeyBindings(inkex.Effect):
 		self.OptionParser.add_option('--slide_addSlide', action = 'callback', type = 'string', callback = self.slideOptions, default = '')
 		self.OptionParser.add_option('--slide_toggleProgressBar', action = 'callback', type = 'string', callback = self.slideOptions, default = '')
 		self.OptionParser.add_option('--slide_resetTimer', action = 'callback', type = 'string', callback = self.slideOptions, default = '')
+		self.OptionParser.add_option('--slide_export', action = 'callback', type = 'string', callback = self.slideOptions, default = '')
 		self.OptionParser.add_option('--drawing_switchToSlideMode', action = 'callback', type = 'string', callback = self.drawingOptions, default = '')
 		self.OptionParser.add_option('--drawing_pathWidthDefault', action = 'callback', type = 'string', callback = self.drawingOptions, default = '')
 		self.OptionParser.add_option('--drawing_pathWidth1', action = 'callback', type = 'string', callback = self.drawingOptions, default = '')
@@ -105,6 +108,7 @@ class	JessyInk_CustomKeyBindings(inkex.Effect):
 		self.slideActions["addSlide"] = "slideAddSlide(activeSlide);"
 		self.slideActions["toggleProgressBar"] = "slideToggleProgressBarVisibility();"
 		self.slideActions["resetTimer"] = "slideResetTimer();"
+		self.slideActions["export"] = "slideUpdateExportLayer();"
 
 		self.drawingActions["switchToSlideMode"] = "drawingSwitchToSlideMode();"
 		self.drawingActions["pathWidthDefault"] = "drawingResetPathWidth();"
@@ -178,10 +182,10 @@ class	JessyInk_CustomKeyBindings(inkex.Effect):
 
 	def effect(self):
 		# Check version.
-		scriptNodes = self.document.xpath("//svg:script[@jessyink:version='1.5.1']", namespaces=inkex.NSS)
+		scriptNodes = self.document.xpath("//svg:script[@jessyink:version='1.5.4']", namespaces=inkex.NSS)
 
 		if len(scriptNodes) != 1:
-			sys.stderr.write("The JessyInk script is not installed in this SVG file or has a different version than the JessyInk extensions. Please select \"install/update...\" from the \"JessyInk\" sub-menu of the \"Effects\" menu to install or update the JessyInk script.\n\n")
+			inkex.errormsg(_("The JessyInk script is not installed in this SVG file or has a different version than the JessyInk extensions. Please select \"install/update...\" from the \"JessyInk\" sub-menu of the \"Extensions\" menu to install or update the JessyInk script.\n\n"))
 
 		# Remove old master slide property
 		for node in self.document.xpath("//svg:g[@jessyink:customKeyBindings='customKeyBindings']", namespaces=inkex.NSS):

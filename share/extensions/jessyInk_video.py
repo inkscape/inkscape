@@ -29,6 +29,8 @@ import os
 import re
 from lxml import etree
 from copy import deepcopy
+import gettext
+_ = gettext.gettext
 
 class JessyInk_Effects(inkex.Effect):
 	def __init__(self):
@@ -41,20 +43,20 @@ class JessyInk_Effects(inkex.Effect):
 
 	def effect(self):
 		# Check version.
-		scriptNodes = self.document.xpath("//svg:script[@jessyink:version='1.5.1']", namespaces=inkex.NSS)
+		scriptNodes = self.document.xpath("//svg:script[@jessyink:version='1.5.4']", namespaces=inkex.NSS)
 
 		if len(scriptNodes) != 1:
-			sys.stderr.write("The JessyInk script is not installed in this SVG file or has a different version than the JessyInk extensions. Please select \"install/update...\" from the \"JessyInk\" sub-menu of the \"Effects\" menu to install or update the JessyInk script.\n\n")
+			inkex.errormsg(_("The JessyInk script is not installed in this SVG file or has a different version than the JessyInk extensions. Please select \"install/update...\" from the \"JessyInk\" sub-menu of the \"Extensions\" menu to install or update the JessyInk script.\n\n"))
 
 		baseView = self.document.xpath("//sodipodi:namedview[@id='base']", namespaces=inkex.NSS)
 
 		if len(baseView) != 1:
-			sys.stderr.write("Could not obtain the selected layer for inclusion of the video element.\n\n")
+			inkex.errormsg(_("Could not obtain the selected layer for inclusion of the video element.\n\n"))
 
 		layer = self.document.xpath("//svg:g[@id='" + baseView[0].attrib["{" + inkex.NSS["inkscape"] + "}current-layer"] + "']", namespaces=inkex.NSS)
 
 		if (len(layer) != 1):
-			sys.stderr.write("Could not obtain the selected layer for inclusion of the video element.\n\n")
+			inkex.errormsg(_("Could not obtain the selected layer for inclusion of the video element.\n\n"))
 
 		# Parse template file.
 		tmplFile = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'jessyInk_video.svg'), 'r')

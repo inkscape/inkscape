@@ -27,6 +27,8 @@ sys.path.append('C:\Program Files\Inkscape\share\extensions')
 
 # We will use the inkex module with the predefined Effect base class.
 import inkex
+import gettext
+_ = gettext.gettext
 
 class	JessyInk_CustomMouseHandler(inkex.Effect):
 	def __init__(self):
@@ -40,10 +42,10 @@ class	JessyInk_CustomMouseHandler(inkex.Effect):
 		
 	def effect(self):
 		# Check version.
-		scriptNodes = self.document.xpath("//svg:script[@jessyink:version='1.5.1']", namespaces=inkex.NSS)
+		scriptNodes = self.document.xpath("//svg:script[@jessyink:version='1.5.4']", namespaces=inkex.NSS)
 
 		if len(scriptNodes) != 1:
-			sys.stderr.write("The JessyInk script is not installed in this SVG file or has a different version than the JessyInk extensions. Please select \"install/update...\" from the \"JessyInk\" sub-menu of the \"Effects\" menu to install or update the JessyInk script.\n\n")
+			inkex.errormsg(_("The JessyInk script is not installed in this SVG file or has a different version than the JessyInk extensions. Please select \"install/update...\" from the \"JessyInk\" sub-menu of the \"Extensions\" menu to install or update the JessyInk script.\n\n"))
 
 		# Remove old mouse handler
 		for node in self.document.xpath("//jessyink:mousehandler", namespaces=inkex.NSS):
