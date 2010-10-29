@@ -282,7 +282,7 @@ sp_export_dialog_area_box (GtkWidget * dlg)
     if (desktop)
         sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us->gobj()), sp_desktop_namedview(desktop)->doc_units);
     unitbox->pack_end(*us, false, false, 0);
-    Gtk::Label* l = new Gtk::Label(_("_Units:"));
+    Gtk::Label* l = new Gtk::Label(_("Units:"));
     unitbox->pack_end(*l, false, false, 3);
     gtk_object_set_data (GTK_OBJECT (dlg), "units", us->gobj());
 
