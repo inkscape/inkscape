@@ -212,7 +212,7 @@ unsigned int sp_shortcut_get_primary(Inkscape::Verb *verb)
     return result;
 }
 
-gchar* sp_shortcut_get_label (unsigned int shortcut)
+gchar *sp_shortcut_get_label(unsigned int shortcut)
 {
     // The comment below was copied from the function sp_ui_shortcut_string in interface.cpp (which was subsequently removed)
     /* TODO: This function shouldn't exist.  Our callers should use GtkAccelLabel instead of
@@ -223,13 +223,16 @@ gchar* sp_shortcut_get_label (unsigned int shortcut)
      * g_object_new(GTK_TYPE_ACCEL_LABEL, NULL) followed by
      * gtk_label_set_text_with_mnemonic(lbl, str).
      */
-    if (shortcut==GDK_VoidSymbol) return 0;
-    return gtk_accelerator_get_label(
-        shortcut&(~SP_SHORTCUT_MODIFIER_MASK),static_cast<GdkModifierType>(
-        ((shortcut&SP_SHORTCUT_SHIFT_MASK)?GDK_SHIFT_MASK:0) |
-        ((shortcut&SP_SHORTCUT_CONTROL_MASK)?GDK_CONTROL_MASK:0) |
-        ((shortcut&SP_SHORTCUT_ALT_MASK)?GDK_MOD1_MASK:0)
-        ));
+    gchar *result = 0;
+    if (shortcut != GDK_VoidSymbol) {
+        result = gtk_accelerator_get_label(
+            shortcut & (~SP_SHORTCUT_MODIFIER_MASK), static_cast<GdkModifierType>(
+                ((shortcut & SP_SHORTCUT_SHIFT_MASK) ? GDK_SHIFT_MASK : 0) |
+                ((shortcut & SP_SHORTCUT_CONTROL_MASK) ? GDK_CONTROL_MASK : 0) |
+                ((shortcut & SP_SHORTCUT_ALT_MASK) ? GDK_MOD1_MASK : 0)
+                ));
+    }
+    return result;
 }
 
 /*
