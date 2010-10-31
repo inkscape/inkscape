@@ -447,7 +447,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
 
     g_object_unref(knot);
 
-    return consumed;
+    return consumed || grabbed;
 }
 
 void sp_knot_handler_request_position(GdkEvent *event, SPKnot *knot)

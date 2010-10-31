@@ -329,7 +329,7 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
             _setState(STATE_CLICKED);
             return true;
         }
-        return false;
+        return _event_grab;
 
     case GDK_2BUTTON_PRESS:
         // store the button number for next release
@@ -452,8 +452,9 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
 
     default: break;
     }
-    
-    return false;
+
+    // do not propagate events during grab - it might cause problems
+    return _event_grab;
 }
 
 void ControlPoint::_setMouseover(ControlPoint *p, unsigned state)
