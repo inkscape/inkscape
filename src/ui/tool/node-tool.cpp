@@ -25,6 +25,7 @@
 #include "sp-mask.h"
 #include "sp-object-group.h"
 #include "sp-path.h"
+#include "sp-text.h"
 #include "ui/tool/node-tool.h"
 #include "ui/tool/control-point-selection.h"
 #include "ui/tool/curve-drag-point.h"
@@ -197,10 +198,6 @@ void ink_node_tool_dispose(GObject *object)
     if (nt->_node_message_context) {
         delete nt->_node_message_context;
     }
-    if (nt->shape_editor) {
-        nt->shape_editor->unset_item(SH_KNOTHOLDER);
-        delete nt->shape_editor;
-    }
 
     G_OBJECT_CLASS(g_type_class_peek(g_type_parent(INK_TYPE_NODE_TOOL)))->dispose(object);
 }
@@ -283,9 +280,6 @@ void ink_node_tool_setup(SPEventContext *ec)
     nt->flash_tempitem = NULL;
     nt->flashed_item = NULL;
     nt->_last_over = NULL;
-    // TODO long term, fold ShapeEditor into MultiPathManipulator and rename MPM
-    // to something better
-    //nt->shape_editor = new ShapeEditor(nt->desktop);
 
     // read prefs before adding items to selection to prevent momentarily showing the outline
     sp_event_context_read(nt, "show_handles");
@@ -405,19 +399,28 @@ void ink_node_tool_selection_changed(InkNodeTool *nt, Inkscape::Selection *sel)
         }
     }
 
-    nt->_shape_editors.clear();
-
     // use multiple ShapeEditors for now, to allow editing many shapes at once
     // needs to be rethought
+    for (ShapeEditors::iterator i = nt->_shape_editors.begin();
+         i != nt->_shape_editors.end(); )
+    {
+        ShapeRecord s;
+        s.item = i->first;
+        if (shapes.find(s) == shapes.end()) {
+            nt->_shape_editors.erase(i++);
+        } else {
+            ++i;
+        }
+    }
 
     for (std::set<ShapeRecord>::iterator i = shapes.begin(); i != shapes.end(); ++i) {
         ShapeRecord const &r = *i;
-        if (SP_IS_SHAPE(r.item))
+        if ((SP_IS_SHAPE(r.item) || SP_IS_TEXT(r.item)) &&
+            nt->_shape_editors.find(r.item) == nt->_shape_editors.end())
         {
             ShapeEditor *si = new ShapeEditor(nt->desktop);
             si->set_item(r.item, SH_KNOTHOLDER);
-            nt->_shape_editors.push_back(si);
-            //nt->shape_editor->set_item(r.item, SH_KNOTHOLDER);
+            nt->_shape_editors.insert(const_cast<SPItem*&>(r.item), si);
         }
     }
 

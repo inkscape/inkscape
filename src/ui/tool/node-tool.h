@@ -12,7 +12,7 @@
 #define SEEN_UI_TOOL_NODE_TOOL_H
 
 #include <memory>
-#include <boost/ptr_container/ptr_vector.hpp>
+#include <boost/ptr_container/ptr_map.hpp>
 #include <glib.h>
 #include <sigc++/sigc++.h>
 #include "event-context.h"
@@ -42,7 +42,7 @@ typedef std::auto_ptr<Inkscape::UI::MultiPathManipulator> MultiPathPtr;
 typedef std::auto_ptr<Inkscape::UI::ControlPointSelection> CSelPtr;
 typedef std::auto_ptr<Inkscape::UI::Selector> SelectorPtr;
 typedef std::auto_ptr<Inkscape::UI::PathSharedData> PathSharedDataPtr;
-typedef boost::ptr_vector<ShapeEditor> ShapeEditors;
+typedef boost::ptr_map<SPItem*, ShapeEditor> ShapeEditors;
 
 struct InkNodeTool : public SPEventContext
 {
