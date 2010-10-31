@@ -164,6 +164,7 @@ void ink_node_tool_init(InkNodeTool *nt)
     new (&nt->_multipath) MultiPathPtr();
     new (&nt->_selector) SelectorPtr();
     new (&nt->_path_data) PathSharedDataPtr();
+    new (&nt->_shape_editors) ShapeEditors();
 }
 
 void ink_node_tool_dispose(GObject *object)
@@ -178,6 +179,7 @@ void ink_node_tool_dispose(GObject *object)
     nt->_multipath.~MultiPathPtr();
     nt->_selected_nodes.~CSelPtr();
     nt->_selector.~SelectorPtr();
+    nt->_shape_editors.~ShapeEditors();
     
     Inkscape::UI::PathSharedData &data = *nt->_path_data;
     destroy_group(data.node_data.node_group);
@@ -283,7 +285,7 @@ void ink_node_tool_setup(SPEventContext *ec)
     nt->_last_over = NULL;
     // TODO long term, fold ShapeEditor into MultiPathManipulator and rename MPM
     // to something better
-    nt->shape_editor = new ShapeEditor(nt->desktop);
+    //nt->shape_editor = new ShapeEditor(nt->desktop);
 
     // read prefs before adding items to selection to prevent momentarily showing the outline
     sp_event_context_read(nt, "show_handles");
@@ -403,21 +405,20 @@ void ink_node_tool_selection_changed(InkNodeTool *nt, Inkscape::Selection *sel)
         }
     }
 
-    // ugly hack: set the first editable non-path item for knotholder
-    // maybe use multiple ShapeEditors for now, to allow editing many shapes at once?
-    bool something_set = false;
+    nt->_shape_editors.clear();
+
+    // use multiple ShapeEditors for now, to allow editing many shapes at once
+    // needs to be rethought
+
     for (std::set<ShapeRecord>::iterator i = shapes.begin(); i != shapes.end(); ++i) {
         ShapeRecord const &r = *i;
-        if (SP_IS_SHAPE(r.item) ||
-            (SP_IS_PATH(r.item) && r.item->repr->attribute("inkscape:original-d") != NULL))
+        if (SP_IS_SHAPE(r.item))
         {
-            nt->shape_editor->set_item(r.item, SH_KNOTHOLDER);
-            something_set = true;
-            break;
+            ShapeEditor *si = new ShapeEditor(nt->desktop);
+            si->set_item(r.item, SH_KNOTHOLDER);
+            nt->_shape_editors.push_back(si);
+            //nt->shape_editor->set_item(r.item, SH_KNOTHOLDER);
         }
-    }
-    if (!something_set) {
-        nt->shape_editor->unset_item(SH_KNOTHOLDER);
     }
 
     nt->_multipath->setItems(shapes);
