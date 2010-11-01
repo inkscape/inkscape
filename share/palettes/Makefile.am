@@ -21,6 +21,20 @@ palettes_DATA = \
     Ubuntu.gpl \
     webhex.gpl \
     websafe22.gpl \
-    windowsXP.gpl     
+    windowsXP.gpl \
+    palettes.h
 
-EXTRA_DIST = $(palettes_DATA)
+palettes_i18n = \
+    echo-palette.gpl \
+    inkscape.gpl \
+    LaTeX-Beamer.gpl \
+    svg.gpl \
+    Tango-Palette.gpl \
+    Ubuntu.gpl
+
+palettes.h: i18n.py $(palettes_i18n)
+	$(srcdir)/i18n.py $(palettes_i18n) > $(srcdir)/palettes.h
+
+EXTRA_DIST = $(palettes_DATA) \
+             i18n.py
+             

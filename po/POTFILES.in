@@ -158,8 +158,9 @@ share/extensions/svg_and_media_zip_output.py
 share/extensions/uniconv_output.py
 share/extensions/web-set-att.py
 share/extensions/web-transmit-att.py
-share/filters/filters.svg.h
 share/filters/i18n.py
+share/filters/filters.svg.h
+share/palettes/palettes.h
 share/patterns/i18n.py
 share/patterns/patterns.svg.h
 src/conn-avoid-ref.cpp

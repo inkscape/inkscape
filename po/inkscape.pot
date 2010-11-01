@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-27 23:28+0200\n"
+"POT-Creation-Date: 2010-11-01 09:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -219,7 +219,7 @@ msgstr ""
 #: ../share/extensions/jessyInk_effects.inx.h:7
 #: ../share/extensions/jessyInk_export.inx.h:2
 #: ../share/extensions/jessyInk_install.inx.h:1
-#: ../share/extensions/jessyInk_keyBindings.inx.h:7
+#: ../share/extensions/jessyInk_keyBindings.inx.h:8
 #: ../share/extensions/jessyInk_masterSlide.inx.h:1
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:3
 #: ../share/extensions/jessyInk_summary.inx.h:1
@@ -1674,7 +1674,7 @@ msgstr ""
 #: ../share/extensions/jessyInk_autoTexts.inx.h:4
 #: ../share/extensions/jessyInk_effects.inx.h:8
 #: ../share/extensions/jessyInk_install.inx.h:3
-#: ../share/extensions/jessyInk_keyBindings.inx.h:10
+#: ../share/extensions/jessyInk_keyBindings.inx.h:11
 #: ../share/extensions/jessyInk_masterSlide.inx.h:3
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:4
 #: ../share/extensions/jessyInk_summary.inx.h:2
@@ -1845,156 +1845,160 @@ msgid "Drawing mode"
 msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:6
+msgid "Export presentation:"
+msgstr ""
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:7
 msgid "First slide:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:8
+#: ../share/extensions/jessyInk_keyBindings.inx.h:9
 msgid "Increase number of columns:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:9
+#: ../share/extensions/jessyInk_keyBindings.inx.h:10
 msgid "Index mode"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:11
+#: ../share/extensions/jessyInk_keyBindings.inx.h:12
 msgid "Key bindings"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:12
+#: ../share/extensions/jessyInk_keyBindings.inx.h:13
 msgid "Last slide:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:13
+#: ../share/extensions/jessyInk_keyBindings.inx.h:14
 msgid "Next (with effects):"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:14
+#: ../share/extensions/jessyInk_keyBindings.inx.h:15
 msgid "Next (without effects):"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:15
+#: ../share/extensions/jessyInk_keyBindings.inx.h:16
 msgid "Next page:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:16
+#: ../share/extensions/jessyInk_keyBindings.inx.h:17
 msgid "Previous page:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:17
+#: ../share/extensions/jessyInk_keyBindings.inx.h:18
 msgid "Reset timer:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:18
+#: ../share/extensions/jessyInk_keyBindings.inx.h:19
 msgid "Select the slide above:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:19
+#: ../share/extensions/jessyInk_keyBindings.inx.h:20
 msgid "Select the slide below:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:20
+#: ../share/extensions/jessyInk_keyBindings.inx.h:21
 msgid "Select the slide to the left:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:21
+#: ../share/extensions/jessyInk_keyBindings.inx.h:22
 msgid "Select the slide to the right:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:22
+#: ../share/extensions/jessyInk_keyBindings.inx.h:23
 msgid "Set duration:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:23
+#: ../share/extensions/jessyInk_keyBindings.inx.h:24
 msgid "Set number of columns to default:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:24
+#: ../share/extensions/jessyInk_keyBindings.inx.h:25
 msgid "Set path color to black:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:25
+#: ../share/extensions/jessyInk_keyBindings.inx.h:26
 msgid "Set path color to blue:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:26
+#: ../share/extensions/jessyInk_keyBindings.inx.h:27
 msgid "Set path color to cyan:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:27
+#: ../share/extensions/jessyInk_keyBindings.inx.h:28
 msgid "Set path color to green:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:28
+#: ../share/extensions/jessyInk_keyBindings.inx.h:29
 msgid "Set path color to magenta:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:29
+#: ../share/extensions/jessyInk_keyBindings.inx.h:30
 msgid "Set path color to orange:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:30
+#: ../share/extensions/jessyInk_keyBindings.inx.h:31
 msgid "Set path color to red:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:31
+#: ../share/extensions/jessyInk_keyBindings.inx.h:32
 msgid "Set path color to white:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:32
+#: ../share/extensions/jessyInk_keyBindings.inx.h:33
 msgid "Set path color to yellow:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:33
+#: ../share/extensions/jessyInk_keyBindings.inx.h:34
 msgid "Set path width to 1:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:34
+#: ../share/extensions/jessyInk_keyBindings.inx.h:35
 msgid "Set path width to 3:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:35
+#: ../share/extensions/jessyInk_keyBindings.inx.h:36
 msgid "Set path width to 5:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:36
+#: ../share/extensions/jessyInk_keyBindings.inx.h:37
 msgid "Set path width to 7:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:37
+#: ../share/extensions/jessyInk_keyBindings.inx.h:38
 msgid "Set path width to 9:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:38
+#: ../share/extensions/jessyInk_keyBindings.inx.h:39
 msgid "Set path width to default:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:39
+#: ../share/extensions/jessyInk_keyBindings.inx.h:40
 msgid "Slide mode"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:40
+#: ../share/extensions/jessyInk_keyBindings.inx.h:41
 msgid "Switch to drawing mode:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:41
+#: ../share/extensions/jessyInk_keyBindings.inx.h:42
 msgid "Switch to index mode:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:42
+#: ../share/extensions/jessyInk_keyBindings.inx.h:43
 msgid "Switch to slide mode:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:43
+#: ../share/extensions/jessyInk_keyBindings.inx.h:44
 msgid ""
 "This extension allows you customise the key bindings JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:44
+#: ../share/extensions/jessyInk_keyBindings.inx.h:45
 msgid "Toggle progress bar:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:45
+#: ../share/extensions/jessyInk_keyBindings.inx.h:46
 msgid "Undo last path segment:"
 msgstr ""
 
@@ -6313,6 +6317,1575 @@ msgstr ""
 msgid "Create a tritone palette with hue selectable by flood"
 msgstr ""
 
+#. Palette: ./i18n.py
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:6
+msgid "Blue1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:7
+msgid "Blue2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:8
+msgid "Blue3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:9
+msgid "Red1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:10
+msgid "Red2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:11
+msgid "Red3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:12
+msgid "Orange1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:13
+msgid "Orange2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:14
+msgid "Orange3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:15
+msgid "Brown1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:16
+msgid "Brown2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:17
+msgid "Brown3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:18
+msgid "Green1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:19
+msgid "Green2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:20
+msgid "Green3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:21
+msgid "Purple1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:22
+msgid "Purple2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:23
+msgid "Purple3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:24
+msgid "Metalic1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:25
+msgid "Metalic2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:26
+msgid "Metalic3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:27
+msgid "Metalic4"
+msgstr ""
+
+#: ../share/palettes/palettes.h:28
+msgid "Grey1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:29
+msgid "Grey2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:30
+msgid "Grey3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:31
+msgid "Grey4"
+msgstr ""
+
+#: ../share/palettes/palettes.h:32
+msgid "Grey5"
+msgstr ""
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:35 ../share/palettes/palettes.h:408
+#: ../src/ui/widget/selected-style.cpp:236
+#: ../src/widgets/sp-color-icc-selector.cpp:238
+#: ../src/widgets/sp-color-scales.cpp:468
+#: ../src/widgets/sp-color-scales.cpp:469
+msgid "Black"
+msgstr ""
+
+#: ../share/palettes/palettes.h:36
+#, c-format
+msgid "90% Gray"
+msgstr ""
+
+#: ../share/palettes/palettes.h:37
+#, c-format
+msgid "80% Gray"
+msgstr ""
+
+#: ../share/palettes/palettes.h:38
+#, c-format
+msgid "70% Gray"
+msgstr ""
+
+#: ../share/palettes/palettes.h:39
+#, c-format
+msgid "60% Gray"
+msgstr ""
+
+#: ../share/palettes/palettes.h:40
+#, c-format
+msgid "50% Gray"
+msgstr ""
+
+#: ../share/palettes/palettes.h:41
+#, c-format
+msgid "40% Gray"
+msgstr ""
+
+#: ../share/palettes/palettes.h:42
+#, c-format
+msgid "30% Gray"
+msgstr ""
+
+#: ../share/palettes/palettes.h:43
+#, c-format
+msgid "20% Gray"
+msgstr ""
+
+#: ../share/palettes/palettes.h:44
+#, c-format
+msgid "10% Gray"
+msgstr ""
+
+#: ../share/palettes/palettes.h:45
+#, c-format
+msgid "7.5% Gray"
+msgstr ""
+
+#: ../share/palettes/palettes.h:46
+#, c-format
+msgid "5% Gray"
+msgstr ""
+
+#: ../share/palettes/palettes.h:47
+#, c-format
+msgid "2.5% Gray"
+msgstr ""
+
+#: ../share/palettes/palettes.h:48 ../src/ui/widget/selected-style.cpp:232
+msgid "White"
+msgstr ""
+
+#: ../share/palettes/palettes.h:49
+msgid "Maroon (#800000)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:50
+msgid "Red (#FF0000)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:51
+msgid "Olive (#808000)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:52
+msgid "Yellow (#FFFF00)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:53
+msgid "Green (#008000)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:54
+msgid "Lime (#00FF00)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:55
+msgid "Teal (#008080)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:56
+msgid "Aqua (#00FFFF)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:57
+msgid "Navy (#000080)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:58
+msgid "Blue (#0000FF)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:59
+msgid "Purple (#800080)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:60
+msgid "Fuchsia (#FF00FF)"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:63
+msgid "default outer 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:64
+msgid "default outer 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:65
+msgid "default outer 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:66
+msgid "default block"
+msgstr ""
+
+#: ../share/palettes/palettes.h:67
+msgid "default added blue"
+msgstr ""
+
+#: ../share/palettes/palettes.h:68
+msgid "default block header"
+msgstr ""
+
+#: ../share/palettes/palettes.h:69
+msgid "default alert block"
+msgstr ""
+
+#: ../share/palettes/palettes.h:70
+msgid "default added red"
+msgstr ""
+
+#: ../share/palettes/palettes.h:71
+msgid "default alert block header"
+msgstr ""
+
+#: ../share/palettes/palettes.h:72
+msgid "default example block"
+msgstr ""
+
+#: ../share/palettes/palettes.h:73
+msgid "default added green"
+msgstr ""
+
+#: ../share/palettes/palettes.h:74
+msgid "default example block header"
+msgstr ""
+
+#: ../share/palettes/palettes.h:75
+msgid "default covered text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:76
+msgid "default covered bullet"
+msgstr ""
+
+#: ../share/palettes/palettes.h:77
+msgid "default background"
+msgstr ""
+
+#: ../share/palettes/palettes.h:78
+msgid "default text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:79
+msgid "default light outer 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:80
+msgid "default light outer 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:81
+msgid "default light outer 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:82
+msgid "default light block"
+msgstr ""
+
+#: ../share/palettes/palettes.h:83
+msgid "default light block header"
+msgstr ""
+
+#: ../share/palettes/palettes.h:84
+msgid "default light block header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:85
+msgid "default light alert block"
+msgstr ""
+
+#: ../share/palettes/palettes.h:86
+msgid "default light alert block header"
+msgstr ""
+
+#: ../share/palettes/palettes.h:87
+msgid "default light alert block header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:88
+msgid "default light example block"
+msgstr ""
+
+#: ../share/palettes/palettes.h:89
+msgid "default light example block header"
+msgstr ""
+
+#: ../share/palettes/palettes.h:90
+msgid "default light example block header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:91
+msgid "default light covered text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:92
+msgid "default light covered bullet"
+msgstr ""
+
+#: ../share/palettes/palettes.h:93
+msgid "default light background"
+msgstr ""
+
+#: ../share/palettes/palettes.h:94
+msgid "default light text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:95
+msgid "beetle outer 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:96
+msgid "beetle outer 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:97
+msgid "beetle outer 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:98 ../share/palettes/palettes.h:99
+#: ../share/palettes/palettes.h:100
+msgid "beetle added blue"
+msgstr ""
+
+#: ../share/palettes/palettes.h:101
+msgid "beetle added red"
+msgstr ""
+
+#: ../share/palettes/palettes.h:102
+msgid "beetle alert block header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:103
+msgid "beetle added green"
+msgstr ""
+
+#: ../share/palettes/palettes.h:104
+msgid "beetle example block header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:105
+msgid "beetle header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:106 ../share/palettes/palettes.h:110
+msgid "beetle added grey"
+msgstr ""
+
+#: ../share/palettes/palettes.h:107
+msgid "beetle covered bullet"
+msgstr ""
+
+#: ../share/palettes/palettes.h:108
+msgid "beetle background"
+msgstr ""
+
+#: ../share/palettes/palettes.h:109
+msgid "beetle covered text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:111
+msgid "beetle text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:112
+msgid "albatross outer 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:113
+msgid "albatross outer 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:114
+msgid "albatross outer 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:115
+msgid "albatross background"
+msgstr ""
+
+#: ../share/palettes/palettes.h:116
+msgid "albatross block"
+msgstr ""
+
+#: ../share/palettes/palettes.h:117
+msgid "albatross block header"
+msgstr ""
+
+#: ../share/palettes/palettes.h:118
+msgid "albatross header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:119
+msgid "albatross bullet"
+msgstr ""
+
+#: ../share/palettes/palettes.h:120
+msgid "albatross covered bullet"
+msgstr ""
+
+#: ../share/palettes/palettes.h:121
+msgid "albatross covered text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:122
+msgid "albatross added red"
+msgstr ""
+
+#: ../share/palettes/palettes.h:123
+msgid "albatross alert block header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:124
+msgid "albatross added green"
+msgstr ""
+
+#: ../share/palettes/palettes.h:125
+msgid "albatross example block header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:126
+msgid "albatross text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:127
+msgid "albatross added yellow"
+msgstr ""
+
+#: ../share/palettes/palettes.h:128
+msgid "albatross added white"
+msgstr ""
+
+#: ../share/palettes/palettes.h:129
+msgid "fly text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:130 ../share/palettes/palettes.h:133
+msgid "fly added grey"
+msgstr ""
+
+#: ../share/palettes/palettes.h:131
+msgid "fly outer"
+msgstr ""
+
+#: ../share/palettes/palettes.h:132
+msgid "fly background"
+msgstr ""
+
+#: ../share/palettes/palettes.h:134
+msgid "fly header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:135
+msgid "fly covered bullet"
+msgstr ""
+
+#: ../share/palettes/palettes.h:136
+msgid "fly covered text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:137
+msgid "fly added red"
+msgstr ""
+
+#: ../share/palettes/palettes.h:138
+msgid "fly alert block header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:139
+msgid "fly added green"
+msgstr ""
+
+#: ../share/palettes/palettes.h:140
+msgid "fly example block header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:141
+msgid "fly added blue"
+msgstr ""
+
+#: ../share/palettes/palettes.h:142
+msgid "fly added default blue"
+msgstr ""
+
+#: ../share/palettes/palettes.h:143
+msgid "seagull outer 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:144
+msgid "seagull outer 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:145
+msgid "seagull outer 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:146
+msgid "seagull block"
+msgstr ""
+
+#: ../share/palettes/palettes.h:147
+msgid "seagull added grey"
+msgstr ""
+
+#: ../share/palettes/palettes.h:148
+msgid "seagull block header"
+msgstr ""
+
+#: ../share/palettes/palettes.h:149
+msgid "seagull covered text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:150
+msgid "seagull covered bullet"
+msgstr ""
+
+#: ../share/palettes/palettes.h:151
+msgid "seagull background"
+msgstr ""
+
+#: ../share/palettes/palettes.h:152
+msgid "seagull text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:153
+msgid "beaver outer frame"
+msgstr ""
+
+#: ../share/palettes/palettes.h:154 ../share/palettes/palettes.h:155
+#: ../share/palettes/palettes.h:163
+msgid "beaver added red"
+msgstr ""
+
+#: ../share/palettes/palettes.h:156
+msgid "beaver outer 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:157
+msgid "beaver outer 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:158
+msgid "beaver outer 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:159
+msgid "beaver added blue"
+msgstr ""
+
+#: ../share/palettes/palettes.h:160
+msgid "beaver block header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:161
+msgid "beaver added green"
+msgstr ""
+
+#: ../share/palettes/palettes.h:162
+msgid "beaver example block header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:164
+msgid "beaver alert block header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:165
+msgid "beaver covered text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:166
+msgid "beaver covered bullet"
+msgstr ""
+
+#: ../share/palettes/palettes.h:167
+msgid "beaver background"
+msgstr ""
+
+#: ../share/palettes/palettes.h:168
+msgid "beaver text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:169
+msgid "crane outer 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:170
+msgid "crane outer 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:171
+msgid "crane outer 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:172
+msgid "crane block"
+msgstr ""
+
+#: ../share/palettes/palettes.h:173
+msgid "crane added orange"
+msgstr ""
+
+#: ../share/palettes/palettes.h:174
+msgid "crane block header"
+msgstr ""
+
+#: ../share/palettes/palettes.h:175
+msgid "crane alert block"
+msgstr ""
+
+#: ../share/palettes/palettes.h:176
+msgid "crane added red"
+msgstr ""
+
+#: ../share/palettes/palettes.h:177
+msgid "crane alert block header"
+msgstr ""
+
+#: ../share/palettes/palettes.h:178
+msgid "crane example block"
+msgstr ""
+
+#: ../share/palettes/palettes.h:179
+msgid "crane added green"
+msgstr ""
+
+#: ../share/palettes/palettes.h:180
+msgid "crane example block header"
+msgstr ""
+
+#: ../share/palettes/palettes.h:181
+msgid "crane covered text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:182
+msgid "crane covered bullet"
+msgstr ""
+
+#: ../share/palettes/palettes.h:183
+msgid "crane bullet"
+msgstr ""
+
+#: ../share/palettes/palettes.h:184
+msgid "crane background"
+msgstr ""
+
+#: ../share/palettes/palettes.h:185
+msgid "crane text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:186
+msgid "wolverine outer 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:187
+msgid "wolverine outer 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:188
+msgid "wolverine outer 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:189
+msgid "wolverine outer 4"
+msgstr ""
+
+#: ../share/palettes/palettes.h:190
+msgid "wolverine added yellow"
+msgstr ""
+
+#: ../share/palettes/palettes.h:191
+msgid "wolverine added blue"
+msgstr ""
+
+#: ../share/palettes/palettes.h:192
+msgid "wolverine header text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:193
+msgid "wolverine added green"
+msgstr ""
+
+#: ../share/palettes/palettes.h:194
+msgid "wolverine example block title"
+msgstr ""
+
+#: ../share/palettes/palettes.h:195
+msgid "wolverine covered text"
+msgstr ""
+
+#: ../share/palettes/palettes.h:196
+msgid "wolverine covered bullet"
+msgstr ""
+
+#: ../share/palettes/palettes.h:197
+msgid "wolverine background"
+msgstr ""
+
+#: ../share/palettes/palettes.h:198
+msgid "wolverine text"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:201
+msgid "black (#000000)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:202
+msgid "dimgray (#696969)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:203
+msgid "gray (#808080)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:204
+msgid "darkgray (#A9A9A9)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:205
+msgid "silver (#C0C0C0)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:206
+msgid "lightgray (#D3D3D3)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:207
+msgid "gainsboro (#DCDCDC)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:208
+msgid "whitesmoke (#F5F5F5)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:209
+msgid "white (#FFFFFF)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:210
+msgid "rosybrown (#BC8F8F)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:211
+msgid "indianred (#CD5C5C)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:212
+msgid "brown (#A52A2A)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:213
+msgid "firebrick (#B22222)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:214
+msgid "lightcoral (#F08080)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:215
+msgid "maroon (#800000)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:216
+msgid "darkred (#8B0000)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:217
+msgid "red (#FF0000)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:218
+msgid "snow (#FFFAFA)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:219
+msgid "mistyrose (#FFE4E1)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:220
+msgid "salmon (#FA8072)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:221
+msgid "tomato (#FF6347)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:222
+msgid "darksalmon (#E9967A)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:223
+msgid "coral (#FF7F50)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:224
+msgid "orangered (#FF4500)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:225
+msgid "lightsalmon (#FFA07A)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:226
+msgid "sienna (#A0522D)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:227
+msgid "seashell (#FFF5EE)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:228
+msgid "chocolate (#D2691E)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:229
+msgid "saddlebrown (#8B4513)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:230
+msgid "sandybrown (#F4A460)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:231
+msgid "peachpuff (#FFDAB9)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:232
+msgid "peru (#CD853F)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:233
+msgid "linen (#FAF0E6)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:234
+msgid "bisque (#FFE4C4)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:235
+msgid "darkorange (#FF8C00)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:236
+msgid "burlywood (#DEB887)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:237
+msgid "tan (#D2B48C)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:238
+msgid "antiquewhite (#FAEBD7)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:239
+msgid "navajowhite (#FFDEAD)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:240
+msgid "blanchedalmond (#FFEBCD)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:241
+msgid "papayawhip (#FFEFD5)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:242
+msgid "moccasin (#FFE4B5)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:243
+msgid "orange (#FFA500)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:244
+msgid "wheat (#F5DEB3)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:245
+msgid "oldlace (#FDF5E6)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:246
+msgid "floralwhite (#FFFAF0)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:247
+msgid "darkgoldenrod (#B8860B)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:248
+msgid "goldenrod (#DAA520)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:249
+msgid "cornsilk (#FFF8DC)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:250
+msgid "gold (#FFD700)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:251
+msgid "khaki (#F0E68C)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:252
+msgid "lemonchiffon (#FFFACD)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:253
+msgid "palegoldenrod (#EEE8AA)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:254
+msgid "darkkhaki (#BDB76B)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:255
+msgid "beige (#F5F5DC)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:256
+msgid "lightgoldenrodyellow (#FAFAD2)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:257
+msgid "olive (#808000)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:258
+msgid "yellow (#FFFF00)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:259
+msgid "lightyellow (#FFFFE0)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:260
+msgid "ivory (#FFFFF0)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:261
+msgid "olivedrab (#6B8E23)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:262
+msgid "yellowgreen (#9ACD32)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:263
+msgid "darkolivegreen (#556B2F)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:264
+msgid "greenyellow (#ADFF2F)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:265
+msgid "chartreuse (#7FFF00)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:266
+msgid "lawngreen (#7CFC00)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:267
+msgid "darkseagreen (#8FBC8F)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:268
+msgid "forestgreen (#228B22)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:269
+msgid "limegreen (#32CD32)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:270
+msgid "lightgreen (#90EE90)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:271
+msgid "palegreen (#98FB98)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:272
+msgid "darkgreen (#006400)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:273
+msgid "green (#008000)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:274
+msgid "lime (#00FF00)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:275
+msgid "honeydew (#F0FFF0)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:276
+msgid "seagreen (#2E8B57)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:277
+msgid "mediumseagreen (#3CB371)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:278
+msgid "springgreen (#00FF7F)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:279
+msgid "mintcream (#F5FFFA)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:280
+msgid "mediumspringgreen (#00FA9A)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:281
+msgid "mediumaquamarine (#66CDAA)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:282
+msgid "aquamarine (#7FFFD4)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:283
+msgid "turquoise (#40E0D0)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:284
+msgid "lightseagreen (#20B2AA)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:285
+msgid "mediumturquoise (#48D1CC)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:286
+msgid "darkslategray (#2F4F4F)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:287
+msgid "paleturquoise (#AFEEEE)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:288
+msgid "teal (#008080)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:289
+msgid "darkcyan (#008B8B)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:290
+msgid "cyan (#00FFFF)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:291
+msgid "lightcyan (#E0FFFF)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:292
+msgid "azure (#F0FFFF)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:293
+msgid "darkturquoise (#00CED1)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:294
+msgid "cadetblue (#5F9EA0)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:295
+msgid "powderblue (#B0E0E6)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:296
+msgid "lightblue (#ADD8E6)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:297
+msgid "deepskyblue (#00BFFF)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:298
+msgid "skyblue (#87CEEB)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:299
+msgid "lightskyblue (#87CEFA)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:300
+msgid "steelblue (#4682B4)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:301
+msgid "aliceblue (#F0F8FF)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:302
+msgid "dodgerblue (#1E90FF)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:303
+msgid "slategray (#708090)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:304
+msgid "lightslategray (#778899)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:305
+msgid "lightsteelblue (#B0C4DE)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:306
+msgid "cornflowerblue (#6495ED)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:307
+msgid "royalblue (#4169E1)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:308
+msgid "midnightblue (#191970)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:309
+msgid "lavender (#E6E6FA)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:310
+msgid "navy (#000080)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:311
+msgid "darkblue (#00008B)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:312
+msgid "mediumblue (#0000CD)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:313
+msgid "blue (#0000FF)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:314
+msgid "ghostwhite (#F8F8FF)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:315
+msgid "slateblue (#6A5ACD)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:316
+msgid "darkslateblue (#483D8B)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:317
+msgid "mediumslateblue (#7B68EE)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:318
+msgid "mediumpurple (#9370DB)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:319
+msgid "blueviolet (#8A2BE2)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:320
+msgid "indigo (#4B0082)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:321
+msgid "darkorchid (#9932CC)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:322
+msgid "darkviolet (#9400D3)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:323
+msgid "mediumorchid (#BA55D3)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:324
+msgid "thistle (#D8BFD8)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:325
+msgid "plum (#DDA0DD)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:326
+msgid "violet (#EE82EE)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:327
+msgid "purple (#800080)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:328
+msgid "darkmagenta (#8B008B)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:329
+msgid "magenta (#FF00FF)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:330
+msgid "orchid (#DA70D6)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:331
+msgid "mediumvioletred (#C71585)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:332
+msgid "deeppink (#FF1493)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:333
+msgid "hotpink (#FF69B4)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:334
+msgid "lavenderblush (#FFF0F5)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:335
+msgid "palevioletred (#DB7093)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:336
+msgid "crimson (#DC143C)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:337
+msgid "pink (#FFC0CB)"
+msgstr ""
+
+#: ../share/palettes/palettes.h:338
+msgid "lightpink (#FFB6C1)"
+msgstr ""
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:341
+msgid "Butter 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:342
+msgid "Butter 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:343
+msgid "Butter 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:344
+msgid "Chameleon 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:345
+msgid "Chameleon 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:346
+msgid "Chameleon 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:347
+msgid "Orange 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:348
+msgid "Orange 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:349
+msgid "Orange 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:350
+msgid "Sky Blue 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:351
+msgid "Sky Blue 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:352
+msgid "Sky Blue 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:353
+msgid "Plum 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:354
+msgid "Plum 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:355
+msgid "Plum 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:356
+msgid "Chocolate 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:357
+msgid "Chocolate 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:358
+msgid "Chocolate 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:359
+msgid "Scarlet Red 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:360
+msgid "Scarlet Red 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:361
+msgid "Scarlet Red 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:362
+msgid "Aluminium 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:363
+msgid "Aluminium 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:364
+msgid "Aluminium 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:365
+msgid "Aluminium 4"
+msgstr ""
+
+#: ../share/palettes/palettes.h:366
+msgid "Aluminium 5"
+msgstr ""
+
+#: ../share/palettes/palettes.h:367
+msgid "Aluminium 6"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:370
+msgid "Orange Hilight"
+msgstr ""
+
+#: ../share/palettes/palettes.h:371
+msgid "Orange"
+msgstr ""
+
+#: ../share/palettes/palettes.h:372
+msgid "Orange Base"
+msgstr ""
+
+#: ../share/palettes/palettes.h:373
+msgid "Orange Shadow"
+msgstr ""
+
+#: ../share/palettes/palettes.h:374
+msgid "Accent Yellow Highlight"
+msgstr ""
+
+#: ../share/palettes/palettes.h:375
+#: ../src/widgets/sp-color-icc-selector.cpp:238
+#: ../src/widgets/sp-color-icc-selector.cpp:239
+#: ../src/widgets/sp-color-scales.cpp:465
+#: ../src/widgets/sp-color-scales.cpp:466
+msgid "Yellow"
+msgstr ""
+
+#: ../share/palettes/palettes.h:376
+msgid "Accent Yellow Base"
+msgstr ""
+
+#: ../share/palettes/palettes.h:377
+msgid "Accent Yellow Shadow"
+msgstr ""
+
+#: ../share/palettes/palettes.h:378
+msgid "Accent Orange"
+msgstr ""
+
+#: ../share/palettes/palettes.h:379
+msgid "Accent Red"
+msgstr ""
+
+#: ../share/palettes/palettes.h:380
+msgid "Accent Red Base"
+msgstr ""
+
+#: ../share/palettes/palettes.h:381
+msgid "Accent Deep Red"
+msgstr ""
+
+#: ../share/palettes/palettes.h:382
+msgid "Human Highlight"
+msgstr ""
+
+#: ../share/palettes/palettes.h:383
+msgid "Human"
+msgstr ""
+
+#: ../share/palettes/palettes.h:384
+msgid "Human Base"
+msgstr ""
+
+#: ../share/palettes/palettes.h:385
+msgid "Environmental Shadow"
+msgstr ""
+
+#: ../share/palettes/palettes.h:386
+msgid "Environmental Blue Highlight"
+msgstr ""
+
+#: ../share/palettes/palettes.h:387
+msgid "Environmental Blue Medium"
+msgstr ""
+
+#: ../share/palettes/palettes.h:388
+msgid "Environmental Blue Base"
+msgstr ""
+
+#: ../share/palettes/palettes.h:389
+msgid "Environmental Blue Shadow"
+msgstr ""
+
+#: ../share/palettes/palettes.h:390 ../share/palettes/palettes.h:393
+msgid "Accent Blue Shadow"
+msgstr ""
+
+#: ../share/palettes/palettes.h:391
+msgid "Accent Blue"
+msgstr ""
+
+#: ../share/palettes/palettes.h:392
+msgid "Accent Blue Base"
+msgstr ""
+
+#: ../share/palettes/palettes.h:394
+msgid "Accent Green Highlight"
+msgstr ""
+
+#: ../share/palettes/palettes.h:395
+msgid "Accent Green"
+msgstr ""
+
+#: ../share/palettes/palettes.h:396
+msgid "Accent Green Base"
+msgstr ""
+
+#: ../share/palettes/palettes.h:397
+msgid "Accent Green Shadow"
+msgstr ""
+
+#: ../share/palettes/palettes.h:398
+msgid "Ubuntu Toner"
+msgstr ""
+
+#: ../share/palettes/palettes.h:399
+msgid "Accent Magenta Highlight"
+msgstr ""
+
+#: ../share/palettes/palettes.h:400
+msgid "Accent Magenta"
+msgstr ""
+
+#: ../share/palettes/palettes.h:401
+msgid "Accent Dark Violet"
+msgstr ""
+
+#: ../share/palettes/palettes.h:402
+msgid "Grey 1"
+msgstr ""
+
+#: ../share/palettes/palettes.h:403
+msgid "Grey 2"
+msgstr ""
+
+#: ../share/palettes/palettes.h:404
+msgid "Grey 3"
+msgstr ""
+
+#: ../share/palettes/palettes.h:405
+msgid "Grey 4"
+msgstr ""
+
+#: ../share/palettes/palettes.h:406
+msgid "Grey 5"
+msgstr ""
+
+#: ../share/palettes/palettes.h:407
+msgid "Grey 6"
+msgstr ""
+
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
 msgstr ""
@@ -7366,7 +8939,7 @@ msgid "<big><b>Export area</b></big>"
 msgstr ""
 
 #: ../src/dialogs/export.cpp:285
-msgid "_Units:"
+msgid "Units:"
 msgstr ""
 
 #: ../src/dialogs/export.cpp:313
@@ -8451,24 +10024,24 @@ msgid "Unnamed document %d"
 msgstr ""
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/draw-context.cpp:579
+#: ../src/draw-context.cpp:578
 msgid "Path is closed."
 msgstr ""
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/draw-context.cpp:594
+#: ../src/draw-context.cpp:593
 msgid "Closing path."
 msgstr ""
 
-#: ../src/draw-context.cpp:704
+#: ../src/draw-context.cpp:703
 msgid "Draw path"
 msgstr ""
 
-#: ../src/draw-context.cpp:864
+#: ../src/draw-context.cpp:863
 msgid "Creating single dot"
 msgstr ""
 
-#: ../src/draw-context.cpp:865
+#: ../src/draw-context.cpp:864
 msgid "Create single dot"
 msgstr ""
 
@@ -11414,60 +12987,60 @@ msgid ""
 msgstr ""
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:331
+#: ../src/live_effects/lpe-knot.cpp:342
 msgid "Fixed width:"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:331
+#: ../src/live_effects/lpe-knot.cpp:342
 msgid "Size of hidden region of lower string"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:332
+#: ../src/live_effects/lpe-knot.cpp:343
 msgid "In units of stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:332
+#: ../src/live_effects/lpe-knot.cpp:343
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:333 ../src/widgets/stroke-style.cpp:688
+#: ../src/live_effects/lpe-knot.cpp:344 ../src/widgets/stroke-style.cpp:688
 msgid "Stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:333
+#: ../src/live_effects/lpe-knot.cpp:344
 msgid "Add the stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:334
+#: ../src/live_effects/lpe-knot.cpp:345
 msgid "Crossing path stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:334
+#: ../src/live_effects/lpe-knot.cpp:345
 msgid "Add crossed stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:335
+#: ../src/live_effects/lpe-knot.cpp:346
 msgid "Switcher size:"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:335
+#: ../src/live_effects/lpe-knot.cpp:346
 msgid "Orientation indicator/switcher size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:336
+#: ../src/live_effects/lpe-knot.cpp:347
 msgid "Crossing Signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:336
+#: ../src/live_effects/lpe-knot.cpp:347
 msgid "Crossings signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:347
+#: ../src/live_effects/lpe-knot.cpp:358
 msgid "Drag to select a crossing, click to flip it"
 msgstr ""
 
 #. / @todo Is this the right verb?
-#: ../src/live_effects/lpe-knot.cpp:640
+#: ../src/live_effects/lpe-knot.cpp:651
 msgid "Change knot crossing"
 msgstr ""
 
@@ -19830,19 +21403,19 @@ msgstr ""
 msgid "Flip nodes vertically"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:537
+#: ../src/ui/tool/node-tool.cpp:541
 msgctxt "Node tool tip"
 msgid ""
 "<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
 "selection"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:541
+#: ../src/ui/tool/node-tool.cpp:545
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:551
+#: ../src/ui/tool/node-tool.cpp:555
 #, c-format
 msgctxt "Node tool tip"
 msgid ""
@@ -19850,7 +21423,7 @@ msgid ""
 "this object (more: Shift)"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:557
+#: ../src/ui/tool/node-tool.cpp:561
 #, c-format
 msgctxt "Node tool tip"
 msgid ""
@@ -19858,22 +21431,22 @@ msgid ""
 "selection"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:565
+#: ../src/ui/tool/node-tool.cpp:569
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:568
+#: ../src/ui/tool/node-tool.cpp:572
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:573
+#: ../src/ui/tool/node-tool.cpp:577
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:576
+#: ../src/ui/tool/node-tool.cpp:580
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr ""
@@ -20562,17 +22135,6 @@ msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:224
 msgid "Last selected color"
-msgstr ""
-
-#: ../src/ui/widget/selected-style.cpp:232
-msgid "White"
-msgstr ""
-
-#: ../src/ui/widget/selected-style.cpp:236
-#: ../src/widgets/sp-color-icc-selector.cpp:238
-#: ../src/widgets/sp-color-scales.cpp:468
-#: ../src/widgets/sp-color-scales.cpp:469
-msgid "Black"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:240
@@ -23242,13 +24804,6 @@ msgstr ""
 #: ../src/widgets/sp-color-scales.cpp:462
 #: ../src/widgets/sp-color-scales.cpp:463
 msgid "Magenta"
-msgstr ""
-
-#: ../src/widgets/sp-color-icc-selector.cpp:238
-#: ../src/widgets/sp-color-icc-selector.cpp:239
-#: ../src/widgets/sp-color-scales.cpp:465
-#: ../src/widgets/sp-color-scales.cpp:466
-msgid "Yellow"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:296

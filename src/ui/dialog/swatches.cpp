@@ -436,7 +436,7 @@ void _loadPaletteFile( gchar const *filename )
                                     if ( !hasErr && *ptr ) {
                                         char* n = trim(ptr);
                                         if (n != NULL) {
-                                            name = n;
+                                            name = _(n);
                                         }
                                     }
                                     if ( !hasErr ) {
