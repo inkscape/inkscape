@@ -436,7 +436,7 @@ void _loadPaletteFile( gchar const *filename )
                                     if ( !hasErr && *ptr ) {
                                         char* n = trim(ptr);
                                         if (n != NULL) {
-                                            name = _(n);
+                                            name = g_dpgettext2(NULL, "Palette", n);
                                         }
                                     }
                                     if ( !hasErr ) {
