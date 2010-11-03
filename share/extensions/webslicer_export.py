@@ -20,17 +20,18 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 from webslicer_effect import *
 import inkex
 import gettext
-import os.path
-import subprocess
+import os
+import sys
 import tempfile
-import commands
 
 _ = gettext.gettext
+
 
 class WebSlicer_Export(WebSlicer_Effect):
 
     def __init__(self):
         WebSlicer_Effect.__init__(self)
+        self.OptionParser.add_option("--tab")
         self.OptionParser.add_option("--dir",
                                      action="store", type="string",
                                      dest="dir",
@@ -64,7 +65,7 @@ class WebSlicer_Export(WebSlicer_Effect):
                 # Try to create it:
                 try:
                     os.makedirs( self.options.dir )
-                except Exception as e:
+                except Exception, e:
                     inkex.errormsg( _('Can\'t create "%s".') % self.options.dir )
                     inkex.errormsg( _('Error: %s') % e )
                     return {'error':'Can\'t create the directory to export.'}
@@ -73,6 +74,21 @@ class WebSlicer_Export(WebSlicer_Effect):
                 return
         self.unique_html_id( self.get_slicer_layer() )
         return None
+
+
+    def get_cmd_output(self, cmd):
+        # This solution comes from Andrew Reedick <jr9445 at ATT.COM>
+        # http://mail.python.org/pipermail/python-win32/2008-January/006606.html
+        # This method replaces the commands.getstatusoutput() usage, with the
+        # hope to correct the windows exporting bug:
+        # https://bugs.launchpad.net/inkscape/+bug/563722
+        if sys.platform != "win32": cmd = '{ '+ cmd +'; }'
+        pipe = os.popen(cmd +' 2>&1', 'r')
+        text = pipe.read()
+        sts = pipe.close()
+        if sts is None: sts = 0
+        if text[-1:] == '\n': text = text[:-1]
+        return sts, text
 
 
     _html_ids = []
@@ -94,7 +110,7 @@ class WebSlicer_Export(WebSlicer_Effect):
 
 
     def test_if_has_imagemagick(self):
-        (status, output) = commands.getstatusoutput('convert --version')
+        (status, output) = self.get_cmd_output('convert --version')
         self.has_magick = ( status == 0 and 'ImageMagick' in output )
 
 
@@ -279,7 +295,7 @@ class WebSlicer_Export(WebSlicer_Effect):
     el_geo = { }
     def register_all_els_geometry(self):
         ink_cmm = 'inkscape --query-all '+self.tmp_svg
-        (status, output) = commands.getstatusoutput( ink_cmm )
+        (status, output) = self.get_cmd_output( ink_cmm )
         self.el_geo = { }
         if status == 0:
             for el in output.split('\n'):
@@ -325,7 +341,7 @@ class WebSlicer_Export(WebSlicer_Effect):
         if 'dimension' in conf:
             dim = conf['dimension'].split('x')
             opts += ' -w '+dim[0]+' -h '+dim[1]
-        (status, output) = commands.getstatusoutput(
+        (status, output) = self.get_cmd_output(
             'inkscape %s -i "%s" -e "%s" "%s"' % (
                 opts, el.attrib['id'], img_name_png, self.tmp_svg
             )
@@ -341,7 +357,7 @@ class WebSlicer_Export(WebSlicer_Effect):
                     opts += ' -type Palette'
                 if conf['palette-size'] < 256:
                     opts += ' -colors '+str(conf['palette-size'])
-            (status, output) = commands.getstatusoutput(
+            (status, output) = self.get_cmd_output(
                 'convert "%s" %s "%s"' % ( img_name_png, opts, img_name )
             )
             if status != 0:
