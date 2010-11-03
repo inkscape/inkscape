@@ -6,8 +6,8 @@
     <dependency type="executable" location="extensions">inkex.py</dependency>
     <param name="tab" type="notebook">
         <page name="config" _gui-text="Configuration">
+            <param name="year" type="int" min="0" max="3000" _gui-text="Year (4 digits):">2011</param>
             <param name="month" type="int" min="0" max="12" _gui-text="Month (0 for all):">0</param>
-            <param name="year" type="int" min="0" max="3000" _gui-text="Year (0 for current):">0</param>
             <param name="fill-empty-day-boxes" type="boolean" _gui-text="Fill empty day boxes with next month's days">true</param>
             <param name="start-day" type="enum" _gui-text="Week start day">
                 <_item value="sun">Sunday</_item>
@@ -125,7 +125,7 @@
             <_param name="encoding-help" type="description">Select your system encoding. More information at http://docs.python.org/library/codecs.html#standard-encodings.</_param>
         </page>
     </param>
-    <effect>
+    <effect needs-live-preview="false">
         <object-type>all</object-type>
         <effects-menu>
           <submenu _name="Render"/>

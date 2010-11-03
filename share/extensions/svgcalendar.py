@@ -131,6 +131,8 @@ class SVGCalendar (inkex.Effect):
           self.options.day_names = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
         # Convert year 0 to current year:
         if self.options.year == 0: self.options.year = datetime.today().year
+        # Year 1 starts it's week at monday, obligatorily
+        if self.options.year == 1: self.options.start_day = 'mon'
         # Set the calendar start day:
         if self.options.start_day=='sun':
           calendar.setfirstweekday(6)
@@ -266,8 +268,9 @@ class SVGCalendar (inkex.Effect):
         gdays = inkex.etree.SubElement(g, 'g')
         cal = calendar.monthcalendar(self.options.year,m)
         if m == 1:
-          before_month = \
-            self.in_line_month( calendar.monthcalendar(self.options.year-1, 12) )
+          if self.options.year > 1:
+            before_month = \
+              self.in_line_month( calendar.monthcalendar(self.options.year-1, 12) )
         else:
           before_month = \
             self.in_line_month( calendar.monthcalendar(self.options.year, m-1) )
@@ -297,8 +300,8 @@ class SVGCalendar (inkex.Effect):
                         'x': str( self.day_w * week_x ),
                         'y': str( self.day_h * (week_y+2) ) }
             if day==0 and not self.options.fill_edb:
-	      pass # draw nothing
-	    elif day==0:
+              pass # draw nothing
+            elif day==0:
               if before:
                 inkex.etree.SubElement(gdays, 'text', txt_atts).text = str( before_month[-bmd] )
                 bmd -= 1
