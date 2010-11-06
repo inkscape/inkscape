@@ -568,14 +568,7 @@ void Node::setType(NodeType type, bool update_handles)
     if (update_handles) {
         switch (type) {
         case NODE_CUSP:
-            // if the existing type is also NODE_CUSP, retract handles
-            // NOTE: This misfeature is very annoying when you have both cusp and smooth
-            //       nodes in a selection, so I have removed it. Use segment commands
-            //       or Ctrl+click to retract handles.
-            //if (_type == NODE_CUSP) {
-            //    _front.retract();
-            //    _back.retract();
-            //}
+            // nothing to do
             break;
         case NODE_AUTO:
             // auto handles make no sense for endnodes
