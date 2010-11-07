@@ -625,7 +625,7 @@ bool MultiPathManipulator::event(GdkEvent *event)
         case GDK_L:
             if (held_only_shift(event->key)) {
                 // Shift+L - make segments linear
-                setSegmentType(SEGMENT_LINEAR);
+                setSegmentType(SEGMENT_STRAIGHT);
                 return true;
             }
         default:
