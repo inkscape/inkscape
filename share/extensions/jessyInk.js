@@ -1373,6 +1373,18 @@ function slideUpdateExportLayer()
 	{
 		var nd = nodesToBeRemoved[ndCounter];
 
+		// Before removing the node, check whether it contains any definitions.
+		var defs = nd.getElementsByTagNameNS(NSS["svg"], "defs");
+
+		for (var defsCounter = 0; defsCounter < defs.length; defsCounter++)
+		{
+			if (defs[defsCounter].id)
+			{
+				newDoc.appendChild(defs[defsCounter].cloneNode(true));
+			}
+		}
+
+		// Remove node.
 		nd.parentNode.removeChild(nd);
 	}
 
@@ -1418,7 +1430,7 @@ function slideUpdateExportLayer()
 
 	var xml = serializer.serializeToStream(newDoc, strm, 'UTF-8');
 
-	window.open('data:image/svg+xml;base64;charset=utf-8,' + window.btoa(strm.content), '_blank');
+	window.location = 'data:application/svg+xml;base64;charset=utf-8,' + window.btoa(strm.content);
 
 	// Unsuspend redraw.
 	ROOT_NODE.unsuspendRedraw(suspendHandle);

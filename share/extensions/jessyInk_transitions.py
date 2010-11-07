@@ -44,7 +44,7 @@ class JessyInk_Transitions(inkex.Effect):
 
 	def effect(self):
 		# Check version.
-		scriptNodes = self.document.xpath("//svg:script[@jessyink:version='1.5.4']", namespaces=inkex.NSS)
+		scriptNodes = self.document.xpath("//svg:script[@jessyink:version='1.5.5']", namespaces=inkex.NSS)
 
 		if len(scriptNodes) != 1:
 			inkex.errormsg(_("The JessyInk script is not installed in this SVG file or has a different version than the JessyInk extensions. Please select \"install/update...\" from the \"JessyInk\" sub-menu of the \"Extensions\" menu to install or update the JessyInk script.\n\n"))
