@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-27 23:28+0200\n"
-"PO-Revision-Date: 2010-10-28 19:29+0100\n"
+"POT-Creation-Date: 2010-11-02 18:43+0100\n"
+"PO-Revision-Date: 2010-11-07 13:02+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -242,7 +242,7 @@ msgstr "Grün-Funktion:"
 #: ../share/extensions/jessyInk_effects.inx.h:7
 #: ../share/extensions/jessyInk_export.inx.h:2
 #: ../share/extensions/jessyInk_install.inx.h:1
-#: ../share/extensions/jessyInk_keyBindings.inx.h:7
+#: ../share/extensions/jessyInk_keyBindings.inx.h:8
 #: ../share/extensions/jessyInk_masterSlide.inx.h:1
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:3
 #: ../share/extensions/jessyInk_summary.inx.h:1
@@ -768,7 +768,7 @@ msgstr "DXF einlesen"
 
 #: ../share/extensions/dxf_input.inx.h:9
 msgid "Gcodetools compatible point import"
-msgstr ""
+msgstr "GCodeWerkzeug kompatible Punkteingabe"
 
 #: ../share/extensions/dxf_input.inx.h:11
 msgid "Import AutoCAD's Document Exchange Format"
@@ -1754,7 +1754,7 @@ msgstr "Auto-Texte"
 #: ../share/extensions/jessyInk_autoTexts.inx.h:4
 #: ../share/extensions/jessyInk_effects.inx.h:8
 #: ../share/extensions/jessyInk_install.inx.h:3
-#: ../share/extensions/jessyInk_keyBindings.inx.h:10
+#: ../share/extensions/jessyInk_keyBindings.inx.h:11
 #: ../share/extensions/jessyInk_masterSlide.inx.h:3
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:4
 #: ../share/extensions/jessyInk_summary.inx.h:2
@@ -1916,155 +1916,160 @@ msgid "Drawing mode"
 msgstr "Zeichenmodus"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:6
+#, fuzzy
+msgid "Export presentation:"
+msgstr "Textausrichtung"
+
+#: ../share/extensions/jessyInk_keyBindings.inx.h:7
 msgid "First slide:"
 msgstr "Erste Folie:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:8
+#: ../share/extensions/jessyInk_keyBindings.inx.h:9
 msgid "Increase number of columns:"
 msgstr "Anzahl der Spalten erhöhen:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:9
+#: ../share/extensions/jessyInk_keyBindings.inx.h:10
 msgid "Index mode"
 msgstr "Indexmodus"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:11
+#: ../share/extensions/jessyInk_keyBindings.inx.h:12
 msgid "Key bindings"
 msgstr "Tastenkombinationen"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:12
+#: ../share/extensions/jessyInk_keyBindings.inx.h:13
 msgid "Last slide:"
 msgstr "Letzte Folie:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:13
+#: ../share/extensions/jessyInk_keyBindings.inx.h:14
 msgid "Next (with effects):"
 msgstr "Nächste (mit Effekten):"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:14
+#: ../share/extensions/jessyInk_keyBindings.inx.h:15
 msgid "Next (without effects):"
 msgstr "Nächste (ohne Effekte):"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:15
+#: ../share/extensions/jessyInk_keyBindings.inx.h:16
 msgid "Next page:"
 msgstr "Nächste Seite:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:16
+#: ../share/extensions/jessyInk_keyBindings.inx.h:17
 msgid "Previous page:"
 msgstr "Vorherige Seite:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:17
+#: ../share/extensions/jessyInk_keyBindings.inx.h:18
 msgid "Reset timer:"
 msgstr "Zeitgeber zurücksetzen"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:18
+#: ../share/extensions/jessyInk_keyBindings.inx.h:19
 msgid "Select the slide above:"
 msgstr "Wähle die Folie darüber:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:19
+#: ../share/extensions/jessyInk_keyBindings.inx.h:20
 msgid "Select the slide below:"
 msgstr "Wähle die Folie darunter:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:20
+#: ../share/extensions/jessyInk_keyBindings.inx.h:21
 msgid "Select the slide to the left:"
 msgstr "Wähle die Folien nach Links aus:"
 
 # !!!
-#: ../share/extensions/jessyInk_keyBindings.inx.h:21
+#: ../share/extensions/jessyInk_keyBindings.inx.h:22
 msgid "Select the slide to the right:"
 msgstr "Wähle die Folien nach Rechts aus:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:22
+#: ../share/extensions/jessyInk_keyBindings.inx.h:23
 msgid "Set duration:"
 msgstr "Sättigung setzen:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:23
+#: ../share/extensions/jessyInk_keyBindings.inx.h:24
 msgid "Set number of columns to default:"
 msgstr "Anzahl der Spalten zur Vorgabe machen:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:24
+#: ../share/extensions/jessyInk_keyBindings.inx.h:25
 msgid "Set path color to black:"
 msgstr "Pfadfarbe auf Schwarz setzen:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:25
+#: ../share/extensions/jessyInk_keyBindings.inx.h:26
 msgid "Set path color to blue:"
 msgstr "Pfadfarbe auf Blau setzen:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:26
+#: ../share/extensions/jessyInk_keyBindings.inx.h:27
 msgid "Set path color to cyan:"
 msgstr "Pfadfarbe auf Türkis setzen:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:27
+#: ../share/extensions/jessyInk_keyBindings.inx.h:28
 msgid "Set path color to green:"
 msgstr "Pfadfarbe auf Grün setzen:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:28
+#: ../share/extensions/jessyInk_keyBindings.inx.h:29
 msgid "Set path color to magenta:"
 msgstr "Pfadfarbe auf Magentarot setzen:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:29
+#: ../share/extensions/jessyInk_keyBindings.inx.h:30
 msgid "Set path color to orange:"
 msgstr "Pfadfarbe auf Orange setzen:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:30
+#: ../share/extensions/jessyInk_keyBindings.inx.h:31
 msgid "Set path color to red:"
 msgstr "Pfadfarbe auf Rot setzen:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:31
+#: ../share/extensions/jessyInk_keyBindings.inx.h:32
 msgid "Set path color to white:"
 msgstr "Pfadfarbe auf Weiß setzen:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:32
+#: ../share/extensions/jessyInk_keyBindings.inx.h:33
 msgid "Set path color to yellow:"
 msgstr "Pfadfarbe auf Gelb setzen:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:33
+#: ../share/extensions/jessyInk_keyBindings.inx.h:34
 msgid "Set path width to 1:"
 msgstr "Setze Pfadbreite auf 1:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:34
+#: ../share/extensions/jessyInk_keyBindings.inx.h:35
 msgid "Set path width to 3:"
 msgstr "Setze Pfadbreite auf 3:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:35
+#: ../share/extensions/jessyInk_keyBindings.inx.h:36
 msgid "Set path width to 5:"
 msgstr "Setze Pfadbreite auf 5:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:36
+#: ../share/extensions/jessyInk_keyBindings.inx.h:37
 msgid "Set path width to 7:"
 msgstr "Setze Pfadbreite auf 7:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:37
+#: ../share/extensions/jessyInk_keyBindings.inx.h:38
 msgid "Set path width to 9:"
 msgstr "Setze Pfadbreite auf 9:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:38
+#: ../share/extensions/jessyInk_keyBindings.inx.h:39
 msgid "Set path width to default:"
 msgstr "Setze Pfadbreite als Vorgabe:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:39
+#: ../share/extensions/jessyInk_keyBindings.inx.h:40
 msgid "Slide mode"
 msgstr "Folienmodus"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:40
+#: ../share/extensions/jessyInk_keyBindings.inx.h:41
 msgid "Switch to drawing mode:"
 msgstr "In den Zeichnenmodus wechseln:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:41
+#: ../share/extensions/jessyInk_keyBindings.inx.h:42
 msgid "Switch to index mode:"
 msgstr "In den Indexmodus wechseln:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:42
+#: ../share/extensions/jessyInk_keyBindings.inx.h:43
 msgid "Switch to slide mode:"
 msgstr "In den Folienmodus wechseln:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:43
+#: ../share/extensions/jessyInk_keyBindings.inx.h:44
 msgid "This extension allows you customise the key bindings JessyInk uses. Please see code.google.com/p/jessyink for more details."
 msgstr "Diese Erweiterung erlaubt Ihnen, die Tastenkombinationen zu verändern, die JessyInk benutzt. Bite schauen Sie auf code.google.com/p/jessyink für weitere Details."
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:44
+#: ../share/extensions/jessyInk_keyBindings.inx.h:45
 msgid "Toggle progress bar:"
 msgstr "Fortschrittsbalken umschalten:"
 
-#: ../share/extensions/jessyInk_keyBindings.inx.h:45
+#: ../share/extensions/jessyInk_keyBindings.inx.h:46
 msgid "Undo last path segment:"
 msgstr "Letztes Pfad-Segment rückgängig machen:"
 
@@ -4213,22 +4218,22 @@ msgstr ""
 #: ../share/extensions/gcodetools.py:3472
 #, python-format
 msgid "Warning! Tool has parameter that default tool has not ( '%s': '%s' )."
-msgstr ""
+msgstr "Achtung! Das Werkzeug hat Parameter, die das Standardwerkzeug nicht hat ( '%s': '%s' )."
 
 #: ../share/extensions/gcodetools.py:3486
 #, python-format
 msgid "Layer '%s' contains more than one tool!"
-msgstr ""
+msgstr "Die Ebene '%s' beinhaltet mehr als nur ein Werkzeug!"
 
 #: ../share/extensions/gcodetools.py:3489
 #, python-format
 msgid "Can not find tool for '%s' layer! Please add one with Tools library tab!"
-msgstr ""
+msgstr "Kann kein Werkzeug für die '%s' Ebene finden. Bitte fügen Sie eins über den Werkzeugbibliotheks-Tab hinzu!"
 
 #: ../share/extensions/gcodetools.py:3592
 #: ../share/extensions/gcodetools.py:3673
 msgid "No paths are selected! Trying to work on all available paths."
-msgstr ""
+msgstr "Keine Pfade ausgewählt. Versuche an allen verfügbaren Pfaden zu arbeiten."
 
 #: ../share/extensions/gcodetools.py:3611
 #: ../share/extensions/gcodetools.py:3682
@@ -6449,6 +6454,2389 @@ msgstr "Drei-Farben-Palette"
 msgid "Create a tritone palette with hue selectable by flood"
 msgstr "Erzeugt eine Drei-Farben-Palette mit durch Füllfarbe definierten Farbton"
 
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:4
+msgctxt "Palette"
+msgid "Blue1"
+msgstr "Blau1"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:7
+msgctxt "Palette"
+msgid "Blue2"
+msgstr "Blau2"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:10
+msgctxt "Palette"
+msgid "Blue3"
+msgstr "Blau3"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:13
+msgctxt "Palette"
+msgid "Red1"
+msgstr "Rot1"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:16
+msgctxt "Palette"
+msgid "Red2"
+msgstr "Rot2"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:19
+msgctxt "Palette"
+msgid "Red3"
+msgstr "Rot3"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:22
+msgctxt "Palette"
+msgid "Orange1"
+msgstr "Orange1"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:25
+msgctxt "Palette"
+msgid "Orange2"
+msgstr "Orange2"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:28
+msgctxt "Palette"
+msgid "Orange3"
+msgstr "Orange3"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:31
+msgctxt "Palette"
+msgid "Brown1"
+msgstr "Braun1"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:34
+msgctxt "Palette"
+msgid "Brown2"
+msgstr "Braun2"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:37
+msgctxt "Palette"
+msgid "Brown3"
+msgstr "Braun3"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:40
+msgctxt "Palette"
+msgid "Green1"
+msgstr "Grün1"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:43
+msgctxt "Palette"
+msgid "Green2"
+msgstr "Grün2"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:46
+msgctxt "Palette"
+msgid "Green3"
+msgstr "Grün3"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:49
+msgctxt "Palette"
+msgid "Purple1"
+msgstr "Lila1"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:52
+msgctxt "Palette"
+msgid "Purple2"
+msgstr "Lila2"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:55
+msgctxt "Palette"
+msgid "Purple3"
+msgstr "Lila3"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:58
+msgctxt "Palette"
+msgid "Metalic1"
+msgstr "Metallic1"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:61
+msgctxt "Palette"
+msgid "Metalic2"
+msgstr "Metallic2"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:64
+msgctxt "Palette"
+msgid "Metalic3"
+msgstr "Metallic3"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:67
+msgctxt "Palette"
+msgid "Metalic4"
+msgstr "Metallic4"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:70
+msgctxt "Palette"
+msgid "Grey1"
+msgstr "Grau1"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:73
+msgctxt "Palette"
+msgid "Grey2"
+msgstr "Grau2"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:76
+msgctxt "Palette"
+msgid "Grey3"
+msgstr "Grau3"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:79
+msgctxt "Palette"
+msgid "Grey4"
+msgstr "Grau4"
+
+#. Palette: echo-palette.gpl
+#: ../share/palettes/palettes.h:82
+msgctxt "Palette"
+msgid "Grey5"
+msgstr "Grau5"
+
+#. Palette: inkscape.gpl
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:85
+#: ../share/palettes/palettes.h:1192
+msgctxt "Palette"
+msgid "Black"
+msgstr "Schwarz"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:89
+#, no-c-format
+msgctxt "Palette"
+msgid "90% Gray"
+msgstr "90% Grau"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:93
+#, no-c-format
+msgctxt "Palette"
+msgid "80% Gray"
+msgstr "80% Grau"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:97
+#, no-c-format
+msgctxt "Palette"
+msgid "70% Gray"
+msgstr "70% Grau"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:101
+#, no-c-format
+msgctxt "Palette"
+msgid "60% Gray"
+msgstr "60% Grau"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:105
+#, no-c-format
+msgctxt "Palette"
+msgid "50% Gray"
+msgstr "50% Grau"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:109
+#, no-c-format
+msgctxt "Palette"
+msgid "40% Gray"
+msgstr "40% Grau"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:113
+#, no-c-format
+msgctxt "Palette"
+msgid "30% Gray"
+msgstr "30% Grau"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:117
+#, no-c-format
+msgctxt "Palette"
+msgid "20% Gray"
+msgstr "20% Grau"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:121
+#, no-c-format
+msgctxt "Palette"
+msgid "10% Gray"
+msgstr "10% Grau"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:125
+#, no-c-format
+msgctxt "Palette"
+msgid "7.5% Gray"
+msgstr "7.5% Grau"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:129
+#, no-c-format
+msgctxt "Palette"
+msgid "5% Gray"
+msgstr "5% Grau"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:133
+#, no-c-format
+msgctxt "Palette"
+msgid "2.5% Gray"
+msgstr "2.5% Grau"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:136
+msgctxt "Palette"
+msgid "White"
+msgstr "Weiß"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:139
+msgctxt "Palette"
+msgid "Maroon (#800000)"
+msgstr "Kastanienbraun (#800000)"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:142
+msgctxt "Palette"
+msgid "Red (#FF0000)"
+msgstr "Rot (#FF0000)"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:145
+msgctxt "Palette"
+msgid "Olive (#808000)"
+msgstr "Oliv (#808000)"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:148
+msgctxt "Palette"
+msgid "Yellow (#FFFF00)"
+msgstr "Gelb (#FFFF00)"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:151
+msgctxt "Palette"
+msgid "Green (#008000)"
+msgstr "Grün (#008000)"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:154
+msgctxt "Palette"
+msgid "Lime (#00FF00)"
+msgstr "Limone (#00FF00)"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:157
+msgctxt "Palette"
+msgid "Teal (#008080)"
+msgstr "Blaugrün (#008080)"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:160
+msgctxt "Palette"
+msgid "Aqua (#00FFFF)"
+msgstr "Wasserblau (#00FFFF)"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:163
+msgctxt "Palette"
+msgid "Navy (#000080)"
+msgstr "Marineblau (#000080)"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:166
+msgctxt "Palette"
+msgid "Blue (#0000FF)"
+msgstr "Blau (#0000FF)"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:169
+msgctxt "Palette"
+msgid "Purple (#800080)"
+msgstr "Lila (#800080)"
+
+#. Palette: inkscape.gpl
+#: ../share/palettes/palettes.h:172
+msgctxt "Palette"
+msgid "Fuchsia (#FF00FF)"
+msgstr "Fuchsia (#FF00FF)"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:175
+#, fuzzy
+msgctxt "Palette"
+msgid "default outer 1"
+msgstr "Vorgegebener Titel"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:178
+#, fuzzy
+msgctxt "Palette"
+msgid "default outer 2"
+msgstr "Vorgegebener Titel"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:181
+#, fuzzy
+msgctxt "Palette"
+msgid "default outer 3"
+msgstr "Vorgegebener Titel"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:184
+#, fuzzy
+msgctxt "Palette"
+msgid "default block"
+msgstr "(Vorgabe)"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:187
+msgctxt "Palette"
+msgid "default added blue"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:190
+msgctxt "Palette"
+msgid "default block header"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:193
+msgctxt "Palette"
+msgid "default alert block"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:196
+msgctxt "Palette"
+msgid "default added red"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:199
+msgctxt "Palette"
+msgid "default alert block header"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:202
+msgctxt "Palette"
+msgid "default example block"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:205
+msgctxt "Palette"
+msgid "default added green"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:208
+msgctxt "Palette"
+msgid "default example block header"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:211
+#, fuzzy
+msgctxt "Palette"
+msgid "default covered text"
+msgstr "Fließtext erstellen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:214
+msgctxt "Palette"
+msgid "default covered bullet"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:217
+#, fuzzy
+msgctxt "Palette"
+msgid "default background"
+msgstr "Hintergrund entfernen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:220
+#, fuzzy
+msgctxt "Palette"
+msgid "default text"
+msgstr "(Vorgabe)"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:223
+msgctxt "Palette"
+msgid "default light outer 1"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:226
+msgctxt "Palette"
+msgid "default light outer 2"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:229
+msgctxt "Palette"
+msgid "default light outer 3"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:232
+#, fuzzy
+msgctxt "Palette"
+msgid "default light block"
+msgstr "Vorgegebener Titel"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:235
+msgctxt "Palette"
+msgid "default light block header"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:238
+msgctxt "Palette"
+msgid "default light block header text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:241
+msgctxt "Palette"
+msgid "default light alert block"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:244
+msgctxt "Palette"
+msgid "default light alert block header"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:247
+msgctxt "Palette"
+msgid "default light alert block header text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:250
+msgctxt "Palette"
+msgid "default light example block"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:253
+msgctxt "Palette"
+msgid "default light example block header"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:256
+msgctxt "Palette"
+msgid "default light example block header text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:259
+#, fuzzy
+msgctxt "Palette"
+msgid "default light covered text"
+msgstr "Standard Schnittstellen-Setup"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:262
+msgctxt "Palette"
+msgid "default light covered bullet"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:265
+msgctxt "Palette"
+msgid "default light background"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:268
+#, fuzzy
+msgctxt "Palette"
+msgid "default light text"
+msgstr "Vorgegebener Titel"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:271
+msgctxt "Palette"
+msgid "beetle outer 1"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:274
+msgctxt "Palette"
+msgid "beetle outer 2"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:277
+msgctxt "Palette"
+msgid "beetle outer 3"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:280
+#: ../share/palettes/palettes.h:283
+#: ../share/palettes/palettes.h:286
+msgctxt "Palette"
+msgid "beetle added blue"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:289
+msgctxt "Palette"
+msgid "beetle added red"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:292
+msgctxt "Palette"
+msgid "beetle alert block header text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:295
+#, fuzzy
+msgctxt "Palette"
+msgid "beetle added green"
+msgstr "Farbverläufe erstellen und bearbeiten"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:298
+msgctxt "Palette"
+msgid "beetle example block header text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:301
+#, fuzzy
+msgctxt "Palette"
+msgid "beetle header text"
+msgstr "Text löschen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:304
+#: ../share/palettes/palettes.h:316
+msgctxt "Palette"
+msgid "beetle added grey"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:307
+msgctxt "Palette"
+msgid "beetle covered bullet"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:310
+#, fuzzy
+msgctxt "Palette"
+msgid "beetle background"
+msgstr "Hintergrund entfernen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:313
+#, fuzzy
+msgctxt "Palette"
+msgid "beetle covered text"
+msgstr "Fließtext erstellen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:319
+#, fuzzy
+msgctxt "Palette"
+msgid "beetle text"
+msgstr "Text löschen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:322
+msgctxt "Palette"
+msgid "albatross outer 1"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:325
+msgctxt "Palette"
+msgid "albatross outer 2"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:328
+msgctxt "Palette"
+msgid "albatross outer 3"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:331
+#, fuzzy
+msgctxt "Palette"
+msgid "albatross background"
+msgstr "Hintergrund entfernen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:334
+msgctxt "Palette"
+msgid "albatross block"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:337
+msgctxt "Palette"
+msgid "albatross block header"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:340
+msgctxt "Palette"
+msgid "albatross header text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:343
+msgctxt "Palette"
+msgid "albatross bullet"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:346
+msgctxt "Palette"
+msgid "albatross covered bullet"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:349
+msgctxt "Palette"
+msgid "albatross covered text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:352
+msgctxt "Palette"
+msgid "albatross added red"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:355
+msgctxt "Palette"
+msgid "albatross alert block header text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:358
+msgctxt "Palette"
+msgid "albatross added green"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:361
+msgctxt "Palette"
+msgid "albatross example block header text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:364
+msgctxt "Palette"
+msgid "albatross text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:367
+msgctxt "Palette"
+msgid "albatross added yellow"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:370
+msgctxt "Palette"
+msgid "albatross added white"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:373
+#, fuzzy
+msgctxt "Palette"
+msgid "fly text"
+msgstr "Text eingeben"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:376
+#: ../share/palettes/palettes.h:385
+msgctxt "Palette"
+msgid "fly added grey"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:379
+#, fuzzy
+msgctxt "Palette"
+msgid "fly outer"
+msgstr "Filter"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:382
+#, fuzzy
+msgctxt "Palette"
+msgid "fly background"
+msgstr "Hintergrund"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:388
+#, fuzzy
+msgctxt "Palette"
+msgid "fly header text"
+msgstr "Text einfügen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:391
+msgctxt "Palette"
+msgid "fly covered bullet"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:394
+#, fuzzy
+msgctxt "Palette"
+msgid "fly covered text"
+msgstr "Fließtext"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:397
+msgctxt "Palette"
+msgid "fly added red"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:400
+msgctxt "Palette"
+msgid "fly alert block header text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:403
+msgctxt "Palette"
+msgid "fly added green"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:406
+msgctxt "Palette"
+msgid "fly example block header text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:409
+msgctxt "Palette"
+msgid "fly added blue"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:412
+msgctxt "Palette"
+msgid "fly added default blue"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:415
+msgctxt "Palette"
+msgid "seagull outer 1"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:418
+msgctxt "Palette"
+msgid "seagull outer 2"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:421
+msgctxt "Palette"
+msgid "seagull outer 3"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:424
+msgctxt "Palette"
+msgid "seagull block"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:427
+msgctxt "Palette"
+msgid "seagull added grey"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:430
+msgctxt "Palette"
+msgid "seagull block header"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:433
+msgctxt "Palette"
+msgid "seagull covered text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:436
+msgctxt "Palette"
+msgid "seagull covered bullet"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:439
+#, fuzzy
+msgctxt "Palette"
+msgid "seagull background"
+msgstr "Hintergrund entfernen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:442
+#, fuzzy
+msgctxt "Palette"
+msgid "seagull text"
+msgstr "Vertikale Textausrichtung"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:445
+msgctxt "Palette"
+msgid "beaver outer frame"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:448
+#: ../share/palettes/palettes.h:451
+#: ../share/palettes/palettes.h:475
+msgctxt "Palette"
+msgid "beaver added red"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:454
+msgctxt "Palette"
+msgid "beaver outer 1"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:457
+msgctxt "Palette"
+msgid "beaver outer 2"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:460
+msgctxt "Palette"
+msgid "beaver outer 3"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:463
+msgctxt "Palette"
+msgid "beaver added blue"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:466
+#, fuzzy
+msgctxt "Palette"
+msgid "beaver block header text"
+msgstr "Fließtext erstellen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:469
+#, fuzzy
+msgctxt "Palette"
+msgid "beaver added green"
+msgstr "Farbverläufe erstellen und bearbeiten"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:472
+msgctxt "Palette"
+msgid "beaver example block header text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:478
+msgctxt "Palette"
+msgid "beaver alert block header text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:481
+#, fuzzy
+msgctxt "Palette"
+msgid "beaver covered text"
+msgstr "Fließtext erstellen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:484
+msgctxt "Palette"
+msgid "beaver covered bullet"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:487
+#, fuzzy
+msgctxt "Palette"
+msgid "beaver background"
+msgstr "Hintergrund entfernen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:490
+#, fuzzy
+msgctxt "Palette"
+msgid "beaver text"
+msgstr "Text erstellen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:493
+#, fuzzy
+msgctxt "Palette"
+msgid "crane outer 1"
+msgstr "Dreieck Ende"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:496
+#, fuzzy
+msgctxt "Palette"
+msgid "crane outer 2"
+msgstr "Dreieck Ende"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:499
+#, fuzzy
+msgctxt "Palette"
+msgid "crane outer 3"
+msgstr "Dreieck Ende"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:502
+msgctxt "Palette"
+msgid "crane block"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:505
+#, fuzzy
+msgctxt "Palette"
+msgid "crane added orange"
+msgstr "abhöängiger Winkel"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:508
+#, fuzzy
+msgctxt "Palette"
+msgid "crane block header"
+msgstr "Ebene entsperren"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:511
+msgctxt "Palette"
+msgid "crane alert block"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:514
+msgctxt "Palette"
+msgid "crane added red"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:517
+msgctxt "Palette"
+msgid "crane alert block header"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:520
+msgctxt "Palette"
+msgid "crane example block"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:523
+#, fuzzy
+msgctxt "Palette"
+msgid "crane added green"
+msgstr "Farbverläufe erstellen und bearbeiten"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:526
+msgctxt "Palette"
+msgid "crane example block header"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:529
+#, fuzzy
+msgctxt "Palette"
+msgid "crane covered text"
+msgstr "Fließtext erstellen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:532
+msgctxt "Palette"
+msgid "crane covered bullet"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:535
+msgctxt "Palette"
+msgid "crane bullet"
+msgstr ""
+
+# !!!
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:538
+#, fuzzy
+msgctxt "Palette"
+msgid "crane background"
+msgstr "Hintergrund verfolgen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:541
+#, fuzzy
+msgctxt "Palette"
+msgid "crane text"
+msgstr "Text erstellen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:544
+msgctxt "Palette"
+msgid "wolverine outer 1"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:547
+msgctxt "Palette"
+msgid "wolverine outer 2"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:550
+msgctxt "Palette"
+msgid "wolverine outer 3"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:553
+msgctxt "Palette"
+msgid "wolverine outer 4"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:556
+msgctxt "Palette"
+msgid "wolverine added yellow"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:559
+msgctxt "Palette"
+msgid "wolverine added blue"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:562
+msgctxt "Palette"
+msgid "wolverine header text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:565
+msgctxt "Palette"
+msgid "wolverine added green"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:568
+msgctxt "Palette"
+msgid "wolverine example block title"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:571
+msgctxt "Palette"
+msgid "wolverine covered text"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:574
+msgctxt "Palette"
+msgid "wolverine covered bullet"
+msgstr ""
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:577
+#, fuzzy
+msgctxt "Palette"
+msgid "wolverine background"
+msgstr "Hintergrund entfernen"
+
+#. Palette: LaTeX-Beamer.gpl
+#: ../share/palettes/palettes.h:580
+#, fuzzy
+msgctxt "Palette"
+msgid "wolverine text"
+msgstr "Text löschen"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:583
+msgctxt "Palette"
+msgid "black (#000000)"
+msgstr "Schwarz (#000000)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:586
+msgctxt "Palette"
+msgid "dimgray (#696969)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:589
+msgctxt "Palette"
+msgid "gray (#808080)"
+msgstr "Grau (#808080)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:592
+msgctxt "Palette"
+msgid "darkgray (#A9A9A9)"
+msgstr "Dunkelgrau (#A9A9A9)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:595
+msgctxt "Palette"
+msgid "silver (#C0C0C0)"
+msgstr "Silber (#C0C0C0)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:598
+msgctxt "Palette"
+msgid "lightgray (#D3D3D3)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:601
+msgctxt "Palette"
+msgid "gainsboro (#DCDCDC)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:604
+msgctxt "Palette"
+msgid "whitesmoke (#F5F5F5)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:607
+msgctxt "Palette"
+msgid "white (#FFFFFF)"
+msgstr "Weiß (#FFFFFF)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:610
+msgctxt "Palette"
+msgid "rosybrown (#BC8F8F)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:613
+msgctxt "Palette"
+msgid "indianred (#CD5C5C)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:616
+msgctxt "Palette"
+msgid "brown (#A52A2A)"
+msgstr "Braun (#A52A2A)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:619
+msgctxt "Palette"
+msgid "firebrick (#B22222)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:622
+msgctxt "Palette"
+msgid "lightcoral (#F08080)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:625
+msgctxt "Palette"
+msgid "maroon (#800000)"
+msgstr "Kastanienbraun (#800000)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:628
+msgctxt "Palette"
+msgid "darkred (#8B0000)"
+msgstr "Dunkelrot (#8B0000)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:631
+msgctxt "Palette"
+msgid "red (#FF0000)"
+msgstr "Rot (#FF0000)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:634
+msgctxt "Palette"
+msgid "snow (#FFFAFA)"
+msgstr "Schnee (#FFFAFA)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:637
+msgctxt "Palette"
+msgid "mistyrose (#FFE4E1)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:640
+msgctxt "Palette"
+msgid "salmon (#FA8072)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:643
+msgctxt "Palette"
+msgid "tomato (#FF6347)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:646
+msgctxt "Palette"
+msgid "darksalmon (#E9967A)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:649
+msgctxt "Palette"
+msgid "coral (#FF7F50)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:652
+msgctxt "Palette"
+msgid "orangered (#FF4500)"
+msgstr "Orangerot (#FF4500)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:655
+msgctxt "Palette"
+msgid "lightsalmon (#FFA07A)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:658
+msgctxt "Palette"
+msgid "sienna (#A0522D)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:661
+msgctxt "Palette"
+msgid "seashell (#FFF5EE)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:664
+msgctxt "Palette"
+msgid "chocolate (#D2691E)"
+msgstr "Schokolade (#D2691E)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:667
+msgctxt "Palette"
+msgid "saddlebrown (#8B4513)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:670
+msgctxt "Palette"
+msgid "sandybrown (#F4A460)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:673
+msgctxt "Palette"
+msgid "peachpuff (#FFDAB9)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:676
+msgctxt "Palette"
+msgid "peru (#CD853F)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:679
+msgctxt "Palette"
+msgid "linen (#FAF0E6)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:682
+msgctxt "Palette"
+msgid "bisque (#FFE4C4)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:685
+msgctxt "Palette"
+msgid "darkorange (#FF8C00)"
+msgstr "Dunkelorange (#FF8C00)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:688
+msgctxt "Palette"
+msgid "burlywood (#DEB887)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:691
+msgctxt "Palette"
+msgid "tan (#D2B48C)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:694
+msgctxt "Palette"
+msgid "antiquewhite (#FAEBD7)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:697
+msgctxt "Palette"
+msgid "navajowhite (#FFDEAD)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:700
+msgctxt "Palette"
+msgid "blanchedalmond (#FFEBCD)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:703
+msgctxt "Palette"
+msgid "papayawhip (#FFEFD5)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:706
+msgctxt "Palette"
+msgid "moccasin (#FFE4B5)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:709
+msgctxt "Palette"
+msgid "orange (#FFA500)"
+msgstr "Orange (#FFA500)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:712
+msgctxt "Palette"
+msgid "wheat (#F5DEB3)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:715
+msgctxt "Palette"
+msgid "oldlace (#FDF5E6)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:718
+msgctxt "Palette"
+msgid "floralwhite (#FFFAF0)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:721
+msgctxt "Palette"
+msgid "darkgoldenrod (#B8860B)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:724
+msgctxt "Palette"
+msgid "goldenrod (#DAA520)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:727
+msgctxt "Palette"
+msgid "cornsilk (#FFF8DC)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:730
+msgctxt "Palette"
+msgid "gold (#FFD700)"
+msgstr "Gold (#FFD700)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:733
+msgctxt "Palette"
+msgid "khaki (#F0E68C)"
+msgstr "Khaki (#F0E68C)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:736
+msgctxt "Palette"
+msgid "lemonchiffon (#FFFACD)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:739
+msgctxt "Palette"
+msgid "palegoldenrod (#EEE8AA)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:742
+msgctxt "Palette"
+msgid "darkkhaki (#BDB76B)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:745
+msgctxt "Palette"
+msgid "beige (#F5F5DC)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:748
+msgctxt "Palette"
+msgid "lightgoldenrodyellow (#FAFAD2)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:751
+msgctxt "Palette"
+msgid "olive (#808000)"
+msgstr "Oliv (#808000)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:754
+msgctxt "Palette"
+msgid "yellow (#FFFF00)"
+msgstr "Gelb (#FFFF00)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:757
+msgctxt "Palette"
+msgid "lightyellow (#FFFFE0)"
+msgstr "Hellgelb (#FFFFE0)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:760
+msgctxt "Palette"
+msgid "ivory (#FFFFF0)"
+msgstr "Elfenbein (#FFFFF0)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:763
+msgctxt "Palette"
+msgid "olivedrab (#6B8E23)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:766
+msgctxt "Palette"
+msgid "yellowgreen (#9ACD32)"
+msgstr "Gelbgrün (#9ACD32)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:769
+msgctxt "Palette"
+msgid "darkolivegreen (#556B2F)"
+msgstr "Dunkelolivgrün (#556B2F)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:772
+msgctxt "Palette"
+msgid "greenyellow (#ADFF2F)"
+msgstr "Grüngelb (#ADFF2F)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:775
+msgctxt "Palette"
+msgid "chartreuse (#7FFF00)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:778
+msgctxt "Palette"
+msgid "lawngreen (#7CFC00)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:781
+msgctxt "Palette"
+msgid "darkseagreen (#8FBC8F)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:784
+msgctxt "Palette"
+msgid "forestgreen (#228B22)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:787
+msgctxt "Palette"
+msgid "limegreen (#32CD32)"
+msgstr "Limonengrün (#32CD32)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:790
+msgctxt "Palette"
+msgid "lightgreen (#90EE90)"
+msgstr "Hellgrün (#90EE90)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:793
+msgctxt "Palette"
+msgid "palegreen (#98FB98)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:796
+msgctxt "Palette"
+msgid "darkgreen (#006400)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:799
+msgctxt "Palette"
+msgid "green (#008000)"
+msgstr "Grün (#008000)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:802
+msgctxt "Palette"
+msgid "lime (#00FF00)"
+msgstr "Limone (#00FF00)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:805
+msgctxt "Palette"
+msgid "honeydew (#F0FFF0)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:808
+msgctxt "Palette"
+msgid "seagreen (#2E8B57)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:811
+msgctxt "Palette"
+msgid "mediumseagreen (#3CB371)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:814
+msgctxt "Palette"
+msgid "springgreen (#00FF7F)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:817
+msgctxt "Palette"
+msgid "mintcream (#F5FFFA)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:820
+msgctxt "Palette"
+msgid "mediumspringgreen (#00FA9A)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:823
+msgctxt "Palette"
+msgid "mediumaquamarine (#66CDAA)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:826
+msgctxt "Palette"
+msgid "aquamarine (#7FFFD4)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:829
+msgctxt "Palette"
+msgid "turquoise (#40E0D0)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:832
+msgctxt "Palette"
+msgid "lightseagreen (#20B2AA)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:835
+msgctxt "Palette"
+msgid "mediumturquoise (#48D1CC)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:838
+msgctxt "Palette"
+msgid "darkslategray (#2F4F4F)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:841
+msgctxt "Palette"
+msgid "paleturquoise (#AFEEEE)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:844
+msgctxt "Palette"
+msgid "teal (#008080)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:847
+msgctxt "Palette"
+msgid "darkcyan (#008B8B)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:850
+msgctxt "Palette"
+msgid "cyan (#00FFFF)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:853
+msgctxt "Palette"
+msgid "lightcyan (#E0FFFF)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:856
+msgctxt "Palette"
+msgid "azure (#F0FFFF)"
+msgstr "Azur (#F0FFFF)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:859
+msgctxt "Palette"
+msgid "darkturquoise (#00CED1)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:862
+msgctxt "Palette"
+msgid "cadetblue (#5F9EA0)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:865
+msgctxt "Palette"
+msgid "powderblue (#B0E0E6)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:868
+msgctxt "Palette"
+msgid "lightblue (#ADD8E6)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:871
+msgctxt "Palette"
+msgid "deepskyblue (#00BFFF)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:874
+msgctxt "Palette"
+msgid "skyblue (#87CEEB)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:877
+msgctxt "Palette"
+msgid "lightskyblue (#87CEFA)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:880
+msgctxt "Palette"
+msgid "steelblue (#4682B4)"
+msgstr "Stahlblau (#4682B4)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:883
+msgctxt "Palette"
+msgid "aliceblue (#F0F8FF)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:886
+msgctxt "Palette"
+msgid "dodgerblue (#1E90FF)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:889
+msgctxt "Palette"
+msgid "slategray (#708090)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:892
+msgctxt "Palette"
+msgid "lightslategray (#778899)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:895
+msgctxt "Palette"
+msgid "lightsteelblue (#B0C4DE)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:898
+msgctxt "Palette"
+msgid "cornflowerblue (#6495ED)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:901
+msgctxt "Palette"
+msgid "royalblue (#4169E1)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:904
+msgctxt "Palette"
+msgid "midnightblue (#191970)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:907
+msgctxt "Palette"
+msgid "lavender (#E6E6FA)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:910
+msgctxt "Palette"
+msgid "navy (#000080)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:913
+msgctxt "Palette"
+msgid "darkblue (#00008B)"
+msgstr "Dunkelblau (#00008B)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:916
+msgctxt "Palette"
+msgid "mediumblue (#0000CD)"
+msgstr "Mittelblau (#0000CD)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:919
+msgctxt "Palette"
+msgid "blue (#0000FF)"
+msgstr "Blau (#0000FF)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:922
+msgctxt "Palette"
+msgid "ghostwhite (#F8F8FF)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:925
+msgctxt "Palette"
+msgid "slateblue (#6A5ACD)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:928
+msgctxt "Palette"
+msgid "darkslateblue (#483D8B)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:931
+msgctxt "Palette"
+msgid "mediumslateblue (#7B68EE)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:934
+msgctxt "Palette"
+msgid "mediumpurple (#9370DB)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:937
+msgctxt "Palette"
+msgid "blueviolet (#8A2BE2)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:940
+msgctxt "Palette"
+msgid "indigo (#4B0082)"
+msgstr "Indigo (#4B0082)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:943
+msgctxt "Palette"
+msgid "darkorchid (#9932CC)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:946
+msgctxt "Palette"
+msgid "darkviolet (#9400D3)"
+msgstr "Dunkelviolet (#9400D3)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:949
+msgctxt "Palette"
+msgid "mediumorchid (#BA55D3)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:952
+msgctxt "Palette"
+msgid "thistle (#D8BFD8)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:955
+msgctxt "Palette"
+msgid "plum (#DDA0DD)"
+msgstr "Pflaume (#DDA0DD)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:958
+msgctxt "Palette"
+msgid "violet (#EE82EE)"
+msgstr "Violet (#EE82EE)"
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:961
+msgctxt "Palette"
+msgid "purple (#800080)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:964
+msgctxt "Palette"
+msgid "darkmagenta (#8B008B)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:967
+msgctxt "Palette"
+msgid "magenta (#FF00FF)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:970
+msgctxt "Palette"
+msgid "orchid (#DA70D6)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:973
+msgctxt "Palette"
+msgid "mediumvioletred (#C71585)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:976
+msgctxt "Palette"
+msgid "deeppink (#FF1493)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:979
+msgctxt "Palette"
+msgid "hotpink (#FF69B4)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:982
+msgctxt "Palette"
+msgid "lavenderblush (#FFF0F5)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:985
+msgctxt "Palette"
+msgid "palevioletred (#DB7093)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:988
+msgctxt "Palette"
+msgid "crimson (#DC143C)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:991
+msgctxt "Palette"
+msgid "pink (#FFC0CB)"
+msgstr ""
+
+#. Palette: svg.gpl
+#: ../share/palettes/palettes.h:994
+msgctxt "Palette"
+msgid "lightpink (#FFB6C1)"
+msgstr ""
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:997
+#, fuzzy
+msgctxt "Palette"
+msgid "Butter 1"
+msgstr "Nicht überstehendes Ende"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1000
+#, fuzzy
+msgctxt "Palette"
+msgid "Butter 2"
+msgstr "Nicht überstehendes Ende"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1003
+#, fuzzy
+msgctxt "Palette"
+msgid "Butter 3"
+msgstr "Nicht überstehendes Ende"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1006
+msgctxt "Palette"
+msgid "Chameleon 1"
+msgstr "Chameleon 1"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1009
+msgctxt "Palette"
+msgid "Chameleon 2"
+msgstr "Chameleon 2"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1012
+msgctxt "Palette"
+msgid "Chameleon 3"
+msgstr "Chameleon 3"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1015
+msgctxt "Palette"
+msgid "Orange 1"
+msgstr "Orange 1"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1018
+msgctxt "Palette"
+msgid "Orange 2"
+msgstr "Orange 2"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1021
+msgctxt "Palette"
+msgid "Orange 3"
+msgstr "Orange 3"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1024
+msgctxt "Palette"
+msgid "Sky Blue 1"
+msgstr ""
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1027
+msgctxt "Palette"
+msgid "Sky Blue 2"
+msgstr ""
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1030
+msgctxt "Palette"
+msgid "Sky Blue 3"
+msgstr ""
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1033
+msgctxt "Palette"
+msgid "Plum 1"
+msgstr "Pflaume 1"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1036
+msgctxt "Palette"
+msgid "Plum 2"
+msgstr "Pflaume 2"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1039
+msgctxt "Palette"
+msgid "Plum 3"
+msgstr "Pflaume 3"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1042
+msgctxt "Palette"
+msgid "Chocolate 1"
+msgstr "Schokolade 1"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1045
+msgctxt "Palette"
+msgid "Chocolate 2"
+msgstr "Schokolade 2"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1048
+msgctxt "Palette"
+msgid "Chocolate 3"
+msgstr "Schokolade 3"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1051
+msgctxt "Palette"
+msgid "Scarlet Red 1"
+msgstr "Scharlachrot 1"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1054
+msgctxt "Palette"
+msgid "Scarlet Red 2"
+msgstr "Scharlachrot 2"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1057
+msgctxt "Palette"
+msgid "Scarlet Red 3"
+msgstr "Scharlachrot 3"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1060
+msgctxt "Palette"
+msgid "Aluminium 1"
+msgstr "Aluminium 1"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1063
+msgctxt "Palette"
+msgid "Aluminium 2"
+msgstr "Aluminium 2"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1066
+msgctxt "Palette"
+msgid "Aluminium 3"
+msgstr "Aluminium 3"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1069
+msgctxt "Palette"
+msgid "Aluminium 4"
+msgstr "Aluminium 4"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1072
+msgctxt "Palette"
+msgid "Aluminium 5"
+msgstr "Aluminium 5"
+
+#. Palette: Tango-Palette.gpl
+#: ../share/palettes/palettes.h:1075
+msgctxt "Palette"
+msgid "Aluminium 6"
+msgstr "Aluminium 6"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1078
+#, fuzzy
+msgctxt "Palette"
+msgid "Orange Hilight"
+msgstr "Linienhöhe"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1081
+msgctxt "Palette"
+msgid "Orange"
+msgstr "Orange"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1084
+msgctxt "Palette"
+msgid "Orange Base"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1087
+msgctxt "Palette"
+msgid "Orange Shadow"
+msgstr "Orange Schatten"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1090
+msgctxt "Palette"
+msgid "Accent Yellow Highlight"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1093
+msgctxt "Palette"
+msgid "Yellow"
+msgstr "Gelb"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1096
+msgctxt "Palette"
+msgid "Accent Yellow Base"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1099
+msgctxt "Palette"
+msgid "Accent Yellow Shadow"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1102
+#, fuzzy
+msgctxt "Palette"
+msgid "Accent Orange"
+msgstr "Exzentrisches Dreieck"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1105
+#, fuzzy
+msgctxt "Palette"
+msgid "Accent Red"
+msgstr "Zentrieren"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1108
+msgctxt "Palette"
+msgid "Accent Red Base"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1111
+msgctxt "Palette"
+msgid "Accent Deep Red"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1114
+msgctxt "Palette"
+msgid "Human Highlight"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1117
+#, fuzzy
+msgctxt "Palette"
+msgid "Human"
+msgstr "Han"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1120
+msgctxt "Palette"
+msgid "Human Base"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1123
+#, fuzzy
+msgctxt "Palette"
+msgid "Environmental Shadow"
+msgstr "Innerer Schatten"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1126
+msgctxt "Palette"
+msgid "Environmental Blue Highlight"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1129
+msgctxt "Palette"
+msgid "Environmental Blue Medium"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1132
+msgctxt "Palette"
+msgid "Environmental Blue Base"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1135
+msgctxt "Palette"
+msgid "Environmental Blue Shadow"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1138
+#: ../share/palettes/palettes.h:1147
+#, fuzzy
+msgctxt "Palette"
+msgid "Accent Blue Shadow"
+msgstr "Innerer Schatten"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1141
+msgctxt "Palette"
+msgid "Accent Blue"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1144
+msgctxt "Palette"
+msgid "Accent Blue Base"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1150
+msgctxt "Palette"
+msgid "Accent Green Highlight"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1153
+#, fuzzy
+msgctxt "Palette"
+msgid "Accent Green"
+msgstr "Innenzentrum"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1156
+#, fuzzy
+msgctxt "Palette"
+msgid "Accent Green Base"
+msgstr "Großschreibung wie in Sätzen"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1159
+msgctxt "Palette"
+msgid "Accent Green Shadow"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1162
+msgctxt "Palette"
+msgid "Ubuntu Toner"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1165
+msgctxt "Palette"
+msgid "Accent Magenta Highlight"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1168
+#, fuzzy
+msgctxt "Palette"
+msgid "Accent Magenta"
+msgstr "Magenta"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1171
+msgctxt "Palette"
+msgid "Accent Dark Violet"
+msgstr ""
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1174
+msgctxt "Palette"
+msgid "Grey 1"
+msgstr "Grau 1"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1177
+msgctxt "Palette"
+msgid "Grey 2"
+msgstr "Grau 2"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1180
+msgctxt "Palette"
+msgid "Grey 3"
+msgstr "Grau 3"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1183
+msgctxt "Palette"
+msgid "Grey 4"
+msgstr "Grau 4"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1186
+msgctxt "Palette"
+msgid "Grey 5"
+msgstr "Grau 5"
+
+#. Palette: Ubuntu.gpl
+#: ../share/palettes/palettes.h:1189
+msgctxt "Palette"
+msgid "Grey 6"
+msgstr "Grau 6"
+
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
 msgstr "Streifen 1:1"
@@ -7511,7 +9899,7 @@ msgid "<big><b>Export area</b></big>"
 msgstr "<big><b>Exportbereich</b></big>"
 
 #: ../src/dialogs/export.cpp:285
-msgid "_Units:"
+msgid "Units:"
 msgstr "Einheiten:"
 
 #: ../src/dialogs/export.cpp:313
@@ -8676,24 +11064,24 @@ msgid "Unnamed document %d"
 msgstr "Unbenanntes Dokument %d"
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/draw-context.cpp:579
+#: ../src/draw-context.cpp:578
 msgid "Path is closed."
 msgstr "Pfad ist geschlossen."
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/draw-context.cpp:594
+#: ../src/draw-context.cpp:593
 msgid "Closing path."
 msgstr "Pfad schließen"
 
-#: ../src/draw-context.cpp:704
+#: ../src/draw-context.cpp:703
 msgid "Draw path"
 msgstr "Pfad zeichnen"
 
-#: ../src/draw-context.cpp:864
+#: ../src/draw-context.cpp:863
 msgid "Creating single dot"
 msgstr "Erzeuge einzelnen Punkt"
 
-#: ../src/draw-context.cpp:865
+#: ../src/draw-context.cpp:864
 msgid "Create single dot"
 msgstr "Einen einzelnen Punkt erzeugen"
 
@@ -11631,63 +14019,63 @@ msgid "If true, the spacing between intermediates is constant along the length o
 msgstr "Falls gesetzt ist der Abstand zwischen zwei Interpolationen konstant entlang des Pfades. Falls nicht gesetzt hängt der Abstand von der Position der Knoten des Trajektorienpfades ab."
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:331
+#: ../src/live_effects/lpe-knot.cpp:342
 #, fuzzy
 msgid "Fixed width:"
 msgstr "Feste Breite"
 
-#: ../src/live_effects/lpe-knot.cpp:331
+#: ../src/live_effects/lpe-knot.cpp:342
 msgid "Size of hidden region of lower string"
 msgstr "Größe des versteckten Abschnitts der unteren Zeichenkette"
 
-#: ../src/live_effects/lpe-knot.cpp:332
+#: ../src/live_effects/lpe-knot.cpp:343
 msgid "In units of stroke width"
 msgstr "In Einheiten der Strichbreite"
 
-#: ../src/live_effects/lpe-knot.cpp:332
+#: ../src/live_effects/lpe-knot.cpp:343
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr "\"Unterbrechungsbreite\" in Vielfachen der Strichbreite"
 
-#: ../src/live_effects/lpe-knot.cpp:333
+#: ../src/live_effects/lpe-knot.cpp:344
 #: ../src/widgets/stroke-style.cpp:688
 msgid "Stroke width"
 msgstr "Breite der Kontur"
 
-#: ../src/live_effects/lpe-knot.cpp:333
+#: ../src/live_effects/lpe-knot.cpp:344
 msgid "Add the stroke width to the interruption size"
 msgstr "Addiere Strichdicke zur Unterbrechungslänge."
 
-#: ../src/live_effects/lpe-knot.cpp:334
+#: ../src/live_effects/lpe-knot.cpp:345
 msgid "Crossing path stroke width"
 msgstr "Breite gekreuzter Striche"
 
-#: ../src/live_effects/lpe-knot.cpp:334
+#: ../src/live_effects/lpe-knot.cpp:345
 msgid "Add crossed stroke width to the interruption size"
 msgstr "Addiere Dicke gekreuzter Striche zur Unterbrechungslänge."
 
-#: ../src/live_effects/lpe-knot.cpp:335
+#: ../src/live_effects/lpe-knot.cpp:346
 #, fuzzy
 msgid "Switcher size:"
 msgstr "Größe des Drehpfeiles"
 
-#: ../src/live_effects/lpe-knot.cpp:335
+#: ../src/live_effects/lpe-knot.cpp:346
 msgid "Orientation indicator/switcher size"
 msgstr "Größe des Orientierungszeigers/-schalters"
 
-#: ../src/live_effects/lpe-knot.cpp:336
+#: ../src/live_effects/lpe-knot.cpp:347
 msgid "Crossing Signs"
 msgstr "Kreuzungsmarkierung"
 
-#: ../src/live_effects/lpe-knot.cpp:336
+#: ../src/live_effects/lpe-knot.cpp:347
 msgid "Crossings signs"
 msgstr "Kreuzungsmarkierungen"
 
-#: ../src/live_effects/lpe-knot.cpp:347
+#: ../src/live_effects/lpe-knot.cpp:358
 msgid "Drag to select a crossing, click to flip it"
 msgstr "Ziehen, wählt eine Überschneidung aus, Klicken dreht sie um"
 
 #. / @todo Is this the right verb?
-#: ../src/live_effects/lpe-knot.cpp:640
+#: ../src/live_effects/lpe-knot.cpp:651
 msgid "Change knot crossing"
 msgstr "Knotenkreuz ändern"
 
@@ -19847,44 +22235,44 @@ msgstr "Knoten Horizontal umkehren"
 msgid "Flip nodes vertically"
 msgstr "Knoten Vertikal umkehren"
 
-#: ../src/ui/tool/node-tool.cpp:537
+#: ../src/ui/tool/node-tool.cpp:541
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection, click to toggle object selection"
 msgstr "<b>Shift</b>: Ziehen, um Knoten zur Auswahl hinzuzufügen. Klicken, um die Auswahl umzuschalten."
 
-#: ../src/ui/tool/node-tool.cpp:541
+#: ../src/ui/tool/node-tool.cpp:545
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr "<b>Umschalt</b>: Ziehen, um Knoten zur Auswahl hinzuzufügen"
 
-#: ../src/ui/tool/node-tool.cpp:551
+#: ../src/ui/tool/node-tool.cpp:555
 #, c-format
 msgctxt "Node tool tip"
 msgid "<b>%u of %u nodes</b> selected. Drag to select nodes, click to edit only this object (more: Shift)"
 msgstr "<b>%u von %u Knoten</b> ausgewählt. Ziehen, um Knoten auszuwählen und Klicken, um nur dieses Objekt zu bearbeiten (mehr: Umschalt)"
 
-#: ../src/ui/tool/node-tool.cpp:557
+#: ../src/ui/tool/node-tool.cpp:561
 #, c-format
 msgctxt "Node tool tip"
 msgid "<b>%u of %u nodes</b> selected. Drag to select nodes, click clear the selection"
 msgstr "<b>%u von %u Knoten</b> ausgewählt. Ziehen um Knoten auszuwählen und Klicken um Auswahl zu löschen"
 
-#: ../src/ui/tool/node-tool.cpp:565
+#: ../src/ui/tool/node-tool.cpp:569
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
 msgstr "Ziehen, um Knoten auszuwählen. Klicken, um nur dieses Objekt zu bearbeiten."
 
-#: ../src/ui/tool/node-tool.cpp:568
+#: ../src/ui/tool/node-tool.cpp:572
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
 msgstr "Ziehen, um Knoten auszuwählen. Klicken, um Auswahl zu löschen"
 
-#: ../src/ui/tool/node-tool.cpp:573
+#: ../src/ui/tool/node-tool.cpp:577
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr "Ziehen um Objekte zum Bearbeiten auszuwählen und Klicken, um das Objekt zu bearbeiten (mehr: Shift)"
 
-#: ../src/ui/tool/node-tool.cpp:576
+#: ../src/ui/tool/node-tool.cpp:580
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr "Ziehen, um Objekte zum bearbeiten auszuwählen"
@@ -25434,9 +27822,8 @@ msgid "Additional post-processor:"
 msgstr "Zusätzliche Pakete"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:7
-#, fuzzy
 msgid "All in one"
-msgstr "Knoten ausrichten"
+msgstr "Alles in einem"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:9
 #: ../share/extensions/gcodetools_area.inx.h:6
@@ -25533,7 +27920,7 @@ msgstr "Einfache Farbe der Füllung"
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:8
 #: ../share/extensions/gcodetools_tools_library.inx.h:1
 msgid "Gcodetools"
-msgstr ""
+msgstr "Gcode-Werkzeug"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:23
 #: ../share/extensions/gcodetools_area.inx.h:15
@@ -25559,7 +27946,7 @@ msgstr "Logfile erstellen"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:26
 #: ../share/extensions/gcodetools_tools_library.inx.h:4
 msgid "Just check tools"
-msgstr ""
+msgstr "Nur Werkzeuge überprüfen"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:27
 #: ../share/extensions/gcodetools_area.inx.h:18
@@ -27097,9 +29484,6 @@ msgstr "Draht-Sphäre (Kugel)"
 #~ msgid "Mmmm, yummy."
 #~ msgstr "Hmm, lecker."
 
-#~ msgid "Metal"
-#~ msgstr "Metal"
-
 #, fuzzy
 #~ msgid "PatternedGlass"
 #~ msgstr "Muster"
@@ -27392,10 +29776,6 @@ msgstr "Draht-Sphäre (Kugel)"
 #, fuzzy
 #~ msgid "Amount of Blur"
 #~ msgstr "Stärke des Wirbels"
-
-#, fuzzy
-#~ msgid "I hate text"
-#~ msgstr "Text einfügen"
 
 #, fuzzy
 #~ msgid "Mirror reflection"
