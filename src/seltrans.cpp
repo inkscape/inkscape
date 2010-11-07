@@ -1656,6 +1656,7 @@ void Inkscape::SelTrans::_keepClosestPointOnly(std::vector<Inkscape::SnapCandida
         }
     }
 
+    closest_point.setSourceNum(-1);
     points.clear();
     points.push_back(closest_point);
 }

@@ -568,22 +568,6 @@ SPObject *GrDraggable::getServer()
     return server;
 }
 
-static
-boost::optional<Geom::Point>
-get_snap_vector (Geom::Point p, Geom::Point o, double snap, double initial)
-{
-    double r = L2 (p - o);
-    if (r < 1e-3) {
-        return boost::optional<Geom::Point>();
-    }
-
-    double angle = atan2 (p - o);
-    // snap angle to snaps increments, starting from initial:
-    double a_snapped = initial + floor((angle - initial)/snap + 0.5) * snap;
-    // calculate the new position and subtract p to get the vector:
-    return (o + r * Geom::Point(cos(a_snapped), sin(a_snapped)) - p);
-}
-
 static void
 gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gpointer data)
 {
@@ -645,15 +629,17 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
         }
     }
 
-    m.setup(desktop);
     if (!((state & GDK_SHIFT_MASK) || (state & GDK_CONTROL_MASK))) {
+        m.setup(desktop);
         Inkscape::SnappedPoint s = m.freeSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_OTHER_HANDLE));
+        m.unSetup();
         if (s.getSnapped()) {
             p = s.getPoint();
             sp_knot_moveto (knot, p);
         }
     } else if (state & GDK_CONTROL_MASK) {
         SnappedConstraints sc;
+        Inkscape::SnapCandidatePoint scp = Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         unsigned snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
         /* 0 means no snapping. */
@@ -699,39 +685,39 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
                 dr_snap = dragger->point_original;
             }
 
-            boost::optional<Geom::Point> snap_vector;
+            // dr_snap contains the origin of the gradient, whereas p will be the new endpoint which we will try to snap now
+            Inkscape::SnappedPoint sp;
             if (dr_snap.isFinite()) {
+                m.setup(desktop);
                 if (state & GDK_MOD1_MASK) {
                     // with Alt, snap to the original angle and its perpendiculars
-                    snap_vector = get_snap_vector (p, dr_snap, M_PI/2, Geom::atan2 (dragger->point_original - dr_snap));
+                    sp = m.constrainedAngularSnap(scp, dragger->point_original, dr_snap, 2);
                 } else {
                     // with Ctrl, snap to M_PI/snaps
-                    snap_vector = get_snap_vector (p, dr_snap, M_PI/snaps, 0);
+                    sp = m.constrainedAngularSnap(scp, boost::optional<Geom::Point>(), dr_snap, snaps);
                 }
-                if (snap_vector) {
-                    Inkscape::Snapper::SnapConstraint cl(dr_snap, p + *snap_vector - dr_snap);
-                    Inkscape::SnappedPoint s = m.constrainedSnap(Inkscape::SnapCandidatePoint(p + *snap_vector, Inkscape::SNAPSOURCE_OTHER_HANDLE), cl);
-                    if (s.getSnapped()) {
-                        s.setTransformation(s.getPoint() - p);
-                        sc.points.push_back(s);
-                    } else {
-                        Inkscape::SnappedPoint dummy(p + *snap_vector, Inkscape::SNAPSOURCE_OTHER_HANDLE, 0, Inkscape::SNAPTARGET_CONSTRAINED_ANGLE, Geom::L2(*snap_vector), 10000, true, true, false);
-                        dummy.setTransformation(*snap_vector);
-                        sc.points.push_back(dummy);
-                    }
-                }
+                m.unSetup();
+                sc.points.push_back(sp);
             }
         }
 
-        Inkscape::SnappedPoint bsp = m.findBestSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_OTHER_HANDLE), sc, true); // snap indicator will be displayed if needed
-
-        if (bsp.getSnapped()) {
-            p += bsp.getTransformation();
-            sp_knot_moveto (knot, p);
+        m.setup(desktop, false); // turn of the snap indicator temporarily
+        Inkscape::SnappedPoint bsp = m.findBestSnap(scp, sc, true);
+        m.unSetup();
+        if (!bsp.getSnapped()) {
+            // If we didn't truly snap to an object or to a grid, then we will still have to look for the
+            // closest projection onto one of the constraints. findBestSnap() will not do this for us
+            for (std::list<Inkscape::SnappedPoint>::const_iterator i = sc.points.begin(); i != sc.points.end(); i++) {
+                if (i == sc.points.begin() || (Geom::L2((*i).getPoint() - p) < Geom::L2(bsp.getPoint() - p))) {
+                    bsp.setPoint((*i).getPoint());
+                    bsp.setTarget(Inkscape::SNAPTARGET_CONSTRAINED_ANGLE);
+                }
+            }
         }
+        //p = sc.points.front().getPoint();
+        p = bsp.getPoint();
+        sp_knot_moveto (knot, p);
     }
-
-    m.unSetup();
 
     drag->keep_selection = (bool) g_list_find(drag->selected, dragger);
     bool scale_radial = (state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK);

@@ -34,6 +34,7 @@
 #include "sp-guide.h"
 #include "preferences.h"
 #include "event-context.h"
+#include "util/mathfns.h"
 using std::vector;
 
 /**
@@ -471,12 +472,8 @@ Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandi
     }
 
     if (result.getSnapped()) {
-        // only change the snap indicator if we really snapped to something
-        if (_snapindicator && _desktop) {
-            _desktop->snapindicator->set_new_snaptarget(result);
-        }
         if (snap_mouse) {
-            // We still have to apply the constraint, because so far we only tried a freeSnap
+            // If "snap_mouse" then we still have to apply the constraint, because so far we only tried a freeSnap
             Geom::Point result_closest;
             for (std::vector<Inkscape::Snapper::SnapConstraint>::const_iterator c = constraints.begin(); c != constraints.end(); c++) {
                 // Project the mouse pointer onto the constraint; In case we don't snap then we will
@@ -504,6 +501,55 @@ Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandi
     }
 
     return no_snap;
+}
+
+/**
+ *  \brief Try to snap a point to something at a specific angle
+ *
+ *  When drawing a straight line or modifying a gradient, it will snap to specific angle increments
+ *  if CTRL is being pressed. This method will enforce this angular constraint (even if there is nothing
+ *  to snap to)
+ *
+ *  \param p Source point to be snapped
+ *  \param p_ref Optional original point, relative to which the angle should be calculated. If empty then
+ *  the angle will be calculated relative to the y-axis
+ *  \param snaps Number of angular increments per PI radians; E.g. if snaps = 2 then we will snap every PI/2 = 90 degrees
+ */
+
+Inkscape::SnappedPoint SnapManager::constrainedAngularSnap(Inkscape::SnapCandidatePoint const &p,
+                                                            boost::optional<Geom::Point> const &p_ref,
+                                                            Geom::Point const &o,
+                                                            unsigned const snaps) const
+{
+    Inkscape::SnappedPoint sp;
+    if (snaps > 0) { // 0 means no angular snapping
+        // p is at an arbitrary angle. Now we should snap this angle to specific increments.
+        // For this we'll calculate the closest two angles, one at each side of the current angle
+        Geom::Line y_axis(Geom::Point(0, 0), Geom::Point(0, 1));
+        Geom::Line p_line(o, p.getPoint());
+        double angle = Geom::angle_between(y_axis, p_line);
+        double angle_incr = M_PI / snaps;
+        double angle_offset = 0;
+        if (p_ref) {
+            Geom::Line p_line_ref(o, *p_ref);
+            angle_offset = Geom::angle_between(y_axis, p_line_ref);
+        }
+        double angle_ceil = round_to_upper_multiple_plus(angle, angle_incr, angle_offset);
+        double angle_floor = round_to_lower_multiple_plus(angle, angle_incr, angle_offset);
+        // We have two angles now. The constrained snapper will try each of them and return the closest
+
+        // Now do the snapping...
+        std::vector<Inkscape::Snapper::SnapConstraint> constraints;
+        constraints.push_back(Inkscape::Snapper::SnapConstraint(Geom::Line(o, angle_ceil - M_PI/2)));
+        constraints.push_back(Inkscape::Snapper::SnapConstraint(Geom::Line(o, angle_floor - M_PI/2)));
+        sp = multipleConstrainedSnaps(p, constraints); // Constraints will always be applied, even if we didn't snap
+        if (!sp.getSnapped()) { // If we haven't snapped then we only had the constraint applied;
+            sp.setTarget(Inkscape::SNAPTARGET_CONSTRAINED_ANGLE);
+        }
+    } else {
+        sp = freeSnap(p);
+    }
+    return sp;
 }
 
 /**
