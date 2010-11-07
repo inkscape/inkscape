@@ -32,8 +32,8 @@ palettes_i18n = \
     Tango-Palette.gpl \
     Ubuntu.gpl
 
-#palettes.h: i18n.py $(palettes_i18n)
-#	$(srcdir)/i18n.py $(palettes_i18n) > $(srcdir)/palettes.h
+palettes.h: i18n.py $(palettes_i18n)
+	$(srcdir)/i18n.py $(foreach i,$(palettes_i18n),$(srcdir)/$(i)) > $(srcdir)/palettes.h
 
 EXTRA_DIST = $(palettes_DATA) \
              i18n.py
