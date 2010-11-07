@@ -628,6 +628,13 @@ bool MultiPathManipulator::event(GdkEvent *event)
                 setSegmentType(SEGMENT_STRAIGHT);
                 return true;
             }
+        case GDK_u:
+        case GDK_U:
+            if (held_only_shift(event->key)) {
+                // Shift+L - make segments curves
+                setSegmentType(SEGMENT_CUBIC_BEZIER);
+                return true;
+            }
         default:
             break;
         }
