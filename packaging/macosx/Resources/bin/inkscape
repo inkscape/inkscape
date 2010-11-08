@@ -23,6 +23,15 @@ TOP="`dirname \"$CWD\"`"
 #	LaTeX distribution for Mac OS X
 export PATH="/usr/texbin:/opt/local/bin:/sw/bin/:/Library/Frameworks/Python.framework/Versions/Current/bin:/usr/local/bin:$CWD:$PATH"
 
+# Put /usr/bin at beginning of path so we make sure we use Apple's python 
+# over one that may be installed be Macports, Fink or some other means.
+export PATH="/usr/bin:$PATH"
+
+# On Snow Leopard, use the 32-bit version of python from Universal build.
+# This is because our bundled i386 python libraries are 32-bit only.
+export VERSIONER_PYTHON_PREFER_32_BIT=yes
+
+
 # Setup PYTHONPATH to use python modules shipped with Inkscape
 ARCH=`arch`
 PYTHON_VERS=`python -V 2>&1 | cut -c 8-10`
