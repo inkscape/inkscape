@@ -12,13 +12,15 @@ import inkex
 #
 #URL: http://www.d-project.com/
 #
+# Copyright (c) 2010 buliabyak@gmail.com:
+#       adapting for Inkscape extension, SVG output, Auto mode
+#
 #Licensed under the MIT license:
 #   http://www.opensource.org/licenses/mit-license.php
 #
 # The word "QR Code" is registered trademark of
 # DENSO WAVE INCORPORATED
 #   http://www.denso-wave.com/qrcode/faqpatent-e.html
-
 
 class QR8bitByte:
 
