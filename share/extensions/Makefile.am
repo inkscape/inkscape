@@ -118,6 +118,7 @@ extensions = \
 	restack.py \
 	render_barcode.py \
 	render_barcode_datamatrix.py \
+	render_barcode_qrcode.py \
 	render_alphabetsoup.py \
 	render_alphabetsoup_config.py \
 	rtree.py \
@@ -278,6 +279,7 @@ modules = \
 	radiusrand.inx \
 	render_barcode.inx \
 	render_barcode_datamatrix.inx \
+	render_barcode_qrcode.inx \
 	render_alphabetsoup.inx \
 	replace_font.inx \
 	restack.inx \
