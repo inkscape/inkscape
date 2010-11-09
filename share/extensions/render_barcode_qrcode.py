@@ -119,13 +119,22 @@ class QRCode:
         return pattern
 
     def makeSVG(self, grp, boxsize):
-        pixelsize = self.getModuleCount() * boxsize
+        margin = 4
+        pixelsize = (self.getModuleCount() + 2*margin) * boxsize #self.getModuleCount() * boxsize
 
+        # white background providing margin:
+        rect = inkex.etree.SubElement(grp, inkex.addNS('rect', 'svg'))
+        rect.set('x', '0')
+        rect.set('y', '0')
+        rect.set('width', str(pixelsize))
+        rect.set('height', str(pixelsize))
+        rect.set('style', 'fill:white;stroke:none')
+        
         for r in range(self.getModuleCount()):
             for c in range(self.getModuleCount()):
                 if (self.isDark(r, c) ):
-                    x = c * boxsize
-                    y = r * boxsize
+                    x = (c + margin) * boxsize
+                    y = (r + margin) * boxsize
                     rect = inkex.etree.SubElement(grp, inkex.addNS('rect', 'svg'))
                     rect.set('x', str(x))
                     rect.set('y', str(y))
