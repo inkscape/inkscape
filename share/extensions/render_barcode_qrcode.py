@@ -1050,7 +1050,7 @@ class QRCodeInkscape(inkex.Effect):
             
             centre = self.view_center   #Put in in the centre of the current view
             grp_transform = 'translate' + str( centre )
-            grp_name = 'QRCode'
+            grp_name = 'QR Code: '+so.TEXT
             grp_attribs = {inkex.addNS('label','inkscape'):grp_name,
                            'transform':grp_transform }
             grp = inkex.etree.SubElement(self.current_layer, 'g', grp_attribs) #the group to put everything in
