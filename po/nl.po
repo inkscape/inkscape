@@ -2875,7 +2875,7 @@ msgstr "Roteren rond:"
 #: ../share/extensions/spirograph.inx.h:7
 #: ../share/extensions/wireframe_sphere.inx.h:6
 msgid "Rotation (deg):"
-msgstr "Draaiing (graden):"
+msgstr "Rotatie (graden):"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
 msgid "Scaling factor:"
@@ -9275,7 +9275,7 @@ msgstr "<b>P1</b>: eenvoudige verplaatsing"
 
 #: ../src/dialogs/clonetiler.cpp:1890
 msgid "<b>P2</b>: 180&#176; rotation"
-msgstr "<b>P2</b>: 180&#176; draaiing"
+msgstr "<b>P2</b>: 180&#176; draaien"
 
 #: ../src/dialogs/clonetiler.cpp:1891
 msgid "<b>PM</b>: reflection"
@@ -9297,47 +9297,47 @@ msgstr "<b>PMM</b>: spiegeling + spiegeling"
 
 #: ../src/dialogs/clonetiler.cpp:1897
 msgid "<b>PMG</b>: reflection + 180&#176; rotation"
-msgstr "<b>PMG</b>: spiegeling + 180&#176; draaiing"
+msgstr "<b>PMG</b>: spiegeling + 180&#176; draaien"
 
 #: ../src/dialogs/clonetiler.cpp:1898
 msgid "<b>PGG</b>: glide reflection + 180&#176; rotation"
-msgstr "<b>PGG</b>: schuifspiegeling + 180&#176; draaiing"
+msgstr "<b>PGG</b>: schuifspiegeling + 180&#176; draaien"
 
 #: ../src/dialogs/clonetiler.cpp:1899
 msgid "<b>CMM</b>: reflection + reflection + 180&#176; rotation"
-msgstr "<b>CMM</b>: spiegeling + spiegeling + 180&#176; draaiing"
+msgstr "<b>CMM</b>: spiegeling + spiegeling + 180&#176; draaien"
 
 #: ../src/dialogs/clonetiler.cpp:1900
 msgid "<b>P4</b>: 90&#176; rotation"
-msgstr "<b>P4</b>: 90&#176; draaiing"
+msgstr "<b>P4</b>: 90&#176; draaien"
 
 #: ../src/dialogs/clonetiler.cpp:1901
 msgid "<b>P4M</b>: 90&#176; rotation + 45&#176; reflection"
-msgstr "<b>P4M</b>: 90&#176; draaiing + 45&#176; spiegeling"
+msgstr "<b>P4M</b>: 90&#176; draaien + 45&#176; spiegeling"
 
 #: ../src/dialogs/clonetiler.cpp:1902
 msgid "<b>P4G</b>: 90&#176; rotation + 90&#176; reflection"
-msgstr "<b>P4G</b>: 90&#176; draaiing + 90&#176; spiegeling"
+msgstr "<b>P4G</b>: 90&#176; draaien + 90&#176; spiegeling"
 
 #: ../src/dialogs/clonetiler.cpp:1903
 msgid "<b>P3</b>: 120&#176; rotation"
-msgstr "<b>P3</b>: 120&#176; draaiing"
+msgstr "<b>P3</b>: 120&#176; draaien"
 
 #: ../src/dialogs/clonetiler.cpp:1904
 msgid "<b>P31M</b>: reflection + 120&#176; rotation, dense"
-msgstr "<b>P31M</b>: spiegeling + 120&#176; draaiing, dicht"
+msgstr "<b>P31M</b>: spiegeling + 120&#176; draaien, dicht"
 
 #: ../src/dialogs/clonetiler.cpp:1905
 msgid "<b>P3M1</b>: reflection + 120&#176; rotation, sparse"
-msgstr "<b>P3M1</b>: spiegeling + 120&#176; draaiing, dun"
+msgstr "<b>P3M1</b>: spiegeling + 120&#176; draaien, dun"
 
 #: ../src/dialogs/clonetiler.cpp:1906
 msgid "<b>P6</b>: 60&#176; rotation"
-msgstr "<b>P6</b>: 60&#176; draaiing"
+msgstr "<b>P6</b>: 60&#176; draaien"
 
 #: ../src/dialogs/clonetiler.cpp:1907
 msgid "<b>P6M</b>: reflection + 60&#176; rotation"
-msgstr "<b>P6M</b>: spiegeling + 60&#176; draaiing"
+msgstr "<b>P6M</b>: spiegeling + 60&#176; draaien"
 
 #: ../src/dialogs/clonetiler.cpp:1935
 msgid "S_hift"
@@ -9517,7 +9517,7 @@ msgstr "De vergrotingen voor elke kolom optellen"
 
 #: ../src/dialogs/clonetiler.cpp:2239
 msgid "_Rotation"
-msgstr "_Draaiing"
+msgstr "_Rotatie"
 
 #: ../src/dialogs/clonetiler.cpp:2247
 msgid "<b>Angle:</b>"
@@ -9526,12 +9526,12 @@ msgstr "<b>Hoek:</b>"
 #: ../src/dialogs/clonetiler.cpp:2255
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
-msgstr "Elke volgende rij de tegels over deze hoek draaien"
+msgstr "Voor elke volgende rij de tegels over deze hoek draaien"
 
 #: ../src/dialogs/clonetiler.cpp:2263
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
-msgstr "Elke volgende kolom de tegels over deze hoek draaien"
+msgstr "Voor elke volgende kolom de tegels over deze hoek draaien"
 
 #: ../src/dialogs/clonetiler.cpp:2270
 msgid "Randomize the rotation angle by this percentage"
@@ -9547,11 +9547,11 @@ msgstr "De draairichting voor elke kolom om-en-om afwisselen"
 
 #: ../src/dialogs/clonetiler.cpp:2302
 msgid "Cumulate the rotation for each row"
-msgstr "De draaiingen voor elke rij optellen"
+msgstr "De rotaties voor elke rij optellen"
 
 #: ../src/dialogs/clonetiler.cpp:2307
 msgid "Cumulate the rotation for each column"
-msgstr "De draaiingen voor elke kolom optellen"
+msgstr "De rotaties voor elke kolom optellen"
 
 #: ../src/dialogs/clonetiler.cpp:2316
 msgid "_Blur & opacity"
@@ -9884,7 +9884,7 @@ msgstr " _Beginwaarden "
 #. TRANSLATORS: "change" is a noun here
 #: ../src/dialogs/clonetiler.cpp:2957
 msgid "Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"
-msgstr "Alle verplaatsingen, vergrotingen, verdraaiingen en kleurveranderingen in het venster terugzetten op nul"
+msgstr "Alle verplaatsingen, vergrotingen, rotaties en kleurveranderingen in het venster terugzetten op nul"
 
 #: ../src/dialogs/export.cpp:146
 #: ../src/verbs.cpp:2612
@@ -12578,7 +12578,7 @@ msgstr "Verzadigen"
 
 #: ../src/filter-enums.cpp:63
 msgid "Hue Rotate"
-msgstr "Tintverdraaiing"
+msgstr "Tintrotatie"
 
 #: ../src/filter-enums.cpp:64
 msgid "Luminance to Alpha"
@@ -16006,11 +16006,11 @@ msgstr "Het <b>centrum</b> van draaien en scheeftrekken: sleep om te verplaatsen
 
 #: ../src/seltrans.cpp:669
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr "De selectie <b>samendrukken of uitrekken</b>; <b>Ctrl</b> behoudt de verhoudingen; <b>Shift</b> vergroot/verkleint om het draaiings-middelpunt"
+msgstr "De selectie <b>samendrukken of uitrekken</b>; <b>Ctrl</b> behoudt de verhoudingen; <b>Shift</b> vergroot/verkleint om het rotatiemiddelpunt"
 
 #: ../src/seltrans.cpp:670
 msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr "De selectie <b>vergroten of verkleinen</b>; <b>Ctrl</b> behoudt de verhoudingen; <b>Shift</b> vergroot/verkleint om het draaiings-middelpunt"
+msgstr "De selectie <b>vergroten of verkleinen</b>; <b>Ctrl</b> behoudt de verhoudingen; <b>Shift</b> vergroot/verkleint om het rotatiemiddelpunt"
 
 #: ../src/seltrans.cpp:674
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
@@ -23247,12 +23247,12 @@ msgstr "tutorial-tracing.nl.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1907
 msgid "tutorial-calligraphy.svg"
-msgstr "tutorial-calligraphy.svg"
+msgstr "tutorial-calligraphy.nl.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1911
 msgid "tutorial-interpolate.svg"
-msgstr "tutorial-interpolate.svg"
+msgstr "tutorial-interpolate.nl.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1915
@@ -25324,7 +25324,7 @@ msgstr "Vulling is niet gedefinieerd"
 
 #: ../src/widgets/paint-selector.cpp:1014
 msgid "Use the <b>Node tool</b> to adjust position, scale, and rotation of the pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new pattern from selection."
-msgstr "Gebruik het <b>knooppunten-gereedschap</b> om positie, schaal en draaiing van het patroon aan te passen.  Gebruik <b>Object &gt; Patroon &gt; Objecten naar patroon</b> om een nieuw patroon te maken uit de selectie."
+msgstr "Gebruik het <b>knooppunten-gereedschap</b> om positie, schaal en rotatie van het patroon aan te passen. Gebruik <b>Object &gt; Patroon &gt; Objecten naar patroon</b> om een nieuw patroon te maken uit de selectie."
 
 #: ../src/widgets/paint-selector.cpp:1102
 msgid "Swatch fill"
@@ -26859,7 +26859,7 @@ msgstr "Draaihoek:"
 #: ../src/widgets/toolbox.cpp:4715
 #, no-c-format
 msgid "Variation of the rotation of the sprayed objects. 0% for the same rotation than the original object."
-msgstr "Variatie van de draaiing van de verstoven objecten. 0% voor dezelfde rotatie als het originele object."
+msgstr "Variatie van de rotatie van de verstoven objecten. 0% voor dezelfde rotatie als het originele object."
 
 #. Scale
 #: ../src/widgets/toolbox.cpp:4728

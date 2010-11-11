@@ -88,6 +88,7 @@ tutorial_DATA = \
     tutorial-calligraphy.hu.svg \
     tutorial-calligraphy.id.svg \
     tutorial-calligraphy.ja.svg \
+    tutorial-calligraphy.nl.svg \
     tutorial-calligraphy.pl.svg \
     tutorial-calligraphy.pt_BR.svg \
     tutorial-calligraphy.ru.svg \
@@ -118,6 +119,7 @@ tutorial_DATA = \
     tutorial-interpolate.fr.svg \
     tutorial-interpolate.hu.svg \
     tutorial-interpolate.ja.svg \
+    tutorial-interpolate.nl.svg \
     tutorial-interpolate.pl.svg \
     tutorial-interpolate.sk.svg \
     tutorial-interpolate.sl.svg \
