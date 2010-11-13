@@ -52,7 +52,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-11-02 18:43+0100\n"
-"PO-Revision-Date: 2010-11-04 22:19+0100\n"
+"PO-Revision-Date: 2010-11-13 21:14+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -23257,7 +23257,7 @@ msgstr "tutorial-interpolate.nl.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1915
 msgid "tutorial-elements.svg"
-msgstr "tutorial-elements.svg"
+msgstr "tutorial-elements.nl.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1919
