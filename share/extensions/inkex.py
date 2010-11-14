@@ -22,7 +22,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import sys, copy, optparse, random, re
 import gettext
 from math import *
-_ = gettext.gettext
+
+gettext.install('inkscape')
+# _ = gettext.gettext
+# gettext.bindtextdomain('inkscape', '/usr/share/locale')
+# gettext.textdomain('inkscape')
 
 #a dictionary of all of the xmlns prefixes in a standard inkscape doc
 NSS = {

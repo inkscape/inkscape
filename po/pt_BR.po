@@ -4090,18 +4090,16 @@ msgid "Create and edit Scalable Vector Graphics images"
 msgstr "Crie e edite desenhos vetoriais escaláveis (SVG)"
 
 #: ../inkscape.desktop.in.h:2
-#, fuzzy
 msgid "Inkscape"
-msgstr "Sair do Inkscape"
+msgstr "Inkscape"
 
 #: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
 msgstr "Editor de Imagens Vetoriais Inkscape"
 
 #: ../inkscape.desktop.in.h:4
-#, fuzzy
 msgid "Vector Graphics Editor"
-msgstr "Editor de Imagens Vetoriais Inkscape"
+msgstr "Editor de Imagens Vetoriais"
 
 #: ../share/extensions/dimension.py:99
 msgid "Unable to process this object.  Try changing it into a path first."
@@ -4123,7 +4121,6 @@ msgid "Side Length 'c'/px: "
 msgstr "Tamanho do lado 'c'/px: "
 
 #: ../share/extensions/draw_from_triangle.py:178
-#, fuzzy
 msgid "Angle 'A'/radians: "
 msgstr "Ângulo 'A'/radianos: "
 
@@ -4182,12 +4179,11 @@ msgstr ""
 #: ../share/extensions/extractimage.py:65
 #, python-format
 msgid "Image extracted to: %s"
-msgstr ""
+msgstr "Imagem extraída para: %s"
 
 #: ../share/extensions/extractimage.py:72
-#, fuzzy
 msgid "Unable to find image data."
-msgstr "Dificuldade ao buscar dados da imagem."
+msgstr "Incapaz de buscar os dados da imagem."
 
 #: ../share/extensions/inkex.py:67
 msgid ""
@@ -4241,13 +4237,13 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:43
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
 "O primeiro objeto selecionado é do tipo '%s'.\n"
-"Tente usar usar o comando Caminhos > Converter em caminho."
+"Tente usar usar o comando \"Caminhos > Converter em caminho\"."
 
 #: ../share/extensions/perspective.py:74
 #: ../share/extensions/summersnight.py:50
@@ -4258,59 +4254,53 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:99
 #: ../share/extensions/summersnight.py:82
-#, fuzzy
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
 msgstr ""
 "O segundo objeto selecionado é um agrupamento, não um caminho.\n"
-"Tente usar o comando Objeto > Desagrupar"
+"Tente usar o comando \"Objeto > Desagrupar\""
 
 #: ../share/extensions/perspective.py:101
 #: ../share/extensions/summersnight.py:84
-#, fuzzy
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
 "O segundo objeto selecionado não é um caminho.\n"
-"Tente usar usar o comando Caminhos > Converter em caminho."
+"Tente usar usar o comando \"Caminhos > Converter em caminho\"."
 
 #: ../share/extensions/perspective.py:104
 #: ../share/extensions/summersnight.py:87
-#, fuzzy
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
 "O primeiro objeto selecionado não é um caminho.\n"
-"Tente usar usar o comando Caminhos > Converter em caminho."
+"Tente usar usar o comando \"Caminhos > Converter em caminho\"."
 
 #: ../share/extensions/polyhedron_3d.py:60
-#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command 'sudo apt-get install python-numpy'."
 msgstr ""
-"Falha ao importar módulos numpy ou numpy.linalg. Esses módulos são "
-"requeridos por essa extensão. Por favor instale, e tente novamente.  Em um "
-"sistema baseado no Debian isto pode ser solucionado com o comando: sudo apt-"
-"get install python-numpy."
+"Falha ao importar o módulo numpy. Esses módulos são requeridos por essa "
+"extensão. Por favor instale, e tente novamente.  Em um sistema baseado "
+"no Debian isto pode ser solucionado com o comando: "
+"\"sudo apt-get install python-numpy\"."
 
 #: ../share/extensions/polyhedron_3d.py:331
-#, fuzzy
 msgid "No face data found in specified file."
-msgstr "Nenhum dado de face no arquivo especificado\n"
+msgstr "Nenhum dado de face encontrado no arquivo especificado."
 
 #: ../share/extensions/polyhedron_3d.py:332
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:338
-#, fuzzy
 msgid "No edge data found in specified file."
-msgstr "Nenhum dado de borda no arquivo especificado\n"
+msgstr "Nenhum dado de borda no arquivo especificado."
 
 #: ../share/extensions/polyhedron_3d.py:339
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
@@ -4331,12 +4321,12 @@ msgid "Internal Error. No view type selected\n"
 msgstr "Erro interno. Tipo de visão não especificado\n"
 
 #: ../share/extensions/summersnight.py:36
-#, fuzzy
 msgid ""
 "This extension requires two selected paths. \n"
 "The second path must be exactly four nodes long."
 msgstr ""
-"Esta extensão requer que o segundo caminho selecionado tenha quatro nós."
+"Esta extensão requer dois caminhos selecionados. \n"
+"O segundo caminho deve ter exatamente quatro nós."
 
 #: ../share/extensions/svg_and_media_zip_output.py:128
 #, python-format
@@ -4855,9 +4845,8 @@ msgid "Neon"
 msgstr "Neon"
 
 #: ../share/filters/filters.svg.h:48
-#, fuzzy
 msgid "Neon light effect"
-msgstr "Efeito de luz neon com incandescência"
+msgstr "Efeito de luz neon"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Molten metal"
@@ -4981,9 +4970,8 @@ msgid "Stone wall"
 msgstr "Parede de pedras"
 
 #: ../share/filters/filters.svg.h:63
-#, fuzzy
 msgid "Stone wall texture to use with not too saturated colors"
-msgstr "Textura de parede de pedras para usar com cores escuras"
+msgstr "Textura de parede de pedras para usar com cores não muito saturadas"
 
 #: ../share/filters/filters.svg.h:64
 msgid "Silk carpet"
