@@ -15,6 +15,7 @@
 
 #include <cstring>
 #include <string>
+#include <io/sys.h>
 
 #ifdef WIN32
 #ifndef _WIN32_WINDOWS         // Allow use of features specific to Windows 98 or later. Required for correctly including icm.h
@@ -556,9 +557,6 @@ bool ColorProfile::GamutCheck(SPColor color){
     cmsSetAlarmCodes(alarm_r, alarm_g, alarm_b);
     return (outofgamut == 255);
 }
-
-
-#include <io/sys.h>
 
 class ProfileInfo
 {
