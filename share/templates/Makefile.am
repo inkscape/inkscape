@@ -10,6 +10,7 @@ templates_DATA = \
 	business_card_85x54mm.svg \
 	business_card_90x50mm.svg \
 	CD_cover_300dpi.svg \
+    CD_label_120x120.svg \
 	DVD_cover_regular_300dpi.svg \
 	DVD_cover_slim_300dpi.svg \
 	DVD_cover_superslim_300dpi.svg \
@@ -29,7 +30,7 @@ templates_DATA = \
 	default.ja.svg \
 	default.lt.svg \
 	default.nl.svg \
-        default.pl.svg \
+    default.pl.svg \
 	default.pt_BR.svg \
 	default.sk.svg \
 	default_mm.svg \
