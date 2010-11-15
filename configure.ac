@@ -780,7 +780,7 @@ if test "x$cairo_pdf" = "xyes"; then
 fi
 
 dnl Shouldn't we test for libpng and libz?
-INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz -lX11 -lxml2"
+INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz -lX11 -lxml2 -ldl"
 if test "x$openmp_ok" = "xyes"; then
 	INKSCAPE_LIBS="$INKSCAPE_LIBS -lgomp"
 fi
