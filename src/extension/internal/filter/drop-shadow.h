@@ -162,7 +162,7 @@ public:
 					"<object-type>all</object-type>\n"
 					"<effects-menu>\n"
 						"<submenu name=\"" N_("Filters") "\">\n"
-   						"<submenu name=\"" N_("Shadows and Glows") "\"/>\n"
+   						"<submenu name=\"" N_("Experimental") "\"/>\n"
 			      "</submenu>\n"
 					"</effects-menu>\n"
 					"<menu-tip>" N_("Colorizable Drop shadow") "</menu-tip>\n"
