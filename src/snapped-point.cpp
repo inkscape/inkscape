@@ -127,7 +127,7 @@ bool getClosestSP(std::list<Inkscape::SnappedPoint> const &list, Inkscape::Snapp
 bool Inkscape::SnappedPoint::isOtherSnapBetter(Inkscape::SnappedPoint const &other_one, bool weighted) const
 {
 
-    if (!other_one.getSnapped()) {
+    if (getSnapped() && !other_one.getSnapped()) {
         return false;
     }
 
