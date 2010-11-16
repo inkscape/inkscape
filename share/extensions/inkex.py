@@ -3,7 +3,13 @@
 inkex.py
 A helper module for creating Inkscape extensions
 
-Copyright (C) 2005,2007 Aaron Spike, aaron@ekips.org
+Copyright (C) 2005,2010 Aaron Spike <aaron@ekips.org> and contributors
+
+Contributors:
+  Aurélio A. Heckert <aurium(a)gmail.com>
+  Bulia Byak <buliabyak@users.sf.net>
+  Nicolas Dufour, nicoduf@yahoo.fr
+  Peter J. R. Moulder <pjrm@users.sourceforge.net>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
