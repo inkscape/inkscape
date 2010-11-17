@@ -319,11 +319,12 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t, Geom::Point c
  *  constrainedSnapReturnByRef() is equal in snapping behavior to
  *  constrainedSnap(), but the former returns the snapped point trough the referenced
  *  parameter p. This parameter p initially contains the position of the snap
- *  source and will we overwritten by the target position if snapping has occurred.
+ *  source and will be overwritten by the target position if snapping has occurred.
  *  This makes snapping transparent to the calling code. If this is not desired
  *  because either the calling code must know whether snapping has occurred, or
  *  because the original position should not be touched, then constrainedSnap() should
- *  be called instead.
+ *  be called instead. If there's nothing to snap to or if snapping has been disabled,
+ *  then this method will still apply the constraint (but without snapping)
  *
  *  PS:
  *  1) SnapManager::setup() must have been called before calling this method,
@@ -357,6 +358,8 @@ void SnapManager::constrainedSnapReturnByRef(Geom::Point &p,
  *
  *  PS: SnapManager::setup() must have been called before calling this method,
  *  but only once for a set of points
+ *  PS: If there's nothing to snap to or if snapping has been disabled, then this
+ *  method will still apply the constraint (but without snapping)
  *
  *  \param p Source point to be snapped
  *  \param constraint The direction or line along which snapping must occur
@@ -421,12 +424,14 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
  * and will try to snap the SnapCandidatePoint to all of the provided constraints and see which one fits best
  *  \param p Source point to be snapped
  *  \param constraints List of directions or lines along which snapping must occur
+ *  \param dont_snap If true then we will only apply the constraint, without snapping
  *  \param bbox_to_snap Bounding box hulling the set of points, all from the same selection and having the same transformation
  */
 
 
 Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandidatePoint const &p,
                                                     std::vector<Inkscape::Snapper::SnapConstraint> const &constraints,
+                                                    bool dont_snap,
                                                     Geom::OptRect const &bbox_to_snap) const
 {
 
@@ -438,7 +443,7 @@ Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandi
     SnappedConstraints sc;
     SnapperList const snappers = getSnappers();
     std::vector<Geom::Point> projections;
-    bool snapping_is_futile = !someSnapperMightSnap();
+    bool snapping_is_futile = !someSnapperMightSnap() || dont_snap;
 
     Inkscape::SnappedPoint result = no_snap;
 
@@ -452,7 +457,7 @@ Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandi
         projections.push_back(pp);
     }
 
-    if (snap_mouse && p.isSingleHandle()) {
+    if (snap_mouse && p.isSingleHandle() && !dont_snap) {
         // Snapping the mouse pointer instead of the constrained position of the knot allows
         // to snap to things which don't intersect with the constraint line; this is basically
         // then just a freesnap with the constraint applied afterwards

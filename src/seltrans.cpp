@@ -1323,25 +1323,29 @@ gboolean Inkscape::SelTrans::rotateRequest(Geom::Point &pt, guint state)
 // Move the item's transformation center
 gboolean Inkscape::SelTrans::centerRequest(Geom::Point &pt, guint state)
 {
-    SnapManager &m = _desktop->namedview->snap_manager;
-    m.setup(_desktop);
-
     // When dragging the transformation center while multiple items have been selected, then those
     // items will share a single center. While dragging that single center, it should never snap to the
     // centers of any of the selected objects. Therefore we will have to pass the list of selected items
     // to the snapper, to avoid self-snapping of the rotation center
     GSList *items = (GSList *) const_cast<Selection *>(_selection)->itemList();
+    SnapManager &m = _desktop->namedview->snap_manager;
+    m.setup(_desktop);
     m.setRotationCenterSource(items);
-    m.freeSnapReturnByRef(pt, Inkscape::SNAPSOURCE_ROTATION_CENTER);
-    m.unSetup();
 
-    if (state & GDK_CONTROL_MASK) {
-        if ( fabs(_point[Geom::X] - pt[Geom::X]) > fabs(_point[Geom::Y] - pt[Geom::Y]) ) {
-            pt[Geom::Y] = _point[Geom::Y];
-        } else {
-            pt[Geom::X] = _point[Geom::X];
+    if (state & GDK_CONTROL_MASK) { // with Ctrl, constrain to axes
+        std::vector<Inkscape::Snapper::SnapConstraint> constraints;
+        constraints.push_back(Inkscape::Snapper::SnapConstraint(_point, Geom::Point(1, 0)));
+        constraints.push_back(Inkscape::Snapper::SnapConstraint(_point, Geom::Point(0, 1)));
+        Inkscape::SnappedPoint sp = m.multipleConstrainedSnaps(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_ROTATION_CENTER), constraints, state & GDK_SHIFT_MASK);
+        pt = sp.getPoint();
+    }
+    else {
+        if (!(state & GDK_SHIFT_MASK)) { // Shift disables snapping
+            m.freeSnapReturnByRef(pt, Inkscape::SNAPSOURCE_ROTATION_CENTER);
         }
     }
+
+    m.unSetup();
 
     // status text
     GString *xs = SP_PX_TO_METRIC_STRING(pt[Geom::X], _desktop->namedview->getDefaultMetric());

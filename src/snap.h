@@ -135,8 +135,9 @@ public:
                                            Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
     Inkscape::SnappedPoint multipleConstrainedSnaps(Inkscape::SnapCandidatePoint const &p,
-                                                        std::vector<Inkscape::Snapper::SnapConstraint> const &constraints,
-                                                        Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
+                                                    std::vector<Inkscape::Snapper::SnapConstraint> const &constraints,
+                                                    bool dont_snap = false,
+                                                    Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
     Inkscape::SnappedPoint constrainedAngularSnap(Inkscape::SnapCandidatePoint const &p,
                                                     boost::optional<Geom::Point> const &p_ref,

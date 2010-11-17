@@ -1020,12 +1020,12 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
                 constraints.push_back(Inkscape::Snapper::SnapConstraint(origin, *bperp_point));
             }
 
-            sp = sm.multipleConstrainedSnaps(Inkscape::SnapCandidatePoint(new_pos, _snapSourceType()), constraints);
+            sp = sm.multipleConstrainedSnaps(Inkscape::SnapCandidatePoint(new_pos, _snapSourceType()), constraints, held_shift(*event));
         } else {
             // with Ctrl, constrain to axes
             constraints.push_back(Inkscape::Snapper::SnapConstraint(origin, Geom::Point(1, 0)));
             constraints.push_back(Inkscape::Snapper::SnapConstraint(origin, Geom::Point(0, 1)));
-            sp = sm.multipleConstrainedSnaps(Inkscape::SnapCandidatePoint(new_pos, _snapSourceType()), constraints);
+            sp = sm.multipleConstrainedSnaps(Inkscape::SnapCandidatePoint(new_pos, _snapSourceType()), constraints, held_shift(*event));
         }
         new_pos = sp.getPoint();
     } else if (snap) {
