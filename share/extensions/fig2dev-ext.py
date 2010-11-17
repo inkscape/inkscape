@@ -27,4 +27,4 @@ from run_command import run
 run('fig2dev -L svg "%s" "%%s"' % sys.argv[1].replace("%","%%"), "fig2dev")
 
 
-# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
+# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99

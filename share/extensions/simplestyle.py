@@ -231,4 +231,4 @@ def formatColor3f(r,g,b):
     return '#%02x%02x%02x' % (int(round(r*255)),int(round(g*255)),int(round(b*255)))
 
 
-# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
+# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99

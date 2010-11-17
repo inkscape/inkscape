@@ -47,4 +47,4 @@ for k,v in sorted(colors.items()):
     print k+v
 
 
-# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8
+# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99

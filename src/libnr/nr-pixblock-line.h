@@ -25,4 +25,4 @@ void nr_pixblock_draw_line_rgba32 (NRPixBlock *d, long x0, long y0, long x1, lon
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
