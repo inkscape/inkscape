@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 inkex.py
 A helper module for creating Inkscape extensions
