@@ -24,7 +24,6 @@ Filter::filters_all (void )
 {
 	// Here come the filters which are coded in C++ in order to present a parameters dialog
     Duochrome::init();
-    Duochrome2::init();
 	DropShadow::init();
 	DropGlow::init();
     ColorizableDropShadow::init();
