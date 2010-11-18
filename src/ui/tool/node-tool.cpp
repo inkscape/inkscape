@@ -619,8 +619,14 @@ void ink_node_tool_select_point(InkNodeTool *nt, Geom::Point const &/*sel*/, Gdk
 
     if (item_clicked == NULL) { // nothing under cursor
         // if no Shift, deselect
-        if (!(event->state & GDK_SHIFT_MASK)) {
-            selection->clear();
+        // if there are nodes selected, the first click should deselect the nodes
+        // and the second should deselect the items
+        if (!state_held_shift(event->state)) {
+            if (nt->_selected_nodes->empty()) {
+                selection->clear();
+            } else {
+                nt->_selected_nodes->clear();
+            }
         }
     } else {
         if (held_shift(*event)) {

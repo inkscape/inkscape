@@ -728,8 +728,7 @@ NodeType Node::parse_nodetype(char x)
 /** Customized event handler to catch scroll events needed for selection grow/shrink. */
 bool Node::_eventHandler(GdkEvent *event)
 {
-    static NodeList::iterator origin;
-    static int dir;
+    int dir = 0;
 
     switch (event->type)
     {
@@ -740,14 +739,34 @@ bool Node::_eventHandler(GdkEvent *event)
             dir = -1;
         } else break;
         if (held_control(event->scroll)) {
-            _selection.spatialGrow(this, dir);
-        } else {
             _linearGrow(dir);
+        } else {
+            _selection.spatialGrow(this, dir);
+        }
+        return true;
+    case GDK_KEY_PRESS:
+        switch (shortcut_key(event->key))
+        {
+        case GDK_Page_Up:
+            dir = 1;
+            break;
+        case GDK_Page_Down:
+            dir = -1;
+            break;
+        default: goto bail_out;
+        }
+
+        if (held_control(event->key)) {
+            _linearGrow(dir);
+        } else {
+            _selection.spatialGrow(this, dir);
         }
         return true;
     default:
         break;
     }
+    
+    bail_out:
     return ControlPoint::_eventHandler(event);
 }
 
@@ -946,7 +965,9 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
     // constrainedSnap() methods to enforce the constraints, so we need
     // to setup the snapmanager anyway; this is also required for someSnapperMightSnap()
     sm.setup(_desktop);
-    bool snap = sm.someSnapperMightSnap();
+
+    // do not snap when Shift is pressed
+    bool snap = !held_shift(*event) && sm.someSnapperMightSnap();
 
     Inkscape::SnappedPoint sp;
     std::vector<Inkscape::SnapCandidatePoint> unselected;
