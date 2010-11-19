@@ -992,6 +992,8 @@ NodeList::iterator PathManipulator::extremeNode(NodeList::iterator origin, bool 
 /** Called by the XML observer when something else than us modifies the path. */
 void PathManipulator::_externalChange(unsigned type)
 {
+    hideDragPoint();
+
     switch (type) {
     case PATH_CHANGE_D: {
         _getGeometry();
