@@ -72,7 +72,17 @@
  *   is to eventually use a common class for object and control point transforms.
  * - SelectableControlPoint: base for any type of selectable point. It can belong to only one
  *   selection.
- * 
+ *
+ * @par Functionality that resides in weird places
+ * @par
+ *
+ * This list is probably incomplete.
+ * - Curve dragging: CurveDragPoint, controlled by PathManipulator
+ * - Single handle shortcuts: MultiPathManipulator::event(), ModifierTracker
+ * - Linear and spatial grow: Node, spatial grow routed to ControlPointSelection
+ * - Committing handle actions performed with the mouse: PathManipulator
+ * - Sculpting: ControlPointSelection
+ *
  * @par Plans for the future
  * @par
  * - MultiPathManipulator should become a generic shape editor that manages all active manipulator,
