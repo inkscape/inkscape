@@ -45,7 +45,7 @@ public:
                 "</param>\n"
                 "<param name=\"levels\" gui-text=\"" N_("Levels:") "\" type=\"int\" min=\"1\" max=\"15\">5</param>\n"
                 "<param name=\"blend\" gui-text=\"" N_("Blend mode:") "\" type=\"enum\">\n"
-                    "<_item value=\"lighten\">Ligthen</_item>\n"
+                    "<_item value=\"lighten\">Lighten</_item>\n"
                     "<_item value=\"normal\">Normal</_item>\n"
                     "<_item value=\"darken\">Darken</_item>\n"
                 "</param>\n"
@@ -124,7 +124,7 @@ Posterize::get_filter_text (Inkscape::Extension::Extension * ext)
             "</feComponentTransfer>\n"
             "<feColorMatrix type=\"saturate\" values=\"%s\" />\n"
             "<feGaussianBlur stdDeviation=\"%s\" />\n"
-            "<feComposite in2=\"SourceGraphic\" operator=\"atop\" />\n"
+            "<feComposite in2=\"SourceGraphic\" operator=\"in\" />\n"
         "</filter>\n", blur1.str().c_str(), blur2.str().c_str(), blendmode.str().c_str(), presat.str().c_str(), table.str().c_str(), transf.str().c_str(), table.str().c_str(), transf.str().c_str(), table.str().c_str(), transf.str().c_str(), postsat.str().c_str(), antialias.str().c_str());
 
 	return _filter;
