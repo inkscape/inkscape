@@ -560,19 +560,24 @@ void ink_node_tool_update_tip(InkNodeTool *nt, GdkEvent *event)
     unsigned sz = nt->_selected_nodes->size();
     unsigned total = nt->_selected_nodes->allPoints().size();
     if (sz != 0) {
+        char *nodestring = g_strdup_printf(
+            ngettext("<b>%u of %u</b> node selected.", "<b>%u of %u</b> nodes selected.", total),
+            sz, total);
         if (nt->_last_over) {
+            // TRANSLATORS: The %s below is where the "%u of %u nodes selected" sentence gets put
             char *dyntip = g_strdup_printf(C_("Node tool tip",
-                "<b>%u of %u nodes</b> selected. "
-                "Drag to select nodes, click to edit only this object (more: Shift)"), sz, total);
+                "%s Drag to select nodes, click to edit only this object (more: Shift)"),
+                nodestring, sz, total);
             nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE, dyntip);
             g_free(dyntip);
         } else {
             char *dyntip = g_strdup_printf(C_("Node tool tip",
-                "<b>%u of %u nodes</b> selected. "
-                "Drag to select nodes, click clear the selection"), sz, total);
+                "%s Drag to select nodes, click clear the selection"),
+                nodestring, sz, total);
             nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE, dyntip);
             g_free(dyntip);
         }
+        g_free(nodestring);
     } else if (!nt->_multipath->empty()) {
         if (nt->_last_over) {
             nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE, C_("Node tool tip",
