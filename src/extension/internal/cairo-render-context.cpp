@@ -670,6 +670,11 @@ CairoRenderContext::popLayer(void)
             }
             TRACE(("mask surface: %f x %f at %i dpi\n", surface_width, surface_height, _dpi ));
 
+            // Mask should start black, but it is created white.
+            cairo_set_source_rgba(mask_ctx->_cr, 0.0, 0.0, 0.0, 1.0);
+            cairo_rectangle(mask_ctx->_cr, 0, 0, surface_width, surface_height);
+            cairo_fill(mask_ctx->_cr);
+
             // set rendering mode to normal
             setRenderMode(RENDER_MODE_NORMAL);
 
@@ -700,19 +705,27 @@ CairoRenderContext::popLayer(void)
             int stride = cairo_image_surface_get_stride(mask_image);
             unsigned char *pixels = cairo_image_surface_get_data(mask_image);
 
-            // premultiply with opacity
             // In SVG, the rgb channels as well as the alpha channel is used in masking.
             // In Cairo, only the alpha channel is used thus requiring this conversion.
+            // SVG specifies that RGB be converted to alpha using luminance-to-alpha.
+            // Notes: This calculation assumes linear RGB values. VERIFY COLOR SPACE!
+            // The incoming pixel values already include alpha, fill-opacity, etc.,
+            // however, opacity must still be applied.
             TRACE(("premul w/ %f\n", opacity));
-            guint8 int_opacity = (guint8)(255 * opacity);
+            const float coeff_r = 0.2125 / 255.0;
+            const float coeff_g = 0.7154 / 255.0;
+            const float coeff_b = 0.0721 / 255.0;
             for (int row = 0 ; row < height; row++) {
                 unsigned char *row_data = pixels + (row * stride);
                 for (int i = 0 ; i < width; i++) {
                     guint32 *pixel = (guint32 *)row_data + i;
-                    *pixel = ((((*pixel & 0x00ff0000) >> 16) * 13817 +
-                               ((*pixel & 0x0000ff00) >>  8) * 46518 +
-                               ((*pixel & 0x000000ff)      ) * 4688) *
-                              int_opacity);
+                    float lum_alpha = (((*pixel & 0x00ff0000) >> 16) * coeff_r +
+                                       ((*pixel & 0x0000ff00) >>  8) * coeff_g +
+                                       ((*pixel & 0x000000ff)      ) * coeff_b );
+                    // lum_alpha can be slightly greater than 1 due to rounding errors...
+                    // but this should be OK since it doesn't matter what the lower
+                    // six hexadecimal numbers of *pixel are.
+                    *pixel = (guint32)(0xff000000 * lum_alpha * opacity);
                 }
             }
 
