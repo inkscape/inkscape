@@ -1874,6 +1874,9 @@ void PdfParser::doPatchMeshShFill(GfxPatchMeshShading *shading) {
 
 void PdfParser::fillPatch(GfxPatch *patch, int nComps, int depth) {
   GfxPatch patch00, patch01, patch10, patch11;
+#ifdef POPPLER_NEW_GFXPATCH
+  GfxColor color;
+#endif
   double xx[4][8], yy[4][8];
   double xxm, yym;
   double patchColorDelta = colorDeltas[pdfPatchMeshShading-1];
@@ -1890,9 +1893,16 @@ void PdfParser::fillPatch(GfxPatch *patch, int nComps, int depth) {
 	  > patchColorDelta) {
       break;
     }
+#ifdef POPPLER_NEW_GFXPATCH
+    color.c[i] = GfxColorComp(patch->color[0][0].c[i]);
+#endif
   }
   if (i == nComps || depth == maxDepths[pdfPatchMeshShading-1]) {
+#ifdef POPPLER_NEW_GFXPATCH
+    state->setFillColor(&color);
+#else
     state->setFillColor(&patch->color[0][0]);
+#endif
     state->moveTo(patch->x[0][0], patch->y[0][0]);
     state->curveTo(patch->x[0][1], patch->y[0][1],
 		   patch->x[0][2], patch->y[0][2],

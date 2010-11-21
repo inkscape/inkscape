@@ -612,11 +612,12 @@ if test "x$popplernew" = "xyes"; then
 	AC_DEFINE(POPPLER_NEW_GFXFONT, 1, [Use GfxFont from Poppler >= 0.8.3])
 fi
 
-AC_MSG_CHECKING(for new color space API in Poppler)
 ink_svd_CPPFLAGS=$CPPFLAGS
 ink_svd_LIBS=$LIBS
 CPPFLAGS="$CPPFLAGS $POPPLER_CFLAGS"
 LIBS="$LIBS $POPPLER_LIBS"
+
+AC_MSG_CHECKING(for new color space API in Poppler)
 popplercolor="no"
 AC_COMPILE_IFELSE([
 #include <GfxState.h>
@@ -628,15 +629,35 @@ int main() {
   return 0;
 }
 ], [popplercolor=yes])
-CPPFLAGS=$ink_svd_CPPFLAGS
-LIBS=$ink_svd_LIBS
-
 if test "x$popplercolor" = "xyes"; then
 	AC_DEFINE(POPPLER_NEW_COLOR_SPACE_API, 1, [Use color space API from Poppler >= 0.12.2])
 	AC_MSG_RESULT(yes)
 else
 	AC_MSG_RESULT(no)
 fi
+
+# Poppler's b604a008 commit changes this
+AC_MSG_CHECKING([whether Poppler's GfxPatch no longer uses GfxColor])
+popplergfxcolor="no"
+AC_COMPILE_IFELSE([
+#include <GfxState.h>
+
+int main() {
+  GfxPatch::ColorValue color = {c: {0}};
+  GfxPatch patch;
+  patch.color[[0]][[0]] = color;
+  return 0;
+}
+], [popplergfxcolor=yes])
+if test "x$popplergfxcolor" = "xyes"; then
+	AC_DEFINE(POPPLER_NEW_GFXPATCH, 1, [GfxPatch no longer uses GfxColor in >= 0.15.1])
+	AC_MSG_RESULT(yes)
+else
+	AC_MSG_RESULT(no)
+fi
+
+CPPFLAGS=$ink_svd_CPPFLAGS
+LIBS=$ink_svd_LIBS
 
 dnl ******************************
 dnl Inkboard dependency checking
