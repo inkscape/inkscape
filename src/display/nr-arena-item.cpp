@@ -514,11 +514,12 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
                                 d = NR_PIXBLOCK_PX (&mpb) + (y -
                                                              carea.y0) * mpb.rs;
                                 for (x = carea.x0; x < carea.x1; x++) {
+                                    // See below for calculation
                                     unsigned int m;
-                                    m = NR_PREMUL_112 (s[0] + s[1] + s[2], s[3]);
-                                    d[0] =
-                                        FAST_DIV_ROUND < 3 * 255 * 255 >
-                                        (NR_PREMUL_123 (d[0], m));
+                                    m = NR_PREMUL_112 ( (NR_PREMUL_112 (s[0],  54) +
+                                                         NR_PREMUL_112 (s[1], 183) +
+                                                         NR_PREMUL_112 (s[2],  19) ) >> 8, s[3]);
+                                    d[0] = FAST_DIV_ROUND < 255 * 255 > ( NR_PREMUL_123 (d[0], m));
                                     s += 4;
                                     d += 1;
                                 }
@@ -533,8 +534,17 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
                                                              carea.y0) * mpb.rs;
                                 for (x = carea.x0; x < carea.x1; x++) {
                                     unsigned int m;
-                                    m = NR_PREMUL_112 (s[0] + s[1] + s[2], s[3]);
-                                    d[0] = FAST_DIV_ROUND < 3 * 255 > (m);
+                                    // m = NR_PREMUL_112 (s[0] + s[1] + s[2], s[3]);
+                                    // d[0] = FAST_DIV_ROUND < 3 * 255 > (m);
+                                    // Must use luminance to alpha from feColorMatrix.
+                                    // This is an approximation, optimized(?) for speed.
+                                    // 0.2125 * 256 =  54.4000
+                                    // 0.7154 * 256 = 183.1424
+                                    // 0.0721 * 256 =  18.4576
+                                    m = NR_PREMUL_112 ( (NR_PREMUL_112 (s[0],  54) +
+                                                         NR_PREMUL_112 (s[1], 183) +
+                                                         NR_PREMUL_112 (s[2],  19) ) >> 8, s[3]);
+                                    d[0] = FAST_DIV_ROUND < 255 > (m);
                                     s += 4;
                                     d += 1;
                                 }
