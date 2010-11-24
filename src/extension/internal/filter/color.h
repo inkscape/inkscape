@@ -22,7 +22,17 @@ namespace Extension {
 namespace Internal {
 namespace Filter {
 
-/* Custom predefined Colorize filter */
+/* Custom predefined Colorize filter 
+
+Filter's parameters:
+    * Harsh light (0.-10., default 0) -> composite1 (k1)
+    * Normal light (0.-10., default 1) -> composite2 (k2)
+    * Duotone (boolean, default false) -> colormatrix1 (values="0")
+    * Filtered greys (boolean, default false) -> colormatrix2 (values="0")
+    * Blend mode 1 (enum, default Multiply) -> blend1 (mode)
+    * Blend mode 2 (enum, default Screen) -> blend2 (mode)
+*/
+
 class Colorize : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
 	virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
@@ -116,9 +126,18 @@ Colorize::get_filter_text (Inkscape::Extension::Extension * ext)
         "</filter>\n", hlight.str().c_str(), nlight.str().c_str(), duotone.str().c_str(), a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(), blend1.str().c_str(), blend2.str().c_str(), fg.str().c_str());
 
 	return _filter;
-};
+}; /* Colorize filter */
 
-/* Custom predefined Duochrome filter */
+
+/* Custom predefined Duochrome filter 
+
+Filter's parameters:
+    * Fluorescence level (0.-2., default 0) -> composite4 (k2)
+    * Swap (enum, default "No swap") -> composite1, composite2 (operator)
+    * Color 1 (guint, default 1364325887) -> flood1 (flood-opacity, flood-color)
+    * Color 2 (guint, default -65281) -> flood2 (flood-opacity, flood-color)
+*/
+
 class Duochrome : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
 	virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
@@ -223,15 +242,17 @@ Duochrome::get_filter_text (Inkscape::Extension::Extension * ext)
         "</filter>\n", a1.str().c_str(), r1.str().c_str(), g1.str().c_str(), b1.str().c_str(), swap1.str().c_str(), a2.str().c_str(), r2.str().c_str(), g2.str().c_str(), b2.str().c_str(), swap2.str().c_str(), fluo.str().c_str());
 
 	return _filter;
-};
+}; /* Duochrome filter */
 
-/* Custom predefined Quadritone filter */
-/*
-- "Répartition" = Matrice de couleurs 1 (de 0 à 360, défaut sur 280)
-- "Colors" = Matrice de couleurs 3 (de 0 à 360, défaut sur 100)
-- "Blend 1" = Blend 1 (Normal, Multiply et Superposition sont suffisantes)
-- "Oversaturation" = Composite 1 arithmetic (K2 de 0 à 1, défaut sur 0)
-- "Blend 2" = Blend 2 (les cinq options disponibles)
+
+/* Custom predefined Quadritone filter
+
+Filter's parameters:
+    * Hue distribution (0-360, default 280) -> colormatrix1 (values)
+    * Colors (0-360, default 100) -> colormatrix3 (values)
+    * Blend mode 1 (enum, default Normal) -> blend1 (mode)
+    * Over-saturation (0.-1., default 0) -> composite1 (k2)
+    * Blend mode 2 (enum, default Normal) -> blend2 (mode)
 */
 
 class Quadritone : public Inkscape::Extension::Internal::Filter::Filter {
@@ -247,7 +268,7 @@ public:
 			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 				"<name>" N_("Quadritone fantasy, custom -EXP-") "</name>\n"
 				"<id>org.inkscape.effect.filter.Quadritone</id>\n"
-                        "<param name=\"dist\" gui-text=\"" N_("Distribution:") "\" type=\"int\" min=\"0\" max=\"360\">280</param>\n"
+                        "<param name=\"dist\" gui-text=\"" N_("Hue distribution:") "\" type=\"int\" min=\"0\" max=\"360\">280</param>\n"
                         "<param name=\"colors\" gui-text=\"" N_("Colors:") "\" type=\"int\" min=\"0\" max=\"360\">100</param>\n"
                         "<param name=\"blend1\" gui-text=\"" N_("Blend1:") "\" type=\"enum\">\n"
                             "<_item value=\"normal\">Normal</_item>\n"
@@ -256,9 +277,9 @@ public:
                         "</param>\n"
                         "<param name=\"sat\" gui-text=\"" N_("Over-saturation:") "\" type=\"float\" min=\"0\" max=\"1\">0</param>\n"
                         "<param name=\"blend2\" gui-text=\"" N_("Blend2:") "\" type=\"enum\">\n"
+                            "<_item value=\"normal\">Normal</_item>\n"
                             "<_item value=\"screen\">Screen</_item>\n"
                             "<_item value=\"multiply\">Multiply</_item>\n"
-                            "<_item value=\"normal\">Normal</_item>\n"
                             "<_item value=\"lighten\">Lighten</_item>\n"
                             "<_item value=\"darken\">Darken</_item>\n"
                         "</param>\n"
@@ -305,7 +326,240 @@ Quadritone::get_filter_text (Inkscape::Extension::Extension * ext)
         "</filter>\n", dist.str().c_str(), colors.str().c_str(), blend1.str().c_str(), sat.str().c_str(), blend2.str().c_str());
 
 	return _filter;
+}; /* Quadritone filter */
+
+
+/* Custom predefined Solarize filter 
+
+Filter's parameters:
+    * Type (enum, default "Solarize") ->
+        Solarize = blend1 (mode="darken"), blend2 (mode="screen")
+        Moonarize = blend1 (mode="lighten"), blend2 (mode="multiply") [No other access to the blend modes]
+    * Hue rotation (0-360, default 0) -> colormatrix1 (values)
+*/
+
+class Solarize : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+	virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+	Solarize ( ) : Filter() { };
+	virtual ~Solarize ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+	static void init (void) {
+		Inkscape::Extension::build_from_mem(
+			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+				"<name>" N_("Solarize, custom -EXP-") "</name>\n"
+				"<id>org.inkscape.effect.filter.Solarize</id>\n"
+                        "<param name=\"rotate\" gui-text=\"" N_("Hue rotation:") "\" type=\"int\" min=\"0\" max=\"360\">0</param>\n"
+                        "<param name=\"type\" gui-text=\"" N_("Type:") "\" type=\"enum\">\n"
+                            "<_item value=\"solarize\">Solarize</_item>\n"
+                            "<_item value=\"moonarize\">Moonarize</_item>\n"
+                        "</param>\n"
+				"<effect>\n"
+					"<object-type>all</object-type>\n"
+					"<effects-menu>\n"
+						"<submenu name=\"" N_("Filters") "\">\n"
+   						"<submenu name=\"" N_("Experimental") "\"/>\n"
+			      "</submenu>\n"
+					"</effects-menu>\n"
+					"<menu-tip>" N_("Classic photographic solarization effect") "</menu-tip>\n"
+				"</effect>\n"
+			"</inkscape-extension>\n", new Solarize());
+	};
+
 };
+
+gchar const *
+Solarize::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+	if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream rotate;
+    std::ostringstream blend1;
+    std::ostringstream blend2;
+
+    rotate << ext->get_param_int("rotate");
+    const gchar *type = ext->get_param_enum("type");
+    if((g_ascii_strcasecmp("solarize", type) == 0)) {
+    // Solarize
+        blend1 << "darken";
+        blend2 << "screen";
+    } else {
+    // Moonarize
+        blend1 << "lighten";
+        blend2 << "multiply";
+    }
+
+	_filter = g_strdup_printf(
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Solarize, custom -EXP-\">\n"
+        "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 1 \" />\n"
+        "<feColorMatrix type=\"hueRotate\" values=\"%s\" result=\"colormatrix2\" />\n"
+        "<feColorMatrix in=\"colormatrix2\" values=\"-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 \" result=\"colormatrix3\" />\n"
+        "<feBlend in=\"colormatrix3\" in2=\"colormatrix2\" mode=\"%s\" result=\"blend1\" />\n"
+        "<feBlend in2=\"blend1\" mode=\"%s\" result=\"blend2\" />\n"
+        "<feComposite in2=\"SourceGraphic\" operator=\"in\" />\n"
+        "</filter>\n", rotate.str().c_str(), blend1.str().c_str(), blend2.str().c_str());
+
+	return _filter;
+}; /* Solarize filter */
+
+
+/* Custom predefined Tritone filter
+
+Filter's parameters:
+    * Option (enum, default Normal) ->
+        Normal = composite1 (in="qminp", in2="flood"), composite2 (in="p", in2="blend6"), blend6 (in2="qminpc")
+        Enhance hue = Normal + composite2 (in="SourceGraphic")
+        Radiation = Normal + blend6 (in2="SourceGraphic") composite2 (in="blend6", in2="qminpc")
+        Hue to background = Normal + composite1 (in2="BackgroundImage") [a template with an activated background is needed, or colors become black]
+    * Hue distribution (0-360, default 0) -> colormatrix1 (values)
+    * Colors (guint, default -73203457) -> flood (flood-opacity, flood-color)
+    * Global blend (enum, default Lighten) -> blend5 (mode) [Multiply, Screen, Darken, Lighten only!]
+    * Glow (0.01-10., default 0.01) -> feGaussianBlur (stdDeviation)
+    * Glow & blend (enum, default Normal) -> blend6 (mode) [Normal, Multiply and Darken only!]
+    * Local light (0.-10., default 0) -> composite2 (k1)
+    * Global light (0.-10., default 1) -> composite2 (k3) [k2 must be fixed to 1].
+*/
+
+class Tritone : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+	virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+	Tritone ( ) : Filter() { };
+	virtual ~Tritone ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+	static void init (void) {
+		Inkscape::Extension::build_from_mem(
+			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+				"<name>" N_("Tritone, custom -EXP-") "</name>\n"
+				"<id>org.inkscape.effect.filter.Tritone</id>\n"
+                        "<param name=\"type\" gui-text=\"" N_("Type:") "\" type=\"enum\">\n"
+                            "<_item value=\"normal\">Normal</_item>\n"
+                            "<_item value=\"enhue\">Enhance hue</_item>\n"
+                            "<_item value=\"rad\">Radiation</_item>\n"
+                            "<_item value=\"htb\">Hue to background</_item>\n"
+                        "</param>\n"
+                        "<param name=\"dist\" gui-text=\"" N_("Hue distribution:") "\" type=\"int\" min=\"0\" max=\"360\">0</param>\n"
+				        "<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">-73203457</param>\n"
+                        "<param name=\"globalblend\" gui-text=\"" N_("Global blend:") "\" type=\"enum\">\n"
+                            "<_item value=\"lighten\">Lighten</_item>\n"
+                            "<_item value=\"screen\">Screen</_item>\n"
+                            "<_item value=\"multiply\">Multiply</_item>\n"
+                            "<_item value=\"darken\">Darken</_item>\n"
+                        "</param>\n"
+                        "<param name=\"glow\" gui-text=\"" N_("Glow:") "\" type=\"float\" min=\"0.01\" max=\"10\">0.01</param>\n"
+                         "<param name=\"glowblend\" gui-text=\"" N_("Glow blend:") "\" type=\"enum\">\n"
+                            "<_item value=\"normal\">Normal</_item>\n"
+                            "<_item value=\"multiply\">Multiply</_item>\n"
+                            "<_item value=\"darken\">Darken</_item>\n"
+                        "</param>\n"
+                        "<param name=\"llight\" gui-text=\"" N_("Local light:") "\" type=\"float\" min=\"0\" max=\"10\">0</param>\n"
+                        "<param name=\"glight\" gui-text=\"" N_("Global light:") "\" type=\"float\" min=\"0\" max=\"10\">1</param>\n"
+				"<effect>\n"
+					"<object-type>all</object-type>\n"
+					"<effects-menu>\n"
+						"<submenu name=\"" N_("Filters") "\">\n"
+   						"<submenu name=\"" N_("Experimental") "\"/>\n"
+			      "</submenu>\n"
+					"</effects-menu>\n"
+					"<menu-tip>" N_("Create a custom tritone palette with additional glow, blend modes and hue moving") "</menu-tip>\n"
+				"</effect>\n"
+			"</inkscape-extension>\n", new Tritone());
+	};
+
+};
+
+gchar const *
+Tritone::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+	if (_filter != NULL) g_free((void *)_filter);
+    
+    std::ostringstream dist;
+    std::ostringstream a;
+    std::ostringstream r;
+    std::ostringstream g;
+    std::ostringstream b;
+    std::ostringstream globalblend;
+    std::ostringstream glow;
+    std::ostringstream glowblend;
+    std::ostringstream llight;
+    std::ostringstream glight;
+    std::ostringstream c1in;
+    std::ostringstream c1in2;
+    std::ostringstream c2in;
+    std::ostringstream c2in2;
+    std::ostringstream b6in2;
+    
+    guint32 color = ext->get_param_color("color");
+    r << ((color >> 24) & 0xff);
+    g << ((color >> 16) & 0xff);
+    b << ((color >>  8) & 0xff);
+    a << (color & 0xff) / 255.0F;
+    globalblend << ext->get_param_enum("globalblend");
+    dist << ext->get_param_int("dist");
+    glow << ext->get_param_float("glow");
+    glowblend << ext->get_param_enum("glowblend");
+    llight << ext->get_param_float("llight");
+    glight << ext->get_param_float("glight");
+    
+    const gchar *type = ext->get_param_enum("type");
+    if((g_ascii_strcasecmp("enhue", type) == 0)) {
+    // Enhance hue
+        c1in << "qminp";
+        c1in2 << "flood";
+        c2in << "SourceGraphic";
+        c2in2 << "blend6";
+        b6in2 << "qminpc";
+    } else if((g_ascii_strcasecmp("rad", type) == 0)) {
+    // Radiation
+        c1in << "qminp";
+        c1in2 << "flood";
+        c2in << "blend6";
+        c2in2 << "qminpc";
+        b6in2 << "SourceGraphic";
+    } else if((g_ascii_strcasecmp("htb", type) == 0)) {
+    // Hue to background
+        c1in << "qminp";
+        c1in2 << "BackgroundImage";
+        c2in << "p";
+        c2in2 << "blend6";
+        b6in2 << "qminpc";
+    } else {
+    // Normal
+        c1in << "qminp";
+        c1in2 << "flood";
+        c2in << "p";
+        c2in2 << "blend6";
+        b6in2 << "qminpc";
+    }
+    
+	_filter = g_strdup_printf(
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Tritone, custom -EXP-\">\n"
+        "<feColorMatrix type=\"hueRotate\" result=\"colormatrix1\" values=\"%s\" />\n"
+        "<feColorMatrix in=\"colormatrix1\" result=\"r\" type=\"matrix\" values=\"1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1 \" />\n"
+        "<feColorMatrix in=\"colormatrix1\" result=\"g\" type=\"matrix\" values=\"0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 1 \" />\n"
+        "<feColorMatrix in=\"colormatrix1\" result=\"b\" type=\"matrix\" values=\"0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 1 \" />\n"
+        "<feBlend in2=\"g\" mode=\"darken\" in=\"r\" result=\"minrg\" />\n"
+        "<feBlend in2=\"b\" mode=\"darken\" in=\"minrg\" result=\"p\" />\n"
+        "<feBlend in2=\"g\" mode=\"lighten\" in=\"r\" result=\"maxrg\" />\n"
+        "<feBlend in2=\"b\" mode=\"lighten\" in=\"maxrg\" result=\"q\" />\n"
+        "<feComponentTransfer in=\"q\" result=\"q2\">\n"
+            "<feFuncR type=\"linear\" slope=\"0\" />\n"
+        "</feComponentTransfer>\n"
+        "<feBlend in2=\"q2\" mode=\"%s\" in=\"p\" result=\"pq\" />\n"
+        "<feColorMatrix in=\"pq\" result=\"qminp\" type=\"matrix\" values=\"-1 1 0 0 0 -1 1 0 0 0 -1 1 0 0 0 0 0 0 0 1 \" />\n"
+        "<feFlood in=\"qminp\" flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
+        "<feComposite in=\"%s\" in2=\"%s\" result=\"qminpc\" operator=\"arithmetic\" k1=\"1\" />\n"
+        "<feGaussianBlur stdDeviation=\"%s\" />\n"
+        "<feBlend in2=\"%s\" blend=\"normal\" result=\"blend6\" mode=\"%s\" />\n"
+        "<feComposite in=\"%s\" in2=\"%s\" operator=\"arithmetic\" k1=\"%s\" k2=\"1\" k3=\"%s\" k4=\"0\" result=\"composite2\" />\n"
+        "<feComposite in2=\"SourceGraphic\" in=\"composite2\" operator=\"in\" />\n"
+        "</filter>\n", dist.str().c_str(), globalblend.str().c_str(), a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(), c1in.str().c_str(), c1in2.str().c_str(), glow.str().c_str(), b6in2.str().c_str(), glowblend.str().c_str(), c2in.str().c_str(), c2in2.str().c_str(), llight.str().c_str(), glight.str().c_str());
+
+	return _filter;
+}; /* Tritone filter */
 
 }; /* namespace Filter */
 }; /* namespace Internal */

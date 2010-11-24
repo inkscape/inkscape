@@ -32,6 +32,9 @@ Filter::filters_all (void )
     Colorize::init();
     Duochrome::init();
     Quadritone::init();
+    Solarize::init();
+    Tritone::init();
+    
     // Shadows and glows
     ColorizableDropShadow::init();
     // TDB
