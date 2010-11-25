@@ -2150,6 +2150,11 @@ sp_selection_unlink(SPDesktop *desktop)
         SPItem *unlink;
         if (SP_IS_USE(item)) {
             unlink = sp_use_unlink(SP_USE(item));
+            // Unable to unlink use (external or invalid href?)
+            if (!unlink) {
+                new_select = g_slist_prepend(new_select, item);
+                continue;
+            }
         } else /*if (SP_IS_TREF(use))*/ {
             unlink = SP_ITEM(sp_tref_convert_to_tspan(item));
         }

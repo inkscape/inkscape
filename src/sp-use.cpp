@@ -678,7 +678,7 @@ sp_use_unlink(SPUse *use)
 
     // Track the ultimate source of a chain of uses.
     SPItem *orig = sp_use_root(use);
-    g_return_val_if_fail(orig, NULL);
+    if (!orig) return NULL ;
 
     // Calculate the accumulated transform, starting from the original.
     Geom::Matrix t = sp_use_get_root_transform(use);
