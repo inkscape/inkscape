@@ -50,6 +50,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <glibmm/stringutils.h>
 
 #if !defined(_)
 #define _(s) gettext(s)
@@ -63,8 +64,6 @@ namespace ege
 static std::string mimeTEXT("text/plain");
 static std::string mimeX_COLOR("application/x-color");
 static std::string mimeOSWB_COLOR("application/x-oswb-color");
-
-static std::string doubleToStr(double d);
 
 PaintDef::PaintDef() :
     descr(_("none")),
@@ -183,11 +182,11 @@ void PaintDef::getMIMEData(std::string const & type, char*& dest, int& len, int&
             {
                 tmp += std::string("<color name=\"") + descr + "\">";
                 tmp += "<sRGB r=\"";
-                tmp += doubleToStr(getR()/255.0);
+                tmp += Glib::Ascii::dtostr(getR()/255.0);
                 tmp += "\" g=\"";
-                tmp += doubleToStr(getG()/255.0);
+                tmp += Glib::Ascii::dtostr(getG()/255.0);
                 tmp += "\" b=\"";
-                tmp += doubleToStr(getB()/255.0);
+                tmp += Glib::Ascii::dtostr(getB()/255.0);
                 tmp += "\"/>";
                 tmp += "</color>";
             }
@@ -233,20 +232,17 @@ bool PaintDef::fromMIMEData(std::string const & type, char const * data, int len
                 this->type = ege::PaintDef::RGB;
                 size_t numPos = srgb.find("r=");
                 if (numPos != std::string::npos) {
-                    char* endPtr = 0;
-                    double dbl = strtod(srgb.c_str() + numPos + 3, &endPtr);
+                    double dbl = Glib::Ascii::strtod(srgb.substr(numPos + 3));
                     this->r = static_cast<int>(255 * dbl);
                 }
                 numPos = srgb.find("g=");
                 if (numPos != std::string::npos) {
-                    char* endPtr = 0;
-                    double dbl = strtod(srgb.c_str() + numPos + 3, &endPtr);
+                    double dbl = Glib::Ascii::strtod(srgb.substr(numPos + 3));
                     this->g = static_cast<int>(255 * dbl);
                 }
                 numPos = srgb.find("b=");
                 if (numPos != std::string::npos) {
-                    char* endPtr = 0;
-                    double dbl = strtod(srgb.c_str() + numPos + 3, &endPtr);
+                    double dbl = Glib::Ascii::strtod(srgb.substr(numPos + 3));
                     this->b = static_cast<int>(255 * dbl);
                 }
 
@@ -307,13 +303,6 @@ void PaintDef::removeCallback( ColorCallback /*cb*/, void* /*data*/ )
 {
 }
 
-static std::string doubleToStr(double d)
-{
-    // TODO ensure "." is used for decimal separator.
-    std::stringstream out;
-    out << d;
-    return out.str();
-}
 
 } // namespace ege
 

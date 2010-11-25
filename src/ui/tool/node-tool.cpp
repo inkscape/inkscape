@@ -567,13 +567,13 @@ void ink_node_tool_update_tip(InkNodeTool *nt, GdkEvent *event)
             // TRANSLATORS: The %s below is where the "%u of %u nodes selected" sentence gets put
             char *dyntip = g_strdup_printf(C_("Node tool tip",
                 "%s Drag to select nodes, click to edit only this object (more: Shift)"),
-                nodestring, sz, total);
+                nodestring);
             nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE, dyntip);
             g_free(dyntip);
         } else {
             char *dyntip = g_strdup_printf(C_("Node tool tip",
                 "%s Drag to select nodes, click clear the selection"),
-                nodestring, sz, total);
+                nodestring);
             nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE, dyntip);
             g_free(dyntip);
         }
