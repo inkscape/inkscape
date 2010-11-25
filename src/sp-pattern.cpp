@@ -435,10 +435,40 @@ pattern_ref_modified (SPObject */*ref*/, guint /*flags*/, SPPattern *pattern)
         /* Conditional to avoid causing infinite loop if there's a cycle in the href chain. */
 }
 
+
+/**
+Count how many times pat is used by the styles of o and its descendants
+*/
 guint
-pattern_users (SPPattern *pattern)
+count_pattern_hrefs(SPObject *o, SPPattern *pat)
 {
-	return SP_OBJECT (pattern)->hrefcount;
+    if (!o)
+        return 1;
+
+    guint i = 0;
+
+    SPStyle *style = SP_OBJECT_STYLE(o);
+    if (style
+        && style->fill.isPaintserver()
+        && SP_IS_PATTERN(SP_STYLE_FILL_SERVER(style))
+        && SP_PATTERN(SP_STYLE_FILL_SERVER(style)) == pat)
+    {
+        i ++;
+    }
+    if (style
+        && style->stroke.isPaintserver()
+        && SP_IS_PATTERN(SP_STYLE_STROKE_SERVER(style))
+        && SP_PATTERN(SP_STYLE_STROKE_SERVER(style)) == pat)
+    {
+        i ++;
+    }
+
+    for (SPObject *child = sp_object_first_child(o);
+         child != NULL; child = SP_OBJECT_NEXT(child)) {
+        i += count_pattern_hrefs(child, pat);
+    }
+
+    return i;
 }
 
 SPPattern *
@@ -465,7 +495,7 @@ pattern_chain (SPPattern *pattern)
 SPPattern *
 sp_pattern_clone_if_necessary (SPItem *item, SPPattern *pattern, const gchar *property)
 {
-	if (pattern_users(pattern) > 1) {
+	if (!pattern->href || SP_OBJECT_HREFCOUNT(pattern) > count_pattern_hrefs(item, pattern)) {
 		pattern = pattern_chain (pattern);
 		gchar *href = g_strconcat ("url(#", SP_OBJECT_REPR (pattern)->attribute("id"), ")", NULL);
 
