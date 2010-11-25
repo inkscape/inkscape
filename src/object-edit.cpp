@@ -172,7 +172,6 @@ RectKnotHolderEntityRX::knot_click(guint state)
         SP_OBJECT_REPR(rect)->setAttribute("ry", SP_OBJECT_REPR(rect)->attribute("rx"));
     }
 
-    update_knot();
 }
 
 Geom::Point
