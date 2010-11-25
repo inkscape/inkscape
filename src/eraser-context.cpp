@@ -576,10 +576,13 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
                 dc->repr = NULL;
             }
 
-            Inkscape::Rubberband::get(desktop)->stop();
             dc->_message_context->clear();
             ret = TRUE;
         }
+        if (Inkscape::Rubberband::get(desktop)->is_started()) {
+            Inkscape::Rubberband::get(desktop)->stop();
+        }
+            
         break;
     }
 
