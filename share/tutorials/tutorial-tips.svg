@@ -329,8 +329,8 @@ scale, rotation, and possibly opacity:
   <flowDiv xml:space="preserve">Create a new layer, in that layer create invisible rectangles covering parts of your
 image. Make sure your document uses the px unit (default), turn on grid and snap the
 rects to the grid so that each one spans a whole number of px units. Assign meaningful
-ids to the rects, and export each one to its own file (<flowSpan font-family="sans serif">File &quot;
-&quot;&gt; Export Bitmap</flowSpan> (<flowSpan font-weight="bold">Shift+Ctrl+E</flowSpan>)). Then the rects will remember
+ids to the rects, and export each one to its own file (<flowSpan font-family="sans serif">File
+&gt; Export Bitmap</flowSpan> (<flowSpan font-weight="bold">Shift+Ctrl+E</flowSpan>)). Then the rects will remember
 their export filenames. After that, it&apos;s very easy to re-export some of the rects:
 switch to the export layer, use Tab to select the one you need (or use Find by id), and
 click Export in the dialog. Or, you can write a shell script or batch file to export
