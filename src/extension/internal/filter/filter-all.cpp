@@ -10,7 +10,9 @@
 /* Put your filter here */
 #include "color.h"
 #include "drop-shadow.h"
+#include "morphology.h"
 #include "snow.h"
+
 #include "experimental.h"
 
 namespace Inkscape {
@@ -26,17 +28,22 @@ Filter::filters_all (void )
 	DropShadow::init();
 	DropGlow::init();
 	Snow::init();
+
+    /* Experimental custom predefined filters */
     
-    // Experimental
     // Color
     Colorize::init();
     Duochrome::init();
     Quadritone::init();
     Solarize::init();
     Tritone::init();
+        
+    // Morphology
+    Crosssmooth::init();
     
     // Shadows and glows
     ColorizableDropShadow::init();
+
     // TDB
     Posterize::init();
 

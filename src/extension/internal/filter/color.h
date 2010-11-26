@@ -22,11 +22,14 @@ namespace Extension {
 namespace Internal {
 namespace Filter {
 
-/* Custom predefined Colorize filter 
+/**
+    \brief    Custom predefined Colorize filter.
+    
+    Blend image or object with a flood color.
 
-Filter's parameters:
-    * Harsh light (0.-10., default 0) -> composite1 (k1)
-    * Normal light (0.-10., default 1) -> composite2 (k2)
+    Filter's parameters:
+    * Harsh light (0.->10., default 0) -> composite1 (k1)
+    * Normal light (0.->10., default 1) -> composite2 (k2)
     * Duotone (boolean, default false) -> colormatrix1 (values="0")
     * Filtered greys (boolean, default false) -> colormatrix2 (values="0")
     * Blend mode 1 (enum, default Multiply) -> blend1 (mode)
@@ -129,10 +132,13 @@ Colorize::get_filter_text (Inkscape::Extension::Extension * ext)
 }; /* Colorize filter */
 
 
-/* Custom predefined Duochrome filter 
+/**
+    \brief    Custom predefined Duochrome filter.
+    
+    Convert luminance values to a duochrome palette.
 
-Filter's parameters:
-    * Fluorescence level (0.-2., default 0) -> composite4 (k2)
+    Filter's parameters:
+    * Fluorescence level (0.->2., default 0) -> composite4 (k2)
     * Swap (enum, default "No swap") -> composite1, composite2 (operator)
     * Color 1 (guint, default 1364325887) -> flood1 (flood-opacity, flood-color)
     * Color 2 (guint, default -65281) -> flood2 (flood-opacity, flood-color)
@@ -245,13 +251,16 @@ Duochrome::get_filter_text (Inkscape::Extension::Extension * ext)
 }; /* Duochrome filter */
 
 
-/* Custom predefined Quadritone filter
+/**
+    \brief    Custom predefined Quadritone filter.
+    
+    Replace hue by two colors.
 
-Filter's parameters:
-    * Hue distribution (0-360, default 280) -> colormatrix1 (values)
-    * Colors (0-360, default 100) -> colormatrix3 (values)
+    Filter's parameters:
+    * Hue distribution (0->360, default 280) -> colormatrix1 (values)
+    * Colors (0->360, default 100) -> colormatrix3 (values)
     * Blend mode 1 (enum, default Normal) -> blend1 (mode)
-    * Over-saturation (0.-1., default 0) -> composite1 (k2)
+    * Over-saturation (0.->1., default 0) -> composite1 (k2)
     * Blend mode 2 (enum, default Normal) -> blend2 (mode)
 */
 
@@ -329,14 +338,18 @@ Quadritone::get_filter_text (Inkscape::Extension::Extension * ext)
 }; /* Quadritone filter */
 
 
-/* Custom predefined Solarize filter 
+/**
+    \brief    Custom predefined Solarize filter.
+    
+    Classic photographic solarization effect.
 
-Filter's parameters:
+    Filter's parameters:
     * Type (enum, default "Solarize") ->
         Solarize = blend1 (mode="darken"), blend2 (mode="screen")
         Moonarize = blend1 (mode="lighten"), blend2 (mode="multiply") [No other access to the blend modes]
-    * Hue rotation (0-360, default 0) -> colormatrix1 (values)
+    * Hue rotation (0->360, default 0) -> colormatrix1 (values)
 */
+
 
 class Solarize : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
@@ -405,21 +418,24 @@ Solarize::get_filter_text (Inkscape::Extension::Extension * ext)
 }; /* Solarize filter */
 
 
-/* Custom predefined Tritone filter
+/**
+    \brief    Custom predefined Tritone filter.
+    
+    Create a custom tritone palette with additional glow, blend modes and hue moving.
 
-Filter's parameters:
+    Filter's parameters:
     * Option (enum, default Normal) ->
         Normal = composite1 (in="qminp", in2="flood"), composite2 (in="p", in2="blend6"), blend6 (in2="qminpc")
         Enhance hue = Normal + composite2 (in="SourceGraphic")
         Radiation = Normal + blend6 (in2="SourceGraphic") composite2 (in="blend6", in2="qminpc")
         Hue to background = Normal + composite1 (in2="BackgroundImage") [a template with an activated background is needed, or colors become black]
-    * Hue distribution (0-360, default 0) -> colormatrix1 (values)
+    * Hue distribution (0->360, default 0) -> colormatrix1 (values)
     * Colors (guint, default -73203457) -> flood (flood-opacity, flood-color)
     * Global blend (enum, default Lighten) -> blend5 (mode) [Multiply, Screen, Darken, Lighten only!]
-    * Glow (0.01-10., default 0.01) -> feGaussianBlur (stdDeviation)
+    * Glow (0.01->10., default 0.01) -> feGaussianBlur (stdDeviation)
     * Glow & blend (enum, default Normal) -> blend6 (mode) [Normal, Multiply and Darken only!]
-    * Local light (0.-10., default 0) -> composite2 (k1)
-    * Global light (0.-10., default 1) -> composite2 (k3) [k2 must be fixed to 1].
+    * Local light (0.->10., default 0) -> composite2 (k1)
+    * Global light (0.->10., default 1) -> composite2 (k3) [k2 must be fixed to 1].
 */
 
 class Tritone : public Inkscape::Extension::Internal::Filter::Filter {
