@@ -27430,22 +27430,22 @@ msgstr "Basculer le style entre Italique/Oblique et normal"
 #. Name
 #: ../src/widgets/toolbox.cpp:7513
 msgid "Toggle Superscript"
-msgstr "Passer en exposant"
+msgstr "Inverser le mode exposant"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7514
 msgid "Toggle superscript"
-msgstr "Passer en exposant"
+msgstr "Inverser le mode exposant"
 
 #. Name
 #: ../src/widgets/toolbox.cpp:7526
 msgid "Toggle Subscript"
-msgstr "Passer en indice"
+msgstr "Inverser le mode indice"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7527
 msgid "Toggle subscript"
-msgstr "Passer en indice"
+msgstr "Inverser le mode indice"
 
 #: ../src/widgets/toolbox.cpp:7544
 #: ../src/widgets/toolbox.cpp:7545
