@@ -28,12 +28,10 @@ namespace Filter {
     Smooth the outside of shapes and pictures.
 
     Filter's parameters:
-    * Type (enum, default "Smooth all") ->
-        Smooth all = composite (in="colormatrix", in2="colormatrix")
-        Smooth edges = composite (in="SourceGraphic", in2="colormatrix")
+    * Type (enum, default "Smooth edges") ->
+        Smooth edges = composite1 (in="SourceGraphic", in2="blur")
+        Smooth all = composite1 (in="blur", in2="blur")
     * Blur (0.01->10., default 5.) -> blur (stdDeviation)
-    * Spreading (1->100, default 20) -> colormatrix (value n-1)
-    * Erosion (0->-100, default -15) -> colormatrix (value n)
 */
 
 class Crosssmooth : public Inkscape::Extension::Internal::Filter::Filter {
@@ -50,12 +48,10 @@ public:
 				"<name>" N_("Cross-smooth, custom -EXP-") "</name>\n"
 				"<id>org.inkscape.effect.filter.Crosssmooth</id>\n"
                         "<param name=\"type\" gui-text=\"" N_("Type:") "\" type=\"enum\">\n"
-                            "<_item value=\"all\">Smooth all</_item>\n"
                             "<_item value=\"edges\">Smooth edges</_item>\n"
+                            "<_item value=\"all\">Smooth all</_item>\n"
                         "</param>\n"
                         "<param name=\"blur\" gui-text=\"" N_("Blur:") "\" type=\"float\" min=\"0.01\" max=\"10\">5</param>\n"
-                        "<param name=\"spreading\" gui-text=\"" N_("Spreading:") "\" type=\"int\" min=\"1\" max=\"100\">20</param>\n"
-                        "<param name=\"erosion\" gui-text=\"" N_("Erosion:") "\" type=\"int\" min=\"-100\" max=\"0\">-15</param>\n"
 				"<effect>\n"
 					"<object-type>all</object-type>\n"
 					"<effects-menu>\n"
@@ -63,7 +59,7 @@ public:
    						"<submenu name=\"" N_("Experimental") "\"/>\n"
 			      "</submenu>\n"
 					"</effects-menu>\n"
-					"<menu-tip>" N_("Smooth the outside of shapes and pictures without altering their contents") "</menu-tip>\n"
+					"<menu-tip>" N_("Smooth edges and angles of shapes") "</menu-tip>\n"
 				"</effect>\n"
 			"</inkscape-extension>\n", new Crosssmooth());
 	};
@@ -76,27 +72,25 @@ Crosssmooth::get_filter_text (Inkscape::Extension::Extension * ext)
 	if (_filter != NULL) g_free((void *)_filter);
 
     std::ostringstream blur;
-    std::ostringstream spreading;
-    std::ostringstream erosion;
-    std::ostringstream cin;
+    std::ostringstream c1in;
 
     blur << ext->get_param_float("blur");
-    spreading << ext->get_param_int("spreading");
-    erosion << ext->get_param_int("erosion");
 
     const gchar *type = ext->get_param_enum("type");
     if((g_ascii_strcasecmp("all", type) == 0)) {
-        cin << "colormatrix";
+        c1in << "blur";
     } else {
-        cin << "SourceGraphic";
+        c1in << "SourceGraphic";
     }
-    
+
 	_filter = g_strdup_printf(
-		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Cross-smooth, custom -EXP-\">\n"
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" y=\"0\" x=\"0\" inkscape:label=\"Cross-smooth, custom -EXP-\">\n"
         "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
-        "<feColorMatrix in=\"blur\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"colormatrix\" />\n"
-        "<feComposite in=\"%s\" in2=\"colormatrix\" operator=\"in\" />\n"
-        "</filter>\n", blur.str().c_str(), spreading.str().c_str(), erosion.str().c_str(), cin.str().c_str());
+        "<feComposite in=\"%s\" in2=\"blur\" operator=\"atop\" result=\"composite1\" />\n"
+        "<feComposite in2=\"composite1\" operator=\"in\" result=\"composite2\" />\n"
+        "<feComposite in2=\"composite2\" operator=\"in\" result=\"composite3\" />\n"
+        "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -10 \" result=\"colormatrix\" />\n"
+        "</filter>\n", blur.str().c_str(), c1in.str().c_str());
 
 	return _filter;
 }; /* Crosssmooth filter */

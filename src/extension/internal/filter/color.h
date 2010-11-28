@@ -52,7 +52,6 @@ public:
                         "<param name=\"hlight\" gui-text=\"" N_("Harsh light:") "\" type=\"float\" min=\"0\" max=\"10\">0</param>\n"
                         "<param name=\"nlight\" gui-text=\"" N_("Normal light:") "\" type=\"float\" min=\"0\" max=\"10\">1</param>\n"
                         "<param name=\"duotone\" gui-text=\"" N_("Duotone") "\" type=\"boolean\" >false</param>\n"
-                        "<param name=\"fg\" gui-text=\"" N_("Filtered greys") "\" type=\"boolean\" >false</param>\n"
                         "<param name=\"blend1\" gui-text=\"" N_("Blend1:") "\" type=\"enum\">\n"
                             "<_item value=\"multiply\">Multiply</_item>\n"
                             "<_item value=\"normal\">Normal</_item>\n"
@@ -94,7 +93,6 @@ Colorize::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream hlight;
     std::ostringstream nlight;
     std::ostringstream duotone;
-    std::ostringstream fg;
     std::ostringstream blend1;
     std::ostringstream blend2;
 
@@ -112,10 +110,6 @@ Colorize::get_filter_text (Inkscape::Extension::Extension * ext)
         duotone << "0";
     else
         duotone << "1";
-    if (ext->get_param_bool("fg"))
-        fg << "0";
-    else
-        fg << "1";
 
 	_filter = g_strdup_printf(
 		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Colorize, custom -EXP-\">\n"
@@ -124,9 +118,9 @@ Colorize::get_filter_text (Inkscape::Extension::Extension * ext)
             "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood1\" />\n"
             "<feBlend in=\"flood1\" in2=\"colormatrix1\" mode=\"%s\" result=\"blend1\" />\n"
             "<feBlend in2=\"blend1\" mode=\"%s\" result=\"blend2\" />\n"
-            "<feColorMatrix in=\"blend2\" values=\"%s\" type=\"saturate\" result=\"colormatrix2\" />\n"
+            "<feColorMatrix in=\"blend2\" values=\"1\" type=\"saturate\" result=\"colormatrix2\" />\n"
             "<feComposite in=\"colormatrix2\" in2=\"SourceGraphic\" operator=\"in\" k2=\"1\" result=\"composite2\" />\n"
-        "</filter>\n", hlight.str().c_str(), nlight.str().c_str(), duotone.str().c_str(), a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(), blend1.str().c_str(), blend2.str().c_str(), fg.str().c_str());
+        "</filter>\n", hlight.str().c_str(), nlight.str().c_str(), duotone.str().c_str(), a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(), blend1.str().c_str(), blend2.str().c_str());
 
 	return _filter;
 }; /* Colorize filter */

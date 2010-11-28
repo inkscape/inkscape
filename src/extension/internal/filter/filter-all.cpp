@@ -37,7 +37,7 @@ Filter::filters_all (void )
     Quadritone::init();
     Solarize::init();
     Tritone::init();
-        
+
     // Morphology
     Crosssmooth::init();
     
@@ -45,6 +45,7 @@ Filter::filters_all (void )
     ColorizableDropShadow::init();
 
     // TDB
+    Drawing::init();
     Posterize::init();
 
 	// Here come the rest of the filters that are read from SVG files in share/filters and

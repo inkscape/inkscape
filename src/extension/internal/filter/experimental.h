@@ -22,6 +22,169 @@ namespace Extension {
 namespace Internal {
 namespace Filter {
 
+/**
+    \brief    Custom predefined Drawing filter.
+    
+    Convert images to duochrome drawings.
+
+    Filter's parameters:
+    * Simplification (0.01->10, default 0.7) -> blur1 (stdDeviation)
+    * Lightness (0->50, default 5) -> convolve (kernelMatrix, central value -1000->-1050, default -1005)
+    * Smoothness (0.01->10, default 0.7) -> blur2 (stdDeviation)
+    * Dilatation (3->100, default 6) -> colormatrix3 (n-1th value)
+
+    * Blur (0.01->10., default 5.) -> blur3 (stdDeviation)
+    * Blur spread (3->20, default 6) -> colormatrix5 (n-1th value)
+    * Blur erosion (-2->0, default -2) -> colormatrix5 (nth value)
+
+    * Stroke color (guint, default 205,0,0) -> flood2 (flood-opacity, flood-color)
+    * Image on stroke (boolean, default false) -> composite1 (in="flood2" true-> in="SourceGraphic")
+    * Image on stroke opacity (0.->1., default 1) -> composite3 (k3)
+    * Fill color (guint, default 255,203,0) -> flood3 (flood-opacity, flood-color)
+    * Image on fill (boolean, default false) -> composite2 (in="flood3" true-> in="SourceGraphic")
+    * Image on fill opacity (0.->1., default 1) -> composite3 (k2)
+*/
+
+class Drawing : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+	virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+	Drawing ( ) : Filter() { };
+	virtual ~Drawing ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+	static void init (void) {
+		Inkscape::Extension::build_from_mem(
+			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+				"<name>" N_("Drawing, custom -EXP-") "</name>\n"
+				"<id>org.inkscape.effect.filter.Drawing</id>\n"
+                        "<param name=\"simply\" gui-text=\"" N_("Simplification:") "\" type=\"float\" min=\"0.01\" max=\"10\">0.7</param>\n"
+                        "<param name=\"light\" gui-text=\"" N_("Lightness:") "\" type=\"int\" min=\"0\" max=\"50\">5</param>\n"
+                        "<param name=\"smooth\" gui-text=\"" N_("Smoothness:") "\" type=\"float\" min=\"0.01\" max=\"10\">0.7</param>\n"
+                        "<param name=\"dilat\" gui-text=\"" N_("Dilatation:") "\" type=\"int\" min=\"3\" max=\"100\">6</param>\n"
+                        "<param name=\"blur\" gui-text=\"" N_("Blur:") "\" type=\"float\" min=\"0.01\" max=\"10\">5</param>\n"
+                        "<param name=\"spread\" gui-text=\"" N_("Spread:") "\" type=\"int\" min=\"3\" max=\"20\">6</param>\n"
+                        "<param name=\"erosion\" gui-text=\"" N_("Erosion:") "\" type=\"int\" min=\"-2\" max=\"0\">-2</param>\n"
+                        "<_param name=\"fillcolorheader\" type=\"groupheader\">Fill color</_param>\n"
+				            "<param name=\"fcolor\" gui-text=\"" N_("Fill color") "\" type=\"color\">-3473153</param>\n"
+                            "<param name=\"iof\" gui-text=\"" N_("Image on fill") "\" type=\"boolean\" >false</param>\n"
+                            "<param name=\"iofo\" gui-text=\"" N_("Image on fill opacity:") "\" type=\"float\" min=\"0\" max=\"1\">1</param>\n"
+                        "<_param name=\"strokecolorheader\" type=\"groupheader\">Stroke color</_param>\n"
+				            "<param name=\"scolor\" gui-text=\"" N_("Stroke color") "\" type=\"color\">-855637761</param>\n"
+                            "<param name=\"ios\" gui-text=\"" N_("Image on stroke") "\" type=\"boolean\" >false</param>\n"
+                            "<param name=\"ioso\" gui-text=\"" N_("Image on stroke opacity:") "\" type=\"float\" min=\"0\" max=\"1\">1</param>\n"
+				"<effect>\n"
+					"<object-type>all</object-type>\n"
+					"<effects-menu>\n"
+						"<submenu name=\"" N_("Filters") "\">\n"
+   						"<submenu name=\"" N_("Experimental") "\"/>\n"
+			      "</submenu>\n"
+					"</effects-menu>\n"
+					"<menu-tip>" N_("Convert images to duochrome drawings") "</menu-tip>\n"
+				"</effect>\n"
+			"</inkscape-extension>\n", new Drawing());
+	};
+
+};
+
+gchar const *
+Drawing::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+	if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream simply;
+    std::ostringstream light;
+    std::ostringstream smooth;
+    std::ostringstream dilat;
+    std::ostringstream blur;
+    std::ostringstream spread;
+    std::ostringstream erosion;
+    std::ostringstream strokea;
+    std::ostringstream stroker;
+    std::ostringstream strokeg;
+    std::ostringstream strokeb;
+    std::ostringstream ios;
+    std::ostringstream ioso;
+    std::ostringstream filla;
+    std::ostringstream fillr;
+    std::ostringstream fillg;
+    std::ostringstream fillb;
+    std::ostringstream iof;
+    std::ostringstream iofo;
+
+    simply << ext->get_param_float("simply");
+    light << (-1000 - ext->get_param_int("light"));
+    smooth << ext->get_param_float("smooth");
+    dilat << ext->get_param_int("dilat");
+
+    blur << ext->get_param_float("blur");
+    spread << ext->get_param_int("spread");
+    erosion << ext->get_param_int("erosion");
+
+    guint32 fcolor = ext->get_param_color("fcolor");
+    fillr << ((fcolor >> 24) & 0xff);
+    fillg << ((fcolor >> 16) & 0xff);
+    fillb << ((fcolor >>  8) & 0xff);
+    filla << (fcolor & 0xff) / 255.0F;
+    if (ext->get_param_bool("iof"))
+        iof << "SourceGraphic";
+    else
+        iof << "flood3";
+    iofo << ext->get_param_float("iofo");
+
+    guint32 scolor = ext->get_param_color("scolor");
+    stroker << ((scolor >> 24) & 0xff);
+    strokeg << ((scolor >> 16) & 0xff);
+    strokeb << ((scolor >>  8) & 0xff);
+    strokea << (scolor & 0xff) / 255.0F;
+    if (ext->get_param_bool("ios"))
+        ios << "SourceGraphic";
+    else
+        ios << "flood2";
+    ioso << ext->get_param_float("ioso");
+
+	_filter = g_strdup_printf(
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Cross-smooth, custom -EXP-\">\n"
+        "<feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%s\" result=\"blur1\" />\n"
+        "<feConvolveMatrix in=\"blur1\" order=\"3 3\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" divisor=\"1\" targetX=\"1\" targetY=\"1\" preserveAlpha=\"true\" bias=\"0\" stdDeviation=\"1\" result=\"convolve\" />\n"
+        "<feColorMatrix values=\"0 -100 0 0 1 0 -100 0 0 1 0 -100 0 0 1 0 0 0 1 0 \" result=\"colormatrix1\" />\n"
+        "<feColorMatrix in=\"colormatrix1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"colormatrix2\" />\n"
+        "<feGaussianBlur stdDeviation=\"%s\" result=\"blur2\" />\n"
+        "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s -2 \" result=\"colormatrix3\" />\n"
+        "<feFlood flood-color=\"rgb(255,255,255)\" result=\"flood1\" />\n"
+        "<feBlend in2=\"colormatrix3\" blend=\"normal\" mode=\"multiply\" result=\"blend1\" />\n"
+        "<feComponentTransfer in=\"blend1\" result=\"component1\">\n"
+            "<feFuncR tableValues=\"0 1 1\" type=\"discrete\" />\n"
+            "<feFuncG tableValues=\"0 1 1\" type=\"discrete\" />\n"
+            "<feFuncB tableValues=\"0 1 1\" type=\"discrete\" />\n"
+        "</feComponentTransfer>\n"
+        "<feGaussianBlur stdDeviation=\"%s\" result=\"blur3\" />\n"
+        "<feColorMatrix in=\"blur3\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"colormatrix4\" />\n"
+        "<feColorMatrix stdDeviation=\"3\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"colormatrix5\" />\n"
+        "<feColorMatrix in=\"colormatrix5\" type=\"saturate\" values=\"1\" result=\"colormatrix6\" />\n"
+        "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" stdDeviation=\"3\" result=\"flood2\" />\n"
+        "<feComposite in=\"%s\" in2=\"colormatrix6\" operator=\"in\" result=\"composite1\" />\n"
+        "<feFlood flood-opacity=\"%s\" in=\"colormatrix6\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood3\" />\n"
+        "<feComposite in=\"%s\" in2=\"colormatrix6\" operator=\"out\" result=\"composite2\" />\n"
+        "<feComposite in2=\"composite1\" operator=\"arithmetic\" k2=\"%s\" k3=\"%s\" result=\"composite3\" />\n"
+        "<feComposite in2=\"SourceGraphic\" operator=\"in\" />\n"
+        "</filter>\n", simply.str().c_str(), light.str().c_str(), smooth.str().c_str(), dilat.str().c_str(), blur.str().c_str(), spread.str().c_str(), erosion.str().c_str(), strokea.str().c_str(), stroker.str().c_str(), strokeg.str().c_str(), strokeb.str().c_str(), ios.str().c_str(), filla.str().c_str(), fillr.str().c_str(), fillg.str().c_str(), fillb.str().c_str(), iof.str().c_str(), iofo.str().c_str(), ioso.str().c_str());
+
+	return _filter;
+}; /* Drawing filter */
+
+/**
+    \brief    Custom predefined Posterize filter.
+    
+    Poster and painting effects.
+
+    Filter's parameters:
+    * Type (enum, default "Normal") ->
+        Normal = feComponentTransfer
+        Dented = Normal + intermediate values
+    * Blur (0.01->10., default 5.) -> blur3 (stdDeviation)
+
+*/
 class Posterize : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
 	virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
@@ -90,7 +253,7 @@ Posterize::get_filter_text (Inkscape::Extension::Extension * ext)
     postsat << ext->get_param_float("postsaturation");
 
 
-    // TransfertComponenet table values are calculated based on the poster type.
+    // TransfertComponent table values are calculated based on the poster type.
     transf << "0";
     int levels = ext->get_param_int("levels") + 1;
     const gchar *effecttype =  ext->get_param_enum("type");
@@ -128,7 +291,8 @@ Posterize::get_filter_text (Inkscape::Extension::Extension * ext)
         "</filter>\n", blur1.str().c_str(), blur2.str().c_str(), blendmode.str().c_str(), presat.str().c_str(), table.str().c_str(), transf.str().c_str(), table.str().c_str(), transf.str().c_str(), table.str().c_str(), transf.str().c_str(), postsat.str().c_str(), antialias.str().c_str());
 
 	return _filter;
-};
+}; /* Posterize filter */
+
 
 class TestFilter : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
