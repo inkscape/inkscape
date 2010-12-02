@@ -8060,22 +8060,17 @@ static void connector_tb_event_attr_changed(Inkscape::XML::Node *repr,
 {
     GtkWidget *tbl = GTK_WIDGET(data);
 
-    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
-        return;
+    if ( !g_object_get_data(G_OBJECT(tbl), "freeze")
+         && (strcmp(name, "inkscape:connector-spacing") == 0) ) {
+        GtkAdjustment *adj = static_cast<GtkAdjustment*>(gtk_object_get_data(GTK_OBJECT(tbl), "spacing"));
+        gdouble spacing = defaultConnSpacing;
+        sp_repr_get_double(repr, "inkscape:connector-spacing", &spacing);
+
+        gtk_adjustment_set_value(adj, spacing);
+        gtk_adjustment_value_changed(adj);
+
+        spinbutton_defocus(GTK_OBJECT(tbl));
     }
-    if (strcmp(name, "inkscape:connector-spacing") != 0) {
-        return;
-    }
-
-    GtkAdjustment *adj = (GtkAdjustment*)
-            gtk_object_get_data(GTK_OBJECT(tbl), "spacing");
-    gdouble spacing = defaultConnSpacing;
-    sp_repr_get_double(repr, "inkscape:connector-spacing", &spacing);
-
-    gtk_adjustment_set_value(adj, spacing);
-    gtk_adjustment_value_changed(adj);
-
-    spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
 static void sp_connector_new_connection_point(GtkWidget *, GObject *tbl)
