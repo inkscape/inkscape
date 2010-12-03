@@ -57,7 +57,7 @@ public:
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void paramString (std::list <std::string> &list);
     gchar * get_guitext (void) {return _text;};
-
+    Parameter * get_param (const gchar * name);
 }; /* class ParamNotebookPage */
 
 
@@ -381,7 +381,45 @@ ParamNotebookWdg::changed_page(GtkNotebookPage */*page*/,
     return;
 }
 
+/** \brief  Search the parameter's name in the notebook content */
+Parameter *
+ParamNotebook::get_param(const gchar * name)
+{
+    if (name == NULL) {
+        throw Extension::param_not_exist();
+    }
+    for (GSList * pglist = pages; pglist != NULL; pglist = g_slist_next(pglist)) {
+        ParamNotebookPage * page = reinterpret_cast<ParamNotebookPage *>(pglist->data);
+        Parameter * subparam = page->get_param(name);
+        if (subparam) {
+            return subparam;
+        }
+    }
 
+    return NULL;
+}
+
+/** \brief  Search the parameter's name in the page content */
+Parameter *
+ParamNotebookPage::get_param(const gchar * name)
+{
+    if (name == NULL) {
+        throw Extension::param_not_exist();
+    }
+    if (this->parameters == NULL) {
+        // the list of parameters is empty
+        throw Extension::param_not_exist();
+    }
+
+    for (GSList * list = this->parameters; list != NULL; list = g_slist_next(list)) {
+        Parameter * param = static_cast<Parameter*>(list->data);
+        if (!strcmp(param->name(), name)) {
+            return param;
+        }
+    }
+
+    return NULL;
+}
 
 /**
     \brief  Creates a Notebook widget for a notebook parameter

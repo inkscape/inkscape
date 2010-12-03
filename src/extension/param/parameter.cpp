@@ -155,8 +155,6 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
     return param;
 }
 
-
-
 /** \brief  Wrapper to cast to the object and use it's function.  */
 bool
 Parameter::get_bool (const SPDocument * doc, const Inkscape::XML::Node * node)
@@ -407,6 +405,13 @@ Parameter::string (std::list <std::string> &list)
 
     list.insert(list.end(), final);
     return;
+}
+
+/** \brief  All the code in Notebook::get_param to get the notebook content */
+Parameter *
+Parameter::get_param(const gchar * name)
+{
+    return NULL;
 }
 
 Glib::ustring const extension_pref_root = "/extensions/";

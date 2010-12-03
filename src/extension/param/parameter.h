@@ -85,6 +85,7 @@ public:
                       Parameter(name, guitext, NULL, Parameter::SCOPE_USER, false, NULL, ext);
                   };
     virtual      ~Parameter  (void);
+
     bool          get_bool   (const SPDocument * doc,
                               const Inkscape::XML::Node * node);
     int           get_int    (const SPDocument * doc,
@@ -120,6 +121,8 @@ public:
 
     virtual void string (std::list <std::string> &list);
     virtual void string (std::string &string);
+
+    virtual Parameter *  get_param  (const gchar * name);
 };
 
 }  /* namespace Extension */

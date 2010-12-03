@@ -169,10 +169,9 @@ public:
 
 private:
     void             make_param       (Inkscape::XML::Node * paramrepr);
-#if 0
-    inline param_t * param_shared     (const gchar * name,
-                                       GSList * list);
-#endif
+    
+    Parameter *      get_param        (const gchar * name);
+
 public:
     bool             get_param_bool   (const gchar * name,
                                        const SPDocument *   doc = NULL,

@@ -44,7 +44,7 @@ namespace Extension {
 std::vector<const gchar *> Extension::search_path;
 std::ofstream Extension::error_file;
 
-Parameter * param_shared (const gchar * name, GSList * list);
+Parameter * get_param (const gchar * name);
 
 /**
     \return  none
@@ -372,45 +372,45 @@ Extension::deactivated (void)
     \brief     This function looks through the linked list for a parameter
                structure with the name of the passed in name
     \param     name   The name to search for
-    \param     list   The list to look for
 
     This is an inline function that is used by all the get_param and
     set_param functions to find a param_t in the linked list with
-    the passed in name.  It is done as an inline so that it will be
-    optimized into a 'jump' by the compiler.
+    the passed in name.
 
     This function can throw a 'param_not_exist' exception if the
     name is not found.
 
     The first thing that this function checks is if the list is NULL.
     It could be NULL because there are no parameters for this extension
-    or because all of them have been checked (I'll spoil the ending and
-    tell you that this function is called recursively).  If the list
+    or because all of them have been checked.  If the list
     is NULL then the 'param_not_exist' exception is thrown.
-
-    Otherwise, the function looks at the current param_t that the element
-    list points to.  If the name of that param_t matches the passed in
-    name then that param_t is returned.  Otherwise, this function is
-    called again with g_slist_next as a parameter.
 */
 Parameter *
-param_shared (const gchar * name, GSList * list)
+Extension::get_param (const gchar * name)
 {
-    Parameter * output;
-
     if (name == NULL) {
         throw Extension::param_not_exist();
     }
-    if (list == NULL) {
+    if (this->parameters == NULL) {
+        // the list of parameters is empty
         throw Extension::param_not_exist();
     }
 
-    output = static_cast<Parameter *>(list->data);
-    if (!strcmp(output->name(), name)) {
-        return output;
+    for (GSList * list = this->parameters; list != NULL; list =
+g_slist_next(list)) {
+        Parameter * param = static_cast<Parameter*>(list->data);
+        if (!strcmp(param->name(), name)) {
+            return param;
+        } else {
+            Parameter * subparam = param->get_param(name);
+            if (subparam) {
+                return subparam;
+            }
+        }
     }
 
-    return param_shared(name, g_slist_next(list));
+    // if execution reaches here, no parameter matching 'name' was found
+    throw Extension::param_not_exist();
 }
 
 /**
@@ -428,22 +428,21 @@ const gchar *
 Extension::get_param_string (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
-
-    param = param_shared(name, parameters);
+    param = get_param(name);
     return param->get_string(doc, node);
 }
 
 const gchar *
 Extension::get_param_enum (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
 {
-    Parameter* param = param_shared(name, parameters);
+    Parameter* param = get_param(name);
     return param->get_enum(doc, node);
 }
 
-
-gchar const *Extension::get_param_optiongroup( gchar const * name, SPDocument const * doc, Inkscape::XML::Node const * node)
+gchar const *
+Extension::get_param_optiongroup( gchar const * name, SPDocument const * doc, Inkscape::XML::Node const * node)
 {
-    Parameter* param = param_shared(name, parameters);
+    Parameter* param = get_param(name);
     return param->get_optiongroup(doc, node);
 }
 
@@ -463,8 +462,7 @@ bool
 Extension::get_param_bool (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
-
-    param = param_shared(name, parameters);
+    param = get_param(name);
     return param->get_bool(doc, node);
 }
 
@@ -483,8 +481,7 @@ int
 Extension::get_param_int (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
-
-    param = param_shared(name, parameters);
+    param = get_param(name);
     return param->get_int(doc, node);
 }
 
@@ -503,7 +500,7 @@ float
 Extension::get_param_float (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
-    param = param_shared(name, parameters);
+    param = get_param(name);
     return param->get_float(doc, node);
 }
 
@@ -521,7 +518,7 @@ Extension::get_param_float (const gchar * name, const SPDocument * doc, const In
 guint32
 Extension::get_param_color (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
 {
-    Parameter* param = param_shared(name, parameters);
+    Parameter* param = get_param(name);
     return param->get_color(doc, node);
 }
 
@@ -541,7 +538,7 @@ bool
 Extension::set_param_bool (const gchar * name, bool value, SPDocument * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
-    param = param_shared(name, parameters);
+    param = get_param(name);
     return param->set_bool(value, doc, node);
 }
 
@@ -561,7 +558,7 @@ int
 Extension::set_param_int (const gchar * name, int value, SPDocument * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
-    param = param_shared(name, parameters);
+    param = get_param(name);
     return param->set_int(value, doc, node);
 }
 
@@ -581,7 +578,7 @@ float
 Extension::set_param_float (const gchar * name, float value, SPDocument * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
-    param = param_shared(name, parameters);
+    param = get_param(name);
     return param->set_float(value, doc, node);
 }
 
@@ -601,13 +598,14 @@ const gchar *
 Extension::set_param_string (const gchar * name, const gchar * value, SPDocument * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
-    param = param_shared(name, parameters);
+    param = get_param(name);
     return param->set_string(value, doc, node);
 }
 
-gchar const * Extension::set_param_optiongroup(gchar const * name, gchar const * value, SPDocument * doc, Inkscape::XML::Node * node)
+gchar const *
+Extension::set_param_optiongroup(gchar const * name, gchar const * value, SPDocument * doc, Inkscape::XML::Node * node)
 {
-    Parameter * param = param_shared(name, parameters);
+    Parameter * param = get_param(name);
     return param->set_optiongroup(value, doc, node);
 }
 
@@ -627,7 +625,7 @@ gchar const * Extension::set_param_optiongroup(gchar const * name, gchar const *
 guint32
 Extension::set_param_color (const gchar * name, guint32 color, SPDocument * doc, Inkscape::XML::Node * node)
 {
-    Parameter* param = param_shared(name, parameters);
+    Parameter* param = get_param(name);
     return param->set_color(color, doc, node);
 }
 

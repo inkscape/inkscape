@@ -43,6 +43,8 @@ public:
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void string (std::list <std::string> &list);
 
+    Parameter * get_param (const gchar * name);
+
     const gchar * get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
     const gchar * set (const int in, SPDocument * doc, Inkscape::XML::Node * node);
 }; /* class ParamNotebook */
