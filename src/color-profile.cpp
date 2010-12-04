@@ -722,6 +722,18 @@ static bool isIccFile( gchar const *filepath )
             }
 
             close(fd);
+#if ENABLE_LCMS
+            if (isIccFile) {
+                cmsHPROFILE prof = cmsOpenProfileFromFile( filepath, "r" );
+                if ( prof ) {
+                    icProfileClassSignature profClass = cmsGetDeviceClass(prof);
+                    if ( profClass == icSigNamedColorClass ) {
+                        isIccFile = false; // Ignore named color profiles for now.
+                    }
+                    cmsCloseProfile( prof );
+                }
+            }
+#endif // ENABLE_LCMS
         }
     }
     return isIccFile;
