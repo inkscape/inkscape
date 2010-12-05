@@ -7,6 +7,13 @@
  *   Ivan Louette (filters)
  *   Nicolas Dufour (UI) <nicoduf@yahoo.fr>
  *
+ * Color filters
+ *   Colorize
+ *   Duochrome
+ *   Quadritone
+ *   Solarize
+ *   Tritone
+ *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 /* ^^^ Change the copyright to be you and your e-mail address ^^^ */
@@ -151,6 +158,8 @@ public:
 			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 				"<name>" N_("Duochrome, custom -EXP-") "</name>\n"
 				"<id>org.inkscape.effect.filter.Duochrome</id>\n"
+	            "<param name=\"tab\" type=\"notebook\">\n"
+                    "<page name=\"optionstab\" _gui-text=\"Options\">\n"
                         "<param name=\"fluo\" gui-text=\"" N_("Fluorescence level:") "\" type=\"float\" min=\"0\" max=\"2\">0</param>\n"
                         "<param name=\"swap\" gui-text=\"" N_("Swap:") "\" type=\"enum\">\n"
                             "<_item value=\"none\">No swap</_item>\n"
@@ -158,10 +167,14 @@ public:
                             "<_item value=\"color\">Color only</_item>\n"
                             "<_item value=\"alpha\">Alpha only</_item>\n"
                         "</param>\n"
-                        "<_param name=\"header1\" type=\"groupheader\">Color 1</_param>\n"
+                    "</page>\n"
+                    "<page name=\"co11tab\" _gui-text=\"Color 1\">\n"
 				        "<param name=\"color1\" gui-text=\"" N_("Color 1") "\" type=\"color\">1364325887</param>\n"
-                        "<_param name=\"header2\" type=\"groupheader\">Color 2</_param>\n"
+                    "</page>\n"
+                    "<page name=\"co12tab\" _gui-text=\"Color 2\">\n"
 				        "<param name=\"color2\" gui-text=\"" N_("Color 2") "\" type=\"color\">-65281</param>\n"
+                    "</page>\n"
+                "</param>\n"
 				"<effect>\n"
 					"<object-type>all</object-type>\n"
 					"<effects-menu>\n"
@@ -445,14 +458,14 @@ public:
 			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 				"<name>" N_("Tritone, custom -EXP-") "</name>\n"
 				"<id>org.inkscape.effect.filter.Tritone</id>\n"
+	            "<param name=\"tab\" type=\"notebook\">\n"
+                    "<page name=\"optionstab\" _gui-text=\"Options\">\n"
                         "<param name=\"type\" gui-text=\"" N_("Type:") "\" type=\"enum\">\n"
                             "<_item value=\"normal\">Normal</_item>\n"
                             "<_item value=\"enhue\">Enhance hue</_item>\n"
                             "<_item value=\"rad\">Radiation</_item>\n"
                             "<_item value=\"htb\">Hue to background</_item>\n"
                         "</param>\n"
-                        "<param name=\"dist\" gui-text=\"" N_("Hue distribution:") "\" type=\"int\" min=\"0\" max=\"360\">0</param>\n"
-				        "<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">-73203457</param>\n"
                         "<param name=\"globalblend\" gui-text=\"" N_("Global blend:") "\" type=\"enum\">\n"
                             "<_item value=\"lighten\">Lighten</_item>\n"
                             "<_item value=\"screen\">Screen</_item>\n"
@@ -467,6 +480,12 @@ public:
                         "</param>\n"
                         "<param name=\"llight\" gui-text=\"" N_("Local light:") "\" type=\"float\" min=\"0\" max=\"10\">0</param>\n"
                         "<param name=\"glight\" gui-text=\"" N_("Global light:") "\" type=\"float\" min=\"0\" max=\"10\">1</param>\n"
+                    "</page>\n"
+                    "<page name=\"co1tab\" _gui-text=\"Color\">\n"
+                        "<param name=\"dist\" gui-text=\"" N_("Hue distribution:") "\" type=\"int\" min=\"0\" max=\"360\">0</param>\n"
+				        "<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">-73203457</param>\n"
+                    "</page>\n"
+                "</param>\n"
 				"<effect>\n"
 					"<object-type>all</object-type>\n"
 					"<effects-menu>\n"

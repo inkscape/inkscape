@@ -7,6 +7,9 @@
  *   Ivan Louette (filters)
  *   Nicolas Dufour (UI) <nicoduf@yahoo.fr>
  *
+ * Morphology filters
+ *   Cross-smooth
+ *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 /* ^^^ Change the copyright to be you and your e-mail address ^^^ */
@@ -23,7 +26,7 @@ namespace Internal {
 namespace Filter {
 
 /**
-    \brief    Custom predefined Crosssmooth filter.
+    \brief    Custom predefined Cross-smooth filter.
     
     Smooth the outside of shapes and pictures.
 
@@ -84,7 +87,7 @@ Crosssmooth::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
 	_filter = g_strdup_printf(
-		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" y=\"0\" x=\"0\" inkscape:label=\"Cross-smooth, custom -EXP-\">\n"
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Cross-smooth, custom -EXP-\">\n"
         "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
         "<feComposite in=\"%s\" in2=\"blur\" operator=\"atop\" result=\"composite1\" />\n"
         "<feComposite in2=\"composite1\" operator=\"in\" result=\"composite2\" />\n"

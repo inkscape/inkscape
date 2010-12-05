@@ -45,6 +45,7 @@ Filter::filters_all (void )
     ColorizableDropShadow::init();
 
     // TDB
+    Chromolitho::init();
     Drawing::init();
     Posterize::init();
 
