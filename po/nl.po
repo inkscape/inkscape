@@ -52,7 +52,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-11-02 18:43+0100\n"
-"PO-Revision-Date: 2010-11-24 22:18+0100\n"
+"PO-Revision-Date: 2010-12-05 12:00+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -6739,7 +6739,7 @@ msgstr "Wit"
 #: ../share/palettes/palettes.h:139
 msgctxt "Palette"
 msgid "Maroon (#800000)"
-msgstr ""
+msgstr "Kastanjebruin (#800000)"
 
 #. Palette: inkscape.gpl
 #: ../share/palettes/palettes.h:142
@@ -6769,13 +6769,13 @@ msgstr "Groen (#008000)"
 #: ../share/palettes/palettes.h:154
 msgctxt "Palette"
 msgid "Lime (#00FF00)"
-msgstr ""
+msgstr "Lime (#00FF00)"
 
 #. Palette: inkscape.gpl
 #: ../share/palettes/palettes.h:157
 msgctxt "Palette"
 msgid "Teal (#008080)"
-msgstr ""
+msgstr "Medium blauw-groen (#008080)"
 
 #. Palette: inkscape.gpl
 #: ../share/palettes/palettes.h:160
@@ -6787,7 +6787,7 @@ msgstr "Water (#00FFFF)"
 #: ../share/palettes/palettes.h:163
 msgctxt "Palette"
 msgid "Navy (#000080)"
-msgstr ""
+msgstr "Marineblauw (#000080)"
 
 #. Palette: inkscape.gpl
 #: ../share/palettes/palettes.h:166
@@ -6809,223 +6809,213 @@ msgstr "Fuchsia (#FF00FF)"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:175
-#, fuzzy
 msgctxt "Palette"
 msgid "default outer 1"
-msgstr "Standaardtitel"
+msgstr "standaard rand 1"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:178
-#, fuzzy
 msgctxt "Palette"
 msgid "default outer 2"
-msgstr "Standaardtitel"
+msgstr "standaard rand 2"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:181
-#, fuzzy
 msgctxt "Palette"
 msgid "default outer 3"
-msgstr "Standaardtitel"
+msgstr "standaard rand 3"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:184
-#, fuzzy
 msgctxt "Palette"
 msgid "default block"
-msgstr "standaard"
+msgstr "standaard blok"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:187
 msgctxt "Palette"
 msgid "default added blue"
-msgstr ""
+msgstr "standaard toegevoegd blauw"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:190
 msgctxt "Palette"
 msgid "default block header"
-msgstr ""
+msgstr "standaard blok hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:193
 msgctxt "Palette"
 msgid "default alert block"
-msgstr ""
+msgstr "standaard waarschuwingsblok"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:196
 msgctxt "Palette"
 msgid "default added red"
-msgstr ""
+msgstr "standaard toegevoegd rood"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:199
 msgctxt "Palette"
 msgid "default alert block header"
-msgstr ""
+msgstr "standaard waarschuwingsblok hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:202
 msgctxt "Palette"
 msgid "default example block"
-msgstr ""
+msgstr "standaard voorbeeldblok"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:205
 msgctxt "Palette"
 msgid "default added green"
-msgstr ""
+msgstr "standaard toegevoegd groen"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:208
 msgctxt "Palette"
 msgid "default example block header"
-msgstr ""
+msgstr "standaard voorbeeldblok hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:211
-#, fuzzy
 msgctxt "Palette"
 msgid "default covered text"
-msgstr "Ingekaderde tekst maken"
+msgstr "standaard bedekte tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:214
 msgctxt "Palette"
 msgid "default covered bullet"
-msgstr ""
+msgstr "standaard bedekt opsommingsteken"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:217
-#, fuzzy
 msgctxt "Palette"
 msgid "default background"
-msgstr "Achtergrond verwijderen"
+msgstr "Standaard achtergrond"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:220
-#, fuzzy
 msgctxt "Palette"
 msgid "default text"
-msgstr "standaard"
+msgstr "standaard tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:223
 msgctxt "Palette"
 msgid "default light outer 1"
-msgstr ""
+msgstr "standaard heldere rand 1"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:226
 msgctxt "Palette"
 msgid "default light outer 2"
-msgstr ""
+msgstr "standaard heldere rand 2"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:229
 msgctxt "Palette"
 msgid "default light outer 3"
-msgstr ""
+msgstr "standaard heldere rand 3"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:232
-#, fuzzy
 msgctxt "Palette"
 msgid "default light block"
-msgstr "Standaardtitel"
+msgstr "standaard helder blok"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:235
 msgctxt "Palette"
 msgid "default light block header"
-msgstr ""
+msgstr "standaard helder blok hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:238
 msgctxt "Palette"
 msgid "default light block header text"
-msgstr ""
+msgstr "standaard helder blok tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:241
 msgctxt "Palette"
 msgid "default light alert block"
-msgstr ""
+msgstr "standaard helder waarschuwingsblok"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:244
 msgctxt "Palette"
 msgid "default light alert block header"
-msgstr ""
+msgstr "standaard helder waarschuwingsblok hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:247
 msgctxt "Palette"
 msgid "default light alert block header text"
-msgstr ""
+msgstr "standaard helder waarschuwingsblok tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:250
 msgctxt "Palette"
 msgid "default light example block"
-msgstr ""
+msgstr "standaard helder voorbeeldblok"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:253
 msgctxt "Palette"
 msgid "default light example block header"
-msgstr ""
+msgstr "standaard helder voorbeeldblok hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:256
 msgctxt "Palette"
 msgid "default light example block header text"
-msgstr ""
+msgstr "standaard helder voorbeeldblok tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:259
-#, fuzzy
 msgctxt "Palette"
 msgid "default light covered text"
-msgstr "Standaard interface setup"
+msgstr "standaard heldere bedekte tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:262
 msgctxt "Palette"
 msgid "default light covered bullet"
-msgstr ""
+msgstr "standaard helder bedekt opsommingsteken"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:265
 msgctxt "Palette"
 msgid "default light background"
-msgstr ""
+msgstr "standaard heldere achtergrond"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:268
-#, fuzzy
 msgctxt "Palette"
 msgid "default light text"
-msgstr "Standaardtitel"
+msgstr "standaard heldere tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:271
 msgctxt "Palette"
 msgid "beetle outer 1"
-msgstr ""
+msgstr "beetle rand 1"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:274
 msgctxt "Palette"
 msgid "beetle outer 2"
-msgstr ""
+msgstr "beetle rand 2"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:277
 msgctxt "Palette"
 msgid "beetle outer 3"
-msgstr ""
+msgstr "beetle rand 3"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:280
@@ -7033,328 +7023,315 @@ msgstr ""
 #: ../share/palettes/palettes.h:286
 msgctxt "Palette"
 msgid "beetle added blue"
-msgstr ""
+msgstr "beetle toegevoegd blauw"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:289
 msgctxt "Palette"
 msgid "beetle added red"
-msgstr ""
+msgstr "beetle toegevoegd rood"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:292
 msgctxt "Palette"
 msgid "beetle alert block header text"
-msgstr ""
+msgstr "beetle waarschuwingsblok tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:295
-#, fuzzy
 msgctxt "Palette"
 msgid "beetle added green"
-msgstr "Kleurverlopen maken en aanpassen"
+msgstr "beetle toegevoegd groen"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:298
 msgctxt "Palette"
 msgid "beetle example block header text"
-msgstr ""
+msgstr "beetle voorbeeldblok tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:301
-#, fuzzy
 msgctxt "Palette"
 msgid "beetle header text"
-msgstr "Tekst verwijderen"
+msgstr "beetle tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:304
 #: ../share/palettes/palettes.h:316
 msgctxt "Palette"
 msgid "beetle added grey"
-msgstr ""
+msgstr "beetle toegevoegd grijs"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:307
 msgctxt "Palette"
 msgid "beetle covered bullet"
-msgstr ""
+msgstr "beetle bedekt opsommingsteken"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:310
-#, fuzzy
 msgctxt "Palette"
 msgid "beetle background"
-msgstr "Achtergrond verwijderen"
+msgstr "beetle achtergrond"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:313
-#, fuzzy
 msgctxt "Palette"
 msgid "beetle covered text"
-msgstr "Ingekaderde tekst maken"
+msgstr "beetle bedekte tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:319
-#, fuzzy
 msgctxt "Palette"
 msgid "beetle text"
-msgstr "Tekst verwijderen"
+msgstr "beetle tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:322
 msgctxt "Palette"
 msgid "albatross outer 1"
-msgstr ""
+msgstr "albatross rand 1"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:325
 msgctxt "Palette"
 msgid "albatross outer 2"
-msgstr ""
+msgstr "albatross rand 2"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:328
 msgctxt "Palette"
 msgid "albatross outer 3"
-msgstr ""
+msgstr "albatross rand 3"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:331
-#, fuzzy
 msgctxt "Palette"
 msgid "albatross background"
-msgstr "Achtergrond verwijderen"
+msgstr "albatross achtergrond"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:334
 msgctxt "Palette"
 msgid "albatross block"
-msgstr ""
+msgstr "albatross blok"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:337
 msgctxt "Palette"
 msgid "albatross block header"
-msgstr ""
+msgstr "albatross blok hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:340
 msgctxt "Palette"
 msgid "albatross header text"
-msgstr ""
+msgstr "albatross tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:343
 msgctxt "Palette"
 msgid "albatross bullet"
-msgstr ""
+msgstr "albatross opsommingsteken"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:346
 msgctxt "Palette"
 msgid "albatross covered bullet"
-msgstr ""
+msgstr "albatross bedekt opsommingsteken"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:349
 msgctxt "Palette"
 msgid "albatross covered text"
-msgstr ""
+msgstr "albatross bedekte tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:352
 msgctxt "Palette"
 msgid "albatross added red"
-msgstr ""
+msgstr "albatross toegevoegd rood"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:355
 msgctxt "Palette"
 msgid "albatross alert block header text"
-msgstr ""
+msgstr "albatross waarschuwingsblok tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:358
 msgctxt "Palette"
 msgid "albatross added green"
-msgstr ""
+msgstr "albatross toegevoegd groen"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:361
 msgctxt "Palette"
 msgid "albatross example block header text"
-msgstr ""
+msgstr "albatross voorbeeldblok tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:364
 msgctxt "Palette"
 msgid "albatross text"
-msgstr ""
+msgstr "albatross tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:367
 msgctxt "Palette"
 msgid "albatross added yellow"
-msgstr ""
+msgstr "albatross toegevoegd geel"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:370
 msgctxt "Palette"
 msgid "albatross added white"
-msgstr ""
+msgstr "albatross toegevoegd wit"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:373
-#, fuzzy
 msgctxt "Palette"
 msgid "fly text"
-msgstr "Tik tekst"
+msgstr "fly tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:376
 #: ../share/palettes/palettes.h:385
 msgctxt "Palette"
 msgid "fly added grey"
-msgstr ""
+msgstr "fly toegevoegd grijs"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:379
-#, fuzzy
 msgctxt "Palette"
 msgid "fly outer"
-msgstr "filter"
+msgstr "fly rand"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:382
-#, fuzzy
 msgctxt "Palette"
 msgid "fly background"
-msgstr "Achtergrond"
+msgstr "fly achtergrond"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:388
-#, fuzzy
 msgctxt "Palette"
 msgid "fly header text"
-msgstr "Tekst verwijderen"
+msgstr "fly tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:391
 msgctxt "Palette"
 msgid "fly covered bullet"
-msgstr ""
+msgstr "fly bedekt opsommingsteken"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:394
-#, fuzzy
 msgctxt "Palette"
 msgid "fly covered text"
-msgstr "Ingekaderde tekst"
+msgstr "fly bedekte tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:397
 msgctxt "Palette"
 msgid "fly added red"
-msgstr ""
+msgstr "fly toegevoegd rood"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:400
 msgctxt "Palette"
 msgid "fly alert block header text"
-msgstr ""
+msgstr "fly waarschuwingsblok tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:403
 msgctxt "Palette"
 msgid "fly added green"
-msgstr ""
+msgstr "fly toegevoegd groen"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:406
 msgctxt "Palette"
 msgid "fly example block header text"
-msgstr ""
+msgstr "fly voorbeeldblok tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:409
 msgctxt "Palette"
 msgid "fly added blue"
-msgstr ""
+msgstr "fly toegevoegd blauw"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:412
 msgctxt "Palette"
 msgid "fly added default blue"
-msgstr ""
+msgstr "fly toegevoegd standaard blauw"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:415
 msgctxt "Palette"
 msgid "seagull outer 1"
-msgstr ""
+msgstr "seagull rand 1"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:418
 msgctxt "Palette"
 msgid "seagull outer 2"
-msgstr ""
+msgstr "seagull rand 2"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:421
 msgctxt "Palette"
 msgid "seagull outer 3"
-msgstr ""
+msgstr "seagull rand 3"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:424
 msgctxt "Palette"
 msgid "seagull block"
-msgstr ""
+msgstr "seagull blok"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:427
 msgctxt "Palette"
 msgid "seagull added grey"
-msgstr ""
+msgstr "seagull toegevoegd grijs"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:430
 msgctxt "Palette"
 msgid "seagull block header"
-msgstr ""
+msgstr "seagull blok hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:433
 msgctxt "Palette"
 msgid "seagull covered text"
-msgstr ""
+msgstr "seagull bedekte tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:436
 msgctxt "Palette"
 msgid "seagull covered bullet"
-msgstr ""
+msgstr "seagull bedekt opsommingsteken"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:439
-#, fuzzy
 msgctxt "Palette"
 msgid "seagull background"
-msgstr "Achtergrond verwijderen"
+msgstr "seagull achtergrond"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:442
-#, fuzzy
 msgctxt "Palette"
 msgid "seagull text"
-msgstr "Verticale tekst"
+msgstr "seagull tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:445
 msgctxt "Palette"
 msgid "beaver outer frame"
-msgstr ""
+msgstr "beaver buitenrand"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:448
@@ -7362,275 +7339,259 @@ msgstr ""
 #: ../share/palettes/palettes.h:475
 msgctxt "Palette"
 msgid "beaver added red"
-msgstr ""
+msgstr "beaver toegevoegd rood"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:454
 msgctxt "Palette"
 msgid "beaver outer 1"
-msgstr ""
+msgstr "beaver rand 1"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:457
 msgctxt "Palette"
 msgid "beaver outer 2"
-msgstr ""
+msgstr "beaver rand 2"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:460
 msgctxt "Palette"
 msgid "beaver outer 3"
-msgstr ""
+msgstr "beaver rand 3"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:463
 msgctxt "Palette"
 msgid "beaver added blue"
-msgstr ""
+msgstr "beaver toegevoegd blauw"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:466
-#, fuzzy
 msgctxt "Palette"
 msgid "beaver block header text"
-msgstr "Ingekaderde tekst maken"
+msgstr "blok tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:469
-#, fuzzy
 msgctxt "Palette"
 msgid "beaver added green"
-msgstr "Kleurverlopen maken en aanpassen"
+msgstr "beaver toegevoegd groen"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:472
 msgctxt "Palette"
 msgid "beaver example block header text"
-msgstr ""
+msgstr "beaver voorbeeldblok tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:478
 msgctxt "Palette"
 msgid "beaver alert block header text"
-msgstr ""
+msgstr "beaver waarschuwingsblok tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:481
-#, fuzzy
 msgctxt "Palette"
 msgid "beaver covered text"
-msgstr "Ingekaderde tekst maken"
+msgstr "beaver bedekte tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:484
 msgctxt "Palette"
 msgid "beaver covered bullet"
-msgstr ""
+msgstr "beaver bedekt opsommingsteken"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:487
-#, fuzzy
 msgctxt "Palette"
 msgid "beaver background"
-msgstr "Achtergrond verwijderen"
+msgstr "beaver achtergrond"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:490
-#, fuzzy
 msgctxt "Palette"
 msgid "beaver text"
-msgstr "Tekst aanmaken"
+msgstr "beaver tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:493
-#, fuzzy
 msgctxt "Palette"
 msgid "crane outer 1"
-msgstr "Oplopende driehoek"
+msgstr "crane rand 1"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:496
-#, fuzzy
 msgctxt "Palette"
 msgid "crane outer 2"
-msgstr "Oplopende driehoek"
+msgstr "crane rand 2"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:499
-#, fuzzy
 msgctxt "Palette"
 msgid "crane outer 3"
-msgstr "Oplopende driehoek"
+msgstr "crane rand 3"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:502
 msgctxt "Palette"
 msgid "crane block"
-msgstr ""
+msgstr "crane blok"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:505
-#, fuzzy
 msgctxt "Palette"
 msgid "crane added orange"
-msgstr "beperkte hoek"
+msgstr "crane toegevoegd oranje"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:508
-#, fuzzy
 msgctxt "Palette"
 msgid "crane block header"
-msgstr "Laag ontgrendelen"
+msgstr "crane blok hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:511
 msgctxt "Palette"
 msgid "crane alert block"
-msgstr ""
+msgstr "crane waarschuwingsblok"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:514
 msgctxt "Palette"
 msgid "crane added red"
-msgstr ""
+msgstr "crane toegevoegd rood"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:517
 msgctxt "Palette"
 msgid "crane alert block header"
-msgstr ""
+msgstr "crane waarschuwingsblok hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:520
 msgctxt "Palette"
 msgid "crane example block"
-msgstr ""
+msgstr "crane voorbeeldblok"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:523
-#, fuzzy
 msgctxt "Palette"
 msgid "crane added green"
-msgstr "Kleurverlopen maken en aanpassen"
+msgstr "crane toegevoegd groen"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:526
 msgctxt "Palette"
 msgid "crane example block header"
-msgstr ""
+msgstr "crane voorbeeldblok hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:529
-#, fuzzy
 msgctxt "Palette"
 msgid "crane covered text"
-msgstr "Ingekaderde tekst maken"
+msgstr "crane bedekte tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:532
 msgctxt "Palette"
 msgid "crane covered bullet"
-msgstr ""
+msgstr "crane bedekt opsommingsteken"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:535
 msgctxt "Palette"
 msgid "crane bullet"
-msgstr ""
+msgstr "crane opsommingsteken"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:538
-#, fuzzy
 msgctxt "Palette"
 msgid "crane background"
-msgstr "Achtergrond volgen"
+msgstr "crane achtergrond"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:541
-#, fuzzy
 msgctxt "Palette"
 msgid "crane text"
-msgstr "Tekst aanmaken"
+msgstr "crane tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:544
 msgctxt "Palette"
 msgid "wolverine outer 1"
-msgstr ""
+msgstr "wolverine rand 1"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:547
 msgctxt "Palette"
 msgid "wolverine outer 2"
-msgstr ""
+msgstr "wolverine rand 2"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:550
 msgctxt "Palette"
 msgid "wolverine outer 3"
-msgstr ""
+msgstr "wolverine rand 3"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:553
 msgctxt "Palette"
 msgid "wolverine outer 4"
-msgstr ""
+msgstr "wolverine rand 4"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:556
 msgctxt "Palette"
 msgid "wolverine added yellow"
-msgstr ""
+msgstr "wolverine toegevoegd geel"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:559
 msgctxt "Palette"
 msgid "wolverine added blue"
-msgstr ""
+msgstr "wolverine toegevoegd blauw"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:562
 msgctxt "Palette"
 msgid "wolverine header text"
-msgstr ""
+msgstr "wolverine tekst hoofding"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:565
 msgctxt "Palette"
 msgid "wolverine added green"
-msgstr ""
+msgstr "wolverine toegevoegd groen"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:568
 msgctxt "Palette"
 msgid "wolverine example block title"
-msgstr ""
+msgstr "wolverine titel voorbeeldblok"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:571
 msgctxt "Palette"
 msgid "wolverine covered text"
-msgstr ""
+msgstr "wolverine bedekte tekst"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:574
 msgctxt "Palette"
 msgid "wolverine covered bullet"
-msgstr ""
+msgstr "wolverine bedekt opsommingsteken"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:577
-#, fuzzy
 msgctxt "Palette"
 msgid "wolverine background"
-msgstr "Achtergrond verwijderen"
+msgstr "wolverine achtergrond"
 
 #. Palette: LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:580
-#, fuzzy
 msgctxt "Palette"
 msgid "wolverine text"
-msgstr "Tekst verwijderen"
+msgstr "wolverine tekst"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:583
@@ -7642,7 +7603,7 @@ msgstr "zwart (#000000)"
 #: ../share/palettes/palettes.h:586
 msgctxt "Palette"
 msgid "dimgray (#696969)"
-msgstr ""
+msgstr "dimgrijs (#696969)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:589
@@ -7672,13 +7633,13 @@ msgstr "lichtgrijs (#D3D3D3)"
 #: ../share/palettes/palettes.h:601
 msgctxt "Palette"
 msgid "gainsboro (#DCDCDC)"
-msgstr ""
+msgstr "gainsboro (#DCDCDC)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:604
 msgctxt "Palette"
 msgid "whitesmoke (#F5F5F5)"
-msgstr ""
+msgstr "witte rook (#F5F5F5)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:607
@@ -7696,7 +7657,7 @@ msgstr "roosbruin (#BC8F8F)"
 #: ../share/palettes/palettes.h:613
 msgctxt "Palette"
 msgid "indianred (#CD5C5C)"
-msgstr ""
+msgstr "indianenrood (#CD5C5C)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:616
@@ -7708,43 +7669,43 @@ msgstr "bruin (#A52A2A)"
 #: ../share/palettes/palettes.h:619
 msgctxt "Palette"
 msgid "firebrick (#B22222)"
-msgstr ""
+msgstr "vuurvaste baksteen (#B22222)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:622
 msgctxt "Palette"
 msgid "lightcoral (#F08080)"
-msgstr ""
+msgstr "lichtkoraal (#F08080)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:625
 msgctxt "Palette"
 msgid "maroon (#800000)"
-msgstr ""
+msgstr "kastanjebruin (#800000)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:628
 msgctxt "Palette"
 msgid "darkred (#8B0000)"
-msgstr ""
+msgstr "donkerrood (#8B0000)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:631
 msgctxt "Palette"
 msgid "red (#FF0000)"
-msgstr ""
+msgstr "rood (#FF0000)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:634
 msgctxt "Palette"
 msgid "snow (#FFFAFA)"
-msgstr ""
+msgstr "sneeuw (#FFFAFA)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:637
 msgctxt "Palette"
 msgid "mistyrose (#FFE4E1)"
-msgstr ""
+msgstr "mistyrose (#FFE4E1)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:640
@@ -7786,313 +7747,313 @@ msgstr "lightzalm (#FFA07A)"
 #: ../share/palettes/palettes.h:658
 msgctxt "Palette"
 msgid "sienna (#A0522D)"
-msgstr ""
+msgstr "sienna (#A0522D)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:661
 msgctxt "Palette"
 msgid "seashell (#FFF5EE)"
-msgstr ""
+msgstr "schelp (#FFF5EE)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:664
 msgctxt "Palette"
 msgid "chocolate (#D2691E)"
-msgstr ""
+msgstr "chocolade (#D2691E)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:667
 msgctxt "Palette"
 msgid "saddlebrown (#8B4513)"
-msgstr ""
+msgstr "zadelbruin (#8B4513)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:670
 msgctxt "Palette"
 msgid "sandybrown (#F4A460)"
-msgstr ""
+msgstr "zandbruin (#F4A460)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:673
 msgctxt "Palette"
 msgid "peachpuff (#FFDAB9)"
-msgstr ""
+msgstr "perzikachtig (#FFDAB9)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:676
 msgctxt "Palette"
 msgid "peru (#CD853F)"
-msgstr ""
+msgstr "peru (#CD853F)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:679
 msgctxt "Palette"
 msgid "linen (#FAF0E6)"
-msgstr ""
+msgstr "linnen (#FAF0E6)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:682
 msgctxt "Palette"
 msgid "bisque (#FFE4C4)"
-msgstr ""
+msgstr "bisque (#FFE4C4)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:685
 msgctxt "Palette"
 msgid "darkorange (#FF8C00)"
-msgstr ""
+msgstr "donkeroranje (#FF8C00)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:688
 msgctxt "Palette"
 msgid "burlywood (#DEB887)"
-msgstr ""
+msgstr "burlywood (#DEB887)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:691
 msgctxt "Palette"
 msgid "tan (#D2B48C)"
-msgstr ""
+msgstr "tan (#D2B48C)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:694
 msgctxt "Palette"
 msgid "antiquewhite (#FAEBD7)"
-msgstr ""
+msgstr "antiekwit (#FAEBD7)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:697
 msgctxt "Palette"
 msgid "navajowhite (#FFDEAD)"
-msgstr ""
+msgstr "navajowit (#FFDEAD)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:700
 msgctxt "Palette"
 msgid "blanchedalmond (#FFEBCD)"
-msgstr ""
+msgstr "blanchedalmond (#FFEBCD)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:703
 msgctxt "Palette"
 msgid "papayawhip (#FFEFD5)"
-msgstr ""
+msgstr "papayawhip (#FFEFD5)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:706
 msgctxt "Palette"
 msgid "moccasin (#FFE4B5)"
-msgstr ""
+msgstr "moccasin (#FFE4B5)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:709
 msgctxt "Palette"
 msgid "orange (#FFA500)"
-msgstr ""
+msgstr "oranje (#FFA500)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:712
 msgctxt "Palette"
 msgid "wheat (#F5DEB3)"
-msgstr ""
+msgstr "tarwe (#F5DEB3)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:715
 msgctxt "Palette"
 msgid "oldlace (#FDF5E6)"
-msgstr ""
+msgstr "kant (#FDF5E6)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:718
 msgctxt "Palette"
 msgid "floralwhite (#FFFAF0)"
-msgstr ""
+msgstr "floraalwit (#FFFAF0)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:721
 msgctxt "Palette"
 msgid "darkgoldenrod (#B8860B)"
-msgstr ""
+msgstr "darkgoldenrod (#B8860B)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:724
 msgctxt "Palette"
 msgid "goldenrod (#DAA520)"
-msgstr ""
+msgstr "goldenrod (#DAA520)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:727
 msgctxt "Palette"
 msgid "cornsilk (#FFF8DC)"
-msgstr ""
+msgstr "cornsilk (#FFF8DC)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:730
 msgctxt "Palette"
 msgid "gold (#FFD700)"
-msgstr ""
+msgstr "goud (#FFD700)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:733
 msgctxt "Palette"
 msgid "khaki (#F0E68C)"
-msgstr ""
+msgstr "kaki (#F0E68C)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:736
 msgctxt "Palette"
 msgid "lemonchiffon (#FFFACD)"
-msgstr ""
+msgstr "lemonchiffon (#FFFACD)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:739
 msgctxt "Palette"
 msgid "palegoldenrod (#EEE8AA)"
-msgstr ""
+msgstr "palegoldenrod (#EEE8AA)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:742
 msgctxt "Palette"
 msgid "darkkhaki (#BDB76B)"
-msgstr ""
+msgstr "donkerkaki (#BDB76B)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:745
 msgctxt "Palette"
 msgid "beige (#F5F5DC)"
-msgstr ""
+msgstr "beige (#F5F5DC)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:748
 msgctxt "Palette"
 msgid "lightgoldenrodyellow (#FAFAD2)"
-msgstr ""
+msgstr "lightgoldenrodyellow (#FAFAD2)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:751
 msgctxt "Palette"
 msgid "olive (#808000)"
-msgstr ""
+msgstr "olijf (#808000)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:754
 msgctxt "Palette"
 msgid "yellow (#FFFF00)"
-msgstr ""
+msgstr "geel (#FFFF00)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:757
 msgctxt "Palette"
 msgid "lightyellow (#FFFFE0)"
-msgstr ""
+msgstr "lichtgeel (#FFFFE0)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:760
 msgctxt "Palette"
 msgid "ivory (#FFFFF0)"
-msgstr ""
+msgstr "ivoor (#FFFFF0)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:763
 msgctxt "Palette"
 msgid "olivedrab (#6B8E23)"
-msgstr ""
+msgstr "olijfdrab (#6B8E23)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:766
 msgctxt "Palette"
 msgid "yellowgreen (#9ACD32)"
-msgstr ""
+msgstr "geelgroen (#9ACD32)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:769
 msgctxt "Palette"
 msgid "darkolivegreen (#556B2F)"
-msgstr ""
+msgstr "donkerolijfgroen (#556B2F)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:772
 msgctxt "Palette"
 msgid "greenyellow (#ADFF2F)"
-msgstr ""
+msgstr "groengeel (#ADFF2F)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:775
 msgctxt "Palette"
 msgid "chartreuse (#7FFF00)"
-msgstr ""
+msgstr "chartreuse (#7FFF00)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:778
 msgctxt "Palette"
 msgid "lawngreen (#7CFC00)"
-msgstr ""
+msgstr "grasgroen (#7CFC00)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:781
 msgctxt "Palette"
 msgid "darkseagreen (#8FBC8F)"
-msgstr ""
+msgstr "donkerzeegroen (#8FBC8F"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:784
 msgctxt "Palette"
 msgid "forestgreen (#228B22)"
-msgstr ""
+msgstr "bosgroen (#228B22)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:787
 msgctxt "Palette"
 msgid "limegreen (#32CD32)"
-msgstr ""
+msgstr "limoengroen (#32CD32)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:790
 msgctxt "Palette"
 msgid "lightgreen (#90EE90)"
-msgstr ""
+msgstr "lichtgroen (#90EE90)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:793
 msgctxt "Palette"
 msgid "palegreen (#98FB98)"
-msgstr ""
+msgstr "bleekgroen (#98FB98)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:796
 msgctxt "Palette"
 msgid "darkgreen (#006400)"
-msgstr ""
+msgstr "donkergroen (#006400)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:799
 msgctxt "Palette"
 msgid "green (#008000)"
-msgstr ""
+msgstr "groen (#008000)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:802
 msgctxt "Palette"
 msgid "lime (#00FF00)"
-msgstr ""
+msgstr "limoen (#00FF00)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:805
 msgctxt "Palette"
 msgid "honeydew (#F0FFF0)"
-msgstr ""
+msgstr "honingdauw (#F0FFF0)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:808
 msgctxt "Palette"
 msgid "seagreen (#2E8B57)"
-msgstr ""
+msgstr "zeegroen (#2E8B57)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:811
 msgctxt "Palette"
 msgid "mediumseagreen (#3CB371)"
-msgstr ""
+msgstr "mediumzeegroen (#3CB371)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:814
@@ -8116,31 +8077,31 @@ msgstr ""
 #: ../share/palettes/palettes.h:823
 msgctxt "Palette"
 msgid "mediumaquamarine (#66CDAA)"
-msgstr ""
+msgstr "mediumaquamarijn (#66CDAA)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:826
 msgctxt "Palette"
 msgid "aquamarine (#7FFFD4)"
-msgstr ""
+msgstr "aquamarijn (#7FFFD4)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:829
 msgctxt "Palette"
 msgid "turquoise (#40E0D0)"
-msgstr ""
+msgstr "turquoise (#40E0D0)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:832
 msgctxt "Palette"
 msgid "lightseagreen (#20B2AA)"
-msgstr ""
+msgstr "lichtzeegroen (#20B2AA)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:835
 msgctxt "Palette"
 msgid "mediumturquoise (#48D1CC)"
-msgstr ""
+msgstr "mediumturquoise (#48D1CC)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:838
@@ -8152,7 +8113,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:841
 msgctxt "Palette"
 msgid "paleturquoise (#AFEEEE)"
-msgstr ""
+msgstr "bleekturquoise (#AFEEEE)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:844
@@ -8164,31 +8125,31 @@ msgstr ""
 #: ../share/palettes/palettes.h:847
 msgctxt "Palette"
 msgid "darkcyan (#008B8B)"
-msgstr ""
+msgstr "donkercyaan (#008B8B)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:850
 msgctxt "Palette"
 msgid "cyan (#00FFFF)"
-msgstr ""
+msgstr "cyaan (#00FFFF)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:853
 msgctxt "Palette"
 msgid "lightcyan (#E0FFFF)"
-msgstr ""
+msgstr "lichtcyaan (#E0FFFF)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:856
 msgctxt "Palette"
 msgid "azure (#F0FFFF)"
-msgstr ""
+msgstr "azuurblauw (#F0FFFF)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:859
 msgctxt "Palette"
 msgid "darkturquoise (#00CED1)"
-msgstr ""
+msgstr "donkerturquoise (#00CED1)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:862
@@ -8200,13 +8161,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:865
 msgctxt "Palette"
 msgid "powderblue (#B0E0E6)"
-msgstr ""
+msgstr "poederblaauw (#B0E0E6)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:868
 msgctxt "Palette"
 msgid "lightblue (#ADD8E6)"
-msgstr ""
+msgstr "lichtblauw (#ADD8E6)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:871
@@ -8230,7 +8191,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:880
 msgctxt "Palette"
 msgid "steelblue (#4682B4)"
-msgstr ""
+msgstr "staalblauw (#4682B4)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:883
@@ -8260,31 +8221,31 @@ msgstr ""
 #: ../share/palettes/palettes.h:895
 msgctxt "Palette"
 msgid "lightsteelblue (#B0C4DE)"
-msgstr ""
+msgstr "lichtstaalblauw (#B0C4DE)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:898
 msgctxt "Palette"
 msgid "cornflowerblue (#6495ED)"
-msgstr ""
+msgstr "korenbloemblauw (#6495ED)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:901
 msgctxt "Palette"
 msgid "royalblue (#4169E1)"
-msgstr ""
+msgstr "konigsblauw (#4169E1)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:904
 msgctxt "Palette"
 msgid "midnightblue (#191970)"
-msgstr ""
+msgstr "middernachtblauw (#191970)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:907
 msgctxt "Palette"
 msgid "lavender (#E6E6FA)"
-msgstr ""
+msgstr "lavendel (#E6E6FA)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:910
@@ -8296,19 +8257,19 @@ msgstr ""
 #: ../share/palettes/palettes.h:913
 msgctxt "Palette"
 msgid "darkblue (#00008B)"
-msgstr ""
+msgstr "donkerblauw (#00008B)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:916
 msgctxt "Palette"
 msgid "mediumblue (#0000CD)"
-msgstr ""
+msgstr "darkblauw (#00008B)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:919
 msgctxt "Palette"
 msgid "blue (#0000FF)"
-msgstr ""
+msgstr "blauw (#0000FF)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:922
@@ -8350,7 +8311,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:940
 msgctxt "Palette"
 msgid "indigo (#4B0082)"
-msgstr ""
+msgstr "indigo (#4B0082)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:943
@@ -8362,7 +8323,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:946
 msgctxt "Palette"
 msgid "darkviolet (#9400D3)"
-msgstr ""
+msgstr "donkerviolet (#9400D3)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:949
@@ -8386,13 +8347,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:958
 msgctxt "Palette"
 msgid "violet (#EE82EE)"
-msgstr ""
+msgstr "violet (#EE82EE)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:961
 msgctxt "Palette"
 msgid "purple (#800080)"
-msgstr ""
+msgstr "purper (#800080)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:964
@@ -8404,31 +8365,31 @@ msgstr ""
 #: ../share/palettes/palettes.h:967
 msgctxt "Palette"
 msgid "magenta (#FF00FF)"
-msgstr ""
+msgstr "magenta (#FF00FF)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:970
 msgctxt "Palette"
 msgid "orchid (#DA70D6)"
-msgstr ""
+msgstr "orchidee (#DA70D6)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:973
 msgctxt "Palette"
 msgid "mediumvioletred (#C71585)"
-msgstr ""
+msgstr "mediumvioletrood (#C71585)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:976
 msgctxt "Palette"
 msgid "deeppink (#FF1493)"
-msgstr ""
+msgstr "dieproze (#FF1493)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:979
 msgctxt "Palette"
 msgid "hotpink (#FF69B4)"
-msgstr ""
+msgstr "warmroze (#FF69B4)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:982
@@ -8440,7 +8401,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:985
 msgctxt "Palette"
 msgid "palevioletred (#DB7093)"
-msgstr ""
+msgstr "bleekvioletrood (#DB7093)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:988
@@ -8452,13 +8413,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:991
 msgctxt "Palette"
 msgid "pink (#FFC0CB)"
-msgstr ""
+msgstr "roze (#FFC0CB)"
 
 #. Palette: svg.gpl
 #: ../share/palettes/palettes.h:994
 msgctxt "Palette"
 msgid "lightpink (#FFB6C1)"
-msgstr ""
+msgstr "lichtroze (#FFB6C1)"
 
 #. Palette: Tango-Palette.gpl
 #: ../share/palettes/palettes.h:997
@@ -8482,19 +8443,19 @@ msgstr "Boter 3"
 #: ../share/palettes/palettes.h:1006
 msgctxt "Palette"
 msgid "Chameleon 1"
-msgstr ""
+msgstr "Kameleon 1"
 
 #. Palette: Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1009
 msgctxt "Palette"
 msgid "Chameleon 2"
-msgstr ""
+msgstr "Kameleon 2"
 
 #. Palette: Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1012
 msgctxt "Palette"
 msgid "Chameleon 3"
-msgstr ""
+msgstr "Kameleon 3"
 
 #. Palette: Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1015
@@ -8554,19 +8515,19 @@ msgstr ""
 #: ../share/palettes/palettes.h:1042
 msgctxt "Palette"
 msgid "Chocolate 1"
-msgstr ""
+msgstr "Chocolade 1"
 
 #. Palette: Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1045
 msgctxt "Palette"
 msgid "Chocolate 2"
-msgstr ""
+msgstr "Chocolade 2"
 
 #. Palette: Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1048
 msgctxt "Palette"
 msgid "Chocolate 3"
-msgstr ""
+msgstr "Chocolade 3"
 
 #. Palette: Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1051
@@ -8624,10 +8585,9 @@ msgstr "Aluminium 6"
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1078
-#, fuzzy
 msgctxt "Palette"
 msgid "Orange Hilight"
-msgstr "Lijnhoogte"
+msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1081
@@ -8643,10 +8603,9 @@ msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1087
-#, fuzzy
 msgctxt "Palette"
 msgid "Orange Shadow"
-msgstr "Schaduw vanbinnen"
+msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1090
@@ -8675,17 +8634,15 @@ msgstr ""
 # Is hier een specifieke term voor? -> Het gaat om de driehoek IaIbIc in http://nl.wikipedia.org/wiki/Aangeschreven_cirkel
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1102
-#, fuzzy
 msgctxt "Palette"
 msgid "Accent Orange"
-msgstr "Uitcentrum driehoek"
+msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1105
-#, fuzzy
 msgctxt "Palette"
 msgid "Accent Red"
-msgstr "midden"
+msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1108
@@ -8707,10 +8664,9 @@ msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1117
-#, fuzzy
 msgctxt "Palette"
 msgid "Human"
-msgstr "Han"
+msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1120
@@ -8720,10 +8676,9 @@ msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1123
-#, fuzzy
 msgctxt "Palette"
 msgid "Environmental Shadow"
-msgstr "Schaduw vanbinnen"
+msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1126
@@ -8752,10 +8707,9 @@ msgstr ""
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1138
 #: ../share/palettes/palettes.h:1147
-#, fuzzy
 msgctxt "Palette"
 msgid "Accent Blue Shadow"
-msgstr "Schaduw vanbinnen"
+msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1141
@@ -8777,17 +8731,15 @@ msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1153
-#, fuzzy
 msgctxt "Palette"
 msgid "Accent Green"
-msgstr "Middelpunt ingeschreven driehoek"
+msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1156
-#, fuzzy
 msgctxt "Palette"
 msgid "Accent Green Base"
-msgstr "Eerste woord in zin met hoofdletter"
+msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1159
@@ -8809,10 +8761,9 @@ msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1168
-#, fuzzy
 msgctxt "Palette"
 msgid "Accent Magenta"
-msgstr "Magenta"
+msgstr ""
 
 #. Palette: Ubuntu.gpl
 #: ../share/palettes/palettes.h:1171
@@ -15487,7 +15438,7 @@ msgstr "Selecteer <b>twee objecten of meer objecten</b> om te groeperen."
 #: ../src/selection-chemistry.cpp:651
 #: ../src/selection-describer.cpp:51
 msgid "Group"
-msgstr "_Groeperen"
+msgstr "Groeperen"
 
 #: ../src/selection-chemistry.cpp:665
 msgid "Select a <b>group</b> to ungroup."
@@ -15500,7 +15451,7 @@ msgstr "<b>Geen groepen geselecteerd</b> om op te heffen."
 #: ../src/selection-chemistry.cpp:712
 #: ../src/sp-item-group.cpp:500
 msgid "Ungroup"
-msgstr "_Groep opheffen"
+msgstr "Groep opheffen"
 
 #: ../src/selection-chemistry.cpp:802
 msgid "Select <b>object(s)</b> to raise."
@@ -16626,7 +16577,7 @@ msgstr "Cursief maken"
 
 #: ../src/text-context.cpp:961
 msgid "New line"
-msgstr "Nieuwe regel"
+msgstr "Nieuwe regel invoegen"
 
 #: ../src/text-context.cpp:995
 msgid "Backspace"
@@ -23133,7 +23084,7 @@ msgstr "Verplaatst naar de volgende laag."
 
 #: ../src/verbs.cpp:1135
 msgid "Cannot go past last layer."
-msgstr "Kan niet voorbij de laatste laag verplaatsen."
+msgstr "Kan niet verder dan de laatste laag gaan."
 
 #: ../src/verbs.cpp:1144
 msgid "Switch to previous layer"
@@ -23145,7 +23096,7 @@ msgstr "Verplaatst naar de vorige laag."
 
 #: ../src/verbs.cpp:1147
 msgid "Cannot go before first layer."
-msgstr "Kan niet voorbij de eerste laag verplaatsen."
+msgstr "Kan niet verder dan de eerste laag gaan."
 
 #: ../src/verbs.cpp:1164
 #: ../src/verbs.cpp:1260
