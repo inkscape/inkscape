@@ -219,7 +219,7 @@ void sp_icon_fetch_pixbuf( SPIcon *icon )
     }
 }
 
-static GdkPixbuf* renderup( gchar const* name, Inkscape::IconSize lsize, unsigned psize ) {
+GdkPixbuf* renderup( gchar const* name, Inkscape::IconSize lsize, unsigned psize ) {
     GtkIconTheme *theme = gtk_icon_theme_get_default();
 
     GdkPixbuf *pb = 0;
@@ -1184,7 +1184,8 @@ void Inkscape::queueIconPrerender( Glib::ustring const &name, Inkscape::IconSize
 {
     GtkStockItem stock;
     gboolean stockFound = gtk_stock_lookup( name.c_str(), &stock );
-    if (!stockFound && !gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), name.c_str()) ) {
+    gboolean themedFound = gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), name.c_str());
+    if (!stockFound && !themedFound ) {
         gint trySize = CLAMP( static_cast<gint>(lsize), 0, static_cast<gint>(G_N_ELEMENTS(iconSizeLookup) - 1) );
         if ( !sizeMapDone ) {
             injectCustomSize();
@@ -1349,7 +1350,9 @@ static void addPreRender( GtkIconSize lsize, gchar const *name )
 }
 
 gboolean icon_prerender_task(gpointer /*data*/) {
-    if (!pendingRenders.empty()) {
+    if ( inkscapeIsCrashing() ) {
+        // stop
+    } else if (!pendingRenders.empty()) {
         bool workDone = false;
         do {
             preRenderItem single = pendingRenders.front();
@@ -1359,7 +1362,7 @@ gboolean icon_prerender_task(gpointer /*data*/) {
         } while (!pendingRenders.empty() && !workDone);
     }
 
-    if (!pendingRenders.empty()) {
+    if (!inkscapeIsCrashing() && !pendingRenders.empty()) {
         return TRUE;
     } else {
         callbackHooked = false;

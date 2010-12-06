@@ -43,6 +43,8 @@ Inkscape::XML::Node *inkscape_get_menus (Inkscape::Application * inkscape);
 Inkscape::Application *inkscape_get_instance();
 gboolean inkscape_use_gui();
 
+bool inkscapeIsCrashing();
+
 SPDesktop * inkscape_find_desktop_by_dkey (unsigned int dkey);
 
 #define SP_ACTIVE_EVENTCONTEXT inkscape_active_event_context ()

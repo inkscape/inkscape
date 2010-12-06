@@ -553,6 +553,13 @@ inkscape_deactivate_desktop_private (Inkscape::Application */*inkscape*/, SPDesk
 #define SP_INDENT 8
 
 
+static bool crashIsHappening = false;
+
+bool inkscapeIsCrashing()
+{
+    return crashIsHappening;
+}
+
 static void
 inkscape_crash_handler (int /*signum*/)
 {
@@ -579,6 +586,8 @@ inkscape_crash_handler (int /*signum*/)
         abort ();
     }
     recursion = TRUE;
+
+    crashIsHappening = true;
 
     EventTracker<SimpleEvent<Inkscape::Debug::Event::CORE> > tracker("crash");
     tracker.set<SimpleEvent<> >("emergency-save");
