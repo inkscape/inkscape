@@ -42,21 +42,27 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
             GDL_DOCK_ITEM_BEH_CANT_DOCK_CENTER);
 
     if (!icon_name.empty()) {
-        int width = 0, height = 0;
-        Gtk::IconSize::lookup(Gtk::ICON_SIZE_MENU, width, height);
-        try {
-            _icon_pixbuf = Gtk::IconTheme::get_default()->load_icon(icon_name, width, (Gtk::IconLookupFlags) 0);
-            _gdl_dock_item =
-                gdl_dock_item_new_with_pixbuf_icon(name.c_str(), long_name.c_str(),
-                                                   _icon_pixbuf->gobj(), gdl_dock_behavior);
-        } catch (Gtk::IconThemeError) {
-            // ignore - create the dock item without an icon below
+        Glib::RefPtr<Gtk::IconTheme> iconTheme = Gtk::IconTheme::get_default();
+        // Icon might be in the icon theme, or might be a stock item. Check the proper source:
+        if ( iconTheme->has_icon(icon_name) ) {
+            int width = 0;
+            int height = 0;
+            Gtk::IconSize::lookup(Gtk::ICON_SIZE_MENU, width, height);
+            _icon_pixbuf = iconTheme->load_icon(icon_name, width);
+        } else {
+            Gtk::StockItem item;
+            Gtk::StockID stockId(icon_name);
+            if ( Gtk::StockItem::lookup(stockId, item) ) {
+                _icon_pixbuf = _dock.getWidget().render_icon( stockId, Gtk::ICON_SIZE_MENU );
+            }
         }
     }
 
-    if (!_gdl_dock_item) {
-        _gdl_dock_item =
-            gdl_dock_item_new(name.c_str(), long_name.c_str(), gdl_dock_behavior);
+    if ( _icon_pixbuf ) {
+        _gdl_dock_item = gdl_dock_item_new_with_pixbuf_icon( name.c_str(), long_name.c_str(),
+                                                             _icon_pixbuf->gobj(), gdl_dock_behavior );
+    } else {
+        _gdl_dock_item = gdl_dock_item_new(name.c_str(), long_name.c_str(), gdl_dock_behavior);
     }
 
     _frame.set_shadow_type(Gtk::SHADOW_IN);
