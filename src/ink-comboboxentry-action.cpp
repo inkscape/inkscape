@@ -481,9 +481,19 @@ gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* ink
     // Show or hide warning
     if( ink_comboboxentry_action->active == -1 && ink_comboboxentry_action->warning != NULL ) {
 #if GTK_CHECK_VERSION(2,16,0)
-      gtk_entry_set_icon_from_icon_name( ink_comboboxentry_action->entry,
-                                         GTK_ENTRY_ICON_SECONDARY,
-                                         GTK_STOCK_DIALOG_WARNING );
+      {
+	  GtkStockItem item;
+	  gboolean isStock = gtk_stock_lookup( GTK_STOCK_DIALOG_WARNING, &item );
+	  if (isStock) {	
+	      gtk_entry_set_icon_from_stock( ink_comboboxentry_action->entry,
+					     GTK_ENTRY_ICON_SECONDARY,
+					     GTK_STOCK_DIALOG_WARNING );
+	  } else {
+	      gtk_entry_set_icon_from_icon_name( ink_comboboxentry_action->entry,
+						 GTK_ENTRY_ICON_SECONDARY,
+						 GTK_STOCK_DIALOG_WARNING );
+	  }
+      }
       // Can't add tooltip until icon set
       gtk_entry_set_icon_tooltip_text( ink_comboboxentry_action->entry,
                                        GTK_ENTRY_ICON_SECONDARY,
@@ -497,6 +507,9 @@ gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* ink
       gtk_entry_set_icon_from_icon_name( GTK_ENTRY(ink_comboboxentry_action->entry),
                                          GTK_ENTRY_ICON_SECONDARY,
                                          NULL );
+      gtk_entry_set_icon_from_stock( GTK_ENTRY(ink_comboboxentry_action->entry),
+				     GTK_ENTRY_ICON_SECONDARY,
+				     NULL );
 #else // GTK_CHECK_VERSION(2,16,0)
       gtk_image_set_from_stock( GTK_IMAGE(ink_comboboxentry_action->indicator), NULL, GTK_ICON_SIZE_SMALL_TOOLBAR);
       gtk_widget_set_tooltip_text( ink_comboboxentry_action->indicator, NULL );
