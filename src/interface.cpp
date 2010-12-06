@@ -1,5 +1,3 @@
-#define __SP_INTERFACE_C__
-
 /** @file
  * @brief Main UI stuff
  */
@@ -133,6 +131,8 @@ static void sp_ui_menu_item_set_name(SPAction *action,
                                      Glib::ustring name,
                                      void *data);
 static void sp_recent_open(GtkRecentChooser *, gpointer);
+
+static void injectRenamedIcons();
 
 SPActionEventVector menu_item_event_vector = {
     {NULL},
@@ -408,6 +408,11 @@ sp_ui_menu_deselect(gpointer object)
 void
 sp_ui_menuitem_add_icon( GtkWidget *item, gchar *icon_name )
 {
+    static bool iconsInjected = false;
+    if ( !iconsInjected ) {
+        iconsInjected = true;
+        injectRenamedIcons();
+    }
     GtkWidget *icon;
 
     icon = sp_icon_new( Inkscape::ICON_SIZE_MENU, icon_name );
@@ -1593,6 +1598,32 @@ sp_ui_menu_item_set_name(SPAction */*action*/, Glib::ustring name, void *data)
         name.c_str());
     }//else sp_ui_menu_append_item_from_verb has been modified and can set
     //a menu item in yet another way...
+}
+
+void injectRenamedIcons()
+{
+    Glib::RefPtr<Gtk::IconTheme> iconTheme = Gtk::IconTheme::get_default();
+
+    std::vector< std::pair<Glib::ustring, Glib::ustring> > renamed;
+    renamed.push_back(std::make_pair("gtk-file", "document-x-generic"));
+    renamed.push_back(std::make_pair("gtk-directory", "folder"));
+
+    for ( std::vector< std::pair<Glib::ustring, Glib::ustring> >::iterator it = renamed.begin(); it < renamed.end(); ++it ) {
+        bool hasIcon = iconTheme->has_icon(it->first);
+        bool hasSecondIcon = iconTheme->has_icon(it->second);
+
+        if ( !hasIcon && hasSecondIcon ) {
+            Glib::ArrayHandle<int> sizes = iconTheme->get_icon_sizes(it->second);
+            for ( Glib::ArrayHandle<int>::iterator it2 = sizes.begin(); it2 < sizes.end(); ++it2 ) {
+                Glib::RefPtr<Gdk::Pixbuf> pb = iconTheme->load_icon( it->second, *it2 );
+                if ( pb ) {
+                    // install a private copy of the pixbuf to avoid pinning a theme
+                    Glib::RefPtr<Gdk::Pixbuf> pbCopy = pb->copy();
+                    Gtk::IconTheme::add_builtin_icon( it->first, *it2, pbCopy );
+                }
+            }
+        }
+    }
 }
 
 
