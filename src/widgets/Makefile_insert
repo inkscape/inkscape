@@ -50,8 +50,6 @@ ink_common_sources +=	\
 	widgets/sp-color-selector.h	\
 	widgets/sp-color-slider.cpp	\
 	widgets/sp-color-slider.h	\
-	widgets/sp-color-wheel.cpp	\
-	widgets/sp-color-wheel.h	\
 	widgets/sp-color-wheel-selector.cpp	\
 	widgets/sp-color-wheel-selector.h	\
 	widgets/spinbutton-events.cpp	\

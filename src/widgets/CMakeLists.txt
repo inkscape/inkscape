@@ -21,7 +21,6 @@ sp-color-preview.cpp
 sp-color-scales.cpp
 sp-color-selector.cpp
 sp-color-slider.cpp
-sp-color-wheel.cpp
 sp-color-wheel-selector.cpp
 spinbutton-events.cpp
 sp-widget.cpp

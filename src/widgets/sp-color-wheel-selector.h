@@ -6,15 +6,14 @@
 #include <gtk/gtkvbox.h>
 
 #include "../color.h"
-#include "sp-color-wheel.h"
 #include "sp-color-slider.h"
 #include "sp-color-selector.h"
 
 
 
+typedef struct _GtkHSV GtkHSV;
 struct SPColorWheelSelector;
 struct SPColorWheelSelectorClass;
-
 
 class ColorWheelSelector: public ColorSelector
 {
@@ -32,7 +31,7 @@ protected:
     static void _sliderGrabbed( SPColorSlider *slider, SPColorWheelSelector *cs );
     static void _sliderReleased( SPColorSlider *slider, SPColorWheelSelector *cs );
     static void _sliderChanged( SPColorSlider *slider, SPColorWheelSelector *cs );
-    static void _wheelChanged( SPColorWheel* wheel, SPColorWheelSelector *cs );
+    static void _wheelChanged( GtkHSV *hsv, SPColorWheelSelector *cs );
 
     static void _fooChanged( GtkWidget foo, SPColorWheelSelector *cs );
 
