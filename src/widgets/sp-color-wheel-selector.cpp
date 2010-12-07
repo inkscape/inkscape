@@ -108,6 +108,45 @@ void sp_color_wheel_selector_init (SPColorWheelSelector *cs)
     }
 }
 
+static void resizeHSVWheel( GtkHSV *hsv, GtkAllocation *allocation )
+{
+    gint diam = std::min(allocation->width, allocation->height);
+
+    // drop a little for resizing
+    diam -= 4;
+
+    GtkStyle *style = gtk_widget_get_style( GTK_WIDGET(hsv) );
+    if ( style ) {
+        gint thick = std::max(style->xthickness, style->ythickness);
+        if (thick > 0) {
+            diam -= thick * 2;
+        }
+    }
+    gint padding = -1;
+    gtk_widget_style_get( GTK_WIDGET(hsv), 
+                          "focus-padding", &padding,
+                          NULL );
+    if (padding > 0) {
+        diam -= padding * 2;
+    }
+     
+    diam = std::max(20, diam);
+    gint ring = static_cast<gint>( static_cast<gdouble>(diam) / (4.0 * 1.618) );
+    gtk_hsv_set_metrics( hsv, diam, ring );
+}
+
+static void handleWheelStyleSet(GtkHSV *hsv, GtkStyle* /*previous*/, gpointer /*userData*/)
+{
+    GtkAllocation allocation = {0, 0, 0, 0};
+    gtk_widget_get_allocation( GTK_WIDGET(hsv), &allocation );
+    resizeHSVWheel( hsv, &allocation );
+}
+
+static void handleWheelAllocation(GtkHSV *hsv, GtkAllocation *allocation, gpointer /*userData*/)
+{
+    resizeHSVWheel( hsv, allocation );
+}
+
 void ColorWheelSelector::init()
 {
     GtkWidget *t;
@@ -126,6 +165,7 @@ void ColorWheelSelector::init()
     row = 0;
 
     _wheel = gtk_hsv_new();
+    gtk_hsv_set_metrics( GTK_HSV(_wheel), 48, 8 );
     gtk_widget_show( _wheel );
     gtk_table_attach( GTK_TABLE(t), _wheel, 0, 3, row, row + 1,  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), XPAD, YPAD);
 
@@ -173,6 +213,13 @@ void ColorWheelSelector::init()
 
     gtk_signal_connect( GTK_OBJECT(_wheel), "changed",
                         GTK_SIGNAL_FUNC(_wheelChanged), _csel );
+
+
+    // GTK does not automatically scale the color wheel, so we have to add that in:
+    gtk_signal_connect( GTK_OBJECT(_wheel), "size-allocate",
+                        GTK_SIGNAL_FUNC(handleWheelAllocation), _csel );
+    gtk_signal_connect( GTK_OBJECT(_wheel), "style-set",
+                        GTK_SIGNAL_FUNC(handleWheelStyleSet), _csel );
 }
 
 static void
