@@ -415,6 +415,15 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
                         g_free(newref);
                     }
                 }
+            } else if (SP_IS_OFFSET(old_clone)) {
+                for (guint j = 0; j < old_ids.size(); j++) {
+                gchar *source_href = SP_OFFSET(old_clone)->sourceHref;
+                    if (source_href && source_href[0]=='#' && !strcmp(source_href+1, old_ids[j])) {
+                        gchar *newref = g_strdup_printf("#%s", new_ids[j]);
+                        doc->getObjectById(new_ids[i])->repr->setAttribute("xlink:href", newref);
+                        g_free(newref);
+                    }
+                }
             }
         }
     }
