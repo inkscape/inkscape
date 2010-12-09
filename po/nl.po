@@ -9,7 +9,7 @@
 # Benno Schulenberg <benno@vertaalt.nl>,  2008.
 # Kris De Gussem <kris.DeGussem@gmail.com>, 2008-2010.
 #
-# *** Stuur een mailtje naar <vertaling@vrijschrift.org>
+# *** Stuur een mailtje naar <kris.DeGussem@gmail.com>
 # *** voordat je met dit bestand aan de slag gaat,
 # *** om dubbel werk en stijlbreuken te voorkomen.
 #
@@ -51,8 +51,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-11-02 18:43+0100\n"
-"PO-Revision-Date: 2010-12-05 12:00+0100\n"
+"POT-Creation-Date: 2010-12-09 17:55+0100\n"
+"PO-Revision-Date: 2010-12-09 20:23+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -259,7 +259,7 @@ msgid "Blue Function:"
 msgstr "Blauwfunctie:"
 
 #: ../share/extensions/color_custom.inx.h:10
-#: ../src/interface.cpp:834
+#: ../src/interface.cpp:839
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1418
 msgid "Custom"
 msgstr "Aangepast"
@@ -422,18 +422,6 @@ msgid "Randomize"
 msgstr "Willekeurig maken"
 
 #: ../share/extensions/color_randomize.inx.h:8
-msgid "Randomize hue"
-msgstr "Willekeurige tint"
-
-#: ../share/extensions/color_randomize.inx.h:9
-msgid "Randomize lightness"
-msgstr "Willekeurige helderheid"
-
-#: ../share/extensions/color_randomize.inx.h:10
-msgid "Randomize saturation"
-msgstr "Willekeurig verzadiging"
-
-#: ../share/extensions/color_randomize.inx.h:11
 #: ../src/flood-context.cpp:251
 #: ../src/ui/dialog/inkscape-preferences.cpp:888
 #: ../src/widgets/sp-color-icc-selector.cpp:236
@@ -1748,8 +1736,8 @@ msgid "Other Attribute:"
 msgstr "Ander attribuut:"
 
 #: ../share/extensions/interp_att_g.inx.h:19
-#: ../src/selection-chemistry.cpp:1655
-#: ../src/seltrans.cpp:527
+#: ../src/selection-chemistry.cpp:1664
+#: ../src/seltrans.cpp:512
 #: ../src/ui/dialog/transformation.cpp:748
 msgid "Scale"
 msgstr "Schalen"
@@ -1966,7 +1954,7 @@ msgstr "Tekenmodus"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:6
 msgid "Export presentation:"
-msgstr ""
+msgstr "Presentatie exporteren:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:7
 msgid "First slide:"
@@ -2141,7 +2129,7 @@ msgstr "Deze uitbreiding laat je toe om de door JessyInk gebruikte masterdia te 
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:1
 #: ../share/extensions/jessyInk_transitions.inx.h:2
 #: ../src/filter-enums.cpp:70
-#: ../src/interface.cpp:833
+#: ../src/interface.cpp:838
 #: ../src/verbs.cpp:2225
 msgid "Default"
 msgstr "Standaard"
@@ -3600,8 +3588,8 @@ msgid "Weekend:"
 msgstr "Weekend:"
 
 #: ../share/extensions/svgcalendar.inx.h:32
-msgid "Year (0 for current):"
-msgstr "Jaar (0 voor huidige):"
+msgid "Year (4 digits):"
+msgstr "Jaar (4 cijfers):"
 
 #: ../share/extensions/svgcalendar.inx.h:33
 msgid "Year color:"
@@ -3845,7 +3833,7 @@ msgid "Middle and Right"
 msgstr "Midden rechts"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:26
-#: ../src/extension/extension.cpp:740
+#: ../src/extension/extension.cpp:738
 #: ../src/ui/dialog/input.cpp:592
 msgid "Name:"
 msgstr "Naam:"
@@ -3941,7 +3929,7 @@ msgstr "Indien je meer dan één attribuut wilt instellen, moeten deze gescheide
 
 #: ../share/extensions/web-set-att.inx.h:7
 #: ../share/extensions/web-transmit-att.inx.h:7
-#: ../src/interface.cpp:1555
+#: ../src/interface.cpp:1560
 msgid "Replace"
 msgstr "Vervangen"
 
@@ -4210,12 +4198,12 @@ msgstr ""
 #: ../share/extensions/gcodetools.py:3240
 #, python-format
 msgid "Orientation points for '%s' layer have not been found! Please add orientation points using Orientation tab!"
-msgstr ""
+msgstr "Oriëntatiepunten voor laag '%s' werden niet gevonden! Voeg aub oriëntatiepunten toe met de tab Oriëntatie!"
 
 #: ../share/extensions/gcodetools.py:3246
 #, python-format
 msgid "There are more than one orientation point groups in '%s' layer"
-msgstr ""
+msgstr "Er is meer dan één oriëntatiepuntgroep in laag '%s'."
 
 #: ../share/extensions/gcodetools.py:3277
 #: ../share/extensions/gcodetools.py:3279
@@ -4235,6 +4223,10 @@ msgid ""
 "Solution 2: Path->Dynamic offset or Ctrl+J.\n"
 "Solution 3: export all contours to PostScript level 2 (File->Save As->.ps) and File->Import this file."
 msgstr ""
+"Deze uitbreiding werkt slechts met paden, dynamische offsets en groepen daarvan! Alle andere objecten worden genegeerd!\n"
+"Oplossing 1: druk op Pad->Object naar pad of Shift+Ctrl+C.\n"
+"Oplossing 2: Pad->Dynamische offset of Ctrl+J.\n"
+"Oplossing 3: exporteer alle contouren naar PostScript niveau 2 (Bestand->Opslaan als->.ps) en dit vervolgens importeren (Bestand->Importeren)."
 
 #: ../share/extensions/gcodetools.py:3469
 #, python-format
@@ -4264,11 +4256,12 @@ msgstr "Er zijn geen paden geselecteerd! Tracht te werken op alle aanwezige pade
 #: ../share/extensions/gcodetools.py:3611
 #: ../share/extensions/gcodetools.py:3682
 msgid "Warning: One or more paths dont have 'd' parameter, try to Ungroup (Ctrl+Shift+G) and Object to Path (Ctrl+Shift+C)!"
-msgstr ""
+msgstr "Waarschuwing: een of meer paden hebben geen 'd' parameter. Probeer Groep opheffen (Ctrl+Shift+G) en Object naar pad (Ctrl+Shift+C)!"
 
 #: ../share/extensions/gcodetools.py:3641
+#, fuzzy
 msgid "Noting is selected. Please select something to convert to drill point (dxfpoint) or clear point sign."
-msgstr ""
+msgstr "Er is niets geselecteerd. Selecteer aub. iets om te converteren naar een boorpunt (dxf-punt) of "
 
 #: ../share/extensions/gcodetools.py:3714
 #: ../share/extensions/gcodetools.py:3808
@@ -4278,7 +4271,7 @@ msgstr "Deze uitbreiding vereist ten minste één geselecteerd pad."
 #: ../share/extensions/gcodetools.py:3720
 #, python-format
 msgid "Tool diameter must be > 0 but tool's diameter on '%s' layer is not!"
-msgstr ""
+msgstr "Diameter gereedschap moet > 0 zijn, maar dit is niet zo voor laag '%s'!"
 
 #: ../share/extensions/gcodetools.py:3731
 msgid "Warning: omitting non-path"
@@ -4291,19 +4284,19 @@ msgstr "Gereedschap '%s' heeft geen vorm!"
 
 #: ../share/extensions/gcodetools.py:4073
 msgid "No need to engrave sharp angles."
-msgstr ""
+msgstr "Het is niet nodig om scherpe hoeken te graveren."
 
 #: ../share/extensions/gcodetools.py:4086
 msgid "Active layer already has orientation points! Remove them or select another layer!"
-msgstr ""
+msgstr "Actieve laag bevat al oriëntatiepunten! Verwijder ze of selecteer een andere laag!"
 
 #: ../share/extensions/gcodetools.py:4134
 msgid "Active layer already has a tool! Remove it or select another layer!"
-msgstr ""
+msgstr "Actieve laag bevat al een gereedschap! Verwijder het of selecteer een andere laag!"
 
 #: ../share/extensions/gcodetools.py:4258
 msgid "Selection is empty! Will compute whole drawing."
-msgstr "Selectie is leef! De volledige afbeelding wordt berekend."
+msgstr "Selectie is leeg! De volledige afbeelding wordt berekend."
 
 #: ../share/extensions/gcodetools.py:4318
 msgid ""
@@ -4313,28 +4306,33 @@ msgid ""
 "and Russian support forum:\n"
 "\thttp://www.cnc-club.ru/gcodetoolsru"
 msgstr ""
+"Tutorials, handleidingen en odnersteuning beschikbaar\n"
+" op het English support forum:\n"
+"\thttp://www.cnc-club.ru/gcodetools\n"
+"en Russisch support forum:\n"
+"\thttp://www.cnc-club.ru/gcodetoolsru"
 
 #: ../share/extensions/gcodetools.py:4363
 msgid "Lathe X and Z axis remap should be 'X', 'Y' or 'Z'. Exiting..."
-msgstr ""
+msgstr "X- en Z-as herindeling van draaibank zouden 'X', 'Y' of 'Z' moeten zijn. Bezig met afronden..."
 
 #: ../share/extensions/gcodetools.py:4366
 msgid "Lathe X and Z axis remap should be the same. Exiting..."
-msgstr ""
+msgstr "X- en Z-as herindeling van draaibank zouden gelijk moeten zijn. Bezig met afronden..."
 
 #: ../share/extensions/gcodetools.py:4527
 msgid "Select one of the active tabs - Path to Gcode, Area, Engraving, DXF points, Orientation, Offset, Lathe or Tools library."
-msgstr ""
+msgstr "Selecteer een van de actieve tabs - Pad naar Gcode, Oppervlak, Oppervlakteartefacten, Gravure, DXF-punten, Gereedschappenbibliotheek of Oriëntatie."
 
 #: ../share/extensions/gcodetools.py:4533
 msgid "Orientation points have not been defined! A default set of orientation points has been automatically added."
-msgstr ""
+msgstr "Oriëntatiepunten werden niet gedefinieerd! Een standaard set oriëntatiepunten werd automatisch toegevoegd."
 
 #: ../share/extensions/gcodetools.py:4537
 msgid "Cutting tool has not been defined! A default tool has been automatically added."
-msgstr ""
+msgstr "Snijgereedschap is niet gedefinieerd! Een standaard gereedschap werd automatisch toegevoegd."
 
-#: ../share/extensions/inkex.py:67
+#: ../share/extensions/inkex.py:78
 #, python-format
 msgid ""
 "The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore this extension. Please download and install the latest version from http://cheeseshop.python.org/pypi/lxml/, or install it through your package manager by a command like: sudo apt-get install python-lxml\n"
@@ -4347,7 +4345,7 @@ msgstr ""
 "Technische details:\n"
 "%s"
 
-#: ../share/extensions/inkex.py:231
+#: ../share/extensions/inkex.py:242
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "Geen overeenkomend knooppunt voor de expressie: %s"
@@ -4592,7 +4590,6 @@ msgstr "Uitsnijding"
 #: ../share/filters/filters.svg.h:214
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:105
-#: ../src/extension/internal/filter/drop-shadow.h:165
 msgid "Shadows and Glows"
 msgstr "Schaduw en gloed"
 
@@ -6475,549 +6472,549 @@ msgstr "Tritone"
 msgid "Create a tritone palette with hue selectable by flood"
 msgstr "Een tritone palet maken waarbij de tint gekozen wordt door de vulling"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:4
 msgctxt "Palette"
 msgid "Blue1"
 msgstr "Blauw1"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:7
 msgctxt "Palette"
 msgid "Blue2"
 msgstr "Blauw2"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:10
 msgctxt "Palette"
 msgid "Blue3"
 msgstr "Blauw3"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:13
 msgctxt "Palette"
 msgid "Red1"
 msgstr "Rood1"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:16
 msgctxt "Palette"
 msgid "Red2"
 msgstr "Rood2"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:19
 msgctxt "Palette"
 msgid "Red3"
 msgstr "Rood3"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:22
 msgctxt "Palette"
 msgid "Orange1"
 msgstr "Oranje1"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:25
 msgctxt "Palette"
 msgid "Orange2"
 msgstr "Oranje2"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:28
 msgctxt "Palette"
 msgid "Orange3"
 msgstr "Oranje3"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:31
 msgctxt "Palette"
 msgid "Brown1"
 msgstr "Bruin1"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:34
 msgctxt "Palette"
 msgid "Brown2"
 msgstr "Bruin2"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:37
 msgctxt "Palette"
 msgid "Brown3"
 msgstr "Bruin3"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:40
 msgctxt "Palette"
 msgid "Green1"
 msgstr "Groen1"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:43
 msgctxt "Palette"
 msgid "Green2"
 msgstr "Groen2"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:46
 msgctxt "Palette"
 msgid "Green3"
 msgstr "Groen3"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:49
 msgctxt "Palette"
 msgid "Purple1"
 msgstr "Purper1"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:52
 msgctxt "Palette"
 msgid "Purple2"
 msgstr "Purper2"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:55
 msgctxt "Palette"
 msgid "Purple3"
 msgstr "Purper3"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:58
 msgctxt "Palette"
 msgid "Metalic1"
 msgstr "Metallisch1"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:61
 msgctxt "Palette"
 msgid "Metalic2"
 msgstr "Metallisch2"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:64
 msgctxt "Palette"
 msgid "Metalic3"
 msgstr "Metallisch3"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:67
 msgctxt "Palette"
 msgid "Metalic4"
 msgstr "Metallisch4"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:70
 msgctxt "Palette"
 msgid "Grey1"
 msgstr "Grijs1"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:73
 msgctxt "Palette"
 msgid "Grey2"
 msgstr "Grijs2"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:76
 msgctxt "Palette"
 msgid "Grey3"
 msgstr "Grijs3"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:79
 msgctxt "Palette"
 msgid "Grey4"
 msgstr "Grijs4"
 
-#. Palette: echo-palette.gpl
+#. Palette: ./echo-palette.gpl
 #: ../share/palettes/palettes.h:82
 msgctxt "Palette"
 msgid "Grey5"
 msgstr "Grijs5"
 
-#. Palette: inkscape.gpl
-#. Palette: Ubuntu.gpl
+#. Palette: ./inkscape.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:85
 #: ../share/palettes/palettes.h:1192
 msgctxt "Palette"
 msgid "Black"
 msgstr "Zwart"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:89
 #, no-c-format
 msgctxt "Palette"
 msgid "90% Gray"
 msgstr "90% grijs"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:93
 #, no-c-format
 msgctxt "Palette"
 msgid "80% Gray"
 msgstr "80% grijs"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:97
 #, no-c-format
 msgctxt "Palette"
 msgid "70% Gray"
 msgstr "70% grijs"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:101
 #, no-c-format
 msgctxt "Palette"
 msgid "60% Gray"
 msgstr "60% grijs"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:105
 #, no-c-format
 msgctxt "Palette"
 msgid "50% Gray"
 msgstr "50% grijs"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:109
 #, no-c-format
 msgctxt "Palette"
 msgid "40% Gray"
 msgstr "40% grijs"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:113
 #, no-c-format
 msgctxt "Palette"
 msgid "30% Gray"
 msgstr "60% grijs"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:117
 #, no-c-format
 msgctxt "Palette"
 msgid "20% Gray"
 msgstr "20% grijs"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:121
 #, no-c-format
 msgctxt "Palette"
 msgid "10% Gray"
 msgstr "10% grijs"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:125
 #, no-c-format
 msgctxt "Palette"
 msgid "7.5% Gray"
 msgstr "7.5% grijs"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:129
 #, no-c-format
 msgctxt "Palette"
 msgid "5% Gray"
 msgstr "5% grijs"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:133
 #, no-c-format
 msgctxt "Palette"
 msgid "2.5% Gray"
 msgstr "2.5% grijs"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:136
 msgctxt "Palette"
 msgid "White"
 msgstr "Wit"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:139
 msgctxt "Palette"
 msgid "Maroon (#800000)"
 msgstr "Kastanjebruin (#800000)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:142
 msgctxt "Palette"
 msgid "Red (#FF0000)"
 msgstr "Rood (#FF0000)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:145
 msgctxt "Palette"
 msgid "Olive (#808000)"
 msgstr "Olijf (#808000)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:148
 msgctxt "Palette"
 msgid "Yellow (#FFFF00)"
 msgstr "Geel (#FFFF00)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:151
 msgctxt "Palette"
 msgid "Green (#008000)"
 msgstr "Groen (#008000)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:154
 msgctxt "Palette"
 msgid "Lime (#00FF00)"
 msgstr "Lime (#00FF00)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:157
 msgctxt "Palette"
 msgid "Teal (#008080)"
-msgstr "Medium blauw-groen (#008080)"
+msgstr "Middelblauwgroen (#008080)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:160
 msgctxt "Palette"
 msgid "Aqua (#00FFFF)"
 msgstr "Water (#00FFFF)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:163
 msgctxt "Palette"
 msgid "Navy (#000080)"
 msgstr "Marineblauw (#000080)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:166
 msgctxt "Palette"
 msgid "Blue (#0000FF)"
 msgstr "Blauw (#0000FF)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:169
 msgctxt "Palette"
 msgid "Purple (#800080)"
 msgstr "Purper (#800080)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:172
 msgctxt "Palette"
 msgid "Fuchsia (#FF00FF)"
 msgstr "Fuchsia (#FF00FF)"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:175
 msgctxt "Palette"
 msgid "default outer 1"
 msgstr "standaard rand 1"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:178
 msgctxt "Palette"
 msgid "default outer 2"
 msgstr "standaard rand 2"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:181
 msgctxt "Palette"
 msgid "default outer 3"
 msgstr "standaard rand 3"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:184
 msgctxt "Palette"
 msgid "default block"
 msgstr "standaard blok"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:187
 msgctxt "Palette"
 msgid "default added blue"
 msgstr "standaard toegevoegd blauw"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:190
 msgctxt "Palette"
 msgid "default block header"
 msgstr "standaard blok hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:193
 msgctxt "Palette"
 msgid "default alert block"
 msgstr "standaard waarschuwingsblok"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:196
 msgctxt "Palette"
 msgid "default added red"
 msgstr "standaard toegevoegd rood"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:199
 msgctxt "Palette"
 msgid "default alert block header"
 msgstr "standaard waarschuwingsblok hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:202
 msgctxt "Palette"
 msgid "default example block"
 msgstr "standaard voorbeeldblok"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:205
 msgctxt "Palette"
 msgid "default added green"
 msgstr "standaard toegevoegd groen"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:208
 msgctxt "Palette"
 msgid "default example block header"
 msgstr "standaard voorbeeldblok hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:211
 msgctxt "Palette"
 msgid "default covered text"
 msgstr "standaard bedekte tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:214
 msgctxt "Palette"
 msgid "default covered bullet"
 msgstr "standaard bedekt opsommingsteken"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:217
 msgctxt "Palette"
 msgid "default background"
 msgstr "Standaard achtergrond"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:220
 msgctxt "Palette"
 msgid "default text"
 msgstr "standaard tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:223
 msgctxt "Palette"
 msgid "default light outer 1"
 msgstr "standaard heldere rand 1"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:226
 msgctxt "Palette"
 msgid "default light outer 2"
 msgstr "standaard heldere rand 2"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:229
 msgctxt "Palette"
 msgid "default light outer 3"
 msgstr "standaard heldere rand 3"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:232
 msgctxt "Palette"
 msgid "default light block"
 msgstr "standaard helder blok"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:235
 msgctxt "Palette"
 msgid "default light block header"
 msgstr "standaard helder blok hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:238
 msgctxt "Palette"
 msgid "default light block header text"
 msgstr "standaard helder blok tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:241
 msgctxt "Palette"
 msgid "default light alert block"
 msgstr "standaard helder waarschuwingsblok"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:244
 msgctxt "Palette"
 msgid "default light alert block header"
 msgstr "standaard helder waarschuwingsblok hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:247
 msgctxt "Palette"
 msgid "default light alert block header text"
 msgstr "standaard helder waarschuwingsblok tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:250
 msgctxt "Palette"
 msgid "default light example block"
 msgstr "standaard helder voorbeeldblok"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:253
 msgctxt "Palette"
 msgid "default light example block header"
 msgstr "standaard helder voorbeeldblok hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:256
 msgctxt "Palette"
 msgid "default light example block header text"
 msgstr "standaard helder voorbeeldblok tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:259
 msgctxt "Palette"
 msgid "default light covered text"
 msgstr "standaard heldere bedekte tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:262
 msgctxt "Palette"
 msgid "default light covered bullet"
 msgstr "standaard helder bedekt opsommingsteken"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:265
 msgctxt "Palette"
 msgid "default light background"
 msgstr "standaard heldere achtergrond"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:268
 msgctxt "Palette"
 msgid "default light text"
 msgstr "standaard heldere tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:271
 msgctxt "Palette"
 msgid "beetle outer 1"
 msgstr "beetle rand 1"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:274
 msgctxt "Palette"
 msgid "beetle outer 2"
 msgstr "beetle rand 2"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:277
 msgctxt "Palette"
 msgid "beetle outer 3"
 msgstr "beetle rand 3"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:280
 #: ../share/palettes/palettes.h:283
 #: ../share/palettes/palettes.h:286
@@ -7025,315 +7022,315 @@ msgctxt "Palette"
 msgid "beetle added blue"
 msgstr "beetle toegevoegd blauw"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:289
 msgctxt "Palette"
 msgid "beetle added red"
 msgstr "beetle toegevoegd rood"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:292
 msgctxt "Palette"
 msgid "beetle alert block header text"
 msgstr "beetle waarschuwingsblok tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:295
 msgctxt "Palette"
 msgid "beetle added green"
 msgstr "beetle toegevoegd groen"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:298
 msgctxt "Palette"
 msgid "beetle example block header text"
 msgstr "beetle voorbeeldblok tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:301
 msgctxt "Palette"
 msgid "beetle header text"
 msgstr "beetle tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:304
 #: ../share/palettes/palettes.h:316
 msgctxt "Palette"
 msgid "beetle added grey"
 msgstr "beetle toegevoegd grijs"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:307
 msgctxt "Palette"
 msgid "beetle covered bullet"
 msgstr "beetle bedekt opsommingsteken"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:310
 msgctxt "Palette"
 msgid "beetle background"
 msgstr "beetle achtergrond"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:313
 msgctxt "Palette"
 msgid "beetle covered text"
 msgstr "beetle bedekte tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:319
 msgctxt "Palette"
 msgid "beetle text"
 msgstr "beetle tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:322
 msgctxt "Palette"
 msgid "albatross outer 1"
 msgstr "albatross rand 1"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:325
 msgctxt "Palette"
 msgid "albatross outer 2"
 msgstr "albatross rand 2"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:328
 msgctxt "Palette"
 msgid "albatross outer 3"
 msgstr "albatross rand 3"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:331
 msgctxt "Palette"
 msgid "albatross background"
 msgstr "albatross achtergrond"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:334
 msgctxt "Palette"
 msgid "albatross block"
 msgstr "albatross blok"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:337
 msgctxt "Palette"
 msgid "albatross block header"
 msgstr "albatross blok hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:340
 msgctxt "Palette"
 msgid "albatross header text"
 msgstr "albatross tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:343
 msgctxt "Palette"
 msgid "albatross bullet"
 msgstr "albatross opsommingsteken"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:346
 msgctxt "Palette"
 msgid "albatross covered bullet"
 msgstr "albatross bedekt opsommingsteken"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:349
 msgctxt "Palette"
 msgid "albatross covered text"
 msgstr "albatross bedekte tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:352
 msgctxt "Palette"
 msgid "albatross added red"
 msgstr "albatross toegevoegd rood"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:355
 msgctxt "Palette"
 msgid "albatross alert block header text"
 msgstr "albatross waarschuwingsblok tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:358
 msgctxt "Palette"
 msgid "albatross added green"
 msgstr "albatross toegevoegd groen"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:361
 msgctxt "Palette"
 msgid "albatross example block header text"
 msgstr "albatross voorbeeldblok tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:364
 msgctxt "Palette"
 msgid "albatross text"
 msgstr "albatross tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:367
 msgctxt "Palette"
 msgid "albatross added yellow"
 msgstr "albatross toegevoegd geel"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:370
 msgctxt "Palette"
 msgid "albatross added white"
 msgstr "albatross toegevoegd wit"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:373
 msgctxt "Palette"
 msgid "fly text"
 msgstr "fly tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:376
 #: ../share/palettes/palettes.h:385
 msgctxt "Palette"
 msgid "fly added grey"
 msgstr "fly toegevoegd grijs"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:379
 msgctxt "Palette"
 msgid "fly outer"
 msgstr "fly rand"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:382
 msgctxt "Palette"
 msgid "fly background"
 msgstr "fly achtergrond"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:388
 msgctxt "Palette"
 msgid "fly header text"
 msgstr "fly tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:391
 msgctxt "Palette"
 msgid "fly covered bullet"
 msgstr "fly bedekt opsommingsteken"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:394
 msgctxt "Palette"
 msgid "fly covered text"
 msgstr "fly bedekte tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:397
 msgctxt "Palette"
 msgid "fly added red"
 msgstr "fly toegevoegd rood"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:400
 msgctxt "Palette"
 msgid "fly alert block header text"
 msgstr "fly waarschuwingsblok tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:403
 msgctxt "Palette"
 msgid "fly added green"
 msgstr "fly toegevoegd groen"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:406
 msgctxt "Palette"
 msgid "fly example block header text"
 msgstr "fly voorbeeldblok tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:409
 msgctxt "Palette"
 msgid "fly added blue"
 msgstr "fly toegevoegd blauw"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:412
 msgctxt "Palette"
 msgid "fly added default blue"
 msgstr "fly toegevoegd standaard blauw"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:415
 msgctxt "Palette"
 msgid "seagull outer 1"
 msgstr "seagull rand 1"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:418
 msgctxt "Palette"
 msgid "seagull outer 2"
 msgstr "seagull rand 2"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:421
 msgctxt "Palette"
 msgid "seagull outer 3"
 msgstr "seagull rand 3"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:424
 msgctxt "Palette"
 msgid "seagull block"
 msgstr "seagull blok"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:427
 msgctxt "Palette"
 msgid "seagull added grey"
 msgstr "seagull toegevoegd grijs"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:430
 msgctxt "Palette"
 msgid "seagull block header"
 msgstr "seagull blok hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:433
 msgctxt "Palette"
 msgid "seagull covered text"
 msgstr "seagull bedekte tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:436
 msgctxt "Palette"
 msgid "seagull covered bullet"
 msgstr "seagull bedekt opsommingsteken"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:439
 msgctxt "Palette"
 msgid "seagull background"
 msgstr "seagull achtergrond"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:442
 msgctxt "Palette"
 msgid "seagull text"
 msgstr "seagull tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:445
 msgctxt "Palette"
 msgid "beaver outer frame"
 msgstr "beaver buitenrand"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:448
 #: ../share/palettes/palettes.h:451
 #: ../share/palettes/palettes.h:475
@@ -7341,1467 +7338,1466 @@ msgctxt "Palette"
 msgid "beaver added red"
 msgstr "beaver toegevoegd rood"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:454
 msgctxt "Palette"
 msgid "beaver outer 1"
 msgstr "beaver rand 1"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:457
 msgctxt "Palette"
 msgid "beaver outer 2"
 msgstr "beaver rand 2"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:460
 msgctxt "Palette"
 msgid "beaver outer 3"
 msgstr "beaver rand 3"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:463
 msgctxt "Palette"
 msgid "beaver added blue"
 msgstr "beaver toegevoegd blauw"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:466
 msgctxt "Palette"
 msgid "beaver block header text"
 msgstr "blok tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:469
 msgctxt "Palette"
 msgid "beaver added green"
 msgstr "beaver toegevoegd groen"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:472
 msgctxt "Palette"
 msgid "beaver example block header text"
 msgstr "beaver voorbeeldblok tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:478
 msgctxt "Palette"
 msgid "beaver alert block header text"
 msgstr "beaver waarschuwingsblok tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:481
 msgctxt "Palette"
 msgid "beaver covered text"
 msgstr "beaver bedekte tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:484
 msgctxt "Palette"
 msgid "beaver covered bullet"
 msgstr "beaver bedekt opsommingsteken"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:487
 msgctxt "Palette"
 msgid "beaver background"
 msgstr "beaver achtergrond"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:490
 msgctxt "Palette"
 msgid "beaver text"
 msgstr "beaver tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:493
 msgctxt "Palette"
 msgid "crane outer 1"
 msgstr "crane rand 1"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:496
 msgctxt "Palette"
 msgid "crane outer 2"
 msgstr "crane rand 2"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:499
 msgctxt "Palette"
 msgid "crane outer 3"
 msgstr "crane rand 3"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:502
 msgctxt "Palette"
 msgid "crane block"
 msgstr "crane blok"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:505
 msgctxt "Palette"
 msgid "crane added orange"
 msgstr "crane toegevoegd oranje"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:508
 msgctxt "Palette"
 msgid "crane block header"
 msgstr "crane blok hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:511
 msgctxt "Palette"
 msgid "crane alert block"
 msgstr "crane waarschuwingsblok"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:514
 msgctxt "Palette"
 msgid "crane added red"
 msgstr "crane toegevoegd rood"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:517
 msgctxt "Palette"
 msgid "crane alert block header"
 msgstr "crane waarschuwingsblok hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:520
 msgctxt "Palette"
 msgid "crane example block"
 msgstr "crane voorbeeldblok"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:523
 msgctxt "Palette"
 msgid "crane added green"
 msgstr "crane toegevoegd groen"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:526
 msgctxt "Palette"
 msgid "crane example block header"
 msgstr "crane voorbeeldblok hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:529
 msgctxt "Palette"
 msgid "crane covered text"
 msgstr "crane bedekte tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:532
 msgctxt "Palette"
 msgid "crane covered bullet"
 msgstr "crane bedekt opsommingsteken"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:535
 msgctxt "Palette"
 msgid "crane bullet"
 msgstr "crane opsommingsteken"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:538
 msgctxt "Palette"
 msgid "crane background"
 msgstr "crane achtergrond"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:541
 msgctxt "Palette"
 msgid "crane text"
 msgstr "crane tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:544
 msgctxt "Palette"
 msgid "wolverine outer 1"
 msgstr "wolverine rand 1"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:547
 msgctxt "Palette"
 msgid "wolverine outer 2"
 msgstr "wolverine rand 2"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:550
 msgctxt "Palette"
 msgid "wolverine outer 3"
 msgstr "wolverine rand 3"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:553
 msgctxt "Palette"
 msgid "wolverine outer 4"
 msgstr "wolverine rand 4"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:556
 msgctxt "Palette"
 msgid "wolverine added yellow"
 msgstr "wolverine toegevoegd geel"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:559
 msgctxt "Palette"
 msgid "wolverine added blue"
 msgstr "wolverine toegevoegd blauw"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:562
 msgctxt "Palette"
 msgid "wolverine header text"
 msgstr "wolverine tekst hoofding"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:565
 msgctxt "Palette"
 msgid "wolverine added green"
 msgstr "wolverine toegevoegd groen"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:568
 msgctxt "Palette"
 msgid "wolverine example block title"
 msgstr "wolverine titel voorbeeldblok"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:571
 msgctxt "Palette"
 msgid "wolverine covered text"
 msgstr "wolverine bedekte tekst"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:574
 msgctxt "Palette"
 msgid "wolverine covered bullet"
 msgstr "wolverine bedekt opsommingsteken"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:577
 msgctxt "Palette"
 msgid "wolverine background"
 msgstr "wolverine achtergrond"
 
-#. Palette: LaTeX-Beamer.gpl
+#. Palette: ./LaTeX-Beamer.gpl
 #: ../share/palettes/palettes.h:580
 msgctxt "Palette"
 msgid "wolverine text"
 msgstr "wolverine tekst"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:583
 msgctxt "Palette"
 msgid "black (#000000)"
 msgstr "zwart (#000000)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:586
 msgctxt "Palette"
 msgid "dimgray (#696969)"
 msgstr "dimgrijs (#696969)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:589
 msgctxt "Palette"
 msgid "gray (#808080)"
 msgstr "grijs (#808080)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:592
 msgctxt "Palette"
 msgid "darkgray (#A9A9A9)"
 msgstr "donkergrijs (#A9A9A9)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:595
 msgctxt "Palette"
 msgid "silver (#C0C0C0)"
 msgstr "zilver (#C0C0C0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:598
 msgctxt "Palette"
 msgid "lightgray (#D3D3D3)"
 msgstr "lichtgrijs (#D3D3D3)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:601
 msgctxt "Palette"
 msgid "gainsboro (#DCDCDC)"
 msgstr "gainsboro (#DCDCDC)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:604
 msgctxt "Palette"
 msgid "whitesmoke (#F5F5F5)"
 msgstr "witte rook (#F5F5F5)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:607
 msgctxt "Palette"
 msgid "white (#FFFFFF)"
 msgstr "wit (#FFFFFF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:610
 msgctxt "Palette"
 msgid "rosybrown (#BC8F8F)"
 msgstr "roosbruin (#BC8F8F)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:613
 msgctxt "Palette"
 msgid "indianred (#CD5C5C)"
 msgstr "indianenrood (#CD5C5C)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:616
 msgctxt "Palette"
 msgid "brown (#A52A2A)"
 msgstr "bruin (#A52A2A)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:619
 msgctxt "Palette"
 msgid "firebrick (#B22222)"
 msgstr "vuurvaste baksteen (#B22222)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:622
 msgctxt "Palette"
 msgid "lightcoral (#F08080)"
 msgstr "lichtkoraal (#F08080)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:625
 msgctxt "Palette"
 msgid "maroon (#800000)"
 msgstr "kastanjebruin (#800000)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:628
 msgctxt "Palette"
 msgid "darkred (#8B0000)"
 msgstr "donkerrood (#8B0000)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:631
 msgctxt "Palette"
 msgid "red (#FF0000)"
 msgstr "rood (#FF0000)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:634
 msgctxt "Palette"
 msgid "snow (#FFFAFA)"
 msgstr "sneeuw (#FFFAFA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:637
 msgctxt "Palette"
 msgid "mistyrose (#FFE4E1)"
 msgstr "mistyrose (#FFE4E1)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:640
 msgctxt "Palette"
 msgid "salmon (#FA8072)"
 msgstr "zalm (#FA8072)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:643
 msgctxt "Palette"
 msgid "tomato (#FF6347)"
 msgstr "tomaat (#FF6347)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:646
 msgctxt "Palette"
 msgid "darksalmon (#E9967A)"
 msgstr "donkerzalm (#E9967A)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:649
 msgctxt "Palette"
 msgid "coral (#FF7F50)"
 msgstr "koraal (#FF7F50)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:652
 msgctxt "Palette"
 msgid "orangered (#FF4500)"
 msgstr "oranjerood (#FF4500)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:655
 msgctxt "Palette"
 msgid "lightsalmon (#FFA07A)"
 msgstr "lightzalm (#FFA07A)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:658
 msgctxt "Palette"
 msgid "sienna (#A0522D)"
 msgstr "sienna (#A0522D)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:661
 msgctxt "Palette"
 msgid "seashell (#FFF5EE)"
 msgstr "schelp (#FFF5EE)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:664
 msgctxt "Palette"
 msgid "chocolate (#D2691E)"
 msgstr "chocolade (#D2691E)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:667
 msgctxt "Palette"
 msgid "saddlebrown (#8B4513)"
 msgstr "zadelbruin (#8B4513)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:670
 msgctxt "Palette"
 msgid "sandybrown (#F4A460)"
 msgstr "zandbruin (#F4A460)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:673
 msgctxt "Palette"
 msgid "peachpuff (#FFDAB9)"
 msgstr "perzikachtig (#FFDAB9)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:676
 msgctxt "Palette"
 msgid "peru (#CD853F)"
 msgstr "peru (#CD853F)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:679
 msgctxt "Palette"
 msgid "linen (#FAF0E6)"
 msgstr "linnen (#FAF0E6)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:682
 msgctxt "Palette"
 msgid "bisque (#FFE4C4)"
 msgstr "bisque (#FFE4C4)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:685
 msgctxt "Palette"
 msgid "darkorange (#FF8C00)"
 msgstr "donkeroranje (#FF8C00)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:688
 msgctxt "Palette"
 msgid "burlywood (#DEB887)"
 msgstr "burlywood (#DEB887)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:691
 msgctxt "Palette"
 msgid "tan (#D2B48C)"
 msgstr "tan (#D2B48C)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:694
 msgctxt "Palette"
 msgid "antiquewhite (#FAEBD7)"
 msgstr "antiekwit (#FAEBD7)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:697
 msgctxt "Palette"
 msgid "navajowhite (#FFDEAD)"
 msgstr "navajowit (#FFDEAD)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:700
 msgctxt "Palette"
 msgid "blanchedalmond (#FFEBCD)"
 msgstr "blanchedalmond (#FFEBCD)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:703
 msgctxt "Palette"
 msgid "papayawhip (#FFEFD5)"
 msgstr "papayawhip (#FFEFD5)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:706
 msgctxt "Palette"
 msgid "moccasin (#FFE4B5)"
 msgstr "moccasin (#FFE4B5)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:709
 msgctxt "Palette"
 msgid "orange (#FFA500)"
 msgstr "oranje (#FFA500)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:712
 msgctxt "Palette"
 msgid "wheat (#F5DEB3)"
 msgstr "tarwe (#F5DEB3)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:715
 msgctxt "Palette"
 msgid "oldlace (#FDF5E6)"
 msgstr "kant (#FDF5E6)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:718
 msgctxt "Palette"
 msgid "floralwhite (#FFFAF0)"
 msgstr "floraalwit (#FFFAF0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:721
 msgctxt "Palette"
 msgid "darkgoldenrod (#B8860B)"
 msgstr "darkgoldenrod (#B8860B)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:724
 msgctxt "Palette"
 msgid "goldenrod (#DAA520)"
 msgstr "goldenrod (#DAA520)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:727
 msgctxt "Palette"
 msgid "cornsilk (#FFF8DC)"
 msgstr "cornsilk (#FFF8DC)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:730
 msgctxt "Palette"
 msgid "gold (#FFD700)"
 msgstr "goud (#FFD700)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:733
 msgctxt "Palette"
 msgid "khaki (#F0E68C)"
 msgstr "kaki (#F0E68C)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:736
 msgctxt "Palette"
 msgid "lemonchiffon (#FFFACD)"
 msgstr "lemonchiffon (#FFFACD)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:739
 msgctxt "Palette"
 msgid "palegoldenrod (#EEE8AA)"
 msgstr "palegoldenrod (#EEE8AA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:742
 msgctxt "Palette"
 msgid "darkkhaki (#BDB76B)"
 msgstr "donkerkaki (#BDB76B)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:745
 msgctxt "Palette"
 msgid "beige (#F5F5DC)"
 msgstr "beige (#F5F5DC)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:748
 msgctxt "Palette"
 msgid "lightgoldenrodyellow (#FAFAD2)"
 msgstr "lightgoldenrodyellow (#FAFAD2)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:751
 msgctxt "Palette"
 msgid "olive (#808000)"
 msgstr "olijf (#808000)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:754
 msgctxt "Palette"
 msgid "yellow (#FFFF00)"
 msgstr "geel (#FFFF00)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:757
 msgctxt "Palette"
 msgid "lightyellow (#FFFFE0)"
 msgstr "lichtgeel (#FFFFE0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:760
 msgctxt "Palette"
 msgid "ivory (#FFFFF0)"
 msgstr "ivoor (#FFFFF0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:763
 msgctxt "Palette"
 msgid "olivedrab (#6B8E23)"
 msgstr "olijfdrab (#6B8E23)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:766
 msgctxt "Palette"
 msgid "yellowgreen (#9ACD32)"
 msgstr "geelgroen (#9ACD32)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:769
 msgctxt "Palette"
 msgid "darkolivegreen (#556B2F)"
 msgstr "donkerolijfgroen (#556B2F)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:772
 msgctxt "Palette"
 msgid "greenyellow (#ADFF2F)"
 msgstr "groengeel (#ADFF2F)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:775
 msgctxt "Palette"
 msgid "chartreuse (#7FFF00)"
 msgstr "chartreuse (#7FFF00)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:778
 msgctxt "Palette"
 msgid "lawngreen (#7CFC00)"
 msgstr "grasgroen (#7CFC00)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:781
 msgctxt "Palette"
 msgid "darkseagreen (#8FBC8F)"
 msgstr "donkerzeegroen (#8FBC8F"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:784
 msgctxt "Palette"
 msgid "forestgreen (#228B22)"
 msgstr "bosgroen (#228B22)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:787
 msgctxt "Palette"
 msgid "limegreen (#32CD32)"
 msgstr "limoengroen (#32CD32)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:790
 msgctxt "Palette"
 msgid "lightgreen (#90EE90)"
 msgstr "lichtgroen (#90EE90)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:793
 msgctxt "Palette"
 msgid "palegreen (#98FB98)"
 msgstr "bleekgroen (#98FB98)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:796
 msgctxt "Palette"
 msgid "darkgreen (#006400)"
 msgstr "donkergroen (#006400)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:799
 msgctxt "Palette"
 msgid "green (#008000)"
 msgstr "groen (#008000)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:802
 msgctxt "Palette"
 msgid "lime (#00FF00)"
 msgstr "limoen (#00FF00)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:805
 msgctxt "Palette"
 msgid "honeydew (#F0FFF0)"
 msgstr "honingdauw (#F0FFF0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:808
 msgctxt "Palette"
 msgid "seagreen (#2E8B57)"
 msgstr "zeegroen (#2E8B57)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:811
 msgctxt "Palette"
 msgid "mediumseagreen (#3CB371)"
-msgstr "mediumzeegroen (#3CB371)"
+msgstr "middelzeegroen (#3CB371)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:814
 msgctxt "Palette"
 msgid "springgreen (#00FF7F)"
-msgstr ""
+msgstr "lentegroen (#00FF7F)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:817
 msgctxt "Palette"
 msgid "mintcream (#F5FFFA)"
-msgstr ""
+msgstr "muntcrème (#F5FFFA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:820
 msgctxt "Palette"
 msgid "mediumspringgreen (#00FA9A)"
-msgstr ""
+msgstr "middellentegroen (#00FA9A)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:823
 msgctxt "Palette"
 msgid "mediumaquamarine (#66CDAA)"
-msgstr "mediumaquamarijn (#66CDAA)"
+msgstr "middelaquamarijn (#66CDAA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:826
 msgctxt "Palette"
 msgid "aquamarine (#7FFFD4)"
 msgstr "aquamarijn (#7FFFD4)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:829
 msgctxt "Palette"
 msgid "turquoise (#40E0D0)"
-msgstr "turquoise (#40E0D0)"
+msgstr "turkoois (#40E0D0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:832
 msgctxt "Palette"
 msgid "lightseagreen (#20B2AA)"
 msgstr "lichtzeegroen (#20B2AA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:835
 msgctxt "Palette"
 msgid "mediumturquoise (#48D1CC)"
-msgstr "mediumturquoise (#48D1CC)"
+msgstr "middelturkoois (#48D1CC)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:838
 msgctxt "Palette"
 msgid "darkslategray (#2F4F4F)"
-msgstr ""
+msgstr "donkerleisteengrijs (#2F4F4F)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:841
 msgctxt "Palette"
 msgid "paleturquoise (#AFEEEE)"
-msgstr "bleekturquoise (#AFEEEE)"
+msgstr "bleekturkoois (#AFEEEE)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:844
 msgctxt "Palette"
 msgid "teal (#008080)"
-msgstr ""
+msgstr "middelblauwgroen (#008080)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:847
 msgctxt "Palette"
 msgid "darkcyan (#008B8B)"
 msgstr "donkercyaan (#008B8B)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:850
 msgctxt "Palette"
 msgid "cyan (#00FFFF)"
 msgstr "cyaan (#00FFFF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:853
 msgctxt "Palette"
 msgid "lightcyan (#E0FFFF)"
 msgstr "lichtcyaan (#E0FFFF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:856
 msgctxt "Palette"
 msgid "azure (#F0FFFF)"
 msgstr "azuurblauw (#F0FFFF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:859
 msgctxt "Palette"
 msgid "darkturquoise (#00CED1)"
-msgstr "donkerturquoise (#00CED1)"
+msgstr "donkerturkoois (#00CED1)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:862
 msgctxt "Palette"
 msgid "cadetblue (#5F9EA0)"
-msgstr ""
+msgstr "cadetblauw (#5F9EA0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:865
 msgctxt "Palette"
 msgid "powderblue (#B0E0E6)"
 msgstr "poederblaauw (#B0E0E6)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:868
 msgctxt "Palette"
 msgid "lightblue (#ADD8E6)"
 msgstr "lichtblauw (#ADD8E6)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:871
 msgctxt "Palette"
 msgid "deepskyblue (#00BFFF)"
-msgstr ""
+msgstr "diep hemelsblauw (#00BFFF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:874
 msgctxt "Palette"
 msgid "skyblue (#87CEEB)"
-msgstr ""
+msgstr "hemelsblauw (#87CEEB)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:877
 msgctxt "Palette"
 msgid "lightskyblue (#87CEFA)"
-msgstr ""
+msgstr "lichthemelsblauw (#87CEFA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:880
 msgctxt "Palette"
 msgid "steelblue (#4682B4)"
 msgstr "staalblauw (#4682B4)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:883
 msgctxt "Palette"
 msgid "aliceblue (#F0F8FF)"
-msgstr ""
+msgstr "aliceblauw (#F0F8FF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:886
 msgctxt "Palette"
 msgid "dodgerblue (#1E90FF)"
-msgstr ""
+msgstr "dodgerblue (#1E90FF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:889
 msgctxt "Palette"
 msgid "slategray (#708090)"
-msgstr ""
+msgstr "leisteengrijs (#708090)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:892
 msgctxt "Palette"
 msgid "lightslategray (#778899)"
-msgstr ""
+msgstr "lichtleisteengrijs (#778899)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:895
 msgctxt "Palette"
 msgid "lightsteelblue (#B0C4DE)"
 msgstr "lichtstaalblauw (#B0C4DE)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:898
 msgctxt "Palette"
 msgid "cornflowerblue (#6495ED)"
 msgstr "korenbloemblauw (#6495ED)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:901
 msgctxt "Palette"
 msgid "royalblue (#4169E1)"
 msgstr "konigsblauw (#4169E1)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:904
 msgctxt "Palette"
 msgid "midnightblue (#191970)"
 msgstr "middernachtblauw (#191970)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:907
 msgctxt "Palette"
 msgid "lavender (#E6E6FA)"
 msgstr "lavendel (#E6E6FA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:910
 msgctxt "Palette"
 msgid "navy (#000080)"
-msgstr ""
+msgstr "marineblauw (#000080)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:913
 msgctxt "Palette"
 msgid "darkblue (#00008B)"
 msgstr "donkerblauw (#00008B)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:916
 msgctxt "Palette"
 msgid "mediumblue (#0000CD)"
-msgstr "darkblauw (#00008B)"
+msgstr "middelblauw (#00008B)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:919
 msgctxt "Palette"
 msgid "blue (#0000FF)"
 msgstr "blauw (#0000FF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:922
 msgctxt "Palette"
 msgid "ghostwhite (#F8F8FF)"
-msgstr ""
+msgstr "spookwit (#F8F8FF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:925
 msgctxt "Palette"
 msgid "slateblue (#6A5ACD)"
-msgstr ""
+msgstr "leisteenblauw (#6A5ACD)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:928
 msgctxt "Palette"
 msgid "darkslateblue (#483D8B)"
-msgstr ""
+msgstr "donkerleisteenblauw (#483D8B)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:931
 msgctxt "Palette"
 msgid "mediumslateblue (#7B68EE)"
-msgstr ""
+msgstr "middelleisteenblauw (#7B68EE)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:934
 msgctxt "Palette"
 msgid "mediumpurple (#9370DB)"
-msgstr ""
+msgstr "middelpurper (#9370DB)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:937
 msgctxt "Palette"
 msgid "blueviolet (#8A2BE2)"
-msgstr ""
+msgstr "blauwviolet (#8A2BE2)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:940
 msgctxt "Palette"
 msgid "indigo (#4B0082)"
 msgstr "indigo (#4B0082)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:943
 msgctxt "Palette"
 msgid "darkorchid (#9932CC)"
-msgstr ""
+msgstr "donkerorchidee (#9932CC)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:946
 msgctxt "Palette"
 msgid "darkviolet (#9400D3)"
 msgstr "donkerviolet (#9400D3)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:949
 msgctxt "Palette"
 msgid "mediumorchid (#BA55D3)"
-msgstr ""
+msgstr "middelorchidee (#BA55D3)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:952
 msgctxt "Palette"
 msgid "thistle (#D8BFD8)"
-msgstr ""
+msgstr "distel (#D8BFD8)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:955
 msgctxt "Palette"
 msgid "plum (#DDA0DD)"
-msgstr ""
+msgstr "pruim (#DDA0DD)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:958
 msgctxt "Palette"
 msgid "violet (#EE82EE)"
 msgstr "violet (#EE82EE)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:961
 msgctxt "Palette"
 msgid "purple (#800080)"
 msgstr "purper (#800080)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:964
 msgctxt "Palette"
 msgid "darkmagenta (#8B008B)"
-msgstr ""
+msgstr "donkermagenta (#8B008B)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:967
 msgctxt "Palette"
 msgid "magenta (#FF00FF)"
 msgstr "magenta (#FF00FF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:970
 msgctxt "Palette"
 msgid "orchid (#DA70D6)"
 msgstr "orchidee (#DA70D6)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:973
 msgctxt "Palette"
 msgid "mediumvioletred (#C71585)"
 msgstr "mediumvioletrood (#C71585)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:976
 msgctxt "Palette"
 msgid "deeppink (#FF1493)"
 msgstr "dieproze (#FF1493)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:979
 msgctxt "Palette"
 msgid "hotpink (#FF69B4)"
 msgstr "warmroze (#FF69B4)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:982
 msgctxt "Palette"
 msgid "lavenderblush (#FFF0F5)"
-msgstr ""
+msgstr "lavendelblos (#FFF0F5)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:985
 msgctxt "Palette"
 msgid "palevioletred (#DB7093)"
 msgstr "bleekvioletrood (#DB7093)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:988
 msgctxt "Palette"
 msgid "crimson (#DC143C)"
-msgstr ""
+msgstr "karmozijnrood (#DC143C)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:991
 msgctxt "Palette"
 msgid "pink (#FFC0CB)"
 msgstr "roze (#FFC0CB)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:994
 msgctxt "Palette"
 msgid "lightpink (#FFB6C1)"
 msgstr "lichtroze (#FFB6C1)"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:997
 msgctxt "Palette"
 msgid "Butter 1"
 msgstr "Boter 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1000
 msgctxt "Palette"
 msgid "Butter 2"
 msgstr "Boter 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1003
 msgctxt "Palette"
 msgid "Butter 3"
 msgstr "Boter 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1006
 msgctxt "Palette"
 msgid "Chameleon 1"
 msgstr "Kameleon 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1009
 msgctxt "Palette"
 msgid "Chameleon 2"
 msgstr "Kameleon 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1012
 msgctxt "Palette"
 msgid "Chameleon 3"
 msgstr "Kameleon 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1015
 msgctxt "Palette"
 msgid "Orange 1"
 msgstr "Oranje 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1018
 msgctxt "Palette"
 msgid "Orange 2"
 msgstr "Oranje 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1021
 msgctxt "Palette"
 msgid "Orange 3"
 msgstr "Oranje 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1024
 msgctxt "Palette"
 msgid "Sky Blue 1"
-msgstr ""
+msgstr "Hemelsblauw 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1027
 msgctxt "Palette"
 msgid "Sky Blue 2"
-msgstr ""
+msgstr "Hemelsblauw 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1030
 msgctxt "Palette"
 msgid "Sky Blue 3"
-msgstr ""
+msgstr "Hemelsblauw 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1033
 msgctxt "Palette"
 msgid "Plum 1"
-msgstr ""
+msgstr "Pruim 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1036
 msgctxt "Palette"
 msgid "Plum 2"
-msgstr ""
+msgstr "Pruim 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1039
 msgctxt "Palette"
 msgid "Plum 3"
-msgstr ""
+msgstr "Pruim 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1042
 msgctxt "Palette"
 msgid "Chocolate 1"
 msgstr "Chocolade 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1045
 msgctxt "Palette"
 msgid "Chocolate 2"
 msgstr "Chocolade 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1048
 msgctxt "Palette"
 msgid "Chocolate 3"
 msgstr "Chocolade 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1051
 msgctxt "Palette"
 msgid "Scarlet Red 1"
 msgstr "Scharlakenrood 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1054
 msgctxt "Palette"
 msgid "Scarlet Red 2"
 msgstr "Scharlakenrood 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1057
 msgctxt "Palette"
 msgid "Scarlet Red 3"
 msgstr "Scharlakenrood 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1060
 msgctxt "Palette"
 msgid "Aluminium 1"
 msgstr "Aluminium 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1063
 msgctxt "Palette"
 msgid "Aluminium 2"
 msgstr "Aluminium 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1066
 msgctxt "Palette"
 msgid "Aluminium 3"
 msgstr "Aluminium 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1069
 msgctxt "Palette"
 msgid "Aluminium 4"
 msgstr "Aluminium 4"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1072
 msgctxt "Palette"
 msgid "Aluminium 5"
 msgstr "Aluminium 5"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:1075
 msgctxt "Palette"
 msgid "Aluminium 6"
 msgstr "Aluminium 6"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1078
 msgctxt "Palette"
 msgid "Orange Hilight"
-msgstr ""
+msgstr "Oranje melding"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1081
 msgctxt "Palette"
 msgid "Orange"
 msgstr "Oranje"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1084
 msgctxt "Palette"
 msgid "Orange Base"
-msgstr ""
+msgstr "Basis oranje"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1087
 msgctxt "Palette"
 msgid "Orange Shadow"
-msgstr ""
+msgstr "Schaduw oranje"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1090
 msgctxt "Palette"
 msgid "Accent Yellow Highlight"
-msgstr ""
+msgstr "Melding geel accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1093
 msgctxt "Palette"
 msgid "Yellow"
 msgstr "Geel"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1096
 msgctxt "Palette"
 msgid "Accent Yellow Base"
-msgstr ""
+msgstr "Basis geel accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1099
 msgctxt "Palette"
 msgid "Accent Yellow Shadow"
-msgstr ""
+msgstr "Schaduw geel accent"
 
-# Is hier een specifieke term voor? -> Het gaat om de driehoek IaIbIc in http://nl.wikipedia.org/wiki/Aangeschreven_cirkel
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1102
 msgctxt "Palette"
 msgid "Accent Orange"
-msgstr ""
+msgstr "Oranje accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1105
 msgctxt "Palette"
 msgid "Accent Red"
-msgstr ""
+msgstr "Rood accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1108
 msgctxt "Palette"
 msgid "Accent Red Base"
-msgstr ""
+msgstr "Basis rood accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1111
 msgctxt "Palette"
 msgid "Accent Deep Red"
-msgstr ""
+msgstr "Dieprood accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1114
 msgctxt "Palette"
 msgid "Human Highlight"
-msgstr ""
+msgstr "Melding mens"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1117
 msgctxt "Palette"
 msgid "Human"
-msgstr ""
+msgstr "Mens"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1120
 msgctxt "Palette"
 msgid "Human Base"
-msgstr ""
+msgstr "Basis mens"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1123
 msgctxt "Palette"
 msgid "Environmental Shadow"
-msgstr ""
+msgstr "Schaduw omgeving"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1126
 msgctxt "Palette"
 msgid "Environmental Blue Highlight"
-msgstr ""
+msgstr "Melding omgeving blauw"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1129
 msgctxt "Palette"
 msgid "Environmental Blue Medium"
-msgstr ""
+msgstr "Omgeving middelblauw"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1132
 msgctxt "Palette"
 msgid "Environmental Blue Base"
-msgstr ""
+msgstr "Basis omgeving blauw"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1135
 msgctxt "Palette"
 msgid "Environmental Blue Shadow"
-msgstr ""
+msgstr "Schaduw omgeving blauw"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1138
 #: ../share/palettes/palettes.h:1147
 msgctxt "Palette"
 msgid "Accent Blue Shadow"
-msgstr ""
+msgstr "Schaduw blauw accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1141
 msgctxt "Palette"
 msgid "Accent Blue"
-msgstr ""
+msgstr "Blauw accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1144
 msgctxt "Palette"
 msgid "Accent Blue Base"
-msgstr ""
+msgstr "Basis blauw accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1150
 msgctxt "Palette"
 msgid "Accent Green Highlight"
-msgstr ""
+msgstr "Melding groen accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1153
 msgctxt "Palette"
 msgid "Accent Green"
-msgstr ""
+msgstr "Groen accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1156
 msgctxt "Palette"
 msgid "Accent Green Base"
-msgstr ""
+msgstr "Basis groen accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1159
 msgctxt "Palette"
 msgid "Accent Green Shadow"
-msgstr ""
+msgstr "Schaduw groen accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1162
 msgctxt "Palette"
 msgid "Ubuntu Toner"
-msgstr ""
+msgstr "Ubuntu Toner"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1165
 msgctxt "Palette"
 msgid "Accent Magenta Highlight"
-msgstr ""
+msgstr "Melding magenta accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1168
 msgctxt "Palette"
 msgid "Accent Magenta"
-msgstr ""
+msgstr "Magenta accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1171
 msgctxt "Palette"
 msgid "Accent Dark Violet"
-msgstr ""
+msgstr "Donkerviolet accent"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1174
 msgctxt "Palette"
 msgid "Grey 1"
 msgstr "Grijs 1"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1177
 msgctxt "Palette"
 msgid "Grey 2"
 msgstr "Grijs 2"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1180
 msgctxt "Palette"
 msgid "Grey 3"
 msgstr "Grijs 3"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1183
 msgctxt "Palette"
 msgid "Grey 4"
 msgstr "Grijs 4"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1186
 msgctxt "Palette"
 msgid "Grey 5"
 msgstr "Grijs 5"
 
-#. Palette: Ubuntu.gpl
+#. Palette: ./Ubuntu.gpl
 #: ../share/palettes/palettes.h:1189
 msgctxt "Palette"
 msgid "Grey 6"
@@ -9098,12 +9094,12 @@ msgid "Select <b>at least one non-connector object</b>."
 msgstr "Selecteer <b>minstens één object</b> dat geen verbindingsobject is."
 
 #: ../src/connector-context.cpp:1969
-#: ../src/widgets/toolbox.cpp:8147
+#: ../src/widgets/toolbox.cpp:8143
 msgid "Make connectors avoid selected objects"
 msgstr "Ervoor zorgen dat verbindingen geselecteerde objecten ontwijken"
 
 #: ../src/connector-context.cpp:1970
-#: ../src/widgets/toolbox.cpp:8157
+#: ../src/widgets/toolbox.cpp:8153
 msgid "Make connectors ignore selected objects"
 msgstr "Ervoor zorgen dat verbindingen geselecteerde objecten negeren"
 
@@ -9178,7 +9174,7 @@ msgid "Delete tiled clones"
 msgstr "Verwijder getegelde klonen"
 
 #: ../src/dialogs/clonetiler.cpp:1087
-#: ../src/selection-chemistry.cpp:2021
+#: ../src/selection-chemistry.cpp:2030
 msgid "Select an <b>object</b> to clone."
 msgstr "Selecteer een <b>object</b> om te klonen."
 
@@ -10942,12 +10938,12 @@ msgid "Bounding box side midpoint"
 msgstr "Midden rand omvattend vak"
 
 #: ../src/display/snap-indicator.cpp:176
-#: ../src/ui/tool/node.cpp:1178
+#: ../src/ui/tool/node.cpp:1192
 msgid "Smooth node"
 msgstr "Afgevlakt knooppunt"
 
 #: ../src/display/snap-indicator.cpp:179
-#: ../src/ui/tool/node.cpp:1177
+#: ../src/ui/tool/node.cpp:1191
 msgid "Cusp node"
 msgstr "Hoekig knooppunt"
 
@@ -11023,24 +11019,24 @@ msgid "Unnamed document %d"
 msgstr "Naamloos document %d"
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/draw-context.cpp:578
+#: ../src/draw-context.cpp:560
 msgid "Path is closed."
 msgstr "Het pad is gesloten."
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/draw-context.cpp:593
+#: ../src/draw-context.cpp:575
 msgid "Closing path."
 msgstr "Het pad wordt gesloten."
 
-#: ../src/draw-context.cpp:703
+#: ../src/draw-context.cpp:685
 msgid "Draw path"
 msgstr "Pad tekenen"
 
-#: ../src/draw-context.cpp:863
+#: ../src/draw-context.cpp:845
 msgid "Creating single dot"
 msgstr "Maken van één stip"
 
-#: ../src/draw-context.cpp:864
+#: ../src/draw-context.cpp:846
 msgid "Create single dot"
 msgstr "Enkele stip maken"
 
@@ -11104,7 +11100,7 @@ msgstr "Kalligrafische lijn tekenen"
 msgid "<b>Drawing</b> an eraser stroke"
 msgstr "<b>Wissen</b> met de gom"
 
-#: ../src/eraser-context.cpp:830
+#: ../src/eraser-context.cpp:833
 msgid "Draw eraser stroke"
 msgstr "Wissen met de gom"
 
@@ -11208,32 +11204,32 @@ msgstr "Uitbreiding \""
 msgid "\" failed to load because "
 msgstr "\" kon niet worden geladen omdat "
 
-#: ../src/extension/extension.cpp:642
+#: ../src/extension/extension.cpp:640
 #, c-format
 msgid "Could not create extension error log file '%s'"
 msgstr "Het fouten-logboekbestand '%s' voor uitbreidingen kon niet worden aangemaakt"
 
-#: ../src/extension/extension.cpp:741
+#: ../src/extension/extension.cpp:739
 msgid "ID:"
 msgstr "ID:"
 
-#: ../src/extension/extension.cpp:742
+#: ../src/extension/extension.cpp:740
 msgid "State:"
 msgstr "Status:"
 
-#: ../src/extension/extension.cpp:742
+#: ../src/extension/extension.cpp:740
 msgid "Loaded"
 msgstr "Geladen"
 
-#: ../src/extension/extension.cpp:742
+#: ../src/extension/extension.cpp:740
 msgid "Unloaded"
 msgstr "Niet-geladen"
 
-#: ../src/extension/extension.cpp:742
+#: ../src/extension/extension.cpp:740
 msgid "Deactivated"
 msgstr "Uitgeschakeld"
 
-#: ../src/extension/extension.cpp:773
+#: ../src/extension/extension.cpp:771
 msgid "Currently there is no help available for this Extension.  Please look on the Inkscape website or ask on the mailing lists if you have questions regarding this extension."
 msgstr "Er is momenteel geen help beschikbaar voor deze uitbreiding. Kijk aub. op de Inkscape website of vraag op de mailinglijsten indien je vragen hebt over deze uitbreiding."
 
@@ -11701,7 +11697,7 @@ msgstr "Drempelwaarde"
 #: ../src/ui/dialog/tracedialog.cpp:420
 #: ../src/ui/dialog/tracedialog.cpp:453
 #: ../src/ui/dialog/tracedialog.cpp:596
-#: ../src/widgets/toolbox.cpp:8386
+#: ../src/widgets/toolbox.cpp:8382
 msgid "Threshold:"
 msgstr "Grenswaarde:"
 
@@ -11922,6 +11918,10 @@ msgstr "Witte, vage vallende gloed"
 #: ../src/extension/internal/filter/drop-shadow.h:155
 msgid "Drop shadow, color -EXP-"
 msgstr "Slagschaduw, gekleurd -EXP-"
+
+#: ../src/extension/internal/filter/drop-shadow.h:165
+msgid "Experimental"
+msgstr "Experimenteel"
 
 #: ../src/extension/internal/filter/drop-shadow.h:168
 msgid "Colorizable Drop shadow"
@@ -12580,7 +12580,7 @@ msgid "Gamma"
 msgstr "Gamma"
 
 #: ../src/filter-enums.cpp:92
-#: ../src/selection-chemistry.cpp:425
+#: ../src/selection-chemistry.cpp:434
 #: ../src/widgets/gradient-selector.cpp:142
 msgid "Duplicate"
 msgstr "Dupliceren"
@@ -12838,55 +12838,55 @@ msgstr[1] "<b>Kleurverloop</b> voor %d objecten; gebruik <b>Ctrl</b> om in stapp
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "Selecteer <b>objecten</b> om een kleurverloop voor te maken."
 
-#: ../src/gradient-drag.cpp:642
+#: ../src/gradient-drag.cpp:626
 msgid "Merge gradient handles"
 msgstr "Kleurverloophandvatten samenvoegen"
 
-#: ../src/gradient-drag.cpp:945
+#: ../src/gradient-drag.cpp:931
 msgid "Move gradient handle"
 msgstr "Kleurverloophandvat verplaatsen"
 
-#: ../src/gradient-drag.cpp:998
+#: ../src/gradient-drag.cpp:984
 #: ../src/widgets/gradient-vector.cpp:768
 msgid "Delete gradient stop"
 msgstr "Kleurverloopovergang verwijderen"
 
-#: ../src/gradient-drag.cpp:1162
+#: ../src/gradient-drag.cpp:1148
 #, c-format
 msgid "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl+Alt</b> to delete stop"
 msgstr "%s %d voor: %s%s; sleep met <b>Ctrl</b> om aan randen te kleven; klik met <b>Ctrl+Alt</b> om overgang te verwijderen"
 
-#: ../src/gradient-drag.cpp:1166
-#: ../src/gradient-drag.cpp:1173
+#: ../src/gradient-drag.cpp:1152
+#: ../src/gradient-drag.cpp:1159
 msgid " (stroke)"
 msgstr " (lijn)"
 
-#: ../src/gradient-drag.cpp:1170
+#: ../src/gradient-drag.cpp:1156
 #, c-format
 msgid "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to preserve angle, with <b>Ctrl+Shift</b> to scale around center"
 msgstr "%s voor: %s%s; <b>Ctrl</b> draait in stappen, <b>Ctrl+Alt</b> behoudt de hoek, <b>Ctrl+Shift</b> vergroot rondom het centrum"
 
-#: ../src/gradient-drag.cpp:1178
+#: ../src/gradient-drag.cpp:1164
 #, c-format
 msgid "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to separate focus"
 msgstr "Het <b>centrum</b> en het <b>brandpunt</b> van het radiale kleurverloop; sleep met <b>Shift</b> om het brandpunt los te koppelen"
 
-#: ../src/gradient-drag.cpp:1181
+#: ../src/gradient-drag.cpp:1167
 #, c-format
 msgid "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to separate"
 msgid_plural "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to separate"
 msgstr[0] "Kleurverlooppunt gedeeld met <b>%d</b> kleurverloop; sleep met <b>Shift</b> om te scheiden"
 msgstr[1] "Kleurverlooppunt gedeeld met <b>%d</b> kleurverlopen; sleep met <b>Shift</b> om te scheiden"
 
-#: ../src/gradient-drag.cpp:1881
+#: ../src/gradient-drag.cpp:1867
 msgid "Move gradient handle(s)"
 msgstr "Kleurverloophandvat(ten) verplaatsen"
 
-#: ../src/gradient-drag.cpp:1917
+#: ../src/gradient-drag.cpp:1903
 msgid "Move gradient mid stop(s)"
 msgstr "Kleurverloopovergang(en) verplaatsen"
 
-#: ../src/gradient-drag.cpp:2205
+#: ../src/gradient-drag.cpp:2191
 msgid "Delete gradient stop(s)"
 msgstr "Kleurverloopovergang(en) verwijderen"
 
@@ -12901,7 +12901,7 @@ msgstr "Eenheid"
 #: ../src/widgets/toolbox.cpp:1574
 #: ../src/widgets/toolbox.cpp:3314
 #: ../src/widgets/toolbox.cpp:6038
-#: ../src/widgets/toolbox.cpp:8405
+#: ../src/widgets/toolbox.cpp:8401
 msgid "Units"
 msgstr "Eenheden"
 
@@ -13075,135 +13075,135 @@ msgstr "Auto-opslaan mislukt! Bestand %s kon niet bewaard worden."
 msgid "Autosave complete."
 msgstr "Auto-opslaan afgelopen."
 
-#: ../src/inkscape.cpp:661
+#: ../src/inkscape.cpp:670
 msgid "Untitled document"
 msgstr "Naamloos document"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:693
+#: ../src/inkscape.cpp:702
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Er is een interne fout opgetreden in Inkscape.  Het programma wordt afgesloten.\n"
 
-#: ../src/inkscape.cpp:694
+#: ../src/inkscape.cpp:703
 msgid "Automatic backups of unsaved documents were done to the following locations:\n"
 msgstr "Automatische reservekopieën van niet-opgeslagen documenten werden gemaakt op de volgende locaties:\n"
 
-#: ../src/inkscape.cpp:695
+#: ../src/inkscape.cpp:704
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Het automatisch maken van een reservekopie is mislukt voor de volgende bestanden:\n"
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:811
+#: ../src/interface.cpp:816
 msgid "Commands Bar"
 msgstr "_Opdrachtenbalk"
 
-#: ../src/interface.cpp:811
+#: ../src/interface.cpp:816
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Opdrachtenbalk weergeven of verbergen (onder de menubalk)"
 
 # Misschien is "Eigenschappenbalk" beter?
-#: ../src/interface.cpp:813
+#: ../src/interface.cpp:818
 msgid "Snap Controls Bar"
 msgstr "Gereedschappenbalk kleven"
 
-#: ../src/interface.cpp:813
+#: ../src/interface.cpp:818
 msgid "Show or hide the snapping controls"
 msgstr "Balk met kleefinstellingen weergeven of verbergen"
 
 # Misschien is "Eigenschappenbalk" beter?
-#: ../src/interface.cpp:815
+#: ../src/interface.cpp:820
 msgid "Tool Controls Bar"
 msgstr "Gereedschaps_details"
 
-#: ../src/interface.cpp:815
+#: ../src/interface.cpp:820
 msgid "Show or hide the Tool Controls bar"
 msgstr "Gereedschapsdetailsbalk weergeven of verbergen"
 
-#: ../src/interface.cpp:817
+#: ../src/interface.cpp:822
 msgid "_Toolbox"
 msgstr "_Gereedschappen"
 
-#: ../src/interface.cpp:817
+#: ../src/interface.cpp:822
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "Gereedschappenbalk weergeven of verbergen (aan de linkerzijde)"
 
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:828
 msgid "_Palette"
 msgstr "_Palet"
 
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:828
 msgid "Show or hide the color palette"
 msgstr "Paletbalk weergeven of verbergen (onderaan)"
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:830
 msgid "_Statusbar"
 msgstr "_Statusbalk"
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:830
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Statusbalk weergeven of verbergen (onderaan)"
 
-#: ../src/interface.cpp:833
+#: ../src/interface.cpp:838
 msgid "Default interface setup"
 msgstr "Standaard interface setup"
 
-#: ../src/interface.cpp:834
+#: ../src/interface.cpp:839
 msgid "Set the custom task"
 msgstr "Aangepaste taak instellen"
 
-#: ../src/interface.cpp:835
+#: ../src/interface.cpp:840
 msgid "Wide"
 msgstr "Breedbeeld"
 
-#: ../src/interface.cpp:835
+#: ../src/interface.cpp:840
 msgid "Setup for widescreen work"
 msgstr "Setup voor breedbeeldwerk"
 
-#: ../src/interface.cpp:932
+#: ../src/interface.cpp:937
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "Werkwoord \"%s\" is onbekend"
 
-#: ../src/interface.cpp:974
+#: ../src/interface.cpp:979
 msgid "Open _Recent"
 msgstr "_Recente bestanden"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1079
+#: ../src/interface.cpp:1084
 #, c-format
 msgid "Enter group #%s"
 msgstr "Groep #%s binnengaan"
 
-#: ../src/interface.cpp:1090
+#: ../src/interface.cpp:1095
 msgid "Go to parent"
 msgstr "Naar de ouder gaan"
 
-#: ../src/interface.cpp:1181
-#: ../src/interface.cpp:1267
-#: ../src/interface.cpp:1370
+#: ../src/interface.cpp:1186
+#: ../src/interface.cpp:1272
+#: ../src/interface.cpp:1375
 #: ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr "Kleur plakken"
 
-#: ../src/interface.cpp:1220
-#: ../src/interface.cpp:1330
+#: ../src/interface.cpp:1225
+#: ../src/interface.cpp:1335
 msgid "Drop color on gradient"
 msgstr "Kleur plakken op kleurverloop"
 
-#: ../src/interface.cpp:1383
+#: ../src/interface.cpp:1388
 msgid "Could not parse SVG data"
 msgstr "De SVG-gegevens konden niet worden verwerkt."
 
-#: ../src/interface.cpp:1422
+#: ../src/interface.cpp:1427
 msgid "Drop SVG"
 msgstr "SVG plakken"
 
-#: ../src/interface.cpp:1456
+#: ../src/interface.cpp:1461
 msgid "Drop bitmap image"
 msgstr "Bitmap plakken"
 
-#: ../src/interface.cpp:1548
+#: ../src/interface.cpp:1553
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do you want to replace it?</span>\n"
@@ -14051,7 +14051,7 @@ msgid "Scale the width of the pattern in units of its length"
 msgstr "De breedte van het patroon in eenheden van zijn lengte"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:68
-#: ../src/widgets/toolbox.cpp:8193
+#: ../src/widgets/toolbox.cpp:8189
 msgid "Spacing:"
 msgstr "Afstand:"
 
@@ -14874,74 +14874,74 @@ msgstr "_Help"
 msgid "Tutorials"
 msgstr "_Handleidingen"
 
-#: ../src/object-edit.cpp:439
+#: ../src/object-edit.cpp:438
 msgid "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the vertical radius the same"
 msgstr "De straal van de <b>horizontale afronding</b> van hoeken instellen; gebruik <b>Ctrl</b> om de verticale straal gelijk te maken"
 
-#: ../src/object-edit.cpp:443
+#: ../src/object-edit.cpp:442
 msgid "Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the horizontal radius the same"
 msgstr "De straal van de <b>verticale afronding</b> van hoeken instellen; gebruik <b>Ctrl</b> om de horizontale straal gelijk te maken"
 
-#: ../src/object-edit.cpp:447
-#: ../src/object-edit.cpp:451
+#: ../src/object-edit.cpp:446
+#: ../src/object-edit.cpp:450
 msgid "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to lock ratio or stretch in one dimension only"
 msgstr "De <b>hoogte en breedte</b> van de rechthoek aanpassen; gebruik <b>Ctrl</b> om de verhouding te vergrendelen of om in één dimensie te schalen"
 
-#: ../src/object-edit.cpp:685
-#: ../src/object-edit.cpp:688
-#: ../src/object-edit.cpp:691
-#: ../src/object-edit.cpp:694
+#: ../src/object-edit.cpp:684
+#: ../src/object-edit.cpp:687
+#: ../src/object-edit.cpp:690
+#: ../src/object-edit.cpp:693
 msgid "Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"
 msgstr "Verander kubus grootte in X/Y-richting; met <b>Shift</b> over de Z-as; met <b>Ctrl</b> om de richting van randen en diagonalen vast te zetten."
 
-#: ../src/object-edit.cpp:697
-#: ../src/object-edit.cpp:700
-#: ../src/object-edit.cpp:703
-#: ../src/object-edit.cpp:706
+#: ../src/object-edit.cpp:696
+#: ../src/object-edit.cpp:699
+#: ../src/object-edit.cpp:702
+#: ../src/object-edit.cpp:705
 msgid "Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"
 msgstr "Verander grootte van kubus over de Z-as; met <b>Shift</b> in X/Y-richting; met <b>Ctrl</b> om de richting van randen of diagonalen vast te zetten"
 
-#: ../src/object-edit.cpp:709
+#: ../src/object-edit.cpp:708
 msgid "Move the box in perspective"
 msgstr "De kubus in perspectief verplaatsen"
 
-#: ../src/object-edit.cpp:927
+#: ../src/object-edit.cpp:926
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
 msgstr "De <b>breedte</b> van de ellips aanpassen; gebruik <b>Ctrl</b> om een cirkel te maken"
 
-#: ../src/object-edit.cpp:930
+#: ../src/object-edit.cpp:929
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr "De <b>hoogte</b> van de ellips aanpassen; gebruik <b>Ctrl</b> om een cirkel te maken"
 
-#: ../src/object-edit.cpp:933
+#: ../src/object-edit.cpp:932
 msgid "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
 msgstr "Positioneer het <b>beginpunt</b> van boog of segment; <b>Ctrl</b> om te draaien in stappen; sleep <b>binnen</b> de ellips voor een boog, <b>erbuiten</b> voor een segment"
 
-#: ../src/object-edit.cpp:937
+#: ../src/object-edit.cpp:936
 msgid "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
 msgstr "Positioneer het <b>eindpunt</b> van boog of segment; <b>Ctrl</b> om te draaien in stappen; sleep <b>binnen</b> de ellips voor een boog, <b>erbuiten</b> voor een segment"
 
-#: ../src/object-edit.cpp:1076
+#: ../src/object-edit.cpp:1075
 msgid "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to round; with <b>Alt</b> to randomize"
 msgstr "De <b>puntstraal</b> van ster of veelhoek aanpassen: <b>Shift</b> om af te ronden; <b>Alt</b> voor willekeur"
 
-#: ../src/object-edit.cpp:1083
+#: ../src/object-edit.cpp:1082
 msgid "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to randomize"
 msgstr "De <b>binnenstraal</b> van ster of veelhoek aanpassen: <b>Ctrl</b> om de punten radiaal te houden; <b>Shift</b> om af te ronden; <b>Alt</b> voor willekeur"
 
-#: ../src/object-edit.cpp:1272
+#: ../src/object-edit.cpp:1271
 msgid "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to converge/diverge"
 msgstr "De spiraal op- of afrollen langs de <b>binnenkant</b>; <b>Ctrl</b> om te draaien in stappen; <b>Alt</b> om te convergeren/uit te waaieren"
 
-#: ../src/object-edit.cpp:1275
+#: ../src/object-edit.cpp:1274
 msgid "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to scale/rotate"
 msgstr "De spiraal op- of afrollen langs de <b>buitenkant</b>; <b>Ctrl</b> om te draaien in stappen; <b>Shift</b> om te schalen/draaien"
 
-#: ../src/object-edit.cpp:1319
+#: ../src/object-edit.cpp:1318
 msgid "Adjust the <b>offset distance</b>"
 msgstr "De <b>afstand voor verplaatsen</b> aanpassen"
 
-#: ../src/object-edit.cpp:1355
+#: ../src/object-edit.cpp:1354
 msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr "Sleep om het <b>kader van de ingekaderde tekst</b> te schalen"
 
@@ -15427,332 +15427,332 @@ msgstr "Verwijderen"
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Selecteer (een) <b>object(en)</b> om te dupliceren."
 
-#: ../src/selection-chemistry.cpp:450
+#: ../src/selection-chemistry.cpp:459
 msgid "Delete all"
 msgstr "Alles verwijderen"
 
-#: ../src/selection-chemistry.cpp:636
+#: ../src/selection-chemistry.cpp:645
 msgid "Select <b>some objects</b> to group."
 msgstr "Selecteer <b>twee objecten of meer objecten</b> om te groeperen."
 
-#: ../src/selection-chemistry.cpp:651
+#: ../src/selection-chemistry.cpp:660
 #: ../src/selection-describer.cpp:51
 msgid "Group"
 msgstr "Groeperen"
 
-#: ../src/selection-chemistry.cpp:665
+#: ../src/selection-chemistry.cpp:674
 msgid "Select a <b>group</b> to ungroup."
 msgstr "Selecteer een <b>groep</b> om op te heffen"
 
-#: ../src/selection-chemistry.cpp:706
+#: ../src/selection-chemistry.cpp:715
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "<b>Geen groepen geselecteerd</b> om op te heffen."
 
-#: ../src/selection-chemistry.cpp:712
+#: ../src/selection-chemistry.cpp:721
 #: ../src/sp-item-group.cpp:500
 msgid "Ungroup"
 msgstr "Groep opheffen"
 
-#: ../src/selection-chemistry.cpp:802
+#: ../src/selection-chemistry.cpp:811
 msgid "Select <b>object(s)</b> to raise."
 msgstr "Selecteer <b>object(en)</b> om naar boven te brengen."
 
-#: ../src/selection-chemistry.cpp:808
-#: ../src/selection-chemistry.cpp:868
-#: ../src/selection-chemistry.cpp:902
-#: ../src/selection-chemistry.cpp:966
+#: ../src/selection-chemistry.cpp:817
+#: ../src/selection-chemistry.cpp:877
+#: ../src/selection-chemistry.cpp:911
+#: ../src/selection-chemistry.cpp:975
 msgid "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr "U kunt geen object uit <b>verschillende groepen</b> of <b>lagen</b> naar boven brengen of naar onder sturen."
 
 #. TRANSLATORS: "Raise" means "to raise an object" in the undo history
-#: ../src/selection-chemistry.cpp:848
+#: ../src/selection-chemistry.cpp:857
 msgctxt "Undo action"
 msgid "Raise"
 msgstr "Verhogen"
 
-#: ../src/selection-chemistry.cpp:860
+#: ../src/selection-chemistry.cpp:869
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Selecteer <b>objecten</b> die u helemaal naar boven wilt brengen."
 
-#: ../src/selection-chemistry.cpp:883
+#: ../src/selection-chemistry.cpp:892
 msgid "Raise to top"
 msgstr "Bovenaan"
 
-#: ../src/selection-chemistry.cpp:896
+#: ../src/selection-chemistry.cpp:905
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Selecteer <b>objecten</b> die u naar onderen wilt brengen."
 
-#: ../src/selection-chemistry.cpp:946
+#: ../src/selection-chemistry.cpp:955
 msgid "Lower"
 msgstr "Omlaag"
 
-#: ../src/selection-chemistry.cpp:958
+#: ../src/selection-chemistry.cpp:967
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Selecteer <b>objecten</b> die u naar helemaal naar onderen wilt sturen."
 
-#: ../src/selection-chemistry.cpp:993
+#: ../src/selection-chemistry.cpp:1002
 msgid "Lower to bottom"
 msgstr "Onderaan"
 
-#: ../src/selection-chemistry.cpp:1000
+#: ../src/selection-chemistry.cpp:1009
 msgid "Nothing to undo."
 msgstr "Er is niets om ongedaan te maken."
 
-#: ../src/selection-chemistry.cpp:1007
+#: ../src/selection-chemistry.cpp:1016
 msgid "Nothing to redo."
 msgstr "Er is niets om opnieuw te doen."
 
-#: ../src/selection-chemistry.cpp:1067
+#: ../src/selection-chemistry.cpp:1076
 msgid "Paste"
 msgstr "Plakken"
 
-#: ../src/selection-chemistry.cpp:1075
+#: ../src/selection-chemistry.cpp:1084
 msgid "Paste style"
 msgstr "Stijl plakken"
 
-#: ../src/selection-chemistry.cpp:1085
+#: ../src/selection-chemistry.cpp:1094
 msgid "Paste live path effect"
 msgstr "Padeffect plakken"
 
-#: ../src/selection-chemistry.cpp:1106
+#: ../src/selection-chemistry.cpp:1115
 msgid "Select <b>object(s)</b> to remove live path effects from."
 msgstr "Selecteer <b>object(en)</b> om padeffect van te verwijderen."
 
-#: ../src/selection-chemistry.cpp:1118
+#: ../src/selection-chemistry.cpp:1127
 msgid "Remove live path effect"
 msgstr "Padeffect verwijderen"
 
-#: ../src/selection-chemistry.cpp:1129
+#: ../src/selection-chemistry.cpp:1138
 msgid "Select <b>object(s)</b> to remove filters from."
 msgstr "Selecteer <b>object(en)</b> om filters van te verwijderen."
 
-#: ../src/selection-chemistry.cpp:1139
+#: ../src/selection-chemistry.cpp:1148
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1340
 msgid "Remove filter"
 msgstr "Verwijder filter"
 
-#: ../src/selection-chemistry.cpp:1148
+#: ../src/selection-chemistry.cpp:1157
 msgid "Paste size"
 msgstr "Grootte plakken"
 
-#: ../src/selection-chemistry.cpp:1157
+#: ../src/selection-chemistry.cpp:1166
 msgid "Paste size separately"
 msgstr "Grootte apart plakken"
 
-#: ../src/selection-chemistry.cpp:1167
+#: ../src/selection-chemistry.cpp:1176
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Selecteer <b>objecten</b> om naar de bovenliggende laag te verplaatsen."
 
-#: ../src/selection-chemistry.cpp:1193
+#: ../src/selection-chemistry.cpp:1202
 msgid "Raise to next layer"
 msgstr "Verhoog naar de volgende laag"
 
-#: ../src/selection-chemistry.cpp:1200
+#: ../src/selection-chemistry.cpp:1209
 msgid "No more layers above."
 msgstr "Er zijn geen bovenliggende lagen."
 
-#: ../src/selection-chemistry.cpp:1212
+#: ../src/selection-chemistry.cpp:1221
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Selecteer <b>objecten</b> om naar de onderliggende laag te verplaatsen."
 
-#: ../src/selection-chemistry.cpp:1238
+#: ../src/selection-chemistry.cpp:1247
 msgid "Lower to previous layer"
 msgstr "Verlaag naar de vorige laag"
 
-#: ../src/selection-chemistry.cpp:1245
+#: ../src/selection-chemistry.cpp:1254
 msgid "No more layers below."
 msgstr "Er zijn geen onderliggende lagen."
 
-#: ../src/selection-chemistry.cpp:1454
+#: ../src/selection-chemistry.cpp:1463
 msgid "Remove transform"
 msgstr "Transformatie verwijderen"
 
-#: ../src/selection-chemistry.cpp:1557
+#: ../src/selection-chemistry.cpp:1566
 msgid "Rotate 90&#176; CCW"
 msgstr "90 graden draaien; TKI"
 
-#: ../src/selection-chemistry.cpp:1557
+#: ../src/selection-chemistry.cpp:1566
 msgid "Rotate 90&#176; CW"
 msgstr "90 graden draaien; MKM"
 
-#: ../src/selection-chemistry.cpp:1578
-#: ../src/seltrans.cpp:530
+#: ../src/selection-chemistry.cpp:1587
+#: ../src/seltrans.cpp:515
 #: ../src/ui/dialog/transformation.cpp:770
 msgid "Rotate"
 msgstr "Roteren"
 
-#: ../src/selection-chemistry.cpp:1625
+#: ../src/selection-chemistry.cpp:1634
 msgid "Rotate by pixels"
 msgstr "Per pixel draaien"
 
-#: ../src/selection-chemistry.cpp:1680
+#: ../src/selection-chemistry.cpp:1689
 msgid "Scale by whole factor"
 msgstr "Met een hele factor schalen"
 
-#: ../src/selection-chemistry.cpp:1695
+#: ../src/selection-chemistry.cpp:1704
 msgid "Move vertically"
 msgstr "Verticaal verplaatsen"
 
-#: ../src/selection-chemistry.cpp:1698
+#: ../src/selection-chemistry.cpp:1707
 msgid "Move horizontally"
 msgstr "Horizontaal verplaatsen"
 
-#: ../src/selection-chemistry.cpp:1701
-#: ../src/selection-chemistry.cpp:1727
-#: ../src/seltrans.cpp:524
+#: ../src/selection-chemistry.cpp:1710
+#: ../src/selection-chemistry.cpp:1736
+#: ../src/seltrans.cpp:509
 #: ../src/ui/dialog/transformation.cpp:691
 msgid "Move"
 msgstr "Verplaatsen"
 
-#: ../src/selection-chemistry.cpp:1721
+#: ../src/selection-chemistry.cpp:1730
 msgid "Move vertically by pixels"
 msgstr "Verticaal verplaatsen per pixels"
 
-#: ../src/selection-chemistry.cpp:1724
+#: ../src/selection-chemistry.cpp:1733
 msgid "Move horizontally by pixels"
 msgstr "Horizontaal verplaatsen per pixels"
 
-#: ../src/selection-chemistry.cpp:1852
+#: ../src/selection-chemistry.cpp:1861
 msgid "The selection has no applied path effect."
 msgstr "De selectie bevat geen toegepast padeffect."
 
-#: ../src/selection-chemistry.cpp:2055
+#: ../src/selection-chemistry.cpp:2064
 msgctxt "Action"
 msgid "Clone"
 msgstr "Kloon"
 
-#: ../src/selection-chemistry.cpp:2071
+#: ../src/selection-chemistry.cpp:2080
 msgid "Select <b>clones</b> to relink."
 msgstr "Selecteer <b>klonen</b> om te herlinken."
 
-#: ../src/selection-chemistry.cpp:2078
+#: ../src/selection-chemistry.cpp:2087
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr "Een <b>object</b> naar het klembord kopiëren om klonen naar te herlinken"
 
-#: ../src/selection-chemistry.cpp:2102
+#: ../src/selection-chemistry.cpp:2111
 msgid "<b>No clones to relink</b> in the selection."
 msgstr "<b>Geen klonen om te herlinken</b> in de selectie"
 
-#: ../src/selection-chemistry.cpp:2105
+#: ../src/selection-chemistry.cpp:2114
 msgid "Relink clone"
 msgstr "Kloon herlinken"
 
-#: ../src/selection-chemistry.cpp:2119
+#: ../src/selection-chemistry.cpp:2128
 msgid "Select <b>clones</b> to unlink."
 msgstr "Selecteer <b>klonen</b> om te ontlinken."
 
-#: ../src/selection-chemistry.cpp:2168
+#: ../src/selection-chemistry.cpp:2182
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "<b>Geen klonen geselecteerd</b> om te ontkoppelen."
 
-#: ../src/selection-chemistry.cpp:2172
+#: ../src/selection-chemistry.cpp:2186
 msgid "Unlink clone"
 msgstr "Kloon ontkoppelen"
 
-#: ../src/selection-chemistry.cpp:2185
+#: ../src/selection-chemistry.cpp:2199
 msgid "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> to go to its source. Select a <b>text on path</b> to go to the path. Select a <b>flowed text</b> to go to its frame."
-msgstr "Selecteer een <b>kloon</b> om naar zijn origineel te gaan. Selecteer een <b>gekoppelde rand</b> om naar zijn bron te gaan. Selecteer <b>tekst op een pad</b> om naar het pad te gaan. Selecteer <b>ingekaderde tekst</b> om naar het vormende object te gaan."
+msgstr "Selecteer een <b>kloon</b> om naar zijn origineel te gaan. Selecteer een <b>gekoppelde offset</b> om naar zijn bron te gaan. Selecteer <b>tekst op een pad</b> om naar het pad te gaan. Selecteer <b>ingekaderde tekst</b> om naar het vormende object te gaan."
 
-#: ../src/selection-chemistry.cpp:2208
+#: ../src/selection-chemistry.cpp:2222
 msgid "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, flowed text?)"
-msgstr "Het te selecteren object <b>is onvindbaar</b> (verweesde kloon, rand, tekstpad of ingekaderde tekst?)"
+msgstr "Het te selecteren object <b>is onvindbaar</b> (verweesde kloon, offset, tekstpad of ingekaderde tekst?)"
 
-#: ../src/selection-chemistry.cpp:2214
+#: ../src/selection-chemistry.cpp:2228
 msgid "The object you're trying to select is <b>not visible</b> (it is in &lt;defs&gt;)"
 msgstr "Het object dat u probeert te selecteren is <b>niet zichtbaar</b> (het staat in &lt;defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2260
+#: ../src/selection-chemistry.cpp:2274
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr "Selecteer eerst de <b>objecten</b> om te converteren naar een markering."
 
-#: ../src/selection-chemistry.cpp:2328
+#: ../src/selection-chemistry.cpp:2342
 msgid "Objects to marker"
 msgstr "Objecten naar markering"
 
-#: ../src/selection-chemistry.cpp:2356
+#: ../src/selection-chemistry.cpp:2370
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr "Selecteer eerst de <b>objecten</b> om te converteren naar hulplijnen."
 
-#: ../src/selection-chemistry.cpp:2368
+#: ../src/selection-chemistry.cpp:2382
 msgid "Objects to guides"
 msgstr "Objecten naar hulplijnen"
 
-#: ../src/selection-chemistry.cpp:2384
+#: ../src/selection-chemistry.cpp:2398
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Selecteer eerst de <b>objecten</b> om te converteren naar een patroon."
 
-#: ../src/selection-chemistry.cpp:2472
+#: ../src/selection-chemistry.cpp:2486
 msgid "Objects to pattern"
 msgstr "Objecten naar patroon"
 
-#: ../src/selection-chemistry.cpp:2488
+#: ../src/selection-chemistry.cpp:2502
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr "Selecteer <b>objecten met patroonvulling</b> om objecten uit te halen."
 
-#: ../src/selection-chemistry.cpp:2541
+#: ../src/selection-chemistry.cpp:2555
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "Er zijn geen <b>objecten met patroonvulling</b> geselecteerd."
 
-#: ../src/selection-chemistry.cpp:2544
+#: ../src/selection-chemistry.cpp:2558
 msgid "Pattern to objects"
 msgstr "Patroon naar objecten"
 
-#: ../src/selection-chemistry.cpp:2629
+#: ../src/selection-chemistry.cpp:2643
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Selecteer eerst de <b>objecten</b> om een bitmapkopie van te maken."
 
-#: ../src/selection-chemistry.cpp:2633
+#: ../src/selection-chemistry.cpp:2647
 msgid "Rendering bitmap..."
 msgstr "Renderen van bitmap..."
 
-#: ../src/selection-chemistry.cpp:2807
+#: ../src/selection-chemistry.cpp:2821
 msgid "Create bitmap"
 msgstr "Bitmap maken"
 
-#: ../src/selection-chemistry.cpp:2839
+#: ../src/selection-chemistry.cpp:2853
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Selecteer de <b>objecten</b> om een afsnijpad/masker van te maken."
 
-#: ../src/selection-chemistry.cpp:2842
+#: ../src/selection-chemistry.cpp:2856
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Selecteer het maskerobject en de <b>object(en)</b> om het afsnijpad/masker op toe te passen."
 
-#: ../src/selection-chemistry.cpp:3023
+#: ../src/selection-chemistry.cpp:3037
 msgid "Set clipping path"
 msgstr "Afsnijpad inschakelen"
 
-#: ../src/selection-chemistry.cpp:3025
+#: ../src/selection-chemistry.cpp:3039
 msgid "Set mask"
 msgstr "Masker inschakelen"
 
-#: ../src/selection-chemistry.cpp:3038
+#: ../src/selection-chemistry.cpp:3052
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Selecteer <b>object(en)</b> om het afsnijpad/masker van uit te schakelen."
 
-#: ../src/selection-chemistry.cpp:3149
+#: ../src/selection-chemistry.cpp:3163
 msgid "Release clipping path"
 msgstr "Afsnijpad uitschakelen"
 
-#: ../src/selection-chemistry.cpp:3151
+#: ../src/selection-chemistry.cpp:3165
 msgid "Release mask"
 msgstr "Masker uitschakelen"
 
-#: ../src/selection-chemistry.cpp:3169
+#: ../src/selection-chemistry.cpp:3183
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr "Selecteer <b>object(en)</b> voor aanpassing van het canvas"
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:3189
+#: ../src/selection-chemistry.cpp:3203
 #: ../src/verbs.cpp:2718
 msgid "Fit Page to Selection"
 msgstr "Pagina naar selectie schalen"
 
-#: ../src/selection-chemistry.cpp:3218
+#: ../src/selection-chemistry.cpp:3232
 #: ../src/verbs.cpp:2720
 msgid "Fit Page to Drawing"
 msgstr "Pagina naar tekening schalen"
 
-#: ../src/selection-chemistry.cpp:3239
+#: ../src/selection-chemistry.cpp:3253
 #: ../src/verbs.cpp:2722
 msgid "Fit Page to Selection or Drawing"
 msgstr "Pagina naar selectie of tekening schalen"
@@ -15938,69 +15938,69 @@ msgstr[1] "<b>%d</b> objecten gevonden van <b>%i</b> types"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:533
+#: ../src/seltrans.cpp:518
 #: ../src/ui/dialog/transformation.cpp:829
 msgid "Skew"
 msgstr "Scheeftrekken"
 
-#: ../src/seltrans.cpp:545
+#: ../src/seltrans.cpp:530
 msgid "Set center"
 msgstr "Centrum instellen"
 
-#: ../src/seltrans.cpp:620
+#: ../src/seltrans.cpp:605
 msgid "Stamp"
 msgstr "Stempel"
 
-#: ../src/seltrans.cpp:642
+#: ../src/seltrans.cpp:627
 msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
 msgstr "Het <b>centrum</b> van draaien en scheeftrekken: sleep om te verplaatsen; vergroten/verkleinen met <b>Shift</b> gebruikt ook dit centrum."
 
-#: ../src/seltrans.cpp:669
+#: ../src/seltrans.cpp:654
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "De selectie <b>samendrukken of uitrekken</b>; <b>Ctrl</b> behoudt de verhoudingen; <b>Shift</b> vergroot/verkleint om het rotatiemiddelpunt"
 
-#: ../src/seltrans.cpp:670
+#: ../src/seltrans.cpp:655
 msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "De selectie <b>vergroten of verkleinen</b>; <b>Ctrl</b> behoudt de verhoudingen; <b>Shift</b> vergroot/verkleint om het rotatiemiddelpunt"
 
-#: ../src/seltrans.cpp:674
+#: ../src/seltrans.cpp:659
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
 msgstr "De selectie <b>scheeftrekken</b>; <b>Ctrl</b> trekt in stappen, <b>Shift</b> trekt om de tegenoverliggende hoek"
 
-#: ../src/seltrans.cpp:675
+#: ../src/seltrans.cpp:660
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
 msgstr "De selectie <b>draaien</b>; <b>Ctrl</b> draait in stappen, <b>Shift</b> draait om de tegenoverliggende hoek"
 
-#: ../src/seltrans.cpp:809
+#: ../src/seltrans.cpp:794
 msgid "Reset center"
 msgstr "Centrum herstellen"
 
-#: ../src/seltrans.cpp:1047
-#: ../src/seltrans.cpp:1144
+#: ../src/seltrans.cpp:1032
+#: ../src/seltrans.cpp:1129
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Vergroten/verkleinen</b>: %0.2f%% x %0.2f%%; gebruik <b>Ctrl</b> om de verhouding te vergrendelen"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1258
+#: ../src/seltrans.cpp:1243
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Scheeftrekken</b>: %0.2f&#176;; gebruik <b>Ctrl</b> om in stappen te trekken"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1333
+#: ../src/seltrans.cpp:1318
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Draaien</b>: %0.2f&#176;; gebruik <b>Ctrl</b> in stappen te draaien"
 
-#: ../src/seltrans.cpp:1364
+#: ../src/seltrans.cpp:1353
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "<b>Centrum</b> verplaatsen naar %s, %s"
 
-#: ../src/seltrans.cpp:1539
+#: ../src/seltrans.cpp:1528
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>Verplaatsen</b> met %s, %s; gebruik <b>Ctrl</b> om het te beperken tot horizontaal en verticaal, gebruik <b>Shift</b> om magnetisch raster uit te zetten."
@@ -16126,7 +16126,7 @@ msgstr "Er is een fout opgetreden tijdens het uitvoeren van het padeffect."
 #: ../src/sp-offset.cpp:426
 #, c-format
 msgid "<b>Linked offset</b>, %s by %f pt"
-msgstr "<b>Gekoppelde rand</b>, %s met %f pt"
+msgstr "<b>Gekoppelde offset</b>, %s met %f pt"
 
 #: ../src/sp-offset.cpp:427
 #: ../src/sp-offset.cpp:431
@@ -16142,7 +16142,7 @@ msgstr "vernauwing"
 #: ../src/sp-offset.cpp:430
 #, c-format
 msgid "<b>Dynamic offset</b>, %s by %f pt"
-msgstr "<b>Dynamische rand</b>, %s met %f pt"
+msgstr "<b>Dynamische offset</b>, %s met %f pt"
 
 #: ../src/sp-path.cpp:156
 #, c-format
@@ -16322,12 +16322,12 @@ msgstr "Het geselecteerde object is <b>geen pad</b>, en kan dus niet versmalt/ve
 #: ../src/splivarot.cpp:1432
 #: ../src/splivarot.cpp:1501
 msgid "Create linked offset"
-msgstr "Gekoppelde rand aanmaken"
+msgstr "Gekoppelde offset maken"
 
 #: ../src/splivarot.cpp:1433
 #: ../src/splivarot.cpp:1502
 msgid "Create dynamic offset"
-msgstr "Dynamische rand aanmaken"
+msgstr "Dynamische offset maken"
 
 #: ../src/splivarot.cpp:1527
 msgid "Select <b>path(s)</b> to inset/outset."
@@ -17105,7 +17105,7 @@ msgstr "V:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:508
 #: ../src/ui/dialog/align-and-distribute.cpp:889
-#: ../src/widgets/toolbox.cpp:8244
+#: ../src/widgets/toolbox.cpp:8240
 msgid "Remove overlaps"
 msgstr "Overlappingen verwijderen"
 
@@ -17240,7 +17240,7 @@ msgid "Distribute baselines of texts vertically"
 msgstr "Grondlijnen van geselecteerde teksten verticaal verdelen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:981
-#: ../src/widgets/toolbox.cpp:8206
+#: ../src/widgets/toolbox.cpp:8202
 msgid "Nicely arrange selected connector network"
 msgstr "Het geselecteerde verbindingennetwerk netjes schikken"
 
@@ -19882,7 +19882,7 @@ msgstr "Verwijderen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:649
 msgid "When the original moves, its clones and linked offsets:"
-msgstr "Gedrag van klonen bij het verplaatsen van het origineel:"
+msgstr "Gedrag van klonen en gekoppelde randen bij verplaatsen van het origineel:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:651
 msgid "Clones are translated by the same vector as their original"
@@ -20365,7 +20365,7 @@ msgstr "Indien aangevinkt en er is uitgezoomd, dan worden rasterlijnen in de nor
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1027
 msgid "Default grid settings"
-msgstr "Standaard rasterinstellingen:"
+msgstr "Standaard rasterinstellingen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1033
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
@@ -22046,120 +22046,131 @@ msgctxt "Path segment tip"
 msgid "<b>Bezier segment</b>: drag to shape the segment, doubleclick to insert node, click to select (more: Shift, Ctrl+Alt)"
 msgstr "<b>Beziersegment</b>: sleep om het segment te vervormen, dubbelklik om een knooppunt in te voegen, klik om te selecteren (toetscombinaties: Shift, Ctrl+Alt)"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:227
+#: ../src/ui/tool/multi-path-manipulator.cpp:245
+msgid "Retract handles"
+msgstr "Handvaten intrekken"
+
+#: ../src/ui/tool/multi-path-manipulator.cpp:245
 msgid "Change node type"
 msgstr "Knooppunttype veranderen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:235
+#: ../src/ui/tool/multi-path-manipulator.cpp:253
 msgid "Straighten segments"
 msgstr "Segmenten effenen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:237
+#: ../src/ui/tool/multi-path-manipulator.cpp:255
 msgid "Make segments curves"
 msgstr "Van segmenten curven maken"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:244
+#: ../src/ui/tool/multi-path-manipulator.cpp:262
 msgid "Add nodes"
 msgstr "Knooppunten toevoegen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:250
+#: ../src/ui/tool/multi-path-manipulator.cpp:268
 msgid "Duplicate nodes"
 msgstr "Knooppunten dupliceren"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:312
+#: ../src/ui/tool/multi-path-manipulator.cpp:330
 #: ../src/widgets/toolbox.cpp:1369
 msgid "Join nodes"
 msgstr "Knooppunten samenvoegen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:319
+#: ../src/ui/tool/multi-path-manipulator.cpp:337
 #: ../src/widgets/toolbox.cpp:1380
 msgid "Break nodes"
 msgstr "Knooppunten verbreken"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:326
+#: ../src/ui/tool/multi-path-manipulator.cpp:344
 msgid "Delete nodes"
 msgstr "Knooppunten verwijderen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:630
+#: ../src/ui/tool/multi-path-manipulator.cpp:662
 msgid "Move nodes"
 msgstr "Knooppunten verplaatsen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:633
+#: ../src/ui/tool/multi-path-manipulator.cpp:665
 msgid "Move nodes horizontally"
 msgstr "Knooppunten horizontaal verplaatsen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:637
+#: ../src/ui/tool/multi-path-manipulator.cpp:669
 msgid "Move nodes vertically"
 msgstr "Knooppunten verticaal verplaatsen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:641
-#: ../src/ui/tool/multi-path-manipulator.cpp:644
+#: ../src/ui/tool/multi-path-manipulator.cpp:673
+#: ../src/ui/tool/multi-path-manipulator.cpp:676
 msgid "Rotate nodes"
 msgstr "Knooppunten roteren"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:648
-#: ../src/ui/tool/multi-path-manipulator.cpp:654
+#: ../src/ui/tool/multi-path-manipulator.cpp:680
+#: ../src/ui/tool/multi-path-manipulator.cpp:686
 msgid "Scale nodes uniformly"
 msgstr "Knooppunten uniform schalen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:651
+#: ../src/ui/tool/multi-path-manipulator.cpp:683
 msgid "Scale nodes"
 msgstr "Knooppunten schalen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:658
+#: ../src/ui/tool/multi-path-manipulator.cpp:690
 msgid "Scale nodes horizontally"
 msgstr "Knooppunten horizontaal schalen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:662
+#: ../src/ui/tool/multi-path-manipulator.cpp:694
 msgid "Scale nodes vertically"
 msgstr "Knooppunten verticaal schalen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:666
+#: ../src/ui/tool/multi-path-manipulator.cpp:698
 msgid "Flip nodes horizontally"
 msgstr "Knooppunten horizontaal spiegelen"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:669
+#: ../src/ui/tool/multi-path-manipulator.cpp:701
 msgid "Flip nodes vertically"
 msgstr "Knooppunten verticaal spiegelen"
 
-#: ../src/ui/tool/node-tool.cpp:541
+#: ../src/ui/tool/node-tool.cpp:551
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection, click to toggle object selection"
 msgstr "<b>Shift</b>: sleep om knooppunten aan de selectie toe te voegen, klik om objectselectie te veranderen"
 
-#: ../src/ui/tool/node-tool.cpp:545
+#: ../src/ui/tool/node-tool.cpp:555
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr "<b>Shift</b>: drag to add nodes to the selection"
 
-#: ../src/ui/tool/node-tool.cpp:555
+#: ../src/ui/tool/node-tool.cpp:564
 #, c-format
-msgctxt "Node tool tip"
-msgid "<b>%u of %u nodes</b> selected. Drag to select nodes, click to edit only this object (more: Shift)"
-msgstr "<b>%u van %u knooppunten</b> geselecteerd. Sleep om knooppunten te selecteren, klik om enkel dit object te bewerken (toetscombinatie: Shift)"
-
-#: ../src/ui/tool/node-tool.cpp:561
-#, c-format
-msgctxt "Node tool tip"
-msgid "<b>%u of %u nodes</b> selected. Drag to select nodes, click clear the selection"
-msgstr "<b>%u van %u knooppunten</b> geselecteerd. Sleep om knooppunten te selecteren, klik voor deselectie"
+msgid "<b>%u of %u</b> node selected."
+msgid_plural "<b>%u of %u</b> nodes selected."
+msgstr[0] "<b>%u van %u</b> knooppunt geselecteerd."
+msgstr[1] "<b>%u van %u</b> knooppunten geselecteerd."
 
 #: ../src/ui/tool/node-tool.cpp:569
+#, c-format
+msgctxt "Node tool tip"
+msgid "%s Drag to select nodes, click to edit only this object (more: Shift)"
+msgstr "%s Sleep om knooppunten te selecteren, klik om enkel dit object te bewerken (meer: Shift)"
+
+#: ../src/ui/tool/node-tool.cpp:575
+#, c-format
+msgctxt "Node tool tip"
+msgid "%s Drag to select nodes, click clear the selection"
+msgstr "%s Sleep om knooppunten te selecteren, klik voor deselectie"
+
+#: ../src/ui/tool/node-tool.cpp:584
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
 msgstr "Sleep om knooppunten te selecteren, klik om enkel dit object te bewerken"
 
-#: ../src/ui/tool/node-tool.cpp:572
+#: ../src/ui/tool/node-tool.cpp:587
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
 msgstr "Sleep om knooppunten te selecteren, klik voor deselectie"
 
-#: ../src/ui/tool/node-tool.cpp:577
+#: ../src/ui/tool/node-tool.cpp:592
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr "Sleep om te bewerken objecten te selecteren, klik om dit object te bewerken (toetscombinatie: Shift)"
 
-#: ../src/ui/tool/node-tool.cpp:580
+#: ../src/ui/tool/node-tool.cpp:595
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr "Sleep om te bewerken objecten te selecteren"
@@ -22247,60 +22258,60 @@ msgctxt "Path handle tip"
 msgid "Move handle by %s, %s; angle %.2f°, length %s"
 msgstr "Handvat verplaatsen met %s, %s; hoek %.2f°, lengte %s"
 
-#: ../src/ui/tool/node.cpp:1131
+#: ../src/ui/tool/node.cpp:1145
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr "<b>Shift</b>: sleep een handvat, klik voor verandering selectie"
 
-#: ../src/ui/tool/node.cpp:1133
+#: ../src/ui/tool/node.cpp:1147
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: click to toggle selection"
 msgstr "<b>Shift</b>: klik voor verandering selectie"
 
-#: ../src/ui/tool/node.cpp:1138
+#: ../src/ui/tool/node.cpp:1152
 msgctxt "Path node tip"
 msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
 msgstr "<b>Ctrl+Alt:</b> verplaatsen langs handvatlijnen, klik om knooppunt te verwijderen"
 
-#: ../src/ui/tool/node.cpp:1141
+#: ../src/ui/tool/node.cpp:1155
 msgctxt "Path node tip"
 msgid "<b>Ctrl</b>: move along axes, click to change node type"
 msgstr "<b>Ctrl</b>: verplaatsen langs assen, klik om knooppunttype te veranderen"
 
-#: ../src/ui/tool/node.cpp:1145
+#: ../src/ui/tool/node.cpp:1159
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
 msgstr "<b>Alt</b>: knooppunten boetseren"
 
-#: ../src/ui/tool/node.cpp:1153
+#: ../src/ui/tool/node.cpp:1167
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>: sleep om het pad te vervormen (toetscombinatie: Shift, Ctrl, Alt)"
 
-#: ../src/ui/tool/node.cpp:1156
+#: ../src/ui/tool/node.cpp:1170
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>: sleep om het pad te vervormen, klik om te schakelen tussen schalings- en rotatiehandvatten (toetscombinaties: Shift, Ctrl, Alt)"
 
-#: ../src/ui/tool/node.cpp:1159
+#: ../src/ui/tool/node.cpp:1173
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>: sleep om het pad te vervormen, klik om enkel dit knooppunt te selecteren (toetscombinaties: Shift, Ctrl, Alt)"
 
-#: ../src/ui/tool/node.cpp:1167
+#: ../src/ui/tool/node.cpp:1181
 #, c-format
 msgctxt "Path node tip"
 msgid "Move node by %s, %s"
 msgstr "Knooppunt verplaatsen met %s, %s"
 
-#: ../src/ui/tool/node.cpp:1179
+#: ../src/ui/tool/node.cpp:1193
 msgid "Symmetric node"
 msgstr "Symmetrisch knooppunt"
 
-#: ../src/ui/tool/node.cpp:1180
+#: ../src/ui/tool/node.cpp:1194
 msgid "Auto-smooth node"
 msgstr "Automatisch glad knooppunt"
 
@@ -22313,20 +22324,20 @@ msgid "Rotate handle"
 msgstr "Roteerhandvat"
 
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1323
+#: ../src/ui/tool/path-manipulator.cpp:1325
 #: ../src/widgets/toolbox.cpp:1358
 msgid "Delete node"
 msgstr "Item verwijderen"
 
-#: ../src/ui/tool/path-manipulator.cpp:1331
+#: ../src/ui/tool/path-manipulator.cpp:1333
 msgid "Cycle node type"
 msgstr "Wisselen van knooppunttype"
 
-#: ../src/ui/tool/path-manipulator.cpp:1346
+#: ../src/ui/tool/path-manipulator.cpp:1348
 msgid "Drag handle"
 msgstr "Handvat slepen"
 
-#: ../src/ui/tool/path-manipulator.cpp:1355
+#: ../src/ui/tool/path-manipulator.cpp:1357
 msgid "Retract handle"
 msgstr "Handvat intrekken"
 
@@ -23806,19 +23817,19 @@ msgstr "Geselecteerde paden met 10 pixels vernauwen"
 
 #: ../src/verbs.cpp:2392
 msgid "D_ynamic Offset"
-msgstr "D_ynamische rand"
+msgstr "D_ynamische offset"
 
 #: ../src/verbs.cpp:2392
 msgid "Create a dynamic offset object"
-msgstr "Een 'dynamische rand'-object aanmaken"
+msgstr "Een 'dynamische offset'-object aanmaken"
 
 #: ../src/verbs.cpp:2394
 msgid "_Linked Offset"
-msgstr "_Gekoppelde rand"
+msgstr "_Gekoppelde offset"
 
 #: ../src/verbs.cpp:2395
 msgid "Create a dynamic offset object linked to the original path"
-msgstr "Een 'dynamische rand'-object aanmaken, gekoppeld aan het originele pad"
+msgstr "Een 'dynamische offset'-object aanmaken, gekoppeld aan het originele pad"
 
 #: ../src/verbs.cpp:2397
 msgid "_Stroke to Path"
@@ -25024,13 +25035,13 @@ msgstr ""
 msgid "_Save as SVG"
 msgstr "Op_slaan als SVG"
 
-#: ../src/widgets/ege-paint-def.cpp:70
-#: ../src/widgets/ege-paint-def.cpp:92
+#: ../src/widgets/ege-paint-def.cpp:69
+#: ../src/widgets/ege-paint-def.cpp:91
 #: ../src/widgets/gradient-selector.cpp:174
 msgid "none"
 msgstr "Niet"
 
-#: ../src/widgets/ege-paint-def.cpp:89
+#: ../src/widgets/ege-paint-def.cpp:88
 msgid "remove"
 msgstr "verwijderen"
 
@@ -25507,7 +25518,7 @@ msgstr "RGB-standaardwaarde aanpassen aan waarde van icc-color()."
 #: ../src/widgets/sp-color-scales.cpp:413
 #: ../src/widgets/sp-color-scales.cpp:439
 #: ../src/widgets/sp-color-scales.cpp:470
-#: ../src/widgets/sp-color-wheel-selector.cpp:135
+#: ../src/widgets/sp-color-wheel-selector.cpp:177
 msgid "_A:"
 msgstr "_A:"
 
@@ -25519,8 +25530,8 @@ msgstr "_A:"
 #: ../src/widgets/sp-color-scales.cpp:441
 #: ../src/widgets/sp-color-scales.cpp:471
 #: ../src/widgets/sp-color-scales.cpp:472
-#: ../src/widgets/sp-color-wheel-selector.cpp:145
-#: ../src/widgets/sp-color-wheel-selector.cpp:157
+#: ../src/widgets/sp-color-wheel-selector.cpp:187
+#: ../src/widgets/sp-color-wheel-selector.cpp:199
 msgid "Alpha (opacity)"
 msgstr "Alfa (ondoorzichtigheid)"
 
@@ -26179,7 +26190,7 @@ msgstr "Punten en hoeken willekeurig uitspreiden"
 #: ../src/widgets/toolbox.cpp:2993
 #: ../src/widgets/toolbox.cpp:3926
 #: ../src/widgets/toolbox.cpp:4181
-#: ../src/widgets/toolbox.cpp:8451
+#: ../src/widgets/toolbox.cpp:8447
 msgid "Defaults"
 msgstr "Standaardwaarden"
 
@@ -27509,131 +27520,131 @@ msgstr "Kromming verbinding aanpassen"
 msgid "Change connector spacing"
 msgstr "Verbindingsafstanden aanpassen"
 
-#: ../src/widgets/toolbox.cpp:8131
+#: ../src/widgets/toolbox.cpp:8127
 msgid "EditMode"
 msgstr "Bewerkmodus"
 
-#: ../src/widgets/toolbox.cpp:8132
+#: ../src/widgets/toolbox.cpp:8128
 msgid "Switch between connection point editing and connector drawing mode"
 msgstr "Wisselen tussen bewerkmodus voor verbindingspunten en tekenmodus voor verbindingen"
 
-#: ../src/widgets/toolbox.cpp:8146
+#: ../src/widgets/toolbox.cpp:8142
 msgid "Avoid"
 msgstr "Vermijden"
 
-#: ../src/widgets/toolbox.cpp:8156
+#: ../src/widgets/toolbox.cpp:8152
 msgid "Ignore"
 msgstr "Negeren"
 
-#: ../src/widgets/toolbox.cpp:8167
+#: ../src/widgets/toolbox.cpp:8163
 msgid "Orthogonal"
 msgstr "Orthogonaal"
 
-#: ../src/widgets/toolbox.cpp:8168
+#: ../src/widgets/toolbox.cpp:8164
 msgid "Make connector orthogonal or polyline"
 msgstr "Verbinding orthogonaal of veellijn maken"
 
-#: ../src/widgets/toolbox.cpp:8182
+#: ../src/widgets/toolbox.cpp:8178
 msgid "Connector Curvature"
 msgstr "Kromming verbinding"
 
-#: ../src/widgets/toolbox.cpp:8182
+#: ../src/widgets/toolbox.cpp:8178
 msgid "Curvature:"
 msgstr "Kromming:"
 
-#: ../src/widgets/toolbox.cpp:8183
+#: ../src/widgets/toolbox.cpp:8179
 msgid "The amount of connectors curvature"
 msgstr "Hoeveelheid kromming van verbindingen"
 
-#: ../src/widgets/toolbox.cpp:8193
+#: ../src/widgets/toolbox.cpp:8189
 msgid "Connector Spacing"
 msgstr "Verbindingsafstanden"
 
-#: ../src/widgets/toolbox.cpp:8194
+#: ../src/widgets/toolbox.cpp:8190
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "De vrij te laten ruimte rond objecten bij het automatisch routeren van verbindingen"
 
-#: ../src/widgets/toolbox.cpp:8205
+#: ../src/widgets/toolbox.cpp:8201
 msgid "Graph"
 msgstr "Diagram"
 
-#: ../src/widgets/toolbox.cpp:8215
+#: ../src/widgets/toolbox.cpp:8211
 msgid "Connector Length"
 msgstr "Verbindingslengte"
 
-#: ../src/widgets/toolbox.cpp:8215
+#: ../src/widgets/toolbox.cpp:8211
 msgid "Length:"
 msgstr "Lengte:"
 
-#: ../src/widgets/toolbox.cpp:8216
+#: ../src/widgets/toolbox.cpp:8212
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Ideale lengte van verbindingen bij herschikken"
 
-#: ../src/widgets/toolbox.cpp:8228
+#: ../src/widgets/toolbox.cpp:8224
 msgid "Downwards"
 msgstr "Omlaag"
 
-#: ../src/widgets/toolbox.cpp:8229
+#: ../src/widgets/toolbox.cpp:8225
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Eindmarkeringen (pijlen) van verbindingen wijzen omlaag"
 
-#: ../src/widgets/toolbox.cpp:8245
+#: ../src/widgets/toolbox.cpp:8241
 msgid "Do not allow overlapping shapes"
 msgstr "Geen overlappende vormen toestaan"
 
-#: ../src/widgets/toolbox.cpp:8260
+#: ../src/widgets/toolbox.cpp:8256
 msgid "New connection point"
 msgstr "Nieuw verbindingspunt"
 
-#: ../src/widgets/toolbox.cpp:8261
+#: ../src/widgets/toolbox.cpp:8257
 msgid "Add a new connection point to the currently selected item"
 msgstr "Een nieuw verbindingspunt naar het geselecteerde item toevoegen"
 
-#: ../src/widgets/toolbox.cpp:8272
+#: ../src/widgets/toolbox.cpp:8268
 msgid "Remove connection point"
 msgstr "Verbindingspunt verwijderen"
 
-#: ../src/widgets/toolbox.cpp:8273
+#: ../src/widgets/toolbox.cpp:8269
 msgid "Remove the currently selected connection point"
 msgstr "Het geselecteerde verbindingspunt verwijderen"
 
-#: ../src/widgets/toolbox.cpp:8373
+#: ../src/widgets/toolbox.cpp:8369
 msgid "Fill by"
 msgstr "Vullen met"
 
-#: ../src/widgets/toolbox.cpp:8374
+#: ../src/widgets/toolbox.cpp:8370
 msgid "Fill by:"
 msgstr "Vullen met:"
 
-#: ../src/widgets/toolbox.cpp:8386
+#: ../src/widgets/toolbox.cpp:8382
 msgid "Fill Threshold"
 msgstr "Vullingsdrempel"
 
-#: ../src/widgets/toolbox.cpp:8387
+#: ../src/widgets/toolbox.cpp:8383
 msgid "The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"
 msgstr "Het maximaal toegestane verschil tussen de aangeklikte pixel en de naastliggende pixels geteld in de vulling"
 
-#: ../src/widgets/toolbox.cpp:8413
+#: ../src/widgets/toolbox.cpp:8409
 msgid "Grow/shrink by"
 msgstr "Verdikken/verdunnen met"
 
-#: ../src/widgets/toolbox.cpp:8413
+#: ../src/widgets/toolbox.cpp:8409
 msgid "Grow/shrink by:"
 msgstr "Verdikken/verdunnen met:"
 
-#: ../src/widgets/toolbox.cpp:8414
+#: ../src/widgets/toolbox.cpp:8410
 msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr "De hoeveelheid waarmee het vullingspad verdikt (positief) of verdund (negatief) moet worden"
 
-#: ../src/widgets/toolbox.cpp:8439
+#: ../src/widgets/toolbox.cpp:8435
 msgid "Close gaps"
 msgstr "Gaten opvullen"
 
-#: ../src/widgets/toolbox.cpp:8440
+#: ../src/widgets/toolbox.cpp:8436
 msgid "Close gaps:"
 msgstr "Gaten opvullen:"
 
-#: ../src/widgets/toolbox.cpp:8452
+#: ../src/widgets/toolbox.cpp:8448
 msgid "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
 msgstr "Herinitialiseer afgebakende gebieden vullen naar standaardwaarden (gebruik Inkscape-voorkeuren > Gereedschappen om de standaardwaarden te veranderen)"
 
@@ -27646,11 +27657,12 @@ msgstr "Herinitialiseer afgebakende gebieden vullen naar standaardwaarden (gebru
 #. fill-column:99
 #. End:
 #.
-#. vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+#. vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
 #: ../share/extensions/gcodetools_all_in_one.inx.h:1
 #: ../share/extensions/gcodetools_area.inx.h:1
+#, fuzzy
 msgid "\"Create area offset\": creates several Inkscape path offsets to fill original path's area up to \"Area radius\" value. Outlines start from \"1/2 D\" up to \"Area width\" total width with \"D\" steps where D is taken from the nearest tool definition (\"Tool diameter\" value). Only one offset will be created if the \"Area width\" is equal to \"1/2 D\"."
-msgstr ""
+msgstr "\"Oppervlak offset maken\": maakt verschillende Inkscape-offsetpaden aan om de originele padoppervlakte te vullen tot de \"Contourbreedte\". Contouren beginnen van \"1/2 D\" tot de \"Contourbreedte\" met \"D\" stappen, waarbij D afkomstig is van de gereedschapsdefinitie (\"Diameter gereedschap\"). Slechts één offset wordt gemaakt indien de \"Contourbreedte\" gelijk is aan \"1/2 D\"."
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:2
 #: ../share/extensions/gcodetools_orientation_points.inx.h:1
@@ -27697,7 +27709,7 @@ msgstr "Oppervlakartefacten"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:10
 #: ../share/extensions/gcodetools_area.inx.h:7
 msgid "Area width:"
-msgstr "Breedte oppervlak"
+msgstr "Contourbreedte:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:11
 #: ../share/extensions/gcodetools_area.inx.h:8
@@ -27721,7 +27733,7 @@ msgstr "Bicirkelinterpolatietolerantie"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:14
 #: ../share/extensions/gcodetools_dxf_points.inx.h:3
 msgid "Convert selected objects to drill points (as dxf_import plugin does). Also you can save original shape. Only the start point of each curve will be used. Also you can manually select object, open XML editor (Shift+Ctrl+X) and add or remove XML tag 'dxfpoint' with any value."
-msgstr ""
+msgstr "Geselecteerde objecten converteren naar boorpunten (zoals de dxf_import plugin doet). Je kan ook de originele vorm bewaren. Slechts het beginpunt van elke vorm zal gebruikt worden. Je kan ook een object manueel selecteren, de XML-editor openen (Shift+Ctrl+X) en de 'dxfpoint'-tag met elke waarde toevoegen of verwijderen."
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:15
 #: ../share/extensions/gcodetools_dxf_points.inx.h:4
@@ -27809,7 +27821,7 @@ msgstr "Gereedschappen nakijken"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:27
 #: ../share/extensions/gcodetools_area.inx.h:18
 msgid "Maximum area cutting curves:"
-msgstr "Maximum oppervlak snijcurves:"
+msgstr "Maximum aantal snijcurves:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:28
 #: ../share/extensions/gcodetools_engraving.inx.h:12
@@ -27847,7 +27859,7 @@ msgstr "Offset langs Z-as:"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:35
 #: ../share/extensions/gcodetools_orientation_points.inx.h:8
 msgid "Orientation points are used to calculate transformation (offset,scale,mirror,rotation in XY plane) of the path. 3-points mode only: do not put all three into one line (use 2-points mode instead). You can modify Z surface, Z depth values later using text tool (3rd coordinates). If there are no orientation points inside current layer they are taken from the upper layer. Do not ungroup orientation points! You can select them using double click to enter the group or by Ctrl+Click. Now press apply to create control points (independent set for each layer)."
-msgstr ""
+msgstr "Oriëntatiepunten worden gebruikt om de transformatie (offset, schalen, spiegeling, rotatie in het XY vlak) van het pad te berekenen. Alleen 3-punts modus: plaats niet alle 3 de punten op een lijn (gebruik dan de 2-punts modus). Je kan de Z-oppervlakte en Z-diepte later aanpassen met het tekstgereedschap (derde coördinaat). Indien er geen oriëntatiepunten in de huidige laag zijn, worden ze van de bovenste laag genomen. Degroepeer nooit oriëntatiepunten! Je kan ze selecteren door een dubbelklik om de groep binnen te gaan of door Ctrl+klik. Druk nu op Toepassen om de controlepunten aan te maken (onafhankelijke set voor elke laag)."
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:36
 #: ../share/extensions/gcodetools_orientation_points.inx.h:9
@@ -27903,12 +27915,12 @@ msgstr "Het geselecteerde type gereedshap gebruikt de standaardwaarden. Je kan d
 #: ../share/extensions/gcodetools_all_in_one.inx.h:43
 #: ../share/extensions/gcodetools_engraving.inx.h:21
 msgid "Sharp angle tolerance:"
-msgstr ""
+msgstr "Tolerantie scherpe hoek:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:44
 #: ../share/extensions/gcodetools_engraving.inx.h:22
 msgid "This function creates path to engrave sharp angles. Cutter's shape function is defined by the tool. Some simple shapes: cone....(45 degrees)...........: w cone....(height/diameter=10/3).: 10/3 w sphere..(\"r\" diameter).........: math.sqrt(max(0,r**2-w**2)) ellipse.(R1=r and R2=r*4r).....: math.sqrt(max(0,r**2-w**2))*4"
-msgstr ""
+msgstr "Deze functie maakt een pad voor het graveren van scherpe hoeken. De functie voor de mesvorm wordt bepaald door het gereedschap. Enkele eenvoudige vormen: kegel...(45 graden)............: w kegel...(hoogte/diameter=10/3).: 10/3 w bol..(\"r\" diameter).........: math.sqrt(max(0,r**2-w**2)) ellips..(R1=r en R2=r*4r).....: math.sqrt(max(0,r**2-w**2))*4"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:45
 #: ../share/extensions/gcodetools_tools_library.inx.h:6
@@ -27957,7 +27969,7 @@ msgstr "Z-oppervlak:"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:52
 #: ../share/extensions/gcodetools_dxf_points.inx.h:18
 msgid "clear dxfpoint sign"
-msgstr ""
+msgstr "dxf-punt teken weghalen"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:53
 #: ../share/extensions/gcodetools_tools_library.inx.h:8
@@ -28002,12 +28014,12 @@ msgstr "plasma"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:61
 #: ../share/extensions/gcodetools_dxf_points.inx.h:19
 msgid "set as dxfpoint and draw arrow"
-msgstr ""
+msgstr "instellen als dxf-punt en pijl tekenen"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:62
 #: ../share/extensions/gcodetools_dxf_points.inx.h:20
 msgid "set as dxfpoint and save shape"
-msgstr ""
+msgstr "instellen als dxf-punt en vorm bewaren"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:63
 #: ../share/extensions/gcodetools_tools_library.inx.h:13
@@ -28028,11 +28040,11 @@ msgstr "DXF-punten"
 
 #: ../share/extensions/gcodetools_engraving.inx.h:4
 msgid "Draw additional graphics to debug engraving path"
-msgstr ""
+msgstr "Additionele afbeeldingen tekenen om gravurepad te debuggen"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:5
 msgid "Create fine cut using:"
-msgstr ""
+msgstr "Precisiesnede maken met:"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:7
 msgid "File"
@@ -28040,11 +28052,11 @@ msgstr "Bestand"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:8
 msgid "Fine cut count:"
-msgstr ""
+msgstr "Aantal sneden:"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:9
 msgid "Fine cut width:"
-msgstr ""
+msgstr "Breedte snede:"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:15
 msgid "Lathe"
@@ -28052,11 +28064,11 @@ msgstr "Draaibank"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:16
 msgid "Lathe X axis remap:"
-msgstr ""
+msgstr "Draaibank X-as herindeling:"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:17
 msgid "Lathe Z axis remap:"
-msgstr ""
+msgstr "Draaibank Z-as herindeling:"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:18
 msgid "Lathe width:"
@@ -28102,6 +28114,28 @@ msgstr "Helling (graden):"
 msgid "Wireframe Sphere"
 msgstr "Draadmodel sfeer"
 
+#~ msgid "Randomize hue"
+#~ msgstr "Willekeurige tint"
+#~ msgid "Randomize lightness"
+#~ msgstr "Willekeurige helderheid"
+#~ msgid "Randomize saturation"
+#~ msgstr "Willekeurig verzadiging"
+#~ msgid "Year (0 for current):"
+#~ msgstr "Jaar (0 voor huidige):"
+#~ msgctxt "Node tool tip"
+#~ msgid ""
+#~ "<b>%u of %u nodes</b> selected. Drag to select nodes, click to edit only "
+#~ "this object (more: Shift)"
+#~ msgstr ""
+#~ "<b>%u van %u knooppunten</b> geselecteerd. Sleep om knooppunten te "
+#~ "selecteren, klik om enkel dit object te bewerken (toetscombinatie: Shift)"
+#~ msgctxt "Node tool tip"
+#~ msgid ""
+#~ "<b>%u of %u nodes</b> selected. Drag to select nodes, click clear the "
+#~ "selection"
+#~ msgstr ""
+#~ "<b>%u van %u knooppunten</b> geselecteerd. Sleep om knooppunten te "
+#~ "selecteren, klik voor deselectie"
 #~ msgctxt "Icon preview window"
 #~ msgid "_Selection"
 #~ msgstr "_Selectie"
