@@ -48,6 +48,8 @@
 #include <windows.h>
 #endif
 
+using Inkscape::DocumentUndo;
+
 #define MIN_ONSCREEN_DISTANCE 50
 
 static GtkWidget *dlg = NULL;
@@ -781,8 +783,8 @@ sp_spellcheck_accept (GObject *, GObject *dlg)
             // find the end of the word anew
             _end_w = _begin_w;
             _end_w.nextEndOfWord();
-            Inkscape::DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_TEXT,
-                                 _("Fix spelling"));
+            DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_TEXT,
+                               _("Fix spelling"));
         }
     }
 
