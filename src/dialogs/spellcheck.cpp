@@ -39,6 +39,7 @@
 #include <xml/repr.h>
 #include "display/canvas-bpath.h"
 #include "display/curve.h"
+#include "document-undo.h"
 
 #ifdef HAVE_ASPELL
 #include <aspell.h>
@@ -780,7 +781,7 @@ sp_spellcheck_accept (GObject *, GObject *dlg)
             // find the end of the word anew
             _end_w = _begin_w;
             _end_w.nextEndOfWord();
-            SPDocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_TEXT,
+            Inkscape::DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_TEXT,
                                  _("Fix spelling"));
         }
     }
