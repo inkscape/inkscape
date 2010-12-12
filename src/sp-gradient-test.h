@@ -1,4 +1,3 @@
-
 #ifndef SEEN_SP_GRADIENT_TEST_H
 #define SEEN_SP_GRADIENT_TEST_H
 
@@ -25,7 +24,7 @@ public:
     {
         if ( _doc )
         {
-            sp_document_unref( _doc );
+            _doc->doUnref();
         }
     }
 
@@ -56,13 +55,13 @@ public:
         SPGradient *gr = static_cast<SPGradient *>(g_object_new(SP_TYPE_GRADIENT, NULL));
         SP_OBJECT(gr)->document = _doc;
 
-        sp_object_set(SP_OBJECT(gr), SP_ATTR_GRADIENTTRANSFORM, "translate(5, 8)");
+        SP_OBJECT(gr)->setKeyValue( SP_ATTR_GRADIENTTRANSFORM, "translate(5, 8)");
         TS_ASSERT_EQUALS( gr->gradientTransform, Geom::Matrix(Geom::Translate(5, 8)) );
 
-        sp_object_set(SP_OBJECT(gr), SP_ATTR_GRADIENTTRANSFORM, "");
+        SP_OBJECT(gr)->setKeyValue( SP_ATTR_GRADIENTTRANSFORM, "");
         TS_ASSERT_EQUALS( gr->gradientTransform, Geom::identity() );
 
-        sp_object_set(SP_OBJECT(gr), SP_ATTR_GRADIENTTRANSFORM, "rotate(90)");
+        SP_OBJECT(gr)->setKeyValue( SP_ATTR_GRADIENTTRANSFORM, "rotate(90)");
         TS_ASSERT_EQUALS( gr->gradientTransform, Geom::Matrix(rotate_degrees(90)) );
 
         g_object_unref(gr);
@@ -74,7 +73,7 @@ public:
         SPGradient *gr = static_cast<SPGradient *>(g_object_new(SP_TYPE_GRADIENT, NULL));
         SP_OBJECT(gr)->document = _doc;
 
-        sp_object_set(SP_OBJECT(gr), SP_ATTR_GRADIENTTRANSFORM, "matrix(0, 1, -1, 0, 0, 0)");
+        SP_OBJECT(gr)->setKeyValue( SP_ATTR_GRADIENTTRANSFORM, "matrix(0, 1, -1, 0, 0, 0)");
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(_doc);
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:radialGradient");
         SP_OBJECT(gr)->updateRepr(repr, SP_OBJECT_WRITE_ALL);
@@ -136,7 +135,7 @@ public:
             sp_gradient_set_gs2d_matrix(gr, funny, larger_rect, gs2d);
             TS_ASSERT( Geom::matrix_equalp(gr->gradientTransform, grXform, 1e-12) );
 
-            sp_object_set(SP_OBJECT(gr), SP_ATTR_GRADIENTUNITS, "userSpaceOnUse");
+            SP_OBJECT(gr)->setKeyValue( SP_ATTR_GRADIENTUNITS, "userSpaceOnUse");
             Geom::Matrix const user_g2d(sp_gradient_get_g2d_matrix(gr, funny, larger_rect));
             Geom::Matrix const user_gs2d(sp_gradient_get_gs2d_matrix(gr, funny, larger_rect));
             TS_ASSERT_EQUALS( user_g2d, funny );

@@ -201,10 +201,11 @@ Inkscape::XML::calc_abs_doc_base(gchar const *const doc_base)
  */
 void Inkscape::XML::rebase_hrefs(SPDocument *const doc, gchar const *const new_base, bool const spns)
 {
-    if (!doc->base)
+    if (!doc->getBase()) {
         return;
+    }
 
-    gchar *const old_abs_base = calc_abs_doc_base(doc->base);
+    gchar *const old_abs_base = calc_abs_doc_base(doc->getBase());
     gchar *const new_abs_base = calc_abs_doc_base(new_base);
 
     /* TODO: Should handle not just image but also:
@@ -227,7 +228,7 @@ void Inkscape::XML::rebase_hrefs(SPDocument *const doc, gchar const *const new_b
      *
      * Note also that Inkscape only supports fragment hrefs (href="#pattern257") for many of these
      * cases. */
-    GSList const *images = sp_document_get_resource_list(doc, "image");
+    GSList const *images = doc->getResourceList("image");
     for (GSList const *l = images; l != NULL; l = l->next) {
         Inkscape::XML::Node *ir = SP_OBJECT_REPR(l->data);
 

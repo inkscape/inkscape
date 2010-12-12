@@ -6,6 +6,7 @@
  *
  * Authors:
  *   Ted Gould <ted@gould.cx>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Authors
  *
@@ -86,7 +87,7 @@ WpgInput::open(Inkscape::Extension::Input * mod, const gchar * uri) {
 
     //printf("I've got a doc: \n%s", painter.document.c_str());
 
-    SPDocument * doc = sp_document_new_from_mem(output.cstr(), strlen(output.cstr()), TRUE);
+    SPDocument * doc = SPDocument::createNewDocFromMem(output.cstr(), strlen(output.cstr()), TRUE);
     delete input;
     return doc;
 }

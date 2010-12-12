@@ -13,6 +13,7 @@
  *   Jon A. Cruz <jon@joncruz.org>
  *   Maximilian Albert <maximilian.albert@gmail.com>
  *   Tavmjong Bah <tavmjong@free.fr>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 David Turner
  * Copyright (C) 2003 MenTaLguY
@@ -112,6 +113,7 @@
 
 using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
+using Inkscape::DocumentUndo;
 
 typedef void (*SetupFunction)(GtkWidget *toolbox, SPDesktop *desktop);
 typedef void (*UpdateFunction)(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
@@ -1271,7 +1273,7 @@ static void sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, Geom::D
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data( tbl, "tracker" ));
     SPUnit const *unit = tracker->getActiveUnit();
 
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         prefs->setDouble(Glib::ustring("/tools/nodes/") + (d == Geom::X ? "x" : "y"),
             sp_units_get_pixels(adj->value, *unit));
     }
@@ -2053,8 +2055,8 @@ static void toggle_snap_callback(GtkToggleAction *act, gpointer data) //data poi
         return;
     }
 
-    bool saved = sp_document_get_undo_sensitive(doc);
-    sp_document_set_undo_sensitive(doc, false);
+    bool saved = DocumentUndo::getUndoSensitive(doc);
+    DocumentUndo::setUndoSensitive(doc, false);
 
     bool v = false;
     SPAttributeEnum attr = (SPAttributeEnum) GPOINTER_TO_INT(g_object_get_data(G_OBJECT(act), "SP_ATTR_INKSCAPE"));
@@ -2139,7 +2141,7 @@ static void toggle_snap_callback(GtkToggleAction *act, gpointer data) //data poi
     // The snapping preferences are stored in the document, and therefore toggling makes the document dirty
     doc->setModifiedSinceSave();
 
-    sp_document_set_undo_sensitive(doc, saved);
+    DocumentUndo::setUndoSensitive(doc, saved);
 }
 
 void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
@@ -2498,7 +2500,7 @@ static void sp_stb_magnitude_value_changed( GtkAdjustment *adj, GObject *dataKlu
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
 
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         // do not remember prefs if this call is initiated by an undo change, because undoing object
         // creation sets bogus values to its attributes before it is deleted
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -2529,8 +2531,8 @@ static void sp_stb_magnitude_value_changed( GtkAdjustment *adj, GObject *dataKlu
         }
     }
     if (modmade) {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
-                         _("Star: Change number of corners"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
+                           _("Star: Change number of corners"));
     }
 
     g_object_set_data( dataKludge, "freeze", GINT_TO_POINTER(FALSE) );
@@ -2540,7 +2542,7 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
 
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         if (!IS_NAN(adj->value)) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             prefs->setDouble("/tools/shapes/star/proportion", adj->value);
@@ -2576,8 +2578,8 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
     }
 
     if (modmade) {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
-                         _("Star: Change spoke ratio"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
+                           _("Star: Change spoke ratio"));
     }
 
     g_object_set_data( dataKludge, "freeze", GINT_TO_POINTER(FALSE) );
@@ -2588,7 +2590,7 @@ static void sp_stb_sides_flat_state_changed( EgeSelectOneAction *act, GObject *d
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
     bool flat = ege_select_one_action_get_active( act ) == 0;
 
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setBool( "/tools/shapes/star/isflatsided", flat);
     }
@@ -2620,8 +2622,8 @@ static void sp_stb_sides_flat_state_changed( EgeSelectOneAction *act, GObject *d
     }
 
     if (modmade) {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
-                         flat ? _("Make polygon") : _("Make star"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
+                           flat ? _("Make polygon") : _("Make star"));
     }
 
     g_object_set_data( dataKludge, "freeze", GINT_TO_POINTER(FALSE) );
@@ -2631,7 +2633,7 @@ static void sp_stb_rounded_value_changed( GtkAdjustment *adj, GObject *dataKludg
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
 
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("/tools/shapes/star/rounded", (gdouble) adj->value);
     }
@@ -2657,8 +2659,8 @@ static void sp_stb_rounded_value_changed( GtkAdjustment *adj, GObject *dataKludg
         }
     }
     if (modmade) {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
-                         _("Star: Change rounding"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
+                           _("Star: Change rounding"));
     }
 
     g_object_set_data( dataKludge, "freeze", GINT_TO_POINTER(FALSE) );
@@ -2668,7 +2670,7 @@ static void sp_stb_randomized_value_changed( GtkAdjustment *adj, GObject *dataKl
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
 
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("/tools/shapes/star/randomized", (gdouble) adj->value);
     }
@@ -2694,8 +2696,8 @@ static void sp_stb_randomized_value_changed( GtkAdjustment *adj, GObject *dataKl
         }
     }
     if (modmade) {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
-                         _("Star: Change randomization"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
+                           _("Star: Change randomization"));
     }
 
     g_object_set_data( dataKludge, "freeze", GINT_TO_POINTER(FALSE) );
@@ -3033,7 +3035,7 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data( tbl, "tracker" ));
     SPUnit const *unit = tracker->getActiveUnit();
 
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble(Glib::ustring("/tools/shapes/rect/") + value_name, sp_units_get_pixels(adj->value, *unit));
     }
@@ -3062,8 +3064,8 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
     sp_rtb_sensitivize( tbl );
 
     if (modmade) {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_RECT,
-                                   _("Change rectangle"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_RECT,
+                           _("Change rectangle"));
     }
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
@@ -3430,7 +3432,7 @@ static void box3d_persp_tb_event_attr_changed(Inkscape::XML::Node *repr,
     }
 
     // set freeze so that it can be caught in box3d_angle_z_value_changed() (to avoid calling
-    // sp_document_maybe_done() when the document is undo insensitive)
+    // SPDocumentUndo::maybeDone() when the document is undo insensitive)
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
 
     // TODO: Only update the appropriate part of the toolbar
@@ -3514,7 +3516,7 @@ static void box3d_angle_value_changed(GtkAdjustment *adj, GObject *dataKludge, P
     SP_OBJECT(persp)->updateRepr();
 
     // TODO: use the correct axis here, too
-    sp_document_maybe_done(document, "perspangle", SP_VERB_CONTEXT_3DBOX, _("3D Box: Change perspective (angle of infinite axis)"));
+    DocumentUndo::maybeDone(document, "perspangle", SP_VERB_CONTEXT_3DBOX, _("3D Box: Change perspective (angle of infinite axis)"));
 
     g_object_set_data( dataKludge, "freeze", GINT_TO_POINTER(FALSE) );
 }
@@ -3709,7 +3711,7 @@ static void sp_spl_tb_value_changed(GtkAdjustment *adj, GObject *tbl, Glib::ustr
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
 
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("/tools/shapes/spiral/" + value_name, adj->value);
     }
@@ -3740,8 +3742,8 @@ static void sp_spl_tb_value_changed(GtkAdjustment *adj, GObject *tbl, Glib::ustr
     g_free(namespaced_name);
 
     if (modmade) {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SPIRAL,
-                                   _("Change spiral"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SPIRAL,
+                           _("Change spiral"));
     }
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
@@ -5303,7 +5305,7 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
 
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble(Glib::ustring("/tools/shapes/arc/") + value_name, adj->value);
     }
@@ -5351,8 +5353,8 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
     sp_arctb_sensitivize( tbl, adj->value, other->value );
 
     if (modmade) {
-        sp_document_maybe_done(sp_desktop_document(desktop), value_name, SP_VERB_CONTEXT_ARC,
-                                   _("Arc: Change start/end"));
+        DocumentUndo::maybeDone(sp_desktop_document(desktop), value_name, SP_VERB_CONTEXT_ARC,
+                                _("Arc: Change start/end"));
     }
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
@@ -5373,7 +5375,7 @@ static void sp_arctb_end_value_changed(GtkAdjustment *adj, GObject *tbl)
 static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setBool("/tools/shapes/arc/open", ege_select_one_action_get_active(act) != 0);
     }
@@ -5415,8 +5417,8 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
     }
 
     if (modmade) {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ARC,
-                                   _("Arc: Change open/closed"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ARC,
+                           _("Arc: Change open/closed"));
     }
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
@@ -5746,7 +5748,7 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
             SP_LPETOOL_CONTEXT(desktop->event_context)->mode = type;
         }
 
-        if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+        if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             prefs->setInt( "/tools/lpetool/mode", mode );
         }
@@ -6083,7 +6085,7 @@ static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
     bool eraserMode = ege_select_one_action_get_active( act ) != 0;
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setBool( "/tools/eraser/mode", eraserMode );
     }
@@ -6383,8 +6385,8 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
     g_free (family);
 
     // Save for undo
-    sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
-                                   _("Text: Change font family"));
+    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+                       _("Text: Change font family"));
     sp_repr_css_attr_unref (css);
 
     // unfreeze
@@ -6430,8 +6432,8 @@ static void sp_text_fontsize_value_changed( Ink_ComboBoxEntry_Action *act, GObje
     sp_desktop_set_style (desktop, css, true, true);
 
     // Save for undo
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:size", SP_VERB_NONE,
-                                   _("Text: Change font size"));
+    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:size", SP_VERB_NONE,
+                             _("Text: Change font size"));
 
     // If no selected objects, set default.
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
@@ -6576,8 +6578,8 @@ static void sp_text_style_changed( InkToggleAction* act, GObject *tbl )
     // Do we need to update other CSS values?
     SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
     sp_desktop_set_style (desktop, css, true, true);
-    sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
-                                   _("Text: Change font style"));
+    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+                       _("Text: Change font style"));
     sp_repr_css_attr_unref (css);
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
@@ -6653,8 +6655,8 @@ static void sp_text_script_changed( InkToggleAction* act, GObject *tbl )
     sp_desktop_set_style (desktop, css, true, false);
 
     // Save for undo
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:script", SP_VERB_NONE,
-                                   _("Text: Change superscript or subscript"));
+    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:script", SP_VERB_NONE,
+                             _("Text: Change superscript or subscript"));
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
@@ -6797,8 +6799,8 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
     sp_style_unref(query);
 
     sp_desktop_set_style (desktop, css, true, true);
-    sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
-                                   _("Text: Change alignment"));
+    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+                       _("Text: Change alignment"));
     sp_repr_css_attr_unref (css);
 
     gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
@@ -6836,8 +6838,8 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
     }
 
     // Save for undo
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:line-height", SP_VERB_NONE,
-                                   _("Text: Change line-height"));
+    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:line-height", SP_VERB_NONE,
+                             _("Text: Change line-height"));
 
     // If no selected objects, set default.
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
@@ -6875,8 +6877,8 @@ static void sp_text_wordspacing_value_changed( GtkAdjustment *adj, GObject *tbl 
     sp_desktop_set_style (desktop, css, true, false);
 
     // Save for undo
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:word-spacing", SP_VERB_NONE,
-                                   _("Text: Change word-spacing"));
+    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:word-spacing", SP_VERB_NONE,
+                             _("Text: Change word-spacing"));
 
     // If no selected objects, set default.
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
@@ -6914,8 +6916,8 @@ static void sp_text_letterspacing_value_changed( GtkAdjustment *adj, GObject *tb
     sp_desktop_set_style (desktop, css, true, false);
 
     // Save for undo
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:letter-spacing", SP_VERB_NONE,
-                                   _("Text: Change letter-spacing"));
+    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:letter-spacing", SP_VERB_NONE,
+                             _("Text: Change letter-spacing"));
 
     // If no selected objects, set default.
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
@@ -6959,8 +6961,8 @@ static void sp_text_dx_value_changed( GtkAdjustment *adj, GObject *tbl )
     }
 
     // Save for undo
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:dx", SP_VERB_NONE,
-                                   _("Text: Change dx (kern)"));
+    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:dx", SP_VERB_NONE,
+                             _("Text: Change dx (kern)"));
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
@@ -6990,8 +6992,8 @@ static void sp_text_dy_value_changed( GtkAdjustment *adj, GObject *tbl )
     }
 
     // Save for undo
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:dy", SP_VERB_NONE,
-                                   _("Text: Change dy"));
+    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:dy", SP_VERB_NONE,
+                            _("Text: Change dy"));
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
@@ -7021,8 +7023,8 @@ static void sp_text_rotation_value_changed( GtkAdjustment *adj, GObject *tbl )
     }
 
     // Save for undo
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:rotate", SP_VERB_NONE,
-                                   _("Text: Change rotate"));
+    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:rotate", SP_VERB_NONE,
+                            _("Text: Change rotate"));
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
@@ -7066,8 +7068,8 @@ static void sp_text_orientation_mode_changed( EgeSelectOneAction *act, GObject *
     }
 
     sp_desktop_set_style (SP_ACTIVE_DESKTOP, css, true, true);
-    sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
-                                   _("Text: Change orientation"));
+    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+                       _("Text: Change orientation"));
     sp_repr_css_attr_unref (css);
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
@@ -7093,7 +7095,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
          items != NULL;
          items = items->next)
     {
-        const gchar* id = SP_OBJECT_ID((SPItem *) items->data);
+        const gchar* id = reinterpret_cast<SPItem *>(items->data)->getId();
         std::cout << "    " << id << std::endl;
     }
     Glib::ustring selected_text = sp_text_get_selected_text((SP_ACTIVE_DESKTOP)->event_context);
@@ -7118,7 +7120,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     for (GSList const *items = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
          items != NULL;
          items = items->next) {
-        // const gchar* id = SP_OBJECT_ID((SPItem *) items->data);
+        // const gchar* id = reinterpret_cast<SPItem *>(items->data)->getId();
         // std::cout << "    " << id << std::endl;
         if( SP_IS_FLOWTEXT(( SPItem *) items->data )) {
             isFlow = true;
@@ -7876,7 +7878,7 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
     Inkscape::Selection * selection = sp_desktop_selection(desktop);
     SPDocument *doc = sp_desktop_document(desktop);
 
-    if (!sp_document_get_undo_sensitive(doc)) {
+    if (!DocumentUndo::getUndoSensitive(doc)) {
         return;
     }
 
@@ -7900,7 +7902,7 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
         SPItem *item = (SPItem *) l->data;
 
         if (cc_item_is_connector(item)) {
-            sp_object_setAttribute(item, "inkscape:connector-type",
+            item->setAttribute( "inkscape:connector-type",
                     value, false);
             item->avoidRef->handleSettingChange();
             modmade = true;
@@ -7913,8 +7915,8 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
         prefs->setBool("/tools/connector/orthogonal", is_orthog);
     }
 
-    sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR,
-            is_orthog ? _("Set connector type: orthogonal"): _("Set connector type: polyline"));
+    DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR,
+                       is_orthog ? _("Set connector type: orthogonal"): _("Set connector type: polyline"));
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
@@ -7925,7 +7927,7 @@ static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
     Inkscape::Selection * selection = sp_desktop_selection(desktop);
     SPDocument *doc = sp_desktop_document(desktop);
 
-    if (!sp_document_get_undo_sensitive(doc)) {
+    if (!DocumentUndo::getUndoSensitive(doc)) {
         return;
     }
 
@@ -7948,7 +7950,7 @@ static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
         SPItem *item = (SPItem *) l->data;
 
         if (cc_item_is_connector(item)) {
-            sp_object_setAttribute(item, "inkscape:connector-curvature",
+            item->setAttribute( "inkscape:connector-curvature",
                     value, false);
             item->avoidRef->handleSettingChange();
             modmade = true;
@@ -7961,8 +7963,8 @@ static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
         prefs->setDouble(Glib::ustring("/tools/connector/curvature"), newValue);
     }
 
-    sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR,
-            _("Change connector curvature"));
+    DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR,
+                       _("Change connector curvature"));
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
@@ -7973,7 +7975,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
     SPDocument *doc = sp_desktop_document(desktop);
 
-    if (!sp_document_get_undo_sensitive(doc)) {
+    if (!DocumentUndo::getUndoSensitive(doc)) {
         return;
     }
 
@@ -8009,8 +8011,8 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
         g_slist_free(items);
     }
 
-    sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR,
-            _("Change connector spacing"));
+    DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR,
+                       _("Change connector spacing"));
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
@@ -8030,7 +8032,7 @@ static void sp_connector_graph_layout(void)
 
     prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
-    sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, _("Arrange connector network"));
+    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, _("Arrange connector network"));
 }
 
 static void sp_directed_graph_layout_toggled( GtkToggleAction* act, GtkObject * /*tbl*/ )

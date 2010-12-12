@@ -1,11 +1,12 @@
-#ifndef __SP_DOCUMENT_PRIVATE_H__
-#define __SP_DOCUMENT_PRIVATE_H__
+#ifndef SEEN_SP_DOCUMENT_PRIVATE_H
+#define SEEN_SP_DOCUMENT_PRIVATE_H
 
 /*
  * Seldom needed document data
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -27,7 +28,7 @@
 // XXX only for testing!
 #include "console-output-undo-observer.h"
 
-#define SP_DOCUMENT_DEFS(d) ((SPObject *) SP_ROOT (SP_DOCUMENT_ROOT (d))->defs)
+#define SP_DOCUMENT_DEFS(d) ((SPObject *) SP_ROOT(d->getRoot())->defs)
 
 namespace Inkscape {
 namespace XML {
@@ -76,4 +77,4 @@ struct SPDocumentPrivate {
 	bool seeking;
 };
 
-#endif
+#endif // SEEN_SP_DOCUMENT_PRIVATE_H

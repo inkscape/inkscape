@@ -7,6 +7,7 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   MenTaLguY <mental@rydia.net>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * The original dynadraw code:
  *   Paul Haeberli <paul@sgi.com>
@@ -64,6 +65,8 @@
 #include <2geom/pathvector.h>
 
 #include "eraser-context.h"
+
+using Inkscape::DocumentUndo;
 
 #define ERC_RED_RGBA 0xff0000ff
 
@@ -716,7 +719,7 @@ set_to_accumulated(SPEraserContext *dc)
     if (!dc->accumulated->is_empty()) {
         if (!dc->repr) {
             /* Create object */
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+            Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
             Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
             /* Set style */
@@ -726,7 +729,7 @@ set_to_accumulated(SPEraserContext *dc)
 
             SPItem *item=SP_ITEM(desktop->currentLayer()->appendChildRepr(dc->repr));
             Inkscape::GC::release(dc->repr);
-            item->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
+            item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
             item->updateRepr();
         }
         Geom::PathVector pathv = dc->accumulated->get_pathvector() * desktop->dt2doc();
@@ -741,7 +744,7 @@ set_to_accumulated(SPEraserContext *dc)
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             
             gint eraserMode = prefs->getBool("/tools/eraser/mode") ? 1 : 0;
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+            Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
 
             SPItem* acid = SP_ITEM(desktop->doc()->getObjectByRepr(dc->repr));
             Geom::OptRect eraserBbox = acid->getBounds(Geom::identity());
@@ -750,10 +753,10 @@ set_to_accumulated(SPEraserContext *dc)
             GSList* toWorkOn = 0;
             if (selection->isEmpty()) {
                 if ( eraserMode ) {
-                    toWorkOn = sp_document_partial_items_in_box(sp_desktop_document(desktop), desktop->dkey, bounds);
+                    toWorkOn = sp_desktop_document(desktop)->getItemsPartiallyInBox(desktop->dkey, bounds);
                 } else {
                     Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
-                    toWorkOn = sp_document_items_at_points(sp_desktop_document(desktop), desktop->dkey, r->getPoints());
+                    toWorkOn = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, r->getPoints());
                 }
                 toWorkOn = g_slist_remove( toWorkOn, acid );
             } else {
@@ -829,10 +832,10 @@ set_to_accumulated(SPEraserContext *dc)
 
 
     if ( workDone ) {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ERASER, 
-                         _("Draw eraser stroke"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ERASER, 
+                           _("Draw eraser stroke"));
     } else {
-        sp_document_cancel(sp_desktop_document(desktop));
+        DocumentUndo::cancel(sp_desktop_document(desktop));
     }
 }
 

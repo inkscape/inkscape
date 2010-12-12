@@ -132,7 +132,7 @@ Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *d
     std::list<SPItem *> items;
     items.insert<GSListConstIterator<SPItem *> >(items.end(), selection->itemList(), NULL);
 
-	Inkscape::XML::Document * xmldoc = sp_document_repr_doc(document->doc());
+	Inkscape::XML::Document * xmldoc = document->doc()->getReprDoc();
 	Inkscape::XML::Node * defsrepr = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(document->doc()));
 
     for(std::list<SPItem *>::iterator item = items.begin();

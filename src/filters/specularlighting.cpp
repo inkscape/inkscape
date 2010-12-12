@@ -1,5 +1,3 @@
-#define __SP_FESPECULARLIGHTING_CPP__
-
 /** \file
  * SVG <feSpecularLighting> implementation.
  *
@@ -8,6 +6,7 @@
  * Authors:
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
  *   Jean-Rene Reinhard <jr@komite.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Hugo Rodrigues
  *               2007 authors
@@ -120,11 +119,11 @@ sp_feSpecularLighting_build(SPObject *object, SPDocument *document, Inkscape::XM
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
-    sp_object_read_attr(object, "surfaceScale");
-    sp_object_read_attr(object, "specularConstant");
-    sp_object_read_attr(object, "specularExponent");
-    sp_object_read_attr(object, "kernelUnitLength");
-    sp_object_read_attr(object, "lighting-color");
+    object->readAttr( "surfaceScale" );
+    object->readAttr( "specularConstant" );
+    object->readAttr( "specularExponent" );
+    object->readAttr( "kernelUnitLength" );
+    object->readAttr( "lighting-color" );
     
 }
 
@@ -250,11 +249,11 @@ static void
 sp_feSpecularLighting_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     if (flags & (SP_OBJECT_MODIFIED_FLAG)) {
-        sp_object_read_attr(object, "surfaceScale");
-        sp_object_read_attr(object, "specularConstant");
-        sp_object_read_attr(object, "specularExponent");
-        sp_object_read_attr(object, "kernelUnitLength");
-        sp_object_read_attr(object, "lighting-color");
+        object->readAttr( "surfaceScale" );
+        object->readAttr( "specularConstant" );
+        object->readAttr( "specularExponent" );
+        object->readAttr( "kernelUnitLength" );
+        object->readAttr( "lighting-color" );
     }
 
     if (((SPObjectClass *) feSpecularLighting_parent_class)->update) {

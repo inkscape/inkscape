@@ -10,7 +10,7 @@ using std::vector;
 void sp_item_update_cns(SPItem &item, SPDesktop const &desktop)
 {
     std::vector<Inkscape::SnapCandidatePoint> snappoints;
-    sp_item_snappoints(&item, snappoints, NULL);
+    item.getSnappoints(snappoints, NULL);
     /* TODO: Implement the ordering. */
     vector<SPGuideConstraint> found_cns;
     satisfied_guide_cns(desktop, snappoints, found_cns);

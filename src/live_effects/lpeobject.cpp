@@ -1,7 +1,6 @@
-#define INKSCAPE_LIVEPATHEFFECT_OBJECT_CPP
-
 /*
  * Copyright (C) Johan Engelen 2007-2008 <j.b.c.engelen@utwente.nl>
+ *   Abhishek Sharma
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -104,14 +103,14 @@ LivePathEffectObject::livepatheffect_build(SPObject *object, SPDocument *documen
     if (((SPObjectClass *) livepatheffect_parent_class)->build)
         (* ((SPObjectClass *) livepatheffect_parent_class)->build)(object, document, repr);
 
-    sp_object_read_attr(object, "effect");
+    object->readAttr( "effect" );
 
     if (repr) {
         repr->addListener (&livepatheffect_repr_events, object);
     }
 
     /* Register ourselves, is this necessary? */
-//    sp_document_add_resource(document, "path-effect", object);
+//    document->addResource("path-effect", object);
 }
 
 /**
@@ -132,7 +131,7 @@ LivePathEffectObject::livepatheffect_release(SPObject *object)
 /*
     if (SP_OBJECT_DOCUMENT(object)) {
         // Unregister ourselves
-        sp_document_remove_resource(SP_OBJECT_DOCUMENT(object), "livepatheffect", SP_OBJECT(object));
+        sp_document_removeResource(SP_OBJECT_DOCUMENT(object), "livepatheffect", SP_OBJECT(object));
     }
 
     if (gradient->ref) {
@@ -247,12 +246,11 @@ livepatheffect_on_repr_attr_changed ( Inkscape::XML::Node * /*repr*/,
  * returns 'this' when no forking was necessary (and therefore no duplicate was made)
  * Check out sp_lpe_item_fork_path_effects_if_necessary !
  */
-LivePathEffectObject *
-LivePathEffectObject::fork_private_if_necessary(unsigned int nr_of_allowed_users)
+LivePathEffectObject *LivePathEffectObject::fork_private_if_necessary(unsigned int nr_of_allowed_users)
 {
-    if (SP_OBJECT_HREFCOUNT(this) > nr_of_allowed_users) {
+    if (hrefcount > nr_of_allowed_users) {
         SPDocument *doc = SP_OBJECT_DOCUMENT(this);
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+        Inkscape::XML::Document *xml_doc = doc->getReprDoc();
         Inkscape::XML::Node *dup_repr = SP_OBJECT_REPR (this)->duplicate(xml_doc);
 
         SP_OBJECT_REPR (SP_DOCUMENT_DEFS (doc))->addChild(dup_repr, NULL);

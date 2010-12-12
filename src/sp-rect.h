@@ -1,11 +1,12 @@
-#ifndef __SP_RECT_H__
-#define __SP_RECT_H__
+#ifndef SEEN_SP_RECT_H
+#define SEEN_SP_RECT_H
 
 /*
  * SVG <rect> implementation
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -64,4 +65,15 @@ gdouble sp_rect_get_visible_height (SPRect *rect);
 
 void sp_rect_compensate_rxry (SPRect *rect, Geom::Matrix xform);
 
-#endif
+#endif // SEEN_SP_RECT_H
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

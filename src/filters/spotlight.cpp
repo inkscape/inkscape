@@ -1,5 +1,3 @@
-#define __SP_FESPOTLIGHT_CPP__
-
 /** \file
  * SVG <fespotlight> implementation.
  */
@@ -8,6 +6,7 @@
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *   Niko Kiirala <niko@kiirala.com>
  *   Jean-Rene Reinhard <jr@komite.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006,2007 Authors
  *
@@ -114,17 +113,17 @@ sp_fespotlight_build(SPObject *object, SPDocument *document, Inkscape::XML::Node
     }
 
     //Read values of key attributes from XML nodes into object.
-    sp_object_read_attr(object, "x");
-    sp_object_read_attr(object, "y");
-    sp_object_read_attr(object, "z");
-    sp_object_read_attr(object, "pointsAtX");
-    sp_object_read_attr(object, "pointsAtY");
-    sp_object_read_attr(object, "pointsAtZ");
-    sp_object_read_attr(object, "specularExponent");
-    sp_object_read_attr(object, "limitingConeAngle");
+    object->readAttr( "x" );
+    object->readAttr( "y" );
+    object->readAttr( "z" );
+    object->readAttr( "pointsAtX" );
+    object->readAttr( "pointsAtY" );
+    object->readAttr( "pointsAtZ" );
+    object->readAttr( "specularExponent" );
+    object->readAttr( "limitingConeAngle" );
 
 //is this necessary?
-    sp_document_add_resource(document, "fespotlight", object);
+    document->addResource("fespotlight", object);
 }
 
 /**
@@ -137,7 +136,7 @@ sp_fespotlight_release(SPObject *object)
 
     if (SP_OBJECT_DOCUMENT(object)) {
         /* Unregister ourselves */
-        sp_document_remove_resource(SP_OBJECT_DOCUMENT(object), "fespotlight", SP_OBJECT(object));
+        SP_OBJECT_DOCUMENT(object)->removeResource("fespotlight", SP_OBJECT(object));
     }
 
 //TODO: release resources here
@@ -309,14 +308,14 @@ sp_fespotlight_update(SPObject *object, SPCtx *ctx, guint flags)
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         /* do something to trigger redisplay, updates? */
-        sp_object_read_attr(object, "x");
-        sp_object_read_attr(object, "y");
-        sp_object_read_attr(object, "z");
-        sp_object_read_attr(object, "pointsAtX");
-        sp_object_read_attr(object, "pointsAtY");
-        sp_object_read_attr(object, "pointsAtZ");
-        sp_object_read_attr(object, "specularExponent");
-        sp_object_read_attr(object, "limitingConeAngle");
+        object->readAttr( "x" );
+        object->readAttr( "y" );
+        object->readAttr( "z" );
+        object->readAttr( "pointsAtX" );
+        object->readAttr( "pointsAtY" );
+        object->readAttr( "pointsAtZ" );
+        object->readAttr( "specularExponent" );
+        object->readAttr( "limitingConeAngle" );
     }
 
     if (((SPObjectClass *) feSpotLight_parent_class)->update) {

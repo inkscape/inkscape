@@ -3,6 +3,7 @@
  *                            of nodes
  *
  * Copyright 2006  MenTaLguY  <mental@rydia.net>
+ *   Abhishek Sharma
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */

@@ -8,6 +8,7 @@
  *      Jon A. Cruz <jon@joncruz.org> (c) 2010
  *      John Bintz <jcoswell@coswellproductions.org> (c) 2006
  *      Ralf Stephan <ralf@ark.in-berlin.de> (c) 2005, distrib. under GPL2
+ *      Abhishek Sharma
  *      ? -2004
  */
 
@@ -17,6 +18,7 @@
 #include "display/display-forward.h"
 #include "libnr/nr-point.h"
 #include "forward.h"
+#include "sp-object.h"
 #include "message.h"
 #include "ui/view/view-widget.h"
 #include "ui/view/edit-widget-interface.h"

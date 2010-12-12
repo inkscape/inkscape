@@ -3,6 +3,7 @@
  *
  * Authors:
  *   Michael Wybrow <mjwybrow@users.sourceforge.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2005 Michael Wybrow
  *
@@ -38,7 +39,7 @@
 #include "inkscape.h"
 #include <glibmm/i18n.h>
 
-
+using Inkscape::DocumentUndo;
 
 using Avoid::Router;
 
@@ -195,10 +196,10 @@ void SPAvoidRef::setConnectionPointsAttrUndoable(const gchar* value, const gchar
 {
     SPDocument* doc = SP_OBJECT_DOCUMENT(item);
 
-    sp_object_setAttribute( SP_OBJECT(item), "inkscape:connection-points", value, 0 );
+    item->setAttribute( "inkscape:connection-points", value, 0 );
     item->updateRepr();
-    sp_document_ensure_up_to_date(doc);
-    sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR, action);
+    doc->ensureUpToDate();
+    DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR, action);
 }
 
 void SPAvoidRef::addConnectionPoint(ConnectionPoint &cp)
@@ -295,7 +296,7 @@ void SPAvoidRef::handleSettingChange(void)
         // isn't the same as the document that this item is part of.  This
         // case can happen if a new document is loaded from the file chooser
         // or via the recent file menu.  In this case, we can end up here
-        // as a rersult of a sp_document_ensure_up_to_date performed on a
+        // as a rersult of a ensureUpToDate performed on a
         // document not yet attached to the active desktop.
         return;
     }
@@ -315,7 +316,7 @@ void SPAvoidRef::handleSettingChange(void)
             _transformed_connection = item->connectTransformed(
                     sigc::ptr_fun(&avoid_item_move));
 
-            const char *id = SP_OBJECT_REPR(item)->attribute("id");
+            char const *id = item->getAttribute("id");
             g_assert(id != NULL);
 
             // Get a unique ID for the item.
@@ -389,12 +390,12 @@ Geom::Point SPAvoidRef::getConnectionPointPos(const int type, const int id)
 {
     g_assert(item);
     Geom::Point pos;
-    const Geom::Matrix& transform = sp_item_i2doc_affine(item);
+    const Geom::Matrix& transform = item->i2doc_affine();
 
     if ( type == ConnPointDefault )
     {
         // For now, just default to the centre of the item
-        Geom::OptRect bbox = item->getBounds(sp_item_i2doc_affine(item));
+        Geom::OptRect bbox = item->getBounds(item->i2doc_affine());
         pos = (bbox) ? bbox->midpoint() : Geom::Point(0, 0);
     }
     else
@@ -491,7 +492,7 @@ static std::vector<Geom::Point> approxItemWithPoints(SPItem const *item, const G
     }
     else if (SP_IS_SHAPE(item))
     {
-        SPCurve* item_curve = sp_shape_get_curve(SP_SHAPE(item));
+        SPCurve* item_curve = SP_SHAPE(item)->getCurve();
         // make sure it has an associated curve
         if (item_curve)
         {
@@ -511,7 +512,7 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
     g_assert(desktop != NULL);
     double spacing = desktop->namedview->connector_spacing;
 
-    Geom::Matrix itd_mat = sp_item_i2doc_affine(item);
+    Geom::Matrix itd_mat = item->i2doc_affine();
     std::vector<Geom::Point> hull_points;
     hull_points = approxItemWithPoints(item, itd_mat);
 
@@ -557,8 +558,7 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
 GSList *get_avoided_items(GSList *list, SPObject *from, SPDesktop *desktop,
         bool initialised)
 {
-    for (SPObject *child = sp_object_first_child(SP_OBJECT(from)) ;
-            child != NULL; child = SP_OBJECT_NEXT(child) ) {
+    for (SPObject *child = from->firstChild() ; child != NULL; child = child->next ) {
         if (SP_IS_ITEM(child) &&
             !desktop->isLayer(SP_ITEM(child)) &&
             !SP_ITEM(child)->isLocked() &&
@@ -596,8 +596,8 @@ void init_avoided_shape_geometry(SPDesktop *desktop)
     // Don't count this as changes to the document,
     // it is basically just late initialisation.
     SPDocument *document = sp_desktop_document(desktop);
-    bool saved = sp_document_get_undo_sensitive(document);
-    sp_document_set_undo_sensitive(document, false);
+    bool saved = DocumentUndo::getUndoSensitive(document);
+    DocumentUndo::setUndoSensitive(document, false);
 
     bool initialised = false;
     GSList *items = get_avoided_items(NULL, desktop->currentRoot(), desktop,
@@ -611,7 +611,7 @@ void init_avoided_shape_geometry(SPDesktop *desktop)
     if (items) {
         g_slist_free(items);
     }
-    sp_document_set_undo_sensitive(document, saved);
+    DocumentUndo::setUndoSensitive(document, saved);
 }
 
 

@@ -9,6 +9,7 @@
  *   Frank Felfe <innerspace@iname.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2010 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -17,6 +18,7 @@
  */
 
 #include "forward.h"
+#include "sp-item.h"
 #include "2geom/forward.h"
 
 namespace Inkscape { class Selection; }

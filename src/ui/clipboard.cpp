@@ -5,6 +5,7 @@
  *   Krzysztof Kosiński <tweenk@o2.pl>
  *   Jon A. Cruz <jon@joncruz.org>
  *   Incorporates some code from selection-chemistry.cpp, see that file for more credits.
+ *   Abhishek Sharma
  *
  * Copyright (C) 2008 authors
  * Copyright (C) 2010 Jon A. Cruz
@@ -335,7 +336,7 @@ bool ClipboardManagerImpl::paste(SPDesktop *desktop, bool in_place)
     }
 
     _pasteDocument(desktop, tempdoc, in_place);
-    sp_document_unref(tempdoc);
+    tempdoc->doUnref();
 
     return true;
 }
@@ -350,8 +351,7 @@ const gchar *ClipboardManagerImpl::getFirstObjectID()
         return NULL;
     }
 
-    Inkscape::XML::Node
-        *root = sp_document_repr_root(tempdoc);
+    Inkscape::XML::Node *root = tempdoc->getReprRoot();
 
     if (!root) {
         return NULL;
@@ -405,9 +405,8 @@ bool ClipboardManagerImpl::pasteStyle(SPDesktop *desktop)
         }
     }
 
-    Inkscape::XML::Node
-        *root = sp_document_repr_root(tempdoc),
-        *clipnode = sp_repr_lookup_name(root, "inkscape:clipboard", 1);
+    Inkscape::XML::Node *root = tempdoc->getReprRoot();
+    Inkscape::XML::Node *clipnode = sp_repr_lookup_name(root, "inkscape:clipboard", 1);
 
     bool pasted = false;
 
@@ -421,7 +420,7 @@ bool ClipboardManagerImpl::pasteStyle(SPDesktop *desktop)
         _userWarn(desktop, _("No style on the clipboard."));
     }
 
-    sp_document_unref(tempdoc);
+    tempdoc->doUnref();
     return pasted;
 }
 
@@ -455,7 +454,7 @@ bool ClipboardManagerImpl::pasteSize(SPDesktop *desktop, bool separately, bool a
     }
 
     // retrieve size ifomration from the clipboard
-    Inkscape::XML::Node *root = sp_document_repr_root(tempdoc);
+    Inkscape::XML::Node *root = tempdoc->getReprRoot();
     Inkscape::XML::Node *clipnode = sp_repr_lookup_name(root, "inkscape:clipboard", 1);
     bool pasted = false;
     if (clipnode) {
@@ -467,7 +466,7 @@ bool ClipboardManagerImpl::pasteSize(SPDesktop *desktop, bool separately, bool a
         if (separately) {
             for (GSList *i = const_cast<GSList*>(selection->itemList()) ; i ; i = i->next) {
                 SPItem *item = SP_ITEM(i->data);
-                Geom::OptRect obj_size = sp_item_bbox_desktop(item);
+                Geom::OptRect obj_size = item->getBboxDesktop();
                 if ( !obj_size ) {
                     continue;
                 }
@@ -484,7 +483,7 @@ bool ClipboardManagerImpl::pasteSize(SPDesktop *desktop, bool separately, bool a
         }
         pasted = true;
     }
-    sp_document_unref(tempdoc);
+    tempdoc->doUnref();
     return pasted;
 }
 
@@ -509,7 +508,7 @@ bool ClipboardManagerImpl::pastePathEffect(SPDesktop *desktop)
 
     SPDocument *tempdoc = _retrieveClipboard("image/x-inkscape-svg");
     if ( tempdoc ) {
-        Inkscape::XML::Node *root = sp_document_repr_root(tempdoc);
+        Inkscape::XML::Node *root = tempdoc->getReprRoot();
         Inkscape::XML::Node *clipnode = sp_repr_lookup_name(root, "inkscape:clipboard", 1);
         if ( clipnode ) {
             gchar const *effectstack = clipnode->attribute("inkscape:path-effect");
@@ -544,12 +543,11 @@ Glib::ustring ClipboardManagerImpl::getPathParameter(SPDesktop* desktop)
         _userWarn(desktop, _("Nothing on the clipboard."));
         return "";
     }
-    Inkscape::XML::Node
-        *root = sp_document_repr_root(tempdoc),
-        *path = sp_repr_lookup_name(root, "svg:path", -1); // unlimited search depth
+    Inkscape::XML::Node *root = tempdoc->getReprRoot();
+    Inkscape::XML::Node *path = sp_repr_lookup_name(root, "svg:path", -1); // unlimited search depth
     if ( path == NULL ) {
         _userWarn(desktop, _("Clipboard does not contain a path."));
-        sp_document_unref(tempdoc);
+        tempdoc->doUnref();
         return "";
     }
     gchar const *svgd = path->attribute("d");
@@ -568,7 +566,7 @@ Glib::ustring ClipboardManagerImpl::getShapeOrTextObjectId(SPDesktop *desktop)
         _userWarn(desktop, _("Nothing on the clipboard."));
         return "";
     }
-    Inkscape::XML::Node *root = sp_document_repr_root(tempdoc);
+    Inkscape::XML::Node *root = tempdoc->getReprRoot();
 
     Inkscape::XML::Node *repr = sp_repr_lookup_name(root, "svg:path", -1); // unlimited search depth
     if ( repr == NULL ) {
@@ -577,7 +575,7 @@ Glib::ustring ClipboardManagerImpl::getShapeOrTextObjectId(SPDesktop *desktop)
 
     if ( repr == NULL ) {
         _userWarn(desktop, _("Clipboard does not contain a path."));
-        sp_document_unref(tempdoc);
+        tempdoc->doUnref();
         return "";
     }
     gchar const *svgd = repr->attribute("id");
@@ -615,7 +613,7 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
         // write the complete accumulated transform passed to us
         // (we're dealing with unattached representations, so we write to their attributes
         // instead of using sp_item_set_transform)
-        gchar *transform_str = sp_svg_transform_write(sp_item_i2doc_affine(SP_ITEM(i->data)));
+        gchar *transform_str = sp_svg_transform_write(SP_ITEM(i->data)->i2doc_affine());
         obj_copy->setAttribute("transform", transform_str);
         g_free(transform_str);
     }
@@ -702,7 +700,7 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
     }
     // Copy text paths
     if (SP_IS_TEXT_TEXTPATH(item)) {
-        _copyTextPath(SP_TEXTPATH(sp_object_first_child(SP_OBJECT(item))));
+        _copyTextPath(SP_TEXTPATH(item->firstChild()));
     }
     // Copy clipping objects
     if (item->clip_ref->getObject()) {
@@ -759,7 +757,7 @@ void ClipboardManagerImpl::_copyPattern(SPPattern *pattern)
         _copyNode(SP_OBJECT_REPR(pattern), _doc, _defs);
 
         // items in the pattern may also use gradients and other patterns, so recurse
-        for (SPObject *child = sp_object_first_child(SP_OBJECT(pattern)) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
+        for ( SPObject *child = pattern->firstChild() ; child ; child = child->getNext() ) {
             if (!SP_IS_ITEM (child)) {
                 continue;
             }
@@ -814,10 +812,9 @@ Inkscape::XML::Node *ClipboardManagerImpl::_copyNode(Inkscape::XML::Node *node, 
 void ClipboardManagerImpl::_pasteDocument(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
 {
     SPDocument *target_document = sp_desktop_document(desktop);
-    Inkscape::XML::Node
-        *root = sp_document_repr_root(clipdoc),
-        *target_parent = SP_OBJECT_REPR(desktop->currentLayer());
-    Inkscape::XML::Document *target_xmldoc = sp_document_repr_doc(target_document);
+    Inkscape::XML::Node *root = clipdoc->getReprRoot();
+    Inkscape::XML::Node *target_parent = SP_OBJECT_REPR(desktop->currentLayer());
+    Inkscape::XML::Document *target_xmldoc = target_document->getReprDoc();
 
     // copy definitions
     _pasteDefs(desktop, clipdoc);
@@ -847,11 +844,11 @@ void ClipboardManagerImpl::_pasteDocument(SPDesktop *desktop, SPDocument *clipdo
     selection->setReprList(pasted_objects);
 
     // invers apply parent transform
-    Geom::Matrix doc2parent = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
+    Geom::Matrix doc2parent = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
     sp_selection_apply_affine(selection, desktop->dt2doc() * doc2parent * desktop->doc2dt(), true, false);
 
     // Update (among other things) all curves in paths, for bounds() to work
-    sp_document_ensure_up_to_date(target_document);
+    target_document->ensureUpToDate();
 
     // move selection either to original position (in_place) or to mouse pointer
     Geom::OptRect sel_bbox = selection->bounds();
@@ -894,11 +891,10 @@ void ClipboardManagerImpl::_pasteDefs(SPDesktop *desktop, SPDocument *clipdoc)
 {
     // boilerplate vars copied from _pasteDocument
     SPDocument *target_document = sp_desktop_document(desktop);
-    Inkscape::XML::Node
-        *root = sp_document_repr_root(clipdoc),
-        *defs = sp_repr_lookup_name(root, "svg:defs", 1),
-        *target_defs = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(target_document));
-    Inkscape::XML::Document *target_xmldoc = sp_document_repr_doc(target_document);
+    Inkscape::XML::Node *root = clipdoc->getReprRoot();
+    Inkscape::XML::Node *defs = sp_repr_lookup_name(root, "svg:defs", 1);
+    Inkscape::XML::Node *target_defs = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(target_document));
+    Inkscape::XML::Document *target_xmldoc = target_document->getReprDoc();
 
     prevent_id_clashes(clipdoc, target_document);
 
@@ -1201,7 +1197,7 @@ void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint /*info*/)
             guint32 bgcolor = 0x00000000;
 
             Geom::Point origin (SP_ROOT(_clipboardSPDoc->root)->x.computed, SP_ROOT(_clipboardSPDoc->root)->y.computed);
-            Geom::Rect area = Geom::Rect(origin, origin + sp_document_dimensions(_clipboardSPDoc));
+            Geom::Rect area = Geom::Rect(origin, origin + _clipboardSPDoc->getDimensions());
 
             unsigned long int width = (unsigned long int) (area.width() * dpi / PX_PER_IN + 0.5);
             unsigned long int height = (unsigned long int) (area.height() * dpi / PX_PER_IN + 0.5);
@@ -1255,11 +1251,11 @@ void ClipboardManagerImpl::_onClear()
 void ClipboardManagerImpl::_createInternalClipboard()
 {
     if ( _clipboardSPDoc == NULL ) {
-        _clipboardSPDoc = sp_document_new(NULL, false, true);
+        _clipboardSPDoc = SPDocument::createNewDoc(NULL, false, true);
         //g_assert( _clipboardSPDoc != NULL );
         _defs = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(_clipboardSPDoc));
-        _doc = sp_document_repr_doc(_clipboardSPDoc);
-        _root = sp_document_repr_root(_clipboardSPDoc);
+        _doc = _clipboardSPDoc->getReprDoc();
+        _root = _clipboardSPDoc->getReprRoot();
 
         _clipnode = _doc->createElement("inkscape:clipboard");
         _root->appendChild(_clipnode);
@@ -1280,7 +1276,7 @@ void ClipboardManagerImpl::_createInternalClipboard()
 void ClipboardManagerImpl::_discardInternalClipboard()
 {
     if ( _clipboardSPDoc != NULL ) {
-        sp_document_unref(_clipboardSPDoc);
+        _clipboardSPDoc->doUnref();
         _clipboardSPDoc = NULL;
         _defs = NULL;
         _doc = NULL;

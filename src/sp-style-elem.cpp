@@ -317,7 +317,8 @@ sp_style_elem_read_content(SPObject *const object)
      * Dodji replies "right, that's *bug*"; just an unexpected oversight.
      */
 
-    GString *const text = concat_children(*style_elem.repr);
+    //XML Tree being used directly here while it shouldn't be.
+    GString *const text = concat_children(*style_elem.getRepr());
     CRParser *parser = cr_parser_new_from_buf(reinterpret_cast<guchar *>(text->str), text->len,
                                               CR_UTF_8, FALSE);
 
@@ -389,8 +390,8 @@ sp_style_elem_build(SPObject *object, SPDocument *document, Inkscape::XML::Node 
 {
     sp_style_elem_read_content(object);
 
-    sp_object_read_attr(object, "type");
-    sp_object_read_attr(object, "media");
+    object->readAttr( "type" );
+    object->readAttr( "media" );
 
     static Inkscape::XML::NodeEventVector const nodeEventVector = {
         child_add_rm_cb,   // child_added

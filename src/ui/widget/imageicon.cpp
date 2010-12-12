@@ -4,6 +4,7 @@
  * Authors:
  *   Bob Jamison
  *   Other dudes from The Inkscape Organization
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 The Inkscape Organization
  *
@@ -76,7 +77,7 @@ ImageIcon::ImageIcon(const ImageIcon &other)
 ImageIcon::~ImageIcon()
 {
     if (document)
-        sp_document_unref(document);
+        document->doUnref();
 }
 
 
@@ -98,11 +99,11 @@ bool ImageIcon::showSvgDocument(const SPDocument *docArg)
 {
 
     if (document)
-        sp_document_unref(document);
+        document->doUnref();
 
     SPDocument *doc = (SPDocument *)docArg;
 
-    sp_document_ref(doc);
+    doc->doRef();
     document = doc;
 
     //This should remove it from the box, and free resources
@@ -127,7 +128,7 @@ bool ImageIcon::showSvgFile(const Glib::ustring &theFileName)
 
     fileName = Glib::filename_to_utf8(fileName);
 
-    SPDocument *doc = sp_document_new (fileName.c_str(), 0);
+    SPDocument *doc = SPDocument::createNewDoc (fileName.c_str(), 0);
     if (!doc) {
         g_warning("SVGView: error loading document '%s'\n", fileName.c_str());
         return false;
@@ -135,7 +136,7 @@ bool ImageIcon::showSvgFile(const Glib::ustring &theFileName)
 
     showSvgDocument(doc);
 
-    sp_document_unref(doc);
+    doc->doUnref();
 
     return true;
 }
@@ -148,7 +149,7 @@ bool ImageIcon::showSvgFromMemory(const char *xmlBuffer)
         return false;
 
     gint len = (gint)strlen(xmlBuffer);
-    SPDocument *doc = sp_document_new_from_mem(xmlBuffer, len, 0);
+    SPDocument *doc = SPDocument::createNewDocFromMem(xmlBuffer, len, 0);
     if (!doc) {
         g_warning("SVGView: error loading buffer '%s'\n",xmlBuffer);
         return false;
@@ -156,7 +157,7 @@ bool ImageIcon::showSvgFromMemory(const char *xmlBuffer)
 
     showSvgDocument(doc);
 
-    sp_document_unref(doc);
+    doc->doUnref();
 
     return true;
 }

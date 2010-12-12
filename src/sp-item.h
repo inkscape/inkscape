@@ -1,5 +1,5 @@
-#ifndef __SP_ITEM_H__
-#define __SP_ITEM_H__
+#ifndef SEEN_SP_ITEM_H
+#define SEEN_SP_ITEM_H
 
 /** \file
  * Some things pertinent to all visible shapes: SPItem, SPItemView, SPItemCtx, SPItemClass, SPEvent.
@@ -10,6 +10,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2006 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -53,13 +54,15 @@ enum {
  * Also, this probably goes to SPObject base class.
  *
  */
-struct SPEvent {
+class SPEvent {
+public:
     unsigned int type;
     gpointer data;
 };
 
 /// SPItemView
-struct SPItemView {
+class SPItemView {
+public:
     SPItemView *next;
     unsigned int flags;
     unsigned int key;
@@ -79,7 +82,8 @@ struct SPItemView {
 #define SP_ITEM_REFERENCE_FLAGS (1 << 1)
 
 /// Contains transformations to document/viewport and the viewport size.
-struct SPItemCtx {
+class SPItemCtx {
+public:
     SPCtx ctx;
     /** Item to document transformation */
     Geom::Matrix i2doc;
@@ -89,8 +93,19 @@ struct SPItemCtx {
     Geom::Matrix i2vp;
 };
 
+class SPItem;
+class SPItemClass;
+
+#define SP_TYPE_ITEM (SPItem::getType ())
+#define SP_ITEM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_ITEM, SPItem))
+#define SP_ITEM_CLASS(clazz) (G_TYPE_CHECK_CLASS_CAST((clazz), SP_TYPE_ITEM, SPItemClass))
+#define SP_IS_ITEM(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_ITEM))
+
+
 /** Abstract base class for all visible shapes. */
-struct SPItem : public SPObject {
+class SPItem : public SPObject {
+public:
+    static GType getType();
     enum BBoxType {
         // legacy behavior: includes crude stroke, markers; excludes long miters, blur margin; is known to be wrong for caps
         APPROXIMATE_BBOX,
@@ -160,6 +175,36 @@ struct SPItem : public SPObject {
     sigc::connection connectTransformed(sigc::slot<void, Geom::Matrix const *, SPItem *> slot)  {
         return _transformed_signal.connect(slot);
     }
+    void invoke_bbox( Geom::OptRect &bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
+    void invoke_bbox( NRRect *bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
+    void invoke_bbox_full( Geom::OptRect &bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear) const;
+    void invoke_bbox_full( NRRect *bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear) __attribute__ ((deprecated));
+
+    unsigned pos_in_parent();
+    gchar *description();
+    void invoke_print(SPPrintContext *ctx);
+    static unsigned int display_key_new(unsigned int numkeys);
+    NRArenaItem *invoke_show(NRArena *arena, unsigned int key, unsigned int flags);
+    void invoke_hide(unsigned int key);
+    void getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs=0) const;
+    void adjust_pattern(/* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);
+    void adjust_gradient(/* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);
+    void adjust_stroke(gdouble ex);
+    void adjust_stroke_width_recursive(gdouble ex);
+    void adjust_paint_recursive(Geom::Matrix advertized_transform, Geom::Matrix t_ancestors, bool is_pattern);
+    void adjust_livepatheffect(Geom::Matrix const &postmul, bool set = false);
+    void doWriteTransform(Inkscape::XML::Node *repr, Geom::Matrix const &transform, Geom::Matrix const *adv = NULL, bool compensate = true);
+    void set_item_transform(Geom::Matrix const &transform_matrix);
+    void convert_item_to_guides();
+    gint emitEvent (SPEvent &event);
+    NRArenaItem *get_arenaitem(unsigned int key);
+    void getBboxDesktop(NRRect *bbox, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
+    Geom::OptRect getBboxDesktop(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
+    Geom::Matrix i2doc_affine() const;
+    Geom::Matrix i2d_affine() const;
+    void set_i2d_affine(Geom::Matrix const &transform);
+    Geom::Matrix dt2i_affine() const;
+    void convert_to_guides();
 
 private:
     enum EvaluatedStatus
@@ -169,10 +214,29 @@ private:
 
     mutable bool _is_evaluated;
     mutable EvaluatedStatus _evaluated_status;
+
+    static void sp_item_init(SPItem *item);
+
+    static void sp_item_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+    static void sp_item_release(SPObject *object);
+    static void sp_item_set(SPObject *object, unsigned key, gchar const *value);
+    static void sp_item_update(SPObject *object, SPCtx *ctx, guint flags);
+    static Inkscape::XML::Node *sp_item_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+
+    static gchar *sp_item_private_description(SPItem *item);
+    static void sp_item_private_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+
+    static SPItemView *sp_item_view_new_prepend(SPItemView *list, SPItem *item, unsigned flags, unsigned key, NRArenaItem *arenaitem);
+    static SPItemView *sp_item_view_list_remove(SPItemView *list, SPItemView *view);
+    static void clip_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item);
+    static void mask_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item);
+
+    friend class SPItemClass;
 };
 
 /// The SPItem vtable.
-struct SPItemClass {
+class SPItemClass {
+public:
     SPObjectClass parent_class;
 
     /** BBox union in given coordinate system */
@@ -201,57 +265,18 @@ struct SPItemClass {
 
     /** Emit event, if applicable */
     gint (* event) (SPItem *item, SPEvent *event);
+
+	private:
+	static SPObjectClass *static_parent_class;
+	static void sp_item_class_init(SPItemClass *klass);
+
+	friend class SPItem;
 };
 
-/* Flag testing macros */
-
-#define SP_ITEM_STOP_PAINT(i) (SP_ITEM (i)->stop_paint)
-
-/* Methods */
-
-void sp_item_invoke_bbox(SPItem const *item, Geom::OptRect &bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
-void sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
-void sp_item_invoke_bbox_full(SPItem const *item, Geom::OptRect &bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear);
-void sp_item_invoke_bbox_full(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear) __attribute__ ((deprecated));
-
-unsigned sp_item_pos_in_parent(SPItem *item);
-
-gchar *sp_item_description(SPItem * item);
-void sp_item_invoke_print(SPItem *item, SPPrintContext *ctx);
-
-/** Shows/Hides item on given arena display list */
-unsigned int sp_item_display_key_new(unsigned int numkeys);
-NRArenaItem *sp_item_invoke_show(SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
-void sp_item_invoke_hide(SPItem *item, unsigned int key);
-
-void sp_item_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
-
-void sp_item_adjust_pattern(SPItem *item, /* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);
-void sp_item_adjust_gradient(SPItem *item, /* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);
-void sp_item_adjust_stroke(SPItem *item, gdouble ex);
-void sp_item_adjust_stroke_width_recursive(SPItem *item, gdouble ex);
-void sp_item_adjust_paint_recursive(SPItem *item, Geom::Matrix advertized_transform, Geom::Matrix t_ancestors, bool is_pattern);
-void sp_item_adjust_livepatheffect(SPItem *item, Geom::Matrix const &postmul, bool set = false);
-
-void sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, Geom::Matrix const &transform, Geom::Matrix const *adv = NULL, bool compensate = true);
-
-void sp_item_set_item_transform(SPItem *item, Geom::Matrix const &transform);
-
-void sp_item_convert_item_to_guides(SPItem *item);
-
-gint sp_item_event (SPItem *item, SPEvent *event);
-
-/* Utility */
-
-NRArenaItem *sp_item_get_arenaitem(SPItem *item, unsigned int key);
-
-void sp_item_bbox_desktop(SPItem *item, NRRect *bbox, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
-Geom::OptRect sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
+// Utility
 
 Geom::Matrix i2anc_affine(SPObject const *item, SPObject const *ancestor);
 Geom::Matrix i2i_affine(SPObject const *src, SPObject const *dest);
-
-Geom::Matrix sp_item_i2doc_affine(SPItem const *item);
 
 /* fixme: - these are evil, but OK */
 
@@ -261,15 +286,10 @@ Geom::Matrix sp_item_i2doc_affine(SPItem const *item);
  *
  * \return TRANSFORM.
  */
-Geom::Matrix sp_item_i2d_affine(SPItem const *item);
-void sp_item_set_i2d_affine(SPItem *item, Geom::Matrix const &transform);
-Geom::Matrix sp_item_dt2i_affine(SPItem const *item);
 int sp_item_repr_compare_position(SPItem *first, SPItem *second);
 SPItem *sp_item_first_item_child (SPObject *obj);
 
-void sp_item_convert_to_guides(SPItem *item);
-
-#endif
+#endif // SEEN_SP_ITEM_H
 
 /*
   Local Variables:

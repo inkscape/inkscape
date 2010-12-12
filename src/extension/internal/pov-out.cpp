@@ -10,6 +10,7 @@
  *
  * Authors:
  *   Bob Jamison <ishmal@inkscape.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004-2008 Authors
  *
@@ -300,7 +301,7 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
     povShapes.push_back(shapeInfo); //passed all tests.  save the info
 
     // convert the path to only lineto's and cubic curveto's:
-    Geom::Matrix tf = sp_item_i2d_affine(item);
+    Geom::Matrix tf = item->i2d_affine();
     Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
 
     /*

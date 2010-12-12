@@ -1,6 +1,7 @@
 /*
  * Authors:
  *   Ted Gould <ted@gould.cx>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2002-2007 Authors
  *
@@ -258,7 +259,7 @@ Effect::prefs (Inkscape::UI::View::View * doc)
     This function first insures that the extension is loaded, and if not,
     loads it.  It then calls the implemention to do the actual work.  It
     also resets the last effect pointer to be this effect.  Finally, it
-    executes a \c sp_document_done to commit the changes to the undo
+    executes a \c SPDocumentUndo::done to commit the changes to the undo
     stack.
 */
 void

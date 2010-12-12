@@ -1,10 +1,10 @@
-#define __SP_TEXT_CHEMISTRY_C__
-
 /*
  * Text commands
  *
  * Authors:
  *   bulia byak
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 authors
  *
@@ -37,6 +37,7 @@
 #include "sp-flowdiv.h"
 #include "sp-tspan.h"
 
+using Inkscape::DocumentUndo;
 
 SPItem *
 text_in_selection(Inkscape::Selection *selection)
@@ -98,7 +99,7 @@ text_put_on_path()
     SPItem *text = text_or_flowtext_in_selection(selection);
     SPItem *shape = shape_in_selection(selection);
 
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+    Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
 
     if (!text || !shape || g_slist_length((GSList *) selection->itemList()) != 2) {
         sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text and a path</b> to put text on path."));
@@ -133,13 +134,13 @@ text_put_on_path()
         parent->appendChild(repr);
 
         SPItem *new_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
-        sp_item_write_transform(new_item, repr, text->transform);
+        new_item->doWriteTransform(repr, text->transform);
         SP_OBJECT(new_item)->updateRepr();
 
         Inkscape::GC::release(repr);
         text->deleteObject(); // delete the orignal flowtext
 
-        sp_document_ensure_up_to_date(sp_desktop_document(desktop));
+        sp_desktop_document(desktop)->ensureUpToDate();
 
         selection->clear();
 
@@ -188,8 +189,8 @@ text_put_on_path()
     SP_OBJECT_REPR(text)->setAttribute("x", NULL);
     SP_OBJECT_REPR(text)->setAttribute("y", NULL);
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
-                     _("Put text on path"));
+    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
+                       _("Put text on path"));
     g_slist_free(text_reprs);
 }
 
@@ -215,7 +216,7 @@ text_remove_from_path()
             continue;
         }
 
-        SPObject *tp = sp_object_first_child(SP_OBJECT(items->data));
+        SPObject *tp = SP_OBJECT(items->data)->firstChild();
 
         did = true;
 
@@ -225,8 +226,8 @@ text_remove_from_path()
     if (!did) {
         sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No texts-on-paths</b> in the selection."));
     } else {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
-                         _("Remove text from path"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
+                           _("Remove text from path"));
         selection->setList(g_slist_copy((GSList *) selection->itemList())); // reselect to update statusbar description
     }
 }
@@ -252,7 +253,7 @@ text_remove_all_kerns_recursively(SPObject *o)
         g_strfreev(xa_comma);
     }
 
-    for (SPObject *i = sp_object_first_child(o); i != NULL; i = SP_OBJECT_NEXT(i)) {
+    for (SPObject *i = o->firstChild(); i != NULL; i = i->getNext()) {
         text_remove_all_kerns_recursively(i);
     }
 }
@@ -289,8 +290,8 @@ text_remove_all_kerns()
     if (!did) {
         sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("Select <b>text(s)</b> to remove kerns from."));
     } else {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
-                         _("Remove manual kerns"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
+                           _("Remove manual kerns"));
     }
 }
 
@@ -302,7 +303,7 @@ text_flow_into_shape()
         return;
 
     SPDocument *doc = sp_desktop_document (desktop);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -377,8 +378,8 @@ text_flow_into_shape()
 
     SP_OBJECT(text)->deleteObject (true);
 
-    sp_document_done(doc, SP_VERB_CONTEXT_TEXT,
-                     _("Flow text into shape"));
+    DocumentUndo::done(doc, SP_VERB_CONTEXT_TEXT,
+                       _("Flow text into shape"));
 
     sp_desktop_selection(desktop)->set(SP_ITEM(root_object));
 
@@ -394,7 +395,7 @@ text_unflow ()
         return;
 
     SPDocument *doc = sp_desktop_document (desktop);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -433,7 +434,7 @@ text_unflow ()
         rtext->setAttribute("style", SP_OBJECT_REPR(flowtext)->attribute("style")); // fixme: transfer style attrs too; and from descendants
 
         NRRect bbox;
-        sp_item_invoke_bbox(SP_ITEM(flowtext), &bbox, sp_item_i2doc_affine(SP_ITEM(flowtext)), TRUE);
+        SP_ITEM(flowtext)->invoke_bbox( &bbox, SP_ITEM(flowtext)->i2doc_affine(), TRUE);
         Geom::Point xy(bbox.x0, bbox.y0);
         if (xy[Geom::X] != 1e18 && xy[Geom::Y] != 1e18) {
             sp_repr_set_svg_double(rtext, "x", xy[Geom::X]);
@@ -473,8 +474,8 @@ text_unflow ()
     g_slist_free (old_objs);
     g_slist_free (new_objs);
 
-    sp_document_done(doc, SP_VERB_CONTEXT_TEXT, 
-                     _("Unflow flowed text"));
+    DocumentUndo::done(doc, SP_VERB_CONTEXT_TEXT, 
+                       _("Unflow flowed text"));
 }
 
 void
@@ -518,7 +519,7 @@ flowtext_to_text()
         parent->addChild(repr, SP_OBJECT_REPR(item));
 
         SPItem *new_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
-        sp_item_write_transform(new_item, repr, item->transform);
+        new_item->doWriteTransform(repr, item->transform);
         SP_OBJECT(new_item)->updateRepr();
     
         Inkscape::GC::release(repr);
@@ -530,9 +531,9 @@ flowtext_to_text()
     g_slist_free(items);
 
     if (did) {
-        sp_document_done(sp_desktop_document(desktop), 
-                         SP_VERB_OBJECT_FLOWTEXT_TO_TEXT,
-                         _("Convert flowed text to text"));
+        DocumentUndo::done(sp_desktop_document(desktop), 
+                           SP_VERB_OBJECT_FLOWTEXT_TO_TEXT,
+                           _("Convert flowed text to text"));
         selection->setReprList(reprs);        
     } else {
         sp_desktop_message_stack(desktop)->

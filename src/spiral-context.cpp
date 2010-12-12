@@ -1,5 +1,3 @@
-#define __SP_SPIRAL_CONTEXT_C__
-
 /*
  * Spiral drawing context
  *
@@ -7,6 +5,8 @@
  *   Mitsuru Oka
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2001 Lauris Kaplinski
  * Copyright (C) 2001-2002 Mitsuru Oka
@@ -41,6 +41,8 @@
 #include "preferences.h"
 #include "context-fns.h"
 #include "shape-editor.h"
+
+using Inkscape::DocumentUndo;
 
 static void sp_spiral_context_class_init(SPSpiralContextClass * klass);
 static void sp_spiral_context_init(SPSpiralContext *spiral_context);
@@ -397,8 +399,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     return ret;
 }
 
-static void
-sp_spiral_drag(SPSpiralContext *sc, Geom::Point p, guint state)
+static void sp_spiral_drag(SPSpiralContext *sc, Geom::Point p, guint state)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
 
@@ -411,17 +412,17 @@ sp_spiral_drag(SPSpiralContext *sc, Geom::Point p, guint state)
             return;
         }
 
-        /* Create object */
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(sc));
+        // Create object
+        Inkscape::XML::Document *xml_doc = SP_EVENT_CONTEXT_DOCUMENT(sc)->getReprDoc();
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
         repr->setAttribute("sodipodi:type", "spiral");
 
-        /* Set style */
+        // Set style
         sp_desktop_apply_style_tool(desktop, repr, "/tools/shapes/spiral", false);
 
         sc->item = (SPItem *) desktop->currentLayer()->appendChildRepr(repr);
         Inkscape::GC::release(repr);
-        sc->item->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
+        sc->item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
         sc->item->updateRepr();
 
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
@@ -475,14 +476,14 @@ sp_spiral_finish(SPSpiralContext *sc)
 
     	SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
 
-        sp_shape_set_shape(SP_SHAPE(spiral));
+        SP_SHAPE(spiral)->setShape();
         SP_OBJECT(spiral)->updateRepr(SP_OBJECT_WRITE_EXT);
 
         sp_canvas_end_forced_full_redraws(desktop->canvas);
 
         sp_desktop_selection(desktop)->set(sc->item);
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SPIRAL,
-                         _("Create spiral"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SPIRAL,
+                           _("Create spiral"));
 
         sc->item = NULL;
     }
@@ -507,7 +508,7 @@ static void sp_spiral_cancel(SPSpiralContext *sc)
 
     sp_canvas_end_forced_full_redraws(desktop->canvas);
 
-    sp_document_cancel(sp_desktop_document(desktop));
+    DocumentUndo::cancel(sp_desktop_document(desktop));
 }
 
 /*

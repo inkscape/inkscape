@@ -4,6 +4,7 @@
  * Authors:
  *   bulia byak <bulia@dr.com>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 Johan Engelen
  * Copyright (C) 2005 authors
@@ -42,6 +43,7 @@
 
 #include "toolbox.h"
 
+using Inkscape::DocumentUndo;
 
 //########################
 //##       Gradient     ##
@@ -150,8 +152,8 @@ gr_item_activate (GtkMenuItem *menuitem, gpointer data)
 
     gr_apply_gradient (selection, ev? ev->get_drag() : NULL, gr);
 
-    sp_document_done (sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
-                      _("Assign gradient to object"));
+    DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
+		       _("Assign gradient to object"));
 }
 
 gchar *
@@ -171,7 +173,7 @@ GtkWidget *gr_vector_list(SPDesktop *desktop, bool selection_empty, SPGradient *
     GtkWidget *m = gtk_menu_new ();
 
     GSList *gl = NULL;
-    const GSList *gradients = sp_document_get_resource_list (document, "gradient");
+    const GSList *gradients = document->getResourceList("gradient");
     for (const GSList *i = gradients; i != NULL; i = i->next) {
         SPGradient *grad = SP_GRADIENT(i->data);
         if ( grad->hasStops() && !grad->isSolid() ) {

@@ -3,6 +3,8 @@
  */
 /* Authors:
  *   bulia byak <bulia@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2009 Authors
  *
@@ -200,10 +202,11 @@ all_text_items (SPObject *r, GSList *l, bool hidden, bool locked)
     if (SP_IS_DEFS(r))
         return l; // we're not interested in items in defs
 
-    if (!strcmp (SP_OBJECT_REPR (r)->name(), "svg:metadata"))
+    if (!strcmp(r->getRepr()->name(), "svg:metadata")) {
         return l; // we're not interested in metadata
+    }
 
-    for (SPObject *child = sp_object_first_child(r); child; child = SP_OBJECT_NEXT (child)) {
+    for (SPObject *child = r->firstChild(); child; child = child->next) {
         if (SP_IS_ITEM (child) && !SP_OBJECT_IS_CLONED (child) && !_desktop->isLayer(SP_ITEM(child))) {
                 if ((hidden || !_desktop->itemIsHidden(SP_ITEM(child))) && (locked || !SP_ITEM(child)->isLocked())) {
                     if (SP_IS_TEXT(child) || SP_IS_FLOWTEXT(child))
@@ -236,8 +239,8 @@ gint compare_text_bboxes (gconstpointer a, gconstpointer b)
     SPItem *i1 = SP_ITEM(a);
     SPItem *i2 = SP_ITEM(b);
 
-    Geom::OptRect bbox1 = i1->getBounds(sp_item_i2d_affine(i1));
-    Geom::OptRect bbox2 = i2->getBounds(sp_item_i2d_affine(i2));
+    Geom::OptRect bbox1 = i1->getBounds(i1->i2d_affine());
+    Geom::OptRect bbox2 = i2->getBounds(i2->i2d_affine());
     if (!bbox1 || !bbox2) {
         return 0;
     }
@@ -392,7 +395,7 @@ spellcheck_init(SPDesktop *desktop)
     _speller3 = to_aspell_speller(ret);
     }
 
-    _root = SP_DOCUMENT_ROOT (sp_desktop_document (desktop));
+    _root = sp_desktop_document(desktop)->getRoot();
 
     // empty the list of objects we've checked
     g_slist_free (_seen_objects);
@@ -570,7 +573,7 @@ spellcheck_next_word()
 
         // draw rect
         std::vector<Geom::Point> points =
-            _layout->createSelectionShape(_begin_w, _end_w, sp_item_i2d_affine(_text));
+            _layout->createSelectionShape(_begin_w, _end_w, _text->i2d_affine());
         Geom::Point tl, br;
         tl = br = points.front();
         for (unsigned i = 0 ; i < points.size() ; i ++) {
@@ -777,8 +780,8 @@ sp_spellcheck_accept (GObject *, GObject *dlg)
             // find the end of the word anew
             _end_w = _begin_w;
             _end_w.nextEndOfWord();
-            sp_document_done (sp_desktop_document(_desktop), SP_VERB_CONTEXT_TEXT,
-                              _("Fix spelling"));
+            SPDocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_TEXT,
+                                 _("Fix spelling"));
         }
     }
 

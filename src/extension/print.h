@@ -1,6 +1,7 @@
 /*
  * Authors:
  *   Ted Gould <ted@gould.cx>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2002-2004 Authors
  *
@@ -14,7 +15,7 @@
 
 #include "display/nr-arena-forward.h"
 #include "forward.h"
-
+#include "sp-item.h"
 namespace Inkscape {
 namespace Extension {
 

@@ -1,10 +1,9 @@
-#define __BOX3D_SIDE_C__
-
 /*
  * 3D box face implementation
  *
  * Authors:
  *   Maximilian Albert <Anhalter42@gmx.de>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007  Authors
  *
@@ -93,13 +92,13 @@ box3d_side_init (Box3DSide * side)
     side->front_or_rear = Box3D::FRONT;
 }
 
-static void
-box3d_side_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
+static void box3d_side_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
 {
-    if (((SPObjectClass *) parent_class)->build)
-        ((SPObjectClass *) parent_class)->build (object, document, repr);
+    if (((SPObjectClass *) parent_class)->build) {
+        ((SPObjectClass *) parent_class)->build(object, document, repr);
+    }
 
-    sp_object_read_attr(object, "inkscape:box3dsidetype");
+    object->readAttr( "inkscape:box3dsidetype" );
 }
 
 static Inkscape::XML::Node *
@@ -117,7 +116,7 @@ box3d_side_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::
         sp_repr_set_int(repr, "inkscape:box3dsidetype", side->dir1 ^ side->dir2 ^ side->front_or_rear);
     }
 
-    sp_shape_set_shape ((SPShape *) object);
+    static_cast<SPShape *>(object)->setShape();
 
     /* Duplicate the path */
     SPCurve const *curve = ((SPShape *) object)->curve;
@@ -179,11 +178,31 @@ box3d_side_update (SPObject *object, SPCtx *ctx, guint flags)
     if (flags & (SP_OBJECT_MODIFIED_FLAG |
                  SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        sp_shape_set_shape ((SPShape *) object);
+        static_cast<SPShape *>(object)->setShape ();
     }
 
     if (((SPObjectClass *) parent_class)->update)
         ((SPObjectClass *) parent_class)->update (object, ctx, flags);
+}
+
+/* Create a new Box3DSide and append it to the parent box */
+Box3DSide * Box3DSide::createBox3DSide(SPBox3D *box)
+{
+	Box3DSide *box3d_side = 0;
+	Inkscape::XML::Document *xml_doc = box->document->rdoc;
+	Inkscape::XML::Node *repr_side = xml_doc->createElement("svg:path");
+	repr_side->setAttribute("sodipodi:type", "inkscape:box3dside");
+	box3d_side = static_cast<Box3DSide *>(box->appendChildRepr(repr_side));
+	return box3d_side;
+}
+
+/*
+ * Function which return the type attribute for Box3D. 
+ * Acts as a replacement for directly accessing the XML Tree directly.
+ */
+long long int Box3DSide::getFaceId()
+{
+	    return this->getIntAttribute("inkscape:box3dsidetype", -1);
 }
 
 void
@@ -243,43 +262,19 @@ box3d_side_set_shape (SPShape *shape)
 
     /* Reset the shape'scurve to the "original_curve"
      * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
-    sp_shape_set_curve_insync (shape, c, TRUE);
+    shape->setCurveInsync( c, TRUE);
     if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(shape)) && sp_lpe_item_path_effects_enabled(SP_LPE_ITEM(shape))) {
         SPCurve *c_lpe = c->copy();
         bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM (shape), c_lpe);
         if (success) {
-            sp_shape_set_curve_insync (shape, c_lpe, TRUE);
+            shape->setCurveInsync( c_lpe, TRUE);
         }
         c_lpe->unref();
     }
     c->unref();
 }
 
-void
-box3d_side_apply_style (Box3DSide *side) {
-    Inkscape::XML::Node *repr_face = SP_OBJECT_REPR(SP_OBJECT(side));
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-
-    Glib::ustring descr = "/desktop/";
-    descr += box3d_side_axes_string(side);
-    descr += "/style";
-    Glib::ustring cur_style = prefs->getString(descr);    
-    
-    SPDesktop *desktop = inkscape_active_desktop();
-    bool use_current = prefs->getBool("/tools/shapes/3dbox/usecurrent", false);
-    if (use_current && !cur_style.empty()) {
-        /* use last used style */
-        repr_face->setAttribute("style", cur_style.data());
-    } else {
-        /* use default style */
-        GString *pstring = g_string_new("");
-        g_string_printf (pstring, "/tools/shapes/3dbox/%s", box3d_side_axes_string(side));
-        sp_desktop_apply_style_tool (desktop, repr_face, pstring->str, false);
-    }
-}
-
-gchar *
-box3d_side_axes_string(Box3DSide *side)
+gchar *box3d_side_axes_string(Box3DSide *side)
 {
     GString *pstring = g_string_new("");
     g_string_printf (pstring, "%s", Box3D::string_from_axes ((Box3D::Axis) (side->dir1 ^ side->dir2)));
@@ -314,15 +309,14 @@ box3d_side_perspective(Box3DSide *side) {
     return SP_BOX3D(SP_OBJECT(side)->parent)->persp_ref->getObject();
 }
 
-Inkscape::XML::Node *
-box3d_side_convert_to_path(Box3DSide *side) {
+Inkscape::XML::Node *box3d_side_convert_to_path(Box3DSide *side) {
     // TODO: Copy over all important attributes (see sp_selected_item_to_curved_repr() for an example)
     SPDocument *doc = SP_OBJECT_DOCUMENT(side);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
-    repr->setAttribute("d", SP_OBJECT_REPR(side)->attribute("d"));
-    repr->setAttribute("style", SP_OBJECT_REPR(side)->attribute("style"));
+    repr->setAttribute("d", side->getAttribute("d"));
+    repr->setAttribute("style", side->getAttribute("style"));
 
     return repr;
 }

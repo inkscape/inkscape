@@ -55,9 +55,9 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
             mime_type = "image/png";
         }
 
-        doc = sp_document_new(NULL, TRUE, TRUE);
-        bool saved = sp_document_get_undo_sensitive(doc);
-        sp_document_set_undo_sensitive(doc, false); // no need to undo in this temporary document
+        doc = SPDocument::createNewDoc(NULL, TRUE, TRUE);
+        bool saved = DocumentUndo::getUndoSensitive(doc);
+        DocumentUndo::setUndoSensitive(doc, false); // no need to undo in this temporary document
 
         double width = gdk_pixbuf_get_width(pb);
         double height = gdk_pixbuf_get_height(pb);
@@ -79,7 +79,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         }
 
         // Create image node
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+        Inkscape::XML::Document *xml_doc = doc->getReprDoc();
         Inkscape::XML::Node *image_node = xml_doc->createElement("svg:image");
         sp_repr_set_svg_double(image_node, "width", width);
         sp_repr_set_svg_double(image_node, "height", height);
@@ -100,11 +100,11 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         g_object_unref(pb);
 
         // Add it to the current layer
-        SP_DOCUMENT_ROOT(doc)->appendChildRepr(image_node);
+        doc->getRoot()->appendChildRepr(image_node);
         Inkscape::GC::release(image_node);
         fit_canvas_to_drawing(doc);
         // restore undo, as now this document may be shown to the user if a bitmap was opened
-        sp_document_set_undo_sensitive(doc, saved);
+        DocumentUndo::setUndoSensitive(doc, saved);
     } else {
         printf("GdkPixbuf loader failed\n");
     }

@@ -11,10 +11,12 @@ SignalObserver::SignalObserver()
 // Add this observer to the SPObject and remove it from any previous object
 void SignalObserver::set(SPObject* o)
 {
-    if(_oldsel && _oldsel->repr)
-        _oldsel->repr->removeObserver(*this);
-    if(o && o->repr)
-        o->repr->addObserver(*this);
+  // XML Tree being used direcly in this function in the following code
+  //   while it shouldn't be
+    if(_oldsel && _oldsel->getRepr())
+        _oldsel->getRepr()->removeObserver(*this);
+    if(o && o->getRepr())
+        o->getRepr()->addObserver(*this);
     _oldsel = o;
 }
 

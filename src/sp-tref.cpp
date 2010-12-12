@@ -1,5 +1,3 @@
-#define __SP_TREF_CPP__
-
 /** \file
  * SVG <tref> implementation - All character data within the referenced
  * element, including character data enclosed within additional markup,
@@ -10,6 +8,8 @@
 /*
  * Authors:
  *   Gail Banaszkiewicz <Gail.Banaszkiewicz@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 Gail Banaszkiewicz
  *
@@ -154,12 +154,12 @@ sp_tref_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
         ((SPObjectClass *) tref_parent_class)->build(object, document, repr);
     }
 
-    sp_object_read_attr(object, "xlink:href");
-    sp_object_read_attr(object, "x");
-    sp_object_read_attr(object, "y");
-    sp_object_read_attr(object, "dx");
-    sp_object_read_attr(object, "dy");
-    sp_object_read_attr(object, "rotate");
+    object->readAttr( "xlink:href" );
+    object->readAttr( "x" );
+    object->readAttr( "y" );
+    object->readAttr( "dx" );
+    object->readAttr( "dy" );
+    object->readAttr( "rotate" );
 }
 
 /**
@@ -359,7 +359,7 @@ sp_tref_description(SPItem *item)
         char *child_desc;
 
         if (SP_IS_ITEM(referred)) {
-            child_desc = sp_item_description(SP_ITEM(referred));
+            child_desc = SP_ITEM(referred)->description();
         } else {
             child_desc = g_strdup("");
         }
@@ -388,7 +388,7 @@ sp_tref_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPTRef *tref)
         tref->_delete_connection.disconnect();
 
         if (tref->stringChild) {
-            sp_object_detach(SP_OBJECT(tref), tref->stringChild);
+            SP_OBJECT(tref)->detach(tref->stringChild);
             tref->stringChild = NULL;
         }
 
@@ -507,8 +507,7 @@ sp_tref_fully_contained(SPObject *start_item, Glib::ustring::iterator &start,
 }
 
 
-void
-sp_tref_update_text(SPTRef *tref)
+void sp_tref_update_text(SPTRef *tref)
 {
     if (tref) {
         // Get the character data that will be used with this tref
@@ -516,20 +515,20 @@ sp_tref_update_text(SPTRef *tref)
         build_string_from_root(SP_OBJECT_REPR(tref->getObjectReferredTo()), &charData);
 
         if (tref->stringChild) {
-            sp_object_detach(SP_OBJECT(tref), tref->stringChild);
+            SP_OBJECT(tref)->detach(tref->stringChild);
             tref->stringChild = NULL;
         }
 
         // Create the node and SPString to be the tref's child
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(tref));
+        Inkscape::XML::Document *xml_doc = SP_OBJECT_DOCUMENT(tref)->getReprDoc();
 
         Inkscape::XML::Node *newStringRepr = xml_doc->createTextNode(charData.c_str());
         tref->stringChild = SP_OBJECT(g_object_new(sp_repr_type_lookup(newStringRepr), NULL));
 
         // Add this SPString as a child of the tref
-        sp_object_attach(SP_OBJECT(tref), tref->stringChild, tref->lastChild());
+        SP_OBJECT(tref)->attach(tref->stringChild, tref->lastChild());
         sp_object_unref(tref->stringChild, NULL);
-        sp_object_invoke_build(tref->stringChild, SP_OBJECT(tref)->document, newStringRepr, TRUE);
+        (tref->stringChild)->invoke_build(SP_OBJECT(tref)->document, newStringRepr, TRUE);
 
         Inkscape::GC::release(newStringRepr);
     }
@@ -586,7 +585,7 @@ sp_tref_convert_to_tspan(SPObject *obj)
             Inkscape::XML::Node *tref_parent = sp_repr_parent(tref_repr);
 
             SPDocument *document = SP_OBJECT(tref)->document;
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+            Inkscape::XML::Document *xml_doc = document->getReprDoc();
 
             Inkscape::XML::Node *new_tspan_repr = xml_doc->createElement("svg:tspan");
 
@@ -633,7 +632,7 @@ sp_tref_convert_to_tspan(SPObject *obj)
     ////////////////////
     else {
         GSList *l = NULL;
-        for (SPObject *child = sp_object_first_child(obj) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
+        for (SPObject *child = obj->firstChild() ; child != NULL ; child = child->getNext() ) {
             sp_object_ref (SP_OBJECT (child), obj);
             l = g_slist_prepend (l, child);
         }

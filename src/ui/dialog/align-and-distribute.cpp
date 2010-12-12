@@ -7,6 +7,8 @@
  *   Frank Felfe <innerspace@iname.com>
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Tim Dwyer <tgdwyer@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2004, 2005 Authors
  *
@@ -152,7 +154,7 @@ private :
                 selected.erase(master);
             /*}*/
             //Compute the anchor point
-            Geom::OptRect b = sp_item_bbox_desktop (thing);
+            Geom::OptRect b = thing->getBboxDesktop ();
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -163,14 +165,13 @@ private :
         }
 
         case AlignAndDistribute::PAGE:
-            mp = Geom::Point(a.mx1 * sp_document_width(sp_desktop_document(desktop)),
-                           a.my1 * sp_document_height(sp_desktop_document(desktop)));
+            mp = Geom::Point(a.mx1 * sp_desktop_document(desktop)->getWidth(),
+                           a.my1 * sp_desktop_document(desktop)->getHeight());
             break;
 
         case AlignAndDistribute::DRAWING:
         {
-            Geom::OptRect b = sp_item_bbox_desktop
-                ( (SPItem *) sp_document_root (sp_desktop_document (desktop)) );
+            Geom::OptRect b = static_cast<SPItem *>( sp_desktop_document(desktop)->getRoot() )->getBboxDesktop();
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -216,9 +217,9 @@ private :
              it != selected.end();
              it++)
         {
-            sp_document_ensure_up_to_date(sp_desktop_document (desktop));
+            sp_desktop_document (desktop)->ensureUpToDate();
             if (!sel_as_group)
-                b = sp_item_bbox_desktop (*it);
+                b = (*it)->getBboxDesktop();
             if (b) {
                 Geom::Point const sp(a.sx0 * b->min()[Geom::X] + a.sx1 * b->max()[Geom::X],
                                      a.sy0 * b->min()[Geom::Y] + a.sy1 * b->max()[Geom::Y]);
@@ -234,8 +235,8 @@ private :
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
         if (changed) {
-            sp_document_done ( sp_desktop_document (desktop) , SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
-                               _("Align"));
+            DocumentUndo::done( sp_desktop_document(desktop) , SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+                                _("Align"));
         }
 
 
@@ -322,7 +323,7 @@ private :
             it != selected.end();
             ++it)
         {
-            Geom::OptRect bbox = sp_item_bbox_desktop(*it);
+            Geom::OptRect bbox = (*it)->getBboxDesktop();
             if (bbox) {
                 sorted.push_back(BBoxSort(*it, *bbox, _orientation, _kBegin, _kEnd));
             }
@@ -393,8 +394,8 @@ private :
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
         if (changed) {
-            sp_document_done ( sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
-                               _("Distribute"));
+            DocumentUndo::done( sp_desktop_document(desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+                                _("Distribute"));
         }
     }
     guint _index;
@@ -504,8 +505,8 @@ private :
         // restore compensation setting
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
-        sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
-                         _("Remove overlaps"));
+        DocumentUndo::done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+                           _("Remove overlaps"));
     }
 };
 
@@ -535,8 +536,8 @@ private :
         // restore compensation setting
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
-        sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
-                         _("Arrange connector network"));
+        DocumentUndo::done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+                           _("Arrange connector network"));
     }
 };
 
@@ -628,10 +629,11 @@ private :
         // restore compensation setting
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
-	sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
-                        _("Exchange Positions"));
+        DocumentUndo::done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+                           _("Exchange Positions"));
     }
 };
+
 // instantiae the private static member
 boost::optional<Geom::Point> ActionExchangePositions::center;
 
@@ -661,8 +663,8 @@ private :
         // restore compensation setting
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
-        sp_document_done (sp_desktop_document (_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
-                          _("Unclump"));
+        DocumentUndo::done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+                           _("Unclump"));
     }
 };
 
@@ -715,8 +717,8 @@ private :
             it != selected.end();
             ++it)
         {
-            sp_document_ensure_up_to_date(sp_desktop_document (desktop));
-            Geom::OptRect item_box = sp_item_bbox_desktop (*it);
+            sp_desktop_document (desktop)->ensureUpToDate();
+            Geom::OptRect item_box = (*it)->getBboxDesktop ();
             if (item_box) {
                 // find new center, staying within bbox
                 double x = _dialog.randomize_bbox->min()[Geom::X] + (*item_box)[Geom::X].extent() /2 +
@@ -732,8 +734,8 @@ private :
         // restore compensation setting
         prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
-        sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
-                          _("Randomize positions"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+                           _("Randomize positions"));
     }
 };
 
@@ -801,7 +803,7 @@ private :
                 Inkscape::Text::Layout const *layout = te_get_layout(*it);
                 boost::optional<Geom::Point> pt = layout->baselineAnchorPoint();
                 if (pt) {
-                    Geom::Point base = *pt * sp_item_i2d_affine(*it);
+                    Geom::Point base = *pt * (*it)->i2d_affine();
                     if (base[Geom::X] < b_min[Geom::X]) b_min[Geom::X] = base[Geom::X];
                     if (base[Geom::Y] < b_min[Geom::Y]) b_min[Geom::Y] = base[Geom::Y];
                     if (base[Geom::X] > b_max[Geom::X]) b_max[Geom::X] = base[Geom::X];
@@ -831,8 +833,8 @@ private :
             }
 
             if (changed) {
-                sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
-                                  _("Distribute text baselines"));
+                DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+                                    _("Distribute text baselines"));
             }
 
         } else {
@@ -844,7 +846,7 @@ private :
                     Inkscape::Text::Layout const *layout = te_get_layout(*it);
                     boost::optional<Geom::Point> pt = layout->baselineAnchorPoint();
                     if (pt) {
-                        Geom::Point base = *pt * sp_item_i2d_affine(*it);
+                        Geom::Point base = *pt * (*it)->i2d_affine();
                         Geom::Point t(0.0, 0.0);
                         t[_orientation] = b_min[_orientation] - base[_orientation];
                         sp_item_move_rel(*it, Geom::Translate(t));
@@ -854,8 +856,8 @@ private :
             }
 
             if (changed) {
-                sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
-                                  _("Align text baselines"));
+                DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+                                   _("Align text baselines"));
             }
         }
     }
@@ -1239,7 +1241,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = -1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
-            Geom::OptRect b = sp_item_bbox_desktop (*it);
+            Geom::OptRect b = (*it)->getBboxDesktop ();
             if (b) {
                 gdouble dim = (*b)[horizontal ? Geom::X : Geom::Y].extent();
                 if (dim > max) {
@@ -1256,7 +1258,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = 1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
-            Geom::OptRect b = sp_item_bbox_desktop (*it);
+            Geom::OptRect b = (*it)->getBboxDesktop ();
             if (b) {
                 gdouble dim = (*b)[horizontal ? Geom::X : Geom::Y].extent();
                 if (dim < max) {

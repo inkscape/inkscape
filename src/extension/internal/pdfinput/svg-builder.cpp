@@ -3,6 +3,7 @@
  * 
  * Authors:
  *   miklos erdelyi
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2007 Authors
  *
@@ -77,12 +78,13 @@ struct SvgTransparencyGroup {
  * 
  */
 
-SvgBuilder::SvgBuilder(SPDocument *document, gchar *docname, XRef *xref) {
+SvgBuilder::SvgBuilder(SPDocument *document, gchar *docname, XRef *xref)
+{
     _is_top_level = true;
     _doc = document;
     _docname = docname;
     _xref = xref;
-    _xml_doc = sp_document_repr_doc(_doc);
+    _xml_doc = _doc->getReprDoc();
     _container = _root = _doc->rroot;
     _root->setAttribute("xml:space", "preserve");
     _init();

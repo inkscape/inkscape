@@ -1,5 +1,3 @@
-#define __SP_REPR_IO_C__
-
 /*
  * Dirty DOM-like  tree
  *

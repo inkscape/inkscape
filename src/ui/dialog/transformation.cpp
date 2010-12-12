@@ -4,6 +4,7 @@
 /* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   buliabyak@gmail.com
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004, 2005 Authors
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
@@ -636,7 +637,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
                      it != selected.end();
                      ++it)
                 {
-                    Geom::OptRect bbox = sp_item_bbox_desktop(*it);
+                    Geom::OptRect bbox = (*it)->getBboxDesktop();
                     if (bbox) {
                         sorted.push_back(BBoxSort(*it, *bbox, Geom::X, x > 0? 1. : 0., x > 0? 0. : 1.));
                     }
@@ -660,7 +661,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
                      it != selected.end();
                      ++it)
                 {
-                    Geom::OptRect bbox = sp_item_bbox_desktop(*it);
+                    Geom::OptRect bbox = (*it)->getBboxDesktop();
                     if (bbox) {
                         sorted.push_back(BBoxSort(*it, *bbox, Geom::Y, y > 0? 1. : 0., y > 0? 0. : 1.));
                     }
@@ -687,8 +688,8 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
         }
     }
 
-    sp_document_done ( sp_desktop_document (selection->desktop()) , SP_VERB_DIALOG_TRANSFORM,
-                       _("Move"));
+    DocumentUndo::done( sp_desktop_document(selection->desktop()) , SP_VERB_DIALOG_TRANSFORM,
+                        _("Move"));
 }
 
 void
@@ -704,7 +705,7 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
             Geom::Scale scale (0,0);
             // the values are increments!
             if (_units_scale.isAbsolute()) {
-                Geom::OptRect bbox(sp_item_bbox_desktop(item));
+                Geom::OptRect bbox(item->getBboxDesktop());
                 if (bbox) {
                     double new_width = scaleX;
                     if (fabs(new_width) < 1e-6) new_width = 1e-6; // not 0, as this would result in a nasty no-bbox object
@@ -744,8 +745,8 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
         }
     }
 
-    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
-                     _("Scale"));
+    DocumentUndo::done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
+                       _("Scale"));
 }
 
 void
@@ -766,8 +767,8 @@ Transformation::applyPageRotate(Inkscape::Selection *selection)
         }
     }
 
-    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
-                     _("Rotate"));
+    DocumentUndo::done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
+                       _("Rotate"));
 }
 
 void
@@ -791,7 +792,7 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
             } else { // absolute displacement
                 double skewX = _scalar_skew_horizontal.getValue("px");
                 double skewY = _scalar_skew_vertical.getValue("px");
-                Geom::OptRect bbox(sp_item_bbox_desktop(item));
+                Geom::OptRect bbox(item->getBboxDesktop());
                 if (bbox) {
                     double width = bbox->dimensions()[Geom::X];
                     double height = bbox->dimensions()[Geom::Y];
@@ -825,8 +826,8 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
         }
     }
 
-    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
-                     _("Skew"));
+    DocumentUndo::done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
+                       _("Skew"));
 }
 
 
@@ -845,15 +846,15 @@ Transformation::applyPageTransform(Inkscape::Selection *selection)
     if (_check_replace_matrix.get_active()) {
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
             SPItem *item = SP_ITEM(l->data);
-            sp_item_set_item_transform(item, displayed);
+            item->set_item_transform(displayed);
             SP_OBJECT(item)->updateRepr();
         }
     } else {
         sp_selection_apply_affine(selection, displayed); // post-multiply each object's transform
     }
 
-    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
-                     _("Edit transformation matrix"));
+    DocumentUndo::done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM,
+                       _("Edit transformation matrix"));
 }
 
 

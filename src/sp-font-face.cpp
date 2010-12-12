@@ -3,7 +3,6 @@
 #endif
 
 #ifdef ENABLE_SVG_FONTS
-#define __SP_FONTFACE_C__
 
 /*
  * SVG <font-face> element implementation
@@ -14,6 +13,7 @@
  *
  * Author:
  *   Felipe C. da S. Sanches <juca@members.fsf.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2008, Felipe C. da S. Sanches
  *
@@ -403,39 +403,39 @@ static void sp_fontface_build(SPObject *object, SPDocument *document, Inkscape::
         ((SPObjectClass *) (parent_class))->build(object, document, repr);
     }
 
-    sp_object_read_attr(object, "font-family");
-    sp_object_read_attr(object, "font-style");
-    sp_object_read_attr(object, "font-variant");
-    sp_object_read_attr(object, "font-weight");
-    sp_object_read_attr(object, "font-stretch");
-    sp_object_read_attr(object, "font-size");
-    sp_object_read_attr(object, "unicode-range");
-    sp_object_read_attr(object, "units-per-em");
-    sp_object_read_attr(object, "panose-1");
-    sp_object_read_attr(object, "stem-v");
-    sp_object_read_attr(object, "stem-h");
-    sp_object_read_attr(object, "slope");
-    sp_object_read_attr(object, "cap-height");
-    sp_object_read_attr(object, "x-height");
-    sp_object_read_attr(object, "accent-height");
-    sp_object_read_attr(object, "ascent");
-    sp_object_read_attr(object, "descent");
-    sp_object_read_attr(object, "widths");
-    sp_object_read_attr(object, "bbox");
-    sp_object_read_attr(object, "ideographic");
-    sp_object_read_attr(object, "alphabetic");
-    sp_object_read_attr(object, "mathematical");
-    sp_object_read_attr(object, "ranging");
-    sp_object_read_attr(object, "v-ideogaphic");
-    sp_object_read_attr(object, "v-alphabetic");
-    sp_object_read_attr(object, "v-mathematical");
-    sp_object_read_attr(object, "v-hanging");
-    sp_object_read_attr(object, "underline-position");
-    sp_object_read_attr(object, "underline-thickness");
-    sp_object_read_attr(object, "strikethrough-position");
-    sp_object_read_attr(object, "strikethrough-thickness");
-    sp_object_read_attr(object, "overline-position");
-    sp_object_read_attr(object, "overline-thickness");
+    object->readAttr( "font-family" );
+    object->readAttr( "font-style" );
+    object->readAttr( "font-variant" );
+    object->readAttr( "font-weight" );
+    object->readAttr( "font-stretch" );
+    object->readAttr( "font-size" );
+    object->readAttr( "unicode-range" );
+    object->readAttr( "units-per-em" );
+    object->readAttr( "panose-1" );
+    object->readAttr( "stem-v" );
+    object->readAttr( "stem-h" );
+    object->readAttr( "slope" );
+    object->readAttr( "cap-height" );
+    object->readAttr( "x-height" );
+    object->readAttr( "accent-height" );
+    object->readAttr( "ascent" );
+    object->readAttr( "descent" );
+    object->readAttr( "widths" );
+    object->readAttr( "bbox" );
+    object->readAttr( "ideographic" );
+    object->readAttr( "alphabetic" );
+    object->readAttr( "mathematical" );
+    object->readAttr( "ranging" );
+    object->readAttr( "v-ideogaphic" );
+    object->readAttr( "v-alphabetic" );
+    object->readAttr( "v-mathematical" );
+    object->readAttr( "v-hanging" );
+    object->readAttr( "underline-position" );
+    object->readAttr( "underline-thickness" );
+    object->readAttr( "strikethrough-position" );
+    object->readAttr( "strikethrough-thickness" );
+    object->readAttr( "overline-position" );
+    object->readAttr( "overline-thickness" );
 }
 
 static void sp_fontface_children_modified(SPFontFace */*sp_fontface*/)
@@ -780,39 +780,39 @@ static void
 sp_fontface_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     if (flags & (SP_OBJECT_MODIFIED_FLAG)) {
-        sp_object_read_attr(object, "font-family");
-        sp_object_read_attr(object, "font-style");
-        sp_object_read_attr(object, "font-variant");
-        sp_object_read_attr(object, "font-weight");
-        sp_object_read_attr(object, "font-stretch");
-        sp_object_read_attr(object, "font-size");
-        sp_object_read_attr(object, "unicode-range");
-        sp_object_read_attr(object, "units-per-em");
-        sp_object_read_attr(object, "panose-1");
-        sp_object_read_attr(object, "stemv");
-        sp_object_read_attr(object, "stemh");
-        sp_object_read_attr(object, "slope");
-        sp_object_read_attr(object, "cap-height");
-        sp_object_read_attr(object, "x-height");
-        sp_object_read_attr(object, "accent-height");
-        sp_object_read_attr(object, "ascent");
-        sp_object_read_attr(object, "descent");
-        sp_object_read_attr(object, "widths");
-        sp_object_read_attr(object, "bbox");
-        sp_object_read_attr(object, "ideographic");
-        sp_object_read_attr(object, "alphabetic");
-        sp_object_read_attr(object, "mathematical");
-        sp_object_read_attr(object, "hanging");
-        sp_object_read_attr(object, "v-ideographic");
-        sp_object_read_attr(object, "v-alphabetic");
-        sp_object_read_attr(object, "v-mathematical");
-        sp_object_read_attr(object, "v-hanging");
-        sp_object_read_attr(object, "underline-position");
-        sp_object_read_attr(object, "underline-thickness");
-        sp_object_read_attr(object, "strikethrough-position");
-        sp_object_read_attr(object, "strikethrough-thickness");
-        sp_object_read_attr(object, "overline-position");
-        sp_object_read_attr(object, "overline-thickness");
+        object->readAttr( "font-family" );
+        object->readAttr( "font-style" );
+        object->readAttr( "font-variant" );
+        object->readAttr( "font-weight" );
+        object->readAttr( "font-stretch" );
+        object->readAttr( "font-size" );
+        object->readAttr( "unicode-range" );
+        object->readAttr( "units-per-em" );
+        object->readAttr( "panose-1" );
+        object->readAttr( "stemv" );
+        object->readAttr( "stemh" );
+        object->readAttr( "slope" );
+        object->readAttr( "cap-height" );
+        object->readAttr( "x-height" );
+        object->readAttr( "accent-height" );
+        object->readAttr( "ascent" );
+        object->readAttr( "descent" );
+        object->readAttr( "widths" );
+        object->readAttr( "bbox" );
+        object->readAttr( "ideographic" );
+        object->readAttr( "alphabetic" );
+        object->readAttr( "mathematical" );
+        object->readAttr( "hanging" );
+        object->readAttr( "v-ideographic" );
+        object->readAttr( "v-alphabetic" );
+        object->readAttr( "v-mathematical" );
+        object->readAttr( "v-hanging" );
+        object->readAttr( "underline-position" );
+        object->readAttr( "underline-thickness" );
+        object->readAttr( "strikethrough-position" );
+        object->readAttr( "strikethrough-thickness" );
+        object->readAttr( "overline-position" );
+        object->readAttr( "overline-thickness" );
     }
 
     if (((SPObjectClass *) parent_class)->update) {
@@ -866,39 +866,41 @@ static Inkscape::XML::Node *sp_fontface_write(SPObject *object, Inkscape::XML::D
     sp_repr_set_svg_double(repr, "overline-thickness", face->overline_thickness);
 
     if (repr != SP_OBJECT_REPR(object)) {
-        COPY_ATTR(repr, object->repr, "font-family");
-        COPY_ATTR(repr, object->repr, "font-style");
-        COPY_ATTR(repr, object->repr, "font-variant");
-        COPY_ATTR(repr, object->repr, "font-weight");
-        COPY_ATTR(repr, object->repr, "font-stretch");
-        COPY_ATTR(repr, object->repr, "font-size");
-        COPY_ATTR(repr, object->repr, "unicode-range");
-        COPY_ATTR(repr, object->repr, "units-per-em");
-        COPY_ATTR(repr, object->repr, "panose-1");
-        COPY_ATTR(repr, object->repr, "stemv");
-        COPY_ATTR(repr, object->repr, "stemh");
-        COPY_ATTR(repr, object->repr, "slope");
-        COPY_ATTR(repr, object->repr, "cap-height");
-        COPY_ATTR(repr, object->repr, "x-height");
-        COPY_ATTR(repr, object->repr, "accent-height");
-        COPY_ATTR(repr, object->repr, "ascent");
-        COPY_ATTR(repr, object->repr, "descent");
-        COPY_ATTR(repr, object->repr, "widths");
-        COPY_ATTR(repr, object->repr, "bbox");
-        COPY_ATTR(repr, object->repr, "ideographic");
-        COPY_ATTR(repr, object->repr, "alphabetic");
-        COPY_ATTR(repr, object->repr, "mathematical");
-        COPY_ATTR(repr, object->repr, "hanging");
-        COPY_ATTR(repr, object->repr, "v-ideographic");
-        COPY_ATTR(repr, object->repr, "v-alphabetic");
-        COPY_ATTR(repr, object->repr, "v-mathematical");
-        COPY_ATTR(repr, object->repr, "v-hanging");
-        COPY_ATTR(repr, object->repr, "underline-position");
-        COPY_ATTR(repr, object->repr, "underline-thickness");
-        COPY_ATTR(repr, object->repr, "strikethrough-position");
-        COPY_ATTR(repr, object->repr, "strikethrough-thickness");
-        COPY_ATTR(repr, object->repr, "overline-position");
-        COPY_ATTR(repr, object->repr, "overline-thickness");
+        // In all COPY_ATTR given below the XML tree is 
+        //  being used directly while it shouldn't be.
+        COPY_ATTR(repr, object->getRepr(), "font-family");
+        COPY_ATTR(repr, object->getRepr(), "font-style");
+        COPY_ATTR(repr, object->getRepr(), "font-variant");
+        COPY_ATTR(repr, object->getRepr(), "font-weight");
+        COPY_ATTR(repr, object->getRepr(), "font-stretch");
+        COPY_ATTR(repr, object->getRepr(), "font-size");
+        COPY_ATTR(repr, object->getRepr(), "unicode-range");
+        COPY_ATTR(repr, object->getRepr(), "units-per-em");
+        COPY_ATTR(repr, object->getRepr(), "panose-1");
+        COPY_ATTR(repr, object->getRepr(), "stemv");
+        COPY_ATTR(repr, object->getRepr(), "stemh");
+        COPY_ATTR(repr, object->getRepr(), "slope");
+        COPY_ATTR(repr, object->getRepr(), "cap-height");
+        COPY_ATTR(repr, object->getRepr(), "x-height");
+        COPY_ATTR(repr, object->getRepr(), "accent-height");
+        COPY_ATTR(repr, object->getRepr(), "ascent");
+        COPY_ATTR(repr, object->getRepr(), "descent");
+        COPY_ATTR(repr, object->getRepr(), "widths");
+        COPY_ATTR(repr, object->getRepr(), "bbox");
+        COPY_ATTR(repr, object->getRepr(), "ideographic");
+        COPY_ATTR(repr, object->getRepr(), "alphabetic");
+        COPY_ATTR(repr, object->getRepr(), "mathematical");
+        COPY_ATTR(repr, object->getRepr(), "hanging");
+        COPY_ATTR(repr, object->getRepr(), "v-ideographic");
+        COPY_ATTR(repr, object->getRepr(), "v-alphabetic");
+        COPY_ATTR(repr, object->getRepr(), "v-mathematical");
+        COPY_ATTR(repr, object->getRepr(), "v-hanging");
+        COPY_ATTR(repr, object->getRepr(), "underline-position");
+        COPY_ATTR(repr, object->getRepr(), "underline-thickness");
+        COPY_ATTR(repr, object->getRepr(), "strikethrough-position");
+        COPY_ATTR(repr, object->getRepr(), "strikethrough-thickness");
+        COPY_ATTR(repr, object->getRepr(), "overline-position");
+        COPY_ATTR(repr, object->getRepr(), "overline-thickness");
     }
 
     if (((SPObjectClass *) (parent_class))->write) {

@@ -3,6 +3,7 @@
  */
 /* Authors:
  *   Jean-Francois Barraud <jf.barraud@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 Authors
  *
@@ -509,7 +510,7 @@ void collectPathsAndWidths (SPLPEItem const *lpeitem, std::vector<Geom::Path> &p
         if (SP_IS_PATH(lpeitem)) {
             c = sp_path_get_curve_for_edit(SP_PATH(lpeitem));
         } else {
-            c = sp_shape_get_curve(SP_SHAPE(lpeitem));
+            c = SP_SHAPE(lpeitem)->getCurve();
         }
         if (c) {
             Geom::PathVector subpaths = c->get_pathvector();
@@ -647,8 +648,8 @@ KnotHolderEntityCrossingSwitcher::knot_click(guint state)
             //std::cout<<"crossing set to"<<lpe->crossing_points[s].sign<<".\n";
         }
         lpe->crossing_points_vector.param_set_and_write_new_value(lpe->crossing_points.to_vector());
-        sp_document_done(lpe->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, /// @todo Is this the right verb?
-                 _("Change knot crossing"));
+        DocumentUndo::done(lpe->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, /// @todo Is this the right verb?
+                           _("Change knot crossing"));
 
         // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
 //        sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);

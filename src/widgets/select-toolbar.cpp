@@ -5,6 +5,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2003-2005 authors
  *
@@ -52,6 +53,7 @@
 #include "ui/icon-names.h"
 
 using Inkscape::UnitTracker;
+using Inkscape::DocumentUndo;
 
 static void
 sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
@@ -155,7 +157,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     SPDocument *document = sp_desktop_document(desktop);
 
-    sp_document_ensure_up_to_date (document);
+    document->ensureUpToDate ();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int prefs_bbox = prefs->getInt("/tools/bounding_box");
     SPItem::BBoxType bbox_type = (prefs_bbox ==0)?
@@ -243,7 +245,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         Geom::Matrix scaler = get_scale_transform_with_stroke (*bbox, strokewidth, transform_stroke, x0, y0, x1, y1);
 
         sp_selection_apply_affine(selection, scaler);
-        sp_document_maybe_done (document, actionkey, SP_VERB_CONTEXT_SELECT,
+        DocumentUndo::maybeDone(document, actionkey, SP_VERB_CONTEXT_SELECT,
                                 _("Transform by toolbar"));
 
         // resume interruptibility

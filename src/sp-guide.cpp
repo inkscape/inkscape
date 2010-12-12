@@ -1,5 +1,3 @@
-#define __SP_GUIDE_C__
-
 /*
  * Inkscape guideline implementation
  *
@@ -7,6 +5,8 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Peter Moulder <pmoulder@mail.csse.monash.edu.au>
  *   Johan Engelen
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2000-2002 authors
  * Copyright (C) 2004 Monash University
@@ -41,6 +41,7 @@
 #include <2geom/angle.h>
 #include "document.h"
 
+using Inkscape::DocumentUndo;
 using std::vector;
 
 enum {
@@ -73,7 +74,7 @@ GType sp_guide_get_type(void)
             sizeof(SPGuide),
             16,
             (GInstanceInitFunc) sp_guide_init,
-            NULL,	/* value_table */
+            NULL,       /* value_table */
         };
         guide_type = g_type_register_static(SP_TYPE_OBJECT, "SPGuide", &guide_info, (GTypeFlags) 0);
     }
@@ -158,8 +159,8 @@ static void sp_guide_build(SPObject *object, SPDocument *document, Inkscape::XML
         (* ((SPObjectClass *) (parent_class))->build)(object, document, repr);
     }
 
-    sp_object_read_attr(object, "orientation");
-    sp_object_read_attr(object, "position");
+    object->readAttr( "orientation" );
+    object->readAttr( "position" );
 }
 
 static void sp_guide_release(SPObject *object)
@@ -241,10 +242,10 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
     }
 }
 
-SPGuide *
-sp_guide_create(SPDesktop *desktop, Geom::Point const &pt1, Geom::Point const &pt2) {
-    SPDocument *doc=sp_desktop_document(desktop);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+SPGuide *SPGuide::createSPGuide(SPDesktop *desktop, Geom::Point const &pt1, Geom::Point const &pt2)
+{
+    SPDocument *doc = sp_desktop_document(desktop);
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
 
@@ -253,7 +254,7 @@ sp_guide_create(SPDesktop *desktop, Geom::Point const &pt1, Geom::Point const &p
     sp_repr_set_point(repr, "position", pt1);
     sp_repr_set_point(repr, "orientation", n);
 
-    SP_OBJECT_REPR(desktop->namedview)->appendChild(repr);
+    desktop->namedview->appendChild(repr);
     Inkscape::GC::release(repr);
 
     SPGuide *guide= SP_GUIDE(doc->getObjectByRepr(repr));
@@ -263,7 +264,7 @@ sp_guide_create(SPDesktop *desktop, Geom::Point const &pt1, Geom::Point const &p
 void
 sp_guide_pt_pairs_to_guides(SPDesktop *dt, std::list<std::pair<Geom::Point, Geom::Point> > &pts) {
     for (std::list<std::pair<Geom::Point, Geom::Point> >::iterator i = pts.begin(); i != pts.end(); ++i) {
-        sp_guide_create(dt, (*i).first, (*i).second);
+        SPGuide::createSPGuide(dt, (*i).first, (*i).second);
     }
 }
 
@@ -273,7 +274,7 @@ sp_guide_create_guides_around_page(SPDesktop *dt) {
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
     Geom::Point A(0, 0);
-    Geom::Point C(sp_document_width(doc), sp_document_height(doc));
+    Geom::Point C(doc->getWidth(), doc->getHeight());
     Geom::Point B(C[Geom::X], 0);
     Geom::Point D(0, C[Geom::Y]);
 
@@ -284,30 +285,28 @@ sp_guide_create_guides_around_page(SPDesktop *dt) {
 
     sp_guide_pt_pairs_to_guides(dt, pts);
 
-    sp_document_done (doc, SP_VERB_NONE, _("Guides Around Page"));
+    DocumentUndo::done(doc, SP_VERB_NONE, _("Guides Around Page"));
 }
 
-void sp_guide_show(SPGuide *guide, SPCanvasGroup *group, GCallback handler)
+void SPGuide::showSPGuide(SPCanvasGroup *group, GCallback handler)
 {
-    SPCanvasItem *item = sp_guideline_new(group, guide->point_on_line, guide->normal_to_line);
-    sp_guideline_set_color(SP_GUIDELINE(item), guide->color);
+    SPCanvasItem *item = sp_guideline_new(group, point_on_line, normal_to_line);
+    sp_guideline_set_color(SP_GUIDELINE(item), color);
 
-    g_signal_connect(G_OBJECT(item), "event", G_CALLBACK(handler), guide);
+    g_signal_connect(G_OBJECT(item), "event", G_CALLBACK(handler), this);
 
-    guide->views = g_slist_prepend(guide->views, item);
+    views = g_slist_prepend(views, item);
 }
 
-void sp_guide_hide(SPGuide *guide, SPCanvas *canvas)
+void SPGuide::hideSPGuide(SPCanvas *canvas)
 {
-    g_assert(guide != NULL);
-    g_assert(SP_IS_GUIDE(guide));
     g_assert(canvas != NULL);
     g_assert(SP_IS_CANVAS(canvas));
 
-    for (GSList *l = guide->views; l != NULL; l = l->next) {
+    for (GSList *l = views; l != NULL; l = l->next) {
         if (canvas == SP_CANVAS_ITEM(l->data)->canvas) {
             sp_guideline_delete(SP_GUIDELINE(l->data));
-            guide->views = g_slist_remove(guide->views, l->data);
+            views = g_slist_remove(views, l->data);
             return;
         }
     }
@@ -315,14 +314,12 @@ void sp_guide_hide(SPGuide *guide, SPCanvas *canvas)
     g_assert_not_reached();
 }
 
-void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, gboolean sensitive)
+void SPGuide::sensitize(SPCanvas *canvas, gboolean sensitive)
 {
-    g_assert(guide != NULL);
-    g_assert(SP_IS_GUIDE(guide));
     g_assert(canvas != NULL);
     g_assert(SP_IS_CANVAS(canvas));
 
-    for (GSList *l = guide->views; l != NULL; l = l->next) {
+    for (GSList *l = views; l != NULL; l = l->next) {
         if (canvas == SP_CANVAS_ITEM(l->data)->canvas) {
             sp_guideline_set_sensitive(SP_GUIDELINE(l->data), sensitive);
             return;
@@ -332,14 +329,14 @@ void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, gboolean sensitive)
     g_assert_not_reached();
 }
 
-Geom::Point sp_guide_position_from_pt(SPGuide const *guide, Geom::Point const &pt)
+Geom::Point SPGuide::getPositionFrom(Geom::Point const &pt) const
 {
-    return -(pt - guide->point_on_line);
+    return -(pt - point_on_line);
 }
 
-double sp_guide_distance_from_pt(SPGuide const *guide, Geom::Point const &pt)
+double SPGuide::getDistanceFrom(Geom::Point const &pt) const
 {
-    return Geom::dot(pt - guide->point_on_line, guide->normal_to_line);
+    return Geom::dot(pt - point_on_line, normal_to_line);
 }
 
 /**
@@ -358,7 +355,8 @@ void sp_guide_moveto(SPGuide const &guide, Geom::Point const point_on_line, bool
     /* Calling sp_repr_set_point must precede calling sp_item_notify_moveto in the commit
        case, so that the guide's new position is available for sp_item_rm_unsatisfied_cns. */
     if (commit) {
-        sp_repr_set_point(SP_OBJECT(&guide)->repr, "position", point_on_line);
+        //XML Tree being used here directly while it shouldn't be.
+        sp_repr_set_point(SP_OBJECT(&guide)->getRepr(), "position", point_on_line);
     }
 
 /*  DISABLED CODE BECAUSE  SPGuideAttachment  IS NOT USE AT THE MOMENT (johan)
@@ -388,7 +386,8 @@ void sp_guide_set_normal(SPGuide const &guide, Geom::Point const normal_to_line,
     /* Calling sp_repr_set_svg_point must precede calling sp_item_notify_moveto in the commit
        case, so that the guide's new position is available for sp_item_rm_unsatisfied_cns. */
     if (commit) {
-        sp_repr_set_point(SP_OBJECT(&guide)->repr, "orientation", normal_to_line);
+        //XML Tree being used directly while it shouldn't be
+        sp_repr_set_point(SP_OBJECT(&guide)->getRepr(), "orientation", normal_to_line);
     }
 
 /*  DISABLED CODE BECAUSE  SPGuideAttachment  IS NOT USE AT THE MOMENT (johan)
@@ -458,7 +457,8 @@ void sp_guide_remove(SPGuide *guide)
     }
     guide->attached_items.clear();
 
-    sp_repr_unparent(SP_OBJECT(guide)->repr);
+    //XML Tree being used directly while it shouldn't be.
+    sp_repr_unparent(SP_OBJECT(guide)->getRepr());
 }
 
 /*

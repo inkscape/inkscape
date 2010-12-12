@@ -9,6 +9,7 @@
  *
  * Author:
  *   Felipe C. da S. Sanches <juca@members.fsf.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2008, Felipe C. da S. Sanches
  *
@@ -101,14 +102,14 @@ static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML:
         ((SPObjectClass *) (parent_class))->build(object, document, repr);
     }
 
-    sp_object_read_attr(object, "horiz-origin-x");
-    sp_object_read_attr(object, "horiz-origin-y");
-    sp_object_read_attr(object, "horiz-adv-x");
-    sp_object_read_attr(object, "vert-origin-x");
-    sp_object_read_attr(object, "vert-origin-y");
-    sp_object_read_attr(object, "vert-adv-y");
+    object->readAttr( "horiz-origin-x" );
+    object->readAttr( "horiz-origin-y" );
+    object->readAttr( "horiz-adv-x" );
+    object->readAttr( "vert-origin-x" );
+    object->readAttr( "vert-origin-y" );
+    object->readAttr( "vert-adv-y" );
 
-    sp_document_add_resource(document, "font", object);
+    document->addResource("font", object);
 }
 
 
@@ -150,7 +151,7 @@ sp_font_remove_child(SPObject *object, Inkscape::XML::Node *child)
 static void sp_font_release(SPObject *object)
 {
     //SPFont *font = SP_FONT(object);
-    sp_document_remove_resource(SP_OBJECT_DOCUMENT(object), "font", object);
+    SP_OBJECT_DOCUMENT(object)->removeResource("font", object);
 
     if (((SPObjectClass *) parent_class)->release) {
         ((SPObjectClass *) parent_class)->release(object);
@@ -232,12 +233,12 @@ static void
 sp_font_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     if (flags & (SP_OBJECT_MODIFIED_FLAG)) {
-        sp_object_read_attr(object, "horiz-origin-x");
-        sp_object_read_attr(object, "horiz-origin-y");
-        sp_object_read_attr(object, "horiz-adv-x");
-        sp_object_read_attr(object, "vert-origin-x");
-        sp_object_read_attr(object, "vert-origin-y");
-        sp_object_read_attr(object, "vert-adv-y");
+        object->readAttr( "horiz-origin-x" );
+        object->readAttr( "horiz-origin-y" );
+        object->readAttr( "horiz-adv-x" );
+        object->readAttr( "vert-origin-x" );
+        object->readAttr( "vert-origin-y" );
+        object->readAttr( "vert-adv-y" );
     }
 
     if (((SPObjectClass *) parent_class)->update) {
@@ -263,12 +264,14 @@ static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Docum
     sp_repr_set_svg_double(repr, "vert-adv-y", font->vert_adv_y);
 
     if (repr != SP_OBJECT_REPR(object)) {
-        COPY_ATTR(repr, object->repr, "horiz-origin-x");
-        COPY_ATTR(repr, object->repr, "horiz-origin-y");
-        COPY_ATTR(repr, object->repr, "horiz-adv-x");
-        COPY_ATTR(repr, object->repr, "vert-origin-x");
-        COPY_ATTR(repr, object->repr, "vert-origin-y");
-        COPY_ATTR(repr, object->repr, "vert-adv-y");
+        // All the below COPY_ATTR funtions are directly using 
+        //  the XML Tree while they shouldn't
+        COPY_ATTR(repr, object->getRepr(), "horiz-origin-x");
+        COPY_ATTR(repr, object->getRepr(), "horiz-origin-y");
+        COPY_ATTR(repr, object->getRepr(), "horiz-adv-x");
+        COPY_ATTR(repr, object->getRepr(), "vert-origin-x");
+        COPY_ATTR(repr, object->getRepr(), "vert-origin-y");
+        COPY_ATTR(repr, object->getRepr(), "vert-adv-y");
     }
 
     if (((SPObjectClass *) (parent_class))->write) {

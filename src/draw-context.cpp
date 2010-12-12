@@ -1,10 +1,9 @@
-#define __SP_DRAW_CONTEXT_C__
-
 /*
  * Generic drawing context
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2000 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -42,6 +41,8 @@
 #include "sp-namedview.h"
 #include "live_effects/lpe-patternalongpath.h"
 #include "style.h"
+
+using Inkscape::DocumentUndo;
 
 static void sp_draw_context_class_init(SPDrawContextClass *klass);
 static void sp_draw_context_init(SPDrawContext *dc);
@@ -438,7 +439,7 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
         /* Curve list */
         /* We keep it in desktop coordinates to eliminate calculation errors */
         SPCurve *norm = sp_path_get_curve_for_edit (SP_PATH(item));
-        norm->transform(sp_item_i2d_affine(dc->white_item));
+        norm->transform((dc->white_item)->i2d_affine());
         g_return_if_fail( norm != NULL );
         dc->white_curves = g_slist_reverse(norm->split());
         norm->unref();
@@ -639,12 +640,12 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
 
     /* Now we have to go back to item coordinates at last */
     c->transform( dc->white_item
-                            ? sp_item_dt2i_affine(dc->white_item)
+                            ? (dc->white_item)->dt2i_affine()
                             : SP_EVENT_CONTEXT_DESKTOP(dc)->dt2doc() );
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
     SPDocument *doc = sp_desktop_document(desktop);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     if ( c && !c->is_empty() ) {
         /* We actually have something to write */
@@ -677,11 +678,11 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
 
             dc->selection->set(repr);
             Inkscape::GC::release(repr);
-            item->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
+            item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
             item->updateRepr();
         }
 
-        sp_document_done(doc, SP_IS_PEN_CONTEXT(dc)? SP_VERB_CONTEXT_PEN : SP_VERB_CONTEXT_PENCIL,
+        DocumentUndo::done(doc, SP_IS_PEN_CONTEXT(dc)? SP_VERB_CONTEXT_PEN : SP_VERB_CONTEXT_PENCIL,
                          _("Draw path"));
 
         // When quickly drawing several subpaths with Shift, the next subpath may be finished and
@@ -695,7 +696,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
     c->unref();
 
     /* Flush pending updates */
-    sp_document_ensure_up_to_date(doc);
+    doc->ensureUpToDate();
 }
 
 /**
@@ -789,7 +790,7 @@ void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char cons
     Glib::ustring tool_path = tool;
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(ec);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+    Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
     repr->setAttribute("sodipodi:type", "arc");
     SPItem *item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
@@ -819,8 +820,8 @@ void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char cons
        current stroke width, multiplied by the amount specified in the preferences */
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    Geom::Matrix const i2d (sp_item_i2d_affine (item));
-    Geom::Point pp = pt * i2d.inverse();
+    Geom::Matrix const i2d (item->i2d_affine ());
+    Geom::Point pp = pt;
     double rad = 0.5 * prefs->getDouble(tool_path + "/dot-size", 3.0);
     if (event_state & GDK_MOD1_MASK) {
         /* TODO: We vary the dot size between 0.5*rad and 1.5*rad, where rad is the dot size
@@ -839,11 +840,12 @@ void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char cons
     sp_repr_set_svg_double (repr, "sodipodi:rx", rad * stroke_width);
     sp_repr_set_svg_double (repr, "sodipodi:ry", rad * stroke_width);
     item->updateRepr();
+    item->set_item_transform(i2d.inverse());
 
     sp_desktop_selection(desktop)->set(item);
 
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating single dot"));
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, _("Create single dot"));
+    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE, _("Create single dot"));
 }
 
 /*

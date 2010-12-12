@@ -3,6 +3,7 @@
  *
  * Authors:
  *   MenTaLguY <mental@rydia.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 MenTaLguY
  *
@@ -583,16 +584,16 @@ void LayerSelector::_prepareLabelRenderer(
 void LayerSelector::_lockLayer(bool lock) {
     if ( _layer && SP_IS_ITEM(_layer) ) {
         SP_ITEM(_layer)->setLocked(lock);
-        sp_document_done(sp_desktop_document(_desktop), SP_VERB_NONE,
-                         lock? _("Lock layer") : _("Unlock layer"));
+        DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_NONE,
+                           lock? _("Lock layer") : _("Unlock layer"));
     }
 }
 
 void LayerSelector::_hideLayer(bool hide) {
     if ( _layer && SP_IS_ITEM(_layer) ) {
         SP_ITEM(_layer)->setHidden(hide);
-        sp_document_done(sp_desktop_document(_desktop), SP_VERB_NONE,
-                         hide? _("Hide layer") : _("Unhide layer"));
+        DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_NONE,
+                           hide? _("Hide layer") : _("Unhide layer"));
     }
 }
 

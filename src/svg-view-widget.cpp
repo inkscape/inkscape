@@ -1,11 +1,10 @@
-#define __SP_SVG_VIEW_C__
-
 /** \file
  * Functions and callbacks for generic SVG view and widget
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
@@ -149,8 +148,8 @@ sp_svg_view_widget_size_request (GtkWidget *widget, GtkRequisition *req)
 		gdouble width, height;
 
 		svgv = static_cast<SPSVGView*> (v);
-		width = sp_document_width (v->doc()) * svgv->_hscale;
-		height = sp_document_height (v->doc()) * svgv->_vscale;
+		width = (v->doc())->getWidth () * svgv->_hscale;
+		height = (v->doc())->getHeight () * svgv->_vscale;
 
 		if (width <= vw->maxwidth) {
 			hpol = GTK_POLICY_NEVER;

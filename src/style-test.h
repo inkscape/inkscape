@@ -1,4 +1,3 @@
-
 #ifndef SEEN_STYLE_TEST_H
 #define SEEN_STYLE_TEST_H
 
@@ -22,7 +21,7 @@ public:
     {
         if ( _doc )
         {
-            sp_document_unref( _doc );
+            _doc->doUnref();
             _doc = 0;
         }
     }

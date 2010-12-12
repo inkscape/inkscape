@@ -1,11 +1,11 @@
-#define __SP_SWITCH_CPP__
-
 /*
  * SVG <switch> implementation
  *
  * Authors:
  *   Andrius R. <knutux@gmail.com>
  *   MenTaLguY  <mental@rydia.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 authors
  *
@@ -72,11 +72,13 @@ CSwitch::~CSwitch() {
 }
 
 SPObject *CSwitch::_evaluateFirst() {
-    for (SPObject *child = sp_object_first_child(_group) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-        if (SP_IS_ITEM(child) && sp_item_evaluate(SP_ITEM(child)))
-            return child;
+    SPObject *first = 0;
+    for (SPObject *child = _group->firstChild() ; child && !first ; child = child->getNext() ) {
+        if (SP_IS_ITEM(child) && sp_item_evaluate(SP_ITEM(child))) {
+	    first = child;
+	}
     }
-    return NULL;
+    return first;
 }
 
 GSList *CSwitch::_childList(bool add_ref, SPObject::Action action) {
@@ -168,7 +170,7 @@ void CSwitch::_showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, 
         if (SP_IS_ITEM (o)) {
             child = SP_ITEM (o);
             child->setEvaluated(o == evaluated_child);
-            ac = sp_item_invoke_show (child, arena, key, flags);
+            ac = child->invoke_show (arena, key, flags);
             if (ac) {
                 nr_arena_item_add_child (ai, ac, ar);
                 ar = ac;
@@ -177,3 +179,14 @@ void CSwitch::_showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, 
         l = g_slist_remove (l, o);
     }
 }
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

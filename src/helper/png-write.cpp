@@ -1,11 +1,11 @@
-#define __SP_PNG_WRITE_C__
-
 /*
  * PNG file format utilities
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Whoever wrote this example in libpng documentation
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 authors
  *
@@ -362,8 +362,7 @@ sp_export_get_rows(guchar const **rows, int row, int num_rows, void *data)
 /**
  * Hide all items that are not listed in list, recursively, skipping groups and defs.
  */
-static void
-hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
+static void hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
 {
     if ( SP_IS_ITEM(o)
          && !SP_IS_DEFS(o)
@@ -371,12 +370,12 @@ hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
          && !SP_IS_GROUP(o)
          && !g_slist_find(list, o) )
     {
-        sp_item_invoke_hide(SP_ITEM(o), dkey);
+        SP_ITEM(o)->invoke_hide(dkey);
     }
 
     // recurse
     if (!g_slist_find(list, o)) {
-        for (SPObject *child = sp_object_first_child(o) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        for ( SPObject *child = o->firstChild() ; child; child = child->getNext() ) {
             hide_other_items_recursively(child, list, dkey);
         }
     }
@@ -422,10 +421,10 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
         return true;
     }
 
-    sp_document_ensure_up_to_date(doc);
+    doc->ensureUpToDate();
 
     /* Calculate translation by transforming to document coordinates (flipping Y)*/
-    Geom::Point translation = Geom::Point(-area[Geom::X][0], area[Geom::Y][1] - sp_document_height(doc));
+    Geom::Point translation = Geom::Point(-area[Geom::X][0], area[Geom::Y][1] - doc->getHeight());
 
     /*  This calculation is only valid when assumed that (x0,y0)= area.corner(0) and (x1,y1) = area.corner(2)
      * 1) a[0] * x0 + a[2] * y1 + a[4] = 0.0
@@ -461,16 +460,16 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     NRArena *const arena = NRArena::create();
     // export with maximum blur rendering quality
     nr_arena_set_renderoffscreen(arena);
-    unsigned const dkey = sp_item_display_key_new(1);
+    unsigned const dkey = SPItem::display_key_new(1);
 
     /* Create ArenaItems and set transform */
-    ebp.root = sp_item_invoke_show(SP_ITEM(sp_document_root(doc)), arena, dkey, SP_ITEM_SHOW_DISPLAY);
+    ebp.root = SP_ITEM(doc->getRoot())->invoke_show(arena, dkey, SP_ITEM_SHOW_DISPLAY);
     nr_arena_item_set_transform(NR_ARENA_ITEM(ebp.root), affine);
 
     // We show all and then hide all items we don't want, instead of showing only requested items,
     // because that would not work if the shown item references something in defs
     if (items_only) {
-        hide_other_items_recursively(sp_document_root(doc), items_only, dkey);
+        hide_other_items_recursively(doc->getRoot(), items_only, dkey);
     }
 
     ebp.status = status;
@@ -490,7 +489,7 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     }
 
     // Hide items, this releases arenaitem
-    sp_item_invoke_hide(SP_ITEM(sp_document_root(doc)), dkey);
+    SP_ITEM(doc->getRoot())->invoke_hide(dkey);
 
     /* Free arena */
     nr_object_unref((NRObject *) arena);

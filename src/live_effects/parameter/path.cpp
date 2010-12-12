@@ -1,7 +1,6 @@
-#define INKSCAPE_LIVEPATHEFFECT_PARAMETER_PATH_CPP
-
 /*
  * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+ *   Abhishek Sharma
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -209,7 +208,7 @@ PathParam::param_editOncanvas(SPItem *item, SPDesktop * dt)
     ShapeRecord r;
 
     r.role = SHAPE_ROLE_LPE_PARAM;
-    r.edit_transform = sp_item_i2d_affine(item); // TODO is it right?
+    r.edit_transform = item->i2d_affine(); // TODO is it right?
     if (!href) {
         r.item = reinterpret_cast<SPItem*>(param_effect->getLPEObj());
         r.lpe_key = param_key;
@@ -366,7 +365,7 @@ PathParam::linked_modified(SPObject *linked_obj, guint /*flags*/)
 {
     SPCurve *curve = NULL;
     if (SP_IS_SHAPE(linked_obj)) {
-        curve = sp_shape_get_curve(SP_SHAPE(linked_obj));
+        curve = SP_SHAPE(linked_obj)->getCurve();
     }
     if (SP_IS_TEXT(linked_obj)) {
         curve = SP_TEXT(linked_obj)->getNormalizedBpath();
@@ -414,8 +413,8 @@ PathParam::on_paste_button_click()
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
     Glib::ustring svgd = cm->getPathParameter(SP_ACTIVE_DESKTOP);
     paste_param_path(svgd.data());
-    sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
-                     _("Paste path parameter"));
+    DocumentUndo::done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
+                       _("Paste path parameter"));
 }
 
 void
@@ -446,8 +445,8 @@ PathParam::on_link_button_click()
         // check if linking to object to which LPE is applied (maybe delegated to PathReference
 
         param_write_to_repr(pathid.c_str());
-        sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
-                         _("Link path parameter to path"));
+        DocumentUndo::done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
+                           _("Link path parameter to path"));
     }
 }
 

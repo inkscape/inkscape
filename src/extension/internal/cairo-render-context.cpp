@@ -1,11 +1,11 @@
-#define __SP_CAIRO_RENDER_CONTEXT_C__
-
 /** \file
  * Rendering with Cairo.
  */
 /*
  * Author:
  *   Miklos Erdelyi <erdelyim@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Miklos Erdelyi
  *
@@ -983,14 +983,15 @@ CairoRenderContext::popState(void)
     g_assert( g_slist_length(_state_stack) > 0 );
 }
 
-static bool pattern_hasItemChildren (SPPattern *pat)
+static bool pattern_hasItemChildren(SPPattern *pat)
 {
-    for (SPObject *child = sp_object_first_child(SP_OBJECT(pat)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+    bool hasItems = false;
+    for ( SPObject *child = pat->firstChild() ; child && !hasItems; child = child->getNext() ) {
         if (SP_IS_ITEM (child)) {
-            return true;
+            hasItems = true;
         }
     }
-    return false;
+    return hasItems;
 }
 
 cairo_pattern_t*
@@ -1086,14 +1087,14 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
     // create arena and group
     NRArena *arena = NRArena::create();
-    unsigned dkey = sp_item_display_key_new(1);
+    unsigned dkey = SPItem::display_key_new(1);
 
     // show items and render them
     for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
         if (pat_i && SP_IS_OBJECT (pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
-            for (SPObject *child = sp_object_first_child(SP_OBJECT(pat_i)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            for ( SPObject *child = pat_i->firstChild() ; child; child = child->getNext() ) {
                 if (SP_IS_ITEM (child)) {
-                    sp_item_invoke_show (SP_ITEM (child), arena, dkey, SP_ITEM_REFERENCE_FLAGS);
+                    SP_ITEM (child)->invoke_show (arena, dkey, SP_ITEM_REFERENCE_FLAGS);
                     _renderer->renderItem(pattern_ctx, SP_ITEM (child));
                 }
             }
@@ -1120,9 +1121,9 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     // hide all items
     for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
         if (pat_i && SP_IS_OBJECT (pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
-            for (SPObject *child = sp_object_first_child(SP_OBJECT(pat_i)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            for ( SPObject *child = pat_i->firstChild() ; child; child = child->getNext() ) {
                 if (SP_IS_ITEM (child)) {
-                    sp_item_invoke_hide (SP_ITEM (child), dkey);
+                    SP_ITEM (child)->invoke_hide (dkey);
                 }
             }
             break; // do not go further up the chain if children are found

@@ -14,6 +14,7 @@
  *
  * Authors:
  *   Bob Jamison
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006, 2007 Bob Jamison
  *
@@ -945,9 +946,9 @@ static Glib::ustring formatTransform(Geom::Matrix &tf)
 static Geom::Matrix getODFTransform(const SPItem *item)
 {
     //### Get SVG-to-ODF transform
-    Geom::Matrix tf (sp_item_i2d_affine(item));
+    Geom::Matrix tf (item->i2d_affine());
     //Flip Y into document coordinates
-    double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
+    double doc_height    = SP_ACTIVE_DOCUMENT->getHeight();
     Geom::Matrix doc2dt_tf = Geom::Matrix(Geom::Scale(1.0, -1.0));
     doc2dt_tf            = doc2dt_tf * Geom::Matrix(Geom::Translate(0, doc_height));
     tf                   = tf * doc2dt_tf;
@@ -964,11 +965,11 @@ static Geom::Matrix getODFTransform(const SPItem *item)
  */
 static Geom::OptRect getODFBoundingBox(const SPItem *item)
 {
-    Geom::OptRect bbox_temp = sp_item_bbox_desktop((SPItem *)item);
+    Geom::OptRect bbox_temp = ((SPItem *)item)->getBboxDesktop();
     Geom::OptRect bbox;
     if (bbox_temp) {
         bbox = *bbox_temp;
-        double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
+        double doc_height    = SP_ACTIVE_DOCUMENT->getHeight();
         Geom::Matrix doc2dt_tf = Geom::Matrix(Geom::Scale(1.0, -1.0));
         doc2dt_tf            = doc2dt_tf * Geom::Matrix(Geom::Translate(0, doc_height));
         bbox                 = *bbox * doc2dt_tf;
@@ -2002,7 +2003,7 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
     else if (SP_IS_SHAPE(item))
         {
         //g_message("### %s is a shape", nodeName.c_str());
-        curve = sp_shape_get_curve(SP_SHAPE(item));
+        curve = SP_SHAPE(item)->getCurve();
         }
     else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))
         {

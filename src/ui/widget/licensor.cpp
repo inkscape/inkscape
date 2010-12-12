@@ -6,6 +6,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jon Phillips <jon@rejon.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de> (Gtkmm)
+ *   Abhishek Sharma
  *
  * Copyright (C) 2000 - 2005 Authors
  *
@@ -64,8 +65,8 @@ LicenseItem::on_toggled()
 
     _wr.setUpdating (true);
     rdf_set_license (SP_ACTIVE_DOCUMENT, _lic->details ? _lic : 0);
-    sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_NONE, 
-                      /* TODO: annotate */ "licensor.cpp:65");
+    DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_NONE, 
+                       /* TODO: annotate */ "licensor.cpp:65");
     _wr.setUpdating (false);
     static_cast<Gtk::Entry*>(_eep->_packable)->set_text (_lic->uri);
     _eep->on_changed();

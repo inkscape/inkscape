@@ -1,5 +1,3 @@
-#define __SP_STAR_CONTEXT_C__
-
 /*
  * Star drawing context
  *
@@ -7,6 +5,8 @@
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2001-2002 Mitsuru Oka
@@ -46,6 +46,8 @@
 #include "shape-editor.h"
 
 #include "star-context.h"
+
+using Inkscape::DocumentUndo;
 
 static void sp_star_context_class_init (SPStarContextClass * klass);
 static void sp_star_context_init (SPStarContext * star_context);
@@ -425,17 +427,17 @@ static void sp_star_drag(SPStarContext *sc, Geom::Point p, guint state)
             return;
         }
 
-        /* Create object */
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(sc));
+        // Create object
+        Inkscape::XML::Document *xml_doc = SP_EVENT_CONTEXT_DOCUMENT(sc)->getReprDoc();
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
         repr->setAttribute("sodipodi:type", "star");
 
-        /* Set style */
+        // Set style
         sp_desktop_apply_style_tool(desktop, repr, "/tools/shapes/star", false);
 
         sc->item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
         Inkscape::GC::release(repr);
-        sc->item->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
+        sc->item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
         sc->item->updateRepr();
 
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
@@ -495,15 +497,15 @@ sp_star_finish (SPStarContext * sc)
         SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
         SPObject *object = SP_OBJECT(sc->item);
 
-        sp_shape_set_shape(SP_SHAPE(sc->item));
+        (SP_SHAPE(sc->item))->setShape();
 
         object->updateRepr(SP_OBJECT_WRITE_EXT);
 
         sp_canvas_end_forced_full_redraws(desktop->canvas);
 
         sp_desktop_selection(desktop)->set(sc->item);
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
-                         _("Create star"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
+                           _("Create star"));
 
         sc->item = NULL;
     }
@@ -528,7 +530,7 @@ static void sp_star_cancel(SPStarContext *sc)
 
     sp_canvas_end_forced_full_redraws(desktop->canvas);
 
-    sp_document_cancel(sp_desktop_document(desktop));
+    DocumentUndo::cancel(sp_desktop_document(desktop));
 }
 
 /*

@@ -6,6 +6,7 @@
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
@@ -46,33 +47,7 @@ GType sp_event_context_get_type ();
 class SPDocument;
 class SPDocumentClass;
 
-#define SP_TYPE_DOCUMENT (sp_document_get_type ())
-#define SP_DOCUMENT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_DOCUMENT, SPDocument))
-#define SP_IS_DOCUMENT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_DOCUMENT))
-
-GType sp_document_get_type ();
-
 /* Objects */
-
-class SPObject;
-class SPObjectClass;
-
-#define SP_TYPE_OBJECT (sp_object_get_type ())
-#define SP_OBJECT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_OBJECT, SPObject))
-#define SP_OBJECT_CLASS(clazz) (G_TYPE_CHECK_CLASS_CAST((clazz), SP_TYPE_OBJECT, SPObjectClass))
-#define SP_IS_OBJECT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_OBJECT))
-
-GType sp_object_get_type ();
-
-class SPItem;
-class SPItemClass;
-
-#define SP_TYPE_ITEM (sp_item_get_type ())
-#define SP_ITEM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_ITEM, SPItem))
-#define SP_ITEM_CLASS(clazz) (G_TYPE_CHECK_CLASS_CAST((clazz), SP_TYPE_ITEM, SPItemClass))
-#define SP_IS_ITEM(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_ITEM))
-
-GType sp_item_get_type ();
 
 class SPGroup;
 class SPGroupClass;

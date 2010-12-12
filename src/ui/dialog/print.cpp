@@ -3,6 +3,7 @@
  */
 /* Authors:
  *   Kees Cook <kees@outflux.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 Kees Cook
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
@@ -46,8 +47,8 @@ static void draw_page(
 
     if (junk->_tab->as_bitmap()) {
         // Render as exported PNG
-        gdouble width = sp_document_width(junk->_doc);
-        gdouble height = sp_document_height(junk->_doc);
+        gdouble width = (junk->_doc)->getWidth();
+        gdouble height = (junk->_doc)->getHeight();
         gdouble dpi = junk->_tab->bitmap_dpi();
         std::string tmp_png;
         std::string tmp_base = "inkscape-print-png-XXXXXX";
@@ -181,7 +182,7 @@ Print::Print(SPDocument *doc, SPItem *base) :
     _printop = gtk_print_operation_new ();
 
     // set up dialog title, based on document name
-    gchar *jobname = _doc->name ? _doc->name : _("SVG Document");
+    gchar const *jobname = _doc->getName() ? _doc->getName() : _("SVG Document");
     Glib::ustring title = _("Print");
     title += " ";
     title += jobname;
@@ -190,8 +191,8 @@ Print::Print(SPDocument *doc, SPItem *base) :
     // set up paper size to match the document size
     gtk_print_operation_set_unit (_printop, GTK_UNIT_POINTS);
     GtkPageSetup *page_setup = gtk_page_setup_new();
-    gdouble doc_width = sp_document_width(_doc) * PT_PER_PX;
-    gdouble doc_height = sp_document_height(_doc) * PT_PER_PX;
+    gdouble doc_width = _doc->getWidth() * PT_PER_PX;
+    gdouble doc_height = _doc->getHeight() * PT_PER_PX;
     GtkPaperSize *paper_size;
     if (doc_width > doc_height) {
         gtk_page_setup_set_orientation (page_setup, GTK_PAGE_ORIENTATION_LANDSCAPE);

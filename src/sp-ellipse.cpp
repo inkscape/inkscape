@@ -1,5 +1,3 @@
-#define __SP_ELLIPSE_C__
-
 /*
  * SVG <ellipse> and related implementations
  *
@@ -7,6 +5,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Mitsuru Oka
  *   bulia byak <buliabyak@users.sf.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -154,7 +153,7 @@ sp_genericellipse_update(SPObject *object, SPCtx *ctx, guint flags)
             ellipse->cy.update(em, ex, dy);
             ellipse->rx.update(em, ex, dr);
             ellipse->ry.update(em, ex, dr);
-            sp_shape_set_shape((SPShape *) object);
+            static_cast<SPShape *>(object)->setShape();
         }
     }
 
@@ -192,7 +191,7 @@ static void sp_genericellipse_set_shape(SPShape *shape)
             // unconditionally read the curve from d, if any, to preserve appearance
             Geom::PathVector pv = sp_svg_read_pathv(SP_OBJECT_REPR(shape)->attribute("d"));
             SPCurve *cold = new SPCurve(pv);
-            sp_shape_set_curve_insync (shape, cold, TRUE);
+            shape->setCurveInsync( cold, TRUE);
             cold->unref();
         }
         return;
@@ -259,12 +258,12 @@ static void sp_genericellipse_set_shape(SPShape *shape)
 
     /* Reset the shape'scurve to the "original_curve"
      * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
-    sp_shape_set_curve_insync (shape, curve, TRUE);
+    shape->setCurveInsync( curve, TRUE);
     if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(shape)) && sp_lpe_item_path_effects_enabled(SP_LPE_ITEM(shape))) {
         SPCurve *c_lpe = curve->copy();
         bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM (shape), c_lpe);
         if (success) {
-            sp_shape_set_curve_insync (shape, c_lpe, TRUE);
+            shape->setCurveInsync( c_lpe, TRUE);
         }
         c_lpe->unref();
     }
@@ -283,7 +282,7 @@ static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscap
 
     SPGenericEllipse *ellipse = SP_GENERICELLIPSE(item);
     sp_genericellipse_normalize(ellipse);
-    Geom::Matrix const i2d = sp_item_i2d_affine(item);
+    Geom::Matrix const i2d = item->i2d_affine();
 
     // figure out if we have a slice, while guarding against rounding errors
     bool slice = false;
@@ -435,10 +434,10 @@ sp_ellipse_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
     if (((SPObjectClass *) ellipse_parent_class)->build)
         (* ((SPObjectClass *) ellipse_parent_class)->build) (object, document, repr);
 
-    sp_object_read_attr(object, "cx");
-    sp_object_read_attr(object, "cy");
-    sp_object_read_attr(object, "rx");
-    sp_object_read_attr(object, "ry");
+    object->readAttr( "cx" );
+    object->readAttr( "cy" );
+    object->readAttr( "rx" );
+    object->readAttr( "ry" );
 }
 
 static Inkscape::XML::Node *
@@ -583,9 +582,9 @@ sp_circle_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
     if (((SPObjectClass *) circle_parent_class)->build)
         (* ((SPObjectClass *) circle_parent_class)->build)(object, document, repr);
 
-    sp_object_read_attr(object, "cx");
-    sp_object_read_attr(object, "cy");
-    sp_object_read_attr(object, "r");
+    object->readAttr( "cx" );
+    object->readAttr( "cy" );
+    object->readAttr( "r" );
 }
 
 static Inkscape::XML::Node *
@@ -708,14 +707,14 @@ sp_arc_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
     if (((SPObjectClass *) arc_parent_class)->build)
         (* ((SPObjectClass *) arc_parent_class)->build) (object, document, repr);
 
-    sp_object_read_attr(object, "sodipodi:cx");
-    sp_object_read_attr(object, "sodipodi:cy");
-    sp_object_read_attr(object, "sodipodi:rx");
-    sp_object_read_attr(object, "sodipodi:ry");
+    object->readAttr( "sodipodi:cx" );
+    object->readAttr( "sodipodi:cy" );
+    object->readAttr( "sodipodi:rx" );
+    object->readAttr( "sodipodi:ry" );
 
-    sp_object_read_attr(object, "sodipodi:start");
-    sp_object_read_attr(object, "sodipodi:end");
-    sp_object_read_attr(object, "sodipodi:open");
+    object->readAttr( "sodipodi:start" );
+    object->readAttr( "sodipodi:end" );
+    object->readAttr( "sodipodi:open" );
 }
 
 /*
@@ -857,7 +856,7 @@ static void
 sp_arc_modified(SPObject *object, guint flags)
 {
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        sp_shape_set_shape((SPShape *) object);
+        ((SPShape *) object)->setShape();
     }
 
     if (((SPObjectClass *) arc_parent_class)->modified)

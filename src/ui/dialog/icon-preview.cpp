@@ -5,6 +5,7 @@
  *   Jon A. Cruz
  *   Bob Jamison
  *   Other dudes from The Inkscape Organization
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 Bob Jamison
  * Copyright (C) 2005,2010 Jon A. Cruz
@@ -443,10 +444,9 @@ void IconPreviewPanel::renderPreview( SPObject* obj )
     NRArena *arena = NRArena::create();
 
     /* Create ArenaItem and set transform */
-    unsigned int visionkey = sp_item_display_key_new(1);
+    unsigned int visionkey = SPItem::display_key_new(1);
 
-    root = sp_item_invoke_show ( SP_ITEM( SP_DOCUMENT_ROOT(doc) ),
-                                 arena, visionkey, SP_ITEM_SHOW_DISPLAY );
+    root = SP_ITEM( doc->getRoot() )->invoke_show( arena, visionkey, SP_ITEM_SHOW_DISPLAY );
 
     for ( int i = 0; i < numEntries; i++ ) {
         guchar * px = sp_icon_doc_icon( doc, root, id, sizes[i] );
@@ -462,7 +462,7 @@ void IconPreviewPanel::renderPreview( SPObject* obj )
     }
     updateMagnify();
 
-    sp_item_invoke_hide(SP_ITEM(sp_document_root(doc)), visionkey);
+    SP_ITEM(doc->getRoot())->invoke_hide(visionkey);
     nr_object_unref((NRObject *) arena);
     renderTimer->stop();
     minDelay = std::max( 0.1, renderTimer->elapsed() * 3.0 );

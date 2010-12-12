@@ -6,6 +6,8 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -142,10 +144,10 @@ static void sp_stop_build(SPObject *object, SPDocument *document, Inkscape::XML:
     if (((SPObjectClass *) stop_parent_class)->build)
         (* ((SPObjectClass *) stop_parent_class)->build)(object, document, repr);
 
-    sp_object_read_attr(object, "offset");
-    sp_object_read_attr(object, "stop-color");
-    sp_object_read_attr(object, "stop-opacity");
-    sp_object_read_attr(object, "style");
+    object->readAttr( "offset" );
+    object->readAttr( "stop-color" );
+    object->readAttr( "stop-opacity" );
+    object->readAttr( "style" );
 }
 
 /**
@@ -169,7 +171,7 @@ sp_stop_set(SPObject *object, unsigned key, gchar const *value)
          * stop-color and stop-opacity properties.
          */
             {
-                gchar const *p = sp_object_get_style_property(object, "stop-color", "black");
+                gchar const *p = object->getStyleProperty( "stop-color", "black");
                 if (streq(p, "currentColor")) {
                     stop->currentColor = true;
                 } else {
@@ -177,7 +179,7 @@ sp_stop_set(SPObject *object, unsigned key, gchar const *value)
                 }
             }
             {
-                gchar const *p = sp_object_get_style_property(object, "stop-opacity", "1");
+                gchar const *p = object->getStyleProperty( "stop-opacity", "1");
                 gdouble opacity = sp_svg_read_percentage(p, stop->opacity);
                 stop->opacity = opacity;
             }
@@ -186,7 +188,7 @@ sp_stop_set(SPObject *object, unsigned key, gchar const *value)
         }
         case SP_PROP_STOP_COLOR: {
             {
-                gchar const *p = sp_object_get_style_property(object, "stop-color", "black");
+                gchar const *p = object->getStyleProperty( "stop-color", "black");
                 if (streq(p, "currentColor")) {
                     stop->currentColor = true;
                 } else {
@@ -199,7 +201,7 @@ sp_stop_set(SPObject *object, unsigned key, gchar const *value)
         }
         case SP_PROP_STOP_OPACITY: {
             {
-                gchar const *p = sp_object_get_style_property(object, "stop-opacity", "1");
+                gchar const *p = object->getStyleProperty( "stop-opacity", "1");
                 gdouble opacity = sp_svg_read_percentage(p, stop->opacity);
                 stop->opacity = opacity;
             }
@@ -291,7 +293,7 @@ void SPGradient::setSwatch( bool swatch )
     if ( swatch != isSwatch() ) {
         this->swatch = swatch; // to make isSolid() work, this happens first
         gchar const* paintVal = swatch ? (isSolid() ? "solid" : "gradient") : 0;
-        sp_object_setAttribute( this, "osb:paint", paintVal, 0 );
+        setAttribute( "osb:paint", paintVal, 0 );
 
         requestModified( SP_OBJECT_MODIFIED_FLAG );
     }
@@ -308,7 +310,7 @@ sp_stop_get_rgba32(SPStop const *const stop)
      * value depends on user agent, and don't give any further restrictions that I can
      * see.) */
     if (stop->currentColor) {
-        char const *str = sp_object_get_style_property(stop, "color", NULL);
+        char const *str = stop->getStyleProperty( "color", NULL);
         if (str) {
             rgb0 = sp_svg_read_color(str, rgb0);
         }
@@ -417,21 +419,21 @@ void SPGradientImpl::build(SPObject *object, SPDocument *document, Inkscape::XML
         (* ((SPObjectClass *) gradient_parent_class)->build)(object, document, repr);
     }
 
-    for ( SPObject *ochild = sp_object_first_child(object); ochild; ochild = ochild->next ) {
+    for ( SPObject *ochild = object->firstChild() ; ochild ; ochild = ochild->getNext() ) {
         if (SP_IS_STOP(ochild)) {
             gradient->has_stops = TRUE;
             break;
         }
     }
 
-    sp_object_read_attr(object, "gradientUnits");
-    sp_object_read_attr(object, "gradientTransform");
-    sp_object_read_attr(object, "spreadMethod");
-    sp_object_read_attr(object, "xlink:href");
-    sp_object_read_attr(object, "osb:paint");
+    object->readAttr( "gradientUnits" );
+    object->readAttr( "gradientTransform" );
+    object->readAttr( "spreadMethod" );
+    object->readAttr( "xlink:href" );
+    object->readAttr( "osb:paint" );
 
-    /* Register ourselves */
-    sp_document_add_resource(document, "gradient", object);
+    // Register ourselves
+    document->addResource("gradient", object);
 }
 
 /**
@@ -442,12 +444,12 @@ void SPGradientImpl::release(SPObject *object)
     SPGradient *gradient = (SPGradient *) object;
 
 #ifdef SP_GRADIENT_VERBOSE
-    g_print("Releasing gradient %s\n", SP_OBJECT_ID(object));
+    g_print("Releasing gradient %s\n", object->getId());
 #endif
 
     if (SP_OBJECT_DOCUMENT(object)) {
         /* Unregister ourselves */
-        sp_document_remove_resource(SP_OBJECT_DOCUMENT(object), "gradient", SP_OBJECT(object));
+        SP_OBJECT_DOCUMENT(object)->removeResource("gradient", SP_OBJECT(object));
     }
 
     if (gradient->ref) {
@@ -541,7 +543,7 @@ void SPGradientImpl::setGradientAttr(SPObject *object, unsigned key, gchar const
                 // Might need to flip solid/gradient
                 Glib::ustring paintVal = ( gr->hasStops() && (gr->getStopCount() == 0) ) ? "solid" : "gradient";
                 if ( paintVal != value ) {
-                    sp_object_setAttribute( gr, "osb:paint", paintVal.c_str(), 0 );
+                    gr->setAttribute( "osb:paint", paintVal.c_str(), 0 );
                     modified = true;
                 }
             }
@@ -600,13 +602,13 @@ void SPGradientImpl::childAdded(SPObject *object, Inkscape::XML::Node *child, In
         (* ((SPObjectClass *) gradient_parent_class)->child_added)(object, child, ref);
     }
 
-    SPObject *ochild = sp_object_get_child_by_repr(object, child);
+    SPObject *ochild = object->get_child_by_repr(child);
     if ( ochild && SP_IS_STOP(ochild) ) {
         gr->has_stops = TRUE;
         if ( gr->getStopCount() > 0 ) {
-            gchar const * attr = gr->repr->attribute("osb:paint");
+            gchar const * attr = gr->getAttribute("osb:paint");
             if ( attr && strcmp(attr, "gradient") ) {
-                sp_object_setAttribute( gr, "osb:paint", "gradient", 0 );
+                gr->setAttribute( "osb:paint", "gradient", 0 );
             }
         }
     }
@@ -629,8 +631,7 @@ void SPGradientImpl::removeChild(SPObject *object, Inkscape::XML::Node *child)
     }
 
     gr->has_stops = FALSE;
-    SPObject *ochild;
-    for ( ochild = sp_object_first_child(object) ; ochild ; ochild = SP_OBJECT_NEXT(ochild) ) {
+    for ( SPObject *ochild = object->firstChild() ; ochild ; ochild = ochild->getNext() ) {
         if (SP_IS_STOP(ochild)) {
             gr->has_stops = TRUE;
             break;
@@ -638,9 +639,9 @@ void SPGradientImpl::removeChild(SPObject *object, Inkscape::XML::Node *child)
     }
 
     if ( gr->getStopCount() == 0 ) {
-        gchar const * attr = gr->repr->attribute("osb:paint");
+        gchar const * attr = gr->getAttribute("osb:paint");
         if ( attr && strcmp(attr, "solid") ) {
-            sp_object_setAttribute( gr, "osb:paint", "solid", 0 );
+            gr->setAttribute( "osb:paint", "solid", 0 );
         }
     }
 
@@ -668,7 +669,7 @@ void SPGradientImpl::modified(SPObject *object, guint flags)
 
     // FIXME: climb up the ladder of hrefs
     GSList *l = NULL;
-    for (SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+    for (SPObject *child = object->firstChild() ; child; child = child->getNext() ) {
         g_object_ref(G_OBJECT(child));
         l = g_slist_prepend(l, child);
     }
@@ -686,7 +687,7 @@ void SPGradientImpl::modified(SPObject *object, guint flags)
 SPStop* SPGradient::getFirstStop()
 {
     SPStop* first = 0;
-    for (SPObject *ochild = sp_object_first_child(this); ochild && !first; ochild = SP_OBJECT_NEXT(ochild)) {
+    for (SPObject *ochild = firstChild(); ochild && !first; ochild = ochild->getNext()) {
         if (SP_IS_STOP(ochild)) {
             first = SP_STOP(ochild);
         }
@@ -718,7 +719,7 @@ Inkscape::XML::Node *SPGradientImpl::write(SPObject *object, Inkscape::XML::Docu
 
     if (flags & SP_OBJECT_WRITE_BUILD) {
         GSList *l = NULL;
-        for (SPObject *child = sp_object_first_child(object); child; child = SP_OBJECT_NEXT(child)) {
+        for (SPObject *child = object->firstChild(); child; child = child->getNext()) {
             Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
             if (crepr) {
                 l = g_slist_prepend(l, crepr);
@@ -961,7 +962,7 @@ sp_gradient_repr_write_vector(SPGradient *gr)
     g_return_if_fail(gr != NULL);
     g_return_if_fail(SP_IS_GRADIENT(gr));
 
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(gr));
+    Inkscape::XML::Document *xml_doc = SP_OBJECT_DOCUMENT(gr)->getReprDoc();
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(gr);
 
     /* We have to be careful, as vector may be our own, so construct repr list at first */
@@ -1023,9 +1024,7 @@ bool SPGradient::invalidateVector()
 void SPGradient::rebuildVector()
 {
     gint len = 0;
-    for ( SPObject *child = sp_object_first_child(SP_OBJECT(this)) ;
-          child != NULL ;
-          child = SP_OBJECT_NEXT(child) ) {
+    for ( SPObject *child = firstChild() ; child ; child = child->getNext() ) {
         if (SP_IS_STOP(child)) {
             len ++;
         }
@@ -1047,9 +1046,7 @@ void SPGradient::rebuildVector()
         }
     }
 
-    for (SPObject *child = sp_object_first_child(SP_OBJECT(this)) ;
-         child != NULL;
-         child = SP_OBJECT_NEXT(child) ) {
+    for ( SPObject *child = firstChild(); child; child = child->getNext() ) {
         if (SP_IS_STOP(child)) {
             SPStop *stop = SP_STOP(child);
 
@@ -1530,10 +1527,10 @@ static void sp_lineargradient_build(SPObject *object,
     if (((SPObjectClass *) lg_parent_class)->build)
         (* ((SPObjectClass *) lg_parent_class)->build)(object, document, repr);
 
-    sp_object_read_attr(object, "x1");
-    sp_object_read_attr(object, "y1");
-    sp_object_read_attr(object, "x2");
-    sp_object_read_attr(object, "y2");
+    object->readAttr( "x1" );
+    object->readAttr( "y1" );
+    object->readAttr( "x2" );
+    object->readAttr( "y2" );
 }
 
 /**
@@ -1807,11 +1804,11 @@ sp_radialgradient_build(SPObject *object, SPDocument *document, Inkscape::XML::N
     if (((SPObjectClass *) rg_parent_class)->build)
         (* ((SPObjectClass *) rg_parent_class)->build)(object, document, repr);
 
-    sp_object_read_attr(object, "cx");
-    sp_object_read_attr(object, "cy");
-    sp_object_read_attr(object, "r");
-    sp_object_read_attr(object, "fx");
-    sp_object_read_attr(object, "fy");
+    object->readAttr( "cx" );
+    object->readAttr( "cy" );
+    object->readAttr( "r" );
+    object->readAttr( "fx" );
+    object->readAttr( "fy" );
 }
 
 /**

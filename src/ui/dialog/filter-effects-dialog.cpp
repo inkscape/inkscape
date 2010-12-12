@@ -5,6 +5,8 @@
  *   Nicholas Bishop <nicholasbishop@gmail.org>
  *   Rodrigo Kumpera <kumpera@gmail.com>
  *   Felipe C. da S. Sanches <juca@members.fsf.org>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 Authors
  *
@@ -1021,16 +1023,18 @@ private:
                !(ls == 1 && SP_IS_FEPOINTLIGHT(child)) &&
                !(ls == 2 && SP_IS_FESPOTLIGHT(child))) {
                 if(child)
-                    sp_repr_unparent(child->repr);
+                    //XML Tree being used directly here while it shouldn't be.
+                    sp_repr_unparent(child->getRepr());
 
                 if(ls != -1) {
-                    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(prim->document);
+                    Inkscape::XML::Document *xml_doc = prim->document->getReprDoc();
                     Inkscape::XML::Node *repr = xml_doc->createElement(_light_source.get_active_data()->key.c_str());
-                    prim->repr->appendChild(repr);
+                    //XML Tree being used directly here while it shouldn't be.
+                    prim->getRepr()->appendChild(repr);
                     Inkscape::GC::release(repr);
                 }
 
-                sp_document_done(prim->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("New light source"));
+                DocumentUndo::done(prim->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("New light source"));
                 update();
             }
 
@@ -1142,8 +1146,7 @@ void FilterEffectsDialog::FilterModifier::on_activate_desktop(Application*, SPDe
 
     me->_resource_changed.disconnect();
     me->_resource_changed =
-        sp_document_resources_changed_connect(sp_desktop_document(desktop), "filter",
-                                              sigc::mem_fun(me, &FilterModifier::update_filters));
+        sp_desktop_document(desktop)->connectResourcesChanged("filter",sigc::mem_fun(me, &FilterModifier::update_filters));
 
     me->_dialog.setDesktop(desktop);
 
@@ -1214,7 +1217,7 @@ void FilterEffectsDialog::FilterModifier::on_name_edited(const Glib::ustring& pa
     if(iter) {
         SPFilter* filter = (*iter)[_columns.filter];
         filter->setLabel(text.c_str());
-        sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Rename filter"));
+        DocumentUndo::done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Rename filter"));
         if(iter)
             (*iter)[_columns.label] = text;
     }
@@ -1250,7 +1253,7 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
         }
 
         update_selection(sel);
-        sp_document_done(doc, SP_VERB_DIALOG_FILTER_EFFECTS,  _("Apply filter"));
+        DocumentUndo::done(doc, SP_VERB_DIALOG_FILTER_EFFECTS,  _("Apply filter"));
     }
 }
 
@@ -1260,7 +1263,7 @@ void FilterEffectsDialog::FilterModifier::update_filters()
 {
     SPDesktop* desktop = _dialog.getDesktop();
     SPDocument* document = sp_desktop_document(desktop);
-    const GSList* filters = sp_document_get_resource_list(document, "filter");
+    const GSList* filters = document->getResourceList("filter");
 
     _model->clear();
 
@@ -1326,7 +1329,7 @@ void FilterEffectsDialog::FilterModifier::add_filter()
 
     select_filter(filter);
 
-    sp_document_done(doc, SP_VERB_DIALOG_FILTER_EFFECTS, _("Add filter"));
+    DocumentUndo::done(doc, SP_VERB_DIALOG_FILTER_EFFECTS, _("Add filter"));
 }
 
 void FilterEffectsDialog::FilterModifier::remove_filter()
@@ -1335,9 +1338,11 @@ void FilterEffectsDialog::FilterModifier::remove_filter()
 
     if(filter) {
         SPDocument* doc = filter->document;
-        sp_repr_unparent(filter->repr);
 
-        sp_document_done(doc, SP_VERB_DIALOG_FILTER_EFFECTS, _("Remove filter"));
+        //XML Tree being used directly here while it shouldn't be.
+        sp_repr_unparent(filter->getRepr());
+
+        DocumentUndo::done(doc, SP_VERB_DIALOG_FILTER_EFFECTS, _("Remove filter"));
 
         update_filters();
     }
@@ -1352,7 +1357,7 @@ void FilterEffectsDialog::FilterModifier::duplicate_filter()
         repr = repr->duplicate(repr->document());
         parent->appendChild(repr);
 
-        sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Duplicate filter"));
+        DocumentUndo::done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Duplicate filter"));
 
         update_filters();
     }
@@ -1487,7 +1492,9 @@ void FilterEffectsDialog::PrimitiveList::update()
             if(prim) {
                 Gtk::TreeModel::Row row = *_model->append();
                 row[_columns.primitive] = prim;
-                row[_columns.type_id] = FPConverter.get_id_from_key(prim->repr->name());
+
+                //XML Tree being used directly here while it shouldn't be.
+                row[_columns.type_id] = FPConverter.get_id_from_key(prim->getRepr()->name());
                 row[_columns.type] = _(FPConverter.get_label(row[_columns.type_id]).c_str());
                 row[_columns.id] = prim->getId();
 
@@ -1540,10 +1547,11 @@ void FilterEffectsDialog::PrimitiveList::remove_selected()
     if(prim) {
         _observer->set(0);
 
-        sp_repr_unparent(prim->repr);
+        //XML Tree being used directly here while it shouldn't be.
+        sp_repr_unparent(prim->getRepr());
 
-        sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_FILTER_EFFECTS,
-                         _("Remove filter primitive"));
+        DocumentUndo::done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_FILTER_EFFECTS,
+                           _("Remove filter primitive"));
 
         update();
     }
@@ -1913,9 +1921,11 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
                     if(c == _in_drag && SP_IS_FEMERGENODE(o)) {
                         // If input is null, delete it
                         if(!in_val) {
-                            sp_repr_unparent(o->repr);
-                            sp_document_done(prim->document, SP_VERB_DIALOG_FILTER_EFFECTS,
-                                             _("Remove merge node"));
+
+                            //XML Tree being used directly here while it shouldn't be.
+                            sp_repr_unparent(o->getRepr());
+                            DocumentUndo::done(prim->document, SP_VERB_DIALOG_FILTER_EFFECTS,
+                                               _("Remove merge node"));
                             (*get_selection()->get_selected())[_columns.primitive] = prim;
                         }
                         else
@@ -1925,10 +1935,12 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
                 }
                 // Add new input?
                 if(!handled && c == _in_drag && in_val) {
-                    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(prim->document);
+                    Inkscape::XML::Document *xml_doc = prim->document->getReprDoc();
                     Inkscape::XML::Node *repr = xml_doc->createElement("svg:feMergeNode");
                     repr->setAttribute("inkscape:collect", "always");
-                    prim->repr->appendChild(repr);
+
+                    //XML Tree being used directly here while it shouldn't be.
+                    prim->getRepr()->appendChild(repr);
                     SPFeMergeNode *node = SP_FEMERGENODE(prim->document->getObjectByRepr(repr));
                     Inkscape::GC::release(repr);
                     _dialog.set_attr(node, SP_ATTR_IN, in_val);
@@ -2031,7 +2043,7 @@ void FilterEffectsDialog::PrimitiveList::on_drag_end(const Glib::RefPtr<Gdk::Dra
 
     filter->requestModified(SP_OBJECT_MODIFIED_FLAG);
 
-    sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Reorder filter primitive"));
+    DocumentUndo::done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Reorder filter primitive"));
 }
 
 // If a connection is dragged towards the top or bottom of the list, the list should scroll to follow.
@@ -2263,7 +2275,7 @@ void FilterEffectsDialog::add_primitive()
 
         _primitive_list.select(prim);
 
-        sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Add filter primitive"));
+        DocumentUndo::done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Add filter primitive"));
     }
 }
 
@@ -2359,7 +2371,7 @@ void FilterEffectsDialog::duplicate_primitive()
         repr = SP_OBJECT_REPR(origprim)->duplicate(SP_OBJECT_REPR(origprim)->document());
         SP_OBJECT_REPR(filter)->appendChild(repr);
 
-        sp_document_done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Duplicate filter primitive"));
+        DocumentUndo::done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Duplicate filter primitive"));
 
         _primitive_list.update();
     }
@@ -2411,8 +2423,8 @@ void FilterEffectsDialog::set_attr(SPObject* o, const SPAttributeEnum attr, cons
 
             Glib::ustring undokey = "filtereffects:";
             undokey += name;
-            sp_document_maybe_done(filter->document, undokey.c_str(), SP_VERB_DIALOG_FILTER_EFFECTS,
-                                   _("Set filter primitive attribute"));
+            DocumentUndo::maybeDone(filter->document, undokey.c_str(), SP_VERB_DIALOG_FILTER_EFFECTS,
+                                    _("Set filter primitive attribute"));
         }
 
         _attr_lock = false;
@@ -2467,7 +2479,9 @@ void FilterEffectsDialog::update_settings_view()
     SPFilterPrimitive* prim = _primitive_list.get_selected();
 
     if(prim) {
-        _settings->show_and_update(FPConverter.get_id_from_key(prim->repr->name()), prim);
+
+        //XML Tree being used directly here while it shouldn't be.
+        _settings->show_and_update(FPConverter.get_id_from_key(prim->getRepr()->name()), prim);
         _empty_settings.hide();
     }
 

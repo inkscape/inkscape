@@ -5,6 +5,7 @@
 /*
  * Authors:
  *   Ted Gould <ted@gould.cx>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004-2005 Authors
  *
@@ -256,7 +257,7 @@ GimpGrad::open (Inkscape::Extension::Input */*module*/, gchar const *filename)
 
         fclose(gradient);
 
-        return sp_document_new_from_mem(outsvg.c_str(), outsvg.length(), TRUE);
+        return SPDocument::createNewDocFromMem(outsvg.c_str(), outsvg.length(), TRUE);
     }
 
 error:

@@ -1,5 +1,3 @@
-#define __SP_STAR_C__
-
 /*
  * <sodipodi:star> implementation
  *
@@ -7,6 +5,7 @@
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -118,16 +117,16 @@ sp_star_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * r
     if (((SPObjectClass *) parent_class)->build)
         ((SPObjectClass *) parent_class)->build (object, document, repr);
 
-    sp_object_read_attr (object, "sodipodi:cx");
-    sp_object_read_attr (object, "sodipodi:cy");
-    sp_object_read_attr (object, "sodipodi:sides");
-    sp_object_read_attr (object, "sodipodi:r1");
-    sp_object_read_attr (object, "sodipodi:r2");
-    sp_object_read_attr (object, "sodipodi:arg1");
-    sp_object_read_attr (object, "sodipodi:arg2");
-    sp_object_read_attr (object, "inkscape:flatsided");
-    sp_object_read_attr (object, "inkscape:rounded");
-    sp_object_read_attr (object, "inkscape:randomized");
+    object->readAttr( "sodipodi:cx" );
+    object->readAttr( "sodipodi:cy" );
+    object->readAttr( "sodipodi:sides" );
+    object->readAttr( "sodipodi:r1" );
+    object->readAttr( "sodipodi:r2" );
+    object->readAttr( "sodipodi:arg1" );
+    object->readAttr( "sodipodi:arg2" );
+    object->readAttr( "inkscape:flatsided" );
+    object->readAttr( "inkscape:rounded" );
+    object->readAttr( "inkscape:randomized" );
 }
 
 static Inkscape::XML::Node *
@@ -270,7 +269,7 @@ sp_star_update (SPObject *object, SPCtx *ctx, guint flags)
     if (flags & (SP_OBJECT_MODIFIED_FLAG |
              SP_OBJECT_STYLE_MODIFIED_FLAG |
              SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        sp_shape_set_shape ((SPShape *) object);
+        ((SPShape *) object)->setShape ();
     }
 
     if (((SPObjectClass *) parent_class)->update)
@@ -439,7 +438,7 @@ sp_star_set_shape (SPShape *shape)
             // unconditionally read the curve from d, if any, to preserve appearance
             Geom::PathVector pv = sp_svg_read_pathv(SP_OBJECT_REPR(shape)->attribute("d"));
             SPCurve *cold = new SPCurve(pv);
-            sp_shape_set_curve_insync (shape, cold, TRUE);
+            shape->setCurveInsync( cold, TRUE);
             cold->unref();
         }
         return;
@@ -509,12 +508,12 @@ sp_star_set_shape (SPShape *shape)
 
     /* Reset the shape'scurve to the "original_curve"
      * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
-    sp_shape_set_curve_insync (shape, c, TRUE);
+    shape->setCurveInsync( c, TRUE);
     if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(shape)) && sp_lpe_item_path_effects_enabled(SP_LPE_ITEM(shape))) {
         SPCurve *c_lpe = c->copy();
         bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM (shape), c_lpe);
         if (success) {
-            sp_shape_set_curve_insync (shape, c_lpe, TRUE);
+            shape->setCurveInsync( c_lpe, TRUE);
         } 
         c_lpe->unref();
     }
@@ -560,7 +559,7 @@ static void sp_star_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
     }
 
     if (snapprefs->getSnapObjectMidpoints()) {
-        Geom::Matrix const i2d (sp_item_i2d_affine (item));
+        Geom::Matrix const i2d (item->i2d_affine ());
         p.push_back(Inkscape::SnapCandidatePoint(SP_STAR(item)->center * i2d,Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
     }
 }

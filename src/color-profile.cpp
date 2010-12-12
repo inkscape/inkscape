@@ -180,9 +180,8 @@ void ColorProfile::init( ColorProfile *cprof )
 void ColorProfile::release( SPObject *object )
 {
     // Unregister ourselves
-    SPDocument* document = SP_OBJECT_DOCUMENT(object);
-    if ( document ) {
-        sp_document_remove_resource (SP_OBJECT_DOCUMENT (object), "iccprofile", SP_OBJECT (object));
+    if ( object->document ) {
+        object->document->removeResource("iccprofile", object);
     }
 
     ColorProfile *cprof = COLORPROFILE(object);
@@ -249,14 +248,14 @@ void ColorProfile::build( SPObject *object, SPDocument *document, Inkscape::XML:
     if (cprof_parent_class->build) {
         (* cprof_parent_class->build)(object, document, repr);
     }
-    sp_object_read_attr( object, "xlink:href" );
-    sp_object_read_attr( object, "local" );
-    sp_object_read_attr( object, "name" );
-    sp_object_read_attr( object, "rendering-intent" );
+    object->readAttr( "xlink:href" );
+    object->readAttr( "local" );
+    object->readAttr( "name" );
+    object->readAttr( "rendering-intent" );
 
     // Register
     if ( document ) {
-        sp_document_add_resource( document, "iccprofile", object );
+        document->addResource( "iccprofile", object );
     }
 }
 
@@ -290,7 +289,7 @@ void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
                         g_warning("object has no document.  using active");
                     }
                     //# 1.  Get complete URI of document
-                    gchar const *docbase = SP_DOCUMENT_URI( doc );
+                    gchar const *docbase = doc->getURI();
                     if (!docbase)
                     {
                         // Normal for files that have not yet been saved.
@@ -477,7 +476,7 @@ static int getLcmsIntent( guint svgIntent )
 static SPObject* bruteFind( SPDocument* document, gchar const* name )
 {
     SPObject* result = 0;
-    const GSList * current = sp_document_get_resource_list(document, "iccprofile");
+    const GSList * current = document->getResourceList("iccprofile");
     while ( current && !result ) {
         if ( IS_COLORPROFILE(current->data) ) {
             ColorProfile* prof = COLORPROFILE(current->data);

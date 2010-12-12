@@ -3,6 +3,7 @@
  *                          to a particular desktop
  *
  * Copyright 2006  MenTaLguY  <mental@rydia.net>
+ *   Abhishek Sharma
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -183,7 +184,7 @@ void LayerManager::renameLayer( SPObject* obj, gchar const *label, bool uniquify
         }
 
         std::set<Glib::ustring> currentNames;
-        GSList const *layers=sp_document_get_resource_list(_document, "layer");
+        GSList const *layers=_document->getResourceList("layer");
         SPObject *root=_desktop->currentRoot();
         if ( root ) {
             for ( GSList const *iter=layers ; iter ; iter = iter->next ) {
@@ -218,7 +219,7 @@ void LayerManager::_setDocument(SPDocument *document) {
     }
     _document = document;
     if (document) {
-        _resource_connection = sp_document_resources_changed_connect(document, "layer", sigc::mem_fun(*this, &LayerManager::_rebuild));
+        _resource_connection = document->connectResourcesChanged("layer", sigc::mem_fun(*this, &LayerManager::_rebuild));
     }
     _rebuild();
 }
@@ -248,7 +249,7 @@ void LayerManager::_rebuild() {
     if (!_document) // http://sourceforge.net/mailarchive/forum.php?thread_name=5747bce9a7ed077c1b4fc9f0f4f8a5e0%40localhost&forum_name=inkscape-devel
         return;
 
-    GSList const *layers = sp_document_get_resource_list(_document, "layer");
+    GSList const *layers = _document->getResourceList("layer");
     SPObject *root=_desktop->currentRoot();
     if ( root ) {
         _addOne(root);
@@ -269,13 +270,15 @@ void LayerManager::_rebuild() {
                         if ( group->layerMode() == SPGroup::LAYER ) {
                             // If we have a layer-group as the one or a parent, ensure it is listed as a valid layer.
                             needsAdd &= ( g_slist_find(const_cast<GSList *>(layers), curr) != NULL );
-                            if ( (!(group->repr)) || (!(group->repr->parent())) ) {
+							// XML Tree being used here directly while it shouldn't be...
+                            if ( (!(group->getRepr())) || (!(group->getRepr()->parent())) ) {
                                 needsAdd = false;
                             }
                         } else {
                             // If a non-layer group is a parent of layer groups, then show it also as a layer.
                             // TODO add the magic Inkscape group mode?
-                            if ( group->repr && group->repr->parent() ) {
+							// XML Tree being used directly while it shouldn't be...
+                            if ( group->getRepr() && group->getRepr()->parent() ) {
                                 additional.insert(group);
                             } else {
                                 needsAdd = false;

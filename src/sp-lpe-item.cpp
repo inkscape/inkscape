@@ -1,5 +1,3 @@
-#define __SP_LPE_ITEM_CPP__
-
 /** \file
  * Base class for live path effect items
  */
@@ -7,6 +5,7 @@
  * Authors:
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *   Bastien Bouclet <bgkweb@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2008 authors
  *
@@ -137,7 +136,7 @@ sp_lpe_item_finalize(GObject *object)
 static void
 sp_lpe_item_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    sp_object_read_attr(object, "inkscape:path-effect");
+    object->readAttr( "inkscape:path-effect" );
 
     if (((SPObjectClass *) parent_class)->build) {
         ((SPObjectClass *) parent_class)->build(object, document, repr);
@@ -681,7 +680,7 @@ sp_lpe_item_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape:
         (* ((SPObjectClass *) (parent_class))->child_added) (object, child, ref);
 
     if (SP_IS_LPE_ITEM(object) && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(object))) {
-        SPObject *ochild = sp_object_get_child_by_repr(object, child);
+        SPObject *ochild = object->get_child_by_repr(child);
         if ( ochild && SP_IS_LPE_ITEM(ochild) ) {
             sp_lpe_item_create_original_path_recursive(SP_LPE_ITEM(ochild));
         }
@@ -692,7 +691,7 @@ static void
 sp_lpe_item_remove_child (SPObject * object, Inkscape::XML::Node * child)
 {
     if (SP_IS_LPE_ITEM(object) && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(object))) {
-        SPObject *ochild = sp_object_get_child_by_repr(object, child);
+        SPObject *ochild = object->get_child_by_repr(child);
         if ( ochild && SP_IS_LPE_ITEM(ochild) ) {
             sp_lpe_item_cleanup_original_path_recursive(SP_LPE_ITEM(ochild));
         }

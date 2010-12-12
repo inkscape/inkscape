@@ -8,6 +8,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jon Phillips <jon@rejon.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de> (Gtkmm)
+ *   Abhishek Sharma
  *
  * Copyright (C) 2000 - 2007 Authors
  *
@@ -349,15 +350,15 @@ RegisteredColorPicker::on_changed (guint32 rgba)
 
     gchar c[32];
     sp_svg_write_color(c, sizeof(c), rgba);
-    bool saved = sp_document_get_undo_sensitive (local_doc);
-    sp_document_set_undo_sensitive (local_doc, false);
+    bool saved = DocumentUndo::getUndoSensitive(local_doc);
+    DocumentUndo::setUndoSensitive(local_doc, false);
     local_repr->setAttribute(_ckey.c_str(), c);
     sp_repr_set_css_double(local_repr, _akey.c_str(), (rgba & 0xff) / 255.0);
-    sp_document_set_undo_sensitive (local_doc, saved);
+    DocumentUndo::setUndoSensitive(local_doc, saved);
 
     local_doc->setModifiedSinceSave();
-    sp_document_done (local_doc, SP_VERB_NONE,
-                      /* TODO: annotate */ "registered-widget.cpp: RegisteredColorPicker::on_changed");
+    DocumentUndo::done(local_doc, SP_VERB_NONE,
+                       /* TODO: annotate */ "registered-widget.cpp: RegisteredColorPicker::on_changed");
 
     _wr->setUpdating (false);
 }

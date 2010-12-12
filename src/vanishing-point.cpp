@@ -1,5 +1,3 @@
-#define __VANISHING_POINT_C__
-
 /*
  * Vanishing point for 3D perspectives
  *
@@ -7,6 +5,7 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *   Maximilian Albert <Anhalter42@gmx.de>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2005-2007 authors
  *
@@ -24,6 +23,8 @@
 #include "shape-editor.h"
 #include "snap.h"
 #include "sp-namedview.h"
+
+using Inkscape::DocumentUndo;
 
 namespace Box3D {
 
@@ -121,8 +122,8 @@ vp_knot_moved_handler (SPKnot *knot, Geom::Point const *ppointer, guint state, g
             }
             // FIXME: Do we need to create a new dragger as well?
             dragger->updateZOrders ();
-            sp_document_done (sp_desktop_document (inkscape_active_desktop()), SP_VERB_CONTEXT_3DBOX,
-                              _("Split vanishing points"));
+            DocumentUndo::done(sp_desktop_document (inkscape_active_desktop()), SP_VERB_CONTEXT_3DBOX,
+			       _("Split vanishing points"));
             return;
         }
     }
@@ -166,8 +167,8 @@ vp_knot_moved_handler (SPKnot *knot, Geom::Point const *ppointer, guint state, g
                 //       deleted according to changes in the svg representation, not based on any user input
                 //       as is currently the case.
 
-                sp_document_done (sp_desktop_document (inkscape_active_desktop()), SP_VERB_CONTEXT_3DBOX,
-                                  _("Merge vanishing points"));
+                DocumentUndo::done(sp_desktop_document (inkscape_active_desktop()), SP_VERB_CONTEXT_3DBOX,
+				   _("Merge vanishing points"));
 
                 return;
             }
@@ -232,8 +233,8 @@ vp_knot_ungrabbed_handler (SPKnot *knot, guint /*state*/, gpointer data)
     // TODO: Undo machinery!!
     g_return_if_fail (dragger->parent);
     g_return_if_fail (dragger->parent->document);
-    sp_document_done(dragger->parent->document, SP_VERB_CONTEXT_3DBOX,
-                     _("3D box: Move vanishing point"));
+    DocumentUndo::done(dragger->parent->document, SP_VERB_CONTEXT_3DBOX,
+		       _("3D box: Move vanishing point"));
 }
 
 unsigned int VanishingPoint::global_counter = 0;

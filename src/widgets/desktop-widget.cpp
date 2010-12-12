@@ -1,5 +1,3 @@
-#define __SP_DESKTOP_WIDGET_C__
-
 /** \file
  * Desktop widget implementation
  */
@@ -10,6 +8,8 @@
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *   John Bintz <jcoswell@coswellproductions.org>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 Johan Engelen
  * Copyright (C) 2006 John Bintz
@@ -709,8 +709,8 @@ sp_desktop_widget_realize (GtkWidget *widget)
     NRRect d;
     d.x0 = 0.0;
     d.y0 = 0.0;
-    d.x1 = sp_document_width (dtw->desktop->doc());
-    d.y1 = sp_document_height (dtw->desktop->doc());
+    d.x1 = (dtw->desktop->doc())->getWidth ();
+    d.y1 = (dtw->desktop->doc())->getHeight ();
 
     if ((fabs (d.x1 - d.x0) < 1.0) || (fabs (d.y1 - d.y0) < 1.0)) return;
 
@@ -731,7 +731,7 @@ void SPDesktopWidget::updateNamedview()
     modified_connection = desktop->namedview->connectModified(sigc::mem_fun(*this, &SPDesktopWidget::namedviewModified));
     namedviewModified(desktop->namedview, SP_OBJECT_MODIFIED_FLAG);
 
-    updateTitle(SP_DOCUMENT_NAME (desktop->doc()));
+    updateTitle( desktop->doc()->getName() );
 }
 
 /**
@@ -858,7 +858,7 @@ SPDesktopWidget::shutdown()
                 GTK_BUTTONS_NONE,
                 _("<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n\n"
                   "If you close without saving, your changes will be discarded."),
-                SP_DOCUMENT_NAME(doc));
+                doc->getName());
             // fix for bug 1767940:
             GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), GTK_CAN_FOCUS);
 
@@ -880,12 +880,12 @@ SPDesktopWidget::shutdown()
             {
                 Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
 
-                sp_document_ref(doc);
+                doc->doRef();
                 sp_namedview_document_from_window(desktop);
                 if (sp_file_save_document(*window, doc)) {
-                    sp_document_unref(doc);
+                    doc->doUnref();
                 } else { // save dialog cancelled or save failed
-                    sp_document_unref(doc);
+                    doc->doUnref();
                     return TRUE;
                 }
 
@@ -900,7 +900,7 @@ SPDesktopWidget::shutdown()
         }
         /* Code to check data loss */
         bool allow_data_loss = FALSE;
-        while (sp_document_repr_root(doc)->attribute("inkscape:dataloss") != NULL && allow_data_loss == FALSE) {
+        while (doc->getReprRoot()->attribute("inkscape:dataloss") != NULL && allow_data_loss == FALSE) {
             GtkWidget *dialog;
 
             /** \todo
@@ -914,7 +914,7 @@ SPDesktopWidget::shutdown()
                 GTK_BUTTONS_NONE,
                 _("<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n\n"
                   "Do you want to save this file as Inkscape SVG?"),
-                SP_DOCUMENT_NAME(doc)? SP_DOCUMENT_NAME(doc) : "Unnamed",
+                doc->getName() ? doc->getName() : "Unnamed",
                 SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE);
             // fix for bug 1767940:
             GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), GTK_CAN_FOCUS);
@@ -938,14 +938,14 @@ SPDesktopWidget::shutdown()
             switch (response) {
             case GTK_RESPONSE_YES:
             {
-                sp_document_ref(doc);
+                doc->doRef();
 
                 Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
 
                 if (sp_file_save_dialog(*window, doc, Inkscape::Extension::FILE_SAVE_METHOD_INKSCAPE_SVG)) {
-                    sp_document_unref(doc);
+                    doc->doUnref();
                 } else { // save dialog cancelled or save failed
-                    sp_document_unref(doc);
+                    doc->doUnref();
                     return TRUE;
                 }
 
@@ -1575,7 +1575,7 @@ bool SPDesktopWidget::onFocusInEvent(GdkEventFocus*)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/options/bitmapautoreload/value", true)) {
-        GSList const *imageList = sp_document_get_resource_list(desktop->doc(), "image");
+        GSList const *imageList = (desktop->doc())->getResourceList("image");
         for (GSList const *p = imageList; p; p = p->next) {
             SPImage* image = SP_IMAGE(p->data);
             sp_image_refresh_if_outdated( image );
@@ -1837,11 +1837,11 @@ sp_desktop_widget_update_scrollbars (SPDesktopWidget *dtw, double scale)
 
     /* The desktop region we always show unconditionally */
     SPDocument *doc = dtw->desktop->doc();
-    Geom::Rect darea ( Geom::Point(-sp_document_width(doc), -sp_document_height(doc)),
-                     Geom::Point(2 * sp_document_width(doc), 2 * sp_document_height(doc))  );
+    Geom::Rect darea ( Geom::Point(-doc->getWidth(), -doc->getHeight()),
+                     Geom::Point(2 * doc->getWidth(), 2 * doc->getHeight())  );
     SPObject* root = doc->root;
     SPItem* item = SP_ITEM(root);
-    Geom::OptRect deskarea = Geom::unify(darea, sp_item_bbox_desktop(item));
+    Geom::OptRect deskarea = Geom::unify(darea, item->getBboxDesktop());
 
     /* Canvas region we always show unconditionally */
     Geom::Rect carea( Geom::Point(deskarea->min()[Geom::X] * scale - 64, deskarea->max()[Geom::Y] * -scale - 64),

@@ -1,5 +1,3 @@
-#define __SP_DYNA_DRAW_CONTEXT_C__
-
 /*
  * Handwriting-like drawing mode
  *
@@ -8,6 +6,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   MenTaLguY <mental@rydia.net>
+ *   Abhishek Sharma
  *
  * The original dynadraw code:
  *   Paul Haeberli <paul@sgi.com>
@@ -64,6 +63,8 @@
 #include "livarot/Shape.h"
 
 #include "dyna-draw-context.h"
+
+using Inkscape::DocumentUndo;
 
 #define DDC_RED_RGBA 0xff0000ff
 
@@ -599,7 +600,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     }
 
                     // calculate pointer point in the guide item's coords
-                    motion_to_curve = sp_item_dt2i_affine(selected) * sp_item_i2doc_affine(selected);
+                    motion_to_curve = selected->dt2i_affine() * selected->i2doc_affine();
                     pointer = motion_dt * motion_to_curve;
 
                     // calculate the nearest point on the guide path
@@ -1002,7 +1003,7 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize, bool subtract)
     if (!dc->accumulated->is_empty()) {
         if (!dc->repr) {
             /* Create object */
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+            Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
             Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
             /* Set style */
@@ -1012,7 +1013,7 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize, bool subtract)
 
             SPItem *item=SP_ITEM(desktop->currentLayer()->appendChildRepr(dc->repr));
             Inkscape::GC::release(dc->repr);
-            item->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
+            item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
             item->updateRepr();
         }
         Geom::PathVector pathv = dc->accumulated->get_pathvector() * desktop->dt2doc();
@@ -1040,8 +1041,8 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize, bool subtract)
         dc->repr = NULL;
     }
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_CALLIGRAPHIC,
-                     _("Draw calligraphic stroke"));
+    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_CALLIGRAPHIC,
+                       _("Draw calligraphic stroke"));
 }
 
 static void

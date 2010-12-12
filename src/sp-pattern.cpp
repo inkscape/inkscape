@@ -1,11 +1,11 @@
-#define __SP_PATTERN_C__
-
 /*
  * SVG <pattern> implementation
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma 
  *
  * Copyright (C) 2002 Lauris Kaplinski
  *
@@ -156,18 +156,18 @@ sp_pattern_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *r
 	if (((SPObjectClass *) pattern_parent_class)->build)
 		(* ((SPObjectClass *) pattern_parent_class)->build) (object, document, repr);
 
-	sp_object_read_attr (object, "patternUnits");
-	sp_object_read_attr (object, "patternContentUnits");
-	sp_object_read_attr (object, "patternTransform");
-	sp_object_read_attr (object, "x");
-	sp_object_read_attr (object, "y");
-	sp_object_read_attr (object, "width");
-	sp_object_read_attr (object, "height");
-	sp_object_read_attr (object, "viewBox");
-	sp_object_read_attr (object, "xlink:href");
+	object->readAttr( "patternUnits" );
+	object->readAttr( "patternContentUnits" );
+	object->readAttr( "patternTransform" );
+	object->readAttr( "x" );
+	object->readAttr( "y" );
+	object->readAttr( "width" );
+	object->readAttr( "height" );
+	object->readAttr( "viewBox" );
+	object->readAttr( "xlink:href" );
 
 	/* Register ourselves */
-	sp_document_add_resource (document, "pattern", object);
+	document->addResource("pattern", object);
 }
 
 static void
@@ -179,7 +179,7 @@ sp_pattern_release (SPObject *object)
 
 	if (SP_OBJECT_DOCUMENT (object)) {
 		/* Unregister ourselves */
-		sp_document_remove_resource (SP_OBJECT_DOCUMENT (object), "pattern", SP_OBJECT (object));
+		SP_OBJECT_DOCUMENT (object)->removeResource("pattern", SP_OBJECT (object));
 	}
 
 	if (pat->ref) {
@@ -323,16 +323,16 @@ sp_pattern_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::
 	if (((SPObjectClass *) (pattern_parent_class))->child_added)
 		(* ((SPObjectClass *) (pattern_parent_class))->child_added) (object, child, ref);
 
-	SPObject *ochild = sp_object_get_child_by_repr(object, child);
+	SPObject *ochild = object->get_child_by_repr(child);
 	if (SP_IS_ITEM (ochild)) {
 
 		SPPaintServer *ps = SP_PAINT_SERVER (pat);
-		unsigned position = sp_item_pos_in_parent(SP_ITEM(ochild));
+		unsigned position = SP_ITEM(ochild)->pos_in_parent();
 
 		for (SPPainter *p = ps->painters; p != NULL; p = p->next) {
 
 			SPPatPainter *pp = (SPPatPainter *) p;
-			NRArenaItem *ai = sp_item_invoke_show (SP_ITEM (ochild), pp->arena, pp->dkey, SP_ITEM_REFERENCE_FLAGS);
+			NRArenaItem *ai = SP_ITEM (ochild)->invoke_show (pp->arena, pp->dkey, SP_ITEM_REFERENCE_FLAGS);
 
 			if (ai) {
 				nr_arena_item_add_child (pp->root, ai, NULL);
@@ -347,21 +347,20 @@ sp_pattern_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::
 
 /* fixme: We need ::order_changed handler too (Lauris) */
 
-GSList *
-pattern_getchildren (SPPattern *pat)
+GSList *pattern_getchildren(SPPattern *pat)
 {
-	GSList *l = NULL;
+    GSList *l = NULL;
 
-	for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
-		if (sp_object_first_child(SP_OBJECT(pat_i))) { // find the first one with children
-			for (SPObject *child = sp_object_first_child(SP_OBJECT (pat)) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-				l = g_slist_prepend (l, child);
-			}
-			break; // do not go further up the chain if children are found
-		}
+    for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
+        if (pat_i->firstChild()) { // find the first one with children
+	    for (SPObject *child = pat->firstChild() ; child ; child = child->getNext() ) {
+	        l = g_slist_prepend (l, child);
+	    }
+	    break; // do not go further up the chain if children are found
 	}
+    }
 
-	return l;
+  return l;
 }
 
 static void
@@ -463,19 +462,17 @@ count_pattern_hrefs(SPObject *o, SPPattern *pat)
         i ++;
     }
 
-    for (SPObject *child = sp_object_first_child(o);
-         child != NULL; child = SP_OBJECT_NEXT(child)) {
+    for ( SPObject *child = o->firstChild(); child != NULL; child = child->next ) {
         i += count_pattern_hrefs(child, pat);
     }
 
     return i;
 }
 
-SPPattern *
-pattern_chain (SPPattern *pattern)
+SPPattern *pattern_chain(SPPattern *pattern)
 {
 	SPDocument *document = SP_OBJECT_DOCUMENT (pattern);
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+        Inkscape::XML::Document *xml_doc = document->getReprDoc();
 	Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 
 	Inkscape::XML::Node *repr = xml_doc->createElement("svg:pattern");
@@ -495,7 +492,7 @@ pattern_chain (SPPattern *pattern)
 SPPattern *
 sp_pattern_clone_if_necessary (SPItem *item, SPPattern *pattern, const gchar *property)
 {
-	if (!pattern->href || SP_OBJECT_HREFCOUNT(pattern) > count_pattern_hrefs(item, pattern)) {
+	if (!pattern->href || pattern->hrefcount > count_pattern_hrefs(item, pattern)) {
 		pattern = pattern_chain (pattern);
 		gchar *href = g_strconcat ("url(#", SP_OBJECT_REPR (pattern)->attribute("id"), ")", NULL);
 
@@ -526,10 +523,9 @@ sp_pattern_transform_multiply (SPPattern *pattern, Geom::Matrix postmul, bool se
 	g_free(c);
 }
 
-const gchar *
-pattern_tile (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix transform, Geom::Matrix move)
+const gchar *pattern_tile(GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix transform, Geom::Matrix move)
 {
-	Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    Inkscape::XML::Document *xml_doc = document->getReprDoc();
 	Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 
 	Inkscape::XML::Node *repr = xml_doc->createElement("svg:pattern");
@@ -554,22 +550,21 @@ pattern_tile (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matr
 			dup_transform = Geom::identity();
 		dup_transform *= move;
 
-		sp_item_write_transform(copy, SP_OBJECT_REPR(copy), dup_transform, NULL, false);
+		copy->doWriteTransform(SP_OBJECT_REPR(copy), dup_transform, NULL, false);
 	}
 
 	Inkscape::GC::release(repr);
 	return pat_id;
 }
 
-SPPattern *
-pattern_getroot (SPPattern *pat)
+SPPattern *pattern_getroot(SPPattern *pat)
 {
-	for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
-		if (sp_object_first_child(SP_OBJECT(pat_i))) { // find the first one with children
-			return pat_i;
-		}
-	}
-	return pat; // document is broken, we can't get to root; but at least we can return pat which is supposedly a valid pattern
+    for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
+        if ( pat_i->firstChild() ) { // find the first one with children
+            return pat_i;
+        }
+    }
+    return pat; // document is broken, we can't get to root; but at least we can return pat which is supposedly a valid pattern
 }
 
 
@@ -651,12 +646,13 @@ NRRect *pattern_viewBox (SPPattern *pat)
 
 bool pattern_hasItemChildren (SPPattern *pat)
 {
-	for (SPObject *child = sp_object_first_child(SP_OBJECT(pat)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-		if (SP_IS_ITEM (child)) {
-			return true;
-		}
-	}
-	return false;
+    bool hasChildren = false;
+    for (SPObject *child = pat->firstChild() ; child && !hasChildren ; child = child->getNext() ) {
+        if (SP_IS_ITEM(child)) {
+            hasChildren = true;
+        }
+    }
+    return hasChildren;
 }
 
 
@@ -675,7 +671,7 @@ sp_pattern_painter_release (SPObject *obj, SPPatPainter *painter)
     painter->_release_connections->erase(obj);
 	}
 
-	sp_item_invoke_hide(SP_ITEM(obj), painter->dkey);
+	SP_ITEM(obj)->invoke_hide(painter->dkey);
 }
 
 /**
@@ -757,30 +753,29 @@ sp_pattern_painter_new (SPPaintServer *ps, Geom::Matrix const &full_transform, G
 	/* Create arena */
 	pp->arena = NRArena::create();
 
-	pp->dkey = sp_item_display_key_new (1);
+	pp->dkey = SPItem::display_key_new (1);
 
 	/* Create group */
 	pp->root = NRArenaGroup::create(pp->arena);
 
 	/* Show items */
-	pp->_release_connections = new std::map<SPObject *, sigc::connection>;
-	for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
-		if (pat_i && SP_IS_OBJECT (pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
-			for (SPObject *child = sp_object_first_child(SP_OBJECT(pat_i)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-				if (SP_IS_ITEM (child)) {
-					// for each item in pattern,
-					NRArenaItem *cai;
-					// show it on our arena,
-					cai = sp_item_invoke_show (SP_ITEM (child), pp->arena, pp->dkey, SP_ITEM_REFERENCE_FLAGS);
-					// add to the group,
-					nr_arena_item_append_child (pp->root, cai);
-					// and connect to the release signal in case the item gets deleted
-					pp->_release_connections->insert(std::make_pair(child, child->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_pattern_painter_release), pp))));
-				}
-			}
-			break; // do not go further up the chain if children are found
-		}
-	}
+        pp->_release_connections = new std::map<SPObject *, sigc::connection>;
+        for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
+            if (pat_i && SP_IS_OBJECT (pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
+                for (SPObject *child = pat_i->firstChild() ; child; child = child->getNext() ) {
+                    if (SP_IS_ITEM (child)) {
+                        // for each item in pattern,
+                        // show it on our arena,
+                        NRArenaItem *cai = SP_ITEM(child)->invoke_show(pp->arena, pp->dkey, SP_ITEM_REFERENCE_FLAGS);
+                        // add to the group,
+                        nr_arena_item_append_child (pp->root, cai);
+                        // and connect to the release signal in case the item gets deleted
+                        pp->_release_connections->insert(std::make_pair(child, child->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_pattern_painter_release), pp))));
+                    }
+                }
+                break; // do not go further up the chain if children are found
+            }
+        }
 
 	{
 		NRRect    one_tile,tr_tile;
@@ -1046,3 +1041,15 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
      } 
 	}
 }
+
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

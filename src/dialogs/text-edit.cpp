@@ -5,6 +5,7 @@
  *   Lauris Kaplinski <lauris@ximian.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2007 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -48,6 +49,8 @@ extern "C" {
 #include "svg/css-ostringstream.h"
 #include "widgets/icon.h"
 #include <xml/repr.h>
+
+using Inkscape::DocumentUndo;
 
 #define VB_MARGIN 4
 #define MIN_ONSCREEN_DISTANCE 50
@@ -638,7 +641,7 @@ sp_text_edit_dialog_apply( GtkButton */*button*/, GtkWidget *dlg )
         if (SP_IS_TEXT (item_list->data)) {
 
             // backwards compatibility:
-            SP_OBJECT_REPR(item_list->data)->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
+            reinterpret_cast<SPObject*>(item_list->data)->getRepr()->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
 
             ++items;
         }
@@ -661,8 +664,8 @@ sp_text_edit_dialog_apply( GtkButton */*button*/, GtkWidget *dlg )
     }
 
     // complete the transaction
-    sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
-                      _("Set text style"));
+    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+                       _("Set text style"));
     gtk_widget_set_sensitive (apply, FALSE);
     sp_repr_css_attr_unref (css);
     g_object_set_data (G_OBJECT (dlg), "blocked", GINT_TO_POINTER (FALSE));
@@ -727,7 +730,7 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
                 sp_font_preview_set_phrase (SP_FONT_PREVIEW (preview), NULL);
             }
         } // end of if (docontent)
-        repr = SP_OBJECT_REPR (text);
+        repr = text->getRepr();
 
     } else {
         gtk_widget_set_sensitive (textw, FALSE);

@@ -222,7 +222,7 @@ void SPUsePath::refresh_source()
         return;
     }
     if (SP_IS_SHAPE(item)) {
-        curve = sp_shape_get_curve(SP_SHAPE(item));
+        curve = SP_SHAPE(item)->getCurve();
         if (curve == NULL)
             return;
     }

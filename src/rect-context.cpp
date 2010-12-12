@@ -1,11 +1,11 @@
-#define __SP_RECT_CONTEXT_C__
-
 /*
  * Rectangle drawing context
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2000-2005 authors
@@ -42,6 +42,8 @@
 #include "preferences.h"
 #include "context-fns.h"
 #include "shape-editor.h"
+
+using Inkscape::DocumentUndo;
 
 //static const double goldenratio = 1.61803398874989484820; // golden ratio
 
@@ -466,16 +468,16 @@ static void sp_rect_drag(SPRectContext &rc, Geom::Point const pt, guint state)
             return;
         }
 
-        /* Create object */
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(&rc));
+        // Create object
+        Inkscape::XML::Document *xml_doc = SP_EVENT_CONTEXT_DOCUMENT(&rc)->getReprDoc();
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:rect");
 
-        /* Set style */
+        // Set style
         sp_desktop_apply_style_tool (desktop, repr, "/tools/shapes/rect", false);
 
         rc.item = (SPItem *) desktop->currentLayer()->appendChildRepr(repr);
         Inkscape::GC::release(repr);
-        rc.item->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
+        rc.item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
         rc.item->updateRepr();
 
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
@@ -549,8 +551,8 @@ static void sp_rect_finish(SPRectContext *rc)
         sp_canvas_end_forced_full_redraws(desktop->canvas);
 
         sp_desktop_selection(desktop)->set(rc->item);
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_RECT,
-                         _("Create rectangle"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_RECT,
+                           _("Create rectangle"));
 
         rc->item = NULL;
     }
@@ -575,7 +577,7 @@ static void sp_rect_cancel(SPRectContext *rc)
 
     sp_canvas_end_forced_full_redraws(desktop->canvas);
 
-    sp_document_cancel(sp_desktop_document(desktop));
+    DocumentUndo::cancel(sp_desktop_document(desktop));
 }
 
 

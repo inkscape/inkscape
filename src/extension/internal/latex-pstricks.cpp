@@ -1,10 +1,9 @@
-#define __SP_LATEX_C__
-
 /*
  * LaTeX Printing
  *
  * Author:
  *  Michael Forbes <miforbes@mbhs.edu>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 Authors
  * 
@@ -128,8 +127,8 @@ PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     }
 
     // width and height in pt
-    _width = sp_document_width(doc) * PT_PER_PX;
-    _height = sp_document_height(doc) * PT_PER_PX;
+    _width = doc->getWidth() * PT_PER_PX;
+    _height = doc->getHeight() * PT_PER_PX;
 
     if (res >= 0) {
 
@@ -139,10 +138,10 @@ PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
         os << "\\psset{xunit=.5pt,yunit=.5pt,runit=.5pt}\n";
         // from now on we can output px, but they will be treated as pt
     
-        os << "\\begin{pspicture}(" << sp_document_width(doc) << "," << sp_document_height(doc) << ")\n";
+        os << "\\begin{pspicture}(" << doc->getWidth() << "," << doc->getHeight() << ")\n";
     }
 
-    m_tr_stack.push( Geom::Scale(1, -1) * Geom::Translate(0, sp_document_height(doc)));
+    m_tr_stack.push( Geom::Scale(1, -1) * Geom::Translate(0, doc->getHeight()));
 
     return fprintf(_stream, "%s", os.str().c_str());
 }

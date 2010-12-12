@@ -1,10 +1,9 @@
-#define __SP_SYMBOL_C__
-
 /*
  * SVG <symbol> implementation
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2003 Lauris Kaplinski
  *
@@ -110,8 +109,8 @@ sp_symbol_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *re
     group = (SPGroup *) object;
     symbol = (SPSymbol *) object;
 
-    sp_object_read_attr (object, "viewBox");
-    sp_object_read_attr (object, "preserveAspectRatio");
+    object->readAttr( "viewBox" );
+    object->readAttr( "preserveAspectRatio" );
 
     if (((SPObjectClass *) parent_class)->build)
         ((SPObjectClass *) parent_class)->build (object, document, repr);
@@ -393,11 +392,15 @@ sp_symbol_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::X
         repr = xml_doc->createElement("svg:symbol");
     }
 
-    repr->setAttribute("viewBox", object->repr->attribute("viewBox"));
-    repr->setAttribute("preserveAspectRatio", object->repr->attribute("preserveAspectRatio"));
+    //XML Tree being used directly here while it shouldn't be.
+    repr->setAttribute("viewBox", object->getRepr()->attribute("viewBox"));
+	
+    //XML Tree being used directly here while it shouldn't be.
+    repr->setAttribute("preserveAspectRatio", object->getRepr()->attribute("preserveAspectRatio"));
 
-    if (((SPObjectClass *) (parent_class))->write)
+    if (((SPObjectClass *) (parent_class))->write) {
         ((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
+    }
 
     return repr;
 }

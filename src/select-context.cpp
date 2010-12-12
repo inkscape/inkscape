@@ -1,11 +1,10 @@
-#define __SP_SELECT_CONTEXT_C__
-
 /*
  * Selection and transformation context
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 1999-2005 Authors
@@ -41,6 +40,8 @@
 #include "selection-describer.h"
 #include "seltrans.h"
 #include "box3d.h"
+
+using Inkscape::DocumentUndo;
 
 static void sp_select_context_class_init(SPSelectContextClass *klass);
 static void sp_select_context_init(SPSelectContext *select_context);
@@ -222,7 +223,7 @@ sp_select_context_abort(SPEventContext *event_context)
             if (sc->item) {
                 // only undo if the item is still valid
                 if (SP_OBJECT_DOCUMENT( SP_OBJECT(sc->item))) {
-                    sp_document_undo(sp_desktop_document(desktop));
+                    DocumentUndo::undo(sp_desktop_document(desktop));
                 }
 
                 sp_object_unref( SP_OBJECT(sc->item), NULL);
@@ -230,7 +231,7 @@ sp_select_context_abort(SPEventContext *event_context)
                 // NOTE:  This is a workaround to a bug.
                 // When the ctrl key is held, sc->item is not defined
                 // so in this case (only), we skip the object doc check
-                sp_document_undo(sp_desktop_document(desktop));
+                DocumentUndo::undo(sp_desktop_document(desktop));
             }
             sc->item = NULL;
 
@@ -510,14 +511,14 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     // and also when we started within tolerance, but trespassed tolerance outside of item
                     Inkscape::Rubberband::get(desktop)->stop();
                     SP_EVENT_CONTEXT(sc)->defaultMessageContext()->clear();
-                    item_at_point = desktop->item_at_point(Geom::Point(event->button.x, event->button.y), FALSE);
+                    item_at_point = desktop->getItemAtPoint(Geom::Point(event->button.x, event->button.y), FALSE);
                     if (!item_at_point) // if no item at this point, try at the click point (bug 1012200)
-                        item_at_point = desktop->item_at_point(Geom::Point(xp, yp), FALSE);
+                        item_at_point = desktop->getItemAtPoint(Geom::Point(xp, yp), FALSE);
                     if (item_at_point || sc->moved || sc->button_press_alt) {
                         // drag only if starting from an item, or if something is already grabbed, or if alt-dragging
                         if (!sc->moved) {
-                            item_in_group = desktop->item_at_point(Geom::Point(event->button.x, event->button.y), TRUE);
-                            group_at_point = desktop->group_at_point(Geom::Point(event->button.x, event->button.y));
+                            item_in_group = desktop->getItemAtPoint(Geom::Point(event->button.x, event->button.y), TRUE);
+                            group_at_point = desktop->getGroupAtPoint(Geom::Point(event->button.x, event->button.y));
                             if (SP_IS_LAYER(selection->single()))
                                 group_at_point = SP_GROUP(selection->single());
 
@@ -614,9 +615,9 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         GSList *items = NULL;
                         if (r->getMode() == RUBBERBAND_MODE_RECT) {
                             Geom::OptRect const b = r->getRectangle();
-                            items = sp_document_items_in_box(sp_desktop_document(desktop), desktop->dkey, *b);
+                            items = sp_desktop_document(desktop)->getItemsInBox(desktop->dkey, *b);
                         } else if (r->getMode() == RUBBERBAND_MODE_TOUCHPATH) {
-                            items = sp_document_items_at_points(sp_desktop_document(desktop), desktop->dkey, r->getPoints());
+                            items = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, r->getPoints());
                         }
 
                         seltrans->resetState();

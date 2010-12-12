@@ -1,5 +1,3 @@
-#define __SP_OBJECT_EDIT_C__
-
 /*
  * Node editing extension to objects
  *
@@ -7,6 +5,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Mitsuru Oka
  *   Maximilian Albert <maximilian.albert@gmail.com>
+ *   Abhishek Sharma
  *
  * Licensed under GNU GPL
  */
@@ -482,7 +481,7 @@ Box3DKnotHolderEntity::knot_set_generic(SPItem *item, unsigned int knot_id, Geom
 
     g_assert(item != NULL);
     SPBox3D *box = SP_BOX3D(item);
-    Geom::Matrix const i2d (sp_item_i2d_affine (item));
+    Geom::Matrix const i2d (item->i2d_affine ());
 
     Box3D::Axis movement;
     if ((knot_id < 4) != (state & GDK_SHIFT_MASK)) {
@@ -658,7 +657,7 @@ Box3DKnotHolderEntityCenter::knot_set(Geom::Point const &new_pos, Geom::Point co
     Geom::Point const s = snap_knot_position(new_pos);
 
     SPBox3D *box = SP_BOX3D(item);
-    Geom::Matrix const i2d (sp_item_i2d_affine (item));
+    Geom::Matrix const i2d (item->i2d_affine ());
 
     box3d_set_center (SP_BOX3D(item), s * i2d, origin * i2d, !(state & GDK_SHIFT_MASK) ? Box3D::XY : Box3D::Z,
                       state & GDK_CONTROL_MASK);

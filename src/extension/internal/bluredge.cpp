@@ -72,7 +72,7 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
         SPItem * spitem = *item;
 
         std::vector<Inkscape::XML::Node *> new_items(steps);
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+        Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
         Inkscape::XML::Node * new_group = xml_doc->createElement("svg:g");
         (SP_OBJECT_REPR(spitem)->parent())->appendChild(new_group);
 

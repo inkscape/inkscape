@@ -4,6 +4,7 @@
  * Authors:
  *   Maximilian Albert <maximilian.albert@gmail.com>
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1998 The Free Software Foundation
  * Copyright (C) 1999-2005 authors
@@ -392,8 +393,8 @@ lpetool_context_switch_mode(SPLPEToolContext *lc, Inkscape::LivePathEffect::Effe
 
 void
 lpetool_get_limiting_bbox_corners(SPDocument *document, Geom::Point &A, Geom::Point &B) {
-    Geom::Coord w = sp_document_width(document);
-    Geom::Coord h = sp_document_height(document);
+    Geom::Coord w = document->getWidth();
+    Geom::Coord h = document->getHeight();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     double ulx = prefs->getDouble("/tools/lpetool/bbox_upperleftx", 0);
@@ -472,7 +473,7 @@ lpetool_create_measuring_items(SPLPEToolContext *lc, Inkscape::Selection *select
     for (GSList const *i = selection->itemList(); i != NULL; i = i->next) {
         if (SP_IS_PATH(i->data)) {
             path = SP_PATH(i->data);
-            curve = sp_shape_get_curve(SP_SHAPE(path));
+            curve = SP_SHAPE(path)->getCurve();
             Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2 = paths_to_pw(curve->get_pathvector());
             canvas_text = (SPCanvasText *) sp_canvastext_new(tmpgrp, lc->desktop, Geom::Point(0,0), "");
             if (!show)
@@ -514,7 +515,7 @@ lpetool_update_measuring_items(SPLPEToolContext *lc)
     std::map<SPPath *, SPCanvasItem*>::iterator i;
     for (i = lc->measuring_items->begin(); i != lc->measuring_items->end(); ++i) {
         path = i->first;
-        curve = sp_shape_get_curve(SP_SHAPE(path));
+        curve = SP_SHAPE(path)->getCurve();
         Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2 = Geom::paths_to_pw(curve->get_pathvector());
         SPUnitId unitid = static_cast<SPUnitId>(prefs->getInt("/tools/lpetool/unitid", SP_UNIT_PX));
         SPUnit unit = sp_unit_get_by_id(unitid);

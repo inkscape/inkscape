@@ -3,18 +3,16 @@
 #include "xml/repr.h"
 #include "xml/node-iterators.h"
 
-static bool
-same_repr(Inkscape::XML::Node &a, Inkscape::XML::Node &b)
+static bool same_repr(Inkscape::XML::Node const &a, Inkscape::XML::Node const &b)
 {
   /* todo: I'm not certain that it's legal to take the address of a reference.  Check the exact wording of the spec on this matter. */
     return &a == &b;
 }
 
-Inkscape::XML::Node *
-LCA(Inkscape::XML::Node *a, Inkscape::XML::Node *b)
+Inkscape::XML::Node const *LCA(Inkscape::XML::Node const *a, Inkscape::XML::Node const *b)
 {
     using Inkscape::Algorithms::longest_common_suffix;
-    Inkscape::XML::Node *ancestor = longest_common_suffix<Inkscape::XML::NodeParentIterator>(
+    Inkscape::XML::Node const *ancestor = longest_common_suffix<Inkscape::XML::NodeConstParentIterator>(
         a, b, NULL, &same_repr
     );
     if ( ancestor && ancestor->type() != Inkscape::XML::DOCUMENT_NODE ) {
@@ -24,22 +22,30 @@ LCA(Inkscape::XML::Node *a, Inkscape::XML::Node *b)
     }
 }
 
-/**
- * Returns a child of \a ancestor such that ret is itself an ancestor of \a descendent.
- *
- * The current version returns NULL if ancestor or descendent is NULL, though future versions may
- * call g_log.  Please update this comment if you rely on the current behaviour.
- */
-Inkscape::XML::Node *
-AncetreFils(Inkscape::XML::Node *descendent, Inkscape::XML::Node *ancestor)
+Inkscape::XML::Node *LCA(Inkscape::XML::Node *a, Inkscape::XML::Node *b)
 {
-    if (descendent == NULL || ancestor == NULL)
-        return NULL;
-    if (sp_repr_parent(descendent) == ancestor)
-        return descendent;
-    return AncetreFils(sp_repr_parent(descendent), ancestor);
+    Inkscape::XML::Node const *tmp = LCA(const_cast<Inkscape::XML::Node const *>(a), const_cast<Inkscape::XML::Node const *>(b));
+    return const_cast<Inkscape::XML::Node *>(tmp);
 }
 
+Inkscape::XML::Node const *AncetreFils(Inkscape::XML::Node const *descendent, Inkscape::XML::Node const *ancestor)
+{
+    Inkscape::XML::Node const *result = 0;
+    if ( descendent && ancestor ) {
+        if (descendent->parent() == ancestor) {
+            result = descendent;
+        } else {
+            result = AncetreFils(descendent->parent(), ancestor);
+        }
+    }
+    return result;
+}
+
+Inkscape::XML::Node *AncetreFils(Inkscape::XML::Node *descendent, Inkscape::XML::Node *ancestor)
+{
+    Inkscape::XML::Node const * tmp = AncetreFils(const_cast<Inkscape::XML::Node const*>(descendent), const_cast<Inkscape::XML::Node const*>(ancestor));
+    return const_cast<Inkscape::XML::Node *>(tmp);
+}
 
 /*
   Local Variables:

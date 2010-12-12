@@ -4,6 +4,8 @@
  *
  * Authors:
  *   Bob Jamison <rjamison@earthlink.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004-2006 Bob Jamison
  *
@@ -246,7 +248,7 @@ Tracer::sioxProcessImage(SPImage *img,
         return Glib::RefPtr<Gdk::Pixbuf>(NULL);
         }
 
-    NRArenaItem *aImg = sp_item_get_arenaitem(img, desktop->dkey);
+    NRArenaItem *aImg = img->get_arenaitem(desktop->dkey);
     //g_message("img: %d %d %d %d\n", aImg->bbox.x0, aImg->bbox.y0,
     //                                aImg->bbox.x1, aImg->bbox.y1);
 
@@ -264,7 +266,7 @@ Tracer::sioxProcessImage(SPImage *img,
     for (iter = sioxShapes.begin() ; iter!=sioxShapes.end() ; iter++)
         {
         SPItem *item = *iter;
-        NRArenaItem *aItem = sp_item_get_arenaitem(item, desktop->dkey);
+        NRArenaItem *aItem = item->get_arenaitem(desktop->dkey);
         arenaItems.push_back(aItem);
         }
 
@@ -443,7 +445,7 @@ void Tracer::traceThread()
         return;
         }
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
-    sp_document_ensure_up_to_date(doc);
+    doc->ensureUpToDate();
 
 
     SPImage *img = getSelectedSPImage();
@@ -482,7 +484,8 @@ void Tracer::traceThread()
         }
 
     //### Get pointers to the <image> and its parent
-    Inkscape::XML::Node *imgRepr   = SP_OBJECT(img)->repr;
+    //XML Tree being used directly here while it shouldn't be.
+    Inkscape::XML::Node *imgRepr   = SP_OBJECT(img)->getRepr();
     Inkscape::XML::Node *par       = sp_repr_parent(imgRepr);
 
     //### Get some information for the new transform()
@@ -518,7 +521,7 @@ void Tracer::traceThread()
 
     //#OK.  Now let's start making new nodes
 
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+    Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
     Inkscape::XML::Node *groupRepr = NULL;
 
     //# if more than 1, make a <g>roup of <path>s
@@ -549,7 +552,7 @@ void Tracer::traceThread()
         if (reprobj)
             {
             SPItem *newItem = SP_ITEM(reprobj);
-            sp_item_write_transform(newItem, pathRepr, tf, NULL);
+            newItem->doWriteTransform(pathRepr, tf, NULL);
             }
         if (nrPaths == 1)
             {
@@ -568,7 +571,7 @@ void Tracer::traceThread()
         }
 
     //## inform the document, so we can undo
-    sp_document_done(doc, SP_VERB_SELECTION_TRACE, _("Trace bitmap"));
+    DocumentUndo::done(doc, SP_VERB_SELECTION_TRACE, _("Trace bitmap"));
 
     engine = NULL;
 

@@ -7,6 +7,8 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *   Johan Engelen <johan@shouraizou.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006-2007 Johan Engelen
  * Copyright (C) 2002-2004 Ted Gould
@@ -111,7 +113,7 @@ open(Extension *key, gchar const *filename)
        to make sure for this release -- TJG */
     doc->setModifiedSinceSave(false);
 
-    sp_document_set_uri(doc, filename);
+    doc->setUri(filename);
 
     return doc;
 }
@@ -256,11 +258,11 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
         throw Output::file_read_only();
     }
 
-    Inkscape::XML::Node *repr = sp_document_repr_root(doc);
+    Inkscape::XML::Node *repr = doc->getReprRoot();
 
 
     // remember attributes in case this is an unofficial save and/or overwrite fails
-    gchar *saved_uri = g_strdup(doc->uri);
+    gchar *saved_uri = g_strdup(doc->getURI());
     bool saved_modified = false;
     gchar *saved_output_extension = NULL;
     gchar *saved_dataloss = NULL;
@@ -268,14 +270,14 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
     saved_output_extension = g_strdup(get_file_save_extension(save_method).c_str());
     saved_dataloss = g_strdup(repr->attribute("inkscape:dataloss"));
     if (official) {
-        /* The document is changing name/uri. */
-        sp_document_change_uri_and_hrefs(doc, fileName);
+        // The document is changing name/uri.
+        doc->changeUriAndHrefs(fileName);
     }
 
     // Update attributes:
     {
-        bool const saved = sp_document_get_undo_sensitive(doc);
-        sp_document_set_undo_sensitive(doc, false);
+        bool const saved = DocumentUndo::getUndoSensitive(doc);
+        DocumentUndo::setUndoSensitive(doc, false);
         {
             // also save the extension for next use
             store_file_extension_in_prefs (omod->get_id(), save_method);
@@ -285,7 +287,7 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
                 repr->setAttribute("inkscape:dataloss", "true");
             }
         }
-        sp_document_set_undo_sensitive(doc, saved);
+        DocumentUndo::setUndoSensitive(doc, saved);
         doc->setModifiedSinceSave(false);
     }
 
@@ -295,14 +297,14 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
     catch(...) {
         // revert attributes in case of official and overwrite
         if(check_overwrite && official) {
-            bool const saved = sp_document_get_undo_sensitive(doc);
-            sp_document_set_undo_sensitive(doc, false);
+            bool const saved = DocumentUndo::getUndoSensitive(doc);
+            DocumentUndo::setUndoSensitive(doc, false);
             {
                 store_file_extension_in_prefs (saved_output_extension, save_method);
                 repr->setAttribute("inkscape:dataloss", saved_dataloss);
             }
-            sp_document_set_undo_sensitive(doc, saved);
-            sp_document_change_uri_and_hrefs(doc, saved_uri);
+            DocumentUndo::setUndoSensitive(doc, saved);
+            doc->changeUriAndHrefs(saved_uri);
         }
         doc->setModifiedSinceSave(saved_modified);
         // free used ressources
@@ -317,13 +319,13 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
 
     // If it is an unofficial save, set the modified attributes back to what they were.
     if ( !official) {
-        bool const saved = sp_document_get_undo_sensitive(doc);
-        sp_document_set_undo_sensitive(doc, false);
+        bool const saved = DocumentUndo::getUndoSensitive(doc);
+        DocumentUndo::setUndoSensitive(doc, false);
         {
             store_file_extension_in_prefs (saved_output_extension, save_method);
             repr->setAttribute("inkscape:dataloss", saved_dataloss);
         }
-        sp_document_set_undo_sensitive(doc, saved);
+        DocumentUndo::setUndoSensitive(doc, saved);
         doc->setModifiedSinceSave(saved_modified);
 
         g_free(saved_output_extension);
@@ -590,8 +592,8 @@ get_file_save_path (SPDocument *doc, FileSaveMethod method) {
         case FILE_SAVE_METHOD_SAVE_AS:
         {
             bool use_current_dir = prefs->getBool("/dialogs/save_as/use_current_dir", true);
-            if (doc->uri && use_current_dir) {
-                path = Glib::path_get_dirname(doc->uri);
+            if (doc->getURI() && use_current_dir) {
+                path = Glib::path_get_dirname(doc->getURI());
             } else {
                 path = prefs->getString("/dialogs/save_as/path");
             }
@@ -604,8 +606,8 @@ get_file_save_path (SPDocument *doc, FileSaveMethod method) {
             path = prefs->getString("/dialogs/save_copy/path");
             break;
         case FILE_SAVE_METHOD_INKSCAPE_SVG:
-            if (doc->uri) {
-                path = Glib::path_get_dirname(doc->uri);
+            if (doc->getURI()) {
+                path = Glib::path_get_dirname(doc->getURI());
             } else {
                 // FIXME: should we use the save_as path here or something else? Maybe we should
                 // leave this as a choice to the user.

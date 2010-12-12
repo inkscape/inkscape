@@ -5,6 +5,8 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *   Ulf Erikson <ulferikson@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004-2006 Authors
  *
@@ -53,14 +55,14 @@ png_render_document_to_file(SPDocument *doc, gchar const *filename)
     CairoRenderer *renderer;
     CairoRenderContext *ctx;
 
-    sp_document_ensure_up_to_date(doc);
+    doc->ensureUpToDate();
 
 /* Start */
     /* Create new arena */
-    SPItem *base = SP_ITEM(sp_document_root(doc));
+    SPItem *base = SP_ITEM(doc->getRoot());
     NRArena *arena = NRArena::create();
-    unsigned dkey = sp_item_display_key_new(1);
-    NRArenaItem *root = sp_item_invoke_show(base, arena, dkey, SP_ITEM_SHOW_DISPLAY);
+    unsigned dkey = SPItem::display_key_new(1);
+    NRArenaItem *root = base->invoke_show(arena, dkey, SP_ITEM_SHOW_DISPLAY);
     
     /* Create renderer and context */
     renderer = new CairoRenderer();
@@ -76,7 +78,7 @@ png_render_document_to_file(SPDocument *doc, gchar const *filename)
     renderer->destroyContext(ctx);
 
     /* Release arena */
-    sp_item_invoke_hide(base, dkey);
+    base->invoke_hide(dkey);
     nr_object_unref((NRObject *) arena);
 /* end */
     delete renderer;

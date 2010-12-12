@@ -6,6 +6,8 @@
  *   Ted Gould <ted@gould.cx>
  *   Ulf Erikson <ulferikson@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004-2010 Authors
  *
@@ -55,7 +57,7 @@ pdf_render_document_to_file(SPDocument *doc, gchar const *filename, unsigned int
                             bool texttopath, bool omittext, bool filtertobitmap, int resolution,
                             const gchar * const exportId, bool exportDrawing, bool exportCanvas)
 {
-    sp_document_ensure_up_to_date(doc);
+    doc->ensureUpToDate();
 
 /* Start */
 
@@ -69,18 +71,19 @@ pdf_render_document_to_file(SPDocument *doc, gchar const *filename, unsigned int
     }
     else {
         // we want to export the entire document from root
-        base = SP_ITEM(sp_document_root(doc));
+        base = SP_ITEM(doc->getRoot());
         pageBoundingBox = !exportDrawing;
     }
 
-    if (!base)
+    if (!base) {
         return false;
+    }
     
     /* Create new arena */
     NRArena *arena = NRArena::create();
     nr_arena_set_renderoffscreen (arena);
-    unsigned dkey = sp_item_display_key_new(1);
-    sp_item_invoke_show(base, arena, dkey, SP_ITEM_SHOW_DISPLAY);
+    unsigned dkey = SPItem::display_key_new(1);
+    base->invoke_show(arena, dkey, SP_ITEM_SHOW_DISPLAY);
 
     /* Create renderer and context */
     CairoRenderer *renderer = new CairoRenderer();
@@ -102,7 +105,7 @@ pdf_render_document_to_file(SPDocument *doc, gchar const *filename, unsigned int
     }
 
     /* Release arena */
-    sp_item_invoke_hide(base, dkey);
+    base->invoke_hide(dkey);
     nr_object_unref((NRObject *) arena);
 
     renderer->destroyContext(ctx);

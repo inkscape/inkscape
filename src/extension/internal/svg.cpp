@@ -6,6 +6,8 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Ted Gould <ted@gould.cx>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2002-2003 Authors
  *
@@ -182,19 +184,19 @@ Svg::open (Inkscape::Extension::Input */*mod*/, const gchar *uri)
 #ifdef WITH_GNOME_VFS
     if (!gnome_vfs_initialized() || gnome_vfs_uri_is_local(gnome_vfs_uri_new(uri))) {
         // Use built-in loader instead of VFS for this
-        return sp_document_new(uri, TRUE);
+        return SPDocument::createNewDoc(uri, TRUE);
     }
     gchar * buffer = _load_uri(uri);
     if (buffer == NULL) {
         g_warning("Error:  Could not open file '%s' with VFS\n", uri);
         return NULL;
     }
-    SPDocument * doc = sp_document_new_from_mem(buffer, strlen(buffer), 1);
+    SPDocument * doc = SPDocument::createNewDocFromMem(buffer, strlen(buffer), 1);
 
     g_free(buffer);
     return doc;
 #else
-    return sp_document_new (uri, TRUE);
+    return SPDocument::createNewDoc(uri, TRUE);
 #endif
 }
 
@@ -237,17 +239,17 @@ Svg::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filena
     Inkscape::XML::Document *rdoc = NULL;
     Inkscape::XML::Node *repr = NULL;
     if (exportExtensions) {
-        repr = sp_document_repr_root (doc);
+        repr = doc->getReprRoot();
     } else {
         rdoc = sp_repr_document_new ("svg:svg");
         repr = rdoc->root();
-        repr = sp_document_root (doc)->updateRepr(rdoc, repr, SP_OBJECT_WRITE_BUILD);
+        repr = doc->getRoot()->updateRepr(rdoc, repr, SP_OBJECT_WRITE_BUILD);
 
         pruneExtendedAttributes(repr);
     }
 
     if (!sp_repr_save_rebased_file(repr->document(), filename, SP_SVG_NS_URI,
-                                   doc->base, filename)) {
+                                   doc->getBase(), filename)) {
         throw Inkscape::Extension::Output::save_failed();
     }
 

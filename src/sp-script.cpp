@@ -1,10 +1,10 @@
-#define __SP_SCRIPT_C__
-
 /*
  * SVG <script> implementation
  *
  * Authors:
  *   Felipe Corrêa da Silva Sanches <juca@members.fsf.org>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2008 authors
  *
@@ -83,16 +83,16 @@ sp_script_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
     }
 
     //Read values of key attributes from XML nodes into object.
-    sp_object_read_attr(object, "xlink:href");
+    object->readAttr( "xlink:href" );
 
-    sp_document_add_resource(document, "script", object);
+    document->addResource("script", object);
 }
 
 static void sp_script_release(SPObject *object)
 {
     if (SP_OBJECT_DOCUMENT(object)) {
         /* Unregister ourselves */
-        sp_document_remove_resource(SP_OBJECT_DOCUMENT(object), "script", SP_OBJECT(object));
+        SP_OBJECT_DOCUMENT(object)->removeResource("script", SP_OBJECT(object));
     }
 
     if (((SPObjectClass *) parent_class)->release)
@@ -139,9 +139,11 @@ TODO:
         }
 
         GSList *l = NULL;
-        for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        for ( SPObject *child = object->firstChild() ; child; child = child->getNext() ) {
             Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
-            if (crepr) l = g_slist_prepend(l, crepr);
+            if (crepr) {
+                l = g_slist_prepend(l, crepr);
+            }
         }
 
         while (l) {
@@ -151,7 +153,7 @@ TODO:
         }
 
     } else {
-        for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        for ( SPObject *child = object->firstChild() ; child; child = child->getNext() ) {
             child->updateRepr(flags);
         }
     }

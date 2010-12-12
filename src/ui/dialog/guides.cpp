@@ -5,6 +5,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Andrius R. <knutux@gmail.com>
  *   Johan Engelen
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2007 Authors
  *
@@ -108,8 +109,8 @@ void GuidelinePropertiesDialog::_onApply()
 
     sp_guide_moveto(*_guide, newpos, true);
 
-    sp_document_done(SP_OBJECT_DOCUMENT(_guide), SP_VERB_NONE, 
-                     _("Set guide properties"));
+    DocumentUndo::done(SP_OBJECT_DOCUMENT(_guide), SP_VERB_NONE, 
+                       _("Set guide properties"));
 }
 
 void GuidelinePropertiesDialog::_onOK()
@@ -121,8 +122,8 @@ void GuidelinePropertiesDialog::_onDelete()
 {
     SPDocument *doc = SP_OBJECT_DOCUMENT(_guide);
     sp_guide_remove(_guide);
-    sp_document_done(doc, SP_VERB_NONE, 
-                     _("Delete guide"));
+    DocumentUndo::done(doc, SP_VERB_NONE, 
+                       _("Delete guide"));
 }
 
 void GuidelinePropertiesDialog::_response(gint response)
@@ -225,9 +226,9 @@ void GuidelinePropertiesDialog::_setup() {
 
     // initialize dialog
     _oldpos = _guide->point_on_line;
-    if (_guide->is_vertical()) {
+    if (_guide->isVertical()) {
         _oldangle = 90;
-    } else if (_guide->is_horizontal()) {
+    } else if (_guide->isHorizontal()) {
         _oldangle = 0;
     } else {
         _oldangle = Geom::rad_to_deg( std::atan2( - _guide->normal_to_line[Geom::X], _guide->normal_to_line[Geom::Y] ) );

@@ -4,6 +4,7 @@
 /* Author:
  *   Bryce W. Harrington <bryce@bryceharrington.com>
  *   Andrius R. <knutux@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 Bryce Harrington
  * Copyright (C) 2006 Andrius R.
@@ -105,8 +106,8 @@ LayerPropertiesDialog::_apply()
     g_assert(_strategy != NULL);
 
     _strategy->perform(*this);
-    sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_NONE,
-                     _("Add layer"));
+    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_NONE,
+                       _("Add layer"));
 
     _close();
 }
@@ -188,8 +189,8 @@ void LayerPropertiesDialog::Rename::perform(LayerPropertiesDialog &dialog) {
                                          (gchar *)name.c_str(),
                                          FALSE
     );
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
-                     _("Rename layer"));
+    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE, 
+                       _("Rename layer"));
     // TRANSLATORS: This means "The layer has been renamed"
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Renamed layer"));
 }

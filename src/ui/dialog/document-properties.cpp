@@ -8,6 +8,8 @@
  *   Jon Phillips <jon@rejon.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de> (Gtkmm)
  *   Diederik van Lierop <mail@diedenrezi.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006-2008 Johan Engelen  <johan@shouraizou.nl>
  * Copyright (C) 2000 - 2008 Authors
@@ -404,7 +406,7 @@ DocumentProperties::linkSelectedProfile()
             g_warning("No color profile available.");
             return;
         }
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+        Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
         Inkscape::XML::Node *cprofRepr = xml_doc->createElement("svg:color-profile");
         gchar* tmp = static_cast<gchar*>(_menu.get_active()->get_data("name"));
         Glib::ustring nameStr = tmp ? tmp : "profile"; // TODO add some auto-numbering to avoid collisions
@@ -426,7 +428,7 @@ DocumentProperties::linkSelectedProfile()
         //Inkscape::GC::release(defsRepr);
 
         // inform the document, so we can undo
-        sp_document_done(desktop->doc(), SP_VERB_EDIT_LINK_COLOR_PROFILE, _("Link Color Profile"));
+        DocumentUndo::done(desktop->doc(), SP_VERB_EDIT_LINK_COLOR_PROFILE, _("Link Color Profile"));
 
         populate_linked_profiles_box();
     }
@@ -436,7 +438,7 @@ void
 DocumentProperties::populate_linked_profiles_box()
 {
     _LinkedProfilesListStore->clear();
-    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "iccprofile" );
+    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
     if (current) _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
     while ( current ) {
         SPObject* obj = SP_OBJECT(current->data);
@@ -493,13 +495,15 @@ void DocumentProperties::removeSelectedProfile(){
         }
     }
 
-    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "iccprofile" );
+    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
     while ( current ) {
         SPObject* obj = SP_OBJECT(current->data);
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
         if (!name.compare(prof->name)){
-            sp_repr_unparent(obj->repr);
-            sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_COLOR_PROFILE, _("Remove linked color profile"));
+
+            //XML Tree being used directly here while it shouldn't be.
+            sp_repr_unparent(obj->getRepr());
+            DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_COLOR_PROFILE, _("Remove linked color profile"));
         }
         current = g_slist_next(current);
     }
@@ -565,7 +569,7 @@ DocumentProperties::build_cms()
     _LinkedProfilesList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::linked_profiles_list_button_release));
     cms_create_popup_menu(_LinkedProfilesList, sigc::mem_fun(*this, &DocumentProperties::removeSelectedProfile));
 
-    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "defs" );
+    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "defs" );
     if (current) {
         _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
     }
@@ -623,7 +627,7 @@ DocumentProperties::build_scripting()
 #endif // ENABLE_LCMS
 
 //TODO: review this observers code:
-    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "script" );
+    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
     if (current) {
         _ext_scripts_observer.set(SP_OBJECT(current->data)->parent);
     }
@@ -636,7 +640,7 @@ void DocumentProperties::addExternalScript(){
     if (!desktop){
         g_warning("No active desktop");
     } else {
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+        Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
         Inkscape::XML::Node *scriptRepr = xml_doc->createElement("svg:script");
         scriptRepr->setAttribute("xlink:href", (gchar*) _script_entry.get_text().c_str());
         _script_entry.set_text("");
@@ -644,7 +648,7 @@ void DocumentProperties::addExternalScript(){
         xml_doc->root()->addChild(scriptRepr, NULL);
 
         // inform the document, so we can undo
-        sp_document_done(desktop->doc(), SP_VERB_EDIT_ADD_EXTERNAL_SCRIPT, _("Add external script..."));
+        DocumentUndo::done(desktop->doc(), SP_VERB_EDIT_ADD_EXTERNAL_SCRIPT, _("Add external script..."));
 
         populate_external_scripts_box();
     }
@@ -662,13 +666,15 @@ void DocumentProperties::removeExternalScript(){
         }
     }
 
-    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "script" );
+    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
     while ( current ) {
         SPObject* obj = SP_OBJECT(current->data);
         SPScript* script = (SPScript*) obj;
         if (name == script->xlinkhref){
-            sp_repr_unparent(obj->repr);
-            sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_EXTERNAL_SCRIPT, _("Remove external script"));
+
+            //XML Tree being used directly here while it shouldn't be.
+            sp_repr_unparent(obj->getRepr());
+            DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_EXTERNAL_SCRIPT, _("Remove external script"));
         }
         current = g_slist_next(current);
     }
@@ -679,7 +685,7 @@ void DocumentProperties::removeExternalScript(){
 
 void DocumentProperties::populate_external_scripts_box(){
     _ExternalScriptsListStore->clear();
-    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "script" );
+    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
     if (current) _ext_scripts_observer.set(SP_OBJECT(current->data)->parent);
     while ( current ) {
         SPObject* obj = SP_OBJECT(current->data);
@@ -798,8 +804,8 @@ DocumentProperties::update()
     if (nv->doc_units)
         _rum_deflt.setUnit (nv->doc_units);
 
-    double const doc_w_px = sp_document_width(sp_desktop_document(dt));
-    double const doc_h_px = sp_document_height(sp_desktop_document(dt));
+    double const doc_w_px = sp_desktop_document(dt)->getWidth();
+    double const doc_h_px = sp_desktop_document(dt)->getHeight();
     _page_sizer.setDim (doc_w_px, doc_h_px);
     _page_sizer.updateFitMarginsUI(SP_OBJECT_REPR(nv));
 
@@ -961,7 +967,7 @@ DocumentProperties::onRemoveGrid()
         // delete the grid that corresponds with the selected tab
         // when the grid is deleted from SVG, the SPNamedview handler automatically deletes the object, so found_grid becomes an invalid pointer!
         found_grid->repr->parent()->removeChild(found_grid->repr);
-        sp_document_done(sp_desktop_document(dt), SP_VERB_DIALOG_NAMEDVIEW, _("Remove grid"));
+        DocumentUndo::done(sp_desktop_document(dt), SP_VERB_DIALOG_NAMEDVIEW, _("Remove grid"));
     }
 }
 

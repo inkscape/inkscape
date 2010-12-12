@@ -1,11 +1,11 @@
-#define __SP_DESKTOP_STYLE_C__
-
 /** \file
  * Desktop style management
  *
  * Authors:
  *   bulia byak
  *   verbalshadow
+ *   Jon A. Cruz <jon@joncruz.org> 
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004, 2006 authors
  *
@@ -103,7 +103,7 @@ sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
               || SP_IS_FLOWDIV(o)
               || SP_IS_FLOWPARA(o)
               || SP_IS_TEXTPATH(o))
-          && !SP_OBJECT_REPR(o)->attribute("style"))
+          &&  !o->getAttribute("style"))
         &&
         !(SP_IS_FLOWREGION(o) ||
           SP_IS_FLOWREGIONEXCLUDE(o) ||
@@ -121,7 +121,7 @@ sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
 
         // Scale the style by the inverse of the accumulated parent transform in the paste context.
         {
-            Geom::Matrix const local(sp_item_i2doc_affine(SP_ITEM(o)));
+            Geom::Matrix const local(SP_ITEM(o)->i2doc_affine());
             double const ex(local.descrim());
             if ( ( ex != 0. )
                  && ( ex != 1. ) ) {
@@ -129,7 +129,7 @@ sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
             }
         }
 
-        sp_repr_css_change(SP_OBJECT_REPR(o), css_set, "style");
+        o->changeCSS(css_set,"style");
 
         sp_repr_css_attr_unref(css_set);
     }
@@ -138,7 +138,7 @@ sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
     if (SP_IS_USE(o))
         return;
 
-    for (SPObject *child = sp_object_first_child(SP_OBJECT(o)) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
+    for ( SPObject *child = o->firstChild() ; child ; child = child->getNext() ) {
         if (sp_repr_css_property(css, "opacity", NULL) != NULL) {
             // Unset properties which are accumulating and thus should not be set recursively.
             // For example, setting opacity 0.5 on a group recursively would result in the visible opacity of 0.25 for an item in the group.
@@ -420,7 +420,7 @@ stroke_average_width (GSList const *objects)
         if (!SP_IS_ITEM (l->data))
             continue;
 
-        Geom::Matrix i2d = sp_item_i2d_affine (SP_ITEM(l->data));
+        Geom::Matrix i2d = SP_ITEM(l->data)->i2d_affine();
 
         SPObject *object = SP_OBJECT(l->data);
 
@@ -702,11 +702,11 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
         if (!style) continue;
 
         if ( style->stroke.isNone() && !(
-				style->marker[SP_MARKER_LOC].set || // stroke width affects markers, so if there's no stroke but only markers then we should
-				style->marker[SP_MARKER_LOC_START].set || // still calculate the stroke width
-				style->marker[SP_MARKER_LOC_MID].set ||
-				style->marker[SP_MARKER_LOC_END].set))
-		{
+                 style->marker[SP_MARKER_LOC].set || // stroke width affects markers, so if there's no stroke but only markers then we should
+                 style->marker[SP_MARKER_LOC_START].set || // still calculate the stroke width
+                 style->marker[SP_MARKER_LOC_MID].set ||
+                 style->marker[SP_MARKER_LOC_END].set))
+        {
             continue;
         }
 
@@ -714,7 +714,7 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
 
         noneSet &= style->stroke.isNone();
 
-        Geom::Matrix i2d = sp_item_i2d_affine (SP_ITEM(obj));
+        Geom::Matrix i2d = SP_ITEM(obj)->i2d_affine();
         double sw = style->stroke_width.computed * i2d.descrim();
 
         if (prev_sw != -1 && fabs(sw - prev_sw) > 1e-3)
@@ -932,7 +932,7 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
         if (!style) continue;
 
         texts ++;
-        size += style->font_size.computed * Geom::Matrix(sp_item_i2d_affine(SP_ITEM(obj))).descrim(); /// \todo FIXME: we assume non-% units here
+        size += style->font_size.computed * Geom::Matrix(SP_ITEM(obj)->i2d_affine()).descrim(); /// \todo FIXME: we assume non-% units here
 
         if (style->letter_spacing.normal) {
             if (!different && (letterspacing_prev == 0 || letterspacing_prev == letterspacing))
@@ -1180,11 +1180,12 @@ objects_query_fontfamily (GSList *objects, SPStyle *style_res)
     for (GSList const *i = objects; i != NULL; i = i->next) {
         SPObject *obj = SP_OBJECT (i->data);
 
-        // std::cout << "  " << SP_OBJECT_ID (i->data) << std::endl;
+        // std::cout << "  " << reinterpret_cast<SPObject*>(i->data)->getId() << std::endl;
         if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
             && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
-            && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj))
+            && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj)) {
             continue;
+        }
 
         SPStyle *style = SP_OBJECT_STYLE (obj);
         if (!style) continue;
@@ -1234,11 +1235,12 @@ objects_query_fontspecification (GSList *objects, SPStyle *style_res)
     for (GSList const *i = objects; i != NULL; i = i->next) {
         SPObject *obj = SP_OBJECT (i->data);
 
-        // std::cout << "  " << SP_OBJECT_ID (i->data) << std::endl;
+        // std::cout << "  " << reinterpret_cast<SPObject*>(i->data)->getId() << std::endl;
         if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
             && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
-            && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj))
+            && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj)) {
             continue;
+        }
 
         SPStyle *style = SP_OBJECT_STYLE (obj);
         if (!style) continue;
@@ -1378,7 +1380,7 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
         if (!style) continue;
         if (!SP_IS_ITEM(obj)) continue;
 
-        Geom::Matrix i2d = sp_item_i2d_affine (SP_ITEM(obj));
+        Geom::Matrix i2d = SP_ITEM(obj)->i2d_affine();
 
         items ++;
 
@@ -1483,7 +1485,7 @@ sp_desktop_query_style(SPDesktop *desktop, SPStyle *style, int property)
 
     // otherwise, do querying and averaging over selection
     if (desktop->selection != NULL) {
-    	return sp_desktop_query_style_from_list ((GSList *) desktop->selection->itemList(), style, property);
+        return sp_desktop_query_style_from_list ((GSList *) desktop->selection->itemList(), style, property);
     }
 
     return QUERY_STYLE_NOTHING;

@@ -4,6 +4,7 @@
 /*
  * Authors:
  *   Tim Dwyer <Tim.Dwyer@infotech.monash.edu.au>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2005 Authors
  *
@@ -126,7 +127,7 @@ void graphlayout(GSList const *const items) {
          ++i)
     {
         SPItem *u=*i;
-        Geom::OptRect const item_box(sp_item_bbox_desktop(u));
+        Geom::OptRect const item_box(u->getBboxDesktop());
         if(item_box) {
             Geom::Point ll(item_box->min());
             Geom::Point ur(item_box->max());
@@ -228,7 +229,7 @@ void graphlayout(GSList const *const items) {
             map<string,unsigned>::iterator i=nodelookup.find(u->getId());
             if(i!=nodelookup.end()) {
                 Rectangle* r=rs[i->second];
-                Geom::OptRect item_box(sp_item_bbox_desktop(u));
+                Geom::OptRect item_box(u->getBboxDesktop());
                 if(item_box) {
                     Geom::Point const curr(item_box->midpoint());
                     Geom::Point const dest(r->getCentreX(),r->getCentreY());

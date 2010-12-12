@@ -1,11 +1,10 @@
-#define __KNOT_HOLDER_ENTITY_C__
-
 /** \file
  * KnotHolderEntity definition.
  *
  * Authors:
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
  *   Maximilian Albert <maximilian.albert@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2001 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -77,7 +76,7 @@ KnotHolderEntity::~KnotHolderEntity()
 void
 KnotHolderEntity::update_knot()
 {
-    Geom::Matrix const i2d(sp_item_i2d_affine(item));
+    Geom::Matrix const i2d(item->i2d_affine());
 
     Geom::Point dp(knot_get() * i2d);
 
@@ -89,7 +88,7 @@ KnotHolderEntity::update_knot()
 Geom::Point
 KnotHolderEntity::snap_knot_position(Geom::Point const &p)
 {
-    Geom::Matrix const i2d (sp_item_i2d_affine(item));
+    Geom::Matrix const i2d (item->i2d_affine());
     Geom::Point s = p * i2d;
 
     SnapManager &m = desktop->namedview->snap_manager;
@@ -103,7 +102,7 @@ KnotHolderEntity::snap_knot_position(Geom::Point const &p)
 Geom::Point
 KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::SnapConstraint const &constraint)
 {
-    Geom::Matrix const i2d (sp_item_i2d_affine(item));
+    Geom::Matrix const i2d (item->i2d_affine());
     Geom::Point s = p * i2d;
 
     SnapManager &m = desktop->namedview->snap_manager;
@@ -159,7 +158,7 @@ PatternKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &ori
 
     if (state)  {
         Geom::Point const q = p_snapped - sp_pattern_extract_trans(pat);
-        sp_item_adjust_pattern(item, Geom::Matrix(Geom::Translate(q)));
+        item->adjust_pattern(Geom::Matrix(Geom::Translate(q)));
     }
 
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -209,7 +208,7 @@ PatternKnotHolderEntityAngle::knot_set(Geom::Point const &p, Geom::Point const &
     Geom::Point const t = sp_pattern_extract_trans(pat);
     rot[4] = t[Geom::X];
     rot[5] = t[Geom::Y];
-    sp_item_adjust_pattern(item, rot, true);
+    item->adjust_pattern(rot, true);
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
@@ -243,7 +242,7 @@ PatternKnotHolderEntityScale::knot_set(Geom::Point const &p, Geom::Point const &
     Geom::Point const t = sp_pattern_extract_trans(pat);
     rot[4] = t[Geom::X];
     rot[5] = t[Geom::Y];
-    sp_item_adjust_pattern(item, rot, true);
+    item->adjust_pattern(rot, true);
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 

@@ -6,6 +6,7 @@
  *   Frank Felfe <innerspace@iname.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2005 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -332,8 +333,8 @@ void FillNStroke::setFillrule( SPPaintSelector::FillRule mode )
         sp_repr_css_attr_unref(css);
         css = 0;
 
-        sp_document_done(desktop->doc(), SP_VERB_DIALOG_FILL_STROKE,
-                         _("Change fill rule"));
+        DocumentUndo::done(desktop->doc(), SP_VERB_DIALOG_FILL_STROKE,
+                           _("Change fill rule"));
     }
 }
 
@@ -417,8 +418,8 @@ void FillNStroke::dragFromPaint()
             // local change, do not update from selection
             dragId = g_timeout_add_full(G_PRIORITY_DEFAULT, 100, dragDelayCB, this, 0);
             psel->setFlatColor( desktop, (kind == FILL) ? "fill" : "stroke", (kind == FILL) ? "fill-opacity" : "stroke-opacity" );
-            sp_document_maybe_done(desktop->doc(), (kind == FILL) ? undo_F_label : undo_S_label, SP_VERB_DIALOG_FILL_STROKE,
-                                   (kind == FILL) ? _("Set fill color") : _("Set stroke color"));
+            DocumentUndo::maybeDone(desktop->doc(), (kind == FILL) ? undo_F_label : undo_S_label, SP_VERB_DIALOG_FILL_STROKE,
+                                    (kind == FILL) ? _("Set fill color") : _("Set stroke color"));
             break;
         }
 
@@ -480,8 +481,8 @@ void FillNStroke::updateFromPaint()
             sp_repr_css_attr_unref(css);
             css = 0;
 
-            sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE,
-                             (kind == FILL) ? _("Remove fill") : _("Remove stroke"));
+            DocumentUndo::done(document, SP_VERB_DIALOG_FILL_STROKE,
+                               (kind == FILL) ? _("Remove fill") : _("Remove stroke"));
             break;
         }
 
@@ -496,8 +497,8 @@ void FillNStroke::updateFromPaint()
             psel->setFlatColor( desktop,
                                 (kind == FILL) ? "fill" : "stroke",
                                 (kind == FILL) ? "fill-opacity" : "stroke-opacity" );
-            sp_document_maybe_done(sp_desktop_document(desktop), (kind == FILL) ? undo_F_label : undo_S_label, SP_VERB_DIALOG_FILL_STROKE,
-                                   (kind == FILL) ? _("Set fill color") : _("Set stroke color"));
+            DocumentUndo::maybeDone(sp_desktop_document(desktop), (kind == FILL) ? undo_F_label : undo_S_label, SP_VERB_DIALOG_FILL_STROKE,
+                                    (kind == FILL) ? _("Set fill color") : _("Set stroke color"));
 
             if (kind == FILL) {
                 // resume interruptibility
@@ -556,7 +557,7 @@ void FillNStroke::updateFromPaint()
                     for (GSList const *i = items; i != NULL; i = i->next) {
                         //FIXME: see above
                         if (kind == FILL) {
-                            sp_repr_css_change_recursive(reinterpret_cast<SPObject*>(i->data)->repr, css, "style");
+                            sp_repr_css_change_recursive(reinterpret_cast<SPObject*>(i->data)->getRepr(), css, "style");
                         }
 
                         if (!vector) {
@@ -578,7 +579,7 @@ void FillNStroke::updateFromPaint()
                     for (GSList const *i = items; i != NULL; i = i->next) {
                         //FIXME: see above
                         if (kind == FILL) {
-                            sp_repr_css_change_recursive(reinterpret_cast<SPObject*>(i->data)->repr, css, "style");
+                            sp_repr_css_change_recursive(reinterpret_cast<SPObject*>(i->data)->getRepr(), css, "style");
                         }
 
                         SPGradient *gr = sp_item_set_gradient(SP_ITEM(i->data), vector, gradient_type, kind == FILL);
@@ -591,8 +592,8 @@ void FillNStroke::updateFromPaint()
                     css = 0;
                 }
 
-                sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE,
-                                 (kind == FILL) ? _("Set gradient on fill") : _("Set gradient on stroke"));
+                DocumentUndo::done(document, SP_VERB_DIALOG_FILL_STROKE,
+                                   (kind == FILL) ? _("Set gradient on fill") : _("Set gradient on stroke"));
             }
             break;
 
@@ -608,7 +609,7 @@ void FillNStroke::updateFromPaint()
                      */
 
                 } else {
-                    Inkscape::XML::Node *patrepr = pattern->repr;
+                    Inkscape::XML::Node *patrepr = pattern->getRepr();
                     SPCSSAttr *css = sp_repr_css_attr_new();
                     gchar *urltext = g_strdup_printf("url(#%s)", patrepr->attribute("id"));
                     sp_repr_css_set_property(css, (kind == FILL) ? "fill" : "stroke", urltext);
@@ -622,7 +623,7 @@ void FillNStroke::updateFromPaint()
                     // objects who already have the same root pattern but through a different href
                     // chain. FIXME: move this to a sp_item_set_pattern
                     for (GSList const *i = items; i != NULL; i = i->next) {
-                        Inkscape::XML::Node *selrepr = reinterpret_cast<SPObject*>(i->data)->repr;
+                        Inkscape::XML::Node *selrepr = reinterpret_cast<SPObject*>(i->data)->getRepr();
                         if ( (kind == STROKE) && !selrepr) {
                             continue;
                         }
@@ -651,9 +652,9 @@ void FillNStroke::updateFromPaint()
 
                 } // end if
 
-                sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE,
-                                 (kind == FILL) ? _("Set pattern on fill") :
-                                 _("Set pattern on stroke"));
+                DocumentUndo::done(document, SP_VERB_DIALOG_FILL_STROKE,
+                                   (kind == FILL) ? _("Set pattern on fill") :
+                                   _("Set pattern on stroke"));
             } // end if
 
             break;
@@ -678,8 +679,8 @@ void FillNStroke::updateFromPaint()
                 sp_repr_css_attr_unref(css);
                 css = 0;
 
-                sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE,
-                                 (kind == FILL) ? _("Unset fill") : _("Unset stroke"));
+                DocumentUndo::done(document, SP_VERB_DIALOG_FILL_STROKE,
+                                   (kind == FILL) ? _("Unset fill") : _("Unset stroke"));
             }
             break;
 

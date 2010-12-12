@@ -1,11 +1,11 @@
-#define __SP_BOX3D_CONTEXT_C__
-
 /*
  * 3D box drawing context
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007      Maximilian Albert <Anhalter42@gmx.de>
  * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
@@ -48,6 +48,8 @@
 #include "document-private.h"
 #include "line-geometry.h"
 #include "shape-editor.h"
+
+using Inkscape::DocumentUndo;
 
 static void sp_box3d_context_class_init(Box3DContextClass *klass);
 static void sp_box3d_context_init(Box3DContext *box3d_context);
@@ -188,10 +190,10 @@ static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, g
  * circumstances, after 'vacuum defs' or when a pre-0.46 file is opened).
  */
 static void sp_box3d_context_ensure_persp_in_defs(SPDocument *document) {
-    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+    SPDefs *defs = reinterpret_cast<SPDefs *>(SP_DOCUMENT_DEFS(document));
 
     bool has_persp = false;
-    for (SPObject *child = sp_object_first_child(defs); child != NULL; child = SP_OBJECT_NEXT(child) ) {
+    for ( SPObject *child = defs->firstChild(); child; child = child->getNext() ) {
         if (SP_IS_PERSP3D(child)) {
             has_persp = true;
             break;
@@ -436,42 +438,42 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
 
         case GDK_bracketright:
             persp3d_rotate_VP (document->getCurrentPersp3D(), Proj::X, -180/snaps, MOD__ALT);
-            sp_document_done(document, SP_VERB_CONTEXT_3DBOX,
+            DocumentUndo::done(document, SP_VERB_CONTEXT_3DBOX,
                              _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_bracketleft:
             persp3d_rotate_VP (document->getCurrentPersp3D(), Proj::X, 180/snaps, MOD__ALT);
-            sp_document_done(document, SP_VERB_CONTEXT_3DBOX,
+            DocumentUndo::done(document, SP_VERB_CONTEXT_3DBOX,
                              _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_parenright:
             persp3d_rotate_VP (document->getCurrentPersp3D(), Proj::Y, -180/snaps, MOD__ALT);
-            sp_document_done(document, SP_VERB_CONTEXT_3DBOX,
+            DocumentUndo::done(document, SP_VERB_CONTEXT_3DBOX,
                              _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_parenleft:
             persp3d_rotate_VP (document->getCurrentPersp3D(), Proj::Y, 180/snaps, MOD__ALT);
-            sp_document_done(document, SP_VERB_CONTEXT_3DBOX,
+            DocumentUndo::done(document, SP_VERB_CONTEXT_3DBOX,
                              _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_braceright:
             persp3d_rotate_VP (document->getCurrentPersp3D(), Proj::Z, -180/snaps, MOD__ALT);
-            sp_document_done(document, SP_VERB_CONTEXT_3DBOX,
+            DocumentUndo::done(document, SP_VERB_CONTEXT_3DBOX,
                              _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_braceleft:
             persp3d_rotate_VP (document->getCurrentPersp3D(), Proj::Z, 180/snaps, MOD__ALT);
-            sp_document_done(document, SP_VERB_CONTEXT_3DBOX,
+            DocumentUndo::done(document, SP_VERB_CONTEXT_3DBOX,
                              _("Change perspective (angle of PLs)"));
             ret = true;
             break;
@@ -573,7 +575,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
 
 static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
 {
-    SPDesktop *desktop = SP_EVENT_CONTEXT(&bc)->desktop;
+    SPDesktop *desktop = bc.desktop;
 
     if (!bc.item) {
 
@@ -581,25 +583,19 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
             return;
         }
 
-        /* Create object */
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(&bc));
-        Inkscape::XML::Node *repr = xml_doc->createElement("svg:g");
-        repr->setAttribute("sodipodi:type", "inkscape:box3d");
+        // Create object
+        SPBox3D *box3d = 0;
+        box3d = SPBox3D::createBox3D((SPItem *)desktop->currentLayer());
 
-        /* Set style */
-        sp_desktop_apply_style_tool (desktop, repr, "/tools/shapes/3dbox", false);
+        // Set style
+        desktop->applyCurrentOrToolStyle(box3d, "/tools/shapes/3dbox", false);
+        
+        bc.item = box3d;
 
-        bc.item = (SPItem *) desktop->currentLayer()->appendChildRepr(repr);
-        Inkscape::GC::release(repr);
-        Inkscape::XML::Node *repr_side;
         // TODO: Incorporate this in box3d-side.cpp!
         for (int i = 0; i < 6; ++i) {
-            repr_side = xml_doc->createElement("svg:path");
-            repr_side->setAttribute("sodipodi:type", "inkscape:box3dside");
-            repr->addChild(repr_side, NULL);
-
-            Box3DSide *side = SP_BOX3D_SIDE(inkscape_active_document()->getObjectByRepr (repr_side));
-
+            Box3DSide *side = Box3DSide::createBox3DSide(box3d);
+            
             guint desc = Box3D::int_to_face(i);
 
             Box3D::Axis plane = (Box3D::Axis) (desc & 0x7);
@@ -608,10 +604,27 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
             side->dir2 = Box3D::extract_second_axis_direction(plane);
             side->front_or_rear = (Box3D::FrontOrRear) (desc & 0x8);
 
-            /* Set style */
-            box3d_side_apply_style(side);
+            // Set style
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-            SP_OBJECT(side)->updateRepr(); // calls box3d_side_write() and updates, e.g., the axes string description
+            Glib::ustring descr = "/desktop/";
+            descr += box3d_side_axes_string(side);
+            descr += "/style";
+            Glib::ustring cur_style = prefs->getString(descr);    
+    
+            bool use_current = prefs->getBool("/tools/shapes/3dbox/usecurrent", false);
+            if (use_current && !cur_style.empty()) {
+                // use last used style 
+                side->setAttribute("style", cur_style.data());
+				
+            } else {
+                // use default style 
+                GString *pstring = g_string_new("");
+                g_string_printf (pstring, "/tools/shapes/3dbox/%s", box3d_side_axes_string(side));
+                desktop->applyCurrentOrToolStyle (side, pstring->str, false);
+            }
+
+            side->updateRepr(); // calls box3d_side_write() and updates, e.g., the axes string description
         }
 
         box3d_set_z_orders(SP_BOX3D(bc.item));
@@ -667,7 +680,7 @@ static void sp_box3d_finish(Box3DContext *bc)
         sp_canvas_end_forced_full_redraws(desktop->canvas);
 
         sp_desktop_selection(desktop)->set(bc->item);
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
                          _("Create 3D box"));
 
         bc->item = NULL;

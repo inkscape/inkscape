@@ -6,6 +6,8 @@
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -14,6 +16,14 @@
  */
 
 /* SPObject flags */
+
+class SPObject;
+class SPObjectClass;
+
+#define SP_TYPE_OBJECT (SPObject::sp_object_get_type ())
+#define SP_OBJECT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_OBJECT, SPObject))
+#define SP_OBJECT_CLASS(clazz) (G_TYPE_CHECK_CLASS_CAST((clazz), SP_TYPE_OBJECT, SPObjectClass))
+#define SP_IS_OBJECT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_OBJECT))
 
 /* Async modification flags */
 #define SP_OBJECT_MODIFIED_FLAG (1 << 0)
@@ -45,15 +55,10 @@
 #define SP_OBJECT_WRITE_ALL (1 << 2)
 
 /* Convenience stuff */
-#define SP_OBJECT_ID(o) (((SPObject *) (o))->getId())
-#define SP_OBJECT_REPR(o) (((SPObject *) (o))->repr)
+#define SP_OBJECT_REPR(o) (((SPObject *) (o))->getRepr())
 #define SP_OBJECT_DOCUMENT(o) (((SPObject *) (o))->document)
 #define SP_OBJECT_PARENT(o) (((SPObject *) (o))->parent)
-#define SP_OBJECT_NEXT(o) (((SPObject *) (o))->next)
-#define SP_OBJECT_PREV(o) (sp_object_prev((SPObject *) (o)))
-#define SP_OBJECT_HREFCOUNT(o) (((SPObject *) (o))->hrefcount)
 #define SP_OBJECT_STYLE(o) (((SPObject *) (o))->style)
-
 
 #include <glib-object.h>
 #include <sigc++/connection.h>
@@ -63,6 +68,7 @@
 #include "forward.h"
 #include "version.h"
 #include "util/forward-pointer-iterator.h"
+#include "desktop-style.h"
 
 namespace Inkscape {
 namespace XML {
@@ -137,7 +143,8 @@ SPObject *sp_object_href(SPObject *object, gpointer owner);
 SPObject *sp_object_hunref(SPObject *object, gpointer owner);
 
 /// A refcounting tree node object.
-struct SPObject : public GObject {
+class SPObject : public GObject {
+public:
     enum CollectionPolicy {
         COLLECT_WITH_PARENT,
         ALWAYS_COLLECT
@@ -154,16 +161,30 @@ struct SPObject : public GObject {
     SPObject *children; /* Our children */
     SPObject *_last_child; /* Remembered last child */
     SPObject *next; /* Next object in linked list */
-    Inkscape::XML::Node *repr; /* Our xml representation */
 
 private:
     gchar *id; /* Our very own unique id */
+    Inkscape::XML::Node *repr; /* Our xml representation */
 public:
 
     /**
      * Returns the objects current ID string.
      */
     gchar const* getId() const;
+
+    /**
+     * Returns the XML representation of tree
+     */
+    //Inkscape::XML::Node const* getRepr() const;
+//protected:
+    Inkscape::XML::Node * getRepr();
+
+    /**
+     * Returns the XML representation of tree
+     */
+    Inkscape::XML::Node const* getRepr() const;
+
+public:
 
     /** @brief cleans up an SPObject, releasing its references and
      *         requesting that references to it be released
@@ -221,18 +242,28 @@ public:
     /* A non-const version can be similarly constructed if you want one.
      * (Don't just cast away the constness, which would be ill-formed.) */
 
-    SPObject *getNext();
+    SPObject *getNext() {return next;}
+    SPObject const *getNext() const {return next;}
+
+    /**
+     * Returns previous object in sibling list or NULL.
+     */
     SPObject *getPrev();
 
     bool hasChildren() const { return ( children != NULL ); }
 
     SPObject *firstChild() { return children; }
     SPObject const *firstChild() const { return children; }
+
     SPObject *lastChild() { return _last_child; }
     SPObject const *lastChild() const { return _last_child; }
 
     enum Action { ActionGeneral, ActionBBox, ActionUpdate, ActionShow };
-    /** @brief Retrieves children as a GSList */
+
+    /**
+     * Retrieves the children as a GSList object, optionally ref'ing the children
+     * in the process, if add_ref is specified.
+     */
     GSList *childList(bool add_ref, Action action = ActionGeneral);
 
     SPObject *appendChildRepr(Inkscape::XML::Node *repr);
@@ -482,7 +513,9 @@ public:
         return _modified_signal.connect(slot);
     }
 
+    /** Sends the delete signal to all children of this object recursively */
     void _sendDeleteSignalRecursive();
+
     void _updateTotalHRefCount(int increment);
 
     void _requireSVGVersion(unsigned major, unsigned minor) {
@@ -498,6 +531,25 @@ public:
     CollectionPolicy _collection_policy;
     gchar *_label;
     mutable gchar *_default_label;
+    void attach(SPObject *object, SPObject *prev);
+    void reorder(SPObject *prev);
+    void detach(SPObject *object);
+    SPObject *get_child_by_repr(Inkscape::XML::Node *repr);
+    void invoke_build(SPDocument *document, Inkscape::XML::Node *repr, unsigned int cloned);
+    long long int getIntAttribute(char const *key, long long int def);
+    unsigned getPosition();
+    gchar const * getAttribute(gchar const *name,SPException *ex=0) const;
+    void appendChild(Inkscape::XML::Node *child);
+    void addChild(Inkscape::XML::Node *child,Inkscape::XML::Node *prev=0);
+    void setKeyValue(unsigned int key, gchar const *value);
+    void setAttribute(gchar const *key, gchar const *value, SPException *ex=0);
+    void readAttr(gchar const *key);
+    gchar const *getTagName(SPException *ex) const;
+    void removeAttribute(gchar const *key, SPException *ex=0);
+    gchar const *getStyleProperty(gchar const *key, gchar const *def) const;
+    void setCSS(SPCSSAttr *css, gchar const *attr);
+    void changeCSS(SPCSSAttr *css, gchar const *attr);
+    bool storeAsDouble( gchar const *key, double *val ) const;
 
 private:
     // Private member functions used in the definitions of setTitle(),
@@ -507,11 +559,41 @@ private:
     SPObject * findFirstChild(gchar const *tagname) const;
     GString * textualContent() const;
 
+    static void sp_object_init(SPObject *object);
+    static void sp_object_finalize(GObject *object);
+
+    static void sp_object_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
+    static void sp_object_remove_child(SPObject *object, Inkscape::XML::Node *child);
+    static void sp_object_order_changed(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
+
+    static void sp_object_release(SPObject *object);
+    static void sp_object_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+
+    static void sp_object_private_set(SPObject *object, unsigned int key, gchar const *value);
+    static Inkscape::XML::Node *sp_object_private_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+    static gchar *sp_object_get_unique_id(SPObject *object, gchar const *defid);
+
+    /* Real handlers of repr signals */
+
+public:
+    static GType sp_object_get_type();
+    static void sp_object_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gchar const *oldval, gchar const *newval, bool is_interactive, gpointer data);
+
+    static void sp_object_repr_content_changed(Inkscape::XML::Node *repr, gchar const *oldcontent, gchar const *newcontent, gpointer data);
+
+    static void sp_object_repr_child_added(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, gpointer data);
+    static void sp_object_repr_child_removed(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, void *data);
+
+    static void sp_object_repr_order_changed(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *old, Inkscape::XML::Node *newer, gpointer data);
+
+
+    friend class SPObjectClass;
     friend class SPObjectImpl;
 };
 
 /// The SPObject vtable.
-struct SPObjectClass {
+class SPObjectClass {
+public:
     GObjectClass parent_class;
 
     void (* build) (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr);
@@ -533,43 +615,16 @@ struct SPObjectClass {
     void (* modified) (SPObject *object, unsigned int flags);
 
     Inkscape::XML::Node * (* write) (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, unsigned int flags);
+
+private:
+    static GObjectClass *static_parent_class;
+    static void sp_object_class_init(SPObjectClass *klass);
+
+    friend class SPObject;
 };
 
 
-/*
- * Attaching/detaching
- */
-
-void sp_object_attach(SPObject *parent, SPObject *object, SPObject *prev);
-void sp_object_reorder(SPObject *object, SPObject *prev);
-void sp_object_detach(SPObject *parent, SPObject *object);
-
-inline SPObject *sp_object_first_child(SPObject *parent) {
-    return parent->firstChild();
-}
-SPObject *sp_object_get_child_by_repr(SPObject *object, Inkscape::XML::Node *repr);
-
-void sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr, unsigned int cloned);
-
-void sp_object_set(SPObject *object, unsigned int key, gchar const *value);
-
-void sp_object_read_attr(SPObject *object, gchar const *key);
-
-/* Public */
-
-gchar const *sp_object_tagName_get(SPObject const *object, SPException *ex);
-gchar const *sp_object_getAttribute(SPObject const *object, gchar const *key, SPException *ex);
-void sp_object_setAttribute(SPObject *object, gchar const *key, gchar const *value, SPException *ex);
-void sp_object_removeAttribute(SPObject *object, gchar const *key, SPException *ex);
-
-/* Style */
-
-gchar const *sp_object_get_style_property(SPObject const *object,
-                                          gchar const *key, gchar const *def);
-
 int sp_object_compare_position(SPObject const *first, SPObject const *second);
-
-SPObject *sp_object_prev(SPObject *child);
 
 
 #endif // SP_OBJECT_H_SEEN

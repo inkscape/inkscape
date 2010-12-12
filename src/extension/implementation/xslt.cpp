@@ -4,6 +4,8 @@
 /*
  * Authors:
  *   Ted Gould <ted@gould.cx>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006-2007 Authors
  *
@@ -174,7 +176,7 @@ XSLT::open(Inkscape::Extension::Input */*module*/, gchar const *filename)
     }
     g_free(s);
 
-    SPDocument * doc = sp_document_create(rdoc, filename, base, name, true);
+    SPDocument * doc = SPDocument::createDoc(rdoc, filename, base, name, true);
 
     g_free(base); g_free(name);
 
@@ -189,8 +191,7 @@ XSLT::save(Inkscape::Extension::Output */*module*/, SPDocument *doc, gchar const
     g_return_if_fail(doc != NULL);
     g_return_if_fail(filename != NULL);
 
-    Inkscape::XML::Node *repr = NULL;
-    repr = sp_document_repr_root (doc);
+    Inkscape::XML::Node *repr = doc->getReprRoot();
 
     std::string tempfilename_out;
     int tempfd_out = 0;
@@ -202,7 +203,7 @@ XSLT::save(Inkscape::Extension::Output */*module*/, SPDocument *doc, gchar const
     }
 
     if (!sp_repr_save_rebased_file(repr->document(), tempfilename_out.c_str(), SP_SVG_NS_URI,
-                                   doc->base, filename)) {
+                                   doc->getBase(), filename)) {
         throw Inkscape::Extension::Output::save_failed();
     }
 

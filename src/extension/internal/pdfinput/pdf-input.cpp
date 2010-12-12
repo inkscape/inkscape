@@ -3,6 +3,7 @@
  *
  * Authors:
  *   miklos erdelyi
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 Authors
  *
@@ -659,9 +660,9 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     Catalog *catalog = pdf_doc->getCatalog();
     Page *page = catalog->getPage(page_num);
 
-    SPDocument *doc = sp_document_new(NULL, TRUE, TRUE);
-    bool saved = sp_document_get_undo_sensitive(doc);
-    sp_document_set_undo_sensitive(doc, false); // No need to undo in this temporary document
+    SPDocument *doc = SPDocument::createNewDoc(NULL, TRUE, TRUE);
+    bool saved = DocumentUndo::getUndoSensitive(doc);
+    DocumentUndo::setUndoSensitive(doc, false); // No need to undo in this temporary document
 
     // Create builder
     gchar *docname = g_path_get_basename(uri);
@@ -735,7 +736,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     delete dlg;
 
     // Restore undo
-    sp_document_set_undo_sensitive(doc, saved);
+    DocumentUndo::setUndoSensitive(doc, saved);
 
     return doc;
 }

@@ -1,5 +1,3 @@
-#define __SP_PATH_CHEMISTRY_C__
-
 /*
  * Here are handlers for modifying selections, specific to paths
  *
@@ -7,6 +5,8 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2008 Authors
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -38,6 +38,8 @@
 #include <2geom/pathvector.h>
 #include "selection-chemistry.h"
 #include "path-chemistry.h"
+
+using Inkscape::DocumentUndo;
 
 void
 sp_selected_path_combine(SPDesktop *desktop)
@@ -135,12 +137,14 @@ sp_selected_path_combine(SPDesktop *desktop)
         SP_OBJECT(first)->deleteObject(false);
         // delete the topmost.
 
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+        Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
         // restore id, transform, path effect, and style
         repr->setAttribute("id", id);
-        if (transform) repr->setAttribute("transform", transform);
+        if (transform) {
+            repr->setAttribute("transform", transform);
+        }
         repr->setAttribute("style", style);
         g_free(style);
 
@@ -150,10 +154,11 @@ sp_selected_path_combine(SPDesktop *desktop)
         // set path data corresponding to new curve
         gchar *dstring = sp_svg_write_path(curve->get_pathvector());
         curve->unref();
-        if (path_effect)
+        if (path_effect) {
             repr->setAttribute("inkscape:original-d", dstring);
-        else
+        } else {
             repr->setAttribute("d", dstring);
+        }
         g_free(dstring);
 
         // add the new group to the parent of the topmost
@@ -162,8 +167,8 @@ sp_selected_path_combine(SPDesktop *desktop)
         // move to the position of the topmost, reduced by the number of deleted items
         repr->setPosition(position > 0 ? position : 0);
 
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_COMBINE, 
-                         _("Combine"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_SELECTION_COMBINE, 
+                           _("Combine"));
 
         selection->set(repr);
 
@@ -213,8 +218,10 @@ sp_selected_path_break_apart(SPDesktop *desktop)
         gint pos = SP_OBJECT_REPR(item)->position();
         char const *id = SP_OBJECT_REPR(item)->attribute("id");
 
-        gchar *style = g_strdup(SP_OBJECT(item)->repr->attribute("style"));
-        gchar *path_effect = g_strdup(SP_OBJECT(item)->repr->attribute("inkscape:path-effect"));
+        // XML Tree being used directly here while it shouldn't be...
+        gchar *style = g_strdup(SP_OBJECT(item)->getRepr()->attribute("style"));
+        // XML Tree being used directly here while it shouldn't be...
+        gchar *path_effect = g_strdup(SP_OBJECT(item)->getRepr()->attribute("inkscape:path-effect"));
 
         Geom::PathVector apv = curve->get_pathvector() * SP_ITEM(path)->transform;
 
@@ -272,8 +279,8 @@ sp_selected_path_break_apart(SPDesktop *desktop)
     desktop->clearWaitingCursor();
 
     if (did) {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_BREAK_APART, 
-                         _("Break apart"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_SELECTION_BREAK_APART, 
+                           _("Break apart"));
     } else {
         sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to break apart in the selection."));
     }
@@ -314,8 +321,8 @@ sp_selected_path_to_curves(SPDesktop *desktop, bool interactive)
     if (interactive) {
         desktop->clearWaitingCursor();
         if (did) {
-            sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_TO_CURVE, 
-                             _("Object to path"));
+            DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_OBJECT_TO_CURVE, 
+                               _("Object to path"));
         } else {
             sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No objects</b> to convert to path in the selection."));
             return;
@@ -532,7 +539,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
 
     SPCurve *curve = NULL;
     if (SP_IS_SHAPE(item)) {
-        curve = sp_shape_get_curve(SP_SHAPE(item));
+        curve = SP_SHAPE(item)->getCurve();
     } 
 
     if (!curve)
@@ -627,8 +634,8 @@ sp_selected_path_reverse(SPDesktop *desktop)
     desktop->clearWaitingCursor();
 
     if (did) {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_REVERSE,
-                         _("Reverse path"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_SELECTION_REVERSE,
+                           _("Reverse path"));
     } else {
         sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to reverse in the selection."));
     }

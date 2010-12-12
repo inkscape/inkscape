@@ -7,6 +7,7 @@
 /*
  * Authors:
  * 	   Miklos Erdelyi <erdelyim@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Miklos Erdelyi
  * 
@@ -23,7 +24,7 @@
 
 //#include "libnrtype/font-instance.h"
 #include "style.h"
-
+#include "sp-item.h"
 #include <cairo.h>
 
 class SPClipPath;

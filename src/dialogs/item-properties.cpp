@@ -5,6 +5,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2006 Authors
  * Copyright (C) 2001 Ximian, Inc.
@@ -40,6 +41,8 @@
 #include "../verbs.h"
 #include "../widgets/sp-attribute-widget.h"
 #include "../widgets/sp-widget.h"
+
+using Inkscape::DocumentUndo;
 
 #define MIN_ONSCREEN_DISTANCE 50
 
@@ -398,8 +401,8 @@ sp_item_widget_sensitivity_toggled (GtkWidget *widget, SPWidget *spw)
 
     item->setLocked(gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)));
 
-    sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-             gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))? _("Lock object") : _("Unlock object"));
+    DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
+		       gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))? _("Lock object") : _("Unlock object"));
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));
 }
@@ -417,8 +420,8 @@ sp_item_widget_hidden_toggled(GtkWidget *widget, SPWidget *spw)
 
     item->setExplicitlyHidden(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)));
 
-    sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-             gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))? _("Hide object") : _("Unhide object"));
+    DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
+		       gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))? _("Hide object") : _("Unhide object"));
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));
 }
@@ -449,9 +452,9 @@ sp_item_widget_label_changed( GtkWidget */*widget*/, SPWidget *spw )
         SPException ex;
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (id_label), _("_ID:"));
         SP_EXCEPTION_INIT (&ex);
-        sp_object_setAttribute (SP_OBJECT (item), "id", id, &ex);
-        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-                                _("Set object ID"));
+        item->setAttribute("id", id, &ex);
+        DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
+			   _("Set object ID"));
     }
 
     /* Retrieve the label widget for the object's label */
@@ -465,16 +468,16 @@ sp_item_widget_label_changed( GtkWidget */*widget*/, SPWidget *spw )
     SPObject *obj = (SPObject*)item;
     if (strcmp (label, obj->defaultLabel())) {
         obj->setLabel(label);
-        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-                                _("Set object label"));
+        DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
+			   _("Set object label"));
     }
 
     /* Retrieve the title */
     GtkWidget *w = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "title"));
     gchar *title = (gchar *)gtk_entry_get_text(GTK_ENTRY (w));
     if (obj->setTitle(title))
-        sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-                         _("Set object title"));
+        DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
+			   _("Set object title"));
 
     /* Retrieve the description */
     GtkTextView *tv = GTK_TEXT_VIEW(gtk_object_get_data(GTK_OBJECT(spw), "desc"));
@@ -483,8 +486,8 @@ sp_item_widget_label_changed( GtkWidget */*widget*/, SPWidget *spw )
     gtk_text_buffer_get_bounds(buf, &start, &end);
     gchar *desc = gtk_text_buffer_get_text(buf, &start, &end, TRUE);
     if (obj->setDesc(desc))
-        sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-                         _("Set object description"));
+        DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
+			   _("Set object description"));
     g_free(desc);
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));

@@ -1,11 +1,12 @@
-#ifndef __SP_PATTERN_H__
-#define __SP_PATTERN_H__
+#ifndef SEEN_SP_PATTERN_H
+#define SEEN_SP_PATTERN_H
 
 /*
  * SVG <pattern> implementation
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2002 Lauris Kaplinski
  *
@@ -15,7 +16,7 @@
 #include <gtk/gtktypeutils.h>
 
 #include "forward.h"
-
+#include "sp-item.h"
 #define SP_TYPE_PATTERN (sp_pattern_get_type ())
 #define SP_PATTERN(o) (GTK_CHECK_CAST ((o), SP_TYPE_PATTERN, SPPattern))
 #define SP_PATTERN_CLASS(k) (GTK_CHECK_CLASS_CAST ((k), SP_TYPE_PATTERN, SPPatternClass))
@@ -99,7 +100,7 @@ gdouble pattern_width (SPPattern *pat);
 gdouble pattern_height (SPPattern *pat);
 NRRect *pattern_viewBox (SPPattern *pat);
 
-#endif //__SP_PATTERN_H__
+#endif // SEEN_SP_PATTERN_H
 
 /*
   Local Variables:

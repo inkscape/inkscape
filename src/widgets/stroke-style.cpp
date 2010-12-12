@@ -7,6 +7,8 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   Maximilian Albert <maximilian.albert@gmail.com>
  *   Josh Andler <scislac@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2001-2005 authors
  * Copyright (C) 2001 Ximian, Inc.
@@ -58,6 +60,8 @@
 #include "stroke-style.h"
 #include "fill-style.h" // to get sp_fill_style_widget_set_desktop
 #include "fill-n-stroke-factory.h"
+
+using Inkscape::DocumentUndo;
 
 /** Marker selection option menus */
 static Gtk::OptionMenu * marker_start_menu = NULL;
@@ -156,7 +160,7 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
         return NULL;
 
     // Create a copy repr of the marker with id="sample"
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(sandbox);
+    Inkscape::XML::Document *xml_doc = sandbox->getReprDoc();
     Inkscape::XML::Node *mrepr = SP_OBJECT_REPR (marker)->duplicate(xml_doc);
     mrepr->setAttribute("id", "sample");
 
@@ -170,19 +174,19 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
 
 // Uncomment this to get the sandbox documents saved (useful for debugging)
     //FILE *fp = fopen (g_strconcat(menu_id, mname, ".svg", NULL), "w");
-    //sp_repr_save_stream (sp_document_repr_doc (sandbox), fp);
+    //sp_repr_save_stream(sandbox->getReprDoc(), fp);
     //fclose (fp);
 
     // object to render; note that the id is the same as that of the menu we're building
     SPObject *object = sandbox->getObjectById(menu_id);
-    sp_document_root (sandbox)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-    sp_document_ensure_up_to_date(sandbox);
+    sandbox->getRoot()->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    sandbox->ensureUpToDate();
 
     if (object == NULL || !SP_IS_ITEM(object))
         return NULL; // sandbox broken?
 
     // Find object's bbox in document
-    Geom::Matrix const i2doc(sp_item_i2doc_affine(SP_ITEM(object)));
+    Geom::Matrix const i2doc(SP_ITEM(object)->i2doc_affine());
     Geom::OptRect dbox = SP_ITEM(object)->getBounds(i2doc);
 
     if (!dbox) {
@@ -193,7 +197,7 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
     double sf = 0.8;
 
     gchar *cache_name = g_strconcat(menu_id, mname, NULL);
-    Glib::ustring key = svg_preview_cache.cache_key(source->uri, cache_name, psize);
+    Glib::ustring key = svg_preview_cache.cache_key(source->getURI(), cache_name, psize);
     g_free (cache_name);
     // TODO: is this correct?
     Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::wrap(svg_preview_cache.get_preview_from_cache(key));
@@ -221,9 +225,7 @@ ink_marker_list_get (SPDocument *source)
 
     GSList *ml   = NULL;
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS (source);
-    for ( SPObject *child = sp_object_first_child(SP_OBJECT(defs));
-          child != NULL;
-          child = SP_OBJECT_NEXT (child) )
+    for ( SPObject *child = SP_OBJECT(defs)->firstChild(); child; child = child->getNext() )
     {
         if (SP_IS_MARKER(child)) {
             ml = g_slist_prepend (ml, child);
@@ -242,8 +244,8 @@ sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, SPDocument *source, SPD
 {
     // Do this here, outside of loop, to speed up preview generation:
     NRArena const *arena = NRArena::create();
-    unsigned const visionkey = sp_item_display_key_new(1);
-    NRArenaItem *root =  sp_item_invoke_show(SP_ITEM(SP_DOCUMENT_ROOT (sandbox)), (NRArena *) arena, visionkey, SP_ITEM_SHOW_DISPLAY);
+    unsigned const visionkey = SPItem::display_key_new(1);
+    NRArenaItem *root =  SP_ITEM(sandbox->getRoot())->invoke_show((NRArena *) arena, visionkey, SP_ITEM_SHOW_DISPLAY);
 
     for (; marker_list != NULL; marker_list = marker_list->next) {
         Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) marker_list->data);
@@ -280,7 +282,7 @@ sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, SPDocument *source, SPD
         m->append(*i);
     }
 
-    sp_item_invoke_hide(SP_ITEM(sp_document_root(sandbox)), visionkey);
+    SP_ITEM(sandbox->getRoot())->invoke_hide(visionkey);
     nr_object_unref((NRObject *) arena);
 }
 
@@ -342,7 +344,7 @@ gchar const *buffer = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:sodipodi=
 
 "</svg>";
 
-    return sp_document_new_from_mem (buffer, strlen(buffer), FALSE);
+    return SPDocument::createNewDocFromMem (buffer, strlen(buffer), FALSE);
 }
 
 static void
@@ -373,7 +375,7 @@ ink_marker_menu_create_menu(Gtk::Menu *m, gchar const *menu_id, SPDocument *doc,
     if (markers_doc == NULL) {
         char *markers_source = g_build_filename(INKSCAPE_MARKERSDIR, "markers.svg", NULL);
         if (Inkscape::IO::file_test(markers_source, G_FILE_TEST_IS_REGULAR)) {
-            markers_doc = sp_document_new(markers_source, FALSE);
+            markers_doc = SPDocument::createNewDoc(markers_source, FALSE);
         }
         g_free(markers_source);
     }
@@ -391,7 +393,7 @@ ink_marker_menu_create_menu(Gtk::Menu *m, gchar const *menu_id, SPDocument *doc,
 
     // suck in from markers.svg
     if (markers_doc) {
-        sp_document_ensure_up_to_date(doc);
+        doc->ensureUpToDate();
         sp_marker_list_from_doc(m, doc, markers_doc, NULL, sandbox, menu_id);
     }
 
@@ -498,8 +500,8 @@ sp_marker_select(Gtk::OptionMenu *mnu, Gtk::Container *spw, SPMarkerLoc const wh
     sp_repr_css_attr_unref(css);
     css = 0;
 
-    sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE,
-                     _("Set markers"));
+    DocumentUndo::done(document, SP_VERB_DIALOG_FILL_STROKE,
+                       _("Set markers"));
 
 };
 
@@ -1200,8 +1202,8 @@ sp_stroke_style_scale_line(Gtk::Container *spw)
     sp_repr_css_attr_unref(css);
     css = 0;
 
-    sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE,
-                     _("Set stroke style"));
+    DocumentUndo::done(document, SP_VERB_DIALOG_FILL_STROKE,
+                       _("Set stroke style"));
 
     spw->set_data("update", GINT_TO_POINTER(FALSE));
 }
@@ -1297,8 +1299,8 @@ sp_stroke_style_any_toggled(Gtk::ToggleButton *tb, Gtk::Container *spw)
         sp_repr_css_attr_unref(css);
         css = 0;
 
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_DIALOG_FILL_STROKE,
-                         _("Set stroke style"));
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_DIALOG_FILL_STROKE,
+                           _("Set stroke style"));
     }
 }
 

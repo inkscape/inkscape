@@ -1,5 +1,3 @@
-#define __INK_STOCK_ITEMS__
-
 /*
  * Stock-items
  *
@@ -7,6 +5,8 @@
  *
  * Authors:
  *  John Cliff <simarilius@yahoo.com>
+ *  Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright 2004 John Cliff
  *
@@ -56,11 +56,11 @@ static SPObject * sp_marker_load_from_svg(gchar const *name, SPDocument *current
     if (!edoc && !doc) {
         gchar *markers = g_build_filename(INKSCAPE_MARKERSDIR, "/markers.svg", NULL);
         if (Inkscape::IO::file_test(markers, G_FILE_TEST_IS_REGULAR)) {
-            doc = sp_document_new(markers, FALSE);
+            doc = SPDocument::createNewDoc(markers, FALSE);
         }
         g_free(markers);
         if (doc) {
-            sp_document_ensure_up_to_date(doc);
+            doc->ensureUpToDate();
         } else {
             edoc = TRUE;
         }
@@ -70,7 +70,7 @@ static SPObject * sp_marker_load_from_svg(gchar const *name, SPDocument *current
         SPObject *object = doc->getObjectById(name);
         if (object && SP_IS_MARKER(object)) {
             SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(current_doc);
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(current_doc);
+            Inkscape::XML::Document *xml_doc = current_doc->getReprDoc();
             Inkscape::XML::Node *mark_repr = SP_OBJECT_REPR(object)->duplicate(xml_doc);
             SP_OBJECT_REPR(defs)->addChild(mark_repr, NULL);
             SPObject *cloned_item = current_doc->getObjectByRepr(mark_repr);
@@ -94,16 +94,16 @@ sp_pattern_load_from_svg(gchar const *name, SPDocument *current_doc)
     if (!edoc && !doc) {
         gchar *patterns = g_build_filename(INKSCAPE_PATTERNSDIR, "/patterns.svg", NULL);
         if (Inkscape::IO::file_test(patterns, G_FILE_TEST_IS_REGULAR)) {
-            doc = sp_document_new(patterns, FALSE);
+            doc = SPDocument::createNewDoc(patterns, FALSE);
         }
         if (!doc) {
         gchar *patterns = g_build_filename(CREATE_PATTERNSDIR, "/patterns.svg", NULL);
         if (Inkscape::IO::file_test(patterns, G_FILE_TEST_IS_REGULAR)) {
-            doc = sp_document_new(patterns, FALSE);
+            doc = SPDocument::createNewDoc(patterns, FALSE);
         }
         g_free(patterns);
         if (doc) {
-            sp_document_ensure_up_to_date(doc);
+            doc->ensureUpToDate();
         } else {
             edoc = TRUE;
         }
@@ -114,7 +114,7 @@ sp_pattern_load_from_svg(gchar const *name, SPDocument *current_doc)
         SPObject *object = doc->getObjectById(name);
         if (object && SP_IS_PATTERN(object)) {
             SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(current_doc);
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(current_doc);
+            Inkscape::XML::Document *xml_doc = current_doc->getReprDoc();
             Inkscape::XML::Node *pat_repr = SP_OBJECT_REPR(object)->duplicate(xml_doc);
             SP_OBJECT_REPR(defs)->addChild(pat_repr, NULL);
             Inkscape::GC::release(pat_repr);
@@ -137,16 +137,16 @@ sp_gradient_load_from_svg(gchar const *name, SPDocument *current_doc)
     if (!edoc && !doc) {
         gchar *gradients = g_build_filename(INKSCAPE_GRADIENTSDIR, "/gradients.svg", NULL);
         if (Inkscape::IO::file_test(gradients, G_FILE_TEST_IS_REGULAR)) {
-            doc = sp_document_new(gradients, FALSE);
+            doc = SPDocument::createNewDoc(gradients, FALSE);
         }
         if (!doc) {
         gchar *gradients = g_build_filename(CREATE_GRADIENTSDIR, "/gradients.svg", NULL);
         if (Inkscape::IO::file_test(gradients, G_FILE_TEST_IS_REGULAR)) {
-            doc = sp_document_new(gradients, FALSE);
+            doc = SPDocument::createNewDoc(gradients, FALSE);
         }
         g_free(gradients);
         if (doc) {
-            sp_document_ensure_up_to_date(doc);
+            doc->ensureUpToDate();
         } else {
             edoc = TRUE;
         }
@@ -157,7 +157,7 @@ sp_gradient_load_from_svg(gchar const *name, SPDocument *current_doc)
         SPObject *object = doc->getObjectById(name);
         if (object && SP_IS_GRADIENT(object)) {
             SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(current_doc);
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(current_doc);
+            Inkscape::XML::Document *xml_doc = current_doc->getReprDoc();
             Inkscape::XML::Node *pat_repr = SP_OBJECT_REPR(object)->duplicate(xml_doc);
             SP_OBJECT_REPR(defs)->addChild(pat_repr, NULL);
             Inkscape::GC::release(pat_repr);
@@ -195,13 +195,11 @@ SPObject *get_stock_item(gchar const *urn)
 
         SPDesktop *desktop = inkscape_active_desktop();
         SPDocument *doc = sp_desktop_document(desktop);
-        SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(doc);
+        SPDefs *defs = reinterpret_cast<SPDefs *>(SP_DOCUMENT_DEFS(doc));
 
         SPObject *object = NULL;
         if (!strcmp(base, "marker")) {
-            for (SPObject *child = sp_object_first_child(SP_OBJECT(defs));
-                 child != NULL;
-                 child = SP_OBJECT_NEXT(child))
+            for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )
             {
                 if (SP_OBJECT_REPR(child)->attribute("inkscape:stockid") &&
                     !strcmp(name_p, SP_OBJECT_REPR(child)->attribute("inkscape:stockid")) &&
@@ -213,11 +211,9 @@ SPObject *get_stock_item(gchar const *urn)
             
         }
         else if (!strcmp(base,"pattern"))  {
-            for (SPObject *child = sp_object_first_child(SP_OBJECT(defs)) ;
-                 child != NULL;
-                 child = SP_OBJECT_NEXT(child) )
+            for ( SPObject *child = defs->firstChild() ; child; child = child->getNext() )
             {
-                if (SP_OBJECT_REPR(child)->attribute("inkscape:stockid") &&
+                if (child->getRepr()->attribute("inkscape:stockid") &&
                     !strcmp(name_p, SP_OBJECT_REPR(child)->attribute("inkscape:stockid")) &&
                     SP_IS_PATTERN(child))
                 {
@@ -227,9 +223,7 @@ SPObject *get_stock_item(gchar const *urn)
             
         }
         else if (!strcmp(base,"gradient"))  {
-            for (SPObject *child = sp_object_first_child(SP_OBJECT(defs));
-                 child != NULL;
-                 child = SP_OBJECT_NEXT(child))
+            for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )
             {
                 if (SP_OBJECT_REPR(child)->attribute("inkscape:stockid") &&
                     !strcmp(name_p, SP_OBJECT_REPR(child)->attribute("inkscape:stockid")) &&

@@ -25,7 +25,7 @@ void sp_item_notify_moveto(SPItem &item, SPGuide const &mv_g, int const snappoin
     g_return_if_fail( dir_lensq != 0 );
 
     std::vector<Inkscape::SnapCandidatePoint> snappoints;
-    sp_item_snappoints(&item, snappoints, NULL);
+    item.getSnappoints(snappoints, NULL);
     g_return_if_fail( snappoint_ix < int(snappoints.size()) );
 
     double const pos0 = dot(dir, snappoints[snappoint_ix].getPoint());
@@ -41,7 +41,7 @@ void sp_item_notify_moveto(SPItem &item, SPGuide const &mv_g, int const snappoin
        s = (position - pos0) / dot(dir, dir). */
     Geom::Translate const tr( ( position - pos0 )
                             * ( dir / dir_lensq ) );
-    sp_item_set_i2d_affine(&item, sp_item_i2d_affine(&item) * tr);
+    item.set_i2d_affine(item.i2d_affine() * tr);
     /// \todo Reget snappoints, check satisfied.
 
     if (commit) {
@@ -49,7 +49,7 @@ void sp_item_notify_moveto(SPItem &item, SPGuide const &mv_g, int const snappoin
 
         /* Commit repr. */
         {
-            sp_item_write_transform(&item, SP_OBJECT_REPR(&item), item.transform);
+            item.doWriteTransform(SP_OBJECT_REPR(&item), item.transform);
         }
 
         sp_item_rm_unsatisfied_cns(item);

@@ -1,5 +1,3 @@
-#define __SP_OFFSET_C__
-
 /** \file
  * Implementation of <path sodipodi:type="inkscape:offset">.
  */
@@ -8,6 +6,7 @@
  * Authors: (of the sp-spiral.c upon which this file was constructed):
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -217,39 +216,42 @@ sp_offset_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
     if (((SPObjectClass *) parent_class)->build)
         ((SPObjectClass *) parent_class)->build (object, document, repr);
 
-    if (object->repr->attribute("inkscape:radius")) {
-        sp_object_read_attr (object, "inkscape:radius");
+    //XML Tree being used directly here while it shouldn't be.
+    if (object->getRepr()->attribute("inkscape:radius")) {
+        object->readAttr( "inkscape:radius" );
     } else {
-        gchar const *oldA = object->repr->attribute("sodipodi:radius");
-        object->repr->setAttribute("inkscape:radius",oldA);
-        object->repr->setAttribute("sodipodi:radius",NULL);
+        //XML Tree being used directly here (as object->getRepr) 
+        //in all the below lines in the block while it shouldn't be.
+        gchar const *oldA = object->getRepr()->attribute("sodipodi:radius");
+        object->getRepr()->setAttribute("inkscape:radius",oldA);
+        object->getRepr()->setAttribute("sodipodi:radius",NULL);
 
-        sp_object_read_attr (object, "inkscape:radius");
+        object->readAttr( "inkscape:radius" );
     }
-    if (object->repr->attribute("inkscape:original")) {
-        sp_object_read_attr (object, "inkscape:original");
+    if (object->getRepr()->attribute("inkscape:original")) {
+        object->readAttr( "inkscape:original" );
     } else {
-        gchar const *oldA = object->repr->attribute("sodipodi:original");
-        object->repr->setAttribute("inkscape:original",oldA);
-        object->repr->setAttribute("sodipodi:original",NULL);
+        gchar const *oldA = object->getRepr()->attribute("sodipodi:original");
+        object->getRepr()->setAttribute("inkscape:original",oldA);
+        object->getRepr()->setAttribute("sodipodi:original",NULL);
 
-        sp_object_read_attr (object, "inkscape:original");
+        object->readAttr( "inkscape:original" );
     }
-    if (object->repr->attribute("xlink:href")) {
-        sp_object_read_attr(object, "xlink:href");
+    if (object->getRepr()->attribute("xlink:href")) {
+        object->readAttr( "xlink:href" );
     } else {
-        gchar const *oldA = object->repr->attribute("inkscape:href");
+        gchar const *oldA = object->getRepr()->attribute("inkscape:href");
         if (oldA) {
             size_t lA = strlen(oldA);
             char *nA=(char*)malloc((1+lA+1)*sizeof(char));
             memcpy(nA+1,oldA,lA*sizeof(char));
             nA[0]='#';
             nA[lA+1]=0;
-            object->repr->setAttribute("xlink:href",nA);
+            object->getRepr()->setAttribute("xlink:href",nA);
             free(nA);
-            object->repr->setAttribute("inkscape:href",NULL);
+            object->getRepr()->setAttribute("inkscape:href",NULL);
         }
-        sp_object_read_attr (object, "xlink:href");
+        object->readAttr( "xlink:href" );
     }
 }
 
@@ -278,7 +280,7 @@ sp_offset_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XM
 
 
     // Make sure the object has curve
-    SPCurve *curve = sp_shape_get_curve (SP_SHAPE (offset));
+    SPCurve *curve = SP_SHAPE (offset)->getCurve();
     if (curve == NULL) {
         sp_offset_set_shape (SP_SHAPE (offset));
     }
@@ -405,7 +407,7 @@ sp_offset_update(SPObject *object, SPCtx *ctx, guint flags)
     if (flags &
         (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
          SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        sp_shape_set_shape ((SPShape *) object);
+        ((SPShape *) object)->setShape ();
     }
     offset->isUpdating=false;
 
@@ -454,12 +456,13 @@ sp_offset_set_shape(SPShape *shape)
         // just put the source shape as the offseted one, no one will notice
         // it's also useless to compute the offset with a 0 radius
 
-        const char *res_d = SP_OBJECT(shape)->repr->attribute("inkscape:original");
+        //XML Tree being used directly here while it shouldn't be.
+        const char *res_d = SP_OBJECT(shape)->getRepr()->attribute("inkscape:original");
         if ( res_d ) {
             Geom::PathVector pv = sp_svg_read_pathv(res_d);
             SPCurve *c = new SPCurve(pv);
             g_assert(c != NULL);
-            sp_shape_set_curve_insync ((SPShape *) offset, c, TRUE);
+            ((SPShape *) offset)->setCurveInsync (c, TRUE);
             c->unref();
         }
         return;
@@ -510,7 +513,7 @@ sp_offset_set_shape(SPShape *shape)
         theRes->ConvertToForme (orig, 1, originaux);
 
         SPItem *item = shape;
-        Geom::OptRect bbox = sp_item_bbox_desktop (item);
+        Geom::OptRect bbox = item->getBboxDesktop ();
         if ( bbox ) {
             gdouble size = L2(bbox->dimensions());
             gdouble const exp = item->transform.descrim();
@@ -708,7 +711,7 @@ sp_offset_set_shape(SPShape *shape)
         Geom::PathVector pv = sp_svg_read_pathv(res_d);
         SPCurve *c = new SPCurve(pv);
         g_assert(c != NULL);
-        sp_shape_set_curve_insync ((SPShape *) offset, c, TRUE);
+        ((SPShape *) offset)->setCurveInsync (c, TRUE);
         c->unref();
 
         free (res_d);
@@ -948,11 +951,11 @@ sp_offset_top_point (SPOffset * offset, Geom::Point *px)
         return;
     }
 
-    SPCurve *curve = sp_shape_get_curve (SP_SHAPE (offset));
+    SPCurve *curve = SP_SHAPE (offset)->getCurve();
     if (curve == NULL)
     {
         sp_offset_set_shape (SP_SHAPE (offset));
-        curve = sp_shape_get_curve (SP_SHAPE (offset));
+        curve = SP_SHAPE (offset)->getCurve();
         if (curve == NULL)
             return;
     }
@@ -1049,7 +1052,7 @@ sp_offset_move_compensate(Geom::Matrix const *mp, SPItem */*original*/, SPOffset
     item->transform *= compensate;
 
     // commit the compensation
-    sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform, &advertized_move);
+    item->doWriteTransform(SP_OBJECT_REPR(item), item->transform, &advertized_move);
     SP_OBJECT(item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
@@ -1076,7 +1079,7 @@ sp_offset_source_modified (SPObject */*iSource*/, guint /*flags*/, SPItem *item)
     SPOffset *offset = SP_OFFSET(item);
     offset->sourceDirty=true;
     refresh_offset_source(offset);
-    sp_shape_set_shape ((SPShape *) offset);
+    ((SPShape *) offset)->setShape ();
 }
 
 static void
@@ -1094,7 +1097,7 @@ refresh_offset_source(SPOffset* offset)
     SPCurve *curve=NULL;
     if (!SP_IS_SHAPE (item) && !SP_IS_TEXT (item)) return;
     if (SP_IS_SHAPE (item)) {
-        curve = sp_shape_get_curve (SP_SHAPE (item));
+        curve = SP_SHAPE (item)->getCurve ();
         if (curve == NULL)
             return;
     }
@@ -1145,7 +1148,8 @@ refresh_offset_source(SPOffset* offset)
         delete res;
         delete orig;
 
-        SP_OBJECT (offset)->repr->setAttribute("inkscape:original", res_d);
+        //XML Tree being used diectly here while it shouldn't be.
+        SP_OBJECT (offset)->getRepr()->setAttribute("inkscape:original", res_d);
 
         free (res_d);
     }

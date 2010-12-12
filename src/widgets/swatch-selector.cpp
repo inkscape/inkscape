@@ -135,8 +135,8 @@ void SwatchSelector::_changedCb(SPColorSelector */*csel*/, void *data)
                 os << "stop-color:" << c << ";stop-opacity:" << static_cast<gdouble>(alpha) <<";";
                 SP_OBJECT_REPR(stop)->setAttribute("style", os.str().c_str());
 
-                sp_document_done(SP_OBJECT_DOCUMENT(ngr), SP_VERB_CONTEXT_GRADIENT,
-                                 _("Change swatch color"));
+                DocumentUndo::done(SP_OBJECT_DOCUMENT(ngr), SP_VERB_CONTEXT_GRADIENT,
+                                   _("Change swatch color"));
             }
         }
     }

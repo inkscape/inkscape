@@ -3,6 +3,7 @@
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2009 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -365,7 +366,8 @@ void gather_items(InkNodeTool *nt, SPItem *base, SPObject *obj, Inkscape::UI::Sh
     using namespace Inkscape::UI;
     if (!obj) return;
 
-    if (SP_IS_PATH(obj) && obj->repr->attribute("inkscape:original-d") != NULL) {
+    //XML Tree being used directly here while it shouldn't be.
+    if (SP_IS_PATH(obj) && obj->getRepr()->attribute("inkscape:original-d") != NULL) {
         ShapeRecord r;
         r.item = static_cast<SPItem*>(obj);
         r.edit_transform = Geom::identity(); // TODO wrong?
@@ -380,7 +382,7 @@ void gather_items(InkNodeTool *nt, SPItem *base, SPObject *obj, Inkscape::UI::Sh
         ShapeRecord r;
         r.item = item;
         // TODO add support for objectBoundingBox
-        r.edit_transform = base ? sp_item_i2doc_affine(base) : Geom::identity();
+        r.edit_transform = base ? base->i2doc_affine() : Geom::identity();
         r.role = role;
         if (s.insert(r).second) {
             // this item was encountered the first time
@@ -481,7 +483,7 @@ gint ink_node_tool_root_handler(SPEventContext *event_context, GdkEvent *event)
 
             nt->flashed_item = over_item;
             SPCurve *c = sp_path_get_curve_for_edit(SP_PATH(over_item));
-            c->transform(sp_item_i2d_affine(over_item));
+            c->transform(over_item->i2d_affine());
             SPCanvasItem *flash = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), c);
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(flash),
                 prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff), 1.0,
@@ -612,8 +614,7 @@ void ink_node_tool_select_area(InkNodeTool *nt, Geom::Rect const &sel, GdkEventB
     if (nt->_multipath->empty()) {
         // if multipath is empty, select rubberbanded items rather than nodes
         Inkscape::Selection *selection = nt->desktop->selection;
-        GSList *items = sp_document_items_in_box(
-            sp_desktop_document(nt->desktop), nt->desktop->dkey, sel);
+        GSList *items = sp_desktop_document(nt->desktop)->getItemsInBox(nt->desktop->dkey, sel);
         selection->setList(items);
         g_slist_free(items);
     } else {

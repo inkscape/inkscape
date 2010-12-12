@@ -6,6 +6,7 @@
  *   bulia byak
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2010 Authors
  * Copyright (C) 2007 Johan Engelen
@@ -107,7 +108,7 @@ static SPGradient *sp_gradient_get_private_normalized(SPDocument *document, SPGr
 
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
 
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    Inkscape::XML::Document *xml_doc = document->getReprDoc();
     // create a new private gradient of the requested type
     Inkscape::XML::Node *repr;
     if (type == SP_GRADIENT_TYPE_LINEAR) {
@@ -160,8 +161,7 @@ guint count_gradient_hrefs(SPObject *o, SPGradient *gr)
         i ++;
     }
 
-    for (SPObject *child = sp_object_first_child(o);
-         child != NULL; child = SP_OBJECT_NEXT(child)) {
+    for ( SPObject *child = o->firstChild(); child; child = child->getNext() ) {
         i += count_gradient_hrefs(child, gr);
     }
 
@@ -198,7 +198,7 @@ SPGradient *sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradient *ve
 
     // Check the number of uses of the gradient within this object;
     // if we are private and there are no other users,
-    if (!vector->isSwatch() && (SP_OBJECT_HREFCOUNT(gr) <= count_gradient_hrefs(user, gr))) {
+    if (!vector->isSwatch() && (gr->hrefcount <= count_gradient_hrefs(user, gr))) {
         // check vector
         if ( gr != vector && gr->ref->getObject() != vector ) {
             /* our href is not the vector, and vector is different from gr; relink */
@@ -213,7 +213,7 @@ SPGradient *sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradient *ve
     if ((gr->hasStops()) ||
         (gr->state != SP_GRADIENT_STATE_UNKNOWN) ||
         (SP_OBJECT_PARENT(gr) != SP_OBJECT(defs)) ||
-        (SP_OBJECT_HREFCOUNT(gr) > 1)) {
+        (gr->hrefcount > 1)) {
         // we have to clone a fresh new private gradient for the given vector
 
         // create an empty one
@@ -254,9 +254,9 @@ SPGradient *sp_gradient_fork_vector_if_necessary(SPGradient *gr)
     if (!prefs->getBool("/options/forkgradientvectors/value", true))
         return gr;
 
-    if (SP_OBJECT_HREFCOUNT(gr) > 1) {
+    if (gr->hrefcount > 1) {
         SPDocument *doc = SP_OBJECT_DOCUMENT(gr);
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+        Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
         Inkscape::XML::Node *repr = SP_OBJECT_REPR (gr)->duplicate(xml_doc);
         SP_OBJECT_REPR (SP_DOCUMENT_DEFS (doc))->addChild(repr, NULL);
@@ -298,7 +298,7 @@ SPGradient *sp_gradient_reset_to_userspace(SPGradient *gr, SPItem *item)
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(gr);
 
     // calculate the bbox of the item
-    sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
+    SP_OBJECT_DOCUMENT(item)->ensureUpToDate();
     Geom::OptRect bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
 
     if (!bbox)
@@ -364,7 +364,7 @@ SPGradient *sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar
         Inkscape::XML::Node *repr = SP_OBJECT_REPR(gr);
 
         // calculate the bbox of the item
-        sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
+        SP_OBJECT_DOCUMENT(item)->ensureUpToDate();
         Geom::Matrix bbox2user;
         Geom::OptRect bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
         if ( bbox ) {
@@ -741,8 +741,7 @@ void sp_item_gradient_reverse_vector(SPItem *item, bool fill_or_stroke)
     GSList *child_reprs = NULL;
     GSList *child_objects = NULL;
     std::vector<double> offsets;
-    for (SPObject *child = sp_object_first_child(vector);
-         child != NULL; child = SP_OBJECT_NEXT(child)) {
+    for ( SPObject *child = vector->firstChild(); child; child = child->getNext()) {
         child_reprs = g_slist_prepend (child_reprs, SP_OBJECT_REPR(child));
         child_objects = g_slist_prepend (child_objects, child);
         offsets.push_back(sp_repr_get_double_attribute(SP_OBJECT_REPR(child), "offset", 0));
@@ -792,7 +791,7 @@ void sp_item_gradient_set_coords(SPItem *item, guint point_type, guint point_i, 
 
     gradient = sp_gradient_convert_to_userspace (gradient, item, fill_or_stroke? "fill" : "stroke");
 
-    Geom::Matrix i2d (sp_item_i2d_affine (item));
+    Geom::Matrix i2d (item->i2d_affine ());
     Geom::Point p = p_w * i2d.inverse();
     p *= (gradient->gradientTransform).inverse();
     // now p is in gradient's original coordinates
@@ -1065,7 +1064,7 @@ Geom::Point sp_item_gradient_get_coords(SPItem *item, guint point_type, guint po
     }
 
     if (SP_GRADIENT(gradient)->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
-        sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
+        SP_OBJECT_DOCUMENT(item)->ensureUpToDate();
         Geom::OptRect bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
         if (bbox) {
             p *= Geom::Matrix(bbox->dimensions()[Geom::X], 0,
@@ -1073,7 +1072,7 @@ Geom::Point sp_item_gradient_get_coords(SPItem *item, guint point_type, guint po
                             bbox->min()[Geom::X], bbox->min()[Geom::Y]);
         }
     }
-    p *= Geom::Matrix(gradient->gradientTransform) * (Geom::Matrix)sp_item_i2d_affine(item);
+    p *= Geom::Matrix(gradient->gradientTransform) * (Geom::Matrix)item->i2d_affine();
     return from_2geom(p);
 }
 
@@ -1110,11 +1109,11 @@ SPGradient *sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType ty
         /* Current fill style is the gradient of the required type */
         SPGradient *current = SP_GRADIENT(ps);
 
-        //g_message("hrefcount %d   count %d\n", SP_OBJECT_HREFCOUNT(current), count_gradient_hrefs(SP_OBJECT(item), current));
+        //g_message("hrefcount %d   count %d\n", current->hrefcount, count_gradient_hrefs(SP_OBJECT(item), current));
 
         if (!current->isSwatch()
-            && (SP_OBJECT_HREFCOUNT(current) == 1 ||
-            SP_OBJECT_HREFCOUNT(current) == count_gradient_hrefs(SP_OBJECT(item), current))) {
+            && (current->hrefcount == 1 ||
+            current->hrefcount == count_gradient_hrefs(SP_OBJECT(item), current))) {
 
             // current is private and it's either used once, or all its uses are by children of item;
             // so just change its href to vector

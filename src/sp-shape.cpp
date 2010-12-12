@@ -3,11 +3,13 @@
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
  * Copyright (C) 2004 John Cliff
  * Copyright (C) 2007-2008 Johan Engelen
+ * Copyright (C) 2010      Jon A. Cruz <jon@joncruz.org>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -55,40 +57,21 @@
 
 #define noSHAPE_VERBOSE
 
-static void sp_shape_class_init (SPShapeClass *klass);
-static void sp_shape_init (SPShape *shape);
-static void sp_shape_finalize (GObject *object);
-
-static void sp_shape_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
-static void sp_shape_release (SPObject *object);
-
-static void sp_shape_set(SPObject *object, unsigned key, gchar const *value);
-static void sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags);
-static void sp_shape_modified (SPObject *object, unsigned int flags);
-static Inkscape::XML::Node *sp_shape_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-
-static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 void sp_shape_print (SPItem * item, SPPrintContext * ctx);
-static NRArenaItem *sp_shape_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
-static void sp_shape_hide (SPItem *item, unsigned int key);
-static void sp_shape_snappoints (SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 
-static void sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai);
-
-static SPLPEItemClass *parent_class;
+SPLPEItemClass * SPShapeClass::parent_class = 0;
 
 /**
  * Registers the SPShape class with Gdk and returns its type number.
  */
-GType
-sp_shape_get_type (void)
+GType SPShape::getType(void)
 {
     static GType type = 0;
     if (!type) {
         GTypeInfo info = {
             sizeof (SPShapeClass),
             NULL, NULL,
-            (GClassInitFunc) sp_shape_class_init,
+            (GClassInitFunc) SPShapeClass::sp_shape_class_init,
             NULL, NULL,
             sizeof (SPShape),
             16,
@@ -104,8 +87,7 @@ sp_shape_get_type (void)
  * Initializes a SPShapeClass object.  Establishes the function pointers to the class'
  * member routines in the class vtable, and sets pointers to parent classes.
  */
-static void
-sp_shape_class_init (SPShapeClass *klass)
+void SPShapeClass::sp_shape_class_init(SPShapeClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     SPObjectClass *sp_object_class = SP_OBJECT_CLASS(klass);
@@ -114,20 +96,20 @@ sp_shape_class_init (SPShapeClass *klass)
 
     parent_class = (SPLPEItemClass *)g_type_class_peek_parent (klass);
 
-    gobject_class->finalize = sp_shape_finalize;
+    gobject_class->finalize = SPShape::sp_shape_finalize;
 
-    sp_object_class->build = sp_shape_build;
-    sp_object_class->release = sp_shape_release;
-    sp_object_class->set = sp_shape_set;
-    sp_object_class->update = sp_shape_update;
-    sp_object_class->modified = sp_shape_modified;
-    sp_object_class->write = sp_shape_write;
+    sp_object_class->build = SPShape::sp_shape_build;
+    sp_object_class->release = SPShape::sp_shape_release;
+    sp_object_class->set = SPShape::sp_shape_set;
+    sp_object_class->update = SPShape::sp_shape_update;
+    sp_object_class->modified = SPShape::sp_shape_modified;
+    sp_object_class->write = SPShape::sp_shape_write;
 
-    item_class->bbox = sp_shape_bbox;
+    item_class->bbox = SPShape::sp_shape_bbox;
     item_class->print = sp_shape_print;
-    item_class->show = sp_shape_show;
-    item_class->hide = sp_shape_hide;
-    item_class->snappoints = sp_shape_snappoints;
+    item_class->show = SPShape::sp_shape_show;
+    item_class->hide = SPShape::sp_shape_hide;
+    item_class->snappoints = SPShape::sp_shape_snappoints;
     lpe_item_class->update_patheffect = NULL;
 
     klass->set_shape = NULL;
@@ -136,8 +118,7 @@ sp_shape_class_init (SPShapeClass *klass)
 /**
  * Initializes an SPShape object.
  */
-static void
-sp_shape_init (SPShape *shape)
+void SPShape::sp_shape_init(SPShape *shape)
 {
     for ( int i = 0 ; i < SP_MARKER_LOC_QTY ; i++ ) {
         new (&shape->release_connect[i]) sigc::connection();
@@ -147,8 +128,7 @@ sp_shape_init (SPShape *shape)
     shape->curve = NULL;
 }
 
-static void
-sp_shape_finalize (GObject *object)
+void SPShape::sp_shape_finalize(GObject *object)
 {
     SPShape *shape=(SPShape *)object;
 
@@ -159,8 +139,8 @@ sp_shape_finalize (GObject *object)
         shape->modified_connect[i].~connection();
     }
 
-    if (((GObjectClass *) (parent_class))->finalize) {
-        (* ((GObjectClass *) (parent_class))->finalize)(object);
+    if (((GObjectClass *) (SPShapeClass::parent_class))->finalize) {
+        (* ((GObjectClass *) (SPShapeClass::parent_class))->finalize)(object);
     }
 }
 
@@ -171,11 +151,10 @@ sp_shape_finalize (GObject *object)
  *
  * \see sp_object_build()
  */
-static void
-sp_shape_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+void SPShape::sp_shape_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) (parent_class))->build) {
-       (*((SPObjectClass *) (parent_class))->build) (object, document, repr);
+    if (((SPObjectClass *) (SPShapeClass::parent_class))->build) {
+       (*((SPObjectClass *) (SPShapeClass::parent_class))->build) (object, document, repr);
     }
 
     for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
@@ -193,8 +172,7 @@ sp_shape_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
  *
  * \see sp_object_release()
  */
-static void
-sp_shape_release (SPObject *object)
+void SPShape::sp_shape_release(SPObject *object)
 {
     SPItem *item;
     SPShape *shape;
@@ -218,26 +196,24 @@ sp_shape_release (SPObject *object)
         shape->curve = shape->curve->unref();
     }
 
-    if (((SPObjectClass *) parent_class)->release) {
-      ((SPObjectClass *) parent_class)->release (object);
+    if (((SPObjectClass *) SPShapeClass::parent_class)->release) {
+      ((SPObjectClass *) SPShapeClass::parent_class)->release (object);
     }
 }
 
 
 
-static void
-sp_shape_set(SPObject *object, unsigned int key, gchar const *value)
+void SPShape::sp_shape_set(SPObject *object, unsigned int key, gchar const *value)
 {
-    if (((SPObjectClass *) parent_class)->set) {
-        ((SPObjectClass *) parent_class)->set(object, key, value);
+    if (((SPObjectClass *) SPShapeClass::parent_class)->set) {
+        ((SPObjectClass *) SPShapeClass::parent_class)->set(object, key, value);
     }
 }
 
-static Inkscape::XML::Node *
-sp_shape_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
+Inkscape::XML::Node * SPShape::sp_shape_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
-    if (((SPObjectClass *)(parent_class))->write) {
-        ((SPObjectClass *)(parent_class))->write(object, doc, repr, flags);
+    if (((SPObjectClass *)(SPShapeClass::parent_class))->write) {
+        ((SPObjectClass *)(SPShapeClass::parent_class))->write(object, doc, repr, flags);
     }
 
     return repr;
@@ -247,14 +223,13 @@ sp_shape_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::No
  * Updates the shape when its attributes have changed.  Also establishes
  * marker objects to match the style settings.
  */
-static void
-sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
+void SPShape::sp_shape_update(SPObject *object, SPCtx *ctx, unsigned int flags)
 {
     SPItem *item = (SPItem *) object;
     SPShape *shape = (SPShape *) object;
 
-    if (((SPObjectClass *) (parent_class))->update) {
-        (* ((SPObjectClass *) (parent_class))->update) (object, ctx, flags);
+    if (((SPObjectClass *) (SPShapeClass::parent_class))->update) {
+        (* ((SPObjectClass *) (SPShapeClass::parent_class))->update) (object, ctx, flags);
     }
 
     /* This stanza checks that an object's marker style agrees with
@@ -294,17 +269,17 @@ sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
         }
     }
 
-    if (sp_shape_has_markers (shape)) {
+    if (shape->hasMarkers ()) {
         /* Dimension marker views */
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
             if (!v->arenaitem->key) {
-                NR_ARENA_ITEM_SET_KEY (v->arenaitem, sp_item_display_key_new (SP_MARKER_LOC_QTY));
+                NR_ARENA_ITEM_SET_KEY (v->arenaitem, SPItem::display_key_new (SP_MARKER_LOC_QTY));
             }
             for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
                 if (shape->marker[i]) {
                     sp_marker_show_dimension ((SPMarker *) shape->marker[i],
                                               NR_ARENA_ITEM_GET_KEY (v->arenaitem) + i,
-                                              sp_shape_number_of_markers (shape, i));
+                                              shape->numberOfMarkers (i));
                 }
             }
         }
@@ -332,8 +307,7 @@ sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
  * Reference for behaviour of zero-length segments:
  * http://www.w3.org/TR/SVG11/implnote.html#PathElementImplementationNotes
  */
-Geom::Matrix
-sp_shape_marker_get_transform(Geom::Curve const & c1, Geom::Curve const & c2)
+Geom::Matrix sp_shape_marker_get_transform(Geom::Curve const & c1, Geom::Curve const & c2)
 {
     Geom::Point p = c1.pointAt(1);
     Geom::Curve * c1_reverse = c1.reverse();
@@ -359,8 +333,8 @@ sp_shape_marker_get_transform(Geom::Curve const & c1, Geom::Curve const & c2)
 
     return Geom::Rotate(ret_angle) * Geom::Translate(p);
 }
-Geom::Matrix
-sp_shape_marker_get_transform_at_start(Geom::Curve const & c)
+
+Geom::Matrix sp_shape_marker_get_transform_at_start(Geom::Curve const & c)
 {
     Geom::Point p = c.pointAt(0);
     Geom::Matrix ret = Geom::Translate(p);
@@ -376,8 +350,8 @@ sp_shape_marker_get_transform_at_start(Geom::Curve const & c)
 
     return ret;
 }
-Geom::Matrix
-sp_shape_marker_get_transform_at_end(Geom::Curve const & c)
+
+Geom::Matrix sp_shape_marker_get_transform_at_end(Geom::Curve const & c)
 {
     Geom::Point p = c.pointAt(1);
     Geom::Matrix ret = Geom::Translate(p);
@@ -403,8 +377,7 @@ sp_shape_marker_get_transform_at_end(Geom::Curve const & c)
  *
  * @todo figure out what to do when both 'marker' and for instance 'marker-end' are set.
  */
-static void
-sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
+void SPShape::sp_shape_update_marker_view(SPShape *shape, NRArenaItem *ai)
 {
     SPStyle *style = ((SPObject *) shape)->style;
 
@@ -514,13 +487,12 @@ sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
 /**
  * Sets modified flag for all sub-item views.
  */
-static void
-sp_shape_modified (SPObject *object, unsigned int flags)
+void SPShape::sp_shape_modified(SPObject *object, unsigned int flags)
 {
     SPShape *shape = SP_SHAPE (object);
 
-    if (((SPObjectClass *) (parent_class))->modified) {
-      (* ((SPObjectClass *) (parent_class))->modified) (object, flags);
+    if (((SPObjectClass *) (SPShapeClass::parent_class))->modified) {
+      (* ((SPObjectClass *) (SPShapeClass::parent_class))->modified) (object, flags);
     }
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
@@ -534,7 +506,7 @@ sp_shape_modified (SPObject *object, unsigned int flags)
  * Calculates the bounding box for item, storing it into bbox.
  * This also includes the bounding boxes of any markers included in the shape.
  */
-static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags)
+void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags)
 {
     SPShape const *shape = SP_SHAPE (item);
     if (shape->curve) {
@@ -588,7 +560,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &
                     }
 
                     // Union with bboxes of the markers, if any
-                    if (sp_shape_has_markers (shape) && !shape->curve->get_pathvector().empty()) {
+                    if ( shape->hasMarkers()  && !shape->curve->get_pathvector().empty() ) {
                         /** \todo make code prettier! */
                         Geom::PathVector const & pathv = shape->curve->get_pathvector();
                         // START marker
@@ -612,7 +584,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &
 
                                     // get bbox of the marker with that transform
                                     NRRect marker_bbox;
-                                    sp_item_invoke_bbox (marker_item, &marker_bbox, from_2geom(tr), true);
+                                    marker_item->invoke_bbox ( &marker_bbox, from_2geom(tr), true);
                                     // union it with the shape bbox
                                     nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                                 }
@@ -640,7 +612,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &
                                     }
                                     tr = marker_item->transform * marker->c2p * tr * transform;
                                     NRRect marker_bbox;
-                                    sp_item_invoke_bbox (marker_item, &marker_bbox, from_2geom(tr), true);
+                                    marker_item->invoke_bbox ( &marker_bbox, from_2geom(tr), true);
                                     nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                                 }
                                 // MID position
@@ -667,7 +639,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &
                                             }
                                             tr = marker_item->transform * marker->c2p * tr * transform;
                                             NRRect marker_bbox;
-                                            sp_item_invoke_bbox (marker_item, &marker_bbox, from_2geom(tr), true);
+                                            marker_item->invoke_bbox ( &marker_bbox, from_2geom(tr), true);
                                             nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                                         }
 
@@ -688,7 +660,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &
                                     }
                                     tr = marker_item->transform * marker->c2p * tr * transform;
                                     NRRect marker_bbox;
-                                    sp_item_invoke_bbox (marker_item, &marker_bbox, tr, true);
+                                    marker_item->invoke_bbox ( &marker_bbox, tr, true);
                                     nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                                 }
                             }
@@ -723,7 +695,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &
 
                                     // get bbox of the marker with that transform
                                     NRRect marker_bbox;
-                                    sp_item_invoke_bbox (marker_item, &marker_bbox, tr, true);
+                                    marker_item->invoke_bbox ( &marker_bbox, tr, true);
                                     // union it with the shape bbox
                                     nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                                 }
@@ -752,7 +724,7 @@ sp_shape_print_invoke_marker_printing(SPObject* obj, Geom::Matrix tr, SPStyle* s
 
     Geom::Matrix old_tr = marker_item->transform;
     marker_item->transform = tr;
-    sp_item_invoke_print (marker_item, ctx);
+    marker_item->invoke_print (ctx);
     marker_item->transform = old_tr;
 }
 /**
@@ -783,13 +755,13 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
         }
 
     /* fixme: Think (Lauris) */
-    sp_item_invoke_bbox(item, &pbox, Geom::identity(), TRUE);
+    item->invoke_bbox( &pbox, Geom::identity(), TRUE);
     dbox.x0 = 0.0;
     dbox.y0 = 0.0;
-    dbox.x1 = sp_document_width (SP_OBJECT_DOCUMENT (item));
-    dbox.y1 = sp_document_height (SP_OBJECT_DOCUMENT (item));
-    sp_item_bbox_desktop (item, &bbox);
-    Geom::Matrix const i2d(sp_item_i2d_affine(item));
+    dbox.x1 = SP_OBJECT_DOCUMENT (item)->getWidth ();
+    dbox.y1 = SP_OBJECT_DOCUMENT (item)->getHeight ();
+    item->getBboxDesktop (&bbox);
+    Geom::Matrix const i2d(item->i2d_affine());
 
     SPStyle* style = SP_OBJECT_STYLE (item);
 
@@ -876,8 +848,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 /**
  * Sets style, path, and paintbox.  Updates marker views, including dimensions.
  */
-static NRArenaItem *
-sp_shape_show (SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int /*flags*/)
+NRArenaItem * SPShape::sp_shape_show(SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int /*flags*/)
 {
     SPObject *object = SP_OBJECT(item);
     SPShape *shape = SP_SHAPE(item);
@@ -900,18 +871,18 @@ sp_shape_show (SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int 
         sp_shape_set_marker (object, i, object->style->marker[i].value);
       }
 
-    if (sp_shape_has_markers (shape)) {
+    if (shape->hasMarkers ()) {
 
         /* provide key and dimension the marker views */
         if (!arenaitem->key) {
-            NR_ARENA_ITEM_SET_KEY (arenaitem, sp_item_display_key_new (SP_MARKER_LOC_QTY));
+            NR_ARENA_ITEM_SET_KEY (arenaitem, SPItem::display_key_new (SP_MARKER_LOC_QTY));
         }
 
         for (int i = 0; i < SP_MARKER_LOC_QTY; i++) {
             if (shape->marker[i]) {
                 sp_marker_show_dimension ((SPMarker *) shape->marker[i],
                                           NR_ARENA_ITEM_GET_KEY (arenaitem) + i,
-                                          sp_shape_number_of_markers (shape, i));
+                                          shape->numberOfMarkers (i));
             }
         }
 
@@ -925,8 +896,7 @@ sp_shape_show (SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int 
 /**
  * Hides/removes marker views from the shape.
  */
-static void
-sp_shape_hide (SPItem *item, unsigned int key)
+void SPShape::sp_shape_hide(SPItem *item, unsigned int key)
 {
     SPShape *shape;
     SPItemView *v;
@@ -945,8 +915,8 @@ sp_shape_hide (SPItem *item, unsigned int key)
       }
     }
 
-    if (((SPItemClass *) parent_class)->hide) {
-      ((SPItemClass *) parent_class)->hide (item, key);
+    if (((SPItemClass *) SPShapeClass::parent_class)->hide) {
+      ((SPItemClass *) SPShapeClass::parent_class)->hide (item, key);
     }
 }
 
@@ -954,19 +924,18 @@ sp_shape_hide (SPItem *item, unsigned int key)
 * \param shape Shape.
 * \return TRUE if the shape has any markers, or FALSE if not.
 */
-int
-sp_shape_has_markers (SPShape const *shape)
+int SPShape::hasMarkers() const
 {
     /* Note, we're ignoring 'marker' settings, which technically should apply for
        all three settings.  This should be fixed later such that if 'marker' is
        specified, then all three should appear. */
 
     return (
-        shape->curve &&
-        (shape->marker[SP_MARKER_LOC] ||
-         shape->marker[SP_MARKER_LOC_START] ||
-         shape->marker[SP_MARKER_LOC_MID] ||
-         shape->marker[SP_MARKER_LOC_END])
+        this->curve &&
+        (this->marker[SP_MARKER_LOC] ||
+         this->marker[SP_MARKER_LOC_START] ||
+         this->marker[SP_MARKER_LOC_MID] ||
+         this->marker[SP_MARKER_LOC_END])
         );
 }
 
@@ -976,10 +945,9 @@ sp_shape_has_markers (SPShape const *shape)
 * \param type Marker type (e.g. SP_MARKER_LOC_START)
 * \return Number of markers that the shape has of this type.
 */
-int
-sp_shape_number_of_markers (SPShape *shape, int type)
+int SPShape::numberOfMarkers(int type)
 {
-    Geom::PathVector const & pathv = shape->curve->get_pathvector();
+    Geom::PathVector const & pathv = this->curve->get_pathvector();
     if (pathv.size() == 0) {
         return 0;
     }
@@ -987,7 +955,7 @@ sp_shape_number_of_markers (SPShape *shape, int type)
     switch(type) {
         case SP_MARKER_LOC:
         {
-            if ( shape->marker[SP_MARKER_LOC] ) {
+            if ( this->marker[SP_MARKER_LOC] ) {
                 guint n = 0;
                 for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
                     n += path_it->size_default() + 1;
@@ -999,11 +967,11 @@ sp_shape_number_of_markers (SPShape *shape, int type)
         }
         case SP_MARKER_LOC_START:
             // there is only a start marker on the first path of a pathvector
-            return shape->marker[SP_MARKER_LOC_START] ? 1 : 0;
+            return this->marker[SP_MARKER_LOC_START] ? 1 : 0;
 
         case SP_MARKER_LOC_MID:
         {
-            if ( shape->marker[SP_MARKER_LOC_MID] ) {
+            if ( this->marker[SP_MARKER_LOC_MID] ) {
                 guint n = 0;
                 for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
                     n += path_it->size_default() + 1;
@@ -1017,7 +985,7 @@ sp_shape_number_of_markers (SPShape *shape, int type)
         case SP_MARKER_LOC_END:
         {
             // there is only an end marker on the last path of a pathvector
-            return shape->marker[SP_MARKER_LOC_END] ? 1 : 0;
+            return this->marker[SP_MARKER_LOC_END] ? 1 : 0;
         }
 
         default:
@@ -1062,7 +1030,7 @@ static void
 sp_shape_marker_modified (SPObject */*marker*/, guint /*flags*/, SPItem */*item*/)
 {
     /* I think mask does update automagically */
-    /* g_warning ("Item %s mask %s modified", SP_OBJECT_ID (item), SP_OBJECT_ID (mask)); */
+    /* g_warning ("Item %s mask %s modified", item->getId(), mask->getId()); */
 }
 
 /**
@@ -1117,14 +1085,10 @@ sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value)
 /**
  * Calls any registered handlers for the set_shape action
  */
-void
-sp_shape_set_shape (SPShape *shape)
+void SPShape::setShape()
 {
-    g_return_if_fail (shape != NULL);
-    g_return_if_fail (SP_IS_SHAPE (shape));
-
-    if (SP_SHAPE_CLASS (G_OBJECT_GET_CLASS (shape))->set_shape) {
-      SP_SHAPE_CLASS (G_OBJECT_GET_CLASS (shape))->set_shape (shape);
+    if (SP_SHAPE_CLASS (G_OBJECT_GET_CLASS (this))->set_shape) {
+      SP_SHAPE_CLASS (G_OBJECT_GET_CLASS (this))->set_shape (this);
     }
 }
 
@@ -1134,30 +1098,28 @@ sp_shape_set_shape (SPShape *shape)
  * Any existing curve in the shape will be unreferenced first.
  * This routine also triggers a request to update the display.
  */
-void
-sp_shape_set_curve (SPShape *shape, SPCurve *curve, unsigned int owner)
+void SPShape::setCurve(SPCurve *curve, unsigned int owner)
 {
-    if (shape->curve) {
-        shape->curve = shape->curve->unref();
+    if (this->curve) {
+        this->curve = this->curve->unref();
     }
     if (curve) {
         if (owner) {
-            shape->curve = curve->ref();
+            this->curve = curve->ref();
         } else {
-            shape->curve = curve->copy();
+            this->curve = curve->copy();
         }
     }
-        SP_OBJECT(shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        SP_OBJECT(this)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /**
  * Return duplicate of curve (if any exists) or NULL if there is no curve
  */
-SPCurve *
-sp_shape_get_curve (SPShape *shape)
+SPCurve * SPShape::getCurve()
 {
-    if (shape->curve) {
-        return shape->curve->copy();
+    if (this->curve) {
+        return this->curve->copy();
     }
     return NULL;
 }
@@ -1165,17 +1127,16 @@ sp_shape_get_curve (SPShape *shape)
 /**
  * Same as sp_shape_set_curve but without updating the display
  */
-void
-sp_shape_set_curve_insync (SPShape *shape, SPCurve *curve, unsigned int owner)
+void SPShape::setCurveInsync(SPCurve *curve, unsigned int owner)
 {
-    if (shape->curve) {
-        shape->curve = shape->curve->unref();
+    if (this->curve) {
+        this->curve = this->curve->unref();
     }
     if (curve) {
         if (owner) {
-            shape->curve = curve->ref();
+            this->curve = curve->ref();
         } else {
-            shape->curve = curve->copy();
+            this->curve = curve->copy();
         }
     }
 }
@@ -1183,7 +1144,7 @@ sp_shape_set_curve_insync (SPShape *shape, SPCurve *curve, unsigned int owner)
 /**
  * Return all nodes in a path that are to be considered for snapping
  */
-static void sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
+void SPShape::sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_SHAPE(item));
@@ -1202,10 +1163,10 @@ static void sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::SnapCa
     if (pathv.empty())
         return;
 
-    Geom::Matrix const i2d (sp_item_i2d_affine (item));
+    Geom::Matrix const i2d (item->i2d_affine ());
 
     if (snapprefs->getSnapObjectMidpoints()) {
-        Geom::OptRect bbox = item->getBounds(sp_item_i2d_affine(item));
+        Geom::OptRect bbox = item->getBounds(item->i2d_affine());
         if (bbox) {
             p.push_back(Inkscape::SnapCandidatePoint(bbox->midpoint(), Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
         }

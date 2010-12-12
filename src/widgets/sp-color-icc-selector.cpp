@@ -581,7 +581,7 @@ void ColorICCSelector::_profilesChanged( std::string const & name )
     gtk_combo_box_set_active( combo, 0 );
 
     int index = 1;
-    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "iccprofile" );
+    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
     while ( current ) {
         SPObject* obj = SP_OBJECT(current->data);
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);

@@ -1,5 +1,3 @@
-#define __SP_SPRAY_CONTEXT_C__
-
 /*
  * Spray Tool
  *
@@ -12,6 +10,8 @@
  *   Vincent MONTAGNE
  *   Pierre BARBRY-BLOT
  *   Steren GIANNINI (steren.giannini@gmail.com)
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2009 authors
  *
@@ -81,6 +81,8 @@
 #include "helper/action.h"
 
 #include <iostream>
+
+using Inkscape::DocumentUndo;
 using namespace std;
 
 
@@ -151,9 +153,9 @@ void sp_spray_rotate_rel(Geom::Point c,SPDesktop */*desktop*/,SPItem *item, Geom
     Geom::Translate const s(c);
     Geom::Matrix affine = Geom::Matrix(s).inverse() * Geom::Matrix(rotation) * Geom::Matrix(s);
     // Rotate item.
-    sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * (Geom::Matrix)affine);
+    item->set_i2d_affine(item->i2d_affine() * (Geom::Matrix)affine);
     // Use each item's own transform writer, consistent with sp_selection_apply_affine()
-    sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
+    item->doWriteTransform(SP_OBJECT_REPR(item), item->transform);
     // Restore the center position (it's changed because the bbox center changed)
     if (item->isCenterSet()) {
         item->setCenter(c);
@@ -165,8 +167,8 @@ void sp_spray_rotate_rel(Geom::Point c,SPDesktop */*desktop*/,SPItem *item, Geom
 void sp_spray_scale_rel(Geom::Point c, SPDesktop */*desktop*/, SPItem *item, Geom::Scale  const &scale)
 {
     Geom::Translate const s(c);
-    sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * s.inverse() * scale * s  );
-    sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
+    item->set_i2d_affine(item->i2d_affine() * s.inverse() * scale * s  );
+    item->doWriteTransform(SP_OBJECT_REPR(item), item->transform);
 }
 
 static void sp_spray_context_init(SPSprayContext *tc)
@@ -479,14 +481,14 @@ bool sp_spray_recursive(SPDesktop *desktop,
     dr=dr*radius;
 
     if (mode == SPRAY_MODE_COPY) {
-        Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
+        Geom::OptRect a = item->getBounds(item->i2doc_affine());
         if (a) {
             SPItem *item_copied;
             if(_fid<=population)
             {
                 // duplicate
                 SPDocument *doc = SP_OBJECT_DOCUMENT(item);
-                Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
+                Inkscape::XML::Document* xml_doc = doc->getReprDoc();
                 Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
                 Inkscape::XML::Node *parent = old_repr->parent();
                 Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
@@ -527,11 +529,11 @@ bool sp_spray_recursive(SPDesktop *desktop,
             i++;
         }
         SPDocument *doc = SP_OBJECT_DOCUMENT(father);
-        Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
+        Inkscape::XML::Document* xml_doc = doc->getReprDoc();
         Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(father);
         Inkscape::XML::Node *parent = old_repr->parent();
 
-        Geom::OptRect a = father->getBounds(sp_item_i2doc_affine(father));
+        Geom::OptRect a = father->getBounds(father->i2doc_affine());
         if (a) {
             if (i==2) {
                 Inkscape::XML::Node *copy1 = old_repr->duplicate(xml_doc);
@@ -569,12 +571,12 @@ bool sp_spray_recursive(SPDesktop *desktop,
             }
         }
     } else if (mode == SPRAY_MODE_CLONE) {
-        Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
+        Geom::OptRect a = item->getBounds(item->i2doc_affine());
         if (a) {
             if(_fid<=population) {
                 SPItem *item_copied;
                 SPDocument *doc = SP_OBJECT_DOCUMENT(item);
-                Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
+                Inkscape::XML::Document* xml_doc = doc->getReprDoc();
                 Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
                 Inkscape::XML::Node *parent = old_repr->parent();
 
@@ -877,16 +879,16 @@ case GDK_SCROLL_LEFT:
             tc->has_dilated = false;
             switch (tc->mode) {
                 case SPRAY_MODE_COPY:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_SPRAY, _("Spray with copies"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_SPRAY, _("Spray with copies"));
                     break;
                 case SPRAY_MODE_CLONE:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_SPRAY, _("Spray with clones"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_SPRAY, _("Spray with clones"));
                     break;
                 case SPRAY_MODE_SINGLE_PATH:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_SPRAY, _("Spray in single path"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_SPRAY, _("Spray in single path"));
                     break;
             }
         }

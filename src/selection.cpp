@@ -6,6 +6,7 @@
  *   MenTaLguY <mental@rydia.net>
  *   bulia byak <buliabyak@users.sf.net>
  *   Andrius R. <knutux@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C)      2006 Andrius R.
  * Copyright (C) 2004-2005 MenTaLguY
@@ -374,7 +375,7 @@ Geom::OptRect Selection::bounds(SPItem::BBoxType type) const
 
     Geom::OptRect bbox;
     for ( GSList const *i = items ; i != NULL ; i = i->next ) {
-        bbox = unify(bbox, sp_item_bbox_desktop(SP_ITEM(i->data), type));
+        bbox = unify(bbox, SP_ITEM(i->data)->getBboxDesktop(type));
     }
     return bbox;
 }
@@ -393,8 +394,8 @@ NRRect *Selection::boundsInDocument(NRRect *bbox, SPItem::BBoxType type) const {
 
     for ( GSList const *iter=items ; iter != NULL ; iter = iter->next ) {
         SPItem *item=SP_ITEM(iter->data);
-        Geom::Matrix i2doc(sp_item_i2doc_affine(item));
-        sp_item_invoke_bbox(item, bbox, i2doc, FALSE, type);
+        Geom::Matrix i2doc(item->i2doc_affine());
+        item->invoke_bbox( bbox, i2doc, FALSE, type);
     }
 
     return bbox;
@@ -438,7 +439,7 @@ std::vector<Inkscape::SnapCandidatePoint> Selection::getSnapPoints(SnapPreferenc
     std::vector<Inkscape::SnapCandidatePoint> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
         SPItem *this_item = SP_ITEM(iter->data);
-        sp_item_snappoints(this_item, p, &snapprefs_dummy);
+        this_item->getSnappoints(p, &snapprefs_dummy);
 
         //Include the transformation origin for snapping
         //For a selection or group only the overall origin is considered
@@ -460,7 +461,7 @@ std::vector<Inkscape::SnapCandidatePoint> Selection::getSnapPointsConvexHull(Sna
 
     std::vector<Inkscape::SnapCandidatePoint> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
-        sp_item_snappoints(SP_ITEM(iter->data), p, &snapprefs_dummy);
+        SP_ITEM(iter->data)->getSnappoints(p, &snapprefs_dummy);
     }
 
     std::vector<Inkscape::SnapCandidatePoint> pHull;

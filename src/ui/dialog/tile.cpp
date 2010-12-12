@@ -5,6 +5,7 @@
  *   Bob Jamison ( based off trace dialog)
  *   John Cliff
  *   Other dudes from The Inkscape Organization
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 Bob Jamison
  * Copyright (C) 2004 John Cliff
@@ -46,8 +47,8 @@ sp_compare_x_position(SPItem *first, SPItem *second)
     using Geom::X;
     using Geom::Y;
 
-    Geom::OptRect a = first->getBounds(sp_item_i2doc_affine(first));
-    Geom::OptRect b = second->getBounds(sp_item_i2doc_affine(second));
+    Geom::OptRect a = first->getBounds(first->i2doc_affine());
+    Geom::OptRect b = second->getBounds(second->i2doc_affine());
 
     if ( !a || !b ) {
         // FIXME?
@@ -86,8 +87,8 @@ sp_compare_x_position(SPItem *first, SPItem *second)
 int
 sp_compare_y_position(SPItem *first, SPItem *second)
 {
-    Geom::OptRect a = first->getBounds(sp_item_i2doc_affine(first));
-    Geom::OptRect b = second->getBounds(sp_item_i2doc_affine(second));
+    Geom::OptRect a = first->getBounds(first->i2doc_affine());
+    Geom::OptRect b = second->getBounds(second->i2doc_affine());
 
     if ( !a || !b ) {
         // FIXME?
@@ -159,14 +160,14 @@ void TileDialog::Grid_Arrange ()
     grid_top = 99999;
 
     SPDesktop *desktop = getDesktop();
-    sp_document_ensure_up_to_date(sp_desktop_document(desktop));
+    sp_desktop_document(desktop)->ensureUpToDate();
 
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
     const GSList *items = selection ? selection->itemList() : 0;
     cnt=0;
     for (; items != NULL; items = items->next) {
         SPItem *item = SP_ITEM(items->data);
-        Geom::OptRect b = item->getBounds(sp_item_i2doc_affine(item));
+        Geom::OptRect b = item->getBounds(item->i2doc_affine());
         if (!b) {
             continue;
         }
@@ -209,7 +210,7 @@ void TileDialog::Grid_Arrange ()
         const GSList *sizes = sorted;
         for (; sizes != NULL; sizes = sizes->next) {
             SPItem *item = SP_ITEM(sizes->data);
-            Geom::OptRect b = item->getBounds(sp_item_i2doc_affine(item));
+            Geom::OptRect b = item->getBounds(item->i2doc_affine());
             if (b) {
                 width = b->dimensions()[Geom::X];
                 height = b->dimensions()[Geom::Y];
@@ -316,7 +317,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
              for (; current_row != NULL; current_row = current_row->next) {
                  SPItem *item=SP_ITEM(current_row->data);
                  Inkscape::XML::Node *repr = SP_OBJECT_REPR(item);
-                 Geom::OptRect b = item->getBounds(sp_item_i2doc_affine(item));
+                 Geom::OptRect b = item->getBounds(item->i2doc_affine());
                  Geom::Point min;
                  if (b) {
                      width = b->dimensions()[Geom::X];
@@ -336,16 +337,16 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
                  // signs are inverted between x and y due to y inversion
                  Geom::Point move = Geom::Point(new_x - min[Geom::X], min[Geom::Y] - new_y);
                  Geom::Matrix const affine = Geom::Matrix(Geom::Translate(move));
-                 sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * affine);
-                 sp_item_write_transform(item, repr, item->transform,  NULL);
+                 item->set_i2d_affine(item->i2d_affine() * affine);
+                 item->doWriteTransform(repr, item->transform,  NULL);
                  SP_OBJECT (current_row->data)->updateRepr();
                  cnt +=1;
              }
              g_slist_free (current_row);
     }
 
-    sp_document_done (sp_desktop_document (desktop), SP_VERB_SELECTION_GRIDTILE,
-                      _("Arrange in a grid"));
+    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_SELECTION_GRIDTILE,
+                       _("Arrange in a grid"));
 
 }
 

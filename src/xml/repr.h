@@ -3,6 +3,7 @@
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1999-2002 authors
  * Copyright (C) 2000-2002 Ximian, Inc.
@@ -10,8 +11,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
  
-#ifndef __SP_REPR_H__
-#define __SP_REPR_H__
+#ifndef SEEN_SP_REPR_H
+#define SEEN_SP_REPR_H
 
 #include <stdio.h>
 #include <glib/gtypes.h>
@@ -137,12 +138,29 @@ double sp_repr_get_double_attribute(Inkscape::XML::Node *repr, gchar const *key,
 /// \deprecated Use sp_repr_get_int to check for success
 long long int sp_repr_get_int_attribute(Inkscape::XML::Node *repr, gchar const *key, long long int def);
 
-int sp_repr_compare_position(Inkscape::XML::Node *first, Inkscape::XML::Node *second);
+int sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::Node const *second);
 
-/* Searching */
+// Searching
+/**
+ * @brief Find an element node with the given name
+ *
+ * This function searches the descendants of the specified node depth-first for
+ * the first XML node with the specified name.
+ *
+ * @param repr The node to start from
+ * @param name The name of the element node to find
+ * @param maxdepth Maximum search depth, or -1 for an unlimited depth
+ * @return  A pointer to the matching Inkscape::XML::Node
+ * @relatesalso Inkscape::XML::Node
+ */
 Inkscape::XML::Node *sp_repr_lookup_name(Inkscape::XML::Node *repr,
                                          gchar const *name,
                                          gint maxdepth = -1);
+
+Inkscape::XML::Node const *sp_repr_lookup_name(Inkscape::XML::Node const *repr,
+                                               gchar const *name,
+                                               gint maxdepth = -1);
+
 Inkscape::XML::Node *sp_repr_lookup_child(Inkscape::XML::Node *repr,
                                           gchar const *key,
                                           gchar const *value);
@@ -152,7 +170,7 @@ inline Inkscape::XML::Node *sp_repr_document_first_child(Inkscape::XML::Document
     return const_cast<Inkscape::XML::Node *>(doc->firstChild());
 }
 
-#endif
+#endif // SEEN_SP_REPR_H
 /*
   Local Variables:
   mode:c++

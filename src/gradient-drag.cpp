@@ -5,6 +5,7 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 Johan Engelen
  * Copyright (C) 2005,2010 Authors
@@ -43,6 +44,8 @@
 #include "snap.h"
 #include "sp-namedview.h"
 #include "selection-chemistry.h"
+
+using Inkscape::DocumentUndo;
 
 #define GR_KNOT_COLOR_NORMAL 0xffffff00
 #define GR_KNOT_COLOR_MOUSEOVER 0xff000000
@@ -185,7 +188,7 @@ Glib::ustring GrDrag::makeStopSafeColor( gchar const *str, bool &isNull )
         Glib::ustring::size_type pos = colorStr.find("url(#");
         if ( pos != Glib::ustring::npos ) {
             Glib::ustring targetName = colorStr.substr(pos + 5, colorStr.length() - 6);
-            const GSList *gradients = sp_document_get_resource_list(desktop->doc(), "gradient");
+            const GSList *gradients = desktop->doc()->getResourceList("gradient");
             for (const GSList *item = gradients; item; item = item->next) {
                 SPGradient* grad = SP_GRADIENT(item->data);
                 if ( targetName == grad->getId() ) {
@@ -194,7 +197,7 @@ Glib::ustring GrDrag::makeStopSafeColor( gchar const *str, bool &isNull )
                     if (firstStop) {
                         Glib::ustring stopColorStr;
                         if (firstStop->currentColor) {
-                            stopColorStr = sp_object_get_style_property(firstStop, "color", NULL);
+                            stopColorStr = firstStop->getStyleProperty("color", NULL);
                         } else {
                             stopColorStr = firstStop->specified_color.toString();
                         }
@@ -622,8 +625,8 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
                 d_new->updateKnotShape ();
                 d_new->updateTip ();
                 d_new->updateDependencies(true);
-                sp_document_done (sp_desktop_document (d_new->parent->desktop), SP_VERB_CONTEXT_GRADIENT,
-                                  _("Merge gradient handles"));
+                DocumentUndo::done(sp_desktop_document (d_new->parent->desktop), SP_VERB_CONTEXT_GRADIENT,
+                                   _("Merge gradient handles"));
                 return;
             }
         }
@@ -927,8 +930,8 @@ gr_knot_ungrabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
     dragger->updateDependencies(true);
 
     // we did an undoable action
-    sp_document_done (sp_desktop_document (dragger->parent->desktop), SP_VERB_CONTEXT_GRADIENT,
-                      _("Move gradient handle"));
+    DocumentUndo::done(sp_desktop_document (dragger->parent->desktop), SP_VERB_CONTEXT_GRADIENT,
+                       _("Move gradient handle"));
 }
 
 /**
@@ -980,8 +983,8 @@ gr_knot_clicked_handler(SPKnot */*knot*/, guint state, gpointer data)
             }
 
             SP_OBJECT_REPR(gradient)->removeChild(SP_OBJECT_REPR(stop));
-            sp_document_done (SP_OBJECT_DOCUMENT (gradient), SP_VERB_CONTEXT_GRADIENT,
-                      _("Delete gradient stop"));
+            DocumentUndo::done(SP_OBJECT_DOCUMENT (gradient), SP_VERB_CONTEXT_GRADIENT,
+                               _("Delete gradient stop"));
         }
     } else {
     // select the dragger
@@ -1140,7 +1143,7 @@ GrDragger::updateTip ()
 
     if (g_slist_length (this->draggables) == 1) {
         GrDraggable *draggable = (GrDraggable *) this->draggables->data;
-        char *item_desc = sp_item_description(draggable->item);
+        char *item_desc = draggable->item->description();
         switch (draggable->point_type) {
             case POINT_LG_MID:
             case POINT_RG_MID1:
@@ -1784,7 +1787,7 @@ GrDrag::updateLevels ()
 
     for (GSList const* i = this->selection->itemList(); i != NULL; i = i->next) {
         SPItem *item = SP_ITEM(i->data);
-        Geom::OptRect rect = sp_item_bbox_desktop (item);
+        Geom::OptRect rect = item->getBboxDesktop ();
         if (rect) {
             // Remember the edges of the bbox and the center axis
             hor_levels.push_back(rect->min()[Geom::Y]);
@@ -1863,7 +1866,7 @@ GrDrag::selected_move (double x, double y, bool write_repr, bool scale_radial)
 
     if (write_repr && did) {
         // we did an undoable action
-        sp_document_maybe_done (sp_desktop_document (desktop), "grmoveh", SP_VERB_CONTEXT_GRADIENT,
+        DocumentUndo::maybeDone(sp_desktop_document (desktop), "grmoveh", SP_VERB_CONTEXT_GRADIENT,
                                 _("Move gradient handle(s)"));
         return;
     }
@@ -1899,7 +1902,7 @@ GrDrag::selected_move (double x, double y, bool write_repr, bool scale_radial)
 
         if (write_repr && did) {
             // we did an undoable action
-            sp_document_maybe_done (sp_desktop_document (desktop), "grmovem", SP_VERB_CONTEXT_GRADIENT,
+            DocumentUndo::maybeDone(sp_desktop_document (desktop), "grmovem", SP_VERB_CONTEXT_GRADIENT,
                                     _("Move gradient mid stop(s)"));
         }
     }
@@ -2047,11 +2050,11 @@ GrDrag::deleteSelected (bool just_one)
         // cannot use vector->vector.stops.size() because the vector might be invalidated by deletion of a midstop
         // manually count the children, don't know if there already exists a function for this...
         int len = 0;
-        for ( SPObject *child = sp_object_first_child(stopinfo->vector) ;
-              child != NULL ;
-              child = SP_OBJECT_NEXT(child) )
+        for ( SPObject *child = (stopinfo->vector)->firstChild() ; child ; child = child->getNext() )
         {
-            if ( SP_IS_STOP(child) )  len ++;
+            if ( SP_IS_STOP(child) ) {
+                len ++;
+            }
         }
         if (len > 2)
         {
@@ -2188,7 +2191,7 @@ GrDrag::deleteSelected (bool just_one)
     }
 
     if (document) {
-        sp_document_done ( document, SP_VERB_CONTEXT_GRADIENT, _("Delete gradient stop(s)") );
+        DocumentUndo::done( document, SP_VERB_CONTEXT_GRADIENT, _("Delete gradient stop(s)") );
     }
 }
 

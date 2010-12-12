@@ -4,6 +4,7 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Edward Flick (EAF)
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2005 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -569,7 +570,7 @@ sp_image_get_type (void)
             (GInstanceInitFunc) sp_image_init,
             NULL,       /* value_table */
         };
-        image_type = g_type_register_static (sp_item_get_type (), "SPImage", &image_info, (GTypeFlags)0);
+        image_type = g_type_register_static (SPItem::getType (), "SPImage", &image_info, (GTypeFlags)0);
     }
     return image_type;
 }
@@ -585,7 +586,7 @@ sp_image_class_init (SPImageClass * klass)
     sp_object_class = (SPObjectClass *) klass;
     item_class = (SPItemClass *) klass;
 
-    parent_class = (SPItemClass*)g_type_class_ref (sp_item_get_type ());
+    parent_class = (SPItemClass*)g_type_class_ref (SPItem::getType ());
 
     sp_object_class->build = sp_image_build;
     sp_object_class->release = sp_image_release;
@@ -637,16 +638,16 @@ sp_image_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
         ((SPObjectClass *) parent_class)->build (object, document, repr);
     }
 
-    sp_object_read_attr (object, "xlink:href");
-    sp_object_read_attr (object, "x");
-    sp_object_read_attr (object, "y");
-    sp_object_read_attr (object, "width");
-    sp_object_read_attr (object, "height");
-    sp_object_read_attr (object, "preserveAspectRatio");
-    sp_object_read_attr (object, "color-profile");
+    object->readAttr( "xlink:href" );
+    object->readAttr( "x" );
+    object->readAttr( "y" );
+    object->readAttr( "width" );
+    object->readAttr( "height" );
+    object->readAttr( "preserveAspectRatio" );
+    object->readAttr( "color-profile" );
 
     /* Register */
-    sp_document_add_resource (document, "image", object);
+    document->addResource("image", object);
 }
 
 static void
@@ -656,7 +657,7 @@ sp_image_release (SPObject *object)
 
     if (SP_OBJECT_DOCUMENT (object)) {
         /* Unregister ourselves */
-        sp_document_remove_resource (SP_OBJECT_DOCUMENT (object), "image", SP_OBJECT (object));
+        SP_OBJECT_DOCUMENT(object)->removeResource("image", SP_OBJECT(object));
     }
 
     if (image->href) {
@@ -838,9 +839,13 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
             pixbuf = sp_image_repr_read_image (
                 image->lastMod,
                 image->pixPath,
-                object->repr->attribute("xlink:href"),
-                object->repr->attribute("sodipodi:absref"),
-                doc->base);
+
+                //XML Tree being used directly while it shouldn't be.
+                object->getRepr()->attribute("xlink:href"),
+
+                //XML Tree being used directly while it shouldn't be.
+                object->getRepr()->attribute("sodipodi:absref"),
+                doc->getBase());
             if (pixbuf) {
                 pixbuf = sp_image_pixbuf_force_rgba (pixbuf);
 // BLIP
@@ -1056,7 +1061,9 @@ sp_image_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XM
     if (image->height._set) {
         sp_repr_set_svg_double(repr, "height", image->height.computed);
     }
-    repr->setAttribute("preserveAspectRatio", object->repr->attribute("preserveAspectRatio"));
+
+    //XML Tree being used directly here while it shouldn't be...
+    repr->setAttribute("preserveAspectRatio", object->getRepr()->attribute("preserveAspectRatio"));
 #if ENABLE_LCMS
     if (image->color_profile) {
         repr->setAttribute("color-profile", image->color_profile);
@@ -1352,7 +1359,7 @@ static void sp_image_snappoints(SPItem const *item, std::vector<Inkscape::SnapCa
         double const y0 = image.y.computed;
         double const x1 = x0 + image.width.computed;
         double const y1 = y0 + image.height.computed;
-        Geom::Matrix const i2d (sp_item_i2d_affine (item));
+        Geom::Matrix const i2d (item->i2d_affine ());
         p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y0) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
         p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y1) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
         p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x1, y1) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));

@@ -1,5 +1,5 @@
-#ifndef __SP_BOX3D_H__
-#define __SP_BOX3D_H__
+#ifndef SEEN_SP_BOX3D_H
+#define SEEN_SP_BOX3D_H
 
 /*
  * SVG <box3d> implementation
@@ -7,6 +7,7 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Maximilian Albert <Anhalter42@gmx.de>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007      Authors
  * Copyright (C) 1999-2002 Lauris Kaplinski
@@ -29,7 +30,8 @@ class Box3DSide;
 class Persp3D;
 class Persp3DReference;
 
-struct SPBox3D : public SPGroup {
+class SPBox3D : public SPGroup {
+public:
     gint z_orders[6]; // z_orders[i] holds the ID of the face at position #i in the group (from top to bottom)
 
     gchar *persp_href;
@@ -44,9 +46,15 @@ struct SPBox3D : public SPGroup {
     Box3D::Axis swapped; // to indicate which coordinates are swapped during dragging
 
     gint my_counter; // for debugging only
+
+    /**
+     * Create a SPBox3D and append it to the parent.
+     */
+    static SPBox3D * createBox3D(SPItem * parent);
 };
 
-struct SPBox3DClass {
+class SPBox3DClass {
+public:
     SPGroupClass parent_class;
 };
 
@@ -78,7 +86,7 @@ void box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_pe
 SPGroup *box3d_convert_to_group(SPBox3D *box);
 
 
-#endif /* __SP_BOX3D_H__ */
+#endif // SEEN_SP_BOX3D_H
 
 /*
   Local Variables:

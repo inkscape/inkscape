@@ -1,11 +1,11 @@
-#define __SP_ROOT_C__
-
 /** \file
  * SVG \<svg\> implementation.
  */
 /*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -146,26 +146,27 @@ sp_root_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
     SPGroup *group = (SPGroup *) object;
     SPRoot *root = (SPRoot *) object;
 
-    if ( !object->repr->attribute("version") ) {
+    //XML Tree being used directly here while it shouldn't be.
+    if ( !object->getRepr()->attribute("version") ) {
         repr->setAttribute("version", SVG_VERSION);
     }
 
-    sp_object_read_attr(object, "version");
-    sp_object_read_attr(object, "inkscape:version");
+    object->readAttr( "version" );
+    object->readAttr( "inkscape:version" );
     /* It is important to parse these here, so objects will have viewport build-time */
-    sp_object_read_attr(object, "x");
-    sp_object_read_attr(object, "y");
-    sp_object_read_attr(object, "width");
-    sp_object_read_attr(object, "height");
-    sp_object_read_attr(object, "viewBox");
-    sp_object_read_attr(object, "preserveAspectRatio");
-    sp_object_read_attr(object, "onload");
+    object->readAttr( "x" );
+    object->readAttr( "y" );
+    object->readAttr( "width" );
+    object->readAttr( "height" );
+    object->readAttr( "viewBox" );
+    object->readAttr( "preserveAspectRatio" );
+    object->readAttr( "onload" );
 
     if (((SPObjectClass *) parent_class)->build)
         (* ((SPObjectClass *) parent_class)->build) (object, document, repr);
 
-    /* Search for first <defs> node */
-    for (SPObject *o = sp_object_first_child(SP_OBJECT(group)) ; o != NULL; o = SP_OBJECT_NEXT(o) ) {
+    // Search for first <defs> node
+    for (SPObject *o = group->firstChild() ; o ; o = o->getNext() ) {
         if (SP_IS_DEFS(o)) {
             root->defs = SP_DEFS(o);
             break;
@@ -345,22 +346,21 @@ sp_root_set(SPObject *object, unsigned int key, gchar const *value)
  * This routine is for adding a child SVG object to an SPRoot object.
  * The SPRoot object is taken to be an SPGroup.
  */
-static void
-sp_root_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
+static void sp_root_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
     SPRoot *root = (SPRoot *) object;
     SPGroup *group = (SPGroup *) object;
 
-    if (((SPObjectClass *) (parent_class))->child_added)
+    if (((SPObjectClass *) (parent_class))->child_added) {
         (* ((SPObjectClass *) (parent_class))->child_added)(object, child, ref);
+    }
 
     SPObject *co = object->document->getObjectByRepr(child);
     g_assert (co != NULL || !strcmp("comment", child->name())); // comment repr node has no object
 
     if (co && SP_IS_DEFS(co)) {
-        SPObject *c;
-        /* We search for first <defs> node - it is not beautiful, but works */
-        for (c = sp_object_first_child(SP_OBJECT(group)) ; c != NULL; c = SP_OBJECT_NEXT(c) ) {
+        // We search for first <defs> node - it is not beautiful, but works
+        for (SPObject *c = group->firstChild() ; c ; c = c->getNext() ) {
             if (SP_IS_DEFS(c)) {
                 root->defs = SP_DEFS(c);
                 break;
@@ -377,9 +377,9 @@ static void sp_root_remove_child(SPObject *object, Inkscape::XML::Node *child)
     SPRoot *root = (SPRoot *) object;
 
     if ( root->defs && SP_OBJECT_REPR(root->defs) == child ) {
-        SPObject *iter;
-        /* We search for first remaining <defs> node - it is not beautiful, but works */
-        for ( iter = sp_object_first_child(object) ; iter ; iter = SP_OBJECT_NEXT(iter) ) {
+        SPObject *iter = 0;
+        // We search for first remaining <defs> node - it is not beautiful, but works
+        for ( iter = object->firstChild() ; iter ; iter = iter->getNext() ) {
             if ( SP_IS_DEFS(iter) && (SPDefs *)iter != root->defs ) {
                 root->defs = (SPDefs *)iter;
                 break;
@@ -391,8 +391,9 @@ static void sp_root_remove_child(SPObject *object, Inkscape::XML::Node *child)
         }
     }
 
-    if (((SPObjectClass *) (parent_class))->remove_child)
+    if (((SPObjectClass *) (parent_class))->remove_child) {
         (* ((SPObjectClass *) (parent_class))->remove_child)(object, child);
+    }
 }
 
 /**
@@ -566,7 +567,7 @@ sp_root_modified(SPObject *object, guint flags)
 
     /* fixme: (Lauris) */
     if (!object->parent && (flags & SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        sp_document_resized_signal_emit (SP_OBJECT_DOCUMENT(root), root->width.computed, root->height.computed);
+        SP_OBJECT_DOCUMENT(root)->emitResizedSignal(root->width.computed, root->height.computed);
     }
 }
 

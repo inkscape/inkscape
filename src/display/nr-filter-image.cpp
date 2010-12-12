@@ -4,6 +4,7 @@
  * Authors:
  *   Felipe Corrêa da Silva Sanches <juca@members.fsf.org>
  *   Tavmjong Bah <tavmjong@free.fr>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 authors
  *
@@ -49,10 +50,10 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         if (!SVGElem) return 0;
         
         // prep the document
-        sp_document_ensure_up_to_date(document);
+        document->ensureUpToDate();
         NRArena* arena = NRArena::create();
-        unsigned const key = sp_item_display_key_new(1);
-        NRArenaItem* ai = sp_item_invoke_show(SVGElem, arena, key, SP_ITEM_SHOW_DISPLAY);
+        unsigned const key = SPItem::display_key_new(1);
+        NRArenaItem* ai = SVGElem->invoke_show(arena, key, SP_ITEM_SHOW_DISPLAY);
         if (!ai) {
             g_warning("feImage renderer: error creating NRArenaItem for SVG Element");
             nr_object_unref((NRObject *) arena);
@@ -100,7 +101,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         {
             g_warning("FilterImage::render: not enough memory to create pixel buffer. Need %ld.", 4L * width * height);
         }
-        sp_item_invoke_hide(SVGElem, key);
+        SVGElem->invoke_hide(key);
         nr_object_unref((NRObject *) arena);
     }
 
@@ -118,7 +119,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
             if ( !g_file_test( fullname, G_FILE_TEST_EXISTS ) ) {
                 // Try to load from relative postion combined with document base
                 if( document ) {
-                    fullname = g_build_filename( document->base, feImageHref, NULL );
+                    fullname = g_build_filename( document->getBase(), feImageHref, NULL );
                 }
             }
             if ( !g_file_test( fullname, G_FILE_TEST_EXISTS ) ) {

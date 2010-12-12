@@ -4,6 +4,8 @@
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -149,16 +151,16 @@ sp_text_release (SPObject *object)
 static void
 sp_text_build (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
 {
-    sp_object_read_attr(object, "x");
-    sp_object_read_attr(object, "y");
-    sp_object_read_attr(object, "dx");
-    sp_object_read_attr(object, "dy");
-    sp_object_read_attr(object, "rotate");
+    object->readAttr( "x" );
+    object->readAttr( "y" );
+    object->readAttr( "dx" );
+    object->readAttr( "dy" );
+    object->readAttr( "rotate" );
 
     if (((SPObjectClass *) text_parent_class)->build)
         ((SPObjectClass *) text_parent_class)->build(object, doc, repr);
 
-    sp_object_read_attr(object, "sodipodi:linespacing");    // has to happen after the styles are read
+    object->readAttr( "sodipodi:linespacing" );    // has to happen after the styles are read
 }
 
 static void
@@ -211,8 +213,7 @@ sp_text_remove_child (SPObject *object, Inkscape::XML::Node *rch)
     text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_CONTENT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
 }
 
-static void
-sp_text_update (SPObject *object, SPCtx *ctx, guint flags)
+static void sp_text_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     SPText *text = SP_TEXT (object);
 
@@ -223,9 +224,9 @@ sp_text_update (SPObject *object, SPCtx *ctx, guint flags)
     if (flags & SP_OBJECT_MODIFIED_FLAG) cflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 
 
-    /* Create temporary list of children */
+    // Create temporary list of children
     GSList *l = NULL;
-    for (SPObject *child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
+    for (SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
         sp_object_ref (SP_OBJECT (child), object);
         l = g_slist_prepend (l, child);
     }
@@ -249,7 +250,7 @@ sp_text_update (SPObject *object, SPCtx *ctx, guint flags)
         text->rebuildLayout();
 
         NRRect paintbox;
-        sp_item_invoke_bbox(text, &paintbox, Geom::identity(), TRUE);
+        text->invoke_bbox( &paintbox, Geom::identity(), TRUE);
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
             text->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
             nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
@@ -259,14 +260,16 @@ sp_text_update (SPObject *object, SPCtx *ctx, guint flags)
     }
 }
 
-static void
-sp_text_modified (SPObject *object, guint flags)
+static void sp_text_modified(SPObject *object, guint flags)
 {
-    if (((SPObjectClass *) text_parent_class)->modified)
+    if (((SPObjectClass *) text_parent_class)->modified) {
         ((SPObjectClass *) text_parent_class)->modified (object, flags);
+    }
 
     guint cflags = (flags & SP_OBJECT_MODIFIED_CASCADE);
-    if (flags & SP_OBJECT_MODIFIED_FLAG) cflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+        cflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    }
 
     // FIXME: all that we need to do here is nr_arena_glyphs_[group_]set_style, to set the changed
     // style, but there's no easy way to access the arena glyphs or glyph groups corresponding to a
@@ -275,7 +278,7 @@ sp_text_modified (SPObject *object, guint flags)
     if (flags & ( SP_OBJECT_STYLE_MODIFIED_FLAG )) {
         SPText *text = SP_TEXT (object);
         NRRect paintbox;
-        sp_item_invoke_bbox(text, &paintbox, Geom::identity(), TRUE);
+        text->invoke_bbox( &paintbox, Geom::identity(), TRUE);
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
             text->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
             nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
@@ -283,16 +286,15 @@ sp_text_modified (SPObject *object, guint flags)
         }
     }
 
-    /* Create temporary list of children */
+    // Create temporary list of children
     GSList *l = NULL;
-    SPObject *child;
-    for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
+    for (SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
         sp_object_ref (SP_OBJECT (child), object);
         l = g_slist_prepend (l, child);
     }
     l = g_slist_reverse (l);
     while (l) {
-        child = SP_OBJECT (l->data);
+        SPObject *child = SP_OBJECT (l->data);
         l = g_slist_remove (l, child);
         if (cflags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             child->emitModified(cflags);
@@ -301,24 +303,28 @@ sp_text_modified (SPObject *object, guint flags)
     }
 }
 
-static Inkscape::XML::Node *
-sp_text_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *sp_text_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPText *text = SP_TEXT (object);
 
     if (flags & SP_OBJECT_WRITE_BUILD) {
-        if (!repr)
+        if (!repr) {
             repr = xml_doc->createElement("svg:text");
+        }
         GSList *l = NULL;
-        for (SPObject *child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
+        for (SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
+            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) {
+                continue;
+            }
             Inkscape::XML::Node *crepr = NULL;
             if (SP_IS_STRING(child)) {
                 crepr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
             } else {
                 crepr = child->updateRepr(xml_doc, NULL, flags);
             }
-            if (crepr) l = g_slist_prepend (l, crepr);
+            if (crepr) {
+                l = g_slist_prepend (l, crepr);
+            }
         }
         while (l) {
             repr->addChild((Inkscape::XML::Node *) l->data, NULL);
@@ -326,8 +332,10 @@ sp_text_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
             l = g_slist_remove (l, l->data);
         }
     } else {
-        for (SPObject *child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
+        for (SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
+            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) {
+                continue;
+            }
             if (SP_IS_STRING(child)) {
                 SP_OBJECT_REPR(child)->setContent(SP_STRING(child)->string.c_str());
             } else {
@@ -343,12 +351,13 @@ sp_text_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
         Inkscape::SVGOStringStream os;
         os << (text->style->line_height.value * 100.0) << "%";
         SP_OBJECT_REPR(text)->setAttribute("sodipodi:linespacing", os.str().c_str());
-    }
-    else
+    } else {
         SP_OBJECT_REPR(text)->setAttribute("sodipodi:linespacing", NULL);
+    }
 
-    if (((SPObjectClass *) (text_parent_class))->write)
+    if (((SPObjectClass *) (text_parent_class))->write) {
         ((SPObjectClass *) (text_parent_class))->write (object, xml_doc, repr, flags);
+    }
 
     return repr;
 }
@@ -387,7 +396,7 @@ sp_text_show(SPItem *item, NRArena *arena, unsigned /* key*/, unsigned /*flags*/
 
     // pass the bbox of the text object as paintbox (used for paintserver fills)
     NRRect paintbox;
-    sp_item_invoke_bbox(item, &paintbox, Geom::identity(), TRUE);
+    item->invoke_bbox( &paintbox, Geom::identity(), TRUE);
     group->layout.show(flowed, &paintbox);
 
     return flowed;
@@ -442,7 +451,7 @@ static void sp_text_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
     if (layout != NULL && layout->outputExists()) {
         boost::optional<Geom::Point> pt = layout->baselineAnchorPoint();
         if (pt) {
-            p.push_back(Inkscape::SnapCandidatePoint((*pt) * sp_item_i2d_affine(item), Inkscape::SNAPSOURCE_TEXT_BASELINE, Inkscape::SNAPTARGET_TEXT_BASELINE));
+            p.push_back(Inkscape::SnapCandidatePoint((*pt) * item->i2d_affine(), Inkscape::SNAPSOURCE_TEXT_BASELINE, Inkscape::SNAPTARGET_TEXT_BASELINE));
         }
     }
 }
@@ -483,13 +492,13 @@ sp_text_set_transform (SPItem *item, Geom::Matrix const &xform)
     text->_adjustFontsizeRecursive (item, ex);
 
     // Adjust stroke width
-    sp_item_adjust_stroke_width_recursive (item, ex);
+    item->adjust_stroke_width_recursive (ex);
 
     // Adjust pattern fill
-    sp_item_adjust_pattern(item, xform * ret.inverse());
+    item->adjust_pattern(xform * ret.inverse());
 
     // Adjust gradient fill
-    sp_item_adjust_gradient(item, xform * ret.inverse());
+    item->adjust_gradient(xform * ret.inverse());
 
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
 
@@ -502,13 +511,13 @@ sp_text_print (SPItem *item, SPPrintContext *ctx)
     NRRect     pbox, dbox, bbox;
     SPText *group = SP_TEXT (item);
 
-    sp_item_invoke_bbox(item, &pbox, Geom::identity(), TRUE);
-    sp_item_bbox_desktop (item, &bbox);
+    item->invoke_bbox( &pbox, Geom::identity(), TRUE);
+    item->getBboxDesktop (&bbox);
     dbox.x0 = 0.0;
     dbox.y0 = 0.0;
-    dbox.x1 = sp_document_width (SP_OBJECT_DOCUMENT (item));
-    dbox.y1 = sp_document_height (SP_OBJECT_DOCUMENT (item));
-    Geom::Matrix const ctm (sp_item_i2d_affine(item));
+    dbox.x1 = SP_OBJECT_DOCUMENT (item)->getWidth ();
+    dbox.y1 = SP_OBJECT_DOCUMENT (item)->getHeight ();
+    Geom::Matrix const ctm (item->i2d_affine());
 
     group->layout.print(ctx,&pbox,&dbox,&bbox,ctm);
 }
@@ -550,14 +559,16 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
     if (SP_IS_TSPAN(root))
         if (SP_TSPAN(root)->role != SP_TSPAN_ROLE_UNSPECIFIED) {
             // we need to allow the first line not to have role=line, but still set the source_cookie to the right value
-            SPObject *prev_object = SP_OBJECT_PREV(root);
+            SPObject *prev_object = root->getPrev();
             if (prev_object && SP_IS_TSPAN(prev_object)) {
-                if (!layout.inputExists())
+                if (!layout.inputExists()) {
                     layout.appendText("", prev_object->style, prev_object, &optional_attrs);
+                }
                 layout.appendControlCode(Inkscape::Text::Layout::PARAGRAPH_BREAK, prev_object);
             }
-            if (!root->hasChildren())
+            if (!root->hasChildren()) {
                 layout.appendText("", root->style, root, &optional_attrs);
+            }
             length++;     // interpreting line breaks as a character for the purposes of x/y/etc attributes
                           // is a liberal interpretation of the svg spec, but a strict reading would mean
                           // that if the first line is empty the second line would take its place at the
@@ -565,12 +576,12 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
             child_attrs_offset--;
         }
 
-    for (SPObject *child = sp_object_first_child(root) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
+    for (SPObject *child = root->firstChild() ; child ; child = child->getNext() ) {
         if (SP_IS_STRING(child)) {
             Glib::ustring const &string = SP_STRING(child)->string;
             layout.appendText(string, root->style, child, &optional_attrs, child_attrs_offset + length);
             length += string.length();
-        } else if (!sp_repr_is_meta_element(child->repr)) {
+        } /*XML Tree being directly used here while it shouldn't be.*/ else if (!sp_repr_is_meta_element(child->getRepr())) {
             length += _buildLayoutInput(child, optional_attrs, child_attrs_offset + length, in_textpath);
         }
     }
@@ -584,7 +595,7 @@ void SPText::rebuildLayout()
     Inkscape::Text::Layout::OptionalTextTagAttrs optional_attrs;
     _buildLayoutInput(this, optional_attrs, 0, false);
     layout.calculateFlow();
-    for (SPObject *child = firstChild() ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
+    for (SPObject *child = firstChild() ; child ; child = child->getNext() ) {
         if (SP_IS_TEXTPATH(child)) {
             SPTextPath const *textpath = SP_TEXTPATH(child);
             if (textpath->originalPath != NULL) {
@@ -596,14 +607,16 @@ void SPText::rebuildLayout()
     //g_print(layout.dumpAsText().c_str());
 
     // set the x,y attributes on role:line spans
-    for (SPObject *child = firstChild() ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-        if (!SP_IS_TSPAN(child)) continue;
-        SPTSpan *tspan = SP_TSPAN(child);
-        if (tspan->role == SP_TSPAN_ROLE_UNSPECIFIED) continue;
-        if (!tspan->attributes.singleXYCoordinates()) continue;
-        Inkscape::Text::Layout::iterator iter = layout.sourceToIterator(tspan);
-        Geom::Point anchor_point = layout.chunkAnchorPoint(iter);
-        tspan->attributes.setFirstXY(anchor_point);
+    for (SPObject *child = firstChild() ; child ; child = child->getNext() ) {
+        if (SP_IS_TSPAN(child)) {
+            SPTSpan *tspan = SP_TSPAN(child);
+            if ( (tspan->role != SP_TSPAN_ROLE_UNSPECIFIED)
+                 && tspan->attributes.singleXYCoordinates() ) {
+                Inkscape::Text::Layout::iterator iter = layout.sourceToIterator(tspan);
+                Geom::Point anchor_point = layout.chunkAnchorPoint(iter);
+                tspan->attributes.setFirstXY(anchor_point);
+            }
+        }
     }
 }
 

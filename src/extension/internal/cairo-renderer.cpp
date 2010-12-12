@@ -1,11 +1,11 @@
-#define __SP_CAIRO_RENDERER_C__
-
 /** \file
  * Rendering with Cairo.
  */
 /*
  * Author:
  *   Miklos Erdelyi <erdelyim@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Miklos Erdelyi
  *
@@ -186,7 +186,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 
     if (!shape->curve) return;
 
-    sp_item_invoke_bbox(item, &pbox, Geom::identity(), TRUE);
+    item->invoke_bbox( &pbox, Geom::identity(), TRUE);
 
     SPStyle* style = SP_OBJECT_STYLE (item);
 
@@ -450,7 +450,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
 
     // Get the bounding box of the selection in document coordinates.
     Geom::OptRect bbox = 
-           item->getBounds(sp_item_i2d_affine(item), SPItem::RENDERING_BBOX);
+           item->getBounds(item->i2d_affine(), SPItem::RENDERING_BBOX);
 
     if (!bbox) // no bbox, e.g. empty group
         return;
@@ -481,7 +481,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
                                  (Geom::Matrix)(Geom::Translate (shift_x, shift_y));
 
     // ctx matrix already includes item transformation. We must substract.
-    Geom::Matrix t_item =  sp_item_i2d_affine (item);
+    Geom::Matrix t_item =  item->i2d_affine ();
     Geom::Matrix t = t_on_document * t_item.inverse();
 
     // Do the export
@@ -603,16 +603,17 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool page
 
     g_assert( ctx != NULL );
 
-    if (!base)
-        base = SP_ITEM(sp_document_root(doc));
+    if (!base) {
+        base = SP_ITEM(doc->getRoot());
+    }
 
     NRRect d;
     if (pageBoundingBox) {
         d.x0 = d.y0 = 0;
-        d.x1 = sp_document_width(doc);
-        d.y1 = sp_document_height(doc);
+        d.x1 = doc->getWidth();
+        d.y1 = doc->getHeight();
     } else {
-        sp_item_invoke_bbox(base, &d, sp_item_i2d_affine(base), TRUE, SPItem::RENDERING_BBOX);
+        base->invoke_bbox( &d, base->i2d_affine(), TRUE, SPItem::RENDERING_BBOX);
     }
 
     if (ctx->_vector_based_target) {
@@ -632,7 +633,7 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool page
 
     if (ret && !pageBoundingBox)
     {
-        double high = sp_document_height(doc);
+        double high = doc->getHeight();
         if (ctx->_vector_based_target)
             high *= PT_PER_PX;
 
@@ -672,7 +673,7 @@ CairoRenderer::applyClipPath(CairoRenderContext *ctx, SPClipPath const *cp)
 
     TRACE(("BEGIN clip\n"));
     SPObject *co = SP_OBJECT(cp);
-    for (SPObject *child = sp_object_first_child(co) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+    for ( SPObject *child = co->firstChild() ; child; child = child->getNext() ) {
         if (SP_IS_ITEM(child)) {
             SPItem *item = SP_ITEM(child);
 
@@ -730,7 +731,7 @@ CairoRenderer::applyMask(CairoRenderContext *ctx, SPMask const *mask)
 
     TRACE(("BEGIN mask\n"));
     SPObject *co = SP_OBJECT(mask);
-    for (SPObject *child = sp_object_first_child(co) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+    for ( SPObject *child = co->firstChild() ; child; child = child->getNext() ) {
         if (SP_IS_ITEM(child)) {
             SPItem *item = SP_ITEM(child);
             renderItem(ctx, item);

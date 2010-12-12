@@ -1,5 +1,3 @@
-#define __SP_DESKTOP_C__
-
 /** \file
  * Editable view implementation
  *
@@ -10,6 +8,8 @@
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *   John Bintz <jcoswell@coswellproductions.org>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 Jon A. Cruz
  * Copyright (C) 2006-2008 Johan Engelen
@@ -90,6 +90,7 @@
 #include "display/canvas-grid.h"
 #include "widgets/desktop-widget.h"
 #include "box3d-context.h"
+#include "desktop-style.h"
 
 // TODO those includes are only for node tool quick zoom. Remove them after fixing it.
 #include "ui/tool/node-tool.h"
@@ -185,12 +186,12 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
 
     SPDocument *document = SP_OBJECT_DOCUMENT (namedview);
     /* Kill flicker */
-    sp_document_ensure_up_to_date (document);
+    document->ensureUpToDate();
 
     /* Setup Dialog Manager */
     _dlg_mgr = &Inkscape::UI::Dialog::DialogManager::getInstance();
 
-    dkey = sp_item_display_key_new (1);
+    dkey = SPItem::display_key_new(1);
 
     /* Connect document */
     setDocument (document);
@@ -255,7 +256,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
     // display rect and zoom are now handled in sp_desktop_widget_realize()
 
     Geom::Rect const d(Geom::Point(0.0, 0.0),
-                       Geom::Point(sp_document_width(document), sp_document_height(document)));
+                       Geom::Point(document->getWidth(), document->getHeight()));
 
     SP_CTRLRECT(page)->setRectangle(d);
     SP_CTRLRECT(page_border)->setRectangle(d);
@@ -272,12 +273,12 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
 
 
     /* Connect event for page resize */
-    _doc2dt[5] = sp_document_height (document);
+    _doc2dt[5] = document->getHeight();
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (drawing), _doc2dt);
 
     _modified_connection = namedview->connectModified(sigc::bind<2>(sigc::ptr_fun(&_namedview_modified), this));
 
-    NRArenaItem *ai = sp_item_invoke_show (SP_ITEM (sp_document_root (document)),
+    NRArenaItem *ai = SP_ITEM(document->getRoot())->invoke_show(
             SP_CANVAS_ARENA (drawing)->arena,
             dkey,
             SP_ITEM_SHOW_DISPLAY);
@@ -394,7 +395,7 @@ void SPDesktop::destroy()
     }
 
     if (drawing) {
-        sp_item_invoke_hide (SP_ITEM (sp_document_root (doc())), dkey);
+        SP_ITEM(doc()->getRoot())->invoke_hide(dkey);
         drawing = NULL;
     }
 
@@ -450,7 +451,7 @@ void SPDesktop::_setDisplayMode(Inkscape::RenderMode mode) {
     canvas->rendermode = mode;
     _display_mode = mode;
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (main), _d2w); // redraw
-    _widget->setTitle(SP_DOCUMENT_NAME(sp_desktop_document(this)));
+    _widget->setTitle( sp_desktop_document(this)->getName() );
 }
 
 void SPDesktop::displayModeToggle() {
@@ -494,7 +495,7 @@ SPObject *SPDesktop::currentLayer() const
 void SPDesktop::setCurrentLayer(SPObject *object) {
     g_return_if_fail(SP_IS_GROUP(object));
     g_return_if_fail( currentRoot() == object || (currentRoot() && currentRoot()->isAncestorOf(object)) );
-    // printf("Set Layer to ID: %s\n", SP_OBJECT_ID(object));
+    // printf("Set Layer to ID: %s\n", object->getId());
     _layer_hierarchy->setBottom(object);
 }
 
@@ -552,7 +553,7 @@ bool SPDesktop::isLayer(SPObject *object) const {
 bool SPDesktop::isWithinViewport (SPItem *item) const
 {
     Geom::Rect const viewport = get_display_area();
-    Geom::OptRect const bbox = sp_item_bbox_desktop(item);
+    Geom::OptRect const bbox = item->getBboxDesktop();
     if (bbox) {
         return viewport.contains(*bbox);
     } else {
@@ -684,33 +685,30 @@ SPDesktop::set_coordinate_status (Geom::Point p) {
 }
 
 /**
- * \see sp_document_item_from_list_at_point_bottom()
+ * \see SPDocument::getItemFromListAtPointBottom()
  */
-SPItem *
-SPDesktop::item_from_list_at_point_bottom (const GSList *list, Geom::Point const p) const
+SPItem *SPDesktop::getItemFromListAtPointBottom(const GSList *list, Geom::Point const p) const
 {
     g_return_val_if_fail (doc() != NULL, NULL);
-    return sp_document_item_from_list_at_point_bottom (dkey, SP_GROUP (doc()->root), list, p);
+    return SPDocument::getItemFromListAtPointBottom(dkey, SP_GROUP (doc()->root), list, p);
 }
 
 /**
- * \see sp_document_item_at_point()
+ * \see SPDocument::getItemAtPoint()
  */
-SPItem *
-SPDesktop::item_at_point (Geom::Point const p, bool into_groups, SPItem *upto) const
+SPItem *SPDesktop::getItemAtPoint(Geom::Point const p, bool into_groups, SPItem *upto) const
 {
     g_return_val_if_fail (doc() != NULL, NULL);
-    return sp_document_item_at_point (doc(), dkey, p, into_groups, upto);
+    return doc()->getItemAtPoint( dkey, p, into_groups, upto);
 }
 
 /**
- * \see sp_document_group_at_point()
+ * \see SPDocument::getGroupAtPoint()
  */
-SPItem *
-SPDesktop::group_at_point (Geom::Point const p) const
+SPItem *SPDesktop::getGroupAtPoint(Geom::Point const p) const
 {
     g_return_val_if_fail (doc() != NULL, NULL);
-    return sp_document_group_at_point (doc(), dkey, p);
+    return doc()->getGroupAtPoint(dkey, p);
 }
 
 /**
@@ -967,6 +965,26 @@ SPDesktop::zoom_absolute_keep_point (double cx, double cy, double px, double py,
 }
 
 /**
+  * Apply the desktop's current style or the tool style to the object.
+  */
+void SPDesktop::applyCurrentOrToolStyle(SPObject *obj, Glib::ustring const &tool_path, bool with_text)
+{
+    SPCSSAttr *css_current = sp_desktop_get_style(this, with_text);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+    if (prefs->getBool(tool_path + "/usecurrent") && css_current) {
+        obj->setCSS(css_current,"style");
+    } else {
+        SPCSSAttr *css = prefs->getInheritedStyle(tool_path + "/style");
+        obj->setCSS(css,"style");
+        sp_repr_css_attr_unref(css);
+    }
+    if (css_current) {
+        sp_repr_css_attr_unref(css_current);
+    }
+}
+
+/**
  * Zoom to center with absolute zoom factor.
  */
 void
@@ -1020,7 +1038,7 @@ void
 SPDesktop::zoom_page()
 {
     Geom::Rect d(Geom::Point(0, 0),
-                 Geom::Point(sp_document_width(doc()), sp_document_height(doc())));
+                 Geom::Point(doc()->getWidth(), doc()->getHeight()));
 
     if (d.minExtent() < 1.0) {
         return;
@@ -1037,12 +1055,12 @@ SPDesktop::zoom_page_width()
 {
     Geom::Rect const a = get_display_area();
 
-    if (sp_document_width(doc()) < 1.0) {
+    if (doc()->getWidth() < 1.0) {
         return;
     }
 
     Geom::Rect d(Geom::Point(0, a.midpoint()[Geom::Y]),
-                 Geom::Point(sp_document_width(doc()), a.midpoint()[Geom::Y]));
+                 Geom::Point(doc()->getWidth(), a.midpoint()[Geom::Y]));
 
     set_display_area(d, 10);
 }
@@ -1078,10 +1096,10 @@ void
 SPDesktop::zoom_drawing()
 {
     g_return_if_fail (doc() != NULL);
-    SPItem *docitem = SP_ITEM (sp_document_root (doc()));
+    SPItem *docitem = SP_ITEM(doc()->getRoot());
     g_return_if_fail (docitem != NULL);
 
-    Geom::OptRect d = sp_item_bbox_desktop(docitem);
+    Geom::OptRect d = docitem->getBboxDesktop();
 
     /* Note that the second condition here indicates that
     ** there are no items in the drawing.
@@ -1416,8 +1434,7 @@ void SPDesktop::toggleGrids()
         }
     } else {
         //there is no grid present at the moment. add a rectangular grid and make it visible
-        Inkscape::XML::Node *repr = SP_OBJECT_REPR(namedview);
-        Inkscape::CanvasGrid::writeNewGridToRepr(repr, sp_desktop_document(this), Inkscape::GRID_RECTANGULAR);
+        namedview->writeNewGrid(sp_desktop_document(this), Inkscape::GRID_RECTANGULAR);
         showGrids(true);
     }
 }
@@ -1435,9 +1452,8 @@ void SPDesktop::showGrids(bool show, bool dirty_document)
 
 void SPDesktop::toggleSnapGlobal()
 {
-    bool v = namedview->snap_manager.snapprefs.getSnapEnabledGlobally();
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(namedview);
-    sp_repr_set_boolean(repr, "inkscape:snap-global", !v);
+    bool v = namedview->getSnapGlobal();
+    namedview->setSnapGlobal(!v);
 }
 
 //----------------------------------------------------------------------
@@ -1480,7 +1496,7 @@ SPDesktop::setDocument (SPDocument *doc)
 {
     if (this->doc() && doc) {
         namedview->hide(this);
-        sp_item_invoke_hide (SP_ITEM (sp_document_root (this->doc())), dkey);
+        SP_ITEM(this->doc()->getRoot())->invoke_hide(dkey);
     }
 
     if (_layer_hierarchy) {
@@ -1491,7 +1507,7 @@ SPDesktop::setDocument (SPDocument *doc)
     _layer_hierarchy->connectAdded(sigc::bind(sigc::ptr_fun(_layer_activated), this));
     _layer_hierarchy->connectRemoved(sigc::bind(sigc::ptr_fun(_layer_deactivated), this));
     _layer_hierarchy->connectChanged(sigc::bind(sigc::ptr_fun(_layer_hierarchy_changed), this));
-    _layer_hierarchy->setTop(SP_DOCUMENT_ROOT(doc));
+    _layer_hierarchy->setTop(doc->getRoot());
 
     /* setup EventLog */
     event_log = new Inkscape::EventLog(doc);
@@ -1511,7 +1527,7 @@ SPDesktop::setDocument (SPDocument *doc)
         _modified_connection = namedview->connectModified(sigc::bind<2>(sigc::ptr_fun(&_namedview_modified), this));
         number = namedview->getViewCount();
 
-        ai = sp_item_invoke_show (SP_ITEM (sp_document_root (doc)),
+        ai = SP_ITEM(doc->getRoot())->invoke_show(
                 SP_CANVAS_ARENA (drawing)->arena,
                 dkey,
                 SP_ITEM_SHOW_DISPLAY);

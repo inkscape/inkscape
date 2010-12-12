@@ -1,11 +1,10 @@
-#define __SELCUE_C__
-
 /*
  * Helper object for showing selected items
  *
  * Authors:
  *   bulia byak <bulia@users.sf.net>
  *   Carl Hetherington <inkscape@carlh.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 Authors
  *
@@ -84,7 +83,7 @@ void Inkscape::SelCue::_updateItemBboxes()
         SPCanvasItem* box = _item_bboxes[bcount ++];
 
         if (box) {
-            Geom::OptRect const b = sp_item_bbox_desktop(item, bbox_type);
+            Geom::OptRect const b = item->getBboxDesktop(bbox_type);
 
             if (b) {
                 sp_canvas_item_show(box);
@@ -125,7 +124,7 @@ void Inkscape::SelCue::_newItemBboxes()
     for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {
         SPItem *item = (SPItem *) l->data;
 
-        Geom::OptRect const b = sp_item_bbox_desktop(item, bbox_type);
+        Geom::OptRect const b = item->getBboxDesktop(bbox_type);
 
         SPCanvasItem* box = NULL;
 
@@ -192,7 +191,7 @@ void Inkscape::SelCue::_newTextBaselines()
                         NULL);
 
                     sp_canvas_item_show(baseline_point);
-                    SP_CTRL(baseline_point)->moveto((*pt) * sp_item_i2d_affine(item));
+                    SP_CTRL(baseline_point)->moveto((*pt) * item->i2d_affine());
                     sp_canvas_item_move_to_z(baseline_point, 0);
                 }
             }

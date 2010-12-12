@@ -1,5 +1,3 @@
-#define __SP_SPIRAL_C__
-
 /** \file
  * <sodipodi:spiral> implementation
  */
@@ -7,6 +5,7 @@
  * Authors:
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -129,13 +128,13 @@ sp_spiral_build (SPObject * object, SPDocument * document, Inkscape::XML::Node *
     if (((SPObjectClass *) parent_class)->build)
         ((SPObjectClass *) parent_class)->build (object, document, repr);
 
-    sp_object_read_attr (object, "sodipodi:cx");
-    sp_object_read_attr (object, "sodipodi:cy");
-    sp_object_read_attr (object, "sodipodi:expansion");
-    sp_object_read_attr (object, "sodipodi:revolution");
-    sp_object_read_attr (object, "sodipodi:radius");
-    sp_object_read_attr (object, "sodipodi:argument");
-    sp_object_read_attr (object, "sodipodi:t0");
+    object->readAttr( "sodipodi:cx" );
+    object->readAttr( "sodipodi:cy" );
+    object->readAttr( "sodipodi:expansion" );
+    object->readAttr( "sodipodi:revolution" );
+    object->readAttr( "sodipodi:radius" );
+    object->readAttr( "sodipodi:argument" );
+    object->readAttr( "sodipodi:t0" );
 }
 
 /**
@@ -287,7 +286,7 @@ static void
 sp_spiral_update (SPObject *object, SPCtx *ctx, guint flags)
 {
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        sp_shape_set_shape ((SPShape *) object);
+        ((SPShape *) object)->setShape ();
     }
 
     if (((SPObjectClass *) parent_class)->update)
@@ -427,7 +426,7 @@ sp_spiral_set_shape (SPShape *shape)
             // unconditionally read the curve from d, if any, to preserve appearance
             Geom::PathVector pv = sp_svg_read_pathv(SP_OBJECT_REPR(shape)->attribute("d"));
             SPCurve *cold = new SPCurve(pv);
-            sp_shape_set_curve_insync (shape, cold, TRUE);
+            shape->setCurveInsync( cold, TRUE);
             cold->unref();
         }
         return;
@@ -470,12 +469,12 @@ sp_spiral_set_shape (SPShape *shape)
 
     /* Reset the shape'scurve to the "original_curve"
      * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
-    sp_shape_set_curve_insync (shape, c, TRUE);
+    shape->setCurveInsync( c, TRUE);
     if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(shape)) && sp_lpe_item_path_effects_enabled(SP_LPE_ITEM(shape))) {
         SPCurve *c_lpe = c->copy();
         bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM (shape), c_lpe);
         if (success) {
-            sp_shape_set_curve_insync (shape, c_lpe, TRUE);
+            shape->setCurveInsync( c_lpe, TRUE);
         }
         c_lpe->unref();
     }
@@ -533,7 +532,7 @@ static void sp_spiral_snappoints(SPItem const *item, std::vector<Inkscape::SnapC
     }
 
     if (snapprefs->getSnapObjectMidpoints()) {
-        Geom::Matrix const i2d (sp_item_i2d_affine (item));
+        Geom::Matrix const i2d (item->i2d_affine ());
         SPSpiral *spiral = SP_SPIRAL(item);
         p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(spiral->cx, spiral->cy) * i2d, Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
         // This point is the start-point of the spiral, which is also returned when _snap_to_itemnode has been set

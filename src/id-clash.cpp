@@ -1,9 +1,10 @@
-#define __ID_CLASH_C__
 /** \file
  * Routines for resolving ID clashes when importing or pasting.
  *
  * Authors:
  *   Stephen Silver <sasilver@users.sourceforge.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2008 authors
  *
@@ -164,9 +165,8 @@ find_references(SPObject *elem, refmap_type *refmap)
         }
     }
     
-    /* recurse */
-    for (SPObject *child = sp_object_first_child(elem);
-         child; child = SP_OBJECT_NEXT(child) )
+    // recurse
+    for (SPObject *child = elem->firstChild(); child; child = child->getNext() )
     {
         find_references(child, refmap);
     }
@@ -203,9 +203,8 @@ change_clashing_ids(SPDocument *imported_doc, SPDocument *current_doc,
             id_changes->push_back(id_changeitem_type(elem, old_id));
     }
 
-    /* recurse */
-    for (SPObject *child = sp_object_first_child(elem);
-         child; child = SP_OBJECT_NEXT(child) )
+    // recurse
+    for (SPObject *child = elem->firstChild(); child; child = child->getNext() )
     {
         change_clashing_ids(imported_doc, current_doc, child, refmap, id_changes);
     }
@@ -263,7 +262,7 @@ prevent_id_clashes(SPDocument *imported_doc, SPDocument *current_doc)
 {
     refmap_type *refmap = new refmap_type;
     id_changelist_type id_changes;
-    SPObject *imported_root = SP_DOCUMENT_ROOT(imported_doc);
+    SPObject *imported_root = imported_doc->getRoot();
         
     find_references(imported_root, refmap);
     change_clashing_ids(imported_doc, current_doc, imported_root, refmap,

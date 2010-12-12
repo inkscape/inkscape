@@ -4,6 +4,7 @@
  *
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de> 
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Authors
  *
@@ -186,11 +187,11 @@ ToleranceSlider::update (double val)
     _wr->setUpdating (true);
 
     SPDocument *doc = sp_desktop_document(dt);
-    bool saved = sp_document_get_undo_sensitive (doc);
-    sp_document_set_undo_sensitive (doc, false);
+    bool saved = DocumentUndo::getUndoSensitive(doc);
+    DocumentUndo::setUndoSensitive(doc, false);
     Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     repr->setAttribute(_key.c_str(), os.str().c_str());
-    sp_document_set_undo_sensitive (doc, saved);
+    DocumentUndo::setUndoSensitive(doc, saved);
 
     doc->setModifiedSinceSave();
     

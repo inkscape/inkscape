@@ -5,6 +5,8 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2007 Authors
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -65,6 +67,8 @@
 #include <commdlg.h>
 #include <gdk/gdkwin32.h>
 #endif
+
+using Inkscape::DocumentUndo;
 
 #define SP_EXPORT_MIN_SIZE 1.0
 
@@ -362,9 +366,9 @@ gchar* create_filepath_from_id (const gchar *id, const gchar *file_entry_text) {
 
     if (directory == NULL) {
         /* Grab document directory */
-        if (SP_DOCUMENT_URI(SP_ACTIVE_DOCUMENT)) {
+        if ( SP_ACTIVE_DOCUMENT->getURI() ) {
             // std::cout << "Directory from document" << std::endl;
-            directory = g_dirname(SP_DOCUMENT_URI(SP_ACTIVE_DOCUMENT));
+            directory = g_dirname( SP_ACTIVE_DOCUMENT->getURI() );
         }
     }
 
@@ -535,11 +539,11 @@ sp_export_dialog (void)
              * this code sets the name first, it may not be the one users
              * really see.
              */
-            if (SP_ACTIVE_DOCUMENT && SP_DOCUMENT_URI (SP_ACTIVE_DOCUMENT))
+            if ( SP_ACTIVE_DOCUMENT && SP_ACTIVE_DOCUMENT->getURI() )
             {
                 gchar *name;
                 SPDocument * doc = SP_ACTIVE_DOCUMENT;
-                const gchar *uri = SP_DOCUMENT_URI (doc);
+                const gchar *uri = doc->getURI();
                 const gchar *text_extension = get_file_save_extension (Inkscape::Extension::FILE_SAVE_METHOD_SAVE_AS).c_str();
                 Inkscape::Extension::Output * oextension = NULL;
 
@@ -780,7 +784,7 @@ sp_export_selection_modified ( Inkscape::Application */*inkscape*/,
             if ( SP_ACTIVE_DESKTOP ) {
                 SPDocument *doc;
                 doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
-                Geom::OptRect bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)), SPItem::RENDERING_BBOX);
+                Geom::OptRect bbox = SP_ITEM(doc->root)->getBboxDesktop(SPItem::RENDERING_BBOX);
                 if (bbox) {
                     sp_export_set_area (base, bbox->min()[Geom::X],
                                               bbox->min()[Geom::Y],
@@ -861,7 +865,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                 /** \todo
                  * This returns wrong values if the document has a viewBox.
                  */
-                bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)), SPItem::RENDERING_BBOX);
+                bbox = SP_ITEM(doc->root)->getBboxDesktop(SPItem::RENDERING_BBOX);
                 /* If the drawing is valid, then we'll use it and break
                    otherwise we drop through to the page settings */
                 if (bbox) {
@@ -871,7 +875,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                 }
             case SELECTION_PAGE:
                 bbox = Geom::Rect(Geom::Point(0.0, 0.0),
-                                  Geom::Point(sp_document_width(doc), sp_document_height(doc)));
+                                  Geom::Point(doc->getWidth(), doc->getHeight()));
 
                 // std::cout << "Using selection: PAGE" << std::endl;
                 key = SELECTION_PAGE;
@@ -1064,8 +1068,8 @@ gchar *absolutize_path_from_document_location (SPDocument *doc, const gchar *fil
 {
     gchar *path = 0;
     //Make relative paths go from the document location, if possible:
-    if (!g_path_is_absolute(filename) && doc->uri) {
-        gchar *dirname = g_path_get_dirname(doc->uri);
+    if (!g_path_is_absolute(filename) && doc->getURI()) {
+        gchar *dirname = g_path_get_dirname(doc->getURI());
         if (dirname) {
             path = g_build_filename(dirname, filename, NULL);
             g_free(dirname);
@@ -1105,10 +1109,10 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
         for (GSList *i = (GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
              i != NULL;
              i = i->next) {
-            SPItem *item = (SPItem *) i->data;
+            SPItem *item = reinterpret_cast<SPItem *>(i->data);
 
             // retrieve export filename hint
-            const gchar *filename = SP_OBJECT_REPR(item)->attribute("inkscape:export-filename");
+            const gchar *filename = item->getRepr()->attribute("inkscape:export-filename");
             gchar *path = 0;
             if (!filename) {
                 path = create_filepath_from_id(item->getId(), NULL);
@@ -1117,7 +1121,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
             }
 
             // retrieve export dpi hints
-            const gchar *dpi_hint = SP_OBJECT_REPR(item)->attribute("inkscape:export-xdpi"); // only xdpi, ydpi is always the same now
+            const gchar *dpi_hint = item->getRepr()->attribute("inkscape:export-xdpi"); // only xdpi, ydpi is always the same now
             gdouble dpi = 0.0;
             if (dpi_hint) {
                 dpi = atof(dpi_hint);
@@ -1127,7 +1131,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
             }
 
             Geom::OptRect area;
-            sp_item_invoke_bbox(item, area, sp_item_i2d_affine((SPItem *) item), TRUE);
+            item->invoke_bbox( area, item->i2d_affine(), TRUE );
             if (area) {
                 gint width = (gint) (area->width() * dpi / PX_PER_IN + 0.5);
                 gint height = (gint) (area->height() * dpi / PX_PER_IN + 0.5);
@@ -1239,14 +1243,13 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
         case SELECTION_PAGE:
         case SELECTION_DRAWING: {
             SPDocument * doc = SP_ACTIVE_DOCUMENT;
-            Inkscape::XML::Node * repr = sp_document_repr_root(doc);
+            Inkscape::XML::Node * repr = doc->getReprRoot();
             bool modified = false;
-            const gchar * temp_string;
 
-            bool saved = sp_document_get_undo_sensitive(doc);
-            sp_document_set_undo_sensitive(doc, false);
+            bool saved = DocumentUndo::getUndoSensitive(doc);
+            DocumentUndo::setUndoSensitive(doc, false);
 
-            temp_string = repr->attribute("inkscape:export-filename");
+            gchar const *temp_string = repr->attribute("inkscape:export-filename");
             if (temp_string == NULL || strcmp(temp_string, filename_ext)) {
                 repr->setAttribute("inkscape:export-filename", filename_ext);
                 modified = true;
@@ -1261,7 +1264,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
                 sp_repr_set_svg_double(repr, "inkscape:export-ydpi", ydpi);
                 modified = true;
             }
-            sp_document_set_undo_sensitive(doc, saved);
+            DocumentUndo::setUndoSensitive(doc, saved);
 
             if (modified) {
                 doc->setModifiedSinceSave();
@@ -1273,8 +1276,8 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
             SPDocument * doc = SP_ACTIVE_DOCUMENT;
             bool modified = false;
 
-            bool saved = sp_document_get_undo_sensitive(doc);
-            sp_document_set_undo_sensitive(doc, false);
+            bool saved = DocumentUndo::getUndoSensitive(doc);
+            DocumentUndo::setUndoSensitive(doc, false);
             reprlst = sp_desktop_selection(SP_ACTIVE_DESKTOP)->reprList();
 
             for(; reprlst != NULL; reprlst = reprlst->next) {
@@ -1283,8 +1286,8 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
 
                 if (repr->attribute("id") == NULL ||
                         !(g_strrstr(filename_ext, repr->attribute("id")) != NULL &&
-                          (!SP_DOCUMENT_URI(SP_ACTIVE_DOCUMENT) ||
-                            strcmp(g_dirname(filename), g_dirname(SP_DOCUMENT_URI(SP_ACTIVE_DOCUMENT))) == 0))) {
+                          ( !SP_ACTIVE_DOCUMENT->getURI() ||
+                            strcmp(g_dirname(filename), g_dirname(SP_ACTIVE_DOCUMENT->getURI())) == 0))) {
                     temp_string = repr->attribute("inkscape:export-filename");
                     if (temp_string == NULL || strcmp(temp_string, filename_ext)) {
                         repr->setAttribute("inkscape:export-filename", filename_ext);
@@ -1302,7 +1305,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
                     modified = true;
                 }
             }
-            sp_document_set_undo_sensitive(doc, saved);
+            DocumentUndo::setUndoSensitive(doc, saved);
 
             if (modified) {
                 doc->setModifiedSinceSave();
@@ -1498,7 +1501,7 @@ sp_export_detect_size(GtkObject * base) {
             case SELECTION_DRAWING: {
                 SPDocument *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
-                Geom::OptRect bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)), SPItem::RENDERING_BBOX);
+                Geom::OptRect bbox = SP_ITEM(doc->root)->getBboxDesktop(SPItem::RENDERING_BBOX);
 
                 // std::cout << "Drawing " << bbox2;
                 if ( bbox && sp_export_bbox_equal(*bbox,current_bbox) ) {
@@ -1513,8 +1516,8 @@ sp_export_detect_size(GtkObject * base) {
                 doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
                 Geom::Point x(0.0, 0.0);
-                Geom::Point y(sp_document_width(doc),
-                              sp_document_height(doc));
+                Geom::Point y(doc->getWidth(),
+                              doc->getHeight());
                 Geom::Rect bbox(x, y);
 
                 // std::cout << "Page " << bbox;

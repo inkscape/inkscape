@@ -3,6 +3,8 @@
  */
 /* Authors:
  *   bulia byak
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2005 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -31,7 +33,7 @@ unclump_center (SPItem *item)
         return i->second;
     }
 
-    Geom::OptRect r = item->getBounds(sp_item_i2d_affine(item));
+    Geom::OptRect r = item->getBounds(item->i2d_affine());
     if (r) {
         Geom::Point const c = r->midpoint();
         c_cache[item->getId()] = c;
@@ -50,7 +52,7 @@ unclump_wh (SPItem *item)
     if ( i != wh_cache.end() ) {
         wh = i->second;
     } else {
-        Geom::OptRect r = item->getBounds(sp_item_i2d_affine(item));
+        Geom::OptRect r = item->getBounds(item->i2d_affine());
         if (r) {
             wh = r->dimensions();
             wh_cache[item->getId()] = wh;
@@ -292,10 +294,10 @@ unclump_push (SPItem *from, SPItem *what, double dist)
         i->second *= move;
     }
 
-    //g_print ("push %s at %g,%g from %g,%g by %g,%g, dist %g\n", SP_OBJECT_ID(what), it[Geom::X],it[Geom::Y], p[Geom::X],p[Geom::Y], by[Geom::X],by[Geom::Y], dist);
+    //g_print ("push %s at %g,%g from %g,%g by %g,%g, dist %g\n", what->getId(), it[Geom::X],it[Geom::Y], p[Geom::X],p[Geom::Y], by[Geom::X],by[Geom::Y], dist);
 
-    sp_item_set_i2d_affine(what, sp_item_i2d_affine(what) * move);
-    sp_item_write_transform(what, SP_OBJECT_REPR(what), what->transform, NULL);
+    what->set_i2d_affine(what->i2d_affine() * move);
+    what->doWriteTransform(SP_OBJECT_REPR(what), what->transform, NULL);
 }
 
 /**
@@ -315,10 +317,10 @@ unclump_pull (SPItem *to, SPItem *what, double dist)
         i->second *= move;
     }
 
-    //g_print ("pull %s at %g,%g to %g,%g by %g,%g, dist %g\n", SP_OBJECT_ID(what), it[Geom::X],it[Geom::Y], p[Geom::X],p[Geom::Y], by[Geom::X],by[Geom::Y], dist);
+    //g_print ("pull %s at %g,%g to %g,%g by %g,%g, dist %g\n", what->getId(), it[Geom::X],it[Geom::Y], p[Geom::X],p[Geom::Y], by[Geom::X],by[Geom::Y], dist);
 
-    sp_item_set_i2d_affine(what, sp_item_i2d_affine(what) * move);
-    sp_item_write_transform(what, SP_OBJECT_REPR(what), what->transform, NULL);
+    what->set_i2d_affine(what->i2d_affine() * move);
+    what->doWriteTransform(SP_OBJECT_REPR(what), what->transform, NULL);
 }
 
 
@@ -364,7 +366,7 @@ unclump (GSList *items)
             double dist_closest = unclump_dist (closest, item);
             double dist_farest = unclump_dist (farest, item);
 
-            //g_print ("NEI %d for item %s    closest %s at %g  farest %s at %g  ave %g\n", g_slist_length(nei), SP_OBJECT_ID(item), SP_OBJECT_ID(closest), dist_closest, SP_OBJECT_ID(farest), dist_farest, ave);
+            //g_print ("NEI %d for item %s    closest %s at %g  farest %s at %g  ave %g\n", g_slist_length(nei), item->getId(), closest->getId(), dist_closest, farest->getId(), dist_farest, ave);
 
             if (fabs (ave) < 1e6 && fabs (dist_closest) < 1e6 && fabs (dist_farest) < 1e6) { // otherwise the items are bogus
                 // increase these coefficients to make unclumping more aggressive and less stable

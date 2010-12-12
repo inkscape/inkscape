@@ -1,11 +1,10 @@
-#define __SP_DOCUMENT_UNDO_C__
-
 /** \file
  * Undo/Redo stack implementation
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   MenTaLguY <mental@rydia.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007  MenTaLguY <mental@rydia.net>
  * Copyright (C) 1999-2003 authors
@@ -23,8 +22,8 @@
  * stack. Two methods exist to indicate that the given action is completed:
  *
  * \verbatim
-   void sp_document_done (SPDocument *document);
-   void sp_document_maybe_done (SPDocument *document, const unsigned char *key) \endverbatim
+   void sp_document_done( SPDocument *document );
+   void sp_document_maybe_done( SPDocument *document, const unsigned char *key ) \endverbatim
  *
  * Both move the recent action list into the undo stack and clear the
  * list afterwards.  While the first method does an unconditional push,
@@ -63,6 +62,7 @@
 #include "xml/repr.h"
 #include "document-private.h"
 #include "inkscape.h"
+#include "document-undo.h"
 #include "debug/event-tracker.h"
 #include "debug/simple-event.h"
 #include "debug/timestamp.h"
@@ -72,20 +72,8 @@
 /*
  * Undo & redo
  */
-/**
- * Set undo sensitivity.
- *
- * \note
- *   Since undo sensitivity needs to be nested, setting undo sensitivity
- *   should be done like this:
- *\verbatim
-        bool saved = sp_document_get_undo_sensitive(document);
-        sp_document_set_undo_sensitive(document, false);
-        ... do stuff ...
-        sp_document_set_undo_sensitive(document, saved);  \endverbatim
- */
-void
-sp_document_set_undo_sensitive (SPDocument *doc, bool sensitive)
+
+void Inkscape::DocumentUndo::setUndoSensitive(SPDocument *doc, bool sensitive)
 {
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
@@ -112,20 +100,19 @@ sp_document_set_undo_sensitive (SPDocument *doc, bool sensitive)
  * the saved bools in a stack.  Perhaps this is why the above solution is better.
  */
 
-bool sp_document_get_undo_sensitive(SPDocument const *document) {
+bool Inkscape::DocumentUndo::getUndoSensitive(SPDocument const *document) {
 	g_assert(document != NULL);
 	g_assert(document->priv != NULL);
 
 	return document->priv->sensitive;
 }
 
-void
-sp_document_done (SPDocument *doc, const unsigned int event_type, Glib::ustring event_description)
+void Inkscape::DocumentUndo::done(SPDocument *doc, const unsigned int event_type, Glib::ustring const &event_description)
 {
-        sp_document_maybe_done (doc, NULL, event_type, event_description);
+    maybeDone(doc, NULL, event_type, event_description);
 }
 
-void sp_document_reset_key( Inkscape::Application * /*inkscape*/, SPDesktop * /*desktop*/, GtkObject *base )
+void Inkscape::DocumentUndo::resetKey( Inkscape::Application * /*inkscape*/, SPDesktop * /*desktop*/, GtkObject *base )
 {
     SPDocument *doc = reinterpret_cast<SPDocument *>(base);
     doc->actionkey.clear();
@@ -163,9 +150,8 @@ public:
 
 }
 
-void
-sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int event_type,
-                        Glib::ustring event_description)
+void Inkscape::DocumentUndo::maybeDone(SPDocument *doc, const gchar *key, const unsigned int event_type,
+                                       Glib::ustring const &event_description)
 {
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
@@ -178,9 +164,9 @@ sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int ev
 
 	doc->collectOrphans();
 
-	sp_document_ensure_up_to_date (doc);
+	doc->ensureUpToDate();
 
-	sp_document_clear_redo (doc);
+	DocumentUndo::clearRedo(doc);
 
 	Inkscape::XML::Event *log = sp_repr_coalesce_log (doc->priv->partial, sp_repr_commit_undoable (doc->rdoc));
 	doc->priv->partial = NULL;
@@ -214,8 +200,7 @@ sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int ev
   doc->priv->commit_signal.emit();
 }
 
-void
-sp_document_cancel (SPDocument *doc)
+void Inkscape::DocumentUndo::cancel(SPDocument *doc)
 {
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
@@ -246,8 +231,7 @@ static void finish_incomplete_transaction(SPDocument &doc) {
 	}
 }
 
-gboolean
-sp_document_undo (SPDocument *doc)
+gboolean Inkscape::DocumentUndo::undo(SPDocument *doc)
 {
 	using Inkscape::Debug::EventTracker;
 	using Inkscape::Debug::SimpleEvent;
@@ -292,8 +276,7 @@ sp_document_undo (SPDocument *doc)
 	return ret;
 }
 
-gboolean
-sp_document_redo (SPDocument *doc)
+gboolean Inkscape::DocumentUndo::redo(SPDocument *doc)
 {
 	using Inkscape::Debug::EventTracker;
 	using Inkscape::Debug::SimpleEvent;
@@ -338,8 +321,7 @@ sp_document_redo (SPDocument *doc)
 	return ret;
 }
 
-void
-sp_document_clear_undo (SPDocument *doc)
+void Inkscape::DocumentUndo::clearUndo(SPDocument *doc)
 {
         if (doc->priv->undo)
                 doc->priv->undoStackObservers.notifyClearUndoEvent();
@@ -356,8 +338,7 @@ sp_document_clear_undo (SPDocument *doc)
 	}
 }
 
-void
-sp_document_clear_redo (SPDocument *doc)
+void Inkscape::DocumentUndo::clearRedo(SPDocument *doc)
 {
         if (doc->priv->redo)
                 doc->priv->undoStackObservers.notifyClearRedoEvent();

@@ -1,11 +1,10 @@
-#define __SP_PATH_C__
-
 /*
  * SVG <path> implementation
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   David Turner <novalis@gnu.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 David Turner
  * Copyright (C) 1999-2002 Lauris Kaplinski
@@ -171,7 +170,7 @@ sp_path_convert_to_guides(SPItem *item)
 
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
-    Geom::Matrix const i2d (sp_item_i2d_affine(SP_ITEM(path)));
+    Geom::Matrix const i2d (SP_ITEM(path)->i2d_affine());
 
     Geom::PathVector const & pv = curve->get_pathvector();
     for(Geom::PathVector::const_iterator pit = pv.begin(); pit != pv.end(); ++pit) {
@@ -214,10 +213,10 @@ static void
 sp_path_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     /* Are these calls actually necessary? */
-    sp_object_read_attr(object, "marker");
-    sp_object_read_attr(object, "marker-start");
-    sp_object_read_attr(object, "marker-mid");
-    sp_object_read_attr(object, "marker-end");
+    object->readAttr( "marker" );
+    object->readAttr( "marker-start" );
+    object->readAttr( "marker-mid" );
+    object->readAttr( "marker-end" );
 
     sp_conn_end_pair_build(object);
 
@@ -225,13 +224,13 @@ sp_path_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
         ((SPObjectClass *) parent_class)->build(object, document, repr);
     }
 
-    sp_object_read_attr(object, "inkscape:original-d");
-    sp_object_read_attr(object, "d");
+    object->readAttr( "inkscape:original-d" );
+    object->readAttr( "d" );
 
     /* d is a required attribute */
-    gchar const *d = sp_object_getAttribute(object, "d", NULL);
+    gchar const *d = object->getAttribute("d", NULL);
     if (d == NULL) {
-        sp_object_set(object, sp_attribute_lookup("d"), "");
+        object->setKeyValue( sp_attribute_lookup("d"), "");
     }
 }
 
@@ -279,11 +278,11 @@ sp_path_set(SPObject *object, unsigned int key, gchar const *value)
                     Geom::PathVector pv = sp_svg_read_pathv(value);
                     SPCurve *curve = new SPCurve(pv);
                     if (curve) {
-                        sp_shape_set_curve((SPShape *) path, curve, TRUE);
+                        ((SPShape *) path)->setCurve(curve, TRUE);
                         curve->unref();
                     }
                 } else {
-                    sp_shape_set_curve((SPShape *) path, NULL, TRUE);
+                    ((SPShape *) path)->setCurve(NULL, TRUE);
                 }
                 object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
@@ -392,16 +391,16 @@ sp_path_set_transform(SPItem *item, Geom::Matrix const &xform)
     }
 
     // Adjust stroke
-    sp_item_adjust_stroke(item, xform.descrim());
+    item->adjust_stroke(xform.descrim());
 
     // Adjust pattern fill
-    sp_item_adjust_pattern(item, xform);
+    item->adjust_pattern(xform);
 
     // Adjust gradient fill
-    sp_item_adjust_gradient(item, xform);
+    item->adjust_gradient(xform);
 
     // Adjust LPE
-    sp_item_adjust_livepatheffect(item, xform);
+    item->adjust_livepatheffect(xform);
 
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
 
@@ -425,7 +424,7 @@ g_message("sp_path_update_patheffect");
         SPCurve *curve = path->original_curve->copy();
         /* if a path does not have an lpeitem applied, then reset the curve to the original_curve.
          * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
-        sp_shape_set_curve_insync(shape, curve, TRUE);
+        shape->setCurveInsync(curve, TRUE);
 
         bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
         if (success && write) {
@@ -446,7 +445,7 @@ g_message("sp_path_update_patheffect writes 'd' attribute");
                 Geom::PathVector pv = sp_svg_read_pathv(value);
                 SPCurve *oldcurve = new SPCurve(pv);
                 if (oldcurve) {
-                    sp_shape_set_curve(shape, oldcurve, TRUE);
+                    shape->setCurve(oldcurve, TRUE);
                     oldcurve->unref();
                 }
             }
@@ -505,7 +504,7 @@ sp_path_get_curve_for_edit (SPPath *path)
                                 sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path))) {
         return sp_path_get_original_curve(path);
     } else {
-        return sp_shape_get_curve( (SPShape *) path );
+        return ((SPShape *) path)->getCurve();
     }
 }
 

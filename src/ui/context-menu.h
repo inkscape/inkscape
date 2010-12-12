@@ -1,11 +1,12 @@
-#ifndef __CONTEXT_MENU_H__
-#define __CONTEXT_MENU_H__
+#ifndef SEEN_CONTEXT_MENU_H
+#define SEEN_CONTEXT_MENU_H
 
 /*
  * Unser-interface related object extension
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * This code is in public domain
  */
@@ -13,7 +14,7 @@
 #include <gtk/gtkmenu.h>
 
 #include "forward.h"
-
+#include "sp-object.h"
 /* Append object-specific part to context menu */
 
 void sp_object_menu (SPObject *object, SPDesktop *desktop, GtkMenu *menu);

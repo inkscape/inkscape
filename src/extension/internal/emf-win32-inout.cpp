@@ -3,6 +3,8 @@
  */
 /* Authors:
  *   Ulf Erikson <ulferikson@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006-2008 Authors
  *
@@ -109,7 +111,7 @@ emf_print_document_to_file(SPDocument *doc, gchar const *filename)
     gchar *oldoutput;
     unsigned int ret;
 
-    sp_document_ensure_up_to_date(doc);
+    doc->ensureUpToDate();
 
     mod = Inkscape::Extension::get_print(PRINT_EMF_WIN32);
     oldconst = mod->get_param_string("destination");
@@ -120,7 +122,7 @@ emf_print_document_to_file(SPDocument *doc, gchar const *filename)
     context.module = mod;
     /* fixme: This has to go into module constructor somehow */
     /* Create new arena */
-    mod->base = SP_ITEM(sp_document_root(doc));
+    mod->base = SP_ITEM(doc->getRoot());
     mod->arena = NRArena::create();
     mod->dkey = sp_item_display_key_new(1);
     mod->root = sp_item_invoke_show(mod->base, mod->arena, mod->dkey, SP_ITEM_SHOW_DISPLAY);
@@ -2367,7 +2369,7 @@ EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
 //    std::cout << "SVG Output: " << std::endl << *(d.outsvg) << std::endl;
 
-    SPDocument *doc = sp_document_new_from_mem(d.outsvg->c_str(), d.outsvg->length(), TRUE);
+    SPDocument *doc = SPDocument::createNewDocFromMem(d.outsvg->c_str(), d.outsvg->length(), TRUE);
 
     delete d.outsvg;
     delete d.path;

@@ -1,7 +1,8 @@
-#ifndef __SP_GUIDE_ATTACHMENT_H__
-#define __SP_GUIDE_ATTACHMENT_H__
+#ifndef SEEN_SP_GUIDE_ATTACHMENT_H
+#define SEEN_SP_GUIDE_ATTACHMENT_H
 
 #include <forward.h>
+#include "sp-item.h"
 
 class SPGuideAttachment {
 public:
@@ -28,8 +29,7 @@ public:
     }
 };
 
-
-#endif /* !__SP_GUIDE_ATTACHMENT_H__ */
+#endif // SEEN_SP_GUIDE_ATTACHMENT_H
 
 /*
   Local Variables:

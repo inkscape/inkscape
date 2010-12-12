@@ -1,5 +1,3 @@
-#define __SP_FEFLOOD_CPP__
-
 /** \file
  * SVG <feFlood> implementation.
  *
@@ -7,6 +5,7 @@
 /*
  * Authors:
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Hugo Rodrigues
  *
@@ -96,8 +95,8 @@ sp_feFlood_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
-    sp_object_read_attr(object, "flood-opacity");
-    sp_object_read_attr(object, "flood-color");
+    object->readAttr( "flood-opacity" );
+    object->readAttr( "flood-color" );
 }
 
 /**

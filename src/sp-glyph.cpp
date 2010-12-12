@@ -10,6 +10,7 @@
  *
  * Author:
  *   Felipe C. da S. Sanches <juca@members.fsf.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2008, Felipe C. da S. Sanches
  *
@@ -39,15 +40,15 @@ GType sp_glyph_get_type(void)
     if (!type) {
         GTypeInfo info = {
             sizeof(SPGlyphClass),
-            NULL,	/* base_init */
-            NULL,	/* base_finalize */
+            NULL,       /* base_init */
+            NULL,       /* base_finalize */
             (GClassInitFunc) sp_glyph_class_init,
-            NULL,	/* class_finalize */
-            NULL,	/* class_data */
+            NULL,       /* class_finalize */
+            NULL,       /* class_data */
             sizeof(SPGlyph),
-            16,	/* n_preallocs */
+            16, /* n_preallocs */
             (GInstanceInitFunc) sp_glyph_init,
-            NULL,	/* value_table */
+            NULL,       /* value_table */
         };
         type = g_type_register_static(SP_TYPE_OBJECT, "SPGlyph", &info, (GTypeFlags) 0);
     }
@@ -90,16 +91,16 @@ static void sp_glyph_build(SPObject *object, SPDocument *document, Inkscape::XML
         ((SPObjectClass *) (parent_class))->build(object, document, repr);
     }
 
-    sp_object_read_attr(object, "unicode");
-    sp_object_read_attr(object, "glyph-name");
-    sp_object_read_attr(object, "d");
-    sp_object_read_attr(object, "orientation");
-    sp_object_read_attr(object, "arabic-form");
-    sp_object_read_attr(object, "lang");
-    sp_object_read_attr(object, "horiz-adv-x");
-    sp_object_read_attr(object, "vert-origin-x");
-    sp_object_read_attr(object, "vert-origin-y");
-    sp_object_read_attr(object, "vert-adv-y");
+    object->readAttr( "unicode" );
+    object->readAttr( "glyph-name" );
+    object->readAttr( "d" );
+    object->readAttr( "orientation" );
+    object->readAttr( "arabic-form" );
+    object->readAttr( "lang" );
+    object->readAttr( "horiz-adv-x" );
+    object->readAttr( "vert-origin-x" );
+    object->readAttr( "vert-origin-y" );
+    object->readAttr( "vert-adv-y" );
 }
 
 static void sp_glyph_release(SPObject *object)
@@ -250,16 +251,16 @@ sp_glyph_update(SPObject *object, SPCtx *ctx, guint flags)
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         /* do something to trigger redisplay, updates? */
-            sp_object_read_attr(object, "unicode");
-            sp_object_read_attr(object, "glyph-name");
-            sp_object_read_attr(object, "d");
-            sp_object_read_attr(object, "orientation");
-            sp_object_read_attr(object, "arabic-form");
-            sp_object_read_attr(object, "lang");
-            sp_object_read_attr(object, "horiz-adv-x");
-            sp_object_read_attr(object, "vert-origin-x");
-            sp_object_read_attr(object, "vert-origin-y");
-            sp_object_read_attr(object, "vert-adv-y");
+            object->readAttr( "unicode" );
+            object->readAttr( "glyph-name" );
+            object->readAttr( "d" );
+            object->readAttr( "orientation" );
+            object->readAttr( "arabic-form" );
+            object->readAttr( "lang" );
+            object->readAttr( "horiz-adv-x" );
+            object->readAttr( "vert-origin-x" );
+            object->readAttr( "vert-origin-y" );
+            object->readAttr( "vert-adv-y" );
     }
 
     if (((SPObjectClass *) parent_class)->update) {
@@ -290,16 +291,18 @@ static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Docu
     sp_repr_set_svg_double(repr, "vert-adv-y", glyph->vert_adv_y);
 */
     if (repr != SP_OBJECT_REPR(object)) {
-        COPY_ATTR(repr, object->repr, "unicode");
-        COPY_ATTR(repr, object->repr, "glyph-name");
-        COPY_ATTR(repr, object->repr, "d");
-        COPY_ATTR(repr, object->repr, "orientation");
-        COPY_ATTR(repr, object->repr, "arabic-form");
-        COPY_ATTR(repr, object->repr, "lang");
-        COPY_ATTR(repr, object->repr, "horiz-adv-x");
-        COPY_ATTR(repr, object->repr, "vert-origin-x");
-        COPY_ATTR(repr, object->repr, "vert-origin-y");
-        COPY_ATTR(repr, object->repr, "vert-adv-y");
+        // All the COPY_ATTR functions below use
+        //   XML Tree directly while they shouldn't.
+        COPY_ATTR(repr, object->getRepr(), "unicode");
+        COPY_ATTR(repr, object->getRepr(), "glyph-name");
+        COPY_ATTR(repr, object->getRepr(), "d");
+        COPY_ATTR(repr, object->getRepr(), "orientation");
+        COPY_ATTR(repr, object->getRepr(), "arabic-form");
+        COPY_ATTR(repr, object->getRepr(), "lang");
+        COPY_ATTR(repr, object->getRepr(), "horiz-adv-x");
+        COPY_ATTR(repr, object->getRepr(), "vert-origin-x");
+        COPY_ATTR(repr, object->getRepr(), "vert-origin-y");
+        COPY_ATTR(repr, object->getRepr(), "vert-adv-y");
     }
 
     if (((SPObjectClass *) (parent_class))->write) {

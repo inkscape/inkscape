@@ -330,8 +330,8 @@ static gint inkscape_autosave(gpointer)
 
         ++docnum;
 
-        Inkscape::XML::Node *repr = sp_document_repr_root(doc);
-        // g_debug("Document %d: \"%s\" %s", docnum, doc ? doc->name : "(null)", doc ? (doc->isModifiedSinceSave() ? "(dirty)" : "(clean)") : "(null)");
+        Inkscape::XML::Node *repr = doc->getReprRoot();
+        // g_debug("Document %d: \"%s\" %s", docnum, doc ? doc->getName() : "(null)", doc ? (doc->isModifiedSinceSave() ? "(dirty)" : "(clean)") : "(null)");
 
         if (doc->isModifiedSinceSave()) {
             gchar *oldest_autosave = 0;
@@ -530,7 +530,7 @@ inkscape_trackalt() {
 
 void inkscape_trackalt(guint trackvalue)
 {
-	inkscape->trackalt = trackvalue;
+    inkscape->trackalt = trackvalue;
 }
 
 
@@ -609,13 +609,13 @@ inkscape_crash_handler (int /*signum*/)
           ++iter) {
         SPDocument *doc = iter->first;
         Inkscape::XML::Node *repr;
-        repr = sp_document_repr_root (doc);
+        repr = doc->getReprRoot();
         if (doc->isModifiedSinceSave()) {
             const gchar *docname;
 
             /* originally, the document name was retrieved from
              * the sodipod:docname attribute */
-            docname = doc->name;
+            docname = doc->getName();
             if (docname) {
                 /* Removes an emergency save suffix if present: /(.*)\.[0-9_]*\.[0-9_]*\.[~\.]*$/\1/ */
                 const char* d0 = strrchr ((char*)docname, '.');
@@ -643,7 +643,7 @@ inkscape_crash_handler (int /*signum*/)
 
             // Find a location
             const char* locations[] = {
-                doc->base,
+                doc->getBase(),
                 g_get_home_dir(),
                 g_get_tmp_dir(),
                 curdir,
@@ -667,7 +667,7 @@ inkscape_crash_handler (int /*signum*/)
                 savednames = g_slist_prepend (savednames, g_strdup (c));
                 fclose (file);
             } else {
-                failednames = g_slist_prepend (failednames, (doc->name) ? g_strdup (doc->name) : g_strdup (_("Untitled document")));
+                failednames = g_slist_prepend (failednames, (doc->getName()) ? g_strdup(doc->getName()) : g_strdup (_("Untitled document")));
             }
             count++;
         }

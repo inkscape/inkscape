@@ -123,7 +123,7 @@ application_interface_document_close_all (ApplicationInterface *object,
     SPDocument *doc = sp_desktop_document(desktop);
     g_assert(doc != NULL);
 
-    Inkscape::XML::Node     *repr = sp_document_repr_root(doc);
+    Inkscape::XML::Node     *repr = doc->getReprRoot();
     g_assert(repr != NULL);
 */
 

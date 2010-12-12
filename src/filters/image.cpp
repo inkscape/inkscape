@@ -1,5 +1,3 @@
-#define __SP_FEIMAGE_CPP__
-
 /** \file
  * SVG <feImage> implementation.
  *
@@ -8,6 +6,7 @@
  * Authors:
  *   Felipe Corrêa da Silva Sanches <juca@members.fsf.org>
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 Felipe Sanches
  * Copyright (C) 2006 Hugo Rodrigues
@@ -100,11 +99,11 @@ static void sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::X
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
 
-    sp_object_read_attr(object, "x");
-    sp_object_read_attr(object, "y");
-    sp_object_read_attr(object, "width");
-    sp_object_read_attr(object, "height");
-    sp_object_read_attr(object, "xlink:href");
+    object->readAttr( "x" );
+    object->readAttr( "y" );
+    object->readAttr( "width" );
+    object->readAttr( "height" );
+    object->readAttr( "xlink:href" );
 
 }
 

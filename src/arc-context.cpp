@@ -6,6 +6,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <johan@shouraizou.nl>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2000-2006 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -44,6 +45,8 @@
 #include "event-context.h"
 
 #include "arc-context.h"
+
+using Inkscape::DocumentUndo;
 
 static void sp_arc_context_class_init(SPArcContextClass *klass);
 static void sp_arc_context_init(SPArcContext *arc_context);
@@ -410,17 +413,17 @@ static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
             return;
         }
 
-        /* Create object */
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+        // Create object
+        Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
         repr->setAttribute("sodipodi:type", "arc");
 
-        /* Set style */
+        // Set style
         sp_desktop_apply_style_tool(desktop, repr, "/tools/shapes/arc", false);
 
         ac->item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
         Inkscape::GC::release(repr);
-        ac->item->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
+        ac->item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
         ac->item->updateRepr();
 
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
@@ -444,7 +447,7 @@ static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
         Geom::Point c = r.midpoint();
         if (!ctrl_save) {
             if (fabs(dir[Geom::X]) > 1E-6 && fabs(dir[Geom::Y]) > 1E-6) {
-                Geom::Matrix const i2d (sp_item_i2d_affine (ac->item));
+                Geom::Matrix const i2d ((ac->item)->i2d_affine ());
                 Geom::Point new_dir = pt * i2d - c;
                 new_dir[Geom::X] *= dir[Geom::Y] / dir[Geom::X];
                 double lambda = new_dir.length() / dir[Geom::Y];
@@ -503,7 +506,7 @@ static void sp_arc_finish(SPArcContext *ac)
         sp_canvas_end_forced_full_redraws(desktop->canvas);
 
         sp_desktop_selection(desktop)->set(ac->item);
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ARC,
+		DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ARC,
                          _("Create ellipse"));
 
         ac->item = NULL;
@@ -529,7 +532,7 @@ static void sp_arc_cancel(SPArcContext *ac)
 
     sp_canvas_end_forced_full_redraws(desktop->canvas);
 
-    sp_document_cancel(sp_desktop_document(desktop));
+    DocumentUndo::cancel(sp_desktop_document(desktop));
 }
 
 

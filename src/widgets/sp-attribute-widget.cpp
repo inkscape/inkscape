@@ -3,6 +3,7 @@
  */
 /* Authors:
  *  Lauris Kaplinski <lauris@ximian.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2001 Ximian, Inc.
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -20,6 +21,8 @@
 #include <sigc++/adaptors/bind.h>
 
 #include "sp-attribute-widget.h"
+
+using Inkscape::DocumentUndo;
 
 static void sp_attribute_widget_class_init (SPAttributeWidgetClass *klass);
 static void sp_attribute_widget_init (SPAttributeWidget *widget);
@@ -154,8 +157,8 @@ sp_attribute_widget_changed (GtkEditable *editable)
         if (spaw->hasobj && spaw->src.object) {
         
             SP_OBJECT_REPR (spaw->src.object)->setAttribute(spaw->attribute, text, false);
-            sp_document_done (SP_OBJECT_DOCUMENT (spaw->src.object), SP_VERB_NONE,
-                              _("Set attribute"));
+            DocumentUndo::done(SP_OBJECT_DOCUMENT (spaw->src.object), SP_VERB_NONE,
+                                _("Set attribute"));
 
         } else if (spaw->src.repr) {
 
@@ -761,8 +764,8 @@ sp_attribute_table_entry_changed ( GtkEditable *editable,
 
                 if (spat->hasobj && spat->src.object) {
                     SP_OBJECT_REPR (spat->src.object)->setAttribute(spat->attributes[i], text, false);
-                    sp_document_done (SP_OBJECT_DOCUMENT (spat->src.object), SP_VERB_NONE,
-                                      _("Set attribute"));
+                    DocumentUndo::done(SP_OBJECT_DOCUMENT (spat->src.object), SP_VERB_NONE,
+                                       _("Set attribute"));
 
                 } else if (spat->src.repr) {
 

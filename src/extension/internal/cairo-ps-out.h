@@ -6,6 +6,7 @@
  *   Ted Gould <ted@gould.cx>
  *   Ulf Erikson <ulferikson@users.sf.net>
  *   Adib Taraben <theAdib@yahoo.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004-2006 Authors
  *
@@ -16,6 +17,7 @@
 #define EXTENSION_INTERNAL_CAIRO_PS_OUT_H
 
 #include "extension/implementation/implementation.h"
+#include "sp-item.h"
 
 #ifdef HAVE_CAIRO_PDF
 

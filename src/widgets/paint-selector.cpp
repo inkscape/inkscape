@@ -8,6 +8,7 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   John Cliff <simarilius@yahoo.com>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) Lauris Kaplinski 2002
  * Copyright (C) 2010 Authors
@@ -784,7 +785,7 @@ ink_pattern_list_get (SPDocument *source)
         return NULL;
 
     GSList *pl = NULL;
-    GSList const *patterns = sp_document_get_resource_list(source, "pattern");
+    GSList const *patterns = source->getResourceList("pattern");
     for (GSList *l = (GSList *) patterns; l != NULL; l = l->next) {
         if (SP_PATTERN(l->data) == pattern_getroot(SP_PATTERN(l->data))) {  // only if this is a root pattern
             pl = g_slist_prepend(pl, l->data);
@@ -875,7 +876,7 @@ ink_pattern_menu_populate_menu(GtkWidget *m, SPDocument *doc)
     if (patterns_doc == NULL) {
         char *patterns_source = g_build_filename(INKSCAPE_PATTERNSDIR, "patterns.svg", NULL);
         if (Inkscape::IO::file_test(patterns_source, G_FILE_TEST_IS_REGULAR)) {
-            patterns_doc = sp_document_new(patterns_source, FALSE);
+            patterns_doc = SPDocument::createNewDoc(patterns_source, FALSE);
         }
         g_free(patterns_source);
     }
@@ -894,7 +895,7 @@ ink_pattern_menu_populate_menu(GtkWidget *m, SPDocument *doc)
 
     // suck in from patterns.svg
     if (patterns_doc) {
-        sp_document_ensure_up_to_date(doc);
+        doc->ensureUpToDate();
         sp_pattern_list_from_doc ( m, doc, patterns_doc, NULL );
     }
 

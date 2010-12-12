@@ -3,6 +3,7 @@
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2009 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -108,7 +109,7 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
     , _path(path)
     , _spcurve(new SPCurve())
     , _dragpoint(new CurveDragPoint(*this))
-    , _observer(new PathManipulatorObserver(this, SP_OBJECT(path)->repr))
+    , /* XML Tree being used here directly while it shouldn't be*/_observer(new PathManipulatorObserver(this, SP_OBJECT(path)->getRepr()))
     , _edit_transform(et)
     , _num_selected(0)
     , _show_handles(true)
@@ -119,7 +120,7 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
     , _lpe_key(lpe_key)
 {
     if (_lpe_key.empty()) {
-        _i2d_transform = sp_item_i2d_affine(SP_ITEM(path));
+        _i2d_transform = SP_ITEM(path)->i2d_affine();
     } else {
         _i2d_transform = Geom::identity();
     }
@@ -1023,7 +1024,7 @@ void PathManipulator::_externalChange(unsigned type)
         } break;
     case PATH_CHANGE_TRANSFORM: {
         Geom::Matrix i2d_change = _d2i_transform;
-        _i2d_transform = sp_item_i2d_affine(SP_ITEM(_path));
+        _i2d_transform = SP_ITEM(_path)->i2d_affine();
         _d2i_transform = _i2d_transform.inverse();
         i2d_change *= _i2d_transform;
         for (SubpathList::iterator i = _subpaths.begin(); i != _subpaths.end(); ++i) {
@@ -1104,7 +1105,9 @@ void PathManipulator::_createControlPointsFromGeometry()
     // so that pickBestType works correctly
     // TODO maybe migrate to inkscape:node-types?
     // TODO move this into SPPath - do not manipulate directly
-    gchar const *nts_raw = _path ? _path->repr->attribute(_nodetypesKey().data()) : 0;
+
+    //XML Tree being used here directly while it shouldn't be.
+    gchar const *nts_raw = _path ? _path->getRepr()->attribute(_nodetypesKey().data()) : 0;
     std::string nodetype_string = nts_raw ? nts_raw : "";
     /* Calculate the needed length of the nodetype string.
      * For closed paths, the entry is duplicated for the starting node,
@@ -1279,10 +1282,11 @@ void PathManipulator::_setGeometry()
             LIVEPATHEFFECT(_path)->requestModified(SP_OBJECT_MODIFIED_FLAG);
         }
     } else {
-        if (_path->repr->attribute("inkscape:original-d"))
+        //XML Tree being used here directly while it shouldn't be.
+        if (_path->getRepr()->attribute("inkscape:original-d"))
             sp_path_set_original_curve(_path, _spcurve, false, false);
         else
-            sp_shape_set_curve(SP_SHAPE(_path), _spcurve, false);
+            SP_SHAPE(_path)->setCurve(_spcurve, false);
     }
 }
 
@@ -1297,8 +1301,10 @@ Glib::ustring PathManipulator::_nodetypesKey()
  * This method is wrong but necessary at the moment. */
 Inkscape::XML::Node *PathManipulator::_getXMLNode()
 {
-    if (_lpe_key.empty()) return _path->repr;
-    return LIVEPATHEFFECT(_path)->repr;
+    //XML Tree being used here directly while it shouldn't be.
+    if (_lpe_key.empty()) return _path->getRepr();
+    //XML Tree being used here directly while it shouldn't be.
+    return LIVEPATHEFFECT(_path)->getRepr();
 }
 
 bool PathManipulator::_nodeClicked(Node *n, GdkEventButton *event)
@@ -1416,14 +1422,14 @@ void PathManipulator::_removeNodesFromSelection()
 void PathManipulator::_commit(Glib::ustring const &annotation)
 {
     writeXML();
-    sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_NODE, annotation.data());
+    DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_NODE, annotation.data());
 }
 
 void PathManipulator::_commit(Glib::ustring const &annotation, gchar const *key)
 {
     writeXML();
-    sp_document_maybe_done(sp_desktop_document(_desktop), key, SP_VERB_CONTEXT_NODE,
-            annotation.data());
+    DocumentUndo::maybeDone(sp_desktop_document(_desktop), key, SP_VERB_CONTEXT_NODE,
+                            annotation.data());
 }
 
 /** Update the position of the curve drag point such that it is over the nearest

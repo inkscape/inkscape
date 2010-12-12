@@ -1,11 +1,12 @@
-#ifndef __SP_MASK_H__
-#define __SP_MASK_H__
+#ifndef SEEN_SP_MASK_H
+#define SEEN_SP_MASK_H
 
 /*
  * SVG <mask> implementation
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2003 authors
  *
@@ -63,8 +64,10 @@ protected:
 	    }
 	    SPObject * const owner = this->getOwner();
         if (obj->isAncestorOf(owner)) {
-            Inkscape::XML::Node * const owner_repr = owner->repr;
-            Inkscape::XML::Node * const obj_repr = obj->repr;
+	  //XML Tree being used directly here while it shouldn't be...
+	  Inkscape::XML::Node * const owner_repr = owner->getRepr();
+	  //XML Tree being used directly here while it shouldn't be...
+	  Inkscape::XML::Node * const obj_repr = obj->getRepr();
             gchar const * owner_name = NULL;
             gchar const * owner_mask = NULL;
             gchar const * obj_name = NULL;
@@ -94,4 +97,4 @@ void sp_mask_set_bbox (SPMask *mask, unsigned int key, NRRect *bbox);
 
 const gchar *sp_mask_create (GSList *reprs, SPDocument *document, Geom::Matrix const* applyTransform);
 
-#endif
+#endif // SEEN_SP_MASK_H

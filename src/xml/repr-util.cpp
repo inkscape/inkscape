@@ -1,5 +1,3 @@
-#define __SP_REPR_UTIL_C__
-
 /** \file
  * Miscellaneous helpers for reprs.
  */
@@ -7,6 +5,7 @@
 /*
  * Authors:
  *   Lauris Kaplinski <lauris@ximian.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1999-2000 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -354,8 +353,7 @@ long long int sp_repr_get_int_attribute(Inkscape::XML::Node *repr, char const *k
  *   -1    first object's position is less than the second
  * @todo Rewrite this function's description to be understandable
  */
-int
-sp_repr_compare_position(Inkscape::XML::Node *first, Inkscape::XML::Node *second)
+int sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::Node const *second)
 {
     int p1, p2;
     if (sp_repr_parent(first) == sp_repr_parent(second)) {
@@ -368,7 +366,7 @@ sp_repr_compare_position(Inkscape::XML::Node *first, Inkscape::XML::Node *second
            instance. */
 
         // Find the lowest common ancestor(LCA)
-        Inkscape::XML::Node *ancestor = LCA(first, second);
+        Inkscape::XML::Node const *ancestor = LCA(first, second);
         g_assert(ancestor != NULL);
 
         if (ancestor == first) {
@@ -433,38 +431,33 @@ sp_repr_lookup_child(Inkscape::XML::Node *repr,
     return NULL;
 }
 
-/**
- * @brief Find an element node with the given name
- *
- * This function searches the descendants of the specified node depth-first for
- * the first XML node with the specified name.
- *
- * @param repr The node to start from
- * @param name The name of the element node to find
- * @param maxdepth Maximum search depth, or -1 for an unlimited depth
- * @return  A pointer to the matching Inkscape::XML::Node
- * @relatesalso Inkscape::XML::Node
- */
-Inkscape::XML::Node *
-sp_repr_lookup_name( Inkscape::XML::Node *repr, gchar const *name, gint maxdepth )
+Inkscape::XML::Node const *sp_repr_lookup_name( Inkscape::XML::Node const *repr, gchar const *name, gint maxdepth )
 {
+    Inkscape::XML::Node const *found = 0;
     g_return_val_if_fail(repr != NULL, NULL);
     g_return_val_if_fail(name != NULL, NULL);
 
     GQuark const quark = g_quark_from_string(name);
 
-    if ( (GQuark)repr->code() == quark ) return repr;
-    if ( maxdepth == 0 ) return NULL;
+    if ( (GQuark)repr->code() == quark ) {
+        found = repr;
+    } else if ( maxdepth != 0 ) {
+        // maxdepth == -1 means unlimited
+        if ( maxdepth == -1 ) {
+            maxdepth = 0;
+        }
 
-    // maxdepth == -1 means unlimited
-    if ( maxdepth == -1 ) maxdepth = 0;
-
-    Inkscape::XML::Node *found = NULL;
-    for (Inkscape::XML::Node *child = repr->firstChild() ; child && !found; child = child->next() ) {
-        found = sp_repr_lookup_name( child, name, maxdepth-1 );
+        for (Inkscape::XML::Node const *child = repr->firstChild() ; child && !found; child = child->next() ) {
+            found = sp_repr_lookup_name( child, name, maxdepth - 1 );
+        }
     }
-
     return found;
+}
+
+Inkscape::XML::Node *sp_repr_lookup_name( Inkscape::XML::Node *repr, gchar const *name, gint maxdepth )
+{
+    Inkscape::XML::Node const *found = sp_repr_lookup_name( const_cast<Inkscape::XML::Node *>(repr), name, maxdepth );
+    return const_cast<Inkscape::XML::Node *>(found);
 }
 
 /**

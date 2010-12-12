@@ -1,5 +1,3 @@
-#define __SP_REPR_C__
-
 /** \file
  * A few non-inline functions of the C facade to Inkscape::XML::Node.
  */

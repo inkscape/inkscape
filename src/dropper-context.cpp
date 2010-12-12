@@ -1,11 +1,10 @@
-#define __SP_DROPPER_CONTEXT_C__
-
 /*
  * Tool for picking colors from drawing
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2005 Authors
  *
@@ -42,6 +41,8 @@
 #include "dropper-context.h"
 #include "message-context.h"
 //#include "libnr/nr-scale-translate-ops.h"
+
+using Inkscape::DocumentUndo;
 
 static void sp_dropper_context_class_init(SPDropperContextClass *klass);
 static void sp_dropper_context_init(SPDropperContext *dc);
@@ -350,8 +351,8 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
 
 
                 if (!(sp_desktop_selection(desktop)->isEmpty())) {
-                    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_DROPPER,
-                                     _("Set picked color"));
+                    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_DROPPER,
+                                       _("Set picked color"));
                 }
 
                 ret = TRUE;

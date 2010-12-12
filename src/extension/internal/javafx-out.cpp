@@ -9,6 +9,7 @@
  *   Silveira Neto <silveiraneto@gmail.com>
  *   Jim Clarke <Jim.Clarke@sun.com>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2008,2009 Authors
  *
@@ -493,7 +494,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
 
     // convert the path to only lineto's and cubic curveto's:
     Geom::Scale yflip(1.0, -1.0);
-    Geom::Matrix tf = sp_item_i2d_affine(item) * yflip;
+    Geom::Matrix tf = item->i2d_affine() * yflip;
     Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
 
     //Count the NR_CURVETOs/LINETOs (including closing line segment)
@@ -635,7 +636,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
 
     // convert the path to only lineto's and cubic curveto's:
     Geom::Scale yflip(1.0, -1.0);
-    Geom::Matrix tf = sp_item_i2d_affine(item) * yflip;
+    Geom::Matrix tf = item->i2d_affine() * yflip;
     Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
 
     //Count the NR_CURVETOs/LINETOs (including closing line segment)

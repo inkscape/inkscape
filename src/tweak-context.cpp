@@ -1,10 +1,10 @@
-#define __SP_TWEAK_CONTEXT_C__
-
 /*
  * tweaking paths without node editing
  *
  * Authors:
  *   bulia byak
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 authors
  *
@@ -76,6 +76,8 @@
 #include "sp-gaussian-blur.h"
 
 #include "tweak-context.h"
+
+using Inkscape::DocumentUndo;
 
 #define DDC_RED_RGBA 0xff0000ff
 
@@ -425,7 +427,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
     if (SP_IS_GROUP(item) && !SP_IS_BOX3D(item)) {
         GSList *children = NULL;
-        for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        for (SPObject *child = item->firstChild() ; child; child = child->getNext() ) {
             if (SP_IS_ITEM(child)) {
                 children = g_slist_prepend(children, child);
             }
@@ -442,7 +444,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
     } else {
         if (mode == TWEAK_MODE_MOVE) {
 
-            Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
+            Geom::OptRect a = item->getBounds(item->i2doc_affine());
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -455,7 +457,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_MOVE_IN_OUT) {
 
-            Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
+            Geom::OptRect a = item->getBounds(item->i2doc_affine());
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -469,7 +471,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_MOVE_JITTER) {
 
-            Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
+            Geom::OptRect a = item->getBounds(item->i2doc_affine());
             if (a) {
                 double dp = g_random_double_range(0, M_PI*2);
                 double dr = g_random_double_range(0, radius);
@@ -484,7 +486,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_SCALE) {
 
-            Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
+            Geom::OptRect a = item->getBounds(item->i2doc_affine());
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -497,7 +499,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_ROTATE) {
 
-            Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
+            Geom::OptRect a = item->getBounds(item->i2doc_affine());
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -510,7 +512,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_MORELESS) {
 
-            Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
+            Geom::OptRect a = item->getBounds(item->i2doc_affine());
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -524,7 +526,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
                             sp_object_unref(SP_OBJECT(item), NULL);
                         } else { // duplicate
                             SPDocument *doc = SP_OBJECT_DOCUMENT(item);
-                            Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
+                            Inkscape::XML::Document* xml_doc = doc->getReprDoc();
                             Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
                             SPObject *old_obj = doc->getObjectByRepr(old_repr);
                             Inkscape::XML::Node *parent = old_repr->parent();
@@ -562,7 +564,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
 
         // skip those paths whose bboxes are entirely out of reach with our radius
-        Geom::OptRect bbox = item->getBounds(sp_item_i2doc_affine(item));
+        Geom::OptRect bbox = item->getBounds(item->i2doc_affine());
         if (bbox) {
             bbox->expandBy(radius);
             if (!bbox->contains(p)) {
@@ -580,7 +582,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         Shape *theShape = new Shape;
         Shape *theRes = new Shape;
-        Geom::Matrix i2doc(sp_item_i2doc_affine(item));
+        Geom::Matrix i2doc(item->i2doc_affine());
 
         orig->ConvertWithBackData((0.08 - (0.07 * fidelity)) / i2doc.descrim()); // default 0.059
         orig->Fill(theShape, 0);
@@ -801,7 +803,7 @@ tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke,
     if (!gradient || !SP_IS_GRADIENT(gradient))
         return;
 
-    Geom::Matrix i2d (sp_item_i2doc_affine (item));
+    Geom::Matrix i2d (item->i2doc_affine ());
     Geom::Point p = p_w * i2d.inverse();
     p *= (gradient->gradientTransform).inverse();
     // now p is in gradient's original coordinates
@@ -863,10 +865,10 @@ tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke,
     double offset_l = 0;
     double offset_h = 0;
     SPObject *child_prev = NULL;
-    for (SPObject *child = sp_object_first_child(vector);
-         child != NULL; child = SP_OBJECT_NEXT(child)) {
-        if (!SP_IS_STOP(child))
+    for (SPObject *child = vector->firstChild(); child; child = child->getNext()) {
+        if (!SP_IS_STOP(child)) {
             continue;
+        }
         SPStop *stop = SP_STOP (child);
 
         offset_h = stop->offset;
@@ -923,7 +925,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
     bool did = false;
 
     if (SP_IS_GROUP(item)) {
-        for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        for (SPObject *child = item->firstChild() ; child; child = child->getNext() ) {
             if (SP_IS_ITEM(child)) {
                 if (sp_tweak_color_recursive (mode, SP_ITEM(child), item_at_point,
                                           fill_goal, do_fill,
@@ -940,7 +942,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
         if (!style) {
             return false;
         }
-        Geom::OptRect bbox = item->getBounds(sp_item_i2doc_affine(item),
+        Geom::OptRect bbox = item->getBounds(item->i2doc_affine(),
                                                         SPItem::GEOMETRIC_BBOX);
         if (!bbox) {
             return false;
@@ -970,14 +972,14 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
         if (this_force > 0.002) {
 
             if (do_blur) {
-                Geom::OptRect bbox = item->getBounds(sp_item_i2doc_affine(item),
+                Geom::OptRect bbox = item->getBounds(item->i2doc_affine(),
                                                         SPItem::GEOMETRIC_BBOX);
                 if (!bbox) {
                     return did;
                 }
 
                 double blur_now = 0;
-                Geom::Matrix i2d = sp_item_i2d_affine (item);
+                Geom::Matrix i2d = item->i2d_affine ();
                 if (style->filter.set && style->getFilter()) {
                     //cycle through filter primitives
                     SPObject *primitive_obj = style->getFilter()->children;
@@ -1060,7 +1062,7 @@ sp_tweak_dilate (SPTweakContext *tc, Geom::Point event_p, Geom::Point p, Geom::P
     bool did = false;
     double radius = get_dilate_radius(tc);
 
-    SPItem *item_at_point = SP_EVENT_CONTEXT(tc)->desktop->item_at_point(event_p, TRUE);
+    SPItem *item_at_point = SP_EVENT_CONTEXT(tc)->desktop->getItemAtPoint(event_p, TRUE);
 
     bool do_fill = false, do_stroke = false, do_opacity = false;
     guint32 fill_goal = sp_desktop_get_color_tool(desktop, "/tools/tweak", true, &do_fill);
@@ -1258,56 +1260,56 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
             tc->has_dilated = false;
             switch (tc->mode) {
                 case TWEAK_MODE_MOVE:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Move tweak"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_TWEAK, _("Move tweak"));
                     break;
                 case TWEAK_MODE_MOVE_IN_OUT:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Move in/out tweak"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_TWEAK, _("Move in/out tweak"));
                     break;
                 case TWEAK_MODE_MOVE_JITTER:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Move jitter tweak"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_TWEAK, _("Move jitter tweak"));
                     break;
                 case TWEAK_MODE_SCALE:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Scale tweak"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_TWEAK, _("Scale tweak"));
                     break;
                 case TWEAK_MODE_ROTATE:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Rotate tweak"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_TWEAK, _("Rotate tweak"));
                     break;
                 case TWEAK_MODE_MORELESS:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Duplicate/delete tweak"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_TWEAK, _("Duplicate/delete tweak"));
                     break;
                 case TWEAK_MODE_PUSH:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Push path tweak"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_TWEAK, _("Push path tweak"));
                     break;
                 case TWEAK_MODE_SHRINK_GROW:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Shrink/grow path tweak"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_TWEAK, _("Shrink/grow path tweak"));
                     break;
                 case TWEAK_MODE_ATTRACT_REPEL:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Attract/repel path tweak"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_TWEAK, _("Attract/repel path tweak"));
                     break;
                 case TWEAK_MODE_ROUGHEN:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Roughen path tweak"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_TWEAK, _("Roughen path tweak"));
                     break;
                 case TWEAK_MODE_COLORPAINT:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Color paint tweak"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_TWEAK, _("Color paint tweak"));
                     break;
                 case TWEAK_MODE_COLORJITTER:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Color jitter tweak"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_TWEAK, _("Color jitter tweak"));
                     break;
                 case TWEAK_MODE_BLUR:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Blur tweak"));
+                    DocumentUndo::done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                       SP_VERB_CONTEXT_TWEAK, _("Blur tweak"));
                     break;
             }
         }

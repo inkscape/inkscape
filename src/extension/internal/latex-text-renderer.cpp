@@ -1,5 +1,3 @@
-#define EXTENSION_INTERNAL_LATEX_TEXT_RENDERER_CPP
-
 /** \file
  * Rendering LaTeX file (pdf/eps/ps+latex output)
  *
@@ -9,6 +7,8 @@
  * Authors:
  *   Johan Engelen <goejendaagh@zonnet.nl>
  *   Miklos Erdelyi <erdelyim@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006-2010 Authors
  *
@@ -58,7 +58,7 @@ latex_render_document_text_to_file( SPDocument *doc, gchar const *filename,
                                     const gchar * const exportId, bool exportDrawing, bool exportCanvas,
                                     bool pdflatex)
 {
-    sp_document_ensure_up_to_date(doc);
+    doc->ensureUpToDate();
 
     SPItem *base = NULL;
 
@@ -70,7 +70,7 @@ latex_render_document_text_to_file( SPDocument *doc, gchar const *filename,
     }
     else {
         // we want to export the entire document from root
-        base = SP_ITEM(sp_document_root(doc));
+        base = SP_ITEM(doc->getRoot());
         pageBoundingBox = !exportDrawing;
     }
 
@@ -311,7 +311,7 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
     }
 
     // get rotation
-    Geom::Matrix i2doc = sp_item_i2doc_affine(item);
+    Geom::Matrix i2doc = item->i2doc_affine();
     Geom::Matrix wotransl = i2doc.without_translation();
     double degrees = -180/M_PI * Geom::atan2(wotransl.xAxis());
     bool has_rotation = !Geom::are_near(degrees,0.);
@@ -412,7 +412,7 @@ Flowing in rectangle is possible, not in arb shape.
     }
 
     // get rotation
-    Geom::Matrix i2doc = sp_item_i2doc_affine(item);
+    Geom::Matrix i2doc = item->i2doc_affine();
     Geom::Matrix wotransl = i2doc.without_translation();
     double degrees = -180/M_PI * Geom::atan2(wotransl.xAxis());
     bool has_rotation = !Geom::are_near(degrees,0.);
@@ -490,15 +490,16 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
 {
 // The boundingbox calculation here should be exactly the same as the one by CairoRenderer::setupDocument !
 
-    if (!base)
-        base = SP_ITEM(sp_document_root(doc));
+    if (!base) {
+        base = SP_ITEM(doc->getRoot());
+    }
 
     Geom::OptRect d;
     if (pageBoundingBox) {
         d = Geom::Rect( Geom::Point(0,0),
-                        Geom::Point(sp_document_width(doc), sp_document_height(doc)) );
+                        Geom::Point(doc->getWidth(), doc->getHeight()) );
     } else {
-        sp_item_invoke_bbox(base, d, sp_item_i2d_affine(base), TRUE, SPItem::RENDERING_BBOX);
+        base->invoke_bbox( d, base->i2d_affine(), TRUE, SPItem::RENDERING_BBOX);
     }
     if (!d) {
         g_message("LaTeXTextRenderer: could not retrieve boundingbox.");
@@ -517,7 +518,7 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
     }
 
     // flip y-axis
-    push_transform( Geom::Scale(1,-1) * Geom::Translate(0, sp_document_height(doc)) );
+    push_transform( Geom::Scale(1,-1) * Geom::Translate(0, doc->getHeight()) );
 
     // write the info to LaTeX
     Inkscape::SVGOStringStream os;

@@ -2,6 +2,7 @@
  * \brief Abstraction for different style widget operands
  *
  * Copyright (C) 2007 MenTaLguY <mental@rydia.net>
+ *   Abhishek Sharma
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -146,7 +147,7 @@ StyleSubject::iterator StyleSubject::CurrentLayer::begin() {
 Geom::OptRect StyleSubject::CurrentLayer::getBounds(SPItem::BBoxType type) {
     SPObject *layer = _getLayer();
     if (layer && SP_IS_ITEM(layer)) {
-        return sp_item_bbox_desktop(SP_ITEM(layer), type);
+        return SP_ITEM(layer)->getBboxDesktop(type);
     } else {
         return Geom::OptRect();
     }

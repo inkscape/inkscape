@@ -1,5 +1,3 @@
-#define __SP_FILTER_CPP__
-
 /** \file
  * SVG <filter> implementation.
  */
@@ -7,6 +5,8 @@
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *   Niko Kiirala <niko@kiirala.com>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006,2007 Authors
  *
@@ -136,17 +136,17 @@ sp_filter_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
     }
 
     //Read values of key attributes from XML nodes into object.
-    sp_object_read_attr(object, "filterUnits");
-    sp_object_read_attr(object, "primitiveUnits");
-    sp_object_read_attr(object, "x");
-    sp_object_read_attr(object, "y");
-    sp_object_read_attr(object, "width");
-    sp_object_read_attr(object, "height");
-    sp_object_read_attr(object, "filterRes");
-    sp_object_read_attr(object, "xlink:href");
+    object->readAttr( "filterUnits" );
+    object->readAttr( "primitiveUnits" );
+    object->readAttr( "x" );
+    object->readAttr( "y" );
+    object->readAttr( "width" );
+    object->readAttr( "height" );
+    object->readAttr( "filterRes" );
+    object->readAttr( "xlink:href" );
 
 //is this necessary?
-    sp_document_add_resource(document, "filter", object);
+    document->addResource("filter", object);
 }
 
 /**
@@ -159,7 +159,7 @@ sp_filter_release(SPObject *object)
 
     if (SP_OBJECT_DOCUMENT(object)) {
         /* Unregister ourselves */
-        sp_document_remove_resource(SP_OBJECT_DOCUMENT(object), "filter", SP_OBJECT(object));
+        SP_OBJECT_DOCUMENT(object)->removeResource("filter", SP_OBJECT(object));
     }
 
 //TODO: release resources here
@@ -284,19 +284,18 @@ static Inkscape::XML::Node *
 sp_filter_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPFilter *filter = SP_FILTER(object);
-    SPObject *child;
-    Inkscape::XML::Node *crepr;
 
-    /* Original from sp-item-group.cpp */
+    // Original from sp-item-group.cpp
     if (flags & SP_OBJECT_WRITE_BUILD) {
-        GSList *l;
         if (!repr) {
             repr = doc->createElement("svg:filter");
         }
-        l = NULL;
-        for (child = sp_object_first_child(object); child != NULL; child = SP_OBJECT_NEXT(child) ) {
-            crepr = child->updateRepr(doc, NULL, flags);
-            if (crepr) l = g_slist_prepend (l, crepr);
+        GSList *l = NULL;
+        for ( SPObject *child = object->firstChild(); child; child = child->getNext() ) {
+            Inkscape::XML::Node *crepr = child->updateRepr(doc, NULL, flags);
+            if (crepr) {
+                l = g_slist_prepend (l, crepr);
+            }
         }
         while (l) {
             repr->addChild((Inkscape::XML::Node *) l->data, NULL);
@@ -304,7 +303,7 @@ sp_filter_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::N
             l = g_slist_remove (l, l->data);
         }
     } else {
-        for (child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        for ( SPObject *child = object->firstChild() ; child; child = child->getNext() ) {
             child->updateRepr(flags);
         }
     }

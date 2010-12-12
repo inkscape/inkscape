@@ -4,6 +4,7 @@
 /*
 * Authors:
 *   Tim Dwyer <tgdwyer@gmail.com>
+ *   Abhishek Sharma
 *
 * Copyright (C) 2005 Authors
 *
@@ -48,7 +49,7 @@ void removeoverlap(GSList const *const items, double const xGap, double const yG
 		++it)
 	{
 		using Geom::X; using Geom::Y;
-		Geom::OptRect item_box(sp_item_bbox_desktop(*it));
+		Geom::OptRect item_box((*it)->getBboxDesktop());
 		if (item_box) {
 			Geom::Point min(item_box->min() - .5*gap);
 			Geom::Point max(item_box->max() + .5*gap);

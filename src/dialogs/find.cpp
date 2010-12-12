@@ -3,6 +3,8 @@
  */
 /* Authors:
  *   bulia byak <bulia@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 Authors
  *
@@ -292,7 +294,7 @@ all_items (SPObject *r, GSList *l, bool hidden, bool locked)
     if (!strcmp (SP_OBJECT_REPR (r)->name(), "svg:metadata"))
         return l; // we're not interested in metadata
 
-    for (SPObject *child = sp_object_first_child(r); child; child = SP_OBJECT_NEXT (child)) {
+    for (SPObject *child = r->firstChild(); child; child = child->next) {
         if (SP_IS_ITEM (child) && !SP_OBJECT_IS_CLONED (child) && !desktop->isLayer(SP_ITEM(child))) {
                 if ((hidden || !desktop->itemIsHidden(SP_ITEM(child))) && (locked || !SP_ITEM(child)->isLocked())) {
                     l = g_slist_prepend (l, child);
@@ -342,7 +344,7 @@ void sp_find_dialog_find(GObject *, GObject *dlg)
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (gtk_object_get_data (GTK_OBJECT (dlg), "inlayer")))) {
             l = all_items (desktop->currentLayer(), l, hidden, locked);
         } else {
-            l = all_items (SP_DOCUMENT_ROOT (sp_desktop_document (desktop)), l, hidden, locked);
+            l = all_items(sp_desktop_document(desktop)->getRoot(), l, hidden, locked);
         }
     }
     guint all = g_slist_length (l);
@@ -606,8 +608,8 @@ sp_find_types ()
 
         {
             GtkWidget *c = sp_find_types_checkbox_indented (vb, "clones", TRUE, tt, _("Search clones"),
-                        //TRANSLATORS: "Clones" is a noun indicating type of object to find
-            		C_("Find dialog","Clones"), NULL, 10);
+                                                            //TRANSLATORS: "Clones" is a noun indicating type of object to find
+                                                            C_("Find dialog","Clones"), NULL, 10);
             gtk_box_pack_start (GTK_BOX (vb_all), c, FALSE, FALSE, 0);
         }
 

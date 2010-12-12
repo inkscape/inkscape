@@ -3,6 +3,7 @@
  *
  * Authors:
  *   Jon A. Cruz
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006,2010 Jon A. Cruz
  *
@@ -468,8 +469,8 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
                 row[_model->_colVisible] = newValue;
                 item->setHidden( !newValue  );
                 item->updateRepr();
-                sp_document_done( _desktop->doc() , SP_VERB_DIALOG_LAYERS,
-                                  newValue? _("Unhide layer") : _("Hide layer"));
+                DocumentUndo::done( _desktop->doc() , SP_VERB_DIALOG_LAYERS,
+                                    newValue? _("Unhide layer") : _("Hide layer"));
             }
             break;
 
@@ -479,8 +480,8 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
                 row[_model->_colLocked] = newValue;
                 item->setLocked( newValue );
                 item->updateRepr();
-                sp_document_done( _desktop->doc() , SP_VERB_DIALOG_LAYERS,
-                                  newValue? _("Lock layer") : _("Unlock layer"));
+                DocumentUndo::done( _desktop->doc() , SP_VERB_DIALOG_LAYERS,
+                                    newValue? _("Lock layer") : _("Unlock layer"));
             }
             break;
         }
@@ -766,7 +767,7 @@ void LayersPanel::setDesktop( SPDesktop* desktop )
         }
     }
 /*
-    GSList const *layers=sp_document_get_resource_list( _desktop->doc(), "layer" );
+    GSList const *layers = _desktop->doc()->getResourceList( "layer" );
     g_message( "layers list starts at %p", layers );
     for ( GSList const *iter=layers ; iter ; iter = iter->next ) {
         SPObject *layer=static_cast<SPObject *>(iter->data);

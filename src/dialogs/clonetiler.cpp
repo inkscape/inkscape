@@ -4,6 +4,8 @@
 /* Authors:
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004-2006 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -44,6 +46,8 @@
 #include "../verbs.h"
 #include "widgets/icon.h"
 #include "xml/repr.h"
+
+using Inkscape::DocumentUndo;
 
 #define MIN_ONSCREEN_DISTANCE 50
 
@@ -108,11 +112,6 @@ clonetiler_dialog_delete (GtkObject */*object*/, GdkEvent * /*event*/, gpointer 
 
     return FALSE; // which means, go ahead and destroy it
 
-}
-
-static void on_delete()
-{
-    (void)clonetiler_dialog_delete (0, 0, NULL);
 }
 
 static void
@@ -839,9 +838,9 @@ clonetiler_trace_hide_tiled_clones_recursively (SPObject *from)
     if (!trace_arena)
         return;
 
-    for (SPObject *o = sp_object_first_child(from); o != NULL; o = SP_OBJECT_NEXT(o)) {
+    for (SPObject *o = from->firstChild(); o != NULL; o = o->next) {
         if (SP_IS_ITEM(o) && clonetiler_is_a_clone_of (o, NULL))
-            sp_item_invoke_hide(SP_ITEM(o), trace_visionkey); // FIXME: hide each tiled clone's original too!
+            SP_ITEM(o)->invoke_hide(trace_visionkey); // FIXME: hide each tiled clone's original too!
         clonetiler_trace_hide_tiled_clones_recursively (o);
     }
 }
@@ -851,17 +850,16 @@ clonetiler_trace_setup (SPDocument *doc, gdouble zoom, SPItem *original)
 {
     trace_arena = NRArena::create();
     /* Create ArenaItem and set transform */
-    trace_visionkey = sp_item_display_key_new(1);
+    trace_visionkey = SPItem::display_key_new(1);
     trace_doc = doc;
-    trace_root = sp_item_invoke_show( SP_ITEM(SP_DOCUMENT_ROOT (trace_doc)),
-                                      (NRArena *) trace_arena, trace_visionkey, SP_ITEM_SHOW_DISPLAY);
+    trace_root = SP_ITEM(trace_doc->getRoot())->invoke_show((NRArena *) trace_arena, trace_visionkey, SP_ITEM_SHOW_DISPLAY);
 
     // hide the (current) original and any tiled clones, we only want to pick the background
-    sp_item_invoke_hide(original, trace_visionkey);
-    clonetiler_trace_hide_tiled_clones_recursively (SP_OBJECT(SP_DOCUMENT_ROOT (trace_doc)));
+    original->invoke_hide(trace_visionkey);
+    clonetiler_trace_hide_tiled_clones_recursively(SP_OBJECT(trace_doc->getRoot()));
 
-    sp_document_root (trace_doc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-    sp_document_ensure_up_to_date(trace_doc);
+    trace_doc->getRoot()->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    trace_doc->ensureUpToDate();
 
     trace_zoom = zoom;
 }
@@ -944,7 +942,7 @@ static void
 clonetiler_trace_finish ()
 {
     if (trace_doc) {
-        sp_item_invoke_hide(SP_ITEM(sp_document_root(trace_doc)), trace_visionkey);
+        SP_ITEM(trace_doc->getRoot())->invoke_hide(trace_visionkey);
     }
     if (trace_arena) {
         ((NRObject *) trace_arena)->unreference();
@@ -972,20 +970,20 @@ clonetiler_unclump( GtkWidget */*widget*/, void * )
 
     GSList *to_unclump = NULL; // not including the original
 
-    for (SPObject *child = sp_object_first_child(parent); child != NULL; child = SP_OBJECT_NEXT(child)) {
+    for (SPObject *child = parent->firstChild(); child != NULL; child = child->next) {
         if (clonetiler_is_a_clone_of (child, obj)) {
             to_unclump = g_slist_prepend (to_unclump, child);
         }
     }
 
-    sp_document_ensure_up_to_date(sp_desktop_document(desktop));
+    sp_desktop_document(desktop)->ensureUpToDate();
 
     unclump (to_unclump);
 
     g_slist_free (to_unclump);
 
-    sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_CLONETILER,
-                      _("Unclump tiled clones"));
+    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_DIALOG_CLONETILER,
+                       _("Unclump tiled clones"));
 }
 
 static guint
@@ -995,7 +993,7 @@ clonetiler_number_of_clones (SPObject *obj)
 
     guint n = 0;
 
-    for (SPObject *child = sp_object_first_child(parent); child != NULL; child = SP_OBJECT_NEXT(child)) {
+    for (SPObject *child = parent->firstChild(); child != NULL; child = child->next) {
         if (clonetiler_is_a_clone_of (child, obj)) {
             n ++;
         }
@@ -1024,7 +1022,7 @@ clonetiler_remove( GtkWidget */*widget*/, void *, bool do_undo = true )
 
 // remove old tiling
     GSList *to_delete = NULL;
-    for (SPObject *child = sp_object_first_child(parent); child != NULL; child = SP_OBJECT_NEXT(child)) {
+    for (SPObject *child = parent->firstChild(); child != NULL; child = child->next) {
         if (clonetiler_is_a_clone_of (child, obj)) {
             to_delete = g_slist_prepend (to_delete, child);
         }
@@ -1036,9 +1034,10 @@ clonetiler_remove( GtkWidget */*widget*/, void *, bool do_undo = true )
 
     clonetiler_change_selection (NULL, selection, dlg);
 
-    if (do_undo)
-        sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_CLONETILER,
-                          _("Delete tiled clones"));
+    if (do_undo) {
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_DIALOG_CLONETILER,
+                           _("Delete tiled clones"));
+    }
 }
 
 static Geom::Rect
@@ -1222,7 +1221,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
         bool prefs_bbox = prefs->getBool("/tools/bounding_box", false);
         SPItem::BBoxType bbox_type = ( prefs_bbox ? 
             SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX );
-        Geom::OptRect r = SP_ITEM(obj)->getBounds(sp_item_i2doc_affine(SP_ITEM(obj)),
+        Geom::OptRect r = SP_ITEM(obj)->getBounds(SP_ITEM(obj)->i2doc_affine(),
                                                         bbox_type);
         if (r) {
             w = r->dimensions()[Geom::X];
@@ -1471,7 +1470,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
                 double radius = blur * perimeter;
                 // this is necessary for all newly added clones to have correct bboxes,
                 // otherwise filters won't work:
-                sp_document_ensure_up_to_date(sp_desktop_document(desktop));
+                sp_desktop_document(desktop)->ensureUpToDate();
                 // it's hard to figure out exact width/height of the tile without having an object
                 // that we can take bbox of; however here we only need a lower bound so that blur
                 // margins are not too small, and the perimeter should work
@@ -1501,8 +1500,8 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
 
     desktop->clearWaitingCursor();
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_DIALOG_CLONETILER,
-                     _("Create tiled clones"));
+    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_DIALOG_CLONETILER,
+                       _("Create tiled clones"));
 }
 
 static GtkWidget *

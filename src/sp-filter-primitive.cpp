@@ -1,5 +1,3 @@
-#define __SP_FILTER_PRIMITIVE_CPP__
-
 /** \file
  * Superclass for all the filter primitives
  *
@@ -8,6 +6,7 @@
  * Authors:
  *   Kees Cook <kees@outflux.net>
  *   Niko Kiirala <niko@kiirala.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004-2007 Authors
  *
@@ -99,8 +98,8 @@ sp_filter_primitive_build(SPObject *object, SPDocument *document, Inkscape::XML:
         ((SPObjectClass *) filter_primitive_parent_class)->build(object, document, repr);
     }
 
-    sp_object_read_attr(object, "in");
-    sp_object_read_attr(object, "result");
+    object->readAttr( "in" );
+    object->readAttr( "result" );
 }
 
 /**
@@ -164,8 +163,8 @@ sp_filter_primitive_update(SPObject *object, SPCtx *ctx, guint flags)
     //SPFilterPrimitive *filter_primitive = SP_FILTER_PRIMITIVE(object);
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-        sp_object_read_attr(object, "in");
-        sp_object_read_attr(object, "result");
+        object->readAttr( "in" );
+        object->readAttr( "result" );
     }
 
     if (((SPObjectClass *) filter_primitive_parent_class)->update) {
@@ -259,7 +258,8 @@ int sp_filter_primitive_name_previous_out(SPFilterPrimitive *prim) {
             Glib::ustring name = sp_filter_get_new_result_name(parent);
             int slot = sp_filter_set_image_name(parent, name.c_str());
             i_prim->image_out = slot;
-            i_prim->repr->setAttribute("result", name.c_str());
+            //XML Tree is being directly used while it shouldn't be.
+            i_prim->getRepr()->setAttribute("result", name.c_str());
             return slot;
         } else {
             return i_prim->image_out;

@@ -1,5 +1,3 @@
-#define __SP_FLOWREGION_C__
-
 /*
  */
 
@@ -143,105 +141,101 @@ sp_flowregion_remove_child (SPObject * object, Inkscape::XML::Node * child)
 }
 
 
-static void
-sp_flowregion_update (SPObject *object, SPCtx *ctx, unsigned int flags)
+static void sp_flowregion_update(SPObject *object, SPCtx *ctx, unsigned int flags)
 {
-	SPFlowregion *group;
-	SPObject *child;
-	SPItemCtx *ictx, cctx;
-	GSList *l;
+    SPFlowregion *group = SP_FLOWREGION(object);
 
-	group = SP_FLOWREGION (object);
-	ictx = (SPItemCtx *) ctx;
-	cctx = *ictx;
+    SPItemCtx *ictx = reinterpret_cast<SPItemCtx *>(ctx);
+    SPItemCtx cctx = *ictx;
 
-	if (((SPObjectClass *) (flowregion_parent_class))->update)
-		((SPObjectClass *) (flowregion_parent_class))->update (object, ctx, flags);
+    if (((SPObjectClass *) (flowregion_parent_class))->update) {
+        ((SPObjectClass *) (flowregion_parent_class))->update (object, ctx, flags);
+    }
 
-	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
-	flags &= SP_OBJECT_MODIFIED_CASCADE;
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+        flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    }
+    flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-	l = NULL;
-	for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-		g_object_ref (G_OBJECT (child));
-		l = g_slist_prepend (l, child);
-	}
-	l = g_slist_reverse (l);
-	while (l) {
-		child = SP_OBJECT (l->data);
-		l = g_slist_remove (l, child);
-		if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
-			if (SP_IS_ITEM (child)) {
-				SPItem const &chi = *SP_ITEM(child);
-				cctx.i2doc = chi.transform * ictx->i2doc;
-				cctx.i2vp = chi.transform * ictx->i2vp;
-				child->updateDisplay((SPCtx *)&cctx, flags);
-			} else {
-				child->updateDisplay(ctx, flags);
-			}
-		}
-		g_object_unref (G_OBJECT (child));
-	}
+    GSList *l = NULL;
+    for ( SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
+        g_object_ref( G_OBJECT(child) );
+        l = g_slist_prepend(l, child);
+    }
+    l = g_slist_reverse(l);
+    while (l) {
+        SPObject *child = SP_OBJECT(l->data);
+        l = g_slist_remove(l, child);
+        if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+            if (SP_IS_ITEM (child)) {
+                SPItem const &chi = *SP_ITEM(child);
+                cctx.i2doc = chi.transform * ictx->i2doc;
+                cctx.i2vp = chi.transform * ictx->i2vp;
+                child->updateDisplay((SPCtx *)&cctx, flags);
+            } else {
+                child->updateDisplay(ctx, flags);
+            }
+        }
+        g_object_unref (G_OBJECT(child));
+    }
 
-	group->UpdateComputed();
+    group->UpdateComputed();
 }
 
-void             SPFlowregion::UpdateComputed(void)
+void SPFlowregion::UpdateComputed(void)
 {
-	SPObject* object=SP_OBJECT(this);
-
-    for (std::vector<Shape*>::iterator it = computed.begin() ; it != computed.end() ; it++)
+    for (std::vector<Shape*>::iterator it = computed.begin() ; it != computed.end() ; it++) {
         delete *it;
+    }
     computed.clear();
 
-	for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-        Shape *shape = NULL;
-		GetDest(child,&shape);
+    for (SPObject* child = firstChild() ; child ; child = child->getNext() ) {
+        Shape *shape = 0;
+        GetDest(child, &shape);
         computed.push_back(shape);
-	}
+    }
 }
 
-static void
-sp_flowregion_modified (SPObject *object, guint flags)
+static void sp_flowregion_modified(SPObject *object, guint flags)
 {
-	SPFlowregion *group;
-	SPObject *child;
-	GSList *l;
+    SP_FLOWREGION(object); // ensure it is the proper type.
 
-	group = SP_FLOWREGION (object);
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+        flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    }
+    flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
-	flags &= SP_OBJECT_MODIFIED_CASCADE;
-
-	l = NULL;
-	for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-		g_object_ref (G_OBJECT (child));
-		l = g_slist_prepend (l, child);
-	}
-	l = g_slist_reverse (l);
-	while (l) {
-		child = SP_OBJECT (l->data);
-		l = g_slist_remove (l, child);
-		if (flags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
-			child->emitModified(flags);
-		}
-		g_object_unref (G_OBJECT (child));
-	}
+    GSList *l = NULL;
+    for ( SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
+        g_object_ref( G_OBJECT(child) );
+        l = g_slist_prepend(l, child);
+    }
+    l = g_slist_reverse(l);
+    while (l) {
+        SPObject *child = SP_OBJECT(l->data);
+        l = g_slist_remove(l, child);
+        if (flags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+            child->emitModified(flags);
+        }
+        g_object_unref( G_OBJECT(child) );
+    }
 }
 
-static Inkscape::XML::Node *
-sp_flowregion_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *sp_flowregion_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     if (flags & SP_OBJECT_WRITE_BUILD) {
-	if ( repr == NULL ) {
+        if ( repr == NULL ) {
             repr = xml_doc->createElement("svg:flowRegion");
-	}
+        }
 
         GSList *l = NULL;
-        for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
-            Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
-            if (crepr) l = g_slist_prepend(l, crepr);
+        for ( SPObject *child = object->firstChild() ; child; child = child->getNext() ) {
+            if ( !SP_IS_TITLE(child) && !SP_IS_DESC(child) ) {
+                Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
+                if (crepr) {
+                    l = g_slist_prepend(l, crepr);
+                }
+            }
         }
 
         while (l) {
@@ -251,16 +245,18 @@ sp_flowregion_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscap
         }
 
     } else {
-        for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
-            child->updateRepr(flags);
+        for ( SPObject *child = object->firstChild() ; child; child = child->getNext() ) {
+            if ( !SP_IS_TITLE(child) && !SP_IS_DESC(child) ) {
+                child->updateRepr(flags);
+            }
         }
     }
 
-	if (((SPObjectClass *) (flowregion_parent_class))->write)
-		((SPObjectClass *) (flowregion_parent_class))->write (object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (flowregion_parent_class))->write) {
+        ((SPObjectClass *) (flowregion_parent_class))->write (object, xml_doc, repr, flags);
+    }
 
-	return repr;
+    return repr;
 }
 
 
@@ -361,102 +357,97 @@ sp_flowregionexclude_remove_child (SPObject * object, Inkscape::XML::Node * chil
 }
 
 
-static void
-sp_flowregionexclude_update (SPObject *object, SPCtx *ctx, unsigned int flags)
+static void sp_flowregionexclude_update(SPObject *object, SPCtx *ctx, unsigned int flags)
 {
-	SPFlowregionExclude *group;
-	SPObject *child;
-	SPItemCtx *ictx, cctx;
-	GSList *l;
+    SPFlowregionExclude *group = SP_FLOWREGIONEXCLUDE (object);
 
-	group = SP_FLOWREGIONEXCLUDE (object);
-	ictx = (SPItemCtx *) ctx;
-	cctx = *ictx;
+    SPItemCtx *ictx = reinterpret_cast<SPItemCtx *>(ctx);
+    SPItemCtx cctx = *ictx;
 
-	if (((SPObjectClass *) (flowregionexclude_parent_class))->update)
-		((SPObjectClass *) (flowregionexclude_parent_class))->update (object, ctx, flags);
+    if (((SPObjectClass *) (flowregionexclude_parent_class))->update) {
+        ((SPObjectClass *) (flowregionexclude_parent_class))->update (object, ctx, flags);
+    }
 
-	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
-	flags &= SP_OBJECT_MODIFIED_CASCADE;
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+        flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    }
+    flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-	l = NULL;
-	for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-		g_object_ref (G_OBJECT (child));
-		l = g_slist_prepend (l, child);
-	}
-	l = g_slist_reverse (l);
-	while (l) {
-		child = SP_OBJECT (l->data);
-		l = g_slist_remove (l, child);
-		if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
-			if (SP_IS_ITEM (child)) {
-				SPItem const &chi = *SP_ITEM(child);
-				cctx.i2doc = chi.transform * ictx->i2doc;
-				cctx.i2vp = chi.transform * ictx->i2vp;
-				child->updateDisplay((SPCtx *)&cctx, flags);
-			} else {
-				child->updateDisplay(ctx, flags);
-			}
-		}
-		g_object_unref (G_OBJECT (child));
-	}
+    GSList *l = NULL;
+    for ( SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
+        g_object_ref( G_OBJECT(child) );
+        l = g_slist_prepend(l, child);
+    }
+    l = g_slist_reverse (l);
+    while (l) {
+        SPObject *child = SP_OBJECT(l->data);
+        l = g_slist_remove(l, child);
+        if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+            if (SP_IS_ITEM (child)) {
+                SPItem const &chi = *SP_ITEM(child);
+                cctx.i2doc = chi.transform * ictx->i2doc;
+                cctx.i2vp = chi.transform * ictx->i2vp;
+                child->updateDisplay((SPCtx *)&cctx, flags);
+            } else {
+                child->updateDisplay(ctx, flags);
+            }
+        }
+        g_object_unref( G_OBJECT(child) );
+    }
 
-	group->UpdateComputed();
+    group->UpdateComputed();
 }
-void             SPFlowregionExclude::UpdateComputed(void)
-{
-	SPObject* object=SP_OBJECT(this);
 
+void SPFlowregionExclude::UpdateComputed(void)
+{
     if (computed) {
         delete computed;
         computed = NULL;
     }
 
-	for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-		GetDest(child,&computed);
-	}
+    for ( SPObject* child = firstChild() ; child ; child = child->getNext() ) {
+        GetDest(child, &computed);
+    }
 }
 
-static void
-sp_flowregionexclude_modified (SPObject *object, guint flags)
+static void sp_flowregionexclude_modified(SPObject *object, guint flags)
 {
-	SPFlowregionExclude *group;
-	SPObject *child;
-	GSList *l;
+    SP_FLOWREGIONEXCLUDE(object); // Ensure it is the proper type
 
-	group = SP_FLOWREGIONEXCLUDE (object);
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+        flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    }
+    flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
-	flags &= SP_OBJECT_MODIFIED_CASCADE;
-
-	l = NULL;
-	for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-		g_object_ref (G_OBJECT (child));
-		l = g_slist_prepend (l, child);
-	}
-	l = g_slist_reverse (l);
-	while (l) {
-		child = SP_OBJECT (l->data);
-		l = g_slist_remove (l, child);
-		if (flags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
-			child->emitModified(flags);
-		}
-		g_object_unref (G_OBJECT (child));
-	}
+    GSList *l = NULL;
+    for ( SPObject *child = object->firstChild() ; child ; child = child->getNext() ) {
+        g_object_ref( G_OBJECT(child) );
+        l = g_slist_prepend(l, child);
+    }
+    l = g_slist_reverse (l);
+    while (l) {
+        SPObject *child = SP_OBJECT(l->data);
+        l = g_slist_remove(l, child);
+        if (flags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+            child->emitModified(flags);
+        }
+        g_object_unref( G_OBJECT(child) );
+    }
 }
 
-static Inkscape::XML::Node *
-sp_flowregionexclude_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *sp_flowregionexclude_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     if (flags & SP_OBJECT_WRITE_BUILD) {
         if ( repr == NULL ) {
             repr = xml_doc->createElement("svg:flowRegionExclude");
-	}
+        }
 
         GSList *l = NULL;
-        for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        for ( SPObject *child = object->firstChild() ; child; child = child->getNext() ) {
             Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
-            if (crepr) l = g_slist_prepend(l, crepr);
+            if (crepr) {
+                l = g_slist_prepend(l, crepr);
+            }
         }
 
         while (l) {
@@ -466,15 +457,16 @@ sp_flowregionexclude_write (SPObject *object, Inkscape::XML::Document *xml_doc, 
         }
 
     } else {
-        for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        for ( SPObject *child = object->firstChild() ; child; child = child->getNext() ) {
             child->updateRepr(flags);
         }
     }
 
-	if (((SPObjectClass *) (flowregionexclude_parent_class))->write)
-		((SPObjectClass *) (flowregionexclude_parent_class))->write (object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (flowregionexclude_parent_class))->write) {
+        ((SPObjectClass *) (flowregionexclude_parent_class))->write (object, xml_doc, repr, flags);
+    }
 
-	return repr;
+    return repr;
 }
 
 
@@ -520,7 +512,7 @@ static void         GetDest(SPObject* child,Shape **computed)
 		tr_mat = SP_ITEM(u_child)->transform;
 	}
 	if ( SP_IS_SHAPE (u_child) ) {
-		curve = sp_shape_get_curve (SP_SHAPE (u_child));
+		curve = SP_SHAPE (u_child)->getCurve ();
 	} else if ( SP_IS_TEXT (u_child) ) {
 	curve = SP_TEXT (u_child)->getNormalizedBpath ();
 	}
@@ -548,3 +540,13 @@ static void         GetDest(SPObject* child,Shape **computed)
 	}
 }
 
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

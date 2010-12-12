@@ -6,6 +6,7 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   MenTaLguY <mental@rydia.net>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
@@ -42,6 +43,8 @@
 
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
+
+using Inkscape::DocumentUndo;
 
 enum {
     VECTOR_SET,
@@ -253,7 +256,7 @@ static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
     /* Pick up all gradients with vectors */
     GSList *gl = NULL;
     if (gvs->gr) {
-        const GSList *gradients = sp_document_get_resource_list(SP_OBJECT_DOCUMENT(gvs->gr), "gradient");
+        const GSList *gradients = SP_OBJECT_DOCUMENT(gvs->gr)->getResourceList("gradient");
         for (const GSList *curr = gradients; curr; curr = curr->next) {
             SPGradient* grad = SP_GRADIENT(curr->data);
             if ( grad->hasStops() && (grad->isSwatch() == gvs->swatched) ) {
@@ -340,12 +343,12 @@ static void sp_gvs_gradient_activate(GtkMenuItem *mi, SPGradientVectorSelector *
     /* Namely - menuitems etc. will be fucked up */
     /* Hmmm - probably we can just re-set it as menuitem data (Lauris) */
 
-    //g_print("SPGradientVectorSelector: gradient %s activated\n", SP_OBJECT_ID(gr));
+    //g_print("SPGradientVectorSelector: gradient %s activated\n", gr->getId());
     //g_message("Setting to gradient %p   swatch:%d   solid:%d", gr, gr->isSwatch(), gr->isSolid());
 
     norm = sp_gradient_ensure_vector_normalized(gr);
     if (norm != gr) {
-        //g_print("SPGradientVectorSelector: become %s after normalization\n", SP_OBJECT_ID(norm));
+        //g_print("SPGradientVectorSelector: become %s after normalization\n", norm->getId());
         /* But be careful that we do not have gradient saved anywhere else */
         g_object_set_data(G_OBJECT(mi), "gradient", norm);
     }
@@ -368,8 +371,8 @@ static void sp_gvs_gradient_activate(GtkMenuItem *mi, SPGradientVectorSelector *
         /* We do extra undo push here */
         /* If handler has already done it, it is just NOP */
         // FIXME: looks like this is never a valid undo step, consider removing this
-        sp_document_done(SP_OBJECT_DOCUMENT(norm), SP_VERB_CONTEXT_GRADIENT,
-                          /* TODO: annotate */ "gradient-vector.cpp:350");
+        DocumentUndo::done(SP_OBJECT_DOCUMENT(norm), SP_VERB_CONTEXT_GRADIENT,
+                           /* TODO: annotate */ "gradient-vector.cpp:350");
     }
 }
 
@@ -468,7 +471,7 @@ static void verify_grad(SPGradient *gradient)
     int i = 0;
     SPStop *stop = NULL;
     /* count stops */
-    for ( SPObject *ochild = sp_object_first_child(SP_OBJECT(gradient)) ; ochild != NULL ; ochild = SP_OBJECT_NEXT(ochild) ) {
+    for ( SPObject *ochild = gradient->firstChild() ; ochild ; ochild = ochild->getNext() ) {
         if (SP_IS_STOP(ochild)) {
             i++;
             stop = SP_STOP(ochild);
@@ -508,7 +511,7 @@ static void verify_grad(SPGradient *gradient)
 static void select_stop_in_list( GtkWidget *mnu, SPGradient *gradient, SPStop *new_stop)
 {
     int i = 0;
-    for ( SPObject *ochild = sp_object_first_child(SP_OBJECT(gradient)) ; ochild != NULL ; ochild = SP_OBJECT_NEXT(ochild) ) {
+    for ( SPObject *ochild = gradient->firstChild() ; ochild ; ochild = ochild->getNext() ) {
         if (SP_IS_STOP(ochild)) {
             if (SP_OBJECT(ochild) == SP_OBJECT(new_stop)) {
                 gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), i);
@@ -538,7 +541,7 @@ static void update_stop_list( GtkWidget *mnu, SPGradient *gradient, SPStop *new_
     gtk_widget_show(m);
     GSList *sl = NULL;
     if ( gradient->hasStops() ) {
-        for ( SPObject *ochild = sp_object_first_child(SP_OBJECT(gradient)) ; ochild != NULL ; ochild = SP_OBJECT_NEXT(ochild) ) {
+        for ( SPObject *ochild = gradient->firstChild() ; ochild ; ochild = ochild->getNext() ) {
             if (SP_IS_STOP(ochild)) {
                 sl = g_slist_append(sl, ochild);
             }
@@ -658,8 +661,8 @@ static void offadjustmentChanged( GtkAdjustment *adjustment, GtkWidget *vb)
             stop->offset = adjustment->value;
             sp_repr_set_css_double(SP_OBJECT_REPR(stop), "offset", stop->offset);
 
-            sp_document_maybe_done(SP_OBJECT_DOCUMENT(stop), "gradient:stop:offset", SP_VERB_CONTEXT_GRADIENT,
-                                   _("Change gradient stop offset"));
+            DocumentUndo::maybeDone(SP_OBJECT_DOCUMENT(stop), "gradient:stop:offset", SP_VERB_CONTEXT_GRADIENT,
+                                    _("Change gradient stop offset"));
 
             blocked = FALSE;
         }
@@ -733,8 +736,8 @@ static void sp_grd_ed_add_stop(GtkWidget */*widget*/,  GtkWidget *vb)
     GtkWidget *offslide =GTK_WIDGET(g_object_get_data(G_OBJECT(vb), "offslide"));
     gtk_widget_set_sensitive(offslide, TRUE);
     gtk_widget_set_sensitive(GTK_WIDGET(offspin), TRUE);
-    sp_document_done(SP_OBJECT_DOCUMENT(gradient), SP_VERB_CONTEXT_GRADIENT,
-                      _("Add gradient stop"));
+    DocumentUndo::done(SP_OBJECT_DOCUMENT(gradient), SP_VERB_CONTEXT_GRADIENT,
+                       _("Add gradient stop"));
 }
 
 static void sp_grd_ed_del_stop(GtkWidget */*widget*/,  GtkWidget *vb)
@@ -764,8 +767,8 @@ static void sp_grd_ed_del_stop(GtkWidget */*widget*/,  GtkWidget *vb)
         SP_OBJECT_REPR(gradient)->removeChild(SP_OBJECT_REPR(stop));
         sp_gradient_vector_widget_load_gradient(vb, gradient);
         update_stop_list(GTK_WIDGET(mnu), gradient, NULL);
-        sp_document_done(SP_OBJECT_DOCUMENT(gradient), SP_VERB_CONTEXT_GRADIENT,
-                          _("Delete gradient stop"));
+        DocumentUndo::done(SP_OBJECT_DOCUMENT(gradient), SP_VERB_CONTEXT_GRADIENT,
+                           _("Delete gradient stop"));
     }
 
 }
@@ -1030,10 +1033,10 @@ static void sp_gradient_vector_widget_load_gradient(GtkWidget *widget, SPGradien
         // Once the user edits a gradient, it stops being auto-collectable
         if (SP_OBJECT_REPR(gradient)->attribute("inkscape:collect")) {
             SPDocument *document = SP_OBJECT_DOCUMENT(gradient);
-            bool saved = sp_document_get_undo_sensitive(document);
-            sp_document_set_undo_sensitive(document, false);
+            bool saved = DocumentUndo::getUndoSensitive(document);
+            DocumentUndo::setUndoSensitive(document, false);
             SP_OBJECT_REPR(gradient)->setAttribute("inkscape:collect", NULL);
-            sp_document_set_undo_sensitive(document, saved);
+            DocumentUndo::setUndoSensitive(document, saved);
         }
     } else { // no gradient, disable everything
         gtk_widget_set_sensitive(widget, FALSE);
@@ -1182,8 +1185,8 @@ static void sp_gradient_vector_color_changed(SPColorSelector *csel, GtkObject *o
     // g_snprintf(c, 256, "stop-color:#%06x;stop-opacity:%g;", rgb >> 8, static_cast<gdouble>(alpha));
     //SP_OBJECT_REPR(stop)->setAttribute("style", c);
 
-    sp_document_done(SP_OBJECT_DOCUMENT(ngr), SP_VERB_CONTEXT_GRADIENT,
-                      _("Change gradient stop color"));
+    DocumentUndo::done(SP_OBJECT_DOCUMENT(ngr), SP_VERB_CONTEXT_GRADIENT,
+                       _("Change gradient stop color"));
 
     blocked = FALSE;
 

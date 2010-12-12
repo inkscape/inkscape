@@ -1,5 +1,3 @@
-#define __SP_FEDISTANTLIGHT_CPP__
-
 /** \file
  * SVG <fedistantlight> implementation.
  */
@@ -8,6 +6,7 @@
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *   Niko Kiirala <niko@kiirala.com>
  *   Jean-Rene Reinhard <jr@komite.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006,2007 Authors
  *
@@ -101,11 +100,11 @@ sp_fedistantlight_build(SPObject *object, SPDocument *document, Inkscape::XML::N
     }
 
     //Read values of key attributes from XML nodes into object.
-    sp_object_read_attr(object, "azimuth");
-    sp_object_read_attr(object, "elevation");
+    object->readAttr( "azimuth" );
+    object->readAttr( "elevation" );
 
 //is this necessary?
-    sp_document_add_resource(document, "fedistantlight", object);
+    document->addResource("fedistantlight", object);
 }
 
 /**
@@ -118,7 +117,7 @@ sp_fedistantlight_release(SPObject *object)
 
     if (SP_OBJECT_DOCUMENT(object)) {
         /* Unregister ourselves */
-        sp_document_remove_resource(SP_OBJECT_DOCUMENT(object), "fedistantlight", SP_OBJECT(object));
+        SP_OBJECT_DOCUMENT(object)->removeResource("fedistantlight", SP_OBJECT(object));
     }
 
 //TODO: release resources here
@@ -189,8 +188,8 @@ sp_fedistantlight_update(SPObject *object, SPCtx *ctx, guint flags)
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         /* do something to trigger redisplay, updates? */
-        sp_object_read_attr(object, "azimuth");
-        sp_object_read_attr(object, "elevation");
+        object->readAttr( "azimuth" );
+        object->readAttr( "elevation" );
     }
 
     if (((SPObjectClass *) feDistantLight_parent_class)->update) {

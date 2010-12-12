@@ -1,5 +1,3 @@
-#define __KNOT_HOLDER_C__
-
 /*
  * Container for SPKnot visual handles
  *
@@ -7,11 +5,14 @@
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
  *   bulia byak <buliabyak@users.sf.net>
  *   Maximilian Albert <maximilian.albert@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2001-2008 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#include <glibmm/i18n.h>
 
 #include "document.h"
 #include "sp-shape.h"
@@ -36,13 +37,14 @@
 
 #include "xml/repr.h" // for debugging only
 
-#include <glibmm/i18n.h>
+using Inkscape::DocumentUndo;
 
 class SPDesktop;
 
 KnotHolder::KnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler)
 {
-    Inkscape::XML::Node *repr = SP_OBJECT(item)->repr;
+    //XML Tree being used directly here while it shouldn't be...
+    Inkscape::XML::Node *repr = SP_OBJECT(item)->getRepr();
 
     if (!desktop || !item || !SP_IS_ITEM(item)) {
         g_print ("Error! Throw an exception, please!\n");
@@ -83,7 +85,7 @@ KnotHolder::~KnotHolder() {
 void
 KnotHolder::update_knots()
 {
-    Geom::Matrix const i2d(sp_item_i2d_affine(item));
+    Geom::Matrix const i2d(item->i2d_affine());
 
     for(std::list<KnotHolderEntity *>::iterator i = entity.begin(); i != entity.end(); ++i) {
         KnotHolderEntity *e = *i;
@@ -121,7 +123,7 @@ KnotHolder::knot_clicked_handler(SPKnot *knot, guint state)
     }
 
     if (SP_IS_SHAPE(item)) {
-        sp_shape_set_shape(SP_SHAPE(item));
+        SP_SHAPE(item)->setShape();
     }
 
     knot_holder->update_knots();
@@ -146,8 +148,8 @@ KnotHolder::knot_clicked_handler(SPKnot *knot, guint state)
     }
 
     // for drag, this is done by ungrabbed_handler, but for click we must do it here
-    sp_document_done(SP_OBJECT_DOCUMENT(item), object_verb,
-                     _("Change handle"));
+    DocumentUndo::done(SP_OBJECT_DOCUMENT(item), object_verb,
+                       _("Change handle"));
 }
 
 void
@@ -163,14 +165,14 @@ KnotHolder::knot_moved_handler(SPKnot *knot, Geom::Point const &p, guint state)
     for(std::list<KnotHolderEntity *>::iterator i = this->entity.begin(); i != this->entity.end(); ++i) {
         KnotHolderEntity *e = *i;
         if (e->knot == knot) {
-            Geom::Point const q = p * sp_item_i2d_affine(item).inverse();
-            e->knot_set(q, e->knot->drag_origin * sp_item_i2d_affine(item).inverse(), state);
+            Geom::Point const q = p * item->i2d_affine().inverse();
+            e->knot_set(q, e->knot->drag_origin * item->i2d_affine().inverse(), state);
             break;
         }
     }
 
     if (SP_IS_SHAPE (item)) {
-        sp_shape_set_shape(SP_SHAPE (item));
+        SP_SHAPE (item)->setShape();
     }
 
     this->update_knots();
@@ -225,8 +227,8 @@ KnotHolder::knot_ungrabbed_handler(SPKnot */*knot*/)
                 object_verb = SP_VERB_SELECTION_DYNAMIC_OFFSET;
         }
 
-        sp_document_done(SP_OBJECT_DOCUMENT (object), object_verb,
-                         _("Move handle"));
+        DocumentUndo::done(SP_OBJECT_DOCUMENT (object), object_verb,
+                           _("Move handle"));
     }
 }
 

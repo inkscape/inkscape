@@ -6,6 +6,8 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jon Phillips <jon@rejon.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de> (Gtkmm)
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2000 - 2005 Authors
  *
@@ -20,6 +22,7 @@
 #include <gtkmm/entry.h>
 
 #include "inkscape.h"
+#include "sp-object.h"
 #include "rdf.h"
 #include "ui/widget/registry.h"
 
@@ -80,10 +83,14 @@ EntityLineEntry::~EntityLineEntry()
     delete static_cast<Gtk::Entry*>(_packable);
 }
 
-void 
-EntityLineEntry::update (SPDocument *doc)
+void EntityLineEntry::update(SPDocument *doc)
 {
     const char *text = rdf_get_work_entity (doc, _entity);
+    // If RDF title is not set, get the document's <title> and set the RDF:
+    if ( !text && !strcmp(_entity->name, "title") && doc->root ) {
+        text = doc->root->title();
+        rdf_set_work_entity(doc, _entity, text);
+    }
     static_cast<Gtk::Entry*>(_packable)->set_text (text ? text : "");
 }
 
@@ -95,9 +102,10 @@ EntityLineEntry::on_changed()
     _wr->setUpdating (true);
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
     Glib::ustring text = static_cast<Gtk::Entry*>(_packable)->get_text();
-    if (rdf_set_work_entity (doc, _entity, text.c_str()))
-        sp_document_done (doc, SP_VERB_NONE, 
-                          /* TODO: annotate */ "entity-entry.cpp:101");
+    if (rdf_set_work_entity (doc, _entity, text.c_str())) {
+        DocumentUndo::done(doc, SP_VERB_NONE, 
+                           /* TODO: annotate */ "entity-entry.cpp:101");
+    }
     _wr->setUpdating (false);
 }
 
@@ -121,10 +129,14 @@ EntityMultiLineEntry::~EntityMultiLineEntry()
     delete static_cast<Gtk::ScrolledWindow*>(_packable);
 }
 
-void 
-EntityMultiLineEntry::update (SPDocument *doc)
+void EntityMultiLineEntry::update(SPDocument *doc)
 {
     const char *text = rdf_get_work_entity (doc, _entity);
+    // If RDF title is not set, get the document's <title> and set the RDF:
+    if ( !text && !strcmp(_entity->name, "title") && doc->root ) {
+        text = doc->root->title();
+        rdf_set_work_entity(doc, _entity, text);
+    }
     Gtk::ScrolledWindow *s = static_cast<Gtk::ScrolledWindow*>(_packable);
     Gtk::TextView *tv = static_cast<Gtk::TextView*>(s->get_child());
     tv->get_buffer()->set_text (text ? text : "");
@@ -140,9 +152,10 @@ EntityMultiLineEntry::on_changed()
     Gtk::ScrolledWindow *s = static_cast<Gtk::ScrolledWindow*>(_packable);
     Gtk::TextView *tv = static_cast<Gtk::TextView*>(s->get_child());
     Glib::ustring text = tv->get_buffer()->get_text();
-    if (rdf_set_work_entity (doc, _entity, text.c_str()))
-        sp_document_done (doc, SP_VERB_NONE, 
-                          /* TODO: annotate */ "entity-entry.cpp:146");
+    if (rdf_set_work_entity (doc, _entity, text.c_str())) {
+        DocumentUndo::done(doc, SP_VERB_NONE, 
+                            /* TODO: annotate */ "entity-entry.cpp:146");
+    }
     _wr->setUpdating (false);
 }
 

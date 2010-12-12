@@ -1,9 +1,10 @@
 /**
  * Inkscape::ConsoleOutputUndoObserver - observer for tracing calls to
- * sp_document_undo, sp_document_redo, sp_document_maybe_done
+ * SPDocumentUndo::undo, SPDocumentUndo::redo, SPDocumentUndo::maybe_done
  *
  * Authors:
  * David Yip <yipdw@alumni.rose-hulman.edu>
+ *   Abhishek Sharma
  *
  * Copyright (c) 2006 Authors
  *
@@ -19,31 +20,31 @@ namespace Inkscape {
 void
 ConsoleOutputUndoObserver::notifyUndoEvent(Event* /*log*/)
 {
-    // g_message("notifyUndoEvent (sp_document_undo) called; log=%p\n", log->event);
+    // g_message("notifyUndoEvent(SPDocumentUndo::undo) called; log=%p\n", log->event);
 }
 
 void
 ConsoleOutputUndoObserver::notifyRedoEvent(Event* /*log*/)
 {
-    // g_message("notifyRedoEvent (sp_document_redo) called; log=%p\n", log->event);
+    // g_message("notifyRedoEvent(SPDocumentUndo::redo) called; log=%p\n", log->event);
 }
 
 void
 ConsoleOutputUndoObserver::notifyUndoCommitEvent(Event* /*log*/)
 {
-    //g_message("notifyUndoCommitEvent (sp_document_maybe_done) called; log=%p\n", log->event);
+    //g_message("notifyUndoCommitEvent(SPDocumentUndo::maybe_done) called; log=%p\n", log->event);
 }
 
 void
 ConsoleOutputUndoObserver::notifyClearUndoEvent()
 {
-    //g_message("notifyClearUndoEvent (sp_document_clear_undo) called);
+    //g_message("notifyClearUndoEvent(sp_document_clear_undo) called);
 }
 
 void
 ConsoleOutputUndoObserver::notifyClearRedoEvent()
 {
-    //g_message("notifyClearRedoEvent (sp_document_clear_redo) called);
+    //g_message("notifyClearRedoEvent(sp_document_clear_redo) called);
 }
 
 }

@@ -1,10 +1,10 @@
-#define __PERSP3D_C__
-
 /*
  * Class modelling a 3D perspective as an SPObject
  *
  * Authors:
  *   Maximilian Albert <Anhalter42@gmx.de>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 authors
  *
@@ -22,6 +22,8 @@
 #include "xml/node-event-vector.h"
 #include "desktop-handles.h"
 #include <glibmm/i18n.h>
+
+using Inkscape::DocumentUndo;
 
 static void persp3d_class_init(Persp3DClass *klass);
 static void persp3d_init(Persp3D *persp);
@@ -116,10 +118,10 @@ static void persp3d_build(SPObject *object, SPDocument *document, Inkscape::XML:
 
     /* calls sp_object_set for the respective attributes */
     // The transformation matrix is updated according to the values we read for the VPs
-    sp_object_read_attr(object, "inkscape:vp_x");
-    sp_object_read_attr(object, "inkscape:vp_y");
-    sp_object_read_attr(object, "inkscape:vp_z");
-    sp_object_read_attr(object, "inkscape:persp3d-origin");
+    object->readAttr( "inkscape:vp_x" );
+    object->readAttr( "inkscape:vp_y" );
+    object->readAttr( "inkscape:vp_z" );
+    object->readAttr( "inkscape:persp3d-origin" );
 
     if (repr) {
         repr->addListener (&persp3d_repr_events, object);
@@ -206,20 +208,19 @@ persp3d_update(SPObject *object, SPCtx *ctx, guint flags)
         ((SPObjectClass *) persp3d_parent_class)->update(object, ctx, flags);
 }
 
-Persp3D *
-persp3d_create_xml_element (SPDocument *document, Persp3DImpl *dup) {// if dup is given, copy the attributes over
+Persp3D *persp3d_create_xml_element(SPDocument *document, Persp3DImpl *dup) {// if dup is given, copy the attributes over
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    Inkscape::XML::Document *xml_doc = document->getReprDoc();
     Inkscape::XML::Node *repr;
 
     /* if no perspective is given, create a default one */
     repr = xml_doc->createElement("inkscape:perspective");
     repr->setAttribute("sodipodi:type", "inkscape:persp3d");
 
-    Proj::Pt2 proj_vp_x = Proj::Pt2 (0.0, sp_document_height(document)/2, 1.0);
+    Proj::Pt2 proj_vp_x = Proj::Pt2 (0.0, document->getHeight()/2, 1.0);
     Proj::Pt2 proj_vp_y = Proj::Pt2 (0.0, 1000.0, 0.0);
-    Proj::Pt2 proj_vp_z = Proj::Pt2 (sp_document_width(document), sp_document_height(document)/2, 1.0);
-    Proj::Pt2 proj_origin = Proj::Pt2 (sp_document_width(document)/2, sp_document_height(document)/3, 1.0);
+    Proj::Pt2 proj_vp_z = Proj::Pt2 (document->getWidth(), document->getHeight()/2, 1.0);
+    Proj::Pt2 proj_origin = Proj::Pt2 (document->getWidth()/2, document->getHeight()/3, 1.0);
 
     if (dup) {
         proj_vp_x = dup->tmat.column (Proj::X);
@@ -246,20 +247,18 @@ persp3d_create_xml_element (SPDocument *document, Persp3DImpl *dup) {// if dup i
     SP_OBJECT_REPR(defs)->addChild(repr, NULL);
     Inkscape::GC::release(repr);
 
-    return (Persp3D *) sp_object_get_child_by_repr (SP_OBJECT(defs), repr);
+    return (Persp3D *) SP_OBJECT(defs)->get_child_by_repr (repr);
 }
 
-Persp3D *
-persp3d_document_first_persp (SPDocument *document) {
-    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
-    Inkscape::XML::Node *repr;
-    for (SPObject *child = sp_object_first_child(defs); child != NULL; child = SP_OBJECT_NEXT(child) ) {
-        repr = SP_OBJECT_REPR(child);
+Persp3D *persp3d_document_first_persp(SPDocument *document)
+{
+    Persp3D *first = 0;
+    for ( SPObject *child = SP_DOCUMENT_DEFS(document)->firstChild(); child && !first; child = child->getNext() ) {
         if (SP_IS_PERSP3D(child)) {
-            return SP_PERSP3D(child);
+            first = SP_PERSP3D(child);
         }
     }
-    return NULL;
+    return first;
 }
 
 /**
@@ -341,8 +340,8 @@ persp3d_toggle_VP (Persp3D *persp, Proj::Axis axis, bool set_undo) {
     persp3d_update_box_reprs (persp);
     SP_OBJECT(persp)->updateRepr(SP_OBJECT_WRITE_EXT);
     if (set_undo) {
-        sp_document_done(sp_desktop_document(inkscape_active_desktop()), SP_VERB_CONTEXT_3DBOX,
-                         _("Toggle vanishing point"));
+        DocumentUndo::done(sp_desktop_document(inkscape_active_desktop()), SP_VERB_CONTEXT_3DBOX,
+                           _("Toggle vanishing point"));
     }
 }
 
@@ -352,8 +351,8 @@ persp3d_toggle_VPs (std::list<Persp3D *> p, Proj::Axis axis) {
     for (std::list<Persp3D *>::iterator i = p.begin(); i != p.end(); ++i) {
         persp3d_toggle_VP((*i), axis, false);
     }
-    sp_document_done(sp_desktop_document(inkscape_active_desktop()), SP_VERB_CONTEXT_3DBOX,
-                     _("Toggle multiple vanishing points"));
+    DocumentUndo::done(sp_desktop_document(inkscape_active_desktop()), SP_VERB_CONTEXT_3DBOX,
+                       _("Toggle multiple vanishing points"));
 }
 
 void
@@ -564,12 +563,9 @@ persp3d_print_debugging_info (Persp3D *persp) {
     g_print ("========================\n");
 }
 
-void
-persp3d_print_debugging_info_all(SPDocument *document) {
-    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
-    Inkscape::XML::Node *repr;
-    for (SPObject *child = sp_object_first_child(defs); child != NULL; child = SP_OBJECT_NEXT(child) ) {
-        repr = SP_OBJECT_REPR(child);
+void persp3d_print_debugging_info_all(SPDocument *document)
+{
+    for ( SPObject *child = SP_DOCUMENT_DEFS(document)->firstChild(); child; child = child->getNext() ) {
         if (SP_IS_PERSP3D(child)) {
             persp3d_print_debugging_info(SP_PERSP3D(child));
         }

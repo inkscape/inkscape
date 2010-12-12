@@ -1,5 +1,5 @@
-#ifndef __SP_INTERFACE_H__
-#define __SP_INTERFACE_H__
+#ifndef SEEN_SP_INTERFACE_H
+#define SEEN_SP_INTERFACE_H
 
 /*
  * Main UI stuff
@@ -7,6 +7,7 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -17,7 +18,7 @@
 #include <gtk/gtkstyle.h>
 
 #include "forward.h"
-
+#include "sp-item.h"
 
 /**
  *  Create a new document window.
@@ -69,7 +70,7 @@ void sp_ui_dialog_title_string (Inkscape::Verb * verb, gchar* c);
 void sp_ui_error_dialog (const gchar * message);
 bool sp_ui_overwrite_file (const gchar * filename);
 
-#endif
+#endif // SEEN_SP_INTERFACE_H
 
 /*
   Local Variables:

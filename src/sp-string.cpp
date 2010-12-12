@@ -1,10 +1,10 @@
-#define __SP_STRING_C__
-
 /*
  * SVG <text> and <tspan> implementation
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -116,12 +116,16 @@ sp_string_read_content(SPObject *object)
     SPString *string = SP_STRING(object);
 
     string->string.clear();
-    gchar const *xml_string = string->repr->content();
+
+    //XML Tree being used directly here while it shouldn't be.
+    gchar const *xml_string = string->getRepr()->content();
     // see algorithms described in svg 1.1 section 10.15
     if (object->xml_space.value == SP_XML_SPACE_PRESERVE) {
         for ( ; *xml_string ; xml_string = g_utf8_next_char(xml_string) ) {
             gunichar c = g_utf8_get_char(xml_string);
-            if (c == 0xa || c == 0xd || c == '\t') c = ' ';
+            if ((c == 0xa) || (c == 0xd) || (c == '\t')) {
+                c = ' ';
+            }
             string->string += c;
         }
     }
@@ -129,17 +133,22 @@ sp_string_read_content(SPObject *object)
         bool whitespace = false;
         for ( ; *xml_string ; xml_string = g_utf8_next_char(xml_string) ) {
             gunichar c = g_utf8_get_char(xml_string);
-            if (c == 0xa || c == 0xd) continue;
-            if (c == ' ' || c == '\t') whitespace = true;
-            else {
-                if (whitespace && (!string->string.empty() || SP_OBJECT_PREV(object) != NULL))
+            if ((c == 0xa) || (c == 0xd)) {
+                continue;
+            }
+            if ((c == ' ') || (c == '\t')) {
+                whitespace = true;
+            } else {
+                if (whitespace && (!string->string.empty() || (object->getPrev() != NULL))) {
                     string->string += ' ';
+                }
                 string->string += c;
                 whitespace = false;
             }
         }
-        if (whitespace && SP_OBJECT_REPR(object)->next() != NULL)   // can't use SP_OBJECT_NEXT() when the SPObject tree is still being built
+        if (whitespace && SP_OBJECT_REPR(object)->next() != NULL) {   // can't use SPObject::getNext() when the SPObject tree is still being built
             string->string += ' ';
+        }
     }
     object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }

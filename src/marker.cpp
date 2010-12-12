@@ -1,11 +1,10 @@
-#define __MARKER_C__
-
 /*
  * SVG <marker> implementation
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Bryce Harrington <bryce@bryceharrington.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2003 Lauris Kaplinski
  *               2004-2006 Bryce Harrington
@@ -141,14 +140,14 @@ sp_marker_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *re
 	group = (SPGroup *) object;
 	marker = (SPMarker *) object;
 
-	sp_object_read_attr (object, "markerUnits");
-	sp_object_read_attr (object, "refX");
-	sp_object_read_attr (object, "refY");
-	sp_object_read_attr (object, "markerWidth");
-	sp_object_read_attr (object, "markerHeight");
-	sp_object_read_attr (object, "orient");
-	sp_object_read_attr (object, "viewBox");
-	sp_object_read_attr (object, "preserveAspectRatio");
+	object->readAttr( "markerUnits" );
+	object->readAttr( "refX" );
+	object->readAttr( "refY" );
+	object->readAttr( "markerWidth" );
+	object->readAttr( "markerHeight" );
+	object->readAttr( "orient" );
+	object->readAttr( "viewBox" );
+	object->readAttr( "preserveAspectRatio" );
 
 	if (((SPObjectClass *) parent_class)->build)
 		((SPObjectClass *) parent_class)->build (object, document, repr);
@@ -524,8 +523,10 @@ sp_marker_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::X
 		repr->setAttribute("orient", NULL);
 	}
 	/* fixme: */
-	repr->setAttribute("viewBox", object->repr->attribute("viewBox"));
-	repr->setAttribute("preserveAspectRatio", object->repr->attribute("preserveAspectRatio"));
+	//XML Tree being used directly here while it shouldn't be....
+	repr->setAttribute("viewBox", object->getRepr()->attribute("viewBox"));
+	//XML Tree being used directly here while it shouldn't be....
+	repr->setAttribute("preserveAspectRatio", object->getRepr()->attribute("preserveAspectRatio"));
 
 	if (((SPObjectClass *) (parent_class))->write)
 		((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
@@ -709,11 +710,10 @@ sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destro
     delete view;
 }
 
-const gchar *
-generate_marker (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix /*transform*/, Geom::Matrix move)
+const gchar *generate_marker(GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix /*transform*/, Geom::Matrix move)
 {
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
-    Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
+    Inkscape::XML::Document *xml_doc = document->getReprDoc();
+    Inkscape::XML::Node *defsrepr = SP_DOCUMENT_DEFS(document)->getRepr();
 
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:marker");
 
@@ -740,7 +740,7 @@ generate_marker (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::M
             dup_transform = Geom::identity();
         dup_transform *= move;
 
-        sp_item_write_transform(copy, SP_OBJECT_REPR(copy), dup_transform);
+        copy->doWriteTransform(SP_OBJECT_REPR(copy), dup_transform);
     }
 
     Inkscape::GC::release(repr);

@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_MIRROR_SYMMETRY_CPP
 /** \file
  * LPE <mirror_symmetry> implementation: mirrors a path with respect to a given line.
  */
@@ -6,6 +5,7 @@
  * Authors:
  *   Maximilian Albert
  *   Johan Engelen
+ *   Abhishek Sharma
  *
  * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
  * Copyright (C) Maximilin Albert 2008 <maximilian.albert@gmail.com>
@@ -46,7 +46,7 @@ LPEMirrorSymmetry::doOnApply (SPLPEItem *lpeitem)
     using namespace Geom;
 
     SPItem *item = SP_ITEM(lpeitem);
-    Geom::Matrix t = sp_item_i2d_affine(item);
+    Geom::Matrix t = item->i2d_affine();
     Geom::Rect bbox = *item->getBounds(t); // fixme: what happens if getBounds does not return a valid rect?
 
     Point A(bbox.left(), bbox.bottom());

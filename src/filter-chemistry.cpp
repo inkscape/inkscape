@@ -1,5 +1,3 @@
-#define __SP_FILTER_CHEMISTRY_C__
-
 /*
  * Various utility methods for filters
  *
@@ -7,6 +5,8 @@
  *   Hugo Rodrigues
  *   bulia byak
  *   Niko Kiirala
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006-2008 authors
  *
@@ -34,8 +34,7 @@
  * Count how many times the filter is used by the styles of o and its
  * descendants
  */
-static guint
-count_filter_hrefs(SPObject *o, SPFilter *filter)
+static guint count_filter_hrefs(SPObject *o, SPFilter *filter)
 {
     if (!o)
         return 1;
@@ -50,8 +49,7 @@ count_filter_hrefs(SPObject *o, SPFilter *filter)
         i ++;
     }
 
-    for (SPObject *child = sp_object_first_child(o);
-         child != NULL; child = SP_OBJECT_NEXT(child)) {
+    for ( SPObject *child = o->firstChild(); child; child = child->getNext() ) {
         i += count_filter_hrefs(child, filter);
     }
 
@@ -94,14 +92,14 @@ SPFilter *new_filter(SPDocument *document)
 
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
 
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    Inkscape::XML::Document *xml_doc = document->getReprDoc();
 
     // create a new filter
     Inkscape::XML::Node *repr;
     repr = xml_doc->createElement("svg:filter");
 
     // Append the new filter node to defs
-    SP_OBJECT_REPR(defs)->appendChild(repr);
+    defs->appendChild(repr);
     Inkscape::GC::release(repr);
 
     // get corresponding object
@@ -117,7 +115,7 @@ SPFilter *new_filter(SPDocument *document)
 SPFilterPrimitive *
 filter_add_primitive(SPFilter *filter, const Inkscape::Filters::FilterPrimitiveType type)
 {
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(filter->document);
+    Inkscape::XML::Document *xml_doc = filter->document->getReprDoc();
 
     //create filter primitive node
     Inkscape::XML::Node *repr;
@@ -168,7 +166,8 @@ filter_add_primitive(SPFilter *filter, const Inkscape::Filters::FilterPrimitiveT
     }
 
     //set primitive as child of filter node
-    filter->repr->appendChild(repr);
+    // XML tree being used directly while/where it shouldn't be...
+    filter->appendChild(repr);
     Inkscape::GC::release(repr);
     
     // get corresponding object
@@ -190,7 +189,7 @@ new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion
 
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
 
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    Inkscape::XML::Document *xml_doc = document->getReprDoc();
 
     // create a new filter
     Inkscape::XML::Node *repr;
@@ -217,7 +216,7 @@ new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion
     Inkscape::GC::release(b_repr);
     
     // Append the new filter node to defs
-    SP_OBJECT_REPR(defs)->appendChild(repr);
+    defs->appendChild(repr);
     Inkscape::GC::release(repr);
 
     // get corresponding object
@@ -245,7 +244,7 @@ new_filter_blend_gaussian_blur (SPDocument *document, const char *blendmode, gdo
 
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
 
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    Inkscape::XML::Document *xml_doc = document->getReprDoc();
 
     // create a new filter
     Inkscape::XML::Node *repr;
@@ -253,7 +252,7 @@ new_filter_blend_gaussian_blur (SPDocument *document, const char *blendmode, gdo
     repr->setAttribute("inkscape:collect", "always");
 
     // Append the new filter node to defs
-    SP_OBJECT_REPR(defs)->appendChild(repr);
+    defs->appendChild(repr);
     Inkscape::GC::release(repr);
  
     // get corresponding object
@@ -319,7 +318,7 @@ new_filter_blend_gaussian_blur (SPDocument *document, const char *blendmode, gdo
 SPFilter *
 new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mode, gdouble radius)
 {
-    Geom::OptRect const r = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
+    Geom::OptRect const r = item->getBboxDesktop(SPItem::GEOMETRIC_BBOX);
 
     double width;
     double height;
@@ -330,7 +329,7 @@ new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mod
         width = height = 0;
     }
 
-    Geom::Matrix i2d (sp_item_i2d_affine (item) );
+    Geom::Matrix i2d (item->i2d_affine () );
 
     return (new_filter_blend_gaussian_blur (document, mode, radius, i2d.descrim(), i2d.expansionX(), i2d.expansionY(), width, height));
 }
@@ -344,37 +343,35 @@ new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mod
  * duplicated, so that other elements referring that filter are not modified.
  */
 /* TODO: this should be made more generic, not just for blurs */
-SPFilter *
-modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
-                                      gdouble radius)
+SPFilter *modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
+                                                gdouble radius)
 {
     if (!item->style || !item->style->filter.set) {
         return new_filter_simple_from_item(document, item, "normal", radius);
     }
 
     SPFilter *filter = SP_FILTER(item->style->getFilter());
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    Inkscape::XML::Document *xml_doc = document->getReprDoc();
 
     // If there are more users for this filter, duplicate it
-    if (SP_OBJECT_HREFCOUNT(filter) > count_filter_hrefs(item, filter)) {
-        Inkscape::XML::Node *repr;
-        repr = SP_OBJECT_REPR(item->style->getFilter())->duplicate(xml_doc);
+    if (filter->hrefcount > count_filter_hrefs(item, filter)) {
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR(item->style->getFilter())->duplicate(xml_doc);
         SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
-        SP_OBJECT_REPR(defs)->appendChild(repr);
+        defs->appendChild(repr);
 
         filter = SP_FILTER( document->getObjectByRepr(repr) );
         Inkscape::GC::release(repr);
     }
 
     // Determine the required standard deviation value
-    Geom::Matrix i2d (sp_item_i2d_affine (item));
+    Geom::Matrix i2d (item->i2d_affine ());
     double expansion = i2d.descrim();
     double stdDeviation = radius;
     if (expansion != 0)
         stdDeviation /= expansion;
 
     // Get the object size
-    Geom::OptRect const r = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
+    Geom::OptRect const r = item->getBboxDesktop(SPItem::GEOMETRIC_BBOX);
     double width;
     double height;
     if (r) {

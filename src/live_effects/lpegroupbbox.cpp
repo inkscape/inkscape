@@ -1,7 +1,6 @@
-#define INKSCAPE_LPEGROUPBBOX_CPP
-
 /*
  * Copyright (C) Steren Giannini 2008 <steren.giannini@gmail.com>
+ *   Abhishek Sharma
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -31,7 +30,7 @@ GroupBBoxEffect::original_bbox(SPLPEItem *lpeitem, bool absolute)
     
     Geom::Matrix transform;
     if (absolute) {
-        transform = sp_item_i2doc_affine(item);
+        transform = item->i2doc_affine();
     }
     else {
         transform = Geom::identity();

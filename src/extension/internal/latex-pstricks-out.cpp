@@ -1,6 +1,8 @@
 /*
  * Authors:
  *   Michael Forbes <miforbes@mbhs.edu>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 Authors
  *
@@ -55,7 +57,7 @@ LatexOutput::save(Inkscape::Extension::Output *mod2, SPDocument *doc, gchar cons
     gchar * oldoutput;
     unsigned int ret;
 
-    sp_document_ensure_up_to_date (doc);
+    doc->ensureUpToDate();
 
     mod = Inkscape::Extension::get_print(SP_MODULE_KEY_PRINT_LATEX);
     oldconst = mod->get_param_string("destination");
@@ -66,16 +68,16 @@ LatexOutput::save(Inkscape::Extension::Output *mod2, SPDocument *doc, gchar cons
     context.module = mod;
     /* fixme: This has to go into module constructor somehow */
     /* Create new arena */
-    mod->base = SP_ITEM (sp_document_root (doc));
+    mod->base = SP_ITEM(doc->getRoot());
     mod->arena = NRArena::create();
-    mod->dkey = sp_item_display_key_new (1);
-    mod->root = sp_item_invoke_show (mod->base, mod->arena, mod->dkey, SP_ITEM_SHOW_DISPLAY);
+    mod->dkey = SPItem::display_key_new (1);
+    mod->root = (mod->base)->invoke_show (mod->arena, mod->dkey, SP_ITEM_SHOW_DISPLAY);
     /* Print document */
     ret = mod->begin (doc);
-    sp_item_invoke_print (mod->base, &context);
+    (mod->base)->invoke_print (&context);
     ret = mod->finish ();
     /* Release arena */
-    sp_item_invoke_hide (mod->base, mod->dkey);
+    (mod->base)->invoke_hide (mod->dkey);
     mod->base = NULL;
     mod->root = NULL;
     nr_object_unref ((NRObject *) mod->arena);

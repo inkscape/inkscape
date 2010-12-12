@@ -1,10 +1,10 @@
-#define __CONTEXT_MENU_C__
-
 /*
  * Unser-interface related object extension
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * This code is in public domain
  */
@@ -20,6 +20,8 @@
 #include "message-stack.h"
 #include "preferences.h"
 #include "ui/dialog/dialog-manager.h"
+
+using Inkscape::DocumentUndo;
 
 static void sp_object_type_menu(GType type, SPObject *object, SPDesktop *desktop, GtkMenu *menu);
 
@@ -274,7 +276,7 @@ sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
     SPDesktop *desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+    Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:a");
     SP_OBJECT_REPR(SP_OBJECT_PARENT(item))->addChild(repr, SP_OBJECT_REPR(item));
     SPObject *object = SP_OBJECT_DOCUMENT(item)->getObjectByRepr(repr);
@@ -289,8 +291,8 @@ sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
     Inkscape::GC::release(repr);
     Inkscape::GC::release(child);
 
-    sp_document_done(SP_OBJECT_DOCUMENT(object), SP_VERB_NONE,
-                     _("Create link"));
+    DocumentUndo::done(SP_OBJECT_DOCUMENT(object), SP_VERB_NONE,
+                       _("Create link"));
 
     sp_object_attributes_dialog(object, "SPAnchor");
 

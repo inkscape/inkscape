@@ -6,6 +6,7 @@
 /*
  * Copyright (C) 2004-2005  Ted Gould <ted@gould.cx>
  * Copyright (C) 2007  MenTaLguY <mental@rydia.net>
+ *   Abhishek Sharma
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -87,14 +88,14 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
         /* get page size */
         SPDocument * doc = document->doc();
         bounding_area = Geom::Rect(  Geom::Point(0,0),
-                                     Geom::Point(sp_document_width(doc), sp_document_height(doc))  );
+                                     Geom::Point(doc->getWidth(), doc->getHeight())  );
     } else {
         Geom::OptRect bounds = selection->bounds();
         if (bounds) {
             bounding_area = *bounds;
         }
 
-        gdouble doc_height  =  sp_document_height(document->doc());
+        gdouble doc_height  =  (document->doc())->getHeight();
         Geom::Rect temprec = Geom::Rect(Geom::Point(bounding_area.min()[Geom::X], doc_height - bounding_area.min()[Geom::Y]),
                                     Geom::Point(bounding_area.max()[Geom::X], doc_height - bounding_area.max()[Geom::Y]));
 
@@ -111,8 +112,10 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
 
     path_data = build_lines(bounding_area,
                                  offsets, spacings);
-    Inkscape::XML::Document * xml_doc = sp_document_repr_doc(document->doc());
-    Inkscape::XML::Node * current_layer = static_cast<SPDesktop *>(document)->currentLayer()->repr;
+    Inkscape::XML::Document * xml_doc = document->doc()->getReprDoc();
+
+    //XML Tree being used directly here while it shouldn't be.
+    Inkscape::XML::Node * current_layer = static_cast<SPDesktop *>(document)->currentLayer()->getRepr();
     Inkscape::XML::Node * path = xml_doc->createElement("svg:path");
 
     path->setAttribute("d", path_data.c_str());

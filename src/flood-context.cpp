@@ -1,5 +1,3 @@
-#define __SP_FLOOD_CONTEXT_C__
-
 /** @file
  * @brief Bucket fill drawing context, works by bitmap filling an area on a rendered version
  * of the current display and then tracing the result using potrace.
@@ -8,6 +6,8 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   John Bintz <jcoswell@coswellproductions.org>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2000-2005 authors
@@ -73,6 +73,8 @@
 #include "trace/trace.h"
 #include "trace/imagemap.h"
 #include "trace/potrace/inkscape-potrace.h"
+
+using Inkscape::DocumentUndo;
 
 static void sp_flood_context_class_init(SPFloodContextClass *klass);
 static void sp_flood_context_init(SPFloodContext *flood_context);
@@ -417,8 +419,8 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
     std::vector<Inkscape::Trace::TracingEngineResult> results = pte.traceGrayMap(gray_map);
     gray_map->destroy(gray_map);
 
-    Inkscape::XML::Node *layer_repr = SP_GROUP(desktop->currentLayer())->repr;
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+    //XML Tree being used here directly while it shouldn't be...."
+    Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
 
     long totalNodeCount = 0L;
 
@@ -481,14 +483,14 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
             g_free(str);
         }
 
-        layer_repr->addChild(pathRepr, NULL);
+        desktop->currentLayer()->addChild(pathRepr,NULL);
 
         SPObject *reprobj = document->getObjectByRepr(pathRepr);
         if (reprobj) {
-            sp_item_write_transform(SP_ITEM(reprobj), pathRepr, transform, NULL);
+            SP_ITEM(reprobj)->doWriteTransform(pathRepr, transform, NULL);
             
             // premultiply the item transform by the accumulated parent transform in the paste layer
-            Geom::Matrix local (sp_item_i2doc_affine(SP_GROUP(desktop->currentLayer())));
+            Geom::Matrix local (SP_GROUP(desktop->currentLayer())->i2doc_affine());
             if (!local.isIdentity()) {
                 gchar const *t_str = pathRepr->attribute("transform");
                 Geom::Matrix item_t (Geom::identity());
@@ -774,11 +776,11 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
     /* Create new arena */
     NRArena *arena = NRArena::create();
-    unsigned dkey = sp_item_display_key_new(1);
+    unsigned dkey = SPItem::display_key_new(1);
 
-    sp_document_ensure_up_to_date (document);
+    document->ensureUpToDate();
     
-    SPItem *document_root = SP_ITEM(SP_DOCUMENT_ROOT(document));
+    SPItem *document_root = SP_ITEM(document->getRoot());
     Geom::OptRect bbox = document_root->getBounds(Geom::identity());
 
     if (!bbox) {
@@ -798,7 +800,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     unsigned int height = (int)ceil(screen.height() * zoom_scale * padding);
 
     Geom::Point origin(screen.min()[Geom::X],
-                       sp_document_height(document) - screen.height() - screen.min()[Geom::Y]);
+                       document->getHeight() - screen.height() - screen.min()[Geom::Y]);
                     
     origin[Geom::X] = origin[Geom::X] + (screen.width() * ((1 - padding) / 2));
     origin[Geom::Y] = origin[Geom::Y] + (screen.height() * ((1 - padding) / 2));
@@ -807,7 +809,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     Geom::Matrix affine = scale * Geom::Translate(-origin * scale);
     
     /* Create ArenaItems and set transform */
-    NRArenaItem *root = sp_item_invoke_show(SP_ITEM(sp_document_root(document)), arena, dkey, SP_ITEM_SHOW_DISPLAY);
+    NRArenaItem *root = SP_ITEM(document->getRoot())->invoke_show( arena, dkey, SP_ITEM_SHOW_DISPLAY);
     nr_arena_item_set_transform(NR_ARENA_ITEM(root), affine);
 
     NRGC gc(NULL);
@@ -850,7 +852,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     nr_pixblock_release(&B);
     
     // Hide items
-    sp_item_invoke_hide(SP_ITEM(sp_document_root(document)), dkey);
+    SP_ITEM(document->getRoot())->invoke_hide(dkey);
     
     nr_object_unref((NRObject *) arena);
     
@@ -905,7 +907,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     }
 
     for (unsigned int i = 0; i < fill_points.size(); i++) {
-        Geom::Point pw = Geom::Point(fill_points[i][Geom::X] / zoom_scale, sp_document_height(document) + (fill_points[i][Geom::Y] / zoom_scale)) * affine;
+        Geom::Point pw = Geom::Point(fill_points[i][Geom::X] / zoom_scale, document->getHeight() + (fill_points[i][Geom::Y] / zoom_scale)) * affine;
 
         pw[Geom::X] = (int)MIN(width - 1, MAX(0, pw[Geom::X]));
         pw[Geom::Y] = (int)MIN(height - 1, MAX(0, pw[Geom::Y]));
@@ -1119,7 +1121,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
     g_free(trace_px);
     
-    sp_document_done(document, SP_VERB_CONTEXT_PAINTBUCKET, _("Fill bounded area"));
+    DocumentUndo::done(document, SP_VERB_CONTEXT_PAINTBUCKET, _("Fill bounded area"));
 }
 
 static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
@@ -1136,10 +1138,9 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
             
             SPItem *item = sp_event_context_find_item (desktop, button_w, TRUE, TRUE);
             
-            Inkscape::XML::Node *pathRepr = SP_OBJECT_REPR(item);
-            /* Set style */
-            sp_desktop_apply_style_tool (desktop, pathRepr, "/tools/paintbucket", false);
-            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET, _("Set style on object"));
+            // Set style
+            desktop->applyCurrentOrToolStyle(item, "/tools/paintbucket", false);
+            DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET, _("Set style on object"));
             ret = TRUE;
         }
         break;
@@ -1278,7 +1279,7 @@ static void sp_flood_finish(SPFloodContext *rc)
         sp_canvas_end_forced_full_redraws(desktop->canvas);
 
         sp_desktop_selection(desktop)->set(rc->item);
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET,
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET,
                         _("Fill bounded area"));
 
         rc->item = NULL;

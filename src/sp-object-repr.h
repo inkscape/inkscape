@@ -1,5 +1,5 @@
-#ifndef __SP_OBJECT_REPR_H__
-#define __SP_OBJECT_REPR_H__
+#ifndef SEEN_SP_OBJECT_REPR_H
+#define SEEN_SP_OBJECT_REPR_H
 
 /*
  * Object type dictionary and build frontend
@@ -13,7 +13,7 @@
  */
 
 #include "forward.h"
-
+#include "sp-object.h"
 namespace Inkscape {
 namespace XML {
 class Node;
@@ -21,13 +21,13 @@ class Node;
 }
 
 
-SPObject *sp_object_repr_build_tree (SPDocument *document, Inkscape::XML::Node *repr);
+SPObject * sp_object_repr_build_tree (SPDocument *document, Inkscape::XML::Node *repr);
 
 GType sp_repr_type_lookup (Inkscape::XML::Node *repr);
 
 void sp_object_type_register(gchar const *name, GType type);
 
-#endif
+#endif // SEEN_SP_OBJECT_REPR_H
 
 /*
   Local Variables:

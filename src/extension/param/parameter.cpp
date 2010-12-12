@@ -4,6 +4,7 @@
 /* Author:
  *   Ted Gould <ted@gould.cx>
  *   Johan Engelen <johan@shouraizou.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2005-2007 Authors
  *
@@ -345,10 +346,9 @@ Parameter::new_child (Inkscape::XML::Node * parent)
     return retval;
 }
 
-Inkscape::XML::Node *
-Parameter::document_param_node (SPDocument * doc)
+Inkscape::XML::Node *Parameter::document_param_node(SPDocument * doc)
 {
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
     Inkscape::XML::Node * defs = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(doc));
     Inkscape::XML::Node * params = NULL;
 

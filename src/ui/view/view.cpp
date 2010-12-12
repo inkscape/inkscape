@@ -1,11 +1,10 @@
-#define __SP_VIEW_C__
-
 /** \file
  * View implementation
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
@@ -156,7 +155,7 @@ void View::setDocument(SPDocument *doc) {
         _doc->connectURISet(sigc::bind(sigc::ptr_fun(&_onDocumentURISet), this));
     _document_resized_connection = 
         _doc->connectResized(sigc::bind(sigc::ptr_fun(&_onDocumentResized), this));
-    _document_uri_set_signal.emit (SP_DOCUMENT_URI(_doc));
+    _document_uri_set_signal.emit( _doc->getURI() );
 }
 
 }}}

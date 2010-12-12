@@ -1,11 +1,10 @@
-#define __SP_KNOT_C__
-
 /** \file
  * SPKnot implementation
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2005 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -28,6 +27,8 @@
 #include "message-stack.h"
 #include "message-context.h"
 #include "event-context.h"
+
+using Inkscape::DocumentUndo;
 
 #define KNOT_EVENT_MASK (GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | \
 			 GDK_POINTER_MOTION_MASK | \
@@ -427,7 +428,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                                 g_signal_emit(knot,
                                               knot_signals[UNGRABBED], 0,
                                               event->button.state);
-                                sp_document_undo(sp_desktop_document(knot->desktop));
+                                DocumentUndo::undo(sp_desktop_document(knot->desktop));
                                 knot->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Node or handle drag canceled."));
                                 transform_escaped = true;
                                 consumed = TRUE;

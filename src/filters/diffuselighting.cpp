@@ -1,5 +1,3 @@
-#define __SP_FEDIFFUSELIGHTING_CPP__
-
 /** \file
  * SVG <feDiffuseLighting> implementation.
  *
@@ -8,6 +6,7 @@
  * Authors:
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
  *   Jean-Rene Reinhard <jr@komite.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Hugo Rodrigues
  *               2007 authors
@@ -118,10 +117,10 @@ sp_feDiffuseLighting_build(SPObject *object, SPDocument *document, Inkscape::XML
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
-    sp_object_read_attr(object, "surfaceScale");
-    sp_object_read_attr(object, "diffuseConstant");
-    sp_object_read_attr(object, "kernelUnitLength");
-    sp_object_read_attr(object, "lighting-color");
+    object->readAttr( "surfaceScale" );
+    object->readAttr( "diffuseConstant" );
+    object->readAttr( "kernelUnitLength" );
+    object->readAttr( "lighting-color" );
     
 }
 
@@ -224,10 +223,10 @@ static void
 sp_feDiffuseLighting_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     if (flags & (SP_OBJECT_MODIFIED_FLAG)) {
-        sp_object_read_attr(object, "surfaceScale");
-        sp_object_read_attr(object, "diffuseConstant");
-        sp_object_read_attr(object, "kernelUnit");
-        sp_object_read_attr(object, "lighting-color");
+        object->readAttr( "surfaceScale" );
+        object->readAttr( "diffuseConstant" );
+        object->readAttr( "kernelUnit" );
+        object->readAttr( "lighting-color" );
     }
 
     if (((SPObjectClass *) feDiffuseLighting_parent_class)->update) {

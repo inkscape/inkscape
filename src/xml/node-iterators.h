@@ -23,6 +23,7 @@ struct NodeSiblingIteratorStrategy {
         return ( node ? node->next() : NULL );
     }
 };
+
 struct NodeParentIteratorStrategy {
     static Node const *next(Node const *node) {
         return ( node ? node->parent() : NULL );

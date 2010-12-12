@@ -1,5 +1,3 @@
-#define __SP_FEMORPHOLOGY_CPP__
-
 /** \file
  * SVG <feMorphology> implementation.
  *
@@ -8,6 +6,7 @@
  * Authors:
  *   Felipe Sanches <juca@members.fsf.org>
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Hugo Rodrigues
  *
@@ -97,8 +96,8 @@ sp_feMorphology_build(SPObject *object, SPDocument *document, Inkscape::XML::Nod
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
-    sp_object_read_attr(object, "operator");
-    sp_object_read_attr(object, "radius");
+    object->readAttr( "operator" );
+    object->readAttr( "radius" );
 }
 
 /**

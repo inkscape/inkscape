@@ -113,12 +113,12 @@ sp_rect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
     if (((SPObjectClass *) parent_class)->build)
         ((SPObjectClass *) parent_class)->build(object, document, repr);
 
-    sp_object_read_attr(object, "x");
-    sp_object_read_attr(object, "y");
-    sp_object_read_attr(object, "width");
-    sp_object_read_attr(object, "height");
-    sp_object_read_attr(object, "rx");
-    sp_object_read_attr(object, "ry");
+    object->readAttr( "x" );
+    object->readAttr( "y" );
+    object->readAttr( "width" );
+    object->readAttr( "height" );
+    object->readAttr( "rx" );
+    object->readAttr( "ry" );
 }
 
 static void
@@ -185,7 +185,7 @@ sp_rect_update(SPObject *object, SPCtx *ctx, guint flags)
         rect->height.update(em, ex, h);
         rect->rx.update(em, ex, w);
         rect->ry.update(em, ex, h);
-        sp_shape_set_shape((SPShape *) object);
+        ((SPShape *) object)->setShape();
         flags &= ~SP_OBJECT_USER_MODIFIED_FLAG_B; // since we change the description, it's not a "just translation" anymore
     }
 
@@ -231,7 +231,7 @@ sp_rect_set_shape(SPShape *shape)
     SPRect *rect = (SPRect *) shape;
 
     if ((rect->height.computed < 1e-18) || (rect->width.computed < 1e-18)) {
-        sp_shape_set_curve_insync(SP_SHAPE(rect), NULL, TRUE);
+        SP_SHAPE(rect)->setCurveInsync( NULL, TRUE);
         return;
     }
 
@@ -281,7 +281,7 @@ sp_rect_set_shape(SPShape *shape)
     }
 
     c->closepath();
-    sp_shape_set_curve_insync(SP_SHAPE(rect), c, TRUE);
+    SP_SHAPE(rect)->setCurveInsync( c, TRUE);
     c->unref();
 }
 
@@ -379,13 +379,13 @@ sp_rect_set_transform(SPItem *item, Geom::Matrix const &xform)
     sp_rect_set_shape(rect);
 
     // Adjust stroke width
-    sp_item_adjust_stroke(item, sqrt(fabs(sw * sh)));
+    item->adjust_stroke(sqrt(fabs(sw * sh)));
 
     // Adjust pattern fill
-    sp_item_adjust_pattern(item, xform * ret.inverse());
+    item->adjust_pattern(xform * ret.inverse());
 
     // Adjust gradient fill
-    sp_item_adjust_gradient(item, xform * ret.inverse());
+    item->adjust_gradient(xform * ret.inverse());
 
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
 
@@ -570,7 +570,7 @@ static void sp_rect_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
 
     SPRect *rect = SP_RECT(item);
 
-    Geom::Matrix const i2d (sp_item_i2d_affine (item));
+    Geom::Matrix const i2d (item->i2d_affine ());
 
     Geom::Point p0 = Geom::Point(rect->x.computed, rect->y.computed) * i2d;
     Geom::Point p1 = Geom::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d;
@@ -603,13 +603,13 @@ sp_rect_convert_to_guides(SPItem *item) {
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (!prefs->getBool("/tools/shapes/rect/convertguides", true)) {
-        sp_item_convert_to_guides(SP_ITEM(rect));
+        SP_ITEM(rect)->convert_to_guides();
         return;
     }
 
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
-    Geom::Matrix const i2d (sp_item_i2d_affine(SP_ITEM(rect)));
+    Geom::Matrix const i2d (SP_ITEM(rect)->i2d_affine());
 
     Geom::Point A1(Geom::Point(rect->x.computed, rect->y.computed) * i2d);
     Geom::Point A2(Geom::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d);

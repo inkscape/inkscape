@@ -1,5 +1,3 @@
-#define __SP_FEBLEND_CPP__
-
 /** \file
  * SVG <feBlend> implementation.
  *
@@ -8,6 +6,7 @@
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *   Niko Kiirala <niko@kiirala.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006,2007 authors
  *
@@ -103,8 +102,8 @@ sp_feBlend_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
-    sp_object_read_attr(object, "mode");
-    sp_object_read_attr(object, "in2");
+    object->readAttr( "mode" );
+    object->readAttr( "in2" );
 
     /* Unlike normal in, in2 is required attribute. Make sure, we can call
      * it by some name. */
@@ -202,8 +201,8 @@ sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags)
     SPFeBlend *blend = SP_FEBLEND(object);
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-        sp_object_read_attr(object, "mode");
-        sp_object_read_attr(object, "in2");
+        object->readAttr( "mode" );
+        object->readAttr( "in2" );
     }
 
     /* Unlike normal in, in2 is required attribute. Make sure, we can call
@@ -213,7 +212,9 @@ sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags)
     {
         SPFilter *parent = SP_FILTER(object->parent);
         blend->in2 = sp_filter_primitive_name_previous_out(blend);
-        object->repr->setAttribute("in2", sp_filter_name_for_image(parent, blend->in2));
+
+        //XML Tree being used directly here while it shouldn't be.
+        object->getRepr()->setAttribute("in2", sp_filter_name_for_image(parent, blend->in2));
     }
 
     if (((SPObjectClass *) feBlend_parent_class)->update) {

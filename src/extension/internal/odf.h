@@ -11,6 +11,7 @@
  *
  * Authors:
  *   Bob Jamison
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Bob Jamison
  *
@@ -47,7 +48,7 @@
 
 #include <dom/util/ziptool.h>
 #include <dom/io/domstream.h>
-
+#include "sp-item.h"
 
 namespace Inkscape
 {

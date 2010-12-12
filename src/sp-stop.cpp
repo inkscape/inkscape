@@ -69,7 +69,7 @@ SPColor SPStop::getEffectiveColor() const
 {
     SPColor ret;
     if (currentColor) {
-        char const *str = sp_object_get_style_property(this, "color", NULL);
+        char const *str = getStyleProperty("color", NULL);
         /* Default value: arbitrarily black.  (SVG1.1 and CSS2 both say that the initial
          * value depends on user agent, and don't give any further restrictions that I can
          * see.) */

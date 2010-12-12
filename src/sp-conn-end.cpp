@@ -66,7 +66,7 @@ static bool try_get_intersect_point_with_item_recursive(Geom::PathVector& conn_p
     if (!SP_IS_SHAPE(item)) return false;
 
     // make sure it has an associated curve
-    SPCurve* item_curve = sp_shape_get_curve(SP_SHAPE(item));
+    SPCurve* item_curve = SP_SHAPE(item)->getCurve();
     if (!item_curve) return false;
 
     // apply transformations (up to common ancestor)

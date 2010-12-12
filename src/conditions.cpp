@@ -1,10 +1,9 @@
-#define __SP_CONDITIONS_CPP__
-
 /*
  * SVG conditional attribute evaluation
  *
  * Authors:
  *   Andrius R. <knutux@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 authors
  *
@@ -39,20 +38,16 @@ static Condition _condition_handlers[] = {
     { "requiredExtensions", evaluateRequiredExtensions },
 };
 
-/* function which evaluates if item should be displayed */
+// function which evaluates if item should be displayed
 bool sp_item_evaluate(SPItem const *item) {
-    Inkscape::XML::Node *grepr = SP_OBJECT_REPR (item);
-    
-    for ( unsigned int i = 0 ; i < sizeof(_condition_handlers)/sizeof(_condition_handlers[0]) ; i++ ) {
-        gchar const *value = grepr->attribute(_condition_handlers[i].attribute);
-        if ( NULL == value )
-            continue;
-
-        if (!_condition_handlers[i].evaluator(item, value))
-            return false;
+    bool needDisplay = true;
+    for ( unsigned int i = 0 ; needDisplay && (i < sizeof(_condition_handlers) / sizeof(_condition_handlers[0])) ; i++ ) {
+        gchar const *value = item->getAttribute(_condition_handlers[i].attribute);
+        if ( value && !_condition_handlers[i].evaluator(item, value) ) {
+            needDisplay = false;
+        }
     }
-
-    return true;
+    return needDisplay;
 }
 
 #define ISALNUM(c)    (((c) >= 'a' && (c) <= 'z') || ((c) >= 'A' && (c) <= 'Z') || ((c) >= '0' && (c) <= '9'))

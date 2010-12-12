@@ -1,10 +1,10 @@
-#define __SP_PIXBUF_OPS_C__
-
 /*
  * Helpers for SPItem -> gdk_pixbuf related stuff
  *
  * Authors:
  *   John Cliff <simarilius@yahoo.com>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2008 John Cliff
  *
@@ -38,11 +38,11 @@
 
 #include "pixbuf-ops.h"
 
+// TODO look for copy-n-past duplication of this function:
 /**
  * Hide all items that are not listed in list, recursively, skipping groups and defs.
  */
-static void
-hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
+static void hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
 {
     if ( SP_IS_ITEM(o)
          && !SP_IS_DEFS(o)
@@ -51,12 +51,12 @@ hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
          && !SP_IS_USE(o)
          && !g_slist_find(list, o) )
     {
-        sp_item_invoke_hide(SP_ITEM(o), dkey);
+        SP_ITEM(o)->invoke_hide(dkey);
     }
 
     // recurse
     if (!g_slist_find(list, o)) {
-        for (SPObject *child = sp_object_first_child(o) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        for ( SPObject *child = o->firstChild() ; child; child = child->getNext() ) {
             hide_other_items_recursively(child, list, dkey);
         }
     }
@@ -104,16 +104,16 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
      /* Create new arena for offscreen rendering*/
      NRArena *arena = NRArena::create();
      nr_arena_set_renderoffscreen(arena);
-     unsigned dkey = sp_item_display_key_new(1);
+     unsigned dkey = SPItem::display_key_new(1);
 
-     sp_document_ensure_up_to_date (doc);
+     doc->ensureUpToDate();
 
      Geom::Rect screen=Geom::Rect(Geom::Point(x0,y0), Geom::Point(x1, y1));
 
      double padding = 1.0;
 
      Geom::Point origin(screen.min()[Geom::X],
-                      sp_document_height(doc) - screen[Geom::Y].extent() - screen.min()[Geom::Y]);
+                      doc->getHeight() - screen[Geom::Y].extent() - screen.min()[Geom::Y]);
 
      origin[Geom::X] = origin[Geom::X] + (screen[Geom::X].extent() * ((1 - padding) / 2));
      origin[Geom::Y] = origin[Geom::Y] + (screen[Geom::Y].extent() * ((1 - padding) / 2));
@@ -122,7 +122,7 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
      Geom::Matrix affine = scale * Geom::Translate(-origin * scale);
 
      /* Create ArenaItems and set transform */
-     NRArenaItem *root = sp_item_invoke_show(SP_ITEM(sp_document_root(doc)), arena, dkey, SP_ITEM_SHOW_DISPLAY);
+     NRArenaItem *root = SP_ITEM(doc->getRoot())->invoke_show( arena, dkey, SP_ITEM_SHOW_DISPLAY);
      nr_arena_item_set_transform(NR_ARENA_ITEM(root), affine);
 
      NRGC gc(NULL);
@@ -131,7 +131,7 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
      // We show all and then hide all items we don't want, instead of showing only requested items,
      // because that would not work if the shown item references something in defs
      if (items_only) {
-         hide_other_items_recursively(sp_document_root(doc), items_only, dkey);
+         hide_other_items_recursively(doc->getRoot(), items_only, dkey);
      }
 
      NRRectL final_bbox;
@@ -186,7 +186,7 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
     {
         g_warning("sp_generate_internal_bitmap: not enough memory to create pixel buffer. Need %lld.", size);
     }
-     sp_item_invoke_hide (SP_ITEM(sp_document_root(doc)), dkey);
+     SP_ITEM(doc->getRoot())->invoke_hide(dkey);
      nr_object_unref((NRObject *) arena);
 
 //    gdk_pixbuf_save (pixbuf, "C:\\temp\\internal.jpg", "jpeg", NULL, "quality","100", NULL);

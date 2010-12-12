@@ -1,17 +1,18 @@
 /**
  * Inkscape::ConsoleOutputUndoObserver - observer for tracing calls to
- * sp_document_undo, sp_document_redo, sp_document_maybe_done
+ * SPDocumentUndo::undo, SPDocumentUndo::redo, SPDocumentUndo::maybe_done
  *
  * Authors:
  * David Yip <yipdw@alumni.rose-hulman.edu>
+ *   Abhishek Sharma
  *
  * Copyright (c) 2006 Authors
  *
  * Released under GNU GPL, see the file 'COPYING' for more information
  */
 
-#ifndef __INKSCAPE_CONSOLE_OUTPUT_UNDO_OBSERVER_H__
-#define __INKSCAPE_CONSOLE_OUTPUT_UNDO_OBSERVER_H__
+#ifndef SEEN_INKSCAPE_CONSOLE_OUTPUT_UNDO_OBSERVER_H
+#define SEEN_INKSCAPE_CONSOLE_OUTPUT_UNDO_OBSERVER_H
 
 #include "undo-stack-observer.h"
 
@@ -31,7 +32,7 @@ public:
 };
 }
 
-#endif
+#endif // SEEN_INKSCAPE_CONSOLE_OUTPUT_UNDO_OBSERVER_H
 
 /*
   Local Variables:

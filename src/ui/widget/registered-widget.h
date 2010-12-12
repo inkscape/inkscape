@@ -4,6 +4,7 @@
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *   Johan Engelen <j.b.c.engelen@utwente.nl>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2005-2008 Authors
  *
@@ -104,16 +105,18 @@ protected:
             local_doc = sp_desktop_document(dt);
         }
 
-        bool saved = sp_document_get_undo_sensitive (local_doc);
-        sp_document_set_undo_sensitive (local_doc, false);
-        if (!write_undo) local_repr->setAttribute(_key.c_str(), svgstr);
-        sp_document_set_undo_sensitive (local_doc, saved);
+        bool saved = DocumentUndo::getUndoSensitive(local_doc);
+        DocumentUndo::setUndoSensitive(local_doc, false);
+        if (!write_undo) {
+            local_repr->setAttribute(_key.c_str(), svgstr);
+        }
+        DocumentUndo::setUndoSensitive(local_doc, saved);
 
         local_doc->setModifiedSinceSave();
 
         if (write_undo) {
             local_repr->setAttribute(_key.c_str(), svgstr);
-            sp_document_done (local_doc, event_type, event_description);
+            DocumentUndo::done(local_doc, event_type, event_description);
         }
     }
 

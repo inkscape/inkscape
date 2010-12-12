@@ -1,10 +1,9 @@
-#define __SP_ANCHOR_C__
-
 /*
  * SVG <a> element implementation
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
@@ -89,14 +88,14 @@ static void sp_anchor_build(SPObject *object, SPDocument *document, Inkscape::XM
         ((SPObjectClass *) (parent_class))->build(object, document, repr);
     }
 
-    sp_object_read_attr(object, "xlink:type");
-    sp_object_read_attr(object, "xlink:role");
-    sp_object_read_attr(object, "xlink:arcrole");
-    sp_object_read_attr(object, "xlink:title");
-    sp_object_read_attr(object, "xlink:show");
-    sp_object_read_attr(object, "xlink:actuate");
-    sp_object_read_attr(object, "xlink:href");
-    sp_object_read_attr(object, "target");
+    object->readAttr( "xlink:type" );
+    object->readAttr( "xlink:role" );
+    object->readAttr( "xlink:arcrole" );
+    object->readAttr( "xlink:title" );
+    object->readAttr( "xlink:show" );
+    object->readAttr( "xlink:actuate" );
+    object->readAttr( "xlink:href" );
+    object->readAttr( "target" );
 }
 
 static void sp_anchor_release(SPObject *object)
@@ -154,13 +153,15 @@ static Inkscape::XML::Node *sp_anchor_write(SPObject *object, Inkscape::XML::Doc
     repr->setAttribute("xlink:href", anchor->href);
 
     if (repr != SP_OBJECT_REPR(object)) {
-        COPY_ATTR(repr, object->repr, "xlink:type");
-        COPY_ATTR(repr, object->repr, "xlink:role");
-        COPY_ATTR(repr, object->repr, "xlink:arcrole");
-        COPY_ATTR(repr, object->repr, "xlink:title");
-        COPY_ATTR(repr, object->repr, "xlink:show");
-        COPY_ATTR(repr, object->repr, "xlink:actuate");
-        COPY_ATTR(repr, object->repr, "target");
+        // XML Tree being directly used while it shouldn't be in the
+        //  below COPY_ATTR lines
+        COPY_ATTR(repr, object->getRepr(), "xlink:type");
+        COPY_ATTR(repr, object->getRepr(), "xlink:role");
+        COPY_ATTR(repr, object->getRepr(), "xlink:arcrole");
+        COPY_ATTR(repr, object->getRepr(), "xlink:title");
+        COPY_ATTR(repr, object->getRepr(), "xlink:show");
+        COPY_ATTR(repr, object->getRepr(), "xlink:actuate");
+        COPY_ATTR(repr, object->getRepr(), "target");
     }
 
     if (((SPObjectClass *) (parent_class))->write) {

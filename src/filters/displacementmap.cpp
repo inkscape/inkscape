@@ -1,5 +1,3 @@
-#define __SP_FEDISPLACEMENTMAP_CPP__
-
 /** \file
  * SVG <feDisplacementMap> implementation.
  *
@@ -7,6 +5,7 @@
 /*
  * Authors:
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Hugo Rodrigues
  *
@@ -97,10 +96,10 @@ sp_feDisplacementMap_build(SPObject *object, SPDocument *document, Inkscape::XML
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
-    sp_object_read_attr(object, "scale");
-    sp_object_read_attr(object, "in2");
-    sp_object_read_attr(object, "xChannelSelector");
-    sp_object_read_attr(object, "yChannelSelector");
+    object->readAttr( "scale" );
+    object->readAttr( "in2" );
+    object->readAttr( "xChannelSelector" );
+    object->readAttr( "yChannelSelector" );
 
     /* Unlike normal in, in2 is required attribute. Make sure, we can call
      * it by some name. */
@@ -218,7 +217,9 @@ sp_feDisplacementMap_update(SPObject *object, SPCtx *ctx, guint flags)
     {
         SPFilter *parent = SP_FILTER(object->parent);
         disp->in2 = sp_filter_primitive_name_previous_out(disp);
-        object->repr->setAttribute("in2", sp_filter_name_for_image(parent, disp->in2));
+
+        //XML Tree being used directly here while it shouldn't be.
+        object->getRepr()->setAttribute("in2", sp_filter_name_for_image(parent, disp->in2));
     }
 
     if (((SPObjectClass *) feDisplacementMap_parent_class)->update) {

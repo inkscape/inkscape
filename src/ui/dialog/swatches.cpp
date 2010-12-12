@@ -5,6 +5,7 @@
 /* Authors:
  *   Jon A. Cruz
  *   John Bintz
+ *   Abhishek Sharma
  *
  * Copyright (C) 2005 Jon A. Cruz
  * Copyright (C) 2008 John Bintz
@@ -155,7 +156,7 @@ static void editGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
         SPDocument *doc = desktop ? desktop->doc() : 0;
         if (doc) {
             std::string targetName(bounceTarget->def.descr);
-            const GSList *gradients = sp_document_get_resource_list(doc, "gradient");
+            const GSList *gradients = doc->getResourceList("gradient");
             for (const GSList *item = gradients; item; item = item->next) {
                 SPGradient* grad = SP_GRADIENT(item->data);
                 if ( targetName == grad->getId() ) {
@@ -177,13 +178,13 @@ void SwatchesPanelHook::convertGradient( GtkMenuItem * /*menuitem*/, gpointer us
         if ( doc && (index >= 0) && (static_cast<guint>(index) < popupItems.size()) ) {
             Glib::ustring targetName = popupItems[index];
 
-            const GSList *gradients = sp_document_get_resource_list(doc, "gradient");
+            const GSList *gradients = doc->getResourceList("gradient");
             for (const GSList *item = gradients; item; item = item->next) {
                 SPGradient* grad = SP_GRADIENT(item->data);
                 if ( targetName == grad->getId() ) {
                     grad->setSwatch();
-                    sp_document_done(doc, SP_VERB_CONTEXT_GRADIENT,
-                                     _("Add gradient stop"));
+                    DocumentUndo::done(doc, SP_VERB_CONTEXT_GRADIENT,
+                                       _("Add gradient stop"));
                     break;
                 }
             }
@@ -199,13 +200,13 @@ void SwatchesPanelHook::deleteGradient( GtkMenuItem */*menuitem*/, gpointer /*us
         SPDocument *doc = desktop ? desktop->doc() : 0;
         if (doc) {
             std::string targetName(bounceTarget->def.descr);
-            const GSList *gradients = sp_document_get_resource_list(doc, "gradient");
+            const GSList *gradients = doc->getResourceList("gradient");
             for (const GSList *item = gradients; item; item = item->next) {
                 SPGradient* grad = SP_GRADIENT(item->data);
                 if ( targetName == grad->getId() ) {
                     grad->setSwatch(false);
-                    sp_document_done(doc, SP_VERB_CONTEXT_GRADIENT,
-                                     _("Delete"));
+                    DocumentUndo::done(doc, SP_VERB_CONTEXT_GRADIENT,
+                                       _("Delete"));
                     break;
                 }
             }
@@ -320,7 +321,7 @@ gboolean colorItemHandleButtonPress( GtkWidget* widget, GdkEventButton* event, g
                     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(wdgt);
                     if ( dtw && dtw->desktop ) {
                         // Pick up all gradients with vectors
-                        const GSList *gradients = sp_document_get_resource_list(dtw->desktop->doc(), "gradient");
+                        const GSList *gradients = (dtw->desktop->doc())->getResourceList("gradient");
                         gint index = 0;
                         for (const GSList *curr = gradients; curr; curr = curr->next) {
                             SPGradient* grad = SP_GRADIENT(curr->data);
@@ -773,7 +774,7 @@ void SwatchesPanel::_trackDocument( SwatchesPanel *panel, SPDocument *document )
             }
             docPerPanel[panel] = document;
             if (!found) {
-                sigc::connection conn1 = sp_document_resources_changed_connect( document, "gradient", sigc::bind(sigc::ptr_fun(&SwatchesPanel::handleGradientsChange), document) );
+                sigc::connection conn1 = document->connectResourcesChanged( "gradient", sigc::bind(sigc::ptr_fun(&SwatchesPanel::handleGradientsChange), document) );
                 sigc::connection conn2 = SP_DOCUMENT_DEFS(document)->connectRelease( sigc::hide(sigc::bind(sigc::ptr_fun(&SwatchesPanel::handleDefsModified), document)) );
                 sigc::connection conn3 = SP_DOCUMENT_DEFS(document)->connectModified( sigc::hide(sigc::hide(sigc::bind(sigc::ptr_fun(&SwatchesPanel::handleDefsModified), document))) );
 
@@ -811,7 +812,7 @@ static void recalcSwatchContents(SPDocument* doc,
 {
     std::vector<SPGradient*> newList;
 
-    const GSList *gradients = sp_document_get_resource_list(doc, "gradient");
+    const GSList *gradients = doc->getResourceList("gradient");
     for (const GSList *item = gradients; item; item = item->next) {
         SPGradient* grad = SP_GRADIENT(item->data);
         if ( grad->isSwatch() ) {
@@ -967,7 +968,8 @@ void SwatchesPanel::_updateFromSelection()
                             }
                         }
                         if ( target ) {
-                            gchar const* id = target->repr->attribute("id");
+                            //XML Tree being used directly here while it shouldn't be
+                            gchar const* id = target->getRepr()->attribute("id");
                             if ( id ) {
                                 fillId = id;
                             }
@@ -998,7 +1000,8 @@ void SwatchesPanel::_updateFromSelection()
                             }
                         }
                         if ( target ) {
-                            gchar const* id = target->repr->attribute("id");
+                            //XML Tree being used directly here while it shouldn't be
+                            gchar const* id = target->getRepr()->attribute("id");
                             if ( id ) {
                                 strokeId = id;
                             }

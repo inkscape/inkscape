@@ -1,5 +1,3 @@
-#define __SP_FECOMPONENTTRANSFER_CPP__
-
 /** \file
  * SVG <feComponentTransfer> implementation.
  *
@@ -7,6 +5,7 @@
 /*
  * Authors:
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Hugo Rodrigues
  *
@@ -100,7 +99,7 @@ sp_feComponentTransfer_build(SPObject *object, SPDocument *document, Inkscape::X
     /*LOAD ATTRIBUTES FROM REPR HERE*/
 
     //do we need this?
-    sp_document_add_resource(document, "feComponentTransfer", object);
+    document->addResource("feComponentTransfer", object);
 }
 
 static void sp_feComponentTransfer_children_modified(SPFeComponentTransfer *sp_componenttransfer)

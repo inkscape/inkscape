@@ -1,10 +1,9 @@
-#define __SP_POLYGON_C__
-
 /*
  * SVG <polygon> implementation
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -84,7 +83,7 @@ static void sp_polygon_build(SPObject *object, SPDocument *document, Inkscape::X
         ((SPObjectClass *) parent_class)->build(object, document, repr);
     }
 
-    sp_object_read_attr(object, "points");
+    object->readAttr( "points" );
 }
 
 
@@ -116,7 +115,7 @@ static Inkscape::XML::Node *sp_polygon_write(SPObject *object, Inkscape::XML::Do
     SPShape *shape = SP_SHAPE(object);
     // Tolerable workaround: we need to update the object's curve before we set points=
     // because it's out of sync when e.g. some extension attrs of the polygon or star are changed in XML editor
-    sp_shape_set_shape(shape);
+    shape->setShape();
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:polygon");
@@ -209,7 +208,7 @@ void sp_polygon_set(SPObject *object, unsigned int key, const gchar *value)
                  * a single-point polygon in SPCurve. TODO: add a testcase with only one coordinate pair */
                 curve->closepath();
             }
-            sp_shape_set_curve(SP_SHAPE(polygon), curve, TRUE);
+            (SP_SHAPE(polygon))->setCurve(curve, TRUE);
             curve->unref();
             break;
         }

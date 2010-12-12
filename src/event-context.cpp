@@ -1,5 +1,3 @@
-#define __SP_EVENT_CONTEXT_C__
-
 /** \file
  * Main event handling, and related helper functions.
  *
@@ -7,6 +5,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1999-2010 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -1103,20 +1102,21 @@ guint get_group0_keyval(GdkEventKey *event) {
  * If state includes alt key mask, cyclically selects under; honors
  * into_groups.
  */
-SPItem *
-sp_event_context_find_item(SPDesktop *desktop, Geom::Point const &p,
-        bool select_under, bool into_groups) {
-    SPItem *item;
+SPItem *sp_event_context_find_item(SPDesktop *desktop, Geom::Point const &p,
+                                   bool select_under, bool into_groups)
+{
+    SPItem *item = 0;
 
     if (select_under) {
-        SPItem *selected_at_point = desktop->item_from_list_at_point_bottom(
+        SPItem *selected_at_point = desktop->getItemFromListAtPointBottom(
                 desktop->selection->itemList(), p);
-        item = desktop->item_at_point(p, into_groups, selected_at_point);
+        item = desktop->getItemAtPoint(p, into_groups, selected_at_point);
         if (item == NULL) { // we may have reached bottom, flip over to the top
-            item = desktop->item_at_point(p, into_groups, NULL);
+            item = desktop->getItemAtPoint(p, into_groups, NULL);
         }
-    } else
-        item = desktop->item_at_point(p, into_groups, NULL);
+    } else {
+        item = desktop->getItemAtPoint(p, into_groups, NULL);
+    }
 
     return item;
 }
@@ -1131,7 +1131,7 @@ sp_event_context_over_item(SPDesktop *desktop, SPItem *item,
         Geom::Point const &p) {
     GSList *temp = NULL;
     temp = g_slist_prepend(temp, item);
-    SPItem *item_at_point = desktop->item_from_list_at_point_bottom(temp, p);
+    SPItem *item_at_point = desktop->getItemFromListAtPointBottom(temp, p);
     g_slist_free(temp);
 
     return item_at_point;

@@ -5,6 +5,7 @@
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Gustav Broberg <broberg@kth.se>
  *   Niko Kiirala <niko@kiirala.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004--2008 Authors
  *
@@ -168,7 +169,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
                                      SP_OBJECT_STYLE_MODIFIED_FLAG ));
     }
 
-    sp_document_maybe_done (document, _blur_tag.c_str(), _verb_code,
+    DocumentUndo::maybeDone(document, _blur_tag.c_str(), _verb_code,
                             _("Change blur"));
 
     // resume interruptibility
@@ -208,7 +209,7 @@ ObjectCompositeSettings::_opacityValueChanged()
 
     sp_repr_css_attr_unref (css);
 
-    sp_document_maybe_done (sp_desktop_document (desktop), _opacity_tag.c_str(), _verb_code,
+    DocumentUndo::maybeDone(sp_desktop_document (desktop), _opacity_tag.c_str(), _verb_code,
                             _("Change opacity"));
 
     // resume interruptibility

@@ -3,6 +3,7 @@
  */
 /* Authors:
  *   Jon A. Cruz
+ *   Abhishek Sharma
  *
  * Copyright (C) 2010 Jon A. Cruz
  *
@@ -458,7 +459,7 @@ void ColorItem::_updatePreviews()
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         if ( desktop ) {
             SPDocument* document = sp_desktop_document( desktop );
-            Inkscape::XML::Node *rroot =  sp_document_repr_root( document );
+            Inkscape::XML::Node *rroot =  document->getReprRoot();
             if ( rroot ) {
 
                 // Find where this thing came from
@@ -486,7 +487,7 @@ void ColorItem::_updatePreviews()
                     str = 0;
 
                     if ( bruteForce( document, rroot, paletteName, def.getR(), def.getG(), def.getB() ) ) {
-                        sp_document_done( document , SP_VERB_DIALOG_SWATCHES,
+                        SPDocumentUndo::done( document , SP_VERB_DIALOG_SWATCHES,
                                           _("Change color definition"));
                     }
                 }
@@ -720,7 +721,7 @@ void ColorItem::buttonClicked(bool secondary)
         sp_desktop_set_style(desktop, css);
         sp_repr_css_attr_unref(css);
 
-        sp_document_done( sp_desktop_document(desktop), SP_VERB_DIALOG_SWATCHES, descr.c_str() );
+        DocumentUndo::done( sp_desktop_document(desktop), SP_VERB_DIALOG_SWATCHES, descr.c_str() );
     }
 }
 

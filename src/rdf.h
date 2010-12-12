@@ -3,12 +3,13 @@
  */
 /* Authors:
  *  Kees Cook <kees@outflux.net>
+ *  Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2004 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-#ifndef _RDF_H_
-#define _RDF_H_
+#ifndef SEEN_RDF_H
+#define SEEN_RDF_H
 
 #include <glib.h>
 #include <glibmm/i18n.h>
@@ -94,19 +95,44 @@ struct rdf_t {
 
 struct rdf_work_entity_t * rdf_find_entity(gchar const * name);
 
-const gchar * rdf_get_work_entity(SPDocument * doc,
+/**
+ *  \brief   Retrieves a known RDF/Work entity's contents from the document XML by name
+ *  \return  A pointer to the entity's static contents as a string, or NULL if no entity exists
+ *  \param   entity  The desired RDF/Work entity
+ *  
+ */
+const gchar * rdf_get_work_entity(SPDocument const * doc,
                                   struct rdf_work_entity_t * entity);
+
+/**
+ *  \brief   Stores a string into a named RDF/Work entity in the document XML
+ *  \param   entity The desired RDF/Work entity to replace
+ *  \param   string The string to replace the entity contents with
+ *  
+ */
 unsigned int  rdf_set_work_entity(SPDocument * doc,
                                   struct rdf_work_entity_t * entity,
                                   const gchar * text);
 
-struct rdf_license_t * rdf_get_license(SPDocument * doc);
+/**
+ *  \brief   Attempts to match and retrieve a known RDF/License from the document XML
+ *  \return  A pointer to the static RDF license structure
+ *  
+ */
+struct rdf_license_t * rdf_get_license(SPDocument const * doc);
+
+/**
+ *  \brief   Stores an RDF/License XML in the document XML
+ *  \param   document  Which document to update
+ *  \param   license   The desired RDF/License structure to store; NULL drops old license, so can be used for proprietary license. 
+ *  
+ */
 void                   rdf_set_license(SPDocument * doc,
                                        struct rdf_license_t const * license);
 
 void rdf_set_defaults ( SPDocument * doc );
 
-#endif // _RDF_H_
+#endif // SEEN_RDF_H
 
 /*
   Local Variables:

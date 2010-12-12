@@ -3,6 +3,7 @@
  */
 /* Authors:
  * David Yip <yipdw@rose-hulman.edu>
+ *   Abhishek Sharma
  *
  * Copyright (c) 2005 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -171,7 +172,7 @@ SessionPlaybackDialogImpl::_respCallback(int resp)
 			switch (result) {
 				case Gtk::RESPONSE_OK:
 					this->_sm->clearDocument();
-					sp_document_done(sp_desktop_document(this->_desktop), SP_VERB_NONE, 
+					SPDocumentUndo::done(sp_desktop_document(this->_desktop), SP_VERB_NONE, 
 							 /* TODO: annotate */ "session-player.cpp:186");
 					this->_sm->loadSessionFile(sessionfiledlg.get_filename());
 					this->_openfile.set_text(this->_sfp->filename());

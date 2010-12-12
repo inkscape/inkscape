@@ -11,6 +11,7 @@
  *
  * Author:
  *   Felipe C. da S. Sanches <juca@members.fsf.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2008, Felipe C. da S. Sanches
  *
@@ -42,15 +43,15 @@ GType sp_glyph_kerning_h_get_type(void)
     if (!type) {
         GTypeInfo info = {
             sizeof(SPGlyphKerningClass),
-            NULL,	/* base_init */
-            NULL,	/* base_finalize */
+            NULL,       /* base_init */
+            NULL,       /* base_finalize */
             (GClassInitFunc) sp_glyph_kerning_class_init,
-            NULL,	/* class_finalize */
-            NULL,	/* class_data */
+            NULL,       /* class_finalize */
+            NULL,       /* class_data */
             sizeof(SPHkern),
-            16,	/* n_preallocs */
+            16, /* n_preallocs */
             (GInstanceInitFunc) sp_glyph_kerning_init,
-            NULL,	/* value_table */
+            NULL,       /* value_table */
         };
         type = g_type_register_static(SP_TYPE_OBJECT, "SPHkern", &info, (GTypeFlags) 0);
     }
@@ -65,15 +66,15 @@ GType sp_glyph_kerning_v_get_type(void)
     if (!type) {
         GTypeInfo info = {
             sizeof(SPGlyphKerningClass),
-            NULL,	/* base_init */
-            NULL,	/* base_finalize */
+            NULL,       /* base_init */
+            NULL,       /* base_finalize */
             (GClassInitFunc) sp_glyph_kerning_class_init,
-            NULL,	/* class_finalize */
-            NULL,	/* class_data */
+            NULL,       /* class_finalize */
+            NULL,       /* class_data */
             sizeof(SPVkern),
-            16,	/* n_preallocs */
+            16, /* n_preallocs */
             (GInstanceInitFunc) sp_glyph_kerning_init,
-            NULL,	/* value_table */
+            NULL,       /* value_table */
         };
         type = g_type_register_static(SP_TYPE_OBJECT, "SPVkern", &info, (GTypeFlags) 0);
     }
@@ -110,11 +111,11 @@ static void sp_glyph_kerning_build(SPObject *object, SPDocument *document, Inksc
         ((SPObjectClass *) (parent_class))->build(object, document, repr);
     }
 
-    sp_object_read_attr(object, "u1");
-    sp_object_read_attr(object, "g1");
-    sp_object_read_attr(object, "u2");
-    sp_object_read_attr(object, "g2");
-    sp_object_read_attr(object, "k");
+    object->readAttr( "u1" );
+    object->readAttr( "g1" );
+    object->readAttr( "u2" );
+    object->readAttr( "g2" );
+    object->readAttr( "k" );
 }
 
 static void sp_glyph_kerning_release(SPObject *object)
@@ -216,10 +217,10 @@ sp_glyph_kerning_update(SPObject *object, SPCtx *ctx, guint flags)
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         /* do something to trigger redisplay, updates? */
-            sp_object_read_attr(object, "u1");
-            sp_object_read_attr(object, "u2");
-            sp_object_read_attr(object, "g2");
-            sp_object_read_attr(object, "k");
+            object->readAttr( "u1" );
+            object->readAttr( "u2" );
+            object->readAttr( "g2" );
+            object->readAttr( "k" );
     }
 
     if (((SPObjectClass *) parent_class)->update) {
@@ -250,11 +251,13 @@ static Inkscape::XML::Node *sp_glyph_kerning_write(SPObject *object, Inkscape::X
     sp_repr_set_svg_double(repr, "vert-adv-y", glyph->vert_adv_y);
 */
     if (repr != SP_OBJECT_REPR(object)) {
-        COPY_ATTR(repr, object->repr, "u1");
-        COPY_ATTR(repr, object->repr, "g1");
-        COPY_ATTR(repr, object->repr, "u2");
-        COPY_ATTR(repr, object->repr, "g2");
-        COPY_ATTR(repr, object->repr, "k");
+        // All the COPY_ATTR functions below use
+        //   XML Tree directly, while they shouldn't.
+        COPY_ATTR(repr, object->getRepr(), "u1");
+        COPY_ATTR(repr, object->getRepr(), "g1");
+        COPY_ATTR(repr, object->getRepr(), "u2");
+        COPY_ATTR(repr, object->getRepr(), "g2");
+        COPY_ATTR(repr, object->getRepr(), "k");
     }
 
     if (((SPObjectClass *) (parent_class))->write) {

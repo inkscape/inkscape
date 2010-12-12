@@ -1,5 +1,3 @@
-#define __SP_FEMERGENODE_CPP__
-
 /** \file
  * feMergeNode implementation. A feMergeNode contains the name of one
  * input image for feMerge.
@@ -8,6 +6,7 @@
  * Authors:
  *   Kees Cook <kees@outflux.net>
  *   Niko Kiirala <niko@kiirala.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004,2007 authors
  *
@@ -84,7 +83,7 @@ sp_feMergeNode_init(SPFeMergeNode *feMergeNode)
 static void
 sp_feMergeNode_build(SPObject *object, SPDocument */*document*/, Inkscape::XML::Node */*repr*/)
 {
-    sp_object_read_attr(object, "in");
+    object->readAttr( "in" );
 }
 
 /**

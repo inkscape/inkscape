@@ -1,5 +1,3 @@
-#define __SP_SKELETON_CPP__
-
 /** \file
  * SVG <skeleton> implementation, used as an example for a base starting class
  * when implementing new sp-objects.
@@ -14,6 +12,7 @@
 /*
  * Authors:
  *   Kees Cook <kees@outflux.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 Kees Cook
  *
@@ -110,18 +109,18 @@ sp_skeleton_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *r
     /*
        Pay attention to certain settings here
 
-    sp_object_read_attr(object, "xlink:href");
-    sp_object_read_attr(object, "attributeName");
-    sp_object_read_attr(object, "attributeType");
-    sp_object_read_attr(object, "begin");
-    sp_object_read_attr(object, "dur");
-    sp_object_read_attr(object, "end");
-    sp_object_read_attr(object, "min");
-    sp_object_read_attr(object, "max");
-    sp_object_read_attr(object, "restart");
-    sp_object_read_attr(object, "repeatCount");
-    sp_object_read_attr(object, "repeatDur");
-    sp_object_read_attr(object, "fill");
+    object->readAttr( "xlink:href" );
+    object->readAttr( "attributeName" );
+    object->readAttr( "attributeType" );
+    object->readAttr( "begin" );
+    object->readAttr( "dur" );
+    object->readAttr( "end" );
+    object->readAttr( "min" );
+    object->readAttr( "max" );
+    object->readAttr( "restart" );
+    object->readAttr( "repeatCount" );
+    object->readAttr( "repeatDur" );
+    object->readAttr( "fill" );
     */
 }
 

@@ -3,13 +3,13 @@
 #endif
 
 #ifdef ENABLE_SVG_FONTS
-#define __SP_MISSING_GLYPH_C__
 
 /*
  * SVG <missing-glyph> element implementation
  *
  * Author:
  *   Felipe C. da S. Sanches <juca@members.fsf.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2008, Felipe C. da S. Sanches
  *
@@ -82,11 +82,11 @@ static void sp_missing_glyph_build(SPObject *object, SPDocument *document, Inksc
         ((SPObjectClass *) (parent_class))->build(object, document, repr);
     }
 
-    sp_object_read_attr(object, "d");
-    sp_object_read_attr(object, "horiz-adv-x");
-    sp_object_read_attr(object, "vert-origin-x");
-    sp_object_read_attr(object, "vert-origin-y");
-    sp_object_read_attr(object, "vert-adv-y");
+    object->readAttr( "d" );
+    object->readAttr( "horiz-adv-x" );
+    object->readAttr( "vert-origin-x" );
+    object->readAttr( "vert-origin-y" );
+    object->readAttr( "vert-adv-y" );
 }
 
 static void sp_missing_glyph_release(SPObject *object)
@@ -176,11 +176,14 @@ static Inkscape::XML::Node *sp_missing_glyph_write(SPObject *object, Inkscape::X
     sp_repr_set_svg_double(repr, "vert-adv-y", glyph->vert_adv_y);
 */
     if (repr != SP_OBJECT_REPR(object)) {
-        COPY_ATTR(repr, object->repr, "d");
-        COPY_ATTR(repr, object->repr, "horiz-adv-x");
-        COPY_ATTR(repr, object->repr, "vert-origin-x");
-        COPY_ATTR(repr, object->repr, "vert-origin-y");
-        COPY_ATTR(repr, object->repr, "vert-adv-y");
+
+        // All the COPY_ATTR functions below use
+        //  XML Tree directly while they shouldn't.
+        COPY_ATTR(repr, object->getRepr(), "d");
+        COPY_ATTR(repr, object->getRepr(), "horiz-adv-x");
+        COPY_ATTR(repr, object->getRepr(), "vert-origin-x");
+        COPY_ATTR(repr, object->getRepr(), "vert-origin-y");
+        COPY_ATTR(repr, object->getRepr(), "vert-adv-y");
     }
 
     if (((SPObjectClass *) (parent_class))->write) {

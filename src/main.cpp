@@ -1,5 +1,3 @@
-#define __MAIN_C__
-
 /** \file
  * Inkscape - an ambitious vector drawing program
  *
@@ -15,6 +13,8 @@
  *   Pawel Palucha
  *   Bryce Harrington <bryce@bryceharrington.com>
  * ... and various people who have worked with various projects
+ *   Jon A. Cruz <jon@oncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2004 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -1023,7 +1023,7 @@ void sp_process_file_list(GSList *fl)
             g_warning("Specified document %s cannot be opened (does not exist or not a valid SVG file)", filename);
         } else {
             if (sp_vacuum_defs) {
-                vacuum_document(doc);
+                doc->vacuumDocument();
             }
             if (sp_vacuum_defs && !sp_export_svg) {
                 // save under the name given in the command line
@@ -1040,9 +1040,9 @@ void sp_process_file_list(GSList *fl)
                 Inkscape::XML::Node *repr;
                 rdoc = sp_repr_document_new("svg:svg");
                 repr = rdoc->root();
-                repr = sp_document_root(doc)->updateRepr(rdoc, repr, SP_OBJECT_WRITE_BUILD);
+                repr = doc->getRoot()->updateRepr(rdoc, repr, SP_OBJECT_WRITE_BUILD);
                 sp_repr_save_rebased_file(repr->document(), sp_export_svg, SP_SVG_NS_URI,
-                                          doc->base, sp_export_svg);
+                                          doc->getBase(), sp_export_svg);
             }
             if (sp_export_ps) {
                 do_export_ps_pdf(doc, sp_export_ps, "image/x-postscript");
@@ -1196,15 +1196,15 @@ do_query_dimension (SPDocument *doc, bool extent, Geom::Dim2 const axis, const g
             return;
         }
     } else {
-        o = SP_DOCUMENT_ROOT(doc);
+        o = doc->getRoot();
     }
 
     if (o) {
-        sp_document_ensure_up_to_date (doc);
+        doc->ensureUpToDate();
         SPItem *item = ((SPItem *) o);
 
         // "true" SVG bbox for scripting
-        Geom::OptRect area = item->getBounds(sp_item_i2doc_affine(item));
+        Geom::OptRect area = item->getBounds(item->i2doc_affine());
         if (area) {
             Inkscape::SVGOStringStream os;
             if (extent) {
@@ -1219,15 +1219,12 @@ do_query_dimension (SPDocument *doc, bool extent, Geom::Dim2 const axis, const g
     }
 }
 
-static void
-do_query_all (SPDocument *doc)
+static void do_query_all(SPDocument *doc)
 {
-    SPObject *o = NULL;
-
-    o = SP_DOCUMENT_ROOT(doc);
+    SPObject *o = doc->getRoot();
 
     if (o) {
-        sp_document_ensure_up_to_date (doc);
+        doc->ensureUpToDate();
         do_query_all_recurse(o);
     }
 }
@@ -1237,7 +1234,7 @@ do_query_all_recurse (SPObject *o)
 {
     SPItem *item = ((SPItem *) o);
     if (o->getId() && SP_IS_ITEM(item)) {
-        Geom::OptRect area = item->getBounds(sp_item_i2doc_affine(item));
+        Geom::OptRect area = item->getBounds(item->i2doc_affine());
         if (area) {
             Inkscape::SVGOStringStream os;
             os << o->getId();
@@ -1277,12 +1274,12 @@ sp_do_export_png(SPDocument *doc)
         SPObject *o_area = NULL;
         if (sp_export_id && sp_export_area_drawing) {
             o = doc->getObjectById(sp_export_id);
-            o_area = SP_DOCUMENT_ROOT (doc);
+            o_area = doc->getRoot();
         } else if (sp_export_id) {
             o = doc->getObjectById(sp_export_id);
             o_area = o;
         } else if (sp_export_area_drawing) {
-            o = SP_DOCUMENT_ROOT (doc);
+            o = doc->getRoot();
             o_area = o;
         }
 
@@ -1330,9 +1327,9 @@ sp_do_export_png(SPDocument *doc)
             }
 
             // write object bbox to area
-            sp_document_ensure_up_to_date (doc);
+            doc->ensureUpToDate();
             Geom::OptRect areaMaybe;
-            sp_item_invoke_bbox((SPItem *) o_area, areaMaybe, sp_item_i2d_affine((SPItem *) o_area), TRUE);
+            static_cast<SPItem *>(o_area)->invoke_bbox( areaMaybe, static_cast<SPItem *>(o_area)->i2d_affine(), TRUE);
             if (areaMaybe) {
                 area = *areaMaybe;
             } else {
@@ -1355,9 +1352,9 @@ sp_do_export_png(SPDocument *doc)
         area = Geom::Rect(Geom::Interval(x0,x1), Geom::Interval(y0,y1));
     } else if (sp_export_area_page || !(sp_export_id || sp_export_area_drawing)) {
         /* Export the whole page: note: Inkscape uses 'page' in all menus and dialogs, not 'canvas' */
-        sp_document_ensure_up_to_date (doc);
+        doc->ensureUpToDate();
         Geom::Point origin (SP_ROOT(doc->root)->x.computed, SP_ROOT(doc->root)->y.computed);
-        area = Geom::Rect(origin, origin + sp_document_dimensions(doc));
+        area = Geom::Rect(origin, origin + doc->getDimensions());
     }
 
     // set filename and dpi from options, if not yet set from the hints
@@ -1451,8 +1448,8 @@ sp_do_export_png(SPDocument *doc)
     gchar *path = 0;
     if (filename_from_hint) {
         //Make relative paths go from the document location, if possible:
-        if (!g_path_is_absolute(filename) && doc->uri) {
-            gchar *dirname = g_path_get_dirname(doc->uri);
+        if (!g_path_is_absolute(filename) && doc->getURI()) {
+            gchar *dirname = g_path_get_dirname(doc->getURI());
             if (dirname) {
                 path = g_build_filename(dirname, filename, NULL);
                 g_free(dirname);

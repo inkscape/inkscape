@@ -5,6 +5,8 @@
  * Authors:
  *   Carl Hetherington <inkscape@carlh.net>
  *   Diederik van Lierop <mail@diedenrezi.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2005 - 2010 Authors
  *
@@ -100,7 +102,8 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
     Geom::Rect bbox_to_snap_incl = bbox_to_snap; // _incl means: will include the snapper tolerance
     bbox_to_snap_incl.expandBy(getSnapperTolerance()); // see?
 
-    for (SPObject* o = sp_object_first_child(parent); o != NULL; o = SP_OBJECT_NEXT(o)) {
+    for ( SPObject *o = parent->firstChild(); o; o = o->getNext() ) {
+        g_assert(_snapmanager->getDesktop() != NULL);
         if (SP_IS_ITEM(o) && !(_snapmanager->getDesktop()->itemIsHidden(SP_ITEM(o)) && !clip_or_mask)) {
             // Snapping to items in a locked layer is allowed
             // Don't snap to hidden objects, unless they're a clipped path or a mask
@@ -123,11 +126,11 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                         // we should also consider that path or mask for snapping to
                         obj = SP_OBJECT(item->clip_ref->getObject());
                         if (obj) {
-                            _findCandidates(obj, it, false, bbox_to_snap, true, sp_item_i2doc_affine(item));
+                            _findCandidates(obj, it, false, bbox_to_snap, true, item->i2doc_affine());
                         }
                         obj = SP_OBJECT(item->mask_ref->getObject());
                         if (obj) {
-                            _findCandidates(obj, it, false, bbox_to_snap, true, sp_item_i2doc_affine(item));
+                            _findCandidates(obj, it, false, bbox_to_snap, true, item->i2doc_affine());
                         }
                     }
                 }
@@ -139,12 +142,11 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                     if (clip_or_mask) {
                         // Oh oh, this will get ugly. We cannot use sp_item_i2d_affine directly because we need to
                         // insert an additional transformation in document coordinates (code copied from sp_item_i2d_affine)
-                        sp_item_invoke_bbox(item,
-                            bbox_of_item,
-                            sp_item_i2doc_affine(item) * additional_affine * _snapmanager->getDesktop()->doc2dt(),
+                        item->invoke_bbox(bbox_of_item,
+                            item->i2doc_affine() * additional_affine * _snapmanager->getDesktop()->doc2dt(),
                             true);
                     } else {
-                        sp_item_invoke_bbox(item, bbox_of_item, sp_item_i2d_affine(item), true);
+                        item->invoke_bbox( bbox_of_item, item->i2d_affine(), true);
                     }
                     if (bbox_of_item) {
                         // See if the item is within range
@@ -242,7 +244,7 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::SnapSourceType const &t,
                     }
                 }
 
-                sp_item_snappoints(root_item, *_points_to_snap_to, &_snapmanager->snapprefs);
+                root_item->getSnappoints(*_points_to_snap_to, &_snapmanager->snapprefs);
 
                 // restore the original snap preferences
                 _snapmanager->snapprefs.setSnapIntersectionCS(old_pref);
@@ -254,7 +256,7 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::SnapSourceType const &t,
                 // Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
                 // of the item AND the bbox of the clipping path at the same time
                 if (!(*i).clip_or_mask) {
-                    Geom::OptRect b = sp_item_bbox_desktop(root_item, bbox_type);
+                    Geom::OptRect b = root_item->getBboxDesktop(bbox_type);
                     getBBoxPoints(b, _points_to_snap_to, true, _snapmanager->snapprefs.getSnapToBBoxNode(), _snapmanager->snapprefs.getSnapBBoxEdgeMidpoints(), _snapmanager->snapprefs.getSnapBBoxMidpoints());
                 }
             }
@@ -342,7 +344,7 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuide(SnappedConstraints &sc,
  * Returns index of first NR_END bpath in array.
  */
 
-void Inkscape::ObjectSnapper::_collectPaths(Geom::Point p,
+void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
                                          Inkscape::SnapSourceType const source_type,
                                          bool const &first_point) const
 {
@@ -384,7 +386,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point p,
                 root_item = sp_use_root(SP_USE((*i).item));
                 g_return_if_fail(root_item);
             } else {
-                i2doc = sp_item_i2doc_affine((*i).item);
+                i2doc = (*i).item->i2doc_affine();
                 root_item = (*i).item;
             }
 
@@ -420,7 +422,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point p,
                             // Geom::PathVector *pv = pathvector_for_curve(root_item, curve, true, true, Geom::identity(), (*i).additional_affine);
 
                             Geom::PathVector *pv = new Geom::PathVector(curve->get_pathvector());
-                            (*pv) *= sp_item_i2d_affine(root_item) * (*i).additional_affine * _snapmanager->getDesktop()->doc2dt(); // (_edit_transform * _i2d_transform);
+                            (*pv) *= root_item->i2d_affine() * (*i).additional_affine * _snapmanager->getDesktop()->doc2dt(); // (_edit_transform * _i2d_transform);
 
                             _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(pv, SNAPTARGET_PATH, Geom::OptRect())); // Perhaps for speed, get a reference to the Geom::pathvector, and store the transformation besides it.
                             curve->unref();
@@ -436,10 +438,10 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point p,
                     // of the item AND the bbox of the clipping path at the same time
                     if (!(*i).clip_or_mask) {
                         Geom::OptRect rect;
-                        sp_item_invoke_bbox(root_item, rect, i2doc, TRUE, bbox_type);
+                        root_item->invoke_bbox( rect, i2doc, TRUE, bbox_type);
                         if (rect) {
                             Geom::PathVector *path = _getPathvFromRect(*rect);
-                            rect = sp_item_bbox_desktop(root_item, bbox_type);
+                            rect = root_item->getBboxDesktop(bbox_type);
                             _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(path, SNAPTARGET_BBOX_EDGE, rect));
                         }
                     }
@@ -659,7 +661,7 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
     /* Get a list of all the SPItems that we will try to snap to */
     if (p.getSourceNum() <= 0) {
         Geom::Rect const local_bbox_to_snap = bbox_to_snap ? *bbox_to_snap : Geom::Rect(p.getPoint(), p.getPoint());
-        _findCandidates(sp_document_root(_snapmanager->getDocument()), it, p.getSourceNum() <= 0, local_bbox_to_snap, false, Geom::identity());
+        _findCandidates(_snapmanager->getDocument()->getRoot(), it, p.getSourceNum() <= 0, local_bbox_to_snap, false, Geom::identity());
     }
 
     // TODO: Argh, UGLY! Get rid of this here, move this logic to the snap manager
@@ -722,7 +724,7 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
     /* Get a list of all the SPItems that we will try to snap to */
     if (p.getSourceNum() <= 0) {
         Geom::Rect const local_bbox_to_snap = bbox_to_snap ? *bbox_to_snap : Geom::Rect(pp, pp);
-        _findCandidates(sp_document_root(_snapmanager->getDocument()), it, p.getSourceNum() <= 0, local_bbox_to_snap, false, Geom::identity());
+        _findCandidates(_snapmanager->getDocument()->getRoot(), it, p.getSourceNum() <= 0, local_bbox_to_snap, false, Geom::identity());
     }
 
     // A constrained snap, is a snap in only one degree of freedom (specified by the constraint line).
@@ -763,7 +765,7 @@ void Inkscape::ObjectSnapper::guideFreeSnap(SnappedConstraints &sc,
     std::vector<SPItem*> cand;
     std::vector<SPItem const *> const it; //just an empty list
 
-    _findCandidates(sp_document_root(_snapmanager->getDocument()), &it, true, Geom::Rect(p, p), false, Geom::identity());
+    _findCandidates(_snapmanager->getDocument()->getRoot(), &it, true, Geom::Rect(p, p), false, Geom::identity());
     _snapTranslatingGuide(sc, p, guide_normal);
 
 }
@@ -778,7 +780,7 @@ void Inkscape::ObjectSnapper::guideConstrainedSnap(SnappedConstraints &sc,
     std::vector<SPItem*> cand;
     std::vector<SPItem const *> const it; //just an empty list
 
-    _findCandidates(sp_document_root(_snapmanager->getDocument()), &it, true, Geom::Rect(p, p), false, Geom::identity());
+    _findCandidates(_snapmanager->getDocument()->getRoot(), &it, true, Geom::Rect(p, p), false, Geom::identity());
     _snapTranslatingGuide(sc, p, guide_normal);
 
 }
@@ -817,7 +819,7 @@ void Inkscape::ObjectSnapper::_clear_paths() const
 
 Geom::PathVector* Inkscape::ObjectSnapper::_getBorderPathv() const
 {
-    Geom::Rect const border_rect = Geom::Rect(Geom::Point(0,0), Geom::Point(sp_document_width(_snapmanager->getDocument()),sp_document_height(_snapmanager->getDocument())));
+    Geom::Rect const border_rect = Geom::Rect(Geom::Point(0,0), Geom::Point((_snapmanager->getDocument())->getWidth(),(_snapmanager->getDocument())->getHeight()));
     return _getPathvFromRect(border_rect);
 }
 
@@ -834,8 +836,8 @@ Geom::PathVector* Inkscape::ObjectSnapper::_getPathvFromRect(Geom::Rect const re
 
 void Inkscape::ObjectSnapper::_getBorderNodes(std::vector<SnapCandidatePoint> *points) const
 {
-    Geom::Coord w = sp_document_width(_snapmanager->getDocument());
-    Geom::Coord h = sp_document_height(_snapmanager->getDocument());
+    Geom::Coord w = (_snapmanager->getDocument())->getWidth();
+    Geom::Coord h = (_snapmanager->getDocument())->getHeight();
     points->push_back(Inkscape::SnapCandidatePoint(Geom::Point(0,0), SNAPSOURCE_UNDEFINED, SNAPTARGET_PAGE_CORNER));
     points->push_back(Inkscape::SnapCandidatePoint(Geom::Point(0,h), SNAPSOURCE_UNDEFINED, SNAPTARGET_PAGE_CORNER));
     points->push_back(Inkscape::SnapCandidatePoint(Geom::Point(w,h), SNAPSOURCE_UNDEFINED, SNAPTARGET_PAGE_CORNER));

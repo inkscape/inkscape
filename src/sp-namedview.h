@@ -6,6 +6,7 @@
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) Lauris Kaplinski 2000-2002
@@ -23,6 +24,8 @@
 #include "sp-object-group.h"
 #include "sp-metric.h"
 #include "snap.h"
+#include "display/canvas-grid.h"
+#include "document.h"
 
 namespace Inkscape {
 class CanvasGrid;
@@ -81,6 +84,14 @@ struct SPNamedView : public SPObjectGroup {
 
     void translateGuides(Geom::Translate const &translation);
     void scrollAllDesktops(double dx, double dy, bool is_scrolling);
+    void writeNewGrid(SPDocument *document,int gridtype);
+    bool getSnapGlobal() const;
+    void setSnapGlobal(bool v);
+    void setGuides(bool v);
+
+private:
+    double getMarginLength(gchar const * const key,SPUnit const * const margin_units,SPUnit const * const return_units,double const width,double const height,bool const use_width);
+    friend class SPDocument;
 };
 
 struct SPNamedViewClass {

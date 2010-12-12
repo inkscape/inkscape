@@ -6,6 +6,7 @@
  *   Bryce Harrington <bryce@osdl.org>
  *   Ted Gould <ted@gould.cx>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2002-2005,2007 Authors
  *
@@ -532,9 +533,8 @@ SPDocument *Script::open(Inkscape::Extension::Input *module,
     } // data_read
 
     if (mydoc != NULL) {
-        g_free(mydoc->base);
-        mydoc->base = NULL;
-        sp_document_change_uri_and_hrefs(mydoc, filenameArg);
+        mydoc->setBase(0);
+        mydoc->changeUriAndHrefs(filenameArg);
     }
 
     // make sure we don't leak file descriptors from g_file_open_tmp

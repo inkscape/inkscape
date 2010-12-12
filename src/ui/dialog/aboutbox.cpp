@@ -6,6 +6,7 @@
  *   MenTaLguY <mental@rydia.net>
  *   Kees Cook <kees@outflux.net>
  *   Jon Phillips <jon@rejon.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004 Derek P. Moore
  * Copyright 2004 Kees Cook
@@ -147,7 +148,7 @@ Gtk::Widget *build_splash_widget() {
     // should be in UTF-*8..
 
     char *about=g_build_filename(INKSCAPE_SCREENSDIR, _("about.svg"), NULL);
-    SPDocument *doc=sp_document_new (about, TRUE);
+    SPDocument *doc=SPDocument::createNewDoc (about, TRUE);
     g_free(about);
     g_return_val_if_fail(doc != NULL, NULL);
 
@@ -155,14 +156,14 @@ Gtk::Widget *build_splash_widget() {
     if ( version && SP_IS_TEXT(version) ) {
         sp_te_set_repr_text_multiline (SP_TEXT (version), Inkscape::version_string);
     }
-    sp_document_ensure_up_to_date(doc);
+    doc->ensureUpToDate();
 
     GtkWidget *v=sp_svg_view_widget_new(doc);
 
-    double width=sp_document_width(doc);
-    double height=sp_document_height(doc);
+    double width=doc->getWidth();
+    double height=doc->getHeight();
     
-    sp_document_unref(doc);
+    doc->doUnref();
 
     sp_svg_view_widget_set_resize(SP_SVG_VIEW_WIDGET(v), FALSE, (int)width, (int)height);
 

@@ -3,6 +3,7 @@
  */
 /* Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * This code is in public domain
  */
@@ -226,10 +227,10 @@ PrintWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     };
     int res;
 
-    _PageWidth = sp_document_width (doc);
-    _PageHeight = sp_document_height (doc);
+    _PageWidth = doc->getWidth ();
+    _PageHeight = doc->getHeight ();
 
-    di.lpszDocName = SP_DOCUMENT_NAME (doc);
+    di.lpszDocName = doc->getName();
 
     SPWin32Modal = TRUE;
 

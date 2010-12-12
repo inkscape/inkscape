@@ -1,11 +1,11 @@
-#define __SP_SVG_VIEW_C__
-
 /** \file
  * Functions and callbacks for generic SVG view and widget
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
@@ -41,7 +41,7 @@ SPSVGView::~SPSVGView()
 {
     if (doc() && _drawing)
     {
-        sp_item_invoke_hide (SP_ITEM (sp_document_root (doc())), _dkey);
+        SP_ITEM( doc()->getRoot() )->invoke_hide(_dkey);
         _drawing = NULL;
     }
 }
@@ -84,12 +84,12 @@ void
 SPSVGView::doRescale (bool event)
 {
     if (!doc()) return;
-    if (sp_document_width (doc()) < 1e-9) return;
-    if (sp_document_height (doc()) < 1e-9) return;
+    if (doc()->getWidth () < 1e-9) return;
+    if (doc()->getHeight () < 1e-9) return;
 
     if (_rescale) {
-        _hscale = _width / sp_document_width (doc());
-        _vscale = _height / sp_document_height (doc());
+        _hscale = _width / doc()->getWidth ();
+        _vscale = _height / doc()->getHeight ();
         if (_keepaspect) {
             if (_hscale > _vscale) {
                 _hscale = _vscale;
@@ -104,8 +104,8 @@ SPSVGView::doRescale (bool event)
     }
 
     if (event) {
-        emitResized (sp_document_width (doc()) * _hscale,
-                sp_document_height (doc()) * _vscale);
+        emitResized (doc()->getWidth () * _hscale,
+                doc()->getHeight () * _vscale);
     }
 }
 
@@ -152,7 +152,7 @@ arena_handler (SPCanvasArena */*arena*/, NRArenaItem *ai, GdkEvent *event, SPSVG
 				spev.type = SP_EVENT_ACTIVATE;
                                 if ( spitem != 0 )
 				{
-				  sp_item_event (spitem, &spev);
+				  spitem->emitEvent (spev);
                                 }
       			}
 		}
@@ -166,7 +166,7 @@ arena_handler (SPCanvasArena */*arena*/, NRArenaItem *ai, GdkEvent *event, SPSVG
 		spev.data = svgview;
                 if ( spitem != 0 )
 		{
-		  sp_item_event (spitem, &spev);
+		  spitem->emitEvent (spev);
                 }
 		break;
 	case GDK_LEAVE_NOTIFY:
@@ -174,7 +174,7 @@ arena_handler (SPCanvasArena */*arena*/, NRArenaItem *ai, GdkEvent *event, SPSVG
 		spev.data = svgview;
                 if ( spitem != 0 )
 		{
-		  sp_item_event (spitem, &spev);
+		  spitem->emitEvent (spev);
                 }
 		break;
 	default:
@@ -191,7 +191,7 @@ void
 SPSVGView::setDocument (SPDocument *document)
 {
     if (doc()) {
-        sp_item_invoke_hide (SP_ITEM (sp_document_root (doc())), _dkey);
+        SP_ITEM( doc()->getRoot() )->invoke_hide(_dkey);
     }
 
     if (!_drawing) {
@@ -200,8 +200,7 @@ SPSVGView::setDocument (SPDocument *document)
     }
 
     if (document) {
-        NRArenaItem *ai = sp_item_invoke_show (
-                SP_ITEM (sp_document_root (document)),
+        NRArenaItem *ai = SP_ITEM( document->getRoot() )->invoke_show(
                 SP_CANVAS_ARENA (_drawing)->arena,
                 _dkey,
                 SP_ITEM_SHOW_DISPLAY);

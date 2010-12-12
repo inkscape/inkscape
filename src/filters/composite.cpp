@@ -1,5 +1,3 @@
-#define __SP_FECOMPOSITE_CPP__
-
 /** \file
  * SVG <feComposite> implementation.
  *
@@ -7,6 +5,7 @@
 /*
  * Authors:
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2006 Hugo Rodrigues
  *
@@ -101,14 +100,14 @@ sp_feComposite_build(SPObject *object, SPDocument *document, Inkscape::XML::Node
 
     SPFeComposite *comp = SP_FECOMPOSITE(object);
 
-    sp_object_read_attr(object, "operator");
+    object->readAttr( "operator" );
     if (comp->composite_operator == COMPOSITE_ARITHMETIC) {
-        sp_object_read_attr(object, "k1");
-        sp_object_read_attr(object, "k2");
-        sp_object_read_attr(object, "k3");
-        sp_object_read_attr(object, "k4");
+        object->readAttr( "k1" );
+        object->readAttr( "k2" );
+        object->readAttr( "k3" );
+        object->readAttr( "k4" );
     }
-    sp_object_read_attr(object, "in2");
+    object->readAttr( "in2" );
 
     /* Unlike normal in, in2 is required attribute. Make sure, we can call
      * it by some name. */
@@ -240,7 +239,9 @@ sp_feComposite_update(SPObject *object, SPCtx *ctx, guint flags)
     {
         SPFilter *parent = SP_FILTER(object->parent);
         comp->in2 = sp_filter_primitive_name_previous_out(comp);
-        object->repr->setAttribute("in2", sp_filter_name_for_image(parent, comp->in2));
+
+		//XML Tree being used directly here while it shouldn't be.
+        object->getRepr()->setAttribute("in2", sp_filter_name_for_image(parent, comp->in2));
     }
 
     if (((SPObjectClass *) feComposite_parent_class)->update) {

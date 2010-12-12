@@ -6,6 +6,8 @@
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *   Lauris Kaplinski
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2005 Ralf Stephan
  *
@@ -145,15 +147,15 @@ Ruler::on_button_release_event(GdkEventButton *evb)
         _dragging = false;
 
         if ( (_horiz_f ? wy : wx ) >= 0 ) {
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(_dt->doc());
+            Inkscape::XML::Document *xml_doc = _dt->doc()->getReprDoc();
             Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
             repr->setAttribute("orientation", _horiz_f ? "horizontal" : "vertical");
             double const guide_pos_dt = event_dt[ _horiz_f ? Geom::Y : Geom::X ];
             sp_repr_set_svg_double(repr, "position", guide_pos_dt);
             SP_OBJECT_REPR(_dt->namedview)->appendChild(repr);
             Inkscape::GC::release(repr);
-            sp_document_done(sp_desktop_document(_dt), SP_VERB_NONE, 
-                             /* TODO: annotate */ "ruler.cpp:157");
+            DocumentUndo::done(sp_desktop_document(_dt), SP_VERB_NONE, 
+                               /* TODO: annotate */ "ruler.cpp:157");
         }
         _dt->set_coordinate_status(event_dt);
     }

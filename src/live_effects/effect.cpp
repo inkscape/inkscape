@@ -1,7 +1,6 @@
-#define INKSCAPE_LIVEPATHEFFECT_CPP
-
 /*
  * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+ *   Abhishek Sharma
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -256,11 +255,10 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
     return neweffect;
 }
 
-void
-Effect::createAndApply(const char* name, SPDocument *doc, SPItem *item)
+void Effect::createAndApply(const char* name, SPDocument *doc, SPItem *item)
 {
     // Path effect definition
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
     Inkscape::XML::Node *repr = xml_doc->createElement("inkscape:path-effect");
     repr->setAttribute("effect", name);
 
@@ -524,7 +522,7 @@ Effect::getHelperPaths(SPLPEItem *lpeitem)
     //       rather than copying PathVectors all over the place
     if (show_orig_path) {
         // add original path to helperpaths
-        SPCurve* curve = sp_shape_get_curve (SP_SHAPE(lpeitem));
+        SPCurve* curve = SP_SHAPE(lpeitem)->getCurve ();
         hp_vec.push_back(curve->get_pathvector());
     }
 

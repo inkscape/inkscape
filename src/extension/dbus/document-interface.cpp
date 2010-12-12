@@ -28,7 +28,7 @@
 
 #include "sp-object.h"
 
-#include "document.h" // sp_document_repr_doc
+#include "document.h" // getReprDoc()
 
 #include "desktop-style.h" //sp_desktop_get_style
 
@@ -189,7 +189,7 @@ Inkscape::XML::Node *
 dbus_create_node (SPDesktop *desk, const gchar *type)
 {
     SPDocument * doc = sp_desktop_document (desk);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     return xml_doc->createElement(type);
 }
@@ -517,11 +517,10 @@ document_interface_image (DocumentInterface *object, int x, int y, gchar *filena
     return strdup(newNode->attribute("id"));
 }
 
-gchar* 
-document_interface_node (DocumentInterface *object, gchar *type, GError **error)
+gchar *document_interface_node (DocumentInterface *object, gchar *type, GError **error)
 {
     SPDocument * doc = sp_desktop_document (object->desk);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     Inkscape::XML::Node *newNode =  xml_doc->createElement(type);
 

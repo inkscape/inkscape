@@ -1,5 +1,3 @@
-#define __SP_FETURBULENCE_CPP__
-
 /** \file
  * SVG <feTurbulence> implementation.
  *
@@ -8,6 +6,7 @@
  * Authors:
  *   Felipe Corrêa da Silva Sanches <juca@members.fsf.org>
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 Felipe Sanches
  * Copyright (C) 2006 Hugo Rodrigues
@@ -100,11 +99,11 @@ sp_feTurbulence_build(SPObject *object, SPDocument *document, Inkscape::XML::Nod
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
-    sp_object_read_attr(object, "baseFrequency");
-    sp_object_read_attr(object, "numOctaves");
-    sp_object_read_attr(object, "seed");
-    sp_object_read_attr(object, "stitchTiles");
-    sp_object_read_attr(object, "type");
+    object->readAttr( "baseFrequency" );
+    object->readAttr( "numOctaves" );
+    object->readAttr( "seed" );
+    object->readAttr( "stitchTiles" );
+    object->readAttr( "type" );
 }
 
 /**

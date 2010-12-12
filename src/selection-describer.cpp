@@ -4,6 +4,7 @@
  * Authors:
  *   MenTaLguY <mental@rydia.net>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004-2006 Authors
  *
@@ -178,7 +179,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         g_free (parent_name);
 
         if (!items->next) { // one item
-            char *item_desc = sp_item_description(item);
+            char *item_desc = item->description();
             if (SP_IS_USE(item) || (SP_IS_OFFSET(item) && SP_OFFSET (item)->sourceHref)) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
                               item_desc, in_phrase,

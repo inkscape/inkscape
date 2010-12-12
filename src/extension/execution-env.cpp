@@ -1,6 +1,7 @@
 /*
  * Authors:
  *   Ted Gould <ted@gould.cx>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007-2008 Authors
  *
@@ -162,14 +163,14 @@ ExecutionEnv::cancel (void) {
 
 void
 ExecutionEnv::undo (void) {
-    sp_document_cancel(_doc->doc());
+    DocumentUndo::cancel(_doc->doc());
     reselect();
     return;
 }
 
 void
 ExecutionEnv::commit (void) {
-    sp_document_done(_doc->doc(), SP_VERB_NONE, _(_effect->get_name()));
+    DocumentUndo::done(_doc->doc(), SP_VERB_NONE, _(_effect->get_name()));
     Effect::set_last_effect(_effect);
     _effect->get_imp()->commitDocument();
     killDocCache();

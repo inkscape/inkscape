@@ -1,11 +1,11 @@
-#define __SP_USE_C__
-
 /*
  * SVG <use> implementation
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2005 authors
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -140,7 +140,7 @@ sp_use_finalize(GObject *obj)
     SPUse *use = (SPUse *) obj;
 
     if (use->child) {
-        sp_object_detach(SP_OBJECT(obj), use->child);
+        SP_OBJECT(obj)->detach(use->child);
         use->child = NULL;
     }
 
@@ -160,11 +160,11 @@ sp_use_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
         (* ((SPObjectClass *) parent_class)->build)(object, document, repr);
     }
 
-    sp_object_read_attr(object, "x");
-    sp_object_read_attr(object, "y");
-    sp_object_read_attr(object, "width");
-    sp_object_read_attr(object, "height");
-    sp_object_read_attr(object, "xlink:href");
+    object->readAttr( "x" );
+    object->readAttr( "y" );
+    object->readAttr( "width" );
+    object->readAttr( "height" );
+    object->readAttr( "xlink:href" );
 
     // We don't need to create child here:
     // reading xlink:href will attach ref, and that will cause the changed signal to be emitted,
@@ -177,7 +177,7 @@ sp_use_release(SPObject *object)
     SPUse *use = SP_USE(object);
 
     if (use->child) {
-        sp_object_detach(object, use->child);
+        object->detach(use->child);
         use->child = NULL;
     }
 
@@ -289,7 +289,7 @@ sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, uns
                                                use->y.computed)
                              * transform );
         Geom::OptRect optbbox;
-        sp_item_invoke_bbox_full(child, optbbox, ct, flags, FALSE);
+        child->invoke_bbox_full( optbbox, ct, flags, FALSE);
         if (optbbox) {
             bbox->x0 = (*optbbox)[0][0];
             bbox->y0 = (*optbbox)[1][0];
@@ -312,7 +312,7 @@ sp_use_print(SPItem *item, SPPrintContext *ctx)
     }
 
     if (use->child && SP_IS_ITEM(use->child)) {
-        sp_item_invoke_print(SP_ITEM(use->child), ctx);
+        SP_ITEM(use->child)->invoke_print(ctx);
     }
 
     if (translated) {
@@ -336,7 +336,7 @@ sp_use_description(SPItem *item)
              * a <use>, and giving its description. */
         }
         ++recursion_depth;
-        char *child_desc = sp_item_description(SP_ITEM(use->child));
+        char *child_desc = SP_ITEM(use->child)->description();
         --recursion_depth;
 
         ret = g_strdup_printf(_("<b>Clone</b> of: %s"), child_desc);
@@ -357,7 +357,7 @@ sp_use_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
     nr_arena_group_set_style(NR_ARENA_GROUP(ai), SP_OBJECT_STYLE(item));
 
     if (use->child) {
-        NRArenaItem *ac = sp_item_invoke_show(SP_ITEM(use->child), arena, key, flags);
+        NRArenaItem *ac = SP_ITEM(use->child)->invoke_show(arena, key, flags);
         if (ac) {
             nr_arena_item_add_child(ai, ac, NULL);
         }
@@ -375,7 +375,7 @@ sp_use_hide(SPItem *item, unsigned key)
     SPUse *use = SP_USE(item);
 
     if (use->child) {
-        sp_item_invoke_hide(SP_ITEM(use->child), key);
+        SP_ITEM(use->child)->invoke_hide(key);
     }
 
     if (((SPItemClass *) parent_class)->hide) {
@@ -492,7 +492,7 @@ sp_use_move_compensate(Geom::Matrix const *mp, SPItem */*original*/, SPUse *self
         return;
 
     // restore item->transform field from the repr, in case it was changed by seltrans
-    sp_object_read_attr (SP_OBJECT (self), "transform");
+    SP_OBJECT (self)->readAttr ("transform");
 
     Geom::Matrix t = sp_use_get_parent_transform(self);
     Geom::Matrix clone_move = t.inverse() * m * t;
@@ -512,7 +512,7 @@ sp_use_move_compensate(Geom::Matrix const *mp, SPItem */*original*/, SPUse *self
     // commit the compensation
     SPItem *item = SP_ITEM(self);
     item->transform *= clone_move;
-    sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform, &advertized_move);
+    item->doWriteTransform(SP_OBJECT_REPR(item), item->transform, &advertized_move);
     SP_OBJECT(item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
@@ -525,7 +525,7 @@ sp_use_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPUse *use)
     use->_transformed_connection.disconnect();
 
     if (use->child) {
-        sp_object_detach(SP_OBJECT(use), use->child);
+        SP_OBJECT(use)->detach(use->child);
         use->child = NULL;
     }
 
@@ -537,13 +537,13 @@ sp_use_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPUse *use)
             g_return_if_fail(type > G_TYPE_NONE);
             if (g_type_is_a(type, SP_TYPE_ITEM)) {
                 use->child = (SPObject*) g_object_new(type, 0);
-                sp_object_attach(SP_OBJECT(use), use->child, use->lastChild());
+                SP_OBJECT(use)->attach(use->child, use->lastChild());
                 sp_object_unref(use->child, SP_OBJECT(use));
-                sp_object_invoke_build(use->child, SP_OBJECT(use)->document, childrepr, TRUE);
+                (use->child)->invoke_build(SP_OBJECT(use)->document, childrepr, TRUE);
 
                 for (SPItemView *v = item->display; v != NULL; v = v->next) {
                     NRArenaItem *ai;
-                    ai = sp_item_invoke_show(SP_ITEM(use->child), NR_ARENA_ITEM_ARENA(v->arenaitem), v->key, v->flags);
+                    ai = SP_ITEM(use->child)->invoke_show(NR_ARENA_ITEM_ARENA(v->arenaitem), v->key, v->flags);
                     if (ai) {
                         nr_arena_item_add_child(v->arenaitem, ai, NULL);
                     }
@@ -664,21 +664,26 @@ sp_use_modified(SPObject *object, guint flags)
     }
 }
 
-SPItem *
-sp_use_unlink(SPUse *use)
+SPItem *sp_use_unlink(SPUse *use)
 {
-    if (!use) return NULL;
+    if (!use) {
+        return NULL;
+    }
 
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(use);
-    if (!repr) return NULL;
+    if (!repr) {
+        return NULL;
+    }
 
     Inkscape::XML::Node *parent = sp_repr_parent(repr);
     SPDocument *document = SP_OBJECT(use)->document;
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    Inkscape::XML::Document *xml_doc = document->getReprDoc();
 
     // Track the ultimate source of a chain of uses.
     SPItem *orig = sp_use_root(use);
-    if (!orig) return NULL ;
+    if (!orig) {
+        return NULL;
+    }
 
     // Calculate the accumulated transform, starting from the original.
     Geom::Matrix t = sp_use_get_root_transform(use);
@@ -736,7 +741,7 @@ sp_use_unlink(SPUse *use)
     {
         Geom::Matrix nomove(Geom::identity());
         // Advertise ourselves as not moving.
-        sp_item_write_transform(item, SP_OBJECT_REPR(item), t, &nomove);
+        item->doWriteTransform(SP_OBJECT_REPR(item), t, &nomove);
     }
     return item;
 }

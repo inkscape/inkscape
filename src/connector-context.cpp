@@ -3,6 +3,7 @@
  *
  * Authors:
  *   Michael Wybrow <mjwybrow@users.sourceforge.net>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2005-2008  Michael Wybrow
  * Copyright (C) 2009  Monash University
@@ -187,6 +188,8 @@
 #include "sp-text.h"
 #include "sp-flowtext.h"
 #include "display/curve.h"
+
+using Inkscape::DocumentUndo;
 
 static void sp_connector_context_class_init(SPConnectorContextClass *klass);
 static void sp_connector_context_init(SPConnectorContext *conn_context);
@@ -971,7 +974,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
                 m.unSetup();
 
                 // Update the hidden path
-                Geom::Matrix i2d = sp_item_i2d_affine(cc->clickeditem);
+                Geom::Matrix i2d = (cc->clickeditem)->i2d_affine();
                 Geom::Matrix d2i = i2d.inverse();
                 SPPath *path = SP_PATH(cc->clickeditem);
                 SPCurve *curve = path->original_curve ? path->original_curve : path->curve;
@@ -1075,7 +1078,7 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
                     m.unSetup();
                     cc_connector_rerouting_finish(cc, &p);
 
-                    sp_document_ensure_up_to_date(doc);
+                    doc->ensureUpToDate();
                     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
                     return TRUE;
                     break;
@@ -1101,7 +1104,7 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
                         m.unSetup();
                         sp_knot_set_position(cc->selected_handle, p, 0);
                         ConnectionPoint& cp = cc->connpthandles[cc->selected_handle];
-                        cp.pos = p * sp_item_dt2i_affine(cc->active_shape);
+                        cp.pos = p * (cc->active_shape)->dt2i_affine();
                         cc->active_shape->avoidRef->updateConnectionPoint(cp);
                     }
 
@@ -1119,11 +1122,11 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
 
                     ConnectionPoint cp;
                     cp.type = ConnPointUserDefined;
-                    cp.pos = p * sp_item_dt2i_affine(cc->active_shape);
+                    cp.pos = p * (cc->active_shape)->dt2i_affine();
                     cp.dir = Avoid::ConnDirAll;
                     g_object_unref(cc->selected_handle);
                     cc->active_shape->avoidRef->addConnectionPoint(cp);
-                    sp_document_ensure_up_to_date(doc);
+                    doc->ensureUpToDate();
                     for (ConnectionPointMap::iterator it = cc->connpthandles.begin(); it != cc->connpthandles.end(); ++it)
                         if (it->second.type == ConnPointUserDefined && it->second.id == cp.id)
                         {
@@ -1167,7 +1170,7 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
 
                     cc_connector_rerouting_finish(cc, NULL);
 
-                    sp_document_undo(doc);
+                    DocumentUndo::undo(doc);
 
                     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
                     desktop->messageStack()->flash( Inkscape::NORMAL_MESSAGE,
@@ -1197,7 +1200,7 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
                     // Obtain original position
                     ConnectionPoint const& cp = cc->connpthandles[cc->selected_handle];
                     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
-                    const Geom::Matrix& i2doc = sp_item_i2doc_affine(cc->active_shape);
+                    const Geom::Matrix& i2doc = (cc->active_shape)->i2doc_affine();
                     sp_knot_set_position(cc->selected_handle, cp.pos * i2doc * desktop->doc2dt(), 0);
                     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
                     desktop->messageStack()->flash( Inkscape::NORMAL_MESSAGE,
@@ -1219,7 +1222,7 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
                         m.unSetup();
                         sp_knot_set_position(cc->selected_handle, p, 0);
                         ConnectionPoint& cp = cc->connpthandles[cc->selected_handle];
-                        cp.pos = p * sp_item_dt2i_affine(cc->active_shape);
+                        cp.pos = p * (cc->active_shape)->dt2i_affine();
                         cc->active_shape->avoidRef->updateConnectionPoint(cp);
                     }
 
@@ -1249,11 +1252,11 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
 
                     ConnectionPoint cp;
                     cp.type = ConnPointUserDefined;
-                    cp.pos = p * sp_item_dt2i_affine(cc->active_shape);
+                    cp.pos = p * (cc->active_shape)->dt2i_affine();
                     cp.dir = Avoid::ConnDirAll;
                     g_object_unref(cc->selected_handle);
                     cc->active_shape->avoidRef->addConnectionPoint(cp);
-                    sp_document_ensure_up_to_date(doc);
+                    doc->ensureUpToDate();
                     for (ConnectionPointMap::iterator it = cc->connpthandles.begin(); it != cc->connpthandles.end(); ++it)
                         if (it->second.type == ConnPointUserDefined && it->second.id == cp.id)
                         {
@@ -1300,16 +1303,12 @@ cc_connector_rerouting_finish(SPConnectorContext *const cc, Geom::Point *const p
 
         if (found) {
             if (cc->clickedhandle == cc->endpt_handle[0]) {
-                sp_object_setAttribute(cc->clickeditem,
-                        "inkscape:connection-start", shape_label, false);
-                sp_object_setAttribute(cc->clickeditem,
-                        "inkscape:connection-start-point", cpid, false);
+                cc->clickeditem->setAttribute("inkscape:connection-start", shape_label, false);
+                cc->clickeditem->setAttribute("inkscape:connection-start-point", cpid, false);
             }
             else {
-                sp_object_setAttribute(cc->clickeditem,
-                        "inkscape:connection-end", shape_label, false);
-                sp_object_setAttribute(cc->clickeditem,
-                        "inkscape:connection-end-point", cpid, false);
+                cc->clickeditem->setAttribute("inkscape:connection-end", shape_label, false);
+                cc->clickeditem->setAttribute("inkscape:connection-end-point", cpid, false);
             }
             g_free(shape_label);
         }
@@ -1317,7 +1316,7 @@ cc_connector_rerouting_finish(SPConnectorContext *const cc, Geom::Point *const p
     cc->clickeditem->setHidden(false);
     sp_conn_reroute_path_immediate(SP_PATH(cc->clickeditem));
     cc->clickeditem->updateRepr();
-    sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR,
+    DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR,
                      _("Reroute connector"));
     cc_set_active_conn(cc, cc->clickeditem);
 }
@@ -1429,7 +1428,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
     SPDocument *doc = sp_desktop_document(desktop);
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     if ( c && !c->is_empty() ) {
         /* We actually have something to write */
@@ -1445,35 +1444,33 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
 
         /* Attach repr */
         cc->newconn = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
-        cc->newconn->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
+        cc->newconn->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
 
         bool connection = false;
-        sp_object_setAttribute(cc->newconn, "inkscape:connector-type",
-                cc->isOrthogonal ? "orthogonal" : "polyline", false);
-        sp_object_setAttribute(cc->newconn, "inkscape:connector-curvature",
-                Glib::Ascii::dtostr(cc->curvature).c_str(), false);
+        cc->newconn->setAttribute( "inkscape:connector-type",
+                                   cc->isOrthogonal ? "orthogonal" : "polyline", false );
+        cc->newconn->setAttribute( "inkscape:connector-curvature",
+                                   Glib::Ascii::dtostr(cc->curvature).c_str(), false );
         if (cc->shref)
         {
-            sp_object_setAttribute(cc->newconn, "inkscape:connection-start",
-                    cc->shref, false);
-            if (cc->scpid)
-                sp_object_setAttribute(cc->newconn, "inkscape:connection-start-point",
-                        cc->scpid, false);
+            cc->newconn->setAttribute( "inkscape:connection-start", cc->shref, false);
+            if (cc->scpid) {
+                cc->newconn->setAttribute( "inkscape:connection-start-point", cc->scpid, false);
+            }
             connection = true;
         }
 
         if (cc->ehref)
         {
-            sp_object_setAttribute(cc->newconn, "inkscape:connection-end",
-                    cc->ehref, false);
-            if (cc->ecpid)
-                sp_object_setAttribute(cc->newconn, "inkscape:connection-end-point",
-                        cc->ecpid, false);
+            cc->newconn->setAttribute( "inkscape:connection-end", cc->ehref, false);
+            if (cc->ecpid) {
+                cc->newconn->setAttribute( "inkscape:connection-end-point", cc->ecpid, false);
+            }
             connection = true;
         }
         // Process pending updates.
         cc->newconn->updateRepr();
-        sp_document_ensure_up_to_date(doc);
+        doc->ensureUpToDate();
 
         if (connection) {
             // Adjust endpoints to shape edge.
@@ -1491,7 +1488,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
 
     c->unref();
 
-    sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR, _("Create connector"));
+    DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR, _("Create connector"));
 }
 
 
@@ -1607,7 +1604,7 @@ endpt_handler(SPKnot */*knot*/, GdkEvent *event, SPConnectorContext *cc)
 
                 // Show the red path for dragging.
                 cc->red_curve = SP_PATH(cc->clickeditem)->original_curve ? SP_PATH(cc->clickeditem)->original_curve->copy() : SP_PATH(cc->clickeditem)->curve->copy();
-                Geom::Matrix i2d = sp_item_i2d_affine(cc->clickeditem);
+                Geom::Matrix i2d = (cc->clickeditem)->i2d_affine();
                 cc->red_curve->transform(i2d);
                 sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve);
 
@@ -1707,7 +1704,7 @@ static void cc_set_active_shape(SPConnectorContext *cc, SPItem *item)
 
         // Ensure the item's connection_points map
         // has been updated
-        sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
+        item->document->ensureUpToDate();
 
         std::set<int> seen;
         for  ( ConnectionPointMap::iterator it = cc->connpthandles.begin(); it != cc->connpthandles.end() ;)
@@ -1766,7 +1763,7 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
     g_assert( SP_IS_PATH(item) );
 
     SPCurve *curve = SP_PATH(item)->original_curve ? SP_PATH(item)->original_curve : SP_PATH(item)->curve;
-    Geom::Matrix i2d = sp_item_i2d_affine(item);
+    Geom::Matrix i2d = item->i2d_affine();
 
     if (cc->active_conn == item)
     {
@@ -1950,8 +1947,7 @@ void cc_selection_set_avoid(bool const set_avoid)
         char const *value = (set_avoid) ? "true" : NULL;
 
         if (cc_item_is_shape(item)) {
-            sp_object_setAttribute(item, "inkscape:connector-avoid",
-                    value, false);
+            item->setAttribute("inkscape:connector-avoid", value, false);
             item->avoidRef->handleSettingChange();
             changes++;
         }
@@ -1968,7 +1964,7 @@ void cc_selection_set_avoid(bool const set_avoid)
     char *event_desc = (set_avoid) ?
             _("Make connectors avoid selected objects") :
             _("Make connectors ignore selected objects");
-    sp_document_done(document, SP_VERB_CONTEXT_CONNECTOR, event_desc);
+    DocumentUndo::done(document, SP_VERB_CONTEXT_CONNECTOR, event_desc);
 }
 
 

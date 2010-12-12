@@ -4,6 +4,8 @@
  * Authors:
  *   bulia byak
  *   Richard Hughes
+ *   Jon A. Cruz <jon@joncruz.org>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2004-5 authors
  *
@@ -60,28 +62,32 @@ static void te_update_layout_now (SPItem *item)
     item->updateRepr();
 }
 
-/** Returns true if there are no visible characters on the canvas */
-bool
-sp_te_output_is_empty (SPItem const *item)
+bool sp_te_output_is_empty(SPItem const *item)
 {
     Inkscape::Text::Layout const *layout = te_get_layout(item);
     return layout->begin() == layout->end();
 }
 
-/** Returns true if the user has typed nothing in the text box */
-bool
-sp_te_input_is_empty (SPObject const *item)
+bool sp_te_input_is_empty(SPObject const *item)
 {
-    if (SP_IS_STRING(item)) return SP_STRING(item)->string.empty();
-    for (SPObject const *child = item->firstChild() ; child ; child = SP_OBJECT_NEXT(child))
-        if (!sp_te_input_is_empty(child)) return false;
-    return true;
+    bool empty = true;
+    if (SP_IS_STRING(item)) {
+        empty = SP_STRING(item)->string.empty();
+    } else {
+        for (SPObject const *child = item->firstChild() ; child ; child = child->getNext()) {
+            if (!sp_te_input_is_empty(child)) {
+                empty = false;
+                break;
+            }
+        }
+    }
+    return empty;
 }
 
 Inkscape::Text::Layout::iterator
 sp_te_get_position_by_coords (SPItem const *item, Geom::Point const &i_p)
 {
-    Geom::Matrix im (sp_item_i2d_affine (item));
+    Geom::Matrix im (item->i2d_affine ());
     im = im.inverse();
 
     Geom::Point p = i_p * im;
@@ -200,25 +206,29 @@ static const char * span_name_for_text_object(SPObject const *object)
     return NULL;
 }
 
-/** Recursively gets the length of all the SPStrings at or below the given
-\a item. Also adds 1 for each line break encountered. */
 unsigned sp_text_get_length(SPObject const *item)
 {
     unsigned length = 0;
 
-    if (SP_IS_STRING(item)) return SP_STRING(item)->string.length();
+    if (SP_IS_STRING(item)) {
+        length = SP_STRING(item)->string.length();
+    } else {
+        if (is_line_break_object(item)) {
+            length++;
+        }
     
-    if (is_line_break_object(item)) length++;
-    
-    for (SPObject const *child = item->firstChild() ; child ; child = SP_OBJECT_NEXT(child)) {
-        if (SP_IS_STRING(child)) length += SP_STRING(child)->string.length();
-        else length += sp_text_get_length(child);
+        for (SPObject const *child = item->firstChild() ; child ; child = child->getNext()) {
+            if (SP_IS_STRING(child)) {
+                length += SP_STRING(child)->string.length();
+            } else {
+                length += sp_text_get_length(child);
+            }
+        }
     }
+    
     return length;
 }
 
-/** Recursively gets the length of all the SPStrings at or below the given
-\a item, before and not including \a upto. Also adds 1 for each line break encountered. */
 unsigned sp_text_get_length_upto(SPObject const *item, SPObject const *upto)
 {
     unsigned length = 0;
@@ -237,7 +247,7 @@ unsigned sp_text_get_length_upto(SPObject const *item, SPObject const *upto)
     }
     
     // Count the length of the children
-    for (SPObject const *child = item->firstChild() ; child ; child = SP_OBJECT_NEXT(child)) {
+    for (SPObject const *child = item->firstChild() ; child ; child = child->getNext()) {
         if (upto && child == upto) {
             // hit upto, return immediately
             return length;
@@ -293,8 +303,9 @@ to \a item at the same level. */
 static unsigned sum_sibling_text_lengths_before(SPObject const *item)
 {
     unsigned char_index = 0;
-    for (SPObject *sibling = SP_OBJECT_PARENT(item)->firstChild() ; sibling && sibling != item ; sibling = SP_OBJECT_NEXT(sibling))
+    for (SPObject *sibling = SP_OBJECT_PARENT(item)->firstChild() ; sibling && sibling != item ; sibling = sibling->getNext()) {
         char_index += sp_text_get_length(sibling);
+    }
     return char_index;
 }
 
@@ -316,13 +327,13 @@ parent of the first line break node encountered.
 */
 static SPObject* split_text_object_tree_at(SPObject *split_obj, unsigned char_index)
 {
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(split_obj));
+    Inkscape::XML::Document *xml_doc = SP_OBJECT_DOCUMENT(split_obj)->getReprDoc();
     if (is_line_break_object(split_obj)) {
         Inkscape::XML::Node *new_node = duplicate_node_without_children(xml_doc, SP_OBJECT_REPR(split_obj));
         SP_OBJECT_REPR(SP_OBJECT_PARENT(split_obj))->addChild(new_node, SP_OBJECT_REPR(split_obj));
         Inkscape::GC::release(new_node);
-        split_attributes(split_obj, SP_OBJECT_NEXT(split_obj), char_index);
-        return SP_OBJECT_NEXT(split_obj);
+        split_attributes(split_obj, split_obj->getNext(), char_index);
+        return split_obj->getNext();
     }
 
     unsigned char_count_before = sum_sibling_text_lengths_before(split_obj);
@@ -336,10 +347,10 @@ static SPObject* split_text_object_tree_at(SPObject *split_obj, unsigned char_in
     split_attributes(split_obj, duplicate_obj->firstChild(), char_index);
 
     // then move all the subsequent nodes
-    split_obj = SP_OBJECT_NEXT(split_obj);
+    split_obj = split_obj->getNext();
     while (split_obj) {
         Inkscape::XML::Node *move_repr = SP_OBJECT_REPR(split_obj);
-        SPObject *next_obj = SP_OBJECT_NEXT(split_obj);  // this is about to become invalidated by removeChild()
+        SPObject *next_obj = split_obj->getNext();  // this is about to become invalidated by removeChild()
         Inkscape::GC::anchor(move_repr);
         SP_OBJECT_REPR(SP_OBJECT_PARENT(split_obj))->removeChild(move_repr);
         SP_OBJECT_REPR(duplicate_obj)->appendChild(move_repr);
@@ -376,12 +387,12 @@ Inkscape::Text::Layout::iterator sp_te_insert_line (SPItem *item, Inkscape::Text
         if (split_obj == 0) split_obj = item->lastChild();
         
         if (SP_IS_TREF(split_obj)) {
-        	desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, tref_edit_message);
+            desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, tref_edit_message);
             return position;
         }
         
         if (split_obj) {
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(split_obj));
+            Inkscape::XML::Document *xml_doc = SP_OBJECT_DOCUMENT(split_obj)->getReprDoc();
             Inkscape::XML::Node *new_node = duplicate_node_without_children(xml_doc, SP_OBJECT_REPR(split_obj));
             SP_OBJECT_REPR(SP_OBJECT_PARENT(split_obj))->addChild(new_node, SP_OBJECT_REPR(split_obj));
             Inkscape::GC::release(new_node);
@@ -420,12 +431,17 @@ static SPString* sp_te_seek_next_string_recursive(SPObject *start_obj)
     while (start_obj) {
         if (start_obj->hasChildren()) {
             SPString *found_string = sp_te_seek_next_string_recursive(start_obj->firstChild());
-            if (found_string) return found_string;
+            if (found_string) {
+                return found_string;
+            }
         }
-        if (SP_IS_STRING(start_obj)) return SP_STRING(start_obj);
-        start_obj = SP_OBJECT_NEXT(start_obj);
-        if (is_line_break_object(start_obj))
+        if (SP_IS_STRING(start_obj)) {
+            return SP_STRING(start_obj);
+        }
+        start_obj = start_obj->getNext();
+        if (is_line_break_object(start_obj)) {
             break;   // don't cross line breaks
+        }
     }
     return NULL;
 }
@@ -495,10 +511,12 @@ sp_te_insert(SPItem *item, Inkscape::Text::Layout::iterator const &position, gch
             if (source_obj->hasChildren()) {
                 source_obj = source_obj->firstChild();
                 if (SP_IS_FLOWTEXT(item)) {
-                    while (SP_IS_FLOWREGION(source_obj) || SP_IS_FLOWREGIONEXCLUDE(source_obj))
-                        source_obj = SP_OBJECT_NEXT(source_obj);
-                    if (source_obj == NULL)
+                    while (SP_IS_FLOWREGION(source_obj) || SP_IS_FLOWREGIONEXCLUDE(source_obj)) {
+                        source_obj = source_obj->getNext();
+                    }
+                    if (source_obj == NULL) {
                         source_obj = item;
+                    }
                 }
             }
             if (source_obj == item && SP_IS_FLOWTEXT(item)) {
@@ -507,7 +525,7 @@ sp_te_insert(SPItem *item, Inkscape::Text::Layout::iterator const &position, gch
                 source_obj = item->lastChild();
             }
         } else
-            source_obj = SP_OBJECT_NEXT(source_obj);
+            source_obj = source_obj->getNext();
 
         if (source_obj) {  // never fails
             SPString *string_item = sp_te_seek_next_string_recursive(source_obj);
@@ -607,16 +625,16 @@ static SPObject* delete_line_break(SPObject *root, SPObject *item, bool *next_is
         new_span_repr->setAttribute("rotate", a);
 
     SPObject *following_item = item;
-    while (SP_OBJECT_NEXT(following_item) == NULL) {
+    while (following_item->getNext() == NULL) {
         following_item = SP_OBJECT_PARENT(following_item);
         g_assert(following_item != root);
     }
-    following_item = SP_OBJECT_NEXT(following_item);
+    following_item = following_item->getNext();
 
     SPObject *new_parent_item;
     if (SP_IS_STRING(following_item)) {
         new_parent_item = SP_OBJECT_PARENT(following_item);
-        SP_OBJECT_REPR(new_parent_item)->addChild(new_span_repr, SP_OBJECT_PREV(following_item) ? SP_OBJECT_REPR(SP_OBJECT_PREV(following_item)) : NULL);
+        SP_OBJECT_REPR(new_parent_item)->addChild(new_span_repr, following_item->getPrev() ? SP_OBJECT_REPR(following_item->getPrev()) : NULL);
         next_item = following_item;
         *next_is_sibling = true;
     } else {
@@ -771,7 +789,7 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start,
                 SPObject *next_item;
                 do {
                     bool is_sibling = true;
-                    next_item = SP_OBJECT_NEXT(sub_item);
+                    next_item = sub_item->getNext();
                     if (next_item == NULL) {
                         next_item = SP_OBJECT_PARENT(sub_item);
                         is_sibling = false;
@@ -804,16 +822,19 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start,
 replacing line break elements with '\n'. */
 static void sp_te_get_ustring_multiline(SPObject const *root, Glib::ustring *string, bool *pending_line_break)
 {
-    if (*pending_line_break)
+    if (*pending_line_break) {
         *string += '\n';
-    for (SPObject const *child = root->firstChild() ; child ; child = SP_OBJECT_NEXT(child)) {
-        if (SP_IS_STRING(child))
-            *string += SP_STRING(child)->string;
-        else
-            sp_te_get_ustring_multiline(child, string, pending_line_break);
     }
-    if (!SP_IS_TEXT(root) && !SP_IS_TEXTPATH(root) && is_line_break_object(root))
+    for (SPObject const *child = root->firstChild() ; child ; child = child->getNext()) {
+        if (SP_IS_STRING(child)) {
+            *string += SP_STRING(child)->string;
+        } else {
+            sp_te_get_ustring_multiline(child, string, pending_line_break);
+        }
+    }
+    if (!SP_IS_TEXT(root) && !SP_IS_TEXTPATH(root) && is_line_break_object(root)) {
         *pending_line_break = true;
+    }
 }
 
 /** Gets a text-only representation of the given text or flowroot object,
@@ -873,8 +894,8 @@ sp_te_set_repr_text_multiline(SPItem *text, gchar const *str)
     SPObject *object;
     bool is_textpath = false;
     if (SP_IS_TEXT_TEXTPATH (text)) {
-        repr = SP_OBJECT_REPR (sp_object_first_child(SP_OBJECT (text)));
-        object = sp_object_first_child(SP_OBJECT (text));
+        repr = SP_OBJECT_REPR(text->firstChild());
+        object = text->firstChild();
         is_textpath = true;
     } else {
         repr = SP_OBJECT_REPR (text);
@@ -887,9 +908,10 @@ sp_te_set_repr_text_multiline(SPItem *text, gchar const *str)
     repr->setContent("");
     SPObject *child = object->firstChild();
     while (child) {
-        SPObject *next = SP_OBJECT_NEXT(child);
-        if (!SP_IS_FLOWREGION(child) && !SP_IS_FLOWREGIONEXCLUDE(child))
+        SPObject *next = child->getNext();
+        if (!SP_IS_FLOWREGION(child) && !SP_IS_FLOWREGIONEXCLUDE(child)) {
             repr->removeChild(SP_OBJECT_REPR(child));
+        }
         child = next;
     }
 
@@ -957,7 +979,7 @@ sp_te_adjust_kerning_screen (SPItem *item, Inkscape::Text::Layout::iterator cons
     // divide increment by zoom
     // divide increment by matrix expansion
     gdouble factor = 1 / desktop->current_zoom();
-    Geom::Matrix t (sp_item_i2doc_affine(item));
+    Geom::Matrix t (item->i2doc_affine());
     factor = factor / t.descrim();
     by = factor * by;
 
@@ -1015,7 +1037,7 @@ sp_te_adjust_rotation_screen(SPItem *text, Inkscape::Text::Layout::iterator cons
     // divide increment by zoom
     // divide increment by matrix expansion
     gdouble factor = 1 / desktop->current_zoom();
-    Geom::Matrix t (sp_item_i2doc_affine(text));
+    Geom::Matrix t (text->i2doc_affine());
     factor = factor / t.descrim();
     Inkscape::Text::Layout const *layout = te_get_layout(text);
     if (layout == NULL) return;
@@ -1121,7 +1143,7 @@ sp_te_adjust_tspan_letterspacing_screen(SPItem *text, Inkscape::Text::Layout::it
     gdouble const zoom = desktop->current_zoom();
     gdouble const zby = (by
                          / (zoom * (nb_let > 1 ? nb_let - 1 : 1))
-                         / to_2geom(sp_item_i2doc_affine(SP_ITEM(source_obj))).descrim());
+                         / to_2geom(SP_ITEM(source_obj)->i2doc_affine()).descrim());
     val += zby;
 
     if (start == end) {
@@ -1193,7 +1215,7 @@ sp_te_adjust_linespacing_screen (SPItem *text, Inkscape::Text::Layout::iterator 
     gdouble zby = by / (desktop->current_zoom() * (line_count == 0 ? 1 : line_count));
 
     // divide increment by matrix expansion
-    Geom::Matrix t (sp_item_i2doc_affine (SP_ITEM(text)));
+    Geom::Matrix t (SP_ITEM(text)->i2doc_affine ());
     zby = zby / t.descrim();
 
     switch (style->line_height.unit) {
@@ -1341,7 +1363,7 @@ static void apply_css_recursive(SPObject *o, SPCSSAttr const *css)
 {
     sp_repr_css_change(SP_OBJECT_REPR(o), const_cast<SPCSSAttr*>(css), "style");
 
-    for (SPObject *child = sp_object_first_child(SP_OBJECT(o)) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
+    for (SPObject *child = o->firstChild() ; child ; child = child->getNext() ) {
         if (sp_repr_css_property(const_cast<SPCSSAttr*>(css), "opacity", NULL) != NULL) {
             // Unset properties which are accumulating and thus should not be set recursively.
             // For example, setting opacity 0.5 on a group recursively would result in the visible opacity of 0.25 for an item in the group.
@@ -1364,11 +1386,12 @@ name of the xml for a text span (ie tspan or flowspan). */
 static void recursively_apply_style(SPObject *common_ancestor, SPCSSAttr const *css, SPObject *start_item, Glib::ustring::iterator start_text_iter, SPObject *end_item, Glib::ustring::iterator end_text_iter, char const *span_object_name)
 {
     bool passed_start = start_item == NULL ? true : false;
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_OBJECT_DOCUMENT(common_ancestor));
+    Inkscape::XML::Document *xml_doc = SP_OBJECT_DOCUMENT(common_ancestor)->getReprDoc();
     
-    for (SPObject *child = common_ancestor->firstChild() ; child != NULL ; child = SP_OBJECT_NEXT(child)) {
-        if (start_item == child)
+    for (SPObject *child = common_ancestor->firstChild() ; child ; child = child->getNext()) {
+        if (start_item == child) {
             passed_start = true;
+        }
 
         if (passed_start) {
             if (end_item && child->isAncestorOf(end_item)) {
@@ -1385,7 +1408,7 @@ static void recursively_apply_style(SPObject *common_ancestor, SPCSSAttr const *
 
                 Inkscape::XML::Node *child_span = xml_doc->createElement(span_object_name);
                 sp_repr_css_set(child_span, const_cast<SPCSSAttr*>(css), "style");   // better hope that prototype wasn't nonconst for a good reason
-                SPObject *prev_item = SP_OBJECT_PREV(child);
+                SPObject *prev_item = child->getPrev();
                 Inkscape::XML::Node *prev_repr = prev_item ? SP_OBJECT_REPR(prev_item) : NULL;
 
                 if (child == start_item || child == end_item) {
@@ -1428,7 +1451,7 @@ static void recursively_apply_style(SPObject *common_ancestor, SPCSSAttr const *
                         child_span->appendChild(text_in_span);
                         Inkscape::GC::release(text_in_span);
                         child->deleteObject();
-                        child = sp_object_get_child_by_repr(common_ancestor, child_span);
+                        child = common_ancestor->get_child_by_repr(child_span);
 
                     } else
                         surround_entire_string = true;
@@ -1440,7 +1463,7 @@ static void recursively_apply_style(SPObject *common_ancestor, SPCSSAttr const *
                     SP_OBJECT_REPR(common_ancestor)->removeChild(child_repr);
                     child_span->appendChild(child_repr);
                     Inkscape::GC::release(child_repr);
-                    child = sp_object_get_child_by_repr(common_ancestor, child_span);
+                    child = common_ancestor->get_child_by_repr(child_span);
                 }
                 Inkscape::GC::release(child_span);
 
@@ -1493,13 +1516,17 @@ static SPObject* ascend_while_first(SPObject *item, Glib::ustring::iterator text
                       -> abcdef                  */
 static bool tidy_operator_empty_spans(SPObject **item)
 {
-    if ((*item)->hasChildren()) return false;
-    if (is_line_break_object(*item)) return false;
-    if (SP_IS_STRING(*item) && !SP_STRING(*item)->string.empty()) return false;
-    SPObject *next = SP_OBJECT_NEXT(*item);
-    (*item)->deleteObject();
-    *item = next;
-    return true;
+    bool result = false;
+    if ( !(*item)->hasChildren()
+         && !is_line_break_object(*item)
+         && !(SP_IS_STRING(*item) && !SP_STRING(*item)->string.empty())
+        ) {
+        SPObject *next = (*item)->getNext();
+        (*item)->deleteObject();
+        *item = next;
+        result = true;
+    }
+    return result;
 }
 
 /**    inexplicable spans: abc<span style="">def</span>ghi
@@ -1507,7 +1534,8 @@ static bool tidy_operator_empty_spans(SPObject **item)
 the repeated strings will be merged by another operator. */
 static bool tidy_operator_inexplicable_spans(SPObject **item)
 {
-    if (*item && sp_repr_is_meta_element((*item)->repr)) return false;
+    //XML Tree being directly used here while it shouldn't be.
+    if (*item && sp_repr_is_meta_element((*item)->getRepr())) return false;
     if (SP_IS_STRING(*item)) return false;
     if (is_line_break_object(*item)) return false;
     TextTagAttributes *attrs = attributes_for_object(*item);
@@ -1520,7 +1548,7 @@ static bool tidy_operator_inexplicable_spans(SPObject **item)
         SP_OBJECT_REPR(*item)->removeChild(repr);
         SP_OBJECT_REPR(SP_OBJECT_PARENT(*item))->addChild(repr, SP_OBJECT_REPR(next));
         Inkscape::GC::release(repr);
-        next = SP_OBJECT_NEXT(next);
+        next = next->getNext();
     }
     (*item)->deleteObject();
     *item = next;
@@ -1532,7 +1560,7 @@ static bool tidy_operator_inexplicable_spans(SPObject **item)
 static bool tidy_operator_repeated_spans(SPObject **item)
 {
     SPObject *first = *item;
-    SPObject *second = SP_OBJECT_NEXT(first);
+    SPObject *second = first->getNext();
     if (second == NULL) return false;
 
     Inkscape::XML::Node *first_repr = SP_OBJECT_REPR(first);
@@ -1605,10 +1633,12 @@ static bool redundant_double_nesting_processor(SPObject **item, SPObject *child,
     if (attrs && attrs->anyAttributesSet()) return false;
     if (!objects_have_equal_style(SP_OBJECT_PARENT(*item), child)) return false;
 
-    Inkscape::XML::Node *insert_after_repr;
-    if (!prepend) insert_after_repr = SP_OBJECT_REPR(*item);
-    else if (SP_OBJECT_PREV(*item)) insert_after_repr = SP_OBJECT_REPR(SP_OBJECT_PREV(*item));
-    else insert_after_repr = NULL;
+    Inkscape::XML::Node *insert_after_repr = 0;
+    if (!prepend) {
+        insert_after_repr = SP_OBJECT_REPR(*item);
+    } else if ((*item)->getPrev()) {
+        insert_after_repr = SP_OBJECT_REPR((*item)->getPrev());
+    }
     while (SP_OBJECT_REPR(child)->childCount()) {
         Inkscape::XML::Node *move_repr = SP_OBJECT_REPR(child)->firstChild();
         Inkscape::GC::anchor(move_repr);
@@ -1673,7 +1703,7 @@ static bool redundant_semi_nesting_processor(SPObject **item, SPObject *child, b
     Inkscape::XML::Document *xml_doc = SP_OBJECT_REPR(*item)->document();
     Inkscape::XML::Node *new_span = xml_doc->createElement(SP_OBJECT_REPR(*item)->name());
     if (prepend) {
-        SPObject *prev = SP_OBJECT_PREV(*item);
+        SPObject *prev = (*item)->getPrev();
         SP_OBJECT_REPR(SP_OBJECT_PARENT(*item))->addChild(new_span, prev ? SP_OBJECT_REPR(prev) : NULL);
     } else
         SP_OBJECT_REPR(SP_OBJECT_PARENT(*item))->addChild(new_span, SP_OBJECT_REPR(*item));
@@ -1703,7 +1733,7 @@ static bool tidy_operator_redundant_semi_nesting(SPObject **item)
 in a paragraph which is not \a not_obj. */
 static SPString* find_last_string_child_not_equal_to(SPObject *root, SPObject *not_obj)
 {
-    for (SPObject *child = root->lastChild() ; child ; child = SP_OBJECT_PREV(child))
+    for (SPObject *child = root->lastChild() ; child ; child = child->getPrev())
     {
         if (child == not_obj) continue;
         if (child->hasChildren()) {
@@ -1729,7 +1759,7 @@ static bool tidy_operator_styled_whitespace(SPObject **item)
     SPObject *test_item = *item;
     SPString *next_string;
     for ( ; ; ) {  // find the next string
-        next_string = sp_te_seek_next_string_recursive(SP_OBJECT_NEXT(test_item));
+        next_string = sp_te_seek_next_string_recursive(test_item->getNext());
         if (next_string) {
             next_string->string.insert(0, str);
             break;
@@ -1738,7 +1768,7 @@ static bool tidy_operator_styled_whitespace(SPObject **item)
             test_item = SP_OBJECT_PARENT(test_item);
             if (is_line_break_object(test_item)) break;
             if (SP_IS_FLOWTEXT(test_item)) return false;
-            SPObject *next = SP_OBJECT_NEXT(test_item);
+            SPObject *next = test_item->getNext();
             if (next) {
                 test_item = next;
                 break;
@@ -1753,7 +1783,7 @@ static bool tidy_operator_styled_whitespace(SPObject **item)
     }
     SP_OBJECT_REPR(next_string)->setContent(next_string->string.c_str());
     SPObject *delete_obj = *item;
-    *item = SP_OBJECT_NEXT(*item);
+    *item = (*item)->getNext();
     delete_obj->deleteObject();
     return true;
 }
@@ -1796,11 +1826,12 @@ static bool tidy_xml_tree_recursively(SPObject *root)
 
     for (SPObject *child = root->firstChild() ; child != NULL ; ) {
         if (SP_IS_FLOWREGION(child) || SP_IS_FLOWREGIONEXCLUDE(child) || SP_IS_TREF(child)) {
-            child = SP_OBJECT_NEXT(child);
+            child = child->getNext();
             continue;
         }
-        if (child->hasChildren())
+        if (child->hasChildren()) {
             changes |= tidy_xml_tree_recursively(child);
+        }
 
         unsigned i;
         for (i = 0 ; i < sizeof(tidy_operators) / sizeof(tidy_operators[0]) ; i++) {
@@ -1809,8 +1840,9 @@ static bool tidy_xml_tree_recursively(SPObject *root)
                 break;
             }
         }
-        if (i == sizeof(tidy_operators) / sizeof(tidy_operators[0]))
-            child = SP_OBJECT_NEXT(child);
+        if (i == sizeof(tidy_operators) / sizeof(tidy_operators[0])) {
+            child = child->getNext();
+        }
     }
     return changes;
 }
@@ -1838,13 +1870,18 @@ void sp_te_apply_style(SPItem *text, Inkscape::Text::Layout::iterator const &sta
     start_item = SP_OBJECT(rawptr);
     layout->getSourceOfCharacter(last, &rawptr, &end_text_iter);
     end_item = SP_OBJECT(rawptr);
-    if (start_item == 0)
+    if (start_item == 0) {
         return;   // start is at end of text
-    if (is_line_break_object(start_item))
-        start_item = SP_OBJECT_NEXT(start_item);
-    if (is_line_break_object(end_item))
-        end_item = SP_OBJECT_NEXT(end_item);
-    if (end_item == 0) end_item = text;
+    }
+    if (is_line_break_object(start_item)) {
+        start_item = start_item->getNext();
+    }
+    if (is_line_break_object(end_item)) {
+        end_item = end_item->getNext();
+    }
+    if (end_item == 0) {
+        end_item = text;
+    }
     
     
     /* Special case: With a tref, we only want to change its style when the whole
@@ -1871,7 +1908,7 @@ void sp_te_apply_style(SPItem *text, Inkscape::Text::Layout::iterator const &sta
     SPCSSAttr *css_set = sp_repr_css_attr_new();
     sp_repr_css_merge(css_set, (SPCSSAttr*) css);
     {
-        Geom::Matrix const local(sp_item_i2doc_affine(SP_ITEM(common_ancestor)));
+        Geom::Matrix const local(SP_ITEM(common_ancestor)->i2doc_affine());
         double const ex(local.descrim());
         if ( ( ex != 0. )
              && ( ex != 1. ) ) {
@@ -1920,17 +1957,22 @@ bool is_top_level_text_object (SPObject *obj)
             || SP_IS_FLOWTEXT(obj));
 }
 
-bool has_visible_text (SPObject *obj)
+bool has_visible_text(SPObject *obj)
 {
-    if (SP_IS_STRING(obj) && !SP_STRING(obj)->string.empty()) 
-        return true; // maybe we should also check that it's not all whitespace?
+    bool hasVisible = false;
 
-    for (SPObject const *child = obj->firstChild() ; child ; child = SP_OBJECT_NEXT(child)) {
-        if (has_visible_text((SPObject *) child))
-            return true;
+    if (SP_IS_STRING(obj) && !SP_STRING(obj)->string.empty()) {
+        hasVisible = true; // maybe we should also check that it's not all whitespace?
+    } else {
+        for (SPObject const *child = obj->firstChild() ; child ; child = child->getNext()) {
+            if (has_visible_text((SPObject *) child)) {
+                hasVisible = true;
+                break;
+            }
+        }
     }
 
-    return false;
+    return hasVisible;
 }
 
 /*
@@ -1942,4 +1984,4 @@ bool has_visible_text (SPObject *obj)
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

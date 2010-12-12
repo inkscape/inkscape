@@ -4,6 +4,7 @@
  * Authors:
  * David Yip <yipdw@rose-hulman.edu>
  * Bob Jamison (Pedro port)
+ *   Abhishek Sharma
  *
  * Copyright (c) 2005 Authors
  *
@@ -56,15 +57,15 @@ SessionManager *sessionManagerInstance = NULL;
 
 void SessionManager::showClient()
 {
-	SessionManager::instance().gui.show();
+    SessionManager::instance().gui.show();
 }
 
-SessionManager&
-SessionManager::instance()
+SessionManager &SessionManager::instance()
 {
-    if (!sessionManagerInstance)
+    if (!sessionManagerInstance) {
         sessionManagerInstance = new SessionManager();
-	return *sessionManagerInstance;
+    }
+    return *sessionManagerInstance;
 }
 
 SessionManager::SessionManager() 
@@ -226,8 +227,8 @@ SessionManager::processWhiteboardEvent(Pedro::XmppEvent const& event)
 {
     Pedro::Element* root = event.getDOM();
     if (root == NULL) {
-	g_warning("Received null DOM; ignoring message.");
-	return;
+        g_warning("Received null DOM; ignoring message.");
+        return;
     }
 
     Pedro::DOMString session = root->getTagAttribute("wb", "session");
@@ -296,11 +297,11 @@ SessionManager::checkInvitationQueue()
     if (invitations.size() > 0) 
     {
         // There's an invitation to process; process it.
-	Invitation invitation = invitations.front();
+        Invitation invitation = invitations.front();
         Glib::ustring from = invitation.first;
         Glib::ustring sessionId = invitation.second;
 
-	Glib::ustring primary = 
+        Glib::ustring primary = 
             "<span weight=\"bold\" size=\"larger\">" + 
             String::ucompose(_("<b>%1</b> has invited you to a whiteboard session."), from) + 
             "</span>\n\n" + 
@@ -366,7 +367,7 @@ makeInkboardDocument(int code, gchar const* rootname, State::SessionType type, G
     Glib::ustring name = String::ucompose(
         _("Inkboard session (%1 to %2)"), SessionManager::instance().getClient().getJid(), to);
 
-    doc = sp_document_create(rdoc, NULL, NULL, name.c_str(), TRUE);
+    doc = SPDocument::createDoc(rdoc, NULL, NULL, name.c_str(), TRUE);
     g_return_val_if_fail(doc != NULL, NULL);
 
     return doc;
@@ -378,17 +379,14 @@ makeInkboardDocument(int code, gchar const* rootname, State::SessionType type, G
 // in file.cpp.
 //
 // \see sp_file_new
-SPDesktop*
-makeInkboardDesktop(SPDocument* doc)
+SPDesktop *makeInkboardDesktop(SPDocument* doc)
 {
-    SPDesktop* dt;
-
     SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL));
     g_return_val_if_fail(dtw != NULL, NULL);
-    sp_document_unref(doc);
+    doc->doUnref();
 
     sp_create_window(dtw, TRUE);
-    dt = static_cast<SPDesktop*>(dtw->view);
+    SPDesktop *dt = static_cast<SPDesktop*>(dtw->view);
     sp_namedview_window_from_document(dt);
     sp_namedview_update_layers_from_document(dt);
 

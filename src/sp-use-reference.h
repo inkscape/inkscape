@@ -10,6 +10,7 @@
  */
 
 #include <forward.h>
+#include "sp-item.h"
 #include <uri-references.h>
 #include <sigc++/sigc++.h>
 

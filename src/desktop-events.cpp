@@ -3,6 +3,7 @@
  */
 /* Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 1999-2010 Others
@@ -41,6 +42,8 @@
 #include "widgets/desktop-widget.h"
 #include "xml/repr.h"
 
+using Inkscape::DocumentUndo;
+
 static void snoop_extended(GdkEvent* event, SPDesktop *desktop);
 static void init_extended();
 
@@ -75,7 +78,6 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
     int wx, wy;
 
     SPDesktop *desktop = dtw->desktop;
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(desktop->namedview);
 
     gdk_window_get_pointer(GTK_WIDGET(dtw->canvas)->window, &wx, &wy, NULL);
     Geom::Point const event_win(wx, wy);
@@ -92,8 +94,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 Geom::Point const event_dt(desktop->w2d(event_w));
 
                 // explicitly show guidelines; if I draw a guide, I want them on
-                sp_repr_set_boolean(repr, "showguides", TRUE);
-                sp_repr_set_boolean(repr, "inkscape:guide-bbox", TRUE);
+                desktop->namedview->setGuides(true);
 
                 // calculate the normal of the guidelines when dragged from the edges of rulers.
                 Geom::Point normal_bl_to_tr(-1.,1.); //bottomleft to topright
@@ -181,13 +182,13 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 gtk_object_destroy(GTK_OBJECT(guide));
                 guide = NULL;
                 if ((horiz ? wy : wx) >= 0) {
-                    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+                    Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
                     Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
                     sp_repr_set_point(repr, "orientation", normal);
                     sp_repr_set_point(repr, "position", from_2geom(event_dt));
-                    SP_OBJECT_REPR(desktop->namedview)->appendChild(repr);
+                    desktop->namedview->appendChild(repr);
                     Inkscape::GC::release(repr);
-                    sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE,
+                    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE,
                                      _("Create guide"));
                 }
                 desktop->set_coordinate_status(from_2geom(event_dt));
@@ -400,14 +401,14 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                                 g_assert_not_reached();
                                 break;
                         }
-                        sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE,
+                        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE,
                                          _("Move guide"));
                     } else {
                         /* Undo movement of any attached shapes. */
                         sp_guide_moveto(*guide, guide->point_on_line, false);
                         sp_guide_set_normal(*guide, guide->normal_to_line, false);
                         sp_guide_remove(guide);
-                        sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE,
+                        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_NONE,
                                      _("Delete guide"));
                     }
                     moved = false;
@@ -454,7 +455,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 {
                     SPDocument *doc = SP_OBJECT_DOCUMENT(guide);
                     sp_guide_remove(guide);
-                    sp_document_done(doc, SP_VERB_NONE, _("Delete guide"));
+                    DocumentUndo::done(doc, SP_VERB_NONE, _("Delete guide"));
                     ret = TRUE;
                     sp_event_context_discard_delayed_snap_event(desktop->event_context);
                     break;

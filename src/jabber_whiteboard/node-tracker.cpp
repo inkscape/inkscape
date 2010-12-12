@@ -37,8 +37,8 @@ namespace Whiteboard {
  * A special node is a node that can only appear once in a document.
  */
 char const* specialnodekeys[] = {
-	DOCUMENT_ROOT_NODE,
-	DOCUMENT_NAMEDVIEW_NODE,
+    DOCUMENT_ROOT_NODE,
+    DOCUMENT_NAMEDVIEW_NODE,
 };
 
 /**
@@ -47,8 +47,8 @@ char const* specialnodekeys[] = {
  * A special node is a node that can only appear once in a document.
  */
 char const* specialnodenames[] = {
-	DOCUMENT_ROOT_NAME,
-	DOCUMENT_NAMEDVIEW_NAME,
+    DOCUMENT_ROOT_NAME,
+    DOCUMENT_NAMEDVIEW_NAME,
 };
 
 XMLNodeTracker::XMLNodeTracker(SessionManager* sm) :
@@ -94,7 +94,7 @@ XMLNodeTracker::setSessionManager(const SessionManager *val)
 
 void 
 XMLNodeTracker::put(const Glib::ustring &key, const XML::Node &nodeArg)
-{	
+{
     keyNodeTable.put(key, &nodeArg);
 }
 
@@ -159,7 +159,7 @@ XMLNodeTracker::isTracking(const XML::Node &node)
 bool
 XMLNodeTracker::isRootNode(const XML::Node &node)
 {
-    XML::Node* docroot = sp_document_repr_root(_sm->getDocument());
+    XML::Node* docroot = _sm->getDocument()->getReprRoot();
     return (docroot == &node);
 }
 
@@ -182,7 +182,7 @@ XMLNodeTracker::remove(const XML::Node &nodeArg)
 bool 
 XMLNodeTracker::isSpecialNode(const Glib::ustring &name)
 {
-    return (_specialnodes.find(name.data()) != _specialnodes.end());	
+    return (_specialnodes.find(name.data()) != _specialnodes.end());
 }
 
 Glib::ustring
@@ -273,23 +273,22 @@ XMLNodeTracker::dump()
     }
 }
 
-void
-XMLNodeTracker::reset()
+void XMLNodeTracker::reset()
 {
     _clear();
 
     // Find and insert special nodes
     // root node
-    put(_rootKey, *(sp_document_repr_root(_sm->getDocument())));
+    put(_rootKey, *(_sm->getDocument()->getReprRoot()));
 
     // namedview node
     SPObject* namedview = sp_item_group_get_child_by_name(
                  (SPGroup *)_sm->getDocument()->root,
                   NULL, DOCUMENT_NAMEDVIEW_NAME);
     if (!namedview) {
-            g_warning("namedview node does not exist; it will be created during synchronization");
+        g_warning("namedview node does not exist; it will be created during synchronization");
     } else {
-            put(_namedviewKey, *(SP_OBJECT_REPR(namedview)));
+        put(_namedviewKey, *(SP_OBJECT_REPR(namedview)));
     }
 }
 

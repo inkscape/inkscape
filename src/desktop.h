@@ -11,6 +11,8 @@
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *   John Bintz <jcoswell@coswellproductions.org>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Jon A. Cruz <jon@joncruz.org>get
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 Johan Engelen
  * Copyright (C) 2006 John Bintz
@@ -84,8 +86,9 @@ namespace Inkscape {
  *
  * @see \ref desktop-handles.h for desktop macros.
  */
-struct SPDesktop : public Inkscape::UI::View::View
+class SPDesktop : public Inkscape::UI::View::View
 {
+public:
     Inkscape::UI::Dialog::DialogManager *_dlg_mgr;
     SPNamedView               *namedview;
     SPCanvas                  *canvas;
@@ -229,9 +232,9 @@ struct SPDesktop : public Inkscape::UI::View::View
     void push_event_context (GtkType type, const gchar *config, unsigned int key);
 
     void set_coordinate_status (Geom::Point p);
-    SPItem *item_from_list_at_point_bottom (const GSList *list, Geom::Point const p) const;
-    SPItem *item_at_point (Geom::Point const p, bool into_groups, SPItem *upto = NULL) const;
-    SPItem *group_at_point (Geom::Point const p) const;
+    SPItem *getItemFromListAtPointBottom(const GSList *list, Geom::Point const p) const;
+    SPItem *getItemAtPoint(Geom::Point const p, bool into_groups, SPItem *upto = NULL) const;
+    SPItem *getGroupAtPoint(Geom::Point const p) const;
     Geom::Point point() const;
 
     Geom::Rect get_display_area() const;
@@ -255,8 +258,9 @@ struct SPDesktop : public Inkscape::UI::View::View
     void prev_zoom();
     void next_zoom();
     void zoom_quick(bool enable = true);
-	/** \brief  Returns whether the desktop is in quick zoom mode or not */
-	bool quick_zoomed(void) { return _quick_zoom_enabled; }
+
+    /** \brief  Returns whether the desktop is in quick zoom mode or not */
+    bool quick_zoomed(void) { return _quick_zoom_enabled; }
 
     bool scroll_to_point (Geom::Point const &s_dt, gdouble autoscrollspeed = 0);
     void scroll_world (double dx, double dy, bool is_scrolling = false);
@@ -323,6 +327,8 @@ struct SPDesktop : public Inkscape::UI::View::View
 
     virtual bool onDeleteUI (GdkEventAny*);
     virtual bool onWindowStateEvent (GdkEventWindowState* event);
+
+    void applyCurrentOrToolStyle(SPObject *obj, Glib::ustring const &tool_path, bool with_text);
 
 private:
     Inkscape::UI::View::EditWidgetInterface       *_widget;

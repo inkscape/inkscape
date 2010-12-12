@@ -1,5 +1,3 @@
-#define __SP_ANIMATION_C__
-
 /** \file
  * SVG <animate> implementation.
  *
@@ -8,6 +6,7 @@
 /*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2002 Lauris Kaplinski
  *
@@ -89,18 +88,18 @@ sp_animation_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *
     if (((SPObjectClass *) animation_parent_class)->build)
         ((SPObjectClass *) animation_parent_class)->build(object, document, repr);
 
-    sp_object_read_attr(object, "xlink:href");
-    sp_object_read_attr(object, "attributeName");
-    sp_object_read_attr(object, "attributeType");
-    sp_object_read_attr(object, "begin");
-    sp_object_read_attr(object, "dur");
-    sp_object_read_attr(object, "end");
-    sp_object_read_attr(object, "min");
-    sp_object_read_attr(object, "max");
-    sp_object_read_attr(object, "restart");
-    sp_object_read_attr(object, "repeatCount");
-    sp_object_read_attr(object, "repeatDur");
-    sp_object_read_attr(object, "fill");
+    object->readAttr( "xlink:href" );
+    object->readAttr( "attributeName" );
+    object->readAttr( "attributeType" );
+    object->readAttr( "begin" );
+    object->readAttr( "dur" );
+    object->readAttr( "end" );
+    object->readAttr( "min" );
+    object->readAttr( "max" );
+    object->readAttr( "restart" );
+    object->readAttr( "repeatCount" );
+    object->readAttr( "repeatDur" );
+    object->readAttr( "fill" );
 }
 
 static void
@@ -176,15 +175,15 @@ sp_ianimation_build(SPObject *object, SPDocument *document, Inkscape::XML::Node 
     if (((SPObjectClass *) ianimation_parent_class)->build)
         ((SPObjectClass *) ianimation_parent_class)->build(object, document, repr);
 
-    sp_object_read_attr(object, "calcMode");
-    sp_object_read_attr(object, "values");
-    sp_object_read_attr(object, "keyTimes");
-    sp_object_read_attr(object, "keySplines");
-    sp_object_read_attr(object, "from");
-    sp_object_read_attr(object, "to");
-    sp_object_read_attr(object, "by");
-    sp_object_read_attr(object, "additive");
-    sp_object_read_attr(object, "accumulate");
+    object->readAttr( "calcMode" );
+    object->readAttr( "values" );
+    object->readAttr( "keyTimes" );
+    object->readAttr( "keySplines" );
+    object->readAttr( "from" );
+    object->readAttr( "to" );
+    object->readAttr( "by" );
+    object->readAttr( "additive" );
+    object->readAttr( "accumulate" );
 }
 
 static void

@@ -6,6 +6,7 @@
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
@@ -18,6 +19,7 @@
 
 #include "bad-uri-exception.h"
 #include "forward.h"
+#include "sp-object.h"
 
 namespace Inkscape {
 

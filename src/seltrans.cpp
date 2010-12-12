@@ -6,6 +6,7 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   Carl Hetherington <inkscape@carlh.net>
  *   Diederik van Lierop <mail@diedenrezi.nl>
+ *   Abhishek Sharma
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 1999-2008 Authors
@@ -45,6 +46,7 @@
 #include <2geom/angle.h>
 #include "display/snap-indicator.h"
 
+using Inkscape::DocumentUndo;
 
 static void sp_remove_handles(SPKnot *knot[], gint num);
 
@@ -265,7 +267,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
         SPItem *it = (SPItem *)sp_object_ref(SP_OBJECT(l->data), NULL);
         _items.push_back(it);
         _items_const.push_back(it);
-        _items_affines.push_back(sp_item_i2d_affine(it));
+        _items_affines.push_back(it->i2d_affine());
         _items_centers.push_back(it->getCenter()); // for content-dragging, we need to remember original centers
     }
 
@@ -333,7 +335,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
             // More than 50 items will produce at least 200 bbox points, which might make Inkscape crawl
             // (see the comment a few lines above). In that case we will use the bbox of the selection as a whole
             for (unsigned i = 0; i < _items.size(); i++) {
-                getBBoxPoints(sp_item_bbox_desktop(_items[i], _snap_bbox_type), &_bbox_points_for_translating, false, true, emp, mp);
+                getBBoxPoints(_items[i]->getBboxDesktop(_snap_bbox_type), &_bbox_points_for_translating, false, true, emp, mp);
             }
         } else {
             _bbox_points_for_translating = _bbox_points; // use the bbox points of the selection as a whole
@@ -429,7 +431,7 @@ void Inkscape::SelTrans::transform(Geom::Matrix const &rel_affine, Geom::Point c
         for (unsigned i = 0; i < _items.size(); i++) {
             SPItem &item = *_items[i];
             Geom::Matrix const &prev_transform = _items_affines[i];
-            sp_item_set_i2d_affine(&item, prev_transform * affine);
+            item.set_i2d_affine(prev_transform * affine);
         }
     } else {
         if (_bbox) {
@@ -505,17 +507,17 @@ void Inkscape::SelTrans::ungrab()
         _items_centers.clear();
 
         if (_current_relative_affine.isTranslation()) {
-            sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
-                             _("Move"));
+            DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                               _("Move"));
         } else if (_current_relative_affine.without_translation().isScale()) {
-            sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
-                             _("Scale"));
+            DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                               _("Scale"));
         } else if (_current_relative_affine.without_translation().isRotation()) {
-            sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
-                             _("Rotate"));
+            DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                               _("Rotate"));
         } else {
-            sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
-                             _("Skew"));
+            DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                               _("Skew"));
         }
 
     } else {
@@ -526,8 +528,8 @@ void Inkscape::SelTrans::ungrab()
                 SPItem *it = (SPItem*)SP_OBJECT(l->data);
                 SP_OBJECT(it)->updateRepr();
             }
-            sp_document_done (sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
-                            _("Set center"));
+            DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                               _("Set center"));
         }
 
         _items.clear();
@@ -584,15 +586,15 @@ void Inkscape::SelTrans::stamp()
 
             Geom::Matrix const *new_affine;
             if (_show == SHOW_OUTLINE) {
-                Geom::Matrix const i2d(sp_item_i2d_affine(original_item));
+                Geom::Matrix const i2d(original_item->i2d_affine());
                 Geom::Matrix const i2dnew( i2d * _current_relative_affine );
-                sp_item_set_i2d_affine(copy_item, i2dnew);
+                copy_item->set_i2d_affine(i2dnew);
                 new_affine = &copy_item->transform;
             } else {
                 new_affine = &original_item->transform;
             }
 
-            sp_item_write_transform(copy_item, copy_repr, *new_affine);
+            copy_item->doWriteTransform(copy_repr, *new_affine);
 
             if ( copy_item->isCenterSet() && _center ) {
                 copy_item->setCenter(*_center * _current_relative_affine);
@@ -601,8 +603,8 @@ void Inkscape::SelTrans::stamp()
             Inkscape::GC::release(copy_repr);
             l = l->next;
         }
-        sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
-                         _("Stamp"));
+        DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                           _("Stamp"));
     }
 
     if ( fixup && _stamp_cache ) {
@@ -790,8 +792,8 @@ void Inkscape::SelTrans::handleClick(SPKnot */*knot*/, guint state, SPSelTransHa
                     _center_is_set = false;  // center has changed
                     _updateHandles();
                 }
-                sp_document_done (sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
-                                        _("Reset center"));
+                DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                                   _("Reset center"));
             }
             break;
         default:

@@ -1,5 +1,3 @@
-#define __SP_XMLVIEW_CONTENT_C__
-
 /*
  * Specialization of GtkTextView for the XML tree view
  *
@@ -7,6 +5,7 @@
  *   MenTaLguY <mental@rydia.net>
  *
  * Copyright (C) 2002 MenTaLguY
+ *   Abhishek Sharma
  *
  * Released under the GNU GPL; see COPYING for details
  */
@@ -19,6 +18,8 @@
 #include "desktop-handles.h"
 #include "document-private.h"
 #include "inkscape.h"
+
+using Inkscape::DocumentUndo;
 
 static void sp_xmlview_content_class_init (SPXMLViewContentClass * klass);
 static void sp_xmlview_content_init (SPXMLViewContent * text);
@@ -165,7 +166,7 @@ sp_xmlview_content_changed (GtkTextBuffer *tb, SPXMLViewContent *text)
         text->repr->setContent(data);
         g_free (data);
         text->blocked = FALSE;
-        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_XML_EDITOR,
-                          _("Type text in a text node"));
+        DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_XML_EDITOR,
+			   _("Type text in a text node"));
     }
 }

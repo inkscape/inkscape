@@ -1,5 +1,3 @@
-#define __SP_FECOLORMATRIX_CPP__
-
 /** \file
  * SVG <feColorMatrix> implementation.
  *
@@ -8,6 +6,7 @@
  * Authors:
  *   Felipe Sanches <juca@members.fsf.org>
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
+ *   Abhishek Sharma
  *
  * Copyright (C) 2007 Felipe C. da S. Sanches
  * Copyright (C) 2006 Hugo Rodrigues
@@ -98,8 +97,8 @@ sp_feColorMatrix_build(SPObject *object, SPDocument *document, Inkscape::XML::No
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
-    sp_object_read_attr(object, "type");
-    sp_object_read_attr(object, "values");
+    object->readAttr( "type" );
+    object->readAttr( "values" );
 }
 
 /**

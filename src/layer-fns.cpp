@@ -3,6 +3,7 @@
  *
  * Authors:
  *   MenTaLguY <mental@rydia.net>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2004 MenTaLguY
  *
@@ -18,6 +19,8 @@
 #include "xml/repr.h"
 #include "util/find-last-if.h"
 #include "layer-fns.h"
+
+// TODO move the documentation comments into the .h file
 
 namespace Inkscape {
 
@@ -36,7 +39,7 @@ SPObject *next_sibling_layer(SPObject *layer) {
     using std::find_if;
 
     return find_if<SPObject::SiblingIterator>(
-        SP_OBJECT_NEXT(layer), NULL, &is_layer
+        layer->getNext(), NULL, &is_layer
     );
 }
 
@@ -174,7 +177,7 @@ SPObject *create_layer(SPObject *root, SPObject *layer, LayerRelativePosition po
         id = g_strdup_printf("layer%d", layer_suffix++);
     } while (document->getObjectById(id));
     
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+    Inkscape::XML::Document *xml_doc = document->getReprDoc();
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:g");
     repr->setAttribute("inkscape:groupmode", "layer");
     repr->setAttribute("id", id);
