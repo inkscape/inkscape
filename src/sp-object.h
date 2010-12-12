@@ -531,6 +531,11 @@ public:
     CollectionPolicy _collection_policy;
     gchar *_label;
     mutable gchar *_default_label;
+
+    // WARNING:
+    // Methods below should not be used outside of the SP tree,
+    // as they operate directly on the XML representation.
+    // In future, they will be made protected.
     void attach(SPObject *object, SPObject *prev);
     void reorder(SPObject *prev);
     void detach(SPObject *object);
