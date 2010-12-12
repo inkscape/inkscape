@@ -456,7 +456,7 @@ Inkscape::XML::Node const *sp_repr_lookup_name( Inkscape::XML::Node const *repr,
 
 Inkscape::XML::Node *sp_repr_lookup_name( Inkscape::XML::Node *repr, gchar const *name, gint maxdepth )
 {
-    Inkscape::XML::Node const *found = sp_repr_lookup_name( const_cast<Inkscape::XML::Node *>(repr), name, maxdepth );
+    Inkscape::XML::Node const *found = sp_repr_lookup_name( const_cast<Inkscape::XML::Node const *>(repr), name, maxdepth );
     return const_cast<Inkscape::XML::Node *>(found);
 }
 
