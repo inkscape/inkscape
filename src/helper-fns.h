@@ -22,7 +22,7 @@
 // can be more clear.
 #define HELPERFNS_NO_WARNING false
 
-/* convert localized ascii representation to double
+/* convert ascii representation to double
  * the function can only be used to convert numbers as given by gui elements that use localized representation
  * @param value ascii representation of the number
  * @return the converted number
@@ -37,7 +37,7 @@ inline double helperfns_read_number(gchar const *value, bool warning = true) {
         return 0;
     }
     char *end;
-    double ret = g_strtod(value, &end);
+    double ret = g_ascii_strtod(value, &end);
     if (*end) {
         if (warning) {
             g_warning("helper-fns::helperfns_read_number() Unable to convert \"%s\" to number", value);
@@ -62,7 +62,7 @@ inline bool helperfns_read_bool(gchar const *value, bool default_value){
     return default_value;
 }
 
-/* convert localized ascii representation to double
+/* convert ascii representation to double
  * the function can only be used to convert numbers as given by gui elements that use localized representation
  * numbers are delimeted by space
  * @param value ascii representation of the number
@@ -77,7 +77,7 @@ inline std::vector<gdouble> helperfns_read_vector(const gchar* value, int size){
             is >> str;
             char *end;
 
-            double ret = g_strtod(str.c_str(), &end);
+            double ret = g_ascii_strtod(str.c_str(), &end);
             if (*end) {
                 g_warning("helper-fns::helperfns_read_vector() Unable to convert \"%s\" to number", str.c_str());
                 // We could leave this out, too. If strtod can't convert
@@ -89,7 +89,7 @@ inline std::vector<gdouble> helperfns_read_vector(const gchar* value, int size){
         return v;
 }
 
-/* convert localized ascii representation to double
+/* convert ascii representation to double
  * the function can only be used to convert numbers as given by gui elements that use localized representation
  * numbers are delimeted by space
  * @param value ascii representation of the number
@@ -103,7 +103,7 @@ inline std::vector<gdouble> helperfns_read_vector(const gchar* value){
         while(*beg)
         {
             char *end;
-            double ret = g_strtod(beg, &end);
+            double ret = g_ascii_strtod(beg, &end);
             if (end==beg){
                 g_warning("helper-fns::helperfns_read_vector() Unable to convert \"%s\" to number", beg);
                 // We could leave this out, too. If strtod can't convert

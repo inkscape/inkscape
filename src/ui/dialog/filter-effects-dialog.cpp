@@ -58,6 +58,7 @@
 
 #include "style.h"
 #include "svg/svg-color.h"
+#include "svg/stringstream.h"
 #include "ui/dialog/filedialog.h"
 #include "verbs.h"
 #include "xml/node.h"
@@ -304,6 +305,7 @@ public:
     // Returns the color in 'rgb(r,g,b)' form.
     Glib::ustring get_as_attribute() const
     {
+        // no doubles here, so we can use the standard string stream.
         std::ostringstream os;
         const Gdk::Color c = get_color();
         const int r = c.get_red() / 257, g = c.get_green() / 257, b = c.get_blue() / 257;//TO-DO: verify this. This sounds a lot strange! shouldn't it be 256?
@@ -371,7 +373,8 @@ public:
 
     Glib::ustring get_as_attribute() const
     {
-        std::ostringstream os;
+        // use SVGOStringStream to output SVG-compatible doubles
+        Inkscape::SVGOStringStream os;
 
         for(Gtk::TreeIter iter = _model->children().begin();
             iter != _model->children().end(); ++iter) {
