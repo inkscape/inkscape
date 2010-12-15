@@ -124,7 +124,7 @@ emf_print_document_to_file(SPDocument *doc, gchar const *filename)
     /* Create new arena */
     mod->base = SP_ITEM(doc->getRoot());
     mod->arena = NRArena::create();
-    mod->dkey = sp_item_display_key_new(1);
+    mod->dkey = SPItem::display_key_new(1);
     mod->root = mod->base->invoke_show(mod->arena, mod->dkey, SP_ITEM_SHOW_DISPLAY);
     /* Print document */
     ret = mod->begin(doc);
