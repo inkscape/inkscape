@@ -31,8 +31,8 @@ void ChooseDesktop::cancelCallback()
 }
 
 void ChooseDesktop::doubleClickCallback(
-                   const Gtk::TreeModel::Path &path,
-                   Gtk::TreeViewColumn *col)
+                   const Gtk::TreeModel::Path & /*path*/,
+                   Gtk::TreeViewColumn * /*col*/)
 {
     response(Gtk::RESPONSE_OK);
     hide();
@@ -71,7 +71,7 @@ bool ChooseDesktop::doSetup()
         SPDesktop *desktop = (SPDesktop *)*p;
 
         Gtk::TreeModel::Row row = *(desktopListStore->append());
-        row[desktopColumns.nameColumn] = (desktop->doc())->name;
+        row[desktopColumns.nameColumn] = desktop->doc()->getName();
         row[desktopColumns.desktopColumn] = (SPDesktop *)*p;
         p++;
     }

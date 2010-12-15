@@ -937,15 +937,15 @@ bool FileOpenDialogImplWin32::set_svg_preview()
 
     // write object bbox to area
     Geom::OptRect maybeArea(area);
-    svgDoc->ensureUpToDate ();
-    static_cast<(SPItem *)>(svgDoc->root)->invoke_bbox( maybeArea,
-        static_cast<(SPItem *)>(svgDoc->root)->i2d_affine(), TRUE);
+    svgDoc->ensureUpToDate();
+    static_cast<SPItem *>(svgDoc->root)->invoke_bbox( maybeArea,
+        static_cast<SPItem *>(svgDoc->root)->i2d_affine(), TRUE);
 
     NRArena *const arena = NRArena::create();
 
-    unsigned const key = sp_item_display_key_new(1);
+    unsigned const key = SPItem::display_key_new(1);
 
-    NRArenaItem *root = sp_item_invoke_show((SPItem*)(svgDoc->root),
+    NRArenaItem *root = static_cast<SPItem*>(svgDoc->root)->invoke_show(
         arena, key, SP_ITEM_SHOW_DISPLAY);
 
     NRGC gc(NULL);
@@ -982,7 +982,7 @@ bool FileOpenDialogImplWin32::set_svg_preview()
 
     // Tidy up
     svgDoc->doUnref();
-    sp_item_invoke_hide((SPItem*)(svgDoc->root), key);
+    static_cast<SPItem*>(svgDoc->root)->invoke_hide(key);
     nr_object_unref((NRObject *) arena);
 
     // Create the GDK pixbuf

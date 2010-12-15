@@ -149,7 +149,7 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
         d.y1 = _height;
     } else {
         SPItem* doc_item = SP_ITEM(doc->getRoot());
-        sp_item_invoke_bbox(doc_item, &d, doc_item->i2d_affine(), TRUE);
+        doc_item->invoke_bbox(&d, doc_item->i2d_affine(), TRUE);
     }
 
     d.x0 *= IN_PER_PX;
