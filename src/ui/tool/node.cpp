@@ -227,6 +227,35 @@ char const *Handle::handle_type_to_localized_string(NodeType type)
     }
 }
 
+bool Handle::_eventHandler(GdkEvent *event)
+{
+    switch (event->type)
+    {
+    case GDK_KEY_PRESS:
+        switch (shortcut_key(event->key))
+        {
+        case GDK_s:
+        case GDK_S:
+            if (held_only_shift(event->key) && _parent->_type == NODE_CUSP) {
+                // when Shift+S is pressed when hovering over a handle belonging to a cusp node,
+                // hold this handle in place; otherwise process normally
+                // this handle is guaranteed not to be degenerate
+                other()->move(_parent->position() - (position() - _parent->position()));
+                _parent->setType(NODE_SMOOTH, false);
+                _parent->_pm().update(); // magic triple combo to add undo event
+                _parent->_pm().writeXML();
+                _parent->_pm()._commit(_("Change node type"));
+                return true;
+            }
+            break;
+        default: break;
+        }
+    default: break;
+    }
+
+    return ControlPoint::_eventHandler(event);
+}
+
 bool Handle::grabbed(GdkEventMotion *)
 {
     _saved_other_pos = other()->position();

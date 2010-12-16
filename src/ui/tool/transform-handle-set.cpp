@@ -18,6 +18,8 @@
 #include "desktop-handles.h"
 #include "display/sodipodi-ctrlrect.h"
 #include "preferences.h"
+#include "snap.h"
+#include "sp-namedview.h"
 #include "ui/tool/commit-events.h"
 #include "ui/tool/control-point.h"
 #include "ui/tool/event-utils.h"
@@ -473,7 +475,23 @@ public:
     }
 
 protected:
-
+    virtual void dragged(Geom::Point &new_pos, GdkEventMotion *event) {
+        SnapManager &sm = _desktop->namedview->snap_manager;
+        sm.setup(_desktop);
+        bool snap = !held_shift(*event) && sm.someSnapperMightSnap();
+        if (held_control(*event)) {
+            // constrain to axes
+            Geom::Point origin = _last_drag_origin();
+            std::vector<Inkscape::Snapper::SnapConstraint> constraints;
+            constraints.push_back(Inkscape::Snapper::SnapConstraint(origin, Geom::Point(1, 0)));
+            constraints.push_back(Inkscape::Snapper::SnapConstraint(origin, Geom::Point(0, 1)));
+            new_pos = sm.multipleConstrainedSnaps(Inkscape::SnapCandidatePoint(new_pos,
+                SNAPSOURCE_ROTATION_CENTER), constraints, held_shift(*event)).getPoint();
+        } else if (snap) {
+            sm.freeSnapReturnByRef(new_pos, SNAPSOURCE_ROTATION_CENTER);
+        }
+        sm.unSetup();
+    }
     virtual Glib::ustring _getTip(unsigned /*state*/) {
         return C_("Transform handle tip",
             "<b>Rotation center</b>: drag to change the origin of transforms");

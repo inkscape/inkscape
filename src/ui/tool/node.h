@@ -102,6 +102,7 @@ public:
 protected:
     Handle(NodeSharedData const &data, Geom::Point const &initial_pos, Node *parent);
 
+    virtual bool _eventHandler(GdkEvent *event);
     virtual void dragged(Geom::Point &, GdkEventMotion *);
     virtual bool grabbed(GdkEventMotion *);
     virtual void ungrabbed(GdkEventButton *);
