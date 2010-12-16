@@ -290,7 +290,7 @@ void ControlPointSelection::_pointDragged(Geom::Point &new_pos, GdkEventMotion *
 {
     Geom::Point abs_delta = new_pos - _original_positions[_grabbed_point];
     double fdist = Geom::distance(_original_positions[_grabbed_point], _original_positions[_farthest_point]);
-    if (held_alt(*event) && fdist > 0) {
+    if (held_only_alt(*event) && fdist > 0) {
         // Sculpting
         for (iterator i = _points.begin(); i != _points.end(); ++i) {
             SelectableControlPoint *cur = (*i);
