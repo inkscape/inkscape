@@ -695,6 +695,14 @@ void MultiPathManipulator::_commit(CommitEvent cps)
         reason = _("Scale nodes vertically");
         key = "node:scale:y";
         break;
+    case COMMIT_MOUSE_SKEW_X:
+        reason = _("Skew nodes horizontally");
+        key = "node:skew:x";
+        break;
+    case COMMIT_MOUSE_SKEW_Y:
+        reason = _("Skew nodes vertically");
+        key = "node:skew:y";
+        break;
     case COMMIT_FLIP_X:
         reason = _("Flip nodes horizontally");
         break;
