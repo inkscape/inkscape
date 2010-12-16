@@ -210,7 +210,78 @@ void MultiPathManipulator::selectSubpaths()
 
 void MultiPathManipulator::shiftSelection(int dir)
 {
-    invokeForAll(&PathManipulator::shiftSelection, dir);
+    if (empty()) return;
+
+    // 1. find last selected node
+    // 2. select the next node; if the last node or nothing is selected,
+    //    select first node
+    MapType::iterator last_i;
+    SubpathList::iterator last_j;
+    NodeList::iterator last_k;
+    bool anything_found = false;
+
+    for (MapType::iterator i = _mmap.begin(); i != _mmap.end(); ++i) {
+        SubpathList &sp = i->second->subpathList();
+        for (SubpathList::iterator j = sp.begin(); j != sp.end(); ++j) {
+            for (NodeList::iterator k = (*j)->begin(); k != (*j)->end(); ++k) {
+                if (k->selected()) {
+                    last_i = i;
+                    last_j = j;
+                    last_k = k;
+                    anything_found = true;
+                    // when tabbing backwards, we want the first node
+                    if (dir == -1) goto exit_loop;
+                }
+            }
+        }
+    }
+    exit_loop:
+
+    // NOTE: we should not assume the _selection contains only nodes
+    // in future it might also contain handles and other types of control points
+    // this is why we use a flag instead in the loop above, instead of calling
+    // selection.empty()
+    if (!anything_found) {
+        // select first / last node
+        // this should never fail because there must be at least 1 non-empty manipulator
+        if (dir == 1) {
+            _selection.insert((*_mmap.begin()->second->subpathList().begin())->begin().ptr());
+        } else {
+            _selection.insert((--(*--(--_mmap.end())->second->subpathList().end())->end()).ptr());
+        }
+        return;
+    }
+
+    // three levels deep - w00t!
+    if (dir == 1) {
+        if (++last_k == (*last_j)->end()) {
+            // here, last_k points to the node to be selected
+            ++last_j;
+            if (last_j == last_i->second->subpathList().end()) {
+                ++last_i;
+                if (last_i == _mmap.end()) {
+                    last_i = _mmap.begin();
+                }
+                last_j = last_i->second->subpathList().begin();
+            }
+            last_k = (*last_j)->begin();
+        }
+    } else {
+        if (!last_k || last_k == (*last_j)->begin()) {
+            if (last_j == last_i->second->subpathList().begin()) {
+                if (last_i == _mmap.begin()) {
+                    last_i = _mmap.end();
+                }
+                --last_i;
+                last_j = last_i->second->subpathList().end();
+            }
+            --last_j;
+            last_k = (*last_j)->end();
+        }
+        --last_k;
+    }
+    _selection.clear();
+    _selection.insert(last_k.ptr());
 }
 
 void MultiPathManipulator::invertSelectionInSubpaths()

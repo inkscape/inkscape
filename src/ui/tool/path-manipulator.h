@@ -65,7 +65,6 @@ public:
     SPPath *item() { return _path; }
 
     void selectSubpaths();
-    void shiftSelection(int dir);
     void invertSelectionInSubpaths();
 
     void insertNodes();
@@ -93,6 +92,9 @@ public:
     NodeList::iterator subdivideSegment(NodeList::iterator after, double t);
     NodeList::iterator extremeNode(NodeList::iterator origin, bool search_selected,
         bool search_unselected, bool closest);
+
+    // this is necessary for Tab-selection in MultiPathManipulator
+    SubpathList &subpathList() { return _subpaths; }
 
     static bool is_item_type(void *item);
 private:

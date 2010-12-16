@@ -215,7 +215,7 @@ void PathManipulator::clear()
 /** Select all nodes in subpaths that have something selected. */
 void PathManipulator::selectSubpaths()
 {
-    for (std::list<SubpathPtr>::iterator i = _subpaths.begin(); i != _subpaths.end(); ++i) {
+    for (SubpathList::iterator i = _subpaths.begin(); i != _subpaths.end(); ++i) {
         NodeList::iterator sp_start = (*i)->begin(), sp_end = (*i)->end();
         for (NodeList::iterator j = sp_start; j != sp_end; ++j) {
             if (j->selected()) {
@@ -225,63 +225,6 @@ void PathManipulator::selectSubpaths()
                     _selection.insert(ins.ptr());
                 continue;
             }
-        }
-    }
-}
-
-/** Move the selection forward or backward by one node in each subpath, based on the sign
- * of the parameter. */
-void PathManipulator::shiftSelection(int dir)
-{
-    if (dir == 0) return;
-    if (_num_selected == 0) {
-        // select the first node of the path.
-        SubpathList::iterator s = _subpaths.begin();
-        if (s == _subpaths.end()) return;
-        NodeList::iterator n = (*s)->begin();
-        if (n != (*s)->end())
-            _selection.insert(n.ptr());
-        return;
-    }
-    // We cannot do any tricks here, like iterating in different directions based on
-    // the sign and only setting the selection of nodes behind us, because it would break
-    // for closed paths.
-    for (SubpathList::iterator i = _subpaths.begin(); i != _subpaths.end(); ++i) {
-        std::deque<bool> sels; // I hope this is specialized for bools!
-        unsigned num = 0;
-        
-        for (NodeList::iterator j = (*i)->begin(); j != (*i)->end(); ++j) {
-            sels.push_back(j->selected());
-            _selection.erase(j.ptr());
-            ++num;
-        }
-        if (num == 0) continue; // should never happen! zero-node subpaths are not allowed
-
-        num = 0;
-        // In closed subpath, shift the selection cyclically. In an open one,
-        // let the selection 'slide into nothing' at ends.
-        if (dir > 0) {
-            if ((*i)->closed()) {
-                bool last = sels.back();
-                sels.pop_back();
-                sels.push_front(last);
-            } else {
-                sels.push_front(false);
-            }
-        } else {
-            if ((*i)->closed()) {
-                bool first = sels.front();
-                sels.pop_front();
-                sels.push_back(first);
-            } else {
-                sels.push_back(false);
-                num = 1;
-            }
-        }
-
-        for (NodeList::iterator j = (*i)->begin(); j != (*i)->end(); ++j) {
-            if (sels[num]) _selection.insert(j.ptr());
-            ++num;
         }
     }
 }
