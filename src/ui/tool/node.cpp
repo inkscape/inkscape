@@ -241,6 +241,7 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
     Geom::Point origin = _last_drag_origin();
     SnapManager &sm = _desktop->namedview->snap_manager;
     bool snap = sm.someSnapperMightSnap();
+    boost::optional<Inkscape::Snapper::SnapConstraint> ctrl_constraint;
 
     // with Alt, preserve length
     if (held_alt(*event)) {
@@ -256,16 +257,23 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
         // note: if snapping to the original position is only desired in the original
         // direction of the handle, change to Ray instead of Line
         Geom::Line original_line(parent_pos, origin);
+        Geom::Line perp_line(parent_pos, parent_pos + Geom::rot90(origin - parent_pos));
         Geom::Point snap_pos = parent_pos + Geom::constrain_angle(
             Geom::Point(0,0), new_pos - parent_pos, snaps, Geom::Point(1,0));
         Geom::Point orig_pos = original_line.pointAt(original_line.nearestPoint(new_pos));
+        Geom::Point perp_pos = perp_line.pointAt(perp_line.nearestPoint(new_pos));
 
-        if (Geom::distance(snap_pos, new_pos) < Geom::distance(orig_pos, new_pos)) {
-            new_pos = snap_pos;
-        } else {
-            new_pos = orig_pos;
+        Geom::Point result = snap_pos;
+        ctrl_constraint = Inkscape::Snapper::SnapConstraint(parent_pos, parent_pos - snap_pos);
+        if (Geom::distance(orig_pos, new_pos) < Geom::distance(result, new_pos)) {
+            result = orig_pos;
+            ctrl_constraint = Inkscape::Snapper::SnapConstraint(parent_pos, parent_pos - orig_pos);
         }
-        snap = false;
+        if (Geom::distance(perp_pos, new_pos) < Geom::distance(result, new_pos)) {
+            result = perp_pos;
+            ctrl_constraint = Inkscape::Snapper::SnapConstraint(parent_pos, parent_pos - perp_pos);
+        }
+        new_pos = result;
     }
 
     std::vector<Inkscape::SnapCandidatePoint> unselected;
@@ -279,12 +287,19 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
         }
         sm.setupIgnoreSelection(_desktop, true, &unselected);
 
-        Node *node_away = (this == &_parent->_front ? _parent->_prev() : _parent->_next());
+        Node *node_away = _parent->nodeAwayFrom(this);
         if (_parent->type() == NODE_SMOOTH && Node::_is_line_segment(_parent, node_away)) {
             Inkscape::Snapper::SnapConstraint cl(_parent->position(),
                 _parent->position() - node_away->position());
             Inkscape::SnappedPoint p;
             p = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos, SNAPSOURCE_NODE_HANDLE), cl);
+            new_pos = p.getPoint();
+        } else if (ctrl_constraint) {
+            // NOTE: this is subtly wrong.
+            // We should get all possible constraints and snap along them using
+            // multipleConstrainedSnaps, instead of first snapping to angle and the to objects
+            Inkscape::SnappedPoint p;
+            p = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos, SNAPSOURCE_NODE_HANDLE), *ctrl_constraint);
             new_pos = p.getPoint();
         } else {
             sm.freeSnapReturnByRef(new_pos, SNAPSOURCE_NODE_HANDLE);
