@@ -113,12 +113,29 @@ void Handle::move(Geom::Point const &new_pos)
     Handle *towards_second = node_towards ? node_towards->handleToward(_parent) : NULL;
 
     if (Geom::are_near(new_pos, _parent->position())) {
-        // The handle becomes degenerate. If the segment between it and the node
+        // The handle becomes degenerate.
+        // Adjust node type as necessary.
+        if (other->isDegenerate()) {
+            // If both handles become degenerate, convert to parent cusp node
+            _parent->setType(NODE_CUSP, false);
+        } else {
+            // Only 1 handle becomes degenerate
+            switch (_parent->type()) {
+            case NODE_AUTO:
+            case NODE_SYMMETRIC:
+                _parent->setType(NODE_SMOOTH, false);
+                break;
+            default:
+                // do nothing for other node types
+                break;
+            }
+        }
+        // If the segment between the handle and the node
         // in its direction becomes linear and there are smooth nodes
         // at its ends, make their handles colinear with the segment
-        if (towards && towards->isDegenerate()) {
+        if (towards && towards_second->isDegenerate()) {
             if (node_towards->type() == NODE_SMOOTH) {
-                towards_second->setDirection(*_parent, *node_towards);
+                towards->setDirection(*_parent, *node_towards);
             }
             if (_parent->type() == NODE_SMOOTH) {
                 other->setDirection(*node_towards, *_parent);
@@ -160,6 +177,7 @@ void Handle::move(Geom::Point const &new_pos)
 
 void Handle::setPosition(Geom::Point const &p)
 {
+    Geom::Point old_pos = position();
     ControlPoint::setPosition(p);
     sp_ctrlline_set_coords(SP_CTRLLINE(_handle_line), _parent->position(), position());
 
@@ -167,14 +185,11 @@ void Handle::setPosition(Geom::Point const &p)
     if (Geom::are_near(position(), _parent->position()))
         _degenerate = true;
     else _degenerate = false;
+
     if (_parent->_handles_shown && _parent->visible() && !_degenerate) {
         setVisible(true);
     } else {
         setVisible(false);
-    }
-    // If both handles become degenerate, convert to parent cusp node
-    if (_parent->isDegenerate()) {
-        _parent->setType(NODE_CUSP, false);
     }
 }
 
@@ -187,7 +202,7 @@ void Handle::setLength(double len)
 
 void Handle::retract()
 {
-    setPosition(_parent->position());
+    move(_parent->position());
 }
 
 void Handle::setDirection(Geom::Point const &from, Geom::Point const &to)
