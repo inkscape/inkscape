@@ -275,22 +275,31 @@ void PathManipulator::duplicateNodes()
                 NodeList::iterator k = j.next();
                 Node *n = new Node(_multi_path_manipulator._path_data.node_data, *j);
 
-                // Move the new node to the bottom of the Z-order. This way you can drag all
-                // nodes that were selected before this operation without deselecting
-                // everything because there is a new node above.
-                n->sink();
+                if (k) {
+                    // Move the new node to the bottom of the Z-order. This way you can drag all
+                    // nodes that were selected before this operation without deselecting
+                    // everything because there is a new node above.
+                    n->sink();
+                }
 
                 n->front()->setPosition(*j->front());
                 j->front()->retract();
                 j->setType(NODE_CUSP, false);
                 (*i)->insert(k, n);
 
-                // We need to manually call the selection change callback to refresh
-                // the handle display correctly.
-                // This call changes num_selected, but we call this once for a selected node
-                // and once for an unselected node, so in the end the number stays correct.
-                _selectionChanged(j.ptr(), true);
-                _selectionChanged(n, false);
+                if (k) {
+                    // We need to manually call the selection change callback to refresh
+                    // the handle display correctly.
+                    // This call changes num_selected, but we call this once for a selected node
+                    // and once for an unselected node, so in the end the number stays correct.
+                    _selectionChanged(j.ptr(), true);
+                    _selectionChanged(n, false);
+                } else {
+                    // select the new end node instead of the node just before it
+                    _selection.erase(j.ptr());
+                    _selection.insert(n);
+                    break; // this was the end node, nothing more to do
+                }
             }
         }
     }
