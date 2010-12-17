@@ -54,7 +54,7 @@ FillAndStroke::FillAndStroke()
 
     contents->pack_start(_notebook, true, true);
 
-    _notebook.append_page(_page_fill, _createPageTabLabel(_("Fill"), INKSCAPE_ICON_OBJECT_FILL));
+    _notebook.append_page(_page_fill, _createPageTabLabel(_("_Fill"), INKSCAPE_ICON_OBJECT_FILL));
     _notebook.append_page(_page_stroke_paint, _createPageTabLabel(_("Stroke _paint"), INKSCAPE_ICON_OBJECT_STROKE));
     _notebook.append_page(_page_stroke_style, _createPageTabLabel(_("Stroke st_yle"), INKSCAPE_ICON_OBJECT_STROKE_STYLE));
 

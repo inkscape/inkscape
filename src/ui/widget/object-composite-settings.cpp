@@ -60,7 +60,7 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
   _opacity_tag(Glib::ustring(history_prefix) + ":opacity"),
   _opacity_vbox(false, 0),
   _opacity_label_box(false, 0),
-  _opacity_label(_("Opacity (%):"), 0.0, 1.0, true),
+  _opacity_label(_("_Opacity (%):"), 0.0, 1.0, true),
   _opacity_adjustment(100.0, 0.0, 100.0, 1.0, 1.0, 0.0),
   _opacity_hscale(_opacity_adjustment),
   _opacity_spin_button(_opacity_adjustment, 0.01, 1),
@@ -86,6 +86,7 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
     _opacity_hscale.set_draw_value(false);
     _opacity_hscale.set_update_policy(Gtk::UPDATE_DELAYED);
     _opacity_adjustment.signal_value_changed().connect(sigc::mem_fun(*this, &ObjectCompositeSettings::_opacityValueChanged));
+	_opacity_label.set_mnemonic_widget(_opacity_hscale);
 
     show_all_children();
 
