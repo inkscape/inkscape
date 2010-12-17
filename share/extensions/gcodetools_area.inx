@@ -6,7 +6,7 @@
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<param name='active-tab' type="notebook">
 
-		<page name='area' _gui-text='Area'>	
+		<page name='area' msgctxt="gcodetools extension" _gui-text='Area'>	
 			<param name="max-area-curves" type="int" min="0" max="1000" _gui-text="Maximum area cutting curves:">100</param>
 			<param name="area-inkscape-radius" type="float" min="-1000" max="1000" _gui-text="Area width:">-10</param>
 
