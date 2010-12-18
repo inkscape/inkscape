@@ -56,6 +56,7 @@
 #include "ui/widget/layer-selector.h"
 #include "ui/widget/selected-style.h"
 #include "ui/uxmanager.h"
+#include "util/ege-appear-time-tracker.h"
 
 // We're in the "widgets" directory, so no need to explicitly prefix these:
 #include "button.h"
@@ -73,6 +74,7 @@ using Inkscape::round;
 using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 using Inkscape::UI::ToolboxFactory;
+using ege::AppearTimeTracker;
 
 #ifdef WITH_INKBOARD
 #endif
@@ -243,6 +245,8 @@ SPDesktopWidget::window_get_pointer()
     return Geom::Point(x,y);
 }
 
+static GTimer *overallTimer = 0;
+
 /**
  * Registers SPDesktopWidget class and returns its type number.
  */
@@ -263,6 +267,8 @@ GType SPDesktopWidget::getType(void)
             0 // value_table
         };
         type = g_type_register_static(SP_TYPE_VIEW_WIDGET, "SPDesktopWidget", &info, static_cast<GTypeFlags>(0));
+        // Begin a timer to watch for the first desktop to appear on-screen
+        overallTimer = g_timer_new();
     }
     return type;
 }
@@ -564,6 +570,18 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_widget_show_all (dtw->vbox);
 
     gtk_widget_grab_focus (GTK_WIDGET(dtw->canvas));
+
+    // If this is the first desktop created, report the time it takes to show up
+    if ( overallTimer ) {
+        if ( prefs->getBool("/dialogs/debug/trackAppear", false) ) {
+            // Time tracker takes ownership of the timer.
+            AppearTimeTracker *tracker = new AppearTimeTracker(overallTimer, GTK_WIDGET(dtw), "first SPDesktopWidget");
+            tracker->setAutodelete(true);
+        } else {
+            g_timer_destroy(overallTimer);
+        }
+        overallTimer = 0;
+    }
 }
 
 /**

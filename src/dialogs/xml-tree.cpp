@@ -41,8 +41,10 @@
 #include "../widgets/sp-xmlview-attr-list.h"
 #include "../widgets/sp-xmlview-content.h"
 #include "../widgets/sp-xmlview-tree.h"
+#include "util/ege-appear-time-tracker.h"
 
 using Inkscape::DocumentUndo;
+using ege::AppearTimeTracker;
 
 #define MIN_ONSCREEN_DISTANCE 50
 
@@ -178,10 +180,12 @@ void attr_reset_context(gint attr)
 void sp_xml_tree_dialog()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
     if (!desktop) {
         return;
     }
+
+    bool wantTiming = Inkscape::Preferences::get()->getBool("/dialogs/debug/trackAppear", false);
+    GTimer *timer = wantTiming ? g_timer_new() : 0;
 
     if (dlg == NULL)
     { // very long block
@@ -603,6 +607,13 @@ void sp_xml_tree_dialog()
 
         tree_reset_context();
     } // end of if (dlg == NULL)
+
+    if ( wantTiming ) {
+        // Time tracker takes ownership of the timer.
+        AppearTimeTracker *tracker = new AppearTimeTracker(timer, GTK_WIDGET(dlg), "DialogXMLEditor");
+        tracker->setAutodelete(true);
+        timer = 0;
+    }
 
     gtk_window_present((GtkWindow *) dlg);
 

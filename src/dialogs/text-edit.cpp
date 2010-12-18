@@ -49,8 +49,10 @@ extern "C" {
 #include "svg/css-ostringstream.h"
 #include "widgets/icon.h"
 #include <xml/repr.h>
+#include "util/ege-appear-time-tracker.h"
 
 using Inkscape::DocumentUndo;
+using ege::AppearTimeTracker;
 
 #define VB_MARGIN 4
 #define MIN_ONSCREEN_DISTANCE 50
@@ -139,6 +141,9 @@ text_view_focus_out (GtkWidget */*w*/, GdkEventKey */*event*/, gpointer data)
 void
 sp_text_edit_dialog (void)
 {
+    bool wantTiming = Inkscape::Preferences::get()->getBool("/dialogs/debug/trackAppear", false);
+    GTimer *timer = wantTiming ? g_timer_new() : 0;
+
     if (!dlg) {
 
         gchar title[500];
@@ -455,6 +460,13 @@ sp_text_edit_dialog (void)
         gtk_widget_show_all (dlg);
 
         sp_text_edit_dialog_read_selection (dlg, TRUE, TRUE);
+    }
+
+    if ( wantTiming ) {
+        // Time tracker takes ownership of the timer.
+        AppearTimeTracker *tracker = new AppearTimeTracker(timer, GTK_WIDGET(dlg), "DialogText");
+        tracker->setAutodelete(true);
+        timer = 0;
     }
 
     gtk_window_present ((GtkWindow *) dlg);

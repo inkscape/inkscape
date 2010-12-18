@@ -5,6 +5,8 @@ ink_common_sources += \
 	util/compose.hpp	\
 	util/copy.h \
 	util/enums.h \
+	util/ege-appear-time-tracker.cpp	\
+	util/ege-appear-time-tracker.h	\
 	util/ege-tags.h \
 	util/ege-tags.cpp \
 	util/filter-list.h \

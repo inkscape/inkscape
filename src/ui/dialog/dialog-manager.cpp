@@ -42,6 +42,7 @@
 #include "ui/dialog/floating-behavior.h"
 #include "ui/dialog/dock-behavior.h"
 //#include "ui/dialog/print-colors-preview-dialog.h"
+#include "util/ege-appear-time-tracker.h"
 #include "preferences.h"
 
 #ifdef ENABLE_SVG_FONTS
@@ -232,9 +233,22 @@ void DialogManager::showDialog(gchar const *name) {
  * Shows the named dialog, creating it if necessary.
  */
 void DialogManager::showDialog(GQuark name) {
-    Dialog *dialog=getDialog(name);
-    if (dialog) {
+    bool wantTiming = Inkscape::Preferences::get()->getBool("/dialogs/debug/trackAppear", false);
+    GTimer *timer = (wantTiming) ? g_timer_new() : 0; // if needed, must be created/started before getDialog()
+    Dialog *dialog = getDialog(name);
+    if ( dialog ) {
+        if ( wantTiming ) {
+            gchar const * nameStr = g_quark_to_string(name);
+            ege::AppearTimeTracker *tracker = new ege::AppearTimeTracker(timer, dialog->gobj(), nameStr);
+            tracker->setAutodelete(true);
+            timer = 0;
+        }
         dialog->present();
+    }
+
+    if ( timer ) {
+        g_timer_destroy(timer);
+        timer = 0;
     }
 }
 
