@@ -88,6 +88,10 @@ def export_SPLINE():
             path = 'M %f,%f Q %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], vals[groups['10']][1], vals[groups['20']][1], vals[groups['10']][2], vals[groups['20']][2])
             attribs = {'d': path, 'style': style}
             inkex.etree.SubElement(layer, 'path', attribs)
+        if not (vals[groups['70']][0] & 3) and len(vals[groups['10']]) == 5 and len(vals[groups['20']]) == 5:
+            path = 'M %f,%f Q %f,%f %f,%f Q %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], vals[groups['10']][1], vals[groups['20']][1], vals[groups['10']][2], vals[groups['20']][2], vals[groups['10']][3], vals[groups['20']][3], vals[groups['10']][4], vals[groups['20']][4])
+            attribs = {'d': path, 'style': style}
+            inkex.etree.SubElement(layer, 'path', attribs)
 
 def export_CIRCLE():
     # mandatory group codes : (10, 20, 40) (x, y, radius)
@@ -322,7 +326,7 @@ parser.add_option("--font", action="store", type="string", dest="font", default=
 parser.add_option("--tab", action="store", type="string", dest="tab", default="Options")
 parser.add_option("--inputhelp", action="store", type="string", dest="inputhelp", default="")
 (options, args) = parser.parse_args(inkex.sys.argv[1:])
-doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"></svg>'))
+doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" width="%s" height="%s"></svg>' % (210*90/25.4, 297*90/25.4)))
 desc = inkex.etree.SubElement(doc.getroot(), 'desc', {})
 defs = inkex.etree.SubElement(doc.getroot(), 'defs', {})
 marker = inkex.etree.SubElement(defs, 'marker', {'id': 'DistanceX', 'orient': 'auto', 'refX': '0.0', 'refY': '0.0', 'style': 'overflow:visible'})
