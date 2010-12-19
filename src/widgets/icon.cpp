@@ -54,7 +54,7 @@ static void sp_icon_style_set( GtkWidget *widget, GtkStyle *previous_style );
 static void sp_icon_theme_changed( SPIcon *icon );
 
 static GdkPixbuf *sp_icon_image_load_pixmap(gchar const *name, unsigned lsize, unsigned psize);
-static GdkPixbuf *sp_icon_image_load_svg(gchar const *name, GtkIconSize lsize, unsigned psize);
+static GdkPixbuf *sp_icon_image_load_svg(std::list<Glib::ustring> const &names, GtkIconSize lsize, unsigned psize);
 
 static void sp_icon_overlay_pixels( guchar *px, int width, int height, int stride,
                                     unsigned r, unsigned g, unsigned b );
@@ -228,13 +228,16 @@ GdkPixbuf* renderup( gchar const* name, Inkscape::IconSize lsize, unsigned psize
         pb = gtk_icon_theme_load_icon(theme, name, psize, (GtkIconLookupFlags) 0, NULL);
     }
     if (!pb) {
-        pb = sp_icon_image_load_svg( name, Inkscape::getRegisteredIconSize(lsize), psize );
-        if (!pb && (legacyNames.find(name) != legacyNames.end())) {
+        std::list<Glib::ustring> names;
+        names.push_back(name);
+        if ( legacyNames.find(name) != legacyNames.end() ) {
             if ( Inkscape::Preferences::get()->getBool("/debug/icons/dumpSvg") ) {
                 g_message("Checking fallback [%s]->[%s]", name, legacyNames[name].c_str());
             }
-            pb = sp_icon_image_load_svg( legacyNames[name].c_str(), Inkscape::getRegisteredIconSize(lsize), psize );
+            names.push_back(legacyNames[name]);
         }
+
+        pb = sp_icon_image_load_svg( names, Inkscape::getRegisteredIconSize(lsize), psize );
 
         // if this was loaded from SVG, add it as a builtin icon
         if (pb) {
@@ -284,7 +287,7 @@ static void sp_icon_theme_changed( SPIcon *icon )
 static void imageMapCB(GtkWidget* widget, gpointer user_data);
 static void imageMapNamedCB(GtkWidget* widget, gpointer user_data);
 static bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize);
-static Glib::ustring icon_cache_key(gchar const *name, unsigned psize);
+static Glib::ustring icon_cache_key(Glib::ustring const &name, unsigned psize);
 static GdkPixbuf *get_cached_pixbuf(Glib::ustring const &key);
 
 static void setupLegacyNaming() {
@@ -1037,18 +1040,20 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
 
 
 
-struct svg_doc_cache_t
+class SVGDocCache
 {
+public:
+    SVGDocCache( SPDocument *doc, NRArenaItem *root ) : doc(doc), root(root) {}
     SPDocument *doc;
     NRArenaItem *root;
 };
 
-static std::map<Glib::ustring, svg_doc_cache_t *> doc_cache;
+static std::map<Glib::ustring, SVGDocCache *> doc_cache;
 static std::map<Glib::ustring, GdkPixbuf *> pb_cache;
 
-Glib::ustring icon_cache_key(gchar const *name, unsigned psize)
+Glib::ustring icon_cache_key(Glib::ustring const & name, unsigned psize)
 {
-    Glib::ustring key=name;
+    Glib::ustring key = name;
     key += ":";
     key += psize;
     return key;
@@ -1079,92 +1084,59 @@ static std::list<gchar*> &icons_svg_paths()
 }
 
 // this function renders icons from icons.svg and returns the pixels.
-static guchar *load_svg_pixels(gchar const *name,
+static guchar *load_svg_pixels(std::list<Glib::ustring> const &names,
                                unsigned /*lsize*/, unsigned psize)
 {
-    SPDocument *doc = NULL;
-    NRArenaItem *root = NULL;
-    svg_doc_cache_t *info = NULL;
-
+    bool const dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpSvg");
     std::list<gchar *> &sources = icons_svg_paths();
 
     // Try each document in turn until we successfully load the icon from one
-    guchar *px=NULL;
-    for (std::list<gchar*>::iterator i = sources.begin(); i != sources.end() && !px; ++i) {
+    guchar *px = NULL;
+    for (std::list<gchar*>::iterator i = sources.begin(); (i != sources.end()) && !px; ++i) {
         gchar *doc_filename = *i;
+        SVGDocCache *info = 0;
 
         // Did we already load this doc?
         Glib::ustring key(doc_filename);
-        info = 0;
         {
-            std::map<Glib::ustring, svg_doc_cache_t *>::iterator i = doc_cache.find(key);
+            std::map<Glib::ustring, SVGDocCache *>::iterator i = doc_cache.find(key);
             if ( i != doc_cache.end() ) {
                 info = i->second;
             }
         }
 
-        /* Try to load from document. */
-        if (!info &&
-            Inkscape::IO::file_test( doc_filename, G_FILE_TEST_IS_REGULAR ) &&
-            (doc = SPDocument::createNewDoc( doc_filename, FALSE )) ) {
+        // Try to load from document.
+        if (!info && Inkscape::IO::file_test( doc_filename, G_FILE_TEST_IS_REGULAR ) ) {
+            SPDocument *doc = SPDocument::createNewDoc( doc_filename, FALSE );
+            if ( doc ) {
+                if ( dump ) {
+                    g_message("Loaded icon file %s", doc_filename);
+                }
+                // prep the document
+                doc->ensureUpToDate();
 
-            //g_message("Loaded icon file %s", doc_filename);
-            // prep the document
-            doc->ensureUpToDate();
-            /* Create new arena */
-            NRArena *arena = NRArena::create();
-            /* Create ArenaItem and set transform */
-            unsigned visionkey = SPItem::display_key_new(1);
-            /* fixme: Memory manage root if needed (Lauris) */
-            // This needs to be fixed indeed; this leads to a memory leak of a few megabytes these days
-            // because shapes are being rendered which are not being freed
-            // Valgrind output:
-            /*==7014== 1,548,344 bytes in 599 blocks are possibly lost in loss record 20,361 of 20,362
-            ==7014==    at 0x4A05974: operator new(unsigned long) (vg_replace_malloc.c:220)
-            ==7014==    by 0x4F1015: __gnu_cxx::new_allocator<Shape::point_data>::allocate(unsigned long, void const*) (new_allocator.h:89)
-            ==7014==    by 0x4F02AC: std::_Vector_base<Shape::point_data, std::allocator<Shape::point_data> >::_M_allocate(unsigned long) (stl_vector.h:140)
-            ==7014==    by 0xCF62D7: std::vector<Shape::point_data, std::allocator<Shape::point_data> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Shape::point_data*, std::vector<Shape::point_data, std::allocator<Shape::point_data> > >, unsigned long, Shape::point_data const&) (vector.tcc:414)
-            ==7014==    by 0xCF4D45: std::vector<Shape::point_data, std::allocator<Shape::point_data> >::insert(__gnu_cxx::__normal_iterator<Shape::point_data*, std::vector<Shape::point_data, std::allocator<Shape::point_data> > >, unsigned long, Shape::point_data const&) (stl_vector.h:851)
-            ==7014==    by 0xCF3DCD: std::vector<Shape::point_data, std::allocator<Shape::point_data> >::resize(unsigned long, Shape::point_data) (stl_vector.h:557)
-            ==7014==    by 0xCEA771: Shape::AddPoint(Geom::Point) (Shape.cpp:326)
-            ==7014==    by 0xD0F413: Shape::ConvertToShape(Shape*, fill_typ, bool) (ShapeSweep.cpp:257)
-            ==7014==    by 0x5ECD4F: nr_arena_shape_update_stroke(NRArenaShape*, NRGC*, NRRectL*) (nr-arena-shape.cpp:651)
-            ==7014==    by 0x5EE0DA: nr_arena_shape_render(_cairo*, NRArenaItem*, NRRectL*, NRPixBlock*, unsigned int) (nr-arena-shape.cpp:862)
-            ==7014==    by 0x5E72FB: nr_arena_item_invoke_render(_cairo*, NRArenaItem*, NRRectL const*, NRPixBlock*, unsigned int) (nr-arena-item.cpp:578)
-            ==7014==    by 0x5E9DDE: nr_arena_group_render(_cairo*, NRArenaItem*, NRRectL*, NRPixBlock*, unsigned int) (nr-arena-group.cpp:228)
-            ==7014==    by 0x5E72FB: nr_arena_item_invoke_render(_cairo*, NRArenaItem*, NRRectL const*, NRPixBlock*, unsigned int) (nr-arena-item.cpp:578)
-            ==7014==    by 0x5E9DDE: nr_arena_group_render(_cairo*, NRArenaItem*, NRRectL*, NRPixBlock*, unsigned int) (nr-arena-group.cpp:228)
-            ==7014==    by 0x5E72FB: nr_arena_item_invoke_render(_cairo*, NRArenaItem*, NRRectL const*, NRPixBlock*, unsigned int) (nr-arena-item.cpp:578)
-            */
-            root = SP_ITEM(doc->getRoot())->invoke_show(arena, visionkey, SP_ITEM_SHOW_DISPLAY );
+                // Create new arena
+                NRArena *arena = NRArena::create();
 
-            // store into the cache
-            info = new svg_doc_cache_t;
-            g_assert(info);
+                // Create ArenaItem and set transform
+                unsigned visionkey = SPItem::display_key_new(1);
+                // fixme: Memory manage root if needed (Lauris)
+                // This needs to be fixed indeed; this leads to a memory leak of a few megabytes these days
+                // because shapes are being rendered which are not being freed
+                NRArenaItem *root = SP_ITEM(doc->getRoot())->invoke_show( arena, visionkey, SP_ITEM_SHOW_DISPLAY );
 
-            info->doc=doc;
-            info->root=root;
-            doc_cache[key]=info;
+                // store into the cache
+                info = new SVGDocCache(doc, root);
+                doc_cache[key] = info;
+            }
         }
         if (info) {
-            doc=info->doc;
-            root=info->root;
+            for (std::list<Glib::ustring>::const_iterator it = names.begin(); !px && (it != names.end()); ++it ) {
+                px = sp_icon_doc_icon( info->doc, info->root, it->c_str(), psize );
+            }
         }
-
-        // move on to the next document if we couldn't get anything
-        if (!info && !doc) {
-            continue;
-        }
-
-        px = sp_icon_doc_icon( doc, root, name, psize );
-//         if (px) {
-//             g_message("Found icon %s in %s", name, doc_filename);
-//         }
     }
 
-//     if (!px) {
-//         g_message("Not found icon %s", name);
-//     }
     return px;
 }
 
@@ -1211,16 +1183,15 @@ bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
             if (dump) {
                 g_message("prerender_icon  [%s] %d:%d", name, lsize, psize);
             }
-            guchar* px = load_svg_pixels(name, lsize, psize);
-            if ( !px ) {
-                // check for a fallback name
-                if ( legacyNames.find(name) != legacyNames.end() ) {
-                    if ( dump ) {
-                        g_message("load_svg_pixels([%s]=%s, %d, %d)", name, legacyNames[name].c_str(), lsize, psize);
-                    }
-                    px = load_svg_pixels(legacyNames[name].c_str(), lsize, psize);
+            std::list<Glib::ustring> names;
+            names.push_back(name);
+            if ( legacyNames.find(name) != legacyNames.end() ) {
+                names.push_back(legacyNames[name]);
+                if ( dump ) {
+                    g_message("load_svg_pixels([%s] = %s, %d, %d)", name, legacyNames[name].c_str(), lsize, psize);
                 }
             }
+            guchar* px = load_svg_pixels(names, lsize, psize);
             if (px) {
                 GdkPixbuf* pb = gdk_pixbuf_new_from_data( px, GDK_COLORSPACE_RGB, TRUE, 8,
                                                           psize, psize, psize * 4,
@@ -1242,20 +1213,20 @@ bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
     return loadNeeded;
 }
 
-static GdkPixbuf *sp_icon_image_load_svg(gchar const *name, GtkIconSize lsize, unsigned psize)
+static GdkPixbuf *sp_icon_image_load_svg(std::list<Glib::ustring> const &names, GtkIconSize lsize, unsigned psize)
 {
-    Glib::ustring key = icon_cache_key(name, psize);
+    Glib::ustring key = icon_cache_key(*names.begin(), psize);
 
     // did we already load this icon at this scale/size?
     GdkPixbuf* pb = get_cached_pixbuf(key);
     if (!pb) {
-        guchar *px = load_svg_pixels(name, lsize, psize);
+        guchar *px = load_svg_pixels(names, lsize, psize);
         if (px) {
             pb = gdk_pixbuf_new_from_data(px, GDK_COLORSPACE_RGB, TRUE, 8,
                                           psize, psize, psize * 4,
                                           (GdkPixbufDestroyNotify)g_free, NULL);
             pb_cache[key] = pb;
-            addToIconSet(pb, name, lsize, psize);
+            addToIconSet(pb, names.begin()->c_str(), lsize, psize);
         }
     }
 
