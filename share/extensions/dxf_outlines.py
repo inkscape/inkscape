@@ -10,6 +10,7 @@ Copyright (C) 2008,2010 Alvin Penner, penner@vaxxine.com
 - toggle between LINE/LWPOLYLINE added Jan 2010
 - support for transform elements added July 2010
 - support for layers added July 2010
+- support for rectangle added Dec 2010
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -165,26 +166,41 @@ class MyEffect(inkex.Effect):
         self.color = 7                                  # default is black
         if hsl[2]:
             self.color = 1 + (int(6*hsl[0] + 0.5) % 6)  # use 6 hues
-        d = node.get('d')
-        if d:
+        if node.tag == inkex.addNS('path','svg'):
+            d = node.get('d')
+            if not d:
+                return
             p = cubicsuperpath.parsePath(d)
-            trans = node.get('transform')
-            if trans:
-                mat = simpletransform.composeTransform(mat, simpletransform.parseTransform(trans))
-            simpletransform.applyTransformToPath(mat, p)
-            for sub in p:
-                for i in range(len(sub)-1):
-                    s = sub[i]
-                    e = sub[i+1]
-                    if s[1] == s[2] and e[0] == e[1]:
-                        if (self.options.POLY == 'true'):
-                            self.LWPOLY_line([s[1],e[1]])
-                        else:
-                            self.dxf_line([s[1],e[1]])
-                    elif (self.options.ROBO == 'true'):
-                        self.ROBO_spline([s[1],s[2],e[0],e[1]])
+        elif node.tag == inkex.addNS('rect','svg'):
+            x = float(node.get('x'))
+            y = float(node.get('y'))
+            width = float(node.get('width'))
+            height = float(node.get('height'))
+            p = [[[x, y],[x, y],[x, y]]]
+            p.append([[x + width, y],[x + width, y],[x + width, y]])
+            p.append([[x + width, y + height],[x + width, y + height],[x + width, y + height]])
+            p.append([[x, y + height],[x, y + height],[x, y + height]])
+            p.append([[x, y],[x, y],[x, y]])
+            p = [p]
+        else:
+            return
+        trans = node.get('transform')
+        if trans:
+            mat = simpletransform.composeTransform(mat, simpletransform.parseTransform(trans))
+        simpletransform.applyTransformToPath(mat, p)
+        for sub in p:
+            for i in range(len(sub)-1):
+                s = sub[i]
+                e = sub[i+1]
+                if s[1] == s[2] and e[0] == e[1]:
+                    if (self.options.POLY == 'true'):
+                        self.LWPOLY_line([s[1],e[1]])
                     else:
-                        self.dxf_spline([s[1],s[2],e[0],e[1]])
+                        self.dxf_line([s[1],e[1]])
+                elif (self.options.ROBO == 'true'):
+                    self.ROBO_spline([s[1],s[2],e[0],e[1]])
+                else:
+                    self.dxf_spline([s[1],s[2],e[0],e[1]])
 
     def process_group(self, group):
         if group.get(inkex.addNS('groupmode', 'inkscape')) == 'layer':
@@ -196,10 +212,10 @@ class MyEffect(inkex.Effect):
         if trans:
             self.groupmat.append(simpletransform.composeTransform(self.groupmat[-1], simpletransform.parseTransform(trans)))
         for node in group:
-            if node.tag == inkex.addNS('path','svg'):
-                self.process_path(node, self.groupmat[-1])
             if node.tag == inkex.addNS('g','svg'):
                 self.process_group(node)
+            else:
+                self.process_path(node, self.groupmat[-1])
         if trans:
             self.groupmat.pop()
 
