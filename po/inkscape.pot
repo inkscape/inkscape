@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-12-15 22:51+0100\n"
+"POT-Creation-Date: 2010-12-21 21:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,7 @@ msgstr ""
 #: ../share/extensions/edge3d.inx.h:6 ../share/extensions/flatten.inx.h:3
 #: ../share/extensions/fractalize.inx.h:2
 #: ../share/extensions/interp_att_g.inx.h:12
-#: ../share/extensions/markers_strokepaint.inx.h:2
+#: ../share/extensions/markers_strokepaint.inx.h:3
 #: ../share/extensions/perspective.inx.h:1
 #: ../share/extensions/pixelsnap.inx.h:1
 #: ../share/extensions/radiusrand.inx.h:5
@@ -228,7 +228,7 @@ msgstr ""
 #: ../share/extensions/jessyInk_video.inx.h:1
 #: ../share/extensions/jessyInk_view.inx.h:3
 #: ../share/extensions/lindenmayer.inx.h:23
-#: ../share/extensions/lorem_ipsum.inx.h:1 ../share/extensions/measure.inx.h:3
+#: ../share/extensions/lorem_ipsum.inx.h:1 ../share/extensions/measure.inx.h:2
 #: ../share/extensions/pathalongpath.inx.h:5
 #: ../share/extensions/pathscatter.inx.h:6
 #: ../share/extensions/radiusrand.inx.h:1 ../share/extensions/scour.inx.h:5
@@ -443,7 +443,7 @@ msgid "Visual"
 msgstr ""
 
 #: ../share/extensions/dimension.inx.h:5 ../share/extensions/dots.inx.h:13
-#: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:20
+#: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:19
 msgid "Visualize Path"
 msgstr ""
 
@@ -1551,7 +1551,6 @@ msgid "End Value:"
 msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:5
-#: ../src/ui/dialog/fill-and-stroke.cpp:57
 msgid "Fill"
 msgstr ""
 
@@ -2225,7 +2224,7 @@ msgstr ""
 #: ../share/extensions/text_randomcase.inx.h:1
 #: ../share/extensions/text_replace.inx.h:4
 #: ../share/extensions/text_titlecase.inx.h:1
-#: ../share/extensions/text_uppercase.inx.h:1 ../src/dialogs/text-edit.cpp:378
+#: ../share/extensions/text_uppercase.inx.h:1 ../src/dialogs/text-edit.cpp:383
 #: ../src/selection-describer.cpp:68
 #: ../src/ui/dialog/inkscape-preferences.cpp:548 ../src/verbs.cpp:2510
 #: ../share/extensions/text_sentencecase.inx.h:2
@@ -2240,53 +2239,71 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
+msgid "Assign alpha"
+msgstr ""
+
+#: ../share/extensions/markers_strokepaint.inx.h:2
 msgid "Color Markers to Match Stroke"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:1
-#: ../share/extensions/gcodetools_all_in_one.inx.h:8
-#: ../share/extensions/gcodetools_area.inx.h:5
-msgid "Area"
+#: ../share/extensions/markers_strokepaint.inx.h:4
+msgid "Replace marker fill with:"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:2
+#: ../share/extensions/markers_strokepaint.inx.h:5
+msgid "fill color"
+msgstr ""
+
+#: ../share/extensions/markers_strokepaint.inx.h:6
+msgid "stroke color"
+msgstr ""
+
+#: ../share/extensions/markers_strokepaint.inx.h:7
+msgid "transparency"
+msgstr ""
+
+#: ../share/extensions/markers_strokepaint.inx.h:8
+msgid "white"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:1
 msgid "Font size (px):"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:4
+#: ../share/extensions/measure.inx.h:3
 msgid "Length"
 msgstr ""
 
 #. <param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>
-#: ../share/extensions/measure.inx.h:6
+#: ../share/extensions/measure.inx.h:5
 msgid "Length Unit:"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:7
+#: ../share/extensions/measure.inx.h:6
 msgid "Measure"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:8
+#: ../share/extensions/measure.inx.h:7
 msgid "Measure Path"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:9
+#: ../share/extensions/measure.inx.h:8
 msgid "Measurement Type: "
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:10
+#: ../share/extensions/measure.inx.h:9
 msgid "Offset (px):"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:11
+#: ../share/extensions/measure.inx.h:10
 msgid "Precision:"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:12
+#: ../share/extensions/measure.inx.h:11
 msgid "Scale Factor (Drawing:Real Length) = 1:"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:14
+#: ../share/extensions/measure.inx.h:13
 #, no-c-format
 msgid ""
 "This effect measures the length, or area, of the selected path and adds it "
@@ -2301,6 +2318,11 @@ msgid ""
 "  * When calculating area, the result should be precise for polygons and "
 "Bezier curves. If a circle is used, the area may be too high by as much as "
 "0.03%."
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:20
+msgctxt "measure extension"
+msgid "Area"
 msgstr ""
 
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
@@ -2888,7 +2910,7 @@ msgstr ""
 #: ../share/extensions/printing-marks.inx.h:16
 #: ../src/ui/dialog/align-and-distribute.cpp:1033
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1415
-#: ../src/widgets/desktop-widget.cpp:1686
+#: ../src/widgets/desktop-widget.cpp:1704
 msgid "Selection"
 msgstr ""
 
@@ -3307,6 +3329,18 @@ msgstr ""
 msgid "Envelope"
 msgstr ""
 
+#: ../share/extensions/svg2fxg.inx.h:1
+msgid "Adobe's XML Graphics file format"
+msgstr ""
+
+#: ../share/extensions/svg2fxg.inx.h:2
+msgid "FXG Output"
+msgstr ""
+
+#: ../share/extensions/svg2fxg.inx.h:3
+msgid "Flash XML Graphics (*.fxg)"
+msgstr ""
+
 #: ../share/extensions/svg2xaml.inx.h:1 ../share/extensions/xaml2svg.inx.h:1
 msgid "Microsoft XAML (*.xaml)"
 msgstr ""
@@ -3372,7 +3406,7 @@ msgid ""
 "December"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:10 ../src/dialogs/text-edit.cpp:224
+#: ../share/extensions/svgcalendar.inx.h:10 ../src/dialogs/text-edit.cpp:229
 msgid "Layout"
 msgstr ""
 
@@ -4035,7 +4069,7 @@ msgstr ""
 msgid "Area (px^2): "
 msgstr ""
 
-#: ../share/extensions/dxf_outlines.py:36
+#: ../share/extensions/dxf_outlines.py:37
 msgid ""
 "Failed to import the numpy or numpy.linalg modules. These modules are "
 "required by this extension. Please install them and try again."
@@ -4255,12 +4289,12 @@ msgstr ""
 msgid "No matching node for expression: %s"
 msgstr ""
 
-#: ../share/extensions/markers_strokepaint.py:41
+#: ../share/extensions/markers_strokepaint.py:49
 #, python-format
 msgid "No style attribute found for id: %s"
 msgstr ""
 
-#: ../share/extensions/markers_strokepaint.py:56
+#: ../share/extensions/markers_strokepaint.py:72
 #, python-format
 msgid "unable to locate marker: %s"
 msgstr ""
@@ -5827,7 +5861,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:1032
-#: ../src/widgets/desktop-widget.cpp:1682
+#: ../src/widgets/desktop-widget.cpp:1700
 msgid "Drawing"
 msgstr ""
 
@@ -10161,13 +10195,13 @@ msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/object-attributes.cpp:59 ../src/ui/dialog/guides.cpp:44
-#: ../src/widgets/desktop-widget.cpp:509 ../src/widgets/toolbox.cpp:1544
+#: ../src/widgets/desktop-widget.cpp:515 ../src/widgets/toolbox.cpp:1544
 msgid "X:"
 msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:52
 #: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:45
-#: ../src/widgets/desktop-widget.cpp:512 ../src/widgets/toolbox.cpp:1562
+#: ../src/widgets/desktop-widget.cpp:518 ../src/widgets/toolbox.cpp:1562
 msgid "Y:"
 msgstr ""
 
@@ -10261,152 +10295,152 @@ msgstr ""
 msgid "Start the check"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:201
+#: ../src/dialogs/text-edit.cpp:206
 msgid "Font"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:238
+#: ../src/dialogs/text-edit.cpp:243
 msgid "Align lines left"
 msgstr ""
 
 #. TRANSLATORS: `Center' here is a verb.
-#: ../src/dialogs/text-edit.cpp:253
+#: ../src/dialogs/text-edit.cpp:258
 msgid "Center lines"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:267
+#: ../src/dialogs/text-edit.cpp:272
 msgid "Align lines right"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:281
+#: ../src/dialogs/text-edit.cpp:286
 msgid "Justify lines"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:303 ../src/widgets/toolbox.cpp:7606
+#: ../src/dialogs/text-edit.cpp:308 ../src/widgets/toolbox.cpp:7606
 msgid "Horizontal text"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:317 ../src/widgets/toolbox.cpp:7613
+#: ../src/dialogs/text-edit.cpp:322 ../src/widgets/toolbox.cpp:7613
 msgid "Vertical text"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:332
+#: ../src/dialogs/text-edit.cpp:337
 msgid "Line spacing:"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:425
+#: ../src/dialogs/text-edit.cpp:430
 msgid "Set as default"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:668 ../src/text-context.cpp:1519
+#: ../src/dialogs/text-edit.cpp:680 ../src/text-context.cpp:1519
 msgid "Set text style"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:156
+#: ../src/dialogs/xml-tree.cpp:158
 msgid "<b>Click</b> to select nodes, <b>drag</b> to rearrange."
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:167
+#: ../src/dialogs/xml-tree.cpp:169
 msgid "<b>Click</b> attribute to edit."
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:171
+#: ../src/dialogs/xml-tree.cpp:173
 #, c-format
 msgid ""
 "Attribute <b>%s</b> selected. Press <b>Ctrl+Enter</b> when done editing to "
 "commit changes."
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:267
+#: ../src/dialogs/xml-tree.cpp:271
 msgid "Drag to reorder nodes"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:287
+#: ../src/dialogs/xml-tree.cpp:291
 msgid "New element node"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:309
+#: ../src/dialogs/xml-tree.cpp:313
 msgid "New text node"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:330 ../src/dialogs/xml-tree.cpp:1412
+#: ../src/dialogs/xml-tree.cpp:334 ../src/dialogs/xml-tree.cpp:1423
 msgid "Duplicate node"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:351
+#: ../src/dialogs/xml-tree.cpp:355
 msgid "nodeAsInXMLdialogTooltip|Delete node"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:367 ../src/dialogs/xml-tree.cpp:1574
+#: ../src/dialogs/xml-tree.cpp:371 ../src/dialogs/xml-tree.cpp:1585
 msgid "Unindent node"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:382 ../src/dialogs/xml-tree.cpp:1553
+#: ../src/dialogs/xml-tree.cpp:386 ../src/dialogs/xml-tree.cpp:1564
 msgid "Indent node"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:394 ../src/dialogs/xml-tree.cpp:1506
+#: ../src/dialogs/xml-tree.cpp:398 ../src/dialogs/xml-tree.cpp:1517
 msgid "Raise node"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:406 ../src/dialogs/xml-tree.cpp:1523
+#: ../src/dialogs/xml-tree.cpp:410 ../src/dialogs/xml-tree.cpp:1534
 msgid "Lower node"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:451 ../src/dialogs/xml-tree.cpp:1447
+#: ../src/dialogs/xml-tree.cpp:455 ../src/dialogs/xml-tree.cpp:1458
 msgid "Delete attribute"
 msgstr ""
 
 #. TRANSLATORS: "Attribute" is a noun here
-#: ../src/dialogs/xml-tree.cpp:496
+#: ../src/dialogs/xml-tree.cpp:500
 msgid "Attribute name"
 msgstr ""
 
 #. TRANSLATORS: "Set" is a verb here
-#: ../src/dialogs/xml-tree.cpp:516 ../src/widgets/sp-attribute-widget.cpp:161
+#: ../src/dialogs/xml-tree.cpp:520 ../src/widgets/sp-attribute-widget.cpp:161
 #: ../src/widgets/sp-attribute-widget.cpp:768
 msgid "Set attribute"
 msgstr ""
 
 #. TRANSLATORS: "Set" is a verb here
-#: ../src/dialogs/xml-tree.cpp:518
+#: ../src/dialogs/xml-tree.cpp:522
 msgid "Set"
 msgstr ""
 
 #. TRANSLATORS: "Attribute" is a noun here
-#: ../src/dialogs/xml-tree.cpp:541
+#: ../src/dialogs/xml-tree.cpp:545
 msgid "Attribute value"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:877
+#: ../src/dialogs/xml-tree.cpp:888
 msgid "Drag XML subtree"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:1314
+#: ../src/dialogs/xml-tree.cpp:1325
 msgid "New element node..."
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:1336
+#: ../src/dialogs/xml-tree.cpp:1347
 msgid "Cancel"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:1344
+#: ../src/dialogs/xml-tree.cpp:1355
 msgid "Create"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:1378
+#: ../src/dialogs/xml-tree.cpp:1389
 msgid "Create new element node"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:1394
+#: ../src/dialogs/xml-tree.cpp:1405
 msgid "Create new text node"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:1429
+#: ../src/dialogs/xml-tree.cpp:1440
 msgid "nodeAsInXMLinHistoryDialog|Delete node"
 msgstr ""
 
-#: ../src/dialogs/xml-tree.cpp:1476
+#: ../src/dialogs/xml-tree.cpp:1487
 msgid "Change attribute"
 msgstr ""
 
@@ -10687,11 +10721,11 @@ msgstr ""
 msgid "Bounding box side midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:176 ../src/ui/tool/node.cpp:1192
+#: ../src/display/snap-indicator.cpp:176 ../src/ui/tool/node.cpp:1251
 msgid "Smooth node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:179 ../src/ui/tool/node.cpp:1191
+#: ../src/display/snap-indicator.cpp:179 ../src/ui/tool/node.cpp:1250
 msgid "Cusp node"
 msgstr ""
 
@@ -11640,7 +11674,6 @@ msgstr ""
 
 #: ../src/extension/internal/filter/drop-shadow.h:38
 #: ../src/extension/internal/filter/drop-shadow.h:98
-#: ../src/ui/widget/object-composite-settings.cpp:63
 msgid "Opacity (%):"
 msgstr ""
 
@@ -13160,7 +13193,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:1031
 #: ../src/ui/dialog/document-properties.cpp:117
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1411
-#: ../src/widgets/desktop-widget.cpp:1678
+#: ../src/widgets/desktop-widget.cpp:1696
 msgid "Page"
 msgstr ""
 
@@ -17683,6 +17716,10 @@ msgstr ""
 msgid "No file selected"
 msgstr ""
 
+#: ../src/ui/dialog/fill-and-stroke.cpp:57
+msgid "_Fill"
+msgstr ""
+
 #: ../src/ui/dialog/fill-and-stroke.cpp:58
 msgid "Stroke _paint"
 msgstr ""
@@ -19622,7 +19659,7 @@ msgstr ""
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:478 ../src/verbs.cpp:2514
-#: ../src/widgets/desktop-widget.cpp:488
+#: ../src/widgets/desktop-widget.cpp:494
 msgid "Zoom"
 msgstr ""
 
@@ -22074,83 +22111,91 @@ msgid ""
 "node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:246
+#: ../src/ui/tool/multi-path-manipulator.cpp:317
 msgid "Retract handles"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:246
+#: ../src/ui/tool/multi-path-manipulator.cpp:317 ../src/ui/tool/node.cpp:247
 msgid "Change node type"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:254
+#: ../src/ui/tool/multi-path-manipulator.cpp:325
 msgid "Straighten segments"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:256
+#: ../src/ui/tool/multi-path-manipulator.cpp:327
 msgid "Make segments curves"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:263
+#: ../src/ui/tool/multi-path-manipulator.cpp:334
 msgid "Add nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:269
+#: ../src/ui/tool/multi-path-manipulator.cpp:340
 msgid "Duplicate nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:331
+#: ../src/ui/tool/multi-path-manipulator.cpp:402
 #: ../src/widgets/toolbox.cpp:1371
 msgid "Join nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:338
+#: ../src/ui/tool/multi-path-manipulator.cpp:409
 #: ../src/widgets/toolbox.cpp:1382
 msgid "Break nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:345
+#: ../src/ui/tool/multi-path-manipulator.cpp:416
 msgid "Delete nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:663
+#: ../src/ui/tool/multi-path-manipulator.cpp:734
 msgid "Move nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:666
+#: ../src/ui/tool/multi-path-manipulator.cpp:737
 msgid "Move nodes horizontally"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:670
+#: ../src/ui/tool/multi-path-manipulator.cpp:741
 msgid "Move nodes vertically"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:674
-#: ../src/ui/tool/multi-path-manipulator.cpp:677
+#: ../src/ui/tool/multi-path-manipulator.cpp:745
+#: ../src/ui/tool/multi-path-manipulator.cpp:748
 msgid "Rotate nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:681
-#: ../src/ui/tool/multi-path-manipulator.cpp:687
+#: ../src/ui/tool/multi-path-manipulator.cpp:752
+#: ../src/ui/tool/multi-path-manipulator.cpp:758
 msgid "Scale nodes uniformly"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:684
+#: ../src/ui/tool/multi-path-manipulator.cpp:755
 msgid "Scale nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:691
+#: ../src/ui/tool/multi-path-manipulator.cpp:762
 msgid "Scale nodes horizontally"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:695
+#: ../src/ui/tool/multi-path-manipulator.cpp:766
 msgid "Scale nodes vertically"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:699
+#: ../src/ui/tool/multi-path-manipulator.cpp:770
+msgid "Skew nodes horizontally"
+msgstr ""
+
+#: ../src/ui/tool/multi-path-manipulator.cpp:774
+msgid "Skew nodes vertically"
+msgstr ""
+
+#: ../src/ui/tool/multi-path-manipulator.cpp:778
 msgid "Flip nodes horizontally"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:702
+#: ../src/ui/tool/multi-path-manipulator.cpp:781
 msgid "Flip nodes vertically"
 msgstr ""
 
@@ -22205,33 +22250,33 @@ msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:207
+#: ../src/ui/tool/node.cpp:222
 msgid "Cusp node handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:208
+#: ../src/ui/tool/node.cpp:223
 msgid "Smooth node handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:209
+#: ../src/ui/tool/node.cpp:224
 msgid "Symmetric node handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:210
+#: ../src/ui/tool/node.cpp:225
 msgid "Auto-smooth node handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:341
+#: ../src/ui/tool/node.cpp:400
 msgctxt "Path handle tip"
 msgid "more: Shift, Ctrl, Alt"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:343
+#: ../src/ui/tool/node.cpp:402
 msgctxt "Path handle tip"
 msgid "more: Ctrl, Alt"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:349
+#: ../src/ui/tool/node.cpp:408
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -22239,24 +22284,24 @@ msgid ""
 "increments while rotating both handles"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:354
+#: ../src/ui/tool/node.cpp:413
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
 "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:360
+#: ../src/ui/tool/node.cpp:419
 msgctxt "Path handle tip"
 msgid "<b>Shift+Alt</b>: preserve handle length and rotate both handles"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:363
+#: ../src/ui/tool/node.cpp:422
 msgctxt "Path handle tip"
 msgid "<b>Alt</b>: preserve handle length while dragging"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:370
+#: ../src/ui/tool/node.cpp:429
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -22264,67 +22309,67 @@ msgid ""
 "handles"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:374
+#: ../src/ui/tool/node.cpp:433
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:379
+#: ../src/ui/tool/node.cpp:438
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: rotate both handles by the same angle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:386
+#: ../src/ui/tool/node.cpp:445
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:389
+#: ../src/ui/tool/node.cpp:448
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>%s</b>: drag to shape the segment (%s)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:405
+#: ../src/ui/tool/node.cpp:464
 #, c-format
 msgctxt "Path handle tip"
 msgid "Move handle by %s, %s; angle %.2f°, length %s"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1145
+#: ../src/ui/tool/node.cpp:1204
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1147
+#: ../src/ui/tool/node.cpp:1206
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: click to toggle selection"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1152
+#: ../src/ui/tool/node.cpp:1211
 msgctxt "Path node tip"
 msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1155
+#: ../src/ui/tool/node.cpp:1214
 msgctxt "Path node tip"
 msgid "<b>Ctrl</b>: move along axes, click to change node type"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1159
+#: ../src/ui/tool/node.cpp:1218
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1167
+#: ../src/ui/tool/node.cpp:1226
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1170
+#: ../src/ui/tool/node.cpp:1229
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -22332,7 +22377,7 @@ msgid ""
 "(more: Shift, Ctrl, Alt)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1173
+#: ../src/ui/tool/node.cpp:1232
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -22340,83 +22385,83 @@ msgid ""
 "Shift, Ctrl, Alt)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1181
+#: ../src/ui/tool/node.cpp:1240
 #, c-format
 msgctxt "Path node tip"
 msgid "Move node by %s, %s"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1193
+#: ../src/ui/tool/node.cpp:1252
 msgid "Symmetric node"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1194
+#: ../src/ui/tool/node.cpp:1253
 msgid "Auto-smooth node"
 msgstr ""
 
-#: ../src/ui/tool/path-manipulator.cpp:797
+#: ../src/ui/tool/path-manipulator.cpp:749
 msgid "Scale handle"
 msgstr ""
 
-#: ../src/ui/tool/path-manipulator.cpp:821
+#: ../src/ui/tool/path-manipulator.cpp:773
 msgid "Rotate handle"
 msgstr ""
 
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1331 ../src/widgets/toolbox.cpp:1360
+#: ../src/ui/tool/path-manipulator.cpp:1283 ../src/widgets/toolbox.cpp:1360
 msgid "Delete node"
 msgstr ""
 
-#: ../src/ui/tool/path-manipulator.cpp:1339
+#: ../src/ui/tool/path-manipulator.cpp:1291
 msgid "Cycle node type"
 msgstr ""
 
-#: ../src/ui/tool/path-manipulator.cpp:1354
+#: ../src/ui/tool/path-manipulator.cpp:1306
 msgid "Drag handle"
 msgstr ""
 
-#: ../src/ui/tool/path-manipulator.cpp:1363
+#: ../src/ui/tool/path-manipulator.cpp:1315
 msgid "Retract handle"
-msgstr ""
-
-#: ../src/ui/tool/transform-handle-set.cpp:137
-msgctxt "Transform handle tip"
-msgid "<b>Shift+Ctrl</b>: scale uniformly about the rotation center"
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:139
 msgctxt "Transform handle tip"
+msgid "<b>Shift+Ctrl</b>: scale uniformly about the rotation center"
+msgstr ""
+
+#: ../src/ui/tool/transform-handle-set.cpp:141
+msgctxt "Transform handle tip"
 msgid "<b>Ctrl:</b> scale uniformly"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:144
+#: ../src/ui/tool/transform-handle-set.cpp:146
 msgctxt "Transform handle tip"
 msgid ""
 "<b>Shift+Alt</b>: scale using an integer ratio about the rotation center"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:146
+#: ../src/ui/tool/transform-handle-set.cpp:148
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: scale from the rotation center"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:149
+#: ../src/ui/tool/transform-handle-set.cpp:151
 msgctxt "Transform handle tip"
 msgid "<b>Alt</b>: scale using an integer ratio"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:151
+#: ../src/ui/tool/transform-handle-set.cpp:153
 msgctxt "Transform handle tip"
 msgid "<b>Scale handle</b>: drag to scale the selection"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:156
+#: ../src/ui/tool/transform-handle-set.cpp:158
 #, c-format
 msgctxt "Transform handle tip"
 msgid "Scale by %.2f%% x %.2f%%"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:311
+#: ../src/ui/tool/transform-handle-set.cpp:313
 #, c-format
 msgctxt "Transform handle tip"
 msgid ""
@@ -22424,18 +22469,18 @@ msgid ""
 "increments"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:314
+#: ../src/ui/tool/transform-handle-set.cpp:316
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: rotate around the opposite corner"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:318
+#: ../src/ui/tool/transform-handle-set.cpp:320
 #, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap angle to %f° increments"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:320
+#: ../src/ui/tool/transform-handle-set.cpp:322
 msgctxt "Transform handle tip"
 msgid ""
 "<b>Rotation handle</b>: drag to rotate the selection around the rotation "
@@ -22443,13 +22488,13 @@ msgid ""
 msgstr ""
 
 #. event
-#: ../src/ui/tool/transform-handle-set.cpp:325
+#: ../src/ui/tool/transform-handle-set.cpp:327
 #, c-format
 msgctxt "Transform handle tip"
 msgid "Rotate by %.2f°"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:419
+#: ../src/ui/tool/transform-handle-set.cpp:421
 #, c-format
 msgctxt "Transform handle tip"
 msgid ""
@@ -22457,36 +22502,36 @@ msgid ""
 "increments"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:422
+#: ../src/ui/tool/transform-handle-set.cpp:424
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: skew about the rotation center"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:426
+#: ../src/ui/tool/transform-handle-set.cpp:428
 #, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap skew angle to %f° increments"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:429
+#: ../src/ui/tool/transform-handle-set.cpp:431
 msgctxt "Transform handle tip"
 msgid ""
 "<b>Skew handle</b>: drag to skew (shear) selection about the opposite handle"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:435
+#: ../src/ui/tool/transform-handle-set.cpp:437
 #, c-format
 msgctxt "Transform handle tip"
 msgid "Skew horizontally by %.2f°"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:438
+#: ../src/ui/tool/transform-handle-set.cpp:440
 #, c-format
 msgctxt "Transform handle tip"
 msgid "Skew vertically by %.2f°"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:479
+#: ../src/ui/tool/transform-handle-set.cpp:497
 msgctxt "Transform handle tip"
 msgid "<b>Rotation center</b>: drag to change the origin of transforms"
 msgstr ""
@@ -22496,7 +22541,7 @@ msgid "_Blend mode:"
 msgstr ""
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
-msgid "Blur:"
+msgid "_Blur:"
 msgstr ""
 
 #: ../src/ui/widget/layer-selector.cpp:115
@@ -22523,11 +22568,15 @@ msgstr ""
 msgid "MetadataLicence|Other"
 msgstr ""
 
-#: ../src/ui/widget/object-composite-settings.cpp:173
+#: ../src/ui/widget/object-composite-settings.cpp:63
+msgid "_Opacity (%):"
+msgstr ""
+
+#: ../src/ui/widget/object-composite-settings.cpp:174
 msgid "Change blur"
 msgstr ""
 
-#: ../src/ui/widget/object-composite-settings.cpp:213
+#: ../src/ui/widget/object-composite-settings.cpp:214
 #: ../src/ui/widget/selected-style.cpp:858
 #: ../src/ui/widget/selected-style.cpp:1152
 msgid "Change opacity"
@@ -24044,7 +24093,7 @@ msgid "Lower the current layer"
 msgstr ""
 
 #: ../src/verbs.cpp:2440
-msgid "Duplicate Current Layer"
+msgid "D_uplicate Current Layer"
 msgstr ""
 
 #: ../src/verbs.cpp:2441
@@ -25010,74 +25059,74 @@ msgstr ""
 msgid "Pattern offset"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:384
+#: ../src/widgets/desktop-widget.cpp:390
 msgid "Zoom drawing if window size changes"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:508
+#: ../src/widgets/desktop-widget.cpp:514
 msgid "Cursor coordinates"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:523
+#: ../src/widgets/desktop-widget.cpp:529
 msgid "Z:"
 msgstr ""
 
 #. display the initial welcome message in the statusbar
-#: ../src/widgets/desktop-widget.cpp:558
+#: ../src/widgets/desktop-widget.cpp:564
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:624
+#: ../src/widgets/desktop-widget.cpp:642
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:626
+#: ../src/widgets/desktop-widget.cpp:644
 #, c-format
 msgid "%s: %d (no filters) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:628
+#: ../src/widgets/desktop-widget.cpp:646
 #, c-format
 msgid "%s: %d (print colors preview) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:630
+#: ../src/widgets/desktop-widget.cpp:648
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:634
+#: ../src/widgets/desktop-widget.cpp:652
 #, c-format
 msgid "%s (outline) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:636
+#: ../src/widgets/desktop-widget.cpp:654
 #, c-format
 msgid "%s (no filters) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:638
+#: ../src/widgets/desktop-widget.cpp:656
 #, c-format
 msgid "%s (print colors preview) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:640
+#: ../src/widgets/desktop-widget.cpp:658
 #, c-format
 msgid "%s - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:802
+#: ../src/widgets/desktop-widget.cpp:820
 msgid "Color-managed display is <b>enabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:804
+#: ../src/widgets/desktop-widget.cpp:822
 msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:859
+#: ../src/widgets/desktop-widget.cpp:877
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -25086,11 +25135,11 @@ msgid ""
 "If you close without saving, your changes will be discarded."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:866 ../src/widgets/desktop-widget.cpp:923
+#: ../src/widgets/desktop-widget.cpp:884 ../src/widgets/desktop-widget.cpp:941
 msgid "Close _without saving"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:915
+#: ../src/widgets/desktop-widget.cpp:933
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -25099,7 +25148,7 @@ msgid ""
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:926
+#: ../src/widgets/desktop-widget.cpp:944
 msgid "_Save as SVG"
 msgstr ""
 
@@ -27783,6 +27832,11 @@ msgstr ""
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:7
 msgid "All in one"
+msgstr ""
+
+#: ../share/extensions/gcodetools_all_in_one.inx.h:8
+#: ../share/extensions/gcodetools_area.inx.h:5
+msgid "Area"
 msgstr ""
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:9

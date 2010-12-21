@@ -168,6 +168,7 @@ otherstuff = \
 	aisvg.xslt \
 	colors.xml \
 	jessyInk_video.svg \
+    svg2fxg.xsl \
 	svg2xaml.xsl \
 	xaml2svg.xsl
 
@@ -293,6 +294,7 @@ modules = \
 	split.inx \
 	straightseg.inx \
 	summersnight.inx \
+    svg2fxg.inx \
 	svg2xaml.inx \
 	svg_and_media_zip_output.inx \
 	svgcalendar.inx \

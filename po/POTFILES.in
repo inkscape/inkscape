@@ -115,6 +115,7 @@
 [type: gettext/xml] share/extensions/split.inx
 [type: gettext/xml] share/extensions/straightseg.inx
 [type: gettext/xml] share/extensions/summersnight.inx
+[type: gettext/xml] share/extensions/svg2fxg.inx
 [type: gettext/xml] share/extensions/svg2xaml.inx
 [type: gettext/xml] share/extensions/svg_and_media_zip_output.inx
 [type: gettext/xml] share/extensions/svgcalendar.inx
