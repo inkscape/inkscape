@@ -6,8 +6,10 @@
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2002 Lauris Kaplinski
+ * Copyright (C) 2010 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -16,11 +18,15 @@
 
 #include "icon-size.h"
 
-#define SP_TYPE_ICON (sp_icon_get_type ())
+#define SP_TYPE_ICON SPIcon::getType()
 #define SP_ICON(o) (GTK_CHECK_CAST ((o), SP_TYPE_ICON, SPIcon))
 #define SP_IS_ICON(o) (GTK_CHECK_TYPE ((o), SP_TYPE_ICON))
 
 #include <gtk/gtkwidget.h>
+
+struct SPIconClass {
+    GtkWidgetClass parent_class;
+};
 
 struct SPIcon {
     GtkWidget widget;
@@ -30,13 +36,12 @@ struct SPIcon {
     gchar *name;
 
     GdkPixbuf *pb;
+
+    static GType getType(void);
+
+    friend class SPIconImpl;
 };
 
-struct SPIconClass {
-    GtkWidgetClass parent_class;
-};
-
-GType sp_icon_get_type (void);
 
 GtkWidget *sp_icon_new( Inkscape::IconSize size, const gchar *name );
 
@@ -54,3 +59,14 @@ namespace Inkscape {
 }
 
 #endif // SEEN_SP_ICON_H
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
