@@ -406,16 +406,18 @@ void IconImpl::validateCache()
         for ( Glib::DirIterator it = dir.begin(); cacheValid && (it != dir.end()); ++it ) {
             if ( isSizedSubdir(*it) ) {
                 std::string subdirName = Glib::build_filename( iconCacheDir, *it );
-                Glib::Dir subdir(subdirName);
-                for ( Glib::DirIterator subit = subdir.begin(); cacheValid && (subit != subdir.end()); ++subit ) {
-                    std::string fullpath = Glib::build_filename( subdirName, *subit );
-                    if ( Glib::file_test(fullpath, Glib::FILE_TEST_EXISTS) && !Glib::file_test(fullpath, Glib::FILE_TEST_IS_DIR) ) {
-                        GStatBuf st;
-                        memset(&st, 0, sizeof(st));
-                        if ( !g_stat(fullpath.c_str(), &st) ) {
-                            unsigned long when = st.st_mtime;
-                            if ( when < lastSeen ) {
-                                cacheValid = false;
+                if ( Glib::file_test(subdirName, Glib::FILE_TEST_IS_DIR) ) {
+                    Glib::Dir subdir(subdirName);
+                    for ( Glib::DirIterator subit = subdir.begin(); cacheValid && (subit != subdir.end()); ++subit ) {
+                        std::string fullpath = Glib::build_filename( subdirName, *subit );
+                        if ( Glib::file_test(fullpath, Glib::FILE_TEST_EXISTS) && !Glib::file_test(fullpath, Glib::FILE_TEST_IS_DIR) ) {
+                            GStatBuf st;
+                            memset(&st, 0, sizeof(st));
+                            if ( !g_stat(fullpath.c_str(), &st) ) {
+                                unsigned long when = st.st_mtime;
+                                if ( when < lastSeen ) {
+                                    cacheValid = false;
+                                }
                             }
                         }
                     }
@@ -425,20 +427,28 @@ void IconImpl::validateCache()
     }
 
     if ( !cacheValid ) {
-        // Purge existing icons, but not possible future sub-directories.
-        Glib::Dir dir(iconCacheDir);
-        for ( Glib::DirIterator it = dir.begin(); it != dir.end(); ++it ) {
-            if ( isSizedSubdir(*it) ) {
-                std::string subdirName = Glib::build_filename( iconCacheDir, *it );
-                Glib::Dir subdir(subdirName);
-                for ( Glib::DirIterator subit = subdir.begin(); subit != subdir.end(); ++subit ) {
-                    std::string fullpath = Glib::build_filename( subdirName, *subit );
-                    if ( Glib::file_test(fullpath, Glib::FILE_TEST_EXISTS) && !Glib::file_test(fullpath, Glib::FILE_TEST_IS_DIR) ) {
-                        g_remove(fullpath.c_str());
+        if ( Glib::file_test(iconCacheDir, Glib::FILE_TEST_EXISTS) ) {
+            // Purge existing icons, but not possible future sub-directories.
+            if ( Glib::file_test(iconCacheDir, Glib::FILE_TEST_IS_DIR) ) {
+                Glib::Dir dir(iconCacheDir);
+                for ( Glib::DirIterator it = dir.begin(); it != dir.end(); ++it ) {
+                    if ( isSizedSubdir(*it) ) {
+                        std::string subdirName = Glib::build_filename( iconCacheDir, *it );
+                        if ( Glib::file_test(subdirName, Glib::FILE_TEST_IS_DIR) ) {
+                            Glib::Dir subdir(subdirName);
+                            for ( Glib::DirIterator subit = subdir.begin(); subit != subdir.end(); ++subit ) {
+                                std::string fullpath = Glib::build_filename( subdirName, *subit );
+                                if ( Glib::file_test(fullpath, Glib::FILE_TEST_EXISTS) && !Glib::file_test(fullpath, Glib::FILE_TEST_IS_DIR) ) {
+                                    g_remove(fullpath.c_str());
+                                }
+                            }
+                            g_rmdir( subdirName.c_str() );
+                        }
                     }
                 }
-                g_rmdir( subdirName.c_str() );
             }
+        } else {
+            g_mkdir_with_parents( iconCacheDir.c_str(), 0x1ED );
         }
 
         if ( g_file_set_contents(iconCacheFile.c_str(), wanted.c_str(), wanted.size(), 0) ) {
@@ -1342,7 +1352,9 @@ bool IconImpl::prerenderIcon(gchar const *name, GtkIconSize lsize, unsigned psiz
     static bool cacheValidated = false;
     if (!cacheValidated) {
         cacheValidated = true;
-        validateCache();
+        if ( useCache ) {
+            validateCache();
+        }
     }
 
     Glib::ustring key = icon_cache_key(name, psize);
@@ -1382,10 +1394,10 @@ bool IconImpl::prerenderIcon(gchar const *name, GtkIconSize lsize, unsigned psiz
                             }
                         }
                     } catch ( Glib::FileError &ex ) {
-                        g_warning("FileError    [%s]", ex.what().c_str());
+                        //g_warning("FileError    [%s]", ex.what().c_str());
                         badFile = true;
                     } catch ( Gdk::PixbufError &ex ) {
-                        g_warning("PixbufError  [%s]", ex.what().c_str());
+                        //g_warning("PixbufError  [%s]", ex.what().c_str());
                         // Invalid contents. Remove cached item
                         badFile = true;
                     }
@@ -1421,9 +1433,9 @@ bool IconImpl::prerenderIcon(gchar const *name, GtkIconSize lsize, unsigned psiz
                         try {
                             ppp->save( potentialFile, "png" );
                         } catch ( Glib::FileError &ex ) {
-                            g_warning("FileError    [%s]", ex.what().c_str());
+                            //g_warning("FileError    [%s]", ex.what().c_str());
                         } catch ( Gdk::PixbufError &ex ) {
-                            g_warning("PixbufError  [%s]", ex.what().c_str());
+                            //g_warning("PixbufError  [%s]", ex.what().c_str());
                         }
                     }
                 } else if (dump) {
