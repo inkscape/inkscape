@@ -1330,7 +1330,7 @@ bool IconImpl::prerenderIcon(gchar const *name, GtkIconSize lsize, unsigned psiz
 {
     bool loadNeeded = false;
     static bool dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpGtk");
-    static bool useCache = Inkscape::Preferences::get()->getBool("/debug/icons/useCache");
+    static bool useCache = Inkscape::Preferences::get()->getBool("/debug/icons/useCache", true);
     static bool cacheValidated = false;
     if (!cacheValidated) {
         cacheValidated = true;
