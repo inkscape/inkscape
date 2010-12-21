@@ -29,6 +29,7 @@
 
 #include <libxml/parser.h>
 #include <libxslt/transform.h>
+#include <libxslt/xsltutils.h>
 
 Inkscape::XML::Document * sp_repr_do_read (xmlDocPtr doc, const gchar * default_ns);
 
@@ -217,10 +218,15 @@ XSLT::save(Inkscape::Extension::Output */*module*/, SPDocument *doc, gchar const
     params[0] = NULL;
 
     xmlDocPtr newdoc = xsltApplyStylesheet(_stylesheet, svgdoc, params);
-    xmlSaveFile(filename, newdoc);
+    //xmlSaveFile(filename, newdoc);
+    xsltSaveResultToFilename(filename, newdoc, _stylesheet, 0);
+
 
     xmlFreeDoc(newdoc);
     xmlFreeDoc(svgdoc);
+
+    xsltCleanupGlobals();
+    xmlCleanupParser();
 
     return;
 }
