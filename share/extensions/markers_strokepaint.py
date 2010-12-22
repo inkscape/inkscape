@@ -26,8 +26,16 @@ class MyEffect(inkex.Effect):
         self.OptionParser.add_option("-m", "--modify",
                         action="store", type="inkbool", 
                         dest="modify", default=False,
-                        help="do not create a copy, modify the markers")
-        
+                        help="Do not create a copy, modify the markers")
+        self.OptionParser.add_option("-t", "--type",
+                        action="store", type="string", 
+                        dest="fill_type", default="stroke",
+                        help="Replace the marker fill with the object stroke or fill color")
+        self.OptionParser.add_option("-a", "--alpha",
+                        action="store", type="inkbool", 
+                        dest="assign_alpha", default=True,
+                        help="Assign the object fill and stroke alpha to the marker")
+
     def effect(self):
         defs = self.xpathSingle('/svg:svg//svg:defs')
         if defs == None:
@@ -42,10 +50,18 @@ class MyEffect(inkex.Effect):
                 continue
             
             stroke = style.get('stroke', '#000000')
-            
+            stroke_opacity = style.get('stroke-opacity', '1')
+            if (self.options.fill_type == "white"):
+                fill = "#FFFFFF"
+                fill_opacity = "1"
+            else:
+                fill = style.get('fill', '#000000')
+                fill_opacity = style.get('fill-opacity', '1')
+
             for mprop in mprops:
                 if style.has_key(mprop) and style[mprop] != 'none'and style[mprop][:5] == 'url(#':
                     marker_id = style[mprop][5:-1]
+
                     try:
                         old_mnode = self.xpathSingle('/svg:svg//svg:marker[@id="%s"]' % marker_id)
                         if not self.options.modify:
@@ -68,8 +84,20 @@ class MyEffect(inkex.Effect):
                         cstyle = simplestyle.parseStyle(child.get('style'))
                         if ('stroke' in cstyle and cstyle['stroke'] != 'none') or 'stroke' not in cstyle:
                             cstyle['stroke'] = stroke
+                            if (self.options.assign_alpha):
+                                cstyle['stroke-opacity'] = stroke_opacity
                         if ('fill' in cstyle and cstyle['fill'] != 'none') or 'fill' not in cstyle:
-                            cstyle['fill'] = stroke
+                            if (self.options.fill_type == "fill" or self.options.fill_type == "white" ):
+                                cstyle['fill'] = fill
+                                if (self.options.assign_alpha):
+                                    cstyle['fill-opacity'] = fill_opacity
+                            elif (self.options.fill_type == "stroke"):
+                                cstyle['fill'] = stroke
+                                if (self.options.assign_alpha):
+                                    cstyle['fill-opacity'] = stroke_opacity
+                            else:
+                                cstyle['fill'] = "none";
+                                cstyle['fill-opacity'] = "0"
                         child.set('style',simplestyle.formatStyle(cstyle))
             node.set('style',simplestyle.formatStyle(style))
 
