@@ -113,7 +113,6 @@ sp_select_context_init(SPSelectContext *sc)
     sc->button_press_shift = false;
     sc->button_press_ctrl = false;
     sc->button_press_alt = false;
-    sc->is_cycling = false;
     sc->cycling_items = NULL;
     sc->cycling_items_selected_before = NULL;
     sc->cycling_cur_item = NULL;
@@ -527,21 +526,6 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_MOTION_NOTIFY:
         {
-            SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
-            if (sc->is_cycling) {
-                // Abort cycle-select
-                NRArenaItem *arenaitem;
-                for (GList *l = sc->cycling_items; l != NULL; l = g_list_next(l)) {
-                    arenaitem = item->get_arenaitem(desktop->dkey);
-                    nr_arena_item_set_opacity (arenaitem, 1.0);
-                }
-                g_list_free(sc->cycling_items);
-                g_list_free(sc->cycling_items_selected_before);
-                sc->cycling_items = NULL;
-                sc->cycling_cur_item = NULL;
-                sc->is_cycling = false;
-            }
-
         	tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
         	if (event->motion.state & GDK_BUTTON1_MASK && !event_context->space_panning) {
                 Geom::Point const motion_pt(event->motion.x, event->motion.y);
@@ -769,24 +753,71 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             if (scroll_event->state & GDK_MOD1_MASK) { // alt modified pressed
                 bool shift_pressed = scroll_event->state & GDK_SHIFT_MASK;
 
-                if(sc->is_cycling == false) {
-                    // Build a list of items underneath the mouse pointer (for cycle-selection) and reduce their opacity
-                    Geom::Point p = desktop->d2w(desktop->point());
-                    SPItem *item = desktop->getItemAtPoint(p, true, NULL);
-                    while(item != NULL) {
-                        sc->cycling_items = g_list_append(sc->cycling_items, item);
+                /* Rebuild list of items underneath the mouse pointer */
+                Geom::Point p = desktop->d2w(desktop->point());
+                SPItem *item = desktop->getItemAtPoint(p, true, NULL);
+
+                // Save pointer to current cycle-item so that we can find it again later, in the freshly built list
+                SPItem *tmp_cur_item = sc->cycling_cur_item ? SP_ITEM(sc->cycling_cur_item->data) : NULL;
+                g_list_free(sc->cycling_items);
+                sc->cycling_items = NULL;
+                sc->cycling_cur_item = NULL;
+
+                while(item != NULL) {
+                    sc->cycling_items = g_list_append(sc->cycling_items, item);
+                    item = desktop->getItemAtPoint(p, true, item);
+                }
+
+                /* Compare current item list with item list during previous scroll ... */
+                GList *l1, *l2;
+                bool item_lists_differ = false;
+                // Note that we can do an 'or' comparison in the loop because it is safe to call g_list_next with a NULL pointer.
+                for (l1 = sc->cycling_items, l2 = sc->cycling_items_cmp; l1 != NULL || l2 != NULL; l1 = g_list_next(l1), l2 = g_list_next(l2)) {
+                    if ((l1 !=NULL && l2 == NULL) || (l1 == NULL && l2 != NULL) || (l1->data != l2->data)) {
+                        item_lists_differ = true;
+                        break;
+                    }
+                }
+
+                /* If list of items under mouse pointer hasn't changed ... */
+                if (!item_lists_differ) {
+                    // ... find current item in the freshly built list and continue cycling ...
+                    // TODO: This wouldn't be necessary if cycling_cur_item pointed to an element of cycling_items_cmp instead
+                    sc->cycling_cur_item = g_list_find(sc->cycling_items, tmp_cur_item);
+                    g_assert(sc->cycling_cur_item != NULL || sc->cycling_items == NULL);
+                } else {
+                    // ... otherwise reset opacities for outdated items ...
+                    NRArenaItem *arenaitem;
+                    for(GList *l = sc->cycling_items_cmp; l != NULL; l = l->next) {
+                        arenaitem = SP_ITEM(l->data)->get_arenaitem(desktop->dkey);
+                        nr_arena_item_set_opacity (arenaitem, 1.0);
+                        //if (!shift_pressed && !g_list_find(sc->cycling_items_selected_before, SP_ITEM(l->data)) && selection->includes(SP_ITEM(l->data)))
+                        if (!g_list_find(sc->cycling_items_selected_before, SP_ITEM(l->data)) && selection->includes(SP_ITEM(l->data)))
+                            selection->remove(SP_ITEM(l->data));
+                    }
+
+                    // ... clear the lists ...
+                    g_list_free(sc->cycling_items_cmp);
+                    g_list_free(sc->cycling_items_selected_before);
+                    sc->cycling_items_cmp = NULL;
+                    sc->cycling_items_selected_before = NULL;
+                    sc->cycling_cur_item = NULL;
+
+                    // ... and rebuild them with the new items.
+                    sc->cycling_items_cmp = g_list_copy(sc->cycling_items);
+                    SPItem *item;
+                    for(GList *l = sc->cycling_items; l != NULL; l = l->next) {
+                        item = SP_ITEM(l->data);
+                        arenaitem = item->get_arenaitem(desktop->dkey);
+                        nr_arena_item_set_opacity (arenaitem, 0.3);
                         if (selection->includes(item)) {
                             // already selected items are stored separately, too
                             sc->cycling_items_selected_before = g_list_append(sc->cycling_items_selected_before, item);
                         }
-                        NRArenaItem *arenaitem = item->get_arenaitem(desktop->dkey);
-                        nr_arena_item_set_opacity (arenaitem, 0.3);
-
-                        item = desktop->getItemAtPoint(p, true, item);
                     }
-                    // Here we set the current item to the bottommost one so that the cycling step below re-starts at the top
+
+                    // set the current item to the bottommost one so that the cycling step below re-starts at the top
                     sc->cycling_cur_item = g_list_last(sc->cycling_items);
-                    sc->is_cycling = true;
                 }
 
                 // Cycle through the items underneath the mouse pointer, one-by-one
@@ -1050,7 +1081,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     Inkscape::Rubberband::get(desktop)->setMode(RUBBERBAND_MODE_RECT);
                 }
             } else {
-                if (alt && sc->is_cycling) {
+                if (alt) { // TODO: Should we have a variable like is_cycling or is it harmless to run this piece of code each time?
                     // quit cycle-selection and reset opacities
                     SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
                     NRArenaItem *arenaitem;
@@ -1060,10 +1091,11 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     }
                     g_list_free(sc->cycling_items);
                     g_list_free(sc->cycling_items_selected_before);
+                    g_list_free(sc->cycling_items_cmp);
                     sc->cycling_items = NULL;
                     sc->cycling_items_selected_before = NULL;
                     sc->cycling_cur_item = NULL;
-                    sc->is_cycling = false;
+                    sc->cycling_items_cmp = NULL;
                 }
             }
 

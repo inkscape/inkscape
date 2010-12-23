@@ -38,8 +38,8 @@ struct SPSelectContext : public SPEventContext {
 	bool button_press_ctrl;
 	bool button_press_alt;
 
-	bool is_cycling;
 	GList *cycling_items;
+	GList *cycling_items_cmp;
 	GList *cycling_items_selected_before;
 	GList *cycling_cur_item;
 
