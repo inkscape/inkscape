@@ -16,7 +16,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "display/display-forward.h"
 #include "sp-lpe-item.h"
 #include "sp-marker-loc.h"
 #include <2geom/forward.h>

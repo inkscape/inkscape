@@ -17,7 +17,6 @@
 #include <sigc++/sigc++.h>
 #include "event-context.h"
 #include "forward.h"
-#include "display/display-forward.h"
 #include "ui/tool/node-types.h"
 
 #define INK_TYPE_NODE_TOOL               (ink_node_tool_get_type ())
@@ -30,13 +29,17 @@ class InkNodeTool;
 class InkNodeToolClass;
 
 namespace Inkscape {
+
+namespace Display {
+class TemporaryItem;
+} // namespace Display
 namespace UI {
 class MultiPathManipulator;
 class ControlPointSelection;
 class Selector;
 struct PathSharedData;
-}
-}
+} // namespace UI
+} // namespace Inkscape
 
 typedef std::auto_ptr<Inkscape::UI::MultiPathManipulator> MultiPathPtr;
 typedef std::auto_ptr<Inkscape::UI::ControlPointSelection> CSelPtr;

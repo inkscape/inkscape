@@ -23,6 +23,7 @@
 #include <cstring>
 #include <string>
 #include "desktop-handles.h"
+#include "display/sp-canvas.h"
 #include "display/guideline.h"
 #include "svg/svg.h"
 #include "svg/stringstream.h"

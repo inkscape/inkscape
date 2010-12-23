@@ -1,19 +1,20 @@
-#ifndef __SP_SVG_VIEW_WIDGET_H__
-#define __SP_SVG_VIEW_WIDGET_H__
+#ifndef SEEN_SP_SVG_VIEW_WIDGET_H
+#define SEEN_SP_SVG_VIEW_WIDGET_H
 
 /** \file
  * SPSVGView, SPSVGSPViewWidget: Generic SVG view and widget
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
+ * Copyright (C) 2010 Authors
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "display/display-forward.h"
 #include "ui/view/view-widget.h"
 
 class SPDocument;
@@ -30,33 +31,39 @@ GtkType sp_svg_view_widget_get_type (void);
 
 GtkWidget *sp_svg_view_widget_new (SPDocument *doc);
 
-void sp_svg_view_widget_set_resize (SPSVGSPViewWidget *vw, bool resize, gdouble width, gdouble height);
-
 /**
  * An SPSVGSPViewWidget is an SVG view together with a canvas.
  */
 struct SPSVGSPViewWidget {
-    public:
-	SPViewWidget widget;
+public:
+    SPViewWidget widget;
 
-	GtkWidget *sw;
-	GtkWidget *canvas;
+    GtkWidget *sw;
+    GtkWidget *canvas;
 
-	/// Whether to resize automatically
-	bool resize;
-	gdouble maxwidth, maxheight;
+    /// Whether to resize automatically
+    bool resize;
+    gdouble maxwidth, maxheight;
 
     // C++ Wrappers
     /// Flags the SPSVGSPViewWidget to have its size changed with Gtk.
-    void setResize(bool resize, gdouble width, gdouble height) {
-	sp_svg_view_widget_set_resize(this, resize, width, height);
-    }
+    void setResize(bool resize, gdouble width, gdouble height);
 };
 
 /// The SPSVGSPViewWidget vtable.
 struct SPSVGSPViewWidgetClass {
-	SPViewWidgetClass parent_class;
+    SPViewWidgetClass parent_class;
 };
 
 
-#endif
+#endif // SEEN_SP_SVG_VIEW_WIDGET_H
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

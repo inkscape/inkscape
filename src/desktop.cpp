@@ -80,6 +80,7 @@
 #include "display/sp-canvas-util.h"
 #include "display/canvas-temporary-item-list.h"
 #include "display/snap-indicator.h"
+#include "display/sp-canvas-group.h"
 #include "ui/dialog/dialog-manager.h"
 #include "xml/repr.h"
 #include "message-context.h"

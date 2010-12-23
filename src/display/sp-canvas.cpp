@@ -1,5 +1,3 @@
-#define __SP_CANVAS_C__
-
 /** \file
  * Port of GnomeCanvas for Inkscape needs
  *
@@ -30,10 +28,10 @@
 
 #include "helper/sp-marshal.h"
 #include <helper/recthull.h>
-#include <display/sp-canvas.h>
-#include "display-forward.h"
+#include "display/sp-canvas.h"
+#include "display/sp-canvas-group.h"
 #include <2geom/matrix.h>
-#include <libnr/nr-convex-hull.h>
+#include "libnr/nr-convex-hull.h"
 #include "preferences.h"
 #include "inkscape.h"
 #include "sodipodi-ctrlrect.h"

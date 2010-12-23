@@ -1,12 +1,14 @@
-/*
+/**
  * Connector creation tool
  *
  * Authors:
  *   Michael Wybrow <mjwybrow@users.sourceforge.net>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2005-2008  Michael Wybrow
  * Copyright (C) 2009  Monash University
+ * Copyright (C) 2010  authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  *
@@ -172,6 +174,7 @@
 #include "inkscape.h"
 #include "preferences.h"
 #include "sp-path.h"
+#include "display/sp-canvas.h"
 #include "display/canvas-bpath.h"
 #include "display/sodipodi-ctrl.h"
 #include <glibmm/i18n.h>

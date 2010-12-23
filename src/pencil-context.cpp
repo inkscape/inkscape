@@ -41,6 +41,7 @@
 #include "document.h"
 #include "desktop-style.h"
 #include "macros.h"
+#include "display/sp-canvas.h"
 #include "display/curve.h"
 #include "livarot/Path.h"
 

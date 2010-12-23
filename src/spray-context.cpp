@@ -27,7 +27,6 @@
 #include <numeric>
 
 #include "svg/svg.h"
-#include "display/canvas-bpath.h"
 
 #include <glib/gmem.h>
 #include "macros.h"
@@ -62,6 +61,7 @@
 #include "gradient-chemistry.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
+#include "display/sp-canvas.h"
 #include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
 #include "display/curve.h"

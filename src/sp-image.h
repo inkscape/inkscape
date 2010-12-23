@@ -29,7 +29,6 @@ class SPImageClass;
 #include <glibmm/ustring.h>
 #include "svg/svg-length.h"
 #include "sp-item.h"
-#include "display/display-forward.h"
 
 #define SP_IMAGE_HREF_MODIFIED_FLAG SP_OBJECT_USER_MODIFIED_FLAG_A
 

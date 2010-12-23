@@ -13,8 +13,9 @@
  */
 
 #include "forward.h"
-#include "display/display-forward.h"
 #include <list>
+
+struct SPCanvasItem;
 
 namespace Inkscape {
 namespace Display {

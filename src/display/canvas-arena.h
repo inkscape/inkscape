@@ -13,7 +13,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "../display/sp-canvas.h"
+#include "sp-canvas-item.h"
 #include "nr-arena-item.h"
 
 G_BEGIN_DECLS

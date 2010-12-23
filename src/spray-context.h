@@ -19,7 +19,6 @@
  */
 
 #include "event-context.h"
-#include <display/display-forward.h>
 #include <libnr/nr-point.h>
 //#include "ui/widget/spray-option.h"
 #include "ui/dialog/dialog.h"

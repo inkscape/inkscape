@@ -18,13 +18,13 @@
 #include <2geom/forward.h>
 #include <2geom/point.h>
 #include <2geom/rect.h>
-#include "display/display-forward.h"
 #include "util/accumulators.h"
 #include "util/unordered-containers.h"
 #include "ui/tool/commit-events.h"
 #include "ui/tool/manipulator.h"
 
 class SPDesktop;
+struct SPCanvasGroup;
 
 namespace Inkscape {
 namespace UI {

@@ -19,7 +19,6 @@
  *
  */
 
-#include "display-forward.h"
 #include "sp-canvas-util.h"
 #include "sp-ctrlline.h"
 

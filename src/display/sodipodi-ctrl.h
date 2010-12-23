@@ -8,10 +8,9 @@
  */
 
 #include <gtk/gtkenums.h>
-#include "sp-canvas.h"
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libnr/nr-rect-l.h>
-
+#include "sp-canvas-item.h"
 
 
 #define SP_TYPE_CTRL            (sp_ctrl_get_type ())
@@ -35,7 +34,7 @@ typedef enum {
     SP_CTRL_MODE_XOR
 } SPCtrlModeType;
 
-struct SPCtrl : public SPCanvasItem{
+struct SPCtrl : public SPCanvasItem {
     SPCtrlShapeType shape;
     SPCtrlModeType mode;
     GtkAnchorType anchor;

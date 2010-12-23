@@ -1,5 +1,3 @@
-#define CANVAS_AXONOMGRID_C
-
 /*
  * Copyright (C) 2006-2008 Johan Engelen <johan@shouraizou.nl>
  */
@@ -21,7 +19,6 @@
 #include "canvas-axonomgrid.h"
 #include "util/mathfns.h"
 #include "2geom/line.h"
-#include "display-forward.h"
 #include <libnr/nr-pixops.h>
 
 #include "canvas-grid.h"

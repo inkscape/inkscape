@@ -1,5 +1,3 @@
-#define __INKSCAPE_CTRLQUADR_C__
-
 /*
  * Quadrilateral
  *
@@ -11,13 +9,12 @@
  * Released under GNU GPL
  */
 
-#include "display-forward.h"
-#include "sp-canvas-util.h"
-#include "sp-ctrlquadr.h"
-
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
+#include "sp-canvas-util.h"
+#include "sp-canvas-item.h"
+#include "sp-ctrlquadr.h"
 #include "display/inkscape-cairo.h"
 #include "color.h"
 

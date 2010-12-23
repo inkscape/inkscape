@@ -22,6 +22,8 @@
 
 
 class SPConnEnd;
+struct SPCurve;
+
 namespace Inkscape {
 namespace XML {
 class Node;

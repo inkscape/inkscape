@@ -1,5 +1,5 @@
-#ifndef __SP_CANVASTEXT_H__
-#define __SP_CANVASTEXT_H__
+#ifndef SEEN_SP_CANVASTEXT_H
+#define SEEN_SP_CANVASTEXT_H
 
 /*
  * Canvas text.
@@ -14,10 +14,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-/*
- * FIXME: The following code should actually be in a separate file called display/canvas-text.h. It
- * temporarily had to be moved here because of linker errors.
- */
+#include "sp-canvas-item.h"
 
 struct SPItem;
 struct SPDesktop;
@@ -26,7 +23,7 @@ struct SPDesktop;
 #define SP_CANVASTEXT(obj) (GTK_CHECK_CAST ((obj), SP_TYPE_CANVASTEXT, SPCanvasText))
 #define SP_IS_CANVASTEXT(obj) (GTK_CHECK_TYPE ((obj), SP_TYPE_CANVASTEXT))
 
-struct SPCanvasText : public SPCanvasItem{
+struct SPCanvasText : public SPCanvasItem {
     SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users
     guint32 rgba;
     guint32 rgba_stroke;
@@ -53,7 +50,7 @@ void sp_canvastext_set_number_as_text (SPCanvasText *ct, int num);
 void sp_canvastext_set_fontsize (SPCanvasText *ct, double size);
 void sp_canvastext_set_anchor (SPCanvasText *ct, double anchor_x, double anchor_y);
 
-#endif
+#endif // SEEN_SP_CANVASTEXT_H
 
 
 /*

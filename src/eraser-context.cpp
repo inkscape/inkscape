@@ -34,6 +34,7 @@
 #include <numeric>
 
 #include "svg/svg.h"
+#include "display/sp-canvas.h"
 #include "display/canvas-bpath.h"
 #include <2geom/bezier-utils.h>
 

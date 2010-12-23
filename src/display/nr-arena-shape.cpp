@@ -1,5 +1,3 @@
-#define __NR_ARENA_SHAPE_C__
-
 /*
  * RGBA display list system for inkscape
  *
@@ -12,34 +10,36 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glib.h>
+#include <fenv.h>
+#include <typeinfo>
+#include <cairo.h>
+
 #include <2geom/svg-path.h>
 #include <2geom/svg-path-parser.h>
-#include <display/canvas-arena.h>
-#include <display/nr-arena.h>
-#include <display/nr-arena-shape.h>
-#include "display/curve.h"
-#include <libnr/nr-pixops.h>
-#include <libnr/nr-blit.h>
-#include <libnr/nr-convert2geom.h>
 #include <2geom/pathvector.h>
 #include <2geom/curves.h>
-#include <livarot/Path.h>
-#include <livarot/float-line.h>
-#include <livarot/int-line.h>
-#include <style.h>
+#include "display/sp-canvas.h"
+#include "display/canvas-arena.h"
+#include "display/nr-arena.h"
+#include "display/nr-arena-shape.h"
+#include "display/curve.h"
+#include "libnr/nr-pixops.h"
+#include "libnr/nr-blit.h"
+#include "libnr/nr-convert2geom.h"
+#include "livarot/Path.h"
+#include "livarot/float-line.h"
+#include "livarot/int-line.h"
+#include "style.h"
 #include "inkscape-cairo.h"
 #include "helper/geom.h"
 #include "helper/geom-curves.h"
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
 #include "display/nr-filter.h"
-#include <typeinfo>
-#include <cairo.h>
 #include "preferences.h"
 
-#include <glib.h>
 #include "svg/svg.h"
-#include <fenv.h>
 
 //int  showRuns=0;
 void nr_pixblock_render_shape_mask_or(NRPixBlock &m,Shape* theS);

@@ -12,7 +12,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "display/display-forward.h"
 #include "event-context.h"
 
 #define SP_TYPE_DROPPER_CONTEXT (sp_dropper_context_get_type ())

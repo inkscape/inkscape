@@ -325,8 +325,7 @@ main (int argc, const char **argv)
     (ss.doc)->ensureUpToDate();
     ss.view = sp_svg_view_widget_new (ss.doc);
     (ss.doc)->doUnref ();
-    sp_svg_view_widget_set_resize (SP_SVG_VIEW_WIDGET (ss.view), FALSE,
-                                   (ss.doc)->getWidth (), (ss.doc)->getHeight ());
+    SP_SVG_VIEW_WIDGET(ss.view)->setResize( false, ss.doc->getWidth(), ss.doc->getHeight() );
     gtk_widget_show (ss.view);
     gtk_container_add (GTK_CONTAINER (w), ss.view);
 

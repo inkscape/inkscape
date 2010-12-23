@@ -1,5 +1,5 @@
-#ifndef __SP_SELTRANS_HANDLES_H__
-#define __SP_SELTRANS_HANDLES_H__
+#ifndef SEEN_SP_SELTRANS_HANDLES_H
+#define SEEN_SP_SELTRANS_HANDLES_H
 
 /*
  * Seltrans knots
@@ -14,6 +14,7 @@
 
 #include "display/sodipodi-ctrl.h"
 #include <2geom/forward.h>
+#include <gdk/gdkcursor.h>
 
 namespace Inkscape
 {
@@ -50,9 +51,22 @@ struct SPSelTransHandle {
 	gdouble x, y;
 };
 
+// TODO these must be purged:
 extern SPSelTransHandle const handles_scale[8];
 extern SPSelTransHandle const handles_rotate[8];
 extern SPSelTransHandle const handle_center;
 
-#endif
+#endif // SEEN_SP_SELTRANS_HANDLES_H
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+
 

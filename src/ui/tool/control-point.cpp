@@ -14,6 +14,7 @@
 #include <2geom/point.h>
 #include "desktop.h"
 #include "desktop-handles.h"
+#include "display/sp-canvas.h"
 #include "display/snap-indicator.h"
 #include "event-context.h"
 #include "message-context.h"

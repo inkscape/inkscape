@@ -12,7 +12,6 @@
 #define SEEN_UI_TOOL_MULTI_PATH_MANIPULATOR_H
 
 #include <sigc++/connection.h>
-#include "display/display-forward.h"
 #include "forward.h"
 #include "ui/tool/commit-events.h"
 #include "ui/tool/manipulator.h"

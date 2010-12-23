@@ -10,7 +10,6 @@
 
 #include <2geom/transforms.h>
 #include "sp-canvas-util.h"
-#include "display-forward.h"
 #include "sodipodi-ctrl.h"
 #include "libnr/nr-pixops.h"
 

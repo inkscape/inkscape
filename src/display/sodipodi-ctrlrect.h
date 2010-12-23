@@ -1,5 +1,5 @@
-#ifndef __INKSCAPE_CTRLRECT_H__
-#define __INKSCAPE_CTRLRECT_H__
+#ifndef SEEN_INKSCAPE_CTRLRECT_H
+#define SEEN_INKSCAPE_CTRLRECT_H
 
 /**
  * \file sodipodi-ctrlrect.h
@@ -17,7 +17,10 @@
  */
 
 #include <glib/gtypes.h>
-#include "sp-canvas.h"
+#include "sp-canvas-item.h"
+#include "libnr/nr-rect-l.h"
+
+struct SPCanvasBuf;
 
 #define SP_TYPE_CTRLRECT (sp_ctrlrect_get_type ())
 #define SP_CTRLRECT(obj) (GTK_CHECK_CAST((obj), SP_TYPE_CTRLRECT, CtrlRect))
@@ -56,7 +59,7 @@ struct SPCtrlRectClass : public SPCanvasItemClass {};
 
 GtkType sp_ctrlrect_get_type();
 
-#endif
+#endif // SEEN_RUBBERBAND_H
 
 /*
   Local Variables:

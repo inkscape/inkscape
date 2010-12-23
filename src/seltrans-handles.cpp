@@ -1,5 +1,3 @@
-#define SP_SELTRANS_HANDLES_C
-
 #include "seltrans-handles.h"
 
 

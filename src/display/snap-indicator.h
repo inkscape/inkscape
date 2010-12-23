@@ -15,11 +15,12 @@
  */
 
 #include "forward.h"
-#include "display/display-forward.h"
 #include "snapped-point.h"
 
 namespace Inkscape {
 namespace Display {
+
+class TemporaryItem;
 
 class SnapIndicator  {
 public:

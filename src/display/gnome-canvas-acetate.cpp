@@ -14,7 +14,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "display-forward.h"
 #include "gnome-canvas-acetate.h"
 
 static void sp_canvas_acetate_class_init (SPCanvasAcetateClass *klass);

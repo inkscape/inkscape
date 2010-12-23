@@ -17,7 +17,6 @@
 #include <gtkmm.h>
 #include <2geom/point.h>
 
-#include "display/display-forward.h"
 #include "forward.h"
 #include "util/accumulators.h"
 #include "display/sodipodi-ctrl.h"

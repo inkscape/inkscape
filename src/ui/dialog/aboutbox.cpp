@@ -165,7 +165,7 @@ Gtk::Widget *build_splash_widget() {
     
     doc->doUnref();
 
-    sp_svg_view_widget_set_resize(SP_SVG_VIEW_WIDGET(v), FALSE, (int)width, (int)height);
+    SP_SVG_VIEW_WIDGET(v)->setResize(false, static_cast<int>(width), static_cast<int>(height));
 
     Gtk::AspectFrame *frame=new Gtk::AspectFrame();
     frame->unset_label();

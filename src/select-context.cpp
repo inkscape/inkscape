@@ -5,7 +5,9 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
+ * Copyright (C) 2010      authors
  * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 1999-2005 Authors
  *
@@ -40,6 +42,7 @@
 #include "selection-describer.h"
 #include "seltrans.h"
 #include "box3d.h"
+#include "display/sp-canvas.h"
 #include "display/nr-arena-item.h"
 
 using Inkscape::DocumentUndo;

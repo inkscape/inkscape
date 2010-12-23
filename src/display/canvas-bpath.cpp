@@ -1,5 +1,3 @@
-#define __SP_CANVAS_BPATH_C__
-
 /*
  * Simple bezier bpath CanvasItem for inkscape
  *
@@ -15,28 +13,20 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include "color.h"
-#include "sp-canvas-util.h"
-#include "inkscape-cairo.h"
-#include "canvas-bpath.h"
-#include "display/display-forward.h"
-#include "display/curve.h"
-#include "display/inkscape-cairo.h"
-#include <libnr/nr-pixops.h>
-#include "helper/geom.h"
-
 #include <sstream>
 #include <string.h>
 #include <desktop.h>
 
-/**
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-#include <color.h>
+#include "color.h"
+#include "sp-canvas-util.h"
+#include "inkscape-cairo.h"
+#include "canvas-bpath.h"
+#include "display/sp-canvas-group.h"
+#include "display/curve.h"
+#include "display/inkscape-cairo.h"
+#include "libnr/nr-pixops.h"
+#include "helper/geom.h"
 
-#include <libnr/nr-pixops.h>
-**/
 
 void nr_pixblock_render_bpath_rgba (Shape* theS,uint32_t color,NRRectL &area,char* destBuf,int stride);
 

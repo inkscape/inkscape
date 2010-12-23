@@ -26,6 +26,7 @@
 #include "ui/widget/ruler.h"
 
 #include "xml/repr.h"
+#include "display/sp-canvas.h"
 #include "display/guideline.h"
 #include "desktop.h"
 #include "desktop-handles.h"

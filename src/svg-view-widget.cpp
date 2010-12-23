@@ -5,7 +5,9 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
+ * Copyright (C) 2010 authors
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
  *
@@ -13,6 +15,8 @@
  */
 
 #include <gtk/gtkscrolledwindow.h>
+#include "display/sp-canvas.h"
+#include "display/sp-canvas-group.h"
 #include "display/canvas-arena.h"
 #include "document.h"
 #include "svg-view.h"
@@ -220,22 +224,18 @@ sp_svg_view_widget_new (SPDocument *doc)
 /**
  * Flags the SPSVGSPViewWidget to have its size renegotiated with Gtk.
  */
-void
-sp_svg_view_widget_set_resize (SPSVGSPViewWidget *vw, bool resize, gdouble width, gdouble height)
+void SPSVGSPViewWidget::setResize(bool resize, gdouble width, gdouble height)
 {
-	g_return_if_fail (vw != NULL);
+    g_return_if_fail( !resize || (width > 0.0) );
+    g_return_if_fail( !resize || (height > 0.0) );
 
-	g_return_if_fail (SP_IS_SVG_VIEW_WIDGET (vw));
-	g_return_if_fail (!resize || (width > 0.0));
-	g_return_if_fail (!resize || (height > 0.0));
+    this->resize = resize;
+    this->maxwidth = width;
+    this->maxheight = height;
 
-	vw->resize = resize;
-	vw->maxwidth = width;
-	vw->maxheight = height;
-
-	if (resize) {
-		gtk_widget_queue_resize (GTK_WIDGET (vw));
-	}
+    if ( resize ) {
+        gtk_widget_queue_resize( GTK_WIDGET(this) );
+    }
 }
 
 

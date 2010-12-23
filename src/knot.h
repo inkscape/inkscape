@@ -16,7 +16,6 @@
 
 #include <gdk/gdk.h>
 #include <gtk/gtkenums.h>
-#include "display/display-forward.h"
 #include "forward.h"
 #include <2geom/point.h>
 #include "knot-enums.h"
@@ -24,6 +23,7 @@
 
 class SPKnot;
 class SPKnotClass;
+struct SPCanvasItem;
 
 #define SP_TYPE_KNOT            (sp_knot_get_type())
 #define SP_KNOT(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_KNOT, SPKnot))

@@ -1,5 +1,5 @@
-#ifndef __INKSCAPE_CTRLPOINT_H__
-#define __INKSCAPE_CTRLPOINT_H__
+#ifndef SEEN_INKSCAPE_CTRLPOINT_H
+#define SEEN_INKSCAPE_CTRLPOINT_H
 
 /*
  * A simple point
@@ -12,7 +12,7 @@
  * Released under GNU GPL
  */
 
-#include "sp-canvas.h"
+#include "sp-canvas-item.h"
 
 struct SPItem;
 
@@ -20,7 +20,7 @@ struct SPItem;
 #define SP_CTRLPOINT(obj) (GTK_CHECK_CAST ((obj), SP_TYPE_CTRLPOINT, SPCtrlPoint))
 #define SP_IS_CTRLPOINT(obj) (GTK_CHECK_TYPE ((obj), SP_TYPE_CTRLPOINT))
 
-struct SPCtrlPoint : public SPCanvasItem{
+struct SPCtrlPoint : public SPCanvasItem {
     SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users
     guint32 rgba;
     Geom::Point pt;
@@ -38,7 +38,7 @@ void sp_ctrlpoint_set_radius (SPCtrlPoint *cp, const double r);
 
 
 
-#endif
+#endif // SEEN_INKSCAPE_CTRLPOINT_H
 
 /*
   Local Variables:

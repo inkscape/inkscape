@@ -1,5 +1,5 @@
-#ifndef __SP_PATH_H__
-#define __SP_PATH_H__
+#ifndef SEEN_SP_PATH_H
+#define SEEN_SP_PATH_H
 
 /*
  * SVG <path> implementation
@@ -16,6 +16,7 @@
 #include "sp-shape.h"
 #include "sp-conn-end-pair.h"
 
+struct SPCurve;
 
 #define SP_TYPE_PATH (sp_path_get_type ())
 #define SP_PATH(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_PATH, SPPath))
@@ -39,7 +40,7 @@ SPCurve* sp_path_get_original_curve (SPPath *path);
 SPCurve* sp_path_get_curve_for_edit (SPPath *path);
 const SPCurve* sp_path_get_curve_reference (SPPath *path);
 
-#endif
+#endif // SEEN_SP_PATH_H
 
 /*
   Local Variables:

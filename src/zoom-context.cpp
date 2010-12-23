@@ -1,5 +1,3 @@
-#define __SP_ZOOM_CONTEXT_C__
-
 /*
  * Handy zooming tool
  *
@@ -18,6 +16,7 @@
 
 #include "macros.h"
 #include "rubberband.h"
+#include "display/sp-canvas-item.h"
 #include "display/sp-canvas-util.h"
 #include "desktop.h"
 #include "pixmaps/cursor-zoom.xpm"

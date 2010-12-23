@@ -14,7 +14,6 @@
 #include <memory>
 #include <gdk/gdk.h>
 #include <2geom/rect.h>
-#include "display/display-forward.h"
 #include "ui/tool/manipulator.h"
 
 class SPDesktop;

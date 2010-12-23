@@ -13,7 +13,6 @@
  */
 
 #include "event-context.h"
-#include <display/display-forward.h>
 #include <libnr/nr-point.h>
 
 #define SP_TYPE_TWEAK_CONTEXT (sp_tweak_context_get_type())

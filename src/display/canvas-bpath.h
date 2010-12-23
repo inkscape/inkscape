@@ -1,13 +1,15 @@
-#ifndef __SP_CANVAS_BPATH_H__
-#define __SP_CANVAS_BPATH_H__
+#ifndef SEEN_SP_CANVAS_BPATH_H
+#define SEEN_SP_CANVAS_BPATH_H
 
 /*
  * Simple bezier bpath CanvasItem for inkscape
  *
  * Authors:
  *   Lauris Kaplinski <lauris@ximian.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2001 Lauris Kaplinski and Ximian, Inc.
+ * Copyright (C) 2010 authors
  *
  * Released under GNU GPL
  *
@@ -15,10 +17,11 @@
 
 #include <glib/gtypes.h>
 
-#include <display/sp-canvas.h>
+#include "sp-canvas-item.h"
 
 struct SPCanvasBPath;
 struct SPCanvasBPathClass;
+struct SPCanvasGroup;
 struct SPCurve;
 
 #define SP_TYPE_CANVAS_BPATH (sp_canvas_bpath_get_type ())

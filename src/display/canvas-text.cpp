@@ -13,7 +13,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "display-forward.h"
 #include "sp-canvas-util.h"
 #include "canvas-text.h"
 #include "display/inkscape-cairo.h"

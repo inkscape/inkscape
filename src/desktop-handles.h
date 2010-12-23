@@ -13,8 +13,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "display/display-forward.h"
 #include "forward.h"
+
+struct SPCanvas;
+struct SPCanvasItem;
+struct SPCanvasGroup;
 
 namespace Inkscape { 
     class MessageStack;

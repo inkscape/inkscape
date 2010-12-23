@@ -12,10 +12,10 @@
  * Don't be shy to correct things.
  */
 
+#include "sp-canvas-group.h"
 #include "sp-canvas-util.h"
 #include "util/mathfns.h"
-#include "display-forward.h"
-#include <libnr/nr-pixops.h>
+#include "libnr/nr-pixops.h"
 #include "desktop-handles.h"
 #include "helper/units.h"
 #include "svg/svg-color.h"

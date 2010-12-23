@@ -14,12 +14,11 @@
 #include <memory>
 #include <gdk/gdk.h>
 #include <2geom/forward.h>
-#include "display/display-forward.h"
 #include "ui/tool/commit-events.h"
 #include "ui/tool/manipulator.h"
 
 class SPDesktop;
-class CtrlRect; // this is not present in display-forward.h!
+class CtrlRect;
 namespace Inkscape {
 namespace UI {
 

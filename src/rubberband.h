@@ -1,5 +1,5 @@
-#ifndef __RUBBERBAND_H__
-#define __RUBBERBAND_H__
+#ifndef SEEN_RUBBERBAND_H
+#define SEEN_RUBBERBAND_H
 
 /**
  * \file src/rubberband.h
@@ -74,7 +74,7 @@ private:
 
 }
 
-#endif
+#endif // SEEN_RUBBERBAND_H
 
 /*
   Local Variables:

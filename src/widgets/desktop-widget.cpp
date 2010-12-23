@@ -33,6 +33,7 @@
 #include "desktop-events.h"
 #include "desktop-handles.h"
 #include "desktop-widget.h"
+#include "display/sp-canvas.h"
 #include "display/canvas-arena.h"
 #include "display/nr-arena.h"
 #include "document.h"

@@ -1,5 +1,3 @@
-#define __SP_CANVAS_ARENA_C__
-
 /*
  * RGBA display list system for inkscape
  *
@@ -15,7 +13,6 @@
 #include <libnr/nr-blit.h>
 #include <gtk/gtksignal.h>
 
-#include <display/display-forward.h>
 #include <display/sp-canvas-util.h>
 #include "helper/sp-marshal.h"
 #include <display/nr-arena.h>

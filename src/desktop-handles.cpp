@@ -1,5 +1,3 @@
-#define __SP_DESKTOP_HANDLES_C__
-
 /*
  * Frontends
  *
@@ -13,6 +11,7 @@
  */
 
 #include "display/sp-canvas.h"
+#include "display/sp-canvas-item.h"
 #include "desktop.h"
 
 SPEventContext *

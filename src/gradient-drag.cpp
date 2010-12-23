@@ -25,6 +25,7 @@
 #include "selection.h"
 #include "desktop.h"
 #include "desktop-style.h"
+#include "desktop-handles.h"
 #include "document.h"
 #include "display/sp-ctrlline.h"
 #include "display/sp-canvas-util.h"

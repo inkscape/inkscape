@@ -1,5 +1,5 @@
-#ifndef __SP_CANVAS_ACETATE_H__
-#define __SP_CANVAS_ACETATE_H__
+#ifndef SEEN_SP_CANVAS_ACETATE_H
+#define SEEN_SP_CANVAS_ACETATE_H
 
 /*
  * Infinite invisible canvas item
@@ -16,7 +16,7 @@
  */
 
 #include <glib/gtypes.h>
-#include "display/sp-canvas.h"
+#include "display/sp-canvas-item.h"
 
 
 #define GNOME_TYPE_CANVAS_ACETATE (sp_canvas_acetate_get_type ())
@@ -38,4 +38,15 @@ GtkType sp_canvas_acetate_get_type (void);
 
 
 
-#endif
+#endif // SEEN_SP_CANVAS_ACETATE_H
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

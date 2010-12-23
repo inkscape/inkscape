@@ -10,7 +10,6 @@
  */
 
 
-#include "display/display-forward.h"
 #include <map>
 #include <glibmm/ustring.h>
 #include <2geom/forward.h>
@@ -29,6 +28,7 @@ class SPLPEItem;
 class KnotHolder;
 class KnotHolderEntity;
 class SPPath;
+struct SPCurve;
 
 namespace Gtk {
     class Widget;

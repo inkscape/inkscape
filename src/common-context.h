@@ -21,7 +21,6 @@
 
 #include "event-context.h"
 #include "display/curve.h"
-#include "display/display-forward.h"
 #include <2geom/point.h>
 
 #define SP_TYPE_COMMON_CONTEXT (sp_common_context_get_type())

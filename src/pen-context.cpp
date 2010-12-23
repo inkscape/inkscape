@@ -31,6 +31,7 @@
 #include "message-context.h"
 #include "preferences.h"
 #include "sp-path.h"
+#include "display/sp-canvas.h"
 #include "display/curve.h"
 #include "pixmaps/cursor-pen.xpm"
 #include "display/canvas-bpath.h"

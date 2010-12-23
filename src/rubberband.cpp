@@ -1,5 +1,3 @@
-#define __RUBBERBAND_C__
-
 /**
  * \file src/rubberband.cpp
  * \brief Rubberbanding selector
@@ -16,6 +14,8 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "rubberband.h"
+#include "display/sp-canvas.h"
+#include "display/sp-canvas-item.h"
 #include "display/canvas-bpath.h"
 #include "display/curve.h"
 

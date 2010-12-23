@@ -15,7 +15,6 @@
  */
 
 #include "sp-item.h"
-#include "display/display-forward.h"
 
 #include <list>
 
@@ -26,12 +25,17 @@
 #define SP_IS_LPE_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_LPE_ITEM))
 
 struct LivePathEffectObject;
+struct SPCurve;
+
 namespace Inkscape{ 
+namespace Display {
+    class TemporaryItem;
+}
 namespace LivePathEffect{
     class LPEObjectReference;
     class Effect;
-};
-};
+}
+}
 
 typedef std::list<Inkscape::LivePathEffect::LPEObjectReference *> PathEffectList;
 

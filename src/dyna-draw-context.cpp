@@ -58,6 +58,7 @@
 #include "sp-shape.h"
 #include "sp-path.h"
 #include "sp-text.h"
+#include "display/sp-canvas.h"
 #include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
 #include "livarot/Shape.h"

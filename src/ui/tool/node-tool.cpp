@@ -13,6 +13,7 @@
 #include <glib/gi18n.h>
 #include "desktop.h"
 #include "desktop-handles.h"
+#include "display/sp-canvas-group.h"
 #include "display/canvas-bpath.h"
 #include "display/curve.h"
 #include "display/sp-canvas.h"

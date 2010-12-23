@@ -1,5 +1,3 @@
-#define __SP_GUIDELINE_C__
-
 /*
  * Horizontal/vertical but can also be angled line
  *
@@ -18,7 +16,6 @@
 
 #include <libnr/nr-pixops.h>
 #include <2geom/transforms.h>
-#include "display-forward.h"
 #include "sp-canvas-util.h"
 #include "sp-ctrlpoint.h"
 #include "guideline.h"

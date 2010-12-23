@@ -14,7 +14,7 @@
 #include <gtkmm/box.h>
 #include <gtkmm.h>
 
-#include "display/sp-canvas.h"
+#include "sp-canvas-item.h"
 #include "xml/repr.h"
 #include "ui/widget/color-picker.h"
 #include "ui/widget/scalar-unit.h"
@@ -26,6 +26,7 @@
 
 struct SPDesktop;
 struct SPNamedView;
+struct SPCanvasBuf;
 class SPDocument;
 
 namespace Inkscape {

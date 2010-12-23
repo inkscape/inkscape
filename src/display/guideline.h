@@ -1,5 +1,5 @@
-#ifndef __SP_GUIDELINE_H__
-#define __SP_GUIDELINE_H__
+#ifndef SEEN_SP_GUIDELINE_H
+#define SEEN_SP_GUIDELINE_H
 
 /*
  * The visual representation of SPGuide.
@@ -14,8 +14,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "sp-canvas.h"
 #include <2geom/point.h>
+#include "sp-canvas-item.h"
 
 #define SP_TYPE_GUIDELINE (sp_guideline_get_type())
 #define SP_GUIDELINE(o) (GTK_CHECK_CAST((o), SP_TYPE_GUIDELINE, SPGuideLine))
@@ -53,7 +53,7 @@ void sp_guideline_set_color(SPGuideLine *gl, unsigned int rgba);
 void sp_guideline_set_sensitive(SPGuideLine *gl, int sensitive);
 void sp_guideline_delete(SPGuideLine *gl);
 
-#endif
+#endif // SEEN_SP_GUIDELINE_H
 
 /*
   Local Variables:

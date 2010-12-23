@@ -8,6 +8,7 @@
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
  *
+ * Copyright (C) 2010 authors
  * Copyright (C) 1999-2005 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  * Copyright (C) 2004 David Turner
@@ -272,7 +273,9 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
     win->show();
 
     // needed because the first ACTIVATE_DESKTOP was sent when there was no window yet
-    inkscape_reactivate_desktop(SP_DESKTOP_WIDGET(vw)->desktop);
+    if ( SP_IS_DESKTOP_WIDGET(vw) ) {
+        inkscape_reactivate_desktop(SP_DESKTOP_WIDGET(vw)->desktop);
+    }
 }
 
 void
@@ -294,20 +297,16 @@ sp_ui_new_view()
 
 /* TODO: not yet working */
 /* To be re-enabled (by adding to menu) once it works. */
-void
-sp_ui_new_view_preview()
+void sp_ui_new_view_preview()
 {
-    SPDocument *document;
-    SPViewWidget *dtw;
+    SPDocument *document = SP_ACTIVE_DOCUMENT;
+    if ( document ) {
+        SPViewWidget *dtw = reinterpret_cast<SPViewWidget *>(sp_svg_view_widget_new(document));
+        g_return_if_fail(dtw != NULL);
+        SP_SVG_VIEW_WIDGET(dtw)->setResize(true, 400.0, 400.0);
 
-    document = SP_ACTIVE_DOCUMENT;
-    if (!document) return;
-
-    dtw = (SPViewWidget *) sp_svg_view_widget_new(document);
-    g_return_if_fail(dtw != NULL);
-    sp_svg_view_widget_set_resize(SP_SVG_VIEW_WIDGET(dtw), TRUE, 400.0, 400.0);
-
-    sp_create_window(dtw, FALSE);
+        sp_create_window(dtw, FALSE);
+    }
 }
 
 /**

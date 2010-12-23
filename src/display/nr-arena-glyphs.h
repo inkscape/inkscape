@@ -1,5 +1,5 @@
-#ifndef __NR_ARENA_GLYPHS_H__
-#define __NR_ARENA_GLYPHS_H__
+#ifndef SEEN_NR_ARENA_GLYPHS_H
+#define SEEN_NR_ARENA_GLYPHS_H
 
 /*
  * RGBA display list system for inkscape
@@ -17,15 +17,15 @@
 #define NR_ARENA_GLYPHS(obj) (NR_CHECK_INSTANCE_CAST ((obj), NR_TYPE_ARENA_GLYPHS, NRArenaGlyphs))
 #define NR_IS_ARENA_GLYPHS(obj) (NR_CHECK_INSTANCE_TYPE ((obj), NR_TYPE_ARENA_GLYPHS))
 
-#include <libnrtype/nrtype-forward.h>
+#include "libnrtype/nrtype-forward.h"
 
-#include <display/display-forward.h>
-#include <forward.h>
-#include <sp-paint-server.h>
-#include <display/nr-arena-item.h>
+#include "forward.h"
+#include "sp-paint-server.h"
+#include "display/nr-arena-item.h"
 
 #define test_glyph_liv
 
+struct SPCurve;
 class Shape;
 
 NRType nr_arena_glyphs_get_type (void);
@@ -106,4 +106,15 @@ void nr_arena_glyphs_group_set_style (NRArenaGlyphsGroup *group, SPStyle *style)
 
 void nr_arena_glyphs_group_set_paintbox (NRArenaGlyphsGroup *group, const NRRect *pbox);
 
-#endif
+#endif // SEEN_NR_ARENA_GLYPHS_H
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
