@@ -467,7 +467,8 @@ public:
         dialog.tooltips().set_tip(removeOverlapXGap,
                                   _("Minimum horizontal gap (in px units) between bounding boxes"));
         //TRANSLATORS: "H:" stands for horizontal gap
-        removeOverlapXGapLabel.set_label(C_("Gap", "H:"));
+        removeOverlapXGapLabel.set_text_with_mnemonic(C_("Gap", "_H:"));
+        removeOverlapXGapLabel.set_mnemonic_widget(removeOverlapXGap);
 
         removeOverlapYGap.set_digits(1);
         removeOverlapYGap.set_size_request(60, -1);
@@ -477,7 +478,8 @@ public:
         dialog.tooltips().set_tip(removeOverlapYGap,
                                   _("Minimum vertical gap (in px units) between bounding boxes"));
         /* TRANSLATORS: Vertical gap */
-        removeOverlapYGapLabel.set_label(C_("Gap", "V:"));
+        removeOverlapYGapLabel.set_text_with_mnemonic(C_("Gap", "_V:"));
+        removeOverlapYGapLabel.set_mnemonic_widget(removeOverlapYGap);
 
         dialog.removeOverlap_table().attach(removeOverlapXGapLabel, column, column+1, row, row+1, Gtk::FILL, Gtk::FILL);
         dialog.removeOverlap_table().attach(removeOverlapXGap, column+1, column+2, row, row+1, Gtk::FILL, Gtk::FILL);
@@ -896,7 +898,7 @@ AlignAndDistribute::AlignAndDistribute()
       _removeOverlapTable(1, 5, false),
       _nodesTable(1, 4, true),
       _anchorLabel(_("Relative to: ")),
-      _selgrpLabel(_("Treat selection as group: "))
+      _selgrpLabel(_("_Treat selection as group: "), 1)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
@@ -1038,6 +1040,7 @@ AlignAndDistribute::AlignAndDistribute()
     _anchorBox.pack_start(_anchorLabel);
     _anchorBox.pack_start(_combo);
 
+    _selgrpLabel.set_mnemonic_widget(_selgrp);
     _selgrpBox.pack_start(_selgrpLabel);
     _selgrpBox.pack_start(_selgrp);
     _selgrp.set_active(prefs->getBool("/dialogs/align/sel-as-groups"));

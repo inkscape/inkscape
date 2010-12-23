@@ -20,6 +20,7 @@
 
 #include <glib/gtypes.h>
 #include <gtk/gtkstyle.h>      /* GtkWidget */
+#include <gtkmm/widget.h>
 
 namespace Gtk {
   class Label;
@@ -28,7 +29,7 @@ namespace Gtk {
 }
 
 Gtk::Label *
-spw_label(Gtk::Table *table, gchar const *label_text, int col, int row);
+spw_label(Gtk::Table *table, gchar const *label_text, int col, int row, Gtk::Widget *target);
 GtkWidget *
 spw_label_old(GtkWidget *table, gchar const *label_text, int col, int row);
 

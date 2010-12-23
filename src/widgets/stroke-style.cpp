@@ -673,7 +673,7 @@ sp_stroke_style_line_widget_new(void)
 
     gint i = 0;
 
-    spw_label(t, C_("Stroke width", "Width:"), 0, i);
+    //spw_label(t, C_("Stroke width", "_Width:"), 0, i);
 
     hb = spw_hbox(t, 3, 1, i);
 
@@ -689,7 +689,8 @@ sp_stroke_style_line_widget_new(void)
     sb = new Gtk::SpinButton(*a, 0.1, 3);
     tt->set_tip(*sb, _("Stroke width"));
     sb->show();
-
+    spw_label(t, C_("Stroke width", "_Width:"), 0, i, sb);
+	
     sp_dialog_defocus_on_enter_cpp(sb);
 
     hb->pack_start(*sb, false, false, 0);
@@ -711,7 +712,7 @@ sp_stroke_style_line_widget_new(void)
     /* Join type */
     // TRANSLATORS: The line join style specifies the shape to be used at the
     //  corners of paths. It can be "miter", "round" or "bevel".
-    spw_label(t, _("Join:"), 0, i);
+    spw_label(t, _("Join:"), 0, i, NULL);
 
     hb = spw_hbox(t, 3, 1, i);
 
@@ -755,7 +756,7 @@ sp_stroke_style_line_widget_new(void)
     //  spike that extends well beyond the connection point. The purpose of the
     //  miter limit is to cut off such spikes (i.e. convert them into bevels)
     //  when they become too long.
-    spw_label(t, _("Miter limit:"), 0, i);
+    //spw_label(t, _("Miter _limit:"), 0, i);
 
     hb = spw_hbox(t, 3, 1, i);
 
@@ -765,6 +766,7 @@ sp_stroke_style_line_widget_new(void)
     sb = new Gtk::SpinButton(*a, 0.1, 2);
     tt->set_tip(*sb, _("Maximum length of the miter (in units of stroke width)"));
     sb->show();
+    spw_label(t, _("Miter _limit:"), 0, i, sb);
     spw->set_data("miterlimit_sb", sb);
     sp_dialog_defocus_on_enter_cpp(sb);
 
@@ -775,7 +777,8 @@ sp_stroke_style_line_widget_new(void)
 
     /* Cap type */
     // TRANSLATORS: cap type specifies the shape for the ends of lines
-    spw_label(t, _("Cap:"), 0, i);
+    //spw_label(t, _("_Cap:"), 0, i);
+    spw_label(t, _("Cap:"), 0, i, NULL);
 
     hb = spw_hbox(t, 3, 1, i);
 
@@ -809,7 +812,11 @@ sp_stroke_style_line_widget_new(void)
 
 
     /* Dash */
-    spw_label(t, _("Dashes:"), 0, i);
+    spw_label(t, _("Dashes:"), 0, i, NULL); //no mnemonic for now
+	                                        //decide what to do:
+	                                        //   implement a set_mnemonic_source function in the
+	                                        //   SPDashSelector class, so that we do not have to
+	                                        //   expose any of the underlying widgets?
     ds = manage(new SPDashSelector);
 
     ds->show();
@@ -826,8 +833,9 @@ sp_stroke_style_line_widget_new(void)
 
     // TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
     // (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-    spw_label(t, _("Start Markers:"), 0, i);
+    //spw_label(t, _("_Start Markers:"), 0, i);
     marker_start_menu = ink_marker_menu(spw ,"marker-start", sandbox);
+    spw_label(t, _("_Start Markers:"), 0, i, marker_start_menu);
     tt->set_tip(*marker_start_menu, _("Start Markers are drawn on the first node of a path or shape"));
     marker_start_menu_connection = marker_start_menu->signal_changed().connect(
         sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
@@ -837,8 +845,9 @@ sp_stroke_style_line_widget_new(void)
     spw->set_data("start_mark_menu", marker_start_menu);
 
     i++;
-    spw_label(t, _("Mid Markers:"), 0, i);
+    //spw_label(t, _("_Mid Markers:"), 0, i);
     marker_mid_menu = ink_marker_menu(spw ,"marker-mid", sandbox);
+    spw_label(t, _("_Mid Markers:"), 0, i, marker_mid_menu);
     tt->set_tip(*marker_mid_menu, _("Mid Markers are drawn on every node of a path or shape except the first and last nodes"));
     marker_mid_menu_connection = marker_mid_menu->signal_changed().connect(
         sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
@@ -848,8 +857,9 @@ sp_stroke_style_line_widget_new(void)
     spw->set_data("mid_mark_menu", marker_mid_menu);
 
     i++;
-    spw_label(t, _("End Markers:"), 0, i);
+    //spw_label(t, _("_End Markers:"), 0, i);
     marker_end_menu = ink_marker_menu(spw ,"marker-end", sandbox);
+    spw_label(t, _("_End Markers:"), 0, i, marker_end_menu);
     tt->set_tip(*marker_end_menu, _("End Markers are drawn on the last node of a path or shape"));
     marker_end_menu_connection = marker_end_menu->signal_changed().connect(
         sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(

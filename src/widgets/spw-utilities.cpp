@@ -34,11 +34,19 @@
  * position in the table.
  */
 Gtk::Label *
-spw_label(Gtk::Table *table, const gchar *label_text, int col, int row)
+spw_label(Gtk::Table *table, const gchar *label_text, int col, int row, Gtk::Widget* target)
 {
-  Gtk::Label *label_widget = new Gtk::Label(label_text);
+  Gtk::Label *label_widget = new Gtk::Label();
   g_assert(label_widget != NULL);
-
+  if (target != NULL)
+  {
+    label_widget->set_text_with_mnemonic(label_text);
+	label_widget->set_mnemonic_widget(*target);
+  }
+  else
+  {
+    label_widget->set_text(label_text);
+  }
   label_widget->set_alignment(1.0, 0.5);
   label_widget->show();
   table->attach(*label_widget, col, col+1, row, row+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 4, 0);
