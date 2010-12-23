@@ -1738,12 +1738,19 @@ extension-element-prefixes="math">
   * Text flowPara
   * Text flowRegion (text frame)
   * Font size
+  * Font weight
+  * Font family
+  * Font style
   * Baseline shift
+  * Line height
   * Writing mode
   * Text decoration
+  * Text fill
   * Text direction
   * Text size
   * Text position
+  * Text object
+  * FlowRoot object
 -->
 
  <!-- 
@@ -1755,6 +1762,9 @@ extension-element-prefixes="math">
 -->
 <xsl:template mode="forward" match="*[name(.) = 'tspan'  or name(.) = 'flowSpan']">
   <span>
+    <xsl:if test="../@xml:space='preserve'">
+      <xsl:attribute name="whiteSpaceCollapse">preserve</xsl:attribute>
+    </xsl:if>
     <xsl:variable name="fill">
       <xsl:apply-templates mode="fill" select="." />
     </xsl:variable>
@@ -1774,8 +1784,13 @@ extension-element-prefixes="math">
       </xsl:attribute>
     </xsl:if>
     <xsl:apply-templates mode="font_size" select="." />
-    <xsl:apply-templates mode="baseline_shift" select="." />
+    <xsl:apply-templates mode="font_weight" select="." />
+    <xsl:apply-templates mode="font_family" select="." />
+    <xsl:apply-templates mode="font_style" select="." />
+    <xsl:apply-templates mode="text_fill" select="." />
     <xsl:apply-templates mode="text_decoration" select="." />
+    <xsl:apply-templates mode="line_height" select="." />
+    <xsl:apply-templates mode="baseline_shift" select="." />
     
     <xsl:if test="text()">
       <xsl:value-of select="text()" />
@@ -1792,6 +1807,9 @@ extension-element-prefixes="math">
 -->
 <xsl:template mode="forward" match="*[name(.) = 'flowPara' or name(.) = 'flowDiv']">
   <p>
+    <xsl:if test="../@xml:space='preserve'">
+      <xsl:attribute name="whiteSpaceCollapse">preserve</xsl:attribute>
+    </xsl:if>
     <xsl:variable name="fill">
       <xsl:apply-templates mode="fill" select="." />
     </xsl:variable>
@@ -1811,8 +1829,13 @@ extension-element-prefixes="math">
       </xsl:attribute>
     </xsl:if>
     <xsl:apply-templates mode="font_size" select="." />
-    <xsl:apply-templates mode="baseline_shift" select="." />
+    <xsl:apply-templates mode="font_weight" select="." />
+    <xsl:apply-templates mode="font_family" select="." />
+    <xsl:apply-templates mode="font_style" select="." />
+    <xsl:apply-templates mode="text_fill" select="." />
     <xsl:apply-templates mode="text_decoration" select="." />
+    <xsl:apply-templates mode="line_height" select="." />
+    <xsl:apply-templates mode="baseline_shift" select="." />
 
     <xsl:choose>
       <xsl:when test="*[name(.) = 'flowSpan']/text()">
@@ -1872,6 +1895,102 @@ extension-element-prefixes="math">
 </xsl:template>
 
 <!-- 
+  // Text font weight //
+  SVG: font-weight, FXG: fontWeight
+-->
+<xsl:template mode="font_weight" match="*">
+  <xsl:variable name="value">
+    <xsl:if test="@font-weight">
+      <xsl:value-of select="@font-weight" />
+    </xsl:if>
+    <xsl:if test="@style and contains(@style, 'font-weight:')">
+      <xsl:variable name="font_weight" select="normalize-space(substring-after(@style, 'font-weight:'))" />
+      <xsl:choose>
+        <xsl:when test="contains($font_weight, ';')">
+          <xsl:value-of select="substring-before($font_weight, ';')" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$font_weight" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:variable>
+  <xsl:if test="$value != ''">
+    <xsl:attribute name="fontWeight">
+      <xsl:choose>
+        <xsl:when test="$value='normal' or $value='bold'">
+          <xsl:value-of select="$value" />
+        </xsl:when>
+        <xsl:when test="$value &lt; 500 or $value = 'lighter'">normal</xsl:when>
+        <xsl:when test="$value &gt; 499 or $value = 'bolder'">bold</xsl:when>
+        <xsl:otherwise>normal</xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+  </xsl:if>
+</xsl:template>
+
+<!-- 
+  // Text font family //
+  SVG: font-family, FXG: fontFamily
+-->
+<xsl:template mode="font_family" match="*">
+  <xsl:variable name="value">
+    <xsl:if test="@font-family">
+      <xsl:value-of select="translate(@font-family, &quot;'&quot;, '')" />
+    </xsl:if>
+    <xsl:if test="@style and contains(@style, 'font-family:')">
+      <xsl:variable name="font_family" select="normalize-space(substring-after(@style, 'font-family:'))" />
+      <xsl:choose>
+        <xsl:when test="contains($font_family, ';')">
+          <xsl:value-of select="translate(substring-before($font_family, ';'), &quot;'&quot;, '')" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="translate($font_family, &quot;'&quot;, '')" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:variable>
+  <xsl:if test="$value != ''">
+    <xsl:attribute name="fontFamily">
+      <xsl:choose>
+        <xsl:when test="$value='Sans'">Arial</xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$value" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+  </xsl:if>
+</xsl:template>
+
+<!-- 
+  // Text font style //
+  SVG: font-style, FXG: fontStyle
+-->
+<xsl:template mode="font_style" match="*">
+  <xsl:variable name="value">
+    <xsl:if test="@font-style">
+      <xsl:value-of select="@font-style" />
+    </xsl:if>
+    <xsl:if test="@style and contains(@style, 'font-style:')">
+      <xsl:variable name="font_style" select="normalize-space(substring-after(@style, 'font-style:'))" />
+      <xsl:choose>
+        <xsl:when test="contains($font_style, ';')">
+          <xsl:value-of select="substring-before($font_style, ';')" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$font_style" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:variable>
+  <xsl:if test="$value != ''">
+    <xsl:attribute name="fontStyle">
+      <xsl:value-of select="$value" />
+    </xsl:attribute>
+  </xsl:if>
+</xsl:template>
+
+<!-- 
   // Text baseline shift //
   SVG: baseline-shift, FXG: baselineShift
 -->
@@ -1900,6 +2019,36 @@ extension-element-prefixes="math">
         </xsl:otherwise>
       </xsl:choose>  
       <xsl:if test="contains($value, '%')">%</xsl:if>
+    </xsl:attribute>
+  </xsl:if>
+</xsl:template>
+
+<!-- 
+  // Text line height //
+  SVG: line-height, FXG: lineHeight
+-->
+<xsl:template mode="line_height" match="*">
+  <xsl:variable name="value">
+    <xsl:if test="@line-height">
+      <xsl:value-of select="@line-height" />
+    </xsl:if>
+    <xsl:if test="@style and contains(@style, 'line-height:')">
+      <xsl:variable name="line_height" select="normalize-space(substring-after(@style, 'line-height:'))" />
+      <xsl:choose>
+        <xsl:when test="contains($line_height, ';')">
+          <xsl:value-of select="substring-before($line_height, ';')" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$line_height" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:variable>
+  <xsl:if test="$value != ''">
+    <xsl:attribute name="lineHeight">
+      <xsl:call-template name="convert_unit">
+        <xsl:with-param name="convert_value" select="$value" />
+      </xsl:call-template>
     </xsl:attribute>
   </xsl:if>
 </xsl:template>
@@ -1962,7 +2111,32 @@ extension-element-prefixes="math">
     </xsl:choose>  
   </xsl:if>
 </xsl:template>
-  
+
+<!-- 
+  // Text fill //
+  SVG: fill, fill-opacity, FXG: color, textAlpha
+-->
+<xsl:template mode="text_fill" match="*">
+  <xsl:variable name="fill">
+    <xsl:apply-templates mode="fill" select="." />
+  </xsl:variable>
+  <xsl:variable name="fill_opacity">
+    <xsl:apply-templates mode="fill_opacity" select="." />
+  </xsl:variable>
+  <xsl:if test="starts-with($fill, '#') or (not(starts-with($fill, 'url')) and $fill != '' and $fill != 'none')">
+    <xsl:attribute name="color">
+      <xsl:call-template name="template_color">
+        <xsl:with-param name="colorspec">
+          <xsl:value-of select="$fill" />
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:attribute>
+    <xsl:attribute name="textAlpha">
+      <xsl:value-of select="$fill_opacity" />
+    </xsl:attribute>
+  </xsl:if>
+</xsl:template>
+
 <!-- 
   // Text direction //
   SVG: direction, unicode-bidi, FXG: direction
@@ -2061,19 +2235,6 @@ extension-element-prefixes="math">
   </xsl:if>
 </xsl:template>
 
-<!-- 
-  // Objects //
-  
-  * Text
-  * Lines
-  * Rectangle
-  * Path
-  * Ellipse
-  * Circle
-  * Image
-  * Polygon (not supported)
-  * Polyline (not supported)
--->
 
 <!-- 
   // Text objects //
@@ -2095,104 +2256,28 @@ extension-element-prefixes="math">
 <xsl:template mode="forward" match="*[name(.) = 'text']">
   <xsl:variable name="object">
     <RichText>
-      <xsl:apply-templates mode="font_size" select="." />
-      
-      <xsl:variable name="font_weight">
-        <xsl:if test="@font-weight">
-          <xsl:value-of select="@font-weight" />
-        </xsl:if>
-        <xsl:if test="@style and contains(@style, 'font-weight:') and not(contains(substring-after(@style, 'font-weight:'), ';'))">
-          <xsl:value-of select="substring-after(@style, 'font-weight:')" />
-        </xsl:if>
-        <xsl:if test="@style and contains(@style, 'font-weight:') and contains(substring-after(@style, 'font-weight:'), ';')">
-          <xsl:value-of select="substring-before(substring-after(@style, 'font-weight:'), ';')" />
-        </xsl:if>   
-      </xsl:variable>
-      <xsl:attribute name="fontWeight">
-        <xsl:choose>
-          <xsl:when test="$font_weight='normal' or $font_weight='bold'">
-            <xsl:value-of select="$font_weight" />
-          </xsl:when>
-          <xsl:when test="$font_weight &lt; 500 or $font_weight = 'lighter'">normal</xsl:when>
-          <xsl:when test="$font_weight &gt; 499 or $font_weight = 'bolder'">bold</xsl:when>
-          <xsl:otherwise>normal</xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
-
-      <xsl:if test="@font-family">
-        <xsl:attribute name="fontFamily">
-          <xsl:value-of select="translate(@font-family, &quot;'&quot;, '')" />
-        </xsl:attribute>
-      </xsl:if>
-      <xsl:if test="@style and contains(@style, 'font-family:')">
-        <xsl:variable name="font_family" select="substring-after(@style, 'font-family:')" />
-        <xsl:attribute name="fontFamily">
-          <xsl:choose>
-            <xsl:when test="contains($font_family, ';')">
-              <xsl:value-of select="translate(substring-before($font_family, ';'), &quot;'&quot;, '')" />
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="translate($font_family, &quot;'&quot;, '')" />
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:attribute>
-      </xsl:if>
-      <xsl:if test="@font-style">
-        <xsl:attribute name="fontStyle">
-          <xsl:value-of select="@font-style" />
-        </xsl:attribute>
-      </xsl:if>
-      <xsl:if test="@style and contains(@style, 'font-style:')">
-        <xsl:variable name="font_style" select="substring-after(@style, 'font-style:')" />
-        <xsl:attribute name="fontStyle">
-          <xsl:choose>
-            <xsl:when test="contains($font_style, ';')">
-              <xsl:value-of select="substring-before($font_style, ';')" />
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="$font_style" />
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:attribute>
-      </xsl:if>
-      
-      <xsl:variable name="fill">
-        <xsl:apply-templates mode="fill" select="." />
-      </xsl:variable>
-      <xsl:variable name="fill_opacity">
-        <xsl:apply-templates mode="fill_opacity" select="." />
-      </xsl:variable>
-
-      <xsl:if test="starts-with($fill, '#') or (not(starts-with($fill, 'url')) and $fill != '' and $fill != 'none')">
-        <xsl:attribute name="color">
-          <xsl:call-template name="template_color">
-            <xsl:with-param name="colorspec">
-              <xsl:value-of select="$fill" />
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:attribute>
-        <xsl:attribute name="textAlpha">
-          <xsl:value-of select="$fill_opacity" />
-        </xsl:attribute>
-      </xsl:if>
-
       <!-- Force default baseline to "ascent" -->
       <xsl:attribute name="alignmentBaseline">ascent</xsl:attribute>
       
-      <xsl:if test="@xml:space='preserve'">
-        <xsl:attribute name="whiteSpaceCollapse">preserve</xsl:attribute>
-      </xsl:if>
-
+      <xsl:apply-templates mode="font_size" select="." />
+      <xsl:apply-templates mode="font_weight" select="." />
+      <xsl:apply-templates mode="font_family" select="." />
+      <xsl:apply-templates mode="font_style" select="." />
+      <xsl:apply-templates mode="text_fill" select="." />
+      <xsl:apply-templates mode="text_decoration" select="." />
+      <xsl:apply-templates mode="line_height" select="." />
       <xsl:apply-templates mode="text_size" select="." />
       <xsl:apply-templates mode="text_position" select="." />
-      <xsl:apply-templates mode="text_decoration" select="." />
       <xsl:apply-templates mode="direction" select="." />
       <xsl:apply-templates mode="writing_mode" select="." />
       <xsl:apply-templates mode="id" select="." />
 
+      <xsl:if test="not(*[name(.) = 'tspan']/text())">
+        <xsl:attribute name="whiteSpaceCollapse">preserve</xsl:attribute>
+      </xsl:if>
+      
       <xsl:apply-templates mode="filter_effect" select="." />
       <xsl:apply-templates mode="desc" select="." />
-
 
       <!--xsl:apply-templates mode="forward" /-->
       <content>
@@ -2254,99 +2339,21 @@ extension-element-prefixes="math">
 <xsl:template mode="forward" match="*[name(.) = 'flowRoot']">
   <xsl:variable name="object">
     <RichText>
-      <xsl:apply-templates mode="font_size" select="." />
-      
-      <xsl:variable name="font_weight">
-        <xsl:if test="@font-weight">
-          <xsl:value-of select="@font-weight" />
-        </xsl:if>
-        <xsl:if test="@style and contains(@style, 'font-weight:') and not(contains(substring-after(@style, 'font-weight:'), ';'))">
-          <xsl:value-of select="substring-after(@style, 'font-weight:')" />
-        </xsl:if>
-        <xsl:if test="@style and contains(@style, 'font-weight:') and contains(substring-after(@style, 'font-weight:'), ';')">
-          <xsl:value-of select="substring-before(substring-after(@style, 'font-weight:'), ';')" />
-        </xsl:if>   
-      </xsl:variable>
-      <xsl:attribute name="fontWeight">
-        <xsl:choose>
-          <xsl:when test="$font_weight='normal' or $font_weight='bold'">
-            <xsl:value-of select="$font_weight" />
-          </xsl:when>
-          <xsl:when test="$font_weight &lt; 500 or $font_weight = 'lighter'">normal</xsl:when>
-          <xsl:when test="$font_weight &gt; 499 or $font_weight = 'bolder'">bold</xsl:when>
-          <xsl:otherwise>normal</xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
-
-      <xsl:if test="@font-family">
-        <xsl:attribute name="fontFamily">
-          <xsl:value-of select="translate(@font-family, &quot;'&quot;, '')" />
-        </xsl:attribute>
-      </xsl:if>
-      <xsl:if test="@style and contains(@style, 'font-family:')">
-        <xsl:variable name="font_family" select="substring-after(@style, 'font-family:')" />
-        <xsl:attribute name="fontFamily">
-          <xsl:choose>
-            <xsl:when test="contains($font_family, ';')">
-              <xsl:value-of select="translate(substring-before($font_family, ';'), &quot;'&quot;, '')" />
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="translate($font_family, &quot;'&quot;, '')" />
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:attribute>
-      </xsl:if>
-      <xsl:if test="@font-style">
-        <xsl:attribute name="fontStyle">
-          <xsl:value-of select="@font-style" />
-        </xsl:attribute>
-      </xsl:if>
-      <xsl:if test="@style and contains(@style, 'font-style:')">
-        <xsl:variable name="font_style" select="substring-after(@style, 'font-style:')" />
-        <xsl:attribute name="fontStyle">
-          <xsl:choose>
-            <xsl:when test="contains($font_style, ';')">
-              <xsl:value-of select="substring-before($font_style, ';')" />
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="$font_style" />
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:attribute>
-      </xsl:if>
-      
-      <xsl:variable name="fill">
-        <xsl:apply-templates mode="fill" select="." />
-      </xsl:variable>
-      <xsl:variable name="fill_opacity">
-        <xsl:apply-templates mode="fill_opacity" select="." />
-      </xsl:variable>
-
-      <xsl:if test="starts-with($fill, '#') or (not(starts-with($fill, 'url')) and $fill != '' and $fill != 'none')">
-        <xsl:attribute name="color">
-          <xsl:call-template name="template_color">
-            <xsl:with-param name="colorspec">
-              <xsl:value-of select="$fill" />
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:attribute>
-        <xsl:attribute name="textAlpha">
-          <xsl:value-of select="$fill_opacity" />
-        </xsl:attribute>
-      </xsl:if>
-
       <!-- Force default baseline to "ascent" -->
       <xsl:attribute name="alignmentBaseline">ascent</xsl:attribute>
       
-      <xsl:if test="@xml:space='preserve'">
-        <xsl:attribute name="whiteSpaceCollapse">preserve</xsl:attribute>
-      </xsl:if>
-
+      <xsl:apply-templates mode="font_size" select="." />
+      <xsl:apply-templates mode="font_weight" select="." />
+      <xsl:apply-templates mode="font_family" select="." />
+      <xsl:apply-templates mode="font_style" select="." />
+      <xsl:apply-templates mode="text_fill" select="." />
       <xsl:apply-templates mode="text_decoration" select="." />
+      <xsl:apply-templates mode="line_height" select="." />
       <xsl:apply-templates mode="direction" select="." />
       <xsl:apply-templates mode="writing_mode" select="." />
       <xsl:apply-templates mode="id" select="." />
       <xsl:apply-templates mode="flow_region" select="*[name(.) = 'flowRegion']/child::node()" />
+      
       <xsl:apply-templates mode="filter_effect" select="." />
       <xsl:apply-templates mode="desc" select="." />
 
@@ -2398,6 +2405,19 @@ extension-element-prefixes="math">
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
+
+<!-- 
+  // Shapes //
+  
+  * Lines
+  * Rectangle
+  * Path
+  * Ellipse
+  * Circle
+  * Image
+  * Polygon (not supported)
+  * Polyline (not supported)
+-->
 
 <!-- 
   // Line object //

@@ -37,7 +37,7 @@ xmlns:libxslt="http://xmlsoft.org/XSLT/namespace"
 exclude-result-prefixes="rdf xlink xs exsl libxslt">
 
 <xsl:strip-space elements="*" />
-<xsl:output method="xml" encoding="UTF-8"/>
+<xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 
 <xsl:param name="silverlight_compatible" select="1" />
 
