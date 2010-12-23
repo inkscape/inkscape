@@ -142,11 +142,11 @@ class MyEffect(inkex.Effect):
                     children = mnode.xpath('.//*[@style]', namespaces=inkex.NSS)
                     for child in children:
                         cstyle = simplestyle.parseStyle(child.get('style'))
-                        if (not(self.options.tab == '"object"' and cstyle['stroke'] == 'none' and self.options.fill_type == "filled")):
+                        if (not('stroke' in cstyle  and self.options.tab == '"object"' and cstyle['stroke'] == 'none' and self.options.fill_type == "filled")):
                             cstyle['stroke'] = stroke
                             if 'stroke_opacity' in locals():
                                 cstyle['stroke-opacity'] = stroke_opacity
-                        if (not(self.options.tab == '"object"' and cstyle['fill'] == 'none' and self.options.fill_type == "solid")):
+                        if (not('fill' in cstyle and self.options.tab == '"object"' and cstyle['fill'] == 'none' and self.options.fill_type == "solid")):
                             cstyle['fill'] = fill
                             if 'fill_opacity' in locals():
                                 cstyle['fill-opacity'] = fill_opacity
