@@ -58,6 +58,7 @@ class MyEffect(inkex.Effect):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("-R", "--ROBO", action="store", type="string", dest="ROBO")
         self.OptionParser.add_option("-P", "--POLY", action="store", type="string", dest="POLY")
+        self.OptionParser.add_option("--units", action="store", type="string", dest="units")
         self.OptionParser.add_option("--tab", action="store", type="string", dest="tab")
         self.OptionParser.add_option("--inputhelp", action="store", type="string", dest="inputhelp")
         self.dxf = []
@@ -236,7 +237,9 @@ class MyEffect(inkex.Effect):
             self.dxf_add("  0\nLAYER\n  5\n%x\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n  2\n%s\n 70\n0\n  6\nCONTINUOUS\n" % (i + 80, self.layers[i]))
         self.dxf_add(dxf_templates.r14_style)
 
-        scale = 25.4/90.0
+        scale = eval(self.options.units)
+        if not scale:
+            scale = 25.4/90
         h = inkex.unittouu(self.document.getroot().xpath('@height', namespaces=inkex.NSS)[0])
         self.groupmat = [[[scale, 0.0, 0.0], [0.0, -scale, h*scale]]]
         doc = self.document.getroot()
