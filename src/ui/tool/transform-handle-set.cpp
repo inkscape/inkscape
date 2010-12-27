@@ -200,7 +200,6 @@ protected:
         _last_scale_x = _last_scale_y = 1.0;
         InkNodeTool *nt = INK_NODE_TOOL(_desktop->event_context);
         ControlPointSelection *selection = nt->_selected_nodes.get();
-        std::cout << "startTransform()" << std::endl;
         selection->setOriginalPoints();
     }
     virtual Geom::Matrix computeTransform(Geom::Point const &new_pos, GdkEventMotion *event) {

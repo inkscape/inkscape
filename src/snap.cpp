@@ -826,11 +826,11 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 /* Consider the case in which a box is almost aligned with a grid in both
                  * horizontal and vertical directions. The distance to the intersection of
                  * the grid lines will always be larger then the distance to a single grid
-                 * line. If we prefer snapping to an intersection instead of to a single
+                 * line. If we prefer snapping to an intersection over to a single
                  * grid line, then we cannot use "metric = Geom::L2(result)". Therefore the
                  * snapped distance will be used as a metric. Please note that the snapped
-                 * distance is defined as the distance to the nearest line of the intersection,
-                 * and not to the intersection itself!
+                 * distance to an intersection is defined as the distance to the nearest line
+                 *  of the intersection, and not to the intersection itself!
                  */
                 // Only for translations, the relevant metric will be the real snapped distance,
                 // so we don't have to do anything special here
@@ -848,7 +848,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                         if (fabs(fabs(a[index]/b[index]) - fabs(transformation[index])) > 1e-12) { // if SNAPPING DID occur in this direction
                             result[index] = a[index] / b[index]; // then calculate it!
                         }
-                        // we might leave result[1-index] = NR_HUGE
+                        // we might have left result[1-index] = NR_HUGE
                         // if scaling didn't occur in the other direction
                     }
                 }
@@ -861,8 +861,12 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 }
                 // Compare the resulting scaling with the desired scaling
                 Geom::Point scale_metric = Geom::abs(result - transformation); // One or both of its components might be NR_HUGE
-                snapped_point.setSnapDistance(std::min(scale_metric[0], scale_metric[1]));
-                snapped_point.setSecondSnapDistance(std::max(scale_metric[0], scale_metric[1]));
+                if (scale_metric[0] == NR_HUGE || scale_metric[1] == NR_HUGE) {
+                    snapped_point.setSnapDistance(std::min(scale_metric[0], scale_metric[1]));
+                } else {
+                    snapped_point.setSnapDistance(Geom::L2(scale_metric));
+                }
+                snapped_point.setSecondSnapDistance(NR_HUGE);
                 break;
             }
             case STRETCH:
@@ -901,7 +905,6 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
 
         if (snapped_point.getSnapped()) {
             // We snapped; keep track of the best snap
-            // TODO: Compare the transformations instead of the snap points; we should be looking for the closest transformation
             if (best_snapped_point.isOtherSnapBetter(snapped_point, true)) {
                 best_transformation = result;
                 best_snapped_point = snapped_point;
