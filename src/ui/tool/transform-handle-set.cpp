@@ -19,11 +19,15 @@
 #include "display/sodipodi-ctrlrect.h"
 #include "preferences.h"
 #include "snap.h"
+#include "snap-candidate.h"
 #include "sp-namedview.h"
 #include "ui/tool/commit-events.h"
 #include "ui/tool/control-point.h"
+#include "ui/tool/control-point-selection.h"
+#include "ui/tool/selectable-control-point.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/transform-handle-set.h"
+#include "ui/tool/node-tool.h"
 
 // FIXME BRAIN DAMAGE WARNING: this is a global variable in select-context.cpp
 // It should be moved to a header
@@ -96,6 +100,8 @@ protected:
     Geom::Matrix _last_transform;
     Geom::Point _origin;
     TransformHandleSet &_th;
+    std::vector<Inkscape::SnapCandidatePoint> _snap_points;
+
 private:
     virtual bool grabbed(GdkEventMotion *) {
         _origin = position();
@@ -105,6 +111,20 @@ private:
         _th._setActiveHandle(this);
         _cset = &invisible_cset;
         _setState(_state);
+
+        // Collect the snap-candidates, one for each selected node. These will be stored in the _snap_points vector.
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        SnapManager &m = desktop->namedview->snap_manager;
+        InkNodeTool *nt = INK_NODE_TOOL(_desktop->event_context);
+        ControlPointSelection *selection = nt->_selected_nodes.get();
+
+        _snap_points = selection->getOriginalPoints();
+
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        if (prefs->getBool("/options/snapclosestonly/value", false)) {
+            m.keepClosestPointOnly(_snap_points, _origin);
+        }
+
         return false;
     }
     virtual void dragged(Geom::Point &new_pos, GdkEventMotion *event)
@@ -118,6 +138,7 @@ private:
         _last_transform = t;
     }
     virtual void ungrabbed(GdkEventButton *) {
+        _snap_points.clear();
         _th._clearActiveHandle();
         _cset = &thandle_cset;
         _setState(_state);
@@ -177,23 +198,64 @@ protected:
         _sc_center = _th.rotationCenter();
         _sc_opposite = _th.bounds().corner(_corner + 2);
         _last_scale_x = _last_scale_y = 1.0;
+        InkNodeTool *nt = INK_NODE_TOOL(_desktop->event_context);
+        ControlPointSelection *selection = nt->_selected_nodes.get();
+        std::cout << "startTransform()" << std::endl;
+        selection->setOriginalPoints();
     }
     virtual Geom::Matrix computeTransform(Geom::Point const &new_pos, GdkEventMotion *event) {
         Geom::Point scc = held_shift(*event) ? _sc_center : _sc_opposite;
         Geom::Point vold = _origin - scc, vnew = new_pos - scc;
+
         // avoid exploding the selection
         if (Geom::are_near(vold[Geom::X], 0) || Geom::are_near(vold[Geom::Y], 0))
             return Geom::identity();
 
         double scale[2] = { vnew[Geom::X] / vold[Geom::X], vnew[Geom::Y] / vold[Geom::Y] };
+
         if (held_alt(*event)) {
             for (unsigned i = 0; i < 2; ++i) {
                 if (scale[i] >= 1.0) scale[i] = round(scale[i]);
                 else scale[i] = 1.0 / round(1.0 / scale[i]);
             }
-        } else if (held_control(*event)) {
-            scale[0] = scale[1] = std::min(scale[0], scale[1]);
+        } else {
+            //SPDesktop *desktop = _th._desktop; // Won't work as _desktop is protected
+            SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+            SnapManager &m = desktop->namedview->snap_manager;
+
+            // The lines below have been copied from Handle::dragged() in node.cpp, and need to be
+            // activated if we want to snap to unselected (i.e. stationary) nodes and stationary pieces of paths of the
+            // path that's currently being edited
+            /*
+            std::vector<Inkscape::SnapCandidatePoint> unselected;
+            typedef ControlPointSelection::Set Set;
+            Set &nodes = _parent->_selection.allPoints();
+            for (Set::iterator i = nodes.begin(); i != nodes.end(); ++i) {
+                Node *n = static_cast<Node*>(*i);
+                Inkscape::SnapCandidatePoint p(n->position(), n->_snapSourceType(), n->_snapTargetType());
+                unselected.push_back(p);
+            }
+            m.setupIgnoreSelection(_desktop, true, &unselected);
+            */
+
+            m.setupIgnoreSelection(_desktop);
+
+            Inkscape::SnappedPoint sp;
+            if (held_control(*event)) {
+                scale[0] = scale[1] = std::min(scale[0], scale[1]);
+                sp = m.constrainedSnapScale(_snap_points, _origin, Geom::Scale(scale[0], scale[1]), scc);
+            } else {
+                sp = m.freeSnapScale(_snap_points, _origin, Geom::Scale(scale[0], scale[1]), scc);
+            }
+            m.unSetup();
+
+            if (sp.getSnapped()) {
+                Geom::Point result = sp.getTransformation();
+                scale[0] = result[0];
+                scale[1] = result[1];
+            }
         }
+
         _last_scale_x = scale[0];
         _last_scale_y = scale[1];
         Geom::Matrix t = Geom::Translate(-scc)

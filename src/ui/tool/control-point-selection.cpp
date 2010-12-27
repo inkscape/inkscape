@@ -642,6 +642,24 @@ bool ControlPointSelection::event(GdkEvent *event)
     return false;
 }
 
+std::vector<Inkscape::SnapCandidatePoint> ControlPointSelection::getOriginalPoints()
+{
+    std::vector<Inkscape::SnapCandidatePoint> points;
+    for (iterator i = _points.begin(); i != _points.end(); ++i) {
+        points.push_back(Inkscape::SnapCandidatePoint(_original_positions[*i], SNAPSOURCE_NODE_HANDLE));
+    }
+    return points;
+}
+
+void ControlPointSelection::setOriginalPoints()
+{
+    _original_positions.clear();
+    for (iterator i = _points.begin(); i != _points.end(); ++i) {
+        _original_positions.insert(std::make_pair(*i, (*i)->position()));
+    }
+}
+
+
 } // namespace UI
 } // namespace Inkscape
 

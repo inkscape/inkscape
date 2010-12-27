@@ -22,6 +22,7 @@
 #include "util/unordered-containers.h"
 #include "ui/tool/commit-events.h"
 #include "ui/tool/manipulator.h"
+#include "snap-candidate.h"
 
 class SPDesktop;
 struct SPCanvasGroup;
@@ -108,6 +109,10 @@ public:
     sigc::signal<void> signal_update;
     sigc::signal<void, SelectableControlPoint *, bool> signal_point_changed;
     sigc::signal<void, CommitEvent> signal_commit;
+
+    std::vector<Inkscape::SnapCandidatePoint> getOriginalPoints();
+    void setOriginalPoints();
+
 private:
     // The functions below are invoked from SelectableControlPoint.
     // Previously they were connected to handlers when selecting, but this

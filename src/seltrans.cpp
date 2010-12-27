@@ -299,7 +299,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
         An average user would rarely ever try to snap such a large number of nodes anyway, because
         (s)he could hardly discern which node would be snapping */
         if (prefs->getBool("/options/snapclosestonly/value", false)) {
-            _keepClosestPointOnly(_snap_points, p);
+            m.keepClosestPointOnly(_snap_points, p);
         } else {
             _snap_points = snap_points_hull;
         }
@@ -360,14 +360,14 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 
     if (prefs->getBool("/options/snapclosestonly/value", false)) {
         if (m.snapprefs.getSnapModeNode()) {
-            _keepClosestPointOnly(_snap_points, p);
+            m.keepClosestPointOnly(_snap_points, p);
         } else {
             _snap_points.clear(); // don't keep any point
         }
 
         if (m.snapprefs.getSnapModeBBox()) {
-            _keepClosestPointOnly(_bbox_points, p);
-            _keepClosestPointOnly(_bbox_points_for_translating, p);
+            m.keepClosestPointOnly(_bbox_points, p);
+            m.keepClosestPointOnly(_bbox_points_for_translating, p);
         } else {
             _bbox_points.clear(); // don't keep any point
             _bbox_points_for_translating.clear();
@@ -1630,26 +1630,6 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineGeom(Geom::Scale const geom_scale)
     // see https://bugs.launchpad.net/inkscape/+bug/318726)
     g_warning("No geometric bounding box has been calculated; this is a bug that needs fixing!");
     return _calcAbsAffineDefault(geom_scale); // this is bogus, but we must return _something_
-}
-
-void Inkscape::SelTrans::_keepClosestPointOnly(std::vector<Inkscape::SnapCandidatePoint> &points, const Geom::Point &reference)
-{
-    if (points.size() < 2) return;
-
-    Inkscape::SnapCandidatePoint closest_point = Inkscape::SnapCandidatePoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, SNAPTARGET_UNDEFINED);
-    Geom::Coord closest_dist = NR_HUGE;
-
-    for(std::vector<Inkscape::SnapCandidatePoint>::const_iterator i = points.begin(); i != points.end(); i++) {
-        Geom::Coord dist = Geom::L2((*i).getPoint() - reference);
-        if (i == points.begin() || dist < closest_dist) {
-            closest_point = *i;
-            closest_dist = dist;
-        }
-    }
-
-    closest_point.setSourceNum(-1);
-    points.clear();
-    points.push_back(closest_point);
 }
 
 /*

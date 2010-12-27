@@ -22,6 +22,7 @@
 
 #include "sp-namedview.h"
 #include "snap.h"
+#include "snap-enums.h"
 #include "snapped-line.h"
 #include "snapped-curve.h"
 
@@ -682,7 +683,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     Geom::Point const &transformation,
     Geom::Point const &origin,
     Geom::Dim2 dim,
-    bool uniform) const
+    bool uniform)
 {
     /* We have a list of points, which we are proposing to transform in some way.  We need to see
     ** if any of these points, when transformed, snap to anything.  If they do, we return the
@@ -733,6 +734,12 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
         // We do not yet allow for simultaneous rotation and scaling
         g_warning("Unconstrained rotation is not supported!");
     }
+
+    // We will try to snap a set of points, but we don't want to have a snap indicator displayed
+    // for each of them. That's why it's temporarily disabled here, and re-enabled again after we
+    // have finished calling the freeSnap() and constrainedSnap() methods
+    bool _orig_snapindicator_status = _snapindicator;
+    _snapindicator = false;
 
     std::vector<Inkscape::SnapCandidatePoint>::iterator j = transformed_points.begin();
 
@@ -801,6 +808,9 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
         }
         // std::cout << "dist = " << snapped_point.getSnapDistance() << std::endl;
         snapped_point.setPointerDistance(Geom::L2(pointer - (*i).getPoint()));
+
+        // Allow the snapindicator to be displayed again
+        _snapindicator = _orig_snapindicator_status;
 
         Geom::Point result;
 
@@ -891,6 +901,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
 
         if (snapped_point.getSnapped()) {
             // We snapped; keep track of the best snap
+            // TODO: Compare the transformations instead of the snap points; we should be looking for the closest transformation
             if (best_snapped_point.isOtherSnapBetter(snapped_point, true)) {
                 best_transformation = result;
                 best_snapped_point = snapped_point;
@@ -932,6 +943,15 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     // Using " < 1e6" instead of " < NR_HUGE" for catching some rounding errors
     // These rounding errors might be caused by NRRects, see bug #1584301
     best_snapped_point.setSnapDistance(best_metric < 1e6 ? best_metric : NR_HUGE);
+
+    if (_snapindicator) {
+        if (best_snapped_point.getSnapped()) {
+            _desktop->snapindicator->set_new_snaptarget(best_snapped_point);
+        } else {
+            _desktop->snapindicator->remove_snaptarget();
+        }
+    }
+
     return best_snapped_point;
 }
 
@@ -947,7 +967,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
 
 Inkscape::SnappedPoint SnapManager::freeSnapTranslate(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                         Geom::Point const &pointer,
-                                                        Geom::Point const &tr) const
+                                                        Geom::Point const &tr)
 {
     Inkscape::SnappedPoint result = _snapTransformed(p, pointer, false, Geom::Point(0,0), TRANSLATE, tr, Geom::Point(0,0), Geom::X, false);
 
@@ -971,7 +991,7 @@ Inkscape::SnappedPoint SnapManager::freeSnapTranslate(std::vector<Inkscape::Snap
 Inkscape::SnappedPoint SnapManager::constrainedSnapTranslate(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                                Geom::Point const &pointer,
                                                                Inkscape::Snapper::SnapConstraint const &constraint,
-                                                               Geom::Point const &tr) const
+                                                               Geom::Point const &tr)
 {
     Inkscape::SnappedPoint result = _snapTransformed(p, pointer, true, constraint, TRANSLATE, tr, Geom::Point(0,0), Geom::X, false);
 
@@ -996,7 +1016,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapTranslate(std::vector<Inkscap
 Inkscape::SnappedPoint SnapManager::freeSnapScale(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                   Geom::Point const &pointer,
                                                   Geom::Scale const &s,
-                                                  Geom::Point const &o) const
+                                                  Geom::Point const &o)
 {
     Inkscape::SnappedPoint result = _snapTransformed(p, pointer, false, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, false);
 
@@ -1021,7 +1041,7 @@ Inkscape::SnappedPoint SnapManager::freeSnapScale(std::vector<Inkscape::SnapCand
 Inkscape::SnappedPoint SnapManager::constrainedSnapScale(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                          Geom::Point const &pointer,
                                                          Geom::Scale const &s,
-                                                         Geom::Point const &o) const
+                                                         Geom::Point const &o)
 {
     // When constrained scaling, only uniform scaling is supported.
     Inkscape::SnappedPoint result = _snapTransformed(p, pointer, true, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, true);
@@ -1050,7 +1070,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(std::vector<Inkscape:
                                                             Geom::Coord const &s,
                                                             Geom::Point const &o,
                                                             Geom::Dim2 d,
-                                                            bool u) const
+                                                            bool u)
 {
     Inkscape::SnappedPoint result = _snapTransformed(p, pointer, true, Geom::Point(0,0), STRETCH, Geom::Point(s, s), o, d, u);
 
@@ -1078,7 +1098,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(std::vector<Inkscape::Sn
                                                  Inkscape::Snapper::SnapConstraint const &constraint,
                                                  Geom::Point const &s,
                                                  Geom::Point const &o,
-                                                 Geom::Dim2 d) const
+                                                 Geom::Dim2 d)
 {
     // "s" contains skew factor in s[0], and scale factor in s[1]
 
@@ -1113,7 +1133,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(std::vector<Inkscape::Sn
 Inkscape::SnappedPoint SnapManager::constrainedSnapRotate(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                     Geom::Point const &pointer,
                                                     Geom::Coord const &angle,
-                                                    Geom::Point const &o) const
+                                                    Geom::Point const &o)
 {
     // Snapping the nodes of the bounding box of a selection that is being transformed, will only work if
     // the transformation of the bounding box is equal to the transformation of the individual nodes. This is
@@ -1427,6 +1447,26 @@ void SnapManager::_displaySnapsource(Inkscape::SnapCandidatePoint const &p) cons
             _desktop->snapindicator->remove_snapsource();
         }
     }
+}
+
+void SnapManager::keepClosestPointOnly(std::vector<Inkscape::SnapCandidatePoint> &points, const Geom::Point &reference) const
+{
+    if (points.size() < 2) return;
+
+    Inkscape::SnapCandidatePoint closest_point = Inkscape::SnapCandidatePoint(Geom::Point(NR_HUGE, NR_HUGE), Inkscape::SNAPSOURCE_UNDEFINED, Inkscape::SNAPTARGET_UNDEFINED);
+    Geom::Coord closest_dist = NR_HUGE;
+
+    for(std::vector<Inkscape::SnapCandidatePoint>::const_iterator i = points.begin(); i != points.end(); i++) {
+        Geom::Coord dist = Geom::L2((*i).getPoint() - reference);
+        if (i == points.begin() || dist < closest_dist) {
+            closest_point = *i;
+            closest_dist = dist;
+        }
+    }
+
+    closest_point.setSourceNum(-1);
+    points.clear();
+    points.push_back(closest_point);
 }
 
 /*

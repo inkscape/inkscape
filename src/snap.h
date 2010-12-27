@@ -149,41 +149,41 @@ public:
 
     Inkscape::SnappedPoint freeSnapTranslate(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                Geom::Point const &pointer,
-                                               Geom::Point const &tr) const;
+                                               Geom::Point const &tr);
 
     Inkscape::SnappedPoint constrainedSnapTranslate(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                       Geom::Point const &pointer,
                                                       Inkscape::Snapper::SnapConstraint const &constraint,
-                                                      Geom::Point const &tr) const;
+                                                      Geom::Point const &tr);
 
     Inkscape::SnappedPoint freeSnapScale(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                          Geom::Point const &pointer,
                                          Geom::Scale const &s,
-                                         Geom::Point const &o) const;
+                                         Geom::Point const &o);
 
     Inkscape::SnappedPoint constrainedSnapScale(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                 Geom::Point const &pointer,
                                                 Geom::Scale const &s,
-                                                Geom::Point const &o) const;
+                                                Geom::Point const &o);
 
     Inkscape::SnappedPoint constrainedSnapStretch(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                   Geom::Point const &pointer,
                                                   Geom::Coord const &s,
                                                   Geom::Point const &o,
                                                   Geom::Dim2 d,
-                                                  bool uniform) const;
+                                                  bool uniform);
 
     Inkscape::SnappedPoint constrainedSnapSkew(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                Geom::Point const &pointer,
                                                Inkscape::Snapper::SnapConstraint const &constraint,
                                                Geom::Point const &s, // s[0] = skew factor, s[1] = scale factor
                                                Geom::Point const &o,
-                                               Geom::Dim2 d) const;
+                                               Geom::Dim2 d);
 
     Inkscape::SnappedPoint constrainedSnapRotate(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                     Geom::Point const &pointer,
                                                     Geom::Coord const &angle,
-                                                    Geom::Point const &o) const;
+                                                    Geom::Point const &o);
 
     Inkscape::GuideSnapper guide;      ///< guide snapper
     Inkscape::ObjectSnapper object;    ///< snapper to other objects
@@ -200,6 +200,7 @@ public:
     bool getSnapIndicator() const {return _snapindicator;}
 
     Inkscape::SnappedPoint findBestSnap(Inkscape::SnapCandidatePoint const &p, SnappedConstraints const &sc, bool constrained, bool noCurves = false, bool allowOffScreen = false) const;
+    void keepClosestPointOnly(std::vector<Inkscape::SnapCandidatePoint> &points, const Geom::Point &reference) const;
 
 protected:
     SPNamedView const *_named_view;
@@ -220,7 +221,7 @@ private:
                                             Geom::Point const &transformation,
                                             Geom::Point const &origin,
                                             Geom::Dim2 dim,
-                                            bool uniform) const;
+                                            bool uniform);
 
     Geom::Point _transformPoint(Inkscape::SnapCandidatePoint const &p,
                                             Transformation const transformation_type,
