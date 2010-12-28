@@ -114,6 +114,7 @@ sp_select_context_init(SPSelectContext *sc)
     sc->button_press_ctrl = false;
     sc->button_press_alt = false;
     sc->cycling_items = NULL;
+    sc->cycling_items_cmp = NULL;
     sc->cycling_items_selected_before = NULL;
     sc->cycling_cur_item = NULL;
     sc->_seltrans = NULL;
