@@ -620,7 +620,7 @@ sp_export_dialog (void)
 
         {
             Gtk::HBox* batch_box = new Gtk::HBox(FALSE, 5);
-            GtkWidget *be = gtk_check_button_new_with_label(_("Batch export all selected objects"));
+            GtkWidget *be = gtk_check_button_new_with_mnemonic(_("B_atch export all selected objects"));
             gtk_widget_set_sensitive(GTK_WIDGET(be), TRUE);
             gtk_object_set_data(GTK_OBJECT(dlg), "batch_checkbox", be);
             batch_box->pack_start(*Glib::wrap(be), false, false);
@@ -632,7 +632,7 @@ sp_export_dialog (void)
 
         {
             Gtk::HBox* hide_box = new Gtk::HBox(FALSE, 5);
-            GtkWidget *he = gtk_check_button_new_with_label(_("Hide all except selected"));
+            GtkWidget *he = gtk_check_button_new_with_mnemonic(_("Hide a_ll except selected"));
             gtk_widget_set_sensitive(GTK_WIDGET(he), TRUE);
             gtk_object_set_data(GTK_OBJECT(dlg), "hide_checkbox", he);
             hide_box->pack_start(*Glib::wrap(he), false, false);
@@ -683,7 +683,7 @@ sp_export_update_checkbuttons (GtkObject *base)
     GtkWidget *he = (GtkWidget *)gtk_object_get_data(base, "hide_checkbox");
     if (num >= 2) {
         gtk_widget_set_sensitive (be, true);
-        gtk_button_set_label (GTK_BUTTON(be), g_strdup_printf (ngettext("Batch export %d selected object","Batch export %d selected objects",num), num));
+        gtk_button_set_label (GTK_BUTTON(be), g_strdup_printf (ngettext("B_atch export %d selected object","B_atch export %d selected objects",num), num));
     } else {
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(be), FALSE);
         gtk_widget_set_sensitive (be, FALSE);

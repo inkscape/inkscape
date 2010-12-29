@@ -656,7 +656,8 @@ TileDialog::TileDialog()
         g_print("/n PerRox = %f PerCol = %f selcount = %d",PerRow,PerCol,selcount);
     #endif
 
-    NoOfRowsLabel.set_label(_("Rows:"));
+    NoOfRowsLabel.set_text_with_mnemonic(_("_Rows:"));
+    NoOfRowsLabel.set_mnemonic_widget(NoOfRowsSpinner);
     NoOfRowsBox.pack_start(NoOfRowsLabel, false, false, MARGIN);
 
     NoOfRowsSpinner.set_digits(0);
@@ -668,7 +669,8 @@ TileDialog::TileDialog()
     NoOfRowsBox.pack_start(NoOfRowsSpinner, false, false, MARGIN);
     gtk_size_group_add_widget(_col1, (GtkWidget *) NoOfRowsBox.gobj());
 
-    RowHeightButton.set_label(_("Equal height"));
+    RowHeightButton.set_label(_("Equal _height"));
+    RowHeightButton.set_use_underline(true);
     double AutoRow = prefs->getDouble("/dialogs/gridtiler/AutoRowSize", 15);
     if (AutoRow>0)
          AutoRowSize=true;
@@ -726,7 +728,8 @@ TileDialog::TileDialog()
 
     /*#### Number of columns ####*/
 
-    NoOfColsLabel.set_label(_("Columns:"));
+    NoOfColsLabel.set_text_with_mnemonic(_("_Columns:"));
+    NoOfColsLabel.set_mnemonic_widget(NoOfColsSpinner);
     NoOfColsBox.pack_start(NoOfColsLabel, false, false, MARGIN);
 
     NoOfColsSpinner.set_digits(0);
@@ -738,7 +741,8 @@ TileDialog::TileDialog()
     NoOfColsBox.pack_start(NoOfColsSpinner, false, false, MARGIN);
     gtk_size_group_add_widget(_col3, (GtkWidget *) NoOfColsBox.gobj());
 
-    ColumnWidthButton.set_label(_("Equal width"));
+    ColumnWidthButton.set_label(_("Equal _width"));
+    ColumnWidthButton.set_use_underline(true);
     double AutoCol = prefs->getDouble("/dialogs/gridtiler/AutoColSize", 15);
     if (AutoCol>0)
          AutoColSize=true;
@@ -793,13 +797,15 @@ TileDialog::TileDialog()
 
     {
         /*#### Radio buttons to control spacing manually or to fit selection bbox ####*/
-        SpaceByBBoxRadioButton.set_label(_("Fit into selection box"));
+        SpaceByBBoxRadioButton.set_label(_("_Fit into selection box"));
+        SpaceByBBoxRadioButton.set_use_underline (true);
         SpaceByBBoxRadioButton.signal_toggled().connect(sigc::mem_fun(*this, &TileDialog::Spacing_button_changed));
         SpacingGroup = SpaceByBBoxRadioButton.get_group();
 
         SpacingVBox.pack_start(SpaceByBBoxRadioButton, false, false, MARGIN);
 
-        SpaceManualRadioButton.set_label(_("Set spacing:"));
+        SpaceManualRadioButton.set_label(_("_Set spacing:"));
+        SpaceManualRadioButton.set_use_underline (true);
         SpaceManualRadioButton.set_group(SpacingGroup);
         SpaceManualRadioButton.signal_toggled().connect(sigc::mem_fun(*this, &TileDialog::Spacing_button_changed));
         SpacingVBox.pack_start(SpaceManualRadioButton, false, false, MARGIN);
@@ -867,7 +873,8 @@ TileDialog::TileDialog()
     SizesHBox.set_sensitive (ManualSpacing);
 
     //## The OK button
-    TileOkButton = addResponseButton(Q_("tileClonesDialog|Arrange"), GTK_RESPONSE_APPLY);
+    TileOkButton = addResponseButton(C_("Rows and columns dialog","_Arrange"), GTK_RESPONSE_APPLY);
+    TileOkButton->set_use_underline(true);
     tips.set_tip((*TileOkButton), _("Arrange selected objects"));
 
     show_all_children();

@@ -2414,7 +2414,7 @@ Verb *Verb::_base_verbs[] = {
     // Advanced tutorial for more info
     new SelectionVerb(SP_VERB_SELECTION_BREAK_APART, "SelectionBreakApart", N_("Break _Apart"),
                       N_("Break selected paths into subpaths"), INKSCAPE_ICON_PATH_BREAK_APART),
-    new SelectionVerb(SP_VERB_SELECTION_GRIDTILE, "DialogGridArrange", N_("Rows and Columns..."),
+    new SelectionVerb(SP_VERB_SELECTION_GRIDTILE, "DialogGridArrange", N_("Ro_ws and Columns..."),
                       N_("Arrange selected objects in a table"), INKSCAPE_ICON_DIALOG_ROWS_AND_COLUMNS),
     /* Layer */
     new LayerVerb(SP_VERB_LAYER_NEW, "LayerNew", N_("_Add Layer..."),
