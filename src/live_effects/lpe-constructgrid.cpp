@@ -23,8 +23,8 @@ using namespace Geom;
 
 LPEConstructGrid::LPEConstructGrid(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    nr_x(_("Size X:"), _("The size of the grid in X direction."), "nr_x", &wr, this, 5),
-    nr_y(_("Size Y:"), _("The size of the grid in Y direction."), "nr_y", &wr, this, 5)
+    nr_x(_("Size _X:"), _("The size of the grid in X direction."), "nr_x", &wr, this, 5),
+    nr_y(_("Size _Y:"), _("The size of the grid in Y direction."), "nr_y", &wr, this, 5)
 {
     registerParameter( dynamic_cast<Parameter *>(&nr_x) );
     registerParameter( dynamic_cast<Parameter *>(&nr_y) );

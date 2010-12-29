@@ -877,8 +877,8 @@ InputDialogImpl::ConfPanel::ConfPanel() :
     tree(store),
     treeScroller(),
     watcher(*this),
-    useExt(_("Use pressure-sensitive tablet (requires restart)")),
-    save(_("Save"))
+    useExt(_("_Use pressure-sensitive tablet (requires restart)"), true),
+    save(_("_Save"), true)
 {
     pack_start(treeScroller);
 

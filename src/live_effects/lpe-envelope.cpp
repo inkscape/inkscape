@@ -34,8 +34,8 @@ LPEEnvelope::LPEEnvelope(LivePathEffectObject *lpeobject) :
     bend_path2(_("Right bend path:"), _("Right path along which to bend the original path"), "bendpath2", &wr, this, "M0,0 L1,0"),
     bend_path3(_("Bottom bend path:"), _("Bottom path along which to bend the original path"), "bendpath3", &wr, this, "M0,0 L1,0"),
     bend_path4(_("Left bend path:"), _("Left path along which to bend the original path"), "bendpath4", &wr, this, "M0,0 L1,0"),
-    xx(_("Enable left & right paths"), _("Enable the left and right deformation paths"), "xx", &wr, this, true),
-    yy(_("Enable top & bottom paths"), _("Enable the top and bottom deformation paths"), "yy", &wr, this, true)
+    xx(_("E_nable left & right paths"), _("Enable the left and right deformation paths"), "xx", &wr, this, true),
+    yy(_("_Enable top & bottom paths"), _("Enable the top and bottom deformation paths"), "yy", &wr, this, true)
 {
     registerParameter( dynamic_cast<Parameter *>(&yy) );
     registerParameter( dynamic_cast<Parameter *>(&xx) );

@@ -209,8 +209,8 @@ namespace LivePathEffect {
 
 LPEGears::LPEGears(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    teeth(_("Teeth:"), _("The number of teeth"), "teeth", &wr, this, 10),
-    phi(_("Phi:"), _("Tooth pressure angle (typically 20-25 deg).  The ratio of teeth not in contact."), "phi", &wr, this, 5)
+    teeth(_("_Teeth:"), _("The number of teeth"), "teeth", &wr, this, 10),
+    phi(_("_Phi:"), _("Tooth pressure angle (typically 20-25 deg).  The ratio of teeth not in contact."), "phi", &wr, this, 5)
 {
     /* Tooth pressure angle: The angle between the tooth profile and a perpendicular to the pitch
      * circle, usually at the point where the pitch circle meets the tooth profile. Standard angles

@@ -53,9 +53,9 @@ namespace LivePathEffect {
 LPEBendPath::LPEBendPath(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     bend_path(_("Bend path:"), _("Path along which to bend the original path"), "bendpath", &wr, this, "M0,0 L1,0"),
-    prop_scale(_("Width:"), _("Width of the path"), "prop_scale", &wr, this, 1),
-    scale_y_rel(_("Width in units of length"), _("Scale the width of the path in units of its length"), "scale_y_rel", &wr, this, false),
-    vertical_pattern(_("Original path is vertical"), _("Rotates the original 90 degrees, before bending it along the bend path"), "vertical", &wr, this, false)
+    prop_scale(_("_Width:"), _("Width of the path"), "prop_scale", &wr, this, 1),
+    scale_y_rel(_("W_idth in units of length"), _("Scale the width of the path in units of its length"), "scale_y_rel", &wr, this, false),
+    vertical_pattern(_("_Original path is vertical"), _("Rotates the original 90 degrees, before bending it along the bend path"), "vertical", &wr, this, false)
 {
     registerParameter( dynamic_cast<Parameter *>(&bend_path) );
     registerParameter( dynamic_cast<Parameter *>(&prop_scale) );
