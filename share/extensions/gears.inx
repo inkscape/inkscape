@@ -5,8 +5,15 @@
     <dependency type="executable" location="extensions">gears.py</dependency>
     <dependency type="executable" location="extensions">inkex.py</dependency>
     <param name="teeth"    type="int"   min="6"    max="360"    _gui-text="Number of teeth:">24</param>
-    <param name="pitch"    type="float" min="0.0"  max="1000.0" _gui-text="Circular pitch (px):">20.0</param>
-    <param name="angle"    type="float" min="10.0" max="30.0"   _gui-text="Pressure angle:">20.0</param>
+    <param name="pitch"    type="float" min="0.0"  max="1000.0" _gui-text="Circular pitch (tooth size):">20.0</param>
+    <param name="angle"    type="float" min="10.0" max="30.0"   _gui-text="Pressure angle (degrees):">20.0</param>
+    <param name="centerdiameter"    type="float" min="0.0" max="1000.0"   _gui-text="Diameter of center hole (0 for none):">20.0</param>
+    <param name="unit" _gui-text="Units:" type="optiongroup" appearance="minimal">
+        <_option value="px">px</_option>
+        <_option value="in">in</_option>
+        <_option value="mm">mm</_option>
+    </param>
+    <param name="unit_text" type="description">Unit of measure for both circular pitch and center diameter.</param>
     <effect>
 	<object-type>all</object-type>
         <effects-menu>

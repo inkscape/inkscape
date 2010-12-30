@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import inkex
 import simplestyle, sys
 from math import *
+import string
 
 def involute_intersect_angle(Rb, R):
     Rb, R = float(Rb), float(R)
@@ -55,11 +56,20 @@ class Gears(inkex.Effect):
                         action="store", type="float",
                         dest="angle", default=20.0,
                         help="Pressure Angle (common values: 14.5, 20, 25 degrees)")
+        self.OptionParser.add_option("-c", "--centerdiameter",
+                        action="store", type="float",
+                        dest="centerdiameter", default=10.0,
+                        help="Diameter of central hole - 0.0 for no hole")
+        self.OptionParser.add_option("-u", "--unit",
+                        action="store", type="string",
+                        dest="unit", default="px",
+                        help="unit of measure for circular pitch and center diameter")
     def effect(self):
 
         teeth = self.options.teeth
-        pitch = self.options.pitch
+        pitch = inkex.unittouu( str(self.options.pitch) + self.options.unit)
         angle = self.options.angle  # Angle of tangent to tooth at circular pitch wrt radial line.
+ 	centerdiameter = inkex.unittouu( str(self.options.centerdiameter) + self.options.unit)
 
         # print >>sys.stderr, "Teeth: %s\n"        % teeth
 
@@ -157,6 +167,15 @@ class Gears(inkex.Effect):
         style = { 'stroke': '#000000', 'fill': 'none' }
         gear_attribs = {'style':simplestyle.formatStyle(style), 'd':path}
         gear = inkex.etree.SubElement(g, inkex.addNS('path','svg'), gear_attribs )
+        if(centerdiameter > 0.0):
+            center_attribs = {'style':simplestyle.formatStyle(style), 
+                inkex.addNS('cx','sodipodi')        :'0.0',
+                inkex.addNS('cy','sodipodi')        :'0.0',
+                inkex.addNS('rx','sodipodi')        :str(centerdiameter/2),
+                inkex.addNS('ry','sodipodi')        :str(centerdiameter/2),
+                inkex.addNS('type','sodipodi')      :'arc'
+            }
+            center = inkex.etree.SubElement(g, inkex.addNS('path','svg'), center_attribs )
 
 if __name__ == '__main__':
     e = Gears()
