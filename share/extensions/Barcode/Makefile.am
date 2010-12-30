@@ -3,9 +3,11 @@ barcodedir = $(datadir)/inkscape/extensions/Barcode
 
 barcode_SCRIPTS = \
 	Base.py \
+    BaseEan.py \
 	Code128.py \
 	Code39Ext.py \
 	Code39.py \
+    Code25i.py \
 	Code93.py \
 	EAN13.py \
 	EAN8.py \

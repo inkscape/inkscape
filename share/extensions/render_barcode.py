@@ -39,15 +39,15 @@ class InsertBarcode(inkex.Effect):
 
 	def effect(self):
 		x, y = self.view_center
-		object = getBarcode( self.options.type, {
+		bargen = getBarcode( self.options.type, {
 			'text'     : self.options.text,
 			'height'   : self.options.height,
 			'document' : self.document,
 			'x'        : x,
 			'y'        : y,
 		} )
-		if object is not None:
-			barcode = object.generate()
+		if bargen is not None:
+			barcode = bargen.generate()
 			if barcode is not None:
 				self.current_layer.append(barcode)
 			else:

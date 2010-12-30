@@ -1,67 +1,63 @@
-#!/usr/bin/env python
-'''
-Copyright (C) 2007 Martin Owens
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-'''
+#
+# Copyright (C) 2010 Martin Owens
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+"""
+Base module for rendering barcodes for Inkscape.
+"""
 
 import itertools
 import sys
 from lxml import etree
 
-class Barcode:
+(WHITE_BAR, BLACK_BAR, TALL_BAR) = range(3)
+TEXT_TEMPLATE = 'font-size:%dpx;text-align:center;text-anchor:middle;'
+
+class Barcode(object):
+    """Provide a base class for all barcode renderers"""
+    name = None
+
+    def error(self, bar, msg):
+        """Cause an error to be reported"""
+        sys.stderr.write(
+            "Error encoding '%s' as %s barcode: %s\n" % (bar, self.name, msg))
+
     def __init__(self, param={}):
-        self.document = None
-        self.x = 0
-        self.y = 0
+        self.document = param.get('document', None)
+        self.x        = int(param.get('x', 0))
+        self.y        = int(param.get('y', 0))
+        self.height   = param.get('height', 30)
+        self.label    = param.get('text', None)
+        self.string   = self.encode( self.label )
 
-        if param.has_key('document'):
-            self.document = param['document']
-        if param.has_key('x'):
-            self.x = param['x']
-        if param.has_key('y'):
-            self.y = param['y']
-
-        if param.has_key('height'):
-            self.height = param['height']
-        else:
-            self.height = 30
-
-        self.text   = param['text']
-        self.label  = self.text
-        self.string = self.encode( self.text )
         if not self.string:
             return
+
         self.width  = len(self.string)
         self.data   = self.graphicalArray(self.string)
 
     def generate(self):
+        """Generate the actual svg from the coding"""
         svg_uri = u'http://www.w3.org/2000/svg'
         if not self.string or not self.data:
             return
-
-        data = self.data;
-    
-        # create an SVG document if required
-        # if not self.document:
-        #     self.document = UNKNOWN
-    
         if not self.document:
-            sys.stderr.write("No document defined to add barcode to\n")
-            return
+            return self.error("No document defined")
         
+        data = self.data
         # Collect document ids
         doc_ids = {}
         docIdNodes = self.document.xpath('//@id')
@@ -81,10 +77,10 @@ class Barcode:
         barcode = etree.Element('{%s}%s' % (svg_uri,'g'))
         barcode.set('id', name)
         barcode.set('style', 'fill: black;')
+        barcode.set('transform', 'translate(%d,%d)' % (self.x, self.y))
 
-        draw    = 1
-        wOffset = int(self.x)
-        id      = 1
+        bar_offset = 0
+        bar_id     = 1
 
         for datum in data:
             # Datum 0 tells us what style of bar is to come next
@@ -94,41 +90,41 @@ class Barcode:
             width = int(datum[1]) * int(style['width'])
 
             if style['write']:
-                # Add height for styles such as EA8 where
-                # the barcode goes into the text
-                
                 rect = etree.SubElement(barcode,'{%s}%s' % (svg_uri,'rect'))
-                rect.set('x',      str(wOffset))
+                rect.set('x',      str(bar_offset))
                 rect.set('y',      str(style['top']))
                 rect.set('width',  str(width))
                 rect.set('height', str(style['height']))
-                rect.set('id', name + '_bar' + str(id))
-            wOffset = int(wOffset) + int(width)
-            id      = id + 1
+                rect.set('id',     "%s_bar%d" % (name, bar_id))
+            bar_offset += width
+            bar_id += 1
 
-        barwidth = wOffset - int(self.x)
+        bar_width = bar_offset
         # Add text at the bottom of the barcode
         text = etree.SubElement(barcode,'{%s}%s' % (svg_uri,'text'))
-        text.set( 'x', str(int(self.x) + int(barwidth / 2)) )
-        text.set( 'y', str(int(self.height) + 10 + int(self.y)) )
-        text.set( 'style', 'font-size:' + self.fontSize() + 'px;text-align:center;text-anchor:middle;' )
+        text.set( 'x', str(int(bar_width / 2)))
+        text.set( 'y', str(self.height + self.fontSize() ))
+        text.set( 'style', TEXT_TEMPLATE % self.fontSize() )
         text.set( '{http://www.w3.org/XML/1998/namespace}space', 'preserve' )
-        text.set( 'id', name + '_bottomtext' )
-
+        text.set( 'id', '%s_text' % name )
         text.text = str(self.label)
-
         return barcode
 
-    # Converts black and white markers into a space array
     def graphicalArray(self, code):
+        """Converts black and white markets into a space array"""
         return [(x,len(list(y))) for x, y in itertools.groupby(code)]
 
     def getStyle(self, index):
-        result = { 'width' : 1, 'top' : int(self.y), 'write' : False }
-        if index==1: # Black Bar
+        """Returns the styles that should be applied to each bar"""
+        result = { 'width' : 1, 'top' : 0, 'write' : True }
+        if index == BLACK_BAR:
             result['height'] = int(self.height)
-            result['write']  = True
+        if index == TALL_BAR:
+            result['height'] = int(self.height) + int(self.fontSize() / 2)
+        if index == WHITE_BAR:
+            result['write'] = False
         return result
 
     def fontSize(self):
-        return '9'
+        """Return the ideal font size, defaults to 9px"""
+        return 9
