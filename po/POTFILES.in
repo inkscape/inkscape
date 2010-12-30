@@ -5,138 +5,6 @@
 
 [encoding: UTF-8]
 
-[type: gettext/xml] share/extensions/addnodes.inx
-[type: gettext/xml] share/extensions/ai_input.inx
-[type: gettext/xml] share/extensions/aisvg.inx
-[type: gettext/xml] share/extensions/ccx_input.inx
-[type: gettext/xml] share/extensions/cdr_input.inx
-[type: gettext/xml] share/extensions/cdt_input.inx
-[type: gettext/xml] share/extensions/cgm_input.inx
-[type: gettext/xml] share/extensions/cmx_input.inx
-[type: gettext/xml] share/extensions/color_blackandwhite.inx
-[type: gettext/xml] share/extensions/color_brighter.inx
-[type: gettext/xml] share/extensions/color_custom.inx
-[type: gettext/xml] share/extensions/color_darker.inx
-[type: gettext/xml] share/extensions/color_desaturate.inx
-[type: gettext/xml] share/extensions/color_grayscale.inx
-[type: gettext/xml] share/extensions/color_lesshue.inx
-[type: gettext/xml] share/extensions/color_lesslight.inx
-[type: gettext/xml] share/extensions/color_lesssaturation.inx
-[type: gettext/xml] share/extensions/color_morehue.inx
-[type: gettext/xml] share/extensions/color_morelight.inx
-[type: gettext/xml] share/extensions/color_moresaturation.inx
-[type: gettext/xml] share/extensions/color_negative.inx
-[type: gettext/xml] share/extensions/color_randomize.inx
-[type: gettext/xml] share/extensions/color_removeblue.inx
-[type: gettext/xml] share/extensions/color_removegreen.inx
-[type: gettext/xml] share/extensions/color_removered.inx
-[type: gettext/xml] share/extensions/color_replace.inx
-[type: gettext/xml] share/extensions/color_rgbbarrel.inx
-[type: gettext/xml] share/extensions/convert2dashes.inx
-[type: gettext/xml] share/extensions/dia.inx
-[type: gettext/xml] share/extensions/dimension.inx
-[type: gettext/xml] share/extensions/dots.inx
-[type: gettext/xml] share/extensions/draw_from_triangle.inx
-[type: gettext/xml] share/extensions/dxf_input.inx
-[type: gettext/xml] share/extensions/dxf_outlines.inx
-[type: gettext/xml] share/extensions/dxf_output.inx
-[type: gettext/xml] share/extensions/edge3d.inx
-[type: gettext/xml] share/extensions/embedimage.inx
-[type: gettext/xml] share/extensions/eps_input.inx
-[type: gettext/xml] share/extensions/eqtexsvg.inx
-[type: gettext/xml] share/extensions/export_gimp_palette.inx
-[type: gettext/xml] share/extensions/extractimage.inx
-[type: gettext/xml] share/extensions/extrude.inx
-[type: gettext/xml] share/extensions/fig_input.inx
-[type: gettext/xml] share/extensions/flatten.inx
-[type: gettext/xml] share/extensions/foldablebox.inx
-[type: gettext/xml] share/extensions/fractalize.inx
-[type: gettext/xml] share/extensions/funcplot.inx
-[type: gettext/xml] share/extensions/gears.inx
-[type: gettext/xml] share/extensions/generate_voronoi.inx
-[type: gettext/xml] share/extensions/gimp_xcf.inx
-[type: gettext/xml] share/extensions/grid_cartesian.inx
-[type: gettext/xml] share/extensions/grid_polar.inx
-[type: gettext/xml] share/extensions/guides_creator.inx
-[type: gettext/xml] share/extensions/guillotine.inx
-[type: gettext/xml] share/extensions/handles.inx
-[type: gettext/xml] share/extensions/hpgl_output.inx
-[type: gettext/xml] share/extensions/inkscape_help_askaquestion.inx
-[type: gettext/xml] share/extensions/inkscape_help_commandline.inx
-[type: gettext/xml] share/extensions/inkscape_help_faq.inx
-[type: gettext/xml] share/extensions/inkscape_help_keys.inx
-[type: gettext/xml] share/extensions/inkscape_help_manual.inx
-[type: gettext/xml] share/extensions/inkscape_help_relnotes.inx
-[type: gettext/xml] share/extensions/inkscape_help_reportabug.inx
-[type: gettext/xml] share/extensions/inkscape_help_svgspec.inx
-[type: gettext/xml] share/extensions/interp.inx
-[type: gettext/xml] share/extensions/interp_att_g.inx
-[type: gettext/xml] share/extensions/jessyInk_autoTexts.inx
-[type: gettext/xml] share/extensions/jessyInk_effects.inx
-[type: gettext/xml] share/extensions/jessyInk_export.inx
-[type: gettext/xml] share/extensions/jessyInk_install.inx
-[type: gettext/xml] share/extensions/jessyInk_keyBindings.inx
-[type: gettext/xml] share/extensions/jessyInk_masterSlide.inx
-[type: gettext/xml] share/extensions/jessyInk_mouseHandler.inx
-[type: gettext/xml] share/extensions/jessyInk_summary.inx
-[type: gettext/xml] share/extensions/jessyInk_transitions.inx
-[type: gettext/xml] share/extensions/jessyInk_uninstall.inx
-[type: gettext/xml] share/extensions/jessyInk_video.inx
-[type: gettext/xml] share/extensions/jessyInk_view.inx
-[type: gettext/xml] share/extensions/lindenmayer.inx
-[type: gettext/xml] share/extensions/lorem_ipsum.inx
-[type: gettext/xml] share/extensions/markers_strokepaint.inx
-[type: gettext/xml] share/extensions/measure.inx
-[type: gettext/xml] share/extensions/motion.inx
-[type: gettext/xml] share/extensions/outline2svg.inx
-[type: gettext/xml] share/extensions/param_curves.inx
-[type: gettext/xml] share/extensions/pathalongpath.inx
-[type: gettext/xml] share/extensions/pathscatter.inx
-[type: gettext/xml] share/extensions/perfectboundcover.inx
-[type: gettext/xml] share/extensions/perspective.inx
-[type: gettext/xml] share/extensions/pixelsnap.inx
-[type: gettext/xml] share/extensions/plt_input.inx
-[type: gettext/xml] share/extensions/plt_output.inx
-[type: gettext/xml] share/extensions/polyhedron_3d.inx
-[type: gettext/xml] share/extensions/printing-marks.inx
-[type: gettext/xml] share/extensions/ps_input.inx
-[type: gettext/xml] share/extensions/radiusrand.inx
-[type: gettext/xml] share/extensions/render_alphabetsoup.inx
-[type: gettext/xml] share/extensions/render_barcode.inx
-[type: gettext/xml] share/extensions/replace_font.inx
-[type: gettext/xml] share/extensions/restack.inx
-[type: gettext/xml] share/extensions/rtree.inx
-[type: gettext/xml] share/extensions/rubberstretch.inx
-[type: gettext/xml] share/extensions/scour.inx
-[type: gettext/xml] share/extensions/sk1_input.inx
-[type: gettext/xml] share/extensions/sk1_output.inx
-[type: gettext/xml] share/extensions/sk_input.inx
-[type: gettext/xml] share/extensions/spirograph.inx
-[type: gettext/xml] share/extensions/split.inx
-[type: gettext/xml] share/extensions/straightseg.inx
-[type: gettext/xml] share/extensions/summersnight.inx
-[type: gettext/xml] share/extensions/svg2fxg.inx
-[type: gettext/xml] share/extensions/svg2xaml.inx
-[type: gettext/xml] share/extensions/svg_and_media_zip_output.inx
-[type: gettext/xml] share/extensions/svgcalendar.inx
-[type: gettext/xml] share/extensions/text_braille.inx
-[type: gettext/xml] share/extensions/text_flipcase.inx
-[type: gettext/xml] share/extensions/text_lowercase.inx
-[type: gettext/xml] share/extensions/text_randomcase.inx
-[type: gettext/xml] share/extensions/text_replace.inx
-[type: gettext/xml] share/extensions/text_titlecase.inx
-[type: gettext/xml] share/extensions/text_uppercase.inx
-[type: gettext/xml] share/extensions/triangle.inx
-[type: gettext/xml] share/extensions/txt2svg.inx
-[type: gettext/xml] share/extensions/webslicer_create_group.inx
-[type: gettext/xml] share/extensions/webslicer_create_rect.inx
-[type: gettext/xml] share/extensions/webslicer_export.inx
-[type: gettext/xml] share/extensions/web-set-att.inx
-[type: gettext/xml] share/extensions/web-transmit-att.inx
-[type: gettext/xml] share/extensions/whirl.inx
-[type: gettext/xml] share/extensions/wmf_input.inx
-[type: gettext/xml] share/extensions/wmf_output.inx
-[type: gettext/xml] share/extensions/xaml2svg.inx
 cxxtest/cxxtestgen.py
 inkscape.desktop.in
 share/extensions/dimension.py
@@ -240,9 +108,12 @@ src/extension/internal/cairo-ps-out.cpp
 src/extension/internal/cairo-renderer-pdf-out.cpp
 src/extension/internal/clear-n_.h
 src/extension/internal/emf-win32-inout.cpp
+src/extension/internal/filter/color.h
 src/extension/internal/filter/drop-shadow.h
+src/extension/internal/filter/experimental.h
 src/extension/internal/filter/filter-file.cpp
 src/extension/internal/filter/filter.cpp
+src/extension/internal/filter/morphology.h
 src/extension/internal/filter/snow.h
 src/extension/internal/gdkpixbuf-input.cpp
 src/extension/internal/gimpgrad.cpp
@@ -519,6 +390,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/gcodetools_orientation_points.inx
 [type: gettext/xml] share/extensions/gcodetools_path_to_gcode.inx
 [type: gettext/xml] share/extensions/gcodetools_tools_library.inx
+[type: gettext/xml] share/extensions/generate_voronoi.inx
 [type: gettext/xml] share/extensions/gimp_xcf.inx
 [type: gettext/xml] share/extensions/grid_cartesian.inx
 [type: gettext/xml] share/extensions/grid_polar.inx
@@ -536,6 +408,18 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/inkscape_help_svgspec.inx
 [type: gettext/xml] share/extensions/interp_att_g.inx
 [type: gettext/xml] share/extensions/interp.inx
+[type: gettext/xml] share/extensions/jessyInk_autoTexts.inx
+[type: gettext/xml] share/extensions/jessyInk_effects.inx
+[type: gettext/xml] share/extensions/jessyInk_export.inx
+[type: gettext/xml] share/extensions/jessyInk_install.inx
+[type: gettext/xml] share/extensions/jessyInk_keyBindings.inx
+[type: gettext/xml] share/extensions/jessyInk_masterSlide.inx
+[type: gettext/xml] share/extensions/jessyInk_mouseHandler.inx
+[type: gettext/xml] share/extensions/jessyInk_summary.inx
+[type: gettext/xml] share/extensions/jessyInk_transitions.inx
+[type: gettext/xml] share/extensions/jessyInk_uninstall.inx
+[type: gettext/xml] share/extensions/jessyInk_video.inx
+[type: gettext/xml] share/extensions/jessyInk_view.inx
 [type: gettext/xml] share/extensions/lindenmayer.inx
 [type: gettext/xml] share/extensions/lorem_ipsum.inx
 [type: gettext/xml] share/extensions/markers_strokepaint.inx
@@ -547,6 +431,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/pathscatter.inx
 [type: gettext/xml] share/extensions/perfectboundcover.inx
 [type: gettext/xml] share/extensions/perspective.inx
+[type: gettext/xml] share/extensions/pixelsnap.inx
 [type: gettext/xml] share/extensions/plt_input.inx
 [type: gettext/xml] share/extensions/plt_output.inx
 [type: gettext/xml] share/extensions/polyhedron_3d.inx
@@ -556,6 +441,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/render_alphabetsoup.inx
 [type: gettext/xml] share/extensions/render_barcode.inx
 [type: gettext/xml] share/extensions/render_barcode_datamatrix.inx
+[type: gettext/xml] share/extensions/render_barcode_qrcode.inx
 [type: gettext/xml] share/extensions/replace_font.inx
 [type: gettext/xml] share/extensions/restack.inx
 [type: gettext/xml] share/extensions/rtree.inx
@@ -568,6 +454,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/split.inx
 [type: gettext/xml] share/extensions/straightseg.inx
 [type: gettext/xml] share/extensions/summersnight.inx
+[type: gettext/xml] share/extensions/svg2fxg.inx
 [type: gettext/xml] share/extensions/svg2xaml.inx
 [type: gettext/xml] share/extensions/svg_and_media_zip_output.inx
 [type: gettext/xml] share/extensions/svgcalendar.inx
@@ -581,6 +468,9 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/text_uppercase.inx
 [type: gettext/xml] share/extensions/triangle.inx
 [type: gettext/xml] share/extensions/txt2svg.inx
+[type: gettext/xml] share/extensions/webslicer_create_group.inx
+[type: gettext/xml] share/extensions/webslicer_create_rect.inx
+[type: gettext/xml] share/extensions/webslicer_export.inx
 [type: gettext/xml] share/extensions/web-set-att.inx
 [type: gettext/xml] share/extensions/web-transmit-att.inx
 [type: gettext/xml] share/extensions/whirl.inx
