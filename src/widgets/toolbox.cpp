@@ -6185,7 +6185,7 @@ static void       sp_print_font( SPStyle *query ) {
               << (query->text->font_specification.value ? query->text->font_specification.value : "No value")
               << std::endl;
 }
-        
+
 static void       sp_print_fontweight( SPStyle *query ) {
     const gchar* names[] = {"100", "200", "300", "400", "500", "600", "700", "800", "900",
                             "NORMAL", "BOLD", "LIGHTER", "BOLDER", "Out of range"};
@@ -6385,8 +6385,10 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
     g_free (family);
 
     // Save for undo
-    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+    if (result_fontspec != QUERY_STYLE_NOTHING) {
+        DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
                        _("Text: Change font family"));
+    }
     sp_repr_css_attr_unref (css);
 
     // unfreeze
@@ -6431,10 +6433,6 @@ static void sp_text_fontsize_value_changed( Ink_ComboBoxEntry_Action *act, GObje
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     sp_desktop_set_style (desktop, css, true, true);
 
-    // Save for undo
-    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:size", SP_VERB_NONE,
-                             _("Text: Change font size"));
-
     // If no selected objects, set default.
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
     int result_numbers =
@@ -6443,7 +6441,12 @@ static void sp_text_fontsize_value_changed( Ink_ComboBoxEntry_Action *act, GObje
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->mergeStyle("/tools/text/style", css);
+    } else {
+        // Save for undo
+        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:size", SP_VERB_NONE,
+                             _("Text: Change font size"));
     }
+
     sp_style_unref(query);
 
     sp_repr_css_attr_unref (css);
@@ -6578,8 +6581,10 @@ static void sp_text_style_changed( InkToggleAction* act, GObject *tbl )
     // Do we need to update other CSS values?
     SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
     sp_desktop_set_style (desktop, css, true, true);
-    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+    if (result_fontspec != QUERY_STYLE_NOTHING) {
+        DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
                        _("Text: Change font style"));
+    }
     sp_repr_css_attr_unref (css);
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
@@ -6655,9 +6660,10 @@ static void sp_text_script_changed( InkToggleAction* act, GObject *tbl )
     sp_desktop_set_style (desktop, css, true, false);
 
     // Save for undo
-    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:script", SP_VERB_NONE,
+    if(result_baseline != QUERY_STYLE_NOTHING) {
+        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:script", SP_VERB_NONE,
                              _("Text: Change superscript or subscript"));
-
+    }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
@@ -6799,8 +6805,11 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
     sp_style_unref(query);
 
     sp_desktop_set_style (desktop, css, true, true);
-    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+    if (result_numbers != QUERY_STYLE_NOTHING)
+    {
+        DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
                        _("Text: Change alignment"));
+    }
     sp_repr_css_attr_unref (css);
 
     gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
@@ -6831,15 +6840,19 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
     // Until deprecated sodipodi:linespacing purged:
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList const *items = selection->itemList();
+    bool modmade = false;
     for (; items != NULL; items = items->next) {
         if (SP_IS_TEXT (items->data)) {
             SP_OBJECT_REPR(items->data)->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
+            modmade = true;
         }
     }
 
     // Save for undo
-    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:line-height", SP_VERB_NONE,
+    if(modmade) {
+        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:line-height", SP_VERB_NONE,
                              _("Text: Change line-height"));
+    }
 
     // If no selected objects, set default.
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
@@ -6876,10 +6889,6 @@ static void sp_text_wordspacing_value_changed( GtkAdjustment *adj, GObject *tbl 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     sp_desktop_set_style (desktop, css, true, false);
 
-    // Save for undo
-    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:word-spacing", SP_VERB_NONE,
-                             _("Text: Change word-spacing"));
-
     // If no selected objects, set default.
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
     int result_numbers =
@@ -6888,6 +6897,10 @@ static void sp_text_wordspacing_value_changed( GtkAdjustment *adj, GObject *tbl 
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->mergeStyle("/tools/text/style", css);
+    } else {
+        // Save for undo
+        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:word-spacing", SP_VERB_NONE,
+                             _("Text: Change word-spacing"));
     }
     sp_style_unref(query);
 
@@ -6915,9 +6928,6 @@ static void sp_text_letterspacing_value_changed( GtkAdjustment *adj, GObject *tb
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     sp_desktop_set_style (desktop, css, true, false);
 
-    // Save for undo
-    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:letter-spacing", SP_VERB_NONE,
-                             _("Text: Change letter-spacing"));
 
     // If no selected objects, set default.
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
@@ -6928,7 +6938,15 @@ static void sp_text_letterspacing_value_changed( GtkAdjustment *adj, GObject *tb
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->mergeStyle("/tools/text/style", css);
     }
+    else
+    {
+        // Save for undo
+        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:letter-spacing", SP_VERB_NONE,
+                             _("Text: Change letter-spacing"));
+    }
+
     sp_style_unref(query);
+
 
     sp_repr_css_attr_unref (css);
 
@@ -6945,6 +6963,7 @@ static void sp_text_dx_value_changed( GtkAdjustment *adj, GObject *tbl )
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
     gdouble new_dx = adj->value;
+    bool modmade = false;
 
     if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
         SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
@@ -6956,14 +6975,16 @@ static void sp_text_dx_value_changed( GtkAdjustment *adj, GObject *tbl )
                 double old_dx = attributes->getDx( char_index );
                 double delta_dx = new_dx - old_dx;
                 sp_te_adjust_dx( tc->text, tc->text_sel_start, tc->text_sel_end, SP_ACTIVE_DESKTOP, delta_dx );
+                modmade = true;
             }
         }
     }
 
-    // Save for undo
-    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:dx", SP_VERB_NONE,
+    if(modmade) {
+        // Save for undo
+        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:dx", SP_VERB_NONE,
                              _("Text: Change dx (kern)"));
-
+    }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
@@ -6976,6 +6997,7 @@ static void sp_text_dy_value_changed( GtkAdjustment *adj, GObject *tbl )
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
     gdouble new_dy = adj->value;
+    bool modmade = false;
 
     if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
         SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
@@ -6987,13 +7009,16 @@ static void sp_text_dy_value_changed( GtkAdjustment *adj, GObject *tbl )
                 double old_dy = attributes->getDy( char_index );
                 double delta_dy = new_dy - old_dy;
                 sp_te_adjust_dy( tc->text, tc->text_sel_start, tc->text_sel_end, SP_ACTIVE_DESKTOP, delta_dy );
+                modmade = true;
             }
         }
     }
 
-    // Save for undo
-    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:dy", SP_VERB_NONE,
+    if(modmade) {
+        // Save for undo
+        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:dy", SP_VERB_NONE,
                             _("Text: Change dy"));
+    }
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
@@ -7008,6 +7033,7 @@ static void sp_text_rotation_value_changed( GtkAdjustment *adj, GObject *tbl )
 
     gdouble new_degrees = adj->value;
 
+    bool modmade = false;
     if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
         SPTextContext *const tc = SP_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context);
         if( tc ) {
@@ -7018,13 +7044,16 @@ static void sp_text_rotation_value_changed( GtkAdjustment *adj, GObject *tbl )
                 double old_degrees = attributes->getRotate( char_index );
                 double delta_deg = new_degrees - old_degrees;
                 sp_te_adjust_rotation( tc->text, tc->text_sel_start, tc->text_sel_end, SP_ACTIVE_DESKTOP, delta_deg );
-            } 
+                modmade = true;
+            }
         }
     }
 
     // Save for undo
-    DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:rotate", SP_VERB_NONE,
+    if(modmade) {
+        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "ttb:rotate", SP_VERB_NONE,
                             _("Text: Change rotate"));
+    }
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
@@ -7068,8 +7097,11 @@ static void sp_text_orientation_mode_changed( EgeSelectOneAction *act, GObject *
     }
 
     sp_desktop_set_style (SP_ACTIVE_DESKTOP, css, true, true);
-    DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+    if(result_numbers != QUERY_STYLE_NOTHING)
+    {
+        DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
                        _("Text: Change orientation"));
+    }
     sp_repr_css_attr_unref (css);
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
@@ -7217,7 +7249,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
 
         // Superscript
         gboolean superscriptSet =
-            ((result_baseline == QUERY_STYLE_SINGLE || result_baseline == QUERY_STYLE_MULTIPLE_SAME ) && 
+            ((result_baseline == QUERY_STYLE_SINGLE || result_baseline == QUERY_STYLE_MULTIPLE_SAME ) &&
              query->baseline_shift.set &&
              query->baseline_shift.type == SP_BASELINE_SHIFT_LITERAL &&
              query->baseline_shift.literal == SP_CSS_BASELINE_SHIFT_SUPER );
@@ -7228,7 +7260,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
 
         // Subscript
         gboolean subscriptSet =
-            ((result_baseline == QUERY_STYLE_SINGLE || result_baseline == QUERY_STYLE_MULTIPLE_SAME ) && 
+            ((result_baseline == QUERY_STYLE_SINGLE || result_baseline == QUERY_STYLE_MULTIPLE_SAME ) &&
              query->baseline_shift.set &&
              query->baseline_shift.type == SP_BASELINE_SHIFT_LITERAL &&
              query->baseline_shift.literal == SP_CSS_BASELINE_SHIFT_SUB );
@@ -7302,7 +7334,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         double letterSpacing;
         if (query->letter_spacing.normal) letterSpacing = 0.0;
         else letterSpacing = query->letter_spacing.computed; // Assume no units (change in desktop-style.cpp)
- 
+
         GtkAction* letterSpacingAction = GTK_ACTION( g_object_get_data( tbl, "TextLetterSpacingAction" ) );
         GtkAdjustment *letterSpacingAdjustment =
             ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( letterSpacingAction ));
@@ -7913,10 +7945,11 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
     if (!modmade) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setBool("/tools/connector/orthogonal", is_orthog);
-    }
+    } else {
 
-    DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR,
+        DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR,
                        is_orthog ? _("Set connector type: orthogonal"): _("Set connector type: polyline"));
+    }
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
@@ -7962,9 +7995,10 @@ static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble(Glib::ustring("/tools/connector/curvature"), newValue);
     }
-
-    DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR,
+    else {
+        DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR,
                        _("Change connector curvature"));
+    }
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
@@ -7999,21 +8033,23 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
 
     sp_repr_set_css_double(repr, "inkscape:connector-spacing", adj->value);
     SP_OBJECT(desktop->namedview)->updateRepr();
+    bool modmade = false;
 
     GSList *items = get_avoided_items(NULL, desktop->currentRoot(), desktop);
     for ( GSList const *iter = items ; iter != NULL ; iter = iter->next ) {
         SPItem *item = reinterpret_cast<SPItem *>(iter->data);
         Geom::Matrix m = Geom::identity();
         avoid_item_move(&m, item);
+        modmade = true;
     }
 
     if (items) {
         g_slist_free(items);
     }
-
-    DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR,
+    if(modmade) {
+        DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR,
                        _("Change connector spacing"));
-
+    }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
