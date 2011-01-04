@@ -681,24 +681,24 @@ PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom::Mat
     
     if (moves == 1 && moves+lines == nodes && closed) {
         polygon = true;
-        if (nodes==5) {
-            if (lpPoints[0].x == lpPoints[3].x && lpPoints[1].x == lpPoints[2].x &&
-                lpPoints[0].y == lpPoints[1].y && lpPoints[2].y == lpPoints[3].y)
-            {
-                rectangle = true;
-            }
-        }
+//        if (nodes==5) {                             // disable due to LP Bug 407394
+//            if (lpPoints[0].x == lpPoints[3].x && lpPoints[1].x == lpPoints[2].x &&
+//                lpPoints[0].y == lpPoints[1].y && lpPoints[2].y == lpPoints[3].y)
+//            {
+//                rectangle = true;
+//            }
+//        }
     }
     else if (moves == 1 && nodes == 5 && moves+curves == nodes && closed) {
-        if (lpPoints[0].x == lpPoints[1].x && lpPoints[1].x == lpPoints[11].x &&
-            lpPoints[5].x == lpPoints[6].x && lpPoints[6].x == lpPoints[7].x &&
-            lpPoints[2].x == lpPoints[10].x && lpPoints[3].x == lpPoints[9].x && lpPoints[4].x == lpPoints[8].x &&
-            lpPoints[2].y == lpPoints[3].y && lpPoints[3].y == lpPoints[4].y &&
-            lpPoints[8].y == lpPoints[9].y && lpPoints[9].y == lpPoints[10].y &&
-            lpPoints[5].y == lpPoints[1].y && lpPoints[6].y == lpPoints[0].y && lpPoints[7].y == lpPoints[11].y)
-        {
-            ellipse = true;
-        }
+//        if (lpPoints[0].x == lpPoints[1].x && lpPoints[1].x == lpPoints[11].x &&
+//            lpPoints[5].x == lpPoints[6].x && lpPoints[6].x == lpPoints[7].x &&
+//            lpPoints[2].x == lpPoints[10].x && lpPoints[3].x == lpPoints[9].x && lpPoints[4].x == lpPoints[8].x &&
+//            lpPoints[2].y == lpPoints[3].y && lpPoints[3].y == lpPoints[4].y &&
+//            lpPoints[8].y == lpPoints[9].y && lpPoints[9].y == lpPoints[10].y &&
+//            lpPoints[5].y == lpPoints[1].y && lpPoints[6].y == lpPoints[0].y && lpPoints[7].y == lpPoints[11].y)
+//        {                                           // disable due to LP Bug 407394
+//            ellipse = true;
+//        }
     }
 
     if (polygon || ellipse) {
