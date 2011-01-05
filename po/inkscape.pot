@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-12-30 10:01+0100\n"
+"POT-Creation-Date: 2011-01-05 20:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -530,6 +530,7 @@ msgid "Roughen"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:10
+#: ../src/extension/internal/filter/abc.h:203
 msgid "Small-scale roughening to edges and content"
 msgstr ""
 
@@ -756,7 +757,7 @@ msgstr ""
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../src/extension/internal/filter/color.h:486
 #: ../src/extension/internal/filter/drop-shadow.h:160
-#: ../src/extension/internal/filter/experimental.h:96
+#: ../src/extension/internal/filter/experimental.h:95
 #: ../share/extensions/color_blackandwhite.inx.h:2
 #: ../share/extensions/color_brighter.inx.h:2
 #: ../share/extensions/color_custom.inx.h:9
@@ -1474,6 +1475,7 @@ msgid "Specular light"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:211
+#: ../src/extension/internal/filter/abc.h:272
 msgid "Basic specular bevel to use for building textures"
 msgstr ""
 
@@ -1549,6 +1551,7 @@ msgid "Diffuse light"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:118
+#: ../src/extension/internal/filter/abc.h:127
 msgid "Basic diffuse bevel to use for building textures"
 msgstr ""
 
@@ -7179,6 +7182,7 @@ msgstr ""
 
 #. Label
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
+#: ../src/extension/internal/filter/experimental.h:265
 #: ../src/live_effects/lpe-ruler.cpp:50 ../src/widgets/gradient-vector.cpp:824
 #: ../share/extensions/printing-marks.inx.h:9
 msgid "Offset:"
@@ -7498,11 +7502,12 @@ msgid "Hue:"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
-#: ../src/extension/internal/filter/experimental.h:84
+#: ../src/extension/internal/filter/experimental.h:83
 msgid "Saturation:"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/modulate.cpp:43
+#: ../src/extension/internal/filter/abc.h:261
 msgid "Brightness:"
 msgstr ""
 
@@ -7590,10 +7595,14 @@ msgid "Shade"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
+#: ../src/extension/internal/filter/abc.h:118
+#: ../src/extension/internal/filter/abc.h:263
 msgid "Azimuth:"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
+#: ../src/extension/internal/filter/abc.h:117
+#: ../src/extension/internal/filter/abc.h:262
 msgid "Elevation:"
 msgstr ""
 
@@ -7841,8 +7850,103 @@ msgstr ""
 msgid "Enhanced Metafile"
 msgstr ""
 
+#: ../src/extension/internal/filter/abc.h:52
+msgid "Blur, custom (ABCs)"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:54
+msgid "Horizontal blur:"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:55
+msgid "Vertical blur:"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:59
+#: ../src/extension/internal/filter/abc.h:123
+#: ../src/extension/internal/filter/abc.h:199
+#: ../src/extension/internal/filter/abc.h:268
+#: ../src/extension/internal/filter/color.h:80
+#: ../src/extension/internal/filter/color.h:181
+#: ../src/extension/internal/filter/color.h:305
+#: ../src/extension/internal/filter/color.h:382
+#: ../src/extension/internal/filter/color.h:492
+#: ../src/extension/internal/filter/drop-shadow.h:44
+#: ../src/extension/internal/filter/drop-shadow.h:104
+#: ../src/extension/internal/filter/drop-shadow.h:164
+#: ../src/extension/internal/filter/experimental.h:108
+#: ../src/extension/internal/filter/experimental.h:271
+#: ../src/extension/internal/filter/experimental.h:428
+#: ../src/extension/internal/filter/experimental.h:525
+#: ../src/extension/internal/filter/filter-file.cpp:148
+#: ../src/extension/internal/filter/filter.cpp:216
+#: ../src/extension/internal/filter/morphology.h:61
+#: ../src/extension/internal/filter/snow.h:38
+#: ../src/ui/dialog/inkscape-preferences.cpp:791
+msgid "Filters"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:60
+#: ../src/extension/internal/filter/abc.h:124
+#: ../src/extension/internal/filter/abc.h:200
+#: ../src/extension/internal/filter/abc.h:269
+#: ../src/extension/internal/filter/color.h:81
+#: ../src/extension/internal/filter/color.h:182
+#: ../src/extension/internal/filter/color.h:306
+#: ../src/extension/internal/filter/color.h:383
+#: ../src/extension/internal/filter/color.h:493
+#: ../src/extension/internal/filter/drop-shadow.h:165
+#: ../src/extension/internal/filter/experimental.h:109
+#: ../src/extension/internal/filter/experimental.h:272
+#: ../src/extension/internal/filter/experimental.h:429
+#: ../src/extension/internal/filter/experimental.h:526
+#: ../src/extension/internal/filter/morphology.h:62
+msgid "Experimental"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:63
+msgid "Simple vertical and horizontal blur effect"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:114
+msgid "Diffuse light, custom (ABCs)"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:116
+#: ../src/extension/internal/filter/abc.h:260
+#: ../src/extension/internal/filter/experimental.h:85
+#: ../src/extension/internal/filter/experimental.h:249
+#: ../share/extensions/fractalize.inx.h:3
+msgid "Smoothness:"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:119
+#: ../src/extension/internal/filter/abc.h:264
+msgid "Lightning color"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:191
+msgid "Roughen, custom (ABCs)"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:193
+msgid "Horizontal frequency (x100):"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:194
+msgid "Vertical frequency (x100):"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:195
+msgid "Intensity:"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:258
+msgid "Specular light, custom (ABCs)"
+msgstr ""
+
 #: ../src/extension/internal/filter/color.h:57
-msgid "Colorize, custom -EXP-"
+msgid "Colorize, custom (color)"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:59
@@ -7868,48 +7972,12 @@ msgstr ""
 msgid "Color 1"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:80
-#: ../src/extension/internal/filter/color.h:181
-#: ../src/extension/internal/filter/color.h:305
-#: ../src/extension/internal/filter/color.h:382
-#: ../src/extension/internal/filter/color.h:492
-#: ../src/extension/internal/filter/drop-shadow.h:44
-#: ../src/extension/internal/filter/drop-shadow.h:104
-#: ../src/extension/internal/filter/drop-shadow.h:164
-#: ../src/extension/internal/filter/experimental.h:109
-#: ../src/extension/internal/filter/experimental.h:268
-#: ../src/extension/internal/filter/experimental.h:411
-#: ../src/extension/internal/filter/experimental.h:508
-#: ../src/extension/internal/filter/experimental.h:569
-#: ../src/extension/internal/filter/filter-file.cpp:148
-#: ../src/extension/internal/filter/filter.cpp:216
-#: ../src/extension/internal/filter/morphology.h:61
-#: ../src/extension/internal/filter/snow.h:38
-#: ../src/ui/dialog/inkscape-preferences.cpp:791
-msgid "Filters"
-msgstr ""
-
-#: ../src/extension/internal/filter/color.h:81
-#: ../src/extension/internal/filter/color.h:182
-#: ../src/extension/internal/filter/color.h:306
-#: ../src/extension/internal/filter/color.h:383
-#: ../src/extension/internal/filter/color.h:493
-#: ../src/extension/internal/filter/drop-shadow.h:165
-#: ../src/extension/internal/filter/experimental.h:110
-#: ../src/extension/internal/filter/experimental.h:269
-#: ../src/extension/internal/filter/experimental.h:412
-#: ../src/extension/internal/filter/experimental.h:509
-#: ../src/extension/internal/filter/experimental.h:570
-#: ../src/extension/internal/filter/morphology.h:62
-msgid "Experimental"
-msgstr ""
-
 #: ../src/extension/internal/filter/color.h:84
 msgid "Blend image or object with a flood color"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:159
-msgid "Duochrome, custom -EXP-"
+msgid "Duochrome, custom (color)"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:163
@@ -7929,7 +7997,7 @@ msgid "Convert luminance values to a duochrome palette"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:285
-msgid "Quadritone fantasy, custom -EXP-"
+msgid "Quadritone fantasy, custom (color)"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:287
@@ -7947,7 +8015,7 @@ msgid "Over-saturation:"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:372
-msgid "Solarize, custom -EXP-"
+msgid "Solarize, custom (color)"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:374
@@ -7959,7 +8027,7 @@ msgid "Classic photographic solarization effect"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:459
-msgid "Tritone, custom -EXP-"
+msgid "Tritone, custom (color)"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:469
@@ -8028,202 +8096,186 @@ msgid "White, blurred drop glow"
 msgstr ""
 
 #: ../src/extension/internal/filter/drop-shadow.h:155
-msgid "Drop shadow, color -EXP-"
+msgid "Drop shadow, color"
 msgstr ""
 
 #: ../src/extension/internal/filter/drop-shadow.h:168
 msgid "Colorizable Drop shadow"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:68
-msgid "Chromolitho, custom -EXP-"
+#: ../src/extension/internal/filter/experimental.h:67
+msgid "Chromolitho, custom"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:72
+#: ../src/extension/internal/filter/experimental.h:71
 #: ../share/extensions/jessyInk_keyBindings.inx.h:5
 msgid "Drawing mode"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:73
+#: ../src/extension/internal/filter/experimental.h:72
 msgid "Drawing blend:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:80
+#: ../src/extension/internal/filter/experimental.h:79
 msgid "Transparent"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:81
+#: ../src/extension/internal/filter/experimental.h:80
 msgid "Dented"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:82
+#: ../src/extension/internal/filter/experimental.h:81
 msgid "Inverted"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:83
-#: ../src/extension/internal/filter/experimental.h:246
+#: ../src/extension/internal/filter/experimental.h:82
+#: ../src/extension/internal/filter/experimental.h:247
 msgid "Lightness:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:85
+#: ../src/extension/internal/filter/experimental.h:84
 msgid "Noise reduction:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:86
-#: ../src/extension/internal/filter/experimental.h:247
-#: ../share/extensions/fractalize.inx.h:3
-msgid "Smoothness:"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:89
+#: ../src/extension/internal/filter/experimental.h:88
 msgid "Grain mode"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:90
+#: ../src/extension/internal/filter/experimental.h:89
 msgid "X frequency:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:91
+#: ../src/extension/internal/filter/experimental.h:90
 msgid "Y frequency:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:92
+#: ../src/extension/internal/filter/experimental.h:91
 msgid "Complexity:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:93
+#: ../src/extension/internal/filter/experimental.h:92
 msgid "Variation:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:94
+#: ../src/extension/internal/filter/experimental.h:93
 msgid "Expansion:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:95
-#: ../src/extension/internal/filter/experimental.h:252
+#: ../src/extension/internal/filter/experimental.h:94
+#: ../src/extension/internal/filter/experimental.h:251
+#: ../src/extension/internal/filter/experimental.h:256
 msgid "Erosion:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:97
+#: ../src/extension/internal/filter/experimental.h:96
 msgid "Grain blend:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:113
+#: ../src/extension/internal/filter/experimental.h:112
 msgid "Chromo effect with customizable edge drawing and graininess"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:241
-msgid "Drawing, custom -EXP-"
+#: ../src/extension/internal/filter/experimental.h:242
+msgid "Drawing, custom"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:245
+#: ../src/extension/internal/filter/experimental.h:246
 msgid "Simplification:"
 msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:248
-msgid "Dilatation:"
+msgid "Fading:"
 msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:250
+#: ../src/extension/internal/filter/experimental.h:255
+msgid "Dilatation:"
+msgstr ""
+
+#: ../src/extension/internal/filter/experimental.h:252
+msgid "Transluscent"
+msgstr ""
+
+#: ../src/extension/internal/filter/experimental.h:254
 msgid "Level:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:251
-msgid "Spread:"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:255
+#: ../src/extension/internal/filter/experimental.h:259
 msgid "Fill color"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:256
+#: ../src/extension/internal/filter/experimental.h:260
 msgid "Image on fill"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:257
-msgid "Image on fill opacity:"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:260
+#: ../src/extension/internal/filter/experimental.h:263
 msgid "Stroke color"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:261
+#: ../src/extension/internal/filter/experimental.h:264
 msgid "Image on stroke"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:262
-msgid "Image on stroke opacity:"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:272
+#: ../src/extension/internal/filter/experimental.h:275
 msgid "Convert images to duochrome drawings"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:387
-msgid "Poster and painting, custom -EXP-"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:389
-msgid "Effect type:"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:393
-msgid "Transfer type:"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:397
-#: ../src/extension/internal/filter/experimental.h:503
-msgid "Levels:"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:398
-msgid "Blend mode:"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:403
-msgid "Primary blur:"
-msgstr ""
-
 #: ../src/extension/internal/filter/experimental.h:404
-msgid "Secondary blur:"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:405
-msgid "Pre-saturation:"
+msgid "Poster and painting, custom"
 msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:406
-msgid "Post-saturation:"
+msgid "Effect type:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:407
-msgid "Simulate antialiasing"
+#: ../src/extension/internal/filter/experimental.h:410
+msgid "Transfer type:"
+msgstr ""
+
+#: ../src/extension/internal/filter/experimental.h:414
+#: ../src/extension/internal/filter/experimental.h:520
+msgid "Levels:"
 msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:415
+msgid "Blend mode:"
+msgstr ""
+
+#: ../src/extension/internal/filter/experimental.h:420
+msgid "Primary blur:"
+msgstr ""
+
+#: ../src/extension/internal/filter/experimental.h:421
+msgid "Secondary blur:"
+msgstr ""
+
+#: ../src/extension/internal/filter/experimental.h:422
+msgid "Pre-saturation:"
+msgstr ""
+
+#: ../src/extension/internal/filter/experimental.h:423
+msgid "Post-saturation:"
+msgstr ""
+
+#: ../src/extension/internal/filter/experimental.h:424
+msgid "Simulate antialiasing"
+msgstr ""
+
+#: ../src/extension/internal/filter/experimental.h:432
 msgid "Poster and painting effects"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:501
-msgid "Posterize basic, custom -EXP-"
+#: ../src/extension/internal/filter/experimental.h:518
+msgid "Posterize basic, custom"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:504
+#: ../src/extension/internal/filter/experimental.h:521
 #: ../src/extension/internal/filter/morphology.h:57
 msgid "Blur:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:512
+#: ../src/extension/internal/filter/experimental.h:529
 msgid "Simple posterizing effect"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:563
-msgid "Test Filter -EXP-"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:573
-msgid "Change colors to a two colors palette"
 msgstr ""
 
 #: ../src/extension/internal/filter/filter-file.cpp:32
@@ -8239,7 +8291,7 @@ msgid "Null external module directory name.  Filters will not be loaded."
 msgstr ""
 
 #: ../src/extension/internal/filter/morphology.h:51
-msgid "Cross-smooth, custom -EXP-"
+msgid "Cross-smooth, custom (morphology)"
 msgstr ""
 
 #: ../src/extension/internal/filter/morphology.h:65

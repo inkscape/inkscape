@@ -108,6 +108,7 @@ src/extension/internal/cairo-ps-out.cpp
 src/extension/internal/cairo-renderer-pdf-out.cpp
 src/extension/internal/clear-n_.h
 src/extension/internal/emf-win32-inout.cpp
+src/extension/internal/filter/abc.h
 src/extension/internal/filter/color.h
 src/extension/internal/filter/drop-shadow.h
 src/extension/internal/filter/experimental.h
