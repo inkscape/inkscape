@@ -48,8 +48,8 @@ public:
 	static void init (void) {
 		Inkscape::Extension::build_from_mem(
 			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-				"<name>" N_("Cross-smooth, custom -EXP-") "</name>\n"
-				"<id>org.inkscape.effect.filter.Crosssmooth</id>\n"
+				"<name>" N_("Cross-smooth, custom (morphology)") "</name>\n"
+				"<id>org.inkscape.effect.filter.crosssmooth</id>\n"
                         "<param name=\"type\" gui-text=\"" N_("Type:") "\" type=\"enum\">\n"
                             "<_item value=\"edges\">Smooth edges</_item>\n"
                             "<_item value=\"all\">Smooth all</_item>\n"
@@ -87,7 +87,7 @@ Crosssmooth::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
 	_filter = g_strdup_printf(
-		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Cross-smooth, custom -EXP-\">\n"
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Cross-smooth, custom\">\n"
         "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
         "<feComposite in=\"%s\" in2=\"blur\" operator=\"atop\" result=\"composite1\" />\n"
         "<feComposite in2=\"composite1\" operator=\"in\" result=\"composite2\" />\n"

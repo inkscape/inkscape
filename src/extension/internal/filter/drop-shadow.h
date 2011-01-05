@@ -152,7 +152,7 @@ public:
 	static void init (void) {
 		Inkscape::Extension::build_from_mem(
 			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-				"<name>" N_("Drop shadow, color -EXP-") "</name>\n"
+				"<name>" N_("Drop shadow, color") "</name>\n"
 				"<id>org.inkscape.effect.filter.colorizable-drop-shadow</id>\n"
 				"<param name=\"blur\" gui-text=\"" N_("Blur radius (px):") "\" type=\"float\" min=\"0.0\" max=\"200.0\">3.0</param>\n"
 				"<param name=\"xoffset\" gui-text=\"" N_("Horizontal offset (px):") "\" type=\"float\" min=\"-50.0\" max=\"50.0\">6.0</param>\n"
@@ -196,7 +196,7 @@ ColorizableDropShadow::get_filter_text (Inkscape::Extension::Extension * ext)
     b << ((color >>  8) & 0xff);
 
 	_filter = g_strdup_printf(
-		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1.2\" width=\"1.2\" y=\"-0.1\" x=\"-0.1\" inkscape:label=\"Drop shadow, color -EXP-\">\n"
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1.2\" width=\"1.2\" y=\"-0.1\" x=\"-0.1\" inkscape:label=\"Drop shadow, color\">\n"
 			"<feFlood flood-opacity=\"%s\" result=\"flood\" flood-color=\"rgb(%s,%s,%s)\" />\n"
 			"<feComposite in2=\"SourceGraphic\" in=\"flood\" result=\"composite\" operator=\"in\" />\n"
 			"<feGaussianBlur result=\"blur\" stdDeviation=\"%s\" in=\"composite\" />\n"

@@ -3,7 +3,7 @@
 /* Change the 'EXPERIMENTAL' above to be your file name */
 
 /*
- * Copyright (C) 2010 Authors:
+ * Copyright (C) 2011 Authors:
  *   Ivan Louette (filters)
  *   Nicolas Dufour (UI) <nicoduf@yahoo.fr>
  *
@@ -11,7 +11,7 @@
  *   Chromolitho
  *   Drawing
  *   Posterize
- *   Test filter (should no be used...)
+ *   Posterize basic
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -38,8 +38,7 @@ namespace Filter {
     * Transparent (boolean, default unchecked) -> Checked = colormatrix5 (in="colormatrix4"), Unchecked = colormatrix5 (in="component1")
     * Invert (boolean, default false) -> component1 (tableValues) [adds a trailing 0]
     * Dented (boolean, default false) -> component1 (tableValues) [adds intermediate 0s]
-    * Expand white (0->5, default 1) -> component1 (tableValues) [0="0 1", 5="0 1 1 1 1 1 1"]
-    * Lightness (0->10, default 0) -> composite1 (k1)
+    * Lightness (0.->10., default 0.) -> composite1 (k1)
     * Saturation (0.->1., default 1.) -> colormatrix3 (values)
     * Noise reduction (1->1000, default 20) -> convolve (kernelMatrix, central value -1001->-2000, default -1020)
     * Drawing blend (enum, default Normal) -> blend1 (mode)
@@ -65,24 +64,24 @@ public:
 	static void init (void) {
 		Inkscape::Extension::build_from_mem(
 			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-				"<name>" N_("Chromolitho, custom -EXP-") "</name>\n"
+				"<name>" N_("Chromolitho, custom") "</name>\n"
 				"<id>org.inkscape.effect.filter.Chromolitho</id>\n"
 	            "<param name=\"tab\" type=\"notebook\">\n"
                     "<page name=\"optionstab\" _gui-text=\"Options\">\n"
                         "<param name=\"drawing\" gui-text=\"" N_("Drawing mode") "\" type=\"boolean\" >true</param>\n"
                         "<param name=\"dblend\" gui-text=\"" N_("Drawing blend:") "\" type=\"enum\">\n"
+                            "<_item value=\"darken\">Darken</_item>\n"
                             "<_item value=\"normal\">Normal</_item>\n"
                             "<_item value=\"multiply\">Multiply</_item>\n"
                             "<_item value=\"screen\">Screen</_item>\n"
                             "<_item value=\"lighten\">Lighten</_item>\n"
-                            "<_item value=\"darken\">Darken</_item>\n"
                         "</param>\n"
                         "<param name=\"transparent\" gui-text=\"" N_("Transparent") "\" type=\"boolean\" >false</param>\n"
                         "<param name=\"dented\" gui-text=\"" N_("Dented") "\" type=\"boolean\" >false</param>\n"
                         "<param name=\"inverted\" gui-text=\"" N_("Inverted") "\" type=\"boolean\" >false</param>\n"
-                        "<param name=\"light\" gui-text=\"" N_("Lightness:") "\" type=\"int\" min=\"0\" max=\"10\">0</param>\n"
+                        "<param name=\"light\" gui-text=\"" N_("Lightness:") "\" type=\"float\" min=\"0\" max=\"10\">0</param>\n"
                         "<param name=\"saturation\" gui-text=\"" N_("Saturation:") "\" type=\"float\" min=\"0\" max=\"1\">1</param>\n"
-                        "<param name=\"noise\" gui-text=\"" N_("Noise reduction:") "\" type=\"int\" min=\"1\" max=\"1000\">20</param>\n"
+                        "<param name=\"noise\" gui-text=\"" N_("Noise reduction:") "\" type=\"int\" min=\"1\" max=\"1000\">10</param>\n"
                         "<param name=\"smooth\" gui-text=\"" N_("Smoothness:") "\" type=\"float\" min=\"0.01\" max=\"10\">1</param>\n"
                     "</page>\n"
                     "<page name=\"graintab\" _gui-text=\"Grain\">\n"
@@ -149,7 +148,7 @@ Chromolitho::get_filter_text (Inkscape::Extension::Extension * ext)
         col3in << "colormatrix4";
     else
         col3in << "component1";
-    light << ext->get_param_int("light");
+    light << ext->get_param_float("light");
     saturation << ext->get_param_float("saturation");
     noise << (-1000 - ext->get_param_int("noise"));
     dblend << ext->get_param_enum("dblend");
@@ -180,8 +179,7 @@ Chromolitho::get_filter_text (Inkscape::Extension::Extension * ext)
         graincol << "0";
 
 	_filter = g_strdup_printf(
-		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Chromolitho, custom -EXP-\">\n"
-
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Chromolitho, custom\">\n"
         "<feComposite stdDeviation=\"1\" in=\"SourceGraphic\" in2=\"SourceGraphic\" operator=\"arithmetic\" k1=\"%s\" k2=\"1\" result=\"composite1\" />\n"
         "<feConvolveMatrix in=\"composite1\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" order=\"3 3\" stdDeviation=\"1\" result=\"convolve1\" />\n"
         "<feBlend in=\"%s\" in2=\"composite1\" mode=\"%s\" blend=\"normal\" stdDeviation=\"1\" result=\"blend1\" />\n"
@@ -210,21 +208,24 @@ Chromolitho::get_filter_text (Inkscape::Extension::Extension * ext)
     Convert images to duochrome drawings.
 
     Filter's parameters:
-    * Simplification (0.01->10, default 0.7) -> blur1 (stdDeviation)
-    * Lightness (0->50, default 5) -> convolve (kernelMatrix, central value -1000->-1050, default -1005)
-    * Smoothness (0.01->10, default 0.7) -> blur2 (stdDeviation)
-    * Dilatation (3->100, default 6) -> colormatrix3 (n-1th value)
+    * Simplification (0.01->20, default 0.6) -> blur1 (stdDeviation)
+    * Lightness (1->500, default 10) -> convolve1 (kernelMatrix, central value -1001->-1500, default -1010)
+    * Fading (0.->6., default 0) -> composite1 (k4)
+    * Smoothness (0.01->20, default 0.6) -> blur2 (stdDeviation)
+    * Dilatation (1->50, default 6) -> color2 (n-1th value)
+    * Erosion (0->50, default 3) -> color2 (nth value 0->-50)
+    * Transluscent (boolean, default false) -> composite 8 (in, true->merge1, false->composite7)
+    * Offset (-100->100, default 0) -> offset (val)
 
-    * Blur (0.01->10., default 1.) -> blur3 (stdDeviation)
-    * Blur spread (3->20, default 6) -> colormatrix5 (n-1th value)
-    * Blur erosion (-2->0, default -2) -> colormatrix5 (nth value)
+    * Blur (0.01->20., default 1.) -> blur3 (stdDeviation)
+    * Blur spread (1->50, default 6) -> color4 (n-1th value)
+    * Blur erosion (0->50, default 3) -> color4 (nth value 0->-50)
 
-    * Stroke color (guint, default 205,0,0) -> flood2 (flood-opacity, flood-color)
-    * Image on stroke (boolean, default false) -> composite1 (in="flood2" true-> in="SourceGraphic")
-    * Image on stroke opacity (0.->1., default 1) -> composite3 (k3)
-    * Fill color (guint, default 255,203,0) -> flood3 (flood-opacity, flood-color)
-    * Image on fill (boolean, default false) -> composite2 (in="flood3" true-> in="SourceGraphic")
-    * Image on fill opacity (0.->1., default 1) -> composite3 (k2)
+    * Stroke color (guint, default 64,64,64,255) -> flood2 (flood-color), composite3 (k2)
+    * Image on stroke (boolean, default false) -> composite2 (in="flood2" true-> in="SourceGraphic")
+    * Fill color (guint, default 200,200,200,255) -> flood3 (flood-opacity), composite5 (k2)
+    * Image on fill (boolean, default false) -> composite4 (in="flood3" true-> in="SourceGraphic")
+
 */
 
 class Drawing : public Inkscape::Extension::Internal::Filter::Filter {
@@ -238,28 +239,30 @@ public:
 	static void init (void) {
 		Inkscape::Extension::build_from_mem(
 			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-				"<name>" N_("Drawing, custom -EXP-") "</name>\n"
+				"<name>" N_("Drawing, custom") "</name>\n"
 				"<id>org.inkscape.effect.filter.Drawing</id>\n"
 	            "<param name=\"tab\" type=\"notebook\">\n"
                     "<page name=\"optionstab\" _gui-text=\"Options\">\n"
-                        "<param name=\"simply\" gui-text=\"" N_("Simplification:") "\" type=\"float\" min=\"0.01\" max=\"10\">0.7</param>\n"
-                        "<param name=\"light\" gui-text=\"" N_("Lightness:") "\" type=\"int\" min=\"0\" max=\"50\">5</param>\n"
-                        "<param name=\"smooth\" gui-text=\"" N_("Smoothness:") "\" type=\"float\" min=\"0.01\" max=\"10\">0.7</param>\n"
-                        "<param name=\"dilat\" gui-text=\"" N_("Dilatation:") "\" type=\"int\" min=\"3\" max=\"100\">6</param>\n"
+                        "<param name=\"simply\" gui-text=\"" N_("Simplification:") "\" type=\"float\" min=\"0.01\" max=\"20\">0.6</param>\n"
+                        "<param name=\"light\" gui-text=\"" N_("Lightness:") "\" type=\"int\" min=\"0\" max=\"500\">10</param>\n"
+                        "<param name=\"fade\" gui-text=\"" N_("Fading:") "\" type=\"float\" min=\"0\" max=\"60\">0</param>\n"
+                        "<param name=\"smooth\" gui-text=\"" N_("Smoothness:") "\" type=\"float\" min=\"0.01\" max=\"20\">0.6</param>\n"
+                        "<param name=\"dilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" min=\"1\" max=\"50\">6</param>\n"
+                        "<param name=\"erosion\" gui-text=\"" N_("Erosion:") "\" type=\"float\" min=\"0\" max=\"50\">3</param>\n"
+                        "<param name=\"transluscent\" gui-text=\"" N_("Transluscent") "\" type=\"boolean\" >false</param>\n"
                         "<_param name=\"blurheader\" type=\"groupheader\">Blur</_param>\n"
-                            "<param name=\"blur\" gui-text=\"" N_("Level:") "\" type=\"float\" min=\"0.01\" max=\"10\">1</param>\n"
-                            "<param name=\"spread\" gui-text=\"" N_("Spread:") "\" type=\"int\" min=\"3\" max=\"20\">6</param>\n"
-                            "<param name=\"erosion\" gui-text=\"" N_("Erosion:") "\" type=\"int\" min=\"-2\" max=\"0\">-2</param>\n"
+                            "<param name=\"blur\" gui-text=\"" N_("Level:") "\" type=\"float\" min=\"0.01\" max=\"20\">1</param>\n"
+                            "<param name=\"bdilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" min=\"1\" max=\"50\">6</param>\n"
+                            "<param name=\"berosion\" gui-text=\"" N_("Erosion:") "\" type=\"float\" min=\"0\" max=\"50\">3</param>\n"
                     "</page>\n"
                     "<page name=\"co11tab\" _gui-text=\"Fill color\">\n"
-			            "<param name=\"fcolor\" gui-text=\"" N_("Fill color") "\" type=\"color\">-3473153</param>\n"
+                        "<param name=\"fcolor\" gui-text=\"" N_("Fill color") "\" type=\"color\">-1515870721</param>\n"
                         "<param name=\"iof\" gui-text=\"" N_("Image on fill") "\" type=\"boolean\" >false</param>\n"
-                        "<param name=\"iofo\" gui-text=\"" N_("Image on fill opacity:") "\" type=\"float\" min=\"0\" max=\"1\">1</param>\n"
                     "</page>\n"
                     "<page name=\"co12tab\" _gui-text=\"Stroke color\">\n"
-			            "<param name=\"scolor\" gui-text=\"" N_("Stroke color") "\" type=\"color\">-855637761</param>\n"
+                        "<param name=\"scolor\" gui-text=\"" N_("Stroke color") "\" type=\"color\">589505535</param>\n"
                         "<param name=\"ios\" gui-text=\"" N_("Image on stroke") "\" type=\"boolean\" >false</param>\n"
-                        "<param name=\"ioso\" gui-text=\"" N_("Image on stroke opacity:") "\" type=\"float\" min=\"0\" max=\"1\">1</param>\n"
+                        "<param name=\"offset\" gui-text=\"" N_("Offset:") "\" type=\"int\" min=\"-100\" max=\"100\">0</param>\n"
                     "</page>\n"
                 "</param>\n"
 				"<effect>\n"
@@ -282,32 +285,41 @@ Drawing::get_filter_text (Inkscape::Extension::Extension * ext)
 
     std::ostringstream simply;
     std::ostringstream light;
+    std::ostringstream fade;
     std::ostringstream smooth;
     std::ostringstream dilat;
-    std::ostringstream blur;
-    std::ostringstream spread;
     std::ostringstream erosion;
+    std::ostringstream transluscent;
+    std::ostringstream offset;
+    std::ostringstream blur;
+    std::ostringstream bdilat;
+    std::ostringstream berosion;
     std::ostringstream strokea;
     std::ostringstream stroker;
     std::ostringstream strokeg;
     std::ostringstream strokeb;
     std::ostringstream ios;
-    std::ostringstream ioso;
     std::ostringstream filla;
     std::ostringstream fillr;
     std::ostringstream fillg;
     std::ostringstream fillb;
     std::ostringstream iof;
-    std::ostringstream iofo;
 
     simply << ext->get_param_float("simply");
     light << (-1000 - ext->get_param_int("light"));
+    fade << (ext->get_param_float("fade") / 10);
     smooth << ext->get_param_float("smooth");
-    dilat << ext->get_param_int("dilat");
-
+    dilat << ext->get_param_float("dilat");
+    erosion << (- ext->get_param_float("erosion"));
+    if (ext->get_param_bool("transluscent"))
+        transluscent << "merge1";
+    else
+        transluscent << "composite7";
+    offset << ext->get_param_int("offset");
+    
     blur << ext->get_param_float("blur");
-    spread << ext->get_param_int("spread");
-    erosion << ext->get_param_int("erosion");
+    bdilat << ext->get_param_float("bdilat");
+    berosion << (- ext->get_param_float("berosion"));
 
     guint32 fcolor = ext->get_param_color("fcolor");
     fillr << ((fcolor >> 24) & 0xff);
@@ -318,7 +330,6 @@ Drawing::get_filter_text (Inkscape::Extension::Extension * ext)
         iof << "SourceGraphic";
     else
         iof << "flood3";
-    iofo << ext->get_param_float("iofo");
 
     guint32 scolor = ext->get_param_color("scolor");
     stroker << ((scolor >> 24) & 0xff);
@@ -329,34 +340,40 @@ Drawing::get_filter_text (Inkscape::Extension::Extension * ext)
         ios << "SourceGraphic";
     else
         ios << "flood2";
-    ioso << ext->get_param_float("ioso");
-
+    
 	_filter = g_strdup_printf(
-		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Drawing, custom -EXP-\">\n"
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Drawing, custom\">\n"
         "<feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%s\" result=\"blur1\" />\n"
-        "<feConvolveMatrix in=\"blur1\" order=\"3 3\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" divisor=\"1\" targetX=\"1\" targetY=\"1\" preserveAlpha=\"true\" bias=\"0\" stdDeviation=\"1\" result=\"convolve\" />\n"
-        "<feColorMatrix values=\"0 -100 0 0 1 0 -100 0 0 1 0 -100 0 0 1 0 0 0 1 0 \" result=\"colormatrix1\" />\n"
-        "<feColorMatrix in=\"colormatrix1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"colormatrix2\" />\n"
+        "<feConvolveMatrix in=\"blur1\" targetX=\"1\" targetY=\"1\" order=\"3 3\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" result=\"convolve1\" />\n"
+        "<feComposite in=\"convolve1\" in2=\"convolve1\" k1=\"1\" k2=\"1\" k4=\"%s\" operator=\"arithmetic\" stdDeviation=\"1\" result=\"composite1\" />\n"
+        "<feColorMatrix in=\"composite1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"color1\" />\n"
         "<feGaussianBlur stdDeviation=\"%s\" result=\"blur2\" />\n"
-        "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s -2 \" result=\"colormatrix3\" />\n"
+        "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"color2\" />\n"
         "<feFlood flood-color=\"rgb(255,255,255)\" result=\"flood1\" />\n"
-        "<feBlend in2=\"colormatrix3\" blend=\"normal\" mode=\"multiply\" result=\"blend1\" />\n"
-        "<feComponentTransfer in=\"blend1\" result=\"component1\">\n"
-            "<feFuncR tableValues=\"0 1 1\" type=\"discrete\" />\n"
-            "<feFuncG tableValues=\"0 1 1\" type=\"discrete\" />\n"
-            "<feFuncB tableValues=\"0 1 1\" type=\"discrete\" />\n"
+        "<feBlend in2=\"color2\" mode=\"multiply\" blend=\"normal\" result=\"blend1\" />\n"
+        "<feComponentTransfer in=\"blend1\" stdDeviation=\"2\" result=\"component1\">\n"
+          "<feFuncR type=\"discrete\" tableValues=\"0 1 1 1\" />\n"
+          "<feFuncG type=\"discrete\" tableValues=\"0 1 1 1\" />\n"
+          "<feFuncB type=\"discrete\" tableValues=\"0 1 1 1\" />\n"
         "</feComponentTransfer>\n"
         "<feGaussianBlur stdDeviation=\"%s\" result=\"blur3\" />\n"
-        "<feColorMatrix in=\"blur3\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"colormatrix4\" />\n"
-        "<feColorMatrix stdDeviation=\"3\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"colormatrix5\" />\n"
-        "<feColorMatrix in=\"colormatrix5\" type=\"saturate\" values=\"1\" result=\"colormatrix6\" />\n"
-        "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" stdDeviation=\"3\" result=\"flood2\" />\n"
-        "<feComposite in=\"%s\" in2=\"colormatrix6\" operator=\"in\" result=\"composite1\" />\n"
-        "<feFlood flood-opacity=\"%s\" in=\"colormatrix6\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood3\" />\n"
-        "<feComposite in=\"%s\" in2=\"colormatrix6\" operator=\"out\" result=\"composite2\" />\n"
-        "<feComposite in2=\"composite1\" operator=\"arithmetic\" k2=\"%s\" k3=\"%s\" result=\"composite3\" />\n"
-        "<feComposite in2=\"SourceGraphic\" operator=\"in\" />\n"
-        "</filter>\n", simply.str().c_str(), light.str().c_str(), smooth.str().c_str(), dilat.str().c_str(), blur.str().c_str(), spread.str().c_str(), erosion.str().c_str(), strokea.str().c_str(), stroker.str().c_str(), strokeg.str().c_str(), strokeb.str().c_str(), ios.str().c_str(), filla.str().c_str(), fillr.str().c_str(), fillg.str().c_str(), fillb.str().c_str(), iof.str().c_str(), iofo.str().c_str(), ioso.str().c_str());
+        "<feColorMatrix in=\"blur3\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.2125 -0.7154 -0.0721 1 0 \" stdDeviation=\"1\" result=\"color3\" />\n"
+        "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"color4\" />\n"
+        "<feFlood flood-color=\"rgb(%s,%s,%s)\" result=\"flood2\" />\n"
+        "<feComposite in=\"%s\" in2=\"color4\" operator=\"in\" result=\"composite2\" />\n"
+        "<feComposite in=\"composite2\" in2=\"composite2\" operator=\"arithmetic\" k2=\"%s\" result=\"composite3\" />\n"
+        "<feOffset dx=\"%s\" dy=\"%s\" result=\"offset1\" />\n"
+        "<feFlood in=\"color4\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood3\" />\n"
+        "<feComposite in=\"%s\" in2=\"color4\" operator=\"out\" result=\"composite4\" />\n"
+        "<feComposite in=\"composite4\" in2=\"composite4\" operator=\"arithmetic\" k2=\"%s\" result=\"composite5\" />\n"
+        "<feMerge result=\"merge1\">\n"
+          "<feMergeNode in=\"composite5\" />\n"
+          "<feMergeNode in=\"offset1\" />\n"
+        "</feMerge>\n"
+        "<feComposite in=\"merge1\" in2=\"merge1\" operator=\"over\" result=\"composite6\" />\n"
+        "<feComposite in=\"composite6\" in2=\"composite6\" operator=\"over\" result=\"composite7\" />\n"
+        "<feComposite in=\"%s\" in2=\"SourceGraphic\" operator=\"in\" result=\"composite8\" />\n"
+        "</filter>\n", simply.str().c_str(), light.str().c_str(), fade.str().c_str(), smooth.str().c_str(), dilat.str().c_str(), erosion.str().c_str(),  blur.str().c_str(), bdilat.str().c_str(), berosion.str().c_str(), stroker.str().c_str(), strokeg.str().c_str(), strokeb.str().c_str(), ios.str().c_str(), strokea.str().c_str(), offset.str().c_str(), offset.str().c_str(), fillr.str().c_str(), fillg.str().c_str(), fillb.str().c_str(), iof.str().c_str(), filla.str().c_str(), transluscent.str().c_str());
 
 	return _filter;
 }; /* Drawing filter */
@@ -384,7 +401,7 @@ public:
 	static void init (void) {
 		Inkscape::Extension::build_from_mem(
 			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-				"<name>" N_("Poster and painting, custom -EXP-") "</name>\n"
+				"<name>" N_("Poster and painting, custom") "</name>\n"
 				"<id>org.inkscape.effect.filter.Posterize</id>\n"
                 "<param name=\"type\" gui-text=\"" N_("Effect type:") "\" type=\"enum\">\n"
                     "<_item value=\"normal\">Normal</_item>\n"
@@ -400,8 +417,8 @@ public:
                     "<_item value=\"normal\">Normal</_item>\n"
                     "<_item value=\"darken\">Darken</_item>\n"
                 "</param>\n"
-                "<param name=\"blur1\" gui-text=\"" N_("Primary blur:") "\" type=\"float\" min=\"0.0\" max=\"100.0\">4.0</param>\n"
-                "<param name=\"blur2\" gui-text=\"" N_("Secondary blur:") "\" type=\"float\" min=\"0.0\" max=\"100.0\">0.5</param>\n"
+                "<param name=\"blur1\" gui-text=\"" N_("Primary blur:") "\" type=\"float\" min=\"0.01\" max=\"100.0\">4.0</param>\n"
+                "<param name=\"blur2\" gui-text=\"" N_("Secondary blur:") "\" type=\"float\" min=\"0.01\" max=\"100.0\">0.5</param>\n"
                 "<param name=\"presaturation\" gui-text=\"" N_("Pre-saturation:") "\" type=\"float\" min=\"0.00\" max=\"1.00\">1.00</param>\n"
                 "<param name=\"postsaturation\" gui-text=\"" N_("Post-saturation:") "\" type=\"float\" min=\"0.00\" max=\"1.00\">1.00</param>\n"
                 "<param name=\"antialiasing\" gui-text=\"" N_("Simulate antialiasing") "\" type=\"boolean\">false</param>\n"
@@ -434,8 +451,8 @@ Posterize::get_filter_text (Inkscape::Extension::Extension * ext)
     
     table << ext->get_param_enum("table");
     blendmode << ext->get_param_enum("blend");
-    blur1 << ext->get_param_float("blur1") + 0.01;
-    blur2 << ext->get_param_float("blur2") + 0.01;
+    blur1 << ext->get_param_float("blur1");
+    blur2 << ext->get_param_float("blur2");
     presat << ext->get_param_float("presaturation");
     postsat << ext->get_param_float("postsaturation");
 
@@ -459,7 +476,7 @@ Posterize::get_filter_text (Inkscape::Extension::Extension * ext)
         antialias << "0.01";
     
 	_filter = g_strdup_printf(
-		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Poster and painting, custom -EXP-\">\n"
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Poster and painting, custom\">\n"
             "<feComposite result=\"Composite1\" operator=\"arithmetic\" k2=\"1\" />\n"
             "<feGaussianBlur stdDeviation=\"%s\" result=\"Gaussian1\" />\n"
             "<feGaussianBlur stdDeviation=\"%s\" in=\"Composite1\" />\n"
@@ -478,21 +495,30 @@ Posterize::get_filter_text (Inkscape::Extension::Extension * ext)
 	return _filter;
 }; /* Posterize filter */
 
+/**
+    \brief    Custom predefined PosterizeBasic filter.
+    
+    Simple posterizing effect
 
-class TestFilter : public Inkscape::Extension::Internal::Filter::Filter {
+    Filter's parameters:
+    * Levels (1->20, default 5) -> component1 (tableValues)
+    * Blur (0.01->20., default 4.) -> blur1 (stdDeviation)
+*/
+class PosterizeBasic : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
 	virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
 
 public:
-	TestFilter ( ) : Filter() { };
-	virtual ~TestFilter ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+	PosterizeBasic ( ) : Filter() { };
+	virtual ~PosterizeBasic ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
 
 	static void init (void) {
 		Inkscape::Extension::build_from_mem(
 			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-				"<name>" N_("Test Filter -EXP-") "</name>\n"
-				"<id>org.inkscape.effect.filter.TestFilter</id>\n"
-                "<_param name=\"header1\" type=\"groupheader\">Test filter</_param>\n"
+				"<name>" N_("Posterize basic, custom") "</name>\n"
+				"<id>org.inkscape.effect.filter.PosterizeBasic</id>\n"
+                "<param name=\"levels\" gui-text=\"" N_("Levels:") "\" type=\"int\" min=\"1\" max=\"20\">5</param>\n"
+                "<param name=\"blur\" gui-text=\"" N_("Blur:") "\" type=\"float\" min=\"0.01\" max=\"20.0\">4.0</param>\n"
 				"<effect>\n"
 					"<object-type>all</object-type>\n"
 					"<effects-menu>\n"
@@ -500,36 +526,44 @@ public:
    						"<submenu name=\"" N_("Experimental") "\"/>\n"
 			      "</submenu>\n"
 					"</effects-menu>\n"
-					"<menu-tip>" N_("Change colors to a two colors palette") "</menu-tip>\n"
+					"<menu-tip>" N_("Simple posterizing effect") "</menu-tip>\n"
 				"</effect>\n"
-			"</inkscape-extension>\n", new TestFilter());
+			"</inkscape-extension>\n", new PosterizeBasic());
 	};
 };
 
 gchar const *
-TestFilter::get_filter_text (Inkscape::Extension::Extension * ext)
+PosterizeBasic::get_filter_text (Inkscape::Extension::Extension * ext)
 {
 	if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream blur;
+    std::ostringstream transf;
     
+    blur << ext->get_param_float("blur");
+
+    transf << "0";
+    int levels = ext->get_param_int("levels") + 1;
+    float val = 0.0;
+    for ( int step = 1 ; step <= levels ; step++ ) {
+        val = (float) step / levels;
+        transf << " " << val;
+    }
+    transf << " 1";
+
 	_filter = g_strdup_printf(
-		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Test Filter -EXP-\">\n"
-            "<feComposite result=\"Composite1\" operator=\"arithmetic\" k2=\"1\" />\n"
-            "<feGaussianBlur stdDeviation=\"4\" result=\"Gaussian1\" />\n"
-            "<feGaussianBlur stdDeviation=\"0.5\" in=\"Composite1\" />\n"
-            "<feBlend in2=\"Gaussian1\" mode=\"normal\" />\n"
-            "<feColorMatrix type=\"saturate\" values=\"1\" />\n"
-            "<feComponentTransfer>\n"
-                "<feFuncR type=\"discrete\" tableValues=\"0 0.25 0.5 0.75 1 1\" />\n"
-                "<feFuncG type=\"discrete\" tableValues=\"0 0.25 0.5 0.75 1 1\" />\n"
-                "<feFuncB type=\"discrete\" tableValues=\"0 0.25 0.5 0.75 1 1\" />\n"
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Posterize basic, custom\">\n"
+            "<feGaussianBlur stdDeviation=\"%s\" result=\"blur1\" />\n"
+            "<feComponentTransfer stdDeviation=\"2\" in=\"blur1\" result=\"component1\">\n"
+                "<feFuncR type=\"discrete\" tableValues=\"%s\" />\n"
+                "<feFuncG type=\"discrete\" tableValues=\"%s\" />\n"
+                "<feFuncB type=\"discrete\" tableValues=\"%s\" />\n"
             "</feComponentTransfer>\n"
-            "<feColorMatrix type=\"saturate\" values=\"1\" />\n"
-            "<feGaussianBlur stdDeviation=\"0.05\" />\n"
-            "<feComposite in2=\"SourceGraphic\" operator=\"atop\" />\n"
-        "</filter>\n");
+            "<feComposite in=\"component1\" in2=\"SourceGraphic\" operator=\"in\" />\n"
+        "</filter>\n", blur.str().c_str(), transf.str().c_str(), transf.str().c_str(), transf.str().c_str());
 
 	return _filter;
-}; /* Test filter */
+}; /* PosterizeBasic filter */
 
 }; /* namespace Filter */
 }; /* namespace Internal */

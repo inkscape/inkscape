@@ -8,6 +8,7 @@
 #include "filter.h"
 
 /* Put your filter here */
+#include "abc.h"
 #include "color.h"
 #include "drop-shadow.h"
 #include "morphology.h"
@@ -30,7 +31,13 @@ Filter::filters_all (void )
 	Snow::init();
 
     /* Experimental custom predefined filters */
-    
+
+    // ABCs
+    Blur::init();
+    DiffuseLight::init();
+    Roughen::init();
+    SpecularLight::init();
+
     // Color
     Colorize::init();
     Duochrome::init();
@@ -40,7 +47,7 @@ Filter::filters_all (void )
 
     // Morphology
     Crosssmooth::init();
-    
+
     // Shadows and glows
     ColorizableDropShadow::init();
 
@@ -48,6 +55,7 @@ Filter::filters_all (void )
     Chromolitho::init();
     Drawing::init();
     Posterize::init();
+    PosterizeBasic::init();
 
 	// Here come the rest of the filters that are read from SVG files in share/filters and
 	// .config/Inkscape/filters
