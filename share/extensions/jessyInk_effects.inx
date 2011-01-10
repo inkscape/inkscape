@@ -12,7 +12,7 @@
 			<param name="effectIn" type="optiongroup" _gui-text="Type:">
         <_option value="none">None (default)</_option>
         <_option value="appear">Appear</_option>
-        <_option value="fade">Fade</_option>
+        <_option value="fade">Fade in</_option>
         <_option value="pop">Pop</_option>
 			</param>
 			<_param name="effectOutLabel" type="description">Build-out effect</_param>
@@ -21,7 +21,7 @@
 			<param name="effectOut" type="optiongroup" _gui-text="Type:">
         <_option value="none">None (default)</_option>
         <_option value="appear">Appear</_option>
-        <_option value="fade">Fade</_option>
+        <_option value="fade">Fade out</_option>
         <_option value="pop">Pop</_option>
 			</param>
 		</page>
