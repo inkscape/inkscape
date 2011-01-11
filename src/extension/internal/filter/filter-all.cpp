@@ -12,6 +12,7 @@
 #include "color.h"
 #include "drop-shadow.h"
 #include "morphology.h"
+#include "shadows.h"
 #include "snow.h"
 
 #include "experimental.h"
@@ -34,13 +35,21 @@ Filter::filters_all (void )
 
     // ABCs
     Blur::init();
+    CleanEdges::init();
+    ColorShift::init();
     DiffuseLight::init();
+    Feather::init();
+    MatteJelly::init();
+    NoiseFill::init();
+    Outline::init();
     Roughen::init();
+    Silhouette::init();
     SpecularLight::init();
 
     // Color
     Colorize::init();
     Duochrome::init();
+    Electrize::init();
     Quadritone::init();
     Solarize::init();
     Tritone::init();
@@ -53,7 +62,9 @@ Filter::filters_all (void )
 
     // TDB
     Chromolitho::init();
+    CrossEngraving::init();
     Drawing::init();
+    NeonDraw::init();
     Posterize::init();
     PosterizeBasic::init();
 
