@@ -1737,6 +1737,7 @@ extension-element-prefixes="math">
   * Text tspan
   * Text flowPara
   * Text flowRegion (text frame)
+  * Get font size
   * Font size
   * Font weight
   * Font family
@@ -1865,15 +1866,14 @@ extension-element-prefixes="math">
 </xsl:template>
 
 <!-- 
-  // Text font size //
-  SVG: font-size, FXG: fontSize
+  // Get text font size //
 -->
-<xsl:template mode="font_size" match="*">
-  <xsl:variable name="value">
-    <xsl:if test="@font-size">
+<xsl:template mode="get_font_size" match="*">
+  <xsl:choose>
+    <xsl:when test="@font-size">
       <xsl:value-of select="@font-size" />
-    </xsl:if>
-    <xsl:if test="@style and contains(@style, 'font-size:')">
+    </xsl:when>
+    <xsl:when test="@style and contains(@style, 'font-size:')">
       <xsl:variable name="font_size" select="normalize-space(substring-after(@style, 'font-size:'))" />
       <xsl:choose>
         <xsl:when test="contains($font_size, ';')">
@@ -1883,7 +1883,20 @@ extension-element-prefixes="math">
           <xsl:value-of select="$font_size" />
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:if>
+    </xsl:when>
+    <xsl:when test="name(..) = 'g' or name(..) = 'svg'">
+      <xsl:apply-templates mode="get_font_size" select="parent::*"/>
+    </xsl:when>
+  </xsl:choose>
+</xsl:template>
+
+<!-- 
+  // Text font size //
+  SVG: font-size, FXG: fontSize
+-->
+<xsl:template mode="font_size" match="*">
+  <xsl:variable name="value">
+    <xsl:apply-templates mode="get_font_size" select="." />
   </xsl:variable>
   <xsl:if test="$value != ''">
     <xsl:attribute name="fontSize">
