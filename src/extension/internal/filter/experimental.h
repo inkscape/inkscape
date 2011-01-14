@@ -498,8 +498,8 @@ public:
               "<name>" N_("Neon draw, custom") "</name>\n"
               "<id>org.inkscape.effect.filter.NeonDraw</id>\n"
               "<param name=\"type\" gui-text=\"" N_("Line type:") "\" type=\"enum\">\n"
-                "<_item value=\"smooth\">Smoothed</_item>\n"
-                "<_item value=\"hard\">Contrasted</_item>\n"
+                "<_item value=\"table\">Smoothed</_item>\n"
+                "<_item value=\"discrete\">Contrasted</_item>\n"
               "</param>\n"
               "<param name=\"simply\" gui-text=\"" N_("Simplify:") "\" type=\"float\" min=\"0.01\" max=\"20.0\">1.5</param>\n"
               "<param name=\"width\" gui-text=\"" N_("Line width:") "\" type=\"float\" min=\"0.01\" max=\"20.0\">1.5</param>\n"
@@ -532,27 +532,19 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream simply;
     std::ostringstream width;
     std::ostringstream lightness;
-    std::ostringstream type1;
-    std::ostringstream type2;
+    std::ostringstream type;
     std::ostringstream dark;
 
-    const gchar *type = ext->get_param_enum("type");
-    if ((g_ascii_strcasecmp("smooth", type) == 0)) {
-        type1 << "table";
-        type2 << "table";
-    } else {
-        type1 << "discrete";
-        type2 << "discrete"; 
-    }
-
+    type << ext->get_param_enum("type");
     blend << ext->get_param_enum("blend");
     simply << ext->get_param_float("simply");
     width << ext->get_param_float("width");
     lightness << ext->get_param_float("lightness");
 
+    const gchar *typestr = ext->get_param_enum("type");
     if (ext->get_param_bool("dark"))
         dark << "component2";
-    else if ((g_ascii_strcasecmp("smooth", type) == 0))
+    else if ((g_ascii_strcasecmp("table", typestr) == 0))
         dark << "blur2";
     else
         dark << "component1";
@@ -562,9 +554,9 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feBlend blend=\"normal\" mode=\"%s\" result=\"blend\" />\n"
           "<feGaussianBlur in=\"blend\" stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feComponentTransfer result=\"component1\">\n"
-            "<feFuncR type=\"%s\" tableValues=\"0 0.3 0.6 1 1\" />\n"
-            "<feFuncG type=\"%s\" tableValues=\"0 0.3 0.6 1 1\" />\n"
-            "<feFuncB type=\"%s\" tableValues=\"0 0.3 0.6 1 1\" />\n"
+            "<feFuncR type=\"discrete\" tableValues=\"0 0.3 0.6 1 1\" />\n"
+            "<feFuncG type=\"discrete\" tableValues=\"0 0.3 0.6 1 1\" />\n"
+            "<feFuncB type=\"discrete\" tableValues=\"0 0.3 0.6 1 1\" />\n"
           "</feComponentTransfer>\n"
           "<feGaussianBlur in=\"component1\" stdDeviation=\"%s\" result=\"blur2\" />\n"
           "<feComponentTransfer in=\"blur2\" result=\"component2\">\n"
@@ -574,7 +566,7 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
           "</feComponentTransfer>\n"
           "<feComposite in=\"component2\" in2=\"%s\" k3=\"%s\" operator=\"arithmetic\" k2=\"1\" result=\"composite1\" />\n"
           "<feComposite in=\"composite1\" in2=\"SourceGraphic\" operator=\"in\" result=\"composite2\" />\n"
-        "</filter>\n", blend.str().c_str(), simply.str().c_str(), type1.str().c_str(), type1.str().c_str(), type1.str().c_str(), width.str().c_str(), type2.str().c_str(), type2.str().c_str(), type2.str().c_str(), dark.str().c_str(), lightness.str().c_str());
+        "</filter>\n", blend.str().c_str(), simply.str().c_str(), width.str().c_str(), type.str().c_str(), type.str().c_str(), type.str().c_str(), dark.str().c_str(), lightness.str().c_str());
 
     return _filter;
 }; /* NeonDraw filter */

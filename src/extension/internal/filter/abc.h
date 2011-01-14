@@ -717,7 +717,7 @@ Roughen::get_filter_text (Inkscape::Extension::Extension * ext)
     Repaint anything visible monochrome
 
     Filter's parameters:
-    * Blur (0.->50., default 0) -> blur (stdDeviation)
+    * Blur (0.01->50., default 0.01) -> blur (stdDeviation)
     * Cutout (boolean, default False) -> composite (false=in, true=out)
     * Color (guint, default 0,0,0,255) -> flood (flood-color, flood-opacity)
 */
@@ -735,7 +735,7 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Silhouette, custom (ABCs)") "</name>\n"
               "<id>org.inkscape.effect.filter.Silhouette</id>\n"
-              "<param name=\"blur\" gui-text=\"" N_("Blur:") "\" type=\"float\" min=\"0.\" max=\"50\">0</param>\n"
+              "<param name=\"blur\" gui-text=\"" N_("Blur:") "\" type=\"float\" min=\"0.01\" max=\"50\">0.01</param>\n"
               "<param name=\"cutout\" gui-text=\"" N_("Cutout") "\" type=\"boolean\">false</param>\n"
               "<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">255</param>\n"
               "<effect>\n"
