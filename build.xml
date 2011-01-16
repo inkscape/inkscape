@@ -687,6 +687,7 @@
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-stream-0.8.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libjpeg-7.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpng12-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpng14-14.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libtiff-3.dll"/>
 	<copy todir="${dist}" file="${devlibs}/bin/libopenjpeg-2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/msvcr70.dll"/>
