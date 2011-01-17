@@ -91,6 +91,19 @@ sp_export_jpg_file(SPDocument *doc, gchar const *filename,
      else return false;
 }
 
+/**
+    generates a bitmap from given items
+    the bitmap is stored in RAM and not written to file
+    @param x0
+    @param y0
+    @param x1
+    @param y1
+    @param width
+    @param height
+    @param xdpi
+    @param ydpi
+    @return the created GdkPixbuf structure or NULL if no memory is allocable
+*/
 GdkPixbuf*
 sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
                             double x0, double y0, double x1, double y1,
@@ -164,6 +177,7 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
          dtc[2] = NR_RGBA32_B(bgcolor);
          dtc[3] = NR_RGBA32_A(bgcolor);
 
+         // fill pixelblock using background colour
          for (gsize fy = 0; fy < height; fy++) {
              guchar *p = NR_PIXBLOCK_PX(&B) + fy * (gsize)B.rs;
              for (unsigned int fx = 0; fx < width; fx++) {

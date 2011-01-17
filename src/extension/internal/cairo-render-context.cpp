@@ -516,7 +516,7 @@ CairoRenderContext::getClipMode(void) const
 CairoRenderState*
 CairoRenderContext::_createState(void)
 {
-    CairoRenderState *state = (CairoRenderState*)g_malloc(sizeof(CairoRenderState));
+    CairoRenderState *state = (CairoRenderState*)g_try_malloc(sizeof(CairoRenderState));
     g_assert( state != NULL );
 
     state->has_filtereffect = FALSE;
@@ -796,7 +796,7 @@ CairoRenderContext::setupSurface(double width, double height)
         case CAIRO_SURFACE_TYPE_PDF:
             surface = cairo_pdf_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, width, height);
 #if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 10, 0))
-            cairo_pdf_surface_restrict_to_version(surface, (cairo_pdf_version_t)_pdf_level);	
+            cairo_pdf_surface_restrict_to_version(surface, (cairo_pdf_version_t)_pdf_level);
 #endif
             break;
 #endif
@@ -1420,9 +1420,20 @@ CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsi
     if (_render_mode == RENDER_MODE_CLIP)
         return true;
 
-    guchar* px_rgba = (guchar*)g_malloc(4 * w * h);
-    if (!px_rgba)
+    guchar* px_rgba = NULL;
+    guint64 size = 4L * (guint64)w * (guint64)h;
+
+    if(size < (guint64)G_MAXSIZE) {
+        px_rgba = (guchar*)g_try_malloc(4 * w * h);
+        if (!px_rgba) {
+            g_warning ("Could not allocate %lu bytes for pixel buffer!", (long unsigned) size);
+            return false;
+        }
+    } else {
+        g_warning ("the requested memory exceeds the system limit");
         return false;
+    }
+
 
     float opacity;
     if (_state->merge_opacity)
@@ -1432,15 +1443,16 @@ CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsi
 
     // make a copy of the original pixbuf with premultiplied alpha
     // if we pass the original pixbuf it will get messed up
+    /// @todo optimize this code, it costs a lot of time
     for (unsigned i = 0; i < h; i++) {
+        guchar const *src = px + i * rs;
+        guint32 *dst = (guint32 *)(px_rgba + i * rs);
     	for (unsigned j = 0; j < w; j++) {
-            guchar const *src = px + i * rs + j * 4;
-            guint32 *dst = (guint32 *)(px_rgba + i * rs + j * 4);
             guchar r, g, b, alpha_dst;
 
             // calculate opacity-modified alpha
             alpha_dst = src[3];
-            if (opacity != 1.0 && _vector_based_target)
+            if ((opacity != 1.0) && _vector_based_target)
                 alpha_dst = (guchar)ceil((float)alpha_dst * opacity);
 
             // premul alpha (needed because this will be undone by cairo-pdf)
@@ -1449,6 +1461,9 @@ CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsi
             b = src[2]*alpha_dst/255;
 
             *dst = (((alpha_dst) << 24) | (((r)) << 16) | (((g)) << 8) | (b));
+
+            dst++;  // pointer to 4byte variables
+            src += 4;   // pointer to 1byte variables
     	}
     }
 
@@ -1497,8 +1512,13 @@ CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoG
     cairo_glyph_t glyph_array[GLYPH_ARRAY_SIZE];
     cairo_glyph_t *glyphs = glyph_array;
     unsigned int num_glyphs = glyphtext.size();
-    if (num_glyphs > GLYPH_ARRAY_SIZE)
-        glyphs = (cairo_glyph_t*)g_malloc(sizeof(cairo_glyph_t) * num_glyphs);
+    if (num_glyphs > GLYPH_ARRAY_SIZE) {
+        glyphs = (cairo_glyph_t*)g_try_malloc(sizeof(cairo_glyph_t) * num_glyphs);
+        if(glyphs == NULL) {
+            g_warning("CairorenderContext::_showGlyphs: can not allocate memory for %d glyphs.", num_glyphs);
+            return 0;
+        }
+    }
 
     unsigned int num_invalid_glyphs = 0;
     unsigned int i = 0; // is a counter for indexing the glyphs array, only counts the valid glyphs

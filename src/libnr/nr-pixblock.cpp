@@ -41,6 +41,13 @@ nr_pixblock_setup_fast (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0, i
 	h = y1 - y0;
 	bpp = (mode == NR_PIXBLOCK_MODE_A8) ? 1 : (mode == NR_PIXBLOCK_MODE_R8G8B8) ? 3 : 4;
 
+    guint64 sizel = (guint64)bpp * (guint64)w * (guint64)h;
+
+    if(sizel > (guint64)G_MAXSIZE) {
+        g_warning ("the requested memory exceeds the system limit");
+        return;
+    }
+
 	size = bpp * w * h;
 
 	if (size <= NR_TINY_MAX) {
@@ -67,8 +74,9 @@ nr_pixblock_setup_fast (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0, i
 		if (size > 100000000) { // Don't even try to allocate more than 100Mb (5000x5000 RGBA
                             // pixels). It'll just bog the system down even if successful. FIXME:
                             // Can anyone suggest something better than the magic number?
-                g_warning ("%lu bytes requested for pixel buffer, I won't try to allocate that.", (long unsigned) size);
-                return;
+                g_warning ("%lu bytes requested for pixel buffer, this will slow down the system.", (long unsigned) size);
+                // do not quit here, let the system decide for RAM usage
+                // return;
              }
 		pb->data.px = g_try_new (unsigned char, size);
 		if (pb->data.px == NULL) { // memory allocation failed
@@ -144,7 +152,7 @@ nr_pixblock_setup_extern (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0,
 	w = x1 - x0;
 	bpp = (mode == NR_PIXBLOCK_MODE_A8) ? 1 : (mode == NR_PIXBLOCK_MODE_R8G8B8) ? 3 : 4;
 
-	pb->size = NR_PIXBLOCK_SIZE_STATIC; 
+	pb->size = NR_PIXBLOCK_SIZE_STATIC;
 	pb->mode = mode;
 	pb->empty = empty;
 	pb->visible_area.x0 = pb->area.x0 = x0;
@@ -157,9 +165,9 @@ nr_pixblock_setup_extern (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0,
         g_assert (pb->data.px != NULL);
 	if (clear) {
 		if (rs == bpp * w) {
-			/// \todo How do you recognise if 
-                        /// px was an uncleared tiny buffer? 
-			if (pb->data.px) 
+			/// \todo How do you recognise if
+                        /// px was an uncleared tiny buffer?
+			if (pb->data.px)
 				memset (pb->data.px, 0x0, bpp * (y1 - y0) * w);
 		} else {
 			int y;
@@ -289,7 +297,7 @@ nr_pixelstore_4K_new (bool clear, unsigned char val)
 	} else {
 		px = g_new (unsigned char, 4096);
 	}
-	
+
 	if (clear) memset (px, val, 4096);
 
 	return px;
@@ -323,7 +331,7 @@ nr_pixelstore_16K_new (bool clear, unsigned char val)
 	} else {
 		px = g_new (unsigned char, 16384);
 	}
-	
+
 	if (clear) memset (px, val, 16384);
 
 	return px;

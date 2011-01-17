@@ -452,8 +452,23 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     Geom::OptRect bbox = 
            item->getBounds(item->i2d_affine(), SPItem::RENDERING_BBOX);
 
-    if (!bbox) // no bbox, e.g. empty group
+    // no bbox, e.g. empty group
+	if (!bbox) {
         return;
+    }
+
+    Geom::Rect docrect(Geom::Rect(Geom::Point(0, 0), SP_OBJECT(item)->document->getDimensions()));
+    Geom::Rect bboxrect(Geom::Rect(Geom::Point(bbox->min()[Geom::X], bbox->min()[Geom::Y]), Geom::Point(bbox->max()[Geom::X], bbox->max()[Geom::Y])));
+
+    Geom::OptRect _bbox = Geom::intersect(docrect, bboxrect);
+
+	// assign the object dimension clipped on the document, no need to draw on area not on canvas
+    bbox = _bbox;
+
+    // no bbox, e.g. empty group
+    if (!bbox) {
+        return;
+    }
 
     // The width and height of the bitmap in pixels
     unsigned width = (unsigned) floor ((bbox->max()[Geom::X] - bbox->min()[Geom::X]) * (res / PX_PER_IN));
