@@ -224,7 +224,7 @@ document_interface_load (DocumentInterface *object,
 
 gboolean 
 document_interface_save_as (DocumentInterface *object, 
-                           gchar *filename, GError **error);
+                           const gchar *filename, GError **error);
 
 gboolean 
 document_interface_mark_as_unmodified (DocumentInterface *object, GError **error);

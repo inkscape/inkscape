@@ -106,10 +106,10 @@ init_document (void) {
         DBusGProxy *proxy;
 	SPDocument *doc;
 
-	doc = sp_document_new(NULL, 1, TRUE);
+        doc = SPDocument::createNewDoc(NULL, 1, TRUE);
 
         std::string name("/org/inkscape/");
-	name.append(doc->name);
+	name.append(doc->getName());
         std::replace(name.begin(), name.end(), ' ', '_');
 
         connection = dbus_get_connection();
