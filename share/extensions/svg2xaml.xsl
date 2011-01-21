@@ -39,7 +39,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 <xsl:strip-space elements="*" />
 <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 
-<xsl:param name="silverlight_compatible" select="1" />
+<xsl:param name="silverlight_compatible" select="0" />
 
 <!-- 
   // Containers //
@@ -70,9 +70,10 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 -->
 <xsl:template mode="forward" match="*[name(.) = 'svg' or name(.) = 'g']">
   <xsl:choose>
-    <xsl:when test="name(.) = 'svg' or @transform or @viewBox or @id or @clip-path or (@style and contains(@style, 'clip-path:url(#')) or (@width and not(contains(@width, '%'))) or @x or @y or (@height and not(contains(@height, '%'))) or *[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath']">
+    <xsl:when test="name(.) = 'svg' or @transform or @viewBox or @id or @clip-path or @filter or (@style and contains(@style, 'clip-path:url(#')) or (@width and not(contains(@width, '%'))) or @x or @y or (@height and not(contains(@height, '%'))) or *[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath']">
       <Canvas>
         <xsl:apply-templates mode="id" select="." />
+        <xsl:apply-templates mode="filter_effect" select="." />
         <!--
         <xsl:apply-templates mode="clip" select="." />
         -->
@@ -118,6 +119,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
             </xsl:call-template>
           </xsl:attribute>
         </xsl:if>
+
         <xsl:if test="@viewBox">
           <xsl:variable name="viewBox">
             <xsl:value-of select="normalize-space(translate(@viewBox, ',', ' '))" />
@@ -140,14 +142,10 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
           </Canvas.RenderTransform>
         </xsl:if>
         <xsl:if test="@transform">
-          <Canvas>
-            <Canvas.RenderTransform>
-              <TransformGroup>
-                <xsl:apply-templates mode="transform" select="." />
-              </TransformGroup>
-            </Canvas.RenderTransform>
+            <xsl:apply-templates mode="transform" select=".">
+              <xsl:with-param name="mapped_type" select="'Canvas'" />
+            </xsl:apply-templates>
             <xsl:apply-templates mode="forward" select="*" />
-          </Canvas>
         </xsl:if>
 
         <xsl:if test="*[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath']">
@@ -298,6 +296,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 -->
 <xsl:template mode="transform" match="*">
   <xsl:param name="mapped_type" />
+  
   <xsl:if test="@transform or @gradientTransform">
     <xsl:variable name="transform">
       <xsl:choose>
@@ -309,10 +308,59 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+
+    <xsl:variable name="values" select="normalize-space(translate($transform, ',', ' '))" />
+    <xsl:variable name="value1">
+      <xsl:choose>
+        <xsl:when test="contains($values, ') ')">
+          <xsl:value-of select="concat(substring-before($values, ') '), ')')" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$values" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="value2">
+      <xsl:if test="substring-after($values, $value1) != ''">
+        <xsl:choose>
+          <xsl:when test="contains(substring-after($values, $value1), ') ')">
+            <xsl:value-of select="normalize-space(concat(substring-before(substring-after($values, $value1), ') '), ')'))" />
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="normalize-space(substring-after($values, $value1))" />
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:variable name="value3">
+      <xsl:if test="$value2 != '' and substring-after($values, $value2) != ''">
+        <xsl:choose>
+          <xsl:when test="contains(substring-after($values, $value2), ') ')">
+            <xsl:value-of select="normalize-space(concat(substring-before(substring-after($values, $value2), ') '), ')'))" />
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="normalize-space(substring-after($values, $value2))" />
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:if>
+    </xsl:variable>
+
     <xsl:variable name="transform_nodes">
-      <xsl:call-template name="parse_transform">
-        <xsl:with-param name="input" select="$transform" />
-      </xsl:call-template>
+      <xsl:if test="$value3 !=''">
+        <xsl:call-template name="parse_transform">
+          <xsl:with-param name="input" select="$value3" />
+        </xsl:call-template>
+      </xsl:if>
+      <xsl:if test="$value2 !=''">
+        <xsl:call-template name="parse_transform">
+          <xsl:with-param name="input" select="$value2" />
+        </xsl:call-template>
+      </xsl:if>
+      <xsl:if test="$value1 !=''">
+        <xsl:call-template name="parse_transform">
+          <xsl:with-param name="input" select="$value1" />
+        </xsl:call-template>
+      </xsl:if>
     </xsl:variable>
 
     <xsl:choose>
@@ -830,6 +878,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 * Gradient stop
 * Gradient stop opacity
 * Gradient stop offset
+* Image stretch
 -->
 
 <!--
@@ -1311,7 +1360,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 -->
 <xsl:template mode="stroke_linejoin" match="*">
   <xsl:choose>
-    <xsl:when test="@stroke-miterlimit">
+    <xsl:when test="@stroke-linejoin">
       <xsl:attribute name="StrokeLineJoin">
         <xsl:call-template name="linejoin_svg_to_xaml">
           <xsl:with-param name="linejoin">
@@ -1580,6 +1629,34 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 </xsl:template>
 
 <!-- 
+  // Image stretch //
+  SVG: preserveAspectRatio, XAML: Stretch
+-->
+<xsl:template mode="image_stretch" match="*">
+  <xsl:variable name="value">
+    <xsl:choose>
+      <xsl:when test="@preserveAspectRatio">
+        <xsl:value-of select="@preserveAspectRatio" />
+      </xsl:when>
+      <xsl:when test="@style and contains(@style, 'preserveAspectRatio:')">
+        <xsl:variable name="ratio" select="normalize-space(substring-after(@style, 'preserveAspectRatio:'))" />
+        <xsl:choose>
+          <xsl:when test="contains($ratio, ';')">
+            <xsl:value-of select="substring-before($ratio, ';')" />
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$ratio" />
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:variable>
+  <xsl:if test="$value = 'none'">  
+    <xsl:attribute name="Stretch">Fill</xsl:attribute>
+  </xsl:if>
+</xsl:template>
+
+<!-- 
   // Text specific templates //
 
   * Text tspan
@@ -1737,6 +1814,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     </xsl:when>
   </xsl:choose>
 </xsl:template>
+
 <!-- 
   // Text font size //
   SVG: font-size, XAML: FontSize
@@ -2392,7 +2470,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
       <xsl:choose>
         <xsl:when test="$silverlight_compatible = 1">
           <xsl:attribute name="Data">
-	    <xsl:value-of select="translate(@d , ',', ' ')" />
+            <xsl:value-of select="translate(@d , ',', ' ')" />
           </xsl:attribute>
         </xsl:when>
         <xsl:otherwise>
@@ -2548,6 +2626,8 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
         </xsl:call-template>
       </xsl:attribute>
     </xsl:if>
+    
+    <xsl:apply-templates mode="image_stretch" select="." />
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Image'" />
     </xsl:apply-templates>
