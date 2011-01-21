@@ -115,6 +115,7 @@ ShowUninstDetails hide
   !insertmacro MUI_LANGUAGE "${_LANG}"
   !insertmacro LANGFILE_INCLUDE_WITHDEFAULT "languages\${_LANG}.nsh" "languages\English.nsh"
 !macroend
+!insertmacro INKLANGFILE BrazilianPortuguese
 !insertmacro INKLANGFILE Breton
 !insertmacro INKLANGFILE Catalan
 !insertmacro INKLANGFILE Czech
@@ -234,7 +235,7 @@ VIProductVersion ${VERSION_X.X.X.X}
 VIAddVersionKey ProductName Inkscape
 VIAddVersionKey Comments "Licensed under the GNU GPL"
 VIAddVersionKey CompanyName inkscape.org
-VIAddVersionKey LegalCopyright "© 2009 Inkscape"
+VIAddVersionKey LegalCopyright "© 2011 Inkscape"
 VIAddVersionKey FileDescription Inkscape
 VIAddVersionKey FileVersion ${VERSION_X.X.X.X}
 VIAddVersionKey ProductVersion ${VERSION_X.X.X.X}
@@ -647,6 +648,7 @@ Function .onInit ; initialise the installer {{{2
   !macroend
 
   ; No need for English to be detected as it's the default
+  !insertmacro LanguageAutoSelect BrPortuguese  1046
   !insertmacro LanguageAutoSelect Breton        1150
   !insertmacro LanguageAutoSelect Catalan       1027
   !insertmacro LanguageAutoSelect Czech         1029
