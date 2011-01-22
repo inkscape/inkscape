@@ -166,7 +166,7 @@ init()
     Internal::PdfInput::init();
 #endif
 #ifdef HAVE_POPPLER_GLIB
-    if (0) {
+    if (1) {
     Internal::PdfInputCairo::init();
     }
 #endif
@@ -192,7 +192,7 @@ init()
 #ifdef WITH_DBUS
     Dbus::init();
 #endif
-	
+
     /* Raster Effects */
 #ifdef WITH_IMAGE_MAGICK
     Internal::Bitmap::AdaptiveThreshold::init();

@@ -87,11 +87,11 @@ PdfInputCairo::init(void) {
     ext = Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>PDF Input</name>\n"
-            "<id>org.inkscape.input.pdf</id>\n"
+            "<id>org.inkscape.input.cairo-pdf</id>\n"
             "<input>\n"
                 "<extension>.pdf</extension>\n"
                 "<mimetype>application/pdf</mimetype>\n"
-                "<filetypename>Adobe PDF (*.pdf)</filetypename>\n"
+                "<filetypename>Adobe PDF via poppler-cairo (*.pdf)</filetypename>\n"
                 "<filetypetooltip>PDF Document</filetypetooltip>\n"
             "</input>\n"
         "</inkscape-extension>", new PdfInputCairo());
