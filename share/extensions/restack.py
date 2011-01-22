@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Copyright (C) 2007,2008 Rob Antonishen; rob.antonishen@gmail.com
+Copyright (C) 2007-2011 Rob Antonishen; rob.antonishen@gmail.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -52,26 +52,34 @@ class Restack(inkex.Effect):
         if len( self.selected ) > 0:
             objlist = []
             svg = self.document.getroot()
-
+            parentnode = self.current_layer
             file = self.args[ -1 ]
-            #get all bounding boxes in file by calling inkscape again with the --querry-all command line option
+			
+            #get all bounding boxes in file by calling inkscape again with the --query-all command line option
             #it returns a comma seperated list structured id,x,y,w,h
             if bsubprocess:
                 p = Popen('inkscape --query-all "%s"' % (file), shell=True, stdout=PIPE, stderr=PIPE)
-                rc = p.wait()
-                f = p.stdout
                 err = p.stderr
+                f = p.communicate()[0]
+                try:
+                    reader=csv.CSVParser().parse_string(f)    #there was a module cvs.py in earlier inkscape that behaved differently
+                except:
+                    reader=csv.reader(f.split( os.linesep ))
+                err.close() 
             else:
-                _,f,err = os.popen3( "inkscape --query-all %s" % ( file ) )
-            reader=csv.reader( f.readlines() )
-            f.close()
-            err.close()
-
+                _,f,err = os.popen3('inkscape --query-all "%s"' % ( file ) )
+                reader=csv.reader( f )
+                err.close()
+				
             #build a dictionary with id as the key
             dimen = dict()
             for line in reader:
-                dimen[line[0]] = map( float, line[1:])
+                if len(line) > 0:
+                    dimen[line[0]] = map( float, line[1:])
 
+            if not bsubprocess: #close file if opened using os.popen3
+                f.close
+				
             #find the center of all selected objects **Not the average!
             x,y,w,h = dimen[self.selected.keys()[0]]
             minx = x
@@ -113,15 +121,15 @@ class Restack(inkex.Effect):
                     cy = y + h
                 else:  # middle
                     cy = y + h / 2
-
+				
                 #direction chosen
-                if self.options.direction == "tb" or self.options.angle == 270:
+                if self.options.direction == "tb" or (self.options.direction == "aa" and self.options.angle == 270):
                     objlist.append([cy,id])
-                elif self.options.direction == "bt" or self.options.angle == 90:
+                elif self.options.direction == "bt" or (self.options.direction == "aa" and self.options.angle == 90):
                     objlist.append([-cy,id])
-                elif self.options.direction == "lr" or self.options.angle == 0 or self.options.angle == 360:
+                elif self.options.direction == "lr" or (self.options.direction == "aa" and (self.options.angle == 0 or self.options.angle == 360)):
                     objlist.append([cx,id])
-                elif self.options.direction == "rl" or self.options.angle == 180:
+                elif self.options.direction == "rl" or (self.options.direction == "aa" and self.options.angle == 180):
                     objlist.append([-cx,id])
                 elif self.options.direction == "aa":
                     distance = math.hypot(cx,cy)*(math.cos(math.radians(-self.options.angle)-math.atan2(cy, cx)))
@@ -136,11 +144,11 @@ class Restack(inkex.Effect):
             objlist.sort()
             #move them to the top of the object stack in this order.
             for item in objlist:
-                svg.append( self.selected[item[1]])
+                parentnode.append( self.selected[item[1]])
 
 if __name__ == '__main__':
     e = Restack()
     e.affect()
 
 
-# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99
+# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
