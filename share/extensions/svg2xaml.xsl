@@ -39,7 +39,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 <xsl:strip-space elements="*" />
 <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 
-<xsl:param name="silverlight_compatible" select="0" />
+<xsl:param name="silverlight_compatible" select="2" />
 
 <!-- 
   // Containers //
@@ -816,13 +816,15 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 -->
 <xsl:template mode="forward" match="*[name(.) = 'use']">
   <Canvas>
-    <xsl:if test="@xlink:href">
-      <xsl:attribute name="Style">
-        <xsl:value-of select="@xlink:href" />
-      </xsl:attribute>
-    </xsl:if>
-    <!--xsl:apply-templates mode="transform" select="." /-->
-    <xsl:apply-templates mode="forward" />
+    <StaticResource>
+      <xsl:if test="@xlink:href">
+        <xsl:attribute name="ResourceKey">
+          <xsl:value-of select="substring-after(@xlink:href, '#')" />
+        </xsl:attribute>
+      </xsl:if>
+      <!--xsl:apply-templates mode="transform" select="." /-->
+      <xsl:apply-templates mode="forward" />
+    </StaticResource>
   </Canvas>
 </xsl:template>
 
@@ -860,6 +862,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 // Colors and patterns //
 
 * Generic color template
+* Object opacity
 * Fill
 * Fill opacity
 * Fill rule
@@ -981,6 +984,56 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
       </xsl:choose>
     </xsl:otherwise>
   </xsl:choose>
+</xsl:template>
+
+<!--
+  // Object opacity //
+-->
+<xsl:template mode="object_opacity" match="*">
+  <xsl:if test="@opacity or (@style and (contains(@style, ';opacity:') or starts-with(@style, 'opacity:')))">
+    <xsl:variable name="value">
+    <xsl:choose>
+      <xsl:when test="@opacity">
+        <xsl:value-of select="@opacity" />
+      </xsl:when>
+      <xsl:when test="@style and contains(@style, ';opacity:')">
+        <xsl:variable name="Opacity" select="substring-after(@style, ';opacity:')" />
+        <xsl:choose>
+          <xsl:when test="contains($Opacity, ';')">
+            <xsl:value-of select="substring-before($Opacity, ';')" />
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$Opacity" />
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:when test="@style and starts-with(@style, 'opacity:')">
+        <xsl:variable name="Opacity" select="substring-after(@style, 'opacity:')" />
+        <xsl:choose>
+          <xsl:when test="contains($Opacity, ';')">
+            <xsl:value-of select="substring-before($Opacity, ';')" />
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$Opacity" />
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:when test="name(..) = 'g' or name(..) = 'svg'">
+        <xsl:apply-templates mode="object_opacity" select="parent::*" />
+      </xsl:when>
+      <xsl:otherwise>1</xsl:otherwise>
+    </xsl:choose>
+    </xsl:variable>
+    <xsl:attribute name="Opacity">
+    <xsl:choose>
+      <xsl:when test="$value &lt; 0">0</xsl:when>
+      <xsl:when test="$value &gt; 1">1</xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$value" />
+      </xsl:otherwise>
+    </xsl:choose>
+    </xsl:attribute>
+  </xsl:if>
 </xsl:template>
 
 <!--
@@ -1681,32 +1734,26 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 
  <!-- 
   // Text span //
-  SVG: tspan, flowSpan, FXG: span
+  SVG: tspan, flowSpan, XAML: Span
   
-  Not supported in FXG:
+  Not supported in XAML:
   * span position
 -->
 <xsl:template mode="forward" match="*[name(.) = 'tspan'  or name(.) = 'flowSpan']">
-  <span>
+  <Span>
     <xsl:if test="../@xml:space='preserve'">
       <xsl:attribute name="whiteSpaceCollapse">preserve</xsl:attribute>
     </xsl:if>
     <xsl:variable name="fill">
       <xsl:apply-templates mode="fill" select="." />
     </xsl:variable>
-    <xsl:variable name="fill_opacity">
-      <xsl:apply-templates mode="fill_opacity" select="." />
-    </xsl:variable>
     <xsl:if test="starts-with($fill, '#') or (not(starts-with($fill, 'url')) and $fill != '' and $fill != 'none')">
-      <xsl:attribute name="color">
+      <xsl:attribute name="Foreground">
         <xsl:call-template name="template_color">
           <xsl:with-param name="colorspec">
             <xsl:value-of select="$fill" />
           </xsl:with-param>
         </xsl:call-template>
-      </xsl:attribute>
-      <xsl:attribute name="textAlpha">
-        <xsl:value-of select="$fill_opacity" />
       </xsl:attribute>
     </xsl:if>
     <xsl:apply-templates mode="font_size" select="." />
@@ -1721,64 +1768,30 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     <xsl:if test="text()">
       <xsl:value-of select="text()" />
     </xsl:if>
-  </span>
+  </Span>
 </xsl:template>
 
  <!-- 
   // Text flowPara //
-  SVG: flowPara, flowDiv FXG: p
+  SVG: flowPara, flowDiv XAML: ?
   
-  Not supported in FXG:
-  * paragraph position
 -->
 <xsl:template mode="forward" match="*[name(.) = 'flowPara' or name(.) = 'flowDiv']">
-  <p>
-    <xsl:if test="../@xml:space='preserve'">
-      <xsl:attribute name="whiteSpaceCollapse">preserve</xsl:attribute>
-    </xsl:if>
-    <xsl:variable name="fill">
-      <xsl:apply-templates mode="fill" select="." />
-    </xsl:variable>
-    <xsl:variable name="fill_opacity">
-      <xsl:apply-templates mode="fill_opacity" select="." />
-    </xsl:variable>
-    <xsl:if test="starts-with($fill, '#') or (not(starts-with($fill, 'url')) and $fill != '' and $fill != 'none')">
-      <xsl:attribute name="color">
-        <xsl:call-template name="template_color">
-          <xsl:with-param name="colorspec">
-            <xsl:value-of select="$fill" />
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:attribute>
-      <xsl:attribute name="textAlpha">
-        <xsl:value-of select="$fill_opacity" />
-      </xsl:attribute>
-    </xsl:if>
-    <xsl:apply-templates mode="font_size" select="." />
-    <xsl:apply-templates mode="font_weight" select="." />
-    <xsl:apply-templates mode="font_family" select="." />
-    <xsl:apply-templates mode="font_style" select="." />
-    <xsl:apply-templates mode="text_fill" select="." />
-    <xsl:apply-templates mode="text_decoration" select="." />
-    <xsl:apply-templates mode="line_height" select="." />
-    <xsl:apply-templates mode="baseline_shift" select="." />
-
-    <xsl:choose>
-      <xsl:when test="*[name(.) = 'flowSpan']/text()">
-        <xsl:apply-templates mode="forward" />
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="@xml:space='preserve'">
-            <xsl:copy-of select="translate(text(), '&#x9;&#xA;&#xD;', ' ')" />
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:copy-of select="normalize-space(translate(text(), '&#x9;&#xA;&#xD;', ' '))" />
-          </xsl:otherwise>
-        </xsl:choose>  
-      </xsl:otherwise>
-    </xsl:choose>
-  </p>
+  <xsl:choose>
+    <xsl:when test="*[name(.) = 'flowSpan']/text()">
+      <xsl:apply-templates mode="forward" />
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:choose>
+        <xsl:when test="@xml:space='preserve'">
+          <xsl:copy-of select="translate(text(), '&#x9;&#xA;&#xD;', ' ')" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="normalize-space(translate(text(), '&#x9;&#xA;&#xD;', ' '))" />
+        </xsl:otherwise>
+      </xsl:choose>  
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 
@@ -1809,7 +1822,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
         </xsl:otherwise>
       </xsl:choose>
     </xsl:when>
-    <xsl:when test="name(..) = 'g' or name(..) = 'svg'">
+    <xsl:when test="name(..) = 'g' or name(..) = 'svg' or name(..) = 'text' or name(..) = 'flowPara' or name(..) = 'flowRoot'">
       <xsl:apply-templates mode="get_font_size" select="parent::*"/>
     </xsl:when>
   </xsl:choose>
@@ -1945,7 +1958,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 
 <!-- 
   // Text baseline shift //
-  SVG: baseline-shift, FXG: baselineShift
+  SVG: baseline-shift, XAML: BaselineAlignment
 -->
 <xsl:template mode="baseline_shift" match="*">
   <xsl:variable name="value">
@@ -1959,17 +1972,12 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
       <xsl:value-of select="substring-before(substring-after(@style, 'baseline-shift:'), ';')" />
     </xsl:if>   
   </xsl:variable>
-  <xsl:if test="$value != ''">
-    <xsl:attribute name="baselineShift">  
+  <xsl:if test="$value = 'baseline' or $value='super' or $value='sub'">
+    <xsl:attribute name="BaselineAlignment">  
       <xsl:choose>
-        <xsl:when test="$value='baseline'">0</xsl:when>
-        <xsl:when test="$value='super'">superscript</xsl:when>
-        <xsl:when test="$value='sub'">subscript</xsl:when>
-        <xsl:when test="translate($value, '%', '') &lt; -1000">-1000</xsl:when>
-        <xsl:when test="translate($value, '%', '') &gt; 1000">1000</xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="translate($value, '%', '')" />
-        </xsl:otherwise>
+        <xsl:when test="$value='baseline'">Normal</xsl:when>
+        <xsl:when test="$value='super'">Superscript</xsl:when>
+        <xsl:when test="$value='sub'">Subscript</xsl:when>
       </xsl:choose>  
       <xsl:if test="contains($value, '%')">%</xsl:if>
     </xsl:attribute>
@@ -2039,7 +2047,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
   
 <!-- 
   // Text decoration //
-  SVG: text-decoration, FXG: textDecoration, lineThrough 
+  SVG: text-decoration, XAML: TextDecorations 
 -->
 <xsl:template mode="text_decoration" match="*">
   <xsl:variable name="value">
@@ -2053,15 +2061,15 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
       <xsl:value-of select="substring-before(substring-after(@style, 'text-decoration:'), ';')" />
     </xsl:if>   
   </xsl:variable>
-  <xsl:if test="$value != ''">  
-    <xsl:choose>
-      <xsl:when test="$value='underline'">
-        <xsl:attribute name="textDecoration">underline</xsl:attribute>
-      </xsl:when>
-      <xsl:when test="$value='line-through'">
-        <xsl:attribute name="lineThrough">true</xsl:attribute>
-      </xsl:when>
-    </xsl:choose>  
+  <xsl:if test="$value != ''">
+    <xsl:attribute name="TextDecorations">
+      <xsl:choose>
+        <xsl:when test="$value='underline'">Underline</xsl:when>
+        <xsl:when test="$value='line-through'">Strikethrough</xsl:when>
+        <xsl:when test="$value='overline'">Overline</xsl:when>
+        <xsl:otherwise>None</xsl:otherwise>
+      </xsl:choose>  
+    </xsl:attribute>
   </xsl:if>
 </xsl:template>
 
@@ -2097,7 +2105,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 
 <!-- 
   // Text direction //
-  SVG: direction, unicode-bidi, FXG: direction
+  SVG: direction, unicode-bidi, XAML: FlowDirection
 -->
 <xsl:template mode="direction" match="*">
   <xsl:variable name="value">
@@ -2124,10 +2132,10 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
   </xsl:variable>
 
   <xsl:if test="$value != '' and ($bidi='embed' or $bidi='bidi-override')">  
-    <xsl:attribute name="direction">
+    <xsl:attribute name="FlowDirection">
       <xsl:choose>
-        <xsl:when test="$value='ltr'">ltr</xsl:when>
-        <xsl:when test="$value='rtl'">rtl</xsl:when>
+        <xsl:when test="$value='ltr'">LeftToRight</xsl:when>
+        <xsl:when test="$value='rtl'">RightToLeft</xsl:when>
       </xsl:choose>  
     </xsl:attribute>
   </xsl:if>
@@ -2229,7 +2237,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
   // Text objects //
   SVG: text, XAML: TextBlock
 -->
-<xsl:template mode="forward" match="*[name(.) = 'text']">
+<xsl:template mode="forward" match="*[name(.) = 'text' or name(.) = 'flowRoot']">
   <TextBlock>
     <xsl:apply-templates mode="font_size" select="." />
     <xsl:apply-templates mode="font_weight" select="." />
@@ -2237,7 +2245,14 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     <xsl:apply-templates mode="font_style" select="." />
     <xsl:apply-templates mode="text_fill" select="." />
     <xsl:apply-templates mode="text_size" select="." />
+    <xsl:apply-templates mode="text_decoration" select="." />
+    <xsl:apply-templates mode="direction" select="." />
     <xsl:apply-templates mode="text_position" select="." />
+    <xsl:if test="name(.) = 'flowRoot'">
+      <xsl:attribute name="TextWrapping">
+        <xsl:value-of select="'Wrap'" />
+      </xsl:attribute>
+    </xsl:if>
     
     <xsl:if test="@text-anchor">
       <xsl:attribute name="HorizontalAlignment">
@@ -2249,15 +2264,21 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
       </xsl:attribute>
     </xsl:if>
     
+    <xsl:apply-templates mode="object_opacity" select="." />
+    
     <xsl:apply-templates mode="id" select="." />
+    <xsl:if test="name(.) = 'flowRoot'">
+      <xsl:apply-templates mode="flow_region" select="*[name(.) = 'flowRegion']/child::node()" />
+    </xsl:if>
     <xsl:apply-templates mode="filter_effect" select="." />
     <xsl:apply-templates mode="desc" select="." />
+    <xsl:apply-templates mode="resources" select="." />
     <xsl:apply-templates mode="clip" select="." />
     <!--xsl:apply-templates mode="transform" select="." /-->
     <!--xsl:apply-templates mode="forward" /-->
     
     <xsl:choose>
-      <xsl:when test="*[name(.) = 'tspan']/text()">
+      <xsl:when test="*[name(.) = 'tspan' or name(.) = 'flowPara' or name(.) = 'flowDiv']/text()">
         <xsl:apply-templates mode="forward" />
       </xsl:when>
       <xsl:otherwise>
@@ -2301,6 +2322,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
         <xsl:value-of select="@y2" />
       </xsl:attribute>
     </xsl:if>
+    
     <xsl:apply-templates mode="id" select="." />
     <xsl:apply-templates mode="template_fill" select="." />
     <xsl:apply-templates mode="template_stroke" select="." />
@@ -2310,7 +2332,9 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
     <xsl:apply-templates mode="filter_effect" select="." />
+    <xsl:apply-templates mode="object_opacity" select="." />
     <xsl:apply-templates mode="desc" select="." />
+    <xsl:apply-templates mode="resources" select="." />
 
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Line'" />
@@ -2384,6 +2408,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     <xsl:apply-templates mode="stroke_linecap" select="." />
     <xsl:apply-templates mode="filter_effect" select="." />
     <xsl:apply-templates mode="resources" select="." />
+    <xsl:apply-templates mode="object_opacity" select="." />
     <xsl:apply-templates mode="desc" select="." />
     <xsl:apply-templates mode="clip" select="." />
 
@@ -2412,7 +2437,9 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
     <xsl:apply-templates mode="filter_effect" select="." />
+    <xsl:apply-templates mode="object_opacity" select="." />
     <xsl:apply-templates mode="desc" select="." />
+    <xsl:apply-templates mode="resources" select="." />
 
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Polygon'" />
@@ -2439,6 +2466,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
     <xsl:apply-templates mode="filter_effect" select="." />
+    <xsl:apply-templates mode="object_opacity" select="." />
     <xsl:apply-templates mode="desc" select="." />
 
     <xsl:apply-templates mode="transform" select=".">
@@ -2464,7 +2492,9 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
     <xsl:apply-templates mode="filter_effect" select="." />
+    <xsl:apply-templates mode="object_opacity" select="." />
     <xsl:apply-templates mode="desc" select="." />
+    <xsl:apply-templates mode="resources" select="." />
 
     <xsl:if test="@d">
       <xsl:choose>
@@ -2529,7 +2559,9 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
     <xsl:apply-templates mode="filter_effect" select="." />
+    <xsl:apply-templates mode="object_opacity" select="." />
     <xsl:apply-templates mode="desc" select="." />
+    <xsl:apply-templates mode="resources" select="." />
     <xsl:apply-templates mode="clip" select="." />
 
     <xsl:apply-templates mode="transform" select=".">
@@ -2573,7 +2605,9 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
     <xsl:apply-templates mode="filter_effect" select="." />
+    <xsl:apply-templates mode="object_opacity" select="." />
     <xsl:apply-templates mode="desc" select="." />
+    <xsl:apply-templates mode="resources" select="." />
     <xsl:apply-templates mode="clip" select="." />
 
     <xsl:apply-templates mode="transform" select=".">
@@ -2628,6 +2662,9 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     </xsl:if>
     
     <xsl:apply-templates mode="image_stretch" select="." />
+    <xsl:apply-templates mode="object_opacity" select="." />
+    <xsl:apply-templates mode="resources" select="." />
+    
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Image'" />
     </xsl:apply-templates>
