@@ -80,6 +80,7 @@ namespace Inkscape {
 namespace Extension {
 namespace Internal {
 
+static float device_scale = DEVICESCALE;
 
 EmfWin32::EmfWin32 (void) // The null constructor
 {
@@ -340,7 +341,7 @@ pix_to_x_point(PEMF_CALLBACK_DATA d, double px, double py)
     double ppy = _pix_y_to_point(d, py);
 
     double x = ppx * d->dc[d->level].worldTransform.eM11 + ppy * d->dc[d->level].worldTransform.eM21 + d->dc[d->level].worldTransform.eDx;
-    x *= d->dc[d->level].ScaleOutX ? d->dc[d->level].ScaleOutX : DEVICESCALE;
+    x *= d->dc[d->level].ScaleOutX ? d->dc[d->level].ScaleOutX : device_scale;
     
     return x;
 }
@@ -352,7 +353,7 @@ pix_to_y_point(PEMF_CALLBACK_DATA d, double px, double py)
     double ppy = _pix_y_to_point(d, py);
 
     double y = ppx * d->dc[d->level].worldTransform.eM12 + ppy * d->dc[d->level].worldTransform.eM22 + d->dc[d->level].worldTransform.eDy;
-    y *= d->dc[d->level].ScaleOutY ? d->dc[d->level].ScaleOutY : DEVICESCALE;
+    y *= d->dc[d->level].ScaleOutY ? d->dc[d->level].ScaleOutY : device_scale;
     
     return y;
 }
@@ -364,9 +365,9 @@ pix_to_size_point(PEMF_CALLBACK_DATA d, double px)
     double ppy = 0;
 
     double dx = ppx * d->dc[d->level].worldTransform.eM11 + ppy * d->dc[d->level].worldTransform.eM21;
-    dx *= d->dc[d->level].ScaleOutX ? d->dc[d->level].ScaleOutX : DEVICESCALE;
+    dx *= d->dc[d->level].ScaleOutX ? d->dc[d->level].ScaleOutX : device_scale;
     double dy = ppx * d->dc[d->level].worldTransform.eM12 + ppy * d->dc[d->level].worldTransform.eM22;
-    dy *= d->dc[d->level].ScaleOutY ? d->dc[d->level].ScaleOutY : DEVICESCALE;
+    dy *= d->dc[d->level].ScaleOutY ? d->dc[d->level].ScaleOutY : device_scale;
 
     double tmp = sqrt(dx * dx + dy * dy);
     return tmp;
@@ -785,14 +786,18 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             d->xDPI = 2540;
             d->yDPI = 2540;
 
-            d->dc[d->level].PixelsInX = pEmr->rclFrame.right - pEmr->rclFrame.left;
-            d->dc[d->level].PixelsInY = pEmr->rclFrame.bottom - pEmr->rclFrame.top;
+            d->dc[d->level].PixelsInX = pEmr->rclFrame.right;  // - pEmr->rclFrame.left;
+            d->dc[d->level].PixelsInY = pEmr->rclFrame.bottom; // - pEmr->rclFrame.top;
 
             d->MMX = d->dc[d->level].PixelsInX / 100.0;
             d->MMY = d->dc[d->level].PixelsInY / 100.0;
 
             d->dc[d->level].PixelsOutX = d->MMX * PX_PER_MM;
             d->dc[d->level].PixelsOutY = d->MMY * PX_PER_MM;
+
+            // calculate ratio of Inkscape dpi/device dpi
+            if (pEmr->szlMillimeters.cx && pEmr->szlDevice.cx)
+                device_scale = PX_PER_MM*pEmr->szlMillimeters.cx/pEmr->szlDevice.cx;
             
             tmp_outsvg <<
                 "  width=\"" << d->MMX << "mm\"\n" <<
@@ -1071,8 +1076,8 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
                 d->dc[d->level].ScaleOutY = (double) d->dc[d->level].PixelsOutY / (double) d->dc[d->level].sizeView.cy;
             }
             else {
-                d->dc[d->level].ScaleOutX = DEVICESCALE;
-                d->dc[d->level].ScaleOutY = DEVICESCALE;
+                d->dc[d->level].ScaleOutX = device_scale;
+                d->dc[d->level].ScaleOutY = device_scale;
             }
 
             break;
@@ -1122,8 +1127,8 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
                 d->dc[d->level].ScaleOutY = (double) d->dc[d->level].PixelsOutY / (double) d->dc[d->level].sizeView.cy;
             }
             else {
-                d->dc[d->level].ScaleOutX = DEVICESCALE;
-                d->dc[d->level].ScaleOutY = DEVICESCALE;
+                d->dc[d->level].ScaleOutX = device_scale;
+                d->dc[d->level].ScaleOutY = device_scale;
             }
 
             break;
