@@ -119,7 +119,8 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
             </xsl:call-template>
           </xsl:attribute>
         </xsl:if>
-
+        <xsl:apply-templates mode="resources" select="." />
+        
         <xsl:if test="@viewBox">
           <xsl:variable name="viewBox">
             <xsl:value-of select="normalize-space(translate(@viewBox, ',', ' '))" />
@@ -364,8 +365,22 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     </xsl:variable>
 
     <xsl:choose>
-      <xsl:when test="$mapped_type and $mapped_type != ''">
+      <xsl:when test="$mapped_type and $mapped_type != '' and not(contains($mapped_type, 'Geometry'))">
         <xsl:element name="{$mapped_type}.RenderTransform">
+          <xsl:choose>
+            <xsl:when test="count(libxslt:node-set($transform_nodes)/*) = 1">
+              <xsl:copy-of select="libxslt:node-set($transform_nodes)" />
+            </xsl:when>
+            <xsl:when test="count(libxslt:node-set($transform_nodes)/*) &gt; 1">
+              <TransformGroup>
+                <xsl:copy-of select="libxslt:node-set($transform_nodes)" />
+              </TransformGroup>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:element>
+      </xsl:when>
+      <xsl:when test="$mapped_type and $mapped_type != '' and contains($mapped_type, 'Geometry')">
+        <xsl:element name="{$mapped_type}.Transform">
           <xsl:choose>
             <xsl:when test="count(libxslt:node-set($transform_nodes)/*) = 1">
               <xsl:copy-of select="libxslt:node-set($transform_nodes)" />
@@ -403,6 +418,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
   * Generic filters template
   * Filter effects
   * Linked filter effects
+  * Absolute gradients
   * Linear gradients
   * Radial gradients
   * Generic gradient stops
@@ -414,7 +430,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 -->
 <xsl:template mode="resources" match="*">
   <!-- should be in-depth -->
-  <xsl:if test="ancestor::*[name(.) = 'defs']"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
+  <xsl:if test="parent::*[name(.) = 'defs']"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
 </xsl:template>
 
 <!--
@@ -474,12 +490,46 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
         <xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@filter, 'url(#'), ')'), '}')" />
       </xsl:attribute>
     </xsl:when>
-    <xsl:when test="@style and contains(@style, 'filter:url(#')">
+    <xsl:when test="@style and contains(normalize-space(substring-after(translate(@style, '&quot;', ''), 'filter:')), 'url(#')">
       <xsl:attribute name="Effect">
-        <xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@style, 'filter:url(#'), ')'), '}')" />
+        <xsl:value-of select="concat('{StaticResource ', substring-before(normalize-space(substring-after(substring-after(translate(@style, '&quot;', ''), 'filter:'), 'url(#')), ')'), '}')" />
       </xsl:attribute>
     </xsl:when>
   </xsl:choose>
+</xsl:template>
+
+<!--
+  // Absolute gradients //
+  Get the calling object position in order to substract it from the absolute gradient position.
+  (XAML absolute gradients values are absolute in the gradient's space).
+-->
+<xsl:template mode="absolute_gradient" match="*">
+  <xsl:param name="position" />
+  <xsl:if test="@id">
+    <xsl:variable name="id" select="concat('#', @id)"/>
+    <xsl:variable name="value">
+      <xsl:for-each select="//*[contains(@style,$id) or contains(@fill,$id) or contains(@stroke,$id)]">
+        <xsl:choose>
+          <xsl:when test="$position = 'y' and @y">
+            <xsl:call-template name="convert_unit">
+              <xsl:with-param name="convert_value" select="@y" />
+            </xsl:call-template>
+          </xsl:when>
+          <xsl:when test="$position = 'x' and @x">
+            <xsl:call-template name="convert_unit">
+              <xsl:with-param name="convert_value" select="@x" />
+            </xsl:call-template>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$value != ''">
+        <xsl:value-of select="$value"/>
+      </xsl:when>
+      <xsl:otherwise>0</xsl:otherwise>
+    </xsl:choose>
+  </xsl:if>
 </xsl:template>
 
 <!--
@@ -507,6 +557,26 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
         </xsl:choose>
       </xsl:attribute>
     </xsl:if>
+    <xsl:variable name="left">
+      <xsl:choose>
+        <xsl:when test="@gradientUnits = 'userSpaceOnUse' ">
+          <xsl:apply-templates mode="absolute_gradient" select=".">
+            <xsl:with-param name="position" select="'x'" />
+          </xsl:apply-templates>
+        </xsl:when>
+        <xsl:otherwise>0</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="top">
+      <xsl:choose>
+        <xsl:when test="@gradientUnits = 'userSpaceOnUse' ">
+          <xsl:apply-templates mode="absolute_gradient" select=".">
+            <xsl:with-param name="position" select="'y'" />
+          </xsl:apply-templates>
+        </xsl:when>
+        <xsl:otherwise>0</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="@x1 and @y1 and @x2 and @y2">
         <xsl:choose>
@@ -517,7 +587,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
           </xsl:when>
           <xsl:otherwise>
             <xsl:attribute name="StartPoint">
-              <xsl:value-of select="concat(@x1, ',', @y1)" />
+              <xsl:value-of select="concat((@x1 - $left), ',', (@y1 - $top))" />
             </xsl:attribute>
           </xsl:otherwise>
         </xsl:choose>
@@ -529,7 +599,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
           </xsl:when>
           <xsl:otherwise>
             <xsl:attribute name="EndPoint">
-              <xsl:value-of select="concat(@x2, ',', @y2)" />
+              <xsl:value-of select="concat((@x2 - $left), ',', (@y2 - $top))" />
             </xsl:attribute>
           </xsl:otherwise>
         </xsl:choose>  
@@ -589,6 +659,26 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
         </xsl:choose>
       </xsl:attribute>
     </xsl:if>
+    <xsl:variable name="left">
+      <xsl:choose>
+        <xsl:when test="@gradientUnits = 'userSpaceOnUse' ">
+          <xsl:apply-templates mode="absolute_gradient" select=".">
+            <xsl:with-param name="position" select="'x'" />
+          </xsl:apply-templates>
+        </xsl:when>
+        <xsl:otherwise>0</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="top">
+      <xsl:choose>
+        <xsl:when test="@gradientUnits = 'userSpaceOnUse' ">
+          <xsl:apply-templates mode="absolute_gradient" select=".">
+            <xsl:with-param name="position" select="'y'" />
+          </xsl:apply-templates>
+        </xsl:when>
+        <xsl:otherwise>0</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:if test="@cx and @cy">
       <xsl:attribute name="Center">
         <xsl:choose>
@@ -596,7 +686,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
             <xsl:value-of select="concat(number(substring-before(@cx, '%')) div 100, ',', number(substring-before(@cy, '%')) div 100)" />
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="concat(@cx, ',', @cy)" />
+            <xsl:value-of select="concat((@cx - $left), ',', (@cy - $top))" />
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
@@ -608,7 +698,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
             <xsl:value-of select="concat(number(substring-before(@fx, '%')) div 100, ',', number(substring-before(@fy, '%')) div 100)" />
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="concat(@fx, ',', @fy)" />
+            <xsl:value-of select="concat((@fx - $left), ',', (@fy - $top))" />
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
@@ -638,7 +728,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
         <xsl:choose>
           <xsl:when test="@xlink:href">
             <xsl:variable name="reference_id" select="@xlink:href" />
-            <xsl:apply-templates mode="forward" select="//*[name(.) = 'linearGradient' and $reference_id = concat('#', @id)]/*" />
+            <xsl:apply-templates mode="forward" select="//*[name(.) = 'radialGradient' and $reference_id = concat('#', @id)]/*" />
           </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates mode="forward" />
@@ -815,17 +905,46 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
   (since it is not supported by Inkscape, not implemented yet)
 -->
 <xsl:template mode="forward" match="*[name(.) = 'use']">
+<!-- Errors when more than one use element share the same reference
   <Canvas>
+    <xsl:if test="@width and not(contains(@width, '%'))">
+      <xsl:attribute name="Width">
+        <xsl:call-template name="convert_unit">
+          <xsl:with-param name="convert_value" select="@width" />
+        </xsl:call-template>
+      </xsl:attribute>
+    </xsl:if>
+      <xsl:if test="@height and not(contains(@height, '%'))">
+      <xsl:attribute name="Height">
+        <xsl:call-template name="convert_unit">
+          <xsl:with-param name="convert_value" select="@height" />
+        </xsl:call-template>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="@x">
+      <xsl:attribute name="Canvas.Left">
+        <xsl:call-template name="convert_unit">
+          <xsl:with-param name="convert_value" select="@x" />
+        </xsl:call-template>
+      </xsl:attribute></xsl:if>
+    <xsl:if test="@y">
+      <xsl:attribute name="Canvas.Top">
+        <xsl:call-template name="convert_unit">
+          <xsl:with-param name="convert_value" select="@y" />
+        </xsl:call-template>
+      </xsl:attribute>
+    </xsl:if>
+    
     <StaticResource>
       <xsl:if test="@xlink:href">
         <xsl:attribute name="ResourceKey">
           <xsl:value-of select="substring-after(@xlink:href, '#')" />
         </xsl:attribute>
       </xsl:if>
-      <!--xsl:apply-templates mode="transform" select="." /-->
       <xsl:apply-templates mode="forward" />
     </StaticResource>
   </Canvas>
+  -->
 </xsl:template>
 
 <!--
@@ -1042,17 +1161,18 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 <xsl:template mode="fill" match="*">
   <xsl:variable name="value">
     <xsl:choose>
-      <xsl:when test="@fill and starts-with(@fill, 'url(#')">
-        <xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@fill, 'url(#'), ')'), '}')" />
+      <xsl:when test="@fill and starts-with(normalize-space(translate(@fill, '&quot;', '')), 'url(#')">
+        <!-- Removes unwanted characters in the color link (TODO: export to a specific template)-->
+        <xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(normalize-space(translate(@fill, '&quot;', '')), 'url(#'), ')'), '}')" />
       </xsl:when>
       <xsl:when test="@fill">
-        <xsl:value-of select="@fill" />
+        <xsl:value-of select="normalize-space(@fill)" />
       </xsl:when>
-      <xsl:when test="@style and contains(@style, 'fill:') and starts-with(substring-after(@style, 'fill:'), 'url(#')">
-        <xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@style, 'url(#'), ')'), '}')" />
+      <xsl:when test="@style and contains(@style, 'fill:') and starts-with(normalize-space(substring-after(translate(@style, '&quot;', ''), 'fill:')), 'url(#')">
+        <xsl:value-of select="concat('{StaticResource ', substring-before(normalize-space(substring-after(substring-after(translate(@style, '&quot;', ''), 'fill:'), 'url(#')), ')'), '}')" />
       </xsl:when>
       <xsl:when test="@style and contains(@style, 'fill:')">
-        <xsl:variable name="Fill" select="substring-after(@style, 'fill:')" />
+        <xsl:variable name="Fill" select="normalize-space(substring-after(@style, 'fill:'))" />
         <xsl:choose>
           <xsl:when test="contains($Fill, ';')">
             <xsl:value-of select="substring-before($Fill, ';')" />
@@ -1068,8 +1188,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     </xsl:choose>
   </xsl:variable>
   <xsl:if test="$value">
-    <!-- Removes unwanted characters in the color link (TODO: export to a specific template)-->
-    <xsl:value-of select="normalize-space(translate($value, '&quot;', ''))" />
+    <xsl:value-of select="$value" />
   </xsl:if>
 </xsl:template>
 
@@ -1080,10 +1199,10 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
   <xsl:variable name="value">
   <xsl:choose>
     <xsl:when test="@fill-opacity">
-      <xsl:value-of select="@fill-opacity" />
+      <xsl:value-of select="normalize-space(@fill-opacity)" />
     </xsl:when>
     <xsl:when test="@style and contains(@style, 'fill-opacity:')">
-      <xsl:variable name="Opacity" select="substring-after(@style, 'fill-opacity:')" />
+      <xsl:variable name="Opacity" select="normalize-space(substring-after(@style, 'fill-opacity:'))" />
       <xsl:choose>
         <xsl:when test="contains($Opacity, ';')">
           <xsl:value-of select="substring-before($Opacity, ';')" />
@@ -1115,7 +1234,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
   <xsl:choose>
     <xsl:when test="@fill-rule and (@fill-rule = 'nonzero' or @fill-rule = 'evenodd')">
       <xsl:attribute name="FillRule">
-        <xsl:value-of select="@fill-rule" />
+        <xsl:value-of select="normalize-space(@fill-rule)" />
       </xsl:attribute>
     </xsl:when>
     <xsl:when test="@style and contains(@style, 'fill-rule:')">
@@ -1177,16 +1296,17 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 <xsl:template mode="stroke" match="*">
   <xsl:choose>
     <xsl:when test="@stroke and starts-with(@stroke, 'url(#')">
-      <xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@stroke, 'url(#'), ')'), '}')" />
+      <!-- Removes unwanted characters in the color link (TODO: export to a specific template)-->
+      <xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(normalize-space(translate(@stroke, '&quot;', '')), 'url(#'), ')'), '}')" />
     </xsl:when>
-    <xsl:when test="@stroke and @stroke != 'none'">
+    <xsl:when test="@stroke and normalize-space(@stroke) != 'none'">
       <xsl:value-of select="@stroke" />
     </xsl:when>
-    <xsl:when test="@style and contains(@style, 'stroke:') and starts-with(substring-after(@style, 'stroke:'), 'url(#')">
-      <xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@style, 'url(#'), ')'), '}')" />
+    <xsl:when test="@style and contains(@style, 'stroke:') and starts-with(normalize-space(substring-after(translate(@style, '&quot;', ''), 'stroke:')), 'url(#')">
+      <xsl:value-of select="concat('{StaticResource ', substring-before(normalize-space(substring-after(substring-after(translate(@style, '&quot;', ''), 'stroke:'), 'url(#')), ')'), '}')" />
     </xsl:when>
     <xsl:when test="@style and contains(@style, 'stroke:')">
-      <xsl:variable name="Stroke" select="substring-after(@style, 'stroke:')" />
+      <xsl:variable name="Stroke" select="normalize-space(substring-after(@style, 'stroke:'))" />
       <xsl:choose>
         <xsl:when test="contains($Stroke, ';')">
           <xsl:if test="substring-before($Stroke, ';') != 'none'">
@@ -1311,11 +1431,11 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
   <xsl:choose>
     <xsl:when test="@stroke-miterlimit">
       <xsl:attribute name="StrokeMiterLimit">
-        <xsl:value-of select="@stroke-miterlimit" />
+        <xsl:value-of select="normalize-space(@stroke-miterlimit)" />
       </xsl:attribute>
     </xsl:when>
     <xsl:when test="@style and contains(@style, 'stroke-miterlimit:')">
-      <xsl:variable name="StrokeMiterLimit" select="substring-after(@style, 'stroke-miterlimit:')" />
+      <xsl:variable name="StrokeMiterLimit" select="normalize-space(substring-after(@style, 'stroke-miterlimit:'))" />
       <xsl:attribute name="StrokeMiterLimit">
         <xsl:choose>
           <xsl:when test="contains($StrokeMiterLimit, ';')">
@@ -1339,7 +1459,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 <xsl:template mode="stroke_dasharray" match="*">
   <!-- stroke-dasharray="10,30,20,30" becomes StrokeDashArray="1 3 2 3" ?? -->
   <xsl:choose>
-    <xsl:when test="@stroke-dasharray and @stroke-dasharray != 'none'">
+    <xsl:when test="@stroke-dasharray and normalize-space(@stroke-dasharray) != 'none'">
       <xsl:attribute name="StrokeDashArray">
         <xsl:value-of select="@stroke-dasharray" />
       </xsl:attribute>
@@ -1348,13 +1468,13 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
       <xsl:variable name="StrokeDashArray" select="substring-after(@style, 'stroke-dasharray:')" />
       <xsl:choose>
         <xsl:when test="contains($StrokeDashArray, ';')">
-          <xsl:if test="substring-before($StrokeDashArray, ';') != 'none'">
+          <xsl:if test="normalize-space(substring-before($StrokeDashArray, ';')) != 'none'">
             <xsl:attribute name="StrokeDashArray">
               <xsl:value-of select="substring-before($StrokeDashArray, ';')" />
             </xsl:attribute>
           </xsl:if>
         </xsl:when>
-        <xsl:when test="$StrokeDashArray != 'none'">
+        <xsl:when test="normalize-space($StrokeDashArray) != 'none'">
           <xsl:attribute name="StrokeDashArray">
             <xsl:value-of select="$StrokeDashArray" />
           </xsl:attribute>
@@ -1372,23 +1492,38 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 -->
 <xsl:template mode="stroke_dashoffset" match="*">
   <xsl:choose>
-    <xsl:when test="@stroke-dashoffset">
-      <xsl:attribute name="StrokeDashOffset">
-        <xsl:value-of select="@stroke-dashoffset" />
-      </xsl:attribute>
-    </xsl:when>
-    <xsl:when test="@style and contains(@style, 'stroke-dashoffset:')">
-      <xsl:variable name="StrokeDashOffset" select="substring-after(@style, 'stroke-dashoffset:')" />
-      <xsl:attribute name="StrokeDashOffset">
+    <xsl:when test="@stroke-dashoffset or (@style and contains(@style, 'stroke-dashoffset:'))">
+      <xsl:variable name="value">
         <xsl:choose>
-          <xsl:when test="contains($StrokeDashOffset, ';')">
-            <xsl:value-of select="substring-before($StrokeDashOffset, ';')" />
+          <xsl:when test="@stroke-dashoffset">
+            <xsl:call-template name="convert_unit">
+              <xsl:with-param name="convert_value" select="normalize-space(@stroke-dashoffset)" />
+            </xsl:call-template>
           </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$StrokeDashOffset" />
-          </xsl:otherwise>
+          <xsl:when test="@style and contains(@style, 'stroke-dashoffset:')">
+            <xsl:variable name="StrokeDashOffset" select="normalize-space(substring-after(@style, 'stroke-dashoffset:'))" />
+            <xsl:attribute name="StrokeDashOffset">
+              <xsl:choose>
+                <xsl:when test="contains($StrokeDashOffset, ';')">
+                  <xsl:call-template name="convert_unit">
+                    <xsl:with-param name="convert_value" select="substring-before($StrokeDashOffset, ';')" />
+                  </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:call-template name="convert_unit">
+                    <xsl:with-param name="convert_value" select="$StrokeDashOffset" />
+                  </xsl:call-template>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:attribute>
+          </xsl:when>
         </xsl:choose>
-      </xsl:attribute>
+      </xsl:variable>
+      <xsl:if test="value != ''">
+        <xsl:attribute name="StrokeDashOffset">
+          <xsl:value-of select="$value" />
+        </xsl:attribute>
+      </xsl:if>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'">
       <xsl:apply-templates mode="stroke_dashoffset" select="parent::*"/>
@@ -1535,10 +1670,10 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
   <xsl:variable name="Opacity">
     <xsl:choose>
       <xsl:when test="@stop-opacity">
-        <xsl:value-of select="@stop-opacity" />
+        <xsl:value-of select="normalize-space(@stop-opacity)" />
       </xsl:when>
       <xsl:when test="@style and contains(@style, 'stop-opacity:')">
-        <xsl:variable name="temp_opacity" select="substring-after(@style, 'stop-opacity:')" />
+        <xsl:variable name="temp_opacity" select="normalize-space(substring-after(@style, 'stop-opacity:'))" />
         <xsl:choose>
           <xsl:when test="contains($temp_opacity, ';')">
             <xsl:value-of select="substring-before($temp_opacity, ';')" />
@@ -1572,12 +1707,12 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
       <xsl:when test="@stop-color">
         <xsl:call-template name="template_color">
           <xsl:with-param name="colorspec">
-            <xsl:value-of select="@stop-color" />
+            <xsl:value-of select="normalize-space(@stop-color)" />
           </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="@style and contains(@style, 'stop-color:')">
-        <xsl:variable name="Color" select="substring-after(@style, 'stop-color:')" />
+        <xsl:variable name="Color" select="normalize-space(substring-after(@style, 'stop-color:'))" />
         <xsl:choose>
           <xsl:when test="contains($Color, ';')">
             <xsl:call-template name="template_color">
@@ -1598,7 +1733,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
       <xsl:when test="name(..) = 'g' or name(..) = 'svg'">
         <xsl:apply-templates mode="stop_color" select="parent::*"/>
       </xsl:when>
-      <xsl:otherwise>#000</xsl:otherwise>
+      <xsl:otherwise>#000000</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
   <xsl:attribute name="Color">
@@ -2495,7 +2630,8 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
     <xsl:apply-templates mode="object_opacity" select="." />
     <xsl:apply-templates mode="desc" select="." />
     <xsl:apply-templates mode="resources" select="." />
-
+    <xsl:apply-templates mode="clip" select="." />
+    
     <xsl:if test="@d">
       <xsl:choose>
         <xsl:when test="$silverlight_compatible = 1">
@@ -2675,40 +2811,138 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 <!--
 // Geometry //
 * Generic clip path template
+* Geometry for path
 * Geometry for circle
 * Geometry for rectangle
 -->
 
-<!-- Generic clip path template -->
+<!-- 
+  // Generic clip path template //
+-->
 <xsl:template mode="forward" match="*[name(.) = 'clipPath']">
   <xsl:apply-templates mode="geometry" />
 </xsl:template>
 
-<!-- Geometry for circle -->
-<xsl:template mode="geometry" match="*[name(.) = 'circle']">
-  <EllipseGeometry>
-    <xsl:if test="../@id"><xsl:attribute name="x:Key"><xsl:value-of select="../@id" /></xsl:attribute></xsl:if>
-    <xsl:if test="@cx and @cy"><xsl:attribute name="Center"><xsl:value-of select="concat(@cx, ',', @cy)" /></xsl:attribute></xsl:if>
-    <xsl:if test="@r">
-      <xsl:attribute name="RadiusX"><xsl:value-of select="@r" /></xsl:attribute>
-      <xsl:attribute name="RadiusY"><xsl:value-of select="@r" /></xsl:attribute>
+<!-- 
+  // Clip Geometry for path //
+  TODO: PathGeometry is positionned in the object's space, and thus needs to be translated.
+-->
+<xsl:template mode="geometry" match="*[name(.) = 'path']">
+  <PathGeometry>
+    <xsl:if test="../@id">
+      <xsl:attribute name="x:Key">
+        <xsl:value-of select="../@id" />
+      </xsl:attribute>
     </xsl:if>
+    <xsl:attribute name="Figures">
+      <xsl:value-of select="translate(@d , ',', ' ')" />
+    </xsl:attribute>
+    <xsl:apply-templates mode="fill_rule" select="." />
+    <xsl:apply-templates mode="transform" select=".">
+      <xsl:with-param name="mapped_type" select="'PathGeometry'" />
+    </xsl:apply-templates>
+  </PathGeometry>
+</xsl:template>
+
+<!-- 
+  // Clip Geometry for circle //
+-->
+<xsl:template mode="geometry" match="*[name(.) = 'circle' or name(.) = 'ellipse']">
+  <EllipseGeometry>
+    <xsl:if test="../@id">
+      <xsl:attribute name="x:Key">
+        <xsl:value-of select="../@id" />
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="@cx and @cy">
+      <xsl:attribute name="Center">
+        <xsl:value-of select="concat(@cx, ',', @cy)" />
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="@r">
+      <xsl:attribute name="RadiusX">
+        <xsl:value-of select="@r" />
+      </xsl:attribute>
+      <xsl:attribute name="RadiusY">
+        <xsl:value-of select="@r" />
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="@rx">
+      <xsl:attribute name="RadiusX">
+        <xsl:value-of select="@rx" />
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="@ry">
+      <xsl:attribute name="RadiusY">
+        <xsl:value-of select="@ry" />
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:apply-templates mode="transform" select=".">
+      <xsl:with-param name="mapped_type" select="'EllipseGeometry'" />
+    </xsl:apply-templates>
   </EllipseGeometry>
 </xsl:template>
 
-<!-- Geometry for rectangle -->
+<!-- 
+  // Clip Geometry for rectangle //
+-->
 <xsl:template mode="geometry" match="*[name(.) = 'rect']">
   <RectangleGeometry>
-    <xsl:if test="../@id"><xsl:attribute name="x:Key"><xsl:value-of select="../@id" /></xsl:attribute></xsl:if>
-    <!--
-    <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>
-    <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>
-    <xsl:if test="@width"><xsl:attribute name="Width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>
-    <xsl:if test="@height"><xsl:attribute name="Height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>
-    <xsl:if test="@rx"><xsl:attribute name="RadiusX"><xsl:value-of select="@rx" /></xsl:attribute></xsl:if>
-    <xsl:if test="@ry"><xsl:attribute name="RadiusY"><xsl:value-of select="@ry" /></xsl:attribute></xsl:if>
-    -->
-    <xsl:attribute name="Rect"><xsl:value-of select="concat('0, 0, ', @width, ', ', @height)" /></xsl:attribute>
+    <xsl:if test="../@id">
+      <xsl:attribute name="x:Key">
+        <xsl:value-of select="../@id" />
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:variable name="x">
+        <xsl:call-template name="convert_unit">
+          <xsl:with-param name="convert_value" select="@x" />
+        </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="y">
+        <xsl:call-template name="convert_unit">
+          <xsl:with-param name="convert_value" select="@y" />
+        </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="width">
+        <xsl:call-template name="convert_unit">
+          <xsl:with-param name="convert_value" select="@width" />
+        </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="height">
+      <xsl:call-template name="convert_unit">
+        <xsl:with-param name="convert_value" select="@height" />
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:if test="@rx">
+      <xsl:attribute name="RadiusX">
+        <xsl:value-of select="@rx" />
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="@ry">
+      <xsl:attribute name="RadiusY">
+        <xsl:value-of select="@ry" />
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="@rx and not(@ry)">
+      <xsl:attribute name="RadiusX">
+        <xsl:value-of select="@rx" />
+      </xsl:attribute>
+      <xsl:attribute name="RadiusY">
+        <xsl:value-of select="@rx" />
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="@ry and not(@rx)">
+      <xsl:attribute name="RadiusX">
+        <xsl:value-of select="@ry" />
+      </xsl:attribute>
+      <xsl:attribute name="RadiusY">
+        <xsl:value-of select="@ry" />
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:attribute name="Rect"><xsl:value-of select="concat($x, ', ', $y, ', ', $width, ', ', $height)" /></xsl:attribute>
+    <xsl:apply-templates mode="transform" select=".">
+      <xsl:with-param name="mapped_type" select="'RectangleGeometry'" />
+    </xsl:apply-templates>
   </RectangleGeometry>
 </xsl:template>
 
