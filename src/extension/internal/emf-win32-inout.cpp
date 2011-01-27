@@ -1777,8 +1777,13 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             }
 
             if (!(d->dc[d->level].textAlign & TA_BOTTOM))
-                y1 += fabs(d->dc[d->level].style.font_size.computed);
-            
+                if (d->dc[d->level].style.text_transform.value) {
+                    x1 += std::sin(d->dc[d->level].style.text_transform.value*M_PI/180.0)*fabs(d->dc[d->level].style.font_size.computed);
+                    y1 += std::cos(d->dc[d->level].style.text_transform.value*M_PI/180.0)*fabs(d->dc[d->level].style.font_size.computed);
+                }
+                else
+                    y1 += fabs(d->dc[d->level].style.font_size.computed);
+
             double x = pix_to_x_point(d, x1, y1);
             double y = pix_to_y_point(d, x1, y1);
 
