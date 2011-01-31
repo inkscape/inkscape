@@ -236,7 +236,7 @@ bool Script::check_existence(const std::string &command)
     }
 
     //Don't search when it is an absolute path. */
-    if (!Glib::path_is_absolute(command)) {
+    if (Glib::path_is_absolute(command)) {
         if (Glib::file_test(command, Glib::FILE_TEST_EXISTS)) {
             return true;
         } else {
