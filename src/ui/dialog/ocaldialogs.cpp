@@ -470,7 +470,7 @@ void FileImportFromOCALDialog::searchTagEntryChangedCallback()
 
     doc = xmlReadIO ((xmlInputReadCallback) vfs_read_callback,
         (xmlInputCloseCallback) gnome_vfs_close, from_handle, uri.c_str(), NULL,
-        XML_PARSE_RECOVER);
+        XML_PARSE_RECOVER + XML_PARSE_NOWARNING + XML_PARSE_NOERROR);
     if (doc == NULL) {
         sp_ui_error_dialog(_("Server supplied malformed Clip Art feed"));
         g_warning("Failed to parse %s\n", uri.c_str());
