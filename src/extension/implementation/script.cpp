@@ -45,7 +45,7 @@
 #include "xml/attribute-record.h"
 
 #include "util/glib-list-iterators.h"
-
+#include "path-prefix.h"
 
 
 #ifdef WIN32
@@ -229,7 +229,6 @@ Script::solve_reldir(Inkscape::XML::Node *reprin) {
 */
 bool Script::check_existence(const std::string &command)
 {
-
     // Check the simple case first
     if (command.empty()) {
         return false;
@@ -243,13 +242,14 @@ bool Script::check_existence(const std::string &command)
             return false;
         }
     }
-
-    std::string path = Glib::getenv("PATH");
-    if (path.empty()) {
-       /* There is no `PATH' in the environment.
-           The default search path is the current directory */
-        path = G_SEARCHPATH_SEPARATOR_S;
-    }
+    
+    // First search in the extension path and the current directory
+    std::string path = INKSCAPE_EXTENSIONDIR;
+    path.append(";");
+    path.append(G_SEARCHPATH_SEPARATOR_S);
+    path.append(";");
+    // And then the PATH environment variable.
+    path.append(Glib::getenv("PATH"));
 
     std::string::size_type pos  = 0;
     std::string::size_type pos2 = 0;
