@@ -28,7 +28,7 @@ GroupBBoxEffect::original_bbox(SPLPEItem *lpeitem, bool absolute)
     // Get item bounding box
     SPItem* item = SP_ITEM(lpeitem);
     
-    Geom::Matrix transform;
+    Geom::Affine transform;
     if (absolute) {
         transform = item->i2doc_affine();
     }

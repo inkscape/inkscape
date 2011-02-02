@@ -37,7 +37,7 @@
 #include "sp-item.h"
 #include "sp-root.h"
 
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 
 namespace Inkscape {
 namespace Extension {

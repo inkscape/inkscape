@@ -27,7 +27,7 @@
 # include "config.h"
 #endif
 
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <libnr/nr-matrix-fns.h>
 #include <libnrtype/FontFactory.h>
 #include <libnrtype/font-instance.h>
@@ -72,12 +72,12 @@ static void sp_text_update (SPObject *object, SPCtx *ctx, guint flags);
 static void sp_text_modified (SPObject *object, guint flags);
 static Inkscape::XML::Node *sp_text_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static void sp_text_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
+static void sp_text_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
 static NRArenaItem *sp_text_show (SPItem *item, NRArena *arena, unsigned key, unsigned flags);
 static void sp_text_hide (SPItem *item, unsigned key);
 static char *sp_text_description (SPItem *item);
 static void sp_text_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
-static Geom::Matrix sp_text_set_transform(SPItem *item, Geom::Matrix const &xform);
+static Geom::Affine sp_text_set_transform(SPItem *item, Geom::Affine const &xform);
 static void sp_text_print (SPItem *item, SPPrintContext *gpc);
 
 static SPItemClass *text_parent_class;
@@ -363,7 +363,7 @@ static Inkscape::XML::Node *sp_text_write(SPObject *object, Inkscape::XML::Docum
 }
 
 static void
-sp_text_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const /*flags*/)
+sp_text_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const /*flags*/)
 {
     SP_TEXT(item)->layout.getBoundingBox(bbox, transform);
 
@@ -456,8 +456,8 @@ static void sp_text_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
     }
 }
 
-static Geom::Matrix
-sp_text_set_transform (SPItem *item, Geom::Matrix const &xform)
+static Geom::Affine
+sp_text_set_transform (SPItem *item, Geom::Affine const &xform)
 {
     SPText *text = SP_TEXT(item);
 
@@ -479,7 +479,7 @@ sp_text_set_transform (SPItem *item, Geom::Matrix const &xform)
         return xform;
     }
 
-    Geom::Matrix ret(Geom::Matrix(xform).without_translation());
+    Geom::Affine ret(Geom::Affine(xform).withoutTranslation());
     ret[0] /= ex;
     ret[1] /= ex;
     ret[2] /= ex;
@@ -517,7 +517,7 @@ sp_text_print (SPItem *item, SPPrintContext *ctx)
     dbox.y0 = 0.0;
     dbox.x1 = SP_OBJECT_DOCUMENT (item)->getWidth ();
     dbox.y1 = SP_OBJECT_DOCUMENT (item)->getHeight ();
-    Geom::Matrix const ctm (item->i2d_affine());
+    Geom::Affine const ctm (item->i2d_affine());
 
     group->layout.print(ctx,&pbox,&dbox,&bbox,ctm);
 }
@@ -642,7 +642,7 @@ void SPText::_adjustFontsizeRecursive(SPItem *item, double ex, bool is_root)
     }
 }
 
-void SPText::_adjustCoordsRecursive(SPItem *item, Geom::Matrix const &m, double ex, bool is_root)
+void SPText::_adjustCoordsRecursive(SPItem *item, Geom::Affine const &m, double ex, bool is_root)
 {
     if (SP_IS_TSPAN(item))
         SP_TSPAN(item)->attributes.transform(m, ex, ex, is_root);
@@ -903,7 +903,7 @@ void TextTagAttributes::joinSingleAttribute(std::vector<SVGLength> *dest_vector,
     }
 }
 
-void TextTagAttributes::transform(Geom::Matrix const &matrix, double scale_x, double scale_y, bool extend_zero_length)
+void TextTagAttributes::transform(Geom::Affine const &matrix, double scale_x, double scale_y, bool extend_zero_length)
 {
     SVGLength zero_length;
     zero_length = 0.0;

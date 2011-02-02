@@ -89,7 +89,7 @@ class Shape {
     const Region &operator[](unsigned ix) const { return content[ix]; }
     
     Shape inverse() const;
-    Shape operator*(Matrix const &m) const;
+    Shape operator*(Affine const &m) const;
     
     bool contains(Point const &p) const;
     

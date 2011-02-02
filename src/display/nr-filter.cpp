@@ -43,7 +43,7 @@
 #include "display/nr-arena-item.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-blit.h"
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <2geom/rect.h>
 #include "svg/svg-length.h"
 #include "sp-filter-units.h"
@@ -139,7 +139,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     FilterQuality const filterquality = (FilterQuality)item->arena->filterquality;
     int const blurquality = item->arena->blurquality;
 
-    Geom::Matrix trans = item->ctm;
+    Geom::Affine trans = item->ctm;
     FilterSlot slot(_slot_count, item);
     slot.set_quality(filterquality);
     slot.set_blurquality(blurquality);
@@ -508,7 +508,7 @@ int Filter::_resolution_limit(FilterQuality const quality) const {
 }
 
 std::pair<double,double> Filter::_filter_resolution(
-    Geom::Rect const &area, Geom::Matrix const &trans,
+    Geom::Rect const &area, Geom::Affine const &trans,
     FilterQuality const filterquality) const
 {
     std::pair<double,double> resolution;

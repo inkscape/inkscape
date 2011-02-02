@@ -63,7 +63,7 @@ void
 find_intersections_bezier_recursive( std::vector<std::pair<double, double> > &xs,
                     vector<Geom::Point> const & A,
                     vector<Geom::Point> const & B,
-                    double precision) {
+                    double /*precision*/) {
     OldBezier a, b;
     a.p = A;
     b.p = B;
@@ -317,9 +317,9 @@ double Lmax(Point p) {
     return std::max(fabs(p[X]), fabs(p[Y]));
 }
 
-unsigned wangs_theorem(OldBezier a) {
+unsigned wangs_theorem(OldBezier /*a*/) {
     return 6; // seems a good approximation!
-    double la1 = Lmax( ( a.p[2] - a.p[1] ) - (a.p[1] - a.p[0]) );
+    /*double la1 = Lmax( ( a.p[2] - a.p[1] ) - (a.p[1] - a.p[0]) );
     double la2 = Lmax( ( a.p[3] - a.p[2] ) - (a.p[2] - a.p[1]) );
     double l0 = std::max(la1, la2);
     unsigned ra;
@@ -328,7 +328,7 @@ unsigned wangs_theorem(OldBezier a) {
     else
         ra = (unsigned)ceil( log4( M_SQRT2 * 6.0 / 8.0 * INV_EPS * l0 ) );
     //std::cout << ra << std::endl;
-    return ra;
+    return ra;*/
 }
 
 struct rparams
@@ -337,7 +337,7 @@ struct rparams
     OldBezier &B;
 };
 
-static int
+/*static int
 intersect_polish_f (const gsl_vector * x, void *params,
               gsl_vector * f)
 {
@@ -351,22 +351,22 @@ intersect_polish_f (const gsl_vector * x, void *params,
     gsl_vector_set (f, 1, dx[1]);
 
     return GSL_SUCCESS;
-}
+}*/
 
-union dbl_64{
+/*union dbl_64{
     long long i64;
     double d64;
-};
+};*/
 
-static double EpsilonBy(double value, int eps)
+/*static double EpsilonBy(double value, int eps)
 {
     dbl_64 s;
     s.d64 = value;
     s.i64 += eps;
     return s.d64;
-}
+}*/
 
-
+/*
 static void intersect_polish_root (OldBezier &A, double &s,
                                    OldBezier &B, double &t) {
     const gsl_multiroot_fsolver_type *T;
@@ -394,7 +394,7 @@ static void intersect_polish_root (OldBezier &A, double &s,
         iter++;
         status = gsl_multiroot_fsolver_iterate (sol);
 
-        if (status)   /* check if solver is stuck */
+        if (status)   // check if solver is stuck
             break;
 
         status =
@@ -439,7 +439,7 @@ static void intersect_polish_root (OldBezier &A, double &s,
             best_v = trial_v;
         }
     }
-}
+}*/
 
 
 void find_intersections_bezier_recursive( std::vector<std::pair<double, double> > &xs,

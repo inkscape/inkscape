@@ -44,7 +44,7 @@ private:
     static Inkscape::XML::Node *write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
     static gchar *getDescription(SPItem * item);
-    static Geom::Matrix setTransform(SPItem *item, Geom::Matrix const &xform);
+    static Geom::Affine setTransform(SPItem *item, Geom::Affine const &xform);
 
     static void update(SPObject *object, SPCtx *ctx, guint flags);
     static void setShape(SPShape *shape);

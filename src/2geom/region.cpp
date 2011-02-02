@@ -5,9 +5,9 @@
 
 namespace Geom {
 
-Region Region::operator*(Matrix const &m) const {
+Region Region::operator*(Affine const &m) const {
     Region r((m.flips() ? boundary.reverse() : boundary) * m, fill);
-    if(box && m.onlyScaleAndTranslation()) r.box = (*box) * m;
+    if(box && m.isZoom()) r.box = (*box) * m;
     return r;
 }
 

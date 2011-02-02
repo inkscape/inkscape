@@ -38,7 +38,7 @@
 #include <2geom/pathvector.h>
 
 #include <2geom/path.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 
 namespace Geom {
 

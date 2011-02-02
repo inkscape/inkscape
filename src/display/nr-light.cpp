@@ -43,7 +43,7 @@ void DistantLight::light_components(NR::Fvector &lc) {
     lc[LIGHT_BLUE] = NR_RGBA32_B(color);
 }
 
-PointLight::PointLight(SPFePointLight *light, guint32 lighting_color, const Geom::Matrix &trans) {
+PointLight::PointLight(SPFePointLight *light, guint32 lighting_color, const Geom::Affine &trans) {
     color = lighting_color;
     l_x = light->x;
     l_y = light->y;
@@ -66,7 +66,7 @@ void PointLight::light_components(NR::Fvector &lc) {
     lc[LIGHT_BLUE] = NR_RGBA32_B(color);
 }
 
-SpotLight::SpotLight(SPFeSpotLight *light, guint32 lighting_color, const Geom::Matrix &trans) {
+SpotLight::SpotLight(SPFeSpotLight *light, guint32 lighting_color, const Geom::Affine &trans) {
     gdouble p_x, p_y, p_z;
     color = lighting_color;
     l_x = light->x;

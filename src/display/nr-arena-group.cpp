@@ -271,13 +271,13 @@ nr_arena_group_set_transparent (NRArenaGroup *group, unsigned int transparent)
     group->transparent = transparent;
 }
 
-void nr_arena_group_set_child_transform(NRArenaGroup *group, Geom::Matrix const &t)
+void nr_arena_group_set_child_transform(NRArenaGroup *group, Geom::Affine const &t)
 {
-    Geom::Matrix nt(t);
+    Geom::Affine nt(t);
     nr_arena_group_set_child_transform(group, &nt);
 }
 
-void nr_arena_group_set_child_transform(NRArenaGroup *group, Geom::Matrix const *t)
+void nr_arena_group_set_child_transform(NRArenaGroup *group, Geom::Affine const *t)
 {
     if (!t) t = &GEOM_MATRIX_IDENTITY;
 

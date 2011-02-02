@@ -70,7 +70,7 @@
 #include "util/find-last-if.h"
 #include "util/reverse-list.h"
 #include <2geom/rect.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <2geom/transforms.h>
 
 #include "xml/repr.h"
@@ -163,7 +163,7 @@ void SPItem::init() {
 
     new (&constraints) std::vector<SPGuideConstraint>();
 
-    new (&_transformed_signal) sigc::signal<void, Geom::Matrix const *, SPItem *>();
+    new (&_transformed_signal) sigc::signal<void, Geom::Affine const *, SPItem *>();
 }
 
 bool SPItem::isVisibleAndUnlocked() const {
@@ -440,7 +440,7 @@ void SPItem::sp_item_set(SPObject *object, unsigned key, gchar const *value)
 
     switch (key) {
         case SP_ATTR_TRANSFORM: {
-            Geom::Matrix t;
+            Geom::Affine t;
             if (value && sp_svg_transform_read(value, &t)) {
                 item->set_item_transform(t);
             } else {
@@ -707,7 +707,7 @@ Inkscape::XML::Node *SPItem::sp_item_write(SPObject *const object, Inkscape::XML
  * \return  There is no guarantee that the return value will contain a rectangle.
             If this item does not have a boundingbox, it might well be empty.
  */
-Geom::OptRect SPItem::getBounds(Geom::Matrix const &transform,
+Geom::OptRect SPItem::getBounds(Geom::Affine const &transform,
                                       SPItem::BBoxType type,
                                       unsigned int /*dkey*/) const
 {
@@ -716,13 +716,13 @@ Geom::OptRect SPItem::getBounds(Geom::Matrix const &transform,
     return r;
 }
 
-void SPItem::invoke_bbox( Geom::OptRect &bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
+void SPItem::invoke_bbox( Geom::OptRect &bbox, Geom::Affine const &transform, unsigned const clear, SPItem::BBoxType type)
 {
     invoke_bbox_full( bbox, transform, type, clear);
 }
 
 // DEPRECATED to phase out the use of NRRect in favor of Geom::OptRect
-void SPItem::invoke_bbox( NRRect *bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
+void SPItem::invoke_bbox( NRRect *bbox, Geom::Affine const &transform, unsigned const clear, SPItem::BBoxType type)
 {
     invoke_bbox_full( bbox, transform, type, clear);
 }
@@ -734,7 +734,7 @@ void SPItem::invoke_bbox( NRRect *bbox, Geom::Matrix const &transform, unsigned 
  * \retval bbox  Note that there is no guarantee that bbox will contain a rectangle when the
  *               function returns. If this item does not have a boundingbox, this might well be empty.
  */
-void SPItem::invoke_bbox_full( Geom::OptRect &bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear) const
+void SPItem::invoke_bbox_full( Geom::OptRect &bbox, Geom::Affine const &transform, unsigned const flags, unsigned const clear) const
 {
     if (clear) {
         bbox = Geom::OptRect();
@@ -794,7 +794,7 @@ void SPItem::invoke_bbox_full( Geom::OptRect &bbox, Geom::Matrix const &transfor
                 }
 
                 // transform the expansions by the item's transform:
-                Geom::Matrix i2d(i2d_affine ());
+                Geom::Affine i2d(i2d_affine ());
                 dx0 *= i2d.expansionX();
                 dx1 *= i2d.expansionX();
                 dy0 *= i2d.expansionY();
@@ -838,7 +838,7 @@ void SPItem::invoke_bbox_full( Geom::OptRect &bbox, Geom::Matrix const &transfor
  * unions the resulting bbox with \a bbox. If \a clear is true, empties \a bbox first. Passes the
  * transform and the flags to the actual bbox methods. Note that many of subclasses (e.g. groups,
  * clones), in turn, call this function in their bbox methods. */
-void SPItem::invoke_bbox_full( NRRect *bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear)
+void SPItem::invoke_bbox_full( NRRect *bbox, Geom::Affine const &transform, unsigned const flags, unsigned const clear)
 {
     g_assert(bbox != NULL);
 
@@ -1139,7 +1139,7 @@ void SPItem::invoke_hide(unsigned key)
 
 // Adjusters
 
-void SPItem::adjust_pattern (Geom::Matrix const &postmul, bool set)
+void SPItem::adjust_pattern (Geom::Affine const &postmul, bool set)
 {
     if (style && (style->fill.isPaintserver())) {
         SPObject *server = style->getFillPaintServer();
@@ -1158,7 +1158,7 @@ void SPItem::adjust_pattern (Geom::Matrix const &postmul, bool set)
     }
 }
 
-void SPItem::adjust_gradient( Geom::Matrix const &postmul, bool set )
+void SPItem::adjust_gradient( Geom::Affine const &postmul, bool set )
 {
     if ( style && style->fill.isPaintserver() ) {
         SPPaintServer *server = style->getFillPaintServer();
@@ -1208,12 +1208,12 @@ void SPItem::adjust_stroke( gdouble ex )
 /**
  * Find out the inverse of previous transform of an item (from its repr)
  */
-Geom::Matrix sp_item_transform_repr (SPItem *item)
+Geom::Affine sp_item_transform_repr (SPItem *item)
 {
-    Geom::Matrix t_old(Geom::identity());
+    Geom::Affine t_old(Geom::identity());
     gchar const *t_attr = item->getRepr()->attribute("transform");
     if (t_attr) {
-        Geom::Matrix t;
+        Geom::Affine t;
         if (sp_svg_transform_read(t_attr, &t)) {
             t_old = t;
         }
@@ -1244,7 +1244,7 @@ void SPItem::adjust_stroke_width_recursive(double expansion)
  * Recursively adjust rx and ry of rects.
  */
 void
-sp_item_adjust_rects_recursive(SPItem *item, Geom::Matrix advertized_transform)
+sp_item_adjust_rects_recursive(SPItem *item, Geom::Affine advertized_transform)
 {
     if (SP_IS_RECT (item)) {
         sp_rect_compensate_rxry (SP_RECT(item), advertized_transform);
@@ -1259,13 +1259,13 @@ sp_item_adjust_rects_recursive(SPItem *item, Geom::Matrix advertized_transform)
 /**
  * Recursively compensate pattern or gradient transform.
  */
-void SPItem::adjust_paint_recursive (Geom::Matrix advertized_transform, Geom::Matrix t_ancestors, bool is_pattern)
+void SPItem::adjust_paint_recursive (Geom::Affine advertized_transform, Geom::Affine t_ancestors, bool is_pattern)
 {
 // _Before_ full pattern/gradient transform: t_paint * t_item * t_ancestors
 // _After_ full pattern/gradient transform: t_paint_new * t_item * t_ancestors * advertised_transform
 // By equating these two expressions we get t_paint_new = t_paint * paint_delta, where:
-    Geom::Matrix t_item = sp_item_transform_repr (this);
-    Geom::Matrix paint_delta = t_item * t_ancestors * advertized_transform * t_ancestors.inverse() * t_item.inverse();
+    Geom::Affine t_item = sp_item_transform_repr (this);
+    Geom::Affine paint_delta = t_item * t_ancestors * advertized_transform * t_ancestors.inverse() * t_item.inverse();
 
 // Within text, we do not fork gradients, and so must not recurse to avoid double compensation;
 // also we do not recurse into clones, because a clone's child is the ghost of its original -
@@ -1292,7 +1292,7 @@ void SPItem::adjust_paint_recursive (Geom::Matrix advertized_transform, Geom::Ma
     }
 }
 
-void SPItem::adjust_livepatheffect (Geom::Matrix const &postmul, bool set)
+void SPItem::adjust_livepatheffect (Geom::Affine const &postmul, bool set)
 {
     if ( SP_IS_LPE_ITEM(this) ) {
         SPLPEItem *lpeitem = SP_LPE_ITEM (this);
@@ -1321,12 +1321,12 @@ void SPItem::adjust_livepatheffect (Geom::Matrix const &postmul, bool set)
  * stored optimized. Send _transformed_signal. Invoke _write method so that
  * the repr is updated with the new transform.
  */
-void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Matrix const &transform, Geom::Matrix const *adv, bool compensate)
+void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &transform, Geom::Affine const *adv, bool compensate)
 {
     g_return_if_fail(repr != NULL);
 
     // calculate the relative transform, if not given by the adv attribute
-    Geom::Matrix advertized_transform;
+    Geom::Affine advertized_transform;
     if (adv != NULL) {
         advertized_transform = *adv;
     } else {
@@ -1364,7 +1364,7 @@ void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Matrix const &tra
     } // endif(compensate)
 
     gint preserve = prefs->getBool("/options/preservetransform/value", 0);
-    Geom::Matrix transform_attr (transform);
+    Geom::Affine transform_attr (transform);
     if ( // run the object's set_transform (i.e. embed transform) only if:
          ((SPItemClass *) G_OBJECT_GET_CLASS(this))->set_transform && // it does have a set_transform method
              !preserve && // user did not chose to preserve all transforms
@@ -1400,7 +1400,7 @@ gint SPItem::emitEvent(SPEvent &event)
  * Sets item private transform (not propagated to repr), without compensating stroke widths,
  * gradients, patterns as sp_item_write_transform does.
  */
-void SPItem::set_item_transform(Geom::Matrix const &transform_matrix)
+void SPItem::set_item_transform(Geom::Affine const &transform_matrix)
 {
     if (!matrix_equalp(transform_matrix, transform, NR_EPSILON)) {
         transform = transform_matrix;
@@ -1427,9 +1427,9 @@ void SPItem::convert_item_to_guides() {
  * \pre \a ancestor really is an ancestor (\>=) of \a object, or NULL.
  *   ("Ancestor (\>=)" here includes as far as \a object itself.)
  */
-Geom::Matrix
+Geom::Affine
 i2anc_affine(SPObject const *object, SPObject const *const ancestor) {
-    Geom::Matrix ret(Geom::identity());
+    Geom::Affine ret(Geom::identity());
     g_return_val_if_fail(object != NULL, ret);
 
     /* stop at first non-renderable ancestor */
@@ -1444,14 +1444,14 @@ i2anc_affine(SPObject const *object, SPObject const *const ancestor) {
     return ret;
 }
 
-Geom::Matrix
+Geom::Affine
 i2i_affine(SPObject const *src, SPObject const *dest) {
     g_return_val_if_fail(src != NULL && dest != NULL, Geom::identity());
     SPObject const *ancestor = src->nearestCommonAncestor(dest);
     return i2anc_affine(src, ancestor) * i2anc_affine(dest, ancestor).inverse();
 }
 
-Geom::Matrix SPItem::getRelativeTransform(SPObject const *dest) const {
+Geom::Affine SPItem::getRelativeTransform(SPObject const *dest) const {
     return i2i_affine(this, dest);
 }
 
@@ -1459,7 +1459,7 @@ Geom::Matrix SPItem::getRelativeTransform(SPObject const *dest) const {
  * Returns the accumulated transformation of the item and all its ancestors, including root's viewport.
  * \pre (item != NULL) and SP_IS_ITEM(item).
  */
-Geom::Matrix SPItem::i2doc_affine() const
+Geom::Affine SPItem::i2doc_affine() const
 {
     return i2anc_affine(this, NULL);
 }
@@ -1467,17 +1467,17 @@ Geom::Matrix SPItem::i2doc_affine() const
 /**
  * Returns the transformation from item to desktop coords
  */
-Geom::Matrix SPItem::i2d_affine() const
+Geom::Affine SPItem::i2d_affine() const
 {
-    Geom::Matrix const ret( i2doc_affine()
+    Geom::Affine const ret( i2doc_affine()
                           * Geom::Scale(1, -1)
                           * Geom::Translate(0, document->getHeight()) );
     return ret;
 }
 
-void SPItem::set_i2d_affine(Geom::Matrix const &i2dt)
+void SPItem::set_i2d_affine(Geom::Affine const &i2dt)
 {
-    Geom::Matrix dt2p; /* desktop to item parent transform */
+    Geom::Affine dt2p; /* desktop to item parent transform */
     if (parent) {
         dt2p = static_cast<SPItem *>(parent)->i2d_affine().inverse();
     } else {
@@ -1485,7 +1485,7 @@ void SPItem::set_i2d_affine(Geom::Matrix const &i2dt)
                  * Geom::Scale(1, -1) );
     }
 
-    Geom::Matrix const i2p( i2dt * dt2p );
+    Geom::Affine const i2p( i2dt * dt2p );
     set_item_transform(i2p);
 }
 
@@ -1493,7 +1493,7 @@ void SPItem::set_i2d_affine(Geom::Matrix const &i2dt)
 /**
  * should rather be named "sp_item_d2i_affine" to match "sp_item_i2d_affine" (or vice versa)
  */
-Geom::Matrix SPItem::dt2i_affine() const
+Geom::Affine SPItem::dt2i_affine() const
 {
     /* fixme: Implement the right way (Lauris) */
     return i2d_affine().inverse();

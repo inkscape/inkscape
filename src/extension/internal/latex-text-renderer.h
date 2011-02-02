@@ -18,7 +18,7 @@
 #endif
 
 #include "extension/extension.h"
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <stack>
 
 class SPItem;
@@ -51,10 +51,10 @@ protected:
 
     bool _pdflatex; /** true if ouputting for pdfLaTeX*/
 
-    void push_transform(Geom::Matrix const &transform);
-    Geom::Matrix const & transform();
+    void push_transform(Geom::Affine const &transform);
+    Geom::Affine const & transform();
     void pop_transform();
-    std::stack<Geom::Matrix> _transform_stack;
+    std::stack<Geom::Affine> _transform_stack;
 
     void writePreamble();
     void writePostamble();

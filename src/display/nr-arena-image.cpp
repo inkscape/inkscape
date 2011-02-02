@@ -108,7 +108,7 @@ nr_arena_image_finalize (NRObject *object)
 static unsigned int
 nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned int /*state*/, unsigned int /*reset*/ )
 {
-    Geom::Matrix grid2px;
+    Geom::Affine grid2px;
 
     // clear old bbox
     nr_arena_item_request_render(item);
@@ -180,7 +180,7 @@ nr_arena_image_render( cairo_t *ct, NRArenaItem *item, NRRectL */*area*/, NRPixB
 
     NRArenaImage *image = NR_ARENA_IMAGE (item);
 
-    Geom::Matrix d2s;
+    Geom::Affine d2s;
 
     d2s[0] = b2i[0];
     d2s[1] = b2i[1];

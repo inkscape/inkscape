@@ -95,7 +95,7 @@ findShadowedTime(Geom::Path const &patha, std::vector<Geom::Point> const &pt_and
     Point N = T.cw();
     Point A = pt_and_dir[0]-3*width*T, B = A+6*width*T;
 
-    Matrix mat = from_basis( T, N, pt_and_dir[0] );
+    Affine mat = from_basis( T, N, pt_and_dir[0] );
     mat = mat.inverse();
     Path p = patha * mat;
     
@@ -611,7 +611,7 @@ LPEKnot::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVecto
         svgd = "M 10,0 C 10,5.52 5.52,10 0,10 -5.52,10 -10,5.52 -10,0 c 0,-5.52 4.48,-10 10,-10 5.52,0 10,4.48 10,10 z";
     }
     PathVector pathv = sp_svg_read_pathv(svgd);
-    pathv *= Matrix(r,0,0,r,0,0);
+    pathv *= Affine(r,0,0,r,0,0);
     pathv+=switcher;
     hp_vec.push_back(pathv);
 }

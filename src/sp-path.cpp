@@ -59,7 +59,7 @@ static void sp_path_build(SPObject *object, SPDocument *document, Inkscape::XML:
 static void sp_path_set(SPObject *object, unsigned key, gchar const *value);
 
 static Inkscape::XML::Node *sp_path_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static Geom::Matrix sp_path_set_transform(SPItem *item, Geom::Matrix const &xform);
+static Geom::Affine sp_path_set_transform(SPItem *item, Geom::Affine const &xform);
 static gchar * sp_path_description(SPItem *item);
 static void sp_path_convert_to_guides(SPItem *item);
 
@@ -170,7 +170,7 @@ sp_path_convert_to_guides(SPItem *item)
 
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
-    Geom::Matrix const i2d (SP_ITEM(path)->i2d_affine());
+    Geom::Affine const i2d (SP_ITEM(path)->i2d_affine());
 
     Geom::PathVector const & pv = curve->get_pathvector();
     for(Geom::PathVector::const_iterator pit = pv.begin(); pit != pv.end(); ++pit) {
@@ -372,8 +372,8 @@ sp_path_update(SPObject *object, SPCtx *ctx, guint flags)
 /**
  * Writes the given transform into the repr for the given item.
  */
-static Geom::Matrix
-sp_path_set_transform(SPItem *item, Geom::Matrix const &xform)
+static Geom::Affine
+sp_path_set_transform(SPItem *item, Geom::Affine const &xform)
 {
     SPShape *shape = (SPShape *) item;
     SPPath *path = (SPPath *) item;

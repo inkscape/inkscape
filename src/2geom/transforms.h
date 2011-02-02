@@ -1,11 +1,12 @@
 /**
- * \file
- * \brief  Transforms should be applied left to right. scale * translate means: first scale, then translate.
- *
+ * @file
+ * @brief Affine transformation classes
+ *//*
  * Authors:
- *      ? <?@?.?>
+ *   ? <?@?.?>
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
  * 
- * Copyright ?-?  authors
+ * Copyright ?-2009 Authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -29,132 +30,235 @@
  * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
  * OF ANY KIND, either express or implied. See the LGPL or the MPL for
  * the specific language governing rights and limitations.
- *
  */
 
 #ifndef SEEN_Geom_TRANSFORMS_H
 #define SEEN_Geom_TRANSFORMS_H
 
-#include <2geom/matrix.h>
+#include <2geom/forward.h>
+#include <2geom/affine.h>
 #include <cmath>
 
 namespace Geom {
 
+/** @brief Type requirements for transforms.
+ * @ingroup Concepts */
 template <typename T>
 struct TransformConcept {
     T t;
-    Matrix m;
+    Affine m;
     Point p;
+    bool bool_;
     void constraints() {
         m = t;  //implicit conversion
-        t = t.inverse();
+        m *= t;
+        m = m * t;
+        m = t * m;
+        p *= t;
         p = p * t;
+        p = t * p;
+        t *= t;
         t = t * t;
+        t = pow(t, 3);
+        p /= t; // multiplication by inverse
+        p = p / t;
+        bool_ = (t == t);
+        bool_ = (t != t);
+        t = T::identity();
+        t = t.inverse();
     }
 };
 
+/** @brief Base template for transforms. */
+template <typename T>
+class TransformOperations
+    : boost::equality_comparable< T
+    , boost::multipliable< T
+      > >
+{
+public:
+    template <typename T2>
+    Affine operator*(T2 const &t) const {
+        Affine ret(*static_cast<T const*>(this)); ret *= t; return ret;
+    }
+};
 
-class Rotate;
-class Translate {
-  private:
-    Translate();
+/** @brief Integer exponentiation for transforms.
+ * Negative exponents will yield the corresponding power of the inverse. This function
+ * can also be applied to matrices.
+ * @param t Affine or transform to exponantiate
+ * @param n Exponent
+ * @return \f$A^n\f$ if @a n is positive, \f$(A^{-1})^n\f$ if negative, identity if zero.
+ * @ingroup Transforms */
+template <typename T>
+T pow(T const &t, int n) {
+    if (n == 0) return T::identity();
+    T result(T::identity());
+    T x(n < 0 ? t.inverse() : t);
+    if (n < 0) n = -n;
+    while ( n ) { // binary exponentiation - fast
+        if ( n & 1 ) { result *= x; --n; }
+        x *= x; n /= 2;
+    }
+    return result;
+}
+
+/** @brief Translation by a vector.
+ * @ingroup Transforms */
+class Translate
+    : public TransformOperations< Translate >
+{
+    Translate() : vec(0, 0) {}
     Point vec;
-  public:
+public:
+    /** @brief Construct a translation from its vector. */
     explicit Translate(Point const &p) : vec(p) {}
-    explicit Translate(Coord const x, Coord const y) : vec(x, y) {}
-    inline operator Matrix() const { return Matrix(1, 0, 0, 1, vec[X], vec[Y]); }
+    /** @brief Construct a translation from its coordinates. */
+    explicit Translate(Coord x, Coord y) : vec(x, y) {}
 
-    inline Coord operator[](Dim2 const dim) const { return vec[dim]; }
-    inline Coord operator[](unsigned const dim) const { return vec[dim]; }
-    inline bool operator==(Translate const &o) const { return vec == o.vec; }
-    inline bool operator!=(Translate const &o) const { return vec != o.vec; }
+    operator Affine() const { Affine ret(1, 0, 0, 1, vec[X], vec[Y]); return ret; }    
+    Coord operator[](Dim2 dim) const { return vec[dim]; }
+    Coord operator[](unsigned dim) const { return vec[dim]; }
+    Translate &operator*=(Translate const &o) { vec += o.vec; return *this; }
+    bool operator==(Translate const &o) const { return vec == o.vec; }
 
-    inline Translate inverse() const { return Translate(-vec); }
+    /** @brief Get the inverse translation. */
+    Translate inverse() const { return Translate(-vec); }
+    /** @brief Get a translation that doesn't do anything. */
+    static Translate identity() { Translate ret; return ret; }
 
-    friend Point operator*(Point const &v, Translate const &t);
-    inline Translate operator*(Translate const &b) const { return Translate(vec + b.vec); }
-    
-    friend Matrix operator*(Translate const &t, Rotate const &r);
+    friend class Point;
 };
 
-inline Point operator*(Point const &v, Translate const &t) { return v + t.vec; }
-
-class Scale {
-  private:
+/** @brief Scaling from the origin.
+ * During scaling, the point (0,0) will not move. To obtain a scale  with a different
+ * invariant point, combine with translation to the origin and back.
+ * @ingroup Transforms */
+class Scale
+    : public TransformOperations< Scale >
+{
     Point vec;
-    Scale();
-  public:
+    Scale() : vec(1, 1) {}
+public:
     explicit Scale(Point const &p) : vec(p) {}
-    Scale(Coord const x, Coord const y) : vec(x, y) {}
-    explicit Scale(Coord const s) : vec(s, s) {}
-    inline operator Matrix() const { return Matrix(vec[X], 0, 0, vec[Y], 0, 0); }
+    Scale(Coord x, Coord y) : vec(x, y) {}
+    explicit Scale(Coord s) : vec(s, s) {}
+    inline operator Affine() const { Affine ret(vec[X], 0, 0, vec[Y], 0, 0); return ret; }
 
-    inline Coord operator[](Dim2 const d) const { return vec[d]; }
-    inline Coord operator[](unsigned const d) const { return vec[d]; }
+    Coord operator[](Dim2 d) const { return vec[d]; }
+    Coord operator[](unsigned d) const { return vec[d]; }
     //TODO: should we keep these mutators? add them to the other transforms?
-    inline Coord &operator[](Dim2 const d) { return vec[d]; }
-    inline Coord &operator[](unsigned const d) { return vec[d]; }
-    inline bool operator==(Scale const &o) const { return vec == o.vec; }
-    inline bool operator!=(Scale const &o) const { return vec != o.vec; }
+    Coord &operator[](Dim2 d) { return vec[d]; }
+    Coord &operator[](unsigned d) { return vec[d]; }
+    Scale &operator*=(Scale const &b) { vec[X] *= b[X]; vec[Y] *= b[Y]; return *this; }
+    bool operator==(Scale const &o) const { return vec == o.vec; }
+    Scale inverse() const { return Scale(1./vec[0], 1./vec[1]); }
+    static Scale identity() { Scale ret; return ret; }
 
-    inline Scale inverse() const { return Scale(1./vec[0], 1./vec[1]); }
-
-    friend Point operator*(Point const &v, Translate const &t);
-    inline Scale operator*(Scale const &b) const { return Scale(vec[X]*b[X], vec[Y]*b[Y]); }
+    friend class Point;
 };
 
-inline Point operator*(Point const &p, Scale const &s) { return Point(p[X] * s[X], p[Y] * s[Y]); }
-
-/** Notionally an Geom::Matrix corresponding to rotation about the origin.
-    Behaves like Geom::Matrix for multiplication.
-**/
-class Rotate {
-  private:
-    Rotate() {}
+/** @brief Rotation around the origin.
+ * Combine with translations to the origin and back to get a rotation around a different point.
+ * @ingroup Transforms */
+class Rotate
+    : public TransformOperations< Rotate >
+{
+    Rotate() : vec(1, 0) {}
     Point vec;
-  public:    
-    explicit Rotate(Coord theta) : vec(std::cos(theta), std::sin(theta)) {}
-    Rotate(Point const &p) {Point v = p; v.normalize(); vec = v;} //TODO: UGLY!
+public:
+    /** @brief Construct a rotation from its angle in radians.
+     * Positive arguments correspond to counter-clockwise rotations (if Y grows upwards). */
+    explicit Rotate(Coord theta) : vec(Point::polar(theta)) {}
+    /** @brief Construct a rotation from its characteristic vector. */
+    explicit Rotate(Point const &p) : vec(unit_vector(p)) {}
+    /** @brief Construct a rotation from the coordinates of its characteristic vector. */
     explicit Rotate(Coord x, Coord y) { Rotate(Point(x, y)); }
-    inline operator Matrix() const { return Matrix(vec[X], vec[Y], -vec[Y], vec[X], 0, 0); }
+    operator Affine() const { Affine ret(vec[X], vec[Y], -vec[Y], vec[X], 0, 0); return ret; }
 
-    inline Point vector() const { return vec; }
-    inline Coord operator[](Dim2 const dim) const { return vec[dim]; }
-    inline Coord operator[](unsigned const dim) const { return vec[dim]; }
-    inline bool operator==(Rotate const &o) const { return vec == o.vec; }
-    inline bool operator!=(Rotate const &o) const { return vec != o.vec; }
-
-    inline Rotate inverse() const {
+    /** @brief Get the characteristic vector of the rotation.
+     * @return A vector that would be obtained by applying this transform to the X versor. */
+    Point vector() const { return vec; }
+    Coord operator[](Dim2 dim) const { return vec[dim]; }
+    Coord operator[](unsigned dim) const { return vec[dim]; }
+    Rotate &operator*=(Rotate const &o) { vec *= o; return *this; }
+    bool operator==(Rotate const &o) const { return vec == o.vec; }
+    Rotate inverse() const {
         Rotate r;
         r.vec = Point(vec[X], -vec[Y]); 
         return r;
     }
+    /** @brief Get a 0-degree rotation. */
+    static Rotate identity() { Rotate ret; return ret; }
+    /** @brief Construct a rotation from its angle in degrees.
+     * Positive arguments correspond to counter-clockwise rotations (if Y grows upwards). */
     static Rotate from_degrees(Coord deg) {
         Coord rad = (deg / 180.0) * M_PI;
         return Rotate(rad);
     }
 
-    friend Point operator*(Point const &v, Rotate const &r);
-    inline Rotate operator*(Rotate const &b) const { return Rotate(vec * b); }
+    friend class Point;
 };
 
-inline Point operator*(Point const &v, Rotate const &r) { return v ^ r.vec; }
+/** @brief Common base for shearing transforms.
+ * @ingroup Transforms */
+template <typename S>
+class ShearBase
+    : public TransformOperations< S >
+{
+protected:
+    Coord f;
+    ShearBase(Coord _f) : f(_f) {}
+public:
+    Coord factor() const { return f; }
+    void setFactor(Coord nf) { f = nf; }
+    S &operator*=(S const &s) { f += s.f; return *static_cast<S const*>(this); }
+    bool operator==(S const &s) const { return f == s.f; }
+    S inverse() const { return S(-f); }
+    static S identity() { return S(0); }
 
-Matrix operator*(Translate const &t, Scale const &s);
-Matrix operator*(Translate const &t, Rotate const &r);
+    friend class Point;
+    friend class Affine;
+};
 
-Matrix operator*(Scale const &s, Translate const &t);
-Matrix operator*(Scale const &s, Matrix const &m);
+/** @brief Horizontal shearing.
+ * Points on the X axis will not move. Combine with translations to get a shear
+ * with a different invariant line.
+ * @ingroup Transforms */
+class HShear
+    : public ShearBase<HShear>
+{
+public:
+    explicit HShear(Coord h) : ShearBase<HShear>(h) {}
+    operator Affine() const { Affine ret(1, 0, f, 1, 0, 0); return ret; }
+};
 
-Matrix operator*(Matrix const &m, Translate const &t);
-Matrix operator*(Matrix const &m, Scale const &s);
-Matrix operator*(Matrix const &m, Rotate const &r);
-Matrix operator*(Matrix const &m1, Matrix const &m2);
+/** @brief Vertical shearing.
+ * Points on the Y axis will not move. Combine with translations to get a shear
+ * with a different invariant line.
+ * @ingroup Transforms */
+class VShear
+    : public ShearBase<VShear>
+{
+public:
+    explicit VShear(Coord h) : ShearBase<VShear>(h) {}
+    operator Affine() const { Affine ret(1, f, 0, 1, 0, 0); return ret; }
+};
 
-Translate pow(Translate const &t, int n);
-Scale pow(Scale const &t, int n);
-Rotate pow(Rotate t, int n);
-Matrix pow(Matrix t, int n);
+/** @brief Specialization of exponentiation for Scale.
+ * @relates Scale */
+template<>
+inline Scale pow(Scale const &s, int n) {
+    Scale ret(::pow(s[X], n), ::pow(s[Y], n));
+    return ret;
+}
+/** @brief Specialization of exponentiation for Translate.
+ * @relates Translate */
+template<>
+inline Translate pow(Translate const &t, int n) {
+    Translate ret(t[X] * n, t[Y] * n);
+    return ret;
+}
 
 //TODO: matrix to trans/scale/rotate
 

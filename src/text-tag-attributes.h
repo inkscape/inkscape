@@ -88,7 +88,7 @@ public:
     If \a extend_zero_length is true, then if the x or y vectors are empty
     they will be made length 1 in order to store the newly calculated
     position. */
-    void transform(Geom::Matrix const &matrix, double scale_x, double scale_y, bool extend_zero_length = false);
+    void transform(Geom::Affine const &matrix, double scale_x, double scale_y, bool extend_zero_length = false);
 
     /** Gets current value of dx vector at \a index. */
     double getDx(unsigned index);

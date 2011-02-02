@@ -34,7 +34,7 @@ public:
     CanvasAxonomGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc);
     virtual ~CanvasAxonomGrid();
 
-    void Update (Geom::Matrix const &affine, unsigned int flags);
+    void Update (Geom::Affine const &affine, unsigned int flags);
     void Render (SPCanvasBuf *buf);
 
     void readRepr();

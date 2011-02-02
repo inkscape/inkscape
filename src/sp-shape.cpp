@@ -307,7 +307,7 @@ void SPShape::sp_shape_update(SPObject *object, SPCtx *ctx, unsigned int flags)
  * Reference for behaviour of zero-length segments:
  * http://www.w3.org/TR/SVG11/implnote.html#PathElementImplementationNotes
  */
-Geom::Matrix sp_shape_marker_get_transform(Geom::Curve const & c1, Geom::Curve const & c2)
+Geom::Affine sp_shape_marker_get_transform(Geom::Curve const & c1, Geom::Curve const & c2)
 {
     Geom::Point p = c1.pointAt(1);
     Geom::Curve * c1_reverse = c1.reverse();
@@ -334,10 +334,10 @@ Geom::Matrix sp_shape_marker_get_transform(Geom::Curve const & c1, Geom::Curve c
     return Geom::Rotate(ret_angle) * Geom::Translate(p);
 }
 
-Geom::Matrix sp_shape_marker_get_transform_at_start(Geom::Curve const & c)
+Geom::Affine sp_shape_marker_get_transform_at_start(Geom::Curve const & c)
 {
     Geom::Point p = c.pointAt(0);
-    Geom::Matrix ret = Geom::Translate(p);
+    Geom::Affine ret = Geom::Translate(p);
 
     if ( !c.isDegenerate() ) {
         Geom::Point tang = c.unitTangentAt(0);
@@ -351,10 +351,10 @@ Geom::Matrix sp_shape_marker_get_transform_at_start(Geom::Curve const & c)
     return ret;
 }
 
-Geom::Matrix sp_shape_marker_get_transform_at_end(Geom::Curve const & c)
+Geom::Affine sp_shape_marker_get_transform_at_end(Geom::Curve const & c)
 {
     Geom::Point p = c.pointAt(1);
-    Geom::Matrix ret = Geom::Translate(p);
+    Geom::Affine ret = Geom::Translate(p);
 
     if ( !c.isDegenerate() ) {
         Geom::Curve * c_reverse = c.reverse();
@@ -393,7 +393,7 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, NRArenaItem *ai)
 
     // START marker
     {
-        Geom::Matrix const m (sp_shape_marker_get_transform_at_start(pathv.begin()->front()));
+        Geom::Affine const m (sp_shape_marker_get_transform_at_start(pathv.begin()->front()));
         for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
             if ( shape->marker[i] ) {
                 sp_marker_show_instance ((SPMarker* ) shape->marker[i], ai,
@@ -411,7 +411,7 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, NRArenaItem *ai)
             if ( path_it != pathv.begin() 
                  && ! ((path_it == (pathv.end()-1)) && (path_it->size_default() == 0)) ) // if this is the last path and it is a moveto-only, don't draw mid marker there
             {
-                Geom::Matrix const m (sp_shape_marker_get_transform_at_start(path_it->front()));
+                Geom::Affine const m (sp_shape_marker_get_transform_at_start(path_it->front()));
                 for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
                     if ( shape->marker[i] ) {
                         sp_marker_show_instance ((SPMarker* ) shape->marker[i], ai,
@@ -431,7 +431,7 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, NRArenaItem *ai)
                      * Loop to end_default (so including closing segment), because when a path is closed,
                      * there should be a midpoint marker between last segment and closing straight line segment
                      */
-                    Geom::Matrix const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
+                    Geom::Affine const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
                     for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
                         if (shape->marker[i]) {
                             sp_marker_show_instance ((SPMarker* ) shape->marker[i], ai,
@@ -448,7 +448,7 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, NRArenaItem *ai)
             // END position
             if ( path_it != (pathv.end()-1) && !path_it->empty()) {
                 Geom::Curve const &lastcurve = path_it->back_default();
-                Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
+                Geom::Affine const m = sp_shape_marker_get_transform_at_end(lastcurve);
                 for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
                     if (shape->marker[i]) {
                         sp_marker_show_instance ((SPMarker* ) shape->marker[i], ai,
@@ -471,7 +471,7 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, NRArenaItem *ai)
             index--;
         }
         Geom::Curve const &lastcurve = path_last[index];
-        Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
+        Geom::Affine const m = sp_shape_marker_get_transform_at_end(lastcurve);
 
         for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
             if (shape->marker[i]) {
@@ -506,7 +506,7 @@ void SPShape::sp_shape_modified(SPObject *object, unsigned int flags)
  * Calculates the bounding box for item, storing it into bbox.
  * This also includes the bounding boxes of any markers included in the shape.
  */
-void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags)
+void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags)
 {
     SPShape const *shape = SP_SHAPE (item);
     if (shape->curve) {
@@ -570,7 +570,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const
                                 SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
 
                                 if (marker_item) {
-                                    Geom::Matrix tr(sp_shape_marker_get_transform_at_start(pathv.begin()->front()));
+                                    Geom::Affine tr(sp_shape_marker_get_transform_at_start(pathv.begin()->front()));
                                     if (!marker->orient_auto) {
                                         Geom::Point transl = tr.translation();
                                         tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
@@ -602,7 +602,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const
                                 if ( path_it != pathv.begin() 
                                      && ! ((path_it == (pathv.end()-1)) && (path_it->size_default() == 0)) ) // if this is the last path and it is a moveto-only, there is no mid marker there
                                 {
-                                    Geom::Matrix tr(sp_shape_marker_get_transform_at_start(path_it->front()));
+                                    Geom::Affine tr(sp_shape_marker_get_transform_at_start(path_it->front()));
                                     if (!marker->orient_auto) {
                                         Geom::Point transl = tr.translation();
                                         tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
@@ -629,7 +629,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const
                                         SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
 
                                         if (marker_item) {
-                                            Geom::Matrix tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
+                                            Geom::Affine tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
                                             if (!marker->orient_auto) {
                                                 Geom::Point transl = tr.translation();
                                                 tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
@@ -650,7 +650,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const
                                 // END position
                                 if ( path_it != (pathv.end()-1) && !path_it->empty()) {
                                     Geom::Curve const &lastcurve = path_it->back_default();
-                                    Geom::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
+                                    Geom::Affine tr = sp_shape_marker_get_transform_at_end(lastcurve);
                                     if (!marker->orient_auto) {
                                         Geom::Point transl = tr.translation();
                                         tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
@@ -681,7 +681,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const
                                     }
                                     Geom::Curve const &lastcurve = path_last[index];
 
-                                    Geom::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
+                                    Geom::Affine tr = sp_shape_marker_get_transform_at_end(lastcurve);
                                     if (!marker->orient_auto) {
                                         Geom::Point transl = tr.translation();
                                         tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
@@ -713,7 +713,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const
 }
 
 static void
-sp_shape_print_invoke_marker_printing(SPObject* obj, Geom::Matrix tr, SPStyle* style, SPPrintContext *ctx) {
+sp_shape_print_invoke_marker_printing(SPObject* obj, Geom::Affine tr, SPStyle* style, SPPrintContext *ctx) {
     SPMarker *marker = SP_MARKER(obj);
     if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
         tr = Geom::Scale(style->stroke_width.computed) * tr;
@@ -722,7 +722,7 @@ sp_shape_print_invoke_marker_printing(SPObject* obj, Geom::Matrix tr, SPStyle* s
     SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
     tr = marker_item->transform * marker->c2p * tr;
 
-    Geom::Matrix old_tr = marker_item->transform;
+    Geom::Affine old_tr = marker_item->transform;
     marker_item->transform = tr;
     marker_item->invoke_print (ctx);
     marker_item->transform = old_tr;
@@ -761,7 +761,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
     dbox.x1 = SP_OBJECT_DOCUMENT (item)->getWidth ();
     dbox.y1 = SP_OBJECT_DOCUMENT (item)->getHeight ();
     item->getBboxDesktop (&bbox);
-    Geom::Matrix const i2d(item->i2d_affine());
+    Geom::Affine const i2d(item->i2d_affine());
 
     SPStyle* style = SP_OBJECT_STYLE (item);
 
@@ -777,7 +777,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
     // START marker
     for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START    
         if ( shape->marker[i] ) {
-            Geom::Matrix tr(sp_shape_marker_get_transform_at_start(pathv.begin()->front()));
+            Geom::Affine tr(sp_shape_marker_get_transform_at_start(pathv.begin()->front()));
             sp_shape_print_invoke_marker_printing(shape->marker[i], tr, style, ctx);
         }
     }
@@ -789,7 +789,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
                 if ( path_it != pathv.begin() 
                      && ! ((path_it == (pathv.end()-1)) && (path_it->size_default() == 0)) ) // if this is the last path and it is a moveto-only, there is no mid marker there
                 {
-                    Geom::Matrix tr(sp_shape_marker_get_transform_at_start(path_it->front()));
+                    Geom::Affine tr(sp_shape_marker_get_transform_at_start(path_it->front()));
                     sp_shape_print_invoke_marker_printing(shape->marker[i], tr, style, ctx);
                 }
                 // MID position
@@ -801,7 +801,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
                         /* Put marker between curve_it1 and curve_it2.
                          * Loop to end_default (so including closing segment), because when a path is closed,
                          * there should be a midpoint marker between last segment and closing straight line segment */
-                        Geom::Matrix tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
+                        Geom::Affine tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
 
                         sp_shape_print_invoke_marker_printing(shape->marker[i], tr, style, ctx);
 
@@ -811,7 +811,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
                 }
                 if ( path_it != (pathv.end()-1) && !path_it->empty()) {
                     Geom::Curve const &lastcurve = path_it->back_default();
-                    Geom::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
+                    Geom::Affine tr = sp_shape_marker_get_transform_at_end(lastcurve);
                     sp_shape_print_invoke_marker_printing(shape->marker[i], tr, style, ctx);
                 }
             }
@@ -828,7 +828,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
         }
         Geom::Curve const &lastcurve = path_last[index];
 
-        Geom::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
+        Geom::Affine tr = sp_shape_marker_get_transform_at_end(lastcurve);
 
         for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
             if (shape->marker[i]) {
@@ -1163,7 +1163,7 @@ void SPShape::sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::Snap
     if (pathv.empty())
         return;
 
-    Geom::Matrix const i2d (item->i2d_affine ());
+    Geom::Affine const i2d (item->i2d_affine ());
 
     if (snapprefs->getSnapObjectMidpoints()) {
         Geom::OptRect bbox = item->getBounds(item->i2d_affine());

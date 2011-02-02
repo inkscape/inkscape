@@ -38,7 +38,7 @@
 #include <exception>
 
 #include <2geom/sbasis-to-bezier.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <2geom/pathvector.h>
 
 // include effects:
@@ -668,7 +668,7 @@ Effect::resetDefaults(SPItem * /*item*/)
 }
 
 void
-Effect::transform_multiply(Geom::Matrix const& postmul, bool set)
+Effect::transform_multiply(Geom::Affine const& postmul, bool set)
 {
     // cycle through all parameters. Most parameters will not need transformation, but path and point params do.
     for (std::vector<Parameter *>::iterator it = param_vector.begin(); it != param_vector.end(); it++) {

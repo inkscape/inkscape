@@ -1,6 +1,5 @@
 #include <2geom/poly.h>
 
-#define HAVE_GSL
 #ifdef HAVE_GSL
 #include <gsl/gsl_poly.h>
 #endif

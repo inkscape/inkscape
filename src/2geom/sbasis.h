@@ -63,7 +63,10 @@ class SBasis : public SBasisN<1>;
 
 namespace Geom{
 
-/*** An empty SBasis is identically 0. */
+/**
+* \brief S-power basis function class
+*
+* An empty SBasis is identically 0. */
 class SBasis{
     std::vector<Linear> d;
     void push_back(Linear const&l) { d.push_back(l); }
@@ -125,8 +128,9 @@ public:
     }
     inline bool isConstant() const {
         if (empty()) return true;
-        for (unsigned i = 0; i < size(); i++) {
-            if(!(*this)[i].isConstant()) return false;
+        if(!(*this)[0].isConstant()) return false;
+        for (unsigned i = 1; i < size(); i++) {
+            if(!(*this)[i].isZero()) return false;
         }
         return true;
     }
@@ -188,6 +192,7 @@ OptInterval bounds_local(SBasis const &a, const OptInterval &t, int order = 0);
 
 /** Returns a function which reverses the domain of a.
  \param a sbasis function
+ \relates SBasis
 
 useful for reversing a parameteric curve.
 */
@@ -312,7 +317,8 @@ inline SBasis& operator*=(SBasis& a, SBasis const & b) {
 /** Returns the degree of the first non zero coefficient.
  \param a sbasis function
  \param tol largest abs val considered 0
- \returns first non zero coefficient
+ \return first non zero coefficient
+ \relates SBasis
 */
 inline unsigned 
 valuation(SBasis const &a, double tol=0){
@@ -333,10 +339,10 @@ SBasis inverse(SBasis a, int k);
 SBasis compose_inverse(SBasis const &f, SBasis const &g, unsigned order=2, double tol=1e-3);
 
 /** Returns the sbasis on domain [0,1] that was t on [from, to]
- \param a sbasis function
+ \param t sbasis function
  \param from,to interval
- \returns sbasis
-
+ \return sbasis
+ \relates SBasis
 */
 inline SBasis portion(const SBasis &t, double from, double to) { return compose(t, Linear(from, to)); }
 inline SBasis portion(const SBasis &t, Interval ivl) { return compose(t, Linear(ivl[0], ivl[1])); }
@@ -364,13 +370,75 @@ SBasis sin(Linear bo, int k);
 SBasis cos(Linear bo, int k);
 
 std::vector<double> roots(SBasis const & s);
+std::vector<double> roots(SBasis const & s, Interval const inside);
 std::vector<std::vector<double> > multi_roots(SBasis const &f,
                                  std::vector<double> const &levels,
                                  double htol=1e-7,
                                  double vtol=1e-7,
                                  double a=0,
                                  double b=1);
-    
+
+//--------- Levelset like functions -----------------------------------------------------
+
+/** Solve f(t) = v +/- tolerance. The collection of intervals where
+ *     v - vtol <= f(t) <= v+vtol
+ *   is returned (with a precision tol on the boundaries).
+    \param f sbasis function
+    \param level the value of v.
+    \param vtol: error tolerance on v.
+    \param a, b limit search on domain [a,b]
+    \param tol: tolerance on the result bounds.
+    \returns a vector of intervals.
+*/
+std::vector<Interval> level_set (SBasis const &f,
+		double level,
+		double vtol = 1e-5,
+		double a=0.,
+		double b=1.,
+		double tol = 1e-5);
+
+/** Solve f(t)\in I=[u,v], which defines a collection of intervals (J_k). More precisely,
+ *  a collection (J'_k) is returned with J'_k = J_k up to a given tolerance.
+    \param f sbasis function
+    \param level: the given interval of deisred values for f.
+    \param a, b limit search on domain [a,b]
+    \param tol: tolerance on the bounds of the result.
+    \returns a vector of intervals.
+*/
+std::vector<Interval> level_set (SBasis const &f,
+		Interval const &level,
+		double a=0.,
+		double b=1.,
+		double tol = 1e-5);
+
+/** 'Solve' f(t) = v +/- tolerance for several values of v at once.
+    \param f sbasis function
+    \param levels vector of values, that should be sorted.
+    \param vtol: error tolerance on v.
+    \param a, b limit search on domain [a,b]
+    \param tol: the bounds of the returned intervals are exact up to that tolerance.
+    \returns a vector of vectors of intervals.
+*/
+std::vector<std::vector<Interval> > level_sets (SBasis const &f,
+		std::vector<double> const &levels,
+		double a=0.,
+		double b=1.,
+		double vtol = 1e-5,
+		double tol = 1e-5);
+
+/** 'Solve' f(t)\in I=[u,v] for several intervals I at once.
+    \param f sbasis function
+    \param levels vector of 'y' intervals, that should be disjoints and sorted.
+    \param a, b limit search on domain [a,b]
+    \param tol: the bounds of the returned intervals are exact up to that tolerance.
+    \returns a vector of vectors of intervals.
+*/
+std::vector<std::vector<Interval> > level_sets (SBasis const &f,
+		std::vector<Interval> const &levels,
+		double a=0.,
+		double b=1.,
+		double tol = 1e-5);
+
 }
 #endif
 

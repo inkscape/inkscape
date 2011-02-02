@@ -68,7 +68,7 @@ class PointLight {
          * employed in the sp light object) and current coordinate (those
          * employed in the rendering)
          */
-        PointLight(SPFePointLight *light, guint32 lighting_color, const Geom::Matrix &trans);
+        PointLight(SPFePointLight *light, guint32 lighting_color, const Geom::Affine &trans);
         virtual ~PointLight();
         /**
          * Computes the light vector of the distant light at point (x,y,z).
@@ -108,7 +108,7 @@ class SpotLight {
          * employed in the sp light object) and current coordinate (those
          * employed in the rendering)
          */
-        SpotLight(SPFeSpotLight *light, guint32 lighting_color, const Geom::Matrix &trans);
+        SpotLight(SPFeSpotLight *light, guint32 lighting_color, const Geom::Affine &trans);
         virtual ~SpotLight();
 
         /**

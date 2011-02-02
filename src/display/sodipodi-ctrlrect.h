@@ -39,7 +39,7 @@ public:
     void setDashed(bool d);
 
     void render(SPCanvasBuf *buf);
-    void update(Geom::Matrix const &affine, unsigned int flags);
+    void update(Geom::Affine const &affine, unsigned int flags);
     
 private:
     void _requestUpdate();

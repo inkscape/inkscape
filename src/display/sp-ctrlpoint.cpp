@@ -25,7 +25,7 @@ static void sp_ctrlpoint_class_init (SPCtrlPointClass *klass);
 static void sp_ctrlpoint_init (SPCtrlPoint *ctrlpoint);
 static void sp_ctrlpoint_destroy (GtkObject *object);
 
-static void sp_ctrlpoint_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
+static void sp_ctrlpoint_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_ctrlpoint_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass *parent_class;
@@ -110,7 +110,7 @@ sp_ctrlpoint_render (SPCanvasItem *item, SPCanvasBuf *buf)
 }
 
 static void
-sp_ctrlpoint_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
+sp_ctrlpoint_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
     SPCtrlPoint *cp = SP_CTRLPOINT (item);
 

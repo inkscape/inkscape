@@ -1,11 +1,17 @@
-#ifndef LIB2GEOM_EXCEPTION_HEADER
-#define LIB2GEOM_EXCEPTION_HEADER
-
 /**
  * \file
  * \brief  Defines the different types of exceptions that 2geom can throw.
  *
- * Copyright 2007 Johan Engelen <goejendaagh@zonnet.nl>
+ * There are two main exception classes: LogicalError and RangeError.
+ * Logical errors are 2geom faults/bugs; RangeErrors are 'user' faults,
+ * e.g. invalid arguments to lib2geom methods.
+ * This way, the 'user' can distinguish between groups of exceptions
+ * ('user' is the coder that uses lib2geom)
+ *
+ * Several macro's are defined for easily throwing exceptions 
+ * (e.g. THROW_CONTINUITYERROR). 
+ */
+/* Copyright 2007 Johan Engelen <goejendaagh@zonnet.nl>
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -32,13 +38,18 @@
  *
  */
 
+#ifndef LIB2GEOM_EXCEPTION_HEADER
+#define LIB2GEOM_EXCEPTION_HEADER
+
 #include <exception>
 #include <sstream>
 #include <string>
 
 namespace Geom {
 
-// Base exception class, all 2geom exceptions should be derived from this one.
+/**
+ * Base exception class, all 2geom exceptions should be derived from this one.
+ */
 class Exception : public std::exception {
 public:
     Exception(const char * message, const char *file, const int line) {
@@ -58,10 +69,7 @@ protected:
 #define THROW_EXCEPTION(message) throw(Geom::Exception(message, __FILE__, __LINE__))
 
 //-----------------------------------------------------------------------
-// Two main exception classes: LogicalError and RangeError.
-// Logical errors are 2geom faults/bugs, RangeErrors are 'user' faults.
-// This way, the 'user' can distinguish between groups of exceptions
-// ('user' is the coder that uses lib2geom)
+
 class LogicalError : public Exception {
 public:
     LogicalError(const char * message, const char *file, const int line)

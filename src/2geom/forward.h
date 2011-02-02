@@ -1,11 +1,12 @@
 /**
  * \file
  * \brief  Contains forward declarations of 2geom types
- *
+ *//*
  * Authors:
  *  Johan Engelen <goejendaagh@zonnet.nl>
+ *  Krzysztof Kosiński <tweenk.pl@gmail.com>
  *
- * Copyright 2008  authors
+ * Copyright (C) 2008-2010 Authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -38,21 +39,34 @@
 
 namespace Geom {
 
+// basic types
+typedef double Coord;
+class Point;
+class Interval;
+class OptInterval;
+class Line;
+class Ray;
+
+// fragments
+class Linear;
 class Bezier;
-template <unsigned> class BezierCurve;
-template<> class BezierCurve<0>;
-typedef BezierCurve<2> QuadraticBezier;
-typedef BezierCurve<1> LineSegment;
-typedef BezierCurve<3> CubicBezier;
+class SBasis;
+
+// curves
+class Curve;
+class SBasisCurve;
+class BezierCurve;
+class HLineSegment;
+class VLineSegment;
+class LineSegment;
 class EllipticalArc;
 class SVGEllipticalArc;
 
-class HLineSegment;
-class VLineSegment;
+// paths and path sequences
+class Path;
+typedef std::vector<Path> PathVector;
 
-typedef double Coord;
-class Point;
-
+// errors
 class Exception;
 class LogicalError;
 class RangeError;
@@ -61,32 +75,27 @@ class InvariantsViolation;
 class NotInvertible;
 class ContinuityError;
 
-class Interval;
-class OptInterval;
-class Linear;
-class Hat;
-class Tri;
-
-class Matrix;
+// transforms
+class Affine;
 class Translate;
 class Rotate;
 class Scale;
+class HShear;
+class VShear;
 
-class Curve;
-class Path;
-typedef std::vector<Path> PathVector;
-
-template <class> class D2;
+// templates
+template <typename> class D2;
 template <typename> class Piecewise;
-class SBasis;
-class SBasisCurve;
 
 typedef D2<Interval> Rect;
 class OptRect;
 
 class Shape;
 class Region;
+class Hat;
+class Tri;
 
+// misc
 class SVGPathSink;
 template <typename> class SVGPathGenerator;
 

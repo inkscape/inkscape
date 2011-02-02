@@ -30,7 +30,7 @@ static void sp_ctrlrect_class_init(SPCtrlRectClass *c);
 static void sp_ctrlrect_init(CtrlRect *ctrlrect);
 static void sp_ctrlrect_destroy(GtkObject *object);
 
-static void sp_ctrlrect_update(SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
+static void sp_ctrlrect_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_ctrlrect_render(SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass *parent_class;
@@ -160,7 +160,7 @@ static void sp_ctrlrect_render(SPCanvasItem *item, SPCanvasBuf *buf)
 }
 
 
-static void sp_ctrlrect_update(SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
+static void sp_ctrlrect_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
     SP_CTRLRECT(item)->update(affine, flags);
 }
@@ -220,7 +220,7 @@ void CtrlRect::render(SPCanvasBuf *buf)
 }
 
 
-void CtrlRect::update(Geom::Matrix const &affine, unsigned int flags)
+void CtrlRect::update(Geom::Affine const &affine, unsigned int flags)
 {
     if (((SPCanvasItemClass *) parent_class)->update) {
         ((SPCanvasItemClass *) parent_class)->update(this, affine, flags);

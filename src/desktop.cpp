@@ -1159,7 +1159,7 @@ SPDesktop::scroll_to_point (Geom::Point const &p, gdouble autoscrollspeed)
     if (!(p[X] > dbox.min()[X] && p[X] < dbox.max()[X]) ||
         !(p[Y] > dbox.min()[Y] && p[Y] < dbox.max()[Y])   ) {
 
-        Geom::Point const s_w( p * (Geom::Matrix)_d2w );
+        Geom::Point const s_w( p * (Geom::Affine)_d2w );
 
         gdouble x_to;
         if (p[X] < dbox.min()[X])
@@ -1754,7 +1754,7 @@ _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
     }
 }
 
-Geom::Matrix SPDesktop::w2d() const
+Geom::Affine SPDesktop::w2d() const
 {
     return _w2d;
 }
@@ -1769,12 +1769,12 @@ Geom::Point SPDesktop::d2w(Geom::Point const &p) const
     return p * _d2w;
 }
 
-Geom::Matrix SPDesktop::doc2dt() const
+Geom::Affine SPDesktop::doc2dt() const
 {
     return _doc2dt;
 }
 
-Geom::Matrix SPDesktop::dt2doc() const
+Geom::Affine SPDesktop::dt2doc() const
 {
     // doc2dt is its own inverse
     return _doc2dt;

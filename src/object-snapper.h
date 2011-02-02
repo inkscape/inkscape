@@ -71,7 +71,7 @@ private:
                        bool const &first_point,
                        Geom::Rect const &bbox_to_snap,
                        bool const _clip_or_mask,
-                       Geom::Matrix const additional_affine) const;
+                       Geom::Affine const additional_affine) const;
 
     void _snapNodes(SnappedConstraints &sc,
                       Inkscape::SnapCandidatePoint const &p, // in desktop coordinates

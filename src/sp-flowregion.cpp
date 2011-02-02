@@ -502,7 +502,7 @@ static void         GetDest(SPObject* child,Shape **computed)
 	if ( child == NULL ) return;
 
 	SPCurve *curve=NULL;
-	Geom::Matrix tr_mat;
+	Geom::Affine tr_mat;
 
 	SPObject* u_child=child;
 	if ( SP_IS_USE(u_child) ) {

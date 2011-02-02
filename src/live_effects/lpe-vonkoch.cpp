@@ -88,25 +88,25 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
     }
 
     //Collect transform matrices.
-    Matrix m0;
+    Affine m0;
     Geom::Path refpath = ref_path.get_pathvector().front();
     Point A = refpath.pointAt(0);
     Point B = refpath.pointAt(refpath.size());
     Point u = B-A;
-    m0 = Matrix(u[X], u[Y],-u[Y], u[X], A[X], A[Y]);
+    m0 = Affine(u[X], u[Y],-u[Y], u[X], A[X], A[Y]);
     
     //FIXME: a path is used as ref instead of 2 points to work around path/point param incompatibility bug.
     //Point u = refB-refA;
-    //m0 = Matrix(u[X], u[Y],-u[Y], u[X], refA[X], refA[Y]);
+    //m0 = Affine(u[X], u[Y],-u[Y], u[X], refA[X], refA[Y]);
     m0 = m0.inverse();
 
-    std::vector<Matrix> transforms;
+    std::vector<Affine> transforms;
     for (unsigned i=0; i<generating_path.size(); i++){
-        Matrix m;
+        Affine m;
         if(generating_path[i].size()==1){
             Point p = generating_path[i].pointAt(0);
             Point u = generating_path[i].pointAt(1)-p;
-            m = Matrix(u[X], u[Y],-u[Y], u[X], p[X], p[Y]);
+            m = Affine(u[X], u[Y],-u[Y], u[X], p[X], p[Y]);
             m = m0*m;
             transforms.push_back(m);
         }else if(generating_path[i].size()>=2){
@@ -118,7 +118,7 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
                 v[X] = -u[Y]*sign;
                 v[Y] =  u[X]*sign;
             }
-            m = Matrix(u[X], u[Y],v[X], v[Y], p[X], p[Y]);
+            m = Affine(u[X], u[Y],v[X], v[Y], p[X], p[Y]);
             m = m0*m;
             transforms.push_back(m);
         }
@@ -133,16 +133,16 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
     for (unsigned k = 0; k < path_in.size(); k++){
             path_in_complexity+=path_in[k].size();
     }    
-    double complexity = pow(transforms.size(),nbgenerations)*path_in_complexity;
+    double complexity = std::pow(transforms.size(),nbgenerations)*path_in_complexity;
     if (drawall.get_value()){
         int k = transforms.size();
         if(k>1){
-            complexity = (pow(k,nbgenerations+1)-1)/(k-1)*path_in_complexity;
+            complexity = (std::pow(k,nbgenerations+1)-1)/(k-1)*path_in_complexity;
         }else{
             complexity = nbgenerations*k*path_in_complexity;
         }
     }else{
-        complexity = pow(transforms.size(),nbgenerations)*path_in_complexity;
+        complexity = std::pow(transforms.size(),nbgenerations)*path_in_complexity;
     }
     if (complexity > double(maxComplexity)){
         g_warning("VonKoch lpe's output too complex. Effect bypassed.");
@@ -288,8 +288,8 @@ LPEVonKoch::resetDefaults(SPItem * item)
     refpaths.push_back(path);
     ref_path.set_new_value(refpaths, true);
 
-    paths.push_back(path * Matrix(1./3,0,0,1./3, A[X]*2./3, A[Y]*2./3 + boundingbox_Y.extent()/2));
-    paths.push_back(path * Matrix(1./3,0,0,1./3, B[X]*2./3, B[Y]*2./3 + boundingbox_Y.extent()/2));
+    paths.push_back(path * Affine(1./3,0,0,1./3, A[X]*2./3, A[Y]*2./3 + boundingbox_Y.extent()/2));
+    paths.push_back(path * Affine(1./3,0,0,1./3, B[X]*2./3, B[Y]*2./3 + boundingbox_Y.extent()/2));
     generator.set_new_value(paths, true);
 
     //FIXME: a path is used as ref instead of 2 points to work around path/point param incompatibility bug.
@@ -300,8 +300,8 @@ LPEVonKoch::resetDefaults(SPItem * item)
     //std::vector<Geom::Path> paths;
     //Geom::Path path = Geom::Path( (Point) refA);
     //path.appendNew<Geom::LineSegment>( (Point) refB );
-    //paths.push_back(path * Matrix(1./3,0,0,1./3, refA[X]*2./3, refA[Y]*2./3 + boundingbox_Y.extent()/2));
-    //paths.push_back(path * Matrix(1./3,0,0,1./3, refB[X]*2./3, refB[Y]*2./3 + boundingbox_Y.extent()/2));
+    //paths.push_back(path * Affine(1./3,0,0,1./3, refA[X]*2./3, refA[Y]*2./3 + boundingbox_Y.extent()/2));
+    //paths.push_back(path * Affine(1./3,0,0,1./3, refB[X]*2./3, refB[Y]*2./3 + boundingbox_Y.extent()/2));
     //paths.push_back(path);
     //generator.set_new_value(paths, true);
 }

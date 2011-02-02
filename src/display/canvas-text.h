@@ -31,7 +31,7 @@ struct SPCanvasText : public SPCanvasItem {
 
     gchar* text;
     Geom::Point s;
-    Geom::Matrix affine;
+    Geom::Affine affine;
     double fontsize;
     double anchor_x;
     double anchor_y;

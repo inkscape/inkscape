@@ -217,7 +217,7 @@ static void sp_mask_update(SPObject *object, SPCtx *ctx, guint flags)
     SPMask *mask = SP_MASK(object);
     for (SPMaskView *v = mask->display; v != NULL; v = v->next) {
         if (mask->maskContentUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
-            Geom::Matrix t(Geom::Scale(v->bbox.x1 - v->bbox.x0, v->bbox.y1 - v->bbox.y0));
+            Geom::Affine t(Geom::Scale(v->bbox.x1 - v->bbox.x0, v->bbox.y1 - v->bbox.y0));
             t[4] = v->bbox.x0;
             t[5] = v->bbox.y0;
             nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), &t);
@@ -267,7 +267,7 @@ sp_mask_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
 
 // Create a mask element (using passed elements), add it to <defs>
 const gchar *
-sp_mask_create (GSList *reprs, SPDocument *document, Geom::Matrix const* applyTransform)
+sp_mask_create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform)
 {
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 
@@ -284,7 +284,7 @@ sp_mask_create (GSList *reprs, SPDocument *document, Geom::Matrix const* applyTr
         SPItem *item = SP_ITEM(mask_object->appendChildRepr(node));
         
         if (NULL != applyTransform) {
-            Geom::Matrix transform (item->transform);
+            Geom::Affine transform (item->transform);
             transform *= (*applyTransform);
             item->doWriteTransform(SP_OBJECT_REPR(item), transform);
         }
@@ -318,7 +318,7 @@ NRArenaItem *sp_mask_show(SPMask *mask, NRArena *arena, unsigned int key)
 	}
 
 	if (mask->maskContentUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
-        Geom::Matrix t(Geom::Scale(mask->display->bbox.x1 - mask->display->bbox.x0, mask->display->bbox.y1 - mask->display->bbox.y0));
+        Geom::Affine t(Geom::Scale(mask->display->bbox.x1 - mask->display->bbox.x0, mask->display->bbox.y1 - mask->display->bbox.y0));
 		t[4] = mask->display->bbox.x0;
 		t[5] = mask->display->bbox.y0;
 		nr_arena_group_set_child_transform (NR_ARENA_GROUP (ai), &t);

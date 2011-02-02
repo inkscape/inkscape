@@ -27,7 +27,7 @@ namespace Inkscape {
 }
 
 #include <2geom/point.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <glibmm/ustring.h>
 
 #include "CharTypes.h"
@@ -212,7 +212,7 @@ private:
     char *_font_specification;
     double _font_scaling;
     bool _need_font_update;
-    Geom::Matrix _text_matrix;
+    Geom::Affine _text_matrix;
     Geom::Point _text_position;
     std::vector<SvgGlyph> _glyphs;   // Added characters
     bool _in_text_object;   // Whether we are inside a text object

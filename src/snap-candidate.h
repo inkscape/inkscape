@@ -82,7 +82,7 @@ private:
 class SnapCandidateItem
 {
 public:
-    SnapCandidateItem(SPItem* item, bool clip_or_mask, Geom::Matrix additional_affine)
+    SnapCandidateItem(SPItem* item, bool clip_or_mask, Geom::Affine additional_affine)
         : item(item), clip_or_mask(clip_or_mask), additional_affine(additional_affine) {}
     ~SnapCandidateItem() {};
 
@@ -93,7 +93,7 @@ public:
      * the transformation of the clipping path or mask itself, but also the transformation of
      * the object to which the clip or mask is being applied; that transformation is stored here
      */
-    Geom::Matrix additional_affine;
+    Geom::Affine additional_affine;
 }
 ;
 

@@ -43,7 +43,7 @@ unsigned sp_text_get_length(SPObject const *item);
 \a item, before and not including \a upto. Also adds 1 for each line break encountered. */
 unsigned sp_text_get_length_upto(SPObject const *item, SPObject const *upto);
 
-std::vector<Geom::Point> sp_te_create_selection_quads(SPItem const *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, Geom::Matrix const &transform);
+std::vector<Geom::Point> sp_te_create_selection_quads(SPItem const *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, Geom::Affine const &transform);
 
 Inkscape::Text::Layout::iterator sp_te_get_position_by_coords (SPItem const *item, Geom::Point const &i_p);
 void sp_te_get_cursor_coords (SPItem const *item, Inkscape::Text::Layout::iterator const &position, Geom::Point &p0, Geom::Point &p1);

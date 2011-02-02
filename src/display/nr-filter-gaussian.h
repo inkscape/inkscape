@@ -39,7 +39,7 @@ public:
     virtual ~FilterGaussian();
 
     virtual int render(FilterSlot &slot, FilterUnits const &units);
-    virtual void area_enlarge(NRRectL &area, Geom::Matrix const &m);
+    virtual void area_enlarge(NRRectL &area, Geom::Affine const &m);
     virtual FilterTraits get_input_traits();
 
     /**

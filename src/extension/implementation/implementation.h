@@ -100,20 +100,20 @@ public:
 
     /* ----- Rendering methods ----- */
     virtual unsigned bind(Inkscape::Extension::Print *module,
-                          Geom::Matrix const *transform,
+                          Geom::Affine const *transform,
                           float opacity);
     virtual unsigned release(Inkscape::Extension::Print *module);
     virtual unsigned comment(Inkscape::Extension::Print *module, const char * comment);
     virtual unsigned fill(Inkscape::Extension::Print *module,
                           Geom::PathVector const &pathv,
-                          Geom::Matrix const *ctm,
+                          Geom::Affine const *ctm,
                           SPStyle const *style,
                           NRRect const *pbox,
                           NRRect const *dbox,
                           NRRect const *bbox);
     virtual unsigned stroke(Inkscape::Extension::Print *module,
                             Geom::PathVector const &pathv,
-                            Geom::Matrix const *transform,
+                            Geom::Affine const *transform,
                             SPStyle const *style,
                             NRRect const *pbox,
                             NRRect const *dbox,
@@ -123,7 +123,7 @@ public:
                            unsigned int w,
                            unsigned int h,
                            unsigned int rs,
-                           Geom::Matrix const *transform,
+                           Geom::Affine const *transform,
                            SPStyle const *style);
     virtual unsigned text(Inkscape::Extension::Print *module,
                           char const *text,

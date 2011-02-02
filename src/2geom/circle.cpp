@@ -89,10 +89,11 @@ void Circle::set(std::vector<Point> const& points)
 }
 
 
-SVGEllipticalArc
+EllipticalArc *
 Circle::arc(Point const& initial, Point const& inner, Point const& final,
              bool _svg_compliant)
 {
+    // TODO native implementation!
     Ellipse e(center(X), center(Y), ray(), ray(), 0);
     return e.arc(initial, inner, final, _svg_compliant);
 }

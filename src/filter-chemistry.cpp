@@ -329,7 +329,7 @@ new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mod
         width = height = 0;
     }
 
-    Geom::Matrix i2d (item->i2d_affine () );
+    Geom::Affine i2d (item->i2d_affine () );
 
     return (new_filter_blend_gaussian_blur (document, mode, radius, i2d.descrim(), i2d.expansionX(), i2d.expansionY(), width, height));
 }
@@ -364,7 +364,7 @@ SPFilter *modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *it
     }
 
     // Determine the required standard deviation value
-    Geom::Matrix i2d (item->i2d_affine ());
+    Geom::Affine i2d (item->i2d_affine ());
     double expansion = i2d.descrim();
     double stdDeviation = radius;
     if (expansion != 0)

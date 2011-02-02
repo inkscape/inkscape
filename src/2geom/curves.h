@@ -1,7 +1,7 @@
 /**
  * \file
- * \brief   this file is only a helper header to include all curve types at once
- *
+ * \brief Include all curve types
+ *//*
  * Authors:
  * 		MenTaLguY <mental@rydia.net>
  * 		Marco Cecchetti <mrcekets at gmail.com>
@@ -32,9 +32,6 @@
  * the specific language governing rights and limitations.
  */
 
-
-
-
 #ifndef _2GEOM_CURVES_H_
 #define _2GEOM_CURVES_H_
 
@@ -43,14 +40,10 @@
 #include <2geom/sbasis-curve.h>
 #include <2geom/bezier-curve.h>
 #include <2geom/hvlinesegment.h>
-//#include <2geom/elliptical-arc.h>
+#include <2geom/elliptical-arc.h>
 #include <2geom/svg-elliptical-arc.h>
 
-
 #endif // _2GEOM_CURVES_H_
-
-
-
 
 /*
   Local Variables:

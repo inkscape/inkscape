@@ -18,7 +18,7 @@
 #include <gtkmm/adjustment.h>
 #include <gtkmm/tooltips.h>
 #include <gtkmm/togglebutton.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include "xml/node.h"
 #include "registry.h"
 
@@ -326,14 +326,14 @@ public:
     // redefine setValue, because transform must be applied
     void setValue(Geom::Point const & p);
 
-    void setTransform(Geom::Matrix const & canvas_to_svg);
+    void setTransform(Geom::Affine const & canvas_to_svg);
 
 protected:
     sigc::connection  _value_x_changed_connection;
     sigc::connection  _value_y_changed_connection;
     void on_value_changed();
 
-    Geom::Matrix to_svg;
+    Geom::Affine to_svg;
 };
 
 

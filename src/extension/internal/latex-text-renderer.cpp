@@ -246,7 +246,7 @@ LaTeXTextRenderer::sp_use_render(SPItem *item)
     SPUse *use = SP_USE(item);
 
     if ((use->x._set && use->x.computed != 0) || (use->y._set && use->y.computed != 0)) {
-        Geom::Matrix tp(Geom::Translate(use->x.computed, use->y.computed));
+        Geom::Affine tp(Geom::Translate(use->x.computed, use->y.computed));
         push_transform(tp);
         translated = true;
     }
@@ -311,8 +311,8 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
     }
 
     // get rotation
-    Geom::Matrix i2doc = item->i2doc_affine();
-    Geom::Matrix wotransl = i2doc.without_translation();
+    Geom::Affine i2doc = item->i2doc_affine();
+    Geom::Affine wotransl = i2doc.withoutTranslation();
     double degrees = -180/M_PI * Geom::atan2(wotransl.xAxis());
     bool has_rotation = !Geom::are_near(degrees,0.);
 
@@ -412,8 +412,8 @@ Flowing in rectangle is possible, not in arb shape.
     }
 
     // get rotation
-    Geom::Matrix i2doc = item->i2doc_affine();
-    Geom::Matrix wotransl = i2doc.without_translation();
+    Geom::Affine i2doc = item->i2doc_affine();
+    Geom::Affine wotransl = i2doc.withoutTranslation();
     double degrees = -180/M_PI * Geom::atan2(wotransl.xAxis());
     bool has_rotation = !Geom::are_near(degrees,0.);
 
@@ -543,17 +543,17 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
     return true;
 }
 
-Geom::Matrix const &
+Geom::Affine const &
 LaTeXTextRenderer::transform()
 {
     return _transform_stack.top();
 }
 
 void
-LaTeXTextRenderer::push_transform(Geom::Matrix const &tr)
+LaTeXTextRenderer::push_transform(Geom::Affine const &tr)
 {
     if(_transform_stack.size()){
-        Geom::Matrix tr_top = _transform_stack.top();
+        Geom::Affine tr_top = _transform_stack.top();
         _transform_stack.push(tr * tr_top);
     } else {
         _transform_stack.push(tr);

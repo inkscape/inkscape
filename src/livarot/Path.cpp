@@ -700,7 +700,7 @@ void Path::PointAndTangentAt(int piece, double at, Geom::Point &pos, Geom::Point
     }
 }
 
-void Path::Transform(const Geom::Matrix &trans)
+void Path::Transform(const Geom::Affine &trans)
 {
     for (std::vector<PathDescr*>::iterator i = descr_cmd.begin(); i != descr_cmd.end(); i++) {
         (*i)->transform(trans);

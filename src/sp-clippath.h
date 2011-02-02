@@ -37,14 +37,14 @@ public:
     unsigned int clipPathUnits : 1;
 
     SPClipPathView *display;
-    static const gchar *create(GSList *reprs, SPDocument *document, Geom::Matrix const* applyTransform);
+    static const gchar *create(GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform);
     static GType sp_clippath_get_type(void);
 
     NRArenaItem *show(NRArena *arena, unsigned int key);
     void hide(unsigned int key);
 
     void setBBox(unsigned int key, NRRect *bbox);
-    void getBBox(NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
+    void getBBox(NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
 
 private:
     static void init(SPClipPath *clippath);

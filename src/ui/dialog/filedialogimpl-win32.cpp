@@ -949,7 +949,7 @@ bool FileOpenDialogImplWin32::set_svg_preview()
         arena, key, SP_ITEM_SHOW_DISPLAY);
 
     NRGC gc(NULL);
-    gc.transform = Geom::Matrix(Geom::Scale(scaleFactor, scaleFactor));
+    gc.transform = Geom::Affine(Geom::Scale(scaleFactor, scaleFactor));
 
     nr_arena_item_invoke_update (root, NULL, &gc,
         NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);

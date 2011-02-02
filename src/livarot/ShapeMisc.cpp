@@ -528,7 +528,7 @@ Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int wildPath,in
 
 
 int
-Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter, bool do_profile, Geom::Point c, Geom::Point vector, double radius, Geom::Matrix *i2doc)
+Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter, bool do_profile, Geom::Point c, Geom::Point vector, double radius, Geom::Affine *i2doc)
 {
   Reset (0, 0);
   MakeBackData(a->_has_back_data);
@@ -639,7 +639,7 @@ Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter,
 
 		Geom::Point this_vec(0,0);
     if (mode == tweak_mode_push) {
-			Geom::Matrix tovec (*i2doc);
+			Geom::Affine tovec (*i2doc);
 			tovec[4] = tovec[5] = 0;
 			tovec = tovec.inverse();
 			this_vec = this_power * (vector * tovec) ;
@@ -718,7 +718,7 @@ Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter,
 // you gotta be very careful with the join, as anything but the right one will fuck everything up
 // see PathStroke.cpp for the "right" joins
 int
-Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter, bool do_profile, double cx, double cy, double radius, Geom::Matrix *i2doc)
+Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter, bool do_profile, double cx, double cy, double radius, Geom::Affine *i2doc)
 {
   Reset (0, 0);
   MakeBackData(a->_has_back_data);

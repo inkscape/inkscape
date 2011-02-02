@@ -41,7 +41,7 @@ bool SPUseReference::_acceptObject(SPObject * const obj) const
 
 
 static void sp_usepath_href_changed(SPObject *old_ref, SPObject *ref, SPUsePath *offset);
-static void sp_usepath_move_compensate(Geom::Matrix const *mp, SPItem *original, SPUsePath *self);
+static void sp_usepath_move_compensate(Geom::Affine const *mp, SPItem *original, SPUsePath *self);
 static void sp_usepath_delete_self(SPObject *deleted, SPUsePath *offset);
 static void sp_usepath_source_modified(SPObject *iSource, guint flags, SPUsePath *offset);
 
@@ -139,7 +139,7 @@ sp_usepath_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPUsePath *off
 }
 
 static void
-sp_usepath_move_compensate(Geom::Matrix const *mp, SPItem *original, SPUsePath *self)
+sp_usepath_move_compensate(Geom::Affine const *mp, SPItem *original, SPUsePath *self)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     guint mode = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_PARALLEL);
@@ -150,15 +150,15 @@ sp_usepath_move_compensate(Geom::Matrix const *mp, SPItem *original, SPUsePath *
 
 // TODO kill naughty naughty #if 0
 #if 0
-    Geom::Matrix m(*mp);
+    Geom::Affine m(*mp);
     if (!(m.is_translation())) {
         return;
     }
-    Geom::Matrix const t(item->transform);
-    Geom::Matrix clone_move = t.inverse() * m * t;
+    Geom::Affine const t(item->transform);
+    Geom::Affine clone_move = t.inverse() * m * t;
 
     // Calculate the compensation matrix and the advertized movement matrix.
-    Geom::Matrix advertized_move;
+    Geom::Affine advertized_move;
     if (mode == SP_CLONE_COMPENSATION_PARALLEL) {
         //clone_move = clone_move.inverse();
         advertized_move.set_identity();

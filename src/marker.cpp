@@ -24,7 +24,7 @@
 #include "libnr/nr-scale-matrix-ops.h"
 #include "libnr/nr-translate-matrix-ops.h"
 #include "libnr/nr-convert2geom.h"
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include "svg/svg.h"
 #include "display/nr-arena-group.h"
 #include "xml/repr.h"
@@ -50,7 +50,7 @@ static Inkscape::XML::Node *sp_marker_write (SPObject *object, Inkscape::XML::Do
 
 static NRArenaItem *sp_marker_private_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 static void sp_marker_private_hide (SPItem *item, unsigned int key);
-static void sp_marker_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
+static void sp_marker_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
 static void sp_marker_print (SPItem *item, SPPrintContext *ctx);
 
 static void sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destroyitems);
@@ -463,7 +463,7 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 	for (v = marker->views; v != NULL; v = v->next) {
       for (unsigned i = 0 ; i < v->items.size() ; i++) {
                 if (v->items[i]) {
-                    Geom::Matrix tmp = marker->c2p;
+                    Geom::Affine tmp = marker->c2p;
                     nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->items[i]), &tmp);
                 }
       }
@@ -557,7 +557,7 @@ sp_marker_private_hide (SPItem */*item*/, unsigned int /*key*/)
  * This routine is disabled to break propagation.
  */
 static void
-sp_marker_bbox(SPItem const *, NRRect *, Geom::Matrix const &, unsigned const)
+sp_marker_bbox(SPItem const *, NRRect *, Geom::Affine const &, unsigned const)
 {
 	/* Break propagation */
 }
@@ -619,7 +619,7 @@ sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size)
 NRArenaItem *
 sp_marker_show_instance ( SPMarker *marker, NRArenaItem *parent,
                           unsigned int key, unsigned int pos,
-                          Geom::Matrix const &base, float linewidth)
+                          Geom::Affine const &base, float linewidth)
 {
     for (SPMarkerView *v = marker->views; v != NULL; v = v->next) {
         if (v->key == key) {
@@ -635,12 +635,12 @@ sp_marker_show_instance ( SPMarker *marker, NRArenaItem *parent,
                     /* fixme: Position (Lauris) */
                     nr_arena_item_add_child (parent, v->items[pos], NULL);
                     /* nr_arena_item_unref (v->items[pos]); */
-                    Geom::Matrix tmp = marker->c2p;
+                    Geom::Affine tmp = marker->c2p;
                     nr_arena_group_set_child_transform((NRArenaGroup *) v->items[pos], &tmp);
                 }
             }
             if (v->items[pos]) {
-                Geom::Matrix m;
+                Geom::Affine m;
                 if (marker->orient_auto) {
                     m = base;
                 } else {
@@ -710,7 +710,7 @@ sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destro
     delete view;
 }
 
-const gchar *generate_marker(GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix /*transform*/, Geom::Matrix move)
+const gchar *generate_marker(GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Affine /*transform*/, Geom::Affine move)
 {
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
     Inkscape::XML::Node *defsrepr = SP_DOCUMENT_DEFS(document)->getRepr();
@@ -735,7 +735,7 @@ const gchar *generate_marker(GSList *reprs, Geom::Rect bounds, SPDocument *docum
             Inkscape::XML::Node *node = (Inkscape::XML::Node *)(i->data);
         SPItem *copy = SP_ITEM(mark_object->appendChildRepr(node));
 
-        Geom::Matrix dup_transform;
+        Geom::Affine dup_transform;
         if (!sp_svg_transform_read (node->attribute("transform"), &dup_transform))
             dup_transform = Geom::identity();
         dup_transform *= move;

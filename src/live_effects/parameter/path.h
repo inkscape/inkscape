@@ -49,7 +49,7 @@ public:
     virtual void param_setup_nodepath(Inkscape::NodePath::Path *np);
     virtual void addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec);
 
-    virtual void param_transform_multiply(Geom::Matrix const& /*postmul*/, bool /*set*/);
+    virtual void param_transform_multiply(Geom::Affine const& /*postmul*/, bool /*set*/);
 
     sigc::signal <void> signal_path_pasted;
     sigc::signal <void> signal_path_changed;

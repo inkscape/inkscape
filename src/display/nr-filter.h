@@ -201,7 +201,7 @@ private:
     void _common_init();
     int _resolution_limit(FilterQuality const quality) const;
     std::pair<double,double> _filter_resolution(Geom::Rect const &area,
-                                                Geom::Matrix const &trans,
+                                                Geom::Affine const &trans,
                                                 FilterQuality const q) const;
 };
 

@@ -187,7 +187,7 @@ void SPClipPath::update(SPObject *object, SPCtx *ctx, guint flags)
     SPClipPath *cp = SP_CLIPPATH(object);
     for (SPClipPathView *v = cp->display; v != NULL; v = v->next) {
         if (cp->clipPathUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
-            Geom::Matrix t(Geom::Scale(v->bbox.x1 - v->bbox.x0, v->bbox.y1 - v->bbox.y0));
+            Geom::Affine t(Geom::Scale(v->bbox.x1 - v->bbox.x0, v->bbox.y1 - v->bbox.y0));
             t[4] = v->bbox.x0;
             t[5] = v->bbox.y0;
             nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), &t);
@@ -254,7 +254,7 @@ NRArenaItem *SPClipPath::show(NRArena *arena, unsigned int key)
     }
 
     if (clipPathUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
-        Geom::Matrix t(Geom::Scale(display->bbox.x1 - display->bbox.x0, display->bbox.y1 - display->bbox.y0));
+        Geom::Affine t(Geom::Scale(display->bbox.x1 - display->bbox.x0, display->bbox.y1 - display->bbox.y0));
         t[4] = display->bbox.x0;
         t[5] = display->bbox.y0;
         nr_arena_group_set_child_transform(NR_ARENA_GROUP(ai), &t);
@@ -297,7 +297,7 @@ void SPClipPath::setBBox(unsigned int key, NRRect *bbox)
     }
 }
 
-void SPClipPath::getBBox(NRRect *bbox, Geom::Matrix const &transform, unsigned const /*flags*/)
+void SPClipPath::getBBox(NRRect *bbox, Geom::Affine const &transform, unsigned const /*flags*/)
 {
     SPObject *i = 0;
     for (i = firstChild(); i && !SP_IS_ITEM(i); i = i->getNext()) {
@@ -306,13 +306,13 @@ void SPClipPath::getBBox(NRRect *bbox, Geom::Matrix const &transform, unsigned c
         return;
     }
 
-    SP_ITEM(i)->invoke_bbox_full( bbox, Geom::Matrix(SP_ITEM(i)->transform) * transform, SPItem::GEOMETRIC_BBOX, FALSE);
+    SP_ITEM(i)->invoke_bbox_full( bbox, Geom::Affine(SP_ITEM(i)->transform) * transform, SPItem::GEOMETRIC_BBOX, FALSE);
     SPObject *i_start = i;
 
     while (i != NULL) {
         if (i != i_start) {
             NRRect i_box;
-            SP_ITEM(i)->invoke_bbox_full( &i_box, Geom::Matrix(SP_ITEM(i)->transform) * transform, SPItem::GEOMETRIC_BBOX, FALSE);
+            SP_ITEM(i)->invoke_bbox_full( &i_box, Geom::Affine(SP_ITEM(i)->transform) * transform, SPItem::GEOMETRIC_BBOX, FALSE);
             nr_rect_d_union (bbox, bbox, &i_box);
         }
         i = i->getNext();
@@ -355,7 +355,7 @@ sp_clippath_view_list_remove(SPClipPathView *list, SPClipPathView *view)
 }
 
 // Create a mask element (using passed elements), add it to <defs>
-const gchar *SPClipPath::create (GSList *reprs, SPDocument *document, Geom::Matrix const* applyTransform)
+const gchar *SPClipPath::create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform)
 {
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 
@@ -372,7 +372,7 @@ const gchar *SPClipPath::create (GSList *reprs, SPDocument *document, Geom::Matr
         SPItem *item = SP_ITEM(clip_path_object->appendChildRepr(node));
 
         if (NULL != applyTransform) {
-            Geom::Matrix transform (item->transform);
+            Geom::Affine transform (item->transform);
             transform *= (*applyTransform);
             item->doWriteTransform(SP_OBJECT_REPR(item), transform);
         }

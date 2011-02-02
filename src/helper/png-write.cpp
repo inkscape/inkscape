@@ -442,7 +442,7 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
      * (2) a[5] = -a[3] * y1
      */
 
-    Geom::Matrix const affine(Geom::Translate(translation)
+    Geom::Affine const affine(Geom::Translate(translation)
                             * Geom::Scale(width / area.width(),
                                         height / area.height()));
 

@@ -91,7 +91,7 @@ public:
 
     virtual bool event(GdkEvent *);
 
-    void transform(Geom::Matrix const &m);
+    void transform(Geom::Affine const &m);
     void align(Geom::Dim2 d);
     void distribute(Geom::Dim2 d);
 
@@ -130,14 +130,14 @@ private:
     bool _keyboardRotate(GdkEventKey const &, int);
     bool _keyboardScale(GdkEventKey const &, int);
     bool _keyboardFlip(Geom::Dim2);
-    void _keyboardTransform(Geom::Matrix const &);
+    void _keyboardTransform(Geom::Affine const &);
     void _commitHandlesTransform(CommitEvent ce);
     double _rotationRadius(Geom::Point const &);
 
     set_type _points;
     set_type _all_points;
     INK_UNORDERED_MAP<SelectableControlPoint *, Geom::Point> _original_positions;
-    INK_UNORDERED_MAP<SelectableControlPoint *, Geom::Matrix> _last_trans;
+    INK_UNORDERED_MAP<SelectableControlPoint *, Geom::Affine> _last_trans;
     boost::optional<double> _rot_radius;
     boost::optional<double> _mouseover_rot_radius;
     Geom::OptRect _bounds;

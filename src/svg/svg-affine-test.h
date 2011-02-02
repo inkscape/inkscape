@@ -2,7 +2,7 @@
 
 #include "svg/svg.h"
 #include "streq.h"
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <algorithm>
 #include <glib.h>
 #include <iostream>
@@ -14,10 +14,10 @@ class SvgAffineTest : public CxxTest::TestSuite
 private:
     struct test_t {
         char const * str;
-        Geom::Matrix matrix;
+        Geom::Affine matrix;
     };
     struct approx_equal_pred {
-        bool operator()(Geom::Matrix const &ref, Geom::Matrix const &cm) const
+        bool operator()(Geom::Affine const &ref, Geom::Affine const &cm) const
         {
             double maxabsdiff = 0;
             for(size_t i=0; i<6; i++) {
@@ -59,7 +59,7 @@ public:
             "skewY(0)"};
         size_t n = G_N_ELEMENTS(strs);
         for(size_t i=0; i<n; i++) {
-            Geom::Matrix cm;
+            Geom::Affine cm;
             TSM_ASSERT(strs[i] , sp_svg_transform_read(strs[i], &cm));
             TSM_ASSERT_EQUALS(strs[i] , Geom::identity() , cm);
         }
@@ -73,7 +73,7 @@ public:
     void testReadMatrix()
     {
         for(size_t i=0; i<G_N_ELEMENTS(read_matrix_tests); i++) {
-            Geom::Matrix cm;
+            Geom::Affine cm;
             TSM_ASSERT(read_matrix_tests[i].str , sp_svg_transform_read(read_matrix_tests[i].str, &cm));
             TSM_ASSERT_RELATION(read_matrix_tests[i].str , approx_equal_pred , read_matrix_tests[i].matrix , cm);
         }
@@ -82,7 +82,7 @@ public:
     void testReadTranslate()
     {
         for(size_t i=0; i<G_N_ELEMENTS(read_translate_tests); i++) {
-            Geom::Matrix cm;
+            Geom::Affine cm;
             TSM_ASSERT(read_translate_tests[i].str , sp_svg_transform_read(read_translate_tests[i].str, &cm));
             TSM_ASSERT_RELATION(read_translate_tests[i].str , approx_equal_pred , read_translate_tests[i].matrix , cm);
         }
@@ -91,7 +91,7 @@ public:
     void testReadScale()
     {
         for(size_t i=0; i<G_N_ELEMENTS(read_scale_tests); i++) {
-            Geom::Matrix cm;
+            Geom::Affine cm;
             TSM_ASSERT(read_scale_tests[i].str , sp_svg_transform_read(read_scale_tests[i].str, &cm));
             TSM_ASSERT_RELATION(read_scale_tests[i].str , approx_equal_pred , read_scale_tests[i].matrix , cm);
         }
@@ -100,7 +100,7 @@ public:
     void testReadRotate()
     {
         for(size_t i=0; i<G_N_ELEMENTS(read_rotate_tests); i++) {
-            Geom::Matrix cm;
+            Geom::Affine cm;
             TSM_ASSERT(read_rotate_tests[i].str , sp_svg_transform_read(read_rotate_tests[i].str, &cm));
             TSM_ASSERT_RELATION(read_rotate_tests[i].str , approx_equal_pred , read_rotate_tests[i].matrix , cm);
         }
@@ -109,7 +109,7 @@ public:
     void testReadSkew()
     {
         for(size_t i=0; i<G_N_ELEMENTS(read_skew_tests); i++) {
-            Geom::Matrix cm;
+            Geom::Affine cm;
             TSM_ASSERT(read_skew_tests[i].str , sp_svg_transform_read(read_skew_tests[i].str, &cm));
             TSM_ASSERT_RELATION(read_skew_tests[i].str , approx_equal_pred , read_skew_tests[i].matrix , cm);
         }
@@ -166,8 +166,8 @@ public:
         //       there should be 1 or more comma-wsp sequences between transforms... This doesn't make sense and it seems
         //       likely that instead of a + they meant a ? (zero or one comma-wsp sequences).
         char const * str = "skewY(17)skewX(9)translate(7,13)scale(2)rotate(13)translate(3,5)";
-        Geom::Matrix ref(2.0199976232558053, 1.0674773585906016, -0.14125199392774669, 1.9055550612095459, 14.412730624347654, 28.499820929377454); // Precomputed using Mathematica
-        Geom::Matrix cm;
+        Geom::Affine ref(2.0199976232558053, 1.0674773585906016, -0.14125199392774669, 1.9055550612095459, 14.412730624347654, 28.499820929377454); // Precomputed using Mathematica
+        Geom::Affine cm;
         TS_ASSERT(sp_svg_transform_read(str, &cm));
         TS_ASSERT_RELATION(approx_equal_pred , ref , cm);
     }
@@ -175,7 +175,7 @@ public:
     void testReadFailures()
     {
         for(size_t i=0; i<G_N_ELEMENTS(read_fail_tests); i++) {
-            Geom::Matrix cm;
+            Geom::Affine cm;
             TSM_ASSERT(read_fail_tests[i] , !sp_svg_transform_read(read_fail_tests[i], &cm));
         }
     }
@@ -184,26 +184,26 @@ public:
 static double const DEGREE = M_PI/180.;
 
 SvgAffineTest::test_t const SvgAffineTest::read_matrix_tests[3] = {
-    {"matrix(0,0,0,0,0,0)",Geom::Matrix(0,0,0,0,0,0)},
-    {" matrix(1,2,3,4,5,6)",Geom::Matrix(1,2,3,4,5,6)},
-    {"matrix (1 2 -3,-4,5e6,-6e-7)",Geom::Matrix(1,2,-3,-4,5e6,-6e-7)}};
+    {"matrix(0,0,0,0,0,0)",Geom::Affine(0,0,0,0,0,0)},
+    {" matrix(1,2,3,4,5,6)",Geom::Affine(1,2,3,4,5,6)},
+    {"matrix (1 2 -3,-4,5e6,-6e-7)",Geom::Affine(1,2,-3,-4,5e6,-6e-7)}};
 SvgAffineTest::test_t const SvgAffineTest::read_translate_tests[3] = {
-    {"translate(1)",Geom::Matrix(1,0,0,1,1,0)},
-    {"translate(1,1)",Geom::Matrix(1,0,0,1,1,1)},
-    {"translate(-1e3 .123e2)",Geom::Matrix(1,0,0,1,-1e3,.123e2)}};
+    {"translate(1)",Geom::Affine(1,0,0,1,1,0)},
+    {"translate(1,1)",Geom::Affine(1,0,0,1,1,1)},
+    {"translate(-1e3 .123e2)",Geom::Affine(1,0,0,1,-1e3,.123e2)}};
 SvgAffineTest::test_t const SvgAffineTest::read_scale_tests[3] = {
-    {"scale(2)",Geom::Matrix(2,0,0,2,0,0)},
-    {"scale(2,3)",Geom::Matrix(2,0,0,3,0,0)},
-    {"scale(0.1e-2 -.475e0)",Geom::Matrix(0.1e-2,0,0,-.475e0,0,0)}};
+    {"scale(2)",Geom::Affine(2,0,0,2,0,0)},
+    {"scale(2,3)",Geom::Affine(2,0,0,3,0,0)},
+    {"scale(0.1e-2 -.475e0)",Geom::Affine(0.1e-2,0,0,-.475e0,0,0)}};
 SvgAffineTest::test_t const SvgAffineTest::read_rotate_tests[4] = {
-    {"rotate(13 )",Geom::Matrix(cos(13.*DEGREE),sin(13.*DEGREE),-sin(13.*DEGREE),cos(13.*DEGREE),0,0)},
-    {"rotate(-13)",Geom::Matrix(cos(-13.*DEGREE),sin(-13.*DEGREE),-sin(-13.*DEGREE),cos(-13.*DEGREE),0,0)},
-    {"rotate(373)",Geom::Matrix(cos(13.*DEGREE),sin(13.*DEGREE),-sin(13.*DEGREE),cos(13.*DEGREE),0,0)},
-    {"rotate(13,7,11)",Geom::Matrix(cos(13.*DEGREE),sin(13.*DEGREE),-sin(13.*DEGREE),cos(13.*DEGREE),(1-cos(13.*DEGREE))*7+sin(13.*DEGREE)*11,(1-cos(13.*DEGREE))*11-sin(13.*DEGREE)*7)}};
+    {"rotate(13 )",Geom::Affine(cos(13.*DEGREE),sin(13.*DEGREE),-sin(13.*DEGREE),cos(13.*DEGREE),0,0)},
+    {"rotate(-13)",Geom::Affine(cos(-13.*DEGREE),sin(-13.*DEGREE),-sin(-13.*DEGREE),cos(-13.*DEGREE),0,0)},
+    {"rotate(373)",Geom::Affine(cos(13.*DEGREE),sin(13.*DEGREE),-sin(13.*DEGREE),cos(13.*DEGREE),0,0)},
+    {"rotate(13,7,11)",Geom::Affine(cos(13.*DEGREE),sin(13.*DEGREE),-sin(13.*DEGREE),cos(13.*DEGREE),(1-cos(13.*DEGREE))*7+sin(13.*DEGREE)*11,(1-cos(13.*DEGREE))*11-sin(13.*DEGREE)*7)}};
 SvgAffineTest::test_t const SvgAffineTest::read_skew_tests[3] = {
-    {"skewX( 30)",Geom::Matrix(1,0,tan(30.*DEGREE),1,0,0)},
-    {"skewX(-30)",Geom::Matrix(1,0,tan(-30.*DEGREE),1,0,0)},
-    {"skewY(390)",Geom::Matrix(1,tan(30.*DEGREE),0,1,0,0)}};
+    {"skewX( 30)",Geom::Affine(1,0,tan(30.*DEGREE),1,0,0)},
+    {"skewX(-30)",Geom::Affine(1,0,tan(-30.*DEGREE),1,0,0)},
+    {"skewY(390)",Geom::Affine(1,tan(30.*DEGREE),0,1,0,0)}};
 char const * const SvgAffineTest::read_fail_tests[25] = {
     "matrix((1,2,3,4,5,6)",
     "matrix((1,2,3,4,5,6))",
@@ -232,22 +232,22 @@ char const * const SvgAffineTest::read_fail_tests[25] = {
     "skewY(1,2)"};
 
 SvgAffineTest::test_t const SvgAffineTest::write_matrix_tests[2] = {
-    {"matrix(1,2,3,4,5,6)",Geom::Matrix(1,2,3,4,5,6)},
-    {"matrix(-1,2123,3,0.4,1e-8,1e20)",Geom::Matrix(-1,2.123e3,3+1e-14,0.4,1e-8,1e20)}};
+    {"matrix(1,2,3,4,5,6)",Geom::Affine(1,2,3,4,5,6)},
+    {"matrix(-1,2123,3,0.4,1e-8,1e20)",Geom::Affine(-1,2.123e3,3+1e-14,0.4,1e-8,1e20)}};
 SvgAffineTest::test_t const SvgAffineTest::write_translate_tests[3] = {
-    {"translate(1,1)",Geom::Matrix(1,0,0,1,1,1)},
-    {"translate(1)",Geom::Matrix(1,0,0,1,1,0)},
-    {"translate(-1345,0.123)",Geom::Matrix(1,0,0,1,-1.345e3,.123)}};
+    {"translate(1,1)",Geom::Affine(1,0,0,1,1,1)},
+    {"translate(1)",Geom::Affine(1,0,0,1,1,0)},
+    {"translate(-1345,0.123)",Geom::Affine(1,0,0,1,-1.345e3,.123)}};
 SvgAffineTest::test_t const SvgAffineTest::write_scale_tests[2] = {
-    {"scale(0)",Geom::Matrix(0,0,0,0,0,0)},
-    {"scale(2,3)",Geom::Matrix(2,0,0,3,0,0)}};
+    {"scale(0)",Geom::Affine(0,0,0,0,0,0)},
+    {"scale(2,3)",Geom::Affine(2,0,0,3,0,0)}};
 SvgAffineTest::test_t const SvgAffineTest::write_rotate_tests[2] = {
-    {"rotate(13)",Geom::Matrix(cos(13.*DEGREE),sin(13.*DEGREE),-sin(13.*DEGREE),cos(13.*DEGREE),0,0)},
-    {"rotate(-13,7,11)",Geom::Matrix(cos(-13.*DEGREE),sin(-13.*DEGREE),-sin(-13.*DEGREE),cos(-13.*DEGREE),(1-cos(-13.*DEGREE))*7+sin(-13.*DEGREE)*11,(1-cos(-13.*DEGREE))*11-sin(-13.*DEGREE)*7)}};
+    {"rotate(13)",Geom::Affine(cos(13.*DEGREE),sin(13.*DEGREE),-sin(13.*DEGREE),cos(13.*DEGREE),0,0)},
+    {"rotate(-13,7,11)",Geom::Affine(cos(-13.*DEGREE),sin(-13.*DEGREE),-sin(-13.*DEGREE),cos(-13.*DEGREE),(1-cos(-13.*DEGREE))*7+sin(-13.*DEGREE)*11,(1-cos(-13.*DEGREE))*11-sin(-13.*DEGREE)*7)}};
 SvgAffineTest::test_t const SvgAffineTest::write_skew_tests[3] = {
-    {"skewX(30)",Geom::Matrix(1,0,tan(30.*DEGREE),1,0,0)},
-    {"skewX(-30)",Geom::Matrix(1,0,tan(-30.*DEGREE),1,0,0)},
-    {"skewY(390)",Geom::Matrix(1,tan(30.*DEGREE),0,1,0,0)}};
+    {"skewX(30)",Geom::Affine(1,0,tan(30.*DEGREE),1,0,0)},
+    {"skewX(-30)",Geom::Affine(1,0,tan(-30.*DEGREE),1,0,0)},
+    {"skewY(390)",Geom::Affine(1,tan(30.*DEGREE),0,1,0,0)}};
 
 /*
   Local Variables:

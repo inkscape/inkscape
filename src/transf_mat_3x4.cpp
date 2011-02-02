@@ -13,7 +13,7 @@
 
 #include "transf_mat_3x4.h"
 #include <gtk/gtk.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include "svg/stringstream.h"
 #include "syseq.h"
 #include "document.h"
@@ -133,7 +133,7 @@ TransfMat3x4::operator==(const TransfMat3x4 &rhs) const
 /* Multiply a projective matrix by an affine matrix (by only multiplying the 'affine part' of the
  * projective matrix) */
 TransfMat3x4
-TransfMat3x4::operator*(Geom::Matrix const &A) const {
+TransfMat3x4::operator*(Geom::Affine const &A) const {
     TransfMat3x4 ret;
 
     for (int j = 0; j < 4; ++j) {
@@ -148,7 +148,7 @@ TransfMat3x4::operator*(Geom::Matrix const &A) const {
 // FIXME: Shouldn't rather operator* call operator*= for efficiency? (Because in operator*=
 //        there is in principle no need to create a temporary object, which happens in the assignment)
 TransfMat3x4 &
-TransfMat3x4::operator*=(Geom::Matrix const &A) {
+TransfMat3x4::operator*=(Geom::Affine const &A) {
     *this = *this * A;
     return *this;
 }

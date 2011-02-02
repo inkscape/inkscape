@@ -46,8 +46,9 @@ namespace Geom
 OptRect Path::boundsFast() const {
   OptRect bounds;
   if (empty()) return bounds;
-  bounds=front().boundsFast();
+  bounds = front().boundsFast();
   const_iterator iter = begin();
+  // the closing path segment can be ignored, because it will always lie within the bbox of the rest of the path
   if ( iter != end() ) {
     for ( ++iter; iter != end() ; ++iter ) {
       bounds.unionWith(iter->boundsFast());
@@ -59,8 +60,9 @@ OptRect Path::boundsFast() const {
 OptRect Path::boundsExact() const {
   OptRect bounds;
   if (empty()) return bounds;
-  bounds=front().boundsExact();
+  bounds = front().boundsExact();
   const_iterator iter = begin();
+  // the closing path segment can be ignored, because it will always lie within the bbox of the rest of the path
   if ( iter != end() ) {
     for ( ++iter; iter != end() ; ++iter ) {
       bounds.unionWith(iter->boundsExact());
@@ -77,7 +79,7 @@ iter inc(iter const &x, unsigned n) {
   return ret;
 }
 
-Path &Path::operator*=(Matrix const &m) {
+Path &Path::operator*=(Affine const &m) {
   unshare();
   Sequence::iterator last = get_curves().end() - 1;
   Sequence::iterator it;
@@ -146,7 +148,7 @@ Path::allNearestPoints(Point const& _point, double from, double to) const
 	Rect bb(Geom::Point(0,0),Geom::Point(0,0));
 	for ( unsigned int i = si + 1; i < ei; ++i )
 	{
-		bb = *(_path[i].boundsFast());
+		bb = (_path[i].boundsFast());
 		dsq = distanceSq(_point, bb);
 		if ( mindistsq < dsq ) continue;
 		all_t = _path[i].allNearestPoints(_point);
@@ -165,7 +167,7 @@ Path::allNearestPoints(Point const& _point, double from, double to) const
 			ni.push_back(i);
 		}
 	}
-	bb = *(_path[ei].boundsFast());
+	bb = (_path[ei].boundsFast());
 	dsq = distanceSq(_point, bb);
 	if ( mindistsq >= dsq )
 	{
@@ -203,7 +205,7 @@ Path::nearestPointPerCurve(Point const& _point) const
 {
 	//return a single nearest point for each curve in this path
 	std::vector<double> np;
-	for (const_iterator it = begin() ; it != end_default(); ++it)
+	for (const_iterator it = begin() ; it != end_default() ; ++it)
 	//for (std::vector<Path>::const_iterator it = _path.begin(); it != _path.end(), ++it){
 	{
 	    np.push_back(it->nearestPoint(_point));
@@ -256,7 +258,7 @@ double Path::nearestPoint(Point const &_point, double from, double to, double *d
 	Rect bb(Geom::Point(0,0),Geom::Point(0,0));
 	for ( unsigned int i = si + 1; i < ei; ++i )
 	{
-		bb = *(_path[i].boundsFast());
+		bb = (_path[i].boundsFast());
 		dsq = distanceSq(_point, bb);
 		if ( mindistsq <= dsq ) continue;
 		t = _path[i].nearestPoint(_point);
@@ -268,7 +270,7 @@ double Path::nearestPoint(Point const &_point, double from, double to, double *d
 			mindistsq = dsq;
 		}
 	}
-	bb = *(_path[ei].boundsFast());
+	bb = (_path[ei].boundsFast());
 	dsq = distanceSq(_point, bb);
 	if ( mindistsq > dsq )
 	{

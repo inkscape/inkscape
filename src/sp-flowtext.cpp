@@ -46,7 +46,7 @@ static Inkscape::XML::Node *sp_flowtext_write(SPObject *object, Inkscape::XML::D
 static void sp_flowtext_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_flowtext_set(SPObject *object, unsigned key, gchar const *value);
 
-static void sp_flowtext_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
+static void sp_flowtext_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
 static void sp_flowtext_print(SPItem *item, SPPrintContext *ctx);
 static gchar *sp_flowtext_description(SPItem *item);
 static void sp_flowtext_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
@@ -328,7 +328,7 @@ static Inkscape::XML::Node *sp_flowtext_write(SPObject *object, Inkscape::XML::D
 }
 
 static void
-sp_flowtext_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const /*flags*/)
+sp_flowtext_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const /*flags*/)
 {
     SPFlowtext *group = SP_FLOWTEXT(item);
     group->layout.getBoundingBox(bbox, transform);
@@ -368,7 +368,7 @@ sp_flowtext_print(SPItem *item, SPPrintContext *ctx)
     dbox.y0 = 0.0;
     dbox.x1 = SP_OBJECT_DOCUMENT(item)->getWidth();
     dbox.y1 = SP_OBJECT_DOCUMENT(item)->getHeight();
-    Geom::Matrix const ctm (item->i2d_affine());
+    Geom::Affine const ctm (item->i2d_affine());
 
     group->layout.print(ctx, &pbox, &dbox, &bbox, ctm);
 }

@@ -61,8 +61,8 @@ void output(QuadraticBezier const &curve, SVGPathSink &sink) {
 }
 
 void output(SVGEllipticalArc const &curve, SVGPathSink &sink) {
-    sink.arcTo( curve.ray(X), curve.ray(Y), curve.rotation_angle(),
-    			curve.large_arc_flag(), curve.sweep_flag(),
+    sink.arcTo( curve.ray(X), curve.ray(Y), curve.rotationAngle(),
+    			curve.largeArc(), curve.sweep(),
     			curve.finalPoint() );
 }
 

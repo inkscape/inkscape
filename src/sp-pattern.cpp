@@ -44,17 +44,17 @@ struct SPPatPainter {
 	SPPainter painter;
 	SPPattern *pat;
 
-	Geom::Matrix ps2px;
-	Geom::Matrix px2ps;
-	Geom::Matrix pcs2px;
+	Geom::Affine ps2px;
+	Geom::Affine px2ps;
+	Geom::Affine pcs2px;
 
 	NRArena *arena;
 	unsigned int dkey;
 	NRArenaItem *root;
 	
 	bool         use_cached_tile;
-	Geom::Matrix     ca2pa;
-	Geom::Matrix     pa2ca;
+	Geom::Affine     ca2pa;
+	Geom::Affine     pa2ca;
 	NRRectL      cached_bbox;
 	NRPixBlock   cached_tile;
 
@@ -74,7 +74,7 @@ static void sp_pattern_modified (SPObject *object, unsigned int flags);
 static void pattern_ref_changed(SPObject *old_ref, SPObject *ref, SPPattern *pat);
 static void pattern_ref_modified (SPObject *ref, guint flags, SPPattern *pattern);
 
-static SPPainter *sp_pattern_painter_new (SPPaintServer *ps, Geom::Matrix const &full_transform, Geom::Matrix const &parent_transform, const NRRect *bbox);
+static SPPainter *sp_pattern_painter_new (SPPaintServer *ps, Geom::Affine const &full_transform, Geom::Affine const &parent_transform, const NRRect *bbox);
 static void sp_pattern_painter_free (SPPaintServer *ps, SPPainter *painter);
 
 static SPPaintServerClass * pattern_parent_class;
@@ -228,7 +228,7 @@ sp_pattern_set (SPObject *object, unsigned int key, const gchar *value)
 		object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 		break;
 	case SP_ATTR_PATTERNTRANSFORM: {
-		Geom::Matrix t;
+		Geom::Affine t;
 		if (value && sp_svg_transform_read (value, &t)) {
 			pat->patternTransform = t;
 			pat->patternTransform_set = TRUE;
@@ -504,7 +504,7 @@ sp_pattern_clone_if_necessary (SPItem *item, SPPattern *pattern, const gchar *pr
 }
 
 void
-sp_pattern_transform_multiply (SPPattern *pattern, Geom::Matrix postmul, bool set)
+sp_pattern_transform_multiply (SPPattern *pattern, Geom::Affine postmul, bool set)
 {
 	// this formula is for a different interpretation of pattern transforms as described in (*) in sp-pattern.cpp
 	// for it to work, we also need    sp_object_read_attr (SP_OBJECT (item), "transform");
@@ -523,7 +523,7 @@ sp_pattern_transform_multiply (SPPattern *pattern, Geom::Matrix postmul, bool se
 	g_free(c);
 }
 
-const gchar *pattern_tile(GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix transform, Geom::Matrix move)
+const gchar *pattern_tile(GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Affine transform, Geom::Affine move)
 {
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
 	Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
@@ -545,7 +545,7 @@ const gchar *pattern_tile(GSList *reprs, Geom::Rect bounds, SPDocument *document
 	        Inkscape::XML::Node *node = (Inkscape::XML::Node *)(i->data);
 		SPItem *copy = SP_ITEM(pat_object->appendChildRepr(node));
 
-		Geom::Matrix dup_transform;
+		Geom::Affine dup_transform;
 		if (!sp_svg_transform_read (node->attribute("transform"), &dup_transform))
 			dup_transform = Geom::identity();
 		dup_transform *= move;
@@ -590,7 +590,7 @@ guint pattern_patternContentUnits (SPPattern *pat)
 	return pat->patternContentUnits;
 }
 
-Geom::Matrix const &pattern_patternTransform(SPPattern const *pat)
+Geom::Affine const &pattern_patternTransform(SPPattern const *pat)
 {
 	for (SPPattern const *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
 		if (pat_i->patternTransform_set)
@@ -679,7 +679,7 @@ Creates a painter (i.e. the thing that does actual filling at the given zoom).
 See (*) below for why the parent_transform may be necessary.
 */
 static SPPainter *
-sp_pattern_painter_new (SPPaintServer *ps, Geom::Matrix const &full_transform, Geom::Matrix const &/*parent_transform*/, const NRRect *bbox)
+sp_pattern_painter_new (SPPaintServer *ps, Geom::Affine const &full_transform, Geom::Affine const &/*parent_transform*/, const NRRect *bbox)
 {
 	SPPattern *pat = SP_PATTERN (ps);
 	SPPatPainter *pp = g_new (SPPatPainter, 1);
@@ -691,10 +691,10 @@ sp_pattern_painter_new (SPPaintServer *ps, Geom::Matrix const &full_transform, G
 
 	if (pattern_patternUnits (pat) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
 		/* BBox to user coordinate system */
-		Geom::Matrix bbox2user (bbox->x1 - bbox->x0, 0.0, 0.0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
+		Geom::Affine bbox2user (bbox->x1 - bbox->x0, 0.0, 0.0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
 
 		// the final patternTransform, taking into account bbox
-		Geom::Matrix const ps2user(pattern_patternTransform(pat) * bbox2user);
+		Geom::Affine const ps2user(pattern_patternTransform(pat) * bbox2user);
 
 		// see (*) comment below
 		pp->ps2px = ps2user * full_transform;
@@ -725,9 +725,9 @@ sp_pattern_painter_new (SPPaintServer *ps, Geom::Matrix const &full_transform, G
 		gdouble tmp_y = pattern_height (pat) / (pattern_viewBox(pat)->y1 - pattern_viewBox(pat)->y0);
 
 		// FIXME: preserveAspectRatio must be taken into account here too!
-		Geom::Matrix vb2ps (tmp_x, 0.0, 0.0, tmp_y, pattern_x(pat) - pattern_viewBox(pat)->x0 * tmp_x, pattern_y(pat) - pattern_viewBox(pat)->y0 * tmp_y);
+		Geom::Affine vb2ps (tmp_x, 0.0, 0.0, tmp_y, pattern_x(pat) - pattern_viewBox(pat)->x0 * tmp_x, pattern_y(pat) - pattern_viewBox(pat)->y0 * tmp_y);
 
-		Geom::Matrix vb2us = vb2ps * pattern_patternTransform(pat);
+		Geom::Affine vb2us = vb2ps * pattern_patternTransform(pat);
 
 		// see (*)
 		pp->pcs2px = vb2us * full_transform;
@@ -735,9 +735,9 @@ sp_pattern_painter_new (SPPaintServer *ps, Geom::Matrix const &full_transform, G
 		/* No viewbox, have to parse units */
 		if (pattern_patternContentUnits (pat) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
 			/* BBox to user coordinate system */
-			Geom::Matrix bbox2user (bbox->x1 - bbox->x0, 0.0, 0.0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
+			Geom::Affine bbox2user (bbox->x1 - bbox->x0, 0.0, 0.0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
 
-			Geom::Matrix pcs2user = pattern_patternTransform(pat) * bbox2user;
+			Geom::Affine pcs2user = pattern_patternTransform(pat) * bbox2user;
 
 			// see (*)
 			pp->pcs2px = pcs2user * full_transform;

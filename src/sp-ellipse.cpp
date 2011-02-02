@@ -253,7 +253,7 @@ static void sp_genericellipse_set_shape(SPShape *shape)
         curve->closepath();
     }
 
-    Geom::Matrix aff = Geom::Scale(rx, ry) * Geom::Translate(ellipse->cx.computed, ellipse->cy.computed);
+    Geom::Affine aff = Geom::Scale(rx, ry) * Geom::Translate(ellipse->cx.computed, ellipse->cy.computed);
     curve->transform(aff);
 
     /* Reset the shape'scurve to the "original_curve"
@@ -282,7 +282,7 @@ static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscap
 
     SPGenericEllipse *ellipse = SP_GENERICELLIPSE(item);
     sp_genericellipse_normalize(ellipse);
-    Geom::Matrix const i2d = item->i2d_affine();
+    Geom::Affine const i2d = item->i2d_affine();
 
     // figure out if we have a slice, while guarding against rounding errors
     bool slice = false;

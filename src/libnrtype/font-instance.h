@@ -68,7 +68,7 @@ public:
     Geom::OptRect             BBox(int glyph_id);
 
     // creates a rasterfont for the given style
-    raster_font*         RasterFont(Geom::Matrix const &trs, double stroke_width,
+    raster_font*         RasterFont(Geom::Affine const &trs, double stroke_width,
                                     bool vertical = false, JoinType stroke_join = join_straight,
                                     ButtType stroke_cap = butt_straight, float miter_limit = 4.0);
     // the dashes array in iStyle is copied

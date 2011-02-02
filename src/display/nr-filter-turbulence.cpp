@@ -87,7 +87,7 @@ void FilterTurbulence::render_area(NRPixBlock *pix, NR::IRect &full_area, Filter
     const int bbox_x1 = full_area.max()[NR::X];
     const int bbox_y1 = full_area.max()[NR::Y];
 
-    Geom::Matrix unit_trans = units.get_matrix_primitiveunits2pb().inverse();
+    Geom::Affine unit_trans = units.get_matrix_primitiveunits2pb().inverse();
 
     double point[2];
 

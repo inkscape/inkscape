@@ -46,7 +46,7 @@ namespace Geom {
 inline Coord subdivideArr(Coord t, Coord const *v, Coord *left, Coord *right, unsigned order) {
 /*
  *  Bernstein : 
- *      Evaluate a Bernstein function at a particular parameter value
+ *	Evaluate a Bernstein function at a particular parameter value
  *      Fill in control points for resulting sub-curves.
  * 
  */
@@ -248,7 +248,7 @@ public:
 
         // initialize temp storage variables
         std::valarray<Coord> d_(order()+1);
-        for (unsigned i = 0; i < size(); i++) {
+        for(unsigned i = 0; i < size(); i++) {
             d_[i] = c_[i];
         }
 
@@ -256,10 +256,10 @@ public:
         if(n_derivs > order()) {
             nn = order()+1; // only calculate the non zero derivs
         }
-        for (unsigned di = 0; di < nn; di++) {
+        for(unsigned di = 0; di < nn; di++) {
             //val_n_der[di] = (subdivideArr(t, &d_[0], NULL, NULL, order() - di));
             val_n_der[di] = bernsteinValueAt(t, &d_[0], order() - di);
-            for (unsigned i = 0; i < order() - di; i++) {
+            for(unsigned i = 0; i < order() - di; i++) {
                 d_[i] = (order()-di)*(d_[i+1] - d_[i]);
             }
         }
@@ -381,7 +381,8 @@ inline Bezier integral(const Bezier & a) {
 }
 
 inline OptInterval bounds_fast(Bezier const & b) {
-    return Interval::fromArray(&const_cast<Bezier&>(b).c_[0], b.size());
+    OptInterval ret = Interval::from_array(&const_cast<Bezier&>(b).c_[0], b.size());
+    return ret;
 }
 
 //TODO: better bounds exact

@@ -555,6 +555,24 @@ void swap_view(VectorView & v1, VectorView & v2)
 	std::swap(v1.m_vector_view, v2.m_vector_view); // not swap m_vector too
 }
 
+inline
+const VectorView & const_vector_view_cast (const ConstVectorView & view)
+{
+    const detail::BaseVectorImpl & bvi
+        = static_cast<const detail::BaseVectorImpl &>(view);
+    const VectorView & vv = reinterpret_cast<const VectorView &>(bvi);
+    return vv;
+}
+
+inline
+VectorView & const_vector_view_cast (ConstVectorView & view)
+{
+    detail::BaseVectorImpl & bvi
+        = static_cast<detail::BaseVectorImpl &>(view);
+    VectorView & vv = reinterpret_cast<VectorView &>(bvi);
+    return vv;
+}
+
 
 } } // end namespaces
 

@@ -33,6 +33,7 @@
 #include <2geom/exception.h>
 #include <algorithm>
 #include <map>
+#include <assert.h>
 
 /** Todo:
     + modify graham scan to work top to bottom, rather than around angles
@@ -48,6 +49,7 @@
 using std::vector;
 using std::map;
 using std::pair;
+using std::make_pair;
 
 namespace Geom{
 
@@ -338,40 +340,74 @@ ConvexHull::is_degenerate() const {
 }
 
 
-/* Here we really need a rotating calipers implementation.  This implementation is slow and incorrect.
-   This incorrectness is a problem because it throws off the algorithms.  Perhaps I will come up with
-   something better tomorrow.  The incorrectness is in the order of the bridges - they must be in the
-   order of traversal around.  Since the a->b and b->a bridges are seperated, they don't need to be merge
-   order, just the order of the traversal of the host hull.  Currently some situations make a n->0 bridge
-   first.*/
-pair< map<int, int>, map<int, int> >
-bridges(ConvexHull a, ConvexHull b) {
-    map<int, int> abridges;
-    map<int, int> bbridges;
-
-    for(unsigned ia = 0; ia < a.boundary.size(); ia++) {
-        for(unsigned ib = 0; ib < b.boundary.size(); ib++) {
-            Point d = b[ib] - a[ia];
-            Geom::Coord e = cross(d, a[ia - 1] - a[ia]), f = cross(d, a[ia + 1] - a[ia]);
-            Geom::Coord g = cross(d, b[ib - 1] - a[ia]), h = cross(d, b[ib + 1] - a[ia]);
-            if     (e > 0 && f > 0 && g > 0 && h > 0) abridges[ia] = ib;
-            else if(e < 0 && f < 0 && g < 0 && h < 0) bbridges[ib] = ia;
-        }
-    }
-
-    return make_pair(abridges, bbridges);
+int sgn(double x) {
+    if(x == 0) return 0;
+    return (x<0)?-1:1;
 }
 
-std::vector<Point> bridge_points(ConvexHull a, ConvexHull b) {
-    vector<Point> ret;
-    pair< map<int, int>, map<int, int> > indices = bridges(a, b);
-    for(map<int, int>::iterator it = indices.first.begin(); it != indices.first.end(); it++) {
-      ret.push_back(a[it->first]);
-      ret.push_back(b[it->second]);
+bool same_side(Point L[2], Point  xs[4]) {
+    int side = 0;
+    for(int i = 0; i < 4; i++) {
+        int sn = sgn(SignedTriangleArea(L[0], L[1], xs[i]));
+        if(sn and not side)
+            side = sn;
+        else if(sn != side) return false;
     }
-    for(map<int, int>::iterator it = indices.second.begin(); it != indices.second.end(); it++) {
-      ret.push_back(b[it->first]);
-      ret.push_back(a[it->second]);
+    return true;
+}
+
+/** find bridging pairs between two convex hulls.
+ *   this code is based on Hormoz Pirzadeh's masters thesis.  There is room for optimisation:
+ * 1. reduce recomputation
+ * 2. use more efficient angle code
+ * 3. write as iterator
+ */
+std::vector<pair<int, int> > bridges(ConvexHull a, ConvexHull b) {
+    vector<pair<int, int> > ret;
+    
+    // 1. find maximal points on a and b
+    int ai = 0, bi = 0;
+    // 2. find first copodal pair
+    double ap_angle = atan2(a[ai+1] - a[ai]);
+    double bp_angle = atan2(b[bi+1] - b[bi]);
+    Point L[2] = {a[ai], b[bi]};
+    while(ai < int(a.size()) or bi < int(b.size())) {
+        if(ap_angle == bp_angle) {
+            // In the case of parallel support lines, we must consider all four pairs of copodal points
+            {
+                assert(0); // untested
+                Point xs[4] = {a[ai-1], a[ai+1], b[bi-1], b[bi+1]};
+                if(same_side(L, xs)) ret.push_back(make_pair(ai, bi));
+                xs[2] = b[bi];
+                xs[3] = b[bi+2];
+                if(same_side(L, xs)) ret.push_back(make_pair(ai, bi));
+                xs[0] = a[ai];
+                xs[1] = a[ai+2];
+                if(same_side(L, xs)) ret.push_back(make_pair(ai, bi));
+                xs[2] = b[bi-1];
+                xs[3] = b[bi+1];
+                if(same_side(L, xs)) ret.push_back(make_pair(ai, bi));
+            }
+            ai++;
+            ap_angle += angle_between(a[ai] - a[ai-1], a[ai+1] - a[ai]);
+            L[0] = a[ai];
+            bi++;
+            bp_angle += angle_between(b[bi] - b[bi-1], b[bi+1] - b[bi]);
+            L[1] = b[bi];
+            std::cout << "parallel\n";
+        } else if(ap_angle < bp_angle) {
+            ai++;
+            ap_angle += angle_between(a[ai] - a[ai-1], a[ai+1] - a[ai]);
+            L[0] = a[ai];
+            Point xs[4] = {a[ai-1], a[ai+1], b[bi-1], b[bi+1]};
+            if(same_side(L, xs)) ret.push_back(make_pair(ai, bi));
+        } else {
+            bi++;
+            bp_angle += angle_between(b[bi] - b[bi-1], b[bi+1] - b[bi]);
+            L[1] = b[bi];
+            Point xs[4] = {a[ai-1], a[ai+1], b[bi-1], b[bi+1]};
+            if(same_side(L, xs)) ret.push_back(make_pair(ai, bi));
+        }
     }
     return ret;
 }
@@ -428,16 +464,48 @@ ConvexHull intersection(ConvexHull /*a*/, ConvexHull /*b*/) {
     return ret;
 }
 
+template <typename T>
+T idx_to_pair(pair<T, T> p, int idx) {
+    return idx?p.second:p.first;
+}
+
 /*** ConvexHull merge(ConvexHull a, ConvexHull b);
  * find the smallest convex hull that surrounds a and b.
  */
 ConvexHull merge(ConvexHull a, ConvexHull b) {
     ConvexHull ret;
 
-    pair< map<int, int>, map<int, int> > bpair = bridges(a, b);
-    map<int, int> ab = bpair.first;
-    map<int, int> bb = bpair.second;
+    std::cout << "---\n";
+    std::vector<pair<int, int> > bpair = bridges(a, b);
+    
+    // Given our list of bridges {(pb1, qb1), ..., (pbk, qbk)}
+    // we start with the highest point in p0, q0, say it is p0.
+    // then the merged hull is p0, ..., pb1, qb1, ..., qb2, pb2, ...
+    // In other words, either of the two polygons vertices are added in order until the vertex coincides with a bridge point, at which point we swap.
 
+    unsigned state = (a[0][Y] < b[0][Y])?0:1;
+    ret.boundary.reserve(a.size() + b.size());
+    ConvexHull chs[2] = {a, b};
+    unsigned idx = 0;
+    
+    for(unsigned k = 0; k < bpair.size(); k++) {
+        unsigned limit = idx_to_pair(bpair[k], state);
+        std::cout << bpair[k].first << " , " << bpair[k].second << "; "
+                  << idx << ", " << limit << ", s: "
+                  << state
+                  << " \n";
+        while(idx <= limit) {
+            ret.boundary.push_back(chs[state][idx++]);
+        }
+        state = 1-state;
+        idx = idx_to_pair(bpair[k], state);
+    }
+    while(idx < chs[state].size()) {
+        ret.boundary.push_back(chs[state][idx++]);
+    }
+    return ret;
+
+    /*
     ab[-1] = 0;
     bb[-1] = 0;
 
@@ -460,6 +528,7 @@ ConvexHull merge(ConvexHull a, ConvexHull b) {
         if(bb[i] == 0 && i != -1) break;
         i = bb[i];
     }
+    */
     return ret;
 }
 

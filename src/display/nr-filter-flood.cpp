@@ -87,7 +87,7 @@ void FilterFlood::set_icc(SVGICCColor *icc_color) {
     icc = icc_color;
 }
 
-void FilterFlood::area_enlarge(NRRectL &/*area*/, Geom::Matrix const &/*trans*/)
+void FilterFlood::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*trans*/)
 {
 }
 

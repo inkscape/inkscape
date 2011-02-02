@@ -16,7 +16,7 @@
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-rect.h"
 #include "libnr/nr-rect-l.h"
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <2geom/rect.h>
 
 namespace Inkscape {
@@ -31,7 +31,7 @@ public:
      * Sets the current transformation matrix, i.e. transformation matrix
      * from object's user coordinates to screen coordinates
      */
-    void set_ctm(Geom::Matrix const &ctm);
+    void set_ctm(Geom::Affine const &ctm);
 
     /**
      * Sets the resolution, the filter should be rendered with.
@@ -64,39 +64,39 @@ public:
     /**
      * Gets the user coordinates to pixblock coordinates transformation matrix.
      */
-    Geom::Matrix get_matrix_user2pb() const;
+    Geom::Affine get_matrix_user2pb() const;
 
     /**
      * Gets the filterUnits to pixblock coordinates transformation matrix.
      */
-    Geom::Matrix get_matrix_filterunits2pb() const;
+    Geom::Affine get_matrix_filterunits2pb() const;
 
     /**
      * Gets the primitiveUnits to pixblock coordinates transformation matrix.
      */
-    Geom::Matrix get_matrix_primitiveunits2pb() const;
+    Geom::Affine get_matrix_primitiveunits2pb() const;
 
     /**
      * Gets the display coordinates to pixblock coordinates transformation
      * matrix.
      */
-    Geom::Matrix get_matrix_display2pb() const;
+    Geom::Affine get_matrix_display2pb() const;
 
     /**
      * Gets the pixblock coordinates to display coordinates transformation
      * matrix
      */
-    Geom::Matrix get_matrix_pb2display() const;
+    Geom::Affine get_matrix_pb2display() const;
 
     /**
      * Gets the user coordinates to filterUnits transformation matrix.
      */
-    Geom::Matrix get_matrix_user2filterunits() const;
+    Geom::Affine get_matrix_user2filterunits() const;
 
     /**
      * Gets the user coordinates to primitiveUnits transformation matrix.
      */
-    Geom::Matrix get_matrix_user2primitiveunits() const;
+    Geom::Affine get_matrix_user2primitiveunits() const;
 
     /**
      * Returns the filter area in pixblock coordinates.
@@ -108,14 +108,14 @@ public:
     FilterUnits& operator=(FilterUnits const &other);
 
 private:
-    Geom::Matrix get_matrix_units2pb(SPFilterUnits units) const;
-    Geom::Matrix get_matrix_user2units(SPFilterUnits units) const;
+    Geom::Affine get_matrix_units2pb(SPFilterUnits units) const;
+    Geom::Affine get_matrix_user2units(SPFilterUnits units) const;
 
     SPFilterUnits filterUnits, primitiveUnits;
     double resolution_x, resolution_y;
     bool paraller_axis;
     bool automatic_resolution;
-    Geom::Matrix ctm;
+    Geom::Affine ctm;
     Geom::OptRect item_bbox;
     Geom::OptRect filter_area;
 

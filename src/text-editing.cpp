@@ -87,7 +87,7 @@ bool sp_te_input_is_empty(SPObject const *item)
 Inkscape::Text::Layout::iterator
 sp_te_get_position_by_coords (SPItem const *item, Geom::Point const &i_p)
 {
-    Geom::Matrix im (item->i2d_affine ());
+    Geom::Affine im (item->i2d_affine ());
     im = im.inverse();
 
     Geom::Point p = i_p * im;
@@ -95,7 +95,7 @@ sp_te_get_position_by_coords (SPItem const *item, Geom::Point const &i_p)
     return layout->getNearestCursorPositionTo(p);
 }
 
-std::vector<Geom::Point> sp_te_create_selection_quads(SPItem const *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, Geom::Matrix const &transform)
+std::vector<Geom::Point> sp_te_create_selection_quads(SPItem const *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, Geom::Affine const &transform)
 {
     if (start == end)
         return std::vector<Geom::Point>();
@@ -979,7 +979,7 @@ sp_te_adjust_kerning_screen (SPItem *item, Inkscape::Text::Layout::iterator cons
     // divide increment by zoom
     // divide increment by matrix expansion
     gdouble factor = 1 / desktop->current_zoom();
-    Geom::Matrix t (item->i2doc_affine());
+    Geom::Affine t (item->i2doc_affine());
     factor = factor / t.descrim();
     by = factor * by;
 
@@ -1037,7 +1037,7 @@ sp_te_adjust_rotation_screen(SPItem *text, Inkscape::Text::Layout::iterator cons
     // divide increment by zoom
     // divide increment by matrix expansion
     gdouble factor = 1 / desktop->current_zoom();
-    Geom::Matrix t (text->i2doc_affine());
+    Geom::Affine t (text->i2doc_affine());
     factor = factor / t.descrim();
     Inkscape::Text::Layout const *layout = te_get_layout(text);
     if (layout == NULL) return;
@@ -1215,7 +1215,7 @@ sp_te_adjust_linespacing_screen (SPItem *text, Inkscape::Text::Layout::iterator 
     gdouble zby = by / (desktop->current_zoom() * (line_count == 0 ? 1 : line_count));
 
     // divide increment by matrix expansion
-    Geom::Matrix t (SP_ITEM(text)->i2doc_affine ());
+    Geom::Affine t (SP_ITEM(text)->i2doc_affine ());
     zby = zby / t.descrim();
 
     switch (style->line_height.unit) {
@@ -1908,7 +1908,7 @@ void sp_te_apply_style(SPItem *text, Inkscape::Text::Layout::iterator const &sta
     SPCSSAttr *css_set = sp_repr_css_attr_new();
     sp_repr_css_merge(css_set, (SPCSSAttr*) css);
     {
-        Geom::Matrix const local(SP_ITEM(common_ancestor)->i2doc_affine());
+        Geom::Affine const local(SP_ITEM(common_ancestor)->i2doc_affine());
         double const ex(local.descrim());
         if ( ( ex != 0. )
              && ( ex != 1. ) ) {

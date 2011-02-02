@@ -553,7 +553,7 @@ RegisteredTransformedPoint::setValue(Geom::Point const & p)
 }
 
 void
-RegisteredTransformedPoint::setTransform(Geom::Matrix const & canvas_to_svg)
+RegisteredTransformedPoint::setTransform(Geom::Affine const & canvas_to_svg)
 {
     // check if matrix is singular / has inverse
     if ( ! canvas_to_svg.isSingular() ) {

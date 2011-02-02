@@ -24,7 +24,7 @@
 #include "libnr/nr-convert2geom.h"
 #include <2geom/pathvector.h>
 #include <2geom/point.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/curves.h>
 #include "../display/canvas-bpath.h"
@@ -400,9 +400,9 @@ void  Path::AddCurve(Geom::Curve const &c)
     }
     else if(Geom::SVGEllipticalArc const *svg_elliptical_arc = dynamic_cast<Geom::SVGEllipticalArc const *>(&c)) {
         ArcTo( svg_elliptical_arc->finalPoint(),
-               svg_elliptical_arc->ray(0), svg_elliptical_arc->ray(1),
-               svg_elliptical_arc->rotation_angle(),  /// \todo check that this parameter is in radians (rotation_angle returns the angle in radians!)
-               svg_elliptical_arc->large_arc_flag(), !svg_elliptical_arc->sweep_flag() );
+               svg_elliptical_arc->ray(Geom::X), svg_elliptical_arc->ray(Geom::Y),
+               svg_elliptical_arc->rotationAngle(),  /// \todo check that this parameter is in radians (rotation_angle returns the angle in radians!)
+               svg_elliptical_arc->largeArc(), !svg_elliptical_arc->sweep() );
     } else { 
         //this case handles sbasis as well as all other curve types
         Geom::Path sbasis_path = Geom::cubicbezierpath_from_sbasis(c.toSBasis(), 0.1);
@@ -416,7 +416,7 @@ void  Path::AddCurve(Geom::Curve const &c)
 
 /**  append is false by default: it means that the path should be resetted. If it is true, the path is not resetted and Geom::Path will be appended as a new path
  */
-void  Path::LoadPath(Geom::Path const &path, Geom::Matrix const &tr, bool doTransformation, bool append)
+void  Path::LoadPath(Geom::Path const &path, Geom::Affine const &tr, bool doTransformation, bool append)
 {
     if (!append) {
         SetBackData (false);
@@ -449,10 +449,10 @@ void  Path::LoadPath(Geom::Path const &path, Geom::Matrix const &tr, bool doTran
 
 void  Path::LoadPathVector(Geom::PathVector const &pv)
 {
-    LoadPathVector(pv, Geom::Matrix(), false);
+    LoadPathVector(pv, Geom::Affine(), false);
 }
 
-void  Path::LoadPathVector(Geom::PathVector const &pv, Geom::Matrix const &tr, bool doTransformation)
+void  Path::LoadPathVector(Geom::PathVector const &pv, Geom::Affine const &tr, bool doTransformation)
 {
     SetBackData (false);
     Reset();

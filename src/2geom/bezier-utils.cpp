@@ -56,9 +56,7 @@
 #include <2geom/isnan.h>
 #include <assert.h>
 
-namespace Geom{
-
-typedef Point BezierCurve[];
+namespace Geom {
 
 /* Forward declarations */
 static void generate_bezier(Point b[], Point const d[], double const u[], unsigned len,
@@ -68,16 +66,16 @@ static void estimate_lengths(Point bezier[],
                              Point const &tHat1, Point const &tHat2);
 static void estimate_bi(Point b[4], unsigned ei,
                         Point const data[], double const u[], unsigned len);
-static void reparameterize(Point const d[], unsigned len, double u[], BezierCurve const bezCurve);
-static double NewtonRaphsonRootFind(BezierCurve const Q, Point const &P, double u);
+static void reparameterize(Point const d[], unsigned len, double u[], Point const bezCurve[]);
+static double NewtonRaphsonRootFind(Point const Q[], Point const &P, double u);
 static Point darray_center_tangent(Point const d[], unsigned center, unsigned length);
 static Point darray_right_tangent(Point const d[], unsigned const len);
 static unsigned copy_without_nans_or_adjacent_duplicates(Point const src[], unsigned src_len, Point dest[]);
 static void chord_length_parameterize(Point const d[], double u[], unsigned len);
 static double compute_max_error_ratio(Point const d[], double const u[], unsigned len,
-                                      BezierCurve const bezCurve, double tolerance,
+                                      Point const bezCurve[], double tolerance,
                                       unsigned *splitPoint);
-static double compute_hook(Point const &a, Point const &b, double const u, BezierCurve const bezCurve,
+static double compute_hook(Point const &a, Point const &b, double const u, Point const bezCurve[],
                            double const tolerance);
 
 
@@ -546,7 +544,7 @@ static void
 reparameterize(Point const d[],
                unsigned const len,
                double u[],
-               BezierCurve const bezCurve)
+               Point const bezCurve[])
 {
     assert( 2 <= len );
 
@@ -572,7 +570,7 @@ reparameterize(Point const d[],
  *  \return Improved u
  */
 static double
-NewtonRaphsonRootFind(BezierCurve const Q, Point const &P, double const u)
+NewtonRaphsonRootFind(Point const Q[], Point const &P, double const u)
 {
     assert( 0.0 <= u );
     assert( u <= 1.0 );
@@ -904,7 +902,7 @@ chord_length_parameterize(Point const d[], double u[], unsigned const len)
  */
 static double
 compute_max_error_ratio(Point const d[], double const u[], unsigned const len,
-                        BezierCurve const bezCurve, double const tolerance,
+                        Point const bezCurve[], double const tolerance,
                         unsigned *const splitPoint)
 {
     assert( 2 <= len );
@@ -974,7 +972,7 @@ compute_max_error_ratio(Point const d[], double const u[], unsigned const len,
  *  distance.)
  */
 static double
-compute_hook(Point const &a, Point const &b, double const u, BezierCurve const bezCurve,
+compute_hook(Point const &a, Point const &b, double const u, Point const bezCurve[],
              double const tolerance)
 {
     Point const P = bezier_pt(3, bezCurve, u);

@@ -45,7 +45,7 @@
 #include <2geom/sbasis.h>
 #include <2geom/sbasis-2d.h>
 #include <2geom/piecewise.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 
 //TODO: implement intersect
 
@@ -76,7 +76,7 @@ Piecewise<SBasis> dot(Piecewise<D2<SBasis> > const &a, Piecewise<D2<SBasis> > co
 Piecewise<SBasis> dot(Piecewise<D2<SBasis> > const &a, Point const &b);
 Piecewise<SBasis> cross(Piecewise<D2<SBasis> > const &a, Piecewise<D2<SBasis> > const &b);
 
-Piecewise<D2<SBasis> > operator*(Piecewise<D2<SBasis> > const &a, Matrix const &m);
+Piecewise<D2<SBasis> > operator*(Piecewise<D2<SBasis> > const &a, Affine const &m);
 
 Piecewise<D2<SBasis> > force_continuity(Piecewise<D2<SBasis> > const &f, double tol=0, bool closed=false);
 
@@ -137,6 +137,11 @@ inline OptRect bounds_local(D2<SBasis> const & s, OptInterval i, unsigned order=
     }
     return retval;
 }
+
+std::vector<Interval> level_set( D2<SBasis> const &f, Rect region);
+std::vector<Interval> level_set( D2<SBasis> const &f, Point p, double tol);
+std::vector<std::vector<Interval> > level_sets( D2<SBasis> const &f, std::vector<Rect> regions);
+std::vector<std::vector<Interval> > level_sets( D2<SBasis> const &f, std::vector<Point> pts, double tol);
 
 }
 

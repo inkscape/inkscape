@@ -178,12 +178,12 @@ public:
   void  DashPolylineFromStyle(SPStyle *style, float scale, float min_len);
   
   //utilitaire pour inkscape
-  void  LoadPath(Geom::Path const &path, Geom::Matrix const &tr, bool doTransformation, bool append = false);
-  void  LoadPathVector(Geom::PathVector const &pv, Geom::Matrix const &tr, bool doTransformation);
+  void  LoadPath(Geom::Path const &path, Geom::Affine const &tr, bool doTransformation, bool append = false);
+  void  LoadPathVector(Geom::PathVector const &pv, Geom::Affine const &tr, bool doTransformation);
   void  LoadPathVector(Geom::PathVector const &pv);
   Geom::PathVector* MakePathVector();
 
-  void  Transform(const Geom::Matrix &trans);
+  void  Transform(const Geom::Affine &trans);
 
   // decompose le chemin en ses sous-chemin
   // killNoSurf=true -> oublie les chemins de surface nulle

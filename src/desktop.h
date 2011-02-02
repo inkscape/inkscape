@@ -31,7 +31,7 @@
 #include <gtk/gtktypeutils.h>
 #include <sigc++/sigc++.h>
 
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <2geom/rect.h>
 
 #include "ui/view/view.h"
@@ -312,11 +312,11 @@ public:
     void fullscreen();
     void focusMode(bool mode = true);
 
-    Geom::Matrix w2d() const; //transformation from window to desktop coordinates (used for zooming)
+    Geom::Affine w2d() const; //transformation from window to desktop coordinates (used for zooming)
     Geom::Point w2d(Geom::Point const &p) const;
     Geom::Point d2w(Geom::Point const &p) const;
-    Geom::Matrix doc2dt() const;
-    Geom::Matrix dt2doc() const;
+    Geom::Affine doc2dt() const;
+    Geom::Affine dt2doc() const;
     Geom::Point doc2dt(Geom::Point const &p) const;
     Geom::Point dt2doc(Geom::Point const &p) const;
 
@@ -335,9 +335,9 @@ private:
     Inkscape::Application     *_inkscape;
     Inkscape::MessageContext  *_guides_message_context;
     bool _active;
-    Geom::Matrix _w2d;
-    Geom::Matrix _d2w;
-    Geom::Matrix _doc2dt;
+    Geom::Affine _w2d;
+    Geom::Affine _d2w;
+    Geom::Affine _doc2dt;
 
     bool grids_visible; /* don't set this variable directly, use the method below */
     void set_grids_visible(bool visible);

@@ -45,7 +45,7 @@ public:
 
     void param_set_and_write_new_value(Geom::Point newpoint);
 
-    virtual void param_transform_multiply(Geom::Matrix const& /*postmul*/, bool /*set*/);
+    virtual void param_transform_multiply(Geom::Affine const& /*postmul*/, bool /*set*/);
 
     void set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color);
 

@@ -622,7 +622,7 @@ Shape sanitize(std::vector<Path> const & ps) {
 /* This transforms a shape by a matrix.  In the case that the matrix flips
  * the shape, it reverses the paths in order to preserve the fill.
  */
-Shape Shape::operator*(Matrix const &m) const {
+Shape Shape::operator*(Affine const &m) const {
     Shape ret;
     for(unsigned i = 0; i < size(); i++)
         ret.content.push_back(content[i] * m);

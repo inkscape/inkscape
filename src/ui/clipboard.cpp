@@ -844,7 +844,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDesktop *desktop, SPDocument *clipdo
     selection->setReprList(pasted_objects);
 
     // invers apply parent transform
-    Geom::Matrix doc2parent = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
+    Geom::Affine doc2parent = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
     sp_selection_apply_affine(selection, desktop->dt2doc() * doc2parent * desktop->doc2dt(), true, false);
 
     // Update (among other things) all curves in paths, for bounds() to work

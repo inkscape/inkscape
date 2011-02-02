@@ -426,7 +426,7 @@ lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc)
 
     Geom::Point A, B;
     lpetool_get_limiting_bbox_corners(document, A, B);
-    Geom::Matrix doc2dt(lc->desktop->doc2dt());
+    Geom::Affine doc2dt(lc->desktop->doc2dt());
     A *= doc2dt;
     B *= doc2dt;
 

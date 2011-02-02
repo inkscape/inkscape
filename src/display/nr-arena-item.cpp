@@ -735,14 +735,14 @@ nr_arena_item_append_child (NRArenaItem *parent, NRArenaItem *child)
 }
 
 void
-nr_arena_item_set_transform (NRArenaItem *item, Geom::Matrix const &transform)
+nr_arena_item_set_transform (NRArenaItem *item, Geom::Affine const &transform)
 {
-    Geom::Matrix const t (transform);
+    Geom::Affine const t (transform);
     nr_arena_item_set_transform (item, &t);
 }
 
 void
-nr_arena_item_set_transform (NRArenaItem *item, Geom::Matrix const *transform)
+nr_arena_item_set_transform (NRArenaItem *item, Geom::Affine const *transform)
 {
     nr_return_if_fail (item != NULL);
     nr_return_if_fail (NR_IS_ARENA_ITEM (item));
@@ -750,8 +750,8 @@ nr_arena_item_set_transform (NRArenaItem *item, Geom::Matrix const *transform)
     if (!transform && !item->transform)
         return;
 
-    const Geom::Matrix *md = (item->transform) ? item->transform : &GEOM_MATRIX_IDENTITY;
-    const Geom::Matrix *ms = (transform) ? transform : &GEOM_MATRIX_IDENTITY;
+    const Geom::Affine *md = (item->transform) ? item->transform : &GEOM_MATRIX_IDENTITY;
+    const Geom::Affine *ms = (transform) ? transform : &GEOM_MATRIX_IDENTITY;
 
     if (!Geom::matrix_equalp(*md, *ms, NR_EPSILON)) {
         nr_arena_item_request_render (item);
@@ -760,7 +760,7 @@ nr_arena_item_set_transform (NRArenaItem *item, Geom::Matrix const *transform)
             item->transform = NULL;
         } else {
             if (!item->transform)
-                item->transform = new (GC::ATOMIC) Geom::Matrix ();
+                item->transform = new (GC::ATOMIC) Geom::Affine ();
             *item->transform = *transform;
         }
         nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, TRUE);

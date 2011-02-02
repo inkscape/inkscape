@@ -190,7 +190,7 @@ int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
     bool map_premultiplied = (map->mode == NR_PIXBLOCK_MODE_R8G8B8A8P);
     bool data_premultiplied = (out->mode == NR_PIXBLOCK_MODE_R8G8B8A8P);
 
-    Geom::Matrix trans = units.get_matrix_primitiveunits2pb();
+    Geom::Affine trans = units.get_matrix_primitiveunits2pb();
     double scalex = scale * trans.expansionX();
     double scaley = scale * trans.expansionY();
 
@@ -237,7 +237,7 @@ void FilterDisplacementMap::set_channel_selector(int s, FilterDisplacementMapCha
     if (s == 1) Ychannel = channel;
 }
 
-void FilterDisplacementMap::area_enlarge(NRRectL &area, Geom::Matrix const &trans)
+void FilterDisplacementMap::area_enlarge(NRRectL &area, Geom::Affine const &trans)
 {
     //I assume scale is in user coordinates (?!?)
     //FIXME: trans should be multiplied by some primitiveunits2user, shouldn't it?

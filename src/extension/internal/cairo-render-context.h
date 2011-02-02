@@ -53,12 +53,12 @@ struct CairoRenderState {
     unsigned int parent_has_userspace : 1;  // whether the parent's ctm should be applied
     float opacity;
     bool has_filtereffect;
-    Geom::Matrix item_transform;     // this item's item->transform, for correct clipping
+    Geom::Affine item_transform;     // this item's item->transform, for correct clipping
 
     SPClipPath *clip_path;
     SPMask* mask;
 
-    Geom::Matrix transform;     // the CTM
+    Geom::Affine transform;     // the CTM
 };
 
 class CairoRenderContext {
@@ -127,10 +127,10 @@ public:
     CairoRenderState *getParentState(void) const;
     void setStateForStyle(SPStyle const *style);
 
-    void transform(Geom::Matrix const *transform);
-    void setTransform(Geom::Matrix const *transform);
-    void getTransform(Geom::Matrix *copy) const;
-    void getParentTransform(Geom::Matrix *copy) const;
+    void transform(Geom::Affine const *transform);
+    void setTransform(Geom::Affine const *transform);
+    void getTransform(Geom::Affine *copy) const;
+    void getParentTransform(Geom::Affine *copy) const;
 
     /* Clipping methods */
     void addClipPath(Geom::PathVector const &pv, SPIEnum const *fill_rule);
@@ -139,8 +139,8 @@ public:
     /* Rendering methods */
     bool renderPathVector(Geom::PathVector const & pathv, SPStyle const *style, NRRect const *pbox);
     bool renderImage(unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
-                     Geom::Matrix const *image_transform, SPStyle const *style);
-    bool renderGlyphtext(PangoFont *font, Geom::Matrix const *font_matrix,
+                     Geom::Affine const *image_transform, SPStyle const *style);
+    bool renderGlyphtext(PangoFont *font, Geom::Affine const *font_matrix,
                          std::vector<CairoGlyphInfo> const &glyphtext, SPStyle const *style);
 
     /* More general rendering methods will have to be added (like fill, stroke) */
@@ -191,9 +191,9 @@ protected:
     void _setFillStyle(SPStyle const *style, NRRect const *pbox);
     void _setStrokeStyle(SPStyle const *style, NRRect const *pbox);
 
-    void _initCairoMatrix(cairo_matrix_t *matrix, Geom::Matrix const *transform);
+    void _initCairoMatrix(cairo_matrix_t *matrix, Geom::Affine const *transform);
     void _concatTransform(cairo_t *cr, double xx, double yx, double xy, double yy, double x0, double y0);
-    void _concatTransform(cairo_t *cr, Geom::Matrix const *transform);
+    void _concatTransform(cairo_t *cr, Geom::Affine const *transform);
 
     GHashTable *font_table;
     static void font_data_free(gpointer data);

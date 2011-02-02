@@ -820,7 +820,7 @@ void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char cons
        current stroke width, multiplied by the amount specified in the preferences */
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    Geom::Matrix const i2d (item->i2d_affine ());
+    Geom::Affine const i2d (item->i2d_affine ());
     Geom::Point pp = pt;
     double rad = 0.5 * prefs->getDouble(tool_path + "/dot-size", 3.0);
     if (event_state & GDK_MOD1_MASK) {

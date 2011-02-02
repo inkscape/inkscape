@@ -202,7 +202,7 @@ static void intersect_polish_root (D2<SBasis> const &A, double &s,
 
         // We're using the standard transformation matricies, which is numerically rather poor.  Much better to solve the equation using elimination.
 
-        Matrix jack(as[1][0], as[1][1],
+        Affine jack(as[1][0], as[1][1],
                     -bs[1][0], -bs[1][1],
                     0, 0);
         Point soln = (F)*jack.inverse();

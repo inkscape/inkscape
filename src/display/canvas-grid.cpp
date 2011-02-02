@@ -52,7 +52,7 @@ static void grid_canvasitem_class_init (GridCanvasItemClass *klass);
 static void grid_canvasitem_init (GridCanvasItem *grid);
 static void grid_canvasitem_destroy (GtkObject *object);
 
-static void grid_canvasitem_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
+static void grid_canvasitem_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void grid_canvasitem_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass * parent_class;
@@ -124,7 +124,7 @@ grid_canvasitem_render (SPCanvasItem * item, SPCanvasBuf * buf)
 }
 
 static void
-grid_canvasitem_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
+grid_canvasitem_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
     GridCanvasItem *gridcanvasitem = INKSCAPE_GRID_CANVASITEM (item);
 
@@ -803,7 +803,7 @@ CanvasXYGrid::updateWidgets()
 
 
 void
-CanvasXYGrid::Update (Geom::Matrix const &affine, unsigned int /*flags*/)
+CanvasXYGrid::Update (Geom::Affine const &affine, unsigned int /*flags*/)
 {
     ow = origin * affine;
     sw = spacing * affine;

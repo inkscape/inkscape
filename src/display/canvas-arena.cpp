@@ -29,7 +29,7 @@ static void sp_canvas_arena_class_init(SPCanvasArenaClass *klass);
 static void sp_canvas_arena_init(SPCanvasArena *group);
 static void sp_canvas_arena_destroy(GtkObject *object);
 
-static void sp_canvas_arena_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
+static void sp_canvas_arena_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf);
 static double sp_canvas_arena_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
 static gint sp_canvas_arena_event (SPCanvasItem *item, GdkEvent *event);
@@ -134,7 +134,7 @@ sp_canvas_arena_destroy (GtkObject *object)
 }
 
 static void
-sp_canvas_arena_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
+sp_canvas_arena_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
     SPCanvasArena *arena = SP_CANVAS_ARENA (item);
 

@@ -81,7 +81,7 @@ class Region {
     
     Region inverse() const { return Region(boundary.reverse(), box, !fill); }
     
-    Region operator*(Matrix const &m) const;
+    Region operator*(Affine const &m) const;
     
     bool invariants() const;
 };

@@ -626,7 +626,7 @@ CairoRenderContext::popLayer(void)
 
                 // copy over the correct CTM
                 // It must be stored in item_transform of current state after pushState.
-                Geom::Matrix item_transform;
+                Geom::Affine item_transform;
                 if (_state->parent_has_userspace)
                     item_transform = getParentState()->transform * _state->item_transform;
                 else
@@ -908,7 +908,7 @@ CairoRenderContext::finish(void)
 }
 
 void
-CairoRenderContext::transform(Geom::Matrix const *transform)
+CairoRenderContext::transform(Geom::Affine const *transform)
 {
     g_assert( _is_valid );
 
@@ -921,7 +921,7 @@ CairoRenderContext::transform(Geom::Matrix const *transform)
 }
 
 void
-CairoRenderContext::setTransform(Geom::Matrix const *transform)
+CairoRenderContext::setTransform(Geom::Affine const *transform)
 {
     g_assert( _is_valid );
 
@@ -932,7 +932,7 @@ CairoRenderContext::setTransform(Geom::Matrix const *transform)
 }
 
 void
-CairoRenderContext::getTransform(Geom::Matrix *copy) const
+CairoRenderContext::getTransform(Geom::Affine *copy) const
 {
     g_assert( _is_valid );
 
@@ -947,12 +947,12 @@ CairoRenderContext::getTransform(Geom::Matrix *copy) const
 }
 
 void
-CairoRenderContext::getParentTransform(Geom::Matrix *copy) const
+CairoRenderContext::getParentTransform(Geom::Affine *copy) const
 {
     g_assert( _is_valid );
 
     CairoRenderState *parent_state = getParentState();
-    memcpy(copy, &parent_state->transform, sizeof(Geom::Matrix));
+    memcpy(copy, &parent_state->transform, sizeof(Geom::Affine));
 }
 
 void
@@ -1001,7 +1001,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
     SPPattern *pat = SP_PATTERN (paintserver);
 
-    Geom::Matrix ps2user, pcs2dev;
+    Geom::Affine ps2user, pcs2dev;
     ps2user = Geom::identity();
     pcs2dev = Geom::identity();
 
@@ -1015,7 +1015,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     TRACE(("%f x %f pattern\n", width, height));
 
     if (pbox && pattern_patternUnits(pat) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
-        //Geom::Matrix bbox2user (pbox->x1 - pbox->x0, 0.0, 0.0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
+        //Geom::Affine bbox2user (pbox->x1 - pbox->x0, 0.0, 0.0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
         bbox_width_scaler = pbox->x1 - pbox->x0;
         bbox_height_scaler = pbox->y1 - pbox->y0;
         ps2user[4] = x * bbox_width_scaler + pbox->x0;
@@ -1028,7 +1028,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     }
 
     // apply pattern transformation
-    Geom::Matrix pattern_transform(pattern_patternTransform(pat));
+    Geom::Affine pattern_transform(pattern_patternTransform(pat));
     ps2user *= pattern_transform;
     Geom::Point ori (ps2user[4], ps2user[5]);
 
@@ -1150,7 +1150,7 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
             Geom::Point p2 (lg->x2.computed, lg->y2.computed);
             if (pbox && SP_GRADIENT(lg)->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
                 // convert to userspace
-                Geom::Matrix bbox2user(pbox->x1 - pbox->x0, 0, 0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
+                Geom::Affine bbox2user(pbox->x1 - pbox->x0, 0, 0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
                 p1 *= bbox2user;
                 p2 *= bbox2user;
             }
@@ -1413,7 +1413,7 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
 
 bool
 CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsigned int rs,
-                                Geom::Matrix const *image_transform, SPStyle const *style)
+                                Geom::Affine const *image_transform, SPStyle const *style)
 {
     g_assert( _is_valid );
 
@@ -1550,7 +1550,7 @@ CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoG
 }
 
 bool
-CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Matrix const *font_matrix,
+CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Affine const *font_matrix,
                                     std::vector<CairoGlyphInfo> const &glyphtext, SPStyle const *style)
 {
     // create a cairo_font_face from PangoFont
@@ -1668,7 +1668,7 @@ CairoRenderContext::_concatTransform(cairo_t *cr, double xx, double yx, double x
 }
 
 void
-CairoRenderContext::_initCairoMatrix(cairo_matrix_t *matrix, Geom::Matrix const *transform)
+CairoRenderContext::_initCairoMatrix(cairo_matrix_t *matrix, Geom::Affine const *transform)
 {
     matrix->xx = (*transform)[0];
     matrix->yx = (*transform)[1];
@@ -1679,7 +1679,7 @@ CairoRenderContext::_initCairoMatrix(cairo_matrix_t *matrix, Geom::Matrix const 
 }
 
 void
-CairoRenderContext::_concatTransform(cairo_t *cr, Geom::Matrix const *transform)
+CairoRenderContext::_concatTransform(cairo_t *cr, Geom::Affine const *transform)
 {
     _concatTransform(cr, (*transform)[0], (*transform)[1],
                      (*transform)[2], (*transform)[3],

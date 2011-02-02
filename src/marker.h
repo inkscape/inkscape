@@ -27,7 +27,7 @@ class SPMarkerClass;
 class SPMarkerView;
 
 #include <2geom/rect.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include "svg/svg-length.h"
 #include "enums.h"
 #include "sp-item-group.h"
@@ -61,7 +61,7 @@ struct SPMarker : public SPGroup {
 	unsigned int aspect_clip : 1;
 
 	/* Child to parent additional transform */
-	Geom::Matrix c2p;
+	Geom::Affine c2p;
 
 	/* Private views */
 	SPMarkerView *views;
@@ -87,9 +87,9 @@ protected:
 void sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size);
 NRArenaItem *sp_marker_show_instance (SPMarker *marker, NRArenaItem *parent,
 				      unsigned int key, unsigned int pos,
-				      Geom::Matrix const &base, float linewidth);
+				      Geom::Affine const &base, float linewidth);
 void sp_marker_hide (SPMarker *marker, unsigned int key);
-const gchar *generate_marker (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix transform, Geom::Matrix move);
+const gchar *generate_marker (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Affine transform, Geom::Affine move);
 
 
 #endif

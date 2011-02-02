@@ -84,12 +84,12 @@ static void sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags);
 static void sp_image_modified (SPObject *object, unsigned int flags);
 static Inkscape::XML::Node *sp_image_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static void sp_image_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
+static void sp_image_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
 static void sp_image_print (SPItem * item, SPPrintContext *ctx);
 static gchar * sp_image_description (SPItem * item);
 static void sp_image_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 static NRArenaItem *sp_image_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
-static Geom::Matrix sp_image_set_transform (SPItem *item, Geom::Matrix const &xform);
+static Geom::Affine sp_image_set_transform (SPItem *item, Geom::Affine const &xform);
 static void sp_image_set_curve(SPImage *image);
 
 
@@ -1078,7 +1078,7 @@ sp_image_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XM
 }
 
 static void
-sp_image_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const /*flags*/)
+sp_image_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const /*flags*/)
 {
     SPImage const &image = *SP_IMAGE(item);
 
@@ -1107,7 +1107,7 @@ sp_image_print (SPItem *item, SPPrintContext *ctx)
         int rs = gdk_pixbuf_get_rowstride(image->pixbuf);
         int pixskip = gdk_pixbuf_get_n_channels(image->pixbuf) * gdk_pixbuf_get_bits_per_sample(image->pixbuf) / 8;
 
-        Geom::Matrix t;
+        Geom::Affine t;
         if (image->aspect_align == SP_ASPECT_NONE) {
             /* fixme: (Lauris) */
             Geom::Translate tp(image->x.computed, image->y.computed);
@@ -1359,7 +1359,7 @@ static void sp_image_snappoints(SPItem const *item, std::vector<Inkscape::SnapCa
         double const y0 = image.y.computed;
         double const x1 = x0 + image.width.computed;
         double const y1 = y0 + image.height.computed;
-        Geom::Matrix const i2d (item->i2d_affine ());
+        Geom::Affine const i2d (item->i2d_affine ());
         p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y0) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
         p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y1) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
         p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x1, y1) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
@@ -1372,8 +1372,8 @@ static void sp_image_snappoints(SPItem const *item, std::vector<Inkscape::SnapCa
  * Transform x, y, set x, y, clear translation
  */
 
-static Geom::Matrix
-sp_image_set_transform(SPItem *item, Geom::Matrix const &xform)
+static Geom::Affine
+sp_image_set_transform(SPItem *item, Geom::Affine const &xform)
 {
     SPImage *image = SP_IMAGE(item);
 
@@ -1382,7 +1382,7 @@ sp_image_set_transform(SPItem *item, Geom::Matrix const &xform)
 
     /* This function takes care of translation and scaling, we return whatever parts we can't
        handle. */
-    Geom::Matrix ret(Geom::Matrix(xform).without_translation());
+    Geom::Affine ret(Geom::Affine(xform).withoutTranslation());
     Geom::Point const scale(hypot(ret[0], ret[1]),
                             hypot(ret[2], ret[3]));
     if ( scale[Geom::X] > MAGIC_EPSILON ) {

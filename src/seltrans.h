@@ -17,7 +17,7 @@
 
 #include <sigc++/sigc++.h>
 #include <2geom/point.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <2geom/rect.h>
 #include "knot.h"
 #include "forward.h"
@@ -55,7 +55,7 @@ public:
     void resetState();
     void setCenter(Geom::Point const &p);
     void grab(Geom::Point const &p, gdouble x, gdouble y, bool show_handles, bool translating);
-    void transform(Geom::Matrix const &rel_affine, Geom::Point const &norm);
+    void transform(Geom::Affine const &rel_affine, Geom::Point const &norm);
     void ungrab();
     void stamp();
     void moveTo(Geom::Point const &xy, guint state);
@@ -114,7 +114,7 @@ private:
 
     std::vector<SPItem *> _items;
     std::vector<SPItem const *> _items_const;
-    std::vector<Geom::Matrix> _items_affines;
+    std::vector<Geom::Affine> _items_affines;
     std::vector<Geom::Point> _items_centers;
 
     std::vector<Inkscape::SnapCandidatePoint> _snap_points;
@@ -139,9 +139,9 @@ private:
     Geom::OptRect _geometric_bbox;
     gdouble _strokewidth;
 
-    Geom::Matrix _current_relative_affine;
-    Geom::Matrix _absolute_affine;
-    Geom::Matrix _relative_affine;
+    Geom::Affine _current_relative_affine;
+    Geom::Affine _absolute_affine;
+    Geom::Affine _relative_affine;
     /* According to Merriam - Webster's online dictionary
      * Affine: a transformation (as a translation, a rotation, or a uniform stretching) that carries straight
      * lines into straight lines and parallel lines into parallel lines but may alter distance between points

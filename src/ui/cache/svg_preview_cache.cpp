@@ -34,7 +34,7 @@
 GdkPixbuf* render_pixbuf(NRArenaItem* root, double scale_factor, const Geom::Rect& dbox, unsigned psize) {
     NRGC gc(NULL);
 
-    Geom::Matrix t(Geom::Scale(scale_factor, scale_factor));
+    Geom::Affine t(Geom::Scale(scale_factor, scale_factor));
     nr_arena_item_set_transform(root, t);
 
     gc.transform.setIdentity();

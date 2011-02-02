@@ -27,7 +27,7 @@
 #include <2geom/bezier-to-sbasis.h>
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/d2.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 
 #include "ui/widget/scalar.h"
 #include "libnr/nr-values.h"
@@ -120,7 +120,7 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> const & path_in)
                         scaling_y = prop_scale;
                     }
 
-                    Matrix transform;
+                    Affine transform;
                     transform.setXAxis( (end-start) / scaling );
                     transform.setYAxis( rot90(unit_vector(end-start)) * scaling_y);
                     transform.setTranslation( start );
@@ -195,7 +195,7 @@ LPECurveStitch::resetDefaults(SPItem * item)
  * special casing is probably needed, because rotation should not be propagated to the strokepath.
  */
 void
-LPECurveStitch::transform_multiply(Geom::Matrix const& postmul, bool set)
+LPECurveStitch::transform_multiply(Geom::Affine const& postmul, bool set)
 {
     // only take translations into account
     if (postmul.isTranslation()) {
@@ -203,7 +203,7 @@ LPECurveStitch::transform_multiply(Geom::Matrix const& postmul, bool set)
     } else if (!scale_y_rel.get_value()) {
   // this basically means that for this transformation, the result should be the same as normal scaling the result path
   // don't know how to do this yet.
-//        Geom::Matrix new_postmul;
+//        Geom::Affine new_postmul;
         //new_postmul.setIdentity();
 //        new_postmul.setTranslation(postmul.translation());
 //        Effect::transform_multiply(new_postmul, set);

@@ -51,7 +51,7 @@ int FilterMorphology::render(FilterSlot &slot, FilterUnits const &units) {
         free_in_on_exit = true;
     }
 
-    Geom::Matrix p2pb = units.get_matrix_primitiveunits2pb();
+    Geom::Affine p2pb = units.get_matrix_primitiveunits2pb();
     int const xradius = (int)round(this->xradius * p2pb.expansionX());
     int const yradius = (int)round(this->yradius * p2pb.expansionY());
 
@@ -112,7 +112,7 @@ int FilterMorphology::render(FilterSlot &slot, FilterUnits const &units) {
     return 0;
 }
 
-void FilterMorphology::area_enlarge(NRRectL &area, Geom::Matrix const &trans)
+void FilterMorphology::area_enlarge(NRRectL &area, Geom::Affine const &trans)
 {
     int const enlarge_x = (int)std::ceil(this->xradius * (std::fabs(trans[0]) + std::fabs(trans[1])));
     int const enlarge_y = (int)std::ceil(this->yradius * (std::fabs(trans[2]) + std::fabs(trans[3])));

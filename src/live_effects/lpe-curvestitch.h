@@ -32,7 +32,7 @@ public:
 
     virtual void resetDefaults(SPItem * item);
 
-    virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
+    virtual void transform_multiply(Geom::Affine const& postmul, bool set);
 
 private:
     PathParam strokepath;

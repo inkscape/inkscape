@@ -805,7 +805,7 @@ void sp_font_preview_set_font(SPFontPreview *fprev, font_instance *font, SPFontS
 
         if (fprev->font)
         {
-            Geom::Matrix flip(Geom::Scale(fsel->fontsize, -fsel->fontsize));
+            Geom::Affine flip(Geom::Scale(fsel->fontsize, -fsel->fontsize));
             fprev->rfont = fprev->font->RasterFont(flip, 0);
         }
 

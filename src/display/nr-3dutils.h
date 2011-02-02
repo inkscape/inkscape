@@ -94,7 +94,7 @@ void compute_surface_normal(Fvector &N, gdouble ss, NRPixBlock *in, int i, int j
  * \param z a reference to a z coordinate
  * \param z a reference to a transformation matrix
  */
-void convert_coord(gdouble &x, gdouble &y, gdouble &z, Geom::Matrix const &trans);
+void convert_coord(gdouble &x, gdouble &y, gdouble &z, Geom::Affine const &trans);
 
 } /* namespace NR */
 

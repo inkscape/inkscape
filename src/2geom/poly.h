@@ -34,6 +34,7 @@
 
 #ifndef LIB2GEOM_SEEN_POLY_H
 #define LIB2GEOM_SEEN_POLY_H
+
 #include <assert.h>
 #include <vector>
 #include <iostream>
@@ -205,11 +206,13 @@ Poly gcd(Poly const &a, Poly const &b, const double tol=1e-10);
  */
 std::vector<std::complex<double> > solve(const Poly & p);
 
+#ifdef HAVE_GSL
 /*** solve_reals(Poly p)
  * find all real solutions to Poly p.
  * currently we just use solve and pick out the suitably real looking values, there may be a better algorithm.
  */
 std::vector<double> solve_reals(const Poly & p);
+#endif
 double polish_root(Poly const & p, double guess, double tol);
 
 inline std::ostream &operator<< (std::ostream &out_file, const Poly &in_poly) {

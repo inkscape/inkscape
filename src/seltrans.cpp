@@ -419,18 +419,18 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     g_return_if_fail(_stamp_cache == NULL);
 }
 
-void Inkscape::SelTrans::transform(Geom::Matrix const &rel_affine, Geom::Point const &norm)
+void Inkscape::SelTrans::transform(Geom::Affine const &rel_affine, Geom::Point const &norm)
 {
     g_return_if_fail(_grabbed);
     g_return_if_fail(!_empty);
 
-    Geom::Matrix const affine( Geom::Translate(-norm) * rel_affine * Geom::Translate(norm) );
+    Geom::Affine const affine( Geom::Translate(-norm) * rel_affine * Geom::Translate(norm) );
 
     if (_show == SHOW_CONTENT) {
         // update the content
         for (unsigned i = 0; i < _items.size(); i++) {
             SPItem &item = *_items[i];
-            Geom::Matrix const &prev_transform = _items_affines[i];
+            Geom::Affine const &prev_transform = _items_affines[i];
             item.set_i2d_affine(prev_transform * affine);
         }
     } else {
@@ -509,10 +509,10 @@ void Inkscape::SelTrans::ungrab()
         if (_current_relative_affine.isTranslation()) {
             DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
                                _("Move"));
-        } else if (_current_relative_affine.without_translation().isScale()) {
+        } else if (_current_relative_affine.withoutTranslation().isScale()) {
             DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
                                _("Scale"));
-        } else if (_current_relative_affine.without_translation().isRotation()) {
+        } else if (_current_relative_affine.withoutTranslation().isRotation()) {
             DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
                                _("Rotate"));
         } else {
@@ -584,10 +584,10 @@ void Inkscape::SelTrans::stamp()
 
             SPItem *copy_item = (SPItem *) sp_desktop_document(_desktop)->getObjectByRepr(copy_repr);
 
-            Geom::Matrix const *new_affine;
+            Geom::Affine const *new_affine;
             if (_show == SHOW_OUTLINE) {
-                Geom::Matrix const i2d(original_item->i2d_affine());
-                Geom::Matrix const i2dnew( i2d * _current_relative_affine );
+                Geom::Affine const i2d(original_item->i2d_affine());
+                Geom::Affine const i2dnew( i2d * _current_relative_affine );
                 copy_item->set_i2d_affine(i2dnew);
                 new_affine = &copy_item->transform;
             } else {
@@ -1520,7 +1520,7 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
         }
     }
 
-    Geom::Matrix const move((Geom::Translate(dxy)));
+    Geom::Affine const move((Geom::Translate(dxy)));
     Geom::Point const norm(0, 0);
     transform(move, norm);
 
@@ -1557,7 +1557,7 @@ Geom::Point Inkscape::SelTrans::_getGeomHandlePos(Geom::Point const &visual_hand
     // Calculate the absolute affine while taking into account the scaling of the stroke width
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool transform_stroke = prefs->getBool("/options/transform/stroke", true);
-    Geom::Matrix abs_affine = get_scale_transform_with_stroke (*_bbox, _strokewidth, transform_stroke,
+    Geom::Affine abs_affine = get_scale_transform_with_stroke (*_bbox, _strokewidth, transform_stroke,
                     new_bbox.min()[Geom::X], new_bbox.min()[Geom::Y], new_bbox.max()[Geom::X], new_bbox.max()[Geom::Y]);
 
     // Calculate the scaled geometrical bbox
@@ -1591,7 +1591,7 @@ Geom::Scale Inkscape::calcScaleFactors(Geom::Point const &initial_point, Geom::P
 // Only for scaling/stretching
 Geom::Point Inkscape::SelTrans::_calcAbsAffineDefault(Geom::Scale const default_scale)
 {
-    Geom::Matrix abs_affine = Geom::Translate(-_origin) * Geom::Matrix(default_scale) * Geom::Translate(_origin);
+    Geom::Affine abs_affine = Geom::Translate(-_origin) * Geom::Affine(default_scale) * Geom::Translate(_origin);
     Geom::Point new_bbox_min = _approximate_bbox->min() * abs_affine;
     Geom::Point new_bbox_max = _approximate_bbox->max() * abs_affine;
 
@@ -1614,7 +1614,7 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineDefault(Geom::Scale const default_
 // Only for scaling/stretching
 Geom::Point Inkscape::SelTrans::_calcAbsAffineGeom(Geom::Scale const geom_scale)
 {
-    _relative_affine = Geom::Matrix(geom_scale);
+    _relative_affine = Geom::Affine(geom_scale);
     _absolute_affine = Geom::Translate(-_origin_for_specpoints) * _relative_affine * Geom::Translate(_origin_for_specpoints);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();

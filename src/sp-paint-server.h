@@ -63,12 +63,12 @@ private:
 struct SPPaintServerClass {
     SPObjectClass sp_object_class;
     /** Get SPPaint instance. */
-    SPPainter * (* painter_new) (SPPaintServer *ps, Geom::Matrix const &full_transform, Geom::Matrix const &parent_transform, const NRRect *bbox);
+    SPPainter * (* painter_new) (SPPaintServer *ps, Geom::Affine const &full_transform, Geom::Affine const &parent_transform, const NRRect *bbox);
     /** Free SPPaint instance. */
     void (* painter_free) (SPPaintServer *ps, SPPainter *painter);
 };
 
-SPPainter *sp_paint_server_painter_new (SPPaintServer *ps, Geom::Matrix const &full_transform, Geom::Matrix const &parent_transform, const NRRect *bbox);
+SPPainter *sp_paint_server_painter_new (SPPaintServer *ps, Geom::Affine const &full_transform, Geom::Affine const &parent_transform, const NRRect *bbox);
 
 SPPainter *sp_painter_free (SPPainter *painter);
 

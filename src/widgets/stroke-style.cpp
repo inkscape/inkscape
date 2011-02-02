@@ -186,7 +186,7 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
         return NULL; // sandbox broken?
 
     // Find object's bbox in document
-    Geom::Matrix const i2doc(SP_ITEM(object)->i2doc_affine());
+    Geom::Affine const i2doc(SP_ITEM(object)->i2doc_affine());
     Geom::OptRect dbox = SP_ITEM(object)->getBounds(i2doc);
 
     if (!dbox) {

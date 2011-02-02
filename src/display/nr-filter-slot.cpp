@@ -151,7 +151,7 @@ NRPixBlock *FilterSlot::get(int slot_nr)
 
 void FilterSlot::get_final(int slot_nr, NRPixBlock *result) {
     NRPixBlock *final_usr = get(slot_nr);
-    Geom::Matrix trans = units.get_matrix_pb2display();
+    Geom::Affine trans = units.get_matrix_pb2display();
 
     int size = (result->area.x1 - result->area.x0)
         * (result->area.y1 - result->area.y0)
@@ -188,7 +188,7 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb, bool takeOwnership)
     assert(slot_nr == NR_FILTER_SLOT_NOT_SET ||_slots[index].number == slot_nr);
 
     if (slot_nr == NR_FILTER_SOURCEGRAPHIC || slot_nr == NR_FILTER_BACKGROUNDIMAGE) {
-        Geom::Matrix trans = units.get_matrix_display2pb();
+        Geom::Affine trans = units.get_matrix_display2pb();
         if (fabs(trans[1]) > 1e-6 || fabs(trans[2]) > 1e-6) {
             NRPixBlock *trans_pb = new NRPixBlock;
             int x0 = pb->area.x0;

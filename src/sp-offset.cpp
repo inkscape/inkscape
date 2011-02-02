@@ -90,7 +90,7 @@ static void refresh_offset_source(SPOffset* offset);
 static void sp_offset_start_listening(SPOffset *offset,SPObject* to);
 static void sp_offset_quit_listening(SPOffset *offset);
 static void sp_offset_href_changed(SPObject *old_ref, SPObject *ref, SPOffset *offset);
-static void sp_offset_move_compensate(Geom::Matrix const *mp, SPItem *original, SPOffset *self);
+static void sp_offset_move_compensate(Geom::Affine const *mp, SPItem *original, SPOffset *self);
 static void sp_offset_delete_self(SPObject *deleted, SPOffset *self);
 static void sp_offset_source_modified (SPObject *iSource, guint flags, SPItem *item);
 
@@ -1024,20 +1024,20 @@ sp_offset_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPOffset *offse
 }
 
 static void
-sp_offset_move_compensate(Geom::Matrix const *mp, SPItem */*original*/, SPOffset *self)
+sp_offset_move_compensate(Geom::Affine const *mp, SPItem */*original*/, SPOffset *self)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     guint mode = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_PARALLEL);
     if (mode == SP_CLONE_COMPENSATION_NONE) return;
 
-    Geom::Matrix m(*mp);
+    Geom::Affine m(*mp);
     if (!(m.isTranslation())) return;
 
     // calculate the compensation matrix and the advertized movement matrix
     SPItem *item = SP_ITEM(self);
 
-    Geom::Matrix compensate;
-    Geom::Matrix advertized_move;
+    Geom::Affine compensate;
+    Geom::Affine advertized_move;
 
     if (mode == SP_CLONE_COMPENSATION_UNMOVED) {
         compensate = Geom::identity();

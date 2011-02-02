@@ -16,10 +16,10 @@
 #include <libnr/nr-forward.h>
 #include <libnr/nr-coord.h>
 
-Geom::OptRect bounds_fast_transformed(Geom::PathVector const & pv, Geom::Matrix const & t);
-Geom::OptRect bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t);
+Geom::OptRect bounds_fast_transformed(Geom::PathVector const & pv, Geom::Affine const & t);
+Geom::OptRect bounds_exact_transformed(Geom::PathVector const & pv, Geom::Affine const & t);
 
-void pathv_matrix_point_bbox_wind_distance ( Geom::PathVector const & pathv, Geom::Matrix const &m, Geom::Point const &pt,
+void pathv_matrix_point_bbox_wind_distance ( Geom::PathVector const & pathv, Geom::Affine const &m, Geom::Point const &pt,
                                              Geom::Rect *bbox, int *wind, Geom::Coord *dist,
                                              Geom::Coord tolerance, Geom::Rect const *viewbox);
 
@@ -31,12 +31,12 @@ void round_rectangle_outwards(Geom::Rect & rect);
 The following predefined objects are for reference
 and comparison.  They are defined in helper/geom.cpp
 */
-extern Geom::Matrix GEOM_MATRIX_IDENTITY;
+extern Geom::Affine GEOM_MATRIX_IDENTITY;
 
 namespace Geom{
-bool transform_equalp(Geom::Matrix const &m0, Geom::Matrix const &m1, Geom::Coord const epsilon);
-bool translate_equalp(Geom::Matrix const &m0, Geom::Matrix const &m1, Geom::Coord const epsilon);
-bool matrix_equalp(Geom::Matrix const &m0, Geom::Matrix const &m1, Geom::Coord const epsilon);
+bool transform_equalp(Geom::Affine const &m0, Geom::Affine const &m1, Geom::Coord const epsilon);
+bool translate_equalp(Geom::Affine const &m0, Geom::Affine const &m1, Geom::Coord const epsilon);
+bool matrix_equalp(Geom::Affine const &m0, Geom::Affine const &m1, Geom::Coord const epsilon);
 }
 #endif  // INKSCAPE_HELPER_GEOM_H
 

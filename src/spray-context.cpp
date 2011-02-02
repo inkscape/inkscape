@@ -151,9 +151,9 @@ void sp_spray_rotate_rel(Geom::Point c,SPDesktop */*desktop*/,SPItem *item, Geom
 {
     Geom::Point center = c;
     Geom::Translate const s(c);
-    Geom::Matrix affine = Geom::Matrix(s).inverse() * Geom::Matrix(rotation) * Geom::Matrix(s);
+    Geom::Affine affine = Geom::Affine(s).inverse() * Geom::Affine(rotation) * Geom::Affine(s);
     // Rotate item.
-    item->set_i2d_affine(item->i2d_affine() * (Geom::Matrix)affine);
+    item->set_i2d_affine(item->i2d_affine() * (Geom::Affine)affine);
     // Use each item's own transform writer, consistent with sp_selection_apply_affine()
     item->doWriteTransform(SP_OBJECT_REPR(item), item->transform);
     // Restore the center position (it's changed because the bbox center changed)
@@ -679,7 +679,7 @@ bool sp_spray_dilate(SPSprayContext *tc, Geom::Point /*event_p*/, Geom::Point p,
 void sp_spray_update_area(SPSprayContext *tc)
 {
         double radius = get_dilate_radius(tc);
-        Geom::Matrix const sm ( Geom::Scale(radius/(1-tc->ratio), radius/(1+tc->ratio)) );
+        Geom::Affine const sm ( Geom::Scale(radius/(1-tc->ratio), radius/(1+tc->ratio)) );
         sp_canvas_item_affine_absolute(tc->dilate_area,   (sm* Geom::Rotate(tc->tilt))* Geom::Translate(SP_EVENT_CONTEXT(tc)->desktop->point()));
         sp_canvas_item_show(tc->dilate_area);
 }
@@ -763,7 +763,7 @@ gint sp_spray_context_root_handler(SPEventContext *event_context,
 
             // draw the dilating cursor
                 double radius = get_dilate_radius(tc);
-                Geom::Matrix const sm (Geom::Scale(radius/(1-tc->ratio), radius/(1+tc->ratio)) );
+                Geom::Affine const sm (Geom::Scale(radius/(1-tc->ratio), radius/(1+tc->ratio)) );
                 sp_canvas_item_affine_absolute(tc->dilate_area, (sm*Geom::Rotate(tc->tilt))*Geom::Translate(desktop->w2d(motion_w)));
                 sp_canvas_item_show(tc->dilate_area);
 

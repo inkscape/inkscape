@@ -50,10 +50,10 @@ public:
     bool transforming() { return _in_transform; }
     ControlPoint &rotationCenter();
 
-    sigc::signal<void, Geom::Matrix const &> signal_transform;
+    sigc::signal<void, Geom::Affine const &> signal_transform;
     sigc::signal<void, CommitEvent> signal_commit;
 private:
-    void _emitTransform(Geom::Matrix const &);
+    void _emitTransform(Geom::Affine const &);
     void _setActiveHandle(ControlPoint *h);
     void _clearActiveHandle();
     void _updateVisibility(bool v);

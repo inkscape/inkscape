@@ -84,7 +84,7 @@ private:
 public:
 
     /** gradientTransform attribute */
-    Geom::Matrix gradientTransform;
+    Geom::Affine gradientTransform;
     guint gradientTransform_set : 1;
 
 private:

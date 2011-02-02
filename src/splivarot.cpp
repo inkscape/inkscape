@@ -452,7 +452,7 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
     // adjust style properties that depend on a possible transform in the source object in order
     // to get a correct style attribute for the new path
     SPItem* item_source = SP_ITEM(source);
-    Geom::Matrix i2doc(item_source->i2doc_affine());
+    Geom::Affine i2doc(item_source->i2doc_affine());
     item_source->adjust_stroke(i2doc.descrim());
     item_source->adjust_pattern(i2doc);
     item_source->adjust_gradient(i2doc);
@@ -485,7 +485,7 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
 
     // premultiply by the inverse of parent's repr
     SPItem *parent_item = SP_ITEM(sp_desktop_document(desktop)->getObjectByRepr(parent));
-    Geom::Matrix local (parent_item->i2doc_affine());
+    Geom::Affine local (parent_item->i2doc_affine());
     gchar *transform = sp_svg_transform_write(local.inverse());
 
     // now that we have the result, add it on the canvas
@@ -601,14 +601,14 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
 }
 
 static
-void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Matrix marker_transform,
-                                          Geom::Scale stroke_scale, Geom::Matrix transform,
+void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Affine marker_transform,
+                                          Geom::Scale stroke_scale, Geom::Affine transform,
                                           Inkscape::XML::Node *g_repr, Inkscape::XML::Document *xml_doc, SPDocument * doc )
 {
     SPMarker* marker = SP_MARKER (marker_object);
     SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker_object));
 
-    Geom::Matrix tr(marker_transform);
+    Geom::Affine tr(marker_transform);
 
     if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
         tr = stroke_scale * tr;
@@ -626,13 +626,13 @@ void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Matrix 
 }
 
 static
-void item_outline_add_marker( SPObject const *marker_object, Geom::Matrix marker_transform,
+void item_outline_add_marker( SPObject const *marker_object, Geom::Affine marker_transform,
                               Geom::Scale stroke_scale, Geom::PathVector* pathv_in )
 {
     SPMarker* marker = SP_MARKER (marker_object);
     SPItem* marker_item = sp_item_first_item_child(SP_OBJECT(marker_object));
 
-    Geom::Matrix tr(marker_transform);
+    Geom::Affine tr(marker_transform);
     if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
         tr = stroke_scale * tr;
     }
@@ -682,7 +682,7 @@ Geom::PathVector* item_outline(SPItem const *item)
     // remember old stroke style, to be set on fill
     SPStyle *i_style = SP_OBJECT_STYLE(item);
 
-    Geom::Matrix const transform(item->transform);
+    Geom::Affine const transform(item->transform);
     float const scale = transform.descrim();
 
     float o_width, o_miter;
@@ -794,7 +794,7 @@ Geom::PathVector* item_outline(SPItem const *item)
             // START marker
             for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
                 if ( SPObject *marker_obj = shape->marker[i] ) {
-                    Geom::Matrix const m (sp_shape_marker_get_transform_at_start(pathv.front().front()));
+                    Geom::Affine const m (sp_shape_marker_get_transform_at_start(pathv.front().front()));
                     item_outline_add_marker( marker_obj, m,
                                              Geom::Scale(i_style->stroke_width.computed),
                                              ret_pathv );
@@ -809,7 +809,7 @@ Geom::PathVector* item_outline(SPItem const *item)
                     if ( path_it != pathv.begin() 
                          && ! ((path_it == (pathv.end()-1)) && (path_it->size_default() == 0)) ) // if this is the last path and it is a moveto-only, there is no mid marker there
                     {
-                        Geom::Matrix const m (sp_shape_marker_get_transform_at_start(path_it->front()));
+                        Geom::Affine const m (sp_shape_marker_get_transform_at_start(path_it->front()));
                         item_outline_add_marker( midmarker_obj, m,
                                                  Geom::Scale(i_style->stroke_width.computed),
                                                  ret_pathv );
@@ -824,7 +824,7 @@ Geom::PathVector* item_outline(SPItem const *item)
                              * Loop to end_default (so including closing segment), because when a path is closed,
                              * there should be a midpoint marker between last segment and closing straight line segment
                              */
-                            Geom::Matrix const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
+                            Geom::Affine const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
                             item_outline_add_marker( midmarker_obj, m,
                                                      Geom::Scale(i_style->stroke_width.computed),
                                                      ret_pathv);
@@ -836,7 +836,7 @@ Geom::PathVector* item_outline(SPItem const *item)
                     // END position
                     if ( path_it != (pathv.end()-1) && !path_it->empty()) {
                         Geom::Curve const &lastcurve = path_it->back_default();
-                        Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
+                        Geom::Affine const m = sp_shape_marker_get_transform_at_end(lastcurve);
                         item_outline_add_marker( midmarker_obj, m,
                                                  Geom::Scale(i_style->stroke_width.computed),
                                                  ret_pathv );
@@ -855,7 +855,7 @@ Geom::PathVector* item_outline(SPItem const *item)
                     }
                     Geom::Curve const &lastcurve = path_last[index];
 
-                    Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
+                    Geom::Affine const m = sp_shape_marker_get_transform_at_end(lastcurve);
                     item_outline_add_marker( marker_obj, m,
                                              Geom::Scale(i_style->stroke_width.computed),
                                              ret_pathv );
@@ -936,7 +936,7 @@ sp_selected_path_outline(SPDesktop *desktop)
             sp_repr_css_unset_property(ncss, "marker-end");
         }
 
-        Geom::Matrix const transform(item->transform);
+        Geom::Affine const transform(item->transform);
         float const scale = transform.descrim();
         gchar const *mask = SP_OBJECT_REPR(item)->attribute("mask");
         gchar const *clip_path = SP_OBJECT_REPR(item)->attribute("clip-path");
@@ -1112,7 +1112,7 @@ sp_selected_path_outline(SPDesktop *desktop)
                 // START marker
                 for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
                     if ( SPObject *marker_obj = shape->marker[i] ) {
-                        Geom::Matrix const m (sp_shape_marker_get_transform_at_start(pathv.front().front()));
+                        Geom::Affine const m (sp_shape_marker_get_transform_at_start(pathv.front().front()));
                         sp_selected_path_outline_add_marker( marker_obj, m,
                                                              Geom::Scale(i_style->stroke_width.computed), transform,
                                                              g_repr, xml_doc, doc );
@@ -1127,7 +1127,7 @@ sp_selected_path_outline(SPDesktop *desktop)
                         if ( path_it != pathv.begin() 
                              && ! ((path_it == (pathv.end()-1)) && (path_it->size_default() == 0)) ) // if this is the last path and it is a moveto-only, there is no mid marker there
                         {
-                            Geom::Matrix const m (sp_shape_marker_get_transform_at_start(path_it->front()));
+                            Geom::Affine const m (sp_shape_marker_get_transform_at_start(path_it->front()));
                             sp_selected_path_outline_add_marker( midmarker_obj, m,
                                                                  Geom::Scale(i_style->stroke_width.computed), transform,
                                                                  g_repr, xml_doc, doc );
@@ -1142,7 +1142,7 @@ sp_selected_path_outline(SPDesktop *desktop)
                                  * Loop to end_default (so including closing segment), because when a path is closed,
                                  * there should be a midpoint marker between last segment and closing straight line segment
                                  */
-                                Geom::Matrix const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
+                                Geom::Affine const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
                                 sp_selected_path_outline_add_marker(midmarker_obj, m,
                                                                     Geom::Scale(i_style->stroke_width.computed), transform,
                                                                     g_repr, xml_doc, doc);
@@ -1154,7 +1154,7 @@ sp_selected_path_outline(SPDesktop *desktop)
                         // END position
                         if ( path_it != (pathv.end()-1) && !path_it->empty()) {
                             Geom::Curve const &lastcurve = path_it->back_default();
-                            Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
+                            Geom::Affine const m = sp_shape_marker_get_transform_at_end(lastcurve);
                             sp_selected_path_outline_add_marker( midmarker_obj, m,
                                                                  Geom::Scale(i_style->stroke_width.computed), transform,
                                                                  g_repr, xml_doc, doc );
@@ -1173,7 +1173,7 @@ sp_selected_path_outline(SPDesktop *desktop)
                         }
                         Geom::Curve const &lastcurve = path_last[index];
 
-                        Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
+                        Geom::Affine const m = sp_shape_marker_get_transform_at_end(lastcurve);
                         sp_selected_path_outline_add_marker( marker_obj, m,
                                                              Geom::Scale(i_style->stroke_width.computed), transform,
                                                              g_repr, xml_doc, doc );
@@ -1327,7 +1327,7 @@ sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updat
             return;
     }
 
-    Geom::Matrix const transform(item->transform);
+    Geom::Affine const transform(item->transform);
 
     item->doWriteTransform(SP_OBJECT_REPR(item), Geom::identity());
 
@@ -1555,7 +1555,7 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
                 continue;
         }
 
-        Geom::Matrix const transform(item->transform);
+        Geom::Affine const transform(item->transform);
 
         item->doWriteTransform(SP_OBJECT_REPR(item), Geom::identity());
 
@@ -1802,7 +1802,7 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
     size /= item->i2doc_affine().descrim();
 
     // save the transform, to re-apply it after simplification
-    Geom::Matrix const transform(item->transform);
+    Geom::Affine const transform(item->transform);
 
     /*
        reset the transform, effectively transforming the item by transform.inverse();
@@ -2089,7 +2089,7 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
  * TODO: see if calling this method can be optimized. All the pathvector copying might be slow.
  */
 Geom::PathVector*
-pathvector_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull, Geom::Matrix extraPreAffine, Geom::Matrix extraPostAffine)
+pathvector_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull, Geom::Affine extraPreAffine, Geom::Affine extraPostAffine)
 {
     if (curve == NULL)
         return NULL;
@@ -2101,7 +2101,7 @@ pathvector_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool t
         if (transformFull) {
             *dest *= extraPreAffine * item->i2doc_affine() * extraPostAffine;
         } else {
-            *dest *= extraPreAffine * (Geom::Matrix)item->transform * extraPostAffine;
+            *dest *= extraPreAffine * (Geom::Affine)item->transform * extraPostAffine;
         }
     } else {
         *dest *= extraPreAffine * extraPostAffine;

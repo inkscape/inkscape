@@ -4,7 +4,7 @@
  *
  * Authors:
  *      ? <?@?.?>
- * 
+ *
  * Copyright ?-?  authors
  *
  * This library is free software; you can redistribute it and/or
@@ -37,9 +37,14 @@
 #include <2geom/point.h>
 #include <2geom/sbasis.h>
 
+
+#include <vector>
+
+
 namespace Geom{
 
 	class Point;
+	class Bezier;
 
 unsigned
 crossing_count(Geom::Point const *V,	/*  Control pts of Bezier curve	*/
@@ -55,6 +60,8 @@ unsigned
 crossing_count(double const *V,	/*  Control pts of Bezier curve	*/
 	       unsigned degree,	/*  Degree of Bezier curve */
 	       double left_t, double right_t);
+
+
 void
 find_bernstein_roots(
     double const *w, /* The control points  */
@@ -64,6 +71,12 @@ find_bernstein_roots(
     double left_t=0, double right_t=1, bool use_secant=true);
 
 };
+
+void
+find_bernstein_roots(std::vector<double> &solutions, /* RETURN candidate t-values */
+                     Geom::Bezier const& bz,
+                     double left_t, double right_t);
+
 #endif
 
 /*

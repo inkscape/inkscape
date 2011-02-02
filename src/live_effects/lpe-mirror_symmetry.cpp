@@ -20,7 +20,7 @@
 
 #include <2geom/path.h>
 #include <2geom/transforms.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -46,7 +46,7 @@ LPEMirrorSymmetry::doOnApply (SPLPEItem *lpeitem)
     using namespace Geom;
 
     SPItem *item = SP_ITEM(lpeitem);
-    Geom::Matrix t = item->i2d_affine();
+    Geom::Affine t = item->i2d_affine();
     Geom::Rect bbox = *item->getBounds(t); // fixme: what happens if getBounds does not return a valid rect?
 
     Point A(bbox.left(), bbox.bottom());
@@ -74,15 +74,15 @@ LPEMirrorSymmetry::doEffect_path (std::vector<Geom::Path> const & path_in)
     Geom::Point A(mline.front().initialPoint());
     Geom::Point B(mline.back().finalPoint());
 
-    Geom::Matrix m1(1.0, 0.0, 0.0, 1.0, A[0], A[1]);
+    Geom::Affine m1(1.0, 0.0, 0.0, 1.0, A[0], A[1]);
     double hyp = Geom::distance(A, B);
     double c = (B[0] - A[0]) / hyp; // cos(alpha)
     double s = (B[1] - A[1]) / hyp; // sin(alpha)
 
-    Geom::Matrix m2(c, -s, s, c, 0.0, 0.0);
-    Geom::Matrix sca(1.0, 0.0, 0.0, -1.0, 0.0, 0.0);
+    Geom::Affine m2(c, -s, s, c, 0.0, 0.0);
+    Geom::Affine sca(1.0, 0.0, 0.0, -1.0, 0.0, 0.0);
 
-    Geom::Matrix m = m1.inverse() * m2;
+    Geom::Affine m = m1.inverse() * m2;
     m = m * sca;
     m = m * m2.inverse();
     m = m * m1;

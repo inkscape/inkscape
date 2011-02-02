@@ -60,7 +60,7 @@ private:
     static void sp_shape_modified (SPObject *object, unsigned int flags);
     static Inkscape::XML::Node *sp_shape_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-    static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
+    static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
     static NRArenaItem *sp_shape_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
     static void sp_shape_hide (SPItem *item, unsigned int key);
     static void sp_shape_snappoints (SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
@@ -88,9 +88,9 @@ private:
 
 void sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value);
 
-Geom::Matrix sp_shape_marker_get_transform(Geom::Curve const & c1, Geom::Curve const & c2);
-Geom::Matrix sp_shape_marker_get_transform_at_start(Geom::Curve const & c);
-Geom::Matrix sp_shape_marker_get_transform_at_end(Geom::Curve const & c);
+Geom::Affine sp_shape_marker_get_transform(Geom::Curve const & c1, Geom::Curve const & c2);
+Geom::Affine sp_shape_marker_get_transform_at_start(Geom::Curve const & c);
+Geom::Affine sp_shape_marker_get_transform_at_end(Geom::Curve const & c);
 
 #endif // SEEN_SP_SHAPE_H
 

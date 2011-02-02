@@ -31,7 +31,7 @@ static void sp_canvastext_class_init (SPCanvasTextClass *klass);
 static void sp_canvastext_init (SPCanvasText *canvastext);
 static void sp_canvastext_destroy (GtkObject *object);
 
-static void sp_canvastext_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
+static void sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass *parent_class_ct;
@@ -133,7 +133,7 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
 }
 
 static void
-sp_canvastext_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
+sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
     SPCanvasText *cl = SP_CANVASTEXT (item);
 

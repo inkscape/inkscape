@@ -401,8 +401,8 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     return NR_ARENA_ITEM_STATE_ALL;
 }
 
-int matrix_is_isometry(Geom::Matrix p) {
-    Geom::Matrix   tp;
+int matrix_is_isometry(Geom::Affine p) {
+    Geom::Affine   tp;
     // transposition
     tp[0]=p[0];
     tp[1]=p[2];
@@ -410,7 +410,7 @@ int matrix_is_isometry(Geom::Matrix p) {
     tp[3]=p[3];
     for (int i = 4; i < 6; i++) // shut valgrind up :)
         tp[i] = p[i] = 0;
-    Geom::Matrix   isom = tp*p; // A^T * A = adjunct?
+    Geom::Affine   isom = tp*p; // A^T * A = adjunct?
     // Is the adjunct nearly an identity function?
     if (isom.isTranslation(0.01)) {
         // the transformation is an isometry -> no need to recompute
@@ -453,7 +453,7 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool fo
     if ((shape->_fill.paint.type() != NRArenaShape::Paint::NONE || force_shape) &&
           has_inner_area(shape->curve->get_pathvector()) ) {
 
-            Geom::Matrix  cached_to_new = Geom::identity();
+            Geom::Affine  cached_to_new = Geom::identity();
             int isometry = 0;
             if ( shape->cached_fill ) {
                 if (shape->cached_fctm == gc->transform) {
@@ -472,7 +472,7 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool fo
                 Path*  thePath=new Path;
                 Shape* theShape=new Shape;
                 {
-                    Geom::Matrix tempMat(gc->transform);
+                    Geom::Affine tempMat(gc->transform);
                     thePath->LoadPathVector(shape->curve->get_pathvector(), tempMat, true);
                 }
 
@@ -562,7 +562,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
             width = style_width;
         }
 
-        Geom::Matrix  cached_to_new = Geom::identity();
+        Geom::Affine  cached_to_new = Geom::identity();
 
         int isometry = 0;
         if ( shape->cached_stroke ) {
@@ -586,7 +586,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
             Path*  thePath = new Path;
             Shape* theShape = new Shape;
             {
-                Geom::Matrix   tempMat( gc->transform );
+                Geom::Affine   tempMat( gc->transform );
                 thePath->LoadPathVector(shape->curve->get_pathvector(), tempMat, true);
             }
 

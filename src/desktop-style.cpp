@@ -121,7 +121,7 @@ sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
 
         // Scale the style by the inverse of the accumulated parent transform in the paste context.
         {
-            Geom::Matrix const local(SP_ITEM(o)->i2doc_affine());
+            Geom::Affine const local(SP_ITEM(o)->i2doc_affine());
             double const ex(local.descrim());
             if ( ( ex != 0. )
                  && ( ex != 1. ) ) {
@@ -420,7 +420,7 @@ stroke_average_width (GSList const *objects)
         if (!SP_IS_ITEM (l->data))
             continue;
 
-        Geom::Matrix i2d = SP_ITEM(l->data)->i2d_affine();
+        Geom::Affine i2d = SP_ITEM(l->data)->i2d_affine();
 
         SPObject *object = SP_OBJECT(l->data);
 
@@ -714,7 +714,7 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
 
         noneSet &= style->stroke.isNone();
 
-        Geom::Matrix i2d = SP_ITEM(obj)->i2d_affine();
+        Geom::Affine i2d = SP_ITEM(obj)->i2d_affine();
         double sw = style->stroke_width.computed * i2d.descrim();
 
         if (prev_sw != -1 && fabs(sw - prev_sw) > 1e-3)
@@ -932,7 +932,7 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
         if (!style) continue;
 
         texts ++;
-        size += style->font_size.computed * Geom::Matrix(SP_ITEM(obj)->i2d_affine()).descrim(); /// \todo FIXME: we assume non-% units here
+        size += style->font_size.computed * Geom::Affine(SP_ITEM(obj)->i2d_affine()).descrim(); /// \todo FIXME: we assume non-% units here
 
         if (style->letter_spacing.normal) {
             if (!different && (letterspacing_prev == 0 || letterspacing_prev == letterspacing))
@@ -1380,7 +1380,7 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
         if (!style) continue;
         if (!SP_IS_ITEM(obj)) continue;
 
-        Geom::Matrix i2d = SP_ITEM(obj)->i2d_affine();
+        Geom::Affine i2d = SP_ITEM(obj)->i2d_affine();
 
         items ++;
 

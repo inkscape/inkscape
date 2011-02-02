@@ -1039,7 +1039,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
             // preserve parent and viewBox transformations
             // c2p is identity matrix at this point unless ensureUpToDate is called
             doc->ensureUpToDate();
-            Geom::Matrix affine = SP_ROOT(doc->getRoot())->c2p * SP_ITEM(place_to_insert)->i2doc_affine().inverse();
+            Geom::Affine affine = SP_ROOT(doc->getRoot())->c2p * SP_ITEM(place_to_insert)->i2doc_affine().inverse();
             sp_selection_apply_affine(selection, desktop->dt2doc() * affine * desktop->doc2dt(), true, false);
 
             // move to mouse pointer

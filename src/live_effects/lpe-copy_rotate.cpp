@@ -101,12 +101,12 @@ LPECopyRotate::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
 
     Piecewise<D2<SBasis> > output;
 
-    Matrix pre = Translate(-origin) * Rotate(-deg_to_rad(starting_angle));
+    Affine pre = Translate(-origin) * Rotate(-deg_to_rad(starting_angle));
     for (int i = 0; i < num_copies; ++i) {
         // I first suspected the minus sign to be a bug in 2geom but it is
         // likely due to SVG's choice of coordinate system orientation (max)
         Rotate rot(-deg_to_rad(rotation_angle * i));
-        Matrix t = pre * rot * Translate(origin);
+        Affine t = pre * rot * Translate(origin);
         output.concat(pwd2_in * t);
     }
 

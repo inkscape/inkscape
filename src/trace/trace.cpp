@@ -515,7 +515,7 @@ void Tracer::traceThread()
     Geom::Scale scal(iwscale, ihscale);
 
     //# Convolve scale, translation, and the original transform
-    Geom::Matrix tf(scal * trans);
+    Geom::Affine tf(scal * trans);
     tf *= img->transform;
 
 

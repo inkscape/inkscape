@@ -493,7 +493,7 @@ void SPGradientImpl::setGradientAttr(SPObject *object, unsigned key, gchar const
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_GRADIENTTRANSFORM: {
-            Geom::Matrix t;
+            Geom::Affine t;
             if (value && sp_svg_transform_read(value, &t)) {
                 gr->gradientTransform = t;
                 gr->gradientTransform_set = TRUE;
@@ -1390,34 +1390,34 @@ sp_gradient_render_vector_block_rgb(SPGradient *gradient, guchar *buf,
     }
 }
 
-Geom::Matrix
-sp_gradient_get_g2d_matrix(SPGradient const *gr, Geom::Matrix const &ctm, Geom::Rect const &bbox)
+Geom::Affine
+sp_gradient_get_g2d_matrix(SPGradient const *gr, Geom::Affine const &ctm, Geom::Rect const &bbox)
 {
     if (gr->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
         return ( Geom::Scale(bbox.dimensions())
                  * Geom::Translate(bbox.min())
-                 * Geom::Matrix(ctm) );
+                 * Geom::Affine(ctm) );
     } else {
         return ctm;
     }
 }
 
-Geom::Matrix
-sp_gradient_get_gs2d_matrix(SPGradient const *gr, Geom::Matrix const &ctm, Geom::Rect const &bbox)
+Geom::Affine
+sp_gradient_get_gs2d_matrix(SPGradient const *gr, Geom::Affine const &ctm, Geom::Rect const &bbox)
 {
     if (gr->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
         return ( gr->gradientTransform
                  * Geom::Scale(bbox.dimensions())
                  * Geom::Translate(bbox.min())
-                 * Geom::Matrix(ctm) );
+                 * Geom::Affine(ctm) );
     } else {
         return gr->gradientTransform * ctm;
     }
 }
 
 void
-sp_gradient_set_gs2d_matrix(SPGradient *gr, Geom::Matrix const &ctm,
-                            Geom::Rect const &bbox, Geom::Matrix const &gs2d)
+sp_gradient_set_gs2d_matrix(SPGradient *gr, Geom::Affine const &ctm,
+                            Geom::Rect const &bbox, Geom::Affine const &gs2d)
 {
     gr->gradientTransform = gs2d * ctm.inverse();
     if (gr->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX ) {
@@ -1444,8 +1444,8 @@ struct SPLGPainter {
     NRLGradientRenderer lgr;
 
     static SPPainter * painter_new(SPPaintServer *ps,
-                                   Geom::Matrix const &full_transform,
-                                   Geom::Matrix const &parent_transform,
+                                   Geom::Affine const &full_transform,
+                                   Geom::Affine const &parent_transform,
                                    NRRect const *bbox);
 };
 
@@ -1609,8 +1609,8 @@ sp_lineargradient_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inks
  * and end < 1.
  */
 SPPainter * SPLGPainter::painter_new(SPPaintServer *ps,
-                                     Geom::Matrix const &full_transform,
-                                     Geom::Matrix const &/*parent_transform*/,
+                                     Geom::Affine const &full_transform,
+                                     Geom::Affine const &/*parent_transform*/,
                                      NRRect const *bbox)
 {
     SPLinearGradient *lg = SP_LINEARGRADIENT(ps);
@@ -1634,26 +1634,26 @@ SPPainter * SPLGPainter::painter_new(SPPaintServer *ps,
      * or something similar. Originally I had 1023.9999 here - not sure
      * whether we have really to cut out ceil int (Lauris).
      */
-    Geom::Matrix color2norm(Geom::identity());
-    Geom::Matrix color2px;
+    Geom::Affine color2norm(Geom::identity());
+    Geom::Affine color2px;
     if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
-        Geom::Matrix norm2pos(Geom::identity());
+        Geom::Affine norm2pos(Geom::identity());
 
         /* BBox to user coordinate system */
-        Geom::Matrix bbox2user(bbox->x1 - bbox->x0, 0, 0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
+        Geom::Affine bbox2user(bbox->x1 - bbox->x0, 0, 0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
 
-        Geom::Matrix color2pos = color2norm * norm2pos;
-        Geom::Matrix color2tpos = color2pos * gr->gradientTransform;
-        Geom::Matrix color2user = color2tpos * bbox2user;
+        Geom::Affine color2pos = color2norm * norm2pos;
+        Geom::Affine color2tpos = color2pos * gr->gradientTransform;
+        Geom::Affine color2user = color2tpos * bbox2user;
         color2px = color2user * full_transform;
 
     } else {
         /* Problem: What to do, if we have mixed lengths and percentages? */
         /* Currently we do ignore percentages at all, but that is not good (lauris) */
 
-        Geom::Matrix norm2pos(Geom::identity());
-        Geom::Matrix color2pos = color2norm * norm2pos;
-        Geom::Matrix color2tpos = color2pos * gr->gradientTransform;
+        Geom::Affine norm2pos(Geom::identity());
+        Geom::Affine color2pos = color2norm * norm2pos;
+        Geom::Affine color2tpos = color2pos * gr->gradientTransform;
         color2px = color2tpos * full_transform;
 
     }
@@ -1721,8 +1721,8 @@ struct SPRGPainter {
     NRRGradientRenderer rgr;
 
     static SPPainter *painter_new(SPPaintServer *ps,
-                                  Geom::Matrix const &full_transform,
-                                  Geom::Matrix const &parent_transform,
+                                  Geom::Affine const &full_transform,
+                                  Geom::Affine const &parent_transform,
                                   NRRect const *bbox);
 };
 
@@ -1893,8 +1893,8 @@ sp_radialgradient_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inks
  * Create radial gradient context.
  */
 SPPainter *SPRGPainter::painter_new(SPPaintServer *ps,
-                                    Geom::Matrix const &full_transform,
-                                    Geom::Matrix const &/*parent_transform*/,
+                                    Geom::Affine const &full_transform,
+                                    Geom::Affine const &/*parent_transform*/,
                                     NRRect const *bbox)
 {
     SPRadialGradient *rg = SP_RADIALGRADIENT(ps);
@@ -1911,7 +1911,7 @@ SPPainter *SPRGPainter::painter_new(SPPaintServer *ps,
 
     rgp->rg = rg;
 
-    Geom::Matrix gs2px;
+    Geom::Affine gs2px;
 
     if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
         /** \todo
@@ -1920,9 +1920,9 @@ SPPainter *SPRGPainter::painter_new(SPPaintServer *ps,
          */
 
         /* BBox to user coordinate system */
-        Geom::Matrix bbox2user(bbox->x1 - bbox->x0, 0, 0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
+        Geom::Affine bbox2user(bbox->x1 - bbox->x0, 0, 0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
 
-        Geom::Matrix gs2user = gr->gradientTransform * bbox2user;
+        Geom::Affine gs2user = gr->gradientTransform * bbox2user;
 
         gs2px = gs2user * full_transform;
     } else {

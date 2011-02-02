@@ -51,6 +51,9 @@ struct Event {
         if(x > other.x) return false;
         return closing < other.closing;
     }
+    bool operator==(Event const &other) const {
+        return other.x == x && other.ix == ix && other.closing == closing;
+    }
 };
 std::vector<std::vector<unsigned> >
 sweep_bounds(std::vector<Rect>, Dim2 dim = X);

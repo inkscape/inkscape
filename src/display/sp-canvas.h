@@ -35,7 +35,7 @@
 
 #include <glibmm/ustring.h>
 
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <libnr/nr-rect-l.h>
 
 #include <2geom/rect.h>

@@ -38,15 +38,15 @@ class PrintEmfWin32 : public Inkscape::Extension::Implementation::Implementation
     HBRUSH hbrush, hbrushOld;
     HPEN hpen, hpenOld;
 
-    std::stack<Geom::Matrix> m_tr_stack;
+    std::stack<Geom::Affine> m_tr_stack;
     Geom::PathVector fill_pathv;
-    Geom::Matrix fill_transform;
+    Geom::Affine fill_transform;
     bool stroke_and_fill;
     bool fill_only;
     bool simple_shape;
 
-    unsigned int print_pathv (Geom::PathVector const &pathv, const Geom::Matrix &transform);
-    bool print_simple_shape (Geom::PathVector const &pathv, const Geom::Matrix &transform);
+    unsigned int print_pathv (Geom::PathVector const &pathv, const Geom::Affine &transform);
+    bool print_simple_shape (Geom::PathVector const &pathv, const Geom::Affine &transform);
 
 public:
     PrintEmfWin32 (void);
@@ -59,13 +59,13 @@ public:
     virtual unsigned int finish (Inkscape::Extension::Print * module);
 
     /* Rendering methods */
-    virtual unsigned int bind(Inkscape::Extension::Print *module, Geom::Matrix const *transform, float opacity);
+    virtual unsigned int bind(Inkscape::Extension::Print *module, Geom::Affine const *transform, float opacity);
     virtual unsigned int release(Inkscape::Extension::Print *module);
     virtual unsigned int fill (Inkscape::Extension::Print * module,
-                               Geom::PathVector const &pathv, const Geom::Matrix *ctm, const SPStyle *style,
+                               Geom::PathVector const &pathv, const Geom::Affine *ctm, const SPStyle *style,
                                const NRRect *pbox, const NRRect *dbox, const NRRect *bbox);
     virtual unsigned int stroke (Inkscape::Extension::Print * module,
-                                 Geom::PathVector const &pathv, const Geom::Matrix *transform, const SPStyle *style,
+                                 Geom::PathVector const &pathv, const Geom::Affine *transform, const SPStyle *style,
                                  const NRRect *pbox, const NRRect *dbox, const NRRect *bbox);
     virtual unsigned int comment(Inkscape::Extension::Print *module, const char * comment);
     virtual unsigned int text(Inkscape::Extension::Print *module, char const *text,
@@ -79,7 +79,7 @@ protected:
 
     void destroy_brush();
 
-    void create_pen(SPStyle const *style, const Geom::Matrix &transform);
+    void create_pen(SPStyle const *style, const Geom::Affine &transform);
 
     void destroy_pen();
 

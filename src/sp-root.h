@@ -47,7 +47,7 @@ struct SPRoot : public SPGroup {
     unsigned int aspect_clip : 1;
 
     /** Child to parent additional transform. */
-    Geom::Matrix c2p;
+    Geom::Affine c2p;
 
     gchar *onload;
 

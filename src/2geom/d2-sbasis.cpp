@@ -121,7 +121,7 @@ Piecewise<SBasis> cross(Piecewise<D2<SBasis> > const &a,
   return result;
 }
 
-Piecewise<D2<SBasis> > operator*(Piecewise<D2<SBasis> > const &a, Matrix const &m) {
+Piecewise<D2<SBasis> > operator*(Piecewise<D2<SBasis> > const &a, Affine const &m) {
   Piecewise<D2<SBasis> > result;
   if(a.empty()) return result;
   result.push_cut(a.cuts[0]);
@@ -257,6 +257,57 @@ std::vector<Piecewise<D2<SBasis> > > fuse_nearby_ends(std::vector<Piecewise<D2<S
     }
     return result;
     return f;
+}
+
+/*
+ *  Computes the intersection of two sets given as (ordered) union of intervals.
+ */
+static std::vector<Interval> intersect( std::vector<Interval> const &a, std::vector<Interval> const &b){
+	std::vector<Interval> result;
+	//TODO: use order!
+	for (unsigned i=0; i < a.size(); i++){
+		for (unsigned j=0; j < b.size(); j++){
+			OptInterval c( a[i] );
+			c &= b[j];
+			if ( c ) {
+				result.push_back( *c );
+			}
+		}
+	}
+	return result;
+}
+
+std::vector<Interval> level_set( D2<SBasis> const &f, Rect region){
+	std::vector<Rect> regions( 1, region );
+	return level_sets( f, regions ).front();
+}
+std::vector<Interval> level_set( D2<SBasis> const &f, Point p, double tol){
+	Rect region(p, p);
+	region.expandBy( tol );
+	return level_set( f, region );
+}
+std::vector<std::vector<Interval> > level_sets( D2<SBasis> const &f, std::vector<Rect> regions){
+	std::vector<Interval> regsX (regions.size(), Interval() );
+	std::vector<Interval> regsY (regions.size(), Interval() );
+	for ( unsigned i=0; i < regions.size(); i++ ){
+		regsX[i] = regions[i][X];
+		regsY[i] = regions[i][Y];
+	}
+	std::vector<std::vector<Interval> > x_in_regs = level_sets( f[X], regsX );
+	std::vector<std::vector<Interval> > y_in_regs = level_sets( f[Y], regsY );
+	std::vector<std::vector<Interval> >result(regions.size(), std::vector<Interval>() );
+	for (unsigned i=0; i<regions.size(); i++){
+		result[i] = intersect ( x_in_regs[i], y_in_regs[i] );
+	}
+	return result;
+}
+std::vector<std::vector<Interval> > level_sets( D2<SBasis> const &f, std::vector<Point> pts, double tol){
+	std::vector<Rect> regions( pts.size(), Rect() );
+	for (unsigned i=0; i<pts.size(); i++){
+		regions[i] = Rect( pts[i], pts[i] );
+		regions[i].expandBy( tol );
+	}
+	return level_sets( f, regions );
 }
 
 

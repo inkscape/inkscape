@@ -287,7 +287,7 @@ unclump_push (SPItem *from, SPItem *what, double dist)
     Geom::Point p = unclump_center (from);
     Geom::Point by = dist * Geom::unit_vector (- (p - it));
 
-    Geom::Matrix move = Geom::Translate (by);
+    Geom::Affine move = Geom::Translate (by);
 
     std::map<const gchar *, Geom::Point>::iterator i = c_cache.find(what->getId());
     if ( i != c_cache.end() ) {
@@ -310,7 +310,7 @@ unclump_pull (SPItem *to, SPItem *what, double dist)
     Geom::Point p = unclump_center (to);
     Geom::Point by = dist * Geom::unit_vector (p - it);
 
-    Geom::Matrix move = Geom::Translate (by);
+    Geom::Affine move = Geom::Translate (by);
 
     std::map<const gchar *, Geom::Point>::iterator i = c_cache.find(what->getId());
     if ( i != c_cache.end() ) {

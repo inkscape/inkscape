@@ -24,7 +24,7 @@ static void sp_guideline_class_init(SPGuideLineClass *c);
 static void sp_guideline_init(SPGuideLine *guideline);
 static void sp_guideline_destroy(GtkObject *object);
 
-static void sp_guideline_update(SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
+static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf);
 
 static double sp_guideline_point(SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
@@ -183,7 +183,7 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
     }
 }
 
-static void sp_guideline_update(SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
+static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
     SPGuideLine *gl = SP_GUIDELINE(item);
 
@@ -243,8 +243,8 @@ SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, Geom::Point point_on_line,
 
 void sp_guideline_set_position(SPGuideLine *gl, Geom::Point point_on_line)
 {
-    sp_canvas_item_affine_absolute(SP_CANVAS_ITEM (gl), Geom::Matrix(Geom::Translate(point_on_line)));
-    sp_canvas_item_affine_absolute(SP_CANVAS_ITEM (gl->origin), Geom::Matrix(Geom::Translate(point_on_line)));
+    sp_canvas_item_affine_absolute(SP_CANVAS_ITEM (gl), Geom::Affine(Geom::Translate(point_on_line)));
+    sp_canvas_item_affine_absolute(SP_CANVAS_ITEM (gl->origin), Geom::Affine(Geom::Translate(point_on_line)));
 }
 
 void sp_guideline_set_normal(SPGuideLine *gl, Geom::Point normal_to_line)

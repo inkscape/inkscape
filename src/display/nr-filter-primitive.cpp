@@ -37,7 +37,7 @@ FilterPrimitive::~FilterPrimitive()
     // Nothing to do here
 }
 
-void FilterPrimitive::area_enlarge(NRRectL &/*area*/, Geom::Matrix const &/*m*/)
+void FilterPrimitive::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*m*/)
 {
     // This doesn't need to do anything by default
 }

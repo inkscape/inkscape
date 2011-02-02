@@ -23,12 +23,12 @@ void sp_gradient_render_vector_block_rgba(SPGradient *gr, guchar *px, gint w, gi
 void sp_gradient_render_vector_block_rgb(SPGradient *gr, guchar *px, gint w, gint h, gint rs, gint pos, gint span, bool horizontal);
 
 /** Transforms to/from gradient position space in given environment */
-Geom::Matrix sp_gradient_get_g2d_matrix(SPGradient const *gr, Geom::Matrix const &ctm,
+Geom::Affine sp_gradient_get_g2d_matrix(SPGradient const *gr, Geom::Affine const &ctm,
                                       Geom::Rect const &bbox);
-Geom::Matrix sp_gradient_get_gs2d_matrix(SPGradient const *gr, Geom::Matrix const &ctm,
+Geom::Affine sp_gradient_get_gs2d_matrix(SPGradient const *gr, Geom::Affine const &ctm,
                                        Geom::Rect const &bbox);
-void sp_gradient_set_gs2d_matrix(SPGradient *gr, Geom::Matrix const &ctm, Geom::Rect const &bbox,
-                                 Geom::Matrix const &gs2d);
+void sp_gradient_set_gs2d_matrix(SPGradient *gr, Geom::Affine const &ctm, Geom::Rect const &bbox,
+                                 Geom::Affine const &gs2d);
 
 
 #endif /* !SEEN_SP_GRADIENT_FNS_H */

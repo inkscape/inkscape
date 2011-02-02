@@ -56,7 +56,7 @@ public:
     operator Geom::Point const &() { return _position; }
     virtual void move(Geom::Point const &pos);
     virtual void setPosition(Geom::Point const &pos);
-    virtual void transform(Geom::Matrix const &m);
+    virtual void transform(Geom::Affine const &m);
     /// @}
     
     /// @name Toggle the point's visibility

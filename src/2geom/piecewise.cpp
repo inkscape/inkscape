@@ -154,6 +154,54 @@ int compose_findSegIdx(std::map<double,unsigned>::iterator  const &cut,
     return idx;
 }
 
+
+Piecewise<SBasis> pw_compose_inverse(SBasis const &f, SBasis const &g, unsigned order, double zero){
+	Piecewise<SBasis> result;
+
+	assert( f.size()>0 && g.size()>0);
+	SBasis g01 = g;
+	bool flip = ( g01.at0() > g01.at1() );
+
+	//OptInterval g_range = bounds_exact(g);
+    OptInterval g_range( Interval( g.at0(), g.at1() ));
+
+    g01 -= g_range->min();
+    g01 /= g_range->extent();
+    if ( flip ){
+    	g01 *= -1.;
+    	g01 += 1.;
+    }
+#if 1
+    assert( std::abs( g01.at0() - 0. ) < zero );
+    assert( std::abs( g01.at1() - 1. ) < zero );
+    //g[0][0] = 0.;
+    //g[0][1] = 1.;
+#endif
+
+	SBasis foginv = compose_inverse( f, g01, order, zero );
+    SBasis err = compose( foginv, g01) - f;
+
+    if ( err.tailError(0) < zero ){
+    	result = Piecewise<SBasis> (foginv);
+    }else{
+    	SBasis g_portion = portion( g01, Interval(0.,.5) );
+    	SBasis f_portion = portion( f, Interval(0.,.5) );
+    	result = pw_compose_inverse(f_portion, g_portion, order, zero);
+
+    	g_portion = portion( g01, Interval(.5, 1.) );
+    	f_portion = portion( f, Interval(.5, 1.) );
+    	Piecewise<SBasis> result_next;
+    	result_next = pw_compose_inverse(f_portion, g_portion, order, zero);
+    	result.concat( result_next );
+    }
+    if (flip) {
+    	result = reverse(result);
+    }
+	result.setDomain(*g_range);
+    return result;
+}
+
+
 std::vector<double> roots(Piecewise<SBasis> const &f){
     std::vector<double> result;
     for (unsigned i=0; i<f.size(); i++){
@@ -178,6 +226,32 @@ std::vector<std::vector<double> > multi_roots(Piecewise<SBasis> const &f, std::v
     }
     return result;
 }
+
+
+std::vector<Interval> level_set(Piecewise<SBasis> const &f, Interval const &level, double tol){
+    std::vector<Interval> result;
+    for (unsigned i=0; i<f.size(); i++){
+        std::vector<Interval> resulti = level_set( f[i], level, 0., 1., tol);
+        for (unsigned j=0; j<resulti.size(); j++){
+        	double a = f.cuts[i] + resulti[j].min() * ( f.cuts[i+1] - f.cuts[i] );
+        	double b = f.cuts[i] + resulti[j].max() * ( f.cuts[i+1] - f.cuts[i] );
+        	Interval domj( a, b );
+        	//Interval domj( f.mapToDomain(resulti[j].min(), i ), f.mapToDomain(resulti[j].max(), i ) );
+
+        	if ( j==0 && result.size() > 0 && result.back().intersects(domj) ){
+        		result.back().unionWith(domj);
+        	}else{
+        		result.push_back(domj);
+        	}
+        }
+    }
+    return result;
+}
+std::vector<Interval> level_set(Piecewise<SBasis> const &f, double v, double vtol, double tol){
+	Interval level ( v-vtol, v+vtol );
+	return level_set( f, level, tol);
+}
+
 
 }
 /*

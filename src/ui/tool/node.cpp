@@ -514,7 +514,7 @@ void Node::move(Geom::Point const &new_pos)
     _fixNeighbors(old_pos, new_pos);
 }
 
-void Node::transform(Geom::Matrix const &m)
+void Node::transform(Geom::Affine const &m)
 {
     Geom::Point old_pos = position();
     setPosition(position() * m);
@@ -829,26 +829,6 @@ bool Node::_eventHandler(GdkEvent *event)
     return ControlPoint::_eventHandler(event);
 }
 
-// TODO Move this to 2Geom!
-static double bezier_length (Geom::Point a0, Geom::Point a1, Geom::Point a2, Geom::Point a3)
-{
-    double lower = Geom::distance(a0, a3);
-    double upper = Geom::distance(a0, a1) + Geom::distance(a1, a2) + Geom::distance(a2, a3);
-
-    if (upper - lower < Geom::EPSILON) return (lower + upper)/2;
-
-    Geom::Point // Casteljau subdivision
-        b0 = a0,
-        c0 = a3,
-        b1 = 0.5*(a0 + a1),
-        t0 = 0.5*(a1 + a2),
-        c1 = 0.5*(a2 + a3),
-        b2 = 0.5*(b1 + t0),
-        c2 = 0.5*(t0 + c1),
-        b3 = 0.5*(b2 + c2); // == c3
-    return bezier_length(b0, b1, b2, b3) + bezier_length(b3, c2, c1, c0);
-}
-
 /** Select or deselect a node in this node's subpath based on its path distance from this node.
  * @param dir If negative, shrink selection by one node; if positive, grow by one node */
 void Node::_linearGrow(int dir)
@@ -875,7 +855,7 @@ void Node::_linearGrow(int dir)
         // find first unselected nodes on both sides
         while (fwd && fwd->selected()) {
             NodeList::iterator n = fwd.next();
-            distance_front += bezier_length(*fwd, fwd->_front, n->_back, *n);
+            distance_front += Geom::bezier_length(*fwd, fwd->_front, n->_back, *n);
             fwd = n;
             if (fwd == this_iter)
                 // there is no unselected node in this cyclic subpath
@@ -886,7 +866,7 @@ void Node::_linearGrow(int dir)
         // so we are guaranteed to stop.
         while (rev && rev->selected()) {
             NodeList::iterator p = rev.prev();
-            distance_back += bezier_length(*rev, rev->_back, p->_front, *p);
+            distance_back += Geom::bezier_length(*rev, rev->_back, p->_front, *p);
             rev = p;
         }
 
@@ -917,7 +897,7 @@ void Node::_linearGrow(int dir)
                     last_distance_front = distance_front;
                 }
                 NodeList::iterator n = fwd.next();
-                if (n) distance_front += bezier_length(*fwd, fwd->_front, n->_back, *n);
+                if (n) distance_front += Geom::bezier_length(*fwd, fwd->_front, n->_back, *n);
                 fwd = n;
             } else if (rev && (!fwd || distance_front > distance_back)) {
                 if (rev->selected()) {
@@ -925,7 +905,7 @@ void Node::_linearGrow(int dir)
                     last_distance_back = distance_back;
                 }
                 NodeList::iterator p = rev.prev();
-                if (p) distance_back += bezier_length(*rev, rev->_back, p->_front, *p);
+                if (p) distance_back += Geom::bezier_length(*rev, rev->_back, p->_front, *p);
                 rev = p;
             }
             // Check whether we walked the entire cyclic subpath.
@@ -935,8 +915,8 @@ void Node::_linearGrow(int dir)
             if (fwd && fwd == rev) {
                 if (!fwd->selected()) break;
                 NodeList::iterator fwdp = fwd.prev(), revn = rev.next();
-                double df = distance_front + bezier_length(*fwdp, fwdp->_front, fwd->_back, *fwd);
-                double db = distance_back + bezier_length(*revn, revn->_back, rev->_front, *rev);
+                double df = distance_front + Geom::bezier_length(*fwdp, fwdp->_front, fwd->_back, *fwd);
+                double db = distance_back + Geom::bezier_length(*revn, revn->_back, rev->_front, *rev);
                 if (df > db) {
                     last_fwd = fwd;
                     last_distance_front = df;

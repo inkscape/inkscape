@@ -11,7 +11,7 @@ void PathDescrMoveTo::dumpSVG(Inkscape::SVGOStringStream& s, Geom::Point const &
     s << "M " << p[Geom::X] << " " << p[Geom::Y] << " ";
 }
 
-void PathDescrMoveTo::transform(Geom::Matrix const& t)
+void PathDescrMoveTo::transform(Geom::Affine const& t)
 {
     p = p * t;
 }
@@ -32,7 +32,7 @@ PathDescr *PathDescrLineTo::clone() const
     return new PathDescrLineTo(*this);
 }
 
-void PathDescrLineTo::transform(Geom::Matrix const& t)
+void PathDescrLineTo::transform(Geom::Affine const& t)
 {
     p = p * t;
 }
@@ -48,7 +48,7 @@ PathDescr *PathDescrBezierTo::clone() const
     return new PathDescrBezierTo(*this);
 }
 
-void PathDescrBezierTo::transform(Geom::Matrix const& t)
+void PathDescrBezierTo::transform(Geom::Affine const& t)
 {
     p = p * t;
 }
@@ -64,7 +64,7 @@ PathDescr *PathDescrIntermBezierTo::clone() const
     return new PathDescrIntermBezierTo(*this);
 }
 
-void PathDescrIntermBezierTo::transform(Geom::Matrix const& t)
+void PathDescrIntermBezierTo::transform(Geom::Affine const& t)
 {
     p = p * t;
 }
@@ -100,9 +100,9 @@ void PathDescrCubicTo::dump(std::ostream &s) const
       << end[Geom::X] << " " << end[Geom::Y] << " ";
 }
 
-void PathDescrCubicTo::transform(Geom::Matrix const& t)
+void PathDescrCubicTo::transform(Geom::Affine const& t)
 {
-    Geom::Matrix tr = t;
+    Geom::Affine tr = t;
     tr[4] = tr[5] = 0;
     start = start * tr;
     end = end * tr;
@@ -127,7 +127,7 @@ PathDescr *PathDescrArcTo::clone() const
     return new PathDescrArcTo(*this);
 }
 
-void PathDescrArcTo::transform(Geom::Matrix const& t)
+void PathDescrArcTo::transform(Geom::Affine const& t)
 {
     p = p * t;
 }

@@ -28,7 +28,7 @@
 #include <2geom/bezier-to-sbasis.h>
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/d2.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 
 #include "ui/widget/scalar.h"
 #include "libnr/nr-values.h"
@@ -309,12 +309,12 @@ LPERoughHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
     }
     Point transformed_org = direction.getOrigin();
     Piecewise<SBasis> tilter;//used to bend the hatches
-    Matrix bend_mat;//used to bend the hatches
+    Affine bend_mat;//used to bend the hatches
 
     if (do_bend.get_value()){
         Point bend_dir = -rot90(unit_vector(bender.getVector()));
         double bend_amount = L2(bender.getVector());
-        bend_mat = Matrix(-bend_dir[Y], bend_dir[X], bend_dir[X], bend_dir[Y],0,0);
+        bend_mat = Affine(-bend_dir[Y], bend_dir[X], bend_dir[X], bend_dir[Y],0,0);
         transformed_pwd2_in = transformed_pwd2_in * bend_mat;
         tilter = Piecewise<SBasis>(shift(Linear(-bend_amount),1));
         OptRect bbox = bounds_exact( transformed_pwd2_in );
@@ -325,7 +325,7 @@ LPERoughHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
     }
     hatch_dist = Geom::L2(direction.getVector())/5;
     Point hatches_dir = rot90(unit_vector(direction.getVector()));
-    Matrix mat(-hatches_dir[Y], hatches_dir[X], hatches_dir[X], hatches_dir[Y],0,0);
+    Affine mat(-hatches_dir[Y], hatches_dir[X], hatches_dir[X], hatches_dir[Y],0,0);
     transformed_pwd2_in = transformed_pwd2_in * mat;
     transformed_org *= mat;
 

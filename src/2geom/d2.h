@@ -34,7 +34,7 @@
 
 #include <2geom/point.h>
 #include <2geom/interval.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 
 #include <boost/concept_check.hpp>
 #include <2geom/concepts.h>
@@ -251,7 +251,7 @@ template <typename T>
 inline D2<T> operator/=(D2<T> & a, double b) { a[0] /= b; a[1] /= b; return a; }
 
 template<typename T>
-D2<T> operator*(D2<T> const &v, Matrix const &m) {
+D2<T> operator*(D2<T> const &v, Affine const &m) {
     boost::function_requires<AddableConcept<T> >();
     boost::function_requires<ScalableConcept<T> >();
     D2<T> ret;

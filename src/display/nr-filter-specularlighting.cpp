@@ -80,7 +80,7 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
     int dx = 1; //TODO setup
     int dy = 1; //TODO setup
     //surface scale
-    Geom::Matrix trans = units.get_matrix_primitiveunits2pb();
+    Geom::Affine trans = units.get_matrix_primitiveunits2pb();
     gdouble ss = surfaceScale * trans[0];
     gdouble ks = specularConstant; //diffuse lighting constant
     NR::Fvector L, N, LC, H;
@@ -188,7 +188,7 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
     return 0;
 }
 
-void FilterSpecularLighting::area_enlarge(NRRectL &area, Geom::Matrix const &trans)
+void FilterSpecularLighting::area_enlarge(NRRectL &area, Geom::Affine const &trans)
 {
     // TODO: support kernelUnitLength
     double scalex = std::fabs(trans[0]) + std::fabs(trans[1]);

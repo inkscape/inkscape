@@ -43,7 +43,7 @@ get_nearest_common_ancestor(SPObject const *const obj, SPItem const *const objs[
 
 
 static bool try_get_intersect_point_with_item_recursive(Geom::PathVector& conn_pv, SPItem* item,
-        const Geom::Matrix& item_transform, double& intersect_pos) {
+        const Geom::Affine& item_transform, double& intersect_pos) {
 
     double initial_pos = intersect_pos;
     // if this is a group...
@@ -96,7 +96,7 @@ static bool try_get_intersect_point_with_item_recursive(Geom::PathVector& conn_p
 // The transforms given should be to a common ancestor of both the path and item.
 //
 static bool try_get_intersect_point_with_item(SPPath* conn, SPItem* item,
-        const Geom::Matrix& item_transform, const Geom::Matrix& conn_transform,
+        const Geom::Affine& item_transform, const Geom::Affine& conn_transform,
         const bool at_start, double& intersect_pos) {
 
     // Copy the curve and apply transformations up to common ancestor.
@@ -147,7 +147,7 @@ sp_conn_get_route_and_redraw(SPPath *const path,
 
     SPItem const *const path_item = SP_ITEM(path);
     SPObject const *const ancestor = get_nearest_common_ancestor(path_item, h2attItem);
-    Geom::Matrix const path2anc(i2anc_affine(path_item, ancestor));
+    Geom::Affine const path2anc(i2anc_affine(path_item, ancestor));
 
     // Set sensible values incase there the connector ends are not
     // attached to any shapes.
@@ -157,7 +157,7 @@ sp_conn_get_route_and_redraw(SPPath *const path,
     SPConnEnd** _connEnd = path->connEndPair.getConnEnds();
     for (unsigned h = 0; h < 2; ++h) {
         if (h2attItem[h] && _connEnd[h]->type == ConnPointDefault && _connEnd[h]->id == ConnPointPosCC) {
-            Geom::Matrix h2i2anc = i2anc_affine(h2attItem[h], ancestor);
+            Geom::Affine h2i2anc = i2anc_affine(h2attItem[h], ancestor);
             try_get_intersect_point_with_item(path, h2attItem[h], h2i2anc, path2anc,
                         (h == 0), endPos[h]);
         }
@@ -171,7 +171,7 @@ sp_conn_get_route_and_redraw(SPPath *const path,
 
 
 static void
-sp_conn_end_shape_move(Geom::Matrix const */*mp*/, SPItem */*moved_item*/,
+sp_conn_end_shape_move(Geom::Affine const */*mp*/, SPItem */*moved_item*/,
                             SPPath *const path)
 {
     if (path->connEndPair.isAutoRoutingConn()) {

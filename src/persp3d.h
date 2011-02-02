@@ -74,7 +74,7 @@ void persp3d_toggle_VP (Persp3D *persp, Proj::Axis axis, bool set_undo = true);
 void persp3d_toggle_VPs (std::list<Persp3D *>, Proj::Axis axis);
 void persp3d_set_VP_state (Persp3D *persp, Proj::Axis axis, Proj::VPState state);
 void persp3d_rotate_VP (Persp3D *persp, Proj::Axis axis, double angle, bool alt_pressed); // angle is in degrees
-void persp3d_apply_affine_transformation (Persp3D *persp, Geom::Matrix const &xform);
+void persp3d_apply_affine_transformation (Persp3D *persp, Geom::Affine const &xform);
 
 void persp3d_add_box (Persp3D *persp, SPBox3D *box);
 void persp3d_remove_box (Persp3D *persp, SPBox3D *box);

@@ -112,7 +112,7 @@ struct NRArenaShape : public NRArenaItem {
     SPStyle *style;
     NRRect paintbox;
     /* State data */
-    Geom::Matrix ctm;
+    Geom::Affine ctm;
 
     SPPainter *fill_painter;
     SPPainter *stroke_painter;
@@ -135,8 +135,8 @@ struct NRArenaShape : public NRArenaItem {
     // polygon to get the *_shp polygon.  Otherwise, recompute so this
     // works fine for translation and rotation, but not scaling and
     // skewing
-    Geom::Matrix cached_fctm;
-    Geom::Matrix cached_sctm;
+    Geom::Affine cached_fctm;
+    Geom::Affine cached_sctm;
     NRRectL cached_farea;
     NRRectL cached_sarea;
     bool cached_fpartialy;

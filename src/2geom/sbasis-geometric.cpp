@@ -151,7 +151,7 @@ Geom::cutAtRoots(Piecewise<D2<SBasis> > const &M, double ZERO){
  \param vect a piecewise parameteric curve.
  \param tol the maximum error allowed.
  \param order the maximum degree to use for approximation
-
+ \relates Piecewise
 */
 Piecewise<SBasis>
 Geom::atan2(Piecewise<D2<SBasis> > const &vect, double tol, unsigned order){
@@ -182,7 +182,7 @@ Geom::atan2(Piecewise<D2<SBasis> > const &vect, double tol, unsigned order){
  \param vect a piecewise parameteric curve.
  \param tol the maximum error allowed.
  \param order the maximum degree to use for approximation
-
+ \relates Piecewise, D2
 */
 Piecewise<SBasis>
 Geom::atan2(D2<SBasis> const &vect, double tol, unsigned order){
@@ -193,7 +193,7 @@ Geom::atan2(D2<SBasis> const &vect, double tol, unsigned order){
  \param angle a piecewise function of angle wrt t.
  \param tol the maximum error allowed.
  \param order the maximum degree to use for approximation
-
+ \relates D2, SBasis
 */
 D2<Piecewise<SBasis> >
 Geom::tan2(SBasis const &angle, double tol, unsigned order){
@@ -204,7 +204,7 @@ Geom::tan2(SBasis const &angle, double tol, unsigned order){
  \param angle a piecewise function of angle wrt t.
  \param tol the maximum error allowed.
  \param order the maximum degree to use for approximation
-
+ \relates Piecewise, D2
 */
 D2<Piecewise<SBasis> >
 Geom::tan2(Piecewise<SBasis> const &angle, double tol, unsigned order){
@@ -218,6 +218,8 @@ Geom::tan2(Piecewise<SBasis> const &angle, double tol, unsigned order){
 
 unitVector(x,y) is computed as (b,-a) where a and b are solutions of:
      ax+by=0 (eqn1)   and   a^2+b^2=1 (eqn2)
+
+ \relates Piecewise, D2
 */
 Piecewise<D2<SBasis> >
 Geom::unitVector(D2<SBasis> const &V_in, double tol, unsigned order){
@@ -296,6 +298,8 @@ Geom::unitVector(D2<SBasis> const &V_in, double tol, unsigned order){
 
 unitVector(x,y) is computed as (b,-a) where a and b are solutions of:
      ax+by=0 (eqn1)   and   a^2+b^2=1 (eqn2)
+
+ \relates Piecewise
 */
 Piecewise<D2<SBasis> >
 Geom::unitVector(Piecewise<D2<SBasis> > const &V, double tol, unsigned order){
@@ -314,7 +318,7 @@ Geom::unitVector(Piecewise<D2<SBasis> > const &V, double tol, unsigned order){
 /** returns a function giving the arclength at each point in M.
  \param M the Element.
  \param tol the maximum error allowed.
-
+ \relates Piecewise
 */
 Piecewise<SBasis> 
 Geom::arcLengthSb(Piecewise<D2<SBasis> > const &M, double tol){
@@ -328,7 +332,7 @@ Geom::arcLengthSb(Piecewise<D2<SBasis> > const &M, double tol){
 /** returns a function giving the arclength at each point in M.
  \param M the Element.
  \param tol the maximum error allowed.
-
+ \relates Piecewise, D2
 */
 Piecewise<SBasis> 
 Geom::arcLengthSb(D2<SBasis> const &M, double tol){
@@ -353,9 +357,8 @@ Geom::length(Piecewise<D2<SBasis> > const &M,
 /** returns a function giving the curvature at each point in M.
  \param M the Element.
  \param tol the maximum error allowed.
-
- Todo:
- * claimed incomplete.  Check.
+ \relates Piecewise, D2
+ \todo claimed incomplete.  Check.
 */
 Piecewise<SBasis>
 Geom::curvature(D2<SBasis> const &M, double tol) {
@@ -371,9 +374,8 @@ Geom::curvature(D2<SBasis> const &M, double tol) {
 /** returns a function giving the curvature at each point in M.
  \param M the Element.
  \param tol the maximum error allowed.
-
- Todo:
- * claimed incomplete.  Check.
+ \relates Piecewise
+ \todo claimed incomplete.  Check.
 */
 Piecewise<SBasis> 
 Geom::curvature(Piecewise<D2<SBasis> > const &V, double tol){
@@ -395,7 +397,7 @@ Geom::curvature(Piecewise<D2<SBasis> > const &V, double tol){
  \param M the Element.
  \param tol the maximum error allowed.
  \param order the maximum degree to use for approximation
-
+ \relates Piecewise, D2
 */
 Piecewise<D2<SBasis> >
 Geom::arc_length_parametrization(D2<SBasis> const &M,
@@ -424,7 +426,7 @@ Geom::arc_length_parametrization(D2<SBasis> const &M,
  \param M the Element.
  \param tol the maximum error allowed.
  \param order the maximum degree to use for approximation
-
+ \relates Piecewise
 */
 Piecewise<D2<SBasis> >
 Geom::arc_length_parametrization(Piecewise<D2<SBasis> > const &M,
@@ -449,7 +451,7 @@ static double sb_length_integrating(double t, void* param) {
  \param tol the maximum error allowed.
  \param result variable to be incremented with the length of the path
  \param abs_error variable to be incremented with the estimated error
-
+ \relates D2
 If you only want the length, this routine may be faster/more accurate.
 */
 void Geom::length_integrating(D2<SBasis> const &B, double &result, double &abs_error, double tol) {
@@ -474,7 +476,7 @@ void Geom::length_integrating(D2<SBasis> const &B, double &result, double &abs_e
 /** Calculates the length of a D2<SBasis> through gsl integration.
  \param s the Element.
  \param tol the maximum error allowed.
-
+ \relates D2
 If you only want the total length, this routine faster and more accurate than constructing an arcLengthSb.
 */
 double
@@ -488,7 +490,7 @@ Geom::length(D2<SBasis> const &s,
 /** Calculates the length of a Piecewise<D2<SBasis> > through gsl integration.
  \param s the Element.
  \param tol the maximum error allowed.
-
+ \relates Piecewise
 If you only want the total length, this routine faster and more accurate than constructing an arcLengthSb.
 */
 double
@@ -507,7 +509,7 @@ Geom::length(Piecewise<D2<SBasis> > const &s,
  \param p the Element.
  \param centroid on return contains the centroid of the shape
  \param area on return contains the signed area of the shape.
- 
+ \relates Piecewise
 This approach uses green's theorem to compute the area and centroid using integrals.  For curved shapes this is much faster than converting to polyline.  Note that without an uncross operation the output is not the absolute area.
 
  * Returned values: 
@@ -620,6 +622,8 @@ solve_lambda0(double a0,double a1,double c0,double c1,
 * proportional to the given ones.
 * If insist_on_speed_signs == 0, allow speeds to point in the opposite direction (both at the same time) 
 * If insist_on_speed_signs == -1, allow speeds to point in both direction independantly. 
+*
+* \relates D2
 */
 std::vector<D2<SBasis> >
 Geom::cubics_fitting_curvature(Point const &M0,   Point const &M1,
@@ -743,6 +747,7 @@ Geom::cubics_with_prescribed_curvature(Point const &M0,   Point const &M1,
 
 /**
 * \brief returns all the parameter values of A whose tangent passes through P.
+* \relates D2
 */
 std::vector<double> find_tangents(Point P, D2<SBasis> const &A) {
     SBasis crs (cross(A - P, derivative(A)));

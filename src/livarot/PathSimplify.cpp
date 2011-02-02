@@ -252,7 +252,7 @@ bool Path::FitCubic(Geom::Point const &start, PathDescrCubicTo &res,
     Geom::Point const end = res.p;
     
     // la matrice tNN
-    Geom::Matrix M(0, 0, 0, 0, 0, 0);
+    Geom::Affine M(0, 0, 0, 0, 0, 0);
     for (int i = 1; i < nbPt - 1; i++) {
         M[0] += N13(tk[i]) * N13(tk[i]);
         M[1] += N23(tk[i]) * N13(tk[i]);
@@ -267,7 +267,7 @@ bool Path::FitCubic(Geom::Point const &start, PathDescrCubicTo &res,
         return false;
     }
     
-    Geom::Matrix const iM = M.inverse();
+    Geom::Affine const iM = M.inverse();
     M = iM;
   
     // phase 1: abcisses

@@ -216,9 +216,9 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                     }
 
                     Geom::Point const cd = desktop->w2d(dc->centre);
-                    Geom::Matrix const w2dt = desktop->w2d();
+                    Geom::Affine const w2dt = desktop->w2d();
                     const double scale = rw * w2dt.descrim();
-                    Geom::Matrix const sm( Geom::Scale(scale, scale) * Geom::Translate(cd) );
+                    Geom::Affine const sm( Geom::Scale(scale, scale) * Geom::Translate(cd) );
                     sp_canvas_item_affine_absolute(dc->area, sm);
                     sp_canvas_item_show(dc->area);
 

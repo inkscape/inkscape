@@ -56,7 +56,7 @@ Inkscape::SnappedCurve::~SnappedCurve()
 {
 }
 
-Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &curve, Geom::Point const &p, Geom::Matrix dt2doc) const
+Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &curve, Geom::Point const &p, Geom::Affine dt2doc) const
 {
     // Calculate the intersections of two curves, which are both within snapping range, and
     // return only the closest intersection
@@ -125,7 +125,7 @@ bool getClosestCurve(std::list<Inkscape::SnappedCurve> const &list, Inkscape::Sn
 }
 
 // search for the closest intersection of two snapped curves, which are both member of the same collection
-bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, Geom::Point const &p, Inkscape::SnappedPoint &result, Geom::Matrix dt2doc)
+bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, Geom::Point const &p, Inkscape::SnappedPoint &result, Geom::Affine dt2doc)
 {
     bool success = false;
 

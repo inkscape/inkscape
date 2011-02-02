@@ -253,7 +253,7 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  */*scaled_font*/,
 //        Geom::Scale s(1.0/((SPFont*) node->parent)->horiz_adv_x);
         Geom::Scale s(1.0/1000);//TODO: use here the units-per-em attribute?
         //This matrix flips the glyph vertically
-        Geom::Matrix m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(0));
+        Geom::Affine m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(0));
         //then we offset it
 //      pathv += Geom::Point(Geom::Coord(0),Geom::Coord(-((SPFont*) node->parent)->horiz_adv_x));
         pathv += Geom::Point(Geom::Coord(0),Geom::Coord(-1000));//TODO: use here the units-per-em attribute?

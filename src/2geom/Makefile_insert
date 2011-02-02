@@ -22,7 +22,7 @@
 	2geom/elliptical-arc.cpp	\
 	2geom/geom.cpp	\
 	2geom/line.cpp	\
-	2geom/matrix.cpp	\
+	2geom/affine.cpp	\
 	2geom/nearest-point.cpp	\
 	2geom/path-intersection.cpp	\
 	2geom/path.cpp	\

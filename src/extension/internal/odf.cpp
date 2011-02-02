@@ -259,7 +259,7 @@ private:
  * NOTE:
  * This class is ported almost verbatim from the public domain
  * JAMA Matrix package.  It is modified to handle only 3x3 matrices
- * and our Geom::Matrix affine transform class.  We give full
+ * and our Geom::Affine affine transform class.  We give full
  * attribution to them, along with many thanks.  JAMA can be found at:
  *     http://math.nist.gov/javanumerics/jama
  *
@@ -921,7 +921,7 @@ static Glib::ustring getExtension(const Glib::ustring &fname)
 }
 
 
-static Glib::ustring formatTransform(Geom::Matrix &tf)
+static Glib::ustring formatTransform(Geom::Affine &tf)
 {
     Glib::ustring str;
     if (!tf.isIdentity())
@@ -943,16 +943,16 @@ static Glib::ustring formatTransform(Geom::Matrix &tf)
  * Get the general transform from SVG pixels to
  * ODF cm
  */
-static Geom::Matrix getODFTransform(const SPItem *item)
+static Geom::Affine getODFTransform(const SPItem *item)
 {
     //### Get SVG-to-ODF transform
-    Geom::Matrix tf (item->i2d_affine());
+    Geom::Affine tf (item->i2d_affine());
     //Flip Y into document coordinates
     double doc_height    = SP_ACTIVE_DOCUMENT->getHeight();
-    Geom::Matrix doc2dt_tf = Geom::Matrix(Geom::Scale(1.0, -1.0));
-    doc2dt_tf            = doc2dt_tf * Geom::Matrix(Geom::Translate(0, doc_height));
+    Geom::Affine doc2dt_tf = Geom::Affine(Geom::Scale(1.0, -1.0));
+    doc2dt_tf            = doc2dt_tf * Geom::Affine(Geom::Translate(0, doc_height));
     tf                   = tf * doc2dt_tf;
-    tf                   = tf * Geom::Matrix(Geom::Scale(pxToCm));
+    tf                   = tf * Geom::Affine(Geom::Scale(pxToCm));
     return tf;
 }
 
@@ -970,10 +970,10 @@ static Geom::OptRect getODFBoundingBox(const SPItem *item)
     if (bbox_temp) {
         bbox = *bbox_temp;
         double doc_height    = SP_ACTIVE_DOCUMENT->getHeight();
-        Geom::Matrix doc2dt_tf = Geom::Matrix(Geom::Scale(1.0, -1.0));
-        doc2dt_tf            = doc2dt_tf * Geom::Matrix(Geom::Translate(0, doc_height));
+        Geom::Affine doc2dt_tf = Geom::Affine(Geom::Scale(1.0, -1.0));
+        doc2dt_tf            = doc2dt_tf * Geom::Affine(Geom::Translate(0, doc_height));
         bbox                 = *bbox * doc2dt_tf;
-        bbox                 = *bbox * Geom::Matrix(Geom::Scale(pxToCm));
+        bbox                 = *bbox * Geom::Affine(Geom::Scale(pxToCm));
     }
     return bbox;
 }
@@ -984,10 +984,10 @@ static Geom::OptRect getODFBoundingBox(const SPItem *item)
  * Get the transform for an item, correcting for
  * handedness reversal
  */
-static Geom::Matrix getODFItemTransform(const SPItem *item)
+static Geom::Affine getODFItemTransform(const SPItem *item)
 {
-    Geom::Matrix itemTransform (Geom::Scale(1, -1));
-    itemTransform = itemTransform * (Geom::Matrix)item->transform;
+    Geom::Affine itemTransform (Geom::Scale(1, -1));
+    itemTransform = itemTransform * (Geom::Affine)item->transform;
     itemTransform = itemTransform * Geom::Scale(1, -1);
     return itemTransform;
 }
@@ -997,7 +997,7 @@ static Geom::Matrix getODFItemTransform(const SPItem *item)
 /**
  * Get some fun facts from the transform
  */
-static void analyzeTransform(Geom::Matrix &tf,
+static void analyzeTransform(Geom::Affine &tf,
                              double &rotate, double &/*xskew*/, double &/*yskew*/,
                              double &xscale, double &yscale)
 {
@@ -1087,7 +1087,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
         }
     SPItem *item  = SP_ITEM(reprobj);
     //### Get SVG-to-ODF transform
-    Geom::Matrix tf = getODFTransform(item);
+    Geom::Affine tf = getODFTransform(item);
 
     if (nodeName == "image" || nodeName == "svg:image")
         {
@@ -1487,7 +1487,7 @@ bool OdfOutput::writeStyle(ZipFile &zf)
  */
 static int
 writePath(Writer &outs, Geom::PathVector const &pathv,
-          Geom::Matrix const &tf, double xoff, double yoff)
+          Geom::Affine const &tf, double xoff, double yoff)
 {
     using Geom::X;
     using Geom::Y;
@@ -1638,7 +1638,7 @@ bool OdfOutput::processStyle(Writer &outs, SPItem *item,
 
 
 bool OdfOutput::processGradient(Writer &outs, SPItem *item,
-                                const Glib::ustring &id, Geom::Matrix &/*tf*/)
+                                const Glib::ustring &id, Geom::Affine &/*tf*/)
 {
     if (!item)
         return false;
@@ -1864,7 +1864,7 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
     Glib::ustring id       = getAttribute(node, "id");
 
     //### Get SVG-to-ODF transform
-    Geom::Matrix tf        = getODFTransform(item);
+    Geom::Affine tf        = getODFTransform(item);
 
     //### Get ODF bounding box params for item
     Geom::OptRect bbox = getODFBoundingBox(item);
@@ -1960,7 +1960,7 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
         iwidth  = xscale * iwidth;
         iheight = yscale * iheight;
 
-        Geom::Matrix itemTransform = getODFItemTransform(item);
+        Geom::Affine itemTransform = getODFItemTransform(item);
 
         Glib::ustring itemTransformString = formatTransform(itemTransform);
 

@@ -317,7 +317,7 @@ SPGradient *sp_gradient_reset_to_userspace(SPGradient *gr, SPItem *item)
         sp_repr_set_svg_double(repr, "r", width/2);
 
         // we want it to be elliptic, not circular
-        Geom::Matrix squeeze = Geom::Translate (-center) *
+        Geom::Affine squeeze = Geom::Translate (-center) *
             Geom::Scale(1, height/width) *
             Geom::Translate (center);
 
@@ -365,10 +365,10 @@ SPGradient *sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar
 
         // calculate the bbox of the item
         SP_OBJECT_DOCUMENT(item)->ensureUpToDate();
-        Geom::Matrix bbox2user;
+        Geom::Affine bbox2user;
         Geom::OptRect bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
         if ( bbox ) {
-            bbox2user = Geom::Matrix(bbox->dimensions()[Geom::X], 0,
+            bbox2user = Geom::Affine(bbox->dimensions()[Geom::X], 0,
                                    0, bbox->dimensions()[Geom::Y],
                                    bbox->min()[Geom::X], bbox->min()[Geom::Y]);
         } else {
@@ -390,7 +390,7 @@ SPGradient *sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar
          *   gradient vector in user space due to application of the non-uniform scaling
          *   transformation from bounding box space to user space.
          */
-        Geom::Matrix skew = bbox2user;
+        Geom::Affine skew = bbox2user;
         double exp = skew.descrim();
         skew[0] /= exp;
         skew[1] /= exp;
@@ -409,7 +409,7 @@ SPGradient *sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar
 
         // Matrix to convert points to userspace coords; postmultiply by inverse of skew so
         // as to cancel it out when it's applied to the gradient during rendering
-        Geom::Matrix point_convert = bbox2user * skew.inverse();
+        Geom::Affine point_convert = bbox2user * skew.inverse();
 
         if (SP_IS_RADIALGRADIENT(gr)) {
             SPRadialGradient *rg = SP_RADIALGRADIENT(gr);
@@ -462,7 +462,7 @@ SPGradient *sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar
     return gr;
 }
 
-void sp_gradient_transform_multiply(SPGradient *gradient, Geom::Matrix postmul, bool set)
+void sp_gradient_transform_multiply(SPGradient *gradient, Geom::Affine postmul, bool set)
 {
 #ifdef SP_GR_VERBOSE
     g_message("sp_gradient_transform_multiply(%p, , %d)", gradient, set);
@@ -791,7 +791,7 @@ void sp_item_gradient_set_coords(SPItem *item, guint point_type, guint point_i, 
 
     gradient = sp_gradient_convert_to_userspace (gradient, item, fill_or_stroke? "fill" : "stroke");
 
-    Geom::Matrix i2d (item->i2d_affine ());
+    Geom::Affine i2d (item->i2d_affine ());
     Geom::Point p = p_w * i2d.inverse();
     p *= (gradient->gradientTransform).inverse();
     // now p is in gradient's original coordinates
@@ -864,7 +864,7 @@ void sp_item_gradient_set_coords(SPItem *item, guint point_type, guint point_i, 
             // prevent setting a radius too close to the center
             return;
         }
-        Geom::Matrix new_transform;
+        Geom::Affine new_transform;
         bool transform_set = false;
 
         switch (point_type) {
@@ -899,12 +899,12 @@ void sp_item_gradient_set_coords(SPItem *item, guint point_type, guint point_i, 
                 double move_angle = Geom::atan2(p_w - c_w) - r1_angle;
                 double move_stretch = Geom::L2(p_w - c_w) / Geom::L2(r1_w - c_w);
 
-                Geom::Matrix move = Geom::Matrix (Geom::Translate (-c_w)) *
-                    Geom::Matrix (Geom::Rotate(-r1_angle)) *
-                    Geom::Matrix (Geom::Scale(move_stretch, scale? move_stretch : 1)) *
-                    Geom::Matrix (Geom::Rotate(r1_angle)) *
-                    Geom::Matrix (Geom::Rotate(move_angle)) *
-                    Geom::Matrix (Geom::Translate (c_w));
+                Geom::Affine move = Geom::Affine (Geom::Translate (-c_w)) *
+                    Geom::Affine (Geom::Rotate(-r1_angle)) *
+                    Geom::Affine (Geom::Scale(move_stretch, scale? move_stretch : 1)) *
+                    Geom::Affine (Geom::Rotate(r1_angle)) *
+                    Geom::Affine (Geom::Rotate(move_angle)) *
+                    Geom::Affine (Geom::Translate (c_w));
 
                 new_transform = gradient->gradientTransform * i2d * move * i2d.inverse();
                 transform_set = true;
@@ -918,12 +918,12 @@ void sp_item_gradient_set_coords(SPItem *item, guint point_type, guint point_i, 
                 double move_angle = Geom::atan2(p_w - c_w) - r2_angle;
                 double move_stretch = Geom::L2(p_w - c_w) / Geom::L2(r2_w - c_w);
 
-                Geom::Matrix move = Geom::Matrix (Geom::Translate (-c_w)) *
-                    Geom::Matrix (Geom::Rotate(-r2_angle)) *
-                    Geom::Matrix (Geom::Scale(move_stretch, scale? move_stretch : 1)) *
-                    Geom::Matrix (Geom::Rotate(r2_angle)) *
-                    Geom::Matrix (Geom::Rotate(move_angle)) *
-                    Geom::Matrix (Geom::Translate (c_w));
+                Geom::Affine move = Geom::Affine (Geom::Translate (-c_w)) *
+                    Geom::Affine (Geom::Rotate(-r2_angle)) *
+                    Geom::Affine (Geom::Scale(move_stretch, scale? move_stretch : 1)) *
+                    Geom::Affine (Geom::Rotate(r2_angle)) *
+                    Geom::Affine (Geom::Rotate(move_angle)) *
+                    Geom::Affine (Geom::Translate (c_w));
 
                 new_transform = gradient->gradientTransform * i2d * move * i2d.inverse();
                 transform_set = true;
@@ -1067,12 +1067,12 @@ Geom::Point sp_item_gradient_get_coords(SPItem *item, guint point_type, guint po
         SP_OBJECT_DOCUMENT(item)->ensureUpToDate();
         Geom::OptRect bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
         if (bbox) {
-            p *= Geom::Matrix(bbox->dimensions()[Geom::X], 0,
+            p *= Geom::Affine(bbox->dimensions()[Geom::X], 0,
                             0, bbox->dimensions()[Geom::Y],
                             bbox->min()[Geom::X], bbox->min()[Geom::Y]);
         }
     }
-    p *= Geom::Matrix(gradient->gradientTransform) * (Geom::Matrix)item->i2d_affine();
+    p *= Geom::Affine(gradient->gradientTransform) * (Geom::Affine)item->i2d_affine();
     return from_2geom(p);
 }
 

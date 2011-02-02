@@ -242,7 +242,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         gdouble strokewidth = stroke_average_width (selection->itemList());
         int transform_stroke = prefs->getBool("/options/transform/stroke", true) ? 1 : 0;
 
-        Geom::Matrix scaler = get_scale_transform_with_stroke (*bbox, strokewidth, transform_stroke, x0, y0, x1, y1);
+        Geom::Affine scaler = get_scale_transform_with_stroke (*bbox, strokewidth, transform_stroke, x0, y0, x1, y1);
 
         sp_selection_apply_affine(selection, scaler);
         DocumentUndo::maybeDone(document, actionkey, SP_VERB_CONTEXT_SELECT,

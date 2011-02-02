@@ -539,9 +539,9 @@ Transformation::updatePageTransform(Inkscape::Selection *selection)
 {
     if (selection && !selection->isEmpty()) {
         if (_check_replace_matrix.get_active()) {
-            Geom::Matrix current (SP_ITEM(selection->itemList()->data)->transform); // take from the first item in selection
+            Geom::Affine current (SP_ITEM(selection->itemList()->data)->transform); // take from the first item in selection
 
-            Geom::Matrix new_displayed = current;
+            Geom::Affine new_displayed = current;
 
             _scalar_transform_a.setValue(new_displayed[0]);
             _scalar_transform_b.setValue(new_displayed[1]);
@@ -841,7 +841,7 @@ Transformation::applyPageTransform(Inkscape::Selection *selection)
     double e = _scalar_transform_e.getValue();
     double f = _scalar_transform_f.getValue();
 
-    Geom::Matrix displayed(a, b, c, d, e, f);
+    Geom::Affine displayed(a, b, c, d, e, f);
 
     if (_check_replace_matrix.get_active()) {
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
@@ -989,10 +989,10 @@ Transformation::onReplaceMatrixToggled()
     double e = _scalar_transform_e.getValue();
     double f = _scalar_transform_f.getValue();
 
-    Geom::Matrix displayed (a, b, c, d, e, f);
-    Geom::Matrix current = SP_ITEM(selection->itemList()->data)->transform; // take from the first item in selection
+    Geom::Affine displayed (a, b, c, d, e, f);
+    Geom::Affine current = SP_ITEM(selection->itemList()->data)->transform; // take from the first item in selection
 
-    Geom::Matrix new_displayed;
+    Geom::Affine new_displayed;
     if (_check_replace_matrix.get_active()) {
         new_displayed = current;
     } else {

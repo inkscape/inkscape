@@ -51,7 +51,7 @@ static Inkscape::XML::Node *sp_use_write(SPObject *object, Inkscape::XML::Docume
 static void sp_use_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_use_modified(SPObject *object, guint flags);
 
-static void sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
+static void sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
 static void sp_use_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 static void sp_use_print(SPItem *item, SPPrintContext *ctx);
 static gchar *sp_use_description(SPItem *item);
@@ -64,7 +64,7 @@ static void sp_use_delete_self(SPObject *deleted, SPUse *self);
 
 static SPItemClass *parent_class;
 
-//void m_print(gchar *say, Geom::Matrix m)
+//void m_print(gchar *say, Geom::Affine m)
 //{ g_print("%s %g %g %g %g %g %g\n", say, m[0], m[1], m[2], m[3], m[4], m[5]); }
 
 GType
@@ -278,13 +278,13 @@ sp_use_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::
 }
 
 static void
-sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags)
+sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags)
 {
     SPUse const *use = SP_USE(item);
 
     if (use->child && SP_IS_ITEM(use->child)) {
         SPItem *child = SP_ITEM(use->child);
-        Geom::Matrix const ct( child->transform
+        Geom::Affine const ct( child->transform
                              * Geom::Translate(use->x.computed,
                                                use->y.computed)
                              * transform );
@@ -306,7 +306,7 @@ sp_use_print(SPItem *item, SPPrintContext *ctx)
     SPUse *use = SP_USE(item);
 
     if ((use->x._set && use->x.computed != 0) || (use->y._set && use->y.computed != 0)) {
-        Geom::Matrix tp(Geom::Translate(use->x.computed, use->y.computed));
+        Geom::Affine tp(Geom::Translate(use->x.computed, use->y.computed));
         sp_print_bind(ctx, tp, 1.0);
         translated = true;
     }
@@ -363,7 +363,7 @@ sp_use_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
         }
         Geom::Translate t(use->x.computed,
                         use->y.computed);
-        nr_arena_group_set_child_transform(NR_ARENA_GROUP(ai), Geom::Matrix(t));
+        nr_arena_group_set_child_transform(NR_ARENA_GROUP(ai), Geom::Affine(t));
     }
 
     return ai;
@@ -407,7 +407,7 @@ sp_use_root(SPUse *use)
  * Returns the effective transform that goes from the ultimate original to given SPUse, both ends
  * included.
  */
-Geom::Matrix
+Geom::Affine
 sp_use_get_root_transform(SPUse *use)
 {
     //track the ultimate source of a chain of uses
@@ -422,7 +422,7 @@ sp_use_get_root_transform(SPUse *use)
 
 
     //calculate the accummulated transform, starting from the original
-    Geom::Matrix t(Geom::identity());
+    Geom::Affine t(Geom::identity());
     for (GSList *i = chain; i != NULL; i = i->next) {
         SPItem *i_tem = SP_ITEM(i->data);
 
@@ -447,10 +447,10 @@ sp_use_get_root_transform(SPUse *use)
  * Returns the transform that leads to the use from its immediate original.
  * Does not inlcude the original's transform if any.
  */
-Geom::Matrix
+Geom::Affine
 sp_use_get_parent_transform(SPUse *use)
 {
-    Geom::Matrix t(Geom::identity());
+    Geom::Affine t(Geom::identity());
     if ((use->x._set && use->x.computed != 0) || (use->y._set && use->y.computed != 0)) {
         t *= Geom::Translate(use->x._set ? use->x.computed : 0,
                            use->y._set ? use->y.computed : 0);
@@ -466,7 +466,7 @@ sp_use_get_parent_transform(SPUse *use)
  * clone's transform.
  */
 static void
-sp_use_move_compensate(Geom::Matrix const *mp, SPItem */*original*/, SPUse *self)
+sp_use_move_compensate(Geom::Affine const *mp, SPItem */*original*/, SPUse *self)
 {
     // the clone is orphaned; or this is not a real use, but a clone of another use;
     // we skip it, otherwise duplicate compensation will occur
@@ -485,7 +485,7 @@ sp_use_move_compensate(Geom::Matrix const *mp, SPItem */*original*/, SPUse *self
     if (mode == SP_CLONE_COMPENSATION_NONE)
         return;
 
-    Geom::Matrix m(*mp);
+    Geom::Affine m(*mp);
 
     // this is not a simple move, do not try to compensate
     if (!(m.isTranslation()))
@@ -494,11 +494,11 @@ sp_use_move_compensate(Geom::Matrix const *mp, SPItem */*original*/, SPUse *self
     // restore item->transform field from the repr, in case it was changed by seltrans
     SP_OBJECT (self)->readAttr ("transform");
 
-    Geom::Matrix t = sp_use_get_parent_transform(self);
-    Geom::Matrix clone_move = t.inverse() * m * t;
+    Geom::Affine t = sp_use_get_parent_transform(self);
+    Geom::Affine clone_move = t.inverse() * m * t;
 
     // calculate the compensation matrix and the advertized movement matrix
-    Geom::Matrix advertized_move;
+    Geom::Affine advertized_move;
     if (mode == SP_CLONE_COMPENSATION_PARALLEL) {
         clone_move = clone_move.inverse() * m;
         advertized_move = m;
@@ -633,7 +633,7 @@ sp_use_update(SPObject *object, SPCtx *ctx, unsigned flags)
 
     /* As last step set additional transform of arena group */
     for (SPItemView *v = item->display; v != NULL; v = v->next) {
-        Geom::Matrix t(Geom::Translate(use->x.computed, use->y.computed));
+        Geom::Affine t(Geom::Translate(use->x.computed, use->y.computed));
         nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), t);
     }
 }
@@ -686,7 +686,7 @@ SPItem *sp_use_unlink(SPUse *use)
     }
 
     // Calculate the accumulated transform, starting from the original.
-    Geom::Matrix t = sp_use_get_root_transform(use);
+    Geom::Affine t = sp_use_get_root_transform(use);
 
     Inkscape::XML::Node *copy = NULL;
     if (SP_IS_SYMBOL(orig)) { // make a group, copy children
@@ -739,7 +739,7 @@ SPItem *sp_use_unlink(SPUse *use)
     SPItem *item = SP_ITEM(unlinked);
     // Set the accummulated transform.
     {
-        Geom::Matrix nomove(Geom::identity());
+        Geom::Affine nomove(Geom::identity());
         // Advertise ourselves as not moving.
         item->doWriteTransform(SP_OBJECT_REPR(item), t, &nomove);
     }

@@ -37,8 +37,11 @@
 
 namespace Geom {
 
+/** @brief Axis enum (X or Y). */
+enum Dim2 { X=0, Y=1 };
+
 /**
- * A "real" type with sufficient precision for coordinates.
+ * @brief Floating point type used to store coordinates.
  *
  * You may safely assume that double (or even float) provides enough precision for storing
  * on-canvas points, and hence that double provides enough precision for dot products of
@@ -51,7 +54,11 @@ const Coord EPSILON = 1e-5; //1e-18;
 inline Coord infinity() {  return std::numeric_limits<Coord>::infinity();  }
 
 //IMPL: NearConcept
-inline bool are_near(Coord a, Coord b, double eps=EPSILON) { return fabs(a-b) <= eps; }
+inline bool are_near(Coord a, Coord b, double eps=EPSILON) { return a-b <= eps && a-b >= -eps; }
+inline bool rel_error_bound(Coord a, Coord b, double eps=EPSILON) { return a <= eps*b && a >= -eps*b; }
+
+
+typedef long IntCoord;
 
 } /* namespace Geom */
 

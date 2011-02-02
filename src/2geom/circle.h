@@ -39,11 +39,12 @@
 #include <2geom/point.h>
 #include <2geom/exception.h>
 #include <2geom/path.h>
+#include <vector>
 
 namespace Geom
 {
 
-class SVGEllipticalArc;
+class EllipticalArc;
 
 class Circle
 {
@@ -87,12 +88,11 @@ class Circle
     // prerequisite: at least 3 points must be passed
     void set(std::vector<Point> const& points);
 
-    SVGEllipticalArc
+    EllipticalArc *
     arc(Point const& initial, Point const& inner, Point const& final,
         bool _svg_compliant = true);
 
-    void
-    getPath(std::vector<Path> &path_out);
+    void getPath(std::vector<Path> &path_out);
 
     Point center() const
     {

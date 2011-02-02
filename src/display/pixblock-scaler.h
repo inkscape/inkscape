@@ -23,7 +23,7 @@ namespace NR {
  * Source pixblock is not modified in process.
  * Only works for 32-bpp images.
  */
-void scale_bicubic(NRPixBlock *to, NRPixBlock *from, Geom::Matrix const &trans);
+void scale_bicubic(NRPixBlock *to, NRPixBlock *from, Geom::Affine const &trans);
 
 } /* namespace NR */
 

@@ -582,7 +582,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         Shape *theShape = new Shape;
         Shape *theRes = new Shape;
-        Geom::Matrix i2doc(item->i2doc_affine());
+        Geom::Affine i2doc(item->i2doc_affine());
 
         orig->ConvertWithBackData((0.08 - (0.07 * fidelity)) / i2doc.descrim()); // default 0.059
         orig->Fill(theShape, 0);
@@ -803,7 +803,7 @@ tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke,
     if (!gradient || !SP_IS_GRADIENT(gradient))
         return;
 
-    Geom::Matrix i2d (item->i2doc_affine ());
+    Geom::Affine i2d (item->i2doc_affine ());
     Geom::Point p = p_w * i2d.inverse();
     p *= (gradient->gradientTransform).inverse();
     // now p is in gradient's original coordinates
@@ -820,7 +820,7 @@ tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke,
 
         // This is the matrix which moves and rotates the gradient line
         // so it's oriented along the X axis:
-        Geom::Matrix norm = Geom::Matrix(Geom::Translate(-p1)) * Geom::Matrix(Geom::Rotate(-atan2(pdiff[Geom::Y], pdiff[Geom::X])));
+        Geom::Affine norm = Geom::Affine(Geom::Translate(-p1)) * Geom::Affine(Geom::Rotate(-atan2(pdiff[Geom::Y], pdiff[Geom::X])));
 
         // Transform the mouse point by it to find out its projection onto the gradient line:
         Geom::Point pnorm = p * norm;
@@ -979,7 +979,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
                 }
 
                 double blur_now = 0;
-                Geom::Matrix i2d = item->i2d_affine ();
+                Geom::Affine i2d = item->i2d_affine ();
                 if (style->filter.set && style->getFilter()) {
                     //cycle through filter primitives
                     SPObject *primitive_obj = style->getFilter()->children;
@@ -1140,7 +1140,7 @@ void
 sp_tweak_update_area (SPTweakContext *tc)
 {
         double radius = get_dilate_radius(tc);
-        Geom::Matrix const sm (Geom::Scale(radius, radius) * Geom::Translate(SP_EVENT_CONTEXT(tc)->desktop->point()));
+        Geom::Affine const sm (Geom::Scale(radius, radius) * Geom::Translate(SP_EVENT_CONTEXT(tc)->desktop->point()));
         sp_canvas_item_affine_absolute(tc->dilate_area, sm);
         sp_canvas_item_show(tc->dilate_area);
 }
@@ -1216,7 +1216,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
 
             // draw the dilating cursor
                 double radius = get_dilate_radius(tc);
-                Geom::Matrix const sm (Geom::Scale(radius, radius) * Geom::Translate(desktop->w2d(motion_w)));
+                Geom::Affine const sm (Geom::Scale(radius, radius) * Geom::Translate(desktop->w2d(motion_w)));
                 sp_canvas_item_affine_absolute(tc->dilate_area, sm);
                 sp_canvas_item_show(tc->dilate_area);
 

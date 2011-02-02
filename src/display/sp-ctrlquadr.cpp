@@ -21,7 +21,7 @@
 struct SPCtrlQuadr : public SPCanvasItem{
     guint32 rgba;
     Geom::Point p1, p2, p3, p4;
-    Geom::Matrix affine;    
+    Geom::Affine affine;    
 };
 
 struct SPCtrlQuadrClass : public SPCanvasItemClass{};
@@ -30,7 +30,7 @@ static void sp_ctrlquadr_class_init (SPCtrlQuadrClass *klass);
 static void sp_ctrlquadr_init (SPCtrlQuadr *ctrlquadr);
 static void sp_ctrlquadr_destroy (GtkObject *object);
 
-static void sp_ctrlquadr_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
+static void sp_ctrlquadr_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_ctrlquadr_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass *parent_class;
@@ -136,7 +136,7 @@ sp_ctrlquadr_render (SPCanvasItem *item, SPCanvasBuf *buf)
 
 
 static void
-sp_ctrlquadr_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
+sp_ctrlquadr_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
     SPCtrlQuadr *cq = SP_CTRLQUADR (item);
 

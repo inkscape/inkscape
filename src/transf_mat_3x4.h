@@ -47,8 +47,8 @@ public:
     gchar * pt_to_str (Proj::Axis axis);
 
     bool operator==(const TransfMat3x4 &rhs) const;
-    TransfMat3x4 operator*(Geom::Matrix const &A) const;
-    TransfMat3x4 &operator*=(Geom::Matrix const &A);
+    TransfMat3x4 operator*(Geom::Affine const &A) const;
+    TransfMat3x4 &operator*=(Geom::Affine const &A);
 
     void print() const;
 

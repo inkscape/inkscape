@@ -288,9 +288,9 @@ public:
     // create a graph that is an offseted version of the graph "of"
     // the offset is dec, with joins between edges of type "join" (see LivarotDefs.h)
     // the result is NOT a polygon; you need a subsequent call to ConvertToShape to get a real polygon
-    int MakeOffset(Shape *of, double dec, JoinType join, double miter, bool do_profile=false, double cx = 0, double cy = 0, double radius = 0, Geom::Matrix *i2doc = NULL);
+    int MakeOffset(Shape *of, double dec, JoinType join, double miter, bool do_profile=false, double cx = 0, double cy = 0, double radius = 0, Geom::Affine *i2doc = NULL);
 
-    int MakeTweak (int mode, Shape *a, double dec, JoinType join, double miter, bool do_profile, Geom::Point c, Geom::Point vector, double radius, Geom::Matrix *i2doc);
+    int MakeTweak (int mode, Shape *a, double dec, JoinType join, double miter, bool do_profile, Geom::Point c, Geom::Point vector, double radius, Geom::Affine *i2doc);
   
     int PtWinding(const Geom::Point px) const; // plus rapide
     int Winding(const Geom::Point px) const;
@@ -314,7 +314,7 @@ public:
     void QuickScan(float &pos, int &curP, float to, FillRule directed, BitLigne* line, float step);
     void QuickScan(float &pos, int &curP, float to, AlphaLigne* line, float step);
 
-    void Transform(Geom::Matrix const &tr)
+    void Transform(Geom::Affine const &tr)
         {for(std::vector<dg_point>::iterator it=_pts.begin();it!=_pts.end();it++) it->x*=tr;}
 
     std::vector<back_data> ebData;

@@ -394,7 +394,7 @@ NRRect *Selection::boundsInDocument(NRRect *bbox, SPItem::BBoxType type) const {
 
     for ( GSList const *iter=items ; iter != NULL ; iter = iter->next ) {
         SPItem *item=SP_ITEM(iter->data);
-        Geom::Matrix i2doc(item->i2doc_affine());
+        Geom::Affine i2doc(item->i2doc_affine());
         item->invoke_bbox( bbox, i2doc, FALSE, type);
     }
 

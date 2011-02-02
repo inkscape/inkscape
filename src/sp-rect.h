@@ -63,7 +63,7 @@ void sp_rect_set_visible_height (SPRect *rect, gdouble ry);
 gdouble sp_rect_get_visible_width (SPRect *rect);
 gdouble sp_rect_get_visible_height (SPRect *rect);
 
-void sp_rect_compensate_rxry (SPRect *rect, Geom::Matrix xform);
+void sp_rect_compensate_rxry (SPRect *rect, Geom::Affine xform);
 
 #endif // SEEN_SP_RECT_H
 

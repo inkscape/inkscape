@@ -438,7 +438,7 @@ sp_root_update(SPObject *object, SPCtx *ctx, guint flags)
          * fixme: height seems natural, as this makes the inner svg element
          * fixme: self-contained. The spec is vague here.
          */
-        root->c2p = Geom::Matrix(Geom::Translate(root->x.computed,
+        root->c2p = Geom::Affine(Geom::Translate(root->x.computed,
                                                  root->y.computed));
     }
 

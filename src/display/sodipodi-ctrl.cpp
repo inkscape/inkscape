@@ -32,7 +32,7 @@ static void sp_ctrl_init (SPCtrl *ctrl);
 static void sp_ctrl_destroy (GtkObject *object);
 static void sp_ctrl_set_arg (GtkObject *object, GtkArg *arg, guint arg_id);
 
-static void sp_ctrl_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
+static void sp_ctrl_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static double sp_ctrl_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
@@ -210,7 +210,7 @@ sp_ctrl_set_arg (GtkObject *object, GtkArg *arg, guint arg_id)
 }
 
 static void
-sp_ctrl_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
+sp_ctrl_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
     SPCtrl *ctrl;
     gint x, y;
@@ -552,7 +552,7 @@ sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf)
 
 void SPCtrl::moveto (Geom::Point const p) {
     if (p != _point) {
-        sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (this), Geom::Matrix(Geom::Translate (p)));
+        sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (this), Geom::Affine(Geom::Translate (p)));
         _moved = true;
     }
     _point = p;

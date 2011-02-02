@@ -21,10 +21,10 @@ sp_item_rotate_rel(SPItem *item, Geom::Rotate const &rotation)
 {
     Geom::Point center = item->getCenter();
     Geom::Translate const s(item->getCenter());
-    Geom::Matrix affine = Geom::Matrix(s).inverse() * Geom::Matrix(rotation) * Geom::Matrix(s);
+    Geom::Affine affine = Geom::Affine(s).inverse() * Geom::Affine(rotation) * Geom::Affine(s);
 
     // Rotate item.
-    item->set_i2d_affine(item->i2d_affine() * (Geom::Matrix)affine);
+    item->set_i2d_affine(item->i2d_affine() * (Geom::Affine)affine);
     // Use each item's own transform writer, consistent with sp_selection_apply_affine()
     item->doWriteTransform(SP_OBJECT_REPR(item), item->transform);
 
@@ -52,8 +52,8 @@ sp_item_skew_rel (SPItem *item, double skewX, double skewY)
     Geom::Point center = item->getCenter();
     Geom::Translate const s(item->getCenter());
 
-    Geom::Matrix const skew(1, skewY, skewX, 1, 0, 0);
-    Geom::Matrix affine = Geom::Matrix(s).inverse() * skew * Geom::Matrix(s);
+    Geom::Affine const skew(1, skewY, skewX, 1, 0, 0);
+    Geom::Affine affine = Geom::Affine(s).inverse() * skew * Geom::Affine(s);
 
     item->set_i2d_affine(item->i2d_affine() * affine);
     item->doWriteTransform(SP_OBJECT_REPR(item), item->transform);
@@ -79,16 +79,16 @@ preference value passed to it. Has to solve a quadratic equation to make sure
 the goal is met exactly and the stroke scaling is obeyed.
 */
 
-Geom::Matrix
+Geom::Affine
 get_scale_transform_with_stroke (Geom::Rect const &bbox_param, gdouble strokewidth, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
 {
     Geom::Rect bbox (bbox_param);
 
-    Geom::Matrix p2o = Geom::Translate (-bbox.min());
-    Geom::Matrix o2n = Geom::Translate (x0, y0);
+    Geom::Affine p2o = Geom::Translate (-bbox.min());
+    Geom::Affine o2n = Geom::Translate (x0, y0);
 
-    Geom::Matrix scale = Geom::Scale (1, 1); // scale component
-    Geom::Matrix unbudge = Geom::Translate (0, 0); // move component to compensate for the drift caused by stroke width change
+    Geom::Affine scale = Geom::Scale (1, 1); // scale component
+    Geom::Affine unbudge = Geom::Translate (0, 0); // move component to compensate for the drift caused by stroke width change
 
     gdouble w0 = bbox[Geom::X].extent(); // will return a value >= 0, as required further down the road
     gdouble h0 = bbox[Geom::Y].extent();
@@ -97,11 +97,11 @@ get_scale_transform_with_stroke (Geom::Rect const &bbox_param, gdouble strokewid
     gdouble r0 = strokewidth;
 
     if (bbox.hasZeroArea()) {
-        Geom::Matrix move = Geom::Translate(x0 - bbox.min()[Geom::X], y0 - bbox.min()[Geom::Y]);
+        Geom::Affine move = Geom::Translate(x0 - bbox.min()[Geom::X], y0 - bbox.min()[Geom::Y]);
         return (move); // cannot scale from empty boxes at all, so only translate
     }
 
-    Geom::Matrix direct = Geom::Scale(w1 / w0,   h1 / h0);
+    Geom::Affine direct = Geom::Scale(w1 / w0,   h1 / h0);
 
     if (fabs(w0 - r0) < 1e-6 || fabs(h0 - r0) < 1e-6 || (!transform_stroke && (fabs(w1 - r0) < 1e-6 || fabs(h1 - r0) < 1e-6))) {
         return (p2o * direct * o2n); // can't solve the equation: one of the dimensions is equal to stroke width, so return the straightforward scaler
@@ -120,7 +120,7 @@ get_scale_transform_with_stroke (Geom::Rect const &bbox_param, gdouble strokewid
     gdouble ratio_x = (w1 - r0) / (w0 - r0);
     gdouble ratio_y = (h1 - r0) / (h0 - r0);
     
-    Geom::Matrix direct_constant_r = Geom::Scale(flip_x * ratio_x, flip_y * ratio_y);
+    Geom::Affine direct_constant_r = Geom::Scale(flip_x * ratio_x, flip_y * ratio_y);
 
     if (transform_stroke && r0 != 0 && r0 != NR_HUGE) { // there's stroke, and we need to scale it
         // These coefficients are obtained from the assumption that scaling applies to the
@@ -159,7 +159,7 @@ get_scale_transform_with_stroke (Geom::Rect const &bbox_param, gdouble strokewid
 }
 
 Geom::Rect
-get_visual_bbox (Geom::OptRect const &initial_geom_bbox, Geom::Matrix const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke)
+get_visual_bbox (Geom::OptRect const &initial_geom_bbox, Geom::Affine const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke)
 {
     
     g_assert(initial_geom_bbox);

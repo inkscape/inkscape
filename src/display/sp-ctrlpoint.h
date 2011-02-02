@@ -24,7 +24,7 @@ struct SPCtrlPoint : public SPCanvasItem {
     SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users
     guint32 rgba;
     Geom::Point pt;
-    Geom::Matrix affine;
+    Geom::Affine affine;
     double radius;
 };
 struct SPCtrlPointClass : public SPCanvasItemClass{};

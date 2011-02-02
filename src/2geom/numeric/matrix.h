@@ -38,6 +38,7 @@
 #ifndef _NL_MATRIX_H_
 #define _NL_MATRIX_H_
 
+#include <2geom/exception.h>
 #include <2geom/numeric/vector.h>
 
 #include <cassert>
@@ -45,7 +46,6 @@
 #include <algorithm>  // for std::swap
 #include <sstream>
 #include <string>
-
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_linalg.h>
 
@@ -232,13 +232,13 @@ class MatrixImpl : public BaseMatrixImpl
 		gsl_matrix_set_identity(m_matrix);
 	}
 
-        using base_type::operator(); // VSC legacy support
-        const double & operator() (size_t i, size_t j) const
-        {
-            return base_type::operator ()(i, j);
-        }
+    using base_type::operator(); // VSC legacy support
+    const double & operator() (size_t i, size_t j) const
+    {
+        return base_type::operator ()(i, j);
+    }
 
-        double & operator() (size_t i, size_t j)
+    double & operator() (size_t i, size_t j)
 	{
             return *gsl_matrix_ptr(m_matrix, i, j);
 	}
@@ -310,6 +310,8 @@ using detail::operator==;
 using detail::operator<<;
 
 
+template <size_t N>
+class ConstBaseSymmetricMatrix;
 
 
 class Matrix: public detail::MatrixImpl
@@ -352,6 +354,18 @@ class Matrix: public detail::MatrixImpl
 		gsl_matrix_memcpy(m_matrix, _matrix.get_gsl_matrix());
 	}
 
+	template <size_t N>
+	explicit
+    Matrix(ConstBaseSymmetricMatrix<N> const& _smatrix)
+	{
+	    m_rows = N;
+	    m_columns = N;
+	    m_matrix = gsl_matrix_alloc(N, N);
+	    for (size_t i = 0; i < N; ++i)
+	        for (size_t j = 0; j < N ; ++j)
+	            (*gsl_matrix_ptr(m_matrix, i, j)) = _smatrix(i,j);
+	}
+
 	Matrix & operator=(Matrix const& _matrix)
 	{
 		assert( rows() == _matrix.rows() && columns() ==  _matrix.columns() );
@@ -364,6 +378,16 @@ class Matrix: public detail::MatrixImpl
 		assert( rows() == _matrix.rows() && columns() ==  _matrix.columns() );
 		gsl_matrix_memcpy(m_matrix, _matrix.get_gsl_matrix());
 		return *this;
+	}
+
+	template <size_t N>
+	Matrix & operator=(ConstBaseSymmetricMatrix<N> const& _smatrix)
+	{
+	    assert (rows() == N && columns() ==  N);
+	    for (size_t i = 0; i < N; ++i)
+	        for (size_t j = 0; j < N ; ++j)
+	            (*this)(i,j) = _smatrix(i,j);
+	    return *this;
 	}
 
 	virtual ~Matrix()
@@ -556,6 +580,10 @@ Matrix operator*( detail::BaseMatrixImpl const& A,
                   detail::BaseMatrixImpl const& B );
 
 Matrix pseudo_inverse(detail::BaseMatrixImpl const& A);
+
+double trace (detail::BaseMatrixImpl const& A);
+
+double det (detail::BaseMatrixImpl const& A);
 
 } } // end namespaces
 

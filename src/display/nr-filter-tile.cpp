@@ -53,7 +53,7 @@ int FilterTile::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     return 0;
 }
 
-void FilterTile::area_enlarge(NRRectL &/*area*/, Geom::Matrix const &/*trans*/)
+void FilterTile::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*trans*/)
 {
 }
 

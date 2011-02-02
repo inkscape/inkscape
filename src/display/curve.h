@@ -67,7 +67,7 @@ public:
     void closepath_current();
     void backspace();
 
-    void transform(Geom::Matrix const &m);
+    void transform(Geom::Affine const &m);
     void stretch_endpoints(Geom::Point const &, Geom::Point const &);
     void move_endpoints(Geom::Point const &, Geom::Point const &);
     void last_point_additive_move(Geom::Point const & p);

@@ -390,7 +390,7 @@ Geom::Point SPAvoidRef::getConnectionPointPos(const int type, const int id)
 {
     g_assert(item);
     Geom::Point pos;
-    const Geom::Matrix& transform = item->i2doc_affine();
+    const Geom::Affine& transform = item->i2doc_affine();
 
     if ( type == ConnPointDefault )
     {
@@ -475,7 +475,7 @@ static std::vector<Geom::Point> approxCurveWithPoints(SPCurve *curve)
     return poly_points;
 }
 
-static std::vector<Geom::Point> approxItemWithPoints(SPItem const *item, const Geom::Matrix& item_transform)
+static std::vector<Geom::Point> approxItemWithPoints(SPItem const *item, const Geom::Affine& item_transform)
 {
     // The structure to hold the output
     std::vector<Geom::Point> poly_points;
@@ -512,7 +512,7 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
     g_assert(desktop != NULL);
     double spacing = desktop->namedview->connector_spacing;
 
-    Geom::Matrix itd_mat = item->i2doc_affine();
+    Geom::Affine itd_mat = item->i2doc_affine();
     std::vector<Geom::Point> hull_points;
     hull_points = approxItemWithPoints(item, itd_mat);
 
@@ -525,15 +525,15 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
 
     Geom::Line hull_edge(hull[-1], hull[0]);
     Geom::Line prev_parallel_hull_edge;
-    prev_parallel_hull_edge.origin(hull_edge.origin()+hull_edge.versor().ccw()*spacing);
-    prev_parallel_hull_edge.versor(hull_edge.versor());
+    prev_parallel_hull_edge.setOrigin(hull_edge.origin()+hull_edge.versor().ccw()*spacing);
+    prev_parallel_hull_edge.setVersor(hull_edge.versor());
     int hull_size = hull.boundary.size();
     for (int i = 0; i < hull_size; ++i)
     {
-        hull_edge.setBy2Points(hull[i], hull[i+1]);
+        hull_edge.setPoints(hull[i], hull[i+1]);
         Geom::Line parallel_hull_edge;
-        parallel_hull_edge.origin(hull_edge.origin()+hull_edge.versor().ccw()*spacing);
-        parallel_hull_edge.versor(hull_edge.versor());
+        parallel_hull_edge.setOrigin(hull_edge.origin()+hull_edge.versor().ccw()*spacing);
+        parallel_hull_edge.setVersor(hull_edge.versor());
         
         // determine the intersection point
         
@@ -578,7 +578,7 @@ GSList *get_avoided_items(GSList *list, SPObject *from, SPDesktop *desktop,
 }
 
 
-void avoid_item_move(Geom::Matrix const */*mp*/, SPItem *moved_item)
+void avoid_item_move(Geom::Affine const */*mp*/, SPItem *moved_item)
 {
     Avoid::ShapeRef *shapeRef = moved_item->avoidRef->shapeRef;
     g_assert(shapeRef);

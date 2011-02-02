@@ -33,7 +33,7 @@ static void sp_ctrlline_class_init (SPCtrlLineClass *klass);
 static void sp_ctrlline_init (SPCtrlLine *ctrlline);
 static void sp_ctrlline_destroy (GtkObject *object);
 
-static void sp_ctrlline_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
+static void sp_ctrlline_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass *parent_class;
@@ -123,7 +123,7 @@ sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf)
 }
 
 static void
-sp_ctrlline_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
+sp_ctrlline_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
     SPCtrlLine *cl = SP_CTRLLINE (item);
 

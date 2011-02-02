@@ -102,7 +102,7 @@ private:
 void build_segment(Geom::PathBuilder &, Node *, Node *);
 
 PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
-        Geom::Matrix const &et, guint32 outline_color, Glib::ustring lpe_key)
+        Geom::Affine const &et, guint32 outline_color, Glib::ustring lpe_key)
     : PointManipulator(mpm._path_data.node_data.desktop, *mpm._path_data.node_data.selection)
     , _subpaths(*this)
     , _multi_path_manipulator(mpm)
@@ -847,9 +847,9 @@ void PathManipulator::setLiveObjects(bool set)
     _live_objects = set;
 }
 
-void PathManipulator::setControlsTransform(Geom::Matrix const &tnew)
+void PathManipulator::setControlsTransform(Geom::Affine const &tnew)
 {
-    Geom::Matrix delta = _i2d_transform.inverse() * _edit_transform.inverse() * tnew * _i2d_transform;
+    Geom::Affine delta = _i2d_transform.inverse() * _edit_transform.inverse() * tnew * _i2d_transform;
     _edit_transform = tnew;
     for (SubpathList::iterator i = _subpaths.begin(); i != _subpaths.end(); ++i) {
         for (NodeList::iterator j = (*i)->begin(); j != (*i)->end(); ++j) {
@@ -894,7 +894,7 @@ NodeList::iterator PathManipulator::subdivideSegment(NodeList::iterator first, d
         // build bezier curve and subdivide
         Geom::CubicBezier temp(first->position(), first->front()->position(),
             second->back()->position(), second->position());
-        std::pair<Geom::CubicBezier, Geom::CubicBezier> div = temp.subdivide(t);
+        std::pair<Geom::BezierCurve, Geom::BezierCurve> div = temp.subdivide(t);
         std::vector<Geom::Point> seg1 = div.first.points(), seg2 = div.second.points();
 
         // set new handle positions
@@ -975,7 +975,7 @@ void PathManipulator::_externalChange(unsigned type)
         _updateOutline();
         } break;
     case PATH_CHANGE_TRANSFORM: {
-        Geom::Matrix i2d_change = _d2i_transform;
+        Geom::Affine i2d_change = _d2i_transform;
         _i2d_transform = SP_ITEM(_path)->i2d_affine();
         _d2i_transform = _i2d_transform.inverse();
         i2d_change *= _i2d_transform;
@@ -1388,7 +1388,7 @@ void PathManipulator::_commit(Glib::ustring const &annotation, gchar const *key)
  * point of the path. */
 void PathManipulator::_updateDragPoint(Geom::Point const &evp)
 {
-    Geom::Matrix to_desktop = _edit_transform * _i2d_transform;
+    Geom::Affine to_desktop = _edit_transform * _i2d_transform;
     Geom::PathVector pv = _spcurve->get_pathvector();
     boost::optional<Geom::PathVectorPosition> pvp
         = Geom::nearestPoint(pv, _desktop->w2d(evp) * to_desktop.inverse());

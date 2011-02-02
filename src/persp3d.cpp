@@ -385,7 +385,7 @@ persp3d_update_with_point (Persp3DImpl *persp_impl, Proj::Axis const axis, Proj:
 }
 
 void
-persp3d_apply_affine_transformation (Persp3D *persp, Geom::Matrix const &xform) {
+persp3d_apply_affine_transformation (Persp3D *persp, Geom::Affine const &xform) {
     persp->perspective_impl->tmat *= xform;
     persp3d_update_box_reprs(persp);
     SP_OBJECT(persp)->updateRepr(SP_OBJECT_WRITE_EXT);

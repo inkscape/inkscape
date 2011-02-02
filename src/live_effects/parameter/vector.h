@@ -48,7 +48,7 @@ public:
 
     void set_and_write_new_values(Geom::Point const &new_origin, Geom::Point const &new_vector);
 
-    virtual void param_transform_multiply(Geom::Matrix const &postmul, bool set);
+    virtual void param_transform_multiply(Geom::Affine const &postmul, bool set);
 
     void set_vector_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color);
     void set_origin_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color);

@@ -214,7 +214,7 @@ void ControlPoint::move(Geom::Point const &pos)
 /** Apply an arbitrary affine transformation to a control point. This is used
  * by ControlPointSelection, and is important for things like nodes with handles.
  * The default implementation simply moves the point according to the transform. */
-void ControlPoint::transform(Geom::Matrix const &m) {
+void ControlPoint::transform(Geom::Affine const &m) {
     move(position() * m);
 }
 

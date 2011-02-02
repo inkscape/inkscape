@@ -293,7 +293,7 @@ PrintWin32::finish (Inkscape::Extension::Print *mod)
     scaley = dpiY / 72.0;
 
     // We simply map document 0,0 to physical page 0,0
-    Geom::Matrix affine = Geom::Scale(scalex / 1.25, scaley / 1.25);
+    Geom::Affine affine = Geom::Scale(scalex / 1.25, scaley / 1.25);
 
     nr_arena_item_set_transform (mod->root, affine);
 

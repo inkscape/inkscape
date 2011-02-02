@@ -216,7 +216,7 @@ void SelectionHelper::selectPrev(SPDesktop *dt)
  * Copies repr and its inherited css style elements, along with the accumulated transform 'full_t',
  * then prepends the copy to 'clip'.
  */
-void sp_selection_copy_one(Inkscape::XML::Node *repr, Geom::Matrix full_t, GSList **clip, Inkscape::XML::Document* xml_doc)
+void sp_selection_copy_one(Inkscape::XML::Node *repr, Geom::Affine full_t, GSList **clip, Inkscape::XML::Document* xml_doc)
 {
     Inkscape::XML::Node *copy = repr->duplicate(xml_doc);
 
@@ -261,10 +261,10 @@ GSList *sp_selection_paste_impl(SPDocument *doc, SPObject *parent, GSList **clip
         Inkscape::XML::Node *copy = repr->duplicate(xml_doc);
 
         // premultiply the item transform by the accumulated parent transform in the paste layer
-        Geom::Matrix local(SP_ITEM(parent)->i2doc_affine());
+        Geom::Affine local(SP_ITEM(parent)->i2doc_affine());
         if (!local.isIdentity()) {
             gchar const *t_str = copy->attribute("transform");
-            Geom::Matrix item_t(Geom::identity());
+            Geom::Affine item_t(Geom::identity());
             if (t_str)
                 sp_svg_transform_read(t_str, &item_t);
             item_t *= local.inverse();
@@ -591,7 +591,7 @@ void sp_selection_group_impl(GSList *p, Inkscape::XML::Node *group, Inkscape::XM
             // At this point, current may already have no item, due to its being a clone whose original is already moved away
             // So we copy it artificially calculating the transform from its repr->attr("transform") and the parent transform
             gchar const *t_str = current->attribute("transform");
-            Geom::Matrix item_t(Geom::identity());
+            Geom::Affine item_t(Geom::identity());
             if (t_str)
                 sp_svg_transform_read(t_str, &item_t);
             item_t *= SP_ITEM(doc->getObjectByRepr(current->parent()))->i2doc_affine();
@@ -1303,7 +1303,7 @@ value of set_i2d==false is only used by seltrans when it's dragging objects live
 that case, items are already in the new position, but the repr is in the old, and this function
 then simply updates the repr from item->transform.
  */
-void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix const &affine, bool set_i2d, bool compensate)
+void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine const &affine, bool set_i2d, bool compensate)
 {
     if (selection->isEmpty())
         return;
@@ -1403,26 +1403,26 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix cons
             SP_OBJECT(item)->readAttr( "transform" );
 
             // calculate the matrix we need to apply to the clone to cancel its induced transform from its original
-            Geom::Matrix parent2dt = SP_ITEM(SP_OBJECT_PARENT(item))->i2d_affine();
-            Geom::Matrix t = parent2dt * affine * parent2dt.inverse();
-            Geom::Matrix t_inv = t.inverse();
-            Geom::Matrix result = t_inv * item->transform * t;
+            Geom::Affine parent2dt = SP_ITEM(SP_OBJECT_PARENT(item))->i2d_affine();
+            Geom::Affine t = parent2dt * affine * parent2dt.inverse();
+            Geom::Affine t_inv = t.inverse();
+            Geom::Affine result = t_inv * item->transform * t;
 
             if ((prefs_parallel || prefs_unmoved) && affine.isTranslation()) {
                 // we need to cancel out the move compensation, too
 
                 // find out the clone move, same as in sp_use_move_compensate
-                Geom::Matrix parent = sp_use_get_parent_transform(SP_USE(item));
-                Geom::Matrix clone_move = parent.inverse() * t * parent;
+                Geom::Affine parent = sp_use_get_parent_transform(SP_USE(item));
+                Geom::Affine clone_move = parent.inverse() * t * parent;
 
                 if (prefs_parallel) {
-                    Geom::Matrix move = result * clone_move * t_inv;
+                    Geom::Affine move = result * clone_move * t_inv;
                     item->doWriteTransform(SP_OBJECT_REPR(item), move, &move, compensate);
 
                 } else if (prefs_unmoved) {
                     //if (SP_IS_USE(sp_use_get_original(SP_USE(item))))
                     //    clone_move = Geom::identity();
-                    Geom::Matrix move = result * clone_move;
+                    Geom::Affine move = result * clone_move;
                     item->doWriteTransform(SP_OBJECT_REPR(item), move, &t, compensate);
                 }
 
@@ -1433,7 +1433,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix cons
 
         } else {
             if (set_i2d) {
-                item->set_i2d_affine(item->i2d_affine() * (Geom::Matrix)affine);
+                item->set_i2d_affine(item->i2d_affine() * (Geom::Affine)affine);
             }
             item->doWriteTransform(SP_OBJECT_REPR(item), item->transform, NULL, compensate);
         }
@@ -1483,7 +1483,7 @@ sp_selection_scale_absolute(Inkscape::Selection *selection,
                               y1 - y0);
     Geom::Scale const scale( newSize * Geom::Scale(bbox->dimensions()).inverse() );
     Geom::Translate const o2n(x0, y0);
-    Geom::Matrix const final( p2o * scale * o2n );
+    Geom::Affine const final( p2o * scale * o2n );
 
     sp_selection_apply_affine(selection, final);
 }
@@ -1509,7 +1509,7 @@ void sp_selection_scale_relative(Inkscape::Selection *selection, Geom::Point con
 
     Geom::Translate const n2d(-align);
     Geom::Translate const d2n(align);
-    Geom::Matrix const final( n2d * scale * d2n );
+    Geom::Affine const final( n2d * scale * d2n );
     sp_selection_apply_affine(selection, final);
 }
 
@@ -1519,7 +1519,7 @@ sp_selection_rotate_relative(Inkscape::Selection *selection, Geom::Point const &
     Geom::Translate const d2n(center);
     Geom::Translate const n2d(-center);
     Geom::Rotate const rotate(Geom::Rotate::from_degrees(angle_degrees));
-    Geom::Matrix const final( Geom::Matrix(n2d) * rotate * d2n );
+    Geom::Affine const final( Geom::Affine(n2d) * rotate * d2n );
     sp_selection_apply_affine(selection, final);
 }
 
@@ -1528,21 +1528,21 @@ sp_selection_skew_relative(Inkscape::Selection *selection, Geom::Point const &al
 {
     Geom::Translate const d2n(align);
     Geom::Translate const n2d(-align);
-    Geom::Matrix const skew(1, dy,
+    Geom::Affine const skew(1, dy,
                             dx, 1,
                             0, 0);
-    Geom::Matrix const final( n2d * skew * d2n );
+    Geom::Affine const final( n2d * skew * d2n );
     sp_selection_apply_affine(selection, final);
 }
 
 void sp_selection_move_relative(Inkscape::Selection *selection, Geom::Point const &move, bool compensate)
 {
-    sp_selection_apply_affine(selection, Geom::Matrix(Geom::Translate(move)), true, compensate);
+    sp_selection_apply_affine(selection, Geom::Affine(Geom::Translate(move)), true, compensate);
 }
 
 void sp_selection_move_relative(Inkscape::Selection *selection, double dx, double dy)
 {
-    sp_selection_apply_affine(selection, Geom::Matrix(Geom::Translate(dx, dy)));
+    sp_selection_apply_affine(selection, Geom::Affine(Geom::Translate(dx, dy)));
 }
 
 /**
@@ -2291,7 +2291,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     // calculate the transform to be applied to objects to move them to 0,0
     Geom::Point move_p = Geom::Point(0, doc->getHeight()) - *c;
     move_p[Geom::Y] = -move_p[Geom::Y];
-    Geom::Matrix move = Geom::Matrix(Geom::Translate(move_p));
+    Geom::Affine move = Geom::Affine(Geom::Translate(move_p));
 
     GSList *items = g_slist_copy((GSList *) selection->itemList());
 
@@ -2300,7 +2300,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     // bottommost object, after sorting
     SPObject *parent = SP_OBJECT_PARENT(items->data);
 
-    Geom::Matrix parent_transform(SP_ITEM(parent)->i2doc_affine());
+    Geom::Affine parent_transform(SP_ITEM(parent)->i2doc_affine());
 
     // remember the position of the first item
     gint pos = SP_OBJECT_REPR(items->data)->position();
@@ -2331,7 +2331,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
     gchar const *mark_id = generate_marker(repr_copies, bounds, doc,
-                                           ( Geom::Matrix(Geom::Translate(desktop->dt2doc(
+                                           ( Geom::Affine(Geom::Translate(desktop->dt2doc(
                                                                               Geom::Point(r->min()[Geom::X],
                                                                                           r->max()[Geom::Y]))))
                                              * parent_transform.inverse() ),
@@ -2415,7 +2415,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     // calculate the transform to be applied to objects to move them to 0,0
     Geom::Point move_p = Geom::Point(0, doc->getHeight()) - (r->min() + Geom::Point(0, r->dimensions()[Geom::Y]));
     move_p[Geom::Y] = -move_p[Geom::Y];
-    Geom::Matrix move = Geom::Matrix(Geom::Translate(move_p));
+    Geom::Affine move = Geom::Affine(Geom::Translate(move_p));
 
     GSList *items = g_slist_copy((GSList *) selection->itemList());
 
@@ -2424,7 +2424,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     // bottommost object, after sorting
     SPObject *parent = SP_OBJECT_PARENT(items->data);
 
-    Geom::Matrix parent_transform(SP_ITEM(parent)->i2doc_affine());
+    Geom::Affine parent_transform(SP_ITEM(parent)->i2doc_affine());
 
     // remember the position of the first item
     gint pos = SP_OBJECT_REPR(items->data)->position();
@@ -2456,7 +2456,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
     gchar const *pat_id = pattern_tile(repr_copies, bounds, doc,
-                                       ( Geom::Matrix(Geom::Translate(desktop->dt2doc(Geom::Point(r->min()[Geom::X],
+                                       ( Geom::Affine(Geom::Translate(desktop->dt2doc(Geom::Point(r->min()[Geom::X],
                                                                                             r->max()[Geom::Y]))))
                                          * to_2geom(parent_transform.inverse()) ),
                                        parent_transform * move);
@@ -2534,7 +2534,7 @@ void sp_selection_untile(SPDesktop *desktop)
 
         SPPattern *pattern = pattern_getroot(SP_PATTERN(server));
 
-        Geom::Matrix pat_transform = to_2geom(pattern_patternTransform(SP_PATTERN(server)));
+        Geom::Affine pat_transform = to_2geom(pattern_patternTransform(SP_PATTERN(server)));
         pat_transform *= item->transform;
 
         for (SPObject *child = pattern->firstChild() ; child != NULL; child = child->next ) {
@@ -2547,7 +2547,7 @@ void sp_selection_untile(SPDesktop *desktop)
             // this is needed to make sure the new item has curve (simply requestDisplayUpdate does not work)
             doc->ensureUpToDate();
 
-            Geom::Matrix transform( i->transform * pat_transform );
+            Geom::Affine transform( i->transform * pat_transform );
             i->doWriteTransform(SP_OBJECT_REPR(i), transform);
 
             new_select = g_slist_prepend(new_select, i);
@@ -2758,8 +2758,8 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
     }
 
     // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
-    Geom::Matrix eek(SP_ITEM(parent_object)->i2d_affine());
-    Geom::Matrix t;
+    Geom::Affine eek(SP_ITEM(parent_object)->i2d_affine());
+    Geom::Affine t;
 
     double shift_x = bbox.x0;
     double shift_y = bbox.y1;
@@ -2974,7 +2974,7 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
         SPItem *item = reinterpret_cast<SPItem *>(i->data);
         // inverted object transform should be applied to a mask object,
         // as mask is calculated in user space (after applying transform)
-        Geom::Matrix maskTransform(item->transform.inverse());
+        Geom::Affine maskTransform(item->transform.inverse());
 
         GSList *mask_items_dup = NULL;
         for (GSList *mask_item = mask_items; NULL != mask_item; mask_item = mask_item->next) {
@@ -3142,7 +3142,7 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
             items_to_select = g_slist_prepend(items_to_select, mask_item);
 
             // transform mask, so it is moved the same spot where mask was applied
-            Geom::Matrix transform(mask_item->transform);
+            Geom::Affine transform(mask_item->transform);
             transform *= (*it).second->transform;
             mask_item->doWriteTransform(SP_OBJECT_REPR(mask_item), transform);
         }

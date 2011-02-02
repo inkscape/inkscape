@@ -25,7 +25,7 @@
 #include "snap.h"
 #include "desktop.h"
 #include "sp-namedview.h"
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <2geom/transforms.h>
 
 int KnotHolderEntity::counter = 0;
@@ -76,7 +76,7 @@ KnotHolderEntity::~KnotHolderEntity()
 void
 KnotHolderEntity::update_knot()
 {
-    Geom::Matrix const i2d(item->i2d_affine());
+    Geom::Affine const i2d(item->i2d_affine());
 
     Geom::Point dp(knot_get() * i2d);
 
@@ -88,7 +88,7 @@ KnotHolderEntity::update_knot()
 Geom::Point
 KnotHolderEntity::snap_knot_position(Geom::Point const &p)
 {
-    Geom::Matrix const i2d (item->i2d_affine());
+    Geom::Affine const i2d (item->i2d_affine());
     Geom::Point s = p * i2d;
 
     SnapManager &m = desktop->namedview->snap_manager;
@@ -102,7 +102,7 @@ KnotHolderEntity::snap_knot_position(Geom::Point const &p)
 Geom::Point
 KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::SnapConstraint const &constraint)
 {
-    Geom::Matrix const i2d (item->i2d_affine());
+    Geom::Affine const i2d (item->i2d_affine());
     Geom::Point s = p * i2d;
 
     SnapManager &m = desktop->namedview->snap_manager;
@@ -125,13 +125,13 @@ KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape:
 
 static gdouble sp_pattern_extract_theta(SPPattern *pat)
 {
-    Geom::Matrix transf = pat->patternTransform;
+    Geom::Affine transf = pat->patternTransform;
     return Geom::atan2(transf.xAxis());
 }
 
 static Geom::Point sp_pattern_extract_scale(SPPattern *pat)
 {
-    Geom::Matrix transf = pat->patternTransform;
+    Geom::Affine transf = pat->patternTransform;
     return Geom::Point( transf.expansionX(), transf.expansionY() );
 }
 
@@ -158,7 +158,7 @@ PatternKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &ori
 
     if (state)  {
         Geom::Point const q = p_snapped - sp_pattern_extract_trans(pat);
-        item->adjust_pattern(Geom::Matrix(Geom::Translate(q)));
+        item->adjust_pattern(Geom::Affine(Geom::Translate(q)));
     }
 
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -181,7 +181,7 @@ PatternKnotHolderEntityAngle::knot_get()
     Geom::Point delta = Geom::Point(x,y);
     Geom::Point scale = sp_pattern_extract_scale(pat);
     gdouble theta = sp_pattern_extract_theta(pat);
-    delta = delta * Geom::Matrix(Geom::Scale(scale))*Geom::Matrix(Geom::Rotate(theta));
+    delta = delta * Geom::Affine(Geom::Scale(scale))*Geom::Affine(Geom::Rotate(theta));
     delta = delta + sp_pattern_extract_trans(pat);
     return delta;
 }
@@ -204,7 +204,7 @@ PatternKnotHolderEntityAngle::knot_set(Geom::Point const &p, Geom::Point const &
 
     // get the scale from the current transform so we can keep it.
     Geom::Point scl = sp_pattern_extract_scale(pat);
-    Geom::Matrix rot = Geom::Matrix(Geom::Scale(scl)) * Geom::Matrix(Geom::Rotate(theta));
+    Geom::Affine rot = Geom::Affine(Geom::Scale(scl)) * Geom::Affine(Geom::Rotate(theta));
     Geom::Point const t = sp_pattern_extract_trans(pat);
     rot[4] = t[Geom::X];
     rot[5] = t[Geom::Y];
@@ -237,7 +237,7 @@ PatternKnotHolderEntityScale::knot_set(Geom::Point const &p, Geom::Point const &
         scl = Geom::Scale(d[Geom::X] / pat_x, d[Geom::Y] / pat_y);
     }
 
-    Geom::Matrix rot = (Geom::Matrix)scl * Geom::Rotate(theta);
+    Geom::Affine rot = (Geom::Affine)scl * Geom::Rotate(theta);
 
     Geom::Point const t = sp_pattern_extract_trans(pat);
     rot[4] = t[Geom::X];
@@ -255,7 +255,7 @@ PatternKnotHolderEntityScale::knot_get()
     gdouble x = pattern_width(pat);
     gdouble y = pattern_height(pat);
     Geom::Point delta = Geom::Point(x,y);
-    Geom::Matrix a = pat->patternTransform;
+    Geom::Affine a = pat->patternTransform;
     a[4] = 0;
     a[5] = 0;
     delta = delta * a;

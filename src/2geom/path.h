@@ -291,13 +291,13 @@ public:
     return !( *this == other );
   }
 
-  Path operator*(Matrix const &m) const {
+  Path operator*(Affine const &m) const {
     Path ret(*this);
     ret *= m;
     return ret;
   }
 
-  Path &operator*=(Matrix const &m);
+  Path &operator*=(Affine const &m);
   
   Point pointAt(double t) const 
   {

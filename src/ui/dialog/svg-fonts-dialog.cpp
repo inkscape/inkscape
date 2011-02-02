@@ -498,7 +498,7 @@ void SvgFontsDialog::set_glyph_description_from_selected_path(){
     Geom::PathVector pathv = sp_svg_read_pathv(node->attribute("d"));
 
     //This matrix flips the glyph vertically
-    Geom::Matrix m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(0));
+    Geom::Affine m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(0));
     pathv*=m;
     //then we offset it
     pathv+=Geom::Point(Geom::Coord(0),Geom::Coord(get_selected_spfont()->horiz_adv_x));
@@ -543,7 +543,7 @@ void SvgFontsDialog::missing_glyph_description_from_selected_path(){
     Geom::PathVector pathv = sp_svg_read_pathv(node->attribute("d"));
 
     //This matrix flips the glyph vertically
-    Geom::Matrix m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(0));
+    Geom::Affine m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(0));
     pathv*=m;
     //then we offset it
 //  pathv+=Geom::Point(Geom::Coord(0),Geom::Coord(get_selected_spfont()->horiz_adv_x));

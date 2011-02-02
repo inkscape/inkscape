@@ -166,12 +166,12 @@ LPEDynastroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
                  std::cout<<"ellptic pen\n";
                  //FIXME: roundness=0???
                  double c = cos(angle_rad), s = sin(angle_rad); 
-                 Matrix rot,slant;
-                 rot = Matrix(c, -s, s,  c, 0, 0 );
-                 slant = Matrix(double(width)*roundness, 0, 0,  double(width), 0, 0 );
+                 Affine rot,slant;
+                 rot = Affine(c, -s, s,  c, 0, 0 );
+                 slant = Affine(double(width)*roundness, 0, 0,  double(width), 0, 0 );
                  Piecewise<D2<SBasis> > nn = unitVector(v * ( rot * slant ) );
-                 slant = Matrix( 0,-roundness, 1, 0, 0, 0 );
-                 rot = Matrix(-s, -c, c, -s, 0, 0 );
+                 slant = Affine( 0,-roundness, 1, 0, 0, 0 );
+                 rot = Affine(-s, -c, c, -s, 0, 0 );
                  nn = nn * (slant * rot );
 
                  n1 = nn*double(width);

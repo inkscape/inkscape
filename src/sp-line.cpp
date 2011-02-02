@@ -180,7 +180,7 @@ void SPLine::convertToGuides(SPItem *item)
     SPLine *line = SP_LINE(item);
     Geom::Point points[2];
 
-    Geom::Matrix const i2d(item->i2d_affine());
+    Geom::Affine const i2d(item->i2d_affine());
 
     points[0] = Geom::Point(line->x1.computed, line->y1.computed)*i2d;
     points[1] = Geom::Point(line->x2.computed, line->y2.computed)*i2d;
@@ -188,7 +188,7 @@ void SPLine::convertToGuides(SPItem *item)
     SPGuide::createSPGuide(inkscape_active_desktop(), points[0], points[1]);
 }
 
-Geom::Matrix SPLine::setTransform(SPItem *item, Geom::Matrix const &xform)
+Geom::Affine SPLine::setTransform(SPItem *item, Geom::Affine const &xform)
 {
     SPLine *line = SP_LINE(item);
     Geom::Point points[2];

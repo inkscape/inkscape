@@ -67,7 +67,7 @@ struct SPCanvasBPath {
 
     /* Line def */
     SPCurve *curve;
-    Geom::Matrix affine;
+    Geom::Affine affine;
 
     /* Fill attributes */
     guint32 fill_rgba;

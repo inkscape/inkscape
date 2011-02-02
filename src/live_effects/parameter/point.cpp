@@ -84,7 +84,7 @@ PointParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
                                                               param_effect->getSPDoc() ) );
     // TODO: fix to get correct desktop (don't use SP_ACTIVE_DESKTOP)
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Geom::Matrix transf = desktop->doc2dt();
+    Geom::Affine transf = desktop->doc2dt();
     pointwdg->setTransform(transf);
     pointwdg->setValue( *this );
     pointwdg->clearProgrammatically();
@@ -114,7 +114,7 @@ PointParam::param_set_and_write_new_value (Geom::Point newpoint)
 }
 
 void
-PointParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
+PointParam::param_transform_multiply(Geom::Affine const& postmul, bool /*set*/)
 {
     param_set_and_write_new_value( (*this) * postmul );
 }

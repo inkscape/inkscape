@@ -94,10 +94,10 @@ public:
 protected:
     virtual void startTransform() {}
     virtual void endTransform() {}
-    virtual Geom::Matrix computeTransform(Geom::Point const &pos, GdkEventMotion *event) = 0;
+    virtual Geom::Affine computeTransform(Geom::Point const &pos, GdkEventMotion *event) = 0;
     virtual CommitEvent getCommitEvent() = 0;
 
-    Geom::Matrix _last_transform;
+    Geom::Affine _last_transform;
     Geom::Point _origin;
     TransformHandleSet &_th;
     std::vector<Inkscape::SnapCandidatePoint> _snap_points;
@@ -129,10 +129,10 @@ private:
     }
     virtual void dragged(Geom::Point &new_pos, GdkEventMotion *event)
     {
-        Geom::Matrix t = computeTransform(new_pos, event);
+        Geom::Affine t = computeTransform(new_pos, event);
         // protect against degeneracies
         if (t.isSingular()) return;
-        Geom::Matrix incr = _last_transform.inverse() * t;
+        Geom::Affine incr = _last_transform.inverse() * t;
         if (incr.isSingular()) return;
         _th.signal_transform.emit(incr);
         _last_transform = t;
@@ -202,7 +202,7 @@ protected:
         ControlPointSelection *selection = nt->_selected_nodes.get();
         selection->setOriginalPoints();
     }
-    virtual Geom::Matrix computeTransform(Geom::Point const &new_pos, GdkEventMotion *event) {
+    virtual Geom::Affine computeTransform(Geom::Point const &new_pos, GdkEventMotion *event) {
         Geom::Point scc = held_shift(*event) ? _sc_center : _sc_opposite;
         Geom::Point vold = _origin - scc, vnew = new_pos - scc;
 
@@ -257,7 +257,7 @@ protected:
 
         _last_scale_x = scale[0];
         _last_scale_y = scale[1];
-        Geom::Matrix t = Geom::Translate(-scc)
+        Geom::Affine t = Geom::Translate(-scc)
             * Geom::Scale(scale[0], scale[1])
             * Geom::Translate(scc);
         return t;
@@ -294,7 +294,7 @@ protected:
         _sc_opposite = Geom::middle_point(b.corner(_side + 2), b.corner(_side + 3));
         _last_scale_x = _last_scale_y = 1.0;
     }
-    virtual Geom::Matrix computeTransform(Geom::Point const &new_pos, GdkEventMotion *event) {
+    virtual Geom::Affine computeTransform(Geom::Point const &new_pos, GdkEventMotion *event) {
         Geom::Point scc = held_shift(*event) ? _sc_center : _sc_opposite;
         Geom::Point vs;
         Geom::Dim2 d1 = static_cast<Geom::Dim2>((_side + 1) % 2);
@@ -313,7 +313,7 @@ protected:
 
         _last_scale_x = vs[Geom::X];
         _last_scale_y = vs[Geom::Y];
-        Geom::Matrix t = Geom::Translate(-scc)
+        Geom::Affine t = Geom::Translate(-scc)
             * Geom::Scale(vs)
             * Geom::Translate(scc);
         return t;
@@ -351,7 +351,7 @@ protected:
         _last_angle = 0;
     }
 
-    virtual Geom::Matrix computeTransform(Geom::Point const &new_pos, GdkEventMotion *event)
+    virtual Geom::Affine computeTransform(Geom::Point const &new_pos, GdkEventMotion *event)
     {
         Geom::Point rotc = held_shift(*event) ? _rot_opposite : _rot_center;
         double angle = Geom::angle_between(_origin - rotc, new_pos - rotc);
@@ -359,7 +359,7 @@ protected:
             angle = snap_angle(angle);
         }
         _last_angle = angle;
-        Geom::Matrix t = Geom::Translate(-rotc)
+        Geom::Affine t = Geom::Translate(-rotc)
             * Geom::Rotate(angle)
             * Geom::Translate(rotc);
         return t;
@@ -425,7 +425,7 @@ protected:
         _last_horizontal = _side % 2;
     }
 
-    virtual Geom::Matrix computeTransform(Geom::Point const &new_pos, GdkEventMotion *event)
+    virtual Geom::Affine computeTransform(Geom::Point const &new_pos, GdkEventMotion *event)
     {
         Geom::Point scc = held_shift(*event) ? _skew_center : _skew_opposite;
         // d1 and d2 are reversed with respect to ScaleSideHandle
@@ -458,12 +458,12 @@ protected:
 
         // skew matrix has the from [[1, k],[0, 1]] for horizontal skew
         // and [[1,0],[k,1]] for vertical skew.
-        Geom::Matrix skew = Geom::identity();
+        Geom::Affine skew = Geom::identity();
         // correct the sign of the tangent
         skew[d2 + 1] = (d1 == Geom::X ? -1.0 : 1.0) * tan(angle);
 
         _last_angle = angle;
-        Geom::Matrix t = Geom::Translate(-scc)
+        Geom::Affine t = Geom::Translate(-scc)
             * Geom::Scale(scale) * skew
             * Geom::Translate(scc);
         return t;
@@ -645,7 +645,7 @@ bool TransformHandleSet::event(GdkEvent*)
     return false;
 }
 
-void TransformHandleSet::_emitTransform(Geom::Matrix const &t)
+void TransformHandleSet::_emitTransform(Geom::Affine const &t)
 {
     signal_transform.emit(t);
     _center->transform(t);

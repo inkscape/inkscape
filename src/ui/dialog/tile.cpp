@@ -336,7 +336,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
 
                  // signs are inverted between x and y due to y inversion
                  Geom::Point move = Geom::Point(new_x - min[Geom::X], min[Geom::Y] - new_y);
-                 Geom::Matrix const affine = Geom::Matrix(Geom::Translate(move));
+                 Geom::Affine const affine = Geom::Affine(Geom::Translate(move));
                  item->set_i2d_affine(item->i2d_affine() * affine);
                  item->doWriteTransform(repr, item->transform,  NULL);
                  SP_OBJECT (current_row->data)->updateRepr();

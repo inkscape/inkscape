@@ -1082,7 +1082,7 @@ extern "C" guchar *sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
         SPObject *object = doc->getObjectById(name);
         if (object && SP_IS_ITEM(object)) {
             /* Find bbox in document */
-            Geom::Matrix const i2doc(SP_ITEM(object)->i2doc_affine());
+            Geom::Affine const i2doc(SP_ITEM(object)->i2doc_affine());
             Geom::OptRect dbox = SP_ITEM(object)->getBounds(i2doc);
 
             if ( SP_OBJECT_PARENT(object) == NULL )
@@ -1096,7 +1096,7 @@ extern "C" guchar *sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                 NRGC gc(NULL);
                 /* Update to renderable state */
                 double sf = 1.0;
-                nr_arena_item_set_transform(root, (Geom::Matrix)Geom::Scale(sf, sf));
+                nr_arena_item_set_transform(root, (Geom::Affine)Geom::Scale(sf, sf));
                 gc.transform.setIdentity();
                 nr_arena_item_invoke_update( root, NULL, &gc,
                                              NR_ARENA_ITEM_STATE_ALL,
@@ -1128,7 +1128,7 @@ extern "C" guchar *sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                         }
                         sf = (double)psize / (double)block;
 
-                        nr_arena_item_set_transform(root, (Geom::Matrix)Geom::Scale(sf, sf));
+                        nr_arena_item_set_transform(root, (Geom::Affine)Geom::Scale(sf, sf));
                         gc.transform.setIdentity();
                         nr_arena_item_invoke_update( root, NULL, &gc,
                                                      NR_ARENA_ITEM_STATE_ALL,

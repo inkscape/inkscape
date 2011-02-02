@@ -64,7 +64,7 @@ struct SPPattern : public SPPaintServer {
     guint patternContentUnits : 1;
     guint patternContentUnits_set : 1;
     /* patternTransform attribute */
-    Geom::Matrix patternTransform;
+    Geom::Affine patternTransform;
     guint patternTransform_set : 1;
     /* Tile rectangle */
     SVGLength x;
@@ -85,15 +85,15 @@ struct SPPatternClass {
 guint pattern_users (SPPattern *pattern);
 SPPattern *pattern_chain (SPPattern *pattern);
 SPPattern *sp_pattern_clone_if_necessary (SPItem *item, SPPattern *pattern, const gchar *property);
-void sp_pattern_transform_multiply (SPPattern *pattern, Geom::Matrix postmul, bool set);
+void sp_pattern_transform_multiply (SPPattern *pattern, Geom::Affine postmul, bool set);
 
-const gchar *pattern_tile (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix transform, Geom::Matrix move);
+const gchar *pattern_tile (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Affine transform, Geom::Affine move);
 
 SPPattern *pattern_getroot (SPPattern *pat);
 
 guint pattern_patternUnits (SPPattern *pat);
 guint pattern_patternContentUnits (SPPattern *pat);
-Geom::Matrix const &pattern_patternTransform(SPPattern const *pat);
+Geom::Affine const &pattern_patternTransform(SPPattern const *pat);
 gdouble pattern_x (SPPattern *pat);
 gdouble pattern_y (SPPattern *pat);
 gdouble pattern_width (SPPattern *pat);

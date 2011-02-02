@@ -67,6 +67,7 @@ public:
     bool contains_point(Point p);
     bool strict_contains_point(Point p);
 
+    inline size_t size() const { return boundary.size();}
     inline Point operator[](int i) const {
 
         int l = boundary.size();
@@ -133,7 +134,7 @@ public:
 // do two convex hulls intersect?
 bool intersectp(ConvexHull a, ConvexHull b);
 
-std::vector<Point> bridge_points(ConvexHull a, ConvexHull b);
+std::vector<std::pair<int, int> > bridges(ConvexHull a, ConvexHull b);
 
 // find the convex hull intersection
 ConvexHull intersection(ConvexHull a, ConvexHull b);

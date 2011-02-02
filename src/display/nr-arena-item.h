@@ -52,7 +52,7 @@
 
 #define NR_ARENA_ITEM_RENDER_NO_CACHE (1 << 0)
 
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <libnr/nr-rect-l.h>
 #include <libnr/nr-pixblock.h>
 #include <libnr/nr-object.h>
@@ -64,7 +64,7 @@
 struct NRGC {
     NRGC(NRGC const *p) : parent(p) {}
     NRGC const *parent;
-    Geom::Matrix transform;
+    Geom::Affine transform;
 };
 
 struct NRArenaItem : public NRObject {
@@ -95,7 +95,7 @@ struct NRArenaItem : public NRObject {
      * specified in SVG standard. Required by filters. */
     Geom::OptRect item_bbox;
     /* Our affine */
-    Geom::Matrix *transform;
+    Geom::Affine *transform;
     /* Clip item */
     NRArenaItem *clip;
     /* Mask item */
@@ -109,7 +109,7 @@ struct NRArenaItem : public NRObject {
     void *data;
 
     /* Current Transformation Matrix */
-    Geom::Matrix ctm;
+    Geom::Affine ctm;
 
     /* These hold background buffer state for filter rendering */
     NRPixBlock *background_pb;
@@ -171,8 +171,8 @@ NRArenaItem *nr_arena_item_unparent (NRArenaItem *item);
 
 void nr_arena_item_append_child (NRArenaItem *parent, NRArenaItem *child);
 
-void nr_arena_item_set_transform(NRArenaItem *item, Geom::Matrix const &transform);
-void nr_arena_item_set_transform(NRArenaItem *item, Geom::Matrix const *transform);
+void nr_arena_item_set_transform(NRArenaItem *item, Geom::Affine const &transform);
+void nr_arena_item_set_transform(NRArenaItem *item, Geom::Affine const *transform);
 void nr_arena_item_set_opacity (NRArenaItem *item, double opacity);
 void nr_arena_item_set_sensitive (NRArenaItem *item, unsigned int sensitive);
 void nr_arena_item_set_visible (NRArenaItem *item, unsigned int visible);

@@ -14,7 +14,7 @@
 
 
 #include <string.h>  // for memset
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include "libnr/nr-pixops.h"
 #include "sp-canvas-item.h"
 #include "sp-canvas-util.h"
@@ -77,7 +77,7 @@ sp_canvas_clear_buffer (SPCanvasBuf *buf)
     }
 }
 
-Geom::Matrix sp_canvas_item_i2p_affine (SPCanvasItem * item)
+Geom::Affine sp_canvas_item_i2p_affine (SPCanvasItem * item)
 {
     g_assert (item != NULL); /* this may be overly zealous - it is
                               * plausible that this gets called
@@ -86,7 +86,7 @@ Geom::Matrix sp_canvas_item_i2p_affine (SPCanvasItem * item)
     return item->xform;
 }
 
-Geom::Matrix  sp_canvas_item_i2i_affine (SPCanvasItem * from, SPCanvasItem * to)
+Geom::Affine  sp_canvas_item_i2i_affine (SPCanvasItem * from, SPCanvasItem * to)
 {
     g_assert (from != NULL);
     g_assert (to != NULL);
@@ -94,7 +94,7 @@ Geom::Matrix  sp_canvas_item_i2i_affine (SPCanvasItem * from, SPCanvasItem * to)
     return sp_canvas_item_i2w_affine(from) * sp_canvas_item_i2w_affine(to).inverse();
 }
 
-void sp_canvas_item_set_i2w_affine (SPCanvasItem * item,  Geom::Matrix const &i2w)
+void sp_canvas_item_set_i2w_affine (SPCanvasItem * item,  Geom::Affine const &i2w)
 {
     g_assert (item != NULL);
 

@@ -12,7 +12,7 @@
 #include <libnr/nr-matrix.h>
 #include <libnr/nr-rect.h>
 #include <libnr/nr-point.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <2geom/d2.h>
 #include <2geom/transforms.h>
 #include <2geom/point.h>
@@ -24,11 +24,11 @@ inline NR::Point from_2geom(Geom::Point const & _pt) {
     return NR::Point(_pt[0], _pt[1]);
 }
 
-inline Geom::Matrix to_2geom(NR::Matrix const & mat) {
-    Geom::Matrix mat2geom(mat[0], mat[1], mat[2], mat[3], mat[4], mat[5]);
+inline Geom::Affine to_2geom(NR::Matrix const & mat) {
+    Geom::Affine mat2geom(mat[0], mat[1], mat[2], mat[3], mat[4], mat[5]);
     return mat2geom;
 }
-inline NR::Matrix from_2geom(Geom::Matrix const & mat) {
+inline NR::Matrix from_2geom(Geom::Affine const & mat) {
     NR::Matrix mat2geom(mat[0], mat[1], mat[2], mat[3], mat[4], mat[5]);
     return mat2geom;
 }

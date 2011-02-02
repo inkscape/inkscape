@@ -67,7 +67,7 @@ public:
     virtual void param_editOncanvas(SPItem * /*item*/, SPDesktop * /*dt*/) {};
     virtual void param_setup_nodepath(Inkscape::NodePath::Path */*np*/) {};
 
-    virtual void param_transform_multiply(Geom::Matrix const& /*postmul*/, bool /*set*/) {};
+    virtual void param_transform_multiply(Geom::Affine const& /*postmul*/, bool /*set*/) {};
 
     Glib::ustring param_key;
     Inkscape::UI::Widget::Registry * param_wr;

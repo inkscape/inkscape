@@ -36,7 +36,7 @@ public:
     virtual ~FilterComponentTransfer();
 
     virtual int render(FilterSlot &slot, FilterUnits const &units);
-    virtual void area_enlarge(NRRectL &area, Geom::Matrix const &trans);
+    virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
 
     FilterComponentTransferType type[4];
     std::vector<gdouble> tableValues[4];

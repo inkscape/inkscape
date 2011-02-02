@@ -34,7 +34,7 @@ struct NRArenaImage : public NRArenaItem {
     Geom::Point c00, c01, c11, c10; // all 4 corners of the image, for outline mode rect
 
     /* From GRID to PIXELS */
-    Geom::Matrix grid2px;
+    Geom::Affine grid2px;
 
     SPStyle *style;
 

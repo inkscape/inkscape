@@ -170,7 +170,7 @@ void Ellipse::set(std::vector<Point> const& points)
 }
 
 
-SVGEllipticalArc
+EllipticalArc *
 Ellipse::arc(Point const& initial, Point const& inner, Point const& final,
              bool _svg_compliant)
 {
@@ -212,21 +212,27 @@ Ellipse::arc(Point const& initial, Point const& inner, Point const& final,
         }
     }
 
-    SVGEllipticalArc ea( initial, ray(X), ray(Y), rot_angle(),
-                      large_arc_flag, sweep_flag, final, _svg_compliant);
-    return ea;
+    EllipticalArc *ret_arc;
+    if (_svg_compliant) {
+        ret_arc = new SVGEllipticalArc(initial, ray(X), ray(Y), rot_angle(),
+                      large_arc_flag, sweep_flag, final);
+    } else {
+        ret_arc = new EllipticalArc(initial, ray(X), ray(Y), rot_angle(),
+                      large_arc_flag, sweep_flag, final);
+    }
+    return ret_arc;
 }
 
-Ellipse Ellipse::transformed(Matrix const& m) const
+Ellipse Ellipse::transformed(Affine const& m) const
 {
     double cosrot = std::cos(rot_angle());
     double sinrot = std::sin(rot_angle());
-    Matrix A(  ray(X) * cosrot, ray(X) * sinrot,
+    Affine A(  ray(X) * cosrot, ray(X) * sinrot,
               -ray(Y) * sinrot, ray(Y) * cosrot,
                0,               0                );
     Point new_center = center() * m;
-    Matrix M = m.without_translation();
-    Matrix AM = A * M;
+    Affine M = m.withoutTranslation();
+    Affine AM = A * M;
     if ( are_near(AM.det(), 0) )
     {
         double angle;
@@ -250,11 +256,11 @@ Ellipse Ellipse::transformed(Matrix const& m) const
     }
 
     std::vector<double> coeff = implicit_form_coefficients();
-    Matrix Q( coeff[0],   coeff[1]/2,
+    Affine Q( coeff[0],   coeff[1]/2,
               coeff[1]/2, coeff[2],
               0,          0   );
 
-    Matrix invm = M.inverse();
+    Affine invm = M.inverse();
     Q = invm * Q ;
     std::swap( invm[1], invm[2] );
     Q *= invm;

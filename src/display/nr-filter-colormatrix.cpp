@@ -195,7 +195,7 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     return 0;
 }
 
-void FilterColorMatrix::area_enlarge(NRRectL &/*area*/, Geom::Matrix const &/*trans*/)
+void FilterColorMatrix::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*trans*/)
 {
 }
 

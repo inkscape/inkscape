@@ -8038,7 +8038,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
     GSList *items = get_avoided_items(NULL, desktop->currentRoot(), desktop);
     for ( GSList const *iter = items ; iter != NULL ; iter = iter->next ) {
         SPItem *item = reinterpret_cast<SPItem *>(iter->data);
-        Geom::Matrix m = Geom::identity();
+        Geom::Affine m = Geom::identity();
         avoid_item_move(&m, item);
         modmade = true;
     }

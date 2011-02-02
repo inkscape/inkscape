@@ -128,7 +128,7 @@ class Node : ListNode, public SelectableControlPoint {
 public:
     Node(NodeSharedData const &data, Geom::Point const &pos);
     virtual void move(Geom::Point const &p);
-    virtual void transform(Geom::Matrix const &m);
+    virtual void transform(Geom::Affine const &m);
     virtual Geom::Rect bounds();
 
     NodeType type() { return _type; }

@@ -235,7 +235,7 @@ PathParam::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVec
  * Only applies transform when not referring to other path!
  */
 void
-PathParam::param_transform_multiply(Geom::Matrix const& postmul, bool /*set*/)
+PathParam::param_transform_multiply(Geom::Affine const& postmul, bool /*set*/)
 {
     // only apply transform when not referring to other path
     if (!href) {

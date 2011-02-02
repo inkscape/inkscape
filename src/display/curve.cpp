@@ -180,7 +180,7 @@ SPCurve::split() const
  * Transform all paths in curve using matrix.
  */
 void
-SPCurve::transform(Geom::Matrix const &m)
+SPCurve::transform(Geom::Affine const &m)
 {
     _pathv *= m;
 }

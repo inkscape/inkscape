@@ -85,7 +85,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
             NRGC gc(NULL);
             /* Update to renderable state */
             double sf = 1.0;
-            Geom::Matrix t(Geom::Scale(sf, sf));
+            Geom::Affine t(Geom::Scale(sf, sf));
             nr_arena_item_set_transform(ai, &t);
             gc.transform.setIdentity();
             nr_arena_item_invoke_update( ai, NULL, &gc,
@@ -166,7 +166,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
 
     // Get the object bounding box. Image is placed with respect to box.
     // Array values:  0: width; 3: height; 4: -x; 5: -y.
-    Geom::Matrix object_bbox = units.get_matrix_user2filterunits().inverse();
+    Geom::Affine object_bbox = units.get_matrix_user2filterunits().inverse();
 
     // feImage is suppose to use the same parameters as a normal SVG image.
     // If a width or height is set to zero, the image is not suppose to be displayed.
@@ -181,8 +181,8 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
 
     int coordx,coordy;
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
-    Geom::Matrix unit_trans = units.get_matrix_primitiveunits2pb().inverse();
-    Geom::Matrix d2s = Geom::Translate(x0, y0) * unit_trans * Geom::Translate(object_bbox[4]-feImageX, object_bbox[5]-feImageY) * Geom::Scale(scaleX, scaleY);
+    Geom::Affine unit_trans = units.get_matrix_primitiveunits2pb().inverse();
+    Geom::Affine d2s = Geom::Translate(x0, y0) * unit_trans * Geom::Translate(object_bbox[4]-feImageX, object_bbox[5]-feImageY) * Geom::Scale(scaleX, scaleY);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int nr_arena_image_x_sample = prefs->getInt("/options/bitmapoversample/value", 1);

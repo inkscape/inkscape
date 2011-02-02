@@ -410,7 +410,7 @@ sp_star_get_curvepoint (SPStar *star, SPStarPoint point, gint index, bool previ)
         guint32 seed = point_unique_int (o);
 
         // randomly rotate (by step 3 from the seed) and scale (by step 4) the vector
-        ret = ret * Geom::Matrix (Geom::Rotate (star->randomized * M_PI * rnd (seed, 3)));
+        ret = ret * Geom::Affine (Geom::Rotate (star->randomized * M_PI * rnd (seed, 3)));
         ret *= ( 1 + star->randomized * rnd (seed, 4));
 
         // the randomized corner point
@@ -559,7 +559,7 @@ static void sp_star_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
     }
 
     if (snapprefs->getSnapObjectMidpoints()) {
-        Geom::Matrix const i2d (item->i2d_affine ());
+        Geom::Affine const i2d (item->i2d_affine ());
         p.push_back(Inkscape::SnapCandidatePoint(SP_STAR(item)->center * i2d,Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
     }
 }

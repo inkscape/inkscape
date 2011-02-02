@@ -34,7 +34,7 @@ static void sp_canvas_bpath_class_init (SPCanvasBPathClass *klass);
 static void sp_canvas_bpath_init (SPCanvasBPath *path);
 static void sp_canvas_bpath_destroy (GtkObject *object);
 
-static void sp_canvas_bpath_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
+static void sp_canvas_bpath_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_canvas_bpath_render (SPCanvasItem *item, SPCanvasBuf *buf);
 static double sp_canvas_bpath_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
 
@@ -103,7 +103,7 @@ sp_canvas_bpath_destroy (GtkObject *object)
 }
 
 static void
-sp_canvas_bpath_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
+sp_canvas_bpath_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
     SPCanvasBPath *cbp = SP_CANVAS_BPATH (item);
 

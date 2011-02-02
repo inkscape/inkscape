@@ -1,3 +1,4 @@
+#line 1 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 /**
  * \file
  * \brief parse SVG path specifications
@@ -139,7 +140,7 @@ private:
 };
 
 
-#line 144 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.cpp"
+#line 144 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.cpp"
 static const char _svg_path_actions[] = {
 	0, 1, 0, 1, 1, 1, 2, 1, 
 	3, 1, 4, 1, 5, 1, 15, 1, 
@@ -1144,7 +1145,7 @@ static const int svg_path_first_final = 270;
 
 static const int svg_path_en_main = 1;
 
-#line 144 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 144 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 
 
 void Parser::parse(char const *str)
@@ -1157,12 +1158,12 @@ throw(SVGPathParseError)
     _reset();
 
     
-#line 1162 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.cpp"
+#line 1162 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.cpp"
 	{
 	cs = svg_path_start;
 	}
 
-#line 1167 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.cpp"
+#line 1167 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.cpp"
 	{
 	int _klen;
 	unsigned int _trans;
@@ -1235,13 +1236,13 @@ _match:
 		switch ( *_acts++ )
 		{
 	case 0:
-#line 156 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 156 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             start = p;
         }
 	break;
 	case 1:
-#line 160 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 160 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             char const *end=p;
             std::string buf(start, end);
@@ -1250,55 +1251,55 @@ _match:
         }
 	break;
 	case 2:
-#line 167 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 167 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _push(1.0);
         }
 	break;
 	case 3:
-#line 171 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 171 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _push(0.0);
         }
 	break;
 	case 4:
-#line 175 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 175 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _absolute = true;
         }
 	break;
 	case 5:
-#line 179 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 179 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _absolute = false;
         }
 	break;
 	case 6:
-#line 183 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 183 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _moveTo(_pop_point());
         }
 	break;
 	case 7:
-#line 187 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 187 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _lineTo(_pop_point());
         }
 	break;
 	case 8:
-#line 191 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 191 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _hlineTo(Point(_pop_coord(X), _current[Y]));
         }
 	break;
 	case 9:
-#line 195 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 195 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _vlineTo(Point(_current[X], _pop_coord(Y)));
         }
 	break;
 	case 10:
-#line 199 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 199 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             Point p = _pop_point();
             Point c1 = _pop_point();
@@ -1307,7 +1308,7 @@ _match:
         }
 	break;
 	case 11:
-#line 206 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 206 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             Point p = _pop_point();
             Point c1 = _pop_point();
@@ -1315,7 +1316,7 @@ _match:
         }
 	break;
 	case 12:
-#line 212 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 212 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             Point p = _pop_point();
             Point c = _pop_point();
@@ -1323,14 +1324,14 @@ _match:
         }
 	break;
 	case 13:
-#line 218 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 218 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             Point p = _pop_point();
             _quadTo(_quad_tangent, p);
         }
 	break;
 	case 14:
-#line 223 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 223 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             Point point = _pop_point();
             bool sweep = _pop_flag();
@@ -1343,16 +1344,16 @@ _match:
         }
 	break;
 	case 15:
-#line 234 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 234 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _closePath();
         }
 	break;
 	case 16:
-#line 370 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 370 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 	{goto _out;}
 	break;
-#line 1357 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.cpp"
+#line 1357 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.cpp"
 		}
 	}
 
@@ -1363,7 +1364,7 @@ _again:
 	goto _resume;
 	_out: {}
 	}
-#line 380 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+#line 380 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
 
 
     if ( cs < svg_path_first_final ) {

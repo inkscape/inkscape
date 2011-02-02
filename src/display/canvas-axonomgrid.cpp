@@ -511,7 +511,7 @@ CanvasAxonomGrid::updateWidgets()
 
 
 void
-CanvasAxonomGrid::Update (Geom::Matrix const &affine, unsigned int /*flags*/)
+CanvasAxonomGrid::Update (Geom::Affine const &affine, unsigned int /*flags*/)
 {
     ow = origin * affine;
     sw = Geom::Point(fabs(affine[0]),fabs(affine[3]));

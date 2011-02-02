@@ -395,7 +395,7 @@ inline static bool check_if_pixel_is_paintable(guchar *px, unsigned char *trace_
  * \param transform The transform to apply to the final SVG path.
  * \param union_with_selection If true, merge the final SVG path with the current selection.
  */
-static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *desktop, Geom::Matrix transform, unsigned int min_x, unsigned int max_x, unsigned int min_y, unsigned int max_y, bool union_with_selection) {
+static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *desktop, Geom::Affine transform, unsigned int min_x, unsigned int max_x, unsigned int min_y, unsigned int max_y, bool union_with_selection) {
     SPDocument *document = sp_desktop_document(desktop);
 
     unsigned char *trace_t;
@@ -490,10 +490,10 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
             SP_ITEM(reprobj)->doWriteTransform(pathRepr, transform, NULL);
             
             // premultiply the item transform by the accumulated parent transform in the paste layer
-            Geom::Matrix local (SP_GROUP(desktop->currentLayer())->i2doc_affine());
+            Geom::Affine local (SP_GROUP(desktop->currentLayer())->i2doc_affine());
             if (!local.isIdentity()) {
                 gchar const *t_str = pathRepr->attribute("transform");
-                Geom::Matrix item_t (Geom::identity());
+                Geom::Affine item_t (Geom::identity());
                 if (t_str)
                     sp_svg_transform_read(t_str, &item_t);
                 item_t *= local.inverse();
@@ -806,7 +806,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     origin[Geom::Y] = origin[Geom::Y] + (screen.height() * ((1 - padding) / 2));
     
     Geom::Scale scale(zoom_scale, zoom_scale);
-    Geom::Matrix affine = scale * Geom::Translate(-origin * scale);
+    Geom::Affine affine = scale * Geom::Translate(-origin * scale);
     
     /* Create ArenaItems and set transform */
     NRArenaItem *root = SP_ITEM(document->getRoot())->invoke_show( arena, dkey, SP_ITEM_SHOW_DISPLAY);
@@ -1115,7 +1115,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     Geom::Point min_start = Geom::Point(min_x, min_y);
     
     affine = scale * Geom::Translate(-origin * scale - min_start);
-    Geom::Matrix inverted_affine = Geom::Matrix(affine).inverse();
+    Geom::Affine inverted_affine = Geom::Affine(affine).inverse();
     
     do_trace(bci, trace_px, desktop, inverted_affine, min_x, max_x, min_y, max_y, union_with_selection);
 

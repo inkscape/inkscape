@@ -49,7 +49,7 @@ static void box3d_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar *box3d_description(SPItem *item);
-static Geom::Matrix box3d_set_transform(SPItem *item, Geom::Matrix const &xform);
+static Geom::Affine box3d_set_transform(SPItem *item, Geom::Affine const &xform);
 static void box3d_convert_to_guides(SPItem *item);
 
 static void box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box);
@@ -335,15 +335,15 @@ void box3d_position_set(SPBox3D *box)
     }
 }
 
-static Geom::Matrix
-box3d_set_transform(SPItem *item, Geom::Matrix const &xform)
+static Geom::Affine
+box3d_set_transform(SPItem *item, Geom::Affine const &xform)
 {
     SPBox3D *box = SP_BOX3D(item);
 
     // We don't apply the transform to the box directly but instead to its perspective (which is
     // done in sp_selection_apply_affine). Here we only adjust strokes, patterns, etc.
 
-    Geom::Matrix ret(Geom::Matrix(xform).without_translation());
+    Geom::Affine ret(Geom::Affine(xform).withoutTranslation());
     gdouble const sw = hypot(ret[0], ret[1]);
     gdouble const sh = hypot(ret[2], ret[3]);
 
@@ -390,7 +390,7 @@ box3d_get_corner_screen (SPBox3D const *box, guint id, bool item_coords) {
     if (!box3d_get_perspective(box)) {
         return Geom::Point (NR_HUGE, NR_HUGE);
     }
-    Geom::Matrix const i2d (SP_ITEM(box)->i2d_affine ());
+    Geom::Affine const i2d (SP_ITEM(box)->i2d_affine ());
     if (item_coords) {
         return box3d_get_perspective(box)->perspective_impl->tmat.image(proj_corner).affine() * i2d.inverse();
     } else {
@@ -414,7 +414,7 @@ box3d_get_center_screen (SPBox3D *box) {
     if (!box3d_get_perspective(box)) {
         return Geom::Point (NR_HUGE, NR_HUGE);
     }
-    Geom::Matrix const i2d (SP_ITEM(box)->i2d_affine ());
+    Geom::Affine const i2d (SP_ITEM(box)->i2d_affine ());
     return box3d_get_perspective(box)->perspective_impl->tmat.image(proj_center).affine() * i2d.inverse();
 }
 

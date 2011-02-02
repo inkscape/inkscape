@@ -977,8 +977,8 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
                 m.unSetup();
 
                 // Update the hidden path
-                Geom::Matrix i2d = (cc->clickeditem)->i2d_affine();
-                Geom::Matrix d2i = i2d.inverse();
+                Geom::Affine i2d = (cc->clickeditem)->i2d_affine();
+                Geom::Affine d2i = i2d.inverse();
                 SPPath *path = SP_PATH(cc->clickeditem);
                 SPCurve *curve = path->original_curve ? path->original_curve : path->curve;
                 if (cc->clickedhandle == cc->endpt_handle[0]) {
@@ -1203,7 +1203,7 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
                     // Obtain original position
                     ConnectionPoint const& cp = cc->connpthandles[cc->selected_handle];
                     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
-                    const Geom::Matrix& i2doc = (cc->active_shape)->i2doc_affine();
+                    const Geom::Affine& i2doc = (cc->active_shape)->i2doc_affine();
                     sp_knot_set_position(cc->selected_handle, cp.pos * i2doc * desktop->doc2dt(), 0);
                     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
                     desktop->messageStack()->flash( Inkscape::NORMAL_MESSAGE,
@@ -1607,7 +1607,7 @@ endpt_handler(SPKnot */*knot*/, GdkEvent *event, SPConnectorContext *cc)
 
                 // Show the red path for dragging.
                 cc->red_curve = SP_PATH(cc->clickeditem)->original_curve ? SP_PATH(cc->clickeditem)->original_curve->copy() : SP_PATH(cc->clickeditem)->curve->copy();
-                Geom::Matrix i2d = (cc->clickeditem)->i2d_affine();
+                Geom::Affine i2d = (cc->clickeditem)->i2d_affine();
                 cc->red_curve->transform(i2d);
                 sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve);
 
@@ -1766,7 +1766,7 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
     g_assert( SP_IS_PATH(item) );
 
     SPCurve *curve = SP_PATH(item)->original_curve ? SP_PATH(item)->original_curve : SP_PATH(item)->curve;
-    Geom::Matrix i2d = item->i2d_affine();
+    Geom::Affine i2d = item->i2d_affine();
 
     if (cc->active_conn == item)
     {

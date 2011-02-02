@@ -43,7 +43,7 @@ int FilterOffset::render(FilterSlot &slot, FilterUnits const &units) {
 
     NRPixBlock *out = new NRPixBlock;
 
-    Geom::Matrix trans = units.get_matrix_primitiveunits2pb();
+    Geom::Affine trans = units.get_matrix_primitiveunits2pb();
     Geom::Point offset(dx, dy);
     offset *= trans;
     offset[X] -= trans[4];
@@ -74,7 +74,7 @@ void FilterOffset::set_dy(double amount) {
     dy = amount;
 }
 
-void FilterOffset::area_enlarge(NRRectL &area, Geom::Matrix const &trans)
+void FilterOffset::area_enlarge(NRRectL &area, Geom::Affine const &trans)
 {
     Geom::Point offset(dx, dy);
     offset *= trans;

@@ -343,7 +343,7 @@ Geom::Rect Layout::characterBoundingBox(iterator const &it, double *rotation) co
     return Geom::Rect(top_left, bottom_right);
 }
 
-std::vector<Geom::Point> Layout::createSelectionShape(iterator const &it_start, iterator const &it_end, Geom::Matrix const &transform) const
+std::vector<Geom::Point> Layout::createSelectionShape(iterator const &it_start, iterator const &it_end, Geom::Affine const &transform) const
 {
     std::vector<Geom::Point> quads;
     unsigned char_index;
@@ -398,7 +398,7 @@ std::vector<Geom::Point> Layout::createSelectionShape(iterator const &it_start, 
             continue;
         Geom::Point center_of_rotation((top_left[Geom::X] + bottom_right[Geom::X]) * 0.5,
                                      top_left[Geom::Y] + _spans[span_index].line_height.ascent);
-        Geom::Matrix total_transform = Geom::Translate(-center_of_rotation) * Geom::Rotate(char_rotation) * Geom::Translate(center_of_rotation) * transform;
+        Geom::Affine total_transform = Geom::Translate(-center_of_rotation) * Geom::Rotate(char_rotation) * Geom::Translate(center_of_rotation) * transform;
         for(int i = 0; i < 4; i ++)
             quads.push_back(char_box.corner(i) * total_transform);
     }

@@ -310,7 +310,7 @@ PrintEmfWin32::destroy_brush()
 
 
 void
-PrintEmfWin32::create_pen(SPStyle const *style, const Geom::Matrix &transform)
+PrintEmfWin32::create_pen(SPStyle const *style, const Geom::Affine &transform)
 {
     if (style) {
         float rgb[3];
@@ -459,12 +459,12 @@ PrintEmfWin32::flush_fill()
 }
 
 unsigned int
-PrintEmfWin32::bind(Inkscape::Extension::Print * /*mod*/, Geom::Matrix const *transform, float /*opacity*/)
+PrintEmfWin32::bind(Inkscape::Extension::Print * /*mod*/, Geom::Affine const *transform, float /*opacity*/)
 {
-    Geom::Matrix tr = *transform;
+    Geom::Affine tr = *transform;
     
     if (m_tr_stack.size()) {
-        Geom::Matrix tr_top = m_tr_stack.top();
+        Geom::Affine tr_top = m_tr_stack.top();
         m_tr_stack.push(tr * tr_top);
     } else {
         m_tr_stack.push(tr);
@@ -482,12 +482,12 @@ PrintEmfWin32::release(Inkscape::Extension::Print * /*mod*/)
 
 unsigned int
 PrintEmfWin32::fill(Inkscape::Extension::Print * /*mod*/,
-                    Geom::PathVector const &pathv, Geom::Matrix const * /*transform*/, SPStyle const *style,
+                    Geom::PathVector const &pathv, Geom::Affine const * /*transform*/, SPStyle const *style,
                     NRRect const * /*pbox*/, NRRect const * /*dbox*/, NRRect const * /*bbox*/)
 {
     if (!hdc) return 0;
 
-    Geom::Matrix tf = m_tr_stack.top();
+    Geom::Affine tf = m_tr_stack.top();
 
     flush_fill(); // flush any pending fills
 
@@ -511,12 +511,12 @@ PrintEmfWin32::fill(Inkscape::Extension::Print * /*mod*/,
 
 unsigned int
 PrintEmfWin32::stroke (Inkscape::Extension::Print * /*mod*/,
-                       Geom::PathVector const &pathv, const Geom::Matrix * /*transform*/, const SPStyle *style,
+                       Geom::PathVector const &pathv, const Geom::Affine * /*transform*/, const SPStyle *style,
                        const NRRect * /*pbox*/, const NRRect * /*dbox*/, const NRRect * /*bbox*/)
 {
     if (!hdc) return 0;
 
-    Geom::Matrix tf = m_tr_stack.top();
+    Geom::Affine tf = m_tr_stack.top();
 
     stroke_and_fill = ( pathv == fill_pathv );
 
@@ -550,7 +550,7 @@ PrintEmfWin32::stroke (Inkscape::Extension::Print * /*mod*/,
 
 
 bool
-PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom::Matrix &transform)
+PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom::Affine &transform)
 {
     Geom::PathVector pv = pathv_to_linear_and_cubic_beziers( pathv * transform );
     
@@ -746,7 +746,7 @@ PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom::Mat
 }
 
 unsigned int
-PrintEmfWin32::print_pathv(Geom::PathVector const &pathv, const Geom::Matrix &transform)
+PrintEmfWin32::print_pathv(Geom::PathVector const &pathv, const Geom::Affine &transform)
 {
     simple_shape = print_simple_shape(pathv, transform);
 
@@ -863,7 +863,7 @@ PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char const *text, Geom
     if (!hdc) return 0;
 
     HFONT hfont = NULL;
-    Geom::Matrix tf = m_tr_stack.top();
+    Geom::Affine tf = m_tr_stack.top();
     double rot = 1800.0*std::atan2(tf[1], tf[0])/M_PI;	// 0.1 degree rotation
     
 #ifdef USE_PANGO_WIN32

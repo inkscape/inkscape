@@ -92,7 +92,7 @@ public:
     virtual void resetDefaults(SPItem * item);
 
     /// /todo: is this method really necessary? it causes UI inconsistensies... (johan)
-    virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
+    virtual void transform_multiply(Geom::Affine const& postmul, bool set);
 
     // /TODO: providesKnotholder() is currently used as an indicator of whether a nodepath is
     // created for an item or not. When we allow both at the same time, this needs rethinking!

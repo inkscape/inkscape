@@ -70,7 +70,7 @@ inline static void _check_index(NRPixBlock const * const pb, int const location,
 }
 
 static void scale_bicubic_rgba(NRPixBlock *to, NRPixBlock *from,
-                               Geom::Matrix const &trans)
+                               Geom::Affine const &trans)
 {
     if (NR_PIXBLOCK_BPP(from) != 4 || NR_PIXBLOCK_BPP(to) != 4) {
         g_warning("A non-32-bpp image passed to scale_bicubic_rgba: scaling aborted.");
@@ -203,7 +203,7 @@ static void scale_bicubic_rgba(NRPixBlock *to, NRPixBlock *from,
 }
 
 void scale_bicubic_alpha(NRPixBlock *to, NRPixBlock *from,
-                         Geom::Matrix const &trans)
+                         Geom::Affine const &trans)
 {
     if (NR_PIXBLOCK_BPP(from) != 1 || NR_PIXBLOCK_BPP(to) != 1) {
         g_warning("A non-8-bpp image passed to scale_bicubic_alpha: scaling aborted.");
@@ -275,7 +275,7 @@ void scale_bicubic_alpha(NRPixBlock *to, NRPixBlock *from,
     }
 }
 
-void scale_bicubic(NRPixBlock *to, NRPixBlock *from, Geom::Matrix const &trans)
+void scale_bicubic(NRPixBlock *to, NRPixBlock *from, Geom::Affine const &trans)
 {
     if (NR_PIXBLOCK_BPP(to) == 4 && NR_PIXBLOCK_BPP(from) == 4) {
         scale_bicubic_rgba(to, from, trans);

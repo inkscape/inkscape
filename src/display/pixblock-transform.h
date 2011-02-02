@@ -17,8 +17,8 @@
 
 namespace NR {
 
-void transform_nearest(NRPixBlock *to, NRPixBlock *from, Geom::Matrix const &trans);
-void transform_bicubic(NRPixBlock *to, NRPixBlock *from, Geom::Matrix const &trans);
+void transform_nearest(NRPixBlock *to, NRPixBlock *from, Geom::Affine const &trans);
+void transform_bicubic(NRPixBlock *to, NRPixBlock *from, Geom::Affine const &trans);
 
 } /* namespace NR */
 

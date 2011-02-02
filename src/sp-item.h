@@ -22,7 +22,7 @@
 
 #include "display/nr-arena-forward.h"
 #include "sp-object.h"
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <libnr/nr-rect.h>
 #include <2geom/forward.h>
 #include <libnr/nr-convert2geom.h>
@@ -86,11 +86,11 @@ class SPItemCtx {
 public:
     SPCtx ctx;
     /** Item to document transformation */
-    Geom::Matrix i2doc;
+    Geom::Affine i2doc;
     /** Viewport size */
     NRRect vp;
     /** Item to viewport transformation */
-    Geom::Matrix i2vp;
+    Geom::Affine i2vp;
 };
 
 class SPItem;
@@ -120,7 +120,7 @@ public:
     double transform_center_x;
     double transform_center_y;
 
-    Geom::Matrix transform;
+    Geom::Affine transform;
 
     SPClipPathReference *clip_ref;
     SPMaskReference *mask_ref;
@@ -132,7 +132,7 @@ public:
 
     std::vector<SPGuideConstraint> constraints;
 
-    sigc::signal<void, Geom::Matrix const *, SPItem *> _transformed_signal;
+    sigc::signal<void, Geom::Affine const *, SPItem *> _transformed_signal;
 
     void init();
     bool isLocked() const;
@@ -160,25 +160,25 @@ public:
 
     bool isVisibleAndUnlocked(unsigned display_key) const;
 
-    Geom::Matrix getRelativeTransform(SPObject const *obj) const;
+    Geom::Affine getRelativeTransform(SPObject const *obj) const;
 
     void raiseOne();
     void lowerOne();
     void raiseToTop();
     void lowerToBottom();
 
-    Geom::OptRect getBounds(Geom::Matrix const &transform, BBoxType type=APPROXIMATE_BBOX, unsigned int dkey=0) const;
+    Geom::OptRect getBounds(Geom::Affine const &transform, BBoxType type=APPROXIMATE_BBOX, unsigned int dkey=0) const;
 
     sigc::connection _clip_ref_connection;
     sigc::connection _mask_ref_connection;
 
-    sigc::connection connectTransformed(sigc::slot<void, Geom::Matrix const *, SPItem *> slot)  {
+    sigc::connection connectTransformed(sigc::slot<void, Geom::Affine const *, SPItem *> slot)  {
         return _transformed_signal.connect(slot);
     }
-    void invoke_bbox( Geom::OptRect &bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
-    void invoke_bbox( NRRect *bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
-    void invoke_bbox_full( Geom::OptRect &bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear) const;
-    void invoke_bbox_full( NRRect *bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear) __attribute__ ((deprecated));
+    void invoke_bbox( Geom::OptRect &bbox, Geom::Affine const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
+    void invoke_bbox( NRRect *bbox, Geom::Affine const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
+    void invoke_bbox_full( Geom::OptRect &bbox, Geom::Affine const &transform, unsigned const flags, unsigned const clear) const;
+    void invoke_bbox_full( NRRect *bbox, Geom::Affine const &transform, unsigned const flags, unsigned const clear) __attribute__ ((deprecated));
 
     unsigned pos_in_parent();
     gchar *description();
@@ -187,23 +187,23 @@ public:
     NRArenaItem *invoke_show(NRArena *arena, unsigned int key, unsigned int flags);
     void invoke_hide(unsigned int key);
     void getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs=0) const;
-    void adjust_pattern(/* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);
-    void adjust_gradient(/* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);
+    void adjust_pattern(/* Geom::Affine const &premul, */ Geom::Affine const &postmul, bool set = false);
+    void adjust_gradient(/* Geom::Affine const &premul, */ Geom::Affine const &postmul, bool set = false);
     void adjust_stroke(gdouble ex);
     void adjust_stroke_width_recursive(gdouble ex);
-    void adjust_paint_recursive(Geom::Matrix advertized_transform, Geom::Matrix t_ancestors, bool is_pattern);
-    void adjust_livepatheffect(Geom::Matrix const &postmul, bool set = false);
-    void doWriteTransform(Inkscape::XML::Node *repr, Geom::Matrix const &transform, Geom::Matrix const *adv = NULL, bool compensate = true);
-    void set_item_transform(Geom::Matrix const &transform_matrix);
+    void adjust_paint_recursive(Geom::Affine advertized_transform, Geom::Affine t_ancestors, bool is_pattern);
+    void adjust_livepatheffect(Geom::Affine const &postmul, bool set = false);
+    void doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &transform, Geom::Affine const *adv = NULL, bool compensate = true);
+    void set_item_transform(Geom::Affine const &transform_matrix);
     void convert_item_to_guides();
     gint emitEvent (SPEvent &event);
     NRArenaItem *get_arenaitem(unsigned int key);
     void getBboxDesktop(NRRect *bbox, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
     Geom::OptRect getBboxDesktop(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
-    Geom::Matrix i2doc_affine() const;
-    Geom::Matrix i2d_affine() const;
-    void set_i2d_affine(Geom::Matrix const &transform);
-    Geom::Matrix dt2i_affine() const;
+    Geom::Affine i2doc_affine() const;
+    Geom::Affine i2d_affine() const;
+    void set_i2d_affine(Geom::Affine const &transform);
+    Geom::Affine dt2i_affine() const;
     void convert_to_guides();
 
 private:
@@ -240,7 +240,7 @@ public:
     SPObjectClass parent_class;
 
     /** BBox union in given coordinate system */
-    void (* bbox) (SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
+    void (* bbox) (SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
 
     /** Printing method. Assumes ctm is set to item affine matrix */
     /* \todo Think about it, and maybe implement generic export method instead (Lauris) */
@@ -258,7 +258,7 @@ public:
     void (* snappoints) (SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 
     /** Apply the transform optimally, and return any residual transformation */
-    Geom::Matrix (* set_transform)(SPItem *item, Geom::Matrix const &transform);
+    Geom::Affine (* set_transform)(SPItem *item, Geom::Affine const &transform);
 
     /** Convert the item to guidelines */
     void (* convert_to_guides)(SPItem *item);
@@ -275,8 +275,8 @@ public:
 
 // Utility
 
-Geom::Matrix i2anc_affine(SPObject const *item, SPObject const *ancestor);
-Geom::Matrix i2i_affine(SPObject const *src, SPObject const *dest);
+Geom::Affine i2anc_affine(SPObject const *item, SPObject const *ancestor);
+Geom::Affine i2i_affine(SPObject const *src, SPObject const *dest);
 
 /* fixme: - these are evil, but OK */
 

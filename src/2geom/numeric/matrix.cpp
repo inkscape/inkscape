@@ -37,9 +37,7 @@
 #include <2geom/numeric/vector.h>
 
 
-
 namespace Geom { namespace NL {
-
 
 Vector operator*( detail::BaseMatrixImpl const& A,
                   detail::BaseVectorImpl const& v )
@@ -100,6 +98,47 @@ Matrix pseudo_inverse(detail::BaseMatrixImpl const& A)
 
     return P;
 }
+
+
+double trace (detail::BaseMatrixImpl const& A)
+{
+    if (A.rows() != A.columns())
+    {
+        THROW_RANGEERROR ("NL::Matrix: computing trace: "
+                          "rows() != columns()");
+    }
+    double t = 0;
+    for (size_t i = 0; i < A.rows(); ++i)
+    {
+        t += A(i,i);
+    }
+    return t;
+}
+
+
+double det (detail::BaseMatrixImpl const& A)
+{
+    if (A.rows() != A.columns())
+    {
+        THROW_RANGEERROR ("NL::Matrix: computing determinant: "
+                          "rows() != columns()");
+    }
+
+    Matrix LU(A);
+    int s;
+    gsl_permutation * p = gsl_permutation_alloc(LU.rows());
+    gsl_linalg_LU_decomp (LU.get_gsl_matrix(), p, &s);
+
+    double t = 1;
+    for (size_t i = 0; i < LU.rows(); ++i)
+    {
+        t *= LU(i,i);
+    }
+
+    gsl_permutation_free(p);
+    return t;
+}
+
 
 } }  // end namespaces
 

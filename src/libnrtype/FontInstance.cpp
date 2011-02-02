@@ -794,7 +794,7 @@ double font_instance::Advance(int glyph_id,bool vertical)
 }
 
 
-raster_font* font_instance::RasterFont(const Geom::Matrix &trs, double stroke_width, bool vertical, JoinType stroke_join, ButtType stroke_cap, float /*miter_limit*/)
+raster_font* font_instance::RasterFont(const Geom::Affine &trs, double stroke_width, bool vertical, JoinType stroke_join, ButtType stroke_cap, float /*miter_limit*/)
 {
     font_style  nStyle;
     nStyle.transform=trs;

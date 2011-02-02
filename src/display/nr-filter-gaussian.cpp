@@ -33,7 +33,7 @@
 #include "display/nr-filter-units.h"
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixblock.h"
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include "util/fixed_point.h"
 #include "preferences.h"
 
@@ -582,7 +582,7 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         nr_blit_pixblock_pixblock(in, original_in);
     }
 
-    Geom::Matrix trans = units.get_matrix_primitiveunits2pb();
+    Geom::Affine trans = units.get_matrix_primitiveunits2pb();
 
     // Some common constants
     int const width_org = in->area.x1-in->area.x0, height_org = in->area.y1-in->area.y0;
@@ -847,7 +847,7 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
     return 0;
 }
 
-void FilterGaussian::area_enlarge(NRRectL &area, Geom::Matrix const &trans)
+void FilterGaussian::area_enlarge(NRRectL &area, Geom::Affine const &trans)
 {
     int area_x = _effect_area_scr(_deviation_x * trans.expansionX());
     int area_y = _effect_area_scr(_deviation_y * trans.expansionY());

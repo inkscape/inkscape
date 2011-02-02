@@ -22,7 +22,7 @@
 #include <2geom/pathvector.h>
 #include <2geom/bezier-curve.h>
 #include <2geom/hvlinesegment.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <2geom/point.h>
 #include <2geom/path.h>
 #include <2geom/transforms.h>
@@ -73,7 +73,7 @@ nr_create_cairo_context (NRRectL *area, NRPixBlock *pb)
  * If optimize_stroke == false, the view Rect is not used.
  */
 static void
-feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Matrix const & trans, Geom::Rect view, bool optimize_stroke)
+feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Affine const & trans, Geom::Rect view, bool optimize_stroke)
 {
     if( is_straight_curve(c) )
     {
@@ -163,7 +163,7 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path)
 
 /** Feeds path-creating calls to the cairo context translating them from the Path, with the given transform and shift */
 static void
-feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, Geom::OptRect area, bool optimize_stroke, double stroke_width)
+feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Affine trans, Geom::OptRect area, bool optimize_stroke, double stroke_width)
 {
     if (!area)
         return;
@@ -174,9 +174,9 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, Geo
     Geom::Point shift = area->min();
     Geom::Rect view = *area;
     view.expandBy (stroke_width);
-    view = view * (Geom::Matrix)Geom::Translate(-shift);
+    view = view * (Geom::Affine)Geom::Translate(-shift);
     //  Pass transformation to feed_curve, so that we don't need to create a whole new path.
-    Geom::Matrix transshift(trans * Geom::Translate(-shift));
+    Geom::Affine transshift(trans * Geom::Translate(-shift));
 
     Geom::Point initial = path.initialPoint() * transshift;
     cairo_move_to(ct, initial[0], initial[1] );
@@ -211,7 +211,7 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, Geo
 /** Feeds path-creating calls to the cairo context translating them from the PathVector, with the given transform and shift
  *  One must have done cairo_new_path(ct); before calling this function. */
 void
-feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv, Geom::Matrix trans, Geom::OptRect area, bool optimize_stroke, double stroke_width)
+feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv, Geom::Affine trans, Geom::OptRect area, bool optimize_stroke, double stroke_width)
 {
     if (!area)
         return;

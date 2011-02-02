@@ -25,7 +25,7 @@ class SPSymbol;
 class SPSymbolClass;
 
 #include <libnr/nr-matrix.h>
-#include <2geom/matrix.h>
+#include <2geom/affine.h>
 #include <libnr/nr-rect.h>
 #include "svg/svg-length.h"
 #include "enums.h"
@@ -42,7 +42,7 @@ struct SPSymbol : public SPGroup {
 	unsigned int aspect_clip : 1;
 
 	/* Child to parent additional transform */
-	Geom::Matrix c2p;
+	Geom::Affine c2p;
 };
 
 struct SPSymbolClass {
