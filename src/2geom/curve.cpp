@@ -1,10 +1,14 @@
-/*
- * 
+/**
+ * \file
+ * \brief Abstract curve type - implementation of default methods
+ *
+ *//*
  * Authors:
- * 		MenTaLguY <mental@rydia.net>
- * 		Marco Cecchetti <mrcekets at gmail.com>
+ *   MenTaLguY <mental@rydia.net>
+ *   Marco Cecchetti <mrcekets at gmail.com>
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
  * 
- * Copyright 2007-2008  authors
+ * Copyright 2007-2009 Authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -30,10 +34,10 @@
  * the specific language governing rights and limitations.
  */
 
-
 #include <2geom/curve.h>
+#include <2geom/nearest-point.h>
+#include <2geom/sbasis-geometric.h>
 #include <2geom/ord.h>
-
 
 namespace Geom 
 {
@@ -79,8 +83,35 @@ int CurveHelpers::root_winding(Curve const &c, Point p) {
     return wind;
 }
 
+Coord Curve::nearestPoint(Point const& p, Coord a, Coord b) const
+{
+    return nearest_point(p, toSBasis(), a, b);
+}
 
-}  // end namespace Geom
+std::vector<Coord> Curve::allNearestPoints(Point const& p, Coord from, Coord to) const
+{
+    return all_nearest_points(p, toSBasis(), from, to);
+}
+
+Coord Curve::length(Coord tolerance) const
+{
+    return ::Geom::length(toSBasis(), tolerance);
+}
+
+Point Curve::unitTangentAt(Coord t, unsigned n) const
+{
+    std::vector<Point> derivs = pointAndDerivatives(t, n);
+    for (unsigned deriv_n = 1; deriv_n < derivs.size(); deriv_n++) {
+        Coord length = derivs[deriv_n].length();
+        if ( ! are_near(length, 0) ) {
+            // length of derivative is non-zero, so return unit vector
+            return derivs[deriv_n] / length;
+        }
+    }
+    return Point (0,0);
+};
+
+} // namespace Geom
 
 /*
   Local Variables:

@@ -18,41 +18,26 @@
 #include "document-interface.h"
 #include <string.h>
 
-#include "verbs.h"
-#include "helper/action.h" //sp_action_perform
-
-#include "inkscape.h" //inkscape_find_desktop_by_dkey, activate desktops
-
 #include "desktop-handles.h" //sp_desktop_document()
-#include "xml/repr.h" //sp_repr_document_new
-
-#include "sp-object.h"
-
-#include "document.h" // getReprDoc()
-
 #include "desktop-style.h" //sp_desktop_get_style
-
-#include "selection.h" //selection struct
-#include "selection-chemistry.h"// lots of selection functions
-
-#include "sp-ellipse.h"
-
-#include "layer-fns.h" //LPOS_BELOW
-
-#include "style.h" //style_write
-
-#include "file.h" //IO
-
-#include "extension/system.h" //IO
-
-#include "extension/output.h" //IO
-
-#include "print.h" //IO
-
-#include "live_effects/parameter/text.h" //text
 #include "display/canvas-text.h" //text
-
 #include "display/sp-canvas.h" //text
+#include "document.h" // getReprDoc()
+#include "extension/output.h" //IO
+#include "extension/system.h" //IO
+#include "file.h" //IO
+#include "helper/action.h" //sp_action_perform
+#include "inkscape.h" //inkscape_find_desktop_by_dkey, activate desktops
+#include "layer-fns.h" //LPOS_BELOW
+#include "live_effects/parameter/text.h" //text
+#include "print.h" //IO
+#include "selection-chemistry.h"// lots of selection functions
+#include "selection.h" //selection struct
+#include "sp-ellipse.h"
+#include "sp-object.h"
+#include "style.h" //style_write
+#include "verbs.h"
+#include "xml/repr.h" //sp_repr_document_new
 
 //#include "2geom/svg-path-parser.h" //get_node_coordinates
 

@@ -22,6 +22,14 @@
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-bindings.h>
 #include <dbus/dbus-glib-lowlevel.h>
+
+// this is reguired so that giomm headers won't barf
+#undef DBUS_MESSAGE_TYPE_INVALID
+#undef DBUS_MESSAGE_TYPE_METHOD_CALL
+#undef DBUS_MESSAGE_TYPE_METHOD_RETURN
+#undef DBUS_MESSAGE_TYPE_ERROR
+#undef DBUS_MESSAGE_TYPE_SIGNAL
+
 #include "desktop.h"
 
 #define DBUS_DOCUMENT_INTERFACE_PATH  "/org/inkscape/document"

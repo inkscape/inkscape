@@ -14,6 +14,8 @@
  */
  
 #include <dbus/dbus-glib.h>
+// this is reguired so that giomm headers won't barf
+#undef DBUS_MESSAGE_TYPE_INVALID
 #include "dbus-init.h"
 
 #include "application-interface.h"
