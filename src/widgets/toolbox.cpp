@@ -7671,7 +7671,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     /* Line height */
     {
         // Drop down menu
-        gchar const* labels[] = {_("Smaller spacing"), 0, 0, 0, 0, _("Normal"), 0, 0, 0, 0, 0, _("Larger spacing")};
+        gchar const* labels[] = {_("Smaller spacing"), 0, 0, 0, 0, C_("Text tool", "Normal"), 0, 0, 0, 0, 0, _("Larger spacing")};
         gdouble values[] = { 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1,2, 1.3, 1.4, 1.5, 2.0};
 
         EgeAdjustmentAction *eact = create_adjustment_action(
@@ -7702,7 +7702,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     /* Word spacing */
     {
         // Drop down menu
-        gchar const* labels[] = {_("Negative spacing"), 0, 0, 0, _("Normal"), 0, 0, 0, 0, 0, 0, 0, _("Positive spacing")};
+        gchar const* labels[] = {_("Negative spacing"), 0, 0, 0, C_("Text tool", "Normal"), 0, 0, 0, 0, 0, 0, 0, _("Positive spacing")};
         gdouble values[] = {-2.0, -1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0};
 
         EgeAdjustmentAction *eact = create_adjustment_action(
@@ -7733,7 +7733,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     /* Letter spacing */
     {
         // Drop down menu
-        gchar const* labels[] = {_("Negative spacing"), 0, 0, 0, _("Normal"), 0, 0, 0, 0, 0, 0, 0, _("Positive spacing")};
+        gchar const* labels[] = {_("Negative spacing"), 0, 0, 0, C_("Text tool", "Normal"), 0, 0, 0, 0, 0, 0, 0, _("Positive spacing")};
         gdouble values[] = {-2.0, -1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0};
 
         EgeAdjustmentAction *eact = create_adjustment_action(

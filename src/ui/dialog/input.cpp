@@ -347,7 +347,7 @@ static std::map<Gdk::InputMode, Glib::ustring> &getModeToString()
     static std::map<Gdk::InputMode, Glib::ustring> mapping;
     if (mapping.empty()) {
         mapping[Gdk::MODE_DISABLED] = _("Disabled");
-        mapping[Gdk::MODE_SCREEN]   = _("Screen");
+        mapping[Gdk::MODE_SCREEN]   = C_("Input device", "Screen");
         mapping[Gdk::MODE_WINDOW]   = _("Window");
     }
 
