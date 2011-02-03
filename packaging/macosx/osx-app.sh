@@ -325,6 +325,9 @@ cp -r $LIBPREFIX/lib/gtk-2.0/$gtk_version/* $pkglib/gtk-2.0/$gtk_version/
 mkdir -p $pkglib/gnome-vfs-2.0/modules
 cp $LIBPREFIX/lib/gnome-vfs-2.0/modules/*.so $pkglib/gnome-vfs-2.0/modules/
 
+mkdir -p $pkglib/gdk-pixbuf-2.0/$gtk_version/loaders
+cp $LIBPREFIX/lib/gdk-pixbuf-2.0/$gtk_version/loaders/*.so $pkglib/gdk-pixbuf-2.0/$gtk_version/loaders/
+
 cp -r "$LIBPREFIX/lib/ImageMagick-$IMAGEMAGICKVER" "$pkglib/"
 cp -r "$LIBPREFIX/share/ImageMagick-$IMAGEMAGICKVER" "$pkgresources/share/"
 
@@ -339,7 +342,7 @@ nfiles=0
 endl=true
 while $endl; do
 	echo -e "\033[1mLooking for dependencies.\033[0m Round" $a
-	libs="`otool -L $pkglib/gtk-2.0/$gtk_version/{engines,immodules,loaders,printbackends}/*.{dylib,so} $pkglib/pango/$pango_version/modules/* $pkglib/gnome-vfs-2.0/modules/* $package/Contents/Resources/lib/* $pkglib/ImageMagick-$IMAGEMAGICKVER/modules-Q16/{filters,coders}/*.so $binary 2>/dev/null | fgrep compatibility | cut -d\( -f1 | grep $LIBPREFIX | sort | uniq`"
+	libs="`otool -L $pkglib/gtk-2.0/$gtk_version/{engines,immodules,loaders,printbackends}/*.{dylib,so} $pkglib/gdk-pixbuf-2.0/$gtk_version/loaders/* $pkglib/pango/$pango_version/modules/* $pkglib/gnome-vfs-2.0/modules/* $package/Contents/Resources/lib/* $pkglib/ImageMagick-$IMAGEMAGICKVER/modules-Q16/{filters,coders}/*.so $binary 2>/dev/null | fgrep compatibility | cut -d\( -f1 | grep $LIBPREFIX | sort | uniq`"
 	cp -f $libs $package/Contents/Resources/lib
 	let "a+=1"	
 	nnfiles=`ls $package/Contents/Resources/lib | wc -l`
@@ -406,25 +409,25 @@ fixlib () {
 rewritelibpaths () {
 	# 
 	# Fix package deps
-	(cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/loaders"
+	(cd "$package/Contents/Resources/lib/gtk-2.0/$gtk_version/loaders"
 	for file in *.so; do
 		echo "Rewriting dylib paths for $file..."
 		fixlib "$file" "`pwd`"
 	done
 	)
-	(cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/engines"
+	(cd "$package/Contents/Resources/lib/gtk-2.0/$gtk_version/engines"
 	for file in *.so; do
 		echo "Rewriting dylib paths for $file..."
 		fixlib "$file" "`pwd`"
 	done
 	)
-	(cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/immodules"
+	(cd "$package/Contents/Resources/lib/gtk-2.0/$gtk_version/immodules"
 	for file in *.so; do
 		echo "Rewriting dylib paths for $file..."
 		fixlib "$file" "`pwd`"
 	done
 	)
-	(cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/printbackends"
+	(cd "$package/Contents/Resources/lib/gtk-2.0/$gtk_version/printbackends"
 	for file in *.so; do
 		echo "Rewriting dylib paths for $file..."
 		fixlib "$file" "`pwd`"
@@ -436,7 +439,13 @@ rewritelibpaths () {
 		fixlib "$file" "`pwd`"
 	done
 	)
-	(cd "$package/Contents/Resources/lib/pango/1.6.0/modules"
+	(cd "$package/Contents/Resources/lib/gdk-pixbuf-2.0/$gtk_version/loaders"
+	for file in *.so; do
+		echo "Rewriting dylib paths for $file..."
+		fixlib "$file" "`pwd`"
+	done
+	)
+	(cd "$package/Contents/Resources/lib/pango/$pango_version/modules"
 	for file in *.so; do
 		echo "Rewriting dylib paths for $file..."
 		fixlib "$file" "`pwd`"
