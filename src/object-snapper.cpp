@@ -414,8 +414,13 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
                         very_complex_path = sp_nodes_in_path(SP_PATH(root_item)) > 500;
                     }
 
-                    if (!very_lenghty_prose && !very_complex_path) {
-                        SPCurve *curve = curve_for_item(root_item);
+                    if (!very_lenghty_prose && !very_complex_path && root_item) {
+                        SPCurve *curve = NULL;
+                        if (SP_IS_SHAPE(root_item)) {
+                           curve = SP_SHAPE(root_item)->getCurve();
+                        } else if (SP_IS_TEXT(root_item) || SP_IS_FLOWTEXT(root_item)) {
+                           curve = te_get_layout(root_item)->convertToCurves();
+                        }
                         if (curve) {
                             // We will get our own copy of the pathvector, which must be freed at some point
 
