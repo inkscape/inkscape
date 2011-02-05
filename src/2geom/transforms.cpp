@@ -60,12 +60,12 @@ Point &Point::operator*=(Rotate const &r)
 }
 Point &Point::operator*=(HShear const &h)
 {
-    _pt[X] += h.f * _pt[X];
+    _pt[X] += h.f * _pt[Y];
     return *this;
 }
 Point &Point::operator*=(VShear const &v)
 {
-    _pt[Y] += v.f * _pt[Y];
+    _pt[Y] += v.f * _pt[X];
     return *this;
 }
 

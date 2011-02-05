@@ -56,12 +56,9 @@ struct TransformConcept {
         m = t * m;
         p *= t;
         p = p * t;
-        p = t * p;
         t *= t;
         t = t * t;
         t = pow(t, 3);
-        p /= t; // multiplication by inverse
-        p = p / t;
         bool_ = (t == t);
         bool_ = (t != t);
         t = T::identity();

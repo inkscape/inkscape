@@ -146,8 +146,8 @@ Point unit_vector(Point const &a)
 }
 /** @brief Return the "absolute value" of the point's vector.
  * This is defined in terms of the default lexicographical ordering. If the point is "larger"
- * that the origin (0, 0), its negation is returned. This corresponds to making the Y coordinate
- * positive. You can check whether the points' vectors have the same direction (e.g. lie
+ * that the origin (0, 0), its negation is returned. You can check whether
+ * the points' vectors have the same direction (e.g. lie
  * on the same line passing through the origin) using
  * @code abs(a).normalize() == abs(b).normalize() @endcode.
  * To check with some margin of error, use
@@ -158,8 +158,14 @@ Point unit_vector(Point const &a)
  * @relates Point */
 Point abs(Point const &b)
 {
-    Point ret = b;
-    ret[Y] = fabs(ret[Y]);
+    Point ret;
+    if (b[Y] < 0.0) {
+        ret = -b;
+    } else if (b[Y] == 0.0) {
+        ret = b[X] < 0.0 ? -b : b;
+    } else {
+        ret = b;
+    }
     return ret;
 }
 

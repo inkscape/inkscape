@@ -44,6 +44,7 @@
 #include <2geom/coord.h>
 #include <2geom/isnan.h> //temporary fix for isnan()
 #include <2geom/math-utils.h>
+#include <2geom/utils.h>
 
 namespace Geom {
 
@@ -51,12 +52,12 @@ class Point
     : boost::additive< Point
     , boost::totally_ordered< Point
     , boost::multiplicative< Point, Coord
-    , boost::multiplicative< Point, Affine
-    , boost::multiplicative< Point, Translate
-    , boost::multiplicative< Point, Rotate
-    , boost::multiplicative< Point, Scale
-    , boost::multiplicative< Point, HShear
-    , boost::multiplicative< Point, VShear
+    , MultipliableNoncommutative< Point, Affine
+    , MultipliableNoncommutative< Point, Translate
+    , MultipliableNoncommutative< Point, Rotate
+    , MultipliableNoncommutative< Point, Scale
+    , MultipliableNoncommutative< Point, HShear
+    , MultipliableNoncommutative< Point, VShear
       > > > > > > > > > // this uses chaining so it looks weird, but works
 {
     Coord _pt[2];

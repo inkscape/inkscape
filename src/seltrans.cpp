@@ -424,7 +424,7 @@ void Inkscape::SelTrans::transform(Geom::Affine const &rel_affine, Geom::Point c
     g_return_if_fail(_grabbed);
     g_return_if_fail(!_empty);
 
-    Geom::Affine const affine( (Geom::Affine)Geom::Translate(-norm) * rel_affine * (Geom::Affine)Geom::Translate(norm) );
+    Geom::Affine const affine( Geom::Translate(-norm) * rel_affine * Geom::Translate(norm) );
 
     if (_show == SHOW_CONTENT) {
         // update the content
@@ -1310,7 +1310,7 @@ gboolean Inkscape::SelTrans::rotateRequest(Geom::Point &pt, guint state)
     _relative_affine = r2 * r1.inverse();
 
     // Update the handle position
-    pt = _point * (Geom::Affine)Geom::Translate(-_origin) * _relative_affine * (Geom::Affine)Geom::Translate(_origin);
+    pt = _point * Geom::Translate(-_origin) * _relative_affine * Geom::Translate(_origin);
 
     // Update the status text
     double degrees = mod360symm(Geom::rad_to_deg(radians));
@@ -1591,7 +1591,7 @@ Geom::Scale Inkscape::calcScaleFactors(Geom::Point const &initial_point, Geom::P
 // Only for scaling/stretching
 Geom::Point Inkscape::SelTrans::_calcAbsAffineDefault(Geom::Scale const default_scale)
 {
-    Geom::Affine abs_affine = (Geom::Affine)Geom::Translate(-_origin) * Geom::Affine(default_scale) * (Geom::Affine)Geom::Translate(_origin);
+    Geom::Affine abs_affine = Geom::Translate(-_origin) * Geom::Affine(default_scale) * Geom::Translate(_origin);
     Geom::Point new_bbox_min = _approximate_bbox->min() * abs_affine;
     Geom::Point new_bbox_max = _approximate_bbox->max() * abs_affine;
 
@@ -1615,7 +1615,7 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineDefault(Geom::Scale const default_
 Geom::Point Inkscape::SelTrans::_calcAbsAffineGeom(Geom::Scale const geom_scale)
 {
     _relative_affine = Geom::Affine(geom_scale);
-    _absolute_affine = (Geom::Affine)Geom::Translate(-_origin_for_specpoints) * _relative_affine * (Geom::Affine)Geom::Translate(_origin_for_specpoints);
+    _absolute_affine = Geom::Translate(-_origin_for_specpoints) * _relative_affine * Geom::Translate(_origin_for_specpoints);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool const transform_stroke = prefs->getBool("/options/transform/stroke", true);

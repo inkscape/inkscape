@@ -33,7 +33,6 @@
  *
  */
 
-#include <2geom/math-utils.h>
 #include <vector>
 
 namespace Geom {
@@ -42,6 +41,22 @@ namespace Geom {
 inline bool logical_xor (bool a, bool b) { return (a || b) && !(a && b); }
 
 void binomial_coefficients(std::vector<size_t>& bc, size_t n);
+
+struct EmptyClass {};
+
+/**
+ * @brief Noncommutative multiplication helper.
+ * Generates operator*(T, U) from operator*=(T, U). Does not generate operator*(U, T)
+ * like boost::multipliable does. This makes it suitable for noncommutative cases,
+ * such as transforms.
+ */
+template <class T, class U, class B = EmptyClass>
+struct MultipliableNoncommutative : B
+{
+    friend T operator*(T const &lhs, U const &rhs) {
+        T nrv(lhs); nrv *= rhs; return nrv;
+    }
+};
 
 }
 

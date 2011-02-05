@@ -16,6 +16,7 @@
 #include <boost/operators.hpp>
 #include <2geom/forward.h>
 #include <2geom/point.h>
+#include <2geom/utils.h>
 
 namespace Geom {
 
@@ -57,15 +58,13 @@ namespace Geom {
  */
 class Affine
     : boost::equality_comparable< Affine // generates operator!= from operator==
-    , boost::multipliable< Affine
-    , boost::multipliable< Affine, Translate
-    , boost::multipliable< Affine, Scale
-    , boost::multipliable< Affine, Rotate
-    , boost::multipliable< Affine, HShear
-    , boost::multipliable< Affine, VShear
+    , boost::multipliable1< Affine
+    , MultipliableNoncommutative< Affine, Translate
+    , MultipliableNoncommutative< Affine, Scale
+    , MultipliableNoncommutative< Affine, Rotate
+    , MultipliableNoncommutative< Affine, HShear
+    , MultipliableNoncommutative< Affine, VShear
       > > > > > > >
-    // boost::multipliable< A, B > generates operator*(A const &, B const &)
-    // and operator*(B const &, A const &) from A::operator*=(B const &)
 {
     Coord _c[6];
 public:
