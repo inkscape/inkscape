@@ -26,17 +26,15 @@ inline bool is_straight_curve(Geom::Curve const & c) {
     }
     // the curve can be a quad/cubic bezier, but could still be a perfect straight line
     // if the control points are exactly on the line connecting the initial and final points.
-    else if ( Geom::QuadraticBezier const *quad = dynamic_cast<Geom::QuadraticBezier const*>(&c) ) {
-        Geom::Line line( quad->initialPoint(), quad->finalPoint() );
-        if ( are_near((*quad)[1], line) ) {
-            return true;
+    Geom::BezierCurve const *curve = dynamic_cast<Geom::BezierCurve const *>(&c);
+    if (curve) {
+        Geom::Line line(curve->initialPoint(), curve->finalPoint());
+        std::vector<Geom::Point> pts = curve->points();
+        for (unsigned i = 1; i < pts.size() - 1; ++i) {
+            if (!are_near(pts[i], line))
+                return false;
         }
-    }
-    else if ( Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&c) ) {
-        Geom::Line line( cubic->initialPoint(), cubic->finalPoint() );
-        if ( are_near((*cubic)[1], line) && are_near((*cubic)[2], line) ) {
-            return true;
-        }
+        return true;
     }
 
     return false;

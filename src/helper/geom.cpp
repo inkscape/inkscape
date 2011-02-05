@@ -476,15 +476,19 @@ pathv_to_linear_and_cubic_beziers( Geom::PathVector const &pathv )
         output.back().close( pit->closed() );
 
         for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_open(); ++cit) {
-            if( dynamic_cast<Geom::CubicBezier const*>(&*cit) || 
-                is_straight_curve(*cit) )
-            {
-                output.back().append(*cit);
-            }
-            else {
-                // convert all other curve types to cubicbeziers
-                Geom::Path cubicbezier_path = Geom::cubicbezierpath_from_sbasis(cit->toSBasis(), 0.1);
-                output.back().append(cubicbezier_path);
+            if (is_straight_curve(*cit)) {
+                Geom::LineSegment l(cit->initialPoint(), cit->finalPoint());
+                output.back().append(l);
+            } else {
+                Geom::BezierCurve const *curve = dynamic_cast<Geom::BezierCurve const *>(&*cit);
+                if (curve && curve->order() == 3) {
+                    Geom::CubicBezier b((*curve)[0], (*curve)[1], (*curve)[2], (*curve)[3]);
+                    output.back().append(b);
+                } else {
+                    // convert all other curve types to cubicbeziers
+                    Geom::Path cubicbezier_path = Geom::cubicbezierpath_from_sbasis(cit->toSBasis(), 0.1);
+                    output.back().append(cubicbezier_path);
+                }
             }
         }
     }

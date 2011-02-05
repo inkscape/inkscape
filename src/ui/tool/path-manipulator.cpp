@@ -1039,13 +1039,14 @@ void PathManipulator::_createControlPointsFromGeometry()
                 subpath->push_back(current_node);
             }
             // if this is a bezier segment, move handles appropriately
-            if (Geom::CubicBezier const *cubic_bezier =
-                dynamic_cast<Geom::CubicBezier const*>(&*cit))
+            // TODO: I don't know why the dynamic cast below doesn't want to work
+            //       when I replace BezierCurve with CubicBezier. Might be a bug
+            //       somewhere in pathv_to_linear_and_cubic_beziers
+            Geom::BezierCurve const *bezier = dynamic_cast<Geom::BezierCurve const*>(&*cit);
+            if (bezier && bezier->order() == 3)
             {
-                std::vector<Geom::Point> points = cubic_bezier->points();
-
-                previous_node->front()->setPosition(points[1]);
-                current_node ->back() ->setPosition(points[2]);
+                previous_node->front()->setPosition((*bezier)[1]);
+                current_node ->back() ->setPosition((*bezier)[2]);
             }
             previous_node = current_node;
         }
