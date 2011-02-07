@@ -93,15 +93,22 @@ void unhideCallback(GtkObject */*object*/, gpointer dlgPtr)
 
 Dialog::Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_path, int verb_num,
                Glib::ustring const &apply_label)
-    : _hiddenF12 (false),
-      _prefs_path (prefs_path),
+    : _user_hidden(false), 
+      _hiddenF12(false),
+      retransientize_suppress(false),
+      //
+      _prefs_path(prefs_path),
       _verb_num(verb_num),
-      _apply_label (apply_label)
+      _title(),
+      _apply_label(apply_label),
+      tooltips(),
+      _behavior(0)
 {
     gchar title[500];
 
-    if (verb_num)
+    if (verb_num) {
         sp_ui_dialog_title_string (Inkscape::Verb::get(verb_num), title);
+    }
 
     _title = title;
 
