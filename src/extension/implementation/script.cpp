@@ -189,7 +189,6 @@ Script::solve_reldir(Inkscape::XML::Node *reprin) {
     }
 
     Glib::ustring reldir = s;
-
     for (unsigned int i=0;
         i < Inkscape::Extension::Extension::search_path.size();
         i++) {
@@ -200,7 +199,7 @@ Script::solve_reldir(Inkscape::XML::Node *reprin) {
            NULL);
         Glib::ustring filename = fname;
         g_free(fname);
-
+        //printf("Filename: %s\n", filename.c_str());
         if ( Inkscape::IO::file_test(filename.c_str(), G_FILE_TEST_EXISTS) ) {
             return Glib::filename_from_utf8(filename);
         }
@@ -242,13 +241,11 @@ bool Script::check_existence(const std::string &command)
             return false;
         }
     }
-    
-    // First search in the extension path and the current directory
-    std::string path = INKSCAPE_EXTENSIONDIR;
+
+    // First search in the current directory
+    std::string path = G_SEARCHPATH_SEPARATOR_S;
     path.append(";");
-    path.append(G_SEARCHPATH_SEPARATOR_S);
-    path.append(";");
-    // And then the PATH environment variable.
+    // And then in the PATH environment variable.
     path.append(Glib::getenv("PATH"));
 
     std::string::size_type pos  = 0;
@@ -379,8 +376,11 @@ Script::check(Inkscape::Extension::Extension *module)
                     if (!command_text.empty()) {
                         /* I've got the command */
                         bool existance = check_existence(command_text);
-                        if (!existance)
+                        if (!existance) {
                             return false;
+                        }
+                    } else {
+                        return false;
                     }
                 }
 
