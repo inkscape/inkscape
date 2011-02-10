@@ -304,6 +304,7 @@
         <fileset dir="${src}">
             <!-- THINGS TO EXCLUDE -->
             <exclude name="2geom/chebyshev.cpp"/>
+            <exclude name="2geom/conisec.cpp"/>
             <exclude name="ast/.*"/>
             <exclude name="bonobo/.*"/>
             <exclude name="deptool.cpp"/>
