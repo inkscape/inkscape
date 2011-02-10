@@ -1793,15 +1793,15 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
                 (gchar *) g_utf16_to_utf8( (gunichar2 *) wide_text, pEmr->emrtext.nChars, NULL, NULL, NULL );
 
             if (ansi_text) {
-                gchar *p = ansi_text;
-                while (*p) {
-                    if (*p < 32 || *p >= 127) {
-                        g_free(ansi_text);
-                        ansi_text = g_strdup("");
-                        break;
-                    }
-                    p++;
-                }
+//                gchar *p = ansi_text;
+//                while (*p) {
+//                    if (*p < 32 || *p >= 127) {
+//                        g_free(ansi_text);
+//                        ansi_text = g_strdup("");
+//                        break;
+//                    }
+//                    p++;
+//                }
 
                 SVGOStringStream ts;
 
@@ -2379,7 +2379,7 @@ EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
 //    std::cout << "SVG Output: " << std::endl << *(d.outsvg) << std::endl;
 
-    SPDocument *doc = SPDocument::createNewDocFromMem(d.outsvg->c_str(), d.outsvg->length(), TRUE);
+    SPDocument *doc = SPDocument::createNewDocFromMem(d.outsvg->c_str(), strlen(d.outsvg->c_str()), TRUE);
 
     delete d.outsvg;
     delete d.path;
