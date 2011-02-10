@@ -18,8 +18,12 @@ Graphics_DATA = $(Graphics_in_files:.desktop.in=.desktop)
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-localinstall
 
-man_MANS = inkscape.1 \
-		inkview.1
+man_MANS = \
+	inkscape.1 \
+	inkscape.fr.1		\
+	inkscape.sk.1		\
+	inkscape.zh_TW.1		\
+	inkview.1
 
 EXTRA_DIST = \
 	acinclude.m4 \
@@ -33,8 +37,12 @@ EXTRA_DIST = \
 	utf8-to-roff \
 	inkscape.1		\
 	inkscape.fr.1		\
+	inkscape.sk.1		\
+	inkscape.zh_TW.1		\
 	inkscape.pod		\
 	inkscape.fr.pod		\
+	inkscape.sk.pod		\
+	inkscape.zh_TW.pod		\
 	inkscape.spec.in	\
 	inkscape.spec		\
 	Info.plist.in	\
@@ -225,17 +233,18 @@ DISTCLEANFILES = inkscape.desktop \
 #ACLOCAL_AMFLAGS = -I m4
 
 SUFFIXES = .pod .1
-inkscape.1 inkscape.fr.1: fix-roff-punct Makefile.am AUTHORS utf8-to-roff
+inkscape.1 inkscape.fr.1 inkscape.sk.1 inkscape.zh_TW.1 : fix-roff-punct Makefile.am AUTHORS
 .pod.1:
 	set -e; \
 	d=`sed -n 's,/,-,g;s,.*\$$[D]ate: \(..........\).*,\1,p' $<`; \
-	pod2man $< \
+	pod2man --utf8 $< \
 	  | sed 's/^\.TH .*/.TH INKSCAPE 1 "'"$$d"'" "Inkscape-$(VERSION)" "Inkscape"/' \
 	  | perl -pe 'if (/^\[\% .*INCLUDE.*AUTHORS.* \%\]/) { open(FOO, "$(srcdir)/AUTHORS");$$_ = join(",\n", map { chomp; $$_ } <FOO>) . "\n"; }' \
 	  | perl $(srcdir)/fix-roff-punct \
-	  | perl -CI $(srcdir)/utf8-to-roff	\
 	  > tmp.$$$$ \
 	 && mv -f tmp.$$$$ $@
+# ut8-to-roff removed (groff now supports utf8).
+# 	  | perl -CI $(srcdir)/utf8-to-roff	\
 # man 7 groff_char for further remarks on charset encoding for man pages.
 
 po/inkscape.pot:
