@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-02-03 18:05+0100\n"
-"PO-Revision-Date: 2011-02-10 19:07+0100\n"
+"PO-Revision-Date: 2011-02-11 10:14+0100\n"
 "Last-Translator: Leandro Regueiro <leandro.regueiro@gmail.com>\n"
 "Language-Team: Galego <proxecto@trasno.net>\n"
 "MIME-Version: 1.0\n"
@@ -20586,7 +20586,7 @@ msgstr "Escalar verticalmente a selección para que teña a altura do obxecto co
 
 #: ../src/verbs.cpp:2280
 msgid "Paste Size Separately"
-msgstr "Pegar tamaño por separado"
+msgstr "Pegar o tamaño por separado"
 
 #: ../src/verbs.cpp:2281
 msgid "Scale each selected object to match the size of the copied object"
@@ -20602,7 +20602,7 @@ msgstr "Escalar horizontalmente cada obxecto seleccionado para que teña a largu
 
 #: ../src/verbs.cpp:2284
 msgid "Paste Height Separately"
-msgstr "Pegar altura por separado"
+msgstr "Pegar a altura por separado"
 
 #: ../src/verbs.cpp:2285
 msgid "Scale each selected object vertically to match the height of the copied object"
@@ -20610,7 +20610,7 @@ msgstr "Escalar verticalmente cada obxecto da selección para que teña a altura
 
 #: ../src/verbs.cpp:2286
 msgid "Paste _In Place"
-msgstr "Pega_r na localización"
+msgstr "Pega_r no lugar"
 
 #: ../src/verbs.cpp:2287
 msgid "Paste objects from clipboard to the original location"
@@ -22003,7 +22003,7 @@ msgstr "Uso da ferramenta pluma de Caligrafía"
 
 #: ../src/verbs.cpp:2707
 msgid "Inkscape: _Interpolate"
-msgstr "Inkscape: _interpolar"
+msgstr "Inkscape: _interpolación"
 
 #: ../src/verbs.cpp:2708
 msgid "Using the interpolate extension"
@@ -23306,7 +23306,7 @@ msgstr "Redondeado"
 
 #: ../src/widgets/toolbox.cpp:2965
 msgid "Rounded:"
-msgstr "Redondeado:"
+msgstr "Redondez:"
 
 #: ../src/widgets/toolbox.cpp:2965
 msgid "How much rounded are the corners (0 for sharp)"
