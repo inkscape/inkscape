@@ -1086,32 +1086,20 @@ accumulate_calligraphic(SPDynaDrawContext *dc)
             return false; // failure
         }
 
-        Geom::CubicBezier const * dc_cal1_firstseg  = dynamic_cast<Geom::CubicBezier const *>( dc->cal1->first_segment() );
-        Geom::CubicBezier const * rev_cal2_firstseg = dynamic_cast<Geom::CubicBezier const *>( rev_cal2->first_segment() );
-        Geom::CubicBezier const * dc_cal1_lastseg   = dynamic_cast<Geom::CubicBezier const *>( dc->cal1->last_segment() );
-        Geom::CubicBezier const * rev_cal2_lastseg  = dynamic_cast<Geom::CubicBezier const *>( rev_cal2->last_segment() );
-
-        if (
-            !dc_cal1_firstseg ||
-            !rev_cal2_firstseg ||
-            !dc_cal1_lastseg ||
-            !rev_cal2_lastseg
-            ) {
-            rev_cal2->unref();
-            dc->cal1->reset();
-            dc->cal2->reset();
-            return false; // failure
-        }
+        Geom::Curve const * dc_cal1_firstseg  = dc->cal1->first_segment();
+        Geom::Curve const * rev_cal2_firstseg = rev_cal2->first_segment();
+        Geom::Curve const * dc_cal1_lastseg   = dc->cal1->last_segment();
+        Geom::Curve const * rev_cal2_lastseg  = rev_cal2->last_segment();
 
         dc->accumulated->reset(); /*  Is this required ?? */
 
         dc->accumulated->append(dc->cal1, false);
 
-        add_cap(dc->accumulated, (*dc_cal1_lastseg)[3], (*rev_cal2_firstseg)[0], dc->cap_rounding);
+        add_cap(dc->accumulated, dc_cal1_lastseg->finalPoint(), rev_cal2_firstseg->initialPoint(), dc->cap_rounding);
 
         dc->accumulated->append(rev_cal2, true);
 
-        add_cap(dc->accumulated, (*rev_cal2_lastseg)[3], (*dc_cal1_firstseg)[0], dc->cap_rounding);
+        add_cap(dc->accumulated, rev_cal2_lastseg->finalPoint(), dc_cal1_firstseg->initialPoint(), dc->cap_rounding);
 
         dc->accumulated->closepath();
 
