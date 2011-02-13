@@ -41,7 +41,7 @@ namespace Geom
 
 /**
  * @class BezierCurve
- * @brief Two-dimensional Bezier curve of arbitrary order.
+ * @brief Two-dimensional Bezier curve of arbitrary order. (this is an abstract class)
  *
  * Bezier curves are an expansion of the concept of linear interpolation to n points.
  * Linear segments in 2Geom are in fact Bezier curves of order 1.
@@ -85,69 +85,25 @@ namespace Geom
  * Every bezier curve is contained in its control polygon (the convex polygon composed
  * of its control points). This fact is useful for sweepline algorithms and intersection.
  *
- * Bezier curves of order 1, 2 and 3 are common enough to have their own more specific subclasses.
- * Note that if you create a generic BezierCurve, you cannot use a dynamic cast to those more
- * specific types, and you might face a slight preformance penalty relative to the more specific
- * classes. To obtain an instance of the correct optimized type, use the optimize()
- * or duplicate() methods. The difference is that optimize() will not create a new object
- * if it can't be optimized or is already an instance of one of the specific types, while
- * duplicate() will always create a new object.
+ * Bezier curves of order 1, 2 and 3 are common enough to have their own more specific subclasses:
+ * LineSegment, QuadraticBezier, and CubicBezier.
+ * Note that you cannot create a generic BezierCurve, you can only create a BezierCurve of a
+ * specific order, by creating a BezierCurveN.
  *
+ * @relates BezierCurveN
  * @ingroup Curves
  */
 
-/** @brief Create an optimized instance of the curve.
- * If the curve was created as a generic Bezier curve but has an order between 1 and 3,
- * this method will create a newly allocated curve that is a LineSegment, a QuadraticBezier,
- * or a CubicBezier. For other cases it returns the pointer to the current curve, to avoid
- * allocating extra memory. Be careful when you use this method, because whether you have
- * to delete the returned object or not depends on its return value! If easier deletion
- * semantics are required, you can use the duplicate() method instead, which returns
- * optimized objects by default.
- * @return Pointer to a curve that is an instance of LineSegment, QuadraticBezier
- *         or CubicBezier based on the order. If the object is already an instance
- *         of te more specific types or the order is above 3, a pointer to the original
- *         object is returned instead, and no memory is allocated. */
-BezierCurve *BezierCurve::optimize() const
-{
-    switch(order()) {
-    case 1:
-        if (!dynamic_cast<LineSegment const *>(this))
-            return new LineSegment((*this)[0], (*this)[1]);
-        break;
-    case 2:
-        if (!dynamic_cast<QuadraticBezier const *>(this))
-            return new QuadraticBezier((*this)[0], (*this)[1], (*this)[2]);
-        break;
-    case 3:
-        if (!dynamic_cast<CubicBezier const *>(this))
-            return new CubicBezier((*this)[0], (*this)[1], (*this)[2], (*this)[3]);
-        break;
-    }
-    return const_cast<BezierCurve*>(this);
-}
-Curve *BezierCurve::duplicate() const
-{
-    switch(order()) {
-    case 1:
-        return new LineSegment((*this)[0], (*this)[1]);
-    case 2:
-        return new QuadraticBezier((*this)[0], (*this)[1], (*this)[2]);
-    case 3:
-        return new CubicBezier((*this)[0], (*this)[1], (*this)[2], (*this)[3]);
-    }
-    return new BezierCurve(*this);
-}
+ /**
+ * @class BezierCurveN
+ * @tparam degree unsigned value indicating the order of the bezier curve
+ * @brief Two-dimensional Bezier curve of specific order.
+ * 
+ * @relates BezierCurve 
+ * @ingroup Curves
+ */
 
-Curve *BezierCurve::derivative() const
-{
-    if (order() == 1) {
-        double dx = inner[X][1] - inner[X][0], dy = inner[Y][1] - inner[Y][0];
-        return new LineSegment(Point(dx,dy),Point(dx,dy));
-    }
-    return new BezierCurve(Geom::derivative(inner[X]), Geom::derivative(inner[Y]));
-}
-
+ 
 Coord BezierCurve::length(Coord tolerance) const
 {
     switch (order())
@@ -169,55 +125,6 @@ Coord BezierCurve::length(Coord tolerance) const
     default:
         return bezier_length(points(), tolerance);
     }
-}
-
-/**
- * @class LineSegment 
- * @brief Linear segment, a special case of a Bezier curve.
- *
- * This class uses some optimizations for a linear segment (a Bezier curve of order 1).
- * Note that if you created a BezierCurve, you will not be able to cast it to a LineSegment
- * using a dynamic cast regardless of its order - use the optimize() method.
- *
- * @ingroup Curves */
-Coord LineSegment::nearestPoint(Point const& p, Coord from, Coord to) const {
-    if ( from > to ) std::swap(from, to);
-    Point ip = pointAt(from);
-    Point fp = pointAt(to);
-    Point v = fp - ip;
-    Coord l2v = L2sq(v);
-    if (l2v == 0) return 0;
-    Coord t = dot( p - ip, v ) / l2v;
-    if ( t <= 0 )  		return from;
-    else if ( t >= 1 )  return to;
-    else return from + t*(to-from);
-}
-
-
-/**
- * @class QuadraticBezier
- * @brief Quadratic Bezier curve.
- * Note that if you created a BezierCurve, you will not be able to cast it to a QuadraticBezier
- * using a dynamic cast regardless of its order - use the optimize() method.
- * @ingroup Curves */
-
-Coord QuadraticBezier::length(Coord tolerance) const
-{
-    std::vector<Point> pts = points();
-    return bezier_length(pts[0], pts[1], pts[2], tolerance);
-}
-
-/**
- * @class CubicBezier
- * @brief Cubic Bezier curve.
- * Note that if you created a BezierCurve, you will not be able to cast it to a CubicBezier
- * using a dynamic cast regardless of its order - use the optimize() method.
- * @ingroup Curves */
-
-Coord CubicBezier::length(Coord tolerance) const
-{
-    std::vector<Point> pts = points();
-    return bezier_length(pts[0], pts[1], pts[2], pts[3], tolerance);
 }
 
 static Coord bezier_length_internal(std::vector<Point> &v1, Coord tolerance)

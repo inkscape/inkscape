@@ -894,7 +894,7 @@ NodeList::iterator PathManipulator::subdivideSegment(NodeList::iterator first, d
         // build bezier curve and subdivide
         Geom::CubicBezier temp(first->position(), first->front()->position(),
             second->back()->position(), second->position());
-        std::pair<Geom::BezierCurve, Geom::BezierCurve> div = temp.subdivide(t);
+        std::pair<Geom::CubicBezier, Geom::CubicBezier> div = temp.subdivide(t);
         std::vector<Geom::Point> seg1 = div.first.points(), seg2 = div.second.points();
 
         // set new handle positions

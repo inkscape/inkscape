@@ -58,7 +58,10 @@ class SBasisCurve;
 class BezierCurve;
 class HLineSegment;
 class VLineSegment;
-class LineSegment;
+template <unsigned degree> class BezierCurveN;
+typedef BezierCurveN<1> LineSegment;
+typedef BezierCurveN<2> QuadraticBezier;
+typedef BezierCurveN<3> CubicBezier;
 class EllipticalArc;
 class SVGEllipticalArc;
 
