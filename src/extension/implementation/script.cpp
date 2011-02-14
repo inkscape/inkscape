@@ -603,7 +603,7 @@ void Script::save(Inkscape::Extension::Output *module,
 
     file_listener fileout;
     int data_read = execute(command, params, tempfilename_in, fileout);
-    
+
     bool success = false;
 
     if (data_read > 0) {
