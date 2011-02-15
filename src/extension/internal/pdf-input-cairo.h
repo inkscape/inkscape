@@ -34,7 +34,7 @@
 #ifdef HAVE_POPPLER_GLIB
 #ifdef HAVE_POPPLER_CAIRO
 
-#include <poppler.h>
+#include <poppler/glib/poppler.h>
 
 #include "../implementation/implementation.h"
 
