@@ -8447,7 +8447,7 @@ static void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             _("Grow/shrink by"), _("Grow/shrink by:"),
             _("The amount to grow (positive) or shrink (negative) the created fill path"),
             "/tools/paintbucket/offset", 0, GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, TRUE,
-            "inkscape:paintbucket-offset", -1e6, 1e6, 0.1, 0.5,
+            "inkscape:paintbucket-offset", -1e4, 1e4, 0.1, 0.5,
             0, 0, 0,
             paintbucket_offset_changed, 1, 2);
         tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
