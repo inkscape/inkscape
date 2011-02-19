@@ -769,6 +769,7 @@ void
 SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double border, bool log)
 {
     g_assert(_widget);
+    bool zoomChanged = false;
 
     // save the zoom
     if (log) {
@@ -802,7 +803,7 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
         _w2d = Geom::Scale(1/newscale, 1/-newscale);
         sp_canvas_item_affine_absolute(SP_CANVAS_ITEM(main), _d2w);
         clear = TRUE;
-        signal_zoom_changed.emit(_d2w.descrim());
+        zoomChanged = true;
     }
 
     /* Calculate top left corner (in document pixels) */
@@ -818,6 +819,11 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
     _widget->updateRulers();
     _widget->updateScrollbars(_d2w.descrim());
     _widget->updateZoom();
+
+
+    if ( zoomChanged ) {
+        signal_zoom_changed.emit(_d2w.descrim());
+    }
 }
 
 void SPDesktop::set_display_area(Geom::Rect const &a, Geom::Coord b, bool log)
