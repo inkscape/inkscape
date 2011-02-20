@@ -185,7 +185,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
     namedview = nv;
     canvas = aCanvas;
 
-    SPDocument *document = SP_OBJECT_DOCUMENT (namedview);
+    SPDocument *document = namedview->document;
     /* Kill flicker */
     document->ensureUpToDate();
 
@@ -532,9 +532,9 @@ SPObject *SPDesktop::layerForObject(SPObject *object) {
     g_return_val_if_fail(object != NULL, NULL);
 
     SPObject *root=currentRoot();
-    object = SP_OBJECT_PARENT(object);
+    object = object->parent;
     while ( object && object != root && !isLayer(object) ) {
-        object = SP_OBJECT_PARENT(object);
+        object = object->parent;
     }
     return object;
 }
@@ -1686,7 +1686,7 @@ _reconstruction_finish (SPDesktop * desktop)
     if (desktop->_reconstruction_old_layer_id == NULL)
         return;
 
-    SPObject * newLayer = SP_OBJECT_DOCUMENT(desktop->namedview)->getObjectById(desktop->_reconstruction_old_layer_id);
+    SPObject * newLayer = desktop->namedview->document->getObjectById(desktop->_reconstruction_old_layer_id);
     if (newLayer != NULL)
         desktop->setCurrentLayer(newLayer);
 

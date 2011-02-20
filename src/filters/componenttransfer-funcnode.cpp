@@ -183,14 +183,13 @@ sp_fefuncnode_build(SPObject *object, SPDocument *document, Inkscape::XML::Node 
 /**
  * Drops any allocated memory.
  */
-static void
-sp_fefuncnode_release(SPObject *object)
+static void sp_fefuncnode_release(SPObject *object)
 {
     //SPFeFuncNode *fefuncnode = SP_FEFUNCNODE(object);
 
-    if (SP_OBJECT_DOCUMENT(object)) {
-        /* Unregister ourselves */
-        SP_OBJECT_DOCUMENT(object)->removeResource("fefuncnode", SP_OBJECT(object));
+    if ( object->document ) {
+        // Unregister ourselves
+        object->document->removeResource("fefuncnode", object);
     }
 
 //TODO: release resources here
@@ -313,7 +312,7 @@ sp_fefuncnode_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XM
     SPFeFuncNode *fefuncnode = SP_FEFUNCNODE(object);
 
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(doc);
+        repr = object->getRepr()->duplicate(doc);
     }
 
     (void)fefuncnode;

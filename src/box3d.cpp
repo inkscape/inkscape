@@ -105,11 +105,10 @@ static void
 box3d_init(SPBox3D *box)
 {
     box->persp_href = NULL;
-    box->persp_ref = new Persp3DReference(SP_OBJECT(box));
+    box->persp_ref = new Persp3DReference(box);
 }
 
-static void
-box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) (parent_class))->build) {
         ((SPObjectClass *) (parent_class))->build(object, document, repr);
@@ -125,15 +124,14 @@ box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 
     // TODO: Create/link to the correct perspective
 
-    SPDocument *doc = SP_OBJECT_DOCUMENT(box);
-    if (!doc)
-        return;
+    SPDocument *doc = box->document;
+    if ( doc ) {
+        box->persp_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(box3d_ref_changed), box));
 
-    box->persp_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(box3d_ref_changed), box));
-
-    object->readAttr( "inkscape:perspectiveID" );
-    object->readAttr( "inkscape:corner0" );
-    object->readAttr( "inkscape:corner7" );
+        object->readAttr( "inkscape:perspectiveID" );
+        object->readAttr( "inkscape:corner0" );
+        object->readAttr( "inkscape:corner7" );
+    }
 }
 
 /**
@@ -168,7 +166,7 @@ box3d_release(SPObject *object)
         // by the following code and then again by the redo mechanism! Perhaps we should perform
         // deletion of the perspective from another location "outside" the undo/redo mechanism?
         if (persp->perspective_impl->boxes.empty()) {
-            SPDocument *doc = SP_OBJECT_DOCUMENT(box);
+            SPDocument *doc = box->document;
             persp->deleteObject();
             doc->setCurrentPersp3D(persp3d_document_first_persp(doc));
         }
@@ -283,7 +281,7 @@ static Inkscape::XML::Node * box3d_write(SPObject *object, Inkscape::XML::Docume
             repr->setAttribute("inkscape:perspectiveID", box->persp_href);
         } else {
             /* box is not yet linked to a perspective; use the document's current perspective */
-            SPDocument *doc = SP_OBJECT_DOCUMENT(object);
+            SPDocument *doc = object->document;
             if (box->persp_ref->getURI()) {
                 gchar *uri_string = box->persp_ref->getURI()->toString();
                 repr->setAttribute("inkscape:perspectiveID", uri_string);
@@ -1344,7 +1342,7 @@ box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp, 
    the original box and deletes the latter */
 SPGroup *box3d_convert_to_group(SPBox3D *box)
 {
-    SPDocument *doc = SP_OBJECT_DOCUMENT(box);
+    SPDocument *doc = box->document;
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     // remember position of the box
@@ -1369,7 +1367,7 @@ SPGroup *box3d_convert_to_group(SPBox3D *box)
     }
 
     // add the new group to the box's parent and set remembered position
-    SPObject *parent = SP_OBJECT_PARENT(box);
+    SPObject *parent = box->parent;
     parent->appendChild(grepr);
     grepr->setPosition(pos);
     grepr->setAttribute("style", style);
@@ -1378,7 +1376,7 @@ SPGroup *box3d_convert_to_group(SPBox3D *box)
     if (clip_path)
        grepr->setAttribute("clip-path", clip_path);
 
-    SP_OBJECT(box)->deleteObject(true);
+    box->deleteObject(true);
 
     grepr->setAttribute("id", id);
 

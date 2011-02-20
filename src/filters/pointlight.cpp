@@ -119,9 +119,9 @@ sp_fepointlight_release(SPObject *object)
 {
     //SPFePointLight *fepointlight = SP_FEPOINTLIGHT(object);
 
-    if (SP_OBJECT_DOCUMENT(object)) {
-        /* Unregister ourselves */
-        SP_OBJECT_DOCUMENT(object)->removeResource("fepointlight", SP_OBJECT(object));
+    if ( object->document ) {
+        // Unregister ourselves
+        object->document->removeResource("fepointlight", object);
     }
 
 //TODO: release resources here
@@ -229,7 +229,7 @@ sp_fepointlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::
     SPFePointLight *fepointlight = SP_FEPOINTLIGHT(object);
 
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(doc);
+        repr = object->getRepr()->duplicate(doc);
     }
 
     if (fepointlight->x_set)

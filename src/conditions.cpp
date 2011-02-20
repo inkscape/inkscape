@@ -103,7 +103,7 @@ static bool evaluateSystemLanguage(SPItem const *item, gchar const *value) {
     if (language_codes.empty())
         return false;
 
-    SPDocument *document = SP_OBJECT_DOCUMENT(item);
+    SPDocument *document = item->document;
     Glib::ustring document_language = document->getLanguage();
 
     if (document_language.size() == 0)

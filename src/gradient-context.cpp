@@ -377,9 +377,9 @@ sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
         SPStop *this_stop = (SPStop *) i->data;
         SPStop *next_stop = (SPStop *) j->data;
         gfloat offset = 0.5*(this_stop->offset + next_stop->offset);
-        SPObject *parent = SP_OBJECT_PARENT(this_stop);
+        SPObject *parent = this_stop->parent;
         if (SP_IS_GRADIENT (parent)) {
-            doc = SP_OBJECT_DOCUMENT (parent);
+            doc = parent->document;
             sp_vector_add_stop (SP_GRADIENT (parent), this_stop, next_stop, offset);
             SP_GRADIENT(parent)->ensureVector();
         }
@@ -448,9 +448,9 @@ sp_gradient_simplify(SPGradientContext *rc, double tolerance)
 
     for (i = todel; i != NULL; i = i->next) {
         SPStop *stop = (SPStop*) i->data;
-        doc = SP_OBJECT_DOCUMENT (stop);
-        Inkscape::XML::Node * parent = SP_OBJECT_REPR(stop)->parent();
-        parent->removeChild(SP_OBJECT_REPR(stop));
+        doc = stop->document;
+        Inkscape::XML::Node * parent = stop->getRepr()->parent();
+        parent->removeChild( stop->getRepr() );
     }
 
     if (g_slist_length(todel) > 0) {
@@ -524,7 +524,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     SPGradientType new_type = (SPGradientType) prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR);
                     guint new_fill = prefs->getInt("/tools/gradient/newfillorstroke", 1);
 
-                    SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop,                                                                                   SP_OBJECT (item), new_fill);
+                    SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop, item, new_fill);
 
                     SPGradient *priv = sp_item_set_gradient(item, vector, new_type, new_fill);
                     sp_gradient_reset_to_userspace(priv, item);
@@ -902,7 +902,7 @@ static void sp_gradient_drag(SPGradientContext &rc, Geom::Point const pt, guint 
         for (GSList const *i = selection->itemList(); i != NULL; i = i->next) {
 
             //FIXME: see above
-            sp_repr_css_change_recursive(SP_OBJECT_REPR(i->data), css, "style");
+            sp_repr_css_change_recursive(SP_OBJECT(i->data)->getRepr(), css, "style");
 
             sp_item_set_gradient(SP_ITEM(i->data), vector, (SPGradientType) type, fill_or_stroke);
 
@@ -913,7 +913,7 @@ static void sp_gradient_drag(SPGradientContext &rc, Geom::Point const pt, guint 
                 sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_RG_CENTER, 0, rc.origin, fill_or_stroke, true, false);
                 sp_item_gradient_set_coords (SP_ITEM(i->data), POINT_RG_R1, 0, pt, fill_or_stroke, true, false);
             }
-            SP_OBJECT (i->data)->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            SP_OBJECT(i->data)->requestModified(SP_OBJECT_MODIFIED_FLAG);
         }
         if (ec->_grdrag) {
             ec->_grdrag->updateDraggers();

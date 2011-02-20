@@ -209,21 +209,21 @@ void
 box3d_side_position_set (Box3DSide *side) {
     box3d_side_set_shape (SP_SHAPE (side));
 
-    /* This call is responsible for live update of the sides during the initial drag */
-    SP_OBJECT(side)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    // This call is responsible for live update of the sides during the initial drag
+    side->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 void
 box3d_side_set_shape (SPShape *shape)
 {
     Box3DSide *side = SP_BOX3D_SIDE (shape);
-    if (!SP_OBJECT_DOCUMENT(side)->root) {
+    if (!side->document->root) {
         // avoid a warning caused by sp_document_height() (which is called from sp_item_i2d_affine() below)
         // when reading a file containing 3D boxes
         return;
     }
 
-    SPObject *parent = SP_OBJECT(side)->parent;
+    SPObject *parent = side->parent;
     if (!SP_IS_BOX3D(parent)) {
         g_warning ("Parent of 3D box side is not a 3D box.\n");
         return;
@@ -306,12 +306,12 @@ box3d_side_compute_corner_ids(Box3DSide *side, unsigned int corners[4]) {
 
 Persp3D *
 box3d_side_perspective(Box3DSide *side) {
-    return SP_BOX3D(SP_OBJECT(side)->parent)->persp_ref->getObject();
+    return SP_BOX3D(side->parent)->persp_ref->getObject();
 }
 
 Inkscape::XML::Node *box3d_side_convert_to_path(Box3DSide *side) {
     // TODO: Copy over all important attributes (see sp_selected_item_to_curved_repr() for an example)
-    SPDocument *doc = SP_OBJECT_DOCUMENT(side);
+    SPDocument *doc = side->document;
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");

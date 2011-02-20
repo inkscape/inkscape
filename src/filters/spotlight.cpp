@@ -134,9 +134,9 @@ sp_fespotlight_release(SPObject *object)
 {
     //SPFeSpotLight *fespotlight = SP_FESPOTLIGHT(object);
 
-    if (SP_OBJECT_DOCUMENT(object)) {
-        /* Unregister ourselves */
-        SP_OBJECT_DOCUMENT(object)->removeResource("fespotlight", SP_OBJECT(object));
+    if ( object->document ) {
+        // Unregister ourselves
+        object->document->removeResource("fespotlight", object);
     }
 
 //TODO: release resources here
@@ -332,7 +332,7 @@ sp_fespotlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::X
     SPFeSpotLight *fespotlight = SP_FESPOTLIGHT(object);
 
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(doc);
+        repr = object->getRepr()->duplicate(doc);
     }
 
     if (fespotlight->x_set)

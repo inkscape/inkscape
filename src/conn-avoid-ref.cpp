@@ -75,13 +75,12 @@ SPAvoidRef::~SPAvoidRef()
 
 void SPAvoidRef::setAvoid(char const *value)
 {
-    if (SP_OBJECT_IS_CLONED(item)) {
-        // Don't keep avoidance information for cloned objects.
-        return;
-    }
-    new_setting = false;
-    if (value && (strcmp(value, "true") == 0)) {
-        new_setting = true;
+    // Don't keep avoidance information for cloned objects.
+    if ( !item->cloned ) {
+        new_setting = false;
+        if (value && (strcmp(value, "true") == 0)) {
+            new_setting = true;
+        }
     }
 }
 
@@ -194,7 +193,7 @@ void SPAvoidRef::setConnectionPoints(gchar const *value)
 
 void SPAvoidRef::setConnectionPointsAttrUndoable(const gchar* value, const gchar* action)
 {
-    SPDocument* doc = SP_OBJECT_DOCUMENT(item);
+    SPDocument* doc = item->document;
 
     item->setAttribute( "inkscape:connection-points", value, 0 );
     item->updateRepr();

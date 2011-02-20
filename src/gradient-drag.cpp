@@ -450,7 +450,7 @@ GrDrag::dropColor(SPItem */*item*/, gchar const *c, Geom::Point p)
                     SPCSSAttr *css = sp_repr_css_attr_new ();
                     sp_repr_css_set_property( css, "stop-color", stopIsNull ? 0 : toUse.c_str() );
                     sp_repr_css_set_property( css, "stop-opacity", "1" );
-                    sp_repr_css_change (SP_OBJECT_REPR (stop), css, "style");
+                    sp_repr_css_change(stop->getRepr(), css, "style");
                     return true;
                 }
             }
@@ -960,7 +960,7 @@ gr_knot_clicked_handler(SPKnot */*knot*/, guint state, gpointer data)
                     SPStop *next = stop->getNextStop();
                     if (next) {
                         next->offset = 0;
-                        sp_repr_set_css_double (SP_OBJECT_REPR (next), "offset", 0);
+                        sp_repr_set_css_double(next->getRepr(), "offset", 0);
                     }
                 }
                 break;
@@ -972,7 +972,7 @@ gr_knot_clicked_handler(SPKnot */*knot*/, guint state, gpointer data)
                     SPStop *prev = stop->getPrevStop();
                     if (prev) {
                         prev->offset = 1;
-                        sp_repr_set_css_double (SP_OBJECT_REPR (prev), "offset", 1);
+                        sp_repr_set_css_double(prev->getRepr(), "offset", 1);
                     }
                 }
                 break;
@@ -983,8 +983,8 @@ gr_knot_clicked_handler(SPKnot */*knot*/, guint state, gpointer data)
                 break;
             }
 
-            SP_OBJECT_REPR(gradient)->removeChild(SP_OBJECT_REPR(stop));
-            DocumentUndo::done(SP_OBJECT_DOCUMENT (gradient), SP_VERB_CONTEXT_GRADIENT,
+            gradient->getRepr()->removeChild(stop->getRepr());
+            DocumentUndo::done(gradient->document, SP_VERB_CONTEXT_GRADIENT,
                                _("Delete gradient stop"));
         }
     } else {
@@ -1745,7 +1745,7 @@ GrDrag::updateLines ()
 
         SPItem *item = SP_ITEM(i->data);
 
-        SPStyle *style = SP_OBJECT_STYLE (item);
+        SPStyle *style = item->style;
 
         if (style && (style->fill.isPaintserver())) {
             SPPaintServer *server = item->style->getFillPaintServer();
@@ -2038,14 +2038,14 @@ GrDrag::deleteSelected (bool just_one)
     }
     while (midstoplist) {
         SPStop *stop = (SPStop*) midstoplist->data;
-        document = SP_OBJECT_DOCUMENT (stop);
-        Inkscape::XML::Node * parent = SP_OBJECT_REPR(stop)->parent();
-        parent->removeChild(SP_OBJECT_REPR(stop));
+        document = stop->document;
+        Inkscape::XML::Node * parent = stop->getRepr()->parent();
+        parent->removeChild(stop->getRepr());
         midstoplist = g_slist_remove(midstoplist, stop);
     }
     while (endstoplist) {
         StructStopInfo *stopinfo  = (StructStopInfo*) endstoplist->data;
-        document = SP_OBJECT_DOCUMENT (stopinfo->spstop);
+        document = stopinfo->spstop->document;
 
         // 2 is the minimum, cannot delete more than that without deleting the whole vector
         // cannot use vector->vector.stops.size() because the vector might be invalidated by deletion of a midstop
@@ -2062,7 +2062,7 @@ GrDrag::deleteSelected (bool just_one)
             switch (stopinfo->draggable->point_type) {
                 case POINT_LG_BEGIN:
                     {
-                        SP_OBJECT_REPR(stopinfo->vector)->removeChild(SP_OBJECT_REPR(stopinfo->spstop));
+                        stopinfo->vector->getRepr()->removeChild(stopinfo->spstop->getRepr());
 
                         SPLinearGradient *lg = SP_LINEARGRADIENT(stopinfo->gradient);
                         Geom::Point oldbegin = Geom::Point (lg->x1.computed, lg->y1.computed);
@@ -2073,25 +2073,25 @@ GrDrag::deleteSelected (bool just_one)
                         lg->x1.computed = newbegin[Geom::X];
                         lg->y1.computed = newbegin[Geom::Y];
 
-                        Inkscape::XML::Node *repr = SP_OBJECT_REPR(stopinfo->gradient);
+                        Inkscape::XML::Node *repr = stopinfo->gradient->getRepr();
                         sp_repr_set_svg_double(repr, "x1", lg->x1.computed);
                         sp_repr_set_svg_double(repr, "y1", lg->y1.computed);
                         stop->offset = 0;
-                        sp_repr_set_css_double (SP_OBJECT_REPR (stop), "offset", 0);
+                        sp_repr_set_css_double(stop->getRepr(), "offset", 0);
 
                         // iterate through midstops to set new offset values such that they won't move on canvas.
                         SPStop *laststop = sp_last_stop(stopinfo->vector);
                         stop = stop->getNextStop();
                         while ( stop != laststop ) {
                             stop->offset = (stop->offset - offset)/(1 - offset);
-                            sp_repr_set_css_double (SP_OBJECT_REPR (stop), "offset", stop->offset);
+                            sp_repr_set_css_double(stop->getRepr(), "offset", stop->offset);
                             stop = stop->getNextStop();
                         }
                     }
                     break;
                 case POINT_LG_END:
                     {
-                        SP_OBJECT_REPR(stopinfo->vector)->removeChild(SP_OBJECT_REPR(stopinfo->spstop));
+                        stopinfo->vector->getRepr()->removeChild(stopinfo->spstop->getRepr());
 
                         SPLinearGradient *lg = SP_LINEARGRADIENT(stopinfo->gradient);
                         Geom::Point begin = Geom::Point (lg->x1.computed, lg->y1.computed);
@@ -2102,18 +2102,18 @@ GrDrag::deleteSelected (bool just_one)
                         lg->x2.computed = newend[Geom::X];
                         lg->y2.computed = newend[Geom::Y];
 
-                        Inkscape::XML::Node *repr = SP_OBJECT_REPR(stopinfo->gradient);
+                        Inkscape::XML::Node *repr = stopinfo->gradient->getRepr();
                         sp_repr_set_svg_double(repr, "x2", lg->x2.computed);
                         sp_repr_set_svg_double(repr, "y2", lg->y2.computed);
                         laststop->offset = 1;
-                        sp_repr_set_css_double (SP_OBJECT_REPR (laststop), "offset", 1);
+                        sp_repr_set_css_double(laststop->getRepr(), "offset", 1);
 
                         // iterate through midstops to set new offset values such that they won't move on canvas.
                         SPStop *stop = stopinfo->vector->getFirstStop();
                         stop = stop->getNextStop();
                         while ( stop != laststop ) {
                             stop->offset = stop->offset / offset;
-                            sp_repr_set_css_double (SP_OBJECT_REPR (stop), "offset", stop->offset);
+                            sp_repr_set_css_double(stop->getRepr(), "offset", stop->offset);
                             stop = stop->getNextStop();
                         }
                     }
@@ -2123,14 +2123,14 @@ GrDrag::deleteSelected (bool just_one)
                         SPStop *newfirst = stopinfo->spstop->getNextStop();
                         if (newfirst) {
                             newfirst->offset = 0;
-                            sp_repr_set_css_double (SP_OBJECT_REPR (newfirst), "offset", 0);
+                            sp_repr_set_css_double(newfirst->getRepr(), "offset", 0);
                         }
-                        SP_OBJECT_REPR(stopinfo->vector)->removeChild(SP_OBJECT_REPR(stopinfo->spstop));
+                        stopinfo->vector->getRepr()->removeChild(stopinfo->spstop->getRepr());
                     }
                     break;
                 case POINT_RG_R1:
                 case POINT_RG_R2:
-                        SP_OBJECT_REPR(stopinfo->vector)->removeChild(SP_OBJECT_REPR(stopinfo->spstop));
+                    stopinfo->vector->getRepr()->removeChild(stopinfo->spstop->getRepr());
 
                         SPRadialGradient *rg = SP_RADIALGRADIENT(stopinfo->gradient);
                         double oldradius = rg->r.computed;
@@ -2139,17 +2139,17 @@ GrDrag::deleteSelected (bool just_one)
                         double newradius = offset * oldradius;
                         rg->r.computed = newradius;
 
-                        Inkscape::XML::Node *repr = SP_OBJECT_REPR(rg);
+                        Inkscape::XML::Node *repr = rg->getRepr();
                         sp_repr_set_svg_double(repr, "r", rg->r.computed);
                         laststop->offset = 1;
-                        sp_repr_set_css_double (SP_OBJECT_REPR (laststop), "offset", 1);
+                        sp_repr_set_css_double(laststop->getRepr(), "offset", 1);
 
                         // iterate through midstops to set new offset values such that they won't move on canvas.
                         SPStop *stop = stopinfo->vector->getFirstStop();
                         stop = stop->getNextStop();
                         while ( stop != laststop ) {
                             stop->offset = stop->offset / offset;
-                            sp_repr_set_css_double (SP_OBJECT_REPR (stop), "offset", stop->offset);
+                            sp_repr_set_css_double(stop->getRepr(), "offset", stop->offset);
                             stop = stop->getNextStop();
                         }
                         break;
@@ -2160,8 +2160,8 @@ GrDrag::deleteSelected (bool just_one)
             SPCSSAttr *css = sp_repr_css_attr_new ();
 
             // stopinfo->spstop is the selected stop
-            Inkscape::XML::Node *unselectedrepr = SP_OBJECT_REPR(stopinfo->vector)->firstChild();
-            if (unselectedrepr == SP_OBJECT_REPR(stopinfo->spstop) ) {
+            Inkscape::XML::Node *unselectedrepr = stopinfo->vector->getRepr()->firstChild();
+            if (unselectedrepr == stopinfo->spstop->getRepr() ) {
                 unselectedrepr = unselectedrepr->next();
             }
 
@@ -2183,7 +2183,7 @@ GrDrag::deleteSelected (bool just_one)
                 sp_repr_css_attr_unref (stopcss);
             }
 
-            sp_repr_css_change (SP_OBJECT_REPR (stopinfo->draggable->item), css, "style");
+            sp_repr_css_change(stopinfo->draggable->item->getRepr(), css, "style");
             sp_repr_css_attr_unref (css);
         }
 

@@ -115,9 +115,9 @@ sp_fedistantlight_release(SPObject *object)
 {
     //SPFeDistantLight *fedistantlight = SP_FEDISTANTLIGHT(object);
 
-    if (SP_OBJECT_DOCUMENT(object)) {
-        /* Unregister ourselves */
-        SP_OBJECT_DOCUMENT(object)->removeResource("fedistantlight", SP_OBJECT(object));
+    if ( object->document ) {
+        // Unregister ourselves
+        object->document->removeResource("fedistantlight", object);
     }
 
 //TODO: release resources here
@@ -206,7 +206,7 @@ sp_fedistantlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape
     SPFeDistantLight *fedistantlight = SP_FEDISTANTLIGHT(object);
 
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(doc);
+        repr = object->getRepr()->duplicate(doc);
     }
 
     if (fedistantlight->azimuth_set)

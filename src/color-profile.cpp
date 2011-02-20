@@ -283,7 +283,7 @@ void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
                     //LCMSAPI cmsHPROFILE   LCMSEXPORT cmsOpenProfileFromMem(LPVOID MemPtr, DWORD dwSize);
 
                     // Try to open relative
-                    SPDocument *doc = SP_OBJECT_DOCUMENT(object);
+                    SPDocument *doc = object->document;
                     if (!doc) {
                         doc = SP_ACTIVE_DOCUMENT;
                         g_warning("object has no document.  using active");
