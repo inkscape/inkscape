@@ -375,7 +375,7 @@ void SPGradientImpl::classInit(SPGradientClass *klass)
  */
 void SPGradientImpl::init(SPGradient *gr)
 {
-    gr->ref = new SPGradientReference(SP_OBJECT(gr));
+    gr->ref = new SPGradientReference(gr);
     gr->ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(SPGradientImpl::gradientRefChanged), gr));
 
     /** \todo
@@ -447,9 +447,9 @@ void SPGradientImpl::release(SPObject *object)
     g_print("Releasing gradient %s\n", object->getId());
 #endif
 
-    if (SP_OBJECT_DOCUMENT(object)) {
-        /* Unregister ourselves */
-        SP_OBJECT_DOCUMENT(object)->removeResource("gradient", SP_OBJECT(object));
+    if (object->document) {
+        // Unregister ourselves
+        object->document->removeResource("gradient", object);
     }
 
     if (gradient->ref) {
@@ -932,7 +932,7 @@ SPGradientUnits SPGradient::fetchUnits()
 void
 sp_gradient_repr_clear_vector(SPGradient *gr)
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(gr);
+    Inkscape::XML::Node *repr = gr->getRepr();
 
     /* Collect stops from original repr */
     GSList *sl = NULL;
@@ -962,8 +962,8 @@ sp_gradient_repr_write_vector(SPGradient *gr)
     g_return_if_fail(gr != NULL);
     g_return_if_fail(SP_IS_GRADIENT(gr));
 
-    Inkscape::XML::Document *xml_doc = SP_OBJECT_DOCUMENT(gr)->getReprDoc();
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(gr);
+    Inkscape::XML::Document *xml_doc = gr->document->getReprDoc();
+    Inkscape::XML::Node *repr = gr->getRepr();
 
     /* We have to be careful, as vector may be our own, so construct repr list at first */
     GSList *cl = NULL;
@@ -995,7 +995,7 @@ sp_gradient_repr_write_vector(SPGradient *gr)
 void SPGradientImpl::gradientRefModified(SPObject */*href*/, guint /*flags*/, SPGradient *gradient)
 {
     if ( gradient->invalidateVector() ) {
-        SP_OBJECT(gradient)->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        gradient->requestModified(SP_OBJECT_MODIFIED_FLAG);
         // Conditional to avoid causing infinite loop if there's a cycle in the href chain.
     }
 }
@@ -1427,7 +1427,7 @@ sp_gradient_set_gs2d_matrix(SPGradient *gr, Geom::Affine const &ctm,
     }
     gr->gradientTransform_set = TRUE;
 
-    SP_OBJECT(gr)->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    gr->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /*
@@ -1689,7 +1689,7 @@ sp_lineargradient_set_position(SPLinearGradient *lg,
     lg->x2.set(SVGLength::NONE, x2, x2);
     lg->y2.set(SVGLength::NONE, y2, y2);
 
-    SP_OBJECT(lg)->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    lg->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /**
@@ -1968,7 +1968,7 @@ sp_radialgradient_set_position(SPRadialGradient *rg,
     rg->fy.set(SVGLength::NONE, fy, fy);
     rg->r.set(SVGLength::NONE, r, r);
 
-    SP_OBJECT(rg)->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    rg->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /**

@@ -201,7 +201,7 @@ Inkscape::SelTrans::~SelTrans()
     }
 
     for (unsigned i = 0; i < _items.size(); i++) {
-        sp_object_unref(SP_OBJECT(_items[i]), NULL);
+        sp_object_unref(_items[i], NULL);
     }
 
     _items.clear();
@@ -235,7 +235,7 @@ void Inkscape::SelTrans::setCenter(Geom::Point const &p)
 
     // Write the new center position into all selected items
     for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
-        SPItem *it = (SPItem*)SP_OBJECT(l->data);
+        SPItem *it = SP_ITEM(l->data);
         it->setCenter(p);
         // only set the value; updating repr and document_done will be done once, on ungrab
     }
@@ -264,7 +264,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     }
 
     for (GSList const *l = selection->itemList(); l; l = l->next) {
-        SPItem *it = (SPItem *)sp_object_ref(SP_OBJECT(l->data), NULL);
+        SPItem *it = reinterpret_cast<SPItem*>(sp_object_ref(SP_ITEM(l->data), NULL));
         _items.push_back(it);
         _items_const.push_back(it);
         _items_affines.push_back(it->i2d_affine());
@@ -463,7 +463,7 @@ void Inkscape::SelTrans::ungrab()
     _updateVolatileState();
 
     for (unsigned i = 0; i < _items.size(); i++) {
-        sp_object_unref(SP_OBJECT(_items[i]), NULL);
+        sp_object_unref(_items[i], NULL);
     }
 
     sp_canvas_item_hide(_norm);
@@ -496,7 +496,7 @@ void Inkscape::SelTrans::ungrab()
                 SPItem *currentItem = _items[i];
                 if (currentItem->isCenterSet()) { // only if it's already set
                     currentItem->setCenter (_items_centers[i] * _current_relative_affine);
-                    SP_OBJECT(currentItem)->updateRepr();
+                    currentItem->updateRepr();
                 }
             }
         }
@@ -525,8 +525,8 @@ void Inkscape::SelTrans::ungrab()
         if (_center_is_set) {
             // we were dragging center; update reprs and commit undoable action
             for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
-                SPItem *it = (SPItem*)SP_OBJECT(l->data);
-                SP_OBJECT(it)->updateRepr();
+                SPItem *it = SP_ITEM(l->data);
+                it->updateRepr();
             }
             DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
                                _("Set center"));
@@ -568,7 +568,7 @@ void Inkscape::SelTrans::stamp()
 
         while (l) {
             SPItem *original_item = SP_ITEM(l->data);
-            Inkscape::XML::Node *original_repr = SP_OBJECT_REPR(original_item);
+            Inkscape::XML::Node *original_repr = original_item->getRepr();
 
             // remember the position of the item
             gint pos = original_repr->position();
@@ -786,9 +786,9 @@ void Inkscape::SelTrans::handleClick(SPKnot */*knot*/, guint state, SPSelTransHa
             if (state & GDK_SHIFT_MASK) {
                 // Unset the  center position for all selected items
                 for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
-                    SPItem *it = (SPItem*)(SP_OBJECT(l->data));
+                    SPItem *it = SP_ITEM(l->data);
                     it->unsetCenter();
-                    SP_OBJECT(it)->updateRepr();
+                    it->updateRepr();
                     _center_is_set = false;  // center has changed
                     _updateHandles();
                 }
@@ -835,7 +835,7 @@ void Inkscape::SelTrans::handleNewEvent(SPKnot *knot, Geom::Point *position, gui
     // in case items have been unhooked from the document, don't
     // try to continue processing events for them.
     for (unsigned int i = 0; i < _items.size(); i++) {
-        if (!SP_OBJECT_DOCUMENT(SP_OBJECT(_items[i])) ) {
+        if ( !_items[i]->document ) {
             return;
         }
     }

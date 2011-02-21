@@ -721,7 +721,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                         // otherwise even one line won't fit; most probably a slip of hand (even if bigger than tolerance)
                         SPItem *ft = create_flowtext_with_internal_frame (desktop, tc->p0, p1);
                         /* Set style */
-                        sp_desktop_apply_style_tool(desktop, SP_OBJECT_REPR(ft), "/tools/text", true);
+                        sp_desktop_apply_style_tool(desktop, ft->getRepr(), "/tools/text", true);
                         sp_desktop_selection(desktop)->set(ft);
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Flowed text is created."));
                         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
@@ -1526,11 +1526,13 @@ sp_text_context_style_set(SPCSSAttr const *css, SPTextContext *tc)
 static int
 sp_text_context_style_query(SPStyle *style, int property, SPTextContext *tc)
 {
-    if (tc->text == NULL)
+    if (tc->text == NULL) {
         return QUERY_STYLE_NOTHING;
+    }
     const Inkscape::Text::Layout *layout = te_get_layout(tc->text);
-    if (layout == NULL)
+    if (layout == NULL) {
         return QUERY_STYLE_NOTHING;
+    }
     sp_text_context_validate_cursor_iterators(tc);
 
     GSList *styles_list = NULL;
@@ -1543,18 +1545,21 @@ sp_text_context_style_query(SPStyle *style, int property, SPTextContext *tc)
         begin_it = tc->text_sel_end;
         end_it = tc->text_sel_start;
     }
-    if (begin_it == end_it)
-        if (!begin_it.prevCharacter())
+    if (begin_it == end_it) {
+        if (!begin_it.prevCharacter()) {
             end_it.nextCharacter();
+        }
+    }
     for (Inkscape::Text::Layout::iterator it = begin_it ; it < end_it ; it.nextStartOfSpan()) {
         SPObject const *pos_obj = 0;
         void *rawptr = 0;
         layout->getSourceOfCharacter(it, &rawptr);
-        if (!rawptr || !SP_IS_OBJECT(rawptr))
+        if (!rawptr || !SP_IS_OBJECT(rawptr)) {
             continue;
+        }
         pos_obj = SP_OBJECT(rawptr);
-        while (SP_IS_STRING(pos_obj) && SP_OBJECT_PARENT(pos_obj)) {
-           pos_obj = SP_OBJECT_PARENT(pos_obj);   // SPStrings don't have style
+        while (SP_IS_STRING(pos_obj) && pos_obj->parent) {
+           pos_obj = pos_obj->parent;   // SPStrings don't have style
         }
         styles_list = g_slist_prepend(styles_list, (gpointer)pos_obj);
     }
@@ -1716,7 +1721,7 @@ sp_text_context_forget_text(SPTextContext *tc)
     */
 /*
     if ((SP_IS_TEXT(ti) || SP_IS_FLOWTEXT(ti)) && sp_te_input_is_empty(ti)) {
-        Inkscape::XML::Node *text_repr=SP_OBJECT_REPR(ti);
+        Inkscape::XML::Node *text_repr = ti->getRepr();
         // the repr may already have been unparented
         // if we were called e.g. as the result of
         // an undo or the element being removed from
@@ -1756,7 +1761,7 @@ sptc_commit(GtkIMContext */*imc*/, gchar *string, SPTextContext *tc)
     sp_text_context_update_cursor(tc);
     sp_text_context_update_text_selection(tc);
 
-    DocumentUndo::done(SP_OBJECT_DOCUMENT(tc->text), SP_VERB_CONTEXT_TEXT,
+    DocumentUndo::done(tc->text->document, SP_VERB_CONTEXT_TEXT,
 		       _("Type text"));
 }
 

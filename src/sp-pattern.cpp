@@ -128,7 +128,7 @@ sp_pattern_class_init (SPPatternClass *klass)
 static void
 sp_pattern_init (SPPattern *pat)
 {
-	pat->ref = new SPPatternReference(SP_OBJECT(pat));
+	pat->ref = new SPPatternReference(pat);
 	pat->ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(pattern_ref_changed), pat));
 
 	pat->patternUnits = SP_PATTERN_UNITS_OBJECTBOUNDINGBOX;
@@ -170,29 +170,27 @@ sp_pattern_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *r
 	document->addResource("pattern", object);
 }
 
-static void
-sp_pattern_release (SPObject *object)
+static void sp_pattern_release(SPObject *object)
 {
-	SPPattern *pat;
+    SPPattern *pat = reinterpret_cast<SPPattern *>(object);
 
-	pat = (SPPattern *) object;
+    if (object->document) {
+        // Unregister ourselves
+        object->document->removeResource("pattern", object);
+    }
 
-	if (SP_OBJECT_DOCUMENT (object)) {
-		/* Unregister ourselves */
-		SP_OBJECT_DOCUMENT (object)->removeResource("pattern", SP_OBJECT (object));
-	}
+    if (pat->ref) {
+        pat->modified_connection.disconnect();
+        pat->ref->detach();
+        delete pat->ref;
+        pat->ref = NULL;
+    }
 
-	if (pat->ref) {
-		pat->modified_connection.disconnect();
-		pat->ref->detach();
-		delete pat->ref;
-		pat->ref = NULL;
-	}
+    pat->modified_connection.~connection();
 
-	pat->modified_connection.~connection();
-
-	if (((SPObjectClass *) pattern_parent_class)->release)
-		((SPObjectClass *) pattern_parent_class)->release (object);
+    if (((SPObjectClass *) pattern_parent_class)->release) {
+        ((SPObjectClass *) pattern_parent_class)->release (object);
+    }
 }
 
 static void
@@ -426,12 +424,12 @@ pattern_ref_changed(SPObject *old_ref, SPObject *ref, SPPattern *pat)
 /**
 Gets called when the referenced <pattern> is changed
 */
-static void
-pattern_ref_modified (SPObject */*ref*/, guint /*flags*/, SPPattern *pattern)
+static void pattern_ref_modified (SPObject */*ref*/, guint /*flags*/, SPPattern *pattern)
 {
-	if (SP_IS_OBJECT (pattern))
-		SP_OBJECT (pattern)->requestModified(SP_OBJECT_MODIFIED_FLAG);
-        /* Conditional to avoid causing infinite loop if there's a cycle in the href chain. */
+    if ( SP_IS_OBJECT(pattern) ) {
+        pattern->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    }
+    // Conditional to avoid causing infinite loop if there's a cycle in the href chain.
 }
 
 
@@ -446,7 +444,7 @@ count_pattern_hrefs(SPObject *o, SPPattern *pat)
 
     guint i = 0;
 
-    SPStyle *style = SP_OBJECT_STYLE(o);
+    SPStyle *style = o->style;
     if (style
         && style->fill.isPaintserver()
         && SP_IS_PATTERN(SP_STYLE_FILL_SERVER(style))
@@ -471,13 +469,13 @@ count_pattern_hrefs(SPObject *o, SPPattern *pat)
 
 SPPattern *pattern_chain(SPPattern *pattern)
 {
-	SPDocument *document = SP_OBJECT_DOCUMENT (pattern);
+	SPDocument *document = pattern->document;
         Inkscape::XML::Document *xml_doc = document->getReprDoc();
-	Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
+	Inkscape::XML::Node *defsrepr = SP_DOCUMENT_DEFS(document)->getRepr();
 
 	Inkscape::XML::Node *repr = xml_doc->createElement("svg:pattern");
 	repr->setAttribute("inkscape:collect", "always");
-	gchar *parent_ref = g_strconcat ("#", SP_OBJECT_REPR(pattern)->attribute("id"), NULL);
+	gchar *parent_ref = g_strconcat("#", pattern->getRepr()->attribute("id"), NULL);
 	repr->setAttribute("xlink:href",  parent_ref);
 	g_free (parent_ref);
 
@@ -494,11 +492,11 @@ sp_pattern_clone_if_necessary (SPItem *item, SPPattern *pattern, const gchar *pr
 {
 	if (!pattern->href || pattern->hrefcount > count_pattern_hrefs(item, pattern)) {
 		pattern = pattern_chain (pattern);
-		gchar *href = g_strconcat ("url(#", SP_OBJECT_REPR (pattern)->attribute("id"), ")", NULL);
+		gchar *href = g_strconcat("url(#", pattern->getRepr()->attribute("id"), ")", NULL);
 
 		SPCSSAttr *css = sp_repr_css_attr_new ();
 		sp_repr_css_set_property (css, property, href);
-		sp_repr_css_change_recursive (SP_OBJECT_REPR (item), css, "style");
+		sp_repr_css_change_recursive(item->getRepr(), css, "style");
 	}
 	return pattern;
 }
@@ -507,7 +505,7 @@ void
 sp_pattern_transform_multiply (SPPattern *pattern, Geom::Affine postmul, bool set)
 {
 	// this formula is for a different interpretation of pattern transforms as described in (*) in sp-pattern.cpp
-	// for it to work, we also need    sp_object_read_attr (SP_OBJECT (item), "transform");
+	// for it to work, we also need    sp_object_read_attr( item, "transform");
 	//pattern->patternTransform = premul * item->transform * pattern->patternTransform * item->transform.inverse() * postmul;
 
 	// otherwise the formula is much simpler
@@ -519,14 +517,14 @@ sp_pattern_transform_multiply (SPPattern *pattern, Geom::Affine postmul, bool se
 	pattern->patternTransform_set = TRUE;
 
 	gchar *c=sp_svg_transform_write(pattern->patternTransform);
-	SP_OBJECT_REPR(pattern)->setAttribute("patternTransform", c);
+	pattern->getRepr()->setAttribute("patternTransform", c);
 	g_free(c);
 }
 
 const gchar *pattern_tile(GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Affine transform, Geom::Affine move)
 {
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
-	Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
+    Inkscape::XML::Node *defsrepr = SP_DOCUMENT_DEFS(document)->getRepr();
 
 	Inkscape::XML::Node *repr = xml_doc->createElement("svg:pattern");
 	repr->setAttribute("patternUnits", "userSpaceOnUse");
@@ -550,8 +548,8 @@ const gchar *pattern_tile(GSList *reprs, Geom::Rect bounds, SPDocument *document
 			dup_transform = Geom::identity();
 		dup_transform *= move;
 
-		copy->doWriteTransform(SP_OBJECT_REPR(copy), dup_transform, NULL, false);
-	}
+        copy->doWriteTransform(copy->getRepr(), dup_transform, NULL, false);
+    }
 
 	Inkscape::GC::release(repr);
 	return pat_id;

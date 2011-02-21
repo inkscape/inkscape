@@ -230,11 +230,11 @@ sp_select_context_abort(SPEventContext *event_context)
 
             if (sc->item) {
                 // only undo if the item is still valid
-                if (SP_OBJECT_DOCUMENT( SP_OBJECT(sc->item))) {
+                if (sc->item->document) {
                     DocumentUndo::undo(sp_desktop_document(desktop));
                 }
 
-                sp_object_unref( SP_OBJECT(sc->item), NULL);
+                sp_object_unref( sc->item, NULL);
             } else if (sc->button_press_ctrl) {
                 // NOTE:  This is a workaround to a bug.
                 // When the ctrl key is held, sc->item is not defined
@@ -286,9 +286,9 @@ sp_select_context_up_one_layer(SPDesktop *desktop)
      */
     SPObject *const current_layer = desktop->currentLayer();
     if (current_layer) {
-        SPObject *const parent = SP_OBJECT_PARENT(current_layer);
+        SPObject *const parent = current_layer->parent;
         if ( parent
-             && ( SP_OBJECT_PARENT(parent)
+             && ( parent->parent
                   || !( SP_IS_GROUP(current_layer)
                         && ( SPGroup::LAYER
                              == SP_GROUP(current_layer)->layerMode() ) ) ) )
@@ -313,7 +313,7 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
     tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     // make sure we still have valid objects to move around
-    if (sc->item && SP_OBJECT_DOCUMENT( SP_OBJECT(sc->item))==NULL) {
+    if (sc->item && sc->item->document == NULL) {
         sp_select_context_abort(event_context);
     }
 
@@ -460,7 +460,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     // make sure we still have valid objects to move around
-    if (sc->item && SP_OBJECT_DOCUMENT( SP_OBJECT(sc->item))==NULL) {
+    if (sc->item && sc->item->document == NULL) {
         sp_select_context_abort(event_context);
     }
 
@@ -652,7 +652,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     sp_canvas_end_forced_full_redraws(desktop->canvas);
 
                     if (sc->item) {
-                        sp_object_unref( SP_OBJECT(sc->item), NULL);
+                        sp_object_unref( sc->item, NULL);
                     }
                     sc->item = NULL;
                 } else {

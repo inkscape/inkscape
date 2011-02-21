@@ -249,7 +249,7 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
     }
 
     if (neweffect) {
-        neweffect->readallParameters(SP_OBJECT_REPR(lpeobj));
+        neweffect->readallParameters(lpeobj->getRepr());
     }
 
     return neweffect;
@@ -262,7 +262,7 @@ void Effect::createAndApply(const char* name, SPDocument *doc, SPItem *item)
     Inkscape::XML::Node *repr = xml_doc->createElement("inkscape:path-effect");
     repr->setAttribute("effect", name);
 
-    SP_OBJECT_REPR(SP_DOCUMENT_DEFS(doc))->addChild(repr, NULL); // adds to <defs> and assigns the 'id' attribute
+    SP_DOCUMENT_DEFS(doc)->getRepr()->addChild(repr, NULL); // adds to <defs> and assigns the 'id' attribute
     const gchar * repr_id = repr->attribute("id");
     Inkscape::GC::release(repr);
 
@@ -579,17 +579,17 @@ Effect::newWidget(Gtk::Tooltips * tooltips)
 }
 
 
-Inkscape::XML::Node *
-Effect::getRepr()
+Inkscape::XML::Node *Effect::getRepr()
 {
-    return SP_OBJECT_REPR(lpeobj);
+    return lpeobj->getRepr();
 }
 
-SPDocument *
-Effect::getSPDoc()
+SPDocument *Effect::getSPDoc()
 {
-    if (SP_OBJECT_DOCUMENT(lpeobj) == NULL) g_message("Effect::getSPDoc() returns NULL");
-    return SP_OBJECT_DOCUMENT(lpeobj);
+    if (lpeobj->document == NULL) {
+        g_message("Effect::getSPDoc() returns NULL");
+    }
+    return lpeobj->document;
 }
 
 Parameter *

@@ -416,7 +416,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
         GSList *items = g_slist_prepend (NULL, item);
         GSList *selected = NULL;
         GSList *to_select = NULL;
-        SPDocument *doc = SP_OBJECT_DOCUMENT(item);
+        SPDocument *doc = item->document;
         sp_item_list_to_curves (items, &selected, &to_select);
         g_slist_free (items);
         SPObject* newObj = doc->getObjectByRepr((Inkscape::XML::Node *) to_select->data);
@@ -521,13 +521,13 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
                     double chance = g_random_double_range(0, 1);
                     if (chance <= prob) {
                         if (reverse) { // delete
-                            sp_object_ref(SP_OBJECT(item), NULL);
-                            SP_OBJECT(item)->deleteObject(true, true);
-                            sp_object_unref(SP_OBJECT(item), NULL);
+                            sp_object_ref(item, NULL);
+                            item->deleteObject(true, true);
+                            sp_object_unref(item, NULL);
                         } else { // duplicate
-                            SPDocument *doc = SP_OBJECT_DOCUMENT(item);
+                            SPDocument *doc = item->document;
                             Inkscape::XML::Document* xml_doc = doc->getReprDoc();
-                            Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
+                            Inkscape::XML::Node *old_repr = item->getRepr();
                             SPObject *old_obj = doc->getObjectByRepr(old_repr);
                             Inkscape::XML::Node *parent = old_repr->parent();
                             Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
@@ -555,11 +555,11 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
                 return false;
 
             // remember the position of the item
-            pos = SP_OBJECT_REPR(item)->position();
+            pos = item->getRepr()->position();
             // remember parent
-            parent = SP_OBJECT_REPR(item)->parent();
+            parent = item->getRepr()->parent();
             // remember id
-            id = SP_OBJECT_REPR(item)->attribute("id");
+            id = item->getRepr()->attribute("id");
         }
 
 
@@ -587,7 +587,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
         orig->ConvertWithBackData((0.08 - (0.07 * fidelity)) / i2doc.descrim()); // default 0.059
         orig->Fill(theShape, 0);
 
-        SPCSSAttr *css = sp_repr_css_attr(SP_OBJECT_REPR(item), "style");
+        SPCSSAttr *css = sp_repr_css_attr(item->getRepr(), "style");
         gchar const *val = sp_repr_css_property(css, "fill-rule", NULL);
         if (val && strcmp(val, "nonzero") == 0)
         {
@@ -650,7 +650,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
                     selection->remove(item);
 
                 // It's going to resurrect, so we delete without notifying listeners.
-                SP_OBJECT(item)->deleteObject(false);
+                item->deleteObject(false);
 
                 // restore id
                 newrepr->setAttribute("id", id);
@@ -669,9 +669,9 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
                     newrepr->setAttribute("d", str);
                 } else {
                     if (SP_IS_LPE_ITEM(item) && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(item))) {
-                        SP_OBJECT_REPR(item)->setAttribute("inkscape:original-d", str);
+                        item->getRepr()->setAttribute("inkscape:original-d", str);
                     } else {
-                        SP_OBJECT_REPR(item)->setAttribute("d", str);
+                        item->getRepr()->setAttribute("d", str);
                     }
                 }
                 g_free(str);
@@ -886,7 +886,7 @@ tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke,
                 tweak_color (mode, SP_STOP(child_prev)->specified_color.v.c, rgb_goal,
                                   force * (offset_h - pos_e) / (offset_h - offset_l),
                                   do_h, do_s, do_l);
-                SP_OBJECT(stop)->updateRepr();
+                stop->updateRepr();
                 child_prev->updateRepr();
                 break;
             } else {
@@ -903,7 +903,7 @@ tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke,
                     tweak_color (mode, stop->specified_color.v.c, rgb_goal,
                                  force * tweak_profile (fabs (pos_e - offset_h), r),
                                  do_h, do_s, do_l);
-                    SP_OBJECT(stop)->updateRepr();
+                    stop->updateRepr();
                 }
             }
         }
@@ -938,7 +938,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
         }
 
     } else {
-        SPStyle *style = SP_OBJECT_STYLE(item);
+        SPStyle *style = item->style;
         if (!style) {
             return false;
         }
@@ -1012,7 +1012,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
                     remove_filter(item, false);
                 } else {
                     double radius = blur_new * perimeter;
-                    SPFilter *filter = modify_filter_gaussian_blur_from_item(SP_OBJECT_DOCUMENT(item), item, radius);
+                    SPFilter *filter = modify_filter_gaussian_blur_from_item(item->document, item, radius);
 
                     sp_style_set_property_url(item, "filter", filter, false);
                 }

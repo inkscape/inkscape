@@ -155,7 +155,7 @@ void sp_spray_rotate_rel(Geom::Point c,SPDesktop */*desktop*/,SPItem *item, Geom
     // Rotate item.
     item->set_i2d_affine(item->i2d_affine() * (Geom::Affine)affine);
     // Use each item's own transform writer, consistent with sp_selection_apply_affine()
-    item->doWriteTransform(SP_OBJECT_REPR(item), item->transform);
+    item->doWriteTransform(item->getRepr(), item->transform);
     // Restore the center position (it's changed because the bbox center changed)
     if (item->isCenterSet()) {
         item->setCenter(c);
@@ -168,7 +168,7 @@ void sp_spray_scale_rel(Geom::Point c, SPDesktop */*desktop*/, SPItem *item, Geo
 {
     Geom::Translate const s(c);
     item->set_i2d_affine(item->i2d_affine() * s.inverse() * scale * s  );
-    item->doWriteTransform(SP_OBJECT_REPR(item), item->transform);
+    item->doWriteTransform(item->getRepr(), item->transform);
 }
 
 static void sp_spray_context_init(SPSprayContext *tc)
@@ -487,9 +487,9 @@ bool sp_spray_recursive(SPDesktop *desktop,
             if(_fid<=population)
             {
                 // duplicate
-                SPDocument *doc = SP_OBJECT_DOCUMENT(item);
+                SPDocument *doc = item->document;
                 Inkscape::XML::Document* xml_doc = doc->getReprDoc();
-                Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
+                Inkscape::XML::Node *old_repr = item->getRepr();
                 Inkscape::XML::Node *parent = old_repr->parent();
                 Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
                 parent->appendChild(copy);
@@ -528,9 +528,9 @@ bool sp_spray_recursive(SPDesktop *desktop,
             }
             i++;
         }
-        SPDocument *doc = SP_OBJECT_DOCUMENT(father);
+        SPDocument *doc = father->document;
         Inkscape::XML::Document* xml_doc = doc->getReprDoc();
-        Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(father);
+        Inkscape::XML::Node *old_repr = father->getRepr();
         Inkscape::XML::Node *parent = old_repr->parent();
 
         Geom::OptRect a = father->getBounds(father->i2doc_affine());
@@ -575,9 +575,9 @@ bool sp_spray_recursive(SPDesktop *desktop,
         if (a) {
             if(_fid<=population) {
                 SPItem *item_copied;
-                SPDocument *doc = SP_OBJECT_DOCUMENT(item);
+                SPDocument *doc = item->document;
                 Inkscape::XML::Document* xml_doc = doc->getReprDoc();
-                Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
+                Inkscape::XML::Node *old_repr = item->getRepr();
                 Inkscape::XML::Node *parent = old_repr->parent();
 
                 // Creation of the clone

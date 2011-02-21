@@ -2041,14 +2041,14 @@ static void toggle_snap_callback(GtkToggleAction *act, gpointer data) //data poi
 
     SPDesktop *dt = reinterpret_cast<SPDesktop*>(ptr);
     SPNamedView *nv = sp_desktop_namedview(dt);
-    SPDocument *doc = SP_OBJECT_DOCUMENT(nv);
+    SPDocument *doc = nv->document;
 
     if (dt == NULL || nv == NULL) {
         g_warning("No desktop or namedview specified (in toggle_snap_callback)!");
         return;
     }
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(nv);
+    Inkscape::XML::Node *repr = nv->getRepr();
 
     if (repr == NULL) {
         g_warning("This namedview doesn't have a xml representation attached!");
@@ -2520,13 +2520,14 @@ static void sp_stb_magnitude_value_changed( GtkAdjustment *adj, GObject *dataKlu
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
-        if (SP_IS_STAR((SPItem *) items->data)) {
-            Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
+        SPItem *item = reinterpret_cast<SPItem*>(items->data);
+        if (SP_IS_STAR(item)) {
+            Inkscape::XML::Node *repr = item->getRepr();
             sp_repr_set_int(repr,"sodipodi:sides",(gint)adj->value);
             sp_repr_set_svg_double(repr, "sodipodi:arg2",
                                    (sp_repr_get_double_attribute(repr, "sodipodi:arg1", 0.5)
                                     + M_PI / (gint)adj->value));
-            SP_OBJECT((SPItem *) items->data)->updateRepr();
+            item->updateRepr();
             modmade = true;
         }
     }
@@ -2561,8 +2562,9 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
-        if (SP_IS_STAR((SPItem *) items->data)) {
-            Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
+        SPItem *item = reinterpret_cast<SPItem *>(items->data);
+        if (SP_IS_STAR(item)) {
+            Inkscape::XML::Node *repr = item->getRepr();
 
             gdouble r1 = sp_repr_get_double_attribute(repr, "sodipodi:r1", 1.0);
             gdouble r2 = sp_repr_get_double_attribute(repr, "sodipodi:r2", 1.0);
@@ -2572,7 +2574,7 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
                 sp_repr_set_svg_double(repr, "sodipodi:r1", r2*adj->value);
             }
 
-            SP_OBJECT((SPItem *) items->data)->updateRepr();
+            item->updateRepr();
             modmade = true;
         }
     }
@@ -2613,10 +2615,11 @@ static void sp_stb_sides_flat_state_changed( EgeSelectOneAction *act, GObject *d
     }
 
     for (; items != NULL; items = items->next) {
-        if (SP_IS_STAR((SPItem *) items->data)) {
-            Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
+        SPItem *item = reinterpret_cast<SPItem *>(items->data);
+        if (SP_IS_STAR(item)) {
+            Inkscape::XML::Node *repr = item->getRepr();
             repr->setAttribute("inkscape:flatsided", flat ? "true" : "false" );
-            SP_OBJECT((SPItem *) items->data)->updateRepr();
+            item->updateRepr();
             modmade = true;
         }
     }
@@ -2651,10 +2654,11 @@ static void sp_stb_rounded_value_changed( GtkAdjustment *adj, GObject *dataKludg
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
-        if (SP_IS_STAR((SPItem *) items->data)) {
-            Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
+        SPItem *item = reinterpret_cast<SPItem*>(items->data);
+        if (SP_IS_STAR(item)) {
+            Inkscape::XML::Node *repr = item->getRepr();
             sp_repr_set_svg_double(repr, "inkscape:rounded", (gdouble) adj->value);
-            SP_OBJECT(items->data)->updateRepr();
+            item->updateRepr();
             modmade = true;
         }
     }
@@ -2688,10 +2692,11 @@ static void sp_stb_randomized_value_changed( GtkAdjustment *adj, GObject *dataKl
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
-        if (SP_IS_STAR((SPItem *) items->data)) {
-            Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
+        SPItem *item = reinterpret_cast<SPItem *>(items->data);
+        if (SP_IS_STAR(item)) {
+            Inkscape::XML::Node *repr = item->getRepr();
             sp_repr_set_svg_double(repr, "inkscape:randomized", (gdouble) adj->value);
-            SP_OBJECT(items->data)->updateRepr();
+            item->updateRepr();
             modmade = true;
         }
     }
@@ -2783,9 +2788,10 @@ sp_star_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
          items != NULL;
          items = items->next)
     {
-        if (SP_IS_STAR((SPItem *) items->data)) {
+        SPItem* item = reinterpret_cast<SPItem *>(items->data);
+        if (SP_IS_STAR(item)) {
             n_selected++;
-            repr = SP_OBJECT_REPR((SPItem *) items->data);
+            repr = item->getRepr();
         }
     }
 
@@ -3055,7 +3061,7 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
             if (adj->value != 0) {
                 setter(SP_RECT(items->data), sp_units_get_pixels(adj->value, *unit));
             } else {
-                SP_OBJECT_REPR(items->data)->setAttribute(value_name, NULL);
+                SP_OBJECT(items->data)->getRepr()->setAttribute(value_name, NULL);
             }
             modmade = true;
         }
@@ -3184,10 +3190,10 @@ static void sp_rect_toolbox_selection_changed(Inkscape::Selection *selection, GO
     for (GSList const *items = selection->itemList();
          items != NULL;
          items = items->next) {
-        if (SP_IS_RECT((SPItem *) items->data)) {
+        if (SP_IS_RECT(reinterpret_cast<SPItem *>(items->data))) {
             n_selected++;
-            item = (SPItem *) items->data;
-            repr = SP_OBJECT_REPR(item);
+            item = reinterpret_cast<SPItem *>(items->data);
+            repr = item->getRepr();
         }
     }
 
@@ -3474,7 +3480,7 @@ static void box3d_toolbox_selection_changed(Inkscape::Selection *selection, GObj
         // FIXME: Also deal with multiple selected boxes
         SPBox3D *box = SP_BOX3D(item);
         Persp3D *persp = box3d_get_perspective(box);
-        persp_repr = SP_OBJECT_REPR(persp);
+        persp_repr = persp->getRepr();
         if (persp_repr) {
             g_object_set_data(tbl, "repr", persp_repr);
             Inkscape::GC::anchor(persp_repr);
@@ -3513,7 +3519,7 @@ static void box3d_angle_value_changed(GtkAdjustment *adj, GObject *dataKludge, P
     Persp3D *persp = sel_persps.front();
 
     persp->perspective_impl->tmat.set_infinite_direction (axis, adj->value);
-    SP_OBJECT(persp)->updateRepr();
+    persp->updateRepr();
 
     // TODO: use the correct axis here, too
     DocumentUndo::maybeDone(document, "perspangle", SP_VERB_CONTEXT_3DBOX, _("3D Box: Change perspective (angle of infinite axis)"));
@@ -3731,10 +3737,11 @@ static void sp_spl_tb_value_changed(GtkAdjustment *adj, GObject *tbl, Glib::ustr
          items != NULL;
          items = items->next)
     {
-        if (SP_IS_SPIRAL((SPItem *) items->data)) {
-            Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
+        SPItem *item = reinterpret_cast<SPItem*>(items->data);
+        if (SP_IS_SPIRAL(item)) {
+            Inkscape::XML::Node *repr = item->getRepr();
             sp_repr_set_svg_double( repr, namespaced_name, adj->value );
-            SP_OBJECT((SPItem *) items->data)->updateRepr();
+            item->updateRepr();
             modmade = true;
         }
     }
@@ -3841,9 +3848,10 @@ static void sp_spiral_toolbox_selection_changed(Inkscape::Selection *selection, 
          items != NULL;
          items = items->next)
     {
-        if (SP_IS_SPIRAL((SPItem *) items->data)) {
+        SPItem *item = reinterpret_cast<SPItem*>(items->data);
+        if (SP_IS_SPIRAL(item)) {
             n_selected++;
-            repr = SP_OBJECT_REPR((SPItem *) items->data);
+            repr = item->getRepr();
         }
     }
 
@@ -5395,10 +5403,11 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
              items != NULL;
              items = items->next)
         {
-            if (SP_IS_ARC((SPItem *) items->data)) {
-                Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
+            SPItem *item = reinterpret_cast<SPItem*>(items->data);
+            if (SP_IS_ARC(item)) {
+                Inkscape::XML::Node *repr = item->getRepr();
                 repr->setAttribute("sodipodi:open", "true");
-                SP_OBJECT((SPItem *) items->data)->updateRepr();
+                item->updateRepr();
                 modmade = true;
             }
         }
@@ -5407,10 +5416,11 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
              items != NULL;
              items = items->next)
         {
-            if (SP_IS_ARC((SPItem *) items->data)) {
-                Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) items->data);
+            SPItem *item = reinterpret_cast<SPItem *>(items->data);
+            if (SP_IS_ARC(item)) {
+                Inkscape::XML::Node *repr = item->getRepr();
                 repr->setAttribute("sodipodi:open", NULL);
-                SP_OBJECT((SPItem *) items->data)->updateRepr();
+                item->updateRepr();
                 modmade = true;
             }
         }
@@ -5496,9 +5506,10 @@ static void sp_arc_toolbox_selection_changed(Inkscape::Selection *selection, GOb
          items != NULL;
          items = items->next)
     {
-        if (SP_IS_ARC((SPItem *) items->data)) {
+        SPItem *item = reinterpret_cast<SPItem *>(items->data);
+        if (SP_IS_ARC(item)) {
             n_selected++;
-            repr = SP_OBJECT_REPR((SPItem *) items->data);
+            repr = item->getRepr();
         }
     }
 
@@ -6688,7 +6699,7 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
         if (SP_IS_TEXT((SPItem *) items->data)) {
             SPItem *item = SP_ITEM(items->data);
 
-            unsigned writing_mode = SP_OBJECT_STYLE(item)->writing_mode.value;
+            unsigned writing_mode = item->style->writing_mode.value;
             // below, variable names suggest horizontal move, but we check the writing direction
             // and move in the corresponding axis
             int axis;
@@ -6708,7 +6719,7 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
             // frame (currently unused)
             double left_slack = 0;
             double right_slack = 0;
-            unsigned old_align = SP_OBJECT_STYLE(item)->text_align.value;
+            unsigned old_align = item->style->text_align.value;
             double move = 0;
             if (old_align == SP_CSS_TEXT_ALIGN_START || old_align == SP_CSS_TEXT_ALIGN_LEFT) {
                 switch (mode) {
@@ -6754,8 +6765,8 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
                 XY = XY + Geom::Point (0, move);
             }
             SP_TEXT(item)->attributes.setFirstXY(XY);
-            SP_OBJECT(item)->updateRepr();
-            SP_OBJECT(item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            item->updateRepr();
+            item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
     }
 
@@ -6843,7 +6854,7 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
     bool modmade = false;
     for (; items != NULL; items = items->next) {
         if (SP_IS_TEXT (items->data)) {
-            SP_OBJECT_REPR(items->data)->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
+            SP_OBJECT(items->data)->getRepr()->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
             modmade = true;
         }
     }
@@ -8013,7 +8024,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
         return;
     }
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(desktop->namedview);
+    Inkscape::XML::Node *repr = desktop->namedview->getRepr();
 
     if ( !repr->attribute("inkscape:connector-spacing") &&
             ( adj->value == defaultConnSpacing )) {
@@ -8032,7 +8043,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE));
 
     sp_repr_set_css_double(repr, "inkscape:connector-spacing", adj->value);
-    SP_OBJECT(desktop->namedview)->updateRepr();
+    desktop->namedview->updateRepr();
     bool modmade = false;
 
     GSList *items = get_avoided_items(NULL, desktop->currentRoot(), desktop);
@@ -8314,7 +8325,7 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
 
     // Code to watch for changes to the connector-spacing attribute in
     // the XML.
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(desktop->namedview);
+    Inkscape::XML::Node *repr = desktop->namedview->getRepr();
     g_assert(repr != NULL);
 
     purge_repr_listener( holder, holder );

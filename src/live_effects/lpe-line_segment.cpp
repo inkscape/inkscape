@@ -47,7 +47,7 @@ LPELineSegment::~LPELineSegment()
 void
 LPELineSegment::doBeforeEffect (SPLPEItem *lpeitem)
 {
-    lpetool_get_limiting_bbox_corners(SP_OBJECT_DOCUMENT(lpeitem), bboxA, bboxB);
+    lpetool_get_limiting_bbox_corners(lpeitem->document, bboxA, bboxB);
 }
 
 std::vector<Geom::Path>

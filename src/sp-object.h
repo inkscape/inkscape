@@ -56,7 +56,6 @@ class SPObjectClass;
 
 /* Convenience stuff */
 #define SP_OBJECT_REPR(o) (((SPObject *) (o))->getRepr())
-#define SP_OBJECT_DOCUMENT(o) (((SPObject *) (o))->document)
 #define SP_OBJECT_PARENT(o) (((SPObject *) (o))->parent)
 #define SP_OBJECT_STYLE(o) (((SPObject *) (o))->style)
 

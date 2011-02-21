@@ -156,7 +156,7 @@ static void sp_group_build(SPObject *object, SPDocument *document, Inkscape::XML
 
 static void sp_group_release(SPObject *object) {
     if ( SP_GROUP(object)->_layer_mode == SPGroup::LAYER ) {
-        SP_OBJECT_DOCUMENT(object)->removeResource("layer", object);
+        object->document->removeResource("layer", object);
     }
     if (((SPObjectClass *)parent_class)->release) {
         ((SPObjectClass *)parent_class)->release(object);
@@ -344,20 +344,20 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
     g_return_if_fail (group != NULL);
     g_return_if_fail (SP_IS_GROUP (group));
 
-    SPDocument *doc = SP_OBJECT_DOCUMENT (group);
+    SPDocument *doc = group->document;
     SPObject *root = doc->getRoot();
-    SPObject *defs = SP_OBJECT (SP_ROOT (root)->defs);
+    SPObject *defs = SP_OBJECT(SP_ROOT(root)->defs);
 
     SPItem *gitem = SP_ITEM (group);
-    Inkscape::XML::Node *grepr = SP_OBJECT_REPR (gitem);
+    Inkscape::XML::Node *grepr = gitem->getRepr();
 
     g_return_if_fail (!strcmp (grepr->name(), "svg:g") || !strcmp (grepr->name(), "svg:a") || !strcmp (grepr->name(), "svg:switch"));
 
     // this converts the gradient/pattern fill/stroke on the group, if any, to userSpaceOnUse
     gitem->adjust_paint_recursive (Geom::identity(), Geom::identity(), false);
 
-    SPItem *pitem = SP_ITEM (SP_OBJECT_PARENT (gitem));
-    Inkscape::XML::Node *prepr = SP_OBJECT_REPR (pitem);
+    SPItem *pitem = SP_ITEM(gitem->parent);
+    Inkscape::XML::Node *prepr = pitem->getRepr();
 
 	if (SP_IS_BOX3D(gitem)) {
 		group = box3d_convert_to_group(SP_BOX3D(gitem));
@@ -380,7 +380,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
             // it here _before_ the new transform is set, so as to use the pre-transform bbox
             citem->adjust_paint_recursive (Geom::identity(), Geom::identity(), false);
 
-            sp_style_merge_from_dying_parent(SP_OBJECT_STYLE(child), SP_OBJECT_STYLE(gitem));
+            sp_style_merge_from_dying_parent(child->style, gitem->style);
             /*
              * fixme: We currently make no allowance for the case where child is cloned
              * and the group has any style settings.
@@ -405,33 +405,33 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 
             child->updateRepr();
 
-            Inkscape::XML::Node *nrepr = SP_OBJECT_REPR (child)->duplicate(prepr->document());
+            Inkscape::XML::Node *nrepr = child->getRepr()->duplicate(prepr->document());
 
             // Merging transform
             Geom::Affine ctrans;
             Geom::Affine const g(gitem->transform);
             if (SP_IS_USE(citem) && sp_use_get_original (SP_USE(citem)) &&
-                    SP_OBJECT_PARENT (sp_use_get_original (SP_USE(citem))) == SP_OBJECT(group)) {
+                sp_use_get_original( SP_USE(citem) )->parent == SP_OBJECT(group)) {
                 // make sure a clone's effective transform is the same as was under group
                 ctrans = g.inverse() * citem->transform * g;
             } else {
-            	// We should not apply the group's transformation to both a linked offset AND to its source
-            	if (SP_IS_OFFSET(citem)) { // Do we have an offset at hand (whether it's dynamic or linked)?
-                	SPItem *source = sp_offset_get_source(SP_OFFSET(citem));
-                	// When dealing with a chain of linked offsets, the transformation of an offset will be
-                	// tied to the transformation of the top-most source, not to any of the intermediate
-                	// offsets. So let's find the top-most source
-                	while (source != NULL && SP_IS_OFFSET(source)) {
-                		source = sp_offset_get_source(SP_OFFSET(source));
-                	}
-                	if (source != NULL && // If true then we must be dealing with a linked offset ...
-                			SP_OBJECT(group)->isAncestorOf(SP_OBJECT(source)) == false) { // ... of which the source is not in the same group
-                		ctrans = citem->transform * g; // then we should apply the transformation of the group to the offset
-                	} else {
-                		ctrans = citem->transform;
-                	}
+                // We should not apply the group's transformation to both a linked offset AND to its source
+                if (SP_IS_OFFSET(citem)) { // Do we have an offset at hand (whether it's dynamic or linked)?
+                    SPItem *source = sp_offset_get_source(SP_OFFSET(citem));
+                    // When dealing with a chain of linked offsets, the transformation of an offset will be
+                    // tied to the transformation of the top-most source, not to any of the intermediate
+                    // offsets. So let's find the top-most source
+                    while (source != NULL && SP_IS_OFFSET(source)) {
+                        source = sp_offset_get_source(SP_OFFSET(source));
+                    }
+                    if (source != NULL && // If true then we must be dealing with a linked offset ...
+                        group->isAncestorOf(source) == false) { // ... of which the source is not in the same group
+                        ctrans = citem->transform * g; // then we should apply the transformation of the group to the offset
+                    } else {
+                        ctrans = citem->transform;
+                    }
                 } else {
-                	ctrans = citem->transform * g;
+                    ctrans = citem->transform * g;
                 }
             }
 
@@ -452,27 +452,28 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
             items = g_slist_prepend (items, nrepr);
 
         } else {
-            Inkscape::XML::Node *nrepr = SP_OBJECT_REPR (child)->duplicate(prepr->document());
+            Inkscape::XML::Node *nrepr = child->getRepr()->duplicate(prepr->document());
             objects = g_slist_prepend (objects, nrepr);
         }
     }
 
     /* Step 2 - clear group */
     // remember the position of the group
-    gint pos = SP_OBJECT_REPR(group)->position();
+    gint pos = group->getRepr()->position();
 
     // the group is leaving forever, no heir, clones should take note; its children however are going to reemerge
-    SP_OBJECT (group)->deleteObject(true, false);
+    group->deleteObject(true, false);
 
     /* Step 3 - add nonitems */
     if (objects) {
-        Inkscape::XML::Node *last_def = SP_OBJECT_REPR(defs)->lastChild();
+        Inkscape::XML::Node *last_def = defs->getRepr()->lastChild();
         while (objects) {
-			Inkscape::XML::Node *repr = (Inkscape::XML::Node *) objects->data;
-			if (!sp_repr_is_meta_element(repr))
-				SP_OBJECT_REPR(defs)->addChild(repr, last_def);
-			Inkscape::GC::release(repr);
-			objects = g_slist_remove (objects, objects->data);
+            Inkscape::XML::Node *repr = (Inkscape::XML::Node *) objects->data;
+            if (!sp_repr_is_meta_element(repr)) {
+                defs->getRepr()->addChild(repr, last_def);
+            }
+            Inkscape::GC::release(repr);
+            objects = g_slist_remove (objects, objects->data);
         }
     }
 
@@ -534,9 +535,9 @@ SPObject *sp_item_group_get_child_by_name(SPGroup *group, SPObject *ref, const g
 void SPGroup::setLayerMode(LayerMode mode) {
     if ( _layer_mode != mode ) {
         if ( mode == LAYER ) {
-            SP_OBJECT_DOCUMENT(this)->addResource("layer", this);
+            this->document->addResource("layer", this);
         } else if ( _layer_mode == LAYER ) {
-            SP_OBJECT_DOCUMENT(this)->removeResource("layer", this);
+            this->document->removeResource("layer", this);
         }
         _layer_mode = mode;
         _updateLayerMode();
@@ -592,7 +593,7 @@ CGroup::~CGroup() {
 
 void CGroup::onChildAdded(Inkscape::XML::Node *child) {
     SPObject *last_child = _group->lastChild();
-    if (last_child && SP_OBJECT_REPR(last_child) == child) {
+    if (last_child && last_child->getRepr() == child) {
         // optimization for the common special case where the child is being added at the end
         SPObject *ochild = last_child;
         if ( SP_IS_ITEM(ochild) ) {
@@ -648,9 +649,9 @@ void CGroup::onUpdate(SPCtx *ctx, unsigned int flags) {
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-      SPObject *object = SP_OBJECT(_group);
-      for (SPItemView *v = SP_ITEM(_group)->display; v != NULL; v = v->next) {
-    nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+      SPObject *object = _group;
+      for (SPItemView *v = _group->display; v != NULL; v = v->next) {
+          nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), object->style);
       }
     }
 
@@ -679,9 +680,9 @@ void CGroup::onModified(guint flags) {
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-      SPObject *object = SP_OBJECT(_group);
-      for (SPItemView *v = SP_ITEM(_group)->display; v != NULL; v = v->next) {
-    nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+      SPObject *object = _group;
+      for (SPItemView *v = _group->display; v != NULL; v = v->next) {
+          nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), object->style);
       }
     }
 
@@ -746,14 +747,14 @@ gchar *CGroup::getDescription() {
 
 NRArenaItem *CGroup::show (NRArena *arena, unsigned int key, unsigned int flags) {
     NRArenaItem *ai;
-    SPObject *object = SP_OBJECT(_group);
+    SPObject *object = _group;
 
     ai = NRArenaGroup::create(arena);
 
     nr_arena_group_set_transparent(NR_ARENA_GROUP (ai),
                                    _group->effectiveLayerMode(key) ==
                          SPGroup::LAYER);
-    nr_arena_group_set_style(NR_ARENA_GROUP(ai), SP_OBJECT_STYLE(object));
+    nr_arena_group_set_style(NR_ARENA_GROUP(ai), object->style);
 
     _showChildren(arena, ai, key, flags);
     return ai;
@@ -863,7 +864,7 @@ sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write)
                 SP_SHAPE(subitem)->setCurve(c, TRUE);
 
                 if (write) {
-                    Inkscape::XML::Node *repr = SP_OBJECT_REPR(subitem);
+                    Inkscape::XML::Node *repr = subitem->getRepr();
                     gchar *str = sp_svg_write_path(c->get_pathvector());
                     repr->setAttribute("d", str);
 #ifdef GROUP_VERBOSE

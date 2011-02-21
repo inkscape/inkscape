@@ -90,13 +90,14 @@ sp_script_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
 
 static void sp_script_release(SPObject *object)
 {
-    if (SP_OBJECT_DOCUMENT(object)) {
-        /* Unregister ourselves */
-        SP_OBJECT_DOCUMENT(object)->removeResource("script", SP_OBJECT(object));
+    if (object->document) {
+        // Unregister ourselves
+        object->document->removeResource("script", object);
     }
 
-    if (((SPObjectClass *) parent_class)->release)
+    if (((SPObjectClass *) parent_class)->release) {
         ((SPObjectClass *) parent_class)->release(object);
+    }
 }
 
 static void sp_script_update(SPObject */*object*/, SPCtx */*ctx*/, guint /*flags*/)

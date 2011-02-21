@@ -44,7 +44,7 @@ class SPDesktop;
 KnotHolder::KnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler)
 {
     //XML Tree being used directly here while it shouldn't be...
-    Inkscape::XML::Node *repr = SP_OBJECT(item)->getRepr();
+    Inkscape::XML::Node *repr = item->getRepr();
 
     if (!desktop || !item || !SP_IS_ITEM(item)) {
         g_print ("Error! Throw an exception, please!\n");
@@ -148,7 +148,7 @@ KnotHolder::knot_clicked_handler(SPKnot *knot, guint state)
     }
 
     // for drag, this is done by ungrabbed_handler, but for click we must do it here
-    DocumentUndo::done(SP_OBJECT_DOCUMENT(item), object_verb,
+    DocumentUndo::done(item->document, object_verb,
                        _("Change handle"));
 }
 
@@ -204,7 +204,7 @@ KnotHolder::knot_ungrabbed_handler(SPKnot */*knot*/)
             Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(object));
             if (lpe) {
                 LivePathEffectObject *lpeobj = lpe->getLPEObj();
-                SP_OBJECT(lpeobj)->updateRepr();
+                lpeobj->updateRepr();
             }
         }
 
@@ -227,7 +227,7 @@ KnotHolder::knot_ungrabbed_handler(SPKnot */*knot*/)
                 object_verb = SP_VERB_SELECTION_DYNAMIC_OFFSET;
         }
 
-        DocumentUndo::done(SP_OBJECT_DOCUMENT (object), object_verb,
+        DocumentUndo::done(object->document, object_verb,
                            _("Move handle"));
     }
 }
@@ -241,8 +241,8 @@ KnotHolder::add(KnotHolderEntity *e)
 void
 KnotHolder::add_pattern_knotholder()
 {
-    if ((SP_OBJECT(item)->style->fill.isPaintserver())
-        && SP_IS_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style)))
+    if ((item->style->fill.isPaintserver())
+        && SP_IS_PATTERN(item->style->getFillPaintServer()))
     {
         PatternKnotHolderEntityXY *entity_xy = new PatternKnotHolderEntityXY();
         PatternKnotHolderEntityAngle *entity_angle = new PatternKnotHolderEntityAngle();

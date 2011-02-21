@@ -99,7 +99,7 @@ sp_filter_class_init(SPFilterClass *klass)
 static void
 sp_filter_init(SPFilter *filter)
 {
-    filter->href = new SPFilterReference(SP_OBJECT(filter));
+    filter->href = new SPFilterReference(filter);
     filter->href->changedSignal().connect(sigc::bind(sigc::ptr_fun(filter_ref_changed), filter));
 
     filter->x = 0;
@@ -152,14 +152,13 @@ sp_filter_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
 /**
  * Drops any allocated memory.
  */
-static void
-sp_filter_release(SPObject *object)
+static void sp_filter_release(SPObject *object)
 {
     SPFilter *filter = SP_FILTER(object);
 
-    if (SP_OBJECT_DOCUMENT(object)) {
-        /* Unregister ourselves */
-        SP_OBJECT_DOCUMENT(object)->removeResource("filter", SP_OBJECT(object));
+    if (object->document) {
+        // Unregister ourselves
+        object->document->removeResource("filter", object);
     }
 
 //TODO: release resources here
@@ -404,10 +403,9 @@ filter_ref_changed(SPObject *old_ref, SPObject *ref, SPFilter *filter)
     filter_ref_modified(ref, 0, filter);
 }
 
-static void
-filter_ref_modified(SPObject */*href*/, guint /*flags*/, SPFilter *filter)
+static void filter_ref_modified(SPObject */*href*/, guint /*flags*/, SPFilter *filter)
 {
-    SP_OBJECT(filter)->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    filter->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /**
@@ -552,7 +550,7 @@ Glib::ustring sp_filter_get_new_result_name(SPFilter *filter) {
     SPObject *primitive_obj = filter->children;
     while (primitive_obj) {
         if (SP_IS_FILTER_PRIMITIVE(primitive_obj)) {
-            Inkscape::XML::Node *repr = SP_OBJECT_REPR(primitive_obj);
+            Inkscape::XML::Node *repr = primitive_obj->getRepr();
             char const *result = repr->attribute("result");
             int index;
             if (result && sscanf(result, "result%d", &index) == 1) {

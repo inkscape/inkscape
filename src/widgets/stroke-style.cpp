@@ -161,11 +161,11 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
 
     // Create a copy repr of the marker with id="sample"
     Inkscape::XML::Document *xml_doc = sandbox->getReprDoc();
-    Inkscape::XML::Node *mrepr = SP_OBJECT_REPR (marker)->duplicate(xml_doc);
+    Inkscape::XML::Node *mrepr = marker->getRepr()->duplicate(xml_doc);
     mrepr->setAttribute("id", "sample");
 
     // Replace the old sample in the sandbox by the new one
-    Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (sandbox->getObjectById("defs"));
+    Inkscape::XML::Node *defsrepr = sandbox->getObjectById("defs")->getRepr();
     SPObject *oldmarker = sandbox->getObjectById("sample");
     if (oldmarker)
         oldmarker->deleteObject(false);
@@ -225,7 +225,7 @@ ink_marker_list_get (SPDocument *source)
 
     GSList *ml   = NULL;
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS (source);
-    for ( SPObject *child = SP_OBJECT(defs)->firstChild(); child; child = child->getNext() )
+    for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )
     {
         if (SP_IS_MARKER(child)) {
             ml = g_slist_prepend (ml, child);
@@ -248,14 +248,15 @@ sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, SPDocument *source, SPD
     NRArenaItem *root =  SP_ITEM(sandbox->getRoot())->invoke_show((NRArena *) arena, visionkey, SP_ITEM_SHOW_DISPLAY);
 
     for (; marker_list != NULL; marker_list = marker_list->next) {
-        Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) marker_list->data);
+        Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(marker_list->data)->getRepr();
         Gtk::MenuItem *i = new Gtk::MenuItem();
         i->show();
 
-        if (repr->attribute("inkscape:stockid"))
+        if (repr->attribute("inkscape:stockid")) {
             i->set_data("stockid", (void *) "true");
-        else
+        } else {
             i->set_data("stockid", (void *) "false");
+        }
 
         gchar const *markid = repr->attribute("id");
         i->set_data("marker", (void *) markid);
@@ -468,7 +469,7 @@ sp_marker_select(Gtk::OptionMenu *mnu, Gtk::Container *spw, SPMarkerLoc const wh
        if (!strcmp(stockid,"true")) markurn = g_strconcat("urn:inkscape:marker:",markid,NULL);
        SPObject *mark = get_stock_item(markurn);
        if (mark) {
-            Inkscape::XML::Node *repr = SP_OBJECT_REPR(mark);
+           Inkscape::XML::Node *repr = mark->getRepr();
             marker = g_strconcat("url(#", repr->attribute("id"), ")", NULL);
         }
     } else {
@@ -486,16 +487,17 @@ sp_marker_select(Gtk::OptionMenu *mnu, Gtk::Container *spw, SPMarkerLoc const wh
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
-         SPItem *item = (SPItem *) items->data;
-         if (!SP_IS_SHAPE(item) || SP_IS_RECT(item)) // can't set marker to rect, until it's converted to using <path>
-             continue;
-         Inkscape::XML::Node *selrepr = SP_OBJECT_REPR((SPItem *) items->data);
-         if (selrepr) {
-             sp_repr_css_change_recursive(selrepr, css, "style");
-         }
-         SP_OBJECT(items->data)->requestModified(SP_OBJECT_MODIFIED_FLAG);
-         SP_OBJECT(items->data)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
-     }
+        SPItem *item = reinterpret_cast<SPItem *>(items->data);
+        if (!SP_IS_SHAPE(item) || SP_IS_RECT(item)) { // can't set marker to rect, until it's converted to using <path>
+            continue;
+        }
+        Inkscape::XML::Node *selrepr = item->getRepr();
+        if (selrepr) {
+            sp_repr_css_change_recursive(selrepr, css, "style");
+        }
+        item->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+    }
 
     sp_repr_css_attr_unref(css);
     css = 0;
@@ -690,7 +692,7 @@ sp_stroke_style_line_widget_new(void)
     tt->set_tip(*sb, _("Stroke width"));
     sb->show();
     spw_label(t, C_("Stroke width", "_Width:"), 0, i, sb);
-	
+
     sp_dialog_defocus_on_enter_cpp(sb);
 
     hb->pack_start(*sb, false, false, 0);
@@ -813,10 +815,10 @@ sp_stroke_style_line_widget_new(void)
 
     /* Dash */
     spw_label(t, _("Dashes:"), 0, i, NULL); //no mnemonic for now
-	                                        //decide what to do:
-	                                        //   implement a set_mnemonic_source function in the
-	                                        //   SPDashSelector class, so that we do not have to
-	                                        //   expose any of the underlying widgets?
+                                            //decide what to do:
+                                            //   implement a set_mnemonic_source function in the
+                                            //   SPDashSelector class, so that we do not have to
+                                            //   expose any of the underlying widgets?
     ds = manage(new SPDashSelector);
 
     ds->show();
@@ -1091,7 +1093,7 @@ sp_stroke_style_line_update(Gtk::Container *spw, Inkscape::Selection *sel)
 
     GSList const *objects = sel->itemList();
     SPObject * const object = SP_OBJECT(objects->data);
-    SPStyle * const style = SP_OBJECT_STYLE(object);
+    SPStyle * const style = object->style;
 
     /* Markers */
     sp_stroke_style_update_marker_menus(spw, objects); // FIXME: make this desktop query too
@@ -1174,7 +1176,7 @@ sp_stroke_style_scale_line(Gtk::Container *spw)
             if (unit->base == SP_UNIT_ABSOLUTE || unit->base == SP_UNIT_DEVICE) {
                 width = sp_units_get_pixels (width_typed, *unit);
             } else { // percentage
-                gdouble old_w = SP_OBJECT_STYLE (i->data)->stroke_width.computed;
+                gdouble old_w = SP_OBJECT(i->data)->style->stroke_width.computed;
                 width = old_w * width_typed / 100;
             }
 
@@ -1362,14 +1364,16 @@ ink_marker_menu_set_current(SPObject *marker, Gtk::OptionMenu *mnu)
     Gtk::Menu *m = mnu->get_menu();
     if (marker != NULL) {
         bool mark_is_stock = false;
-        if (SP_OBJECT_REPR(marker)->attribute("inkscape:stockid"))
+        if (marker->getRepr()->attribute("inkscape:stockid")) {
             mark_is_stock = true;
+        }
 
-        gchar *markname;
-        if (mark_is_stock)
-            markname = g_strdup(SP_OBJECT_REPR(marker)->attribute("inkscape:stockid"));
-        else
-            markname = g_strdup(SP_OBJECT_REPR(marker)->attribute("id"));
+        gchar *markname = 0;
+        if (mark_is_stock) {
+            markname = g_strdup(marker->getRepr()->attribute("inkscape:stockid"));
+        } else {
+            markname = g_strdup(marker->getRepr()->attribute("id"));
+        }
 
         int markpos = ink_marker_menu_get_pos(m, markname);
         mnu->set_history(markpos);
@@ -1427,7 +1431,7 @@ sp_stroke_style_update_marker_menus(Gtk::Container *spw, GSList const *objects)
             // If the object has this type of markers,
 
             // Extract the name of the marker that the object uses
-            SPObject *marker = ink_extract_marker_name(object->style->marker[keyloc[i].loc].value, SP_OBJECT_DOCUMENT(object));
+            SPObject *marker = ink_extract_marker_name(object->style->marker[keyloc[i].loc].value, object->document);
             // Scroll the menu to that marker
             ink_marker_menu_set_current(marker, mnu);
 

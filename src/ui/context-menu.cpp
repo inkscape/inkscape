@@ -278,20 +278,20 @@ sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
 
     Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:a");
-    SP_OBJECT_REPR(SP_OBJECT_PARENT(item))->addChild(repr, SP_OBJECT_REPR(item));
-    SPObject *object = SP_OBJECT_DOCUMENT(item)->getObjectByRepr(repr);
+    item->parent->getRepr()->addChild(repr, item->getRepr());
+    SPObject *object = item->document->getObjectByRepr(repr);
     g_return_if_fail(SP_IS_ANCHOR(object));
 
-    const char *id = SP_OBJECT_REPR(item)->attribute("id");
-    Inkscape::XML::Node *child = SP_OBJECT_REPR(item)->duplicate(xml_doc);
-    SP_OBJECT(item)->deleteObject(false);
+    const char *id = item->getRepr()->attribute("id");
+    Inkscape::XML::Node *child = item->getRepr()->duplicate(xml_doc);
+    item->deleteObject(false);
     repr->addChild(child, NULL);
     child->setAttribute("id", id);
 
     Inkscape::GC::release(repr);
     Inkscape::GC::release(child);
 
-    DocumentUndo::done(SP_OBJECT_DOCUMENT(object), SP_VERB_NONE,
+    DocumentUndo::done(object->document, SP_VERB_NONE,
                        _("Create link"));
 
     sp_object_attributes_dialog(object, "SPAnchor");
@@ -371,7 +371,7 @@ sp_anchor_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 static void
 sp_anchor_link_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 {
-    sp_object_attributes_dialog(SP_OBJECT(anchor), "Link");
+    sp_object_attributes_dialog(anchor, "Link");
 }
 
 static void
@@ -420,7 +420,7 @@ sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_image_image_edit), item);
     gtk_widget_show(w);
     gtk_menu_append(GTK_MENU(m), w);
-    Inkscape::XML::Node *ir = SP_OBJECT_REPR(object);
+    Inkscape::XML::Node *ir = object->getRepr();
     const gchar *href = ir->attribute("xlink:href");
     if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
         gtk_widget_set_sensitive( w, FALSE );
@@ -430,7 +430,7 @@ sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 static void
 sp_image_image_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 {
-    sp_object_attributes_dialog(SP_OBJECT(anchor), "Image");
+    sp_object_attributes_dialog(anchor, "Image");
 }
 
 static gchar* getImageEditorName() {
@@ -455,8 +455,8 @@ static gchar* getImageEditorName() {
 
 static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
 {
-    SPObject* obj = SP_OBJECT(anchor);
-    Inkscape::XML::Node *ir = SP_OBJECT_REPR(obj);
+    SPObject* obj = anchor;
+    Inkscape::XML::Node *ir = obj->getRepr();
     const gchar *href = ir->attribute("xlink:href");
 
     GError* errThing = 0;

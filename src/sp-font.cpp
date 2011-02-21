@@ -151,7 +151,7 @@ sp_font_remove_child(SPObject *object, Inkscape::XML::Node *child)
 static void sp_font_release(SPObject *object)
 {
     //SPFont *font = SP_FONT(object);
-    SP_OBJECT_DOCUMENT(object)->removeResource("font", object);
+    object->document->removeResource("font", object);
 
     if (((SPObjectClass *) parent_class)->release) {
         ((SPObjectClass *) parent_class)->release(object);
@@ -263,7 +263,7 @@ static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Docum
     sp_repr_set_svg_double(repr, "vert-origin-y", font->vert_origin_y);
     sp_repr_set_svg_double(repr, "vert-adv-y", font->vert_adv_y);
 
-    if (repr != SP_OBJECT_REPR(object)) {
+    if (repr != object->getRepr()) {
         // All the below COPY_ATTR funtions are directly using 
         //  the XML Tree while they shouldn't
         COPY_ATTR(repr, object->getRepr(), "horiz-origin-x");

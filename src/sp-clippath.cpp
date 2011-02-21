@@ -98,9 +98,9 @@ void SPClipPath::build(SPObject *object, SPDocument *document, Inkscape::XML::No
 
 void SPClipPath::release(SPObject * object)
 {
-    if (SP_OBJECT_DOCUMENT(object)) {
-        /* Unregister ourselves */
-        SP_OBJECT_DOCUMENT(object)->removeResource("clipPath", object);
+    if (object->document) {
+        // Unregister ourselves
+        object->document->removeResource("clipPath", object);
     }
 
     SPClipPath *cp = SP_CLIPPATH(object);
@@ -146,7 +146,7 @@ void SPClipPath::childAdded(SPObject *object, Inkscape::XML::Node *child, Inksca
     ((SPObjectClass *) (SPClipPathClass::static_parent_class))->child_added(object, child, ref);
 
     /* Show new object */
-    SPObject *ochild = SP_OBJECT_DOCUMENT(object)->getObjectByRepr(child);
+    SPObject *ochild = object->document->getObjectByRepr(child);
     if (SP_IS_ITEM(ochild)) {
         SPClipPath *cp = SP_CLIPPATH(object);
         for (SPClipPathView *v = cp->display; v != NULL; v = v->next) {
@@ -357,7 +357,7 @@ sp_clippath_view_list_remove(SPClipPathView *list, SPClipPathView *view)
 // Create a mask element (using passed elements), add it to <defs>
 const gchar *SPClipPath::create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform)
 {
-    Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
+    Inkscape::XML::Node *defsrepr = SP_DOCUMENT_DEFS(document)->getRepr();
 
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:clipPath");
@@ -374,7 +374,7 @@ const gchar *SPClipPath::create (GSList *reprs, SPDocument *document, Geom::Affi
         if (NULL != applyTransform) {
             Geom::Affine transform (item->transform);
             transform *= (*applyTransform);
-            item->doWriteTransform(SP_OBJECT_REPR(item), transform);
+            item->doWriteTransform(item->getRepr(), transform);
         }
     }
 

@@ -47,7 +47,7 @@ void URIReference::attach(const URI &uri) throw(BadURIException)
 {
     SPDocument *document;
     if (_owner) {
-        document = SP_OBJECT_DOCUMENT(_owner);
+        document = _owner->document;
     } else if (_owner_document) {
         document = _owner_document;
     } else {

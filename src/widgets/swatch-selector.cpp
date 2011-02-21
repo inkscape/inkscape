@@ -133,9 +133,9 @@ void SwatchSelector::_changedCb(SPColorSelector */*csel*/, void *data)
                 gchar c[64];
                 sp_svg_write_color(c, sizeof(c), rgb);
                 os << "stop-color:" << c << ";stop-opacity:" << static_cast<gdouble>(alpha) <<";";
-                SP_OBJECT_REPR(stop)->setAttribute("style", os.str().c_str());
+                stop->getRepr()->setAttribute("style", os.str().c_str());
 
-                DocumentUndo::done(SP_OBJECT_DOCUMENT(ngr), SP_VERB_CONTEXT_GRADIENT,
+                DocumentUndo::done(ngr->document, SP_VERB_CONTEXT_GRADIENT,
                                    _("Change swatch color"));
             }
         }
@@ -169,7 +169,7 @@ void SwatchSelector::connectchangedHandler( GCallback handler, void *data )
 void SwatchSelector::setVector(SPDocument */*doc*/, SPGradient *vector)
 {
     //GtkVBox * box = gobj();
-    _gsel->setVector((vector) ? SP_OBJECT_DOCUMENT(vector) : 0, vector);
+    _gsel->setVector((vector) ? vector->document : 0, vector);
 
     if ( vector && vector->isSolid() ) {
         SPStop* stop = vector->getFirstStop();

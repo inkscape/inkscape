@@ -457,7 +457,7 @@ void SPPaintSelector::setSwatch(SPGradient *vector )
 
     SwatchSelector *swatchsel = static_cast<SwatchSelector*>(g_object_get_data(G_OBJECT(selector), "swatch-selector"));
     if (swatchsel) {
-        swatchsel->setVector( (vector) ? SP_OBJECT_DOCUMENT(vector) : 0, vector );
+        swatchsel->setVector( (vector) ? vector->document : 0, vector );
     }
 }
 
@@ -471,7 +471,7 @@ void SPPaintSelector::setGradientLinear(SPGradient *vector)
     SPGradientSelector *gsel = getGradientFromData(this);
 
     gsel->setMode(SPGradientSelector::MODE_LINEAR);
-    gsel->setVector((vector) ? SP_OBJECT_DOCUMENT(vector) : 0, vector);
+    gsel->setVector((vector) ? vector->document : 0, vector);
 }
 
 void SPPaintSelector::setGradientRadial(SPGradient *vector)
@@ -485,7 +485,7 @@ void SPPaintSelector::setGradientRadial(SPGradient *vector)
 
     gsel->setMode(SPGradientSelector::MODE_RADIAL);
 
-    gsel->setVector((vector) ? SP_OBJECT_DOCUMENT(vector) : 0, vector);
+    gsel->setVector((vector) ? vector->document : 0, vector);
 }
 
 void SPPaintSelector::setGradientProperties( SPGradientUnits units, SPGradientSpread spread )
@@ -541,7 +541,7 @@ void SPPaintSelector::pushAttrsToGradient( SPGradient *gr ) const
     getGradientProperties( units, spread );
     gr->setUnits(units);
     gr->setSpread(spread);
-    SP_OBJECT(gr)->updateRepr();
+    gr->updateRepr();
 }
 
 static void
@@ -804,7 +804,7 @@ sp_pattern_menu_build (GtkWidget *m, GSList *pattern_list, SPDocument */*source*
 {
 
     for (; pattern_list != NULL; pattern_list = pattern_list->next) {
-        Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) pattern_list->data);
+        Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(pattern_list->data)->getRepr();
                 GtkWidget *i = gtk_menu_item_new();
                 gtk_widget_show(i);
 

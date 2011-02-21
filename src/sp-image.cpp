@@ -655,9 +655,9 @@ sp_image_release (SPObject *object)
 {
     SPImage *image = SP_IMAGE(object);
 
-    if (SP_OBJECT_DOCUMENT (object)) {
-        /* Unregister ourselves */
-        SP_OBJECT_DOCUMENT(object)->removeResource("image", SP_OBJECT(object));
+    if (object->document) {
+        // Unregister ourselves
+        object->document->removeResource("image", object);
     }
 
     if (image->href) {
@@ -818,7 +818,7 @@ static void
 sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 {
     SPImage *image = SP_IMAGE(object);
-    SPDocument *doc = SP_OBJECT_DOCUMENT(object);
+    SPDocument *doc = object->document;
 
     if (((SPObjectClass *) (parent_class))->update) {
         ((SPObjectClass *) (parent_class))->update (object, ctx, flags);
@@ -862,7 +862,7 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
                         DEBUG_MESSAGE( lcmsFive, "in <image>'s sp_image_update. About to call colorprofile_get_handle()" );
 #endif // DEBUG_LCMS
                         guint profIntent = Inkscape::RENDERING_INTENT_UNKNOWN;
-                        cmsHPROFILE prof = Inkscape::colorprofile_get_handle( SP_OBJECT_DOCUMENT( object ),
+                        cmsHPROFILE prof = Inkscape::colorprofile_get_handle( object->document,
                                                                               &profIntent,
                                                                               image->color_profile );
                         if ( prof ) {
@@ -1124,9 +1124,9 @@ sp_image_print (SPItem *item, SPPrintContext *ctx)
         }
 
         if (image->aspect_align == SP_ASPECT_NONE) {
-            sp_print_image_R8G8B8A8_N(ctx, px, w, h, rs, &t, SP_OBJECT_STYLE (item));
+            sp_print_image_R8G8B8A8_N(ctx, px, w, h, rs, &t, item->style);
         } else { // preserveAspectRatio
-            sp_print_image_R8G8B8A8_N(ctx, px + image->trimx*pixskip + image->trimy*rs, image->trimwidth, image->trimheight, rs, &t, SP_OBJECT_STYLE(item));
+            sp_print_image_R8G8B8A8_N(ctx, px + image->trimx*pixskip + image->trimy*rs, image->trimwidth, image->trimheight, rs, &t, item->style);
         }
     }
 }
@@ -1164,7 +1164,7 @@ sp_image_show (SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int 
     if (image->pixbuf) {
         int pixskip = gdk_pixbuf_get_n_channels(image->pixbuf) * gdk_pixbuf_get_bits_per_sample(image->pixbuf) / 8;
         int rs = gdk_pixbuf_get_rowstride(image->pixbuf);
-        nr_arena_image_set_style(NR_ARENA_IMAGE(ai), SP_OBJECT_STYLE(SP_OBJECT(item)));
+        nr_arena_image_set_style(NR_ARENA_IMAGE(ai), item->style);
         if (image->aspect_align == SP_ASPECT_NONE) {
             nr_arena_image_set_pixels(NR_ARENA_IMAGE(ai),
                                        gdk_pixbuf_get_pixels(image->pixbuf),
@@ -1315,7 +1315,7 @@ sp_image_update_canvas_image (SPImage *image)
     for (SPItemView *v = item->display; v != NULL; v = v->next) {
         int pixskip = gdk_pixbuf_get_n_channels(image->pixbuf) * gdk_pixbuf_get_bits_per_sample(image->pixbuf) / 8;
         int rs = gdk_pixbuf_get_rowstride(image->pixbuf);
-        nr_arena_image_set_style(NR_ARENA_IMAGE(v->arenaitem), SP_OBJECT_STYLE(SP_OBJECT(image)));
+        nr_arena_image_set_style(NR_ARENA_IMAGE(v->arenaitem), image->style);
         if (image->aspect_align == SP_ASPECT_NONE) {
             nr_arena_image_set_pixels(NR_ARENA_IMAGE(v->arenaitem),
                                        gdk_pixbuf_get_pixels(image->pixbuf),

@@ -51,7 +51,7 @@ SPObject *previous_sibling_layer(SPObject *layer) {
     using Inkscape::Algorithms::find_last_if;
 
     SPObject *sibling(find_last_if<SPObject::SiblingIterator>(
-        SP_OBJECT_PARENT(layer)->firstChild(), layer, &is_layer
+        layer->parent->firstChild(), layer, &is_layer
     ));
 
     return ( sibling != layer ) ? sibling : NULL;
@@ -91,16 +91,18 @@ SPObject *last_child_layer(SPObject *layer) {
 
 SPObject *last_elder_layer(SPObject *root, SPObject *layer) {
     using Inkscape::Algorithms::find_last_if;
+    SPObject *result = 0;
 
     while ( layer != root ) {
         SPObject *sibling(previous_sibling_layer(layer));
         if (sibling) {
-            return sibling;
+            result = sibling;
+            break;
         }
-        layer = SP_OBJECT_PARENT(layer);
+        layer = layer->parent;
     }
 
-    return NULL;
+    return result;
 }
 
 }
@@ -114,23 +116,21 @@ SPObject *next_layer(SPObject *root, SPObject *layer) {
     using std::find_if;
 
     g_return_val_if_fail(layer != NULL, NULL);
+    SPObject *result = 0;
 
-    SPObject *sibling(next_sibling_layer(layer));
+    SPObject *sibling = next_sibling_layer(layer);
     if (sibling) {
         SPObject *descendant(first_descendant_layer(sibling));
         if (descendant) {
-            return descendant;
+            result = descendant;
         } else {
-            return sibling;
+            result = sibling;
         }
-    } else {
-        SPObject *parent=SP_OBJECT_PARENT(layer);
-        if ( parent != root ) {
-            return parent;
-        } else {
-            return NULL;
-        }
+    } else if ( layer->parent != root ) {
+        result = layer->parent;
     }
+
+    return result;
 }
 
 
@@ -143,20 +143,21 @@ SPObject *previous_layer(SPObject *root, SPObject *layer) {
     using Inkscape::Algorithms::find_last_if;
 
     g_return_val_if_fail(layer != NULL, NULL);
+    SPObject *result = 0;
 
-    SPObject *child(last_child_layer(layer));
+    SPObject *child = last_child_layer(layer);
     if (child) {
-        return child;
+        result = child;
     } else if ( layer != root ) {
-        SPObject *sibling(previous_sibling_layer(layer));
+        SPObject *sibling = previous_sibling_layer(layer);
         if (sibling) {
-            return sibling;
+            result = sibling;
         } else {
-            return last_elder_layer(root, SP_OBJECT_PARENT(layer));
+            result = last_elder_layer(root, layer->parent);
         }
     }
 
-    return NULL;
+    return result;
 }
 
 /**
@@ -168,7 +169,7 @@ SPObject *previous_layer(SPObject *root, SPObject *layer) {
  *  \pre \a root should be either \a layer or an ancestor of it
  */
 SPObject *create_layer(SPObject *root, SPObject *layer, LayerRelativePosition position) {
-    SPDocument *document=SP_OBJECT_DOCUMENT(root);
+    SPDocument *document = root->document;
     
     static int layer_suffix=1;
     gchar *id=NULL;
@@ -192,9 +193,9 @@ SPObject *create_layer(SPObject *root, SPObject *layer, LayerRelativePosition po
     }
     
     if ( root == layer ) {
-        SP_OBJECT_REPR(root)->appendChild(repr);
+        root->getRepr()->appendChild(repr);
     } else {
-        Inkscape::XML::Node *layer_repr=SP_OBJECT_REPR(layer);
+        Inkscape::XML::Node *layer_repr = layer->getRepr();
         sp_repr_parent(layer_repr)->addChild(repr, layer_repr);
         
         if ( LPOS_BELOW == position ) {

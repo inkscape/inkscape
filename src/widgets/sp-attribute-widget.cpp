@@ -154,14 +154,12 @@ sp_attribute_widget_changed (GtkEditable *editable)
         if (!*text)
             text = NULL;
 
-        if (spaw->hasobj && spaw->src.object) {
-        
-            SP_OBJECT_REPR (spaw->src.object)->setAttribute(spaw->attribute, text, false);
-            DocumentUndo::done(SP_OBJECT_DOCUMENT (spaw->src.object), SP_VERB_NONE,
+        if (spaw->hasobj && spaw->src.object) {        
+            spaw->src.object->getRepr()->setAttribute(spaw->attribute, text, false);
+            DocumentUndo::done(spaw->src.object->document, SP_VERB_NONE,
                                 _("Set attribute"));
 
         } else if (spaw->src.repr) {
-
             spaw->src.repr->setAttribute(spaw->attribute, text, false);
             /* TODO: Warning! Undo will not be flushed in given case */
         }
@@ -248,7 +246,7 @@ sp_attribute_widget_set_object ( SPAttributeWidget *spaw,
 
         spaw->attribute = g_strdup (attribute);
 
-        val = SP_OBJECT_REPR (object)->attribute(attribute);
+        val = object->getRepr()->attribute(attribute);
         gtk_entry_set_text (GTK_ENTRY (spaw), val ? val : (const gchar *) "");
         spaw->blocked = FALSE;
     }
@@ -317,7 +315,7 @@ sp_attribute_widget_object_modified ( SPObject */*object*/,
     if (flags && SP_OBJECT_MODIFIED_FLAG) {
 
         const gchar *val, *text;
-        val = SP_OBJECT_REPR (spaw->src.object)->attribute(spaw->attribute);
+        val = spaw->src.object->getRepr()->attribute(spaw->attribute);
         text = gtk_entry_get_text (GTK_ENTRY (spaw));
 
         if (val || text) {
@@ -588,7 +586,7 @@ sp_attribute_table_set_object ( SPAttributeTable *spat,
                                XPAD, YPAD );
             w = gtk_entry_new ();
             gtk_widget_show (w);
-            val = SP_OBJECT_REPR (object)->attribute(attributes[i]);
+            val = object->getRepr()->attribute(attributes[i]);
             gtk_entry_set_text (GTK_ENTRY (w), val ? val : (const gchar *) "");
             gtk_table_attach ( GTK_TABLE (spat->table), w, 1, 2, i, i + 1,
                                (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
@@ -719,7 +717,7 @@ sp_attribute_table_object_modified ( SPObject */*object*/,
         gint i;
         for (i = 0; i < spat->num_attr; i++) {
             const gchar *val, *text;
-            val = SP_OBJECT_REPR (spat->src.object)->attribute(spat->attributes[i]);
+            val = spat->src.object->getRepr()->attribute(spat->attributes[i]);
             text = gtk_entry_get_text (GTK_ENTRY (spat->entries[i]));
             if (val || text) {
                 if (!val || !text || strcmp (val, text)) {
@@ -763,8 +761,8 @@ sp_attribute_table_entry_changed ( GtkEditable *editable,
                     text = NULL;
 
                 if (spat->hasobj && spat->src.object) {
-                    SP_OBJECT_REPR (spat->src.object)->setAttribute(spat->attributes[i], text, false);
-                    DocumentUndo::done(SP_OBJECT_DOCUMENT (spat->src.object), SP_VERB_NONE,
+                    spat->src.object->getRepr()->setAttribute(spat->attributes[i], text, false);
+                    DocumentUndo::done(spat->src.object->document, SP_VERB_NONE,
                                        _("Set attribute"));
 
                 } else if (spat->src.repr) {

@@ -109,7 +109,7 @@ void GuidelinePropertiesDialog::_onApply()
 
     sp_guide_moveto(*_guide, newpos, true);
 
-    DocumentUndo::done(SP_OBJECT_DOCUMENT(_guide), SP_VERB_NONE, 
+    DocumentUndo::done(_guide->document, SP_VERB_NONE, 
                        _("Set guide properties"));
 }
 
@@ -120,7 +120,7 @@ void GuidelinePropertiesDialog::_onOK()
 
 void GuidelinePropertiesDialog::_onDelete()
 {
-    SPDocument *doc = SP_OBJECT_DOCUMENT(_guide);
+    SPDocument *doc = _guide->document;
     sp_guide_remove(_guide);
     DocumentUndo::done(doc, SP_VERB_NONE, 
                        _("Delete guide"));
@@ -235,7 +235,7 @@ void GuidelinePropertiesDialog::_setup() {
     }
 
     {
-        Inkscape::XML::Node *repr = SP_OBJECT_REPR (_guide);
+        Inkscape::XML::Node *repr = _guide->getRepr();
         const gchar *guide_id = repr->attribute("id");
         gchar *label = g_strdup_printf(_("Guideline ID: %s"), guide_id);
         _label_name.set_label(label);

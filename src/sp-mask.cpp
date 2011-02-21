@@ -111,23 +111,22 @@ sp_mask_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr
 	document->addResource("mask", object);
 }
 
-static void
-sp_mask_release (SPObject * object)
+static void sp_mask_release (SPObject * object)
 {
-	if (SP_OBJECT_DOCUMENT (object)) {
-		/* Unregister ourselves */
-		SP_OBJECT_DOCUMENT(object)->removeResource("mask", object);
-	}
+    if (object->document) {
+        // Unregister ourselves
+        object->document->removeResource("mask", object);
+    }
 
-	SPMask *cp = SP_MASK (object);
-	while (cp->display) {
-		/* We simply unref and let item manage this in handler */
-		cp->display = sp_mask_view_list_remove (cp->display, cp->display);
-	}
+    SPMask *cp = SP_MASK (object);
+    while (cp->display) {
+        // We simply unref and let item manage this in handler
+        cp->display = sp_mask_view_list_remove (cp->display, cp->display);
+    }
 
-	if (((SPObjectClass *) (parent_class))->release) {
-		((SPObjectClass *) parent_class)->release (object);
-	}
+    if (((SPObjectClass *) (parent_class))->release) {
+        ((SPObjectClass *) parent_class)->release (object);
+    }
 }
 
 static void
@@ -176,7 +175,7 @@ sp_mask_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML
 	((SPObjectClass *) (parent_class))->child_added (object, child, ref);
 
 	/* Show new object */
-	SPObject *ochild = SP_OBJECT_DOCUMENT (object)->getObjectByRepr(child);
+	SPObject *ochild = object->document->getObjectByRepr(child);
 	if (SP_IS_ITEM (ochild)) {
 		SPMask *cp = SP_MASK (object);
 		for (SPMaskView *v = cp->display; v != NULL; v = v->next) {
@@ -269,7 +268,7 @@ sp_mask_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
 const gchar *
 sp_mask_create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform)
 {
-    Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
+    Inkscape::XML::Node *defsrepr = SP_DOCUMENT_DEFS(document)->getRepr();
 
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:mask");
@@ -286,7 +285,7 @@ sp_mask_create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTr
         if (NULL != applyTransform) {
             Geom::Affine transform (item->transform);
             transform *= (*applyTransform);
-            item->doWriteTransform(SP_OBJECT_REPR(item), transform);
+            item->doWriteTransform(item->getRepr(), transform);
         }
     }
 

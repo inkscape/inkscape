@@ -568,7 +568,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
 {
     g_assert(style != NULL);
     g_assert(repr != NULL);
-    g_assert(!object || (SP_OBJECT_REPR(object) == repr));
+    g_assert(!object || (object->getRepr() == repr));
 
     sp_style_clear(style);
 
@@ -652,7 +652,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
         val = repr->attribute("color");
         if (val) {
             sp_style_read_icolor(&style->color, val, style, ( object
-                                                              ? SP_OBJECT_DOCUMENT(object)
+                                                              ? object->document
                                                               : NULL ));
         }
     }
@@ -660,7 +660,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     if (!style->fill.set) {
         val = repr->attribute("fill");
         if (val) {
-            style->fill.read( val, *style, (object) ? SP_OBJECT_DOCUMENT(object) : NULL );
+            style->fill.read( val, *style, (object) ? object->document : NULL );
         }
     }
     /* fill-opacity */
@@ -676,7 +676,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     if (!style->stroke.set) {
         val = repr->attribute("stroke");
         if (val) {
-            style->stroke.read( val, *style, (object) ? SP_OBJECT_DOCUMENT(object) : NULL );
+            style->stroke.read( val, *style, (object) ? object->document : NULL );
         }
     }
     SPS_READ_PLENGTH_IF_UNSET(&style->stroke_width, repr, "stroke-width");
@@ -762,7 +762,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     if (!style->filter.set) {
         val = repr->attribute("filter");
         if (val) {
-            sp_style_read_ifilter(val, style, (object) ? SP_OBJECT_DOCUMENT(object) : NULL);
+            sp_style_read_ifilter(val, style, (object) ? object->document : NULL);
         }
     }
     SPS_READ_PENUM_IF_UNSET(&style->enable_background, repr,
@@ -771,7 +771,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     /* 3. Merge from parent */
     if (object) {
         if (object->parent) {
-            sp_style_merge_from_parent(style, SP_OBJECT_STYLE(object->parent));
+            sp_style_merge_from_parent(style, object->parent->style);
         }
     } else {
         if (sp_repr_parent(repr)) {
@@ -799,7 +799,7 @@ sp_style_read_from_object(SPStyle *style, SPObject *object)
     g_return_if_fail(object != NULL);
     g_return_if_fail(SP_IS_OBJECT(object));
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(object);
+    Inkscape::XML::Node *repr = object->getRepr();
     g_return_if_fail(repr != NULL);
 
     sp_style_read(style, object, repr);
@@ -987,7 +987,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             break;
         case SP_PROP_COLOR:
             if (!style->color.set) {
-                sp_style_read_icolor(&style->color, val, style, (style->object) ? SP_OBJECT_DOCUMENT(style->object) : NULL);
+                sp_style_read_icolor(&style->color, val, style, (style->object) ? style->object->document : NULL);
             }
             break;
         case SP_PROP_CURSOR:
@@ -1044,7 +1044,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             /* Filter */
         case SP_PROP_FILTER:
             if (!style->filter.set && !style->filter.inherit) {
-                sp_style_read_ifilter(val, style, (style->object) ? SP_OBJECT_DOCUMENT(style->object) : NULL);
+                sp_style_read_ifilter(val, style, (style->object) ? style->object->document : NULL);
             }
             break;
         case SP_PROP_FLOOD_COLOR:
@@ -1085,7 +1085,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
         }
         case SP_PROP_FILL:
             if (!style->fill.set) {
-                style->fill.read( val, *style, (style->object) ? SP_OBJECT_DOCUMENT(style->object) : NULL );
+                style->fill.read( val, *style, (style->object) ? style->object->document : NULL );
             }
             break;
         case SP_PROP_FILL_OPACITY:
@@ -1152,7 +1152,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
 
         case SP_PROP_STROKE:
             if (!style->stroke.set) {
-                style->stroke.read( val, *style, (style->object) ? SP_OBJECT_DOCUMENT(style->object) : NULL );
+                style->stroke.read( val, *style, (style->object) ? style->object->document : NULL );
             }
             break;
         case SP_PROP_STROKE_WIDTH:
@@ -2274,8 +2274,8 @@ sp_style_merge_ifilter(SPStyle *style, SPIFilter const *parent)
        style->filter.href->detach();
 
     // it may be that this style has not yet created its SPFilterReference
-    if (!style->filter.href && style->object && SP_OBJECT_DOCUMENT(style->object)) {
-            style->filter.href = new SPFilterReference(SP_OBJECT_DOCUMENT(style->object));
+    if (!style->filter.href && style->object && style->object->document) {
+            style->filter.href = new SPFilterReference(style->object->document);
             style->filter.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
     }
 
@@ -4071,7 +4071,7 @@ sp_style_filter_clear(SPStyle *style)
 void
 sp_style_set_property_url (SPObject *item, gchar const *property, SPObject *linked, bool recursive)
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(item);
+    Inkscape::XML::Node *repr = item->getRepr();
 
     if (repr == NULL) return;
 
@@ -4099,13 +4099,19 @@ sp_style_set_property_url (SPObject *item, gchar const *property, SPObject *link
 void
 sp_style_unset_property_attrs(SPObject *o)
 {
-    if (!o) return;
+    if (!o) {
+        return;
+    }
 
-    SPStyle *style = SP_OBJECT_STYLE(o);
-    if (!style) return;
+    SPStyle *style = o->style;
+    if (!style) {
+        return;
+    }
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(o);
-    if (!repr) return;
+    Inkscape::XML::Node *repr = o->getRepr();
+    if (!repr) {
+        return;
+    }
 
     if (style->opacity.set) {
         repr->setAttribute("opacity", NULL);
@@ -4198,16 +4204,16 @@ sp_css_attr_from_style(SPStyle const *const style, guint const flags)
  * \pre object != NULL
  * \pre flags in {IFSET, ALWAYS}.
  */
-SPCSSAttr *
-sp_css_attr_from_object(SPObject *object, guint const flags)
+SPCSSAttr *sp_css_attr_from_object(SPObject *object, guint const flags)
 {
     g_return_val_if_fail(((flags == SP_STYLE_FLAG_IFSET) ||
                           (flags == SP_STYLE_FLAG_ALWAYS)  ),
                          NULL);
-    SPStyle const *const style = SP_OBJECT_STYLE(object);
-    if (style == NULL)
-        return NULL;
-    return sp_css_attr_from_style(style, flags);
+    SPCSSAttr * result = 0;    
+    if (object->style) {
+        result = sp_css_attr_from_style(object->style, flags);
+    }
+    return result;
 }
 
 /**

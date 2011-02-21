@@ -269,7 +269,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     object->readAttr( "inkscape:connector-spacing" );
 
     /* Construct guideline list */
-    for (SPObject *o = SP_OBJECT(og)->firstChild() ; o; o = o->getNext() ) {
+    for (SPObject *o = og->firstChild() ; o; o = o->getNext() ) {
         if (SP_IS_GUIDE(o)) {
             SPGuide * g = SP_GUIDE(o);
             nv->guides = g_slist_prepend(nv->guides, g);
@@ -696,7 +696,7 @@ static void sp_namedview_remove_child(SPObject *object, Inkscape::XML::Node *chi
     } else {
         GSList **ref = &nv->guides;
         for ( GSList *iter = nv->guides ; iter ; iter = iter->next ) {
-            if ( SP_OBJECT_REPR((SPObject *)iter->data) == child ) {
+            if ( reinterpret_cast<SPObject *>(iter->data)->getRepr() == child ) {
                 *ref = iter->next;
                 iter->next = NULL;
                 g_slist_free_1(iter);
@@ -714,12 +714,12 @@ static void sp_namedview_remove_child(SPObject *object, Inkscape::XML::Node *chi
 static Inkscape::XML::Node *sp_namedview_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     if ( ( flags & SP_OBJECT_WRITE_EXT ) &&
-         repr != SP_OBJECT_REPR(object) )
+         repr != object->getRepr() )
     {
         if (repr) {
-            repr->mergeFrom(SP_OBJECT_REPR(object), "id");
+            repr->mergeFrom(object->getRepr(), "id");
         } else {
-             repr = SP_OBJECT_REPR(object)->duplicate(doc);
+            repr = object->getRepr()->duplicate(doc);
         }
     }
 
@@ -739,7 +739,7 @@ void SPNamedView::show(SPDesktop *desktop)
     views = g_slist_prepend(views, desktop);
 
     // generate grids specified in SVG:
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(this);
+    Inkscape::XML::Node *repr = this->getRepr();
     if (repr) {
         for (Inkscape::XML::Node * child = repr->firstChild() ; child != NULL; child = child->next() ) {
             if (!strcmp(child->name(), "inkscape:grid")) {
@@ -850,7 +850,7 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool save_geometry_in_file = prefs->getBool("/options/savewindowgeometry/value", 0);
-    Inkscape::XML::Node *view = SP_OBJECT_REPR(desktop->namedview);
+    Inkscape::XML::Node *view = desktop->namedview->getRepr();
     Geom::Rect const r = desktop->get_display_area();
 
     // saving window geometry is not undoable
@@ -943,8 +943,8 @@ void sp_namedview_show_grids(SPNamedView * namedview, bool show, bool dirty_docu
 {
     namedview->grids_visible = show;
 
-    SPDocument *doc = SP_OBJECT_DOCUMENT (namedview);
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(namedview);
+    SPDocument *doc = namedview->document;
+    Inkscape::XML::Node *repr = namedview->getRepr();
 
     bool saved = DocumentUndo::getUndoSensitive(doc);
     DocumentUndo::setUndoSensitive(doc, false);
@@ -962,7 +962,7 @@ gchar const *SPNamedView::getName() const
 {
     SPException ex;
     SP_EXCEPTION_INIT(&ex);
-    return SP_OBJECT(this)->getAttribute("id", &ex);
+    return this->getAttribute("id", &ex);
 }
 
 guint SPNamedView::getViewCount()

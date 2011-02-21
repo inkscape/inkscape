@@ -259,7 +259,7 @@ SPGradientSpread SPGradientSelector::getSpread()
 void SPGradientSelector::setVector(SPDocument *doc, SPGradient *vector)
 {
     g_return_if_fail(!vector || SP_IS_GRADIENT(vector));
-    g_return_if_fail(!vector || (SP_OBJECT_DOCUMENT(vector) == doc));
+    g_return_if_fail(!vector || (vector->document == doc));
 
     if (vector && !vector->hasStops()) {
         return;
@@ -312,7 +312,7 @@ sp_gradient_selector_vector_set (SPGradientVectorSelector */*gvs*/, SPGradient *
     if (!blocked) {
         blocked = TRUE;
         gr = sp_gradient_ensure_vector_normalized (gr);
-        sel->setVector((gr) ? SP_OBJECT_DOCUMENT (gr) : 0, gr);
+        sel->setVector((gr) ? gr->document : 0, gr);
         g_signal_emit (G_OBJECT (sel), signals[CHANGED], 0, gr);
         blocked = FALSE;
     }
@@ -344,9 +344,9 @@ sp_gradient_selector_add_vector_clicked (GtkWidget */*w*/, SPGradientSelector *s
 
     Inkscape::XML::Node *repr = NULL;
 
-    if (gr)
-        repr = SP_OBJECT_REPR (gr)->duplicate(xml_doc);
-    else {
+    if (gr) {
+        repr = gr->getRepr()->duplicate(xml_doc);
+    } else {
         repr = xml_doc->createElement("svg:linearGradient");
         Inkscape::XML::Node *stop = xml_doc->createElement("svg:stop");
         stop->setAttribute("offset", "0");
@@ -360,7 +360,7 @@ sp_gradient_selector_add_vector_clicked (GtkWidget */*w*/, SPGradientSelector *s
         Inkscape::GC::release(stop);
     }
 
-    SP_OBJECT_REPR (SP_DOCUMENT_DEFS (doc))->addChild(repr, NULL);
+    SP_DOCUMENT_DEFS(doc)->getRepr()->addChild(repr, NULL);
 
     gr = (SPGradient *) doc->getObjectByRepr(repr);
     sp_gradient_vector_selector_set_gradient(

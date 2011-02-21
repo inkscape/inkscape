@@ -123,7 +123,7 @@ sp_tref_init(SPTRef *tref)
     new (&tref->attributes) TextTagAttributes;
 
     tref->href = NULL;
-    tref->uriOriginalRef = new SPTRefReference(SP_OBJECT(tref));
+    tref->uriOriginalRef = new SPTRefReference(tref);
     new (&tref->_delete_connection) sigc::connection();
     new (&tref->_changed_connection) sigc::connection();
 
@@ -223,7 +223,7 @@ sp_tref_set(SPObject *object, unsigned int key, gchar const *value)
             }
 
             // No matter what happened, an update should be in order
-            SP_OBJECT(tref)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            tref->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
 
     } else { // default
@@ -323,16 +323,20 @@ static void
 sp_tref_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const /*flags*/)
 {
     // find out the ancestor text which holds our layout
-    SPObject *parent_text = SP_OBJECT(item);
-    for (; parent_text != NULL && !SP_IS_TEXT(parent_text); parent_text = SP_OBJECT_PARENT (parent_text)){};
-    if (parent_text == NULL) return;
+    SPObject const *parent_text = item;
+    while ( parent_text && !SP_IS_TEXT(parent_text) ) {
+        parent_text = parent_text->parent;
+    }
+    if (parent_text == NULL) {
+        return;
+    }
 
     // get the bbox of our portion of the layout
     SP_TEXT(parent_text)->layout.getBoundingBox(
         bbox, transform, sp_text_get_length_upto(parent_text, item), sp_text_get_length_upto(item, NULL) - 1);
 
     // Add stroke width
-    SPStyle* style=SP_OBJECT_STYLE (item);
+    SPStyle* style = item->style;
     if (!style->stroke.isNone()) {
         double const scale = transform.descrim();
         if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
@@ -388,7 +392,7 @@ sp_tref_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPTRef *tref)
         tref->_delete_connection.disconnect();
 
         if (tref->stringChild) {
-            SP_OBJECT(tref)->detach(tref->stringChild);
+            tref->detach(tref->stringChild);
             tref->stringChild = NULL;
         }
 
@@ -399,7 +403,7 @@ sp_tref_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPTRef *tref)
             sp_tref_update_text(tref);
 
             // Restore the delete connection now that we're done messing with stuff
-            tref->_delete_connection = SP_OBJECT(refRoot)->connectDelete(sigc::bind(sigc::ptr_fun(&sp_tref_delete_self), tref));
+            tref->_delete_connection = refRoot->connectDelete(sigc::bind(sigc::ptr_fun(&sp_tref_delete_self), tref));
         }
 
     }
@@ -412,7 +416,7 @@ sp_tref_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPTRef *tref)
 static void
 sp_tref_delete_self(SPObject */*deleted*/, SPTRef *self)
 {
-    SP_OBJECT(self)->deleteObject();
+    self->deleteObject();
 }
 
 /**
@@ -423,7 +427,7 @@ SPObject * SPTRef::getObjectReferredTo(void)
     SPObject *referredObject = NULL;
 
     if (uriOriginalRef) {
-        referredObject = SP_OBJECT(uriOriginalRef->getObject());
+        referredObject = uriOriginalRef->getObject();
     }
 
     return referredObject;
@@ -441,7 +445,7 @@ sp_tref_reference_allowed(SPTRef *tref, SPObject *possible_ref)
     if (tref && possible_ref) {
         if (tref != possible_ref) {
             bool ancestor = false;
-            for (SPObject *obj = tref; obj; obj = SP_OBJECT_PARENT(obj)) {
+            for (SPObject *obj = tref; obj; obj = obj->parent) {
                 if (possible_ref == obj) {
                     ancestor = true;
                     break;
@@ -470,15 +474,15 @@ sp_tref_fully_contained(SPObject *start_item, Glib::ustring::iterator &start,
         // If neither the beginning or the end is a tref then we return true (whether there
         // is a tref in the innards or not, because if there is one then it must be totally
         // contained)
-        if (!(SP_IS_STRING(start_item) && SP_IS_TREF(SP_OBJECT_PARENT(start_item)))
-                && !(SP_IS_STRING(end_item) && SP_IS_TREF(SP_OBJECT_PARENT(end_item)))) {
+        if (!(SP_IS_STRING(start_item) && SP_IS_TREF(start_item->parent))
+                && !(SP_IS_STRING(end_item) && SP_IS_TREF(end_item->parent))) {
             fully_contained = true;
         }
 
         // Both the beginning and end are trefs; but in this case, the string iterators
         // must be at the right places
-        else if ((SP_IS_STRING(start_item) && SP_IS_TREF(SP_OBJECT_PARENT(start_item)))
-                && (SP_IS_STRING(end_item) && SP_IS_TREF(SP_OBJECT_PARENT(end_item)))) {
+        else if ((SP_IS_STRING(start_item) && SP_IS_TREF(start_item->parent))
+                && (SP_IS_STRING(end_item) && SP_IS_TREF(end_item->parent))) {
             if (start == SP_STRING(start_item)->string.begin()
                     && end == SP_STRING(start_item)->string.end()) {
                 fully_contained = true;
@@ -487,16 +491,16 @@ sp_tref_fully_contained(SPObject *start_item, Glib::ustring::iterator &start,
 
         // If the beginning is a string that is a child of a tref, the iterator has to be
         // at the beginning of the item
-        else if ((SP_IS_STRING(start_item) && SP_IS_TREF(SP_OBJECT_PARENT(start_item)))
-                    && !(SP_IS_STRING(end_item) && SP_IS_TREF(SP_OBJECT_PARENT(end_item)))) {
+        else if ((SP_IS_STRING(start_item) && SP_IS_TREF(start_item->parent))
+                    && !(SP_IS_STRING(end_item) && SP_IS_TREF(end_item->parent))) {
             if (start == SP_STRING(start_item)->string.begin()) {
                 fully_contained = true;
             }
         }
 
         // Same, but the for the end
-        else if (!(SP_IS_STRING(start_item) && SP_IS_TREF(SP_OBJECT_PARENT(start_item)))
-                    && (SP_IS_STRING(end_item) && SP_IS_TREF(SP_OBJECT_PARENT(end_item)))) {
+        else if (!(SP_IS_STRING(start_item) && SP_IS_TREF(start_item->parent))
+                    && (SP_IS_STRING(end_item) && SP_IS_TREF(end_item->parent))) {
             if (end == SP_STRING(start_item)->string.end()) {
                 fully_contained = true;
             }
@@ -512,23 +516,23 @@ void sp_tref_update_text(SPTRef *tref)
     if (tref) {
         // Get the character data that will be used with this tref
         Glib::ustring charData = "";
-        build_string_from_root(SP_OBJECT_REPR(tref->getObjectReferredTo()), &charData);
+        build_string_from_root(tref->getObjectReferredTo()->getRepr(), &charData);
 
         if (tref->stringChild) {
-            SP_OBJECT(tref)->detach(tref->stringChild);
+            tref->detach(tref->stringChild);
             tref->stringChild = NULL;
         }
 
         // Create the node and SPString to be the tref's child
-        Inkscape::XML::Document *xml_doc = SP_OBJECT_DOCUMENT(tref)->getReprDoc();
+        Inkscape::XML::Document *xml_doc = tref->document->getReprDoc();
 
         Inkscape::XML::Node *newStringRepr = xml_doc->createTextNode(charData.c_str());
         tref->stringChild = SP_OBJECT(g_object_new(sp_repr_type_lookup(newStringRepr), NULL));
 
         // Add this SPString as a child of the tref
-        SP_OBJECT(tref)->attach(tref->stringChild, tref->lastChild());
+        tref->attach(tref->stringChild, tref->lastChild());
         sp_object_unref(tref->stringChild, NULL);
-        (tref->stringChild)->invoke_build(SP_OBJECT(tref)->document, newStringRepr, TRUE);
+        (tref->stringChild)->invoke_build(tref->document, newStringRepr, TRUE);
 
         Inkscape::GC::release(newStringRepr);
     }
@@ -581,10 +585,10 @@ sp_tref_convert_to_tspan(SPObject *obj)
         SPTRef *tref = SP_TREF(obj);
 
         if (tref && tref->stringChild) {
-            Inkscape::XML::Node *tref_repr = SP_OBJECT_REPR(tref);
+            Inkscape::XML::Node *tref_repr = tref->getRepr();
             Inkscape::XML::Node *tref_parent = sp_repr_parent(tref_repr);
 
-            SPDocument *document = SP_OBJECT(tref)->document;
+            SPDocument *document = tref->document;
             Inkscape::XML::Document *xml_doc = document->getReprDoc();
 
             Inkscape::XML::Node *new_tspan_repr = xml_doc->createElement("svg:tspan");
@@ -596,35 +600,35 @@ sp_tref_convert_to_tspan(SPObject *obj)
             new_tspan = document->getObjectByRepr(new_tspan_repr);
 
             // Create a new string child for the tspan
-            Inkscape::XML::Node *new_string_repr = SP_OBJECT_REPR(tref->stringChild)->duplicate(xml_doc);
+            Inkscape::XML::Node *new_string_repr = tref->stringChild->getRepr()->duplicate(xml_doc);
             new_tspan_repr->addChild(new_string_repr, NULL);
 
             //SPObject * new_string_child = document->getObjectByRepr(new_string_repr);
 
             // Merge style from the tref
-            SPStyle *new_tspan_sty = SP_OBJECT_STYLE(new_tspan);
-            SPStyle const *tref_sty = SP_OBJECT_STYLE(tref);
+            SPStyle *new_tspan_sty = new_tspan->style;
+            SPStyle const *tref_sty = tref->style;
             sp_style_merge_from_dying_parent(new_tspan_sty, tref_sty);
             sp_style_merge_from_parent(new_tspan_sty, new_tspan->parent->style);
 
 
-            SP_OBJECT(new_tspan)->updateRepr();
+            new_tspan->updateRepr();
 
             // Hold onto our SPObject and repr for now.
-            sp_object_ref(SP_OBJECT(tref), NULL);
+            sp_object_ref(tref, NULL);
             Inkscape::GC::anchor(tref_repr);
 
             // Remove ourselves, not propagating delete events to avoid a
             // chain-reaction with other elements that might reference us.
-            SP_OBJECT(tref)->deleteObject(false);
+            tref->deleteObject(false);
 
             // Give the copy our old id and let go of our old repr.
             new_tspan_repr->setAttribute("id", tref_repr->attribute("id"));
             Inkscape::GC::release(tref_repr);
 
             // Establish the succession and let go of our object.
-            SP_OBJECT(tref)->setSuccessor(new_tspan);
-            sp_object_unref(SP_OBJECT(tref), NULL);
+            tref->setSuccessor(new_tspan);
+            sp_object_unref(tref, NULL);
         }
     }
     ////////////////////
@@ -633,19 +637,19 @@ sp_tref_convert_to_tspan(SPObject *obj)
     else {
         GSList *l = NULL;
         for (SPObject *child = obj->firstChild() ; child != NULL ; child = child->getNext() ) {
-            sp_object_ref (SP_OBJECT (child), obj);
+            sp_object_ref(child, obj);
             l = g_slist_prepend (l, child);
         }
         l = g_slist_reverse (l);
         while (l) {
-            SPObject *child = SP_OBJECT (l->data);
+            SPObject *child = reinterpret_cast<SPObject *>(l->data); // We just built this list, so cast is safe.
             l = g_slist_remove (l, child);
 
             // Note that there may be more than one conversion happening here, so if it's not a
             // tref being passed into this function, the returned value can't be specifically known
             new_tspan = sp_tref_convert_to_tspan(child);
 
-            sp_object_unref (SP_OBJECT (child), obj);
+            sp_object_unref(child, obj);
         }
     }
 

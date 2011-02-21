@@ -180,7 +180,7 @@ static void sp_flowtext_update(SPObject *object, SPCtx *ctx, unsigned flags)
     group->invoke_bbox( &paintbox, Geom::identity(), TRUE);
     for (SPItemView *v = group->display; v != NULL; v = v->next) {
         group->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
-        nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+        nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), object->style);
         // pass the bbox of the flowtext object as paintbox (used for paintserver fills)
         group->layout.show(NR_ARENA_GROUP(v->arenaitem), &paintbox);
     }
@@ -201,7 +201,7 @@ static void sp_flowtext_modified(SPObject *object, guint flags)
         text->invoke_bbox( &paintbox, Geom::identity(), TRUE);
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
             text->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
-            nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+            nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), object->style);
             text->layout.show(NR_ARENA_GROUP(v->arenaitem), &paintbox);
         }
     }
@@ -241,7 +241,7 @@ sp_flowtext_set(SPObject *object, unsigned key, gchar const *value)
         case SP_ATTR_LAYOUT_OPTIONS: {
             // deprecated attribute, read for backward compatibility only
             //XML Tree being directly used while it shouldn't be.
-            SPCSSAttr *opts = sp_repr_css_attr((SP_OBJECT(group))->getRepr(), "inkscape:layoutOptions");
+            SPCSSAttr *opts = sp_repr_css_attr(group->getRepr(), "inkscape:layoutOptions");
             {
                 gchar const *val = sp_repr_css_property(opts, "justification", NULL);
                 if (val != NULL && !object->style->text_align.set) {
@@ -334,7 +334,7 @@ sp_flowtext_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform
     group->layout.getBoundingBox(bbox, transform);
 
     // Add stroke width
-    SPStyle* style=SP_OBJECT_STYLE (item);
+    SPStyle* style = item->style;
     if ( !style->stroke.isNone() ) {
         double const scale = transform.descrim();
         if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
@@ -366,8 +366,8 @@ sp_flowtext_print(SPItem *item, SPPrintContext *ctx)
     NRRect dbox;
     dbox.x0 = 0.0;
     dbox.y0 = 0.0;
-    dbox.x1 = SP_OBJECT_DOCUMENT(item)->getWidth();
-    dbox.y1 = SP_OBJECT_DOCUMENT(item)->getHeight();
+    dbox.x1 = item->document->getWidth();
+    dbox.y1 = item->document->getHeight();
     Geom::Affine const ctm (item->i2d_affine());
 
     group->layout.print(ctx, &pbox, &dbox, &bbox, ctm);
@@ -438,7 +438,7 @@ void SPFlowtext::_buildLayoutInput(SPObject *root, Shape const *exclusion_shape,
     if (SP_IS_FLOWPARA(root)) {
         // emulate par-indent with the first char's kern
         SPObject *t = root;
-        for ( ; t != NULL && !SP_IS_FLOWTEXT(t); t = SP_OBJECT_PARENT(t)){};
+        for ( ; t != NULL && !SP_IS_FLOWTEXT(t); t = t->parent){};
         if (SP_IS_FLOWTEXT(t)) {
             double indent = SP_FLOWTEXT(t)->par_indent;
             if (indent != 0) {
@@ -556,10 +556,10 @@ SPFlowtext::getAsText()
 
     SPItem *item = SP_ITEM(this);
 
-    Inkscape::XML::Document *xml_doc = SP_OBJECT_DOCUMENT(this)->getReprDoc();
+    Inkscape::XML::Document *xml_doc = this->document->getReprDoc();
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:text");
     repr->setAttribute("xml:space", "preserve");
-    repr->setAttribute("style", SP_OBJECT_REPR(this)->attribute("style"));
+    repr->setAttribute("style", this->getRepr()->attribute("style"));
     Geom::Point anchor_point = this->layout.characterAnchorPoint(this->layout.begin());
     sp_repr_set_svg_double(repr, "x", anchor_point[Geom::X]);
     sp_repr_set_svg_double(repr, "y", anchor_point[Geom::Y]);
@@ -695,7 +695,7 @@ bool SPFlowtext::has_internal_frame()
 {
     SPItem *frame = get_frame(NULL);
 
-    return (frame && SP_OBJECT(this)->isAncestorOf(SP_OBJECT(frame)) && SP_IS_RECT(frame));
+    return (frame && this->isAncestorOf(frame) && SP_IS_RECT(frame));
 }
 
 
@@ -718,7 +718,7 @@ SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, Geom::Point p0,
     Inkscape::XML::Node *rect_repr = xml_doc->createElement("svg:rect"); // FIXME: use path!!! after rects are converted to use path
     region_repr->appendChild(rect_repr);
 
-    SPObject *rect = doc->getObjectByRepr(rect_repr);
+    SPRect *rect = SP_RECT(doc->getObjectByRepr(rect_repr));
 
     p0 *= desktop->dt2doc();
     p1 *= desktop->dt2doc();
@@ -731,8 +731,8 @@ SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, Geom::Point p0,
     Geom::Coord const w  = x1 - x0;
     Geom::Coord const h  = y1 - y0;
 
-    sp_rect_position_set(SP_RECT(rect), x0, y0, w, h);
-    SP_OBJECT(rect)->updateRepr();
+    sp_rect_position_set(rect, x0, y0, w, h);
+    rect->updateRepr();
 
     Inkscape::XML::Node *para_repr = xml_doc->createElement("svg:flowPara");
     root_repr->appendChild(para_repr);

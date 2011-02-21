@@ -162,7 +162,7 @@ GtkWidget *sp_gradient_vector_selector_new(SPDocument *doc, SPGradient *gr)
     GtkWidget *gvs;
 
     g_return_val_if_fail(!gr || SP_IS_GRADIENT(gr), NULL);
-    g_return_val_if_fail(!gr || (SP_OBJECT_DOCUMENT(gr) == doc), NULL);
+    g_return_val_if_fail(!gr || (gr->document == doc), NULL);
 
     gvs = static_cast<GtkWidget*>(gtk_type_new(SP_TYPE_GRADIENT_VECTOR_SELECTOR));
 
@@ -187,7 +187,7 @@ void sp_gradient_vector_selector_set_gradient(SPGradientVectorSelector *gvs, SPD
     g_return_if_fail(SP_IS_GRADIENT_VECTOR_SELECTOR(gvs));
     g_return_if_fail(!gr || (doc != NULL));
     g_return_if_fail(!gr || SP_IS_GRADIENT(gr));
-    g_return_if_fail(!gr || (SP_OBJECT_DOCUMENT(gr) == doc));
+    g_return_if_fail(!gr || (gr->document == doc));
     g_return_if_fail(!gr || gr->hasStops());
 
     if (doc != gvs->doc) {
@@ -256,7 +256,7 @@ static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
     /* Pick up all gradients with vectors */
     GSList *gl = NULL;
     if (gvs->gr) {
-        const GSList *gradients = SP_OBJECT_DOCUMENT(gvs->gr)->getResourceList("gradient");
+        const GSList *gradients = gvs->gr->document->getResourceList("gradient");
         for (const GSList *curr = gradients; curr; curr = curr->next) {
             SPGradient* grad = SP_GRADIENT(curr->data);
             if ( grad->hasStops() && (grad->isSwatch() == gvs->swatched) ) {
@@ -371,7 +371,7 @@ static void sp_gvs_gradient_activate(GtkMenuItem *mi, SPGradientVectorSelector *
         /* We do extra undo push here */
         /* If handler has already done it, it is just NOP */
         // FIXME: looks like this is never a valid undo step, consider removing this
-        DocumentUndo::done(SP_OBJECT_DOCUMENT(norm), SP_VERB_CONTEXT_GRADIENT,
+        DocumentUndo::done(norm->document, SP_VERB_CONTEXT_GRADIENT,
                            /* TODO: annotate */ "gradient-vector.cpp:350");
     }
 }
@@ -479,7 +479,7 @@ static void verify_grad(SPGradient *gradient)
     }
 
     Inkscape::XML::Document *xml_doc;
-    xml_doc = SP_OBJECT_REPR(gradient)->document();
+    xml_doc = gradient->getRepr()->document();
 
     if (i < 1) {
         Inkscape::CSSOStringStream os;
@@ -490,20 +490,20 @@ static void verify_grad(SPGradient *gradient)
         child = xml_doc->createElement("svg:stop");
         sp_repr_set_css_double(child, "offset", 0.0);
         child->setAttribute("style", os.str().c_str());
-        SP_OBJECT_REPR(gradient)->addChild(child, NULL);
+        gradient->getRepr()->addChild(child, NULL);
         Inkscape::GC::release(child);
 
         child = xml_doc->createElement("svg:stop");
         sp_repr_set_css_double(child, "offset", 1.0);
         child->setAttribute("style", os.str().c_str());
-        SP_OBJECT_REPR(gradient)->addChild(child, NULL);
+        gradient->getRepr()->addChild(child, NULL);
         Inkscape::GC::release(child);
     }
     if (i < 2) {
-        sp_repr_set_css_double(SP_OBJECT_REPR(stop), "offset", 0.0);
-        Inkscape::XML::Node *child = SP_OBJECT_REPR(stop)->duplicate(SP_OBJECT_REPR(gradient)->document());
+        sp_repr_set_css_double(stop->getRepr(), "offset", 0.0);
+        Inkscape::XML::Node *child = stop->getRepr()->duplicate(gradient->getRepr()->document());
         sp_repr_set_css_double(child, "offset", 1.0);
-        SP_OBJECT_REPR(gradient)->addChild(child, SP_OBJECT_REPR(stop));
+        gradient->getRepr()->addChild(child, stop->getRepr());
         Inkscape::GC::release(child);
     }
 }
@@ -513,7 +513,7 @@ static void select_stop_in_list( GtkWidget *mnu, SPGradient *gradient, SPStop *n
     int i = 0;
     for ( SPObject *ochild = gradient->firstChild() ; ochild ; ochild = ochild->getNext() ) {
         if (SP_IS_STOP(ochild)) {
-            if (SP_OBJECT(ochild) == SP_OBJECT(new_stop)) {
+            if (ochild == new_stop) {
                 gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), i);
                 break;
             }
@@ -565,7 +565,7 @@ static void update_stop_list( GtkWidget *mnu, SPGradient *gradient, SPStop *new_
                 gtk_widget_show(cpv);
                 gtk_container_add( GTK_CONTAINER(hb), cpv );
                 g_object_set_data( G_OBJECT(i), "preview", cpv );
-                Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) sl->data);
+                Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(sl->data)->getRepr();
                 GtkWidget *l = gtk_label_new(repr->attribute("id"));
                 gtk_widget_show(l);
                 gtk_misc_set_alignment(GTK_MISC(l), 1.0, 0.5);
@@ -659,9 +659,9 @@ static void offadjustmentChanged( GtkAdjustment *adjustment, GtkWidget *vb)
             SPStop *stop = SP_STOP(g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))), "stop"));
 
             stop->offset = adjustment->value;
-            sp_repr_set_css_double(SP_OBJECT_REPR(stop), "offset", stop->offset);
+            sp_repr_set_css_double(stop->getRepr(), "offset", stop->offset);
 
-            DocumentUndo::maybeDone(SP_OBJECT_DOCUMENT(stop), "gradient:stop:offset", SP_VERB_CONTEXT_GRADIENT,
+            DocumentUndo::maybeDone(stop->document, "gradient:stop:offset", SP_VERB_CONTEXT_GRADIENT,
                                     _("Change gradient stop offset"));
 
             blocked = FALSE;
@@ -705,15 +705,15 @@ static void sp_grd_ed_add_stop(GtkWidget */*widget*/,  GtkWidget *vb)
     }
 
     if (next != NULL) {
-        new_stop_repr = SP_OBJECT_REPR(stop)->duplicate(SP_OBJECT_REPR(gradient)->document());
-        SP_OBJECT_REPR(gradient)->addChild(new_stop_repr, SP_OBJECT_REPR(stop));
+        new_stop_repr = stop->getRepr()->duplicate(gradient->getRepr()->document());
+        gradient->getRepr()->addChild(new_stop_repr, stop->getRepr());
     } else {
         next = stop;
-        new_stop_repr = SP_OBJECT_REPR(stop->getPrevStop())->duplicate(SP_OBJECT_REPR(gradient)->document());
-        SP_OBJECT_REPR(gradient)->addChild(new_stop_repr, SP_OBJECT_REPR(stop->getPrevStop()));
+        new_stop_repr = stop->getPrevStop()->getRepr()->duplicate(gradient->getRepr()->document());
+        gradient->getRepr()->addChild(new_stop_repr, stop->getPrevStop()->getRepr());
     }
 
-    SPStop *newstop = (SPStop *) SP_OBJECT_DOCUMENT(gradient)->getObjectByRepr(new_stop_repr);
+    SPStop *newstop = reinterpret_cast<SPStop *>(gradient->document->getObjectByRepr(new_stop_repr));
 
     newstop->offset = (stop->offset + next->offset) * 0.5 ;
 
@@ -726,8 +726,8 @@ static void sp_grd_ed_add_stop(GtkWidget */*widget*/,  GtkWidget *vb)
     sp_svg_write_color(c, sizeof(c), cnew);
     gdouble opacity = static_cast<gdouble>(SP_RGBA32_A_F(cnew));
     os << "stop-color:" << c << ";stop-opacity:" << opacity <<";";
-    SP_OBJECT_REPR (newstop)->setAttribute("style", os.str().c_str());
-    sp_repr_set_css_double( SP_OBJECT_REPR(newstop), "offset", (double)newstop->offset);
+    newstop->getRepr()->setAttribute("style", os.str().c_str());
+    sp_repr_set_css_double( newstop->getRepr(), "offset", (double)newstop->offset);
 
     sp_gradient_vector_widget_load_gradient(vb, gradient);
     Inkscape::GC::release(new_stop_repr);
@@ -736,7 +736,7 @@ static void sp_grd_ed_add_stop(GtkWidget */*widget*/,  GtkWidget *vb)
     GtkWidget *offslide =GTK_WIDGET(g_object_get_data(G_OBJECT(vb), "offslide"));
     gtk_widget_set_sensitive(offslide, TRUE);
     gtk_widget_set_sensitive(GTK_WIDGET(offspin), TRUE);
-    DocumentUndo::done(SP_OBJECT_DOCUMENT(gradient), SP_VERB_CONTEXT_GRADIENT,
+    DocumentUndo::done(gradient->document, SP_VERB_CONTEXT_GRADIENT,
                        _("Add gradient stop"));
 }
 
@@ -754,20 +754,20 @@ static void sp_grd_ed_del_stop(GtkWidget */*widget*/,  GtkWidget *vb)
             SPStop *next = stop->getNextStop();
             if (next) {
                 next->offset = 0;
-                sp_repr_set_css_double(SP_OBJECT_REPR(next), "offset", 0);
+                sp_repr_set_css_double(next->getRepr(), "offset", 0);
             }
         } else if (stop->offset == 1) {
             SPStop *prev = stop->getPrevStop();
             if (prev) {
                 prev->offset = 1;
-                sp_repr_set_css_double(SP_OBJECT_REPR(prev), "offset", 1);
+                sp_repr_set_css_double(prev->getRepr(), "offset", 1);
             }
         }
 
-        SP_OBJECT_REPR(gradient)->removeChild(SP_OBJECT_REPR(stop));
+        gradient->getRepr()->removeChild(stop->getRepr());
         sp_gradient_vector_widget_load_gradient(vb, gradient);
         update_stop_list(GTK_WIDGET(mnu), gradient, NULL);
-        DocumentUndo::done(SP_OBJECT_DOCUMENT(gradient), SP_VERB_CONTEXT_GRADIENT,
+        DocumentUndo::done(gradient->document, SP_VERB_CONTEXT_GRADIENT,
                            _("Delete gradient stop"));
     }
 
@@ -787,7 +787,7 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     gtk_widget_show(w);
     gtk_box_pack_start(GTK_BOX(vb), w, TRUE, TRUE, PAD);
 
-    sp_repr_add_listener(SP_OBJECT_REPR(gradient), &grad_edit_dia_repr_events, vb);
+    sp_repr_add_listener(gradient->getRepr(), &grad_edit_dia_repr_events, vb);
     GtkTooltips *tt = gtk_tooltips_new();
 
     /* Stop list */
@@ -1031,11 +1031,11 @@ static void sp_gradient_vector_widget_load_gradient(GtkWidget *widget, SPGradien
         update_stop_list(GTK_WIDGET(mnu), gradient, NULL);
 
         // Once the user edits a gradient, it stops being auto-collectable
-        if (SP_OBJECT_REPR(gradient)->attribute("inkscape:collect")) {
-            SPDocument *document = SP_OBJECT_DOCUMENT(gradient);
+        if (gradient->getRepr()->attribute("inkscape:collect")) {
+            SPDocument *document = gradient->document;
             bool saved = DocumentUndo::getUndoSensitive(document);
             DocumentUndo::setUndoSensitive(document, false);
-            SP_OBJECT_REPR(gradient)->setAttribute("inkscape:collect", NULL);
+            gradient->getRepr()->setAttribute("inkscape:collect", NULL);
             DocumentUndo::setUndoSensitive(document, saved);
         }
     } else { // no gradient, disable everything
@@ -1077,9 +1077,7 @@ static gboolean sp_gradient_vector_dialog_delete(GtkWidget */*widget*/, GdkEvent
 
 static void sp_gradient_vector_widget_destroy(GtkObject *object, gpointer /*data*/)
 {
-    GObject *gradient;
-
-    gradient = (GObject*)g_object_get_data(G_OBJECT(object), "gradient");
+    SPObject *gradient = reinterpret_cast<SPObject*>(g_object_get_data(G_OBJECT(object), "gradient"));
 
     sigc::connection *release_connection = (sigc::connection *)g_object_get_data(G_OBJECT(object), "gradient_release_connection");
     sigc::connection *modified_connection = (sigc::connection *)g_object_get_data(G_OBJECT(object), "gradient_modified_connection");
@@ -1092,8 +1090,8 @@ static void sp_gradient_vector_widget_destroy(GtkObject *object, gpointer /*data
         sp_signal_disconnect_by_data(gradient, object);
     }
 
-    if (gradient && SP_OBJECT_REPR(gradient)) {
-        sp_repr_remove_listener_by_data(SP_OBJECT_REPR(gradient), object);
+    if (gradient && gradient->getRepr()) {
+        sp_repr_remove_listener_by_data(gradient->getRepr(), object);
     }
 }
 
@@ -1178,14 +1176,14 @@ static void sp_gradient_vector_color_changed(SPColorSelector *csel, GtkObject *o
     float alpha = 0;
     csel->base->getColorAlpha( color, alpha );
 
-    sp_repr_set_css_double(SP_OBJECT_REPR(stop), "offset", stop->offset);
+    sp_repr_set_css_double(stop->getRepr(), "offset", stop->offset);
     Inkscape::CSSOStringStream os;
     os << "stop-color:" << color.toString() << ";stop-opacity:" << static_cast<gdouble>(alpha) <<";";
-    SP_OBJECT_REPR(stop)->setAttribute("style", os.str().c_str());
+    stop->getRepr()->setAttribute("style", os.str().c_str());
     // g_snprintf(c, 256, "stop-color:#%06x;stop-opacity:%g;", rgb >> 8, static_cast<gdouble>(alpha));
-    //SP_OBJECT_REPR(stop)->setAttribute("style", c);
+    //stop->getRepr()->setAttribute("style", c);
 
-    DocumentUndo::done(SP_OBJECT_DOCUMENT(ngr), SP_VERB_CONTEXT_GRADIENT,
+    DocumentUndo::done(ngr->document, SP_VERB_CONTEXT_GRADIENT,
                        _("Change gradient stop color"));
 
     blocked = FALSE;

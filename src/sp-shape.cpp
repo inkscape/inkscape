@@ -242,8 +242,7 @@ void SPShape::sp_shape_update(SPObject *object, SPCtx *ctx, unsigned int flags)
       }
 
     if (flags & (SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        SPStyle *style;
-        style = SP_OBJECT_STYLE (object);
+        SPStyle *style = object->style;
         if (style->stroke_width.unit == SP_CSS_UNIT_PERCENT) {
             SPItemCtx *ictx = (SPItemCtx *) ctx;
             double const aw = 1.0 / NR::expansion(ictx->i2vp);
@@ -525,7 +524,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const
                 }
                 case SPItem::RENDERING_BBOX: {
                     // convert the stroke to a path and calculate that path's geometric bbox
-                    SPStyle* style=SP_OBJECT_STYLE (item);
+                    SPStyle* style = item->style;
                     if (!style->stroke.isNone()) {
                         Geom::PathVector *pathv = item_outline(item);
                         if (pathv) {
@@ -545,7 +544,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const
                 }
                 default:
                 case SPItem::APPROXIMATE_BBOX: {
-                    SPStyle* style=SP_OBJECT_STYLE (item);
+                    SPStyle* style = item->style;
                     if (!style->stroke.isNone()) {
                         double const scale = transform.descrim();
                         if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
@@ -567,7 +566,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const
                         for (unsigned i = 0; i < 2; i++) { // SP_MARKER_LOC and SP_MARKER_LOC_START
                             if ( shape->marker[i] ) {
                                 SPMarker* marker = SP_MARKER (shape->marker[i]);
-                                SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
+                                SPItem* marker_item = sp_item_first_item_child( marker );
 
                                 if (marker_item) {
                                     Geom::Affine tr(sp_shape_marker_get_transform_at_start(pathv.begin()->front()));
@@ -594,7 +593,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const
                         for (unsigned i = 0; i < 3; i += 2) { // SP_MARKER_LOC and SP_MARKER_LOC_MID
                             SPMarker* marker = SP_MARKER (shape->marker[i]);
                             if ( !shape->marker[i] ) continue;
-                            SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
+                            SPItem* marker_item = sp_item_first_item_child( marker );
                             if ( !marker_item ) continue;
 
                             for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
@@ -626,7 +625,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const
                                          * there should be a midpoint marker between last segment and closing straight line segment */
 
                                         SPMarker* marker = SP_MARKER (shape->marker[i]);
-                                        SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
+                                        SPItem* marker_item = sp_item_first_item_child( marker );
 
                                         if (marker_item) {
                                             Geom::Affine tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
@@ -669,7 +668,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const
                         for (unsigned i = 0; i < 4; i += 3) { // SP_MARKER_LOC and SP_MARKER_LOC_END
                             if ( shape->marker[i] ) {
                                 SPMarker* marker = SP_MARKER (shape->marker[i]);
-                                SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
+                                SPItem* marker_item = sp_item_first_item_child( marker );
 
                                 if (marker_item) {
                                     /* Get reference to last curve in the path.
@@ -719,7 +718,7 @@ sp_shape_print_invoke_marker_printing(SPObject* obj, Geom::Affine tr, SPStyle* s
         tr = Geom::Scale(style->stroke_width.computed) * tr;
     }
 
-    SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
+    SPItem* marker_item = sp_item_first_item_child( marker );
     tr = marker_item->transform * marker->c2p * tr;
 
     Geom::Affine old_tr = marker_item->transform;
@@ -749,7 +748,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
         gint add_comments = prefs->getBool("/printing/debug/add-label-comments");
         if (add_comments) {
             gchar * comment = g_strdup_printf("begin '%s'",
-                                              SP_OBJECT(item)->defaultLabel());
+                                              item->defaultLabel());
             sp_print_comment(ctx, comment);
             g_free(comment);
         }
@@ -758,12 +757,12 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
     item->invoke_bbox( &pbox, Geom::identity(), TRUE);
     dbox.x0 = 0.0;
     dbox.y0 = 0.0;
-    dbox.x1 = SP_OBJECT_DOCUMENT (item)->getWidth ();
-    dbox.y1 = SP_OBJECT_DOCUMENT (item)->getHeight ();
+    dbox.x1 = item->document->getWidth();
+    dbox.y1 = item->document->getHeight();
     item->getBboxDesktop (&bbox);
     Geom::Affine const i2d(item->i2d_affine());
 
-    SPStyle* style = SP_OBJECT_STYLE (item);
+    SPStyle* style = item->style;
 
     if (!style->fill.isNone()) {
         sp_print_fill (ctx, pathv, &i2d, style, &pbox, &dbox, &bbox);
@@ -839,7 +838,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 
         if (add_comments) {
             gchar * comment = g_strdup_printf("end '%s'",
-                                              SP_OBJECT(item)->defaultLabel());
+                                              item->defaultLabel());
             sp_print_comment(ctx, comment);
             g_free(comment);
         }
@@ -850,7 +849,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
  */
 NRArenaItem * SPShape::sp_shape_show(SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int /*flags*/)
 {
-    SPObject *object = SP_OBJECT(item);
+    SPObject *object = item;
     SPShape *shape = SP_SHAPE(item);
 
     NRArenaItem *arenaitem = NRArenaShape::create(arena);
@@ -1050,7 +1049,7 @@ sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value)
         return;
     }
 
-    SPObject *mrk = sp_css_uri_reference_resolve (SP_OBJECT_DOCUMENT (object), value);
+    SPObject *mrk = sp_css_uri_reference_resolve(object->document, value);
     if (mrk != shape->marker[key]) {
         if (shape->marker[key]) {
             SPItemView *v;
@@ -1110,7 +1109,7 @@ void SPShape::setCurve(SPCurve *curve, unsigned int owner)
             this->curve = curve->copy();
         }
     }
-        SP_OBJECT(this)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /**

@@ -125,13 +125,13 @@ LivePathEffectObject::livepatheffect_release(SPObject *object)
 
     LivePathEffectObject *lpeobj = LIVEPATHEFFECT(object);
 
-    SP_OBJECT_REPR(object)->removeListenerByData(object);
+    object->getRepr()->removeListenerByData(object);
 
 
 /*
-    if (SP_OBJECT_DOCUMENT(object)) {
+    if (object->document) {
         // Unregister ourselves
-        sp_document_removeResource(SP_OBJECT_DOCUMENT(object), "livepatheffect", SP_OBJECT(object));
+        sp_document_removeResource(object->document, "livepatheffect", object);
     }
 
     if (gradient->ref) {
@@ -249,11 +249,11 @@ livepatheffect_on_repr_attr_changed ( Inkscape::XML::Node * /*repr*/,
 LivePathEffectObject *LivePathEffectObject::fork_private_if_necessary(unsigned int nr_of_allowed_users)
 {
     if (hrefcount > nr_of_allowed_users) {
-        SPDocument *doc = SP_OBJECT_DOCUMENT(this);
+        SPDocument *doc = this->document;
         Inkscape::XML::Document *xml_doc = doc->getReprDoc();
-        Inkscape::XML::Node *dup_repr = SP_OBJECT_REPR (this)->duplicate(xml_doc);
+        Inkscape::XML::Node *dup_repr = this->getRepr()->duplicate(xml_doc);
 
-        SP_OBJECT_REPR (SP_DOCUMENT_DEFS (doc))->addChild(dup_repr, NULL);
+        SP_DOCUMENT_DEFS(doc)->getRepr()->addChild(dup_repr, NULL);
         LivePathEffectObject *lpeobj_new = LIVEPATHEFFECT( doc->getObjectByRepr(dup_repr) );
 
         Inkscape::GC::release(dup_repr);

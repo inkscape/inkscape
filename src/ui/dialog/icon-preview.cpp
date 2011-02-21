@@ -355,7 +355,7 @@ void IconPreviewPanel::refreshPreview()
                     GSList const *items = sel->itemList();
                     while ( items && !target ) {
                         SPItem* item = SP_ITEM( items->data );
-                        SPObject * obj = SP_OBJECT(item);
+                        SPObject * obj = item;
                         gchar const *id = obj->getId();
                         if ( id ) {
                             targetId = id;
@@ -427,7 +427,7 @@ void IconPreviewPanel::modeToggled()
 
 void IconPreviewPanel::renderPreview( SPObject* obj )
 {
-    SPDocument * doc = SP_OBJECT_DOCUMENT(obj);
+    SPDocument * doc = obj->document;
     gchar const * id = obj->getId();
     if ( !renderTimer ) {
         renderTimer = new Glib::Timer();
