@@ -460,7 +460,7 @@ void LayerSelector::_buildEntry(unsigned depth, SPObject &object) {
     );
 
     SPObject *layer=_desktop->currentLayer();
-    if ( &object == layer || &object == SP_OBJECT_PARENT(layer) ) {
+    if ( (&object == layer) || (&object == layer->parent) ) {
         callbacks->update_list = sigc::bind(
             sigc::mem_fun(*this, &LayerSelector::_protectUpdate),
             sigc::bind(
@@ -498,12 +498,12 @@ void LayerSelector::_buildEntry(unsigned depth, SPObject &object) {
     sp_object_ref(&object, NULL);
     row->set_value(_model_columns.object, &object);
 
-    Inkscape::GC::anchor(SP_OBJECT_REPR(&object));
-    row->set_value(_model_columns.repr, SP_OBJECT_REPR(&object));
+    Inkscape::GC::anchor(object.getRepr());
+    row->set_value(_model_columns.repr, object.getRepr());
 
     row->set_value(_model_columns.callbacks, reinterpret_cast<void *>(callbacks));
 
-    sp_repr_add_listener(SP_OBJECT_REPR(&object), vector, callbacks);
+    sp_repr_add_listener(object.getRepr(), vector, callbacks);
 }
 
 /** Removes a row from the _model_columns object, disconnecting listeners
@@ -536,13 +536,13 @@ void LayerSelector::_prepareLabelRenderer(
     //       (or before one has been selected) something appears to
     //       "invent" an iterator with null data and try to render it;
     //       where does it come from, and how can we avoid it?
-    if ( object && SP_OBJECT_REPR(object) ) {
+    if ( object && object->getRepr() ) {
         SPObject *layer=( _desktop ? _desktop->currentLayer() : NULL );
         SPObject *root=( _desktop ? _desktop->currentRoot() : NULL );
 
-        bool isancestor = !( (layer && (SP_OBJECT_PARENT(object) == SP_OBJECT_PARENT(layer))) || ((layer == root) && (SP_OBJECT_PARENT(object) == root)));
+        bool isancestor = !( (layer && (object->parent == layer->parent)) || ((layer == root) && (object->parent == root)));
 
-        bool iscurrent = ( object == layer && object != root );
+        bool iscurrent = ( (object == layer) && (object != root) );
 
         gchar *format = g_strdup_printf (
             "<span size=\"smaller\" %s><tt>%*s%s</tt>%s%s%s%%s%s%s%s</span>",

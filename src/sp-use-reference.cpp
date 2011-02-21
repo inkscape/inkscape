@@ -27,8 +27,8 @@ bool SPUseReference::_acceptObject(SPObject * const obj) const
 {
     if (SP_IS_ITEM(obj)) {
         SPObject * const owner = getOwner();
-        /* Refuse references to us or to an ancestor. */
-        for ( SPObject *iter = owner ; iter ; iter = SP_OBJECT_PARENT(iter) ) {
+        // Refuse references to us or to an ancestor.
+        for ( SPObject *iter = owner ; iter ; iter = iter->parent ) {
             if ( iter == obj ) {
                 return false;
             }
@@ -107,7 +107,7 @@ SPUsePath::start_listening(SPObject* to)
         return;
     }
     sourceObject = to;
-    sourceRepr = SP_OBJECT_REPR(to);
+    sourceRepr = to->getRepr();
     _delete_connection = to->connectDelete(sigc::bind(sigc::ptr_fun(&sp_usepath_delete_self), this));
     _transformed_connection = SP_ITEM(to)->connectTransformed(sigc::bind(sigc::ptr_fun(&sp_usepath_move_compensate), this));
     _modified_connection = to->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_usepath_source_modified), this));
@@ -135,7 +135,7 @@ sp_usepath_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPUsePath *off
         offset->start_listening(refobj);
     }
     offset->sourceDirty=true;
-    SP_OBJECT(offset->owner)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    offset->owner->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 static void
@@ -171,14 +171,14 @@ sp_usepath_move_compensate(Geom::Affine const *mp, SPItem *original, SPUsePath *
 
     // Commit the compensation.
     item->transform *= clone_move;
-    sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform, &advertized_move);
+    sp_item_write_transform(item, item->getRepr(), item->transform, &advertized_move);
 #else
     (void)mp;
     (void)original;
 #endif
 
     self->sourceDirty = true;
-    SP_OBJECT(item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 static void

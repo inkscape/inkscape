@@ -70,10 +70,10 @@ void ObjectHierarchy::_addTop(SPObject *senior, SPObject *junior) {
     g_assert(junior != NULL);
     g_assert(senior != NULL);
 
-    SPObject *object=SP_OBJECT_PARENT(junior);
+    SPObject *object = junior->parent;
     do {
         _addTop(object);
-        object = SP_OBJECT_PARENT(object);
+        object = object->parent;
     } while ( object != senior );
 }
 
@@ -160,7 +160,7 @@ void ObjectHierarchy::_addBottom(SPObject *senior, SPObject *junior) {
     g_assert(senior != NULL);
 
     if ( junior != senior ) {
-        _addBottom(senior, SP_OBJECT_PARENT(junior));
+        _addBottom(senior, junior->parent);
         _addBottom(junior);
     }
 }

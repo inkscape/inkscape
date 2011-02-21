@@ -236,7 +236,7 @@ void LayerManager::_rebuild() {
         LayerWatcher* one = _watchers.back();
         _watchers.pop_back();
         if ( one->_obj ) {
-            Node* node = SP_OBJECT_REPR(one->_obj);
+            Node* node = one->_obj->getRepr();
             if ( node ) {
                 node->removeObserver(*one);
             }
@@ -264,7 +264,7 @@ void LayerManager::_rebuild() {
 
             if ( root->isAncestorOf(layer) ) {
                 needsAdd = true;
-                for ( SPObject* curr = layer; curr && (curr != root) && needsAdd; curr = SP_OBJECT_PARENT(curr) ) {
+                for ( SPObject* curr = layer; curr && (curr != root) && needsAdd; curr = curr->parent ) {
                     if ( SP_IS_GROUP(curr) ) {
                         SPGroup* group = SP_GROUP(curr);
                         if ( group->layerMode() == SPGroup::LAYER ) {
@@ -307,10 +307,10 @@ void LayerManager::_rebuild() {
             // See http://sourceforge.net/tracker/index.php?func=detail&aid=1339397&group_id=93438&atid=604306
 
             SPObject const *higher = layer;
-            while ( higher && (SP_OBJECT_PARENT(higher) != root) ) {
-                higher = SP_OBJECT_PARENT(higher);
+            while ( higher && (higher->parent != root) ) {
+                higher = higher->parent;
             }
-            Node* node = higher ? SP_OBJECT_REPR(higher) : 0;
+            Node const* node = higher ? higher->getRepr() : 0;
             if ( node && node->parent() ) {
 //                 Debug::EventTracker<DebugAddLayer> tracker(*layer);
 
@@ -318,7 +318,7 @@ void LayerManager::_rebuild() {
 
                 LayerWatcher *eye = new LayerWatcher(this, layer, connection);
                 _watchers.push_back( eye );
-                SP_OBJECT_REPR(layer)->addObserver(*eye);
+                layer->getRepr()->addObserver(*eye);
 
                 _addOne(layer);
             }

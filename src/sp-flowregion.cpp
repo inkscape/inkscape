@@ -507,7 +507,7 @@ static void         GetDest(SPObject* child,Shape **computed)
 	SPObject* u_child=child;
 	if ( SP_IS_USE(u_child) ) {
 		u_child=SP_USE(u_child)->child;
-		tr_mat = SP_ITEM(u_child)->getRelativeTransform(SP_OBJECT_PARENT(child));
+		tr_mat = SP_ITEM(u_child)->getRelativeTransform(child->parent);
 	} else {
 		tr_mat = SP_ITEM(u_child)->transform;
 	}
@@ -524,7 +524,7 @@ static void         GetDest(SPObject* child,Shape **computed)
 		temp->Convert(0.25);
 		temp->Fill(n_shp,0);
 		Shape*  uncross=new Shape;
-		SPStyle* style=SP_OBJECT_STYLE(u_child);
+		SPStyle* style = u_child->style;
 		if ( style && style->fill_rule.computed == SP_WIND_RULE_EVENODD ) {
 			uncross->ConvertToShape(n_shp,fill_oddEven);
 		} else {

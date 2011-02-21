@@ -130,12 +130,12 @@ text_put_on_path()
 
         if (!repr) return;
 
-        Inkscape::XML::Node *parent = SP_OBJECT_REPR(text)->parent();
+        Inkscape::XML::Node *parent = text->getRepr()->parent();
         parent->appendChild(repr);
 
         SPItem *new_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
         new_item->doWriteTransform(repr, text->transform);
-        SP_OBJECT(new_item)->updateRepr();
+        new_item->updateRepr();
 
         Inkscape::GC::release(repr);
         text->deleteObject(); // delete the orignal flowtext
@@ -152,23 +152,24 @@ text_put_on_path()
 
     // remove transform from text, but recursively scale text's fontsize by the expansion
     SP_TEXT(text)->_adjustFontsizeRecursive (text, NR::expansion(SP_ITEM(text)->transform));
-    SP_OBJECT_REPR(text)->setAttribute("transform", NULL);
+    text->getRepr()->setAttribute("transform", NULL);
 
     // make a list of text children
     GSList *text_reprs = NULL;
-    for (SPObject *o = SP_OBJECT(text)->children; o != NULL; o = o->next) {
-        text_reprs = g_slist_prepend(text_reprs, SP_OBJECT_REPR(o));
+    for (SPObject *o = text->children; o != NULL; o = o->next) {
+        text_reprs = g_slist_prepend(text_reprs, o->getRepr());
     }
 
     // create textPath and put it into the text
     Inkscape::XML::Node *textpath = xml_doc->createElement("svg:textPath");
     // reference the shape
-    textpath->setAttribute("xlink:href", g_strdup_printf("#%s", SP_OBJECT_REPR(shape)->attribute("id")));
-    if (text_alignment == Inkscape::Text::Layout::RIGHT)
+    textpath->setAttribute("xlink:href", g_strdup_printf("#%s", shape->getRepr()->attribute("id")));
+    if (text_alignment == Inkscape::Text::Layout::RIGHT) {
         textpath->setAttribute("startOffset", "100%");
-    else if (text_alignment == Inkscape::Text::Layout::CENTER)
+    } else if (text_alignment == Inkscape::Text::Layout::CENTER) {
         textpath->setAttribute("startOffset", "50%");
-    SP_OBJECT_REPR(text)->addChild(textpath, NULL);
+    }
+    text->getRepr()->addChild(textpath, NULL);
 
     for ( GSList *i = text_reprs ; i ; i = i->next ) {
         // Make a copy of each text child
@@ -180,14 +181,14 @@ text_put_on_path()
             copy->setAttribute("y", NULL);
         }
         // remove the old repr from under text
-        SP_OBJECT_REPR(text)->removeChild((Inkscape::XML::Node *) i->data);
+        text->getRepr()->removeChild(reinterpret_cast<Inkscape::XML::Node *>(i->data));
         // put its copy into under textPath
         textpath->addChild(copy, NULL); // fixme: copy id
     }
 
     // x/y are useless with textpath, and confuse Batik 1.5
-    SP_OBJECT_REPR(text)->setAttribute("x", NULL);
-    SP_OBJECT_REPR(text)->setAttribute("y", NULL);
+    text->getRepr()->setAttribute("x", NULL);
+    text->getRepr()->setAttribute("y", NULL);
 
     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
                        _("Put text on path"));
@@ -211,16 +212,15 @@ text_remove_from_path()
     for (GSList *items = g_slist_copy((GSList *) selection->itemList());
          items != NULL;
          items = items->next) {
+        SPObject *obj = SP_OBJECT(items->data);
 
-        if (!SP_IS_TEXT_TEXTPATH(SP_OBJECT(items->data))) {
-            continue;
+        if (SP_IS_TEXT_TEXTPATH(obj)) {
+            SPObject *tp = obj->firstChild();
+
+            did = true;
+
+            sp_textpath_to_text(tp);
         }
-
-        SPObject *tp = SP_OBJECT(items->data)->firstChild();
-
-        did = true;
-
-        sp_textpath_to_text(tp);
     }
 
     if (!did) {
@@ -235,19 +235,19 @@ text_remove_from_path()
 void
 text_remove_all_kerns_recursively(SPObject *o)
 {
-    SP_OBJECT_REPR(o)->setAttribute("dx", NULL);
-    SP_OBJECT_REPR(o)->setAttribute("dy", NULL);
-    SP_OBJECT_REPR(o)->setAttribute("rotate", NULL);
+    o->getRepr()->setAttribute("dx", NULL);
+    o->getRepr()->setAttribute("dy", NULL);
+    o->getRepr()->setAttribute("rotate", NULL);
 
     // if x contains a list, leave only the first value
-    gchar *x = (gchar *) SP_OBJECT_REPR(o)->attribute("x");
+    gchar const *x = o->getRepr()->attribute("x");
     if (x) {
         gchar **xa_space = g_strsplit(x, " ", 0);
         gchar **xa_comma = g_strsplit(x, ",", 0);
         if (xa_space && *xa_space && *(xa_space + 1)) {
-            SP_OBJECT_REPR(o)->setAttribute("x", g_strdup(*xa_space));
+            o->getRepr()->setAttribute("x", g_strdup(*xa_space));
         } else if (xa_comma && *xa_comma && *(xa_comma + 1)) {
-            SP_OBJECT_REPR(o)->setAttribute("x", g_strdup(*xa_comma));
+            o->getRepr()->setAttribute("x", g_strdup(*xa_comma));
         }
         g_strfreev(xa_space);
         g_strfreev(xa_comma);
@@ -318,13 +318,13 @@ text_flow_into_shape()
     if (SP_IS_TEXT(text)) {
       // remove transform from text, but recursively scale text's fontsize by the expansion
       SP_TEXT(text)->_adjustFontsizeRecursive(text, NR::expansion(SP_ITEM(text)->transform));
-      SP_OBJECT_REPR(text)->setAttribute("transform", NULL);
+      text->getRepr()->setAttribute("transform", NULL);
     }
 
     Inkscape::XML::Node *root_repr = xml_doc->createElement("svg:flowRoot");
     root_repr->setAttribute("xml:space", "preserve"); // we preserve spaces in the text objects we create
-    root_repr->setAttribute("style", SP_OBJECT_REPR(text)->attribute("style")); // fixme: transfer style attrs too
-    SP_OBJECT_REPR(SP_OBJECT_PARENT(shape))->appendChild(root_repr);
+    root_repr->setAttribute("style", text->getRepr()->attribute("style")); // fixme: transfer style attrs too
+    shape->parent->getRepr()->appendChild(root_repr);
     SPObject *root_object = doc->getObjectByRepr(root_repr);
     g_return_if_fail(SP_IS_FLOWTEXT(root_object));
 
@@ -342,7 +342,7 @@ text_flow_into_shape()
             Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
             clone->setAttribute("x", "0");
             clone->setAttribute("y", "0");
-            clone->setAttribute("xlink:href", g_strdup_printf("#%s", SP_OBJECT_REPR(item)->attribute("id")));
+            clone->setAttribute("xlink:href", g_strdup_printf("#%s", item->getRepr()->attribute("id")));
 
             // add the new clone to the region
             region_repr->appendChild(clone);
@@ -365,9 +365,9 @@ text_flow_into_shape()
         Inkscape::GC::release(text_repr);
 
     } else { // reflow an already flowed text, preserving paras
-        for (SPObject *o = SP_OBJECT(text)->children; o != NULL; o = o->next) {
+        for (SPObject *o = text->children; o != NULL; o = o->next) {
             if (SP_IS_FLOWPARA(o)) {
-                Inkscape::XML::Node *para_repr = SP_OBJECT_REPR(o)->duplicate(xml_doc);
+                Inkscape::XML::Node *para_repr = o->getRepr()->duplicate(xml_doc);
                 root_repr->appendChild(para_repr);
                 object = doc->getObjectByRepr(para_repr);
                 g_return_if_fail(SP_IS_FLOWPARA(object));
@@ -376,7 +376,7 @@ text_flow_into_shape()
         }
     }
 
-    SP_OBJECT(text)->deleteObject (true);
+    text->deleteObject(true);
 
     DocumentUndo::done(doc, SP_VERB_CONTEXT_TEXT,
                        _("Flow text into shape"));
@@ -431,7 +431,7 @@ text_unflow ()
         rtext->setAttribute("xml:space", "preserve"); // we preserve spaces in the text objects we create
 
         /* Set style */
-        rtext->setAttribute("style", SP_OBJECT_REPR(flowtext)->attribute("style")); // fixme: transfer style attrs too; and from descendants
+        rtext->setAttribute("style", flowtext->getRepr()->attribute("style")); // fixme: transfer style attrs too; and from descendants
 
         NRRect bbox;
         SP_ITEM(flowtext)->invoke_bbox( &bbox, SP_ITEM(flowtext)->i2doc_affine(), TRUE);
@@ -451,7 +451,7 @@ text_unflow ()
         free(text_string);
         rtspan->appendChild(text_repr);
 
-        SP_OBJECT_REPR(SP_OBJECT_PARENT(flowtext))->appendChild(rtext);
+        flowtext->parent->getRepr()->appendChild(rtext);
         SPObject *text_object = doc->getObjectByRepr(rtext);
 
         // restore the font size multiplier from the flowtext's transform
@@ -515,12 +515,12 @@ flowtext_to_text()
 
         did = true;
 
-        Inkscape::XML::Node *parent = SP_OBJECT_REPR(item)->parent();
-        parent->addChild(repr, SP_OBJECT_REPR(item));
+        Inkscape::XML::Node *parent = item->getRepr()->parent();
+        parent->addChild(repr, item->getRepr());
 
-        SPItem *new_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
+        SPItem *new_item = reinterpret_cast<SPItem *>(sp_desktop_document(desktop)->getObjectByRepr(repr));
         new_item->doWriteTransform(repr, item->transform);
-        SP_OBJECT(new_item)->updateRepr();
+        new_item->updateRepr();
     
         Inkscape::GC::release(repr);
         item->deleteObject();

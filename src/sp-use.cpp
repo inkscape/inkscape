@@ -129,7 +129,7 @@ sp_use_init(SPUse *use)
 
     new (&use->_transformed_connection) sigc::connection();
 
-    use->ref = new SPUseReference(SP_OBJECT(use));
+    use->ref = new SPUseReference(use);
 
     use->_changed_connection = use->ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_use_href_changed), use));
 }
@@ -137,15 +137,16 @@ sp_use_init(SPUse *use)
 static void
 sp_use_finalize(GObject *obj)
 {
-    SPUse *use = (SPUse *) obj;
+    SPUse *use = reinterpret_cast<SPUse *>(obj);
 
     if (use->child) {
-        SP_OBJECT(obj)->detach(use->child);
+        use->detach(use->child);
         use->child = NULL;
     }
 
     use->ref->detach();
     delete use->ref;
+    use->ref = 0;
 
     use->_delete_connection.~connection();
     use->_changed_connection.~connection();
@@ -354,7 +355,7 @@ sp_use_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
 
     NRArenaItem *ai = NRArenaGroup::create(arena);
     nr_arena_group_set_transparent(NR_ARENA_GROUP(ai), FALSE);
-    nr_arena_group_set_style(NR_ARENA_GROUP(ai), SP_OBJECT_STYLE(item));
+    nr_arena_group_set_style(NR_ARENA_GROUP(ai), item->style);
 
     if (use->child) {
         NRArenaItem *ac = SP_ITEM(use->child)->invoke_show(arena, key, flags);
@@ -470,12 +471,12 @@ sp_use_move_compensate(Geom::Affine const *mp, SPItem */*original*/, SPUse *self
 {
     // the clone is orphaned; or this is not a real use, but a clone of another use;
     // we skip it, otherwise duplicate compensation will occur
-    if (SP_OBJECT_IS_CLONED(self)) {
+    if (self->cloned) {
         return;
     }
 
     // never compensate uses which are used in flowtext
-    if (SP_OBJECT_PARENT(self) && SP_IS_FLOWREGION(SP_OBJECT_PARENT(self))) {
+    if (self->parent && SP_IS_FLOWREGION(self->parent)) {
         return;
     }
 
@@ -492,7 +493,7 @@ sp_use_move_compensate(Geom::Affine const *mp, SPItem */*original*/, SPUse *self
         return;
 
     // restore item->transform field from the repr, in case it was changed by seltrans
-    SP_OBJECT (self)->readAttr ("transform");
+    self->readAttr ("transform");
 
     Geom::Affine t = sp_use_get_parent_transform(self);
     Geom::Affine clone_move = t.inverse() * m * t;
@@ -510,10 +511,9 @@ sp_use_move_compensate(Geom::Affine const *mp, SPItem */*original*/, SPUse *self
     }
 
     // commit the compensation
-    SPItem *item = SP_ITEM(self);
-    item->transform *= clone_move;
-    item->doWriteTransform(SP_OBJECT_REPR(item), item->transform, &advertized_move);
-    SP_OBJECT(item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    self->transform *= clone_move;
+    self->doWriteTransform(self->getRepr(), self->transform, &advertized_move);
+    self->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 static void
@@ -525,21 +525,21 @@ sp_use_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPUse *use)
     use->_transformed_connection.disconnect();
 
     if (use->child) {
-        SP_OBJECT(use)->detach(use->child);
+        use->detach(use->child);
         use->child = NULL;
     }
 
     if (use->href) {
         SPItem *refobj = use->ref->getObject();
         if (refobj) {
-            Inkscape::XML::Node *childrepr = SP_OBJECT_REPR(refobj);
+            Inkscape::XML::Node *childrepr = refobj->getRepr();
             GType type = sp_repr_type_lookup(childrepr);
             g_return_if_fail(type > G_TYPE_NONE);
             if (g_type_is_a(type, SP_TYPE_ITEM)) {
                 use->child = (SPObject*) g_object_new(type, 0);
-                SP_OBJECT(use)->attach(use->child, use->lastChild());
-                sp_object_unref(use->child, SP_OBJECT(use));
-                (use->child)->invoke_build(SP_OBJECT(use)->document, childrepr, TRUE);
+                use->attach(use->child, use->lastChild());
+                sp_object_unref(use->child, use);
+                (use->child)->invoke_build(use->document, childrepr, TRUE);
 
                 for (SPItemView *v = item->display; v != NULL; v = v->next) {
                     NRArenaItem *ai;
@@ -550,7 +550,7 @@ sp_use_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPUse *use)
                 }
 
             }
-            use->_delete_connection = SP_OBJECT(refobj)->connectDelete(sigc::bind(sigc::ptr_fun(&sp_use_delete_self), use));
+            use->_delete_connection = refobj->connectDelete(sigc::bind(sigc::ptr_fun(&sp_use_delete_self), use));
             use->_transformed_connection = SP_ITEM(refobj)->connectTransformed(sigc::bind(sigc::ptr_fun(&sp_use_move_compensate), use));
         }
     }
@@ -560,8 +560,8 @@ static void
 sp_use_delete_self(SPObject */*deleted*/, SPUse *self)
 {
     // always delete uses which are used in flowtext
-    if (SP_OBJECT_PARENT(self) && SP_IS_FLOWREGION(SP_OBJECT_PARENT(self))) {
-        SP_OBJECT(self)->deleteObject();
+    if (self->parent && SP_IS_FLOWREGION(self->parent)) {
+        self->deleteObject();
         return;
     }
 
@@ -572,7 +572,7 @@ sp_use_delete_self(SPObject */*deleted*/, SPUse *self)
     if (mode == SP_CLONE_ORPHANS_UNLINK) {
         sp_use_unlink(self);
     } else if (mode == SP_CLONE_ORPHANS_DELETE) {
-        SP_OBJECT(self)->deleteObject();
+        self->deleteObject();
     }
 }
 
@@ -587,12 +587,14 @@ sp_use_update(SPObject *object, SPCtx *ctx, unsigned flags)
     if (((SPObjectClass *) (parent_class))->update)
         ((SPObjectClass *) (parent_class))->update(object, ctx, flags);
 
-    if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+        flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    }
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
       for (SPItemView *v = SP_ITEM(object)->display; v != NULL; v = v->next) {
-        nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+        nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), object->style);
       }
     }
 
@@ -650,7 +652,7 @@ sp_use_modified(SPObject *object, guint flags)
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
       for (SPItemView *v = SP_ITEM(object)->display; v != NULL; v = v->next) {
-        nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+        nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), object->style);
       }
     }
 
@@ -670,13 +672,13 @@ SPItem *sp_use_unlink(SPUse *use)
         return NULL;
     }
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(use);
+    Inkscape::XML::Node *repr = use->getRepr();
     if (!repr) {
         return NULL;
     }
 
     Inkscape::XML::Node *parent = sp_repr_parent(repr);
-    SPDocument *document = SP_OBJECT(use)->document;
+    SPDocument *document = use->document;
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
 
     // Track the ultimate source of a chain of uses.
@@ -691,12 +693,12 @@ SPItem *sp_use_unlink(SPUse *use)
     Inkscape::XML::Node *copy = NULL;
     if (SP_IS_SYMBOL(orig)) { // make a group, copy children
         copy = xml_doc->createElement("svg:g");
-        for (Inkscape::XML::Node *child = SP_OBJECT_REPR(orig)->firstChild() ; child != NULL; child = child->next()) {
+        for (Inkscape::XML::Node *child = orig->getRepr()->firstChild() ; child != NULL; child = child->next()) {
                 Inkscape::XML::Node *newchild = child->duplicate(xml_doc);
                 copy->appendChild(newchild);
         }
     } else { // just copy
-        copy = SP_OBJECT_REPR(orig)->duplicate(xml_doc);
+        copy = orig->getRepr()->duplicate(xml_doc);
     }
 
     // Add the duplicate repr just after the existing one.
@@ -706,20 +708,20 @@ SPItem *sp_use_unlink(SPUse *use)
     SPObject *unlinked = document->getObjectByRepr(copy);
 
     // Merge style from the use.
-    SPStyle *unli_sty = SP_OBJECT_STYLE(unlinked);
-    SPStyle const *use_sty = SP_OBJECT_STYLE(use);
+    SPStyle *unli_sty = unlinked->style;
+    SPStyle const *use_sty = use->style;
     sp_style_merge_from_dying_parent(unli_sty, use_sty);
     sp_style_merge_from_parent(unli_sty, unlinked->parent->style);
 
-    SP_OBJECT(unlinked)->updateRepr();
+    unlinked->updateRepr();
 
     // Hold onto our SPObject and repr for now.
-    sp_object_ref(SP_OBJECT(use), NULL);
+    sp_object_ref(use, NULL);
     Inkscape::GC::anchor(repr);
 
     // Remove ourselves, not propagating delete events to avoid a
     // chain-reaction with other elements that might reference us.
-    SP_OBJECT(use)->deleteObject(false);
+    use->deleteObject(false);
 
     // Give the copy our old id and let go of our old repr.
     copy->setAttribute("id", repr->attribute("id"));
@@ -733,15 +735,15 @@ SPItem *sp_use_unlink(SPUse *use)
     copy->setAttribute("inkscape:tile-cy", NULL);
 
     // Establish the succession and let go of our object.
-    SP_OBJECT(use)->setSuccessor(unlinked);
-    sp_object_unref(SP_OBJECT(use), NULL);
+    use->setSuccessor(unlinked);
+    sp_object_unref(use, NULL);
 
     SPItem *item = SP_ITEM(unlinked);
     // Set the accummulated transform.
     {
         Geom::Affine nomove(Geom::identity());
         // Advertise ourselves as not moving.
-        item->doWriteTransform(SP_OBJECT_REPR(item), t, &nomove);
+        item->doWriteTransform(item->getRepr(), t, &nomove);
     }
     return item;
 }

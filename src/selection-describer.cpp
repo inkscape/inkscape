@@ -128,7 +128,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         _context.set(Inkscape::NORMAL_MESSAGE, _when_nothing);
     } else {
         SPItem *item = SP_ITEM(items->data);
-        SPObject *layer = selection->desktop()->layerForObject (SP_OBJECT (item));
+        SPObject *layer = selection->desktop()->layerForObject(item);
         SPObject *root = selection->desktop()->currentRoot();
 
         // Layer name
@@ -154,7 +154,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         }
 
         // Parent name
-        SPObject *parent = SP_OBJECT_PARENT (item);
+        SPObject *parent = item->parent;
         gchar const *parent_label = parent->getId();
         char *quoted_parent_label = xml_quote_strdup(parent_label);
         gchar *parent_name = g_strdup_printf(_("<i>%s</i>"), quoted_parent_label);

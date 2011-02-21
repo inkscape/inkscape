@@ -1025,7 +1025,7 @@ sp_ui_main_menubar(Inkscape::UI::View::View *view)
 }
 
 static void leave_group(GtkMenuItem *, SPDesktop *desktop) {
-    desktop->setCurrentLayer(SP_OBJECT_PARENT(desktop->currentLayer()));
+    desktop->setCurrentLayer(desktop->currentLayer()->parent);
 }
 
 static void enter_group(GtkMenuItem *mi, SPDesktop *desktop) {
@@ -1071,13 +1071,13 @@ sp_ui_context_menu(Inkscape::UI::View::View *view, SPItem *item)
     if (item) {
         if (SP_IS_GROUP(item)) {
             group = SP_GROUP(item);
-        } else if ( item != dt->currentRoot() && SP_IS_GROUP(SP_OBJECT_PARENT(item)) ) {
-            group = SP_GROUP(SP_OBJECT_PARENT(item));
+        } else if ( item != dt->currentRoot() && SP_IS_GROUP(item->parent) ) {
+            group = SP_GROUP(item->parent);
         }
     }
 
     if (( group && group != dt->currentLayer() ) ||
-        ( dt->currentLayer() != dt->currentRoot() && SP_OBJECT_PARENT(dt->currentLayer()) != dt->currentRoot() ) ) {
+        ( dt->currentLayer() != dt->currentRoot() && dt->currentLayer()->parent != dt->currentRoot() ) ) {
         /* Separator */
         sp_ui_menu_append_item(GTK_MENU(m), NULL, NULL, NULL, NULL, NULL, NULL);
     }
@@ -1094,7 +1094,7 @@ sp_ui_context_menu(Inkscape::UI::View::View *view, SPItem *item)
     }
 
     if ( dt->currentLayer() != dt->currentRoot() ) {
-        if ( SP_OBJECT_PARENT(dt->currentLayer()) != dt->currentRoot() ) {
+        if ( dt->currentLayer()->parent != dt->currentRoot() ) {
             GtkWidget *w = gtk_menu_item_new_with_label(_("Go to parent"));
             g_signal_connect(G_OBJECT(w), "activate", GCallback(leave_group), dt);
             gtk_widget_show(w);
@@ -1167,10 +1167,10 @@ sp_ui_drag_data_received(GtkWidget *widget,
                             g_free(str);
                             str = 0;
 
-                            SP_OBJECT(item)->setAttribute( 
-                                                    fillnotstroke ? "inkscape:x-fill-tag":"inkscape:x-stroke-tag",
-                                                    palName.c_str(),
-                                                    false );
+                            item->setAttribute( 
+                                fillnotstroke ? "inkscape:x-fill-tag":"inkscape:x-stroke-tag",
+                                palName.c_str(),
+                                false );
                             item->updateRepr();
 
                             sp_repr_css_set_property( css, fillnotstroke ? "fill":"stroke", c );
@@ -1251,9 +1251,9 @@ sp_ui_drag_data_received(GtkWidget *widget,
                             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                             delta = desktop->d2w(delta);
                             double stroke_tolerance =
-                                ( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
+                                ( !item->style->stroke.isNone() ?
                                   desktop->current_zoom() *
-                                  SP_OBJECT_STYLE (item)->stroke_width.computed *
+                                  item->style->stroke_width.computed *
                                   to_2geom(item->i2d_affine()).descrim() * 0.5
                                   : 0.0)
                                 + prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
@@ -1354,9 +1354,9 @@ sp_ui_drag_data_received(GtkWidget *widget,
                             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                             delta = desktop->d2w(delta);
                             double stroke_tolerance =
-                                ( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
+                                ( !item->style->stroke.isNone() ?
                                   desktop->current_zoom() *
-                                  SP_OBJECT_STYLE (item)->stroke_width.computed *
+                                  item->style->stroke_width.computed *
                                   to_2geom(item->i2d_affine()).descrim() * 0.5
                                   : 0.0)
                                 + prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);

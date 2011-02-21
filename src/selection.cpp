@@ -308,7 +308,7 @@ GSList const *Selection::reprList() {
 
     for ( GSList const *iter=itemList() ; iter != NULL ; iter = iter->next ) {
         SPObject *obj=reinterpret_cast<SPObject *>(iter->data);
-        _reprs = g_slist_prepend(_reprs, SP_OBJECT_REPR(obj));
+        _reprs = g_slist_prepend(_reprs, obj->getRepr());
     }
     _reprs = g_slist_reverse(_reprs);
 
@@ -359,7 +359,7 @@ SPItem *Selection::singleItem() {
 
 Inkscape::XML::Node *Selection::singleRepr() {
     SPObject *obj=single();
-    return obj ? SP_OBJECT_REPR(obj) : NULL;
+    return obj ? obj->getRepr() : NULL;
 }
 
 NRRect *Selection::bounds(NRRect *bbox, SPItem::BBoxType type) const
@@ -489,24 +489,24 @@ void Selection::_removeObjectDescendants(SPObject *obj) {
     for ( iter = _objs ; iter ; iter = next ) {
         next = iter->next;
         SPObject *sel_obj=reinterpret_cast<SPObject *>(iter->data);
-        SPObject *parent=SP_OBJECT_PARENT(sel_obj);
+        SPObject *parent = sel_obj->parent;
         while (parent) {
             if ( parent == obj ) {
                 _remove(sel_obj);
                 break;
             }
-            parent = SP_OBJECT_PARENT(parent);
+            parent = parent->parent;
         }
     }
 }
 
 void Selection::_removeObjectAncestors(SPObject *obj) {
-        SPObject *parent=SP_OBJECT_PARENT(obj);
+        SPObject *parent = obj->parent;
         while (parent) {
             if (includes(parent)) {
                 _remove(parent);
             }
-            parent = SP_OBJECT_PARENT(parent);
+            parent = parent->parent;
         }
 }
 
@@ -537,7 +537,7 @@ guint Selection::numberOfParents() {
     GSList const *items = const_cast<Selection *>(this)->itemList();
     GSList *parents = NULL;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
-        SPObject *parent = SP_OBJECT_PARENT(iter->data);
+        SPObject *parent = SP_OBJECT(iter->data)->parent;
         if (g_slist_find (parents, parent) == NULL) {
             parents = g_slist_prepend (parents, parent);
         }

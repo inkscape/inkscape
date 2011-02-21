@@ -1602,7 +1602,7 @@ bool in_dt_coordsys(SPObject const &item)
         if (!SP_IS_ITEM(child)) {
             return false;
         }
-        SPObject const * const parent = SP_OBJECT_PARENT(child);
+        SPObject const * const parent = child->parent;
         if (parent == NULL) {
             break;
         }

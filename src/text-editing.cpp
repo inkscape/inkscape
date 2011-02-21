@@ -1757,7 +1757,7 @@ static bool redundant_semi_nesting_processor(SPObject **item, SPObject *child, b
         SPObject *prev = (*item)->getPrev();
         (*item)->parent->getRepr()->addChild(new_span, prev ? prev->getRepr() : NULL);
     } else {
-        SP_OBJECT_REPR(SP_OBJECT_PARENT(*item))->addChild(new_span, SP_OBJECT_REPR(*item));
+        (*item)->parent->getRepr()->addChild(new_span, (*item)->getRepr());
     }
     new_span->setAttribute("style", child->getRepr()->attribute("style"));
     move_child_nodes(child->getRepr(), new_span);

@@ -803,27 +803,29 @@ clonetiler_get_transform (
 static bool
 clonetiler_is_a_clone_of (SPObject *tile, SPObject *obj)
 {
+    bool result = false;
     char *id_href = NULL;
 
     if (obj) {
-        Inkscape::XML::Node *obj_repr = SP_OBJECT_REPR(obj);
+        Inkscape::XML::Node *obj_repr = obj->getRepr();
         id_href = g_strdup_printf("#%s", obj_repr->attribute("id"));
     }
 
     if (SP_IS_USE(tile) &&
-        SP_OBJECT_REPR(tile)->attribute("xlink:href") &&
-        (!id_href || !strcmp(id_href, SP_OBJECT_REPR(tile)->attribute("xlink:href"))) &&
-        SP_OBJECT_REPR(tile)->attribute("inkscape:tiled-clone-of") &&
-        (!id_href || !strcmp(id_href, SP_OBJECT_REPR(tile)->attribute("inkscape:tiled-clone-of"))))
+        tile->getRepr()->attribute("xlink:href") &&
+        (!id_href || !strcmp(id_href, tile->getRepr()->attribute("xlink:href"))) &&
+        tile->getRepr()->attribute("inkscape:tiled-clone-of") &&
+        (!id_href || !strcmp(id_href, tile->getRepr()->attribute("inkscape:tiled-clone-of"))))
     {
-        if (id_href)
-            g_free (id_href);
-        return true;
+        result = true;
     } else {
-        if (id_href)
-            g_free (id_href);
-        return false;
+        result = false;
     }
+    if (id_href) {
+        g_free(id_href);
+        id_href = 0;
+    }
+    return result;
 }
 
 static NRArena const *trace_arena = NULL;
@@ -856,7 +858,7 @@ clonetiler_trace_setup (SPDocument *doc, gdouble zoom, SPItem *original)
 
     // hide the (current) original and any tiled clones, we only want to pick the background
     original->invoke_hide(trace_visionkey);
-    clonetiler_trace_hide_tiled_clones_recursively(SP_OBJECT(trace_doc->getRoot()));
+    clonetiler_trace_hide_tiled_clones_recursively(trace_doc->getRoot());
 
     trace_doc->getRoot()->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     trace_doc->ensureUpToDate();
@@ -965,8 +967,8 @@ clonetiler_unclump( GtkWidget */*widget*/, void * )
         return;
     }
 
-    SPObject *obj = SP_OBJECT(selection->singleItem());
-    SPObject *parent = SP_OBJECT_PARENT (obj);
+    SPObject *obj = selection->singleItem();
+    SPObject *parent = obj->parent;
 
     GSList *to_unclump = NULL; // not including the original
 
@@ -989,7 +991,7 @@ clonetiler_unclump( GtkWidget */*widget*/, void * )
 static guint
 clonetiler_number_of_clones (SPObject *obj)
 {
-    SPObject *parent = SP_OBJECT_PARENT (obj);
+    SPObject *parent = obj->parent;
 
     guint n = 0;
 
@@ -1017,8 +1019,8 @@ clonetiler_remove( GtkWidget */*widget*/, void *, bool do_undo = true )
         return;
     }
 
-    SPObject *obj = SP_OBJECT(selection->singleItem());
-    SPObject *parent = SP_OBJECT_PARENT (obj);
+    SPObject *obj = selection->singleItem();
+    SPObject *parent = obj->parent;
 
 // remove old tiling
     GSList *to_delete = NULL;
@@ -1102,10 +1104,10 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
     gtk_widget_queue_draw(GTK_WIDGET(status));
     gdk_window_process_all_updates();
 
-    SPObject *obj = SP_OBJECT(selection->singleItem());
-    Inkscape::XML::Node *obj_repr = SP_OBJECT_REPR(obj);
+    SPObject *obj = selection->singleItem();
+    Inkscape::XML::Node *obj_repr = obj->getRepr();
     const char *id_href = g_strdup_printf("#%s", obj_repr->attribute("id"));
-    SPObject *parent = SP_OBJECT_PARENT (obj);
+    SPObject *parent = obj->parent;
 
     clonetiler_remove (NULL, NULL, false);
 
@@ -1462,7 +1464,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
             }
 
             // add the new clone to the top of the original's parent
-            SP_OBJECT_REPR(parent)->appendChild(clone);
+            parent->getRepr()->appendChild(clone);
 
             if (blur > 0.0) {
                 SPObject *clone_object = sp_desktop_document(desktop)->getObjectByRepr(clone);
@@ -1475,7 +1477,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
                 // that we can take bbox of; however here we only need a lower bound so that blur
                 // margins are not too small, and the perimeter should work
                 SPFilter *constructed = new_filter_gaussian_blur(sp_desktop_document(desktop), radius, t.descrim(), t.expansionX(), t.expansionY(), perimeter, perimeter);
-                sp_style_set_property_url (clone_object, "filter", SP_OBJECT(constructed), false);
+                sp_style_set_property_url (clone_object, "filter", constructed, false);
             }
 
             if (center_set) {

@@ -1085,7 +1085,7 @@ extern "C" guchar *sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
             Geom::Affine const i2doc(SP_ITEM(object)->i2doc_affine());
             Geom::OptRect dbox = SP_ITEM(object)->getBounds(i2doc);
 
-            if ( SP_OBJECT_PARENT(object) == NULL )
+            if ( object->parent == NULL )
             {
                 dbox = Geom::Rect(Geom::Point(0, 0),
                                 Geom::Point(doc->getWidth(), doc->getHeight()));
