@@ -687,7 +687,7 @@ select_font(PEMF_CALLBACK_DATA d, int index)
         g_free(d->dc[d->level].tstyle.font_family.value);
     d->dc[d->level].tstyle.font_family.value =
         (gchar *) g_utf16_to_utf8( (gunichar2*) pEmr->elfw.elfLogFont.lfFaceName, -1, NULL, NULL, NULL );
-    d->dc[d->level].style.text_transform.value = ((pEmr->elfw.elfLogFont.lfEscapement + 3600) % 3600) / 10;
+    d->dc[d->level].style.baseline_shift.value = ((pEmr->elfw.elfLogFont.lfEscapement + 3600) % 3600) / 10;	// use baseline_shift instead of text_transform to avoid overflow
 }
 
 static void
@@ -1563,8 +1563,42 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             break;
         }
         case EMR_ROUNDRECT:
+        {
             dbg_str << "<!-- EMR_ROUNDRECT -->\n";
+
+            PEMRROUNDRECT pEmr = (PEMRROUNDRECT) lpEMFR;
+            RECTL rc = pEmr->rclBox;
+            SIZEL corner = pEmr->szlCorner;
+            double f = 4.*(sqrt(2) - 1)/3;
+
+            double l = pix_to_x_point(d, rc.left, rc.top);
+            double t = pix_to_y_point(d, rc.left, rc.top);
+            double r = pix_to_x_point(d, rc.right, rc.bottom);
+            double b = pix_to_y_point(d, rc.right, rc.bottom);
+            double cnx = pix_to_size_point(d, corner.cx/2);
+            double cny = pix_to_size_point(d, corner.cy/2);
+
+            SVGOStringStream tmp_rectangle;
+            tmp_rectangle << "d=\"";
+            tmp_rectangle << "\n\tM " << l << ", " << t + cny << " ";
+            tmp_rectangle << "\n\tC " << l << ", " << t + (1-f)*cny << " " << l + (1-f)*cnx << ", " << t << " " << l + cnx << ", " << t << " ";
+            tmp_rectangle << "\n\tL " << r - cnx << ", " << t << " ";
+            tmp_rectangle << "\n\tC " << r - (1-f)*cnx << ", " << t << " " << r << ", " << t + (1-f)*cny << " " << r << ", " << t + cny << " ";
+            tmp_rectangle << "\n\tL " << r << ", " << b - cny << " ";
+            tmp_rectangle << "\n\tC " << r << ", " << b - (1-f)*cny << " " << r - (1-f)*cnx << ", " << b << " " << r - cnx << ", " << b << " ";
+            tmp_rectangle << "\n\tL " << l + cnx << ", " << b << " ";
+            tmp_rectangle << "\n\tC " << l + (1-f)*cnx << ", " << b << " " << l << ", " << b - (1-f)*cny << " " << l << ", " << b - cny << " ";
+            tmp_rectangle << "\n\tz";
+            assert_empty_path(d, "EMR_ROUNDRECT");
+
+            *(d->outsvg) += "    <path ";
+            output_style(d, lpEMFR->iType);
+            *(d->outsvg) += "\n\t";
+            *(d->outsvg) += tmp_rectangle.str().c_str();
+            *(d->outsvg) += " \" /> \n";
+            *(d->path) = "";
             break;
+        }
         case EMR_ARC:
             dbg_str << "<!-- EMR_ARC -->\n";
             break;
@@ -1777,9 +1811,9 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             }
 
             if (!(d->dc[d->level].textAlign & TA_BOTTOM))
-                if (d->dc[d->level].style.text_transform.value) {
-                    x1 += std::sin(d->dc[d->level].style.text_transform.value*M_PI/180.0)*fabs(d->dc[d->level].style.font_size.computed);
-                    y1 += std::cos(d->dc[d->level].style.text_transform.value*M_PI/180.0)*fabs(d->dc[d->level].style.font_size.computed);
+                if (d->dc[d->level].style.baseline_shift.value) {
+                    x1 += std::sin(d->dc[d->level].style.baseline_shift.value*M_PI/180.0)*fabs(d->dc[d->level].style.font_size.computed);
+                    y1 += std::cos(d->dc[d->level].style.baseline_shift.value*M_PI/180.0)*fabs(d->dc[d->level].style.font_size.computed);
                 }
                 else
                     y1 += fabs(d->dc[d->level].style.font_size.computed);
@@ -1807,14 +1841,14 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
 
                 gchar *escaped_text = g_markup_escape_text(ansi_text, -1);
 
-                float text_rgb[3];
-                sp_color_get_rgb_floatv( &(d->dc[d->level].style.fill.value.color), text_rgb );
+//                float text_rgb[3];
+//                sp_color_get_rgb_floatv( &(d->dc[d->level].style.fill.value.color), text_rgb );
 
-                if (!d->dc[d->level].textColorSet) {
-                    d->dc[d->level].textColor = RGB(SP_COLOR_F_TO_U(text_rgb[0]),
-                                       SP_COLOR_F_TO_U(text_rgb[1]),
-                                       SP_COLOR_F_TO_U(text_rgb[2]));
-                }
+//                if (!d->dc[d->level].textColorSet) {
+//                    d->dc[d->level].textColor = RGB(SP_COLOR_F_TO_U(text_rgb[0]),
+//                                       SP_COLOR_F_TO_U(text_rgb[1]),
+//                                       SP_COLOR_F_TO_U(text_rgb[2]));
+//                }
 
                 char tmp[128];
                 snprintf(tmp, 127,
@@ -1836,9 +1870,9 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
                 ts << "        xml:space=\"preserve\"\n";
                 ts << "        x=\"" << x << "\"\n";
                 ts << "        y=\"" << y << "\"\n";
-                if (d->dc[d->level].style.text_transform.value) {
+                if (d->dc[d->level].style.baseline_shift.value) {
                     ts << "        transform=\""
-                       << "rotate(-" << d->dc[d->level].style.text_transform.value
+                       << "rotate(-" << d->dc[d->level].style.baseline_shift.value
                        << " " << x << " " << y << ")"
                        << "\"\n";
                 }
