@@ -387,9 +387,13 @@ static bool readPngAndHeaders( PushPull &youme, gint & dpiX, gint & dpiY )
 
 #if defined(PNG_iCCP_SUPPORTED)
                 {
-                    char* name = 0;
+                    png_charp name = 0;
                     int compression_type = 0;
-                    char* profile = 0;
+#if (PNG_LIBPNG_VER < 10500)
+                    png_charp profile = 0;
+#else
+                    png_bytep profile = 0;
+#endif
                     png_uint_32 proflen = 0;
                     if ( png_get_iCCP(pngPtr, infoPtr, &name, &compression_type, &profile, &proflen) ) {
 //                                         g_message("Found an iCCP chunk named [%s] with %d bytes and comp %d", name, proflen, compression_type);
