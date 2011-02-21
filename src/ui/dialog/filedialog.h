@@ -46,7 +46,8 @@ namespace Dialog
 typedef enum {
     SVG_TYPES,
     IMPORT_TYPES,
-    EXPORT_TYPES
+    EXPORT_TYPES,
+    EXE_TYPES
     } FileDialogType;
 
 /**

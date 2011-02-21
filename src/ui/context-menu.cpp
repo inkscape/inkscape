@@ -436,17 +436,10 @@ sp_image_image_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 static gchar* getImageEditorName() {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gchar* value = 0;
-    Glib::ustring choices = prefs->getString("/options/bitmapeditor/choices");
+    Glib::ustring choices = prefs->getString("/options/bitmapeditor/value");
     if (!choices.empty()) {
-        gchar** splits = g_strsplit(choices.data(), ",", 0);
-        gint numIems = g_strv_length(splits);
-
-        int setting = prefs->getIntLimited("/options/bitmapeditor/value", 0, 0, numIems);
-        value = g_strdup(splits[setting]);
-
-        g_strfreev(splits);
+        value = g_strdup(choices.c_str());
     }
-
     if (!value) {
         value = g_strdup("gimp");
     }
@@ -460,16 +453,46 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
     const gchar *href = ir->attribute("xlink:href");
 
     GError* errThing = 0;
-    gchar* editorBin = getImageEditorName();
-    gchar const* args[] = {editorBin, href, 0};
-    g_spawn_async(0, // working dir
-                  const_cast<gchar **>(args),
-                  0, //envp
-                  G_SPAWN_SEARCH_PATH,
-                  0, // child_setup
-                  0, // user_data
-                  0, //GPid *child_pid
-                  &errThing);
+    Glib::ustring cmdline = getImageEditorName();
+    Glib::ustring fullname;
+    
+#ifdef WIN32
+    // g_spawn_command_line_sync parsing is done according to Unix shell rules,
+    // not Windows command interpreter rules. Thus we need to enclose the
+    // executable path with sigle quotes.
+    int index = cmdline.find(".exe");
+    if ( index < 0 ) index = cmdline.find(".bat");
+    if ( index < 0 ) index = cmdline.find(".com");
+    if ( index >= 0 ) {
+        Glib::ustring editorBin = cmdline.substr(0, index + 4).c_str();
+				Glib::ustring args = cmdline.substr(index + 4, cmdline.length()).c_str();
+        editorBin.insert(0, "'");
+        editorBin.append("'");
+        cmdline = editorBin;
+        cmdline.append(args);
+    } else {
+        // Enclose the whole command line if no executable path can be extracted.
+        cmdline.insert(0, "'");
+        cmdline.append("'");
+    }
+#endif
+
+    if (strncmp (href,"file:",5) == 0) {
+    // URI to filename conversion
+      fullname = g_filename_from_uri(href, NULL, NULL);
+    } else {
+      fullname.append(href);
+    }
+    
+    cmdline.append(" '");
+    cmdline.append(fullname.c_str());
+    cmdline.append("'");
+
+    //printf("##Command line: %s\n", cmdline.c_str());
+
+    g_spawn_command_line_async(cmdline.c_str(),
+                  &errThing); 
+ 
     if ( errThing ) {
         g_warning("Problem launching editor (%d). %s", errThing->code, errThing->message);
         SPDesktop *desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
@@ -477,7 +500,6 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
         g_error_free(errThing);
         errThing = 0;
     }
-    g_free(editorBin);
 }
 
 /* Fill and Stroke entry */

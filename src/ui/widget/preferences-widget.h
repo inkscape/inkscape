@@ -176,6 +176,19 @@ protected:
     void onRelatedButtonClickedCallback();
 };
 
+class PrefEntryFileButtonHBox : public Gtk::HBox
+{
+public:
+    void init(Glib::ustring const &prefs_path,
+            bool mask);
+protected:
+    Glib::ustring _prefs_path;
+    Gtk::Button *relatedButton;
+    Gtk::Entry *relatedEntry;
+    void onRelatedEntryChangedCallback();
+    void onRelatedButtonClickedCallback();
+};
+
 class PrefFileButton : public Gtk::FileChooserButton
 {
 public:

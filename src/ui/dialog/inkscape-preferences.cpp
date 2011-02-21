@@ -1220,24 +1220,8 @@ void InkscapePreferences::initPageBitmaps()
     _misc_bitmap_autoreload.init(_("Automatically reload bitmaps"), "/options/bitmapautoreload/value", true);
     _page_bitmaps.add_line( false, "", _misc_bitmap_autoreload, "",
                            _("Automatically reload linked images when file is changed on disk"));
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring choices = prefs->getString("/options/bitmapeditor/choices");
-    if (!choices.empty()) {
-        gchar** splits = g_strsplit(choices.data(), ",", 0);
-        gint numIems = g_strv_length(splits);
-
-        Glib::ustring labels[numIems];
-        int values[numIems];
-        for ( gint i = 0; i < numIems; i++) {
-            values[i] = i;
-            labels[i] = splits[i];
-        }
-        _misc_bitmap_editor.init("/options/bitmapeditor/value", labels, values, numIems, 0);
-        _page_bitmaps.add_line( false, _("Bitmap editor:"), _misc_bitmap_editor, "", "", false);
-
-        g_strfreev(splits);
-    }
-
+    _misc_bitmap_editor.init("/options/bitmapeditor/value", true);
+    _page_bitmaps.add_line( false, _("Bitmap editor:"), _misc_bitmap_editor, "", "", true);
     _bitmap_copy_res.init("/options/createbitmap/resolution", 1.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
     _page_bitmaps.add_line( false, _("Resolution for Create Bitmap Copy:"), _bitmap_copy_res, _("dpi"),
                             _("Resolution used by the Create Bitmap Copy command"), false);

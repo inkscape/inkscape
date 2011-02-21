@@ -14,6 +14,10 @@
 # include <config.h>
 #endif
 
+#ifdef WIN32
+#include <windows.h>
+#endif
+
 #include <gtkmm/frame.h>
 #include <gtkmm/alignment.h>
 #include <gtkmm/box.h>
@@ -22,7 +26,9 @@
 #include "ui/widget/preferences-widget.h"
 #include "verbs.h"
 #include "selcue.h"
+#include "io/sys.h"
 #include <iostream>
+#include "desktop.h"
 #include "enums.h"
 #include "inkscape.h"
 #include "desktop-handles.h"
@@ -30,6 +36,7 @@
 #include "style.h"
 #include "selection.h"
 #include "selection-chemistry.h"
+#include "ui/dialog/filedialog.h"
 #include "xml/repr.h"
 
 using namespace Inkscape::UI::Widget;
@@ -618,6 +625,137 @@ void PrefEntryButtonHBox::onRelatedButtonClickedCallback()
     }
 }
 
+void PrefEntryFileButtonHBox::init(Glib::ustring const &prefs_path,
+            bool visibility)
+{
+    _prefs_path = prefs_path;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    
+    relatedEntry = new Gtk::Entry();
+    relatedEntry->set_invisible_char('*');
+    relatedEntry->set_visibility(visibility);
+    relatedEntry->set_text(prefs->getString(_prefs_path));
+    
+    relatedButton = new Gtk::Button();
+    Gtk::HBox* pixlabel = new Gtk::HBox(false, 3);
+    Gtk::Image *im = new Gtk::Image(Gtk::StockID(Gtk::Stock::INDEX),
+            Gtk::ICON_SIZE_BUTTON);
+    pixlabel->pack_start(*im);
+    Gtk::Label *l = new Gtk::Label();
+    l->set_markup_with_mnemonic(_("_Browse..."));
+    pixlabel->pack_start(*l);
+    relatedButton->add(*pixlabel); 
+
+    this->pack_end(*relatedButton, false, false, 4);
+    this->pack_start(*relatedEntry, true, true, 0);
+
+    relatedButton->signal_clicked().connect(
+            sigc::mem_fun(*this, &PrefEntryFileButtonHBox::onRelatedButtonClickedCallback));
+    relatedEntry->signal_changed().connect(
+            sigc::mem_fun(*this, &PrefEntryFileButtonHBox::onRelatedEntryChangedCallback));
+}
+
+void PrefEntryFileButtonHBox::onRelatedEntryChangedCallback()
+{
+    if (this->is_visible()) //only take action if user changed value
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setString(_prefs_path, relatedEntry->get_text());
+    }
+}
+
+static Inkscape::UI::Dialog::FileOpenDialog * selectPrefsFileInstance = NULL;
+
+void PrefEntryFileButtonHBox::onRelatedButtonClickedCallback()
+{
+    if (this->is_visible()) //only take action if user changed value
+    {
+        //# Get the current directory for finding files
+        static Glib::ustring open_path;
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+
+        Glib::ustring attr = prefs->getString(_prefs_path);
+        if (!attr.empty()) open_path = attr;
+        
+        //# Test if the open_path directory exists
+        if (!Inkscape::IO::file_test(open_path.c_str(),
+                  (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
+            open_path = "";
+
+#ifdef WIN32
+        //# If no open path, default to our win32 documents folder
+        if (open_path.empty())
+        {
+            // The path to the My Documents folder is read from the
+            // value "HKEY_CURRENT_USER\Software\Windows\CurrentVersion\Explorer\Shell Folders\Personal"
+            HKEY key = NULL;
+            if(RegOpenKeyExA(HKEY_CURRENT_USER,
+                "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders",
+                0, KEY_QUERY_VALUE, &key) == ERROR_SUCCESS)
+            {
+                WCHAR utf16path[_MAX_PATH];
+                DWORD value_type;
+                DWORD data_size = sizeof(utf16path);
+                if(RegQueryValueExW(key, L"Personal", NULL, &value_type,
+                    (BYTE*)utf16path, &data_size) == ERROR_SUCCESS)
+                {
+                    g_assert(value_type == REG_SZ);
+                    gchar *utf8path = g_utf16_to_utf8(
+                        (const gunichar2*)utf16path, -1, NULL, NULL, NULL);
+                    if(utf8path)
+                    {
+                        open_path = Glib::ustring(utf8path);
+                        g_free(utf8path);
+                    }
+                }
+            }
+        }
+#endif
+
+        //# If no open path, default to our home directory
+        if (open_path.empty())
+        {
+            open_path = g_get_home_dir();
+            open_path.append(G_DIR_SEPARATOR_S);
+        }
+
+        //# Create a dialog
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        if (!selectPrefsFileInstance) {
+        selectPrefsFileInstance =
+              Inkscape::UI::Dialog::FileOpenDialog::create(
+                 *desktop->getToplevel(),
+                 open_path,
+                 Inkscape::UI::Dialog::EXE_TYPES,
+                 _("Select a bitmap editor"));
+        }
+        
+        //# Show the dialog
+        bool const success = selectPrefsFileInstance->show();
+        
+        if (!success) {
+            return;
+        }
+        
+        //# User selected something.  Get name and type
+        Glib::ustring fileName = selectPrefsFileInstance->getFilename();
+
+        if (!fileName.empty())
+        {
+            Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
+
+            if ( newFileName.size() > 0)
+                open_path = newFileName;
+            else
+                g_warning( "ERROR CONVERTING OPEN FILENAME TO UTF-8" );
+
+            prefs->setString(_prefs_path, open_path);
+        }
+        
+        relatedEntry->set_text(fileName);
+    }
+}
 
 void PrefFileButton::init(Glib::ustring const &prefs_path)
 {

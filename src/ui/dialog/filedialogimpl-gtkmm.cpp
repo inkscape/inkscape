@@ -572,32 +572,36 @@ SVGPreview::~SVGPreview()
 
 void FileDialogBaseGtk::internalSetup()
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool enablePreview = prefs->getBool( preferenceBase + "/enable_preview", true);
+    // Open executable file dialogs don't need the preview panel
+    if (_dialogType != EXE_TYPES) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        bool enablePreview = prefs->getBool( preferenceBase + "/enable_preview", true);
 
-    previewCheckbox.set_label( Glib::ustring(_("Enable preview")) );
-    previewCheckbox.set_active( enablePreview );
+        previewCheckbox.set_label( Glib::ustring(_("Enable preview")) );
+        previewCheckbox.set_active( enablePreview );
 
-    previewCheckbox.signal_toggled().connect(
-        sigc::mem_fun(*this, &FileDialogBaseGtk::_previewEnabledCB) );
+        previewCheckbox.signal_toggled().connect(
+            sigc::mem_fun(*this, &FileDialogBaseGtk::_previewEnabledCB) );
 
-    //Catch selection-changed events, so we can adjust the text widget
-    signal_update_preview().connect(
-         sigc::mem_fun(*this, &FileDialogBaseGtk::_updatePreviewCallback) );
+        //Catch selection-changed events, so we can adjust the text widget
+        signal_update_preview().connect(
+             sigc::mem_fun(*this, &FileDialogBaseGtk::_updatePreviewCallback) );
 
-    //###### Add a preview widget
-    set_preview_widget(svgPreview);
-    set_preview_widget_active( enablePreview );
-    set_use_preview_label (false);
-
+        //###### Add a preview widget
+        set_preview_widget(svgPreview);
+        set_preview_widget_active( enablePreview );
+        set_use_preview_label (false);
+    }
 }
 
 
 void FileDialogBaseGtk::cleanup( bool showConfirmed )
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if ( showConfirmed )
-        prefs->setBool( preferenceBase + "/enable_preview", previewCheckbox.get_active() );
+    if (_dialogType != EXE_TYPES) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        if ( showConfirmed )
+            prefs->setBool( preferenceBase + "/enable_preview", previewCheckbox.get_active() );
+    }
 }
 
 
@@ -648,9 +652,13 @@ FileOpenDialogImplGtk::FileOpenDialogImplGtk(Gtk::Window& parentWindow,
 {
 
 
-    /* One file at a time */
-    /* And also Multiple Files */
-    set_select_multiple(true);
+    if (_dialogType == EXE_TYPES) {
+        /* One file at a time */
+        set_select_multiple(false);
+    } else {
+        /* And also Multiple Files */
+        set_select_multiple(true);
+    }
 
 #ifdef WITH_GNOME_VFS
     if (gnome_vfs_initialized()) {
@@ -668,19 +676,22 @@ FileOpenDialogImplGtk::FileOpenDialogImplGtk(Gtk::Window& parentWindow,
 
 
     /* Set the pwd and/or the filename */
-    if (dir.size() > 0)
-        {
+    if (dir.size() > 0) {
         Glib::ustring udir(dir);
         Glib::ustring::size_type len = udir.length();
         // leaving a trailing backslash on the directory name leads to the infamous
         // double-directory bug on win32
         if (len != 0 && udir[len - 1] == '\\') udir.erase(len - 1);
-        set_current_folder(udir.c_str());
+        if (_dialogType == EXE_TYPES) {
+            set_filename(udir.c_str());
+        } else {
+            set_current_folder(udir.c_str());
         }
+    }
 
-
-    set_extra_widget( previewCheckbox );
-
+    if (_dialogType != EXE_TYPES) {
+        set_extra_widget( previewCheckbox );
+    }
 
     //###### Add the file types menu
     createFilterMenu();
@@ -708,84 +719,91 @@ FileOpenDialogImplGtk::~FileOpenDialogImplGtk()
 
 void FileOpenDialogImplGtk::createFilterMenu()
 {
-    Gtk::FileFilter allInkscapeFilter;
-    allInkscapeFilter.set_name(_("All Inkscape Files"));
-    extensionMap[Glib::ustring(_("All Inkscape Files"))]=NULL;
-    add_filter(allInkscapeFilter);
+    if (_dialogType == EXE_TYPES) {
+        Gtk::FileFilter allFilter;
+        allFilter.set_name(_("All Files"));
+        extensionMap[Glib::ustring(_("All Files"))]=NULL;
+        allFilter.add_pattern("*");
+        add_filter(allFilter);
+    } else {
+        Gtk::FileFilter allInkscapeFilter;
+        allInkscapeFilter.set_name(_("All Inkscape Files"));
+        extensionMap[Glib::ustring(_("All Inkscape Files"))]=NULL;
+        add_filter(allInkscapeFilter);
 
-    Gtk::FileFilter allFilter;
-    allFilter.set_name(_("All Files"));
-    extensionMap[Glib::ustring(_("All Files"))]=NULL;
-    allFilter.add_pattern("*");
-    add_filter(allFilter);
+        Gtk::FileFilter allFilter;
+        allFilter.set_name(_("All Files"));
+        extensionMap[Glib::ustring(_("All Files"))]=NULL;
+        allFilter.add_pattern("*");
+        add_filter(allFilter);
+    
+        Gtk::FileFilter allImageFilter;
+        allImageFilter.set_name(_("All Images"));
+        extensionMap[Glib::ustring(_("All Images"))]=NULL;
+        add_filter(allImageFilter);
 
-    Gtk::FileFilter allImageFilter;
-    allImageFilter.set_name(_("All Images"));
-    extensionMap[Glib::ustring(_("All Images"))]=NULL;
-    add_filter(allImageFilter);
+        Gtk::FileFilter allVectorFilter;
+        allVectorFilter.set_name(_("All Vectors"));
+        extensionMap[Glib::ustring(_("All Vectors"))]=NULL;
+        add_filter(allVectorFilter);
 
-    Gtk::FileFilter allVectorFilter;
-    allVectorFilter.set_name(_("All Vectors"));
-    extensionMap[Glib::ustring(_("All Vectors"))]=NULL;
-    add_filter(allVectorFilter);
+        Gtk::FileFilter allBitmapFilter;
+        allBitmapFilter.set_name(_("All Bitmaps"));
+        extensionMap[Glib::ustring(_("All Bitmaps"))]=NULL;
+        add_filter(allBitmapFilter);
 
-    Gtk::FileFilter allBitmapFilter;
-    allBitmapFilter.set_name(_("All Bitmaps"));
-    extensionMap[Glib::ustring(_("All Bitmaps"))]=NULL;
-    add_filter(allBitmapFilter);
+        //patterns added dynamically below
+        Inkscape::Extension::DB::InputList extension_list;
+        Inkscape::Extension::db.get_input_list(extension_list);
 
-    //patterns added dynamically below
-    Inkscape::Extension::DB::InputList extension_list;
-    Inkscape::Extension::db.get_input_list(extension_list);
+        for (Inkscape::Extension::DB::InputList::iterator current_item = extension_list.begin();
+             current_item != extension_list.end(); current_item++)
+        {
+            Inkscape::Extension::Input * imod = *current_item;
 
-    for (Inkscape::Extension::DB::InputList::iterator current_item = extension_list.begin();
-         current_item != extension_list.end(); current_item++)
-    {
-        Inkscape::Extension::Input * imod = *current_item;
+            // FIXME: would be nice to grey them out instead of not listing them
+            if (imod->deactivated()) continue;
 
-        // FIXME: would be nice to grey them out instead of not listing them
-        if (imod->deactivated()) continue;
+            Glib::ustring upattern("*");
+            Glib::ustring extension = imod->get_extension();
+            fileDialogExtensionToPattern(upattern, extension);
 
-        Glib::ustring upattern("*");
-        Glib::ustring extension = imod->get_extension();
-        fileDialogExtensionToPattern(upattern, extension);
+            Gtk::FileFilter filter;
+            Glib::ustring uname(_(imod->get_filetypename()));
+            filter.set_name(uname);
+            filter.add_pattern(upattern);
+            add_filter(filter);
+            extensionMap[uname] = imod;
 
-        Gtk::FileFilter filter;
-        Glib::ustring uname(_(imod->get_filetypename()));
-        filter.set_name(uname);
-        filter.add_pattern(upattern);
-        add_filter(filter);
-        extensionMap[uname] = imod;
+            //g_message("ext %s:%s '%s'\n", ioext->name, ioext->mimetype, upattern.c_str());
+            allInkscapeFilter.add_pattern(upattern);
+            if ( strncmp("image", imod->get_mimetype(), 5)==0 )
+                allImageFilter.add_pattern(upattern);
 
-        //g_message("ext %s:%s '%s'\n", ioext->name, ioext->mimetype, upattern.c_str());
-        allInkscapeFilter.add_pattern(upattern);
-        if ( strncmp("image", imod->get_mimetype(), 5)==0 )
-            allImageFilter.add_pattern(upattern);
+            // uncomment this to find out all mime types supported by Inkscape import/open
+            // g_print ("%s\n", imod->get_mimetype());
 
-        // uncomment this to find out all mime types supported by Inkscape import/open
-        // g_print ("%s\n", imod->get_mimetype());
-
-        // I don't know of any other way to define "bitmap" formats other than by listing them
-        if ( 
-            strncmp("image/png", imod->get_mimetype(), 9)==0 ||
-            strncmp("image/jpeg", imod->get_mimetype(), 10)==0 ||
-            strncmp("image/gif", imod->get_mimetype(), 9)==0 ||
-            strncmp("image/x-icon", imod->get_mimetype(), 12)==0 ||
-            strncmp("image/x-navi-animation", imod->get_mimetype(), 22)==0 ||
-            strncmp("image/x-cmu-raster", imod->get_mimetype(), 18)==0 ||
-            strncmp("image/x-xpixmap", imod->get_mimetype(), 15)==0 ||
-            strncmp("image/bmp", imod->get_mimetype(), 9)==0 ||
-            strncmp("image/vnd.wap.wbmp", imod->get_mimetype(), 18)==0 ||
-            strncmp("image/tiff", imod->get_mimetype(), 10)==0 ||
-            strncmp("image/x-xbitmap", imod->get_mimetype(), 15)==0 ||
-            strncmp("image/x-tga", imod->get_mimetype(), 11)==0 ||
-            strncmp("image/x-pcx", imod->get_mimetype(), 11)==0 
-           )
-            allBitmapFilter.add_pattern(upattern);
-        else 
-            allVectorFilter.add_pattern(upattern);
+            // I don't know of any other way to define "bitmap" formats other than by listing them
+            if ( 
+                strncmp("image/png", imod->get_mimetype(), 9)==0 ||
+                strncmp("image/jpeg", imod->get_mimetype(), 10)==0 ||
+                strncmp("image/gif", imod->get_mimetype(), 9)==0 ||
+                strncmp("image/x-icon", imod->get_mimetype(), 12)==0 ||
+                strncmp("image/x-navi-animation", imod->get_mimetype(), 22)==0 ||
+                strncmp("image/x-cmu-raster", imod->get_mimetype(), 18)==0 ||
+                strncmp("image/x-xpixmap", imod->get_mimetype(), 15)==0 ||
+                strncmp("image/bmp", imod->get_mimetype(), 9)==0 ||
+                strncmp("image/vnd.wap.wbmp", imod->get_mimetype(), 18)==0 ||
+                strncmp("image/tiff", imod->get_mimetype(), 10)==0 ||
+                strncmp("image/x-xbitmap", imod->get_mimetype(), 15)==0 ||
+                strncmp("image/x-tga", imod->get_mimetype(), 11)==0 ||
+                strncmp("image/x-pcx", imod->get_mimetype(), 11)==0 
+               )
+                allBitmapFilter.add_pattern(upattern);
+            else 
+                allVectorFilter.add_pattern(upattern);
+        }
     }
-
     return;
 }
 

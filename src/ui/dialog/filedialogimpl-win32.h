@@ -150,8 +150,9 @@ public:
 
 private:
 
-    /// Create a filter menu for this type of dialog
+    /// Create filter menu for this type of dialog
     void createFilterMenu();
+
 
     /// The handle of the preview pane window
     HWND _preview_wnd;

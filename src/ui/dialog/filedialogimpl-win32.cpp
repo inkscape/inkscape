@@ -124,11 +124,11 @@ FileDialogBaseWin32::FileDialogBaseWin32(Gtk::Window &parent,
 {
     _main_loop = NULL;
 
-	_filter_index = 1;
-	_filter_count = 0;
+    _filter_index = 1;
+    _filter_count = 0;
 
     _title = (wchar_t*)g_utf8_to_utf16(title, -1, NULL, NULL, NULL);
-	g_assert(_title != NULL);
+    g_assert(_title != NULL);
 
     Glib::RefPtr<const Gdk::Window> parentWindow = parent.get_window();
     g_assert(parentWindow->gobj() != NULL);
@@ -185,7 +185,7 @@ FileOpenDialogImplWin32::FileOpenDialogImplWin32(Gtk::Window &parent,
     _preview_image_height = 0;
     _preview_emf_image = false;
 
-	_mutex = NULL;
+    _mutex = NULL;
 
     createFilterMenu();
 }
@@ -206,143 +206,180 @@ void FileOpenDialogImplWin32::createFilterMenu()
 {
     list<Filter> filter_list;
 
-    // Compose the filter string
-    Inkscape::Extension::DB::InputList extension_list;
-    Inkscape::Extension::db.get_input_list(extension_list);
-
-    ustring all_inkscape_files_filter, all_image_files_filter, all_vectors_filter, all_bitmaps_filter;
-    Filter all_files, all_inkscape_files, all_image_files, all_vectors, all_bitmaps;
-
-    const gchar *all_files_filter_name = _("All Files");
-    const gchar *all_inkscape_files_filter_name = _("All Inkscape Files");
-    const gchar *all_image_files_filter_name = _("All Images");
-    const gchar *all_vectors_filter_name = _("All Vectors");
-    const gchar *all_bitmaps_filter_name = _("All Bitmaps");
-
-    // Calculate the amount of memory required
-    int filter_count = 5;       // 5 - one for each filter type
-    int filter_length = 1;
-
-    for (Inkscape::Extension::DB::InputList::iterator current_item = extension_list.begin();
-         current_item != extension_list.end(); current_item++)
-    {
-        Filter filter;
-
-        Inkscape::Extension::Input *imod = *current_item;
-        if (imod->deactivated()) continue;
-
-        // Type
-        filter.name = g_utf8_to_utf16(_(imod->get_filetypename()),
-            -1, NULL, &filter.name_length, NULL);
-
-        // Extension
-        const gchar *file_extension_name = imod->get_extension();
-        filter.filter = g_utf8_to_utf16(file_extension_name,
-            -1, NULL, &filter.filter_length, NULL);
-
-        filter.mod = imod;
-        filter_list.push_back(filter);
-
-        filter_length += filter.name_length +
-            filter.filter_length + 3;   // Add 3 for two \0s and a *
-
-        // Add to the "All Inkscape Files" Entry
-        if(all_inkscape_files_filter.length() > 0)
-            all_inkscape_files_filter += ";*";
-        all_inkscape_files_filter += file_extension_name;
-        if( strncmp("image", imod->get_mimetype(), 5) == 0)
-        {
-            // Add to the "All Image Files" Entry
-            if(all_image_files_filter.length() > 0)
-                all_image_files_filter += ";*";
-            all_image_files_filter += file_extension_name;
-        }
-
-        // I don't know of any other way to define "bitmap" formats other than by listing them
-        // if you change it here, do the same change in filedialogimpl-gtkmm
-        if ( 
-            strncmp("image/png", imod->get_mimetype(), 9)==0 ||
-            strncmp("image/jpeg", imod->get_mimetype(), 10)==0 ||
-            strncmp("image/gif", imod->get_mimetype(), 9)==0 ||
-            strncmp("image/x-icon", imod->get_mimetype(), 12)==0 ||
-            strncmp("image/x-navi-animation", imod->get_mimetype(), 22)==0 ||
-            strncmp("image/x-cmu-raster", imod->get_mimetype(), 18)==0 ||
-            strncmp("image/x-xpixmap", imod->get_mimetype(), 15)==0 ||
-            strncmp("image/bmp", imod->get_mimetype(), 9)==0 ||
-            strncmp("image/vnd.wap.wbmp", imod->get_mimetype(), 18)==0 ||
-            strncmp("image/tiff", imod->get_mimetype(), 10)==0 ||
-            strncmp("image/x-xbitmap", imod->get_mimetype(), 15)==0 ||
-            strncmp("image/x-tga", imod->get_mimetype(), 11)==0 ||
-            strncmp("image/x-pcx", imod->get_mimetype(), 11)==0 
-            ) {
-            if(all_bitmaps_filter.length() > 0)
-                all_bitmaps_filter += ";*";
-            all_bitmaps_filter += file_extension_name;
-        } else {
-            if(all_vectors_filter.length() > 0)
-                all_vectors_filter += ";*";
-            all_vectors_filter += file_extension_name;
-        }
-
-        filter_count++;
-    }
-
     int extension_index = 0;
-    _extension_map = new Inkscape::Extension::Extension*[filter_count];
+    int filter_length = 1;
+    
+    if (dialogType != EXE_TYPES) {
+        // Compose the filter string
+        Inkscape::Extension::DB::InputList extension_list;
+        Inkscape::Extension::db.get_input_list(extension_list);
 
-    // Filter bitmap files
-    all_bitmaps.name = g_utf8_to_utf16(all_bitmaps_filter_name,
-        -1, NULL, &all_bitmaps.name_length, NULL);
-    all_bitmaps.filter = g_utf8_to_utf16(all_bitmaps_filter.data(),
-            -1, NULL, &all_bitmaps.filter_length, NULL);
-  	all_bitmaps.mod = NULL;
-    filter_list.push_front(all_bitmaps);
+        ustring all_inkscape_files_filter, all_image_files_filter, all_vectors_filter, all_bitmaps_filter;
+        Filter all_files, all_inkscape_files, all_image_files, all_vectors, all_bitmaps;
 
-    // Filter vector files
-    all_vectors.name = g_utf8_to_utf16(all_vectors_filter_name,
-        -1, NULL, &all_vectors.name_length, NULL);
-    all_vectors.filter = g_utf8_to_utf16(all_vectors_filter.data(),
-            -1, NULL, &all_vectors.filter_length, NULL);
-  	all_vectors.mod = NULL;
-    filter_list.push_front(all_vectors);
+        const gchar *all_files_filter_name = _("All Files");
+        const gchar *all_inkscape_files_filter_name = _("All Inkscape Files");
+        const gchar *all_image_files_filter_name = _("All Images");
+        const gchar *all_vectors_filter_name = _("All Vectors");
+        const gchar *all_bitmaps_filter_name = _("All Bitmaps");
 
-    // Filter Image Files
-    all_image_files.name = g_utf8_to_utf16(all_image_files_filter_name,
-        -1, NULL, &all_image_files.name_length, NULL);
-    all_image_files.filter = g_utf8_to_utf16(all_image_files_filter.data(),
-            -1, NULL, &all_image_files.filter_length, NULL);
-	all_image_files.mod = NULL;
-    filter_list.push_front(all_image_files);
+        // Calculate the amount of memory required
+        int filter_count = 5;       // 5 - one for each filter type
 
-    // Filter Inkscape Files
-    all_inkscape_files.name = g_utf8_to_utf16(all_inkscape_files_filter_name,
-        -1, NULL, &all_inkscape_files.name_length, NULL);
-    all_inkscape_files.filter = g_utf8_to_utf16(all_inkscape_files_filter.data(),
-            -1, NULL, &all_inkscape_files.filter_length, NULL);
-	all_inkscape_files.mod = NULL;
-    filter_list.push_front(all_inkscape_files);
+        for (Inkscape::Extension::DB::InputList::iterator current_item = extension_list.begin();
+             current_item != extension_list.end(); current_item++)
+        {
+            Filter filter;
 
-    // Filter All Files
-    all_files.name = g_utf8_to_utf16(all_files_filter_name,
-        -1, NULL, &all_files.name_length, NULL);
-    all_files.filter = NULL;
-    all_files.filter_length = 0;
-	all_files.mod = NULL;
-    filter_list.push_front(all_files);
+            Inkscape::Extension::Input *imod = *current_item;
+            if (imod->deactivated()) continue;
 
-    filter_length += all_files.name_length + 3 +
-                    all_inkscape_files.filter_length +
-                    all_inkscape_files.name_length + 3 +
-                    all_image_files.filter_length +
-                    all_image_files.name_length + 3 +
-                    all_vectors.filter_length +
-                    all_vectors.name_length + 3 +
-                    all_bitmaps.filter_length +
-                    all_bitmaps.name_length + 3 +
-                                                  1;
-     // Add 3 for 2*2 \0s and a *, and 1 for a trailing \0
+            // Type
+            filter.name = g_utf8_to_utf16(_(imod->get_filetypename()),
+                -1, NULL, &filter.name_length, NULL);
 
-	_filter = new wchar_t[filter_length];
+            // Extension
+            const gchar *file_extension_name = imod->get_extension();
+            filter.filter = g_utf8_to_utf16(file_extension_name,
+                -1, NULL, &filter.filter_length, NULL);
+
+            filter.mod = imod;
+            filter_list.push_back(filter);
+
+            filter_length += filter.name_length +
+                filter.filter_length + 3;   // Add 3 for two \0s and a *
+
+            // Add to the "All Inkscape Files" Entry
+            if(all_inkscape_files_filter.length() > 0)
+                all_inkscape_files_filter += ";*";
+            all_inkscape_files_filter += file_extension_name;
+            if( strncmp("image", imod->get_mimetype(), 5) == 0)
+            {
+                // Add to the "All Image Files" Entry
+                if(all_image_files_filter.length() > 0)
+                    all_image_files_filter += ";*";
+                all_image_files_filter += file_extension_name;
+            }
+
+            // I don't know of any other way to define "bitmap" formats other than by listing them
+            // if you change it here, do the same change in filedialogimpl-gtkmm
+            if ( 
+                strncmp("image/png", imod->get_mimetype(), 9)==0 ||
+                strncmp("image/jpeg", imod->get_mimetype(), 10)==0 ||
+                strncmp("image/gif", imod->get_mimetype(), 9)==0 ||
+                strncmp("image/x-icon", imod->get_mimetype(), 12)==0 ||
+                strncmp("image/x-navi-animation", imod->get_mimetype(), 22)==0 ||
+                strncmp("image/x-cmu-raster", imod->get_mimetype(), 18)==0 ||
+                strncmp("image/x-xpixmap", imod->get_mimetype(), 15)==0 ||
+                strncmp("image/bmp", imod->get_mimetype(), 9)==0 ||
+                strncmp("image/vnd.wap.wbmp", imod->get_mimetype(), 18)==0 ||
+                strncmp("image/tiff", imod->get_mimetype(), 10)==0 ||
+                strncmp("image/x-xbitmap", imod->get_mimetype(), 15)==0 ||
+                strncmp("image/x-tga", imod->get_mimetype(), 11)==0 ||
+                strncmp("image/x-pcx", imod->get_mimetype(), 11)==0 
+                ) {
+                if(all_bitmaps_filter.length() > 0)
+                    all_bitmaps_filter += ";*";
+                all_bitmaps_filter += file_extension_name;
+            } else {
+                if(all_vectors_filter.length() > 0)
+                    all_vectors_filter += ";*";
+                all_vectors_filter += file_extension_name;
+            }
+
+            filter_count++;
+        }
+
+        _extension_map = new Inkscape::Extension::Extension*[filter_count];
+
+        // Filter bitmap files
+        all_bitmaps.name = g_utf8_to_utf16(all_bitmaps_filter_name,
+            -1, NULL, &all_bitmaps.name_length, NULL);
+        all_bitmaps.filter = g_utf8_to_utf16(all_bitmaps_filter.data(),
+                -1, NULL, &all_bitmaps.filter_length, NULL);
+        all_bitmaps.mod = NULL;
+        filter_list.push_front(all_bitmaps);
+
+        // Filter vector files
+        all_vectors.name = g_utf8_to_utf16(all_vectors_filter_name,
+            -1, NULL, &all_vectors.name_length, NULL);
+        all_vectors.filter = g_utf8_to_utf16(all_vectors_filter.data(),
+                -1, NULL, &all_vectors.filter_length, NULL);
+        all_vectors.mod = NULL;
+        filter_list.push_front(all_vectors);
+
+        // Filter Image Files
+        all_image_files.name = g_utf8_to_utf16(all_image_files_filter_name,
+            -1, NULL, &all_image_files.name_length, NULL);
+        all_image_files.filter = g_utf8_to_utf16(all_image_files_filter.data(),
+                -1, NULL, &all_image_files.filter_length, NULL);
+        all_image_files.mod = NULL;
+        filter_list.push_front(all_image_files);
+
+        // Filter Inkscape Files
+        all_inkscape_files.name = g_utf8_to_utf16(all_inkscape_files_filter_name,
+            -1, NULL, &all_inkscape_files.name_length, NULL);
+        all_inkscape_files.filter = g_utf8_to_utf16(all_inkscape_files_filter.data(),
+                -1, NULL, &all_inkscape_files.filter_length, NULL);
+        all_inkscape_files.mod = NULL;
+        filter_list.push_front(all_inkscape_files);
+
+        // Filter All Files
+        all_files.name = g_utf8_to_utf16(all_files_filter_name,
+            -1, NULL, &all_files.name_length, NULL);
+        all_files.filter = NULL;
+        all_files.filter_length = 0;
+        all_files.mod = NULL;
+        filter_list.push_front(all_files);
+
+        filter_length += all_files.name_length + 3 +
+                        all_inkscape_files.filter_length +
+                        all_inkscape_files.name_length + 3 +
+                        all_image_files.filter_length +
+                        all_image_files.name_length + 3 +
+                        all_vectors.filter_length +
+                        all_vectors.name_length + 3 +
+                        all_bitmaps.filter_length +
+                        all_bitmaps.name_length + 3 +
+                                                      1;
+         // Add 3 for 2*2 \0s and a *, and 1 for a trailing \0
+    } else {
+        // Executables only
+        ustring all_exe_files_filter = "*.exe;*.bat;*.com";
+        Filter all_exe_files, all_files;
+
+        const gchar *all_files_filter_name = _("All Files");
+        const gchar *all_exe_files_filter_name = _("All Executable Files");
+        
+        // Calculate the amount of memory required
+        int filter_count = 2;       // 2 - All Files and All Executable Files
+        
+        _extension_map = new Inkscape::Extension::Extension*[filter_count];
+        
+        // Filter Executable Files
+        all_exe_files.name = g_utf8_to_utf16(all_exe_files_filter_name,
+            -1, NULL, &all_exe_files.name_length, NULL);
+        all_exe_files.filter = g_utf8_to_utf16(all_exe_files_filter.data(),
+                -1, NULL, &all_exe_files.filter_length, NULL);
+        all_exe_files.mod = NULL;
+        filter_list.push_front(all_exe_files);
+
+        // Filter All Files
+        all_files.name = g_utf8_to_utf16(all_files_filter_name,
+            -1, NULL, &all_files.name_length, NULL);
+        all_files.filter = NULL;
+        all_files.filter_length = 0;
+        all_files.mod = NULL;
+        filter_list.push_front(all_files);
+        
+        filter_length += all_files.name_length + 3 +
+                        all_exe_files.filter_length +
+                        all_exe_files.name_length + 3 +
+                                                      1;
+         // Add 3 for 2*2 \0s and a *, and 1 for a trailing \0
+    }
+    
+    _filter = new wchar_t[filter_length];
     wchar_t *filterptr = _filter;
 
     for(list<Filter>::iterator filter_iterator = filter_list.begin();
@@ -371,7 +408,7 @@ void FileOpenDialogImplWin32::createFilterMenu()
     }
     *(filterptr++) = L'\0';
 
-	_filter_count = extension_index;
+    _filter_count = extension_index;
     _filter_index = 2;	// Select the 2nd filter in the list - 2 is NOT the 3rd
 }
 
@@ -380,7 +417,7 @@ void FileOpenDialogImplWin32::GetOpenFileName_thread()
     OPENFILENAMEEXW ofn;
 
     g_assert(this != NULL);
-	g_assert(_mutex != NULL);
+    g_assert(_mutex != NULL);
 
     WCHAR* current_directory_string = (WCHAR*)g_utf8_to_utf16(
         _current_directory.data(), _current_directory.length(),
@@ -411,7 +448,7 @@ void FileOpenDialogImplWin32::GetOpenFileName_thread()
 
     _result = GetOpenFileNameW(&ofn) != 0;
 
-	g_assert(ofn.nFilterIndex >= 1 && ofn.nFilterIndex <= _filter_count);
+    g_assert(ofn.nFilterIndex >= 1 && ofn.nFilterIndex <= _filter_count);
     _filter_index = ofn.nFilterIndex;
     _extension = _extension_map[ofn.nFilterIndex - 1];
 
@@ -459,56 +496,70 @@ UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
             HWND hParentWnd = GetParent(hdlg);
             HINSTANCE hInstance = GetModuleHandle(NULL);
 
-            // Make the window a bit wider
-            RECT rcRect;
-            GetWindowRect(hParentWnd, &rcRect);
-            MoveWindow(hParentWnd, rcRect.left, rcRect.top,
-                       rcRect.right - rcRect.left + PREVIEW_WIDENING,
-                       rcRect.bottom - rcRect.top,
-                       FALSE);
-
             // Set the pointer to the object
             OPENFILENAMEW *ofn = (OPENFILENAMEW*)lParam;
             SetWindowLongPtr(hdlg, GWLP_USERDATA, ofn->lCustData);
             SetWindowLongPtr(hParentWnd, GWLP_USERDATA, ofn->lCustData);
             pImpl = (FileOpenDialogImplWin32*)ofn->lCustData;
+            
+            // Make the window a bit wider
+            RECT rcRect;
+            GetWindowRect(hParentWnd, &rcRect);
+            
+            // Don't show the preview when opening executable files
+            if ( pImpl->dialogType == EXE_TYPES) {
+                MoveWindow(hParentWnd, rcRect.left, rcRect.top,
+                           rcRect.right - rcRect.left,
+                           rcRect.bottom - rcRect.top,
+                           FALSE);
+            } else {
+                MoveWindow(hParentWnd, rcRect.left, rcRect.top,
+                           rcRect.right - rcRect.left + PREVIEW_WIDENING,
+                           rcRect.bottom - rcRect.top,
+                           FALSE);
+            }
 
             // Subclass the parent
             pImpl->_base_window_proc = (WNDPROC)GetWindowLongPtr(hParentWnd, GWLP_WNDPROC);
             SetWindowLongPtr(hParentWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(file_dialog_subclass_proc));
 
-            // Add a button to the toolbar
-            pImpl->_toolbar_wnd = FindWindowEx(hParentWnd, NULL, "ToolbarWindow32", NULL);
+            if ( pImpl->dialogType != EXE_TYPES) {
+                // Add a button to the toolbar
+                pImpl->_toolbar_wnd = FindWindowEx(hParentWnd, NULL, "ToolbarWindow32", NULL);
 
-            pImpl->_show_preview_button_bitmap = LoadBitmap(
-                hInstance, MAKEINTRESOURCE(IDC_SHOW_PREVIEW));
-            TBADDBITMAP tbAddBitmap = {NULL, reinterpret_cast<UINT_PTR>(pImpl->_show_preview_button_bitmap)};
-            const int iBitmapIndex = SendMessage(pImpl->_toolbar_wnd,
-                TB_ADDBITMAP, 1, (LPARAM)&tbAddBitmap);
+                pImpl->_show_preview_button_bitmap = LoadBitmap(
+                    hInstance, MAKEINTRESOURCE(IDC_SHOW_PREVIEW));
+                TBADDBITMAP tbAddBitmap = {NULL, reinterpret_cast<UINT_PTR>(pImpl->_show_preview_button_bitmap)};
+                const int iBitmapIndex = SendMessage(pImpl->_toolbar_wnd,
+                    TB_ADDBITMAP, 1, (LPARAM)&tbAddBitmap);
+                
 
-            TBBUTTON tbButton;
-            memset(&tbButton, 0, sizeof(TBBUTTON));
-            tbButton.iBitmap = iBitmapIndex;
-            tbButton.idCommand = IDC_SHOW_PREVIEW;
-            tbButton.fsState = (pImpl->_show_preview ? TBSTATE_CHECKED : 0)
-                | TBSTATE_ENABLED;
-            tbButton.fsStyle = TBSTYLE_CHECK;
-            tbButton.iString = (INT_PTR)_("Show Preview");
-            SendMessage(pImpl->_toolbar_wnd, TB_ADDBUTTONS, 1, (LPARAM)&tbButton);
+                TBBUTTON tbButton;
+                memset(&tbButton, 0, sizeof(TBBUTTON));
+                tbButton.iBitmap = iBitmapIndex;
+                tbButton.idCommand = IDC_SHOW_PREVIEW;
+                tbButton.fsState = (pImpl->_show_preview ? TBSTATE_CHECKED : 0)
+                    | TBSTATE_ENABLED;
+                tbButton.fsStyle = TBSTYLE_CHECK;
+                tbButton.iString = (INT_PTR)_("Show Preview");
+                SendMessage(pImpl->_toolbar_wnd, TB_ADDBUTTONS, 1, (LPARAM)&tbButton);
 
-            // Create preview pane
-            register_preview_wnd_class();
+                // Create preview pane
+                register_preview_wnd_class();
+            }
 
             pImpl->_mutex->lock();
 
-                pImpl->_file_dialog_wnd = hParentWnd;
+            pImpl->_file_dialog_wnd = hParentWnd;
 
+            if ( pImpl->dialogType != EXE_TYPES) {
                 pImpl->_preview_wnd =
                     CreateWindowA(PreviewWindowClassName, "",
                         WS_CHILD | WS_VISIBLE,
                         0, 0, 100, 100, hParentWnd, NULL, hInstance, NULL);
                 SetWindowLongPtr(pImpl->_preview_wnd, GWLP_USERDATA, ofn->lCustData);
-
+            }
+            
             pImpl->_mutex->unlock();
 
             pImpl->layout_dialog();
@@ -775,7 +826,7 @@ void FileOpenDialogImplWin32::layout_dialog()
         rcClient.right - iPadding, rcFileList.r.bottom};
     rcFileList.r.right = rcBody.right;
 
-    if(_show_preview)
+    if(_show_preview && dialogType != EXE_TYPES)
     {
         rcPreview.top = rcBody.top;
         rcPreview.left = rcClient.right - (rcBody.bottom - rcBody.top);
@@ -1603,7 +1654,7 @@ void FileSaveDialogImplWin32::createFilterMenu()
     }
     *(filterptr++) = 0;
 
-	_filter_count = extension_index;
+    _filter_count = extension_index;
     _filter_index = 1;	// A value of 1 selects the 1st filter - NOT the 2nd
 }
 
@@ -1643,7 +1694,7 @@ void FileSaveDialogImplWin32::GetSaveFileName_thread()
 
     _result = GetSaveFileNameW(&ofn) != 0;
 
-	g_assert(ofn.nFilterIndex >= 1 && ofn.nFilterIndex <= _filter_count);
+    g_assert(ofn.nFilterIndex >= 1 && ofn.nFilterIndex <= _filter_count);
     _filter_index = ofn.nFilterIndex;
     _extension = _extension_map[ofn.nFilterIndex - 1];
 
