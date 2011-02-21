@@ -143,6 +143,7 @@ struct SPCanvas {
     bool drawing_disabled;
 
     int rendermode;
+    int colorrendermode;
 
 #if ENABLE_LCMS
     bool enable_cms_display_adj;

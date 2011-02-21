@@ -58,6 +58,7 @@ nr_arena_init (NRArena *arena)
     arena->delta = 0; // to be set by desktop from prefs
     arena->renderoffscreen = false; // use render values from preferences otherwise render exact
     arena->rendermode = Inkscape::RENDERMODE_NORMAL; // default is normal render
+    arena->colorrendermode = Inkscape::COLORRENDERMODE_NORMAL; // default is normal color
     arena->blurquality = BLUR_QUALITY_NORMAL;
     arena->filterquality = Inkscape::Filters::FILTER_QUALITY_NORMAL;
     arena->outlinecolor = 0xff; // black; to be set by desktop from bg color
@@ -88,6 +89,7 @@ nr_arena_request_update (NRArena *arena, NRArenaItem *item)
         arena->blurquality =  BLUR_QUALITY_BEST;
         arena->filterquality = Inkscape::Filters::FILTER_QUALITY_BEST;
         arena->rendermode = Inkscape::RENDERMODE_NORMAL;
+        arena->colorrendermode = Inkscape::COLORRENDERMODE_NORMAL;
     }
 
     if (aobject->callbacks) {
@@ -119,6 +121,7 @@ nr_arena_request_render_rect (NRArena *arena, NRRectL *area)
         arena->blurquality =  BLUR_QUALITY_BEST;
         arena->filterquality = Inkscape::Filters::FILTER_QUALITY_BEST;
         arena->rendermode = Inkscape::RENDERMODE_NORMAL;
+        arena->colorrendermode = Inkscape::COLORRENDERMODE_NORMAL;
     }
     if (aobject->callbacks && area && !nr_rect_l_test_empty_ptr(area)) {
         for (unsigned int i = 0; i < aobject->callbacks->length; i++) {

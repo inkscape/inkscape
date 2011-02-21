@@ -30,6 +30,7 @@
 #include "uri.h"
 #include "sp-pattern.h"
 #include "xml/repr.h"
+#include "display/grayscale.h"
 
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
@@ -915,10 +916,12 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
 	if (pattern_width (pp->pat) < NR_EPSILON) return;
 	if (pattern_height (pp->pat) < NR_EPSILON) return;
 
+    bool grayscale = Grayscale::activeDesktopIsGrayscale();   // TODO: find good way to access the current rendermode
+
 	/* Find buffer area in gradient space */
 	/* fixme: This is suboptimal (Lauris) */
 
-	if ( pp->use_cached_tile ) {
+	if ( !grayscale && pp->use_cached_tile ) {
 		double   pat_w=pattern_width (pp->pat);
 		double   pat_h=pattern_height (pp->pat);
 		if ( pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8N || pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8P ) { // same thing because it's filling an empty pixblock
@@ -1031,8 +1034,13 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
     				// fixme: (Lauris)
     				nr_pixblock_setup_extern (&ppb, pb->mode, area.x0, area.y0, area.x1, area.y1, NR_PIXBLOCK_PX (pb), pb->rs, FALSE, FALSE);
     				
+                    Inkscape::ColorRenderMode saved_colormode = pp->root->arena->colorrendermode;
+                    if (grayscale) {
+                        pp->root->arena->colorrendermode = Inkscape::COLORRENDERMODE_GRAYSCALE;
+                    }
     				nr_arena_item_invoke_render (NULL, pp->root, &area, &ppb, 0);
-    				
+                    pp->root->arena->colorrendermode = saved_colormode;
+
     				nr_pixblock_release (&ppb);
     			}
     		}

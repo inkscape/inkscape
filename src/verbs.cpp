@@ -1715,11 +1715,20 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_VIEW_MODE_OUTLINE:
             dt->setDisplayModeOutline();
             break;
-//        case SP_VERB_VIEW_MODE_PRINT_COLORS_PREVIEW:
-//            dt->setDisplayModePrintColorsPreview();
-//            break;
         case SP_VERB_VIEW_MODE_TOGGLE:
             dt->displayModeToggle();
+            break;
+        case SP_VERB_VIEW_COLOR_MODE_NORMAL:
+            dt->setDisplayColorModeNormal();
+            break;
+        case SP_VERB_VIEW_COLOR_MODE_GRAYSCALE:
+            dt->setDisplayColorModeGrayscale();
+            break;
+//        case SP_VERB_VIEW_COLOR_MODE_PRINT_COLORS_PREVIEW:
+//            dt->setDisplayColorModePrintColorsPreview();
+//            break;
+        case SP_VERB_VIEW_COLOR_MODE_TOGGLE:
+            dt->displayColorModeToggle();
             break;
         case SP_VERB_VIEW_CMS_TOGGLE:
             dt->toggleColorProfAdjust();
@@ -2602,10 +2611,16 @@ Verb *Verb::_base_verbs[] = {
                  N_("Switch to normal display without filters"), NULL),
     new ZoomVerb(SP_VERB_VIEW_MODE_OUTLINE, "ViewModeOutline", N_("_Outline"),
                  N_("Switch to outline (wireframe) display mode"), NULL),
-//    new ZoomVerb(SP_VERB_VIEW_MODE_PRINT_COLORS_PREVIEW, "ViewModePrintColorsPreview", N_("_Print Colors Preview"),
-//                 N_("Switch to print colors preview mode"), NULL),
     new ZoomVerb(SP_VERB_VIEW_MODE_TOGGLE, "ViewModeToggle", N_("_Toggle"),
                  N_("Toggle between normal and outline display modes"), NULL),
+    new ZoomVerb(SP_VERB_VIEW_COLOR_MODE_NORMAL, "ViewColorModeNormal", N_("_Normal"),
+                 N_("Switch to normal color display mode"), NULL),
+     new ZoomVerb(SP_VERB_VIEW_COLOR_MODE_GRAYSCALE, "ViewColorModeGrayscale", N_("_Grayscale"),
+                 N_("Switch to grayscale display mode"), NULL),
+//    new ZoomVerb(SP_VERB_VIEW_COLOR_MODE_PRINT_COLORS_PREVIEW, "ViewColorModePrintColorsPreview", N_("_Print Colors Preview"),
+//                 N_("Switch to print colors preview mode"), NULL),
+     new ZoomVerb(SP_VERB_VIEW_COLOR_MODE_TOGGLE, "ViewColorModeToggle", N_("_Toggle"),
+                 N_("Toggle between normal and grayscale color display modes"), NULL),
 
     new ZoomVerb(SP_VERB_VIEW_CMS_TOGGLE, "ViewCmsToggle", N_("Color-managed view"),
                  N_("Toggle color-managed display for this document window"), INKSCAPE_ICON_COLOR_MANAGEMENT),

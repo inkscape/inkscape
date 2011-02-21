@@ -37,6 +37,8 @@ ink_common_sources += \
 	display/curve.h	\
 	display/gnome-canvas-acetate.cpp	\
 	display/gnome-canvas-acetate.h	\
+	display/grayscale.cpp	\
+	display/grayscale.h	\
 	display/guideline.cpp	\
 	display/guideline.h	\
 	display/nr-plain-stuff-gdk.cpp	\

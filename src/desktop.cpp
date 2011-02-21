@@ -154,6 +154,7 @@ SPDesktop::SPDesktop() :
     _layer_hierarchy( 0 ),
     _reconstruction_old_layer_id( 0 ),
     _display_mode(Inkscape::RENDERMODE_NORMAL),
+    _display_color_mode(Inkscape::COLORRENDERMODE_NORMAL),
     _widget( 0 ),
     _inkscape( 0 ),
     _guides_message_context( 0 ),
@@ -454,6 +455,13 @@ void SPDesktop::_setDisplayMode(Inkscape::RenderMode mode) {
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (main), _d2w); // redraw
     _widget->setTitle( sp_desktop_document(this)->getName() );
 }
+void SPDesktop::_setDisplayColorMode(Inkscape::ColorRenderMode mode) {
+    SP_CANVAS_ARENA (drawing)->arena->colorrendermode = mode;
+    canvas->colorrendermode = mode;
+    _display_color_mode = mode;
+    sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (main), _d2w); // redraw
+    _widget->setTitle( sp_desktop_document(this)->getName() );
+}
 
 void SPDesktop::displayModeToggle() {
     switch (_display_mode) {
@@ -466,9 +474,21 @@ void SPDesktop::displayModeToggle() {
     case Inkscape::RENDERMODE_OUTLINE:
         _setDisplayMode(Inkscape::RENDERMODE_NORMAL);
         break;
-//    case Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW:
     default:
         _setDisplayMode(Inkscape::RENDERMODE_NORMAL);
+    }
+}
+void SPDesktop::displayColorModeToggle() {
+    switch (_display_color_mode) {
+    case Inkscape::COLORRENDERMODE_NORMAL:
+        _setDisplayColorMode(Inkscape::COLORRENDERMODE_GRAYSCALE);
+        break;
+    case Inkscape::COLORRENDERMODE_GRAYSCALE:
+        _setDisplayColorMode(Inkscape::COLORRENDERMODE_NORMAL);
+        break;
+//    case Inkscape::COLORRENDERMODE_PRINT_COLORS_PREVIEW:
+    default:
+        _setDisplayColorMode(Inkscape::COLORRENDERMODE_NORMAL);
     }
 }
 

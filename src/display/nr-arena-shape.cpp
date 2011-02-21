@@ -24,6 +24,7 @@
 #include "display/nr-arena.h"
 #include "display/nr-arena-shape.h"
 #include "display/curve.h"
+#include "display/grayscale.h"
 #include "libnr/nr-pixops.h"
 #include "libnr/nr-blit.h"
 #include "libnr/nr-convert2geom.h"
@@ -843,7 +844,8 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
     if (!shape->style) return item->state;
 
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
-    bool print_colors_preview = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW);
+    bool print_colors_preview = (NR_ARENA_ITEM(shape)->arena->colorrendermode == Inkscape::COLORRENDERMODE_PRINT_COLORS_PREVIEW);
+    bool grayscale = (NR_ARENA_ITEM(shape)->arena->colorrendermode == Inkscape::COLORRENDERMODE_GRAYSCALE);
 
     if (outline) { // cairo outline rendering
 
@@ -903,8 +905,11 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
                 rgba = fill_color->toRGBA32( shape->_fill.opacity );
             }
 
-            if (print_colors_preview)
+            if (print_colors_preview) {
                 nr_arena_separate_color_plates(&rgba);
+            } else if (grayscale) {
+                rgba = Grayscale::process(rgba);
+            }
 
             nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
             pb->empty = FALSE;
@@ -944,8 +949,11 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
             rgba = stroke_color->toRGBA32( shape->_stroke.opacity );
         }
 
-        if (print_colors_preview)
+        if (print_colors_preview) {
             nr_arena_separate_color_plates(&rgba);
+        } else if (grayscale) {
+            rgba = Grayscale::process(rgba);
+        }
 
         nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
         pb->empty = FALSE;

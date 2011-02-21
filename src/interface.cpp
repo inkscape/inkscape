@@ -640,44 +640,49 @@ static void taskToggled(GtkCheckMenuItem *menuitem, gpointer userData)
 
 
 /**
- *  \brief Callback function to update the status of the radio buttons in the View -> Display mode menu (Normal, No Filters, Outline)
+ *  \brief Callback function to update the status of the radio buttons in the View -> Display mode menu (Normal, No Filters, Outline) and Color display mode
  */
 
 static gboolean
 update_view_menu(GtkWidget *widget, GdkEventExpose */*event*/, gpointer user_data)
 {
-	SPAction *action = (SPAction *) user_data;
-	g_assert(action->id != NULL);
+    SPAction *action = (SPAction *) user_data;
+    g_assert(action->id != NULL);
 
-	Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(widget), "view");
+    Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(widget), "view");
     SPDesktop *dt = static_cast<SPDesktop*>(view);
-	Inkscape::RenderMode mode = dt->getMode();
+    Inkscape::RenderMode mode = dt->getMode();
+    Inkscape::ColorRenderMode colormode = dt->getColorMode();
 
-	bool new_state = false;
-	if (!strcmp(action->id, "ViewModeNormal")) {
-    	new_state = mode == Inkscape::RENDERMODE_NORMAL;
-	} else if (!strcmp(action->id, "ViewModeNoFilters")) {
-    	new_state = mode == Inkscape::RENDERMODE_NO_FILTERS;
+    bool new_state = false;
+    if (!strcmp(action->id, "ViewModeNormal")) {
+        new_state = mode == Inkscape::RENDERMODE_NORMAL;
+    } else if (!strcmp(action->id, "ViewModeNoFilters")) {
+        new_state = mode == Inkscape::RENDERMODE_NO_FILTERS;
     } else if (!strcmp(action->id, "ViewModeOutline")) {
-    	new_state = mode == Inkscape::RENDERMODE_OUTLINE;
-    } else if (!strcmp(action->id, "ViewModePrintColorsPreview")) {
-    	new_state = mode == Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW;
+        new_state = mode == Inkscape::RENDERMODE_OUTLINE;
+    } else if (!strcmp(action->id, "ViewColorModeNormal")) {
+        new_state = colormode == Inkscape::COLORRENDERMODE_NORMAL;
+    } else if (!strcmp(action->id, "ViewColorModeGrayscale")) {
+        new_state = colormode == Inkscape::COLORRENDERMODE_GRAYSCALE;
+    } else if (!strcmp(action->id, "ViewColorModePrintColorsPreview")) {
+        new_state = colormode == Inkscape::COLORRENDERMODE_PRINT_COLORS_PREVIEW;
     } else {
-    	g_warning("update_view_menu does not handle this verb");
+        g_warning("update_view_menu does not handle this verb");
     }
 
-	if (new_state) { //only one of the radio buttons has to be activated; the others will automatically be deactivated
-		if (!gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (widget))) {
-			// When the GtkMenuItem version of the "activate" signal has been emitted by a GtkRadioMenuItem, there is a second
-			// emission as the most recently active item is toggled to inactive. This is dealt with before the original signal is handled.
-			// This emission however should not invoke any actions, hence we block it here:
-			temporarily_block_actions = true;
-			gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (widget), TRUE);
-			temporarily_block_actions = false;
-		}
-	}
+    if (new_state) { //only one of the radio buttons has to be activated; the others will automatically be deactivated
+        if (!gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (widget))) {
+            // When the GtkMenuItem version of the "activate" signal has been emitted by a GtkRadioMenuItem, there is a second
+            // emission as the most recently active item is toggled to inactive. This is dealt with before the original signal is handled.
+            // This emission however should not invoke any actions, hence we block it here:
+            temporarily_block_actions = true;
+            gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (widget), TRUE);
+            temporarily_block_actions = false;
+        }
+    }
 
-	return FALSE;
+    return FALSE;
 }
 
 void

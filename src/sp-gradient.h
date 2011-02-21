@@ -101,6 +101,8 @@ public:
 
     /** Rendered color array (4 * 1024 bytes) */
     guchar *color;
+    /** Rendered color array in grayscale (for grayscale viewmode) (4 * 1024 bytes) */
+    guchar *color_grayscale;
 
     sigc::connection modified_connection;
 

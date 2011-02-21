@@ -48,6 +48,7 @@
 #include "uri.h"
 #include "xml/repr.h"
 #include "style.h"
+#include "display/grayscale.h"
 
 #define SP_MACROS_SILENT
 #include "macros.h"
@@ -1120,6 +1121,7 @@ void SPGradient::rebuildVector()
 
 /**
  * The gradient's color array is newly created and set up from vector.
+ * Also, the gradient's color_grayscale is created.
  */
 void SPGradient::ensureColors()
 {
@@ -1131,6 +1133,9 @@ void SPGradient::ensureColors()
     /// \todo Where is the memory freed?
     if (!color) {
         color = g_new(guchar, 4 * NCOLORS);
+    }
+    if (!color_grayscale) {
+        color_grayscale = g_new(guchar, 4 * NCOLORS);
     }
 
     // This assumes that vector is a zero-order B-spline (box function) approximation of the "true" gradient.
@@ -1260,6 +1265,15 @@ void SPGradient::ensureColors()
         color[3] = color[4 * (NCOLORS-1) + 3] = (unsigned char) floor(255*(remainder[3]+remainder_for_end[3]) + .5);
         break;
     }
+
+    // Fill color_grayscale array
+    for (unsigned j = 0; j < NCOLORS; j++) {
+        guint32 rgba = Grayscale::process(color[4 * j + 0], color[4 * j + 1], color[4 * j + 2], color[4 * j + 3]);
+        color_grayscale[4 * j + 0] = SP_RGBA32_R_U(rgba);
+        color_grayscale[4 * j + 1] = SP_RGBA32_G_U(rgba);
+        color_grayscale[4 * j + 2] = SP_RGBA32_B_U(rgba);
+        color_grayscale[4 * j + 3] = SP_RGBA32_A_U(rgba);
+    }
 }
 
 /**
@@ -1290,13 +1304,25 @@ sp_gradient_render_vector_line_rgba(SPGradient *const gradient, guchar *buf,
     gint idx = (pos * 1024 << 8) / span;
     gint didx = (1024 << 8) / span;
 
-    for (gint x = 0; x < len; x++) {
-        /// \todo Can this be done with 4 byte copies?
-        *buf++ = gradient->color[4 * (idx >> 8)];
-        *buf++ = gradient->color[4 * (idx >> 8) + 1];
-        *buf++ = gradient->color[4 * (idx >> 8) + 2];
-        *buf++ = gradient->color[4 * (idx >> 8) + 3];
-        idx += didx;
+    bool grayscale = false;  // this rendering is for UI items, like the gradient edit dialog
+    if (grayscale) {
+        for (gint x = 0; x < len; x++) {
+            guchar luminance = Grayscale::luminance( gradient->color[4 * (idx >> 8)], gradient->color[4 * (idx >> 8) + 1], gradient->color[4 * (idx >> 8) + 2] );
+            *buf++ = luminance;
+            *buf++ = luminance;
+            *buf++ = luminance;
+            *buf++ = gradient->color[4 * (idx >> 8) + 3];
+            idx += didx;
+        }
+    } else {
+        for (gint x = 0; x < len; x++) {
+            /// \todo Can this be done with 4 byte copies?
+            *buf++ = gradient->color[4 * (idx >> 8)];
+            *buf++ = gradient->color[4 * (idx >> 8) + 1];
+            *buf++ = gradient->color[4 * (idx >> 8) + 2];
+            *buf++ = gradient->color[4 * (idx >> 8) + 3];
+            idx += didx;
+        }
     }
 }
 
@@ -1702,6 +1728,11 @@ sp_lg_fill(SPPainter *painter, NRPixBlock *pb)
 
     if (lgp->lg->color == NULL) {
         lgp->lg->ensureColors();
+    }
+    bool grayscale = Grayscale::activeDesktopIsGrayscale();   // TODO: find good way to access the current rendermode
+    if (grayscale) {
+        lgp->lgr.vector = lgp->lg->color_grayscale;
+    } else {
         lgp->lgr.vector = lgp->lg->color;
     }
 
@@ -1981,6 +2012,11 @@ sp_rg_fill(SPPainter *painter, NRPixBlock *pb)
 
     if (rgp->rg->color == NULL) {
         rgp->rg->ensureColors();
+    }
+    bool grayscale = Grayscale::activeDesktopIsGrayscale();  // TODO: find good way to access the current rendermode
+    if (grayscale) {
+        rgp->rgr.vector = rgp->rg->color_grayscale;
+    } else {
         rgp->rgr.vector = rgp->rg->color;
     }
 

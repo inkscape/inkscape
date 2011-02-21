@@ -638,25 +638,37 @@ SPDesktopWidget::updateTitle(gchar const* uri)
                                ? uri
                                : g_basename(uri) );
         GString *name = g_string_new ("");
+
+        gchar const *grayscalename = "(grayscale) ";
+        gchar const *grayscalenamecomma = ", grayscale";
+        gchar const *printcolorsname = "(print colors preview) ";
+        gchar const *printcolorsnamecomma = ", print colors preview";
+        gchar const *colormodename = "";
+        gchar const *colormodenamecomma = "";
+
+        if (this->desktop->getColorMode() == Inkscape::COLORRENDERMODE_GRAYSCALE) {
+                colormodename = grayscalename;
+                colormodenamecomma = grayscalenamecomma;
+        } else if (this->desktop->getColorMode() == Inkscape::COLORRENDERMODE_PRINT_COLORS_PREVIEW) {
+                colormodename = printcolorsname;
+                colormodenamecomma = printcolorsnamecomma;
+        }
+
         if (this->desktop->number > 1) {
             if (this->desktop->getMode() == Inkscape::RENDERMODE_OUTLINE) {
-                g_string_printf (name, _("%s: %d (outline) - Inkscape"), fname, this->desktop->number);
+                g_string_printf (name, _("%s: %d (outline%s) - Inkscape"), fname, this->desktop->number, colormodenamecomma);
             } else if (this->desktop->getMode() == Inkscape::RENDERMODE_NO_FILTERS) {
-                g_string_printf (name, _("%s: %d (no filters) - Inkscape"), fname, this->desktop->number);
-            } else if (this->desktop->getMode() == Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW) {
-                g_string_printf (name, _("%s: %d (print colors preview) - Inkscape"), fname, this->desktop->number);
+                g_string_printf (name, _("%s: %d (no filters%s) - Inkscape"), fname, this->desktop->number, colormodenamecomma);
             } else {
-                g_string_printf (name, _("%s: %d - Inkscape"), fname, this->desktop->number);
+                g_string_printf (name, _("%s: %d %s- Inkscape"), fname, this->desktop->number, colormodename);
             }
         } else {
             if (this->desktop->getMode() == Inkscape::RENDERMODE_OUTLINE) {
-                g_string_printf (name, _("%s (outline) - Inkscape"), fname);
+                g_string_printf (name, _("%s (outline%s) - Inkscape"), fname, colormodenamecomma);
             } else if (this->desktop->getMode() == Inkscape::RENDERMODE_NO_FILTERS) {
-                g_string_printf (name, _("%s (no filters) - Inkscape"), fname);
-            } else if (this->desktop->getMode() == Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW) {
-                g_string_printf (name, _("%s (print colors preview) - Inkscape"), fname);
+                g_string_printf (name, _("%s (no filters%s) - Inkscape"), fname, colormodenamecomma);
             } else {
-                g_string_printf (name, _("%s - Inkscape"), fname);
+                g_string_printf (name, _("%s %s- Inkscape"), fname, colormodename);
             }
         }
         window->set_title (name->str);

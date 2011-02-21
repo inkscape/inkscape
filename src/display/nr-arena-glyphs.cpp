@@ -24,6 +24,7 @@
 #include "nr-arena-glyphs.h"
 #include <cairo.h>
 #include "inkscape-cairo.h"
+#include "display/grayscale.h"
 
 #ifdef test_glyph_liv
 #include "../display/canvas-bpath.h"
@@ -444,7 +445,8 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
     SPStyle const *style = ggroup->style;
 
     guint ret = item->state;
-    bool print_colors_preview = (item->arena->rendermode == Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW);
+    bool print_colors_preview = (item->arena->colorrendermode == Inkscape::COLORRENDERMODE_PRINT_COLORS_PREVIEW);
+    bool grayscale = (item->arena->colorrendermode == Inkscape::COLORRENDERMODE_GRAYSCALE);
 
     if (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE) {
 
@@ -513,8 +515,11 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
                 rgba = style->fill.value.color.toRGBA32( SP_SCALE24_TO_FLOAT(style->fill_opacity.value) );
             }
 
-            if (print_colors_preview)
+            if (print_colors_preview) {
                 nr_arena_separate_color_plates(&rgba);
+            } else if (grayscale) {
+                rgba = Grayscale::process(rgba);
+            }
 
             nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
             pb->empty = FALSE;
@@ -557,8 +562,11 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
                 rgba = style->stroke.value.color.toRGBA32( SP_SCALE24_TO_FLOAT(style->stroke_opacity.value) );
             }
 
-            if (print_colors_preview)
+            if (print_colors_preview) {
                 nr_arena_separate_color_plates(&rgba);
+            } else if (grayscale) {
+                rgba = Grayscale::process(rgba);
+            }
 
             nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
             pb->empty = FALSE;

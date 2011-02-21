@@ -206,12 +206,23 @@ public:
     void setDisplayModeOutline() {
         _setDisplayMode(Inkscape::RENDERMODE_OUTLINE);
     }
-//    void setDisplayModePrintColorsPreview() {
-//        _setDisplayMode(Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW);
-//    }
     void displayModeToggle();
     Inkscape::RenderMode _display_mode;
     Inkscape::RenderMode getMode() const { return _display_mode; }
+
+    void _setDisplayColorMode(Inkscape::ColorRenderMode mode);
+    void setDisplayColorModeNormal() {
+        _setDisplayColorMode(Inkscape::COLORRENDERMODE_NORMAL);
+    }
+    void setDisplayColorModeGrayscale() {
+        _setDisplayColorMode(Inkscape::COLORRENDERMODE_GRAYSCALE);
+    }
+//    void setDisplayColorModePrintColorsPreview() {
+//        _setDisplayColorMode(Inkscape::COLORRENDERMODE_PRINT_COLORS_PREVIEW);
+//    }
+    void displayColorModeToggle();
+    Inkscape::ColorRenderMode _display_color_mode;
+    Inkscape::ColorRenderMode getColorMode() const { return _display_color_mode; }
 
     Inkscape::UI::Widget::Dock* getDock() { return _widget->getDock(); }
 

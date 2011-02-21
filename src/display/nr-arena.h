@@ -48,6 +48,7 @@ struct NRArena : public NRActiveObject {
 	double delta;
 	bool renderoffscreen;  // if true then rendering must be exact
 	Inkscape::RenderMode rendermode;
+	Inkscape::ColorRenderMode colorrendermode;
 	int blurquality;    // will be updated during update from preferences
 	int filterquality;  // will be updated during update from preferences
 
