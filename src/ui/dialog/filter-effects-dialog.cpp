@@ -1181,29 +1181,32 @@ void FilterEffectsDialog::FilterModifier::update_selection(Selection *sel)
 {
     std::set<SPObject*> used;
 
-    for(GSList const *i = sel->itemList(); i != NULL; i = i->next) {
+    for (GSList const *i = sel->itemList(); i != NULL; i = i->next) {
         SPObject *obj = SP_OBJECT (i->data);
-        SPStyle *style = SP_OBJECT_STYLE (obj);
-        if(!style || !SP_IS_ITEM(obj)) continue;
+        SPStyle *style = obj->style;
+        if (!style || !SP_IS_ITEM(obj)) {
+            continue;
+        }
 
-        if(style->filter.set && style->getFilter())
+        if (style->filter.set && style->getFilter()) {
             used.insert(style->getFilter());
-        else
+        } else {
             used.insert(0);
+        }
     }
 
     const int size = used.size();
 
-    for(Gtk::TreeIter iter = _model->children().begin();
-        iter != _model->children().end(); ++iter) {
-        if(used.find((*iter)[_columns.filter]) != used.end()) {
+    for (Gtk::TreeIter iter = _model->children().begin(); iter != _model->children().end(); ++iter) {
+        if (used.find((*iter)[_columns.filter]) != used.end()) {
             // If only one filter is in use by the selection, select it
-            if(size == 1)
+            if (size == 1) {
                 _list.get_selection()->select(iter);
+            }
             (*iter)[_columns.sel] = size;
-        }
-        else
+        } else {
             (*iter)[_columns.sel] = 0;
+        }
     }
 }
 
@@ -1244,15 +1247,16 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
 
         for (GSList const *i = items; i != NULL; i = i->next) {
             SPItem * item = SP_ITEM(i->data);
-            SPStyle *style = SP_OBJECT_STYLE(item);
+            SPStyle *style = item->style;
             g_assert(style != NULL);
 
-            if(filter)
-                sp_style_set_property_url(SP_OBJECT(item), "filter", SP_OBJECT(filter), false);
-            else
+            if (filter) {
+                sp_style_set_property_url(item, "filter", filter, false);
+            } else {
                 ::remove_filter(item, false);
+            }
 
-            SP_OBJECT(item)->requestDisplayUpdate((SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG ));
+            item->requestDisplayUpdate((SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG ));
         }
 
         update_selection(sel);
@@ -1355,8 +1359,9 @@ void FilterEffectsDialog::FilterModifier::duplicate_filter()
 {
     SPFilter* filter = get_selected_filter();
 
-    if(filter) {
-        Inkscape::XML::Node* repr = SP_OBJECT_REPR(filter), *parent = repr->parent();
+    if (filter) {
+        Inkscape::XML::Node *repr = filter->getRepr();
+        Inkscape::XML::Node *parent = repr->parent();
         repr = repr->duplicate(repr->document());
         parent->appendChild(repr);
 
@@ -1902,7 +1907,7 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
                 for(Gtk::TreeIter iter = _model->children().begin();
                     iter != get_selection()->get_selected(); ++iter) {
                     if(iter == target_iter) {
-                        Inkscape::XML::Node *repr = SP_OBJECT_REPR(target);
+                        Inkscape::XML::Node *repr = target->getRepr();
                         // Make sure the target has a result
                         const gchar *gres = repr->attribute("result");
                         if(!gres) {
@@ -1979,22 +1984,23 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
 // Checks all of prim's inputs, removes any that use result
 void check_single_connection(SPFilterPrimitive* prim, const int result)
 {
-    if(prim && result >= 0) {
-
-        if(prim->image_in == result)
-            SP_OBJECT_REPR(prim)->setAttribute("in", 0);
-
-        if(SP_IS_FEBLEND(prim)) {
-            if(SP_FEBLEND(prim)->in2 == result)
-                SP_OBJECT_REPR(prim)->setAttribute("in2", 0);
+    if (prim && (result >= 0)) {
+        if (prim->image_in == result) {
+            prim->getRepr()->setAttribute("in", 0);
         }
-        else if(SP_IS_FECOMPOSITE(prim)) {
-            if(SP_FECOMPOSITE(prim)->in2 == result)
-                SP_OBJECT_REPR(prim)->setAttribute("in2", 0);
-        }
-        else if(SP_IS_FEDISPLACEMENTMAP(prim)) {
-            if(SP_FEDISPLACEMENTMAP(prim)->in2 == result)
-                SP_OBJECT_REPR(prim)->setAttribute("in2", 0);
+
+        if (SP_IS_FEBLEND(prim)) {
+            if (SP_FEBLEND(prim)->in2 == result) {
+                prim->getRepr()->setAttribute("in2", 0);
+            }
+        } else if (SP_IS_FECOMPOSITE(prim)) {
+            if (SP_FECOMPOSITE(prim)->in2 == result) {
+                prim->getRepr()->setAttribute("in2", 0);
+            }
+        } else if (SP_IS_FEDISPLACEMENTMAP(prim)) {
+            if (SP_FEDISPLACEMENTMAP(prim)->in2 == result) {
+                prim->getRepr()->setAttribute("in2", 0);
+            }
         }
     }
 }
@@ -2025,19 +2031,19 @@ void FilterEffectsDialog::PrimitiveList::on_drag_end(const Glib::RefPtr<Gdk::Dra
     SPFilter* filter = _dialog._filter_modifier.get_selected_filter();
     int ndx = 0;
 
-    for(Gtk::TreeModel::iterator iter = _model->children().begin();
+    for (Gtk::TreeModel::iterator iter = _model->children().begin();
         iter != _model->children().end(); ++iter, ++ndx) {
         SPFilterPrimitive* prim = (*iter)[_columns.primitive];
-        if(prim && prim == _drag_prim) {
-            SP_OBJECT_REPR(prim)->setPosition(ndx);
+        if (prim && prim == _drag_prim) {
+            prim->getRepr()->setPosition(ndx);
             break;
         }
     }
 
-    for(Gtk::TreeModel::iterator iter = _model->children().begin();
+    for (Gtk::TreeModel::iterator iter = _model->children().begin();
         iter != _model->children().end(); ++iter, ++ndx) {
         SPFilterPrimitive* prim = (*iter)[_columns.primitive];
-        if(prim && prim == _drag_prim) {
+        if (prim && prim == _drag_prim) {
             sanitize_connections(iter);
             get_selection()->select(iter);
             break;
@@ -2369,10 +2375,10 @@ void FilterEffectsDialog::duplicate_primitive()
     SPFilter* filter = _filter_modifier.get_selected_filter();
     SPFilterPrimitive* origprim = _primitive_list.get_selected();
 
-    if(filter && origprim) {
+    if (filter && origprim) {
         Inkscape::XML::Node *repr;
-        repr = SP_OBJECT_REPR(origprim)->duplicate(SP_OBJECT_REPR(origprim)->document());
-        SP_OBJECT_REPR(filter)->appendChild(repr);
+        repr = origprim->getRepr()->duplicate(origprim->getRepr()->document());
+        filter->getRepr()->appendChild(repr);
 
         DocumentUndo::done(filter->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("Duplicate filter primitive"));
 
@@ -2382,7 +2388,7 @@ void FilterEffectsDialog::duplicate_primitive()
 
 void FilterEffectsDialog::convolve_order_changed()
 {
-    _convolve_matrix->set_from_attribute(SP_OBJECT(_primitive_list.get_selected()));
+    _convolve_matrix->set_from_attribute(_primitive_list.get_selected());
     _convolve_target->get_spinbuttons()[0]->get_adjustment()->set_upper(_convolve_order->get_spinbutton1().get_value() - 1);
     _convolve_target->get_spinbuttons()[1]->get_adjustment()->set_upper(_convolve_order->get_spinbutton2().get_value() - 1);
 }
@@ -2398,8 +2404,8 @@ void FilterEffectsDialog::set_filternode_attr(const AttrWidget* input)
         _attr_lock = true;
         SPFilter *filter = _filter_modifier.get_selected_filter();
         const gchar* name = (const gchar*)sp_attribute_name(input->get_attribute());
-        if (filter && name && SP_OBJECT_REPR(filter)){
-            SP_OBJECT_REPR(filter)->setAttribute(name, input->get_as_attribute().c_str());
+        if (filter && name && filter->getRepr()){
+            filter->getRepr()->setAttribute(name, input->get_as_attribute().c_str());
             filter->requestModified(SP_OBJECT_MODIFIED_FLAG);
         }
         _attr_lock = false;
@@ -2421,7 +2427,7 @@ void FilterEffectsDialog::set_attr(SPObject* o, const SPAttributeEnum attr, cons
         if(filter && name && o) {
             update_settings_sensitivity();
 
-            SP_OBJECT_REPR(o)->setAttribute(name, val);
+            o->getRepr()->setAttribute(name, val);
             filter->requestModified(SP_OBJECT_MODIFIED_FLAG);
 
             Glib::ustring undokey = "filtereffects:";

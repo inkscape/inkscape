@@ -286,8 +286,9 @@ Geom::Affine i2i_affine(SPObject const *src, SPObject const *dest);
  *
  * \return TRANSFORM.
  */
-int sp_item_repr_compare_position(SPItem *first, SPItem *second);
+int sp_item_repr_compare_position(SPItem const *first, SPItem const *second);
 SPItem *sp_item_first_item_child (SPObject *obj);
+SPItem const *sp_item_first_item_child (SPObject const *obj);
 
 #endif // SEEN_SP_ITEM_H
 

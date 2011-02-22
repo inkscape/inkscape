@@ -169,7 +169,7 @@ static void sp_shape_render_invoke_marker_rendering(SPMarker* marker, Geom::Affi
     }
 
     if (render) {
-        SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
+        SPItem* marker_item = sp_item_first_item_child(marker);
         tr = (Geom::Affine)marker_item->transform * (Geom::Affine)marker->c2p * tr;
         Geom::Affine old_tr = marker_item->transform;
         marker_item->transform = tr;
@@ -184,14 +184,18 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 
     SPShape *shape = SP_SHAPE(item);
 
-    if (!shape->curve) return;
+    if (!shape->curve) {
+        return;
+    }
 
     item->invoke_bbox( &pbox, Geom::identity(), TRUE);
 
-    SPStyle* style = SP_OBJECT_STYLE (item);
+    SPStyle* style = item->style;
 
     Geom::PathVector const & pathv = shape->curve->get_pathvector();
-    if (pathv.empty()) return;
+    if (pathv.empty()) {
+        return;
+    }
 
     ctx->renderPathVector(pathv, style, &pbox);
 
@@ -290,7 +294,7 @@ static void sp_group_render(SPItem *item, CairoRenderContext *ctx)
 {
     SPGroup *group = SP_GROUP(item);
     CairoRenderer *renderer = ctx->getRenderer();
-    TRACE(("sp_group_render opacity: %f\n", SP_SCALE24_TO_FLOAT(SP_OBJECT_STYLE(item)->opacity.value)));
+    TRACE(("sp_group_render opacity: %f\n", SP_SCALE24_TO_FLOAT(item->style->opacity.value)));
 
     GSList *l = g_slist_reverse(group->childList(false));
     while (l) {
@@ -370,14 +374,15 @@ static void sp_image_render(SPItem *item, CairoRenderContext *ctx)
     Geom::Scale s(width / (double)w, height / (double)h);
     Geom::Affine t(s * tp);
 
-    ctx->renderImage (px, w, h, rs, &t, SP_OBJECT_STYLE (item));
+    ctx->renderImage (px, w, h, rs, &t, item->style);
 }
 
 static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx)
 {
     SPSymbol *symbol = SP_SYMBOL(item);
-    if (!SP_OBJECT_IS_CLONED (symbol))
+    if (!symbol->cloned) {
         return;
+    }
 
     /* Cloned <symbol> is actually renderable */
     ctx->pushState();
@@ -418,7 +423,7 @@ static void sp_root_render(SPItem *item, CairoRenderContext *ctx)
     SPRoot *root = SP_ROOT(item);
     CairoRenderer *renderer = ctx->getRenderer();
 
-    if (!ctx->getCurrentState()->has_overflow && SP_OBJECT(item)->parent)
+    if (!ctx->getCurrentState()->has_overflow && item->parent)
         ctx->addClippingRect(root->x.computed, root->y.computed, root->width.computed, root->height.computed);
 
     ctx->pushState();
@@ -457,7 +462,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
         return;
     }
 
-    Geom::Rect docrect(Geom::Rect(Geom::Point(0, 0), SP_OBJECT(item)->document->getDimensions()));
+    Geom::Rect docrect(Geom::Rect(Geom::Point(0, 0), item->document->getDimensions()));
     Geom::Rect bboxrect(Geom::Rect(Geom::Point(bbox->min()[Geom::X], bbox->min()[Geom::Y]), Geom::Point(bbox->max()[Geom::X], bbox->max()[Geom::Y])));
 
     Geom::OptRect _bbox = Geom::intersect(docrect, bboxrect);
@@ -500,7 +505,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     Geom::Affine t = t_on_document * t_item.inverse();
 
     // Do the export
-    SPDocument *document = SP_OBJECT(item)->document;
+    SPDocument *document = item->document;
     GSList *items = NULL;
     items = g_slist_append(items, item);
 
@@ -514,8 +519,9 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
         unsigned int w = gdk_pixbuf_get_width(pb);
         unsigned int h = gdk_pixbuf_get_height(pb);
         unsigned int rs = gdk_pixbuf_get_rowstride(pb);
-        ctx->renderImage (px, w, h, rs, &t, SP_OBJECT_STYLE (item));
-        gdk_pixbuf_unref (pb);
+        ctx->renderImage(px, w, h, rs, &t, item->style);
+        gdk_pixbuf_unref(pb);
+        pb = 0;
     }
     g_slist_free (items);
 }
@@ -528,7 +534,7 @@ static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)
         return;
     }
 
-    SPStyle* style = SP_OBJECT_STYLE (item);
+    SPStyle* style = item->style;
     if((ctx->getFilterToBitmap() == TRUE) && (style->filter.set != 0)) {
         return sp_asbitmap_render(item, ctx);
     }
@@ -564,7 +570,7 @@ static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)
 void
 CairoRenderer::setStateForItem(CairoRenderContext *ctx, SPItem const *item)
 {
-    SPStyle const *style = SP_OBJECT_STYLE(item);
+    SPStyle const *style = item->style;
     ctx->setStateForStyle(style);
 
     CairoRenderState *state = ctx->getCurrentState();
@@ -582,8 +588,8 @@ CairoRenderer::setStateForItem(CairoRenderContext *ctx, SPItem const *item)
     TRACE(("setStateForItem opacity: %f\n", state->opacity));
 }
 
-void
-CairoRenderer::renderItem(CairoRenderContext *ctx, SPItem *item)
+// TODO change this to accept a const SPItem:
+void CairoRenderer::renderItem(CairoRenderContext *ctx, SPItem *item)
 {
     if ( _omitText && (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) ) {
         // skip text if _omitText is true
@@ -687,10 +693,10 @@ CairoRenderer::applyClipPath(CairoRenderContext *ctx, SPClipPath const *cp)
     }
 
     TRACE(("BEGIN clip\n"));
-    SPObject *co = SP_OBJECT(cp);
-    for ( SPObject *child = co->firstChild() ; child; child = child->getNext() ) {
+    SPObject const *co = cp;
+    for ( SPObject const *child = co->firstChild() ; child; child = child->getNext() ) {
         if (SP_IS_ITEM(child)) {
-            SPItem *item = SP_ITEM(child);
+            SPItem const *item = SP_ITEM(child);
 
             // combine transform of the item in clippath and the item using clippath:
             Geom::Affine tempmat (item->transform);
@@ -700,7 +706,8 @@ CairoRenderer::applyClipPath(CairoRenderContext *ctx, SPClipPath const *cp)
             ctx->pushState();
             ctx->transform(&tempmat);
             setStateForItem(ctx, item);
-            sp_item_invoke_render(item, ctx);
+            // TODO fix this call to accept const items
+            sp_item_invoke_render(const_cast<SPItem *>(item), ctx);
             ctx->popState();
         }
     }
@@ -745,11 +752,12 @@ CairoRenderer::applyMask(CairoRenderContext *ctx, SPMask const *mask)
     ctx->pushState();
 
     TRACE(("BEGIN mask\n"));
-    SPObject *co = SP_OBJECT(mask);
-    for ( SPObject *child = co->firstChild() ; child; child = child->getNext() ) {
+    SPObject const *co = mask;
+    for ( SPObject const *child = co->firstChild() ; child; child = child->getNext() ) {
         if (SP_IS_ITEM(child)) {
-            SPItem *item = SP_ITEM(child);
-            renderItem(ctx, item);
+            SPItem const *item = SP_ITEM(child);
+            // TODO fix const correctness:
+            renderItem(ctx, const_cast<SPItem*>(item));
         }
     }
     TRACE(("END mask\n"));

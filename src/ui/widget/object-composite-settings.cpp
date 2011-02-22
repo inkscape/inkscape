@@ -146,7 +146,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
         }
 
         SPItem * item = SP_ITEM(*i);
-        SPStyle *style = SP_OBJECT_STYLE(item);
+        SPStyle *style = item->style;
         g_assert(style != NULL);
 
         if (blendmode != "normal") {

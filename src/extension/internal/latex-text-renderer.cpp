@@ -264,7 +264,7 @@ void
 LaTeXTextRenderer::sp_text_render(SPItem *item)
 {
     SPText *textobj = SP_TEXT (item);
-    SPStyle *style = SP_OBJECT_STYLE (SP_OBJECT(item));
+    SPStyle *style = item->style;
 
     gchar *str = sp_te_get_string_multiline(item);
     if (!str) {
@@ -350,7 +350,7 @@ Flowing in rectangle is possible, not in arb shape.
 */
 
     SPFlowtext *flowtext = SP_FLOWTEXT(item);
-    SPStyle *style = SP_OBJECT_STYLE (SP_OBJECT(item));
+    SPStyle *style = item->style;
 
     gchar *strtext = sp_te_get_string_multiline(item);
     if (!strtext) {

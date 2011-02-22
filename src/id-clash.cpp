@@ -88,8 +88,8 @@ const char* clipboard_properties[] = {
 static void
 find_references(SPObject *elem, refmap_type *refmap)
 {
-    if (SP_OBJECT_IS_CLONED(elem)) return;
-    Inkscape::XML::Node *repr_elem = SP_OBJECT_REPR(elem);
+    if (elem->cloned) return;
+    Inkscape::XML::Node *repr_elem = elem->getRepr();
     if (!repr_elem) return;
     if (repr_elem->type() != Inkscape::XML::ELEMENT_NODE) return;
 
@@ -124,7 +124,7 @@ find_references(SPObject *elem, refmap_type *refmap)
         }
     }
 
-    SPStyle *style = SP_OBJECT_STYLE(elem);
+    SPStyle *style = elem->style;
 
     /* check for url(#...) references in 'fill' or 'stroke' */
     for (unsigned i = 0; i < NUM_SPIPAINT_PROPERTIES; ++i) {
@@ -197,7 +197,7 @@ change_clashing_ids(SPDocument *imported_doc, SPDocument *current_doc,
                 imported_doc->getObjectById(str) == NULL) break;
         }
         // Change to the new ID
-        SP_OBJECT_REPR(elem)->setAttribute("id", new_id.c_str());
+        elem->getRepr()->setAttribute("id", new_id.c_str());
         // Make a note of this change, if we need to fix up refs to it
         if (refmap->find(old_id) != refmap->end())
             id_changes->push_back(id_changeitem_type(elem, old_id));
@@ -226,27 +226,25 @@ fix_up_refs(const refmap_type *refmap, const id_changelist_type &id_changes)
         for (it = pos->second.begin(); it != it_end; ++it) {
             if (it->type == REF_HREF) {
                 gchar *new_uri = g_strdup_printf("#%s", obj->getId());
-                SP_OBJECT_REPR(it->elem)->setAttribute(it->attr, new_uri);
+                it->elem->getRepr()->setAttribute(it->attr, new_uri);
                 g_free(new_uri);
-            }
-            else if (it->type == REF_STYLE) {
+            } else if (it->type == REF_STYLE) {
                 sp_style_set_property_url(it->elem, it->attr, obj, false);
-            }
-            else if (it->type == REF_URL) {
+            } else if (it->type == REF_URL) {
                 gchar *url = g_strdup_printf("url(#%s)", obj->getId());
-                SP_OBJECT_REPR(it->elem)->setAttribute(it->attr, url);
+                it->elem->getRepr()->setAttribute(it->attr, url);
                 g_free(url);
-            }
-            else if (it->type == REF_CLIPBOARD) {
-                SPCSSAttr *style = sp_repr_css_attr(SP_OBJECT_REPR(it->elem), "style");
+            } else if (it->type == REF_CLIPBOARD) {
+                SPCSSAttr *style = sp_repr_css_attr(it->elem->getRepr(), "style");
                 gchar *url = g_strdup_printf("url(#%s)", obj->getId());
                 sp_repr_css_set_property(style, it->attr, url);
                 g_free(url);
                 gchar *style_string = sp_repr_css_write_string(style);
-                SP_OBJECT_REPR(it->elem)->setAttribute("style", style_string);
+                it->elem->getRepr()->setAttribute("style", style_string);
                 g_free(style_string);
+            } else {
+                g_assert(0); // shouldn't happen
             }
-            else g_assert(0); // shouldn't happen
         }
     }
 }

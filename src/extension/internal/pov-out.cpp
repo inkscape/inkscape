@@ -72,16 +72,15 @@ static void err(const char *fmt, ...)
 
 
 
-static double
-effective_opacity(SPItem const *item)
+static double effective_opacity(SPItem const *item)
 {
+    // TODO investigate this. The early return seems that it would abort early.
+    // Plus is will emit a warning, which may not be proper here.
     double ret = 1.0;
-    for (SPObject const *obj = item; obj; obj = obj->parent)
-        {
-        SPStyle const *const style = SP_OBJECT_STYLE(obj);
-        g_return_val_if_fail(style, ret);
-        ret *= SP_SCALE24_TO_FLOAT(style->opacity.value);
-        }
+    for (SPObject const *obj = item; obj; obj = obj->parent) {
+        g_return_val_if_fail(obj->style, ret);
+        ret *= SP_SCALE24_TO_FLOAT(obj->style->opacity.value);
+    }
     return ret;
 }
 
@@ -275,7 +274,7 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
     shapeInfo.color = "";
 
     //Try to get the fill color of the shape
-    SPStyle *style = SP_OBJECT_STYLE(shape);
+    SPStyle *style = shape->style;
     /* fixme: Handle other fill types, even if this means translating gradients to a single
            flat colour. */
     if (style)

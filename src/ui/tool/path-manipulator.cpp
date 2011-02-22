@@ -109,7 +109,7 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
     , _path(path)
     , _spcurve(new SPCurve())
     , _dragpoint(new CurveDragPoint(*this))
-    , /* XML Tree being used here directly while it shouldn't be*/_observer(new PathManipulatorObserver(this, SP_OBJECT(path)->getRepr()))
+    , /* XML Tree being used here directly while it shouldn't be*/_observer(new PathManipulatorObserver(this, path->getRepr()))
     , _edit_transform(et)
     , _num_selected(0)
     , _show_handles(true)
@@ -191,7 +191,7 @@ void PathManipulator::writeXML()
     if (!_path) return;
     _observer->block();
     if (!empty()) {
-        SP_OBJECT(_path)->updateRepr();
+        _path->updateRepr();
         _getXMLNode()->setAttribute(_nodetypesKey().data(), _createTypeString().data());
     } else {
         // this manipulator will have to be destroyed right after this call
@@ -1430,8 +1430,8 @@ double PathManipulator::_getStrokeTolerance()
      * drag tolerance setting.  */
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double ret = prefs->getIntLimited("/options/dragtolerance/value", 2, 0, 100);
-    if (_path && SP_OBJECT_STYLE(_path) && !SP_OBJECT_STYLE(_path)->stroke.isNone()) {
-        ret += SP_OBJECT_STYLE(_path)->stroke_width.computed * 0.5
+    if (_path && _path->style && !_path->style->stroke.isNone()) {
+        ret += _path->style->stroke_width.computed * 0.5
             * (_edit_transform * _i2d_transform).descrim() // scale to desktop coords
             * _desktop->current_zoom(); // == _d2w.descrim() - scale to window coords
     }

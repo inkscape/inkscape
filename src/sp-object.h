@@ -56,7 +56,6 @@ class SPObjectClass;
 
 /* Convenience stuff */
 #define SP_OBJECT_REPR(o) (((SPObject *) (o))->getRepr())
-#define SP_OBJECT_STYLE(o) (((SPObject *) (o))->style)
 
 #include <glib-object.h>
 #include <sigc++/connection.h>
