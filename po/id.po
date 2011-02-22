@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-01-05 20:49+0100\n"
-"PO-Revision-Date: 2011-02-17 23:22+0730\n"
+"PO-Revision-Date: 2011-02-22 21:14+0730\n"
 "Last-Translator: Waluyo Adi Siswanto <was.uthm@gmail.com>\n"
 "Language-Team: Indonesian <was.uthm@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -29,11 +29,11 @@ msgstr "Inkscape"
 
 #: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
-msgstr "Editor Grafis Vektor Inkscape"
+msgstr "Penyunting Grafik Vektor Inkscape"
 
 #: ../inkscape.desktop.in.h:4
 msgid "Vector Graphics Editor"
-msgstr "Editor Grafis Vektor"
+msgstr "Penyunting Grafik Vektor"
 
 #: ../share/extensions/dimension.py:105
 msgid "Please select an object."
@@ -238,7 +238,7 @@ msgstr ""
 
 #: ../share/extensions/gcodetools.py:4363
 msgid "Lathe X and Z axis remap should be 'X', 'Y' or 'Z'. Exiting..."
-msgstr "Mesin bubut sumbu peta X dan Z harus 'X', 'Y' or 'Z'. Keluar sekarang..."
+msgstr "Mesin bubut sumbu peta X dan Z harus 'X', 'Y' atau 'Z'. Keluar sekarang..."
 
 #: ../share/extensions/gcodetools.py:4366
 msgid "Lathe X and Z axis remap should be the same. Exiting..."
@@ -264,16 +264,20 @@ msgid ""
 "Technical details:\n"
 "%s"
 msgstr ""
+"Program lxml wrapper untuk libxml2 diperlukan oleh inkex.py pada ekstensi ini. Muaturun dan pasang versi terbaru dari http://cheeseshop.python.org/pypi/lxml/, atau pasang melalui pengelola paket dengan perintah seperti: sudo apt-get install python-lxml\n"
+"\n"
+"Rincian Teknis:\n"
+"%s"
 
 #: ../share/extensions/inkex.py:242
 #, python-format
 msgid "No matching node for expression: %s"
-msgstr ""
+msgstr "Tidak ada nodal sesuai untuk ekspresi: %s"
 
 #: ../share/extensions/markers_strokepaint.py:78
 #, python-format
 msgid "No style attribute found for id: %s"
-msgstr ""
+msgstr "Tidak ada atribut gaya ditemukan untuk id: %s"
 
 #: ../share/extensions/markers_strokepaint.py:132
 #, python-format
@@ -291,6 +295,8 @@ msgid ""
 "The total length of the pattern is too small :\n"
 "Please choose a larger object or set 'Space between copies' > 0"
 msgstr ""
+"Panjang total untuk pola terlalu kecil :\n"
+"Pilih obyek yang lebih besar atau atur 'Spasi antara gandaan' > 0"
 
 #: ../share/extensions/pathmodifier.py:229
 #, python-format
@@ -299,7 +305,7 @@ msgstr "Harap terlebih dahulu mengubah obyek ke tapak! (Ada [%s].)"
 
 #: ../share/extensions/perspective.py:29
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
-msgstr ""
+msgstr "Gagal mengimpor modul numpy atau numpy.linalg. Modul ini diperlukan oleh ekstensi ini. Anda perlu pasang dulu kemudian coba lagi.  Pada sistem seperti Debian, dapat dilakukan dengan perintah, sudo apt-get install python-numpy."
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:43
@@ -308,11 +314,13 @@ msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
+"Obyek yang pertama dipilih mempunyai tipe '%s'.\n"
+"Coba gunakan prosedur Tapak->Obyek ke Tapak."
 
 #: ../share/extensions/perspective.py:74
 #: ../share/extensions/summersnight.py:50
 msgid "This extension requires that the second selected path be four nodes long."
-msgstr ""
+msgstr "Ekstensi ini mensyaratkan bahwa tapak pilihan kedua harus memiliki empat nodal."
 
 #: ../share/extensions/perspective.py:99
 #: ../share/extensions/summersnight.py:82
@@ -320,6 +328,8 @@ msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
 msgstr ""
+"Obyek kedua yang dipilih adalah grup, bukan tapak.\n"
+"Coba gunakan prosedur Obyek->Lepas grup."
 
 #: ../share/extensions/perspective.py:101
 #: ../share/extensions/summersnight.py:84
@@ -327,6 +337,8 @@ msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
+"Obyek kedua yang dipilih bukan tapak.\n"
+"Coba gunakan prosedur Tapak->Obyek ke Tapak."
 
 #: ../share/extensions/perspective.py:104
 #: ../share/extensions/summersnight.py:87
@@ -334,41 +346,45 @@ msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
+"Obyek pertama yang dipilih bukan tapak.\n"
+"Coba gunakan prosedur  Tapak->Obyek ke Tapak."
 
 #: ../share/extensions/polyhedron_3d.py:60
 msgid "Failed to import the numpy module. This module is required by this extension. Please install it and try again.  On a Debian-like system this can be done with the command 'sudo apt-get install python-numpy'."
-msgstr ""
+msgstr "Gagal mengimpor modul numpy. Modul ini diperlukan oleh ekstensi ini. Anda perlu memasang dahulu.  Pada sistem seperti Debian, anda dapat menggunakan perintah 'sudo apt-get install python-numpy'."
 
 #: ../share/extensions/polyhedron_3d.py:331
 msgid "No face data found in specified file."
-msgstr ""
+msgstr "Tidak ada data permukaan ditemukan dalam berkas."
 
 #: ../share/extensions/polyhedron_3d.py:332
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
-msgstr ""
+msgstr "Mencoba memilih  \"Nyatakan Sisi\" dari Berkas Model tab.\n"
 
 #: ../share/extensions/polyhedron_3d.py:338
 msgid "No edge data found in specified file."
-msgstr ""
+msgstr "Data sisi tidak ditemukan di berkas yang dikehendaki."
 
 #: ../share/extensions/polyhedron_3d.py:339
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
-msgstr ""
+msgstr "Mencoba memilih  \"Nyatakan Permukaan\" dari Berkas Model tab.\n"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:514
 msgid "Face Data Not Found. Ensure file contains face data, and check the file is imported as \"Face-Specified\" under the \"Model File\" tab.\n"
-msgstr ""
+msgstr "Data permukaan tidak ditemukan. Pastikan berkas memiliki data permukaan, dan periksa berkas diimpor sebagai \"Nyatakan Permukaan\" dalam tab \"Berkas Model\".\n"
 
 #: ../share/extensions/polyhedron_3d.py:516
 msgid "Internal Error. No view type selected\n"
-msgstr ""
+msgstr "Kesalahan internal. Tidak ada tipe tampilan dipilih\n"
 
 #: ../share/extensions/summersnight.py:36
 msgid ""
 "This extension requires two selected paths. \n"
 "The second path must be exactly four nodes long."
 msgstr ""
+"Ekstensi ini memerlukan dua tapak pilihan. \n"
+"Tapak yang kedua harus mempunyai empat nodal."
 
 #: ../share/extensions/svg_and_media_zip_output.py:128
 #, python-format
@@ -444,7 +460,7 @@ msgstr "Logam cor"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Smooth drop-like bevel with metallic finish"
-msgstr ""
+msgstr "Halus, bevel seperti jatuh dengan hasil metalik"
 
 #: ../share/filters/filters.svg.h:5
 msgid "Motion blur, horizontal"
@@ -578,7 +594,7 @@ msgstr "Mekar"
 
 #: ../share/filters/filters.svg.h:14
 msgid "Soft, cushion-like bevel with matte highlights"
-msgstr ""
+msgstr "Lembut, bevel seperti bantal dengan cahaya matte"
 
 #: ../share/filters/filters.svg.h:15
 msgid "Ridged border"
@@ -1027,7 +1043,7 @@ msgstr "Cahaya tidak memantul"
 
 #: ../share/filters/filters.svg.h:51
 msgid "Soft, pastel-colored, blurry bevel"
-msgstr ""
+msgstr "Lembut, warna pastel, bevel kabur"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Thin Membrane"
@@ -1170,7 +1186,7 @@ msgstr "Dragee"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Gel Ridge with a pearlescent look"
-msgstr ""
+msgstr "Bubungan jeli dengan tampilan mutiara"
 
 #: ../share/filters/filters.svg.h:69
 msgid "Raised border"
@@ -1633,7 +1649,7 @@ msgstr "Timbul Gelap"
 
 #: ../share/filters/filters.svg.h:121
 msgid "Emboss effect : 3D relief where white is replaced by black"
-msgstr ""
+msgstr "Efek timbul: ukiran 3D dimana putih diganti dengan hitam"
 
 #: ../share/filters/filters.svg.h:122
 msgid "Simple blur"
@@ -1955,7 +1971,7 @@ msgstr "Kabur derau"
 
 #: ../share/filters/filters.svg.h:159
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr ""
+msgstr "Penkasaran skala kecil dan pengkaburan di pinggir serta isi"
 
 #: ../share/filters/filters.svg.h:160
 msgid "Film grain"
@@ -2053,7 +2069,7 @@ msgstr "Gelapkan pinggiran"
 
 #: ../share/filters/filters.svg.h:171
 msgid "Darken the edges with an inner blur"
-msgstr "Gelapkan pinggirand dengan kabur didalam"
+msgstr "Gelapkan pinggiran dengan kabur didalam"
 
 #: ../share/filters/filters.svg.h:172
 msgid "Warped rainbow"
@@ -2343,7 +2359,7 @@ msgstr "Metal cerah"
 
 #: ../share/filters/filters.svg.h:207
 msgid "Bright metallic effect for any color"
-msgstr ""
+msgstr "Efek logam cerah di semua warna"
 
 #: ../share/filters/filters.svg.h:208
 msgid "Deep colors plastic"
@@ -4950,7 +4966,7 @@ msgstr "Arah"
 
 #: ../src/live_effects/lpe-extrude.cpp:28
 msgid "Defines the direction and magnitude of the extrusion"
-msgstr ""
+msgstr "Mendefinisikan arah dan besarnya ekstrusi"
 
 #: ../src/sp-flowtext.cpp:382
 #: ../src/sp-text.cpp:436
@@ -4987,7 +5003,7 @@ msgstr "<b>Elips</b>: %s &#215; %s (kendala ke rasio %d:%d); dengan <b>Shift</b>
 #: ../src/arc-context.cpp:484
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"
-msgstr ""
+msgstr "<b>Elips</b>: %s &#215; %s; dengan <b>Ctrl</b> membuat elips kuadrat atau rasio bulat; denga <b>Shift</b> menggambar elips dari titik awal"
 
 #: ../src/arc-context.cpp:510
 msgid "Create ellipse"
@@ -5005,7 +5021,7 @@ msgstr "Ganti perspektif (sudut PL)"
 #. status text
 #: ../src/box3d-context.cpp:656
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
-msgstr ""
+msgstr "<b>Kotak 3D</b>; dengan <b>Shift</b> untuk ekstrut pada arah Z"
 
 #: ../src/box3d-context.cpp:684
 msgid "Create 3D box"
@@ -5032,9 +5048,8 @@ msgid "Connector endpoint drag cancelled."
 msgstr "Titik akhir seret penghubung dibatalkan."
 
 #: ../src/connector-context.cpp:1210
-#, fuzzy
 msgid "Connection point drag cancelled."
-msgstr "Titik akhir seret penghubung dibatalkan."
+msgstr "Seret penghubung titik dibatalkan."
 
 #: ../src/connector-context.cpp:1323
 msgid "Reroute connector"
@@ -5304,11 +5319,11 @@ msgstr "<b>Eksponen:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2015
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
-msgstr ""
+msgstr "Apakah baris pada jarak antara yang sama (1), mengecil (<1) atau melebar (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2022
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
-msgstr ""
+msgstr "Apakah kolum pada jarak antaran yang sama (1), mengecil (<1) atau melebar (>1)"
 
 #. TRANSLATORS: "Alternate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2030
@@ -5404,11 +5419,11 @@ msgstr "Mengacak skala vertikal berdasar persentasi ini"
 
 #: ../src/dialogs/clonetiler.cpp:2163
 msgid "Whether row scaling is uniform (1), converge (<1) or diverge (>1)"
-msgstr ""
+msgstr "Apakah skala baris seragam (1), mengecil (<1) atau membesar (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2170
 msgid "Whether column scaling is uniform (1), converge (<1) or diverge (>1)"
-msgstr ""
+msgstr "Apakah skala kolom seragam (1), mengecil (<1) atau membesar (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2178
 msgid "<b>Base:</b>"
@@ -5497,14 +5512,12 @@ msgid "Randomize the tile blur by this percentage"
 msgstr "Acak Geseran horizontal dengan persentase ini"
 
 #: ../src/dialogs/clonetiler.cpp:2359
-#, fuzzy
 msgid "Alternate the sign of blur change for each row"
-msgstr "Ubah simbol dari geseran untuk tiap baris"
+msgstr "Ubah simbol dari perubahan kekaburan untuk tiap baris"
 
 #: ../src/dialogs/clonetiler.cpp:2364
-#, fuzzy
 msgid "Alternate the sign of blur change for each column"
-msgstr "Ubah simbol dari geseran untuk tiap kolom"
+msgstr "Ubah simbol dari perubahan kekaburan untuk tiap kolom"
 
 #: ../src/dialogs/clonetiler.cpp:2373
 msgid "<b>Fade out:</b>"
@@ -5525,11 +5538,11 @@ msgstr "Acak Geseran horizontal dengan persentase ini"
 
 #: ../src/dialogs/clonetiler.cpp:2408
 msgid "Alternate the sign of opacity change for each row"
-msgstr ""
+msgstr "Mengganti tanda perubahan opasitas di setiap baris"
 
 #: ../src/dialogs/clonetiler.cpp:2413
 msgid "Alternate the sign of opacity change for each column"
-msgstr ""
+msgstr "Mengganti tanda perubahan opasitas di setiap kolom"
 
 #: ../src/dialogs/clonetiler.cpp:2421
 msgid "Co_lor"
@@ -5573,11 +5586,11 @@ msgstr "<b>S:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2482
 msgid "Change the color saturation by this percentage for each row"
-msgstr ""
+msgstr "Mengganti warna saturasi dengan persentasi ini di setiap baris"
 
 #: ../src/dialogs/clonetiler.cpp:2489
 msgid "Change the color saturation by this percentage for each column"
-msgstr ""
+msgstr "Mengganti warna saturasi dengan persentasi ini di setiap kolom"
 
 #: ../src/dialogs/clonetiler.cpp:2496
 #, fuzzy
@@ -5590,11 +5603,11 @@ msgstr "<b>L:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2511
 msgid "Change the color lightness by this percentage for each row"
-msgstr ""
+msgstr "Mengganti kecerahan warna dengan persentasi ini di setiap baris"
 
 #: ../src/dialogs/clonetiler.cpp:2518
 msgid "Change the color lightness by this percentage for each column"
-msgstr ""
+msgstr "engganti kecerahan warna dengan persentasi ini di setiap kolom"
 
 #: ../src/dialogs/clonetiler.cpp:2525
 #, fuzzy
@@ -5603,11 +5616,11 @@ msgstr "Acak Geseran horizontal dengan persentase ini"
 
 #: ../src/dialogs/clonetiler.cpp:2539
 msgid "Alternate the sign of color changes for each row"
-msgstr ""
+msgstr "Mengganti tanda perubahan warna di setiap baris"
 
 #: ../src/dialogs/clonetiler.cpp:2544
 msgid "Alternate the sign of color changes for each column"
-msgstr ""
+msgstr "Mengganti tanda perubahan warna di setiap kolom"
 
 #: ../src/dialogs/clonetiler.cpp:2552
 #, fuzzy
@@ -5628,7 +5641,7 @@ msgstr "1. Pilih dari gambar"
 
 #: ../src/dialogs/clonetiler.cpp:2589
 msgid "Pick the visible color and opacity"
-msgstr ""
+msgstr "Pilih warna tampak dan opasitas"
 
 #: ../src/dialogs/clonetiler.cpp:2596
 #: ../src/dialogs/clonetiler.cpp:2739
@@ -5640,7 +5653,7 @@ msgstr "Opasitas"
 
 #: ../src/dialogs/clonetiler.cpp:2597
 msgid "Pick the total accumulated opacity"
-msgstr ""
+msgstr "Pilih opasitas terakumulasi total"
 
 #: ../src/dialogs/clonetiler.cpp:2604
 msgid "R"
@@ -5759,19 +5772,19 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2769
 msgid "How many rows in the tiling"
-msgstr ""
+msgstr "Berapa banyak baris pada ubinan"
 
 #: ../src/dialogs/clonetiler.cpp:2789
 msgid "How many columns in the tiling"
-msgstr ""
+msgstr "Berapa banyak kolom pada ubinan"
 
 #: ../src/dialogs/clonetiler.cpp:2819
 msgid "Width of the rectangle to be filled"
-msgstr ""
+msgstr "Lebar segiempat yang diisi"
 
 #: ../src/dialogs/clonetiler.cpp:2844
 msgid "Height of the rectangle to be filled"
-msgstr ""
+msgstr "Tinggi segiempat yang diisi"
 
 #: ../src/dialogs/clonetiler.cpp:2859
 msgid "Rows, columns: "
@@ -5779,7 +5792,7 @@ msgstr "Baris, kolom:"
 
 #: ../src/dialogs/clonetiler.cpp:2860
 msgid "Create the specified number of rows and columns"
-msgstr ""
+msgstr "Membuat baris dan kolom dengan jumlah tertentu"
 
 #: ../src/dialogs/clonetiler.cpp:2869
 msgid "Width, height: "
@@ -5787,15 +5800,15 @@ msgstr "Lebar, tinggi:"
 
 #: ../src/dialogs/clonetiler.cpp:2870
 msgid "Fill the specified width and height with the tiling"
-msgstr ""
+msgstr "Isi lebar dan tinggi yang diinginkan dengan ubin"
 
 #: ../src/dialogs/clonetiler.cpp:2886
 msgid "Use saved size and position of the tile"
-msgstr ""
+msgstr "Gunakan ukuran dan posisi yang disimpan untuk ubin"
 
 #: ../src/dialogs/clonetiler.cpp:2889
 msgid "Pretend that the size and position of the tile are the same as the last time you tiled it (if any), instead of using the current size"
-msgstr ""
+msgstr "Anggap bahwa ukuran dan posisi ubin sama dengan yang digunakan untuk ubinan sebelumnya (jika ada), bukan menggunakan ukuran sekarang"
 
 #: ../src/dialogs/clonetiler.cpp:2913
 msgid " <b>_Create</b> "
@@ -5820,23 +5833,21 @@ msgid "Spread out clones to reduce clumping; can be applied repeatedly"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2937
-#, fuzzy
 msgid " Re_move "
-msgstr "&Hapus"
+msgstr "Hapus"
 
 #: ../src/dialogs/clonetiler.cpp:2938
 msgid "Remove existing tiled clones of the selected object (siblings only)"
-msgstr ""
+msgstr "Hapus gandaan ubin yang ada dari obyek pilihan (hanya turunannya)"
 
 #: ../src/dialogs/clonetiler.cpp:2954
-#, fuzzy
 msgid " R_eset "
-msgstr "Kembali Semula"
+msgstr "Atur ulang"
 
 #. TRANSLATORS: "change" is a noun here
 #: ../src/dialogs/clonetiler.cpp:2956
 msgid "Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"
-msgstr ""
+msgstr "Ganti semua aturan pergeseran, skala, rotasi, opasitas dan perubahan warna di dialog ke angka nol"
 
 #: ../src/dialogs/export.cpp:150
 #: ../src/verbs.cpp:2615
@@ -6658,15 +6669,13 @@ msgstr "Hapus nodal"
 
 #: ../src/dialogs/xml-tree.cpp:371
 #: ../src/dialogs/xml-tree.cpp:1585
-#, fuzzy
 msgid "Unindent node"
-msgstr "Gandakan nodal"
+msgstr "Lepas inden nodal"
 
 #: ../src/dialogs/xml-tree.cpp:386
 #: ../src/dialogs/xml-tree.cpp:1564
-#, fuzzy
 msgid "Indent node"
-msgstr "Gandakan nodal"
+msgstr "Inden nodal"
 
 #: ../src/dialogs/xml-tree.cpp:398
 #: ../src/dialogs/xml-tree.cpp:1517
@@ -6708,7 +6717,7 @@ msgstr "Angka atribut"
 #: ../src/dialogs/xml-tree.cpp:888
 #, fuzzy
 msgid "Drag XML subtree"
-msgstr "<b>Seret</b> untuk menghapus."
+msgstr "Gaya ke xml"
 
 #: ../src/dialogs/xml-tree.cpp:1325
 msgid "New element node..."
@@ -7140,9 +7149,9 @@ msgstr " alfa %.3g"
 
 #. where the color is picked, to show in the statusbar
 #: ../src/dropper-context.cpp:315
-#, fuzzy, c-format
+#, c-format
 msgid ", averaged with radius %d"
-msgstr "Radius Cincin - R (px)"
+msgstr ", rerata dengan jejari %d"
 
 #: ../src/dropper-context.cpp:315
 #, c-format
@@ -7157,7 +7166,7 @@ msgstr "<b>Lepaskan tetikus</b> untuk memilih warna."
 #: ../src/dropper-context.cpp:317
 #: ../src/tools-switch.cpp:215
 msgid "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> to copy the color under mouse to clipboard"
-msgstr "<b>Klik</b> untuk isian, <b>Shift+klik</b> untuk sapuan; <b>seret</b> untuk membuat warna di area; denga <b>Alt</b> untuk memilih warna invers; <b>Ctrl+C</b> untuk menyalin warna yang ditunjuk tetikus ke papan klip"
+msgstr "<b>Klik</b> untuk isian, <b>Shift+klik</b> untuk sapuan; <b>seret</b> untuk membuat warna di area; dengan <b>Alt</b> untuk memilih warna invers; <b>Ctrl+C</b> untuk menyalin warna yang ditunjuk tetikus ke papan klip"
 
 #: ../src/dropper-context.cpp:355
 #, fuzzy
@@ -7166,15 +7175,15 @@ msgstr "Set warna terakhir"
 
 #: ../src/dyna-draw-context.cpp:617
 msgid "<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
-msgstr ""
+msgstr "<b>Tapak panduan dipilih</b>; mulai menggambar sepanjang panduan dengan <b>Ctrl</b>"
 
 #: ../src/dyna-draw-context.cpp:619
 msgid "<b>Select a guide path</b> to track with <b>Ctrl</b>"
-msgstr ""
+msgstr "<b>Pilih tapak panduan</b> untuk melacak <b>Ctrl</b>"
 
 #: ../src/dyna-draw-context.cpp:754
 msgid "Tracking: <b>connection to guide path lost!</b>"
-msgstr ""
+msgstr "Pelacakan: <b>koneksi ke tapak panduan hilang!</b>"
 
 #: ../src/dyna-draw-context.cpp:754
 #, fuzzy
@@ -7263,7 +7272,7 @@ msgstr "'%s' sedang berjalan, mohon ditunggu..."
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
 #: ../src/extension/extension.cpp:254
 msgid "  This is caused by an improper .inx file for this extension.  An improper .inx file could have been caused by a faulty installation of Inkscape."
-msgstr ""
+msgstr "  Ini disebabkan oleh ekstensi berkas .inx yang tidak betul.  Kesalahan berkas .inx  kemungkinan disebabkan adanya kesalahan ketika memasang Inkscape."
 
 #: ../src/extension/extension.cpp:257
 msgid "an ID was not defined for it."
@@ -7275,7 +7284,7 @@ msgstr "tidak ada nama didefinisikan untuk ini."
 
 #: ../src/extension/extension.cpp:265
 msgid "the XML description of it got lost."
-msgstr ""
+msgstr "Deskripsi XML telah hilang"
 
 #: ../src/extension/extension.cpp:269
 msgid "no implementation was defined for the extension."
@@ -7298,7 +7307,7 @@ msgstr "\" gagal memuat karena "
 #: ../src/extension/extension.cpp:640
 #, c-format
 msgid "Could not create extension error log file '%s'"
-msgstr ""
+msgstr "Tidak bisa membuat ekstensi berkas log '%s'"
 
 #: ../src/extension/extension.cpp:738
 #: ../src/ui/dialog/input.cpp:592
@@ -7325,7 +7334,7 @@ msgstr "Tidak dimuat"
 
 #: ../src/extension/extension.cpp:740
 msgid "Deactivated"
-msgstr ""
+msgstr "Tidak diaktifkan"
 
 #: ../src/extension/extension.cpp:771
 msgid "Currently there is no help available for this Extension.  Please look on the Inkscape website or ask on the mailing lists if you have questions regarding this extension."
@@ -7333,17 +7342,17 @@ msgstr "Saat ini tidak ada bantuan tersedia untuk Ekstensi ini. Silahkan lihat d
 
 #: ../src/extension/implementation/script.cpp:989
 msgid "Inkscape has received additional data from the script executed.  The script did not return an error, but this may indicate the results will not be as expected."
-msgstr ""
+msgstr "Inkscape menerima tambahan data dari skrip yang dijalankan. Skrip ini tidak ada kesalahan, tetapi hasilnya tidak seperti yang diharapkan."
 
 #: ../src/extension/init.cpp:281
 msgid "Null external module directory name.  Modules will not be loaded."
-msgstr ""
+msgstr "Nama direktori modul eksternal kosong. Modul tidak bisa dimuat."
 
 #: ../src/extension/init.cpp:295
 #: ../src/extension/internal/filter/filter-file.cpp:56
 #, c-format
 msgid "Modules directory (%s) is unavailable.  External modules in that directory will not be loaded."
-msgstr ""
+msgstr "Direktori modul (%s) tidak ada.  Modul eksternal pada direktori tidak dapat dimuat."
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:38
 msgid "Adaptive Threshold"
@@ -7582,7 +7591,7 @@ msgstr "Efek timbul dari bitmap -- memperjelas sisi dengan efek 3D."
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
 msgid "Enhance"
-msgstr ""
+msgstr "Menambah baik"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:41
 #, fuzzy
@@ -7591,11 +7600,11 @@ msgstr "Tambah derau acak ke bitmap terpilih"
 
 #: ../src/extension/internal/bitmap/equalize.cpp:34
 msgid "Equalize"
-msgstr ""
+msgstr "Menyamakan"
 
 #: ../src/extension/internal/bitmap/equalize.cpp:41
 msgid "Equalize selected bitmap(s); histogram equalization"
-msgstr ""
+msgstr "Menyamakan bitmap pilihan; menyamakan histogram"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:37
 #: ../src/filter-enums.cpp:28
@@ -7614,7 +7623,7 @@ msgstr "Kekaburan Gaussian bitmap pilihan"
 
 #: ../src/extension/internal/bitmap/implode.cpp:36
 msgid "Implode"
-msgstr ""
+msgstr "Mengumpulkan"
 
 #: ../src/extension/internal/bitmap/implode.cpp:44
 #, fuzzy
@@ -7662,7 +7671,7 @@ msgstr "Median"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
 msgid "Replace each pixel component with the median color in a circular neighborhood"
-msgstr ""
+msgstr "Ganti setiap komponen piksel dengan warna median dari radius sekitarnya"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
 msgid "HSB Adjust"
@@ -7688,7 +7697,7 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
 msgid "Negate"
-msgstr ""
+msgstr "Mengkosongkan"
 
 #: ../src/extension/internal/bitmap/negate.cpp:42
 #, fuzzy
@@ -7697,11 +7706,11 @@ msgstr "Mengurangi derai speckle dari bitmap."
 
 #: ../src/extension/internal/bitmap/normalize.cpp:35
 msgid "Normalize"
-msgstr ""
+msgstr "Menormalkan"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:42
 msgid "Normalize selected bitmap(s), expanding color range to the full possible range of color"
-msgstr ""
+msgstr "Menormalkan bitmap pilihan, menambah jangkauan warna untuk agar warna bisa penuh"
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:36
 msgid "Oil Paint"
@@ -7709,7 +7718,7 @@ msgstr "Cat Minyak"
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:44
 msgid "Stylize selected bitmap(s) so that they appear to be painted with oils"
-msgstr ""
+msgstr "Memodifikasi bitmap pilihan sehingga tampak seperti dicat dengan cat minyak"
 
 #: ../src/extension/internal/bitmap/opacity.cpp:39
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2234
@@ -7719,7 +7728,7 @@ msgstr "Opasitas:"
 
 #: ../src/extension/internal/bitmap/opacity.cpp:45
 msgid "Modify opacity channel(s) of selected bitmap(s)."
-msgstr ""
+msgstr "Modifikasi opasitas kanal dari bitmap pilihan"
 
 #: ../src/extension/internal/bitmap/raise.cpp:39
 msgid "Raise"
@@ -7731,7 +7740,7 @@ msgstr "Dinaikkan"
 
 #: ../src/extension/internal/bitmap/raise.cpp:49
 msgid "Alter lightness the edges of selected bitmap(s) to create a raised appearance"
-msgstr ""
+msgstr "Mengubah cahaya pinggiran dari bitmap pilihan untuk membuat tampilan naik"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:39
 msgid "Reduce Noise"
@@ -7746,7 +7755,7 @@ msgstr "Orde:"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:47
 msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter"
-msgstr ""
+msgstr "Mengurangi derau bitmap pilihan menggunakan penapis eliminasi puncak derau"
 
 #: ../src/extension/internal/bitmap/sample.cpp:38
 #, fuzzy
@@ -7755,7 +7764,7 @@ msgstr "Bentuk"
 
 #: ../src/extension/internal/bitmap/sample.cpp:47
 msgid "Alter the resolution of selected image by resizing it to the given pixel size"
-msgstr ""
+msgstr "Setelah resolusi dari gambar pilihan dengan mengubah ukurannya ke ukuran piksel yang dikehendaki"
 
 #: ../src/extension/internal/bitmap/shade.cpp:39
 #, fuzzy
@@ -7784,9 +7793,8 @@ msgid "Shade selected bitmap(s) simulating distant light source"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/sharpen.cpp:46
-#, fuzzy
 msgid "Sharpen selected bitmap(s)"
-msgstr "Kaburkan bitmap yang dipilih"
+msgstr "Tertangkan bitmap pilihan"
 
 #: ../src/extension/internal/bitmap/solarize.cpp:46
 msgid "Solarize selected bitmap(s), like overexposing photographic film"
@@ -7799,7 +7807,7 @@ msgstr "_File"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
 msgid "Randomly scatter pixels in selected bitmap(s), within the given radius of the original position"
-msgstr ""
+msgstr "Menyebar piksel secara acak di bitmap pilihan, sampai pada radius yang ditentukan dari posisi aslinya"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
 #, fuzzy
@@ -7812,7 +7820,7 @@ msgstr "Derajat:"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:44
 msgid "Swirl selected bitmap(s) around center point"
-msgstr ""
+msgstr "Putar bitmap pilihan mengelilingi titik pusat"
 
 #. TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-threshold.html
 #: ../src/extension/internal/bitmap/threshold.cpp:37
@@ -7830,9 +7838,8 @@ msgid "Threshold:"
 msgstr "Ambang batas:"
 
 #: ../src/extension/internal/bitmap/threshold.cpp:45
-#, fuzzy
 msgid "Threshold selected bitmap(s)"
-msgstr "Kaburkan bitmap yang dipilih"
+msgstr "Ambang bitmap yang dipilih"
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:40
 #, fuzzy
@@ -7841,7 +7848,7 @@ msgstr "Lepaskan Topeng"
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:51
 msgid "Sharpen selected bitmap(s) using unsharp mask algorithms"
-msgstr ""
+msgstr "Pertajam bitmap pilihan menggunakan algoritma unshapr mask"
 
 #: ../src/extension/internal/bitmap/wave.cpp:37
 msgid "Wave"
@@ -7894,9 +7901,8 @@ msgstr "PostScript"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:319
 #: ../src/extension/internal/cairo-ps-out.cpp:357
-#, fuzzy
 msgid "Restrict to PS level:"
-msgstr "Mengatur tingkatan debug ke  %1$s"
+msgstr "Dibatasi ke tingkat PS:"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:320
 #: ../src/extension/internal/cairo-ps-out.cpp:358
@@ -7924,7 +7930,7 @@ msgstr "PS+LaTeX: Abaikan teks di PS, dan membuat berkas LaTeX"
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
 #, fuzzy
 msgid "Rasterize filter effects"
-msgstr "Kualitas efek penapis untuk tampilan layar:"
+msgstr "Lebar daerah efek penapis"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:328
 #: ../src/extension/internal/cairo-ps-out.cpp:366
@@ -7948,7 +7954,7 @@ msgstr "Area ekspor pada halaman"
 #: ../src/extension/internal/cairo-ps-out.cpp:369
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:254
 msgid "Limit export to the object with ID:"
-msgstr ""
+msgstr "Batasi ekspor hanya untuk obyek dengan ID:"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:335
 #: ../share/extensions/ps_input.inx.h:2
@@ -8030,9 +8036,8 @@ msgid "Enhanced Metafile"
 msgstr "Enhanced Metafile"
 
 #: ../src/extension/internal/filter/abc.h:52
-#, fuzzy
 msgid "Blur, custom (ABCs)"
-msgstr "Tambahan lingkungan kepala/kaki"
+msgstr "Kabur, atursendiri (ABC)"
 
 #: ../src/extension/internal/filter/abc.h:54
 msgid "Horizontal blur:"
@@ -8086,12 +8091,11 @@ msgstr "Eksperimental"
 
 #: ../src/extension/internal/filter/abc.h:63
 msgid "Simple vertical and horizontal blur effect"
-msgstr ""
+msgstr "Efek kabur vertikal dan horisontal sederhana"
 
 #: ../src/extension/internal/filter/abc.h:114
-#, fuzzy
 msgid "Diffuse light, custom (ABCs)"
-msgstr "Cahaya Miring"
+msgstr "Cahaya menyebar, atursendiri (ABC)"
 
 #: ../src/extension/internal/filter/abc.h:116
 #: ../src/extension/internal/filter/abc.h:260
@@ -8107,9 +8111,8 @@ msgid "Lightning color"
 msgstr "Warna cahaya"
 
 #: ../src/extension/internal/filter/abc.h:191
-#, fuzzy
 msgid "Roughen, custom (ABCs)"
-msgstr "Tambahan lingkungan kepala/kaki"
+msgstr "Kasarkan, atursendiri (ABC)"
 
 #: ../src/extension/internal/filter/abc.h:193
 msgid "Horizontal frequency (x100):"
@@ -8124,19 +8127,16 @@ msgid "Intensity:"
 msgstr "Intensitas:"
 
 #: ../src/extension/internal/filter/abc.h:258
-#, fuzzy
 msgid "Specular light, custom (ABCs)"
-msgstr "Pantulan cahaya"
+msgstr "Cahaya spekuler, atursendiri (ABC)"
 
 #: ../src/extension/internal/filter/color.h:57
-#, fuzzy
 msgid "Colorize, custom (color)"
-msgstr "Fantasi Quadritone, atursendiri (warna)"
+msgstr "Warnai, atursendiri (warna)"
 
 #: ../src/extension/internal/filter/color.h:59
-#, fuzzy
 msgid "Harsh light:"
-msgstr "Kurangi Cahaya"
+msgstr "Cahaya kuat:"
 
 #: ../src/extension/internal/filter/color.h:60
 msgid "Normal light:"
@@ -8158,24 +8158,20 @@ msgid "Color 1"
 msgstr "Warna 1"
 
 #: ../src/extension/internal/filter/color.h:84
-#, fuzzy
 msgid "Blend image or object with a flood color"
-msgstr "Gabung gambar atau obyek dengan membanjiri warna dan pengaturan terang dan kontras"
+msgstr "Gabung gambar atau obyek dengan warna banjir"
 
 #: ../src/extension/internal/filter/color.h:159
-#, fuzzy
 msgid "Duochrome, custom (color)"
-msgstr "Fantasi Quadritone, atursendiri (warna)"
+msgstr "Duochrome, atursendiri (warna)"
 
 #: ../src/extension/internal/filter/color.h:163
-#, fuzzy
 msgid "Fluorescence level:"
-msgstr "PostScript tingkat 3"
+msgstr "Tingkat florisensi:"
 
 #: ../src/extension/internal/filter/color.h:164
-#, fuzzy
 msgid "Swap:"
-msgstr "Tukar Baris"
+msgstr "Tukar:"
 
 #: ../src/extension/internal/filter/color.h:175
 msgid "Color 2"
@@ -8201,14 +8197,12 @@ msgid "Colors:"
 msgstr "Warna:"
 
 #: ../src/extension/internal/filter/color.h:294
-#, fuzzy
 msgid "Over-saturation:"
-msgstr "Kurangi Penjenuhan"
+msgstr "Penjenuhan-berlebih:"
 
 #: ../src/extension/internal/filter/color.h:372
-#, fuzzy
 msgid "Solarize, custom (color)"
-msgstr "Fantasi Quadritone, atursendiri (warna)"
+msgstr "Matahari, Atursendiri (warna)"
 
 #: ../src/extension/internal/filter/color.h:374
 #, fuzzy
@@ -8216,19 +8210,17 @@ msgid "Hue rotation:"
 msgstr "Rotasi, sudut"
 
 #: ../src/extension/internal/filter/color.h:386
-#, fuzzy
 msgid "Classic photographic solarization effect"
 msgstr "Efek fotografi klasik matahari"
 
 #: ../src/extension/internal/filter/color.h:459
-#, fuzzy
 msgid "Tritone, custom (color)"
-msgstr "Fantasi Quadritone, atursendiri (warna)"
+msgstr "Tritone, Atursendiri (warna)"
 
 #: ../src/extension/internal/filter/color.h:469
 #, fuzzy
 msgid "Global blend:"
-msgstr "Pengaturan Global"
+msgstr "Mode Campuran:"
 
 #: ../src/extension/internal/filter/color.h:475
 #, fuzzy
@@ -8238,7 +8230,7 @@ msgstr "Nyala Warna Diri"
 #: ../src/extension/internal/filter/color.h:476
 #, fuzzy
 msgid "Glow blend:"
-msgstr "Perpotongan Bersinar"
+msgstr "Mode Campuran:"
 
 #: ../src/extension/internal/filter/color.h:481
 msgid "Local light:"
@@ -8294,7 +8286,7 @@ msgstr "Nyala berwarna putih dan kabur"
 #: ../src/extension/internal/filter/drop-shadow.h:155
 #, fuzzy
 msgid "Drop shadow, color"
-msgstr "Bayangan berwarna hitam dan kabur"
+msgstr "Warna jatuh atau gradiasi"
 
 #: ../src/extension/internal/filter/drop-shadow.h:168
 #, fuzzy
@@ -8302,9 +8294,8 @@ msgid "Colorizable Drop shadow"
 msgstr "Menambah bayangan dengan warna didalam obyek"
 
 #: ../src/extension/internal/filter/experimental.h:67
-#, fuzzy
 msgid "Chromolitho, custom"
-msgstr "Ukuran sendiri"
+msgstr "Chromolitho, atursendiri"
 
 #: ../src/extension/internal/filter/experimental.h:71
 #: ../share/extensions/jessyInk_keyBindings.inx.h:5
@@ -8314,7 +8305,7 @@ msgstr "Mode Menggambar"
 #: ../src/extension/internal/filter/experimental.h:72
 #, fuzzy
 msgid "Drawing blend:"
-msgstr "Mode menggambar"
+msgstr "Mode Campuran:"
 
 #: ../src/extension/internal/filter/experimental.h:79
 msgid "Transparent"
@@ -8326,7 +8317,6 @@ msgid "Dented"
 msgstr "tengah"
 
 #: ../src/extension/internal/filter/experimental.h:81
-#, fuzzy
 msgid "Inverted"
 msgstr "Membalik Warna"
 
@@ -8373,11 +8363,11 @@ msgstr "Erosi:"
 #: ../src/extension/internal/filter/experimental.h:96
 #, fuzzy
 msgid "Grain blend:"
-msgstr "Lapisan butiran"
+msgstr "Mode Campuran:"
 
 #: ../src/extension/internal/filter/experimental.h:112
 msgid "Chromo effect with customizable edge drawing and graininess"
-msgstr ""
+msgstr "Efek Chromo dengan pinggiran yang bisa digambar serta bergelombang"
 
 #: ../src/extension/internal/filter/experimental.h:242
 msgid "Drawing, custom"
@@ -8394,9 +8384,8 @@ msgstr "Komik pucat"
 
 #: ../src/extension/internal/filter/experimental.h:250
 #: ../src/extension/internal/filter/experimental.h:255
-#, fuzzy
 msgid "Dilatation:"
-msgstr "Penjenuhan:"
+msgstr "Dilatasi:"
 
 #: ../src/extension/internal/filter/experimental.h:252
 msgid "Transluscent"
@@ -8423,14 +8412,12 @@ msgid "Image on stroke"
 msgstr "Gambar di sapuan"
 
 #: ../src/extension/internal/filter/experimental.h:275
-#, fuzzy
 msgid "Convert images to duochrome drawings"
-msgstr "Merubah warna yang ada sesuai palet duotone"
+msgstr "Merubah gambar ke gambar duochrome"
 
 #: ../src/extension/internal/filter/experimental.h:404
-#, fuzzy
 msgid "Poster and painting, custom"
-msgstr "Titik Suaian dan Pilihan"
+msgstr "Poster dan lukiran, atursendiri"
 
 #: ../src/extension/internal/filter/experimental.h:406
 msgid "Effect type:"
@@ -8442,34 +8429,28 @@ msgstr "Tipe transfer:"
 
 #: ../src/extension/internal/filter/experimental.h:414
 #: ../src/extension/internal/filter/experimental.h:520
-#, fuzzy
 msgid "Levels:"
-msgstr "Jumlah Level"
+msgstr "Tingkatan:"
 
 #: ../src/extension/internal/filter/experimental.h:415
-#, fuzzy
 msgid "Blend mode:"
-msgstr "Mode menggambar"
+msgstr "Mode Campuran:"
 
 #: ../src/extension/internal/filter/experimental.h:420
-#, fuzzy
 msgid "Primary blur:"
-msgstr "Tinggi Pengaburan"
+msgstr "Pengaburan utama:"
 
 #: ../src/extension/internal/filter/experimental.h:421
-#, fuzzy
 msgid "Secondary blur:"
-msgstr "Tinggi Pengaburan"
+msgstr "Pengaburan tambahan:"
 
 #: ../src/extension/internal/filter/experimental.h:422
-#, fuzzy
 msgid "Pre-saturation:"
-msgstr "Kurangi Penjenuhan"
+msgstr "Penjenuhan-awal:"
 
 #: ../src/extension/internal/filter/experimental.h:423
-#, fuzzy
 msgid "Post-saturation:"
-msgstr "Kurangi Penjenuhan"
+msgstr "Penjenuhan-lanjut:"
 
 #: ../src/extension/internal/filter/experimental.h:424
 #, fuzzy
@@ -8477,14 +8458,12 @@ msgid "Simulate antialiasing"
 msgstr "Memberikan kesan gaya melukis dengan cat minyak"
 
 #: ../src/extension/internal/filter/experimental.h:432
-#, fuzzy
 msgid "Poster and painting effects"
-msgstr "Mengelola, menyunting, dan menerapkan efek tapak"
+msgstr "Efek poster dan lukisan"
 
 #: ../src/extension/internal/filter/experimental.h:518
-#, fuzzy
 msgid "Posterize basic, custom"
-msgstr "Tambahan lingkungan kepala/kaki"
+msgstr "Poster dasar, atursendiri"
 
 #: ../src/extension/internal/filter/experimental.h:521
 #: ../src/extension/internal/filter/morphology.h:57
@@ -8492,9 +8471,8 @@ msgid "Blur:"
 msgstr "Kabur:"
 
 #: ../src/extension/internal/filter/experimental.h:529
-#, fuzzy
 msgid "Simple posterizing effect"
-msgstr "Efek build-in"
+msgstr "Efek poster sederhana"
 
 #: ../src/extension/internal/filter/filter-file.cpp:32
 #, fuzzy
@@ -8502,21 +8480,20 @@ msgid "Bundled"
 msgstr "Node"
 
 #: ../src/extension/internal/filter/filter-file.cpp:33
-#, fuzzy
 msgid "Personal"
 msgstr "Pribadi"
 
 #: ../src/extension/internal/filter/filter-file.cpp:44
 msgid "Null external module directory name.  Filters will not be loaded."
-msgstr ""
+msgstr "Nama direktori modul eksternal kosong. Penapis tidak bisa dimuat."
 
 #: ../src/extension/internal/filter/morphology.h:51
 msgid "Cross-smooth, custom (morphology)"
-msgstr ""
+msgstr "Halus melintang, atursendiri (morfologi)"
 
 #: ../src/extension/internal/filter/morphology.h:65
 msgid "Smooth edges and angles of shapes"
-msgstr ""
+msgstr "Menghaluskan pinggiran dan sudut dari bentuk"
 
 #: ../src/extension/internal/filter/snow.h:32
 msgid "Snow crest"
@@ -8538,7 +8515,7 @@ msgstr "Masukan %s GDK pixbuf"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:152
 msgid "Link or embed image:"
-msgstr ""
+msgstr "Gambar tautan atau tempelan:"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:153
 msgid "embed"
@@ -8617,7 +8594,7 @@ msgstr "Pencitraan"
 
 #: ../src/extension/internal/grid.cpp:211
 msgid "Draw a path which is a grid"
-msgstr ""
+msgstr "Gambar tapak yang berupa kisi"
 
 #: ../src/extension/internal/javafx-out.cpp:967
 msgid "JavaFX Output"
@@ -8703,7 +8680,7 @@ msgstr "Pengaturan halaman"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:107
 msgid "Precision of approximating gradient meshes:"
-msgstr ""
+msgstr "Presisi pembagian dari gradiasi pendekatan:"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:108
 msgid "<b>Note</b>: setting the precision too high may result in a large SVG file and slow performance."
@@ -8875,7 +8852,7 @@ msgstr "WordPerfect Graphics (*.wpg)"
 
 #: ../src/extension/internal/wpg-input.cpp:109
 msgid "Vector graphics format used by Corel WordPerfect"
-msgstr "Format Vektor Grafik yang digunakan oleh Corel WordPerfect"
+msgstr "Format grafik vektor yang digunakan oleh Corel WordPerfect"
 
 #: ../src/extension/prefdialog.cpp:236
 msgid "Live preview"
@@ -8883,7 +8860,7 @@ msgstr "Pratampilan"
 
 #: ../src/extension/prefdialog.cpp:236
 msgid "Is the effect previewed live on canvas?"
-msgstr ""
+msgstr "Apakah pratampilan efek akan tampak di kanvas?"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -8926,22 +8903,22 @@ msgstr "Pilih berkas untuk dibuka"
 
 #: ../src/file.cpp:557
 msgid "Vacuum &lt;defs&gt;"
-msgstr ""
+msgstr "Vakum &lt;defs&gt;"
 
 #: ../src/file.cpp:562
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
-msgstr[0] ""
+msgstr[0] "Dihapus <b>%i</b> definisi yang tidak dipakai di &lt;defs&gt;."
 
 #: ../src/file.cpp:567
 msgid "No unused definitions in &lt;defs&gt;."
-msgstr ""
+msgstr "Tidak ada definisi tidak dipakai di &lt;defs&gt;."
 
 #: ../src/file.cpp:598
 #, c-format
 msgid "No Inkscape extension found to save document (%s).  This may have been caused by an unknown filename extension."
-msgstr ""
+msgstr "Tidak ada ekstensi Inkscape ditemukan di dokumen (%s).  Ini telah disebabkan oleh nama ekstensi yang tidak dikenal."
 
 #: ../src/file.cpp:599
 #: ../src/file.cpp:607
@@ -9016,17 +8993,17 @@ msgid "Import From Open Clip Art Library"
 msgstr "Impor dari pustaka Open Clip Art"
 
 #: ../src/filter-enums.cpp:20
+#, fuzzy
 msgid "Blend"
-msgstr ""
+msgstr "Mode Campuran:"
 
 #: ../src/filter-enums.cpp:21
 msgid "Color Matrix"
 msgstr "Matriks warna"
 
 #: ../src/filter-enums.cpp:22
-#, fuzzy
 msgid "Component Transfer"
-msgstr "Tipe transfer:"
+msgstr "Komponen Transfer"
 
 #: ../src/filter-enums.cpp:23
 msgid "Composite"
@@ -9038,18 +9015,16 @@ msgid "Convolve Matrix"
 msgstr "Matriks warna"
 
 #: ../src/filter-enums.cpp:25
-#, fuzzy
 msgid "Diffuse Lighting"
-msgstr "Pencahayaan gabungan"
+msgstr "Pencahayaan Menyebar"
 
 #: ../src/filter-enums.cpp:26
 msgid "Displacement Map"
 msgstr "Peta Simpangan"
 
 #: ../src/filter-enums.cpp:27
-#, fuzzy
 msgid "Flood"
-msgstr "Warna Banjir:"
+msgstr "Warna Banjir"
 
 #: ../src/filter-enums.cpp:29
 #: ../src/selection-describer.cpp:54
@@ -9066,9 +9041,8 @@ msgid "Offset"
 msgstr "Offset"
 
 #: ../src/filter-enums.cpp:33
-#, fuzzy
 msgid "Specular Lighting"
-msgstr "Pencahayaan gabungan"
+msgstr "Pencahayaan Spekuler"
 
 #: ../src/filter-enums.cpp:34
 msgid "Tile"
@@ -9126,7 +9100,7 @@ msgstr "Gelapkan"
 #: ../src/filter-enums.cpp:55
 msgctxt "Filter blend mode"
 msgid "Lighten"
-msgstr "Cahayaan"
+msgstr "Terang"
 
 #: ../src/filter-enums.cpp:61
 msgid "Matrix"
@@ -9188,9 +9162,8 @@ msgid "Table"
 msgstr "Tabel"
 
 #: ../src/filter-enums.cpp:84
-#, fuzzy
 msgid "Discrete"
-msgstr "Bagi"
+msgstr "Terpisah"
 
 #: ../src/filter-enums.cpp:85
 msgid "Linear"
@@ -9261,9 +9234,8 @@ msgid "Alpha"
 msgstr "Alfa"
 
 #: ../src/filter-enums.cpp:109
-#, fuzzy
 msgid "Erode"
-msgstr "Node"
+msgstr "Erosi"
 
 #: ../src/filter-enums.cpp:110
 #, fuzzy
@@ -9348,22 +9320,22 @@ msgstr ""
 #, c-format
 msgid "Area filled, path with <b>%d</b> node created and unioned with selection."
 msgid_plural "Area filled, path with <b>%d</b> nodes created and unioned with selection."
-msgstr[0] ""
+msgstr[0] "Area disisi, tapak dengan <b>%d</b> nodal dibuat dan disatukan dengan pilihan."
 
 #: ../src/flood-context.cpp:515
 #, c-format
 msgid "Area filled, path with <b>%d</b> node created."
 msgid_plural "Area filled, path with <b>%d</b> nodes created."
-msgstr[0] ""
+msgstr[0] "Area diisi, tapak dengan <b>%d</b> nodal dibuat."
 
 #: ../src/flood-context.cpp:787
 #: ../src/flood-context.cpp:1101
 msgid "<b>Area is not bounded</b>, cannot fill."
-msgstr ""
+msgstr "<b>Area tidak ada batas</b>, tidak bisa diisi."
 
 #: ../src/flood-context.cpp:1106
 msgid "<b>Only the visible part of the bounded area was filled.</b> If you want to fill all of the area, undo, zoom out, and fill again."
-msgstr ""
+msgstr "<b>Hanya bagian yang tampak dan area berbatas yang diisi.</b> Jika anda ingin mengisi area, tekan tidak jadi, perbesar, kemudian coba isi lagi."
 
 #: ../src/flood-context.cpp:1124
 #: ../src/flood-context.cpp:1283
@@ -9376,7 +9348,7 @@ msgstr "Tentukan gaya pada obyek"
 
 #: ../src/flood-context.cpp:1202
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
-msgstr ""
+msgstr "<b>Gmbar diatas</b> area dan menambah isisan, tahan <b>Alt</b> untuk sentuh dan isi"
 
 #: ../src/gradient-context.cpp:132
 #: ../src/gradient-drag.cpp:78
@@ -9447,21 +9419,21 @@ msgstr[0] " di %d obyek pilihan"
 #, c-format
 msgid "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
 msgid_plural "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
-msgstr[0] ""
+msgstr[0] "Satu handel menggabung %d hentian (seret dengan <b>Shift</b> untuk memisahkan) pilihan"
 
 #. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
 #: ../src/gradient-context.cpp:182
 #, c-format
 msgid "<b>%d</b> gradient handle selected out of %d"
 msgid_plural "<b>%d</b> gradient handles selected out of %d"
-msgstr[0] ""
+msgstr[0] "<b>%d</b> gradiasi handel pilihan dari %d"
 
 #. TRANSLATORS: The plural refers to number of selected objects
 #: ../src/gradient-context.cpp:189
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
 msgid_plural "<b>No</b> gradient handles selected out of %d on %d selected objects"
-msgstr[0] ""
+msgstr[0] "<b>Tidak ada</b> handel gradiasi dipilih dari %d pada %d obyek pilihan"
 
 #: ../src/gradient-context.cpp:389
 #: ../src/gradient-context.cpp:482
@@ -9480,7 +9452,7 @@ msgstr "Membuat gradiasi bawaan"
 
 #: ../src/gradient-context.cpp:589
 msgid "<b>Draw around</b> handles to select them"
-msgstr ""
+msgstr "<b>Gambar sekitar</b> handel untuk memilih"
 
 #: ../src/gradient-context.cpp:698
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -9488,7 +9460,7 @@ msgstr "<b>Ctrl</b>: kancingkan gradiasi sudut"
 
 #: ../src/gradient-context.cpp:699
 msgid "<b>Shift</b>: draw gradient around the starting point"
-msgstr ""
+msgstr "<b>Shift</b>: menggambar gradiasi sekitar titik awal"
 
 #: ../src/gradient-context.cpp:819
 msgid "Invert gradient"
@@ -9498,11 +9470,11 @@ msgstr "Tukar balik gradiasi"
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
-msgstr[0] ""
+msgstr[0] "<b>Gradiasi</b> untuk %d obyek; dengan <b>Ctrl</b> untuk mengancing sudut"
 
 #: ../src/gradient-context.cpp:940
 msgid "Select <b>objects</b> on which to create gradient."
-msgstr ""
+msgstr "Pilih <b>obyek</b> yang akan dibuat gradiasi."
 
 #: ../src/gradient-drag.cpp:630
 msgid "Merge gradient handles"
@@ -9520,7 +9492,7 @@ msgstr "Hapus hentian gradiasi"
 #: ../src/gradient-drag.cpp:1152
 #, c-format
 msgid "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl+Alt</b> to delete stop"
-msgstr ""
+msgstr "%s %d untuk: %s%s; seret dengan <b>Ctrl</b> untuk mengancing ofset; klik dengan <b>Ctrl+Alt</b> untuk menghapus hentian"
 
 #: ../src/gradient-drag.cpp:1156
 #: ../src/gradient-drag.cpp:1163
@@ -9530,18 +9502,18 @@ msgstr " (sapuan)"
 #: ../src/gradient-drag.cpp:1160
 #, c-format
 msgid "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to preserve angle, with <b>Ctrl+Shift</b> to scale around center"
-msgstr ""
+msgstr "%s untuk: %s%s; seret dengan <b>Ctrl</b> untuk mengancing sudut, dengan <b>Ctrl+Alt</b> untuk mempertahankan sudut, dengan <b>Ctrl+Shift</b> untuk skalakan sekitar pusat"
 
 #: ../src/gradient-drag.cpp:1168
 #, c-format
 msgid "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to separate focus"
-msgstr ""
+msgstr "Gradiasi radial <b>pusat</b> dan <b>fokus</b>; seret dengan <b>Shift</b> untuk memisahkan fokus"
 
 #: ../src/gradient-drag.cpp:1171
 #, c-format
 msgid "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to separate"
 msgid_plural "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to separate"
-msgstr[0] ""
+msgstr[0] "Titik gradiasi dibagi dengan <b>%d</b> gradiasi; seret dengan <b>Shift</b> untuk memisah"
 
 #: ../src/gradient-drag.cpp:1871
 msgid "Move gradient handle(s)"
@@ -9785,14 +9757,12 @@ msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Tampil atau sembunyikan Kotak Bantuan Perintah (dibawah menu)"
 
 #: ../src/interface.cpp:821
-#, fuzzy
 msgid "Snap Controls Bar"
-msgstr "Kotak Bantuan Kontrol"
+msgstr "Kotak Kontrol Kancingan"
 
 #: ../src/interface.cpp:821
-#, fuzzy
 msgid "Show or hide the snapping controls"
-msgstr "Tampil stau sembunyikan Kotak Bantuan Kontrol"
+msgstr "Tampil atau sembunyikan kontrol pengancingan"
 
 #: ../src/interface.cpp:823
 msgid "Tool Controls Bar"
@@ -9875,13 +9845,12 @@ msgstr "Ke induk"
 #: ../src/ui/widget/selected-style.cpp:469
 #, fuzzy
 msgid "Drop color"
-msgstr "Ganti warna"
+msgstr "Warna jatuh atau gradiasi"
 
 #: ../src/interface.cpp:1228
 #: ../src/interface.cpp:1338
-#, fuzzy
 msgid "Drop color on gradient"
-msgstr "Pilih gradiasi isian"
+msgstr "Warna jatuh atau gradiasi"
 
 #: ../src/interface.cpp:1391
 msgid "Could not parse SVG data"
@@ -9924,15 +9893,15 @@ msgstr "Pindah handel"
 #. TRANSLATORS: This refers to the pattern that's inside the object
 #: ../src/knotholder.cpp:252
 msgid "<b>Move</b> the pattern fill inside the object"
-msgstr ""
+msgstr "<b>Pindahkna</b> isian pola dalam obyek"
 
 #: ../src/knotholder.cpp:255
 msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
-msgstr ""
+msgstr "<b>Skalakan</b> isian pola; secara sama jika dengan <b>Ctrl</b>"
 
 #: ../src/knotholder.cpp:258
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Putar</b> isian pola; dengan <b>Ctrl</b> untuk mengancing sudut"
 
 #: ../src/libgdl/gdl-dock-bar.c:108
 msgid "Master"
@@ -10019,18 +9988,16 @@ msgid "If set, the dock item cannot be dragged around and it doesn't show a grip
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-item.c:329
-#, fuzzy
 msgid "Preferred width"
-msgstr "Lebar pengaburan"
+msgstr "Lebar disukai"
 
 #: ../src/libgdl/gdl-dock-item.c:330
 msgid "Preferred width for the dock item"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-item.c:336
-#, fuzzy
 msgid "Preferred height"
-msgstr "Tinggi "
+msgstr "Tinggi disukai"
 
 #: ../src/libgdl/gdl-dock-item.c:337
 msgid "Preferred height for the dock item"
@@ -10125,9 +10092,8 @@ msgid "Page"
 msgstr "Halaman"
 
 #: ../src/libgdl/gdl-dock-notebook.c:135
-#, fuzzy
 msgid "The index of the current page"
-msgstr "Pemisah halaman pada &baris"
+msgstr "Indeks dari halaman ini"
 
 #: ../src/libgdl/gdl-dock-object.c:120
 #: ../src/ui/widget/page-sizer.cpp:244
@@ -10147,18 +10113,16 @@ msgid "Human readable name for the dock object"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-object.c:135
-#, fuzzy
 msgid "Stock Icon"
-msgstr "Tema ikon:"
+msgstr "Ikon stok"
 
 #: ../src/libgdl/gdl-dock-object.c:136
 msgid "Stock icon for the dock object"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-object.c:142
-#, fuzzy
 msgid "Pixbuf Icon"
-msgstr "Tema ikon:"
+msgstr "Ikon pixbuf"
 
 #: ../src/libgdl/gdl-dock-object.c:143
 msgid "Pixbuf icon for the dock object"
@@ -10199,11 +10163,11 @@ msgstr "Posisi"
 
 #: ../src/libgdl/gdl-dock-paned.c:133
 msgid "Position of the divider in pixels"
-msgstr ""
+msgstr "Posisi pembagi dalam piksel"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:143
 msgid "Sticky"
-msgstr ""
+msgstr "Lengket"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:144
 msgid "Whether the placeholder will stick to its host or move up the hierarchy when the host is redocked"
@@ -10211,16 +10175,15 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:151
 msgid "Host"
-msgstr ""
+msgstr "Host"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:152
 msgid "The dock object this placeholder is attached to"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:159
-#, fuzzy
 msgid "Next placement"
-msgstr "Penempatan Rodagigi"
+msgstr "Penempatan berikutnya"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:160
 msgid "The position an item will be docked to our host if a request is made to dock to us"
@@ -10287,7 +10250,7 @@ msgstr ""
 #: ../src/libgdl/gdl-dock-placeholder.c:643
 #, c-format
 msgid "Something weird happened while getting the child placement for %p from parent %p"
-msgstr ""
+msgstr "Ada hal yang tidak normal ketika menempatkan anak untuk %p dari induk %p"
 
 #: ../src/libgdl/gdl-dock-tablabel.c:129
 msgid "Dockitem which 'owns' this tablabel"
@@ -10340,22 +10303,20 @@ msgstr ""
 
 #: ../src/libnrtype/FontFactory.cpp:897
 msgid "Ignoring font without family that will crash Pango"
-msgstr ""
+msgstr "Mengabaikan keluarga huruf yang menyebabkan menghentikan Pango"
 
 #: ../src/live_effects/effect.cpp:87
 msgid "doEffect stack test"
 msgstr ""
 
 #: ../src/live_effects/effect.cpp:88
-#, fuzzy
 msgid "Angle bisector"
-msgstr "Sudut Bisektor"
+msgstr "Sudut bisektor"
 
 #. TRANSLATORS: boolean operations
 #: ../src/live_effects/effect.cpp:90
-#, fuzzy
 msgid "Boolops"
-msgstr "Tutup"
+msgstr "Boolops"
 
 #: ../src/live_effects/effect.cpp:91
 msgid "Circle (by center and radius)"
@@ -10396,9 +10357,8 @@ msgid "Path length"
 msgstr "Panjang tapak"
 
 #: ../src/live_effects/effect.cpp:101
-#, fuzzy
 msgid "Perpendicular bisector"
-msgstr "(tegak lurus ke sapuan, \"kuas\")"
+msgstr "Tegaklurus bisektor"
 
 #: ../src/live_effects/effect.cpp:102
 msgid "Perspective path"
@@ -10409,9 +10369,8 @@ msgid "Power stroke"
 msgstr "Sapuan kuat"
 
 #: ../src/live_effects/effect.cpp:104
-#, fuzzy
 msgid "Rotate copies"
-msgstr "Salinan dari pola:"
+msgstr "Putar salinan"
 
 #: ../src/live_effects/effect.cpp:105
 #, fuzzy
@@ -10419,9 +10378,8 @@ msgid "Recursive skeleton"
 msgstr "Inpur rekursif"
 
 #: ../src/live_effects/effect.cpp:106
-#, fuzzy
 msgid "Tangent to curve"
-msgstr "Konversikan ke Garis"
+msgstr "Tangen ke kurva"
 
 #: ../src/live_effects/effect.cpp:107
 msgid "Text label"
@@ -10494,7 +10452,7 @@ msgstr "Apakah tampak?"
 
 #: ../src/live_effects/effect.cpp:282
 msgid "If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"
-msgstr ""
+msgstr "Jika tidak dipilih, efek tetap dipakai obyek tetapi sementara tidak digunakan di kanvas"
 
 #: ../src/live_effects/effect.cpp:303
 msgid "No effect"
@@ -10503,7 +10461,7 @@ msgstr "Tanpa efek"
 #: ../src/live_effects/effect.cpp:350
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
-msgstr ""
+msgstr "Perlu menyatakan parameter tapak untuk LPE '%s' dengan klik tetikus %d"
 
 #: ../src/live_effects/effect.cpp:648
 #, c-format
@@ -10512,7 +10470,7 @@ msgstr "Parameter suntingan <b>%s</b>."
 
 #: ../src/live_effects/effect.cpp:653
 msgid "None of the applied path effect's parameters can be edited on-canvas."
-msgstr ""
+msgstr "Tidak ada parameter tapak yang diterapkan bisa disunting di kanvas."
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
 #, fuzzy
@@ -10532,8 +10490,9 @@ msgid "W_idth in units of length"
 msgstr "Lebar dalam satuan panjang"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
+#, fuzzy
 msgid "Scale the width of the path in units of its length"
-msgstr ""
+msgstr "Skalakan lebar dari tapak jahitan relatif terhadap panjang"
 
 #: ../src/live_effects/lpe-bendpath.cpp:58
 msgid "_Original path is vertical"
@@ -10566,7 +10525,7 @@ msgstr "Jahit tapak:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
-msgstr ""
+msgstr "Tapak yang akan digunakan sebagai jahitan"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "Number of paths:"
@@ -10574,7 +10533,7 @@ msgstr "Jumlah tapak:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "The number of paths that will be generated."
-msgstr ""
+msgstr "Jumlah tapak yang akan dihasilkan."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 #, fuzzy
@@ -10622,13 +10581,12 @@ msgid "Scale the width of the stitch path"
 msgstr "Ubah lebar tapak jadi 1:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-#, fuzzy
 msgid "Scale width relative to length"
-msgstr "Lebar area modifikasi (relatif terhadap area kanvas yang tampak)"
+msgstr "Skala lebar terhadap panjang"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 msgid "Scale the width of the stitch path relative to its length"
-msgstr ""
+msgstr "Skalakan lebar dari tapak jahitan relatif terhadap panjang"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 #, fuzzy
@@ -10669,20 +10627,20 @@ msgstr ""
 #: ../src/live_effects/lpe-envelope.cpp:37
 #, fuzzy
 msgid "E_nable left & right paths"
-msgstr "Kanan ke kiri (180)"
+msgstr "Aktifkan deformasi tapak kiri dan kanan"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Enable the left and right deformation paths"
-msgstr ""
+msgstr "Aktifkan deformasi tapak kiri dan kanan"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
 #, fuzzy
 msgid "_Enable top & bottom paths"
-msgstr "Bawah ke Atas (90)"
+msgstr "Aktifkan deformasi tapak atas dan bawah"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
 msgid "Enable the top and bottom deformation paths"
-msgstr ""
+msgstr "Aktifkan deformasi tapak atas dan bawah"
 
 #: ../src/live_effects/lpe-gears.cpp:212
 msgid "_Teeth:"
@@ -10751,9 +10709,8 @@ msgid "Add the stroke width to the interruption size"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:346
-#, fuzzy
 msgid "Crossing path stroke width"
-msgstr "kali dari lebar sapuan sekarang"
+msgstr "Lebar sapuan tapak menyebrang"
 
 #: ../src/live_effects/lpe-knot.cpp:346
 msgid "Add crossed stroke width to the interruption size"
@@ -10769,12 +10726,10 @@ msgid "Orientation indicator/switcher size"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:348
-#, fuzzy
 msgid "Crossing Signs"
 msgstr "Tanda Menyebrang"
 
 #: ../src/live_effects/lpe-knot.cpp:348
-#, fuzzy
 msgid "Crossings signs"
 msgstr "Tanda menyebrang"
 
@@ -10812,13 +10767,13 @@ msgid "Pattern source:"
 msgstr "Sumber pola:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:61
+#, fuzzy
 msgid "Path to put along the skeleton path"
-msgstr ""
+msgstr "Pilih <b>teks dan tapak</b> untuk meletakkan teks pada tapak."
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
-#, fuzzy
 msgid "Pattern copies:"
-msgstr "Salinan dari pola:"
+msgstr "Salinan pola:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
 msgid "How many pattern copies to place along the skeleton path"
@@ -10894,9 +10849,8 @@ msgid "Variation of distance between hatches, in %."
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
-#, fuzzy
 msgid "Growth:"
-msgstr "Gothic"
+msgstr "Berkembang:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
 #, fuzzy
@@ -10910,7 +10864,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid "Set smoothness/sharpness of path when reaching a 'bottom' half-turn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Atur kehalusan/ketajaman tapak ketika mencapai setengah putaran 'dasar'. 0=tajam, 1=bawaan"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "1st side, out:"
@@ -10918,7 +10872,7 @@ msgstr "Sisi ke-1, luar:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Atur kehalusan/ketajaman tapak ketika meninggalkan setengah putaran 'dasar'. 0=tajam, 1=bawaan"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid "2nd side, in:"
@@ -10926,7 +10880,7 @@ msgstr "Sisi ke-2, dalam:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid "Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Atur kehalusan/ketajaman dari tapak ketika mencapai setengah putaran 'atas'. 0=tajam, 1=bawaan"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "2nd side, out:"
@@ -10934,11 +10888,12 @@ msgstr "Sisi ke-2, luar:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Atur kehalusan/ketajaman dari tapak ketika meninggalkan setengah putaran 'atas'. 0=tajam, 1=bawaan"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
+#, fuzzy
 msgid "Magnitude jitter: 1st side:"
-msgstr ""
+msgstr "Ketebalan: sisi ke-1:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
@@ -10955,8 +10910,9 @@ msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
+#, fuzzy
 msgid "Parallelism jitter: 1st side:"
-msgstr ""
+msgstr "Ketebalan: sisi ke-1:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Add direction randomness by moving 'bottom' half-turns tangentially to the boundary."
@@ -10971,12 +10927,14 @@ msgid "Variance: 1st side:"
 msgstr "Varians: sisi ke-1:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
+#, fuzzy
 msgid "Randomness of 'bottom' half-turns smoothness"
-msgstr ""
+msgstr "Lebar di 'bawah' setengah putaran"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
+#, fuzzy
 msgid "Randomness of 'top' half-turns smoothness"
-msgstr ""
+msgstr "Lebar di 'atas' setengah puraran"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
@@ -10999,11 +10957,11 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Thickness: at 1st side:"
-msgstr ""
+msgstr "Ketebalan: sisi ke-1:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Width at 'bottom' half-turns"
-msgstr ""
+msgstr "Lebar di 'bawah' setengah putaran"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "at 2nd side:"
@@ -11011,24 +10969,24 @@ msgstr "di sisi kedua:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "Width at 'top' half-turns"
-msgstr ""
+msgstr "Lebar di 'atas' setengah puraran"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
 msgid "from 2nd to 1st side:"
-msgstr ""
+msgstr "dari ke-2 ke sisi ke-1:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
 msgid "Width from 'top' to 'bottom'"
-msgstr ""
+msgstr "Lebar dari 'atas' ke 'bawah'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side:"
-msgstr ""
+msgstr "dari sisi ke-1 ke ke-2:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "Width from 'bottom' to 'top'"
-msgstr ""
+msgstr "Lebar dari 'bawah' ke 'atas'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 #, fuzzy
@@ -11036,8 +10994,9 @@ msgid "Hatches width and dir"
 msgstr "Kunci lebar dan tinggi"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
+#, fuzzy
 msgid "Defines hatches frequency and direction"
-msgstr ""
+msgstr "Mendefinisikan arah dan besarnya ekstrusi"
 
 #.
 #. bender(_("Global bending"), _("Relative position to a reference point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
@@ -11081,7 +11040,7 @@ msgstr "Tanda Jarak:"
 
 #: ../src/live_effects/lpe-ruler.cpp:43
 msgid "Distance between successive ruler marks"
-msgstr ""
+msgstr "Jarak antara dengan tanda penggaris berikutnya"
 
 #: ../src/live_effects/lpe-ruler.cpp:44
 #: ../src/ui/dialog/guides.cpp:43
@@ -11097,7 +11056,7 @@ msgstr "Panjang mayor:"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
 msgid "Length of major ruler marks"
-msgstr ""
+msgstr "Panjang tanda utama dari penggaris"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
 msgid "Minor length:"
@@ -11105,25 +11064,23 @@ msgstr "Panjang minor:"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
 msgid "Length of minor ruler marks"
-msgstr ""
+msgstr "Panjang tanda tambahan dari penggaris"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
-#, fuzzy
 msgid "Major steps:"
-msgstr "Tahapan interpolasi"
+msgstr "Langkah utama:"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
 msgid "Draw a major mark every ... steps"
-msgstr ""
+msgstr "Lukis tanda utama setiap ... langkah"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
-#, fuzzy
 msgid "Shift marks by:"
-msgstr "Dari jumlah segmen"
+msgstr "Geser penanda sebesar:"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
 msgid "Shift marks by this many steps"
-msgstr ""
+msgstr "Geser tanda dengan banyak langkah"
 
 #: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Mark direction:"
@@ -11131,7 +11088,7 @@ msgstr "Tanda arah:"
 
 #: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Direction of marks (when viewing along the path from start to end)"
-msgstr ""
+msgstr "Arah tanda (jika dilihat sepanjang tapak dari awal sampai akhir)"
 
 #: ../src/live_effects/lpe-ruler.cpp:50
 #, fuzzy
@@ -11144,7 +11101,7 @@ msgstr "Tanda batas:"
 
 #: ../src/live_effects/lpe-ruler.cpp:51
 msgid "Choose whether to draw marks at the beginning and end of the path"
-msgstr ""
+msgstr "Pilih apakah akan memberi tanda di awal dan di akhir tapak"
 
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
@@ -11174,9 +11131,8 @@ msgid "Random variation of stroke length (relative to maximum length)"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:40
-#, fuzzy
 msgid "Max. overlap:"
-msgstr "Variasi saling tindih:"
+msgstr "Maks. saling tindih:"
 
 #: ../src/live_effects/lpe-sketch.cpp:41
 msgid "How much successive strokes should overlap (relative to maximum length)"
@@ -11191,9 +11147,8 @@ msgid "Random variation of overlap (relative to maximum overlap)"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:44
-#, fuzzy
 msgid "Max. end tolerance:"
-msgstr "Toleransi interpolasi Biarc:"
+msgstr "Maks. akhir toleransi:"
 
 #: ../src/live_effects/lpe-sketch.cpp:45
 msgid "Maximum distance between ends of original and approximating paths (relative to maximum length)"
@@ -11259,8 +11214,9 @@ msgid "Length variation:"
 msgstr "Variasi panjang:"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
+#, fuzzy
 msgid "Random variation of the length of construction lines"
-msgstr ""
+msgstr "0: garis konstruksi dibagi sama, 1: penempatan secara acak"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 #, fuzzy
@@ -11269,27 +11225,23 @@ msgstr "Penempatan Rodagigi"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "0: evenly distributed construction lines, 1: purely random placement"
-msgstr ""
+msgstr "0: garis konstruksi dibagi sama, 1: penempatan secara acak"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
-#, fuzzy
 msgid "k_min:"
-msgstr "min"
+msgstr "k_min:"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
-#, fuzzy
 msgid "min curvature"
-msgstr "Pembengkokan Konektor"
+msgstr "lengkungan min"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
-#, fuzzy
 msgid "k_max:"
-msgstr "max"
+msgstr "k_maks:"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
-#, fuzzy
 msgid "max curvature"
-msgstr "Pembengkokan Konektor"
+msgstr "lengkungan maks"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:46
 #, fuzzy
@@ -11338,33 +11290,28 @@ msgstr ""
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
 #. FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
 #: ../src/live_effects/lpe-vonkoch.cpp:55
-#, fuzzy
 msgid "Max complexity:"
-msgstr "Panjang maks:"
+msgstr "Maks kompleksitas:"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:55
 msgid "Disable effect if the output is too complex"
 msgstr ""
 
 #: ../src/live_effects/parameter/bool.cpp:69
-#, fuzzy
 msgid "Change bool parameter"
-msgstr "Ubah parameter vektor"
+msgstr "Ubah parameter bool"
 
 #: ../src/live_effects/parameter/enum.h:50
-#, fuzzy
 msgid "Change enumeration parameter"
-msgstr "Ubah parameter vektor"
+msgstr "Ubah parameter penomoran"
 
 #: ../src/live_effects/parameter/parameter.cpp:139
-#, fuzzy
 msgid "Change scalar parameter"
-msgstr "Ubah parameter vektor"
+msgstr "Ubah parameter skalar"
 
 #: ../src/live_effects/parameter/path.cpp:159
-#, fuzzy
 msgid "Edit on-canvas"
-msgstr "Tonjolan Kanvas, tidak memantul"
+msgstr "Sunting di kanvas"
 
 #: ../src/live_effects/parameter/path.cpp:169
 msgid "Copy path"
@@ -11379,14 +11326,12 @@ msgid "Link to path"
 msgstr "Tautkan ke tapak"
 
 #: ../src/live_effects/parameter/path.cpp:417
-#, fuzzy
 msgid "Paste path parameter"
-msgstr "Tempel E_fek Tapak"
+msgstr "Tempel parameter tapak"
 
 #: ../src/live_effects/parameter/path.cpp:449
-#, fuzzy
 msgid "Link path parameter to path"
-msgstr "Lokasi untuk menyimpan gambar:"
+msgstr "Tautkan parameter tapak ke tapak:"
 
 #: ../src/live_effects/parameter/point.cpp:91
 msgid "Change point parameter"
@@ -11411,17 +11356,16 @@ msgstr "Ubah parameter vektor"
 #: ../src/main-cmdlineact.cpp:49
 #, c-format
 msgid "Unable to find verb ID '%s' specified on the command line.\n"
-msgstr ""
+msgstr "Tidak bisa menemukan kata ID '%s' yang dinyatakan di perintah baris.\n"
 
 #: ../src/main-cmdlineact.cpp:61
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find node ID: '%s'\n"
-msgstr "Tidak bisa menemukan data gambar"
+msgstr "Tidak bisa menemukan nodal ID: '%s'\n"
 
 #: ../src/main.cpp:267
-#, fuzzy
 msgid "Print the Inkscape version number"
-msgstr "Informasi tentang versi Inkscape, pengembang, penerjemah serta lisensi"
+msgstr "Cetak nomor versi Inkscape"
 
 #: ../src/main.cpp:272
 msgid "Do not use X server (only process files from console)"
@@ -11433,7 +11377,7 @@ msgstr "Mencoba menggunakan X server (meskipun jika $DISPLAY tidak diatur)"
 
 #: ../src/main.cpp:282
 msgid "Open specified document(s) (option string may be excluded)"
-msgstr ""
+msgstr "Membuka dokumen yang dinyatakan (opsi string bisa tidak diikutkan)"
 
 #: ../src/main.cpp:283
 #: ../src/main.cpp:288
@@ -11448,16 +11392,15 @@ msgstr "NAMABERKAS"
 
 #: ../src/main.cpp:287
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
-msgstr ""
+msgstr "Cetak dokumen ke berkas keluaran yang dinyatakan (gunakan'| program' untuk pipa)"
 
 #: ../src/main.cpp:292
-#, fuzzy
 msgid "Export document to a PNG file"
 msgstr "Ekspor dokumen ke berkas PNG"
 
 #: ../src/main.cpp:297
 msgid "Resolution for exporting to bitmap and for rasterization of filters in PS/EPS/PDF (default 90)"
-msgstr ""
+msgstr "Resolusi untuk mengekspor bitmap dan rasterisasi penapis PS/EPS/PDF (bawaan 90)"
 
 #: ../src/main.cpp:298
 #: ../src/ui/widget/rendering-options.cpp:43
@@ -11466,7 +11409,7 @@ msgstr "DPI"
 
 #: ../src/main.cpp:302
 msgid "Exported area in SVG user units (default is the page; 0,0 is lower-left corner)"
-msgstr ""
+msgstr "Area yang diekspor dalam satuan pengguna SVG (bawaan adalah halaman, 0,0 adalah titk sudut kiri bawah)"
 
 #: ../src/main.cpp:303
 msgid "x0:y0:x1:y1"
@@ -11474,20 +11417,20 @@ msgstr "x0:y0:x1:y1"
 
 #: ../src/main.cpp:307
 msgid "Exported area is the entire drawing (not page)"
-msgstr ""
+msgstr "Area yang diekspor adalah seluruh gambar (bukan halaman)"
 
 #: ../src/main.cpp:312
-#, fuzzy
 msgid "Exported area is the entire page"
-msgstr "Area yang dipilih tidak valid"
+msgstr "Area yang diekspor adalah halaman penuh"
 
 #: ../src/main.cpp:317
 msgid "Snap the bitmap export area outwards to the nearest integer values (in SVG user units)"
 msgstr ""
 
 #: ../src/main.cpp:322
+#, fuzzy
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
-msgstr ""
+msgstr "Tinggi bitmap yang diekspor dalam piksel (menindih ekspor-dpi)"
 
 #: ../src/main.cpp:323
 msgid "WIDTH"
@@ -11495,16 +11438,15 @@ msgstr "LEBAR"
 
 #: ../src/main.cpp:327
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
-msgstr ""
+msgstr "Tinggi bitmap yang diekspor dalam piksel (menindih ekspor-dpi)"
 
 #: ../src/main.cpp:328
 msgid "HEIGHT"
 msgstr "TINGGI"
 
 #: ../src/main.cpp:332
-#, fuzzy
 msgid "The ID of the object to export"
-msgstr "Pilih berkas untuk di ekspor"
+msgstr "ID obyek yang diekspor"
 
 #: ../src/main.cpp:333
 #: ../src/main.cpp:431
@@ -11523,7 +11465,7 @@ msgstr ""
 
 #: ../src/main.cpp:349
 msgid "Background color of exported bitmap (any SVG-supported color string)"
-msgstr ""
+msgstr "Warna latar dari bitmap yang diekspor (nama warna yang didukung SVG)"
 
 #: ../src/main.cpp:350
 msgid "COLOR"
@@ -11531,7 +11473,7 @@ msgstr "WARNA"
 
 #: ../src/main.cpp:354
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
-msgstr ""
+msgstr "Opasitas latar dari bitmap yang diekspor (bisa 0.0 atau 1.0, atau 1 sampai 255)"
 
 #: ../src/main.cpp:355
 msgid "VALUE"
@@ -11539,7 +11481,7 @@ msgstr "ANGKA"
 
 #: ../src/main.cpp:359
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
-msgstr ""
+msgstr "Ekspor dokumen ke berkas plain SVG (tanpa sodipodi atau inkscape namespaces)"
 
 #: ../src/main.cpp:364
 msgid "Export document to a PS file"
@@ -11555,7 +11497,7 @@ msgstr "Expor dokumen ke berkas PDF"
 
 #: ../src/main.cpp:379
 msgid "Export PDF/PS/EPS without text. Besides the PDF/PS/EPS, a LaTeX file is exported, putting the text on top of the PDF/PS/EPS file. Include the result in LaTeX like: \\input{latexfile.tex}"
-msgstr ""
+msgstr "Ekspor PDF/PS/EPS tanpa teks. Disamping PDF/PS/EPS, berkas juga diekspor, meletakkan teks diatas berkas PDF/PS/EPS. Termasuk hasil di LaTeX seperti: \\input{latexfile.tex}"
 
 #: ../src/main.cpp:385
 msgid "Export document to an Enhanced Metafile (EMF) File"
@@ -11563,7 +11505,7 @@ msgstr "Expor dokumen ke berkas Enhanced Metafile (EMF)"
 
 #: ../src/main.cpp:391
 msgid "Convert text object to paths on export (PS, EPS, PDF)"
-msgstr ""
+msgstr "Merubah obyek teks ke tapak ketika ekspor (PS, EPS, PDF)"
 
 #: ../src/main.cpp:396
 msgid "Render filtered objects without filters, instead of rasterizing (PS, EPS, PDF)"
@@ -11600,7 +11542,7 @@ msgstr ""
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
 #: ../src/main.cpp:436
 msgid "Print out the extension directory and exit"
-msgstr ""
+msgstr "Cetak ekstensi direktori kemudian keluar"
 
 #: ../src/main.cpp:441
 msgid "Remove unused definitions from the defs section(s) of the document"
@@ -11608,11 +11550,11 @@ msgstr ""
 
 #: ../src/main.cpp:446
 msgid "List the IDs of all the verbs in Inkscape"
-msgstr ""
+msgstr "Senarai ID dari semua kata dalam Inkscape"
 
 #: ../src/main.cpp:451
 msgid "Verb to call when Inkscape opens."
-msgstr ""
+msgstr "Kata yang dipanggil ketika membuka Inkscape."
 
 #: ../src/main.cpp:452
 msgid "VERB-ID"
@@ -11620,7 +11562,7 @@ msgstr "VERB-ID"
 
 #: ../src/main.cpp:456
 msgid "Object ID to select when Inkscape opens."
-msgstr ""
+msgstr "Obyek ID pilihan ketika menjalankan Inkscape."
 
 #: ../src/main.cpp:457
 msgid "OBJECT-ID"
@@ -11628,7 +11570,7 @@ msgstr "OBYEK-ID"
 
 #: ../src/main.cpp:461
 msgid "Start Inkscape in interactive shell mode."
-msgstr ""
+msgstr "Menjalankan Inkscape dari mode perintah interaktif"
 
 #: ../src/main.cpp:799
 #: ../src/main.cpp:1125
@@ -11740,30 +11682,30 @@ msgstr "Tutorial"
 
 #: ../src/object-edit.cpp:437
 msgid "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the vertical radius the same"
-msgstr ""
+msgstr "Atur jejari <b>lengkungan horisontal</b>; dengan <b>Ctrl</b> membuat jejari vertikal yang sama"
 
 #: ../src/object-edit.cpp:441
 msgid "Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the horizontal radius the same"
-msgstr ""
+msgstr "Atur jejari <b>lengkungan vertikal</b>; dengan <b>Ctrl</b> membuat jejari horisontal yang sama"
 
 #: ../src/object-edit.cpp:445
 #: ../src/object-edit.cpp:449
 msgid "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to lock ratio or stretch in one dimension only"
-msgstr ""
+msgstr "Atur <b>lebar dan tinggi</b> segiempat; dengan <b>Ctrl</b> mengunci rasio atau meregang hanya satu dimensi"
 
 #: ../src/object-edit.cpp:683
 #: ../src/object-edit.cpp:686
 #: ../src/object-edit.cpp:689
 #: ../src/object-edit.cpp:692
 msgid "Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"
-msgstr ""
+msgstr "Atur ukuran pada arah X/Y; dengan <b>Shift</b> untuk arah Z; dengan <b>Ctrl</b> menahan arah sisi atau diagonal"
 
 #: ../src/object-edit.cpp:695
 #: ../src/object-edit.cpp:698
 #: ../src/object-edit.cpp:701
 #: ../src/object-edit.cpp:704
 msgid "Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"
-msgstr ""
+msgstr "Atur kotak sepanjang arah sumbu Z; dengan <b>Shift</b> pada arah X/Y; dengan <b>Ctrl</b> menahan arah sisi atau diagonal"
 
 #: ../src/object-edit.cpp:707
 msgid "Move the box in perspective"
@@ -11771,40 +11713,39 @@ msgstr "Pindahkan kotak dalam perpektif"
 
 #: ../src/object-edit.cpp:925
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
-msgstr ""
+msgstr "Atur <b>lebar</b> elips, dengan <b>Ctrl</b> untuk membuat lingkaran"
 
 #: ../src/object-edit.cpp:928
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
-msgstr ""
+msgstr "Atur <b>tinggi</b> elips, dengan <b>Ctrl</b> untuk membuat lingkaran"
 
 #: ../src/object-edit.cpp:931
 msgid "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
-msgstr ""
+msgstr "Posisi <b>titik awal</b> dari segmen busur; dengan <b>Ctrl</b> untuk mengkancing sudut; seret <b>dalam</b> elips untuk busur, <b>luar</b> untuk segmen"
 
 #: ../src/object-edit.cpp:935
 msgid "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
-msgstr ""
+msgstr "Posisi <b>titik akhir</b> dari segmen busur; dengan <b>Ctrl</b> untuk mengkancing sudut; seret <b>dalam</b> elips untuk busur, <b>luar</b> untuk segmen"
 
 #: ../src/object-edit.cpp:1074
 msgid "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to round; with <b>Alt</b> to randomize"
-msgstr ""
+msgstr "Atur <b>jejari ujung</b> dari bintang atau poligon; dengan <b>Shift</b> untuk bulatan; dengan <b>Alt</b> untuk mengacak"
 
 #: ../src/object-edit.cpp:1081
 msgid "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to randomize"
-msgstr ""
+msgstr "Atur <b>jejari dasar</b> dari bintang; dengan <b>Ctrl</b> agar bintang searah radial (tidak condong); dengan <b>Shift</b> untuk bulatan; dengan <b>Alt</b> untuk mengacak"
 
 #: ../src/object-edit.cpp:1270
 msgid "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to converge/diverge"
-msgstr ""
+msgstr "Gulung/buka spiral dari <b>dalam</b>; dengan <b>Ctrl</b> untuk mengkancing sudut; dengan <b>Alt</b> untuk memperbesar/perkecil"
 
 #: ../src/object-edit.cpp:1273
 msgid "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to scale/rotate"
-msgstr ""
+msgstr "Gulung/buka spiral dari <b>luar</b>; dengan <b>Ctrl</b> untuk mengkancing sudut; dengan <b>Shift</b> untuk menskala/memutar"
 
 #: ../src/object-edit.cpp:1317
-#, fuzzy
 msgid "Adjust the <b>offset distance</b>"
-msgstr "Ofset horisontal, px"
+msgstr "Atur <b>jarak ofset</b>"
 
 #: ../src/object-edit.cpp:1353
 msgid "Drag to resize the <b>flowed text frame</b>"
@@ -11824,11 +11765,11 @@ msgstr "Gabung"
 
 #: ../src/path-chemistry.cpp:178
 msgid "<b>No path(s)</b> to combine in the selection."
-msgstr ""
+msgstr "<b>Tidak ada tapak</b> untuk menggabung pilihan."
 
 #: ../src/path-chemistry.cpp:190
 msgid "Select <b>path(s)</b> to break apart."
-msgstr ""
+msgstr "Pilih <b>tapak</b> untuk dipisah."
 
 #: ../src/path-chemistry.cpp:194
 msgid "Breaking apart paths..."
@@ -11840,7 +11781,7 @@ msgstr "Pemisahan tapak"
 
 #: ../src/path-chemistry.cpp:285
 msgid "<b>No path(s)</b> to break apart in the selection."
-msgstr ""
+msgstr "<b>Tidak ada tapak</b> untuk memisah pilihan."
 
 #: ../src/path-chemistry.cpp:297
 msgid "Select <b>object(s)</b> to convert to path."
@@ -11856,7 +11797,7 @@ msgstr "Obyek ke tapak"
 
 #: ../src/path-chemistry.cpp:327
 msgid "<b>No objects</b> to convert to path in the selection."
-msgstr ""
+msgstr "<b>Tidak ada obyek</b> untuk mengubah ke tapak."
 
 #: ../src/path-chemistry.cpp:595
 msgid "Select <b>path(s)</b> to reverse."
@@ -11871,8 +11812,9 @@ msgid "Reverse path"
 msgstr "Menyimpan tapak"
 
 #: ../src/path-chemistry.cpp:640
+#, fuzzy
 msgid "<b>No paths</b> to reverse in the selection."
-msgstr ""
+msgstr "<b>Tidak ada tapak</b> untuk menggabung pilihan."
 
 #: ../src/pen-context.cpp:254
 #: ../src/pencil-context.cpp:555
@@ -11896,36 +11838,36 @@ msgstr "Meneruskan ke tapak pilihan"
 
 #: ../src/pen-context.cpp:669
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
-msgstr ""
+msgstr "<b>Klik</b> atau <b>klik dan seret</b> untuk menutup dan mengakhiri tapak."
 
 #: ../src/pen-context.cpp:679
 msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
-msgstr ""
+msgstr "<b>Klik</b> atau <b>klik dan seret</b> untuk meneruskan tapak dari titik ini."
 
 #: ../src/pen-context.cpp:1290
 #, c-format
 msgid "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr ""
+msgstr "<b>Segmen kurva</b>: sudut %3.2f&#176;, jarak %s; dengan <b>Ctrl</b> mengancing sufut, <b>Enter</b> untuk mengakhiri tapak"
 
 #: ../src/pen-context.cpp:1291
 #, c-format
 msgid "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr ""
+msgstr "<b>Segmen garis</b>: sudut %3.2f&#176;, jarak %s; dengan <b>Ctrl</b> mengancing sudut, <b>Enter</b> untuk mengakhiri tapak"
 
 #: ../src/pen-context.cpp:1309
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Handel kurva</b>: sudut %3.2f&#176;, panjang %s; dengan <b>Ctrl</b> mengancing sudut"
 
 #: ../src/pen-context.cpp:1331
 #, c-format
 msgid "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr ""
+msgstr "<b>Handel kurva, simetri</b>: sudut %3.2f&#176;, panjang %s; dengan <b>Ctrl</b> mengancing sudut, dengan <b>Shift</b> untuk menggerakkan handel ini saja"
 
 #: ../src/pen-context.cpp:1332
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr ""
+msgstr "<b>Handel kurva</b>: sudut %3.2f&#176;, panjang %s; dengan <b>Ctrl</b> mengancing sudut, dengan <b>Shift</b> untuk menggerakkan handel ini saja"
 
 #: ../src/pen-context.cpp:1380
 msgid "Drawing finished"
@@ -11933,26 +11875,24 @@ msgstr "Gambar selesai"
 
 #: ../src/pencil-context.cpp:396
 msgid "<b>Release</b> here to close and finish the path."
-msgstr ""
+msgstr "<b>Melepas</b> disini untuk menutup dan mengakhiri tapak."
 
 #: ../src/pencil-context.cpp:402
-#, fuzzy
 msgid "Drawing a freehand path"
-msgstr "Membuat dari Tapak"
+msgstr "Menggambar tapak bebas"
 
 #: ../src/pencil-context.cpp:407
 msgid "<b>Drag</b> to continue the path from this point."
-msgstr ""
+msgstr "<b>Seret</b> untuk meneruskan tapak dari titik ini."
 
 #. Write curves to object
 #: ../src/pencil-context.cpp:499
-#, fuzzy
 msgid "Finishing freehand"
-msgstr "Penghubung akhir"
+msgstr "Selesai menggambar bebas"
 
 #: ../src/pencil-context.cpp:605
 msgid "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. Release <b>Alt</b> to finalize."
-msgstr ""
+msgstr "<b>Mode sketsa</b>: tahan <b>Alt</b> menginterpolasi tapak sketsa. Lepaskan <b>Alt</b> untuk mengakhiri."
 
 #: ../src/pencil-context.cpp:633
 #, fuzzy
@@ -11982,9 +11922,8 @@ msgid "Brush"
 msgstr ""
 
 #: ../src/preferences-skeleton.h:104
-#, fuzzy
 msgid "Wiggly"
-msgstr "Sudut:"
+msgstr "Bergoyang"
 
 #: ../src/preferences-skeleton.h:105
 msgid "Splotchy"
@@ -12003,9 +11942,9 @@ msgstr "Inkscape akan dijalankan dengan aturan bawaan, dan pengaturan baru tidak
 #. _reportError(Glib::ustring::compose(_("Cannot create profile directory %1."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
 #: ../src/preferences.cpp:145
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create profile directory %s."
-msgstr "Tidak bisa menghapus direktori sementara"
+msgstr "Tidak bisa membuat direktori %s."
 
 #. The profile dir is not actually a directory
 #. _reportError(Glib::ustring::compose(_("%1 is not a valid directory."),
@@ -12081,7 +12020,7 @@ msgstr "Lisensi Open Font"
 
 #: ../src/rdf.cpp:231
 msgid "Name by which this document is formally known"
-msgstr ""
+msgstr "Nama yang dibawa dokumen ini dikenal secara resmi"
 
 #: ../src/rdf.cpp:233
 msgid "Date:"
@@ -12089,7 +12028,7 @@ msgstr "Hari:"
 
 #: ../src/rdf.cpp:234
 msgid "Date associated with the creation of this document (YYYY-MM-DD)"
-msgstr ""
+msgstr "Tanggal yang menunjukkan kapan dokumen ini dibuat (YYYY-MM-DD)"
 
 #: ../src/rdf.cpp:236
 #: ../share/extensions/webslicer_create_rect.inx.h:14
@@ -12172,9 +12111,8 @@ msgstr ""
 #. TRANSLATORS: "Coverage": the spatial or temporal characteristics of the content.
 #. For info, see Appendix D of http://www.w3.org/TR/1998/WD-rdf-schema-19980409/
 #: ../src/rdf.cpp:270
-#, fuzzy
 msgid "Coverage:"
-msgstr "Cakupan"
+msgstr "Cakupan:"
 
 #: ../src/rdf.cpp:271
 msgid "Extent or scope of this document"
@@ -12228,17 +12166,17 @@ msgstr "<b>Segiempat</b>: %s &#215; %s (kendala ke rasio %d:%d); dengan <b>Shift
 #: ../src/rect-context.cpp:524
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with <b>Shift</b> to draw around the starting point"
-msgstr ""
+msgstr "<b>Segiempat</b>: %s &#215; %s (pada rasio emas 1.618 : 1); dengan <b>Shift</b> untuk menggambar sekitar titik awal"
 
 #: ../src/rect-context.cpp:526
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with <b>Shift</b> to draw around the starting point"
-msgstr ""
+msgstr "<b>Segiempat</b>: %s &#215; %s (pada rasio emas 1:1.618); dengan <b>Shift</b> untuk menggambar sekitar titik awal"
 
 #: ../src/rect-context.cpp:530
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"
-msgstr ""
+msgstr "<b>Segiempat</b>: %s &#215; %s; dengan <b>Ctrl</b> membuat segiempat atau rasio bulat; dengan <b>Shift</b> menggambar sekitar dari titik awal"
 
 #: ../src/rect-context.cpp:555
 msgid "Create rectangle"
@@ -12246,7 +12184,7 @@ msgstr "Membuat segi empat"
 
 #: ../src/select-context.cpp:186
 msgid "Click selection to toggle scale/rotation handles"
-msgstr ""
+msgstr "Klik pilihan untuk merubah handel skala/rotasi"
 
 #: ../src/select-context.cpp:187
 msgid "No objects selected. Click, Shift+click, Alt+scroll mouse on top of objects, or drag around objects to select."
@@ -12270,19 +12208,20 @@ msgstr ""
 
 #: ../src/select-context.cpp:858
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
-msgstr ""
+msgstr "<b>Ctrl</b>: klik untuk memilih dalam grup; seret untuk memindah hor/vert"
 
 #: ../src/select-context.cpp:859
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
-msgstr ""
+msgstr "<b>Shift</b>: klik untuk merubah pilihan; seret untuk pilihan pitakaret"
 
 #: ../src/select-context.cpp:860
 msgid "<b>Alt</b>: click to select under; scroll mouse-wheel to cycle-select; drag to move selected or select by touch"
 msgstr ""
 
 #: ../src/select-context.cpp:1034
+#, fuzzy
 msgid "Selected object is not a group. Cannot enter."
-msgstr ""
+msgstr "Obyek pilihan <b>bukan tapak</b>, tidak bisa diperbesar/perkecil."
 
 #: ../src/selection-chemistry.cpp:306
 msgid "Delete text"
@@ -12323,8 +12262,9 @@ msgid "Select a <b>group</b> to ungroup."
 msgstr "Pilih <b>grup</b> untuk diurai dari grup."
 
 #: ../src/selection-chemistry.cpp:717
+#, fuzzy
 msgid "<b>No groups</b> to ungroup in the selection."
-msgstr ""
+msgstr "<b>Tidak ada tapak</b> untuk menggabung pilihan."
 
 #: ../src/selection-chemistry.cpp:723
 #: ../src/sp-item-group.cpp:501
@@ -12340,7 +12280,7 @@ msgstr "Pilih <b>obyek</b> untuk dinaikkan."
 #: ../src/selection-chemistry.cpp:909
 #: ../src/selection-chemistry.cpp:973
 msgid "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
-msgstr ""
+msgstr "Anda tidak bisa menaikkan/menurunkan obyek dari <b>grup berbeda</b> atau <b>lapis</b>."
 
 #. TRANSLATORS: "Raise" means "to raise an object" in the undo history
 #: ../src/selection-chemistry.cpp:855
@@ -12385,14 +12325,12 @@ msgid "Paste"
 msgstr "Tempel"
 
 #: ../src/selection-chemistry.cpp:1084
-#, fuzzy
 msgid "Paste style"
-msgstr "Tempelkan _Gaya"
+msgstr "Tempelkan  gaya"
 
 #: ../src/selection-chemistry.cpp:1094
-#, fuzzy
 msgid "Paste live path effect"
-msgstr "Hapus efek tapak hidup"
+msgstr "Tempel efek tapak hidup"
 
 #: ../src/selection-chemistry.cpp:1115
 msgid "Select <b>object(s)</b> to remove live path effects from."
@@ -12416,39 +12354,32 @@ msgid "Paste size"
 msgstr "Tempel ukuran"
 
 #: ../src/selection-chemistry.cpp:1166
-#, fuzzy
 msgid "Paste size separately"
-msgstr "Tempel Ukuran Terpisah"
+msgstr "Tempel ukuran terpisah"
 
 #: ../src/selection-chemistry.cpp:1176
-#, fuzzy
 msgid "Select <b>object(s)</b> to move to the layer above."
-msgstr "Pindah yang dipilih ke lapis diatas lapis yang sekarang"
+msgstr "Pilih <b>obyek</b> untuk dipindah ke lapis diatasnya."
 
 #: ../src/selection-chemistry.cpp:1202
-#, fuzzy
 msgid "Raise to next layer"
 msgstr "Pindah ke lapis berikutnya"
 
 #: ../src/selection-chemistry.cpp:1209
-#, fuzzy
 msgid "No more layers above."
-msgstr "Tidak ada lagi pembatas garis yang tersedia"
+msgstr "Tidak ada layar lagi diatasnya."
 
 #: ../src/selection-chemistry.cpp:1221
-#, fuzzy
 msgid "Select <b>object(s)</b> to move to the layer below."
-msgstr "Pindah yang dipilih ke lapis dibawah lapis yang sekarang"
+msgstr "Pilih <b>obyek</b> untuk dipindah ke lapis dibawahnya."
 
 #: ../src/selection-chemistry.cpp:1247
-#, fuzzy
 msgid "Lower to previous layer"
-msgstr "Pindah ke lapis sebelumnya"
+msgstr "Turunkan ke lapis sebelumnya"
 
 #: ../src/selection-chemistry.cpp:1254
-#, fuzzy
 msgid "No more layers below."
-msgstr "Tidak ada lagi pembatas garis yang tersedia"
+msgstr "Tidak ada lagi lapis dibawahnya."
 
 #: ../src/selection-chemistry.cpp:1464
 msgid "Remove transform"
@@ -12508,13 +12439,12 @@ msgstr "Geser horisontal berdasarkan piksel"
 
 #: ../src/selection-chemistry.cpp:1866
 msgid "The selection has no applied path effect."
-msgstr ""
+msgstr "Pilihan tidak memiliki tapak dengan efek."
 
 #: ../src/selection-chemistry.cpp:2069
-#, fuzzy
 msgctxt "Action"
 msgid "Clone"
-msgstr "Putus tautan penggandaan"
+msgstr "Penggandaan"
 
 #: ../src/selection-chemistry.cpp:2085
 #, fuzzy
@@ -12527,8 +12457,9 @@ msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr "Tautkan kembali gandaan terpilih ke obyek yang ada di papan klip"
 
 #: ../src/selection-chemistry.cpp:2116
+#, fuzzy
 msgid "<b>No clones to relink</b> in the selection."
-msgstr ""
+msgstr "<b>Tidak ada tapak</b> untuk menggabung pilihan."
 
 #: ../src/selection-chemistry.cpp:2119
 msgid "Relink clone"
@@ -12540,8 +12471,9 @@ msgid "Select <b>clones</b> to unlink."
 msgstr "Pilih satu <b>obyek</b> untuk digandakan."
 
 #: ../src/selection-chemistry.cpp:2187
+#, fuzzy
 msgid "<b>No clones to unlink</b> in the selection."
-msgstr ""
+msgstr "<b>Tidak ada tapak</b> untuk menggabung pilihan."
 
 #: ../src/selection-chemistry.cpp:2191
 #, fuzzy
@@ -12561,52 +12493,44 @@ msgid "The object you're trying to select is <b>not visible</b> (it is in &lt;de
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:2280
-#, fuzzy
 msgid "Select <b>object(s)</b> to convert to marker."
-msgstr "Mengubah obyek yang dipilih menjadi tapak"
+msgstr "Pilih <b>obyek</b> untuk merubah menjadi tanda."
 
 #: ../src/selection-chemistry.cpp:2348
-#, fuzzy
 msgid "Objects to marker"
 msgstr "Obyek ke Tanda"
 
 #: ../src/selection-chemistry.cpp:2376
-#, fuzzy
 msgid "Select <b>object(s)</b> to convert to guides."
-msgstr "Mengubah obyek yang dipilih menjadi tapak"
+msgstr "Pilih <b>obyek</b> untuk merubah ke panduan."
 
 #: ../src/selection-chemistry.cpp:2388
-#, fuzzy
 msgid "Objects to guides"
-msgstr "<b>Kancing ke garis pemandu</b>"
+msgstr "Obyek ke panduan"
 
 #: ../src/selection-chemistry.cpp:2405
-#, fuzzy
 msgid "Select <b>object(s)</b> to convert to pattern."
-msgstr "Mengubah obyek yang dipilih menjadi tapak"
+msgstr "Pilih <b>obyek</b> untuk merubah ke pola."
 
 #: ../src/selection-chemistry.cpp:2493
-#, fuzzy
 msgid "Objects to pattern"
-msgstr "Pola ke Ob_yek"
+msgstr "Obyek ke pola"
 
 #: ../src/selection-chemistry.cpp:2509
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
-msgstr ""
+msgstr "Pilih <b>obyek dengan pola isian</b> untuk ekstraksi dari obyek."
 
 #: ../src/selection-chemistry.cpp:2562
-#, fuzzy
 msgid "<b>No pattern fills</b> in the selection."
-msgstr "<small>Obyek pilihan tanpa gradiasi</small>"
+msgstr "<b>Tidak ada pola isian</b> dalam pilihan."
 
 #: ../src/selection-chemistry.cpp:2565
-#, fuzzy
 msgid "Pattern to objects"
-msgstr "Pola ke Ob_yek"
+msgstr "Pola ke Obyek"
 
 #: ../src/selection-chemistry.cpp:2647
 msgid "Select <b>object(s)</b> to make a bitmap copy."
-msgstr ""
+msgstr "Pilih <b>obyek</b> untuk membuat salinan bitmap."
 
 #: ../src/selection-chemistry.cpp:2651
 msgid "Rendering bitmap..."
@@ -12617,44 +12541,37 @@ msgid "Create bitmap"
 msgstr "Membuat bitmap"
 
 #: ../src/selection-chemistry.cpp:2857
-#, fuzzy
 msgid "Select <b>object(s)</b> to create clippath or mask from."
-msgstr "Pilih satu <b>objek</b> untuk di clone"
+msgstr "Pilih <b>obyek</b> yang akan digunakan untuk membuat tapak klip atau topeng."
 
 #: ../src/selection-chemistry.cpp:2860
 #, fuzzy
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
-msgstr "Pilih satu <b>objek</b> untuk di clone"
+msgstr "Pilih <b>obyek</b> yang akan dihilangkan topeng atau klipnya"
 
 #: ../src/selection-chemistry.cpp:3041
-#, fuzzy
 msgid "Set clipping path"
-msgstr "Sunting tapak kliping"
+msgstr "Pilih tapak kliping"
 
 #: ../src/selection-chemistry.cpp:3043
-#, fuzzy
 msgid "Set mask"
-msgstr "Lepaskan Topeng"
+msgstr "Pilih topeng"
 
 #: ../src/selection-chemistry.cpp:3058
-#, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
-msgstr "Pilih satu <b>objek</b> untuk di clone"
+msgstr "Pilih <b>obyek</b> yang akan dihilangkan topeng atau klipnya"
 
 #: ../src/selection-chemistry.cpp:3169
-#, fuzzy
 msgid "Release clipping path"
-msgstr "Sunting tapak kliping"
+msgstr "Lepaskan tapak kliping"
 
 #: ../src/selection-chemistry.cpp:3171
-#, fuzzy
 msgid "Release mask"
 msgstr "Lepaskan Topeng"
 
 #: ../src/selection-chemistry.cpp:3190
-#, fuzzy
 msgid "Select <b>object(s)</b> to fit canvas to."
-msgstr "Pilih <b>obyek</b> untuk dipasang gaya."
+msgstr "Pilih <b>obyek</b> untuk disesuaikan ke kanvas."
 
 #. Fit Page
 #: ../src/selection-chemistry.cpp:3210
@@ -12664,15 +12581,13 @@ msgstr "Sesuaikan Halaman untuk Pilihan"
 
 #: ../src/selection-chemistry.cpp:3239
 #: ../src/verbs.cpp:2723
-#, fuzzy
 msgid "Fit Page to Drawing"
-msgstr "Sesuaikan Halaman untuk Pilihan"
+msgstr "Sesuaikan Halaman untuk Gambar"
 
 #: ../src/selection-chemistry.cpp:3260
 #: ../src/verbs.cpp:2725
-#, fuzzy
 msgid "Fit Page to Selection or Drawing"
-msgstr "Atur halaman untuk _gambar atau pilihan"
+msgstr "Sesuaikan Halaman untuk Pilihan atau Gambar"
 
 #. TRANSLATORS: "Link" means internet link (anchor)
 #: ../src/selection-describer.cpp:44
@@ -12731,15 +12646,13 @@ msgstr "Kotak 3D"
 
 #. TRANSLATORS: "Clone" is a noun, type of object
 #: ../src/selection-describer.cpp:71
-#, fuzzy
 msgctxt "Object"
 msgid "Clone"
-msgstr "Putus tautan penggandaan"
+msgstr "Penggandaan"
 
 #: ../src/selection-describer.cpp:75
-#, fuzzy
 msgid "Offset path"
-msgstr "Ubah Tapak"
+msgstr "Tapak Ofset"
 
 #. Spiral
 #: ../src/selection-describer.cpp:77
@@ -12757,9 +12670,8 @@ msgid "Star"
 msgstr "Bintang"
 
 #: ../src/selection-describer.cpp:137
-#, fuzzy
 msgid "root"
-msgstr "Sisipan akar"
+msgstr "akar"
 
 #: ../src/selection-describer.cpp:149
 #, c-format
@@ -12787,10 +12699,10 @@ msgid " in group %s (%s)"
 msgstr " pada kelompok %s (%s)"
 
 #: ../src/selection-describer.cpp:173
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> parents (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
-msgstr[0] "Bleed (in)"
+msgstr[0] " di <b>%i</b> induk (%s)"
 
 #: ../src/selection-describer.cpp:176
 #, c-format
@@ -12800,15 +12712,15 @@ msgstr[0] " di <b>%i</b> lapis"
 
 #: ../src/selection-describer.cpp:186
 msgid "Use <b>Shift+D</b> to look up original"
-msgstr ""
+msgstr "Gunakan <b>Shift+D</b> untuk mencari asli"
 
 #: ../src/selection-describer.cpp:190
 msgid "Use <b>Shift+D</b> to look up path"
-msgstr ""
+msgstr "Gunakan <b>Shift+D</b> untuk mencari tapak"
 
 #: ../src/selection-describer.cpp:194
 msgid "Use <b>Shift+D</b> to look up frame"
-msgstr ""
+msgstr "Gunakan <b>Shift+D</b> untuk mencari frame"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:209
@@ -12898,16 +12810,16 @@ msgstr ""
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1245
-#, c-format
+#, fuzzy, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Handel kurva</b>: sudut %3.2f&#176;, panjang %s; dengan <b>Ctrl</b> mengancing sudut"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1320
-#, c-format
+#, fuzzy, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Handel kurva</b>: sudut %3.2f&#176;, panjang %s; dengan <b>Ctrl</b> mengancing sudut"
 
 #: ../src/seltrans.cpp:1355
 #, c-format
@@ -12961,9 +12873,8 @@ msgid "Flow excluded region"
 msgstr "Meng_ikuti dalam Bingkai"
 
 #: ../src/sp-guide.cpp:289
-#, fuzzy
 msgid "Guides Around Page"
-msgstr "Panduan Seke_liling"
+msgstr "Panduan Sekeliling Halaman"
 
 #: ../src/sp-guide.cpp:421
 msgid "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to delete"
@@ -13011,22 +12922,22 @@ msgstr "Obyek"
 #: ../src/sp-item.cpp:1001
 #, c-format
 msgid "%s; <i>clipped</i>"
-msgstr ""
+msgstr "%s; <i>di klip</i>"
 
 #: ../src/sp-item.cpp:1006
 #, c-format
 msgid "%s; <i>masked</i>"
-msgstr ""
+msgstr "%s; <i>bertopeng</i>"
 
 #: ../src/sp-item.cpp:1014
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
-msgstr ""
+msgstr "%s; <i>ditapis (%s)</i>"
 
 #: ../src/sp-item.cpp:1016
 #, c-format
 msgid "%s; <i>filtered</i>"
-msgstr ""
+msgstr "%s; <i>ditapis</i>"
 
 #: ../src/sp-line.cpp:175
 msgid "<b>Line</b>"
@@ -13040,7 +12951,7 @@ msgstr ""
 #: ../src/sp-offset.cpp:428
 #, c-format
 msgid "<b>Linked offset</b>, %s by %f pt"
-msgstr ""
+msgstr "<b>Ofset tautan</b>, %s dengan %f pt"
 
 #: ../src/sp-offset.cpp:429
 #: ../src/sp-offset.cpp:433
@@ -13103,8 +13014,9 @@ msgstr[0] "<b>Poligon</b> dengan %d vertex"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:428
+#, fuzzy
 msgid "&lt;no name found&gt;"
-msgstr ""
+msgstr "Tidak ada definisi tidak dipakai di &lt;defs&gt;."
 
 #: ../src/sp-text.cpp:440
 #, c-format
@@ -13142,7 +13054,7 @@ msgstr "..."
 #: ../src/sp-use.cpp:342
 #, fuzzy, c-format
 msgid "<b>Clone</b> of: %s"
-msgstr "Putus tautan penggandaan"
+msgstr "Penggandaan"
 
 #: ../src/sp-use.cpp:346
 #, fuzzy
@@ -13155,12 +13067,12 @@ msgstr "<b>Ctrl</b>: sudut kancingan"
 
 #: ../src/spiral-context.cpp:329
 msgid "<b>Alt</b>: lock spiral radius"
-msgstr ""
+msgstr "<b>Alt</b>: mengunci jejari spiral"
 
 #: ../src/spiral-context.cpp:460
 #, c-format
 msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Spiral</b>: jejari %s, sudut %5g&#176;; dengan <b>Ctrl</b> untuk mengunci sudut"
 
 #: ../src/spiral-context.cpp:486
 msgid "Create spiral"
@@ -13168,9 +13080,8 @@ msgstr "Membuat spiral"
 
 #: ../src/splivarot.cpp:67
 #: ../src/splivarot.cpp:73
-#, fuzzy
 msgid "Union"
-msgstr "Pen_yatuan"
+msgstr "Penyatuan"
 
 #: ../src/splivarot.cpp:79
 msgid "Intersection"
@@ -13195,15 +13106,15 @@ msgstr "Potong tapak"
 
 #: ../src/splivarot.cpp:122
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
-msgstr ""
+msgstr "Pilih <b>paling tidak 2 tapak</b> untuk melakuka operasi bolean."
 
 #: ../src/splivarot.cpp:126
 msgid "Select <b>at least 1 path</b> to perform a boolean union."
-msgstr ""
+msgstr "Pilih <b>paling tidak 1 tapak</b> untuk melakukan gabungan bolean."
 
 #: ../src/splivarot.cpp:132
 msgid "Select <b>exactly 2 paths</b> to perform difference, division, or path cut."
-msgstr ""
+msgstr "Pilih <b>2 tapak</b> untuk melihat perbedaan, divisi, atau memotong tapak."
 
 #: ../src/splivarot.cpp:148
 #: ../src/splivarot.cpp:163
@@ -13212,11 +13123,11 @@ msgstr ""
 
 #: ../src/splivarot.cpp:193
 msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
-msgstr ""
+msgstr "Salah satu obyek <b>bukan tapak</b>, tidak bisa melakukan operasi bolean."
 
 #: ../src/splivarot.cpp:881
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
-msgstr ""
+msgstr "Pilih <b>tapak sapuan</b> untuk merubah ke tapak."
 
 #: ../src/splivarot.cpp:1228
 msgid "Convert stroke to path"
@@ -13230,7 +13141,7 @@ msgstr "<small>Obyek pilihan tanpa gradiasi</small>"
 
 #: ../src/splivarot.cpp:1314
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
-msgstr ""
+msgstr "Obyek pilihan <b>bukan tapak</b>, tidak bisa diperbesar/perkecil."
 
 #: ../src/splivarot.cpp:1434
 #: ../src/splivarot.cpp:1505
@@ -13245,7 +13156,7 @@ msgstr "Membuat ofset dinamik"
 #: ../src/splivarot.cpp:1531
 #, fuzzy
 msgid "Select <b>path(s)</b> to inset/outset."
-msgstr "Jumlah salinan inset/outset dari obyek yang dibuat"
+msgstr "Memilih <b>obyek</b> menjadi tapak."
 
 #: ../src/splivarot.cpp:1749
 #, fuzzy
@@ -13262,14 +13173,12 @@ msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr ""
 
 #: ../src/splivarot.cpp:1929
-#, fuzzy
 msgid "Simplifying paths (separately):"
-msgstr "Tempel Ukuran Terpisah"
+msgstr "Sederhanakan tapak (terpisah):"
 
 #: ../src/splivarot.cpp:1931
-#, fuzzy
 msgid "Simplifying paths:"
-msgstr "%s <b>%d</b> dari <b>%d</b> tapak diringkas.."
+msgstr "Sederhanakan tapak:"
 
 #: ../src/splivarot.cpp:1968
 #, c-format
@@ -13290,8 +13199,9 @@ msgid "Simplify"
 msgstr "Sederhanakan"
 
 #: ../src/splivarot.cpp:2010
+#, fuzzy
 msgid "<b>No paths</b> to simplify in the selection."
-msgstr ""
+msgstr "<b>Tidak ada tapak</b> untuk menggabung pilihan."
 
 #: ../src/spray-context.cpp:245
 #: ../src/tweak-context.cpp:205
@@ -13339,12 +13249,12 @@ msgstr ""
 #: ../src/star-context.cpp:474
 #, c-format
 msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Poligon</b>: jejari %s, sudut %5g&#176;; dengan <b>Ctrl</b> untuk mengunci sudut"
 
 #: ../src/star-context.cpp:475
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Bintang</b>: jejari %s, sudut %5g&#176;; dengan <b>Ctrl</b> untuk mengunci sudut"
 
 #: ../src/star-context.cpp:508
 msgid "Create star"
@@ -13352,7 +13262,7 @@ msgstr "Membuat bintang"
 
 #: ../src/text-chemistry.cpp:105
 msgid "Select <b>a text and a path</b> to put text on path."
-msgstr ""
+msgstr "Pilih <b>teks dan tapak</b> untuk meletakkan teks pada tapak."
 
 #: ../src/text-chemistry.cpp:110
 msgid "This text object is <b>already put on a path</b>. Remove it from the path first. Use <b>Shift+D</b> to look up its path."
@@ -13387,9 +13297,8 @@ msgstr "Lepaskan teks dari tapak"
 
 #: ../src/text-chemistry.cpp:270
 #: ../src/text-chemistry.cpp:291
-#, fuzzy
 msgid "Select <b>text(s)</b> to remove kerns from."
-msgstr "Pilih <b>obyek</b> yang akan dihilangkan penapisan."
+msgstr "Pilih <b>teks</b> yang dihilangkan kern nya."
 
 #: ../src/text-chemistry.cpp:294
 #, fuzzy
@@ -13417,7 +13326,7 @@ msgstr "Rata penuh (hanya teks berterusan)"
 #: ../src/text-chemistry.cpp:490
 #, fuzzy
 msgid "Select <b>flowed text(s)</b> to convert."
-msgstr "Pilih satu <b>objek</b> untuk di clone"
+msgstr "Memilih <b>obyek</b> menjadi tapak."
 
 #: ../src/text-chemistry.cpp:508
 msgid "The flowed text(s) must be <b>visible</b> in order to be converted."
@@ -13429,8 +13338,9 @@ msgid "Convert flowed text to text"
 msgstr "Rata penuh (hanya teks berterusan)"
 
 #: ../src/text-chemistry.cpp:541
+#, fuzzy
 msgid "<b>No flowed text(s)</b> to convert in the selection."
-msgstr ""
+msgstr "<b>Tidak ada obyek</b> untuk mengubah ke tapak."
 
 #: ../src/text-context.cpp:449
 #, fuzzy
@@ -13487,17 +13397,15 @@ msgstr "Rata penuh (hanya teks berterusan)"
 
 #: ../src/text-context.cpp:730
 msgid "The frame is <b>too small</b> for the current font size. Flowed text not created."
-msgstr ""
+msgstr "Bingkai <b>terlalu kecil</b> untuk hurus yg sekarang. Teks mengalir tidak dibuat."
 
 #: ../src/text-context.cpp:866
-#, fuzzy
 msgid "No-break space"
-msgstr "Spasi antara salinan:"
+msgstr "Spasi bukan pemisah"
 
 #: ../src/text-context.cpp:868
-#, fuzzy
 msgid "Insert no-break space"
-msgstr "Menyisipkan spasi merata setelah pemisah baris"
+msgstr "Sisipkan spasi bukan pemisah"
 
 #: ../src/text-context.cpp:905
 msgid "Make bold"
@@ -13513,27 +13421,23 @@ msgstr "Baris baru"
 
 #: ../src/text-context.cpp:996
 msgid "Backspace"
-msgstr ""
+msgstr "Backspace"
 
 #: ../src/text-context.cpp:1044
-#, fuzzy
 msgid "Kern to the left"
-msgstr "Kiri ke Kanan (0)"
+msgstr "Kern ke kiri"
 
 #: ../src/text-context.cpp:1069
-#, fuzzy
 msgid "Kern to the right"
-msgstr "Kiri ke Kanan (0)"
+msgstr "Kern ke kanan"
 
 #: ../src/text-context.cpp:1094
-#, fuzzy
 msgid "Kern up"
-msgstr "ketika tetikus naik"
+msgstr "Kern keatas"
 
 #: ../src/text-context.cpp:1119
-#, fuzzy
 msgid "Kern down"
-msgstr "ketika tetikus turun"
+msgstr "Kern kebawah"
 
 #: ../src/text-context.cpp:1195
 msgid "Rotate counterclockwise"
@@ -13856,18 +13760,16 @@ msgid "No style on the clipboard."
 msgstr "Tidak ada gaya tersimpan di papan klip."
 
 #: ../src/ui/clipboard.cpp:445
-#, fuzzy
 msgid "Select <b>object(s)</b> to paste size to."
-msgstr "Pilih <b>obyek</b> untuk dipasang gaya."
+msgstr "Pilih <b>obyek</b> untuk diterapkan ukuran."
 
 #: ../src/ui/clipboard.cpp:452
 msgid "No size on the clipboard."
 msgstr "Tidak ada ukuran tersimpan di papan klip."
 
 #: ../src/ui/clipboard.cpp:505
-#, fuzzy
 msgid "Select <b>object(s)</b> to paste live path effect to."
-msgstr "Pilih <b>objek</b> dimana efek tapak hidup akan dihapus."
+msgstr "Pilih <b>obyek</b> dimana efek tapak hidup akan ditempelkan."
 
 #. no_effect:
 #: ../src/ui/clipboard.cpp:530
@@ -13897,9 +13799,8 @@ msgstr "Buat Tautan"
 
 #. Set mask
 #: ../src/ui/context-menu.cpp:139
-#, fuzzy
 msgid "Set Mask"
-msgstr "Lepaskan Topeng"
+msgstr "Pilih Topeng"
 
 #. Release mask
 #: ../src/ui/context-menu.cpp:150
@@ -13908,15 +13809,13 @@ msgstr "Lepaskan Topeng"
 
 #. Set Clip
 #: ../src/ui/context-menu.cpp:161
-#, fuzzy
 msgid "Set _Clip"
-msgstr "Atur durasi:"
+msgstr "Pilih Klip"
 
 #. Release Clip
 #: ../src/ui/context-menu.cpp:172
-#, fuzzy
 msgid "Release C_lip"
-msgstr "Lepaskan Topeng"
+msgstr "Lepaskan Klip"
 
 #: ../src/ui/context-menu.cpp:295
 msgid "Create link"
@@ -14751,24 +14650,20 @@ msgid "Guess from extension"
 msgstr "Menggunakan ekstensi Interpolate"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1361
-#, fuzzy
 msgid "Left edge of source"
-msgstr "Tampilan program asal"
+msgstr "Sumber sisi kiri"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
-#, fuzzy
 msgid "Top edge of source"
-msgstr "Tampilan program asal"
+msgstr "Sumber sisi atas"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
-#, fuzzy
 msgid "Right edge of source"
-msgstr "Tampilan program asal"
+msgstr "Sumber sisi kanan"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
-#, fuzzy
 msgid "Bottom edge of source"
-msgstr "Tampilan program asal"
+msgstr "Sumber sisi bawah"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
 msgid "Source width"
@@ -14819,9 +14714,8 @@ msgid "Destination"
 msgstr "Tujuan"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:496
-#, fuzzy
 msgid "Show Preview"
-msgstr "Pra Tampilan LaTeX"
+msgstr "Munculkan Pratampilan"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:631
 msgid "No file selected"
@@ -14937,9 +14831,8 @@ msgid "New light source"
 msgstr "Sumber cahaya baru"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1081
-#, fuzzy
 msgid "_Duplicate"
-msgstr "Duplikat"
+msgstr "Salin"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1107
 msgid "_Filter"
@@ -14966,9 +14859,8 @@ msgid "Add filter"
 msgstr "Tambah penapis"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1363
-#, fuzzy
 msgid "Duplicate filter"
-msgstr "Hapus penapis"
+msgstr "Salin penapis"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1430
 msgid "_Effect"
@@ -15031,14 +14923,12 @@ msgid "Dimensions:"
 msgstr "Dimensi:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2181
-#, fuzzy
 msgid "Width of filter effects region"
-msgstr "Kualitas efek penapis untuk tampilan layar:"
+msgstr "Lebar daerah efek penapis"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2181
-#, fuzzy
 msgid "Height of filter effects region"
-msgstr "Kualitas efek penapis untuk tampilan layar:"
+msgstr "Tinggi daerah efek penapis"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 #: ../src/widgets/toolbox.cpp:4019
@@ -15134,7 +15024,6 @@ msgid "This value is added to each component. This is useful to define a constan
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2217
-#, fuzzy
 msgid "Edge Mode:"
 msgstr "Mode Sisi:"
 
@@ -15143,9 +15032,8 @@ msgid "Determines how to extend the input image as necessary with color values s
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2218
-#, fuzzy
 msgid "Preserve Alpha"
-msgstr "Gambar Alfa"
+msgstr "Pertahankan Alfa"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2218
 msgid "If set, the alpha channel won't be altered by this filter primitive."
@@ -15164,9 +15052,8 @@ msgstr "Mendefinisikan warna dari sumber cahaya"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2255
-#, fuzzy
 msgid "Surface Scale:"
-msgstr "Skala lebar"
+msgstr "Skala Bidang:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2255
@@ -15185,9 +15072,8 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2224
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2258
-#, fuzzy
 msgid "Kernel Unit Length:"
-msgstr "Panjang tahap (px)"
+msgstr "Satuan Panjang Kernel:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2228
 msgid "This defines the intensity of the displacement effect."
@@ -15211,7 +15097,6 @@ msgstr ""
 
 #. default: black
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2233
-#, fuzzy
 msgid "Flood Color:"
 msgstr "Warna Banjir:"
 
@@ -15255,7 +15140,6 @@ msgstr ""
 
 #. default: white
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2254
-#, fuzzy
 msgid "Specular Color:"
 msgstr "Warna Spekuler:"
 
@@ -15281,9 +15165,8 @@ msgid "Octaves:"
 msgstr "Oktaf:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2269
-#, fuzzy
 msgid "Seed:"
-msgstr "Kecepatan"
+msgstr "Benih:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2269
 msgid "The starting number for the pseudo random number generator."
@@ -15358,9 +15241,8 @@ msgid "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind 
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2377
-#, fuzzy
 msgid "Duplicate filter primitive"
-msgstr "Tambahkan penapis primitif"
+msgstr "Salin penapis primitif"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2430
 msgid "Set filter primitive attribute"
@@ -15821,9 +15703,8 @@ msgid "Phonetic Extensions Supplement"
 msgstr "Ekstensi Phonetic Tambahan"
 
 #: ../src/ui/dialog/glyphs.cpp:215
-#, fuzzy
 msgid "Combining Diacritical Marks Supplement"
-msgstr "Tanda Baca Diakritikal untuk Simbol"
+msgstr "Menggabungkan Tanda Tambahan Diakritikal"
 
 #: ../src/ui/dialog/glyphs.cpp:216
 msgid "Latin Extended Additional"
@@ -15846,18 +15727,16 @@ msgid "Currency Symbols"
 msgstr "Simbol Mata Uang"
 
 #: ../src/ui/dialog/glyphs.cpp:221
-#, fuzzy
 msgid "Combining Diacritical Marks for Symbols"
-msgstr "Tanda Baca Diakritikal untuk Simbol"
+msgstr "Menggabungkan Tanda untuk Simbol Diakritikal"
 
 #: ../src/ui/dialog/glyphs.cpp:222
 msgid "Letterlike Symbols"
 msgstr "Simbol mirip huruf"
 
 #: ../src/ui/dialog/glyphs.cpp:223
-#, fuzzy
 msgid "Number Forms"
-msgstr "Berbagai Format Angka"
+msgstr "Format Angka"
 
 #: ../src/ui/dialog/glyphs.cpp:224
 msgid "Arrows"
@@ -15872,14 +15751,12 @@ msgid "Miscellaneous Technical"
 msgstr "Bebagai Simbol Teknik"
 
 #: ../src/ui/dialog/glyphs.cpp:227
-#, fuzzy
 msgid "Control Pictures"
-msgstr "Simbol Kontrol"
+msgstr "Kontrol Gambar"
 
 #: ../src/ui/dialog/glyphs.cpp:228
-#, fuzzy
 msgid "Optical Character Recognition"
-msgstr "Pengenalan Karakter Secara Optik"
+msgstr "Pengenal Karakter Optik"
 
 #: ../src/ui/dialog/glyphs.cpp:229
 msgid "Enclosed Alphanumerics"
@@ -16116,7 +15993,6 @@ msgid "Combining Half Marks"
 msgstr "Tanda Combining Half"
 
 #: ../src/ui/dialog/glyphs.cpp:300
-#, fuzzy
 msgid "CJK Compatibility Forms"
 msgstr "Format Kompatibilitas CJK"
 
@@ -16610,7 +16486,7 @@ msgstr "Nodal"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:443
 msgid "Path outline"
-msgstr "Garis batas tapak:"
+msgstr "Garis batas tapak"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid "Path outline color"
@@ -17323,9 +17199,8 @@ msgid "The rendering intent to use to calibrate display output"
 msgstr "isi pencitraan yang digukanan untuk mengkalibrasi keluaran tampilan"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:925
-#, fuzzy
 msgid "Proofing"
-msgstr "Potret"
+msgstr "Proofing"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:927
 msgid "Simulate output on screen"
@@ -18182,19 +18057,16 @@ msgid "Add layer"
 msgstr "Tambah lapis"
 
 #: ../src/ui/dialog/layer-properties.cpp:148
-#, fuzzy
 msgid "Above current"
-msgstr "Lapis sekarang"
+msgstr "Diatas sekarang"
 
 #: ../src/ui/dialog/layer-properties.cpp:152
-#, fuzzy
 msgid "Below current"
-msgstr "Lapis sekarang"
+msgstr "Dibawah sekarang"
 
 #: ../src/ui/dialog/layer-properties.cpp:155
-#, fuzzy
 msgid "As sublayer of current"
-msgstr "Tahun (0 untuk sekarang)"
+msgstr "Sebagai anak lapis ini"
 
 #: ../src/ui/dialog/layer-properties.cpp:159
 msgid "Position:"
@@ -18237,9 +18109,8 @@ msgstr "Lapis baru dibuat."
 
 #: ../src/ui/dialog/layers.cpp:473
 #: ../src/ui/widget/layer-selector.cpp:596
-#, fuzzy
 msgid "Unhide layer"
-msgstr "Nama lapis:"
+msgstr "Tampilkan lapis"
 
 #: ../src/ui/dialog/layers.cpp:473
 #: ../src/ui/widget/layer-selector.cpp:596
@@ -18319,38 +18190,32 @@ msgid "Empty selection"
 msgstr "Pilihan kosong"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:314
-#, fuzzy
 msgid "Unknown effect"
-msgstr "Efek yang tidak dikenal dipakai"
+msgstr "Efek tidak dikenal"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:381
-#, fuzzy
 msgid "Create and apply path effect"
-msgstr "Mengelola, menyunting, dan menerapkan efek tapak"
+msgstr "Membuat dan menerapkan efek tapak"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:399
 msgid "Remove path effect"
 msgstr "Hapus efek tapak"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:415
-#, fuzzy
 msgid "Move path effect up"
-msgstr "Atur parameter Efek Jalur"
+msgstr "Pindah efek tapak keatas"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:431
-#, fuzzy
 msgid "Move path effect down"
-msgstr "Atur parameter Efek Jalur"
+msgstr "Pindah efek tapak kebawah"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:470
-#, fuzzy
 msgid "Activate path effect"
-msgstr "Hapus efek tapak"
+msgstr "Aktifkan efek tapak"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:470
-#, fuzzy
 msgid "Deactivate path effect"
-msgstr "Hapus efek tapak"
+msgstr "Matikan efek tapak"
 
 #: ../src/ui/dialog/memory.cpp:94
 msgid "Heap"
@@ -18433,9 +18298,8 @@ msgstr ""
 "%1$s."
 
 #: ../src/ui/dialog/print.cpp:145
-#, fuzzy
 msgid "Failed to set CairoRenderContext"
-msgstr "Ubah lebar tapak jadi 1:"
+msgstr "Gagal mengatur CairoRenderContext"
 
 #. set up dialog title, based on document name
 #: ../src/ui/dialog/print.cpp:185
@@ -18480,9 +18344,8 @@ msgid "Set SVG Font attribute"
 msgstr "Pilih atribut huruf SVG"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:178
-#, fuzzy
 msgid "Adjust kerning value"
-msgstr "Nilai Y dari bagian bawah"
+msgstr "Mengatur angka kerning"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:368
 msgid "Family Name:"
@@ -18493,21 +18356,18 @@ msgid "Set width:"
 msgstr "Tetapkan lebar:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:437
-#, fuzzy
 msgid "glyph"
-msgstr "Hapus glif"
+msgstr "glif"
 
 #. SPGlyph* glyph =
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:469
-#, fuzzy
 msgid "Add glyph"
-msgstr "Hapus glif"
+msgstr "Tambah glif"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:485
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:530
-#, fuzzy
 msgid "Select a <b>path</b> to define the curves of a glyph"
-msgstr "Pilih satu <b>objek</b> untuk di clone"
+msgstr "Pilih satu <b>tapak</b> untuk mendifinisikan kurva tapak"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:493
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:538
@@ -18527,12 +18387,11 @@ msgstr "Membuat kurva segmen"
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:578
 #, fuzzy
 msgid "Reset missing-glyph"
-msgstr "\\begin_header tidak ada"
+msgstr "Sunting nama glif"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:594
-#, fuzzy
 msgid "Edit glyph name"
-msgstr "Warna nama hari satu minggu"
+msgstr "Sunting nama glif"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:608
 #, fuzzy
@@ -18548,14 +18407,12 @@ msgid "Remove glyph"
 msgstr "Hapus glyph"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:654
-#, fuzzy
 msgid "Remove kerning pair"
-msgstr "Kerning horisontal (px)"
+msgstr "Hapus pasangan kerning"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:664
-#, fuzzy
 msgid "Missing Glyph:"
-msgstr "Hapus glif"
+msgstr "Glif hilang:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:668
 msgid "From selection..."
@@ -18571,9 +18428,8 @@ msgid "Glyph name"
 msgstr "Nama Glif"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:682
-#, fuzzy
 msgid "Matching string"
-msgstr "String ditemukan!"
+msgstr "String sesuai"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:685
 msgid "Add Glyph"
@@ -18585,15 +18441,13 @@ msgid "Get curves from selection..."
 msgstr "Hapus topeng dari pilihan"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:741
-#, fuzzy
 msgid "Add kerning pair"
-msgstr "Kerning horisontal (px)"
+msgstr "Tambah pasangan kerning"
 
 #. Kerning Setup:
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:749
-#, fuzzy
 msgid "Kerning Setup"
-msgstr "Tampilan bawaan setup"
+msgstr "Pengaturan Kerning"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:751
 msgid "1st Glyph:"
@@ -18608,24 +18462,20 @@ msgid "Add pair"
 msgstr "Tambah pasangan"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:768
-#, fuzzy
 msgid "First Unicode range"
-msgstr "Jangkah dan sampling"
+msgstr "Jangkauan Unicode pertama"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:769
-#, fuzzy
 msgid "Second Unicode range"
-msgstr "Jangkah dan sampling"
+msgstr "Jangkauan Unicode kedua"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:776
-#, fuzzy
 msgid "Kerning value:"
-msgstr "Akhir angka X"
+msgstr "Angka kerning:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:834
-#, fuzzy
 msgid "Set font family"
-msgstr "Teks: Ubah keluarga huruf"
+msgstr "Pilih keluarga huruf"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:843
 msgid "font"
@@ -18646,10 +18496,9 @@ msgstr "Pengaturan Global"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:887
 msgid "_Glyphs"
-msgstr ""
+msgstr "Glif"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:888
-#, fuzzy
 msgid "_Kerning"
 msgstr "Kerning"
 
@@ -18659,9 +18508,8 @@ msgid "Sample Text"
 msgstr "Contoh Teks"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:900
-#, fuzzy
 msgid "Preview Text:"
-msgstr "Teks-Otomatis:"
+msgstr "Pratampilan Teks:"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:252
@@ -18684,14 +18532,13 @@ msgid "Convert"
 msgstr "Konversi"
 
 #: ../src/ui/dialog/swatches.cpp:528
-#, fuzzy, c-format
+#, c-format
 msgid "Palettes directory (%s) is unavailable."
-msgstr "Direktori profil warna (%s) tidak tersedia."
+msgstr "Direktori palet warna (%s) tidak tersedia."
 
 #: ../src/ui/dialog/tile.cpp:349
-#, fuzzy
 msgid "Arrange in a grid"
-msgstr "Ukuran jaring pada arah X"
+msgstr "Rangkai dalam kisi"
 
 #: ../src/ui/dialog/tile.cpp:659
 msgid "_Rows:"
@@ -18785,7 +18632,6 @@ msgstr "Semprotkan dalam satu tapak"
 #. canny edge detection
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
 #: ../src/ui/dialog/tracedialog.cpp:430
-#, fuzzy
 msgid "Edge detection"
 msgstr "Deteksi sisi"
 
@@ -18822,9 +18668,8 @@ msgid "Invert image"
 msgstr "kstrak Gambar"
 
 #: ../src/ui/dialog/tracedialog.cpp:488
-#, fuzzy
 msgid "Invert black and white regions"
-msgstr "meniru penutup kartun dengan warna hitam putih"
+msgstr "Balik daerah hitam dan putih"
 
 #. # end single scan
 #. # begin multiple scan
@@ -18904,9 +18749,8 @@ msgstr "Mode"
 #. ## begin option page
 #. # potrace parameters
 #: ../src/ui/dialog/tracedialog.cpp:569
-#, fuzzy
 msgid "Suppress speckles"
-msgstr "Hamparan warna seperti marmer"
+msgstr "Hilangkan bintik"
 
 #: ../src/ui/dialog/tracedialog.cpp:571
 msgid "Ignore small spots (speckles) in the bitmap"
@@ -18929,9 +18773,8 @@ msgid "Increase this to smooth corners more"
 msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:599
-#, fuzzy
 msgid "Optimize paths"
-msgstr "%s <b>%d</b> dari <b>%d</b> tapak diringkas.."
+msgstr "Tapak optimal"
 
 #: ../src/ui/dialog/tracedialog.cpp:602
 msgid "Try to optimize paths by joining adjacent Bezier curve segments"
@@ -19153,9 +18996,8 @@ msgid "Edit transformation matrix"
 msgstr "Sunting matriks transformasi"
 
 #: ../src/ui/tool/curve-drag-point.cpp:100
-#, fuzzy
 msgid "Drag curve"
-msgstr "Nodal kurva"
+msgstr "Sesret kurva"
 
 #: ../src/ui/tool/curve-drag-point.cpp:157
 msgid "Add node"
@@ -19164,7 +19006,7 @@ msgstr "Tambah nodal"
 #: ../src/ui/tool/curve-drag-point.cpp:167
 msgctxt "Path segment tip"
 msgid "<b>Shift</b>: click to toggle segment selection"
-msgstr ""
+msgstr "<b>Shift</b>: klik untuk merubah pilihan segmen"
 
 #: ../src/ui/tool/curve-drag-point.cpp:171
 msgctxt "Path segment tip"
@@ -19174,17 +19016,16 @@ msgstr "<b>Ctrl+Alt</b>: klik untuk menyisipkan nodal"
 #: ../src/ui/tool/curve-drag-point.cpp:175
 msgctxt "Path segment tip"
 msgid "<b>Linear segment</b>: drag to convert to a Bezier segment, doubleclick to insert node, click to select (more: Shift, Ctrl+Alt)"
-msgstr ""
+msgstr "<b>Segmen Linier</b>: seret untuk mengubah ke segmen Bezier, klik ganda untuk menyisipkan nodal, klik untuk memilih (tambah lagi: Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/curve-drag-point.cpp:179
 msgctxt "Path segment tip"
 msgid "<b>Bezier segment</b>: drag to shape the segment, doubleclick to insert node, click to select (more: Shift, Ctrl+Alt)"
-msgstr ""
+msgstr "<b>Segmen Besier</b>: seret untuk mengubah segmen, klik ganda untuk menyisipkan nodal, klik untuk memilih (tambah lagi: Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:317
-#, fuzzy
 msgid "Retract handles"
-msgstr "Tampilkan Handle"
+msgstr "Tarik Handel"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:317
 #: ../src/ui/tool/node.cpp:247
@@ -19204,9 +19045,8 @@ msgid "Add nodes"
 msgstr "Tambah nodal"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:340
-#, fuzzy
 msgid "Duplicate nodes"
-msgstr "Tambahkan Nodal"
+msgstr "Gandakan nodal"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:402
 #: ../src/widgets/toolbox.cpp:1371
@@ -19275,7 +19115,7 @@ msgstr "Gulingkan nodal secara vertikal"
 #: ../src/ui/tool/node-tool.cpp:554
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection, click to toggle object selection"
-msgstr ""
+msgstr "<b>Shift</b>: seret untuk menambah nodal ke pilihan, klik untuk melepas pilihan"
 
 #: ../src/ui/tool/node-tool.cpp:558
 msgctxt "Node tool tip"
@@ -19350,23 +19190,23 @@ msgstr "tambah: Ctrl, Alt"
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Shift+Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments while rotating both handles"
-msgstr ""
+msgstr "<b>Shift+Ctrl+Alt</b>: mempertahankan panjang dan kancingan rotasi sudut ke pertambahan %g° sementara memutar kedua handel"
 
 #: ../src/ui/tool/node.cpp:413
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"
-msgstr ""
+msgstr "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"
 
 #: ../src/ui/tool/node.cpp:419
 msgctxt "Path handle tip"
 msgid "<b>Shift+Alt</b>: preserve handle length and rotate both handles"
-msgstr ""
+msgstr "<b>Shift+Alt</b>: mempertahankan panjang panjang handel dan memutar kedua handel"
 
 #: ../src/ui/tool/node.cpp:422
 msgctxt "Path handle tip"
 msgid "<b>Alt</b>: preserve handle length while dragging"
-msgstr ""
+msgstr "<b>Alt</b>: mempertahankan panjang handel sementara menyeret"
 
 #: ../src/ui/tool/node.cpp:429
 #, c-format
@@ -19375,16 +19215,15 @@ msgid "<b>Shift+Ctrl</b>: snap rotation angle to %g° increments and rotate both
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:433
-#, c-format
+#, fuzzy, c-format
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
-msgstr ""
+msgstr "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"
 
 #: ../src/ui/tool/node.cpp:438
-#, fuzzy
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: rotate both handles by the same angle"
-msgstr "<b>Shift</b>: menggambar dengan posisi awal pointer sebagai titik tengah"
+msgstr "<b>Shift</b>: memutar kedua handel dengan sudut dama"
 
 #: ../src/ui/tool/node.cpp:445
 #, c-format
@@ -19405,16 +19244,15 @@ msgid "Move handle by %s, %s; angle %.2f°, length %s"
 msgstr "Pindah handel sebesar %s, %s; sudut %.2f°, panjang %s"
 
 #: ../src/ui/tool/node.cpp:1204
-#, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
-msgstr "<b>Shift</b>: menggambar dengan posisi awal pointer sebagai titik tengah"
+msgstr "<b>Shift</b>: menyeret handel, klik untuk merubah pilihan"
 
 #: ../src/ui/tool/node.cpp:1206
 #, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: click to toggle selection"
-msgstr "<b>Shift</b>: seret dan menambah nodal pada pilihan obyek"
+msgstr "<b>Shift</b>: klik untuk merubah pilihan segmen"
 
 #: ../src/ui/tool/node.cpp:1211
 msgctxt "Path node tip"
@@ -19479,9 +19317,8 @@ msgid "Delete node"
 msgstr "Hapus nodal"
 
 #: ../src/ui/tool/path-manipulator.cpp:1291
-#, fuzzy
 msgid "Cycle node type"
-msgstr "Ganti tipe nodal"
+msgstr "Putar tipe nodal"
 
 #: ../src/ui/tool/path-manipulator.cpp:1306
 msgid "Drag handle"
@@ -19492,16 +19329,14 @@ msgid "Retract handle"
 msgstr "Handel tarik"
 
 #: ../src/ui/tool/transform-handle-set.cpp:160
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift+Ctrl</b>: scale uniformly about the rotation center"
-msgstr "<b>Shift</b>: menggambar dengan posisi awal pointer sebagai titik tengah"
+msgstr "<b>Shift+Ctrl</b>: menskalakan sama dari pusat rotasi"
 
 #: ../src/ui/tool/transform-handle-set.cpp:162
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl:</b> scale uniformly"
-msgstr "Skalakan nodal secara sama"
+msgstr "<b>Ctrl:</b> skala sama"
 
 #: ../src/ui/tool/transform-handle-set.cpp:167
 msgctxt "Transform handle tip"
@@ -19512,7 +19347,7 @@ msgstr ""
 #, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: scale from the rotation center"
-msgstr "Kancingkan dari dan ke pusat rotasi dari obyek"
+msgstr "<b>Shift+Ctrl</b>: menskalakan sama dari pusat rotasi"
 
 #: ../src/ui/tool/transform-handle-set.cpp:172
 msgctxt "Transform handle tip"
@@ -19526,10 +19361,10 @@ msgid "<b>Scale handle</b>: drag to scale the selection"
 msgstr "<b>Shift</b>: seret dan menambah nodal pada pilihan obyek"
 
 #: ../src/ui/tool/transform-handle-set.cpp:179
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "Scale by %.2f%% x %.2f%%"
-msgstr "> dan < di skala pada"
+msgstr "Skala pada %.2f%% x %.2f%%"
 
 #: ../src/ui/tool/transform-handle-set.cpp:374
 #, c-format
@@ -19538,16 +19373,15 @@ msgid "<b>Shift+Ctrl</b>: rotate around the opposite corner and snap angle to %f
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:377
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: rotate around the opposite corner"
-msgstr "<b>Shift</b>: menggambar dengan posisi awal pointer sebagai titik tengah"
+msgstr "<b>Shift</b>: memutar di sekitar sudut berlawanan"
 
 #: ../src/ui/tool/transform-handle-set.cpp:381
-#, c-format
+#, fuzzy, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap angle to %f° increments"
-msgstr ""
+msgstr "<b>Gradiasi</b> untuk %d obyek; dengan <b>Ctrl</b> untuk mengancing sudut"
 
 #: ../src/ui/tool/transform-handle-set.cpp:383
 msgctxt "Transform handle tip"
@@ -19568,10 +19402,9 @@ msgid "<b>Shift+Ctrl</b>: skew about the rotation center with snapping to %f° i
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:485
-#, fuzzy
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: skew about the rotation center"
-msgstr "<b>Shift</b>: menggambar dengan posisi awal pointer sebagai titik tengah"
+msgstr "<b>Shift</b>: mencondongkan disekitar pusat rotasi"
 
 #: ../src/ui/tool/transform-handle-set.cpp:489
 #, c-format
@@ -19585,16 +19418,16 @@ msgid "<b>Skew handle</b>: drag to skew (shear) selection about the opposite han
 msgstr ""
 
 #: ../src/ui/tool/transform-handle-set.cpp:498
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "Skew horizontally by %.2f°"
-msgstr "Geser horisontal berdasarkan piksel"
+msgstr "Condong horisontal dengan %.2f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:501
-#, fuzzy, c-format
+#, c-format
 msgctxt "Transform handle tip"
 msgid "Skew vertically by %.2f°"
-msgstr "Geser vertikal berdasarkan piksel"
+msgstr "Condong vertikal dengan %.2f°"
 
 #: ../src/ui/tool/transform-handle-set.cpp:558
 msgctxt "Transform handle tip"
@@ -19602,18 +19435,16 @@ msgid "<b>Rotation center</b>: drag to change the origin of transforms"
 msgstr ""
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:25
-#, fuzzy
 msgid "_Blend mode:"
-msgstr "Mode menggambar"
+msgstr "Mode Campuran:"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
 msgid "_Blur:"
 msgstr "Kab_ur:"
 
 #: ../src/ui/widget/layer-selector.cpp:115
-#, fuzzy
 msgid "Toggle current layer visibility"
-msgstr "Cari hanya di _lapis ini"
+msgstr "Ganti visibilitas lapis ini"
 
 #: ../src/ui/widget/layer-selector.cpp:136
 msgid "Lock or unlock current layer"
@@ -19624,34 +19455,30 @@ msgid "Current layer"
 msgstr "Lapis sekarang"
 
 #: ../src/ui/widget/layer-selector.cpp:567
-#, fuzzy
 msgid "(root)"
-msgstr "Sisipan akar"
+msgstr "(akar)"
 
 #: ../src/ui/widget/licensor.cpp:36
 msgid "Proprietary"
 msgstr "Hak kepemilikan"
 
 #: ../src/ui/widget/licensor.cpp:39
-#, fuzzy
 msgid "MetadataLicence|Other"
-msgstr "Atribut Lain"
+msgstr "Lainnya"
 
 #: ../src/ui/widget/object-composite-settings.cpp:63
 msgid "_Opacity (%):"
 msgstr "_Opasitas (%):"
 
 #: ../src/ui/widget/object-composite-settings.cpp:174
-#, fuzzy
 msgid "Change blur"
-msgstr "Tinggi Pengaburan"
+msgstr "Ubah pengaburan"
 
 #: ../src/ui/widget/object-composite-settings.cpp:214
 #: ../src/ui/widget/selected-style.cpp:858
 #: ../src/ui/widget/selected-style.cpp:1152
-#, fuzzy
 msgid "Change opacity"
-msgstr "Waktu animasi perubahan opasitas: "
+msgstr "Ubah opasitas"
 
 #: ../src/ui/widget/page-sizer.cpp:231
 msgid "U_nits:"
@@ -19731,9 +19558,8 @@ msgid "Resize the page to fit the current selection, or the entire drawing if th
 msgstr "Atur halaman untuk menyesuaikan dengan pilihan isi, atau seluruh gambar yang ada jika tidak ada pilihan"
 
 #: ../src/ui/widget/page-sizer.cpp:426
-#, fuzzy
 msgid "Set page size"
-msgstr "Otomatis menentukan ukuran dan posisi"
+msgstr "Pilih ukuran halaman"
 
 #: ../src/ui/widget/panel.cpp:111
 msgid "List"
@@ -19953,9 +19779,8 @@ msgstr "Sapuan berbeda"
 #: ../src/ui/widget/selected-style.cpp:516
 #: ../src/ui/widget/style-swatch.cpp:303
 #: ../src/widgets/fill-style.cpp:683
-#, fuzzy
 msgid "Unset stroke"
-msgstr "Lebar sapuan"
+msgstr "Lepaskan sapuan"
 
 #: ../src/ui/widget/selected-style.cpp:203
 msgid "Flat color fill"
@@ -20034,14 +19859,12 @@ msgstr "Tukar warna sapuan dan isian"
 #: ../src/ui/widget/selected-style.cpp:253
 #: ../src/ui/widget/selected-style.cpp:525
 #: ../src/ui/widget/selected-style.cpp:534
-#, fuzzy
 msgid "Make fill opaque"
-msgstr "Warna isi, Biru"
+msgstr "Membuat isian buram"
 
 #: ../src/ui/widget/selected-style.cpp:253
-#, fuzzy
 msgid "Make stroke opaque"
-msgstr "Ketebalan sapuan, px"
+msgstr "Membuat sapuan buram"
 
 #: ../src/ui/widget/selected-style.cpp:262
 #: ../src/ui/widget/selected-style.cpp:482
@@ -20282,9 +20105,8 @@ msgstr "Tidak bisa menempatkan sebelum lapis pertama"
 #: ../src/verbs.cpp:1263
 #: ../src/verbs.cpp:1295
 #: ../src/verbs.cpp:1301
-#, fuzzy
 msgid "No current layer."
-msgstr "Beri nama lain pada lapis yang sekarang"
+msgstr "Nomor lapis ini."
 
 #: ../src/verbs.cpp:1195
 #: ../src/verbs.cpp:1199
@@ -20325,15 +20147,13 @@ msgid "%s copy"
 msgstr "%s salin"
 
 #: ../src/verbs.cpp:1258
-#, fuzzy
 msgid "Duplicate layer"
-msgstr "Gandakan Lapis Ini"
+msgstr "Gandakan Lapis"
 
 #. TRANSLATORS: this means "The layer has been duplicated."
 #: ../src/verbs.cpp:1261
-#, fuzzy
 msgid "Duplicated layer."
-msgstr "Nama lapis:"
+msgstr "Lapis digandakan."
 
 #: ../src/verbs.cpp:1290
 msgid "Delete layer"
@@ -20347,16 +20167,15 @@ msgstr "Lapis dihapus."
 #: ../src/verbs.cpp:1304
 #, fuzzy
 msgid "Toggle layer solo"
-msgstr "Membuat lapis baru"
+msgstr "Ganti visibilitas lapis ini"
 
 #: ../src/verbs.cpp:1365
 msgid "Flip horizontally"
 msgstr "Balik horisontal"
 
 #: ../src/verbs.cpp:1370
-#, fuzzy
 msgid "Flip vertically"
-msgstr "Membalik nodal secara vertikal"
+msgstr "Guling secara vertikal"
 
 #. TRANSLATORS: If you have translated the tutorial-basic.en.svgz file to your language,
 #. then translate this string as "tutorial-basic.LANG.svgz" (where LANG is your language
@@ -20412,20 +20231,17 @@ msgstr "Lepas kunci semua obyek di semua lapis"
 
 #: ../src/verbs.cpp:2206
 #: ../src/verbs.cpp:2733
-#, fuzzy
 msgid "Unhide all objects in the current layer"
-msgstr "Lepas kunci semua obyek di lapis sekarang"
+msgstr "Tampilkan semua obyek di lapis sekarang"
 
 #: ../src/verbs.cpp:2210
 #: ../src/verbs.cpp:2735
-#, fuzzy
 msgid "Unhide all objects in all layers"
-msgstr "Lepas kunci semua obyek di semua lapis"
+msgstr "Tampilkan semua obyek di semua lapis"
 
 #: ../src/verbs.cpp:2225
-#, fuzzy
 msgid "Does nothing"
-msgstr "<b>Tidak ada</b> dipilih"
+msgstr "Tidak mengerjakan sesuatu"
 
 #: ../src/verbs.cpp:2228
 msgid "Create new document from the default template"
@@ -20714,8 +20530,9 @@ msgid "Objects to _Marker"
 msgstr "Obyek ke Tanda"
 
 #: ../src/verbs.cpp:2307
+#, fuzzy
 msgid "Convert selection to a line marker"
-msgstr ""
+msgstr "Pilih <b>obyek</b> untuk merubah menjadi tanda."
 
 #: ../src/verbs.cpp:2308
 msgid "Objects to Gu_ides"
@@ -20774,14 +20591,12 @@ msgid "Invert selection (unselect what is selected and select everything else)"
 msgstr "Membalik pilihan (melepas semua yang dipilih dan memilih yang belum dipilih)"
 
 #: ../src/verbs.cpp:2322
-#, fuzzy
 msgid "Invert in All Layers"
-msgstr "Pilih di semua lapis"
+msgstr "Balik Semua Lapis"
 
 #: ../src/verbs.cpp:2323
-#, fuzzy
 msgid "Invert selection in all visible and unlocked layers"
-msgstr "Pilih semua obyek dari semua lapis yang tampak dan tidak terkunci"
+msgstr "Ubah pilihan di semua lapis yang tampak dan tidak terkunci"
 
 #: ../src/verbs.cpp:2324
 msgid "Select Next"
@@ -20816,9 +20631,8 @@ msgid "Create four guides aligned with the page borders"
 msgstr "Mrmbuat empat garis panduan sejajar dengan batas halaman"
 
 #: ../src/verbs.cpp:2332
-#, fuzzy
 msgid "Next path effect parameter"
-msgstr "Tampilkan parameter efek tapak yang bisa disunting berikutnya"
+msgstr "Parameter efek tapak berikutnya"
 
 #: ../src/verbs.cpp:2333
 msgid "Show next editable path effect parameter"
@@ -21156,9 +20970,8 @@ msgid "Lower the current layer"
 msgstr "Turunkan lapis yang sekarang satu tingkat kebawah"
 
 #: ../src/verbs.cpp:2440
-#, fuzzy
 msgid "D_uplicate Current Layer"
-msgstr "Beri nama lain pada lapis yang sekarang"
+msgstr "Salin Lapis Sekarang"
 
 #: ../src/verbs.cpp:2441
 msgid "Duplicate an existing layer"
@@ -21569,7 +21382,7 @@ msgstr "Perkecil"
 
 #: ../src/verbs.cpp:2573
 msgid "_Rulers"
-msgstr ""
+msgstr "Penggaris"
 
 #: ../src/verbs.cpp:2573
 #, fuzzy
@@ -21783,7 +21596,7 @@ msgstr "Sunting warna obyek, gradiasi, lebar sapuan, ujung panah, pola garis..."
 
 #: ../src/verbs.cpp:2633
 msgid "Glyphs..."
-msgstr ""
+msgstr "Glif..."
 
 #: ../src/verbs.cpp:2634
 #, fuzzy
@@ -21927,10 +21740,9 @@ msgstr "S_emua Lapis..."
 
 #: ../src/verbs.cpp:2675
 msgid "View Layers"
-msgstr "Tampilkan semua lapis yang ada"
+msgstr "Tampilkan semua lapis"
 
 #: ../src/verbs.cpp:2676
-#, fuzzy
 msgid "Path E_ffect Editor..."
 msgstr "Penyunting Efek Tapak..."
 
@@ -22079,19 +21891,16 @@ msgid "Repeat the last extension with new settings"
 msgstr "Ulangi ekstensi terakhir dengan pengaturan baru"
 
 #: ../src/verbs.cpp:2722
-#, fuzzy
 msgid "Fit the page to the current selection"
-msgstr "Batasi pencarian hanya pada obyek yang dipilih saja"
+msgstr "Sesuaikan halaman untuk pilihan ini"
 
 #: ../src/verbs.cpp:2724
-#, fuzzy
 msgid "Fit the page to the drawing"
-msgstr "Sesuaikan Halaman untuk Pilihan"
+msgstr "Sesuaikan halaman untuk gambar"
 
 #: ../src/verbs.cpp:2726
-#, fuzzy
 msgid "Fit the page to the current selection or the drawing if there is no selection"
-msgstr "Atur halaman untuk menyesuaikan dengan pilihan isi, atau seluruh gambar yang ada jika tidak ada pilihan"
+msgstr "Sesuaikan halaman untuk pilihan ini, atau gambar jika tidak ada pilihan"
 
 #. LockAndHide
 #: ../src/verbs.cpp:2728
@@ -22294,11 +22103,11 @@ msgstr ""
 
 #: ../src/widgets/gradient-selector.cpp:178
 msgid "reflected"
-msgstr ""
+msgstr "dipantulkan"
 
 #: ../src/widgets/gradient-selector.cpp:182
 msgid "direct"
-msgstr ""
+msgstr "langsung"
 
 #: ../src/widgets/gradient-selector.cpp:190
 msgid "Repeat:"
@@ -22480,7 +22289,7 @@ msgstr "Cat tidak didefinisikan"
 
 #: ../src/widgets/paint-selector.cpp:1015
 msgid "Use the <b>Node tool</b> to adjust position, scale, and rotation of the pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new pattern from selection."
-msgstr ""
+msgstr "Gunakan <b>Alat nodal</b> untuk mengatur psosisi, skala, dan rotasi obyek pada kanvas. Gunakan <b>Obyek &gt; Pola &gt; Obyek ke Pola</b> untuk membuat pola baru dari pilihan."
 
 #: ../src/widgets/paint-selector.cpp:1103
 #, fuzzy
@@ -22494,35 +22303,35 @@ msgstr "pilih toolbar|posisi X"
 
 #: ../src/widgets/select-toolbar.cpp:306
 msgid "Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."
-msgstr ""
+msgstr "Sekarang <b>lebar sapuan</b> akan <b>diskalakan</b> ketika obyek diskalakan."
 
 #: ../src/widgets/select-toolbar.cpp:308
 msgid "Now <b>stroke width</b> is <b>not scaled</b> when objects are scaled."
-msgstr ""
+msgstr "Sekarang <b>lebar sapuan</b> akan <b>tidak diskala</b> jika obyek diskalalakan."
 
 #: ../src/widgets/select-toolbar.cpp:319
 msgid "Now <b>rounded rectangle corners</b> are <b>scaled</b> when rectangles are scaled."
-msgstr ""
+msgstr "Sekarang <b>bulatan sudut runcing</b> akan <b>diskalakan</b> jika segiempat diskalakan."
 
 #: ../src/widgets/select-toolbar.cpp:321
 msgid "Now <b>rounded rectangle corners</b> are <b>not scaled</b> when rectangles are scaled."
-msgstr ""
+msgstr "Sekarang <b>bulatan sudut runcing</b> tidak <b>diskalakan</b> jika segiempat diskalakan."
 
 #: ../src/widgets/select-toolbar.cpp:332
 msgid "Now <b>gradients</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Sekarang <b>gradiasi</b> akan <b>dipinah</b> sepanjang obyeknya jika obyek dipindah (digeser, diskalakan, diputar, atau dicondongkan)."
 
 #: ../src/widgets/select-toolbar.cpp:334
 msgid "Now <b>gradients</b> remain <b>fixed</b> when objects are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Sekarang <b>gradiasi</b> tetap <b>ditempat</b> jika obyek dipindah (digeser, diskalakan, diputar, atau dcondongkan)."
 
 #: ../src/widgets/select-toolbar.cpp:345
 msgid "Now <b>patterns</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Sekarang <b>pola</b> akan <b>dipindah</b> sepanjang obyeknya jika obyek dipindah (digeser, diskalakan, diputar, atau dicondongkan)."
 
 #: ../src/widgets/select-toolbar.cpp:347
 msgid "Now <b>patterns</b> remain <b>fixed</b> when objects are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Sekarang <b>pola</b> tetap <b>ditempat</b> jika obyek dipindah (digeser, diskalakan, diputar, atau dicondongkan)."
 
 #. four spinbuttons
 #: ../src/widgets/select-toolbar.cpp:460
@@ -22734,9 +22543,8 @@ msgid "Color Managed"
 msgstr "Warna yang dikelola"
 
 #: ../src/widgets/sp-color-notebook.cpp:347
-#, fuzzy
 msgid "Out of gamut!"
-msgstr "Menandai warna diluar gamut"
+msgstr "Diluar gamut!"
 
 #: ../src/widgets/sp-color-notebook.cpp:355
 msgid "Too much ink!"
@@ -22780,14 +22588,12 @@ msgid "Value"
 msgstr "Ukuran"
 
 #: ../src/widgets/sp-xmlview-content.cpp:170
-#, fuzzy
 msgid "Type text in a text node"
-msgstr "Buat node teks baru"
+msgstr "Tulis teks di nodal teks"
 
 #: ../src/widgets/stroke-style.cpp:504
-#, fuzzy
 msgid "Set markers"
-msgstr "Awal garis:"
+msgstr "Pilih penanda"
 
 #: ../src/widgets/stroke-style.cpp:692
 msgctxt "Stroke width"
@@ -22886,9 +22692,8 @@ msgstr "Tanda akhir garis pada nodal terakhir dari tapak atau bentuk"
 
 #: ../src/widgets/stroke-style.cpp:1216
 #: ../src/widgets/stroke-style.cpp:1313
-#, fuzzy
 msgid "Set stroke style"
-msgstr "Pilih gaya teks"
+msgstr "Pilih gaya sapuan"
 
 #: ../src/widgets/swatch-selector.cpp:139
 #, fuzzy
@@ -22901,7 +22706,6 @@ msgid "Color/opacity used for color tweaking"
 msgstr "Warna untuk garis kisi normal"
 
 #: ../src/widgets/toolbox.cpp:215
-#, fuzzy
 msgid "Style of new stars"
 msgstr "Gaya bintang baru"
 
@@ -22914,14 +22718,12 @@ msgid "Style of new 3D boxes"
 msgstr "Gaya dari kotak 3D baru"
 
 #: ../src/widgets/toolbox.cpp:221
-#, fuzzy
 msgid "Style of new ellipses"
 msgstr "Gaya elips baru"
 
 #: ../src/widgets/toolbox.cpp:223
-#, fuzzy
 msgid "Style of new spirals"
-msgstr "Gaya spiran baru"
+msgstr "Gaya spiral baru"
 
 #: ../src/widgets/toolbox.cpp:225
 msgid "Style of new paths created by Pencil"
@@ -22932,9 +22734,8 @@ msgid "Style of new paths created by Pen"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:229
-#, fuzzy
 msgid "Style of new calligraphic strokes"
-msgstr "Gaya dari kotak 3D baru"
+msgstr "Gaya sapuan kaligrafi baru"
 
 #: ../src/widgets/toolbox.cpp:231
 #: ../src/widgets/toolbox.cpp:233
@@ -23062,7 +22863,6 @@ msgid "Show path outline (without path effects)"
 msgstr "Tampilkan kerangka tapak (tanpa efek tapak)"
 
 #: ../src/widgets/toolbox.cpp:1518
-#, fuzzy
 msgid "Edit clipping paths"
 msgstr "Sunting tapak kliping"
 
@@ -23071,9 +22871,8 @@ msgid "Show clipping path(s) of selected object(s)"
 msgstr "Tampilkan tapak kliping dari obyek pilihan"
 
 #: ../src/widgets/toolbox.cpp:1529
-#, fuzzy
 msgid "Edit masks"
-msgstr "Sunting nodal"
+msgstr "Sunting topeng"
 
 #: ../src/widgets/toolbox.cpp:1530
 msgid "Show mask(s) of selected object(s)"
@@ -23306,9 +23105,8 @@ msgid "Base radius to tip radius ratio"
 msgstr "Rasio jejari dasar terhadap jejari ujung"
 
 #: ../src/widgets/toolbox.cpp:2962
-#, fuzzy
 msgid "stretched"
-msgstr "Diulang, diregang"
+msgstr "Diregang"
 
 #: ../src/widgets/toolbox.cpp:2962
 msgid "twisted"
@@ -23317,38 +23115,33 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:2962
 #, fuzzy
 msgid "slightly pinched"
-msgstr "Ada efek tekstur enamel yang sedikit retak"
+msgstr "sedikit bulatan"
 
 #: ../src/widgets/toolbox.cpp:2962
-#, fuzzy
 msgid "NOT rounded"
-msgstr "tanpa kelengkungan"
+msgstr "TANPA dibulatkan"
 
 #: ../src/widgets/toolbox.cpp:2962
-#, fuzzy
 msgid "slightly rounded"
-msgstr "tanpa kelengkungan"
+msgstr "sedikit bulatan"
 
 #: ../src/widgets/toolbox.cpp:2962
-#, fuzzy
 msgid "visibly rounded"
-msgstr "tanpa kelengkungan"
+msgstr "tampak bulatan"
 
 #: ../src/widgets/toolbox.cpp:2962
-#, fuzzy
 msgid "well rounded"
-msgstr "tanpa kelengkungan"
+msgstr "bulatan penuh"
 
 #: ../src/widgets/toolbox.cpp:2962
-#, fuzzy
 msgid "amply rounded"
-msgstr "tanpa kelengkungan"
+msgstr "bulatan besar"
 
 #: ../src/widgets/toolbox.cpp:2962
 #: ../src/widgets/toolbox.cpp:2977
 #, fuzzy
 msgid "blown up"
-msgstr "ketika tetikus naik"
+msgstr "Kern keatas"
 
 #: ../src/widgets/toolbox.cpp:2965
 msgid "Rounded"
@@ -23363,22 +23156,23 @@ msgid "How much rounded are the corners (0 for sharp)"
 msgstr "Seberapa besar kelengkungan sudut (0 untuk tajam)"
 
 #: ../src/widgets/toolbox.cpp:2977
-#, fuzzy
 msgid "NOT randomized"
-msgstr "tanpa kelengkungan"
+msgstr "TIDAK diacak"
 
 #: ../src/widgets/toolbox.cpp:2977
 #, fuzzy
 msgid "slightly irregular"
-msgstr "Ada efek tekstur enamel yang sedikit retak"
+msgstr "sedikit bulatan"
 
 #: ../src/widgets/toolbox.cpp:2977
+#, fuzzy
 msgid "visibly randomized"
-msgstr ""
+msgstr "TIDAK diacak"
 
 #: ../src/widgets/toolbox.cpp:2977
+#, fuzzy
 msgid "strongly randomized"
-msgstr ""
+msgstr "TIDAK diacak"
 
 #: ../src/widgets/toolbox.cpp:2980
 msgid "Randomized"
@@ -23525,14 +23319,12 @@ msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
 msgstr "Ubah garis proyeksi arah Z dengan 'terhingga' atau 'tak terhingga' (=sejajar)"
 
 #: ../src/widgets/toolbox.cpp:3746
-#, fuzzy
 msgid "Change spiral"
-msgstr "Membuat spiral"
+msgstr "Ubah spiral"
 
 #: ../src/widgets/toolbox.cpp:3885
-#, fuzzy
 msgid "just a curve"
-msgstr "Nodal kurva"
+msgstr "hanya satu kurva"
 
 #: ../src/widgets/toolbox.cpp:3885
 msgid "one full revolution"
@@ -23643,9 +23435,8 @@ msgid "Create a sequence of paraxial line segments"
 msgstr "Membuat garis lurus secara berurutan dan saling tegak lurus"
 
 #: ../src/widgets/toolbox.cpp:4019
-#, fuzzy
 msgid "Mode of new lines drawn by this tool"
-msgstr "Bentuk garis yang digambar dengan alat ini"
+msgstr "Mode menggambar garis baru dengan alat ini"
 
 #: ../src/widgets/toolbox.cpp:4048
 msgid "Triangle in"
@@ -23669,9 +23460,8 @@ msgid "Shape of new paths drawn by this tool"
 msgstr "Bentuk garis yang digambar dengan alat ini"
 
 #: ../src/widgets/toolbox.cpp:4160
-#, fuzzy
 msgid "(many nodes, rough)"
-msgstr "Kasar dan mengkilap"
+msgstr "(banyak nodal, kasar)"
 
 #: ../src/widgets/toolbox.cpp:4160
 #: ../src/widgets/toolbox.cpp:4268
@@ -23690,9 +23480,8 @@ msgid "(default)"
 msgstr "(bawaan)"
 
 #: ../src/widgets/toolbox.cpp:4160
-#, fuzzy
 msgid "(few nodes, smooth)"
-msgstr "Kaitkan ke node penghalusan"
+msgstr "(sedikit nodal, halus)"
 
 #: ../src/widgets/toolbox.cpp:4163
 msgid "Smoothing:"
@@ -23897,7 +23686,7 @@ msgstr "(kasar, disederhanakan)"
 
 #: ../src/widgets/toolbox.cpp:4493
 msgid "(fine, but many nodes)"
-msgstr ""
+msgstr "(halus, tetapi banyak nodal)"
 
 #: ../src/widgets/toolbox.cpp:4496
 msgid "Fidelity"
@@ -24088,7 +23877,7 @@ msgstr "Lebar pena kaligrafi (relatif terhadap area kanvas yang tampak)"
 #. Thinning
 #: ../src/widgets/toolbox.cpp:5105
 msgid "(speed blows up stroke)"
-msgstr ""
+msgstr "(sapuan cepat dengan hembusan)"
 
 #: ../src/widgets/toolbox.cpp:5105
 msgid "(slight widening)"
@@ -24105,7 +23894,7 @@ msgstr "(dedikit menyempit, bawaan)"
 #: ../src/widgets/toolbox.cpp:5105
 #, fuzzy
 msgid "(speed deflates stroke)"
-msgstr "Ketebalan sapuan, px"
+msgstr "(sapuan cepat dengan hembusan)"
 
 #: ../src/widgets/toolbox.cpp:5108
 msgid "Stroke Thinning"
@@ -24123,7 +23912,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:5121
 #, fuzzy
 msgid "(left edge up)"
-msgstr "ketika tetikus naik"
+msgstr "Sumber sisi kiri"
 
 #: ../src/widgets/toolbox.cpp:5121
 msgid "(horizontal)"
@@ -24132,7 +23921,7 @@ msgstr "(horisontal)"
 #: ../src/widgets/toolbox.cpp:5121
 #, fuzzy
 msgid "(right edge up)"
-msgstr "ketika tetikus naik"
+msgstr "Sumber sisi kanan"
 
 #: ../src/widgets/toolbox.cpp:5124
 msgid "Pen Angle"
@@ -24185,7 +23974,7 @@ msgstr "Kualitas (Bawaan = 16)"
 #: ../src/widgets/toolbox.cpp:5155
 #, fuzzy
 msgid "(slightly bulging)"
-msgstr "Bentuk menonjol, dengan lapisan warna tidak mengkilap"
+msgstr "sedikit bulatan"
 
 #: ../src/widgets/toolbox.cpp:5155
 #, fuzzy
@@ -24249,9 +24038,8 @@ msgid "(no wiggle)"
 msgstr "Getaran Pena"
 
 #: ../src/widgets/toolbox.cpp:5190
-#, fuzzy
 msgid "(slight deviation)"
-msgstr "Standar Deviasi:"
+msgstr "(sedikit deviasi)"
 
 #: ../src/widgets/toolbox.cpp:5190
 msgid "(wild waves and curls)"
@@ -24276,9 +24064,8 @@ msgid "(no inertia)"
 msgstr "Satuan"
 
 #: ../src/widgets/toolbox.cpp:5207
-#, fuzzy
 msgid "(slight smoothing, default)"
-msgstr "(dedikit menyempit, bawaan)"
+msgstr "(sedikit penghalusan, bawaan)"
 
 #: ../src/widgets/toolbox.cpp:5207
 msgid "(noticeable lagging)"
@@ -24295,7 +24082,7 @@ msgstr "Berat pena"
 
 #: ../src/widgets/toolbox.cpp:5210
 msgid "Mass:"
-msgstr ""
+msgstr "Massa:"
 
 #: ../src/widgets/toolbox.cpp:5211
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
@@ -24310,14 +24097,12 @@ msgid "Trace the lightness of the background by the width of the pen (white - mi
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5240
-#, fuzzy
 msgid "Use the pressure of the input device to alter the width of the pen"
-msgstr "Gunakan tekanan dari piranti masukan untuk merubah pakasaan dari aksi modifikasi"
+msgstr "Gunakan tekanan dari piranti masukan untuk merubah lebar pena"
 
 #: ../src/widgets/toolbox.cpp:5252
-#, fuzzy
 msgid "Tilt"
-msgstr "Miring [der]"
+msgstr "Miring"
 
 #: ../src/widgets/toolbox.cpp:5253
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
@@ -24455,12 +24240,10 @@ msgid "Display measuring info for selected items"
 msgstr "Tampilkan info pengukuran untuk obyek pilihan"
 
 #: ../src/widgets/toolbox.cpp:6050
-#, fuzzy
 msgid "Open LPE dialog"
 msgstr "Buka dialog LPE"
 
 #: ../src/widgets/toolbox.cpp:6051
-#, fuzzy
 msgid "Open LPE dialog (to adapt parameters numerically)"
 msgstr "Buka dialog LPE (untuk menyesuaikan parameter secara numerik)"
 
@@ -24798,7 +24581,7 @@ msgstr "Lengkungan:"
 
 #: ../src/widgets/toolbox.cpp:8217
 msgid "The amount of connectors curvature"
-msgstr "Ukura kelengkungan penghubung"
+msgstr "Ukuran kelengkungan penghubung"
 
 #: ../src/widgets/toolbox.cpp:8227
 msgid "Connector Spacing"
@@ -25419,7 +25202,7 @@ msgstr "Masukan DXF"
 
 #: ../share/extensions/dxf_input.inx.h:9
 msgid "Gcodetools compatible point import"
-msgstr ""
+msgstr "Impor titik kompatibel Gcodetools"
 
 #: ../share/extensions/dxf_input.inx.h:11
 msgid "Import AutoCAD's Document Exchange Format"
@@ -25743,13 +25526,12 @@ msgid "Y value of rectangle's top:"
 msgstr "Nilai Y dari kotak atas:"
 
 #: ../share/extensions/gears.inx.h:1
-#, fuzzy
 msgid "Circular pitch (tooth size):"
-msgstr "Diameter gigi (px):"
+msgstr "Diameter gigi (ukuran gigi):"
 
 #: ../share/extensions/gears.inx.h:2
 msgid "Diameter of center hole (0 for none):"
-msgstr ""
+msgstr "Diameter dari lubang tengah (0 untuk tidak ada):"
 
 #: ../share/extensions/gears.inx.h:3
 msgid "Gear"
@@ -25771,12 +25553,12 @@ msgstr "\"Membuat ofset area\": membuat beberapa tapak ofset Inkscape untuk meng
 #: ../share/extensions/gcodetools_all_in_one.inx.h:2
 #: ../share/extensions/gcodetools_orientation_points.inx.h:1
 msgid "2-points mode (move and rotate, maintained aspect ratio X/Y)"
-msgstr ""
+msgstr "Model 2-titik (geser dan putar, pertahankan aspek rasio X/Y)"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:3
 #: ../share/extensions/gcodetools_orientation_points.inx.h:2
 msgid "3-points mode (move, rotate and mirror, different X/Y scale)"
-msgstr ""
+msgstr "Model 3-titik (geser, putar dan cermin, perbedaan skala X/Y)"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:4
 #: ../share/extensions/gcodetools_area.inx.h:2
@@ -26077,9 +25859,8 @@ msgstr "Bidang Z:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:52
 #: ../share/extensions/gcodetools_dxf_points.inx.h:18
-#, fuzzy
 msgid "clear dxfpoint sign"
-msgstr "Hapus cara pintas yang sekarang"
+msgstr "Hapus tanda dxfpoint"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:53
 #: ../share/extensions/gcodetools_tools_library.inx.h:8
@@ -26103,9 +25884,8 @@ msgstr "Hapus"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:57
 #: ../share/extensions/gcodetools_tools_library.inx.h:11
-#, fuzzy
 msgid "lathe cutter"
-msgstr "Lebar mesin bubut:"
+msgstr "Alat potong bubut:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:58
 #: ../share/extensions/gcodetools_area.inx.h:32
@@ -27191,19 +26971,16 @@ msgid "This effect creates the standard \"Lorem Ipsum\" pseudolatin placeholder 
 msgstr "Efek ini membuat penempatan pseudolatin \"Lorem Ipsum\" standar. Apabila teks yang mengambang dipilih, Lorem Ipsum akan ditambahkan disitu; jika tidak ada, akan dibuat obyek teks baru yang berada pada lapis baru."
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
-#, fuzzy
 msgid "Assign alpha"
-msgstr "Gambar Alfa"
+msgstr "Terapkan alfa"
 
 #: ../share/extensions/markers_strokepaint.inx.h:2
-#, fuzzy
 msgid "Assign fill color"
-msgstr "Warna isi, Biru"
+msgstr "Terapkan warna isian"
 
 #: ../share/extensions/markers_strokepaint.inx.h:3
-#, fuzzy
 msgid "Assign stroke color"
-msgstr "Hapus warna sapuan"
+msgstr "Terapkan warna sapuan"
 
 #: ../share/extensions/markers_strokepaint.inx.h:4
 msgid "Color Markers"
@@ -27332,6 +27109,8 @@ msgid ""
 "Select a rectangle before calling the extension, it will determine X and Y scales.\n"
 "First derivatives are always determined numerically."
 msgstr ""
+"Pilih segiempat sebelum memanggil ekstensi, untuk menentukan skala X dan Y.\n"
+"Turunan pertama selalu dihitung secara numerik."
 
 #: ../share/extensions/param_curves.inx.h:22
 msgid "Start t-value:"
@@ -27566,18 +27345,16 @@ msgid "Draw back-facing polygons"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
-#, fuzzy
 msgid "Edge-Specified"
-msgstr "Sisi 3D"
+msgstr "Sisi dinyatakan"
 
 #: ../share/extensions/polyhedron_3d.inx.h:8
 msgid "Edges"
 msgstr "Sudut"
 
 #: ../share/extensions/polyhedron_3d.inx.h:9
-#, fuzzy
 msgid "Face-Specified"
-msgstr "Titik Suaian Dinyatakan Oleh:"
+msgstr "Permukaan Dinyatakan"
 
 #: ../share/extensions/polyhedron_3d.inx.h:10
 msgid "Faces"
@@ -27850,9 +27627,8 @@ msgid "Alphabet Soup"
 msgstr "Sabun Alfabet"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:2
-#, fuzzy
 msgid "Random Seed:"
-msgstr "Pohon acak"
+msgstr "Benih Acak:"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:5
 #: ../share/extensions/render_barcode_datamatrix.inx.h:6
@@ -27878,7 +27654,7 @@ msgstr "Tipe Barcode:"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:1
 msgid "Barcode - Datamatrix"
-msgstr "Kodekotak - Datamatrix"
+msgstr "Kodebalok - Datamatrix"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:2
 msgid "Cols:"
@@ -27898,12 +27674,11 @@ msgstr "Otomatis"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:2
 msgid "Barcode - QR Code"
-msgstr "Kodekotak - Kode QR"
+msgstr "Kodebalok - Kode QR"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:3
-#, fuzzy
 msgid "Error correction level:"
-msgstr "Tingkat (dengan kanal)"
+msgstr "Tingkat koreksi kesalahan:"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:5
 #, no-c-format
@@ -28085,9 +27860,8 @@ msgid "Enable viewboxing"
 msgstr "Mengkatifkan pengancingan"
 
 #: ../share/extensions/scour.inx.h:4
-#, fuzzy
 msgid "Group collapsing"
-msgstr " pada kelompok %s (%s)"
+msgstr "Menguraikan grup"
 
 #: ../share/extensions/scour.inx.h:6
 msgid "Indent"
@@ -28123,14 +27897,12 @@ msgid "Space"
 msgstr "Spasi Ruang"
 
 #: ../share/extensions/scour.inx.h:16
-#, fuzzy
 msgid "Strip xml prolog"
-msgstr "Flash XML Graphics (*.fxg)"
+msgstr "Hilangkan prolog xml"
 
 #: ../share/extensions/scour.inx.h:17
-#, fuzzy
 msgid "Style to xml"
-msgstr "Pilih <b>obyek</b> untuk dipasang gaya."
+msgstr "Gaya ke xml"
 
 #: ../share/extensions/scour.inx.h:18
 msgid "Tab"
@@ -28154,24 +27926,24 @@ msgstr ""
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
-msgstr "Buka berkas yang disimpan dalam editor gambar vektor sK1"
+msgstr "Buka berkas yang disimpan dalam penyunting grafik vektor sK1"
 
 #: ../share/extensions/sk1_input.inx.h:2
 #: ../share/extensions/sk1_output.inx.h:2
 msgid "sK1 vector graphics files (.sk1)"
-msgstr "Berkas sK1 vector graphics (.sk1)"
+msgstr "Berkas grafik vektor sK1 (.sk1)"
 
 #: ../share/extensions/sk1_input.inx.h:3
 msgid "sK1 vector graphics files input"
-msgstr "Masukan berkas vektor grafik sK1"
+msgstr "Masukan berkas grafik vektor sK1"
 
 #: ../share/extensions/sk1_output.inx.h:1
 msgid "File format for use in sK1 vector graphics editor"
-msgstr "Format berkas untuk digunakan dalam editor gambar vektor sK1"
+msgstr "Format berkas untuk digunakan dalam penyunting grafik vektor sK1"
 
 #: ../share/extensions/sk1_output.inx.h:3
 msgid "sK1 vector graphics files output"
-msgstr "Keluaran berkas vektor grafik sK1"
+msgstr "Keluaran berkas grafik vektor sK1"
 
 #: ../share/extensions/sk_input.inx.h:1
 msgid "A diagram created with the program Sketch"
@@ -28265,9 +28037,8 @@ msgid "Envelope"
 msgstr "Amplop"
 
 #: ../share/extensions/svg2fxg.inx.h:1
-#, fuzzy
 msgid "Adobe's XML Graphics file format"
-msgstr "Format berkas grafik yang populer untuk clipart"
+msgstr "Format berkas grafik Adobe XML"
 
 #: ../share/extensions/svg2fxg.inx.h:2
 msgid "FXG Output"
@@ -28555,14 +28326,12 @@ msgid "Pixel (fixed)"
 msgstr "Piksel (tetap)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:10
-#, fuzzy
 msgid "Set a layout group"
 msgstr "Atur grup tataletak"
 
 #: ../share/extensions/webslicer_create_group.inx.h:11
-#, fuzzy
 msgid "Slicer"
-msgstr "Buat persegi pemotong"
+msgstr "Pemotong"
 
 #: ../share/extensions/webslicer_create_group.inx.h:12
 msgid "Undefined (relative to non-floating content size)"
@@ -28642,7 +28411,6 @@ msgid "Layout disposition:"
 msgstr "perubahan rataletak:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:22
-#, fuzzy
 msgid "Left Floated Image"
 msgstr "Gambar Mengambang Kiri"
 
@@ -28691,12 +28459,10 @@ msgid "Quality:"
 msgstr "Kualitas:"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:35
-#, fuzzy
 msgid "Right Floated Image"
 msgstr "Gambar Mengambang Kanan"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:36
-#, fuzzy
 msgid "Tiled Background (on parent group)"
 msgstr "Latar (pada grup induk)"
 
@@ -28725,7 +28491,6 @@ msgid "Directory path to export:"
 msgstr "Direktori untuk ekspor:"
 
 #: ../share/extensions/webslicer_export.inx.h:4
-#, fuzzy
 msgid "Export layout pieces and HTML+CSS code"
 msgstr "Ekspor kepingan tataletak dan kode HTML+CSS"
 
@@ -28738,13 +28503,11 @@ msgid "All selected ones set an attribute in the last one"
 msgstr "Semua yang dipilih mengatur atribut pada yang terakhir"
 
 #: ../share/extensions/web-set-att.inx.h:2
-#, fuzzy
 msgid "Attribute to set:"
-msgstr "Atribut yang diatur"
+msgstr "Atribut diterapkan:"
 
 #: ../share/extensions/web-set-att.inx.h:3
 #: ../share/extensions/web-transmit-att.inx.h:3
-#, fuzzy
 msgid "Compatibility with previews code to this event:"
 msgstr "Kompatibilitas dengan kode pratampilan untuk even ini"
 
@@ -28793,14 +28556,12 @@ msgid "This effect sets one or more attributes in the second selected element, w
 msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:17
-#, fuzzy
 msgid "Value to set:"
-msgstr "Atribut yang diatur"
+msgstr "Angka diterapkan:"
 
 #: ../share/extensions/web-set-att.inx.h:19
-#, fuzzy
 msgid "When should the set be done:"
-msgstr "Kapan aturan dilakukan?"
+msgstr "Kapan aturan harus dilakukan:"
 
 #: ../share/extensions/web-set-att.inx.h:20
 #: ../share/extensions/web-transmit-att.inx.h:18
