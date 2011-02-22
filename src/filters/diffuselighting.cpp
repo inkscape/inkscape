@@ -245,7 +245,7 @@ sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Document *doc, Inksc
     /* TODO: Don't just clone, but create a new repr node and write all
      * relevant values _and children_ into it */
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(doc);
+        repr = object->getRepr()->duplicate(doc);
         //repr = doc->createElement("svg:feDiffuseLighting");
     }
     

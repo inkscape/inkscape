@@ -376,7 +376,7 @@ static void sp_root_remove_child(SPObject *object, Inkscape::XML::Node *child)
 {
     SPRoot *root = (SPRoot *) object;
 
-    if ( root->defs && SP_OBJECT_REPR(root->defs) == child ) {
+    if ( root->defs && (root->defs->getRepr() == child) ) {
         SPObject *iter = 0;
         // We search for first remaining <defs> node - it is not beautiful, but works
         for ( iter = object->firstChild() ; iter ; iter = iter->getNext() ) {

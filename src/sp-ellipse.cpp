@@ -168,7 +168,7 @@ sp_genericellipse_update_patheffect(SPLPEItem *lpeitem, bool write)
     sp_genericellipse_set_shape(shape);
 
     if (write) {
-        Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
+        Inkscape::XML::Node *repr = shape->getRepr();
         if ( shape->curve != NULL ) {
             gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
             repr->setAttribute("d", str);
@@ -187,9 +187,9 @@ static void sp_genericellipse_set_shape(SPShape *shape)
 {
     if (sp_lpe_item_has_broken_path_effect(SP_LPE_ITEM(shape))) {
         g_warning ("The ellipse shape has unknown LPE on it! Convert to path to make it editable preserving the appearance; editing it as ellipse will remove the bad LPE");
-        if (SP_OBJECT_REPR(shape)->attribute("d")) {
+        if (shape->getRepr()->attribute("d")) {
             // unconditionally read the curve from d, if any, to preserve appearance
-            Geom::PathVector pv = sp_svg_read_pathv(SP_OBJECT_REPR(shape)->attribute("d"));
+            Geom::PathVector pv = sp_svg_read_pathv(shape->getRepr()->attribute("d"));
             SPCurve *cold = new SPCurve(pv);
             shape->setCurveInsync( cold, TRUE);
             cold->unref();
@@ -364,12 +364,14 @@ static Inkscape::XML::Node *sp_genericellipse_write(SPObject *object, Inkscape::
         sp_repr_set_svg_double(repr, "sodipodi:rx", ellipse->rx.computed);
         sp_repr_set_svg_double(repr, "sodipodi:ry", ellipse->ry.computed);
 
-        if (SP_IS_ARC(ellipse))
-            sp_arc_set_elliptical_path_attribute(SP_ARC(object), SP_OBJECT_REPR(object));
+        if (SP_IS_ARC(ellipse)) {
+            sp_arc_set_elliptical_path_attribute(SP_ARC(object), object->getRepr());
+        }
     }
 
-    if (((SPObjectClass *) ge_parent_class)->write)
+    if (((SPObjectClass *) ge_parent_class)->write) {
         ((SPObjectClass *) ge_parent_class)->write(object, xml_doc, repr, flags);
+    }
 
     return repr;
 }

@@ -134,7 +134,7 @@ static void persp3d_build(SPObject *object, SPDocument *document, Inkscape::XML:
 static void persp3d_release(SPObject *object) {
     Persp3D *persp = SP_PERSP3D(object);
     delete persp->perspective_impl;
-    SP_OBJECT_REPR(object)->removeListenerByData(object);
+    object->getRepr()->removeListenerByData(object);
 }
 
 
@@ -244,10 +244,10 @@ Persp3D *persp3d_create_xml_element(SPDocument *document, Persp3DImpl *dup) {// 
     g_free (str);
 
     /* Append the new persp3d to defs */
-    SP_OBJECT_REPR(defs)->addChild(repr, NULL);
+    defs->getRepr()->addChild(repr, NULL);
     Inkscape::GC::release(repr);
 
-    return (Persp3D *) SP_OBJECT(defs)->get_child_by_repr (repr);
+    return reinterpret_cast<Persp3D *>( defs->get_child_by_repr(repr) );
 }
 
 Persp3D *persp3d_document_first_persp(SPDocument *document)
@@ -338,7 +338,7 @@ persp3d_toggle_VP (Persp3D *persp, Proj::Axis axis, bool set_undo) {
     //        On the other hand, vp_drag_sel_modified() would update all boxes;
     //        here we can confine ourselves to the boxes of this particular perspective.
     persp3d_update_box_reprs (persp);
-    SP_OBJECT(persp)->updateRepr(SP_OBJECT_WRITE_EXT);
+    persp->updateRepr(SP_OBJECT_WRITE_EXT);
     if (set_undo) {
         DocumentUndo::done(sp_desktop_document(inkscape_active_desktop()), SP_VERB_CONTEXT_3DBOX,
                            _("Toggle vanishing point"));
@@ -376,7 +376,7 @@ persp3d_rotate_VP (Persp3D *persp, Proj::Axis axis, double angle, bool alt_press
     persp->perspective_impl->tmat.set_infinite_direction (axis, a);
 
     persp3d_update_box_reprs (persp);
-    SP_OBJECT(persp)->updateRepr(SP_OBJECT_WRITE_EXT);
+    persp->updateRepr(SP_OBJECT_WRITE_EXT);
 }
 
 void
@@ -388,7 +388,7 @@ void
 persp3d_apply_affine_transformation (Persp3D *persp, Geom::Affine const &xform) {
     persp->perspective_impl->tmat *= xform;
     persp3d_update_box_reprs(persp);
-    SP_OBJECT(persp)->updateRepr(SP_OBJECT_WRITE_EXT);
+    persp->updateRepr(SP_OBJECT_WRITE_EXT);
 }
 
 gchar *
@@ -455,7 +455,7 @@ persp3d_update_box_reprs (Persp3D *persp) {
     if (persp_impl->boxes.empty())
         return;
     for (std::vector<SPBox3D *>::iterator i = persp_impl->boxes.begin(); i != persp_impl->boxes.end(); ++i) {
-        SP_OBJECT(*i)->updateRepr(SP_OBJECT_WRITE_EXT);
+        (*i)->updateRepr(SP_OBJECT_WRITE_EXT);
         box3d_set_z_orders(*i);
     }
 }
@@ -504,7 +504,7 @@ persp3d_absorb(Persp3D *persp1, Persp3D *persp2) {
 
     for (std::list<SPBox3D *>::iterator i = boxes_of_persp2.begin(); i != boxes_of_persp2.end(); ++i) {
         box3d_switch_perspectives((*i), persp2, persp1, true);
-        SP_OBJECT(*i)->updateRepr(SP_OBJECT_WRITE_EXT); // so that undo/redo can do its job properly
+        (*i)->updateRepr(SP_OBJECT_WRITE_EXT); // so that undo/redo can do its job properly
     }
 }
 
@@ -583,7 +583,7 @@ persp3d_print_all_selected() {
     for (std::list<Persp3D *>::iterator j = sel_persps.begin(); j != sel_persps.end(); ++j) {
         Persp3D *persp = SP_PERSP3D(*j);
         Persp3DImpl *persp_impl = persp->perspective_impl;
-        g_print ("  %s (%d):  ", SP_OBJECT_REPR(persp)->attribute("id"), persp->perspective_impl->my_counter);
+        g_print ("  %s (%d):  ", persp->getRepr()->attribute("id"), persp->perspective_impl->my_counter);
         for (std::vector<SPBox3D *>::iterator i = persp_impl->boxes.begin();
              i != persp_impl->boxes.end(); ++i) {
             g_print ("%d ", (*i)->my_counter);
@@ -596,7 +596,7 @@ persp3d_print_all_selected() {
 void print_current_persp3d(gchar *func_name, Persp3D *persp) {
     g_print ("%s: current_persp3d is now %s\n",
              func_name,
-             persp ? SP_OBJECT_REPR(persp)->attribute("id") : "NULL");
+             persp ? persp->getRepr()->attribute("id") : "NULL");
 }
 
 /*

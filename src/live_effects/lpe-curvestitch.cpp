@@ -163,7 +163,7 @@ LPECurveStitch::resetDefaults(SPItem * item)
     
     // calculate bounding box:  (isn't there a simpler way?)
     Piecewise<D2<SBasis> > pwd2;
-    std::vector<Geom::Path> temppath = sp_svg_read_pathv( SP_OBJECT_REPR(item)->attribute("inkscape:original-d"));
+    std::vector<Geom::Path> temppath = sp_svg_read_pathv( item->getRepr()->attribute("inkscape:original-d"));
     for (unsigned int i=0; i < temppath.size(); i++) {
         pwd2.concat( temppath[i].toPwSb() );
     }

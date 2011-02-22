@@ -422,7 +422,7 @@ PageSizer::setDim (double w, double h, bool changeList)
         // The origin for the user is in the lower left corner; this point should remain stationary when
         // changing the page size. The SVG's origin however is in the upper left corner, so we must compensate for this
         Geom::Translate const vert_offset(Geom::Point(0, (old_height - h)));
-		SP_GROUP(SP_ROOT(doc->root))->translateChildItems(vert_offset);
+        SP_GROUP(SP_ROOT(doc->root))->translateChildItems(vert_offset);
         DocumentUndo::done(doc, SP_VERB_NONE, _("Set page size"));
     }
 
@@ -538,8 +538,8 @@ PageSizer::fire_fit_canvas_to_selection_or_drawing()
     SPNamedView *nv;
     Inkscape::XML::Node *nv_repr;
     if ((doc = sp_desktop_document(SP_ACTIVE_DESKTOP))
-            && (nv = sp_document_namedview(doc, 0))
-            && (nv_repr = SP_OBJECT_REPR(nv))) {
+        && (nv = sp_document_namedview(doc, 0))
+        && (nv_repr = nv->getRepr())) {
         sp_repr_set_svg_double(nv_repr, "fit-margin-top", _marginTop.getValue());
         sp_repr_set_svg_double(nv_repr, "fit-margin-left", _marginLeft.getValue());
         sp_repr_set_svg_double(nv_repr, "fit-margin-right", _marginRight.getValue());

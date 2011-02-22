@@ -299,7 +299,7 @@ sp_feConvolveMatrix_write(SPObject *object, Inkscape::XML::Document *doc, Inksca
     /* TODO: Don't just clone, but create a new repr node and write all
      * relevant values into it */
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(doc);
+        repr = object->getRepr()->duplicate(doc);
     }
 
 

@@ -183,7 +183,7 @@ sp_offset_init(SPOffset *offset)
     new (&offset->_changed_connection) sigc::connection();
     new (&offset->_transformed_connection) sigc::connection();
     // set up the uri reference
-    offset->sourceRef = new SPUseReference(SP_OBJECT(offset));
+    offset->sourceRef = new SPUseReference(offset);
     offset->_changed_connection = offset->sourceRef->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_offset_href_changed), offset));
 }
 
@@ -457,7 +457,7 @@ sp_offset_set_shape(SPShape *shape)
         // it's also useless to compute the offset with a 0 radius
 
         //XML Tree being used directly here while it shouldn't be.
-        const char *res_d = SP_OBJECT(shape)->getRepr()->attribute("inkscape:original");
+        const char *res_d = shape->getRepr()->attribute("inkscape:original");
         if ( res_d ) {
             Geom::PathVector pv = sp_svg_read_pathv(res_d);
             SPCurve *c = new SPCurve(pv);
@@ -987,15 +987,16 @@ sp_offset_top_point (SPOffset * offset, Geom::Point *px)
 // the listening functions
 static void sp_offset_start_listening(SPOffset *offset,SPObject* to)
 {
-    if ( to == NULL )
+    if ( to == NULL ) {
         return;
+    }
 
     offset->sourceObject = to;
-    offset->sourceRepr = SP_OBJECT_REPR(to);
+    offset->sourceRepr = to->getRepr();
 
-    offset->_delete_connection = SP_OBJECT(to)->connectDelete(sigc::bind(sigc::ptr_fun(&sp_offset_delete_self), offset));
+    offset->_delete_connection = to->connectDelete(sigc::bind(sigc::ptr_fun(&sp_offset_delete_self), offset));
     offset->_transformed_connection = SP_ITEM(to)->connectTransformed(sigc::bind(sigc::ptr_fun(&sp_offset_move_compensate), offset));
-    offset->_modified_connection = SP_OBJECT(to)->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_offset_source_modified), offset));
+    offset->_modified_connection = to->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_offset_source_modified), offset));
 }
 
 static void sp_offset_quit_listening(SPOffset *offset)
@@ -1019,7 +1020,7 @@ sp_offset_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPOffset *offse
         SPItem *refobj = offset->sourceRef->getObject();
         if (refobj) sp_offset_start_listening(offset,refobj);
         offset->sourceDirty=true;
-        SP_OBJECT(offset)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        offset->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     }
 }
 
@@ -1052,8 +1053,8 @@ sp_offset_move_compensate(Geom::Affine const *mp, SPItem */*original*/, SPOffset
     item->transform *= compensate;
 
     // commit the compensation
-    item->doWriteTransform(SP_OBJECT_REPR(item), item->transform, &advertized_move);
-    SP_OBJECT(item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    item->doWriteTransform(item->getRepr(), item->transform, &advertized_move);
+    item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 static void
@@ -1069,7 +1070,7 @@ sp_offset_delete_self(SPObject */*deleted*/, SPOffset *offset)
         offset->sourceHref = NULL;
         offset->sourceRef->detach();
     } else if (mode == SP_CLONE_ORPHANS_DELETE) {
-        SP_OBJECT(offset)->deleteObject();
+        offset->deleteObject();
     }
 }
 
@@ -1148,8 +1149,9 @@ refresh_offset_source(SPOffset* offset)
         delete res;
         delete orig;
 
+        // TODO fix:
         //XML Tree being used diectly here while it shouldn't be.
-        SP_OBJECT (offset)->getRepr()->setAttribute("inkscape:original", res_d);
+        offset->getRepr()->setAttribute("inkscape:original", res_d);
 
         free (res_d);
     }

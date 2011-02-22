@@ -233,8 +233,8 @@ sp_conn_end_deleted(SPObject *, SPObject *const owner, unsigned const handle_ix)
     g_return_if_fail(handle_ix < 2);
     char const * const attr_strs[] = {"inkscape:connection-start", "inkscape:connection-start-point",
                                       "inkscape:connection-end", "inkscape:connection-end-point"};
-    SP_OBJECT_REPR(owner)->setAttribute(attr_strs[2*handle_ix], NULL);
-    SP_OBJECT_REPR(owner)->setAttribute(attr_strs[2*handle_ix+1], NULL);
+    owner->getRepr()->setAttribute(attr_strs[2*handle_ix], NULL);
+    owner->getRepr()->setAttribute(attr_strs[2*handle_ix+1], NULL);
     /* I believe this will trigger sp_conn_end_href_changed. */
 }
 
@@ -375,8 +375,8 @@ sp_conn_end_href_changed(SPObject */*old_ref*/, SPObject */*ref*/,
         SPObject *refobj = connEnd.ref.getObject();
         if (refobj) {
             connEnd._delete_connection
-                = SP_OBJECT(refobj)->connectDelete(sigc::bind(sigc::ptr_fun(&sp_conn_end_deleted),
-                                                              SP_OBJECT(path), handle_ix));
+                = refobj->connectDelete(sigc::bind(sigc::ptr_fun(&sp_conn_end_deleted),
+                                                   path, handle_ix));
             connEnd._transformed_connection
                 = SP_ITEM(refobj)->connectTransformed(sigc::bind(sigc::ptr_fun(&sp_conn_end_shape_move),
                                                                  path));

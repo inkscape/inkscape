@@ -434,7 +434,7 @@ sp_lpe_item_create_original_path_recursive(SPLPEItem *lpeitem)
         }
     }
     else if (SP_IS_PATH(lpeitem)) {
-        Inkscape::XML::Node *pathrepr = SP_OBJECT_REPR(lpeitem);
+        Inkscape::XML::Node *pathrepr = lpeitem->getRepr();
         if ( !pathrepr->attribute("inkscape:original-d") ) {
             pathrepr->setAttribute("inkscape:original-d", pathrepr->attribute("d"));
         }
@@ -454,7 +454,7 @@ sp_lpe_item_cleanup_original_path_recursive(SPLPEItem *lpeitem)
         }
     }
     else if (SP_IS_PATH(lpeitem)) {
-        Inkscape::XML::Node *repr = SP_OBJECT_REPR(lpeitem);
+        Inkscape::XML::Node *repr = lpeitem->getRepr();
         if (!sp_lpe_item_has_path_effect_recursive(lpeitem)
                 && repr->attribute("inkscape:original-d")) {
             repr->setAttribute("d", repr->attribute("inkscape:original-d"));
@@ -485,7 +485,7 @@ void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset)
         hreflist.push_back( std::string(value) );
         std::string hrefs = hreflist_write_svg(hreflist);
 
-        SP_OBJECT_REPR(lpeitem)->setAttribute("inkscape:path-effect", hrefs.c_str());
+        lpeitem->getRepr()->setAttribute("inkscape:path-effect", hrefs.c_str());
 
         // make sure there is an original-d for paths!!!
         sp_lpe_item_create_original_path_recursive(lpeitem);
@@ -516,7 +516,7 @@ void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset)
 
 void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * new_lpeobj)
 {
-    const gchar * repr_id = SP_OBJECT_REPR(new_lpeobj)->attribute("id");
+    const gchar * repr_id = new_lpeobj->getRepr()->attribute("id");
     gchar *hrefstr = g_strdup_printf("#%s", repr_id);
     sp_lpe_item_add_path_effect(lpeitem, hrefstr, false);
     g_free(hrefstr);
@@ -533,9 +533,9 @@ void sp_lpe_item_remove_current_path_effect(SPLPEItem *lpeitem, bool keep_paths)
     std::string r = patheffectlist_write_svg(new_list);
 
     if (!r.empty()) {
-        SP_OBJECT_REPR(lpeitem)->setAttribute("inkscape:path-effect", r.c_str());
+        lpeitem->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
     } else {
-        SP_OBJECT_REPR(lpeitem)->setAttribute("inkscape:path-effect", NULL);
+        lpeitem->getRepr()->setAttribute("inkscape:path-effect", NULL);
     }
 
     if (!keep_paths) {
@@ -545,7 +545,7 @@ void sp_lpe_item_remove_current_path_effect(SPLPEItem *lpeitem, bool keep_paths)
 
 void sp_lpe_item_remove_all_path_effects(SPLPEItem *lpeitem, bool keep_paths)
 {
-    SP_OBJECT_REPR(lpeitem)->setAttribute("inkscape:path-effect", NULL);
+    lpeitem->getRepr()->setAttribute("inkscape:path-effect", NULL);
 
     if (!keep_paths) {
         sp_lpe_item_cleanup_original_path_recursive(lpeitem);
@@ -568,7 +568,7 @@ void sp_lpe_item_down_current_path_effect(SPLPEItem *lpeitem)
         }
     }
     std::string r = patheffectlist_write_svg(new_list);
-    SP_OBJECT_REPR(lpeitem)->setAttribute("inkscape:path-effect", r.c_str());
+    lpeitem->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
 
     sp_lpe_item_cleanup_original_path_recursive(lpeitem);
 }
@@ -588,7 +588,7 @@ void sp_lpe_item_up_current_path_effect(SPLPEItem *lpeitem)
     }
     std::string r = patheffectlist_write_svg(new_list);
 
-    SP_OBJECT_REPR(lpeitem)->setAttribute("inkscape:path-effect", r.c_str());
+    lpeitem->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
 
     sp_lpe_item_cleanup_original_path_recursive(lpeitem);
 }
@@ -785,7 +785,7 @@ void SPLPEItem::replacePathEffects( std::vector<LivePathEffectObject const *> co
         std::vector<LivePathEffectObject const *>::const_iterator found_it(std::find(old_lpeobjs.begin(), old_lpeobjs.end(), current_lpeobj));
         if ( found_it != old_lpeobjs.end() ) {
             std::vector<LivePathEffectObject const *>::difference_type found_index = std::distance (old_lpeobjs.begin(), found_it);
-            const gchar * repr_id = SP_OBJECT_REPR(new_lpeobjs[found_index])->attribute("id");
+            const gchar * repr_id = new_lpeobjs[found_index]->getRepr()->attribute("id");
             gchar *hrefstr = g_strdup_printf("#%s", repr_id);
             hreflist.push_back( std::string(hrefstr) );
             g_free(hrefstr);
@@ -795,7 +795,7 @@ void SPLPEItem::replacePathEffects( std::vector<LivePathEffectObject const *> co
         }
     }
     std::string r = hreflist_write_svg(hreflist);
-    SP_OBJECT_REPR(this)->setAttribute("inkscape:path-effect", r.c_str());
+    this->getRepr()->setAttribute("inkscape:path-effect", r.c_str());
 }
 
 /**
@@ -815,7 +815,7 @@ bool sp_lpe_item_fork_path_effects_if_necessary(SPLPEItem *lpeitem, unsigned int
 
         // Clones of the LPEItem will increase the refcount of the lpeobjects.
         // Therefore, nr_of_allowed_users should be increased with the number of clones (i.e. refs to the lpeitem)
-        nr_of_allowed_users += SP_OBJECT(lpeitem)->hrefcount;
+        nr_of_allowed_users += lpeitem->hrefcount;
 
         std::vector<LivePathEffectObject const *> old_lpeobjs, new_lpeobjs;
         PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);

@@ -66,11 +66,12 @@ static Inkscape::XML::Node *
 sp_desc_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     if (!repr) {
-        repr = SP_OBJECT_REPR (object)->duplicate(doc);
+        repr = object->getRepr()->duplicate(doc);
     }
 
-    if (((SPObjectClass *) desc_parent_class)->write)
+    if (((SPObjectClass *) desc_parent_class)->write) {
         ((SPObjectClass *) desc_parent_class)->write(object, doc, repr, flags);
+    }
 
     return repr;
 }

@@ -71,8 +71,8 @@ static SPObject * sp_marker_load_from_svg(gchar const *name, SPDocument *current
         if (object && SP_IS_MARKER(object)) {
             SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(current_doc);
             Inkscape::XML::Document *xml_doc = current_doc->getReprDoc();
-            Inkscape::XML::Node *mark_repr = SP_OBJECT_REPR(object)->duplicate(xml_doc);
-            SP_OBJECT_REPR(defs)->addChild(mark_repr, NULL);
+            Inkscape::XML::Node *mark_repr = object->getRepr()->duplicate(xml_doc);
+            defs->getRepr()->addChild(mark_repr, NULL);
             SPObject *cloned_item = current_doc->getObjectByRepr(mark_repr);
             Inkscape::GC::release(mark_repr);
             return cloned_item;
@@ -115,8 +115,8 @@ sp_pattern_load_from_svg(gchar const *name, SPDocument *current_doc)
         if (object && SP_IS_PATTERN(object)) {
             SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(current_doc);
             Inkscape::XML::Document *xml_doc = current_doc->getReprDoc();
-            Inkscape::XML::Node *pat_repr = SP_OBJECT_REPR(object)->duplicate(xml_doc);
-            SP_OBJECT_REPR(defs)->addChild(pat_repr, NULL);
+            Inkscape::XML::Node *pat_repr = object->getRepr()->duplicate(xml_doc);
+            defs->getRepr()->addChild(pat_repr, NULL);
             Inkscape::GC::release(pat_repr);
             return object;
         }
@@ -158,8 +158,8 @@ sp_gradient_load_from_svg(gchar const *name, SPDocument *current_doc)
         if (object && SP_IS_GRADIENT(object)) {
             SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(current_doc);
             Inkscape::XML::Document *xml_doc = current_doc->getReprDoc();
-            Inkscape::XML::Node *pat_repr = SP_OBJECT_REPR(object)->duplicate(xml_doc);
-            SP_OBJECT_REPR(defs)->addChild(pat_repr, NULL);
+            Inkscape::XML::Node *pat_repr = object->getRepr()->duplicate(xml_doc);
+            defs->getRepr()->addChild(pat_repr, NULL);
             Inkscape::GC::release(pat_repr);
             return object;
         }
@@ -201,8 +201,8 @@ SPObject *get_stock_item(gchar const *urn)
         if (!strcmp(base, "marker")) {
             for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )
             {
-                if (SP_OBJECT_REPR(child)->attribute("inkscape:stockid") &&
-                    !strcmp(name_p, SP_OBJECT_REPR(child)->attribute("inkscape:stockid")) &&
+                if (child->getRepr()->attribute("inkscape:stockid") &&
+                    !strcmp(name_p, child->getRepr()->attribute("inkscape:stockid")) &&
                     SP_IS_MARKER(child))
                 {
                     object = child;
@@ -214,7 +214,7 @@ SPObject *get_stock_item(gchar const *urn)
             for ( SPObject *child = defs->firstChild() ; child; child = child->getNext() )
             {
                 if (child->getRepr()->attribute("inkscape:stockid") &&
-                    !strcmp(name_p, SP_OBJECT_REPR(child)->attribute("inkscape:stockid")) &&
+                    !strcmp(name_p, child->getRepr()->attribute("inkscape:stockid")) &&
                     SP_IS_PATTERN(child))
                 {
                     object = child;
@@ -225,8 +225,8 @@ SPObject *get_stock_item(gchar const *urn)
         else if (!strcmp(base,"gradient"))  {
             for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )
             {
-                if (SP_OBJECT_REPR(child)->attribute("inkscape:stockid") &&
-                    !strcmp(name_p, SP_OBJECT_REPR(child)->attribute("inkscape:stockid")) &&
+                if (child->getRepr()->attribute("inkscape:stockid") &&
+                    !strcmp(name_p, child->getRepr()->attribute("inkscape:stockid")) &&
                     SP_IS_GRADIENT(child))
                 {
                     object = child;

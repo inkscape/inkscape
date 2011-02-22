@@ -259,7 +259,7 @@ sp_symbol_update (SPObject *object, SPCtx *ctx, guint flags)
     symbol = SP_SYMBOL (object);
     ictx = (SPItemCtx *) ctx;
 
-    if (SP_OBJECT_IS_CLONED (object)) {
+    if (object->cloned) {
         /* Cloned <symbol> is actually renderable */
 
         /* fixme: We have to set up clip here too */
@@ -413,7 +413,7 @@ sp_symbol_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int fla
 
     symbol = SP_SYMBOL (item);
 
-    if (SP_OBJECT_IS_CLONED (symbol)) {
+    if (symbol->cloned) {
         /* Cloned <symbol> is actually renderable */
         if (((SPItemClass *) (parent_class))->show) {
             ai = ((SPItemClass *) (parent_class))->show (item, arena, key, flags);
@@ -437,7 +437,7 @@ sp_symbol_hide (SPItem *item, unsigned int key)
 
     symbol = SP_SYMBOL (item);
 
-    if (SP_OBJECT_IS_CLONED (symbol)) {
+    if (symbol->cloned) {
         /* Cloned <symbol> is actually renderable */
         if (((SPItemClass *) (parent_class))->hide)
             ((SPItemClass *) (parent_class))->hide (item, key);
@@ -449,7 +449,7 @@ sp_symbol_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, 
 {
     SPSymbol const *symbol = SP_SYMBOL(item);
 
-    if (SP_OBJECT_IS_CLONED (symbol)) {
+    if (symbol->cloned) {
         /* Cloned <symbol> is actually renderable */
 
         if (((SPItemClass *) (parent_class))->bbox) {
@@ -463,7 +463,7 @@ static void
 sp_symbol_print (SPItem *item, SPPrintContext *ctx)
 {
     SPSymbol *symbol = SP_SYMBOL(item);
-    if (SP_OBJECT_IS_CLONED (symbol)) {
+    if (symbol->cloned) {
         /* Cloned <symbol> is actually renderable */
 
         sp_print_bind(ctx, &symbol->c2p, 1.0);

@@ -250,7 +250,7 @@ static Inkscape::XML::Node *sp_glyph_kerning_write(SPObject *object, Inkscape::X
     sp_repr_set_svg_double(repr, "vert-origin-y", glyph->vert_origin_y);
     sp_repr_set_svg_double(repr, "vert-adv-y", glyph->vert_adv_y);
 */
-    if (repr != SP_OBJECT_REPR(object)) {
+    if (repr != object->getRepr()) {
         // All the COPY_ATTR functions below use
         //   XML Tree directly, while they shouldn't.
         COPY_ATTR(repr, object->getRepr(), "u1");

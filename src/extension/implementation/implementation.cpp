@@ -96,23 +96,26 @@ Implementation::save(Inkscape::Extension::Output */*module*/, SPDocument */*doc*
     return;
 } /* Implementation::save */
 
-Gtk::Widget *
-Implementation::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, ImplementationDocumentCache * docCache) {
-    if (module->param_visible_count() == 0) return NULL;
+Gtk::Widget *Implementation::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, ImplementationDocumentCache * /*docCache*/)
+{
+    if (module->param_visible_count() == 0) {
+        return NULL;
+    }
 
     SPDocument * current_document = view->doc();
 
     using Inkscape::Util::GSListConstIterator;
     GSListConstIterator<SPItem *> selected =
            sp_desktop_selection((SPDesktop *)view)->itemList();
-    Inkscape::XML::Node * first_select = NULL;
+    Inkscape::XML::Node const* first_select = NULL;
     if (selected != NULL) {
         const SPItem * item = *selected;
-        first_select = SP_OBJECT_REPR(item);
+        first_select = item->getRepr();
     }
 
-    return module->autogui(current_document, first_select, changeSignal);
-} /* Implementation::prefs_effect */
+    // TODO deal with this broken const correctness:
+    return module->autogui(current_document, const_cast<Inkscape::XML::Node *>(first_select), changeSignal);
+} // Implementation::prefs_effect
 
 void
 Implementation::effect(Inkscape::Extension::Effect */*module*/, Inkscape::UI::View::View */*document*/, ImplementationDocumentCache * /*docCache*/) {

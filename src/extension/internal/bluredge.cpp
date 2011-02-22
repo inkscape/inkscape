@@ -74,9 +74,9 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
         std::vector<Inkscape::XML::Node *> new_items(steps);
         Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
         Inkscape::XML::Node * new_group = xml_doc->createElement("svg:g");
-        (SP_OBJECT_REPR(spitem)->parent())->appendChild(new_group);
+        spitem->getRepr()->parent()->appendChild(new_group);
 
-        double orig_opacity = sp_repr_css_double_property(sp_repr_css_attr(SP_OBJECT_REPR(spitem), "style"), "opacity", 1.0);
+        double orig_opacity = sp_repr_css_double_property(sp_repr_css_attr(spitem->getRepr(), "style"), "opacity", 1.0);
         char opacity_string[64];
         g_ascii_formatd(opacity_string, sizeof(opacity_string), "%f",
                         orig_opacity / (steps));
@@ -84,7 +84,7 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
         for (int i = 0; i < steps; i++) {
             double offset = (width / (float)(steps - 1) * (float)i) - (width / 2.0);
 
-            new_items[i] = (SP_OBJECT_REPR(spitem))->duplicate(xml_doc);
+            new_items[i] = spitem->getRepr()->duplicate(xml_doc);
 
             SPCSSAttr * css = sp_repr_css_attr(new_items[i], "style");
             sp_repr_css_set_property(css, "opacity", opacity_string);

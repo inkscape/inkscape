@@ -1580,7 +1580,7 @@ TextVerb::perform(SPAction *action, void */*data*/, void */*pdata*/)
 
     SPDocument *doc = sp_desktop_document(dt);
     (void)doc;
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(dt->namedview);
+    Inkscape::XML::Node *repr = dt->namedview->getRepr();
     (void)repr;
 }
 
@@ -1595,7 +1595,7 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
     SPDocument *doc = sp_desktop_document(dt);
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(dt->namedview);
+    Inkscape::XML::Node *repr = dt->namedview->getRepr();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gdouble zoom_inc =

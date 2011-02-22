@@ -414,7 +414,7 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
 {
     SPShape * const shape = (SPShape *) lpeitem;
     SPPath * const path = (SPPath *) lpeitem;
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
+    Inkscape::XML::Node *repr = shape->getRepr();
 
 #ifdef PATH_VERBOSE
 g_message("sp_path_update_patheffect");
@@ -428,7 +428,7 @@ g_message("sp_path_update_patheffect");
 
         bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
         if (success && write) {
-            // could also do SP_OBJECT(shape)->updateRepr();  but only the d attribute needs updating.
+            // could also do shape->getRepr()->updateRepr();  but only the d attribute needs updating.
 #ifdef PATH_VERBOSE
 g_message("sp_path_update_patheffect writes 'd' attribute");
 #endif
@@ -450,7 +450,7 @@ g_message("sp_path_update_patheffect writes 'd' attribute");
                 }
             }
         }
-        SP_OBJECT(shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        shape->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         curve->unref();
     }
 }
@@ -478,7 +478,7 @@ sp_path_set_original_curve (SPPath *path, SPCurve *curve, unsigned int owner, bo
         }
     }
     sp_lpe_item_update_patheffect(path, true, write);
-    SP_OBJECT(path)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    path->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /**

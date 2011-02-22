@@ -142,15 +142,18 @@ Find::~Find()
 bool
 Find::item_id_match (SPItem *item, const gchar *id, bool exact)
 {
-    if (SP_OBJECT_REPR (item) == NULL)
+    if (item->getRepr() == NULL) {
         return false;
+    }
 
-    if (SP_IS_STRING(item)) // SPStrings have "on demand" ids which are useless for searching
+    if (SP_IS_STRING(item)) { // SPStrings have "on demand" ids which are useless for searching
         return false;
+    }
 
-    const gchar *item_id = (SP_OBJECT_REPR (item))->attribute("id");
-    if (item_id == NULL)
+    const gchar *item_id = item->getRepr()->attribute("id");
+    if (item_id == NULL) {
         return false;
+    }
 
     if (exact) {
         return ((bool) !strcmp(item_id, id));
@@ -163,8 +166,9 @@ Find::item_id_match (SPItem *item, const gchar *id, bool exact)
 bool
 Find::item_text_match (SPItem *item, const gchar *text, bool exact)
 {
-    if (SP_OBJECT_REPR (item) == NULL)
+    if (item->getRepr() == NULL) {
         return false;
+    }
 
     if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
         const gchar *item_text = sp_te_get_string_multiline (item);
@@ -186,12 +190,14 @@ Find::item_text_match (SPItem *item, const gchar *text, bool exact)
 bool
 Find::item_style_match (SPItem *item, const gchar *text, bool exact)
 {
-    if (SP_OBJECT_REPR (item) == NULL)
+    if (item->getRepr() == NULL) {
         return false;
+    }
 
-    const gchar *item_text = (SP_OBJECT_REPR (item))->attribute("style");
-    if (item_text == NULL)
+    const gchar *item_text = item->getRepr()->attribute("style");
+    if (item_text == NULL) {
         return false;
+    }
 
     if (exact) {
         return ((bool) !strcmp(item_text, text));
@@ -200,18 +206,18 @@ Find::item_style_match (SPItem *item, const gchar *text, bool exact)
     }
 }
 
-bool
-Find::item_attr_match (SPItem *item, const gchar *name, bool exact)
+bool Find::item_attr_match(SPItem *item, const gchar *name, bool exact)
 {
-    if (SP_OBJECT_REPR (item) == NULL)
-        return false;
-
-    if (exact) {
-        const gchar *attr_value = (SP_OBJECT_REPR (item))->attribute(name);
-        return ((bool) (attr_value != NULL));
-    } else {
-        return SP_OBJECT_REPR (item)->matchAttributeName(name);
+    bool result = false;
+    if (item->getRepr()) {
+        if (exact) {
+            const gchar *attr_value = item->getRepr()->attribute(name);
+            result =  (attr_value != NULL);
+        } else {
+            result = item->getRepr()->matchAttributeName(name);
+        }
     }
+    return result;
 }
 
 
@@ -342,17 +348,20 @@ Find::all_items (SPObject *r, GSList *l, bool hidden, bool locked)
 {
     SPDesktop *desktop = getDesktop();
 
-    if (SP_IS_DEFS(r))
+    if (SP_IS_DEFS(r)) {
         return l; // we're not interested in items in defs
+    }
 
-    if (!strcmp (SP_OBJECT_REPR (r)->name(), "svg:metadata"))
+    if (!strcmp(r->getRepr()->name(), "svg:metadata")) {
         return l; // we're not interested in metadata
+    }
 
     for (SPObject *child = r->firstChild(); child; child = child->getNext()) {
-        if (SP_IS_ITEM (child) && !SP_OBJECT_IS_CLONED (child) && !desktop->isLayer(SP_ITEM(child))) {
-                if ((hidden || !desktop->itemIsHidden(SP_ITEM(child))) && (locked || !SP_ITEM(child)->isLocked())) {
-                    l = g_slist_prepend (l, child);
-                }
+        if (SP_IS_ITEM(child) && !child->cloned && !desktop->isLayer(SP_ITEM(child))) {
+            SPItem *item = reinterpret_cast<SPItem *>(child);
+            if ((hidden || !desktop->itemIsHidden(item)) && (locked || !item->isLocked())) {
+                l = g_slist_prepend (l, child);
+            }
         }
         l = all_items (child, l, hidden, locked);
     }
@@ -365,9 +374,10 @@ Find::all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor
     SPDesktop *desktop = getDesktop();
 
     for (GSList *i = (GSList *) s->itemList(); i != NULL; i = i->next) {
-        if (SP_IS_ITEM (i->data) && !SP_OBJECT_IS_CLONED (i->data) && !desktop->isLayer(SP_ITEM(i->data))) {
-            if (!ancestor || ancestor->isAncestorOf(SP_OBJECT (i->data))) {
-                if ((hidden || !desktop->itemIsHidden(SP_ITEM(i->data))) && (locked || !SP_ITEM(i->data)->isLocked())) {
+        if (SP_IS_ITEM (i->data) && !reinterpret_cast<SPItem *>(i->data)->cloned && !desktop->isLayer(SP_ITEM(i->data))) {
+            SPItem *item = reinterpret_cast<SPItem *>(i->data);
+            if (!ancestor || ancestor->isAncestorOf(item)) {
+                if ((hidden || !desktop->itemIsHidden(item)) && (locked || !item->isLocked())) {
                     l = g_slist_prepend (l, i->data);
                 }
             }
@@ -524,3 +534,14 @@ Find::squeeze_window()
 } // namespace UI
 } // namespace Inkscape
 
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

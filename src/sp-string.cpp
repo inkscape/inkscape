@@ -146,7 +146,7 @@ sp_string_read_content(SPObject *object)
                 whitespace = false;
             }
         }
-        if (whitespace && SP_OBJECT_REPR(object)->next() != NULL) {   // can't use SPObject::getNext() when the SPObject tree is still being built
+        if (whitespace && object->getRepr()->next() != NULL) {   // can't use SPObject::getNext() when the SPObject tree is still being built
             string->string += ' ';
         }
     }

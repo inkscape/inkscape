@@ -143,9 +143,9 @@ DocumentProperties::init()
 {
     update();
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(getDesktop()));
+    Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
     repr->addListener (&_repr_events, this);
-    Inkscape::XML::Node *root = SP_OBJECT_REPR(sp_desktop_document(getDesktop())->root);
+    Inkscape::XML::Node *root = sp_desktop_document(getDesktop())->root->getRepr();
     root->addListener (&_repr_events, this);
 
     show_all_children();
@@ -154,9 +154,9 @@ DocumentProperties::init()
 
 DocumentProperties::~DocumentProperties()
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(getDesktop()));
+    Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
     repr->removeListenerByData (this);
-    Inkscape::XML::Node *root = SP_OBJECT_REPR(sp_desktop_document(getDesktop())->root);
+    Inkscape::XML::Node *root = sp_desktop_document(getDesktop())->root->getRepr();
     root->removeListenerByData (this);
 }
 
@@ -439,7 +439,9 @@ DocumentProperties::populate_linked_profiles_box()
 {
     _LinkedProfilesListStore->clear();
     const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
-    if (current) _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
+    if (current) {
+        _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
+    }
     while ( current ) {
         SPObject* obj = SP_OBJECT(current->data);
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
@@ -807,7 +809,7 @@ DocumentProperties::update()
     double const doc_w_px = sp_desktop_document(dt)->getWidth();
     double const doc_h_px = sp_desktop_document(dt)->getHeight();
     _page_sizer.setDim (doc_w_px, doc_h_px);
-    _page_sizer.updateFitMarginsUI(SP_OBJECT_REPR(nv));
+    _page_sizer.updateFitMarginsUI(nv->getRepr());
 
     //-----------------------------------------------------------guide page
 
@@ -873,9 +875,9 @@ DocumentProperties::on_response (int id)
 void
 DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *document)
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
+    Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->addListener(&_repr_events, this);
-    Inkscape::XML::Node *root = SP_OBJECT_REPR(document->root);
+    Inkscape::XML::Node *root = document->root->getRepr();
     root->addListener(&_repr_events, this);
     update();
 }
@@ -883,9 +885,9 @@ DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *docu
 void
 DocumentProperties::_handleActivateDesktop(Inkscape::Application *, SPDesktop *desktop)
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
+    Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->addListener(&_repr_events, this);
-    Inkscape::XML::Node *root = SP_OBJECT_REPR(sp_desktop_document(desktop)->root);
+    Inkscape::XML::Node *root = sp_desktop_document(desktop)->root->getRepr();
     root->addListener(&_repr_events, this);
     update();
 }
@@ -893,9 +895,9 @@ DocumentProperties::_handleActivateDesktop(Inkscape::Application *, SPDesktop *d
 void
 DocumentProperties::_handleDeactivateDesktop(Inkscape::Application *, SPDesktop *desktop)
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
+    Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->removeListenerByData(this);
-    Inkscape::XML::Node *root = SP_OBJECT_REPR(sp_desktop_document(desktop)->root);
+    Inkscape::XML::Node *root = sp_desktop_document(desktop)->root->getRepr();
     root->removeListenerByData(this);
 }
 
@@ -934,7 +936,7 @@ void
 DocumentProperties::onNewGrid()
 {
     SPDesktop *dt = getDesktop();
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(dt));
+    Inkscape::XML::Node *repr = sp_desktop_namedview(dt)->getRepr();
     SPDocument *doc = sp_desktop_document(dt);
 
     Glib::ustring typestring = _grids_combo_gridtype.get_active_text();

@@ -190,7 +190,7 @@ sp_feColorMatrix_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape:
     /* TODO: Don't just clone, but create a new repr node and write all
      * relevant values into it */
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(doc);
+        repr = object->getRepr()->duplicate(doc);
     }
 
     if (((SPObjectClass *) feColorMatrix_parent_class)->write) {

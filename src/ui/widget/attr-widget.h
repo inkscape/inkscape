@@ -149,7 +149,7 @@ protected:
     {
         const gchar* name = (const gchar*)sp_attribute_name(_attr);
         if(name && o) {
-            const gchar* val = SP_OBJECT_REPR(o)->attribute(name);
+            const gchar* val = o->getRepr()->attribute(name);
             return val;
         }
         return 0;

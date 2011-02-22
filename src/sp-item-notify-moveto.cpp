@@ -49,7 +49,7 @@ void sp_item_notify_moveto(SPItem &item, SPGuide const &mv_g, int const snappoin
 
         /* Commit repr. */
         {
-            item.doWriteTransform(SP_OBJECT_REPR(&item), item.transform);
+            item.doWriteTransform(item.getRepr(), item.transform);
         }
 
         sp_item_rm_unsatisfied_cns(item);

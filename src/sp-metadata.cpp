@@ -188,11 +188,11 @@ sp_metadata_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML:
     debug("0x%08x",(unsigned int)object);
     //SPMetadata *metadata = SP_METADATA(object);
 
-    if ( repr != SP_OBJECT_REPR(object) ) {
+    if ( repr != object->getRepr() ) {
         if (repr) {
-            repr->mergeFrom(SP_OBJECT_REPR (object), "id");
+            repr->mergeFrom(object->getRepr(), "id");
         } else {
-            repr = SP_OBJECT_REPR (object)->duplicate(doc);
+            repr = object->getRepr()->duplicate(doc);
         }
     }
 
@@ -221,4 +221,13 @@ sp_document_metadata (SPDocument *document)
 }
 
 
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

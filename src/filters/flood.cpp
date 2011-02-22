@@ -201,7 +201,7 @@ sp_feFlood_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::
     /* TODO: Don't just clone, but create a new repr node and write all
      * relevant values into it */
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(doc);
+        repr = object->getRepr()->duplicate(doc);
     }
 
     if (((SPObjectClass *) feFlood_parent_class)->write) {

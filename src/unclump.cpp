@@ -297,7 +297,7 @@ unclump_push (SPItem *from, SPItem *what, double dist)
     //g_print ("push %s at %g,%g from %g,%g by %g,%g, dist %g\n", what->getId(), it[Geom::X],it[Geom::Y], p[Geom::X],p[Geom::Y], by[Geom::X],by[Geom::Y], dist);
 
     what->set_i2d_affine(what->i2d_affine() * move);
-    what->doWriteTransform(SP_OBJECT_REPR(what), what->transform, NULL);
+    what->doWriteTransform(what->getRepr(), what->transform, NULL);
 }
 
 /**
@@ -320,7 +320,7 @@ unclump_pull (SPItem *to, SPItem *what, double dist)
     //g_print ("pull %s at %g,%g to %g,%g by %g,%g, dist %g\n", what->getId(), it[Geom::X],it[Geom::Y], p[Geom::X],p[Geom::Y], by[Geom::X],by[Geom::Y], dist);
 
     what->set_i2d_affine(what->i2d_affine() * move);
-    what->doWriteTransform(SP_OBJECT_REPR(what), what->transform, NULL);
+    what->doWriteTransform(what->getRepr(), what->transform, NULL);
 }
 
 

@@ -405,7 +405,7 @@ static Inkscape::XML::Node *sp_flowtspan_write(SPObject *object, Inkscape::XML::
             } else if ( SP_IS_FLOWPARA(child) ) {
                 child->updateRepr(flags);
             } else if ( SP_IS_STRING(child) ) {
-                SP_OBJECT_REPR(child)->setContent(SP_STRING(child)->string.c_str());
+                child->getRepr()->setContent(SP_STRING(child)->string.c_str());
             }
         }
     }

@@ -85,7 +85,7 @@ DocumentMetadata::init()
 {
     update();
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(getDesktop()));
+    Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
     repr->addListener (&_repr_events, this);
 
     show_all_children();
@@ -93,7 +93,7 @@ DocumentMetadata::init()
 
 DocumentMetadata::~DocumentMetadata()
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(getDesktop()));
+    Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
     repr->removeListenerByData (this);
 
     for (RDElist::iterator it = _rdflist.begin(); it != _rdflist.end(); it++)
@@ -211,7 +211,7 @@ DocumentMetadata::update()
 void 
 DocumentMetadata::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *)
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
+    Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->addListener (&_repr_events, this);
     update();
 }
@@ -219,7 +219,7 @@ DocumentMetadata::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *)
 void 
 DocumentMetadata::_handleActivateDesktop(Inkscape::Application *, SPDesktop *desktop)
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
+    Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->addListener(&_repr_events, this);
     update();
 }
@@ -227,7 +227,7 @@ DocumentMetadata::_handleActivateDesktop(Inkscape::Application *, SPDesktop *des
 void
 DocumentMetadata::_handleDeactivateDesktop(Inkscape::Application *, SPDesktop *desktop)
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
+    Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->removeListenerByData(this);
 }
 

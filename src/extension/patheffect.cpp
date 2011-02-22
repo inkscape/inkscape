@@ -42,7 +42,7 @@ PathEffect::processPathEffects (SPDocument * doc, Inkscape::XML::Node * path)
         return;
 
     gchar ** patheffects = g_strsplit(patheffectlist, ";", 128);
-    Inkscape::XML::Node * defs = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(doc));
+    Inkscape::XML::Node * defs = SP_DOCUMENT_DEFS(doc)->getRepr();
 
     for (int i = 0; patheffects[i] != NULL && i < 128; i++) {
         gchar * patheffect = patheffects[i];

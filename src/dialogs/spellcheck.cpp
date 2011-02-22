@@ -210,7 +210,7 @@ all_text_items (SPObject *r, GSList *l, bool hidden, bool locked)
     }
 
     for (SPObject *child = r->firstChild(); child; child = child->next) {
-        if (SP_IS_ITEM (child) && !SP_OBJECT_IS_CLONED (child) && !_desktop->isLayer(SP_ITEM(child))) {
+        if (SP_IS_ITEM (child) && !child->cloned && !_desktop->isLayer(SP_ITEM(child))) {
                 if ((hidden || !_desktop->itemIsHidden(SP_ITEM(child))) && (locked || !SP_ITEM(child)->isLocked())) {
                     if (SP_IS_TEXT(child) || SP_IS_FLOWTEXT(child))
                         l = g_slist_prepend (l, child);

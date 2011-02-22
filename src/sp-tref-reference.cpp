@@ -37,7 +37,7 @@ void SPTRefReference::updateObserver()
             delete subtreeObserved;
         }
 
-        subtreeObserved = new Inkscape::XML::Subtree(*SP_OBJECT_REPR(referred));
+        subtreeObserved = new Inkscape::XML::Subtree(*referred->getRepr());
         subtreeObserved->addObserver(*this);
     }
 }

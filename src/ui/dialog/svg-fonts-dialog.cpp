@@ -114,7 +114,7 @@ void SvgFontsDialog::AttrEntry::on_attr_changed(){
 
     const gchar* name = (const gchar*)sp_attribute_name(this->attr);
     if(name && o) {
-        SP_OBJECT_REPR(o)->setAttribute((const gchar*) name, this->entry.get_text().c_str());
+        o->getRepr()->setAttribute((const gchar*) name, this->entry.get_text().c_str());
         o->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 
         Glib::ustring undokey = "svgfonts:";
@@ -438,7 +438,7 @@ SPGlyph *new_glyph(SPDocument* document, SPFont *font, const int count)
     repr->setAttribute("glyph-name", os.str().c_str());
 
     // Append the new glyph node to the current font
-    SP_OBJECT_REPR(font)->appendChild(repr);
+    font->getRepr()->appendChild(repr);
     Inkscape::GC::release(repr);
 
     // get corresponding object
@@ -732,7 +732,7 @@ void SvgFontsDialog::add_kerning_pair(){
     repr->setAttribute("k", "0");
 
     // Append the new hkern node to the current font
-    SP_OBJECT_REPR(get_selected_spfont())->appendChild(repr);
+    get_selected_spfont()->getRepr()->appendChild(repr);
     Inkscape::GC::release(repr);
 
     // get corresponding object
@@ -797,7 +797,7 @@ SPFont *new_font(SPDocument *document)
     repr->setAttribute("horiz-adv-x", "1024");
 
     // Append the new font node to defs
-    SP_OBJECT_REPR(defs)->appendChild(repr);
+    defs->getRepr()->appendChild(repr);
 
     //create a missing glyph
     Inkscape::XML::Node *fontface;

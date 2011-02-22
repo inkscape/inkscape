@@ -316,7 +316,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
 
              for (; current_row != NULL; current_row = current_row->next) {
                  SPItem *item=SP_ITEM(current_row->data);
-                 Inkscape::XML::Node *repr = SP_OBJECT_REPR(item);
+                 Inkscape::XML::Node *repr = item->getRepr();
                  Geom::OptRect b = item->getBounds(item->i2doc_affine());
                  Geom::Point min;
                  if (b) {

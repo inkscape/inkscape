@@ -950,7 +950,7 @@ void SPPaintSelector::updatePatternList( SPPattern *pattern )
 
         gtk_object_set_data(GTK_OBJECT(mnu), "update", GINT_TO_POINTER(TRUE));
 
-        gchar *patname = (gchar *) SP_OBJECT_REPR(pattern)->attribute("id");
+        gchar const *patname = pattern->getRepr()->attribute("id");
 
         GtkMenu *m = GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(mnu)));
 

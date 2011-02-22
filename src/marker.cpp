@@ -740,7 +740,7 @@ const gchar *generate_marker(GSList *reprs, Geom::Rect bounds, SPDocument *docum
             dup_transform = Geom::identity();
         dup_transform *= move;
 
-        copy->doWriteTransform(SP_OBJECT_REPR(copy), dup_transform);
+        copy->doWriteTransform(copy->getRepr(), dup_transform);
     }
 
     Inkscape::GC::release(repr);

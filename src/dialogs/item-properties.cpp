@@ -310,7 +310,7 @@ sp_item_widget_setup ( SPWidget *spw, Inkscape::Selection *selection )
     w = GTK_WIDGET(gtk_object_get_data (GTK_OBJECT (spw), "hidden"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), item->isExplicitlyHidden());
 
-    if (SP_OBJECT_IS_CLONED (item)) {
+    if (item->cloned) {
 
         /* ID */
         w = GTK_WIDGET(gtk_object_get_data (GTK_OBJECT (spw), "id"));

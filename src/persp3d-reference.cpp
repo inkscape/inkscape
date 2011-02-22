@@ -55,7 +55,7 @@ Persp3DReference::start_listening(Persp3D* to)
         return;
     }
     persp = to;
-    persp_repr = SP_OBJECT_REPR(to);
+    persp_repr = to->getRepr();
     _delete_connection = to->connectDelete(sigc::bind(sigc::ptr_fun(&persp3dreference_delete_self), this));
     _modified_connection = to->connectModified(sigc::bind<2>(sigc::ptr_fun(&persp3dreference_source_modified), this));
 }

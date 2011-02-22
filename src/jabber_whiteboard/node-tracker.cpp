@@ -288,7 +288,7 @@ void XMLNodeTracker::reset()
     if (!namedview) {
         g_warning("namedview node does not exist; it will be created during synchronization");
     } else {
-        put(_namedviewKey, *(SP_OBJECT_REPR(namedview)));
+        put(_namedviewKey, *(namedview->getRepr()));
     }
 }
 

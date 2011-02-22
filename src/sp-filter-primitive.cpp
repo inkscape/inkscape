@@ -182,7 +182,7 @@ sp_filter_primitive_write(SPObject *object, Inkscape::XML::Document *doc, Inksca
     SPFilter *parent = SP_FILTER(object->parent);
 
     if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(doc);
+        repr = object->getRepr()->duplicate(doc);
     }
 
     gchar const *in_name = sp_filter_name_for_image(parent, prim->image_in);

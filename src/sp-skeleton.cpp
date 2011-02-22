@@ -188,9 +188,9 @@ sp_skeleton_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML:
     if (flags & SP_OBJECT_WRITE_EXT) {
         if (repr) {
             // is this sane?
-            repr->mergeFrom(SP_OBJECT_REPR(object), "id");
+            repr->mergeFrom(object->getRepr(), "id");
         } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(doc);
+            repr = object->getRepr()->duplicate(doc);
         }
     }
 

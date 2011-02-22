@@ -183,8 +183,9 @@ Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View
     using Inkscape::Util::GSListConstIterator;
     GSListConstIterator<SPItem *> selected = sp_desktop_selection((SPDesktop *)view)->itemList();
     Inkscape::XML::Node * first_select = NULL;
-    if (selected != NULL)
-        first_select = SP_OBJECT_REPR(*selected);
+    if (selected != NULL) {
+        first_select = (*selected)->getRepr();
+    }
 
     return module->autogui(current_document, first_select, changeSignal);
 }

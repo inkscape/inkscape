@@ -865,7 +865,7 @@ static Inkscape::XML::Node *sp_fontface_write(SPObject *object, Inkscape::XML::D
     sp_repr_set_svg_double(repr, "overline-position", face->overline_position);
     sp_repr_set_svg_double(repr, "overline-thickness", face->overline_thickness);
 
-    if (repr != SP_OBJECT_REPR(object)) {
+    if (repr != object->getRepr()) {
         // In all COPY_ATTR given below the XML tree is 
         //  being used directly while it shouldn't be.
         COPY_ATTR(repr, object->getRepr(), "font-family");

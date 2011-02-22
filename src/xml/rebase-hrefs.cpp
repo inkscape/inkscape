@@ -230,7 +230,7 @@ void Inkscape::XML::rebase_hrefs(SPDocument *const doc, gchar const *const new_b
      * cases. */
     GSList const *images = doc->getResourceList("image");
     for (GSList const *l = images; l != NULL; l = l->next) {
-        Inkscape::XML::Node *ir = SP_OBJECT_REPR(l->data);
+        Inkscape::XML::Node *ir = static_cast<SPObject *>(l->data)->getRepr();
 
         gchar const *const href = ir->attribute("xlink:href");
         /* TODO: Most of this function currently treats href as if it were a simple filename

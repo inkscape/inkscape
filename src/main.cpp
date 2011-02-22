@@ -1298,7 +1298,7 @@ sp_do_export_png(SPDocument *doc)
             if (sp_export_use_hints) {
 
                 // retrieve export filename hint
-                const gchar *fn_hint = SP_OBJECT_REPR(o)->attribute("inkscape:export-filename");
+                const gchar *fn_hint = o->getRepr()->attribute("inkscape:export-filename");
                 if (fn_hint) {
                     if (sp_export_png) {
                         g_warning ("Using export filename from the command line (--export-png). Filename hint %s is ignored.", fn_hint);
@@ -1313,7 +1313,7 @@ sp_do_export_png(SPDocument *doc)
                 }
 
                 // retrieve export dpi hints
-                const gchar *dpi_hint = SP_OBJECT_REPR(o)->attribute("inkscape:export-xdpi"); // only xdpi, ydpi is always the same now
+                const gchar *dpi_hint = o->getRepr()->attribute("inkscape:export-xdpi"); // only xdpi, ydpi is always the same now
                 if (dpi_hint) {
                     if (sp_export_dpi || sp_export_width || sp_export_height) {
                         g_warning ("Using bitmap dimensions from the command line (--export-dpi, --export-width, or --export-height). DPI hint %s is ignored.", dpi_hint);

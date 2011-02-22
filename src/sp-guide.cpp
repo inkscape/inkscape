@@ -222,7 +222,7 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
                 guide->point_on_line = Geom::Point(newx, newy);
             } else if (success == 1) {
                 // before 0.46 style guideline definition.
-                const gchar *attr = SP_OBJECT_REPR(object)->attribute("orientation");
+                const gchar *attr = object->getRepr()->attribute("orientation");
                 if (attr && !strcmp(attr, "horizontal")) {
                     guide->point_on_line = Geom::Point(0, newx);
                 } else {
@@ -345,7 +345,7 @@ double SPGuide::getDistanceFrom(Geom::Point const &pt) const
  *      true indicates a "committing" version: in response to button release event after
  *      dragging a guideline, or clicking OK in guide editing dialog.
  */
-void sp_guide_moveto(SPGuide const &guide, Geom::Point const point_on_line, bool const commit)
+void sp_guide_moveto(SPGuide &guide, Geom::Point const point_on_line, bool const commit)
 {
     g_assert(SP_IS_GUIDE(&guide));
 
@@ -357,7 +357,7 @@ void sp_guide_moveto(SPGuide const &guide, Geom::Point const point_on_line, bool
        case, so that the guide's new position is available for sp_item_rm_unsatisfied_cns. */
     if (commit) {
         //XML Tree being used here directly while it shouldn't be.
-        sp_repr_set_point(SP_OBJECT(&guide)->getRepr(), "position", point_on_line);
+        sp_repr_set_point(guide.getRepr(), "position", point_on_line);
     }
 
 /*  DISABLED CODE BECAUSE  SPGuideAttachment  IS NOT USE AT THE MOMENT (johan)
@@ -376,7 +376,7 @@ void sp_guide_moveto(SPGuide const &guide, Geom::Point const point_on_line, bool
  *      true indicates a "committing" version: in response to button release event after
  *      dragging a guideline, or clicking OK in guide editing dialog.
  */
-void sp_guide_set_normal(SPGuide const &guide, Geom::Point const normal_to_line, bool const commit)
+void sp_guide_set_normal(SPGuide &guide, Geom::Point const normal_to_line, bool const commit)
 {
     g_assert(SP_IS_GUIDE(&guide));
 
@@ -388,7 +388,7 @@ void sp_guide_set_normal(SPGuide const &guide, Geom::Point const normal_to_line,
        case, so that the guide's new position is available for sp_item_rm_unsatisfied_cns. */
     if (commit) {
         //XML Tree being used directly while it shouldn't be
-        sp_repr_set_point(SP_OBJECT(&guide)->getRepr(), "orientation", normal_to_line);
+        sp_repr_set_point(guide.getRepr(), "orientation", normal_to_line);
     }
 
 /*  DISABLED CODE BECAUSE  SPGuideAttachment  IS NOT USE AT THE MOMENT (johan)
@@ -459,7 +459,7 @@ void sp_guide_remove(SPGuide *guide)
     guide->attached_items.clear();
 
     //XML Tree being used directly while it shouldn't be.
-    sp_repr_unparent(SP_OBJECT(guide)->getRepr());
+    sp_repr_unparent(guide->getRepr());
 }
 
 /*

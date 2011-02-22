@@ -189,7 +189,7 @@ ToleranceSlider::update (double val)
     SPDocument *doc = sp_desktop_document(dt);
     bool saved = DocumentUndo::getUndoSensitive(doc);
     DocumentUndo::setUndoSensitive(doc, false);
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
+    Inkscape::XML::Node *repr = sp_desktop_namedview(dt)->getRepr();
     repr->setAttribute(_key.c_str(), os.str().c_str());
     DocumentUndo::setUndoSensitive(doc, saved);
 

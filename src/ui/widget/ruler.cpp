@@ -102,7 +102,7 @@ Ruler::on_button_press_event(GdkEventButton *evb)
 {
     g_assert(_dt);
     Geom::Point const &event_dt = get_event_dt();
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(_dt->namedview);
+    Inkscape::XML::Node *repr = _dt->namedview->getRepr();
 
     if (evb->button == 1) {
         _dragging = true;
@@ -153,7 +153,7 @@ Ruler::on_button_release_event(GdkEventButton *evb)
             repr->setAttribute("orientation", _horiz_f ? "horizontal" : "vertical");
             double const guide_pos_dt = event_dt[ _horiz_f ? Geom::Y : Geom::X ];
             sp_repr_set_svg_double(repr, "position", guide_pos_dt);
-            SP_OBJECT_REPR(_dt->namedview)->appendChild(repr);
+            _dt->namedview->getRepr()->appendChild(repr);
             Inkscape::GC::release(repr);
             DocumentUndo::done(sp_desktop_document(_dt), SP_VERB_NONE, 
                                /* TODO: annotate */ "ruler.cpp:157");

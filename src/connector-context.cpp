@@ -489,7 +489,7 @@ void sp_connector_context_switch_mode(SPEventContext* ec, unsigned int newMode)
         cc->knot_tip = cc_knot_tips[1];
 /*            if (cc->active_shape)
         {
-            cc->selection->set( SP_OBJECT( cc->active_shape ) );
+            cc->selection->set( cc->active_shape );
         }
         else
         {
@@ -497,7 +497,7 @@ void sp_connector_context_switch_mode(SPEventContext* ec, unsigned int newMode)
             if ( item )
             {
                 cc_set_active_shape(cc, item);
-                cc->selection->set( SP_OBJECT( item ) );
+                cc->selection->set( item );
             }
         }*/
     }
@@ -899,7 +899,7 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
                     if ( cc->selected_handle )
                     {
                         cc->state = SP_CONNECTOR_CONTEXT_DRAGGING;
-                        cc->selection->set( SP_OBJECT( cc->active_shape ) );
+                        cc->selection->set( cc->active_shape );
                     }
 
                     ret = TRUE;
@@ -1668,7 +1668,7 @@ static void cc_set_active_shape(SPConnectorContext *cc, SPItem *item)
         }
 
         // Listen in case the active shape changes
-        cc->active_shape_repr = SP_OBJECT_REPR(item);
+        cc->active_shape_repr = item->getRepr();
         if (cc->active_shape_repr) {
             Inkscape::GC::anchor(cc->active_shape_repr);
             sp_repr_add_listener(cc->active_shape_repr, &shape_repr_events, cc);
@@ -1800,7 +1800,7 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
     }
 
     // Listen in case the active conn changes
-    cc->active_conn_repr = SP_OBJECT_REPR(item);
+    cc->active_conn_repr = item->getRepr();
     if (cc->active_conn_repr) {
         Inkscape::GC::anchor(cc->active_conn_repr);
         sp_repr_add_listener(cc->active_conn_repr, &shape_repr_events, cc);

@@ -140,8 +140,8 @@ Inkscape::XML::Node *SPPolyLine::write(SPObject *object, Inkscape::XML::Document
         repr = xml_doc->createElement("svg:polyline");
     }
 
-    if (repr != SP_OBJECT_REPR (object)) {
-        repr->mergeFrom(SP_OBJECT_REPR (object), "id");
+    if (repr != object->getRepr()) {
+        repr->mergeFrom(object->getRepr(), "id");
     }
 
     if (((SPObjectClass *) (SPPolyLineClass::static_parent_class))->write) {

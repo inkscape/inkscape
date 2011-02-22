@@ -950,7 +950,7 @@ SelectedStyle::update()
             if (paint->set && paint->isPaintserver()) {
                 SPPaintServer *server = (i == SS_FILL)? SP_STYLE_FILL_SERVER (query) : SP_STYLE_STROKE_SERVER (query);
                 if ( server ) {
-                    Inkscape::XML::Node *srepr = SP_OBJECT_REPR(server);
+                    Inkscape::XML::Node *srepr = server->getRepr();
                     _paintserver_id[i] += "url(#";
                     _paintserver_id[i] += srepr->attribute("id");
                     _paintserver_id[i] += ")";

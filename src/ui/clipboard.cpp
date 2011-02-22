@@ -82,6 +82,7 @@
 #include "svg/svg-color.h"
 #include "sp-namedview.h"
 #include "snap.h"
+#include "persp3d.h"
 
 /// @brief Made up mimetype to represent Gdk::Pixbuf clipboard contents
 #define CLIPBOARD_GDK_PIXBUF_TARGET "image/x-gdk-pixbuf"
@@ -602,7 +603,7 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
         if (!SP_IS_ITEM(i->data)) {
             continue;
         }
-        Inkscape::XML::Node *obj = SP_OBJECT_REPR(i->data);
+        Inkscape::XML::Node *obj = reinterpret_cast<SPObject *>(i->data)->getRepr();
         Inkscape::XML::Node *obj_copy = _copyNode(obj, _doc, _root);
 
         // copy complete inherited style
@@ -628,7 +629,7 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
 
         // copy path effect from the first path
         if (SP_IS_OBJECT(sorted_items->data)) {
-            gchar const *effect = SP_OBJECT_REPR(sorted_items->data)->attribute("inkscape:path-effect");
+            gchar const *effect = reinterpret_cast<SPObject *>(sorted_items->data)->getRepr()->attribute("inkscape:path-effect");
             if (effect) {
                 _clipnode->setAttribute("inkscape:path-effect", effect);
             }
@@ -677,7 +678,7 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
         SPShape *shape = SP_SHAPE (item);
         for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
             if (shape->marker[i]) {
-                _copyNode(SP_OBJECT_REPR(SP_OBJECT(shape->marker[i])), _doc, _defs);
+                _copyNode(shape->marker[i]->getRepr(), _doc, _defs);
             }
         }
     }
@@ -689,14 +690,14 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
             {
                 LivePathEffectObject *lpeobj = (*it)->lpeobject;
                 if (lpeobj) {
-                    _copyNode(SP_OBJECT_REPR(SP_OBJECT(lpeobj)), _doc, _defs);
+                    _copyNode(lpeobj->getRepr(), _doc, _defs);
                 }
             }
         }
     }
     // For 3D boxes, copy perspectives
     if (SP_IS_BOX3D(item)) {
-        _copyNode(SP_OBJECT_REPR(SP_OBJECT(box3d_get_perspective(SP_BOX3D(item)))), _doc, _defs);
+        _copyNode(box3d_get_perspective(SP_BOX3D(item))->getRepr(), _doc, _defs);
     }
     // Copy text paths
     if (SP_IS_TEXT_TEXTPATH(item)) {
@@ -704,14 +705,14 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
     }
     // Copy clipping objects
     if (item->clip_ref->getObject()) {
-        _copyNode(SP_OBJECT_REPR(item->clip_ref->getObject()), _doc, _defs);
+        _copyNode(item->clip_ref->getObject()->getRepr(), _doc, _defs);
     }
     // Copy mask objects
     if (item->mask_ref->getObject()) {
         SPObject *mask = item->mask_ref->getObject();
-        _copyNode(SP_OBJECT_REPR(mask), _doc, _defs);
+        _copyNode(mask->getRepr(), _doc, _defs);
         // recurse into the mask for its gradients etc.
-        for (SPObject *o = SP_OBJECT(mask)->children ; o != NULL ; o = o->next) {
+        for (SPObject *o = mask->children ; o != NULL ; o = o->next) {
             if (SP_IS_ITEM(o)) {
                 _copyUsedDefs(SP_ITEM(o));
             }
@@ -721,12 +722,12 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
     if (style->getFilter()) {
         SPObject *filter = style->getFilter();
         if (SP_IS_FILTER(filter)) {
-            _copyNode(SP_OBJECT_REPR(filter), _doc, _defs);
+            _copyNode(filter->getRepr(), _doc, _defs);
         }
     }
 
     // recurse
-    for (SPObject *o = SP_OBJECT(item)->children ; o != NULL ; o = o->next) {
+    for (SPObject *o = item->children ; o != NULL ; o = o->next) {
         if (SP_IS_ITEM(o)) {
             _copyUsedDefs(SP_ITEM(o));
         }
@@ -741,7 +742,7 @@ void ClipboardManagerImpl::_copyGradient(SPGradient *gradient)
 {
     while (gradient) {
         // climb up the refs, copying each one in the chain
-        _copyNode(SP_OBJECT_REPR(gradient), _doc, _defs);
+        _copyNode(gradient->getRepr(), _doc, _defs);
         gradient = gradient->ref->getObject();
     }
 }
@@ -754,7 +755,7 @@ void ClipboardManagerImpl::_copyPattern(SPPattern *pattern)
 {
     // climb up the references, copying each one in the chain
     while (pattern) {
-        _copyNode(SP_OBJECT_REPR(pattern), _doc, _defs);
+        _copyNode(pattern->getRepr(), _doc, _defs);
 
         // items in the pattern may also use gradients and other patterns, so recurse
         for ( SPObject *child = pattern->firstChild() ; child ; child = child->getNext() ) {
@@ -777,7 +778,7 @@ void ClipboardManagerImpl::_copyTextPath(SPTextPath *tp)
     if (!path) {
         return;
     }
-    Inkscape::XML::Node *path_node = SP_OBJECT_REPR(path);
+    Inkscape::XML::Node *path_node = path->getRepr();
 
     // Do not copy the text path to defs if it's already copied
     if (sp_repr_lookup_child(_root, "id", path_node->attribute("id"))) {
@@ -813,7 +814,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDesktop *desktop, SPDocument *clipdo
 {
     SPDocument *target_document = sp_desktop_document(desktop);
     Inkscape::XML::Node *root = clipdoc->getReprRoot();
-    Inkscape::XML::Node *target_parent = SP_OBJECT_REPR(desktop->currentLayer());
+    Inkscape::XML::Node *target_parent = desktop->currentLayer()->getRepr();
     Inkscape::XML::Document *target_xmldoc = target_document->getReprDoc();
 
     // copy definitions
@@ -893,7 +894,7 @@ void ClipboardManagerImpl::_pasteDefs(SPDesktop *desktop, SPDocument *clipdoc)
     SPDocument *target_document = sp_desktop_document(desktop);
     Inkscape::XML::Node *root = clipdoc->getReprRoot();
     Inkscape::XML::Node *defs = sp_repr_lookup_name(root, "svg:defs", 1);
-    Inkscape::XML::Node *target_defs = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(target_document));
+    Inkscape::XML::Node *target_defs = SP_DOCUMENT_DEFS(target_document)->getRepr();
     Inkscape::XML::Document *target_xmldoc = target_document->getReprDoc();
 
     prevent_id_clashes(clipdoc, target_document);
@@ -1253,7 +1254,7 @@ void ClipboardManagerImpl::_createInternalClipboard()
     if ( _clipboardSPDoc == NULL ) {
         _clipboardSPDoc = SPDocument::createNewDoc(NULL, false, true);
         //g_assert( _clipboardSPDoc != NULL );
-        _defs = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(_clipboardSPDoc));
+        _defs = SP_DOCUMENT_DEFS(_clipboardSPDoc)->getRepr();
         _doc = _clipboardSPDoc->getReprDoc();
         _root = _clipboardSPDoc->getReprRoot();
 

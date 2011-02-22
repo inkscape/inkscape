@@ -301,7 +301,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
 
         int shape = prefs->getInt(tool_name(dc) + "/shape", 0);
         bool shape_applied = false;
-        SPCSSAttr *css_item = sp_css_attr_from_object (SP_OBJECT(item), SP_STYLE_FLAG_ALWAYS);
+        SPCSSAttr *css_item = sp_css_attr_from_object(item, SP_STYLE_FLAG_ALWAYS);
         const char *cstroke = sp_repr_css_property(css_item, "stroke", "none");
 
 #define SHAPE_LENGTH 10
@@ -380,7 +380,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
                 sp_repr_css_set_property (css, "fill", cstroke);
             }
             sp_repr_css_set_property (css, "stroke", "none");
-            sp_desktop_apply_css_recursive(SP_OBJECT(item), css, true);
+            sp_desktop_apply_css_recursive(item, css, true);
             sp_repr_css_attr_unref(css);
             return;
         }
@@ -653,7 +653,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
         bool has_lpe = false;
         Inkscape::XML::Node *repr;
         if (dc->white_item) {
-            repr = SP_OBJECT_REPR(dc->white_item);
+            repr = dc->white_item->getRepr();
             has_lpe = sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(dc->white_item));
         } else {
             repr = xml_doc->createElement("svg:path");

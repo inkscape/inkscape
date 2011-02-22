@@ -152,7 +152,7 @@ static Inkscape::XML::Node *sp_anchor_write(SPObject *object, Inkscape::XML::Doc
 
     repr->setAttribute("xlink:href", anchor->href);
 
-    if (repr != SP_OBJECT_REPR(object)) {
+    if (repr != object->getRepr()) {
         // XML Tree being directly used while it shouldn't be in the
         //  below COPY_ATTR lines
         COPY_ATTR(repr, object->getRepr(), "xlink:type");

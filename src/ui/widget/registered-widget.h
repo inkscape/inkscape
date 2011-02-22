@@ -101,7 +101,7 @@ protected:
         if (!local_repr) {
             // no repr specified, use active desktop's namedview's repr
             SPDesktop* dt = SP_ACTIVE_DESKTOP;
-            local_repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
+            local_repr = reinterpret_cast<SPObject *>(sp_desktop_namedview(dt))->getRepr();
             local_doc = sp_desktop_document(dt);
         }
 
