@@ -14,6 +14,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include "event-context.h"
 #include "libnr/nr-point.h"

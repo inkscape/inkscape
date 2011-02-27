@@ -33,6 +33,7 @@ class SPPatternClass;
 #include "sp-paint-server.h"
 #include "uri-references.h"
 
+#include <stddef.h>
 #include <sigc++/connection.h>
 
 class SPPatternReference : public Inkscape::URIReference {

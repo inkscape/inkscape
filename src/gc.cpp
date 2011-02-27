@@ -16,6 +16,7 @@
 #include <glib/gmessages.h>
 #include <sigc++/functors/ptr_fun.h>
 #include <glibmm/main.h>
+#include <cstddef>
 
 namespace Inkscape {
 namespace GC {

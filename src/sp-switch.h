@@ -14,6 +14,7 @@
 
 #include "sp-item-group.h"
 
+#include <stddef.h>
 #include <sigc++/connection.h>
 
 #define SP_TYPE_SWITCH            (CSwitch::getType())

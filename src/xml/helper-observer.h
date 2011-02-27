@@ -5,6 +5,7 @@
 #include "node.h"
 #include "../sp-object.h"
 //#include "../sp-object-repr.h"
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 namespace Inkscape {

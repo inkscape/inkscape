@@ -25,6 +25,7 @@
 #include "sp-gradient-units.h"
 #include "sp-gradient-vector.h"
 
+#include <stddef.h>
 #include <sigc++/connection.h>
 
 struct SPGradientReference;

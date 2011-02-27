@@ -11,6 +11,7 @@
 #ifndef SEEN_UI_TOOL_MULTI_PATH_MANIPULATOR_H
 #define SEEN_UI_TOOL_MULTI_PATH_MANIPULATOR_H
 
+#include <stddef.h>
 #include <sigc++/connection.h>
 #include "forward.h"
 #include "ui/tool/commit-events.h"

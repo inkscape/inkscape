@@ -13,6 +13,7 @@
 #ifndef INKSCAPE_EXTENSION_TIMER_H__
 #define INKSCAPE_EXTENSION_TIMER_H__
 
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <glibmm/timeval.h>
 #include "extension-forward.h"

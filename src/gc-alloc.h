@@ -16,6 +16,7 @@
 #define SEEN_INKSCAPE_GC_ALLOC_H
 
 #include <limits>
+#include <cstddef>
 #include "gc-core.h"
 
 namespace Inkscape {

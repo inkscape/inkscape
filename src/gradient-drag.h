@@ -15,6 +15,7 @@
  */
 
 #include <glib/gslist.h>
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <vector>
 

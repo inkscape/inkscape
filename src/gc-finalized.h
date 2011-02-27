@@ -17,6 +17,7 @@
 #define SEEN_INKSCAPE_GC_FINALIZED_H
 
 #include <new>
+#include <cstddef>
 #include "gc-core.h"
 
 namespace Inkscape {

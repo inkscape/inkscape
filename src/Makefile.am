@@ -212,7 +212,7 @@ libinkscape_a_SOURCES = $(ink_common_sources)
 
 inkscape_SOURCES += main.cpp $(win32_sources)
 inkscape_LDADD = $(all_libs)
-inkscape_LDFLAGS = --export-dynamic $(kdeldflags) $(mwindows)
+inkscape_LDFLAGS = -Wl,--export-dynamic $(kdeldflags) $(mwindows)
 
 inkview_SOURCES += inkview.cpp $(win32_sources)
 inkview_LDADD = $(all_libs)

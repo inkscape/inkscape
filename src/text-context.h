@@ -15,6 +15,7 @@
  */
 
 /*  #include <gdk/gdkic.h> */
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <gtk/gtkimcontext.h>
 

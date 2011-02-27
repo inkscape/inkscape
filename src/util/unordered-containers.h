@@ -41,6 +41,8 @@
 # define INK_UNORDERED_MAP __gnu_cxx::hash_map
 # define INK_HASH __gnu_cxx::hash
 
+#include <cstddef>
+
 namespace __gnu_cxx {
 // hash function for pointers
 // TR1 and Boost have this defined by default, __gnu_cxx doesn't

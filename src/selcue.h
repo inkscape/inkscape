@@ -14,6 +14,7 @@
  */
 
 #include <list>
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 class SPDesktop;

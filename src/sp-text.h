@@ -14,6 +14,7 @@
  */
 
 #include <glib/gtypes.h>
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include "sp-item.h"
 #include "sp-string.h"

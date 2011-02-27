@@ -14,6 +14,7 @@
 #ifndef SEEN_INKSCAPE_MESSAGE_STACK_H
 #define SEEN_INKSCAPE_MESSAGE_STACK_H
 
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <glib.h>
 #include <stdarg.h>

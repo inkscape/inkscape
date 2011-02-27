@@ -15,6 +15,7 @@
 
 #include <glibmm/i18n.h>
 #include <gtk/gtkimage.h>
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 

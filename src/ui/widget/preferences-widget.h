@@ -26,6 +26,7 @@
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/filechooserbutton.h>
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <glibmm/i18n.h>
 

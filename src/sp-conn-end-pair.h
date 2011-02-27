@@ -15,6 +15,7 @@
 
 #include "forward.h"
 #include "libnr/nr-point.h"
+#include <stddef.h>
 #include <sigc++/connection.h>
 #include <sigc++/functors/slot.h>
 #include <sigc++/signal.h>

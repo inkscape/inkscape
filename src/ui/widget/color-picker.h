@@ -13,6 +13,7 @@
 #ifndef __COLOR_PICKER_H__
 #define __COLOR_PICKER_H__
 
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <gtkmm/button.h>
 #include <gtkmm/dialog.h>

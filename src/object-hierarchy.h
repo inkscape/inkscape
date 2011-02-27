@@ -14,6 +14,7 @@
 
 #include <exception>
 #include <list>
+#include <stddef.h>
 #include <sigc++/connection.h>
 #include <sigc++/signal.h>
 #include <glib/gmessages.h>

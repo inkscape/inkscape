@@ -11,6 +11,7 @@
 #ifndef SEEN_DIALOG_DESKTOP_TRACKER
 #define SEEN_DIALOG_DESKTOP_TRACKER
 
+#include <stddef.h>
 #include <sigc++/connection.h>
 #include <glib/gtypes.h>
 

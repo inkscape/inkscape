@@ -13,6 +13,7 @@
 #define INKSCAPE_UI_WIDGET_PAGE_SIZER__H
 
 #include <gtkmm.h>
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 #include "helper/units.h"

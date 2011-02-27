@@ -12,6 +12,7 @@
 #ifndef SEEN_INKSCAPE_SELECTION_DESCRIPTION_HANDLER_H
 #define SEEN_INKSCAPE_SELECTION_DESCRIPTION_HANDLER_H
 
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include "message-context.h"
 

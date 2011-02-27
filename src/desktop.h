@@ -29,6 +29,7 @@
 
 #include <gdk/gdkevents.h>
 #include <gtk/gtktypeutils.h>
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 #include <2geom/affine.h>

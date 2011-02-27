@@ -14,6 +14,7 @@
 #define SEEN_DIALOGS_SP_ATTRIBUTE_WIDGET_H
 
 #include <glib.h>
+#include <stddef.h>
 #include <sigc++/connection.h>
 
 #define SP_TYPE_ATTRIBUTE_WIDGET (sp_attribute_widget_get_type ())

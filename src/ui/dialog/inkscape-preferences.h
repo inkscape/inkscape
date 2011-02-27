@@ -28,6 +28,7 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/notebook.h>
 #include "ui/widget/preferences-widget.h"
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <glibmm/i18n.h>
 #include <gtkmm/textview.h>

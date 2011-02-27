@@ -23,6 +23,7 @@
 #include <gtkmm/adjustment.h>
 #include <gtkmm/spinbutton.h>
 
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 #include <glibmm/i18n.h>

@@ -12,6 +12,7 @@
 #define SEEN_UI_TOOL_CONTROL_POINT_H
 
 #include <boost/utility.hpp>
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <gdkmm.h>
 #include <gtkmm.h>

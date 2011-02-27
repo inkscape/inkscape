@@ -19,6 +19,7 @@
 
 #include <glib-object.h>
 #include <gtk/gtksignal.h>
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <sigc++/class_slot.h>
 

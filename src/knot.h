@@ -19,6 +19,7 @@
 #include "forward.h"
 #include <2geom/point.h>
 #include "knot-enums.h"
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 class SPKnot;

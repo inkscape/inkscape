@@ -14,6 +14,7 @@
 #define INKSCAPE_UI_DIALOG_DOCUMENT_METADATA_H
 
 #include <list>
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <gtkmm/notebook.h>
 #include <glibmm/i18n.h>

@@ -19,6 +19,7 @@
 #include <vector>
 #include <map>
 #include <list>
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 //#include "libnr/nr-rect.h"

@@ -2,6 +2,7 @@
 #define SEEN_SP_CONN_END
 
 #include <glib/gtypes.h>
+#include <stddef.h>
 #include <sigc++/connection.h>
 
 #include "sp-use-reference.h"

@@ -17,6 +17,7 @@
 
 #include <glib.h>
 
+#include <stddef.h>
 #include <sigc++/connection.h>
 
 #include <gtk/gtkvbox.h>

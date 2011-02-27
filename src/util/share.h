@@ -14,6 +14,7 @@
 
 #include "gc-core.h"
 #include <cstring>
+#include <cstddef>
 
 namespace Inkscape {
 namespace Util {

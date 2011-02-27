@@ -14,6 +14,7 @@
  */
 
 #include <glib/gslist.h>
+#include <stddef.h>
 #include <sigc++/connection.h>
 
 struct SPDesktop;

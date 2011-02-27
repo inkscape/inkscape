@@ -3,6 +3,7 @@
 
 #include <glib-object.h>
 #include <gtkmm.h>
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 namespace Inkscape

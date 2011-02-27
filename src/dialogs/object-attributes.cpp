@@ -13,6 +13,7 @@
 #include <glibmm/i18n.h>
 #include <string>
 #include <cstring>
+#include <stddef.h>
 #include <sigc++/connection.h>
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>

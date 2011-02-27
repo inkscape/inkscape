@@ -14,6 +14,7 @@
 #include "libnr/nr-rect.h"
 #include <2geom/rect.h>
 #include "sp-item.h"
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 class SPDesktop;

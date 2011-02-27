@@ -14,6 +14,7 @@
  * Released under GNU GPL
  */
 
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 #include "event-context.h"
 #include <forward.h>

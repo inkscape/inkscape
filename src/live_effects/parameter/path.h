@@ -16,6 +16,7 @@
 
 #include "live_effects/parameter/parameter.h"
 #include "live_effects/parameter/path-reference.h"
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 namespace Inkscape {

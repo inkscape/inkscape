@@ -15,6 +15,7 @@
  */
 
 #include <gdk/gdktypes.h>
+#include <stddef.h>
 #include <sigc++/connection.h>
 #include "message.h"
 #include "gc-managed.h"

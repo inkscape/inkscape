@@ -16,6 +16,7 @@
 
 #include "sp-shape.h"
 
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 #define SP_TYPE_OFFSET            (sp_offset_get_type ())

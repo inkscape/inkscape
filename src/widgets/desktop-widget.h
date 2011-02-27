@@ -22,6 +22,7 @@
 #include "ui/view/view-widget.h"
 #include "ui/view/edit-widget-interface.h"
 
+#include <stddef.h>
 #include <sigc++/connection.h>
 
 // forward declaration

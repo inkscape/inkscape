@@ -12,6 +12,7 @@
 #include <forward.h>
 #include "sp-item.h"
 #include <uri-references.h>
+#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 class Path;
