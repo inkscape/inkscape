@@ -25,12 +25,9 @@ palettes_DATA = \
     palettes.h
 
 palettes_i18n = \
-    echo-palette.gpl \
     inkscape.gpl \
-    LaTeX-Beamer.gpl \
     svg.gpl \
-    Tango-Palette.gpl \
-    Ubuntu.gpl
+    Tango-Palette.gpl
 
 palettes.h: i18n.py $(palettes_i18n)
 	$(srcdir)/i18n.py $(foreach i,$(palettes_i18n),$(srcdir)/$(i)) > $(srcdir)/palettes.h
