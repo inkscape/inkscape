@@ -17,25 +17,21 @@ def cspsubdiv(csp,flat):
         subdiv(sp,flat)
 
 def subdiv(sp,flat,i=1):
-    p0 = sp[i-1][1]
-    p1 = sp[i-1][2]
-    p2 = sp[i][0]
-    p3 = sp[i][1]
-    
-    b = (p0,p1,p2,p3)
-    m = maxdist(b)
-    if m <= flat:
-        try:
-            subdiv(sp,flat,i+1)
-        except IndexError:
-            pass
-    else:
-        one, two = beziersplitatt(b,0.5)
-        sp[i-1][2] = one[1]
-        sp[i][0] = two[2]
-        p = [one[2],one[3],two[1]]
-        sp[i:1] = [p]    
-        subdiv(sp,flat,i)
-
+    while i < len(sp):
+        p0 = sp[i-1][1]
+        p1 = sp[i-1][2]
+        p2 = sp[i][0]
+        p3 = sp[i][1]
+        
+        b = (p0,p1,p2,p3)
+        m = maxdist(b)
+        if m <= flat:
+            i += 1
+        else:
+            one, two = beziersplitatt(b,0.5)
+            sp[i-1][2] = one[1]
+            sp[i][0] = two[2]
+            p = [one[2],one[3],two[1]]
+            sp[i:1] = [p]
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99
