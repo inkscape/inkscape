@@ -314,6 +314,19 @@ AC_MSG_RESULT([$platform_win32])
 AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
 AC_SUBST(WIN32_CFLAGS)
 
+dnl TODO - switch to a linker/libtool/feature check, not OS check:
+dnl ******************************
+dnl MacOS X
+dnl ******************************
+AC_MSG_CHECKING([for OSX platform])
+if test "x$build_vendor" = "xapple" ; then
+  platform_osx=yes
+else
+  platform_osx=no
+fi
+AC_MSG_RESULT([$platform_osx])
+AM_CONDITIONAL(EXPORT_DYNAMIC_DIRECT, test "$platform_osx" = "yes")
+	
 AC_MSG_CHECKING([for Solaris platform])
 case "$host" in
   *-solaris2.*)
