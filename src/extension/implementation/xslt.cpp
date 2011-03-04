@@ -219,14 +219,17 @@ XSLT::save(Inkscape::Extension::Output */*module*/, SPDocument *doc, gchar const
 
     xmlDocPtr newdoc = xsltApplyStylesheet(_stylesheet, svgdoc, params);
     //xmlSaveFile(filename, newdoc);
-    xsltSaveResultToFilename(filename, newdoc, _stylesheet, 0);
-
+    int success = xsltSaveResultToFilename(filename, newdoc, _stylesheet, 0);
 
     xmlFreeDoc(newdoc);
     xmlFreeDoc(svgdoc);
 
     xsltCleanupGlobals();
     xmlCleanupParser();
+
+    if (success < 1) {
+        throw Inkscape::Extension::Output::save_failed();
+    }
 
     return;
 }
