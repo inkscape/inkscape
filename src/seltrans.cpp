@@ -624,34 +624,14 @@ void Inkscape::SelTrans::_updateHandles()
         return;
     }
 
-    // center handle
-    if ( _chandle == NULL ) {
-        _chandle = sp_knot_new(_desktop, _("<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"));
-
-        _chandle->setShape (SP_CTRL_SHAPE_BITMAP);
-        _chandle->setSize (13);
-        _chandle->setAnchor (handle_center.anchor);
-        _chandle->setMode (SP_CTRL_MODE_XOR);
-        _chandle->setFill(0x00000000, 0x00000000, 0x00000000);
-        _chandle->setStroke(0x000000ff, 0xff0000b0, 0xff0000b0);
-        _chandle->setPixbuf(handles[handle_center.control]);
-        sp_knot_update_ctrl(_chandle);
-
-        g_signal_connect(G_OBJECT(_chandle), "request",
-                         G_CALLBACK(sp_sel_trans_handle_request), (gpointer) &handle_center);
-        g_signal_connect(G_OBJECT(_chandle), "moved",
-                         G_CALLBACK(sp_sel_trans_handle_new_event), (gpointer) &handle_center);
-        g_signal_connect(G_OBJECT(_chandle), "grabbed",
-                         G_CALLBACK(sp_sel_trans_handle_grab), (gpointer) &handle_center);
-        g_signal_connect(G_OBJECT(_chandle), "ungrabbed",
-                         G_CALLBACK(sp_sel_trans_handle_ungrab), (gpointer) &handle_center);
-        g_signal_connect(G_OBJECT(_chandle), "clicked",
-                         G_CALLBACK(sp_sel_trans_handle_click), (gpointer) &handle_center);
+    if (!_center_is_set) {
+        _center = _desktop->selection->center();
+        _center_is_set = true;
     }
 
-    sp_remove_handles(&_chandle, 1);
     if ( _state == STATE_SCALE ) {
         sp_remove_handles(_rhandle, 8);
+        sp_remove_handles(&_chandle, 1);
         _showHandles(_shandle, handles_scale, 8,
                     _("<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"),
                     _("<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"));
@@ -660,18 +640,47 @@ void Inkscape::SelTrans::_updateHandles()
         _showHandles(_rhandle, handles_rotate, 8,
                     _("<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"),
                     _("<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"));
-    }
+        // center handle
+        /* Assuming that the center handle is in its default position, ie. in the center:
+         * Multiple handles will be shown, for rotating, skewing and the center handle. For straight lines, the bounding box of the center handle will be
+         * fully overlapped by bounding boxes of two of the skew handles. Due to the internals of sp_canvas_group_point, the center handle must be the
+         * last handle in the SPCanvasGroup if it is to be selectable in such a case. So we have made sure here that the center handle is added to the
+         * group after the rotation handles (determined by the chronological order of sp_knot_new() calls)
+         * Now when the center handle is in still in the center, the skew handles can be selected because because the bounding box of the
+         * center handle does not fully overlap the bounding box of either of the skew handles. However, if the center handle has been moved such that it
+         * covers one of the other eight handles, then either the opposite handle has to be used (in case of rotating), or the center handle has to be moved.
+         * Although this is annoying, this is still better than not being able to select the center handle at all
+         */
+        if ( _chandle == NULL ) {
+            _chandle = sp_knot_new(_desktop, _("<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"));
 
-    if (!_center_is_set) {
-        _center = _desktop->selection->center();
-        _center_is_set = true;
-    }
+            _chandle->setShape (SP_CTRL_SHAPE_BITMAP);
+            _chandle->setSize (13);
+            _chandle->setAnchor (handle_center.anchor);
+            _chandle->setMode (SP_CTRL_MODE_XOR);
+            _chandle->setFill(0x00000000, 0x00000000, 0x00000000);
+            _chandle->setStroke(0x000000ff, 0xff0000b0, 0xff0000b0);
+            _chandle->setPixbuf(handles[handle_center.control]);
+            sp_knot_update_ctrl(_chandle);
 
-    if ( _state == STATE_SCALE || !_center ) {
-        sp_knot_hide(_chandle);
-    } else {
-        sp_knot_show(_chandle);
-        sp_knot_moveto(_chandle, *_center);
+            g_signal_connect(G_OBJECT(_chandle), "request",
+                             G_CALLBACK(sp_sel_trans_handle_request), (gpointer) &handle_center);
+            g_signal_connect(G_OBJECT(_chandle), "moved",
+                             G_CALLBACK(sp_sel_trans_handle_new_event), (gpointer) &handle_center);
+            g_signal_connect(G_OBJECT(_chandle), "grabbed",
+                             G_CALLBACK(sp_sel_trans_handle_grab), (gpointer) &handle_center);
+            g_signal_connect(G_OBJECT(_chandle), "ungrabbed",
+                             G_CALLBACK(sp_sel_trans_handle_ungrab), (gpointer) &handle_center);
+            g_signal_connect(G_OBJECT(_chandle), "clicked",
+                             G_CALLBACK(sp_sel_trans_handle_click), (gpointer) &handle_center);
+        }
+
+        if ( _center ) {
+            sp_knot_show(_chandle);
+            sp_knot_moveto(_chandle, *_center);
+        } else {
+            sp_remove_handles(&_chandle, 1);
+        }
     }
 }
 

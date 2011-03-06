@@ -848,6 +848,12 @@ sp_canvas_group_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_
             } else
                 has_point = FALSE;
 
+            // This metric should be improved, because in case of (partly) overlapping items we will now
+            // always select the last one that has been added to the group. We could instead select the one
+            // of which the center is the closest, for example. One can then move to the center
+            // of the item to be focused, and have that one selected. Of course this will only work if the
+            // centers are not coincident, but at least it's better than what we have now.
+            // See the extensive comment in Inkscape::SelTrans::_updateHandles()
             if (has_point && point_item && ((int) (dist + 0.5) <= item->canvas->close_enough)) {
                 best = dist;
                 *actual_item = point_item;
