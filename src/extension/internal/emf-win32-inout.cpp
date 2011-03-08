@@ -228,7 +228,7 @@ typedef struct emf_callback_data {
 static void
 output_style(PEMF_CALLBACK_DATA d, int iType)
 {
-    SVGOStringStream tmp_id;
+//    SVGOStringStream tmp_id;
     SVGOStringStream tmp_style;
     char tmp[1024] = {0};
 
@@ -238,8 +238,8 @@ output_style(PEMF_CALLBACK_DATA d, int iType)
     float stroke_rgb[3];
     sp_color_get_rgb_floatv(&(d->dc[d->level].style.stroke.value.color), stroke_rgb);
 
-    tmp_id << "\n\tid=\"" << (d->id++) << "\"";
-    *(d->outsvg) += tmp_id.str().c_str();
+//    tmp_id << "\n\tid=\"" << (d->id++) << "\"";
+//    *(d->outsvg) += tmp_id.str().c_str();
     *(d->outsvg) += "\n\tstyle=\"";
     if (iType == EMR_STROKEPATH || !d->dc[d->level].fill_set) {
         tmp_style << "fill:none;";
@@ -801,13 +801,13 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             
             tmp_outsvg <<
                 "  width=\"" << d->MMX << "mm\"\n" <<
-                "  height=\"" << d->MMY << "mm\"\n";
-            tmp_outsvg <<
-                "  id=\"" << (d->id++) << "\">\n";
+                "  height=\"" << d->MMY << "mm\">\n";
+//            tmp_outsvg <<
+//                "  id=\"" << (d->id++) << "\">\n";
 
-            tmp_outsvg <<
-                "<g\n" <<
-                "  id=\"" << (d->id++) << "\">\n";
+            tmp_outsvg << "<g>\n";
+//                "<g\n" <<
+//                "  id=\"" << (d->id++) << "\">\n";
 
             if (pEmr->nHandles) {
                 d->n_obj = pEmr->nHandles;
@@ -1866,7 +1866,7 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
                 assert_empty_path(d, "EMR_EXTTEXTOUTW");
 
                 ts << "    <text\n";
-                ts << "        id=\"" << (d->id++) << "\"\n";
+//                ts << "        id=\"" << (d->id++) << "\"\n";
                 ts << "        xml:space=\"preserve\"\n";
                 ts << "        x=\"" << x << "\"\n";
                 ts << "        y=\"" << y << "\"\n";
