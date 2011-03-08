@@ -2372,7 +2372,7 @@ clonetiler_dialog (void)
             // Dissolve
             {
                 GtkWidget *l = gtk_label_new ("");
-                gtk_label_set_markup (GTK_LABEL(l), _("<b>Fade out:</b>"));
+                gtk_label_set_markup (GTK_LABEL(l), _("<b>Opacity:</b>"));
                 gtk_size_group_add_widget(table_row_labels, l);
                 clonetiler_table_attach (table, l, 1, 4, 1);
             }
