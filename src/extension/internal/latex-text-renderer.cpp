@@ -331,7 +331,44 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
         os << "\\rotatebox{" << degrees << "}{";
     }
     os << "\\makebox(0,0)" << alignment << "{";
-    os << "\\smash{" << str << "}";  // smash the text, to be able to put the makebox coordinates at the baseline
+    os << "\\smash{";  // smash the text, to be able to put the makebox coordinates at the baseline
+
+        // Walk through all spans in the text object.
+        // Write span strings to LaTeX, associated with font weight and style.
+        Inkscape::Text::Layout const &layout = *(te_get_layout (item));
+        for (Inkscape::Text::Layout::iterator li = layout.begin(), le = layout.end(); 
+             li != le; li.nextStartOfSpan())
+        {
+            SPStyle const &spanstyle = *(sp_te_style_at_position (item, li));
+            bool is_bold = false, is_italic = false;
+
+            if (spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_500 ||
+                spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_600 ||
+                spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_700 ||
+                spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_800 ||
+                spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_900 ||
+                spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_BOLD ||
+                spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_BOLDER) 
+            {
+                is_bold = true;
+                os << "{\\bfseries{}";
+            }
+            if (spanstyle.font_style.computed == SP_CSS_FONT_STYLE_ITALIC) 
+            {
+                is_italic = true;
+                os << "{\\itshape{}";
+            }
+
+            Inkscape::Text::Layout::iterator ln = li; 
+            ln.nextStartOfSpan();
+            Glib::ustring spanstr = sp_te_get_string_multiline (item, li, ln);
+            os << spanstr;
+
+            if (is_italic) { os << "}"; } // italic end
+            if (is_bold) { os << "}"; } // bold end
+        }
+
+    os << "}"; // smash end
     if (has_rotation) {
         os << "}"; // rotatebox end
     }
@@ -434,7 +471,42 @@ Flowing in rectangle is possible, not in arb shape.
     os << "\\makebox(0,0)" << alignment << "{";
     os << "\\begin{minipage}{" << framebox.width() << "\\unitlength}";
     os << justification;
-    os << str;
+
+        // Walk through all spans in the text object.
+        // Write span strings to LaTeX, associated with font weight and style.
+        Inkscape::Text::Layout const &layout = *(te_get_layout (item));
+        for (Inkscape::Text::Layout::iterator li = layout.begin(), le = layout.end(); 
+             li != le; li.nextStartOfSpan())
+        {
+            SPStyle const &spanstyle = *(sp_te_style_at_position (item, li));
+            bool is_bold = false, is_italic = false;
+
+            if (spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_500 ||
+                spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_600 ||
+                spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_700 ||
+                spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_800 ||
+                spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_900 ||
+                spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_BOLD ||
+                spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_BOLDER) 
+            {
+                is_bold = true;
+                os << "{\\bfseries{}";
+            }
+            if (spanstyle.font_style.computed == SP_CSS_FONT_STYLE_ITALIC) 
+            {
+                is_italic = true;
+                os << "{\\itshape{}";
+            }
+
+            Inkscape::Text::Layout::iterator ln = li; 
+            ln.nextStartOfSpan();
+            Glib::ustring spanstr = sp_te_get_string_multiline (item, li, ln);
+            os << spanstr;
+
+            if (is_italic) { os << "}"; } // italic end
+            if (is_bold) { os << "}"; } // bold end
+        }
+
     os << "\\end{minipage}";
     if (has_rotation) {
         os << "}"; // rotatebox end
