@@ -528,10 +528,16 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
 
     os << "  \\ifx\\svgwidth\\undefined\n";
     os << "    \\setlength{\\unitlength}{" << d->width() * PT_PER_PX << "pt}\n";
+    os << "    \\ifx\\svgscale\\undefined\n";
+    os << "      \\relax\n";
+    os << "    \\else\n";
+    os << "      \\setlength{\\unitlength}{\\unitlength * \\real{\\svgscale}}\n";
+    os << "    \\fi\n";
     os << "  \\else\n";
     os << "    \\setlength{\\unitlength}{\\svgwidth}\n";
     os << "  \\fi\n";
     os << "  \\global\\let\\svgwidth\\undefined\n";
+    os << "  \\global\\let\\svgscale\\undefined\n";
     os << "  \\makeatother\n";
 
     os << "  \\begin{picture}(" << _width << "," << _height << ")%\n";
