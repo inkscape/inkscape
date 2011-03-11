@@ -19,6 +19,7 @@
 #endif
 #include "uri.h"
 #include "uri-references.h"
+#include "enums.h"
 #include "attributes.h"
 #include "svg/svg.h"
 #include "image.h"
@@ -78,8 +79,10 @@ static void sp_feImage_class_init(SPFeImageClass *klass)
     sp_primitive_class->build_renderer = sp_feImage_build_renderer;
 }
 
-static void sp_feImage_init(SPFeImage */*feImage*/)
+static void sp_feImage_init(SPFeImage *feImage)
 {
+    feImage->aspect_align = SP_ASPECT_XMID_YMID; // Default
+    feImage->aspect_clip = SP_ASPECT_MEET; // Default
 }
 
 /**
@@ -99,10 +102,7 @@ static void sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::X
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
 
-    object->readAttr( "x" );
-    object->readAttr( "y" );
-    object->readAttr( "width" );
-    object->readAttr( "height" );
+    object->readAttr( "preserveAspectRatio" );
     object->readAttr( "xlink:href" );
 
 }
@@ -185,22 +185,67 @@ static void sp_feImage_set(SPObject *object, unsigned int key, gchar const *valu
             }
             break;
 
-        case SP_ATTR_X:
-            feImage->x.readOrUnset(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        case SP_ATTR_PRESERVEASPECTRATIO:
+            /* Copied from sp-image.cpp */
+            /* Do setup before, so we can use break to escape */
+            feImage->aspect_align = SP_ASPECT_XMID_YMID; // Default
+            feImage->aspect_clip = SP_ASPECT_MEET; // Default
+            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
+            if (value) {
+                int len;
+                gchar c[256];
+                const gchar *p, *e;
+                unsigned int align, clip;
+                p = value;
+                while (*p && *p == 32) p += 1;
+                if (!*p) break;
+                e = p;
+                while (*e && *e != 32) e += 1;
+                len = e - p;
+                if (len > 8) break;
+                memcpy (c, value, len);
+                c[len] = 0;
+                /* Now the actual part */
+                if (!strcmp (c, "none")) {
+                    align = SP_ASPECT_NONE;
+                } else if (!strcmp (c, "xMinYMin")) {
+                    align = SP_ASPECT_XMIN_YMIN;
+                } else if (!strcmp (c, "xMidYMin")) {
+                    align = SP_ASPECT_XMID_YMIN;
+                } else if (!strcmp (c, "xMaxYMin")) {
+                    align = SP_ASPECT_XMAX_YMIN;
+                } else if (!strcmp (c, "xMinYMid")) {
+                    align = SP_ASPECT_XMIN_YMID;
+                } else if (!strcmp (c, "xMidYMid")) {
+                    align = SP_ASPECT_XMID_YMID;
+                } else if (!strcmp (c, "xMaxYMid")) {
+                    align = SP_ASPECT_XMAX_YMID;
+                } else if (!strcmp (c, "xMinYMax")) {
+                    align = SP_ASPECT_XMIN_YMAX;
+                } else if (!strcmp (c, "xMidYMax")) {
+                    align = SP_ASPECT_XMID_YMAX;
+                } else if (!strcmp (c, "xMaxYMax")) {
+                    align = SP_ASPECT_XMAX_YMAX;
+                } else {
+                    g_warning("Illegal preserveAspectRatio: %s", c);
+                    break;
+                }
+                clip = SP_ASPECT_MEET;
+                while (*e && *e == 32) e += 1;
+                if (*e) {
+                    if (!strcmp (e, "meet")) {
+                        clip = SP_ASPECT_MEET;
+                    } else if (!strcmp (e, "slice")) {
+                        clip = SP_ASPECT_SLICE;
+                    } else {
+                        break;
+                    }
+                }
+                feImage->aspect_align = align;
+                feImage->aspect_clip = clip;
+            }
             break;
-        case SP_ATTR_Y:
-            feImage->y.readOrUnset(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-        case SP_ATTR_WIDTH:
-            feImage->width.readOrUnset(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-        case SP_ATTR_HEIGHT:
-            feImage->height.readOrUnset(value);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
+
         default:
             if (((SPObjectClass *) feImage_parent_class)->set)
                 ((SPObjectClass *) feImage_parent_class)->set(object, key, value);
@@ -259,7 +304,8 @@ static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, Inkscape::Fi
 
     nr_image->from_element = sp_image->from_element;
     nr_image->SVGElem = sp_image->SVGElem;
-    nr_image->set_region(sp_image->x, sp_image->y, sp_image->width, sp_image->height);
+    nr_image->set_align( sp_image->aspect_align );
+    nr_image->set_clip( sp_image->aspect_clip );
     nr_image->set_href(sp_image->href);
     nr_image->set_document(sp_image->document);
 }

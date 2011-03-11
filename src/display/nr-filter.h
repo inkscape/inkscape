@@ -92,8 +92,8 @@ public:
      * If any of these parameters does not get set, the default value, as
      * defined in SVG standard, for that parameter is used instead.
      */
-    void set_region(SVGLength &x, SVGLength &y,
-                    SVGLength &width, SVGLength &height);
+    void set_region(SVGLength const &x, SVGLength const &y,
+                    SVGLength const &width, SVGLength const &height);
 
     /**
      * Resets the filter effects region to its default value as defined
@@ -131,7 +131,7 @@ public:
     void set_filter_units(SPFilterUnits unit);
 
     /**
-     * Set the primitiveUnits-properterty. If not set, the default value of
+     * Set the primitiveUnits-property. If not set, the default value of
      * userSpaceOnUse is used. If the parameter value is not a valid
      * enumeration value from SPFilterUnits, no changes to filter state
      * are made.

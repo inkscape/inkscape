@@ -326,7 +326,7 @@ Geom::Rect Filter::filter_effect_area(Geom::Rect const &bbox)
         minp[Y] = _region_y.computed;
         maxp[Y] = minp[Y] + _region_height.computed;
     } else {
-        g_warning("Error in Inkscape::Filters::Filter::bbox_enlarge: unrecognized value of _filter_units");
+        g_warning("Error in Inkscape::Filters::Filter::filter_effect_area: unrecognized value of _filter_units");
     }
     Geom::Rect area(minp, maxp);
     return area;

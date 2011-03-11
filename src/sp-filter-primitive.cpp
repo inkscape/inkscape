@@ -84,6 +84,16 @@ sp_filter_primitive_init(SPFilterPrimitive *filter_primitive)
 {
     filter_primitive->image_in = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
     filter_primitive->image_out = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
+
+    // We must keep track if a value is set or not, if not set then the region defaults to 0%, 0%,
+    // 100%, 100% ("x", "y", "width", "height") of the -> filter <- region.  If set then
+    // percentages are in terms of bounding box or viewbox, depending on value of "primitiveUnits"
+
+    // NB: SVGLength.set takes prescaled percent values: 1 means 100%
+    filter_primitive->x.unset(SVGLength::PERCENT, 0, 0);
+    filter_primitive->y.unset(SVGLength::PERCENT, 0, 0);
+    filter_primitive->width.unset(SVGLength::PERCENT, 1, 0);
+    filter_primitive->height.unset(SVGLength::PERCENT, 1, 0);
 }
 
 /**
@@ -100,6 +110,10 @@ sp_filter_primitive_build(SPObject *object, SPDocument *document, Inkscape::XML:
 
     object->readAttr( "in" );
     object->readAttr( "result" );
+    object->readAttr( "x" );
+    object->readAttr( "y" );
+    object->readAttr( "width" );
+    object->readAttr( "height" );
 }
 
 /**
@@ -121,7 +135,6 @@ sp_filter_primitive_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFilterPrimitive *filter_primitive = SP_FILTER_PRIMITIVE(object);
     (void)filter_primitive;
-
     int image_nr;
     switch (key) {
         case SP_ATTR_IN:
@@ -146,6 +159,24 @@ sp_filter_primitive_set(SPObject *object, unsigned int key, gchar const *value)
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+
+        /* Filter primitive sub-region */
+        case SP_ATTR_X:
+            filter_primitive->x.readOrUnset(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_Y:
+            filter_primitive->y.readOrUnset(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_WIDTH:
+            filter_primitive->width.readOrUnset(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_HEIGHT:
+            filter_primitive->height.readOrUnset(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
     }
 
     /* See if any parents need this value. */
@@ -165,6 +196,10 @@ sp_filter_primitive_update(SPObject *object, SPCtx *ctx, guint flags)
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         object->readAttr( "in" );
         object->readAttr( "result" );
+        object->readAttr( "x" );
+        object->readAttr( "y" );
+        object->readAttr( "width" );
+        object->readAttr( "height" );
     }
 
     if (((SPObjectClass *) filter_primitive_parent_class)->update) {
@@ -191,6 +226,7 @@ sp_filter_primitive_write(SPObject *object, Inkscape::XML::Document *doc, Inksca
     gchar const *out_name = sp_filter_name_for_image(parent, prim->image_out);
     repr->setAttribute("result", out_name);
 
+    /* Do we need to add x,y,width,height? */
     if (((SPObjectClass *) filter_primitive_parent_class)->write) {
         ((SPObjectClass *) filter_primitive_parent_class)->write(object, doc, repr, flags);
     }
@@ -279,6 +315,7 @@ void sp_filter_primitive_renderer_common(SPFilterPrimitive *sp_prim, Inkscape::F
     nr_prim->set_output(sp_prim->image_out);
 
     /* TODO: place here code to handle input images, filter area etc. */
+    nr_prim->set_subregion( sp_prim->x, sp_prim->y, sp_prim->width, sp_prim->height );
 }
 
 

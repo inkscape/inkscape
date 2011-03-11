@@ -78,27 +78,27 @@ public:
      */
     virtual void set_output(int slot);
 
-    void set_x(SVGLength &length);
-    void set_y(SVGLength &length);
-    void set_width(SVGLength &length);
-    void set_height(SVGLength &length);
-
     /**
      * Sets the filter primitive subregion. Passing an unset length
-     * (length._set == false) as any parameter results in that parameter
-     * not being changed.
-     * Filter primitive will not hold any references to the passed
-     * SVGLength object after function returns.
-     * If any of the parameters does not get set the default value, as
-     * defined in SVG standard, for that parameter is used instead.
+     * (length._set == false) WILL change the parameter as it is
+     * important to know if a parameter is unset.
      */
-    void set_region(SVGLength &x, SVGLength &y,
-                    SVGLength &width, SVGLength &height);
+    void set_x(SVGLength const &length);
+    void set_y(SVGLength const &length);
+    void set_width(SVGLength const &length);
+    void set_height(SVGLength const &length);
+    void set_subregion(SVGLength const &x, SVGLength const &y,
+                       SVGLength const &width, SVGLength const &height);
 
     /**
      * Resets the filter primitive subregion to its default value
      */
-    void reset_region();
+    void reset_subregion(); // Not implemented
+
+    /**
+     * Returns the filter primitive area in user coordinate system.
+     */
+    Geom::Rect filter_primitive_area(FilterUnits const &units);
 
     /**
      * Queries the filter, which traits it needs from its input buffers.
@@ -112,10 +112,11 @@ protected:
     int _input;
     int _output;
 
-    SVGLength _region_x;
-    SVGLength _region_y;
-    SVGLength _region_width;
-    SVGLength _region_height;
+    /* Filter primitive subregion */
+    SVGLength _subregion_x;
+    SVGLength _subregion_y;
+    SVGLength _subregion_width;
+    SVGLength _subregion_height;
 };
 
 

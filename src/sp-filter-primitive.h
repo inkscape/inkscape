@@ -30,6 +30,9 @@ class SPFilterPrimitiveClass;
 
 struct SPFilterPrimitive : public SPObject {
     int image_in, image_out;
+
+    /* filter primitive subregion */
+    SVGLength x, y, height, width;
 };
 
 struct SPFilterPrimitiveClass {

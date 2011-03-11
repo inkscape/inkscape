@@ -26,7 +26,11 @@ class SPFeImageClass;
 struct SPFeImage : public SPFilterPrimitive {
     /** IMAGE ATTRIBUTES HERE */
     gchar *href;
-    SVGLength x, y, height, width;
+
+    /* preserveAspectRatio */
+    unsigned int aspect_align : 4;
+    unsigned int aspect_clip : 1;
+
     SPDocument *document;
     bool from_element;
     SPItem* SVGElem;

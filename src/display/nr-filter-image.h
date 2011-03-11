@@ -31,7 +31,8 @@ public:
     virtual FilterTraits get_input_traits();
     void set_document( SPDocument *document );
     void set_href(const gchar *href);
-    void set_region(SVGLength x, SVGLength y, SVGLength width, SVGLength height);
+    void set_align( unsigned int align );
+    void set_clip( unsigned int clip );
     bool from_element;
     SPItem* SVGElem;
 
@@ -41,7 +42,8 @@ private:
     guint8* image_pixbuf;
     Glib::RefPtr<Gdk::Pixbuf> image;
     int width, height, rowstride;
-    float feImageX,feImageY,feImageWidth,feImageHeight;
+    unsigned int aspect_align : 4;
+    unsigned int aspect_clip : 1;
     bool has_alpha;
 };
 

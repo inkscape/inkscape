@@ -62,6 +62,26 @@ public:
     void set_automatic_resolution(bool const automatic);
 
     /**
+     * Gets the item bounding box in user coordinates
+     */
+    Geom::OptRect get_item_bbox() const { return item_bbox; };
+
+    /**
+     * Gets the filter effects area in user coordinates
+     */
+    Geom::OptRect get_filter_area() const { return filter_area; };
+
+    /**
+     * Gets Filter Units (userSpaceOnUse or objectBoundingBox)
+     */
+    SPFilterUnits get_filter_units() const { return filterUnits; };
+
+    /**
+     * Gets Primitive Units (userSpaceOnUse or objectBoundingBox)
+     */
+    SPFilterUnits get_primitive_units() const { return primitiveUnits; };
+
+    /**
      * Gets the user coordinates to pixblock coordinates transformation matrix.
      */
     Geom::Affine get_matrix_user2pb() const;

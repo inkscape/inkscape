@@ -6,7 +6,7 @@
  *   Tavmjong Bah <tavmjong@free.fr>
  *   Abhishek Sharma
  *
- * Copyright (C) 2007 authors
+ * Copyright (C) 2007-2011 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -20,6 +20,8 @@
 #include "libnr/nr-compose-transform.h"
 #include "libnr/nr-rect-l.h"
 #include "preferences.h"
+#include "svg/svg-length.h"
+#include "enums.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -148,60 +150,139 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         image_pixbuf = image->get_pixels();
         has_alpha = image->get_has_alpha();
     }
-    int w,x,y;
+
+    // Viewport is filter primitive area (in user coordinates).
+    Geom::Rect vp = filter_primitive_area( units );
+    double feImageX      = vp.min()[Geom::X];
+    double feImageY      = vp.min()[Geom::Y];
+    double feImageWidth  = vp.width();
+    double feImageHeight = vp.height();
+
+    // Now that we have the viewport, we must map image inside.
+    // Partially copied from sp-image.cpp.
+
+    // Do nothing if preserveAspectRatio is "none".
+    if( aspect_align != SP_ASPECT_NONE ) {
+
+        // Check aspect ratio of image vs. viewport
+        double feAspect = feImageHeight/feImageWidth;
+        double aspect = (double)height/(double)width;
+        bool ratio = (feAspect < aspect);
+
+        double ax, ay; // Align side
+        switch( aspect_align ) {
+            case SP_ASPECT_XMIN_YMIN:
+                ax = 0.0;
+                ay = 0.0;
+                break;
+            case SP_ASPECT_XMID_YMIN:
+                ax = 0.5;
+                ay = 0.0;
+                break;
+            case SP_ASPECT_XMAX_YMIN:
+                ax = 1.0;
+                ay = 0.0;
+                break;
+            case SP_ASPECT_XMIN_YMID:
+                ax = 0.0;
+                ay = 0.5;
+                break;
+            case SP_ASPECT_XMID_YMID:
+                ax = 0.5;
+                ay = 0.5;
+                break;
+            case SP_ASPECT_XMAX_YMID:
+                ax = 1.0;
+                ay = 0.5;
+                break;
+            case SP_ASPECT_XMIN_YMAX:
+                ax = 0.0;
+                ay = 1.0;
+                break;
+            case SP_ASPECT_XMID_YMAX:
+                ax = 0.5;
+                ay = 1.0;
+                break;
+            case SP_ASPECT_XMAX_YMAX:
+                ax = 1.0;
+                ay = 1.0;
+                break;
+            default:
+                ax = 0.0;
+                ay = 0.0;
+                break;
+        }
+
+        if( aspect_clip == SP_ASPECT_SLICE ) {
+            // image clipped by viewbox
+
+            if( ratio ) {
+                // clip top/bottom
+                feImageY -= ay * (feImageWidth * aspect - feImageHeight);
+                feImageHeight = feImageWidth * aspect;
+            } else {
+                // clip sides
+                feImageX -= ax * (feImageHeight / aspect - feImageWidth); 
+                feImageWidth = feImageHeight / aspect;
+            }
+
+        } else {
+            // image fits into viewbox
+
+            if( ratio ) {
+                // fit to height
+                feImageX += ax * (feImageWidth - feImageHeight / aspect );
+                feImageWidth = feImageHeight / aspect;
+            } else {
+                // fit to width
+                feImageY += ay * (feImageHeight - feImageWidth * aspect);
+                feImageHeight = feImageWidth * aspect;
+            }
+        }
+    }
+
+    // Set up user coordinates to pix block transforms
+    double scaleX = width/feImageWidth;
+    double scaleY = height/feImageHeight;
+    Geom::Affine unit_trans = units.get_matrix_user2pb().inverse();
+
+    // Region being drawn on screen. Corresponds to Filter Region in current screen coordinates.
+    // Note, that the screen is refreshed in horizontal slices with y-axis inverted.
     NRPixBlock *in = slot.get(_input);
     if (!in) {
         g_warning("Missing source image for feImage (in=%d)", _input);
         return 1;
     }
-
-    // This section needs to be fully tested!!
-
-    // Region being drawn on screen
     int x0 = in->area.x0, y0 = in->area.y0;
     int x1 = in->area.x1, y1 = in->area.y1;
+    int w = x1 - x0;
+
+    Geom::Affine d2s = Geom::Translate(x0, y0) * unit_trans * Geom::Translate(-feImageX,-feImageY) * Geom::Scale(scaleX, scaleY);
+
+    // Set up pix block
     NRPixBlock *out = new NRPixBlock;
     nr_pixblock_setup_fast(out, NR_PIXBLOCK_MODE_R8G8B8A8P, x0, y0, x1, y1, true);
-    w = x1 - x0;
-
-    // Get the object bounding box. Image is placed with respect to box.
-    // Array values:  0: width; 3: height; 4: -x; 5: -y.
-    Geom::Affine object_bbox = units.get_matrix_user2filterunits().inverse();
-
-    // feImage is suppose to use the same parameters as a normal SVG image.
-    // If a width or height is set to zero, the image is not suppose to be displayed.
-    // This does not seem to be what Firefox or Opera does, nor does the W3C displacement
-    // filter test expect this behavior. If the width and/or height are zero, we use
-    // the width and height of the object bounding box.
-    if( feImageWidth  == 0 ) feImageWidth  = object_bbox[0];
-    if( feImageHeight == 0 ) feImageHeight = object_bbox[3];
-
-    double scaleX = width/feImageWidth;
-    double scaleY = height/feImageHeight;
-
-    int coordx,coordy;
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
-    Geom::Affine unit_trans = units.get_matrix_primitiveunits2pb().inverse();
-    Geom::Affine d2s = Geom::Translate(x0, y0) * unit_trans * Geom::Translate(object_bbox[4]-feImageX, object_bbox[5]-feImageY) * Geom::Scale(scaleX, scaleY);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int nr_arena_image_x_sample = prefs->getInt("/options/bitmapoversample/value", 1);
     int nr_arena_image_y_sample = nr_arena_image_x_sample;
 
+
     if (has_alpha) {
         nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM(out_data, x1-x0, y1-y0, 4*w, image_pixbuf, width, height, rowstride, d2s, 255, nr_arena_image_x_sample, nr_arena_image_y_sample);
     } else {
-        for (x=x0; x < x1; x++){
-            for (y=y0; y < y1; y++){
+        for (int x=x0; x < x1; x++){
+            for (int y=y0; y < y1; y++){
                 //TODO: use interpolation
                 // Temporarily add 0.5 so we sample center of "cell"
-                double indexX = scaleX * (((x+0.5) * unit_trans[0] + unit_trans[4]) - feImageX + object_bbox[4]);
-                double indexY = scaleY * (((y+0.5) * unit_trans[3] + unit_trans[5]) - feImageY + object_bbox[5]);
+                double indexX = scaleX * (((x+0.5) * unit_trans[0] + unit_trans[4]) - feImageX);
+                double indexY = scaleY * (((y+0.5) * unit_trans[3] + unit_trans[5]) - feImageY);
 
                 // coordx == 0 and coordy == 0 must be included, but we protect
                 // against negative numbers which round up to 0 with (int).
-                coordx = ( indexX >= 0 ? int( indexX ) : -1 );
-                coordy = ( indexY >= 0 ? int( indexY ) : -1 );
+                int coordx = ( indexX >= 0 ? int( indexX ) : -1 );
+                int coordy = ( indexY >= 0 ? int( indexY ) : -1 );
                 if (coordx >= 0 && coordx < width && coordy >= 0 && coordy < height){
                     out_data[4*((x - x0)+w*(y - y0))    ] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy    ]; //Red
                     out_data[4*((x - x0)+w*(y - y0)) + 1] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy + 1]; //Green
@@ -230,11 +311,12 @@ void FilterImage::set_document(SPDocument *doc){
     document = doc;
 }
 
-void FilterImage::set_region(SVGLength x, SVGLength y, SVGLength width, SVGLength height){
-        feImageX=x.computed;
-        feImageY=y.computed;
-        feImageWidth=width.computed;
-        feImageHeight=height.computed;
+void FilterImage::set_align( unsigned int align ) {
+    aspect_align = align;
+}
+
+void FilterImage::set_clip( unsigned int clip ) {
+    aspect_clip = clip;
 }
 
 FilterTraits FilterImage::get_input_traits() {
