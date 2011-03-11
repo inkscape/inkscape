@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-02-27 22:17+0100\n"
+"POT-Creation-Date: 2011-03-11 13:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -775,8 +775,8 @@ msgstr ""
 #: ../src/extension/internal/filter/abc.h:477
 #: ../src/extension/internal/filter/abc.h:580
 #: ../src/extension/internal/filter/abc.h:740
-#: ../src/extension/internal/filter/color.h:81
-#: ../src/extension/internal/filter/color.h:577
+#: ../src/extension/internal/filter/color.h:153
+#: ../src/extension/internal/filter/color.h:806
 #: ../src/extension/internal/filter/experimental.h:97
 #: ../share/extensions/color_blackandwhite.inx.h:2
 #: ../share/extensions/color_brighter.inx.h:2
@@ -1389,7 +1389,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:98
 #: ../src/extension/internal/bitmap/solarize.cpp:38
-#: ../src/extension/internal/filter/color.h:467
+#: ../src/extension/internal/filter/color.h:696
 msgid "Solarize"
 msgstr ""
 
@@ -1398,7 +1398,7 @@ msgid "Classical photographic solarization effect"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:99
-#: ../src/extension/internal/filter/color.h:468
+#: ../src/extension/internal/filter/color.h:697
 msgid "Moonarize"
 msgstr ""
 
@@ -2043,7 +2043,7 @@ msgid "Quadritone fantasy"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-#: ../src/extension/internal/filter/color.h:400
+#: ../src/extension/internal/filter/color.h:629
 msgid "Replace hue by two colors"
 msgstr ""
 
@@ -2223,7 +2223,7 @@ msgid "Convert to a colorizable transparent positive or negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:196
-#: ../src/extension/internal/filter/color.h:64
+#: ../src/extension/internal/filter/color.h:136
 msgid "Duotone"
 msgstr ""
 
@@ -4292,7 +4292,7 @@ msgid "Alternate the sign of blur change for each column"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2375
-msgid "<b>Fade out:</b>"
+msgid "<b>Opacity:</b>"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2382
@@ -5081,22 +5081,22 @@ msgstr ""
 msgid "Set object description"
 msgstr ""
 
-#: ../src/dialogs/object-attributes.cpp:32
+#: ../src/dialogs/object-attributes.cpp:33
 msgid "Href:"
 msgstr ""
 
 #. default x:
 #. default y:
-#: ../src/dialogs/object-attributes.cpp:33
+#: ../src/dialogs/object-attributes.cpp:34
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2217
 msgid "Target:"
 msgstr ""
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
-#: ../src/dialogs/object-attributes.cpp:34
+#: ../src/dialogs/object-attributes.cpp:35
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/extension/internal/filter/color.h:466
-#: ../src/extension/internal/filter/color.h:554
+#: ../src/extension/internal/filter/color.h:695
+#: ../src/extension/internal/filter/color.h:783
 #: ../src/extension/internal/filter/morphology.h:53 ../src/rdf.cpp:239
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2272
@@ -5109,49 +5109,49 @@ msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkRoleAttribute
 #. Identifies the type of the related resource with an absolute URI
-#: ../src/dialogs/object-attributes.cpp:37
+#: ../src/dialogs/object-attributes.cpp:38
 msgid "Role:"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
-#: ../src/dialogs/object-attributes.cpp:40
+#: ../src/dialogs/object-attributes.cpp:41
 msgid "Arcrole:"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
-#: ../src/dialogs/object-attributes.cpp:42 ../src/rdf.cpp:230
+#: ../src/dialogs/object-attributes.cpp:43 ../src/rdf.cpp:230
 msgid "Title:"
 msgstr ""
 
-#: ../src/dialogs/object-attributes.cpp:43
+#: ../src/dialogs/object-attributes.cpp:44
 #: ../share/extensions/polyhedron_3d.inx.h:36
 msgid "Show:"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
-#: ../src/dialogs/object-attributes.cpp:45
+#: ../src/dialogs/object-attributes.cpp:46
 msgid "Actuate:"
 msgstr ""
 
-#: ../src/dialogs/object-attributes.cpp:50
+#: ../src/dialogs/object-attributes.cpp:51
 msgid "URL:"
 msgstr ""
 
-#: ../src/dialogs/object-attributes.cpp:51
-#: ../src/dialogs/object-attributes.cpp:59 ../src/ui/dialog/guides.cpp:44
+#: ../src/dialogs/object-attributes.cpp:52
+#: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:44
 #: ../src/widgets/desktop-widget.cpp:516 ../src/widgets/toolbox.cpp:1544
 msgid "X:"
 msgstr ""
 
-#: ../src/dialogs/object-attributes.cpp:52
-#: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:45
+#: ../src/dialogs/object-attributes.cpp:53
+#: ../src/dialogs/object-attributes.cpp:61 ../src/ui/dialog/guides.cpp:45
 #: ../src/widgets/desktop-widget.cpp:519 ../src/widgets/toolbox.cpp:1562
 msgid "Y:"
 msgstr ""
 
-#: ../src/dialogs/object-attributes.cpp:53
-#: ../src/dialogs/object-attributes.cpp:61
+#: ../src/dialogs/object-attributes.cpp:54
+#: ../src/dialogs/object-attributes.cpp:62
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:40
 #: ../src/extension/internal/bitmap/raise.cpp:41
 #: ../src/extension/internal/bitmap/sample.cpp:40
@@ -5164,8 +5164,8 @@ msgstr ""
 msgid "Width:"
 msgstr ""
 
-#: ../src/dialogs/object-attributes.cpp:54
-#: ../src/dialogs/object-attributes.cpp:62
+#: ../src/dialogs/object-attributes.cpp:55
+#: ../src/dialogs/object-attributes.cpp:63
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:41
 #: ../src/extension/internal/bitmap/raise.cpp:42
 #: ../src/extension/internal/bitmap/sample.cpp:41
@@ -5173,17 +5173,17 @@ msgstr ""
 msgid "Height:"
 msgstr ""
 
-#: ../src/dialogs/object-attributes.cpp:107
+#: ../src/dialogs/object-attributes.cpp:108
 #, c-format
 msgid "Link Properties"
 msgstr ""
 
-#: ../src/dialogs/object-attributes.cpp:109
+#: ../src/dialogs/object-attributes.cpp:110
 #, c-format
 msgid "Image Properties"
 msgstr ""
 
-#: ../src/dialogs/object-attributes.cpp:111
+#: ../src/dialogs/object-attributes.cpp:112
 #, c-format
 msgid "%s Properties"
 msgstr ""
@@ -6041,6 +6041,7 @@ msgstr ""
 
 #. Label
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
+#: ../src/extension/internal/filter/color.h:540
 #: ../src/extension/internal/filter/experimental.h:355
 #: ../src/live_effects/lpe-ruler.cpp:50 ../src/widgets/gradient-vector.cpp:824
 #: ../share/extensions/printing-marks.inx.h:9
@@ -6736,12 +6737,15 @@ msgstr ""
 #: ../src/extension/internal/filter/abc.h:675
 #: ../src/extension/internal/filter/abc.h:744
 #: ../src/extension/internal/filter/abc.h:822
-#: ../src/extension/internal/filter/color.h:87
-#: ../src/extension/internal/filter/color.h:188
-#: ../src/extension/internal/filter/color.h:301
-#: ../src/extension/internal/filter/color.h:396
-#: ../src/extension/internal/filter/color.h:473
-#: ../src/extension/internal/filter/color.h:583
+#: ../src/extension/internal/filter/color.h:71
+#: ../src/extension/internal/filter/color.h:159
+#: ../src/extension/internal/filter/color.h:260
+#: ../src/extension/internal/filter/color.h:373
+#: ../src/extension/internal/filter/color.h:464
+#: ../src/extension/internal/filter/color.h:544
+#: ../src/extension/internal/filter/color.h:625
+#: ../src/extension/internal/filter/color.h:702
+#: ../src/extension/internal/filter/color.h:812
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:104
 #: ../src/extension/internal/filter/experimental.h:110
@@ -6769,12 +6773,15 @@ msgstr ""
 #: ../src/extension/internal/filter/abc.h:676
 #: ../src/extension/internal/filter/abc.h:745
 #: ../src/extension/internal/filter/abc.h:823
-#: ../src/extension/internal/filter/color.h:88
-#: ../src/extension/internal/filter/color.h:189
-#: ../src/extension/internal/filter/color.h:302
-#: ../src/extension/internal/filter/color.h:397
-#: ../src/extension/internal/filter/color.h:474
-#: ../src/extension/internal/filter/color.h:584
+#: ../src/extension/internal/filter/color.h:72
+#: ../src/extension/internal/filter/color.h:160
+#: ../src/extension/internal/filter/color.h:261
+#: ../src/extension/internal/filter/color.h:374
+#: ../src/extension/internal/filter/color.h:465
+#: ../src/extension/internal/filter/color.h:545
+#: ../src/extension/internal/filter/color.h:626
+#: ../src/extension/internal/filter/color.h:703
+#: ../src/extension/internal/filter/color.h:813
 #: ../src/extension/internal/filter/experimental.h:111
 #: ../src/extension/internal/filter/experimental.h:243
 #: ../src/extension/internal/filter/experimental.h:362
@@ -6795,6 +6802,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/abc.h:118
 #: ../src/extension/internal/filter/abc.h:313
+#: ../src/extension/internal/filter/color.h:65
 #: ../src/extension/internal/filter/experimental.h:236
 #: ../src/extension/internal/filter/experimental.h:335
 #: ../src/extension/internal/filter/experimental.h:340
@@ -6899,7 +6907,7 @@ msgid "Erosion:"
 msgstr ""
 
 #: ../src/extension/internal/filter/abc.h:474
-#: ../src/extension/internal/filter/color.h:297
+#: ../src/extension/internal/filter/color.h:369
 #: ../src/extension/internal/filter/experimental.h:83
 msgid "Inverted"
 msgstr ""
@@ -6946,234 +6954,275 @@ msgstr ""
 msgid "Specular light, custom (ABCs)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:58
-msgid "Colorize, custom (Color)"
-msgstr ""
-
-#: ../src/extension/internal/filter/color.h:62
-msgid "Harsh light:"
-msgstr ""
-
 #: ../src/extension/internal/filter/color.h:63
-msgid "Normal light:"
-msgstr ""
-
-#: ../src/extension/internal/filter/color.h:65
-#: ../src/extension/internal/filter/color.h:380
-msgid "Blend 1:"
+msgid "Brightness, custom (Color)"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:66
-#: ../src/extension/internal/filter/color.h:74
-#: ../src/extension/internal/filter/color.h:382
-#: ../src/extension/internal/filter/color.h:389
-#: ../src/extension/internal/filter/color.h:563
-#: ../src/extension/internal/filter/color.h:569
-#: ../src/extension/internal/filter/experimental.h:77
-#: ../src/extension/internal/filter/experimental.h:100
-#: ../src/extension/internal/filter/experimental.h:509
-#: ../src/filter-enums.cpp:52
-msgid "Multiply"
+msgid "Vibration:"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:67
+#: ../src/extension/internal/filter/color.h:459
+#: ../src/extension/internal/filter/experimental.h:84
+#: ../src/extension/internal/filter/experimental.h:506
+msgid "Lightness:"
+msgstr ""
+
 #: ../src/extension/internal/filter/color.h:75
-#: ../src/extension/internal/filter/color.h:381
-#: ../src/extension/internal/filter/color.h:387
-#: ../src/extension/internal/filter/color.h:555
-#: ../src/extension/internal/filter/color.h:568
-#: ../src/extension/internal/filter/experimental.h:76
-#: ../src/extension/internal/filter/experimental.h:99
-#: ../src/extension/internal/filter/experimental.h:508
-#: ../src/extension/internal/filter/experimental.h:606
-#: ../src/extension/internal/filter/experimental.h:616
-#: ../src/filter-enums.cpp:51 ../src/ui/dialog/inkscape-preferences.cpp:586
+msgid "Brightness filter"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:130
+msgid "Colorize, custom (Color)"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:134
+msgid "Harsh light:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:135
+msgid "Normal light:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:137
+#: ../src/extension/internal/filter/color.h:609
+msgid "Blend 1:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:138
+#: ../src/extension/internal/filter/color.h:146
+#: ../src/extension/internal/filter/color.h:611
+#: ../src/extension/internal/filter/color.h:618
+#: ../src/extension/internal/filter/color.h:792
+#: ../src/extension/internal/filter/color.h:798 ../src/filter-enums.cpp:52
+msgid "Multiply"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:139
+#: ../src/extension/internal/filter/color.h:147
+#: ../src/extension/internal/filter/color.h:610
+#: ../src/extension/internal/filter/color.h:616
+#: ../src/extension/internal/filter/color.h:784
+#: ../src/extension/internal/filter/color.h:797 ../src/filter-enums.cpp:51
+#: ../src/ui/dialog/inkscape-preferences.cpp:586
 msgid "Normal"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:68
-#: ../src/extension/internal/filter/color.h:73
-#: ../src/extension/internal/filter/color.h:383
-#: ../src/extension/internal/filter/color.h:388
-#: ../src/extension/internal/filter/color.h:562
-#: ../src/extension/internal/filter/experimental.h:78
-#: ../src/extension/internal/filter/experimental.h:101
-#: ../src/extension/internal/filter/experimental.h:510
-#: ../src/filter-enums.cpp:53 ../src/ui/dialog/input.cpp:362
+#: ../src/extension/internal/filter/color.h:140
+#: ../src/extension/internal/filter/color.h:145
+#: ../src/extension/internal/filter/color.h:612
+#: ../src/extension/internal/filter/color.h:617
+#: ../src/extension/internal/filter/color.h:791 ../src/filter-enums.cpp:53
+#: ../src/ui/dialog/input.cpp:362
 msgid "Screen"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:69
-#: ../src/extension/internal/filter/color.h:76
-#: ../src/extension/internal/filter/color.h:390
-#: ../src/extension/internal/filter/color.h:561
-#: ../src/extension/internal/filter/experimental.h:79
-#: ../src/extension/internal/filter/experimental.h:102
-#: ../src/extension/internal/filter/experimental.h:615
-#: ../src/filter-enums.cpp:55
+#: ../src/extension/internal/filter/color.h:141
+#: ../src/extension/internal/filter/color.h:148
+#: ../src/extension/internal/filter/color.h:619
+#: ../src/extension/internal/filter/color.h:790 ../src/filter-enums.cpp:55
 msgid "Lighten"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:70
-#: ../src/extension/internal/filter/color.h:77
-#: ../src/extension/internal/filter/color.h:391
-#: ../src/extension/internal/filter/color.h:564
-#: ../src/extension/internal/filter/color.h:570
-#: ../src/extension/internal/filter/experimental.h:75
-#: ../src/extension/internal/filter/experimental.h:103
-#: ../src/extension/internal/filter/experimental.h:617
-#: ../src/filter-enums.cpp:54
+#: ../src/extension/internal/filter/color.h:142
+#: ../src/extension/internal/filter/color.h:149
+#: ../src/extension/internal/filter/color.h:620
+#: ../src/extension/internal/filter/color.h:793
+#: ../src/extension/internal/filter/color.h:799 ../src/filter-enums.cpp:54
 msgid "Darken"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:72
-#: ../src/extension/internal/filter/color.h:386
+#: ../src/extension/internal/filter/color.h:144
+#: ../src/extension/internal/filter/color.h:615
 msgid "Blend 2:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:91
+#: ../src/extension/internal/filter/color.h:163
 msgid "Blend image or object with a flood color"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:166
+#: ../src/extension/internal/filter/color.h:238
 msgid "Duochrome, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:170
+#: ../src/extension/internal/filter/color.h:242
 msgid "Fluorescence level:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:171
+#: ../src/extension/internal/filter/color.h:243
 msgid "Swap:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:172
+#: ../src/extension/internal/filter/color.h:244
 msgid "No swap"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:173
+#: ../src/extension/internal/filter/color.h:245
 msgid "Color and alpha"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:174
+#: ../src/extension/internal/filter/color.h:246
 msgid "Color only"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:175
+#: ../src/extension/internal/filter/color.h:247
 msgid "Alpha only"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:179
+#: ../src/extension/internal/filter/color.h:251
 msgid "Color 1"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:182
+#: ../src/extension/internal/filter/color.h:254
 msgid "Color 2"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:192
+#: ../src/extension/internal/filter/color.h:264
 msgid "Convert luminance values to a duochrome palette"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:289
+#: ../src/extension/internal/filter/color.h:361
 msgid "Electrize, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:291
+#: ../src/extension/internal/filter/color.h:363
 #: ../src/extension/internal/filter/experimental.h:504
 msgid "Simplify:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:292
+#: ../src/extension/internal/filter/color.h:364
 #: ../src/extension/internal/filter/experimental.h:605
 msgid "Effect type:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:293 ../src/filter-enums.cpp:83
+#: ../src/extension/internal/filter/color.h:365 ../src/filter-enums.cpp:83
 msgid "Table"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:294 ../src/filter-enums.cpp:84
+#: ../src/extension/internal/filter/color.h:366 ../src/filter-enums.cpp:84
 msgid "Discrete"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:296
+#: ../src/extension/internal/filter/color.h:368
 #: ../src/extension/internal/filter/experimental.h:613
 #: ../src/extension/internal/filter/experimental.h:719
 msgid "Levels:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:305
+#: ../src/extension/internal/filter/color.h:377
 msgid "Electro solarization effects"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:376
+#: ../src/extension/internal/filter/color.h:454
+msgid "Greyscale, custom (Color)"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:456
+msgid "Red:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:457
+msgid "Green:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:458
+msgid "Blue:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:460
+#: ../src/extension/internal/filter/experimental.h:81
+#: ../src/extension/internal/filter/experimental.h:238
+msgid "Transparent"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:468
+msgid "Customize greyscale components"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:536
+msgid "Lightness, custom (Color)"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:538
+msgid "Lights:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:539
+msgid "Shadows:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:548
+msgid "Modify lights and shadows separately"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:605
 msgid "Quadritone fantasy, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:378
-#: ../src/extension/internal/filter/color.h:576
+#: ../src/extension/internal/filter/color.h:607
+#: ../src/extension/internal/filter/color.h:805
 msgid "Hue distribution:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:379
+#: ../src/extension/internal/filter/color.h:608
 #: ../src/ui/dialog/tracedialog.cpp:477
 msgid "Colors:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:385
+#: ../src/extension/internal/filter/color.h:614
 msgid "Over-saturation:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:463
+#: ../src/extension/internal/filter/color.h:692
 msgid "Solarize, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:465
+#: ../src/extension/internal/filter/color.h:694
 msgid "Hue rotation:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:477
+#: ../src/extension/internal/filter/color.h:706
 msgid "Classic photographic solarization effect"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:550
+#: ../src/extension/internal/filter/color.h:779
 msgid "Tritone, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:556
+#: ../src/extension/internal/filter/color.h:785
 msgid "Enhance hue"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:557
+#: ../src/extension/internal/filter/color.h:786
 msgid "Radiation"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:558
+#: ../src/extension/internal/filter/color.h:787
 msgid "Hue to background"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:560
+#: ../src/extension/internal/filter/color.h:789
 msgid "Global blend:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:566
+#: ../src/extension/internal/filter/color.h:795
 msgid "Glow:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:567
+#: ../src/extension/internal/filter/color.h:796
 msgid "Glow blend:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:572
+#: ../src/extension/internal/filter/color.h:801
 msgid "Local light:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:573
+#: ../src/extension/internal/filter/color.h:802
 msgid "Global light:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:587
+#: ../src/extension/internal/filter/color.h:816
 msgid ""
 "Create a custom tritone palette with additional glow, blend modes and hue "
 "moving"
@@ -7228,19 +7277,8 @@ msgstr ""
 msgid "Drawing blend:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:81
-#: ../src/extension/internal/filter/experimental.h:238
-msgid "Transparent"
-msgstr ""
-
 #: ../src/extension/internal/filter/experimental.h:82
-#: ../src/extension/internal/filter/experimental.h:607
 msgid "Dented"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:84
-#: ../src/extension/internal/filter/experimental.h:506
-msgid "Lightness:"
 msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:86
@@ -7293,25 +7331,12 @@ msgstr ""
 msgid "Drawing, custom"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:334
-#: ../src/splivarot.cpp:2014
-msgid "Simplify"
-msgstr ""
-
 #: ../src/extension/internal/filter/experimental.h:337
 msgid "Erase:"
 msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:338
 msgid "Transluscent"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:339
-msgid "Smoothness"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:343
-msgid "Melt"
 msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:344
@@ -7346,14 +7371,6 @@ msgstr ""
 msgid "Line type:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:501
-msgid "Smoothed"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:502
-msgid "Contrasted"
-msgstr ""
-
 #: ../src/extension/internal/filter/experimental.h:505
 msgid "Line width:"
 msgstr ""
@@ -7377,14 +7394,6 @@ msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:609
 msgid "Transfer type:"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:610
-msgid "Poster"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:611
-msgid "Painting"
 msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:619
@@ -11673,65 +11682,65 @@ msgstr ""
 msgid "Stamp"
 msgstr ""
 
-#: ../src/seltrans.cpp:629
-msgid ""
-"<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
-"Shift also uses this center"
-msgstr ""
-
-#: ../src/seltrans.cpp:656
+#: ../src/seltrans.cpp:636
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
 msgstr ""
 
-#: ../src/seltrans.cpp:657
+#: ../src/seltrans.cpp:637
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
 msgstr ""
 
-#: ../src/seltrans.cpp:661
+#: ../src/seltrans.cpp:641
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
 msgstr ""
 
-#: ../src/seltrans.cpp:662
+#: ../src/seltrans.cpp:642
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
 msgstr ""
 
-#: ../src/seltrans.cpp:796
+#: ../src/seltrans.cpp:655
+msgid ""
+"<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
+"Shift also uses this center"
+msgstr ""
+
+#: ../src/seltrans.cpp:805
 msgid "Reset center"
 msgstr ""
 
-#: ../src/seltrans.cpp:1034 ../src/seltrans.cpp:1131
+#: ../src/seltrans.cpp:1043 ../src/seltrans.cpp:1140
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1245
+#: ../src/seltrans.cpp:1254
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1320
+#: ../src/seltrans.cpp:1329
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/seltrans.cpp:1355
+#: ../src/seltrans.cpp:1364
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr ""
 
-#: ../src/seltrans.cpp:1530
+#: ../src/seltrans.cpp:1539
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -12097,6 +12106,10 @@ msgstr ""
 
 #: ../src/splivarot.cpp:2000
 msgid "Select <b>path(s)</b> to simplify."
+msgstr ""
+
+#: ../src/splivarot.cpp:2014
+msgid "Simplify"
 msgstr ""
 
 #: ../src/splivarot.cpp:2016
@@ -12807,7 +12820,7 @@ msgstr ""
 #. FIXME? INKSCAPE_SCREENSDIR and "about.svg" are in UTF-8, not the
 #. native filename encoding... and the filename passed to sp_document_new
 #. should be in UTF-*8..
-#: ../src/ui/dialog/aboutbox.cpp:150
+#: ../src/ui/dialog/aboutbox.cpp:151
 msgid "about.svg"
 msgstr ""
 
@@ -21626,24 +21639,24 @@ msgstr ""
 msgid "Alpha (opacity)"
 msgstr ""
 
-#: ../src/widgets/sp-color-notebook.cpp:339
+#: ../src/widgets/sp-color-notebook.cpp:340
 msgid "Color Managed"
 msgstr ""
 
-#: ../src/widgets/sp-color-notebook.cpp:347
+#: ../src/widgets/sp-color-notebook.cpp:348
 msgid "Out of gamut!"
 msgstr ""
 
-#: ../src/widgets/sp-color-notebook.cpp:355
+#: ../src/widgets/sp-color-notebook.cpp:356
 msgid "Too much ink!"
 msgstr ""
 
 #. Create RGBA entry and color preview
-#: ../src/widgets/sp-color-notebook.cpp:362
+#: ../src/widgets/sp-color-notebook.cpp:363
 msgid "RGBA_:"
 msgstr ""
 
-#: ../src/widgets/sp-color-notebook.cpp:370
+#: ../src/widgets/sp-color-notebook.cpp:371
 msgid "Hexadecimal RGBA value of the color"
 msgstr ""
 

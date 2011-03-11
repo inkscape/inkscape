@@ -72,11 +72,11 @@ public:
                 "<page name=\"optionstab\" _gui-text=\"Options\">\n"
                   "<param name=\"drawing\" gui-text=\"" N_("Drawing mode") "\" type=\"boolean\" >true</param>\n"
                   "<param name=\"dblend\" gui-text=\"" N_("Drawing blend:") "\" type=\"enum\">\n"
-                    "<_item value=\"darken\">" N_("Darken") "</_item>\n"
-                    "<_item value=\"normal\">" N_("Normal") "</_item>\n"
-                    "<_item value=\"multiply\">" N_("Multiply") "</_item>\n"
-                    "<_item value=\"screen\">" N_("Screen") "</_item>\n"
-                    "<_item value=\"lighten\">" N_("Lighten") "</_item>\n"
+                    "<_item value=\"darken\">Darken</_item>\n"
+                    "<_item value=\"normal\">Normal</_item>\n"
+                    "<_item value=\"multiply\">Multiply</_item>\n"
+                    "<_item value=\"screen\">Screen</_item>\n"
+                    "<_item value=\"lighten\">Lighten</_item>\n"
                   "</param>\n"
                   "<param name=\"transparent\" gui-text=\"" N_("Transparent") "\" type=\"boolean\" >false</param>\n"
                   "<param name=\"dented\" gui-text=\"" N_("Dented") "\" type=\"boolean\" >false</param>\n"
@@ -96,11 +96,11 @@ public:
                   "<param name=\"grainero\" gui-text=\"" N_("Erosion:") "\" type=\"float\" min=\"0\" max=\"40\">0</param>\n"
                   "<param name=\"graincol\" gui-text=\"" N_("Color") "\" type=\"boolean\" >true</param>\n"
                   "<param name=\"gblend\" gui-text=\"" N_("Grain blend:") "\" type=\"enum\">\n"
-                    "<_item value=\"normal\">" N_("Normal") "</_item>\n"
-                    "<_item value=\"multiply\">" N_("Multiply") "</_item>\n"
-                    "<_item value=\"screen\">" N_("Screen") "</_item>\n"
-                    "<_item value=\"lighten\">" N_("Lighten") "</_item>\n"
-                    "<_item value=\"darken\">" N_("Darken") "</_item>\n"
+                    "<_item value=\"normal\">Normal</_item>\n"
+                    "<_item value=\"multiply\">Multiply</_item>\n"
+                    "<_item value=\"screen\">Screen</_item>\n"
+                    "<_item value=\"lighten\">Lighten</_item>\n"
+                    "<_item value=\"darken\">Darken</_item>\n"
                   "</param>\n"
                 "</page>\n"
               "</param>\n"
@@ -300,12 +300,12 @@ CrossEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
     * Erase (0.->6., default 0) -> composite1 (k4)
     * Smoothness strength (0.01->20, default 0.6) -> blur2 (stdDeviation)
     * Dilatation (1.->50., default 6) -> color2 (n-1th value)
-    * Erosion (0.->50., default 3) -> color2 (nth value 0->-50)
+    * Erosion (0.->50., default 2) -> color2 (nth value 0->-50)
     * Transluscent (boolean, default false) -> composite 8 (in, true->merge1, false->composite7)
 
     * Blur strength (0.01->20., default 1.) -> blur3 (stdDeviation)
     * Blur dilatation (1.->50., default 6) -> color4 (n-1th value)
-    * Blur erosion (0.->50., default 3) -> color4 (nth value 0->-50)
+    * Blur erosion (0.->50., default 2) -> color4 (nth value 0->-50)
 
     * Stroke color (guint, default 64,64,64,255) -> flood2 (flood-color), composite3 (k2)
     * Image on stroke (boolean, default false) -> composite2 (in="flood2" true-> in="SourceGraphic")
@@ -331,19 +331,19 @@ public:
               "<id>org.inkscape.effect.filter.Drawing</id>\n"
               "<param name=\"tab\" type=\"notebook\">\n"
                 "<page name=\"optionstab\" _gui-text=\"Options\">\n"
-                  "<param name=\"simplifyheader\" type=\"groupheader\">" N_("Simplify") "</param>\n"
+                  "<_param name=\"simplifyheader\" type=\"groupheader\">Simplify</_param>\n"
                   "<param name=\"simply\" gui-text=\"" N_("Strength:") "\" type=\"float\" min=\"0.01\" max=\"20\">0.6</param>\n"
                   "<param name=\"clean\" gui-text=\"" N_("Clean-up:") "\" type=\"int\" min=\"1\" max=\"500\">10</param>\n"
                   "<param name=\"erase\" gui-text=\"" N_("Erase:") "\" type=\"float\" min=\"0\" max=\"60\">0</param>\n"
                   "<param name=\"transluscent\" gui-text=\"" N_("Transluscent") "\" type=\"boolean\" >false</param>\n"
-                  "<param name=\"smoothheader\" type=\"groupheader\">" N_("Smoothness") "</param>\n"
+                  "<_param name=\"smoothheader\" type=\"groupheader\">Smoothness</_param>\n"
                     "<param name=\"smooth\" gui-text=\"" N_("Strength:") "\" type=\"float\" min=\"0.01\" max=\"20\">0.6</param>\n"
                     "<param name=\"dilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" min=\"1\" max=\"50\">6</param>\n"
-                    "<param name=\"erosion\" gui-text=\"" N_("Erosion:") "\" type=\"float\" min=\"0\" max=\"50\">3</param>\n"
-                  "<param name=\"meltheader\" type=\"groupheader\">" N_("Melt") "</param>\n"
+                    "<param name=\"erosion\" gui-text=\"" N_("Erosion:") "\" type=\"float\" min=\"0\" max=\"50\">2</param>\n"
+                  "<_param name=\"meltheader\" type=\"groupheader\">Melt</_param>\n"
                     "<param name=\"blur\" gui-text=\"" N_("Level:") "\" type=\"float\" min=\"0.01\" max=\"20\">1</param>\n"
                     "<param name=\"bdilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" min=\"1\" max=\"50\">6</param>\n"
-                    "<param name=\"berosion\" gui-text=\"" N_("Erosion:") "\" type=\"float\" min=\"0\" max=\"50\">3</param>\n"
+                    "<param name=\"berosion\" gui-text=\"" N_("Erosion:") "\" type=\"float\" min=\"0\" max=\"50\">2</param>\n"
                 "</page>\n"
                 "<page name=\"co11tab\" _gui-text=\"Fill color\">\n"
                   "<param name=\"fcolor\" gui-text=\"" N_("Fill color") "\" type=\"color\">-1515870721</param>\n"
@@ -480,7 +480,7 @@ Drawing::get_filter_text (Inkscape::Extension::Extension * ext)
         hard = component1 (type="discrete"), component2 (type="discrete"), composite1 (in2="component1")
     * Simplify (0.01->20., default 1.5) -> blur1 (stdDeviation)
     * Line width (0.01->20., default 1.5) -> blur2 (stdDeviation)
-    * Lightness (0.->10., default 5) -> composite1 (k3)
+    * Lightness (0.->10., default 0.5) -> composite1 (k3)
     * Blend (enum [normal, multiply, screen], default normal) -> blend (mode)
     * Dark mode (boolean, default false) -> composite1 (true: in2="component2")
 */
@@ -498,16 +498,16 @@ public:
               "<name>" N_("Neon draw, custom") "</name>\n"
               "<id>org.inkscape.effect.filter.NeonDraw</id>\n"
               "<param name=\"type\" gui-text=\"" N_("Line type:") "\" type=\"enum\">\n"
-                "<_item value=\"table\">" N_("Smoothed") "</_item>\n"
-                "<_item value=\"discrete\">" N_("Contrasted") "</_item>\n"
+                "<_item value=\"table\">Smoothed</_item>\n"
+                "<_item value=\"discrete\">Contrasted</_item>\n"
               "</param>\n"
               "<param name=\"simply\" gui-text=\"" N_("Simplify:") "\" type=\"float\" min=\"0.01\" max=\"20.0\">1.5</param>\n"
               "<param name=\"width\" gui-text=\"" N_("Line width:") "\" type=\"float\" min=\"0.01\" max=\"20.0\">1.5</param>\n"
-              "<param name=\"lightness\" gui-text=\"" N_("Lightness:") "\" type=\"float\" min=\"0.\" max=\"10.0\">5</param>\n"
+              "<param name=\"lightness\" gui-text=\"" N_("Lightness:") "\" type=\"float\" min=\"0.\" max=\"10.0\">0.5</param>\n"
               "<param name=\"blend\" gui-text=\"" N_("Blend mode:") "\" type=\"enum\">\n"
-                "<_item value=\"normal\">" N_("Normal") "</_item>\n"
-                "<_item value=\"multiply\">" N_("Multiply") "</_item>\n"
-                "<_item value=\"screen\">" N_("Screen") "</_item>\n"
+                "<_item value=\"normal\">Normal</_item>\n"
+                "<_item value=\"multiply\">Multiply</_item>\n"
+                "<_item value=\"screen\">Screen</_item>\n"
               "</param>\n"
               "<param name=\"dark\" gui-text=\"" N_("Dark mode") "\" type=\"boolean\" >false</param>\n"
               "<effect>\n"
@@ -603,18 +603,18 @@ public:
               "<name>" N_("Poster paint, custom") "</name>\n"
               "<id>org.inkscape.effect.filter.Posterize</id>\n"
               "<param name=\"type\" gui-text=\"" N_("Effect type:") "\" type=\"enum\">\n"
-                "<_item value=\"normal\">" N_("Normal") "</_item>\n"
-                "<_item value=\"dented\">" N_("Dented") "</_item>\n"
+                "<_item value=\"normal\">Normal</_item>\n"
+                "<_item value=\"dented\">Dented</_item>\n"
               "</param>\n"
               "<param name=\"table\" gui-text=\"" N_("Transfer type:") "\" type=\"enum\">\n"
-                "<_item value=\"discrete\">" N_("Poster") "</_item>\n"
-                "<_item value=\"table\">" N_("Painting") "</_item>\n"
+                "<_item value=\"discrete\">Poster</_item>\n"
+                "<_item value=\"table\">Painting</_item>\n"
               "</param>\n"
               "<param name=\"levels\" gui-text=\"" N_("Levels:") "\" type=\"int\" min=\"1\" max=\"15\">5</param>\n"
               "<param name=\"blend\" gui-text=\"" N_("Blend mode:") "\" type=\"enum\">\n"
-                "<_item value=\"lighten\">" N_("Lighten") "</_item>\n"
-                "<_item value=\"normal\">" N_("Normal") "</_item>\n"
-                "<_item value=\"darken\">" N_("Darken") "</_item>\n"
+                "<_item value=\"lighten\">Lighten</_item>\n"
+                "<_item value=\"normal\">Normal</_item>\n"
+                "<_item value=\"darken\">Darken</_item>\n"
               "</param>\n"
               "<param name=\"blur1\" gui-text=\"" N_("Primary blur:") "\" type=\"float\" min=\"0.01\" max=\"100.0\">4.0</param>\n"
               "<param name=\"blur2\" gui-text=\"" N_("Secondary blur:") "\" type=\"float\" min=\"0.01\" max=\"100.0\">0.5</param>\n"

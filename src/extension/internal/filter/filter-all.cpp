@@ -47,9 +47,12 @@ Filter::filters_all (void )
     SpecularLight::init();
 
     // Color
+    Brightness::init();
     Colorize::init();
     Duochrome::init();
     Electrize::init();
+    Greyscale::init();
+    Lightness::init();
     Quadritone::init();
     Solarize::init();
     Tritone::init();

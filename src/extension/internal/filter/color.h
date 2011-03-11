@@ -8,9 +8,12 @@
  *   Nicolas Dufour (UI) <nicoduf@yahoo.fr>
  *
  * Color filters
+ *   Brightness
  *   Colorize
  *   Duochrome
  *   Electrize
+ *   Greyscale
+ *   Lightness
  *   Quadritone
  *   Solarize
  *   Tritone
@@ -29,6 +32,75 @@ namespace Inkscape {
 namespace Extension {
 namespace Internal {
 namespace Filter {
+
+/**
+    \brief    Custom predefined Brightness filter.
+    
+    Brightness filter.
+
+    Filter's parameters:
+    * Strength (-10.->10., default 10) -> colorMatrix (RVB entries [/10])
+    * Vibration (-10.->10., default 0.) -> colorMatrix (6 other entries [/10])
+    * Lightness (-10.->10., default 0.) -> colorMatrix (last column [/10])
+    
+    Matrix:
+      St Vi Vi 0  Li
+      Vi St Vi 0  Li
+      Vi Vi St 0  Li
+      0  0  0  1  0
+*/
+class Brightness : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    Brightness ( ) : Filter() { };
+    virtual ~Brightness ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Brightness, custom (Color)") "</name>\n"
+              "<id>org.inkscape.effect.filter.Brightness</id>\n"
+              "<param name=\"strength\" gui-text=\"" N_("Strength:") "\" type=\"float\" min=\"-100.0\" max=\"100.0\">10</param>\n"
+              "<param name=\"vibration\" gui-text=\"" N_("Vibration:") "\" type=\"float\" min=\"-100.0\" max=\"100.0\">0</param>\n"
+              "<param name=\"lightness\" gui-text=\"" N_("Lightness:") "\" type=\"float\" min=\"-100.0\" max=\"100.0\">0</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Brightness filter") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new Brightness());
+    };
+};
+
+gchar const *
+Brightness::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream strength;
+    std::ostringstream vibration;
+    std::ostringstream lightness;
+
+    strength << (ext->get_param_float("strength") / 10);
+    vibration << (ext->get_param_float("vibration") / 10);
+    lightness << (ext->get_param_float("lightness") / 10);
+
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Brightness, custom\">\n"
+          "<feColorMatrix values=\"%s %s %s 0 %s %s %s %s 0 %s %s %s %s 0 %s 0 0 0 1 0 \" />\n"
+        "</filter>\n", strength.str().c_str(), vibration.str().c_str(), vibration.str().c_str(),
+            lightness.str().c_str(), vibration.str().c_str(), strength.str().c_str(),
+            vibration.str().c_str(), lightness.str().c_str(), vibration.str().c_str(),
+            vibration.str().c_str(), strength.str().c_str(), lightness.str().c_str());
+
+    return _filter;
+}; /* Brightness filter */
 
 /**
     \brief    Custom predefined Colorize filter.
@@ -348,6 +420,163 @@ Electrize::get_filter_text (Inkscape::Extension::Extension * ext)
 
     return _filter;
 }; /* Electrize filter */
+
+/**
+    \brief    Custom predefined Greyscale filter.
+    
+    Customize greyscale components.
+
+    Filter's parameters:
+    * Red (-100.->100., default 2.1) -> colorMatrix (values [/10])
+    * Green (-100.->100., default 7.2) -> colorMatrix (values [/10])
+    * Blue (-100.->100., default 0.72) -> colorMatrix (values [/10])
+    * Lightness (-100.->100., default 0.) -> colorMatrix (values [/10])
+    * Transparent (boolean, default false) -> matrix structure
+    
+    Matrix:
+     normal       transparency
+    R G B St 0    0 0 0 0    0
+    R G B St 0    0 0 0 0    0
+    R G B St 0    0 0 0 0    0  
+    0 0 0 1  0    R G B 1-St 0
+*/
+class Greyscale : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    Greyscale ( ) : Filter() { };
+    virtual ~Greyscale ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Greyscale, custom (Color)") "</name>\n"
+              "<id>org.inkscape.effect.filter.Greyscale</id>\n"
+              "<param name=\"red\" gui-text=\"" N_("Red:") "\" type=\"float\" min=\"-100.0\" max=\"100.0\">2.1</param>\n"
+              "<param name=\"green\" gui-text=\"" N_("Green:") "\" type=\"float\" min=\"-100.0\" max=\"100.0\">7.2</param>\n"
+              "<param name=\"blue\" gui-text=\"" N_("Blue:") "\" type=\"float\" min=\"-100.\" max=\"100.0\">0.72</param>\n"
+              "<param name=\"strength\" gui-text=\"" N_("Lightness:") "\" type=\"float\" min=\"-100.\" max=\"100.0\">0</param>\n"
+              "<param name=\"transparent\" gui-text=\"" N_("Transparent") "\" type=\"boolean\" >false</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Customize greyscale components") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new Greyscale());
+    };
+};
+
+gchar const *
+Greyscale::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream red;
+    std::ostringstream green;
+    std::ostringstream blue;
+    std::ostringstream strength;
+    std::ostringstream redt;
+    std::ostringstream greent;
+    std::ostringstream bluet;
+    std::ostringstream strengtht;
+    std::ostringstream transparency;
+    std::ostringstream line;
+    
+    red << (ext->get_param_float("red") / 10);
+    green << (ext->get_param_float("green") / 10);
+    blue << (ext->get_param_float("blue") / 10);
+    strength << (ext->get_param_float("strength") / 10);
+    
+    redt << - (ext->get_param_float("red") / 10);
+    greent << - (ext->get_param_float("green") / 10);
+    bluet << - (ext->get_param_float("blue") / 10);
+    strengtht << 1 - (ext->get_param_float("strength") / 10);
+
+    if (ext->get_param_bool("transparent")) {
+        line << "0 0 0 0";
+        transparency << redt.str().c_str() << " " <<  greent.str().c_str() << " " <<  bluet.str().c_str() << " " << strengtht.str().c_str();
+    } else {
+        line << red.str().c_str() << " " <<  green.str().c_str() << " " <<  blue.str().c_str() << " " << strength.str().c_str();
+        transparency << "0 0 0 1";
+    }
+    
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Greyscale, custom\">\n"
+          "<feColorMatrix values=\"%s 0 %s 0 %s 0 %s 0 \" />\n"
+        "</filter>\n", line.str().c_str(), line.str().c_str(), line.str().c_str(), transparency.str().c_str());
+    return _filter;
+}; /* Greyscale filter */
+
+/**
+    \brief    Custom predefined Lightness filter.
+    
+    Modify lights and shadows separately.
+
+    Filter's parameters:
+    * Lightness (0.->200., default 10.) -> component (amplitude [/10])
+    * Shadow (0.->200., default 10.) -> component (exponent [/10])
+    * Offset (-10.->10., default 0.) -> component (offset [/10])
+*/
+class Lightness : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    Lightness ( ) : Filter() { };
+    virtual ~Lightness ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Lightness, custom (Color)") "</name>\n"
+              "<id>org.inkscape.effect.filter.Lightness</id>\n"
+              "<param name=\"amplitude\" gui-text=\"" N_("Lights:") "\" type=\"float\" min=\"0.0\" max=\"200.0\">10.0</param>\n"
+              "<param name=\"exponent\" gui-text=\"" N_("Shadows:") "\" type=\"float\" min=\"0.0\" max=\"200.0\">10.0</param>\n"
+              "<param name=\"offset\" gui-text=\"" N_("Offset:") "\" type=\"float\" min=\"-10.\" max=\"10.0\">0.0</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Modify lights and shadows separately") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new Lightness());
+    };
+};
+
+gchar const *
+Lightness::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream amplitude;
+    std::ostringstream exponent;
+    std::ostringstream offset;
+
+    amplitude << (ext->get_param_float("amplitude") / 10);
+    exponent << (ext->get_param_float("exponent") / 10);
+    offset << (ext->get_param_float("offset") / 10);
+
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Lightness, custom\">\n"
+          "<feComponentTransfer in=\"blur\" stdDeviation=\"2\" result=\"component\" >\n"
+          "<feFuncR type=\"gamma\" amplitude=\"%s\" exponent=\"%s\" offset=\"%s\" />\n"
+          "<feFuncG type=\"gamma\" amplitude=\"%s\" exponent=\"%s\" offset=\"%s\" />\n"
+          "<feFuncB type=\"gamma\" amplitude=\"%s\" exponent=\"%s\" offset=\"%s\" />\n"
+          "</feComponentTransfer>\n"
+        "</filter>\n", amplitude.str().c_str(), exponent.str().c_str(), offset.str().c_str(),
+            amplitude.str().c_str(), exponent.str().c_str(), offset.str().c_str(),
+            amplitude.str().c_str(), exponent.str().c_str(), offset.str().c_str());
+
+    return _filter;
+}; /* Lightness filter */
 
 /**
     \brief    Custom predefined Quadritone filter.
