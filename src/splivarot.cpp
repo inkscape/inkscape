@@ -626,32 +626,51 @@ void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Affine 
 }
 
 static
+void item_outline_add_marker_child( SPItem const *item, Geom::Affine marker_transform, Geom::PathVector* pathv_in )
+{
+    Geom::Affine tr(marker_transform);
+    tr = item->transform * tr;
+
+    // note: a marker child item can be an item group!
+    if (SP_IS_GROUP(item)) {
+        // recurse through all childs:
+        for (SPObject const *o = item->firstChild() ; o ; o = o->getNext() ) {
+            if ( SP_IS_ITEM(o) ) {
+                item_outline_add_marker_child(SP_ITEM(o), tr, pathv_in);
+            }
+        }
+    } else {
+        Geom::PathVector* marker_pathv = item_outline(item);
+
+        if (marker_pathv) {
+            for (unsigned int j=0; j < marker_pathv->size(); j++) {
+                pathv_in->push_back((*marker_pathv)[j] * tr);
+            }
+            delete marker_pathv;
+        }
+    }
+}
+
+static
 void item_outline_add_marker( SPObject const *marker_object, Geom::Affine marker_transform,
                               Geom::Scale stroke_scale, Geom::PathVector* pathv_in )
 {
     SPMarker const * marker = SP_MARKER(marker_object);
-    SPItem const * marker_item = sp_item_first_item_child(marker_object);
 
     Geom::Affine tr(marker_transform);
     if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
         tr = stroke_scale * tr;
     }
     // total marker transform
-    tr = marker_item->transform * marker->c2p * tr;
+    tr = marker->c2p * tr;
 
-    Geom::PathVector* marker_pathv = item_outline(marker_item);
-    
-    if (marker_pathv) {
-        for (unsigned int j=0; j < marker_pathv->size(); j++) {
-            pathv_in->push_back((*marker_pathv)[j] * tr);
-        }
-        delete marker_pathv;
-    }
+    SPItem const * marker_item = sp_item_first_item_child(marker_object); // why only consider the first item? can a marker only consist of a single item (that may be a group)?
+    item_outline_add_marker_child(marker_item, tr, pathv_in);
 }
 
 /**
  *  Returns a pathvector that is the outline of the stroked item, with markers.
- *  item must be SPShape of SPText.
+ *  item must be SPShape or SPText.
  */
 Geom::PathVector* item_outline(SPItem const *item)
 {
