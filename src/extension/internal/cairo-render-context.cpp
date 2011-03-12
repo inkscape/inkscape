@@ -58,6 +58,8 @@
 
 #include "io/sys.h"
 
+#include "svg/stringstream.h"
+
 #include <cairo.h>
 
 // include support for only the compiled-in surface types
@@ -785,6 +787,13 @@ CairoRenderContext::setupSurface(double width, double height)
     _width = width;
     _height = height;
 
+    Inkscape::SVGOStringStream os_bbox;
+    Inkscape::SVGOStringStream os_pagebbox;
+    os_bbox.setf(std::ios::fixed); // don't use scientific notation
+    os_pagebbox.setf(std::ios::fixed); // don't use scientific notation
+    os_bbox << "%%BoundingBox: 0 0 " << width << height;
+    os_pagebbox << "%%PageBoundingBox: 0 0 " << width << height;
+
     cairo_surface_t *surface = NULL;
     cairo_matrix_t ctm;
     cairo_matrix_init_identity (&ctm);
@@ -812,11 +821,9 @@ CairoRenderContext::setupSurface(double width, double height)
 #endif
             // Cairo calculates the bounding box itself, however we want to override this. See Launchpad bug #380501
 #if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 11, 2))
-// This is only a template, override_bbox and the bounding box values must be defned.
-//            if (override_bbox) {
-//                cairo_ps_dsc_comment(surface, "%%BoundingBox: 100 100 200 200");
-//                cairo_ps_dsc_comment(surface, "%%PageBoundingBox: 100 100 200 200");
-//            }
+//            cairo_ps_dsc_comment(surface, os_bbox.str().c_str());
+//            cairo_ps_dsc_begin_page(surface);
+//            cairo_ps_dsc_comment(surface, os_pagebbox.str().c_str());
 #endif
             break;
 #endif
