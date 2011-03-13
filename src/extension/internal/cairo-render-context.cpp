@@ -791,8 +791,8 @@ CairoRenderContext::setupSurface(double width, double height)
     Inkscape::SVGOStringStream os_pagebbox;
     os_bbox.setf(std::ios::fixed); // don't use scientific notation
     os_pagebbox.setf(std::ios::fixed); // don't use scientific notation
-    os_bbox << "%%BoundingBox: 0 0 " << width << height;
-    os_pagebbox << "%%PageBoundingBox: 0 0 " << width << height;
+    os_bbox << "%%BoundingBox: 0 0 " << (int)ceil(width) << (int)ceil(height);  // apparently, the numbers should be integers. (see bug 380501)
+    os_pagebbox << "%%PageBoundingBox: 0 0 " << (int)ceil(width) << (int)ceil(height);
 
     cairo_surface_t *surface = NULL;
     cairo_matrix_t ctm;
