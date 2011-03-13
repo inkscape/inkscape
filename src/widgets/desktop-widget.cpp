@@ -943,10 +943,9 @@ SPDesktopWidget::shutdown()
                 GTK_DIALOG_DESTROY_WITH_PARENT,
                 GTK_MESSAGE_WARNING,
                 GTK_BUTTONS_NONE,
-                _("<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n\n"
+                _("<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format that may cause data loss!</span>\n\n"
                   "Do you want to save this file as Inkscape SVG?"),
-                doc->getName() ? doc->getName() : "Unnamed",
-                SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE);
+                doc->getName() ? doc->getName() : "Unnamed");
             // fix for bug 1767940:
             GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), GTK_CAN_FOCUS);
 
