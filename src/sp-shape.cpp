@@ -508,6 +508,8 @@ void SPShape::sp_shape_modified(SPObject *object, unsigned int flags)
 void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags)
 {
     SPShape const *shape = SP_SHAPE (item);
+    SPItem::BBoxType bboxtype = (SPItem::BBoxType) flags;
+
     if (shape->curve) {
         Geom::OptRect geombbox = bounds_exact_transformed(shape->curve->get_pathvector(), transform);
         if (geombbox) {
@@ -517,7 +519,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const
             cbbox.x1 = (*geombbox)[0][1];
             cbbox.y1 = (*geombbox)[1][1];
 
-            switch ((SPItem::BBoxType) flags) {
+            switch (bboxtype) {
                 case SPItem::GEOMETRIC_BBOX: {
                     // do nothing
                     break;
