@@ -17,14 +17,19 @@ namespace Inkscape {
 namespace Extension {
 
 class ParamFloat : public Parameter {
-private:
-    /** \brief  Internal value. */
-    float _value;
-    float _min;
-    float _max;
-    int _precision;
 public:
-    ParamFloat (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
+    enum AppearanceMode {
+        FULL, MINIMAL
+    };
+    ParamFloat (const gchar * name,
+                const gchar * guitext,
+                const gchar * desc,
+                const Parameter::_scope_t scope,
+                bool gui_hidden,
+                const gchar * gui_tip,
+                Inkscape::Extension::Extension * ext,
+                Inkscape::XML::Node * xml,
+                AppearanceMode mode);
     /** \brief  Returns \c _value */
     float get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
     float set (float in, SPDocument * doc, Inkscape::XML::Node * node);
@@ -33,6 +38,13 @@ public:
     float precision (void) { return _precision; }
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void string (std::string &string);
+private:
+    /** \brief  Internal value. */
+    float _value;
+    float _min;
+    float _max;
+    int _precision;
+    AppearanceMode _mode;
 };
 
 }  /* namespace Extension */

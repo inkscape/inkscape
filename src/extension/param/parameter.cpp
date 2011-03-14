@@ -124,9 +124,17 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
     if (!strcmp(type, "boolean")) {
         param = new ParamBool(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "int")) {
-        param = new ParamInt(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
+        if (appearance && !strcmp(appearance, "minimal")) {
+            param = new ParamInt(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamInt::MINIMAL);
+        } else {
+            param = new ParamInt(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamInt::FULL);
+        }
     } else if (!strcmp(type, "float")) {
-        param = new ParamFloat(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
+        if (appearance && !strcmp(appearance, "minimal")) {
+            param = new ParamFloat(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamFloat::MINIMAL);
+        } else {
+            param = new ParamFloat(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamFloat::FULL);
+        }
     } else if (!strcmp(type, "string")) {
         param = new ParamString(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
         const gchar * max_length = in_repr->attribute("max_length");

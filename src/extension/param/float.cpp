@@ -11,6 +11,7 @@
 
 #include <gtkmm/adjustment.h>
 #include <gtkmm/box.h>
+#include <gtkmm/scale.h>
 #include <gtkmm/spinbutton.h>
 
 #include "xml/node.h"
@@ -23,8 +24,17 @@ namespace Extension {
 
 
 /** \brief  Use the superclass' allocator and set the \c _value */
-ParamFloat::ParamFloat (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-        Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext), _value(0.0), _min(0.0), _max(10.0)
+ParamFloat::ParamFloat (const gchar * name,
+                        const gchar * guitext,
+                        const gchar * desc,
+                        const Parameter::_scope_t scope,
+                        bool gui_hidden,
+                        const gchar * gui_tip,
+                        Inkscape::Extension::Extension * ext,
+                        Inkscape::XML::Node * xml,
+                        AppearanceMode mode) :
+        Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext),
+                  _value(0.0), _mode(mode), _min(0.0), _max(10.0)
 {
     const gchar * defaultval = NULL;
     if (sp_repr_children(xml) != NULL)
@@ -153,6 +163,15 @@ ParamFloat::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::sign
     hbox->pack_start(*label, true, true);
 
     ParamFloatAdjustment * fadjust = Gtk::manage(new ParamFloatAdjustment(this, doc, node, changeSignal));
+    
+    if (_mode == FULL) {
+        Gtk::HScale * scale = Gtk::manage(new Gtk::HScale(*fadjust));
+        scale->set_draw_value(false);
+        scale->set_size_request(200, -1);
+        scale->show();
+        hbox->pack_start(*scale, false, false);
+    }
+ 
     Gtk::SpinButton * spin = Gtk::manage(new Gtk::SpinButton(*fadjust, 0.1, _precision));
     spin->show();
     hbox->pack_start(*spin, false, false);

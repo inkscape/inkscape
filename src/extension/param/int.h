@@ -17,13 +17,19 @@ namespace Inkscape {
 namespace Extension {
 
 class ParamInt : public Parameter {
-private:
-    /** \brief  Internal value. */
-    int _value;
-    int _min;
-    int _max;
 public:
-    ParamInt (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
+    enum AppearanceMode {
+        FULL, MINIMAL
+    };
+    ParamInt (const gchar * name,
+              const gchar * guitext,
+              const gchar * desc,
+              const Parameter::_scope_t scope,
+              bool gui_hidden,
+              const gchar * gui_tip,
+              Inkscape::Extension::Extension * ext,
+              Inkscape::XML::Node * xml,
+              AppearanceMode mode);
     /** \brief  Returns \c _value */
     int get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
     int set (int in, SPDocument * doc, Inkscape::XML::Node * node);
@@ -31,6 +37,12 @@ public:
     int min (void) { return _min; }
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void string (std::string &string);
+private:
+    /** \brief  Internal value. */
+    int _value;
+    int _min;
+    int _max;
+    AppearanceMode _mode;
 };
 
 }  /* namespace Extension */
