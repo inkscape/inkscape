@@ -978,7 +978,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
 
         // Create a new group if necessary.
         Inkscape::XML::Node *newgroup = NULL;
-        if ((style && style->firstChild()) || items_count > 1) {
+        if ((style && style->attributeList()) || items_count > 1) {
             newgroup = xml_in_doc->createElement("svg:g");
             sp_repr_css_set(newgroup, style, "style");
         }
