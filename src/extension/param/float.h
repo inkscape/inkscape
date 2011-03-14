@@ -41,10 +41,10 @@ public:
 private:
     /** \brief  Internal value. */
     float _value;
+    AppearanceMode _mode;
     float _min;
     float _max;
     int _precision;
-    AppearanceMode _mode;
 };
 
 }  /* namespace Extension */

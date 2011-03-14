@@ -40,9 +40,9 @@ public:
 private:
     /** \brief  Internal value. */
     int _value;
+    AppearanceMode _mode;
     int _min;
     int _max;
-    AppearanceMode _mode;
 };
 
 }  /* namespace Extension */
