@@ -301,7 +301,7 @@ CrossEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
     * Smoothness strength (0.01->20, default 0.6) -> blur2 (stdDeviation)
     * Dilatation (1.->50., default 6) -> color2 (n-1th value)
     * Erosion (0.->50., default 2) -> color2 (nth value 0->-50)
-    * Transluscent (boolean, default false) -> composite 8 (in, true->merge1, false->composite7)
+    * Transluscent (boolean, default false) -> composite 8 (in, true->merge1, false->color5)
 
     * Blur strength (0.01->20., default 1.) -> blur3 (stdDeviation)
     * Blur dilatation (1.->50., default 6) -> color4 (n-1th value)
@@ -404,7 +404,7 @@ Drawing::get_filter_text (Inkscape::Extension::Extension * ext)
     if (ext->get_param_bool("transluscent"))
         transluscent << "merge1";
     else
-        transluscent << "composite7";
+        transluscent << "color5";
     offset << ext->get_param_int("offset");
     
     blur << ext->get_param_float("blur");
@@ -460,8 +460,7 @@ Drawing::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feMergeNode in=\"composite5\" />\n"
           "<feMergeNode in=\"offset1\" />\n"
         "</feMerge>\n"
-        "<feComposite in=\"merge1\" in2=\"merge1\" operator=\"over\" result=\"composite6\" />\n"
-        "<feComposite in=\"composite6\" in2=\"composite6\" operator=\"over\" result=\"composite7\" />\n"
+        "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1.3 0 \" result=\"color5\" flood-opacity=\"0.56\" />\n"
         "<feComposite in=\"%s\" in2=\"SourceGraphic\" operator=\"in\" result=\"composite8\" />\n"
         "</filter>\n", simply.str().c_str(), clean.str().c_str(), erase.str().c_str(), smooth.str().c_str(), dilat.str().c_str(), erosion.str().c_str(),  blur.str().c_str(), bdilat.str().c_str(), berosion.str().c_str(), stroker.str().c_str(), strokeg.str().c_str(), strokeb.str().c_str(), ios.str().c_str(), strokea.str().c_str(), offset.str().c_str(), offset.str().c_str(), fillr.str().c_str(), fillg.str().c_str(), fillb.str().c_str(), iof.str().c_str(), filla.str().c_str(), transluscent.str().c_str());
 
