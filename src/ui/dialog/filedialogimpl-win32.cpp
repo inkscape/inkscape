@@ -1577,6 +1577,17 @@ FileSaveDialogImplWin32::FileSaveDialogImplWin32(Gtk::Window &parent,
 {
     FileSaveDialog::myDocTitle = docTitle;
     createFilterMenu();
+
+    /* The code below sets the default file name */
+        myFilename = "";
+        if (dir.size() > 0) {
+            Glib::ustring udir(dir);
+            Glib::ustring::size_type len = udir.length();
+            // leaving a trailing backslash on the directory name leads to the infamous
+            // double-directory bug on win32
+            if (len != 0 && udir[len - 1] == '\\') udir.erase(len - 1);
+            myFilename = udir.substr(0, udir.find_last_of( '.' ) ); // this removes the extension, or actually, removes everything past the last dot (hopefully this is what most people want)
+        }
 }
 
 FileSaveDialogImplWin32::~FileSaveDialogImplWin32()
