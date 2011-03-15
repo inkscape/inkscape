@@ -124,16 +124,16 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
     if (!strcmp(type, "boolean")) {
         param = new ParamBool(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "int")) {
-        if (appearance && !strcmp(appearance, "minimal")) {
-            param = new ParamInt(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamInt::MINIMAL);
-        } else {
+        if (appearance && !strcmp(appearance, "full")) {
             param = new ParamInt(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamInt::FULL);
+        } else {
+            param = new ParamInt(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamInt::MINIMAL);
         }
     } else if (!strcmp(type, "float")) {
-        if (appearance && !strcmp(appearance, "minimal")) {
-            param = new ParamFloat(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamFloat::MINIMAL);
-        } else {
+        if (appearance && !strcmp(appearance, "full")) {
             param = new ParamFloat(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamFloat::FULL);
+        } else {
+            param = new ParamFloat(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamFloat::MINIMAL);
         }
     } else if (!strcmp(type, "string")) {
         param = new ParamString(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
