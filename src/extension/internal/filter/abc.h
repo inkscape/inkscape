@@ -58,8 +58,8 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Blur, custom (ABCs)") "</name>\n"
               "<id>org.inkscape.effect.filter.Blur</id>\n"
-              "<param name=\"hblur\" gui-text=\"" N_("Horizontal blur:") "\" type=\"float\" appearance=\"full\" min=\"0.01\" max=\"100\">2</param>\n"
-              "<param name=\"vblur\" gui-text=\"" N_("Vertical blur:") "\" type=\"float\" appearance=\"full\" min=\"0.01\" max=\"100\">2</param>\n"
+              "<param name=\"hblur\" gui-text=\"" N_("Horizontal blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.00\">2</param>\n"
+              "<param name=\"vblur\" gui-text=\"" N_("Vertical blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.00\">2</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -115,7 +115,7 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Clean edges, custom (ABCs)") "</name>\n"
               "<id>org.inkscape.effect.filter.CleanEdges</id>\n"
-              "<param name=\"blur\" gui-text=\"" N_("Strength:") "\" type=\"float\" appearance=\"full\" min=\"0.01\" max=\"2.0\">0.4</param>\n"
+              "<param name=\"blur\" gui-text=\"" N_("Strength:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"2.00\">0.4</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -157,7 +157,7 @@ CleanEdges::get_filter_text (Inkscape::Extension::Extension * ext)
 
     Filter's parameters:
     * Shift (0->360, default 330) -> color1 (values)
-    * Saturation (0.->10., default 6) -> color2 (values [/10])
+    * Saturation (0.->1., default 0.6) -> color2 (values)
 */
 
 class ColorShift : public Inkscape::Extension::Internal::Filter::Filter {
@@ -173,8 +173,8 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Color shift, custom (ABCs)") "</name>\n"
               "<id>org.inkscape.effect.filter.ColorShift</id>\n"
-              "<param name=\"shift\" gui-text=\"" N_("Shift:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">330</param>\n"
-              "<param name=\"sat\" gui-text=\"" N_("Saturation:") "\" type=\"float\" appearance=\"full\" min=\"0.\" max=\"10\">6</param>\n"
+              "<param name=\"shift\" gui-text=\"" N_("Shift (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">330</param>\n"
+              "<param name=\"sat\" gui-text=\"" N_("Saturation:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1\">0.6</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -198,7 +198,7 @@ ColorShift::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream sat;
 
     shift << ext->get_param_int("shift");
-    sat << (ext->get_param_float("sat") / 10);
+    sat << ext->get_param_float("sat");
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Color shift, custom\">\n"
@@ -235,8 +235,8 @@ public:
               "<name>" N_("Diffuse light, custom (ABCs)") "</name>\n"
               "<id>org.inkscape.effect.filter.DiffuseLight</id>\n"
               "<param name=\"smooth\" gui-text=\"" N_("Smoothness:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"10\">6</param>\n"
-              "<param name=\"elevation\" gui-text=\"" N_("Elevation:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">25</param>\n"
-              "<param name=\"azimuth\" gui-text=\"" N_("Azimuth:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">235</param>\n"
+              "<param name=\"elevation\" gui-text=\"" N_("Elevation (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">25</param>\n"
+              "<param name=\"azimuth\" gui-text=\"" N_("Azimuth (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">235</param>\n"
               "<param name=\"color\" gui-text=\"" N_("Lightning color") "\" type=\"color\">-1</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
@@ -310,7 +310,7 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Feather, custom (ABCs)") "</name>\n"
               "<id>org.inkscape.effect.filter.Feather</id>\n"
-              "<param name=\"blur\" gui-text=\"" N_("Strength:") "\" type=\"float\" appearance=\"full\" min=\"0.01\" max=\"100\">5</param>\n"
+              "<param name=\"blur\" gui-text=\"" N_("Strength:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.00\">5</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -371,10 +371,10 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Matte jelly, custom (ABCs)") "</name>\n"
               "<id>org.inkscape.effect.filter.MatteJelly</id>\n"
-              "<param name=\"smooth\" gui-text=\"" N_("Smoothness:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"10\">7</param>\n"
-              "<param name=\"bright\" gui-text=\"" N_("Brightness:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"5\">0.9</param>\n"
-              "<param name=\"elevation\" gui-text=\"" N_("Elevation:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">60</param>\n"
-              "<param name=\"azimuth\" gui-text=\"" N_("Azimuth:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">225</param>\n"
+              "<param name=\"smooth\" gui-text=\"" N_("Smoothness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.00\" max=\"10.00\">7</param>\n"
+              "<param name=\"bright\" gui-text=\"" N_("Brightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.00\" max=\"5.00\">0.9</param>\n"
+              "<param name=\"elevation\" gui-text=\"" N_("Elevation (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">60</param>\n"
+              "<param name=\"azimuth\" gui-text=\"" N_("Azimuth (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">225</param>\n"
               "<param name=\"color\" gui-text=\"" N_("Lightning color") "\" type=\"color\">-1</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
@@ -436,8 +436,8 @@ MatteJelly::get_filter_text (Inkscape::Extension::Extension * ext)
 
     Filter's parameters:
     * Turbulence type (enum, default fractalNoise else turbulence) -> turbulence (type)
-    * Horizontal frequency (*100) (0.001->1000., default 2) -> turbulence (baseFrequency [/100])
-    * Vertical frequency (*100) (0.001->1000., default 4) -> turbulence (baseFrequency [/100])
+    * Horizontal frequency (*1000) (0.01->10000., default 20) -> turbulence (baseFrequency [/1000])
+    * Vertical frequency (*1000) (0.01->10000., default 40) -> turbulence (baseFrequency [/1000])
     * Complexity (1->5, default 5) -> turbulence (numOctaves)
     * Variation (1->360, default 1) -> turbulence (seed)
     * Dilatation (1.->50., default 3) -> color (n-1th value)
@@ -465,12 +465,12 @@ public:
                     "<_item value=\"fractalNoise\">Fractal noise</_item>\n"
                     "<_item value=\"turbulence\">Turbulence</_item>\n"
                   "</param>\n"
-                  "<param name=\"hfreq\" gui-text=\"" N_("Horizontal frequency (x100):") "\" type=\"float\" appearance=\"full\" min=\"0.001\" max=\"1000\">2</param>\n"
-                  "<param name=\"vfreq\" gui-text=\"" N_("Vertical frequency (x100):") "\" type=\"float\" appearance=\"full\" min=\"0.001\" max=\"1000\">4</param>\n"
+                  "<param name=\"hfreq\" gui-text=\"" N_("Horizontal frequency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"10000.00\">20</param>\n"
+                  "<param name=\"vfreq\" gui-text=\"" N_("Vertical frequency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"10000.00\">40</param>\n"
                   "<param name=\"complexity\" gui-text=\"" N_("Complexity:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"5\">5</param>\n"
                   "<param name=\"variation\" gui-text=\"" N_("Variation:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"360\">0</param>\n"
-                  "<param name=\"dilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" appearance=\"full\" min=\"1\" max=\"50\">3</param>\n"
-                  "<param name=\"erosion\" gui-text=\"" N_("Erosion:") "\" type=\"float\" appearance=\"full\" min=\"0\" max=\"50\">1</param>\n"
+                  "<param name=\"dilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"1\" max=\"50\">3</param>\n"
+                  "<param name=\"erosion\" gui-text=\"" N_("Erosion:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0\" max=\"50\">1</param>\n"
                   "<param name=\"inverted\" gui-text=\"" N_("Inverted") "\" type=\"boolean\" >false</param>\n"
                 "</page>\n"
                 "<page name=\"co11tab\" _gui-text=\"Noise color\">\n"
@@ -510,8 +510,8 @@ NoiseFill::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream inverted;
 
     type << ext->get_param_enum("type");
-    hfreq << (ext->get_param_float("hfreq") / 100);
-    vfreq << (ext->get_param_float("vfreq") / 100);
+    hfreq << (ext->get_param_float("hfreq") / 1000);
+    vfreq << (ext->get_param_float("vfreq") / 1000);
     complexity << ext->get_param_int("complexity");
     variation << ext->get_param_int("variation");
     dilat << ext->get_param_float("dilat");
@@ -571,10 +571,10 @@ public:
               "<id>org.inkscape.effect.filter.Outline</id>\n"
               "<param name=\"tab\" type=\"notebook\">\n"
                 "<page name=\"optionstab\" _gui-text=\"Options\">\n"
-                  "<param name=\"width\" gui-text=\"" N_("Width:") "\" type=\"float\" appearance=\"full\" min=\"0.01\" max=\"50\">5</param>\n"
-                  "<param name=\"melt\" gui-text=\"" N_("Melt:") "\" type=\"float\" appearance=\"full\" min=\"0.01\" max=\"50\">2</param>\n"
-                  "<param name=\"dilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" appearance=\"full\" min=\"1\" max=\"50\">8</param>\n"
-                  "<param name=\"erosion\" gui-text=\"" N_("Erosion:") "\" type=\"float\" appearance=\"full\" min=\"0\" max=\"50\">5</param>\n"
+                  "<param name=\"width\" gui-text=\"" N_("Width:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"50.00\">5</param>\n"
+                  "<param name=\"melt\" gui-text=\"" N_("Melt:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"50.00\">2</param>\n"
+                  "<param name=\"dilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"1\" max=\"50\">8</param>\n"
+                  "<param name=\"erosion\" gui-text=\"" N_("Erosion:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0\" max=\"50\">5</param>\n"
                 "</page>\n"
                 "<page name=\"co11tab\" _gui-text=\"Color\">\n"
                   "<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">1029214207</param>\n"
@@ -640,8 +640,8 @@ Outline::get_filter_text (Inkscape::Extension::Extension * ext)
 
     Filter's parameters:
     * Turbulence type (enum, default fractalNoise else turbulence) -> turbulence (type)
-    * Horizontal frequency (*100) (0.001->1000., default 1.3) -> turbulence (baseFrequency)
-    * Vertical frequency (*100) (0.001->1000., default 1.3) -> turbulence (baseFrequency)
+    * Horizontal frequency (*1000) (0.01->10000., default 13) -> turbulence (baseFrequency [/1000])
+    * Vertical frequency (*1000) (0.01->10000., default 13) -> turbulence (baseFrequency [/1000])
     * Complexity (1->5, default 5) -> turbulence (numOctaves)
     * Variation (1->360, default 1) -> turbulence (seed)
     * Intensity (0.0->50., default 6.6) -> displacement (scale)
@@ -664,8 +664,8 @@ public:
                 "<_item value=\"fractalNoise\">Fractal noise</_item>\n"
                 "<_item value=\"turbulence\">Turbulence</_item>\n"
               "</param>\n"
-              "<param name=\"hfreq\" gui-text=\"" N_("Horizontal frequency (x100):") "\" type=\"float\" appearance=\"full\" min=\"0.001\" max=\"1000\">1.3</param>\n"
-              "<param name=\"vfreq\" gui-text=\"" N_("Vertical frequency (x100):") "\" type=\"float\" appearance=\"full\" min=\"0.001\" max=\"1000\">1.3</param>\n"
+              "<param name=\"hfreq\" gui-text=\"" N_("Horizontal frequency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"10000.00\">13</param>\n"
+              "<param name=\"vfreq\" gui-text=\"" N_("Vertical frequency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"10000.00\">13</param>\n"
               "<param name=\"complexity\" gui-text=\"" N_("Complexity:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"5\">5</param>\n"
               "<param name=\"variation\" gui-text=\"" N_("Variation:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"360\">0</param>\n"
               "<param name=\"intensity\" gui-text=\"" N_("Intensity:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"50\">6.6</param>\n"
@@ -696,8 +696,8 @@ Roughen::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream intensity;
     
     type << ext->get_param_enum("type");
-    hfreq << (ext->get_param_float("hfreq") / 100);
-    vfreq << (ext->get_param_float("vfreq") / 100);
+    hfreq << (ext->get_param_float("hfreq") / 1000);
+    vfreq << (ext->get_param_float("vfreq") / 1000);
     complexity << ext->get_param_int("complexity");
     variation << ext->get_param_int("variation");
     intensity << ext->get_param_float("intensity");
@@ -735,7 +735,7 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Silhouette, custom (ABCs)") "</name>\n"
               "<id>org.inkscape.effect.filter.Silhouette</id>\n"
-              "<param name=\"blur\" gui-text=\"" N_("Blur:") "\" type=\"float\" appearance=\"full\" min=\"0.01\" max=\"50\">0.01</param>\n"
+              "<param name=\"blur\" gui-text=\"" N_("Blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"50.00\">0.01</param>\n"
               "<param name=\"cutout\" gui-text=\"" N_("Cutout") "\" type=\"boolean\">false</param>\n"
               "<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">255</param>\n"
               "<effect>\n"
@@ -813,8 +813,8 @@ public:
               "<id>org.inkscape.effect.filter.SpecularLight</id>\n"
               "<param name=\"smooth\" gui-text=\"" N_("Smoothness:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"10\">6</param>\n"
               "<param name=\"bright\" gui-text=\"" N_("Brightness:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"5\">1</param>\n"
-              "<param name=\"elevation\" gui-text=\"" N_("Elevation:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">45</param>\n"
-              "<param name=\"azimuth\" gui-text=\"" N_("Azimuth:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">235</param>\n"
+              "<param name=\"elevation\" gui-text=\"" N_("Elevation (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">45</param>\n"
+              "<param name=\"azimuth\" gui-text=\"" N_("Azimuth (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">235</param>\n"
               "<param name=\"color\" gui-text=\"" N_("Lightning color") "\" type=\"color\">-1</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"

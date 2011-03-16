@@ -39,9 +39,9 @@ namespace Filter {
     Brightness filter.
 
     Filter's parameters:
-    * Strength (-10.->10., default 10) -> colorMatrix (RVB entries [/10])
-    * Vibration (-10.->10., default 0.) -> colorMatrix (6 other entries [/10])
-    * Lightness (-10.->10., default 0.) -> colorMatrix (last column [/10])
+    * Strength (-10.->10., default 1) -> colorMatrix (RVB entries)
+    * Vibration (-10.->10., default 0.) -> colorMatrix (6 other entries)
+    * Lightness (-10.->10., default 0.) -> colorMatrix (last column)
     
     Matrix:
       St Vi Vi 0  Li
@@ -62,9 +62,9 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Brightness, custom (Color)") "</name>\n"
               "<id>org.inkscape.effect.filter.Brightness</id>\n"
-              "<param name=\"strength\" gui-text=\"" N_("Strength:") "\" type=\"float\" appearance=\"full\" min=\"-100.0\" max=\"100.0\">10</param>\n"
-              "<param name=\"vibration\" gui-text=\"" N_("Vibration:") "\" type=\"float\" appearance=\"full\" min=\"-100.0\" max=\"100.0\">0</param>\n"
-              "<param name=\"lightness\" gui-text=\"" N_("Lightness:") "\" type=\"float\" appearance=\"full\" min=\"-100.0\" max=\"100.0\">0</param>\n"
+              "<param name=\"strength\" gui-text=\"" N_("Strength:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">1</param>\n"
+              "<param name=\"vibration\" gui-text=\"" N_("Vibration:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0</param>\n"
+              "<param name=\"lightness\" gui-text=\"" N_("Lightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -87,9 +87,9 @@ Brightness::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream vibration;
     std::ostringstream lightness;
 
-    strength << (ext->get_param_float("strength") / 10);
-    vibration << (ext->get_param_float("vibration") / 10);
-    lightness << (ext->get_param_float("lightness") / 10);
+    strength << ext->get_param_float("strength");
+    vibration << ext->get_param_float("vibration");
+    lightness << ext->get_param_float("lightness");
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Brightness, custom\">\n"
@@ -427,10 +427,10 @@ Electrize::get_filter_text (Inkscape::Extension::Extension * ext)
     Customize greyscale components.
 
     Filter's parameters:
-    * Red (-100.->100., default 2.1) -> colorMatrix (values [/10])
-    * Green (-100.->100., default 7.2) -> colorMatrix (values [/10])
-    * Blue (-100.->100., default 0.72) -> colorMatrix (values [/10])
-    * Lightness (-100.->100., default 0.) -> colorMatrix (values [/10])
+    * Red (-10.->10., default .21) -> colorMatrix (values)
+    * Green (-10.->10., default .72) -> colorMatrix (values)
+    * Blue (-10.->10., default .072) -> colorMatrix (values)
+    * Lightness (-10.->10., default 0.) -> colorMatrix (values)
     * Transparent (boolean, default false) -> matrix structure
     
     Matrix:
@@ -453,10 +453,10 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Greyscale, custom (Color)") "</name>\n"
               "<id>org.inkscape.effect.filter.Greyscale</id>\n"
-              "<param name=\"red\" gui-text=\"" N_("Red:") "\" type=\"float\" appearance=\"full\" min=\"-100.0\" max=\"100.0\">2.1</param>\n"
-              "<param name=\"green\" gui-text=\"" N_("Green:") "\" type=\"float\" appearance=\"full\" min=\"-100.0\" max=\"100.0\">7.2</param>\n"
-              "<param name=\"blue\" gui-text=\"" N_("Blue:") "\" type=\"float\" appearance=\"full\" min=\"-100.\" max=\"100.0\">0.72</param>\n"
-              "<param name=\"strength\" gui-text=\"" N_("Lightness:") "\" type=\"float\" appearance=\"full\" min=\"-100.\" max=\"100.0\">0</param>\n"
+              "<param name=\"red\" gui-text=\"" N_("Red:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0.21</param>\n"
+              "<param name=\"green\" gui-text=\"" N_("Green:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0.72</param>\n"
+              "<param name=\"blue\" gui-text=\"" N_("Blue:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0.072</param>\n"
+              "<param name=\"strength\" gui-text=\"" N_("Lightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0</param>\n"
               "<param name=\"transparent\" gui-text=\"" N_("Transparent") "\" type=\"boolean\" >false</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
@@ -487,15 +487,15 @@ Greyscale::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream transparency;
     std::ostringstream line;
     
-    red << (ext->get_param_float("red") / 10);
-    green << (ext->get_param_float("green") / 10);
-    blue << (ext->get_param_float("blue") / 10);
-    strength << (ext->get_param_float("strength") / 10);
+    red << ext->get_param_float("red");
+    green << ext->get_param_float("green");
+    blue << ext->get_param_float("blue");
+    strength << ext->get_param_float("strength");
     
-    redt << - (ext->get_param_float("red") / 10);
-    greent << - (ext->get_param_float("green") / 10);
-    bluet << - (ext->get_param_float("blue") / 10);
-    strengtht << 1 - (ext->get_param_float("strength") / 10);
+    redt << - ext->get_param_float("red");
+    greent << - ext->get_param_float("green");
+    bluet << - ext->get_param_float("blue");
+    strengtht << 1 - ext->get_param_float("strength");
 
     if (ext->get_param_bool("transparent")) {
         line << "0 0 0 0";
@@ -518,9 +518,9 @@ Greyscale::get_filter_text (Inkscape::Extension::Extension * ext)
     Modify lights and shadows separately.
 
     Filter's parameters:
-    * Lightness (0.->200., default 10.) -> component (amplitude [/10])
-    * Shadow (0.->200., default 10.) -> component (exponent [/10])
-    * Offset (-10.->10., default 0.) -> component (offset [/10])
+    * Lightness (0.->20., default 1.) -> component (amplitude)
+    * Shadow (0.->20., default 1.) -> component (exponent)
+    * Offset (-1.->1., default 0.) -> component (offset)
 */
 class Lightness : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
@@ -535,9 +535,9 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Lightness, custom (Color)") "</name>\n"
               "<id>org.inkscape.effect.filter.Lightness</id>\n"
-              "<param name=\"amplitude\" gui-text=\"" N_("Lights:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"200.0\">10.0</param>\n"
-              "<param name=\"exponent\" gui-text=\"" N_("Shadows:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"200.0\">10.0</param>\n"
-              "<param name=\"offset\" gui-text=\"" N_("Offset:") "\" type=\"float\" appearance=\"full\" min=\"-10.\" max=\"10.0\">0.0</param>\n"
+              "<param name=\"amplitude\" gui-text=\"" N_("Lights:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.00\" max=\"20.00\">1</param>\n"
+              "<param name=\"exponent\" gui-text=\"" N_("Shadows:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.00\" max=\"20.00\">1</param>\n"
+              "<param name=\"offset\" gui-text=\"" N_("Offset:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-1.00\" max=\"1.00\">0</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -560,9 +560,9 @@ Lightness::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream exponent;
     std::ostringstream offset;
 
-    amplitude << (ext->get_param_float("amplitude") / 10);
-    exponent << (ext->get_param_float("exponent") / 10);
-    offset << (ext->get_param_float("offset") / 10);
+    amplitude << ext->get_param_float("amplitude");
+    exponent << ext->get_param_float("exponent");
+    offset << ext->get_param_float("offset");
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Lightness, custom\">\n"
@@ -604,14 +604,14 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Quadritone fantasy, custom (Color)") "</name>\n"
               "<id>org.inkscape.effect.filter.Quadritone</id>\n"
-                "<param name=\"dist\" gui-text=\"" N_("Hue distribution:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">280</param>\n"
+                "<param name=\"dist\" gui-text=\"" N_("Hue distribution (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">280</param>\n"
                 "<param name=\"colors\" gui-text=\"" N_("Colors:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">100</param>\n"
                 "<param name=\"blend1\" gui-text=\"" N_("Blend 1:") "\" type=\"enum\">\n"
                   "<_item value=\"normal\">" N_("Normal") "</_item>\n"
                   "<_item value=\"multiply\">" N_("Multiply") "</_item>\n"
                   "<_item value=\"screen\">" N_("Screen") "</_item>\n"
                 "</param>\n"
-                "<param name=\"sat\" gui-text=\"" N_("Over-saturation:") "\" type=\"float\" appearance=\"full\" min=\"0\" max=\"1\">0</param>\n"
+                "<param name=\"sat\" gui-text=\"" N_("Over-saturation:") "\" type=\"float\" appearance=\"full\" precision=\"2\"  min=\"0.00\" max=\"1.00\">0</param>\n"
                 "<param name=\"blend2\" gui-text=\"" N_("Blend 2:") "\" type=\"enum\">\n"
                   "<_item value=\"normal\">" N_("Normal") "</_item>\n"
                   "<_item value=\"screen\">" N_("Screen") "</_item>\n"
@@ -691,7 +691,7 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Solarize, custom (Color)") "</name>\n"
               "<id>org.inkscape.effect.filter.Solarize</id>\n"
-              "<param name=\"rotate\" gui-text=\"" N_("Hue rotation:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">0</param>\n"
+              "<param name=\"rotate\" gui-text=\"" N_("Hue rotation (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">0</param>\n"
               "<param name=\"type\" gui-text=\"" N_("Type:") "\" type=\"enum\">\n"
                 "<_item value=\"solarize\">" N_("Solarize") "</_item>\n"
                 "<_item value=\"moonarize\">" N_("Moonarize") "</_item>\n"
@@ -802,7 +802,7 @@ public:
                   "<param name=\"glight\" gui-text=\"" N_("Global light:") "\" type=\"float\" appearance=\"full\" min=\"0\" max=\"10\">1</param>\n"
                 "</page>\n"
                 "<page name=\"co1tab\" _gui-text=\"Color\">\n"
-                  "<param name=\"dist\" gui-text=\"" N_("Hue distribution:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">0</param>\n"
+                  "<param name=\"dist\" gui-text=\"" N_("Hue distribution (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">0</param>\n"
                   "<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">-73203457</param>\n"
                 "</page>\n"
               "</param>\n"

@@ -54,7 +54,7 @@ public:
                 "<_item value=\"edges\">Smooth edges</_item>\n"
                 "<_item value=\"all\">Smooth all</_item>\n"
               "</param>\n"
-              "<param name=\"blur\" gui-text=\"" N_("Blur:") "\" type=\"float\" appearance=\"full\" min=\"0.01\" max=\"10\">5</param>\n"
+              "<param name=\"blur\" gui-text=\"" N_("Blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"10.00\">5</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
