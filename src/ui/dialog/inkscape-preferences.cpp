@@ -393,7 +393,7 @@ void InkscapePreferences::initPageTools()
     Gtk::TreeModel::iterator iter_tools = this->AddPage(_page_tools, _("Tools"), PREFS_PAGE_TOOLS);
     _path_tools = _page_list.get_model()->get_path(iter_tools);
 
-    _page_tools.add_group_header( _("Bounding box to use:"));
+    _page_tools.add_group_header( _("Bounding box to use"));
     _t_bbox_visual.init ( _("Visual bounding box"), "/tools/bounding_box", 0, false, 0); // 0 means visual
     _page_tools.add_line( true, "", _t_bbox_visual, "",
                             _("This bounding box includes stroke width, markers, filter margins, etc."));
@@ -401,7 +401,7 @@ void InkscapePreferences::initPageTools()
     _page_tools.add_line( true, "", _t_bbox_geometric, "",
                             _("This bounding box includes only the bare path"));
 
-    _page_tools.add_group_header( _("Conversion to guides:"));
+    _page_tools.add_group_header( _("Conversion to guides"));
     _t_cvg_keep_objects.init ( _("Keep objects after conversion to guides"), "/tools/cvg_keep_objects", false);
     _page_tools.add_line( true, "", _t_cvg_keep_objects, "",
                             _("When converting an object to guides, don't delete the object after the conversion"));
@@ -418,14 +418,14 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_selector, _("Selector"), iter_tools, PREFS_PAGE_TOOLS_SELECTOR);
 
     AddSelcueCheckbox(_page_selector, "/tools/select", false);
-    _page_selector.add_group_header( _("When transforming, show:"));
+    _page_selector.add_group_header( _("When transforming, show"));
     _t_sel_trans_obj.init ( _("Objects"), "/tools/select/show", "content", true, 0);
     _page_selector.add_line( true, "", _t_sel_trans_obj, "",
                             _("Show the actual objects when moving or transforming"));
     _t_sel_trans_outl.init ( _("Box outline"), "/tools/select/show", "outline", false, &_t_sel_trans_obj);
     _page_selector.add_line( true, "", _t_sel_trans_outl, "",
                             _("Show only a box outline of the objects when moving or transforming"));
-    _page_selector.add_group_header( _("Per-object selection cue:"));
+    _page_selector.add_group_header( _("Per-object selection cue"));
     _t_sel_cue_none.init ( _("None"), "/options/selcue/value", Inkscape::SelCue::NONE, false, 0);
     _page_selector.add_line( true, "", _t_sel_cue_none, "",
                             _("No per-object selection indication"));
@@ -646,20 +646,20 @@ void InkscapePreferences::initPageClones()
     _clone_option_delete.init ( _("Are deleted"), "/options/cloneorphans/value",
                                   SP_CLONE_ORPHANS_DELETE, false, &_clone_option_unlink);
 
-    _page_clones.add_group_header( _("When the original moves, its clones and linked offsets:"));
+    _page_clones.add_group_header( _("Moving original: clones and linked offsets"));
     _page_clones.add_line( true, "", _clone_option_parallel, "",
                            _("Clones are translated by the same vector as their original"));
     _page_clones.add_line( true, "", _clone_option_stay, "",
                            _("Clones preserve their positions when their original is moved"));
     _page_clones.add_line( true, "", _clone_option_transform, "",
                            _("Each clone moves according to the value of its transform= attribute; for example, a rotated clone will move in a different direction than its original"));
-    _page_clones.add_group_header( _("When the original is deleted, its clones:"));
+    _page_clones.add_group_header( _("Deleting original: clones"));
     _page_clones.add_line( true, "", _clone_option_unlink, "",
                            _("Orphaned clones are converted to regular objects"));
     _page_clones.add_line( true, "", _clone_option_delete, "",
                            _("Orphaned clones are deleted along with their original"));
 
-    _page_clones.add_group_header( _("When duplicating original+clones/linked offset:"));
+    _page_clones.add_group_header( _("Duplicating original+clones/linked offset"));
 
     _clone_relink_on_duplicate.init ( _("Relink duplicated clones"), "/options/relinkclonesonduplicate/value", false);
     _page_clones.add_line(true, "", _clone_relink_on_duplicate, "",
