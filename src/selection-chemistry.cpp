@@ -1379,7 +1379,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
          * Same for textpath if we are also doing ANY transform to its path: do not touch textpath,
          * letters cannot be squeezed or rotated anyway, they only refill the changed path.
          * Same for linked offset if we are also moving its source: do not move it. */
-        if (transform_textpath_with_path || transform_offset_with_source) {
+        if (transform_textpath_with_path) {
             // Restore item->transform field from the repr, in case it was changed by seltrans.
             item->readAttr( "transform" );
         } else if (transform_flowtext_with_frame) {
@@ -1394,7 +1394,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
                     }
                 }
             }
-        } else if (transform_clone_with_original) {
+        } else if (transform_clone_with_original || transform_offset_with_source) {
             // We are transforming a clone along with its original. The below matrix juggling is
             // necessary to ensure that they transform as a whole, i.e. the clone's induced
             // transform and its move compensation are both cancelled out.
@@ -1408,7 +1408,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
             Geom::Affine t_inv = t.inverse();
             Geom::Affine result = t_inv * item->transform * t;
 
-            if ((prefs_parallel || prefs_unmoved) && affine.isTranslation()) {
+            if (transform_clone_with_original && (prefs_parallel || prefs_unmoved) && affine.isTranslation()) {
                 // we need to cancel out the move compensation, too
 
                 // find out the clone move, same as in sp_use_move_compensate
@@ -1423,6 +1423,19 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
                     //if (SP_IS_USE(sp_use_get_original(SP_USE(item))))
                     //    clone_move = Geom::identity();
                     Geom::Affine move = result * clone_move;
+                    item->doWriteTransform(item->getRepr(), move, &t, compensate);
+                }
+
+            } else if (transform_offset_with_source && (prefs_parallel || prefs_unmoved) && affine.isTranslation()){
+                Geom::Affine parent = item->transform;
+                Geom::Affine offset_move = parent.inverse() * t * parent;
+
+                if (prefs_parallel) {
+                    Geom::Affine move = result * offset_move * t_inv;
+                    item->doWriteTransform(item->getRepr(), move, &move, compensate);
+
+                } else if (prefs_unmoved) {
+                    Geom::Affine move = result * offset_move;
                     item->doWriteTransform(item->getRepr(), move, &t, compensate);
                 }
 

@@ -1487,6 +1487,7 @@ sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updat
         if ( updating ) {
 
 			//XML Tree being used directly here while it shouldn't be
+            item->doWriteTransform(item->getRepr(), transform);
             char const *id = item->getRepr()->attribute("id");
             char const *uri = g_strdup_printf("#%s", id);
             repr->setAttribute("xlink:href", uri);
@@ -1505,11 +1506,7 @@ sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updat
 
         SPItem *nitem = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
 
-        if ( updating ) {
-            // on conserve l'original
-            // we reapply the transform to the original (offset will feel it)
-            item->doWriteTransform(item->getRepr(), transform);
-        } else {
+        if ( !updating ) {
             // delete original, apply the transform to the offset
             item->deleteObject(false);
             nitem->doWriteTransform(repr, transform);
