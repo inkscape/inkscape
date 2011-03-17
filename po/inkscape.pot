@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-03-11 13:10+0100\n"
+"POT-Creation-Date: 2011-03-17 20:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1459,7 +1459,6 @@ msgid "Same as Bubbly Bumps but with transparent highlights"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:105
-#: ../src/extension/internal/filter/morphology.h:54
 msgid "Smooth edges"
 msgstr ""
 
@@ -1938,7 +1937,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:1034
-#: ../src/widgets/desktop-widget.cpp:1713
+#: ../src/widgets/desktop-widget.cpp:1712
 msgid "Drawing"
 msgstr ""
 
@@ -3940,7 +3939,7 @@ msgstr ""
 msgid "Delete tiled clones"
 msgstr ""
 
-#: ../src/dialogs/clonetiler.cpp:1088 ../src/selection-chemistry.cpp:2035
+#: ../src/dialogs/clonetiler.cpp:1088 ../src/selection-chemistry.cpp:2048
 msgid "Select an <b>object</b> to clone."
 msgstr ""
 
@@ -6457,16 +6456,10 @@ msgid "Shade"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/extension/internal/filter/abc.h:239
-#: ../src/extension/internal/filter/abc.h:377
-#: ../src/extension/internal/filter/abc.h:817
 msgid "Azimuth:"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/extension/internal/filter/abc.h:238
-#: ../src/extension/internal/filter/abc.h:376
-#: ../src/extension/internal/filter/abc.h:816
 msgid "Elevation:"
 msgstr ""
 
@@ -6751,9 +6744,9 @@ msgstr ""
 #: ../src/extension/internal/filter/experimental.h:110
 #: ../src/extension/internal/filter/experimental.h:242
 #: ../src/extension/internal/filter/experimental.h:361
-#: ../src/extension/internal/filter/experimental.h:516
-#: ../src/extension/internal/filter/experimental.h:627
-#: ../src/extension/internal/filter/experimental.h:724
+#: ../src/extension/internal/filter/experimental.h:515
+#: ../src/extension/internal/filter/experimental.h:626
+#: ../src/extension/internal/filter/experimental.h:723
 #: ../src/extension/internal/filter/filter-file.cpp:148
 #: ../src/extension/internal/filter/filter.cpp:216
 #: ../src/extension/internal/filter/morphology.h:61
@@ -6785,9 +6778,9 @@ msgstr ""
 #: ../src/extension/internal/filter/experimental.h:111
 #: ../src/extension/internal/filter/experimental.h:243
 #: ../src/extension/internal/filter/experimental.h:362
-#: ../src/extension/internal/filter/experimental.h:517
-#: ../src/extension/internal/filter/experimental.h:628
-#: ../src/extension/internal/filter/experimental.h:725
+#: ../src/extension/internal/filter/experimental.h:516
+#: ../src/extension/internal/filter/experimental.h:627
+#: ../src/extension/internal/filter/experimental.h:724
 #: ../src/extension/internal/filter/morphology.h:62
 msgid "Experimental"
 msgstr ""
@@ -6814,7 +6807,7 @@ msgid "Color shift, custom (ABCs)"
 msgstr ""
 
 #: ../src/extension/internal/filter/abc.h:176
-msgid "Shift:"
+msgid "Shift (°):"
 msgstr ""
 
 #: ../src/extension/internal/filter/abc.h:185
@@ -6831,6 +6824,18 @@ msgstr ""
 #: ../src/extension/internal/filter/experimental.h:87
 #: ../share/extensions/fractalize.inx.h:3
 msgid "Smoothness:"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:238
+#: ../src/extension/internal/filter/abc.h:376
+#: ../src/extension/internal/filter/abc.h:816
+msgid "Elevation (°):"
+msgstr ""
+
+#: ../src/extension/internal/filter/abc.h:239
+#: ../src/extension/internal/filter/abc.h:377
+#: ../src/extension/internal/filter/abc.h:817
+msgid "Azimuth (°):"
 msgstr ""
 
 #: ../src/extension/internal/filter/abc.h:240
@@ -6856,25 +6861,14 @@ msgstr ""
 msgid "Turbulence type:"
 msgstr ""
 
-#: ../src/extension/internal/filter/abc.h:465
-#: ../src/extension/internal/filter/abc.h:664
-msgid "Fractal noise"
-msgstr ""
-
-#: ../src/extension/internal/filter/abc.h:466
-#: ../src/extension/internal/filter/abc.h:665 ../src/filter-enums.cpp:35
-#: ../src/filter-enums.cpp:117
-msgid "Turbulence"
-msgstr ""
-
 #: ../src/extension/internal/filter/abc.h:468
 #: ../src/extension/internal/filter/abc.h:667
-msgid "Horizontal frequency (x100):"
+msgid "Horizontal frequency:"
 msgstr ""
 
 #: ../src/extension/internal/filter/abc.h:469
 #: ../src/extension/internal/filter/abc.h:668
-msgid "Vertical frequency (x100):"
+msgid "Vertical frequency:"
 msgstr ""
 
 #: ../src/extension/internal/filter/abc.h:470
@@ -6941,7 +6935,6 @@ msgid "Silhouette, custom (ABCs)"
 msgstr ""
 
 #: ../src/extension/internal/filter/abc.h:738
-#: ../src/extension/internal/filter/experimental.h:720
 #: ../src/extension/internal/filter/morphology.h:57
 msgid "Blur:"
 msgstr ""
@@ -6965,7 +6958,7 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:67
 #: ../src/extension/internal/filter/color.h:459
 #: ../src/extension/internal/filter/experimental.h:84
-#: ../src/extension/internal/filter/experimental.h:506
+#: ../src/extension/internal/filter/experimental.h:505
 msgid "Lightness:"
 msgstr ""
 
@@ -7087,12 +7080,13 @@ msgid "Electrize, custom (Color)"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:363
-#: ../src/extension/internal/filter/experimental.h:504
+#: ../src/extension/internal/filter/experimental.h:503
+#: ../src/extension/internal/filter/experimental.h:719
 msgid "Simplify:"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:364
-#: ../src/extension/internal/filter/experimental.h:605
+#: ../src/extension/internal/filter/experimental.h:604
 msgid "Effect type:"
 msgstr ""
 
@@ -7105,8 +7099,8 @@ msgid "Discrete"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:368
-#: ../src/extension/internal/filter/experimental.h:613
-#: ../src/extension/internal/filter/experimental.h:719
+#: ../src/extension/internal/filter/experimental.h:612
+#: ../src/extension/internal/filter/experimental.h:718
 msgid "Levels:"
 msgstr ""
 
@@ -7162,7 +7156,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/color.h:607
 #: ../src/extension/internal/filter/color.h:805
-msgid "Hue distribution:"
+msgid "Hue distribution (°):"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:608
@@ -7179,7 +7173,7 @@ msgid "Solarize, custom (Color)"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:694
-msgid "Hue rotation:"
+msgid "Hue rotation (°):"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:706
@@ -7363,68 +7357,68 @@ msgstr ""
 msgid "Convert images to duochrome drawings"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:498
+#: ../src/extension/internal/filter/experimental.h:497
 msgid "Neon draw, custom"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:500
+#: ../src/extension/internal/filter/experimental.h:499
 msgid "Line type:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:505
+#: ../src/extension/internal/filter/experimental.h:504
 msgid "Line width:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:507
-#: ../src/extension/internal/filter/experimental.h:614
+#: ../src/extension/internal/filter/experimental.h:506
+#: ../src/extension/internal/filter/experimental.h:613
 msgid "Blend mode:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:512
+#: ../src/extension/internal/filter/experimental.h:511
 msgid "Dark mode"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:520
+#: ../src/extension/internal/filter/experimental.h:519
 msgid "Posterize and draw smooth lines around color shapes"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:603
+#: ../src/extension/internal/filter/experimental.h:602
 msgid "Poster paint, custom"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:609
+#: ../src/extension/internal/filter/experimental.h:608
 msgid "Transfer type:"
 msgstr ""
 
+#: ../src/extension/internal/filter/experimental.h:618
+msgid "Simplify (primary):"
+msgstr ""
+
 #: ../src/extension/internal/filter/experimental.h:619
-msgid "Primary blur:"
+msgid "Simplify (secondary):"
 msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:620
-msgid "Secondary blur:"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:621
 msgid "Pre-saturation:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:622
+#: ../src/extension/internal/filter/experimental.h:621
 msgid "Post-saturation:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:623
+#: ../src/extension/internal/filter/experimental.h:622
 msgid "Simulate antialiasing"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:631
+#: ../src/extension/internal/filter/experimental.h:630
 msgid "Poster and painting effects"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:717
+#: ../src/extension/internal/filter/experimental.h:716
 msgid "Posterize basic, custom"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:728
+#: ../src/extension/internal/filter/experimental.h:727
 msgid "Simple posterizing effect"
 msgstr ""
 
@@ -7442,10 +7436,6 @@ msgstr ""
 
 #: ../src/extension/internal/filter/morphology.h:51
 msgid "Cross-smooth, custom (Morphology)"
-msgstr ""
-
-#: ../src/extension/internal/filter/morphology.h:55
-msgid "Smooth all"
 msgstr ""
 
 #: ../src/extension/internal/filter/morphology.h:65
@@ -7994,6 +7984,10 @@ msgstr ""
 
 #: ../src/filter-enums.cpp:34
 msgid "Tile"
+msgstr ""
+
+#: ../src/filter-enums.cpp:35 ../src/filter-enums.cpp:117
+msgid "Turbulence"
 msgstr ""
 
 #: ../src/filter-enums.cpp:40
@@ -8966,7 +8960,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:1033
 #: ../src/ui/dialog/document-properties.cpp:117
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1429
-#: ../src/widgets/desktop-widget.cpp:1709
+#: ../src/widgets/desktop-widget.cpp:1708
 msgid "Page"
 msgstr ""
 
@@ -11296,204 +11290,204 @@ msgstr ""
 msgid "No more layers below."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1464
+#: ../src/selection-chemistry.cpp:1477
 msgid "Remove transform"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1567
+#: ../src/selection-chemistry.cpp:1580
 msgid "Rotate 90&#176; CCW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1567
+#: ../src/selection-chemistry.cpp:1580
 msgid "Rotate 90&#176; CW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1588 ../src/seltrans.cpp:517
+#: ../src/selection-chemistry.cpp:1601 ../src/seltrans.cpp:517
 #: ../src/ui/dialog/transformation.cpp:771
 msgid "Rotate"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1635
+#: ../src/selection-chemistry.cpp:1648
 msgid "Rotate by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1665 ../src/seltrans.cpp:514
+#: ../src/selection-chemistry.cpp:1678 ../src/seltrans.cpp:514
 #: ../src/ui/dialog/transformation.cpp:749
 #: ../share/extensions/interp_att_g.inx.h:19
 msgid "Scale"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1690
+#: ../src/selection-chemistry.cpp:1703
 msgid "Scale by whole factor"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1705
+#: ../src/selection-chemistry.cpp:1718
 msgid "Move vertically"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1708
+#: ../src/selection-chemistry.cpp:1721
 msgid "Move horizontally"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1711 ../src/selection-chemistry.cpp:1737
+#: ../src/selection-chemistry.cpp:1724 ../src/selection-chemistry.cpp:1750
 #: ../src/seltrans.cpp:511 ../src/ui/dialog/transformation.cpp:692
 msgid "Move"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1731
+#: ../src/selection-chemistry.cpp:1744
 msgid "Move vertically by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1734
+#: ../src/selection-chemistry.cpp:1747
 msgid "Move horizontally by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1866
+#: ../src/selection-chemistry.cpp:1879
 msgid "The selection has no applied path effect."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2069
+#: ../src/selection-chemistry.cpp:2082
 msgctxt "Action"
 msgid "Clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2085
+#: ../src/selection-chemistry.cpp:2098
 msgid "Select <b>clones</b> to relink."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2092
+#: ../src/selection-chemistry.cpp:2105
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2116
+#: ../src/selection-chemistry.cpp:2129
 msgid "<b>No clones to relink</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2119
+#: ../src/selection-chemistry.cpp:2132
 msgid "Relink clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2133
+#: ../src/selection-chemistry.cpp:2146
 msgid "Select <b>clones</b> to unlink."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2187
+#: ../src/selection-chemistry.cpp:2200
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2191
+#: ../src/selection-chemistry.cpp:2204
 msgid "Unlink clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2204
+#: ../src/selection-chemistry.cpp:2217
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
 "a <b>flowed text</b> to go to its frame."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2227
+#: ../src/selection-chemistry.cpp:2240
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2233
+#: ../src/selection-chemistry.cpp:2246
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2280
+#: ../src/selection-chemistry.cpp:2293
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2348
+#: ../src/selection-chemistry.cpp:2361
 msgid "Objects to marker"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2376
+#: ../src/selection-chemistry.cpp:2389
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2388
+#: ../src/selection-chemistry.cpp:2401
 msgid "Objects to guides"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2405
+#: ../src/selection-chemistry.cpp:2418
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2493
+#: ../src/selection-chemistry.cpp:2506
 msgid "Objects to pattern"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2509
+#: ../src/selection-chemistry.cpp:2522
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2562
+#: ../src/selection-chemistry.cpp:2575
 msgid "<b>No pattern fills</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2565
+#: ../src/selection-chemistry.cpp:2578
 msgid "Pattern to objects"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2647
+#: ../src/selection-chemistry.cpp:2660
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2651
+#: ../src/selection-chemistry.cpp:2664
 msgid "Rendering bitmap..."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2825
+#: ../src/selection-chemistry.cpp:2838
 msgid "Create bitmap"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2857
+#: ../src/selection-chemistry.cpp:2870
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2860
+#: ../src/selection-chemistry.cpp:2873
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3041
+#: ../src/selection-chemistry.cpp:3054
 msgid "Set clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3043
+#: ../src/selection-chemistry.cpp:3056
 msgid "Set mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3058
+#: ../src/selection-chemistry.cpp:3071
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3169
+#: ../src/selection-chemistry.cpp:3182
 msgid "Release clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3171
+#: ../src/selection-chemistry.cpp:3184
 msgid "Release mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3190
+#: ../src/selection-chemistry.cpp:3203
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr ""
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:3210 ../src/verbs.cpp:2736
+#: ../src/selection-chemistry.cpp:3223 ../src/verbs.cpp:2736
 msgid "Fit Page to Selection"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3239 ../src/verbs.cpp:2738
+#: ../src/selection-chemistry.cpp:3252 ../src/verbs.cpp:2738
 msgid "Fit Page to Drawing"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3260 ../src/verbs.cpp:2740
+#: ../src/selection-chemistry.cpp:3273 ../src/verbs.cpp:2740
 msgid "Fit Page to Selection or Drawing"
 msgstr ""
 
@@ -12045,74 +12039,74 @@ msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr ""
 
-#: ../src/splivarot.cpp:882
+#: ../src/splivarot.cpp:901
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr ""
 
-#: ../src/splivarot.cpp:1235
+#: ../src/splivarot.cpp:1254
 msgid "Convert stroke to path"
 msgstr ""
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:1238
+#: ../src/splivarot.cpp:1257
 msgid "<b>No stroked paths</b> in the selection."
 msgstr ""
 
-#: ../src/splivarot.cpp:1321
+#: ../src/splivarot.cpp:1340
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr ""
 
-#: ../src/splivarot.cpp:1440 ../src/splivarot.cpp:1511
+#: ../src/splivarot.cpp:1459 ../src/splivarot.cpp:1527
 msgid "Create linked offset"
 msgstr ""
 
-#: ../src/splivarot.cpp:1441 ../src/splivarot.cpp:1512
+#: ../src/splivarot.cpp:1460 ../src/splivarot.cpp:1528
 msgid "Create dynamic offset"
 msgstr ""
 
-#: ../src/splivarot.cpp:1537
+#: ../src/splivarot.cpp:1553
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr ""
 
-#: ../src/splivarot.cpp:1754
+#: ../src/splivarot.cpp:1770
 msgid "Outset path"
 msgstr ""
 
-#: ../src/splivarot.cpp:1754
+#: ../src/splivarot.cpp:1770
 msgid "Inset path"
 msgstr ""
 
-#: ../src/splivarot.cpp:1756
+#: ../src/splivarot.cpp:1772
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr ""
 
-#: ../src/splivarot.cpp:1935
+#: ../src/splivarot.cpp:1951
 msgid "Simplifying paths (separately):"
 msgstr ""
 
-#: ../src/splivarot.cpp:1937
+#: ../src/splivarot.cpp:1953
 msgid "Simplifying paths:"
 msgstr ""
 
-#: ../src/splivarot.cpp:1974
+#: ../src/splivarot.cpp:1990
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr ""
 
-#: ../src/splivarot.cpp:1986
+#: ../src/splivarot.cpp:2002
 #, c-format
 msgid "<b>%d</b> paths simplified."
 msgstr ""
 
-#: ../src/splivarot.cpp:2000
+#: ../src/splivarot.cpp:2016
 msgid "Select <b>path(s)</b> to simplify."
 msgstr ""
 
-#: ../src/splivarot.cpp:2014
+#: ../src/splivarot.cpp:2030
 msgid "Simplify"
 msgstr ""
 
-#: ../src/splivarot.cpp:2016
+#: ../src/splivarot.cpp:2032
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr ""
 
@@ -13062,7 +13056,7 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1035
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1433
-#: ../src/widgets/desktop-widget.cpp:1717
+#: ../src/widgets/desktop-widget.cpp:1716
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr ""
@@ -15839,7 +15833,7 @@ msgid "Orphaned clones are deleted along with their original"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:662
-msgid "When duplicating original+clones:"
+msgid "When duplicating original+clones/linked offset:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:664
@@ -21113,7 +21107,7 @@ msgid ""
 "If you close without saving, your changes will be discarded."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:897 ../src/widgets/desktop-widget.cpp:954
+#: ../src/widgets/desktop-widget.cpp:897 ../src/widgets/desktop-widget.cpp:953
 msgid "Close _without saving"
 msgstr ""
 
@@ -21121,12 +21115,12 @@ msgstr ""
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
-"format (%s) that may cause data loss!</span>\n"
+"format that may cause data loss!</span>\n"
 "\n"
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:957
+#: ../src/widgets/desktop-widget.cpp:956
 msgid "_Save as SVG"
 msgstr ""
 

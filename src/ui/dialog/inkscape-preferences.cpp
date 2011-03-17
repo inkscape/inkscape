@@ -659,7 +659,7 @@ void InkscapePreferences::initPageClones()
     _page_clones.add_line( true, "", _clone_option_delete, "",
                            _("Orphaned clones are deleted along with their original"));
 
-    _page_clones.add_group_header( _("When duplicating original+clones:"));
+    _page_clones.add_group_header( _("When duplicating original+clones/linked offset:"));
 
     _clone_relink_on_duplicate.init ( _("Relink duplicated clones"), "/options/relinkclonesonduplicate/value", false);
     _page_clones.add_line(true, "", _clone_relink_on_duplicate, "",
