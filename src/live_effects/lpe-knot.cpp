@@ -340,11 +340,11 @@ CrossingPoints::inherit_signs(CrossingPoints const &other, int default_value)
 LPEKnot::LPEKnot(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     // initialise your parameters here:
-    interruption_width(_("Fixed width:"), _("Size of hidden region of lower string"), "interruption_width", &wr, this, 3),
-    prop_to_stroke_width(_("In units of stroke width"), _("Consider 'Interruption width' as a ratio of stroke width"), "prop_to_stroke_width", &wr, this, true),
-    add_stroke_width(_("Stroke width"), _("Add the stroke width to the interruption size"), "add_stroke_width", &wr, this, true),
-    add_other_stroke_width(_("Crossing path stroke width"), _("Add crossed stroke width to the interruption size"), "add_other_stroke_width", &wr, this, true),
-    switcher_size(_("Switcher size:"), _("Orientation indicator/switcher size"), "switcher_size", &wr, this, 15),
+    interruption_width(_("Fi_xed width:"), _("Size of hidden region of lower string"), "interruption_width", &wr, this, 3),
+    prop_to_stroke_width(_("_In units of stroke width"), _("Consider 'Interruption width' as a ratio of stroke width"), "prop_to_stroke_width", &wr, this, true),
+    add_stroke_width(_("St_roke width"), _("Add the stroke width to the interruption size"), "add_stroke_width", &wr, this, true),
+    add_other_stroke_width(_("_Crossing path stroke width"), _("Add crossed stroke width to the interruption size"), "add_other_stroke_width", &wr, this, true),
+    switcher_size(_("S_witcher size:"), _("Orientation indicator/switcher size"), "switcher_size", &wr, this, 15),
     crossing_points_vector(_("Crossing Signs"), _("Crossings signs"), "crossing_points_vector", &wr, this),
     gpaths(),gstroke_widths()
 {
