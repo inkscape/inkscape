@@ -15,6 +15,7 @@
 #include "live_effects/effect.h"
 #include "live_effects/parameter/bool.h"
 #include "live_effects/parameter/powerstrokepointarray.h"
+#include "live_effects/parameter/enum.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -31,6 +32,7 @@ public:
 private:
     PowerStrokePointArrayParam offset_points;
     BoolParam sort_points;
+    EnumParam<unsigned> interpolator_type;
 
     LPEPowerStroke(const LPEPowerStroke&);
     LPEPowerStroke& operator=(const LPEPowerStroke&);
