@@ -115,10 +115,13 @@ gchar*
 document_interface_line (DocumentInterface *object, int x, int y, 
                               int x2, int y2, GError **error);
 
-gboolean
+gchar* 
 document_interface_text (DocumentInterface *object, int x, int y, 
                          gchar *text, GError **error);
-                         
+gboolean
+document_interface_set_text (DocumentInterface *object, gchar *name,
+                             gchar *text, GError **error);
+
 gchar *
 document_interface_image (DocumentInterface *object, int x, int y, 
                           gchar *filename, GError **error);

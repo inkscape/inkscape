@@ -53,6 +53,7 @@ void sp_canvastext_set_anchor (SPCanvasText *ct, double anchor_x, double anchor_
 #endif // SEEN_SP_CANVASTEXT_H
 
 
+
 /*
   Local Variables:
   mode:c++

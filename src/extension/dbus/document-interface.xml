@@ -310,6 +310,12 @@
           <doc:summary>The text you want.</doc:summary>
         </doc:doc>
       </arg>
+      <arg type="s" name="object_name" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The name of the new text.</doc:summary>
+        </doc:doc>
+      </arg>
       <doc:doc>
         <doc:description>
           <doc:para>This method creates some text in the current layer.</doc:para>
@@ -471,6 +477,29 @@
         </doc:description>
       </doc:doc>
     </method>
+
+
+    <method name="set_text">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of an object.</doc:summary>
+        </doc:doc>
+      </arg>
+
+      <arg type="s" name="text" direction="in" >
+        <doc:doc>
+          <doc:summary>The text you want.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>set text of text object.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+
+    
 
     <method name="set_int_attribute">
       <arg type="s" name="shape" direction="in" >

@@ -72,7 +72,7 @@ char *
 inkscape_line (DocumentInterface *doc, const gint IN_x, const gint IN_y, const gint IN_x2, const gint IN_y2, GError **error);
 
 //static
-gboolean
+char *
 inkscape_text (DocumentInterface *doc, const gint IN_x, const gint IN_y, const char * IN_text, GError **error);
 
 //static

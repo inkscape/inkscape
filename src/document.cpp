@@ -848,7 +848,11 @@ SPObject *SPDocument::getObjectById(gchar const *id) const
     g_return_val_if_fail(id != NULL, NULL);
 
     GQuark idq = g_quark_from_string(id);
-    return (SPObject*)g_hash_table_lookup(priv->iddef, GINT_TO_POINTER(idq));
+    gpointer rv = g_hash_table_lookup(priv->iddef, GINT_TO_POINTER(idq));
+    if(rv != NULL)
+        return (SPObject*)rv;
+    else
+        return NULL;
 }
 
 sigc::connection SPDocument::connectIdChanged(gchar const *id,

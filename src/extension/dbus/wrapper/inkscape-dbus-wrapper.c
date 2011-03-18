@@ -198,11 +198,13 @@ inkscape_line (DocumentInterface *doc, const gint IN_x, const gint IN_y, const g
 }
 
 //static
-gboolean
+char *
 inkscape_text (DocumentInterface *doc, const gint IN_x, const gint IN_y, const char * IN_text, GError **error)
 {
+  char * OUT_object_name;
   DBusGProxy *proxy = doc->proxy;
-  return org_inkscape_document_text (proxy, IN_x, IN_y, IN_text, error);
+  org_inkscape_document_text (proxy, IN_x, IN_y, IN_text, &OUT_object_name, error);
+  return OUT_object_name;
 }
 
 //static

@@ -86,7 +86,6 @@ init (void)
         GError *error = NULL;
         DBusGConnection *connection;
         DBusGProxy *proxy;
-	    DocumentInterface *obj;
         connection = dbus_get_connection();
         proxy = dbus_get_proxy(connection);
         org_freedesktop_DBus_request_name (proxy,
@@ -102,8 +101,6 @@ init (void)
 
 gchar *
 init_document (void) {
-        guint   result;
-        GError *error = NULL;
         DBusGConnection *connection;
         DBusGProxy *proxy;
 	SPDocument *doc;

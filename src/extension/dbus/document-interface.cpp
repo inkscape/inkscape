@@ -36,6 +36,20 @@
 #include "sp-ellipse.h"
 #include "sp-object.h"
 #include "style.h" //style_write
+
+#include "file.h" //IO
+
+#include "extension/system.h" //IO
+
+#include "extension/output.h" //IO
+
+#include "print.h" //IO
+
+#include "live_effects/parameter/text.h" //text
+#include "display/canvas-text.h" //text
+
+#include "display/sp-canvas.h" //text
+#include "text-editing.h"
 #include "verbs.h"
 #include "xml/repr.h" //sp_repr_document_new
 
@@ -61,13 +75,13 @@ get_repr_by_name (SPDesktop *desk, gchar *name, GError **error)
     /* ALTERNATIVE (is this faster if only repr is needed?)
     Inkscape::XML::Node *node = sp_repr_lookup_name((doc->root)->repr, name);
     */
-  Inkscape::XML::Node * node = sp_desktop_document(desk)->getObjectById(name)->getRepr();
-    if (!node)
+  SPObject * obj = sp_desktop_document(desk)->getObjectById(name);
+    if (!obj)
     {
         g_set_error(error, INKSCAPE_ERROR, INKSCAPE_ERROR_OBJECT, "Object '%s' not found in document.", name);
         return NULL;
     }
-    return node;
+    return  obj->getRepr();
 }
 
 /* 
@@ -346,6 +360,7 @@ document_interface_call_verb (DocumentInterface *object, gchar *verbid, GError *
                 if (object->updates) {
                     Inkscape::DocumentUndo::done(sp_desktop_document(desk2),  verb->get_code(), g_strdup(verb->get_tip()));
                 }
+                return TRUE;
             }
         }
     }
@@ -470,17 +485,20 @@ document_interface_spiral (DocumentInterface *object, int cx, int cy,
     return retval;
 }
 
-gboolean
+gchar*
 document_interface_text (DocumentInterface *object, int x, int y, gchar *text, GError **error)
 {
-    //FIXME: Not selectable (aka broken).  Needs to be rewritten completely.
 
-    SPDesktop *desktop = object->desk;
-    SPCanvasText * canvas_text = (SPCanvasText *) sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, Geom::Point(0,0), "");
-    sp_canvastext_set_text (canvas_text, text);
-    sp_canvastext_set_coords (canvas_text, x, y);
+  Inkscape::XML::Node *text_node = dbus_create_node(object->desk, "svg:text");
+    sp_repr_set_int(text_node, "x", x);
+    sp_repr_set_int(text_node, "y", y);
+    //just a workaround so i can get an spitem from the name
+    gchar  *name = finish_create_shape (object, error, text_node, (gchar *)"create text");
+    
+    SPItem* text_obj=(SPItem* )get_object_by_name(object->desk, name, error);
+    sp_te_set_repr_text_multiline(text_obj, text);
 
-    return TRUE;
+    return name;
 }
 
 gchar *
@@ -806,6 +824,20 @@ document_interface_get_node_coordinates (DocumentInterface *object, gchar *shape
     return NULL;
     */
     return NULL;
+}
+
+
+gboolean
+document_interface_set_text (DocumentInterface *object, gchar *name, gchar *text, GError **error)
+{
+
+  SPItem* text_obj=(SPItem* )get_object_by_name(object->desk, name, error);
+  //TODO verify object type
+  if (!text_obj)
+    return FALSE;
+  sp_te_set_repr_text_multiline(text_obj, text);
+  return TRUE;
+      
 }
 
 
