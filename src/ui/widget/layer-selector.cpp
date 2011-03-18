@@ -236,6 +236,8 @@ void LayerSelector::_selectLayer(SPObject *layer) {
     using Inkscape::Util::reverse_list;
 
     _selection_changed_connection.block();
+    _visibility_toggled_connection.block();
+    _lock_toggled_connection.block();
 
     while (!_layer_model->children().empty()) {
         Gtk::ListStore::iterator first_row(_layer_model->children().begin());
@@ -285,6 +287,8 @@ void LayerSelector::_selectLayer(SPObject *layer) {
         _lock_toggle.set_active(( SP_IS_ITEM(layer) ? SP_ITEM(layer)->isLocked() : false ));
     }
 
+    _lock_toggled_connection.unblock();
+    _visibility_toggled_connection.unblock();
     _selection_changed_connection.unblock();
 }
 
