@@ -538,7 +538,7 @@
 <feConvolveMatrix order="3 3" kernelMatrix="1 0 0 0 2 0 0 0 -1 " targetX="0" targetY="0" divisor="1.5" edgeMode="duplicate" in="result2" />
 </filter>
 <filter id="f055" inkscape:label="Translucent" inkscape:menu="Bevels" inkscape:menu-tooltip="Illuminated translucent plastic or glass effect" x="-0.25" y="-0.25" width="1.5" height="1.5" color-interpolation-filters="sRGB">
-<feBlend mode="screen" result="result1" in2="result91" />
+<feBlend mode="screen" result="result1" />
 <feGaussianBlur stdDeviation="8" result="result6" />
 <feComposite operator="xor" in="result6" in2="SourceGraphic" />
 <feGaussianBlur stdDeviation="5" result="result2" />
