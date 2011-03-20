@@ -441,9 +441,11 @@ static GtkWidget* ink_toggle_action_create_tool_item( GtkAction* action )
             gtk_container_add( GTK_CONTAINER(align), child );
             gtk_tool_button_set_icon_widget( button, align );
         } else {
-            gchar *label;
-            g_object_get (G_OBJECT(action), "short_label", &label, NULL);
+            gchar *label = 0;
+            g_object_get( G_OBJECT(action), "short_label", &label, NULL );
             gtk_tool_button_set_label( button, label );
+            g_free( label );
+            label = 0;
         }
     } else {
         // For now trigger a warning but don't do anything else

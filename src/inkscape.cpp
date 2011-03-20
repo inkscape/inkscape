@@ -875,23 +875,31 @@ gboolean inkscape_use_gui()
  *  Menus management
  *
  */
-bool inkscape_load_menus (Inkscape::Application */*inkscape*/)
+bool inkscape_load_menus( Inkscape::Application * inkscape )
 {
-    // TODO fix that fn is being leaked
     gchar *fn = profile_path(MENUS_FILE);
-    gchar *menus_xml = NULL;
+    gchar *menus_xml = 0;
     gsize len = 0;
 
-    if (g_file_get_contents(fn, &menus_xml, &len, NULL)) {
-        // load the menus_xml file
-        INKSCAPE->menus = sp_repr_read_mem(menus_xml, len, NULL);
-        g_free(menus_xml);
-        if (INKSCAPE->menus) {
-            return true;
-        }
+    if ( inkscape != inkscape_get_instance() ) {
+        g_warning("BAD BAD BAD THINGS");
     }
-    INKSCAPE->menus = sp_repr_read_mem(menus_skeleton, MENUS_SKELETON_SIZE, NULL);
-    return (INKSCAPE->menus != 0);
+
+    if ( g_file_get_contents(fn, &menus_xml, &len, NULL) ) {
+        // load the menus_xml file
+        inkscape->menus = sp_repr_read_mem(menus_xml, len, NULL);
+
+        g_free(menus_xml);
+        menus_xml = 0;
+    }
+    g_free(fn);
+    fn = 0;
+
+    if ( !inkscape->menus ) {
+        inkscape->menus = sp_repr_read_mem(menus_skeleton, MENUS_SKELETON_SIZE, NULL);
+    }
+
+    return (inkscape->menus != 0);
 }
 
 

@@ -371,7 +371,10 @@ Glib::ustring font_factory::ConstructFontSpecification(PangoFontDescription *fon
         PangoFontDescription *copy = pango_font_description_copy(font);
 
         pango_font_description_unset_fields (copy, PANGO_FONT_MASK_SIZE);
-        pangoString = Glib::ustring(pango_font_description_to_string(copy));
+        char * copyAsString = pango_font_description_to_string(copy);
+        pangoString = copyAsString;
+        g_free(copyAsString);
+        copyAsString = 0;
 
         pango_font_description_free(copy);
 
@@ -420,8 +423,11 @@ Glib::ustring font_factory::GetUIStyleString(PangoFontDescription const *fontDes
         pango_font_description_unset_fields(fontDescrCopy, PANGO_FONT_MASK_SIZE);
 
         // For now, keep it as style name taken from pango
-        style = pango_font_description_to_string(fontDescrCopy);
+        char *fontDescrAsString = pango_font_description_to_string(fontDescrCopy);
+        style = fontDescrAsString;
 
+        g_free(fontDescrAsString);
+        fontDescrAsString = 0;
         pango_font_description_free(fontDescrCopy);
     }
 
@@ -745,7 +751,11 @@ void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
                     }
                 }
             }
+            g_free(faces);
+            faces = 0;
         }
+        g_free(families);
+        families = 0;
 
         // Sort the style lists
         for (FamilyToStylesMap::iterator iter = map->begin() ; iter != map->end(); iter++) {

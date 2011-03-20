@@ -770,20 +770,18 @@ static GtkWidget* create_menu_item( GtkAction* action )
     if ( IS_EGE_ADJUSTMENT_ACTION(action) ) {
         EgeAdjustmentAction* act = EGE_ADJUSTMENT_ACTION( action );
         GValue value;
-        const gchar*  sss = 0;
         GtkWidget*  subby = 0;
 
         memset( &value, 0, sizeof(value) );
         g_value_init( &value, G_TYPE_STRING );
         g_object_get_property( G_OBJECT(action), "label", &value );
 
-        sss = g_value_get_string( &value );
-
-        item = gtk_menu_item_new_with_label( sss );
+        item = gtk_menu_item_new_with_label( g_value_get_string( &value ) );
 
         subby = create_popup_number_menu( act );
         gtk_menu_item_set_submenu( GTK_MENU_ITEM(item), subby );
         gtk_widget_show_all( subby );
+        g_value_unset( &value );
     } else {
         item = gParentClass->create_menu_item( action );
     }
@@ -816,8 +814,7 @@ static gboolean event_cb( EgeAdjustmentAction* act, GdkEvent* evt )
     return handled;
 }
 
-static gchar*
-slider_format_falue (GtkScale* scale, gdouble value, gchar *label)
+static gchar *slider_format_falue( GtkScale* scale, gdouble value, gchar *label )
 {
     (void)scale;
     return g_strdup_printf("%s %d", label, (int) round(value));
@@ -831,19 +828,18 @@ static GtkWidget* create_tool_item( GtkAction* action )
         EgeAdjustmentAction* act = EGE_ADJUSTMENT_ACTION( action );
         GtkWidget* spinbutton = 0;
         GtkWidget* hb = gtk_hbox_new( FALSE, 5 );
-
         GValue value;
         memset( &value, 0, sizeof(value) );
         g_value_init( &value, G_TYPE_STRING );
         g_object_get_property( G_OBJECT(action), "short_label", &value );
-        const gchar* sss = g_value_get_string( &value );
 
         if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
-	    // Slider
-	    spinbutton = gtk_hscale_new( act->private_data->adj);
+            // Slider
+            gchar *leakyForNow = g_value_dup_string( &value );
+            spinbutton = gtk_hscale_new( act->private_data->adj);
             gtk_widget_set_size_request(spinbutton, 100, -1);
-            gtk_scale_set_digits (GTK_SCALE(spinbutton), 0);
-            gtk_signal_connect(GTK_OBJECT(spinbutton), "format-value", GTK_SIGNAL_FUNC(slider_format_falue), (void *) sss);
+            gtk_scale_set_digits( GTK_SCALE(spinbutton), 0 );
+            g_signal_connect( G_OBJECT(spinbutton), "format-value", G_CALLBACK(slider_format_falue), leakyForNow );
 
 #if GTK_CHECK_VERSION(2,12,0)
         } else if ( act->private_data->appearanceMode == APPEARANCE_MINIMAL ) {
@@ -869,6 +865,7 @@ static GtkWidget* create_tool_item( GtkAction* action )
                 }
                 gtk_tooltips_set_tip( act->private_data->toolTips, spinbutton, tipstr, 0 );
             }
+	    g_value_unset( &tooltip );
         }
 
         if ( act->private_data->appearanceMode != APPEARANCE_FULL ) {
@@ -880,7 +877,7 @@ static GtkWidget* create_tool_item( GtkAction* action )
                 GtkWidget* icon = sp_icon_new( act->private_data->iconSize, act->private_data->iconId );
                 gtk_box_pack_start( GTK_BOX(hb), icon, FALSE, FALSE, 0 );
 	    } else {
-                GtkWidget* lbl = gtk_label_new( sss ? sss : "wwww" );
+                GtkWidget* lbl = gtk_label_new( g_value_get_string( &value ) ? g_value_get_string( &value ) : "wwww" );
                 gtk_misc_set_alignment( GTK_MISC(lbl), 1.0, 0.5 );
                 gtk_box_pack_start( GTK_BOX(hb), lbl, FALSE, FALSE, 0 );
 	    }
@@ -921,6 +918,8 @@ static GtkWidget* create_tool_item( GtkAction* action )
         if ( act->private_data->toolPost ) {
             act->private_data->toolPost( item );
         }
+
+	g_value_unset( &value );
     } else {
         item = gParentClass->create_tool_item( action );
     }

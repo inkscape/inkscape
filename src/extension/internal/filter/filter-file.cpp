@@ -26,13 +26,15 @@ namespace Extension {
 namespace Internal {
 namespace Filter {
 
-void
-Filter::filters_all_files (void)
+void Filter::filters_all_files(void)
 {
-	filters_load_dir(INKSCAPE_FILTERDIR, _("Bundled"));
-	filters_load_dir(profile_path("filters"), _("Personal"));
+	gchar *filtersProfilePath = profile_path("filters");
 
-	return;
+	filters_load_dir(INKSCAPE_FILTERDIR, _("Bundled"));
+	filters_load_dir(filtersProfilePath, _("Personal"));
+
+	g_free(filtersProfilePath);
+	filtersProfilePath = 0;
 }
 
 #define INKSCAPE_FILTER_FILE  ".svg"

@@ -776,12 +776,20 @@ sp_menu_append_new_templates(GtkWidget *menu, Inkscape::UI::View::View *view)
 
             if (dir) {
                 for (gchar const *file = g_dir_read_name(dir); file != NULL; file = g_dir_read_name(dir)) {
-                    if (!g_str_has_suffix(file, ".svg") && !g_str_has_suffix(file, ".svgz"))
+                    if (!g_str_has_suffix(file, ".svg") && !g_str_has_suffix(file, ".svgz")) {
                         continue; // skip non-svg files
+                    }
 
-                    gchar *basename = g_path_get_basename(file);
-                    if (g_str_has_suffix(basename, ".svg") && g_str_has_prefix(basename, "default."))
-                        continue; // skip default.*.svg (i.e. default.svg and translations) - it's in the menu already
+                    {
+                        gchar *basename = g_path_get_basename(file);
+                        if (g_str_has_suffix(basename, ".svg") && g_str_has_prefix(basename, "default.")) {
+                            g_free(basename);
+                            basename = 0;
+                            continue; // skip default.*.svg (i.e. default.svg and translations) - it's in the menu already
+                        }
+                        g_free(basename);
+                        basename = 0;
+                    }
 
                     gchar const *filepath = g_build_filename(dirname, file, NULL);
                     gchar *dupfile = g_strndup(file, strlen(file) - 4);

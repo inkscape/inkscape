@@ -222,6 +222,8 @@ GtkWidget* create_tool_item( GtkAction* action )
         gtk_container_add( GTK_CONTAINER(item), hb );
 
         gtk_widget_show_all( item );
+
+        g_value_unset( &value );
     } else {
         item = gParentClass->create_tool_item( action );
     }

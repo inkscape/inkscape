@@ -660,8 +660,11 @@ Inkscape::XML::Node *Preferences::_getNode(Glib::ustring const &pref_key, bool c
                         node = child;
                     }
                     g_strfreev(splits);
+                    splits = 0;
                     return node;
                 } else {
+                    g_strfreev(splits);
+                    splits = 0;
                     return NULL;
                 }
             }

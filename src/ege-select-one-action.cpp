@@ -663,15 +663,18 @@ GtkWidget* create_tool_item( GtkAction* action )
             gint index = 0;
             GtkTooltips* tooltips = gtk_tooltips_new();
 
-            gchar*  sss = 0;
-            g_object_get( G_OBJECT(action), "short_label", &sss, NULL );
-            // If short_label not defined, g_object_get will return label.
-            // This hack allows a label to be used with a drop-down menu when
-            // no label is used with a set of icons that are self-explanatory.
-            if (sss && strcmp( sss, "NotUsed" ) != 0 ) {
-                GtkWidget* lbl;
-                lbl = gtk_label_new(sss);
-                gtk_box_pack_start( GTK_BOX(holder), lbl, FALSE, FALSE, 4 );
+            {
+                gchar*  sss = 0;
+                g_object_get( G_OBJECT(action), "short_label", &sss, NULL );
+                // If short_label not defined, g_object_get will return label.
+                // This hack allows a label to be used with a drop-down menu when
+                // no label is used with a set of icons that are self-explanatory.
+                if (sss && strcmp( sss, "NotUsed" ) != 0 ) {
+                    GtkWidget* lbl = gtk_label_new(sss);
+                    gtk_box_pack_start( GTK_BOX(holder), lbl, FALSE, FALSE, 4 );
+                }
+                g_free( sss );
+                sss = 0;
             }
 
             valid = gtk_tree_model_get_iter_first( act->private_data->model, &iter );
@@ -813,9 +816,10 @@ GtkWidget* create_tool_item( GtkAction* action )
                 gchar*  sss = 0;
                 g_object_get( G_OBJECT(action), "short_label", &sss, NULL );
                 if (sss) {
-                    GtkWidget* lbl;
-                    lbl = gtk_label_new(sss);
+                    GtkWidget* lbl = gtk_label_new(sss);
                     gtk_box_pack_start( GTK_BOX(holder), lbl, FALSE, FALSE, 4 );
+                    g_free( sss );
+                    sss = 0;
                 }
             }
 

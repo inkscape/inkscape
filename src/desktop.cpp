@@ -779,6 +779,9 @@ SPDesktop::push_current_zoom (GList **history)
                ( ((NRRect *) ((*history)->data))->y1 == old_zoom->y1 ) ) )
     {
         *history = g_list_prepend (*history, old_zoom);
+    } else {
+        g_free(old_zoom);
+        old_zoom = 0;
     }
 }
 
