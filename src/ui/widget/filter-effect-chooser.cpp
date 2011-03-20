@@ -22,7 +22,7 @@ namespace UI {
 namespace Widget {
 
 SimpleFilterModifier::SimpleFilterModifier(int flags)
-    : _lb_blend(_("_Blend mode:")),
+    : _lb_blend(_("Blend mode:")),
       _lb_blur(_("_Blur:"), Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER, true),
       _blend(BlendModeConverter, SP_ATTR_INVALID, false),
       _blur(0, 0, 100, 1, 0.01, 1)
