@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-12-15 22:51+0100\n"
-"PO-Revision-Date: 2011-03-21 17:00+0100\n"
+"PO-Revision-Date: 2011-03-21 17:23+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -22217,9 +22217,9 @@ msgstr "<b>Shift</b>: ťahaním pridáte uzly do výberu"
 #, c-format
 msgid "<b>%u of %u</b> node selected."
 msgid_plural "<b>%u of %u</b> nodes selected."
-msgstr[0] "<b>%i</b> zo <b>%i</b> uzlov zvolených; %s."
-msgstr[1] "<b>%i</b> zo <b>%i</b> uzlov zvolených; %s."
-msgstr[2] "<b>%i</b> zo <b>%i</b> uzlov zvolených; %s."
+msgstr[0] "<b>%u</b> zo <b>%u</b> uzlov zvolených."
+msgstr[1] "<b>%u</b> zo <b>%u</b> uzlov zvolených."
+msgstr[2] "<b>%u</b> zo <b>%u</b> uzlov zvolených."
 
 #: ../src/ui/tool/node-tool.cpp:571
 #, c-format
@@ -27736,17 +27736,17 @@ msgstr "Nastaviť parametre vedra s farbou na štandardné hodnoty (použite Nas
 #: ../share/extensions/gcodetools_all_in_one.inx.h:1
 #: ../share/extensions/gcodetools_area.inx.h:1
 msgid "\"Create area offset\": creates several Inkscape path offsets to fill original path's area up to \"Area radius\" value. Outlines start from \"1/2 D\" up to \"Area width\" total width with \"D\" steps where D is taken from the nearest tool definition (\"Tool diameter\" value). Only one offset will be created if the \"Area width\" is equal to \"1/2 D\"."
-msgstr ""
+msgstr "„Vytvoriť posun oblasti“: vytvorí niekoľko posunutí ciest Inkscape, aby sa pôvodná oblasť cesty zaplnila na hodnotu „Polomer oblasti“. Obrysy začínajú od „1/2 D“ do celkovej šírky  „Šírka oblasti“ s „D“ krokmi, kde D sa berie z najbližšej definície nástroja (hodnota „Priemer nástroja“). Ak je „Šírka oblasti“ rovná „1/2 D“, vytvorí sa iba jeden posun."
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:2
 #: ../share/extensions/gcodetools_orientation_points.inx.h:1
 msgid "2-points mode (move and rotate, maintained aspect ratio X/Y)"
-msgstr ""
+msgstr "Režim 2 bodov (posunúť a otočiť, zachovaný pomer strán X/Y)"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:3
 #: ../share/extensions/gcodetools_orientation_points.inx.h:2
 msgid "3-points mode (move, rotate and mirror, different X/Y scale)"
-msgstr ""
+msgstr "Režim 3 bodov (posunúť, otočiť a zrkadliť, odlišný pomer X/Y)"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:4
 #: ../share/extensions/gcodetools_area.inx.h:2
@@ -27760,7 +27760,7 @@ msgstr "Operácia:"
 #: ../share/extensions/gcodetools_lathe.inx.h:1
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:1
 msgid "Add numeric suffix to filename"
-msgstr ""
+msgstr "Pridať názvu súboru číselnú príponu"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:6
 #: ../share/extensions/gcodetools_area.inx.h:4
@@ -27769,7 +27769,7 @@ msgstr ""
 #: ../share/extensions/gcodetools_lathe.inx.h:2
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:2
 msgid "Additional post-processor:"
-msgstr ""
+msgstr "Ďalší post-procesor:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:7
 msgid "All in one"
@@ -27778,7 +27778,7 @@ msgstr "Všetko v jednom"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:9
 #: ../share/extensions/gcodetools_area.inx.h:6
 msgid "Area artefacts"
-msgstr ""
+msgstr "Artefakty oblasti"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:10
 #: ../share/extensions/gcodetools_area.inx.h:7
@@ -27788,14 +27788,14 @@ msgstr "Šírka oblasti:"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:11
 #: ../share/extensions/gcodetools_area.inx.h:8
 msgid "Artefact diameter:"
-msgstr ""
+msgstr "Priemer oblasti:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:12
 #: ../share/extensions/gcodetools_area.inx.h:9
 #: ../share/extensions/gcodetools_lathe.inx.h:3
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:3
 msgid "Biarc interpolation tolerance is the maximum distance between path and its approximation. The segment will be split into two segments if the distance between path's segment and it's approximation exceeds biarc interpolation tolerance."
-msgstr ""
+msgstr "Tolerancia bioblúkovej interpolácie je maximálna vzdialenosť medzi cestou a jej aproximáciou. Úsek sa rozdelí na dva úseky ak vzdialenosť medzi úsekom cesty a jeho aproximáciou prekračuje toleranciu bioblúkovej interpolácie."
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:13
 #: ../share/extensions/gcodetools_area.inx.h:10
@@ -27808,7 +27808,7 @@ msgstr "Krokov interpolácie"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:14
 #: ../share/extensions/gcodetools_dxf_points.inx.h:3
 msgid "Convert selected objects to drill points (as dxf_import plugin does). Also you can save original shape. Only the start point of each curve will be used. Also you can manually select object, open XML editor (Shift+Ctrl+X) and add or remove XML tag 'dxfpoint' with any value."
-msgstr ""
+msgstr "Previesť vybrané objekty na body vŕtania (ako robí zásuvný modul dxf_import). Môžete tiež uložiť pôvodný tvar. Použije sa iba počiatočný bod každej krivky. Môžete tiež ručne vybrať objekt, otvoriť editor XML (Shift+Ctrl+X) a pridať alebo odstrániť značku XML „dxfpoint“ s ľubovoľnou hodnotou."
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:15
 #: ../share/extensions/gcodetools_dxf_points.inx.h:4
@@ -27865,7 +27865,7 @@ msgstr "Plná cesta k súboru záznamu:"
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:8
 #: ../share/extensions/gcodetools_tools_library.inx.h:1
 msgid "Gcodetools"
-msgstr ""
+msgstr "Gcodetools"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:23
 #: ../share/extensions/gcodetools_area.inx.h:15
@@ -27877,7 +27877,7 @@ msgstr ""
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:9
 #: ../share/extensions/gcodetools_tools_library.inx.h:2
 msgid "Gcodetools plug-in: converts paths to Gcode (using circular interpolation), makes offset paths and engraves sharp corners using cone cutters. This plug-in calculates Gcode for paths using circular interpolation or linear motion when needed. Tutorials, manuals and support can be found at English support forum: http://www.cnc-club.ru/gcodetools and Russian support forum: http://www.cnc-club.ru/gcodetoolsru Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas. Gcodetools ver. 1.6.01"
-msgstr ""
+msgstr "Zásuvný modul Gcodetools: prevedie cesty na Gcode (pomocou kruhovej interpolácie), vytvorí posunuté cesty a vyryje ostré rohy pomocou kužeľosečiek. Tento zásuvný modul vypočíta Gcode ciest pomocou kruhovej interpolácie alebo lineárneho pohybu ak treba. Návody, príručky a podporu nájdete na anglickom fóre podpory: \thttp://www.cnc-club.ru/gcodetools a ruskom fóre podpory: \thttp://www.cnc-club.ru/gcodetoolsru Autori: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas. Gcodetools ver. 1.6.01"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:24
 #: ../share/extensions/gcodetools_area.inx.h:16
@@ -27891,12 +27891,12 @@ msgstr "Vytvoriť súbor záznamu"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:26
 #: ../share/extensions/gcodetools_tools_library.inx.h:4
 msgid "Just check tools"
-msgstr ""
+msgstr "Iba skontrolovať nástroje"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:27
 #: ../share/extensions/gcodetools_area.inx.h:18
 msgid "Maximum area cutting curves:"
-msgstr ""
+msgstr "Maximálna oblasť rezacích kriviek:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:28
 #: ../share/extensions/gcodetools_engraving.inx.h:12
@@ -27921,7 +27921,7 @@ msgstr "Minimálny oblúkový polomer:"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:31
 #: ../share/extensions/gcodetools_engraving.inx.h:14
 msgid "Number of sample points used to calculate distance:"
-msgstr ""
+msgstr "Počet vzorkovacích bodov na výpočet vzdialenosti:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:32
 #: ../share/extensions/gcodetools_area.inx.h:21
@@ -27929,12 +27929,12 @@ msgstr ""
 #: ../share/extensions/gcodetools_lathe.inx.h:21
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:14
 msgid "Offset along Z axis:"
-msgstr ""
+msgstr "Posun po osi Z:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:35
 #: ../share/extensions/gcodetools_orientation_points.inx.h:8
 msgid "Orientation points are used to calculate transformation (offset,scale,mirror,rotation in XY plane) of the path. 3-points mode only: do not put all three into one line (use 2-points mode instead). You can modify Z surface, Z depth values later using text tool (3rd coordinates). If there are no orientation points inside current layer they are taken from the upper layer. Do not ungroup orientation points! You can select them using double click to enter the group or by Ctrl+Click. Now press apply to create control points (independent set for each layer)."
-msgstr ""
+msgstr "Orientačné body sa používajú na výpočet transformácie (posun, zmena mierky, zrkadlenie, otočenie v rovine XY) cesty. Iba režim 3 bodov: nedávať všetky tri na priamku (namiesto toho použite 2 body). Neskôr môžete zmeniť hodnoty povrchu Z, hĺbky Z pomocou nástroja text (3D súradnice). Ak v aktuálnej vrstve nie sú žiadne orientačné body, vezmú sa z hornej vrstvy. Nerušte zoskupenie orientačných bodov! Môžete ich vybrať dvojitým kliknutím alebo Ctrl+kliknutím, čím sa dostanete do skupiny. Teraz stlačením Použiť vytvoríte riadiace body (nezávislé skupiny pre každú vrstvu)."
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:36
 #: ../share/extensions/gcodetools_orientation_points.inx.h:9
@@ -27955,7 +27955,7 @@ msgstr "Cesta k Gcode"
 #: ../share/extensions/gcodetools_lathe.inx.h:24
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:17
 msgid "Post-processor:"
-msgstr ""
+msgstr "Post-procesor:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:39
 #: ../share/extensions/gcodetools_area.inx.h:25
@@ -27980,12 +27980,12 @@ msgstr "Zmeniť mierku pozdĺž osi Z:"
 #: ../share/extensions/gcodetools_lathe.inx.h:27
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:20
 msgid "Select all paths if nothing is selected"
-msgstr ""
+msgstr "Vybrať všetky vrstvy ak nič nie je vybrané"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:42
 #: ../share/extensions/gcodetools_tools_library.inx.h:5
 msgid "Selected tool type fills appropriate default values. You can change these values using the Text tool later on. The topmost (z order) tool in the active layer is used. If there is no tool inside the current layer it is taken from the upper layer. Press Apply to create new tool."
-msgstr ""
+msgstr "Vybraný tup nástroja vypĺňa vhodné predvolené hodnoty. Tieto hodnoty neskôr môžete zmeniť pomocou nástroja Text. Použije sa najvrchnejší (v poradí Z) nástroj v aktívnej vrstve. Ak v aktívnej vrstve nie je žiadny nástroj, vezme sa z vrchnej vrstvy. Stlačením Použiť vytvoríte nový nástroj."
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:43
 #: ../share/extensions/gcodetools_engraving.inx.h:21
@@ -27995,7 +27995,7 @@ msgstr "Tolerancia ostrých uhlov:"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:44
 #: ../share/extensions/gcodetools_engraving.inx.h:22
 msgid "This function creates path to engrave sharp angles. Cutter's shape function is defined by the tool. Some simple shapes: cone....(45 degrees)...........: w cone....(height/diameter=10/3).: 10/3 w sphere..(\"r\" diameter).........: math.sqrt(max(0,r**2-w**2)) ellipse.(R1=r and R2=r*4r).....: math.sqrt(max(0,r**2-w**2))*4"
-msgstr ""
+msgstr "Táto funkcia vytvorí cestu na vyrytie ostrých uhlov. Funkciu tvaru rezača definuje nástroj. Niektoré jednoduché tvary: kužeľ....(45 stupňov)...........: w kužeľ....(výška/priemer=10/3).: 10/3 w guľa..(priemer „r“).........: math.sqrt(max(0,r**2-w**2)) elipsa.(R1=r a R2=r*4r).....: math.sqrt(max(0,r**2-w**2))*4"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:45
 #: ../share/extensions/gcodetools_tools_library.inx.h:6
@@ -28015,12 +28015,12 @@ msgstr "Typ nástrojov:"
 #: ../share/extensions/gcodetools_orientation_points.inx.h:10
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:21
 msgid "Units (mm or in):"
-msgstr ""
+msgstr "Jednotky (mm alebo pl):"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:48
 #: ../share/extensions/gcodetools_area.inx.h:29
 msgid "Usage: 1. Select all Area Offsets (gray outlines) 2. Object/Ungroup (Shift+Ctrl+G) 3. Press Apply Suspected small objects will be marked out by colored arrows."
-msgstr ""
+msgstr "Použitie: 1. Vyberte všetky Posuny oblasti (šedé obrysy) 2. Objekt/Zrušiť zoskupenie (Shift+Ctrl+G) 3. Stlačte Použiť Podozrivé malé objekty budú označené farebnými šípkami."
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:49
 #: ../share/extensions/gcodetools_orientation_points.inx.h:11
@@ -28034,7 +28034,7 @@ msgstr "Hĺbka Z:"
 #: ../share/extensions/gcodetools_lathe.inx.h:29
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:22
 msgid "Z safe height for G00 move over blank:"
-msgstr ""
+msgstr "Z bezpečná výška pre posun G00 po prázdnom:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:51
 #: ../share/extensions/gcodetools_orientation_points.inx.h:12
@@ -28044,7 +28044,7 @@ msgstr "Povrch Z:"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:52
 #: ../share/extensions/gcodetools_dxf_points.inx.h:18
 msgid "clear dxfpoint sign"
-msgstr ""
+msgstr "zmazať znamienko dxfpoint"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:53
 #: ../share/extensions/gcodetools_tools_library.inx.h:8
@@ -28069,12 +28069,12 @@ msgstr "zmazať"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:57
 #: ../share/extensions/gcodetools_tools_library.inx.h:11
 msgid "lathe cutter"
-msgstr ""
+msgstr "sústruh"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:58
 #: ../share/extensions/gcodetools_area.inx.h:32
 msgid "mark with an arrow"
-msgstr ""
+msgstr "označiť šípkou"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:59
 #: ../share/extensions/gcodetools_area.inx.h:33
@@ -28089,12 +28089,12 @@ msgstr "plazma"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:61
 #: ../share/extensions/gcodetools_dxf_points.inx.h:19
 msgid "set as dxfpoint and draw arrow"
-msgstr ""
+msgstr "nastaviť ako dxfpoint a nakresliť šípku"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:62
 #: ../share/extensions/gcodetools_dxf_points.inx.h:20
 msgid "set as dxfpoint and save shape"
-msgstr ""
+msgstr "nastaviť ako dxfpoint a nakresliť tvar"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:63
 #: ../share/extensions/gcodetools_tools_library.inx.h:13
@@ -28103,11 +28103,11 @@ msgstr "tangenciálny nôž"
 
 #: ../share/extensions/gcodetools_check_for_updates.inx.h:1
 msgid "Check for Gcodetools latest stable version and try to get the updates."
-msgstr ""
+msgstr "Skontrolovať najnovšiu stabilnú verziu Gcodetools a pokúsiť sa stiahnuť aktualizácie."
 
 #: ../share/extensions/gcodetools_check_for_updates.inx.h:2
 msgid "Check for updates"
-msgstr ""
+msgstr "Skontrolovať aktualizácie"
 
 #: ../share/extensions/gcodetools_dxf_points.inx.h:5
 msgid "DXF Points"
@@ -28139,11 +28139,11 @@ msgstr "Sústruh"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:16
 msgid "Lathe X axis remap:"
-msgstr ""
+msgstr "Premapovanie osi X sústruhu:"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:17
 msgid "Lathe Z axis remap:"
-msgstr ""
+msgstr "Premapovanie osi Z sústruhu:"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:18
 msgid "Lathe width:"
