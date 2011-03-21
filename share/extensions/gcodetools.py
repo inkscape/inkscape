@@ -3638,7 +3638,7 @@ class Gcodetools(inkex.Effect):
 ################################################################################
 	def dxfpoints(self):
 		if self.selected_paths == {}:
-			self.error(_("Noting is selected. Please select something to convert to drill point (dxfpoint) or clear point sign."),"warning")
+			self.error(_("Nothing is selected. Please select something to convert to drill point (dxfpoint) or clear point sign."),"warning")
 		for layer in self.layers :
 			if layer in self.selected_paths :
 				for path in self.selected_paths[layer]:
