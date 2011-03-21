@@ -1,5 +1,5 @@
 /** @file
- * @brief  Singleton class to access the preferences file - implementation
+ * Singleton class to access the preferences file - implementation.
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -59,7 +59,7 @@ static void file_add_recent(gchar const *uri)
 // private inner class definition
 
 /**
- * @brief XML - prefs observer bridge
+ * XML - prefs observer bridge.
  *
  * This is an XML node observer that watches for changes in the XML document storing the preferences.
  * It is used to implement preference observers.
@@ -110,7 +110,7 @@ Preferences::~Preferences()
 }
 
 /**
- * @brief Load internal defaults
+ * Load internal defaults.
  *
  * In the future this will try to load the system-wide file before falling
  * back to the internal defaults.
@@ -121,7 +121,7 @@ void Preferences::_loadDefaults()
 }
 
 /**
- * @brief Load the user's customized preferences
+ * Load the user's customized preferences.
  *
  * Tries to load the user's preferences.xml file. If there is none, creates it.
  */
@@ -255,7 +255,7 @@ static void migrateDetails( Inkscape::XML::Document *from, Inkscape::XML::Docume
 }
 
 /**
- * @brief Flush all pref changes to the XML file
+ * Flush all pref changes to the XML file.
  */
 void Preferences::save()
 {
@@ -364,9 +364,10 @@ void Preferences::migrate( std::string const& legacyDir, std::string const& pref
 // Now for the meat.
 
 /**
- * @brief Get names of all entries in the specified path
- * @param path Preference path to query
- * @return A vector containing all entries in the given directory
+ * Get names of all entries in the specified path.
+ *
+ * @param path Preference path to query.
+ * @return A vector containing all entries in the given directory.
  */
 std::vector<Preferences::Entry> Preferences::getAllEntries(Glib::ustring const &path)
 {
@@ -383,9 +384,10 @@ std::vector<Preferences::Entry> Preferences::getAllEntries(Glib::ustring const &
 }
 
 /**
- * @brief Get the paths to all subdirectories of the specified path
- * @param path Preference path to query
- * @return A vector containing absolute paths to all subdirectories in the given path
+ * Get the paths to all subdirectories of the specified path.
+ *
+ * @param path Preference path to query.
+ * @return A vector containing absolute paths to all subdirectories in the given path.
  */
 std::vector<Glib::ustring> Preferences::getAllDirs(Glib::ustring const &path)
 {
@@ -411,9 +413,10 @@ Preferences::Entry const Preferences::getEntry(Glib::ustring const &pref_path)
 // setter methods
 
 /**
- * @brief Set a boolean attribute of a preference
- * @param pref_path Path of the preference to modify
- * @param value The new value of the pref attribute
+ * Set a boolean attribute of a preference.
+ *
+ * @param pref_path Path of the preference to modify.
+ * @param value The new value of the pref attribute.
  */
 void Preferences::setBool(Glib::ustring const &pref_path, bool value)
 {
@@ -424,9 +427,10 @@ void Preferences::setBool(Glib::ustring const &pref_path, bool value)
 }
 
 /**
- * @brief Set an integer attribute of a preference
- * @param pref_path Path of the preference to modify
- * @param value The new value of the pref attribute
+ * Set an integer attribute of a preference.
+ *
+ * @param pref_path Path of the preference to modify.
+ * @param value The new value of the pref attribute.
  */
 void Preferences::setInt(Glib::ustring const &pref_path, int value)
 {
@@ -436,9 +440,10 @@ void Preferences::setInt(Glib::ustring const &pref_path, int value)
 }
 
 /**
- * @brief Set a floating point attribute of a preference
- * @param pref_path Path of the preference to modify
- * @param value The new value of the pref attribute
+ * Set a floating point attribute of a preference.
+ *
+ * @param pref_path Path of the preference to modify.
+ * @param value The new value of the pref attribute.
  */
 void Preferences::setDouble(Glib::ustring const &pref_path, double value)
 {
@@ -455,9 +460,10 @@ void Preferences::setColor(Glib::ustring const &pref_path, guint32 value)
 }
 
 /**
- * @brief Set a string attribute of a preference
- * @param pref_path Path of the preference to modify
- * @param value The new value of the pref attribute
+ * Set a string attribute of a preference.
+ *
+ * @param pref_path Path of the preference to modify.
+ * @param value The new value of the pref attribute.
  */
 void Preferences::setString(Glib::ustring const &pref_path, Glib::ustring const &value)
 {
@@ -486,7 +492,7 @@ void Preferences::mergeStyle(Glib::ustring const &pref_path, SPCSSAttr *style)
 namespace {
 
 /**
- * @brief Structure that holds additional information for registered Observers
+ * Structure that holds additional information for registered Observers.
  */
 struct _ObserverData {
     Inkscape::XML::Node *_node; ///< Node at which the wrapping PrefNodeObserver is registered
@@ -542,7 +548,7 @@ void Preferences::PrefNodeObserver::notifyAttributeChanged(XML::Node &node, GQua
 }
 
 /**
- * @brief Find the XML node to observe
+ * Find the XML node to observe.
  */
 XML::Node *Preferences::_findObserverNode(Glib::ustring const &pref_path, Glib::ustring &node_key, Glib::ustring &attr_key, bool create)
 {
@@ -613,11 +619,12 @@ void Preferences::removeObserver(Observer &o)
 
 
 /**
- * @brief Get the XML node corresponding to the given pref key
- * @param pref_key Preference key (path) to get
- * @param create Whether to create the corresponding node if it doesn't exist
- * @param separator The character used to separate parts of the pref key
- * @return XML node corresponding to the specified key
+ * Get the XML node corresponding to the given pref key.
+ *
+ * @param pref_key Preference key (path) to get.
+ * @param create Whether to create the corresponding node if it doesn't exist.
+ * @param separator The character used to separate parts of the pref key.
+ * @return XML node corresponding to the specified key.
  *
  * Derived from former inkscape_get_repr(). Private because it assumes that the backend is
  * a flat XML file, which may not be the case e.g. if we are using GConf (in future).
