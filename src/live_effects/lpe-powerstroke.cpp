@@ -346,7 +346,6 @@ LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & 
         }
 
         // create stroke path where points (x,y) := (t, offset)
-        //Geom::Interpolate::CubicBezierJohan interpolator;
         Geom::Interpolate::Interpolator *interpolator = Geom::Interpolate::Interpolator::create(static_cast<Geom::Interpolate::InterpolatorType>(interpolator_type.get_value()));
         Geom::Path strokepath = interpolator->interpolateToPath(ts);
         Geom::Path mirroredpath = strokepath.reverse() * Geom::Scale(1,-1);
@@ -374,8 +373,9 @@ LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & 
         ts.insert(ts.begin(), last_point - Point(pwd2_in.domain().extent() ,0));
         ts.push_back( first_point + Point(pwd2_in.domain().extent() ,0) );
         // create stroke path where points (x,y) := (t, offset)
-        Geom::Interpolate::CubicBezierJohan interpolator;
-        Geom::Path strokepath = interpolator.interpolateToPath(ts);
+        Geom::Interpolate::Interpolator *interpolator = Geom::Interpolate::Interpolator::create(static_cast<Geom::Interpolate::InterpolatorType>(interpolator_type.get_value()));
+        Geom::Path strokepath = interpolator->interpolateToPath(ts);
+        delete interpolator;
 
         // output 2 separate paths
         D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(strokepath.toPwSb());
