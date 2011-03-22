@@ -232,13 +232,40 @@ void Inkscape::XML::rebase_hrefs(SPDocument *const doc, gchar const *const new_b
     for (GSList const *l = images; l != NULL; l = l->next) {
         Inkscape::XML::Node *ir = static_cast<SPObject *>(l->data)->getRepr();
 
-        gchar const *const href = ir->attribute("xlink:href");
+        gchar * uri = g_strdup(ir->attribute("xlink:href"));
+        if (!uri) {
+            continue;
+        }
+        if (!strncmp(uri, "file://", 7)) {
+            uri = g_strdup(g_filename_from_uri(ir->attribute("xlink:href"), NULL, NULL)); 
+        }
+        // The following two cases are for absolute hrefs that can be converted to relative.
+        // Imported images, first time rebased, need an old base.
+        gchar * href = uri;
+        if (g_path_is_absolute(href)) {
+            href = (gchar *) sp_relative_path_from_path(uri, old_abs_base);
+        }
+        // Files moved from a absolute path need a new one.
+        if (g_path_is_absolute(href)) {
+            href = (gchar *) sp_relative_path_from_path(uri, new_abs_base);
+        }
+        // Other bitmaps are either really absolute, or already relative.
+
+#ifdef WIN32
+        /* Windows relative path needs their native separators before we
+         * compare it to native baserefs. */
+        if (!g_path_is_absolute(href)) {
+            g_strdelimit(href, "/", '\\');
+        }
+#endif
+
         /* TODO: Most of this function currently treats href as if it were a simple filename
          * (e.g. passing it to g_path_is_absolute, g_build_filename or IO::file_test, or avoiding
          * changing non-file hrefs), which breaks if href starts with a scheme or if href contains
          * any escaping. */
 
         if (!href || !href_needs_rebasing(href)) {
+            g_free(uri);
             continue;
         }
 
@@ -253,10 +280,21 @@ void Inkscape::XML::rebase_hrefs(SPDocument *const doc, gchar const *const new_b
          * of file hrefs. */
 
         gchar const *const new_href = sp_relative_path_from_path(abs_href, new_abs_base);
-        ir->setAttribute("xlink:href", new_href);
         ir->setAttribute("sodipodi:absref", ( spns
                                               ? abs_href
                                               : NULL ));
+        if (!g_path_is_absolute(new_href)) {
+#ifdef WIN32
+            /* Native Windows path separators are replaced with / so that the href
+             * also works on Gnu/Linux and OSX */
+            ir->setAttribute("xlink:href", g_strdelimit((gchar *) new_href, "\\", '/'));
+#else
+            ir->setAttribute("xlink:href", new_href);
+#endif
+        } else {
+            ir->setAttribute("xlink:href", g_filename_to_uri((gchar *) new_href, NULL, NULL));
+        }
+
         /* impl: I assume that if !spns then any existing sodipodi:absref is about to get
          * cleared (or is already cleared) anyway, in which case it doesn't matter whether we
          * clear or leave any existing sodipodi:absref value.  If that assumption turns out to
@@ -264,8 +302,10 @@ void Inkscape::XML::rebase_hrefs(SPDocument *const doc, gchar const *const new_b
          * referred to a different file than sodipodi:absref) while clearing it means risking
          * losing information. */
 
+        g_free(uri);
+        // (No need to free href, it's guaranteed to point into uri.)
         g_free(abs_href);
-        /* (No need to free new_href, it's guaranteed to point into used_abs_href.) */
+        // (No need to free new_href, it's guaranteed to point into abs_href.)
     }
 
     g_free(new_abs_base);
