@@ -34,7 +34,7 @@
 # grid  -  raster
 # glyph  -  teken
 # hue  -  tint
-# lightness  -  helderheid
+# lightness  -  lichtheid
 # master  -  meester  (i.v.m. docking)
 # minor/major division  -  hoofdmarkering/hulpmarkering
 # node  -  knooppunt
@@ -51,8 +51,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-02-27 22:17+0100\n"
-"PO-Revision-Date: 2011-03-08 23:18+0100\n"
+"POT-Creation-Date: 2011-03-17 20:24+0100\n"
+"PO-Revision-Date: 2011-03-23 22:56+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -862,8 +862,8 @@ msgstr "Onverzadigd maken"
 #: ../src/extension/internal/filter/abc.h:477
 #: ../src/extension/internal/filter/abc.h:580
 #: ../src/extension/internal/filter/abc.h:740
-#: ../src/extension/internal/filter/color.h:81
-#: ../src/extension/internal/filter/color.h:577
+#: ../src/extension/internal/filter/color.h:153
+#: ../src/extension/internal/filter/color.h:806
 #: ../src/extension/internal/filter/experimental.h:97
 #: ../share/extensions/color_blackandwhite.inx.h:2
 #: ../share/extensions/color_brighter.inx.h:2
@@ -1017,7 +1017,7 @@ msgstr "Van Gogh-verfeffect voor bitmaps"
 
 #: ../share/filters/filters.svg.h:44
 msgid "HSL Bumps"
-msgstr "TVH-reliëf"
+msgstr "TVL-reliëf"
 
 # het blijkt hier ook om embossering te gaan: in Inkscape consistent als reliëf aangeduid
 #: ../share/filters/filters.svg.h:44
@@ -1508,7 +1508,7 @@ msgstr "Klassiek of gekleurd reliëf-effect: grijswaarden, kleur en 3D-reliëf"
 
 #: ../share/filters/filters.svg.h:98
 #: ../src/extension/internal/bitmap/solarize.cpp:38
-#: ../src/extension/internal/filter/color.h:467
+#: ../src/extension/internal/filter/color.h:696
 msgid "Solarize"
 msgstr "Solariseren"
 
@@ -1517,7 +1517,7 @@ msgid "Classical photographic solarization effect"
 msgstr "Klassiek fotografisch solarisatie-effect"
 
 #: ../share/filters/filters.svg.h:99
-#: ../src/extension/internal/filter/color.h:468
+#: ../src/extension/internal/filter/color.h:697
 msgid "Moonarize"
 msgstr "Lunariseren"
 
@@ -1551,7 +1551,7 @@ msgstr "Verlicht glaseffect met licht van onderuit"
 
 #: ../share/filters/filters.svg.h:103
 msgid "HSL Bumps alpha"
-msgstr "TVH-reliëf, alfa"
+msgstr "TVL-reliëf, alfa"
 
 #: ../share/filters/filters.svg.h:103
 #: ../share/filters/filters.svg.h:104
@@ -1571,7 +1571,7 @@ msgstr "Afbeeldingseffecten, transparant"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Same as HSL Bumps but with transparent highlights"
-msgstr "Gelijk aan TVH-reliëf, maar met transparantie"
+msgstr "Gelijk aan TVL-reliëf, maar met transparantie"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Bubbly Bumps alpha"
@@ -1582,7 +1582,6 @@ msgid "Same as Bubbly Bumps but with transparent highlights"
 msgstr "Gelijk aan Vervormde bellen, maar met transparantie"
 
 #: ../share/filters/filters.svg.h:105
-#: ../src/extension/internal/filter/morphology.h:54
 msgid "Smooth edges"
 msgstr "Randen glad maken"
 
@@ -1710,11 +1709,11 @@ msgstr "Gloed naar binnen en buiten met een mogelijke offset en gekleurde vullin
 
 #: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
-msgstr "TVH-reliëf, mat"
+msgstr "TVL-reliëf, mat"
 
 #: ../share/filters/filters.svg.h:120
 msgid "Same as HSL bumps but with a diffuse reflection instead of a specular one"
-msgstr "Gelijk aan TVH-reliëf, maar met een diffuse reflectie in plaats van een spiegelende"
+msgstr "Gelijk aan TVL-reliëf, maar met een diffuse reflectie in plaats van een spiegelende"
 
 #: ../share/filters/filters.svg.h:121
 msgid "Dark Emboss"
@@ -2056,7 +2055,7 @@ msgstr "Een kleine korrel toevoegen"
 
 #: ../share/filters/filters.svg.h:161
 msgid "HSL Bumps, transparent"
-msgstr "TVH-reliëf, transparant"
+msgstr "TVL-reliëf, transparant"
 
 #: ../share/filters/filters.svg.h:161
 msgid "Highly flexible specular bump with transparency"
@@ -2064,7 +2063,7 @@ msgstr "Zeer flexibel belicht reliëf met transparantie"
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:1034
-#: ../src/widgets/desktop-widget.cpp:1713
+#: ../src/widgets/desktop-widget.cpp:1712
 msgid "Drawing"
 msgstr "Tekening"
 
@@ -2165,7 +2164,7 @@ msgid "Quadritone fantasy"
 msgstr "Quadritone fantasie"
 
 #: ../share/filters/filters.svg.h:174
-#: ../src/extension/internal/filter/color.h:400
+#: ../src/extension/internal/filter/color.h:629
 msgid "Replace hue by two colors"
 msgstr "Tint door twee kleuren vervangen"
 
@@ -2191,7 +2190,7 @@ msgstr "Gepointilliseerde transparantie"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Gives a pointillist HSL sensitive transparency"
-msgstr "Geeft een gepointilliseerde TVH-gevoelige transparantie"
+msgstr "Geeft een gepointilliseerde TVL-gevoelige transparantie"
 
 #: ../share/filters/filters.svg.h:178
 msgid "Canvas transparency"
@@ -2199,7 +2198,7 @@ msgstr "Doekachtige transparantie"
 
 #: ../share/filters/filters.svg.h:178
 msgid "Gives a canvas like HSL sensitive transparency"
-msgstr "Geeft een doekachtige TVH-gevoelige transparantie"
+msgstr "Geeft een doekachtige TVL-gevoelige transparantie"
 
 #: ../share/filters/filters.svg.h:179
 msgid "Smear transparency"
@@ -2231,7 +2230,7 @@ msgstr "Leer met reliëf"
 
 #: ../share/filters/filters.svg.h:182
 msgid "Combine a HSL edges detection bump with a leathery or woody and colorizable texture"
-msgstr "Combineert een TVH-randdetectie met een verkleurbare lederachtige of houten textuur"
+msgstr "Combineert een TVL-randdetectie met een verkleurbare lederachtige of houten textuur"
 
 #: ../share/filters/filters.svg.h:183
 msgid "Carnaval"
@@ -2247,7 +2246,7 @@ msgstr "Plastificeren"
 
 #: ../share/filters/filters.svg.h:184
 msgid "HSL edges detection bump with a wavy reflective surface effect and variable crumple"
-msgstr "TVH-randdetectie met een golvend en spiegelend oppervlakteeffect en variabele kreuken"
+msgstr "TVL-randdetectie met een golvend en spiegelend oppervlakteeffect en variabele kreuken"
 
 #: ../share/filters/filters.svg.h:185
 msgid "Plaster"
@@ -2255,7 +2254,7 @@ msgstr "Bepleisteren"
 
 #: ../share/filters/filters.svg.h:185
 msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
-msgstr "Combineert een TVH-randdetectie met een mat en verkreukeld oppervlakteeffect"
+msgstr "Combineert een TVL-randdetectie met een mat en verkreukeld oppervlakteeffect"
 
 #: ../share/filters/filters.svg.h:186
 msgid "Rough transparency"
@@ -2338,7 +2337,7 @@ msgid "Convert to a colorizable transparent positive or negative"
 msgstr "Omzetten naar een verkleurbaar transparant positief of negatief"
 
 #: ../share/filters/filters.svg.h:196
-#: ../src/extension/internal/filter/color.h:64
+#: ../src/extension/internal/filter/color.h:136
 msgid "Duotone"
 msgstr "Duotone"
 
@@ -2392,7 +2391,7 @@ msgstr "Gebogen doek"
 
 #: ../share/filters/filters.svg.h:202
 msgid "Canvas texture with an HSL sensitive height map"
-msgstr "Doektextuur met een TVH-gevoelige hoogtekaart"
+msgstr "Doektextuur met een TVL-gevoelige hoogtekaart"
 
 #: ../share/filters/filters.svg.h:203
 msgid "Canvas Bumps, matte"
@@ -4056,7 +4055,7 @@ msgid "Delete tiled clones"
 msgstr "Verwijder getegelde klonen"
 
 #: ../src/dialogs/clonetiler.cpp:1088
-#: ../src/selection-chemistry.cpp:2035
+#: ../src/selection-chemistry.cpp:2048
 msgid "Select an <b>object</b> to clone."
 msgstr "Selecteer een <b>object</b> om te klonen."
 
@@ -4411,8 +4410,8 @@ msgid "Alternate the sign of blur change for each column"
 msgstr "De vervaging voor elke kolom om-en-om afwisselen"
 
 #: ../src/dialogs/clonetiler.cpp:2375
-msgid "<b>Fade out:</b>"
-msgstr "<b>Ondoorzichtigheid:</b>"
+msgid "<b>Opacity:</b>"
+msgstr "<b>Ondoorzichtigheid</b>:"
 
 #: ../src/dialogs/clonetiler.cpp:2382
 msgid "Decrease tile opacity by this percentage for each row"
@@ -4583,7 +4582,7 @@ msgstr "De verzadiging van de kleur kiezen"
 #: ../src/dialogs/clonetiler.cpp:2646
 msgctxt "Clonetiler color lightness"
 msgid "L"
-msgstr "H"
+msgstr "L"
 
 #: ../src/dialogs/clonetiler.cpp:2647
 msgid "Pick the lightness of the color"
@@ -5249,22 +5248,22 @@ msgstr "Objecttitel instellen"
 msgid "Set object description"
 msgstr "Objectomschrijving instellen"
 
-#: ../src/dialogs/object-attributes.cpp:32
+#: ../src/dialogs/object-attributes.cpp:33
 msgid "Href:"
 msgstr "Href:"
 
 #. default x:
 #. default y:
-#: ../src/dialogs/object-attributes.cpp:33
+#: ../src/dialogs/object-attributes.cpp:34
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2217
 msgid "Target:"
 msgstr "Doel:"
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
-#: ../src/dialogs/object-attributes.cpp:34
+#: ../src/dialogs/object-attributes.cpp:35
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/extension/internal/filter/color.h:466
-#: ../src/extension/internal/filter/color.h:554
+#: ../src/extension/internal/filter/color.h:695
+#: ../src/extension/internal/filter/color.h:783
 #: ../src/extension/internal/filter/morphology.h:53
 #: ../src/rdf.cpp:239
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
@@ -5278,54 +5277,54 @@ msgstr "Type:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkRoleAttribute
 #. Identifies the type of the related resource with an absolute URI
-#: ../src/dialogs/object-attributes.cpp:37
+#: ../src/dialogs/object-attributes.cpp:38
 msgid "Role:"
 msgstr "Role:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
-#: ../src/dialogs/object-attributes.cpp:40
+#: ../src/dialogs/object-attributes.cpp:41
 msgid "Arcrole:"
 msgstr "Arcrole:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
-#: ../src/dialogs/object-attributes.cpp:42
+#: ../src/dialogs/object-attributes.cpp:43
 #: ../src/rdf.cpp:230
 msgid "Title:"
 msgstr "Titel:"
 
-#: ../src/dialogs/object-attributes.cpp:43
+#: ../src/dialogs/object-attributes.cpp:44
 #: ../share/extensions/polyhedron_3d.inx.h:36
 msgid "Show:"
 msgstr "Tonen:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
-#: ../src/dialogs/object-attributes.cpp:45
+#: ../src/dialogs/object-attributes.cpp:46
 msgid "Actuate:"
 msgstr "Activatie:"
 
-#: ../src/dialogs/object-attributes.cpp:50
+#: ../src/dialogs/object-attributes.cpp:51
 msgid "URL:"
 msgstr "URL:"
 
-#: ../src/dialogs/object-attributes.cpp:51
-#: ../src/dialogs/object-attributes.cpp:59
+#: ../src/dialogs/object-attributes.cpp:52
+#: ../src/dialogs/object-attributes.cpp:60
 #: ../src/ui/dialog/guides.cpp:44
 #: ../src/widgets/desktop-widget.cpp:516
 #: ../src/widgets/toolbox.cpp:1544
 msgid "X:"
 msgstr "X:"
 
-#: ../src/dialogs/object-attributes.cpp:52
-#: ../src/dialogs/object-attributes.cpp:60
+#: ../src/dialogs/object-attributes.cpp:53
+#: ../src/dialogs/object-attributes.cpp:61
 #: ../src/ui/dialog/guides.cpp:45
 #: ../src/widgets/desktop-widget.cpp:519
 #: ../src/widgets/toolbox.cpp:1562
 msgid "Y:"
 msgstr "Y:"
 
-#: ../src/dialogs/object-attributes.cpp:53
-#: ../src/dialogs/object-attributes.cpp:61
+#: ../src/dialogs/object-attributes.cpp:54
+#: ../src/dialogs/object-attributes.cpp:62
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:40
 #: ../src/extension/internal/bitmap/raise.cpp:41
 #: ../src/extension/internal/bitmap/sample.cpp:40
@@ -5340,8 +5339,8 @@ msgstr "Y:"
 msgid "Width:"
 msgstr "Breedte:"
 
-#: ../src/dialogs/object-attributes.cpp:54
-#: ../src/dialogs/object-attributes.cpp:62
+#: ../src/dialogs/object-attributes.cpp:55
+#: ../src/dialogs/object-attributes.cpp:63
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:41
 #: ../src/extension/internal/bitmap/raise.cpp:42
 #: ../src/extension/internal/bitmap/sample.cpp:41
@@ -5349,17 +5348,17 @@ msgstr "Breedte:"
 msgid "Height:"
 msgstr "Hoogte:"
 
-#: ../src/dialogs/object-attributes.cpp:107
+#: ../src/dialogs/object-attributes.cpp:108
 #, c-format
 msgid "Link Properties"
 msgstr "Linkeigenschappen"
 
-#: ../src/dialogs/object-attributes.cpp:109
+#: ../src/dialogs/object-attributes.cpp:110
 #, c-format
 msgid "Image Properties"
 msgstr "Afbeeldingseigenschappen"
 
-#: ../src/dialogs/object-attributes.cpp:111
+#: ../src/dialogs/object-attributes.cpp:112
 #, c-format
 msgid "%s Properties"
 msgstr "Eigenschappen van %s"
@@ -6233,6 +6232,7 @@ msgstr "Aanpassende drempelwaarde"
 
 #. Label
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
+#: ../src/extension/internal/filter/color.h:540
 #: ../src/extension/internal/filter/experimental.h:355
 #: ../src/live_effects/lpe-ruler.cpp:50
 #: ../src/widgets/gradient-vector.cpp:824
@@ -6610,7 +6610,7 @@ msgstr "Verhoogd"
 
 #: ../src/extension/internal/bitmap/raise.cpp:49
 msgid "Alter lightness the edges of selected bitmap(s) to create a raised appearance"
-msgstr "De helderheid van randen in geselecteerde bitmap(s) aanpassen om reliëf te simuleren"
+msgstr "De lichtheid van randen in geselecteerde bitmap(s) aanpassen om reliëf te simuleren"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:39
 msgid "Reduce Noise"
@@ -6642,16 +6642,10 @@ msgid "Shade"
 msgstr "Schaduw"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/extension/internal/filter/abc.h:239
-#: ../src/extension/internal/filter/abc.h:377
-#: ../src/extension/internal/filter/abc.h:817
 msgid "Azimuth:"
 msgstr "Azimut:"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/extension/internal/filter/abc.h:238
-#: ../src/extension/internal/filter/abc.h:376
-#: ../src/extension/internal/filter/abc.h:816
 msgid "Elevation:"
 msgstr "Hoogte:"
 
@@ -6924,20 +6918,23 @@ msgstr "Vertical vervaging:"
 #: ../src/extension/internal/filter/abc.h:675
 #: ../src/extension/internal/filter/abc.h:744
 #: ../src/extension/internal/filter/abc.h:822
-#: ../src/extension/internal/filter/color.h:87
-#: ../src/extension/internal/filter/color.h:188
-#: ../src/extension/internal/filter/color.h:301
-#: ../src/extension/internal/filter/color.h:396
-#: ../src/extension/internal/filter/color.h:473
-#: ../src/extension/internal/filter/color.h:583
+#: ../src/extension/internal/filter/color.h:71
+#: ../src/extension/internal/filter/color.h:159
+#: ../src/extension/internal/filter/color.h:260
+#: ../src/extension/internal/filter/color.h:373
+#: ../src/extension/internal/filter/color.h:464
+#: ../src/extension/internal/filter/color.h:544
+#: ../src/extension/internal/filter/color.h:625
+#: ../src/extension/internal/filter/color.h:702
+#: ../src/extension/internal/filter/color.h:812
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:104
 #: ../src/extension/internal/filter/experimental.h:110
 #: ../src/extension/internal/filter/experimental.h:242
 #: ../src/extension/internal/filter/experimental.h:361
-#: ../src/extension/internal/filter/experimental.h:516
-#: ../src/extension/internal/filter/experimental.h:627
-#: ../src/extension/internal/filter/experimental.h:724
+#: ../src/extension/internal/filter/experimental.h:515
+#: ../src/extension/internal/filter/experimental.h:626
+#: ../src/extension/internal/filter/experimental.h:723
 #: ../src/extension/internal/filter/filter-file.cpp:148
 #: ../src/extension/internal/filter/filter.cpp:216
 #: ../src/extension/internal/filter/morphology.h:61
@@ -6957,18 +6954,21 @@ msgstr "Filters"
 #: ../src/extension/internal/filter/abc.h:676
 #: ../src/extension/internal/filter/abc.h:745
 #: ../src/extension/internal/filter/abc.h:823
-#: ../src/extension/internal/filter/color.h:88
-#: ../src/extension/internal/filter/color.h:189
-#: ../src/extension/internal/filter/color.h:302
-#: ../src/extension/internal/filter/color.h:397
-#: ../src/extension/internal/filter/color.h:474
-#: ../src/extension/internal/filter/color.h:584
+#: ../src/extension/internal/filter/color.h:72
+#: ../src/extension/internal/filter/color.h:160
+#: ../src/extension/internal/filter/color.h:261
+#: ../src/extension/internal/filter/color.h:374
+#: ../src/extension/internal/filter/color.h:465
+#: ../src/extension/internal/filter/color.h:545
+#: ../src/extension/internal/filter/color.h:626
+#: ../src/extension/internal/filter/color.h:703
+#: ../src/extension/internal/filter/color.h:813
 #: ../src/extension/internal/filter/experimental.h:111
 #: ../src/extension/internal/filter/experimental.h:243
 #: ../src/extension/internal/filter/experimental.h:362
-#: ../src/extension/internal/filter/experimental.h:517
-#: ../src/extension/internal/filter/experimental.h:628
-#: ../src/extension/internal/filter/experimental.h:725
+#: ../src/extension/internal/filter/experimental.h:516
+#: ../src/extension/internal/filter/experimental.h:627
+#: ../src/extension/internal/filter/experimental.h:724
 #: ../src/extension/internal/filter/morphology.h:62
 msgid "Experimental"
 msgstr "Experimenteel"
@@ -6983,6 +6983,7 @@ msgstr "Randen schoonmaken, aanpasbaar (basis)"
 
 #: ../src/extension/internal/filter/abc.h:118
 #: ../src/extension/internal/filter/abc.h:313
+#: ../src/extension/internal/filter/color.h:65
 #: ../src/extension/internal/filter/experimental.h:236
 #: ../src/extension/internal/filter/experimental.h:335
 #: ../src/extension/internal/filter/experimental.h:340
@@ -6994,8 +6995,8 @@ msgid "Color shift, custom (ABCs)"
 msgstr "Kleurverandering, aanpasbaar (basis)"
 
 #: ../src/extension/internal/filter/abc.h:176
-msgid "Shift:"
-msgstr "Verandering:"
+msgid "Shift (°):"
+msgstr "Verplaatsing (°):"
 
 #: ../src/extension/internal/filter/abc.h:185
 msgid "Rotate and desaturate hue"
@@ -7012,6 +7013,18 @@ msgstr "Diffuse belichting, aanpasbaar (basis)"
 #: ../share/extensions/fractalize.inx.h:3
 msgid "Smoothness:"
 msgstr "Gladheid:"
+
+#: ../src/extension/internal/filter/abc.h:238
+#: ../src/extension/internal/filter/abc.h:376
+#: ../src/extension/internal/filter/abc.h:816
+msgid "Elevation (°):"
+msgstr "Hoogte (°):"
+
+#: ../src/extension/internal/filter/abc.h:239
+#: ../src/extension/internal/filter/abc.h:377
+#: ../src/extension/internal/filter/abc.h:817
+msgid "Azimuth (°):"
+msgstr "Azimut (°):"
 
 #: ../src/extension/internal/filter/abc.h:240
 #: ../src/extension/internal/filter/abc.h:378
@@ -7036,27 +7049,15 @@ msgstr "Ruis-opvulling, aanpasbaar (basis)"
 msgid "Turbulence type:"
 msgstr "Type turbulentie:"
 
-#: ../src/extension/internal/filter/abc.h:465
-#: ../src/extension/internal/filter/abc.h:664
-msgid "Fractal noise"
-msgstr "Fractale ruis"
-
-#: ../src/extension/internal/filter/abc.h:466
-#: ../src/extension/internal/filter/abc.h:665
-#: ../src/filter-enums.cpp:35
-#: ../src/filter-enums.cpp:117
-msgid "Turbulence"
-msgstr "Turbulentie"
-
 #: ../src/extension/internal/filter/abc.h:468
 #: ../src/extension/internal/filter/abc.h:667
-msgid "Horizontal frequency (x100):"
-msgstr "Horizontale frequentie (x100):"
+msgid "Horizontal frequency:"
+msgstr "Horizontale frequentie:"
 
 #: ../src/extension/internal/filter/abc.h:469
 #: ../src/extension/internal/filter/abc.h:668
-msgid "Vertical frequency (x100):"
-msgstr "Verticale frequentie (x100):"
+msgid "Vertical frequency:"
+msgstr "Verticale frequentie:"
 
 #: ../src/extension/internal/filter/abc.h:470
 #: ../src/extension/internal/filter/abc.h:669
@@ -7088,7 +7089,7 @@ msgid "Erosion:"
 msgstr "Erosie:"
 
 #: ../src/extension/internal/filter/abc.h:474
-#: ../src/extension/internal/filter/color.h:297
+#: ../src/extension/internal/filter/color.h:369
 #: ../src/extension/internal/filter/experimental.h:83
 msgid "Inverted"
 msgstr "Geïnverteerd"
@@ -7122,7 +7123,6 @@ msgid "Silhouette, custom (ABCs)"
 msgstr "Silhouet, aanpasbaar (basis)"
 
 #: ../src/extension/internal/filter/abc.h:738
-#: ../src/extension/internal/filter/experimental.h:720
 #: ../src/extension/internal/filter/morphology.h:57
 msgid "Blur:"
 msgstr "Vervaging:"
@@ -7135,241 +7135,283 @@ msgstr "Alle zichtbare monochrome delen hertekenen"
 msgid "Specular light, custom (ABCs)"
 msgstr "Spiegelende belichting, aanpasbaar (basis)"
 
-#: ../src/extension/internal/filter/color.h:58
+#: ../src/extension/internal/filter/color.h:63
+msgid "Brightness, custom (Color)"
+msgstr "Helderheid, aanpasbaar (kleur)"
+
+#: ../src/extension/internal/filter/color.h:66
+msgid "Vibration:"
+msgstr "Vibratie:"
+
+#: ../src/extension/internal/filter/color.h:67
+#: ../src/extension/internal/filter/color.h:459
+#: ../src/extension/internal/filter/experimental.h:84
+#: ../src/extension/internal/filter/experimental.h:505
+msgid "Lightness:"
+msgstr "Lichtheid:"
+
+#: ../src/extension/internal/filter/color.h:75
+msgid "Brightness filter"
+msgstr "Helderheidsfilter"
+
+#: ../src/extension/internal/filter/color.h:130
 msgid "Colorize, custom (Color)"
 msgstr "Verkleuren, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:62
+#: ../src/extension/internal/filter/color.h:134
 msgid "Harsh light:"
 msgstr "Hard licht:"
 
-#: ../src/extension/internal/filter/color.h:63
+#: ../src/extension/internal/filter/color.h:135
 msgid "Normal light:"
 msgstr "Normaal licht:"
 
-#: ../src/extension/internal/filter/color.h:65
-#: ../src/extension/internal/filter/color.h:380
+#: ../src/extension/internal/filter/color.h:137
+#: ../src/extension/internal/filter/color.h:609
 msgid "Blend 1:"
 msgstr "Mengen 1:"
 
-#: ../src/extension/internal/filter/color.h:66
-#: ../src/extension/internal/filter/color.h:74
-#: ../src/extension/internal/filter/color.h:382
-#: ../src/extension/internal/filter/color.h:389
-#: ../src/extension/internal/filter/color.h:563
-#: ../src/extension/internal/filter/color.h:569
-#: ../src/extension/internal/filter/experimental.h:77
-#: ../src/extension/internal/filter/experimental.h:100
-#: ../src/extension/internal/filter/experimental.h:509
+#: ../src/extension/internal/filter/color.h:138
+#: ../src/extension/internal/filter/color.h:146
+#: ../src/extension/internal/filter/color.h:611
+#: ../src/extension/internal/filter/color.h:618
+#: ../src/extension/internal/filter/color.h:792
+#: ../src/extension/internal/filter/color.h:798
 #: ../src/filter-enums.cpp:52
 msgid "Multiply"
 msgstr "Vermenigvuldigen"
 
-#: ../src/extension/internal/filter/color.h:67
-#: ../src/extension/internal/filter/color.h:75
-#: ../src/extension/internal/filter/color.h:381
-#: ../src/extension/internal/filter/color.h:387
-#: ../src/extension/internal/filter/color.h:555
-#: ../src/extension/internal/filter/color.h:568
-#: ../src/extension/internal/filter/experimental.h:76
-#: ../src/extension/internal/filter/experimental.h:99
-#: ../src/extension/internal/filter/experimental.h:508
-#: ../src/extension/internal/filter/experimental.h:606
-#: ../src/extension/internal/filter/experimental.h:616
+#: ../src/extension/internal/filter/color.h:139
+#: ../src/extension/internal/filter/color.h:147
+#: ../src/extension/internal/filter/color.h:610
+#: ../src/extension/internal/filter/color.h:616
+#: ../src/extension/internal/filter/color.h:784
+#: ../src/extension/internal/filter/color.h:797
 #: ../src/filter-enums.cpp:51
 #: ../src/ui/dialog/inkscape-preferences.cpp:586
 msgid "Normal"
 msgstr "Normaal"
 
-#: ../src/extension/internal/filter/color.h:68
-#: ../src/extension/internal/filter/color.h:73
-#: ../src/extension/internal/filter/color.h:383
-#: ../src/extension/internal/filter/color.h:388
-#: ../src/extension/internal/filter/color.h:562
-#: ../src/extension/internal/filter/experimental.h:78
-#: ../src/extension/internal/filter/experimental.h:101
-#: ../src/extension/internal/filter/experimental.h:510
+#: ../src/extension/internal/filter/color.h:140
+#: ../src/extension/internal/filter/color.h:145
+#: ../src/extension/internal/filter/color.h:612
+#: ../src/extension/internal/filter/color.h:617
+#: ../src/extension/internal/filter/color.h:791
 #: ../src/filter-enums.cpp:53
 #: ../src/ui/dialog/input.cpp:362
 msgid "Screen"
 msgstr "Scherm"
 
-#: ../src/extension/internal/filter/color.h:69
-#: ../src/extension/internal/filter/color.h:76
-#: ../src/extension/internal/filter/color.h:390
-#: ../src/extension/internal/filter/color.h:561
-#: ../src/extension/internal/filter/experimental.h:79
-#: ../src/extension/internal/filter/experimental.h:102
-#: ../src/extension/internal/filter/experimental.h:615
+#: ../src/extension/internal/filter/color.h:141
+#: ../src/extension/internal/filter/color.h:148
+#: ../src/extension/internal/filter/color.h:619
+#: ../src/extension/internal/filter/color.h:790
 #: ../src/filter-enums.cpp:55
 msgid "Lighten"
 msgstr "Lichter"
 
-#: ../src/extension/internal/filter/color.h:70
-#: ../src/extension/internal/filter/color.h:77
-#: ../src/extension/internal/filter/color.h:391
-#: ../src/extension/internal/filter/color.h:564
-#: ../src/extension/internal/filter/color.h:570
-#: ../src/extension/internal/filter/experimental.h:75
-#: ../src/extension/internal/filter/experimental.h:103
-#: ../src/extension/internal/filter/experimental.h:617
+#: ../src/extension/internal/filter/color.h:142
+#: ../src/extension/internal/filter/color.h:149
+#: ../src/extension/internal/filter/color.h:620
+#: ../src/extension/internal/filter/color.h:793
+#: ../src/extension/internal/filter/color.h:799
 #: ../src/filter-enums.cpp:54
 msgid "Darken"
 msgstr "Donkerder"
 
-#: ../src/extension/internal/filter/color.h:72
-#: ../src/extension/internal/filter/color.h:386
+#: ../src/extension/internal/filter/color.h:144
+#: ../src/extension/internal/filter/color.h:615
 msgid "Blend 2:"
 msgstr "Mengen 2:"
 
-#: ../src/extension/internal/filter/color.h:91
+#: ../src/extension/internal/filter/color.h:163
 msgid "Blend image or object with a flood color"
 msgstr "Afbeelding of object mengen met een vulkleur"
 
-#: ../src/extension/internal/filter/color.h:166
+#: ../src/extension/internal/filter/color.h:238
 msgid "Duochrome, custom (Color)"
 msgstr "Duochroom, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:170
+#: ../src/extension/internal/filter/color.h:242
 msgid "Fluorescence level:"
 msgstr "Fluorescentieniveau:"
 
-#: ../src/extension/internal/filter/color.h:171
+#: ../src/extension/internal/filter/color.h:243
 msgid "Swap:"
 msgstr "Verwisselen:"
 
-#: ../src/extension/internal/filter/color.h:172
+#: ../src/extension/internal/filter/color.h:244
 msgid "No swap"
 msgstr "Niet verwisselen"
 
-#: ../src/extension/internal/filter/color.h:173
+#: ../src/extension/internal/filter/color.h:245
 msgid "Color and alpha"
 msgstr "Kleur en alfa"
 
-#: ../src/extension/internal/filter/color.h:174
+#: ../src/extension/internal/filter/color.h:246
 msgid "Color only"
 msgstr "Alleen kleur"
 
-#: ../src/extension/internal/filter/color.h:175
+#: ../src/extension/internal/filter/color.h:247
 msgid "Alpha only"
 msgstr "Alleen alfa"
 
-#: ../src/extension/internal/filter/color.h:179
+#: ../src/extension/internal/filter/color.h:251
 msgid "Color 1"
 msgstr "Kleur 1"
 
-#: ../src/extension/internal/filter/color.h:182
+#: ../src/extension/internal/filter/color.h:254
 msgid "Color 2"
 msgstr "Kleur 2"
 
-#: ../src/extension/internal/filter/color.h:192
+#: ../src/extension/internal/filter/color.h:264
 msgid "Convert luminance values to a duochrome palette"
 msgstr "Luminantiewaarden omzetten naar een twee-kleurenpalet"
 
-#: ../src/extension/internal/filter/color.h:289
+#: ../src/extension/internal/filter/color.h:361
 msgid "Electrize, custom (Color)"
 msgstr "Elektrificeren, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:291
-#: ../src/extension/internal/filter/experimental.h:504
+#: ../src/extension/internal/filter/color.h:363
+#: ../src/extension/internal/filter/experimental.h:503
+#: ../src/extension/internal/filter/experimental.h:719
 msgid "Simplify:"
 msgstr "Vereenvoudigen:"
 
-#: ../src/extension/internal/filter/color.h:292
-#: ../src/extension/internal/filter/experimental.h:605
+#: ../src/extension/internal/filter/color.h:364
+#: ../src/extension/internal/filter/experimental.h:604
 msgid "Effect type:"
 msgstr "Effecttype:"
 
-#: ../src/extension/internal/filter/color.h:293
+#: ../src/extension/internal/filter/color.h:365
 #: ../src/filter-enums.cpp:83
 msgid "Table"
 msgstr "Tabel"
 
-#: ../src/extension/internal/filter/color.h:294
+#: ../src/extension/internal/filter/color.h:366
 #: ../src/filter-enums.cpp:84
 msgid "Discrete"
 msgstr "Discreet"
 
-#: ../src/extension/internal/filter/color.h:296
-#: ../src/extension/internal/filter/experimental.h:613
-#: ../src/extension/internal/filter/experimental.h:719
+#: ../src/extension/internal/filter/color.h:368
+#: ../src/extension/internal/filter/experimental.h:612
+#: ../src/extension/internal/filter/experimental.h:718
 msgid "Levels:"
 msgstr "Niveaus:"
 
-#: ../src/extension/internal/filter/color.h:305
+#: ../src/extension/internal/filter/color.h:377
 msgid "Electro solarization effects"
 msgstr "Electro solarisatie-effecten"
 
-#: ../src/extension/internal/filter/color.h:376
+#: ../src/extension/internal/filter/color.h:454
+msgid "Greyscale, custom (Color)"
+msgstr "Grijswaarden, aanpasbaar (kleur)"
+
+#: ../src/extension/internal/filter/color.h:456
+msgid "Red:"
+msgstr "Rood:"
+
+#: ../src/extension/internal/filter/color.h:457
+msgid "Green:"
+msgstr "Groen:"
+
+#: ../src/extension/internal/filter/color.h:458
+msgid "Blue:"
+msgstr "Blauw:"
+
+#: ../src/extension/internal/filter/color.h:460
+#: ../src/extension/internal/filter/experimental.h:81
+#: ../src/extension/internal/filter/experimental.h:238
+msgid "Transparent"
+msgstr "Transparant"
+
+#: ../src/extension/internal/filter/color.h:468
+msgid "Customize greyscale components"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:536
+msgid "Lightness, custom (Color)"
+msgstr "Lichtheid, aanpasbaar (kleur)"
+
+#: ../src/extension/internal/filter/color.h:538
+msgid "Lights:"
+msgstr "Lichte delen:"
+
+#: ../src/extension/internal/filter/color.h:539
+msgid "Shadows:"
+msgstr "Schaduwen:"
+
+#: ../src/extension/internal/filter/color.h:548
+msgid "Modify lights and shadows separately"
+msgstr "Lichte delen en schaduwen afzonderlijk aanpassen"
+
+#: ../src/extension/internal/filter/color.h:605
 msgid "Quadritone fantasy, custom (Color)"
 msgstr "Quadritone fantasie, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:378
-#: ../src/extension/internal/filter/color.h:576
-msgid "Hue distribution:"
-msgstr "Tintdistributie:"
+#: ../src/extension/internal/filter/color.h:607
+#: ../src/extension/internal/filter/color.h:805
+msgid "Hue distribution (°):"
+msgstr "Tintdistributie (°):"
 
-#: ../src/extension/internal/filter/color.h:379
+#: ../src/extension/internal/filter/color.h:608
 #: ../src/ui/dialog/tracedialog.cpp:477
 msgid "Colors:"
 msgstr "Kleuren:"
 
-#: ../src/extension/internal/filter/color.h:385
+#: ../src/extension/internal/filter/color.h:614
 msgid "Over-saturation:"
 msgstr "Oververzadiging:"
 
-#: ../src/extension/internal/filter/color.h:463
+#: ../src/extension/internal/filter/color.h:692
 msgid "Solarize, custom (Color)"
 msgstr "Solariseren, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:465
-msgid "Hue rotation:"
-msgstr "Tintrotatie:"
+#: ../src/extension/internal/filter/color.h:694
+msgid "Hue rotation (°):"
+msgstr "Tintrotatie (°):"
 
-#: ../src/extension/internal/filter/color.h:477
+#: ../src/extension/internal/filter/color.h:706
 msgid "Classic photographic solarization effect"
 msgstr "Klassiek fotografisch solarisatie-effect"
 
-#: ../src/extension/internal/filter/color.h:550
+#: ../src/extension/internal/filter/color.h:779
 msgid "Tritone, custom (Color)"
 msgstr "Tritone, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:556
-#, fuzzy
+#: ../src/extension/internal/filter/color.h:785
 msgid "Enhance hue"
-msgstr "Verbeteren"
+msgstr "Tint verbeteren"
 
-#: ../src/extension/internal/filter/color.h:557
-#, fuzzy
+#: ../src/extension/internal/filter/color.h:786
 msgid "Radiation"
-msgstr "Variatie:"
+msgstr ""
 
-#: ../src/extension/internal/filter/color.h:558
-#, fuzzy
+#: ../src/extension/internal/filter/color.h:787
 msgid "Hue to background"
-msgstr "Achtergrond verwijderen"
+msgstr ""
 
-#: ../src/extension/internal/filter/color.h:560
+#: ../src/extension/internal/filter/color.h:789
 msgid "Global blend:"
 msgstr "Globaal mengen:"
 
-#: ../src/extension/internal/filter/color.h:566
+#: ../src/extension/internal/filter/color.h:795
 msgid "Glow:"
 msgstr "Gloed:"
 
-#: ../src/extension/internal/filter/color.h:567
+#: ../src/extension/internal/filter/color.h:796
 msgid "Glow blend:"
 msgstr "Mengen gloed"
 
-#: ../src/extension/internal/filter/color.h:572
+#: ../src/extension/internal/filter/color.h:801
 msgid "Local light:"
 msgstr "Lokaal licht:"
 
-#: ../src/extension/internal/filter/color.h:573
+#: ../src/extension/internal/filter/color.h:802
 msgid "Global light:"
 msgstr "Globaal licht:"
 
-#: ../src/extension/internal/filter/color.h:587
+#: ../src/extension/internal/filter/color.h:816
 msgid "Create a custom tritone palette with additional glow, blend modes and hue moving"
 msgstr "Een eigen tritone palen maen met aanpasbare gloed, mengmodi en tintrotatie"
 
@@ -7422,20 +7464,9 @@ msgstr "Tekenmodus"
 msgid "Drawing blend:"
 msgstr "Mengen afbeelding:"
 
-#: ../src/extension/internal/filter/experimental.h:81
-#: ../src/extension/internal/filter/experimental.h:238
-msgid "Transparent"
-msgstr "Transparant"
-
 #: ../src/extension/internal/filter/experimental.h:82
-#: ../src/extension/internal/filter/experimental.h:607
 msgid "Dented"
 msgstr "Ingedrukt"
-
-#: ../src/extension/internal/filter/experimental.h:84
-#: ../src/extension/internal/filter/experimental.h:506
-msgid "Lightness:"
-msgstr "Helderheid:"
 
 #: ../src/extension/internal/filter/experimental.h:86
 msgid "Noise reduction:"
@@ -7487,11 +7518,6 @@ msgstr "Afbeelding omzetten in gravure van verticale en horizontale lijnen"
 msgid "Drawing, custom"
 msgstr "Tekening, aanpasbaar"
 
-#: ../src/extension/internal/filter/experimental.h:334
-#: ../src/splivarot.cpp:2014
-msgid "Simplify"
-msgstr "Vereenvoudigen"
-
 #: ../src/extension/internal/filter/experimental.h:337
 msgid "Erase:"
 msgstr "Gommen:"
@@ -7499,14 +7525,6 @@ msgstr "Gommen:"
 #: ../src/extension/internal/filter/experimental.h:338
 msgid "Transluscent"
 msgstr "Doorzichtig"
-
-#: ../src/extension/internal/filter/experimental.h:339
-msgid "Smoothness"
-msgstr "Gladheid"
-
-#: ../src/extension/internal/filter/experimental.h:343
-msgid "Melt"
-msgstr "Smelt"
 
 #: ../src/extension/internal/filter/experimental.h:344
 msgid "Level:"
@@ -7532,84 +7550,68 @@ msgstr ""
 msgid "Convert images to duochrome drawings"
 msgstr "Afbeelding in tweekleurentekening omzetten"
 
-#: ../src/extension/internal/filter/experimental.h:498
+#: ../src/extension/internal/filter/experimental.h:497
 msgid "Neon draw, custom"
 msgstr "Neonafbeelding, aanpasbaar"
 
-#: ../src/extension/internal/filter/experimental.h:500
+#: ../src/extension/internal/filter/experimental.h:499
 msgid "Line type:"
 msgstr "Lijntype:"
 
-#: ../src/extension/internal/filter/experimental.h:501
-msgid "Smoothed"
-msgstr "Glad"
-
-#: ../src/extension/internal/filter/experimental.h:502
-msgid "Contrasted"
-msgstr "Contrasterend"
-
-#: ../src/extension/internal/filter/experimental.h:505
+#: ../src/extension/internal/filter/experimental.h:504
 msgid "Line width:"
 msgstr "Lijnbreedte:"
 
-#: ../src/extension/internal/filter/experimental.h:507
-#: ../src/extension/internal/filter/experimental.h:614
+#: ../src/extension/internal/filter/experimental.h:506
+#: ../src/extension/internal/filter/experimental.h:613
 msgid "Blend mode:"
 msgstr "Mengmodus:"
 
-#: ../src/extension/internal/filter/experimental.h:512
+#: ../src/extension/internal/filter/experimental.h:511
 msgid "Dark mode"
 msgstr "Donkere modus"
 
-#: ../src/extension/internal/filter/experimental.h:520
+#: ../src/extension/internal/filter/experimental.h:519
 msgid "Posterize and draw smooth lines around color shapes"
 msgstr "Posteriseren en afgeronde lijnen rond vormen tekenen"
 
-#: ../src/extension/internal/filter/experimental.h:603
+#: ../src/extension/internal/filter/experimental.h:602
 msgid "Poster paint, custom"
 msgstr "Poster, aanpasbaar"
 
-#: ../src/extension/internal/filter/experimental.h:609
+#: ../src/extension/internal/filter/experimental.h:608
 msgid "Transfer type:"
 msgstr "Uitvoer:"
 
-#: ../src/extension/internal/filter/experimental.h:610
-msgid "Poster"
-msgstr "Poster"
-
-#: ../src/extension/internal/filter/experimental.h:611
-msgid "Painting"
-msgstr "Schilderij"
+#: ../src/extension/internal/filter/experimental.h:618
+msgid "Simplify (primary):"
+msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:619
-msgid "Primary blur:"
-msgstr "Primaire vervaging:"
+msgid "Simplify (secondary):"
+msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:620
-msgid "Secondary blur:"
-msgstr "Secundaire vervaging:"
-
-#: ../src/extension/internal/filter/experimental.h:621
 msgid "Pre-saturation:"
 msgstr "Pre-verzadiging:"
 
-#: ../src/extension/internal/filter/experimental.h:622
+#: ../src/extension/internal/filter/experimental.h:621
 msgid "Post-saturation:"
 msgstr "Post-verzadiging:"
 
-#: ../src/extension/internal/filter/experimental.h:623
+#: ../src/extension/internal/filter/experimental.h:622
 msgid "Simulate antialiasing"
 msgstr "Anti-aliasing simuleren"
 
-#: ../src/extension/internal/filter/experimental.h:631
+#: ../src/extension/internal/filter/experimental.h:630
 msgid "Poster and painting effects"
 msgstr "Poster- en schilderijeffecten"
 
-#: ../src/extension/internal/filter/experimental.h:717
+#: ../src/extension/internal/filter/experimental.h:716
 msgid "Posterize basic, custom"
 msgstr "Posteriseren, basis, aanpasbaar"
 
-#: ../src/extension/internal/filter/experimental.h:728
+#: ../src/extension/internal/filter/experimental.h:727
 msgid "Simple posterizing effect"
 msgstr "Eenvoudig posterisatie-effect"
 
@@ -7628,10 +7630,6 @@ msgstr "Map voor uitbreidingen niet beschikbaar.  Filters kunnen niet geladen wo
 #: ../src/extension/internal/filter/morphology.h:51
 msgid "Cross-smooth, custom (Morphology)"
 msgstr "Kruis-vervagen, aanpasbaar (morfologie)"
-
-#: ../src/extension/internal/filter/morphology.h:55
-msgid "Smooth all"
-msgstr "Alles glad maken"
 
 #: ../src/extension/internal/filter/morphology.h:65
 msgid "Smooth edges and angles of shapes"
@@ -8189,6 +8187,11 @@ msgstr "Lichtbron"
 msgid "Tile"
 msgstr "Tegel"
 
+#: ../src/filter-enums.cpp:35
+#: ../src/filter-enums.cpp:117
+msgid "Turbulence"
+msgstr "Turbulentie"
+
 #: ../src/filter-enums.cpp:40
 msgid "Source Graphic"
 msgstr "Bronafbeelding"
@@ -8390,7 +8393,7 @@ msgstr "Verzadiging"
 #: ../src/widgets/toolbox.cpp:4469
 #: ../share/extensions/color_randomize.inx.h:5
 msgid "Lightness"
-msgstr "Helderheid"
+msgstr "Lichtheid"
 
 #: ../src/flood-context.cpp:266
 msgctxt "Flood autogap"
@@ -9190,7 +9193,7 @@ msgstr "De nieuwe dock-controller %p is automatisch.  Enkel manuele dock-objecte
 #: ../src/ui/dialog/align-and-distribute.cpp:1033
 #: ../src/ui/dialog/document-properties.cpp:117
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1429
-#: ../src/widgets/desktop-widget.cpp:1709
+#: ../src/widgets/desktop-widget.cpp:1708
 msgid "Page"
 msgstr "Pagina"
 
@@ -10682,9 +10685,8 @@ msgstr "_Afbeeldingsmodus"
 #. "         <verb verb-id=\"ViewModePrintColorsPreview\" radio=\"yes\"/>\n"
 #. "         <verb verb-id=\"DialogPrintColorsPreview\" />\n"
 #: ../src/menus-skeleton.h:115
-#, fuzzy
 msgid "_Color display mode"
-msgstr "_Afbeeldingsmodus"
+msgstr "_Kleurweergavemodus"
 
 #. Better location in menu needs to be found
 #. "         <verb verb-id=\"ViewColorModePrintColorsPreview\" radio=\"yes\"/>\n"
@@ -11438,203 +11440,203 @@ msgstr "Verlaag naar de vorige laag"
 msgid "No more layers below."
 msgstr "Er zijn geen onderliggende lagen."
 
-#: ../src/selection-chemistry.cpp:1464
+#: ../src/selection-chemistry.cpp:1477
 msgid "Remove transform"
 msgstr "Transformatie verwijderen"
 
-#: ../src/selection-chemistry.cpp:1567
+#: ../src/selection-chemistry.cpp:1580
 msgid "Rotate 90&#176; CCW"
 msgstr "90 graden draaien; TKI"
 
-#: ../src/selection-chemistry.cpp:1567
+#: ../src/selection-chemistry.cpp:1580
 msgid "Rotate 90&#176; CW"
 msgstr "90 graden draaien; MKM"
 
-#: ../src/selection-chemistry.cpp:1588
+#: ../src/selection-chemistry.cpp:1601
 #: ../src/seltrans.cpp:517
 #: ../src/ui/dialog/transformation.cpp:771
 msgid "Rotate"
 msgstr "Roteren"
 
-#: ../src/selection-chemistry.cpp:1635
+#: ../src/selection-chemistry.cpp:1648
 msgid "Rotate by pixels"
 msgstr "Per pixel draaien"
 
-#: ../src/selection-chemistry.cpp:1665
+#: ../src/selection-chemistry.cpp:1678
 #: ../src/seltrans.cpp:514
 #: ../src/ui/dialog/transformation.cpp:749
 #: ../share/extensions/interp_att_g.inx.h:19
 msgid "Scale"
 msgstr "Schalen"
 
-#: ../src/selection-chemistry.cpp:1690
+#: ../src/selection-chemistry.cpp:1703
 msgid "Scale by whole factor"
 msgstr "Met een hele factor schalen"
 
-#: ../src/selection-chemistry.cpp:1705
+#: ../src/selection-chemistry.cpp:1718
 msgid "Move vertically"
 msgstr "Verticaal verplaatsen"
 
-#: ../src/selection-chemistry.cpp:1708
+#: ../src/selection-chemistry.cpp:1721
 msgid "Move horizontally"
 msgstr "Horizontaal verplaatsen"
 
-#: ../src/selection-chemistry.cpp:1711
-#: ../src/selection-chemistry.cpp:1737
+#: ../src/selection-chemistry.cpp:1724
+#: ../src/selection-chemistry.cpp:1750
 #: ../src/seltrans.cpp:511
 #: ../src/ui/dialog/transformation.cpp:692
 msgid "Move"
 msgstr "Verplaatsen"
 
-#: ../src/selection-chemistry.cpp:1731
+#: ../src/selection-chemistry.cpp:1744
 msgid "Move vertically by pixels"
 msgstr "Verticaal verplaatsen per pixels"
 
-#: ../src/selection-chemistry.cpp:1734
+#: ../src/selection-chemistry.cpp:1747
 msgid "Move horizontally by pixels"
 msgstr "Horizontaal verplaatsen per pixels"
 
-#: ../src/selection-chemistry.cpp:1866
+#: ../src/selection-chemistry.cpp:1879
 msgid "The selection has no applied path effect."
 msgstr "De selectie bevat geen toegepast padeffect."
 
-#: ../src/selection-chemistry.cpp:2069
+#: ../src/selection-chemistry.cpp:2082
 msgctxt "Action"
 msgid "Clone"
 msgstr "Kloon"
 
-#: ../src/selection-chemistry.cpp:2085
+#: ../src/selection-chemistry.cpp:2098
 msgid "Select <b>clones</b> to relink."
 msgstr "Selecteer <b>klonen</b> om te herlinken."
 
-#: ../src/selection-chemistry.cpp:2092
+#: ../src/selection-chemistry.cpp:2105
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr "Een <b>object</b> naar het klembord kopiëren om klonen naar te herlinken"
 
-#: ../src/selection-chemistry.cpp:2116
+#: ../src/selection-chemistry.cpp:2129
 msgid "<b>No clones to relink</b> in the selection."
 msgstr "<b>Geen klonen om te herlinken</b> in de selectie"
 
-#: ../src/selection-chemistry.cpp:2119
+#: ../src/selection-chemistry.cpp:2132
 msgid "Relink clone"
 msgstr "Kloon herlinken"
 
-#: ../src/selection-chemistry.cpp:2133
+#: ../src/selection-chemistry.cpp:2146
 msgid "Select <b>clones</b> to unlink."
 msgstr "Selecteer <b>klonen</b> om te ontlinken."
 
-#: ../src/selection-chemistry.cpp:2187
+#: ../src/selection-chemistry.cpp:2200
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "<b>Geen klonen geselecteerd</b> om te ontkoppelen."
 
-#: ../src/selection-chemistry.cpp:2191
+#: ../src/selection-chemistry.cpp:2204
 msgid "Unlink clone"
 msgstr "Kloon ontkoppelen"
 
-#: ../src/selection-chemistry.cpp:2204
+#: ../src/selection-chemistry.cpp:2217
 msgid "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> to go to its source. Select a <b>text on path</b> to go to the path. Select a <b>flowed text</b> to go to its frame."
 msgstr "Selecteer een <b>kloon</b> om naar zijn origineel te gaan. Selecteer een <b>gekoppelde offset</b> om naar zijn bron te gaan. Selecteer <b>tekst op een pad</b> om naar het pad te gaan. Selecteer <b>ingekaderde tekst</b> om naar het vormende object te gaan."
 
-#: ../src/selection-chemistry.cpp:2227
+#: ../src/selection-chemistry.cpp:2240
 msgid "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, flowed text?)"
 msgstr "Het te selecteren object <b>is onvindbaar</b> (verweesde kloon, offset, tekstpad of ingekaderde tekst?)"
 
-#: ../src/selection-chemistry.cpp:2233
+#: ../src/selection-chemistry.cpp:2246
 msgid "The object you're trying to select is <b>not visible</b> (it is in &lt;defs&gt;)"
 msgstr "Het object dat u probeert te selecteren is <b>niet zichtbaar</b> (het staat in &lt;defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2280
+#: ../src/selection-chemistry.cpp:2293
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr "Selecteer eerst de <b>objecten</b> om te converteren naar een markering."
 
-#: ../src/selection-chemistry.cpp:2348
+#: ../src/selection-chemistry.cpp:2361
 msgid "Objects to marker"
 msgstr "Objecten naar markering"
 
-#: ../src/selection-chemistry.cpp:2376
+#: ../src/selection-chemistry.cpp:2389
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr "Selecteer eerst de <b>objecten</b> om te converteren naar hulplijnen."
 
-#: ../src/selection-chemistry.cpp:2388
+#: ../src/selection-chemistry.cpp:2401
 msgid "Objects to guides"
 msgstr "Objecten naar hulplijnen"
 
-#: ../src/selection-chemistry.cpp:2405
+#: ../src/selection-chemistry.cpp:2418
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Selecteer eerst de <b>objecten</b> om te converteren naar een patroon."
 
-#: ../src/selection-chemistry.cpp:2493
+#: ../src/selection-chemistry.cpp:2506
 msgid "Objects to pattern"
 msgstr "Objecten naar patroon"
 
-#: ../src/selection-chemistry.cpp:2509
+#: ../src/selection-chemistry.cpp:2522
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr "Selecteer <b>objecten met patroonvulling</b> om objecten uit te halen."
 
-#: ../src/selection-chemistry.cpp:2562
+#: ../src/selection-chemistry.cpp:2575
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "Er zijn geen <b>objecten met patroonvulling</b> geselecteerd."
 
-#: ../src/selection-chemistry.cpp:2565
+#: ../src/selection-chemistry.cpp:2578
 msgid "Pattern to objects"
 msgstr "Patroon naar objecten"
 
-#: ../src/selection-chemistry.cpp:2647
+#: ../src/selection-chemistry.cpp:2660
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Selecteer eerst de <b>objecten</b> om een bitmapkopie van te maken."
 
-#: ../src/selection-chemistry.cpp:2651
+#: ../src/selection-chemistry.cpp:2664
 msgid "Rendering bitmap..."
 msgstr "Renderen van bitmap..."
 
-#: ../src/selection-chemistry.cpp:2825
+#: ../src/selection-chemistry.cpp:2838
 msgid "Create bitmap"
 msgstr "Bitmap maken"
 
-#: ../src/selection-chemistry.cpp:2857
+#: ../src/selection-chemistry.cpp:2870
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Selecteer de <b>objecten</b> om een afsnijpad/masker van te maken."
 
-#: ../src/selection-chemistry.cpp:2860
+#: ../src/selection-chemistry.cpp:2873
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Selecteer het maskerobject en de <b>object(en)</b> om het afsnijpad/masker op toe te passen."
 
-#: ../src/selection-chemistry.cpp:3041
+#: ../src/selection-chemistry.cpp:3054
 msgid "Set clipping path"
 msgstr "Afsnijpad inschakelen"
 
-#: ../src/selection-chemistry.cpp:3043
+#: ../src/selection-chemistry.cpp:3056
 msgid "Set mask"
 msgstr "Masker inschakelen"
 
-#: ../src/selection-chemistry.cpp:3058
+#: ../src/selection-chemistry.cpp:3071
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Selecteer <b>object(en)</b> om het afsnijpad/masker van uit te schakelen."
 
-#: ../src/selection-chemistry.cpp:3169
+#: ../src/selection-chemistry.cpp:3182
 msgid "Release clipping path"
 msgstr "Afsnijpad uitschakelen"
 
-#: ../src/selection-chemistry.cpp:3171
+#: ../src/selection-chemistry.cpp:3184
 msgid "Release mask"
 msgstr "Masker uitschakelen"
 
-#: ../src/selection-chemistry.cpp:3190
+#: ../src/selection-chemistry.cpp:3203
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr "Selecteer <b>object(en)</b> voor aanpassing van het canvas"
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:3210
+#: ../src/selection-chemistry.cpp:3223
 #: ../src/verbs.cpp:2736
 msgid "Fit Page to Selection"
 msgstr "Pagina naar selectie schalen"
 
-#: ../src/selection-chemistry.cpp:3239
+#: ../src/selection-chemistry.cpp:3252
 #: ../src/verbs.cpp:2738
 msgid "Fit Page to Drawing"
 msgstr "Pagina naar tekening schalen"
 
-#: ../src/selection-chemistry.cpp:3260
+#: ../src/selection-chemistry.cpp:3273
 #: ../src/verbs.cpp:2740
 msgid "Fit Page to Selection or Drawing"
 msgstr "Pagina naar selectie of inhoud schalen"
@@ -11833,56 +11835,56 @@ msgstr "Centrum instellen"
 msgid "Stamp"
 msgstr "Stempel"
 
-#: ../src/seltrans.cpp:629
-msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
-msgstr "Het <b>centrum</b> van draaien en scheeftrekken: sleep om te verplaatsen; vergroten/verkleinen met <b>Shift</b> gebruikt ook dit centrum."
-
-#: ../src/seltrans.cpp:656
+#: ../src/seltrans.cpp:636
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "De selectie <b>samendrukken of uitrekken</b>; <b>Ctrl</b> behoudt de verhoudingen; <b>Shift</b> vergroot/verkleint om het rotatiemiddelpunt"
 
-#: ../src/seltrans.cpp:657
+#: ../src/seltrans.cpp:637
 msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "De selectie <b>vergroten of verkleinen</b>; <b>Ctrl</b> behoudt de verhoudingen; <b>Shift</b> vergroot/verkleint om het rotatiemiddelpunt"
 
-#: ../src/seltrans.cpp:661
+#: ../src/seltrans.cpp:641
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
 msgstr "De selectie <b>scheeftrekken</b>; <b>Ctrl</b> trekt in stappen, <b>Shift</b> trekt om de tegenoverliggende hoek"
 
-#: ../src/seltrans.cpp:662
+#: ../src/seltrans.cpp:642
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
 msgstr "De selectie <b>draaien</b>; <b>Ctrl</b> draait in stappen, <b>Shift</b> draait om de tegenoverliggende hoek"
 
-#: ../src/seltrans.cpp:796
+#: ../src/seltrans.cpp:655
+msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
+msgstr "Het <b>centrum</b> van draaien en scheeftrekken: sleep om te verplaatsen; vergroten/verkleinen met <b>Shift</b> gebruikt ook dit centrum."
+
+#: ../src/seltrans.cpp:805
 msgid "Reset center"
 msgstr "Centrum herstellen"
 
-#: ../src/seltrans.cpp:1034
-#: ../src/seltrans.cpp:1131
+#: ../src/seltrans.cpp:1043
+#: ../src/seltrans.cpp:1140
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Vergroten/verkleinen</b>: %0.2f%% x %0.2f%%; gebruik <b>Ctrl</b> om de verhouding te vergrendelen"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1245
+#: ../src/seltrans.cpp:1254
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Scheeftrekken</b>: %0.2f&#176;; gebruik <b>Ctrl</b> om in stappen te trekken"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1320
+#: ../src/seltrans.cpp:1329
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Draaien</b>: %0.2f&#176;; gebruik <b>Ctrl</b> in stappen te draaien"
 
-#: ../src/seltrans.cpp:1355
+#: ../src/seltrans.cpp:1364
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "<b>Centrum</b> verplaatsen naar %s, %s"
 
-#: ../src/seltrans.cpp:1530
+#: ../src/seltrans.cpp:1539
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>Verplaatsen</b> met %s, %s; gebruik <b>Ctrl</b> om het te beperken tot horizontaal en verticaal, gebruik <b>Shift</b> om magnetisch raster uit te zetten."
@@ -12184,72 +12186,76 @@ msgstr "Er kon niet worden bepaald welk object <b>boven de andere</b> lag om een
 msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "Een van de geselecteerde objecten <b>is geen pad</b>, de booleaansche bewerking kan niet worden uitgevoerd."
 
-#: ../src/splivarot.cpp:882
+#: ../src/splivarot.cpp:901
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr "Selecteer <b>paden</b> waarvan de omlijning omgezet moet worden naar een pad."
 
-#: ../src/splivarot.cpp:1235
+#: ../src/splivarot.cpp:1254
 msgid "Convert stroke to path"
 msgstr "Omlijning omzetten naar pad"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:1238
+#: ../src/splivarot.cpp:1257
 msgid "<b>No stroked paths</b> in the selection."
 msgstr "Er zijn <b>geen omlijnde paden</b> geselecteerd."
 
-#: ../src/splivarot.cpp:1321
+#: ../src/splivarot.cpp:1340
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "Het geselecteerde object is <b>geen pad</b>, en kan dus niet versmalt/verbreed worden."
 
-#: ../src/splivarot.cpp:1440
-#: ../src/splivarot.cpp:1511
+#: ../src/splivarot.cpp:1459
+#: ../src/splivarot.cpp:1527
 msgid "Create linked offset"
 msgstr "Gekoppelde offset maken"
 
-#: ../src/splivarot.cpp:1441
-#: ../src/splivarot.cpp:1512
+#: ../src/splivarot.cpp:1460
+#: ../src/splivarot.cpp:1528
 msgid "Create dynamic offset"
 msgstr "Dynamische offset maken"
 
-#: ../src/splivarot.cpp:1537
+#: ../src/splivarot.cpp:1553
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Selecteer de <b>paden</b> om te versmallen/verbreden."
 
-#: ../src/splivarot.cpp:1754
+#: ../src/splivarot.cpp:1770
 msgid "Outset path"
 msgstr "Pad verbreden"
 
-#: ../src/splivarot.cpp:1754
+#: ../src/splivarot.cpp:1770
 msgid "Inset path"
 msgstr "Pad versmallen"
 
-#: ../src/splivarot.cpp:1756
+#: ../src/splivarot.cpp:1772
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "Er zijn <b>geen paden</b> geselecteerd om te vernauwen/verwijden."
 
-#: ../src/splivarot.cpp:1935
+#: ../src/splivarot.cpp:1951
 msgid "Simplifying paths (separately):"
 msgstr "Vereenvoudigen van paden (apart):"
 
-#: ../src/splivarot.cpp:1937
+#: ../src/splivarot.cpp:1953
 msgid "Simplifying paths:"
 msgstr "Vereenvoudigen van paden:"
 
-#: ../src/splivarot.cpp:1974
+#: ../src/splivarot.cpp:1990
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr "%s <b>%d</b> van <b>%d</b> paden vereenvoudigd..."
 
-#: ../src/splivarot.cpp:1986
+#: ../src/splivarot.cpp:2002
 #, c-format
 msgid "<b>%d</b> paths simplified."
 msgstr "<b>%d</b> paden zijn vereenvoudigd."
 
-#: ../src/splivarot.cpp:2000
+#: ../src/splivarot.cpp:2016
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Selecteer <b>paden</b> om te vereenvoudigen."
 
-#: ../src/splivarot.cpp:2016
+#: ../src/splivarot.cpp:2030
+msgid "Simplify"
+msgstr "Vereenvoudigen"
+
+#: ../src/splivarot.cpp:2032
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "Er zijn <b>geen paden</b> geselecteerd om te vereenvoudigen."
 
@@ -12932,7 +12938,7 @@ msgstr "_Licentie"
 #. FIXME? INKSCAPE_SCREENSDIR and "about.svg" are in UTF-8, not the
 #. native filename encoding... and the filename passed to sp_document_new
 #. should be in UTF-*8..
-#: ../src/ui/dialog/aboutbox.cpp:150
+#: ../src/ui/dialog/aboutbox.cpp:151
 msgid "about.svg"
 msgstr "about.nl.svg"
 
@@ -13182,7 +13188,7 @@ msgstr "Kleinste object"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1035
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1433
-#: ../src/widgets/desktop-widget.cpp:1717
+#: ../src/widgets/desktop-widget.cpp:1716
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Selectie"
@@ -15857,7 +15863,7 @@ msgid "Orphaned clones are deleted along with their original"
 msgstr "Verweesde klonen worden verwijderd samen met hun origineel"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:662
-msgid "When duplicating original+clones:"
+msgid "When duplicating original+clones/linked offset:"
 msgstr "Dupliceren van origineel en klonen:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:664
@@ -17633,7 +17639,7 @@ msgstr "Geselecteerde objecten ordenen"
 #. brightness
 #: ../src/ui/dialog/tracedialog.cpp:406
 msgid "Brightness cutoff"
-msgstr "Helderheid"
+msgstr "Grenswaarde helderheid"
 
 #: ../src/ui/dialog/tracedialog.cpp:410
 msgid "Trace by a given brightness level"
@@ -18986,16 +18992,16 @@ msgstr "Verzadiging aanpassen"
 #: ../src/ui/widget/selected-style.cpp:1281
 #, c-format
 msgid "Adjusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Ctrl</b> to adjust lightness, without modifiers to adjust hue"
-msgstr "<b>Verzadiging</b> is aangepast: was %.3g, is nu <b>%.3g</b> (verschil %.3g); gebruik <b>Ctrl</b> om helderheid, en geen toets om tint aan te passen"
+msgstr "<b>Verzadiging</b> is aangepast: was %.3g, is nu <b>%.3g</b> (verschil %.3g); gebruik <b>Ctrl</b> om lichtheid, en geen toets om tint aan te passen"
 
 #: ../src/ui/widget/selected-style.cpp:1285
 msgid "Adjust lightness"
-msgstr "Helderheid aanpassen"
+msgstr "Lichtheid aanpassen"
 
 #: ../src/ui/widget/selected-style.cpp:1287
 #, c-format
 msgid "Adjusting <b>lightness</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</b> to adjust saturation, without modifiers to adjust hue"
-msgstr "<b>Helderheid</b> is aangepast: was %.3g, is nu <b>%.3g</b> (verschil %.3g); gebruik <b>Shift</b> om verzadiging, en geen toets om tint aan te passen"
+msgstr "<b>Lichtheid</b> is aangepast: was %.3g, is nu <b>%.3g</b> (verschil %.3g); gebruik <b>Shift</b> om verzadiging, en geen toets om tint aan te passen"
 
 #: ../src/ui/widget/selected-style.cpp:1291
 msgid "Adjust hue"
@@ -19004,7 +19010,7 @@ msgstr "Tint aanpassen"
 #: ../src/ui/widget/selected-style.cpp:1293
 #, c-format
 msgid "Adjusting <b>hue</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</b> to adjust saturation, with <b>Ctrl</b> to adjust lightness"
-msgstr "<b>Tint</b> is aangepast: was %.3g, is nu <b>%.3g</b> (verschil %.3g); gebruik <b>Shift</b> om verzadiging, en <b>Ctrl</b> om helderheid aan te passen"
+msgstr "<b>Tint</b> is aangepast: was %.3g, is nu <b>%.3g</b> (verschil %.3g); gebruik <b>Shift</b> om verzadiging, en <b>Ctrl</b> om lichtheid aan te passen"
 
 #: ../src/ui/widget/selected-style.cpp:1402
 #: ../src/ui/widget/selected-style.cpp:1416
@@ -19352,7 +19358,7 @@ msgstr "V_olgende venster"
 
 #: ../src/verbs.cpp:2263
 msgid "Switch to the next document window"
-msgstr "Naar het volgende documentvenster overschakelen"
+msgstr "Naar het volgende documentvenster gaan"
 
 #: ../src/verbs.cpp:2264
 msgid "P_revious Window"
@@ -19360,7 +19366,7 @@ msgstr "Vor_ige venster"
 
 #: ../src/verbs.cpp:2265
 msgid "Switch to the previous document window"
-msgstr "Naar het vorige documentvenster overschakelen"
+msgstr "Naar het vorige documentvenster gaan"
 
 #: ../src/verbs.cpp:2266
 msgid "_Close"
@@ -20511,7 +20517,7 @@ msgstr "_Normaal"
 
 #: ../src/verbs.cpp:2609
 msgid "Switch to normal display mode"
-msgstr "Overschakelen naar normale weergavemodus"
+msgstr "Naar normale weergavemodus overschakelen"
 
 #: ../src/verbs.cpp:2610
 msgid "No _Filters"
@@ -20519,7 +20525,7 @@ msgstr "Geen _filters"
 
 #: ../src/verbs.cpp:2611
 msgid "Switch to normal display without filters"
-msgstr "Overschakelen naar normale weergavemodus zonder filters"
+msgstr "Naar normale weergavemodus zonder filters overschakelen"
 
 #: ../src/verbs.cpp:2612
 msgid "_Outline"
@@ -20527,38 +20533,34 @@ msgstr "_Silhouet"
 
 #: ../src/verbs.cpp:2613
 msgid "Switch to outline (wireframe) display mode"
-msgstr "Overschakelen naar silhouetmodus voor weergave (draadmodel)"
+msgstr "Naar silhouetmodus voor weergave (draadmodel) overschakelen"
 
 #. new ZoomVerb(SP_VERB_VIEW_COLOR_MODE_PRINT_COLORS_PREVIEW, "ViewColorModePrintColorsPreview", N_("_Print Colors Preview"),
 #. N_("Switch to print colors preview mode"), NULL),
 #: ../src/verbs.cpp:2614
 #: ../src/verbs.cpp:2622
 msgid "_Toggle"
-msgstr "Om_schakelen"
+msgstr "_Schakelen"
 
 #: ../src/verbs.cpp:2615
 msgid "Toggle between normal and outline display modes"
-msgstr "Omschakelen tussen normale en silhouetweergavemodus"
+msgstr "Tussen normale en silhouetweergavemodus schakelen"
 
 #: ../src/verbs.cpp:2617
-#, fuzzy
 msgid "Switch to normal color display mode"
-msgstr "Overschakelen naar normale weergavemodus"
+msgstr "Naar normale kleurweergavemodus schakelen"
 
 #: ../src/verbs.cpp:2618
-#, fuzzy
 msgid "_Grayscale"
-msgstr "Grijstinten"
+msgstr "_Grijstinten"
 
 #: ../src/verbs.cpp:2619
-#, fuzzy
 msgid "Switch to grayscale display mode"
-msgstr "Overschakelen naar normale weergavemodus"
+msgstr "Naar weergavemodus grijswaarden schakelen"
 
 #: ../src/verbs.cpp:2623
-#, fuzzy
 msgid "Toggle between normal and grayscale color display modes"
-msgstr "Omschakelen tussen normale en silhouetweergavemodus"
+msgstr "Tussen kleurweergavenmodi normaal en grijswaarden schakelen"
 
 #: ../src/verbs.cpp:2625
 msgid "Color-managed view"
@@ -20566,7 +20568,7 @@ msgstr "Kleurmanagementmodus"
 
 #: ../src/verbs.cpp:2626
 msgid "Toggle color-managed display for this document window"
-msgstr "Kleurmanagementweergave omschakelen voor dit documentvenster"
+msgstr "Kleurmanagementweergave veranderen voor dit documentvenster"
 
 #: ../src/verbs.cpp:2628
 msgid "Ico_n Preview..."
@@ -21034,14 +21036,14 @@ msgstr ""
 "Als u afsluit zonder opslaan, gaan de wijzigingen verloren."
 
 #: ../src/widgets/desktop-widget.cpp:897
-#: ../src/widgets/desktop-widget.cpp:954
+#: ../src/widgets/desktop-widget.cpp:953
 msgid "Close _without saving"
 msgstr "Sluiten _zonder opslaan"
 
 #: ../src/widgets/desktop-widget.cpp:946
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n"
+"<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format that may cause data loss!</span>\n"
 "\n"
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
@@ -21049,7 +21051,7 @@ msgstr ""
 "\n"
 "Wilt u dit bestand opslaan in het Inkscape SVG-formaat?"
 
-#: ../src/widgets/desktop-widget.cpp:957
+#: ../src/widgets/desktop-widget.cpp:956
 msgid "_Save as SVG"
 msgstr "Op_slaan als SVG"
 
@@ -21478,7 +21480,7 @@ msgstr "_V:"
 #: ../src/widgets/sp-color-icc-selector.cpp:223
 #: ../src/widgets/sp-color-scales.cpp:436
 msgid "_L:"
-msgstr "_H:"
+msgstr "_L:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-icc-selector.cpp:225
@@ -21558,24 +21560,24 @@ msgstr "_A:"
 msgid "Alpha (opacity)"
 msgstr "Alfa (ondoorzichtigheid)"
 
-#: ../src/widgets/sp-color-notebook.cpp:339
+#: ../src/widgets/sp-color-notebook.cpp:340
 msgid "Color Managed"
 msgstr "Kleur beheerd"
 
-#: ../src/widgets/sp-color-notebook.cpp:347
+#: ../src/widgets/sp-color-notebook.cpp:348
 msgid "Out of gamut!"
 msgstr "Buiten kleurbereik!"
 
-#: ../src/widgets/sp-color-notebook.cpp:355
+#: ../src/widgets/sp-color-notebook.cpp:356
 msgid "Too much ink!"
 msgstr "Te veel inkt!"
 
 #. Create RGBA entry and color preview
-#: ../src/widgets/sp-color-notebook.cpp:362
+#: ../src/widgets/sp-color-notebook.cpp:363
 msgid "RGBA_:"
 msgstr "RGBA_:"
 
-#: ../src/widgets/sp-color-notebook.cpp:370
+#: ../src/widgets/sp-color-notebook.cpp:371
 msgid "Hexadecimal RGBA value of the color"
 msgstr "Hexadecimale RGBA-waarde van de kleur"
 
@@ -21586,7 +21588,7 @@ msgstr "RGB"
 # Tint-Verzadiging-Licht.
 #: ../src/widgets/sp-color-scales.cpp:80
 msgid "HSL"
-msgstr "TVH"
+msgstr "TVL"
 
 #: ../src/widgets/sp-color-scales.cpp:80
 msgid "CMYK"
@@ -22677,12 +22679,12 @@ msgstr "V"
 
 #: ../src/widgets/toolbox.cpp:4470
 msgid "In color mode, act on objects' lightness"
-msgstr "Op de helderheid van het object inwerken (in verfmodi)"
+msgstr "Op de lichtheid van het object inwerken (in verfmodi)"
 
 #. TRANSLATORS: "L" here stands for Lightness
 #: ../src/widgets/toolbox.cpp:4474
 msgid "L"
-msgstr "H"
+msgstr "L"
 
 #: ../src/widgets/toolbox.cpp:4486
 msgid "In color mode, act on objects' opacity"
@@ -23091,7 +23093,7 @@ msgstr "Achtergrond volgen"
 
 #: ../src/widgets/toolbox.cpp:5235
 msgid "Trace the lightness of the background by the width of the pen (white - minimum width, black - maximum width)"
-msgstr "De helderheid van de achtergrond bepaalt de breedte van de pen (wit = minimum breedte, zwart = maximum breedte)"
+msgstr "De lichtheid van de achtergrond bepaalt de breedte van de pen (wit = minimum breedte, zwart = maximum breedte)"
 
 #: ../src/widgets/toolbox.cpp:5248
 msgid "Use the pressure of the input device to alter the width of the pen"
@@ -23888,7 +23890,7 @@ msgstr "Negatief"
 
 #: ../share/extensions/color_randomize.inx.h:2
 msgid "Converts to HSL, randomizes hue and/or saturation and/or lightness and converts it back to RGB."
-msgstr "Converteert naar TVH, randomiseert tint en/of verzadiging en/of helderheid"
+msgstr "Converteert naar TVL, randomiseert tint en/of verzadiging en/of lichtheid en converteert terug naar RGB."
 
 #: ../share/extensions/color_randomize.inx.h:7
 msgid "Randomize"
@@ -27778,6 +27780,28 @@ msgstr "Windows Metafile-invoer"
 msgid "XAML Input"
 msgstr "XAML-invoer"
 
+#~ msgid "<b>Fade out:</b>"
+#~ msgstr "<b>Ondoorzichtigheid:</b>"
+#~ msgid "Fractal noise"
+#~ msgstr "Fractale ruis"
+#~ msgid "Smoothness"
+#~ msgstr "Gladheid"
+#~ msgid "Melt"
+#~ msgstr "Smelt"
+#~ msgid "Smoothed"
+#~ msgstr "Glad"
+#~ msgid "Contrasted"
+#~ msgstr "Contrasterend"
+#~ msgid "Poster"
+#~ msgstr "Poster"
+#~ msgid "Painting"
+#~ msgstr "Schilderij"
+#~ msgid "Primary blur:"
+#~ msgstr "Primaire vervaging:"
+#~ msgid "Secondary blur:"
+#~ msgstr "Secundaire vervaging:"
+#~ msgid "Smooth all"
+#~ msgstr "Alles glad maken"
 #~ msgctxt "Palette"
 #~ msgid "Blue1"
 #~ msgstr "Blauw1"
@@ -28364,8 +28388,6 @@ msgstr "XAML-invoer"
 #~ msgstr "%s: %d (afdrukvoorbeeld kleuren) - Inkscape"
 #~ msgid "%s (print colors preview) - Inkscape"
 #~ msgstr "%s (afdrukvoorbeeld kleuren) - Inkscape"
-
-#, fuzzy
 #~ msgid "Drop shadow, color"
 #~ msgstr "Slagschaduw, gekleurd -EXP-"
 #~ msgid "Colorizable Drop shadow"
@@ -28374,30 +28396,8 @@ msgstr "XAML-invoer"
 #~ msgstr "Vereenvoudiging:"
 #~ msgid "Fading:"
 #~ msgstr "Vervaging:"
-#~ msgctxt "Filter blend mode"
-#~ msgid "Normal"
-#~ msgstr "Normaal"
-#~ msgctxt "Filter blend mode"
-#~ msgid "Screen"
-#~ msgstr "Scherm"
 #~ msgid "ZIP Output"
 #~ msgstr "ZIP-uitvoer"
-#~ msgid "Color Markers to Match Stroke"
-#~ msgstr "Markeringen dezelfde kleur als de omlijning geven"
-#~ msgctxt "Gap"
-#~ msgid "H:"
-#~ msgstr "H:"
-#~ msgid "tileClonesDialog|Arrange"
-#~ msgstr "Ordenen"
-#~ msgctxt "Stroke width"
-#~ msgid "Width:"
-#~ msgstr "Breedte:"
-#~ msgid "Randomize hue"
-#~ msgstr "Willekeurige tint"
-#~ msgid "Randomize lightness"
-#~ msgstr "Willekeurige helderheid"
-#~ msgid "Randomize saturation"
-#~ msgstr "Willekeurig verzadiging"
 #~ msgid "Year (0 for current):"
 #~ msgstr "Jaar (0 voor huidige):"
 #~ msgctxt "Node tool tip"
@@ -28421,9 +28421,6 @@ msgstr "XAML-invoer"
 #~ msgstr "Nieuwe objecten aanmaken met:"
 #~ msgid "Paint objects with:"
 #~ msgstr "Objecten verven met:"
-#~ msgctxt "Export bitmap dialog"
-#~ msgid "_Width:"
-#~ msgstr "_Breedte:"
 #~ msgid "Title"
 #~ msgstr "Titel"
 #~ msgid "Format"
