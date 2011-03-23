@@ -699,7 +699,7 @@ Posterize::get_filter_text (Inkscape::Extension::Extension * ext)
     Simple posterizing effect
 
     Filter's parameters:
-    * Levels (1->20, default 5) -> component1 (tableValues)
+    * Levels (0->20, default 5) -> component1 (tableValues)
     * Blur (0.01->20., default 4.) -> blur1 (stdDeviation)
 */
 class PosterizeBasic : public Inkscape::Extension::Internal::Filter::Filter {
@@ -715,7 +715,7 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Posterize basic, custom") "</name>\n"
               "<id>org.inkscape.effect.filter.PosterizeBasic</id>\n"
-              "<param name=\"levels\" gui-text=\"" N_("Levels:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"20\">5</param>\n"
+              "<param name=\"levels\" gui-text=\"" N_("Levels:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"20\">5</param>\n"
               "<param name=\"blur\" gui-text=\"" N_("Simplify:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"20.00\">4.0</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
