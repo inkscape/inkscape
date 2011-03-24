@@ -2119,8 +2119,17 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             dbg_str << "<!-- EMR_CREATEMONOBRUSH -->\n";
             break;
         case EMR_CREATEDIBPATTERNBRUSHPT:
+        {
             dbg_str << "<!-- EMR_CREATEDIBPATTERNBRUSHPT -->\n";
+
+            PEMRCREATEDIBPATTERNBRUSHPT pEmr = (PEMRCREATEDIBPATTERNBRUSHPT) lpEMFR;
+            int index = pEmr->ihBrush;
+
+            EMRCREATEDIBPATTERNBRUSHPT *pBrush =
+                (EMRCREATEDIBPATTERNBRUSHPT *) malloc( sizeof(EMRCREATEDIBPATTERNBRUSHPT) );
+            insert_object(d, index, EMR_CREATEDIBPATTERNBRUSHPT, (ENHMETARECORD *) pBrush);
             break;
+        }
         case EMR_EXTCREATEPEN:
         {
             dbg_str << "<!-- EMR_EXTCREATEPEN -->\n";
