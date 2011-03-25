@@ -4,12 +4,12 @@
     <id>org.coswellproductions.inkscape.effects.perfectboundcover</id>
     <dependency type="executable" location="extensions">perfectboundcover.py</dependency>
     <dependency type="executable" location="extensions">inkex.py</dependency>
-    <_param name="book" type="groupheader">Book Properties</_param>
+    <_param name="book" type="description" appearance="header">Book Properties</_param>
     <param name="width" precision="3" type="float" min="0.0" max="100.000" _gui-text="Book Width (inches):">6</param>
     <param name="height" precision="3" type="float" min="0.0" max="100.000" _gui-text="Book Height (inches):">9</param>
     <param name="pages" type="int" min="4" max="6000" _gui-text="Number of Pages:">64</param>
     <param name="removeguides" type="boolean" _gui-text="Remove existing guides">true</param>
-    <_param name="paper" type="groupheader">Interior Pages</_param>
+    <_param name="paper" type="description" appearance="header">Interior Pages</_param>
     <param name="paperthicknessmeasurement" _gui-text="Paper Thickness Measurement:" type="enum">
         <_item value="ppi">Pages Per Inch (PPI)</_item>
         <_item value="caliper">Caliper (inches)</_item>
@@ -18,7 +18,7 @@
         <_item value="width">Specify Width</_item>
     </param>
     <param precision="4" name="paperthickness" type="float" min="0.000" max="1000.000" _gui-text="Value:">0</param>
-    <_param name="cover" type="groupheader">Cover</_param>
+    <_param name="cover" type="description" appearance="header">Cover</_param>
     <param name="coverthicknessmeasurement" _gui-text="Cover Thickness Measurement:" type="enum">
         <_item value="ppi">Pages Per Inch (PPI)</_item>
         <_item value="caliper">Caliper (inches)</_item>

@@ -36,7 +36,6 @@
 #include "bool.h"
 #include "color.h"
 #include "description.h"
-#include "groupheader.h"
 #include "enum.h"
 #include "float.h"
 #include "int.h"
@@ -143,9 +142,11 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
         	ps->setMaxLength(atoi(max_length));
         }
     } else if (!strcmp(type, "description")) {
-        param = new ParamDescription(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
-    } else if (!strcmp(type, "groupheader")) {
-        param = new ParamGroupHeader(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);        
+        if (appearance && !strcmp(appearance, "header")) {
+            param = new ParamDescription(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamDescription::HEADER);
+        } else {
+            param = new ParamDescription(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr, ParamDescription::DESC);
+        }   
     } else if (!strcmp(type, "enum")) {
         param = new ParamComboBox(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
     } else if (!strcmp(type, "notebook")) {

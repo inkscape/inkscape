@@ -24,8 +24,6 @@ ink_common_sources +=	\
     extension/param/color.cpp \
     extension/param/description.h \
     extension/param/description.cpp \
-    extension/param/groupheader.h \
-    extension/param/groupheader.cpp \
     extension/param/enum.h \
     extension/param/enum.cpp \
     extension/param/float.h \

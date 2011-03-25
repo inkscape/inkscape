@@ -27,7 +27,7 @@
                 <item value="mm">mm</item>
             </param>
             <param name="crop_offset"     type="float"  min="0.0"  max="9999.0"  _gui-text="Offset:">5</param>
-            <_param name="bleed_settings" type="groupheader">Bleed Margin</_param>
+            <_param name="bleed_settings" type="description" appearance="header">Bleed Margin</_param>
             <param name="bleed_top"       type="float"  min="0.0"  max="9999.0"  _gui-text="Top:">5</param>
             <param name="bleed_bottom"    type="float"  min="0.0"  max="9999.0"  _gui-text="Bottom:">5</param>
             <param name="bleed_left"      type="float"  min="0.0"  max="9999.0"  _gui-text="Left:">5</param>
