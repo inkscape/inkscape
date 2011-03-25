@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-03-11 13:10+0100\n"
+"POT-Creation-Date: 2011-03-25 19:30+0100\n"
 "PO-Revision-Date: 2011-03-12 09:19+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Gezer (Hebrew)\n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: he\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Virtaal 0.6.1\n"
 
@@ -218,7 +218,7 @@ msgstr ""
 
 #: ../share/extensions/gcodetools.py:3641
 msgid ""
-"Noting is selected. Please select something to convert to drill point "
+"Nothing is selected. Please select something to convert to drill point "
 "(dxfpoint) or clear point sign."
 msgstr ""
 
@@ -310,9 +310,9 @@ msgid ""
 "Technical details:\n"
 "%s"
 msgstr ""
-"אריזת ה­־lxml הנפלאה עבור libxml2 נדרשת על ידי inkex.py ולכן על ידי הרחבה "
-"זו. נא להוריד ולהתקין את הגרסה האחרונה מהכתובת ‎http://cheeseshop.python.org/"
-"pypi/lxml/ או להתקין אותה דרך מנהל החבילות על ידי פקודה כגון: sudo apt-get "
+"אריזת ה­־lxml הנפלאה עבור libxml2 נדרשת על ידי inkex.py ולכן על ידי הרחבה זו. "
+"נא להוריד ולהתקין את הגרסה האחרונה מהכתובת ‎http://cheeseshop.python.org/pypi/"
+"lxml/ או להתקין אותה דרך מנהל החבילות על ידי פקודה כגון: sudo apt-get "
 "install python-lxml\n"
 "\n"
 "פרטים טכניים:\n"
@@ -1533,7 +1533,6 @@ msgid "Same as Bubbly Bumps but with transparent highlights"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:105
-#: ../src/extension/internal/filter/morphology.h:54
 msgid "Smooth edges"
 msgstr "קצוותחלקים"
 
@@ -2036,7 +2035,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:1034
-#: ../src/widgets/desktop-widget.cpp:1713
+#: ../src/widgets/desktop-widget.cpp:1712
 msgid "Drawing"
 msgstr "ציור"
 
@@ -4044,11 +4043,11 @@ msgstr "מחיקת קו מנחה"
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>קו מנחה</b>: %s"
 
-#: ../src/desktop.cpp:874
+#: ../src/desktop.cpp:877
 msgid "No previous zoom."
 msgstr "לא קיימת רמת התקרבות קודמת."
 
-#: ../src/desktop.cpp:899
+#: ../src/desktop.cpp:902
 msgid "No next zoom."
 msgstr "אין רמת התקרבות נוספת."
 
@@ -4085,7 +4084,7 @@ msgstr "יש לבחור <b>בפריט אחד</b> שברצונך להסיר את 
 msgid "Delete tiled clones"
 msgstr "מחיקת כפילים פרוסים"
 
-#: ../src/dialogs/clonetiler.cpp:1088 ../src/selection-chemistry.cpp:2035
+#: ../src/dialogs/clonetiler.cpp:1088 ../src/selection-chemistry.cpp:2048
 msgid "Select an <b>object</b> to clone."
 msgstr "בחירת <b>פריט</b> לשכפול."
 
@@ -4817,6 +4816,7 @@ msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>גודל מפת הסיביות</b></big>"
 
 #: ../src/dialogs/export.cpp:488 ../src/live_effects/lpe-bendpath.cpp:56
+#: ../src/live_effects/lpe-patternalongpath.cpp:64
 #: ../src/ui/dialog/transformation.cpp:88 ../src/ui/widget/page-sizer.cpp:232
 msgid "_Width:"
 msgstr "_רוחב:"
@@ -5308,11 +5308,9 @@ msgstr "Y:"
 #: ../src/extension/internal/bitmap/raise.cpp:41
 #: ../src/extension/internal/bitmap/sample.cpp:40
 #: ../src/extension/internal/bluredge.cpp:136
-#: ../src/extension/internal/filter/abc.h:574
-#: ../src/live_effects/lpe-patternalongpath.cpp:64
-#: ../src/widgets/toolbox.cpp:4279 ../src/widgets/toolbox.cpp:4599
-#: ../src/widgets/toolbox.cpp:5099 ../src/widgets/toolbox.cpp:6125
-#: ../share/extensions/foldablebox.inx.h:9
+#: ../src/extension/internal/filter/abc.h:574 ../src/widgets/toolbox.cpp:4279
+#: ../src/widgets/toolbox.cpp:4599 ../src/widgets/toolbox.cpp:5099
+#: ../src/widgets/toolbox.cpp:6125 ../share/extensions/foldablebox.inx.h:9
 msgid "Width:"
 msgstr "רוחב:"
 
@@ -6197,7 +6195,7 @@ msgid "Null external module directory name.  Modules will not be loaded."
 msgstr "שם מודול חיצוני מאופס. המודולים לא יטענו."
 
 #: ../src/extension/init.cpp:295
-#: ../src/extension/internal/filter/filter-file.cpp:56
+#: ../src/extension/internal/filter/filter-file.cpp:58
 #, c-format
 msgid ""
 "Modules directory (%s) is unavailable.  External modules in that directory "
@@ -6213,7 +6211,7 @@ msgstr "סף מסתגל"
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/extension/internal/filter/color.h:540
 #: ../src/extension/internal/filter/experimental.h:355
-#: ../src/live_effects/lpe-ruler.cpp:50 ../src/widgets/gradient-vector.cpp:824
+#: ../src/widgets/gradient-vector.cpp:824
 #: ../share/extensions/printing-marks.inx.h:9
 msgid "Offset:"
 msgstr "היסט:"
@@ -6635,16 +6633,10 @@ msgid "Shade"
 msgstr "הצללה"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/extension/internal/filter/abc.h:239
-#: ../src/extension/internal/filter/abc.h:377
-#: ../src/extension/internal/filter/abc.h:817
 msgid "Azimuth:"
 msgstr "אזימות:"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/extension/internal/filter/abc.h:238
-#: ../src/extension/internal/filter/abc.h:376
-#: ../src/extension/internal/filter/abc.h:816
 msgid "Elevation:"
 msgstr "הגבהה:"
 
@@ -6778,7 +6770,7 @@ msgstr "PostScript רמה 2"
 #: ../src/extension/internal/cairo-ps-out.cpp:325
 #: ../src/extension/internal/cairo-ps-out.cpp:363
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
-#: ../src/extension/internal/emf-win32-inout.cpp:2478
+#: ../src/extension/internal/emf-win32-inout.cpp:2487
 msgid "Convert texts to paths"
 msgstr "המרת טקסטים לנתיבים"
 
@@ -6859,39 +6851,39 @@ msgstr "PDF 1.4"
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
 msgstr "PDF+LaTeX: השמטת טקסט ב־PDF ויצירת קובץ LaTeX"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2448
+#: ../src/extension/internal/emf-win32-inout.cpp:2457
 msgid "EMF Input"
 msgstr "קלט EMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2453
+#: ../src/extension/internal/emf-win32-inout.cpp:2462
 msgid "Enhanced Metafiles (*.emf)"
 msgstr "קובצי מטא מורחבים (‎*.emf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2454
+#: ../src/extension/internal/emf-win32-inout.cpp:2463
 msgid "Enhanced Metafiles"
 msgstr "קובצי מטא מורחבים"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2462
+#: ../src/extension/internal/emf-win32-inout.cpp:2471
 msgid "WMF Input"
 msgstr "קלט WMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2467
+#: ../src/extension/internal/emf-win32-inout.cpp:2476
 msgid "Windows Metafiles (*.wmf)"
 msgstr "קובצי מטא של Windows‏ (‎*.wmf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2468
+#: ../src/extension/internal/emf-win32-inout.cpp:2477
 msgid "Windows Metafiles"
 msgstr "קובצי מטא של Windows"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2476
+#: ../src/extension/internal/emf-win32-inout.cpp:2485
 msgid "EMF Output"
 msgstr "פלט EMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2482
+#: ../src/extension/internal/emf-win32-inout.cpp:2491
 msgid "Enhanced Metafile (*.emf)"
 msgstr "קובצי מטא מורחבים (‎*.emf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2483
+#: ../src/extension/internal/emf-win32-inout.cpp:2492
 msgid "Enhanced Metafile"
 msgstr "קובץ מטא מורחב"
 
@@ -6932,10 +6924,10 @@ msgstr "טשטוש אנכי:"
 #: ../src/extension/internal/filter/experimental.h:110
 #: ../src/extension/internal/filter/experimental.h:242
 #: ../src/extension/internal/filter/experimental.h:361
-#: ../src/extension/internal/filter/experimental.h:516
-#: ../src/extension/internal/filter/experimental.h:627
-#: ../src/extension/internal/filter/experimental.h:724
-#: ../src/extension/internal/filter/filter-file.cpp:148
+#: ../src/extension/internal/filter/experimental.h:515
+#: ../src/extension/internal/filter/experimental.h:626
+#: ../src/extension/internal/filter/experimental.h:723
+#: ../src/extension/internal/filter/filter-file.cpp:150
 #: ../src/extension/internal/filter/filter.cpp:216
 #: ../src/extension/internal/filter/morphology.h:61
 #: ../src/extension/internal/filter/snow.h:38
@@ -6966,9 +6958,9 @@ msgstr "מסננים"
 #: ../src/extension/internal/filter/experimental.h:111
 #: ../src/extension/internal/filter/experimental.h:243
 #: ../src/extension/internal/filter/experimental.h:362
-#: ../src/extension/internal/filter/experimental.h:517
-#: ../src/extension/internal/filter/experimental.h:628
-#: ../src/extension/internal/filter/experimental.h:725
+#: ../src/extension/internal/filter/experimental.h:516
+#: ../src/extension/internal/filter/experimental.h:627
+#: ../src/extension/internal/filter/experimental.h:724
 #: ../src/extension/internal/filter/morphology.h:62
 msgid "Experimental"
 msgstr "ניסיוני"
@@ -6995,7 +6987,8 @@ msgid "Color shift, custom (ABCs)"
 msgstr "הזחת צבעים בהתאמה אישית (בסיסי)"
 
 #: ../src/extension/internal/filter/abc.h:176
-msgid "Shift:"
+#, fuzzy
+msgid "Shift (°):"
 msgstr "הזחה:"
 
 #: ../src/extension/internal/filter/abc.h:185
@@ -7014,6 +7007,20 @@ msgstr "פיזור התאורה, התאמה אישית (בסיסי)"
 #: ../share/extensions/fractalize.inx.h:3
 msgid "Smoothness:"
 msgstr "חלקלקות:"
+
+#: ../src/extension/internal/filter/abc.h:238
+#: ../src/extension/internal/filter/abc.h:376
+#: ../src/extension/internal/filter/abc.h:816
+#, fuzzy
+msgid "Elevation (°):"
+msgstr "הגבהה:"
+
+#: ../src/extension/internal/filter/abc.h:239
+#: ../src/extension/internal/filter/abc.h:377
+#: ../src/extension/internal/filter/abc.h:817
+#, fuzzy
+msgid "Azimuth (°):"
+msgstr "אזימות:"
 
 #: ../src/extension/internal/filter/abc.h:240
 #: ../src/extension/internal/filter/abc.h:378
@@ -7038,25 +7045,16 @@ msgstr ""
 msgid "Turbulence type:"
 msgstr "סוג המערבולת:"
 
-#: ../src/extension/internal/filter/abc.h:465
-#: ../src/extension/internal/filter/abc.h:664
-msgid "Fractal noise"
-msgstr "רעש פרקטלי"
-
-#: ../src/extension/internal/filter/abc.h:466
-#: ../src/extension/internal/filter/abc.h:665 ../src/filter-enums.cpp:35
-#: ../src/filter-enums.cpp:117
-msgid "Turbulence"
-msgstr "מערבולת"
-
 #: ../src/extension/internal/filter/abc.h:468
 #: ../src/extension/internal/filter/abc.h:667
-msgid "Horizontal frequency (x100):"
+#, fuzzy
+msgid "Horizontal frequency:"
 msgstr "תדירות אופקית (x100):"
 
 #: ../src/extension/internal/filter/abc.h:469
 #: ../src/extension/internal/filter/abc.h:668
-msgid "Vertical frequency (x100):"
+#, fuzzy
+msgid "Vertical frequency:"
 msgstr "תדירות אנכית (x100):"
 
 #: ../src/extension/internal/filter/abc.h:470
@@ -7123,7 +7121,6 @@ msgid "Silhouette, custom (ABCs)"
 msgstr "צללית, התאמה אישית (בסיסי)"
 
 #: ../src/extension/internal/filter/abc.h:738
-#: ../src/extension/internal/filter/experimental.h:720
 #: ../src/extension/internal/filter/morphology.h:57
 msgid "Blur:"
 msgstr "טישטוש:"
@@ -7148,7 +7145,7 @@ msgstr "רטט:"
 #: ../src/extension/internal/filter/color.h:67
 #: ../src/extension/internal/filter/color.h:459
 #: ../src/extension/internal/filter/experimental.h:84
-#: ../src/extension/internal/filter/experimental.h:506
+#: ../src/extension/internal/filter/experimental.h:505
 msgid "Lightness:"
 msgstr "בהירות:"
 
@@ -7272,12 +7269,13 @@ msgid "Electrize, custom (Color)"
 msgstr "בחירת צבע מותאם אישית"
 
 #: ../src/extension/internal/filter/color.h:363
-#: ../src/extension/internal/filter/experimental.h:504
+#: ../src/extension/internal/filter/experimental.h:503
+#: ../src/extension/internal/filter/experimental.h:719
 msgid "Simplify:"
 msgstr "פישוט:"
 
 #: ../src/extension/internal/filter/color.h:364
-#: ../src/extension/internal/filter/experimental.h:605
+#: ../src/extension/internal/filter/experimental.h:604
 msgid "Effect type:"
 msgstr "סוג האפקט:"
 
@@ -7290,8 +7288,8 @@ msgid "Discrete"
 msgstr "הפרדה"
 
 #: ../src/extension/internal/filter/color.h:368
-#: ../src/extension/internal/filter/experimental.h:613
-#: ../src/extension/internal/filter/experimental.h:719
+#: ../src/extension/internal/filter/experimental.h:612
+#: ../src/extension/internal/filter/experimental.h:718
 msgid "Levels:"
 msgstr "רמות:"
 
@@ -7350,7 +7348,8 @@ msgstr "שימוש כצבע מותאם אישית לרקע"
 
 #: ../src/extension/internal/filter/color.h:607
 #: ../src/extension/internal/filter/color.h:805
-msgid "Hue distribution:"
+#, fuzzy
+msgid "Hue distribution (°):"
 msgstr "הפצת גוון:"
 
 #: ../src/extension/internal/filter/color.h:608
@@ -7369,7 +7368,7 @@ msgstr "בחירת צבע מותאם אישית"
 
 #: ../src/extension/internal/filter/color.h:694
 #, fuzzy
-msgid "Hue rotation:"
+msgid "Hue rotation (°):"
 msgstr "קצב הסיבוב:"
 
 #: ../src/extension/internal/filter/color.h:706
@@ -7554,93 +7553,92 @@ msgstr "תמונה בקו המתאר"
 msgid "Convert images to duochrome drawings"
 msgstr "המרת תמונות לציורי דואוכרום"
 
-#: ../src/extension/internal/filter/experimental.h:498
+#: ../src/extension/internal/filter/experimental.h:497
 msgid "Neon draw, custom"
 msgstr "ציור נאון, התאמה אישית"
 
-#: ../src/extension/internal/filter/experimental.h:500
+#: ../src/extension/internal/filter/experimental.h:499
 msgid "Line type:"
 msgstr "סוג הקו:"
 
-#: ../src/extension/internal/filter/experimental.h:505
+#: ../src/extension/internal/filter/experimental.h:504
 msgid "Line width:"
 msgstr "עובי הקו:"
 
-#: ../src/extension/internal/filter/experimental.h:507
-#: ../src/extension/internal/filter/experimental.h:614
+#: ../src/extension/internal/filter/experimental.h:506
+#: ../src/extension/internal/filter/experimental.h:613
+#: ../src/ui/widget/filter-effect-chooser.cpp:25
 msgid "Blend mode:"
 msgstr "מצב ערבול:"
 
-#: ../src/extension/internal/filter/experimental.h:512
+#: ../src/extension/internal/filter/experimental.h:511
 msgid "Dark mode"
 msgstr "מצב כהה"
 
-#: ../src/extension/internal/filter/experimental.h:520
+#: ../src/extension/internal/filter/experimental.h:519
 msgid "Posterize and draw smooth lines around color shapes"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:603
+#: ../src/extension/internal/filter/experimental.h:602
 msgid "Poster paint, custom"
 msgstr "צביעת כרזה, התאמה אישית"
 
-#: ../src/extension/internal/filter/experimental.h:609
+#: ../src/extension/internal/filter/experimental.h:608
 msgid "Transfer type:"
 msgstr "מצב ההעברה:"
 
+#: ../src/extension/internal/filter/experimental.h:618
+#, fuzzy
+msgid "Simplify (primary):"
+msgstr "נתיבים להפשטה:"
+
 #: ../src/extension/internal/filter/experimental.h:619
-msgid "Primary blur:"
-msgstr "ערבול ראשי:"
+#, fuzzy
+msgid "Simplify (secondary):"
+msgstr "פישוט הצבעים"
 
 #: ../src/extension/internal/filter/experimental.h:620
-msgid "Secondary blur:"
-msgstr "ערבול משני:"
-
-#: ../src/extension/internal/filter/experimental.h:621
 msgid "Pre-saturation:"
 msgstr "קדם־רווייה:"
 
-#: ../src/extension/internal/filter/experimental.h:622
+#: ../src/extension/internal/filter/experimental.h:621
 msgid "Post-saturation:"
 msgstr "רווייה מאוחרת:"
 
-#: ../src/extension/internal/filter/experimental.h:623
+#: ../src/extension/internal/filter/experimental.h:622
 msgid "Simulate antialiasing"
 msgstr "הדמיית החלקת קצוות"
 
-#: ../src/extension/internal/filter/experimental.h:631
+#: ../src/extension/internal/filter/experimental.h:630
 #, fuzzy
 msgid "Poster and painting effects"
 msgstr "ניהול, עריכה והחלה של אפקטי נתיב"
 
-#: ../src/extension/internal/filter/experimental.h:717
+#: ../src/extension/internal/filter/experimental.h:716
 #, fuzzy
 msgid "Posterize basic, custom"
 msgstr "Custom format of the clock"
 
-#: ../src/extension/internal/filter/experimental.h:728
+#: ../src/extension/internal/filter/experimental.h:727
 #, fuzzy
 msgid "Simple posterizing effect"
 msgstr "Effect of the Backspace key"
 
-#: ../src/extension/internal/filter/filter-file.cpp:32
+#: ../src/extension/internal/filter/filter-file.cpp:33
 msgid "Bundled"
 msgstr "ארוז"
 
-#: ../src/extension/internal/filter/filter-file.cpp:33
+#: ../src/extension/internal/filter/filter-file.cpp:34
 msgid "Personal"
 msgstr "אישי"
 
-#: ../src/extension/internal/filter/filter-file.cpp:44
+#: ../src/extension/internal/filter/filter-file.cpp:46
 msgid "Null external module directory name.  Filters will not be loaded."
 msgstr "שם תיקיית המודולים החיצונית ריקה.  המסננים לא יטענו."
 
 #: ../src/extension/internal/filter/morphology.h:51
 msgid "Cross-smooth, custom (Morphology)"
 msgstr ""
-
-#: ../src/extension/internal/filter/morphology.h:55
-msgid "Smooth all"
-msgstr "החלקת הכול"
 
 #: ../src/extension/internal/filter/morphology.h:65
 msgid "Smooth edges and angles of shapes"
@@ -7734,7 +7732,7 @@ msgstr "היסט אנכי:"
 #: ../share/extensions/printing-marks.inx.h:14
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 #: ../share/extensions/render_barcode.inx.h:5
-#: ../share/extensions/render_barcode_datamatrix.inx.h:3
+#: ../share/extensions/render_barcode_datamatrix.inx.h:2
 #: ../share/extensions/render_barcode_qrcode.inx.h:12
 #: ../share/extensions/rtree.inx.h:4 ../share/extensions/spirograph.inx.h:6
 #: ../share/extensions/svgcalendar.inx.h:20
@@ -8196,6 +8194,10 @@ msgstr "תאורה משתקפת"
 msgid "Tile"
 msgstr "אריח"
 
+#: ../src/filter-enums.cpp:35 ../src/filter-enums.cpp:117
+msgid "Turbulence"
+msgstr "מערבולת"
+
 #: ../src/filter-enums.cpp:40
 msgid "Source Graphic"
 msgstr "גרפיקת מקור"
@@ -8237,7 +8239,7 @@ msgid "Luminance to Alpha"
 msgstr "נהירות לשקיפות"
 
 #. File
-#: ../src/filter-enums.cpp:70 ../src/interface.cpp:846 ../src/verbs.cpp:2237
+#: ../src/filter-enums.cpp:70 ../src/interface.cpp:854 ../src/verbs.cpp:2237
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:1
 #: ../share/extensions/jessyInk_transitions.inx.h:2
 msgid "Default"
@@ -8845,117 +8847,117 @@ msgstr "הגיבוי האוטומטי של המסמכים הבאים נכשל:\n
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:824
+#: ../src/interface.cpp:832
 msgid "Commands Bar"
 msgstr "סרגל פקודות"
 
-#: ../src/interface.cpp:824
+#: ../src/interface.cpp:832
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "הצגה או הסתרה של סרגל הפקודות (מתחת לתפריט)"
 
-#: ../src/interface.cpp:826
+#: ../src/interface.cpp:834
 msgid "Snap Controls Bar"
 msgstr "הצמדת סרגל הפקדים"
 
-#: ../src/interface.cpp:826
+#: ../src/interface.cpp:834
 msgid "Show or hide the snapping controls"
 msgstr "הצגה או הסתרה של פקדי ההצמדה"
 
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:836
 msgid "Tool Controls Bar"
 msgstr "סרגל פקודות הכלים"
 
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:836
 msgid "Show or hide the Tool Controls bar"
 msgstr "הצגה או הסתרה של סרגל פקודות הכלים"
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:838
 msgid "_Toolbox"
 msgstr "_תיבת כלים"
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:838
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "הצגה או הסתרה של תיבת הכלים הראשית (מימין)"
 
-#: ../src/interface.cpp:836
+#: ../src/interface.cpp:844
 msgid "_Palette"
 msgstr "_לוח צבעים"
 
-#: ../src/interface.cpp:836
+#: ../src/interface.cpp:844
 msgid "Show or hide the color palette"
 msgstr "הצגה או הסתרה של לוח הצבעים"
 
-#: ../src/interface.cpp:838
+#: ../src/interface.cpp:846
 msgid "_Statusbar"
 msgstr "_שורת מצב"
 
-#: ../src/interface.cpp:838
+#: ../src/interface.cpp:846
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "הצגה או הסתרה של שורת המצב (בתחתית החלון)"
 
-#: ../src/interface.cpp:846
+#: ../src/interface.cpp:854
 msgid "Default interface setup"
 msgstr "הגדרת מנשק בררת המחדל"
 
-#: ../src/interface.cpp:847 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1437
+#: ../src/interface.cpp:855 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1437
 #: ../share/extensions/color_custom.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:5
 msgid "Custom"
 msgstr "מותאם אישית"
 
-#: ../src/interface.cpp:847
+#: ../src/interface.cpp:855
 msgid "Set the custom task"
 msgstr "הגדרת המשימה המותאמת אישית"
 
-#: ../src/interface.cpp:848
+#: ../src/interface.cpp:856
 msgid "Wide"
 msgstr "רחב"
 
-#: ../src/interface.cpp:848
+#: ../src/interface.cpp:856
 msgid "Setup for widescreen work"
 msgstr "הגדרה לעבודה בצג רחב"
 
-#: ../src/interface.cpp:945
+#: ../src/interface.cpp:953
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "הפועל \"%s\" אינו ידוע"
 
-#: ../src/interface.cpp:987
+#: ../src/interface.cpp:995
 msgid "Open _Recent"
 msgstr "נפתחו לא_חרונה"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1092
+#: ../src/interface.cpp:1100
 #, c-format
 msgid "Enter group #%s"
 msgstr "כניסה לקבוצה מס׳ %s"
 
-#: ../src/interface.cpp:1103
+#: ../src/interface.cpp:1111
 msgid "Go to parent"
 msgstr "עלייה לתיקיית האב"
 
-#: ../src/interface.cpp:1194 ../src/interface.cpp:1280
-#: ../src/interface.cpp:1383 ../src/ui/widget/selected-style.cpp:469
+#: ../src/interface.cpp:1202 ../src/interface.cpp:1288
+#: ../src/interface.cpp:1391 ../src/ui/widget/selected-style.cpp:469
 msgid "Drop color"
 msgstr "השמטת צבע"
 
-#: ../src/interface.cpp:1233 ../src/interface.cpp:1343
+#: ../src/interface.cpp:1241 ../src/interface.cpp:1351
 msgid "Drop color on gradient"
 msgstr "השמטת צבע מהמדרג"
 
-#: ../src/interface.cpp:1396
+#: ../src/interface.cpp:1404
 msgid "Could not parse SVG data"
 msgstr "לא ניתן לנתח את נתוני ה־SVG"
 
-#: ../src/interface.cpp:1435
+#: ../src/interface.cpp:1443
 msgid "Drop SVG"
 msgstr "השמטת SVG"
 
-#: ../src/interface.cpp:1469
+#: ../src/interface.cpp:1477
 msgid "Drop bitmap image"
 msgstr "השמטת מפת סיביות"
 
-#: ../src/interface.cpp:1561
+#: ../src/interface.cpp:1569
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -8968,7 +8970,7 @@ msgstr ""
 "\n"
 "הקובץ כבר קיים תחת \"%s\". החלפת הקובץ תגרום לשכתובו."
 
-#: ../src/interface.cpp:1568 ../share/extensions/web-set-att.inx.h:7
+#: ../src/interface.cpp:1576 ../share/extensions/web-set-att.inx.h:7
 #: ../share/extensions/web-transmit-att.inx.h:7
 msgid "Replace"
 msgstr "החלפה"
@@ -9191,7 +9193,7 @@ msgstr "בקר המעגן %p הנו אוטומטי. רק פריטי מעגן י�
 #: ../src/ui/dialog/align-and-distribute.cpp:1033
 #: ../src/ui/dialog/document-properties.cpp:117
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1429
-#: ../src/widgets/desktop-widget.cpp:1709
+#: ../src/widgets/desktop-widget.cpp:1708
 msgid "Page"
 msgstr "עמוד"
 
@@ -9409,7 +9411,7 @@ msgstr "נקודת הציון ב־Y עבור מעגן צף"
 msgid "Dock #%d"
 msgstr "מעגן מס׳ %d"
 
-#: ../src/libnrtype/FontFactory.cpp:897
+#: ../src/libnrtype/FontFactory.cpp:907
 msgid "Ignoring font without family that will crash Pango"
 msgstr "מתעלם מגופן ללא משפחה כדי שלא יקריס את פאנגו"
 
@@ -9627,7 +9629,8 @@ msgid "The path that will be used as stitch."
 msgstr "הנתיב שישמש כתפר."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
-msgid "Number of paths:"
+#, fuzzy
+msgid "N_umber of paths:"
 msgstr "מספר הנתיבים:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
@@ -9635,7 +9638,8 @@ msgid "The number of paths that will be generated."
 msgstr "מספר הנתיבים שיווצרו."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
-msgid "Start edge variance:"
+#, fuzzy
+msgid "Sta_rt edge variance:"
 msgstr "שינוי בקצה ההתחלתי:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
@@ -9646,7 +9650,8 @@ msgstr ""
 "כמות הריצוד האקראי להזזת נקודות ההתחלה של התפרים מתוך ומחוץ לנתיב המנחה"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
-msgid "Start spacing variance:"
+#, fuzzy
+msgid "Sta_rt spacing variance:"
 msgstr "שינוי בריווח ההתחלה:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
@@ -9657,7 +9662,8 @@ msgstr ""
 "כמות התזוזה היחסית להזזת נקודות התחלת התפרים קדימה ואחורה לאורך הנתיב המנחה"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
-msgid "End edge variance:"
+#, fuzzy
+msgid "End ed_ge variance:"
 msgstr "סיום קצה השינוי:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
@@ -9667,7 +9673,8 @@ msgid ""
 msgstr "כמות האקראיות שמניעה את נקודות הסיום של התפרים מפנים ומחוץ לנתיב המנחה"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
-msgid "End spacing variance:"
+#, fuzzy
+msgid "End spa_cing variance:"
 msgstr "סיום שינוי הריווח:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
@@ -9678,7 +9685,8 @@ msgstr ""
 "כמות האקראיות בהזזת נקודות הסיום של התפרים קדימה ואחורה לאורך הנתיב המנחה"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
-msgid "Scale width:"
+#, fuzzy
+msgid "Scale _width:"
 msgstr "שינוי הרוחב:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
@@ -9686,7 +9694,8 @@ msgid "Scale the width of the stitch path"
 msgstr "שינוי רוחב נתיב התפר"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-msgid "Scale width relative to length"
+#, fuzzy
+msgid "Scale _width relative to length"
 msgstr "שינוי הרוחב הינו יחסי לאורך"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
@@ -9768,7 +9777,8 @@ msgid "Path along which intermediate steps are created."
 msgstr "נתיב שלאורכו יווצרו צעדים בינוניים."
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
-msgid "Steps:"
+#, fuzzy
+msgid "Steps_:"
 msgstr "שלבים:"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
@@ -9776,7 +9786,8 @@ msgid "Determines the number of steps from start to end path."
 msgstr "ציון מספר השלבים מההתחלה לסיום הנתיב."
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
-msgid "Equidistant spacing"
+#, fuzzy
+msgid "E_quidistant spacing"
 msgstr "ריווח שווה מרחק"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
@@ -9790,7 +9801,8 @@ msgstr ""
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:343
-msgid "Fixed width:"
+#, fuzzy
+msgid "Fi_xed width:"
 msgstr "עובי קבוע:"
 
 #: ../src/live_effects/lpe-knot.cpp:343
@@ -9798,15 +9810,17 @@ msgid "Size of hidden region of lower string"
 msgstr "גודל האזור המוסתר של המחרוזת התחתונה"
 
 #: ../src/live_effects/lpe-knot.cpp:344
-msgid "In units of stroke width"
+#, fuzzy
+msgid "_In units of stroke width"
 msgstr "ביחידות עובי קו המתאר"
 
 #: ../src/live_effects/lpe-knot.cpp:344
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr "התייחסות ל'עובי המרווח' כיחס לעובי קו המתאר"
 
-#: ../src/live_effects/lpe-knot.cpp:345 ../src/widgets/stroke-style.cpp:692
-msgid "Stroke width"
+#: ../src/live_effects/lpe-knot.cpp:345
+#, fuzzy
+msgid "St_roke width"
 msgstr "עובי קו המתאר"
 
 #: ../src/live_effects/lpe-knot.cpp:345
@@ -9814,7 +9828,8 @@ msgid "Add the stroke width to the interruption size"
 msgstr "הוספת עובי קו המתאר לגודל המרווח"
 
 #: ../src/live_effects/lpe-knot.cpp:346
-msgid "Crossing path stroke width"
+#, fuzzy
+msgid "_Crossing path stroke width"
 msgstr "עובי קו המתאר של הנתיב החוצה"
 
 #: ../src/live_effects/lpe-knot.cpp:346
@@ -9822,7 +9837,8 @@ msgid "Add crossed stroke width to the interruption size"
 msgstr "הוספת רוחב לקו המתאר החוצה לגודל המרווח"
 
 #: ../src/live_effects/lpe-knot.cpp:347
-msgid "Switcher size:"
+#, fuzzy
+msgid "S_witcher size:"
 msgstr "גודל המחליף:"
 
 #: ../src/live_effects/lpe-knot.cpp:347
@@ -9887,7 +9903,8 @@ msgid "Width of the pattern"
 msgstr "רוחב התבנית"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
-msgid "Width in units of length"
+#, fuzzy
+msgid "Wid_th in units of length"
 msgstr "רוחב ביחידות אורך"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:66
@@ -9895,8 +9912,8 @@ msgid "Scale the width of the pattern in units of its length"
 msgstr "שינוי רוחב התבנית ביחידות של אורכה"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:68
-#: ../src/widgets/toolbox.cpp:8238
-msgid "Spacing:"
+#, fuzzy
+msgid "Spa_cing:"
 msgstr "ריווח:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
@@ -9909,19 +9926,18 @@ msgstr ""
 "של 90 אחוזים מרוחב התבנית(% o)."
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:72
-#: ../share/extensions/pathalongpath.inx.h:6
-#: ../share/extensions/pathscatter.inx.h:9
-msgid "Normal offset:"
+#, fuzzy
+msgid "No_rmal offset:"
 msgstr "היסט רגיל:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:73
-#: ../share/extensions/pathalongpath.inx.h:17
-#: ../share/extensions/pathscatter.inx.h:19
-msgid "Tangential offset:"
+#, fuzzy
+msgid "Tan_gential offset:"
 msgstr "היסט משיקי:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:74
-msgid "Offsets in unit of pattern size"
+#, fuzzy
+msgid "Offsets in _unit of pattern size"
 msgstr "קיזוזים ביחידת גודל התבנית"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:75
@@ -9931,9 +9947,8 @@ msgid ""
 msgstr "קיזוזי ריווח, משיקיים ורגילים מבוטאים כיחס רוחב/גובה"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
-#: ../share/extensions/pathalongpath.inx.h:9
-#: ../share/extensions/pathscatter.inx.h:12
-msgid "Pattern is vertical"
+#, fuzzy
+msgid "Pattern is _vertical"
 msgstr "התבנית אנכית"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
@@ -9941,7 +9956,8 @@ msgid "Rotate pattern 90 deg before applying"
 msgstr "הטיית התבנית ב־90 מעלות לפני ההחלה"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
-msgid "Fuse nearby ends:"
+#, fuzzy
+msgid "_Fuse nearby ends:"
 msgstr "הלחמת קצוות סמוכים:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
@@ -10148,7 +10164,8 @@ msgid "End"
 msgstr "סוף"
 
 #: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Mark distance:"
+#, fuzzy
+msgid "_Mark distance:"
 msgstr "מרחק הסימן:"
 
 #: ../src/live_effects/lpe-ruler.cpp:43
@@ -10163,7 +10180,8 @@ msgid "Unit:"
 msgstr "יחידה:"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Major length:"
+#, fuzzy
+msgid "Ma_jor length:"
 msgstr "אורך עיקרי:"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
@@ -10171,7 +10189,8 @@ msgid "Length of major ruler marks"
 msgstr "המרחק בין הסימנים הראשיים של הסרגל"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
-msgid "Minor length:"
+#, fuzzy
+msgid "Mino_r length:"
 msgstr "אורך משני:"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
@@ -10179,7 +10198,8 @@ msgid "Length of minor ruler marks"
 msgstr "המרחק בין הסימנים המשניים של הסרגל"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
-msgid "Major steps:"
+#, fuzzy
+msgid "Major steps_:"
 msgstr "צעדים ראשיים:"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
@@ -10187,7 +10207,8 @@ msgid "Draw a major mark every ... steps"
 msgstr "ציור סימן ראשי כל ... צעדים"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
-msgid "Shift marks by:"
+#, fuzzy
+msgid "Shift marks _by:"
 msgstr "הזזת הסימנים ב־:"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
@@ -10201,6 +10222,11 @@ msgstr "כיוון הסימן:"
 #: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Direction of marks (when viewing along the path from start to end)"
 msgstr "כיוון הסמנים (בעת הצפיה לאורך הנתיב מההתחלה ועד הסוף)"
+
+#: ../src/live_effects/lpe-ruler.cpp:50
+#, fuzzy
+msgid "_Offset:"
+msgstr "היסט:"
 
 #: ../src/live_effects/lpe-ruler.cpp:50
 msgid "Offset of first mark"
@@ -10353,7 +10379,8 @@ msgid "max curvature"
 msgstr "עקמומיות מירבית"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:46
-msgid "Nb of generations:"
+#, fuzzy
+msgid "N_r of generations:"
 msgstr "מספר היצירות:"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:46
@@ -10369,7 +10396,8 @@ msgid "Path whose segments define the iterated transforms"
 msgstr "נתיב שמקטעיו מגדירים את ההמרות החוזרות"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
-msgid "Use uniform transforms only"
+#, fuzzy
+msgid "_Use uniform transforms only"
 msgstr "שימוש בהמרות אחידות בלבד"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
@@ -10381,7 +10409,8 @@ msgstr ""
 "כללית)."
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
-msgid "Draw all generations"
+#, fuzzy
+msgid "Dra_w all generations"
 msgstr "ציור את כל התוצרים"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
@@ -10401,7 +10430,8 @@ msgstr "מקטע ההפנייה. בררת המחדל שלי היא לקו האמ
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
 #. FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
 #: ../src/live_effects/lpe-vonkoch.cpp:55
-msgid "Max complexity:"
+#, fuzzy
+msgid "_Max complexity:"
 msgstr "מורכבות מרבית:"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:55
@@ -11611,96 +11641,96 @@ msgstr "הנמכה לשכבה הקודמת"
 msgid "No more layers below."
 msgstr "אין עוד שכבות מתחת."
 
-#: ../src/selection-chemistry.cpp:1464
+#: ../src/selection-chemistry.cpp:1477
 msgid "Remove transform"
 msgstr "הסרת שינוי הצורה"
 
-#: ../src/selection-chemistry.cpp:1567
+#: ../src/selection-chemistry.cpp:1580
 msgid "Rotate 90&#176; CCW"
 msgstr "הטיה ב־90&#176; נכ״ש"
 
-#: ../src/selection-chemistry.cpp:1567
+#: ../src/selection-chemistry.cpp:1580
 msgid "Rotate 90&#176; CW"
 msgstr "הטיה ב־90&#176; עכ״ש"
 
-#: ../src/selection-chemistry.cpp:1588 ../src/seltrans.cpp:517
+#: ../src/selection-chemistry.cpp:1601 ../src/seltrans.cpp:517
 #: ../src/ui/dialog/transformation.cpp:771
 msgid "Rotate"
 msgstr "הטיה"
 
-#: ../src/selection-chemistry.cpp:1635
+#: ../src/selection-chemistry.cpp:1648
 msgid "Rotate by pixels"
 msgstr "הטיה לפי פיקסלים"
 
-#: ../src/selection-chemistry.cpp:1665 ../src/seltrans.cpp:514
+#: ../src/selection-chemistry.cpp:1678 ../src/seltrans.cpp:514
 #: ../src/ui/dialog/transformation.cpp:749
 #: ../share/extensions/interp_att_g.inx.h:19
 msgid "Scale"
 msgstr "התאם מידות"
 
-#: ../src/selection-chemistry.cpp:1690
+#: ../src/selection-chemistry.cpp:1703
 msgid "Scale by whole factor"
 msgstr "התאמת המידות לפי מקדם שלם"
 
-#: ../src/selection-chemistry.cpp:1705
+#: ../src/selection-chemistry.cpp:1718
 msgid "Move vertically"
 msgstr "הזזה אנכית"
 
-#: ../src/selection-chemistry.cpp:1708
+#: ../src/selection-chemistry.cpp:1721
 msgid "Move horizontally"
 msgstr "הזזה אופקית"
 
-#: ../src/selection-chemistry.cpp:1711 ../src/selection-chemistry.cpp:1737
+#: ../src/selection-chemistry.cpp:1724 ../src/selection-chemistry.cpp:1750
 #: ../src/seltrans.cpp:511 ../src/ui/dialog/transformation.cpp:692
 msgid "Move"
 msgstr "הזזה"
 
-#: ../src/selection-chemistry.cpp:1731
+#: ../src/selection-chemistry.cpp:1744
 msgid "Move vertically by pixels"
 msgstr "הזזה אנכית לפי פיקסלים"
 
-#: ../src/selection-chemistry.cpp:1734
+#: ../src/selection-chemistry.cpp:1747
 msgid "Move horizontally by pixels"
 msgstr "הזזה אופקית לפי פיקסלים"
 
-#: ../src/selection-chemistry.cpp:1866
+#: ../src/selection-chemistry.cpp:1879
 msgid "The selection has no applied path effect."
 msgstr "על הבחירה לו הוחלו אפקטי נתיב."
 
-#: ../src/selection-chemistry.cpp:2069
+#: ../src/selection-chemistry.cpp:2082
 msgctxt "Action"
 msgid "Clone"
 msgstr "כפיל"
 
-#: ../src/selection-chemistry.cpp:2085
+#: ../src/selection-chemistry.cpp:2098
 msgid "Select <b>clones</b> to relink."
 msgstr "בחירת <b>כפילים</b> לקישור מחדש."
 
-#: ../src/selection-chemistry.cpp:2092
+#: ../src/selection-chemistry.cpp:2105
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr "העתקת <b>פריט</b> ללוח הגזירים כדי לקשר אליו את הכפילים מחדש."
 
-#: ../src/selection-chemistry.cpp:2116
+#: ../src/selection-chemistry.cpp:2129
 msgid "<b>No clones to relink</b> in the selection."
 msgstr "<b>אין כפילים לחיבור מחדש</b> בבחירה."
 
-#: ../src/selection-chemistry.cpp:2119
+#: ../src/selection-chemistry.cpp:2132
 msgid "Relink clone"
 msgstr "קישור כפיל מחדש"
 
-#: ../src/selection-chemistry.cpp:2133
+#: ../src/selection-chemistry.cpp:2146
 msgid "Select <b>clones</b> to unlink."
 msgstr "בחירת <b>כפילים</b> לניתוק."
 
-#: ../src/selection-chemistry.cpp:2187
+#: ../src/selection-chemistry.cpp:2200
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "<b>אין כפילים לניתוק</b> בבחירה."
 
-#: ../src/selection-chemistry.cpp:2191
+#: ../src/selection-chemistry.cpp:2204
 msgid "Unlink clone"
 msgstr "ניתוק כפיל"
 
-#: ../src/selection-chemistry.cpp:2204
+#: ../src/selection-chemistry.cpp:2217
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -11710,109 +11740,109 @@ msgstr ""
 "למקור שלו. בחירה ב<b>טקסט על נתיב</b> כדי להגיע לנתיב. בחירה ב<b>טקסט צף</b> "
 "כדי להגיע למסגרת שלו."
 
-#: ../src/selection-chemistry.cpp:2227
+#: ../src/selection-chemistry.cpp:2240
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
 msgstr ""
 "<b>לא ניתן למצוא</b> את הפריט לבחירה (כפיל יתום, קיזוז, נתיב טקסט, טקסט צף?)"
 
-#: ../src/selection-chemistry.cpp:2233
+#: ../src/selection-chemistry.cpp:2246
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr "הפריט המיועד לבחירה הנו <b>בלתי נראה</b> (זה ב־&lt;defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2280
+#: ../src/selection-chemistry.cpp:2293
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr "בחירת <b>פריט/ים</b> להמרה לסמנים."
 
-#: ../src/selection-chemistry.cpp:2348
+#: ../src/selection-chemistry.cpp:2361
 msgid "Objects to marker"
 msgstr "פריטים לסמנים"
 
-#: ../src/selection-chemistry.cpp:2376
+#: ../src/selection-chemistry.cpp:2389
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr "בחירת <b>הפריט/ים</b> להמרה לנתיבים."
 
-#: ../src/selection-chemistry.cpp:2388
+#: ../src/selection-chemistry.cpp:2401
 msgid "Objects to guides"
 msgstr "פריטים לנתיבים"
 
-#: ../src/selection-chemistry.cpp:2405
+#: ../src/selection-chemistry.cpp:2418
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "בחירת <b>פריט/ים</b> להמרה לתבנית."
 
-#: ../src/selection-chemistry.cpp:2493
+#: ../src/selection-chemistry.cpp:2506
 msgid "Objects to pattern"
 msgstr "פריטים לתבנית"
 
-#: ../src/selection-chemistry.cpp:2509
+#: ../src/selection-chemistry.cpp:2522
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr "בחירת <b>פריט עם תבנית מילוי</b> כדי לחלץ ממנו פריטים."
 
-#: ../src/selection-chemistry.cpp:2562
+#: ../src/selection-chemistry.cpp:2575
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "<b>אין תבנית מילוי</b> בבחירה."
 
-#: ../src/selection-chemistry.cpp:2565
+#: ../src/selection-chemistry.cpp:2578
 msgid "Pattern to objects"
 msgstr "תבנית לפריטים"
 
-#: ../src/selection-chemistry.cpp:2647
+#: ../src/selection-chemistry.cpp:2660
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "בחירת <b>פריט/ים</b> מהם יעשה עותק מפת סיביות."
 
-#: ../src/selection-chemistry.cpp:2651
+#: ../src/selection-chemistry.cpp:2664
 msgid "Rendering bitmap..."
 msgstr "מפת הסיביות בעיבוד..."
 
-#: ../src/selection-chemistry.cpp:2825
+#: ../src/selection-chemistry.cpp:2838
 msgid "Create bitmap"
 msgstr "יצירת מפת סיביות"
 
-#: ../src/selection-chemistry.cpp:2857
+#: ../src/selection-chemistry.cpp:2870
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "בחירת <b>פריט/ים</b> מהם ייווצר נתיב חיתוך או מסכה."
 
-#: ../src/selection-chemistry.cpp:2860
+#: ../src/selection-chemistry.cpp:2873
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "בחירת פריט מסכה ו<b>פריט/ים</b> כדי להחיל עליהם נתיב חיתוך או מסכה."
 
-#: ../src/selection-chemistry.cpp:3041
+#: ../src/selection-chemistry.cpp:3054
 msgid "Set clipping path"
 msgstr "בחירת נתיב חיתוך"
 
-#: ../src/selection-chemistry.cpp:3043
+#: ../src/selection-chemistry.cpp:3056
 msgid "Set mask"
 msgstr "הגדרת מסכה"
 
-#: ../src/selection-chemistry.cpp:3058
+#: ../src/selection-chemistry.cpp:3071
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "בחירת <b>פריט/ים</b> מהם יוסרו נתיב חיתוך או מסכה."
 
-#: ../src/selection-chemistry.cpp:3169
+#: ../src/selection-chemistry.cpp:3182
 msgid "Release clipping path"
 msgstr "שחרור נתיב חיתוך"
 
-#: ../src/selection-chemistry.cpp:3171
+#: ../src/selection-chemistry.cpp:3184
 msgid "Release mask"
 msgstr "שחרור מסכה"
 
-#: ../src/selection-chemistry.cpp:3190
+#: ../src/selection-chemistry.cpp:3203
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr "בחירת <b>פריט/ים</b> אליהם יותאם משטח הציור."
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:3210 ../src/verbs.cpp:2736
+#: ../src/selection-chemistry.cpp:3223 ../src/verbs.cpp:2736
 msgid "Fit Page to Selection"
 msgstr "התאמת עמוד לבחירה"
 
-#: ../src/selection-chemistry.cpp:3239 ../src/verbs.cpp:2738
+#: ../src/selection-chemistry.cpp:3252 ../src/verbs.cpp:2738
 msgid "Fit Page to Drawing"
 msgstr "התאמת העמוד לציור"
 
-#: ../src/selection-chemistry.cpp:3260 ../src/verbs.cpp:2740
+#: ../src/selection-chemistry.cpp:3273 ../src/verbs.cpp:2740
 msgid "Fit Page to Selection or Drawing"
 msgstr "התאמת העמוד לבחירה או לציור"
 
@@ -12381,74 +12411,74 @@ msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "אחד הפריטים <b>איננו נתיב</b>, לא ניתן לבצע פעולה בוליאנית."
 
-#: ../src/splivarot.cpp:882
+#: ../src/splivarot.cpp:901
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr "יש לבחור <b>נתיב/י קו מתאר</b> כדי להמיר קו מתאר לנתיב."
 
-#: ../src/splivarot.cpp:1235
+#: ../src/splivarot.cpp:1254
 msgid "Convert stroke to path"
 msgstr "המרת קו מתאר לנתיב"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:1238
+#: ../src/splivarot.cpp:1257
 msgid "<b>No stroked paths</b> in the selection."
 msgstr "<b>אין כל נתיבים בעלי קו מתאר </b> בבחירה."
 
-#: ../src/splivarot.cpp:1321
+#: ../src/splivarot.cpp:1340
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "הפריט הנבחר <b>איננו נתיב</b>, לא ניתן לצמצם/להרחיב."
 
-#: ../src/splivarot.cpp:1440 ../src/splivarot.cpp:1511
+#: ../src/splivarot.cpp:1459 ../src/splivarot.cpp:1527
 msgid "Create linked offset"
 msgstr "יצירת היסט מקושר"
 
-#: ../src/splivarot.cpp:1441 ../src/splivarot.cpp:1512
+#: ../src/splivarot.cpp:1460 ../src/splivarot.cpp:1528
 msgid "Create dynamic offset"
 msgstr "יצירת היסט דינמי"
 
-#: ../src/splivarot.cpp:1537
+#: ../src/splivarot.cpp:1553
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "בחירת <b>נתיב/ים</b> להרחיב/לצמצם."
 
-#: ../src/splivarot.cpp:1754
+#: ../src/splivarot.cpp:1770
 msgid "Outset path"
 msgstr "הרחבת נתיב"
 
-#: ../src/splivarot.cpp:1754
+#: ../src/splivarot.cpp:1770
 msgid "Inset path"
 msgstr "צמצום נתיב"
 
-#: ../src/splivarot.cpp:1756
+#: ../src/splivarot.cpp:1772
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "<b>אין נתיבים</b> לצמצום/הרחבת הבחירה."
 
-#: ../src/splivarot.cpp:1935
+#: ../src/splivarot.cpp:1951
 msgid "Simplifying paths (separately):"
 msgstr "הנתיבים מפושטים (בנפרד):"
 
-#: ../src/splivarot.cpp:1937
+#: ../src/splivarot.cpp:1953
 msgid "Simplifying paths:"
 msgstr "נתיבים להפשטה:"
 
-#: ../src/splivarot.cpp:1974
+#: ../src/splivarot.cpp:1990
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr "%s <b>%d</b> מתוך <b>%d</b> נתיבים הופשטו..."
 
-#: ../src/splivarot.cpp:1986
+#: ../src/splivarot.cpp:2002
 #, c-format
 msgid "<b>%d</b> paths simplified."
 msgstr "<b>%d</b> נתיבים הופשטו."
 
-#: ../src/splivarot.cpp:2000
+#: ../src/splivarot.cpp:2016
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "יש לבחור <b>נתיב/ים</b> להפשטה."
 
-#: ../src/splivarot.cpp:2014
+#: ../src/splivarot.cpp:2030
 msgid "Simplify"
 msgstr "פישוט"
 
-#: ../src/splivarot.cpp:2016
+#: ../src/splivarot.cpp:2032
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>אין נתיבים</b> להפשטה בבחירה."
 
@@ -13442,7 +13472,7 @@ msgstr "הפריט הקטן ביותר"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1035
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1433
-#: ../src/widgets/desktop-widget.cpp:1717
+#: ../src/widgets/desktop-widget.cpp:1716
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "בחירה"
@@ -15857,7 +15887,8 @@ msgid "Tools"
 msgstr "כלים"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:396
-msgid "Bounding box to use:"
+#, fuzzy
+msgid "Bounding box to use"
 msgstr "תיבה תוחמת לשימוש:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:397
@@ -15877,7 +15908,8 @@ msgid "This bounding box includes only the bare path"
 msgstr "תיבה תוחמת זו מכילה רק את הנתיב החשוף"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:404
-msgid "Conversion to guides:"
+#, fuzzy
+msgid "Conversion to guides"
 msgstr "המרה לקווים מנחים:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:405
@@ -15923,7 +15955,8 @@ msgid "Selector"
 msgstr "בוחר"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:421
-msgid "When transforming, show:"
+#, fuzzy
+msgid "When transforming, show"
 msgstr "בזמן שינוי הצורה, יש להציג:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:422
@@ -15943,7 +15976,8 @@ msgid "Show only a box outline of the objects when moving or transforming"
 msgstr "הצגת קווי חוץ התיבה בלבד של הפריטים כאשר הם מוזזים או בעת שינוי צורתם"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:428
-msgid "Per-object selection cue:"
+#, fuzzy
+msgid "Per-object selection cue"
 msgstr "סימון בחירה עבור כל פריט בנפרד:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:431
@@ -16317,7 +16351,8 @@ msgid "Are deleted"
 msgstr "נמחקו"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:649
-msgid "When the original moves, its clones and linked offsets:"
+#, fuzzy
+msgid "Moving original: clones and linked offsets"
 msgstr "כאשר המקור זז, כפיליו ומקושריו מוסטים:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:651
@@ -16337,8 +16372,9 @@ msgstr ""
 "מהמקור"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:656
-msgid "When the original is deleted, its clones:"
-msgstr "כאשר המקור נמחק, כפיליו:"
+#, fuzzy
+msgid "Deleting original: clones"
+msgstr "בעת שכפול מקור+כפילים:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:658
 msgid "Orphaned clones are converted to regular objects"
@@ -16349,7 +16385,8 @@ msgid "Orphaned clones are deleted along with their original"
 msgstr "כפילים יתומים ימחקו לצד המקור שלהם"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:662
-msgid "When duplicating original+clones:"
+#, fuzzy
+msgid "Duplicating original+clones/linked offset"
 msgstr "בעת שכפול מקור+כפילים:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:664
@@ -16990,8 +17027,8 @@ msgid ""
 "The smallest number written to SVG is 10 to the power of this exponent; "
 "anything smaller is written as zero"
 msgstr ""
-"המספר הקטן ביותר שנכתב ל־SVG הנו 10 בחזקת מעריך זה; כל מספר קטן יותר נכתב "
-"כ־0."
+"המספר הקטן ביותר שנכתב ל־SVG הנו 10 בחזקת מעריך זה; כל מספר קטן יותר נכתב כ־"
+"0."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1104
 msgid "SVG output"
@@ -17735,19 +17772,19 @@ msgstr "הוס_פה"
 msgid "New layer created."
 msgstr "נוצרה שכבה חדשה."
 
-#: ../src/ui/dialog/layers.cpp:473 ../src/ui/widget/layer-selector.cpp:596
+#: ../src/ui/dialog/layers.cpp:473 ../src/ui/widget/layer-selector.cpp:600
 msgid "Unhide layer"
 msgstr "הצגת השכבה"
 
-#: ../src/ui/dialog/layers.cpp:473 ../src/ui/widget/layer-selector.cpp:596
+#: ../src/ui/dialog/layers.cpp:473 ../src/ui/widget/layer-selector.cpp:600
 msgid "Hide layer"
 msgstr "הסתרת השכבה"
 
-#: ../src/ui/dialog/layers.cpp:484 ../src/ui/widget/layer-selector.cpp:588
+#: ../src/ui/dialog/layers.cpp:484 ../src/ui/widget/layer-selector.cpp:592
 msgid "Lock layer"
 msgstr "נעילת השכבה"
 
-#: ../src/ui/dialog/layers.cpp:484 ../src/ui/widget/layer-selector.cpp:588
+#: ../src/ui/dialog/layers.cpp:484 ../src/ui/widget/layer-selector.cpp:592
 msgid "Unlock layer"
 msgstr "שחרור השכבה"
 
@@ -19106,10 +19143,6 @@ msgctxt "Transform handle tip"
 msgid "<b>Rotation center</b>: drag to change the origin of transforms"
 msgstr "<b>מרכז ההטיה</b>: יש לגרור כדי לשנות את מקור השינויים לצורה"
 
-#: ../src/ui/widget/filter-effect-chooser.cpp:25
-msgid "_Blend mode:"
-msgstr "מצב _ערבול:"
-
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
 msgid "_Blur:"
 msgstr "טישטוש:"
@@ -19126,7 +19159,7 @@ msgstr "נעילה או שחרור של השכבה הנוכחית"
 msgid "Current layer"
 msgstr "השכבה הנוכחית"
 
-#: ../src/ui/widget/layer-selector.cpp:567
+#: ../src/ui/widget/layer-selector.cpp:571
 msgid "(root)"
 msgstr "(מקור)"
 
@@ -21746,15 +21779,15 @@ msgstr ""
 "\n"
 "אם המסמך ייסגר ללא שמירה, השינויים שלך יאבדו."
 
-#: ../src/widgets/desktop-widget.cpp:897 ../src/widgets/desktop-widget.cpp:954
+#: ../src/widgets/desktop-widget.cpp:897 ../src/widgets/desktop-widget.cpp:953
 msgid "Close _without saving"
 msgstr "סגירה ל_לא שמירה"
 
 #: ../src/widgets/desktop-widget.cpp:946
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
-"format (%s) that may cause data loss!</span>\n"
+"format that may cause data loss!</span>\n"
 "\n"
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
@@ -21763,7 +21796,7 @@ msgstr ""
 "\n"
 "האם ברצונך לשמור את הקובץ בתור SVG של אינקסקייפ?"
 
-#: ../src/widgets/desktop-widget.cpp:957
+#: ../src/widgets/desktop-widget.cpp:956
 msgid "_Save as SVG"
 msgstr "_שמירה בתור SVG"
 
@@ -22349,6 +22382,10 @@ msgstr "הזנת טקסט במפרק טקסט"
 #: ../src/widgets/stroke-style.cpp:506
 msgid "Set markers"
 msgstr "הגדרת סמנים"
+
+#: ../src/widgets/stroke-style.cpp:692
+msgid "Stroke width"
+msgstr "עובי קו המתאר"
 
 #: ../src/widgets/stroke-style.cpp:694
 msgctxt "Stroke width"
@@ -24339,6 +24376,10 @@ msgstr "כמות עקמומיות המחברים"
 msgid "Connector Spacing"
 msgstr "ריווח מחברים"
 
+#: ../src/widgets/toolbox.cpp:8238
+msgid "Spacing:"
+msgstr "ריווח:"
+
 #: ../src/widgets/toolbox.cpp:8239
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "המרווח שנשאר מסביב לפריטים על ידי ניתוב אוטומטי של מחברים"
@@ -25293,8 +25334,8 @@ msgid ""
 "   First derivative is always determined numerically."
 msgstr ""
 "יש לבחור במרובע לפני הקריאה להרחבה זו,\n"
-"ההרחבה תזהה את ממדי ה־X וה־Y. אם ברצונך למלא אזור, עליך להוסיף נקודות קצה "
-"ב־x.\n"
+"ההרחבה תזהה את ממדי ה־X וה־Y. אם ברצונך למלא אזור, עליך להוסיף נקודות קצה ב־"
+"x.\n"
 "\n"
 "עם נקודות ציון קוטביות:\n"
 "  ערכי ה־X של הסוף וההתחלה את טווח הזווית ברדיאנים.\n"
@@ -27119,8 +27160,8 @@ msgid ""
 "scales.\n"
 "First derivatives are always determined numerically."
 msgstr ""
-"יש לבחור במרובע לפני הפעלת ההרחבה, הפונקציה תוודא את אמות המידה בצירי ה־X "
-"וה־Y.\n"
+"יש לבחור במרובע לפני הפעלת ההרחבה, הפונקציה תוודא את אמות המידה בצירי ה־X וה־"
+"Y.\n"
 "הנגזרות הראשונות תמיד מזוהות מספרית."
 
 #: ../share/extensions/param_curves.inx.h:22
@@ -27164,9 +27205,19 @@ msgstr "סוג העיוות:"
 msgid "Duplicate the pattern before deformation"
 msgstr "שכפול התבנית לפני העיוות"
 
+#: ../share/extensions/pathalongpath.inx.h:6
+#: ../share/extensions/pathscatter.inx.h:9
+msgid "Normal offset:"
+msgstr "היסט רגיל:"
+
 #: ../share/extensions/pathalongpath.inx.h:8
 msgid "Pattern along Path"
 msgstr "תבנית לאורך הנתיב"
+
+#: ../share/extensions/pathalongpath.inx.h:9
+#: ../share/extensions/pathscatter.inx.h:12
+msgid "Pattern is vertical"
+msgstr "התבנית אנכית"
 
 #: ../share/extensions/pathalongpath.inx.h:12
 msgid "Ribbon"
@@ -27180,6 +27231,11 @@ msgstr "נחש"
 #: ../share/extensions/pathscatter.inx.h:17
 msgid "Space between copies:"
 msgstr "רווח בין העותקים:"
+
+#: ../share/extensions/pathalongpath.inx.h:17
+#: ../share/extensions/pathscatter.inx.h:19
+msgid "Tangential offset:"
+msgstr "היסט משיקי:"
 
 #: ../share/extensions/pathalongpath.inx.h:18
 msgid ""
@@ -27657,7 +27713,7 @@ msgid "Random Seed:"
 msgstr "זרע אקראי:"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:5
-#: ../share/extensions/render_barcode_datamatrix.inx.h:6
+#: ../share/extensions/render_barcode_datamatrix.inx.h:5
 #: ../share/extensions/render_barcode_qrcode.inx.h:16
 msgid "Text:"
 msgstr "טקסט:"
@@ -27682,15 +27738,12 @@ msgstr "סוג הברקוד:"
 msgid "Barcode - Datamatrix"
 msgstr "ברקוד — מטריצת נתונים"
 
-#: ../share/extensions/render_barcode_datamatrix.inx.h:2
-msgid "Cols:"
-msgstr "עמודות:"
+#: ../share/extensions/render_barcode_datamatrix.inx.h:3
+#: ../share/extensions/render_barcode_qrcode.inx.h:14
+msgid "Size, in unit squares:"
+msgstr "גודל, ביחידות ריבועיות:"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:4
-msgid "Rows:"
-msgstr "שורות:"
-
-#: ../share/extensions/render_barcode_datamatrix.inx.h:5
 msgid "Square Size (px):"
 msgstr "גודל הריבוע (פיקסלים):"
 
@@ -27730,10 +27783,6 @@ msgstr "Q (בערך 25%)"
 msgid "See http://www.denso-wave.com/qrcode/index-e.html for details"
 msgstr ""
 "ניתן לעיין בכתובת http://www.denso-wave.com/qrcode/index-e.html לפרטים נוספים"
-
-#: ../share/extensions/render_barcode_qrcode.inx.h:14
-msgid "Size, in unit squares:"
-msgstr "גודל, ביחידות ריבועיות:"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:15
 msgid "Square size (px):"
@@ -28777,6 +28826,30 @@ msgstr "קלט קובץ מטא של Windows"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "קלט XAML"
+
+#~ msgid "Fractal noise"
+#~ msgstr "רעש פרקטלי"
+
+#~ msgid "Primary blur:"
+#~ msgstr "ערבול ראשי:"
+
+#~ msgid "Secondary blur:"
+#~ msgstr "ערבול משני:"
+
+#~ msgid "Smooth all"
+#~ msgstr "החלקת הכול"
+
+#~ msgid "When the original is deleted, its clones:"
+#~ msgstr "כאשר המקור נמחק, כפיליו:"
+
+#~ msgid "_Blend mode:"
+#~ msgstr "מצב _ערבול:"
+
+#~ msgid "Cols:"
+#~ msgstr "עמודות:"
+
+#~ msgid "Rows:"
+#~ msgstr "שורות:"
 
 #~ msgid "Randomize hue"
 #~ msgstr "בחירת גוון אקראי"
@@ -30518,8 +30591,8 @@ msgstr "קלט XAML"
 
 #, fuzzy
 #~ msgid ""
-#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %"
-#~ "s."
+#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. "
+#~ "%s."
 #~ msgid_plural ""
 #~ "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. "
 #~ "%s."
@@ -30787,12 +30860,12 @@ msgstr "קלט XAML"
 #~ "<b>לחץ</b>, <b>Shift+לחיצה</b>, או <b>גרור מסביב</b> למפרקים לבחירה."
 
 #~ msgid ""
-#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %"
-#~ "s.<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> "
+#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. "
+#~ "%s.<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> "
 #~ "subpaths. %s."
 #~ msgstr ""
-#~ "<b>%i</b> מתוך <b>%i</b> מפרקים נבחר תחת <b>%i</b> מתוך <b>%i</b> "
-#~ "תת־נתיבים. %s.<b>%i</b> מתוך <b>%i</b> מפרקים נבחרו תחת <b>%i</b> מתוך <b>"
+#~ "<b>%i</b> מתוך <b>%i</b> מפרקים נבחר תחת <b>%i</b> מתוך <b>%i</b> תת־"
+#~ "נתיבים. %s.<b>%i</b> מתוך <b>%i</b> מפרקים נבחרו תחת <b>%i</b> מתוך <b>"
 #~ "%i</b> תת־נתיבים. %s."
 
 #~ msgid "Biggest item"

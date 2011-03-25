@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-03-17 20:24+0100\n"
+"POT-Creation-Date: 2011-03-25 19:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -202,7 +202,7 @@ msgstr ""
 
 #: ../share/extensions/gcodetools.py:3641
 msgid ""
-"Noting is selected. Please select something to convert to drill point "
+"Nothing is selected. Please select something to convert to drill point "
 "(dxfpoint) or clear point sign."
 msgstr ""
 
@@ -3898,11 +3898,11 @@ msgstr ""
 msgid "<b>Guideline</b>: %s"
 msgstr ""
 
-#: ../src/desktop.cpp:874
+#: ../src/desktop.cpp:877
 msgid "No previous zoom."
 msgstr ""
 
-#: ../src/desktop.cpp:899
+#: ../src/desktop.cpp:902
 msgid "No next zoom."
 msgstr ""
 
@@ -4666,6 +4666,7 @@ msgid "<big><b>Bitmap size</b></big>"
 msgstr ""
 
 #: ../src/dialogs/export.cpp:488 ../src/live_effects/lpe-bendpath.cpp:56
+#: ../src/live_effects/lpe-patternalongpath.cpp:64
 #: ../src/ui/dialog/transformation.cpp:88 ../src/ui/widget/page-sizer.cpp:232
 msgid "_Width:"
 msgstr ""
@@ -5155,11 +5156,9 @@ msgstr ""
 #: ../src/extension/internal/bitmap/raise.cpp:41
 #: ../src/extension/internal/bitmap/sample.cpp:40
 #: ../src/extension/internal/bluredge.cpp:136
-#: ../src/extension/internal/filter/abc.h:574
-#: ../src/live_effects/lpe-patternalongpath.cpp:64
-#: ../src/widgets/toolbox.cpp:4279 ../src/widgets/toolbox.cpp:4599
-#: ../src/widgets/toolbox.cpp:5099 ../src/widgets/toolbox.cpp:6125
-#: ../share/extensions/foldablebox.inx.h:9
+#: ../src/extension/internal/filter/abc.h:574 ../src/widgets/toolbox.cpp:4279
+#: ../src/widgets/toolbox.cpp:4599 ../src/widgets/toolbox.cpp:5099
+#: ../src/widgets/toolbox.cpp:6125 ../share/extensions/foldablebox.inx.h:9
 msgid "Width:"
 msgstr ""
 
@@ -6027,7 +6026,7 @@ msgid "Null external module directory name.  Modules will not be loaded."
 msgstr ""
 
 #: ../src/extension/init.cpp:295
-#: ../src/extension/internal/filter/filter-file.cpp:56
+#: ../src/extension/internal/filter/filter-file.cpp:58
 #, c-format
 msgid ""
 "Modules directory (%s) is unavailable.  External modules in that directory "
@@ -6042,7 +6041,7 @@ msgstr ""
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/extension/internal/filter/color.h:540
 #: ../src/extension/internal/filter/experimental.h:355
-#: ../src/live_effects/lpe-ruler.cpp:50 ../src/widgets/gradient-vector.cpp:824
+#: ../src/widgets/gradient-vector.cpp:824
 #: ../share/extensions/printing-marks.inx.h:9
 msgid "Offset:"
 msgstr ""
@@ -6590,7 +6589,7 @@ msgstr ""
 #: ../src/extension/internal/cairo-ps-out.cpp:325
 #: ../src/extension/internal/cairo-ps-out.cpp:363
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
-#: ../src/extension/internal/emf-win32-inout.cpp:2478
+#: ../src/extension/internal/emf-win32-inout.cpp:2487
 msgid "Convert texts to paths"
 msgstr ""
 
@@ -6671,39 +6670,39 @@ msgstr ""
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2448
+#: ../src/extension/internal/emf-win32-inout.cpp:2457
 msgid "EMF Input"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2453
+#: ../src/extension/internal/emf-win32-inout.cpp:2462
 msgid "Enhanced Metafiles (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2454
+#: ../src/extension/internal/emf-win32-inout.cpp:2463
 msgid "Enhanced Metafiles"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2462
+#: ../src/extension/internal/emf-win32-inout.cpp:2471
 msgid "WMF Input"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2467
+#: ../src/extension/internal/emf-win32-inout.cpp:2476
 msgid "Windows Metafiles (*.wmf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2468
+#: ../src/extension/internal/emf-win32-inout.cpp:2477
 msgid "Windows Metafiles"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2476
+#: ../src/extension/internal/emf-win32-inout.cpp:2485
 msgid "EMF Output"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2482
+#: ../src/extension/internal/emf-win32-inout.cpp:2491
 msgid "Enhanced Metafile (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2483
+#: ../src/extension/internal/emf-win32-inout.cpp:2492
 msgid "Enhanced Metafile"
 msgstr ""
 
@@ -6747,7 +6746,7 @@ msgstr ""
 #: ../src/extension/internal/filter/experimental.h:515
 #: ../src/extension/internal/filter/experimental.h:626
 #: ../src/extension/internal/filter/experimental.h:723
-#: ../src/extension/internal/filter/filter-file.cpp:148
+#: ../src/extension/internal/filter/filter-file.cpp:150
 #: ../src/extension/internal/filter/filter.cpp:216
 #: ../src/extension/internal/filter/morphology.h:61
 #: ../src/extension/internal/filter/snow.h:38
@@ -7371,6 +7370,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:506
 #: ../src/extension/internal/filter/experimental.h:613
+#: ../src/ui/widget/filter-effect-chooser.cpp:25
 msgid "Blend mode:"
 msgstr ""
 
@@ -7422,15 +7422,15 @@ msgstr ""
 msgid "Simple posterizing effect"
 msgstr ""
 
-#: ../src/extension/internal/filter/filter-file.cpp:32
+#: ../src/extension/internal/filter/filter-file.cpp:33
 msgid "Bundled"
 msgstr ""
 
-#: ../src/extension/internal/filter/filter-file.cpp:33
+#: ../src/extension/internal/filter/filter-file.cpp:34
 msgid "Personal"
 msgstr ""
 
-#: ../src/extension/internal/filter/filter-file.cpp:44
+#: ../src/extension/internal/filter/filter-file.cpp:46
 msgid "Null external module directory name.  Filters will not be loaded."
 msgstr ""
 
@@ -7528,7 +7528,7 @@ msgstr ""
 #: ../share/extensions/printing-marks.inx.h:14
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 #: ../share/extensions/render_barcode.inx.h:5
-#: ../share/extensions/render_barcode_datamatrix.inx.h:3
+#: ../share/extensions/render_barcode_datamatrix.inx.h:2
 #: ../share/extensions/render_barcode_qrcode.inx.h:12
 #: ../share/extensions/rtree.inx.h:4 ../share/extensions/spirograph.inx.h:6
 #: ../share/extensions/svgcalendar.inx.h:20
@@ -8031,7 +8031,7 @@ msgid "Luminance to Alpha"
 msgstr ""
 
 #. File
-#: ../src/filter-enums.cpp:70 ../src/interface.cpp:846 ../src/verbs.cpp:2237
+#: ../src/filter-enums.cpp:70 ../src/interface.cpp:854 ../src/verbs.cpp:2237
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:1
 #: ../share/extensions/jessyInk_transitions.inx.h:2
 msgid "Default"
@@ -8627,117 +8627,117 @@ msgstr ""
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:824
+#: ../src/interface.cpp:832
 msgid "Commands Bar"
 msgstr ""
 
-#: ../src/interface.cpp:824
+#: ../src/interface.cpp:832
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr ""
 
-#: ../src/interface.cpp:826
+#: ../src/interface.cpp:834
 msgid "Snap Controls Bar"
 msgstr ""
 
-#: ../src/interface.cpp:826
+#: ../src/interface.cpp:834
 msgid "Show or hide the snapping controls"
 msgstr ""
 
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:836
 msgid "Tool Controls Bar"
 msgstr ""
 
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:836
 msgid "Show or hide the Tool Controls bar"
 msgstr ""
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:838
 msgid "_Toolbox"
 msgstr ""
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:838
 msgid "Show or hide the main toolbox (on the left)"
 msgstr ""
 
-#: ../src/interface.cpp:836
+#: ../src/interface.cpp:844
 msgid "_Palette"
 msgstr ""
 
-#: ../src/interface.cpp:836
+#: ../src/interface.cpp:844
 msgid "Show or hide the color palette"
 msgstr ""
 
-#: ../src/interface.cpp:838
+#: ../src/interface.cpp:846
 msgid "_Statusbar"
 msgstr ""
 
-#: ../src/interface.cpp:838
+#: ../src/interface.cpp:846
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr ""
 
-#: ../src/interface.cpp:846
+#: ../src/interface.cpp:854
 msgid "Default interface setup"
 msgstr ""
 
-#: ../src/interface.cpp:847 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1437
+#: ../src/interface.cpp:855 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1437
 #: ../share/extensions/color_custom.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:5
 msgid "Custom"
 msgstr ""
 
-#: ../src/interface.cpp:847
+#: ../src/interface.cpp:855
 msgid "Set the custom task"
 msgstr ""
 
-#: ../src/interface.cpp:848
+#: ../src/interface.cpp:856
 msgid "Wide"
 msgstr ""
 
-#: ../src/interface.cpp:848
+#: ../src/interface.cpp:856
 msgid "Setup for widescreen work"
 msgstr ""
 
-#: ../src/interface.cpp:945
+#: ../src/interface.cpp:953
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr ""
 
-#: ../src/interface.cpp:987
+#: ../src/interface.cpp:995
 msgid "Open _Recent"
 msgstr ""
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1092
+#: ../src/interface.cpp:1100
 #, c-format
 msgid "Enter group #%s"
 msgstr ""
 
-#: ../src/interface.cpp:1103
+#: ../src/interface.cpp:1111
 msgid "Go to parent"
 msgstr ""
 
-#: ../src/interface.cpp:1194 ../src/interface.cpp:1280
-#: ../src/interface.cpp:1383 ../src/ui/widget/selected-style.cpp:469
+#: ../src/interface.cpp:1202 ../src/interface.cpp:1288
+#: ../src/interface.cpp:1391 ../src/ui/widget/selected-style.cpp:469
 msgid "Drop color"
 msgstr ""
 
-#: ../src/interface.cpp:1233 ../src/interface.cpp:1343
+#: ../src/interface.cpp:1241 ../src/interface.cpp:1351
 msgid "Drop color on gradient"
 msgstr ""
 
-#: ../src/interface.cpp:1396
+#: ../src/interface.cpp:1404
 msgid "Could not parse SVG data"
 msgstr ""
 
-#: ../src/interface.cpp:1435
+#: ../src/interface.cpp:1443
 msgid "Drop SVG"
 msgstr ""
 
-#: ../src/interface.cpp:1469
+#: ../src/interface.cpp:1477
 msgid "Drop bitmap image"
 msgstr ""
 
-#: ../src/interface.cpp:1561
+#: ../src/interface.cpp:1569
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -8746,7 +8746,7 @@ msgid ""
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
 
-#: ../src/interface.cpp:1568 ../share/extensions/web-set-att.inx.h:7
+#: ../src/interface.cpp:1576 ../share/extensions/web-set-att.inx.h:7
 #: ../share/extensions/web-transmit-att.inx.h:7
 msgid "Replace"
 msgstr ""
@@ -9174,7 +9174,7 @@ msgstr ""
 msgid "Dock #%d"
 msgstr ""
 
-#: ../src/libnrtype/FontFactory.cpp:897
+#: ../src/libnrtype/FontFactory.cpp:907
 msgid "Ignoring font without family that will crash Pango"
 msgstr ""
 
@@ -9391,7 +9391,7 @@ msgid "The path that will be used as stitch."
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
-msgid "Number of paths:"
+msgid "N_umber of paths:"
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
@@ -9399,7 +9399,7 @@ msgid "The number of paths that will be generated."
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
-msgid "Start edge variance:"
+msgid "Sta_rt edge variance:"
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
@@ -9409,7 +9409,7 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
-msgid "Start spacing variance:"
+msgid "Sta_rt spacing variance:"
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
@@ -9419,7 +9419,7 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
-msgid "End edge variance:"
+msgid "End ed_ge variance:"
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
@@ -9429,7 +9429,7 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
-msgid "End spacing variance:"
+msgid "End spa_cing variance:"
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
@@ -9439,7 +9439,7 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
-msgid "Scale width:"
+msgid "Scale _width:"
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
@@ -9447,7 +9447,7 @@ msgid "Scale the width of the stitch path"
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-msgid "Scale width relative to length"
+msgid "Scale _width relative to length"
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
@@ -9529,7 +9529,7 @@ msgid "Path along which intermediate steps are created."
 msgstr ""
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
-msgid "Steps:"
+msgid "Steps_:"
 msgstr ""
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
@@ -9537,7 +9537,7 @@ msgid "Determines the number of steps from start to end path."
 msgstr ""
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
-msgid "Equidistant spacing"
+msgid "E_quidistant spacing"
 msgstr ""
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
@@ -9549,7 +9549,7 @@ msgstr ""
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:343
-msgid "Fixed width:"
+msgid "Fi_xed width:"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:343
@@ -9557,15 +9557,15 @@ msgid "Size of hidden region of lower string"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:344
-msgid "In units of stroke width"
+msgid "_In units of stroke width"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:344
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:345 ../src/widgets/stroke-style.cpp:692
-msgid "Stroke width"
+#: ../src/live_effects/lpe-knot.cpp:345
+msgid "St_roke width"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:345
@@ -9573,7 +9573,7 @@ msgid "Add the stroke width to the interruption size"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:346
-msgid "Crossing path stroke width"
+msgid "_Crossing path stroke width"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:346
@@ -9581,7 +9581,7 @@ msgid "Add crossed stroke width to the interruption size"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:347
-msgid "Switcher size:"
+msgid "S_witcher size:"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:347
@@ -9646,7 +9646,7 @@ msgid "Width of the pattern"
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
-msgid "Width in units of length"
+msgid "Wid_th in units of length"
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:66
@@ -9654,8 +9654,7 @@ msgid "Scale the width of the pattern in units of its length"
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:68
-#: ../src/widgets/toolbox.cpp:8238
-msgid "Spacing:"
+msgid "Spa_cing:"
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
@@ -9666,19 +9665,15 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:72
-#: ../share/extensions/pathalongpath.inx.h:6
-#: ../share/extensions/pathscatter.inx.h:9
-msgid "Normal offset:"
+msgid "No_rmal offset:"
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:73
-#: ../share/extensions/pathalongpath.inx.h:17
-#: ../share/extensions/pathscatter.inx.h:19
-msgid "Tangential offset:"
+msgid "Tan_gential offset:"
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:74
-msgid "Offsets in unit of pattern size"
+msgid "Offsets in _unit of pattern size"
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:75
@@ -9688,9 +9683,7 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
-#: ../share/extensions/pathalongpath.inx.h:9
-#: ../share/extensions/pathscatter.inx.h:12
-msgid "Pattern is vertical"
+msgid "Pattern is _vertical"
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
@@ -9698,7 +9691,7 @@ msgid "Rotate pattern 90 deg before applying"
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
-msgid "Fuse nearby ends:"
+msgid "_Fuse nearby ends:"
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
@@ -9899,7 +9892,7 @@ msgid "End"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Mark distance:"
+msgid "_Mark distance:"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:43
@@ -9914,7 +9907,7 @@ msgid "Unit:"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Major length:"
+msgid "Ma_jor length:"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:45
@@ -9922,7 +9915,7 @@ msgid "Length of major ruler marks"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:46
-msgid "Minor length:"
+msgid "Mino_r length:"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:46
@@ -9930,7 +9923,7 @@ msgid "Length of minor ruler marks"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:47
-msgid "Major steps:"
+msgid "Major steps_:"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:47
@@ -9938,7 +9931,7 @@ msgid "Draw a major mark every ... steps"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:48
-msgid "Shift marks by:"
+msgid "Shift marks _by:"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:48
@@ -9951,6 +9944,10 @@ msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Direction of marks (when viewing along the path from start to end)"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:50
+msgid "_Offset:"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:50
@@ -10102,7 +10099,7 @@ msgid "max curvature"
 msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:46
-msgid "Nb of generations:"
+msgid "N_r of generations:"
 msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:46
@@ -10118,7 +10115,7 @@ msgid "Path whose segments define the iterated transforms"
 msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
-msgid "Use uniform transforms only"
+msgid "_Use uniform transforms only"
 msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
@@ -10128,7 +10125,7 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
-msgid "Draw all generations"
+msgid "Dra_w all generations"
 msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
@@ -10148,7 +10145,7 @@ msgstr ""
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
 #. FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
 #: ../src/live_effects/lpe-vonkoch.cpp:55
-msgid "Max complexity:"
+msgid "_Max complexity:"
 msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:55
@@ -15362,7 +15359,7 @@ msgid "Tools"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:396
-msgid "Bounding box to use:"
+msgid "Bounding box to use"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:397
@@ -15382,7 +15379,7 @@ msgid "This bounding box includes only the bare path"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:404
-msgid "Conversion to guides:"
+msgid "Conversion to guides"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:405
@@ -15427,7 +15424,7 @@ msgid "Selector"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:421
-msgid "When transforming, show:"
+msgid "When transforming, show"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:422
@@ -15447,7 +15444,7 @@ msgid "Show only a box outline of the objects when moving or transforming"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:428
-msgid "Per-object selection cue:"
+msgid "Per-object selection cue"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:431
@@ -15803,7 +15800,7 @@ msgid "Are deleted"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:649
-msgid "When the original moves, its clones and linked offsets:"
+msgid "Moving original: clones and linked offsets"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:651
@@ -15821,7 +15818,7 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:656
-msgid "When the original is deleted, its clones:"
+msgid "Deleting original: clones"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:658
@@ -15833,7 +15830,7 @@ msgid "Orphaned clones are deleted along with their original"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:662
-msgid "When duplicating original+clones/linked offset:"
+msgid "Duplicating original+clones/linked offset"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:664
@@ -17164,19 +17161,19 @@ msgstr ""
 msgid "New layer created."
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:473 ../src/ui/widget/layer-selector.cpp:596
+#: ../src/ui/dialog/layers.cpp:473 ../src/ui/widget/layer-selector.cpp:600
 msgid "Unhide layer"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:473 ../src/ui/widget/layer-selector.cpp:596
+#: ../src/ui/dialog/layers.cpp:473 ../src/ui/widget/layer-selector.cpp:600
 msgid "Hide layer"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:484 ../src/ui/widget/layer-selector.cpp:588
+#: ../src/ui/dialog/layers.cpp:484 ../src/ui/widget/layer-selector.cpp:592
 msgid "Lock layer"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:484 ../src/ui/widget/layer-selector.cpp:588
+#: ../src/ui/dialog/layers.cpp:484 ../src/ui/widget/layer-selector.cpp:592
 msgid "Unlock layer"
 msgstr ""
 
@@ -18502,10 +18499,6 @@ msgctxt "Transform handle tip"
 msgid "<b>Rotation center</b>: drag to change the origin of transforms"
 msgstr ""
 
-#: ../src/ui/widget/filter-effect-chooser.cpp:25
-msgid "_Blend mode:"
-msgstr ""
-
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
 msgid "_Blur:"
 msgstr ""
@@ -18522,7 +18515,7 @@ msgstr ""
 msgid "Current layer"
 msgstr ""
 
-#: ../src/ui/widget/layer-selector.cpp:567
+#: ../src/ui/widget/layer-selector.cpp:571
 msgid "(root)"
 msgstr ""
 
@@ -21690,6 +21683,10 @@ msgstr ""
 msgid "Set markers"
 msgstr ""
 
+#: ../src/widgets/stroke-style.cpp:692
+msgid "Stroke width"
+msgstr ""
+
 #: ../src/widgets/stroke-style.cpp:694
 msgctxt "Stroke width"
 msgid "_Width:"
@@ -23661,6 +23658,10 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:8238
 msgid "Connector Spacing"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:8238
+msgid "Spacing:"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:8239
@@ -26312,8 +26313,18 @@ msgstr ""
 msgid "Duplicate the pattern before deformation"
 msgstr ""
 
+#: ../share/extensions/pathalongpath.inx.h:6
+#: ../share/extensions/pathscatter.inx.h:9
+msgid "Normal offset:"
+msgstr ""
+
 #: ../share/extensions/pathalongpath.inx.h:8
 msgid "Pattern along Path"
+msgstr ""
+
+#: ../share/extensions/pathalongpath.inx.h:9
+#: ../share/extensions/pathscatter.inx.h:12
+msgid "Pattern is vertical"
 msgstr ""
 
 #: ../share/extensions/pathalongpath.inx.h:12
@@ -26327,6 +26338,11 @@ msgstr ""
 #: ../share/extensions/pathalongpath.inx.h:16
 #: ../share/extensions/pathscatter.inx.h:17
 msgid "Space between copies:"
+msgstr ""
+
+#: ../share/extensions/pathalongpath.inx.h:17
+#: ../share/extensions/pathscatter.inx.h:19
+msgid "Tangential offset:"
 msgstr ""
 
 #: ../share/extensions/pathalongpath.inx.h:18
@@ -26797,7 +26813,7 @@ msgid "Random Seed:"
 msgstr ""
 
 #: ../share/extensions/render_alphabetsoup.inx.h:5
-#: ../share/extensions/render_barcode_datamatrix.inx.h:6
+#: ../share/extensions/render_barcode_datamatrix.inx.h:5
 #: ../share/extensions/render_barcode_qrcode.inx.h:16
 msgid "Text:"
 msgstr ""
@@ -26822,15 +26838,12 @@ msgstr ""
 msgid "Barcode - Datamatrix"
 msgstr ""
 
-#: ../share/extensions/render_barcode_datamatrix.inx.h:2
-msgid "Cols:"
+#: ../share/extensions/render_barcode_datamatrix.inx.h:3
+#: ../share/extensions/render_barcode_qrcode.inx.h:14
+msgid "Size, in unit squares:"
 msgstr ""
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:4
-msgid "Rows:"
-msgstr ""
-
-#: ../share/extensions/render_barcode_datamatrix.inx.h:5
 msgid "Square Size (px):"
 msgstr ""
 
@@ -26868,10 +26881,6 @@ msgstr ""
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:13
 msgid "See http://www.denso-wave.com/qrcode/index-e.html for details"
-msgstr ""
-
-#: ../share/extensions/render_barcode_qrcode.inx.h:14
-msgid "Size, in unit squares:"
 msgstr ""
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:15

@@ -11,17 +11,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-03-08 11:34+0200\n"
+"POT-Creation-Date: 2011-03-25 19:30+0100\n"
 "PO-Revision-Date: 2011-03-08 12:08+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 1.2\n"
-"Language: uk\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
@@ -161,10 +161,11 @@ msgstr "У шарі «%s» виявлено більше за одну груп�
 
 #: ../share/extensions/gcodetools.py:3277
 #: ../share/extensions/gcodetools.py:3279
+#, fuzzy
 msgid ""
 "Orientation points are wrong! (if there are two orientation points they "
-"should not be the same. If there are three orientation points they should "
-"not be in a straight line.)"
+"sould not be the same. If there are three orientation points they should not "
+"be in a straight line.)"
 msgstr ""
 "Помилкові точки орієнтації. Якщо використовуються дві точки, ці точки мають "
 "збігатися. Якщо використовуються три точки, ці точки не повинні лежати на "
@@ -224,8 +225,8 @@ msgstr "У шарі «%s» міститься більше за один інс�
 msgid ""
 "Can not find tool for '%s' layer! Please add one with Tools library tab!"
 msgstr ""
-"Не вдалося знайти інструмент для шару «%s». Будь ласка, додайте інструмент за "
-"допомогою вкладки «Бібліотека інструментів»."
+"Не вдалося знайти інструмент для шару «%s». Будь ласка, додайте інструмент "
+"за допомогою вкладки «Бібліотека інструментів»."
 
 #: ../share/extensions/gcodetools.py:3592
 #: ../share/extensions/gcodetools.py:3673
@@ -236,8 +237,9 @@ msgstr ""
 
 #: ../share/extensions/gcodetools.py:3611
 #: ../share/extensions/gcodetools.py:3682
+#, fuzzy
 msgid ""
-"Warning: One or more paths don't have 'd' parameter, try to Ungroup (Ctrl"
+"Warning: One or more paths dont have 'd' parameter, try to Ungroup (Ctrl"
 "+Shift+G) and Object to Path (Ctrl+Shift+C)!"
 msgstr ""
 "Попередження: для одного або декількох контурів не вказано параметра «d». "
@@ -245,8 +247,9 @@ msgstr ""
 "контур» (Ctrl+Shift+C)."
 
 #: ../share/extensions/gcodetools.py:3641
+#, fuzzy
 msgid ""
-"Noting is selected. Please select something to convert to drill point "
+"Nothing is selected. Please select something to convert to drill point "
 "(dxfpoint) or clear point sign."
 msgstr ""
 "Нічого не позначено. Будь ласка, позначте щось для перетворення на точку "
@@ -310,8 +313,8 @@ msgstr ""
 #: ../share/extensions/gcodetools.py:4363
 msgid "Lathe X and Z axis remap should be 'X', 'Y' or 'Z'. Exiting..."
 msgstr ""
-"Значеннями перепризначених осей X і Z мають бути «X», «Y» або «Z». Завершення "
-"роботи…"
+"Значеннями перепризначених осей X і Z мають бути «X», «Y» або «Z». "
+"Завершення роботи…"
 
 #: ../share/extensions/gcodetools.py:4366
 msgid "Lathe X and Z axis remap should be the same. Exiting..."
@@ -880,8 +883,8 @@ msgstr "Знебарвлення"
 #: ../src/extension/internal/filter/abc.h:477
 #: ../src/extension/internal/filter/abc.h:580
 #: ../src/extension/internal/filter/abc.h:740
-#: ../src/extension/internal/filter/color.h:81
-#: ../src/extension/internal/filter/color.h:577
+#: ../src/extension/internal/filter/color.h:153
+#: ../src/extension/internal/filter/color.h:806
 #: ../src/extension/internal/filter/experimental.h:97
 #: ../share/extensions/color_blackandwhite.inx.h:2
 #: ../share/extensions/color_brighter.inx.h:2
@@ -1515,7 +1518,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:98
 #: ../src/extension/internal/bitmap/solarize.cpp:38
-#: ../src/extension/internal/filter/color.h:467
+#: ../src/extension/internal/filter/color.h:696
 msgid "Solarize"
 msgstr "Сонячне світло"
 
@@ -1524,7 +1527,7 @@ msgid "Classical photographic solarization effect"
 msgstr "Класичний фотографічний ефект вигорання"
 
 #: ../share/filters/filters.svg.h:99
-#: ../src/extension/internal/filter/color.h:468
+#: ../src/extension/internal/filter/color.h:697
 msgid "Moonarize"
 msgstr "Місяцезація"
 
@@ -1587,7 +1590,6 @@ msgid "Same as Bubbly Bumps but with transparent highlights"
 msgstr "Те саме, що і Пухирчасте витискання, але з прозорими відблисками"
 
 #: ../share/filters/filters.svg.h:105
-#: ../src/extension/internal/filter/morphology.h:54
 msgid "Smooth edges"
 msgstr "Гладкі краї"
 
@@ -1704,8 +1706,8 @@ msgstr "Сад земних насолод"
 msgid ""
 "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr ""
-"Фантасмагорійні закручені вихори, схожі на картину Ієроніма Босха «Сад земних "
-"насолод»"
+"Фантасмагорійні закручені вихори, схожі на картину Ієроніма Босха «Сад "
+"земних насолод»"
 
 #: ../share/filters/filters.svg.h:118
 msgid "Diffuse light"
@@ -2089,7 +2091,7 @@ msgstr "Дуже гнучкі дзеркальні горби з прозорі�
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:1034
-#: ../src/widgets/desktop-widget.cpp:1713
+#: ../src/widgets/desktop-widget.cpp:1712
 msgid "Drawing"
 msgstr "Малюнок"
 
@@ -2200,7 +2202,7 @@ msgid "Quadritone fantasy"
 msgstr "Фантазія з чотирьох тонів"
 
 #: ../share/filters/filters.svg.h:174
-#: ../src/extension/internal/filter/color.h:400
+#: ../src/extension/internal/filter/color.h:629
 msgid "Replace hue by two colors"
 msgstr "Замінити відтінок на два кольори"
 
@@ -2403,7 +2405,7 @@ msgid "Convert to a colorizable transparent positive or negative"
 msgstr "Перетворити на одноколірний прозорий позитив або негатив"
 
 #: ../share/filters/filters.svg.h:196
-#: ../src/extension/internal/filter/color.h:64
+#: ../src/extension/internal/filter/color.h:136
 msgid "Duotone"
 msgstr "Два тони"
 
@@ -2418,7 +2420,8 @@ msgstr "Гумка-негатив"
 #: ../share/filters/filters.svg.h:197
 msgid "Like Light eraser but converts to negative"
 msgstr ""
-"Подібний до ефекту «Світла гумка», але з перетворенням зображення на негативне"
+"Подібний до ефекту «Світла гумка», але з перетворенням зображення на "
+"негативне"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Alpha repaint"
@@ -4112,11 +4115,11 @@ msgstr "Вилучити напрямну"
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Напрямна</b>: %s"
 
-#: ../src/desktop.cpp:874
+#: ../src/desktop.cpp:877
 msgid "No previous zoom."
 msgstr "Немає попереднього масштабу."
 
-#: ../src/desktop.cpp:899
+#: ../src/desktop.cpp:902
 msgid "No next zoom."
 msgstr "Немає наступного масштабу."
 
@@ -4153,7 +4156,7 @@ msgstr "Позначте <b>один об'єкт</b>, клони якого сл
 msgid "Delete tiled clones"
 msgstr "Вилучити мозаїку з клонів"
 
-#: ../src/dialogs/clonetiler.cpp:1088 ../src/selection-chemistry.cpp:2035
+#: ../src/dialogs/clonetiler.cpp:1088 ../src/selection-chemistry.cpp:2048
 msgid "Select an <b>object</b> to clone."
 msgstr "Позначте <b>об'єкт</b> для клонування."
 
@@ -4518,8 +4521,9 @@ msgid "Alternate the sign of blur change for each column"
 msgstr "Чергувати знак зміни розмиття для кожного стовпчика"
 
 #: ../src/dialogs/clonetiler.cpp:2375
-msgid "<b>Fade out:</b>"
-msgstr "<b>Згасання:</b>"
+#, fuzzy
+msgid "<b>Opacity:</b>"
+msgstr "Непрозорість:"
 
 #: ../src/dialogs/clonetiler.cpp:2382
 msgid "Decrease tile opacity by this percentage for each row"
@@ -4907,6 +4911,7 @@ msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>Розмір зображення</b></big>"
 
 #: ../src/dialogs/export.cpp:488 ../src/live_effects/lpe-bendpath.cpp:56
+#: ../src/live_effects/lpe-patternalongpath.cpp:64
 #: ../src/ui/dialog/transformation.cpp:88 ../src/ui/widget/page-sizer.cpp:232
 msgid "_Width:"
 msgstr "_Ширина:"
@@ -5345,8 +5350,8 @@ msgstr "Target:"
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/dialogs/object-attributes.cpp:35
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/extension/internal/filter/color.h:466
-#: ../src/extension/internal/filter/color.h:554
+#: ../src/extension/internal/filter/color.h:695
+#: ../src/extension/internal/filter/color.h:783
 #: ../src/extension/internal/filter/morphology.h:53 ../src/rdf.cpp:239
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2272
@@ -5406,11 +5411,9 @@ msgstr "Y:"
 #: ../src/extension/internal/bitmap/raise.cpp:41
 #: ../src/extension/internal/bitmap/sample.cpp:40
 #: ../src/extension/internal/bluredge.cpp:136
-#: ../src/extension/internal/filter/abc.h:574
-#: ../src/live_effects/lpe-patternalongpath.cpp:64
-#: ../src/widgets/toolbox.cpp:4279 ../src/widgets/toolbox.cpp:4599
-#: ../src/widgets/toolbox.cpp:5099 ../src/widgets/toolbox.cpp:6125
-#: ../share/extensions/foldablebox.inx.h:9
+#: ../src/extension/internal/filter/abc.h:574 ../src/widgets/toolbox.cpp:4279
+#: ../src/widgets/toolbox.cpp:4599 ../src/widgets/toolbox.cpp:5099
+#: ../src/widgets/toolbox.cpp:6125 ../share/extensions/foldablebox.inx.h:9
 msgid "Width:"
 msgstr "Ширина:"
 
@@ -6310,7 +6313,7 @@ msgstr ""
 "завантажуватись."
 
 #: ../src/extension/init.cpp:295
-#: ../src/extension/internal/filter/filter-file.cpp:56
+#: ../src/extension/internal/filter/filter-file.cpp:58
 #, c-format
 msgid ""
 "Modules directory (%s) is unavailable.  External modules in that directory "
@@ -6325,8 +6328,9 @@ msgstr "Адаптивна постеризація"
 
 #. Label
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
+#: ../src/extension/internal/filter/color.h:540
 #: ../src/extension/internal/filter/experimental.h:355
-#: ../src/live_effects/lpe-ruler.cpp:50 ../src/widgets/gradient-vector.cpp:824
+#: ../src/widgets/gradient-vector.cpp:824
 #: ../share/extensions/printing-marks.inx.h:9
 msgid "Offset:"
 msgstr "Зсув:"
@@ -6764,16 +6768,10 @@ msgid "Shade"
 msgstr "Тінь"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/extension/internal/filter/abc.h:239
-#: ../src/extension/internal/filter/abc.h:377
-#: ../src/extension/internal/filter/abc.h:817
 msgid "Azimuth:"
 msgstr "Азимут:"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/extension/internal/filter/abc.h:238
-#: ../src/extension/internal/filter/abc.h:376
-#: ../src/extension/internal/filter/abc.h:816
 msgid "Elevation:"
 msgstr "Висота:"
 
@@ -6911,7 +6909,7 @@ msgstr "PostScript level 2"
 #: ../src/extension/internal/cairo-ps-out.cpp:325
 #: ../src/extension/internal/cairo-ps-out.cpp:363
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
-#: ../src/extension/internal/emf-win32-inout.cpp:2478
+#: ../src/extension/internal/emf-win32-inout.cpp:2487
 msgid "Convert texts to paths"
 msgstr "Перетворити текст на контури"
 
@@ -6992,39 +6990,39 @@ msgstr "PDF 1.4"
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
 msgstr "PDF+LaTeX: пропустити текст у PDF і створити файл LaTeX"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2448
+#: ../src/extension/internal/emf-win32-inout.cpp:2457
 msgid "EMF Input"
 msgstr "Імпорт EMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2453
+#: ../src/extension/internal/emf-win32-inout.cpp:2462
 msgid "Enhanced Metafiles (*.emf)"
 msgstr "Розширений метафайл (*.emf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2454
+#: ../src/extension/internal/emf-win32-inout.cpp:2463
 msgid "Enhanced Metafiles"
 msgstr "Розширені метафайли"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2462
+#: ../src/extension/internal/emf-win32-inout.cpp:2471
 msgid "WMF Input"
 msgstr "Імпорт WMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2467
+#: ../src/extension/internal/emf-win32-inout.cpp:2476
 msgid "Windows Metafiles (*.wmf)"
 msgstr "Метафайл Windows (*.wmf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2468
+#: ../src/extension/internal/emf-win32-inout.cpp:2477
 msgid "Windows Metafiles"
 msgstr "Метафайл Windows"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2476
+#: ../src/extension/internal/emf-win32-inout.cpp:2485
 msgid "EMF Output"
 msgstr "Експорт до EMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2482
+#: ../src/extension/internal/emf-win32-inout.cpp:2491
 msgid "Enhanced Metafile (*.emf)"
 msgstr "Розширений метафайл (*.emf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2483
+#: ../src/extension/internal/emf-win32-inout.cpp:2492
 msgid "Enhanced Metafile"
 msgstr "Розширений метафайл"
 
@@ -7051,21 +7049,24 @@ msgstr "Вертикальне розмивання:"
 #: ../src/extension/internal/filter/abc.h:675
 #: ../src/extension/internal/filter/abc.h:744
 #: ../src/extension/internal/filter/abc.h:822
-#: ../src/extension/internal/filter/color.h:87
-#: ../src/extension/internal/filter/color.h:188
-#: ../src/extension/internal/filter/color.h:301
-#: ../src/extension/internal/filter/color.h:396
-#: ../src/extension/internal/filter/color.h:473
-#: ../src/extension/internal/filter/color.h:583
+#: ../src/extension/internal/filter/color.h:71
+#: ../src/extension/internal/filter/color.h:159
+#: ../src/extension/internal/filter/color.h:260
+#: ../src/extension/internal/filter/color.h:373
+#: ../src/extension/internal/filter/color.h:464
+#: ../src/extension/internal/filter/color.h:544
+#: ../src/extension/internal/filter/color.h:625
+#: ../src/extension/internal/filter/color.h:702
+#: ../src/extension/internal/filter/color.h:812
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:104
 #: ../src/extension/internal/filter/experimental.h:110
 #: ../src/extension/internal/filter/experimental.h:242
 #: ../src/extension/internal/filter/experimental.h:361
-#: ../src/extension/internal/filter/experimental.h:516
-#: ../src/extension/internal/filter/experimental.h:627
-#: ../src/extension/internal/filter/experimental.h:724
-#: ../src/extension/internal/filter/filter-file.cpp:148
+#: ../src/extension/internal/filter/experimental.h:515
+#: ../src/extension/internal/filter/experimental.h:626
+#: ../src/extension/internal/filter/experimental.h:723
+#: ../src/extension/internal/filter/filter-file.cpp:150
 #: ../src/extension/internal/filter/filter.cpp:216
 #: ../src/extension/internal/filter/morphology.h:61
 #: ../src/extension/internal/filter/snow.h:38
@@ -7084,18 +7085,21 @@ msgstr "Фільтри"
 #: ../src/extension/internal/filter/abc.h:676
 #: ../src/extension/internal/filter/abc.h:745
 #: ../src/extension/internal/filter/abc.h:823
-#: ../src/extension/internal/filter/color.h:88
-#: ../src/extension/internal/filter/color.h:189
-#: ../src/extension/internal/filter/color.h:302
-#: ../src/extension/internal/filter/color.h:397
-#: ../src/extension/internal/filter/color.h:474
-#: ../src/extension/internal/filter/color.h:584
+#: ../src/extension/internal/filter/color.h:72
+#: ../src/extension/internal/filter/color.h:160
+#: ../src/extension/internal/filter/color.h:261
+#: ../src/extension/internal/filter/color.h:374
+#: ../src/extension/internal/filter/color.h:465
+#: ../src/extension/internal/filter/color.h:545
+#: ../src/extension/internal/filter/color.h:626
+#: ../src/extension/internal/filter/color.h:703
+#: ../src/extension/internal/filter/color.h:813
 #: ../src/extension/internal/filter/experimental.h:111
 #: ../src/extension/internal/filter/experimental.h:243
 #: ../src/extension/internal/filter/experimental.h:362
-#: ../src/extension/internal/filter/experimental.h:517
-#: ../src/extension/internal/filter/experimental.h:628
-#: ../src/extension/internal/filter/experimental.h:725
+#: ../src/extension/internal/filter/experimental.h:516
+#: ../src/extension/internal/filter/experimental.h:627
+#: ../src/extension/internal/filter/experimental.h:724
 #: ../src/extension/internal/filter/morphology.h:62
 msgid "Experimental"
 msgstr "Експериментальні"
@@ -7110,6 +7114,7 @@ msgstr "Чисті краї, нетипове (Основні)"
 
 #: ../src/extension/internal/filter/abc.h:118
 #: ../src/extension/internal/filter/abc.h:313
+#: ../src/extension/internal/filter/color.h:65
 #: ../src/extension/internal/filter/experimental.h:236
 #: ../src/extension/internal/filter/experimental.h:335
 #: ../src/extension/internal/filter/experimental.h:340
@@ -7121,7 +7126,8 @@ msgid "Color shift, custom (ABCs)"
 msgstr "Зсув кольорів, нетиповий (Основні)"
 
 #: ../src/extension/internal/filter/abc.h:176
-msgid "Shift:"
+#, fuzzy
+msgid "Shift (°):"
 msgstr "Зсув:"
 
 #: ../src/extension/internal/filter/abc.h:185
@@ -7139,6 +7145,20 @@ msgstr "Розсіяне світло, нетипове (Основні)"
 #: ../share/extensions/fractalize.inx.h:3
 msgid "Smoothness:"
 msgstr "Плавність:"
+
+#: ../src/extension/internal/filter/abc.h:238
+#: ../src/extension/internal/filter/abc.h:376
+#: ../src/extension/internal/filter/abc.h:816
+#, fuzzy
+msgid "Elevation (°):"
+msgstr "Висота:"
+
+#: ../src/extension/internal/filter/abc.h:239
+#: ../src/extension/internal/filter/abc.h:377
+#: ../src/extension/internal/filter/abc.h:817
+#, fuzzy
+msgid "Azimuth (°):"
+msgstr "Азимут:"
 
 #: ../src/extension/internal/filter/abc.h:240
 #: ../src/extension/internal/filter/abc.h:378
@@ -7163,25 +7183,16 @@ msgstr "Заповнення шумом, нетипове (Основні)"
 msgid "Turbulence type:"
 msgstr "Тип збурення:"
 
-#: ../src/extension/internal/filter/abc.h:465
-#: ../src/extension/internal/filter/abc.h:664
-msgid "Fractal noise"
-msgstr "Фрактальний шум"
-
-#: ../src/extension/internal/filter/abc.h:466
-#: ../src/extension/internal/filter/abc.h:665 ../src/filter-enums.cpp:35
-#: ../src/filter-enums.cpp:117
-msgid "Turbulence"
-msgstr "Турбулентність"
-
 #: ../src/extension/internal/filter/abc.h:468
 #: ../src/extension/internal/filter/abc.h:667
-msgid "Horizontal frequency (x100):"
+#, fuzzy
+msgid "Horizontal frequency:"
 msgstr "Горизонтальний зсув (⨯100):"
 
 #: ../src/extension/internal/filter/abc.h:469
 #: ../src/extension/internal/filter/abc.h:668
-msgid "Vertical frequency (x100):"
+#, fuzzy
+msgid "Vertical frequency:"
 msgstr "Вертикальна частота (⨯100):"
 
 #: ../src/extension/internal/filter/abc.h:470
@@ -7214,7 +7225,7 @@ msgid "Erosion:"
 msgstr "Ерозія:"
 
 #: ../src/extension/internal/filter/abc.h:474
-#: ../src/extension/internal/filter/color.h:297
+#: ../src/extension/internal/filter/color.h:369
 #: ../src/extension/internal/filter/experimental.h:83
 msgid "Inverted"
 msgstr "Інвертоване"
@@ -7248,7 +7259,6 @@ msgid "Silhouette, custom (ABCs)"
 msgstr "Силует, нетиповий (Основні)"
 
 #: ../src/extension/internal/filter/abc.h:738
-#: ../src/extension/internal/filter/experimental.h:720
 #: ../src/extension/internal/filter/morphology.h:57
 msgid "Blur:"
 msgstr "Розмивання:"
@@ -7261,234 +7271,287 @@ msgstr "Перемалювати всі видимі об’єкти у моно
 msgid "Specular light, custom (ABCs)"
 msgstr "Дзеркальне світло, нетипове (Основні)"
 
-#: ../src/extension/internal/filter/color.h:58
+#: ../src/extension/internal/filter/color.h:63
+#, fuzzy
+msgid "Brightness, custom (Color)"
+msgstr "Тритон, нетиповий (Колір)"
+
+#: ../src/extension/internal/filter/color.h:66
+#, fuzzy
+msgid "Vibration:"
+msgstr "Варіація:"
+
+#: ../src/extension/internal/filter/color.h:67
+#: ../src/extension/internal/filter/color.h:459
+#: ../src/extension/internal/filter/experimental.h:84
+#: ../src/extension/internal/filter/experimental.h:505
+msgid "Lightness:"
+msgstr "Освітленість:"
+
+#: ../src/extension/internal/filter/color.h:75
+#, fuzzy
+msgid "Brightness filter"
+msgstr "Кроки яскравості"
+
+#: ../src/extension/internal/filter/color.h:130
 msgid "Colorize, custom (Color)"
 msgstr "Зробити кольоровим, нетиповий (Колір)"
 
-#: ../src/extension/internal/filter/color.h:62
+#: ../src/extension/internal/filter/color.h:134
 msgid "Harsh light:"
 msgstr "Яскраве освітлення:"
 
-#: ../src/extension/internal/filter/color.h:63
+#: ../src/extension/internal/filter/color.h:135
 msgid "Normal light:"
 msgstr "Звичайне освітлення:"
 
-#: ../src/extension/internal/filter/color.h:65
-#: ../src/extension/internal/filter/color.h:380
+#: ../src/extension/internal/filter/color.h:137
+#: ../src/extension/internal/filter/color.h:609
 msgid "Blend 1:"
 msgstr "Накладення 1:"
 
-#: ../src/extension/internal/filter/color.h:66
-#: ../src/extension/internal/filter/color.h:74
-#: ../src/extension/internal/filter/color.h:382
-#: ../src/extension/internal/filter/color.h:389
-#: ../src/extension/internal/filter/color.h:563
-#: ../src/extension/internal/filter/color.h:569
-#: ../src/extension/internal/filter/experimental.h:77
-#: ../src/extension/internal/filter/experimental.h:100
-#: ../src/extension/internal/filter/experimental.h:509
-#: ../src/filter-enums.cpp:52
+#: ../src/extension/internal/filter/color.h:138
+#: ../src/extension/internal/filter/color.h:146
+#: ../src/extension/internal/filter/color.h:611
+#: ../src/extension/internal/filter/color.h:618
+#: ../src/extension/internal/filter/color.h:792
+#: ../src/extension/internal/filter/color.h:798 ../src/filter-enums.cpp:52
 msgid "Multiply"
 msgstr "Множення"
 
-#: ../src/extension/internal/filter/color.h:67
-#: ../src/extension/internal/filter/color.h:75
-#: ../src/extension/internal/filter/color.h:381
-#: ../src/extension/internal/filter/color.h:387
-#: ../src/extension/internal/filter/color.h:555
-#: ../src/extension/internal/filter/color.h:568
-#: ../src/extension/internal/filter/experimental.h:76
-#: ../src/extension/internal/filter/experimental.h:99
-#: ../src/extension/internal/filter/experimental.h:508
-#: ../src/extension/internal/filter/experimental.h:606
-#: ../src/extension/internal/filter/experimental.h:616
-#: ../src/filter-enums.cpp:51 ../src/ui/dialog/inkscape-preferences.cpp:586
+#: ../src/extension/internal/filter/color.h:139
+#: ../src/extension/internal/filter/color.h:147
+#: ../src/extension/internal/filter/color.h:610
+#: ../src/extension/internal/filter/color.h:616
+#: ../src/extension/internal/filter/color.h:784
+#: ../src/extension/internal/filter/color.h:797 ../src/filter-enums.cpp:51
+#: ../src/ui/dialog/inkscape-preferences.cpp:586
 msgid "Normal"
 msgstr "Звичайне"
 
-#: ../src/extension/internal/filter/color.h:68
-#: ../src/extension/internal/filter/color.h:73
-#: ../src/extension/internal/filter/color.h:383
-#: ../src/extension/internal/filter/color.h:388
-#: ../src/extension/internal/filter/color.h:562
-#: ../src/extension/internal/filter/experimental.h:78
-#: ../src/extension/internal/filter/experimental.h:101
-#: ../src/extension/internal/filter/experimental.h:510
-#: ../src/filter-enums.cpp:53 ../src/ui/dialog/input.cpp:362
+#: ../src/extension/internal/filter/color.h:140
+#: ../src/extension/internal/filter/color.h:145
+#: ../src/extension/internal/filter/color.h:612
+#: ../src/extension/internal/filter/color.h:617
+#: ../src/extension/internal/filter/color.h:791 ../src/filter-enums.cpp:53
+#: ../src/ui/dialog/input.cpp:362
 msgid "Screen"
 msgstr "Ширма"
 
-#: ../src/extension/internal/filter/color.h:69
-#: ../src/extension/internal/filter/color.h:76
-#: ../src/extension/internal/filter/color.h:390
-#: ../src/extension/internal/filter/color.h:561
-#: ../src/extension/internal/filter/experimental.h:79
-#: ../src/extension/internal/filter/experimental.h:102
-#: ../src/extension/internal/filter/experimental.h:615
-#: ../src/filter-enums.cpp:55
+#: ../src/extension/internal/filter/color.h:141
+#: ../src/extension/internal/filter/color.h:148
+#: ../src/extension/internal/filter/color.h:619
+#: ../src/extension/internal/filter/color.h:790 ../src/filter-enums.cpp:55
 msgid "Lighten"
 msgstr "Світліше"
 
-#: ../src/extension/internal/filter/color.h:70
-#: ../src/extension/internal/filter/color.h:77
-#: ../src/extension/internal/filter/color.h:391
-#: ../src/extension/internal/filter/color.h:564
-#: ../src/extension/internal/filter/color.h:570
-#: ../src/extension/internal/filter/experimental.h:75
-#: ../src/extension/internal/filter/experimental.h:103
-#: ../src/extension/internal/filter/experimental.h:617
-#: ../src/filter-enums.cpp:54
+#: ../src/extension/internal/filter/color.h:142
+#: ../src/extension/internal/filter/color.h:149
+#: ../src/extension/internal/filter/color.h:620
+#: ../src/extension/internal/filter/color.h:793
+#: ../src/extension/internal/filter/color.h:799 ../src/filter-enums.cpp:54
 msgid "Darken"
 msgstr "Темніше"
 
-#: ../src/extension/internal/filter/color.h:72
-#: ../src/extension/internal/filter/color.h:386
+#: ../src/extension/internal/filter/color.h:144
+#: ../src/extension/internal/filter/color.h:615
 msgid "Blend 2:"
 msgstr "Накладення 2:"
 
-#: ../src/extension/internal/filter/color.h:91
+#: ../src/extension/internal/filter/color.h:163
 msgid "Blend image or object with a flood color"
 msgstr "Змішує кольори зображення або об’єкта з кольором заповнення"
 
-#: ../src/extension/internal/filter/color.h:166
+#: ../src/extension/internal/filter/color.h:238
 msgid "Duochrome, custom (Color)"
 msgstr "Два тори, нетиповий (Колір)"
 
-#: ../src/extension/internal/filter/color.h:170
+#: ../src/extension/internal/filter/color.h:242
 msgid "Fluorescence level:"
 msgstr "Рівень свічення:"
 
-#: ../src/extension/internal/filter/color.h:171
+#: ../src/extension/internal/filter/color.h:243
 msgid "Swap:"
 msgstr "Обмін:"
 
-#: ../src/extension/internal/filter/color.h:172
+#: ../src/extension/internal/filter/color.h:244
 msgid "No swap"
 msgstr "Без обміну"
 
-#: ../src/extension/internal/filter/color.h:173
+#: ../src/extension/internal/filter/color.h:245
 msgid "Color and alpha"
 msgstr "Колір і α-канал"
 
-#: ../src/extension/internal/filter/color.h:174
+#: ../src/extension/internal/filter/color.h:246
 msgid "Color only"
 msgstr "Лише колір"
 
-#: ../src/extension/internal/filter/color.h:175
+#: ../src/extension/internal/filter/color.h:247
 msgid "Alpha only"
 msgstr "Лише α-канал"
 
-#: ../src/extension/internal/filter/color.h:179
+#: ../src/extension/internal/filter/color.h:251
 msgid "Color 1"
 msgstr "Колір 1"
 
-#: ../src/extension/internal/filter/color.h:182
+#: ../src/extension/internal/filter/color.h:254
 msgid "Color 2"
 msgstr "Колір 2"
 
-#: ../src/extension/internal/filter/color.h:192
+#: ../src/extension/internal/filter/color.h:264
 msgid "Convert luminance values to a duochrome palette"
 msgstr "Перетворити значення освітленості на кольори двотонової палітри"
 
-#: ../src/extension/internal/filter/color.h:289
+#: ../src/extension/internal/filter/color.h:361
 msgid "Electrize, custom (Color)"
 msgstr "Електризація, нетипова (Колір)"
 
-#: ../src/extension/internal/filter/color.h:291
-#: ../src/extension/internal/filter/experimental.h:504
+#: ../src/extension/internal/filter/color.h:363
+#: ../src/extension/internal/filter/experimental.h:503
+#: ../src/extension/internal/filter/experimental.h:719
 msgid "Simplify:"
 msgstr "Спрощення:"
 
-#: ../src/extension/internal/filter/color.h:292
-#: ../src/extension/internal/filter/experimental.h:605
+#: ../src/extension/internal/filter/color.h:364
+#: ../src/extension/internal/filter/experimental.h:604
 msgid "Effect type:"
 msgstr "Тип ефекту:"
 
-#: ../src/extension/internal/filter/color.h:293 ../src/filter-enums.cpp:83
+#: ../src/extension/internal/filter/color.h:365 ../src/filter-enums.cpp:83
 msgid "Table"
 msgstr "Табличний"
 
-#: ../src/extension/internal/filter/color.h:294 ../src/filter-enums.cpp:84
+#: ../src/extension/internal/filter/color.h:366 ../src/filter-enums.cpp:84
 msgid "Discrete"
 msgstr "Дискретний"
 
-#: ../src/extension/internal/filter/color.h:296
-#: ../src/extension/internal/filter/experimental.h:613
-#: ../src/extension/internal/filter/experimental.h:719
+#: ../src/extension/internal/filter/color.h:368
+#: ../src/extension/internal/filter/experimental.h:612
+#: ../src/extension/internal/filter/experimental.h:718
 msgid "Levels:"
 msgstr "Рівні:"
 
-#: ../src/extension/internal/filter/color.h:305
+#: ../src/extension/internal/filter/color.h:377
 msgid "Electro solarization effects"
 msgstr "Ефекти електровигорання"
 
-#: ../src/extension/internal/filter/color.h:376
+#: ../src/extension/internal/filter/color.h:454
+#, fuzzy
+msgid "Greyscale, custom (Color)"
+msgstr "Електризація, нетипова (Колір)"
+
+#: ../src/extension/internal/filter/color.h:456
+msgid "Red:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:457
+#, fuzzy
+msgid "Green:"
+msgstr "Зелений"
+
+#: ../src/extension/internal/filter/color.h:458
+#, fuzzy
+msgid "Blue:"
+msgstr "Синій"
+
+#: ../src/extension/internal/filter/color.h:460
+#: ../src/extension/internal/filter/experimental.h:81
+#: ../src/extension/internal/filter/experimental.h:238
+msgid "Transparent"
+msgstr "Прозорість"
+
+#: ../src/extension/internal/filter/color.h:468
+msgid "Customize greyscale components"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:536
+#, fuzzy
+msgid "Lightness, custom (Color)"
+msgstr "Тритон, нетиповий (Колір)"
+
+#: ../src/extension/internal/filter/color.h:538
+#, fuzzy
+msgid "Lights:"
+msgstr "Права:"
+
+#: ../src/extension/internal/filter/color.h:539
+#, fuzzy
+msgid "Shadows:"
+msgstr "Тіні:"
+
+#: ../src/extension/internal/filter/color.h:548
+msgid "Modify lights and shadows separately"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:605
 msgid "Quadritone fantasy, custom (Color)"
 msgstr "Фантазія з чотирьох тонів, нетипова (колір)"
 
-#: ../src/extension/internal/filter/color.h:378
-#: ../src/extension/internal/filter/color.h:576
-msgid "Hue distribution:"
+#: ../src/extension/internal/filter/color.h:607
+#: ../src/extension/internal/filter/color.h:805
+#, fuzzy
+msgid "Hue distribution (°):"
 msgstr "Розподіл відтінку:"
 
-#: ../src/extension/internal/filter/color.h:379
+#: ../src/extension/internal/filter/color.h:608
 #: ../src/ui/dialog/tracedialog.cpp:477
 msgid "Colors:"
 msgstr "Кольори:"
 
-#: ../src/extension/internal/filter/color.h:385
+#: ../src/extension/internal/filter/color.h:614
 msgid "Over-saturation:"
 msgstr "Перенасиченість:"
 
-#: ../src/extension/internal/filter/color.h:463
+#: ../src/extension/internal/filter/color.h:692
 msgid "Solarize, custom (Color)"
 msgstr "Вигорання, нетипове (Колір)"
 
-#: ../src/extension/internal/filter/color.h:465
-msgid "Hue rotation:"
+#: ../src/extension/internal/filter/color.h:694
+#, fuzzy
+msgid "Hue rotation (°):"
 msgstr "Обертання відтінку:"
 
-#: ../src/extension/internal/filter/color.h:477
+#: ../src/extension/internal/filter/color.h:706
 msgid "Classic photographic solarization effect"
 msgstr "Класичний фотографічний ефект вигорання"
 
-#: ../src/extension/internal/filter/color.h:550
+#: ../src/extension/internal/filter/color.h:779
 msgid "Tritone, custom (Color)"
 msgstr "Тритон, нетиповий (Колір)"
 
-#: ../src/extension/internal/filter/color.h:556
+#: ../src/extension/internal/filter/color.h:785
 msgid "Enhance hue"
 msgstr "Збільшити значення відтінку"
 
-#: ../src/extension/internal/filter/color.h:557
+#: ../src/extension/internal/filter/color.h:786
 msgid "Radiation"
 msgstr "Випромінювання"
 
-#: ../src/extension/internal/filter/color.h:558
+#: ../src/extension/internal/filter/color.h:787
 msgid "Hue to background"
 msgstr "Відтінок у тло"
 
-#: ../src/extension/internal/filter/color.h:560
+#: ../src/extension/internal/filter/color.h:789
 msgid "Global blend:"
 msgstr "Загальне змішування:"
 
-#: ../src/extension/internal/filter/color.h:566
+#: ../src/extension/internal/filter/color.h:795
 msgid "Glow:"
 msgstr "Німб:"
 
-#: ../src/extension/internal/filter/color.h:567
+#: ../src/extension/internal/filter/color.h:796
 msgid "Glow blend:"
 msgstr "Змішування німба:"
 
-#: ../src/extension/internal/filter/color.h:572
+#: ../src/extension/internal/filter/color.h:801
 msgid "Local light:"
 msgstr "Локальне освітлення:"
 
-#: ../src/extension/internal/filter/color.h:573
+#: ../src/extension/internal/filter/color.h:802
 msgid "Global light:"
 msgstr "Загальне освітлення:"
 
-#: ../src/extension/internal/filter/color.h:587
+#: ../src/extension/internal/filter/color.h:816
 msgid ""
 "Create a custom tritone palette with additional glow, blend modes and hue "
 "moving"
@@ -7545,20 +7608,9 @@ msgstr "Режим малювання"
 msgid "Drawing blend:"
 msgstr "Змішування малювання:"
 
-#: ../src/extension/internal/filter/experimental.h:81
-#: ../src/extension/internal/filter/experimental.h:238
-msgid "Transparent"
-msgstr "Прозорість"
-
 #: ../src/extension/internal/filter/experimental.h:82
-#: ../src/extension/internal/filter/experimental.h:607
 msgid "Dented"
 msgstr "Насічка"
-
-#: ../src/extension/internal/filter/experimental.h:84
-#: ../src/extension/internal/filter/experimental.h:506
-msgid "Lightness:"
-msgstr "Освітленість:"
 
 #: ../src/extension/internal/filter/experimental.h:86
 msgid "Noise reduction:"
@@ -7613,11 +7665,6 @@ msgstr ""
 msgid "Drawing, custom"
 msgstr "Графіка, нетиповий"
 
-#: ../src/extension/internal/filter/experimental.h:334
-#: ../src/splivarot.cpp:2014
-msgid "Simplify"
-msgstr "Спростити"
-
 #: ../src/extension/internal/filter/experimental.h:337
 msgid "Erase:"
 msgstr "Витирання:"
@@ -7625,14 +7672,6 @@ msgstr "Витирання:"
 #: ../src/extension/internal/filter/experimental.h:338
 msgid "Transluscent"
 msgstr "Прозорість"
-
-#: ../src/extension/internal/filter/experimental.h:339
-msgid "Smoothness"
-msgstr "Плавність"
-
-#: ../src/extension/internal/filter/experimental.h:343
-msgid "Melt"
-msgstr "Плавлення"
 
 #: ../src/extension/internal/filter/experimental.h:344
 msgid "Level:"
@@ -7658,97 +7697,84 @@ msgstr "Зображення на штриху"
 msgid "Convert images to duochrome drawings"
 msgstr "Перетворити зображення на двоколірні"
 
-#: ../src/extension/internal/filter/experimental.h:498
+#: ../src/extension/internal/filter/experimental.h:497
 msgid "Neon draw, custom"
 msgstr "Неонова графіка, нетипова"
 
-#: ../src/extension/internal/filter/experimental.h:500
+#: ../src/extension/internal/filter/experimental.h:499
 msgid "Line type:"
 msgstr "Тип ліній:"
 
-#: ../src/extension/internal/filter/experimental.h:501
-msgid "Smoothed"
-msgstr "Згладжений"
-
-#: ../src/extension/internal/filter/experimental.h:502
-msgid "Contrasted"
-msgstr "Контрастний"
-
-#: ../src/extension/internal/filter/experimental.h:505
+#: ../src/extension/internal/filter/experimental.h:504
 msgid "Line width:"
 msgstr "Товщина ліній:"
 
-#: ../src/extension/internal/filter/experimental.h:507
-#: ../src/extension/internal/filter/experimental.h:614
+#: ../src/extension/internal/filter/experimental.h:506
+#: ../src/extension/internal/filter/experimental.h:613
+#: ../src/ui/widget/filter-effect-chooser.cpp:25
 msgid "Blend mode:"
 msgstr "Режим змішування:"
 
-#: ../src/extension/internal/filter/experimental.h:512
+#: ../src/extension/internal/filter/experimental.h:511
 msgid "Dark mode"
 msgstr "Темний режим"
 
-#: ../src/extension/internal/filter/experimental.h:520
+#: ../src/extension/internal/filter/experimental.h:519
 msgid "Posterize and draw smooth lines around color shapes"
 msgstr ""
 "Постеризувати і намалювати гладкі ліній навколо ділянок різних кольорів"
 
-#: ../src/extension/internal/filter/experimental.h:603
+#: ../src/extension/internal/filter/experimental.h:602
 msgid "Poster paint, custom"
 msgstr "Малювання плакатів, нетипове"
 
-#: ../src/extension/internal/filter/experimental.h:609
+#: ../src/extension/internal/filter/experimental.h:608
 msgid "Transfer type:"
 msgstr "Тип передачі:"
 
-#: ../src/extension/internal/filter/experimental.h:610
-msgid "Poster"
-msgstr "Плакат"
-
-#: ../src/extension/internal/filter/experimental.h:611
-msgid "Painting"
-msgstr "Малювання"
+#: ../src/extension/internal/filter/experimental.h:618
+#, fuzzy
+msgid "Simplify (primary):"
+msgstr "Спрощення контурів:"
 
 #: ../src/extension/internal/filter/experimental.h:619
-msgid "Primary blur:"
-msgstr "Основне розмивання:"
+#, fuzzy
+msgid "Simplify (secondary):"
+msgstr "Спростити кольори"
 
 #: ../src/extension/internal/filter/experimental.h:620
-msgid "Secondary blur:"
-msgstr "Вторинне розмивання:"
-
-#: ../src/extension/internal/filter/experimental.h:621
 msgid "Pre-saturation:"
 msgstr "Попереднє насичення:"
 
-#: ../src/extension/internal/filter/experimental.h:622
+#: ../src/extension/internal/filter/experimental.h:621
 msgid "Post-saturation:"
 msgstr "Остаточне насичення:"
 
-#: ../src/extension/internal/filter/experimental.h:623
+#: ../src/extension/internal/filter/experimental.h:622
 msgid "Simulate antialiasing"
 msgstr "Імітувати згладжування"
 
-#: ../src/extension/internal/filter/experimental.h:631
+#: ../src/extension/internal/filter/experimental.h:630
 msgid "Poster and painting effects"
 msgstr "Ефекти постеризації та малювання"
 
-#: ../src/extension/internal/filter/experimental.h:717
+#: ../src/extension/internal/filter/experimental.h:716
 msgid "Posterize basic, custom"
 msgstr "Базова постеризація, нетипова"
 
-#: ../src/extension/internal/filter/experimental.h:728
+#: ../src/extension/internal/filter/experimental.h:727
 msgid "Simple posterizing effect"
 msgstr "Простий ефект постеризації"
 
-#: ../src/extension/internal/filter/filter-file.cpp:32
+#: ../src/extension/internal/filter/filter-file.cpp:33
 msgid "Bundled"
 msgstr "З’єднане"
 
-#: ../src/extension/internal/filter/filter-file.cpp:33
+#: ../src/extension/internal/filter/filter-file.cpp:34
 msgid "Personal"
 msgstr "Особисте"
 
-#: ../src/extension/internal/filter/filter-file.cpp:44
+#: ../src/extension/internal/filter/filter-file.cpp:46
 msgid "Null external module directory name.  Filters will not be loaded."
 msgstr ""
 "Порожнє поле назви каталогу зовнішнього модуля. Фільтри не будуть "
@@ -7757,10 +7783,6 @@ msgstr ""
 #: ../src/extension/internal/filter/morphology.h:51
 msgid "Cross-smooth, custom (Morphology)"
 msgstr "Перехресне згладжування, нетипове (морфологічне)"
-
-#: ../src/extension/internal/filter/morphology.h:55
-msgid "Smooth all"
-msgstr "Згладити все"
 
 #: ../src/extension/internal/filter/morphology.h:65
 msgid "Smooth edges and angles of shapes"
@@ -7854,7 +7876,7 @@ msgstr "Вертикальний зсув:"
 #: ../share/extensions/printing-marks.inx.h:14
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 #: ../share/extensions/render_barcode.inx.h:5
-#: ../share/extensions/render_barcode_datamatrix.inx.h:3
+#: ../share/extensions/render_barcode_datamatrix.inx.h:2
 #: ../share/extensions/render_barcode_qrcode.inx.h:12
 #: ../share/extensions/rtree.inx.h:4 ../share/extensions/spirograph.inx.h:6
 #: ../share/extensions/svgcalendar.inx.h:20
@@ -8321,6 +8343,10 @@ msgstr "Відбиття світла"
 msgid "Tile"
 msgstr "Мозаїка"
 
+#: ../src/filter-enums.cpp:35 ../src/filter-enums.cpp:117
+msgid "Turbulence"
+msgstr "Турбулентність"
+
 #: ../src/filter-enums.cpp:40
 msgid "Source Graphic"
 msgstr "Графіка джерела"
@@ -8362,7 +8388,7 @@ msgid "Luminance to Alpha"
 msgstr "Освітленість до прозорості"
 
 #. File
-#: ../src/filter-enums.cpp:70 ../src/interface.cpp:846 ../src/verbs.cpp:2237
+#: ../src/filter-enums.cpp:70 ../src/interface.cpp:854 ../src/verbs.cpp:2237
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:1
 #: ../share/extensions/jessyInk_transitions.inx.h:2
 msgid "Default"
@@ -8424,7 +8450,6 @@ msgstr "Обгортка"
 #: ../src/ui/dialog/input.cpp:607 ../src/ui/dialog/input.cpp:608
 #: ../src/ui/dialog/input.cpp:1269 ../src/verbs.cpp:2234
 #: ../src/widgets/stroke-style.cpp:365 ../src/widgets/toolbox.cpp:4055
-#: ../share/extensions/gcodetools_lathe.inx.h:23
 #: ../share/extensions/grid_polar.inx.h:18
 #: ../share/extensions/guides_creator.inx.h:15
 #: ../share/extensions/scour.inx.h:8
@@ -8875,7 +8900,6 @@ msgstr "Міліметр"
 
 #: ../src/helper/units.cpp:43 ../src/ui/widget/selected-style.cpp:298
 #: ../share/extensions/dxf_outlines.inx.h:15 ../share/extensions/gears.inx.h:9
-#: ../share/extensions/gcodetools_lathe.inx.h:37
 msgid "mm"
 msgstr "мм"
 
@@ -8914,7 +8938,6 @@ msgstr "Дюйм"
 
 #: ../src/helper/units.cpp:46 ../share/extensions/dxf_outlines.inx.h:13
 #: ../share/extensions/gears.inx.h:8
-#: ../share/extensions/gcodetools_lathe.inx.h:36
 msgid "in"
 msgstr "дюйм"
 
@@ -9003,117 +9026,117 @@ msgstr "Не вдається створити резервну копію та�
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:824
+#: ../src/interface.cpp:832
 msgid "Commands Bar"
 msgstr "Панель команд"
 
-#: ../src/interface.cpp:824
+#: ../src/interface.cpp:832
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Показати/сховати панель команд (під меню)"
 
-#: ../src/interface.cpp:826
+#: ../src/interface.cpp:834
 msgid "Snap Controls Bar"
 msgstr "Панель керування прилипанням"
 
-#: ../src/interface.cpp:826
+#: ../src/interface.cpp:834
 msgid "Show or hide the snapping controls"
 msgstr "Показати або сховати інструменти керування прилипанням"
 
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:836
 msgid "Tool Controls Bar"
 msgstr "Панель параметрів інструментів"
 
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:836
 msgid "Show or hide the Tool Controls bar"
 msgstr "Показати або сховати панель з параметрами інструментів"
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:838
 msgid "_Toolbox"
 msgstr "Панель _інструментів"
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:838
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "Показати або сховати головну панель інструментів (зліва)"
 
-#: ../src/interface.cpp:836
+#: ../src/interface.cpp:844
 msgid "_Palette"
 msgstr "_Палітру"
 
-#: ../src/interface.cpp:836
+#: ../src/interface.cpp:844
 msgid "Show or hide the color palette"
 msgstr "Показати або сховати панель з палітрою кольорів"
 
-#: ../src/interface.cpp:838
+#: ../src/interface.cpp:846
 msgid "_Statusbar"
 msgstr "_Рядок стану"
 
-#: ../src/interface.cpp:838
+#: ../src/interface.cpp:846
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Показати або сховати рядок стану (внизу вікна)"
 
-#: ../src/interface.cpp:846
+#: ../src/interface.cpp:854
 msgid "Default interface setup"
 msgstr "Типові налаштування інтерфейсу"
 
-#: ../src/interface.cpp:847 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1437
+#: ../src/interface.cpp:855 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1437
 #: ../share/extensions/color_custom.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:5
 msgid "Custom"
 msgstr "Інше"
 
-#: ../src/interface.cpp:847
+#: ../src/interface.cpp:855
 msgid "Set the custom task"
 msgstr "Встановити нетипове завдання"
 
-#: ../src/interface.cpp:848
+#: ../src/interface.cpp:856
 msgid "Wide"
 msgstr "Широкий екран"
 
-#: ../src/interface.cpp:848
+#: ../src/interface.cpp:856
 msgid "Setup for widescreen work"
 msgstr "Налаштування для широкоекранних моніторів"
 
-#: ../src/interface.cpp:945
+#: ../src/interface.cpp:953
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "Невідоме дієслово «%s»"
 
-#: ../src/interface.cpp:987
+#: ../src/interface.cpp:995
 msgid "Open _Recent"
 msgstr "Відкрити не_давній"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1092
+#: ../src/interface.cpp:1100
 #, c-format
 msgid "Enter group #%s"
 msgstr "Увійти у групу №%s"
 
-#: ../src/interface.cpp:1103
+#: ../src/interface.cpp:1111
 msgid "Go to parent"
 msgstr "На рівень вище"
 
-#: ../src/interface.cpp:1194 ../src/interface.cpp:1280
-#: ../src/interface.cpp:1383 ../src/ui/widget/selected-style.cpp:469
+#: ../src/interface.cpp:1202 ../src/interface.cpp:1288
+#: ../src/interface.cpp:1391 ../src/ui/widget/selected-style.cpp:469
 msgid "Drop color"
 msgstr "Скинути колір"
 
-#: ../src/interface.cpp:1233 ../src/interface.cpp:1343
+#: ../src/interface.cpp:1241 ../src/interface.cpp:1351
 msgid "Drop color on gradient"
 msgstr "Перенесення кольору на градієнт"
 
-#: ../src/interface.cpp:1396
+#: ../src/interface.cpp:1404
 msgid "Could not parse SVG data"
 msgstr "Не вдається прочитати SVG-дані"
 
-#: ../src/interface.cpp:1435
+#: ../src/interface.cpp:1443
 msgid "Drop SVG"
 msgstr "Скинути SVG"
 
-#: ../src/interface.cpp:1469
+#: ../src/interface.cpp:1477
 msgid "Drop bitmap image"
 msgstr "Скинути растрову картинку"
 
-#: ../src/interface.cpp:1561
+#: ../src/interface.cpp:1569
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -9126,7 +9149,7 @@ msgstr ""
 "\n"
 "Файл вже існує у «%s». Заміна призведе до перезапису його вмісту."
 
-#: ../src/interface.cpp:1568 ../share/extensions/web-set-att.inx.h:7
+#: ../src/interface.cpp:1576 ../share/extensions/web-set-att.inx.h:7
 #: ../share/extensions/web-transmit-att.inx.h:7
 msgid "Replace"
 msgstr "Замінити"
@@ -9359,7 +9382,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:1033
 #: ../src/ui/dialog/document-properties.cpp:117
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1429
-#: ../src/widgets/desktop-widget.cpp:1709
+#: ../src/widgets/desktop-widget.cpp:1708
 msgid "Page"
 msgstr "Сторінка"
 
@@ -9436,8 +9459,8 @@ msgstr ""
 msgid ""
 "Attempt to bind to %p an already bound dock object %p (current master: %p)"
 msgstr ""
-"Спроба прив’язування до %p вже прив’язаного об’єкта %p (поточний господар: %"
-"p)"
+"Спроба прив’язування до %p вже прив’язаного об’єкта %p (поточний господар: "
+"%p)"
 
 #: ../src/libgdl/gdl-dock-paned.c:132
 msgid "Position"
@@ -9588,7 +9611,7 @@ msgstr "Координата Y плаваючої панелі"
 msgid "Dock #%d"
 msgstr "Прикріпити #%d"
 
-#: ../src/libnrtype/FontFactory.cpp:897
+#: ../src/libnrtype/FontFactory.cpp:907
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Шрифт без сімейства, який може привести до збою Pango, ігнорується"
 
@@ -9811,7 +9834,8 @@ msgid "The path that will be used as stitch."
 msgstr "Контур, який буде використано для зшивання."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
-msgid "Number of paths:"
+#, fuzzy
+msgid "N_umber of paths:"
 msgstr "Кількість контурів:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
@@ -9819,7 +9843,8 @@ msgid "The number of paths that will be generated."
 msgstr "Кількість контурів, які буде створено."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
-msgid "Start edge variance:"
+#, fuzzy
+msgid "Sta_rt edge variance:"
 msgstr "Початкова варіація границі:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
@@ -9831,7 +9856,8 @@ msgstr ""
 "всередині і зовні від напрямного контуру"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
-msgid "Start spacing variance:"
+#, fuzzy
+msgid "Sta_rt spacing variance:"
 msgstr "Початкова варіація інтервалу:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
@@ -9843,7 +9869,8 @@ msgstr ""
 "назад та вперед вздовж напрямного контуру"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
-msgid "End edge variance:"
+#, fuzzy
+msgid "End ed_ge variance:"
 msgstr "Кінцева варіація границі:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
@@ -9855,7 +9882,8 @@ msgstr ""
 "всередині і зовні від напрямного контуру"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
-msgid "End spacing variance:"
+#, fuzzy
+msgid "End spa_cing variance:"
 msgstr "Кінцева варіація інтервалу:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
@@ -9867,7 +9895,8 @@ msgstr ""
 "назад та вперед вздовж напрямного контуру"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
-msgid "Scale width:"
+#, fuzzy
+msgid "Scale _width:"
 msgstr "Зміна товщини:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
@@ -9875,7 +9904,8 @@ msgid "Scale the width of the stitch path"
 msgstr "Змінити товщину контуру зшивання"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-msgid "Scale width relative to length"
+#, fuzzy
+msgid "Scale _width relative to length"
 msgstr "Масштаб відносно довжини"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
@@ -9961,7 +9991,8 @@ msgid "Path along which intermediate steps are created."
 msgstr "Контур, за яким буде створено проміжні кроки."
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
-msgid "Steps:"
+#, fuzzy
+msgid "Steps_:"
 msgstr "Кроків:"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
@@ -9969,7 +10000,8 @@ msgid "Determines the number of steps from start to end path."
 msgstr "Визначає кількість кроків від початкового до кінцевого контурів."
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
-msgid "Equidistant spacing"
+#, fuzzy
+msgid "E_quidistant spacing"
 msgstr "Однакові проміжки"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
@@ -9984,7 +10016,8 @@ msgstr ""
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:343
-msgid "Fixed width:"
+#, fuzzy
+msgid "Fi_xed width:"
 msgstr "Фіксована ширина:"
 
 #: ../src/live_effects/lpe-knot.cpp:343
@@ -9992,15 +10025,17 @@ msgid "Size of hidden region of lower string"
 msgstr "Розмір схованого фрагмента нижнього рядка"
 
 #: ../src/live_effects/lpe-knot.cpp:344
-msgid "In units of stroke width"
+#, fuzzy
+msgid "_In units of stroke width"
 msgstr "У одиницях товщини штриха"
 
 #: ../src/live_effects/lpe-knot.cpp:344
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr "Обчислювати «ширину проміжку» відносно товщини штриха"
 
-#: ../src/live_effects/lpe-knot.cpp:345 ../src/widgets/stroke-style.cpp:692
-msgid "Stroke width"
+#: ../src/live_effects/lpe-knot.cpp:345
+#, fuzzy
+msgid "St_roke width"
 msgstr "Товщина штриха"
 
 #: ../src/live_effects/lpe-knot.cpp:345
@@ -10008,7 +10043,8 @@ msgid "Add the stroke width to the interruption size"
 msgstr "Додати ширину штриха до розміру проміжку"
 
 #: ../src/live_effects/lpe-knot.cpp:346
-msgid "Crossing path stroke width"
+#, fuzzy
+msgid "_Crossing path stroke width"
 msgstr "Товщина штриха контуру перетинання"
 
 #: ../src/live_effects/lpe-knot.cpp:346
@@ -10016,7 +10052,8 @@ msgid "Add crossed stroke width to the interruption size"
 msgstr "Додати ширину перпендикулярного штриха до розміру проміжку"
 
 #: ../src/live_effects/lpe-knot.cpp:347
-msgid "Switcher size:"
+#, fuzzy
+msgid "S_witcher size:"
 msgstr "Розмір перемикача:"
 
 #: ../src/live_effects/lpe-knot.cpp:347
@@ -10081,7 +10118,8 @@ msgid "Width of the pattern"
 msgstr "Ширина візерунку"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
-msgid "Width in units of length"
+#, fuzzy
+msgid "Wid_th in units of length"
 msgstr "Ширина у одиницях довжини"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:66
@@ -10089,8 +10127,8 @@ msgid "Scale the width of the pattern in units of its length"
 msgstr "Показувати ширину візерунку у одиницях його довжини"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:68
-#: ../src/widgets/toolbox.cpp:8238
-msgid "Spacing:"
+#, fuzzy
+msgid "Spa_cing:"
 msgstr "Інтервал:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
@@ -10103,19 +10141,18 @@ msgstr ""
 "їх обмежено -90% ширини візерунка."
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:72
-#: ../share/extensions/pathalongpath.inx.h:6
-#: ../share/extensions/pathscatter.inx.h:9
-msgid "Normal offset:"
+#, fuzzy
+msgid "No_rmal offset:"
 msgstr "Звичайний відступ:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:73
-#: ../share/extensions/pathalongpath.inx.h:17
-#: ../share/extensions/pathscatter.inx.h:19
-msgid "Tangential offset:"
+#, fuzzy
+msgid "Tan_gential offset:"
 msgstr "Відступ по дотичній:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:74
-msgid "Offsets in unit of pattern size"
+#, fuzzy
+msgid "Offsets in _unit of pattern size"
 msgstr "Відступ у одиницях розміру візерунка"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:75
@@ -10127,9 +10164,8 @@ msgstr ""
 "ширини/висоти"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
-#: ../share/extensions/pathalongpath.inx.h:9
-#: ../share/extensions/pathscatter.inx.h:12
-msgid "Pattern is vertical"
+#, fuzzy
+msgid "Pattern is _vertical"
 msgstr "Візерунок є вертикальним"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
@@ -10137,7 +10173,8 @@ msgid "Rotate pattern 90 deg before applying"
 msgstr "Повернути візерунок на 90° перед застосуванням"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
-msgid "Fuse nearby ends:"
+#, fuzzy
+msgid "_Fuse nearby ends:"
 msgstr "Об’єднання ближніх кінців:"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
@@ -10207,8 +10244,8 @@ msgid ""
 "Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
-"Встановіть гладкість/загостреність контуру для виходу «верхніх» напіввигинів. "
-"0=загостреність, 1=типово"
+"Встановіть гладкість/загостреність контуру для виходу «верхніх» "
+"напіввигинів. 0=загостреність, 1=типово"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Magnitude jitter: 1st side:"
@@ -10239,8 +10276,8 @@ msgid ""
 "Add direction randomness by moving 'bottom' half-turns tangentially to the "
 "boundary."
 msgstr ""
-"Додати випадковість напрямку пересуванням «нижніх» напіввигинів паралельно до "
-"границі."
+"Додати випадковість напрямку пересуванням «нижніх» напіввигинів паралельно "
+"до границі."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 msgid ""
@@ -10354,7 +10391,8 @@ msgid "End"
 msgstr "Кінець"
 
 #: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Mark distance:"
+#, fuzzy
+msgid "_Mark distance:"
 msgstr "Відстань між позначками:"
 
 #: ../src/live_effects/lpe-ruler.cpp:43
@@ -10369,7 +10407,8 @@ msgid "Unit:"
 msgstr "Одиниця:"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Major length:"
+#, fuzzy
+msgid "Ma_jor length:"
 msgstr "Основна довжина:"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
@@ -10377,7 +10416,8 @@ msgid "Length of major ruler marks"
 msgstr "Довжина основних позначок лінійки"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
-msgid "Minor length:"
+#, fuzzy
+msgid "Mino_r length:"
 msgstr "Проміжна довжина:"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
@@ -10385,7 +10425,8 @@ msgid "Length of minor ruler marks"
 msgstr "Довжина проміжних позначок лінійки"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
-msgid "Major steps:"
+#, fuzzy
+msgid "Major steps_:"
 msgstr "Основні кроки:"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
@@ -10393,7 +10434,8 @@ msgid "Draw a major mark every ... steps"
 msgstr "Малювати основну позначку кожні … кроків"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
-msgid "Shift marks by:"
+#, fuzzy
+msgid "Shift marks _by:"
 msgstr "Зсунути позначки на:"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
@@ -10407,6 +10449,11 @@ msgstr "Напрямок позначки:"
 #: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Direction of marks (when viewing along the path from start to end)"
 msgstr "Напрямок позначок (дивлячись вздовж контуру з початку до кінця)"
+
+#: ../src/live_effects/lpe-ruler.cpp:50
+#, fuzzy
+msgid "_Offset:"
+msgstr "Зсув:"
 
 #: ../src/live_effects/lpe-ruler.cpp:50
 msgid "Offset of first mark"
@@ -10564,7 +10611,8 @@ msgid "max curvature"
 msgstr "максимальна кривина"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:46
-msgid "Nb of generations:"
+#, fuzzy
+msgid "N_r of generations:"
 msgstr "Кількість поколінь:"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:46
@@ -10580,7 +10628,8 @@ msgid "Path whose segments define the iterated transforms"
 msgstr "Контур, чиї сегменти визначають ітеровані перетворення"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
-msgid "Use uniform transforms only"
+#, fuzzy
+msgid "_Use uniform transforms only"
 msgstr "Використовувати лише однорідні перетворення"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
@@ -10592,7 +10641,8 @@ msgstr ""
 "сегментів (інакше вони визначатимуть загальне перетворення)."
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
-msgid "Draw all generations"
+#, fuzzy
+msgid "Dra_w all generations"
 msgstr "Малювати всі покоління"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
@@ -10612,7 +10662,8 @@ msgstr "Еталонний сегмент. Типовим є горизонта�
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
 #. FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
 #: ../src/live_effects/lpe-vonkoch.cpp:55
-msgid "Max complexity:"
+#, fuzzy
+msgid "_Max complexity:"
 msgstr "Максимальна складність:"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:55
@@ -11615,8 +11666,8 @@ msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with "
 "<b>Shift</b> to draw around the starting point"
 msgstr ""
-"<b>Прямокутник</b>: %s &#215; %s (обмежено параметром «золотого» перерізу 1 : "
-"1,618); за допомогою <b>Shift</b> можна малювати навколо початкової точки"
+"<b>Прямокутник</b>: %s &#215; %s (обмежено параметром «золотого» перерізу "
+"1 : 1,618); за допомогою <b>Shift</b> можна малювати навколо початкової точки"
 
 #: ../src/rect-context.cpp:530
 #, c-format
@@ -11844,97 +11895,97 @@ msgstr "Опуститися на попередній шар"
 msgid "No more layers below."
 msgstr "Немає нижчого шару."
 
-#: ../src/selection-chemistry.cpp:1464
+#: ../src/selection-chemistry.cpp:1477
 msgid "Remove transform"
 msgstr "Прибрати трансформацію"
 
-#: ../src/selection-chemistry.cpp:1567
+#: ../src/selection-chemistry.cpp:1580
 msgid "Rotate 90&#176; CCW"
 msgstr "Обернути на 90&#176; проти годинникової стрілки"
 
-#: ../src/selection-chemistry.cpp:1567
+#: ../src/selection-chemistry.cpp:1580
 msgid "Rotate 90&#176; CW"
 msgstr "Обернути на 90&#176; за годинниковою стрілкою"
 
-#: ../src/selection-chemistry.cpp:1588 ../src/seltrans.cpp:517
+#: ../src/selection-chemistry.cpp:1601 ../src/seltrans.cpp:517
 #: ../src/ui/dialog/transformation.cpp:771
 msgid "Rotate"
 msgstr "Обертати"
 
-#: ../src/selection-chemistry.cpp:1635
+#: ../src/selection-chemistry.cpp:1648
 msgid "Rotate by pixels"
 msgstr "Обертати поточково"
 
-#: ../src/selection-chemistry.cpp:1665 ../src/seltrans.cpp:514
+#: ../src/selection-chemistry.cpp:1678 ../src/seltrans.cpp:514
 #: ../src/ui/dialog/transformation.cpp:749
 #: ../share/extensions/interp_att_g.inx.h:19
 msgid "Scale"
 msgstr "Масштабувати"
 
-#: ../src/selection-chemistry.cpp:1690
+#: ../src/selection-chemistry.cpp:1703
 msgid "Scale by whole factor"
 msgstr "Масштабувати за повним коефіцієнтом"
 
-#: ../src/selection-chemistry.cpp:1705
+#: ../src/selection-chemistry.cpp:1718
 msgid "Move vertically"
 msgstr "Перемістити вертикально"
 
-#: ../src/selection-chemistry.cpp:1708
+#: ../src/selection-chemistry.cpp:1721
 msgid "Move horizontally"
 msgstr "Перемістити горизонтально"
 
-#: ../src/selection-chemistry.cpp:1711 ../src/selection-chemistry.cpp:1737
+#: ../src/selection-chemistry.cpp:1724 ../src/selection-chemistry.cpp:1750
 #: ../src/seltrans.cpp:511 ../src/ui/dialog/transformation.cpp:692
 msgid "Move"
 msgstr "Перемістити"
 
-#: ../src/selection-chemistry.cpp:1731
+#: ../src/selection-chemistry.cpp:1744
 msgid "Move vertically by pixels"
 msgstr "Перемістити вертикально поточково"
 
-#: ../src/selection-chemistry.cpp:1734
+#: ../src/selection-chemistry.cpp:1747
 msgid "Move horizontally by pixels"
 msgstr "Перемістити горизонтально поточково"
 
-#: ../src/selection-chemistry.cpp:1866
+#: ../src/selection-chemistry.cpp:1879
 msgid "The selection has no applied path effect."
 msgstr "Обране не має застосованого ефекту контуру."
 
-#: ../src/selection-chemistry.cpp:2069
+#: ../src/selection-chemistry.cpp:2082
 msgctxt "Action"
 msgid "Clone"
 msgstr "Клонувати"
 
-#: ../src/selection-chemistry.cpp:2085
+#: ../src/selection-chemistry.cpp:2098
 msgid "Select <b>clones</b> to relink."
 msgstr "Позначте <b>клон</b> для перез'єднання."
 
-#: ../src/selection-chemistry.cpp:2092
+#: ../src/selection-chemistry.cpp:2105
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr ""
 "Копіювати <b>об’єкт</b> до буфера обміну інформації для перез’єднання клонів."
 
-#: ../src/selection-chemistry.cpp:2116
+#: ../src/selection-chemistry.cpp:2129
 msgid "<b>No clones to relink</b> in the selection."
 msgstr "У позначеному <b>немає клонів для перез’єднання</b>."
 
-#: ../src/selection-chemistry.cpp:2119
+#: ../src/selection-chemistry.cpp:2132
 msgid "Relink clone"
 msgstr "Перез'єднати клон"
 
-#: ../src/selection-chemistry.cpp:2133
+#: ../src/selection-chemistry.cpp:2146
 msgid "Select <b>clones</b> to unlink."
 msgstr "Позначте <b>клон</b> для від'єднання."
 
-#: ../src/selection-chemistry.cpp:2187
+#: ../src/selection-chemistry.cpp:2200
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "У позначеному <b>немає клонів</b>."
 
-#: ../src/selection-chemistry.cpp:2191
+#: ../src/selection-chemistry.cpp:2204
 msgid "Unlink clone"
 msgstr "Від'єднати клон"
 
-#: ../src/selection-chemistry.cpp:2204
+#: ../src/selection-chemistry.cpp:2217
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -11944,7 +11995,7 @@ msgstr ""
 "перейти до її контуру; <b>текст вздовж контуру</b>, щоб перейти до його "
 "контуру. Позначте <b>текст у рамці</b>, щоб перейти до рамки."
 
-#: ../src/selection-chemistry.cpp:2227
+#: ../src/selection-chemistry.cpp:2240
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -11952,7 +12003,7 @@ msgstr ""
 "<b>Не вдається знайти</b> об'єкт, що позначається (осиротілий клон, втяжка, "
 "текст вздовж контуру чи текст у рамці?)"
 
-#: ../src/selection-chemistry.cpp:2233
+#: ../src/selection-chemistry.cpp:2246
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
@@ -11960,102 +12011,102 @@ msgstr ""
 "Об'єкт, який ви намагаєтесь позначити, є <b>невидимим</b> (знаходиться у &lt;"
 "defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2280
+#: ../src/selection-chemistry.cpp:2293
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr "Позначте <b>об'єкт(и)</b> для перетворення у маркер."
 
-#: ../src/selection-chemistry.cpp:2348
+#: ../src/selection-chemistry.cpp:2361
 msgid "Objects to marker"
 msgstr "Об'єкти у маркер"
 
-#: ../src/selection-chemistry.cpp:2376
+#: ../src/selection-chemistry.cpp:2389
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr "Позначте <b>об'єкт(и)</b> для перетворення у напрямні."
 
-#: ../src/selection-chemistry.cpp:2388
+#: ../src/selection-chemistry.cpp:2401
 msgid "Objects to guides"
 msgstr "Об'єкти у напрямні"
 
-#: ../src/selection-chemistry.cpp:2405
+#: ../src/selection-chemistry.cpp:2418
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Позначте <b>об'єкт(и)</b> для перетворення у візерунок."
 
-#: ../src/selection-chemistry.cpp:2493
+#: ../src/selection-chemistry.cpp:2506
 msgid "Objects to pattern"
 msgstr "Об'єкти у візерунок"
 
-#: ../src/selection-chemistry.cpp:2509
+#: ../src/selection-chemistry.cpp:2522
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 "Позначте <b>об'єкт із заповненням візерунком</b> для витягування об'єктів з "
 "нього."
 
-#: ../src/selection-chemistry.cpp:2562
+#: ../src/selection-chemistry.cpp:2575
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "У позначеному <b>немає заповнення візерунком</b>."
 
-#: ../src/selection-chemistry.cpp:2565
+#: ../src/selection-chemistry.cpp:2578
 msgid "Pattern to objects"
 msgstr "Візерунок у об'єкти"
 
-#: ../src/selection-chemistry.cpp:2647
+#: ../src/selection-chemistry.cpp:2660
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Позначте <b>об'єкти</b> для створення їх растрової копії."
 
-#: ../src/selection-chemistry.cpp:2651
+#: ../src/selection-chemistry.cpp:2664
 msgid "Rendering bitmap..."
 msgstr "Показ растрового зображення…"
 
-#: ../src/selection-chemistry.cpp:2825
+#: ../src/selection-chemistry.cpp:2838
 msgid "Create bitmap"
 msgstr "Створення растрового зображення"
 
-#: ../src/selection-chemistry.cpp:2857
+#: ../src/selection-chemistry.cpp:2870
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
 "Оберіть <b>об'єкт(и)</b> для створення з них контуру вирізання або маски."
 
-#: ../src/selection-chemistry.cpp:2860
+#: ../src/selection-chemistry.cpp:2873
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 "Оберіть об'єкт-маску та <b>об'єкт(и)</b> для застосування вирізання або "
 "маскування."
 
-#: ../src/selection-chemistry.cpp:3041
+#: ../src/selection-chemistry.cpp:3054
 msgid "Set clipping path"
 msgstr "Задати контур вирізання"
 
-#: ../src/selection-chemistry.cpp:3043
+#: ../src/selection-chemistry.cpp:3056
 msgid "Set mask"
 msgstr "Задати маску"
 
-#: ../src/selection-chemistry.cpp:3058
+#: ../src/selection-chemistry.cpp:3071
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 "Оберіть <b>об'єкт(и)</b> для вилучення контуру вирізання або маскування."
 
-#: ../src/selection-chemistry.cpp:3169
+#: ../src/selection-chemistry.cpp:3182
 msgid "Release clipping path"
 msgstr "Від'єднати закріплений контур"
 
-#: ../src/selection-chemistry.cpp:3171
+#: ../src/selection-chemistry.cpp:3184
 msgid "Release mask"
 msgstr "Маску знято"
 
-#: ../src/selection-chemistry.cpp:3190
+#: ../src/selection-chemistry.cpp:3203
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr "Оберіть <b>об'єкт(и)</b> для підбирання їх розмірів під полотно."
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:3210 ../src/verbs.cpp:2736
+#: ../src/selection-chemistry.cpp:3223 ../src/verbs.cpp:2736
 msgid "Fit Page to Selection"
 msgstr "Підігнати полотно до позначеної області"
 
-#: ../src/selection-chemistry.cpp:3239 ../src/verbs.cpp:2738
+#: ../src/selection-chemistry.cpp:3252 ../src/verbs.cpp:2738
 msgid "Fit Page to Drawing"
 msgstr "Підігнати полотно під намальоване"
 
-#: ../src/selection-chemistry.cpp:3260 ../src/verbs.cpp:2740
+#: ../src/selection-chemistry.cpp:3273 ../src/verbs.cpp:2740
 msgid "Fit Page to Selection or Drawing"
 msgstr "Підігнати полотно під позначену область чи область креслення"
 
@@ -12115,7 +12166,6 @@ msgid "Clone"
 msgstr "Клон"
 
 #: ../src/selection-describer.cpp:75
-#: ../share/extensions/gcodetools_lathe.inx.h:25
 msgid "Offset path"
 msgstr "Розтягнення контуру"
 
@@ -12640,71 +12690,75 @@ msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "Один з об'єктів <b>не є контуром</b>, логічна операція неможлива."
 
-#: ../src/splivarot.cpp:882
+#: ../src/splivarot.cpp:901
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr "Оберіть <b>контур(и) з штрихів</b> для перетворення на контур."
 
-#: ../src/splivarot.cpp:1235
+#: ../src/splivarot.cpp:1254
 msgid "Convert stroke to path"
 msgstr "Перетворити штрих на контур"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:1238
+#: ../src/splivarot.cpp:1257
 msgid "<b>No stroked paths</b> in the selection."
 msgstr "У позначеному <b>немає контурів зі штрихів</b>."
 
-#: ../src/splivarot.cpp:1321
+#: ../src/splivarot.cpp:1340
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr ""
 "позначений об'єкт <b>не є контуром</b>, втягування/розтягування неможливі."
 
-#: ../src/splivarot.cpp:1440 ../src/splivarot.cpp:1511
+#: ../src/splivarot.cpp:1459 ../src/splivarot.cpp:1527
 msgid "Create linked offset"
 msgstr "Створити зв'язану втяжку"
 
-#: ../src/splivarot.cpp:1441 ../src/splivarot.cpp:1512
+#: ../src/splivarot.cpp:1460 ../src/splivarot.cpp:1528
 msgid "Create dynamic offset"
 msgstr "Створити динамічний відступ"
 
-#: ../src/splivarot.cpp:1537
+#: ../src/splivarot.cpp:1553
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Позначте <b>контур(и)</b> для втягування/розтягування."
 
-#: ../src/splivarot.cpp:1754
+#: ../src/splivarot.cpp:1770
 msgid "Outset path"
 msgstr "Розтягнений контур"
 
-#: ../src/splivarot.cpp:1754
+#: ../src/splivarot.cpp:1770
 msgid "Inset path"
 msgstr "Втягнутий контур"
 
-#: ../src/splivarot.cpp:1756
+#: ../src/splivarot.cpp:1772
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "У позначеному <b>немає контурів</b> для втягування/розтягування."
 
-#: ../src/splivarot.cpp:1935
+#: ../src/splivarot.cpp:1951
 msgid "Simplifying paths (separately):"
 msgstr "Спрощення контурів (окремо):"
 
-#: ../src/splivarot.cpp:1937
+#: ../src/splivarot.cpp:1953
 msgid "Simplifying paths:"
 msgstr "Спрощення контурів:"
 
-#: ../src/splivarot.cpp:1974
+#: ../src/splivarot.cpp:1990
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr "%s <b>%d</b> з <b>%d</b> контурів спрощено…"
 
-#: ../src/splivarot.cpp:1986
+#: ../src/splivarot.cpp:2002
 #, c-format
 msgid "<b>%d</b> paths simplified."
 msgstr "<b>%d</b> контурів спрощено."
 
-#: ../src/splivarot.cpp:2000
+#: ../src/splivarot.cpp:2016
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Позначте <b>контур(и)</b> для спрощення."
 
-#: ../src/splivarot.cpp:2016
+#: ../src/splivarot.cpp:2030
+msgid "Simplify"
+msgstr "Спростити"
+
+#: ../src/splivarot.cpp:2032
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "У позначеному <b>немає контурів</b> для спрощення."
 
@@ -13485,7 +13539,7 @@ msgstr "about.svg"
 
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of: name surname (email). Use \n for newline.
-#: ../src/ui/dialog/aboutbox.cpp:389
+#: ../src/ui/dialog/aboutbox.cpp:388
 msgid "translator-credits"
 msgstr ""
 "Yuri Syrota (rasta@renome.rovno.ua)\n"
@@ -13728,7 +13782,7 @@ msgstr "Найменший об’єкт"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1035
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1433
-#: ../src/widgets/desktop-widget.cpp:1717
+#: ../src/widgets/desktop-widget.cpp:1716
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "позначене"
@@ -13897,8 +13951,8 @@ msgid ""
 msgstr ""
 "Під час перетягування напрямної увімкнути її прилипання до вузлів об’єктів "
 "та кутів рамок (слід попередньо увімкнути пункти «прилипання до вузлів» та "
-"«прилипання до кутів рамок», властивість прилипання має лише невелика частина "
-"напрямної поряд з курсором)"
+"«прилипання до кутів рамок», властивість прилипання має лише невелика "
+"частина напрямної поряд з курсором)"
 
 #: ../src/ui/dialog/document-properties.cpp:104
 msgid "Guide co_lor:"
@@ -14154,7 +14208,7 @@ msgstr "Інформація"
 #: ../share/extensions/gcodetools_check_for_updates.inx.h:5
 #: ../share/extensions/gcodetools_dxf_points.inx.h:13
 #: ../share/extensions/gcodetools_engraving.inx.h:11
-#: ../share/extensions/gcodetools_lathe.inx.h:15
+#: ../share/extensions/gcodetools_lathe.inx.h:14
 #: ../share/extensions/gcodetools_orientation_points.inx.h:5
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:11
 #: ../share/extensions/gcodetools_tools_library.inx.h:3
@@ -14565,9 +14619,9 @@ msgid ""
 "convenience shortcuts to allow commonly used color operations to be "
 "performed without specifying a complete matrix."
 msgstr ""
-"Тип матричної операції. Слово «матриця» означає, що буде надано повну матрицю "
-"значень розміром 5×4. Інші варіанти — це простий спосіб виконати найпростіші "
-"операції без визначення всієї матриці вручну."
+"Тип матричної операції. Слово «матриця» означає, що буде надано повну "
+"матрицю значень розміром 5×4. Інші варіанти — це простий спосіб виконати "
+"найпростіші операції без визначення всієї матриці вручну."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2194
 msgid "Value(s):"
@@ -16203,7 +16257,8 @@ msgid "Tools"
 msgstr "Інструменти"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:396
-msgid "Bounding box to use:"
+#, fuzzy
+msgid "Bounding box to use"
 msgstr "Рамка, що використовується:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:397
@@ -16223,7 +16278,8 @@ msgid "This bounding box includes only the bare path"
 msgstr "Ця рамка включає лише простий контур"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:404
-msgid "Conversion to guides:"
+#, fuzzy
+msgid "Conversion to guides"
 msgstr "Перетворення у напрямні:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:405
@@ -16270,7 +16326,8 @@ msgid "Selector"
 msgstr "Селектор"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:421
-msgid "When transforming, show:"
+#, fuzzy
+msgid "When transforming, show"
 msgstr "При трансформації показувати:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:422
@@ -16291,7 +16348,8 @@ msgstr ""
 "Показувати лише прямокутну рамку об'єктів при переміщенні чи трансформації"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:428
-msgid "Per-object selection cue:"
+#, fuzzy
+msgid "Per-object selection cue"
 msgstr "Позначення позначених об'єктів:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:431
@@ -16683,7 +16741,8 @@ msgid "Are deleted"
 msgstr "Вилучено"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:649
-msgid "When the original moves, its clones and linked offsets:"
+#, fuzzy
+msgid "Moving original: clones and linked offsets"
 msgstr "При переміщенні оригіналу, його клони та прив'язані розтяжки:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:651
@@ -16704,8 +16763,9 @@ msgstr ""
 "оригінал."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:656
-msgid "When the original is deleted, its clones:"
-msgstr "Коли оригінал вилучається, його клони:"
+#, fuzzy
+msgid "Deleting original: clones"
+msgstr "За дублювання (оригінал+клони):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:658
 msgid "Orphaned clones are converted to regular objects"
@@ -16716,7 +16776,8 @@ msgid "Orphaned clones are deleted along with their original"
 msgstr "Осиротілі клони вилучаються разом з оригіналом"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:662
-msgid "When duplicating original+clones:"
+#, fuzzy
+msgid "Duplicating original+clones/linked offset"
 msgstr "За дублювання (оригінал+клони):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:664
@@ -17939,9 +18000,9 @@ msgid ""
 "this command several times in quick succession, it will act more and more "
 "aggressively; invoking it again after a pause restores the default threshold."
 msgstr ""
-"Ступінь спрощення за командою «Спростити» інструмента «Вузол». Якщо викликати "
-"цю команду кілька разів поспіль, вона діятиме з кожним разом все більш "
-"агресивно; щоб повернутися до типового значення, зробіть паузу перед "
+"Ступінь спрощення за командою «Спростити» інструмента «Вузол». Якщо "
+"викликати цю команду кілька разів поспіль, вона діятиме з кожним разом все "
+"більш агресивно; щоб повернутися до типового значення, зробіть паузу перед "
 "черговим викликом команди."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1332
@@ -18136,19 +18197,19 @@ msgstr "_Додати"
 msgid "New layer created."
 msgstr "Новий шар створено."
 
-#: ../src/ui/dialog/layers.cpp:473 ../src/ui/widget/layer-selector.cpp:596
+#: ../src/ui/dialog/layers.cpp:473 ../src/ui/widget/layer-selector.cpp:600
 msgid "Unhide layer"
 msgstr "Показати шар"
 
-#: ../src/ui/dialog/layers.cpp:473 ../src/ui/widget/layer-selector.cpp:596
+#: ../src/ui/dialog/layers.cpp:473 ../src/ui/widget/layer-selector.cpp:600
 msgid "Hide layer"
 msgstr "Сховати шар"
 
-#: ../src/ui/dialog/layers.cpp:484 ../src/ui/widget/layer-selector.cpp:588
+#: ../src/ui/dialog/layers.cpp:484 ../src/ui/widget/layer-selector.cpp:592
 msgid "Lock layer"
 msgstr "Замкнути шар"
 
-#: ../src/ui/dialog/layers.cpp:484 ../src/ui/widget/layer-selector.cpp:588
+#: ../src/ui/dialog/layers.cpp:484 ../src/ui/widget/layer-selector.cpp:592
 msgid "Unlock layer"
 msgstr "Розімкнути шар"
 
@@ -18829,7 +18890,7 @@ msgstr "Згладжування:"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:33
 #: ../share/extensions/gcodetools_area.inx.h:22
 #: ../share/extensions/gcodetools_engraving.inx.h:16
-#: ../share/extensions/gcodetools_lathe.inx.h:26
+#: ../share/extensions/gcodetools_lathe.inx.h:22
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:15
 #: ../share/extensions/generate_voronoi.inx.h:7
 #: ../share/extensions/gimp_xcf.inx.h:4
@@ -19271,8 +19332,8 @@ msgid ""
 "<b>Shift+Ctrl+Alt</b>: preserve length and snap rotation angle to %g° "
 "increments while rotating both handles"
 msgstr ""
-"<b>Shift+Ctrl+Alt</b>: зберігати довжину, змінювати кут обертання кроками у %"
-"g°, обертати обидва елементи керування"
+"<b>Shift+Ctrl+Alt</b>: зберігати довжину, змінювати кут обертання кроками у "
+"%g°, обертати обидва елементи керування"
 
 #: ../src/ui/tool/node.cpp:413
 #, c-format
@@ -19556,10 +19617,6 @@ msgstr ""
 "<b>Центр обертання</b>: перетягніть, щоб змінити розташування центра "
 "перетворень"
 
-#: ../src/ui/widget/filter-effect-chooser.cpp:25
-msgid "_Blend mode:"
-msgstr "Режим _змішування:"
-
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
 msgid "_Blur:"
 msgstr "Р_озмивання:"
@@ -19576,7 +19633,7 @@ msgstr "Замкнути чи розімкнути поточний шар"
 msgid "Current layer"
 msgstr "Поточний шар"
 
-#: ../src/ui/widget/layer-selector.cpp:567
+#: ../src/ui/widget/layer-selector.cpp:571
 msgid "(root)"
 msgstr "(основа)"
 
@@ -22251,15 +22308,15 @@ msgstr ""
 "\n"
 "Якщо ви закриєте документ без збереження, усі зміни будуть втрачені."
 
-#: ../src/widgets/desktop-widget.cpp:897 ../src/widgets/desktop-widget.cpp:954
+#: ../src/widgets/desktop-widget.cpp:897 ../src/widgets/desktop-widget.cpp:953
 msgid "Close _without saving"
 msgstr "_Не зберігати"
 
 #: ../src/widgets/desktop-widget.cpp:946
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
-"format (%s) that may cause data loss!</span>\n"
+"format that may cause data loss!</span>\n"
 "\n"
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
@@ -22268,7 +22325,7 @@ msgstr ""
 "\n"
 "Зберегти документ у форматі SVG Inkscape?"
 
-#: ../src/widgets/desktop-widget.cpp:957
+#: ../src/widgets/desktop-widget.cpp:956
 msgid "_Save as SVG"
 msgstr "_Зберегти як SVG"
 
@@ -22871,6 +22928,10 @@ msgstr "Надрукувати текст у текстовому вузлі"
 #: ../src/widgets/stroke-style.cpp:506
 msgid "Set markers"
 msgstr "Встановити маркери"
+
+#: ../src/widgets/stroke-style.cpp:692
+msgid "Stroke width"
+msgstr "Товщина штриха"
 
 #: ../src/widgets/stroke-style.cpp:694
 msgctxt "Stroke width"
@@ -24891,6 +24952,10 @@ msgstr "Кривина з’єднань"
 msgid "Connector Spacing"
 msgstr "Відстань для з'єднання"
 
+#: ../src/widgets/toolbox.cpp:8238
+msgid "Spacing:"
+msgstr "Інтервал:"
+
 #: ../src/widgets/toolbox.cpp:8239
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Простір, що залишається навколо об'єктів під час автоз'єднання"
@@ -25953,12 +26018,11 @@ msgid ""
 msgstr ""
 "Створення полів ділянки: створює декілька полів для контурів Inkscape з "
 "метою заповнення початкової ділянки контуру з полем, що визначається "
-"значенням «Радіус ділянки». Криві руху інструмента починатимуться на відстані "
-"«1/2 D» від краю ділянки і розташовуватимуться до значення «Ширина ділянки» з "
-"кроком «D», де D буде взято з найменшого за значенням діаметра інструмента "
-"(значення «Діаметр інструмента»). Якщо «Ширина ділянки» дорівнюватиме «1/2 "
-"D», "
-"буде створено лише одну криву."
+"значенням «Радіус ділянки». Криві руху інструмента починатимуться на "
+"відстані «1/2 D» від краю ділянки і розташовуватимуться до значення «Ширина "
+"ділянки» з кроком «D», де D буде взято з найменшого за значенням діаметра "
+"інструмента (значення «Діаметр інструмента»). Якщо «Ширина ділянки» "
+"дорівнюватиме «1/2 D», буде створено лише одну криву."
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:2
 #: ../share/extensions/gcodetools_orientation_points.inx.h:1
@@ -26007,7 +26071,8 @@ msgstr "Ділянка"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:9
 #: ../share/extensions/gcodetools_area.inx.h:6
-msgid "Area artifacts"
+#, fuzzy
+msgid "Area artefacts"
 msgstr "Дрібні деталі"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:10
@@ -26017,7 +26082,8 @@ msgstr "Ширина ділянки:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:11
 #: ../share/extensions/gcodetools_area.inx.h:8
-msgid "Artifact diameter:"
+#, fuzzy
+msgid "Artefact diameter:"
 msgstr "Діаметр дрібної деталі:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:12
@@ -26097,7 +26163,7 @@ msgstr "Файл:"
 #: ../share/extensions/gcodetools_area.inx.h:13
 #: ../share/extensions/gcodetools_dxf_points.inx.h:9
 #: ../share/extensions/gcodetools_engraving.inx.h:7
-#: ../share/extensions/gcodetools_lathe.inx.h:11
+#: ../share/extensions/gcodetools_lathe.inx.h:10
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:7
 msgid "Full path to log file:"
 msgstr "Шлях до файла журналу, повністю:"
@@ -26107,7 +26173,7 @@ msgstr "Шлях до файла журналу, повністю:"
 #: ../share/extensions/gcodetools_check_for_updates.inx.h:3
 #: ../share/extensions/gcodetools_dxf_points.inx.h:10
 #: ../share/extensions/gcodetools_engraving.inx.h:8
-#: ../share/extensions/gcodetools_lathe.inx.h:12
+#: ../share/extensions/gcodetools_lathe.inx.h:11
 #: ../share/extensions/gcodetools_orientation_points.inx.h:3
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:8
 #: ../share/extensions/gcodetools_tools_library.inx.h:1
@@ -26119,7 +26185,7 @@ msgstr "Інструменти Gcode"
 #: ../share/extensions/gcodetools_check_for_updates.inx.h:4
 #: ../share/extensions/gcodetools_dxf_points.inx.h:11
 #: ../share/extensions/gcodetools_engraving.inx.h:9
-#: ../share/extensions/gcodetools_lathe.inx.h:13
+#: ../share/extensions/gcodetools_lathe.inx.h:12
 #: ../share/extensions/gcodetools_orientation_points.inx.h:4
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:9
 #: ../share/extensions/gcodetools_tools_library.inx.h:2
@@ -26145,7 +26211,7 @@ msgstr ""
 #: ../share/extensions/gcodetools_area.inx.h:16
 #: ../share/extensions/gcodetools_dxf_points.inx.h:12
 #: ../share/extensions/gcodetools_engraving.inx.h:10
-#: ../share/extensions/gcodetools_lathe.inx.h:14
+#: ../share/extensions/gcodetools_lathe.inx.h:13
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:10
 msgid "Generate log file"
 msgstr "Створити файл журналу"
@@ -26167,7 +26233,7 @@ msgstr "Максимальна відстань для гравірування:
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:29
 #: ../share/extensions/gcodetools_area.inx.h:19
-#: ../share/extensions/gcodetools_lathe.inx.h:20
+#: ../share/extensions/gcodetools_lathe.inx.h:19
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:12
 msgid "Maximum splitting depth:"
 msgstr "Максимальна глибина поділу:"
@@ -26175,7 +26241,7 @@ msgstr "Максимальна глибина поділу:"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:30
 #: ../share/extensions/gcodetools_area.inx.h:20
 #: ../share/extensions/gcodetools_engraving.inx.h:13
-#: ../share/extensions/gcodetools_lathe.inx.h:21
+#: ../share/extensions/gcodetools_lathe.inx.h:20
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:13
 msgid "Minimum arc radius:"
 msgstr "Мінімальний радіус дуги:"
@@ -26188,7 +26254,7 @@ msgstr "Кількість опорних точок, які буде викор
 #: ../share/extensions/gcodetools_all_in_one.inx.h:32
 #: ../share/extensions/gcodetools_area.inx.h:21
 #: ../share/extensions/gcodetools_engraving.inx.h:15
-#: ../share/extensions/gcodetools_lathe.inx.h:24
+#: ../share/extensions/gcodetools_lathe.inx.h:21
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:14
 msgid "Offset along Z axis:"
 msgstr "Відступ за віссю Z:"
@@ -26224,7 +26290,7 @@ msgstr "Тип орієнтації:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:37
 #: ../share/extensions/gcodetools_area.inx.h:23
-#: ../share/extensions/gcodetools_lathe.inx.h:28
+#: ../share/extensions/gcodetools_lathe.inx.h:23
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:16
 msgid "Path to Gcode"
 msgstr "Контур у Gcode"
@@ -26233,7 +26299,7 @@ msgstr "Контур у Gcode"
 #: ../share/extensions/gcodetools_area.inx.h:24
 #: ../share/extensions/gcodetools_dxf_points.inx.h:14
 #: ../share/extensions/gcodetools_engraving.inx.h:17
-#: ../share/extensions/gcodetools_lathe.inx.h:29
+#: ../share/extensions/gcodetools_lathe.inx.h:24
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:17
 msgid "Post-processor:"
 msgstr "Завершальний обробник:"
@@ -26242,7 +26308,7 @@ msgstr "Завершальний обробник:"
 #: ../share/extensions/gcodetools_area.inx.h:25
 #: ../share/extensions/gcodetools_dxf_points.inx.h:15
 #: ../share/extensions/gcodetools_engraving.inx.h:18
-#: ../share/extensions/gcodetools_lathe.inx.h:30
+#: ../share/extensions/gcodetools_lathe.inx.h:25
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:18
 msgid "Preferences"
 msgstr "Налаштування"
@@ -26250,7 +26316,7 @@ msgstr "Налаштування"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:40
 #: ../share/extensions/gcodetools_area.inx.h:26
 #: ../share/extensions/gcodetools_engraving.inx.h:19
-#: ../share/extensions/gcodetools_lathe.inx.h:32
+#: ../share/extensions/gcodetools_lathe.inx.h:26
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:19
 msgid "Scale along Z axis:"
 msgstr "Масштаб вздовж вісі Z:"
@@ -26258,7 +26324,7 @@ msgstr "Масштаб вздовж вісі Z:"
 #: ../share/extensions/gcodetools_all_in_one.inx.h:41
 #: ../share/extensions/gcodetools_area.inx.h:27
 #: ../share/extensions/gcodetools_engraving.inx.h:20
-#: ../share/extensions/gcodetools_lathe.inx.h:33
+#: ../share/extensions/gcodetools_lathe.inx.h:27
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:20
 msgid "Select all paths if nothing is selected"
 msgstr "Позначити всі контури, якщо нічого не позначено"
@@ -26314,7 +26380,7 @@ msgstr "Тим інструментів:"
 #: ../share/extensions/gcodetools_area.inx.h:28
 #: ../share/extensions/gcodetools_dxf_points.inx.h:16
 #: ../share/extensions/gcodetools_engraving.inx.h:23
-#: ../share/extensions/gcodetools_lathe.inx.h:34
+#: ../share/extensions/gcodetools_lathe.inx.h:28
 #: ../share/extensions/gcodetools_orientation_points.inx.h:10
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:21
 msgid "Units (mm or in):"
@@ -26342,7 +26408,7 @@ msgstr "Глибина за Z:"
 #: ../share/extensions/gcodetools_area.inx.h:30
 #: ../share/extensions/gcodetools_dxf_points.inx.h:17
 #: ../share/extensions/gcodetools_engraving.inx.h:24
-#: ../share/extensions/gcodetools_lathe.inx.h:35
+#: ../share/extensions/gcodetools_lathe.inx.h:29
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:22
 msgid "Z safe height for G00 move over blank:"
 msgstr "Безпечна висота Z для рухів G00 над порожніми фрагментами:"
@@ -26447,37 +26513,21 @@ msgstr "Кількість кліше:"
 msgid "Fine cut width:"
 msgstr "Ширина кліше:"
 
-#: ../share/extensions/gcodetools_lathe.inx.h:10
-msgid "Flip y axis and parameterize Gcode"
-msgstr "Віддзеркалити вісь y і параметризувати Gcode"
-
-#: ../share/extensions/gcodetools_lathe.inx.h:16
+#: ../share/extensions/gcodetools_lathe.inx.h:15
 msgid "Lathe"
 msgstr "Верстат"
 
-#: ../share/extensions/gcodetools_lathe.inx.h:17
+#: ../share/extensions/gcodetools_lathe.inx.h:16
 msgid "Lathe X axis remap:"
 msgstr "Перепризначення вісі X верстата:"
 
-#: ../share/extensions/gcodetools_lathe.inx.h:18
+#: ../share/extensions/gcodetools_lathe.inx.h:17
 msgid "Lathe Z axis remap:"
 msgstr "Перепризначення вісі Z верстата:"
 
-#: ../share/extensions/gcodetools_lathe.inx.h:19
+#: ../share/extensions/gcodetools_lathe.inx.h:18
 msgid "Lathe width:"
 msgstr "Ширина робочої області:"
-
-#: ../share/extensions/gcodetools_lathe.inx.h:22
-msgid "Move path"
-msgstr "Пересування контуру"
-
-#: ../share/extensions/gcodetools_lathe.inx.h:27
-msgid "Parameterize Gcode"
-msgstr "Параметризувати Gcode"
-
-#: ../share/extensions/gcodetools_lathe.inx.h:31
-msgid "Round all values to 4 digits"
-msgstr "Округлити всі значення до 4 цифр"
 
 #: ../share/extensions/gcodetools_orientation_points.inx.h:7
 msgid "Orientation points"
@@ -27817,9 +27867,19 @@ msgstr "Тип викривлення:"
 msgid "Duplicate the pattern before deformation"
 msgstr "Дублювати візерунок перед деформацією"
 
+#: ../share/extensions/pathalongpath.inx.h:6
+#: ../share/extensions/pathscatter.inx.h:9
+msgid "Normal offset:"
+msgstr "Звичайний відступ:"
+
 #: ../share/extensions/pathalongpath.inx.h:8
 msgid "Pattern along Path"
 msgstr "Візерунок вздовж контуру"
+
+#: ../share/extensions/pathalongpath.inx.h:9
+#: ../share/extensions/pathscatter.inx.h:12
+msgid "Pattern is vertical"
+msgstr "Візерунок є вертикальним"
 
 #: ../share/extensions/pathalongpath.inx.h:12
 msgid "Ribbon"
@@ -27833,6 +27893,11 @@ msgstr "Змія"
 #: ../share/extensions/pathscatter.inx.h:17
 msgid "Space between copies:"
 msgstr "Відстань між копіями:"
+
+#: ../share/extensions/pathalongpath.inx.h:17
+#: ../share/extensions/pathscatter.inx.h:19
+msgid "Tangential offset:"
+msgstr "Відступ по дотичній:"
 
 #: ../share/extensions/pathalongpath.inx.h:18
 msgid ""
@@ -28313,7 +28378,7 @@ msgid "Random Seed:"
 msgstr "База випадковості:"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:5
-#: ../share/extensions/render_barcode_datamatrix.inx.h:6
+#: ../share/extensions/render_barcode_datamatrix.inx.h:5
 #: ../share/extensions/render_barcode_qrcode.inx.h:16
 msgid "Text:"
 msgstr "Текст:"
@@ -28338,15 +28403,12 @@ msgstr "Тип штрихкоду:"
 msgid "Barcode - Datamatrix"
 msgstr "Штрихкод — Datamatrix"
 
-#: ../share/extensions/render_barcode_datamatrix.inx.h:2
-msgid "Cols:"
-msgstr "Стовпчиків:"
+#: ../share/extensions/render_barcode_datamatrix.inx.h:3
+#: ../share/extensions/render_barcode_qrcode.inx.h:14
+msgid "Size, in unit squares:"
+msgstr "Розмір (у одиницях площі):"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:4
-msgid "Rows:"
-msgstr "Рядків:"
-
-#: ../share/extensions/render_barcode_datamatrix.inx.h:5
 msgid "Square Size (px):"
 msgstr "Розмір квадрата (у пк):"
 
@@ -28386,10 +28448,6 @@ msgstr "Q (приблизно 25%)"
 msgid "See http://www.denso-wave.com/qrcode/index-e.html for details"
 msgstr "Докладніше про це тут: http://www.denso-wave.com/qrcode/index-e.html"
 
-#: ../share/extensions/render_barcode_qrcode.inx.h:14
-msgid "Size, in unit squares:"
-msgstr "Розмір (у одиницях площі):"
-
 #: ../share/extensions/render_barcode_qrcode.inx.h:15
 msgid "Square size (px):"
 msgstr "Розмір квадрата (у пк):"
@@ -28399,8 +28457,8 @@ msgid ""
 "With \"Auto\", the size of the barcode depends on the length of the text and "
 "the error correction level"
 msgstr ""
-"Якщо буде позначено пункт «Авто», розміри штрихкоду залежатимуть від розмірів "
-"тексту та рівня виправлення помилок"
+"Якщо буде позначено пункт «Авто», розміри штрихкоду залежатимуть від "
+"розмірів тексту та рівня виправлення помилок"
 
 #: ../share/extensions/replace_font.inx.h:1
 msgid "And replace with: "
@@ -29457,6 +29515,63 @@ msgstr "Імпорт метафайла Windows"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Імпорт з XAML"
+
+#~ msgid "<b>Fade out:</b>"
+#~ msgstr "<b>Згасання:</b>"
+
+#~ msgid "Fractal noise"
+#~ msgstr "Фрактальний шум"
+
+#~ msgid "Smoothness"
+#~ msgstr "Плавність"
+
+#~ msgid "Melt"
+#~ msgstr "Плавлення"
+
+#~ msgid "Smoothed"
+#~ msgstr "Згладжений"
+
+#~ msgid "Contrasted"
+#~ msgstr "Контрастний"
+
+#~ msgid "Poster"
+#~ msgstr "Плакат"
+
+#~ msgid "Painting"
+#~ msgstr "Малювання"
+
+#~ msgid "Primary blur:"
+#~ msgstr "Основне розмивання:"
+
+#~ msgid "Secondary blur:"
+#~ msgstr "Вторинне розмивання:"
+
+#~ msgid "Smooth all"
+#~ msgstr "Згладити все"
+
+#~ msgid "When the original is deleted, its clones:"
+#~ msgstr "Коли оригінал вилучається, його клони:"
+
+#~ msgid "_Blend mode:"
+#~ msgstr "Режим _змішування:"
+
+#~ msgid "Flip y axis and parameterize Gcode"
+#~ msgstr "Віддзеркалити вісь y і параметризувати Gcode"
+
+#~ msgid "Move path"
+#~ msgstr "Пересування контуру"
+
+#~ msgid "Parameterize Gcode"
+#~ msgstr "Параметризувати Gcode"
+
+#~ msgid "Round all values to 4 digits"
+#~ msgstr "Округлити всі значення до 4 цифр"
+
+#~ msgid "Cols:"
+#~ msgstr "Стовпчиків:"
+
+#~ msgid "Rows:"
+#~ msgstr "Рядків:"
 
 #~ msgid "Color Markers to Match Stroke"
 #~ msgstr "Розфарбувати маркери у колір штриха"
