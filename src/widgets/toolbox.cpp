@@ -332,7 +332,6 @@ static gchar const * ui_descr =
         "  <toolbar name='SprayToolbar'>"
         "    <toolitem action='SprayModeAction' />"
         "    <separator />"
-        "    <separator />"
         "    <toolitem action='SprayWidthAction' />"
         "    <toolitem action='SprayPressureAction' />"
         "    <toolitem action='SprayPopulationAction' />"
@@ -469,9 +468,9 @@ static gchar const * ui_descr =
         "  </toolbar>"
 
         "  <toolbar name='EraserToolbar'>"
-        "    <toolitem action='EraserWidthAction' />"
-        "    <separator />"
         "    <toolitem action='EraserModeAction' />"
+        "    <separator />"
+        "    <toolitem action='EraserWidthAction' />"
         "  </toolbar>"
 
         "  <toolbar name='TextToolbar'>"
@@ -4609,10 +4608,10 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 
     {
         /* Mean */
-        gchar const* labels[] = {_("(minimum mean)"), 0, 0, _("(default)"), 0, 0, 0, _("(maximum mean)")};
-        gdouble values[] = {1, 5, 10, 20, 30, 50, 70, 100};
+        gchar const* labels[] = {_("(default)"), 0, 0, 0, 0, 0, 0, _("(maximum mean)")};
+        gdouble values[] = {0, 5, 10, 20, 30, 50, 70, 100};
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayMeanAction",
-                                                              _("Focus"), _("Focus:"), _("0 to spray a spot. Increase to enlarge the ring radius."),
+                                                              _("Focus"), _("Focus:"), _("0 to spray a spot; increase to enlarge the ring radius"),
                                                               "/tools/spray/mean", 0,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-mean",
                                                               0, 100, 1.0, 10.0,
@@ -4625,13 +4624,10 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 
     {
         /* Standard_deviation */
-        gchar const* labels[] = {_("(minimum scatter)"), 0, 0, _("(default)"), 0, 0, 0, _("(maximum scatter)")};
+        gchar const* labels[] = {_("(minimum scatter)"), 0, 0, 0, 0, 0, _("(default)"), _("(maximum scatter)")};
         gdouble values[] = {1, 5, 10, 20, 30, 50, 70, 100};
-
-        //TRANSLATORS: only translate "string" in "context|string".
-        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayStandard_deviationAction",
-                                                              Q_("Toolbox|Scatter"), Q_("Toolbox|Scatter:"), _("Increase to scatter sprayed objects."),
+                                                              C_("Spray tool", "Scatter"), C_("Spray tool", "Scatter:"), _("Increase to scatter sprayed objects"),
                                                               "/tools/spray/standard_deviation", 70,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-standard_deviation",
                                                               1, 100, 1.0, 10.0,
@@ -4688,11 +4684,11 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
     }
 
     {   /* Population */
-        gchar const* labels[] = {_("(low population)"), 0, 0, _("(default)"), 0, 0, _("(high population)")};
-        gdouble values[] = {10, 25, 35, 50, 60, 80, 100};
+        gchar const* labels[] = {_("(low population)"), 0, 0, 0, _("(default)"), 0, _("(high population)")};
+        gdouble values[] = {5, 20, 35, 50, 70, 85, 100};
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayPopulationAction",
                                                               _("Amount"), _("Amount:"),
-                                                              _("Adjusts the number of items sprayed per clic."),
+                                                              _("Adjusts the number of items sprayed per clic"),
                                                               "/tools/spray/population", 70,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-population",
                                                               1, 100, 1.0, 10.0,
@@ -4708,21 +4704,22 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
     {
         InkToggleAction* act = ink_toggle_action_new( "SprayPressureAction",
                                                       _("Pressure"),
-                                                      _("Use the pressure of the input device to alter the amount of sprayed objects."),
+                                                      _("Use the pressure of the input device to alter the amount of sprayed objects"),
                                                       "use_pressure",
                                                       Inkscape::ICON_SIZE_DECORATION );
-        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_spray_pressure_state_changed), NULL);
-        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/spray/usepressure", true) );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        PrefPusher *pusher = new PrefPusher(GTK_TOGGLE_ACTION(act), "/tools/spray/usepressure");
+        g_signal_connect(holder, "destroy", G_CALLBACK(delete_prefspusher), pusher);
+        
     }
 
     {   /* Rotation */
-        gchar const* labels[] = {_("(low rotation variation)"), 0, 0, _("(default)"), 0, 0, _("(high rotation variation)")};
-        gdouble values[] = {10, 25, 35, 50, 60, 80, 100};
+        gchar const* labels[] = {_("(default)"), 0, 0, 0, 0, 0, 0, _("(high rotation variation)")};
+        gdouble values[] = {0, 10, 25, 35, 50, 60, 80, 100};
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayRotationAction",
                                                               _("Rotation"), _("Rotation:"),
                                                               // xgettext:no-c-format
-                                                              _("Variation of the rotation of the sprayed objects. 0% for the same rotation than the original object."),
+                                                              _("Variation of the rotation of the sprayed objects; 0% for the same rotation than the original object"),
                                                               "/tools/spray/rotation_variation", 0,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-rotation",
                                                               0, 100, 1.0, 10.0,
@@ -4735,15 +4732,12 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
     }
 
     {   /* Scale */
-        gchar const* labels[] = {_("(low scale variation)"), 0, 0, _("(default)"), 0, 0, _("(high scale variation)")};
-        gdouble values[] = {10, 25, 35, 50, 60, 80, 100};
-
-        //TRANSLATORS: only translate "string" in "context|string".
-        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+        gchar const* labels[] = {_("(default)"), 0, 0, 0, 0, 0, 0, _("(high scale variation)")};
+        gdouble values[] = {0, 10, 25, 35, 50, 60, 80, 100};
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayScaleAction",
-                                                              Q_("Toolbox|Scale"), Q_("Toolbox|Scale:"),
+                                                              C_("Spray tool", "Scale"), C_("Spray tool", "Scale:"),
                                                               // xgettext:no-c-format
-                                                              _("Variation in the scale of the sprayed objects. 0% for the same scale than the original object."),
+                                                              _("Variation in the scale of the sprayed objects; 0% for the same scale than the original object"),
                                                               "/tools/spray/scale_variation", 0,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-scale",
                                                               0, 100, 1.0, 10.0,
@@ -6118,23 +6112,6 @@ static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 static void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     {
-        /* Width */
-        gchar const* labels[] = {_("(hairline)"), 0, 0, 0, _("(default)"), 0, 0, 0, 0, _("(broad stroke)")};
-        gdouble values[] = {1, 3, 5, 10, 15, 20, 30, 50, 75, 100};
-        EgeAdjustmentAction *eact = create_adjustment_action( "EraserWidthAction",
-                                                              _("Pen Width"), _("Width:"),
-                                                              _("The width of the eraser pen (relative to the visible canvas area)"),
-                                                              "/tools/eraser/width", 15,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-eraser",
-                                                              1, 100, 1.0, 10.0,
-                                                              labels, values, G_N_ELEMENTS(labels),
-                                                              sp_erc_width_value_changed, 1, 0);
-        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
-        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
-        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
-    }
-
-    {
         GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
 
         GtkTreeIter iter;
@@ -6153,9 +6130,10 @@ static void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
                             -1 );
 
         EgeSelectOneAction* act = ege_select_one_action_new( "EraserModeAction", (""), (""), NULL, GTK_TREE_MODEL(model) );
+        g_object_set( act, "short_label", _("Mode:"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
         g_object_set_data( holder, "eraser_mode_action", act );
-
+        
         ege_select_one_action_set_appearance( act, "full" );
         ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
         g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
@@ -6167,6 +6145,23 @@ static void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
         gint eraserMode = prefs->getBool("/tools/eraser/mode") ? 1 : 0;
         ege_select_one_action_set_active( act, eraserMode );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_erasertb_mode_changed), holder );
+    }
+
+    {
+        /* Width */
+        gchar const* labels[] = {_("(hairline)"), 0, 0, 0, _("(default)"), 0, 0, 0, 0, _("(broad stroke)")};
+        gdouble values[] = {1, 3, 5, 10, 15, 20, 30, 50, 75, 100};
+        EgeAdjustmentAction *eact = create_adjustment_action( "EraserWidthAction",
+                                                              _("Pen Width"), _("Width:"),
+                                                              _("The width of the eraser pen (relative to the visible canvas area)"),
+                                                              "/tools/eraser/width", 15,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-eraser",
+                                                              1, 100, 1.0, 10.0,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_erc_width_value_changed, 1, 0);
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     }
 
 }

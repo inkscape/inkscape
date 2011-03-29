@@ -91,11 +91,6 @@ struct SPSprayContext
     Geom::Point last_push;
     SPCanvasItem *dilate_area;
 
-    bool do_h;
-    bool do_s;
-    bool do_l;
-    bool do_o;
-
     sigc::connection style_set_connection;
 };
 
