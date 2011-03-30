@@ -394,6 +394,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/generate_voronoi.inx
 [type: gettext/xml] share/extensions/gimp_xcf.inx
 [type: gettext/xml] share/extensions/grid_cartesian.inx
+[type: gettext/xml] share/extensions/grid_isometric.inx
 [type: gettext/xml] share/extensions/grid_polar.inx
 [type: gettext/xml] share/extensions/guides_creator.inx
 [type: gettext/xml] share/extensions/guillotine.inx

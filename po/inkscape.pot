@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-03-29 19:33+0200\n"
+"POT-Creation-Date: 2011-03-30 23:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7519,6 +7519,7 @@ msgstr ""
 #: ../share/extensions/foldablebox.inx.h:6
 #: ../share/extensions/funcplot.inx.h:14 ../share/extensions/gears.inx.h:6
 #: ../share/extensions/grid_cartesian.inx.h:15
+#: ../share/extensions/grid_isometric.inx.h:6
 #: ../share/extensions/grid_polar.inx.h:20
 #: ../share/extensions/guides_creator.inx.h:17
 #: ../share/extensions/lindenmayer.inx.h:31
@@ -7537,7 +7538,14 @@ msgstr ""
 msgid "Render"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:212
+#: ../src/extension/internal/grid.cpp:211
+#: ../src/ui/dialog/document-properties.cpp:119
+#: ../src/ui/dialog/inkscape-preferences.cpp:1072
+#: ../src/widgets/toolbox.cpp:2321
+msgid "Grids"
+msgstr ""
+
+#: ../src/extension/internal/grid.cpp:214
 msgid "Draw a path which is a grid"
 msgstr ""
 
@@ -13261,12 +13269,6 @@ msgstr ""
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/widgets/toolbox.cpp:2330
 msgid "Guides"
-msgstr ""
-
-#: ../src/ui/dialog/document-properties.cpp:119
-#: ../src/ui/dialog/inkscape-preferences.cpp:1072
-#: ../src/widgets/toolbox.cpp:2321
-msgid "Grids"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:120 ../src/verbs.cpp:2586
@@ -25127,6 +25129,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:1
+#: ../share/extensions/grid_isometric.inx.h:1
 msgid "Border Thickness (px):"
 msgstr ""
 
@@ -25212,6 +25215,42 @@ msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:23
 msgid "Y Axis"
+msgstr ""
+
+#: ../share/extensions/grid_isometric.inx.h:2
+msgid "Division Spacing (px):"
+msgstr ""
+
+#: ../share/extensions/grid_isometric.inx.h:3
+msgid "Isometric Grid"
+msgstr ""
+
+#: ../share/extensions/grid_isometric.inx.h:4
+msgid "Major Division Thickness (px):"
+msgstr ""
+
+#: ../share/extensions/grid_isometric.inx.h:5
+msgid "Minor Division Thickness (px):"
+msgstr ""
+
+#: ../share/extensions/grid_isometric.inx.h:7
+msgid "Subdivisions per Major Division:"
+msgstr ""
+
+#: ../share/extensions/grid_isometric.inx.h:8
+msgid "Subminor Division Thickness (px):"
+msgstr ""
+
+#: ../share/extensions/grid_isometric.inx.h:9
+msgid "Subsubdivs per Subdivision:"
+msgstr ""
+
+#: ../share/extensions/grid_isometric.inx.h:10
+msgid "X Divisions [x2]:"
+msgstr ""
+
+#: ../share/extensions/grid_isometric.inx.h:11
+msgid "Y Divisions [x2] [> 1/2 X Div]:"
 msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:1
