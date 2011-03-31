@@ -75,6 +75,7 @@
 #define PS_JOIN_MASK (PS_JOIN_BEVEL|PS_JOIN_MITER|PS_JOIN_ROUND)
 #endif
 
+#define DPA 0x00A000C9    // TernaryRasterOperation
 
 namespace Inkscape {
 namespace Extension {
@@ -1761,8 +1762,36 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             dbg_str << "<!-- EMR_EXTSELECTCLIPRGN -->\n";
             break;
         case EMR_BITBLT:
+        {
             dbg_str << "<!-- EMR_BITBLT -->\n";
+
+            PEMRBITBLT pEmr = (PEMRBITBLT) lpEMFR;
+            if (pEmr->dwRop == DPA) {
+                // should be an application of a DIBPATTERNBRUSHPT, use a solid color instead
+                double l = pix_to_x_point( d, pEmr->xDest, pEmr->yDest);
+                double t = pix_to_y_point( d, pEmr->xDest, pEmr->yDest);
+                double r = pix_to_x_point( d, pEmr->xDest + pEmr->cxDest, pEmr->yDest + pEmr->cyDest);
+                double b = pix_to_y_point( d, pEmr->xDest + pEmr->cxDest, pEmr->yDest + pEmr->cyDest);
+
+                SVGOStringStream tmp_rectangle;
+                tmp_rectangle << "d=\"";
+                tmp_rectangle << "\n\tM " << l << " " << t << " ";
+                tmp_rectangle << "\n\tL " << r << " " << t << " ";
+                tmp_rectangle << "\n\tL " << r << " " << b << " ";
+                tmp_rectangle << "\n\tL " << l << " " << b << " ";
+                tmp_rectangle << "\n\tz";
+
+                assert_empty_path(d, "EMR_BITBLT");
+
+                *(d->outsvg) += "    <path ";
+                output_style(d, lpEMFR->iType);
+                *(d->outsvg) += "\n\t";
+                *(d->outsvg) += tmp_rectangle.str().c_str();
+                *(d->outsvg) += " \" /> \n";
+                *(d->path) = "";
+            }
             break;
+        }
         case EMR_STRETCHBLT:
             dbg_str << "<!-- EMR_STRETCHBLT -->\n";
             break;
