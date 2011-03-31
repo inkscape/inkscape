@@ -587,7 +587,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
           </xsl:when>
           <xsl:otherwise>
             <xsl:attribute name="StartPoint">
-              <xsl:value-of select="concat((@x1 - $left), ',', (@y1 - $top))" />
+              <xsl:value-of select="concat(round((@x1 - $left)), ',', round((@y1 - $top)))" />
             </xsl:attribute>
           </xsl:otherwise>
         </xsl:choose>
@@ -599,7 +599,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
           </xsl:when>
           <xsl:otherwise>
             <xsl:attribute name="EndPoint">
-              <xsl:value-of select="concat((@x2 - $left), ',', (@y2 - $top))" />
+              <xsl:value-of select="concat(round((@x2 - $left)), ',', round((@y2 - $top)))" />
             </xsl:attribute>
           </xsl:otherwise>
         </xsl:choose>  
