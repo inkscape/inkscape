@@ -288,7 +288,7 @@ sp_desktop_get_master_opacity_tool(SPDesktop *desktop, Glib::ustring const &tool
                 value = 1.0; // things failed. set back to the default
             } else {
                 if (has_opacity)
-                   *has_opacity = false;
+                   *has_opacity = true;
             }
         }
 

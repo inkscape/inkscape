@@ -36,6 +36,7 @@
 #include "desktop-events.h"
 #include "desktop-handles.h"
 #include "unistd.h"
+//#include "desktop-style.h"
 #include "message-context.h"
 #include "pixmaps/cursor-spray.xpm"
 #include <boost/optional.hpp>
@@ -190,6 +191,9 @@ static void sp_spray_context_init(SPSprayContext *tc)
 static void sp_spray_context_dispose(GObject *object)
 {
     SPSprayContext *tc = SP_SPRAY_CONTEXT(object);
+    SPEventContext *ec = SP_EVENT_CONTEXT(object);
+
+    ec->enableGrDrag(false);
 
     tc->style_set_connection.disconnect();
     tc->style_set_connection.~connection();
