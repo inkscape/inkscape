@@ -425,6 +425,7 @@ g_message("sp_path_update_patheffect");
         /* if a path does not have an lpeitem applied, then reset the curve to the original_curve.
          * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
         shape->setCurveInsync(curve, TRUE);
+        shape->setCurveBeforeLPE(path->original_curve);
 
         bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
         if (success && write) {

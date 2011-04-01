@@ -126,6 +126,7 @@ void SPShape::sp_shape_init(SPShape *shape)
         shape->marker[i] = NULL;
     }
     shape->curve = NULL;
+    shape->curve_before_lpe = NULL;
 }
 
 void SPShape::sp_shape_finalize(GObject *object)
@@ -194,6 +195,9 @@ void SPShape::sp_shape_release(SPObject *object)
     }
     if (shape->curve) {
         shape->curve = shape->curve->unref();
+    }
+    if (shape->curve_before_lpe) {
+        shape->curve_before_lpe = shape->curve_before_lpe->unref();
     }
 
     if (((SPObjectClass *) SPShapeClass::parent_class)->release) {
@@ -1115,12 +1119,44 @@ void SPShape::setCurve(SPCurve *curve, unsigned int owner)
 }
 
 /**
+ * Sets curve_before_lpe to refer to the curve.
+ */
+void
+SPShape::setCurveBeforeLPE (SPCurve *curve)
+{
+    if (this->curve_before_lpe) {
+        this->curve_before_lpe = this->curve_before_lpe->unref();
+    }
+    if (curve) {
+        this->curve_before_lpe = curve->ref();
+    }
+}
+
+/**
  * Return duplicate of curve (if any exists) or NULL if there is no curve
  */
 SPCurve * SPShape::getCurve()
 {
     if (this->curve) {
         return this->curve->copy();
+    }
+    return NULL;
+}
+
+/**
+ * Return duplicate of curve *before* LPE (if any exists) or NULL if there is no curve
+ */
+SPCurve *
+SPShape::getCurveBeforeLPE()
+{
+    if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(this))) {
+        if (this->curve_before_lpe) {
+            return this->curve_before_lpe->copy();
+        }
+    } else {
+        if (this->curve) {
+            return this->curve->copy();
+        }
     }
     return NULL;
 }

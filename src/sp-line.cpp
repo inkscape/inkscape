@@ -221,6 +221,9 @@ void SPLine::setShape(SPShape *shape)
     c->lineto(line->x2.computed, line->y2.computed);
 
     shape->setCurveInsync(c, TRUE); // *_insync does not call update, avoiding infinite recursion when set_shape is called by update
+    shape->setCurveBeforeLPE(c);
+
+    // LPE's cannot be applied to lines. (the result can (generally) not be represented as SPLine)
 
     c->unref();
 }

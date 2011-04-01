@@ -232,6 +232,7 @@ sp_rect_set_shape(SPShape *shape)
 
     if ((rect->height.computed < 1e-18) || (rect->width.computed < 1e-18)) {
         SP_SHAPE(rect)->setCurveInsync( NULL, TRUE);
+        SP_SHAPE(rect)->setCurveBeforeLPE( NULL );
         return;
     }
 
@@ -282,6 +283,10 @@ sp_rect_set_shape(SPShape *shape)
 
     c->closepath();
     SP_SHAPE(rect)->setCurveInsync( c, TRUE);
+    SP_SHAPE(rect)->setCurveBeforeLPE( c );
+
+    // LPE is not applied because result can generally not be represented as SPRect
+
     c->unref();
 }
 

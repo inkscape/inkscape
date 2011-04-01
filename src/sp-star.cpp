@@ -439,6 +439,7 @@ sp_star_set_shape (SPShape *shape)
             Geom::PathVector pv = sp_svg_read_pathv(shape->getRepr()->attribute("d"));
             SPCurve *cold = new SPCurve(pv);
             shape->setCurveInsync( cold, TRUE);
+            shape->setCurveBeforeLPE(cold);
             cold->unref();
         }
         return;
@@ -509,6 +510,7 @@ sp_star_set_shape (SPShape *shape)
     /* Reset the shape'scurve to the "original_curve"
      * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
     shape->setCurveInsync( c, TRUE);
+    shape->setCurveBeforeLPE( c );
     if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(shape)) && sp_lpe_item_path_effects_enabled(SP_LPE_ITEM(shape))) {
         SPCurve *c_lpe = c->copy();
         bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM (shape), c_lpe);

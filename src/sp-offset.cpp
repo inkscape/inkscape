@@ -463,6 +463,7 @@ sp_offset_set_shape(SPShape *shape)
             SPCurve *c = new SPCurve(pv);
             g_assert(c != NULL);
             ((SPShape *) offset)->setCurveInsync (c, TRUE);
+            ((SPShape *) offset)->setCurveBeforeLPE(c);
             c->unref();
         }
         return;
@@ -712,6 +713,7 @@ sp_offset_set_shape(SPShape *shape)
         SPCurve *c = new SPCurve(pv);
         g_assert(c != NULL);
         ((SPShape *) offset)->setCurveInsync (c, TRUE);
+        ((SPShape *) offset)->setCurveBeforeLPE(c);
         c->unref();
 
         free (res_d);

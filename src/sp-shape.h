@@ -44,10 +44,15 @@ public:
     static GType getType (void);
     void setShape ();
     SPCurve * getCurve ();
+    SPCurve * getCurveBeforeLPE ();
     void setCurve (SPCurve *curve, unsigned int owner);
     void setCurveInsync (SPCurve *curve, unsigned int owner);
+    void setCurveBeforeLPE (SPCurve *curve);
     int hasMarkers () const;
     int numberOfMarkers (int type);
+
+protected:
+    SPCurve *curve_before_lpe;
 
 private:
     static void sp_shape_init (SPShape *shape);

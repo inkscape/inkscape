@@ -1804,19 +1804,10 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
                                                false);
     }
 
-
-    SPCurve *curve = NULL;
-
-    if (SP_IS_SHAPE(item)) {
-        curve = SP_SHAPE(item)->getCurve();
-        if (!curve)
-            return false;
-    }
-
-    if (SP_IS_TEXT(item)) {
-        curve = SP_TEXT(item)->getNormalizedBpath();
-        if (!curve)
-            return false;
+    // get path to simplify (note that the path *before* LPE calculation is needed)
+    Path *orig = Path_for_item_before_LPE(item, false);
+    if (orig == NULL) {
+        return false;
     }
 
     // correct virtual size by full transform (bug #166937)
@@ -1836,14 +1827,6 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
     gchar *mask = g_strdup(item->getRepr()->attribute("mask"));
     gchar *clip_path = g_strdup(item->getRepr()->attribute("clip-path"));
 
-    Path *orig = Path_for_item(item, false);
-    if (orig == NULL) {
-        g_free(style);
-        curve->unref();
-        return false;
-    }
-
-    curve->unref();
     // remember the position of the item
     gint pos = item->getRepr()->position();
     // remember parent
@@ -2106,6 +2089,27 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
     return dest;
 }
 
+/**
+ * Obtains an item's Path before the LPE stack has been applied.
+ */
+Path *
+Path_for_item_before_LPE(SPItem *item, bool doTransformation, bool transformFull)
+{
+    SPCurve *curve = curve_for_item_before_LPE(item);
+
+    if (curve == NULL)
+        return NULL;
+    
+    Geom::PathVector *pathv = pathvector_for_curve(item, curve, doTransformation, transformFull, Geom::identity(), Geom::identity());
+    curve->unref();
+    
+    Path *dest = new Path;
+    dest->LoadPathVector(*pathv);
+    delete pathv;
+
+    return dest;
+}
+
 /* 
  * NOTE: Returns empty pathvector if curve == NULL
  * TODO: see if calling this method can be optimized. All the pathvector copying might be slow.
@@ -2132,6 +2136,10 @@ pathvector_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool t
     return dest;
 }
 
+/**
+ * Obtains an item's curve. For SPPath, it is the path *before* LPE. For SPShapes other than path, it is the path *after* LPE.
+ * So the result is somewhat ill-defined, and probably this method should not be used... See curve_for_item_before_LPE.
+ */
 SPCurve* curve_for_item(SPItem *item)
 {
     if (!item) 
@@ -2152,6 +2160,31 @@ SPCurve* curve_for_item(SPItem *item)
     else if (SP_IS_IMAGE(item))
     {
     curve = sp_image_get_curve(SP_IMAGE(item));
+    }
+    
+    return curve; // do not forget to unref the curve at some point!
+}
+
+/**
+ * Obtains an item's curve *before* LPE.
+ * The returned SPCurve should be unreffed by the caller.
+ */
+SPCurve* curve_for_item_before_LPE(SPItem *item)
+{
+    if (!item) 
+        return NULL;
+    
+    SPCurve *curve = NULL;
+    if (SP_IS_SHAPE(item)) {
+        curve = SP_SHAPE(item)->getCurveBeforeLPE();
+    }
+    else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))
+    {
+        curve = te_get_layout(item)->convertToCurves();
+    }
+    else if (SP_IS_IMAGE(item))
+    {
+        curve = sp_image_get_curve(SP_IMAGE(item));
     }
     
     return curve; // do not forget to unref the curve at some point!
