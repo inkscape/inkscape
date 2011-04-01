@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-03-29 19:33+0200\n"
-"PO-Revision-Date: 2011-03-30 17:15+0100\n"
+"POT-Creation-Date: 2011-04-01 15:12+0200\n"
+"PO-Revision-Date: 2011-04-01 15:20+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "Language: \n"
@@ -6734,7 +6734,7 @@ msgstr "PostScript niveau 2"
 #: ../src/extension/internal/cairo-ps-out.cpp:325
 #: ../src/extension/internal/cairo-ps-out.cpp:363
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
-#: ../src/extension/internal/emf-win32-inout.cpp:2487
+#: ../src/extension/internal/emf-win32-inout.cpp:2516
 msgid "Convert texts to paths"
 msgstr "Convertir les textes en chemins"
 
@@ -6815,39 +6815,39 @@ msgstr "PDF 1.4"
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
 msgstr "PDF+LaTeX : exclure le texte du fichier PDF, et créer un fichier LaTeX"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2457
+#: ../src/extension/internal/emf-win32-inout.cpp:2486
 msgid "EMF Input"
 msgstr "Entrée EMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2462
+#: ../src/extension/internal/emf-win32-inout.cpp:2491
 msgid "Enhanced Metafiles (*.emf)"
 msgstr "Métafichier amélioré (*.emf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2463
+#: ../src/extension/internal/emf-win32-inout.cpp:2492
 msgid "Enhanced Metafiles"
 msgstr "Métafichier amélioré"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2471
+#: ../src/extension/internal/emf-win32-inout.cpp:2500
 msgid "WMF Input"
 msgstr "Entrée WMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2476
+#: ../src/extension/internal/emf-win32-inout.cpp:2505
 msgid "Windows Metafiles (*.wmf)"
 msgstr "Métafichier Windows (*.wmf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2477
+#: ../src/extension/internal/emf-win32-inout.cpp:2506
 msgid "Windows Metafiles"
 msgstr "Métafichier Windows"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2485
+#: ../src/extension/internal/emf-win32-inout.cpp:2514
 msgid "EMF Output"
 msgstr "Sortie EMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2491
+#: ../src/extension/internal/emf-win32-inout.cpp:2520
 msgid "Enhanced Metafile (*.emf)"
 msgstr "Métafichier amélioré (*.emf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2492
+#: ../src/extension/internal/emf-win32-inout.cpp:2521
 msgid "Enhanced Metafile"
 msgstr "Métafichier amélioré"
 
@@ -7008,11 +7008,13 @@ msgstr "Type de turbulence :"
 
 #: ../src/extension/internal/filter/abc.h:468
 #: ../src/extension/internal/filter/abc.h:667
+#: ../src/extension/internal/filter/experimental.h:91
 msgid "Horizontal frequency:"
 msgstr "Fréquence horizontale :"
 
 #: ../src/extension/internal/filter/abc.h:469
 #: ../src/extension/internal/filter/abc.h:668
+#: ../src/extension/internal/filter/experimental.h:92
 msgid "Vertical frequency:"
 msgstr "Fréquence verticale :"
 
@@ -7115,19 +7117,16 @@ msgid "Brightness filter"
 msgstr "Niveaux de luminosité"
 
 #: ../src/extension/internal/filter/color.h:130
-#, fuzzy
 msgid "Colorize, custom (Color)"
-msgstr "Appliquer une couleur de contour"
+msgstr "Colorer, paramétrable (Couleur)"
 
 #: ../src/extension/internal/filter/color.h:134
-#, fuzzy
 msgid "Harsh light:"
-msgstr "Hauteur des barres :"
+msgstr "Lumière crue :"
 
 #: ../src/extension/internal/filter/color.h:135
-#, fuzzy
 msgid "Normal light:"
-msgstr "Décalage normal :"
+msgstr "Lumière normale :"
 
 #: ../src/extension/internal/filter/color.h:137
 #: ../src/extension/internal/filter/color.h:609
@@ -7234,9 +7233,8 @@ msgid "Convert luminance values to a duochrome palette"
 msgstr "Modifie les couleurs avec une palette à deux tons"
 
 #: ../src/extension/internal/filter/color.h:361
-#, fuzzy
 msgid "Electrize, custom (Color)"
-msgstr "Appliquer une couleur de contour"
+msgstr "Électriser, paramétrable (Couleur)"
 
 #: ../src/extension/internal/filter/color.h:363
 #: ../src/extension/internal/filter/experimental.h:503
@@ -7266,9 +7264,8 @@ msgid "Levels:"
 msgstr "Niveaux :"
 
 #: ../src/extension/internal/filter/color.h:377
-#, fuzzy
 msgid "Electro solarization effects"
-msgstr "Effet de solarisation photographique classique"
+msgstr "Effets d'électro-solarisation"
 
 #: ../src/extension/internal/filter/color.h:454
 msgid "Greyscale, custom (Color)"
@@ -7314,9 +7311,8 @@ msgid "Modify lights and shadows separately"
 msgstr "Modifie les lumières et les ombres séparément"
 
 #: ../src/extension/internal/filter/color.h:605
-#, fuzzy
 msgid "Quadritone fantasy, custom (Color)"
-msgstr "Quadritone fantaisie"
+msgstr "Quadritone fantaisie, paramétrable (Couleur)"
 
 #: ../src/extension/internal/filter/color.h:607
 #: ../src/extension/internal/filter/color.h:805
@@ -7333,38 +7329,32 @@ msgid "Over-saturation:"
 msgstr "Sur-saturation :"
 
 #: ../src/extension/internal/filter/color.h:692
-#, fuzzy
 msgid "Solarize, custom (Color)"
-msgstr "Appliquer une couleur de contour"
+msgstr "Solariser, paramétrable (Couleur)"
 
 #: ../src/extension/internal/filter/color.h:694
 msgid "Hue rotation (°):"
 msgstr "Rotation de teinte (°) :"
 
 #: ../src/extension/internal/filter/color.h:706
-#, fuzzy
 msgid "Classic photographic solarization effect"
 msgstr "Effet de solarisation photographique classique"
 
 #: ../src/extension/internal/filter/color.h:779
-#, fuzzy
 msgid "Tritone, custom (Color)"
-msgstr "Appliquer une couleur de contour"
+msgstr "Tritone, paramétrable (Couleur)"
 
 #: ../src/extension/internal/filter/color.h:785
-#, fuzzy
 msgid "Enhance hue"
-msgstr "Améliorer"
+msgstr "Teinte augmentée"
 
 #: ../src/extension/internal/filter/color.h:786
-#, fuzzy
 msgid "Radiation"
-msgstr "Saturation :"
+msgstr "Radiation"
 
 #: ../src/extension/internal/filter/color.h:787
-#, fuzzy
 msgid "Hue to background"
-msgstr "Retirer l’arrière-plan"
+msgstr "Teinte en arrière-plan"
 
 #: ../src/extension/internal/filter/color.h:789
 msgid "Global blend:"
@@ -7379,14 +7369,12 @@ msgid "Glow blend:"
 msgstr "Fondu de la lueur :"
 
 #: ../src/extension/internal/filter/color.h:801
-#, fuzzy
 msgid "Local light:"
-msgstr "Éclairage spéculaire"
+msgstr "Éclairage local :"
 
 #: ../src/extension/internal/filter/color.h:802
-#, fuzzy
 msgid "Global light:"
-msgstr "Flexion globale"
+msgstr "Éclairage global :"
 
 #: ../src/extension/internal/filter/color.h:816
 msgid "Create a custom tritone palette with additional glow, blend modes and hue moving"
@@ -7429,9 +7417,8 @@ msgid "White, blurred drop glow"
 msgstr "Lueur portée, blanche et diffuse"
 
 #: ../src/extension/internal/filter/experimental.h:69
-#, fuzzy
 msgid "Chromolitho, custom"
-msgstr "Adoucissement"
+msgstr "Chromolitho, paramétrable"
 
 #: ../src/extension/internal/filter/experimental.h:73
 #: ../share/extensions/jessyInk_keyBindings.inx.h:5
@@ -7443,9 +7430,8 @@ msgid "Drawing blend:"
 msgstr "Fondu du dessin :"
 
 #: ../src/extension/internal/filter/experimental.h:82
-#, fuzzy
 msgid "Dented"
-msgstr "centre"
+msgstr "Irrégulier"
 
 #: ../src/extension/internal/filter/experimental.h:86
 msgid "Noise reduction:"
@@ -7455,34 +7441,21 @@ msgstr "Réduction de bruit :"
 msgid "Grain mode"
 msgstr "Mode grain"
 
-#: ../src/extension/internal/filter/experimental.h:91
-#, fuzzy
-msgid "X frequency:"
-msgstr "Fréquence de base :"
-
-#: ../src/extension/internal/filter/experimental.h:92
-#, fuzzy
-msgid "Y frequency:"
-msgstr "Fréquence de base :"
-
 #: ../src/extension/internal/filter/experimental.h:95
-#, fuzzy
 msgid "Expansion:"
-msgstr "L’extension « "
+msgstr "Extension :"
 
 #: ../src/extension/internal/filter/experimental.h:98
-#, fuzzy
 msgid "Grain blend:"
-msgstr "Dégradé"
+msgstr "Fusion du grain :"
 
 #: ../src/extension/internal/filter/experimental.h:114
 msgid "Chromo effect with customizable edge drawing and graininess"
 msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:231
-#, fuzzy
 msgid "Cross engraving, custom"
-msgstr "Ombre portée couleur -Expérimentale-"
+msgstr "Gravure croisée, paramétrable"
 
 #: ../src/extension/internal/filter/experimental.h:233
 #: ../src/extension/internal/filter/experimental.h:336
@@ -7520,36 +7493,30 @@ msgid "Fill color"
 msgstr "Couleur du remplissage"
 
 #: ../src/extension/internal/filter/experimental.h:350
-#, fuzzy
 msgid "Image on fill"
-msgstr "Fichier image"
+msgstr "Image sur le remplissage"
 
 #: ../src/extension/internal/filter/experimental.h:353
 msgid "Stroke color"
 msgstr "Couleur du contour"
 
 #: ../src/extension/internal/filter/experimental.h:354
-#, fuzzy
 msgid "Image on stroke"
-msgstr "Motif de contour"
+msgstr "Image sur le contour"
 
 #: ../src/extension/internal/filter/experimental.h:365
-#, fuzzy
 msgid "Convert images to duochrome drawings"
-msgstr "Ajuster la page au dessin"
+msgstr "Convertit les images en dessins duochromes"
 
 #: ../src/extension/internal/filter/experimental.h:497
-#, fuzzy
 msgid "Neon draw, custom"
-msgstr "Ombre portée couleur -Expérimentale-"
+msgstr "Dessin néon, paramétrable"
 
 #: ../src/extension/internal/filter/experimental.h:499
-#, fuzzy
 msgid "Line type:"
-msgstr "  type : "
+msgstr "Type de ligne : "
 
 #: ../src/extension/internal/filter/experimental.h:504
-#, fuzzy
 msgid "Line width:"
 msgstr "Largeur de ligne :"
 
@@ -7593,9 +7560,8 @@ msgid "Post-saturation:"
 msgstr "Post-saturation :"
 
 #: ../src/extension/internal/filter/experimental.h:622
-#, fuzzy
 msgid "Simulate antialiasing"
-msgstr "Simule une peinture à l’huile"
+msgstr "Simuler l'antialiasing"
 
 #: ../src/extension/internal/filter/experimental.h:630
 #, fuzzy
@@ -7708,6 +7674,7 @@ msgstr "Décalage vertical :"
 #: ../share/extensions/funcplot.inx.h:14
 #: ../share/extensions/gears.inx.h:6
 #: ../share/extensions/grid_cartesian.inx.h:15
+#: ../share/extensions/grid_isometric.inx.h:6
 #: ../share/extensions/grid_polar.inx.h:20
 #: ../share/extensions/guides_creator.inx.h:17
 #: ../share/extensions/lindenmayer.inx.h:31
@@ -7727,7 +7694,14 @@ msgstr "Décalage vertical :"
 msgid "Render"
 msgstr "Rendu"
 
-#: ../src/extension/internal/grid.cpp:212
+#: ../src/extension/internal/grid.cpp:211
+#: ../src/ui/dialog/document-properties.cpp:119
+#: ../src/ui/dialog/inkscape-preferences.cpp:1072
+#: ../src/widgets/toolbox.cpp:2321
+msgid "Grids"
+msgstr "Grilles"
+
+#: ../src/extension/internal/grid.cpp:214
 msgid "Draw a path which is a grid"
 msgstr "Tracer un chemin en forme de grille"
 
@@ -9751,18 +9725,16 @@ msgid "Path along which intermediate steps are created."
 msgstr "Chemin le long duquel les étapes intermédiaires seront créées."
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
-#, fuzzy
 msgid "Steps_:"
-msgstr "Incrément :"
+msgstr "I_ncrément :"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 msgid "Determines the number of steps from start to end path."
 msgstr "Définit le nombre d’étapes entre le chemin de début et le chemin de fin."
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
-#, fuzzy
 msgid "E_quidistant spacing"
-msgstr "Espacement équidistant"
+msgstr "Espacement é_quidistant"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
 msgid "If true, the spacing between intermediates is constant along the length of the path. If false, the distance depends on the location of the nodes of the trajectory path."
@@ -11802,8 +11774,8 @@ msgstr "Utilisez <b>Maj+D</b> pour sélectionner le cadre"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:209
-#: ../src/spray-context.cpp:226
-#: ../src/tweak-context.cpp:203
+#: ../src/spray-context.cpp:230
+#: ../src/tweak-context.cpp:206
 #, c-format
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
@@ -12284,42 +12256,42 @@ msgstr "Simplifier"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>Aucun chemin</b> à simplifier dans la sélection."
 
-#: ../src/spray-context.cpp:228
-#: ../src/tweak-context.cpp:205
+#: ../src/spray-context.cpp:232
+#: ../src/tweak-context.cpp:208
 #, c-format
 msgid "<b>Nothing</b> selected"
 msgstr "<b>Rien</b> n’a été sélectionné."
 
-#: ../src/spray-context.cpp:234
+#: ../src/spray-context.cpp:238
 #, fuzzy, c-format
 msgid "%s. Drag, click or scroll to spray <b>copies</b> of the initial selection."
 msgstr "%s. Cliquer-déplacer, cliquer ou défiler pour pulvériser des <b>copies</b> de la sélection initiale"
 
-#: ../src/spray-context.cpp:237
+#: ../src/spray-context.cpp:241
 #, fuzzy, c-format
 msgid "%s. Drag, click or scroll to spray <b>clones</b> of the initial selection."
 msgstr "%s. Cliquer-déplacer, cliquer ou défiler pour pulvériser des <b>clones</b> de la sélection initiale"
 
-#: ../src/spray-context.cpp:240
+#: ../src/spray-context.cpp:244
 #, fuzzy, c-format
 msgid "%s. Drag, click or scroll to spray in a <b>single path</b> of the initial selection."
 msgstr "%s. Cliquer-déplacer, cliquer ou défiler pour pulvériser dans un <b>chemin unique</b> la sélection initiale"
 
-#: ../src/spray-context.cpp:706
+#: ../src/spray-context.cpp:710
 msgid "<b>Nothing selected!</b> Select objects to spray."
 msgstr "<b>Sélection vide !</b> Sélectionner les objets à pulvériser."
 
-#: ../src/spray-context.cpp:781
+#: ../src/spray-context.cpp:785
 #: ../src/widgets/toolbox.cpp:4648
 msgid "Spray with copies"
 msgstr "Pulvérise avec des copies"
 
-#: ../src/spray-context.cpp:785
+#: ../src/spray-context.cpp:789
 #: ../src/widgets/toolbox.cpp:4655
 msgid "Spray with clones"
 msgstr "Pulvérise avec des clones"
 
-#: ../src/spray-context.cpp:789
+#: ../src/spray-context.cpp:793
 msgid "Spray in single path"
 msgstr "Pulvérisation par union des formes"
 
@@ -12564,8 +12536,8 @@ msgid "To tweak a path by pushing, select it and drag over it."
 msgstr "Pour perturber un chemin en le poussant, sélectionnez-le et faites glisser la souris dessus."
 
 #: ../src/tools-switch.cpp:143
-msgid "To spray a path by pushing, select it and drag over it."
-msgstr "Pour pulvériser un chemin en le poussant, sélectionnez-le et faites glisser la souris dessus."
+msgid "<b>Drag</b>, <b>click</b> or <b>scroll</b> to spray the selected objects."
+msgstr ""
 
 #: ../src/tools-switch.cpp:149
 msgid "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and resize. <b>Click</b> to select."
@@ -12674,124 +12646,124 @@ msgstr "Vectoriser un bitmap"
 msgid "Trace: Done. %ld nodes created"
 msgstr "Vectorisation effectuée. %ld nœuds créés."
 
-#: ../src/tweak-context.cpp:211
+#: ../src/tweak-context.cpp:213
 #, c-format
 msgid "%s. Drag to <b>move</b>."
 msgstr "%s. Cliquer-glisser pour <b>déplacer</b>."
 
-#: ../src/tweak-context.cpp:215
+#: ../src/tweak-context.cpp:217
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
 msgstr "%s. Cliquer-glisser ou cliquer pour <b>rapprocher</b>; avec Maj pour <b>éloigner</b>."
 
-#: ../src/tweak-context.cpp:219
+#: ../src/tweak-context.cpp:221
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
 msgstr "%s. Glisser ou cliquer pour <b>déplacer aléatoirement</b>."
 
-#: ../src/tweak-context.cpp:223
+#: ../src/tweak-context.cpp:225
 #, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
 msgstr "%s. Cliquer-glisser ou cliquer pour <b>réduire</b>; avec Maj pour <b>agrandir</b>."
 
-#: ../src/tweak-context.cpp:227
+#: ../src/tweak-context.cpp:229
 #, c-format
 msgid "%s. Drag or click to <b>rotate clockwise</b>; with Shift, <b>counterclockwise</b>."
 msgstr "%s. Glisser ou cliquer pour <b>pivoter dans le sens horaire</b> ; avec Maj, <b>dans le sens anti-horaire</b>."
 
-#: ../src/tweak-context.cpp:231
+#: ../src/tweak-context.cpp:233
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr "%s. Glisser ou cliquer pour <b>dupliquer</b> ; avec Maj, <b>supprime</b>."
 
-#: ../src/tweak-context.cpp:235
+#: ../src/tweak-context.cpp:237
 #, c-format
 msgid "%s. Drag to <b>push paths</b>."
 msgstr "%s. Glisser pour <b>pousser les chemins</b>."
 
-#: ../src/tweak-context.cpp:239
+#: ../src/tweak-context.cpp:241
 #, c-format
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
 msgstr "%s. Cliquer-glisser ou cliquer pour <b>rétrécir les chemins</b>; avec Maj pour les <b>élargir</b>."
 
-#: ../src/tweak-context.cpp:247
+#: ../src/tweak-context.cpp:249
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
 msgstr "%s. Cliquer-glisser ou cliquer pour <b>attirer les chemins</b>; avec Maj pour les <b>repousser</b>."
 
-#: ../src/tweak-context.cpp:255
+#: ../src/tweak-context.cpp:257
 #, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
 msgstr "%s. Cliquer-glisser ou cliquer pour <b>rendre les chemins rugueux</b>."
 
-#: ../src/tweak-context.cpp:259
+#: ../src/tweak-context.cpp:261
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
 msgstr "%s. Cliquer-glisser ou cliquer pour <b>peindre les objets</b> avec une couleur."
 
-#: ../src/tweak-context.cpp:263
+#: ../src/tweak-context.cpp:265
 #, c-format
 msgid "%s. Drag or click to <b>randomize colors</b>."
 msgstr "%s. Cliquer-glisser ou cliquer pour <b>peindre avec une couleur aléatoire</b>."
 
-#: ../src/tweak-context.cpp:267
+#: ../src/tweak-context.cpp:269
 #, c-format
 msgid "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
 msgstr "%s. Cliquer-glisser ou cliquer pour <b>augmenter le flou</b>; avec Maj pour le <b>diminuer</b>."
 
-#: ../src/tweak-context.cpp:1228
+#: ../src/tweak-context.cpp:1238
 msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr "<b>Sélection vide !</b> Sélectionner les objets à ajuster."
 
-#: ../src/tweak-context.cpp:1264
+#: ../src/tweak-context.cpp:1272
 msgid "Move tweak"
 msgstr "Ajuster en déplaçant"
 
-#: ../src/tweak-context.cpp:1268
+#: ../src/tweak-context.cpp:1276
 msgid "Move in/out tweak"
 msgstr "Ajuster en rapprochant ou en s’éloignant du curseur"
 
-#: ../src/tweak-context.cpp:1272
+#: ../src/tweak-context.cpp:1280
 msgid "Move jitter tweak"
 msgstr "Ajuster en déplaçant aléatoirement"
 
-#: ../src/tweak-context.cpp:1276
+#: ../src/tweak-context.cpp:1284
 msgid "Scale tweak"
 msgstr "Ajuster en redimensionnant"
 
-#: ../src/tweak-context.cpp:1280
+#: ../src/tweak-context.cpp:1288
 msgid "Rotate tweak"
 msgstr "Ajuster en pivotant"
 
-#: ../src/tweak-context.cpp:1284
+#: ../src/tweak-context.cpp:1292
 msgid "Duplicate/delete tweak"
 msgstr "Ajuster en dupliquant ou supprimant"
 
-#: ../src/tweak-context.cpp:1288
+#: ../src/tweak-context.cpp:1296
 msgid "Push path tweak"
 msgstr "Ajuster en poussant le chemin"
 
-#: ../src/tweak-context.cpp:1292
+#: ../src/tweak-context.cpp:1300
 msgid "Shrink/grow path tweak"
 msgstr "Ajuster en contractant ou en dilatant le chemin"
 
-#: ../src/tweak-context.cpp:1296
+#: ../src/tweak-context.cpp:1304
 msgid "Attract/repel path tweak"
 msgstr "Ajuster en attirant ou en repoussant le chemin"
 
-#: ../src/tweak-context.cpp:1300
+#: ../src/tweak-context.cpp:1308
 msgid "Roughen path tweak"
 msgstr "Ajuster en rendant le chemin plus rugueux"
 
-#: ../src/tweak-context.cpp:1304
+#: ../src/tweak-context.cpp:1312
 msgid "Color paint tweak"
 msgstr "Ajuster en peignant la couleur"
 
-#: ../src/tweak-context.cpp:1308
+#: ../src/tweak-context.cpp:1316
 msgid "Color jitter tweak"
 msgstr "Ajuster en variant les couleurs"
 
-#: ../src/tweak-context.cpp:1312
+#: ../src/tweak-context.cpp:1320
 msgid "Blur tweak"
 msgstr "Ajuster le niveau de flou"
 
@@ -13418,12 +13390,6 @@ msgstr "Supprimer la grille sélectionnée."
 #: ../src/widgets/toolbox.cpp:2330
 msgid "Guides"
 msgstr "Guides"
-
-#: ../src/ui/dialog/document-properties.cpp:119
-#: ../src/ui/dialog/inkscape-preferences.cpp:1072
-#: ../src/widgets/toolbox.cpp:2321
-msgid "Grids"
-msgstr "Grilles"
 
 #: ../src/ui/dialog/document-properties.cpp:120
 #: ../src/verbs.cpp:2586
@@ -15859,9 +15825,8 @@ msgid "Are deleted"
 msgstr "Sont supprimés"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:649
-#, fuzzy
 msgid "Moving original: clones and linked offsets"
-msgstr "Lorsque l’original est déplacé, ses clones et offsets liés :"
+msgstr "Lorsque l’original est déplacé, ses clones et ses offsets liés"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:651
 msgid "Clones are translated by the same vector as their original"
@@ -15878,7 +15843,7 @@ msgstr "Chaque clone est déplacé en fonction de son attribut transform= ; par
 #: ../src/ui/dialog/inkscape-preferences.cpp:656
 #, fuzzy
 msgid "Deleting original: clones"
-msgstr "Lors de la duplication d’un original et de ses clones :"
+msgstr "Lors de la duplication d’un original et de ses clones"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:658
 msgid "Orphaned clones are converted to regular objects"
@@ -15889,9 +15854,8 @@ msgid "Orphaned clones are deleted along with their original"
 msgstr "Les clones orphelins sont supprimés en même temps que leur original"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:662
-#, fuzzy
 msgid "Duplicating original+clones/linked offset"
-msgstr "Lors de la duplication d’un original et de ses clones :"
+msgstr "Lors de la duplication d’un original et de ses clones ou de ses offsets liés"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:664
 msgid "Relink duplicated clones"
@@ -18169,23 +18133,23 @@ msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr "<b>Maj</b> : cliquer-déplacer pour ajouter des nœuds à la sélection"
 
 #: ../src/ui/tool/node-tool.cpp:567
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%u of %u</b> node selected."
 msgid_plural "<b>%u of %u</b> nodes selected."
-msgstr[0] "<b>%i</b> objet sélectionné"
-msgstr[1] "<b>%i</b> objets sélectionnés"
+msgstr[0] "<b>%u</b> objet sur <b>%u</b> sélectionné"
+msgstr[1] "<b>%u</b> objets sur <b>%u</b> sélectionnés"
 
 #: ../src/ui/tool/node-tool.cpp:572
-#, fuzzy, c-format
+#, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click to edit only this object (more: Shift)"
-msgstr "Cliquer-glisser pour sélectionner des nœuds, cliquer pour sélectionner seulement cet objet"
+msgstr "%s Cliquer-glisser pour sélectionner des nœuds, cliquer pour sélectionner seulement cet objet (plus d'actions avec Maj)"
 
 #: ../src/ui/tool/node-tool.cpp:578
-#, fuzzy, c-format
+#, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click clear the selection"
-msgstr "Cliquer-glisser pour sélectionner des nœuds, cliquer pour libérer la sélection"
+msgstr "%s Cliquer-glisser pour sélectionner des nœuds, cliquer pour libérer la sélection"
 
 #: ../src/ui/tool/node-tool.cpp:587
 msgctxt "Node tool tip"
@@ -18671,9 +18635,8 @@ msgid "Wrap"
 msgstr "Retour à la ligne"
 
 #: ../src/ui/widget/preferences-widget.cpp:731
-#, fuzzy
 msgid "Select a bitmap editor"
-msgstr "Éditeur de bitmap :"
+msgstr "Sélectionnez un éditeur de bitmap"
 
 #: ../src/ui/widget/random.cpp:123
 msgid "Reseed the random number generator; this creates a different sequence of random numbers."
@@ -20574,23 +20537,20 @@ msgid "Toggle between normal and outline display modes"
 msgstr "Alterner entre les modes d’affichage normal et contour"
 
 #: ../src/verbs.cpp:2617
-#, fuzzy
 msgid "Switch to normal color display mode"
-msgstr "Passer en mode d’affichage normal"
+msgstr "Passer en mode d’affichage de couleur normal"
 
 #: ../src/verbs.cpp:2618
 msgid "_Grayscale"
 msgstr "Niveaux de _gris"
 
 #: ../src/verbs.cpp:2619
-#, fuzzy
 msgid "Switch to grayscale display mode"
-msgstr "Passer en mode d’affichage normal"
+msgstr "Passer en mode d’affichage niveaux de gris"
 
 #: ../src/verbs.cpp:2623
-#, fuzzy
 msgid "Toggle between normal and grayscale color display modes"
-msgstr "Alterner entre les modes d’affichage normal et contour"
+msgstr "Alterner entre les modes d’affichage de couleur normal et niveaux de gris"
 
 #: ../src/verbs.cpp:2625
 msgid "Color-managed view"
@@ -21017,34 +20977,34 @@ msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects
 msgstr "<b>Bienvenue dans Inkscape!</b> Utilisez les formes ou l’outil de dessin à main levée pour créer des objets; utilisez les sélecteurs (flèches) pour les déplacer ou les modifier."
 
 #: ../src/widgets/desktop-widget.cpp:659
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %d (outline%s) - Inkscape"
-msgstr "%s: %d (contour) - Inkscape"
+msgstr "%s: %d (contour%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:661
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %d (no filters%s) - Inkscape"
-msgstr "%s: %d (aucun filtre) - Inkscape"
+msgstr "%s: %d (aucun filtre%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:663
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %d %s- Inkscape"
-msgstr "%s: %d - Inkscape"
+msgstr "%s: %d %s- Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:667
-#, fuzzy, c-format
+#, c-format
 msgid "%s (outline%s) - Inkscape"
-msgstr "%s (contour) - Inkscape"
+msgstr "%s (contour%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:669
-#, fuzzy, c-format
+#, c-format
 msgid "%s (no filters%s) - Inkscape"
-msgstr "%s (aucun filtre) - Inkscape"
+msgstr "%s (aucun filtre%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:671
-#, fuzzy, c-format
+#, c-format
 msgid "%s %s- Inkscape"
-msgstr "%s - Inkscape"
+msgstr "%s %s- Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:833
 msgid "Color-managed display is <b>enabled</b> in this window"
@@ -21071,13 +21031,13 @@ msgid "Close _without saving"
 msgstr "Fermer _sans enregistrer"
 
 #: ../src/widgets/desktop-widget.cpp:946
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format that may cause data loss!</span>\n"
 "\n"
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Le fichier « %s » a été enregistré dans un format (%s) qui peut causer des pertes de données !</span>\n"
+"<span weight=\"bold\" size=\"larger\">Le fichier « %s » a été enregistré dans un format qui peut causer des pertes de données !</span>\n"
 "\n"
 "Voulez-vous enregistrer ce fichier au format SVG Inkscape ?"
 
@@ -23858,7 +23818,6 @@ msgid "Brighter"
 msgstr "Plus clair"
 
 #: ../share/extensions/color_custom.inx.h:1
-#, fuzzy
 msgid ""
 "Allows you to evaluate different functions for each channel.\n"
 "r, g and b are the normalized values of the red, green and blue channels. The resulting RGB values are automatically clamped.\n"
@@ -23869,7 +23828,7 @@ msgid ""
 "  Blue Function: g"
 msgstr ""
 "Permet l'évaluation de différentes fonctions pour chaque canal.\n"
-"r, g et b sont les valeurs normalisées pour les canaux rouge, vert et bleu. Les valeurs RGB résultantes sont ??clamped?? automatiquement.\n"
+"r, g et b sont les valeurs normalisées pour les canaux rouge, vert et bleu. Les valeurs RGB résultantes sont recalculées automatiquement.\n"
 "\n"
 "Exemple (division du rouge par deux, échange du vert et du bleu) :\n"
 "  Fonction pour le rouge : r*0.5\n"
@@ -24289,7 +24248,6 @@ msgid "Use automatic scaling to size A4"
 msgstr "Utilise un redimensionnement automatique vers la taille A4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
-#, fuzzy
 msgid ""
 "- AutoCAD Release 13 format.\n"
 "- assume svg drawing is in pixels, at 90 dpi.\n"
@@ -24299,7 +24257,6 @@ msgid ""
 msgstr ""
 "Format AutoCAD Release 13.\n"
 "- Le dessin svg est en pixels, à 90 ppp.\n"
-"- Le dessin dxf doit être en mm.\n"
 "- Seuls les éléments ligne et spline sont supportés.\n"
 "- L’option ROBO-Master génère une spline spécialisée qui ne peut être utilisée que par des lecteurs ROBO-Master et AutoDesk, pas Inkscape.\n"
 "- La sortie LWPOLYLINE est une polyligne multi-connectée. Désactivez cette option pour utiliser une ancienne version de la sortie LINE."
@@ -25118,6 +25075,7 @@ msgstr ""
 "Chaque calque de premier niveau est converti en calque Gimp. Les sous-calques sont concaténés et converti avec le calque de premier niveau supérieur en un calque Gimp unique."
 
 #: ../share/extensions/grid_cartesian.inx.h:1
+#: ../share/extensions/grid_isometric.inx.h:1
 msgid "Border Thickness (px):"
 msgstr "Épaisseur de la bordure (px) :"
 
@@ -25204,6 +25162,42 @@ msgstr "Axe X"
 #: ../share/extensions/grid_cartesian.inx.h:23
 msgid "Y Axis"
 msgstr "Axe Y"
+
+#: ../share/extensions/grid_isometric.inx.h:2
+msgid "Division Spacing (px):"
+msgstr "Espacement des marques (px) :"
+
+#: ../share/extensions/grid_isometric.inx.h:3
+msgid "Isometric Grid"
+msgstr "Grille isométrique"
+
+#: ../share/extensions/grid_isometric.inx.h:4
+msgid "Major Division Thickness (px):"
+msgstr "Épaisseur des marques principales (px) :"
+
+#: ../share/extensions/grid_isometric.inx.h:5
+msgid "Minor Division Thickness (px):"
+msgstr "Épaisseur des marques secondaires (px) :"
+
+#: ../share/extensions/grid_isometric.inx.h:7
+msgid "Subdivisions per Major Division:"
+msgstr "Subdivisions par marque principale :"
+
+#: ../share/extensions/grid_isometric.inx.h:8
+msgid "Subminor Division Thickness (px):"
+msgstr "Épaisseur des marques mineures (px) :"
+
+#: ../share/extensions/grid_isometric.inx.h:9
+msgid "Subsubdivs per Subdivision:"
+msgstr "Sous-subdivisions par subdivision :"
+
+#: ../share/extensions/grid_isometric.inx.h:10
+msgid "X Divisions [x2]:"
+msgstr "Marques sur l’axe X (x2) :"
+
+#: ../share/extensions/grid_isometric.inx.h:11
+msgid "Y Divisions [x2] [> 1/2 X Div]:"
+msgstr "Marques sur l'axe Y (x2, >1/2 marques X) :"
 
 #: ../share/extensions/grid_polar.inx.h:1
 msgid "Angle Divisions at Centre:"
@@ -25636,14 +25630,12 @@ msgid "Effects"
 msgstr "Effets"
 
 #: ../share/extensions/jessyInk_effects.inx.h:6
-#, fuzzy
 msgid "Fade in"
-msgstr "Fondu"
+msgstr "Ouverture en fondu"
 
 #: ../share/extensions/jessyInk_effects.inx.h:7
-#, fuzzy
 msgid "Fade out"
-msgstr "<b>Opacité :</b>"
+msgstr "Fermeture en fondu"
 
 #: ../share/extensions/jessyInk_effects.inx.h:10
 msgid "None (default)"
@@ -27191,23 +27183,20 @@ msgid "XAML Output"
 msgstr "Sortie XAML"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:1
-#, fuzzy
 msgid "Add font list"
-msgstr "Ajouter une fonte"
+msgstr "Ajouter la liste des polices"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:2
 msgid "Compressed Inkscape SVG with media (*.zip)"
 msgstr "SVG Inkscape compressé avec média (*.zip)"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:3
-#, fuzzy
 msgid "Compressed Inkscape SVG with media export"
-msgstr "SVG Inkscape compressé avec média (*.zip)"
+msgstr "Exportation SVG Inkscape compressé avec média"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:4
-#, fuzzy
 msgid "Image zip directory:"
-msgstr "%s n’est pas un répertoire valide."
+msgstr "Chemin des images dans le fichier compressé :"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:5
 msgid "Inkscape's native file format compressed with Zip and including all media files"
@@ -27835,27 +27824,31 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#, fuzzy
+#~ msgid "X frequency:"
+#~ msgstr "Fréquence de base :"
+
+#, fuzzy
+#~ msgid "Y frequency:"
+#~ msgstr "Fréquence de base :"
+#~ msgid "To spray a path by pushing, select it and drag over it."
+#~ msgstr ""
+#~ "Pour pulvériser un chemin en le poussant, sélectionnez-le et faites "
+#~ "glisser la souris dessus."
 #~ msgid "(minimum mean)"
 #~ msgstr "(moyenne minimale)"
-
 #~ msgid "Toolbox|Scatter"
 #~ msgstr "Dispersion"
-
 #~ msgid "Toolbox|Scatter:"
 #~ msgstr "Dispersion :"
-
 #~ msgid "(low rotation variation)"
 #~ msgstr "(variation de rotation faible)"
-
 #~ msgid "(low scale variation)"
 #~ msgstr "(variation d’échelle faible)"
-
 #~ msgid "Toolbox|Scale"
 #~ msgstr "Échelle"
-
 #~ msgid "Toolbox|Scale:"
 #~ msgstr "Échelle :"
-
 #~ msgid "<b>Fade out:</b>"
 #~ msgstr "<b>Opacité :</b>"
 
@@ -27866,7 +27859,6 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Smoothness"
 #~ msgstr "Lissage :"
-
 #~ msgid "Melt"
 #~ msgstr "Mélange"
 
@@ -27885,1037 +27877,838 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Painting"
 #~ msgstr "Peinture à l’huile"
-
 #~ msgid "Primary blur:"
 #~ msgstr "Flou primaire :"
-
 #~ msgid "Secondary blur:"
 #~ msgstr "Flou secondaire :"
 
 #, fuzzy
 #~ msgid "Smooth all"
 #~ msgstr "Adoucir"
-
 #~ msgid "When the original is deleted, its clones:"
 #~ msgstr "Lors que l’original est supprimé, ses clones :"
-
 #~ msgid "_Blend mode:"
 #~ msgstr "Mode de _fondu :"
-
 #~ msgid "Cols:"
 #~ msgstr "Colonnes :"
-
 #~ msgid "Rows:"
 #~ msgstr "Lignes :"
 #~ msgctxt "Palette"
-
 #~ msgid "Blue1"
 #~ msgstr "Bleu1"
 #~ msgctxt "Palette"
-
 #~ msgid "Blue2"
 #~ msgstr "Bleu2"
 #~ msgctxt "Palette"
-
 #~ msgid "Blue3"
 #~ msgstr "Bleu3"
 #~ msgctxt "Palette"
-
 #~ msgid "Red1"
 #~ msgstr "Rouge1"
 #~ msgctxt "Palette"
-
 #~ msgid "Red2"
 #~ msgstr "Rouge2"
 #~ msgctxt "Palette"
-
 #~ msgid "Red3"
 #~ msgstr "Rouge3"
 #~ msgctxt "Palette"
-
 #~ msgid "Orange1"
 #~ msgstr "Orange1"
 #~ msgctxt "Palette"
-
 #~ msgid "Orange2"
 #~ msgstr "Orange2"
 #~ msgctxt "Palette"
-
 #~ msgid "Orange3"
 #~ msgstr "Orange3"
 #~ msgctxt "Palette"
-
 #~ msgid "Brown1"
 #~ msgstr "Brun1"
 #~ msgctxt "Palette"
-
 #~ msgid "Brown2"
 #~ msgstr "Brun2"
 #~ msgctxt "Palette"
-
 #~ msgid "Brown3"
 #~ msgstr "Brun3"
 #~ msgctxt "Palette"
-
 #~ msgid "Green1"
 #~ msgstr "Vert1"
 #~ msgctxt "Palette"
-
 #~ msgid "Green2"
 #~ msgstr "Vert2"
 #~ msgctxt "Palette"
-
 #~ msgid "Green3"
 #~ msgstr "Vert3"
 #~ msgctxt "Palette"
-
 #~ msgid "Purple1"
 #~ msgstr "Violet1"
 #~ msgctxt "Palette"
-
 #~ msgid "Purple2"
 #~ msgstr "Violet2"
 #~ msgctxt "Palette"
-
 #~ msgid "Purple3"
 #~ msgstr "Violet3"
 #~ msgctxt "Palette"
-
 #~ msgid "Metalic1"
 #~ msgstr "Métallique1"
 #~ msgctxt "Palette"
-
 #~ msgid "Metalic2"
 #~ msgstr "Métallique2"
 #~ msgctxt "Palette"
-
 #~ msgid "Metalic3"
 #~ msgstr "Métallique3"
 #~ msgctxt "Palette"
-
 #~ msgid "Metalic4"
 #~ msgstr "Métallique4"
 #~ msgctxt "Palette"
-
 #~ msgid "Grey1"
 #~ msgstr "Gris1"
 #~ msgctxt "Palette"
-
 #~ msgid "Grey2"
 #~ msgstr "Gris2"
 #~ msgctxt "Palette"
-
 #~ msgid "Grey3"
 #~ msgstr "Gris3"
 #~ msgctxt "Palette"
-
 #~ msgid "Grey4"
 #~ msgstr "Gris4"
 #~ msgctxt "Palette"
-
 #~ msgid "Grey5"
 #~ msgstr "Gris5"
 #~ msgctxt "Palette"
-
 #~ msgid "default outer 1"
 #~ msgstr "extérieur 1 (défaut)"
 #~ msgctxt "Palette"
-
 #~ msgid "default outer 2"
 #~ msgstr "extérieur 2 (défaut)"
 #~ msgctxt "Palette"
-
 #~ msgid "default outer 3"
 #~ msgstr "extérieur 3 (défaut)"
 #~ msgctxt "Palette"
-
 #~ msgid "default block"
 #~ msgstr "bloc (défaut)"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default added blue"
 #~ msgstr "bleu ajouté (défaut)"
 #~ msgctxt "Palette"
-
 #~ msgid "default block header"
 #~ msgstr "en-tête de bloc (défaut)"
 #~ msgctxt "Palette"
-
 #~ msgid "default alert block"
 #~ msgstr "bloc d'alerte (défaut)"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default added red"
 #~ msgstr "rouge ajouté (défaut)"
 #~ msgctxt "Palette"
-
 #~ msgid "default alert block header"
 #~ msgstr "en-tête de bloc d'alerte (défaut)"
 #~ msgctxt "Palette"
-
 #~ msgid "default example block"
 #~ msgstr "bloc d'exemple (défaut)"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default added green"
 #~ msgstr "vert ajouté (défaut)"
 #~ msgctxt "Palette"
-
 #~ msgid "default example block header"
 #~ msgstr "en-tête de bloc d'exemple (défaut)"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default covered text"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default covered bullet"
 #~ msgstr "Créer un texte encadré"
 #~ msgctxt "Palette"
-
 #~ msgid "default background"
 #~ msgstr "arrière-plan (défaut)"
 #~ msgctxt "Palette"
-
 #~ msgid "default text"
 #~ msgstr "texte (défaut)"
 #~ msgctxt "Palette"
-
 #~ msgid "default light outer 1"
 #~ msgstr "extérieur 1 (default light)"
 #~ msgctxt "Palette"
-
 #~ msgid "default light outer 2"
 #~ msgstr "extérieur 2 (default light)"
 #~ msgctxt "Palette"
-
 #~ msgid "default light outer 3"
 #~ msgstr "extérieur 3 (default light)"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default light block"
 #~ msgstr "Titre par défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default light block header"
 #~ msgstr "Titre par défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default light block header text"
 #~ msgstr "Paramètres par défaut de l’interface"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default light alert block"
 #~ msgstr "Titre par défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default light alert block header"
 #~ msgstr "Titre par défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default light alert block header text"
 #~ msgstr "Paramètres par défaut de l’interface"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default light example block"
 #~ msgstr "Titre par défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default light example block header"
 #~ msgstr "Titre par défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default light example block header text"
 #~ msgstr "Paramètres par défaut de l’interface"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default light covered text"
 #~ msgstr "Paramètres par défaut de l’interface"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default light covered bullet"
 #~ msgstr "Paramètres par défaut de l’interface"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default light background"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "default light text"
 #~ msgstr "Titre par défaut"
 #~ msgctxt "Palette"
-
 #~ msgid "beetle outer 1"
 #~ msgstr "extérieur 1 (beetle)"
 #~ msgctxt "Palette"
-
 #~ msgid "beetle outer 2"
 #~ msgstr "extérieur 2 (beetle)"
 #~ msgctxt "Palette"
-
 #~ msgid "beetle outer 3"
 #~ msgstr "extérieur 3 (beetle)"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beetle added blue"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beetle added red"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beetle alert block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beetle added green"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beetle example block header text"
 #~ msgstr "Test en-tête de groupe"
 #~ msgctxt "Palette"
-
 #~ msgid "beetle header text"
 #~ msgstr "en-tête de texte (beetle)"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beetle added grey"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beetle covered bullet"
 #~ msgstr "Créer un texte encadré"
 #~ msgctxt "Palette"
-
 #~ msgid "beetle background"
 #~ msgstr "arrière-plan (beetle)"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beetle covered text"
 #~ msgstr "Créer un texte encadré"
 #~ msgctxt "Palette"
-
 #~ msgid "beetle text"
 #~ msgstr "texte (beetle)"
 #~ msgctxt "Palette"
-
 #~ msgid "albatross outer 1"
 #~ msgstr "extérieur 1 (albatross)"
 #~ msgctxt "Palette"
-
 #~ msgid "albatross outer 2"
 #~ msgstr "extérieur 2 (albatross)"
 #~ msgctxt "Palette"
-
 #~ msgid "albatross outer 3"
 #~ msgstr "extérieur 3 (albatross)"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross background"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross block"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross block header"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross bullet"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross covered bullet"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross covered text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross added red"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross alert block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross added green"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross example block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross added yellow"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "albatross added white"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "fly text"
 #~ msgstr "Taper du texte"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "fly added grey"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "fly outer"
 #~ msgstr "filtre"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "fly background"
 #~ msgstr "Fond"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "fly header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "fly covered bullet"
 #~ msgstr "Texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "fly covered text"
 #~ msgstr "Texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "fly added red"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "fly alert block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "fly added green"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "fly example block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "fly added blue"
 #~ msgstr "Test en-tête de groupe"
 #~ msgctxt "Palette"
-
 #~ msgid "seagull outer 1"
 #~ msgstr "extérieur 1 (seagull)"
 #~ msgctxt "Palette"
-
 #~ msgid "seagull outer 2"
 #~ msgstr "extérieur 2 (seagull)"
 #~ msgctxt "Palette"
-
 #~ msgid "seagull outer 3"
 #~ msgstr "extérieur 3 (seagull)"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "seagull block"
 #~ msgstr "défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "seagull added grey"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "seagull block header"
 #~ msgstr "Déverrouiller le calque"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "seagull covered text"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "seagull covered bullet"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "seagull background"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "seagull text"
 #~ msgstr "Texte vertical"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beaver outer frame"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beaver added red"
 #~ msgstr "Créer et éditer des dégradés"
 #~ msgctxt "Palette"
-
 #~ msgid "beaver outer 1"
 #~ msgstr "extérieur 1 (beaver)"
 #~ msgctxt "Palette"
-
 #~ msgid "beaver outer 2"
 #~ msgstr "extérieur 2 (beaver)"
 #~ msgctxt "Palette"
-
 #~ msgid "beaver outer 3"
 #~ msgstr "extérieur 3 (beaver)"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beaver added blue"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beaver block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beaver added green"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beaver example block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beaver alert block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beaver covered text"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beaver covered bullet"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beaver background"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "beaver text"
 #~ msgstr "Créer un texte"
 #~ msgctxt "Palette"
-
 #~ msgid "crane outer 1"
 #~ msgstr "extérieur 1 (crane)"
 #~ msgctxt "Palette"
-
 #~ msgid "crane outer 2"
 #~ msgstr "extérieur 2 (crane)"
 #~ msgctxt "Palette"
-
 #~ msgid "crane outer 3"
 #~ msgstr "extérieur 3 (crane)"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "crane block"
 #~ msgstr "Déverrouiller le calque"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "crane added orange"
 #~ msgstr "angle contraint"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "crane block header"
 #~ msgstr "Déverrouiller le calque"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "crane alert block"
 #~ msgstr "défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "crane added red"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "crane alert block header"
 #~ msgstr "Déverrouiller le calque"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "crane added green"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "crane example block header"
 #~ msgstr "Déverrouiller le calque"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "crane covered text"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "crane covered bullet"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "crane bullet"
 #~ msgstr "Créer un texte"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "crane background"
 #~ msgstr "Tracer selon le fond"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "crane text"
 #~ msgstr "Créer un texte"
 #~ msgctxt "Palette"
-
 #~ msgid "wolverine outer 1"
 #~ msgstr "extérieur 1 (wolverine)"
 #~ msgctxt "Palette"
-
 #~ msgid "wolverine outer 2"
 #~ msgstr "extérieur 2 (wolverine)"
 #~ msgctxt "Palette"
-
 #~ msgid "wolverine outer 3"
 #~ msgstr "extérieur 3 (wolverine)"
 #~ msgctxt "Palette"
-
 #~ msgid "wolverine outer 4"
 #~ msgstr "extérieur 4 (wolverine)"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "wolverine added yellow"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "wolverine added blue"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "wolverine header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "wolverine added green"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "wolverine example block title"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "wolverine covered text"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "wolverine covered bullet"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "wolverine background"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "wolverine text"
 #~ msgstr "Supprimer le texte"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Orange Hilight"
 #~ msgstr "Hauteur de ligne"
 #~ msgctxt "Palette"
-
 #~ msgid "Orange"
 #~ msgstr "Orange"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Orange Base"
 #~ msgstr "Orange 1"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Orange Shadow"
 #~ msgstr "Ombre interne"
 #~ msgctxt "Palette"
-
 #~ msgid "Yellow"
 #~ msgstr "Jaune"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Yellow Base"
 #~ msgstr "Casse des phrases"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Yellow Shadow"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Orange"
 #~ msgstr "Triangle exinscrit"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Red"
 #~ msgstr "centre"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Red Base"
 #~ msgstr "Casse des phrases"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Deep Red"
 #~ msgstr "centre"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Human Highlight"
 #~ msgstr "Hauteur de ligne"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Human"
 #~ msgstr "Han"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Human Base"
 #~ msgstr "Han"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Environmental Shadow"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Environmental Blue Highlight"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Environmental Blue Medium"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Environmental Blue Base"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Environmental Blue Shadow"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Blue Shadow"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Blue"
 #~ msgstr "centre"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Blue Base"
 #~ msgstr "Casse des phrases"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Green Highlight"
 #~ msgstr "Centre du cercle inscrit"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Green"
 #~ msgstr "Centre du cercle inscrit"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Green Base"
 #~ msgstr "Casse des phrases"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Green Shadow"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Magenta Highlight"
 #~ msgstr "Magenta"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Magenta"
 #~ msgstr "Magenta"
 
 #, fuzzy
 #~ msgctxt "Palette"
-
 #~ msgid "Accent Dark Violet"
 #~ msgstr "Magenta"
 #~ msgctxt "Palette"
-
 #~ msgid "Grey 1"
 #~ msgstr "Gris 1"
 #~ msgctxt "Palette"
-
 #~ msgid "Grey 2"
 #~ msgstr "Gris 2"
 #~ msgctxt "Palette"
-
 #~ msgid "Grey 3"
 #~ msgstr "Gris 3"
 #~ msgctxt "Palette"
-
 #~ msgid "Grey 4"
 #~ msgstr "Gris 4"
 #~ msgctxt "Palette"
-
 #~ msgid "Grey 5"
 #~ msgstr "Gris 5"
 #~ msgctxt "Palette"
-
 #~ msgid "Grey 6"
 #~ msgstr "Gris 6"
-
 #~ msgid "%s: %d (print colors preview) - Inkscape"
 #~ msgstr "%s: %d (aperçu des couleurs d’impression) - Inkscape"
-
 #~ msgid "%s (print colors preview) - Inkscape"
 #~ msgstr "%s (aperçu des couleurs d’impression) - Inkscape"
 
 #, fuzzy
 #~ msgid "Drop shadow, color"
 #~ msgstr "Ombre portée couleur -Expérimentale-"
-
 #~ msgid "Colorizable Drop shadow"
 #~ msgstr "Ombre portée colorisable"
 
@@ -28927,17 +28720,13 @@ msgstr "Entrée XAML"
 #~ msgid "Fading:"
 #~ msgstr "Ombrage"
 #~ msgctxt "Filter blend mode"
-
 #~ msgid "Normal"
 #~ msgstr "Normal"
 #~ msgctxt "Filter blend mode"
-
 #~ msgid "Screen"
 #~ msgstr "Superposition"
-
 #~ msgid "ZIP Output"
 #~ msgstr "Sortie ZIP"
-
 #~ msgid "Spread:"
 #~ msgstr "Dispersion :"
 
@@ -28952,34 +28741,25 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Change colors to a two colors palette"
 #~ msgstr "Modifie les couleurs avec une palette à deux tons"
-
 #~ msgid "tileClonesDialog|Arrange"
 #~ msgstr "Organiser"
-
 #~ msgid "Color Markers to Match Stroke"
 #~ msgstr "Colorer les marqueurs pour les assortir au contour"
 #~ msgctxt "Gap"
-
 #~ msgid "H:"
 #~ msgstr "H :"
 #~ msgctxt "Stroke width"
-
 #~ msgid "Width:"
 #~ msgstr "Épaisseur :"
-
 #~ msgid "Randomize hue"
 #~ msgstr "Rendre la teinte aléatoire"
-
 #~ msgid "Randomize lightness"
 #~ msgstr "Rendre la luminosité aléatoire"
-
 #~ msgid "Randomize saturation"
 #~ msgstr "Rendre la saturation aléatoire"
-
 #~ msgid "Year (0 for current):"
 #~ msgstr "Année (0 pour l’année en cours) :"
 #~ msgctxt "Node tool tip"
-
 #~ msgid ""
 #~ "<b>%u of %u nodes</b> selected. Drag to select nodes, click to edit only "
 #~ "this object (more: Shift)"
@@ -28987,29 +28767,22 @@ msgstr "Entrée XAML"
 #~ "<b>%u sur %u nœuds</b> sélectionnés. Cliquer-glisser pour sélectionner "
 #~ "des nœuds, cliquer pour éditer seulement cet objet (modificateur : Maj)"
 #~ msgctxt "Node tool tip"
-
 #~ msgid ""
 #~ "<b>%u of %u nodes</b> selected. Drag to select nodes, click clear the "
 #~ "selection"
 #~ msgstr ""
 #~ "<b>%u sur %u nœuds</b> sélectionnés. Cliquer-glisser pour sélectionner "
 #~ "des nœuds, cliquer libérer la sélection"
-
 #~ msgid "Create new objects with:"
 #~ msgstr "Créer de nouveaux objets avec :"
-
 #~ msgid "Paint objects with:"
 #~ msgstr "Peindre les objets avec :"
-
 #~ msgid "_Width"
 #~ msgstr "_Largeur"
-
 #~ msgid "_Height"
 #~ msgstr "_Hauteur"
-
 #~ msgid "A_ngle"
 #~ msgstr "A_ngle"
-
 #~ msgid "Opacity, %"
 #~ msgstr "Opacité, %"
 
@@ -29102,25 +28875,18 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "artefact diameter:"
 #~ msgstr "Coller le paramètre du chemin"
-
 #~ msgid "Spacing"
 #~ msgstr "Espacement"
-
 #~ msgid "Normal offset"
 #~ msgstr "Décalage normal"
-
 #~ msgid "Function applied to the blue channel"
 #~ msgstr "Fonction appliquée au canal bleu"
-
 #~ msgid "Function applied to the green channel"
 #~ msgstr "Fonction appliquée au canal vert"
-
 #~ msgid "Function applied to the red channel"
 #~ msgstr "Fonction appliquée au canal rouge"
-
 #~ msgid "Rotation (degrees):"
 #~ msgstr "Rotation (deg) :"
-
 #~ msgid "Rotation(degrees):"
 #~ msgstr "Rotation (deg) :"
 
@@ -29151,16 +28917,12 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Export aborted."
 #~ msgstr "Export en cours"
-
 #~ msgid "Side Length 'a'/px: "
 #~ msgstr "Longueur du côté a (px) :"
-
 #~ msgid "Side Length 'b'/px: "
 #~ msgstr "Longueur du côté b (px) :"
-
 #~ msgid "Side Length 'c'/px: "
 #~ msgstr "Longueur du côté c (px) :"
-
 #~ msgid ""
 #~ "Generate a random pattern of Voronoi cells. The pattern will be "
 #~ "accessible in the Fill and Stroke dialog. You must select an object or a "
@@ -29169,194 +28931,134 @@ msgstr "Entrée XAML"
 #~ "Génère un motif aléatoire de cellules de Voronoi. Le motif sera "
 #~ "accessible depuis la boîte de dialogue Remplissage et contour. Vous devez "
 #~ "sélectionner un objet ou un groupe."
-
 #~ msgid "Where to apply?"
 #~ msgstr "Où appliquer ?"
-
 #~ msgid "Order"
 #~ msgstr "Ordre"
-
 #~ msgid "Font size [px]"
 #~ msgstr "Taille de police (px)"
-
 #~ msgid "Angle"
 #~ msgstr "Angle"
-
 #~ msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
 #~ msgstr ""
 #~ "Redimensionnement isotrope (utilise le plus petit de : largeur/amplitude "
 #~ "en X ou hauteur/amplitude en Y)"
-
 #~ msgid "Radius"
 #~ msgstr "Rayon"
-
 #~ msgid "Next Path Effect Parameter"
 #~ msgstr "Paramètre suivant"
-
 #~ msgid "Show next Path Effect parameter for editing"
 #~ msgstr "Afficher le paramètre d’effet de chemin suivant pour le modifier"
-
 #~ msgid "Toggle snapping on or off"
 #~ msgstr "Activer ou désactiver le magnétisme"
-
 #~ msgid "Rows"
 #~ msgstr "Lignes"
-
 #~ msgid "Radius [px]"
 #~ msgstr "Rayon (px)"
-
 #~ msgid "Rotation [deg]"
 #~ msgstr "Rotation (deg)"
-
 #~ msgid "Font size"
 #~ msgstr "Taille de police"
-
 #~ msgid "gap|H:"
 #~ msgstr "H :"
-
 #~ msgid "Grid|_New"
 #~ msgstr "_Nouvelle"
-
 #~ msgid "find|Clones"
 #~ msgstr "Clones"
-
 #~ msgid "filesystem|Path:"
 #~ msgstr "Chemin :"
-
 #~ msgid "layers|Top"
 #~ msgstr "Haut"
 #~ msgctxt "Select toolbar"
-
 #~ msgid "X"
 #~ msgstr "X"
 #~ msgctxt "Select toolbar"
-
 #~ msgid "Y"
 #~ msgstr "Y"
 #~ msgctxt "Select toolbar"
-
 #~ msgid "W"
 #~ msgstr "L"
 #~ msgctxt "Select toolbar"
-
 #~ msgid "H"
 #~ msgstr "H"
-
 #~ msgid "StrokeWidth|Width:"
 #~ msgstr "Épaisseur :"
-
 #~ msgid "clonetiler|H"
 #~ msgstr "T"
-
 #~ msgid "clonetiler|S"
 #~ msgstr "S"
-
 #~ msgid "clonetiler|L"
 #~ msgstr "L"
-
 #~ msgid "pdfinput|medium"
 #~ msgstr "moyen"
-
 #~ msgid "filterBlendMode|Normal"
 #~ msgstr "Normal"
-
 #~ msgid "undo action|Raise"
 #~ msgstr "Monter"
-
 #~ msgid "action|Clone"
 #~ msgstr "Cloner"
-
 #~ msgid "web|Link"
 #~ msgstr "Lien"
-
 #~ msgid "object|Clone"
 #~ msgstr "Clone"
-
 #~ msgid "Connector network layout"
 #~ msgstr "Router un réseau de connecteurs"
-
 #~ msgid "swatches|Size"
 #~ msgstr "Taille"
-
 #~ msgid "small"
 #~ msgstr "Petit"
-
 #~ msgid "swatchesHeight|medium"
 #~ msgstr "Moyen"
-
 #~ msgid "large"
 #~ msgstr "Grand"
-
 #~ msgid "huge"
 #~ msgstr "Énorme"
-
 #~ msgid "swatches|Width"
 #~ msgstr "Largeur"
-
 #~ msgid "swatchesWidth|medium"
 #~ msgstr "Moyen"
-
 #~ msgid "wide"
 #~ msgstr "Large"
-
 #~ msgid "wider"
 #~ msgstr "Très large"
-
 #~ msgid "swatches|Wrap"
 #~ msgstr "Retour à la ligne"
-
 #~ msgid "sliders|Link"
 #~ msgstr "Lier"
-
 #~ msgid "_Print Colors Preview"
 #~ msgstr "A_perçu des couleurs d’impression"
-
 #~ msgid "Switch to print colors preview mode"
 #~ msgstr "Passer en mode aperçu des couleurs d’impression"
-
 #~ msgid "fontselector|Style"
 #~ msgstr "Style"
-
 #~ msgid "select toolbar|X position"
 #~ msgstr "position X"
-
 #~ msgid "select toolbar|X"
 #~ msgstr "X"
-
 #~ msgid "select toolbar|Y position"
 #~ msgstr "Position Y"
-
 #~ msgid "select toolbar|Y"
 #~ msgstr "Y"
-
 #~ msgid "select toolbar|Width"
 #~ msgstr "Largeur"
-
 #~ msgid "select toolbar|W"
 #~ msgstr "L"
-
 #~ msgid "select toolbar|Height"
 #~ msgstr "Hauteur"
-
 #~ msgid "select toolbar|H"
 #~ msgstr "select toolbar|H"
-
 #~ msgid "Task"
 #~ msgstr "Tâche"
-
 #~ msgid "Task:"
 #~ msgstr "Tâche :"
-
 #~ msgid "order"
 #~ msgstr "ordre"
-
 #~ msgid "type"
 #~ msgstr "type"
 
 #, fuzzy
 #~ msgid "mouse handler"
 #~ msgstr "gestionnaire de souris"
-
 #~ msgid "view"
 #~ msgstr "vue"
 
@@ -29379,19 +29081,14 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Transform handle tip"
 #~ msgstr "Poignée de transformation"
-
 #~ msgid "Select Font Size"
 #~ msgstr "Définir la taille de la police"
-
 #~ msgid "Toggle On/Off Bold Style"
 #~ msgstr "Basculer le style Gras"
-
 #~ msgid "Toggle On/Off Italic/Oblique Style"
 #~ msgstr "Basculer le style Italique/Oblique"
-
 #~ msgid "Horizontal Text"
 #~ msgstr "Texte horizontal"
-
 #~ msgid "Vertical Text"
 #~ msgstr "Texte vertical"
 
@@ -29512,65 +29209,48 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "tr"
 #~ msgstr "Étoile"
-
 #~ msgid "Refresh the icons"
 #~ msgstr "Rafraîchir les icônes"
-
 #~ msgid "How many digits to write after the decimal dot"
 #~ msgstr "Combien de chiffres écrire après le point décimal"
-
 #~ msgid "Color/opacity used for color spraying"
 #~ msgstr "Couleur et opacités pour la pulvérisation de couleur"
-
 #~ msgid "Show node transformation handles"
 #~ msgstr "Afficher les poignées de transformation de nœud"
-
 #~ msgid "Show next path effect parameter for editing"
 #~ msgstr "Afficher le paramètre d’effet de chemin suivant pour le modifier"
-
 #~ msgid "Select Font Family"
 #~ msgstr "Définir la famille de la police"
-
 #~ msgid ""
 #~ "This font is currently not installed on your system. Inkscape will use "
 #~ "the default font instead."
 #~ msgstr ""
 #~ "Cette police n’est pas installée sur votre système. Inkscape utilisera la "
 #~ "police par défaut à la place"
-
 #~ msgid "Italic"
 #~ msgstr "Italique"
-
 #~ msgid "Note: The file extension is appended automatically."
 #~ msgstr "Note : l’extension du fichier est ajoutée automatiquement"
-
 #~ msgid "_Input Devices (new)..."
 #~ msgstr "Périphériques de saisie... (nouveau)"
-
 #~ msgid "Failed to read from child pipe (%s)"
 #~ msgstr "Échec de lecture sur le tube fils (%s)"
-
 #~ msgid "Failed to change to directory '%s' (%s)"
 #~ msgstr ""
 #~ "Impossible de choisir le répertoire %s.\n"
 #~ "%s"
-
 #~ msgid "Failed to execute child process (%s)"
 #~ msgstr "Échec lors de l’exécution du processus fils (%s)"
-
 #~ msgid "Invalid program name: %s"
 #~ msgstr "Nom de programme erroné : %s"
-
 #~ msgid "Invalid string in argument vector at %d: %s"
 #~ msgstr "Chaîne invalide dans le vecteur d’argument dans %d: %s"
-
 #~ msgid "Invalid string in environment: %s"
 #~ msgstr "Chaîne invalide dans l’environnement : %s"
-
 #~ msgid "Failed to create pipe for communicating with child process (%s)"
 #~ msgstr ""
 #~ "Échec de création d’un tube pour la communication avec le processus fils "
 #~ "(%s)"
-
 #~ msgid "Failed to execute helper program (%s)"
 #~ msgstr "Échec de l’exécution du programme auxiliaire (%s)"
+

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-03-30 23:08+0200\n"
+"POT-Creation-Date: 2011-04-01 15:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6589,7 +6589,7 @@ msgstr ""
 #: ../src/extension/internal/cairo-ps-out.cpp:325
 #: ../src/extension/internal/cairo-ps-out.cpp:363
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
-#: ../src/extension/internal/emf-win32-inout.cpp:2487
+#: ../src/extension/internal/emf-win32-inout.cpp:2516
 msgid "Convert texts to paths"
 msgstr ""
 
@@ -6670,39 +6670,39 @@ msgstr ""
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2457
+#: ../src/extension/internal/emf-win32-inout.cpp:2486
 msgid "EMF Input"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2462
+#: ../src/extension/internal/emf-win32-inout.cpp:2491
 msgid "Enhanced Metafiles (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2463
+#: ../src/extension/internal/emf-win32-inout.cpp:2492
 msgid "Enhanced Metafiles"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2471
+#: ../src/extension/internal/emf-win32-inout.cpp:2500
 msgid "WMF Input"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2476
+#: ../src/extension/internal/emf-win32-inout.cpp:2505
 msgid "Windows Metafiles (*.wmf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2477
+#: ../src/extension/internal/emf-win32-inout.cpp:2506
 msgid "Windows Metafiles"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2485
+#: ../src/extension/internal/emf-win32-inout.cpp:2514
 msgid "EMF Output"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2491
+#: ../src/extension/internal/emf-win32-inout.cpp:2520
 msgid "Enhanced Metafile (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2492
+#: ../src/extension/internal/emf-win32-inout.cpp:2521
 msgid "Enhanced Metafile"
 msgstr ""
 
@@ -6862,11 +6862,13 @@ msgstr ""
 
 #: ../src/extension/internal/filter/abc.h:468
 #: ../src/extension/internal/filter/abc.h:667
+#: ../src/extension/internal/filter/experimental.h:91
 msgid "Horizontal frequency:"
 msgstr ""
 
 #: ../src/extension/internal/filter/abc.h:469
 #: ../src/extension/internal/filter/abc.h:668
+#: ../src/extension/internal/filter/experimental.h:92
 msgid "Vertical frequency:"
 msgstr ""
 
@@ -7280,14 +7282,6 @@ msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:90
 msgid "Grain mode"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:91
-msgid "X frequency:"
-msgstr ""
-
-#: ../src/extension/internal/filter/experimental.h:92
-msgid "Y frequency:"
 msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:95
@@ -11624,8 +11618,8 @@ msgid "Use <b>Shift+D</b> to look up frame"
 msgstr ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:209 ../src/spray-context.cpp:226
-#: ../src/tweak-context.cpp:203
+#: ../src/selection-describer.cpp:209 ../src/spray-context.cpp:230
+#: ../src/tweak-context.cpp:206
 #, c-format
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
@@ -12115,43 +12109,43 @@ msgstr ""
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr ""
 
-#: ../src/spray-context.cpp:228 ../src/tweak-context.cpp:205
+#: ../src/spray-context.cpp:232 ../src/tweak-context.cpp:208
 #, c-format
 msgid "<b>Nothing</b> selected"
 msgstr ""
 
-#: ../src/spray-context.cpp:234
+#: ../src/spray-context.cpp:238
 #, c-format
 msgid ""
 "%s. Drag, click or scroll to spray <b>copies</b> of the initial selection."
 msgstr ""
 
-#: ../src/spray-context.cpp:237
+#: ../src/spray-context.cpp:241
 #, c-format
 msgid ""
 "%s. Drag, click or scroll to spray <b>clones</b> of the initial selection."
 msgstr ""
 
-#: ../src/spray-context.cpp:240
+#: ../src/spray-context.cpp:244
 #, c-format
 msgid ""
 "%s. Drag, click or scroll to spray in a <b>single path</b> of the initial "
 "selection."
 msgstr ""
 
-#: ../src/spray-context.cpp:706
+#: ../src/spray-context.cpp:710
 msgid "<b>Nothing selected!</b> Select objects to spray."
 msgstr ""
 
-#: ../src/spray-context.cpp:781 ../src/widgets/toolbox.cpp:4648
+#: ../src/spray-context.cpp:785 ../src/widgets/toolbox.cpp:4648
 msgid "Spray with copies"
 msgstr ""
 
-#: ../src/spray-context.cpp:785 ../src/widgets/toolbox.cpp:4655
+#: ../src/spray-context.cpp:789 ../src/widgets/toolbox.cpp:4655
 msgid "Spray with clones"
 msgstr ""
 
-#: ../src/spray-context.cpp:789
+#: ../src/spray-context.cpp:793
 msgid "Spray in single path"
 msgstr ""
 
@@ -12405,7 +12399,8 @@ msgid "To tweak a path by pushing, select it and drag over it."
 msgstr ""
 
 #: ../src/tools-switch.cpp:143
-msgid "To spray a path by pushing, select it and drag over it."
+msgid ""
+"<b>Drag</b>, <b>click</b> or <b>scroll</b> to spray the selected objects."
 msgstr ""
 
 #: ../src/tools-switch.cpp:149
@@ -12537,127 +12532,127 @@ msgstr ""
 msgid "Trace: Done. %ld nodes created"
 msgstr ""
 
-#: ../src/tweak-context.cpp:211
+#: ../src/tweak-context.cpp:213
 #, c-format
 msgid "%s. Drag to <b>move</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:215
+#: ../src/tweak-context.cpp:217
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:219
+#: ../src/tweak-context.cpp:221
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:223
+#: ../src/tweak-context.cpp:225
 #, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:227
+#: ../src/tweak-context.cpp:229
 #, c-format
 msgid ""
 "%s. Drag or click to <b>rotate clockwise</b>; with Shift, "
 "<b>counterclockwise</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:231
+#: ../src/tweak-context.cpp:233
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:235
+#: ../src/tweak-context.cpp:237
 #, c-format
 msgid "%s. Drag to <b>push paths</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:239
+#: ../src/tweak-context.cpp:241
 #, c-format
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:247
+#: ../src/tweak-context.cpp:249
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:255
+#: ../src/tweak-context.cpp:257
 #, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:259
+#: ../src/tweak-context.cpp:261
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
 msgstr ""
 
-#: ../src/tweak-context.cpp:263
+#: ../src/tweak-context.cpp:265
 #, c-format
 msgid "%s. Drag or click to <b>randomize colors</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:267
+#: ../src/tweak-context.cpp:269
 #, c-format
 msgid ""
 "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:1228
+#: ../src/tweak-context.cpp:1238
 msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr ""
 
-#: ../src/tweak-context.cpp:1264
+#: ../src/tweak-context.cpp:1272
 msgid "Move tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1268
+#: ../src/tweak-context.cpp:1276
 msgid "Move in/out tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1272
+#: ../src/tweak-context.cpp:1280
 msgid "Move jitter tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1276
+#: ../src/tweak-context.cpp:1284
 msgid "Scale tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1280
+#: ../src/tweak-context.cpp:1288
 msgid "Rotate tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1284
+#: ../src/tweak-context.cpp:1292
 msgid "Duplicate/delete tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1288
+#: ../src/tweak-context.cpp:1296
 msgid "Push path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1292
+#: ../src/tweak-context.cpp:1300
 msgid "Shrink/grow path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1296
+#: ../src/tweak-context.cpp:1304
 msgid "Attract/repel path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1300
+#: ../src/tweak-context.cpp:1308
 msgid "Roughen path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1304
+#: ../src/tweak-context.cpp:1312
 msgid "Color paint tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1308
+#: ../src/tweak-context.cpp:1316
 msgid "Color jitter tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1312
+#: ../src/tweak-context.cpp:1320
 msgid "Blur tweak"
 msgstr ""
 
