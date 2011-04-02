@@ -632,9 +632,9 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
                 margin_units = &px;
             }
             margin_top = nv->getMarginLength("fit-margin-top",margin_units, &px, w, h, false);
-            margin_top = nv->getMarginLength("fit-margin-left",margin_units, &px, w, h, true);
-            margin_top = nv->getMarginLength("fit-margin-right",margin_units, &px, w, h, true);
-            margin_top = nv->getMarginLength("fit-margin-bottom",margin_units, &px, w, h, false);
+            margin_left = nv->getMarginLength("fit-margin-left",margin_units, &px, w, h, true);
+            margin_right = nv->getMarginLength("fit-margin-right",margin_units, &px, w, h, true);
+            margin_bottom = nv->getMarginLength("fit-margin-bottom",margin_units, &px, w, h, false);
         }
     }
     
