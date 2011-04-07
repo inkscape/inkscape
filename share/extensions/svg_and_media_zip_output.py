@@ -153,18 +153,19 @@ class CompressedMediaOutput(inkex.Effect):
         the node is using.
         '''
         fonts = []
-        font_familly = ''
-        font_weight = ''
         s = ''
         if 'style' in node.attrib:
             s = simplestyle.parseStyle(node.attrib['style'])
         if not s:
             return fonts
-        if s['font-weight']:
-            font_weight = s['font-weight']
-        if s['font-family']:
-            font_familly = s['font-family']
-        fonts.append(font_familly + ' ' + font_weight)
+            
+        if s.has_key('font-family'):
+            if s.has_key('font-weight'):
+                fonts.append(s['font-family'] + ' ' + s['font-weight'])
+            else:
+                fonts.append(s['font-family'])
+        elif s.has_key('-inkscape-font-specification'):
+            fonts.append(s['-inkscape-font-specification'])
         return fonts
 
     def list_fonts(self, z):
