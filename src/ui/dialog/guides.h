@@ -21,6 +21,7 @@
 #include <gtkmm/stock.h>
 #include <gtkmm/adjustment.h>
 #include "ui/widget/button.h"
+#include "ui/widget/spinbutton.h"
 #include <2geom/point.h>
 
 namespace Inkscape {
@@ -62,12 +63,12 @@ private:
     Inkscape::UI::Widget::CheckButton _relative_toggle;
     static bool _relative_toggle_status; // remember the status of the _relative_toggle_status button across instances
     Gtk::Adjustment _adjustment_x;
-    Gtk::SpinButton _spin_button_x;
+    Inkscape::UI::Widget::SpinButton _spin_button_x;
     Gtk::Adjustment _adjustment_y;
-    Gtk::SpinButton _spin_button_y;
+    Inkscape::UI::Widget::SpinButton _spin_button_y;
 
     Gtk::Adjustment _adj_angle;
-    Gtk::SpinButton _spin_angle;
+    Inkscape::UI::Widget::SpinButton _spin_angle;
 
     Gtk::Widget *_unit_selector;
     bool _mode;

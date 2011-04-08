@@ -66,6 +66,8 @@ ink_common_sources +=	\
 	ui/widget/scalar.h		\
 	ui/widget/selected-style.h	\
 	ui/widget/selected-style.cpp	\
+	ui/widget/spinbutton.h	\
+	ui/widget/spinbutton.cpp	\
 	ui/widget/spin-slider.h		\
 	ui/widget/spin-slider.cpp	\
 	ui/widget/style-subject.h	\
