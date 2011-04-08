@@ -52,6 +52,8 @@ GuidelinePropertiesDialog::GuidelinePropertiesDialog(SPGuide *guide, SPDesktop *
 {
 }
 
+bool GuidelinePropertiesDialog::_relative_toggle_status = false; // initialize relative checkbox status for when this dialog is opened for first time
+
 GuidelinePropertiesDialog::~GuidelinePropertiesDialog() {
 }
 
@@ -64,6 +66,7 @@ void GuidelinePropertiesDialog::showDialog(SPGuide *guide, SPDesktop *desktop) {
 void GuidelinePropertiesDialog::_modeChanged()
 {
     _mode = !_relative_toggle.get_active();
+    _relative_toggle_status = _relative_toggle.get_active();
     if (!_mode) {
         // relative
         _spin_angle.set_value(0);
@@ -149,7 +152,7 @@ void GuidelinePropertiesDialog::_response(gint response)
 }
 
 void GuidelinePropertiesDialog::_setup() {
-    set_title(_("Guideline"));
+    set_title(_("Guidelinea"));
     add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
     add_button(Gtk::Stock::DELETE, -12);
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
@@ -179,6 +182,7 @@ void GuidelinePropertiesDialog::_setup() {
     _layout_table.attach(_relative_toggle,
                          1, 3, 9, 10, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _relative_toggle.signal_toggled().connect(sigc::mem_fun(*this, &GuidelinePropertiesDialog::_modeChanged));
+    _relative_toggle.set_active(_relative_toggle_status);
 
     // unitmenu
     /* fixme: We should allow percents here too, as percents of the canvas size */

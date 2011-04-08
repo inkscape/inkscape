@@ -60,6 +60,7 @@ private:
     Gtk::Label  _label_Y;
     Gtk::Label  _label_degrees;
     Inkscape::UI::Widget::CheckButton _relative_toggle;
+    static bool _relative_toggle_status; // remember the status of the _relative_toggle_status button across instances
     Gtk::Adjustment _adjustment_x;
     Gtk::SpinButton _spin_button_x;
     Gtk::Adjustment _adjustment_y;
