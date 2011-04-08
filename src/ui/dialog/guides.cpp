@@ -205,9 +205,6 @@ void GuidelinePropertiesDialog::_setup() {
                          1, 2, 5, 6, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _layout_table.attach(_spin_button_y,
                          2, 3, 5, 6, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-    gtk_signal_connect_object(GTK_OBJECT(_spin_button_x.gobj()), "activate",
-                              GTK_SIGNAL_FUNC(gtk_window_activate_default),
-                              gobj());
 
     _layout_table.attach(_label_units,
                          1, 2, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
@@ -222,6 +219,14 @@ void GuidelinePropertiesDialog::_setup() {
                          1, 2, 8, 9, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _layout_table.attach(_spin_angle,
                          2, 3, 8, 9, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+
+    // don't know what this exactly does, but it results in that the dialog closes when entering a value and pressing enter (see LP bug 484187)
+    gtk_signal_connect_object(GTK_OBJECT(_spin_button_x.gobj()), "activate",
+                              GTK_SIGNAL_FUNC(gtk_window_activate_default), gobj());
+    gtk_signal_connect_object(GTK_OBJECT(_spin_button_y.gobj()), "activate",
+                              GTK_SIGNAL_FUNC(gtk_window_activate_default), gobj());
+    gtk_signal_connect_object(GTK_OBJECT(_spin_angle.gobj()), "activate",
+                              GTK_SIGNAL_FUNC(gtk_window_activate_default), gobj());
 
 
     // dialog
