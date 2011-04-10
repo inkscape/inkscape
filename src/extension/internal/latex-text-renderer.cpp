@@ -266,10 +266,15 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
     SPText *textobj = SP_TEXT (item);
     SPStyle *style = item->style;
 
-    gchar *str = sp_te_get_string_multiline(item);
-    if (!str) {
+    gchar *strtext = sp_te_get_string_multiline(item);
+    if (!strtext) {
         return;
     }
+    // replace carriage return with double slash
+    gchar ** splitstr = g_strsplit(strtext, "\n", -1);
+    gchar *str = g_strjoinv("\\\\ ", splitstr);
+    g_free(strtext);
+    g_strfreev(splitstr);
 
     // get position and alignment
     // Align vertically on the baseline of the font (retreived from the anchor point)
@@ -361,8 +366,17 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
 
             Inkscape::Text::Layout::iterator ln = li; 
             ln.nextStartOfSpan();
-            Glib::ustring spanstr = sp_te_get_string_multiline (item, li, ln);
-            os << spanstr;
+            Glib::ustring uspanstr = sp_te_get_string_multiline (item, li, ln);
+            const gchar *spanstr = uspanstr.c_str();
+            if (!spanstr) {
+                continue;
+            }
+            // replace carriage return with double slash
+            gchar ** splitstr = g_strsplit(spanstr, "\n", -1);
+            gchar *spanstr_new = g_strjoinv("\\\\ ", splitstr);
+            os << spanstr_new;
+            g_strfreev(splitstr);
+            g_free(spanstr_new);
 
             if (is_italic) { os << "}"; } // italic end
             if (is_bold) { os << "}"; } // bold end
@@ -388,16 +402,6 @@ Flowing in rectangle is possible, not in arb shape.
 
     SPFlowtext *flowtext = SP_FLOWTEXT(item);
     SPStyle *style = item->style;
-
-    gchar *strtext = sp_te_get_string_multiline(item);
-    if (!strtext) {
-        return;
-    }
-    // replace carriage return with double slash
-    gchar ** splitstr = g_strsplit(strtext, "\n", -1);
-    gchar *str = g_strjoinv("\\\\ ", splitstr);
-    g_free(strtext);
-    g_strfreev(splitstr);
 
     SPItem *frame_item = flowtext->get_frame(NULL);
     if (!frame_item || !SP_IS_RECT(frame_item)) {
@@ -500,8 +504,17 @@ Flowing in rectangle is possible, not in arb shape.
 
             Inkscape::Text::Layout::iterator ln = li; 
             ln.nextStartOfSpan();
-            Glib::ustring spanstr = sp_te_get_string_multiline (item, li, ln);
-            os << spanstr;
+            Glib::ustring uspanstr = sp_te_get_string_multiline (item, li, ln);
+            const gchar *spanstr = uspanstr.c_str();
+            if (!spanstr) {
+                continue;
+            }
+            // replace carriage return with double slash
+            gchar ** splitstr = g_strsplit(spanstr, "\n", -1);
+            gchar *spanstr_new = g_strjoinv("\\\\ ", splitstr);
+            os << spanstr_new;
+            g_strfreev(splitstr);
+            g_free(spanstr_new);
 
             if (is_italic) { os << "}"; } // italic end
             if (is_bold) { os << "}"; } // bold end
