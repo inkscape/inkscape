@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-04-01 15:12+0200\n"
-"PO-Revision-Date: 2011-04-01 20:39+0100\n"
+"PO-Revision-Date: 2011-04-10 12:08+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -409,6 +409,8 @@ msgid ""
 "Found the following fonts:\n"
 "%s"
 msgstr ""
+"Es wurden folgende Schriftarten gefunden:\n"
+"%s"
 
 #: ../share/extensions/uniconv_output.py:120
 msgid "You need to install the UniConvertor software.\n"
@@ -2668,7 +2670,7 @@ msgstr "Schwarz (#000000)"
 #: ../share/palettes/palettes.h:97
 msgctxt "Palette"
 msgid "dimgray (#696969)"
-msgstr ""
+msgstr "dimgray (#696969)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:100
@@ -2692,19 +2694,19 @@ msgstr "Silber (#C0C0C0)"
 #: ../share/palettes/palettes.h:109
 msgctxt "Palette"
 msgid "lightgray (#D3D3D3)"
-msgstr ""
+msgstr "lightgray (#D3D3D3)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:112
 msgctxt "Palette"
 msgid "gainsboro (#DCDCDC)"
-msgstr ""
+msgstr "gainsboro (#DCDCDC)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:115
 msgctxt "Palette"
 msgid "whitesmoke (#F5F5F5)"
-msgstr ""
+msgstr "whitesmoke (#F5F5F5)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:118
@@ -2716,13 +2718,13 @@ msgstr "Weiß (#FFFFFF)"
 #: ../share/palettes/palettes.h:121
 msgctxt "Palette"
 msgid "rosybrown (#BC8F8F)"
-msgstr ""
+msgstr "rosybrown (#BC8F8F)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:124
 msgctxt "Palette"
 msgid "indianred (#CD5C5C)"
-msgstr ""
+msgstr "indianred (#CD5C5C)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:127
@@ -2734,13 +2736,13 @@ msgstr "Braun (#A52A2A)"
 #: ../share/palettes/palettes.h:130
 msgctxt "Palette"
 msgid "firebrick (#B22222)"
-msgstr ""
+msgstr "firebrick (#B22222)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:133
 msgctxt "Palette"
 msgid "lightcoral (#F08080)"
-msgstr ""
+msgstr "lightcoral (#F08080)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:136
@@ -2770,31 +2772,31 @@ msgstr "Schnee (#FFFAFA)"
 #: ../share/palettes/palettes.h:148
 msgctxt "Palette"
 msgid "mistyrose (#FFE4E1)"
-msgstr ""
+msgstr "mistyrose (#FFE4E1)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:151
 msgctxt "Palette"
 msgid "salmon (#FA8072)"
-msgstr ""
+msgstr "salmon (#FA8072)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:154
 msgctxt "Palette"
 msgid "tomato (#FF6347)"
-msgstr ""
+msgstr "tomato (#FF6347)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:157
 msgctxt "Palette"
 msgid "darksalmon (#E9967A)"
-msgstr ""
+msgstr "darksalmon (#E9967A)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:160
 msgctxt "Palette"
 msgid "coral (#FF7F50)"
-msgstr ""
+msgstr "coral (#FF7F50)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:163
@@ -2806,19 +2808,19 @@ msgstr "Orangerot (#FF4500)"
 #: ../share/palettes/palettes.h:166
 msgctxt "Palette"
 msgid "lightsalmon (#FFA07A)"
-msgstr ""
+msgstr "lightsalmon (#FFA07A)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:169
 msgctxt "Palette"
 msgid "sienna (#A0522D)"
-msgstr ""
+msgstr "sienna (#A0522D)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:172
 msgctxt "Palette"
 msgid "seashell (#FFF5EE)"
-msgstr ""
+msgstr "seashell (#FFF5EE)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:175
@@ -2830,37 +2832,37 @@ msgstr "Schokolade (#D2691E)"
 #: ../share/palettes/palettes.h:178
 msgctxt "Palette"
 msgid "saddlebrown (#8B4513)"
-msgstr ""
+msgstr "saddlebrown (#8B4513)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:181
 msgctxt "Palette"
 msgid "sandybrown (#F4A460)"
-msgstr ""
+msgstr "sandybrown (#F4A460)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:184
 msgctxt "Palette"
 msgid "peachpuff (#FFDAB9)"
-msgstr ""
+msgstr "peachpuff (#FFDAB9)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:187
 msgctxt "Palette"
 msgid "peru (#CD853F)"
-msgstr ""
+msgstr "peru (#CD853F)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:190
 msgctxt "Palette"
 msgid "linen (#FAF0E6)"
-msgstr ""
+msgstr "linen (#FAF0E6)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:193
 msgctxt "Palette"
 msgid "bisque (#FFE4C4)"
-msgstr ""
+msgstr "bisque (#FFE4C4)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:196
@@ -2872,43 +2874,43 @@ msgstr "Dunkelorange (#FF8C00)"
 #: ../share/palettes/palettes.h:199
 msgctxt "Palette"
 msgid "burlywood (#DEB887)"
-msgstr ""
+msgstr "burlywood (#DEB887)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:202
 msgctxt "Palette"
 msgid "tan (#D2B48C)"
-msgstr ""
+msgstr "tan (#D2B48C)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:205
 msgctxt "Palette"
 msgid "antiquewhite (#FAEBD7)"
-msgstr ""
+msgstr "antiquewhite (#FAEBD7)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:208
 msgctxt "Palette"
 msgid "navajowhite (#FFDEAD)"
-msgstr ""
+msgstr "navajowhite (#FFDEAD)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:211
 msgctxt "Palette"
 msgid "blanchedalmond (#FFEBCD)"
-msgstr ""
+msgstr "blanchedalmond (#FFEBCD)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:214
 msgctxt "Palette"
 msgid "papayawhip (#FFEFD5)"
-msgstr ""
+msgstr "papayawhip (#FFEFD5)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:217
 msgctxt "Palette"
 msgid "moccasin (#FFE4B5)"
-msgstr ""
+msgstr "moccasin (#FFE4B5)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:220
@@ -2920,37 +2922,37 @@ msgstr "Orange (#FFA500)"
 #: ../share/palettes/palettes.h:223
 msgctxt "Palette"
 msgid "wheat (#F5DEB3)"
-msgstr ""
+msgstr "wheat (#F5DEB3)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:226
 msgctxt "Palette"
 msgid "oldlace (#FDF5E6)"
-msgstr ""
+msgstr "oldlace (#FDF5E6)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:229
 msgctxt "Palette"
 msgid "floralwhite (#FFFAF0)"
-msgstr ""
+msgstr "floralwhite (#FFFAF0)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:232
 msgctxt "Palette"
 msgid "darkgoldenrod (#B8860B)"
-msgstr ""
+msgstr "darkgoldenrod (#B8860B)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:235
 msgctxt "Palette"
 msgid "goldenrod (#DAA520)"
-msgstr ""
+msgstr "goldenrod (#DAA520)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:238
 msgctxt "Palette"
 msgid "cornsilk (#FFF8DC)"
-msgstr ""
+msgstr "cornsilk (#FFF8DC)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:241
@@ -2968,31 +2970,31 @@ msgstr "Khaki (#F0E68C)"
 #: ../share/palettes/palettes.h:247
 msgctxt "Palette"
 msgid "lemonchiffon (#FFFACD)"
-msgstr ""
+msgstr "lemonchiffon (#FFFACD)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:250
 msgctxt "Palette"
 msgid "palegoldenrod (#EEE8AA)"
-msgstr ""
+msgstr "palegoldenrod (#EEE8AA)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:253
 msgctxt "Palette"
 msgid "darkkhaki (#BDB76B)"
-msgstr ""
+msgstr "darkkhaki (#BDB76B)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:256
 msgctxt "Palette"
 msgid "beige (#F5F5DC)"
-msgstr ""
+msgstr "beige (#F5F5DC)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:259
 msgctxt "Palette"
 msgid "lightgoldenrodyellow (#FAFAD2)"
-msgstr ""
+msgstr "lightgoldenrodyellow (#FAFAD2)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:262
@@ -3022,7 +3024,7 @@ msgstr "Elfenbein (#FFFFF0)"
 #: ../share/palettes/palettes.h:274
 msgctxt "Palette"
 msgid "olivedrab (#6B8E23)"
-msgstr ""
+msgstr "olivedrab (#6B8E23)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:277
@@ -3046,25 +3048,25 @@ msgstr "Grüngelb (#ADFF2F)"
 #: ../share/palettes/palettes.h:286
 msgctxt "Palette"
 msgid "chartreuse (#7FFF00)"
-msgstr ""
+msgstr "chartreuse (#7FFF00)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:289
 msgctxt "Palette"
 msgid "lawngreen (#7CFC00)"
-msgstr ""
+msgstr "lawngreen (#7CFC00)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:292
 msgctxt "Palette"
 msgid "darkseagreen (#8FBC8F)"
-msgstr ""
+msgstr "darkseagreen (#8FBC8F)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:295
 msgctxt "Palette"
 msgid "forestgreen (#228B22)"
-msgstr ""
+msgstr "forestgreen (#228B22)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:298
@@ -3082,13 +3084,13 @@ msgstr "Hellgrün (#90EE90)"
 #: ../share/palettes/palettes.h:304
 msgctxt "Palette"
 msgid "palegreen (#98FB98)"
-msgstr ""
+msgstr "palegreen (#98FB98)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:307
 msgctxt "Palette"
 msgid "darkgreen (#006400)"
-msgstr ""
+msgstr "darkgreen (#006400)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:310
@@ -3106,103 +3108,103 @@ msgstr "Limone (#00FF00)"
 #: ../share/palettes/palettes.h:316
 msgctxt "Palette"
 msgid "honeydew (#F0FFF0)"
-msgstr ""
+msgstr "honeydew (#F0FFF0)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:319
 msgctxt "Palette"
 msgid "seagreen (#2E8B57)"
-msgstr ""
+msgstr "seagreen (#2E8B57)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:322
 msgctxt "Palette"
 msgid "mediumseagreen (#3CB371)"
-msgstr ""
+msgstr "mediumseagreen (#3CB371)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:325
 msgctxt "Palette"
 msgid "springgreen (#00FF7F)"
-msgstr ""
+msgstr "springgreen (#00FF7F)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:328
 msgctxt "Palette"
 msgid "mintcream (#F5FFFA)"
-msgstr ""
+msgstr "mintcream (#F5FFFA)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:331
 msgctxt "Palette"
 msgid "mediumspringgreen (#00FA9A)"
-msgstr ""
+msgstr "mediumspringgreen (#00FA9A)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:334
 msgctxt "Palette"
 msgid "mediumaquamarine (#66CDAA)"
-msgstr ""
+msgstr "mediumaquamarine (#66CDAA)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:337
 msgctxt "Palette"
 msgid "aquamarine (#7FFFD4)"
-msgstr ""
+msgstr "aquamarine (#7FFFD4)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:340
 msgctxt "Palette"
 msgid "turquoise (#40E0D0)"
-msgstr ""
+msgstr "turquoise (#40E0D0)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:343
 msgctxt "Palette"
 msgid "lightseagreen (#20B2AA)"
-msgstr ""
+msgstr "lightseagreen (#20B2AA)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:346
 msgctxt "Palette"
 msgid "mediumturquoise (#48D1CC)"
-msgstr ""
+msgstr "mediumturquoise (#48D1CC)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:349
 msgctxt "Palette"
 msgid "darkslategray (#2F4F4F)"
-msgstr ""
+msgstr "darkslategray (#2F4F4F)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:352
 msgctxt "Palette"
 msgid "paleturquoise (#AFEEEE)"
-msgstr ""
+msgstr "paleturquoise (#AFEEEE)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:355
 msgctxt "Palette"
 msgid "teal (#008080)"
-msgstr ""
+msgstr "teal (#008080)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:358
 msgctxt "Palette"
 msgid "darkcyan (#008B8B)"
-msgstr ""
+msgstr "darkcyan (#008B8B)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:361
 msgctxt "Palette"
 msgid "cyan (#00FFFF)"
-msgstr ""
+msgstr "cyan (#00FFFF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:364
 msgctxt "Palette"
 msgid "lightcyan (#E0FFFF)"
-msgstr ""
+msgstr "lightcyan (#E0FFFF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:367
@@ -3214,43 +3216,43 @@ msgstr "Azur (#F0FFFF)"
 #: ../share/palettes/palettes.h:370
 msgctxt "Palette"
 msgid "darkturquoise (#00CED1)"
-msgstr ""
+msgstr "darkturquoise (#00CED1)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:373
 msgctxt "Palette"
 msgid "cadetblue (#5F9EA0)"
-msgstr ""
+msgstr "cadetblue (#5F9EA0)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:376
 msgctxt "Palette"
 msgid "powderblue (#B0E0E6)"
-msgstr ""
+msgstr "powderblue (#B0E0E6)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:379
 msgctxt "Palette"
 msgid "lightblue (#ADD8E6)"
-msgstr ""
+msgstr "lightblue (#ADD8E6)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:382
 msgctxt "Palette"
 msgid "deepskyblue (#00BFFF)"
-msgstr ""
+msgstr "deepskyblue (#00BFFF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:385
 msgctxt "Palette"
 msgid "skyblue (#87CEEB)"
-msgstr ""
+msgstr "skyblue (#87CEEB)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:388
 msgctxt "Palette"
 msgid "lightskyblue (#87CEFA)"
-msgstr ""
+msgstr "lightskyblue (#87CEFA)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:391
@@ -3262,61 +3264,61 @@ msgstr "Stahlblau (#4682B4)"
 #: ../share/palettes/palettes.h:394
 msgctxt "Palette"
 msgid "aliceblue (#F0F8FF)"
-msgstr ""
+msgstr "aliceblue (#F0F8FF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:397
 msgctxt "Palette"
 msgid "dodgerblue (#1E90FF)"
-msgstr ""
+msgstr "dodgerblue (#1E90FF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:400
 msgctxt "Palette"
 msgid "slategray (#708090)"
-msgstr ""
+msgstr "slategray (#708090)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:403
 msgctxt "Palette"
 msgid "lightslategray (#778899)"
-msgstr ""
+msgstr "lightslategray (#778899)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:406
 msgctxt "Palette"
 msgid "lightsteelblue (#B0C4DE)"
-msgstr ""
+msgstr "lightsteelblue (#B0C4DE)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:409
 msgctxt "Palette"
 msgid "cornflowerblue (#6495ED)"
-msgstr ""
+msgstr "cornflowerblue (#6495ED)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:412
 msgctxt "Palette"
 msgid "royalblue (#4169E1)"
-msgstr ""
+msgstr "royalblue (#4169E1)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:415
 msgctxt "Palette"
 msgid "midnightblue (#191970)"
-msgstr ""
+msgstr "midnightblue (#191970)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:418
 msgctxt "Palette"
 msgid "lavender (#E6E6FA)"
-msgstr ""
+msgstr "lavender (#E6E6FA)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:421
 msgctxt "Palette"
 msgid "navy (#000080)"
-msgstr ""
+msgstr "navy (#000080)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:424
@@ -3340,37 +3342,37 @@ msgstr "Blau (#0000FF)"
 #: ../share/palettes/palettes.h:433
 msgctxt "Palette"
 msgid "ghostwhite (#F8F8FF)"
-msgstr ""
+msgstr "ghostwhite (#F8F8FF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:436
 msgctxt "Palette"
 msgid "slateblue (#6A5ACD)"
-msgstr ""
+msgstr "slateblue (#6A5ACD)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:439
 msgctxt "Palette"
 msgid "darkslateblue (#483D8B)"
-msgstr ""
+msgstr "darkslateblue (#483D8B)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:442
 msgctxt "Palette"
 msgid "mediumslateblue (#7B68EE)"
-msgstr ""
+msgstr "mediumslateblue (#7B68EE)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:445
 msgctxt "Palette"
 msgid "mediumpurple (#9370DB)"
-msgstr ""
+msgstr "mediumpurple (#9370DB)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:448
 msgctxt "Palette"
 msgid "blueviolet (#8A2BE2)"
-msgstr ""
+msgstr "blueviolet (#8A2BE2)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:451
@@ -3382,7 +3384,7 @@ msgstr "Indigo (#4B0082)"
 #: ../share/palettes/palettes.h:454
 msgctxt "Palette"
 msgid "darkorchid (#9932CC)"
-msgstr ""
+msgstr "darkorchid (#9932CC)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:457
@@ -3394,13 +3396,13 @@ msgstr "Dunkelviolet (#9400D3)"
 #: ../share/palettes/palettes.h:460
 msgctxt "Palette"
 msgid "mediumorchid (#BA55D3)"
-msgstr ""
+msgstr "mediumorchid (#BA55D3)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:463
 msgctxt "Palette"
 msgid "thistle (#D8BFD8)"
-msgstr ""
+msgstr "thistle (#D8BFD8)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:466
@@ -3418,73 +3420,73 @@ msgstr "Violet (#EE82EE)"
 #: ../share/palettes/palettes.h:472
 msgctxt "Palette"
 msgid "purple (#800080)"
-msgstr ""
+msgstr "purple (#800080)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:475
 msgctxt "Palette"
 msgid "darkmagenta (#8B008B)"
-msgstr ""
+msgstr "darkmagenta (#8B008B)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:478
 msgctxt "Palette"
 msgid "magenta (#FF00FF)"
-msgstr ""
+msgstr "magenta (#FF00FF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:481
 msgctxt "Palette"
 msgid "orchid (#DA70D6)"
-msgstr ""
+msgstr "orchid (#DA70D6)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:484
 msgctxt "Palette"
 msgid "mediumvioletred (#C71585)"
-msgstr ""
+msgstr "mediumvioletred (#C71585)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:487
 msgctxt "Palette"
 msgid "deeppink (#FF1493)"
-msgstr ""
+msgstr "deeppink (#FF1493)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:490
 msgctxt "Palette"
 msgid "hotpink (#FF69B4)"
-msgstr ""
+msgstr "hotpink (#FF69B4)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:493
 msgctxt "Palette"
 msgid "lavenderblush (#FFF0F5)"
-msgstr ""
+msgstr "lavenderblush (#FFF0F5)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:496
 msgctxt "Palette"
 msgid "palevioletred (#DB7093)"
-msgstr ""
+msgstr "palevioletred (#DB7093)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:499
 msgctxt "Palette"
 msgid "crimson (#DC143C)"
-msgstr ""
+msgstr "crimson (#DC143C)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:502
 msgctxt "Palette"
 msgid "pink (#FFC0CB)"
-msgstr ""
+msgstr "pink (#FFC0CB)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:505
 msgctxt "Palette"
 msgid "lightpink (#FFB6C1)"
-msgstr ""
+msgstr "lightpink (#FFB6C1)"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:508
@@ -3547,19 +3549,19 @@ msgstr "Orange 3"
 #: ../share/palettes/palettes.h:535
 msgctxt "Palette"
 msgid "Sky Blue 1"
-msgstr ""
+msgstr "Himmelsblau 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:538
 msgctxt "Palette"
 msgid "Sky Blue 2"
-msgstr ""
+msgstr "Himmelsblau 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:541
 msgctxt "Palette"
 msgid "Sky Blue 3"
-msgstr ""
+msgstr "Himmelsblau 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:544
@@ -6998,9 +7000,8 @@ msgstr "Glattheit"
 #: ../src/extension/internal/filter/abc.h:238
 #: ../src/extension/internal/filter/abc.h:376
 #: ../src/extension/internal/filter/abc.h:816
-#, fuzzy
 msgid "Elevation (°):"
-msgstr "Anhebung"
+msgstr "Anhebung (°):"
 
 #: ../src/extension/internal/filter/abc.h:239
 #: ../src/extension/internal/filter/abc.h:377
@@ -7011,9 +7012,8 @@ msgstr "Azimut (°):"
 #: ../src/extension/internal/filter/abc.h:240
 #: ../src/extension/internal/filter/abc.h:378
 #: ../src/extension/internal/filter/abc.h:818
-#, fuzzy
 msgid "Lightning color"
-msgstr "_Hervorhebungsfarbe:"
+msgstr "Hervorhebungsfarbe:"
 
 #: ../src/extension/internal/filter/abc.h:311
 #, fuzzy
@@ -7054,9 +7054,8 @@ msgstr "Vertikaler Versatz (px):"
 #: ../src/extension/internal/filter/abc.h:470
 #: ../src/extension/internal/filter/abc.h:669
 #: ../src/extension/internal/filter/experimental.h:93
-#, fuzzy
 msgid "Complexity:"
-msgstr "Maximale Kompexität"
+msgstr "Kompexität:"
 
 #: ../src/extension/internal/filter/abc.h:471
 #: ../src/extension/internal/filter/abc.h:670
@@ -7087,9 +7086,8 @@ msgstr "Position:"
 #: ../src/extension/internal/filter/abc.h:474
 #: ../src/extension/internal/filter/color.h:369
 #: ../src/extension/internal/filter/experimental.h:83
-#, fuzzy
 msgid "Inverted"
-msgstr "Invertieren"
+msgstr "Invertiet"
 
 #: ../src/extension/internal/filter/abc.h:487
 #, fuzzy
@@ -7115,9 +7113,8 @@ msgid "Roughen, custom (ABCs)"
 msgstr ""
 
 #: ../src/extension/internal/filter/abc.h:671
-#, fuzzy
 msgid "Intensity:"
-msgstr "Identität"
+msgstr "Intensität:"
 
 #: ../src/extension/internal/filter/abc.h:736
 #, fuzzy
@@ -7153,14 +7150,12 @@ msgstr "Sättigung"
 #: ../src/extension/internal/filter/color.h:459
 #: ../src/extension/internal/filter/experimental.h:84
 #: ../src/extension/internal/filter/experimental.h:505
-#, fuzzy
 msgid "Lightness:"
-msgstr "Helligkeit"
+msgstr "Helligkeit:"
 
 #: ../src/extension/internal/filter/color.h:75
-#, fuzzy
 msgid "Brightness filter"
-msgstr "Helligkeitsschritte"
+msgstr "Helligkeitsfilter"
 
 #: ../src/extension/internal/filter/color.h:130
 #, fuzzy
@@ -7173,15 +7168,13 @@ msgid "Harsh light:"
 msgstr "Höhe der Striche:"
 
 #: ../src/extension/internal/filter/color.h:135
-#, fuzzy
 msgid "Normal light:"
-msgstr "Normaler Versatz"
+msgstr "Normales Licht:"
 
 #: ../src/extension/internal/filter/color.h:137
 #: ../src/extension/internal/filter/color.h:609
-#, fuzzy
 msgid "Blend 1:"
-msgstr "Mischen"
+msgstr "Mischen 1:"
 
 #: ../src/extension/internal/filter/color.h:138
 #: ../src/extension/internal/filter/color.h:146
@@ -7190,7 +7183,6 @@ msgstr "Mischen"
 #: ../src/extension/internal/filter/color.h:792
 #: ../src/extension/internal/filter/color.h:798
 #: ../src/filter-enums.cpp:52
-#, fuzzy
 msgid "Multiply"
 msgstr "Multiplizieren"
 
@@ -7220,7 +7212,6 @@ msgstr "Screen"
 #: ../src/extension/internal/filter/color.h:619
 #: ../src/extension/internal/filter/color.h:790
 #: ../src/filter-enums.cpp:55
-#, fuzzy
 msgid "Lighten"
 msgstr "Erhellen"
 
@@ -7230,15 +7221,13 @@ msgstr "Erhellen"
 #: ../src/extension/internal/filter/color.h:793
 #: ../src/extension/internal/filter/color.h:799
 #: ../src/filter-enums.cpp:54
-#, fuzzy
 msgid "Darken"
 msgstr "Verdunkeln"
 
 #: ../src/extension/internal/filter/color.h:144
 #: ../src/extension/internal/filter/color.h:615
-#, fuzzy
 msgid "Blend 2:"
-msgstr "Mischen"
+msgstr "Mischen 2:"
 
 #: ../src/extension/internal/filter/color.h:163
 #, fuzzy
@@ -7265,19 +7254,16 @@ msgid "No swap"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:245
-#, fuzzy
 msgid "Color and alpha"
-msgstr "Farb-Management"
+msgstr "Farbe und Alpha"
 
 #: ../src/extension/internal/filter/color.h:246
-#, fuzzy
 msgid "Color only"
-msgstr "Farbe"
+msgstr "nur Farbe"
 
 #: ../src/extension/internal/filter/color.h:247
-#, fuzzy
 msgid "Alpha only"
-msgstr "Alpha-Füllung"
+msgstr "nur Alpha"
 
 #: ../src/extension/internal/filter/color.h:251
 msgid "Color 1"
@@ -7300,9 +7286,8 @@ msgstr "Farbe der Kontur setzen"
 #: ../src/extension/internal/filter/color.h:363
 #: ../src/extension/internal/filter/experimental.h:503
 #: ../src/extension/internal/filter/experimental.h:719
-#, fuzzy
 msgid "Simplify:"
-msgstr "Vereinfachen"
+msgstr "Vereinfachen:"
 
 #: ../src/extension/internal/filter/color.h:364
 #: ../src/extension/internal/filter/experimental.h:604
@@ -7364,14 +7349,12 @@ msgid "Lightness, custom (Color)"
 msgstr "Farbe der Kontur setzen"
 
 #: ../src/extension/internal/filter/color.h:538
-#, fuzzy
 msgid "Lights:"
-msgstr "Rechte:"
+msgstr "Lichter:"
 
 #: ../src/extension/internal/filter/color.h:539
-#, fuzzy
 msgid "Shadows:"
-msgstr "Formen"
+msgstr "Schatten:"
 
 #: ../src/extension/internal/filter/color.h:548
 msgid "Modify lights and shadows separately"
@@ -7394,9 +7377,8 @@ msgid "Colors:"
 msgstr "Farben:"
 
 #: ../src/extension/internal/filter/color.h:614
-#, fuzzy
 msgid "Over-saturation:"
-msgstr "Sättigung"
+msgstr "Übersättigung"
 
 #: ../src/extension/internal/filter/color.h:692
 #, fuzzy
@@ -7527,9 +7509,8 @@ msgid "Grain mode"
 msgstr "Zeichenmodus"
 
 #: ../src/extension/internal/filter/experimental.h:95
-#, fuzzy
 msgid "Expansion:"
-msgstr "Erweiterung »"
+msgstr "Erweiterung:"
 
 #: ../src/extension/internal/filter/experimental.h:98
 #, fuzzy
@@ -7578,9 +7559,8 @@ msgid "Transluscent"
 msgstr "Transparent"
 
 #: ../src/extension/internal/filter/experimental.h:344
-#, fuzzy
 msgid "Level:"
-msgstr "Ebene"
+msgstr "Ebene:"
 
 #: ../src/extension/internal/filter/experimental.h:349
 msgid "Fill color"
@@ -7623,7 +7603,6 @@ msgstr "Linienstärke:"
 #: ../src/extension/internal/filter/experimental.h:506
 #: ../src/extension/internal/filter/experimental.h:613
 #: ../src/ui/widget/filter-effect-chooser.cpp:25
-#, fuzzy
 msgid "Blend mode:"
 msgstr "Mischmodus:"
 
@@ -10236,9 +10215,8 @@ msgid "Length of minor ruler marks"
 msgstr "Länge der kleinen Linealmarken"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
-#, fuzzy
 msgid "Major steps_:"
-msgstr "Große Schritte"
+msgstr "Hauptschritte:"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
 msgid "Draw a major mark every ... steps"
@@ -10262,7 +10240,6 @@ msgid "Direction of marks (when viewing along the path from start to end)"
 msgstr "Ausrichtung der Markierungen (relativ zur Pfadrichtung)"
 
 #: ../src/live_effects/lpe-ruler.cpp:50
-#, fuzzy
 msgid "_Offset:"
 msgstr "Versatz:"
 
@@ -10281,7 +10258,6 @@ msgstr "Wählt Markierungen an Anfang und Ende des Pfades"
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
 #: ../src/live_effects/lpe-sketch.cpp:35
-#, fuzzy
 msgid "Strokes:"
 msgstr "Kontur:"
 
@@ -13126,7 +13102,6 @@ msgstr "Minimaler horizontaler Abstand (in px-Einheiten) zwischen Umrandungsboxe
 
 #. TRANSLATORS: "H:" stands for horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:470
-#, fuzzy
 msgctxt "Gap"
 msgid "_H:"
 msgstr "_H:"
@@ -13137,7 +13112,6 @@ msgstr "Minimaler vertikaler Abstand (in px-Einheiten) zwischen Umrandungsboxen"
 
 #. TRANSLATORS: Vertical gap
 #: ../src/ui/dialog/align-and-distribute.cpp:481
-#, fuzzy
 msgctxt "Gap"
 msgid "_V:"
 msgstr "V:"
@@ -16063,9 +16037,8 @@ msgid "After applying, remove the object used as the clipping path or mask from 
 msgstr "Entferne das Objekt von der Zeichnung, welches als Ausschneidepfad oder Maskierung verwendet wird, nach dem Anwenden"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:681
-#, fuzzy
 msgid "Before applying"
-msgstr "Vor dem Anwenden der Ausschneidung/Maske:"
+msgstr "Vor dem Anwenden:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:683
 msgid "Do not group clipped/masked objects"
@@ -16092,9 +16065,8 @@ msgid "Apply clippath/mask to group containing all objects"
 msgstr "Ausschneidungspfad/Maske auf Gruppen anwenden, die alle Objekte beinhalten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:696
-#, fuzzy
 msgid "After releasing"
-msgstr "Nach dem Lösen von Ausschneidungspfad/Maske:"
+msgstr "Nach dem Lösen:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:698
 msgid "Ungroup automatically created groups"
@@ -17742,16 +17714,14 @@ msgid "Arrange in a grid"
 msgstr "In Raster anordnen:"
 
 #: ../src/ui/dialog/tile.cpp:659
-#, fuzzy
 msgid "_Rows:"
-msgstr "Reihen:"
+msgstr "_Reihen:"
 
 #: ../src/ui/dialog/tile.cpp:668
 msgid "Number of rows"
 msgstr "Anzahl der Zeilen"
 
 #: ../src/ui/dialog/tile.cpp:672
-#, fuzzy
 msgid "Equal _height"
 msgstr "Gleiche Höhe"
 
@@ -17768,7 +17738,6 @@ msgstr "Ausrichten:"
 
 #. #### Number of columns ####
 #: ../src/ui/dialog/tile.cpp:731
-#, fuzzy
 msgid "_Columns:"
 msgstr "Spalten:"
 
@@ -17777,7 +17746,6 @@ msgid "Number of columns"
 msgstr "Anzahl der Spalten"
 
 #: ../src/ui/dialog/tile.cpp:744
-#, fuzzy
 msgid "Equal _width"
 msgstr "Gleiche Breite"
 
@@ -17787,12 +17755,10 @@ msgstr "Wenn nicht gesetzt, dann hat jede Spalte die Breite seines breitesten Ob
 
 #. #### Radio buttons to control spacing manually or to fit selection bbox ####
 #: ../src/ui/dialog/tile.cpp:800
-#, fuzzy
 msgid "_Fit into selection box"
 msgstr "In den Auswahlrahmen einpassen"
 
 #: ../src/ui/dialog/tile.cpp:807
-#, fuzzy
 msgid "_Set spacing:"
 msgstr "Abstand setzen:"
 
@@ -17806,7 +17772,6 @@ msgstr "Horizontale Abstände zwischen Spalten (px-Einheiten)"
 
 #. ## The OK button
 #: ../src/ui/dialog/tile.cpp:876
-#, fuzzy
 msgctxt "Rows and columns dialog"
 msgid "_Arrange"
 msgstr "Anordnen"
@@ -18146,7 +18111,6 @@ msgid "Add the specified relative displacement to the current position; otherwis
 msgstr "Die angegebene relative Verschiebung zur aktuellen Position hinzuaddieren; anderenfalls die aktuelle absolute Position direkt ändern"
 
 #: ../src/ui/dialog/transformation.cpp:107
-#, fuzzy
 msgid "_Scale proportionally"
 msgstr "Proportional skalieren"
 
@@ -20746,9 +20710,8 @@ msgid "Switch to normal color display mode"
 msgstr "In den normalen Anzeigemodus wechseln"
 
 #: ../src/verbs.cpp:2618
-#, fuzzy
 msgid "_Grayscale"
-msgstr "Graustufen"
+msgstr "_Graustufen"
 
 #: ../src/verbs.cpp:2619
 #, fuzzy
@@ -21192,34 +21155,34 @@ msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects
 msgstr "<b>Willkommen zu Inkscape!</b> Formen- und Freihandwerkzeuge erstellen Objekte; das Auswahlwerkzeug (Pfeil) verschiebt und bearbeitet."
 
 #: ../src/widgets/desktop-widget.cpp:659
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %d (outline%s) - Inkscape"
-msgstr "%s: %d (Umriss) - Inkscape"
+msgstr "%s: %d (Umriss%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:661
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %d (no filters%s) - Inkscape"
-msgstr "%s: %d (keine Filter) - Inkscape"
+msgstr "%s: %d (keine Filter%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:663
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %d %s- Inkscape"
-msgstr "%s: %d - Inkscape"
+msgstr "%s: %d %s - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:667
-#, fuzzy, c-format
+#, c-format
 msgid "%s (outline%s) - Inkscape"
-msgstr "%s (Umriss) - Inkscape"
+msgstr "%s (Umriss%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:669
-#, fuzzy, c-format
+#, c-format
 msgid "%s (no filters%s) - Inkscape"
-msgstr "%s (keine Filter) - Inkscape"
+msgstr "%s (keine Filter%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:671
-#, fuzzy, c-format
+#, c-format
 msgid "%s %s- Inkscape"
-msgstr "%s - Inkscape"
+msgstr "%s %s- Inkscape"
 
 # ???
 #: ../src/widgets/desktop-widget.cpp:833
@@ -21833,7 +21796,6 @@ msgid "Stroke width"
 msgstr "Breite der Kontur"
 
 #: ../src/widgets/stroke-style.cpp:694
-#, fuzzy
 msgctxt "Stroke width"
 msgid "_Width:"
 msgstr "_Breite:"
@@ -21871,9 +21833,8 @@ msgid "Maximum length of the miter (in units of stroke width)"
 msgstr "Maximale Länge der Spitze (in Vielfachen der Konturlinienbreite)"
 
 #: ../src/widgets/stroke-style.cpp:771
-#, fuzzy
 msgid "Miter _limit:"
-msgstr "Maximale Länge der Spitze:"
+msgstr "Gehrungs_limit:"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
@@ -21906,27 +21867,24 @@ msgid "Dashes:"
 msgstr "Strichlinien:"
 
 #: ../src/widgets/stroke-style.cpp:840
-#, fuzzy
 msgid "_Start Markers:"
-msgstr "Anfangsmarkierung:"
+msgstr "_Startmarkierung:"
 
 #: ../src/widgets/stroke-style.cpp:841
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr "Startmakierungen werden am ersten Knoten eines Pfades oder einer Form gezeichnet."
 
 #: ../src/widgets/stroke-style.cpp:852
-#, fuzzy
 msgid "_Mid Markers:"
-msgstr "Markierungen dazwischen:"
+msgstr "_Mittelmarkierungen:"
 
 #: ../src/widgets/stroke-style.cpp:853
 msgid "Mid Markers are drawn on every node of a path or shape except the first and last nodes"
 msgstr "Mittenmarkierungen werden auf jedem Knoten entlang eines Pfades - außer dem ersten und letzten - gezeichnet."
 
 #: ../src/widgets/stroke-style.cpp:864
-#, fuzzy
 msgid "_End Markers:"
-msgstr "Endmarkierungen:"
+msgstr "_Endmarkierungen:"
 
 #: ../src/widgets/stroke-style.cpp:865
 msgid "End Markers are drawn on the last node of a path or shape"
@@ -23646,7 +23604,6 @@ msgstr "Kleinerer Abstand"
 #: ../src/widgets/toolbox.cpp:7680
 #: ../src/widgets/toolbox.cpp:7711
 #: ../src/widgets/toolbox.cpp:7742
-#, fuzzy
 msgctxt "Text tool"
 msgid "Normal"
 msgstr "Normal"
@@ -24909,9 +24866,8 @@ msgstr ""
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:19
 #: ../share/extensions/gcodetools_engraving.inx.h:5
-#, fuzzy
 msgid "Engraving"
-msgstr "Alpha Gravur"
+msgstr "Gravur"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:20
 #: ../share/extensions/gcodetools_area.inx.h:12
@@ -25108,9 +25064,8 @@ msgstr ""
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:49
 #: ../share/extensions/gcodetools_orientation_points.inx.h:11
-#, fuzzy
 msgid "Z depth:"
-msgstr "Tiefe"
+msgstr "Z Tiefe:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:50
 #: ../share/extensions/gcodetools_area.inx.h:30
@@ -25123,9 +25078,8 @@ msgstr ""
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:51
 #: ../share/extensions/gcodetools_orientation_points.inx.h:12
-#, fuzzy
 msgid "Z surface:"
-msgstr "Z-Sortierung der Flächen gemäß:"
+msgstr "Z Fläche:"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:52
 #: ../share/extensions/gcodetools_dxf_points.inx.h:18
@@ -25160,7 +25114,7 @@ msgstr ""
 #: ../share/extensions/gcodetools_all_in_one.inx.h:58
 #: ../share/extensions/gcodetools_area.inx.h:32
 msgid "mark with an arrow"
-msgstr ""
+msgstr "mit Pfeil markieren"
 
 #: ../share/extensions/gcodetools_all_in_one.inx.h:59
 #: ../share/extensions/gcodetools_area.inx.h:33
@@ -26360,24 +26314,20 @@ msgid "Invert fill and stroke colors"
 msgstr "Farbe der Kontur setzen"
 
 #: ../share/extensions/markers_strokepaint.inx.h:9
-#, fuzzy
 msgid "Marker type:"
-msgstr "Filzstift"
+msgstr "Filzstift:"
 
 #: ../share/extensions/markers_strokepaint.inx.h:11
-#, fuzzy
 msgid "Stroke"
-msgstr "Kontur:"
+msgstr "Kontur"
 
 #: ../share/extensions/markers_strokepaint.inx.h:12
-#, fuzzy
 msgid "filled"
-msgstr "Filter"
+msgstr "gefüllt"
 
 #: ../share/extensions/markers_strokepaint.inx.h:13
-#, fuzzy
 msgid "solid"
-msgstr "Fett"
+msgstr "fest"
 
 #: ../share/extensions/measure.inx.h:1
 msgid "Font size (px):"
@@ -27062,14 +27012,12 @@ msgid "Square Size (px):"
 msgstr "Quadratische Größe / px"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:1
-#, fuzzy
 msgid "Auto"
-msgstr "Obenauf"
+msgstr "Auto"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:2
-#, fuzzy
 msgid "Barcode - QR Code"
-msgstr "Strichcode-Typ:"
+msgstr "Strichcode - QR Code"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:3
 #, fuzzy
