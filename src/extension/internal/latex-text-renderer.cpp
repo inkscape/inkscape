@@ -196,22 +196,22 @@ static char const preamble[] =
 "%% \n"
 "%% For more information, please see info/svg-inkscape on CTAN:\n"
 "%%   http://tug.ctan.org/tex-archive/info/svg-inkscape\n"
-"\n"
-"\\begingroup\n"
-"  \\makeatletter\n"
+"%%\n"
+"\\begingroup%\n"
+"  \\makeatletter%\n"
 "  \\providecommand\\color[2][]{%\n"
-"    \\errmessage{(Inkscape) Color is used for the text in Inkscape, but the package \'color.sty\' is not loaded}\n"
+"    \\errmessage{(Inkscape) Color is used for the text in Inkscape, but the package \'color.sty\' is not loaded}%\n"
 "    \\renewcommand\\color[2][]{}%\n"
-"  }\n"
+"  }%\n"
 "  \\providecommand\\transparent[1]{%\n"
-"    \\errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package \'transparent.sty\' is not loaded}\n"
+"    \\errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package \'transparent.sty\' is not loaded}%\n"
 "    \\renewcommand\\transparent[1]{}%\n"
-"  }\n"
-"  \\providecommand\\rotatebox[2]{#2}\n";
+"  }%\n"
+"  \\providecommand\\rotatebox[2]{#2}%\n";
 
 static char const postamble[] =
 "  \\end{picture}%\n"
-"\\endgroup\n";
+"\\endgroup%\n";
 
 void
 LaTeXTextRenderer::writePreamble()
@@ -598,19 +598,19 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
 
     // scaling of the image when including it in LaTeX
 
-    os << "  \\ifx\\svgwidth\\undefined\n";
-    os << "    \\setlength{\\unitlength}{" << d->width() * PT_PER_PX << "pt}\n";
-    os << "    \\ifx\\svgscale\\undefined\n";
-    os << "      \\relax\n";
-    os << "    \\else\n";
-    os << "      \\setlength{\\unitlength}{\\unitlength * \\real{\\svgscale}}\n";
-    os << "    \\fi\n";
-    os << "  \\else\n";
-    os << "    \\setlength{\\unitlength}{\\svgwidth}\n";
-    os << "  \\fi\n";
-    os << "  \\global\\let\\svgwidth\\undefined\n";
-    os << "  \\global\\let\\svgscale\\undefined\n";
-    os << "  \\makeatother\n";
+    os << "  \\ifx\\svgwidth\\undefined%\n";
+    os << "    \\setlength{\\unitlength}{" << d->width() * PT_PER_PX << "pt}%\n";
+    os << "    \\ifx\\svgscale\\undefined%\n";
+    os << "      \\relax%\n";
+    os << "    \\else%\n";
+    os << "      \\setlength{\\unitlength}{\\unitlength * \\real{\\svgscale}}%\n";
+    os << "    \\fi%\n";
+    os << "  \\else%\n";
+    os << "    \\setlength{\\unitlength}{\\svgwidth}%\n";
+    os << "  \\fi%\n";
+    os << "  \\global\\let\\svgwidth\\undefined%\n";
+    os << "  \\global\\let\\svgscale\\undefined%\n";
+    os << "  \\makeatother%\n";
 
     os << "  \\begin{picture}(" << _width << "," << _height << ")%\n";
     // strip pathname, as it is probably desired. Having a specific path in the TeX file is not convenient.
