@@ -345,7 +345,7 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
              li != le; li.nextStartOfSpan())
         {
             SPStyle const &spanstyle = *(sp_te_style_at_position (item, li));
-            bool is_bold = false, is_italic = false;
+            bool is_bold = false, is_italic = false, is_oblique = false;
 
             if (spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_500 ||
                 spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_600 ||
@@ -356,12 +356,17 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
                 spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_BOLDER) 
             {
                 is_bold = true;
-                os << "{\\bfseries{}";
+                os << "\\textbf{";
             }
             if (spanstyle.font_style.computed == SP_CSS_FONT_STYLE_ITALIC) 
             {
                 is_italic = true;
-                os << "{\\itshape{}";
+                os << "\\textit{";
+            }
+            if (spanstyle.font_style.computed == SP_CSS_FONT_STYLE_OBLIQUE) 
+            {
+                is_oblique = true;
+                os << "\\textsl{";  // this is an accurate choice if the LaTeX chosen font matches the font in Inkscape. Gives bad results when it is not so...
             }
 
             Inkscape::Text::Layout::iterator ln = li; 
@@ -378,6 +383,7 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
             g_strfreev(splitstr);
             g_free(spanstr_new);
 
+            if (is_oblique) { os << "}"; } // oblique end
             if (is_italic) { os << "}"; } // italic end
             if (is_bold) { os << "}"; } // bold end
         }
@@ -483,7 +489,7 @@ Flowing in rectangle is possible, not in arb shape.
              li != le; li.nextStartOfSpan())
         {
             SPStyle const &spanstyle = *(sp_te_style_at_position (item, li));
-            bool is_bold = false, is_italic = false;
+            bool is_bold = false, is_italic = false, is_oblique = false;
 
             if (spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_500 ||
                 spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_600 ||
@@ -494,12 +500,17 @@ Flowing in rectangle is possible, not in arb shape.
                 spanstyle.font_weight.computed == SP_CSS_FONT_WEIGHT_BOLDER) 
             {
                 is_bold = true;
-                os << "{\\bfseries{}";
+                os << "\\textbf{";
             }
             if (spanstyle.font_style.computed == SP_CSS_FONT_STYLE_ITALIC) 
             {
                 is_italic = true;
-                os << "{\\itshape{}";
+                os << "\\textit{";
+            }
+            if (spanstyle.font_style.computed == SP_CSS_FONT_STYLE_OBLIQUE) 
+            {
+                is_oblique = true;
+                os << "\\textsl{";  // this is an accurate choice if the LaTeX chosen font matches the font in Inkscape. Gives bad results when it is not so...
             }
 
             Inkscape::Text::Layout::iterator ln = li; 
@@ -516,6 +527,7 @@ Flowing in rectangle is possible, not in arb shape.
             g_strfreev(splitstr);
             g_free(spanstr_new);
 
+            if (is_oblique) { os << "}"; } // oblique end
             if (is_italic) { os << "}"; } // italic end
             if (is_bold) { os << "}"; } // bold end
         }
