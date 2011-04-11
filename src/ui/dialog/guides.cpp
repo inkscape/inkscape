@@ -152,7 +152,7 @@ void GuidelinePropertiesDialog::_response(gint response)
 }
 
 void GuidelinePropertiesDialog::_setup() {
-    set_title(_("Guidelinea"));
+    set_title(_("Guideline"));
     add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
     add_button(Gtk::Stock::DELETE, -12);
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
