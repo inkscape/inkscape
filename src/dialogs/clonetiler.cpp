@@ -82,8 +82,7 @@ static sigc::connection _color_changed_connection;
 
 static Inkscape::UI::Widget::ColorPicker *color_picker;
 
-static void
-clonetiler_dialog_destroy( GtkObject */*object*/, gpointer /*data*/ )
+static void clonetiler_dialog_destroy(GtkObject */*object*/, gpointer /*data*/)
 {
     sp_signal_disconnect_by_data (INKSCAPE, dlg);
     _color_changed_connection.disconnect();
@@ -95,14 +94,17 @@ clonetiler_dialog_destroy( GtkObject */*object*/, gpointer /*data*/ )
 
 }
 
-static gboolean
-clonetiler_dialog_delete (GtkObject */*object*/, GdkEvent * /*event*/, gpointer /*data*/)
+static gboolean clonetiler_dialog_delete(GtkObject */*object*/, GdkEvent * /*event*/, gpointer /*data*/)
 {
     gtk_window_get_position ((GtkWindow *) dlg, &x, &y);
     gtk_window_get_size ((GtkWindow *) dlg, &w, &h);
 
-    if (x<0) x=0;
-    if (y<0) y=0;
+    if (x < 0) {
+        x = 0;
+    }
+    if (y < 0) {
+        y = 0;
+    }
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt(prefs_path + "x", x);
@@ -114,8 +116,7 @@ clonetiler_dialog_delete (GtkObject */*object*/, GdkEvent * /*event*/, gpointer 
 
 }
 
-static void
-on_picker_color_changed (guint rgba)
+static void on_picker_color_changed(guint rgba)
 {
     static bool is_updating = false;
     if (is_updating || !SP_ACTIVE_DESKTOP)
@@ -131,10 +132,9 @@ on_picker_color_changed (guint rgba)
     is_updating = false;
 }
 
-static guint clonetiler_number_of_clones (SPObject *obj);
+static guint clonetiler_number_of_clones(SPObject *obj);
 
-static void
-clonetiler_change_selection (Inkscape::Application * /*inkscape*/, Inkscape::Selection *selection, GtkWidget *dlg)
+static void clonetiler_change_selection(Inkscape::Application * /*inkscape*/, Inkscape::Selection *selection, GtkWidget *dlg)
 {
     GtkWidget *buttons = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "buttons_on_tiles");
     GtkWidget *status = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "status");
@@ -163,15 +163,16 @@ clonetiler_change_selection (Inkscape::Application * /*inkscape*/, Inkscape::Sel
     }
 }
 
-static void
-clonetiler_external_change (Inkscape::Application * /*inkscape*/, GtkWidget *dlg)
+static void clonetiler_external_change(Inkscape::Application * /*inkscape*/, GtkWidget *dlg)
 {
     clonetiler_change_selection (NULL, sp_desktop_selection(SP_ACTIVE_DESKTOP), dlg);
 }
 
-static void clonetiler_disconnect_gsignal (GObject *widget, gpointer source) {
-    if (source && G_IS_OBJECT(source))
+static void clonetiler_disconnect_gsignal(GObject *widget, gpointer source)
+{
+    if (source && G_IS_OBJECT(source)) {
         sp_signal_disconnect_by_data (source, widget);
+    }
 }
 
 
@@ -196,9 +197,7 @@ enum {
 };
 
 
-static Geom::Affine
-clonetiler_get_transform (
-
+static Geom::Affine clonetiler_get_transform(
     // symmetry group
     int type,
 
@@ -800,8 +799,7 @@ clonetiler_get_transform (
     return Geom::identity();
 }
 
-static bool
-clonetiler_is_a_clone_of (SPObject *tile, SPObject *obj)
+static bool clonetiler_is_a_clone_of(SPObject *tile, SPObject *obj)
 {
     bool result = false;
     char *id_href = NULL;
@@ -834,8 +832,7 @@ static NRArenaItem *trace_root;
 static gdouble trace_zoom;
 static SPDocument *trace_doc;
 
-static void
-clonetiler_trace_hide_tiled_clones_recursively (SPObject *from)
+static void clonetiler_trace_hide_tiled_clones_recursively(SPObject *from)
 {
     if (!trace_arena)
         return;
@@ -847,8 +844,7 @@ clonetiler_trace_hide_tiled_clones_recursively (SPObject *from)
     }
 }
 
-static void
-clonetiler_trace_setup (SPDocument *doc, gdouble zoom, SPItem *original)
+static void clonetiler_trace_setup(SPDocument *doc, gdouble zoom, SPItem *original)
 {
     trace_arena = NRArena::create();
     /* Create ArenaItem and set transform */
@@ -866,11 +862,11 @@ clonetiler_trace_setup (SPDocument *doc, gdouble zoom, SPItem *original)
     trace_zoom = zoom;
 }
 
-static guint32
-clonetiler_trace_pick (Geom::Rect box)
+static guint32 clonetiler_trace_pick(Geom::Rect box)
 {
-    if (!trace_arena)
+    if (!trace_arena) {
         return 0;
+    }
 
     Geom::Affine t(Geom::Scale(trace_zoom, trace_zoom));
     nr_arena_item_set_transform(trace_root, &t);
@@ -940,8 +936,7 @@ clonetiler_trace_pick (Geom::Rect box)
     return SP_RGBA32_F_COMPOSE (R, G, B, A);
 }
 
-static void
-clonetiler_trace_finish ()
+static void clonetiler_trace_finish()
 {
     if (trace_doc) {
         SP_ITEM(trace_doc->getRoot())->invoke_hide(trace_visionkey);
@@ -952,12 +947,12 @@ clonetiler_trace_finish ()
     }
 }
 
-static void
-clonetiler_unclump( GtkWidget */*widget*/, void * )
+static void clonetiler_unclump(GtkWidget */*widget*/, void *)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop == NULL)
+    if (desktop == NULL) {
         return;
+    }
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -988,8 +983,7 @@ clonetiler_unclump( GtkWidget */*widget*/, void * )
                        _("Unclump tiled clones"));
 }
 
-static guint
-clonetiler_number_of_clones (SPObject *obj)
+static guint clonetiler_number_of_clones(SPObject *obj)
 {
     SPObject *parent = obj->parent;
 
@@ -1004,12 +998,12 @@ clonetiler_number_of_clones (SPObject *obj)
     return n;
 }
 
-static void
-clonetiler_remove( GtkWidget */*widget*/, void *, bool do_undo = true )
+static void clonetiler_remove(GtkWidget */*widget*/, void *, bool do_undo = true)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop == NULL)
+    if (desktop == NULL) {
         return;
+    }
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -1042,8 +1036,7 @@ clonetiler_remove( GtkWidget */*widget*/, void *, bool do_undo = true )
     }
 }
 
-static Geom::Rect
-transform_rect( Geom::Rect const &r, Geom::Affine const &m)
+static Geom::Rect transform_rect(Geom::Rect const &r, Geom::Affine const &m)
 {
     using Geom::X;
     using Geom::Y;
@@ -1064,22 +1057,23 @@ transform_rect( Geom::Rect const &r, Geom::Affine const &m)
 Randomizes \a val by \a rand, with 0 < val < 1 and all values (including 0, 1) having the same
 probability of being displaced.
  */
-static double
-randomize01 (double val, double rand)
+static double randomize01(double val, double rand)
 {
     double base = MIN (val - rand, 1 - 2*rand);
-    if (base < 0) base = 0;
+    if (base < 0) {
+        base = 0;
+    }
     val = base + g_random_double_range (0, MIN (2 * rand, 1 - base));
     return CLAMP(val, 0, 1); // this should be unnecessary with the above provisions, but just in case...
 }
 
 
-static void
-clonetiler_apply( GtkWidget */*widget*/, void * )
+static void clonetiler_apply(GtkWidget */*widget*/, void *)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop == NULL)
+    if (desktop == NULL) {
         return;
+    }
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -1429,11 +1423,11 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
             }
 
             if (opacity < 1e-6) { // invisibly transparent, skip
-                    continue;
+                continue;
             }
 
             if (fabs(t[0]) + fabs (t[1]) + fabs(t[2]) + fabs(t[3]) < 1e-6) { // too small, skip
-                    continue;
+                continue;
             }
 
             // Create the clone
@@ -1506,8 +1500,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
                        _("Create tiled clones"));
 }
 
-static GtkWidget *
-clonetiler_new_tab (GtkWidget *nb, const gchar *label)
+static GtkWidget * clonetiler_new_tab(GtkWidget *nb, const gchar *label)
 {
     GtkWidget *l = gtk_label_new_with_mnemonic (label);
     GtkWidget *vb = gtk_vbox_new (FALSE, VB_MARGIN);
@@ -1516,16 +1509,14 @@ clonetiler_new_tab (GtkWidget *nb, const gchar *label)
     return vb;
 }
 
-static void
-clonetiler_checkbox_toggled (GtkToggleButton *tb, gpointer *data)
+static void clonetiler_checkbox_toggled(GtkToggleButton *tb, gpointer *data)
 {
     const gchar *attr = (const gchar *) data;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool(prefs_path + attr, gtk_toggle_button_get_active(tb));
 }
 
-static GtkWidget *
-clonetiler_checkbox (GtkTooltips *tt, const char *tip, const char *attr)
+static GtkWidget * clonetiler_checkbox(GtkTooltips *tt, const char *tip, const char *attr)
 {
     GtkWidget *hb = gtk_hbox_new(FALSE, VB_MARGIN);
 
@@ -1545,32 +1536,31 @@ clonetiler_checkbox (GtkTooltips *tt, const char *tip, const char *attr)
     return hb;
 }
 
-
-static void
-clonetiler_value_changed (GtkAdjustment *adj, gpointer data)
+static void clonetiler_value_changed(GtkAdjustment *adj, gpointer data)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     const gchar *pref = (const gchar *) data;
     prefs->setDouble(prefs_path + pref, adj->value);
 }
 
-static GtkWidget *
-clonetiler_spinbox (GtkTooltips *tt, const char *tip, const char *attr, double lower, double upper, const gchar *suffix, bool exponent = false)
+static GtkWidget * clonetiler_spinbox(GtkTooltips *tt, const char *tip, const char *attr, double lower, double upper, const gchar *suffix, bool exponent = false)
 {
     GtkWidget *hb = gtk_hbox_new(FALSE, 0);
 
     {
         GtkObject *a;
-        if (exponent)
-            a = gtk_adjustment_new(1.0, lower, upper, 0.01, 0.05, 0.1);
-        else
-            a = gtk_adjustment_new(0.0, lower, upper, 0.1, 0.5, 2);
+        if (exponent) {
+            a = gtk_adjustment_new(1.0, lower, upper, 0.01, 0.05, 0);
+        } else {
+            a = gtk_adjustment_new(0.0, lower, upper, 0.1, 0.5, 0);
+        }
 
         GtkWidget *sb;
-        if (exponent)
+        if (exponent) {
             sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 0.01, 2);
-        else
+        } else {
             sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 0.1, 1);
+        }
 
         gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), sb, tip, NULL);
         gtk_entry_set_width_chars (GTK_ENTRY (sb), 4);
@@ -1582,10 +1572,11 @@ clonetiler_spinbox (GtkTooltips *tt, const char *tip, const char *attr, double l
         gtk_signal_connect(GTK_OBJECT(a), "value_changed",
                            GTK_SIGNAL_FUNC(clonetiler_value_changed), (gpointer) attr);
 
-        if (exponent)
+        if (exponent) {
             g_object_set_data (G_OBJECT(sb), "oneable", GINT_TO_POINTER(TRUE));
-        else
+        } else {
             g_object_set_data (G_OBJECT(sb), "zeroable", GINT_TO_POINTER(TRUE));
+        }
     }
 
     {
@@ -1598,31 +1589,27 @@ clonetiler_spinbox (GtkTooltips *tt, const char *tip, const char *attr, double l
     return hb;
 }
 
-static void
-clonetiler_symgroup_changed( GtkMenuItem */*item*/, gpointer data )
+static void clonetiler_symgroup_changed(GtkMenuItem */*item*/, gpointer data)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gint group_new = GPOINTER_TO_INT (data);
     prefs->setInt(prefs_path + "symmetrygroup", group_new);
 }
 
-static void
-clonetiler_xy_changed (GtkAdjustment *adj, gpointer data)
+static void clonetiler_xy_changed(GtkAdjustment *adj, gpointer data)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     const gchar *pref = (const gchar *) data;
     prefs->setInt(prefs_path + pref, (int) floor(adj->value + 0.5));
 }
 
-static void
-clonetiler_keep_bbox_toggled( GtkToggleButton *tb, gpointer /*data*/ )
+static void clonetiler_keep_bbox_toggled(GtkToggleButton *tb, gpointer /*data*/)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool(prefs_path + "keepbbox", gtk_toggle_button_get_active(tb));
 }
 
-static void
-clonetiler_pick_to (GtkToggleButton *tb, gpointer data)
+static void clonetiler_pick_to(GtkToggleButton *tb, gpointer data)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     const gchar *pref = (const gchar *) data;
@@ -1630,8 +1617,7 @@ clonetiler_pick_to (GtkToggleButton *tb, gpointer data)
 }
 
 
-static void
-clonetiler_reset_recursive (GtkWidget *w)
+static void clonetiler_reset_recursive(GtkWidget *w)
 {
     if (w && GTK_IS_OBJECT(w)) {
         {
@@ -1665,22 +1651,19 @@ clonetiler_reset_recursive (GtkWidget *w)
     }
 }
 
-static void
-clonetiler_reset( GtkWidget */*widget*/, void * )
+static void clonetiler_reset(GtkWidget */*widget*/, void *)
 {
     clonetiler_reset_recursive (dlg);
 }
 
-static void
-clonetiler_table_attach (GtkWidget *table, GtkWidget *widget, float align, int row, int col)
+static void clonetiler_table_attach(GtkWidget *table, GtkWidget *widget, float align, int row, int col)
 {
     GtkWidget *a = gtk_alignment_new (align, 0, 0, 0);
     gtk_container_add(GTK_CONTAINER(a), widget);
     gtk_table_attach ( GTK_TABLE (table), a, col, col + 1, row, row + 1, (GtkAttachOptions)4, (GtkAttachOptions)0, 0, 0 );
 }
 
-static GtkWidget *
-clonetiler_table_x_y_rand (int values)
+static GtkWidget * clonetiler_table_x_y_rand(int values)
 {
     GtkWidget *table = gtk_table_new (values + 2, 5, FALSE);
     gtk_container_set_border_width (GTK_CONTAINER (table), VB_MARGIN);
@@ -1722,8 +1705,7 @@ clonetiler_table_x_y_rand (int values)
     return table;
 }
 
-static void
-clonetiler_pick_switched( GtkToggleButton */*tb*/, gpointer data )
+static void clonetiler_pick_switched(GtkToggleButton */*tb*/, gpointer data)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     guint v = GPOINTER_TO_INT (data);
@@ -1731,8 +1713,7 @@ clonetiler_pick_switched( GtkToggleButton */*tb*/, gpointer data )
 }
 
 
-static void
-clonetiler_switch_to_create( GtkToggleButton */*tb*/, GtkWidget *dlg )
+static void clonetiler_switch_to_create(GtkToggleButton */*tb*/, GtkWidget *dlg)
 {
     GtkWidget *rowscols = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "rowscols");
     GtkWidget *widthheight = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "widthheight");
@@ -1749,8 +1730,7 @@ clonetiler_switch_to_create( GtkToggleButton */*tb*/, GtkWidget *dlg )
 }
 
 
-static void
-clonetiler_switch_to_fill( GtkToggleButton */*tb*/, GtkWidget *dlg )
+static void clonetiler_switch_to_fill(GtkToggleButton */*tb*/, GtkWidget *dlg)
 {
     GtkWidget *rowscols = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "rowscols");
     GtkWidget *widthheight = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "widthheight");
@@ -1769,8 +1749,7 @@ clonetiler_switch_to_fill( GtkToggleButton */*tb*/, GtkWidget *dlg )
 
 
 
-static void
-clonetiler_fill_width_changed (GtkAdjustment *adj, GtkWidget *u)
+static void clonetiler_fill_width_changed(GtkAdjustment *adj, GtkWidget *u)
 {
     gdouble const raw_dist = adj->value;
     SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
@@ -1780,8 +1759,7 @@ clonetiler_fill_width_changed (GtkAdjustment *adj, GtkWidget *u)
     prefs->setDouble(prefs_path + "fillwidth", pixels);
 }
 
-static void
-clonetiler_fill_height_changed (GtkAdjustment *adj, GtkWidget *u)
+static void clonetiler_fill_height_changed(GtkAdjustment *adj, GtkWidget *u)
 {
     gdouble const raw_dist = adj->value;
     SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
@@ -1792,23 +1770,22 @@ clonetiler_fill_height_changed (GtkAdjustment *adj, GtkWidget *u)
 }
 
 
-static void
-clonetiler_do_pick_toggled( GtkToggleButton *tb, gpointer /*data*/ )
+static void clonetiler_do_pick_toggled(GtkToggleButton *tb, gpointer /*data*/)
 {
     GtkWidget *vvb = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "dotrace");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool(prefs_path + "dotrace", gtk_toggle_button_get_active (tb));
 
-    if (vvb)
+    if (vvb) {
         gtk_widget_set_sensitive (vvb, gtk_toggle_button_get_active (tb));
+    }
 }
 
 
 
 
-void
-clonetiler_dialog (void)
+void clonetiler_dialog(void)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (!dlg)
@@ -2764,7 +2741,7 @@ clonetiler_dialog (void)
                 g_object_set_data (G_OBJECT(dlg), "rowscols", (gpointer) hb);
 
                 {
-                    GtkObject *a = gtk_adjustment_new(0.0, 1, 500, 1, 10, 10);
+                    GtkObject *a = gtk_adjustment_new(0.0, 1, 500, 1, 10, 0);
                     int value = prefs->getInt(prefs_path + "jmax", 2);
                     gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
                     GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 0);
@@ -2784,7 +2761,7 @@ clonetiler_dialog (void)
                 }
 
                 {
-                    GtkObject *a = gtk_adjustment_new(0.0, 1, 500, 1, 10, 10);
+                    GtkObject *a = gtk_adjustment_new(0.0, 1, 500, 1, 10, 0);
                     int value = prefs->getInt(prefs_path + "imax", 2);
                     gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
                     GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 0);
@@ -2809,7 +2786,7 @@ clonetiler_dialog (void)
 
                 {
                     // Width spinbutton
-                    GtkObject *a = gtk_adjustment_new (0.0, -1e6, 1e6, 1.0, 10.0, 10.0);
+                    GtkObject *a = gtk_adjustment_new (0.0, -1e6, 1e6, 1.0, 10.0, 0);
                     sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a));
 
                     double value = prefs->getDouble(prefs_path + "fillwidth", 50.0);
@@ -2833,7 +2810,7 @@ clonetiler_dialog (void)
 
                 {
                     // Height spinbutton
-                    GtkObject *a = gtk_adjustment_new (0.0, -1e6, 1e6, 1.0, 10.0, 10.0);
+                    GtkObject *a = gtk_adjustment_new (0.0, -1e6, 1e6, 1.0, 10.0, 0);
                     sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a));
 
                     double value = prefs->getDouble(prefs_path + "fillheight", 50.0);
