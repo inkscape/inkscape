@@ -25,8 +25,10 @@ namespace Widget {
 class SpinButton : public Gtk::SpinButton
 {
 public:
-  SpinButton() : Gtk::SpinButton() {};
-  /// @todo perhaps more constructors should be added here
+  SpinButton(double climb_rate = 0.0, guint digits = 0)
+    : Gtk::SpinButton(climb_rate, digits) {};
+  explicit SpinButton(Gtk::Adjustment& adjustment, double climb_rate = 0.0, guint digits = 0)
+    : Gtk::SpinButton(adjustment, climb_rate, digits) {};
 
   virtual ~SpinButton() {};
 

@@ -15,9 +15,6 @@
 #ifndef INKSCAPE_UI_WIDGET_SCALAR_H
 #define INKSCAPE_UI_WIDGET_SCALAR_H
 
-#include <gtkmm/adjustment.h>
-#include <gtkmm/spinbutton.h>
-
 #include "labelled.h"
 
 namespace Inkscape {

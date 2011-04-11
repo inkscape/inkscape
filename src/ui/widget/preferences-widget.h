@@ -32,6 +32,7 @@
 
 #include "ui/widget/color-picker.h"
 #include "ui/widget/unit-menu.h"
+#include "ui/widget/spinbutton.h"
 
 namespace Inkscape {
 namespace UI {
@@ -68,7 +69,7 @@ protected:
     void on_toggled();
 };
 
-class PrefSpinButton : public Gtk::SpinButton
+class PrefSpinButton : public SpinButton
 {
 public:
     void init(Glib::ustring const &prefs_path,

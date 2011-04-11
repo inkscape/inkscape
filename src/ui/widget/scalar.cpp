@@ -18,6 +18,7 @@
 
 
 #include "scalar.h"
+#include "spinbutton.h"
 
 namespace Inkscape {
 namespace UI {
@@ -37,10 +38,10 @@ Scalar::Scalar(Glib::ustring const &label, Glib::ustring const &tooltip,
                Glib::ustring const &suffix,
                Glib::ustring const &icon,
                bool mnemonic)
-    : Labelled(label, tooltip, new Gtk::SpinButton(), suffix, icon, mnemonic),
+    : Labelled(label, tooltip, new SpinButton(), suffix, icon, mnemonic),
       setProgrammatically(false)
 {
-    static_cast<Gtk::SpinButton*>(_widget)->set_numeric();
+    static_cast<SpinButton*>(_widget)->set_numeric();
 }
 
 /**
@@ -59,10 +60,10 @@ Scalar::Scalar(Glib::ustring const &label, Glib::ustring const &tooltip,
                Glib::ustring const &suffix,
                Glib::ustring const &icon,
                bool mnemonic)
-    : Labelled(label, tooltip, new Gtk::SpinButton(0.0, digits), suffix, icon, mnemonic),
+    : Labelled(label, tooltip, new SpinButton(0.0, digits), suffix, icon, mnemonic),
       setProgrammatically(false)
 {
-    static_cast<Gtk::SpinButton*>(_widget)->set_numeric();
+    static_cast<SpinButton*>(_widget)->set_numeric();
 }
 
 /**
@@ -83,10 +84,10 @@ Scalar::Scalar(Glib::ustring const &label, Glib::ustring const &tooltip,
                Glib::ustring const &suffix,
                Glib::ustring const &icon,
                bool mnemonic)
-    : Labelled(label, tooltip, new Gtk::SpinButton(adjust, 0.0, digits), suffix, icon, mnemonic),
+    : Labelled(label, tooltip, new SpinButton(adjust, 0.0, digits), suffix, icon, mnemonic),
       setProgrammatically(false)
 {
-    static_cast<Gtk::SpinButton*>(_widget)->set_numeric();
+    static_cast<SpinButton*>(_widget)->set_numeric();
 }
 
 /** Fetches the precision of the spin buton */
@@ -94,7 +95,7 @@ unsigned
 Scalar::getDigits() const
 {
     g_assert(_widget != NULL);
-    return static_cast<Gtk::SpinButton*>(_widget)->get_digits();
+    return static_cast<SpinButton*>(_widget)->get_digits();
 }
 
 /** Gets the current step ingrement used by the spin button */
@@ -103,7 +104,7 @@ Scalar::getStep() const
 {
     g_assert(_widget != NULL);
     double step, page;
-    static_cast<Gtk::SpinButton*>(_widget)->get_increments(step, page);
+    static_cast<SpinButton*>(_widget)->get_increments(step, page);
     return step;
 }
 
@@ -113,7 +114,7 @@ Scalar::getPage() const
 {
     g_assert(_widget != NULL);
     double step, page;
-    static_cast<Gtk::SpinButton*>(_widget)->get_increments(step, page);
+    static_cast<SpinButton*>(_widget)->get_increments(step, page);
     return page;
 }
 
@@ -123,7 +124,7 @@ Scalar::getRangeMin() const
 {
     g_assert(_widget != NULL);
     double min, max;
-    static_cast<Gtk::SpinButton*>(_widget)->get_range(min, max);
+    static_cast<SpinButton*>(_widget)->get_range(min, max);
     return min;
 }
 
@@ -133,7 +134,7 @@ Scalar::getRangeMax() const
 {
     g_assert(_widget != NULL);
     double min, max;
-    static_cast<Gtk::SpinButton*>(_widget)->get_range(min, max);
+    static_cast<SpinButton*>(_widget)->get_range(min, max);
     return max;
 }
 
@@ -142,7 +143,7 @@ double
 Scalar::getValue() const
 {
     g_assert(_widget != NULL);
-    return static_cast<Gtk::SpinButton*>(_widget)->get_value();
+    return static_cast<SpinButton*>(_widget)->get_value();
 }
 
 /** Get the value spin_button represented as an integer. */
@@ -150,7 +151,7 @@ int
 Scalar::getValueAsInt() const
 {
     g_assert(_widget != NULL);
-    return static_cast<Gtk::SpinButton*>(_widget)->get_value_as_int();
+    return static_cast<SpinButton*>(_widget)->get_value_as_int();
 }
 
 
@@ -159,7 +160,7 @@ void
 Scalar::setDigits(unsigned digits)
 {
     g_assert(_widget != NULL);
-    static_cast<Gtk::SpinButton*>(_widget)->set_digits(digits);
+    static_cast<SpinButton*>(_widget)->set_digits(digits);
 }
 
 /** Sets the step and page increments for the spin button
@@ -169,7 +170,7 @@ void
 Scalar::setIncrements(double step, double /*page*/)
 {
     g_assert(_widget != NULL);
-    static_cast<Gtk::SpinButton*>(_widget)->set_increments(step, 0);
+    static_cast<SpinButton*>(_widget)->set_increments(step, 0);
 }
 
 /** Sets the minimum and maximum range allowed for the spin button */
@@ -177,7 +178,7 @@ void
 Scalar::setRange(double min, double max)
 {
     g_assert(_widget != NULL);
-    static_cast<Gtk::SpinButton*>(_widget)->set_range(min, max);
+    static_cast<SpinButton*>(_widget)->set_range(min, max);
 }
 
 /** Sets the value of the spin button */
@@ -186,14 +187,14 @@ Scalar::setValue(double value)
 {
     g_assert(_widget != NULL);
     setProgrammatically = true; // callback is supposed to reset back, if it cares
-    static_cast<Gtk::SpinButton*>(_widget)->set_value(value);
+    static_cast<SpinButton*>(_widget)->set_value(value);
 }
 
 /** Manually forces an update of the spin button */
 void
 Scalar::update() {
     g_assert(_widget != NULL);
-    static_cast<Gtk::SpinButton*>(_widget)->update();
+    static_cast<SpinButton*>(_widget)->update();
 }
 
 
@@ -202,7 +203,7 @@ Scalar::update() {
 Glib::SignalProxy0<void>
 Scalar::signal_value_changed()
 {
-    return static_cast<Gtk::SpinButton*>(_widget)->signal_value_changed();
+    return static_cast<SpinButton*>(_widget)->signal_value_changed();
 }
 
 

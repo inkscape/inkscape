@@ -75,7 +75,7 @@ private:
 	Gtk::Tooltips _tooltips;
 	Gtk::Toolbar _playbackcontrols;
 	Gtk::Adjustment _delay;
-	Gtk::SpinButton _delayentry;
+	Widget::SpinButton _delayentry;
 
 	Gtk::Frame _filemanager;
 	Gtk::VBox _fm;
