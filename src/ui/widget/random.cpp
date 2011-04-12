@@ -25,6 +25,8 @@
 
 #include <glibmm/i18n.h>
 
+#include <gtkmm/button.h>
+
 namespace Inkscape {
 namespace UI {
 namespace Widget {
