@@ -194,9 +194,7 @@ void GuidelinePropertiesDialog::_setup() {
     sp_unit_selector_add_adjustment(SP_UNIT_SELECTOR(unit_selector), GTK_ADJUSTMENT(_adjustment_x.gobj()));
     sp_unit_selector_add_adjustment(SP_UNIT_SELECTOR(unit_selector), GTK_ADJUSTMENT(_adjustment_y.gobj()));
     _spin_button_x.configure(_adjustment_x, 1.0 , 3);
-    _spin_button_x.set_numeric();
     _spin_button_y.configure(_adjustment_y, 1.0 , 3);
-    _spin_button_y.set_numeric();
     _layout_table.attach(_label_X,
                          1, 2, 4, 5, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _layout_table.attach(_spin_button_x,
@@ -213,7 +211,6 @@ void GuidelinePropertiesDialog::_setup() {
 
     // angle spinbutton
     _spin_angle.configure(_adj_angle, 5.0 , 3);
-    _spin_angle.set_numeric();
     _spin_angle.show();
     _layout_table.attach(_label_degrees,
                          1, 2, 8, 9, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);

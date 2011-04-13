@@ -9,6 +9,8 @@ ink_common_sources += \
 	util/ege-appear-time-tracker.h	\
 	util/ege-tags.h \
 	util/ege-tags.cpp \
+	util/expression-evaluator.h \
+	util/expression-evaluator.cpp \
 	util/filter-list.h \
 	util/find-if-before.h \
 	util/find-last-if.h \

@@ -16,32 +16,39 @@
 
 #include "spinbutton.h"
 
-#include <locale.h>
+#include "unit-menu.h"
+#include "util/expression-evaluator.h"
 
 namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-void
-SpinButton::on_insert_text(const Glib::ustring& text, int* position)
+/**
+ * This callback function should try to convert the entered text to a number and write it to newvalue.
+ * It calls a method to evaluate the (potential) mathematical expression.
+ *
+ * @retval false No conversion done, continue with default handler.
+ * @retval true  Conversion successful, don't call default handler. 
+ */
+int
+SpinButton::on_input(double* newvalue)
 {
-    Glib::ustring newtext = text;
-
-    // if in numeric mode: replace '.' or ',' with the locale's decimal point
-    if (get_numeric()) {
-        size_t found = newtext.find('.');
-        if (found != Glib::ustring::npos) {
-            newtext.replace(found, 1, localeconv()->decimal_point);
-        } else {
-            found = newtext.find(',');
-            if (found != Glib::ustring::npos) {
-                newtext.replace(found, 1, localeconv()->decimal_point);
-            }
+    try {
+        Inkscape::Util::GimpEevlQuantity result = Inkscape::Util::gimp_eevl_evaluate (get_text().c_str(), _unit_menu ? &_unit_menu->getUnit() : NULL);
+        // check if output dimension corresponds to input unit
+        if (_unit_menu && result.dimension != (_unit_menu->getUnit().isAbsolute() ? 1 : 0) ) {
+            throw Inkscape::Util::EvaluatorException("Input dimensions do not match with parameter dimensions.","");
         }
+
+        *newvalue = result.value;
+    }
+    catch(Inkscape::Util::EvaluatorException &e) {
+        g_message ("%s", e.what());
+
+        return false;
     }
 
-    // call parent function with replaced text:
-    Gtk::SpinButton::on_insert_text(newtext, position);
+    return true;
 }
 
 } // namespace Widget

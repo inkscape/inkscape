@@ -227,7 +227,6 @@ void PrefSpinButton::init(Glib::ustring const &prefs_path,
 
     this->set_range (lower, upper);
     this->set_increments (step_increment, 0);
-    this->set_numeric();
     this->set_value (value);
     this->set_width_chars(6);
     if (is_int)

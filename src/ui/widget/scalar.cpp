@@ -41,7 +41,6 @@ Scalar::Scalar(Glib::ustring const &label, Glib::ustring const &tooltip,
     : Labelled(label, tooltip, new SpinButton(), suffix, icon, mnemonic),
       setProgrammatically(false)
 {
-    static_cast<SpinButton*>(_widget)->set_numeric();
 }
 
 /**
@@ -63,7 +62,6 @@ Scalar::Scalar(Glib::ustring const &label, Glib::ustring const &tooltip,
     : Labelled(label, tooltip, new SpinButton(0.0, digits), suffix, icon, mnemonic),
       setProgrammatically(false)
 {
-    static_cast<SpinButton*>(_widget)->set_numeric();
 }
 
 /**
@@ -87,7 +85,6 @@ Scalar::Scalar(Glib::ustring const &label, Glib::ustring const &tooltip,
     : Labelled(label, tooltip, new SpinButton(adjust, 0.0, digits), suffix, icon, mnemonic),
       setProgrammatically(false)
 {
-    static_cast<SpinButton*>(_widget)->set_numeric();
 }
 
 /** Fetches the precision of the spin buton */

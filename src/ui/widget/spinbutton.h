@@ -19,21 +19,37 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+class UnitMenu;
+
 /**
- * SpinButton widget, that allows entry of both '.' and ',' for the decimal, even when in numeric mode.
+ * SpinButton widget, that allows entry of simple math expressions (also units, when linked with UnitMenu).
+ *
+ * Calling "set_numeric()" effectively disables the expression parsing. If no unit menu is linked, all unitlike characters are ignored.
  */
 class SpinButton : public Gtk::SpinButton
 {
 public:
   SpinButton(double climb_rate = 0.0, guint digits = 0)
-    : Gtk::SpinButton(climb_rate, digits) {};
+    : Gtk::SpinButton(climb_rate, digits),
+      _unit_menu(NULL)
+  {
+      signal_input().connect(sigc::mem_fun(*this, &SpinButton::on_input));
+  };
   explicit SpinButton(Gtk::Adjustment& adjustment, double climb_rate = 0.0, guint digits = 0)
-    : Gtk::SpinButton(adjustment, climb_rate, digits) {};
+    : Gtk::SpinButton(adjustment, climb_rate, digits),
+      _unit_menu(NULL)
+  {
+      signal_input().connect(sigc::mem_fun(*this, &SpinButton::on_input));
+  };
 
   virtual ~SpinButton() {};
 
+  void setUnitMenu(UnitMenu* unit_menu) { _unit_menu = unit_menu; };
+
 protected:
-  virtual void on_insert_text(const Glib::ustring& text, int* position);
+  UnitMenu *_unit_menu; /// Linked unit menu for unit conversion in entered expressions.
+
+  int on_input(double* newvalue);
 
 private:
   // noncopyable

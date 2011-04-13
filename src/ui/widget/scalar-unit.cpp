@@ -27,6 +27,7 @@
 #endif
 
 #include "scalar-unit.h"
+#include "spinbutton.h"
 
 namespace Inkscape {
 namespace UI {
@@ -65,6 +66,8 @@ ScalarUnit::ScalarUnit(Glib::ustring const &label, Glib::ustring const &tooltip,
     }
     _unit_menu->signal_changed()
             .connect_notify(sigc::mem_fun(*this, &ScalarUnit::on_unit_changed));
+
+    static_cast<SpinButton*>(_widget)->setUnitMenu(_unit_menu);
 }
 
 /**
