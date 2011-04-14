@@ -15,9 +15,9 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+#include "guides.h"
+
 #include "display/guideline.h"
-#include "helper/unit-menu.h"
-#include "helper/units.h"
 #include "desktop.h"
 #include "document.h"
 #include "sp-guide.h"
@@ -25,14 +25,13 @@
 #include "desktop-handles.h"
 #include "event-context.h"
 #include "widgets/desktop-widget.h"
-#include "sp-metrics.h"
 #include <glibmm/i18n.h>
 #include "dialogs/dialog-events.h"
 #include "message-context.h"
 #include "xml/repr.h"
+
 #include <2geom/point.h>
 #include <2geom/angle.h>
-#include "guides.h"
 
 namespace Inkscape {
 namespace UI {
@@ -40,21 +39,21 @@ namespace Dialogs {
 
 GuidelinePropertiesDialog::GuidelinePropertiesDialog(SPGuide *guide, SPDesktop *desktop)
 : _desktop(desktop), _guide(guide),
-  _label_units(_("Unit:")),
-  _label_X(_("X:")),
-  _label_Y(_("Y:")),
-  _label_degrees(_("Angle (degrees):")),
   _relative_toggle(_("Rela_tive change"), _("Move and/or rotate the guide relative to current settings")),
-  _adjustment_x(0.0, -1e6, 1e6, 1.0, 10.0, 0),  
-  _adjustment_y(0.0, -1e6, 1e6, 1.0, 10.0, 0),  
-  _adj_angle(0.0, -360, 360, 1.0, 10.0, 0),  
-  _unit_selector(NULL), _mode(true), _oldpos(0.,0.), _oldangle(0.0)
+  _spin_button_x(_("X:"), "", UNIT_TYPE_LINEAR, "", "", &_unit_menu),
+  _spin_button_y(_("Y:"), "", UNIT_TYPE_LINEAR, "", "", &_unit_menu),
+  _spin_angle(_("Angle:"), "", UNIT_TYPE_RADIAL),
+  _mode(true), _oldpos(0.,0.), _oldangle(0.0)
 {
 }
 
 bool GuidelinePropertiesDialog::_relative_toggle_status = false; // initialize relative checkbox status for when this dialog is opened for first time
+Glib::ustring GuidelinePropertiesDialog::_angle_unit_status = "deg"; // initialize angle unit status
 
 GuidelinePropertiesDialog::~GuidelinePropertiesDialog() {
+    // save current status
+    _relative_toggle_status = _relative_toggle.get_active();
+    _angle_unit_status = _spin_angle.getUnit().abbr;
 }
 
 void GuidelinePropertiesDialog::showDialog(SPGuide *guide, SPDesktop *desktop) {
@@ -66,28 +65,24 @@ void GuidelinePropertiesDialog::showDialog(SPGuide *guide, SPDesktop *desktop) {
 void GuidelinePropertiesDialog::_modeChanged()
 {
     _mode = !_relative_toggle.get_active();
-    _relative_toggle_status = _relative_toggle.get_active();
     if (!_mode) {
         // relative
-        _spin_angle.set_value(0);
+        _spin_angle.setValue(0);
 
-        _spin_button_y.set_value(0);
-        _spin_button_x.set_value(0);
+        _spin_button_y.setValue(0);
+        _spin_button_x.setValue(0);
     } else {
         // absolute
-        _spin_angle.set_value(_oldangle);
+        _spin_angle.setValueKeepUnit(_oldangle, "deg");
 
-        SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(_unit_selector->gobj()));
-        gdouble const val_y = sp_pixels_get_units(_oldpos[Geom::Y], unit);
-        _spin_button_y.set_value(val_y);
-        gdouble const val_x = sp_pixels_get_units(_oldpos[Geom::X], unit);
-        _spin_button_x.set_value(val_x);
+        _spin_button_x.setValueKeepUnit(_oldpos[Geom::X], "px");
+        _spin_button_y.setValueKeepUnit(_oldpos[Geom::Y], "px");
     }
 }
 
 void GuidelinePropertiesDialog::_onApply()
 {
-    double deg_angle = _spin_angle.get_value();
+    double deg_angle = _spin_angle.getValue("deg");
     if (!_mode)
         deg_angle += _oldangle;
     Geom::Point normal;
@@ -101,11 +96,8 @@ void GuidelinePropertiesDialog::_onApply()
     }
     sp_guide_set_normal(*_guide, normal, true);
 
-    SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(_unit_selector->gobj()));
-    gdouble const raw_dist_x = _spin_button_x.get_value();
-    gdouble const points_x = sp_units_get_pixels(raw_dist_x, unit);
-    gdouble const raw_dist_y = _spin_button_y.get_value();
-    gdouble const points_y = sp_units_get_pixels(raw_dist_y, unit);
+    double const points_x = _spin_button_x.getValue("px");
+    double const points_y = _spin_button_y.getValue("px");
     Geom::Point newpos(points_x, points_y);
     if (!_mode)
         newpos += _oldpos;
@@ -178,51 +170,49 @@ void GuidelinePropertiesDialog::_setup() {
     _layout_table.attach(*manage(new Gtk::Label(" ")),
                          0, 1, 2, 3, Gtk::FILL, Gtk::FILL, 10);
 
+    // unitmenus
+    /* fixme: We should allow percents here too, as percents of the canvas size */
+    _unit_menu.setUnitType(UNIT_TYPE_LINEAR);
+    _unit_menu.setUnit("px");
+    if (_desktop->namedview->doc_units) {
+        _unit_menu.setUnit( sp_unit_get_abbreviation(_desktop->namedview->doc_units) );
+    }
+    _spin_angle.setUnit(_angle_unit_status);
+
+    // position spinbuttons
+    _spin_button_x.setDigits(3);
+    _spin_button_x.setIncrements(1.0, 10.0);
+    _spin_button_x.setRange(-1e6, 1e6);
+    _spin_button_y.setDigits(3);
+    _spin_button_y.setIncrements(1.0, 10.0);
+    _spin_button_y.setRange(-1e6, 1e6);
+    _layout_table.attach(_spin_button_x,
+                         1, 2, 4, 5, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+    _layout_table.attach(_spin_button_y,
+                         1, 2, 5, 6, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+
+    _layout_table.attach(_unit_menu,
+                         2, 3, 4, 5, Gtk::FILL, Gtk::FILL);
+
+    // angle spinbutton
+    _spin_angle.setDigits(3);
+    _spin_angle.setIncrements(1.0, 10.0);
+    _spin_angle.setRange(-3600., 3600.);
+    _layout_table.attach(_spin_angle,
+                         1, 3, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+
     // mode radio button
     _layout_table.attach(_relative_toggle,
-                         1, 3, 9, 10, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+                         1, 3, 7, 8, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _relative_toggle.signal_toggled().connect(sigc::mem_fun(*this, &GuidelinePropertiesDialog::_modeChanged));
     _relative_toggle.set_active(_relative_toggle_status);
 
-    // unitmenu
-    /* fixme: We should allow percents here too, as percents of the canvas size */
-    GtkWidget *unit_selector = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
-    sp_unit_selector_set_unit(SP_UNIT_SELECTOR(unit_selector), _desktop->namedview->doc_units);
-    _unit_selector = Gtk::manage(Glib::wrap(unit_selector));
-
-    // position spinbuttons
-    sp_unit_selector_add_adjustment(SP_UNIT_SELECTOR(unit_selector), GTK_ADJUSTMENT(_adjustment_x.gobj()));
-    sp_unit_selector_add_adjustment(SP_UNIT_SELECTOR(unit_selector), GTK_ADJUSTMENT(_adjustment_y.gobj()));
-    _spin_button_x.configure(_adjustment_x, 1.0 , 3);
-    _spin_button_y.configure(_adjustment_y, 1.0 , 3);
-    _layout_table.attach(_label_X,
-                         1, 2, 4, 5, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-    _layout_table.attach(_spin_button_x,
-                         2, 3, 4, 5, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-    _layout_table.attach(_label_Y,
-                         1, 2, 5, 6, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-    _layout_table.attach(_spin_button_y,
-                         2, 3, 5, 6, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-
-    _layout_table.attach(_label_units,
-                         1, 2, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-    _layout_table.attach(*_unit_selector,
-                         2, 3, 6, 7, Gtk::FILL, Gtk::FILL);
-
-    // angle spinbutton
-    _spin_angle.configure(_adj_angle, 5.0 , 3);
-    _spin_angle.show();
-    _layout_table.attach(_label_degrees,
-                         1, 2, 8, 9, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-    _layout_table.attach(_spin_angle,
-                         2, 3, 8, 9, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-
     // don't know what this exactly does, but it results in that the dialog closes when entering a value and pressing enter (see LP bug 484187)
-    gtk_signal_connect_object(GTK_OBJECT(_spin_button_x.gobj()), "activate",
+    gtk_signal_connect_object(GTK_OBJECT(_spin_button_x.getWidget()->gobj()), "activate",
                               GTK_SIGNAL_FUNC(gtk_window_activate_default), gobj());
-    gtk_signal_connect_object(GTK_OBJECT(_spin_button_y.gobj()), "activate",
+    gtk_signal_connect_object(GTK_OBJECT(_spin_button_y.getWidget()->gobj()), "activate",
                               GTK_SIGNAL_FUNC(gtk_window_activate_default), gobj());
-    gtk_signal_connect_object(GTK_OBJECT(_spin_angle.gobj()), "activate",
+    gtk_signal_connect_object(GTK_OBJECT(_spin_angle.getWidget()->gobj()), "activate",
                               GTK_SIGNAL_FUNC(gtk_window_activate_default), gobj());
 
 
@@ -258,14 +248,11 @@ void GuidelinePropertiesDialog::_setup() {
     _modeChanged(); // sets values of spinboxes.
 
     if ( _oldangle == 90. || _oldangle == 270. || _oldangle == -90. || _oldangle == -270.) {
-        _spin_button_x.grab_focus();
-        _spin_button_x.select_region(0, 20);
+        _spin_button_x.grabFocusAndSelectEntry();
     } else if ( _oldangle == 0. || _oldangle == 180. || _oldangle == -180.) {
-        _spin_button_y.grab_focus();
-        _spin_button_y.select_region(0, 20);
+        _spin_button_y.grabFocusAndSelectEntry();
     } else {
-        _spin_angle.grab_focus();
-        _spin_angle.select_region(0, 20);
+        _spin_angle.grabFocusAndSelectEntry();
     }
 
     set_position(Gtk::WIN_POS_MOUSE);

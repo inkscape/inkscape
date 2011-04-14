@@ -22,10 +22,20 @@
 #include <gtkmm/adjustment.h>
 #include "ui/widget/button.h"
 #include "ui/widget/spinbutton.h"
+#include "ui/widget/unit-menu.h"
+#include "ui/widget/scalar-unit.h"
 #include <2geom/point.h>
+
+class SPGuide;
+class SPDesktop;
 
 namespace Inkscape {
 namespace UI {
+
+namespace Widget {
+  class UnitMenu;
+};
+
 namespace Dialogs {
 
 class GuidelinePropertiesDialog : public Gtk::Dialog {
@@ -56,21 +66,15 @@ private:
     Gtk::Table  _layout_table;
     Gtk::Label  _label_name;
     Gtk::Label  _label_descr;
-    Gtk::Label  _label_units;
-    Gtk::Label  _label_X;
-    Gtk::Label  _label_Y;
-    Gtk::Label  _label_degrees;
     Inkscape::UI::Widget::CheckButton _relative_toggle;
     static bool _relative_toggle_status; // remember the status of the _relative_toggle_status button across instances
-    Gtk::Adjustment _adjustment_x;
-    Inkscape::UI::Widget::SpinButton _spin_button_x;
-    Gtk::Adjustment _adjustment_y;
-    Inkscape::UI::Widget::SpinButton _spin_button_y;
+    Inkscape::UI::Widget::UnitMenu _unit_menu;
+    Inkscape::UI::Widget::ScalarUnit _spin_button_x;
+    Inkscape::UI::Widget::ScalarUnit _spin_button_y;
 
-    Gtk::Adjustment _adj_angle;
-    Inkscape::UI::Widget::SpinButton _spin_angle;
+    Inkscape::UI::Widget::ScalarUnit _spin_angle;
+    static Glib::ustring _angle_unit_status; // remember the status of the _relative_toggle_status button across instances
 
-    Gtk::Widget *_unit_selector;
     bool _mode;
     Geom::Point _oldpos;
     gdouble _oldangle;
