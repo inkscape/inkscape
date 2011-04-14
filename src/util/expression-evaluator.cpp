@@ -69,8 +69,6 @@
 
 #include <string.h>
 
-#include <glib-object.h>
-
 namespace Inkscape {
 namespace Util {
 
@@ -82,7 +80,7 @@ enum
   GIMP_EEVL_TOKEN_ANY        = 40000,
 
   GIMP_EEVL_TOKEN_END        = 50000
-} GimpEevlTokenTypeEnum;
+};
 
 typedef int GimpEevlTokenType;
 
