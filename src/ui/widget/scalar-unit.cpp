@@ -118,6 +118,19 @@ ScalarUnit::setValue(double number, Glib::ustring const &units) {
     Scalar::setValue(number);
 }
 
+/** Convert and sets the number only and keeps the current unit.  */
+void
+ScalarUnit::setValueKeepUnit(double number, Glib::ustring const &units) {
+    g_assert(_unit_menu != NULL);
+    if (units == "") {
+        // set the value in the default units
+        Scalar::setValue(number);
+    } else {
+        double conversion = _unit_menu->getConversion(units);
+        Scalar::setValue(number / conversion);
+    }
+}
+
 /** Sets the number only */
 void
 ScalarUnit::setValue(double number) {
@@ -136,6 +149,15 @@ ScalarUnit::getValue(Glib::ustring const &unit_name) const {
         return conversion * Scalar::getValue();
     }
 }
+
+/** Grab focus, and select the text that is in the entry field.
+ */
+void
+ScalarUnit::grabFocusAndSelectEntry() {
+    _widget->grab_focus();
+    static_cast<SpinButton*>(_widget)->select_region(0, 20);
+}
+
 
 void
 ScalarUnit::setHundredPercent(double number)

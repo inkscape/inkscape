@@ -41,7 +41,10 @@ public:
 
     bool      setUnit(Glib::ustring const &units);
     void      setValue(double number, Glib::ustring const &units);
+    void      setValueKeepUnit(double number, Glib::ustring const &units);
     void      setValue(double number);
+
+    void      grabFocusAndSelectEntry();
 
     void      setHundredPercent(double number);
     void      setAbsoluteIsIncrement(bool value);
