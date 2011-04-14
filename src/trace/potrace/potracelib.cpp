@@ -1,4 +1,4 @@
-/* Copyright (C) 2001-2007 Peter Selinger.
+/* Copyright (C) 2001-2010 Peter Selinger.
    This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
@@ -48,15 +48,16 @@ potrace_param_t *potrace_param_default(void) {
 /* On success, returns a Potrace state st with st->status ==
    POTRACE_STATUS_OK. On failure, returns NULL if no Potrace state
    could be created (with errno set), or returns an incomplete Potrace
-   state (with st->status == POTRACE_STATUS_INCOMPLETE). Complete or
-   incomplete Potrace state can be freed with potrace_state_free(). */
+   state (with st->status == POTRACE_STATUS_INCOMPLETE, and with errno
+   set). Complete or incomplete Potrace state can be freed with
+   potrace_state_free(). */
 potrace_state_t *potrace_trace(const potrace_param_t *param, const potrace_bitmap_t *bm) {
     int r;
     path_t *plist = NULL;
     potrace_state_t *st;
     progress_t prog;
     progress_t subprog;
-
+    
     /* prepare private progress bar state */
     prog.callback = param->progress.callback;
     prog.data = param->progress.data;

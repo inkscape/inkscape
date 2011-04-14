@@ -1,8 +1,8 @@
-/* Copyright (C) 2001-2007 Peter Selinger.
+/* Copyright (C) 2001-2010 Peter Selinger.
    This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
-/* $Id$ */
+/* $Id: trace.c 227 2010-12-16 05:47:19Z selinger $ */
 /* transform jaggy paths into smooth curves */
 
 #include <stdio.h>
@@ -483,28 +483,38 @@ static double penalty3(privpath_t *pp, int i, int j) {
   double a, b, c, s;
   double px, py, ex, ey;
 
-  int r=0; /* rotations from i to j */
+  int r = 0; /* rotations from i to j */
 
   if (j>=n) {
-    j-=n;
-    r+=1;
+    j -= n;
+    r = 1;
   }
   
-  x = sums[j+1].x-sums[i].x+r*sums[n].x;
-  y = sums[j+1].y-sums[i].y+r*sums[n].y;
-  x2 = sums[j+1].x2-sums[i].x2+r*sums[n].x2;
-  xy = sums[j+1].xy-sums[i].xy+r*sums[n].xy;
-  y2 = sums[j+1].y2-sums[i].y2+r*sums[n].y2;
-  k = j+1-i+r*n;
-  
-  px = (pt[i].x+pt[j].x)/2.0-pt[0].x;
-  py = (pt[i].y+pt[j].y)/2.0-pt[0].y;
-  ey = (pt[j].x-pt[i].x);
-  ex = -(pt[j].y-pt[i].y);
+  /* critical inner loop: the "if" gives a 4.6 percent speedup */
+  if (r == 0) {
+    x = sums[j+1].x - sums[i].x;
+    y = sums[j+1].y - sums[i].y;
+    x2 = sums[j+1].x2 - sums[i].x2;
+    xy = sums[j+1].xy - sums[i].xy;
+    y2 = sums[j+1].y2 - sums[i].y2;
+    k = j+1 - i;
+  } else {
+    x = sums[j+1].x - sums[i].x + sums[n].x;
+    y = sums[j+1].y - sums[i].y + sums[n].y;
+    x2 = sums[j+1].x2 - sums[i].x2 + sums[n].x2;
+    xy = sums[j+1].xy - sums[i].xy + sums[n].xy;
+    y2 = sums[j+1].y2 - sums[i].y2 + sums[n].y2;
+    k = j+1 - i + n;
+  } 
 
-  a = ((x2-2*x*px)/k+px*px);
-  b = ((xy-x*py-y*px)/k+px*py);
-  c = ((y2-2*y*py)/k+py*py);
+  px = (pt[i].x + pt[j].x) / 2.0 - pt[0].x;
+  py = (pt[i].y + pt[j].y) / 2.0 - pt[0].y;
+  ey = (pt[j].x - pt[i].x);
+  ex = -(pt[j].y - pt[i].y);
+
+  a = ((x2 - 2*x*px) / k + px*px);
+  b = ((xy - x*py - y*px) / k + px*py);
+  c = ((y2 - 2*y*py) / k + py*py);
   
   s = ex*ex*a + 2*ex*ey*b + ey*ey*c;
 
@@ -513,7 +523,7 @@ static double penalty3(privpath_t *pp, int i, int j) {
 
 /* find the optimal polygon. Fill in the m and po components. Return 1
    on failure with errno set, else 0. Non-cyclic version: assumes i=0
-   is in the polygon. Fixme: ### implement cyclic version. */
+   is in the polygon. Fixme: implement cyclic version. */
 static int bestpolygon(privpath_t *pp)
 {
   int i, j, m, k;     
@@ -576,7 +586,7 @@ static int bestpolygon(privpath_t *pp)
   seg1[0] = 0;
 
   /* now find the shortest path with m segments, based on penalty3 */
-  /* note: the outer 2 loops jointly have at most n interations, thus
+  /* note: the outer 2 loops jointly have at most n iterations, thus
      the worst-case behavior here is quadratic. In practice, it is
      close to linear since the inner loop tends to be short. */
   pen[0]=0;
@@ -828,23 +838,26 @@ static int adjust_vertices(privpath_t *pp) {
 /* ---------------------------------------------------------------------- */
 /* Stage 4: smoothing and corner analysis (Sec. 2.3.3) */
 
-/* Always succeeds and returns 0 */
-static int smooth(privcurve_t *curve, int sign, double alphamax) {
+/* reverse orientation of a path */
+static void reverse(privcurve_t *curve) {
+  int m = curve->n;
+  int i, j;
+  dpoint_t tmp;
+
+  for (i=0, j=m-1; i<j; i++, j--) {
+    tmp = curve->vertex[i];
+    curve->vertex[i] = curve->vertex[j];
+    curve->vertex[j] = tmp;
+  }
+}
+
+/* Always succeeds */
+static void smooth(privcurve_t *curve, double alphamax) {
   int m = curve->n;
 
   int i, j, k;
   double dd, denom, alpha;
   dpoint_t p2, p3, p4;
-
-  if (sign == '-') {
-    /* reverse orientation of negative paths */
-    for (i=0, j=m-1; i<j; i++, j--) {
-      dpoint_t tmp;
-      tmp = curve->vertex[i];
-      curve->vertex[i] = curve->vertex[j];
-      curve->vertex[j] = tmp;
-    }
-  }
 
   /* examine each vertex and find its best fit */
   for (i=0; i<m; i++) {
@@ -885,7 +898,7 @@ static int smooth(privcurve_t *curve, int sign, double alphamax) {
   }
   curve->alphacurve = 1;
 
-  return 0;
+  return;
 }
 
 /* ---------------------------------------------------------------------- */
@@ -1098,7 +1111,7 @@ static int opticurve(privpath_t *pp, double opttolerance) {
   len[0] = 0;
 
   /* Fixme: we always start from a fixed point -- should find the best
-     curve cyclically ### */
+     curve cyclically */
 
   for (j=1; j<=m; j++) {
     /* calculate best path from 0 to j */
@@ -1206,7 +1219,10 @@ int process_path(path_t *plist, const potrace_param_t *param, progress_t *progre
     TRY(calc_lon(p->priv));
     TRY(bestpolygon(p->priv));
     TRY(adjust_vertices(p->priv));
-    TRY(smooth(&p->priv->curve, p->sign, param->alphamax));
+    if (p->sign == '-') {   /* reverse orientation of negative paths */
+      reverse(&p->priv->curve);
+    }
+    smooth(&p->priv->curve, param->alphamax);
     if (param->opticurve) {
       TRY(opticurve(p->priv, param->opttolerance));
       p->priv->fcurve = &p->priv->ocurve;

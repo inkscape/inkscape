@@ -1,8 +1,8 @@
-/* Copyright (C) 2001-2007 Peter Selinger.
+/* Copyright (C) 2001-2010 Peter Selinger.
    This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
-/* $Id$ */
+/* $Id: decompose.c 227 2010-12-16 05:47:19Z selinger $ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,32 +54,6 @@ static void clear_bm_with_bbox(potrace_bitmap_t *bm, bbox_t *bbox) {
 
 /* ---------------------------------------------------------------------- */
 /* auxiliary functions */
-
-/* deterministically and efficiently hash (x,y) into a pseudo-random bit */
-static inline int detrand(int x, int y) {
-  unsigned int z;
-  static const unsigned char t[256] = { 
-    /* non-linear sequence: constant term of inverse in GF(8), 
-       mod x^8+x^4+x^3+x+1 */
-    0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 
-    0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 
-    0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 
-    1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 
-    0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 
-    0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 
-    0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 
-    0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 
-    1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 
-    0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 
-    1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 
-  };
-
-  /* 0x04b3e375 and 0x05a8ef93 are chosen to contain every possible
-     5-bit sequence */
-  z = ((0x04b3e375 * x) ^ y) * 0x05a8ef93;
-  z = t[z & 0xff] ^ t[(z>>8) & 0xff] ^ t[(z>>16) & 0xff] ^ t[(z>>24) & 0xff];
-  return z & 1;
-}
 
 /* return the "majority" value of bitmap bm at intersection (x,y). We
    assume that the bitmap is balanced at "radius" 1.  */
@@ -304,7 +278,8 @@ static void pathlist_to_tree(path_t *plist, potrace_bitmap_t *bm) {
   path_t *heap, *heap1;
   path_t *cur;
   path_t *head;
-  path_t **hook, **hook_in, **hook_out; /* for fast appending to linked list */
+  path_t **plist_hook;          /* for fast appending to linked list */
+  path_t **hook_in, **hook_out; /* for fast appending to linked list */
   bbox_t bbox;
   
   bm_clear(bm, 0);
@@ -391,18 +366,18 @@ static void pathlist_to_tree(path_t *plist, potrace_bitmap_t *bm) {
     heap->next = NULL;  /* heap is a linked list of childlists */
   }
   plist = NULL;
-  hook = &plist;
+  plist_hook = &plist;
   while (heap) {
     heap1 = heap->next;
     for (p=heap; p; p=p->sibling) {
       /* p is a positive path */
       /* append to linked list */
-      list_insert_beforehook(p, hook);
+      list_insert_beforehook(p, plist_hook);
       
       /* go through its children */
       for (p1=p->childlist; p1; p1=p1->sibling) {
 	/* append to linked list */
-	list_insert_beforehook(p1, hook);
+	list_insert_beforehook(p1, plist_hook);
 	/* append its childlist to heap, if non-empty */
 	if (p1->childlist) {
 	  list_append(path_t, heap1, p1->childlist);
@@ -423,9 +398,12 @@ static void pathlist_to_tree(path_t *plist, potrace_bitmap_t *bm) {
 static int findnext(potrace_bitmap_t *bm, int *xp, int *yp) {
   int x;
   int y;
+  int x0;
+
+  x0 = (*xp) & ~(BM_WORDBITS-1);
 
   for (y=*yp; y>=0; y--) {
-    for (x=0; x<bm->w; x+=BM_WORDBITS) {
+    for (x=x0; x<bm->w; x+=BM_WORDBITS) {
       if (*bm_index(bm, x, y)) {
 	while (!BM_GET(bm, x, y)) {
 	  x++;
@@ -436,6 +414,7 @@ static int findnext(potrace_bitmap_t *bm, int *xp, int *yp) {
 	return 0;
       }
     }
+    x0 = 0;
   }
   /* not found */
   return 1;
@@ -451,7 +430,7 @@ int bm_to_pathlist(const potrace_bitmap_t *bm, path_t **plistp, const potrace_pa
   int y;
   path_t *p;
   path_t *plist = NULL;  /* linked list of path objects */
-  path_t **hook = &plist;  /* used to speed up appending to linked list */
+  path_t **plist_hook = &plist;  /* used to speed up appending to linked list */
   potrace_bitmap_t *bm1 = NULL;
   int sign;
 
@@ -465,6 +444,7 @@ int bm_to_pathlist(const potrace_bitmap_t *bm, path_t **plistp, const potrace_pa
   bm_clearexcess(bm1);
 
   /* iterate through components */
+  x = 0;
   y = bm1->h - 1;
   while (findnext(bm1, &x, &y) == 0) { 
     /* calculate the sign by looking at the original */
@@ -483,7 +463,7 @@ int bm_to_pathlist(const potrace_bitmap_t *bm, path_t **plistp, const potrace_pa
     if (p->area <= param->turdsize) {
       path_free(p);
     } else {
-      list_insert_beforehook(p, hook);
+      list_insert_beforehook(p, plist_hook);
     }
 
     if (bm1->h > 0) { /* to be sure */

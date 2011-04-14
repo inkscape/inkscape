@@ -1,8 +1,8 @@
-/* Copyright (C) 2001-2007 Peter Selinger.
+/* Copyright (C) 2001-2010 Peter Selinger.
    This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
-/* $Id$ */
+/* $Id: curve.c 227 2010-12-16 05:47:19Z selinger $ */
 /* private part of the path and curve data structures */
 
 #include <stdio.h>

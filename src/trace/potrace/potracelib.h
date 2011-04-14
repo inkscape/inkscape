@@ -1,4 +1,4 @@
-/* Copyright (C) 2001-2007 Peter Selinger.
+/* Copyright (C) 2001-2010 Peter Selinger.
    This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
@@ -6,7 +6,11 @@
 #define POTRACELIB_H
 
 /* this file defines the API for the core Potrace library. For a more
-   detailed description of the API, see doc/potracelib.txt */
+   detailed description of the API, see potracelib.pdf */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ---------------------------------------------------------------------- */
 /* tracing parameters */
@@ -127,5 +131,9 @@ void potrace_state_free(potrace_state_t *st);
 /* return a static plain text version string identifying this version
    of potracelib */
 char *potrace_version(void);
+
+#ifdef  __cplusplus
+} /* end of extern "C" */
+#endif
 
 #endif /* POTRACELIB_H */

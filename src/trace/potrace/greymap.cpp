@@ -1,14 +1,13 @@
-/* Copyright (C) 2001-2007 Peter Selinger.
+/* Copyright (C) 2001-2010 Peter Selinger.
    This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
-/* $Id$ */
+/* $Id: greymap.c 227 2010-12-16 05:47:19Z selinger $ */
 
 /* Routines for manipulating greymaps, including reading pgm files. We
    only deal with greymaps of depth 8 bits. */
 
 #include <stdlib.h>
-#include <errno.h>
 #include <string.h>
 #include <math.h>
 
@@ -28,7 +27,6 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp);
 
 greymap_t *gm_new(int w, int h) {
   greymap_t *gm;
-  int errno_save;
 
   gm = (greymap_t *) malloc(sizeof(greymap_t));
   if (!gm) {
@@ -38,9 +36,7 @@ greymap_t *gm_new(int w, int h) {
   gm->h = h;
   gm->map = (signed short int *) malloc(w*h*sizeof(signed short int));
   if (!gm->map) {
-    errno_save = errno;
     free(gm);
-    errno = errno_save;
     return NULL;
   }
   return gm;
@@ -60,7 +56,7 @@ greymap_t *gm_dup(greymap_t *gm) {
   if (!gm1) {
     return NULL;
   }
-  memcpy(gm1->map, gm->map, gm->w*gm->h*2);
+  memcpy(gm1->map, gm->map, gm->w*gm->h*sizeof(signed short int));
   return gm1;
 }
 
@@ -69,7 +65,7 @@ void gm_clear(greymap_t *gm, int b) {
   int i;
 
   if (b==0) {
-    memset(gm->map, 0, gm->w*gm->h*2);
+    memset(gm->map, 0, gm->w*gm->h*sizeof(signed short int));
   } else {
     for (i=0; i<gm->w*gm->h; i++) {
       gm->map[i] = b;
@@ -161,16 +157,16 @@ static int readbit(FILE *f) {
 
 /* ---------------------------------------------------------------------- */
 
-char const *gm_read_error = NULL;
-
-/** Read a PNM stream: P1-P6 format (see pnm(5)), or a BMP stream, and
+/* read a PNM stream: P1-P6 format (see pnm(5)), or a BMP stream, and
    convert the output to a greymap. Return greymap in *gmp. Return 0
    on success, -1 on error with errno set, -2 on bad file format (with
    error message in gm_read_error), and 1 on premature end of file, -3
    on empty file (including files with only whitespace and comments),
    -4 if wrong magic number. If the return value is >=0, *gmp is
-   valid.
-   */
+   valid. */
+
+char const *gm_read_error = NULL;
+
 int gm_read(FILE *f, greymap_t **gmp) {
   int magic[2];
 
@@ -413,6 +409,7 @@ struct bmp_info_s {
   unsigned int ncolors;        /* number of colors in palette */
   unsigned int ColorsImportant;
   unsigned int ctbits;         /* sample size for color table */
+  int topdown;                 /* top-down mode? */
 };
 typedef struct bmp_info_s bmp_info_t;
 
@@ -481,6 +478,9 @@ static int bmp_forward(FILE *f, int pos) {
 #define TRY(x) if (x) goto try_error
 #define TRY_EOF(x) if (x) goto eof
 
+/* correct y-coordinate for top-down format */
+#define ycorr(y) (bmpinfo.topdown ? bmpinfo.h-1-y : y)
+
 /* read BMP stream after magic number. Return values as for gm_read.
    We choose to be as permissive as possible, since there are many
    programs out there which produce BMP. For instance, ppmtobmp can
@@ -512,7 +512,8 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
 
   /* info header */
   TRY(bmp_readint(f, 4, &bmpinfo.InfoSize));
-  if (bmpinfo.InfoSize == 40 || bmpinfo.InfoSize == 64) {
+  if (bmpinfo.InfoSize == 40 || bmpinfo.InfoSize == 64
+      || bmpinfo.InfoSize == 108 || bmpinfo.InfoSize == 124) {
     /* Windows or new OS/2 format */
     bmpinfo.ctbits = 32; /* sample size in color table */
     TRY(bmp_readint(f, 4, &bmpinfo.w));
@@ -525,6 +526,12 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
     TRY(bmp_readint(f, 4, &bmpinfo.YpixelsPerM));
     TRY(bmp_readint(f, 4, &bmpinfo.ncolors));
     TRY(bmp_readint(f, 4, &bmpinfo.ColorsImportant));
+    if ((signed int)bmpinfo.h < 0) {
+      bmpinfo.h = -bmpinfo.h;
+      bmpinfo.topdown = 1;
+    } else {
+      bmpinfo.topdown = 0;
+    }
   } else if (bmpinfo.InfoSize == 12) {
     /* old OS/2 format */
     bmpinfo.ctbits = 24; /* sample size in color table */
@@ -534,11 +541,12 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
     TRY(bmp_readint(f, 2, &bmpinfo.bits));
     bmpinfo.comp = 0;
     bmpinfo.ncolors = 0;
+    bmpinfo.topdown = 0;
   } else {
     goto format_error;
   }
 
-  /* forward to color table (i.e., if bmpinfo.InfoSize == 64) */
+  /* forward to color table (e.g., if bmpinfo.InfoSize == 64) */
   TRY(bmp_forward(f, 14+bmpinfo.InfoSize));
 
   if (bmpinfo.Planes != 1) {
@@ -593,7 +601,7 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
       for (i=0; 8*i<bmpinfo.w; i++) {
 	TRY_EOF(bmp_readint(f, 1, &b));
 	for (j=0; j<8; j++) {
-	  GM_PUT(gm, i*8+j, y, b & (0x80 >> j) ? coltable[1] : coltable[0]);
+	  GM_PUT(gm, i*8+j, ycorr(y), b & (0x80 >> j) ? coltable[1] : coltable[0]);
 	}
       }
       TRY(bmp_pad(f));
@@ -620,7 +628,7 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
 	b = bitbuf >> (INTBITS - bmpinfo.bits);
 	bitbuf <<= bmpinfo.bits;
 	n -= bmpinfo.bits;
-	GM_UPUT(gm, x, y, coltable[b]);
+	GM_UPUT(gm, x, ycorr(y), coltable[b]);
       }
       TRY(bmp_pad(f));
     }
@@ -640,7 +648,7 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
       for (x=0; x<bmpinfo.w; x++) {
         TRY_EOF(bmp_readint(f, bmpinfo.bits/8, &c));
 	c = ((c>>16) & 0xff) + ((c>>8) & 0xff) + (c & 0xff);
-        GM_UPUT(gm, x, y, c/3);
+        GM_UPUT(gm, x, ycorr(y), c/3);
       }
       TRY(bmp_pad(f));
     }
@@ -664,7 +672,7 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
 	  if (y>=bmpinfo.h) {
 	    break;
 	  }
-	  GM_UPUT(gm, x, y, col[i&1]);
+	  GM_UPUT(gm, x, ycorr(y), col[i&1]);
 	  x++;
 	}
       } else if (c == 0) {
@@ -693,7 +701,7 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
 	  if (y>=bmpinfo.h) {
 	    break;
 	  }
-	  GM_PUT(gm, x, y, coltable[(b>>(4-4*(i&1))) & 0xf]);
+	  GM_PUT(gm, x, ycorr(y), coltable[(b>>(4-4*(i&1))) & 0xf]);
 	  x++;
 	}
 	if ((c+1) & 2) {
@@ -720,7 +728,7 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
 	  if (y>=bmpinfo.h) {
 	    break;
 	  }
-	  GM_UPUT(gm, x, y, coltable[c]);
+	  GM_UPUT(gm, x, ycorr(y), coltable[c]);
 	  x++;
 	}
       } else if (c == 0) {
@@ -747,7 +755,7 @@ static int gm_readbody_bmp(FILE *f, greymap_t **gmp) {
           if (y>=bmpinfo.h) {
             break;
           }
-	  GM_PUT(gm, x, y, coltable[b]);
+	  GM_PUT(gm, x, ycorr(y), coltable[b]);
 	  x++;
 	}
 	if (c & 1) {
