@@ -33,13 +33,13 @@ public:
     : Gtk::SpinButton(climb_rate, digits),
       _unit_menu(NULL)
   {
-      signal_input().connect(sigc::mem_fun(*this, &SpinButton::on_input));
+      connect_signals();
   };
   explicit SpinButton(Gtk::Adjustment& adjustment, double climb_rate = 0.0, guint digits = 0)
     : Gtk::SpinButton(adjustment, climb_rate, digits),
       _unit_menu(NULL)
   {
-      signal_input().connect(sigc::mem_fun(*this, &SpinButton::on_input));
+      connect_signals();
   };
 
   virtual ~SpinButton() {};
@@ -49,7 +49,13 @@ public:
 protected:
   UnitMenu *_unit_menu; /// Linked unit menu for unit conversion in entered expressions.
 
+  void connect_signals();
   int on_input(double* newvalue);
+  bool on_my_focus_in_event(GdkEventFocus* event);
+  bool on_my_key_press_event(GdkEventKey* event);
+  void undo();
+
+  double on_focus_in_value;
 
 private:
   // noncopyable

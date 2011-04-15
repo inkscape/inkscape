@@ -18,10 +18,19 @@
 
 #include "unit-menu.h"
 #include "util/expression-evaluator.h"
+#include "event-context.h"
 
 namespace Inkscape {
 namespace UI {
 namespace Widget {
+
+
+void
+SpinButton::connect_signals() {
+    signal_input().connect(sigc::mem_fun(*this, &SpinButton::on_input));
+    signal_focus_in_event().connect(sigc::mem_fun(*this, &SpinButton::on_my_focus_in_event));
+    signal_key_press_event().connect(sigc::mem_fun(*this, &SpinButton::on_my_key_press_event));
+};
 
 /**
  * This callback function should try to convert the entered text to a number and write it to newvalue.
@@ -34,10 +43,16 @@ int
 SpinButton::on_input(double* newvalue)
 {
     try {
-        Inkscape::Util::GimpEevlQuantity result = Inkscape::Util::gimp_eevl_evaluate (get_text().c_str(), _unit_menu ? &_unit_menu->getUnit() : NULL);
-        // check if output dimension corresponds to input unit
-        if (_unit_menu && result.dimension != (_unit_menu->getUnit().isAbsolute() ? 1 : 0) ) {
-            throw Inkscape::Util::EvaluatorException("Input dimensions do not match with parameter dimensions.","");
+        Inkscape::Util::GimpEevlQuantity result;
+        if (_unit_menu) {
+            Unit unit = _unit_menu->getUnit();
+            result = Inkscape::Util::gimp_eevl_evaluate (get_text().c_str(), &unit);
+            // check if output dimension corresponds to input unit
+            if (result.dimension != (unit.isAbsolute() ? 1 : 0) ) {
+                throw Inkscape::Util::EvaluatorException("Input dimensions do not match with parameter dimensions.","");
+            }
+        } else {
+            result = Inkscape::Util::gimp_eevl_evaluate (get_text().c_str(), NULL);
         }
 
         *newvalue = result.value;
@@ -50,6 +65,53 @@ SpinButton::on_input(double* newvalue)
 
     return true;
 }
+
+/** When focus is obtained, save the value to enable undo later.
+ * @retval false continue with default handler.
+ * @retval true  don't call default handler. 
+*/
+bool
+SpinButton::on_my_focus_in_event(GdkEventFocus* /*event*/)
+{
+    on_focus_in_value = get_value();
+    return false; // do not consume the event
+}
+
+/** Handle specific keypress events, like Ctrl+Z
+ * @retval false continue with default handler.
+ * @retval true  don't call default handler. 
+*/
+bool
+SpinButton::on_my_key_press_event(GdkEventKey* event)
+{
+    switch (get_group0_keyval (event)) {
+    case GDK_Escape:
+        undo();
+        return true; // I consumed the event
+        break;
+    case GDK_z:
+    case GDK_Z:
+        if (event->state & GDK_CONTROL_MASK) {
+            undo();
+            return true; // I consumed the event
+        }
+        break;
+    default:
+        break;
+    }
+
+    return false; // do not consume the event
+}
+
+/**
+ * Undo the editing, by resetting the value upon when the spinbutton got focus.
+ */
+void
+SpinButton::undo()
+{
+    set_value(on_focus_in_value);
+}
+
 
 } // namespace Widget
 } // namespace UI
