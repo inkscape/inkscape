@@ -62,6 +62,8 @@
 #include "icon-size.h"
 #include "ege-adjustment-action.h"
 
+#include "ui/widget/spinbutton.h"
+
 
 static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass );
 static void ege_adjustment_action_init( EgeAdjustmentAction* action );
@@ -846,7 +848,9 @@ static GtkWidget* create_tool_item( GtkAction* action )
             gtk_scale_button_set_icons( GTK_SCALE_BUTTON(spinbutton), floogles );
 #endif /* GTK_CHECK_VERSION(2,12,0) */
         } else {
-            spinbutton = gtk_spin_button_new( act->private_data->adj, act->private_data->climbRate, act->private_data->digits );
+            //spinbutton = gtk_spin_button_new( act->private_data->adj, act->private_data->climbRate, act->private_data->digits );
+            Inkscape::UI::Widget::SpinButton *inkscape_spinbutton = new Inkscape::UI::Widget::SpinButton(*Glib::wrap(act->private_data->adj, true), act->private_data->climbRate, act->private_data->digits);
+            spinbutton = GTK_WIDGET( inkscape_spinbutton->gobj() );
         }
 
         item = GTK_WIDGET( gtk_tool_item_new() );
