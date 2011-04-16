@@ -90,11 +90,11 @@ Gtk::HScale& SpinSlider::get_scale()
     return _scale;
 }
 
-const Gtk::SpinButton& SpinSlider::get_spin_button() const
+const Inkscape::UI::Widget::SpinButton& SpinSlider::get_spin_button() const
 {
     return _spin;
 }
-Gtk::SpinButton& SpinSlider::get_spin_button()
+Inkscape::UI::Widget::SpinButton& SpinSlider::get_spin_button()
 {
     return _spin;
 }

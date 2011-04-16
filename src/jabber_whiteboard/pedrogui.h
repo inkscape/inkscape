@@ -26,6 +26,7 @@
 
 
 #include <gtkmm.h>
+#include "ui/widget/spinbutton.h"
 
 #include "pedro/pedroxmpp.h"
 #include "pedro/pedroconfig.h"
@@ -595,7 +596,7 @@ private:
     Gtk::Label       hostLabel;
     Gtk::Entry       hostField;
     Gtk::Label       portLabel;
-    Gtk::SpinButton  portSpinner;
+    Inkscape::UI::Widget::SpinButton  portSpinner;
     Gtk::Label       userLabel;
     Gtk::Entry       userField;
     Gtk::Label       passLabel;

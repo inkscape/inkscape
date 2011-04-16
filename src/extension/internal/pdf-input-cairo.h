@@ -20,7 +20,6 @@
 #include <gtkmm/button.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/label.h>
-#include <gtkmm/spinbutton.h>
 #include <gtkmm/box.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/comboboxtext.h>
@@ -39,6 +38,13 @@
 #include "../implementation/implementation.h"
 
 namespace Inkscape {
+
+namespace UI {
+namespace Widget {
+  class SpinButton;
+}
+}
+
 namespace Extension {
 namespace Internal {
 
@@ -64,7 +70,7 @@ private:
     class Gtk::Button * cancelbutton;
     class Gtk::Button * okbutton;
     class Gtk::Label * _labelSelect;
-    class Gtk::SpinButton * _pageNumberSpin;
+    class Inkscape::UI::Widget::SpinButton * _pageNumberSpin;
     class Gtk::Label * _labelTotalPages;
     class Gtk::HBox * hbox2;
     class Gtk::CheckButton * _cropCheck;

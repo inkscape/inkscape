@@ -137,7 +137,7 @@ Gtk::HBox* SvgFontsDialog::AttrCombo(gchar* lbl, const SPAttributeEnum /*attr*/)
 Gtk::HBox* SvgFontsDialog::AttrSpin(gchar* lbl){
     Gtk::HBox* hbox = Gtk::manage(new Gtk::HBox());
     hbox->add(* Gtk::manage(new Gtk::Label(lbl)) );
-    hbox->add(* Gtk::manage(new Gtk::SpinBox()) );
+    hbox->add(* Gtk::manage(new Inkscape::UI::Widget::SpinBox()) );
     hbox->show_all();
     return hbox;
 }*/

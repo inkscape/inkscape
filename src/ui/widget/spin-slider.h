@@ -15,7 +15,7 @@
 #include <gtkmm/adjustment.h>
 #include <gtkmm/box.h>
 #include <gtkmm/scale.h>
-#include <gtkmm/spinbutton.h>
+#include "spinbutton.h"
 #include "attr-widget.h"
 
 namespace Inkscape {
@@ -42,8 +42,8 @@ public:
     const Gtk::HScale& get_scale() const;
     Gtk::HScale& get_scale();
 
-    const Gtk::SpinButton& get_spin_button() const;
-    Gtk::SpinButton& get_spin_button();
+    const Inkscape::UI::Widget::SpinButton& get_spin_button() const;
+    Inkscape::UI::Widget::SpinButton& get_spin_button();
 
     void set_update_policy(const Gtk::UpdateType);
 
@@ -52,7 +52,7 @@ public:
 private:
     Gtk::Adjustment _adjustment;
     Gtk::HScale _scale;
-    Gtk::SpinButton _spin;
+    Inkscape::UI::Widget::SpinButton _spin;
 };
 
 // Contains two SpinSliders for controlling number-opt-number attributes

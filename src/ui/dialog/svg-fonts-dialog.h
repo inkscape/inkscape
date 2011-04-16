@@ -12,6 +12,7 @@
 #define INKSCAPE_UI_DIALOG_SVG_FONTS_H
 
 #include "ui/widget/panel.h"
+#include "ui/widget/spinbutton.h"
 #include "sp-font.h"
 #include "sp-font-face.h"
 #include "verbs.h"
@@ -206,7 +207,7 @@ private:
     SvgFontDrawingArea _font_da, kerning_preview;
     GlyphComboBox first_glyph, second_glyph;
     SPGlyphKerning* kerning_pair;
-    Gtk::SpinButton setwidth_spin;
+    Inkscape::UI::Widget::SpinButton setwidth_spin;
     Gtk::HScale kerning_slider;
 
     class EntryWidget : public Gtk::HBox

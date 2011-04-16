@@ -31,6 +31,8 @@
 #include <poppler/glib/poppler-document.h>
 #include <poppler/glib/poppler-page.h>
 
+#include "ui/widget/spinbutton.h"
+
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
@@ -67,7 +69,7 @@ PdfImportCairoDialog::PdfImportCairoDialog(PopplerDocument *doc)
     // Page number
     int num_pages = poppler_document_get_n_pages(_poppler_doc);
     Gtk::Adjustment *_pageNumberSpin_adj = Gtk::manage(new class Gtk::Adjustment(1, 1, num_pages, 1, 10, 0));
-    _pageNumberSpin = Gtk::manage(new class Gtk::SpinButton(*_pageNumberSpin_adj, 1, 1));
+    _pageNumberSpin = Gtk::manage(new class Inkscape::UI::Widget::SpinButton(*_pageNumberSpin_adj, 1, 1));
     _labelTotalPages = Gtk::manage(new class Gtk::Label());
     hbox2 = Gtk::manage(new class Gtk::HBox(false, 0));
     // Disable the page selector when there's only one page

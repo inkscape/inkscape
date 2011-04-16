@@ -143,13 +143,13 @@ private:
     Gtk::VBox             RowHeightVBox;
     Gtk::HBox             RowHeightBox;
     Gtk::Label            RowHeightLabel;
-    Gtk::SpinButton       RowHeightSpinner;
+    Inkscape::UI::Widget::SpinButton RowHeightSpinner;
 
     // Column width
     Gtk::VBox             ColumnWidthVBox;
     Gtk::HBox             ColumnWidthBox;
     Gtk::Label            ColumnWidthLabel;
-    Gtk::SpinButton       ColumnWidthSpinner;
+    Inkscape::UI::Widget::SpinButton ColumnWidthSpinner;
 };
 
 

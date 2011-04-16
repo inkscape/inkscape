@@ -24,7 +24,7 @@
 #include <gtkmm/paned.h>
 #include <gtkmm/scale.h>
 #include <gtkmm/scrolledwindow.h>
-#include <gtkmm/spinbutton.h>
+#include "ui/widget/spinbutton.h"
 #include <gtkmm/stock.h>
 #include <gtkmm/tooltips.h>
 #include <glibmm/i18n.h>
@@ -133,12 +133,12 @@ private:
     const Glib::ustring _true_val, _false_val;
 };
 
-class SpinButtonAttr : public Gtk::SpinButton, public AttrWidget
+class SpinButtonAttr : public Inkscape::UI::Widget::SpinButton, public AttrWidget
 {
 public:
     SpinButtonAttr(double lower, double upper, double step_inc,
                    double climb_rate, int digits, const SPAttributeEnum a, double def, char* tip_text)
-        : Gtk::SpinButton(climb_rate, digits),
+        : Inkscape::UI::Widget::SpinButton(climb_rate, digits),
           AttrWidget(a, def)
     {
         if (tip_text) _tt.set_tip(*this, tip_text);
@@ -248,12 +248,12 @@ public:
         pack_start(_s2, false, false);
     }
 
-    Gtk::SpinButton& get_spinbutton1()
+    Inkscape::UI::Widget::SpinButton& get_spinbutton1()
     {
         return _s1;
     }
 
-    Gtk::SpinButton& get_spinbutton2()
+    Inkscape::UI::Widget::SpinButton& get_spinbutton2()
     {
         return _s2;
     }
@@ -285,7 +285,7 @@ public:
 
     }
 private:
-    Gtk::SpinButton _s1, _s2;
+    Inkscape::UI::Widget::SpinButton _s1, _s2;
 };
 
 class ColorButton : public Gtk::ColorButton, public AttrWidget

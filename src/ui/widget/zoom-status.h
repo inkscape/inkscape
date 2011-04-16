@@ -13,7 +13,7 @@
  */
 
 #include <gtkmm/adjustment.h>
-#include <gtkmm/spinbutton.h>
+#include "ui/widget/spinbutton.h"
 
 struct SPDesktop;
 
@@ -22,7 +22,7 @@ namespace Inkscape {
     namespace UI {
         namespace Widget {
 
-class ZoomStatus : public Gtk::SpinButton
+class ZoomStatus : public Inkscape::UI::Widget::SpinButton
 {
 public:
     ZoomStatus();

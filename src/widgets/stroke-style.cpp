@@ -55,6 +55,7 @@
 #include "widgets/paint-selector.h"
 #include "widgets/sp-widget.h"
 #include "widgets/spw-utilities.h"
+#include "ui/widget/spinbutton.h"
 #include "xml/repr.h"
 
 #include "stroke-style.h"
@@ -653,7 +654,7 @@ sp_stroke_style_line_widget_new(void)
     Gtk::Container *spw;
     Gtk::Table *t;
     Gtk::Adjustment *a;
-    Gtk::SpinButton *sb;
+    Inkscape::UI::Widget::SpinButton *sb;
     Gtk::RadioButton *tb;
     Gtk::HBox *f, *hb;
 
@@ -688,7 +689,7 @@ sp_stroke_style_line_widget_new(void)
 
     a = new Gtk::Adjustment(1.0, 0.0, 1000.0, 0.1, 10.0, 0.0);
     spw->set_data("width", a);
-    sb = new Gtk::SpinButton(*a, 0.1, 3);
+    sb = new Inkscape::UI::Widget::SpinButton(*a, 0.1, 3);
     tt->set_tip(*sb, _("Stroke width"));
     sb->show();
     spw_label(t, C_("Stroke width", "_Width:"), 0, i, sb);
@@ -765,7 +766,7 @@ sp_stroke_style_line_widget_new(void)
     a = new Gtk::Adjustment(4.0, 0.0, 100.0, 0.1, 10.0, 0.0);
     spw->set_data("miterlimit", a);
 
-    sb = new Gtk::SpinButton(*a, 0.1, 2);
+    sb = new Inkscape::UI::Widget::SpinButton(*a, 0.1, 2);
     tt->set_tip(*sb, _("Maximum length of the miter (in units of stroke width)"));
     sb->show();
     spw_label(t, _("Miter _limit:"), 0, i, sb);
@@ -1057,8 +1058,8 @@ sp_stroke_style_line_update(Gtk::Container *spw, Inkscape::Selection *sel)
         tb = static_cast<Gtk::RadioButton *>(spw->get_data("bevel join"));
         tb->set_sensitive(enabled);
 
-        Gtk::SpinButton* sb = NULL;
-        sb = static_cast<Gtk::SpinButton *>(spw->get_data("miterlimit_sb"));
+        Inkscape::UI::Widget::SpinButton* sb = NULL;
+        sb = static_cast<Inkscape::UI::Widget::SpinButton *>(spw->get_data("miterlimit_sb"));
         sb->set_sensitive(enabled);
 
         tb = static_cast<Gtk::RadioButton *>(spw->get_data("cap butt"));

@@ -17,7 +17,7 @@
 #include <vector>
 #include <gtkmm/table.h>
 #include <gtkmm/comboboxtext.h>
-#include <gtkmm/spinbutton.h>
+#include "ui/widget/spinbutton.h"
 #include <gtkmm/tooltips.h>
 #include <gtkmm/treeview.h>
 #include <gtkmm/radiobutton.h>
@@ -117,7 +117,7 @@ private:
     void on_spinbutton_value_changed();
     void on_unit_changed();
 
-    Gtk::SpinButton _sb;
+    Inkscape::UI::Widget::SpinButton _sb;
     UnitMenu        _unit;
     Gtk::HScale     _slider;
     ZoomCorrRuler   _ruler;
@@ -135,7 +135,7 @@ private:
     void on_spinbutton_value_changed();
     
     Glib::ustring _prefs_path;
-    Gtk::SpinButton _sb;
+    Inkscape::UI::Widget::SpinButton _sb;
     Gtk::HScale     _slider;
     bool freeze; // used to block recursive updates of slider and spinbutton
 };

@@ -21,7 +21,7 @@
 #include <gtkmm/menu.h>
 #include <gtkmm/menuitem.h>
 #include <gtkmm/adjustment.h>
-#include <gtkmm/spinbutton.h>
+#include "ui/widget/spinbutton.h"
 
 #include <stddef.h>
 #include <sigc++/sigc++.h>
@@ -138,7 +138,7 @@ protected:
 
     Gtk::EventBox _opacity_place;
     Gtk::Adjustment _opacity_adjustment;
-    Gtk::SpinButton _opacity_sb;
+    Inkscape::UI::Widget::SpinButton _opacity_sb;
 
     Gtk::Label _na[2];
     Glib::ustring __na[2];

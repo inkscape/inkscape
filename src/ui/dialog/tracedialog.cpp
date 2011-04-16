@@ -16,7 +16,7 @@
 
 #include <gtkmm/notebook.h>
 #include <gtkmm/frame.h>
-#include <gtkmm/spinbutton.h>
+#include "ui/widget/spinbutton.h"
 #include <gtkmm/stock.h>
 
 #include <gtk/gtkdialog.h> //for GTK_RESPONSE* types
@@ -109,7 +109,7 @@ class TraceDialogImpl : public TraceDialog
     Gtk::HBox             modeBrightnessBox;
     Gtk::RadioButton      modeBrightnessRadioButton;
     Gtk::Label            modeBrightnessSpinnerLabel;
-    Gtk::SpinButton       modeBrightnessSpinner;
+    Inkscape::UI::Widget::SpinButton modeBrightnessSpinner;
     //edge detection
     Gtk::Frame            modeCannyFrame;
     Gtk::HBox             modeCannyBox;
@@ -117,16 +117,16 @@ class TraceDialogImpl : public TraceDialog
     Gtk::RadioButton      modeCannyRadioButton;
     //Gtk::HSeparator     modeCannySeparator;
     //Gtk::Label          modeCannyLoSpinnerLabel;
-    //Gtk::SpinButton     modeCannyLoSpinner;
+    //Inkscape::UI::Widget::SpinButton     modeCannyLoSpinner;
     Gtk::Label            modeCannyHiSpinnerLabel;
-    Gtk::SpinButton       modeCannyHiSpinner;
+    Inkscape::UI::Widget::SpinButton       modeCannyHiSpinner;
     //quantization
     Gtk::Frame            modeQuantFrame;
     Gtk::HBox             modeQuantBox;
     Gtk::VBox             modeQuantVBox;
     Gtk::RadioButton      modeQuantRadioButton;
     Gtk::Label            modeQuantNrColorLabel;
-    Gtk::SpinButton       modeQuantNrColorSpinner;
+    Inkscape::UI::Widget::SpinButton       modeQuantNrColorSpinner;
     //params
     Gtk::CheckButton      modeInvertButton;
     Gtk::HBox             modeInvertBox;
@@ -137,7 +137,7 @@ class TraceDialogImpl : public TraceDialog
     //brightness
     Gtk::HBox             modeMultiScanHBox1;
     Gtk::RadioButton      modeMultiScanBrightnessRadioButton;
-    Gtk::SpinButton       modeMultiScanNrColorSpinner;
+    Inkscape::UI::Widget::SpinButton       modeMultiScanNrColorSpinner;
     //colors
     Gtk::HBox             modeMultiScanHBox2;
     Gtk::RadioButton      modeMultiScanColorRadioButton;
@@ -162,15 +162,15 @@ class TraceDialogImpl : public TraceDialog
     Gtk::HBox             optionsSpecklesBox;
     Gtk::CheckButton      optionsSpecklesButton;
     Gtk::Label            optionsSpecklesSizeLabel;
-    Gtk::SpinButton       optionsSpecklesSizeSpinner;
+    Inkscape::UI::Widget::SpinButton optionsSpecklesSizeSpinner;
     Gtk::HBox             optionsCornersBox;
     Gtk::CheckButton      optionsCornersButton;
     Gtk::Label            optionsCornersThresholdLabel;
-    Gtk::SpinButton       optionsCornersThresholdSpinner;
+    Inkscape::UI::Widget::SpinButton optionsCornersThresholdSpinner;
     Gtk::HBox             optionsOptimBox;
     Gtk::CheckButton      optionsOptimButton;
     Gtk::Label            optionsOptimToleranceLabel;
-    Gtk::SpinButton       optionsOptimToleranceSpinner;
+    Inkscape::UI::Widget::SpinButton optionsOptimToleranceSpinner;
 
 
     //#### Credits

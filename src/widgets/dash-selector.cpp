@@ -32,7 +32,7 @@
 
 #include <gtkmm/optionmenu.h>
 #include <gtkmm/adjustment.h>
-#include <gtkmm/spinbutton.h>
+#include "ui/widget/spinbutton.h"
 
 
 #include "dash-selector.h"
@@ -73,7 +73,7 @@ SPDashSelector::SPDashSelector() {
     dash->set_menu(*m);
 
     offset = new Gtk::Adjustment(0.0, 0.0, 10.0, 0.1, 1.0, 0.0);
-    Gtk::SpinButton *sb = new Gtk::SpinButton(*offset, 0.1, 2);
+    Inkscape::UI::Widget::SpinButton *sb = new Inkscape::UI::Widget::SpinButton(*offset, 0.1, 2);
     tt->set_tip(*sb, _("Pattern offset"));
 
     sp_dialog_defocus_on_enter_cpp(sb);

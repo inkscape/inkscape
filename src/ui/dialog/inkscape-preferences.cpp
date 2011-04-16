@@ -38,6 +38,7 @@
 #include "selection-chemistry.h"
 #include "xml/repr.h"
 #include "ui/widget/style-swatch.h"
+#include "ui/widget/spinbutton.h"
 #include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-types.h"
 #include "color-profile-fns.h"
@@ -70,7 +71,7 @@ InkscapePreferences::InkscapePreferences()
       _current_page(0)
 {
     //get the width of a spinbutton
-    Gtk::SpinButton* sb = new Gtk::SpinButton;
+    Inkscape::UI::Widget::SpinButton* sb = new Inkscape::UI::Widget::SpinButton;
     sb->set_width_chars(6);
     _getContents()->add(*sb);
     show_all_children();

@@ -19,7 +19,7 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
-#include <gtkmm/spinbutton.h>
+#include "ui/widget/spinbutton.h"
 #include <gtkmm/notebook.h>
 
 //#include "ui/previewholder.h"
@@ -117,7 +117,7 @@ private:
     Gtk::HButtonBox _buttonsRow;
     Gtk::ScrolledWindow _scroller;
     Gtk::Menu _popupMenu;
-    Gtk::SpinButton _spinBtn;
+    Inkscape::UI::Widget::SpinButton _spinBtn;
     Gtk::VBox _layersPage;
 
     UI::Widget::StyleSubject::CurrentLayer _subject;

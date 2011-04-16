@@ -20,7 +20,7 @@
 # include <config.h>
 #endif
 
-#include <gtkmm/spinbutton.h>
+#include "ui/widget/spinbutton.h"
 
 #include "desktop-handles.h"
 #include "unclump.h"
@@ -445,8 +445,8 @@ class ActionRemoveOverlaps : public Action {
 private:
     Gtk::Label removeOverlapXGapLabel;
     Gtk::Label removeOverlapYGapLabel;
-    Gtk::SpinButton removeOverlapXGap;
-    Gtk::SpinButton removeOverlapYGap;
+    Inkscape::UI::Widget::SpinButton removeOverlapXGap;
+    Inkscape::UI::Widget::SpinButton removeOverlapYGap;
 
 public:
     ActionRemoveOverlaps(Glib::ustring const &id,

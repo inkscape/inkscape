@@ -17,7 +17,7 @@
 #include <gtkmm/alignment.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/label.h>
-#include <gtkmm/spinbutton.h>
+#include "ui/widget/spinbutton.h"
 #include <gtkmm/scale.h>
 
 #include <glibmm/ustring.h>
@@ -47,7 +47,7 @@ private:
     Gtk::Label      _opacity_label;
     Gtk::Adjustment _opacity_adjustment;
     Gtk::HScale     _opacity_hscale;
-    Gtk::SpinButton _opacity_spin_button;
+    Inkscape::UI::Widget::SpinButton _opacity_spin_button;
 
     StyleSubject *_subject;
 
