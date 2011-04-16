@@ -19,10 +19,6 @@
 # define ESCAPE_DOLLAR_COMMANDLINE
 #endif
 
-#include <gtkmm/adjustment.h>
-#include <gtkmm/box.h>
-#include <gtkmm/spinbutton.h>
-
 #include <xml/node.h>
 
 #include <extension/extension.h>
