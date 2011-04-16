@@ -68,7 +68,41 @@ ScalarUnit::ScalarUnit(Glib::ustring const &label, Glib::ustring const &tooltip,
             .connect_notify(sigc::mem_fun(*this, &ScalarUnit::on_unit_changed));
 
     static_cast<SpinButton*>(_widget)->setUnitMenu(_unit_menu);
+
+    lastUnits = _unit_menu->getUnitAbbr();
 }
+
+/**
+ * Construct a ScalarUnit
+ *
+ * \param label      Label.
+ * \param tooltip    Tooltip text.
+ * \param take_unitmenu  Use the unitmenu from this parameter.
+ * \param suffix     Suffix, placed after the widget (defaults to "").
+ * \param icon       Icon filename, placed before the label (defaults to "").
+ * \param mnemonic   Mnemonic toggle; if true, an underscore (_) in the label
+ *                   indicates the next character should be used for the
+ *                   mnemonic accelerator key (defaults to true).
+ */
+ScalarUnit::ScalarUnit(Glib::ustring const &label, Glib::ustring const &tooltip,
+                       ScalarUnit &take_unitmenu,
+                       Glib::ustring const &suffix,
+                       Glib::ustring const &icon,
+                       bool mnemonic)
+    : Scalar(label, tooltip, suffix, icon, mnemonic),
+      _unit_menu(take_unitmenu._unit_menu),
+      _hundred_percent(0),
+      _absolute_is_increment(false),
+      _percentage_is_increment(false)
+{
+    _unit_menu->signal_changed()
+            .connect_notify(sigc::mem_fun(*this, &ScalarUnit::on_unit_changed));
+
+    static_cast<SpinButton*>(_widget)->setUnitMenu(_unit_menu);
+
+    lastUnits = _unit_menu->getUnitAbbr();
+}
+
 
 /**
  * Initializes the scalar based on the settings in _unit_menu.

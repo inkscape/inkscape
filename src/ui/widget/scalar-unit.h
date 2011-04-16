@@ -32,6 +32,11 @@ public:
                Glib::ustring const &icon = "",
                UnitMenu *unit_menu = NULL,
                bool mnemonic = true);
+    ScalarUnit(Glib::ustring const &label, Glib::ustring const &tooltip,
+               ScalarUnit &take_unitmenu,
+               Glib::ustring const &suffix = "",
+               Glib::ustring const &icon = "",
+               bool mnemonic = true);
 
     void      initScalar(double min_value, double max_value);
 
