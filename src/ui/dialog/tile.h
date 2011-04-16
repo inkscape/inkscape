@@ -24,6 +24,8 @@
 #include <gtkmm/radiobutton.h>
 
 #include "ui/widget/panel.h"
+#include "ui/widget/spinbutton.h"
+#include "ui/widget/scalar-unit.h"
 
 namespace Inkscape {
 namespace UI {
@@ -88,12 +90,11 @@ private:
 
     Gtk::HBox             AlignHBox;
     Gtk::HBox             SpinsHBox;
-    Gtk::HBox             SizesHBox;
 
     // Number per Row
     Gtk::VBox             NoOfColsBox;
     Gtk::Label            NoOfColsLabel;
-    Gtk::SpinButton       NoOfColsSpinner;
+    Inkscape::UI::Widget::SpinButton NoOfColsSpinner;
     bool AutoRowSize;
     Gtk::CheckButton      RowHeightButton;
 
@@ -104,7 +105,7 @@ private:
     // Number per Column
     Gtk::VBox             NoOfRowsBox;
     Gtk::Label            NoOfRowsLabel;
-    Gtk::SpinButton       NoOfRowsSpinner;
+    Inkscape::UI::Widget::SpinButton NoOfRowsSpinner;
     bool AutoColSize;
     Gtk::CheckButton      ColumnWidthButton;
 
@@ -128,15 +129,8 @@ private:
     Gtk::RadioButton      HorizRightRadioButton;
     double HorizAlign;
 
-    // padding in x
-    Gtk::VBox             XPadBox;
-    Gtk::Label            XPadLabel;
-    Gtk::SpinButton       XPadSpinner;
-
-    // padding in y
-    Gtk::VBox             YPadBox;
-    Gtk::Label            YPadLabel;
-    Gtk::SpinButton       YPadSpinner;
+    Inkscape::UI::Widget::ScalarUnit    XPadding;
+    Inkscape::UI::Widget::ScalarUnit    YPadding;
 
     // BBox or manual spacing
     Gtk::VBox             SpacingVBox;
@@ -144,8 +138,6 @@ private:
     Gtk::RadioButton      SpaceByBBoxRadioButton;
     Gtk::RadioButton      SpaceManualRadioButton;
     bool ManualSpacing;
-
-
 
     // Row height
     Gtk::VBox             RowHeightVBox;

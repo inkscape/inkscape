@@ -136,8 +136,8 @@ void TileDialog::Grid_Arrange ()
     on_row_spinbutton_changed();
 
     // set padding to manual values
-    paddingx = XPadSpinner.get_value();
-    paddingy = YPadSpinner.get_value();
+    paddingx = XPadding.getValue("px");
+    paddingy = YPadding.getValue("px");
 
     std::vector<double> row_heights;
     std::vector<double> col_widths;
@@ -422,7 +422,7 @@ void TileDialog::on_col_spinbutton_changed()
 void TileDialog::on_xpad_spinbutton_changed()
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble("/dialogs/gridtiler/XPad", XPadSpinner.get_value());
+    prefs->setDouble("/dialogs/gridtiler/XPad", XPadding.getValue("px"));
 
 }
 
@@ -432,7 +432,7 @@ void TileDialog::on_xpad_spinbutton_changed()
 void TileDialog::on_ypad_spinbutton_changed()
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble("/dialogs/gridtiler/YPad", YPadSpinner.get_value());
+    prefs->setDouble("/dialogs/gridtiler/YPad", YPadding.getValue("px"));
 }
 
 
@@ -512,7 +512,8 @@ void TileDialog::Spacing_button_changed()
         prefs->setDouble("/dialogs/gridtiler/SpacingType", -20);
     }
 
-    SizesHBox.set_sensitive ( SpaceManualRadioButton.get_active());
+    XPadding.set_sensitive ( SpaceManualRadioButton.get_active());
+    YPadding.set_sensitive ( SpaceManualRadioButton.get_active());
 }
 
 /**
@@ -614,7 +615,9 @@ static void updateSelectionCallback(Inkscape::Application */*inkscape*/, Inkscap
  * Constructor
  */
 TileDialog::TileDialog()
-    : UI::Widget::Panel("", "/dialogs/gridtiler", SP_VERB_SELECTION_GRIDTILE)
+    : UI::Widget::Panel("", "/dialogs/gridtiler", SP_VERB_SELECTION_GRIDTILE),
+      XPadding(_("X:"), _("Horizontal spacing between columns."), UNIT_TYPE_LINEAR, "", "object-columns"),
+      YPadding(_("Y:"), _("Vertical spacing between rows."), XPadding, "", "object-rows")
 {
      // bool used by spin button callbacks to stop loops where they change each other.
     updating = false;
@@ -814,51 +817,25 @@ TileDialog::TileDialog()
     }
 
     {
-        /*#### Y Padding ####*/
+        /*#### Padding ####*/
 
-        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_MENU, "object-rows");
-        YPadBox.pack_start (*(Glib::wrap(i)), false, false, MARGIN);
+        YPadding.setDigits(1);
+        YPadding.setIncrements(0.2, 0);
+        YPadding.setRange(-10000, 10000);
+        double yPad = prefs->getDouble("/dialogs/gridtiler/YPad", 15);
+        YPadding.setValue(yPad, "px");
+        YPadding.signal_value_changed().connect(sigc::mem_fun(*this, &TileDialog::on_ypad_spinbutton_changed));
 
-        YPadSpinner.set_digits(1);
-        YPadSpinner.set_increments(0.2, 0);
-        YPadSpinner.set_range(-10000, 10000);
-        double YPad = prefs->getDouble("/dialogs/gridtiler/YPad", 15);
-        YPadSpinner.set_value(YPad);
-        YPadBox.pack_start(YPadSpinner, true, true, MARGIN);
-        tips.set_tip(YPadSpinner, _("Vertical spacing between rows (px units)"));
-        YPadSpinner.signal_changed().connect(sigc::mem_fun(*this, &TileDialog::on_ypad_spinbutton_changed));
-        gtk_size_group_add_widget(_col1, (GtkWidget *) YPadBox.gobj());
+        XPadding.setDigits(1);
+        XPadding.setIncrements(0.2, 0);
+        XPadding.setRange(-10000, 10000);
+        double xPad = prefs->getDouble("/dialogs/gridtiler/XPad", 15);
+        XPadding.setValue(xPad, "px");
 
-        SizesHBox.pack_start(YPadBox, false, false, MARGIN);
+        XPadding.signal_value_changed().connect(sigc::mem_fun(*this, &TileDialog::on_xpad_spinbutton_changed));
     }
-
-    {
-    Gtk::HBox *spacer = new Gtk::HBox;
-    SizesHBox.pack_start(*spacer, false, false, 0);
-    gtk_size_group_add_widget(_col2, (GtkWidget *) spacer->gobj());
-    }
-
-    {
-        /*#### X padding ####*/
-
-        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_MENU, "object-columns");
-        XPadBox.pack_start (*(Glib::wrap(i)), false, false, MARGIN);
-
-        XPadSpinner.set_digits(1);
-        XPadSpinner.set_increments(0.2, 0);
-        XPadSpinner.set_range(-10000, 10000);
-        double XPad = prefs->getDouble("/dialogs/gridtiler/XPad", 15);
-        XPadSpinner.set_value(XPad);
-        XPadBox.pack_start(XPadSpinner, true, true, MARGIN);
-        tips.set_tip(XPadSpinner, _("Horizontal spacing between columns (px units)"));
-        XPadSpinner.signal_changed().connect(sigc::mem_fun(*this, &TileDialog::on_xpad_spinbutton_changed));
-        gtk_size_group_add_widget(_col3, (GtkWidget *) XPadBox.gobj());
-
-        SizesHBox.pack_start(XPadBox, false, false, MARGIN);
-    }
-
-
-    TileBox.pack_start(SizesHBox, false, false, MARGIN);
+    TileBox.pack_start(XPadding, false, false, MARGIN);
+    TileBox.pack_start(YPadding, false, false, MARGIN);
 
     contents->pack_start(TileBox);
 
@@ -870,7 +847,8 @@ TileDialog::TileDialog()
     }
     SpaceManualRadioButton.set_active(ManualSpacing);
     SpaceByBBoxRadioButton.set_active(!ManualSpacing);
-    SizesHBox.set_sensitive (ManualSpacing);
+    XPadding.set_sensitive (ManualSpacing);
+    YPadding.set_sensitive (ManualSpacing);
 
     //## The OK button
     TileOkButton = addResponseButton(C_("Rows and columns dialog","_Arrange"), GTK_RESPONSE_APPLY);
