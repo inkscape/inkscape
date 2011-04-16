@@ -12,7 +12,7 @@
 #include <gtkmm/adjustment.h>
 #include <gtkmm/box.h>
 #include <gtkmm/scale.h>
-#include <gtkmm/spinbutton.h>
+#include "ui/widget/spinbutton.h"
 
 #include "xml/node.h"
 #include "extension/extension.h"
@@ -157,7 +157,7 @@ ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal
         hbox->pack_start(*scale, false, false);
     }
     
-    Gtk::SpinButton * spin = Gtk::manage(new Gtk::SpinButton(*fadjust, 1.0, 0));
+    Inkscape::UI::Widget::SpinButton * spin = Gtk::manage(new Inkscape::UI::Widget::SpinButton(*fadjust, 1.0, 0));
     spin->show();
     hbox->pack_start(*spin, false, false);
 
