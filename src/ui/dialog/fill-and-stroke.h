@@ -15,11 +15,9 @@
 #ifndef INKSCAPE_UI_DIALOG_FILL_AND_STROKE_H
 #define INKSCAPE_UI_DIALOG_FILL_AND_STROKE_H
 
-#include <gtkmm/adjustment.h>
 #include <gtkmm/alignment.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/scale.h>
-#include <gtkmm/spinbutton.h>
 #include <glibmm/i18n.h>
 
 #include "ui/widget/panel.h"
