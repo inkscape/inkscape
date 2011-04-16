@@ -7783,7 +7783,7 @@ msgid ""
 "Embed results in stand-alone, larger SVG files. Link references a file "
 "outside this SVG document and all files must be moved together."
 msgstr ""
-"Vložiť výsledok do samostatných, väčších súborov SVG. Odkazy smerujú na "
+"Vloženie má za následok samostatný, väčší súbor SVG. Odkazovať vloží odkaz na "
 "súbor mimo tohto dokumentu SVG a všetky súbory je potrebné presúvať spolu."
 
 #: ../src/extension/internal/gimpgrad.cpp:275
