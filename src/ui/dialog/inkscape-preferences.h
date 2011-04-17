@@ -178,10 +178,10 @@ protected:
 
     UI::Widget::PrefCombo       _steps_rot_snap;
     UI::Widget::PrefCheckButton _steps_compass;
-    UI::Widget::PrefSpinButton _steps_arrow;
-    UI::Widget::PrefSpinButton _steps_scale;
-    UI::Widget::PrefSpinButton _steps_inset;
-    UI::Widget::PrefSpinButton _steps_zoom;
+    UI::Widget::PrefSpinUnit    _steps_arrow;
+    UI::Widget::PrefSpinUnit    _steps_scale;
+    UI::Widget::PrefSpinUnit    _steps_inset;
+    UI::Widget::PrefSpinButton  _steps_zoom;
 
     UI::Widget::PrefRadioButton _t_sel_trans_obj;
     UI::Widget::PrefRadioButton _t_sel_trans_outl;

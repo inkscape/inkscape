@@ -33,6 +33,7 @@
 #include "ui/widget/color-picker.h"
 #include "ui/widget/unit-menu.h"
 #include "ui/widget/spinbutton.h"
+#include "ui/widget/scalar-unit.h"
 
 namespace Inkscape {
 namespace UI {
@@ -80,6 +81,21 @@ protected:
     bool _is_int;
     bool _is_percent;
     void on_value_changed();
+};
+
+class PrefSpinUnit : public ScalarUnit
+{
+public:
+    PrefSpinUnit() : ScalarUnit("", "") {};
+
+    void init(Glib::ustring const &prefs_path,
+              double lower, double upper, double step_increment,
+              double default_value,
+              UnitType unit_type, Glib::ustring const &default_unit);
+protected:
+    Glib::ustring _prefs_path;
+    bool _is_percent;
+    void on_my_value_changed();
 };
 
 class ZoomCorrRuler : public Gtk::DrawingArea {

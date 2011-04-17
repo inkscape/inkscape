@@ -432,7 +432,7 @@ bool ControlPointSelection::_keyboardMove(GdkEventKey const &event, Geom::Point 
         delta /= _desktop->current_zoom();
     } else {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        double nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000);
+        double nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000, "px");
         delta *= nudge;
     }
 
@@ -533,7 +533,7 @@ bool ControlPointSelection::_keyboardScale(GdkEventKey const &event, int dir)
         length_change = 1.0 / _desktop->current_zoom() * dir;
     } else {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        length_change = prefs->getDoubleLimited("/options/defaultscale/value", 2, 1, 1000);
+        length_change = prefs->getDoubleLimited("/options/defaultscale/value", 2, 1, 1000, "px");
         length_change *= dir;
     }
     double scale = (maxext + length_change) / maxext;

@@ -59,7 +59,7 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
     int   steps = module->get_param_int("num-steps");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    double old_offset = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0);
+    double old_offset = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0, "px");
 
     using Inkscape::Util::GSListConstIterator;
     // TODO need to properly refcount the items, at least
@@ -97,10 +97,10 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
             if (offset < 0.0) {
                 /* Doing an inset here folks */
                 offset *= -1.0;
-                prefs->setDouble("/options/defaultoffsetwidth/value", offset);
+                prefs->setDoubleUnit("/options/defaultoffsetwidth/value", offset, "px");
                 sp_action_perform(Inkscape::Verb::get(SP_VERB_SELECTION_INSET)->get_action(desktop), NULL);
             } else if (offset > 0.0) {
-                prefs->setDouble("/options/defaultoffsetwidth/value", offset);
+                prefs->setDoubleUnit("/options/defaultoffsetwidth/value", offset, "px");
                 sp_action_perform(Inkscape::Verb::get(SP_VERB_SELECTION_OFFSET)->get_action(desktop), NULL);
             }
 
@@ -110,7 +110,7 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
         Inkscape::GC::release(new_group);
     }
 
-    prefs->setDouble("/options/defaultoffsetwidth/value", old_offset);
+    prefs->setDoubleUnit("/options/defaultoffsetwidth/value", old_offset, "px");
 
     selection->clear();
     selection->add(items.begin(), items.end());

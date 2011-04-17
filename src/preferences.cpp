@@ -23,6 +23,7 @@
 #include "xml/node-observer.h"
 #include "xml/node-iterators.h"
 #include "xml/attribute-record.h"
+#include "util/units.h"
 
 #define PREFERENCES_FILE_NAME "preferences.xml"
 
@@ -452,6 +453,22 @@ void Preferences::setDouble(Glib::ustring const &pref_path, double value)
     _setRawValue(pref_path, buf);
 }
 
+/**
+ * Set a floating point attribute of a preference.
+ *
+ * @param pref_path Path of the preference to modify.
+ * @param value The new value of the pref attribute.
+ * @param unit_abbr The string of the unit (abbreviated).
+ */
+void Preferences::setDoubleUnit(Glib::ustring const &pref_path, double value, Glib::ustring const &unit_abbr)
+{
+    gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
+    g_ascii_dtostr(buf, G_ASCII_DTOSTR_BUF_SIZE, value);
+    Glib::ustring str(buf);
+    str += unit_abbr;
+    _setRawValue(pref_path, str.c_str());
+}
+
 void Preferences::setColor(Glib::ustring const &pref_path, guint32 value)
 {
     gchar buf[16];
@@ -745,9 +762,36 @@ double Preferences::_extractDouble(Entry const &v)
     return g_ascii_strtod(s, NULL);
 }
 
+double Preferences::_extractDouble(Entry const &v, Glib::ustring const &requested_unit)
+{
+    static Inkscape::Util::UnitTable unit_table; // load the unit_table once by making it static
+
+    double val = _extractDouble(v);
+    Glib::ustring unit = _extractUnit(v);
+
+    return val * (unit_table.getUnit(unit).factor / unit_table.getUnit(requested_unit).factor);
+}
+
 Glib::ustring Preferences::_extractString(Entry const &v)
 {
     return Glib::ustring(static_cast<gchar const *>(v._value));
+}
+
+Glib::ustring Preferences::_extractUnit(Entry const &v)
+{
+    gchar const *str = static_cast<gchar const *>(v._value);
+    gchar const *e;
+    g_ascii_strtod(str, (char **) &e);
+    if (e == str) {
+        return "";
+    }
+
+    if (e[0] == 0) {
+        /* Unitless */
+        return "";
+    } else {
+        return Glib::ustring(e);
+    }
 }
 
 guint32 Preferences::_extractColor(Entry const &v)

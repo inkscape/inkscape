@@ -727,7 +727,7 @@ void PathManipulator::scaleHandle(Node *n, int which, int dir, bool pixel)
         length_change = 1.0 / _desktop->current_zoom() * dir;
     } else {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        length_change = prefs->getDoubleLimited("/options/defaultscale/value", 2, 1, 1000);
+        length_change = prefs->getDoubleLimited("/options/defaultscale/value", 2, 1, 1000, "px");
         length_change *= dir;
     }
 

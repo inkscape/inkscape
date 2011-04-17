@@ -989,7 +989,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
 
     gint ret = FALSE;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    gdouble const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000); // in px
+    gdouble const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000, "px"); // in px
 
     switch (get_group0_keyval (&event->key)) {
 

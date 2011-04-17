@@ -249,17 +249,17 @@ void InkscapePreferences::initPageSteps()
 {
     this->AddPage(_page_steps, _("Steps"), PREFS_PAGE_STEPS);
 
-    _steps_arrow.init ( "/options/nudgedistance/value", 0.0, 1000.0, 0.01, 1.0, 2.0, false, false);
+    _steps_arrow.init ( "/options/nudgedistance/value", 0.0, 1000.0, 0.01, 2.0, UNIT_TYPE_LINEAR, "px");
     //nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
-    _page_steps.add_line( false, _("Arrow keys move by:"), _steps_arrow, _("px"),
-                          _("Pressing an arrow key moves selected object(s) or node(s) by this distance (in px units)"), false);
-    _steps_scale.init ( "/options/defaultscale/value", 0.0, 1000.0, 0.01, 1.0, 2.0, false, false);
+    _page_steps.add_line( false, _("Arrow keys move by:"), _steps_arrow, "",
+                          _("Pressing an arrow key moves selected object(s) or node(s) by this distance"), false);
+    _steps_scale.init ( "/options/defaultscale/value", 0.0, 1000.0, 0.01, 2.0, UNIT_TYPE_LINEAR, "px");
     //defaultscale is limited to 1000 in select-context.cpp: use the same limit here
-    _page_steps.add_line( false, _("> and < scale by:"), _steps_scale, _("px"),
-                          _("Pressing > or < scales selection up or down by this increment (in px units)"), false);
-    _steps_inset.init ( "/options/defaultoffsetwidth/value", 0.0, 3000.0, 0.01, 1.0, 2.0, false, false);
-    _page_steps.add_line( false, _("Inset/Outset by:"), _steps_inset, _("px"),
-                          _("Inset and Outset commands displace the path by this distance (in px units)"), false);
+    _page_steps.add_line( false, _("> and < scale by:"), _steps_scale, "",
+                          _("Pressing > or < scales selection up or down by this increment"), false);
+    _steps_inset.init ( "/options/defaultoffsetwidth/value", 0.0, 3000.0, 0.01, 2.0, UNIT_TYPE_LINEAR, "px");
+    _page_steps.add_line( false, _("Inset/Outset by:"), _steps_inset, "",
+                          _("Inset and Outset commands displace the path by this distance"), false);
     _steps_compass.init ( _("Compass-like display of angles"), "/options/compassangledisplay/value", true);
     _page_steps.add_line( false, "", _steps_compass, "",
                             _("When on, angles are displayed with 0 at north, 0 to 360 range, positive clockwise; otherwise with 0 at east, -180 to 180 range, positive counterclockwise"));

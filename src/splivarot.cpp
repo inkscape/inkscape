@@ -1264,7 +1264,7 @@ void
 sp_selected_path_offset(SPDesktop *desktop)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    double prefOffset = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0);
+    double prefOffset = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0, "px");
 
     sp_selected_path_do_offset(desktop, true, prefOffset);
 }
@@ -1272,7 +1272,7 @@ void
 sp_selected_path_inset(SPDesktop *desktop)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    double prefOffset = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0);
+    double prefOffset = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0, "px");
 
     sp_selected_path_do_offset(desktop, false, prefOffset);
 }
@@ -1398,7 +1398,7 @@ sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updat
 
         {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-            o_width = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0);
+            o_width = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0, "px");
         }
 
         if (o_width < 0.01)

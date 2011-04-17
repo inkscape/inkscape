@@ -54,6 +54,19 @@ UnitMenu::setUnitType(UnitType unit_type)
     return true;
 }
 
+/** Removes all unit entries, then adds the unit type to the widget.
+    This extracts the corresponding
+    units from the unit map matching the given type, and appends them
+    to the dropdown widget.  It causes the primary unit for the given
+    unit_type to be selected.  */
+bool
+UnitMenu::resetUnitType(UnitType unit_type) 
+{
+    clear_text();
+
+    return setUnitType(unit_type);
+}
+
 /** Returns the Unit object corresponding to the current selection
     in the dropdown widget */
 Unit

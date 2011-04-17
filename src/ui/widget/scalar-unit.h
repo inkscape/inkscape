@@ -45,6 +45,8 @@ public:
     double    getValue(Glib::ustring const &units) const;
 
     bool      setUnit(Glib::ustring const &units);
+    void      setUnitType(UnitType unit_type);
+    void      resetUnitType(UnitType unit_type);
     void      setValue(double number, Glib::ustring const &units);
     void      setValueKeepUnit(double number, Glib::ustring const &units);
     void      setValue(double number);

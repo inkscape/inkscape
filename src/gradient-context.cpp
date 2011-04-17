@@ -497,7 +497,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     SPGradientContext *rc = SP_GRADIENT_CONTEXT(event_context);
 
     event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
-    double const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000); // in px
+    double const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000, "px"); // in px
 
     GrDrag *drag = event_context->_grdrag;
     g_assert (drag);

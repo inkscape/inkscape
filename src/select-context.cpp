@@ -867,8 +867,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             }
 			}
 
-            gdouble const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000); // in px
-			gdouble const offset = prefs->getDoubleLimited("/options/defaultscale/value", 2, 0, 1000);
+            gdouble const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000, "px"); // in px
+			gdouble const offset = prefs->getDoubleLimited("/options/defaultscale/value", 2, 0, 1000, "px");
 			int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
 			switch (get_group0_keyval (&event->key)) {

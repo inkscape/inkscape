@@ -28,6 +28,7 @@ public:
     virtual ~UnitMenu();
 
     bool          setUnitType(UnitType unit_type);
+    bool          resetUnitType(UnitType unit_type);
 
     bool          setUnit(Glib::ustring const &unit);
 

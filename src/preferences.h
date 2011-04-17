@@ -159,9 +159,10 @@ public:
         /**
          * Interpret the preference as a floating point value.
          *
-         * @param def Default value if the preference is not set.
+         * @param def  Default value if the preference is not set.
+         * @param unit Specifies the unit of the returned result. Will be ignored when equal to "". If the preference has no unit set, the default unit will be assumed.
          */
-        inline double getDouble(double def=0.0) const;
+        inline double getDouble(double def=0.0, Glib::ustring const &unit = "") const;
 
         /**
          * Interpret the preference as a limited floating point value.
@@ -172,8 +173,9 @@ public:
          * @param def Default value if the preference is not set.
          * @param min Minimum value allowed to return.
          * @param max Maximum value allowed to return.
+         * @param unit Specifies the unit of the returned result. Will be ignored when equal to "". If the preference has no unit set, the default unit will be assumed.
          */
-        inline double getDoubleLimited(double def=0.0, double min=DBL_MIN, double max=DBL_MAX) const;
+        inline double getDoubleLimited(double def=0.0, double min=DBL_MIN, double max=DBL_MAX, Glib::ustring const &unit = "") const;
 
         /**
          * Interpret the preference as an UTF-8 string.
@@ -181,6 +183,11 @@ public:
          * To store a filename, convert it using Glib::filename_to_utf8().
          */
         inline Glib::ustring getString() const;
+
+       /**
+         * Interpret the preference as a number followed by a unit (without space), and return this unit string.
+         */
+        inline Glib::ustring getUnit() const;
 
         /**
          * Interpret the preference as an RGBA color value.
@@ -316,8 +323,8 @@ public:
         return getEntry(pref_path).getIntLimited(def, min, max);
     }
 
-    double getDouble(Glib::ustring const &pref_path, double def=0.0) {
-        return getEntry(pref_path).getDouble(def);
+    double getDouble(Glib::ustring const &pref_path, double def=0.0, Glib::ustring const &unit = "") {
+        return getEntry(pref_path).getDouble(def, unit);
     }
 
     /**
@@ -330,9 +337,10 @@ public:
      * @param def The default value to return if the preference is not set.
      * @param min Minimum value to return.
      * @param max Maximum value to return.
+     * @param unit Specifies the unit of the returned result. Will be ignored when equal to "". If the preference has no unit set, the default unit will be assumed.
      */
-    double getDoubleLimited(Glib::ustring const &pref_path, double def=0.0, double min=DBL_MIN, double max=DBL_MAX) {
-        return getEntry(pref_path).getDoubleLimited(def, min, max);
+    double getDoubleLimited(Glib::ustring const &pref_path, double def=0.0, double min=DBL_MIN, double max=DBL_MAX, Glib::ustring const &unit = "") {
+        return getEntry(pref_path).getDoubleLimited(def, min, max, unit);
     }
 
     /**
@@ -342,6 +350,15 @@ public:
      */
     Glib::ustring getString(Glib::ustring const &pref_path) {
         return getEntry(pref_path).getString();
+    }
+
+    /**
+     * Retrieve the unit string.
+     *
+     * @param pref_path Path to the retrieved preference.
+     */
+    Glib::ustring getUnit(Glib::ustring const &pref_path) {
+        return getEntry(pref_path).getUnit();
     }
 
     guint32 getColor(Glib::ustring const &pref_path, guint32 def=0x000000ff) {
@@ -397,6 +414,11 @@ public:
      * Set a floating point value.
      */
     void setDouble(Glib::ustring const &pref_path, double value);
+
+    /**
+     * Set a floating point value with unit.
+     */
+    void setDoubleUnit(Glib::ustring const &pref_path, double value, Glib::ustring const &unit_abbr);
 
     /**
      * Set an UTF-8 string value.
@@ -484,7 +506,9 @@ protected:
     bool _extractBool(Entry const &v);
     int _extractInt(Entry const &v);
     double _extractDouble(Entry const &v);
+    double _extractDouble(Entry const &v, Glib::ustring const &requested_unit);
     Glib::ustring _extractString(Entry const &v);
+    Glib::ustring _extractUnit(Entry const &v);
     guint32 _extractColor(Entry const &v);
     SPCSSAttr *_extractStyle(Entry const &v);
     SPCSSAttr *_extractInheritedStyle(Entry const &v);
@@ -566,21 +590,28 @@ inline int Preferences::Entry::getIntLimited(int def, int min, int max) const
     }
 }
 
-inline double Preferences::Entry::getDouble(double def) const
+inline double Preferences::Entry::getDouble(double def, Glib::ustring const &unit) const
 {
     if (!this->isValid()) {
         return def;
-    } else {
+    } else if (unit.length() == 0) {
         return Inkscape::Preferences::get()->_extractDouble(*this);
+    } else {
+        return Inkscape::Preferences::get()->_extractDouble(*this, unit);
     }
 }
 
-inline double Preferences::Entry::getDoubleLimited(double def, double min, double max) const
+inline double Preferences::Entry::getDoubleLimited(double def, double min, double max, Glib::ustring const &unit) const
 {
     if (!this->isValid()) {
         return def;
     } else {
-        double val = Inkscape::Preferences::get()->_extractDouble(*this);
+        double val = def;
+        if (unit.length() == 0) {
+            val = Inkscape::Preferences::get()->_extractDouble(*this);
+        } else {
+            val = Inkscape::Preferences::get()->_extractDouble(*this, unit);
+        }
         return ( val >= min && val <= max ? val : def );
     }
 }
@@ -591,6 +622,15 @@ inline Glib::ustring Preferences::Entry::getString() const
         return "";
     } else {
         return Inkscape::Preferences::get()->_extractString(*this);
+    }
+}
+
+inline Glib::ustring Preferences::Entry::getUnit() const
+{
+    if (!this->isValid()) {
+        return "";
+    } else {
+        return Inkscape::Preferences::get()->_extractUnit(*this);
     }
 }
 

@@ -130,6 +130,22 @@ ScalarUnit::setUnit(Glib::ustring const &unit) {
     return true;
 }
 
+/** Adds the unit type to the ScalarUnit widget */
+void
+ScalarUnit::setUnitType(UnitType unit_type) {
+    g_assert(_unit_menu != NULL);
+    _unit_menu->setUnitType(unit_type);
+    lastUnits = _unit_menu->getUnitAbbr();
+}
+
+/** Resets the unit type for the ScalarUnit widget */
+void
+ScalarUnit::resetUnitType(UnitType unit_type) {
+    g_assert(_unit_menu != NULL);
+    _unit_menu->resetUnitType(unit_type);
+    lastUnits = _unit_menu->getUnitAbbr();
+}
+
 /** Gets the object for the currently selected unit */
 Unit
 ScalarUnit::getUnit() const {
