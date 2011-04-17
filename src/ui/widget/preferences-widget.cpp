@@ -262,7 +262,7 @@ void PrefSpinUnit::init(Glib::ustring const &prefs_path,
     _prefs_path = prefs_path;
     _is_percent = (unit_type == UNIT_TYPE_DIMENSIONLESS);
 
-    setUnitType(unit_type);
+    resetUnitType(unit_type);
     setUnit(default_unit);
     setRange (lower, upper); /// @fixme  this disregards changes of units
     setIncrements (step_increment, 0);
