@@ -39,6 +39,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+/* Note: this file should be kept compilable as both .cpp and .c */
+
 #include <cmath>
 #include <string.h>
 
