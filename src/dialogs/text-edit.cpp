@@ -203,7 +203,7 @@ sp_text_edit_dialog (void)
 
         // Font tab
         {
-            GtkWidget *l = gtk_label_new (_("Font"));
+            GtkWidget *l = gtk_label_new_with_mnemonic (_("_Font"));
             GtkWidget *vb = gtk_vbox_new (FALSE, VB_MARGIN);
             gtk_container_set_border_width (GTK_CONTAINER (vb), VB_MARGIN);
             gtk_notebook_append_page (GTK_NOTEBOOK (nb), vb, l);
@@ -330,7 +330,7 @@ sp_text_edit_dialog (void)
 
                     gtk_box_pack_start (GTK_BOX (l_vb), row, FALSE, FALSE, 0);
                 }
-
+				
                 {
                     GtkWidget *row = gtk_hbox_new (FALSE, VB_MARGIN);
 
@@ -343,7 +343,6 @@ sp_text_edit_dialog (void)
 
                 {
                     GtkWidget *row = gtk_hbox_new (FALSE, VB_MARGIN);
-
                     GtkWidget *c = gtk_combo_new ();
                     gtk_combo_set_value_in_list ((GtkCombo *) c, FALSE, FALSE);
                     gtk_combo_set_use_arrows ((GtkCombo *) c, TRUE);
@@ -359,7 +358,7 @@ sp_text_edit_dialog (void)
                         gtk_combo_set_popdown_strings ((GtkCombo *) c, sl);
                         g_list_free (sl);
                     }
-
+                    
                     g_signal_connect ( (GObject *) ((GtkCombo *) c)->entry,
                                        "changed",
                                        (GCallback) sp_text_edit_dialog_line_spacing_changed,
@@ -380,7 +379,7 @@ sp_text_edit_dialog (void)
 
         // Text tab
         {
-            GtkWidget *l = gtk_label_new (_("Text"));
+            GtkWidget *l = gtk_label_new_with_mnemonic (_("_Text"));
             GtkWidget *vb = gtk_vbox_new (FALSE, VB_MARGIN);
             gtk_container_set_border_width (GTK_CONTAINER (vb), VB_MARGIN);
             gtk_notebook_append_page (GTK_NOTEBOOK (nb), vb, l);
@@ -427,7 +426,7 @@ sp_text_edit_dialog (void)
         gtk_box_pack_start (GTK_BOX (mainvb), hb, FALSE, FALSE, 0);
 
         {
-            GtkWidget *b = gtk_button_new_with_label (_("Set as default"));
+            GtkWidget *b = gtk_button_new_with_mnemonic (_("Set as _default"));
             g_signal_connect ( G_OBJECT (b), "clicked",
                                G_CALLBACK (sp_text_edit_dialog_set_default),
                                dlg );

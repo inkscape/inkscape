@@ -154,7 +154,10 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_box_set_spacing(GTK_BOX(fsel), 4);
 
         /* Family frame */
-        GtkWidget *f = gtk_frame_new(_("Font family"));
+		GtkWidget *ft = gtk_label_new_with_mnemonic(_("F_ont family"));
+        GtkWidget *f = gtk_frame_new(NULL);
+		gtk_frame_set_label_widget ((GtkFrame*)f, ft);
+		
         gtk_widget_show (f);
         gtk_box_pack_start (GTK_BOX(fsel), f, TRUE, TRUE, 0);
 
@@ -178,6 +181,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_tree_view_set_model (GTK_TREE_VIEW(fsel->family_treeview), GTK_TREE_MODEL (Glib::unwrap (store)));
         gtk_container_add(GTK_CONTAINER(sw), fsel->family_treeview);
         gtk_widget_show_all (sw);
+		gtk_label_set_mnemonic_widget((GtkLabel*)ft, fsel->family_treeview);
 
         GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(fsel->family_treeview));
         g_signal_connect (G_OBJECT(selection), "changed", G_CALLBACK (sp_font_selector_family_select_row), fsel);
@@ -185,7 +189,9 @@ static void sp_font_selector_init(SPFontSelector *fsel)
 
 
         /* Style frame */
-        f = gtk_frame_new(C_("Font selector", "Style"));
+		ft = gtk_label_new_with_mnemonic(C_("Font selector", "_Style"));
+        f = gtk_frame_new(NULL);
+		gtk_frame_set_label_widget ((GtkFrame*)f, ft);
         gtk_widget_show(f);
         gtk_box_pack_start(GTK_BOX (fsel), f, TRUE, TRUE, 0);
 
@@ -210,6 +216,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(fsel->style_treeview), FALSE);
         gtk_container_add(GTK_CONTAINER(sw), fsel->style_treeview);
         gtk_widget_show_all (sw);
+		gtk_label_set_mnemonic_widget((GtkLabel*)ft, fsel->style_treeview);
 
         selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(fsel->style_treeview));
         g_signal_connect (G_OBJECT(selection), "changed", G_CALLBACK (sp_font_selector_style_select_row), fsel);
@@ -223,13 +230,14 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         g_signal_connect (G_OBJECT(fsel->size), "changed", G_CALLBACK (sp_font_selector_size_changed), fsel);
         gtk_box_pack_end (GTK_BOX(hb), fsel->size, FALSE, FALSE, 0);
 
-        GtkWidget *l = gtk_label_new(_("Font size:"));
+        GtkWidget *l = gtk_label_new_with_mnemonic(_("Font si_ze:"));
         gtk_widget_show_all (l);
         gtk_box_pack_end(GTK_BOX (hb), l, FALSE, FALSE, 0);
+		gtk_label_set_mnemonic_widget((GtkLabel*)l, fsel->size);
 
         for (unsigned int n = 0; sizes[n]; ++n)
             {
-                gtk_combo_box_append_text (GTK_COMBO_BOX(fsel->size), sizes[n]);
+                gtk_combo_box_append_text ((GtkComboBox *)fsel->size, sizes[n]);
             }
 
         gtk_widget_show_all (fsel->size);
