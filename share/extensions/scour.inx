@@ -7,33 +7,53 @@
     <dependency type="executable" location="extensions">yocto_css.py</dependency>
     <param name="tab" type="notebook">
         <page name="Options" _gui-text="Options">            
-            <param name="simplify-colors"  type="boolean" _gui-text="Simplify colors">true</param>
-            <param name="style-to-xml"  type="boolean" _gui-text="Style to xml">true</param>
+            <param name="simplify-colors"  type="boolean" _gui-text="Shorten color values">true</param>
+            <param name="style-to-xml"  type="boolean" _gui-text="Convert CSS attributes to XML attributes">true</param>
             <param name="group-collapsing"  type="boolean" _gui-text="Group collapsing">true</param>
-            <param name="enable-id-stripping"  type="boolean" _gui-text="Enable id stripping">false</param>
+            <param name="create-groups"  type="boolean" _gui-text="Create groups for similar attributes">true</param>
             <param name="embed-rasters"  type="boolean" _gui-text="Embed rasters">true</param>
             <param name="keep-editor-data"  type="boolean" _gui-text="Keep editor data">false</param>
+            <param name="remove-metadata"  type="boolean" _gui-text="Remove metadata">false</param>
+            <param name="enable-comment-stripping"  type="boolean" _gui-text="Remove comments">false</param>
+            <param name="renderer-workaround"  type="boolean" _gui-text="Work around renderer bugs">true</param>
             <param name="enable-viewboxing" type="boolean" _gui-text="Enable viewboxing">false</param>
-            <param name="strip-xml-prolog"  type="boolean" _gui-text="Strip xml prolog">false</param>
-            <param name="set-precision"  type="int" _gui-text="Set precision">5</param>
-      	    <param name="indent" type="enum" _gui-text="Indent">
+            <param name="strip-xml-prolog"  type="boolean" _gui-text="Remove the &lt;?xml?&gt; declaration">false</param>
+            <param name="set-precision"  type="int" _gui-text="Number of significant digits for coords">5</param>
+      	    <param name="indent" type="enum" _gui-text="XML indentation (pretty-printing)">
                 <_item value="space">Space</_item>
                 <_item value="tab">Tab</_item>
                 <_item value="none">None</_item>
             </param>
         </page>
-        <page name="Help" _gui-text="Help">
+        <page name="Ids" _gui-text="Ids">            
+            <param name="enable-id-stripping"  type="boolean" _gui-text="Remove unused ID names for elements">false</param>
+            <param name="shorten-ids"  type="boolean" _gui-text="Shorten IDs">false</param>
+            <param name="protect-ids-noninkscape"  type="boolean" _gui-text="Preserve manually created ID names not ending with digits">false</param>
+            <param name="protect-ids-list"  type="string" _gui-text="Preserve these ID names, comma-separated:"></param>
+            <param name="protect-ids-prefix"  type="string" _gui-text="Preserve ID names starting with:"></param>
+        </page>
+        <page name="OptionHelp" _gui-text="Help (Options)">
             <_param name="instructions" type="description" xml:space="preserve">This extension optimizes the SVG file according to the following options:
-    * Simplify colors: convert all colors to #RRGGBB format.
-    * Style to xml: convert styles into XML attributes.
-    * Group collapsing: collapse group elements.
-    * Enable id stripping: remove all un-referenced ID attributes.
-    * Embed rasters: embed rasters as base64-encoded data.
+    * Shorten color names: convert all colors to #RRGGBB or #RGB format.
+    * Convert CSS attributes to XML attributes: convert styles from &lt;style&gt; tags and inline style="" declarations into XML attributes.
+    * Group collapsing: removes useless &lt;g&gt; elements, promoting their contents up one level. Requires "Remove unused ID names for elements" to be set.
+    * Create groups for similar attributes: create &lt;g&gt; elements for runs of elements having at least one attribute in common (e.g. fill color, stroke opacity, ...).
+    * Embed rasters: embed raster images as base64-encoded data URLs.
     * Keep editor data: don't remove Inkscape, Sodipodi or Adobe Illustrator elements and attributes.
+    * Remove metadata: remove &lt;metadata&gt; tags along with all the information in them, which may include license metadata, alternate versions for non-SVG-enabled browsers, etc.
+    * Remove comments: remove &lt;!-- --&gt; tags.
+    * Work around renderer bugs: emits slightly larger SVG data, but works around a bug in librsvg's renderer, which is used in Eye of GNOME and other various applications.
     * Enable viewboxing: size image to 100%/100% and introduce a viewBox.
-    * Strip xml prolog: don't output the xml prolog.
-    * Set precision: set number of significant digits (default: 5).
-    * Indent: indentation of the output: none, space, tab (default: space).</_param>
+    * Number of significant digits for coords: all coordinates are output with that number of significant digits. For example, if 3 is specified, the coordinate 3.5153 is output as 3.51 and the coordinate 471.55 is output as 472.
+    * XML indentation (pretty-printing): either None for no indentation, Space to use one space per nesting level, or Tab to use one tab per nesting level.</_param>
+        </page>
+        <page name="IdHelp" _gui-text="Help (Ids)">
+            <_param name="instructions" type="description" xml:space="preserve">Ids specific options:
+    * Remove unused ID names for elements: remove all unreferenced ID attributes.
+    * Shorten IDs: reduce the length of all ID attributes, assigning the shortest to the most-referenced elements. For instance, #linearGradient5621, referenced 100 times, can become #a.
+    * Preserve manually created ID names not ending with digits: usually, optimised SVG output removes these, but if they're needed for referencing (e.g. #middledot), you may use this option.
+    * Preserve these ID names, comma-separated: you can use this in conjunction with the other preserve options if you wish to preserve some more specific ID names.
+    * Preserve ID names starting with: usually, optimised SVG output removes all unused ID names, but if all of your preserved ID names start with the same prefix (e.g. #flag-mx, #flag-pt), you may use this option.</_param>
         </page>
     </param>        
     <output>

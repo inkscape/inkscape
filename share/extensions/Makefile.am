@@ -141,6 +141,7 @@ extensions = \
 	svgcalendar.py \
 	svg_regex.py \
 	svg_and_media_zip_output.py \
+    svg_transform.py \
 	text_uppercase.py \
 	text_lowercase.py \
 	text_sentencecase.py \

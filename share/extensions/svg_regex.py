@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # This software is OSI Certified Open Source Software.
 # OSI Certified is a certification mark of the Open Source Initiative.
 # 
@@ -44,6 +43,7 @@ Out[5]: [('M', [(100.0, -200.0)])]
 """
 
 import re
+from decimal import *
 
 
 # Sentinel.
@@ -53,8 +53,8 @@ class _EOF(object):
 EOF = _EOF()
 
 lexicon = [
-    ('float', r'[-\+]?(?:(?:[0-9]*\.[0-9]+)|(?:[0-9]+\.?))(?:[Ee][-\+]?[0-9]+)?'),
-    ('int', r'[-\+]?[0-9]+'),
+    ('float', r'[-+]?(?:(?:[0-9]*\.[0-9]+)|(?:[0-9]+\.?))(?:[Ee][-+]?[0-9]+)?'),
+    ('int', r'[-+]?[0-9]+'),
     ('command', r'[AaCcHhLlMmQqSsTtVvZz]'),
 ]
 
@@ -162,7 +162,7 @@ class SVGPathParser(object):
     def rule_closepath(self, next, token):
         command = token[1]
         token = next()
-        return (command, None), token
+        return (command, []), token
 
     def rule_moveto_or_lineto(self, next, token):
         command = token[1]
@@ -170,7 +170,7 @@ class SVGPathParser(object):
         coordinates = []
         while token[0] in self.number_tokens:
             pair, token = self.rule_coordinate_pair(next, token)
-            coordinates.append(pair)
+            coordinates.extend(pair)
         return (command, coordinates), token
 
     def rule_orthogonal_lineto(self, next, token):
@@ -190,7 +190,9 @@ class SVGPathParser(object):
             pair1, token = self.rule_coordinate_pair(next, token)
             pair2, token = self.rule_coordinate_pair(next, token)
             pair3, token = self.rule_coordinate_pair(next, token)
-            coordinates.append((pair1, pair2, pair3))
+            coordinates.extend(pair1)
+            coordinates.extend(pair2)
+            coordinates.extend(pair3)
         return (command, coordinates), token
 
     def rule_curveto2(self, next, token):
@@ -200,7 +202,8 @@ class SVGPathParser(object):
         while token[0] in self.number_tokens:
             pair1, token = self.rule_coordinate_pair(next, token)
             pair2, token = self.rule_coordinate_pair(next, token)
-            coordinates.append((pair1, pair2))
+            coordinates.extend(pair1)
+            coordinates.extend(pair2)
         return (command, coordinates), token
 
     def rule_curveto1(self, next, token):
@@ -209,7 +212,7 @@ class SVGPathParser(object):
         coordinates = []
         while token[0] in self.number_tokens:
             pair1, token = self.rule_coordinate_pair(next, token)
-            coordinates.append(pair1)
+            coordinates.extend(pair1)
         return (command, coordinates), token
 
     def rule_elliptical_arc(self, next, token):
@@ -217,51 +220,51 @@ class SVGPathParser(object):
         token = next()
         arguments = []
         while token[0] in self.number_tokens:
-            rx = float(token[1])
-            if rx < 0.0:
+            rx = Decimal(token[1]) * 1
+            if rx < Decimal("0.0"):
                 raise SyntaxError("expecting a nonnegative number; got %r" % (token,))
 
             token = next()
             if token[0] not in self.number_tokens:
                 raise SyntaxError("expecting a number; got %r" % (token,))
-            ry = float(token[1])
-            if ry < 0.0:
+            ry = Decimal(token[1]) * 1
+            if ry < Decimal("0.0"):
                 raise SyntaxError("expecting a nonnegative number; got %r" % (token,))
 
             token = next()
             if token[0] not in self.number_tokens:
                 raise SyntaxError("expecting a number; got %r" % (token,))
-            axis_rotation = float(token[1])
+            axis_rotation = Decimal(token[1]) * 1
 
             token = next()
             if token[1] not in ('0', '1'):
                 raise SyntaxError("expecting a boolean flag; got %r" % (token,))
-            large_arc_flag = bool(int(token[1]))
+            large_arc_flag = Decimal(token[1]) * 1
 
             token = next()
             if token[1] not in ('0', '1'):
                 raise SyntaxError("expecting a boolean flag; got %r" % (token,))
-            sweep_flag = bool(int(token[1]))
+            sweep_flag = Decimal(token[1]) * 1
 
             token = next()
             if token[0] not in self.number_tokens:
                 raise SyntaxError("expecting a number; got %r" % (token,))
-            x = float(token[1])
+            x = Decimal(token[1]) * 1
 
             token = next()
             if token[0] not in self.number_tokens:
                 raise SyntaxError("expecting a number; got %r" % (token,))
-            y = float(token[1])
+            y = Decimal(token[1]) * 1
 
             token = next()
-            arguments.append(((rx,ry), axis_rotation, large_arc_flag, sweep_flag, (x,y)))
+            arguments.extend([rx, ry, axis_rotation, large_arc_flag, sweep_flag, x, y])
 
         return (command, arguments), token
 
     def rule_coordinate(self, next, token):
         if token[0] not in self.number_tokens:
             raise SyntaxError("expecting a number; got %r" % (token,))
-        x = float(token[1])
+        x = getcontext().create_decimal(token[1])
         token = next()
         return x, token
 
@@ -270,13 +273,13 @@ class SVGPathParser(object):
         # Inline these since this rule is so common.
         if token[0] not in self.number_tokens:
             raise SyntaxError("expecting a number; got %r" % (token,))
-        x = float(token[1])
+        x = getcontext().create_decimal(token[1])
         token = next()
         if token[0] not in self.number_tokens:
             raise SyntaxError("expecting a number; got %r" % (token,))
-        y = float(token[1])
+        y = getcontext().create_decimal(token[1])
         token = next()
-        return (x,y), token
+        return [x, y], token
 
 
 svg_parser = SVGPathParser()
