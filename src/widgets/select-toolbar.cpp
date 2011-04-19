@@ -23,6 +23,7 @@
 #include "widgets/spw-utilities.h"
 #include "widgets/widget-sizes.h"
 #include "widgets/spinbutton-events.h"
+#include "ui/widget/spinbutton.h"
 #include "widgets/icon.h"
 #include "widgets/sp-widget.h"
 
@@ -255,6 +256,16 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
 }
 
+static GtkWidget* createCustomSlider( GtkAdjustment *adjustment, gdouble climbRate, guint digits )
+{
+    Inkscape::UI::Widget::SpinButton *inkSpinner = new Inkscape::UI::Widget::SpinButton(*Glib::wrap(adjustment, true), climbRate, digits);
+    inkSpinner = Gtk::manage( inkSpinner );
+    GtkWidget *widget = GTK_WIDGET( inkSpinner->gobj() );
+    return widget;
+}
+
+// TODO create_adjustment_action appears to be a rogue tile copy from toolbox.cpp. Resolve it to be unified:
+
 static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
                                                        gchar const *label,
                                                        gchar const *shortLabel,
@@ -266,6 +277,12 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
                                                        gchar const *tooltip,
                                                        gboolean altx )
 {
+    static bool init = false;
+    if ( !init ) {
+        init = true;
+        ege_adjustment_action_set_compact_tool_factory( createCustomSlider );
+    }
+
     GtkAdjustment* adj = GTK_ADJUSTMENT( gtk_adjustment_new( 0.0, lower, 1e6, SPIN_STEP, SPIN_PAGE_STEP, 0 ) );
     if (tracker) {
         tracker->addAdjustment(adj);

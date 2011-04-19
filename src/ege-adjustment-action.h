@@ -87,6 +87,24 @@ struct _EgeAdjustmentActionClass
 /** Standard Gtk type function */
 GType ege_adjustment_action_get_type( void );
 
+
+/*
+ * Note: This normally could be implemented via a GType property for the class to construct,
+ * but gtkmm classes implemented in C++ only will often not funciton properly.
+ *
+ */
+
+/** Callback type for widgets creation factory */
+typedef GtkWidget* (*EgeCreateAdjWidgetCB)( GtkAdjustment *adjustment, gdouble climb_rate, guint digits );
+
+/**
+ * Sets a factory callback to be used to create the specific widget.
+ *
+ * @param factoryCb the callback to use to create custom widgets, NULL to use the default.
+ */
+void ege_adjustment_action_set_compact_tool_factory( EgeCreateAdjWidgetCB factoryCb );
+
+
 /**
  * Creates a new EgeAdjustmentAction instance.
  * This is a GtkAction subclass that manages a value stored in a

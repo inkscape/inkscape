@@ -1,5 +1,3 @@
-
-
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  *
  */
@@ -64,8 +62,6 @@
 #include "icon-size.h"
 #include "ege-adjustment-action.h"
 
-#include "ui/widget/spinbutton.h"
-
 
 static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass );
 static void ege_adjustment_action_init( EgeAdjustmentAction* action );
@@ -89,14 +85,15 @@ static void egeAct_free_all_descriptions( EgeAdjustmentAction* action );
 
 
 static GtkActionClass* gParentClass = 0;
+static EgeCreateAdjWidgetCB gFactoryCb = 0;
 static GQuark gDataName = 0;
 
 enum {
     APPEARANCE_UNKNOWN = -1,
     APPEARANCE_NONE = 0,
-    APPEARANCE_FULL,    // label, then all choices represented by separate buttons
-    APPEARANCE_COMPACT, // label, then choices in a drop-down menu
-    APPEARANCE_MINIMAL, // no label, just choices in a drop-down menu
+    APPEARANCE_FULL,    /* label, then all choices represented by separate buttons */
+    APPEARANCE_COMPACT, /* label, then choices in a drop-down menu */
+    APPEARANCE_MINIMAL, /* no label, just choices in a drop-down menu */
 };
 
 #if GTK_CHECK_VERSION(2,12,0)
@@ -197,6 +194,7 @@ static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass )
 
         gDataName = g_quark_from_string("ege-adj-action");
 
+  
         objClass->finalize = ege_adjustment_action_finalize;
 
         objClass->get_property = ege_adjustment_action_get_property;
@@ -281,6 +279,11 @@ static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass )
 
         g_type_class_add_private( klass, sizeof(EgeAdjustmentActionClass) );
     }
+}
+
+void ege_adjustment_action_set_compact_tool_factory( EgeCreateAdjWidgetCB factoryCb )
+{
+    gFactoryCb = factoryCb;
 }
 
 static void ege_adjustment_action_init( EgeAdjustmentAction* action )
@@ -383,11 +386,11 @@ static void ege_adjustment_action_get_property( GObject* obj, guint propId, GVal
 
         case PROP_ICON_ID:
             g_value_set_string( value, action->private_data->iconId );
-	    break;
+            break;
 
         case PROP_ICON_SIZE:
             g_value_set_int( value, action->private_data->iconSize );
-	    break;
+            break;
 
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID( obj, propId, pspec );
@@ -836,7 +839,7 @@ static GtkWidget* create_tool_item( GtkAction* action )
         g_object_get_property( G_OBJECT(action), "short_label", &value );
 
         if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
-            // Slider
+            /* Slider */
             gchar *leakyForNow = g_value_dup_string( &value );
             spinbutton = gtk_hscale_new( act->private_data->adj);
             gtk_widget_set_size_request(spinbutton, 100, -1);
@@ -850,9 +853,11 @@ static GtkWidget* create_tool_item( GtkAction* action )
             gtk_scale_button_set_icons( GTK_SCALE_BUTTON(spinbutton), floogles );
 #endif /* GTK_CHECK_VERSION(2,12,0) */
         } else {
-            //spinbutton = gtk_spin_button_new( act->private_data->adj, act->private_data->climbRate, act->private_data->digits );
-            Inkscape::UI::Widget::SpinButton *inkscape_spinbutton = new Inkscape::UI::Widget::SpinButton(*Glib::wrap(act->private_data->adj, true), act->private_data->climbRate, act->private_data->digits);
-            spinbutton = GTK_WIDGET( inkscape_spinbutton->gobj() );
+            if ( gFactoryCb ) {
+                spinbutton = gFactoryCb( act->private_data->adj, act->private_data->climbRate, act->private_data->digits );
+            } else {
+                spinbutton = gtk_spin_button_new( act->private_data->adj, act->private_data->climbRate, act->private_data->digits );
+            }
         }
 
         item = GTK_WIDGET( gtk_tool_item_new() );
@@ -869,22 +874,22 @@ static GtkWidget* create_tool_item( GtkAction* action )
                 }
                 gtk_tooltips_set_tip( act->private_data->toolTips, spinbutton, tipstr, 0 );
             }
-	    g_value_unset( &tooltip );
+            g_value_unset( &tooltip );
         }
 
         if ( act->private_data->appearanceMode != APPEARANCE_FULL ) {
-	    GtkWidget* filler1 = gtk_label_new(" ");
-	    gtk_box_pack_start( GTK_BOX(hb), filler1, FALSE, FALSE, 0 );
+            GtkWidget* filler1 = gtk_label_new(" ");
+            gtk_box_pack_start( GTK_BOX(hb), filler1, FALSE, FALSE, 0 );
 
-	    // Use an icon if available or use short-label
-	    if ( act->private_data->iconId && strcmp( act->private_data->iconId, "" ) != 0 ) {
+            /* Use an icon if available or use short-label */
+            if ( act->private_data->iconId && strcmp( act->private_data->iconId, "" ) != 0 ) {
                 GtkWidget* icon = sp_icon_new( act->private_data->iconSize, act->private_data->iconId );
                 gtk_box_pack_start( GTK_BOX(hb), icon, FALSE, FALSE, 0 );
-	    } else {
+            } else {
                 GtkWidget* lbl = gtk_label_new( g_value_get_string( &value ) ? g_value_get_string( &value ) : "wwww" );
                 gtk_misc_set_alignment( GTK_MISC(lbl), 1.0, 0.5 );
                 gtk_box_pack_start( GTK_BOX(hb), lbl, FALSE, FALSE, 0 );
-	    }
+            }
         }
 
         if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
@@ -923,7 +928,7 @@ static GtkWidget* create_tool_item( GtkAction* action )
             act->private_data->toolPost( item );
         }
 
-	g_value_unset( &value );
+        g_value_unset( &value );
     } else {
         item = gParentClass->create_tool_item( action );
     }
