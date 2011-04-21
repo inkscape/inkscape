@@ -2298,7 +2298,7 @@ Verb *Verb::_base_verbs[] = {
                  N_("Apply the path effect of the copied object to selection"), NULL),
     new EditVerb(SP_VERB_EDIT_REMOVE_LIVEPATHEFFECT, "RemoveLivePathEffect", N_("Remove Path _Effect"),
                  N_("Remove any path effects from selected objects"), NULL),
-    new EditVerb(SP_VERB_EDIT_REMOVE_FILTER, "RemoveFilter", N_("Remove Filters"),
+    new EditVerb(SP_VERB_EDIT_REMOVE_FILTER, "RemoveFilter", N_("_Remove Filters"),
                  N_("Remove any filters from selected objects"), NULL),
     new EditVerb(SP_VERB_EDIT_DELETE, "EditDelete", N_("_Delete"),
                  N_("Delete selection"), GTK_STOCK_DELETE),
@@ -2645,7 +2645,7 @@ Verb *Verb::_base_verbs[] = {
                    N_("Edit document metadata (to be saved with the document)"), INKSCAPE_ICON_DOCUMENT_METADATA ),
     new DialogVerb(SP_VERB_DIALOG_FILL_STROKE, "DialogFillStroke", N_("_Fill and Stroke..."),
                    N_("Edit objects' colors, gradients, arrowheads, and other fill and stroke properties..."), INKSCAPE_ICON_DIALOG_FILL_AND_STROKE),
-    new DialogVerb(SP_VERB_DIALOG_GLYPHS, "DialogGlyphs", N_("Glyphs..."),
+    new DialogVerb(SP_VERB_DIALOG_GLYPHS, "DialogGlyphs", N_("Gl_yphs..."),
                    N_("Select characters from a glyphs palette"), GTK_STOCK_SELECT_FONT),
     // TRANSLATORS: "Swatches" means: color samples
     new DialogVerb(SP_VERB_DIALOG_SWATCHES, "DialogSwatches", N_("S_watches..."),
@@ -2690,7 +2690,7 @@ Verb *Verb::_base_verbs[] = {
                    N_("View Layers"), INKSCAPE_ICON_DIALOG_LAYERS),
     new DialogVerb(SP_VERB_DIALOG_LIVE_PATH_EFFECT, "DialogLivePathEffect", N_("Path E_ffect Editor..."),
                    N_("Manage, edit, and apply path effects"), NULL),
-    new DialogVerb(SP_VERB_DIALOG_FILTER_EFFECTS, "DialogFilterEffects", N_("Filter Editor..."),
+    new DialogVerb(SP_VERB_DIALOG_FILTER_EFFECTS, "DialogFilterEffects", N_("Filter _Editor..."),
                    N_("Manage, edit, and apply SVG filters"), NULL),
     new DialogVerb(SP_VERB_DIALOG_SVG_FONTS, "DialogSVGFonts", N_("SVG Font Editor..."),
                    N_("Edit SVG fonts"), NULL),
@@ -2727,9 +2727,9 @@ Verb *Verb::_base_verbs[] = {
                      N_("Miscellaneous tips and tricks"), NULL/*"tutorial_tips"*/),
 
     /* Effect -- renamed Extension */
-    new EffectLastVerb(SP_VERB_EFFECT_LAST, "EffectLast", N_("Previous Extension"),
+    new EffectLastVerb(SP_VERB_EFFECT_LAST, "EffectLast", N_("Previous Exte_nsion"),
                        N_("Repeat the last extension with the same settings"), NULL),
-    new EffectLastVerb(SP_VERB_EFFECT_LAST_PREF, "EffectLastPref", N_("Previous Extension Settings..."),
+    new EffectLastVerb(SP_VERB_EFFECT_LAST_PREF, "EffectLastPref", N_("_Previous Extension Settings..."),
                        N_("Repeat the last extension with new settings"), NULL),
 
     /* Fit Page */

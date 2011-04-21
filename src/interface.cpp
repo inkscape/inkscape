@@ -829,11 +829,11 @@ sp_ui_checkboxes_menus(GtkMenu *m, Inkscape::UI::View::View *view)
 {
     //sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
     //                                       checkitem_toggled, checkitem_update, 0);
-    sp_ui_menu_append_check_item_from_verb(m, view, _("Commands Bar"), _("Show or hide the Commands bar (under the menu)"), "commands",
+    sp_ui_menu_append_check_item_from_verb(m, view, _("_Commands Bar"), _("Show or hide the Commands bar (under the menu)"), "commands",
                                            checkitem_toggled, checkitem_update, 0);
-    sp_ui_menu_append_check_item_from_verb(m, view, _("Snap Controls Bar"), _("Show or hide the snapping controls"), "snaptoolbox",
+    sp_ui_menu_append_check_item_from_verb(m, view, _("Sn_ap Controls Bar"), _("Show or hide the snapping controls"), "snaptoolbox",
                                            checkitem_toggled, checkitem_update, 0);
-    sp_ui_menu_append_check_item_from_verb(m, view, _("Tool Controls Bar"), _("Show or hide the Tool Controls bar"), "toppanel",
+    sp_ui_menu_append_check_item_from_verb(m, view, _("T_ool Controls Bar"), _("Show or hide the Tool Controls bar"), "toppanel",
                                            checkitem_toggled, checkitem_update, 0);
     sp_ui_menu_append_check_item_from_verb(m, view, _("_Toolbox"), _("Show or hide the main toolbox (on the left)"), "toolbox",
                                            checkitem_toggled, checkitem_update, 0);
