@@ -149,13 +149,13 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
             <xsl:apply-templates mode="forward" select="*" />
         </xsl:if>
 
-        <xsl:if test="*[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath']">
+        <xsl:if test="*[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath' or name(.) = 'filter']">
           <Canvas.Resources>
-            <xsl:apply-templates mode="forward" select="*[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath']" />
+            <xsl:apply-templates mode="forward" select="*[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath' or name(.) = 'filter']" />
           </Canvas.Resources>
         </xsl:if>
         <xsl:if test="not(@transform)">
-          <xsl:apply-templates mode="forward" select="*[name(.) != 'linearGradient' and name(.) != 'radialGradient' and name(.) != 'defs' and name(.) != 'clipPath']" />
+          <xsl:apply-templates mode="forward" select="*[name(.) != 'linearGradient' and name(.) != 'radialGradient' and name(.) != 'defs' and name(.) != 'clipPath' and name(.) != 'filter']" />
         </xsl:if>  
       </Canvas>
     </xsl:when>
@@ -582,7 +582,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
         <xsl:choose>
           <xsl:when test="contains(@x1, '%') and contains(@y1, '%')">
             <xsl:attribute name="StartPoint">
-              <xsl:value-of select="concat(substring-before(@x1, '%') div 100, ',', substring-before(@y1,'%') div 100)" />
+              <xsl:value-of select="concat(round(number(substring-before(@x1, '%')) div 100), ',', round(number(substring-before(@y1,'%')) div 100))" />
             </xsl:attribute>
           </xsl:when>
           <xsl:otherwise>
@@ -594,7 +594,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
         <xsl:choose>
           <xsl:when test="contains(@x2, '%') and contains(@y2, '%')">
             <xsl:attribute name="EndPoint">
-              <xsl:value-of select="concat(substring-before(@x2, '%') div 100, ',', substring-before(@y2,'%') div 100)" />
+              <xsl:value-of select="concat(round(number(substring-before(@x2, '%')) div 100), ',', round(number(substring-before(@y2,'%')) div 100))" />
             </xsl:attribute>
           </xsl:when>
           <xsl:otherwise>
@@ -683,10 +683,10 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
       <xsl:attribute name="Center">
         <xsl:choose>
           <xsl:when test="contains(@cx, '%') and contains(@cy, '%')">
-            <xsl:value-of select="concat(number(substring-before(@cx, '%')) div 100, ',', number(substring-before(@cy, '%')) div 100)" />
+            <xsl:value-of select="concat(round(number(substring-before(@cx, '%')) div 100), ',', round(number(substring-before(@cy, '%')) div 100))" />
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="concat((@cx - $left), ',', (@cy - $top))" />
+            <xsl:value-of select="concat(round(@cx - $left), ',', round(@cy - $top))" />
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
@@ -695,10 +695,10 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
       <xsl:attribute name="GradientOrigin">
         <xsl:choose>
           <xsl:when test="contains(@fx, '%') and contains(@fy, '%')">
-            <xsl:value-of select="concat(number(substring-before(@fx, '%')) div 100, ',', number(substring-before(@fy, '%')) div 100)" />
+            <xsl:value-of select="concat(round(number(substring-before(@fx, '%')) div 100), ',', round(number(substring-before(@fy, '%')) div 100))" />
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="concat((@fx - $left), ',', (@fy - $top))" />
+            <xsl:value-of select="concat(round(@fx - $left), ',', round(@fy - $top))" />
           </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
