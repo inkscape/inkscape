@@ -15,17 +15,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-04-21 14:18+0400\n"
+"POT-Creation-Date: 2011-04-21 17:11+0200\n"
 "PO-Revision-Date: 2011-04-21 15:16+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: UTF-8\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2); 10<=4 && (n%100<10 || n%"
-"100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2); 10<=4 && (n%100<10 || n"
+"%100>=20) ? 1 : 2);\n"
 "X-Poedit-Language: Russian\n"
 
 #: ../inkscape.desktop.in.h:1
@@ -9115,7 +9116,8 @@ msgstr "Не получилось сохранить резервную копи
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
 #: ../src/interface.cpp:832
-msgid "Commands Bar"
+#, fuzzy
+msgid "_Commands Bar"
 msgstr "Панель команд"
 
 #: ../src/interface.cpp:832
@@ -9123,7 +9125,8 @@ msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Показать/скрыть панель команд (под меню)"
 
 #: ../src/interface.cpp:834
-msgid "Snap Controls Bar"
+#, fuzzy
+msgid "Sn_ap Controls Bar"
 msgstr "Панель параметров прилипания"
 
 #: ../src/interface.cpp:834
@@ -9131,7 +9134,8 @@ msgid "Show or hide the snapping controls"
 msgstr "Показать/скрыть панель с параметрами прилипания"
 
 #: ../src/interface.cpp:836
-msgid "Tool Controls Bar"
+#, fuzzy
+msgid "T_ool Controls Bar"
 msgstr "Панель параметров инструментов"
 
 #: ../src/interface.cpp:836
@@ -11156,7 +11160,8 @@ msgstr "Отобр_ажение"
 #. "         <verb verb-id=\"ViewColorModePrintColorsPreview\" radio=\"yes\"/>\n"
 #. "         <verb verb-id=\"DialogPrintColorsPreview\" />\n"
 #: ../src/menus-skeleton.h:129
-msgid "Show/Hide"
+#, fuzzy
+msgid "Sh_ow/Hide"
 msgstr "Показать или скрыть"
 
 #. "       <verb verb-id=\"DialogScript\" />\n"
@@ -18204,10 +18209,10 @@ msgid ""
 "this command several times in quick succession, it will act more and more "
 "aggressively; invoking it again after a pause restores the default threshold."
 msgstr ""
-"Степень упрощения по команде «Упростить». Если вызывать эту команду несколько "
-"раз подряд, она будет действовать с каждым разом все более агрессивно; чтобы "
-"вернуться к значению по умолчанию, сделайте паузу перед очередным вызовом "
-"команды."
+"Степень упрощения по команде «Упростить». Если вызывать эту команду "
+"несколько раз подряд, она будет действовать с каждым разом все более "
+"агрессивно; чтобы вернуться к значению по умолчанию, сделайте паузу перед "
+"очередным вызовом команды."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1333
 msgid "Latency skew:"
@@ -20931,7 +20936,8 @@ msgid "Remove any path effects from selected objects"
 msgstr "Убрать все контурные эффекты из выделения"
 
 #: ../src/verbs.cpp:2301
-msgid "Remove Filters"
+#, fuzzy
+msgid "_Remove Filters"
 msgstr "Снять фильтры"
 
 #: ../src/verbs.cpp:2302
@@ -22094,7 +22100,8 @@ msgstr ""
 "Изменить заливку объекта, параметры обводки, маркеры и штриховку стрелок..."
 
 #: ../src/verbs.cpp:2648
-msgid "Glyphs..."
+#, fuzzy
+msgid "Gl_yphs..."
 msgstr "Глифы..."
 
 #: ../src/verbs.cpp:2649
@@ -22251,7 +22258,8 @@ msgid "Manage, edit, and apply path effects"
 msgstr "Управление, редактирование и применение контурных эффектов"
 
 #: ../src/verbs.cpp:2693
-msgid "Filter Editor..."
+#, fuzzy
+msgid "Filter _Editor..."
 msgstr "Редактор фильтров..."
 
 #: ../src/verbs.cpp:2694
@@ -22376,7 +22384,8 @@ msgstr "Различные советы по использованию прог
 #. "tutorial_tips"
 #. Effect -- renamed Extension
 #: ../src/verbs.cpp:2730
-msgid "Previous Extension"
+#, fuzzy
+msgid "Previous Exte_nsion"
 msgstr "Повторить выполнение"
 
 #: ../src/verbs.cpp:2731
@@ -22384,7 +22393,8 @@ msgid "Repeat the last extension with the same settings"
 msgstr "Повторно выполнить последнее расширение с теми же параметрами"
 
 #: ../src/verbs.cpp:2732
-msgid "Previous Extension Settings..."
+#, fuzzy
+msgid "_Previous Extension Settings..."
 msgstr "Повторить с изменениями..."
 
 #: ../src/verbs.cpp:2733
@@ -29043,8 +29053,9 @@ msgid "Remove metadata"
 msgstr "Удалить красный компонент"
 
 #: ../share/extensions/scour.inx.h:26
-msgid "Remove the <?xml?> declaration"
-msgstr ""
+#, fuzzy
+msgid "Remove the xml declaration"
+msgstr "Удалить переходы"
 
 #: ../share/extensions/scour.inx.h:27
 msgid "Remove unused ID names for elements"
@@ -31056,8 +31067,8 @@ msgstr "Импорт XAML"
 #~ "\n"
 #~ "Do you want to save this file as an Inkscape SVG?"
 #~ msgstr ""
-#~ "<span weight=\"bold\" size=\"larger\">Файл %s был сохранен в формате (%"
-#~ "s), что может привести к частичной потере данных!</span>\n"
+#~ "<span weight=\"bold\" size=\"larger\">Файл %s был сохранен в формате "
+#~ "(%s), что может привести к частичной потере данных!</span>\n"
 #~ "\n"
 #~ "Сохранить документ в формате Inkscape SVG?"
 
@@ -31747,8 +31758,8 @@ msgstr "Импорт XAML"
 #~ msgstr[2] "<b>%i</b> из <b>%i</b> узлов выделено; %s. %s."
 
 #~ msgid ""
-#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %"
-#~ "s."
+#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. "
+#~ "%s."
 #~ msgid_plural ""
 #~ "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. "
 #~ "%s."

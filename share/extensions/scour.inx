@@ -17,7 +17,7 @@
             <param name="enable-comment-stripping"  type="boolean" _gui-text="Remove comments">false</param>
             <param name="renderer-workaround"  type="boolean" _gui-text="Work around renderer bugs">true</param>
             <param name="enable-viewboxing" type="boolean" _gui-text="Enable viewboxing">false</param>
-            <param name="strip-xml-prolog"  type="boolean" _gui-text="Remove the &lt;?xml?&gt; declaration">false</param>
+            <param name="strip-xml-prolog"  type="boolean" _gui-text="Remove the xml declaration">false</param>
             <param name="set-precision"  type="int" _gui-text="Number of significant digits for coords">5</param>
       	    <param name="indent" type="enum" _gui-text="XML indentation (pretty-printing)">
                 <_item value="space">Space</_item>
