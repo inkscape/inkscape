@@ -162,7 +162,10 @@ void GlyphComboBox::update(SPFont* spfont){
 }
 
 void SvgFontsDialog::on_kerning_value_changed(){
-    if (!this->kerning_pair) return;
+    if (!get_selected_kerning_pair()) {
+        return;
+    }
+
     SPDocument* document = sp_desktop_document(this->getDesktop());
 
     //TODO: I am unsure whether this is the correct way of calling SPDocumentUndo::maybe_done
