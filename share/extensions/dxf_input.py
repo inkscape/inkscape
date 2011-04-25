@@ -73,7 +73,7 @@ def export_POINT():
 def export_LINE():
     # mandatory group codes : (10, 11, 20, 21) (x1, x2, y1, y2)
     if vals[groups['10']] and vals[groups['11']] and vals[groups['20']] and vals[groups['21']]:
-        path = 'M %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], scale*(vals[groups['11']][0] - xmin), - scale*(vals[groups['21']][0] - ymax))
+        path = 'M %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], scale*(vals[groups['11']][0] - xmin), height - scale*(vals[groups['21']][0] - ymin))
         attribs = {'d': path, 'style': style}
         inkex.etree.SubElement(layer, 'path', attribs)
 
@@ -224,7 +224,7 @@ def export_HATCH():
                         i40 += 1
                         i72 += 1
                     elif vals[groups['72']][i72] == 1:      # line
-                        path += 'L %f,%f ' % (scale*(vals[groups['11']][i11] - xmin), -scale*(vals[groups['21']][i11] - ymax))
+                        path += 'L %f,%f ' % (scale*(vals[groups['11']][i11] - xmin), height - scale*(vals[groups['21']][i11] - ymin))
                         i11 += 1
                         i72 += 1
                     i10 += 1
@@ -254,7 +254,7 @@ def export_DIMENSION():
         attribs = {'d': path, 'style': style + '; marker-start: url(#DistanceX); marker-end: url(#DistanceX); stroke-width: 0.25px'}
         inkex.etree.SubElement(layer, 'path', attribs)
         x = scale*(vals[groups['11']][0] - xmin)
-        y = - scale*(vals[groups['21']][0] - ymax)
+        y = height - scale*(vals[groups['21']][0] - ymin)
         size = 12                   # default fontsize in px
         if vals[groups['3']]:
             if DIMTXT.has_key(vals[groups['3']][0]):
@@ -271,8 +271,8 @@ def export_DIMENSION():
 def export_INSERT():
     # mandatory group codes : (2, 10, 20) (block name, x, y)
     if vals[groups['2']] and vals[groups['10']] and vals[groups['20']]:
-        x = vals[groups['10']][0]
-        y = vals[groups['20']][0] - scale*ymax
+        x = vals[groups['10']][0] + scale*xmin
+        y = vals[groups['20']][0] - scale*ymin - height
         attribs = {'x': '%f' % x, 'y': '%f' % y, inkex.addNS('href','xlink'): '#' + quote(vals[groups['2']][0].encode("utf-8"))}
         inkex.etree.SubElement(layer, 'use', attribs)
 
@@ -340,6 +340,8 @@ colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '
 parser = inkex.optparse.OptionParser(usage="usage: %prog [options] SVGfile", option_class=inkex.InkOption)
 parser.add_option("--auto", action="store", type="inkbool", dest="auto", default=True)
 parser.add_option("--scale", action="store", type="string", dest="scale", default="1.0")
+parser.add_option("--xmin", action="store", type="string", dest="xmin", default="0.0")
+parser.add_option("--ymin", action="store", type="string", dest="ymin", default="0.0")
 parser.add_option("--gcodetoolspoints", action="store", type="inkbool", dest="gcodetoolspoints", default=True)
 parser.add_option("--encoding", action="store", type="string", dest="input_encode", default="latin_1")
 parser.add_option("--font", action="store", type="string", dest="font", default="Arial")
@@ -356,8 +358,8 @@ inkex.etree.SubElement(pattern, 'path', {'d': 'M8 4 l-4,4', 'stroke': '#000000',
 inkex.etree.SubElement(pattern, 'path', {'d': 'M6 2 l-4,4', 'stroke': '#000000', 'stroke-width': '0.25', 'linecap': 'square'})
 inkex.etree.SubElement(pattern, 'path', {'d': 'M4 0 l-4,4', 'stroke': '#000000', 'stroke-width': '0.25', 'linecap': 'square'})
 stream = open(args[0], 'r')
-xmax = xmin = 0.0
-ymax = 297.0                                        # default A4 height in mm
+xmax = xmin = ymin = 0.0
+height = 297.0*90.0/25.4                            # default A4 height in pixels
 line = get_line()
 flag = 0                                            # (0, 1, 2, 3) = (none, LAYER, LTYPE, DIMTXT)
 layer_colors = {}                                   # store colors by layer
@@ -370,9 +372,9 @@ while line[0] and line[1] != 'BLOCKS':
     if options.auto:
         if line[1] == '$EXTMIN':
             xmin = get_group('10')
+            ymin = get_group('20')
         if line[1] == '$EXTMAX':
             xmax = get_group('10')
-            ymax = get_group('20')
     if flag == 1 and line[0] == '2':
         layername = unicode(line[1], options.input_encode)
         attribs = {inkex.addNS('groupmode','inkscape'): 'layer', inkex.addNS('label','inkscape'): '%s' % layername}
@@ -403,6 +405,8 @@ if options.auto:
         scale = 210.0/(xmax - xmin)                 # scale to A4 width
 else:
     scale = float(options.scale)                    # manual scale factor
+    xmin = float(options.xmin)
+    ymin = float(options.ymin)
 desc.text = '%s - scale = %f' % (unicode(args[0], options.input_encode), scale)
 scale *= 90.0/25.4                                  # convert from mm to pixels
 
@@ -450,7 +454,7 @@ while line[0] and (line[1] != 'ENDSEC' or not inENTITIES):
         elif line[0] == '10' or line[0] == '13' or line[0] == '14': # scaled float x value
             val = scale*(float(line[1]) - xmin)
         elif line[0] == '20' or line[0] == '23' or line[0] == '24': # scaled float y value
-            val = - scale*(float(line[1]) - ymax)
+            val = height - scale*(float(line[1]) - ymin)
         else:                                       # unscaled float value
             val = float(line[1])
         vals[groups[line[0]]].append(val)

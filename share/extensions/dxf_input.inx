@@ -8,6 +8,8 @@
 		<page name="options" _gui-text="Options">
 			<param name="auto" type="boolean" _gui-text="Use automatic scaling to size A4">true</param>
 			<param name="scale" type="string" _gui-text="Or, use manual scale factor">1.0</param>
+			<param name="xmin" type="string" _gui-text="Manual x-axis origin (mm)">0.0</param>
+			<param name="ymin" type="string" _gui-text="Manual y-axis origin (mm)">0.0</param>
 			<param name="gcodetoolspoints" type="boolean" _gui-text="Gcodetools compatible point import">false</param>
 			<param name="sep1" type="description">-------------------------------------------------------------------------</param>
 			<param name="encoding" type="enum" _gui-text="Character Encoding">
@@ -22,6 +24,7 @@
 			<_param name="inputhelp" type="description" xml:space="preserve">- AutoCAD Release 13 and newer.
 - assume dxf drawing is in mm.
 - assume svg drawing is in pixels, at 90 dpi.
+- scale factor and origin apply only to manual scaling.
 - layers are preserved only on File->Open, not Import.
 - limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed.</_param>
 		</page>
