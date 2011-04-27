@@ -82,6 +82,8 @@ namespace Extension {
 namespace Internal {
 
 static float device_scale = DEVICESCALE;
+static RECTL rc_old;
+static bool clipset = false;
 
 EmfWin32::EmfWin32 (void) // The null constructor
 {
@@ -205,6 +207,7 @@ typedef struct emf_device_context {
 typedef struct emf_callback_data {
     Glib::ustring *outsvg;
     Glib::ustring *path;
+    Glib::ustring *outdef;
 
     EMF_DEVICE_CONTEXT dc[EMF_MAX_DC+1]; // FIXME: This should be dynamic..
     int level;
@@ -311,6 +314,9 @@ output_style(PEMF_CALLBACK_DATA d, int iType)
         tmp_style << "stroke-opacity:1;";
     }
     tmp_style << "\" ";
+    if (clipset)
+        tmp_style << "\n\tclip-path=\"url(#clipEmfPath" << d->id << ")\" ";
+    clipset = false;
 
     *(d->outsvg) += tmp_style.str().c_str();
 }
@@ -770,19 +776,20 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
         {
             dbg_str << "<!-- EMR_HEADER -->\n";
 
-            *(d->outsvg) += "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
+            *(d->outdef) += "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
 
             if (d->pDesc) {
-                *(d->outsvg) += "<!-- ";
-                *(d->outsvg) += d->pDesc;
-                *(d->outsvg) += " -->\n";
+                *(d->outdef) += "<!-- ";
+                *(d->outdef) += d->pDesc;
+                *(d->outdef) += " -->\n";
             }
 
             ENHMETAHEADER *pEmr = (ENHMETAHEADER *) lpEMFR;
-            tmp_outsvg << "<svg\n";
-            tmp_outsvg << "  xmlns:svg=\"http://www.w3.org/2000/svg\"\n";
-            tmp_outsvg << "  xmlns=\"http://www.w3.org/2000/svg\"\n";
-            tmp_outsvg << "  version=\"1.0\"\n";
+            SVGOStringStream tmp_outdef;
+            tmp_outdef << "<svg\n";
+            tmp_outdef << "  xmlns:svg=\"http://www.w3.org/2000/svg\"\n";
+            tmp_outdef << "  xmlns=\"http://www.w3.org/2000/svg\"\n";
+            tmp_outdef << "  version=\"1.0\"\n";
 
             d->xDPI = 2540;
             d->yDPI = 2540;
@@ -800,15 +807,13 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             if (pEmr->szlMillimeters.cx && pEmr->szlDevice.cx)
                 device_scale = PX_PER_MM*pEmr->szlMillimeters.cx/pEmr->szlDevice.cx;
             
-            tmp_outsvg <<
+            tmp_outdef <<
                 "  width=\"" << d->MMX << "mm\"\n" <<
                 "  height=\"" << d->MMY << "mm\">\n";
-//            tmp_outsvg <<
-//                "  id=\"" << (d->id++) << "\">\n";
+            *(d->outdef) += tmp_outdef.str().c_str();
+            *(d->outdef) += "<defs>";				// temporary end of header
 
-            tmp_outsvg << "<g>\n";
-//                "<g\n" <<
-//                "  id=\"" << (d->id++) << "\">\n";
+            tmp_outsvg << "\n</defs>\n<g>\n";			// start of main body
 
             if (pEmr->nHandles) {
                 d->n_obj = pEmr->nHandles;
@@ -1152,6 +1157,7 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             assert_empty_path(d, "EMR_EOF");
             tmp_outsvg << "</g>\n";
             tmp_outsvg << "</svg>\n";
+            *(d->outsvg) = *(d->outdef) + *(d->outsvg);
             break;
         }
         case EMR_SETPIXELV:
@@ -1234,8 +1240,37 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             dbg_str << "<!-- EMR_EXCLUDECLIPRECT -->\n";
             break;
         case EMR_INTERSECTCLIPRECT:
+        {
             dbg_str << "<!-- EMR_INTERSECTCLIPRECT -->\n";
+
+            PEMRINTERSECTCLIPRECT pEmr = (PEMRINTERSECTCLIPRECT) lpEMFR;
+            RECTL rc = pEmr->rclClip;
+            clipset = true;
+            if ((rc.left == rc_old.left) && (rc.top == rc_old.top) && (rc.right == rc_old.right) && (rc.bottom == rc_old.bottom))
+                break;
+            rc_old = rc;
+
+            double l = pix_to_x_point( d, rc.left, rc.top );
+            double t = pix_to_y_point( d, rc.left, rc.top );
+            double r = pix_to_x_point( d, rc.right, rc.bottom );
+            double b = pix_to_y_point( d, rc.right, rc.bottom );
+
+            SVGOStringStream tmp_rectangle;
+            tmp_rectangle << "\n<clipPath\n\tclipPathUnits=\"userSpaceOnUse\" ";
+            tmp_rectangle << "\n\tid=\"clipEmfPath" << ++(d->id) << "\" >";
+            tmp_rectangle << "\n<rect ";
+            tmp_rectangle << "\n\tx=\"" << l << "\" ";
+            tmp_rectangle << "\n\ty=\"" << t << "\" ";
+            tmp_rectangle << "\n\twidth=\"" << r-l << "\" ";
+            tmp_rectangle << "\n\theight=\"" << b-t << "\" />";
+            tmp_rectangle << "\n</clipPath>";
+
+            assert_empty_path(d, "EMR_RECTANGLE");
+
+            *(d->outdef) += tmp_rectangle.str().c_str();
+            *(d->path) = "";
             break;
+        }
         case EMR_SCALEVIEWPORTEXTEX:
             dbg_str << "<!-- EMR_SCALEVIEWPORTEXTEX -->\n";
             break;
@@ -2273,6 +2308,7 @@ EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
     d.outsvg = new Glib::ustring("");
     d.path = new Glib::ustring("");
+    d.outdef = new Glib::ustring("");
 
     CHAR *ansi_uri = (CHAR *) local_fn;
     gunichar2 *unicode_fn = g_utf8_to_utf16( local_fn, -1, NULL, NULL, NULL );
@@ -2414,6 +2450,8 @@ EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
             delete d.outsvg;
         if (d.path)
             delete d.path;
+        if (d.outdef)
+            delete d.outdef;
         if (local_fn)
             g_free(local_fn);
         if (unicode_fn)
@@ -2455,6 +2493,7 @@ EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
     delete d.outsvg;
     delete d.path;
+    delete d.outdef;
 
     if (d.emf_obj) {
         int i;
