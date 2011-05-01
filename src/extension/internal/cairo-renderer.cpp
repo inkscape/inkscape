@@ -170,11 +170,13 @@ static void sp_shape_render_invoke_marker_rendering(SPMarker* marker, Geom::Affi
 
     if (render) {
         SPItem* marker_item = sp_item_first_item_child(marker);
-        tr = (Geom::Affine)marker_item->transform * (Geom::Affine)marker->c2p * tr;
-        Geom::Affine old_tr = marker_item->transform;
-        marker_item->transform = tr;
-        ctx->getRenderer()->renderItem (ctx, marker_item);
-        marker_item->transform = old_tr;
+        if (marker_item) {
+            tr = (Geom::Affine)marker_item->transform * (Geom::Affine)marker->c2p * tr;
+            Geom::Affine old_tr = marker_item->transform;
+            marker_item->transform = tr;
+            ctx->getRenderer()->renderItem (ctx, marker_item);
+            marker_item->transform = old_tr;
+        }
     }
 }
 

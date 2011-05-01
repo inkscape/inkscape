@@ -607,6 +607,9 @@ void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Affine 
 {
     SPMarker* marker = SP_MARKER (marker_object);
     SPItem* marker_item = sp_item_first_item_child(marker_object);
+    if (!marker_item) {
+        return;
+    }
 
     Geom::Affine tr(marker_transform);
 
@@ -665,7 +668,9 @@ void item_outline_add_marker( SPObject const *marker_object, Geom::Affine marker
     tr = marker->c2p * tr;
 
     SPItem const * marker_item = sp_item_first_item_child(marker_object); // why only consider the first item? can a marker only consist of a single item (that may be a group)?
-    item_outline_add_marker_child(marker_item, tr, pathv_in);
+    if (marker_item) {
+        item_outline_add_marker_child(marker_item, tr, pathv_in);
+    }
 }
 
 /**

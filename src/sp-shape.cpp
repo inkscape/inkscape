@@ -725,12 +725,14 @@ sp_shape_print_invoke_marker_printing(SPObject* obj, Geom::Affine tr, SPStyle* s
     }
 
     SPItem* marker_item = sp_item_first_item_child( marker );
-    tr = marker_item->transform * marker->c2p * tr;
+    if (marker_item) {
+        tr = marker_item->transform * marker->c2p * tr;
 
-    Geom::Affine old_tr = marker_item->transform;
-    marker_item->transform = tr;
-    marker_item->invoke_print (ctx);
-    marker_item->transform = old_tr;
+        Geom::Affine old_tr = marker_item->transform;
+        marker_item->transform = tr;
+        marker_item->invoke_print (ctx);
+        marker_item->transform = old_tr;
+    }
 }
 /**
  * Prepares shape for printing.  Handles printing of comments for printing
