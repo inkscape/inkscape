@@ -544,6 +544,9 @@ static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)
     if (SP_IS_ROOT(item)) {
         TRACE(("root\n"));
         return sp_root_render(item, ctx);
+    } else if (SP_IS_SYMBOL(item)) {
+        TRACE(("symbol\n"));
+        return sp_symbol_render(item, ctx);
     } else if (SP_IS_GROUP(item)) {
         TRACE(("group\n"));
         return sp_group_render(item, ctx);
@@ -554,9 +557,6 @@ static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)
         TRACE(("use begin---\n"));
         sp_use_render(item, ctx);
         TRACE(("---use end\n"));
-    } else if (SP_IS_SYMBOL(item)) {
-        TRACE(("symbol\n"));
-        return sp_symbol_render(item, ctx);
     } else if (SP_IS_TEXT(item)) {
         TRACE(("text\n"));
         return sp_text_render(item, ctx);
