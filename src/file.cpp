@@ -54,6 +54,7 @@
 #include "path-prefix.h"
 #include "preferences.h"
 #include "print.h"
+#include "resource-manager.h"
 #include "rdf.h"
 #include "selection-chemistry.h"
 #include "selection.h"
@@ -209,14 +210,14 @@ sp_file_exit()
  *  \param replace_empty if true, and the current desktop is empty, this document
  *  will replace the empty one.
  */
-bool
-sp_file_open(const Glib::ustring &uri,
-             Inkscape::Extension::Extension *key,
-             bool add_to_recent, bool replace_empty)
+bool sp_file_open(const Glib::ustring &uri,
+                  Inkscape::Extension::Extension *key,
+                  bool add_to_recent, bool replace_empty)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop)
+    if (desktop) {
         desktop->setWaitingCursor();
+    }
 
     SPDocument *doc = NULL;
     try {
@@ -227,33 +228,44 @@ sp_file_open(const Glib::ustring &uri,
         doc = NULL;
     }
 
-    if (desktop)
+    if (desktop) {
         desktop->clearWaitingCursor();
+    }
 
     if (doc) {
         SPDocument *existing = desktop ? sp_desktop_document(desktop) : NULL;
 
         if (existing && existing->virgin && replace_empty) {
             // If the current desktop is empty, open the document there
-            doc->ensureUpToDate();
+            doc->ensureUpToDate(); // TODO this will trigger broken link warnings, etc.
             desktop->change_document(doc);
             doc->emitResizedSignal(doc->getWidth(), doc->getHeight());
         } else {
             // create a whole new desktop and window
-            SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL));
+            SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL)); // TODO this will trigger broken link warnings, etc.
             sp_create_window(dtw, TRUE);
             desktop = static_cast<SPDesktop*>(dtw->view);
         }
 
         doc->virgin = FALSE;
+
         // everyone who cares now has a reference, get rid of ours
         doc->doUnref();
+
         // resize the window to match the document properties
         sp_namedview_window_from_document(desktop);
         sp_namedview_update_layers_from_document(desktop);
 
         if (add_to_recent) {
             sp_file_add_recent( doc->getURI() );
+        }
+
+        if ( inkscape_use_gui() ) {
+            // Perform a fixup pass for hrefs.
+            if ( Inkscape::ResourceManager::getManager().fixupBrokenLinks(doc) ) {
+                Glib::ustring msg = _("Broken links have been changed to point to existing files.");
+                desktop->showInfoDialog(msg);
+            }
         }
 
         return TRUE;

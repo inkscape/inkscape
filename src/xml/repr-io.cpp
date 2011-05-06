@@ -52,6 +52,7 @@ static void sp_repr_write_stream_root_element(Node *repr, Writer &out,
                                               int inlineattrs, int indent,
                                               gchar const *old_href_abs_base,
                                               gchar const *new_href_abs_base);
+
 static void sp_repr_write_stream_element(Node *repr, Writer &out,
                                          gint indent_level, bool add_whitespace,
                                          Glib::QueryQuark elide_prefix,
@@ -644,7 +645,7 @@ sp_repr_save_rebased_file(Document *doc, gchar const *const filename, gchar cons
         return false;
     }
 
-    gchar *old_href_abs_base = NULL;
+    std::string old_href_abs_base;
     gchar *new_href_abs_base = NULL;
     if (for_filename) {
         old_href_abs_base = calc_abs_doc_base(old_base);
@@ -662,9 +663,8 @@ sp_repr_save_rebased_file(Document *doc, gchar const *const filename, gchar cons
          * to using sodipodi:absref instead of the xlink:href value,
          * then we should do `if streq() { free them and set both to NULL; }'. */
     }
-    sp_repr_save_stream(doc, file, default_ns, compress, old_href_abs_base, new_href_abs_base);
+    sp_repr_save_stream(doc, file, default_ns, compress, old_href_abs_base.c_str(), new_href_abs_base);
 
-    g_free(old_href_abs_base);
     g_free(new_href_abs_base);
 
     if (fclose (file) != 0) {
@@ -879,17 +879,16 @@ void sp_repr_write_stream( Node *repr, Writer &out, gint indent_level,
 }
 
 
-static void
-sp_repr_write_stream_element (Node * repr, Writer & out, gint indent_level,
-                              bool add_whitespace,
-                              Glib::QueryQuark elide_prefix,
-                              List<AttributeRecord const> attributes, 
-                              int inlineattrs, int indent,
-                              gchar const *const old_href_base,
-                              gchar const *const new_href_base)
+void sp_repr_write_stream_element( Node * repr, Writer & out,
+                                   gint indent_level, bool add_whitespace,
+                                   Glib::QueryQuark elide_prefix,
+                                   List<AttributeRecord const> attributes, 
+                                   int inlineattrs, int indent,
+                                   gchar const *old_href_base,
+                                   gchar const *new_href_base )
 {
-    Node *child;
-    bool loose;
+    Node *child = 0;
+    bool loose = false;
 
     g_return_if_fail (repr != NULL);
 
@@ -919,6 +918,28 @@ sp_repr_write_stream_element (Node * repr, Writer & out, gint indent_level,
     gchar const *xml_space_attr = repr->attribute("xml:space");
     if (xml_space_attr != NULL && !strcmp(xml_space_attr, "preserve")) {
         add_whitespace = false;
+    }
+
+
+    {
+        GQuark const href_key = g_quark_from_static_string("xlink:href");
+        GQuark const absref_key = g_quark_from_static_string("sodipodi:absref");
+
+        gchar const *xxHref = 0;
+        gchar const *xxAbsref = 0;
+        for ( List<AttributeRecord const> ai(attributes); ai; ++ai ) {
+            if ( ai->key == href_key ) {
+                xxHref = ai->value;
+            } else if ( ai->key == absref_key ) {
+                xxAbsref = ai->value;
+            }
+        }
+
+        // Might add a special case for absref but no href.
+        if ( old_href_base && new_href_base && xxHref ) {
+            //g_message("href rebase test with [%s] and [%s]", xxHref, xxAbsref);
+            //std::string newOne = rebase_href_attrs( old_href_base, new_href_base, xxHref, xxAbsref );
+        }
     }
 
     for ( List<AttributeRecord const> iter = rebase_href_attrs(old_href_base, new_href_base,

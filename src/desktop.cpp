@@ -87,6 +87,7 @@
 #include "device-manager.h"
 #include "layer-fns.h"
 #include "layer-manager.h"
+#include "resource-manager.h"
 #include "event-log.h"
 #include "display/canvas-grid.h"
 #include "widgets/desktop-widget.h"
@@ -177,6 +178,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
 
     // Temporary workaround for link order issues:
     Inkscape::DeviceManager::getManager().getDevices();
+    Inkscape::ResourceManager::getManager();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     _guides_message_context = new Inkscape::MessageContext(const_cast<Inkscape::MessageStack*>(messageStack()));
@@ -1318,6 +1320,11 @@ void
 SPDesktop::presentWindow()
 {
     _widget->present();
+}
+
+bool SPDesktop::showInfoDialog( Glib::ustring const & message )
+{
+    return _widget->showInfoDialog( message );
 }
 
 bool

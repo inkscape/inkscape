@@ -1150,6 +1150,25 @@ SPDesktopWidget::presentWindow()
         gtk_window_present (w);
 }
 
+bool SPDesktopWidget::showInfoDialog( Glib::ustring const &message )
+{
+    bool result = false;
+    GtkWindow *window = GTK_WINDOW( gtk_widget_get_toplevel( GTK_WIDGET(this) ) );
+    if (window)
+    {
+        GtkWidget *dialog = gtk_message_dialog_new(
+                window,
+                GTK_DIALOG_DESTROY_WITH_PARENT,
+                GTK_MESSAGE_INFO,
+                GTK_BUTTONS_OK,
+                "%s", message.c_str());
+        gtk_window_set_title( GTK_WINDOW(dialog), _("Note:")); // probably want to take this as a parameter.
+        gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+        gtk_widget_destroy(dialog);
+    }
+    return result;
+}
+
 bool
 SPDesktopWidget::warnDialog (gchar* text)
 {

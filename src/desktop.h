@@ -288,6 +288,7 @@ public:
     void setWindowTransient (void* p, int transient_policy=1);
     Gtk::Window* getToplevel();
     void presentWindow();
+    bool showInfoDialog( Glib::ustring const &message );
     bool warnDialog (gchar *text);
     void toggleRulers();
     void toggleScrollbars();

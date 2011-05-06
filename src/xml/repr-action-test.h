@@ -88,7 +88,6 @@ public:
     }
 
     /* lots more tests needed ... */
-
 };
 
 /*

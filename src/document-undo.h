@@ -15,10 +15,10 @@ public:
      *   Since undo sensitivity needs to be nested, setting undo sensitivity
      *   should be done like this:
      *\verbatim
-     bool saved = sp_document_get_undo_sensitive(document);
-     sp_document_set_undo_sensitive(document, false);
+     bool saved = DocumentUndo::getUndoSensitive(document);
+     DocumentUndo::setUndoSensitive(document, false);
      ... do stuff ...
-     sp_document_set_undo_sensitive(document, saved);  \endverbatim
+     DocumentUndo::setUndoSensitive(document, saved);  \endverbatim
     */
     static void setUndoSensitive(SPDocument *doc, bool sensitive);
 

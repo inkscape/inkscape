@@ -59,6 +59,7 @@ using Inkscape::Extension::Internal::PrintWin32;
 #include "io/sys.h"
 #include "message-stack.h"
 #include "preferences.h"
+#include "resource-manager.h"
 #include "selection.h"
 #include "ui/dialog/debug.h"
 #include "xml/repr.h"
@@ -820,6 +821,7 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
         inkscape_load_menus(inkscape);
         Inkscape::DeviceManager::getManager().loadConfig();
     }
+    Inkscape::ResourceManager::getManager();
 
     /* set language for user interface according setting in preferences */
     Glib::ustring ui_language = prefs->getString("/ui/language");

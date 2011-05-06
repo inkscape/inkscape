@@ -1,8 +1,7 @@
-/** @file
- * @brief Utility functions for filenames
+/**
+ * @file
+ * Utility functions for filenames.
  */
-
-#define DIR_UTIL_C
 
 #include <errno.h>
 #include <string>
@@ -13,49 +12,37 @@
 #include <glib/gconvert.h>
 #include <glib/gstrfuncs.h>
 
-/** Returns a form of \a path relative to \a base if that is easy to construct (e.g. if \a path
-    appears to be in the directory specified by \a base), otherwise returns \a path.
-
-    N.B. The return value is a pointer into the \a path string.
-
-    \a base is expected to be either NULL or the absolute path of a directory.
-
-    \a path is expected to be an absolute path.
-
-    \see inkscape_abs2rel for a more sophisticated version.
-    \see prepend_current_dir_if_relative.
-*/
-char const *
-sp_relative_path_from_path(char const *const path, char const *const base)
+std::string sp_relative_path_from_path( std::string const &path, std::string const &base)
 {
-	if (base == NULL || path == NULL) {
-		return path;
-	}
+    std::string result;
+    if ( !base.empty() && !path.empty() ) {
+        size_t base_len = base.length();
+        while (base_len != 0
+               && (base[base_len - 1] == G_DIR_SEPARATOR))
+        {
+            --base_len;
+        }
 
-	size_t base_len = strlen(base);
-	while (base_len != 0
-	       && (base[base_len - 1] == G_DIR_SEPARATOR))
-	{
-		--base_len;
-	}
+        if ( (path.substr(0, base_len) == base.substr(0, base_len))
+             && (path[base_len] == G_DIR_SEPARATOR))
+        {
+            size_t retPos = base_len + 1;
+            while ( (retPos < path.length()) && (path[retPos] == G_DIR_SEPARATOR) ) {
+                retPos++;
+            }
+            if ( (retPos + 1) < path.length() ) {
+                result = path.substr(retPos);
+            }
+        }
 
-	if ((memcmp(path, base, base_len) == 0)
-	    && (path[base_len] == G_DIR_SEPARATOR))
-	{
-		char const *ret = path + base_len + 1;
-		while (*ret == G_DIR_SEPARATOR) {
-			++ret;
-		}
-		if (*ret != '\0') {
-			return ret;
-		}
-	}
-
-	return path;
+    }
+    if ( result.empty() ) {
+        result = path;
+    }
+    return result;
 }
 
-char const *
-sp_extension_from_path(char const *const path)
+char const *sp_extension_from_path(char const *const path)
 {
 	if (path == NULL) {
 		return NULL;
@@ -77,25 +64,7 @@ static char const dots[] = {'.', '.', G_DIR_SEPARATOR, '\0'};
 static char const *const parent = dots;
 static char const *const current = dots + 1;
 
-/**
- * \brief   Convert a relative path name into absolute. If path is already absolute, does nothing except copying path to result.
- *
- *	\param path	relative path
- *	\param base	base directory (must be absolute path)
- *	\param result	result buffer
- *	\param size	size of result buffer
- *	\return		!= NULL: absolute path
- *			== NULL: error
-
-\comment
- based on functions by Shigio Yamaguchi.
- FIXME:TODO: force it to also do path normalization of the entire resulting path,
- i.e. get rid of any .. and . in any place, even if 'path' is already absolute
- (now it returns it unchanged in this case)
-
- */
-char *
-inkscape_rel2abs (const char *path, const char *base, char *result, const size_t size)
+char *inkscape_rel2abs(const char *path, const char *base, char *result, const size_t size)
 {
   const char *pp, *bp;
   /* endp points the last position which is safe in the result buffer. */
@@ -181,79 +150,77 @@ erange:
   return (NULL);
 }
 
-char *
-inkscape_abs2rel (const char *path, const char *base, char *result, const size_t size)
+char *inkscape_abs2rel(const char *path, const char *base, char *result, const size_t size)
 {
-  const char *pp, *bp, *branch;
-  /* endp points the last position which is safe in the result buffer. */
-  const char *endp = result + size - 1;
-  char *rp;
+    const char *pp, *bp, *branch;
+    // endp points the last position which is safe in the result buffer.
+    const char *endp = result + size - 1;
+    char *rp;
 
-  if (*path != G_DIR_SEPARATOR)
+    if (*path != G_DIR_SEPARATOR)
     {
-      if (strlen (path) >= size)
-	goto erange;
-      strcpy (result, path);
-      goto finish;
+        if (strlen (path) >= size)
+            goto erange;
+        strcpy (result, path);
+        goto finish;
     }
-  else if (*base != G_DIR_SEPARATOR || !size)
+    else if (*base != G_DIR_SEPARATOR || !size)
     {
-      errno = EINVAL;
-      return (NULL);
+        errno = EINVAL;
+        return (NULL);
     }
-  else if (size == 1)
-    goto erange;
-  /* seek to branched point. */
-  branch = path;
-  for (pp = path, bp = base; *pp && *bp && *pp == *bp; pp++, bp++)
-    if (*pp == G_DIR_SEPARATOR)
-      branch = pp;
-  if (((*pp == 0) || ((*pp == G_DIR_SEPARATOR) && (*(pp + 1) == 0))) &&
-      ((*bp == 0) || ((*bp == G_DIR_SEPARATOR) && (*(bp + 1) == 0))))
+    else if (size == 1)
+        goto erange;
+    /* seek to branched point. */
+    branch = path;
+    for (pp = path, bp = base; *pp && *bp && *pp == *bp; pp++, bp++)
+        if (*pp == G_DIR_SEPARATOR)
+            branch = pp;
+    if (((*pp == 0) || ((*pp == G_DIR_SEPARATOR) && (*(pp + 1) == 0))) &&
+        ((*bp == 0) || ((*bp == G_DIR_SEPARATOR) && (*(bp + 1) == 0))))
     {
-      rp = result;
-      *rp++ = '.';
-      if (*pp == G_DIR_SEPARATOR || *(pp - 1) == G_DIR_SEPARATOR)
-	*rp++ = G_DIR_SEPARATOR;
-      if (rp > endp)
-	goto erange;
-      *rp = 0;
-      goto finish;
+        rp = result;
+        *rp++ = '.';
+        if (*pp == G_DIR_SEPARATOR || *(pp - 1) == G_DIR_SEPARATOR)
+            *rp++ = G_DIR_SEPARATOR;
+        if (rp > endp)
+            goto erange;
+        *rp = 0;
+        goto finish;
     }
-  if (((*pp == 0) && (*bp == G_DIR_SEPARATOR)) || ((*pp == G_DIR_SEPARATOR) && (*bp == 0)))
-    branch = pp;
-  /* up to root. */
-  rp = result;
-  for (bp = base + (branch - path); *bp; bp++)
-    if (*bp == G_DIR_SEPARATOR && *(bp + 1) != 0)
-      {
-	if (rp + 3 > endp)
-	  goto erange;
-	*rp++ = '.';
-	*rp++ = '.';
-	*rp++ = G_DIR_SEPARATOR;
-      }
-  if (rp > endp)
-    goto erange;
-  *rp = 0;
-  /* down to leaf. */
-  if (*branch)
+    if (((*pp == 0) && (*bp == G_DIR_SEPARATOR)) || ((*pp == G_DIR_SEPARATOR) && (*bp == 0)))
+        branch = pp;
+    /* up to root. */
+    rp = result;
+    for (bp = base + (branch - path); *bp; bp++)
+        if (*bp == G_DIR_SEPARATOR && *(bp + 1) != 0)
+        {
+            if (rp + 3 > endp)
+                goto erange;
+            *rp++ = '.';
+            *rp++ = '.';
+            *rp++ = G_DIR_SEPARATOR;
+        }
+    if (rp > endp)
+        goto erange;
+    *rp = 0;
+    /* down to leaf. */
+    if (*branch)
     {
-      if (rp + strlen (branch + 1) > endp)
-	goto erange;
-      strcpy (rp, branch + 1);
+        if (rp + strlen (branch + 1) > endp)
+            goto erange;
+        strcpy (rp, branch + 1);
     }
-  else
-    *--rp = 0;
+    else
+        *--rp = 0;
 finish:
-  return result;
+    return result;
 erange:
-  errno = ERANGE;
-  return (NULL);
+    errno = ERANGE;
+    return (NULL);
 }
 
-gchar *
-prepend_current_dir_if_relative(gchar const *uri)
+gchar *prepend_current_dir_if_relative(gchar const *uri)
 {
 	if (!uri) {
 		return NULL;
@@ -278,4 +245,13 @@ prepend_current_dir_if_relative(gchar const *uri)
 	return ret;
 }
 
-
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vi: set autoindent shiftwidth=4 tabstop=8 filetype=cpp expandtab softtabstop=4 encoding=utf-8 textwidth=99 :

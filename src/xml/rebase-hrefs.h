@@ -9,17 +9,36 @@ struct SPDocument;
 namespace Inkscape {
 namespace XML {
 
-gchar *calc_abs_doc_base(gchar const *doc_base);
+std::string calc_abs_doc_base(gchar const *doc_base);
 
+/**
+ * Change relative hrefs in doc to be relative to \a new_base instead of doc.base.
+ *
+ * (NULL doc base or new_base is interpreted as current working directory.)
+ *
+ * @param spns True if doc should contain sodipodi:absref attributes.
+ */
 void rebase_hrefs(SPDocument *doc, gchar const *new_base, bool spns);
 
+/**
+ * Change relative xlink:href attributes to be relative to \a new_abs_base instead of old_abs_base.
+ *
+ * Note that old_abs_base and new_abs_base must each be non-NULL, absolute directory paths.
+ */
 Inkscape::Util::List<AttributeRecord const> rebase_href_attrs(
     gchar const *old_abs_base,
     gchar const *new_abs_base,
     Inkscape::Util::List<AttributeRecord const> attributes);
 
-}
-}
+
+// /**
+//  * .
+//  * @return a non-empty replacement href if needed, empty otherwise.
+//  */
+// std::string rebase_href_attrs( std::string const &oldAbsBase, std::string const &newAbsBase, gchar const *href, gchar const *absref = 0 );
+
+} // namespace XML
+} // namespace Inkscape
 
 
 #endif /* !REBASE_HREFS_H_SEEN */

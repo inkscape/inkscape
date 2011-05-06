@@ -137,6 +137,10 @@ struct EditWidgetInterface
     /// Message widget will get no content
     virtual void setMessage (Inkscape::MessageType type, gchar const* msg) = 0;
 
+
+    /** Show an info dialog with the given message */
+    virtual bool showInfoDialog( Glib::ustring const &message ) = 0;
+
     /// Open yes/no dialog with warning text and confirmation question.
     virtual bool warnDialog (gchar*) = 0;
 

@@ -123,6 +123,7 @@ ink_common_sources +=	\
 	removeoverlap.cpp removeoverlap.h				\
 	rdf.cpp rdf.h							\
 	rect-context.cpp rect-context.h					\
+	resource-manager.cpp resource-manager.h				\
 	require-config.h						\
 	round.h								\
 	rubberband.cpp rubberband.h					\

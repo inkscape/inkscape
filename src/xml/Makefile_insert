@@ -47,5 +47,6 @@ ink_common_sources +=	\
 # ### CxxTest stuff ####
 # ######################
 CXXTEST_TESTSUITES += \
+	$(srcdir)/xml/rebase-hrefs-test.h	\
 	$(srcdir)/xml/repr-action-test.h	\
 	$(srcdir)/xml/quote-test.h
