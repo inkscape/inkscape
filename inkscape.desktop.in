@@ -12,3 +12,9 @@ TryExec=inkscape
 Terminal=false
 StartupNotify=true
 Icon=inkscape
+X-Ayatana-Desktop-Shortcuts=Drawing
+
+[Drawing Shortcut Group]
+_Name=New Drawing
+Exec=inkscape
+TargetEnvironment=Unity
