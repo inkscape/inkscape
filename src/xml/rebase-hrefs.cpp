@@ -252,8 +252,8 @@ void Inkscape::XML::rebase_hrefs(SPDocument *const doc, gchar const *const new_b
 #ifdef WIN32
         /* Windows relative path needs their native separators before we
          * compare it to native baserefs. */
-        if (!g_path_is_absolute(href)) {
-            g_strdelimit(href, "/", '\\');
+        if ( !Glib::path_is_absolute(href) ) {
+            std::replace(href.begin(), href.end(), '/', '\\');
         }
 #endif
 
@@ -281,10 +281,9 @@ void Inkscape::XML::rebase_hrefs(SPDocument *const doc, gchar const *const new_b
 #ifdef WIN32
                 /* Native Windows path separators are replaced with / so that the href
                  * also works on Gnu/Linux and OSX */
-                ir->setAttribute("xlink:href", g_strdelimit(new_href.c_str(), "\\", '/'));
-#else
-                ir->setAttribute("xlink:href", new_href.c_str());
+                std::replace(href.begin(), href.end(), '\\', '/');
 #endif
+                ir->setAttribute("xlink:href", new_href.c_str());
             } else {
                 ir->setAttribute("xlink:href", g_filename_to_uri(new_href.c_str(), NULL, NULL));
             }
