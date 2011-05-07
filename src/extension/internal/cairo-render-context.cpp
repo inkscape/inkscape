@@ -1361,7 +1361,7 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
             addClipPath(pathv, &style->fill_rule);
         } else {
             setPathVector(pathv);
-            if (style->fill_rule.value == SP_WIND_RULE_EVENODD) {
+            if (style->fill_rule.computed == SP_WIND_RULE_EVENODD) {
                 cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_EVEN_ODD);
             } else {
                 cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_WINDING);
@@ -1391,7 +1391,7 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
         _setFillStyle(style, pbox);
         setPathVector(pathv);
 
-        if (style->fill_rule.value == SP_WIND_RULE_EVENODD) {
+        if (style->fill_rule.computed == SP_WIND_RULE_EVENODD) {
             cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_EVEN_ODD);
         } else {
             cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_WINDING);
@@ -1606,7 +1606,7 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Affine const *font_ma
 
     if (_render_mode == RENDER_MODE_CLIP) {
         if (_clip_mode == CLIP_MODE_MASK) {
-            if (style->fill_rule.value == SP_WIND_RULE_EVENODD) {
+            if (style->fill_rule.computed == SP_WIND_RULE_EVENODD) {
                 cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_EVEN_ODD);
             } else {
                 cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_WINDING);
