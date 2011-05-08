@@ -209,7 +209,7 @@ protected:
 public:
     Coord factor() const { return f; }
     void setFactor(Coord nf) { f = nf; }
-    S &operator*=(S const &s) { f += s.f; return *static_cast<S const*>(this); }
+    S &operator*=(S const &s) { f += s.f; return static_cast<S &>(*this); }
     bool operator==(S const &s) const { return f == s.f; }
     S inverse() const { return S(-f); }
     static S identity() { return S(0); }
