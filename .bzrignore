@@ -148,3 +148,4 @@ gc.log
 share/palettes/palettes.h
 ltmain.sh@
 backup.bzr
+mkinstalldirs
