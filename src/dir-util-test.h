@@ -17,17 +17,17 @@ public:
             {"/foo/bar/baz", "/foo/", "bar/baz"},
             {"/foo/bar/baz", "/", "foo/bar/baz"},
             {"/foo/bar/baz", "/foo/qux", "/foo/bar/baz"},
-            {"/foo", NULL, "/foo"}
         };
 
         for ( size_t i = 0; i < G_N_ELEMENTS(cases); i++ )
         {
-            char const* result = sp_relative_path_from_path( cases[i][0], cases[i][1] );
-            TS_ASSERT( result );
-            TS_ASSERT( cases[i][2] );
-            if ( result && cases[i][2] )
-            {
-                TS_ASSERT_EQUALS( std::string(result), std::string(cases[i][2]) );
+            if ( cases[i][0] && cases[i][1] ) { // std::string can't use null.
+                std::string  result = sp_relative_path_from_path( cases[i][0], cases[i][1] );
+                TS_ASSERT( !result.empty() );
+                if ( !result.empty() )
+                {
+                    TS_ASSERT_EQUALS( result, std::string(cases[i][2]) );
+                }
             }
         }
     }
