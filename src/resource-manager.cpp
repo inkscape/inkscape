@@ -25,6 +25,76 @@
 
 namespace Inkscape {
 
+std::vector<std::string> splitPath( std::string const &path )
+{
+    std::vector<std::string> parts;
+
+    std::string prior;
+    std::string tmp = path;
+    while ( !tmp.empty() && (tmp != prior) ) {
+        prior = tmp;
+
+        parts.push_back( Glib::path_get_basename(tmp) );
+        tmp = Glib::path_get_dirname(tmp);
+    }
+    if ( !parts.empty() ) {
+        std::reverse(parts.begin(), parts.end());
+    }
+
+    return parts;
+}
+
+std::string convertPathToRelative( std::string const &path, std::string const &docbase )
+{
+    std::string result = path;
+
+    if ( !path.empty() && Glib::path_is_absolute(path) ) {
+        // Whack the parts into pieces
+
+        std::vector<std::string> parts = splitPath(path);
+        std::vector<std::string> baseParts = splitPath(docbase);
+
+        // TODO debug g_message("+++++++++++++++++++++++++");
+        for ( std::vector<std::string>::iterator it = parts.begin(); it != parts.end(); ++it ) {
+            // TODO debug g_message("    [%s]", it->c_str());
+        }
+        // TODO debug g_message(" - - - - - - - - - - - - - - - ");
+        for ( std::vector<std::string>::iterator it = baseParts.begin(); it != baseParts.end(); ++it ) {
+            // TODO debug g_message("    [%s]", it->c_str());
+        }
+        // TODO debug g_message("+++++++++++++++++++++++++");
+
+        if ( !parts.empty() && !baseParts.empty() && (parts[0] == baseParts[0]) ) {
+            // Both paths have the same root. We can proceed.
+            while ( !parts.empty() && !baseParts.empty() && (parts[0] == baseParts[0]) ) {
+                parts.erase( parts.begin() );
+                baseParts.erase( baseParts.begin() );
+            }
+
+            // TODO debug g_message("+++++++++++++++++++++++++");
+            for ( std::vector<std::string>::iterator it = parts.begin(); it != parts.end(); ++it ) {
+                // TODO debug g_message("    [%s]", it->c_str());
+            }
+            // TODO debug g_message(" - - - - - - - - - - - - - - - ");
+            for ( std::vector<std::string>::iterator it = baseParts.begin(); it != baseParts.end(); ++it ) {
+                // TODO debug g_message("    [%s]", it->c_str());
+            }
+            // TODO debug g_message("+++++++++++++++++++++++++");
+
+            if ( !parts.empty() ) {
+                result.clear();
+
+                for ( size_t i = 0; i < baseParts.size(); ++i ) {
+                    parts.insert(parts.begin(), "..");
+                }
+                result = Glib::build_filename( parts );
+                // TODO debug g_message("----> [%s]", result.c_str());
+            }
+        }
+    }
+
+    return result;
+}
 
 
 class ResourceManagerImpl : public ResourceManager {
@@ -202,6 +272,11 @@ std::map<Glib::ustring, Glib::ustring> ResourceManagerImpl::locateLinks(Glib::us
                 }
 
                 if ( exists ) {
+                    if ( Glib::path_is_absolute( remainder ) ) {
+                        // TODO debug g_message("Need to convert to relative if possible [%s]", remainder.c_str());
+                        remainder = convertPathToRelative( remainder, docbase );
+                    }
+
                     bool isAbsolute = Glib::path_is_absolute( remainder );
                     Glib::ustring replacement = isAbsolute ? Glib::filename_to_uri( remainder ) : Glib::filename_to_utf8( remainder );
                     result[*it] = replacement;
