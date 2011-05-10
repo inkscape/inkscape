@@ -8,11 +8,13 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 #include <glibmm/i18n.h>
 #include <glibmm/convert.h>
 #include <glibmm/fileutils.h>
 #include <glibmm/miscutils.h>
 #include <glibmm/uriutils.h>
+#include <gtkmm/recentmanager.h>
 
 #include "resource-manager.h"
 
@@ -132,6 +134,25 @@ std::map<Glib::ustring, Glib::ustring> ResourceManagerImpl::locateLinks(Glib::us
 {
     std::map<Glib::ustring, Glib::ustring> result;
 
+
+    // Note: we use a vector because we want them to stay in order:
+    std::vector<std::string> priorLocations;
+
+    Glib::RefPtr<Gtk::RecentManager> recentMgr = Gtk::RecentManager::get_default();
+    std::vector< Glib::RefPtr<Gtk::RecentInfo> > recentItems = recentMgr->get_items();
+    for ( std::vector< Glib::RefPtr<Gtk::RecentInfo> >::iterator it = recentItems.begin(); it != recentItems.end(); ++it ) {
+        Glib::ustring uri = (*it)->get_uri();
+        std::string scheme = Glib::uri_parse_scheme(uri);
+        if ( scheme == "file" ) {
+            std::string path = Glib::filename_from_uri(uri);
+            path = Glib::path_get_dirname(path);
+            if ( std::find(priorLocations.begin(), priorLocations.end(), path) == priorLocations.end() ) {
+                // TODO debug g_message("               ==>[%s]", path.c_str());
+                priorLocations.push_back(path);
+            }
+        }
+    }
+
     // At the moment we expect this list to contain file:// references, or simple relative or absolute paths.
     for ( std::vector<Glib::ustring>::const_iterator it = brokenLinks.begin(); it != brokenLinks.end(); ++it ) {
         // TODO debug g_message("========{%s}", it->c_str());
@@ -139,6 +160,7 @@ std::map<Glib::ustring, Glib::ustring> ResourceManagerImpl::locateLinks(Glib::us
         std::string uri;
         if ( extractFilepath( *it, uri ) ) {
             // We were able to get some path. Check it
+            std::string origPath = uri;
 
             if ( !Glib::path_is_absolute(uri) ) {
                 uri = Glib::build_filename(docbase, uri);
@@ -165,10 +187,24 @@ std::map<Glib::ustring, Glib::ustring> ResourceManagerImpl::locateLinks(Glib::us
                     exists = Glib::file_test(rebuild, Glib::FILE_TEST_EXISTS);
 
                     // TODO debug g_message("                                    [%s]  [%s]%s", tmp.c_str(), remainder.c_str(), exists ? "   XXXX" : "");
-                    if ( exists ) {
-                        Glib::ustring replacement = Glib::filename_to_utf8( remainder );
-                        result[*it] = replacement;
+                }
+
+                if ( !exists ) {
+                    // TODO debug g_message("Expanding the search...");
+
+                    // Check if the MRU bases point us to it.
+                    if ( !Glib::path_is_absolute(origPath) ) {
+                        for ( std::vector<std::string>::iterator it = priorLocations.begin(); !exists && (it != priorLocations.end()); ++it ) {
+                            remainder = Glib::build_filename( *it, origPath );
+                            exists = Glib::file_test( remainder, Glib::FILE_TEST_EXISTS );
+                        }
                     }
+                }
+
+                if ( exists ) {
+                    bool isAbsolute = Glib::path_is_absolute( remainder );
+                    Glib::ustring replacement = isAbsolute ? Glib::filename_to_uri( remainder ) : Glib::filename_to_utf8( remainder );
+                    result[*it] = replacement;
                 }
             }
         }
@@ -186,7 +222,7 @@ bool ResourceManagerImpl::fixupBrokenLinks(SPDocument *doc)
 
         std::vector<Glib::ustring> brokenHrefs = findBrokenLinks(doc);
         if ( !brokenHrefs.empty() ) {
-            // TODO debug g_message("    FOUND SOME LINKS %d", brokenHrefs.size());
+            // TODO debug g_message("    FOUND SOME LINKS %d", static_cast<int>(brokenHrefs.size()));
             for ( std::vector<Glib::ustring>::iterator it = brokenHrefs.begin(); it != brokenHrefs.end(); ++it ) {
                 // TODO debug g_message("        [%s]", it->c_str());
             }
