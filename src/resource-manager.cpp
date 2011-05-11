@@ -39,6 +39,9 @@ std::vector<std::string> splitPath( std::string const &path )
     }
     if ( !parts.empty() ) {
         std::reverse(parts.begin(), parts.end());
+        if ( (parts[0] == ".") && (path[0] != '.') ) {
+            parts.erase(parts.begin());
+        }
     }
 
     return parts;
@@ -123,6 +126,8 @@ public:
     std::map<Glib::ustring, Glib::ustring> locateLinks(Glib::ustring const & docbase, std::vector<Glib::ustring> const & brokenLinks);
 
     bool extractFilepath( Glib::ustring const &href, std::string &uri );
+
+    bool searchUpwards( std::string const &base, std::string const &subpath, std::string &dest );
 
 protected:
 };
@@ -239,25 +244,8 @@ std::map<Glib::ustring, Glib::ustring> ResourceManagerImpl::locateLinks(Glib::us
 
             if ( !Glib::file_test(uri, Glib::FILE_TEST_EXISTS) ) {
                 // TODO debug g_message("                                  DOES NOT EXIST.");
-                std::string tmp = uri;
-                std::string prior;
                 std::string remainder;
-                bool exists = false;
-                while ( (tmp != prior) && !exists) {
-                    prior = tmp;
-                    std::string basename = Glib::path_get_basename(tmp);
-                    tmp = Glib::path_get_dirname(tmp);
-                    if ( remainder.empty() ) {
-                        remainder = basename;
-                    } else {
-                        remainder = Glib::build_filename(basename, remainder);
-                    }
-
-                    std::string rebuild = Glib::build_filename(docbase, remainder);
-                    exists = Glib::file_test(rebuild, Glib::FILE_TEST_EXISTS);
-
-                    // TODO debug g_message("                                    [%s]  [%s]%s", tmp.c_str(), remainder.c_str(), exists ? "   XXXX" : "");
-                }
+                bool exists = searchUpwards( docbase, origPath, remainder );
 
                 if ( !exists ) {
                     // TODO debug g_message("Expanding the search...");
@@ -265,8 +253,7 @@ std::map<Glib::ustring, Glib::ustring> ResourceManagerImpl::locateLinks(Glib::us
                     // Check if the MRU bases point us to it.
                     if ( !Glib::path_is_absolute(origPath) ) {
                         for ( std::vector<std::string>::iterator it = priorLocations.begin(); !exists && (it != priorLocations.end()); ++it ) {
-                            remainder = Glib::build_filename( *it, origPath );
-                            exists = Glib::file_test( remainder, Glib::FILE_TEST_EXISTS );
+                            exists = searchUpwards( *it, origPath, remainder );
                         }
                     }
                 }
@@ -348,6 +335,35 @@ bool ResourceManagerImpl::fixupBrokenLinks(SPDocument *doc)
 }
 
 
+bool ResourceManagerImpl::searchUpwards( std::string const &base, std::string const &subpath, std::string &dest )
+{
+    bool exists = false;
+    // TODO debug g_message("............");
+
+    std::vector<std::string> parts = splitPath(subpath);
+    std::vector<std::string> baseParts = splitPath(base);
+
+    while ( !exists && !baseParts.empty() ) {
+        std::vector<std::string> current;
+        current.insert(current.begin(), parts.begin(), parts.end());
+        // TODO debug g_message("         ---{%s}", Glib::build_filename( baseParts ).c_str());
+        while ( !exists && !current.empty() ) {
+            std::vector<std::string> combined;
+            combined.insert( combined.end(), baseParts.begin(), baseParts.end() );
+            combined.insert( combined.end(), current.begin(), current.end() );
+            std::string filepath = Glib::build_filename( combined );
+            exists = Glib::file_test(filepath, Glib::FILE_TEST_EXISTS);
+            // TODO debug g_message("            ...[%s] %s", filepath.c_str(), (exists ? "XXX" : ""));
+            if ( exists ) {
+                dest = filepath;
+            }
+            current.erase( current.begin() );
+        }
+        baseParts.pop_back();
+    }
+
+    return exists;
+}
 
 
 static ResourceManagerImpl* theInstance = 0;
