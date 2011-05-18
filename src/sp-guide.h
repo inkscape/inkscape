@@ -31,6 +31,7 @@ struct SPCanvasGroup;
 /* Represents the constraint on p that dot(g.direction, p) == g.position. */
 class SPGuide : public SPObject {
 public:
+    char* label;
     Geom::Point normal_to_line;
     Geom::Point point_on_line;
 
@@ -62,6 +63,7 @@ void sp_guide_create_guides_around_page(SPDesktop *dt);
 
 void sp_guide_moveto(SPGuide &guide, Geom::Point const point_on_line, bool const commit);
 void sp_guide_set_normal(SPGuide &guide, Geom::Point const normal_to_line, bool const commit);
+void sp_guide_set_label(SPGuide &guide, char* const label, bool const commit);
 void sp_guide_remove(SPGuide *guide);
 
 char *sp_guide_description(SPGuide const *guide, const bool verbose = true);

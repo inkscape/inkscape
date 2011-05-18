@@ -160,6 +160,7 @@ static void sp_guide_build(SPObject *object, SPDocument *document, Inkscape::XML
         (* ((SPObjectClass *) (parent_class))->build)(object, document, repr);
     }
 
+    object->readAttr( "inkscape:label" );
     object->readAttr( "orientation" );
     object->readAttr( "position" );
 }
@@ -183,6 +184,15 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
     SPGuide *guide = SP_GUIDE(object);
 
     switch (key) {
+    case SP_ATTR_INKSCAPE_LABEL:
+        if (value) {
+            guide->label = g_strdup(value);
+        } else {
+            guide->label = NULL;
+        }
+
+        sp_guide_set_label(*guide, guide->label, false);
+        break;
     case SP_ATTR_ORIENTATION:
         {
             if (value && !strcmp(value, "horizontal")) {
@@ -291,7 +301,7 @@ sp_guide_create_guides_around_page(SPDesktop *dt) {
 
 void SPGuide::showSPGuide(SPCanvasGroup *group, GCallback handler)
 {
-    SPCanvasItem *item = sp_guideline_new(group, point_on_line, normal_to_line);
+    SPCanvasItem *item = sp_guideline_new(group, label, point_on_line, normal_to_line);
     sp_guideline_set_color(SP_GUIDELINE(item), color);
 
     g_signal_connect(G_OBJECT(item), "event", G_CALLBACK(handler), this);
@@ -400,6 +410,19 @@ void sp_guide_set_normal(SPGuide &guide, Geom::Point const normal_to_line, bool 
         sp_item_notify_moveto(*att.item, guide, att.snappoint_ix, position, commit);
     }
 */
+}
+
+void sp_guide_set_label(SPGuide &guide, char* label, bool const commit)
+{
+    g_assert(SP_IS_GUIDE(&guide));
+    if (guide.views){
+        sp_guideline_set_label(SP_GUIDELINE(guide.views->data), label);
+    }
+
+    if (commit){
+        //XML Tree being used directly while it shouldn't be
+        guide.getRepr()->setAttribute("label", label);
+    }
 }
 
 /**
