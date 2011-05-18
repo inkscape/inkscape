@@ -77,9 +77,7 @@ private:
     Gtk::Entry *entry;
     Gtk::Label *label;
     Gtk::Button *insertBtn;
-#if GLIB_CHECK_VERSION(2,14,0)
     Gtk::ComboBoxText *scriptCombo;
-#endif //GLIB_CHECK_VERSION(2,14,0)
     Gtk::ComboBoxText *rangeCombo;
     SPFontSelector *fsel;
     SPDesktop *targetDesktop;
