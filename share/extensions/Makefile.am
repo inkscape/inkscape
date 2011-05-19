@@ -100,6 +100,7 @@ extensions = \
 	markers_strokepaint.py \
 	measure.py \
 	motion.py \
+	new_glyph_layer.py \
 	outline2svg.pl	\
 	param_curves.py \
 	pathalongpath.py\
@@ -269,6 +270,7 @@ modules = \
 	markers_strokepaint.inx \
 	measure.inx \
 	motion.inx \
+	new_glyph_layer.inx \
 	outline2svg.inx \
 	param_curves.inx \
 	pathalongpath.inx\
