@@ -48,6 +48,7 @@ GlyphsPanel &GlyphsPanel::getInstance()
 }
 
 
+#if GLIB_CHECK_VERSION(2,14,0)
 static std::map<GUnicodeScript, Glib::ustring> & getScriptToName()
 {
     static bool init = false;
@@ -122,6 +123,8 @@ static std::map<GUnicodeScript, Glib::ustring> & getScriptToName()
         mappings[G_UNICODE_SCRIPT_PHOENICIAN]           = _("Phoenician");
         mappings[G_UNICODE_SCRIPT_PHAGS_PA]             = _("Phags-pa");
         mappings[G_UNICODE_SCRIPT_NKO]                  = _("N'Ko");
+
+#if GLIB_CHECK_VERSION(2,14,0)
         mappings[G_UNICODE_SCRIPT_KAYAH_LI]             = _("Kayah Li");
         mappings[G_UNICODE_SCRIPT_LEPCHA]               = _("Lepcha");
         mappings[G_UNICODE_SCRIPT_REJANG]               = _("Rejang");
@@ -133,9 +136,11 @@ static std::map<GUnicodeScript, Glib::ustring> & getScriptToName()
         mappings[G_UNICODE_SCRIPT_CARIAN]               = _("Carian");
         mappings[G_UNICODE_SCRIPT_LYCIAN]               = _("Lycian");
         mappings[G_UNICODE_SCRIPT_LYDIAN]               = _("Lydian");
+#endif // GLIB_CHECK_VERSION(2,14,0)
     }
     return mappings;
 }
+#endif // GLIB_CHECK_VERSION(2,14,0)
 
 typedef std::pair<gunichar, gunichar> Range;
 typedef std::pair<Range, Glib::ustring> NamedRange;
@@ -332,7 +337,9 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     entry(0),
     label(0),
     insertBtn(0),
+#if GLIB_CHECK_VERSION(2,14,0)
     scriptCombo(0),
+#endif // GLIB_CHECK_VERSION(2,14,0)
     fsel(0),
     targetDesktop(0),
     deskTrack(),
@@ -359,6 +366,7 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
 
 // -------------------------------
 
+#if GLIB_CHECK_VERSION(2,14,0)
     {
         Gtk::Label *label = new Gtk::Label(_("Script: "));
         table->attach( *Gtk::manage(label),
@@ -383,6 +391,7 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     }
 
     row++;
+#endif // GLIB_CHECK_VERSION(2,14,0)
 
 // -------------------------------
 
@@ -455,7 +464,10 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     insertBtn = new Gtk::Button(_("Append"));
     conn = insertBtn->signal_clicked().connect(sigc::mem_fun(*this, &GlyphsPanel::insertText));
     instanceConns.push_back(conn);
+#if GTK_CHECK_VERSION(2,18,0)
+    //gtkmm 2.18
     insertBtn->set_can_default();
+#endif
     insertBtn->set_sensitive(false);
 
     box->pack_end(*Gtk::manage(insertBtn), Gtk::PACK_SHRINK);
@@ -595,11 +607,13 @@ void GlyphsPanel::glyphSelectionChanged()
 
 
         Glib::ustring scriptName;
+#if GLIB_CHECK_VERSION(2,14,0)
         GUnicodeScript script = g_unichar_get_script(ch);
         std::map<GUnicodeScript, Glib::ustring> mappings = getScriptToName();
         if (mappings.find(script) != mappings.end()) {
             scriptName = mappings[script];
         }
+#endif
         gchar * tmp = g_strdup_printf("U+%04X %s", ch, scriptName.c_str());
         label->set_text(tmp);
     }
@@ -666,6 +680,7 @@ void GlyphsPanel::rebuild()
     if (font) {
         //double  sp_font_selector_get_size (SPFontSelector *fsel);
 
+#if GLIB_CHECK_VERSION(2,14,0)
         GUnicodeScript script = G_UNICODE_SCRIPT_INVALID_CODE;
         Glib::ustring scriptName = scriptCombo->get_active_text();
         std::map<GUnicodeScript, Glib::ustring> items = getScriptToName();
@@ -675,6 +690,7 @@ void GlyphsPanel::rebuild()
                 break;
             }
         }
+#endif // GLIB_CHECK_VERSION(2,14,0)
 
         // Disconnect the model while we update it. Simple work-around for 5x+ performance boost.
         Glib::RefPtr<Gtk::ListStore> tmp = Gtk::ListStore::create(*getColumns());
@@ -691,9 +707,13 @@ void GlyphsPanel::rebuild()
         for (gunichar ch = lower; ch <= upper; ch++) {
             int glyphId = font->MapUnicodeChar(ch);
             if (glyphId > 0) {
+#if GLIB_CHECK_VERSION(2,14,0)
                 if ((script == G_UNICODE_SCRIPT_INVALID_CODE) || (script == g_unichar_get_script(ch))) {
                     present.push_back(ch);
                 }
+#else
+                present.push_back(ch);
+#endif
             }
         }
 

@@ -47,8 +47,10 @@
 #include <gtk/gtktoolitem.h>
 #include <gtk/gtk.h>
 #include <gtk/gtkhscale.h>
+#if GTK_CHECK_VERSION(2,12,0)
 #include <gtk/gtkscalebutton.h>
 #include <gtk/gtkstock.h>
+#endif /* GTK_CHECK_VERSION(2,12,0) */
 #include <gtk/gtkhbox.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkmisc.h>
@@ -94,6 +96,7 @@ enum {
     APPEARANCE_MINIMAL, /* no label, just choices in a drop-down menu */
 };
 
+#if GTK_CHECK_VERSION(2,12,0)
 /* TODO need to have appropriate icons setup for these: */
 static const gchar *floogles[] = {
     GTK_STOCK_REMOVE,
@@ -102,6 +105,7 @@ static const gchar *floogles[] = {
     GTK_STOCK_ABOUT,
     GTK_STOCK_GO_UP,
     0};
+#endif /* GTK_CHECK_VERSION(2,12,0) */
 
 typedef struct _EgeAdjustmentDescr EgeAdjustmentDescr;
 
@@ -842,10 +846,12 @@ static GtkWidget* create_tool_item( GtkAction* action )
             gtk_scale_set_digits( GTK_SCALE(spinbutton), 0 );
             g_signal_connect( G_OBJECT(spinbutton), "format-value", G_CALLBACK(slider_format_falue), leakyForNow );
 
+#if GTK_CHECK_VERSION(2,12,0)
         } else if ( act->private_data->appearanceMode == APPEARANCE_MINIMAL ) {
             spinbutton = gtk_scale_button_new( GTK_ICON_SIZE_MENU, 0, 100, 2, 0 );
             gtk_scale_button_set_adjustment( GTK_SCALE_BUTTON(spinbutton), act->private_data->adj );
             gtk_scale_button_set_icons( GTK_SCALE_BUTTON(spinbutton), floogles );
+#endif /* GTK_CHECK_VERSION(2,12,0) */
         } else {
             if ( gFactoryCb ) {
                 spinbutton = gFactoryCb( act->private_data->adj, act->private_data->climbRate, act->private_data->digits );
@@ -907,8 +913,10 @@ static GtkWidget* create_tool_item( GtkAction* action )
         g_signal_connect_swapped( G_OBJECT(spinbutton), "event", G_CALLBACK(event_cb), action );
         if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
             /* */
+#if GTK_CHECK_VERSION(2,12,0)
         } else if ( act->private_data->appearanceMode == APPEARANCE_MINIMAL ) {
             /* */
+#endif /* GTK_CHECK_VERSION(2,12,0) */
         } else {
             gtk_entry_set_width_chars( GTK_ENTRY(spinbutton), act->private_data->digits + 3 );
         }
@@ -954,8 +962,10 @@ gboolean focus_in_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
         EgeAdjustmentAction* action = EGE_ADJUSTMENT_ACTION( data );
         if ( GTK_IS_SPIN_BUTTON(widget) ) {
             action->private_data->lastVal = gtk_spin_button_get_value( GTK_SPIN_BUTTON(widget) );
+#if GTK_CHECK_VERSION(2,12,0)
         } else if ( GTK_IS_SCALE_BUTTON(widget) ) {
             action->private_data->lastVal = gtk_scale_button_get_value( GTK_SCALE_BUTTON(widget) );
+#endif /* GTK_CHECK_VERSION(2,12,0) */
         } else if (GTK_IS_RANGE(widget) ) {
             action->private_data->lastVal = gtk_range_get_value( GTK_RANGE(widget) );
         }

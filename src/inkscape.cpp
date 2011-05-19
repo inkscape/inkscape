@@ -442,7 +442,11 @@ void inkscape_autosave_init()
         // Turn on autosave
         guint32 timeout = prefs->getInt("/options/autosave/interval", 10) * 60;
         // g_debug("options.autosave.interval = %d", prefs->getInt("/options/autosave/interval", 10));
+#if GLIB_CHECK_VERSION(2,14,0)
         autosave_timeout_id = g_timeout_add_seconds(timeout, inkscape_autosave, NULL);
+#else
+        autosave_timeout_id = g_timeout_add(timeout * 1000, inkscape_autosave, NULL);
+#endif
     }
 }
 

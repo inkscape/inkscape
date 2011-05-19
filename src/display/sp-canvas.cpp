@@ -47,9 +47,12 @@
 
 using Inkscape::Debug::GdkEventLatencyTracker;
 
+// GTK_CHECK_VERSION returns false on failure
+#define HAS_GDK_EVENT_REQUEST_MOTIONS GTK_CHECK_VERSION(2, 12, 0)
+
 // gtk_check_version returns non-NULL on failure
 static bool const HAS_BROKEN_MOTION_HINTS =
-  true || gtk_check_version(2, 12, 0) != NULL;
+  true || gtk_check_version(2, 12, 0) != NULL || !HAS_GDK_EVENT_REQUEST_MOTIONS;
 
 // Define this to visualize the regions to be redrawn
 //#define DEBUG_REDRAW 1;
@@ -1596,7 +1599,9 @@ sp_canvas_scroll (GtkWidget *widget, GdkEventScroll *event)
 
 static inline void request_motions(GdkWindow *w, GdkEventMotion *event) {
     gdk_window_get_pointer(w, NULL, NULL, NULL);
+#if HAS_GDK_EVENT_REQUEST_MOTIONS
     gdk_event_request_motions(event);
+#endif
 }
 
 /**

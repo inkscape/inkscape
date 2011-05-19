@@ -135,12 +135,14 @@ static void resizeHSVWheel( GtkHSV *hsv, GtkAllocation *allocation )
     gtk_hsv_set_metrics( hsv, diam, ring );
 }
 
+#if GTK_CHECK_VERSION(2,18,0)
 static void handleWheelStyleSet(GtkHSV *hsv, GtkStyle* /*previous*/, gpointer /*userData*/)
 {
     GtkAllocation allocation = {0, 0, 0, 0};
     gtk_widget_get_allocation( GTK_WIDGET(hsv), &allocation );
     resizeHSVWheel( hsv, &allocation );
 }
+#endif // GTK_CHECK_VERSION(2,18,0)
 
 static void handleWheelAllocation(GtkHSV *hsv, GtkAllocation *allocation, gpointer /*userData*/)
 {
@@ -218,8 +220,10 @@ void ColorWheelSelector::init()
     // GTK does not automatically scale the color wheel, so we have to add that in:
     gtk_signal_connect( GTK_OBJECT(_wheel), "size-allocate",
                         GTK_SIGNAL_FUNC(handleWheelAllocation), _csel );
+#if GTK_CHECK_VERSION(2,18,0)
     gtk_signal_connect( GTK_OBJECT(_wheel), "style-set",
                         GTK_SIGNAL_FUNC(handleWheelStyleSet), _csel );
+#endif // GTK_CHECK_VERSION(2,18,0)
 }
 
 static void
