@@ -127,6 +127,7 @@ extensions = \
 	run_command.py \
 	scour.py \
 	scour.inkscape.py \
+	setup_typography_canvas.py \
 	simplepath.py \
 	simplepath.rb \
 	simplestyle.py \
@@ -290,6 +291,7 @@ modules = \
 	rubberstretch.inx \
 	rtree.inx \
 	scour.inx \
+	setup_typography_canvas.inx \
 	sk_input.inx \
 	sk1_input.inx \
 	sk1_output.inx \
