@@ -500,12 +500,6 @@ void SvgFontsDialog::set_glyph_description_from_selected_path(){
 
     Geom::PathVector pathv = sp_svg_read_pathv(node->attribute("d"));
 
-    //This matrix flips the glyph vertically
-    Geom::Affine m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(0));
-    pathv*=m;
-    //then we offset it
-    pathv+=Geom::Point(Geom::Coord(0),Geom::Coord(get_selected_spfont()->horiz_adv_x));
-
     SPGlyph* glyph = get_selected_glyph();
     if (!glyph){
         char *msg = _("No glyph selected in the SVGFonts dialog.");
@@ -544,13 +538,6 @@ void SvgFontsDialog::missing_glyph_description_from_selected_path(){
     } //TODO: //Is there a better way to tell it to to the user?
 
     Geom::PathVector pathv = sp_svg_read_pathv(node->attribute("d"));
-
-    //This matrix flips the glyph vertically
-    Geom::Affine m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(0));
-    pathv*=m;
-    //then we offset it
-//  pathv+=Geom::Point(Geom::Coord(0),Geom::Coord(get_selected_spfont()->horiz_adv_x));
-    pathv+=Geom::Point(Geom::Coord(0),Geom::Coord(1000));//TODO: use here the units-per-em attribute?
 
     SPObject* obj;
     for (obj = get_selected_spfont()->children; obj; obj=obj->next){
