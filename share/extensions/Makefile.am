@@ -95,6 +95,7 @@ extensions = \
 	jessyInk_video.py \
 	jessyInk_view.py \
 	launch_webbrowser.py \
+	layers2svgfont.py \
 	lindenmayer.py \
 	lorem_ipsum.py \
 	markers_strokepaint.py \
@@ -265,6 +266,7 @@ modules = \
 	jessyInk_uninstall.inx \
 	jessyInk_video.inx \
 	jessyInk_view.inx \
+	layers2svgfont.inx \
 	lindenmayer.inx \
 	lorem_ipsum.inx \
 	markers_strokepaint.inx \
