@@ -49,9 +49,7 @@ struct _Ink_ComboBoxEntry_Action {
   GtkComboBoxEntry   *combobox;
   GtkEntry           *entry;
   GtkEntryCompletion *entry_completion;
-#if !GTK_CHECK_VERSION(2,16,0)
   GtkWidget          *indicator;
-#endif
 
   gpointer            cell_data_func; // drop-down menu format
 
