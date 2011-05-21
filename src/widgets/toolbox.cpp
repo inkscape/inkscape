@@ -8377,7 +8377,9 @@ static void paintbucket_offset_changed(GtkAdjustment *adj, GObject *tbl)
     SPUnit const *unit = tracker->getActiveUnit();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    prefs->setDouble("/tools/paintbucket/offset", (gdouble)sp_units_get_pixels(adj->value, *unit));
+    // Don't adjust the offset value because we're saving the
+    // unit and it'll be correctly handled on load.
+    prefs->setDouble("/tools/paintbucket/offset", (gdouble)adj->value);
     prefs->setString("/tools/paintbucket/offsetunits", sp_unit_get_abbreviation(unit));
 }
 
