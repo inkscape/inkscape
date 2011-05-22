@@ -40,7 +40,7 @@ class SetupTypographyCanvas(inkex.Effect):
 						help="x-height")
 		self.OptionParser.add_option("-d", "--descender",
 						action="store", type="int",
-						dest="descender", default='-250',
+						dest="descender", default='250',
 						help="Descender")
 		self.OptionParser.add_option("-l", "--lbearing",
 						action="store", type="int",
@@ -79,13 +79,13 @@ class SetupTypographyCanvas(inkex.Effect):
 		self.svg.set("width", str(setwidth))
 		self.svg.set("height", str(setwidth))
 
-		baseline = -descender
+		baseline = descender
 		# Create guidelines
 		self.create_horizontal_guideline("baseline", baseline)
 		self.create_horizontal_guideline("ascender", baseline+ascender)
 		self.create_horizontal_guideline("caps", baseline+caps)
 		self.create_horizontal_guideline("xheight", baseline+xheight)
-		self.create_horizontal_guideline("descender", baseline+descender)
+		self.create_horizontal_guideline("descender", baseline-descender)
 		self.create_vertical_guideline("lbearing", lbearing)
 		self.create_vertical_guideline("rbearing", setwidth-rbearing)
 

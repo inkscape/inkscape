@@ -11,6 +11,7 @@
 #ifndef INKSCAPE_UI_DIALOG_SVG_FONTS_H
 #define INKSCAPE_UI_DIALOG_SVG_FONTS_H
 
+#include <2geom/pathvector.h>
 #include "ui/widget/panel.h"
 #include "ui/widget/spinbutton.h"
 #include "sp-font.h"
@@ -78,6 +79,7 @@ public:
     void on_kerning_value_changed();
     void on_setwidth_changed();
 	void add_font();
+	Geom::PathVector flip_coordinate_system(Geom::PathVector pathv);
 
 	//TODO: AttrEntry is currently unused. Should we remove it?
     class AttrEntry : public Gtk::HBox

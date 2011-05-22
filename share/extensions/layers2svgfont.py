@@ -23,6 +23,12 @@ logfile = open("/tmp/inkscape-ext-logfile", "wa")
 def LOG(s):
 	logfile.write(s+"\n")
 
+def flip_cordinate_system(d, units_per_em, baseline):
+	#todo
+	return d
+
+bugged_fontforge_compatibility_mode = True
+
 class Layers2SVGFont(inkex.Effect):
 	def __init__(self):
 		inkex.Effect.__init__(self)
@@ -55,11 +61,12 @@ class Layers2SVGFont(inkex.Effect):
 		self.defs = self.get_or_create(self.svg, inkex.addNS('defs', 'svg'))
 
 		setwidth = int(self.svg.get("width"))
+		units_per_em = setwidth #TODO: ask the user for this value?
 		baseline = self.guideline_value("baseline", 1)
 		ascender = self.guideline_value("ascender", 1) - baseline
 		caps = self.guideline_value("caps", 1) - baseline
 		xheight = self.guideline_value("xheight", 1) - baseline
-		descender = self.guideline_value("descender", 1) - baseline
+		descender = baseline - self.guideline_value("descender", 1)
 		lbearing = self.guideline_value("lbearing", 0)
 		rbearing = setwidth - self.guideline_value("rbearing", 0)
 
@@ -74,8 +81,9 @@ class Layers2SVGFont(inkex.Effect):
 
 		font = self.get_or_create(self.defs, inkex.addNS('font', 'svg'))
 		font.set("horiz-adv-x", str(setwidth))
+		font.set("horiz-origin-y", str(baseline))
 
-		fontface = self.get_or_create(font, inkex.addNS('fontface', 'svg'))
+		fontface = self.get_or_create(font, inkex.addNS('font-face', 'svg'))
 		fontface.set("units-per-em", str(setwidth))
 		fontface.set("cap-height", str(caps))
 		fontface.set("x-height", str(xheight))
@@ -90,9 +98,18 @@ class Layers2SVGFont(inkex.Effect):
 				unicode_char = label.split("GlyphLayer-")[1]
 				glyph = self.get_or_create_glyph(font, unicode_char)
 				glyph.set("unicode", unicode_char)
-				use = self.get_or_create(glyph, inkex.addNS('use', 'svg'))
-				use.set(inkex.addNS('href', 'xlink'), "#"+group.get("id"))
-				#TODO: This code creates nodes but they do not render on svg fonts dialog. why? 
+
+				#use = self.get_or_create(glyph, inkex.addNS('use', 'svg'))
+				#use.set(inkex.addNS('href', 'xlink'), "#"+group.get("id"))
+				#TODO: This code creates <use> nodes but they do not render on svg fonts dialog. why? 
+
+				paths = group.findall(inkex.addNS('path', 'svg'))				
+				for p in paths:
+					path = inkex.etree.SubElement(glyph, inkex.addNS('path', 'svg'))
+					d = p.get("d")
+					if not bugged_fontforge_compatibility_mode:
+						d = flip_cordinate_system(d, units_per_em, baseline)
+					path.set("d", d)
 
 if __name__ == '__main__':
 	LOG("\n\n"+"*"*80+"\n\n")

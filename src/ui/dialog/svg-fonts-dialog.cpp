@@ -16,7 +16,6 @@
 
 #ifdef ENABLE_SVG_FONTS
 
-#include <2geom/pathvector.h>
 #include "document-private.h"
 #include <gtkmm/notebook.h>
 #include <glibmm/i18n.h>
@@ -474,6 +473,24 @@ void SvgFontsDialog::add_glyph(){
     update_glyphs();
 }
 
+Geom::PathVector
+SvgFontsDialog::flip_coordinate_system(Geom::PathVector pathv){
+    double units_per_em = 1000;
+    SPObject* obj;
+    for (obj = get_selected_spfont()->children; obj; obj=obj->next){
+        if (SP_IS_FONTFACE(obj)){
+            //XML Tree being directly used here while it shouldn't be.
+            sp_repr_get_double(obj->getRepr(), "units_per_em", &units_per_em);
+        }
+    }
+
+    double baseline_offset = units_per_em - get_selected_spfont()->horiz_origin_y;
+
+    //This matrix flips y-axis and places the origin at baseline
+    Geom::Affine m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(baseline_offset));
+    return pathv*m;
+}
+
 void SvgFontsDialog::set_glyph_description_from_selected_path(){
     SPDesktop* desktop = this->getDesktop();
     if (!desktop) {
@@ -498,16 +515,17 @@ void SvgFontsDialog::set_glyph_description_from_selected_path(){
         return;
     } //TODO: //Is there a better way to tell it to to the user?
 
-    Geom::PathVector pathv = sp_svg_read_pathv(node->attribute("d"));
-
     SPGlyph* glyph = get_selected_glyph();
     if (!glyph){
         char *msg = _("No glyph selected in the SVGFonts dialog.");
         msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
         return;
     }
+
+    Geom::PathVector pathv = sp_svg_read_pathv(node->attribute("d"));
+
 	//XML Tree being directly used here while it shouldn't be.
-    glyph->getRepr()->setAttribute("d", (char*) sp_svg_write_path (pathv));
+    glyph->getRepr()->setAttribute("d", (char*) sp_svg_write_path (flip_coordinate_system(pathv)));
     DocumentUndo::done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Set glyph curves"));
 
     update_glyphs();
@@ -544,7 +562,7 @@ void SvgFontsDialog::missing_glyph_description_from_selected_path(){
         if (SP_IS_MISSING_GLYPH(obj)){
 
             //XML Tree being directly used here while it shouldn't be.
-            obj->getRepr()->setAttribute("d", (char*) sp_svg_write_path (pathv));
+            obj->getRepr()->setAttribute("d", (char*) sp_svg_write_path (flip_coordinate_system(pathv)));
             DocumentUndo::done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Set glyph curves"));
         }
     }

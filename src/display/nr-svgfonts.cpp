@@ -25,6 +25,9 @@
 #include "../sp-use.h"
 #include "../sp-use-reference.h"
 #include "curve.h"
+#include "xml/repr.h"
+#include "sp-font-face.h"
+
 
 //*************************//
 // UserFont Implementation //
@@ -240,6 +243,24 @@ SvgFont::glyph_modified(SPObject* /* blah */, unsigned int /* bleh */){
     //TODO: update rendering on svgfonts preview widget (in the svg fonts dialog)
 }
 
+Geom::PathVector
+SvgFont::flip_coordinate_system(SPFont* spfont, Geom::PathVector pathv){
+    double units_per_em = 1000;
+    SPObject* obj;
+    for (obj = ((SPObject*) spfont)->children; obj; obj=obj->next){
+        if (SP_IS_FONTFACE(obj)){
+            //XML Tree being directly used here while it shouldn't be.
+            sp_repr_get_double(obj->getRepr(), "units_per_em", &units_per_em);
+        }
+    }
+
+    double baseline_offset = units_per_em - spfont->horiz_origin_y;
+
+    //This matrix flips y-axis and places the origin at baseline
+    Geom::Affine m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(baseline_offset));
+    return pathv*m;
+}
+
 cairo_status_t
 SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  */*scaled_font*/,
                                    unsigned long         glyph,
@@ -266,15 +287,22 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  */*scaled_font*/,
         return CAIRO_STATUS_SUCCESS;  // FIXME: is this the right code to return?
     }
 
+    SPFont* spfont = (SPFont*) node->parent;
+    if (!spfont) {
+        return CAIRO_STATUS_SUCCESS;  // FIXME: is this the right code to return?
+    }
+
     //glyphs can be described by arbitrary SVG declared in the childnodes of a glyph node
     // or using the d attribute of a glyph node.
     // pathv stores the path description from the d attribute:
     Geom::PathVector pathv;
     if (SP_IS_GLYPH(node) && ((SPGlyph*)node)->d) {
         pathv = sp_svg_read_pathv(((SPGlyph*)node)->d);
+        pathv = flip_coordinate_system(spfont, pathv);
         this->render_glyph_path(cr, &pathv);
     } else if (SP_IS_MISSING_GLYPH(node) && ((SPMissingGlyph*)node)->d) {
         pathv = sp_svg_read_pathv(((SPMissingGlyph*)node)->d);
+        pathv = flip_coordinate_system(spfont, pathv);
         this->render_glyph_path(cr, &pathv);
     }
 
@@ -283,6 +311,7 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  */*scaled_font*/,
         for(node = node->children; node; node=node->next){
             if (SP_IS_PATH(node)){
                 pathv = ((SPShape*)node)->curve->get_pathvector();
+                pathv = flip_coordinate_system(spfont, pathv);
                 this->render_glyph_path(cr, &pathv);
             }
             if (SP_IS_OBJECTGROUP(node)){
@@ -292,6 +321,7 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  */*scaled_font*/,
                 SPItem* item = SP_USE(node)->ref->getObject();
                 if (SP_IS_PATH(item)){
                     pathv = ((SPShape*)item)->curve->get_pathvector();
+                    pathv = flip_coordinate_system(spfont, pathv);
                     this->render_glyph_path(cr, &pathv);
                 }
 
