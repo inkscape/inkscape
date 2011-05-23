@@ -1124,6 +1124,31 @@ void InkscapePreferences::initPageUI()
         "gl", "he", "hu", "id", "it", "ja", "km", "rw", "ko", "lt", "mk", "mn", "ne", "nb", "nn", "pa",
         "pl", "pt", "pt_BR", "ro", "ru", "sr", "sr@latin", "sk", "sl", "es", "es_MX", "sv", "te_IN", "th", "tr", "uk", "vi" };
 
+    {
+        // sorting languages according to translated name
+        int i = 0;
+        int j = 0;
+        int n = sizeof( languages ) / sizeof( Glib::ustring );
+        Glib::ustring key_language;
+        Glib::ustring key_langValue;
+        for ( j = 1 ; j < n ; j++ ) {
+            key_language = languages[j];
+            key_langValue = langValues[j];
+            i = j-1;
+            while ( i >= 0
+                    && ( ( languages[i] > key_language
+                         && langValues[i] != "" )
+                       || key_langValue == "" ) )
+            {
+                languages[i+1] = languages[i];
+                langValues[i+1] = langValues[i];
+                i--;
+            }
+            languages[i+1] = key_language;
+            langValues[i+1] = key_langValue;
+        }
+    }
+
     _ui_languages.init( "/ui/language", languages, langValues, G_N_ELEMENTS(languages), languages[0]);
     _page_ui.add_line( false, _("Language (requires restart):"), _ui_languages, "",
                               _("Set the language for menus and number formats"), false);
