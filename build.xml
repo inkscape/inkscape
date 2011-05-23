@@ -661,6 +661,7 @@
     <copy todir="${dist}" file="${devlibs}/bin/libsigc-2.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/freetype6.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libatk-1.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libgcc_s_sjlj-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libgdk-win32-2.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libgdk_pixbuf-2.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libglib-2.0-0.dll"/>
