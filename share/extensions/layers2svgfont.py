@@ -1,5 +1,5 @@
 '''
-Copyright (C) 2011 Felipe Correa da Silva Sanches
+Copyright (C) 2011 Felipe Correa da Silva Sanches <juca@members.fsf.org>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,16 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 import inkex
 import sys
-
-logfile = open("/tmp/inkscape-ext-logfile", "wa")
-def LOG(s):
-	logfile.write(s+"\n")
-
-def flip_cordinate_system(d, units_per_em, baseline):
-	#todo
-	return d
-
-bugged_fontforge_compatibility_mode = True
+from PathData import PathData
 
 class Layers2SVGFont(inkex.Effect):
 	def __init__(self):
@@ -55,6 +46,18 @@ class Layers2SVGFont(inkex.Effect):
 				return glyph
 		return inkex.etree.SubElement(font, inkex.addNS('glyph', 'svg'))	
 
+	def flip_cordinate_system(self, d, units_per_em, baseline):
+		pathdata = PathData(d)
+
+		def flip_cordinates(coordinates, units_per_em, baseline, relative):
+			x, y = coordinates
+			if relative:
+				return (x, -y)
+			else:
+				return (x, units_per_em - baseline - y)	
+
+		return pathdata.transform_coordinate_values(flip_cordinates, units_per_em, baseline)
+
 	def effect(self):
 		# Get access to main SVG document element
 		self.svg = self.document.getroot()
@@ -69,15 +72,6 @@ class Layers2SVGFont(inkex.Effect):
 		descender = baseline - self.guideline_value("descender", 1)
 		lbearing = self.guideline_value("lbearing", 0)
 		rbearing = setwidth - self.guideline_value("rbearing", 0)
-
-		LOG("setwidth: " + str(setwidth))
-		LOG("baseline: " + str(baseline))
-		LOG("ascender: " + str(ascender))
-		LOG("descender: " + str(descender))
-		LOG("caps: " + str(caps))
-		LOG("xheight: " + str(xheight))
-		LOG("lbearing: " + str(lbearing))
-		LOG("rbearing: " + str(rbearing))
 
 		font = self.get_or_create(self.defs, inkex.addNS('font', 'svg'))
 		font.set("horiz-adv-x", str(setwidth))
@@ -107,13 +101,10 @@ class Layers2SVGFont(inkex.Effect):
 				for p in paths:
 					path = inkex.etree.SubElement(glyph, inkex.addNS('path', 'svg'))
 					d = p.get("d")
-					if not bugged_fontforge_compatibility_mode:
-						d = flip_cordinate_system(d, units_per_em, baseline)
+					d = self.flip_cordinate_system(d, units_per_em, baseline)
 					path.set("d", d)
 
 if __name__ == '__main__':
-	LOG("\n\n"+"*"*80+"\n\n")
 	e = Layers2SVGFont()
 	e.affect()
-	logfile.close()
 
