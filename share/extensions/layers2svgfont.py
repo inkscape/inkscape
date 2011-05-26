@@ -70,8 +70,6 @@ class Layers2SVGFont(inkex.Effect):
 		caps = self.guideline_value("caps", 1) - baseline
 		xheight = self.guideline_value("xheight", 1) - baseline
 		descender = baseline - self.guideline_value("descender", 1)
-		lbearing = self.guideline_value("lbearing", 0)
-		rbearing = setwidth - self.guideline_value("rbearing", 0)
 
 		font = self.get_or_create(self.defs, inkex.addNS('font', 'svg'))
 		font.set("horiz-adv-x", str(setwidth))
@@ -83,7 +81,6 @@ class Layers2SVGFont(inkex.Effect):
 		fontface.set("x-height", str(xheight))
 		fontface.set("ascent", str(ascender))
 		fontface.set("descent", str(descender))
-		#TODO: should we somehow store sidebearing values?
 
 		groups = self.svg.findall(inkex.addNS('g', 'svg'))
 		for group in groups:
