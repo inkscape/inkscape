@@ -53,7 +53,8 @@ templates_DATA = \
 	video_PAL_720x576.svg \
 	web_banner_468x60.svg \
 	web_banner_728x90.svg \
-	LaTeX_Beamer.svg
+	LaTeX_Beamer.svg \
+	Typography_Canvas.svg
 
 
 EXTRA_DIST = $(templates_DATA)
