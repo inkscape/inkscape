@@ -42,6 +42,7 @@ GuidelinePropertiesDialog::GuidelinePropertiesDialog(SPGuide *guide, SPDesktop *
   _relative_toggle(_("Rela_tive change"), _("Move and/or rotate the guide relative to current settings")),
   _spin_button_x(_("X:"), "", UNIT_TYPE_LINEAR, "", "", &_unit_menu),
   _spin_button_y(_("Y:"), "", UNIT_TYPE_LINEAR, "", "", &_unit_menu),
+  _label_entry(_("Label:"), _("Optionally give this guideline a name")),
   _spin_angle(_("Angle:"), "", UNIT_TYPE_RADIAL),
   _mode(true), _oldpos(0.,0.), _oldangle(0.0)
 {
@@ -103,6 +104,9 @@ void GuidelinePropertiesDialog::_onApply()
         newpos += _oldpos;
 
     sp_guide_moveto(*_guide, newpos, true);
+
+    const gchar* name = _label_entry.getEntry()->get_text().c_str();
+    sp_guide_set_label(*_guide, name, true);
 
     DocumentUndo::done(_guide->document, SP_VERB_NONE, 
                        _("Set guide properties"));
@@ -167,8 +171,11 @@ void GuidelinePropertiesDialog::_setup() {
     _label_descr.set_alignment(0, 0.5);
 
     // indent
-    _layout_table.attach(*manage(new Gtk::Label(" ")),
-                         0, 1, 2, 3, Gtk::FILL, Gtk::FILL, 10);
+//    _layout_table.attach(*manage(new Gtk::Label(" ")),
+//                         0, 1, 2, 3, Gtk::FILL, Gtk::FILL, 10);
+
+    _layout_table.attach(_label_entry,
+                         1, 3, 2, 3, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
 
     // unitmenus
     /* fixme: We should allow percents here too, as percents of the canvas size */
@@ -244,6 +251,9 @@ void GuidelinePropertiesDialog::_setup() {
         _label_descr.set_markup(label);
         g_free(label);
     }
+
+    // init name entry
+    _label_entry.getEntry()->set_text(_guide->label ? _guide->label : "");
 
     _modeChanged(); // sets values of spinboxes.
 

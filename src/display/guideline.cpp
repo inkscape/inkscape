@@ -21,6 +21,7 @@
 #include "guideline.h"
 #include "cairo.h"
 #include "inkscape-cairo.h"
+#include "color.h"
 
 static void sp_guideline_class_init(SPGuideLineClass *c);
 static void sp_guideline_init(SPGuideLine *guideline);
@@ -112,7 +113,8 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
     cairo_t* ctx = nr_create_cairo_context_canvasbuf (NULL /*area*/, buf); //this function ignores the "area" parameter
     cairo_set_font_size (ctx, 10);
     cairo_set_line_width (ctx, 10);
-    cairo_set_source_rgb (ctx, 0, 0, 0);
+    /// @todo uh??! why must the order of these arguments be reversed? bgra instead of rgba!
+    cairo_set_source_rgba (ctx, SP_RGBA32_B_F(gl->rgba), SP_RGBA32_G_F(gl->rgba), SP_RGBA32_R_F(gl->rgba), SP_RGBA32_A_F(gl->rgba));
 
     unsigned int const r = NR_RGBA32_R (gl->rgba);
     unsigned int const g = NR_RGBA32_G (gl->rgba);
@@ -274,9 +276,12 @@ SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, char* label, Geom::Point p
     return item;
 }
 
-void sp_guideline_set_label(SPGuideLine *gl, char* label)
+void sp_guideline_set_label(SPGuideLine *gl, const char* label)
 {
-    gl->label = label;
+    if (gl->label) {
+        g_free(gl->label);
+    }
+    gl->label = g_strdup(label);
 
     sp_canvas_item_request_update(SP_CANVAS_ITEM (gl));
 }

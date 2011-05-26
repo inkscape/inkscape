@@ -48,7 +48,7 @@ GType sp_guideline_get_type();
 
 SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, char* label, Geom::Point point_on_line, Geom::Point normal);
 
-void sp_guideline_set_label(SPGuideLine *gl, char* label);
+void sp_guideline_set_label(SPGuideLine *gl, const char* label);
 void sp_guideline_set_position(SPGuideLine *gl, Geom::Point point_on_line);
 void sp_guideline_set_normal(SPGuideLine *gl, Geom::Point normal_to_line);
 void sp_guideline_set_color(SPGuideLine *gl, unsigned int rgba);

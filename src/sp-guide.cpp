@@ -412,7 +412,7 @@ void sp_guide_set_normal(SPGuide &guide, Geom::Point const normal_to_line, bool 
 */
 }
 
-void sp_guide_set_label(SPGuide &guide, char* label, bool const commit)
+void sp_guide_set_label(SPGuide &guide, const char* label, bool const commit)
 {
     g_assert(SP_IS_GUIDE(&guide));
     if (guide.views){
@@ -421,7 +421,7 @@ void sp_guide_set_label(SPGuide &guide, char* label, bool const commit)
 
     if (commit){
         //XML Tree being used directly while it shouldn't be
-        guide.getRepr()->setAttribute("label", label);
+        guide.getRepr()->setAttribute("inkscape:label", label);
     }
 }
 

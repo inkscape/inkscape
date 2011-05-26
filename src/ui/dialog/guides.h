@@ -24,6 +24,7 @@
 #include "ui/widget/spinbutton.h"
 #include "ui/widget/unit-menu.h"
 #include "ui/widget/scalar-unit.h"
+#include "ui/widget/entry.h"
 #include <2geom/point.h>
 
 class SPGuide;
@@ -71,6 +72,7 @@ private:
     Inkscape::UI::Widget::UnitMenu _unit_menu;
     Inkscape::UI::Widget::ScalarUnit _spin_button_x;
     Inkscape::UI::Widget::ScalarUnit _spin_button_y;
+    Inkscape::UI::Widget::Entry _label_entry;
 
     Inkscape::UI::Widget::ScalarUnit _spin_angle;
     static Glib::ustring _angle_unit_status; // remember the status of the _relative_toggle_status button across instances
