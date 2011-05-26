@@ -76,6 +76,7 @@ class Layers2SVGFont(inkex.Effect):
 		font.set("horiz-origin-y", str(baseline))
 
 		fontface = self.get_or_create(font, inkex.addNS('font-face', 'svg'))
+		fontface.set("font-family", "SVGFont")
 		fontface.set("units-per-em", str(setwidth))
 		fontface.set("cap-height", str(caps))
 		fontface.set("x-height", str(xheight))
