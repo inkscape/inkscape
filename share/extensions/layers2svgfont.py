@@ -46,25 +46,24 @@ class Layers2SVGFont(inkex.Effect):
 				return glyph
 		return inkex.etree.SubElement(font, inkex.addNS('glyph', 'svg'))	
 
-	def flip_cordinate_system(self, d, units_per_em, baseline):
+	def flip_cordinate_system(self, d, emsize, baseline):
 		pathdata = PathData(d)
 
-		def flip_cordinates(coordinates, units_per_em, baseline, relative):
+		def flip_cordinates(coordinates, emsize, baseline, relative):
 			x, y = coordinates
 			if relative:
 				return (x, -y)
 			else:
-				return (x, units_per_em - baseline - y)	
+				return (x, emsize - baseline - y)	
 
-		return pathdata.transform_coordinate_values(flip_cordinates, units_per_em, baseline)
+		return pathdata.transform_coordinate_values(flip_cordinates, emsize, baseline)
 
 	def effect(self):
 		# Get access to main SVG document element
 		self.svg = self.document.getroot()
 		self.defs = self.get_or_create(self.svg, inkex.addNS('defs', 'svg'))
 
-		setwidth = int(self.svg.get("width"))
-		units_per_em = setwidth #TODO: ask the user for this value?
+		emsize = int(self.svg.get("width"))
 		baseline = self.guideline_value("baseline", 1)
 		ascender = self.guideline_value("ascender", 1) - baseline
 		caps = self.guideline_value("caps", 1) - baseline
@@ -72,12 +71,12 @@ class Layers2SVGFont(inkex.Effect):
 		descender = baseline - self.guideline_value("descender", 1)
 
 		font = self.get_or_create(self.defs, inkex.addNS('font', 'svg'))
-		font.set("horiz-adv-x", str(setwidth))
+		font.set("horiz-adv-x", str(emsize))
 		font.set("horiz-origin-y", str(baseline))
 
 		fontface = self.get_or_create(font, inkex.addNS('font-face', 'svg'))
 		fontface.set("font-family", "SVGFont")
-		fontface.set("units-per-em", str(setwidth))
+		fontface.set("units-per-em", str(emsize))
 		fontface.set("cap-height", str(caps))
 		fontface.set("x-height", str(xheight))
 		fontface.set("ascent", str(ascender))
@@ -106,7 +105,7 @@ class Layers2SVGFont(inkex.Effect):
 				#paths = group.findall(inkex.addNS('path', 'svg'))
 				#for p in paths:
 				#	d = p.get("d")
-				#	d = self.flip_cordinate_system(d, units_per_em, baseline)
+				#	d = self.flip_cordinate_system(d, emsize, baseline)
 				#	path = inkex.etree.SubElement(glyph, inkex.addNS('path', 'svg'))
 				#	path.set("d", d)
 
@@ -117,7 +116,7 @@ class Layers2SVGFont(inkex.Effect):
 				paths = group.findall(inkex.addNS('path', 'svg'))
 				d = ""
 				for p in paths:
-					d += " " + self.flip_cordinate_system(p.get("d"), units_per_em, baseline)
+					d += " " + self.flip_cordinate_system(p.get("d"), emsize, baseline)
 				glyph.set("d", d)
 
 if __name__ == '__main__':

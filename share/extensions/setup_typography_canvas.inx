@@ -4,7 +4,7 @@
   <id>org.inkscape.typography.setuptypographycanvas</id>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <dependency type="executable" location="extensions">setup_typography_canvas.py</dependency>
-  <param name="setwidth" type="int" _gui-text="Set Width:" min="10" max="2000">1000</param>
+  <param name="emsize" type="int" _gui-text="Em-size:" min="10" max="2000">1000</param>
   <param name="ascender" type="int" _gui-text="Ascender:" min="0" max="2000">750</param>
   <param name="caps" type="int" _gui-text="Caps Height:" min="0" max="2000">700</param>
   <param name="xheight" type="int" _gui-text="X-Height:" min="0" max="2000">500</param>

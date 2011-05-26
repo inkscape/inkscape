@@ -22,10 +22,10 @@ import sys
 class SetupTypographyCanvas(inkex.Effect):
 	def __init__(self):
 		inkex.Effect.__init__(self)
-		self.OptionParser.add_option("-w", "--setwidth",
+		self.OptionParser.add_option("-e", "--emsize",
 						action="store", type="int",
-						dest="setwidth", default=1000,
-						help="Set Width")
+						dest="emsize", default=1000,
+						help="Em-size")
 		self.OptionParser.add_option("-a", "--ascender",
 						action="store", type="int",
 						dest="ascender", default='750',
@@ -58,7 +58,7 @@ class SetupTypographyCanvas(inkex.Effect):
 
 	def effect(self):
 		# Get all the options
-		setwidth = self.options.setwidth
+		emsize = self.options.emsize
 		ascender = self.options.ascender
 		caps = self.options.caps
 		xheight = self.options.xheight
@@ -66,8 +66,8 @@ class SetupTypographyCanvas(inkex.Effect):
 
 		# Get access to main SVG document element
 		self.svg = self.document.getroot()
-		self.svg.set("width", str(setwidth))
-		self.svg.set("height", str(setwidth))
+		self.svg.set("width", str(emsize))
+		self.svg.set("height", str(emsize))
 
 		baseline = descender
 		# Create guidelines
