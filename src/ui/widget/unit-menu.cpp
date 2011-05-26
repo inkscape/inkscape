@@ -67,6 +67,14 @@ UnitMenu::resetUnitType(UnitType unit_type)
     return setUnitType(unit_type);
 }
 
+/** Adds a unit, possibly user-defined, to the menu. */
+void
+UnitMenu::addUnit(Unit const& u)
+{
+    _unit_table.addUnit(u, false);
+    append_text(u.abbr);
+}
+
 /** Returns the Unit object corresponding to the current selection
     in the dropdown widget */
 Unit
