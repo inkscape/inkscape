@@ -93,16 +93,34 @@ class Layers2SVGFont(inkex.Effect):
 				glyph = self.get_or_create_glyph(font, unicode_char)
 				glyph.set("unicode", unicode_char)
 
+				############################
+				#Option 1:
+				# Using clone (svg:use) as childnode of svg:glyph
+
 				#use = self.get_or_create(glyph, inkex.addNS('use', 'svg'))
 				#use.set(inkex.addNS('href', 'xlink'), "#"+group.get("id"))
 				#TODO: This code creates <use> nodes but they do not render on svg fonts dialog. why? 
 
-				paths = group.findall(inkex.addNS('path', 'svg'))				
+				############################
+				#Option 2:
+				# Using svg:paths as childnodes of svg:glyph
+
+				#paths = group.findall(inkex.addNS('path', 'svg'))
+				#for p in paths:
+				#	d = p.get("d")
+				#	d = self.flip_cordinate_system(d, units_per_em, baseline)
+				#	path = inkex.etree.SubElement(glyph, inkex.addNS('path', 'svg'))
+				#	path.set("d", d)
+
+				############################
+				#Option 3:
+				# Using curve description in d attribute of svg:glyph
+
+				paths = group.findall(inkex.addNS('path', 'svg'))
+				d = ""
 				for p in paths:
-					path = inkex.etree.SubElement(glyph, inkex.addNS('path', 'svg'))
-					d = p.get("d")
-					d = self.flip_cordinate_system(d, units_per_em, baseline)
-					path.set("d", d)
+					d += " " + self.flip_cordinate_system(p.get("d"), units_per_em, baseline)
+				glyph.set("d", d)
 
 if __name__ == '__main__':
 	e = Layers2SVGFont()
