@@ -589,4 +589,7 @@ override) the bindings in the main default.xml.
   effect id from the .inx file, for example "org.ekips.filter.addnodes" for the Add
   Nodes effect. -->
 
+ <bind key="g" modifiers="Ctrl,Alt" action="org.inkscape.typography.newglyphlayer" display="true"/>
+ <bind key="G" modifiers="Ctrl,Alt" action="org.inkscape.typography.newglyphlayer"/>
+
 </keys>
