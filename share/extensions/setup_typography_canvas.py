@@ -42,14 +42,6 @@ class SetupTypographyCanvas(inkex.Effect):
 						action="store", type="int",
 						dest="descender", default='250',
 						help="Descender")
-		self.OptionParser.add_option("-l", "--lbearing",
-						action="store", type="int",
-						dest="lbearing", default='100',
-						help="Left Side Bearing")
-		self.OptionParser.add_option("-r", "--rbearing",
-						action="store", type="int",
-						dest="rbearing", default='100',
-						help="Right Side Bearing")
 
 	def create_horizontal_guideline(self, name, position):
 		self.create_guideline(name, "0,1", 0, position)
@@ -71,8 +63,6 @@ class SetupTypographyCanvas(inkex.Effect):
 		caps = self.options.caps
 		xheight = self.options.xheight
 		descender = self.options.descender
-		lbearing = self.options.lbearing
-		rbearing = self.options.rbearing
 
 		# Get access to main SVG document element
 		self.svg = self.document.getroot()
@@ -86,8 +76,6 @@ class SetupTypographyCanvas(inkex.Effect):
 		self.create_horizontal_guideline("caps", baseline+caps)
 		self.create_horizontal_guideline("xheight", baseline+xheight)
 		self.create_horizontal_guideline("descender", baseline-descender)
-		self.create_vertical_guideline("lbearing", lbearing)
-		self.create_vertical_guideline("rbearing", setwidth-rbearing)
 
 if __name__ == '__main__':
 	e = SetupTypographyCanvas()

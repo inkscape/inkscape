@@ -9,8 +9,6 @@
   <param name="caps" type="int" _gui-text="Caps Height:" min="0" max="2000">700</param>
   <param name="xheight" type="int" _gui-text="X-Height:" min="0" max="2000">500</param>
   <param name="descender" type="int" _gui-text="Descender:" min="0" max="1000">250</param>
-  <param name="lbearing" type="int" _gui-text="Left Side Bearing:" min="0" max="2000">100</param>
-  <param name="rbearing" type="int" _gui-text="Right Side Bearing:" min="0" max="2000">100</param>
   <effect>
     <object-type>all</object-type>
     <effects-menu>
