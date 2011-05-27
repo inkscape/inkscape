@@ -592,4 +592,10 @@ override) the bindings in the main default.xml.
  <bind key="g" modifiers="Ctrl,Alt" action="org.inkscape.typography.newglyphlayer" display="true"/>
  <bind key="G" modifiers="Ctrl,Alt" action="org.inkscape.typography.newglyphlayer"/>
 
+ <bind key="h" modifiers="Ctrl,Alt" action="org.inkscape.typography.previousglyphlayer" display="true"/>
+ <bind key="H" modifiers="Ctrl,Alt" action="org.inkscape.typography.previousglyphlayer"/>
+
+ <bind key="j" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer" display="true"/>
+ <bind key="J" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer"/>
+
 </keys>

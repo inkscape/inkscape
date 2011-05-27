@@ -102,6 +102,8 @@ extensions = \
 	measure.py \
 	motion.py \
 	new_glyph_layer.py \
+	next_glyph_layer.py \
+	previous_glyph_layer.py \
 	outline2svg.pl	\
 	PathData.py \
 	param_curves.py \
@@ -274,6 +276,8 @@ modules = \
 	measure.inx \
 	motion.inx \
 	new_glyph_layer.inx \
+	next_glyph_layer.inx \
+	previous_glyph_layer.inx \
 	outline2svg.inx \
 	param_curves.inx \
 	pathalongpath.inx\
