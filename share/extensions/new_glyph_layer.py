@@ -38,6 +38,11 @@ class NewGlyphLayer(inkex.Effect):
 		layer = inkex.etree.SubElement(svg, 'g')
 		layer.set(inkex.addNS('label', 'inkscape'), 'GlyphLayer-'+unicode_char)
 		layer.set(inkex.addNS('groupmode', 'inkscape'), 'layer')
+		layer.set('style', 'display:none') #initially not visible
+
+		# Move selection to the newly created layer
+		for id,node in self.selected.iteritems():
+			layer.append(node)
 
 if __name__ == '__main__':
 	e = NewGlyphLayer()
