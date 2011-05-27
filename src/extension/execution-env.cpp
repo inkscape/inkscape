@@ -141,7 +141,10 @@ ExecutionEnv::createWorkingDialog (void) {
                                true); // modal
     _visibleDialog->signal_response().connect(sigc::mem_fun(this, &ExecutionEnv::workingCanceled));
     g_free(dlgmessage);
-    _visibleDialog->show();
+
+    if (!_effect->is_silent()){
+        _visibleDialog->show();
+    }
 
     return;
 }

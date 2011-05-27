@@ -59,6 +59,7 @@ Parameter * get_param (const gchar * name);
 */
 Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementation * in_imp)
     : _help(NULL)
+    , silent(false)
     , _gui(true)
 {
     repr = in_repr;
@@ -105,6 +106,9 @@ Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementat
             if (!strcmp(chname, "dependency")) {
                 _deps.push_back(new Dependency(child_repr));
             } /* dependency */
+            if (!strcmp(chname, "options")) {
+                silent = !strcmp( child_repr->attribute("silent"), "true" );
+            }
             child_repr = sp_repr_next(child_repr);
         }
 
@@ -307,6 +311,16 @@ Inkscape::XML::Node *
 Extension::get_repr (void)
 {
     return repr;
+}
+
+/**
+    \return  bool 
+    \brief   Whether this extension should hide the "working, please wait" dialog
+*/
+bool
+Extension::is_silent (void)
+{
+    return silent;
 }
 
 /**

@@ -99,6 +99,7 @@ private:
     state_t    _state;                    /**< Which state the Extension is currently in */
     std::vector<Dependency *>  _deps;     /**< Dependencies for this extension */
     static std::ofstream error_file;      /**< This is the place where errors get reported */
+    bool silent;
     bool _gui;
 
 protected:
@@ -120,6 +121,7 @@ public:
     gchar *       get_name     (void);
     /** \brief  Gets the help string for this extension */
     gchar const * get_help     (void) { return _help; }
+    bool          is_silent (void);
     void          deactivate   (void);
     bool          deactivated  (void);
     void          printFailure (Glib::ustring reason);
