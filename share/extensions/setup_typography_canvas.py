@@ -68,6 +68,8 @@ class SetupTypographyCanvas(inkex.Effect):
 		self.svg = self.document.getroot()
 		self.svg.set("width", str(emsize))
 		self.svg.set("height", str(emsize))
+		self.svg.set("showborder"(true))
+		self.svg.set("inkscape:showpageshadow"(false))
 
 		baseline = descender
 		# Create guidelines
