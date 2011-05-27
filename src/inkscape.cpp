@@ -190,7 +190,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
                                G_SIGNAL_RUN_FIRST,
                                G_STRUCT_OFFSET (Inkscape::ApplicationClass, modify_selection),
                                NULL, NULL,
-                               g_cclosure_marshal_VOID__UINT_POINTER,
+                               gtk_marshal_VOID__POINTER_UINT,
                                G_TYPE_NONE, 2,
                                G_TYPE_POINTER, G_TYPE_UINT);
     inkscape_signals[CHANGE_SELECTION] = g_signal_new ("change_selection",
