@@ -17,6 +17,7 @@
 #include "nr-filter-gaussian.h"
 #include "nr-filter-types.h"
 #include <libnr/nr-blit.h>
+#include "sp-paint-server.h"
 #include "preferences.h"
 #include "color.h"
 

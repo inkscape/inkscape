@@ -22,7 +22,7 @@
 #include "sp-filter-reference.h"
 #include "uri-references.h"
 #include "uri.h"
-#include "sp-paint-server.h"
+#include "sp-paint-server-reference.h"
 
 #include <stddef.h>
 #include <sigc++/connection.h>

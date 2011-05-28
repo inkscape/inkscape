@@ -200,6 +200,7 @@ ink_common_sources +=	\
 	sp-object-repr.cpp sp-object-repr.h	\
 	sp-offset.cpp sp-offset.h		\
 	sp-paint-server.cpp sp-paint-server.h	\
+	sp-paint-server-reference.h		\
 	sp-path.cpp sp-path.h			\
 	sp-pattern.cpp sp-pattern.h		\
 	sp-polygon.cpp sp-polygon.h		\

@@ -78,7 +78,7 @@ static void pattern_ref_modified (SPObject *ref, guint flags, SPPattern *pattern
 static SPPainter *sp_pattern_painter_new (SPPaintServer *ps, Geom::Affine const &full_transform, Geom::Affine const &parent_transform, const NRRect *bbox);
 static void sp_pattern_painter_free (SPPaintServer *ps, SPPainter *painter);
 
-static SPPaintServerClass * pattern_parent_class;
+static SPPaintServerClass * pattern_parent_class = 0;
 
 GType
 sp_pattern_get_type (void)
@@ -105,13 +105,10 @@ sp_pattern_get_type (void)
 static void
 sp_pattern_class_init (SPPatternClass *klass)
 {
-	SPObjectClass *sp_object_class;
-	SPPaintServerClass *ps_class;
+    SPObjectClass *sp_object_class = SP_OBJECT_CLASS( klass );
+    SPPaintServerClass *ps_class = SP_PAINT_SERVER_CLASS( klass );
 
-	sp_object_class = (SPObjectClass *) klass;
-	ps_class = (SPPaintServerClass *) klass;
-
-	pattern_parent_class = (SPPaintServerClass*)g_type_class_ref (SP_TYPE_PAINT_SERVER);
+	pattern_parent_class = SP_PAINT_SERVER_CLASS( g_type_class_ref(SP_TYPE_PAINT_SERVER) );
 
 	sp_object_class->build = sp_pattern_build;
 	sp_object_class->release = sp_pattern_release;
@@ -683,7 +680,7 @@ sp_pattern_painter_new (SPPaintServer *ps, Geom::Affine const &full_transform, G
 	SPPattern *pat = SP_PATTERN (ps);
 	SPPatPainter *pp = g_new (SPPatPainter, 1);
 
-	pp->painter.type = SP_PAINTER_IND;
+        pp->painter.server_type = G_OBJECT_TYPE(ps);
 	pp->painter.fill = sp_pat_fill;
 
 	pp->pat = pat;

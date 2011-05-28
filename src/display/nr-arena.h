@@ -30,7 +30,8 @@ G_END_DECLS
 #include <libnr/nr-forward.h>
 #include <libnr/nr-object.h>
 #include "nr-arena-forward.h"
-#include "sp-paint-server.h"
+
+class SPPainter;
 
 NRType nr_arena_get_type (void);
 

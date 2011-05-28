@@ -20,13 +20,13 @@
 #include "libnrtype/nrtype-forward.h"
 
 #include "forward.h"
-#include "sp-paint-server.h"
 #include "display/nr-arena-item.h"
 
 #define test_glyph_liv
 
 struct SPCurve;
 class Shape;
+class SPPainter;
 
 NRType nr_arena_glyphs_get_type (void);
 

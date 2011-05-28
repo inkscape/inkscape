@@ -19,7 +19,8 @@
 #include "sp-object.h"
 #include "uri-references.h"
 
-class SPPainter;
+struct SPPainter;
+struct SPPaintServer;
 
 #define SP_TYPE_PAINT_SERVER (SPPaintServer::getType())
 #define SP_PAINT_SERVER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_PAINT_SERVER, SPPaintServer))
@@ -27,19 +28,15 @@ class SPPainter;
 #define SP_IS_PAINT_SERVER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_PAINT_SERVER))
 #define SP_IS_PAINT_SERVER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_PAINT_SERVER))
 
-typedef enum {
-    SP_PAINTER_IND,
-    SP_PAINTER_DEP
-} SPPainterType;
-
 typedef void (* SPPainterFillFunc) (SPPainter *painter, NRPixBlock *pb);
+
 
 /* fixme: I do not like that class thingie (Lauris) */
 struct SPPainter {
     SPPainter *next;
     SPPaintServer *server;
     GType server_type;
-    SPPainterType type;
+//    SPPainterType type;
     SPPainterFillFunc fill;
 };
 
@@ -72,18 +69,6 @@ SPPainter *sp_paint_server_painter_new (SPPaintServer *ps, Geom::Affine const &f
 
 SPPainter *sp_painter_free (SPPainter *painter);
 
-class SPPaintServerReference : public Inkscape::URIReference {
-public:
-    SPPaintServerReference (SPObject *obj) : URIReference(obj) {}
-    SPPaintServerReference (SPDocument *doc) : URIReference(doc) {}
-    SPPaintServer *getObject() const {
-        return static_cast<SPPaintServer *>(URIReference::getObject());
-    }
-protected:
-    virtual bool _acceptObject(SPObject *obj) const {
-        return SP_IS_PAINT_SERVER (obj);
-    }
-};
 
 #endif // SEEN_SP_PAINT_SERVER_H
 /*

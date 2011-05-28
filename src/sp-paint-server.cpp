@@ -15,6 +15,7 @@
 
 #include <string.h>
 #include "libnr/nr-pixblock-pattern.h"
+#include "sp-paint-server-reference.h"
 #include "sp-paint-server.h"
 
 #include "sp-gradient.h"
@@ -28,6 +29,17 @@ static void sp_painter_stale_fill(SPPainter *painter, NRPixBlock *pb);
 
 static SPObjectClass *parent_class;
 static GSList *stale_painters = NULL;
+
+
+SPPaintServer *SPPaintServerReference::getObject() const
+{
+    return static_cast<SPPaintServer *>(URIReference::getObject());
+}
+
+bool SPPaintServerReference::_acceptObject(SPObject *obj) const
+{
+    return SP_IS_PAINT_SERVER(obj);
+}
 
 GType SPPaintServer::getType(void)
 {
@@ -91,7 +103,7 @@ SPPainter *sp_paint_server_painter_new(SPPaintServer *ps,
     g_return_val_if_fail(bbox != NULL, NULL);
 
     SPPainter *painter = NULL;
-    SPPaintServerClass *psc = (SPPaintServerClass *) G_OBJECT_GET_CLASS(ps);
+    SPPaintServerClass *psc = SP_PAINT_SERVER_CLASS( G_OBJECT_GET_CLASS(ps) );
     if ( psc->painter_new ) {
         painter = (*psc->painter_new)(ps, full_transform, parent_transform, bbox);
     }
@@ -99,7 +111,7 @@ SPPainter *sp_paint_server_painter_new(SPPaintServer *ps,
     if (painter) {
         painter->next = ps->painters;
         painter->server = ps;
-        painter->type = (SPPainterType) G_OBJECT_TYPE(ps);
+        painter->server_type = G_OBJECT_TYPE(ps);
         ps->painters = painter;
     }
 
@@ -112,7 +124,7 @@ static void sp_paint_server_painter_free(SPPaintServer *ps, SPPainter *painter)
     g_return_if_fail(SP_IS_PAINT_SERVER(ps));
     g_return_if_fail(painter != NULL);
 
-    SPPaintServerClass *psc = (SPPaintServerClass *) G_OBJECT_GET_CLASS(ps);
+    SPPaintServerClass *psc = SP_PAINT_SERVER_CLASS( G_OBJECT_GET_CLASS(ps) );
 
     SPPainter *r = NULL;
     for (SPPainter *p = ps->painters; p != NULL; p = p->next) {
@@ -141,9 +153,10 @@ SPPainter *sp_painter_free(SPPainter *painter)
     if (painter->server) {
         sp_paint_server_painter_free(painter->server, painter);
     } else {
-        SPPaintServerClass *psc = (SPPaintServerClass *) g_type_class_ref(painter->type);
-        if (psc->painter_free)
+        SPPaintServerClass *psc = SP_PAINT_SERVER_CLASS( g_type_class_ref(painter->server_type) );
+        if (psc->painter_free) {
             (*psc->painter_free)(NULL, painter);
+        }
         stale_painters = g_slist_remove(stale_painters, painter);
     }
 

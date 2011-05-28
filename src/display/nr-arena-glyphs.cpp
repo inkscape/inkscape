@@ -25,6 +25,7 @@
 #include <cairo.h>
 #include "inkscape-cairo.h"
 #include "display/grayscale.h"
+#include "sp-paint-server.h"
 
 #ifdef test_glyph_liv
 #include "../display/canvas-bpath.h"

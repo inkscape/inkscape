@@ -360,7 +360,7 @@ void SPGradientImpl::classInit(SPGradientClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
 
-    gradient_parent_class = (SPPaintServerClass *)g_type_class_ref(SP_TYPE_PAINT_SERVER);
+    gradient_parent_class = SP_PAINT_SERVER_CLASS( g_type_class_ref(SP_TYPE_PAINT_SERVER) );
 
     sp_object_class->build = SPGradientImpl::build;
     sp_object_class->release = SPGradientImpl::release;
@@ -1520,7 +1520,7 @@ sp_lineargradient_get_type()
 static void sp_lineargradient_class_init(SPLinearGradientClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
-    SPPaintServerClass *ps_class = (SPPaintServerClass *) klass;
+    SPPaintServerClass *ps_class = SP_PAINT_SERVER_CLASS( klass );
 
     lg_parent_class = (SPGradientClass*)g_type_class_ref(SP_TYPE_GRADIENT);
 
@@ -1648,7 +1648,7 @@ SPPainter * SPLGPainter::painter_new(SPPaintServer *ps,
 
     SPLGPainter *lgp = g_new(SPLGPainter, 1);
 
-    lgp->painter.type = SP_PAINTER_IND;
+    lgp->painter.server_type = G_OBJECT_TYPE(ps);
     lgp->painter.fill = sp_lg_fill;
 
     lgp->lg = lg;
@@ -1801,7 +1801,7 @@ sp_radialgradient_get_type()
 static void sp_radialgradient_class_init(SPRadialGradientClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
-    SPPaintServerClass *ps_class = (SPPaintServerClass *) klass;
+    SPPaintServerClass *ps_class = SP_PAINT_SERVER_CLASS( klass );
 
     rg_parent_class = (SPGradientClass*)g_type_class_ref(SP_TYPE_GRADIENT);
 
@@ -1937,7 +1937,7 @@ SPPainter *SPRGPainter::painter_new(SPPaintServer *ps,
 
     SPRGPainter *rgp = g_new(SPRGPainter, 1);
 
-    rgp->painter.type = SP_PAINTER_IND;
+    rgp->painter.server_type = G_OBJECT_TYPE(ps);
     rgp->painter.fill = sp_rg_fill;
 
     rgp->rg = rg;

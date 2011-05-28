@@ -43,6 +43,7 @@
 #include "document.h"
 #include "style.h"
 #include "sp-object-repr.h"
+#include "sp-paint-server.h"
 #include "sp-root.h"
 #include "sp-style-elem.h"
 #include "sp-script.h"
