@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<_name>Voronoi Diagram</_name>
+  <id>org.inkscape.effect.voronoi</id>
+  <dependency type="executable" location="extensions">voronoi2svg.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <dependency type="executable" location="extensions">voronoi.py</dependency>
+  <param name="diagram-type" type="optiongroup" appearance="minimal" _gui-text="Select type of diagram">
+    <option value="Voronoi">Voronoi Diagram</option>
+    <option value="Delaunay">Delaunay Triangulation</option>
+    <option value="Both">Voronoi and Delaunay</option>
+  </param>
+  <param name="Voronoi Options" type="description" appearance="header">Options for Voronoi diagram</param>
+  <param name="clip-box" type="optiongroup" appearance="minimal" _gui-text="Area bounding the Voronoi diagram">
+    <option value="Page">Page</option>
+    <option value="Automatic from seeds">Automatic from seeds</option>
+  </param>
+  <param name="show-clip-box" type="boolean" _gui-text="Show the Voronoi bounding area"></param>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Generate from Path"/>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">voronoi2svg.py</command>
+  </script>
+</inkscape-extension>
