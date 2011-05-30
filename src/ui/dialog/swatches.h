@@ -23,6 +23,7 @@ namespace Dialogs {
 
 class ColorItem;
 class SwatchPage;
+class DocTrack;
 
 /**
  * A panel that displays paint swatches.
@@ -68,6 +69,8 @@ private:
 
     sigc::connection _documentConnection;
     sigc::connection _selChanged;
+
+    friend class DocTrack;
 };
 
 } //namespace Dialogs
