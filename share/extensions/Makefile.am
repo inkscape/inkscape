@@ -76,13 +76,9 @@ extensions = \
 	inkex.py \
 	Inkscape.pm \
 	inkwebeffect.py \
-	inkweb.js \
 	interp.py \
 	interp_att_g.py \
-	jessyInk.js \
 	jessyInk_autoTexts.py \
-	jessyInk_core_mouseHandler_noclick.js \
-	jessyInk_core_mouseHandler_zoomControl.js \
 	jessyInk_effects.py \
 	jessyInk_export.py \
 	jessyInk_install.py \
@@ -174,6 +170,10 @@ extensions = \
 	yocto_css.py
 
 otherstuff = \
+	inkweb.js \
+	jessyInk.js \
+	jessyInk_core_mouseHandler_noclick.js \
+	jessyInk_core_mouseHandler_zoomControl.js \
 	aisvg.xslt \
 	colors.xml \
 	jessyInk_video.svg \
