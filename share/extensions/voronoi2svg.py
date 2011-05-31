@@ -197,7 +197,14 @@ class Voronoi2svg(inkex.Effect):
   #}}}
 
   def effect(self):
-    svg = self.document.getroot()
+
+    #{{{ Check that elements have been selected
+
+    if len(self.options.ids) == 0:
+      inkex.errormsg("Please select seed objects!")
+      return
+
+    #}}}
 
     #{{{ Drawing styles
 
@@ -216,8 +223,9 @@ class Voronoi2svg(inkex.Effect):
     #}}}
 
     #{{{ Handle the transformation of the current group
+    parentGroup = self.getParentNode(self.selected[self.options.ids[0]])
 
-    trans = self.getGlobalTransform(self.current_layer)
+    trans = self.getGlobalTransform(parentGroup)
     invtrans = None
     if trans:
       invtrans = self.invertTransform(trans)
@@ -244,23 +252,19 @@ class Voronoi2svg(inkex.Effect):
         pts.append(Point(pt[0],pt[1]))
         seeds.append(Point(cx,cy))
 
-    if not seeds:
-      inkex.errormsg("Please select seed objects!")
-      return
-
     #}}}
 
     #{{{ Creation of groups to store the result
 
     if self.options.diagramType != 'Delaunay':
       # Voronoi
-      groupVoronoi = inkex.etree.SubElement(self.current_layer,inkex.addNS('g','svg'))
+      groupVoronoi = inkex.etree.SubElement(parentGroup,inkex.addNS('g','svg'))
       groupVoronoi.set(inkex.addNS('label', 'inkscape'), 'Voronoi')
       if invtrans:
         simpletransform.applyTransformToNode(invtrans,groupVoronoi)
     if self.options.diagramType != 'Voronoi':
       # Delaunay
-      groupDelaunay = inkex.etree.SubElement(self.current_layer,inkex.addNS('g','svg'))
+      groupDelaunay = inkex.etree.SubElement(parentGroup,inkex.addNS('g','svg'))
       groupDelaunay.set(inkex.addNS('label', 'inkscape'), 'Delaunay')
 
     #}}}
@@ -274,6 +278,7 @@ class Voronoi2svg(inkex.Effect):
       #Clipbox is the box to which the Voronoi diagram is restricted
       clipBox = ()
       if self.options.clipBox == 'Page':
+        svg = self.document.getroot()
         w = inkex.unittouu(svg.get('width'))
         h = inkex.unittouu(svg.get('height'))
         clipBox = (0,w,0,h)
