@@ -157,7 +157,7 @@ protected:
     LivePathEffectObject *lpeobj;
 
     // this boolean defaults to false, it concatenates the input path to one pwd2,
-    // instead of normally 'splitting' the path into continuous pwd2 paths.
+    // instead of normally 'splitting' the path into continuous pwd2 paths and calling doEffect_pwd2 for each.
     bool concatenate_before_pwd2;
 
 private:
