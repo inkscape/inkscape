@@ -170,6 +170,13 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
         }
 
     } else {
+
+        if (gl->label){
+            cairo_move_to(ctx, px - buf->rect.x0 + 5, py - buf->rect.y0);
+            cairo_rotate(ctx, atan2(gl->normal_to_line[Geom::X], gl->normal_to_line[Geom::Y]));
+            cairo_show_text(ctx, gl->label);
+        }
+
         // render angled line, once intersection has been detected, draw from there.
         Geom::Point parallel_to_line( gl->normal_to_line[Geom::Y],
                                       /*should be minus, but inverted y axis*/ gl->normal_to_line[Geom::X]);
@@ -206,12 +213,6 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
             // intersects with bottom horizontal!
             sp_guideline_drawline (buf, static_cast<gint>(round(x_intersect_bottom)), buf->rect.y1, static_cast<gint>(round(x_intersect_top)), buf->rect.y0, gl->rgba);
             return;
-        }
-
-        if (gl->label){
-            cairo_move_to(ctx, px - buf->rect.x0 + 5, py - buf->rect.y0);
-            cairo_rotate(ctx, atan2(gl->normal_to_line[Geom::X], gl->normal_to_line[Geom::Y]));
-            cairo_show_text(ctx, gl->label);
         }
     }
 }
