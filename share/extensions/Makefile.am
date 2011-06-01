@@ -92,6 +92,7 @@ extensions = \
 	jessyInk_view.py \
 	launch_webbrowser.py \
 	layers2svgfont.py \
+	svgfont2layers.py \
 	lindenmayer.py \
 	lorem_ipsum.py \
 	markers_strokepaint.py \
@@ -271,6 +272,7 @@ modules = \
 	jessyInk_video.inx \
 	jessyInk_view.inx \
 	layers2svgfont.inx \
+	svgfont2layers.inx \
 	lindenmayer.inx \
 	lorem_ipsum.inx \
 	markers_strokepaint.inx \
