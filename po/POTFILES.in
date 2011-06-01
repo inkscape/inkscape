@@ -392,6 +392,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/gcodetools_path_to_gcode.inx
 [type: gettext/xml] share/extensions/gcodetools_tools_library.inx
 [type: gettext/xml] share/extensions/generate_voronoi.inx
+[type: gettext/xml] share/extensions/voronoi2svg.inx
 [type: gettext/xml] share/extensions/gimp_xcf.inx
 [type: gettext/xml] share/extensions/grid_cartesian.inx
 [type: gettext/xml] share/extensions/grid_isometric.inx

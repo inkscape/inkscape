@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-23 06:44+0200\n"
+"POT-Creation-Date: 2011-06-01 19:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3893,7 +3893,7 @@ msgid "Move guide"
 msgstr ""
 
 #: ../src/desktop-events.cpp:412 ../src/desktop-events.cpp:458
-#: ../src/ui/dialog/guides.cpp:121
+#: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr ""
 
@@ -5932,72 +5932,72 @@ msgstr ""
 
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
-#: ../src/extension/extension.cpp:254
+#: ../src/extension/extension.cpp:258
 msgid ""
 "  This is caused by an improper .inx file for this extension.  An improper ."
 "inx file could have been caused by a faulty installation of Inkscape."
 msgstr ""
 
-#: ../src/extension/extension.cpp:257
+#: ../src/extension/extension.cpp:261
 msgid "an ID was not defined for it."
 msgstr ""
 
-#: ../src/extension/extension.cpp:261
+#: ../src/extension/extension.cpp:265
 msgid "there was no name defined for it."
 msgstr ""
 
-#: ../src/extension/extension.cpp:265
+#: ../src/extension/extension.cpp:269
 msgid "the XML description of it got lost."
 msgstr ""
 
-#: ../src/extension/extension.cpp:269
+#: ../src/extension/extension.cpp:273
 msgid "no implementation was defined for the extension."
 msgstr ""
 
 #. std::cout << "Failed: " << *(_deps[i]) << std::endl;
-#: ../src/extension/extension.cpp:276
+#: ../src/extension/extension.cpp:280
 msgid "a dependency was not met."
 msgstr ""
 
-#: ../src/extension/extension.cpp:296
+#: ../src/extension/extension.cpp:300
 msgid "Extension \""
 msgstr ""
 
-#: ../src/extension/extension.cpp:296
+#: ../src/extension/extension.cpp:300
 msgid "\" failed to load because "
 msgstr ""
 
-#: ../src/extension/extension.cpp:640
+#: ../src/extension/extension.cpp:654
 #, c-format
 msgid "Could not create extension error log file '%s'"
 msgstr ""
 
-#: ../src/extension/extension.cpp:738 ../src/ui/dialog/input.cpp:592
+#: ../src/extension/extension.cpp:752 ../src/ui/dialog/input.cpp:592
 #: ../share/extensions/webslicer_create_rect.inx.h:26
 msgid "Name:"
 msgstr ""
 
-#: ../src/extension/extension.cpp:739
+#: ../src/extension/extension.cpp:753
 msgid "ID:"
 msgstr ""
 
-#: ../src/extension/extension.cpp:740
+#: ../src/extension/extension.cpp:754
 msgid "State:"
 msgstr ""
 
-#: ../src/extension/extension.cpp:740
+#: ../src/extension/extension.cpp:754
 msgid "Loaded"
 msgstr ""
 
-#: ../src/extension/extension.cpp:740
+#: ../src/extension/extension.cpp:754
 msgid "Unloaded"
 msgstr ""
 
-#: ../src/extension/extension.cpp:740
+#: ../src/extension/extension.cpp:754
 msgid "Deactivated"
 msgstr ""
 
-#: ../src/extension/extension.cpp:771
+#: ../src/extension/extension.cpp:785
 msgid ""
 "Currently there is no help available for this Extension.  Please look on the "
 "Inkscape website or ask on the mailing lists if you have questions regarding "
@@ -6550,7 +6550,8 @@ msgstr ""
 #: ../src/extension/internal/bluredge.cpp:141
 #: ../share/extensions/extrude.inx.h:2
 #: ../share/extensions/generate_voronoi.inx.h:5
-#: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:2
+#: ../share/extensions/voronoi2svg.inx.h:4 ../share/extensions/interp.inx.h:3
+#: ../share/extensions/motion.inx.h:2
 #: ../share/extensions/pathalongpath.inx.h:4
 #: ../share/extensions/pathscatter.inx.h:5
 msgid "Generate from Path"
@@ -8313,7 +8314,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../src/gradient-context.cpp:389 ../src/gradient-context.cpp:482
-#: ../src/ui/dialog/swatches.cpp:187 ../src/widgets/gradient-vector.cpp:740
+#: ../src/ui/dialog/swatches.cpp:186 ../src/widgets/gradient-vector.cpp:740
 msgid "Add gradient stop"
 msgstr ""
 
@@ -8950,6 +8951,7 @@ msgstr ""
 #: ../src/ui/dialog/document-properties.cpp:117
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1429
 #: ../src/widgets/desktop-widget.cpp:1727
+#: ../share/extensions/voronoi2svg.inx.h:6
 msgid "Page"
 msgstr ""
 
@@ -11130,7 +11132,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:332 ../src/text-context.cpp:1027
-#: ../src/ui/dialog/swatches.cpp:209 ../src/ui/dialog/swatches.cpp:272
+#: ../src/ui/dialog/swatches.cpp:208 ../src/ui/dialog/swatches.cpp:271
 #: ../src/widgets/toolbox.cpp:1378 ../src/widgets/toolbox.cpp:6135
 msgid "Delete"
 msgstr ""
@@ -13487,7 +13489,6 @@ msgstr ""
 #: ../share/extensions/lorem_ipsum.inx.h:1 ../share/extensions/measure.inx.h:2
 #: ../share/extensions/pathalongpath.inx.h:5
 #: ../share/extensions/pathscatter.inx.h:6
-#: ../share/extensions/pixelsnap.inx.h:12
 #: ../share/extensions/radiusrand.inx.h:1 ../share/extensions/split.inx.h:1
 #: ../share/extensions/webslicer_create_group.inx.h:5
 #: ../share/extensions/webslicer_export.inx.h:5
@@ -14975,25 +14976,33 @@ msgstr ""
 msgid "Move and/or rotate the guide relative to current settings"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:45 ../src/widgets/toolbox.cpp:5141
+#: ../src/ui/dialog/guides.cpp:45
+msgid "Label:"
+msgstr ""
+
+#: ../src/ui/dialog/guides.cpp:45
+msgid "Optionally give this guideline a name"
+msgstr ""
+
+#: ../src/ui/dialog/guides.cpp:46 ../src/widgets/toolbox.cpp:5141
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
 msgid "Angle:"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:108
+#: ../src/ui/dialog/guides.cpp:112
 msgid "Set guide properties"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:147
+#: ../src/ui/dialog/guides.cpp:151
 msgid "Guideline"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:236
+#: ../src/ui/dialog/guides.cpp:243
 #, c-format
 msgid "Guideline ID: %s"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:242
+#: ../src/ui/dialog/guides.cpp:249
 #, c-format
 msgid "Current: %s"
 msgstr ""
@@ -17551,25 +17560,25 @@ msgid "Preview Text:"
 msgstr ""
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:252
+#: ../src/ui/dialog/swatches.cpp:251
 msgid "Set fill"
 msgstr ""
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:260
+#: ../src/ui/dialog/swatches.cpp:259
 msgid "Set stroke"
 msgstr ""
 
-#: ../src/ui/dialog/swatches.cpp:281 ../src/widgets/gradient-selector.cpp:148
+#: ../src/ui/dialog/swatches.cpp:280 ../src/widgets/gradient-selector.cpp:148
 #: ../src/widgets/gradient-toolbar.cpp:486
 msgid "Edit..."
 msgstr ""
 
-#: ../src/ui/dialog/swatches.cpp:293
+#: ../src/ui/dialog/swatches.cpp:292
 msgid "Convert"
 msgstr ""
 
-#: ../src/ui/dialog/swatches.cpp:528
+#: ../src/ui/dialog/swatches.cpp:527
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr ""
@@ -17840,7 +17849,6 @@ msgstr ""
 #: ../share/extensions/lorem_ipsum.inx.h:4
 #: ../share/extensions/pathalongpath.inx.h:7
 #: ../share/extensions/pathscatter.inx.h:10
-#: ../share/extensions/pixelsnap.inx.h:17
 #: ../share/extensions/radiusrand.inx.h:6 ../share/extensions/scour.inx.h:20
 #: ../share/extensions/split.inx.h:2
 #: ../share/extensions/webslicer_create_group.inx.h:7
@@ -23776,7 +23784,7 @@ msgstr ""
 #: ../share/extensions/interp_att_g.inx.h:12
 #: ../share/extensions/markers_strokepaint.inx.h:10
 #: ../share/extensions/perspective.inx.h:1
-#: ../share/extensions/pixelsnap.inx.h:16
+#: ../share/extensions/pixelsnap.inx.h:1
 #: ../share/extensions/radiusrand.inx.h:5
 #: ../share/extensions/rubberstretch.inx.h:3
 #: ../share/extensions/straightseg.inx.h:2
@@ -25097,6 +25105,38 @@ msgstr ""
 
 #: ../share/extensions/generate_voronoi.inx.h:9
 msgid "Voronoi Pattern"
+msgstr ""
+
+#: ../share/extensions/voronoi2svg.inx.h:1
+msgid "Area bounding the diagram:"
+msgstr ""
+
+#: ../share/extensions/voronoi2svg.inx.h:2
+msgid "Automatic from seeds"
+msgstr ""
+
+#: ../share/extensions/voronoi2svg.inx.h:3
+msgid "Delaunay Triangulation"
+msgstr ""
+
+#: ../share/extensions/voronoi2svg.inx.h:5
+msgid "Options for Voronoi diagram"
+msgstr ""
+
+#: ../share/extensions/voronoi2svg.inx.h:7
+msgid "Show the bounding area"
+msgstr ""
+
+#: ../share/extensions/voronoi2svg.inx.h:8
+msgid "Type of diagram:"
+msgstr ""
+
+#: ../share/extensions/voronoi2svg.inx.h:9
+msgid "Voronoi Diagram"
+msgstr ""
+
+#: ../share/extensions/voronoi2svg.inx.h:10
+msgid "Voronoi and Delaunay"
 msgstr ""
 
 #: ../share/extensions/gimp_xcf.inx.h:1
@@ -26507,53 +26547,14 @@ msgstr ""
 msgid "Perspective"
 msgstr ""
 
-#: ../share/extensions/pixelsnap.inx.h:1
-msgid ""
-"\n"
-"Snap selected paths, images, and rectangles to pixel boundaries. Strokes "
-"with a non-zero odd width are snapped to midpoints, so they align "
-"correctly.\n"
-"\n"
-"Options:\n"
-"  * Snap ancestors: snap unselected ancestors' translations (groups, layers, "
-"document height) first.\n"
-"  * Ancestor offset: calculate offset relative to unselected ancestors' "
-"transforms (includes document height offset).\n"
-"  * Modification type:\n"
-"    * Size and position: only move position and resize objects, don't touch "
-"paths (least damaging choice, fine for most scenarios).\n"
-"    * Shape: modify path shapes, size, and position of object (most "
-"effective, but can damage intricate paths).\n"
-"  * Maximum slope: maximum slope to consider straight."
-msgstr ""
-
-#: ../share/extensions/pixelsnap.inx.h:11
-msgid "Ancestor offset"
-msgstr ""
-
-#: ../share/extensions/pixelsnap.inx.h:14
-#, no-c-format
-msgid "Maximum slope (%):"
-msgstr ""
-
-#: ../share/extensions/pixelsnap.inx.h:15
-msgid "Modification type:"
-msgstr ""
-
-#: ../share/extensions/pixelsnap.inx.h:18
+#: ../share/extensions/pixelsnap.inx.h:2
 msgid "PixelSnap"
 msgstr ""
 
-#: ../share/extensions/pixelsnap.inx.h:19
-msgid "Shape"
-msgstr ""
-
-#: ../share/extensions/pixelsnap.inx.h:20
-msgid "Size and position"
-msgstr ""
-
-#: ../share/extensions/pixelsnap.inx.h:21
-msgid "Snap ancestors"
+#: ../share/extensions/pixelsnap.inx.h:3
+msgid ""
+"Snap all paths in selection to pixels. Snaps borders to half-points and "
+"fills to full points."
 msgstr ""
 
 #: ../share/extensions/plt_input.inx.h:1

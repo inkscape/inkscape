@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
-	<_name>Voronoi Diagram</_name>
+  <_name>Voronoi Diagram</_name>
   <id>org.inkscape.effect.voronoi</id>
   <dependency type="executable" location="extensions">voronoi2svg.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <dependency type="executable" location="extensions">voronoi.py</dependency>
-  <param name="diagram-type" type="optiongroup" appearance="minimal" _gui-text="Select type of diagram">
-    <option value="Voronoi">Voronoi Diagram</option>
-    <option value="Delaunay">Delaunay Triangulation</option>
-    <option value="Both">Voronoi and Delaunay</option>
+  <param name="diagram-type" type="enum" _gui-text="Type of diagram:">
+    <_item value="Voronoi">Voronoi Diagram</_item>
+    <_item value="Delaunay">Delaunay Triangulation</_item>
+    <_item value="Both">Voronoi and Delaunay</_item>
   </param>
-  <param name="Voronoi Options" type="description" appearance="header">Options for Voronoi diagram</param>
-  <param name="clip-box" type="optiongroup" appearance="minimal" _gui-text="Area bounding the Voronoi diagram">
-    <option value="Page">Page</option>
-    <option value="Automatic from seeds">Automatic from seeds</option>
+  <_param name="Voronoi Options" type="description" appearance="header">Options for Voronoi diagram</_param>
+  <param name="clip-box" type="enum" _gui-text="Area bounding the diagram:">
+    <_item value="Page">Page</_item>
+    <_item value="Automatic from seeds">Automatic from seeds</_item>
   </param>
-  <param name="show-clip-box" type="boolean" _gui-text="Show the Voronoi bounding area"></param>
+  <param name="show-clip-box" type="boolean" _gui-text="Show the bounding area"></param>
   <effect>
     <object-type>all</object-type>
     <effects-menu>
