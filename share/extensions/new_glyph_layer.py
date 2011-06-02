@@ -22,27 +22,31 @@ import sys
 class NewGlyphLayer(inkex.Effect):
 	def __init__(self):
 		inkex.Effect.__init__(self)
-		self.OptionParser.add_option("-u", "--unicodechar",
+		self.OptionParser.add_option("-u", "--unicodechars",
 						action="store", type="string",
-						dest="unicodechar", default='',
-						help="Unicode char")
+						dest="unicodechars", default='',
+						help="Unicode chars")
 
 	def effect(self):
 		# Get all the options
-		unicode_char = self.options.unicodechar
+		unicode_chars = self.options.unicodechars
+
+		#TODO: remove duplicate chars
 
 		# Get access to main SVG document element
 		svg = self.document.getroot()
 
-		# Create a new layer.
-		layer = inkex.etree.SubElement(svg, 'g')
-		layer.set(inkex.addNS('label', 'inkscape'), 'GlyphLayer-'+unicode_char)
-		layer.set(inkex.addNS('groupmode', 'inkscape'), 'layer')
-		layer.set('style', 'display:none') #initially not visible
+		for char in unicode_chars:
+			# Create a new layer.
+			layer = inkex.etree.SubElement(svg, 'g')
+			layer.set(inkex.addNS('label', 'inkscape'), 'GlyphLayer-'+char)
+			layer.set(inkex.addNS('groupmode', 'inkscape'), 'layer')
+			layer.set('style', 'display:none') #initially not visible
 
-		# Move selection to the newly created layer
-		for id,node in self.selected.iteritems():
-			layer.append(node)
+			#TODO: make it optional ("Use current selection as template glyph")
+			# Move selection to the newly created layer
+			for id,node in self.selected.iteritems():
+				layer.append(node)
 
 if __name__ == '__main__':
 	e = NewGlyphLayer()
