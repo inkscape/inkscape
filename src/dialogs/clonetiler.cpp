@@ -46,6 +46,7 @@
 #include "../verbs.h"
 #include "widgets/icon.h"
 #include "xml/repr.h"
+#include "sp-root.h"
 
 using Inkscape::DocumentUndo;
 

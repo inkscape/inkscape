@@ -29,8 +29,6 @@
 // XXX only for testing!
 #include "console-output-undo-observer.h"
 
-#define SP_DOCUMENT_DEFS(d) ((SPObject *) SP_ROOT(d->getRoot())->defs)
-
 namespace Inkscape {
 namespace XML {
 class Event;

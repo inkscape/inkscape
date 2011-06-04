@@ -54,6 +54,7 @@
 #include "preferences.h"
 #include "verbs.h"
 #include "interface.h"
+#include "sp-root.h"
 
 #include "extension/output.h"
 #include "extension/db.h"
@@ -784,7 +785,7 @@ sp_export_selection_modified ( Inkscape::Application */*inkscape*/,
             if ( SP_ACTIVE_DESKTOP ) {
                 SPDocument *doc;
                 doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
-                Geom::OptRect bbox = SP_ITEM(doc->root)->getBboxDesktop(SPItem::RENDERING_BBOX);
+                Geom::OptRect bbox = doc->getRoot()->getBboxDesktop(SPItem::RENDERING_BBOX);
                 if (bbox) {
                     sp_export_set_area (base, bbox->min()[Geom::X],
                                               bbox->min()[Geom::Y],
@@ -865,7 +866,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                 /** \todo
                  * This returns wrong values if the document has a viewBox.
                  */
-                bbox = SP_ITEM(doc->root)->getBboxDesktop(SPItem::RENDERING_BBOX);
+                bbox = doc->getRoot()->getBboxDesktop(SPItem::RENDERING_BBOX);
                 /* If the drawing is valid, then we'll use it and break
                    otherwise we drop through to the page settings */
                 if (bbox) {
@@ -1501,7 +1502,7 @@ sp_export_detect_size(GtkObject * base) {
             case SELECTION_DRAWING: {
                 SPDocument *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
-                Geom::OptRect bbox = SP_ITEM(doc->root)->getBboxDesktop(SPItem::RENDERING_BBOX);
+                Geom::OptRect bbox = doc->getRoot()->getBboxDesktop(SPItem::RENDERING_BBOX);
 
                 // std::cout << "Drawing " << bbox2;
                 if ( bbox && sp_export_bbox_equal(*bbox,current_bbox) ) {

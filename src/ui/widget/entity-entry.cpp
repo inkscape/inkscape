@@ -25,6 +25,7 @@
 #include "sp-object.h"
 #include "rdf.h"
 #include "ui/widget/registry.h"
+#include "sp-root.h"
 
 #include "entity-entry.h"
 
@@ -87,8 +88,8 @@ void EntityLineEntry::update(SPDocument *doc)
 {
     const char *text = rdf_get_work_entity (doc, _entity);
     // If RDF title is not set, get the document's <title> and set the RDF:
-    if ( !text && !strcmp(_entity->name, "title") && doc->root ) {
-        text = doc->root->title();
+    if ( !text && !strcmp(_entity->name, "title") && doc->getRoot() ) {
+        text = doc->getRoot()->title();
         rdf_set_work_entity(doc, _entity, text);
     }
     static_cast<Gtk::Entry*>(_packable)->set_text (text ? text : "");
@@ -133,8 +134,8 @@ void EntityMultiLineEntry::update(SPDocument *doc)
 {
     const char *text = rdf_get_work_entity (doc, _entity);
     // If RDF title is not set, get the document's <title> and set the RDF:
-    if ( !text && !strcmp(_entity->name, "title") && doc->root ) {
-        text = doc->root->title();
+    if ( !text && !strcmp(_entity->name, "title") && doc->getRoot() ) {
+        text = doc->getRoot()->title();
         rdf_set_work_entity(doc, _entity, text);
     }
     Gtk::ScrolledWindow *s = static_cast<Gtk::ScrolledWindow*>(_packable);

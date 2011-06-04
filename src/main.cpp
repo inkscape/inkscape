@@ -1353,7 +1353,7 @@ sp_do_export_png(SPDocument *doc)
     } else if (sp_export_area_page || !(sp_export_id || sp_export_area_drawing)) {
         /* Export the whole page: note: Inkscape uses 'page' in all menus and dialogs, not 'canvas' */
         doc->ensureUpToDate();
-        Geom::Point origin (SP_ROOT(doc->root)->x.computed, SP_ROOT(doc->root)->y.computed);
+        Geom::Point origin(doc->getRoot()->x.computed, doc->getRoot()->y.computed);
         area = Geom::Rect(origin, origin + doc->getDimensions());
     }
 

@@ -25,6 +25,7 @@
 #include "sp-paint-server.h"
 #include "xml/node.h"
 #include "xml/repr.h"
+#include "sp-root.h"
 
 typedef enum { REF_HREF, REF_STYLE, REF_URL, REF_CLIPBOARD } ID_REF_TYPE;
 

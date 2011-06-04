@@ -24,6 +24,7 @@
 #include "extension/output.h"
 #include <vector>
 #include "xml/attribute-record.h"
+#include "sp-root.h"
 
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs.h>

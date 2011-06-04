@@ -106,7 +106,7 @@ static SPGradient *sp_gradient_get_private_normalized(SPDocument *document, SPGr
     g_return_val_if_fail(SP_IS_GRADIENT(vector), NULL);
     g_return_val_if_fail(vector->hasStops(), NULL);
 
-    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+    SPDefs *defs = document->getDefs();
 
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
     // create a new private gradient of the requested type
@@ -208,7 +208,7 @@ SPGradient *sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradient *ve
     }
 
     SPDocument *doc = gr->document;
-    SPObject *defs = SP_DOCUMENT_DEFS(doc);
+    SPObject *defs = doc->getDefs();
 
     if ((gr->hasStops()) ||
         (gr->state != SP_GRADIENT_STATE_UNKNOWN) ||
@@ -259,7 +259,7 @@ SPGradient *sp_gradient_fork_vector_if_necessary(SPGradient *gr)
         Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
         Inkscape::XML::Node *repr = gr->getRepr()->duplicate(xml_doc);
-        SP_DOCUMENT_DEFS(doc)->getRepr()->addChild(repr, NULL);
+        doc->getDefs()->getRepr()->addChild(repr, NULL);
         SPGradient *gr_new = (SPGradient *) doc->getObjectByRepr(repr);
         gr_new = sp_gradient_ensure_vector_normalized (gr_new);
         Inkscape::GC::release(repr);
@@ -1198,7 +1198,7 @@ static void addStop( Inkscape::XML::Node *parent, Glib::ustring const &color, gi
  */
 SPGradient *sp_document_default_gradient_vector( SPDocument *document, SPColor const &color, bool singleStop )
 {
-    SPDefs *defs = static_cast<SPDefs *>(SP_DOCUMENT_DEFS(document));
+    SPDefs *defs = document->getDefs();
     Inkscape::XML::Document *xml_doc = document->rdoc;
 
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:linearGradient");

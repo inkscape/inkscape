@@ -214,6 +214,11 @@ SPDocument::~SPDocument() {
     //delete this->_whiteboard_session_manager;
 }
 
+SPDefs *SPDocument::getDefs()
+{
+    return root->defs;
+}
+
 Persp3D *
 SPDocument::getCurrentPersp3D() {
     // Check if current_persp3d is still valid
@@ -243,8 +248,7 @@ SPDocument::setCurrentPersp3D(Persp3D * const persp) {
 
 void SPDocument::getPerspectivesInDefs(std::vector<Persp3D*> &list) const
 {
-    SPDefs *defs = SP_ROOT(this->root)->defs;
-    for (SPObject *i = defs->firstChild(); i; i = i->getNext() ) {
+    for (SPObject *i = root->defs->firstChild(); i; i = i->getNext() ) {
         if (SP_IS_PERSP3D(i)) {
             list.push_back(SP_PERSP3D(i));
         }
@@ -348,7 +352,7 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
     rroot->setAttribute("baseProfile", NULL);
 
     // creating namedview
-    if (!sp_item_group_get_child_by_name((SPGroup *) document->root, NULL, "sodipodi:namedview")) {
+    if (!sp_item_group_get_child_by_name(document->root, NULL, "sodipodi:namedview")) {
         // if there's none in the document already,
         Inkscape::XML::Node *rnew = NULL;
 
@@ -388,13 +392,12 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
         Inkscape::GC::release(rnew);
     }
 
-    /* Defs */
-    if (!SP_ROOT(document->root)->defs) {
-        Inkscape::XML::Node *r;
-        r = rdoc->createElement("svg:defs");
+    // Defs
+    if (!document->root->defs) {
+        Inkscape::XML::Node *r = rdoc->createElement("svg:defs");
         rroot->addChild(r, NULL);
         Inkscape::GC::release(r);
-        g_assert(SP_ROOT(document->root)->defs);
+        g_assert(document->root->defs);
     }
 
     /* Default RDF */
@@ -520,17 +523,15 @@ gdouble SPDocument::getWidth() const
     g_return_val_if_fail(this->priv != NULL, 0.0);
     g_return_val_if_fail(this->root != NULL, 0.0);
 
-    SPRoot *root = SP_ROOT(this->root);
-
-    if (root->width.unit == SVGLength::PERCENT && root->viewBox_set)
-        return root->viewBox.x1 - root->viewBox.x0;
-    return root->width.computed;
+    gdouble result = root->width.computed;
+    if (root->width.unit == SVGLength::PERCENT && root->viewBox_set) {
+        result = root->viewBox.x1 - root->viewBox.x0;
+    }
+    return result;
 }
 
 void SPDocument::setWidth(gdouble width, const SPUnit *unit)
 {
-    SPRoot *root = SP_ROOT(this->root);
-
     if (root->width.unit == SVGLength::PERCENT && root->viewBox_set) { // set to viewBox=
         root->viewBox.x1 = root->viewBox.x0 + sp_units_get_pixels (width, *unit);
     } else { // set to width=
@@ -555,8 +556,6 @@ void SPDocument::setWidth(gdouble width, const SPUnit *unit)
 
 void SPDocument::setHeight(gdouble height, const SPUnit *unit)
 {
-    SPRoot *root = SP_ROOT(this->root);
-
     if (root->height.unit == SVGLength::PERCENT && root->viewBox_set) { // set to viewBox=
         root->viewBox.y1 = root->viewBox.y0 + sp_units_get_pixels (height, *unit);
     } else { // set to height=
@@ -584,11 +583,11 @@ gdouble SPDocument::getHeight() const
     g_return_val_if_fail(this->priv != NULL, 0.0);
     g_return_val_if_fail(this->root != NULL, 0.0);
 
-    SPRoot *root = SP_ROOT(this->root);
-
-    if (root->height.unit == SVGLength::PERCENT && root->viewBox_set)
-        return root->viewBox.y1 - root->viewBox.y0;
-    return root->height.computed;
+    gdouble result = root->height.computed;
+    if (root->height.unit == SVGLength::PERCENT && root->viewBox_set) {
+        result = root->viewBox.y1 - root->viewBox.y0;
+    }
+    return result;
 }
 
 Geom::Point SPDocument::getDimensions() const
@@ -649,7 +648,7 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
     Geom::Translate const tr(
             Geom::Point(0, old_height - rect_with_margins.height())
             - to_2geom(rect_with_margins.min()));
-    SP_GROUP(root)->translateChildItems(tr);
+    root->translateChildItems(tr);
 
     if(nv) {
         Geom::Translate tr2(-rect_with_margins.min());
@@ -922,17 +921,16 @@ void SPDocument::requestModified()
     }
 }
 
-void
-sp_document_setup_viewport (SPDocument *doc, SPItemCtx *ctx)
+void SPDocument::setupViewport(SPItemCtx *ctx)
 {
     ctx->ctx.flags = 0;
     ctx->i2doc = Geom::identity();
-    /* Set up viewport in case svg has it defined as percentages */
-    if (SP_ROOT(doc->root)->viewBox_set) { // if set, take from viewBox
-        ctx->vp.x0 = SP_ROOT(doc->root)->viewBox.x0;
-        ctx->vp.y0 = SP_ROOT(doc->root)->viewBox.y0;
-        ctx->vp.x1 = SP_ROOT(doc->root)->viewBox.x1;
-        ctx->vp.y1 = SP_ROOT(doc->root)->viewBox.y1;
+    // Set up viewport in case svg has it defined as percentages
+    if (root->viewBox_set) { // if set, take from viewBox
+        ctx->vp.x0 = root->viewBox.x0;
+        ctx->vp.y0 = root->viewBox.y0;
+        ctx->vp.x1 = root->viewBox.x1;
+        ctx->vp.y1 = root->viewBox.y1;
     } else { // as a last resort, set size to A4
         ctx->vp.x0 = 0.0;
         ctx->vp.y0 = 0.0;
@@ -954,7 +952,7 @@ SPDocument::_updateDocument()
     if (this->root->uflags || this->root->mflags) {
         if (this->root->uflags) {
             SPItemCtx ctx;
-            sp_document_setup_viewport (this, &ctx);
+            setupViewport(&ctx);
 
             bool saved = DocumentUndo::getUndoSensitive(this);
             DocumentUndo::setUndoSensitive(this, false);

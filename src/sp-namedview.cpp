@@ -34,6 +34,7 @@
 #include "preferences.h"
 #include "desktop.h"
 #include "conn-avoid-ref.h" // for defaultConnSpacing.
+#include "sp-root.h"
 
 using Inkscape::DocumentUndo;
 
@@ -1013,7 +1014,7 @@ SPNamedView *sp_document_namedview(SPDocument *document, const gchar *id)
 {
     g_return_val_if_fail(document != NULL, NULL);
 
-    SPObject *nv = sp_item_group_get_child_by_name((SPGroup *) document->root, NULL, "sodipodi:namedview");
+    SPObject *nv = sp_item_group_get_child_by_name(document->getRoot(), NULL, "sodipodi:namedview");
     g_assert(nv != NULL);
 
     if (id == NULL) {
@@ -1021,7 +1022,7 @@ SPNamedView *sp_document_namedview(SPDocument *document, const gchar *id)
     }
 
     while (nv && strcmp(nv->getId(), id)) {
-        nv = sp_item_group_get_child_by_name((SPGroup *) document->root, nv, "sodipodi:namedview");
+        nv = sp_item_group_get_child_by_name(document->getRoot(), nv, "sodipodi:namedview");
     }
 
     return (SPNamedView *) nv;

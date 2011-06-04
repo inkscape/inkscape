@@ -58,6 +58,7 @@
 #include "ui/widget/selected-style.h"
 #include "ui/uxmanager.h"
 #include "util/ege-appear-time-tracker.h"
+#include "sp-root.h"
 
 // We're in the "widgets" directory, so no need to explicitly prefix these:
 #include "button.h"
@@ -1888,9 +1889,8 @@ sp_desktop_widget_update_scrollbars (SPDesktopWidget *dtw, double scale)
     SPDocument *doc = dtw->desktop->doc();
     Geom::Rect darea ( Geom::Point(-doc->getWidth(), -doc->getHeight()),
                      Geom::Point(2 * doc->getWidth(), 2 * doc->getHeight())  );
-    SPObject* root = doc->root;
-    SPItem* item = SP_ITEM(root);
-    Geom::OptRect deskarea = Geom::unify(darea, item->getBboxDesktop());
+
+    Geom::OptRect deskarea = Geom::unify(darea, doc->getRoot()->getBboxDesktop());
 
     /* Canvas region we always show unconditionally */
     Geom::Rect carea( Geom::Point(deskarea->min()[Geom::X] * scale - 64, deskarea->max()[Geom::Y] * -scale - 64),

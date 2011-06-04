@@ -354,7 +354,7 @@ Parameter::new_child (Inkscape::XML::Node * parent)
 Inkscape::XML::Node *Parameter::document_param_node(SPDocument * doc)
 {
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
-    Inkscape::XML::Node * defs = SP_DOCUMENT_DEFS(doc)->getRepr();
+    Inkscape::XML::Node * defs = doc->getDefs()->getRepr();
     Inkscape::XML::Node * params = NULL;
 
     GQuark const name_quark = g_quark_from_string("inkscape:extension-params");

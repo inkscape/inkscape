@@ -190,7 +190,7 @@ static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, g
  * circumstances, after 'vacuum defs' or when a pre-0.46 file is opened).
  */
 static void sp_box3d_context_ensure_persp_in_defs(SPDocument *document) {
-    SPDefs *defs = reinterpret_cast<SPDefs *>(SP_DOCUMENT_DEFS(document));
+    SPDefs *defs = document->getDefs();
 
     bool has_persp = false;
     for ( SPObject *child = defs->firstChild(); child; child = child->getNext() ) {

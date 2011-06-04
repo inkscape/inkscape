@@ -894,7 +894,7 @@ void ClipboardManagerImpl::_pasteDefs(SPDesktop *desktop, SPDocument *clipdoc)
     SPDocument *target_document = sp_desktop_document(desktop);
     Inkscape::XML::Node *root = clipdoc->getReprRoot();
     Inkscape::XML::Node *defs = sp_repr_lookup_name(root, "svg:defs", 1);
-    Inkscape::XML::Node *target_defs = SP_DOCUMENT_DEFS(target_document)->getRepr();
+    Inkscape::XML::Node *target_defs = target_document->getDefs()->getRepr();
     Inkscape::XML::Document *target_xmldoc = target_document->getReprDoc();
 
     prevent_id_clashes(clipdoc, target_document);
@@ -1197,7 +1197,7 @@ void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint /*info*/)
             gdouble dpi = PX_PER_IN;
             guint32 bgcolor = 0x00000000;
 
-            Geom::Point origin (SP_ROOT(_clipboardSPDoc->root)->x.computed, SP_ROOT(_clipboardSPDoc->root)->y.computed);
+            Geom::Point origin (_clipboardSPDoc->getRoot()->x.computed, _clipboardSPDoc->getRoot()->y.computed);
             Geom::Rect area = Geom::Rect(origin, origin + _clipboardSPDoc->getDimensions());
 
             unsigned long int width = (unsigned long int) (area.width() * dpi / PX_PER_IN + 0.5);
@@ -1254,7 +1254,7 @@ void ClipboardManagerImpl::_createInternalClipboard()
     if ( _clipboardSPDoc == NULL ) {
         _clipboardSPDoc = SPDocument::createNewDoc(NULL, false, true);
         //g_assert( _clipboardSPDoc != NULL );
-        _defs = SP_DOCUMENT_DEFS(_clipboardSPDoc)->getRepr();
+        _defs = _clipboardSPDoc->getDefs()->getRepr();
         _doc = _clipboardSPDoc->getReprDoc();
         _root = _clipboardSPDoc->getReprRoot();
 

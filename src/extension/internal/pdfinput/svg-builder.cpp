@@ -531,7 +531,7 @@ void SvgBuilder::setClipPath(GfxState *state, bool even_odd) {
     clip_path->appendChild(path);
     Inkscape::GC::release(path);
     // Append clipPath to defs and get id
-    SP_DOCUMENT_DEFS(_doc)->getRepr()->appendChild(clip_path);
+    _doc->getDefs()->getRepr()->appendChild(clip_path);
     gchar *urltext = g_strdup_printf ("url(#%s)", clip_path->attribute("id"));
     Inkscape::GC::release(clip_path);
     _container->setAttribute("clip-path", urltext);
@@ -678,7 +678,7 @@ gchar *SvgBuilder::_createTilingPattern(GfxTilingPattern *tiling_pattern,
     delete pattern_builder;
 
     // Append the pattern to defs
-    SP_DOCUMENT_DEFS(_doc)->getRepr()->appendChild(pattern_node);
+    _doc->getDefs()->getRepr()->appendChild(pattern_node);
     gchar *id = g_strdup(pattern_node->attribute("id"));
     Inkscape::GC::release(pattern_node);
 
@@ -752,7 +752,7 @@ gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix, bool for
         return NULL;
     }
 
-    Inkscape::XML::Node *defs = SP_DOCUMENT_DEFS(_doc)->getRepr();
+    Inkscape::XML::Node *defs = _doc->getDefs()->getRepr();
     defs->appendChild(gradient);
     gchar *id = g_strdup(gradient->attribute("id"));
     Inkscape::GC::release(gradient);
@@ -1635,9 +1635,9 @@ Inkscape::XML::Node *SvgBuilder::_createMask(double width, double height) {
     sp_repr_set_svg_double(mask_node, "height", height);
     // Append mask to defs
     if (_is_top_level) {
-        SP_DOCUMENT_DEFS(_doc)->getRepr()->appendChild(mask_node);
+        _doc->getDefs()->getRepr()->appendChild(mask_node);
         Inkscape::GC::release(mask_node);
-        return SP_DOCUMENT_DEFS(_doc)->getRepr()->lastChild();
+        return _doc->getDefs()->getRepr()->lastChild();
     } else {    // Work around for renderer bug when mask isn't defined in pattern
         static int mask_count = 0;
         Inkscape::XML::Node *defs = _root->firstChild();

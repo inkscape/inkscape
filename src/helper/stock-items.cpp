@@ -69,7 +69,7 @@ static SPObject * sp_marker_load_from_svg(gchar const *name, SPDocument *current
         /* Get the marker we want */
         SPObject *object = doc->getObjectById(name);
         if (object && SP_IS_MARKER(object)) {
-            SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(current_doc);
+            SPDefs *defs = current_doc->getDefs();
             Inkscape::XML::Document *xml_doc = current_doc->getReprDoc();
             Inkscape::XML::Node *mark_repr = object->getRepr()->duplicate(xml_doc);
             defs->getRepr()->addChild(mark_repr, NULL);
@@ -113,7 +113,7 @@ sp_pattern_load_from_svg(gchar const *name, SPDocument *current_doc)
         /* Get the pattern we want */
         SPObject *object = doc->getObjectById(name);
         if (object && SP_IS_PATTERN(object)) {
-            SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(current_doc);
+            SPDefs *defs = current_doc->getDefs();
             Inkscape::XML::Document *xml_doc = current_doc->getReprDoc();
             Inkscape::XML::Node *pat_repr = object->getRepr()->duplicate(xml_doc);
             defs->getRepr()->addChild(pat_repr, NULL);
@@ -156,7 +156,7 @@ sp_gradient_load_from_svg(gchar const *name, SPDocument *current_doc)
         /* Get the gradient we want */
         SPObject *object = doc->getObjectById(name);
         if (object && SP_IS_GRADIENT(object)) {
-            SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(current_doc);
+            SPDefs *defs = current_doc->getDefs();
             Inkscape::XML::Document *xml_doc = current_doc->getReprDoc();
             Inkscape::XML::Node *pat_repr = object->getRepr()->duplicate(xml_doc);
             defs->getRepr()->addChild(pat_repr, NULL);
@@ -195,7 +195,7 @@ SPObject *get_stock_item(gchar const *urn)
 
         SPDesktop *desktop = inkscape_active_desktop();
         SPDocument *doc = sp_desktop_document(desktop);
-        SPDefs *defs = reinterpret_cast<SPDefs *>(SP_DOCUMENT_DEFS(doc));
+        SPDefs *defs = doc->getDefs();
 
         SPObject *object = NULL;
         if (!strcmp(base, "marker")) {

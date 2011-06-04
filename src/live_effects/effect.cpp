@@ -262,7 +262,7 @@ void Effect::createAndApply(const char* name, SPDocument *doc, SPItem *item)
     Inkscape::XML::Node *repr = xml_doc->createElement("inkscape:path-effect");
     repr->setAttribute("effect", name);
 
-    SP_DOCUMENT_DEFS(doc)->getRepr()->addChild(repr, NULL); // adds to <defs> and assigns the 'id' attribute
+    doc->getDefs()->getRepr()->addChild(repr, NULL); // adds to <defs> and assigns the 'id' attribute
     const gchar * repr_id = repr->attribute("id");
     Inkscape::GC::release(repr);
 

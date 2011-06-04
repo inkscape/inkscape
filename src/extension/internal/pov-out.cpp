@@ -35,6 +35,7 @@
 #include "helper/geom.h"
 #include "helper/geom-curves.h"
 #include <io/sys.h>
+#include "sp-root.h"
 
 #include <string>
 #include <stdio.h>
@@ -485,7 +486,7 @@ bool PovOutput::doTree(SPDocument *doc)
     miny  =  bignum;
     maxy  = -bignum;
 
-    if (!doTreeRecursive(doc, doc->root))
+    if (!doTreeRecursive(doc, doc->getRoot()))
         return false;
 
     //## Let's make a union of all of the Shapes

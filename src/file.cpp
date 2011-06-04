@@ -802,7 +802,7 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, Inkscape::Extens
     } else {
         dialog_title = (char const *) _("Select file to save to");
     }
-    gchar* doc_title = doc->root->title();
+    gchar* doc_title = doc->getRoot()->title();
     Inkscape::UI::Dialog::FileSaveDialog *saveDialog =
         Inkscape::UI::Dialog::FileSaveDialog::create(
             parentWindow,
@@ -975,7 +975,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
 
         prevent_id_clashes(doc, in_doc);
 
-        SPObject *in_defs = SP_DOCUMENT_DEFS(in_doc);
+        SPObject *in_defs = in_doc->getDefs();
         Inkscape::XML::Node *last_def = in_defs->getRepr()->lastChild();
 
         SPCSSAttr *style = sp_css_attr_from_object(doc->getRoot());
@@ -1051,7 +1051,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
             // preserve parent and viewBox transformations
             // c2p is identity matrix at this point unless ensureUpToDate is called
             doc->ensureUpToDate();
-            Geom::Affine affine = SP_ROOT(doc->getRoot())->c2p * SP_ITEM(place_to_insert)->i2doc_affine().inverse();
+            Geom::Affine affine = doc->getRoot()->c2p * SP_ITEM(place_to_insert)->i2doc_affine().inverse();
             sp_selection_apply_affine(selection, desktop->dt2doc() * affine * desktop->doc2dt(), true, false);
 
             // move to mouse pointer

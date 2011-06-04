@@ -268,7 +268,7 @@ sp_mask_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
 const gchar *
 sp_mask_create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform)
 {
-    Inkscape::XML::Node *defsrepr = SP_DOCUMENT_DEFS(document)->getRepr();
+    Inkscape::XML::Node *defsrepr = document->getDefs()->getRepr();
 
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:mask");

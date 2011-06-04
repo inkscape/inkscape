@@ -713,7 +713,7 @@ sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destro
 const gchar *generate_marker(GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Affine /*transform*/, Geom::Affine move)
 {
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
-    Inkscape::XML::Node *defsrepr = SP_DOCUMENT_DEFS(document)->getRepr();
+    Inkscape::XML::Node *defsrepr = document->getDefs()->getRepr();
 
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:marker");
 

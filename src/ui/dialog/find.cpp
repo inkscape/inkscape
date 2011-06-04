@@ -50,6 +50,7 @@
 #include "sp-use.h"
 #include "sp-image.h"
 #include "sp-offset.h"
+#include "sp-root.h"
 #include "xml/repr.h"
 
 

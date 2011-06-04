@@ -25,6 +25,8 @@
 #include "enums.h"
 #include "sp-item-group.h"
 
+class SPDefs;
+
 /** \<svg\> element */
 struct SPRoot : public SPGroup {
     struct {

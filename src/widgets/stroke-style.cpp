@@ -225,7 +225,7 @@ ink_marker_list_get (SPDocument *source)
         return NULL;
 
     GSList *ml   = NULL;
-    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS (source);
+    SPDefs *defs = source->getDefs();
     for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )
     {
         if (SP_IS_MARKER(child)) {

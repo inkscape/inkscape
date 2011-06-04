@@ -44,6 +44,7 @@ struct SPDesktop;
 struct SPItem;
 struct SPObject;
 struct SPGroup;
+struct SPRoot;
 
 namespace Inkscape {
     struct Application;
@@ -57,9 +58,11 @@ namespace Inkscape {
     }
 }
 
+class SPDefs;
 class SP3DBox;
 class Persp3D;
 class Persp3DImpl;
+class SPItemCtx;
 
 namespace Proj {
     class TransfMat3x4;
@@ -72,6 +75,8 @@ class SPDocument : public Inkscape::GC::Managed<>,
                     public Inkscape::GC::Finalized,
                     public Inkscape::GC::Anchored
 {
+// Note: multiple public and private sections is not a good practice, but happens
+// in this class as transitional to fixing encapsulation:
 public:
     typedef sigc::signal<void, SPObject *> IDChangedSignal;
     typedef sigc::signal<void> ResourcesChangedSignal;
@@ -91,7 +96,9 @@ public:
 
     Inkscape::XML::Document *rdoc; ///< Our Inkscape::XML::Document
     Inkscape::XML::Node *rroot; ///< Root element of Inkscape::XML::Document
-    SPObject *root;             ///< Our SPRoot
+private:
+    SPRoot *root;             ///< Our SPRoot
+public:
     CRCascade *style_cascade;
 
 protected:
@@ -122,7 +129,7 @@ public:
     bool oldSignalsConnected;
 
     /** Returns our SPRoot */
-    SPObject *getRoot() { return root; }
+    SPRoot *getRoot() { return root; }
 
     Inkscape::XML::Node *getReprRoot() { return rroot; }
 
@@ -140,6 +147,9 @@ public:
 
     /** basename(uri) or other human-readable label for the document. */
     gchar const* getName() const { return name; }
+
+    /** Return the main defs object for the document. */
+    SPDefs *getDefs();
 
 
     void setCurrentPersp3D(Persp3D * const persp);
@@ -248,6 +258,7 @@ public:
 
 private:
     void do_change_uri(gchar const *const filename, bool const rebase);
+    void setupViewport(SPItemCtx *ctx);
 };
 
 struct SPUnit;

@@ -357,7 +357,7 @@ sp_clippath_view_list_remove(SPClipPathView *list, SPClipPathView *view)
 // Create a mask element (using passed elements), add it to <defs>
 const gchar *SPClipPath::create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform)
 {
-    Inkscape::XML::Node *defsrepr = SP_DOCUMENT_DEFS(document)->getRepr();
+    Inkscape::XML::Node *defsrepr = document->getDefs()->getRepr();
 
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:clipPath");

@@ -52,12 +52,6 @@ class SPDocumentClass;
 class SPGroup;
 class SPGroupClass;
 
-class SPDefs;
-class SPDefsClass;
-
-class SPRoot;
-class SPRootClass;
-
 class SPNamedView;
 class SPNamedViewClass;
 

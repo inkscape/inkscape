@@ -858,8 +858,8 @@ void SwatchesPanel::_trackDocument( SwatchesPanel *panel, SPDocument *document )
             docPerPanel[panel] = document;
             if (!found) {
                 sigc::connection conn1 = document->connectResourcesChanged( "gradient", sigc::bind(sigc::ptr_fun(&SwatchesPanel::handleGradientsChange), document) );
-                sigc::connection conn2 = SP_DOCUMENT_DEFS(document)->connectRelease( sigc::hide(sigc::bind(sigc::ptr_fun(&SwatchesPanel::handleDefsModified), document)) );
-                sigc::connection conn3 = SP_DOCUMENT_DEFS(document)->connectModified( sigc::hide(sigc::hide(sigc::bind(sigc::ptr_fun(&SwatchesPanel::handleDefsModified), document))) );
+                sigc::connection conn2 = document->getDefs()->connectRelease( sigc::hide(sigc::bind(sigc::ptr_fun(&SwatchesPanel::handleDefsModified), document)) );
+                sigc::connection conn3 = document->getDefs()->connectModified( sigc::hide(sigc::hide(sigc::bind(sigc::ptr_fun(&SwatchesPanel::handleDefsModified), document))) );
 
                 DocTrack *dt = new DocTrack(document, conn1, conn2, conn3);
                 docTrackings.push_back(dt);

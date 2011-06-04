@@ -422,7 +422,7 @@ PageSizer::setDim (double w, double h, bool changeList)
         // The origin for the user is in the lower left corner; this point should remain stationary when
         // changing the page size. The SVG's origin however is in the upper left corner, so we must compensate for this
         Geom::Translate const vert_offset(Geom::Point(0, (old_height - h)));
-        SP_GROUP(SP_ROOT(doc->root))->translateChildItems(vert_offset);
+        doc->getRoot()->translateChildItems(vert_offset);
         DocumentUndo::done(doc, SP_VERB_NONE, _("Set page size"));
     }
 

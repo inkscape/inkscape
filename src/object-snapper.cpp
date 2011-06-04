@@ -36,6 +36,7 @@
 #include "sp-mask.h"
 #include "helper/geom-curves.h"
 #include "desktop.h"
+#include "sp-root.h"
 
 Inkscape::ObjectSnapper::ObjectSnapper(SnapManager *sm, Geom::Coord const d)
     : Snapper(sm, d)

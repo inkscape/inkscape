@@ -20,6 +20,7 @@
 #include "document.h"
 
 #include "sp-item-group.h"
+#include "sp-root.h"
 
 #define noDEBUG_METADATA
 #ifdef DEBUG_METADATA
@@ -213,7 +214,7 @@ sp_document_metadata (SPDocument *document)
 
     g_return_val_if_fail (document != NULL, NULL);
 
-    nv = sp_item_group_get_child_by_name ((SPGroup *) document->root, NULL,
+    nv = sp_item_group_get_child_by_name( document->getRoot(), NULL,
                                         "metadata");
     g_assert (nv != NULL);
 

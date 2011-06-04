@@ -794,7 +794,7 @@ SPFont *new_font(SPDocument *document)
 {
     g_return_val_if_fail(document != NULL, NULL);
 
-    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+    SPDefs *defs = document->getDefs();
 
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
 
@@ -911,7 +911,7 @@ SvgFontsDialog::SvgFontsDialog()
     _FontsList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &SvgFontsDialog::fonts_list_button_release));
     create_fonts_popup_menu(_FontsList, sigc::mem_fun(*this, &SvgFontsDialog::remove_selected_font));
 
-    _defs_observer.set(SP_DOCUMENT_DEFS(sp_desktop_document(this->getDesktop())));
+    _defs_observer.set(sp_desktop_document(this->getDesktop())->getDefs());
     _defs_observer.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::update_fonts));
 
     _getContents()->show_all();

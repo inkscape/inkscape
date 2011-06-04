@@ -60,6 +60,7 @@ sp_find_dialog(){
 #include "../sp-image.h"
 #include "../sp-offset.h"
 #include <xml/repr.h>
+#include "sp-root.h"
 
 #define MIN_ONSCREEN_DISTANCE 50
 

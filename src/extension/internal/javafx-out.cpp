@@ -38,7 +38,7 @@
 #include "helper/geom.h"
 #include "helper/geom-curves.h"
 #include <io/sys.h>
-
+#include "sp-root.h"
 
 #include <string>
 #include <stdio.h>
@@ -758,7 +758,7 @@ bool JavaFXOutput::doTree(SPDocument *doc)
     miny  =  bignum;
     maxy  = -bignum;
 
-    if (!doTreeRecursive(doc, doc->root)) {
+    if (!doTreeRecursive(doc, doc->getRoot())) {
         return false;
     }
 
@@ -875,7 +875,7 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
     out("           content: [\n");
     idindex    = 0;
 
-    doBody(doc, doc->root);
+    doBody(doc, doc->getRoot());
 
     if (!doTail()) {
         return false;

@@ -542,13 +542,10 @@ Flowing in rectangle is possible, not in arb shape.
     fprintf(_stream, "%s", os.str().c_str());
 }
 
-void
-LaTeXTextRenderer::sp_root_render(SPItem *item)
+void LaTeXTextRenderer::sp_root_render(SPRoot *root)
 {
-    SPRoot *root = SP_ROOT(item);
-
     push_transform(root->c2p);
-    sp_group_render(item);
+    sp_group_render(root);
     pop_transform();
 }
 
@@ -561,7 +558,7 @@ LaTeXTextRenderer::sp_item_invoke_render(SPItem *item)
     }
 
     if (SP_IS_ROOT(item)) {
-        return sp_root_render(item);
+        return sp_root_render(SP_ROOT(item));
     } else if (SP_IS_GROUP(item)) {
         return sp_group_render(item);
     } else if (SP_IS_USE(item)) {

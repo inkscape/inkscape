@@ -217,7 +217,7 @@ void
 box3d_side_set_shape (SPShape *shape)
 {
     Box3DSide *side = SP_BOX3D_SIDE (shape);
-    if (!side->document->root) {
+    if (!side->document->getRoot()) {
         // avoid a warning caused by sp_document_height() (which is called from sp_item_i2d_affine() below)
         // when reading a file containing 3D boxes
         return;

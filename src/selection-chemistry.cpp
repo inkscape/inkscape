@@ -3234,7 +3234,7 @@ fit_canvas_to_drawing(SPDocument *doc, bool with_margins)
     g_return_val_if_fail(doc != NULL, false);
 
     doc->ensureUpToDate();
-    SPItem const *const root = SP_ITEM(doc->root);
+    SPItem const *const root = doc->getRoot();
     Geom::OptRect const bbox(root->getBounds(root->i2d_affine(), SPItem::RENDERING_BBOX));
     if (bbox) {
         doc->fitToRect(*bbox, with_margins);

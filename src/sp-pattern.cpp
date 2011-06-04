@@ -469,7 +469,7 @@ SPPattern *pattern_chain(SPPattern *pattern)
 {
 	SPDocument *document = pattern->document;
         Inkscape::XML::Document *xml_doc = document->getReprDoc();
-	Inkscape::XML::Node *defsrepr = SP_DOCUMENT_DEFS(document)->getRepr();
+	Inkscape::XML::Node *defsrepr = document->getDefs()->getRepr();
 
 	Inkscape::XML::Node *repr = xml_doc->createElement("svg:pattern");
 	repr->setAttribute("inkscape:collect", "always");
@@ -522,7 +522,7 @@ sp_pattern_transform_multiply (SPPattern *pattern, Geom::Affine postmul, bool se
 const gchar *pattern_tile(GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Affine transform, Geom::Affine move)
 {
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
-    Inkscape::XML::Node *defsrepr = SP_DOCUMENT_DEFS(document)->getRepr();
+    Inkscape::XML::Node *defsrepr = document->getDefs()->getRepr();
 
 	Inkscape::XML::Node *repr = xml_doc->createElement("svg:pattern");
 	repr->setAttribute("patternUnits", "userSpaceOnUse");

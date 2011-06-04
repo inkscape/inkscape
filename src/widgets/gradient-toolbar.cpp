@@ -521,9 +521,9 @@ GtkWidget * gr_change_widget(SPDesktop *desktop)
 
     // connect to release and modified signals of the defs (i.e. when someone changes gradient)
     sigc::connection *release_connection = new sigc::connection();
-    *release_connection = SP_DOCUMENT_DEFS(document)->connectRelease(sigc::bind<1>(sigc::ptr_fun(&gr_defs_release), widget));
+    *release_connection = document->getDefs()->connectRelease(sigc::bind<1>(sigc::ptr_fun(&gr_defs_release), widget));
     sigc::connection *modified_connection = new sigc::connection();
-    *modified_connection = SP_DOCUMENT_DEFS(document)->connectModified(sigc::bind<2>(sigc::ptr_fun(&gr_defs_modified), widget));
+    *modified_connection = document->getDefs()->connectModified(sigc::bind<2>(sigc::ptr_fun(&gr_defs_modified), widget));
 
     // when widget is destroyed, disconnect
     g_signal_connect(G_OBJECT(widget), "destroy", G_CALLBACK(gr_disconnect_sigc), release_connection);

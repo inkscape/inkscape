@@ -204,8 +204,8 @@ void sp_gradient_vector_selector_set_gradient(SPGradientVectorSelector *gvs, SPD
 
         // Connect signals
         if (doc) {
-            gvs->defs_release_connection = SP_DOCUMENT_DEFS(doc)->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_gvs_defs_release), gvs));
-            gvs->defs_modified_connection = SP_DOCUMENT_DEFS(doc)->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_gvs_defs_modified), gvs));
+            gvs->defs_release_connection = doc->getDefs()->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_gvs_defs_release), gvs));
+            gvs->defs_modified_connection = doc->getDefs()->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_gvs_defs_modified), gvs));
         }
         if (gr) {
             gvs->gradient_release_connection = gr->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_gvs_gradient_release), gvs));

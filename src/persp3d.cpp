@@ -209,7 +209,7 @@ persp3d_update(SPObject *object, SPCtx *ctx, guint flags)
 }
 
 Persp3D *persp3d_create_xml_element(SPDocument *document, Persp3DImpl *dup) {// if dup is given, copy the attributes over
-    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+    SPDefs *defs = document->getDefs();
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
     Inkscape::XML::Node *repr;
 
@@ -253,7 +253,7 @@ Persp3D *persp3d_create_xml_element(SPDocument *document, Persp3DImpl *dup) {// 
 Persp3D *persp3d_document_first_persp(SPDocument *document)
 {
     Persp3D *first = 0;
-    for ( SPObject *child = SP_DOCUMENT_DEFS(document)->firstChild(); child && !first; child = child->getNext() ) {
+    for ( SPObject *child = document->getDefs()->firstChild(); child && !first; child = child->getNext() ) {
         if (SP_IS_PERSP3D(child)) {
             first = SP_PERSP3D(child);
         }
@@ -565,7 +565,7 @@ persp3d_print_debugging_info (Persp3D *persp) {
 
 void persp3d_print_debugging_info_all(SPDocument *document)
 {
-    for ( SPObject *child = SP_DOCUMENT_DEFS(document)->firstChild(); child; child = child->getNext() ) {
+    for ( SPObject *child = document->getDefs()->firstChild(); child; child = child->getNext() ) {
         if (SP_IS_PERSP3D(child)) {
             persp3d_print_debugging_info(SP_PERSP3D(child));
         }

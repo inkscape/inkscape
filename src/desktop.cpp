@@ -93,6 +93,8 @@
 #include "widgets/desktop-widget.h"
 #include "box3d-context.h"
 #include "desktop-style.h"
+#include "sp-item-group.h"
+#include "sp-root.h"
 
 // TODO those includes are only for node tool quick zoom. Remove them after fixing it.
 #include "ui/tool/node-tool.h"
@@ -713,7 +715,7 @@ SPDesktop::set_coordinate_status (Geom::Point p) {
 SPItem *SPDesktop::getItemFromListAtPointBottom(const GSList *list, Geom::Point const p) const
 {
     g_return_val_if_fail (doc() != NULL, NULL);
-    return SPDocument::getItemFromListAtPointBottom(dkey, SP_GROUP (doc()->root), list, p);
+    return SPDocument::getItemFromListAtPointBottom(dkey, doc()->getRoot(), list, p);
 }
 
 /**

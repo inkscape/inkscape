@@ -18,6 +18,7 @@
 #include "rdf.h"
 #include "sp-item-group.h"
 #include "inkscape.h"
+#include "sp-root.h"
 
 /*
    Example RDF XML from various places...
@@ -566,7 +567,9 @@ unsigned int RDFImpl::setReprText( Inkscape::XML::Node * repr,
     // set document's title element to the RDF title
     if (!strcmp(entity.name, "title")) {
         SPDocument *doc = SP_ACTIVE_DOCUMENT;
-        if(doc && doc->root) doc->root->setTitle(text);
+        if (doc && doc->getRoot()) {
+            doc->getRoot()->setTitle(text);
+        }
     }
 
     switch (entity.datatype) {
@@ -1104,7 +1107,7 @@ void RDFImpl::setDefaults( SPDocument * doc )
     g_assert( doc != NULL );
 
     // Create metadata node if it doesn't already exist
-    if (!sp_item_group_get_child_by_name((SPGroup *) doc->root, NULL,
+    if (!sp_item_group_get_child_by_name( doc->getRoot(), NULL,
                                           XML_TAG_NAME_METADATA)) {
         if ( !doc->getReprDoc()) {
             g_critical("XML doc is null.");

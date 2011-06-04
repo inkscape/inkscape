@@ -360,7 +360,7 @@ sp_gradient_selector_add_vector_clicked (GtkWidget */*w*/, SPGradientSelector *s
         Inkscape::GC::release(stop);
     }
 
-    SP_DOCUMENT_DEFS(doc)->getRepr()->addChild(repr, NULL);
+    doc->getDefs()->getRepr()->addChild(repr, NULL);
 
     gr = (SPGradient *) doc->getObjectByRepr(repr);
     sp_gradient_vector_selector_set_gradient(

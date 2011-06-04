@@ -145,7 +145,7 @@ DocumentProperties::init()
 
     Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
     repr->addListener (&_repr_events, this);
-    Inkscape::XML::Node *root = sp_desktop_document(getDesktop())->root->getRepr();
+    Inkscape::XML::Node *root = sp_desktop_document(getDesktop())->getRoot()->getRepr();
     root->addListener (&_repr_events, this);
 
     show_all_children();
@@ -156,7 +156,7 @@ DocumentProperties::~DocumentProperties()
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
     repr->removeListenerByData (this);
-    Inkscape::XML::Node *root = sp_desktop_document(getDesktop())->root->getRepr();
+    Inkscape::XML::Node *root = sp_desktop_document(getDesktop())->getRoot()->getRepr();
     root->removeListenerByData (this);
 }
 
@@ -421,7 +421,7 @@ DocumentProperties::linkSelectedProfile()
             xml_doc->root()->addChild(defsRepr, NULL);
         }
 
-        g_assert(SP_ROOT(desktop->doc()->root)->defs);
+        g_assert(desktop->doc()->getDefs());
         defsRepr->addChild(cprofRepr, NULL);
 
         // TODO check if this next line was sometimes needed. It being there caused an assertion.
@@ -877,7 +877,7 @@ DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *docu
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->addListener(&_repr_events, this);
-    Inkscape::XML::Node *root = document->root->getRepr();
+    Inkscape::XML::Node *root = document->getRoot()->getRepr();
     root->addListener(&_repr_events, this);
     update();
 }
@@ -887,7 +887,7 @@ DocumentProperties::_handleActivateDesktop(Inkscape::Application *, SPDesktop *d
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->addListener(&_repr_events, this);
-    Inkscape::XML::Node *root = sp_desktop_document(desktop)->root->getRepr();
+    Inkscape::XML::Node *root = sp_desktop_document(desktop)->getRoot()->getRepr();
     root->addListener(&_repr_events, this);
     update();
 }
@@ -897,7 +897,7 @@ DocumentProperties::_handleDeactivateDesktop(Inkscape::Application *, SPDesktop 
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->removeListenerByData(this);
-    Inkscape::XML::Node *root = sp_desktop_document(desktop)->root->getRepr();
+    Inkscape::XML::Node *root = sp_desktop_document(desktop)->getRoot()->getRepr();
     root->removeListenerByData(this);
 }
 
