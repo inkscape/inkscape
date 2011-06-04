@@ -25,7 +25,7 @@
 #define __GDL_DOCK_MASTER_H__
 
 #include <glib-object.h>
-#include <gtk/gtktypeutils.h>
+#include <gtk/gtk.h>
 #include "libgdl/gdl-dock-object.h"
 
 

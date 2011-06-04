@@ -30,8 +30,7 @@
 
 #include <string.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkmain.h>
-#include <gtk/gtkmenu.h>
+#include <gtk/gtk.h>
 #include <glibmm/i18n.h>
 #include <cstring>
 #include <string>

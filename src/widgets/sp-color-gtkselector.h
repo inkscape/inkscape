@@ -1,7 +1,7 @@
 #ifndef SEEN_SP_COLOR_GTKSELECTOR_H
 #define SEEN_SP_COLOR_GTKSELECTOR_H
 
-#include <gtk/gtkcolorsel.h>
+#include <gtk/gtk.h>
 #include "../color.h"
 #include "sp-color-selector.h"
 

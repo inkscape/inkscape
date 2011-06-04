@@ -28,7 +28,7 @@ struct SPFontPreview;
 #define SP_IS_FONT_PREVIEW(o) (GTK_CHECK_TYPE ((o), SP_TYPE_FONT_PREVIEW))
 
 #include <libnrtype/nrtype-forward.h>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 /* SPFontSelector */
 

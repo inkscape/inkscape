@@ -21,7 +21,7 @@
 #define SP_IS_WIDGET(obj) (GTK_CHECK_TYPE ((obj), SP_TYPE_WIDGET))
 #define SP_IS_WIDGET_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), SP_TYPE_WIDGET))
 
-#include <gtk/gtkbin.h>
+#include <gtk/gtk.h>
 
 namespace Inkscape {
 	class Application;

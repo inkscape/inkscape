@@ -14,7 +14,7 @@
 
 #include <glib.h>
 
-#include <gtk/gtkenums.h>
+#include <gtk/gtk.h>
 
 namespace Inkscape {
 

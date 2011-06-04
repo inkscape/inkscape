@@ -7,7 +7,7 @@
  *
  */
 
-#include <gtk/gtkenums.h>
+#include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libnr/nr-rect-l.h>
 #include "sp-canvas-item.h"

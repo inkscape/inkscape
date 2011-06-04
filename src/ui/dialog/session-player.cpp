@@ -15,7 +15,7 @@
 
 #include <glibmm.h>
 #include <glibmm/i18n.h>
-#include <gtk/gtkdialog.h>
+#include <gtk/gtk.h>
 #include <gtkmm.h>
 
 #include "inkscape.h"

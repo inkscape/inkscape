@@ -9,8 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtktable.h>
-#include <gtk/gtklabel.h>
+#include <gtk/gtk.h>
 #include "xml/repr.h"
 #include "macros.h"
 #include "document.h"

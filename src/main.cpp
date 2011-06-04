@@ -31,7 +31,7 @@
 // This has to be included prior to anything that includes setjmp.h, it croaks otherwise
 #include <png.h>
 
-#include <gtk/gtkmessagedialog.h>
+#include <gtk/gtk.h>
 
 #ifdef HAVE_IEEEFP_H
 #include <ieeefp.h>
@@ -51,10 +51,6 @@
 #include <glib/gprintf.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
-#include <gtk/gtkmain.h>
-#include <gtk/gtksignal.h>
-#include <gtk/gtkwindow.h>
-#include <gtk/gtkbox.h>
 
 #include "gc-core.h"
 

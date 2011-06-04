@@ -20,9 +20,7 @@
 
 #include <libnr/nr-pixblock.h>
 
-#include <gtk/gtkmain.h>
-#include <gtk/gtksignal.h>
-#include <gtk/gtkversion.h>
+#include <gtk/gtk.h>
 
 #include <gtkmm.h>
 

@@ -15,7 +15,7 @@
 
 #include "ui/widget/point.h"
 #include "widgets/icon.h"
-#include <gtk/gtkstock.h>
+#include <gtk/gtk.h>
 #include "selection-chemistry.h"
 #include "xml/repr.h"
 #include "desktop.h"

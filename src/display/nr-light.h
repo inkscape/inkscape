@@ -8,7 +8,7 @@
  * light color components (at a given point).
  */
 
-#include <gdk/gdktypes.h>
+#include <gdk/gdk.h>
 #include "display/nr-3dutils.h"
 #include "display/nr-light-types.h"
 #include <2geom/forward.h>

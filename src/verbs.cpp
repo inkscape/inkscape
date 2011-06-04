@@ -29,7 +29,7 @@
 #endif
 
 #include <cstring>
-#include <gtk/gtkstock.h>
+#include <gtk/gtk.h>
 #include <gtkmm/filechooserdialog.h>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/stock.h>

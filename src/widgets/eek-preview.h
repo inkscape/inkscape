@@ -40,8 +40,8 @@
 #ifndef SEEN_EEK_PREVIEW_H
 #define SEEN_EEK_PREVIEW_H
 
-#include <gdk/gdkpixbuf.h>
-#include <gtk/gtkdrawingarea.h>
+#include <gdk/gdk.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 

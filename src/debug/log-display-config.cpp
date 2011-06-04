@@ -10,8 +10,7 @@
  */
 
 #include <iostream>
-#include <gdk/gdkdisplay.h>
-#include <gdk/gdkscreen.h>
+#include <gdk/gdk.h>
 #include "debug/event-tracker.h"
 #include "debug/logger.h"
 #include "debug/simple-event.h"

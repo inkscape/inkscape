@@ -15,7 +15,7 @@
 
 #include <glibmm/i18n.h>
 #include <gtkmm/dialog.h>
-#include <gtk/gtkdialog.h>
+#include <gtk/gtk.h>
 #include "verbs.h"
 
 #include "prefdialog.h"

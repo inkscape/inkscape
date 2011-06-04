@@ -24,7 +24,6 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <gtk/gtkiconfactory.h>
 #include "gdl-stock.h"
 #include "gdl-stock-icons.h"
 

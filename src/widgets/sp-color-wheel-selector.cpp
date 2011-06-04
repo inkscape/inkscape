@@ -2,10 +2,7 @@
 # include "config.h"
 #endif
 #include <math.h>
-#include <gtk/gtksignal.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtktable.h>
-#include <gtk/gtkspinbutton.h>
+#include <gtk/gtk.h>
 #include <glibmm/i18n.h>
 #include "../dialogs/dialog-events.h"
 #include "sp-color-wheel-selector.h"

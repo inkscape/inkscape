@@ -27,7 +27,7 @@ class SPGradient;
 #define SP_IS_PAINT_SELECTOR(o) (GTK_CHECK_TYPE ((o), SP_TYPE_PAINT_SELECTOR))
 #define SP_IS_PAINT_SELECTOR_CLASS(k) (GTK_CHECK_CLASS_TYPE ((k), SP_TYPE_PAINT_SELECTOR))
 
-#include <gtk/gtkvbox.h>
+#include <gtk/gtk.h>
 
 #include "../forward.h"
 #include <color.h>

@@ -42,8 +42,7 @@ struct SPAttributeWidgetClass;
 struct SPAttributeTable;
 struct SPAttributeTableClass;
 
-#include <gtk/gtkentry.h>
-#include <gtk/gtkvbox.h>
+#include <gtk/gtk.h>
 
 #include <forward.h>
 

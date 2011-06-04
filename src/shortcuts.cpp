@@ -26,7 +26,7 @@
 #include <cstring>
 #include <string>
 
-#include <gdk/gdkkeys.h>
+#include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 

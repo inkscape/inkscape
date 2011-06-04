@@ -37,7 +37,7 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include <gtk/gtkmain.h>
+#include <gtk/gtk.h>
 #include <string>
 #include <cstring>
 

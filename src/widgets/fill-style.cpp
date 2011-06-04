@@ -23,7 +23,7 @@
 
 #include <glibmm/i18n.h>
 #include <gtkmm/box.h>
-#include <gtk/gtkvbox.h>
+#include <gtk/gtk.h>
 
 #include "desktop.h"
 #include "selection.h"

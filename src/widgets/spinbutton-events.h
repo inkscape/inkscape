@@ -10,8 +10,7 @@
  */
 
 #include <glib/gtypes.h>
-#include <gtk/gtkstyle.h>      /* GtkWidget */
-#include <gtk/gtktypeutils.h>  /* GtkObject */
+#include <gtk/gtk.h>      /* GtkWidget */
 
 gboolean spinbutton_focus_in (GtkWidget *w, GdkEventKey *event, gpointer data);
 void spinbutton_undo (GtkWidget *w);

@@ -12,9 +12,7 @@
  * This code is in public domain
  */
 
-#include <gtk/gtkvbox.h>
-#include <gtk/gtknotebook.h>
-#include <gtk/gtkentry.h>
+#include <gtk/gtk.h>
 #include "../color.h"
 #include "sp-color-selector.h"
 

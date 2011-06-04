@@ -17,7 +17,7 @@
 
 #include <gtkmm.h>
 #include <glib/gslist.h>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 #include "extension/extension-forward.h"
 #include "extension/system.h"

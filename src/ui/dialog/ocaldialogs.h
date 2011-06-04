@@ -33,11 +33,9 @@
 //Temporary ugly hack
 //Remove this after the get_filter() calls in
 //show() on both classes are fixed
-#include <gtk/gtkfilechooser.h>
+#include <gtk/gtk.h>
 
 //Another hack
-#include <gtk/gtkentry.h>
-#include <gtk/gtkexpander.h>
 #ifdef WITH_GNOME_VFS
 #include <libgnomevfs/gnome-vfs-init.h>  // gnome_vfs_initialized
 #include<libgnomevfs/gnome-vfs.h>

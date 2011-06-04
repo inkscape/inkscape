@@ -22,7 +22,7 @@
 #define SP_ICON(o) (GTK_CHECK_CAST ((o), SP_TYPE_ICON, SPIcon))
 #define SP_IS_ICON(o) (GTK_CHECK_TYPE ((o), SP_TYPE_ICON))
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 struct SPIconClass {
     GtkWidgetClass parent_class;

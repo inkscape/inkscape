@@ -14,7 +14,7 @@
 # include <config.h>
 #endif
 
-#include <gtk/gtkdnd.h>
+#include <gtk/gtk.h>
 
 #include "selected-style.h"
 

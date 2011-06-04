@@ -17,7 +17,7 @@
 /*  #include <gdk/gdkic.h> */
 #include <stddef.h>
 #include <sigc++/sigc++.h>
-#include <gtk/gtkimcontext.h>
+#include <gtk/gtk.h>
 
 #include "event-context.h"
 #include <2geom/point.h>

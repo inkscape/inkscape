@@ -16,7 +16,7 @@
 #include <glibmm/i18n.h>
 
 #include <sigc++/sigc++.h>
-#include <gtk/gtkdialog.h>
+#include <gtk/gtk.h>
 
 #include "message-stack.h"
 #include "message-context.h"

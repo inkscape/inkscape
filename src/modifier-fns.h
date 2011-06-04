@@ -11,7 +11,7 @@
  * Hereby placed in public domain.
  */
 
-#include <gdk/gdktypes.h>
+#include <gdk/gdk.h>
 #include <glib/gtypes.h>
 
 inline bool

@@ -2,8 +2,7 @@
 #define SEEN_SP_COLOR_ICC_SELECTOR_H
 
 #include <glib/gtypes.h>
-#include <gtk/gtktooltips.h>
-#include <gtk/gtkvbox.h>
+#include <gtk/gtk.h>
 
 #include "../color.h"
 #include "sp-color-slider.h"

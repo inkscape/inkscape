@@ -18,11 +18,10 @@
 #endif
 
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkmain.h>
+#include <gtk/gtk.h>
 #include <display/sp-ctrlline.h>
 #include <display/sodipodi-ctrlrect.h>
 #include <display/sp-ctrlquadr.h>
-#include <gtk/gtkimmulticontext.h>
 #include <gtkmm/clipboard.h>
 
 #include "macros.h"

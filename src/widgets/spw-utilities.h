@@ -19,7 +19,7 @@
 */
 
 #include <glib/gtypes.h>
-#include <gtk/gtkstyle.h>      /* GtkWidget */
+#include <gtk/gtk.h>      /* GtkWidget */
 #include <gtkmm/widget.h>
 
 namespace Gtk {

@@ -13,7 +13,7 @@
 #ifndef _GDL_DOCK_ITEM_GRIP_H_
 #define _GDL_DOCK_ITEM_GRIP_H_
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include "libgdl/gdl-dock-item.h"
 
 G_BEGIN_DECLS

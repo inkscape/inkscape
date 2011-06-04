@@ -10,7 +10,7 @@
 #include <glib.h>
 #include <map>
 #include <set>
-#include <gtk/gtkaccelgroup.h>
+#include <gtk/gtk.h>
 
 #include "device-manager.h"
 #include "preferences.h"

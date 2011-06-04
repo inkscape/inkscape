@@ -16,7 +16,7 @@
  */
 
 #include <glib.h>
-#include <gtk/gtkvbox.h>
+#include <gtk/gtk.h>
 #include <vector>
 #include "sp-gradient.h"
 #include "sp-gradient-spread.h"

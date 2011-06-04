@@ -17,10 +17,7 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include <gtk/gtksignal.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkmenu.h>
-#include <gtk/gtkmenuitem.h>
+#include <gtk/gtk.h>
 #include "helper/sp-marshal.h"
 #include "helper/units.h"
 #include "helper/unit-menu.h"

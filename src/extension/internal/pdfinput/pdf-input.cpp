@@ -40,7 +40,7 @@
 #include "inkscape.h"
 
 #include "dialogs/dialog-events.h"
-#include <gtk/gtkdialog.h>
+#include <gtk/gtk.h>
 #include "ui/widget/spinbutton.h"
 
 namespace Inkscape {

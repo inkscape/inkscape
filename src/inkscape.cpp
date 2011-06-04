@@ -40,8 +40,7 @@ using Inkscape::Extension::Internal::PrintWin32;
 #include <glib/gstdio.h>
 #include <glib.h>
 #include <glibmm/i18n.h>
-#include <gtk/gtkmain.h>
-#include <gtk/gtkmessagedialog.h>
+#include <gtk/gtk.h>
 #include <gtkmm/messagedialog.h>
 #include <signal.h>
 #include <string>

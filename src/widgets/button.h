@@ -16,9 +16,7 @@
 #define SP_BUTTON(o) (GTK_CHECK_CAST ((o), SP_TYPE_BUTTON, SPButton))
 #define SP_IS_BUTTON(o) (GTK_CHECK_TYPE ((o), SP_TYPE_BUTTON))
 
-#include <gtk/gtkwidget.h>
-#include <gtk/gtktogglebutton.h>
-#include <gtk/gtktooltips.h>
+#include <gtk/gtk.h>
 
 #include "helper/action.h"
 #include "icon-size.h"

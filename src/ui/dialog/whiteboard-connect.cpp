@@ -14,7 +14,7 @@
  */
 
 #include <glibmm/i18n.h>
-#include <gtk/gtkdialog.h>
+#include <gtk/gtk.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/table.h>

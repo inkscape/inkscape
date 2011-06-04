@@ -14,7 +14,7 @@
 #endif
 
 #include <gtkmm/radioaction.h>
-#include <gtk/gtkmain.h>
+#include <gtk/gtk.h>
 #include "ui/widget/toolbox.h"
 #include "path-prefix.h"
 

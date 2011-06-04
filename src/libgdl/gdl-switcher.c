@@ -35,10 +35,6 @@
 #include "libgdltypebuiltins.h"
 
 #include <gtk/gtk.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkimage.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtktogglebutton.h>
 
 #if HAVE_GNOME
 #include <gconf/gconf-client.h>

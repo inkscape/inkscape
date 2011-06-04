@@ -15,7 +15,7 @@
  * Released under GNU GPL
  */
 
-#include <gtk/gtktypeutils.h>
+#include <gtk/gtk.h>
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 #include "event-context.h"

@@ -3,9 +3,7 @@
 
 
 #include <glib.h>
-#include <gtk/gtkaction.h>
-#include <gtk/gtktoggleaction.h>
-#include <gtk/gtkradioaction.h>
+#include <gtk/gtk.h>
 #include <glib-object.h>
 #include "icon-size.h"
 #include "attributes.h"

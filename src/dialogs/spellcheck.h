@@ -12,7 +12,7 @@
 #ifndef SEEN_SPELLCHECK_H
 #define SEEN_SPELLCHECK_H
 
-#include <gtk/gtkstyle.h>
+#include <gtk/gtk.h>
 
 void sp_spellcheck_dialog();
 

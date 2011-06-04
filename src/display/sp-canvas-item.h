@@ -22,8 +22,8 @@
 #endif
 
 #include <glib-object.h>
-#include <gtk/gtkobject.h>
-#include <gdk/gdkevents.h>
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 #include "2geom/rect.h"
 

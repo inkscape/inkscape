@@ -23,14 +23,7 @@
 #include <cstring>
 #include <string>
 
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkradiobutton.h>
-#include <gtk/gtkframe.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtkoptionmenu.h>
-#include <gtk/gtktooltips.h>
-#include <gtk/gtkmenuitem.h>
-#include <gtk/gtkseparatormenuitem.h>
+#include <gtk/gtk.h>
 
 #include "../sp-pattern.h"
 #include <glibmm/i18n.h>

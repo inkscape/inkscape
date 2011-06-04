@@ -10,7 +10,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtkliststore.h>
+#include <gtk/gtk.h>
 
 #include "unit-tracker.h"
 #include "ege-select-one-action.h"

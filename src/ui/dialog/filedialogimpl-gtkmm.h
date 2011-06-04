@@ -35,11 +35,7 @@
 //Temporary ugly hack
 //Remove this after the get_filter() calls in
 //show() on both classes are fixed
-#include <gtk/gtkfilechooser.h>
-
-//Another hack
-#include <gtk/gtkentry.h>
-#include <gtk/gtkexpander.h>
+#include <gtk/gtk.h>
 
 //Inkscape includes
 #include "extension/input.h"

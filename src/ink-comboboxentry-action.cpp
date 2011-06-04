@@ -26,9 +26,6 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
-#include <gtk/gtktoolitem.h>
-#include <gtk/gtkcomboboxentry.h>
-#include <gtk/gtkentrycompletion.h>
 
 #include "ink-comboboxentry-action.h"
 

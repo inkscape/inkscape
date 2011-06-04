@@ -13,7 +13,7 @@
 
 #include <glibmm/i18n.h>
 #include <gtkmm/printoperation.h> // GtkMM
-#include <gtk/gtkprintoperation.h> // Gtk
+#include <gtk/gtk.h> // Gtk
 
 #include "desktop.h"
 #include "sp-item.h"

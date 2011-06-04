@@ -12,8 +12,7 @@
 #ifndef __DIALOG_EVENTS_H__
 #define __DIALOG_EVENTS_H__
 
-#include <gtk/gtkstyle.h>
-#include <gtk/gtkwindow.h>
+#include <gtk/gtk.h>
 #include <forward.h>
  
 /*

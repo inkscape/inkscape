@@ -41,9 +41,7 @@
 
 #include <string.h>
 
-#include <gtk/gtkwidget.h>
-#include <gtk/gtkwindow.h>
-#include <gtk/gtkmarshal.h>
+#include <gtk/gtk.h>
 
 #ifdef GDK_WINDOWING_X11
 #include <X11/Xlib.h>

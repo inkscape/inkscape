@@ -14,7 +14,7 @@
  */
 
 #include <glib/gtypes.h>
-#include <gtk/gtkmenuitem.h>
+#include <gtk/gtk.h>
 
 void sp_help_about(void);
 void sp_help_open_tutorial(GtkMenuItem *menuitem, gpointer data);

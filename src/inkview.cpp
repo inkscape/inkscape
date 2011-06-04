@@ -45,11 +45,7 @@
 
 #include <libxml/tree.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkmain.h>
-#include <gtk/gtkstock.h>
-#include <gtk/gtkwindow.h>
-#include <gtk/gtktable.h>
-#include <gtk/gtkbutton.h>
+#include <gtk/gtk.h>
 
 #include <gtkmm/main.h>
 

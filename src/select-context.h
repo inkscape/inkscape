@@ -13,7 +13,7 @@
  */
 
 #include "event-context.h"
-#include <gtk/gtktypeutils.h>
+#include <gtk/gtk.h>
 
 #define SP_TYPE_SELECT_CONTEXT            (sp_select_context_get_type ())
 #define SP_SELECT_CONTEXT(obj)            (GTK_CHECK_CAST ((obj), SP_TYPE_SELECT_CONTEXT, SPSelectContext))

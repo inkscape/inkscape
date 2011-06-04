@@ -14,7 +14,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gdk/gdktypes.h>
+#include <gdk/gdk.h>
 #include <2geom/forward.h>
 
 struct NRPixBlock;

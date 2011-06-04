@@ -18,8 +18,7 @@
  */
 
 #include <glib-object.h>
-#include <gdk/gdktypes.h>
-#include <gdk/gdkevents.h>
+#include <gdk/gdk.h>
 #include "knot.h"
 
 #include "2geom/forward.h"

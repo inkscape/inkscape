@@ -12,7 +12,7 @@
  * Released under GNU GPL
  */
 
-#include <gdk/gdktypes.h>
+#include <gdk/gdk.h>
 
 namespace Grayscale {
     guint32 process(guint32 rgba);

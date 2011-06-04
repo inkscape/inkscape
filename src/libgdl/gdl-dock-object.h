@@ -24,7 +24,7 @@
 #ifndef __GDL_DOCK_OBJECT_H__
 #define __GDL_DOCK_OBJECT_H__
 
-#include <gtk/gtkcontainer.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 

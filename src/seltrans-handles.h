@@ -14,7 +14,7 @@
 
 #include "display/sodipodi-ctrl.h"
 #include <2geom/forward.h>
-#include <gdk/gdkcursor.h>
+#include <gdk/gdk.h>
 
 namespace Inkscape
 {

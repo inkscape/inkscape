@@ -22,7 +22,7 @@
 #include <gtkmm/dialog.h> // for Gtk::RESPONSE_*
 #include <gtkmm/stock.h>
 
-#include <gtk/gtkiconfactory.h>
+#include <gtk/gtk.h>
 
 #include "panel.h"
 #include "icon-size.h"

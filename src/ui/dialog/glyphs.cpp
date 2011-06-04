@@ -22,9 +22,7 @@
 #include <gtkmm/treemodelcolumn.h>
 #include <gtkmm/widget.h>
 
-#include <gtk/gtkbutton.h>
-#include <gtk/gtkstock.h>
-#include <gtk/gtkversion.h>
+#include <gtk/gtk.h>
 
 #include "glyphs.h"
 

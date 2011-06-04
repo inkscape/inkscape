@@ -15,8 +15,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtkstyle.h>
-#include <gtk/gtktooltips.h>
+#include <gtk/gtk.h>
 #include <glibmm/ustring.h>
 
 #include "forward.h"

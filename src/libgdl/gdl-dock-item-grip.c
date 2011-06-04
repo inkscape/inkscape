@@ -17,9 +17,7 @@
 #include "gdl-i18n.h"
 #include <string.h>
 #include <glib-object.h>
-#include <gtk/gtkbutton.h>
-#include <gtk/gtktooltips.h>
-#include <gtk/gtkimage.h>
+#include <gtk/gtk.h>
 #include "gdl-dock-item.h"
 #include "gdl-dock-item-grip.h"
 #include "gdl-stock.h"

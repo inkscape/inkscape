@@ -15,7 +15,7 @@
  */
 
 #include <gdk/gdk.h>
-#include <gtk/gtkenums.h>
+#include <gtk/gtk.h>
 #include "forward.h"
 #include <2geom/point.h>
 #include "knot-enums.h"

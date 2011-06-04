@@ -23,7 +23,7 @@
 #endif
 
 #include "combo-text.h"
-#include <gtk/gtkcombobox.h>
+#include <gtk/gtk.h>
 
 ComboText::ComboText()
     : Gtk::ComboBox()

@@ -17,11 +17,7 @@
 #include <map>
 #include <algorithm>
 
-#include <gtk/gtkdialog.h> //for GTK_RESPONSE* types
-#include <gtk/gtkdnd.h>
-#include <gtk/gtkmenu.h>
-#include <gtk/gtkmenuitem.h>
-#include <gtk/gtkseparatormenuitem.h>
+#include <gtk/gtk.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
 #include <glibmm/main.h>
 #include <gdkmm/pixbuf.h>

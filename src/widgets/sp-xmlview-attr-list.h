@@ -13,7 +13,6 @@
  */
 
 #include <stdio.h>
-#include <gtk/gtkctree.h>
 #include <gtk/gtk.h>
 #include "../xml/repr.h"
 

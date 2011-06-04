@@ -13,7 +13,7 @@
 #ifndef INKSCAPE_EXTENSION_OUTPUT_H__
 #define INKSCAPE_EXTENSION_OUTPUT_H__
 
-#include <gtk/gtkdialog.h>
+#include <gtk/gtk.h>
 #include "extension.h"
 struct SPDocument;
 

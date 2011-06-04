@@ -10,7 +10,7 @@
  * This code is in public domain
  */
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include <gtkmm/window.h>
 
 /*

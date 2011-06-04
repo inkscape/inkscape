@@ -12,7 +12,7 @@
  * Released under the GNU GPL; see COPYING for details
  */
 
-#include <gtk/gtkctree.h>
+#include <gtk/gtk.h>
 #include "../xml/repr.h"
 
 #include <glib.h>

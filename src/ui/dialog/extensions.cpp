@@ -9,7 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtkdialog.h> //for GTK_RESPONSE* types
+#include <gtk/gtk.h> //for GTK_RESPONSE* types
 #include <gtkmm/scrolledwindow.h>
 
 #include "extension/db.h"

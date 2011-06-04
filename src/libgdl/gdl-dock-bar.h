@@ -22,7 +22,7 @@
 #ifndef __GDL_DOCK_BAR_H__
 #define __GDL_DOCK_BAR_H__
 
-#include <gtk/gtkvbox.h>
+#include <gtk/gtk.h>
 #include "libgdl/gdl-dock.h"
 
 G_BEGIN_DECLS

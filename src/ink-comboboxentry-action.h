@@ -22,8 +22,7 @@
 #include <glib.h>
 #include <glib-object.h>
 
-#include <gtk/gtkaction.h>
-#include <gtk/gtktreemodel.h>
+#include <gtk/gtk.h>
 
 
 #define INK_COMBOBOXENTRY_TYPE_ACTION           (ink_comboboxentry_action_get_type())

@@ -19,7 +19,7 @@
 #include "ui/widget/spinbutton.h"
 #include <gtkmm/stock.h>
 
-#include <gtk/gtkdialog.h> //for GTK_RESPONSE* types
+#include <gtk/gtk.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
 
 #include "desktop.h"

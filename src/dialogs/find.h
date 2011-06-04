@@ -12,7 +12,7 @@
 #ifndef SEEN_FIND_H
 #define SEEN_FIND_H
 
-#include <gtk/gtkstyle.h>
+#include <gtk/gtk.h>
 
 void sp_find_dialog();
 

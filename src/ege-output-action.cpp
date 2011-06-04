@@ -41,9 +41,7 @@
 
 #include <string.h>
 
-#include <gtk/gtkhbox.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtktoolitem.h>
+#include <gtk/gtk.h>
 
 #include "ege-output-action.h"
 

@@ -14,7 +14,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtkeventbox.h>
+#include <gtk/gtk.h>
 
 namespace Inkscape {
     namespace UI {

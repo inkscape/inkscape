@@ -10,7 +10,7 @@
  */
 
 #include <gtkmm/button.h>
-#include <gtk/gtkbin.h>
+#include <gtk/gtk.h>
 
 namespace Inkscape {
 namespace Widgets {

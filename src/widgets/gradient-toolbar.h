@@ -12,7 +12,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 struct SPDesktop;
 
 GtkWidget *sp_gradient_toolbox_new (SPDesktop *desktop);

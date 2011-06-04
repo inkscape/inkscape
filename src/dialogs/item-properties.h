@@ -12,7 +12,7 @@
 #define SEEN_DIALOGS_ITEM_PROPERTIES_H
 
 #include <glib.h>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include "../forward.h"
 
 GtkWidget *sp_item_widget_new (void);

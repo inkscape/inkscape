@@ -11,7 +11,7 @@
  */
 
 #include <libnr/nr-blit.h>
-#include <gtk/gtksignal.h>
+#include <gtk/gtk.h>
 
 #include <display/sp-canvas-util.h>
 #include "helper/sp-marshal.h"

@@ -13,8 +13,7 @@
 # include <config.h>
 #endif
 
-#include <gtk/gtkstock.h>
-#include <gtk/gtkmain.h>
+#include <gtk/gtk.h>
 #include <gtkmm/widget.h>
 #include <gtkmm/icontheme.h>
 #include <glibmm/i18n.h>

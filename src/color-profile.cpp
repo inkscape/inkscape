@@ -10,7 +10,7 @@
 #include <glib/gi18n.h>
 
 #ifdef DEBUG_LCMS
-#include <gtk/gtkmessagedialog.h>
+#include <gtk.h>
 #endif // DEBUG_LCMS
 
 #include <cstring>

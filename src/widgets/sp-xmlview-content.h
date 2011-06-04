@@ -16,7 +16,7 @@
 
 #include <stdio.h>
 
-#include <gtk/gtktextview.h>
+#include <gtk/gtk.h>
 #include "../xml/repr.h"
 
 #include <glib.h>

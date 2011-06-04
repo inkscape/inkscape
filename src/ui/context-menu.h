@@ -11,7 +11,7 @@
  * This code is in public domain
  */
 
-#include <gtk/gtkmenu.h>
+#include <gtk/gtk.h>
 
 #include "forward.h"
 #include "sp-object.h"

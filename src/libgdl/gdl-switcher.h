@@ -25,7 +25,7 @@
 #ifndef _GDL_SWITCHER_H_
 #define _GDL_SWITCHER_H_
 
-#include <gtk/gtknotebook.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 

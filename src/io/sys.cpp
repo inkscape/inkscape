@@ -21,7 +21,7 @@
 #include <glibmm/fileutils.h>
 #include <glib/gstdio.h>
 #include <glibmm/ustring.h>
-#include <gtk/gtkmessagedialog.h>
+#include <gtk/gtk.h>
 
 #include "preferences.h"
 #include "sys.h"

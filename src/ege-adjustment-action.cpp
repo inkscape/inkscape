@@ -43,18 +43,7 @@
 #include <string.h>
 
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkversion.h>
-#include <gtk/gtktoolitem.h>
 #include <gtk/gtk.h>
-#include <gtk/gtkhscale.h>
-#include <gtk/gtkscalebutton.h>
-#include <gtk/gtkstock.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtkmisc.h>
-#include <gtk/gtktoolbar.h>
-#include <gtk/gtktooltips.h>
-#include <gtk/gtkradiomenuitem.h>
 
 #include "widgets/icon.h"
 #include "icon-size.h"

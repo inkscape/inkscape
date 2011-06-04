@@ -7,7 +7,7 @@
 # include "config.h"
 #endif
 #include <math.h>
-#include <gtk/gtksignal.h>
+#include <gtk/gtk.h>
 #include <glibmm/i18n.h>
 #include "sp-color-selector.h"
 

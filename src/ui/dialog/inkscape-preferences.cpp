@@ -21,7 +21,7 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/alignment.h>
 
-#include <gtk/gtkicontheme.h>
+#include <gtk/gtk.h>
 
 #include "preferences.h"
 #include "inkscape-preferences.h"

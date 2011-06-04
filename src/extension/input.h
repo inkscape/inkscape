@@ -16,7 +16,7 @@
 #include "extension.h"
 #include "xml/repr.h"
 #include "document.h"
-#include <gtk/gtkdialog.h>
+#include <gtk/gtk.h>
 
 namespace Inkscape {
 namespace Extension {

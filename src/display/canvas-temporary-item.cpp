@@ -16,7 +16,7 @@
 
 #include "display/canvas-temporary-item.h"
 
-#include <gtk/gtkobject.h>
+#include <gtk/gtk.h>
 
 namespace Inkscape {
 namespace Display {

@@ -12,7 +12,7 @@
 #ifndef __INKSCAPE_EXTENSION_IMPLEMENTATION_H__
 #define __INKSCAPE_EXTENSION_IMPLEMENTATION_H__
 
-#include <gtk/gtkdialog.h>
+#include <gtk/gtk.h>
 #include <gdkmm/types.h>
 #include <gtkmm/widget.h>
 

@@ -12,7 +12,7 @@
 
 #include <glib.h>
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 void clonetiler_dialog       ( void );
 

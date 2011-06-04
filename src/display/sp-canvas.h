@@ -28,10 +28,8 @@
 #endif
 
 #include <glib/gtypes.h>
-#include <gdk/gdkevents.h>
-#include <gdk/gdkgc.h>
-#include <gtk/gtkobject.h>
-#include <gtk/gtkwidget.h>
+#include <gdk/gdk.h>
+#include <gtk/gtk.h>
 
 #include <glibmm/ustring.h>
 

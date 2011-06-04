@@ -25,7 +25,7 @@
 #define __GDL_TOOLS_H__
 
 #include <glib.h>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 /* FIXME: Toggle this */
 

@@ -17,7 +17,6 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <gtk/gtkaction.h>
 
 #include "widgets/button.h"
 #include "widgets/spw-utilities.h"

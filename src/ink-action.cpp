@@ -2,12 +2,7 @@
 
 
 #include <glib/gi18n.h>
-#include <gtk/gtkalignment.h>
-#include <gtk/gtktooltips.h>
-#include <gtk/gtktoolitem.h>
-#include <gtk/gtktoggletoolbutton.h>
-#include <gtk/gtkcheckmenuitem.h>
-#include <gtk/gtkimagemenuitem.h>
+#include <gtk/gtk.h>
 
 #include "icon-size.h"
 #include "ink-action.h"
@@ -183,7 +178,7 @@ void ink_action_set_property( GObject* obj, guint propId, const GValue *value, G
     }
 }
 
-#include <gtk/gtkstock.h>
+#include <gtk/gtk.h>
 
 static GtkWidget* ink_action_create_menu_item( GtkAction* action )
 {

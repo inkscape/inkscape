@@ -11,7 +11,7 @@
  */
 
 #include <glib/gtypes.h>
-#include <gtk/gtkoptionmenu.h>
+#include <gtk/gtk.h>
 
 #include <helper/helper-forward.h>
 

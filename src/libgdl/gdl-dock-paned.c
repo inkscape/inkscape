@@ -27,8 +27,7 @@
 
 #include "gdl-i18n.h"
 #include <string.h>
-#include <gtk/gtkhpaned.h>
-#include <gtk/gtkvpaned.h>
+#include <gtk/gtk.h>
 
 #include "gdl-tools.h"
 #include "gdl-dock-paned.h"

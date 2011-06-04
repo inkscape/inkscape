@@ -41,16 +41,7 @@
 
 #include <string.h>
 
-#include <gtk/gtkhbox.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtktoolitem.h>
 #include <gtk/gtk.h>
-#include <gtk/gtkcellrenderertext.h>
-#include <gtk/gtkcellrendererpixbuf.h>
-#include <gtk/gtkcelllayout.h>
-#include <gtk/gtkradioaction.h>
-#include <gtk/gtkradiomenuitem.h>
-#include <gtk/gtktable.h>
 
 #include "ege-select-one-action.h"
 

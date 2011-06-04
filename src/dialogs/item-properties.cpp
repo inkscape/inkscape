@@ -16,16 +16,7 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include <gtk/gtkvbox.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtktable.h>
-#include <gtk/gtkcheckbutton.h>
 #include <gtk/gtk.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtkframe.h>
-#include <gtk/gtkexpander.h>
-#include <gtk/gtktextview.h>
-#include <gtk/gtktooltips.h>
 
 #include "../desktop-handles.h"
 #include "dialog-events.h"

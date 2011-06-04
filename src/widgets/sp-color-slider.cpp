@@ -10,8 +10,7 @@
  * This code is in public domain
  */
 
-#include <gtk/gtkversion.h>
-#include <gtk/gtksignal.h>
+#include <gtk/gtk.h>
 #include "sp-color-scales.h"
 #include "preferences.h"
 
