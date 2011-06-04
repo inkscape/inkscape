@@ -28,6 +28,7 @@
 #endif
 
 //#include "inkscape.h"
+#include "sp-root.h"
 #include "sp-path.h"
 #include "style.h"
 //#include "color.h"
@@ -126,7 +127,7 @@ emf_print_document_to_file(SPDocument *doc, gchar const *filename)
     context.module = mod;
     /* fixme: This has to go into module constructor somehow */
     /* Create new arena */
-    mod->base = SP_ITEM(doc->getRoot());
+    mod->base = doc->getRoot();
     mod->arena = NRArena::create();
     mod->dkey = SPItem::display_key_new(1);
     mod->root = mod->base->invoke_show(mod->arena, mod->dkey, SP_ITEM_SHOW_DISPLAY);

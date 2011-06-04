@@ -43,6 +43,7 @@
 
 #include "filedialog.h"
 #include "filedialogimpl-win32.h"
+#include "sp-root.h"
 
 #include <zlib.h>
 #include <cairomm/win32_surface.h>
@@ -409,7 +410,7 @@ void FileOpenDialogImplWin32::createFilterMenu()
     *(filterptr++) = L'\0';
 
     _filter_count = extension_index;
-    _filter_index = 2;	// Select the 2nd filter in the list - 2 is NOT the 3rd
+    _filter_index = 2;  // Select the 2nd filter in the list - 2 is NOT the 3rd
 }
 
 void FileOpenDialogImplWin32::GetOpenFileName_thread()
@@ -421,7 +422,7 @@ void FileOpenDialogImplWin32::GetOpenFileName_thread()
 
     WCHAR* current_directory_string = (WCHAR*)g_utf8_to_utf16(
         _current_directory.data(), _current_directory.length(),
-		NULL, NULL, NULL);
+        NULL, NULL, NULL);
 
     memset(&ofn, 0, sizeof(ofn));
 
@@ -962,8 +963,10 @@ bool FileOpenDialogImplWin32::set_svg_preview()
     g_free(utf8string);
 
     // Check the document loaded properly
-    if(svgDoc == NULL) return false;
-    if(svgDoc->root == NULL)
+    if (svgDoc == NULL) {
+        return false;
+    }
+    if (svgDoc->getRoot() == NULL)
     {
         svgDoc->doUnref();
         return false;
@@ -989,14 +992,14 @@ bool FileOpenDialogImplWin32::set_svg_preview()
     // write object bbox to area
     Geom::OptRect maybeArea(area);
     svgDoc->ensureUpToDate();
-    static_cast<SPItem *>(svgDoc->root)->invoke_bbox( maybeArea,
-        static_cast<SPItem *>(svgDoc->root)->i2d_affine(), TRUE);
+    svgDoc->getRoot()->invoke_bbox( maybeArea,
+                                    svgDoc->getRoot()->i2d_affine(), TRUE);
 
     NRArena *const arena = NRArena::create();
 
     unsigned const key = SPItem::display_key_new(1);
 
-    NRArenaItem *root = static_cast<SPItem*>(svgDoc->root)->invoke_show(
+    NRArenaItem *root = svgDoc->getRoot()->invoke_show(
         arena, key, SP_ITEM_SHOW_DISPLAY);
 
     NRGC gc(NULL);
@@ -1033,7 +1036,7 @@ bool FileOpenDialogImplWin32::set_svg_preview()
 
     // Tidy up
     svgDoc->doUnref();
-    static_cast<SPItem*>(svgDoc->root)->invoke_hide(key);
+    svgDoc->getRoot()->invoke_hide(key);
     nr_object_unref((NRObject *) arena);
 
     // Create the GDK pixbuf
@@ -1666,7 +1669,7 @@ void FileSaveDialogImplWin32::createFilterMenu()
     *(filterptr++) = 0;
 
     _filter_count = extension_index;
-    _filter_index = 1;	// A value of 1 selects the 1st filter - NOT the 2nd
+    _filter_index = 1;  // A value of 1 selects the 1st filter - NOT the 2nd
 }
 
 void FileSaveDialogImplWin32::GetSaveFileName_thread()
@@ -1678,7 +1681,7 @@ void FileSaveDialogImplWin32::GetSaveFileName_thread()
 
     WCHAR* current_directory_string = (WCHAR*)g_utf8_to_utf16(
         _current_directory.data(), _current_directory.length(),
-		NULL, NULL, NULL);
+        NULL, NULL, NULL);
 
     // Copy the selected file name, converting from UTF-8 to UTF-16
     memset(_path_string, 0, sizeof(_path_string));
@@ -1730,14 +1733,14 @@ FileSaveDialogImplWin32::show()
     _result = false;
     _main_loop = g_main_loop_new(g_main_context_default(), FALSE);
 
-	if(_main_loop != NULL)
-	{
-	    if(Glib::Thread::create(sigc::mem_fun(*this, &FileSaveDialogImplWin32::GetSaveFileName_thread), true))
-	        g_main_loop_run(_main_loop);
+    if(_main_loop != NULL)
+    {
+        if(Glib::Thread::create(sigc::mem_fun(*this, &FileSaveDialogImplWin32::GetSaveFileName_thread), true))
+            g_main_loop_run(_main_loop);
 
-	    if(_result)
-	        appendExtension(myFilename, (Inkscape::Extension::Output*)_extension);
-	}
+        if(_result)
+            appendExtension(myFilename, (Inkscape::Extension::Output*)_extension);
+    }
 
     return _result;
 }

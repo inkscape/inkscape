@@ -50,6 +50,7 @@
 #include "style.h"
 //#include "sp-paint-server.h"
 #include "inkscape-version.h"
+#include "sp-root.h"
 
 //#include "libnrtype/FontFactory.h"
 //#include "libnrtype/font-instance.h"
@@ -146,7 +147,7 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
         d.x1 = _width;
         d.y1 = _height;
     } else {
-        SPItem* doc_item = SP_ITEM(doc->getRoot());
+        SPItem* doc_item = doc->getRoot();
         doc_item->invoke_bbox(&d, doc_item->i2d_affine(), TRUE);
     }
 
