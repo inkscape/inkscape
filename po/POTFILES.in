@@ -323,6 +323,7 @@ share/extensions/export_gimp_palette.py
 share/extensions/extractimage.py
 share/extensions/guides_creator.py
 share/extensions/inkex.py
+share/extensions/interp_att_g.py
 share/extensions/markers_strokepaint.py
 share/extensions/pathalongpath.py
 share/extensions/pathmodifier.py
@@ -332,6 +333,7 @@ share/extensions/polyhedron_3d.py
 share/extensions/summersnight.py
 share/extensions/svg_and_media_zip_output.py
 share/extensions/uniconv_output.py
+share/extensions/voronoi2svg.py
 share/extensions/web-set-att.py
 share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/addnodes.inx
@@ -392,7 +394,6 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/gcodetools_path_to_gcode.inx
 [type: gettext/xml] share/extensions/gcodetools_tools_library.inx
 [type: gettext/xml] share/extensions/generate_voronoi.inx
-[type: gettext/xml] share/extensions/voronoi2svg.inx
 [type: gettext/xml] share/extensions/gimp_xcf.inx
 [type: gettext/xml] share/extensions/grid_cartesian.inx
 [type: gettext/xml] share/extensions/grid_isometric.inx
@@ -471,6 +472,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/text_uppercase.inx
 [type: gettext/xml] share/extensions/triangle.inx
 [type: gettext/xml] share/extensions/txt2svg.inx
+[type: gettext/xml] share/extensions/voronoi2svg.inx
 [type: gettext/xml] share/extensions/webslicer_create_group.inx
 [type: gettext/xml] share/extensions/webslicer_create_rect.inx
 [type: gettext/xml] share/extensions/webslicer_export.inx

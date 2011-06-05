@@ -45,6 +45,11 @@ class Voronoi2svg(inkex.Effect):
     #{{{ Additional options
 
     self.OptionParser.add_option(
+      "--tab",
+      action="store",
+      type="string",
+      dest="tab")
+    self.OptionParser.add_option(
       '--diagram-type',
       action = 'store',
       type = 'choice', choices=['Voronoi','Delaunay','Both'],
@@ -57,14 +62,14 @@ class Voronoi2svg(inkex.Effect):
       type = 'choice', choices=['Page','Automatic from seeds'],
       default = 'Page',
       dest='clipBox',
-      help = 'Defines the area bounding the Voronoi diagram')
+      help = 'Defines the bounding box of the Voronoi diagram')
     self.OptionParser.add_option(
       '--show-clip-box',
       action = 'store',
       type = 'inkbool',
       default = False,
       dest='showClipBox',
-      help = 'Set this to true to write the bounding box of the bounding area')
+      help = 'Set this to true to write the bounding box')
 
     #}}}
 
@@ -201,7 +206,7 @@ class Voronoi2svg(inkex.Effect):
     #{{{ Check that elements have been selected
 
     if len(self.options.ids) == 0:
-      inkex.errormsg("Please select seed objects!")
+      inkex.errormsg(_("Please select objects!"))
       return
 
     #}}}
