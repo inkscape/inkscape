@@ -10,7 +10,7 @@
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
  *
- * Copyright (C) 2006-2010 Authors
+ * Copyright (C) 2006-2011 Authors
  *
  * Licensed under GNU GPL
  */
@@ -621,7 +621,7 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
     // scaling of the image when including it in LaTeX
 
     os << "  \\ifx\\svgwidth\\undefined%\n";
-    os << "    \\setlength{\\unitlength}{" << d->width() * PT_PER_PX << "pt}%\n";
+    os << "    \\setlength{\\unitlength}{" << d->width() * PT_PER_PX << "bp}%\n"; // note: 'bp' is the Postscript pt unit in LaTeX, see LP bug #792384
     os << "    \\ifx\\svgscale\\undefined%\n";
     os << "      \\relax%\n";
     os << "    \\else%\n";
