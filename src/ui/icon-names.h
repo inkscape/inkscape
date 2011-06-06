@@ -556,6 +556,8 @@
     "xml-text-new"
 #define INKSCAPE_ICON_ZOOM \
     "zoom"
+#define INKSCAPE_ICON_MEASURE \
+    "measure"
 #define INKSCAPE_ICON_ZOOM_DOUBLE_SIZE \
     "zoom-double-size"
 #define INKSCAPE_ICON_ZOOM_FIT_DRAWING \

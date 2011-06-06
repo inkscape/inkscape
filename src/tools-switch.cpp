@@ -50,6 +50,7 @@
 #include "sp-flowtext.h"
 #include "gradient-context.h"
 #include "zoom-context.h"
+#include "measure-context.h"
 #include "dropper-context.h"
 #include "connector-context.h"
 #include "flood-context.h"
@@ -75,6 +76,7 @@ static char const *const tool_names[] = {
     "/tools/text",
     "/tools/gradient",
     "/tools/zoom",
+    "/tools/measure",
     "/tools/dropper",
     "/tools/connector",
     "/tools/paintbucket",
@@ -207,6 +209,12 @@ tools_switch(SPDesktop *dt, int num)
             dt->activate_guides(false);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
             dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> or <b>drag around an area</b> to zoom in, <b>Shift+click</b> to zoom out."));
+            break;
+        case TOOLS_MEASURE:
+            dt->set_event_context(SP_TYPE_MEASURE_CONTEXT, tool_names[num]);
+            dt->activate_guides(false);
+            inkscape_eventcontext_set(sp_desktop_event_context(dt));
+            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> to measure the dimensions of objects."));
             break;
         case TOOLS_DROPPER:
             dt->set_event_context(SP_TYPE_DROPPER_CONTEXT, tool_names[num]);

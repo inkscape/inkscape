@@ -226,6 +226,7 @@
     <toolitem action='ToolSelect'/>
     <toolitem action='ToolNode'/>
     <toolitem action='ToolZoom'/>
+    <toolitem action='ToolMeasure'/>
     <toolitem action='ToolRect'/>
     <toolitem action='ToolArc'/>
     <toolitem action='ToolStar'/>

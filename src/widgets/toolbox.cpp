@@ -133,6 +133,7 @@ static void       sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainA
 static void       sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_zoom_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
+static void       sp_measure_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
@@ -174,6 +175,7 @@ static struct {
     { "SPTweakContext",    "tweak_tool",     SP_VERB_CONTEXT_TWEAK, SP_VERB_CONTEXT_TWEAK_PREFS },
     { "SPSprayContext",    "spray_tool",     SP_VERB_CONTEXT_SPRAY, SP_VERB_CONTEXT_SPRAY_PREFS },
     { "SPZoomContext",     "zoom_tool",      SP_VERB_CONTEXT_ZOOM, SP_VERB_CONTEXT_ZOOM_PREFS },
+    { "SPMeasureContext",  "measure_tool",   SP_VERB_CONTEXT_MEASURE, SP_VERB_CONTEXT_MEASURE_PREFS },
     { "SPRectContext",     "rect_tool",      SP_VERB_CONTEXT_RECT, SP_VERB_CONTEXT_RECT_PREFS },
     { "Box3DContext",      "3dbox_tool",     SP_VERB_CONTEXT_3DBOX, SP_VERB_CONTEXT_3DBOX_PREFS },
     { "SPArcContext",      "arc_tool",       SP_VERB_CONTEXT_ARC, SP_VERB_CONTEXT_ARC_PREFS },
@@ -211,6 +213,8 @@ static struct {
     { "SPSprayContext",   "spray_toolbox",   0, sp_spray_toolbox_prep,              "SprayToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPZoomContext",   "zoom_toolbox",   0, sp_zoom_toolbox_prep,              "ZoomToolbar",
+      SP_VERB_INVALID, 0, 0},
+    { "SPMeasureContext",   "measure_toolbox",   0, sp_measure_toolbox_prep,              "MeasureToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPStarContext",   "star_toolbox",   0, sp_star_toolbox_prep,              "StarToolbar",
       SP_VERB_CONTEXT_STAR_PREFS,   "/tools/shapes/star",     N_("Style of new stars")},
@@ -359,6 +363,9 @@ static gchar const * ui_descr =
         "    <separator />"
         "    <toolitem action='ZoomPrev' />"
         "    <toolitem action='ZoomNext' />"
+        "  </toolbar>"
+
+        "  <toolbar name='MeasureToolbar'>"
         "  </toolbar>"
 
         "  <toolbar name='StarToolbar'>"
@@ -932,7 +939,7 @@ static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* deskto
         SP_VERB_ZOOM_PAGE,
         SP_VERB_ZOOM_PAGE_WIDTH,
         SP_VERB_ZOOM_PREV,
-        SP_VERB_ZOOM_SELECTION,
+        SP_VERB_ZOOM_SELECTION
     };
 
     Inkscape::IconSize toolboxSize = ToolboxFactory::prefToSize("/toolbox/small");
@@ -1627,6 +1634,11 @@ static void sp_zoom_toolbox_prep(SPDesktop * /*desktop*/, GtkActionGroup* /*main
     // no custom GtkAction setup needed
 } // end of sp_zoom_toolbox_prep()
 
+static void sp_measure_toolbox_prep(SPDesktop * /*desktop*/, GtkActionGroup* /*mainActions*/, GObject* /*holder*/)
+{
+    // no custom GtkAction setup needed
+} // end of sp_measure_toolbox_prep()
+
 void ToolboxFactory::setToolboxDesktop(GtkWidget *toolbox, SPDesktop *desktop)
 {
     sigc::connection *conn = static_cast<sigc::connection*>(g_object_get_data(G_OBJECT(toolbox),
@@ -1838,6 +1850,7 @@ void setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='ToolNode' />"
         "    <toolitem action='ToolTweak' />"
         "    <toolitem action='ToolZoom' />"
+        "    <toolitem action='ToolMeasure' />"
 
         "   <!-- Shapes -->"
         "    <toolitem action='ToolRect' />"

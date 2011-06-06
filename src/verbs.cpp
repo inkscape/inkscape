@@ -1466,6 +1466,9 @@ ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_CONTEXT_ZOOM:
             tools_switch(dt, TOOLS_ZOOM);
             break;
+        case SP_VERB_CONTEXT_MEASURE:
+            tools_switch(dt, TOOLS_MEASURE);
+            break;
         case SP_VERB_CONTEXT_DROPPER:
             tools_switch(dt, TOOLS_DROPPER);
             break;
@@ -1540,6 +1543,10 @@ ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
         case SP_VERB_CONTEXT_ZOOM_PREFS:
             prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_ZOOM);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
+            break;
+        case SP_VERB_CONTEXT_MEASURE_PREFS:
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_MEASURE);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_DROPPER_PREFS:
@@ -2522,6 +2529,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Create and edit gradients"), INKSCAPE_ICON_COLOR_GRADIENT),
     new ContextVerb(SP_VERB_CONTEXT_ZOOM, "ToolZoom", N_("Zoom"),
                     N_("Zoom in or out"), INKSCAPE_ICON_ZOOM),
+    new ContextVerb(SP_VERB_CONTEXT_MEASURE, "ToolMeasure", N_("Measure"),
+                    N_("Measurement tool"), INKSCAPE_ICON_MEASURE),
     new ContextVerb(SP_VERB_CONTEXT_DROPPER, "ToolDropper", N_("Dropper"),
                     N_("Pick colors from image"), INKSCAPE_ICON_COLOR_PICKER),
     new ContextVerb(SP_VERB_CONTEXT_CONNECTOR, "ToolConnector", N_("Connector"),
@@ -2565,6 +2574,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Open Preferences for the Gradient tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_ZOOM_PREFS, "ZoomPrefs", N_("Zoom Preferences"),
                     N_("Open Preferences for the Zoom tool"), NULL),
+    new ContextVerb(SP_VERB_CONTEXT_MEASURE_PREFS, "MeasurePrefs", N_("Measure Preferences"),
+                    N_("Open Preferences for the Measure tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_DROPPER_PREFS, "DropperPrefs", N_("Dropper Preferences"),
                     N_("Open Preferences for the Dropper tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_CONNECTOR_PREFS, "ConnectorPrefs", N_("Connector Preferences"),
