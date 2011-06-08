@@ -590,10 +590,11 @@ Glib::ustring
 get_file_save_path (SPDocument *doc, FileSaveMethod method) {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     Glib::ustring path;
+    bool use_current_dir = true;
     switch (method) {
         case FILE_SAVE_METHOD_SAVE_AS:
         {
-            bool use_current_dir = prefs->getBool("/dialogs/save_as/use_current_dir", true);
+            use_current_dir = prefs->getBool("/dialogs/save_as/use_current_dir", true);
             if (doc->getURI() && use_current_dir) {
                 path = Glib::path_get_dirname(doc->getURI());
             } else {
@@ -605,7 +606,12 @@ get_file_save_path (SPDocument *doc, FileSaveMethod method) {
             path = prefs->getString("/dialogs/save_as/path");
             break;
         case FILE_SAVE_METHOD_SAVE_COPY:
-            path = prefs->getString("/dialogs/save_copy/path");
+            use_current_dir = prefs->getBool("/dialogs/save_copy/use_current_dir", prefs->getBool("/dialogs/save_as/use_current_dir", true));
+            if (doc->getURI() && use_current_dir) {
+                path = Glib::path_get_dirname(doc->getURI());
+            } else {
+                path = prefs->getString("/dialogs/save_copy/path");
+            }
             break;
         case FILE_SAVE_METHOD_INKSCAPE_SVG:
             if (doc->getURI()) {
