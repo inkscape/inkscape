@@ -13,16 +13,25 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "macros.h"
+#include "display/curve.h"
+#include "sp-shape.h"
 #include "display/sp-ctrlline.h"
+#include "display/sodipodi-ctrl.h"
 #include "display/sp-canvas-item.h"
 #include "display/sp-canvas-util.h"
 #include "desktop.h"
+#include "document.h"
 #include "pixmaps/cursor-measure.xpm"
 #include "preferences.h"
 #include "inkscape.h"
 #include "desktop-handles.h"
 #include "measure-context.h"
 #include "display/canvas-text.h"
+#include "path-chemistry.h"
+#include "2geom/line.h"
+#include <2geom/path-intersection.h>
+#include <2geom/pathvector.h>
+#include <2geom/crossing.h>
 
 static void sp_measure_context_class_init(SPMeasureContextClass *klass);
 static void sp_measure_context_init(SPMeasureContext *measure_context);
@@ -181,10 +190,100 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 sp_ctrlline_set_coords (SP_CTRLLINE(line), start_point[Geom::X], start_point[Geom::Y], motion_dt[Geom::X], motion_dt[Geom::Y]);
 
-                Geom::Point measure_text_pos = (start_point + motion_dt)/2;
-                double length = (start_point - motion_dt).length();
+
+                //our control line
+                Geom::PathVector line;
+                Geom::Path p;
+                p.start(desktop->dt2doc(start_point));
+                p.appendNew<Geom::LineSegment>(desktop->dt2doc(motion_dt));
+                line.push_back(p);
+
+                std::vector<Geom::Point> points;
+                int i;
+                for (i=0; i<30; i++){
+                    points.push_back(start_point + i*(motion_dt-start_point)/30);
+                }
+
+                SPDocument *doc = sp_desktop_document(desktop);
+                GSList *items = sp_desktop_document(desktop)->getItemsInBox(desktop->dkey, Geom::Rect(start_point, motion_dt));
+                double length;
+//TODO: select elements crossed by line segment:
+//                GSList *items = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, points);
+                SPItem* item;
+                GSList *l;
+                int counter=0;
+                std::vector<Geom::Point> intersections;
+                for (l = items; l != NULL; l = l->next){
+                    item = (SPItem*) (l->data);
+#if 0
+//TODO: deal with all kinds of objects:
+
+                    Inkscape::XML::Node *repr = sp_selected_item_to_curved_repr(item, 0);
+
+                    if (!repr) continue;
+                    item = (SPItem *) doc->getObjectByRepr(repr);
+                    if (!item) continue;
+                    SPCurve* curve = SP_SHAPE(item)->getCurve();
+#else
+                    SPCurve* curve = NULL;
+                    if (SP_IS_SHAPE(item)) {
+                        curve = SP_SHAPE(item)->getCurve();
+                    } 
+#endif
+                    if (!curve) continue;
+                    counter++;
+
+                    Geom::PathVector pathv = curve->get_pathvector();
+
+                    // Find all intersections of the control-line with this shape
+                    Geom::CrossingSet cs = Geom::crossings(line, pathv);
+                    // Store the results as intersection points
+                    unsigned int index = 0;
+                    for (Geom::CrossingSet::const_iterator i = cs.begin(); i != cs.end(); i++) {
+                        if (index >= line.size()) {
+                            break;
+                        }
+                        // Reconstruct and store the points of intersection
+                        for (Geom::Crossings::const_iterator m = (*i).begin(); m != (*i).end(); m++) {
+                            intersections.push_back(line[index].pointAt((*m).ta));
+                        }
+                        index++;
+                    }
+                    //g_free(repr);
+                }
+                
+                Geom::Point pa = start_point;
+                Geom::Point pb = motion_dt;
+
+                if (intersections.size() >= 2){
+                    pa = desktop->doc2dt(intersections[0]);
+                    pb = desktop->doc2dt(intersections[1]);    
+                }
+
+                unsigned int idx;
+                for (idx=0;idx<intersections.size(); idx++){
+                    // Display the intersection indicator (i.e. the cross)
+                    SPCanvasItem * canvasitem = NULL;
+                    canvasitem = sp_canvas_item_new(sp_desktop_tempgroup (desktop),
+                                                    SP_TYPE_CTRL,
+                                                    "anchor", GTK_ANCHOR_CENTER,
+                                                    "size", 5.0,
+                                                    "stroked", TRUE,
+                                                    "stroke_color", 0xff0000ff,
+                                                    "mode", SP_KNOT_MODE_XOR,
+                                                    "shape", SP_KNOT_SHAPE_CROSS,
+                                                    NULL );
+
+                    SP_CTRL(canvasitem)->moveto(desktop->doc2dt(intersections[idx]));
+                    desktop->add_temporary_canvasitem(canvasitem, 100);
+                }
+
+
+                Geom::Point measure_text_pos = (pa + pb)/2;
+
+                length = (pa - pb).length();
                 char* measure_str = (char*) malloc(sizeof(char)*20);
-                sprintf(measure_str, "%2f", length);
+                sprintf(measure_str, "%f", length);
 
                 sp_canvastext_set_coords (SP_CANVASTEXT(measure_text), desktop->dt2doc(measure_text_pos));
                 sp_canvastext_set_text (SP_CANVASTEXT(measure_text), measure_str);
