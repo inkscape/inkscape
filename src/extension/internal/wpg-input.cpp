@@ -50,8 +50,11 @@
 #include "document.h"
 
 #include "libwpg/libwpg.h"
+#if WITH_LIBWPG01
 #include "libwpg/WPGStreamImplementation.h"
-
+#elif WITH_LIBWPG02
+#include "libwpd-stream/libwpd-stream.h"
+#endif
 
 using namespace libwpg;
 
@@ -62,9 +65,17 @@ namespace Internal {
 
 SPDocument *
 WpgInput::open(Inkscape::Extension::Input * mod, const gchar * uri) {
+#if WITH_LIBWPG01
     WPXInputStream* input = new libwpg::WPGFileStream(uri);
+#elif WITH_LIBWPG02
+    WPXInputStream* input = new WPXFileStream(uri);
+#endif
     if (input->isOLEStream()) {
+#if WITH_LIBWPG01
         WPXInputStream* olestream = input->getDocumentOLEStream();
+#elif WITH_LIBWPG02
+        WPXInputStream* olestream = input->getDocumentOLEStream("PerfectOffice_MAIN");
+#endif
         if (olestream) {
             delete input;
             input = olestream;
@@ -79,7 +90,11 @@ WpgInput::open(Inkscape::Extension::Input * mod, const gchar * uri) {
         return NULL;
     }
 
+#if WITH_LIBWPG01
     libwpg::WPGString output;
+#elif WITH_LIBWPG02
+    WPXString output;
+#endif
     if (!libwpg::WPGraphics::generateSVG(input, output)) {
         delete input;
         return NULL;
