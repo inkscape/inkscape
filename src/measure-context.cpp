@@ -124,6 +124,11 @@ static gint sp_measure_context_item_handler(SPEventContext *event_context, SPIte
     return ret;
 }
 
+bool GeomPointSortPredicate(const Geom::Point& p1, const Geom::Point& p2)
+{
+  return p1[Geom::Y] < p2[Geom::Y];
+}
+
 static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
     SPDesktop *desktop = event_context->desktop;
@@ -199,20 +204,21 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 line.push_back(p);
 
                 std::vector<Geom::Point> points;
-                int i;
-                for (i=0; i<30; i++){
-                    points.push_back(start_point + i*(motion_dt-start_point)/30);
+                double i;
+#define NPOINTS 3000
+                for (i=0; i<NPOINTS; i++){
+                    points.push_back(desktop->d2w(start_point + (i/NPOINTS)*(motion_dt-start_point)));
                 }
 
-                SPDocument *doc = sp_desktop_document(desktop);
-                GSList *items = sp_desktop_document(desktop)->getItemsInBox(desktop->dkey, Geom::Rect(start_point, motion_dt));
                 double length;
-//TODO: select elements crossed by line segment:
-//                GSList *items = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, points);
+//select elements crossed by line segment:
+                GSList *items = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, points);
                 SPItem* item;
                 GSList *l;
                 int counter=0;
                 std::vector<Geom::Point> intersections;
+                intersections.push_back(desktop->dt2doc(start_point));
+
                 for (l = items; l != NULL; l = l->next){
                     item = (SPItem*) (l->data);
 #if 0
@@ -251,15 +257,12 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     }
                     //g_free(repr);
                 }
-                
-                Geom::Point pa = start_point;
-                Geom::Point pb = motion_dt;
+                intersections.push_back(desktop->dt2doc(motion_dt));
 
-                if (intersections.size() >= 2){
-                    pa = desktop->doc2dt(intersections[0]);
-                    pb = desktop->doc2dt(intersections[1]);    
-                }
+                //sort intersections
+                std::sort(intersections.begin(), intersections.end(), GeomPointSortPredicate);
 
+//TODO: make these not fade out.
                 unsigned int idx;
                 for (idx=0;idx<intersections.size(); idx++){
                     // Display the intersection indicator (i.e. the cross)
@@ -267,7 +270,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     canvasitem = sp_canvas_item_new(sp_desktop_tempgroup (desktop),
                                                     SP_TYPE_CTRL,
                                                     "anchor", GTK_ANCHOR_CENTER,
-                                                    "size", 5.0,
+                                                    "size", 8.0,
                                                     "stroked", TRUE,
                                                     "stroke_color", 0xff0000ff,
                                                     "mode", SP_KNOT_MODE_XOR,
@@ -279,6 +282,29 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 }
 
 
+//TODO: make these not fade out.
+                Geom::Point previous_point = intersections[0];
+                for (idx=1; idx < intersections.size(); idx++){
+                    Geom::Point measure_text_pos = (previous_point + intersections[idx])/2;
+
+                    length = (intersections[idx] - previous_point).length();
+                    char* measure_str = (char*) malloc(sizeof(char)*20);
+                    sprintf(measure_str, "%f", length);
+
+//                    sp_canvastext_set_coords (SP_CANVASTEXT(measure_text), desktop->dt2doc(measure_text_pos));
+//                    sp_canvastext_set_text (SP_CANVASTEXT(measure_text), measure_str);
+
+//                    SPCanvasItem * canvasitem = NULL;
+                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->dt2doc(measure_text_pos), measure_str);
+
+                    desktop->add_temporary_canvasitem(canvas_tooltip, 100);
+
+                    free(measure_str);
+
+                    previous_point = intersections[idx];
+                }
+
+#if 0
                 Geom::Point measure_text_pos = (pa + pb)/2;
 
                 length = (pa - pb).length();
@@ -288,6 +314,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 sp_canvastext_set_coords (SP_CANVASTEXT(measure_text), desktop->dt2doc(measure_text_pos));
                 sp_canvastext_set_text (SP_CANVASTEXT(measure_text), measure_str);
                 free(measure_str);
+#endif
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
             }
