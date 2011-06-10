@@ -713,6 +713,8 @@ dnl ******************************
 dnl Check for libwpg for extension
 dnl ******************************
 
+with_libwpg=no
+
 PKG_CHECK_MODULES(LIBWPG01, libwpg-0.1 libwpg-stream-0.1, with_libwpg01=yes, with_libwpg01=no)
 if test "x$with_libwpg01" = "xyes"; then
 	AC_DEFINE(WITH_LIBWPG01,1,[Build in libwpg 0.1.x])
