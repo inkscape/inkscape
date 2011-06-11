@@ -49,6 +49,11 @@
 #include "extension/input.h"
 #include "document.h"
 
+// Take a guess and fallback to 0.1.x if no configure has run
+#if !defined(WITH_LIBWPG01) && !defined(WITH_LIBWPG02)
+#define WITH_LIBWPG01 1
+#endif
+
 #include "libwpg/libwpg.h"
 #if WITH_LIBWPG01
 #include "libwpg/WPGStreamImplementation.h"

@@ -187,6 +187,9 @@
         /* Allow reading WordPerfect? */
         #define WITH_LIBWPG                   1
 
+        /* Default  to libwpg 0.1.x */
+        #define WITH_LIBWPG01                 1
+
         /* Do we support SVG Fonts? */
         #define ENABLE_SVG_FONTS              1
 

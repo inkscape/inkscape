@@ -173,6 +173,9 @@
         /* Allow reading WordPerfect? */
         #define WITH_LIBWPG                   1
 
+        /* Default  to libwpg 0.1.x */
+        #define WITH_LIBWPG01                 1
+
         #endif /* _CONFIG_H_ */
     </makefile>
   </target>
