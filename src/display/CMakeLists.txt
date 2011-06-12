@@ -33,7 +33,7 @@ set(display_SRC
 	nr-filter-morphology.cpp
 	nr-filter-offset.cpp
 	nr-filter-primitive.cpp
-	nr-filter-skeleton.cpp
+	# nr-filter-skeleton.cpp
 	nr-filter-slot.cpp
 	nr-filter-specularlighting.cpp
 	nr-filter-tile.cpp

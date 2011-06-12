@@ -30,7 +30,7 @@ set(live_effects_SRC
 	lpe-recursiveskeleton.cpp
 	lpe-rough-hatches.cpp
 	lpe-ruler.cpp
-	lpe-skeleton.cpp
+	# lpe-skeleton.cpp
 	lpe-sketch.cpp
 	lpe-spiro.cpp
 	lpe-tangent_to_curve.cpp

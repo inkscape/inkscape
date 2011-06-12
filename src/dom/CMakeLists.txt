@@ -24,7 +24,7 @@ set(dom_SRC
 	ucd.cpp
 	uri.cpp
 	xmlreader.cpp
-	xmlwriter.cpp
+	# xmlwriter.cpp
 	xpathimpl.cpp
 	xpathparser.cpp
 	xpathtoken.cpp

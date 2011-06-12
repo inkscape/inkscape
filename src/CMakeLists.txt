@@ -1,7 +1,7 @@
 
 set(SP_SRC
 	sp-anchor.cpp
-	sp-animation.cpp
+	# sp-animation.cpp
 	sp-clippath.cpp
 	sp-conn-end-pair.cpp
 	sp-conn-end.cpp
@@ -50,7 +50,7 @@ set(SP_SRC
 	sp-root.cpp
 	sp-script.cpp
 	sp-shape.cpp
-	sp-skeleton.cpp
+	# sp-skeleton.cpp
 	sp-spiral.cpp
 	sp-star.cpp
 	sp-stop.cpp
@@ -225,9 +225,9 @@ set(internalfolders
 	filters
 	helper
 	io
-	jabber_whiteboard
+	# jabber_whiteboard
 	live_effects
-	pedro
+	# pedro
 	svg
 	trace
 	#traits
@@ -296,52 +296,52 @@ target_link_libraries(inkscape
 	
 	
 	# system libs
-	xslt
-	gtkspell
-	gsl
-	gslcblas
-	gtkmm-2.4
-	atkmm-1.6
-	gdkmm-2.4
-	giomm-2.4
-	pangomm-1.4
-	gtk-x11-2.0
-	glibmm-2.4
-	cairomm-1.0
-	sigc-2.0
-	atk-1.0
-	gio-2.0
-	png
-	X11
-	xml2
-	dl
-	gomp
-	popt
-	aspell
-	gnomevfs-2
-	gconf-2
-	pangoft2-1.0
-	fontconfig
-	freetype
-	z
-	Magick++
-	MagickCore
-	gc
-	lcms
-	poppler-glib
-	gdk-x11-2.0
-	poppler
-	pangocairo-1.0
-	gdk_pixbuf-2.0
-	png14
-	m
-	pango-1.0
-	cairo
-	gmodule-2.0
-	gobject-2.0
-	gthread-2.0
-	rt
-	glib-2.0
+	-lxslt
+	-lgtkspell
+	-lgsl
+	-lgslcblas
+	-lgtkmm-2.4
+	-latkmm-1.6
+	-lgdkmm-2.4
+	-lgiomm-2.4
+	-lpangomm-1.4
+	-lgtk-x11-2.0
+	-lglibmm-2.4
+	-lcairomm-1.0
+	-lsigc-2.0
+	-latk-1.0
+	-lgio-2.0
+	-lpng
+	-lX11
+	-lxml2
+	-ldl
+	-lgomp
+	-lpopt
+	-laspell
+	-lgnomevfs-2
+	-lgconf-2
+	-lpangoft2-1.0
+	-lfontconfig
+	-lfreetype
+	-lz
+	-lMagick++
+	-lMagickCore
+	-lgc
+	-llcms
+	-lpoppler-glib
+	-lgdk-x11-2.0
+	-lpoppler
+	-lpangocairo-1.0
+	-lgdk_pixbuf-2.0
+	-lpng14
+	-lm
+	-lpango-1.0
+	-lcairo
+	-lgmodule-2.0
+	-lgobject-2.0
+	-lgthread-2.0
+	-lrt
+	-lglib-2.0
 	
 )
 

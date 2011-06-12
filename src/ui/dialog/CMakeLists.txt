@@ -33,16 +33,16 @@ set(ui_dialog_SRC
 	print-colors-preview-dialog.cpp
 	print.cpp
 	scriptdialog.cpp
-	session-player.cpp
+	# session-player.cpp
 	svg-fonts-dialog.cpp
 	swatches.cpp
 	tile.cpp
 	tracedialog.cpp
 	transformation.cpp
 	undo-history.cpp
-	whiteboard-connect.cpp
-	whiteboard-sharewithchat.cpp
-	whiteboard-sharewithuser.cpp
+	# whiteboard-connect.cpp
+	# whiteboard-sharewithchat.cpp
+	# whiteboard-sharewithuser.cpp
 )
 
 if(WIN32)

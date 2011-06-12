@@ -7,8 +7,8 @@ set(2GEOM_SRC
 	bezier-utils.cpp
 	circle-circle.cpp
 	circle.cpp
-	conic_section_clipper_impl.cpp
-	conicsec.cpp
+	# conic_section_clipper_impl.cpp
+	# conicsec.cpp
 	conjugate_gradient.cpp
 	convex-cover.cpp
 	crossing.cpp
@@ -27,7 +27,7 @@ set(2GEOM_SRC
 	point.cpp
 	poly.cpp
 	quadtree.cpp
-	recursive-bezier-intersection.cpp
+	# recursive-bezier-intersection.cpp
 	region.cpp
 	sbasis-2d.cpp
 	sbasis-geometric.cpp

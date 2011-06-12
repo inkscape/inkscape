@@ -3,7 +3,7 @@ set(dom_io_SRC
 	bufferstream.cpp
 	domstream.cpp
 	gzipstream.cpp
-	httpclient.cpp
+	# httpclient.cpp
 	socket.cpp
 	stringstream.cpp
 	uristream.cpp
