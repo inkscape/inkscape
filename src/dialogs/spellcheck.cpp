@@ -185,10 +185,10 @@ static gboolean sp_spellcheck_dialog_delete(GtkObject *, GdkEvent *, gpointer /*
 }
 
 void
-sp_spellcheck_new_button (GtkWidget *dlg, GtkWidget *hb, const gchar *label, GtkTooltips *tt, const gchar *tip, void (*function) (GObject *, GObject *), const gchar *cookie)
+sp_spellcheck_new_button (GtkWidget *dlg, GtkWidget *hb, const gchar *label, const gchar *tip, void (*function) (GObject *, GObject *), const gchar *cookie)
 {
     GtkWidget *b = gtk_button_new_with_mnemonic (label);
-    gtk_tooltips_set_tip (tt, b, tip, NULL);
+    gtk_widget_set_tooltip_text (b, tip);
     gtk_box_pack_start (GTK_BOX (hb), b, TRUE, TRUE, 0);
     g_signal_connect ( G_OBJECT (b), "clicked", G_CALLBACK (function), dlg );
     gtk_object_set_data (GTK_OBJECT (dlg), cookie, b);
@@ -926,8 +926,6 @@ sp_spellcheck_dialog (void)
         g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg);
         g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg);
 
-        GtkTooltips *tt = gtk_tooltips_new ();
-
         gtk_container_set_border_width (GTK_CONTAINER (dlg), 4);
 
         /* Toplevel vbox */
@@ -971,18 +969,18 @@ sp_spellcheck_dialog (void)
 
         {
             GtkWidget *hb = gtk_hbox_new (FALSE, 0);
-            sp_spellcheck_new_button (dlg, hb, _("_Accept"), tt, _("Accept the chosen suggestion"),
+            sp_spellcheck_new_button (dlg, hb, _("_Accept"), _("Accept the chosen suggestion"),
                                       sp_spellcheck_accept, "b_accept");
-            sp_spellcheck_new_button (dlg, hb, _("_Ignore once"), tt, _("Ignore this word only once"),
+            sp_spellcheck_new_button (dlg, hb, _("_Ignore once"), _("Ignore this word only once"),
                                       sp_spellcheck_ignore_once, "b_ignore_once");
-            sp_spellcheck_new_button (dlg, hb, _("_Ignore"), tt, _("Ignore this word in this session"),
+            sp_spellcheck_new_button (dlg, hb, _("_Ignore"), _("Ignore this word in this session"),
                                       sp_spellcheck_ignore, "b_ignore");
             gtk_box_pack_start (GTK_BOX (vb), hb, FALSE, FALSE, 0);
         }
 
         {
             GtkWidget *hb = gtk_hbox_new (FALSE, 0);
-            sp_spellcheck_new_button (dlg, hb, _("A_dd to dictionary:"), tt, _("Add this word to the chosen dictionary"),
+            sp_spellcheck_new_button (dlg, hb, _("A_dd to dictionary:"), _("Add this word to the chosen dictionary"),
                                       sp_spellcheck_add, "b_add");
             GtkComboBox *cbox = GTK_COMBO_BOX (gtk_combo_box_new_text());
             gtk_combo_box_append_text (cbox,  _lang);
@@ -1006,9 +1004,9 @@ sp_spellcheck_dialog (void)
 
         {
             GtkWidget *hb = gtk_hbox_new (FALSE, 0);
-            sp_spellcheck_new_button (dlg, hb, _("_Stop"), tt, _("Stop the check"),
+            sp_spellcheck_new_button (dlg, hb, _("_Stop"), _("Stop the check"),
                                       sp_spellcheck_stop, "b_stop");
-            sp_spellcheck_new_button (dlg, hb, _("_Start"), tt, _("Start the check"),
+            sp_spellcheck_new_button (dlg, hb, _("_Start"), _("Start the check"),
                                       sp_spellcheck_start, "b_start");
             gtk_box_pack_start (GTK_BOX (vb), hb, FALSE, FALSE, 0);
         }

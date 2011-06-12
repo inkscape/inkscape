@@ -152,8 +152,6 @@ void ColorWheelSelector::init()
     _updating = FALSE;
     _dragging = FALSE;
 
-    _tt = gtk_tooltips_new();
-
     t = gtk_table_new (5, 3, FALSE);
     gtk_widget_show (t);
     gtk_box_pack_start (GTK_BOX (_csel), t, TRUE, TRUE, 0);
@@ -179,7 +177,7 @@ void ColorWheelSelector::init()
 
     /* Slider */
     _slider = sp_color_slider_new (_adj);
-    gtk_tooltips_set_tip (_tt, _slider, _("Alpha (opacity)"), NULL);
+    gtk_widget_set_tooltip_text (_slider, _("Alpha (opacity)"));
     gtk_widget_show (_slider);
     gtk_table_attach (GTK_TABLE (t), _slider, 1, 2, row, row + 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)GTK_FILL, XPAD, YPAD);
 
@@ -191,7 +189,7 @@ void ColorWheelSelector::init()
 
     /* Spinbutton */
     _sbtn = gtk_spin_button_new (GTK_ADJUSTMENT (_adj), 1.0, 0);
-    gtk_tooltips_set_tip (_tt, _sbtn, _("Alpha (opacity)"), NULL);
+    gtk_widget_set_tooltip_text (_sbtn, _("Alpha (opacity)"));
     sp_dialog_defocus_on_enter (_sbtn);
     gtk_label_set_mnemonic_widget (GTK_LABEL(_label), _sbtn);
     gtk_widget_show (_sbtn);

@@ -71,7 +71,7 @@ static void sp_paint_selector_class_init(SPPaintSelectorClass *klass);
 static void sp_paint_selector_init(SPPaintSelector *slider);
 static void sp_paint_selector_destroy(GtkObject *object);
 
-static GtkWidget *sp_paint_selector_style_button_add(SPPaintSelector *psel, gchar const *px, SPPaintSelector::Mode mode, GtkTooltips *tt, gchar const *tip);
+static GtkWidget *sp_paint_selector_style_button_add(SPPaintSelector *psel, gchar const *px, SPPaintSelector::Mode mode, gchar const *tip);
 static void sp_paint_selector_style_button_toggled(GtkToggleButton *tb, SPPaintSelector *psel);
 static void sp_paint_selector_fillrule_toggled(GtkToggleButton *tb, SPPaintSelector *psel);
 
@@ -210,8 +210,6 @@ sp_paint_selector_class_init(SPPaintSelectorClass *klass)
 static void
 sp_paint_selector_init(SPPaintSelector *psel)
 {
-    GtkTooltips *tt = gtk_tooltips_new();
-
     psel->mode = static_cast<SPPaintSelector::Mode>(-1); // huh?  do you mean 0xff?  --  I think this means "not in the enum"
 
     /* Paint style button box */
@@ -222,19 +220,19 @@ sp_paint_selector_init(SPPaintSelector *psel)
 
     /* Buttons */
     psel->none = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_NONE,
-                                                    SPPaintSelector::MODE_NONE, tt, _("No paint"));
+                                                    SPPaintSelector::MODE_NONE, _("No paint"));
     psel->solid = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_SOLID,
-                                                     SPPaintSelector::MODE_COLOR_RGB, tt, _("Flat color"));
+                                                     SPPaintSelector::MODE_COLOR_RGB, _("Flat color"));
     psel->gradient = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_GRADIENT_LINEAR,
-                                                        SPPaintSelector::MODE_GRADIENT_LINEAR, tt, _("Linear gradient"));
+                                                        SPPaintSelector::MODE_GRADIENT_LINEAR, _("Linear gradient"));
     psel->radial = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_GRADIENT_RADIAL,
-                                                      SPPaintSelector::MODE_GRADIENT_RADIAL, tt, _("Radial gradient"));
+                                                      SPPaintSelector::MODE_GRADIENT_RADIAL, _("Radial gradient"));
     psel->pattern = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_PATTERN,
-                                                       SPPaintSelector::MODE_PATTERN, tt, _("Pattern"));
+                                                       SPPaintSelector::MODE_PATTERN, _("Pattern"));
     psel->swatch = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_SWATCH,
-                                                       SPPaintSelector::MODE_SWATCH, tt, _("Swatch"));
+                                                       SPPaintSelector::MODE_SWATCH, _("Swatch"));
     psel->unset = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_UNKNOWN,
-                                                     SPPaintSelector::MODE_UNSET, tt, _("Unset paint (make it undefined so it can be inherited)"));
+                                                     SPPaintSelector::MODE_UNSET, _("Unset paint (make it undefined so it can be inherited)"));
 
     /* Fillrule */
     {
@@ -246,7 +244,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
         gtk_button_set_relief(GTK_BUTTON(psel->evenodd), GTK_RELIEF_NONE);
         gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(psel->evenodd), FALSE);
         // TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-        gtk_tooltips_set_tip(tt, psel->evenodd, _("Any path self-intersections or subpaths create holes in the fill (fill-rule: evenodd)"), NULL);
+        gtk_widget_set_tooltip_text(psel->evenodd, _("Any path self-intersections or subpaths create holes in the fill (fill-rule: evenodd)"));
         gtk_object_set_data(GTK_OBJECT(psel->evenodd), "mode", GUINT_TO_POINTER(SPPaintSelector::FILLRULE_EVENODD));
         w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_FILL_RULE_EVEN_ODD);
         gtk_container_add(GTK_CONTAINER(psel->evenodd), w);
@@ -257,7 +255,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
         gtk_button_set_relief(GTK_BUTTON(psel->nonzero), GTK_RELIEF_NONE);
         gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(psel->nonzero), FALSE);
         // TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-        gtk_tooltips_set_tip(tt, psel->nonzero, _("Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"), NULL);
+        gtk_widget_set_tooltip_text(psel->nonzero, _("Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"));
         gtk_object_set_data(GTK_OBJECT(psel->nonzero), "mode", GUINT_TO_POINTER(SPPaintSelector::FILLRULE_NONZERO));
         w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_FILL_RULE_NONZERO);
         gtk_container_add(GTK_CONTAINER(psel->nonzero), w);
@@ -290,12 +288,12 @@ sp_paint_selector_destroy(GtkObject *object)
 
 static GtkWidget *sp_paint_selector_style_button_add(SPPaintSelector *psel,
                                                      gchar const *pixmap, SPPaintSelector::Mode mode,
-                                                     GtkTooltips *tt, gchar const *tip)
+                                                     gchar const *tip)
 {
     GtkWidget *b, *w;
 
     b = gtk_toggle_button_new();
-    gtk_tooltips_set_tip(tt, b, tip, NULL);
+    gtk_widget_set_tooltip_text(b, tip);
     gtk_widget_show(b);
 
     gtk_container_set_border_width(GTK_CONTAINER(b), 0);

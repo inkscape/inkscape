@@ -66,7 +66,6 @@ static Inkscape::MessageStack *_message_stack = NULL;
 static Inkscape::MessageContext *_message_context = NULL;
 static sigc::connection _message_changed_connection;
 
-static GtkTooltips *tooltips = NULL;
 static GtkEditable *attr_name = NULL;
 static GtkTextView *attr_value = NULL;
 static SPXMLViewTree *tree = NULL;
@@ -194,9 +193,6 @@ void sp_xml_tree_dialog()
         GtkWidget *text_container, *attr_container, *attr_subpaned_container, *box2;
         GtkWidget *set_attr;
 
-        tooltips = gtk_tooltips_new();
-        gtk_tooltips_enable(tooltips);
-
         dlg = sp_window_new("", TRUE);
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         if (x == -1000 || y == -1000) {
@@ -267,8 +263,8 @@ void sp_xml_tree_dialog()
         gtk_paned_pack1(GTK_PANED(paned), box, FALSE, FALSE);
 
         tree = SP_XMLVIEW_TREE(sp_xmlview_tree_new(NULL, NULL, NULL));
-        gtk_tooltips_set_tip( tooltips, GTK_WIDGET(tree),
-                               _("Drag to reorder nodes"), NULL );
+        gtk_widget_set_tooltip_text( GTK_WIDGET(tree),
+                               _("Drag to reorder nodes") );
 
         g_signal_connect( G_OBJECT(tree), "tree_select_row",
                            G_CALLBACK(on_tree_select_row), NULL );
@@ -495,9 +491,9 @@ void sp_xml_tree_dialog()
                              FALSE, TRUE, 0);
 
         attr_name = GTK_EDITABLE(gtk_entry_new());
-        gtk_tooltips_set_tip( tooltips, GTK_WIDGET(attr_name),
+        gtk_widget_set_tooltip_text( GTK_WIDGET(attr_name),
                                // TRANSLATORS: "Attribute" is a noun here
-                               _("Attribute name"), NULL );
+                               _("Attribute name") );
 
         gtk_signal_connect( GTK_OBJECT(attributes), "select_row",
                             (GCallback) on_attr_select_row_set_name_content,
@@ -515,9 +511,9 @@ void sp_xml_tree_dialog()
                              TRUE, TRUE, 0);
 
         set_attr = gtk_button_new();
-        gtk_tooltips_set_tip( tooltips, GTK_WIDGET(set_attr),
+        gtk_widget_set_tooltip_text( GTK_WIDGET(set_attr),
                                // TRANSLATORS: "Set" is a verb here
-                               _("Set attribute"), NULL );
+                               _("Set attribute") );
         // TRANSLATORS: "Set" is a verb here
         GtkWidget *set_label = gtk_label_new(_("Set"));
         gtk_container_add(GTK_CONTAINER(set_attr), set_label);
@@ -540,9 +536,9 @@ void sp_xml_tree_dialog()
 
         attr_value =(GtkTextView *) gtk_text_view_new();
         gtk_text_view_set_wrap_mode((GtkTextView *) attr_value, GTK_WRAP_CHAR);
-        gtk_tooltips_set_tip( tooltips, GTK_WIDGET(attr_value),
+        gtk_widget_set_tooltip_text( GTK_WIDGET(attr_value),
                                // TRANSLATORS: "Attribute" is a noun here
-                               _("Attribute value"), NULL );
+                               _("Attribute value") );
         gtk_signal_connect( GTK_OBJECT(attributes), "select_row",
                             (GCallback) on_attr_select_row_set_value_content,
                              attr_value );
@@ -895,8 +891,6 @@ void after_tree_move(GtkCTree */*tree*/,
 static void on_destroy(GtkObject */*object*/, gpointer /*data*/)
 {
     set_tree_desktop(NULL);
-    gtk_object_destroy(GTK_OBJECT(tooltips));
-    tooltips = NULL;
     sp_signal_disconnect_by_data(INKSCAPE, dlg);
     wd.win = dlg = NULL;
     wd.stop = 0;

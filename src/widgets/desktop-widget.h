@@ -69,8 +69,6 @@ struct SPDesktopWidget {
 
     sigc::connection modified_connection;
 
-    GtkTooltips *tt;
-
     SPDesktop *desktop;
 
     Gtk::Window *window;

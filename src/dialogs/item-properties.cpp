@@ -89,8 +89,6 @@ sp_item_widget_new (void)
     GtkWidget *spw, *vb, *t, *cb, *l, *f, *tf, *pb, *int_expander, *int_label;
     GtkTextBuffer *desc_buffer;
 
-    GtkTooltips *tt = gtk_tooltips_new();
-
     /* Create container widget */
     spw = sp_widget_new_global (INKSCAPE);
     gtk_signal_connect ( GTK_OBJECT (spw), "modify_selection",
@@ -120,7 +118,7 @@ sp_item_widget_new (void)
 
     /* Create the entry box for the object id */
     tf = gtk_entry_new ();
-    gtk_tooltips_set_tip (tt, tf, _("The id= attribute (only letters, digits, and the characters .-_: allowed)"), NULL);
+    gtk_widget_set_tooltip_text (tf, _("The id= attribute (only letters, digits, and the characters .-_: allowed)"));
     gtk_entry_set_max_length (GTK_ENTRY (tf), 64);
     gtk_table_attach ( GTK_TABLE (t), tf, 1, 2, 0, 1,
                        (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
@@ -152,7 +150,7 @@ sp_item_widget_new (void)
 
     /* Create the entry box for the object label */
     tf = gtk_entry_new ();
-    gtk_tooltips_set_tip (tt, tf, _("A freeform label for the object"), NULL);
+    gtk_widget_set_tooltip_text (tf, _("A freeform label for the object"));
     gtk_entry_set_max_length (GTK_ENTRY (tf), 256);
     gtk_table_attach ( GTK_TABLE (t), tf, 1, 2, 1, 2,
                        (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
@@ -214,7 +212,7 @@ sp_item_widget_new (void)
 
     /* Hide */
     cb = gtk_check_button_new_with_mnemonic (_("_Hide"));
-    gtk_tooltips_set_tip (tt, cb, _("Check to make the object invisible"), NULL);
+    gtk_widget_set_tooltip_text (cb, _("Check to make the object invisible"));
     gtk_table_attach ( GTK_TABLE (t), cb, 0, 1, 0, 1,
                        (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
                        (GtkAttachOptions)0, 0, 0 );
@@ -224,7 +222,7 @@ sp_item_widget_new (void)
     /* Lock */
     // TRANSLATORS: "Lock" is a verb here
     cb = gtk_check_button_new_with_mnemonic (_("L_ock"));
-    gtk_tooltips_set_tip (tt, cb, _("Check to make the object insensitive (not selectable by mouse)"), NULL);
+    gtk_widget_set_tooltip_text (cb, _("Check to make the object insensitive (not selectable by mouse)"));
     gtk_table_attach ( GTK_TABLE (t), cb, 1, 2, 0, 1,
                        (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
                        (GtkAttachOptions)0, 0, 0 );

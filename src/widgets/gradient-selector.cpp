@@ -133,7 +133,6 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     GtkWidget *hb = gtk_hbox_new( FALSE, 0 );
     sel->nonsolid.push_back(hb);
     gtk_box_pack_start( GTK_BOX(sel), hb, FALSE, FALSE, 0 );
-    GtkTooltips *ttips = gtk_tooltips_new ();
 
     sel->add = gtk_button_new_with_label (_("Duplicate"));
     sel->nonsolid.push_back(sel->add);
@@ -159,12 +158,12 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     sel->nonsolid.push_back(sel->spread);
     gtk_widget_show(sel->spread);
     gtk_box_pack_end( GTK_BOX(hb), sel->spread, FALSE, FALSE, 0 );
-    gtk_tooltips_set_tip( ttips, sel->spread,
+    gtk_widget_set_tooltip_text( sel->spread,
                           // TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
                           _("Whether to fill with flat color beyond the ends of the gradient vector "
                             "(spreadMethod=\"pad\"), or repeat the gradient in the same direction "
                             "(spreadMethod=\"repeat\"), or repeat the gradient in alternating opposite "
-                            "directions (spreadMethod=\"reflect\")"), NULL);
+                            "directions (spreadMethod=\"reflect\")"));
 
     GtkWidget *m = gtk_menu_new();
     GtkWidget *mi = gtk_menu_item_new_with_label(_("none"));

@@ -103,7 +103,6 @@ struct _EgeAdjustmentDescr
 struct _EgeAdjustmentActionPrivate
 {
     GtkAdjustment* adj;
-    GtkTooltips* toolTips;
     GtkWidget* focusWidget;
     gdouble climbRate;
     guint digits;
@@ -275,7 +274,6 @@ static void ege_adjustment_action_init( EgeAdjustmentAction* action )
 {
     action->private_data = EGE_ADJUSTMENT_ACTION_GET_PRIVATE( action );
     action->private_data->adj = 0;
-    action->private_data->toolTips = 0;
     action->private_data->focusWidget = 0;
     action->private_data->climbRate = 0.0;
     action->private_data->digits = 2;
@@ -852,10 +850,7 @@ static GtkWidget* create_tool_item( GtkAction* action )
             g_object_get_property( G_OBJECT(action), "tooltip", &tooltip );
             const gchar* tipstr = g_value_get_string( &tooltip );
             if ( tipstr && *tipstr ) {
-                if ( !act->private_data->toolTips ) {
-                    act->private_data->toolTips = gtk_tooltips_new();
-                }
-                gtk_tooltips_set_tip( act->private_data->toolTips, spinbutton, tipstr, 0 );
+                gtk_widget_set_tooltip_text( spinbutton, tipstr );
             }
             g_value_unset( &tooltip );
         }

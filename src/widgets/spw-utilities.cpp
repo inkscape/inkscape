@@ -92,10 +92,8 @@ GtkWidget *spw_vbox_checkbutton(GtkWidget *dialog, GtkWidget *vbox,
   g_assert (dialog != NULL);
   g_assert (vbox != NULL);
 
-  GtkTooltips *tt = gtk_tooltips_new ();
-
   GtkWidget *b = gtk_check_button_new_with_label (label);
-  gtk_tooltips_set_tip(tt, b, tip, NULL);
+  gtk_widget_set_tooltip_text(b, tip);
   g_assert (b != NULL);
   gtk_widget_show (b);
   gtk_box_pack_start (GTK_BOX (vbox), b, FALSE, FALSE, 0);

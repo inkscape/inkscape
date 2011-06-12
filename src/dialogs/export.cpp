@@ -450,8 +450,6 @@ sp_export_dialog (void)
         g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_unhide",
                              G_CALLBACK (sp_dialog_unhide), dlg);
 
-        GtkTooltips *tt = gtk_tooltips_new();
-
         Gtk::VBox *vb = new Gtk::VBox(false, 3);
         vb->set_border_width(3);
         gtk_container_add (GTK_CONTAINER (dlg), GTK_WIDGET(vb->gobj()));
@@ -625,7 +623,7 @@ sp_export_dialog (void)
             gtk_widget_set_sensitive(GTK_WIDGET(be), TRUE);
             gtk_object_set_data(GTK_OBJECT(dlg), "batch_checkbox", be);
             batch_box->pack_start(*Glib::wrap(be), false, false);
-            gtk_tooltips_set_tip(tt, be, _("Export each selected object into its own PNG file, using export hints if any (caution, overwrites without asking!)"), NULL);
+            gtk_widget_set_tooltip_text(be, _("Export each selected object into its own PNG file, using export hints if any (caution, overwrites without asking!)"));
             batch_box->show_all();
             g_signal_connect(G_OBJECT(be), "toggled", GTK_SIGNAL_FUNC(batch_export_clicked), dlg);
             vb->pack_start(*batch_box);
@@ -637,7 +635,7 @@ sp_export_dialog (void)
             gtk_widget_set_sensitive(GTK_WIDGET(he), TRUE);
             gtk_object_set_data(GTK_OBJECT(dlg), "hide_checkbox", he);
             hide_box->pack_start(*Glib::wrap(he), false, false);
-            gtk_tooltips_set_tip(tt, he, _("In the exported image, hide all objects except those that are selected"), NULL);
+            gtk_widget_set_tooltip_text(he, _("In the exported image, hide all objects except those that are selected"));
             hide_box->show_all();
             vb->pack_start(*hide_box);
         }
@@ -658,7 +656,7 @@ sp_export_dialog (void)
             image_label->pack_start(*l);
 
             b->add(*image_label);
-            gtk_tooltips_set_tip (tt, GTK_WIDGET(b->gobj()), _("Export the bitmap file with these settings"), NULL);
+            gtk_widget_set_tooltip_text (GTK_WIDGET(b->gobj()), _("Export the bitmap file with these settings"));
             gtk_signal_connect ( GTK_OBJECT (b->gobj()), "clicked",
                                  GTK_SIGNAL_FUNC (sp_export_export_clicked), dlg );
             bb->pack_end(*b, false, false, 0);

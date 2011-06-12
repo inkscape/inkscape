@@ -46,7 +46,7 @@ static void sp_button_set_doubleclick_action (SPButton *button, SPAction *action
 static void sp_button_action_set_active (SPAction *action, unsigned int active, void *data);
 static void sp_button_action_set_sensitive (SPAction *action, unsigned int sensitive, void *data);
 static void sp_button_action_set_shortcut (SPAction *action, unsigned int shortcut, void *data);
-static void sp_button_set_composed_tooltip (GtkTooltips *tooltips, GtkWidget *widget, SPAction *action);
+static void sp_button_set_composed_tooltip (GtkWidget *widget, SPAction *action);
 
 static GtkToggleButtonClass *parent_class;
 SPActionEventVector button_event_vector = {
@@ -98,7 +98,6 @@ sp_button_init (SPButton *button)
 {
 	button->action = NULL;
 	button->doubleclick_action = NULL;
-	button->tooltips = NULL;
 
 	gtk_container_set_border_width (GTK_CONTAINER (button), 0);
 
@@ -115,11 +114,6 @@ sp_button_destroy (GtkObject *object)
 	SPButton *button;
 
 	button = SP_BUTTON (object);
-
-	if (button->tooltips) {
-		g_object_unref (G_OBJECT (button->tooltips));
-		button->tooltips = NULL;
-	}
 
 	if (button->action) {
 		sp_button_set_action (button, NULL);
@@ -186,7 +180,7 @@ sp_button_perform_action (SPButton *button, gpointer /*data*/)
 
 
 GtkWidget *
-sp_button_new( Inkscape::IconSize size, SPButtonType type, SPAction *action, SPAction *doubleclick_action, GtkTooltips *tooltips )
+sp_button_new( Inkscape::IconSize size, SPButtonType type, SPAction *action, SPAction *doubleclick_action )
 {
 	SPButton *button;
 
@@ -194,9 +188,6 @@ sp_button_new( Inkscape::IconSize size, SPButtonType type, SPAction *action, SPA
 
 	button->type = type;
 	button->lsize = CLAMP( size, Inkscape::ICON_SIZE_MENU, Inkscape::ICON_SIZE_DECORATION );
-	button->tooltips = tooltips;
-
-	if (tooltips) g_object_ref ((GObject *) tooltips);
 
 	sp_button_set_action (button, action);
 	if (doubleclick_action)
@@ -253,9 +244,7 @@ sp_button_set_action (SPButton *button, SPAction *action)
 		}
 	}
 
-	if (button->tooltips) {
-		sp_button_set_composed_tooltip (button->tooltips, (GtkWidget *) button, action);
-	}
+	sp_button_set_composed_tooltip ((GtkWidget *) button, action);
 }
 
 static void
@@ -283,12 +272,10 @@ static void
 sp_button_action_set_shortcut (SPAction *action, unsigned int /*shortcut*/, void *data)
 {
 	SPButton *button=SP_BUTTON (data);
-	if (button->tooltips) {
-		sp_button_set_composed_tooltip (button->tooltips, GTK_WIDGET (button), action);
-	}
+	sp_button_set_composed_tooltip (GTK_WIDGET (button), action);
 }
 
-static void sp_button_set_composed_tooltip(GtkTooltips *tooltips, GtkWidget *widget, SPAction *action)
+static void sp_button_set_composed_tooltip(GtkWidget *widget, SPAction *action)
 {
     if (action) {
         unsigned int shortcut = sp_shortcut_get_primary (action->verb);
@@ -298,16 +285,16 @@ static void sp_button_set_composed_tooltip(GtkTooltips *tooltips, GtkWidget *wid
             gchar *key = sp_shortcut_get_label(shortcut);
 
             gchar *tip = g_strdup_printf ("%s (%s)", action->tip, key);
-            gtk_tooltips_set_tip(tooltips, widget, tip, NULL);
+            gtk_widget_set_tooltip_text(widget, tip);
             g_free(tip);
             g_free(key);
         } else {
             // action has no shortcut
-            gtk_tooltips_set_tip(tooltips, widget, action->tip, NULL);
+            gtk_widget_set_tooltip_text(widget, action->tip);
         }
     } else {
         // no action
-        gtk_tooltips_set_tip(tooltips, widget, NULL, NULL);
+        gtk_widget_set_tooltip_text(widget, NULL);
     }
 }
 
@@ -316,12 +303,11 @@ sp_button_new_from_data( Inkscape::IconSize size,
 			 SPButtonType type,
 			 Inkscape::UI::View::View *view,
 			 const gchar *name,
-			 const gchar *tip,
-			 GtkTooltips *tooltips )
+			 const gchar *tip )
 {
 	GtkWidget *button;
 	SPAction *action=sp_action_new(view, name, name, tip, name, 0);
-	button = sp_button_new (size, type, action, NULL, tooltips);
+	button = sp_button_new (size, type, action, NULL);
 	nr_object_unref ((NRObject *) action);
 	return button;
 }

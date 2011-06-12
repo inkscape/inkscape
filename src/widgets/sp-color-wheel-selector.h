@@ -44,8 +44,6 @@ protected:
     GtkWidget* _sbtn; /* Spinbutton */
     GtkWidget* _label; /* Label */
 
-    GtkTooltips* _tt; /* tooltip container */
-
 private:
     // By default, disallow copy constructor and assignment operator
     ColorWheelSelector( const ColorWheelSelector& obj );

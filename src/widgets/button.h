@@ -38,7 +38,6 @@ struct SPButton {
 	unsigned int psize;
 	SPAction *action;
 	SPAction *doubleclick_action;
-	GtkTooltips *tooltips;
 };
 
 struct SPButtonClass {
@@ -49,7 +48,7 @@ struct SPButtonClass {
 
 GType sp_button_get_type (void);
 
-GtkWidget *sp_button_new (Inkscape::IconSize size, SPButtonType type, SPAction *action, SPAction *doubleclick_action, GtkTooltips *tooltips);
+GtkWidget *sp_button_new (Inkscape::IconSize size, SPButtonType type, SPAction *action, SPAction *doubleclick_action);
 
 void sp_button_toggle_set_down (SPButton *button, gboolean down);
 
@@ -57,8 +56,7 @@ GtkWidget *sp_button_new_from_data (Inkscape::IconSize size,
 				    SPButtonType type,
 				    Inkscape::UI::View::View *view,
 				    const gchar *name,
-				    const gchar *tip,
-				    GtkTooltips *tooltips);
+				    const gchar *tip);
 
 
 

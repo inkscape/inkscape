@@ -652,7 +652,6 @@ GtkWidget* create_tool_item( GtkAction* action )
             GtkTreeIter iter;
             gboolean valid = FALSE;
             gint index = 0;
-            GtkTooltips* tooltips = gtk_tooltips_new();
 
             {
                 gchar*  sss = 0;
@@ -737,7 +736,7 @@ GtkWidget* create_tool_item( GtkAction* action )
 
                 sub = gtk_action_create_tool_item( GTK_ACTION(ract) );
                 gtk_action_connect_proxy( GTK_ACTION(ract), sub );
-                gtk_tool_item_set_tooltip( GTK_TOOL_ITEM(sub), tooltips, tip, NULL );
+                gtk_tool_item_set_tooltip_text( GTK_TOOL_ITEM(sub), tip );
 
                 gtk_box_pack_start( GTK_BOX(holder), sub, FALSE, FALSE, 0 );
 
@@ -750,7 +749,6 @@ GtkWidget* create_tool_item( GtkAction* action )
             }
 
             g_object_set_data( G_OBJECT(holder), "ege-proxy_action-group", group );
-            g_object_set_data( G_OBJECT(holder), "ege-tooltips", tooltips );
 
             gtk_container_add( GTK_CONTAINER(item), holder );
         } else {

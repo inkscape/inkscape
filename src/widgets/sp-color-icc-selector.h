@@ -66,8 +66,6 @@ protected:
     GtkWidget* _sbtn; /* Spinbutton */
     GtkWidget* _label; /* Label */
 
-    GtkTooltips* _tt; /* tooltip container */
-
 #if ENABLE_LCMS
     std::string _profileName;
     Inkscape::ColorProfile* _prof;

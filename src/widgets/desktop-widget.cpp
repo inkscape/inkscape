@@ -236,7 +236,7 @@ SPDesktopWidget::setMessage (Inkscape::MessageType type, const gchar *message)
         gdk_window_process_updates(GTK_WIDGET(sb)->window, TRUE);
     }
 
-    gtk_tooltips_set_tip (this->tt, this->select_status_eventbox, gtk_label_get_text (sb) , NULL);
+    gtk_widget_set_tooltip_text (this->select_status_eventbox, gtk_label_get_text (sb));
 }
 
 Geom::Point
@@ -313,7 +313,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->window = 0;
     dtw->desktop = NULL;
     dtw->_interaction_disabled_counter = 0;
-    dtw->tt = gtk_tooltips_new ();
 
     /* Main table */
     dtw->vbox = gtk_vbox_new (FALSE, 0);
@@ -359,7 +358,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->hruler = sp_hruler_new ();
     dtw->hruler_box = eventbox;
     sp_ruler_set_metric (GTK_RULER (dtw->hruler), SP_PT);
-    gtk_tooltips_set_tip (dtw->tt, dtw->hruler_box, gettext(sp_unit_get_plural (&sp_unit_get_by_id(SP_UNIT_PT))), NULL);
+    gtk_widget_set_tooltip_text (dtw->hruler_box, gettext(sp_unit_get_plural (&sp_unit_get_by_id(SP_UNIT_PT))));
     gtk_container_add (GTK_CONTAINER (eventbox), dtw->hruler);
     gtk_table_attach (GTK_TABLE (canvas_tbl), eventbox, 1, 2, 0, 1, (GtkAttachOptions)(GTK_FILL), (GtkAttachOptions)(GTK_FILL), widget->style->xthickness, 0);
     g_signal_connect (G_OBJECT (eventbox), "button_press_event", G_CALLBACK (sp_dt_hruler_event), dtw);
@@ -371,7 +370,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->vruler = sp_vruler_new ();
     dtw->vruler_box = eventbox;
     sp_ruler_set_metric (GTK_RULER (dtw->vruler), SP_PT);
-    gtk_tooltips_set_tip (dtw->tt, dtw->vruler_box, gettext(sp_unit_get_plural (&sp_unit_get_by_id(SP_UNIT_PT))), NULL);
+    gtk_widget_set_tooltip_text (dtw->vruler_box, gettext(sp_unit_get_plural (&sp_unit_get_by_id(SP_UNIT_PT))));
     gtk_container_add (GTK_CONTAINER (eventbox), GTK_WIDGET (dtw->vruler));
     gtk_table_attach (GTK_TABLE (canvas_tbl), eventbox, 0, 1, 1, 2, (GtkAttachOptions)(GTK_FILL), (GtkAttachOptions)(GTK_FILL), 0, widget->style->ythickness);
     g_signal_connect (G_OBJECT (eventbox), "button_press_event", G_CALLBACK (sp_dt_vruler_event), dtw);
@@ -389,8 +388,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
                                                  SP_BUTTON_TYPE_TOGGLE,
                                                  NULL,
                                                  INKSCAPE_ICON_ZOOM_ORIGINAL,
-                                                 _("Zoom drawing if window size changes"),
-                                                 dtw->tt);
+                                                 _("Zoom drawing if window size changes"));
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dtw->sticky_zoom), prefs->getBool("/options/stickyzoom/value"));
     gtk_box_pack_start (GTK_BOX (dtw->vscrollbar_box), dtw->sticky_zoom, FALSE, FALSE, 0);
     g_signal_connect (G_OBJECT (dtw->sticky_zoom), "toggled", G_CALLBACK (sp_dtw_sticky_zoom_toggled), dtw);
@@ -412,8 +410,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
                                                SP_BUTTON_TYPE_TOGGLE,
                                                NULL,
                                                INKSCAPE_ICON_COLOR_MANAGEMENT,
-                                               tip,
-                                               dtw->tt );
+                                               tip );
 #if ENABLE_LCMS
     {
         Glib::ustring current = prefs->getString("/options/displayprofile/uri");
@@ -493,7 +490,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
     // zoom status spinbutton
     dtw->zoom_status = gtk_spin_button_new_with_range (log(SP_DESKTOP_ZOOM_MIN)/log(2), log(SP_DESKTOP_ZOOM_MAX)/log(2), 0.1);
-    gtk_tooltips_set_tip (dtw->tt, dtw->zoom_status, _("Zoom"), NULL);
+    gtk_widget_set_tooltip_text (dtw->zoom_status, _("Zoom"));
     gtk_widget_set_size_request (dtw->zoom_status, STATUS_ZOOM_WIDTH, -1);
     gtk_entry_set_width_chars (GTK_ENTRY (dtw->zoom_status), 6);
     gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (dtw->zoom_status), FALSE);
@@ -513,7 +510,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_table_attach(GTK_TABLE(dtw->coord_status), gtk_vseparator_new(), 0,1, 0,2, GTK_FILL, GTK_FILL, 0, 0);
     eventbox = gtk_event_box_new ();
     gtk_container_add (GTK_CONTAINER (eventbox), dtw->coord_status);
-    gtk_tooltips_set_tip (dtw->tt, eventbox, _("Cursor coordinates"), NULL);
+    gtk_widget_set_tooltip_text (eventbox, _("Cursor coordinates"));
     GtkWidget *label_x = gtk_label_new(_("X:"));
     gtk_misc_set_alignment (GTK_MISC(label_x), 0.0, 0.5);
     gtk_table_attach(GTK_TABLE(dtw->coord_status),  label_x, 1,2, 0,1, GTK_FILL, GTK_FILL, 0, 0);
@@ -1595,8 +1592,8 @@ void SPDesktopWidget::namedviewModified(SPObject *obj, guint flags)
             } // children
         } // if aux_toolbox is a container
 
-        gtk_tooltips_set_tip(this->tt, this->hruler_box, gettext(sp_unit_get_plural (nv->doc_units)), NULL);
-        gtk_tooltips_set_tip(this->tt, this->vruler_box, gettext(sp_unit_get_plural (nv->doc_units)), NULL);
+        gtk_widget_set_tooltip_text(this->hruler_box, gettext(sp_unit_get_plural (nv->doc_units)));
+        gtk_widget_set_tooltip_text(this->vruler_box, gettext(sp_unit_get_plural (nv->doc_units)));
 
         sp_desktop_widget_update_rulers(this);
         ToolboxFactory::updateSnapToolbox(this->desktop, 0, this->snap_toolbox);

@@ -203,8 +203,6 @@ void ColorNotebook::init()
     GType *selector_types = 0;
     guint selector_type_count = 0;
 
-    GtkTooltips *tt = gtk_tooltips_new ();
-
     /* tempory hardcoding to get types loaded */
     SP_TYPE_COLOR_SCALES;
     SP_TYPE_COLOR_WHEEL_SELECTOR;
@@ -336,24 +334,21 @@ void ColorNotebook::init()
     _box_colormanaged = gtk_event_box_new ();
     GtkWidget *colormanaged = gtk_image_new_from_icon_name ("color-management-icon", GTK_ICON_SIZE_SMALL_TOOLBAR);
     gtk_container_add (GTK_CONTAINER (_box_colormanaged), colormanaged);
-    GtkTooltips *tooltips_colormanaged = gtk_tooltips_new ();
-    gtk_tooltips_set_tip (tooltips_colormanaged, _box_colormanaged, _("Color Managed"), "");
+    gtk_widget_set_tooltip_text (_box_colormanaged, _("Color Managed"));
     gtk_widget_set_sensitive (_box_colormanaged, false);
     gtk_box_pack_start(GTK_BOX(rgbabox), _box_colormanaged, FALSE, FALSE, 2);
 
     _box_outofgamut = gtk_event_box_new ();
     GtkWidget *outofgamut = gtk_image_new_from_icon_name ("out-of-gamut-icon", GTK_ICON_SIZE_SMALL_TOOLBAR);
     gtk_container_add (GTK_CONTAINER (_box_outofgamut), outofgamut);
-    GtkTooltips *tooltips_outofgamut = gtk_tooltips_new ();
-    gtk_tooltips_set_tip (tooltips_outofgamut, _box_outofgamut, _("Out of gamut!"), "");
+    gtk_widget_set_tooltip_text (_box_outofgamut, _("Out of gamut!"));
     gtk_widget_set_sensitive (_box_outofgamut, false);
     gtk_box_pack_start(GTK_BOX(rgbabox), _box_outofgamut, FALSE, FALSE, 2);
 
     _box_toomuchink = gtk_event_box_new ();
     GtkWidget *toomuchink = gtk_image_new_from_icon_name ("too-much-ink-icon", GTK_ICON_SIZE_SMALL_TOOLBAR);
     gtk_container_add (GTK_CONTAINER (_box_toomuchink), toomuchink);
-    GtkTooltips *tooltips_toomuchink = gtk_tooltips_new ();
-    gtk_tooltips_set_tip (tooltips_toomuchink, _box_toomuchink, _("Too much ink!"), "");
+    gtk_widget_set_tooltip_text (_box_toomuchink, _("Too much ink!"));
     gtk_widget_set_sensitive (_box_toomuchink, false);
     gtk_box_pack_start(GTK_BOX(rgbabox), _box_toomuchink, FALSE, FALSE, 2);
 
@@ -368,7 +363,7 @@ void ColorNotebook::init()
     sp_dialog_defocus_on_enter (_rgbae);
     gtk_entry_set_max_length (GTK_ENTRY (_rgbae), 8);
     gtk_entry_set_width_chars (GTK_ENTRY (_rgbae), 8);
-    gtk_tooltips_set_tip (tt, _rgbae, _("Hexadecimal RGBA value of the color"), NULL);
+    gtk_widget_set_tooltip_text (_rgbae, _("Hexadecimal RGBA value of the color"));
     gtk_box_pack_start(GTK_BOX(rgbabox), _rgbae, FALSE, FALSE, 0);
     gtk_label_set_mnemonic_widget (GTK_LABEL(_rgbal), _rgbae);
 

@@ -412,7 +412,7 @@ sp_find_dialog_reset (GObject *, GObject *dlg)
 #define FIND_LABELWIDTH 80
 
 void
-sp_find_new_searchfield (GtkWidget *dlg, GtkWidget *vb, const gchar *label, const gchar *id, GtkTooltips *tt, const gchar *tip)
+sp_find_new_searchfield (GtkWidget *dlg, GtkWidget *vb, const gchar *label, const gchar *id, const gchar *tip)
 {
     GtkWidget *hb = gtk_hbox_new (FALSE, 0);
     GtkWidget *l = gtk_label_new_with_mnemonic (label);
@@ -424,7 +424,7 @@ sp_find_new_searchfield (GtkWidget *dlg, GtkWidget *vb, const gchar *label, cons
     gtk_entry_set_max_length (GTK_ENTRY (tf), 64);
     gtk_box_pack_start (GTK_BOX (hb), tf, TRUE, TRUE, 0);
     gtk_object_set_data (GTK_OBJECT (dlg), id, tf);
-    gtk_tooltips_set_tip (tt, tf, tip, NULL);
+    gtk_widget_set_tooltip_text (tf, tip);
     g_signal_connect ( G_OBJECT (tf), "activate", G_CALLBACK (sp_find_dialog_find), dlg );
     gtk_label_set_mnemonic_widget   (GTK_LABEL(l), tf);
 
@@ -432,10 +432,10 @@ sp_find_new_searchfield (GtkWidget *dlg, GtkWidget *vb, const gchar *label, cons
 }
 
 void
-sp_find_new_button (GtkWidget *dlg, GtkWidget *hb, const gchar *label, GtkTooltips *tt, const gchar *tip, void (*function) (GObject *, GObject *))
+sp_find_new_button (GtkWidget *dlg, GtkWidget *hb, const gchar *label, const gchar *tip, void (*function) (GObject *, GObject *))
 {
     GtkWidget *b = gtk_button_new_with_mnemonic (label);
-    gtk_tooltips_set_tip (tt, b, tip, NULL);
+    gtk_widget_set_tooltip_text (b, tip);
     gtk_box_pack_start (GTK_BOX (hb), b, TRUE, TRUE, 0);
     g_signal_connect ( G_OBJECT (b), "clicked", G_CALLBACK (function), dlg );
     gtk_widget_show (b);
@@ -483,7 +483,7 @@ toggle_shapes (GtkToggleButton *tb, gpointer data)
 
 GtkWidget *
 sp_find_types_checkbox (GtkWidget *w, const gchar *data, gboolean active,
-                        GtkTooltips *tt, const gchar *tip,
+                        const gchar *tip,
                         const gchar *label,
                         void (*toggled)(GtkToggleButton *, gpointer))
 {
@@ -495,7 +495,7 @@ sp_find_types_checkbox (GtkWidget *w, const gchar *data, gboolean active,
         gtk_widget_show (b);
         gtk_toggle_button_set_active ((GtkToggleButton *) b, active);
         gtk_object_set_data (GTK_OBJECT (w), data, b);
-        gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, tip, NULL);
+        gtk_widget_set_tooltip_text (b, tip);
         if (toggled)
             gtk_signal_connect (GTK_OBJECT (b), "toggled", GTK_SIGNAL_FUNC (toggled), w);
         gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
@@ -506,7 +506,7 @@ sp_find_types_checkbox (GtkWidget *w, const gchar *data, gboolean active,
 
 GtkWidget *
 sp_find_types_checkbox_indented (GtkWidget *w, const gchar *data, gboolean active,
-                                 GtkTooltips *tt, const gchar *tip,
+                                 const gchar *tip,
                                  const gchar *label,
                                  void (*toggled)(GtkToggleButton *, gpointer), guint indent)
 {
@@ -520,7 +520,7 @@ sp_find_types_checkbox_indented (GtkWidget *w, const gchar *data, gboolean activ
         gtk_box_pack_start (GTK_BOX (hb), l, FALSE, FALSE, 0);
     }
 
-    GtkWidget *c = sp_find_types_checkbox (w, data, active, tt, tip, label, toggled);
+    GtkWidget *c = sp_find_types_checkbox (w, data, active, tip, label, toggled);
     gtk_box_pack_start (GTK_BOX (hb), c, FALSE, FALSE, 0);
 
     return hb;
@@ -530,8 +530,6 @@ sp_find_types_checkbox_indented (GtkWidget *w, const gchar *data, gboolean activ
 GtkWidget *
 sp_find_types ()
 {
-    GtkTooltips *tt = gtk_tooltips_new ();
-
     GtkWidget *vb = gtk_vbox_new (FALSE, 4);
     gtk_widget_show (vb);
 
@@ -547,7 +545,7 @@ sp_find_types ()
             gtk_box_pack_start (GTK_BOX (hb), l, FALSE, FALSE, 0);
         }
 
-        GtkWidget *alltypes = sp_find_types_checkbox (vb, "all", TRUE, tt, _("Search in all object types"), _("All types"), toggle_alltypes);
+        GtkWidget *alltypes = sp_find_types_checkbox (vb, "all", TRUE, _("Search in all object types"), _("All types"), toggle_alltypes);
         gtk_box_pack_start (GTK_BOX (hb), alltypes, FALSE, FALSE, 0);
 
         gtk_box_pack_start (GTK_BOX (vb), hb, FALSE, FALSE, 0);
@@ -558,7 +556,7 @@ sp_find_types ()
         gtk_widget_show (vb_all);
 
         {
-            GtkWidget *c = sp_find_types_checkbox_indented (vb, "shapes", FALSE, tt, _("Search all shapes"), _("All shapes"), toggle_shapes, 10);
+            GtkWidget *c = sp_find_types_checkbox_indented (vb, "shapes", FALSE, _("Search all shapes"), _("All shapes"), toggle_shapes, 10);
             gtk_box_pack_start (GTK_BOX (vb_all), c, FALSE, FALSE, 0);
         }
 
@@ -575,22 +573,22 @@ sp_find_types ()
             }
 
             {
-                GtkWidget *c = sp_find_types_checkbox (vb, "rects", FALSE, tt, _("Search rectangles"), _("Rectangles"), NULL);
+                GtkWidget *c = sp_find_types_checkbox (vb, "rects", FALSE, _("Search rectangles"), _("Rectangles"), NULL);
                 gtk_box_pack_start (GTK_BOX (hb), c, FALSE, FALSE, 0);
             }
 
             {
-                GtkWidget *c = sp_find_types_checkbox (vb, "ellipses", FALSE, tt, _("Search ellipses, arcs, circles"), _("Ellipses"), NULL);
+                GtkWidget *c = sp_find_types_checkbox (vb, "ellipses", FALSE, _("Search ellipses, arcs, circles"), _("Ellipses"), NULL);
                 gtk_box_pack_start (GTK_BOX (hb), c, FALSE, FALSE, 0);
             }
 
             {
-                GtkWidget *c = sp_find_types_checkbox (vb, "stars", FALSE, tt, _("Search stars and polygons"), _("Stars"), NULL);
+                GtkWidget *c = sp_find_types_checkbox (vb, "stars", FALSE, _("Search stars and polygons"), _("Stars"), NULL);
                 gtk_box_pack_start (GTK_BOX (hb), c, FALSE, FALSE, 0);
             }
 
             {
-                GtkWidget *c = sp_find_types_checkbox (vb, "spirals", FALSE, tt, _("Search spirals"), _("Spirals"), NULL);
+                GtkWidget *c = sp_find_types_checkbox (vb, "spirals", FALSE, _("Search spirals"), _("Spirals"), NULL);
                 gtk_box_pack_start (GTK_BOX (hb), c, FALSE, FALSE, 0);
             }
 
@@ -603,34 +601,34 @@ sp_find_types ()
         {
             // TRANSLATORS: polyline is a set of connected straight line segments
             // http://www.w3.org/TR/SVG11/shapes.html#PolylineElement
-            GtkWidget *c = sp_find_types_checkbox_indented (vb, "paths", TRUE, tt, _("Search paths, lines, polylines"), _("Paths"), NULL, 10);
+            GtkWidget *c = sp_find_types_checkbox_indented (vb, "paths", TRUE, _("Search paths, lines, polylines"), _("Paths"), NULL, 10);
             gtk_box_pack_start (GTK_BOX (vb_all), c, FALSE, FALSE, 0);
         }
 
         {
-            GtkWidget *c = sp_find_types_checkbox_indented (vb, "texts", TRUE, tt, _("Search text objects"), _("Texts"), NULL, 10);
+            GtkWidget *c = sp_find_types_checkbox_indented (vb, "texts", TRUE, _("Search text objects"), _("Texts"), NULL, 10);
             gtk_box_pack_start (GTK_BOX (vb_all), c, FALSE, FALSE, 0);
         }
 
         {
-            GtkWidget *c = sp_find_types_checkbox_indented (vb, "groups", TRUE, tt, _("Search groups"), _("Groups"), NULL, 10);
+            GtkWidget *c = sp_find_types_checkbox_indented (vb, "groups", TRUE, _("Search groups"), _("Groups"), NULL, 10);
             gtk_box_pack_start (GTK_BOX (vb_all), c, FALSE, FALSE, 0);
         }
 
         {
-            GtkWidget *c = sp_find_types_checkbox_indented (vb, "clones", TRUE, tt, _("Search clones"),
+            GtkWidget *c = sp_find_types_checkbox_indented (vb, "clones", TRUE, _("Search clones"),
                                                             //TRANSLATORS: "Clones" is a noun indicating type of object to find
                                                             C_("Find dialog","Clones"), NULL, 10);
             gtk_box_pack_start (GTK_BOX (vb_all), c, FALSE, FALSE, 0);
         }
 
         {
-            GtkWidget *c = sp_find_types_checkbox_indented (vb, "images", TRUE, tt, _("Search images"), _("Images"), NULL, 10);
+            GtkWidget *c = sp_find_types_checkbox_indented (vb, "images", TRUE, _("Search images"), _("Images"), NULL, 10);
             gtk_box_pack_start (GTK_BOX (vb_all), c, FALSE, FALSE, 0);
         }
 
         {
-            GtkWidget *c = sp_find_types_checkbox_indented (vb, "offsets", TRUE, tt, _("Search offset objects"), _("Offsets"), NULL, 10);
+            GtkWidget *c = sp_find_types_checkbox_indented (vb, "offsets", TRUE, _("Search offset objects"), _("Offsets"), NULL, 10);
             gtk_box_pack_start (GTK_BOX (vb_all), c, FALSE, FALSE, 0);
         }
 
@@ -687,18 +685,16 @@ sp_find_dialog_old (void)
         g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg);
         g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg);
 
-        GtkTooltips *tt = gtk_tooltips_new ();
-
         gtk_container_set_border_width (GTK_CONTAINER (dlg), 4);
 
         /* Toplevel vbox */
         GtkWidget *vb = gtk_vbox_new (FALSE, 0);
         gtk_container_add (GTK_CONTAINER (dlg), vb);
 
-        sp_find_new_searchfield (dlg, vb, _("_Text:"), "text", tt, _("Find objects by their text content (exact or partial match)"));
-        sp_find_new_searchfield (dlg, vb, _("_ID:"), "id", tt, _("Find objects by the value of the id attribute (exact or partial match)"));
-        sp_find_new_searchfield (dlg, vb, _("_Style:"), "style", tt, _("Find objects by the value of the style attribute (exact or partial match)"));
-        sp_find_new_searchfield (dlg, vb, _("_Attribute:"), "attr", tt ,_("Find objects by the name of an attribute (exact or partial match)"));
+        sp_find_new_searchfield (dlg, vb, _("_Text:"), "text", _("Find objects by their text content (exact or partial match)"));
+        sp_find_new_searchfield (dlg, vb, _("_ID:"), "id", _("Find objects by the value of the id attribute (exact or partial match)"));
+        sp_find_new_searchfield (dlg, vb, _("_Style:"), "style", _("Find objects by the value of the style attribute (exact or partial match)"));
+        sp_find_new_searchfield (dlg, vb, _("_Attribute:"), "attr", _("Find objects by the name of an attribute (exact or partial match)"));
 
         gtk_widget_show_all (vb);
 
@@ -716,7 +712,7 @@ sp_find_dialog_old (void)
             gtk_widget_show (b);
             gtk_toggle_button_set_active ((GtkToggleButton *) b, FALSE);
             gtk_object_set_data (GTK_OBJECT (dlg), "inselection", b);
-            gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Limit search to the current selection"), NULL);
+            gtk_widget_set_tooltip_text (b, _("Limit search to the current selection"));
             gtk_box_pack_start (GTK_BOX (vb), b, FALSE, FALSE, 0);
             }
 
@@ -725,7 +721,7 @@ sp_find_dialog_old (void)
             gtk_widget_show (b);
             gtk_toggle_button_set_active ((GtkToggleButton *) b, FALSE);
             gtk_object_set_data (GTK_OBJECT (dlg), "inlayer", b);
-            gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Limit search to the current layer"), NULL);
+            gtk_widget_set_tooltip_text (b, _("Limit search to the current layer"));
             gtk_box_pack_start (GTK_BOX (vb), b, FALSE, FALSE, 0);
             }
 
@@ -734,7 +730,7 @@ sp_find_dialog_old (void)
             gtk_widget_show (b);
             gtk_toggle_button_set_active ((GtkToggleButton *) b, FALSE);
             gtk_object_set_data (GTK_OBJECT (dlg), "includehidden", b);
-            gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Include hidden objects in search"), NULL);
+            gtk_widget_set_tooltip_text (b, _("Include hidden objects in search"));
             gtk_box_pack_start (GTK_BOX (vb), b, FALSE, FALSE, 0);
             }
 
@@ -743,7 +739,7 @@ sp_find_dialog_old (void)
             gtk_widget_show (b);
             gtk_toggle_button_set_active ((GtkToggleButton *) b, FALSE);
             gtk_object_set_data (GTK_OBJECT (dlg), "includelocked", b);
-            gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Include locked objects in search"), NULL);
+            gtk_widget_set_tooltip_text (b, _("Include locked objects in search"));
             gtk_box_pack_start (GTK_BOX (vb), b, FALSE, FALSE, 0);
             }
         }
@@ -754,8 +750,8 @@ sp_find_dialog_old (void)
             gtk_box_pack_start (GTK_BOX (vb), hb, FALSE, FALSE, 0);
 
             // TRANSLATORS: "Clear" is a verb here
-            sp_find_new_button (dlg, hb, _("_Clear"), tt, _("Clear values"), sp_find_dialog_reset);
-            sp_find_new_button (dlg, hb, _("_Find"), tt, _("Select objects matching all of the fields you filled in"), sp_find_dialog_find);
+            sp_find_new_button (dlg, hb, _("_Clear"), _("Clear values"), sp_find_dialog_reset);
+            sp_find_new_button (dlg, hb, _("_Find"), _("Select objects matching all of the fields you filled in"), sp_find_dialog_find);
         }
     }
 

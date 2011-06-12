@@ -788,7 +788,6 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     gtk_box_pack_start(GTK_BOX(vb), w, TRUE, TRUE, PAD);
 
     sp_repr_add_listener(gradient->getRepr(), &grad_edit_dia_repr_events, vb);
-    GtkTooltips *tt = gtk_tooltips_new();
 
     /* Stop list */
     GtkWidget *mnu = gtk_option_menu_new();
@@ -805,12 +804,12 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     GtkWidget *b = gtk_button_new_with_label(_("Add stop"));
     gtk_widget_show(b);
     gtk_container_add(GTK_CONTAINER(hb), b);
-    gtk_tooltips_set_tip(tt, b, _("Add another control stop to gradient"), NULL);
+    gtk_widget_set_tooltip_text(b, _("Add another control stop to gradient"));
     gtk_signal_connect(GTK_OBJECT(b), "clicked", GTK_SIGNAL_FUNC(sp_grd_ed_add_stop), vb);
     b = gtk_button_new_with_label(_("Delete stop"));
     gtk_widget_show(b);
     gtk_container_add(GTK_CONTAINER(hb), b);
-    gtk_tooltips_set_tip(tt, b, _("Delete current control stop from gradient"), NULL);
+    gtk_widget_set_tooltip_text(b, _("Delete current control stop from gradient"));
     gtk_signal_connect(GTK_OBJECT(b), "clicked", GTK_SIGNAL_FUNC(sp_grd_ed_del_stop), vb);
 
     gtk_widget_show(hb);

@@ -65,8 +65,6 @@ protected:
     GtkWidget *_b[5]; /* Spinbuttons */
     GtkWidget *_l[5]; /* Labels */
 
-    GtkTooltips *_tt; /* tooltip container */
-
 private:
     // By default, disallow copy constructor and assignment operator
     ColorScales(ColorScales const &obj);

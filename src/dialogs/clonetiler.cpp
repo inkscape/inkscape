@@ -1517,12 +1517,12 @@ static void clonetiler_checkbox_toggled(GtkToggleButton *tb, gpointer *data)
     prefs->setBool(prefs_path + attr, gtk_toggle_button_get_active(tb));
 }
 
-static GtkWidget * clonetiler_checkbox(GtkTooltips *tt, const char *tip, const char *attr)
+static GtkWidget * clonetiler_checkbox(const char *tip, const char *attr)
 {
     GtkWidget *hb = gtk_hbox_new(FALSE, VB_MARGIN);
 
     GtkWidget *b = gtk_check_button_new ();
-    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, tip, NULL);
+    gtk_widget_set_tooltip_text (b, tip);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool value = prefs->getBool(prefs_path + attr);
@@ -1544,7 +1544,7 @@ static void clonetiler_value_changed(GtkAdjustment *adj, gpointer data)
     prefs->setDouble(prefs_path + pref, adj->value);
 }
 
-static GtkWidget * clonetiler_spinbox(GtkTooltips *tt, const char *tip, const char *attr, double lower, double upper, const gchar *suffix, bool exponent = false)
+static GtkWidget * clonetiler_spinbox(const char *tip, const char *attr, double lower, double upper, const gchar *suffix, bool exponent = false)
 {
     GtkWidget *hb = gtk_hbox_new(FALSE, 0);
 
@@ -1563,7 +1563,7 @@ static GtkWidget * clonetiler_spinbox(GtkTooltips *tt, const char *tip, const ch
             sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 0.1, 1);
         }
 
-        gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), sb, tip, NULL);
+        gtk_widget_set_tooltip_text (sb, tip);
         gtk_entry_set_width_chars (GTK_ENTRY (sb), 4);
         gtk_box_pack_start (GTK_BOX (hb), sb, FALSE, FALSE, SB_MARGIN);
 
@@ -1834,8 +1834,6 @@ void clonetiler_dialog(void)
         g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg);
         g_signal_connect   ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd);
 
-        GtkTooltips *tt = gtk_tooltips_new();
-
         GtkWidget *mainbox = gtk_vbox_new(FALSE, 4);
         gtk_container_set_border_width (GTK_CONTAINER (mainbox), 6);
         gtk_container_add (GTK_CONTAINER (dlg), mainbox);
@@ -1854,7 +1852,7 @@ void clonetiler_dialog(void)
              * http://www.clarku.edu/~djoyce/wallpaper/seventeen.html (English vocabulary); or
              * http://membres.lycos.fr/villemingerard/Geometri/Sym1D.htm (French vocabulary).
              */
-            gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), om, _("Select one of the 17 symmetry groups for the tiling"), NULL);
+            gtk_widget_set_tooltip_text (om, _("Select one of the 17 symmetry groups for the tiling"));
             gtk_box_pack_start (GTK_BOX (vb), om, FALSE, FALSE, SB_MARGIN);
 
             GtkWidget *m = gtk_menu_new ();
@@ -1927,7 +1925,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
+                GtkWidget *l = clonetiler_spinbox (
                     // xgettext:no-c-format
                                                    _("Horizontal shift per row (in % of tile width)"), "shiftx_per_j",
                                                    -10000, 10000, "%");
@@ -1935,7 +1933,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
+                GtkWidget *l = clonetiler_spinbox (
                     // xgettext:no-c-format
                                                    _("Horizontal shift per column (in % of tile width)"), "shiftx_per_i",
                                                    -10000, 10000, "%");
@@ -1943,8 +1941,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the horizontal shift by this percentage"), "shiftx_rand",
+                GtkWidget *l = clonetiler_spinbox (_("Randomize the horizontal shift by this percentage"), "shiftx_rand",
                                                    0, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 2, 4);
             }
@@ -1960,7 +1957,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
+                GtkWidget *l = clonetiler_spinbox (
                     // xgettext:no-c-format
                                                    _("Vertical shift per row (in % of tile height)"), "shifty_per_j",
                                                    -10000, 10000, "%");
@@ -1968,7 +1965,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
+                GtkWidget *l = clonetiler_spinbox (
                     // xgettext:no-c-format
                                                    _("Vertical shift per column (in % of tile height)"), "shifty_per_i",
                                                    -10000, 10000, "%");
@@ -1976,7 +1973,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
+                GtkWidget *l = clonetiler_spinbox (
                                                    _("Randomize the vertical shift by this percentage"), "shifty_rand",
                                                    0, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 3, 4);
@@ -1991,14 +1988,14 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
+                GtkWidget *l = clonetiler_spinbox (
                                                    _("Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"), "shifty_exp",
                                                    0, 10, "", true);
                 clonetiler_table_attach (table, l, 0, 4, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
+                GtkWidget *l = clonetiler_spinbox (
                                                    _("Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"), "shiftx_exp",
                                                    0, 10, "", true);
                 clonetiler_table_attach (table, l, 0, 4, 3);
@@ -2013,12 +2010,12 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of shifts for each row"), "shifty_alternate");
+                GtkWidget *l = clonetiler_checkbox (_("Alternate the sign of shifts for each row"), "shifty_alternate");
                 clonetiler_table_attach (table, l, 0, 5, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of shifts for each column"), "shiftx_alternate");
+                GtkWidget *l = clonetiler_checkbox (_("Alternate the sign of shifts for each column"), "shiftx_alternate");
                 clonetiler_table_attach (table, l, 0, 5, 3);
             }
 
@@ -2031,12 +2028,12 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Cumulate the shifts for each row"), "shifty_cumulate");
+                GtkWidget *l = clonetiler_checkbox (_("Cumulate the shifts for each row"), "shifty_cumulate");
                 clonetiler_table_attach (table, l, 0, 6, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Cumulate the shifts for each column"), "shiftx_cumulate");
+                GtkWidget *l = clonetiler_checkbox (_("Cumulate the shifts for each column"), "shiftx_cumulate");
                 clonetiler_table_attach (table, l, 0, 6, 3);
             }
 
@@ -2049,12 +2046,12 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Exclude tile height in shift"), "shifty_excludeh");
+                GtkWidget *l = clonetiler_checkbox (_("Exclude tile height in shift"), "shifty_excludeh");
                 clonetiler_table_attach (table, l, 0, 7, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Exclude tile width in shift"), "shiftx_excludew");
+                GtkWidget *l = clonetiler_checkbox (_("Exclude tile width in shift"), "shiftx_excludew");
                 clonetiler_table_attach (table, l, 0, 7, 3);
             }
 
@@ -2077,7 +2074,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
+                GtkWidget *l = clonetiler_spinbox (
                     // xgettext:no-c-format
                                                    _("Horizontal scale per row (in % of tile width)"), "scalex_per_j",
                                                    -100, 1000, "%");
@@ -2085,7 +2082,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
+                GtkWidget *l = clonetiler_spinbox (
                     // xgettext:no-c-format
                                                    _("Horizontal scale per column (in % of tile width)"), "scalex_per_i",
                                                    -100, 1000, "%");
@@ -2093,8 +2090,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the horizontal scale by this percentage"), "scalex_rand",
+                GtkWidget *l = clonetiler_spinbox (_("Randomize the horizontal scale by this percentage"), "scalex_rand",
                                                    0, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 2, 4);
             }
@@ -2108,7 +2104,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
+                GtkWidget *l = clonetiler_spinbox (
                     // xgettext:no-c-format
                                                    _("Vertical scale per row (in % of tile height)"), "scaley_per_j",
                                                    -100, 1000, "%");
@@ -2116,7 +2112,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
+                GtkWidget *l = clonetiler_spinbox (
                     // xgettext:no-c-format
                                                    _("Vertical scale per column (in % of tile height)"), "scaley_per_i",
                                                    -100, 1000, "%");
@@ -2124,8 +2120,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the vertical scale by this percentage"), "scaley_rand",
+                GtkWidget *l = clonetiler_spinbox (_("Randomize the vertical scale by this percentage"), "scaley_rand",
                                                    0, 1000, "%");
                 clonetiler_table_attach (table, l, 0, 3, 4);
             }
@@ -2139,15 +2134,13 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Whether row scaling is uniform (1), converge (<1) or diverge (>1)"), "scaley_exp",
+                GtkWidget *l = clonetiler_spinbox (_("Whether row scaling is uniform (1), converge (<1) or diverge (>1)"), "scaley_exp",
                                                    0, 10, "", true);
                 clonetiler_table_attach (table, l, 0, 4, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Whether column scaling is uniform (1), converge (<1) or diverge (>1)"), "scalex_exp",
+                GtkWidget *l = clonetiler_spinbox (_("Whether column scaling is uniform (1), converge (<1) or diverge (>1)"), "scalex_exp",
                                                    0, 10, "", true);
                 clonetiler_table_attach (table, l, 0, 4, 3);
             }
@@ -2161,15 +2154,13 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"), "scaley_log",
+                GtkWidget *l = clonetiler_spinbox (_("Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"), "scaley_log",
                                                    0, 10, "", false);
                 clonetiler_table_attach (table, l, 0, 5, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"), "scalex_log",
+                GtkWidget *l = clonetiler_spinbox (_("Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"), "scalex_log",
                                                    0, 10, "", false);
                 clonetiler_table_attach (table, l, 0, 5, 3);
             }
@@ -2183,12 +2174,12 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of scales for each row"), "scaley_alternate");
+                GtkWidget *l = clonetiler_checkbox (_("Alternate the sign of scales for each row"), "scaley_alternate");
                 clonetiler_table_attach (table, l, 0, 6, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of scales for each column"), "scalex_alternate");
+                GtkWidget *l = clonetiler_checkbox (_("Alternate the sign of scales for each column"), "scalex_alternate");
                 clonetiler_table_attach (table, l, 0, 6, 3);
             }
 
@@ -2201,12 +2192,12 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Cumulate the scales for each row"), "scaley_cumulate");
+                GtkWidget *l = clonetiler_checkbox (_("Cumulate the scales for each row"), "scaley_cumulate");
                 clonetiler_table_attach (table, l, 0, 7, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Cumulate the scales for each column"), "scalex_cumulate");
+                GtkWidget *l = clonetiler_checkbox (_("Cumulate the scales for each column"), "scalex_cumulate");
                 clonetiler_table_attach (table, l, 0, 7, 3);
             }
 
@@ -2229,7 +2220,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
+                GtkWidget *l = clonetiler_spinbox (
                     // xgettext:no-c-format
                                                    _("Rotate tiles by this angle for each row"), "rotate_per_j",
                                                    -180, 180, "&#176;");
@@ -2237,7 +2228,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
+                GtkWidget *l = clonetiler_spinbox (
                     // xgettext:no-c-format
                                                    _("Rotate tiles by this angle for each column"), "rotate_per_i",
                                                    -180, 180, "&#176;");
@@ -2245,8 +2236,7 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the rotation angle by this percentage"), "rotate_rand",
+                GtkWidget *l = clonetiler_spinbox (_("Randomize the rotation angle by this percentage"), "rotate_rand",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 4);
             }
@@ -2260,12 +2250,12 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the rotation direction for each row"), "rotate_alternatej");
+                GtkWidget *l = clonetiler_checkbox (_("Alternate the rotation direction for each row"), "rotate_alternatej");
                 clonetiler_table_attach (table, l, 0, 3, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the rotation direction for each column"), "rotate_alternatei");
+                GtkWidget *l = clonetiler_checkbox (_("Alternate the rotation direction for each column"), "rotate_alternatei");
                 clonetiler_table_attach (table, l, 0, 3, 3);
             }
 
@@ -2278,12 +2268,12 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Cumulate the rotation for each row"), "rotate_cumulatej");
+                GtkWidget *l = clonetiler_checkbox (_("Cumulate the rotation for each row"), "rotate_cumulatej");
                 clonetiler_table_attach (table, l, 0, 4, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Cumulate the rotation for each column"), "rotate_cumulatei");
+                GtkWidget *l = clonetiler_checkbox (_("Cumulate the rotation for each column"), "rotate_cumulatei");
                 clonetiler_table_attach (table, l, 0, 4, 3);
             }
 
@@ -2307,22 +2297,19 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Blur tiles by this percentage for each row"), "blur_per_j",
+                GtkWidget *l = clonetiler_spinbox (_("Blur tiles by this percentage for each row"), "blur_per_j",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Blur tiles by this percentage for each column"), "blur_per_i",
+                GtkWidget *l = clonetiler_spinbox (_("Blur tiles by this percentage for each column"), "blur_per_i",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 3);
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the tile blur by this percentage"), "blur_rand",
+                GtkWidget *l = clonetiler_spinbox (_("Randomize the tile blur by this percentage"), "blur_rand",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 4);
             }
@@ -2336,12 +2323,12 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of blur change for each row"), "blur_alternatej");
+                GtkWidget *l = clonetiler_checkbox (_("Alternate the sign of blur change for each row"), "blur_alternatej");
                 clonetiler_table_attach (table, l, 0, 3, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of blur change for each column"), "blur_alternatei");
+                GtkWidget *l = clonetiler_checkbox (_("Alternate the sign of blur change for each column"), "blur_alternatei");
                 clonetiler_table_attach (table, l, 0, 3, 3);
             }
 
@@ -2356,22 +2343,19 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Decrease tile opacity by this percentage for each row"), "opacity_per_j",
+                GtkWidget *l = clonetiler_spinbox (_("Decrease tile opacity by this percentage for each row"), "opacity_per_j",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 4, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Decrease tile opacity by this percentage for each column"), "opacity_per_i",
+                GtkWidget *l = clonetiler_spinbox (_("Decrease tile opacity by this percentage for each column"), "opacity_per_i",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 4, 3);
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the tile opacity by this percentage"), "opacity_rand",
+                GtkWidget *l = clonetiler_spinbox (_("Randomize the tile opacity by this percentage"), "opacity_rand",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 4, 4);
             }
@@ -2385,12 +2369,12 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of opacity change for each row"), "opacity_alternatej");
+                GtkWidget *l = clonetiler_checkbox (_("Alternate the sign of opacity change for each row"), "opacity_alternatej");
                 clonetiler_table_attach (table, l, 0, 5, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of opacity change for each column"), "opacity_alternatei");
+                GtkWidget *l = clonetiler_checkbox (_("Alternate the sign of opacity change for each column"), "opacity_alternatei");
                 clonetiler_table_attach (table, l, 0, 5, 3);
             }
         }
@@ -2428,22 +2412,19 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Change the tile hue by this percentage for each row"), "hue_per_j",
+                GtkWidget *l = clonetiler_spinbox (_("Change the tile hue by this percentage for each row"), "hue_per_j",
                                                    -100, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Change the tile hue by this percentage for each column"), "hue_per_i",
+                GtkWidget *l = clonetiler_spinbox (_("Change the tile hue by this percentage for each column"), "hue_per_i",
                                                    -100, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 3);
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the tile hue by this percentage"), "hue_rand",
+                GtkWidget *l = clonetiler_spinbox (_("Randomize the tile hue by this percentage"), "hue_rand",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 4);
             }
@@ -2458,22 +2439,19 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Change the color saturation by this percentage for each row"), "saturation_per_j",
+                GtkWidget *l = clonetiler_spinbox (_("Change the color saturation by this percentage for each row"), "saturation_per_j",
                                                    -100, 100, "%");
                 clonetiler_table_attach (table, l, 0, 3, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Change the color saturation by this percentage for each column"), "saturation_per_i",
+                GtkWidget *l = clonetiler_spinbox (_("Change the color saturation by this percentage for each column"), "saturation_per_i",
                                                    -100, 100, "%");
                 clonetiler_table_attach (table, l, 0, 3, 3);
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the color saturation by this percentage"), "saturation_rand",
+                GtkWidget *l = clonetiler_spinbox (_("Randomize the color saturation by this percentage"), "saturation_rand",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 3, 4);
             }
@@ -2487,22 +2465,19 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Change the color lightness by this percentage for each row"), "lightness_per_j",
+                GtkWidget *l = clonetiler_spinbox (_("Change the color lightness by this percentage for each row"), "lightness_per_j",
                                                    -100, 100, "%");
                 clonetiler_table_attach (table, l, 0, 4, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Change the color lightness by this percentage for each column"), "lightness_per_i",
+                GtkWidget *l = clonetiler_spinbox (_("Change the color lightness by this percentage for each column"), "lightness_per_i",
                                                    -100, 100, "%");
                 clonetiler_table_attach (table, l, 0, 4, 3);
             }
 
             {
-                GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the color lightness by this percentage"), "lightness_rand",
+                GtkWidget *l = clonetiler_spinbox (_("Randomize the color lightness by this percentage"), "lightness_rand",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 4, 4);
             }
@@ -2516,12 +2491,12 @@ void clonetiler_dialog(void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of color changes for each row"), "color_alternatej");
+                GtkWidget *l = clonetiler_checkbox (_("Alternate the sign of color changes for each row"), "color_alternatej");
                 clonetiler_table_attach (table, l, 0, 5, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of color changes for each column"), "color_alternatei");
+                GtkWidget *l = clonetiler_checkbox (_("Alternate the sign of color changes for each column"), "color_alternatei");
                 clonetiler_table_attach (table, l, 0, 5, 3);
             }
 
@@ -2540,7 +2515,7 @@ void clonetiler_dialog(void)
             g_object_set_data (G_OBJECT(b), "uncheckable", GINT_TO_POINTER(TRUE));
             bool old = prefs->getBool(prefs_path + "dotrace");
             gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
-            gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("For each clone, pick a value from the drawing in that clone's location and apply it to the clone"), NULL);
+            gtk_widget_set_tooltip_text (b, _("For each clone, pick a value from the drawing in that clone's location and apply it to the clone"));
             gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
 
             gtk_signal_connect(GTK_OBJECT(b), "toggled",
@@ -2566,7 +2541,7 @@ void clonetiler_dialog(void)
                 GtkWidget* radio;
                 {
                     radio = gtk_radio_button_new_with_label (NULL, _("Color"));
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the visible color and opacity"), NULL);
+                    gtk_widget_set_tooltip_text (radio, _("Pick the visible color and opacity"));
                     clonetiler_table_attach (table, radio, 0.0, 1, 1);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_COLOR));
@@ -2574,7 +2549,7 @@ void clonetiler_dialog(void)
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("Opacity"));
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the total accumulated opacity"), NULL);
+                    gtk_widget_set_tooltip_text (radio, _("Pick the total accumulated opacity"));
                     clonetiler_table_attach (table, radio, 0.0, 2, 1);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_OPACITY));
@@ -2582,7 +2557,7 @@ void clonetiler_dialog(void)
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("R"));
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the Red component of the color"), NULL);
+                    gtk_widget_set_tooltip_text (radio, _("Pick the Red component of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 1, 2);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_R));
@@ -2590,7 +2565,7 @@ void clonetiler_dialog(void)
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("G"));
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the Green component of the color"), NULL);
+                    gtk_widget_set_tooltip_text (radio, _("Pick the Green component of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 2, 2);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_G));
@@ -2598,7 +2573,7 @@ void clonetiler_dialog(void)
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("B"));
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the Blue component of the color"), NULL);
+                    gtk_widget_set_tooltip_text (radio, _("Pick the Blue component of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 3, 2);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_B));
@@ -2606,7 +2581,7 @@ void clonetiler_dialog(void)
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color hue", "H"));
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the hue of the color"), NULL);
+                    gtk_widget_set_tooltip_text (radio, _("Pick the hue of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 1, 3);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_H));
@@ -2614,7 +2589,7 @@ void clonetiler_dialog(void)
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color saturation", "S"));
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the saturation of the color"), NULL);
+                    gtk_widget_set_tooltip_text (radio, _("Pick the saturation of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 2, 3);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_S));
@@ -2622,7 +2597,7 @@ void clonetiler_dialog(void)
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color lightness", "L"));
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Pick the lightness of the color"), NULL);
+                    gtk_widget_set_tooltip_text (radio, _("Pick the lightness of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 3, 3);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_L));
@@ -2646,8 +2621,7 @@ void clonetiler_dialog(void)
                     clonetiler_table_attach (table, l, 1.0, 1, 1);
                 }
                 {
-                    GtkWidget *l = clonetiler_spinbox (tt,
-                                                       _("Shift the mid-range of the picked value upwards (>0) or downwards (<0)"), "gamma_picked",
+                    GtkWidget *l = clonetiler_spinbox (_("Shift the mid-range of the picked value upwards (>0) or downwards (<0)"), "gamma_picked",
                                                        -10, 10, "");
                     clonetiler_table_attach (table, l, 0.0, 1, 2);
                 }
@@ -2658,8 +2632,7 @@ void clonetiler_dialog(void)
                     clonetiler_table_attach (table, l, 1.0, 1, 3);
                 }
                 {
-                    GtkWidget *l = clonetiler_spinbox (tt,
-                                                       _("Randomize the picked value by this percentage"), "rand_picked",
+                    GtkWidget *l = clonetiler_spinbox (_("Randomize the picked value by this percentage"), "rand_picked",
                                                        0, 100, "%");
                     clonetiler_table_attach (table, l, 0.0, 1, 4);
                 }
@@ -2670,7 +2643,7 @@ void clonetiler_dialog(void)
                     clonetiler_table_attach (table, l, 1.0, 2, 1);
                 }
                 {
-                    GtkWidget *l = clonetiler_checkbox (tt, _("Invert the picked value"), "invert_picked");
+                    GtkWidget *l = clonetiler_checkbox (_("Invert the picked value"), "invert_picked");
                     clonetiler_table_attach (table, l, 0.0, 2, 2);
                 }
             }
@@ -2689,7 +2662,7 @@ void clonetiler_dialog(void)
                     GtkWidget *b  = gtk_check_button_new_with_label (_("Presence"));
                     bool old = prefs->getBool(prefs_path + "pick_to_presence", true);
                     gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Each clone is created with the probability determined by the picked value in that point"), NULL);
+                    gtk_widget_set_tooltip_text (b, _("Each clone is created with the probability determined by the picked value in that point"));
                     clonetiler_table_attach (table, b, 0.0, 1, 1);
                     gtk_signal_connect(GTK_OBJECT(b), "toggled",
                                        GTK_SIGNAL_FUNC(clonetiler_pick_to), (gpointer) "pick_to_presence");
@@ -2699,7 +2672,7 @@ void clonetiler_dialog(void)
                     GtkWidget *b  = gtk_check_button_new_with_label (_("Size"));
                     bool old = prefs->getBool(prefs_path + "pick_to_size");
                     gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Each clone's size is determined by the picked value in that point"), NULL);
+                    gtk_widget_set_tooltip_text (b, _("Each clone's size is determined by the picked value in that point"));
                     clonetiler_table_attach (table, b, 0.0, 2, 1);
                     gtk_signal_connect(GTK_OBJECT(b), "toggled",
                                        GTK_SIGNAL_FUNC(clonetiler_pick_to), (gpointer) "pick_to_size");
@@ -2709,7 +2682,7 @@ void clonetiler_dialog(void)
                     GtkWidget *b  = gtk_check_button_new_with_label (_("Color"));
                     bool old = prefs->getBool(prefs_path + "pick_to_color", 0);
                     gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Each clone is painted by the picked color (the original must have unset fill or stroke)"), NULL);
+                    gtk_widget_set_tooltip_text (b, _("Each clone is painted by the picked color (the original must have unset fill or stroke)"));
                     clonetiler_table_attach (table, b, 0.0, 1, 2);
                     gtk_signal_connect(GTK_OBJECT(b), "toggled",
                                        GTK_SIGNAL_FUNC(clonetiler_pick_to), (gpointer) "pick_to_color");
@@ -2719,7 +2692,7 @@ void clonetiler_dialog(void)
                     GtkWidget *b  = gtk_check_button_new_with_label (_("Opacity"));
                     bool old = prefs->getBool(prefs_path + "pick_to_opacity", 0);
                     gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Each clone's opacity is determined by the picked value in that point"), NULL);
+                    gtk_widget_set_tooltip_text (b, _("Each clone's opacity is determined by the picked value in that point"));
                     clonetiler_table_attach (table, b, 0.0, 2, 2);
                     gtk_signal_connect(GTK_OBJECT(b), "toggled",
                                        GTK_SIGNAL_FUNC(clonetiler_pick_to), (gpointer) "pick_to_opacity");
@@ -2746,7 +2719,7 @@ void clonetiler_dialog(void)
                     int value = prefs->getInt(prefs_path + "jmax", 2);
                     gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
                     GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 0);
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), sb, _("How many rows in the tiling"), NULL);
+                    gtk_widget_set_tooltip_text (sb, _("How many rows in the tiling"));
                     gtk_entry_set_width_chars (GTK_ENTRY (sb), 5);
                     gtk_box_pack_start (GTK_BOX (hb), sb, TRUE, TRUE, 0);
 
@@ -2766,7 +2739,7 @@ void clonetiler_dialog(void)
                     int value = prefs->getInt(prefs_path + "imax", 2);
                     gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
                     GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 0);
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), sb, _("How many columns in the tiling"), NULL);
+                    gtk_widget_set_tooltip_text (sb, _("How many columns in the tiling"));
                     gtk_entry_set_width_chars (GTK_ENTRY (sb), 5);
                     gtk_box_pack_start (GTK_BOX (hb), sb, TRUE, TRUE, 0);
 
@@ -2796,7 +2769,7 @@ void clonetiler_dialog(void)
                     gtk_adjustment_set_value (GTK_ADJUSTMENT (a), units);
 
                     GtkWidget *e = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0 , 2);
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), e, _("Width of the rectangle to be filled"), NULL);
+                    gtk_widget_set_tooltip_text (e, _("Width of the rectangle to be filled"));
                     gtk_entry_set_width_chars (GTK_ENTRY (e), 5);
                     gtk_box_pack_start (GTK_BOX (hb), e, TRUE, TRUE, 0);
                     gtk_signal_connect(GTK_OBJECT(a), "value_changed",
@@ -2821,7 +2794,7 @@ void clonetiler_dialog(void)
 
 
                     GtkWidget *e = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0 , 2);
-                    gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), e, _("Height of the rectangle to be filled"), NULL);
+                    gtk_widget_set_tooltip_text (e, _("Height of the rectangle to be filled"));
                     gtk_entry_set_width_chars (GTK_ENTRY (e), 5);
                     gtk_box_pack_start (GTK_BOX (hb), e, TRUE, TRUE, 0);
                     gtk_signal_connect(GTK_OBJECT(a), "value_changed",
@@ -2837,7 +2810,7 @@ void clonetiler_dialog(void)
             GtkWidget* radio;
             {
                 radio = gtk_radio_button_new_with_label (NULL, _("Rows, columns: "));
-                gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Create the specified number of rows and columns"), NULL);
+                gtk_widget_set_tooltip_text (radio, _("Create the specified number of rows and columns"));
                 clonetiler_table_attach (table, radio, 0.0, 1, 1);
                 gtk_signal_connect (GTK_OBJECT (radio), "toggled", GTK_SIGNAL_FUNC (clonetiler_switch_to_create), (gpointer) dlg);
             }
@@ -2847,7 +2820,7 @@ void clonetiler_dialog(void)
             }
             {
                 radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("Width, height: "));
-                gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), radio, _("Fill the specified width and height with the tiling"), NULL);
+                gtk_widget_set_tooltip_text (radio, _("Fill the specified width and height with the tiling"));
                 clonetiler_table_attach (table, radio, 0.0, 2, 1);
                 gtk_signal_connect (GTK_OBJECT (radio), "toggled", GTK_SIGNAL_FUNC (clonetiler_switch_to_fill), (gpointer) dlg);
             }
@@ -2866,7 +2839,7 @@ void clonetiler_dialog(void)
             GtkWidget *b  = gtk_check_button_new_with_label (_("Use saved size and position of the tile"));
             bool keepbbox = prefs->getBool(prefs_path + "keepbbox", true);
             gtk_toggle_button_set_active ((GtkToggleButton *) b, keepbbox);
-            gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Pretend that the size and position of the tile are the same as the last time you tiled it (if any), instead of using the current size"), NULL);
+            gtk_widget_set_tooltip_text (b, _("Pretend that the size and position of the tile are the same as the last time you tiled it (if any), instead of using the current size"));
             gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
 
             gtk_signal_connect(GTK_OBJECT(b), "toggled",
@@ -2892,7 +2865,7 @@ void clonetiler_dialog(void)
                 GtkWidget *l = gtk_label_new ("");
                 gtk_label_set_markup_with_mnemonic (GTK_LABEL(l), _(" <b>_Create</b> "));
                 gtk_container_add (GTK_CONTAINER(b), l);
-                gtk_tooltips_set_tip (tt, b, _("Create and tile the clones of the selection"), NULL);
+                gtk_widget_set_tooltip_text (b, _("Create and tile the clones of the selection"));
                 gtk_signal_connect (GTK_OBJECT (b), "clicked", GTK_SIGNAL_FUNC (clonetiler_apply), NULL);
                 gtk_box_pack_end (GTK_BOX (hb), b, FALSE, FALSE, 0);
             }
@@ -2908,14 +2881,14 @@ void clonetiler_dialog(void)
                     //  http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
                     //  So unclumping is the process of spreading a number of objects out more evenly.
                     GtkWidget *b = gtk_button_new_with_mnemonic (_(" _Unclump "));
-                    gtk_tooltips_set_tip (tt, b, _("Spread out clones to reduce clumping; can be applied repeatedly"), NULL);
+                    gtk_widget_set_tooltip_text (b, _("Spread out clones to reduce clumping; can be applied repeatedly"));
                     gtk_signal_connect (GTK_OBJECT (b), "clicked", GTK_SIGNAL_FUNC (clonetiler_unclump), NULL);
                     gtk_box_pack_end (GTK_BOX (sb), b, FALSE, FALSE, 0);
                 }
 
                 {
                     GtkWidget *b = gtk_button_new_with_mnemonic (_(" Re_move "));
-                    gtk_tooltips_set_tip (tt, b, _("Remove existing tiled clones of the selected object (siblings only)"), NULL);
+                    gtk_widget_set_tooltip_text (b, _("Remove existing tiled clones of the selected object (siblings only)"));
                     gtk_signal_connect (GTK_OBJECT (b), "clicked", GTK_SIGNAL_FUNC (clonetiler_remove), NULL);
                     gtk_box_pack_end (GTK_BOX (sb), b, FALSE, FALSE, 0);
                 }
@@ -2933,7 +2906,7 @@ void clonetiler_dialog(void)
             {
                 GtkWidget *b = gtk_button_new_with_mnemonic (_(" R_eset "));
                 // TRANSLATORS: "change" is a noun here
-                gtk_tooltips_set_tip (tt, b, _("Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"), NULL);
+                gtk_widget_set_tooltip_text (b, _("Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"));
                 gtk_signal_connect (GTK_OBJECT (b), "clicked", GTK_SIGNAL_FUNC (clonetiler_reset), NULL);
                 gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
             }
