@@ -426,8 +426,8 @@ gdl_dock_item_class_init (GdlDockItemClass *klass)
 static void
 gdl_dock_item_instance_init (GdlDockItem *item)
 {
-    GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (item), GTK_NO_WINDOW);
-    GTK_WIDGET_SET_FLAGS (GTK_WIDGET (item), GTK_CAN_FOCUS);
+    gtk_widget_set_has_window (GTK_WIDGET (item), TRUE);
+    gtk_widget_set_can_focus (GTK_WIDGET (item), TRUE);
 
     item->child = NULL;
     
@@ -836,7 +836,7 @@ gdl_dock_item_map (GtkWidget *widget)
     g_return_if_fail (widget != NULL);
     g_return_if_fail (GDL_IS_DOCK_ITEM (widget));
 
-    GTK_WIDGET_SET_FLAGS (widget, GTK_MAPPED);
+    gtk_widget_set_mapped (widget, TRUE);
 
     item = GDL_DOCK_ITEM (widget);
 
@@ -861,7 +861,7 @@ gdl_dock_item_unmap (GtkWidget *widget)
     g_return_if_fail (widget != NULL);
     g_return_if_fail (GDL_IS_DOCK_ITEM (widget));
 
-    GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
+    gtk_widget_set_mapped (widget, FALSE);
     
     item = GDL_DOCK_ITEM (widget);
 
@@ -883,7 +883,7 @@ gdl_dock_item_realize (GtkWidget *widget)
 
     item = GDL_DOCK_ITEM (widget);
 
-    GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+    gtk_widget_set_realized (widget, TRUE);
 
     /* widget window */
     attributes.x = widget->allocation.x;

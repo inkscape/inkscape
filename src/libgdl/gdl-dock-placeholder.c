@@ -215,8 +215,9 @@ gdl_dock_placeholder_class_init (GdlDockPlaceholderClass *klass)
 static void 
 gdl_dock_placeholder_instance_init (GdlDockPlaceholder *ph)
 {
-    GTK_WIDGET_SET_FLAGS (ph, GTK_NO_WINDOW);
-    GTK_WIDGET_UNSET_FLAGS (ph, GTK_CAN_FOCUS);
+    gtk_widget_set_has_window (GTK_WIDGET (ph), FALSE);
+
+    gtk_widget_set_can_focus (GTK_WIDGET (ph), FALSE);
     
     ph->_priv = g_new0 (GdlDockPlaceholderPrivate, 1);
 }

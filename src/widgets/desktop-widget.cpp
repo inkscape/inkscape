@@ -440,7 +440,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #if ENABLE_LCMS
     dtw->canvas->enable_cms_display_adj = prefs->getBool("/options/displayprofile/enable");
 #endif // ENABLE_LCMS
-    GTK_WIDGET_SET_FLAGS (GTK_WIDGET (dtw->canvas), GTK_CAN_FOCUS);
+    gtk_widget_set_can_focus (GTK_WIDGET (dtw->canvas), TRUE);
     style = gtk_style_copy (GTK_WIDGET (dtw->canvas)->style);
     style->bg[GTK_STATE_NORMAL] = style->white;
     gtk_widget_set_style (GTK_WIDGET (dtw->canvas), style);
@@ -889,7 +889,7 @@ SPDesktopWidget::shutdown()
                   "If you close without saving, your changes will be discarded."),
                 doc->getName());
             // fix for bug 1767940:
-            GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), GTK_CAN_FOCUS);
+	    gtk_widget_set_can_focus(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), FALSE);
 
             GtkWidget *close_button;
             close_button = gtk_button_new_with_mnemonic(_("Close _without saving"));
@@ -945,7 +945,7 @@ SPDesktopWidget::shutdown()
                   "Do you want to save this file as Inkscape SVG?"),
                 doc->getName() ? doc->getName() : "Unnamed");
             // fix for bug 1767940:
-            GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), GTK_CAN_FOCUS);
+            gtk_widget_set_can_focus(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), FALSE);
 
             GtkWidget *close_button;
             close_button = gtk_button_new_with_mnemonic(_("Close _without saving"));

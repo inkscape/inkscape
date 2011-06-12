@@ -1020,9 +1020,9 @@ sp_canvas_class_init (SPCanvasClass *klass)
 static void
 sp_canvas_init (SPCanvas *canvas)
 {
-    GTK_WIDGET_UNSET_FLAGS (canvas, GTK_NO_WINDOW);
-    GTK_WIDGET_UNSET_FLAGS (canvas, GTK_DOUBLE_BUFFERED);
-    GTK_WIDGET_SET_FLAGS (canvas, GTK_CAN_FOCUS);
+    gtk_widget_set_has_window (GTK_WIDGET (canvas), TRUE);
+    gtk_widget_set_double_buffered (GTK_WIDGET (canvas), FALSE);
+    gtk_widget_set_can_focus (GTK_WIDGET (canvas), TRUE);
 
     canvas->pick_event.type = GDK_LEAVE_NOTIFY;
     canvas->pick_event.crossing.x = 0;
@@ -1176,7 +1176,7 @@ sp_canvas_realize (GtkWidget *widget)
 
     widget->style = gtk_style_attach (widget->style, widget->window);
 
-    GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+    gtk_widget_set_realized (widget, TRUE);
 
     canvas->pixmap_gc = gdk_gc_new (SP_CANVAS_WINDOW (canvas));
 }
@@ -2022,7 +2022,7 @@ sp_canvas_crossing (GtkWidget *widget, GdkEventCrossing *event)
 static gint
 sp_canvas_focus_in (GtkWidget *widget, GdkEventFocus *event)
 {
-    GTK_WIDGET_SET_FLAGS (widget, GTK_HAS_FOCUS);
+    gtk_widget_grab_focus (widget);
 
     SPCanvas *canvas = SP_CANVAS (widget);
 
@@ -2039,8 +2039,6 @@ sp_canvas_focus_in (GtkWidget *widget, GdkEventFocus *event)
 static gint
 sp_canvas_focus_out (GtkWidget *widget, GdkEventFocus *event)
 {
-    GTK_WIDGET_UNSET_FLAGS (widget, GTK_HAS_FOCUS);
-
     SPCanvas *canvas = SP_CANVAS (widget);
 
     if (canvas->focused_item)

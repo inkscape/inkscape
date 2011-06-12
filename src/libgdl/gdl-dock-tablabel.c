@@ -550,7 +550,7 @@ gdl_dock_tablabel_realize (GtkWidget *widget)
     
     widget->style = gtk_style_attach (widget->style, widget->window);
     
-    GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+    gtk_widget_set_realized (widget, TRUE);
 }
 
 static void   

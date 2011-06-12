@@ -74,7 +74,7 @@ sp_color_preview_class_init (SPColorPreviewClass *klass)
 static void
 sp_color_preview_init (SPColorPreview *image)
 {
-    GTK_WIDGET_SET_FLAGS (image, GTK_NO_WINDOW);
+    gtk_widget_set_has_window (GTK_WIDGET (image), FALSE);
 
     image->rgba = 0xffffffff;
 }

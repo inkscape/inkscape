@@ -707,7 +707,7 @@ gdl_switcher_instance_init (GdlSwitcher *switcher)
 {
     GdlSwitcherPrivate *priv;
 
-    GTK_WIDGET_SET_FLAGS (switcher, GTK_NO_WINDOW);
+    gtk_widget_set_has_window (GTK_WIDGET (switcher), FALSE);
   
     priv = g_new0 (GdlSwitcherPrivate, 1);
     switcher->priv = priv;

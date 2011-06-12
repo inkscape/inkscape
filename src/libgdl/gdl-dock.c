@@ -260,7 +260,7 @@ gdl_dock_class_init (GdlDockClass *klass)
 static void
 gdl_dock_instance_init (GdlDock *dock)
 {
-    GTK_WIDGET_SET_FLAGS (GTK_WIDGET (dock), GTK_NO_WINDOW);
+    gtk_widget_set_has_window (GTK_WIDGET (dock), FALSE);
 
     dock->root = NULL;
     dock->_priv = g_new0 (GdlDockPrivate, 1);

@@ -1339,8 +1339,7 @@ void cmd_new_element_node(GtkObject */*object*/, gpointer /*data*/)
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, TRUE, 0);
 
     cancel = gtk_button_new_with_label(_("Cancel"));
-    GTK_WIDGET_SET_FLAGS( GTK_WIDGET(cancel),
-                           GTK_CAN_DEFAULT );
+    gtk_widget_set_can_default( GTK_WIDGET(cancel), TRUE );
     gtk_signal_connect_object( GTK_OBJECT(cancel), "clicked",
                                 G_CALLBACK(gtk_widget_destroy),
                                 GTK_OBJECT(window) );
@@ -1356,8 +1355,8 @@ void cmd_new_element_node(GtkObject */*object*/, gpointer /*data*/)
     gtk_signal_connect_object( GTK_OBJECT(create), "clicked",
                                 G_CALLBACK(gtk_widget_destroy),
                                 GTK_OBJECT(window) );
-    GTK_WIDGET_SET_FLAGS( GTK_WIDGET(create),
-                           GTK_CAN_DEFAULT | GTK_RECEIVES_DEFAULT );
+    gtk_widget_set_can_default( GTK_WIDGET(create), TRUE );
+    gtk_widget_set_receives_default( GTK_WIDGET(create), TRUE );
     gtk_container_add(GTK_CONTAINER(bbox), create);
 
     gtk_widget_show_all(GTK_WIDGET(window));

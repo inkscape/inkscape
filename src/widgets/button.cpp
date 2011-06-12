@@ -101,8 +101,8 @@ sp_button_init (SPButton *button)
 
 	gtk_container_set_border_width (GTK_CONTAINER (button), 0);
 
-	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (button), GTK_CAN_FOCUS);
-	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (button), GTK_CAN_DEFAULT);
+	gtk_widget_set_can_focus (GTK_WIDGET (button), FALSE);
+	gtk_widget_set_can_default (GTK_WIDGET (button), FALSE);
 
 	g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (sp_button_perform_action), NULL);
 	g_signal_connect_after (G_OBJECT (button), "event", G_CALLBACK (sp_button_process_event), NULL);

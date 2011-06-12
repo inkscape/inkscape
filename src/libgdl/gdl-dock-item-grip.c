@@ -341,7 +341,7 @@ gdl_dock_item_grip_instance_init (GdlDockItemGrip *grip)
 {
     GtkWidget *image;
 
-    GTK_WIDGET_SET_FLAGS (grip, GTK_NO_WINDOW);
+    gtk_widget_set_has_window (GTK_WIDGET (grip), FALSE);
     
     grip->_priv = g_new0 (GdlDockItemGripPrivate, 1);
     grip->_priv->icon_pixbuf_valid = FALSE;
@@ -352,7 +352,7 @@ gdl_dock_item_grip_instance_init (GdlDockItemGrip *grip)
     grip->_priv->close_button = gtk_button_new ();
     gtk_widget_pop_composite_child ();
     
-    GTK_WIDGET_UNSET_FLAGS (grip->_priv->close_button, GTK_CAN_FOCUS);
+    gtk_widget_set_can_focus (grip->_priv->close_button, FALSE);
     gtk_widget_set_parent (grip->_priv->close_button, GTK_WIDGET (grip));
     gtk_button_set_relief (GTK_BUTTON (grip->_priv->close_button), GTK_RELIEF_NONE);
     gtk_widget_show (grip->_priv->close_button);
@@ -368,7 +368,7 @@ gdl_dock_item_grip_instance_init (GdlDockItemGrip *grip)
     grip->_priv->iconify_button = gtk_button_new ();
     gtk_widget_pop_composite_child ();
     
-    GTK_WIDGET_UNSET_FLAGS (grip->_priv->iconify_button, GTK_CAN_FOCUS);
+    gtk_widget_set_can_focus (grip->_priv->iconify_button, FALSE);
     gtk_widget_set_parent (grip->_priv->iconify_button, GTK_WIDGET (grip));
     gtk_button_set_relief (GTK_BUTTON (grip->_priv->iconify_button), GTK_RELIEF_NONE);
     gtk_widget_show (grip->_priv->iconify_button);

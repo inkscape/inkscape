@@ -131,7 +131,7 @@ static void
 sp_color_slider_init (SPColorSlider *slider)
 {
 	/* We are widget with window */
-	GTK_WIDGET_UNSET_FLAGS (slider, GTK_NO_WINDOW);
+	gtk_widget_set_has_window (GTK_WIDGET(slider), TRUE);
 
 	slider->dragging = FALSE;
 
@@ -186,7 +186,7 @@ sp_color_slider_realize (GtkWidget *widget)
 
 	slider = SP_COLOR_SLIDER (widget);
 
-	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+	gtk_widget_set_realized (widget, TRUE);
 
 	attributes.window_type = GDK_WINDOW_CHILD;
 	attributes.x = widget->allocation.x;

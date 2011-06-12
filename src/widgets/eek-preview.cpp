@@ -684,8 +684,8 @@ void eek_preview_set_details( EekPreview* preview, PreviewStyle prevstyle, ViewT
 static void eek_preview_init( EekPreview *preview )
 {
     GtkWidget* widg = GTK_WIDGET(preview);
-    GTK_WIDGET_SET_FLAGS( widg, GTK_CAN_FOCUS );
-    GTK_WIDGET_SET_FLAGS( widg, GTK_RECEIVES_DEFAULT );
+    gtk_widget_set_can_focus( widg, TRUE );
+    gtk_widget_set_receives_default( widg, TRUE );
 
     gtk_widget_set_sensitive( widg, TRUE );
 
