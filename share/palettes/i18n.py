@@ -4,7 +4,7 @@ import sys
 import glob
 import re
 
-print "char * stringlst = ["
+sys.stdout.write("char * stringlst = [")
 
 # Gimp palette format: R   G   B  Label (255   0   0  Red)
 
@@ -16,10 +16,10 @@ for filename in sys.argv[1:]:
     for line in file:
         match = regex.match(line)
         if match:
-            print '\n/* Palette: ' + filename + ' */'
+            sys.stdout.write('\n/* Palette: ' + filename + ' */')
             search = regexnoc.search(match.group(1))
             if search:
-                print "/* xgettext:no-c-format */"
-            print "NC_(\"Palette\", \"" + match.group(1) + "\"),"
+                sys.stdout.write("/* xgettext:no-c-format */")
+            sys.stdout.write("NC_(\"Palette\", \"" + match.group(1) + "\"),")
 
-print "];"
+sys.stdout.write("];")

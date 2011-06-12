@@ -7,7 +7,7 @@ doc = minidom.parse(sys.argv[1])
 
 filters = doc.getElementsByTagName('filter')
 
-print "char * stringlst = ["
+sys.stdout.write("char * stringlst = [")
 
 for filter in filters:
 	label = filter.getAttribute('inkscape:label')
@@ -18,6 +18,6 @@ for filter in filters:
 	if "NR" in label:
 		comment = '/* TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders */\n'
 	
-	print comment + "N_(\"" + label + "\"), N_(\"" + menu + "\"), N_(\"" + desc + "\"),"
+	sys.stdout.write(comment + "N_(\"" + label + "\"), N_(\"" + menu + "\"), N_(\"" + desc + "\"),")
 
-print "];"
+sys.stdout.write("];")
