@@ -14,5 +14,5 @@ set(libnrtype_SRC
 	RasterFont.cpp
 	TextWrapper.cpp
 )
-add_library(nrtype STATIC ${libnrtype_SRC})
-target_link_libraries(nrtype nr ${INKSCAPE_LIBS})
+add_library(nrtype_LIB STATIC ${libnrtype_SRC})
+target_link_libraries(nrtype_LIB nr_LIB ${INKSCAPE_LIBS})

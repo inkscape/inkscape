@@ -9,5 +9,5 @@ set(debug_SRC
 	gdk-event-latency-tracker.cpp
 )
 
-add_library(debug STATIC ${debug_SRC})
-target_link_libraries(debug 2geom ${INKSCAPE_LIBS})
+add_library(debug_LIB STATIC ${debug_SRC})
+target_link_libraries(debug_LIB 2geom_LIB ${INKSCAPE_LIBS})

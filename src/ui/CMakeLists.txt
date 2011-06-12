@@ -42,5 +42,5 @@ include_directories(
 	"${CMAKE_SOURCE_DIR}/extension/dbus"
 )
 
-add_library(ui STATIC ${ui_SRC})
-target_link_libraries(ui 2geom ${INKSCAPE_LIBS})
+add_library(ui_LIB STATIC ${ui_SRC})
+target_link_libraries(ui_LIB 2geom_LIB ${INKSCAPE_LIBS})

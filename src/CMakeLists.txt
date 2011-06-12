@@ -129,8 +129,8 @@ set(INKSCAPE_SRC
 	inkscape-version.cpp
 	inkscape.cpp
 	inkscape.rc
-	inkview.cpp
-	inkview.rc
+	# inkview.cpp
+	# inkview.rc
 	interface.cpp
 	knot-holder-entity.cpp
 	knot.cpp
@@ -264,17 +264,34 @@ set(INKSCAPE_SRC
 	${GlibOutput}
 )
 
-add_library(sp STATIC ${SP_SRC})
-target_link_libraries(sp
-	nr
-	nrtype
-	avoid
-	cola
-	croco
-	gdl
-	vpsc
-	livarot
-	${internalfolders}
+add_library(sp_LIB STATIC ${SP_SRC})
+
+target_link_libraries(
+	sp_LIB
+	nr_LIB
+	nrtype_LIB
+	avoid_LIB
+	cola_LIB
+	croco_LIB
+	gdl_LIB
+	vpsc_LIB
+	livarot_LIB
+
+	bind_LIB
+	display_LIB
+	dom_LIB
+	extension_LIB
+	filters_LIB
+	helper_LIB
+	io_LIB
+	live_effects_LIB
+	svg_LIB
+	trace_LIB
+	ui_LIB
+	widgets_LIB
+	xml_LIB
+	2geom_LIB
+
 	${INKSCAPE_LIBS}
 )
 
@@ -282,16 +299,15 @@ target_link_libraries(sp
 add_executable(inkscape ${INKSCAPE_SRC})
 
 target_link_libraries(inkscape
-	nr
-	nrtype
-	sp
-	avoid
-	cola
-	croco
-	gdl
-	vpsc
-	livarot
-	${internalfolders}
+	nr_LIB
+	nrtype_LIB
+	sp_LIB
+	avoid_LIB
+	cola_LIB
+	croco_LIB
+	gdl_LIB
+	vpsc_LIB
+	livarot_LIB
 	${INKSCAPE_LIBS}
 	
 	
@@ -348,6 +364,15 @@ target_link_libraries(inkscape
 # make executable for INKVIEW
 #ADD_EXECUTABLE(inkview inkview.cpp)
 #TARGET_LINK_LIBRARIES(inkview
-#	2geom avoid cola croco gdl nr nrtype vpsc livarot sp ${internalfolders}
+#	2geom_LIB
+#	avoid_LIB
+#	cola_LIB
+#	croco_LIB
+#	gdl_LIB
+#	nr_LIB
+#	nrtype_LIB
+#	vpsc_LIB
+#	livarot_LIB
+#	sp_LIB
 #)
 

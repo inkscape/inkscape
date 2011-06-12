@@ -14,5 +14,5 @@ set(svg_SRC
 	#test-stubs.cpp
 )
 
-add_library(svg STATIC ${svg_SRC})
-target_link_libraries(svg 2geom ${INKSCAPE_LIBS})
+add_library(svg_LIB STATIC ${svg_SRC})
+target_link_libraries(svg_LIB 2geom_LIB ${INKSCAPE_LIBS})

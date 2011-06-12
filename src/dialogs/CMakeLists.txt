@@ -9,5 +9,5 @@ set(dialogs_SRC
 	text-edit.cpp
 	xml-tree.cpp
 )
-add_library(dialogs STATIC ${dialogs_SRC})
-target_link_libraries(dialogs 2geom ${INKSCAPE_LIBS})
+add_library(dialogs_LIB STATIC ${dialogs_SRC})
+target_link_libraries(dialogs_LIB 2geom_LIB ${INKSCAPE_LIBS})

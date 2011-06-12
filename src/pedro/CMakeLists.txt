@@ -8,5 +8,5 @@ set(pedro_SRC
 	pedroutil.cpp
 	pedroxmpp.cpp
 )
-add_library(pedro STATIC ${pedro_SRC})
-target_link_libraries(pedro ${INKSCAPE_LIBS})
+add_library(pedro_LIB STATIC ${pedro_SRC})
+target_link_libraries(pedro_LIB ${INKSCAPE_LIBS})

@@ -7,5 +7,5 @@ set(util_SRC
 	units.cpp
 )
 
-add_library(util STATIC ${util_SRC})
-target_link_libraries(util 2geom ${INKSCAPE_LIBS})
+add_library(util_LIB STATIC ${util_SRC})
+target_link_libraries(util_LIB 2geom_LIB ${INKSCAPE_LIBS})

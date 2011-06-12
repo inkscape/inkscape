@@ -62,5 +62,5 @@ include_directories(
 	"${CMAKE_SOURCE_DIR}/src"
 )
 
-add_library(display STATIC ${display_SRC})
-target_link_libraries(display 2geom ${INKSCAPE_LIBS})
+add_library(display_LIB STATIC ${display_SRC})
+target_link_libraries(display_LIB 2geom_LIB ${INKSCAPE_LIBS})

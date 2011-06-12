@@ -17,5 +17,5 @@ set(xml_SRC
 	rebase-hrefs.cpp
 )
 
-add_library(xml STATIC ${xml_SRC})
-target_link_libraries(xml 2geom ${INKSCAPE_LIBS})
+add_library(xml_LIB STATIC ${xml_SRC})
+target_link_libraries(xml_LIB 2geom_LIB ${INKSCAPE_LIBS})

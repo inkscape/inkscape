@@ -14,5 +14,5 @@ set(libavoid_SRC
 	vpsc.cpp
 )
 
-add_library(avoid STATIC ${libavoid_SRC})
-target_link_libraries(avoid ${INKSCAPE_LIBS})
+add_library(avoid_LIB STATIC ${libavoid_SRC})
+target_link_libraries(avoid_LIB ${INKSCAPE_LIBS})

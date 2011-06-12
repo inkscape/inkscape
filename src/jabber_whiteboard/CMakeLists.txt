@@ -19,5 +19,5 @@ set(jabber_whiteboard_SRC
 	${jabber_whiteboard_dialog_SRC}
 )
 
-add_library(jabber_whiteboard STATIC ${jabber_whiteboard_SRC})
-target_link_libraries(jabber_whiteboard 2geom ${INKSCAPE_LIBS})
+add_library(jabber_whiteboard_LIB STATIC ${jabber_whiteboard_SRC})
+target_link_libraries(jabber_whiteboard_LIB 2geom_LIB ${INKSCAPE_LIBS})

@@ -44,5 +44,5 @@ set(live_effects_SRC
 	${live_effects_parameter_SRC}
 )
 
-add_library(live_effects STATIC ${live_effects_SRC})
-target_link_libraries(live_effects 2geom ${INKSCAPE_LIBS})
+add_library(live_effects_LIB STATIC ${live_effects_SRC})
+target_link_libraries(live_effects_LIB 2geom_LIB ${INKSCAPE_LIBS})

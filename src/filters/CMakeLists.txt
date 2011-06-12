@@ -20,5 +20,5 @@ set(filters_SRC
 	tile.cpp
 	turbulence.cpp
 )
-add_library(filters STATIC ${filters_SRC})
-target_link_libraries(filters 2geom ${INKSCAPE_LIBS})
+add_library(filters_LIB STATIC ${filters_SRC})
+target_link_libraries(filters_LIB 2geom_LIB ${INKSCAPE_LIBS})

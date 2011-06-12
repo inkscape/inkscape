@@ -11,4 +11,4 @@ set(cxxtestfolders
 
 foreach(cxxtestdirlist ${cxxtestfolders})
 	add_subdirectory(${cxxtestdirlist})
-endforeach(cxxtestdirlist)
+endforeach()

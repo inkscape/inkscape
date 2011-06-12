@@ -36,5 +36,5 @@ set(widgets_SRC
 	toolbox.cpp
 )
 
-add_library(widgets STATIC ${widgets_SRC})
-target_link_libraries(widgets 2geom ${INKSCAPE_LIBS})
+add_library(widgets_LIB STATIC ${widgets_SRC})
+target_link_libraries(widgets_LIB 2geom_LIB ${INKSCAPE_LIBS})

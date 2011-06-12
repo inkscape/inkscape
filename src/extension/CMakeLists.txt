@@ -37,5 +37,5 @@ set(extension_SRC
 	${extension_script_SRC}
 )
 
-add_library(extension STATIC ${extension_SRC})
-target_link_libraries(extension 2geom ${INKSCAPE_LIBS})
+add_library(extension_LIB STATIC ${extension_SRC})
+target_link_libraries(extension_LIB 2geom_LIB ${INKSCAPE_LIBS})

@@ -21,5 +21,5 @@ set(livarot_SRC
 	sweep-tree-list.cpp
 )
 
-add_library(livarot STATIC ${livarot_SRC})
-target_link_libraries(nrtype ${INKSCAPE_LIBS})
+add_library(livarot_LIB STATIC ${livarot_SRC})
+target_link_libraries(nrtype_LIB ${INKSCAPE_LIBS})

@@ -1,5 +1,5 @@
 
-set(2GEOM_SRC
+set(2geom_SRC
 	affine.cpp
 	basic-intersection.cpp
 	bezier-clipping.cpp
@@ -121,7 +121,7 @@ set(2GEOM_SRC
 	numeric/vector.h
 )
 
-# make lib for 2geom
-add_library(2geom STATIC ${2GEOM_SRC})
-#TARGET_LINK_LIBRARIES(2geom blas gsl)
-target_link_libraries(2geom ${INKSCAPE_LIBS})
+# make lib for 2geom_LIB
+add_library(2geom_LIB STATIC ${2geom_SRC})
+#TARGET_LINK_LIBRARIES(2geom_LIB blas_LIB gsl_LIB)
+target_link_libraries(2geom_LIB ${INKSCAPE_LIBS})

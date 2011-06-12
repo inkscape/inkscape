@@ -34,5 +34,5 @@ set(dom_SRC
 	#${dom_work_SRC}
 )
 
-add_library(dom STATIC ${dom_SRC})
-target_link_libraries(dom 2geom ${INKSCAPE_LIBS})
+add_library(dom_LIB STATIC ${dom_SRC})
+target_link_libraries(dom_LIB 2geom_LIB ${INKSCAPE_LIBS})

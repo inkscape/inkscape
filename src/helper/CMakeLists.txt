@@ -2,7 +2,7 @@ include(UseGlibMarshal)
 
 GLIB_MARSHAL(sp_marshal sp-marshal "${CMAKE_CURRENT_BINARY_DIR}/helper")
 
-set(GlibOutput
+set(sp_marshal_SRC
 	${CMAKE_CURRENT_BINARY_DIR}/sp-marshal.cpp
 	${CMAKE_CURRENT_BINARY_DIR}/sp-marshal.h
 )
@@ -23,9 +23,8 @@ set(helper_SRC
 	sp-marshal.cpp
 	sp-marshal.list
 	# we generate this file and it's .h counter-part
-	${CMAKE_CURRENT_BINARY_DIR}/sp-marshal.cpp
-	${CMAKE_CURRENT_BINARY_DIR}/sp-marshal.h
+	${sp_marshal_SRC}
 )
 
-add_library(helper STATIC ${helper_SRC})
-target_link_libraries(helper 2geom ${INKSCAPE_LIBS})
+add_library(helper_LIB STATIC ${helper_SRC})
+target_link_libraries(helper_LIB 2geom_LIB ${INKSCAPE_LIBS})
