@@ -1,19 +1,18 @@
-SET(libavoid_SRC
-connector.cpp
-geometry.cpp
-graph.cpp
-makepath.cpp
-polyutil.cpp
-region.cpp
-router.cpp
-shape.cpp
-static.cpp
-timer.cpp
-vertices.cpp
-visibility.cpp
-orthogonal.cpp
-vpsc.cpp
+set(libavoid_SRC
+	connector.cpp
+	geometry.cpp
+	geomtypes.cpp
+	graph.cpp
+	makepath.cpp
+	orthogonal.cpp
+	router.cpp
+	shape.cpp
+	timer.cpp
+	vertices.cpp
+	viscluster.cpp
+	visibility.cpp
+	vpsc.cpp
 )
-ADD_LIBRARY(avoid STATIC ${libavoid_SRC})
-TARGET_LINK_LIBRARIES(avoid
-${INKSCAPE_LIBS})
+
+add_library(avoid STATIC ${libavoid_SRC})
+target_link_libraries(avoid ${INKSCAPE_LIBS})

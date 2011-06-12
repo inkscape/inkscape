@@ -1,13 +1,13 @@
-SET(live_effects_parameter_SRC
-array.cpp
-bool.cpp
-parameter.cpp
-path.cpp
-path-reference.cpp
-point.cpp
-powerstrokepointarray.cpp
-random.cpp
-text.cpp
-unit.cpp
-vector.cpp
+set(live_effects_parameter_SRC
+	array.cpp
+	bool.cpp
+	parameter.cpp
+	path.cpp
+	path-reference.cpp
+	point.cpp
+	powerstrokepointarray.cpp
+	random.cpp
+	text.cpp
+	unit.cpp
+	vector.cpp
 )

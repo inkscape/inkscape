@@ -9,6 +9,8 @@
  * This code is in public domain
  */
 
+#include <stdio.h>
+
 #if defined (_WIN32) || defined (__WIN32__)
 # include <windows.h> 
 #include <glib.h>

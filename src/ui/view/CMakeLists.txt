@@ -1,10 +1,4 @@
-SET(ui_view_SRC
-desktop.cpp
-desktop-events.cpp
-desktop-handles.cpp
-desktop-style.cpp
-edit.cpp
-edit-widget.cpp
-view.cpp
-view-widget.cpp
+set(ui_view_SRC
+	view.cpp
+	view-widget.cpp
 )

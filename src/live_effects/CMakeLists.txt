@@ -1,37 +1,48 @@
-ADD_SUBDIRECTORY(parameter)
+add_subdirectory(parameter)
 
-SET(live_effects_SRC
-bezctx.cpp
-effect.cpp
-lpe-bendpath.cpp
-lpe-boolops.cpp
-lpe-circle_with_radius.cpp
-lpe-constructgrid.cpp
-lpe-curvestitch.cpp
-lpe-envelope.cpp
-lpe-gears.cpp
-lpegroupbbox.cpp
-lpe-interpolate.cpp
-lpe-knot.cpp
-lpe-rough-hatches.cpp
-lpe-lattice.cpp
-lpe-mirror_symmetry.cpp
-lpeobject.cpp
-lpeobject-reference.cpp
-lpe-patternalongpath.cpp
-lpe-perp_bisector.cpp
-lpe-perspective_path.cpp
-lpe-powerstroke.cpp
-lpe-skeleton.cpp
-lpe-sketch.cpp
-lpe-spiro.cpp
-lpe-tangent_to_curve.cpp
-lpe-test-doEffect-stack.cpp
-lpe-vonkoch.cpp
-lpe-dynastroke.cpp
-spiro.cpp
-${live_effects_parameter_SRC}
+set(live_effects_SRC
+	bezctx.cpp
+	effect.cpp
+	lpe-angle_bisector.cpp
+	lpe-bendpath.cpp
+	lpe-boolops.cpp
+	lpe-circle_3pts.cpp
+	lpe-circle_with_radius.cpp
+	lpe-constructgrid.cpp
+	lpe-copy_rotate.cpp
+	lpe-curvestitch.cpp
+	lpe-dynastroke.cpp
+	lpe-envelope.cpp
+	lpe-extrude.cpp
+	lpe-gears.cpp
+	lpe-interpolate.cpp
+	lpe-knot.cpp
+	lpe-lattice.cpp
+	lpe-line_segment.cpp
+	lpe-mirror_symmetry.cpp
+	lpe-offset.cpp
+	lpe-parallel.cpp
+	lpe-path_length.cpp
+	lpe-patternalongpath.cpp
+	lpe-perp_bisector.cpp
+	lpe-perspective_path.cpp
+	lpe-powerstroke.cpp
+	lpe-recursiveskeleton.cpp
+	lpe-rough-hatches.cpp
+	lpe-ruler.cpp
+	lpe-skeleton.cpp
+	lpe-sketch.cpp
+	lpe-spiro.cpp
+	lpe-tangent_to_curve.cpp
+	lpe-test-doEffect-stack.cpp
+	lpe-text_label.cpp
+	lpe-vonkoch.cpp
+	lpegroupbbox.cpp
+	lpeobject-reference.cpp
+	lpeobject.cpp
+	spiro.cpp
+	${live_effects_parameter_SRC}
 )
-ADD_LIBRARY(live_effects STATIC ${live_effects_SRC})
-TARGET_LINK_LIBRARIES(live_effects
-2geom ${INKSCAPE_LIBS})
+
+add_library(live_effects STATIC ${live_effects_SRC})
+target_link_libraries(live_effects 2geom ${INKSCAPE_LIBS})

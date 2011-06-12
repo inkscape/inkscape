@@ -1,7 +1,6 @@
-SET(bind_SRC
-dobinding.cpp
-javabind.cpp
+set(bind_SRC
+	dobinding.cpp
+	javabind.cpp
 )
-ADD_LIBRARY(bind STATIC ${bind_SRC})
-TARGET_LINK_LIBRARIES(bind
-${INKSCAPE_LIBS})
+add_library(bind STATIC ${bind_SRC})
+target_link_libraries(bind ${INKSCAPE_LIBS})

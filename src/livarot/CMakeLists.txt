@@ -1,25 +1,25 @@
-SET(livarot_SRC
-AlphaLigne.cpp
-AVL.cpp
-BitLigne.cpp
-float-line.cpp
-int-line.cpp
-PathConversion.cpp
-Path.cpp
-PathCutting.cpp
-path-description.cpp
-PathOutline.cpp
-PathSimplify.cpp
-PathStroke.cpp
-Shape.cpp
-ShapeDraw.cpp
-ShapeMisc.cpp
-ShapeRaster.cpp
-ShapeSweep.cpp
-sweep-event.cpp
-sweep-tree.cpp
-sweep-tree-list.cpp
+set(livarot_SRC
+	AlphaLigne.cpp
+	AVL.cpp
+	BitLigne.cpp
+	float-line.cpp
+	int-line.cpp
+	PathConversion.cpp
+	Path.cpp
+	PathCutting.cpp
+	path-description.cpp
+	PathOutline.cpp
+	PathSimplify.cpp
+	PathStroke.cpp
+	Shape.cpp
+	ShapeDraw.cpp
+	ShapeMisc.cpp
+	ShapeRaster.cpp
+	ShapeSweep.cpp
+	sweep-event.cpp
+	sweep-tree.cpp
+	sweep-tree-list.cpp
 )
-ADD_LIBRARY(livarot STATIC ${livarot_SRC})
-TARGET_LINK_LIBRARIES(nrtype
-${INKSCAPE_LIBS})
+
+add_library(livarot STATIC ${livarot_SRC})
+target_link_libraries(nrtype ${INKSCAPE_LIBS})

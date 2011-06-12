@@ -1,127 +1,127 @@
-SET(2GEOM_SRC
 
-svg-path.h
-svg-path.cpp
-svg-path-parser.h
-svg-path-parser.cpp
+set(2GEOM_SRC
+	affine.cpp
+	basic-intersection.cpp
+	bezier-clipping.cpp
+	bezier-curve.cpp
+	bezier-utils.cpp
+	circle-circle.cpp
+	circle.cpp
+	conic_section_clipper_impl.cpp
+	conicsec.cpp
+	conjugate_gradient.cpp
+	convex-cover.cpp
+	crossing.cpp
+	curve.cpp
+	d2-sbasis.cpp
+	ellipse.cpp
+	elliptical-arc.cpp
+	geom.cpp
+	line.cpp
+	nearest-point.cpp
+	numeric/matrix.cpp
+	path-intersection.cpp
+	path.cpp
+	pathvector.cpp
+	piecewise.cpp
+	point.cpp
+	poly.cpp
+	quadtree.cpp
+	recursive-bezier-intersection.cpp
+	region.cpp
+	sbasis-2d.cpp
+	sbasis-geometric.cpp
+	sbasis-math.cpp
+	sbasis-poly.cpp
+	sbasis-roots.cpp
+	sbasis-to-bezier.cpp
+	sbasis.cpp
+	shape.cpp
+	solve-bezier-one-d.cpp
+	solve-bezier-parametric.cpp
+	svg-elliptical-arc.cpp
+	svg-path-parser.cpp
+	svg-path.cpp
+	sweep.cpp
+	transforms.cpp
+	utils.cpp
 
-ord.h
+	affine.h
+	angle.h
+	basic-intersection.h
+	bezier-curve.h
+	bezier-to-sbasis.h
+	bezier-utils.h
+	bezier.h
+	choose.h
+	circle.h
+	circulator.h
+	concepts.h
+	conic_section_clipper.h
+	conic_section_clipper_cr.h
+	conic_section_clipper_impl.h
+	conicsec.h
+	conjugate_gradient.h
+	convex-cover.h
+	coord.h
+	crossing.h
+	curve.h
+	curves.h
+	d2-sbasis.h
+	d2.h
+	ellipse.h
+	elliptical-arc.h
+	exception.h
+	forward.h
+	geom.h
+	hvlinesegment.h
+	interval.h
+	isnan.h
+	line.h
+	linear.h
+	math-utils.h
+	nearest-point.h
+	ord.h
+	path-intersection.h
+	path.h
+	pathvector.h
+	piecewise.h
+	point-l.h
+	point-ops.h
+	point.h
+	poly.h
+	quadtree.h
+	ray.h
+	rect.h
+	region.h
+	sbasis-2d.h
+	sbasis-curve.h
+	sbasis-geometric.h
+	sbasis-math.h
+	sbasis-poly.h
+	sbasis-to-bezier.h
+	sbasis.h
+	shape.h
+	solver.h
+	sturm.h
+	svg-elliptical-arc.h
+	svg-path-parser.h
+	svg-path.h
+	sweep.h
+	transforms.h
+	utils.h
 
-#nearestpoint.cpp
-nearest-point.cpp
-nearest-point.h
-
-bezier-curve.h
-circle.cpp
-circle.h
-curve.h
-curves.h
-curve-helpers.cpp
-ellipse.cpp
-ellipse.h
-elliptical-arc.cpp
-elliptical-arc.h
-hvlinesegment.h
-sbasis-curve.h
-path.cpp
-path.h
-path-intersection.cpp
-path-intersection.h
-pathvector.cpp
-pathvector.h
-
-forward.h
-
-shape.cpp
-shape.h
-region.cpp
-region.h
-crossing.h
-crossing.cpp
-sweep.cpp
-sweep.h
-
-poly.cpp
-poly.h
-poly-dk-solve.cpp
-poly-dk-solve.h
-poly-laguerre-solve.cpp
-poly-laguerre-solve.h
-
-quadtree.cpp
-quadtree.h
-
-matrix.cpp
-matrix.h
-transforms.cpp
-transforms.h
-
-point.h
-point.cpp
-point-l.h
-
-coord.h
-
-d2.h
-d2-sbasis.h
-d2-sbasis.cpp
-rect.h
-
-piecewise.h
-piecewise.cpp
-
-sbasis.cpp
-sbasis.h
-sbasis-2d.h
-sbasis-2d.cpp
-sbasis-geometric.cpp
-sbasis-geometric.h
-sbasis-math.h
-sbasis-math.cpp
-sbasis-poly.cpp
-sbasis-poly.h
-#chebyshev.cpp # requires gsl, not useful, I think
-#chebyshev.h
-sbasis-roots.cpp
-sbasis-to-bezier.cpp
-sbasis-to-bezier.h
-
-bezier-to-sbasis.h
-
-basic-intersection.h
-basic-intersection.cpp
-recursive-bezier-intersection.cpp
-
-geom.cpp
-geom.h
-
-#utils.cpp
-utils.h
-exception.h
-angle.h
-
-bezier-utils.cpp
-bezier-utils.h
-choose.h
-circulator.h
-conjugate_gradient.cpp
-conjugate_gradient.h
-convex-cover.cpp
-convex-cover.h
-solve-bezier-one-d.cpp
-solve-bezier-parametric.cpp
-solver.h
-sturm.h
-svg-elliptical-arc.cpp
-svg-elliptical-arc.h
-
-#arc-length.cpp
-#arc-length.h
-
-numeric/matrix.cpp
+	numeric/fitting-model.h
+	numeric/fitting-tool.h
+	numeric/linear_system.h
+	numeric/matrix.h
+	numeric/symmetric-matrix-fs-operation.h
+	numeric/symmetric-matrix-fs-trace.h
+	numeric/symmetric-matrix-fs.h
+	numeric/vector.h
 )
 
 # make lib for 2geom
-ADD_LIBRARY(2geom STATIC ${2GEOM_SRC})
+add_library(2geom STATIC ${2GEOM_SRC})
 #TARGET_LINK_LIBRARIES(2geom blas gsl)
-TARGET_LINK_LIBRARIES(2geom ${INKSCAPE_LIBS})
+target_link_libraries(2geom ${INKSCAPE_LIBS})

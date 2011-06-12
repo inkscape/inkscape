@@ -1,31 +1,29 @@
-IF(WIN32)
-SET(EXT_INT_WIN
-win32.cpp
+set(extension_internal_SRC
+	bluredge.cpp
+	cairo-png-out.cpp
+	cairo-ps-out.cpp
+	cairo-render-context.cpp
+	cairo-renderer.cpp
+	cairo-renderer-pdf-out.cpp
+	emf-win32-inout.cpp
+	emf-win32-print.cpp
+	gdkpixbuf-input.cpp
+	gimpgrad.cpp
+	grid.cpp
+	latex-pstricks.cpp
+	latex-pstricks-out.cpp
+	odf.cpp
+	latex-text-renderer.cpp
+	pdf-input-cairo.cpp
+	pov-out.cpp
+	javafx-out.cpp
+	svg.cpp
+	svgz.cpp
+	wpg-input.cpp
 )
-ENDIF(WIN32)
 
-SET(extension_internal_SRC
-bluredge.cpp
-cairo-png-out.cpp
-cairo-ps-out.cpp
-cairo-render-context.cpp
-cairo-renderer.cpp
-cairo-renderer-pdf-out.cpp
-emf-win32-inout.cpp
-emf-win32-print.cpp
-gdkpixbuf-input.cpp
-gimpgrad.cpp
-grid.cpp
-latex-pstricks.cpp
-latex-pstricks-out.cpp
-odf.cpp
-pdfinput
-latex-text-renderer.cpp
-pdf-input-cairo.cpp
-pov-out.cpp
-javafx-out.cpp
-svg.cpp
-svgz.cpp
-wpg-input.cpp
-${EXT_INT_WIN}
-)
+if(WIN32)
+	list(APPEND extension_internal_SRC
+		win32.cpp
+	)
+endif()

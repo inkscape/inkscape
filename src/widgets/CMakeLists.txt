@@ -1,36 +1,40 @@
-SET(widgets_SRC
-button.cpp
-calligraphic-profile-rename.cpp
-dash-selector.cpp
-desktop-widget.cpp
-font-selector.cpp
-gradient-image.cpp
-gradient-selector.cpp
-gradient-toolbar.cpp
-gradient-vector.cpp
-icon.cpp
-layer-selector.cpp
-paint-selector.cpp
-ruler.cpp
-select-toolbar.cpp
-shrink-wrap-button.cpp
-sp-color-gtkselector.cpp
-sp-color-icc-selector.cpp
-sp-color-notebook.cpp
-sp-color-preview.cpp
-sp-color-scales.cpp
-sp-color-selector.cpp
-sp-color-slider.cpp
-sp-color-wheel-selector.cpp
-spinbutton-events.cpp
-sp-widget.cpp
-spw-utilities.cpp
-sp-xmlview-attr-list.cpp
-sp-xmlview-content.cpp
-sp-xmlview-tree.cpp
-swatch-selector.cpp
-toolbox.cpp
+
+set(widgets_SRC
+	button.cpp
+	dash-selector.cpp
+	desktop-widget.cpp
+	eek-preview.cpp
+	ege-paint-def.cpp
+	fill-style.cpp
+	font-selector.cpp
+	gradient-image.cpp
+	gradient-selector.cpp
+	gradient-toolbar.cpp
+	gradient-vector.cpp
+	icon.cpp
+	paint-selector.cpp
+	ruler.cpp
+	select-toolbar.cpp
+	shrink-wrap-button.cpp
+	sp-attribute-widget.cpp
+	sp-color-gtkselector.cpp
+	sp-color-icc-selector.cpp
+	sp-color-notebook.cpp
+	sp-color-preview.cpp
+	sp-color-scales.cpp
+	sp-color-selector.cpp
+	sp-color-slider.cpp
+	sp-color-wheel-selector.cpp
+	sp-widget.cpp
+	sp-xmlview-attr-list.cpp
+	sp-xmlview-content.cpp
+	sp-xmlview-tree.cpp
+	spinbutton-events.cpp
+	spw-utilities.cpp
+	stroke-style.cpp
+	swatch-selector.cpp
+	toolbox.cpp
 )
-ADD_LIBRARY(widgets STATIC ${widgets_SRC})
-TARGET_LINK_LIBRARIES(widgets
-2geom ${INKSCAPE_LIBS})
+
+add_library(widgets STATIC ${widgets_SRC})
+target_link_libraries(widgets 2geom ${INKSCAPE_LIBS})

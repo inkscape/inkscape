@@ -1,24 +1,46 @@
-SET(uifolders
-cache
-dialog
-view
-widget
+set(uifolders
+	cache
+	dialog
+	view
+	widget
 )
-FOREACH(uilistsrc ${uifolders})
-  ADD_SUBDIRECTORY(${uilistsrc})
-ENDFOREACH(uilistsrc)
+foreach(uilistsrc ${uifolders})
+	add_subdirectory(${uilistsrc})
+endforeach()
 
-SET(ui_SRC
-clipboard.cpp
-context-menu.cpp
-previewholder.cpp
-stock.cpp
-stock-items.cpp
-${ui_cache_SRC}
-${ui_dialog_SRC}
-${ui_view_SRC}
-${ui_widget_SRC}
+set(ui_SRC
+	clipboard.cpp
+	context-menu.cpp
+	previewholder.cpp
+	uxmanager.cpp
+
+	tool/control-point-selection.cpp
+	tool/control-point.cpp
+	tool/curve-drag-point.cpp
+	tool/event-utils.cpp
+	tool/manipulator.cpp
+	tool/modifier-tracker.cpp
+	tool/multi-path-manipulator.cpp
+	tool/node-tool.cpp
+	tool/node.cpp
+	tool/path-manipulator.cpp
+	tool/selectable-control-point.cpp
+	tool/selector.cpp
+	tool/transform-handle-set.cpp
+	
+	${ui_cache_SRC}
+	${ui_dialog_SRC}
+	${ui_view_SRC}
+	${ui_widget_SRC}
 )
-ADD_LIBRARY(ui STATIC ${ui_SRC})
-TARGET_LINK_LIBRARIES(ui
-2geom ${INKSCAPE_LIBS})
+
+include_directories(
+	"${CMAKE_SOURCE_DIR}/src"
+	"${CMAKE_SOURCE_DIR}"
+	"${CMAKE_SOURCE_DIR}/bind/javainc"
+	"${CMAKE_SOURCE_DIR}/bind/javainc/linux"
+	"${CMAKE_SOURCE_DIR}/extension/dbus"
+)
+
+add_library(ui STATIC ${ui_SRC})
+target_link_libraries(ui 2geom ${INKSCAPE_LIBS})

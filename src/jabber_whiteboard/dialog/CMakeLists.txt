@@ -1,3 +1,4 @@
-SET(jabber_whiteboard_dialog_SRC
-choose-desktop.cpp
+
+set(jabber_whiteboard_dialog_SRC
+	choose-desktop.cpp
 )

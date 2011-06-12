@@ -1,7 +1,11 @@
-SET(util_SRC
-share.cpp
-units.cpp
+
+set(util_SRC
+	ege-appear-time-tracker.cpp
+	ege-tags.cpp
+	expression-evaluator.cpp
+	share.cpp
+	units.cpp
 )
-ADD_LIBRARY(util STATIC ${util_SRC})
-TARGET_LINK_LIBRARIES(util
-2geom ${INKSCAPE_LIBS})
+
+add_library(util STATIC ${util_SRC})
+target_link_libraries(util 2geom ${INKSCAPE_LIBS})
