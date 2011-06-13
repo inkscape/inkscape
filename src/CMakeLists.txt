@@ -219,7 +219,6 @@ set(inkscape_SRC
 	ige-mac-menu.c
 	ink-action.cpp
 	ink-comboboxentry-action.cpp
-	inkscape-version.cpp
 	inkscape.cpp
 	inkscape.rc
 	interface.cpp
@@ -492,6 +491,33 @@ endif()
 
 
 # -----------------------------------------------------------------------------
+# Generate version file
+# -----------------------------------------------------------------------------
+
+# a custom target that is always built
+add_custom_target(
+		inkscape_version ALL
+		DEPENDS ${CMAKE_BINARY_DIR}/src/inkscape-version.cpp)
+
+# creates inkscape-version.cpp using cmake script
+add_custom_command(
+		OUTPUT ${CMAKE_BINARY_DIR}/src/inkscape-version.cpp
+		COMMAND ${CMAKE_COMMAND}
+		-DINKSCAPE_SOURCE_DIR=${CMAKE_SOURCE_DIR}
+		-DINKSCAPE_BINARY_DIR=${CMAKE_BINARY_DIR}
+		-P ${CMAKE_SOURCE_DIR}/CMakeScripts/inkscape-version.cmake)
+
+# buildinfo.h is a generated file
+set_source_files_properties(
+		${CMAKE_BINARY_DIR}/src/inkscape-version.cpp
+		PROPERTIES GENERATED TRUE)
+
+list(APPEND inkscape_SRC
+	${CMAKE_BINARY_DIR}/src/inkscape-version.cpp
+)
+
+
+# -----------------------------------------------------------------------------
 # Load in subdirectories
 # -----------------------------------------------------------------------------
 
@@ -536,7 +562,6 @@ set(inkscape_SRC
 	${inkscape_SRC}
 )
 
-
 # -----------------------------------------------------------------------------
 # Setup the executable
 # -----------------------------------------------------------------------------
@@ -545,6 +570,8 @@ add_inkscape_lib(inkscape_LIB "${inkscape_SRC}")
 
 # make executable for INKSCAPE
 add_executable(inkscape ${main_SRC})
+
+add_dependencies(inkscape inkscape_version)
 
 target_link_libraries(inkscape
 	# order from automake 

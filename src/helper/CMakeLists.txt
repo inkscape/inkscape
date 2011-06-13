@@ -37,7 +37,6 @@ set(helper_SRC
 	pixbuf-ops.h
 	png-write.h
 	recthull.h
-	sp-marshal.h
 	stlport.h
 	stock-items.h
 	unit-menu.h
