@@ -302,7 +302,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 }
 
                 char* angle_str = (char*) malloc(sizeof(char)*20);
-                sprintf(angle_str, "%.2f degrees", angle * 180/3.1415 );
+                sprintf(angle_str, "(%.2f °)", angle * 180/3.1415 );
                 SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, motion_dt + desktop->w2d(Geom::Point(50,0)), angle_str);
                 sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
 
