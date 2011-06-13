@@ -1,3 +1,4 @@
+
 include(UseGlibMarshal)
 
 GLIB_MARSHAL(sp_marshal sp-marshal "${CMAKE_CURRENT_BINARY_DIR}/helper")
@@ -26,5 +27,4 @@ set(helper_SRC
 	${sp_marshal_SRC}
 )
 
-add_library(helper_LIB STATIC ${helper_SRC})
-target_link_libraries(helper_LIB 2geom_LIB ${INKSCAPE_LIBS})
+add_library(helper_LIB ${helper_SRC})

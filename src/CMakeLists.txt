@@ -1,5 +1,5 @@
 
-set(SP_SRC
+set(sp_SRC
 	sp-anchor.cpp
 	# sp-animation.cpp
 	sp-clippath.cpp
@@ -69,7 +69,7 @@ set(SP_SRC
 	splivarot.cpp
 )
 
-set(INKSCAPE_SRC
+set(inkscape_SRC
 	arc-context.cpp
 	attributes.cpp
 	axis-manip.cpp
@@ -205,7 +205,7 @@ set(INKSCAPE_SRC
 )
 
 if(WIN32)
-    list(APPEND INKSCAPE_SRC
+    list(APPEND inkscape_SRC
 		registrytool.cpp
 		#deptool.cpp
 		winmain.cpp
@@ -259,55 +259,47 @@ foreach(srclistsrc ${dirs})
 	add_subdirectory(${srclistsrc})
 endforeach()
 
-set(INKSCAPE_SRC
-	${INKSCAPE_SRC}
+set(inkscape_SRC
+	${inkscape_SRC}
 	${GlibOutput}
 )
 
-add_library(sp_LIB STATIC ${SP_SRC})
+add_library(sp_LIB ${sp_SRC})
 
-target_link_libraries(
-	sp_LIB
-	nr_LIB
-	nrtype_LIB
-	avoid_LIB
-	cola_LIB
+# make executable for INKSCAPE
+add_executable(inkscape ${inkscape_SRC})
+
+target_link_libraries(inkscape
+	# order from automake 
+	dom_LIB
 	croco_LIB
+	avoid_LIB
 	gdl_LIB
+	cola_LIB
 	vpsc_LIB
 	livarot_LIB
+	2geom_LIB
 
+	# guessing these ones
+	ui_LIB
 	bind_LIB
+	debug_LIB
+	dialogs_LIB
 	display_LIB
-	dom_LIB
 	extension_LIB
 	filters_LIB
 	helper_LIB
 	io_LIB
-	live_effects_LIB
-	svg_LIB
-	trace_LIB
-	ui_LIB
-	widgets_LIB
-	xml_LIB
-	2geom_LIB
-
-	${INKSCAPE_LIBS}
-)
-
-# make executable for INKSCAPE
-add_executable(inkscape ${INKSCAPE_SRC})
-
-target_link_libraries(inkscape
 	nr_LIB
 	nrtype_LIB
 	sp_LIB
-	avoid_LIB
-	cola_LIB
-	croco_LIB
-	gdl_LIB
-	vpsc_LIB
-	livarot_LIB
+	svg_LIB
+	trace_LIB
+	util_LIB
+	widgets_LIB
+	xml_LIB
+	live_effects_LIB
+
 	${INKSCAPE_LIBS}
 	
 	

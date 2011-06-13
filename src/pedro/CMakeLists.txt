@@ -1,3 +1,4 @@
+
 set(pedro_SRC
 	#empty.cpp
 	#geckoembed.cpp
@@ -8,5 +9,5 @@ set(pedro_SRC
 	pedroutil.cpp
 	pedroxmpp.cpp
 )
-add_library(pedro_LIB STATIC ${pedro_SRC})
-target_link_libraries(pedro_LIB ${INKSCAPE_LIBS})
+
+add_library(pedro_LIB ${pedro_SRC})

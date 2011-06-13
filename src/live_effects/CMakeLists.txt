@@ -1,4 +1,3 @@
-add_subdirectory(parameter)
 
 set(live_effects_SRC
 	bezctx.cpp
@@ -41,8 +40,18 @@ set(live_effects_SRC
 	lpeobject-reference.cpp
 	lpeobject.cpp
 	spiro.cpp
-	${live_effects_parameter_SRC}
+
+	parameter/array.cpp
+	parameter/bool.cpp
+	parameter/parameter.cpp
+	parameter/path.cpp
+	parameter/path-reference.cpp
+	parameter/point.cpp
+	parameter/powerstrokepointarray.cpp
+	parameter/random.cpp
+	parameter/text.cpp
+	parameter/unit.cpp
+	parameter/vector.cpp
 )
 
-add_library(live_effects_LIB STATIC ${live_effects_SRC})
-target_link_libraries(live_effects_LIB 2geom_LIB ${INKSCAPE_LIBS})
+add_library(live_effects_LIB ${live_effects_SRC})

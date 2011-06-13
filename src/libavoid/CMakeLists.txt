@@ -1,3 +1,4 @@
+
 set(libavoid_SRC
 	connector.cpp
 	geometry.cpp
@@ -14,5 +15,4 @@ set(libavoid_SRC
 	vpsc.cpp
 )
 
-add_library(avoid_LIB STATIC ${libavoid_SRC})
-target_link_libraries(avoid_LIB ${INKSCAPE_LIBS})
+add_library(avoid_LIB ${libavoid_SRC})

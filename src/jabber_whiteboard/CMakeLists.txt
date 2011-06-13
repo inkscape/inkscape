@@ -1,4 +1,3 @@
-add_subdirectory(dialog)
 
 set(jabber_whiteboard_SRC
 	defines.cpp
@@ -16,8 +15,8 @@ set(jabber_whiteboard_SRC
 	pedrogui.cpp
 	session-file-selector.cpp
 	session-manager.cpp
-	${jabber_whiteboard_dialog_SRC}
+
+	dialog/choose-desktop.cpp
 )
 
-add_library(jabber_whiteboard_LIB STATIC ${jabber_whiteboard_SRC})
-target_link_libraries(jabber_whiteboard_LIB 2geom_LIB ${INKSCAPE_LIBS})
+add_library(jabber_whiteboard_LIB ${jabber_whiteboard_SRC})

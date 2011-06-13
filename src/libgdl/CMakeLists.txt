@@ -16,7 +16,6 @@ set(libgdl_SRC
 	gdl-tools.h
 	libgdlmarshal.c
 	libgdltypebuiltins.c
-	${GDL_WIN}
 )
 
 if(WIN32)
@@ -25,5 +24,4 @@ if(WIN32)
 	)
 endif()
 
-ADD_LIBRARY(gdl_LIB STATIC ${libgdl_SRC})
-TARGET_LINK_LIBRARIES(gdl_LIB ${INKSCAPE_LIBS})
+add_library(gdl_LIB ${libgdl_SRC})

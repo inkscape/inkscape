@@ -1,4 +1,3 @@
-add_subdirectory(potrace)
 
 set(trace_SRC
 	filterset.cpp
@@ -7,8 +6,14 @@ set(trace_SRC
 	quantize.cpp
 	siox.cpp
 	trace.cpp
-	${trace_potrace_SRC}
+
+	potrace/curve.cpp
+	potrace/decompose.cpp
+	potrace/greymap.cpp
+	potrace/inkscape-potrace.cpp
+	potrace/potracelib.cpp
+	potrace/render.cpp
+	potrace/trace.cpp
 )
 
-ADD_LIBRARY(trace_LIB STATIC ${trace_SRC})
-TARGET_LINK_LIBRARIES(trace_LIB 2geom_LIB ${INKSCAPE_LIBS})
+add_library(trace_LIB ${trace_SRC})

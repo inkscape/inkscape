@@ -122,6 +122,4 @@ set(2geom_SRC
 )
 
 # make lib for 2geom_LIB
-add_library(2geom_LIB STATIC ${2geom_SRC})
-#TARGET_LINK_LIBRARIES(2geom_LIB blas_LIB gsl_LIB)
-target_link_libraries(2geom_LIB ${INKSCAPE_LIBS})
+add_library(2geom_LIB ${2geom_SRC})

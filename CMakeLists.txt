@@ -1,3 +1,4 @@
+
 project(inkscape)
 
 set(INKSCAPE_VERSION 0.48+devel)
@@ -13,6 +14,11 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeScripts")
 
 # XXX, TODO: use pkgconfig, This part is WIP to get building
 # - campbell
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pipe -fPIC -funsigned-char -fno-strict-aliasing  -pthread")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pipe -fPIC -funsigned-char -fno-strict-aliasing  -pthread")
+ 
+
 include_directories(
 	 /usr/include/freetype2
 	 /usr/include/gnome-vfs-2.0

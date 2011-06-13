@@ -29,5 +29,4 @@ set(libcroco_SRC
 	cr-utils.c
 )
 
-add_library(croco_LIB STATIC ${libcroco_SRC})
-target_link_libraries(croco_LIB ${INKSCAPE_LIBS})
+add_library(croco_LIB ${libcroco_SRC})

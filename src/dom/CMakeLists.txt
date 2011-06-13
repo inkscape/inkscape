@@ -1,13 +1,3 @@
-set(domfolders
-	io
-	odf
-	util
-	#work
-)
-
-foreach(domlistsrc ${domfolders})
-	add_subdirectory(${domlistsrc})
-endforeach()
 
 set(dom_SRC
 	cssreader.cpp
@@ -28,11 +18,35 @@ set(dom_SRC
 	xpathimpl.cpp
 	xpathparser.cpp
 	xpathtoken.cpp
-	${dom_io_SRC}
-	${dom_odf_SRC}
-	${dom_util_SRC}
-	#${dom_work_SRC}
+
+	io/base64stream.cpp
+	io/bufferstream.cpp
+	io/domstream.cpp
+	io/gzipstream.cpp
+	# io/httpclient.cpp
+	io/socket.cpp
+	io/stringstream.cpp
+	io/uristream.cpp
+
+	odf/odfdocument.cpp
+	#odf/SvgOdg.cpp
+
+	util/digest.cpp
+	util/thread.cpp
+	util/ziptool.cpp
+
+	# # Dont use any of them.
+	# work/svg2.cpp
+	# work/testdom.cpp
+	# work/testhttp.cpp
+	# work/testjs.cpp
+	# work/testodf.cpp
+	# work/testsvg.cpp
+	# work/testuri.cpp
+	# work/testxpath.cpp
+	# work/testzip.cpp
+	# work/xpathtests.cpp
+
 )
 
-add_library(dom_LIB STATIC ${dom_SRC})
-target_link_libraries(dom_LIB 2geom_LIB ${INKSCAPE_LIBS})
+add_library(dom_LIB ${dom_SRC})

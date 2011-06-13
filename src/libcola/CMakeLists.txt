@@ -1,3 +1,4 @@
+
 set(libcola_SRC
 	cola.cpp
 	conjugate_gradient.cpp
@@ -7,5 +8,5 @@ set(libcola_SRC
 	shortest_paths.cpp
 	straightener.cpp
 )
-add_library(cola_LIB STATIC ${libcola_SRC})
-target_link_libraries(cola_LIB ${INKSCAPE_LIBS})
+
+add_library(cola_LIB ${libcola_SRC})

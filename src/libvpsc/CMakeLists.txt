@@ -1,3 +1,4 @@
+
 set(libvpsc_SRC
 	block.cpp
 	blocks.cpp
@@ -10,5 +11,4 @@ set(libvpsc_SRC
 	pairingheap/PairingHeap.cpp
 )
 
-add_library(vpsc_LIB STATIC ${libvpsc_SRC})
-target_link_libraries(vpsc_LIB ${INKSCAPE_LIBS})
+add_library(vpsc_LIB ${libvpsc_SRC})

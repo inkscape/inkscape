@@ -1,3 +1,4 @@
+
 set(io_SRC
 	base64stream.cpp
 	ftos.cpp
@@ -12,5 +13,4 @@ set(io_SRC
 	xsltstream.cpp
 )
 
-add_library(io_LIB STATIC ${io_SRC})
-target_link_libraries(io_LIB 2geom_LIB ${INKSCAPE_LIBS})
+add_library(io_LIB ${io_SRC})
