@@ -89,8 +89,8 @@ static void sp_measure_context_init (SPMeasureContext *measure_context)
     SPEventContext *event_context = SP_EVENT_CONTEXT(measure_context);
 
     event_context->cursor_shape = cursor_measure_xpm;
-    event_context->hot_x = 3;
-    event_context->hot_y = 5;
+    event_context->hot_x = 4;
+    event_context->hot_y = 4;
 }
 
 static void
