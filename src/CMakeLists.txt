@@ -592,16 +592,6 @@ target_link_libraries(inkscape
 	2geom_LIB
 
 	${INKSCAPE_LIBS}
-
-	# system libs
-	-lgsl # needed
-	-lgslcblas # needed
-	-lgtkmm-2.4
-	-lgdkmm-2.4
-	-lpangomm-1.4
-	-lsigc-2.0
-	-lMagick++
-	-lMagickCore
 )
 
 # TODO
