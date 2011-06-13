@@ -16,11 +16,6 @@ list(APPEND INKSCAPE_INCS ${GSL_INCLUDE_DIRS})
 list(APPEND INKSCAPE_LIBS ${GSL_LIBRARIES})
 list(APPEND INKSCAPE_LIBS "-lgslcblas")  # FIXME
 
-find_package(Freetype2 REQUIRED)  # our own
-list(APPEND INKSCAPE_INCS ${FREETYPE2_INCLUDE_DIR})
-list(APPEND INKSCAPE_LIBS ${FREETYPE2_LIBRARIES})
-
-
 find_package(GnomeVFS2)
 list(APPEND INKSCAPE_INCS ${GNOMEVFS2_INCLUDE_DIR})
 list(APPEND INKSCAPE_LIBS ${GNOMEVFS-2_LIBRARY})
@@ -90,9 +85,13 @@ list(APPEND INKSCAPE_LIBS
 
 )
 
+find_package(Freetype REQUIRED)
+list(APPEND INKSCAPE_INCS ${FREETYPE_INCLUDE_DIRS})
+list(APPEND INKSCAPE_LIBS ${FREETYPE_LIBRARIES})
+
 find_package(Boost REQUIRED)
 list(APPEND INKSCAPE_INCS ${Boost_INCLUDE_DIRS})
-list(APPEND INKSCAPE_LIBS ${Boost_LIBRARIES})
+# list(APPEND INKSCAPE_LIBS ${Boost_LIBRARIES})
 
 find_package(ASPELL)
 list(APPEND INKSCAPE_INCS ${ASPELL_INCLUDE_DIR})
@@ -133,16 +132,9 @@ list(APPEND INKSCAPE_LIBS ${ImageMagick_Magick++_LIBRARY})
 include(IncludeJava)
 # end Dependencies
 
-# ----------------------------------------------------------------------------
-# Optional
-# ----------------------------------------------------------------------------
-
-if(WITH_DBUS)
-	# XXX, needs s module
-	list(APPEND INKSCAPE_INCS "/usr/include/dbus-1.0")
-	list(APPEND INKSCAPE_INCS "/usr/lib/dbus-1.0/include")
-	list(APPEND INKSCAPE_LIBS "/usr/lib/libdbus-1.so")
-endif()
+# message(FATAL_ERROR "Whee: ${INKSCAPE_INCS}")
+# message(FATAL_ERROR "Whee: ${INKSCAPE_LIBS}")
+# message(FATAL_ERROR "Whee: ${INKSCAPE_LINK_DIRS}")
 
 # C/C++ Flags
 include_directories(${INKSCAPE_INCS})
