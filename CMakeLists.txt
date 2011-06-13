@@ -19,23 +19,32 @@ endif()
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeScripts")
 
+# -----------------------------------------------------------------------------
+# Options
+# -----------------------------------------------------------------------------
+option(WITH_DBUS "Compile with support for DBus interface" OFF)
+#option(WITH_INKJAR "Enable support for openoffice files (SVG jars)" ON)
 
-# XXX, TODO: use pkgconfig, This part is WIP to get building
-# - campbell
+option(WITH_PROFILING "Turn on profiling" OFF) # Set to true if compiler/linker should enable profiling
+
+include(ConfigPaths) # Installation Paths
+include(DefineDependsandFlags) # Includes, Compiler Flags, and Link Libraries
+include(HelperMacros) # Misc Utility Macros
+
+
+
+# -----------------------------------------------------------------------------
+# BAD HACKS, NEED TO INVESTIGATE MAKING THESE LESS BAD
 add_definitions(-D_FORTIFY_SOURCE=2)
 add_definitions(-DPOTRACE="potrace")
 add_definitions(-DORBIT2=1)
 add_definitions(-DHAVE_CONFIG_H)
 add_definitions(-DHAVE_CAIRO_PDF=1)  # needed for src/libnrtype/Layout-TNG.h
 add_definitions(-DHAVE_TR1_UNORDERED_SET) # XXX make an option!
-# XXX - end hackish defines!
+#
+# end badness
+# -----------------------------------------------------------------------------
 
-
-include(ConfigPaths) # Installation Paths
-include(DefineDependsandFlags) # Includes, Compiler Flags, and Link Libraries
-include(HelperMacros) # Misc Utility Macros
-
-option(ENABLE_PROFILING "Turn on profiling" OFF) # Set to true if compiler/linker should enable profiling
 
 # make dist target
 set(INKSCAPE_DIST_PREFIX "${PROJECT_NAME}-${INKSCAPE_VERSION}")
@@ -58,8 +67,11 @@ add_custom_target(uninstall
 		"${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
 
-add_subdirectory(src)
+# -----------------------------------------------------------------------------
+# Subdirs (on only 1 atm), but a lot happens here
+# -----------------------------------------------------------------------------
 
+add_subdirectory(src)
 
 
 # -----------------------------------------------------------------------------

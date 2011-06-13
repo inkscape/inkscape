@@ -235,6 +235,9 @@
 /* Define the version as a string. */
 #define VERSION "${INKSCAPE_VERSION}"
 
+/* Build in dbus */
+#cmakedefine WITH_DBUS 1
+
 /* Define as the return type of signal handlers (`int' or `void'). */
 #cmakedefine RETSIGTYPE
 
@@ -295,7 +298,6 @@
 
 /* Define to `int' if <sys/types.h> does not define. */
 #cmakedefine mode_t
-
 
 #endif /* _CONFIG_H_ */
 

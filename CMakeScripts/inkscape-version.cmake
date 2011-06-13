@@ -7,7 +7,6 @@
 
 # We should extract the version from build.xml
 # but for now just hard code
-set(INKSCAPE_VERSION "0.48+devel")
 set(INKSCAPE_REVISION "unknown")
 
 if(EXISTS ${INKSCAPE_SOURCE_DIR}/.bzr/)
@@ -19,8 +18,13 @@ endif()
 
 file(WRITE
 		${INKSCAPE_BINARY_DIR}/src/inkscape-version.cpp.txt
+		# unlike autoconf, include config.h
+		"#ifdef HAVE_CONFIG_H\n"
+		"# include <config.h>\n"
+		"#endif\n"
+		"\n"
 		"namespace Inkscape {\n"
-		"    char const *version_string = \"${INKSCAPE_VERSION} ${INKSCAPE_REVISION}\";\n"
+		"    char const *version_string = VERSION \" \" \"${INKSCAPE_REVISION}\";\n"
 		"}\n")
 
 # Copy the file to the final header only if the version changes

@@ -133,9 +133,16 @@ list(APPEND INKSCAPE_LIBS ${ImageMagick_Magick++_LIBRARY})
 include(IncludeJava)
 # end Dependencies
 
-# message(FATAL_ERROR "Whee: ${INKSCAPE_INCS}")
-# message(FATAL_ERROR "Whee: ${INKSCAPE_LIBS}")
-# message(FATAL_ERROR "Whee: ${INKSCAPE_LINK_DIRS}")
+# ----------------------------------------------------------------------------
+# Optional
+# ----------------------------------------------------------------------------
+
+if(WITH_DBUS)
+	# XXX, needs s module
+	list(APPEND INKSCAPE_INCS "/usr/include/dbus-1.0")
+	list(APPEND INKSCAPE_INCS "/usr/lib/dbus-1.0/include")
+	list(APPEND INKSCAPE_LIBS "/usr/lib/libdbus-1.so")
+endif()
 
 # C/C++ Flags
 include_directories(${INKSCAPE_INCS})
