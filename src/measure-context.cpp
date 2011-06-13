@@ -48,7 +48,7 @@ static gint tolerance = 0;
 static bool within_tolerance = false;
 static SPCanvasItem * line = NULL;
 Geom::Point start_point;
-SPCanvasItem *measure_text = NULL;
+std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
 
 GType sp_measure_context_get_type(void)
 {
@@ -157,16 +157,8 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 line = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLLINE, NULL);
             }
 
-            if (!measure_text){
-                measure_text = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, start_point, "");
-                SP_CANVASTEXT(measure_text)->rgba = 0x7f7f7fff;
-                sp_canvastext_set_anchor(SP_CANVASTEXT(measure_text), -1, 1);//why?
-            }
-
             sp_ctrlline_set_coords (SP_CTRLLINE(line), start_point, start_point);
-            sp_canvastext_set_text (SP_CANVASTEXT(measure_text), "");
             sp_canvas_item_show (line);
-            sp_canvas_item_show (measure_text);
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
 								GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
@@ -195,23 +187,23 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 sp_ctrlline_set_coords (SP_CTRLLINE(line), start_point[Geom::X], start_point[Geom::Y], motion_dt[Geom::X], motion_dt[Geom::Y]);
 
-
-                //our control line
-                Geom::PathVector line;
+                Geom::PathVector lineseg;
                 Geom::Path p;
                 p.start(desktop->dt2doc(start_point));
                 p.appendNew<Geom::LineSegment>(desktop->dt2doc(motion_dt));
-                line.push_back(p);
+                lineseg.push_back(p);
+
+//TODO: calculate NPOINTS
+//800 seems to be a good value for 800x600 resolution
+#define NPOINTS 800
 
                 std::vector<Geom::Point> points;
                 double i;
-#define NPOINTS 3000
                 for (i=0; i<NPOINTS; i++){
                     points.push_back(desktop->d2w(start_point + (i/NPOINTS)*(motion_dt-start_point)));
                 }
 
-                double length;
-//select elements crossed by line segment:
+                //select elements crossed by line segment:
                 GSList *items = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, points);
                 SPItem* item;
                 GSList *l;
@@ -242,16 +234,16 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     Geom::PathVector pathv = curve->get_pathvector();
 
                     // Find all intersections of the control-line with this shape
-                    Geom::CrossingSet cs = Geom::crossings(line, pathv);
+                    Geom::CrossingSet cs = Geom::crossings(lineseg, pathv);
                     // Store the results as intersection points
                     unsigned int index = 0;
                     for (Geom::CrossingSet::const_iterator i = cs.begin(); i != cs.end(); i++) {
-                        if (index >= line.size()) {
+                        if (index >= lineseg.size()) {
                             break;
                         }
                         // Reconstruct and store the points of intersection
                         for (Geom::Crossings::const_iterator m = (*i).begin(); m != (*i).end(); m++) {
-                            intersections.push_back(line[index].pointAt((*m).ta));
+                            intersections.push_back(lineseg[index].pointAt((*m).ta));
                         }
                         index++;
                     }
@@ -262,8 +254,12 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 //sort intersections
                 std::sort(intersections.begin(), intersections.end(), GeomPointSortPredicate);
 
-//TODO: make these not fade out.
                 unsigned int idx;
+                for (idx=0; idx<measure_tmp_items.size(); idx++){
+                    desktop->remove_temporary_canvasitem(measure_tmp_items[idx]);
+                }
+                measure_tmp_items.clear();
+
                 for (idx=0;idx<intersections.size(); idx++){
                     // Display the intersection indicator (i.e. the cross)
                     SPCanvasItem * canvasitem = NULL;
@@ -278,43 +274,29 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                                                     NULL );
 
                     SP_CTRL(canvasitem)->moveto(desktop->doc2dt(intersections[idx]));
-                    desktop->add_temporary_canvasitem(canvasitem, 100);
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvasitem, 0));
+
                 }
 
-
-//TODO: make these not fade out.
                 Geom::Point previous_point = intersections[0];
                 for (idx=1; idx < intersections.size(); idx++){
                     Geom::Point measure_text_pos = (previous_point + intersections[idx])/2;
+//TODO: shift label a few pixels in the y coordinate
 
-                    length = (intersections[idx] - previous_point).length();
                     char* measure_str = (char*) malloc(sizeof(char)*20);
-                    sprintf(measure_str, "%f", length);
-
-//                    sp_canvastext_set_coords (SP_CANVASTEXT(measure_text), desktop->dt2doc(measure_text_pos));
-//                    sp_canvastext_set_text (SP_CANVASTEXT(measure_text), measure_str);
-
-//                    SPCanvasItem * canvasitem = NULL;
+                    sprintf(measure_str, "%.2f", (intersections[idx] - previous_point).length());
                     SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->dt2doc(measure_text_pos), measure_str);
 
-                    desktop->add_temporary_canvasitem(canvas_tooltip, 100);
+                    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                    double fontsize = prefs->getInt("/tools/measure/fontsize");
 
+                    //TODO: get font size option from toolbar
+                    sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
+
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
                     free(measure_str);
-
                     previous_point = intersections[idx];
                 }
-
-#if 0
-                Geom::Point measure_text_pos = (pa + pb)/2;
-
-                length = (pa - pb).length();
-                char* measure_str = (char*) malloc(sizeof(char)*20);
-                sprintf(measure_str, "%f", length);
-
-                sp_canvastext_set_coords (SP_CANVASTEXT(measure_text), desktop->dt2doc(measure_text_pos));
-                sp_canvastext_set_text (SP_CANVASTEXT(measure_text), measure_str);
-                free(measure_str);
-#endif
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
             }
@@ -327,9 +309,11 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 sp_canvas_item_hide(line);
             }
 
-            if (measure_text){
-                sp_canvas_item_hide(measure_text);
+            unsigned int idx;
+            for (idx=0; idx<measure_tmp_items.size(); idx++){
+                desktop->remove_temporary_canvasitem(measure_tmp_items[idx]);
             }
+            measure_tmp_items.clear();
 
             if (mc->grabbed) {
                 sp_canvas_item_ungrab(mc->grabbed, event->button.time);

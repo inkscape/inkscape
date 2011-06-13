@@ -366,6 +366,7 @@ static gchar const * ui_descr =
         "  </toolbar>"
 
         "  <toolbar name='MeasureToolbar'>"
+        "    <toolitem action='MeasureFontSizeAction' />"
         "  </toolbar>"
 
         "  <toolbar name='StarToolbar'>"
@@ -1630,9 +1631,34 @@ static void sp_zoom_toolbox_prep(SPDesktop * /*desktop*/, GtkActionGroup* /*main
     // no custom GtkAction setup needed
 } // end of sp_zoom_toolbox_prep()
 
-static void sp_measure_toolbox_prep(SPDesktop * /*desktop*/, GtkActionGroup* /*mainActions*/, GObject* /*holder*/)
+static void
+sp_measure_fontsize_value_changed(GtkAdjustment *adj, GObject *tbl)
 {
-    // no custom GtkAction setup needed
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+
+    if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setInt(Glib::ustring("/tools/measure/fontsize"), adj->value);
+    }
+}
+
+
+static void sp_measure_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObject* holder)
+{
+    EgeAdjustmentAction* eact = 0;
+
+    /* Font Size */
+    {
+        eact = create_adjustment_action( "MeasureFontSizeAction",
+                                         _("Font Size"), _("Font Size:"),
+                                         _("The font size to be used in the measurement labels"),
+                                         "/tools/measure/fontsize", 0.0,
+                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                         10, 36, 1.0, 4.0,
+                                         0, 0, 0,
+                                         sp_measure_fontsize_value_changed);
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+    }
 } // end of sp_measure_toolbox_prep()
 
 void ToolboxFactory::setToolboxDesktop(GtkWidget *toolbox, SPDesktop *desktop)
