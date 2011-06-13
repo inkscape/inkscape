@@ -193,6 +193,10 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 p.appendNew<Geom::LineSegment>(desktop->dt2doc(motion_dt));
                 lineseg.push_back(p);
 
+                double deltax = motion_dt[Geom::X] - start_point[Geom::X];
+                double deltay = motion_dt[Geom::Y] - start_point[Geom::Y];
+                double angle = atan2(deltay, deltax);
+
 //TODO: calculate NPOINTS
 //800 seems to be a good value for 800x600 resolution
 #define NPOINTS 800
@@ -278,6 +282,9 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 }
 
+                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                double fontsize = prefs->getInt("/tools/measure/fontsize");
+
                 Geom::Point previous_point = intersections[0];
                 for (idx=1; idx < intersections.size(); idx++){
                     Geom::Point measure_text_pos = (previous_point + intersections[idx])/2;
@@ -287,16 +294,20 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     sprintf(measure_str, "%.2f", (intersections[idx] - previous_point).length());
                     SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->dt2doc(measure_text_pos), measure_str);
 
-                    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-                    double fontsize = prefs->getInt("/tools/measure/fontsize");
-
-                    //TODO: get font size option from toolbar
                     sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
 
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
                     free(measure_str);
                     previous_point = intersections[idx];
                 }
+
+                char* angle_str = (char*) malloc(sizeof(char)*20);
+                sprintf(angle_str, "%.2f degrees", angle * 180/3.1415 );
+                SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, motion_dt + desktop->w2d(Geom::Point(50,0)), angle_str);
+                sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
+
+                measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
+                free(angle_str);
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
             }
