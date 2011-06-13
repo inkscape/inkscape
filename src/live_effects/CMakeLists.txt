@@ -52,7 +52,64 @@ set(live_effects_SRC
 	parameter/text.cpp
 	parameter/unit.cpp
 	parameter/vector.cpp
+
+	# -------
+	# Headers
+	bezctx.h
+	bezctx_intf.h
+	effect-enum.h
+	effect.h
+	lpe-angle_bisector.h
+	lpe-bendpath.h
+	lpe-boolops.h
+	lpe-circle_3pts.h
+	lpe-circle_with_radius.h
+	lpe-constructgrid.h
+	lpe-copy_rotate.h
+	lpe-curvestitch.h
+	lpe-dynastroke.h
+	lpe-envelope.h
+	lpe-extrude.h
+	lpe-gears.h
+	lpe-interpolate.h
+	lpe-knot.h
+	lpe-lattice.h
+	lpe-line_segment.h
+	lpe-mirror_symmetry.h
+	lpe-offset.h
+	lpe-parallel.h
+	lpe-path_length.h
+	lpe-patternalongpath.h
+	lpe-perp_bisector.h
+	lpe-perspective_path.h
+	lpe-powerstroke.h
+	lpe-recursiveskeleton.h
+	lpe-rough-hatches.h
+	lpe-ruler.h
+	lpe-skeleton.h
+	lpe-sketch.h
+	lpe-spiro.h
+	lpe-tangent_to_curve.h
+	lpe-test-doEffect-stack.h
+	lpe-text_label.h
+	lpe-vonkoch.h
+	lpegroupbbox.h
+	lpeobject-reference.h
+	lpeobject.h
+	parameter/array.h
+	parameter/bool.h
+	parameter/enum.h
+	parameter/parameter.h
+	parameter/path-reference.h
+	parameter/path.h
+	parameter/point.h
+	parameter/powerstrokepointarray.h
+	parameter/random.h
+	parameter/text.h
+	parameter/unit.h
+	parameter/vector.h
+	spiro.h
 )
 
-# add_library(live_effects_LIB ${live_effects_SRC})
+# add_inkscape_lib(live_effects_LIB "${live_effects_SRC}")
 add_inkscape_source("${live_effects_SRC}")

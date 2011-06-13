@@ -12,8 +12,25 @@ set(svg_SRC
 	svg-color.cpp
 	svg-length.cpp
 	svg-path.cpp
-	#test-stubs.cpp
+	# test-stubs.cpp
+
+	css-ostringstream-test.h
+	css-ostringstream.h
+	path-string.h
+	stringstream-test.h
+	stringstream.h
+	strip-trailing-zeros.h
+	svg-affine-test.h
+	svg-color-test.h
+	svg-color.h
+	svg-icc-color.h
+	svg-length-test.h
+	svg-length.h
+	svg-path-geom-test.h
+	svg.h
+	# test-stubs.h
+
 )
 
-# add_library(svg_LIB ${svg_SRC})
+# add_inkscape_lib(svg_LIB "${svg_SRC}")
 add_inkscape_source("${svg_SRC}")

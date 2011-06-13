@@ -14,7 +14,30 @@ set(trace_SRC
 	potrace/potracelib.cpp
 	potrace/render.cpp
 	potrace/trace.cpp
+
+
+	# -------
+	# Headers
+	filterset.h
+	imagemap-gdk.h
+	imagemap.h
+	pool.h
+	quantize.h
+	siox.h
+	trace.h
+
+	potrace/auxiliary.h
+	potrace/bitmap.h
+	potrace/curve.h
+	potrace/decompose.h
+	potrace/greymap.h
+	potrace/inkscape-potrace.h
+	potrace/lists.h
+	potrace/potracelib.h
+	potrace/progress.h
+	potrace/render.h
+	potrace/trace.h
 )
 
-# add_library(trace_LIB ${trace_SRC})
+# add_inkscape_lib(trace_LIB "${trace_SRC}")
 add_inkscape_source("${trace_SRC}")

@@ -20,6 +20,22 @@ set(livarot_SRC
 	sweep-event.cpp
 	sweep-tree.cpp
 	sweep-tree-list.cpp
+
+	AVL.h
+	AlphaLigne.h
+	BitLigne.h
+	Livarot.h
+	LivarotDefs.h
+	Path.h
+	Shape.h
+	float-line.h
+	int-line.h
+	livarot-forward.h
+	path-description.h
+	sweep-event-queue.h
+	sweep-event.h
+	sweep-tree-list.h
+	sweep-tree.h
 )
 
-add_library(livarot_LIB ${livarot_SRC})
+add_inkscape_lib(livarot_LIB "${livarot_SRC}")

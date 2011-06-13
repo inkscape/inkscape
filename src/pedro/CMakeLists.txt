@@ -10,5 +10,5 @@ set(pedro_SRC
 	pedroxmpp.cpp
 )
 
-# add_library(pedro_LIB ${pedro_SRC})
+# add_inkscape_lib(pedro_LIB "${pedro_SRC}")
 add_inkscape_source("${pedro_SRC}")

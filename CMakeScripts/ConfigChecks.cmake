@@ -2,9 +2,9 @@
 # From here on:
 # Set all HAVE_XXX variables, to correctly set all defines in config.h
 #SET(CMAKE_REQUIRED_INCLUDES ${INK_INCLUDES})
-INCLUDE (CheckIncludeFiles)
-INCLUDE (CheckFunctionExists)
-INCLUDE (CheckStructMember)
+include(CheckIncludeFiles)
+include(CheckFunctionExists)
+include(CheckStructMember)
 # usage: CHECK_INCLUDE_FILES (<header> <RESULT_VARIABLE> )
 # usage: CHECK_FUNCTION_EXISTS (<function name> <RESULT_VARIABLE> )
 # usage: CHECK_STRUCT_MEMBER (<struct> <member> <header> <RESULT_VARIABLE>)
@@ -59,13 +59,12 @@ CHECK_INCLUDE_FILES(zlib.h HAVE_ZLIB_H)
 
 #Enable pango defines, necessary for compilation on Win32, how about Linux?
 # yes but needs to be done a better way
-IF (HAVE_CAIRO_PDF)
-    SET(PANGO_ENABLE_ENGINE TRUE)
-    SET(RENDER_WITH_PANGO_CAIRO TRUE)
-ENDIF(HAVE_CAIRO_PDF)
+if(HAVE_CAIRO_PDF)
+    set(PANGO_ENABLE_ENGINE TRUE)
+    set(RENDER_WITH_PANGO_CAIRO TRUE)
+endif()
 
 # Create the two configuration files: config.h and inkscape_version.h
 # Create them in the binary root dir
-CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_BINARY_DIR}/config.h)
-FILE(WRITE ${CMAKE_BINARY_DIR}/inkscape_version.h "#define INKSCAPE_VERSION \"${INKSCAPE_VERSION}\"\n")
+configure_file(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_BINARY_DIR}/config.h)
 add_definitions(-DHAVE_CONFIG_H)

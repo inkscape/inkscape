@@ -47,6 +47,53 @@ set(dom_SRC
 	# work/testzip.cpp
 	# work/xpathtests.cpp
 
+
+
+	# -------
+	# Headers
+	css.h
+	cssreader.h
+	dom.h
+	domimpl.h
+	domptr.h
+	domstring.h
+	events.h
+	ls.h
+	lsimpl.h
+	smil.h
+	smilimpl.h
+	stylesheets.h
+	svg.h
+	svg2.h
+	svgimpl.h
+	svgreader.h
+	svgtypes.h
+	traversal.h
+	ucd.h
+	uri.h
+	views-level3.h
+	views.h
+	xmlreader.h
+	xmlwriter.h
+	xpath.h
+	xpathimpl.h
+	xpathparser.h
+	xpathtoken.h
+
+	odf/odfdocument.h
+
+	io/base64stream.h
+	io/bufferstream.h
+	io/domstream.h
+	io/gzipstream.h
+	io/httpclient.h
+	io/socket.h
+	io/stringstream.h
+	io/uristream.h
+
+	util/digest.h
+	util/thread.h
+	util/ziptool.h
 )
 
-add_library(dom_LIB ${dom_SRC})
+add_inkscape_lib(dom_LIB "${dom_SRC}")

@@ -107,6 +107,111 @@ set(extension_SRC
 	# dxf2svg/dxf2svg.cpp
 	# dxf2svg/read_dxf.cpp
 	# dxf2svg/test_dxf.cpp
+
+
+	# ------
+	# Header
+	db.h
+	dependency.h
+	effect.h
+	error-file.h
+	execution-env.h
+	extension-forward.h
+	extension.h
+	init.h
+	input.h
+	output.h
+	param/bool.h
+	param/color.h
+	param/description.h
+	param/enum.h
+	param/float.h
+	param/int.h
+	param/notebook.h
+	param/parameter.h
+	param/radiobutton.h
+	param/string.h
+	patheffect.h
+	prefdialog.h
+	print.h
+	system.h
+	timer.h
+
+	implementation/implementation.h
+	implementation/script.h
+	implementation/xslt.h
+
+	internal/bitmap/adaptiveThreshold.h
+	internal/bitmap/addNoise.h
+	internal/bitmap/blur.h
+	internal/bitmap/channel.h
+	internal/bitmap/charcoal.h
+	internal/bitmap/colorize.h
+	internal/bitmap/contrast.h
+	internal/bitmap/cycleColormap.h
+	internal/bitmap/despeckle.h
+	internal/bitmap/edge.h
+	internal/bitmap/emboss.h
+	internal/bitmap/enhance.h
+	internal/bitmap/equalize.h
+	internal/bitmap/gaussianBlur.h
+	internal/bitmap/imagemagick.h
+	internal/bitmap/implode.h
+	internal/bitmap/level.h
+	internal/bitmap/levelChannel.h
+	internal/bitmap/medianFilter.h
+	internal/bitmap/modulate.h
+	internal/bitmap/negate.h
+	internal/bitmap/normalize.h
+	internal/bitmap/oilPaint.h
+	internal/bitmap/opacity.h
+	internal/bitmap/raise.h
+	internal/bitmap/reduceNoise.h
+	internal/bitmap/sample.h
+	internal/bitmap/shade.h
+	internal/bitmap/sharpen.h
+	internal/bitmap/solarize.h
+	internal/bitmap/spread.h
+	internal/bitmap/swirl.h
+	internal/bitmap/threshold.h
+	internal/bitmap/unsharpmask.h
+	internal/bitmap/wave.h
+	internal/bluredge.h
+	internal/cairo-png-out.h
+	internal/cairo-ps-out.h
+	internal/cairo-render-context.h
+	internal/cairo-renderer-pdf-out.h
+	internal/cairo-renderer.h
+	internal/clear-n_.h
+	internal/emf-win32-inout.h
+	internal/emf-win32-print.h
+	internal/filter/abc.h
+	internal/filter/color.h
+	internal/filter/drop-shadow.h
+	internal/filter/experimental.h
+	internal/filter/filter.h
+	internal/filter/morphology.h
+	internal/filter/shadows.h
+	internal/filter/snow.h
+	internal/gdkpixbuf-input.h
+	internal/gimpgrad.h
+	internal/grid.h
+	internal/javafx-out.h
+	internal/latex-pstricks-out.h
+	internal/latex-pstricks.h
+	internal/latex-text-renderer.h
+	internal/odf.h
+	internal/pdf-input-cairo.h
+	internal/pdfinput/pdf-input.h
+	internal/pdfinput/pdf-parser.h
+	internal/pdfinput/svg-builder.h
+	internal/pov-out.h
+	internal/svg.h
+	internal/svgz.h
+	internal/win32.h
+	internal/wpg-input.h
+
+	script/InkscapeScript.h
 )
 
 if(WIN32)
@@ -115,5 +220,5 @@ if(WIN32)
 	)
 endif()
 
-# add_library(extension_LIB ${extension_SRC})
+# add_inkscape_lib(extension_LIB "${extension_SRC}")
 add_inkscape_source("${extension_SRC}")

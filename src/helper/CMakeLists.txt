@@ -21,11 +21,31 @@ set(helper_SRC
 	#units-test.cpp
 	unit-tracker.cpp
 	window.cpp
-	sp-marshal.cpp
-	sp-marshal.list
+
 	# we generate this file and it's .h counter-part
 	${sp_marshal_SRC}
+
+
+	# -------
+	# Headers
+	action.h
+	geom-curves.h
+	geom-nodetype.h
+	geom.h
+	gnome-utils.h
+	helper-forward.h
+	pixbuf-ops.h
+	png-write.h
+	recthull.h
+	sp-marshal.h
+	stlport.h
+	stock-items.h
+	unit-menu.h
+	unit-tracker.h
+	units-test.h
+	units.h
+	window.h
 )
 
-# add_library(helper_LIB ${helper_SRC})
+# add_inkscape_lib(helper_LIB "${helper_SRC}")
 add_inkscape_source("${helper_SRC}")

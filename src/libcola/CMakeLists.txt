@@ -7,6 +7,17 @@ set(libcola_SRC
 	gradient_projection.cpp
 	shortest_paths.cpp
 	straightener.cpp
+
+
+	# -------
+	# Headers
+	cola.h
+	conjugate_gradient.h
+	# cycle_detector.h
+	defs.h
+	gradient_projection.h
+	shortest_paths.h
+	straightener.h
 )
 
-add_library(cola_LIB ${libcola_SRC})
+add_inkscape_lib(cola_LIB "${libcola_SRC}")

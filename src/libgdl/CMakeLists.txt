@@ -16,12 +16,34 @@ set(libgdl_SRC
 	gdl-tools.h
 	libgdlmarshal.c
 	libgdltypebuiltins.c
+
+
+	# -------
+	# Headers
+	gdl-dock-bar.h
+	gdl-dock-item-grip.h
+	gdl-dock-item.h
+	gdl-dock-master.h
+	gdl-dock-notebook.h
+	gdl-dock-object.h
+	gdl-dock-paned.h
+	gdl-dock-placeholder.h
+	gdl-dock-tablabel.h
+	gdl-dock.h
+	gdl-i18n.h
+	gdl-stock-icons.h
+	gdl-stock.h
+	gdl-switcher.h
+	libgdl.h
+	libgdlmarshal.h
+	libgdltypebuiltins.h
 )
 
 if(WIN32)
 	list(APPEND libgdl_SRC
 		gdl-win32.c
+		gdl-win32.h
 	)
 endif()
 
-add_library(gdl_LIB ${libgdl_SRC})
+add_inkscape_lib(gdl_LIB "${libgdl_SRC}")

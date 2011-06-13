@@ -109,6 +109,132 @@ set(ui_SRC
 
 	view/view.cpp
 	view/view-widget.cpp
+
+
+	# -------
+	# Headers
+	clipboard.h
+	context-menu.h
+	icon-names.h
+	previewable.h
+	previewfillable.h
+	previewholder.h
+	uxmanager.h
+	
+	cache/svg_preview_cache.h
+
+	dialog/aboutbox.h
+	dialog/align-and-distribute.h
+	dialog/behavior.h
+	dialog/calligraphic-profile-rename.h
+	dialog/color-item.h
+	dialog/debug.h
+	dialog/desktop-tracker.h
+	dialog/dialog-manager.h
+	dialog/dialog.h
+	dialog/dock-behavior.h
+	dialog/document-metadata.h
+	dialog/document-properties.h
+	dialog/extension-editor.h
+	dialog/extensions.h
+	dialog/filedialog.h
+	dialog/filedialogimpl-gtkmm.h
+	dialog/filedialogimpl-win32.h
+	dialog/fill-and-stroke.h
+	dialog/filter-effects-dialog.h
+	dialog/find.h
+	dialog/floating-behavior.h
+	dialog/glyphs.h
+	dialog/guides.h
+	dialog/icon-preview.h
+	dialog/inkscape-preferences.h
+	dialog/input.h
+	dialog/layer-properties.h
+	dialog/layers.h
+	dialog/livepatheffect-editor.h
+	dialog/memory.h
+	dialog/messages.h
+	dialog/ocaldialogs.h
+	dialog/panel-dialog.h
+	dialog/print-colors-preview-dialog.h
+	dialog/print.h
+	dialog/scriptdialog.h
+	dialog/session-player.h
+	dialog/svg-fonts-dialog.h
+	dialog/swatches.h
+	dialog/tile.h
+	dialog/tracedialog.h
+	dialog/transformation.h
+	dialog/undo-history.h
+	dialog/whiteboard-connect.h
+	dialog/whiteboard-sharewithchat.h
+	dialog/whiteboard-sharewithuser.h
+
+	tool/commit-events.h
+	tool/control-point-selection.h
+	tool/control-point.h
+	tool/curve-drag-point.h
+	tool/event-utils.h
+	tool/manipulator.h
+	tool/modifier-tracker.h
+	tool/multi-path-manipulator.h
+	tool/node-tool.h
+	tool/node-types.h
+	tool/node.h
+	tool/path-manipulator.h
+	tool/selectable-control-point.h
+	tool/selector.h
+	tool/shape-record.h
+	tool/transform-handle-set.h
+
+	view/edit-widget-interface.h
+	view/view-widget.h
+	view/view.h
+
+	widget/attr-widget.h
+	widget/button.h
+	widget/color-picker.h
+	widget/color-preview.h
+	widget/combo-enums.h
+	widget/combo-text.h
+	widget/dock-item.h
+	widget/dock.h
+	widget/entity-entry.h
+	widget/entry.h
+	widget/filter-effect-chooser.h
+	widget/handlebox.h
+	widget/icon-widget.h
+	widget/imageicon.h
+	widget/imagetoggler.h
+	widget/labelled.h
+	widget/layer-selector.h
+	widget/licensor.h
+	widget/notebook-page.h
+	widget/object-composite-settings.h
+	widget/page-sizer.h
+	widget/panel.h
+	widget/point.h
+	widget/preferences-widget.h
+	widget/random.h
+	widget/registered-enums.h
+	widget/registered-widget.h
+	widget/registry.h
+	widget/rendering-options.h
+	widget/rotateable.h
+	widget/ruler.h
+	widget/scalar-unit.h
+	widget/scalar.h
+	widget/selected-style.h
+	widget/spin-slider.h
+	widget/spinbutton.h
+	widget/style-subject.h
+	widget/style-swatch.h
+	widget/svg-canvas.h
+	widget/text.h
+	widget/tolerance-slider.h
+	widget/toolbox.h
+	widget/unit-menu.h
+	widget/zoom-status.h
 )
 
 if(WIN32)
@@ -117,5 +243,5 @@ if(WIN32)
 	)
 endif()
 
-# add_library(ui_LIB ${ui_SRC})
+# add_inkscape_lib(ui_LIB "${ui_SRC}")
 add_inkscape_source("${ui_SRC}")

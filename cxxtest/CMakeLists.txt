@@ -4,12 +4,7 @@ set(cxxtest_SRC
 )
 
 # Add New folders in src folder here
-set(cxxtestfolders
-	cxxtest
-	docs
-	sample
-)
 
-foreach(cxxtestdirlist ${cxxtestfolders})
-	add_subdirectory(${cxxtestdirlist})
-endforeach()
+add_subdirectory(cxxtest)
+add_subdirectory(docs)
+add_subdirectory(sample)

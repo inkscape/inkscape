@@ -34,7 +34,44 @@ set(widgets_SRC
 	stroke-style.cpp
 	swatch-selector.cpp
 	toolbox.cpp
+
+	button.h
+	dash-selector.h
+	desktop-widget.h
+	eek-preview.h
+	ege-paint-def.h
+	fill-n-stroke-factory.h
+	fill-style.h
+	font-selector.h
+	gradient-image.h
+	gradient-selector.h
+	gradient-toolbar.h
+	gradient-vector.h
+	icon.h
+	paint-selector.h
+	ruler.h
+	select-toolbar.h
+	shrink-wrap-button.h
+	sp-attribute-widget.h
+	sp-color-gtkselector.h
+	sp-color-icc-selector.h
+	sp-color-notebook.h
+	sp-color-preview.h
+	sp-color-scales.h
+	sp-color-selector.h
+	sp-color-slider.h
+	sp-color-wheel-selector.h
+	sp-widget.h
+	sp-xmlview-attr-list.h
+	sp-xmlview-content.h
+	sp-xmlview-tree.h
+	spinbutton-events.h
+	spw-utilities.h
+	stroke-style.h
+	swatch-selector.h
+	toolbox.h
+	widget-sizes.h
 )
 
-# add_library(widgets_LIB ${widgets_SRC})
+# add_inkscape_lib(widgets_LIB "${widgets_SRC}")
 add_inkscape_source("${widgets_SRC}")

@@ -1,4 +1,12 @@
 
+# -----------------------------------------------------------------------------
+# Define the main source
+# -----------------------------------------------------------------------------
+
+set(main_SRC
+	main.cpp
+)
+
 set(sp_SRC
 	sp-anchor.cpp
 	# sp-animation.cpp
@@ -67,6 +75,91 @@ set(sp_SRC
 	sp-use.cpp
 	spiral-context.cpp
 	splivarot.cpp
+	
+	sp-anchor.h
+	sp-animation.h
+	sp-clippath.h
+	sp-conn-end-pair.h
+	sp-conn-end.h
+	sp-cursor.h
+	sp-defs.h
+	sp-desc.h
+	sp-ellipse.h
+	sp-filter-fns.h
+	sp-filter-primitive.h
+	sp-filter-reference.h
+	sp-filter-units.h
+	sp-filter.h
+	sp-flowdiv.h
+	sp-flowregion.h
+	sp-flowtext.h
+	sp-font-face.h
+	sp-font.h
+	sp-gaussian-blur-fns.h
+	sp-gaussian-blur.h
+	sp-glyph-kerning.h
+	sp-glyph.h
+	sp-gradient-fns.h
+	sp-gradient-reference.h
+	sp-gradient-spread.h
+	sp-gradient-test.h
+	sp-gradient-units.h
+	sp-gradient-vector.h
+	sp-gradient.h
+	sp-guide-attachment.h
+	sp-guide-constraint.h
+	sp-guide.h
+	sp-image.h
+	sp-item-group.h
+	sp-item-notify-moveto.h
+	sp-item-rm-unsatisfied-cns.h
+	sp-item-transform.h
+	sp-item-update-cns.h
+	sp-item.h
+	sp-line.h
+	sp-linear-gradient-fns.h
+	sp-linear-gradient.h
+	sp-lpe-item.h
+	sp-marker-loc.h
+	sp-mask.h
+	sp-metadata.h
+	sp-metric.h
+	sp-metrics.h
+	sp-missing-glyph.h
+	sp-namedview.h
+	sp-object-group.h
+	sp-object-repr.h
+	sp-object.h
+	sp-offset.h
+	sp-paint-server-reference.h
+	sp-paint-server.h
+	sp-path.h
+	sp-pattern.h
+	sp-polygon.h
+	sp-polyline.h
+	sp-radial-gradient-fns.h
+	sp-radial-gradient.h
+	sp-rect.h
+	sp-root.h
+	sp-script.h
+	sp-shape.h
+	# sp-skeleton.h
+	sp-spiral.h
+	sp-star.h
+	sp-stop.h
+	sp-string.h
+	sp-style-elem-test.h
+	sp-style-elem.h
+	sp-switch.h
+	sp-symbol.h
+	sp-text.h
+	sp-textpath.h
+	sp-title.h
+	sp-tref-reference.h
+	sp-tref.h
+	sp-tspan.h
+	sp-use-reference.h
+	sp-use.h
 )
 
 set(inkscape_SRC
@@ -199,6 +292,194 @@ set(inkscape_SRC
 	verbs.cpp
 	version.cpp
 	zoom-context.cpp
+
+
+	# -------
+	# Headers
+	MultiPrinter.h
+	PylogFormatter.h
+	TRPIFormatter.h
+	approx-equal.h
+	arc-context.h
+	attributes-test.h
+	attributes.h
+	axis-manip.h
+	bad-uri-exception.h
+	box3d-context.h
+	box3d-side.h
+	box3d.h
+	color-profile-fns.h
+	color-profile-test.h
+	color-profile.h
+	color-rgba.h
+	color.h
+	common-context.h
+	composite-undo-stack-observer.h
+	conditions.h
+	conn-avoid-ref.h
+	connection-points.h
+	connection-pool.h
+	connector-context.h
+	console-output-undo-observer.h
+	context-fns.h
+	decimal-round.h
+	desktop-events.h
+	desktop-handles.h
+	desktop-style.h
+	desktop.h
+	device-manager.h
+	dir-util-test.h
+	dir-util.h
+	document-private.h
+	document-subset.h
+	document-undo.h
+	document.h
+	draw-anchor.h
+	draw-context.h
+	dropper-context.h
+	dyna-draw-context.h
+	ege-adjustment-action.h
+	ege-color-prof-tracker.h
+	ege-output-action.h
+	ege-select-one-action.h
+	enums.h
+	eraser-context.h
+	event-context.h
+	event-log.h
+	event.h
+	extract-uri-test.h
+	extract-uri.h
+	file.h
+	fill-or-stroke.h
+	filter-chemistry.h
+	filter-enums.h
+	flood-context.h
+	forward.h
+	gc-alloc.h
+	gc-allocator.h
+	gc-anchored.h
+	gc-core.h
+	gc-finalized.h
+	gc-managed.h
+	gc-soft-ptr.h
+	gradient-chemistry.h
+	gradient-context.h
+	gradient-drag.h
+	graphlayout.h
+	guide-snapper.h
+	help.h
+	helper-fns.h
+	icon-size.h
+	id-clash.h
+	ige-mac-menu.h
+	ink-action.h
+	ink-comboboxentry-action.h
+	inkscape-private.h
+	inkscape-version.h
+	inkscape.h
+	interface.h
+	isinf.h
+	isnormal.h
+	knot-enums.h
+	knot-holder-entity.h
+	knot.h
+	knotholder.h
+	layer-fns.h
+	layer-manager.h
+	line-geometry.h
+	line-snapper.h
+	lpe-tool-context.h
+	macros.h
+	main-cmdlineact.h
+	marker-test.h
+	marker.h
+	measure-context.h
+	media.h
+	memeq.h
+	menus-skeleton.h
+	message-context.h
+	message-stack.h
+	message.h
+	mod360-test.h
+	mod360.h
+	modifier-fns.h
+	number-opt-number.h
+	object-edit.h
+	object-hierarchy.h
+	object-snapper.h
+	path-chemistry.h
+	path-prefix.h
+	pen-context.h
+	pencil-context.h
+	persp3d-reference.h
+	persp3d.h
+	perspective-line.h
+	preferences-skeleton.h
+	preferences-test.h
+	preferences.h
+	prefix.h
+	print.h
+	profile-manager.h
+	proj_pt.h
+	rdf.h
+	rect-context.h
+	registrytool.h
+	remove-last.h
+	removeoverlap.h
+	require-config.h
+	resource-manager.h
+	round-test.h
+	round.h
+	rubberband.h
+	satisfied-guide-cns.h
+	selcue.h
+	select-context.h
+	selection-chemistry.h
+	selection-describer.h
+	selection.h
+	seltrans-handles.h
+	seltrans.h
+	shape-editor.h
+	shortcuts.h
+	snap-candidate.h
+	snap-enums.h
+	snap-preferences.h
+	snap.h
+	snapped-curve.h
+	snapped-line.h
+	snapped-point.h
+	snapper.h
+	spiral-context.h
+	splivarot.h
+	spray-context.h
+	star-context.h
+	streq.h
+	strneq.h
+	style-test.h
+	style.h
+	svg-profile.h
+	svg-view-widget.h
+	svg-view.h
+	syseq.h
+	test-helpers.h
+	text-chemistry.h
+	text-context.h
+	text-editing.h
+	text-tag-attributes.h
+	tools-switch.h
+	transf_mat_3x4.h
+	tweak-context.h
+	unclump.h
+	undo-stack-observer.h
+	unicoderange.h
+	unit-constants.h
+	uri-references.h
+	uri.h
+	vanishing-point.h
+	verbs-test.h
+	verbs.h
+	version.h
+	zoom-context.h
 )
 
 if(WIN32)
@@ -209,49 +490,44 @@ if(WIN32)
 	)
 endif()
 
+
+# -----------------------------------------------------------------------------
+# Load in subdirectories
+# -----------------------------------------------------------------------------
+
 # All folders for internal inkscape
-set(internalfolders
-	bind
-	debug
-	dialogs
-	display
-	dom
-	extension
-	filters
-	helper
-	io
-	# jabber_whiteboard
-	live_effects
-	# pedro
-	svg
-	trace
-	ui
-	util
-	widgets
-	xml
-	2geom
-)
+# these call add_inkscape_source
+add_subdirectory(bind)
+add_subdirectory(debug)
+add_subdirectory(dialogs)
+add_subdirectory(display)
+add_subdirectory(dom)
+add_subdirectory(extension)
+add_subdirectory(filters)
+add_subdirectory(helper)
+add_subdirectory(io)
+# add_subdirectory(jabber_whiteboard)
+add_subdirectory(live_effects)
+# add_subdirectory(pedro)
+add_subdirectory(svg)
+add_subdirectory(trace)
+add_subdirectory(ui)
+add_subdirectory(util)
+add_subdirectory(widgets)
+add_subdirectory(xml)
+add_subdirectory(2geom)
 
-set(libfolders
-	# Directories containing lists files that describe building internal libraries
-	libavoid
-	libcola
-	libcroco
-	libgdl
-	libvpsc
-	livarot
-	libnr
-	libnrtype
-)
 
-set(dirs
-	${internalfolders}
-	${libfolders}
-)
+# Directories containing lists files that describe building internal libraries
+add_subdirectory(libavoid)
+add_subdirectory(libcola)
+add_subdirectory(libcroco)
+add_subdirectory(libgdl)
+add_subdirectory(libvpsc)
+add_subdirectory(livarot)
+add_subdirectory(libnr)
+add_subdirectory(libnrtype)
 
-foreach(srclistsrc ${dirs})
-	add_subdirectory(${srclistsrc})
-endforeach()
 
 get_property(inkscape_global_SRC GLOBAL PROPERTY inkscape_global_SRC)
 
@@ -260,11 +536,15 @@ set(inkscape_SRC
 	${inkscape_SRC}
 )
 
-add_library(sp_LIB ${sp_SRC})
-add_library(inkscape_LIB ${inkscape_SRC})
+
+# -----------------------------------------------------------------------------
+# Setup the executable
+# -----------------------------------------------------------------------------
+add_inkscape_lib(sp_LIB "${sp_SRC}")
+add_inkscape_lib(inkscape_LIB "${inkscape_SRC}")
 
 # make executable for INKSCAPE
-add_executable(inkscape main.cpp)
+add_executable(inkscape ${main_SRC})
 
 target_link_libraries(inkscape
 	# order from automake 
@@ -285,56 +565,16 @@ target_link_libraries(inkscape
 	2geom_LIB
 
 	${INKSCAPE_LIBS}
-	
-	
+
 	# system libs
-	-lxslt
-	-lgtkspell
-	-lgsl
-	-lgslcblas
+	-lgsl # needed
+	-lgslcblas # needed
 	-lgtkmm-2.4
-	-latkmm-1.6
 	-lgdkmm-2.4
-	-lgiomm-2.4
 	-lpangomm-1.4
-	-lgtk-x11-2.0
-	-lglibmm-2.4
-	-lcairomm-1.0
 	-lsigc-2.0
-	-latk-1.0
-	-lgio-2.0
-	-lpng
-	-lX11
-	-lxml2
-	-ldl
-	-lgomp
-	-lpopt
-	-laspell
-	-lgnomevfs-2
-	-lgconf-2
-	-lpangoft2-1.0
-	-lfontconfig
-	-lfreetype
-	-lz
 	-lMagick++
 	-lMagickCore
-	-lgc
-	-llcms
-	-lpoppler-glib
-	-lgdk-x11-2.0
-	-lpoppler
-	-lpangocairo-1.0
-	-lgdk_pixbuf-2.0
-	-lpng14
-	-lm
-	-lpango-1.0
-	-lcairo
-	-lgmodule-2.0
-	-lgobject-2.0
-	-lgthread-2.0
-	-lrt
-	-lglib-2.0
-	
 )
 
 # TODO

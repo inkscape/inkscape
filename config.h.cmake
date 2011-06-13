@@ -232,6 +232,9 @@
 /* Define to the version of this package. */
 #define PACKAGE_VERSION "${INKSCAPE_VERSION}"
 
+/* Define the version as a string. */
+#define VERSION "${INKSCAPE_VERSION}"
+
 /* Define as the return type of signal handlers (`int' or `void'). */
 #cmakedefine RETSIGTYPE
 

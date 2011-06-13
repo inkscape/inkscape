@@ -122,4 +122,4 @@ set(2geom_SRC
 )
 
 # make lib for 2geom_LIB
-add_library(2geom_LIB ${2geom_SRC})
+add_inkscape_lib(2geom_LIB "${2geom_SRC}")

@@ -16,7 +16,38 @@ set(xml_SRC
 	subtree.cpp
 	helper-observer.cpp
 	rebase-hrefs.cpp
+
+	attribute-record.h
+	comment-node.h
+	composite-node-observer.h
+	croco-node-iface.h
+	document.h
+	element-node.h
+	event-fns.h
+	event.h
+	helper-observer.h
+	invalid-operation-exception.h
+	log-builder.h
+	node-event-vector.h
+	node-fns.h
+	node-iterators.h
+	node-observer.h
+	node.h
+	pi-node.h
+	quote-test.h
+	quote.h
+	rebase-hrefs-test.h
+	rebase-hrefs.h
+	repr-action-test.h
+	repr-sorting.h
+	repr.h
+	simple-document.h
+	simple-node.h
+	sp-css-attr.h
+	subtree.h
+	text-node.h
+	xml-forward.h
 )
 
-# add_library(xml_LIB ${xml_SRC})
+# add_inkscape_lib(xml_LIB "${xml_SRC}")
 add_inkscape_source("${xml_SRC}")

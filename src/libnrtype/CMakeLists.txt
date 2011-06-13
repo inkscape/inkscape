@@ -14,6 +14,27 @@ set(nrtype_SRC
 	nr-type-primitives.cpp
 	RasterFont.cpp
 	TextWrapper.cpp
+
+	FontFactory.h
+	Layout-TNG-Scanline-Maker.h
+	Layout-TNG.h
+	RasterFont.h
+	TextWrapper.h
+	boundary-type.h
+	font-glyph.h
+	font-instance.h
+	font-lister.h
+	font-style-to-pos.h
+	font-style.h
+	nr-type-pos-def.h
+	nr-type-primitives.h
+	nrtype-forward.h
+	one-box.h
+	one-glyph.h
+	one-para.h
+	raster-glyph.h
+	raster-position.h
+	text-boundary.h
 )
 
-add_library(nrtype_LIB ${nrtype_SRC})
+add_inkscape_lib(nrtype_LIB "${nrtype_SRC}")
