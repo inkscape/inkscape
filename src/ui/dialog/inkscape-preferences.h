@@ -141,6 +141,7 @@ protected:
     UI::Widget::DialogPage _page_tweak;
     UI::Widget::DialogPage _page_spray;
     UI::Widget::DialogPage _page_zoom;
+    UI::Widget::DialogPage _page_measure;
     UI::Widget::DialogPage _page_shapes;
     UI::Widget::DialogPage _page_pencil;
     UI::Widget::DialogPage _page_pen;
@@ -372,6 +373,7 @@ protected:
     static void AddSelcueCheckbox(UI::Widget::DialogPage& p, Glib::ustring const &prefs_path, bool def_value);
     static void AddGradientCheckbox(UI::Widget::DialogPage& p, Glib::ustring const &prefs_path, bool def_value);
     static void AddConvertGuidesCheckbox(UI::Widget::DialogPage& p, Glib::ustring const &prefs_path, bool def_value);
+    static void AddFirstAndLastCheckbox(UI::Widget::DialogPage& p, Glib::ustring const &prefs_path, bool def_value);
     static void AddDotSizeSpinbutton(UI::Widget::DialogPage& p, Glib::ustring const &prefs_path, double def_value);
     static void AddNewObjectsStyle(UI::Widget::DialogPage& p, Glib::ustring const &prefs_path, const gchar* banner = NULL);
 

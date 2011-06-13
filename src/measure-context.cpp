@@ -213,7 +213,12 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 GSList *l;
                 int counter=0;
                 std::vector<Geom::Point> intersections;
-                intersections.push_back(desktop->dt2doc(start_point));
+                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                bool ignore_1st_and_last = prefs->getBool("/tools/measure/ignore_1st_and_last", true);
+
+                if (!ignore_1st_and_last){
+                    intersections.push_back(desktop->dt2doc(start_point));
+                }
 
                 for (l = items; l != NULL; l = l->next){
                     item = (SPItem*) (l->data);
@@ -253,10 +258,15 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     }
                     //g_free(repr);
                 }
-                intersections.push_back(desktop->dt2doc(motion_dt));
+
+                if (!ignore_1st_and_last){
+                    intersections.push_back(desktop->dt2doc(motion_dt));
+                }
 
                 //sort intersections
-                std::sort(intersections.begin(), intersections.end(), GeomPointSortPredicate);
+                if (intersections.size()>2){
+                    std::sort(intersections.begin(), intersections.end(), GeomPointSortPredicate);
+                }
 
                 unsigned int idx;
                 for (idx=0; idx<measure_tmp_items.size(); idx++){
@@ -282,10 +292,12 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 }
 
-                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                 double fontsize = prefs->getInt("/tools/measure/fontsize");
 
-                Geom::Point previous_point = intersections[0];
+                Geom::Point previous_point;
+                if (intersections.size()>0)
+                    previous_point = intersections[0];
+
                 for (idx=1; idx < intersections.size(); idx++){
                     Geom::Point measure_text_pos = (previous_point + intersections[idx])/2;
 //TODO: shift label a few pixels in the y coordinate
