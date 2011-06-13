@@ -49,8 +49,62 @@ configure_file(
 		"${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
 		IMMEDIATE @ONLY)
 
+configure_file(
+		"${CMAKE_CURRENT_SOURCE_DIR}/inkscape.desktop.in"
+		"${CMAKE_BINARY_DIR}/inkscape.desktop"
+		IMMEDIATE @ONLY)
+
 add_custom_target(uninstall
 		"${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
 
 add_subdirectory(src)
+
+
+
+# -----------------------------------------------------------------------------
+# Installation
+# -----------------------------------------------------------------------------
+
+if(UNIX)
+	# TODO: man, locale, icons
+
+	# message after building.
+	add_custom_command(
+		TARGET blender POST_BUILD MAIN_DEPENDENCY blender
+		COMMAND ${CMAKE_COMMAND} -E echo 'now run: \"make install\" to copy runtime files & scripts to ${CMAKE_INSTALL_PREFIX}'
+	)
+
+	install(
+		PROGRAMS ${CMAKE_BINARY_DIR}/src/inkscape
+		DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+	)
+
+	install(
+		FILES ${CMAKE_BINARY_DIR}/inkscape.desktop
+		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications
+	)
+
+	install(
+		DIRECTORY
+			${CMAKE_SOURCE_DIR}/share/clipart
+			${CMAKE_SOURCE_DIR}/share/examples
+			${CMAKE_SOURCE_DIR}/share/extensions
+			${CMAKE_SOURCE_DIR}/share/filters
+			${CMAKE_SOURCE_DIR}/share/fonts
+			${CMAKE_SOURCE_DIR}/share/gradients
+			${CMAKE_SOURCE_DIR}/share/icons
+			${CMAKE_SOURCE_DIR}/share/keys
+			${CMAKE_SOURCE_DIR}/share/markers
+			${CMAKE_SOURCE_DIR}/share/palettes
+			${CMAKE_SOURCE_DIR}/share/patterns
+			${CMAKE_SOURCE_DIR}/share/screens
+			${CMAKE_SOURCE_DIR}/share/templates
+			${CMAKE_SOURCE_DIR}/share/tutorials
+			${CMAKE_SOURCE_DIR}/share/ui
+		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/inkscape
+	)
+
+else()
+	# TODO, WIN32/APPLE
+endif()
