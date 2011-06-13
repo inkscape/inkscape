@@ -11,4 +11,5 @@ set(dialogs_SRC
 	xml-tree.cpp
 )
 
-add_library(dialogs_LIB ${dialogs_SRC})
+# add_library(dialogs_LIB ${dialogs_SRC})
+add_inkscape_source("${dialogs_SRC}")

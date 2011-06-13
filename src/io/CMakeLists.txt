@@ -13,4 +13,5 @@ set(io_SRC
 	xsltstream.cpp
 )
 
-add_library(io_LIB ${io_SRC})
+# add_library(io_LIB ${io_SRC})
+add_inkscape_source("${io_SRC}")

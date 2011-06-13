@@ -9,4 +9,5 @@ set(debug_SRC
 	gdk-event-latency-tracker.cpp
 )
 
-add_library(debug_LIB ${debug_SRC})
+# add_library(debug_LIB ${debug_SRC})
+add_inkscape_source("${debug_SRC}")

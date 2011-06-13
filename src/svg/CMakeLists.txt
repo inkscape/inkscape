@@ -15,4 +15,5 @@ set(svg_SRC
 	#test-stubs.cpp
 )
 
-add_library(svg_LIB ${svg_SRC})
+# add_library(svg_LIB ${svg_SRC})
+add_inkscape_source("${svg_SRC}")

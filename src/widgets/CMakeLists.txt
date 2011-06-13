@@ -36,4 +36,5 @@ set(widgets_SRC
 	toolbox.cpp
 )
 
-add_library(widgets_LIB ${widgets_SRC})
+# add_library(widgets_LIB ${widgets_SRC})
+add_inkscape_source("${widgets_SRC}")

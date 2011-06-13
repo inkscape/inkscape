@@ -19,4 +19,5 @@ set(jabber_whiteboard_SRC
 	dialog/choose-desktop.cpp
 )
 
-add_library(jabber_whiteboard_LIB ${jabber_whiteboard_SRC})
+# add_library(jabber_whiteboard_LIB ${jabber_whiteboard_SRC})
+add_inkscape_source("${jabber_whiteboard_SRC}")

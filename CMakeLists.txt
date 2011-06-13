@@ -12,6 +12,20 @@ endif()
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeScripts")
 
+# main source list
+set_property(GLOBAL PROPERTY inkscape_global_SRC "")
+macro (add_inkscape_source
+	sources)
+
+	foreach(_SRC ${ARGV})
+		get_filename_component(_ABS_SRC ${_SRC} ABSOLUTE)
+		set_property(GLOBAL APPEND PROPERTY inkscape_global_SRC ${_ABS_SRC})
+	endforeach()
+	unset(_SRC)
+	unset(_ABS_SRC)
+endmacro()
+
+
 # XXX, TODO: use pkgconfig, This part is WIP to get building
 # - campbell
 
@@ -76,6 +90,7 @@ add_definitions(-D_FORTIFY_SOURCE=2)
 add_definitions(-DPOTRACE="potrace")
 add_definitions(-DORBIT2=1)
 add_definitions(-DHAVE_CONFIG_H)
+add_definitions(-DHAVE_CAIRO_PDF=1)  # needed for src/libnrtype/Layout-TNG.h
 add_definitions(-DHAVE_TR1_UNORDERED_SET) # XXX make an option!
 add_definitions(-DVERSION="\\"0.48+devel\\"") # XXX make an option!
 # XXX - end hackish defines!

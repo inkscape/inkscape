@@ -18,4 +18,5 @@ set(xml_SRC
 	rebase-hrefs.cpp
 )
 
-add_library(xml_LIB ${xml_SRC})
+# add_library(xml_LIB ${xml_SRC})
+add_inkscape_source("${xml_SRC}")

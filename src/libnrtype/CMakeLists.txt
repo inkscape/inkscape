@@ -1,5 +1,5 @@
 
-set(libnrtype_SRC
+set(nrtype_SRC
 	FontFactory.cpp
 	FontInstance.cpp
 	font-lister.cpp
@@ -16,4 +16,4 @@ set(libnrtype_SRC
 	TextWrapper.cpp
 )
 
-add_library(nrtype_LIB ${libnrtype_SRC})
+add_library(nrtype_LIB ${nrtype_SRC})

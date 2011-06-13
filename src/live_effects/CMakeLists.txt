@@ -54,4 +54,5 @@ set(live_effects_SRC
 	parameter/vector.cpp
 )
 
-add_library(live_effects_LIB ${live_effects_SRC})
+# add_library(live_effects_LIB ${live_effects_SRC})
+add_inkscape_source("${live_effects_SRC}")

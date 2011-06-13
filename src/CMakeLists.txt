@@ -129,8 +129,6 @@ set(inkscape_SRC
 	inkscape-version.cpp
 	inkscape.cpp
 	inkscape.rc
-	# inkview.cpp
-	# inkview.rc
 	interface.cpp
 	knot-holder-entity.cpp
 	knot.cpp
@@ -141,7 +139,6 @@ set(inkscape_SRC
 	line-snapper.cpp
 	lpe-tool-context.cpp
 	main-cmdlineact.cpp
-	main.cpp
 	marker.cpp
 	measure-context.cpp
 	media.cpp
@@ -214,8 +211,6 @@ endif()
 
 # All folders for internal inkscape
 set(internalfolders
-	#algorithms
-	#api
 	bind
 	debug
 	dialogs
@@ -230,7 +225,6 @@ set(internalfolders
 	# pedro
 	svg
 	trace
-	#traits
 	ui
 	util
 	widgets
@@ -244,10 +238,10 @@ set(libfolders
 	libcola
 	libcroco
 	libgdl
-	libnr
-	libnrtype
 	libvpsc
 	livarot
+	libnr
+	libnrtype
 )
 
 set(dirs
@@ -259,18 +253,28 @@ foreach(srclistsrc ${dirs})
 	add_subdirectory(${srclistsrc})
 endforeach()
 
+get_property(inkscape_global_SRC GLOBAL PROPERTY inkscape_global_SRC)
+
 set(inkscape_SRC
+	${inkscape_global_SRC}
 	${inkscape_SRC}
-	${GlibOutput}
 )
 
 add_library(sp_LIB ${sp_SRC})
+add_library(inkscape_LIB ${inkscape_SRC})
 
 # make executable for INKSCAPE
-add_executable(inkscape ${inkscape_SRC})
+add_executable(inkscape main.cpp)
 
 target_link_libraries(inkscape
 	# order from automake 
+	sp_LIB
+	inkscape_LIB
+	sp_LIB # annoying, we need both!
+
+	nr_LIB
+	nrtype_LIB
+
 	dom_LIB
 	croco_LIB
 	avoid_LIB
@@ -279,26 +283,6 @@ target_link_libraries(inkscape
 	vpsc_LIB
 	livarot_LIB
 	2geom_LIB
-
-	# guessing these ones
-	ui_LIB
-	bind_LIB
-	debug_LIB
-	dialogs_LIB
-	display_LIB
-	extension_LIB
-	filters_LIB
-	helper_LIB
-	io_LIB
-	nr_LIB
-	nrtype_LIB
-	sp_LIB
-	svg_LIB
-	trace_LIB
-	util_LIB
-	widgets_LIB
-	xml_LIB
-	live_effects_LIB
 
 	${INKSCAPE_LIBS}
 	
@@ -353,18 +337,8 @@ target_link_libraries(inkscape
 	
 )
 
+# TODO
 # make executable for INKVIEW
-#ADD_EXECUTABLE(inkview inkview.cpp)
-#TARGET_LINK_LIBRARIES(inkview
-#	2geom_LIB
-#	avoid_LIB
-#	cola_LIB
-#	croco_LIB
-#	gdl_LIB
-#	nr_LIB
-#	nrtype_LIB
-#	vpsc_LIB
-#	livarot_LIB
-#	sp_LIB
-#)
+#add_executable(inkview inkview.cpp)
+# ...
 

@@ -117,12 +117,5 @@ if(WIN32)
 	)
 endif()
 
-include_directories(
-	"${CMAKE_SOURCE_DIR}/src"
-	"${CMAKE_SOURCE_DIR}"
-	"${CMAKE_SOURCE_DIR}/bind/javainc"
-	"${CMAKE_SOURCE_DIR}/bind/javainc/linux"
-	"${CMAKE_SOURCE_DIR}/extension/dbus"
-)
-
-add_library(ui_LIB ${ui_SRC})
+# add_library(ui_LIB ${ui_SRC})
+add_inkscape_source("${ui_SRC}")

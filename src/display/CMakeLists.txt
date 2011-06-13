@@ -59,8 +59,5 @@ set(display_SRC
 	sp-ctrlquadr.cpp
 )
 
-include_directories(
-	"${CMAKE_SOURCE_DIR}/src"
-)
-
-add_library(display_LIB ${display_SRC})
+# add_library(display_LIB ${display_SRC})
+add_inkscape_source("${display_SRC}")

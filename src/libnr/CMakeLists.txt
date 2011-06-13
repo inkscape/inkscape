@@ -1,5 +1,5 @@
 
-set(libnr_SRC
+set(nr_SRC
 	#in-svg-plane-test.cpp
 	nr-blit.cpp
 	nr-compose.cpp
@@ -33,4 +33,4 @@ set(libnr_SRC
 	#testnr.cpp
 )
 
-add_library(nr_LIB ${libnr_SRC})
+add_library(nr_LIB ${nr_SRC})

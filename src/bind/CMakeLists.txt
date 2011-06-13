@@ -4,4 +4,5 @@ set(bind_SRC
 	javabind.cpp
 )
 
-add_library(bind_LIB ${bind_SRC})
+# add_library(bind_LIB ${bind_SRC})
+add_inkscape_source("${bind_SRC}")

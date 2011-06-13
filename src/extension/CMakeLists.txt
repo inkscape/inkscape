@@ -29,12 +29,12 @@ set(extension_SRC
 	param/parameter.cpp
 	param/radiobutton.cpp
 	param/string.cpp
-	
+
 	internal/bluredge.cpp
 	internal/cairo-png-out.cpp
 	internal/cairo-ps-out.cpp
-	# internal/cairo-render-context.cpp  # XXX MUST GET THIS WORKING
-	# internal/cairo-renderer.cpp  # XXX MUST GET THIS WORKING
+	internal/cairo-render-context.cpp
+	internal/cairo-renderer.cpp
 	internal/cairo-renderer-pdf-out.cpp
 	internal/emf-win32-inout.cpp
 	internal/emf-win32-print.cpp
@@ -42,7 +42,7 @@ set(extension_SRC
 	internal/gimpgrad.cpp
 	internal/grid.cpp
 	internal/latex-pstricks.cpp
-	# internal/latex-pstricks-out.cpp  # XXX MUST GET THIS WORKING
+	internal/latex-pstricks-out.cpp
 	internal/odf.cpp
 	internal/latex-text-renderer.cpp
 	internal/pdf-input-cairo.cpp
@@ -115,4 +115,5 @@ if(WIN32)
 	)
 endif()
 
-add_library(extension_LIB ${extension_SRC})
+# add_library(extension_LIB ${extension_SRC})
+add_inkscape_source("${extension_SRC}")

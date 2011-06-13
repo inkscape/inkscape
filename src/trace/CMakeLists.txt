@@ -16,4 +16,5 @@ set(trace_SRC
 	potrace/trace.cpp
 )
 
-add_library(trace_LIB ${trace_SRC})
+# add_library(trace_LIB ${trace_SRC})
+add_inkscape_source("${trace_SRC}")

@@ -27,4 +27,5 @@ set(helper_SRC
 	${sp_marshal_SRC}
 )
 
-add_library(helper_LIB ${helper_SRC})
+# add_library(helper_LIB ${helper_SRC})
+add_inkscape_source("${helper_SRC}")

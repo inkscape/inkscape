@@ -22,4 +22,5 @@ set(filters_SRC
 	turbulence.cpp
 )
 
-add_library(filters_LIB ${filters_SRC})
+#add_library(filters_LIB ${filters_SRC})
+add_inkscape_source("${filters_SRC}")

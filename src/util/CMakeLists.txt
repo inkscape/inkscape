@@ -7,4 +7,5 @@ set(util_SRC
 	units.cpp
 )
 
-add_library(util_LIB ${util_SRC})
+# add_library(util_LIB ${util_SRC})
+add_inkscape_source("${util_SRC}")
