@@ -1,6 +1,4 @@
 
-include(CMakeScripts/HelperMacros.cmake) # Misc Utility Macros
-
 project(inkscape)
 
 set(INKSCAPE_VERSION 0.48+devel)
@@ -18,10 +16,6 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeScripts")
 
 # XXX, TODO: use pkgconfig, This part is WIP to get building
 # - campbell
-
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pipe -fPIC -funsigned-char -fno-strict-aliasing  -pthread")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pipe -fPIC -funsigned-char -fno-strict-aliasing  -pthread")
- 
 
 include_directories(
 	 /usr/include/atk-1.0
@@ -67,8 +61,10 @@ add_definitions(-DHAVE_CAIRO_PDF=1)  # needed for src/libnrtype/Layout-TNG.h
 add_definitions(-DHAVE_TR1_UNORDERED_SET) # XXX make an option!
 # XXX - end hackish defines!
 
+
 include(ConfigPaths) # Installation Paths
 include(DefineDependsandFlags) # Includes, Compiler Flags, and Link Libraries
+include(HelperMacros) # Misc Utility Macros
 
 option(ENABLE_PROFILING "Turn on profiling" OFF) # Set to true if compiler/linker should enable profiling
 
@@ -80,12 +76,12 @@ add_custom_target(dist svn export --force -q "${CMAKE_SOURCE_DIR}" "${CMAKE_BINA
 
 # make unistall target
 configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-  IMMEDIATE @ONLY)
+		"${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
+		"${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+		IMMEDIATE @ONLY)
 
 add_custom_target(uninstall
-  "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
+		"${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
 
 add_subdirectory(src)
