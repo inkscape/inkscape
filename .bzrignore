@@ -29,6 +29,7 @@
 ./intltool-update.in
 ./missing
 ./stamp-h1
+./CMakeLists.txt.user
 .deps
 .dirstamp
 Makefile.in

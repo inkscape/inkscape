@@ -216,7 +216,8 @@ set(extension_SRC
 
 if(WIN32)
 	list(APPEND extension_SRC
-		win32.cpp
+		internal/win32.cpp
+		internal/win32.h
 	)
 endif()
 
