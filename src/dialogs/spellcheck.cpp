@@ -917,10 +917,10 @@ sp_spellcheck_dialog (void)
         g_signal_connect( G_OBJECT(INKSCAPE), "deactivate_desktop", G_CALLBACK( spellcheck_desktop_deactivated ), NULL);
 
 
-        gtk_signal_connect ( GTK_OBJECT (dlg), "event", GTK_SIGNAL_FUNC (sp_dialog_event_handler), dlg);
+        g_signal_connect ( G_OBJECT (dlg), "event", G_CALLBACK (sp_dialog_event_handler), dlg);
 
-        gtk_signal_connect ( GTK_OBJECT (dlg), "destroy", G_CALLBACK (sp_spellcheck_dialog_destroy), NULL );
-        gtk_signal_connect ( GTK_OBJECT (dlg), "delete_event", G_CALLBACK (sp_spellcheck_dialog_delete), dlg);
+        g_signal_connect ( G_OBJECT (dlg), "destroy", G_CALLBACK (sp_spellcheck_dialog_destroy), NULL );
+        g_signal_connect ( G_OBJECT (dlg), "delete_event", G_CALLBACK (sp_spellcheck_dialog_delete), dlg);
         g_signal_connect   ( G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (sp_spellcheck_dialog_delete), dlg);
 
         g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg);

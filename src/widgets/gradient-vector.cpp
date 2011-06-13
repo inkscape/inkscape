@@ -104,13 +104,14 @@ static void sp_gradient_vector_selector_class_init(SPGradientVectorSelectorClass
 
     parent_class = static_cast<GtkVBoxClass*>(gtk_type_class(GTK_TYPE_VBOX));
 
-    signals[VECTOR_SET] = gtk_signal_new( "vector_set",
-                                          GTK_RUN_LAST,
-                                          GTK_CLASS_TYPE(object_class),
-                                          GTK_SIGNAL_OFFSET(SPGradientVectorSelectorClass, vector_set),
-                                          gtk_marshal_NONE__POINTER,
-                                          GTK_TYPE_NONE, 1,
-                                          GTK_TYPE_POINTER);
+    signals[VECTOR_SET] = g_signal_new( "vector_set",
+		                        G_TYPE_FROM_CLASS(object_class),
+					G_SIGNAL_RUN_LAST,
+                                        G_STRUCT_OFFSET(SPGradientVectorSelectorClass, vector_set),
+					NULL, NULL,
+					gtk_marshal_NONE__POINTER,
+					G_TYPE_NONE, 1,
+					GTK_TYPE_POINTER);
 
     object_class->destroy = sp_gradient_vector_selector_destroy;
 }
@@ -793,7 +794,7 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     GtkWidget *mnu = gtk_option_menu_new();
     /* Create new menu widget */
     update_stop_list(GTK_WIDGET(mnu), gradient, NULL);
-    gtk_signal_connect(GTK_OBJECT(mnu), "changed", GTK_SIGNAL_FUNC(sp_grad_edit_select), vb);
+    g_signal_connect(G_OBJECT(mnu), "changed", G_CALLBACK(sp_grad_edit_select), vb);
     gtk_widget_show(mnu);
     gtk_object_set_data(GTK_OBJECT(vb), "stopmenu", mnu);
     gtk_box_pack_start(GTK_BOX(vb), mnu, FALSE, FALSE, 0);
@@ -805,12 +806,12 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     gtk_widget_show(b);
     gtk_container_add(GTK_CONTAINER(hb), b);
     gtk_widget_set_tooltip_text(b, _("Add another control stop to gradient"));
-    gtk_signal_connect(GTK_OBJECT(b), "clicked", GTK_SIGNAL_FUNC(sp_grd_ed_add_stop), vb);
+    g_signal_connect(G_OBJECT(b), "clicked", G_CALLBACK(sp_grd_ed_add_stop), vb);
     b = gtk_button_new_with_label(_("Delete stop"));
     gtk_widget_show(b);
     gtk_container_add(GTK_CONTAINER(hb), b);
     gtk_widget_set_tooltip_text(b, _("Delete current control stop from gradient"));
-    gtk_signal_connect(GTK_OBJECT(b), "clicked", GTK_SIGNAL_FUNC(sp_grd_ed_del_stop), vb);
+    g_signal_connect(G_OBJECT(b), "clicked", G_CALLBACK(sp_grd_ed_del_stop), vb);
 
     gtk_widget_show(hb);
     gtk_box_pack_start(GTK_BOX(vb),hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
@@ -857,10 +858,10 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
 
 
     /* Signals */
-    gtk_signal_connect(GTK_OBJECT(Offset_adj), "value_changed",
-                        GTK_SIGNAL_FUNC(offadjustmentChanged), vb);
+    g_signal_connect(G_OBJECT(Offset_adj), "value_changed",
+                        G_CALLBACK(offadjustmentChanged), vb);
 
-    // gtk_signal_connect(GTK_OBJECT(slider), "changed",  GTK_SIGNAL_FUNC(offsliderChanged), vb);
+    // g_signal_connect(G_OBJECT(slider), "changed",  G_CALLBACK(offsliderChanged), vb);
     gtk_widget_show(hb);
     gtk_box_pack_start(GTK_BOX(vb), hb, FALSE, FALSE, PAD);
 
@@ -924,9 +925,9 @@ GtkWidget * sp_gradient_vector_editor_new(SPGradient *gradient, SPStop *stop)
         wd.win = dlg;
         wd.stop = 0;
         g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK(sp_transientize_callback), &wd);
-        gtk_signal_connect(GTK_OBJECT(dlg), "event", GTK_SIGNAL_FUNC(sp_dialog_event_handler), dlg);
-        gtk_signal_connect(GTK_OBJECT(dlg), "destroy", G_CALLBACK(sp_gradient_vector_dialog_destroy), dlg);
-        gtk_signal_connect(GTK_OBJECT(dlg), "delete_event", G_CALLBACK(sp_gradient_vector_dialog_delete), dlg);
+        g_signal_connect(G_OBJECT(dlg), "event", G_CALLBACK(sp_dialog_event_handler), dlg);
+        g_signal_connect(G_OBJECT(dlg), "destroy", G_CALLBACK(sp_gradient_vector_dialog_destroy), dlg);
+        g_signal_connect(G_OBJECT(dlg), "delete_event", G_CALLBACK(sp_gradient_vector_dialog_delete), dlg);
         g_signal_connect(G_OBJECT(INKSCAPE), "shut_down", G_CALLBACK(sp_gradient_vector_dialog_delete), dlg);
         g_signal_connect( G_OBJECT(INKSCAPE), "dialogs_hide", G_CALLBACK(sp_dialog_hide), dlg );
         g_signal_connect( G_OBJECT(INKSCAPE), "dialogs_unhide", G_CALLBACK(sp_dialog_unhide), dlg );

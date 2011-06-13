@@ -177,10 +177,10 @@ sp_text_edit_dialog (void)
         wd.stop = 0;
         g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd );
 
-        gtk_signal_connect ( GTK_OBJECT (dlg), "event", GTK_SIGNAL_FUNC (sp_dialog_event_handler), dlg );
+        g_signal_connect ( G_OBJECT (dlg), "event", G_CALLBACK (sp_dialog_event_handler), dlg );
 
-        gtk_signal_connect ( GTK_OBJECT (dlg), "destroy", G_CALLBACK (sp_text_edit_dialog_destroy), dlg );
-        gtk_signal_connect ( GTK_OBJECT (dlg), "delete_event", G_CALLBACK (sp_text_edit_dialog_delete), dlg );
+        g_signal_connect ( G_OBJECT (dlg), "destroy", G_CALLBACK (sp_text_edit_dialog_destroy), dlg );
+        g_signal_connect ( G_OBJECT (dlg), "delete_event", G_CALLBACK (sp_text_edit_dialog_delete), dlg );
         g_signal_connect ( G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (sp_text_edit_dialog_delete), dlg );
 
         g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg );

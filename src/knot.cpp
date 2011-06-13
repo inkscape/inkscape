@@ -489,8 +489,8 @@ SPKnot *sp_knot_new(SPDesktop *desktop, const gchar *tip)
                                     "mode", SP_KNOT_MODE_XOR,
                                     NULL);
 
-    knot->_event_handler_id = gtk_signal_connect(GTK_OBJECT(knot->item), "event",
-                                                 GTK_SIGNAL_FUNC(sp_knot_handler), knot);
+    knot->_event_handler_id = g_signal_connect(G_OBJECT(knot->item), "event",
+                                                 G_CALLBACK(sp_knot_handler), knot);
 
     return knot;
 }

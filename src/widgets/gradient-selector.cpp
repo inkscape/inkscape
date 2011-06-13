@@ -85,30 +85,34 @@ sp_gradient_selector_class_init (SPGradientSelectorClass *klass)
 
     parent_class = (GtkVBoxClass*)gtk_type_class (GTK_TYPE_VBOX);
 
-    signals[GRABBED] =  gtk_signal_new ("grabbed",
-                                        (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                        GTK_CLASS_TYPE(object_class),
-                                        GTK_SIGNAL_OFFSET (SPGradientSelectorClass, grabbed),
+    signals[GRABBED] =  g_signal_new ("grabbed",
+                                        G_TYPE_FROM_CLASS(object_class),
+                                        (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                        G_STRUCT_OFFSET (SPGradientSelectorClass, grabbed),
+					NULL, NULL,
                                         gtk_marshal_NONE__NONE,
-                                        GTK_TYPE_NONE, 0);
-    signals[DRAGGED] =  gtk_signal_new ("dragged",
-                                        (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                        GTK_CLASS_TYPE(object_class),
-                                        GTK_SIGNAL_OFFSET (SPGradientSelectorClass, dragged),
+                                        G_TYPE_NONE, 0);
+    signals[DRAGGED] =  g_signal_new ("dragged",
+                                        G_TYPE_FROM_CLASS(object_class),
+                                        (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                        G_STRUCT_OFFSET (SPGradientSelectorClass, dragged),
+					NULL, NULL,
                                         gtk_marshal_NONE__NONE,
-                                        GTK_TYPE_NONE, 0);
-    signals[RELEASED] = gtk_signal_new ("released",
-                                        (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                        GTK_CLASS_TYPE(object_class),
-                                        GTK_SIGNAL_OFFSET (SPGradientSelectorClass, released),
+                                        G_TYPE_NONE, 0);
+    signals[RELEASED] = g_signal_new ("released",
+                                        G_TYPE_FROM_CLASS(object_class),
+                                        (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                        G_STRUCT_OFFSET (SPGradientSelectorClass, released),
+					NULL, NULL,
                                         gtk_marshal_NONE__NONE,
-                                        GTK_TYPE_NONE, 0);
-    signals[CHANGED] =  gtk_signal_new ("changed",
-                                        (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                        GTK_CLASS_TYPE(object_class),
-                                        GTK_SIGNAL_OFFSET (SPGradientSelectorClass, changed),
+                                        G_TYPE_NONE, 0);
+    signals[CHANGED] =  g_signal_new ("changed",
+                                        G_TYPE_FROM_CLASS(object_class),
+                                        (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                        G_STRUCT_OFFSET (SPGradientSelectorClass, changed),
+					NULL, NULL,
                                         gtk_marshal_NONE__NONE,
-                                        GTK_TYPE_NONE, 0);
+                                        G_TYPE_NONE, 0);
 
     object_class->destroy = sp_gradient_selector_destroy;
 }

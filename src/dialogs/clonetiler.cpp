@@ -1529,8 +1529,8 @@ static GtkWidget * clonetiler_checkbox(const char *tip, const char *attr)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(b), value);
 
     gtk_box_pack_end (GTK_BOX (hb), b, FALSE, TRUE, 0);
-    gtk_signal_connect ( GTK_OBJECT (b), "clicked",
-                         GTK_SIGNAL_FUNC (clonetiler_checkbox_toggled), (gpointer) attr);
+    g_signal_connect ( G_OBJECT (b), "clicked",
+                         G_CALLBACK (clonetiler_checkbox_toggled), (gpointer) attr);
 
     g_object_set_data (G_OBJECT(b), "uncheckable", GINT_TO_POINTER(TRUE));
 
@@ -1570,8 +1570,8 @@ static GtkWidget * clonetiler_spinbox(const char *tip, const char *attr, double 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         double value = prefs->getDoubleLimited(prefs_path + attr, exponent? 1.0 : 0.0, lower, upper);
         gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
-        gtk_signal_connect(GTK_OBJECT(a), "value_changed",
-                           GTK_SIGNAL_FUNC(clonetiler_value_changed), (gpointer) attr);
+        g_signal_connect(G_OBJECT(a), "value_changed",
+                           G_CALLBACK(clonetiler_value_changed), (gpointer) attr);
 
         if (exponent) {
             g_object_set_data (G_OBJECT(sb), "oneable", GINT_TO_POINTER(TRUE));
@@ -1824,10 +1824,10 @@ void clonetiler_dialog(void)
         wd.stop = 0;
 
 
-        gtk_signal_connect ( GTK_OBJECT (dlg), "event", GTK_SIGNAL_FUNC (sp_dialog_event_handler), dlg);
+        g_signal_connect ( G_OBJECT (dlg), "event", G_CALLBACK (sp_dialog_event_handler), dlg);
 
-        gtk_signal_connect ( GTK_OBJECT (dlg), "destroy", G_CALLBACK (clonetiler_dialog_destroy), dlg);
-        gtk_signal_connect ( GTK_OBJECT (dlg), "delete_event", G_CALLBACK (clonetiler_dialog_delete), dlg);
+        g_signal_connect ( G_OBJECT (dlg), "destroy", G_CALLBACK (clonetiler_dialog_destroy), dlg);
+        g_signal_connect ( G_OBJECT (dlg), "delete_event", G_CALLBACK (clonetiler_dialog_delete), dlg);
 
         g_signal_connect   ( G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (clonetiler_dialog_delete), dlg);
         g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg);
@@ -1894,8 +1894,8 @@ void clonetiler_dialog(void)
                 GtkWidget *item = gtk_menu_item_new ();
                 gtk_container_add (GTK_CONTAINER (item), l);
 
-                gtk_signal_connect ( GTK_OBJECT (item), "activate",
-                                     GTK_SIGNAL_FUNC (clonetiler_symgroup_changed),
+                g_signal_connect ( G_OBJECT (item), "activate",
+                                     G_CALLBACK (clonetiler_symgroup_changed),
                                      GINT_TO_POINTER (sg.group) );
 
                 gtk_menu_append (GTK_MENU (m), item);
@@ -2518,8 +2518,8 @@ void clonetiler_dialog(void)
             gtk_widget_set_tooltip_text (b, _("For each clone, pick a value from the drawing in that clone's location and apply it to the clone"));
             gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
 
-            gtk_signal_connect(GTK_OBJECT(b), "toggled",
-                               GTK_SIGNAL_FUNC(clonetiler_do_pick_toggled), dlg);
+            g_signal_connect(G_OBJECT(b), "toggled",
+                               G_CALLBACK(clonetiler_do_pick_toggled), dlg);
         }
 
         {
@@ -2543,64 +2543,64 @@ void clonetiler_dialog(void)
                     radio = gtk_radio_button_new_with_label (NULL, _("Color"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the visible color and opacity"));
                     clonetiler_table_attach (table, radio, 0.0, 1, 1);
-                    gtk_signal_connect (GTK_OBJECT (radio), "toggled",
-                                        GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_COLOR));
+                    g_signal_connect (G_OBJECT (radio), "toggled",
+                                        G_CALLBACK (clonetiler_pick_switched), GINT_TO_POINTER(PICK_COLOR));
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_COLOR);
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("Opacity"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the total accumulated opacity"));
                     clonetiler_table_attach (table, radio, 0.0, 2, 1);
-                    gtk_signal_connect (GTK_OBJECT (radio), "toggled",
-                                        GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_OPACITY));
+                    g_signal_connect (G_OBJECT (radio), "toggled",
+                                        G_CALLBACK (clonetiler_pick_switched), GINT_TO_POINTER(PICK_OPACITY));
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_OPACITY);
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("R"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the Red component of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 1, 2);
-                    gtk_signal_connect (GTK_OBJECT (radio), "toggled",
-                                        GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_R));
+                    g_signal_connect (G_OBJECT (radio), "toggled",
+                                        G_CALLBACK (clonetiler_pick_switched), GINT_TO_POINTER(PICK_R));
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_R);
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("G"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the Green component of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 2, 2);
-                    gtk_signal_connect (GTK_OBJECT (radio), "toggled",
-                                        GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_G));
+                    g_signal_connect (G_OBJECT (radio), "toggled",
+                                        G_CALLBACK (clonetiler_pick_switched), GINT_TO_POINTER(PICK_G));
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_G);
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("B"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the Blue component of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 3, 2);
-                    gtk_signal_connect (GTK_OBJECT (radio), "toggled",
-                                        GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_B));
+                    g_signal_connect (G_OBJECT (radio), "toggled",
+                                        G_CALLBACK (clonetiler_pick_switched), GINT_TO_POINTER(PICK_B));
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_B);
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color hue", "H"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the hue of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 1, 3);
-                    gtk_signal_connect (GTK_OBJECT (radio), "toggled",
-                                        GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_H));
+                    g_signal_connect (G_OBJECT (radio), "toggled",
+                                        G_CALLBACK (clonetiler_pick_switched), GINT_TO_POINTER(PICK_H));
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_H);
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color saturation", "S"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the saturation of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 2, 3);
-                    gtk_signal_connect (GTK_OBJECT (radio), "toggled",
-                                        GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_S));
+                    g_signal_connect (G_OBJECT (radio), "toggled",
+                                        G_CALLBACK (clonetiler_pick_switched), GINT_TO_POINTER(PICK_S));
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_S);
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color lightness", "L"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the lightness of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 3, 3);
-                    gtk_signal_connect (GTK_OBJECT (radio), "toggled",
-                                        GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_L));
+                    g_signal_connect (G_OBJECT (radio), "toggled",
+                                        G_CALLBACK (clonetiler_pick_switched), GINT_TO_POINTER(PICK_L));
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_L);
                 }
 
@@ -2664,8 +2664,8 @@ void clonetiler_dialog(void)
                     gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
                     gtk_widget_set_tooltip_text (b, _("Each clone is created with the probability determined by the picked value in that point"));
                     clonetiler_table_attach (table, b, 0.0, 1, 1);
-                    gtk_signal_connect(GTK_OBJECT(b), "toggled",
-                                       GTK_SIGNAL_FUNC(clonetiler_pick_to), (gpointer) "pick_to_presence");
+                    g_signal_connect(G_OBJECT(b), "toggled",
+                                       G_CALLBACK(clonetiler_pick_to), (gpointer) "pick_to_presence");
                 }
 
                 {
@@ -2674,8 +2674,8 @@ void clonetiler_dialog(void)
                     gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
                     gtk_widget_set_tooltip_text (b, _("Each clone's size is determined by the picked value in that point"));
                     clonetiler_table_attach (table, b, 0.0, 2, 1);
-                    gtk_signal_connect(GTK_OBJECT(b), "toggled",
-                                       GTK_SIGNAL_FUNC(clonetiler_pick_to), (gpointer) "pick_to_size");
+                    g_signal_connect(G_OBJECT(b), "toggled",
+                                       G_CALLBACK(clonetiler_pick_to), (gpointer) "pick_to_size");
                 }
 
                 {
@@ -2684,8 +2684,8 @@ void clonetiler_dialog(void)
                     gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
                     gtk_widget_set_tooltip_text (b, _("Each clone is painted by the picked color (the original must have unset fill or stroke)"));
                     clonetiler_table_attach (table, b, 0.0, 1, 2);
-                    gtk_signal_connect(GTK_OBJECT(b), "toggled",
-                                       GTK_SIGNAL_FUNC(clonetiler_pick_to), (gpointer) "pick_to_color");
+                    g_signal_connect(G_OBJECT(b), "toggled",
+                                       G_CALLBACK(clonetiler_pick_to), (gpointer) "pick_to_color");
                 }
 
                 {
@@ -2694,8 +2694,8 @@ void clonetiler_dialog(void)
                     gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
                     gtk_widget_set_tooltip_text (b, _("Each clone's opacity is determined by the picked value in that point"));
                     clonetiler_table_attach (table, b, 0.0, 2, 2);
-                    gtk_signal_connect(GTK_OBJECT(b), "toggled",
-                                       GTK_SIGNAL_FUNC(clonetiler_pick_to), (gpointer) "pick_to_opacity");
+                    g_signal_connect(G_OBJECT(b), "toggled",
+                                       G_CALLBACK(clonetiler_pick_to), (gpointer) "pick_to_opacity");
                 }
             }
            gtk_widget_set_sensitive (vvb, prefs->getBool(prefs_path + "dotrace"));
@@ -2723,8 +2723,8 @@ void clonetiler_dialog(void)
                     gtk_entry_set_width_chars (GTK_ENTRY (sb), 5);
                     gtk_box_pack_start (GTK_BOX (hb), sb, TRUE, TRUE, 0);
 
-                    gtk_signal_connect(GTK_OBJECT(a), "value_changed",
-                                       GTK_SIGNAL_FUNC(clonetiler_xy_changed), (gpointer) "jmax");
+                    g_signal_connect(G_OBJECT(a), "value_changed",
+                                       G_CALLBACK(clonetiler_xy_changed), (gpointer) "jmax");
                 }
 
                 {
@@ -2743,8 +2743,8 @@ void clonetiler_dialog(void)
                     gtk_entry_set_width_chars (GTK_ENTRY (sb), 5);
                     gtk_box_pack_start (GTK_BOX (hb), sb, TRUE, TRUE, 0);
 
-                    gtk_signal_connect(GTK_OBJECT(a), "value_changed",
-                                       GTK_SIGNAL_FUNC(clonetiler_xy_changed), (gpointer) "imax");
+                    g_signal_connect(G_OBJECT(a), "value_changed",
+                                       G_CALLBACK(clonetiler_xy_changed), (gpointer) "imax");
                 }
 
                 clonetiler_table_attach (table, hb, 0.0, 1, 2);
@@ -2772,8 +2772,8 @@ void clonetiler_dialog(void)
                     gtk_widget_set_tooltip_text (e, _("Width of the rectangle to be filled"));
                     gtk_entry_set_width_chars (GTK_ENTRY (e), 5);
                     gtk_box_pack_start (GTK_BOX (hb), e, TRUE, TRUE, 0);
-                    gtk_signal_connect(GTK_OBJECT(a), "value_changed",
-                                       GTK_SIGNAL_FUNC(clonetiler_fill_width_changed), u);
+                    g_signal_connect(G_OBJECT(a), "value_changed",
+                                       G_CALLBACK(clonetiler_fill_width_changed), u);
                 }
                 {
                     GtkWidget *l = gtk_label_new ("");
@@ -2797,8 +2797,8 @@ void clonetiler_dialog(void)
                     gtk_widget_set_tooltip_text (e, _("Height of the rectangle to be filled"));
                     gtk_entry_set_width_chars (GTK_ENTRY (e), 5);
                     gtk_box_pack_start (GTK_BOX (hb), e, TRUE, TRUE, 0);
-                    gtk_signal_connect(GTK_OBJECT(a), "value_changed",
-                                       GTK_SIGNAL_FUNC(clonetiler_fill_height_changed), u);
+                    g_signal_connect(G_OBJECT(a), "value_changed",
+                                       G_CALLBACK(clonetiler_fill_height_changed), u);
                 }
 
                 gtk_box_pack_start (GTK_BOX (hb), u, TRUE, TRUE, 0);
@@ -2812,7 +2812,7 @@ void clonetiler_dialog(void)
                 radio = gtk_radio_button_new_with_label (NULL, _("Rows, columns: "));
                 gtk_widget_set_tooltip_text (radio, _("Create the specified number of rows and columns"));
                 clonetiler_table_attach (table, radio, 0.0, 1, 1);
-                gtk_signal_connect (GTK_OBJECT (radio), "toggled", GTK_SIGNAL_FUNC (clonetiler_switch_to_create), (gpointer) dlg);
+                g_signal_connect (G_OBJECT (radio), "toggled", G_CALLBACK (clonetiler_switch_to_create), (gpointer) dlg);
             }
             if (!prefs->getBool(prefs_path + "fillrect")) {
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
@@ -2822,7 +2822,7 @@ void clonetiler_dialog(void)
                 radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("Width, height: "));
                 gtk_widget_set_tooltip_text (radio, _("Fill the specified width and height with the tiling"));
                 clonetiler_table_attach (table, radio, 0.0, 2, 1);
-                gtk_signal_connect (GTK_OBJECT (radio), "toggled", GTK_SIGNAL_FUNC (clonetiler_switch_to_fill), (gpointer) dlg);
+                g_signal_connect (G_OBJECT (radio), "toggled", G_CALLBACK (clonetiler_switch_to_fill), (gpointer) dlg);
             }
             if (prefs->getBool(prefs_path + "fillrect")) {
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
@@ -2842,8 +2842,8 @@ void clonetiler_dialog(void)
             gtk_widget_set_tooltip_text (b, _("Pretend that the size and position of the tile are the same as the last time you tiled it (if any), instead of using the current size"));
             gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
 
-            gtk_signal_connect(GTK_OBJECT(b), "toggled",
-                               GTK_SIGNAL_FUNC(clonetiler_keep_bbox_toggled), NULL);
+            g_signal_connect(G_OBJECT(b), "toggled",
+                               G_CALLBACK(clonetiler_keep_bbox_toggled), NULL);
         }
 
 // Statusbar
@@ -2866,7 +2866,7 @@ void clonetiler_dialog(void)
                 gtk_label_set_markup_with_mnemonic (GTK_LABEL(l), _(" <b>_Create</b> "));
                 gtk_container_add (GTK_CONTAINER(b), l);
                 gtk_widget_set_tooltip_text (b, _("Create and tile the clones of the selection"));
-                gtk_signal_connect (GTK_OBJECT (b), "clicked", GTK_SIGNAL_FUNC (clonetiler_apply), NULL);
+                g_signal_connect (G_OBJECT (b), "clicked", G_CALLBACK (clonetiler_apply), NULL);
                 gtk_box_pack_end (GTK_BOX (hb), b, FALSE, FALSE, 0);
             }
 
@@ -2882,14 +2882,14 @@ void clonetiler_dialog(void)
                     //  So unclumping is the process of spreading a number of objects out more evenly.
                     GtkWidget *b = gtk_button_new_with_mnemonic (_(" _Unclump "));
                     gtk_widget_set_tooltip_text (b, _("Spread out clones to reduce clumping; can be applied repeatedly"));
-                    gtk_signal_connect (GTK_OBJECT (b), "clicked", GTK_SIGNAL_FUNC (clonetiler_unclump), NULL);
+                    g_signal_connect (G_OBJECT (b), "clicked", G_CALLBACK (clonetiler_unclump), NULL);
                     gtk_box_pack_end (GTK_BOX (sb), b, FALSE, FALSE, 0);
                 }
 
                 {
                     GtkWidget *b = gtk_button_new_with_mnemonic (_(" Re_move "));
                     gtk_widget_set_tooltip_text (b, _("Remove existing tiled clones of the selected object (siblings only)"));
-                    gtk_signal_connect (GTK_OBJECT (b), "clicked", GTK_SIGNAL_FUNC (clonetiler_remove), NULL);
+                    g_signal_connect (G_OBJECT (b), "clicked", G_CALLBACK (clonetiler_remove), NULL);
                     gtk_box_pack_end (GTK_BOX (sb), b, FALSE, FALSE, 0);
                 }
 
@@ -2907,7 +2907,7 @@ void clonetiler_dialog(void)
                 GtkWidget *b = gtk_button_new_with_mnemonic (_(" R_eset "));
                 // TRANSLATORS: "change" is a noun here
                 gtk_widget_set_tooltip_text (b, _("Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"));
-                gtk_signal_connect (GTK_OBJECT (b), "clicked", GTK_SIGNAL_FUNC (clonetiler_reset), NULL);
+                g_signal_connect (G_OBJECT (b), "clicked", G_CALLBACK (clonetiler_reset), NULL);
                 gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
             }
         }

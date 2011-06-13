@@ -318,7 +318,7 @@ void ColorNotebook::init()
         // but first fix it so it remembers its settings in prefs and does not take that much space (entire vertical column!)
         //gtk_table_attach (GTK_TABLE (table), align, 2, 3, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD);
 
-        gtk_signal_connect_object(GTK_OBJECT(_btn), "event", GTK_SIGNAL_FUNC (sp_color_notebook_menu_handler), GTK_OBJECT(_csel));
+        g_signal_connect_swapped(G_OBJECT(_btn), "event", G_CALLBACK (sp_color_notebook_menu_handler), G_OBJECT(_csel));
         if ( !found )
         {
             gtk_widget_set_sensitive (_btn, FALSE);
@@ -383,10 +383,10 @@ void ColorNotebook::init()
     gtk_table_attach (GTK_TABLE (table), _p, 2, 3, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD);
 #endif
 
-    _switchId = g_signal_connect(GTK_OBJECT (_book), "switch-page",
-                                 GTK_SIGNAL_FUNC (sp_color_notebook_switch_page), SP_COLOR_NOTEBOOK(_csel));
+    _switchId = g_signal_connect(G_OBJECT (_book), "switch-page",
+                                 G_CALLBACK (sp_color_notebook_switch_page), SP_COLOR_NOTEBOOK(_csel));
 
-    _entryId = gtk_signal_connect (GTK_OBJECT (_rgbae), "changed", GTK_SIGNAL_FUNC (ColorNotebook::_rgbaEntryChangedHook), _csel);
+    _entryId = g_signal_connect (G_OBJECT (_rgbae), "changed", G_CALLBACK (ColorNotebook::_rgbaEntryChangedHook), _csel);
 }
 
 static void
@@ -648,10 +648,10 @@ GtkWidget* ColorNotebook::addPage(GType page_type, guint submode)
 //         g_message( "Hitting up for tab for '%s'", str );
         tab_label = gtk_label_new(_(str));
         gtk_notebook_append_page( GTK_NOTEBOOK (_book), page, tab_label );
-        gtk_signal_connect (GTK_OBJECT (page), "grabbed", GTK_SIGNAL_FUNC (_entryGrabbed), _csel);
-        gtk_signal_connect (GTK_OBJECT (page), "dragged", GTK_SIGNAL_FUNC (_entryDragged), _csel);
-        gtk_signal_connect (GTK_OBJECT (page), "released", GTK_SIGNAL_FUNC (_entryReleased), _csel);
-        gtk_signal_connect (GTK_OBJECT (page), "changed", GTK_SIGNAL_FUNC (_entryChanged), _csel);
+        g_signal_connect (G_OBJECT (page), "grabbed", G_CALLBACK (_entryGrabbed), _csel);
+        g_signal_connect (G_OBJECT (page), "dragged", G_CALLBACK (_entryDragged), _csel);
+        g_signal_connect (G_OBJECT (page), "released", G_CALLBACK (_entryReleased), _csel);
+        g_signal_connect (G_OBJECT (page), "changed", G_CALLBACK (_entryChanged), _csel);
     }
 
     return page;

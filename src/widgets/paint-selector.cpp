@@ -164,42 +164,48 @@ sp_paint_selector_class_init(SPPaintSelectorClass *klass)
 
     parent_class = (GtkVBoxClass*)gtk_type_class(GTK_TYPE_VBOX);
 
-    psel_signals[MODE_CHANGED] = gtk_signal_new("mode_changed",
-                                                (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                                GTK_CLASS_TYPE(object_class),
-                                                GTK_SIGNAL_OFFSET(SPPaintSelectorClass, mode_changed),
+    psel_signals[MODE_CHANGED] = g_signal_new("mode_changed",
+                                                G_TYPE_FROM_CLASS(object_class),
+                                                (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                                G_STRUCT_OFFSET(SPPaintSelectorClass, mode_changed),
+						NULL, NULL,
                                                 gtk_marshal_NONE__UINT,
-                                                GTK_TYPE_NONE, 1, GTK_TYPE_UINT);
-    psel_signals[GRABBED] =  gtk_signal_new("grabbed",
-                                            (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                            GTK_CLASS_TYPE(object_class),
-                                            GTK_SIGNAL_OFFSET(SPPaintSelectorClass, grabbed),
+                                                G_TYPE_NONE, 1, GTK_TYPE_UINT);
+    psel_signals[GRABBED] =  g_signal_new("grabbed",
+                                            G_TYPE_FROM_CLASS(object_class),
+                                            (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                            G_STRUCT_OFFSET(SPPaintSelectorClass, grabbed),
+					    NULL, NULL,
                                             gtk_marshal_NONE__NONE,
-                                            GTK_TYPE_NONE, 0);
-    psel_signals[DRAGGED] =  gtk_signal_new("dragged",
-                                            (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                            GTK_CLASS_TYPE(object_class),
-                                            GTK_SIGNAL_OFFSET(SPPaintSelectorClass, dragged),
+                                            G_TYPE_NONE, 0);
+    psel_signals[DRAGGED] =  g_signal_new("dragged",
+                                            G_TYPE_FROM_CLASS(object_class),
+                                            (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                            G_STRUCT_OFFSET(SPPaintSelectorClass, dragged),
+					    NULL, NULL,
                                             gtk_marshal_NONE__NONE,
-                                            GTK_TYPE_NONE, 0);
-    psel_signals[RELEASED] = gtk_signal_new("released",
-                                            (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                            GTK_CLASS_TYPE(object_class),
-                                            GTK_SIGNAL_OFFSET(SPPaintSelectorClass, released),
+                                            G_TYPE_NONE, 0);
+    psel_signals[RELEASED] = g_signal_new("released",
+                                            G_TYPE_FROM_CLASS(object_class),
+                                            (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                            G_STRUCT_OFFSET(SPPaintSelectorClass, released),
+					    NULL, NULL,
                                             gtk_marshal_NONE__NONE,
-                                            GTK_TYPE_NONE, 0);
-    psel_signals[CHANGED] =  gtk_signal_new("changed",
-                                            (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                            GTK_CLASS_TYPE(object_class),
-                                            GTK_SIGNAL_OFFSET(SPPaintSelectorClass, changed),
+                                            G_TYPE_NONE, 0);
+    psel_signals[CHANGED] =  g_signal_new("changed",
+                                            G_TYPE_FROM_CLASS(object_class),
+                                            (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                            G_STRUCT_OFFSET(SPPaintSelectorClass, changed),
+					    NULL, NULL,
                                             gtk_marshal_NONE__NONE,
-                                            GTK_TYPE_NONE, 0);
-    psel_signals[FILLRULE_CHANGED] = gtk_signal_new("fillrule_changed",
-                                                    (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                                    GTK_CLASS_TYPE(object_class),
-                                                    GTK_SIGNAL_OFFSET(SPPaintSelectorClass, fillrule_changed),
+                                            G_TYPE_NONE, 0);
+    psel_signals[FILLRULE_CHANGED] = g_signal_new("fillrule_changed",
+                                                    G_TYPE_FROM_CLASS(object_class),
+                                                    (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                                    G_STRUCT_OFFSET(SPPaintSelectorClass, fillrule_changed),
+						    NULL, NULL,
                                                     gtk_marshal_NONE__UINT,
-                                                    GTK_TYPE_NONE, 1, GTK_TYPE_UINT);
+                                                    G_TYPE_NONE, 1, GTK_TYPE_UINT);
 
     object_class->destroy = sp_paint_selector_destroy;
 }
@@ -249,7 +255,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
         w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_FILL_RULE_EVEN_ODD);
         gtk_container_add(GTK_CONTAINER(psel->evenodd), w);
         gtk_box_pack_start(GTK_BOX(psel->fillrulebox), psel->evenodd, FALSE, FALSE, 0);
-        gtk_signal_connect(GTK_OBJECT(psel->evenodd), "toggled", GTK_SIGNAL_FUNC(sp_paint_selector_fillrule_toggled), psel);
+        g_signal_connect(G_OBJECT(psel->evenodd), "toggled", G_CALLBACK(sp_paint_selector_fillrule_toggled), psel);
 
         psel->nonzero = gtk_radio_button_new(gtk_radio_button_group(GTK_RADIO_BUTTON(psel->evenodd)));
         gtk_button_set_relief(GTK_BUTTON(psel->nonzero), GTK_RELIEF_NONE);
@@ -260,7 +266,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
         w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_FILL_RULE_NONZERO);
         gtk_container_add(GTK_CONTAINER(psel->nonzero), w);
         gtk_box_pack_start(GTK_BOX(psel->fillrulebox), psel->nonzero, FALSE, FALSE, 0);
-        gtk_signal_connect(GTK_OBJECT(psel->nonzero), "toggled", GTK_SIGNAL_FUNC(sp_paint_selector_fillrule_toggled), psel);
+        g_signal_connect(G_OBJECT(psel->nonzero), "toggled", G_CALLBACK(sp_paint_selector_fillrule_toggled), psel);
     }
 
     /* Frame */
@@ -308,7 +314,7 @@ static GtkWidget *sp_paint_selector_style_button_add(SPPaintSelector *psel,
     gtk_container_add(GTK_CONTAINER(b), w);
 
     gtk_box_pack_start(GTK_BOX(psel->style), b, FALSE, FALSE, 0);
-    gtk_signal_connect(GTK_OBJECT(b), "toggled", GTK_SIGNAL_FUNC(sp_paint_selector_style_button_toggled), psel);
+    g_signal_connect(G_OBJECT(b), "toggled", G_CALLBACK(sp_paint_selector_style_button_toggled), psel);
 
     return b;
 }
@@ -326,7 +332,7 @@ sp_paint_selector_fillrule_toggled(GtkToggleButton *tb, SPPaintSelector *psel)
 {
     if (!psel->update && gtk_toggle_button_get_active(tb)) {
         SPPaintSelector::FillRule fr = static_cast<SPPaintSelector::FillRule>(GPOINTER_TO_UINT(g_object_get_data(G_OBJECT(tb), "mode")));
-        gtk_signal_emit(GTK_OBJECT(psel), psel_signals[FILLRULE_CHANGED], fr);
+        g_signal_emit(G_OBJECT(psel), psel_signals[FILLRULE_CHANGED], 0, fr);
     }
 }
 
@@ -397,7 +403,7 @@ void SPPaintSelector::setMode(Mode mode)
                 break;
         }
         this->mode = mode;
-        gtk_signal_emit(GTK_OBJECT(this), psel_signals[MODE_CHANGED], this->mode);
+        g_signal_emit(G_OBJECT(this), psel_signals[MODE_CHANGED], 0, this->mode);
         update = FALSE;
     }
 }
@@ -610,17 +616,17 @@ sp_paint_selector_set_mode_none(SPPaintSelector *psel)
 
 static void sp_paint_selector_color_grabbed(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    gtk_signal_emit(GTK_OBJECT(psel), psel_signals[GRABBED]);
+    g_signal_emit(G_OBJECT(psel), psel_signals[GRABBED], 0);
 }
 
 static void sp_paint_selector_color_dragged(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    gtk_signal_emit(GTK_OBJECT(psel), psel_signals[DRAGGED]);
+    g_signal_emit(G_OBJECT(psel), psel_signals[DRAGGED], 0);
 }
 
 static void sp_paint_selector_color_released(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    gtk_signal_emit(GTK_OBJECT(psel), psel_signals[RELEASED]);
+    g_signal_emit(G_OBJECT(psel), psel_signals[RELEASED], 0);
 }
 
 static void
@@ -628,7 +634,7 @@ sp_paint_selector_color_changed(SPColorSelector *csel, SPPaintSelector *psel)
 {
     csel->base->getColorAlpha( psel->color, psel->alpha );
 
-    gtk_signal_emit(GTK_OBJECT(psel), psel_signals[CHANGED]);
+    g_signal_emit(G_OBJECT(psel), psel_signals[CHANGED], 0);
 }
 
 static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelector::Mode /*mode*/)
@@ -654,10 +660,10 @@ static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelec
         gtk_widget_show(csel);
         gtk_object_set_data(GTK_OBJECT(vb), "color-selector", csel);
         gtk_box_pack_start(GTK_BOX(vb), csel, TRUE, TRUE, 0);
-        gtk_signal_connect(GTK_OBJECT(csel), "grabbed", GTK_SIGNAL_FUNC(sp_paint_selector_color_grabbed), psel);
-        gtk_signal_connect(GTK_OBJECT(csel), "dragged", GTK_SIGNAL_FUNC(sp_paint_selector_color_dragged), psel);
-        gtk_signal_connect(GTK_OBJECT(csel), "released", GTK_SIGNAL_FUNC(sp_paint_selector_color_released), psel);
-        gtk_signal_connect(GTK_OBJECT(csel), "changed", GTK_SIGNAL_FUNC(sp_paint_selector_color_changed), psel);
+        g_signal_connect(G_OBJECT(csel), "grabbed", G_CALLBACK(sp_paint_selector_color_grabbed), psel);
+        g_signal_connect(G_OBJECT(csel), "dragged", G_CALLBACK(sp_paint_selector_color_dragged), psel);
+        g_signal_connect(G_OBJECT(csel), "released", G_CALLBACK(sp_paint_selector_color_released), psel);
+        g_signal_connect(G_OBJECT(csel), "changed", G_CALLBACK(sp_paint_selector_color_changed), psel);
         /* Pack everything to frame */
         gtk_container_add(GTK_CONTAINER(psel->frame), vb);
         psel->selector = vb;
@@ -677,22 +683,22 @@ static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelec
 
 static void sp_paint_selector_gradient_grabbed(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    gtk_signal_emit(GTK_OBJECT(psel), psel_signals[GRABBED]);
+    g_signal_emit(G_OBJECT(psel), psel_signals[GRABBED], 0);
 }
 
 static void sp_paint_selector_gradient_dragged(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    gtk_signal_emit(GTK_OBJECT(psel), psel_signals[DRAGGED]);
+    g_signal_emit(G_OBJECT(psel), psel_signals[DRAGGED], 0);
 }
 
 static void sp_paint_selector_gradient_released(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    gtk_signal_emit(GTK_OBJECT(psel), psel_signals[RELEASED]);
+    g_signal_emit(G_OBJECT(psel), psel_signals[RELEASED], 0);
 }
 
 static void sp_paint_selector_gradient_changed(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    gtk_signal_emit(GTK_OBJECT(psel), psel_signals[CHANGED]);
+    g_signal_emit(G_OBJECT(psel), psel_signals[CHANGED], 0);
 }
 
 static void sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSelector::Mode mode)
@@ -716,10 +722,10 @@ static void sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSe
         /* Create new gradient selector */
         gsel = sp_gradient_selector_new();
         gtk_widget_show(gsel);
-        gtk_signal_connect(GTK_OBJECT(gsel), "grabbed", GTK_SIGNAL_FUNC(sp_paint_selector_gradient_grabbed), psel);
-        gtk_signal_connect(GTK_OBJECT(gsel), "dragged", GTK_SIGNAL_FUNC(sp_paint_selector_gradient_dragged), psel);
-        gtk_signal_connect(GTK_OBJECT(gsel), "released", GTK_SIGNAL_FUNC(sp_paint_selector_gradient_released), psel);
-        gtk_signal_connect(GTK_OBJECT(gsel), "changed", GTK_SIGNAL_FUNC(sp_paint_selector_gradient_changed), psel);
+        g_signal_connect(G_OBJECT(gsel), "grabbed", G_CALLBACK(sp_paint_selector_gradient_grabbed), psel);
+        g_signal_connect(G_OBJECT(gsel), "dragged", G_CALLBACK(sp_paint_selector_gradient_dragged), psel);
+        g_signal_connect(G_OBJECT(gsel), "released", G_CALLBACK(sp_paint_selector_gradient_released), psel);
+        g_signal_connect(G_OBJECT(gsel), "changed", G_CALLBACK(sp_paint_selector_gradient_changed), psel);
         /* Pack everything to frame */
         gtk_container_add(GTK_CONTAINER(psel->frame), gsel);
         psel->selector = gsel;
@@ -760,7 +766,7 @@ static void sp_psel_pattern_destroy(GtkWidget *widget, SPPaintSelector * /*psel*
 
 static void sp_psel_pattern_change(GtkWidget * /*widget*/, SPPaintSelector *psel)
 {
-    gtk_signal_emit(GTK_OBJECT(psel), psel_signals[CHANGED]);
+    g_signal_emit(G_OBJECT(psel), psel_signals[CHANGED], 0);
 }
 
 
@@ -991,8 +997,8 @@ static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSel
 
             GtkWidget *mnu = gtk_option_menu_new();
             ink_pattern_menu(mnu);
-            gtk_signal_connect(GTK_OBJECT(mnu), "changed", GTK_SIGNAL_FUNC(sp_psel_pattern_change), psel);
-            gtk_signal_connect(GTK_OBJECT(mnu), "destroy", GTK_SIGNAL_FUNC(sp_psel_pattern_destroy), psel);
+            g_signal_connect(G_OBJECT(mnu), "changed", G_CALLBACK(sp_psel_pattern_change), psel);
+            g_signal_connect(G_OBJECT(mnu), "destroy", G_CALLBACK(sp_psel_pattern_destroy), psel);
             gtk_object_set_data(GTK_OBJECT(psel), "patternmenu", mnu);
             g_object_ref( G_OBJECT(mnu));
 

@@ -262,7 +262,7 @@ sp_export_spinbutton_new ( gchar const *key, float val, float min, float max,
     }
 
     if (cb)
-        gtk_signal_connect (adj, "value_changed", cb, dlg);
+        g_signal_connect (adj, "value_changed", cb, dlg);
 
     return;
 } // end of sp_export_spinbutton_new()
@@ -299,8 +299,8 @@ sp_export_dialog_area_box (GtkWidget * dlg)
         b->set_data("key", GINT_TO_POINTER(i));
         gtk_object_set_data (GTK_OBJECT (dlg), selection_names[i], b->gobj());
         togglebox->pack_start(*b, false, true, 0);
-        gtk_signal_connect ( GTK_OBJECT (b->gobj()), "clicked",
-                             GTK_SIGNAL_FUNC (sp_export_area_toggled), dlg );
+        g_signal_connect ( G_OBJECT (b->gobj()), "clicked",
+                             G_CALLBACK (sp_export_area_toggled), dlg );
     }
 
     g_signal_connect ( G_OBJECT (INKSCAPE), "change_selection",
@@ -432,13 +432,13 @@ sp_export_dialog (void)
         g_signal_connect   ( G_OBJECT (INKSCAPE), "activate_desktop",
                              G_CALLBACK (sp_transientize_callback), &wd);
 
-        gtk_signal_connect ( GTK_OBJECT (dlg), "event",
-                             GTK_SIGNAL_FUNC (sp_dialog_event_handler), dlg);
+        g_signal_connect ( G_OBJECT (dlg), "event",
+                             G_CALLBACK (sp_dialog_event_handler), dlg);
 
-        gtk_signal_connect ( GTK_OBJECT (dlg), "destroy",
+        g_signal_connect ( G_OBJECT (dlg), "destroy",
                              G_CALLBACK (sp_export_dialog_destroy), dlg);
 
-        gtk_signal_connect ( GTK_OBJECT (dlg), "delete_event",
+        g_signal_connect ( G_OBJECT (dlg), "delete_event",
                              G_CALLBACK (sp_export_dialog_delete), dlg);
 
         g_signal_connect   ( G_OBJECT (INKSCAPE), "shut_down",
@@ -657,8 +657,8 @@ sp_export_dialog (void)
 
             b->add(*image_label);
             gtk_widget_set_tooltip_text (GTK_WIDGET(b->gobj()), _("Export the bitmap file with these settings"));
-            gtk_signal_connect ( GTK_OBJECT (b->gobj()), "clicked",
-                                 GTK_SIGNAL_FUNC (sp_export_export_clicked), dlg );
+            g_signal_connect ( G_OBJECT (b->gobj()), "clicked",
+                                 G_CALLBACK (sp_export_export_clicked), dlg );
             bb->pack_end(*b, false, false, 0);
         }
 

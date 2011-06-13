@@ -77,10 +77,11 @@ sp_canvas_arena_class_init (SPCanvasArenaClass *klass)
 
     parent_class = (SPCanvasItemClass*)gtk_type_class (SP_TYPE_CANVAS_ITEM);
 
-    signals[ARENA_EVENT] = gtk_signal_new ("arena_event",
-                                           GTK_RUN_LAST,
-                                           GTK_CLASS_TYPE(object_class),
+    signals[ARENA_EVENT] = g_signal_new ("arena_event",
+                                           G_TYPE_FROM_CLASS(object_class),
+                                           G_SIGNAL_RUN_LAST,
                                            ((glong)((guint8*)&(klass->arena_event) - (guint8*)klass)),
+					   NULL, NULL,
                                            sp_marshal_INT__POINTER_POINTER,
                                            GTK_TYPE_INT, 2, GTK_TYPE_POINTER, GTK_TYPE_POINTER);
 
@@ -329,7 +330,7 @@ sp_canvas_arena_send_event (SPCanvasArena *arena, GdkEvent *event)
     gint ret = FALSE;
 
     /* Send event to arena */
-    gtk_signal_emit (GTK_OBJECT (arena), signals[ARENA_EVENT], arena->active, event, &ret);
+    g_signal_emit (G_OBJECT (arena), signals[ARENA_EVENT], 0, arena->active, event, &ret);
 
     return ret;
 }

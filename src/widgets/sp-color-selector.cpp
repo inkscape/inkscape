@@ -70,28 +70,32 @@ void sp_color_selector_class_init( SPColorSelectorClass *klass )
 
     parent_class = GTK_VBOX_CLASS( gtk_type_class(GTK_TYPE_VBOX) );
 
-    csel_signals[GRABBED] = gtk_signal_new( "grabbed",
-                                            (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                            GTK_CLASS_TYPE(object_class),
-                                            GTK_SIGNAL_OFFSET(SPColorSelectorClass, grabbed),
+    csel_signals[GRABBED] = g_signal_new( "grabbed",
+                                            G_TYPE_FROM_CLASS(object_class),
+                                            (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                            G_STRUCT_OFFSET(SPColorSelectorClass, grabbed),
+					    NULL, NULL,
                                             gtk_marshal_NONE__NONE,
                                             GTK_TYPE_NONE, 0 );
-    csel_signals[DRAGGED] = gtk_signal_new( "dragged",
-                                            (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                            GTK_CLASS_TYPE(object_class),
-                                            GTK_SIGNAL_OFFSET(SPColorSelectorClass, dragged),
+    csel_signals[DRAGGED] = g_signal_new( "dragged",
+                                            G_TYPE_FROM_CLASS(object_class),
+                                            (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                            G_STRUCT_OFFSET(SPColorSelectorClass, dragged),
+					    NULL, NULL,
                                             gtk_marshal_NONE__NONE,
                                             GTK_TYPE_NONE, 0 );
-    csel_signals[RELEASED] = gtk_signal_new( "released",
-                                             (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                             GTK_CLASS_TYPE(object_class),
-                                             GTK_SIGNAL_OFFSET(SPColorSelectorClass, released),
+    csel_signals[RELEASED] = g_signal_new( "released",
+                                             G_TYPE_FROM_CLASS(object_class),
+                                             (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                             G_STRUCT_OFFSET(SPColorSelectorClass, released),
+					     NULL, NULL,
                                              gtk_marshal_NONE__NONE,
                                              GTK_TYPE_NONE, 0 );
-    csel_signals[CHANGED] = gtk_signal_new( "changed",
-                                            (GtkSignalRunType)(GTK_RUN_FIRST | GTK_RUN_NO_RECURSE),
-                                            GTK_CLASS_TYPE(object_class),
-                                            GTK_SIGNAL_OFFSET(SPColorSelectorClass, changed),
+    csel_signals[CHANGED] = g_signal_new( "changed",
+                                            G_TYPE_FROM_CLASS(object_class),
+                                            (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
+                                            G_STRUCT_OFFSET(SPColorSelectorClass, changed),
+					    NULL, NULL,
                                             gtk_marshal_NONE__NONE,
                                             GTK_TYPE_NONE, 0 );
 
@@ -111,7 +115,7 @@ void sp_color_selector_init( SPColorSelector *csel )
     {
         csel->base->init();
     }
-/*   gtk_signal_connect(GTK_OBJECT(csel->rgbae), "changed", GTK_SIGNAL_FUNC(sp_color_selector_rgba_entry_changed), csel); */
+/*   g_signal_connect(G_OBJECT(csel->rgbae), "changed", G_CALLBACK(sp_color_selector_rgba_entry_changed), csel); */
 }
 
 void sp_color_selector_destroy( GtkObject *object )
@@ -230,7 +234,7 @@ void ColorSelector::setColorAlpha( const SPColor& color, gfloat alpha, bool emit
         _colorChanged();
 
         if (emit) {
-            gtk_signal_emit(GTK_OBJECT(_csel), csel_signals[CHANGED]);
+            g_signal_emit(G_OBJECT(_csel), csel_signals[CHANGED], 0);
         }
 #ifdef DUMP_CHANGE_INFO
     } else {
@@ -248,7 +252,7 @@ void ColorSelector::_grabbed()
                "GRABBED",
                FOO_NAME(_csel));
 #endif
-    gtk_signal_emit(GTK_OBJECT(_csel), csel_signals[GRABBED]);
+    g_signal_emit(G_OBJECT(_csel), csel_signals[GRABBED], 0);
 }
 
 void ColorSelector::_released()
@@ -259,8 +263,8 @@ void ColorSelector::_released()
                "RELEASED",
                FOO_NAME(_csel));
 #endif
-    gtk_signal_emit(GTK_OBJECT(_csel), csel_signals[RELEASED]);
-    gtk_signal_emit(GTK_OBJECT(_csel), csel_signals[CHANGED]);
+    g_signal_emit(G_OBJECT(_csel), csel_signals[RELEASED], 0);
+    g_signal_emit(G_OBJECT(_csel), csel_signals[CHANGED], 0);
 }
 
 // Called from subclasses to update color and broadcast if needed
@@ -288,7 +292,7 @@ void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, gboole
                    "GRABBED",
                    color.toRGBA32( alpha ), (color.icc?color.icc->colorProfile.c_str():"<null>"), FOO_NAME(_csel));
 #endif
-        gtk_signal_emit(GTK_OBJECT(_csel), csel_signals[GRABBED]);
+        g_signal_emit(G_OBJECT(_csel), csel_signals[GRABBED], 0);
     }
     else if ( released )
     {
@@ -297,7 +301,7 @@ void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, gboole
                    "RELEASED",
                    color.toRGBA32( alpha ), (color.icc?color.icc->colorProfile.c_str():"<null>"), FOO_NAME(_csel));
 #endif
-        gtk_signal_emit(GTK_OBJECT(_csel), csel_signals[RELEASED]);
+        g_signal_emit(G_OBJECT(_csel), csel_signals[RELEASED], 0);
     }
 
     if ( colorDifferent || released )
@@ -307,7 +311,7 @@ void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, gboole
                    (_held ? "CHANGED" : "DRAGGED" ),
                    color.toRGBA32( alpha ), (color.icc?color.icc->colorProfile.c_str():"<null>"), FOO_NAME(_csel));
 #endif
-        gtk_signal_emit(GTK_OBJECT(_csel), csel_signals[_held ? CHANGED : DRAGGED]);
+        g_signal_emit(G_OBJECT(_csel), csel_signals[_held ? CHANGED : DRAGGED], 0);
     }
 }
 

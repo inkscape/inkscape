@@ -485,7 +485,7 @@ GtkWidget * gr_change_widget(SPDesktop *desktop)
         gtk_widget_set_tooltip_text(b, _("Edit the stops of the gradient"));
         gtk_widget_show(b);
         gtk_container_add(GTK_CONTAINER(hb), b);
-        gtk_signal_connect(GTK_OBJECT(b), "clicked", GTK_SIGNAL_FUNC(gr_edit), widget);
+        g_signal_connect(G_OBJECT(b), "clicked", G_CALLBACK(gr_edit), widget);
         gtk_box_pack_start (GTK_BOX(buttons), hb, FALSE, FALSE, 0);
     }
 

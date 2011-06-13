@@ -497,7 +497,7 @@ sp_find_types_checkbox (GtkWidget *w, const gchar *data, gboolean active,
         gtk_object_set_data (GTK_OBJECT (w), data, b);
         gtk_widget_set_tooltip_text (b, tip);
         if (toggled)
-            gtk_signal_connect (GTK_OBJECT (b), "toggled", GTK_SIGNAL_FUNC (toggled), w);
+            g_signal_connect (G_OBJECT (b), "toggled", G_CALLBACK (toggled), w);
         gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
     }
 
@@ -676,10 +676,10 @@ sp_find_dialog_old (void)
         wd.stop = 0;
         g_signal_connect   ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd );
 
-        gtk_signal_connect ( GTK_OBJECT (dlg), "event", GTK_SIGNAL_FUNC (sp_dialog_event_handler), dlg);
+        g_signal_connect ( G_OBJECT (dlg), "event", G_CALLBACK (sp_dialog_event_handler), dlg);
 
-        gtk_signal_connect ( GTK_OBJECT (dlg), "destroy", G_CALLBACK (sp_find_dialog_destroy), NULL );
-        gtk_signal_connect ( GTK_OBJECT (dlg), "delete_event", G_CALLBACK (sp_find_dialog_delete), dlg);
+        g_signal_connect ( G_OBJECT (dlg), "destroy", G_CALLBACK (sp_find_dialog_destroy), NULL );
+        g_signal_connect ( G_OBJECT (dlg), "delete_event", G_CALLBACK (sp_find_dialog_delete), dlg);
         g_signal_connect   ( G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (sp_find_dialog_delete), dlg);
 
         g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg);

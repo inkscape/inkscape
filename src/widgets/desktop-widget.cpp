@@ -498,8 +498,8 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     g_signal_connect (G_OBJECT (dtw->zoom_status), "input", G_CALLBACK (sp_dtw_zoom_input), dtw);
     g_signal_connect (G_OBJECT (dtw->zoom_status), "output", G_CALLBACK (sp_dtw_zoom_output), dtw);
     gtk_object_set_data (GTK_OBJECT (dtw->zoom_status), "dtw", dtw->canvas);
-    gtk_signal_connect (GTK_OBJECT (dtw->zoom_status), "focus-in-event", GTK_SIGNAL_FUNC (spinbutton_focus_in), dtw->zoom_status);
-    gtk_signal_connect (GTK_OBJECT (dtw->zoom_status), "key-press-event", GTK_SIGNAL_FUNC (spinbutton_keypress), dtw->zoom_status);
+    g_signal_connect (G_OBJECT (dtw->zoom_status), "focus-in-event", G_CALLBACK (spinbutton_focus_in), dtw->zoom_status);
+    g_signal_connect (G_OBJECT (dtw->zoom_status), "key-press-event", G_CALLBACK (spinbutton_keypress), dtw->zoom_status);
     dtw->zoom_update = g_signal_connect (G_OBJECT (dtw->zoom_status), "value_changed", G_CALLBACK (sp_dtw_zoom_value_changed), dtw);
     dtw->zoom_update = g_signal_connect (G_OBJECT (dtw->zoom_status), "populate_popup", G_CALLBACK (sp_dtw_zoom_populate_popup), dtw);
 
@@ -599,7 +599,7 @@ sp_desktop_widget_destroy (GtkObject *object)
         }
         g_signal_handlers_disconnect_by_func(G_OBJECT (dtw->zoom_status), (gpointer) G_CALLBACK(sp_dtw_zoom_input), dtw);
         g_signal_handlers_disconnect_by_func(G_OBJECT (dtw->zoom_status), (gpointer) G_CALLBACK(sp_dtw_zoom_output), dtw);
-        gtk_signal_disconnect_by_data (GTK_OBJECT (dtw->zoom_status), dtw->zoom_status);
+        g_signal_handlers_disconnect_matched (G_OBJECT (dtw->zoom_status), G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, dtw->zoom_status);
         g_signal_handlers_disconnect_by_func (G_OBJECT (dtw->zoom_status), (gpointer) G_CALLBACK (sp_dtw_zoom_value_changed), dtw);
         g_signal_handlers_disconnect_by_func (G_OBJECT (dtw->zoom_status), (gpointer) G_CALLBACK (sp_dtw_zoom_populate_popup), dtw);
         g_signal_handlers_disconnect_by_func (G_OBJECT (dtw->canvas), (gpointer) G_CALLBACK (sp_desktop_widget_event), dtw);

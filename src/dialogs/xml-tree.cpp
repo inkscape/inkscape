@@ -221,10 +221,10 @@ void sp_xml_tree_dialog()
         wd.stop = 0;
         g_signal_connect  ( G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK(sp_transientize_callback), &wd );
 
-        gtk_signal_connect( GTK_OBJECT(dlg), "event", GTK_SIGNAL_FUNC(sp_dialog_event_handler), dlg );
+        g_signal_connect( G_OBJECT(dlg), "event", G_CALLBACK(sp_dialog_event_handler), dlg );
 
-        gtk_signal_connect( GTK_OBJECT(dlg), "destroy", G_CALLBACK(on_destroy), dlg);
-        gtk_signal_connect( GTK_OBJECT(dlg), "delete_event", G_CALLBACK(on_delete), dlg);
+        g_signal_connect( G_OBJECT(dlg), "destroy", G_CALLBACK(on_destroy), dlg);
+        g_signal_connect( G_OBJECT(dlg), "delete_event", G_CALLBACK(on_delete), dlg);
         g_signal_connect  ( G_OBJECT(INKSCAPE), "shut_down", G_CALLBACK(on_delete), dlg);
 
         g_signal_connect  ( G_OBJECT(INKSCAPE), "dialogs_hide", G_CALLBACK(sp_dialog_hide), dlg);
@@ -495,15 +495,15 @@ void sp_xml_tree_dialog()
                                // TRANSLATORS: "Attribute" is a noun here
                                _("Attribute name") );
 
-        gtk_signal_connect( GTK_OBJECT(attributes), "select_row",
+        g_signal_connect( G_OBJECT(attributes), "select_row",
                             (GCallback) on_attr_select_row_set_name_content,
                              attr_name);
 
-        gtk_signal_connect( GTK_OBJECT(attributes), "unselect_row",
+        g_signal_connect( G_OBJECT(attributes), "unselect_row",
                             (GCallback) on_attr_unselect_row_clear_text,
                              attr_name);
 
-        gtk_signal_connect( GTK_OBJECT(tree), "tree_unselect_row",
+        g_signal_connect( G_OBJECT(tree), "tree_unselect_row",
                             (GCallback) on_tree_unselect_row_clear_text,
                              attr_name);
 
@@ -518,9 +518,9 @@ void sp_xml_tree_dialog()
         GtkWidget *set_label = gtk_label_new(_("Set"));
         gtk_container_add(GTK_CONTAINER(set_attr), set_label);
 
-        gtk_signal_connect( GTK_OBJECT(set_attr), "clicked",
+        g_signal_connect( G_OBJECT(set_attr), "clicked",
                             (GCallback) cmd_set_attr, NULL);
-        gtk_signal_connect( GTK_OBJECT(attr_name), "changed",
+        g_signal_connect( G_OBJECT(attr_name), "changed",
                    (GCallback) on_editable_changed_enable_if_valid_xml_name,
                     set_attr );
         gtk_widget_set_sensitive(GTK_WIDGET(set_attr), FALSE);
@@ -539,13 +539,13 @@ void sp_xml_tree_dialog()
         gtk_widget_set_tooltip_text( GTK_WIDGET(attr_value),
                                // TRANSLATORS: "Attribute" is a noun here
                                _("Attribute value") );
-        gtk_signal_connect( GTK_OBJECT(attributes), "select_row",
+        g_signal_connect( G_OBJECT(attributes), "select_row",
                             (GCallback) on_attr_select_row_set_value_content,
                              attr_value );
-        gtk_signal_connect( GTK_OBJECT(attributes), "unselect_row",
+        g_signal_connect( G_OBJECT(attributes), "unselect_row",
                             (GCallback) on_attr_unselect_row_clear_text,
                              attr_value );
-        gtk_signal_connect( GTK_OBJECT(tree), "tree_unselect_row",
+        g_signal_connect( G_OBJECT(tree), "tree_unselect_row",
                             (GCallback) on_tree_unselect_row_clear_text,
                              attr_value );
         gtk_text_view_set_editable(attr_value, TRUE);
@@ -1321,8 +1321,8 @@ void cmd_new_element_node(GtkObject */*object*/, gpointer /*data*/)
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     gtk_window_set_transient_for(GTK_WINDOW(window), GTK_WINDOW(dlg));
     gtk_window_set_modal(GTK_WINDOW(window), TRUE);
-    gtk_signal_connect(GTK_OBJECT(window), "destroy", gtk_main_quit, NULL);
-    gtk_signal_connect(GTK_OBJECT(window), "key-press-event", G_CALLBACK(quit_on_esc), window);
+    g_signal_connect(G_OBJECT(window), "destroy", gtk_main_quit, NULL);
+    g_signal_connect(G_OBJECT(window), "key-press-event", G_CALLBACK(quit_on_esc), window);
 
     vbox = gtk_vbox_new(FALSE, 4);
     gtk_container_add(GTK_CONTAINER(window), vbox);
@@ -1340,21 +1340,21 @@ void cmd_new_element_node(GtkObject */*object*/, gpointer /*data*/)
 
     cancel = gtk_button_new_with_label(_("Cancel"));
     gtk_widget_set_can_default( GTK_WIDGET(cancel), TRUE );
-    gtk_signal_connect_object( GTK_OBJECT(cancel), "clicked",
+    g_signal_connect_swapped( G_OBJECT(cancel), "clicked",
                                 G_CALLBACK(gtk_widget_destroy),
-                                GTK_OBJECT(window) );
+                                G_OBJECT(window) );
     gtk_container_add(GTK_CONTAINER(bbox), cancel);
 
     create = gtk_button_new_with_label(_("Create"));
     gtk_widget_set_sensitive(GTK_WIDGET(create), FALSE);
-    gtk_signal_connect( GTK_OBJECT(entry), "changed",
+    g_signal_connect( G_OBJECT(entry), "changed",
                     G_CALLBACK(on_editable_changed_enable_if_valid_xml_name),
                     create );
-    gtk_signal_connect( GTK_OBJECT(create), "clicked",
+    g_signal_connect( G_OBJECT(create), "clicked",
                          G_CALLBACK(on_clicked_get_editable_text), &name );
-    gtk_signal_connect_object( GTK_OBJECT(create), "clicked",
+    g_signal_connect_swapped( G_OBJECT(create), "clicked",
                                 G_CALLBACK(gtk_widget_destroy),
-                                GTK_OBJECT(window) );
+                                G_OBJECT(window) );
     gtk_widget_set_can_default( GTK_WIDGET(create), TRUE );
     gtk_widget_set_receives_default( GTK_WIDGET(create), TRUE );
     gtk_container_add(GTK_CONTAINER(bbox), create);

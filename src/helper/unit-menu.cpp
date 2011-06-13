@@ -205,7 +205,7 @@ spus_unit_activate(GtkWidget *widget, SPUnitSelector *us)
         /* when the base changes, signal all the adjustments to get them
          * to recalculate */
         for (GSList *l = us->adjustments; l != NULL; l = g_slist_next(l)) {
-            gtk_signal_emit_by_name(GTK_OBJECT(l->data), "value_changed");
+            g_signal_emit_by_name(G_OBJECT(l->data), "value_changed");
         }
     }
 
@@ -233,7 +233,7 @@ spus_rebuild_menu(SPUnitSelector *us)
         GtkWidget *i = gtk_menu_item_new_with_label( u->abbr );
 
         gtk_object_set_data(GTK_OBJECT(i), "unit", (gpointer) u);
-        gtk_signal_connect(GTK_OBJECT(i), "activate", GTK_SIGNAL_FUNC(spus_unit_activate), us);
+        g_signal_connect(G_OBJECT(i), "activate", G_CALLBACK(spus_unit_activate), us);
 
         sp_set_font_size_smaller (i);
 

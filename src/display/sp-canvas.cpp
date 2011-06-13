@@ -1360,7 +1360,7 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
 
     while (item && !finished) {
         gtk_object_ref (GTK_OBJECT (item));
-        gtk_signal_emit (GTK_OBJECT (item), item_signals[ITEM_EVENT], &ev, &finished);
+        g_signal_emit (G_OBJECT (item), item_signals[ITEM_EVENT], 0, &ev, &finished);
         SPCanvasItem *parent = item->parent;
         gtk_object_unref (GTK_OBJECT (item));
         item = parent;

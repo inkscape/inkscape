@@ -358,11 +358,11 @@ void ColorICCSelector::init()
 
 
         /* Signals */
-        gtk_signal_connect( GTK_OBJECT( _fooAdj[i] ), "value_changed", GTK_SIGNAL_FUNC( _adjustmentChanged ), _csel );
+        g_signal_connect( G_OBJECT( _fooAdj[i] ), "value_changed", G_CALLBACK( _adjustmentChanged ), _csel );
 
-        gtk_signal_connect( GTK_OBJECT( _fooSlider[i] ), "grabbed", GTK_SIGNAL_FUNC( _sliderGrabbed ), _csel );
-        gtk_signal_connect( GTK_OBJECT( _fooSlider[i] ), "released", GTK_SIGNAL_FUNC( _sliderReleased ), _csel );
-        gtk_signal_connect( GTK_OBJECT( _fooSlider[i] ), "changed", GTK_SIGNAL_FUNC( _sliderChanged ), _csel );
+        g_signal_connect( G_OBJECT( _fooSlider[i] ), "grabbed", G_CALLBACK( _sliderGrabbed ), _csel );
+        g_signal_connect( G_OBJECT( _fooSlider[i] ), "released", G_CALLBACK( _sliderReleased ), _csel );
+        g_signal_connect( G_OBJECT( _fooSlider[i] ), "changed", G_CALLBACK( _sliderChanged ), _csel );
 
         row++;
     }
@@ -397,15 +397,15 @@ void ColorICCSelector::init()
     gtk_table_attach (GTK_TABLE (t), _sbtn, 2, 3, row, row + 1, (GtkAttachOptions)0, (GtkAttachOptions)0, XPAD, YPAD);
 
     /* Signals */
-    gtk_signal_connect (GTK_OBJECT (_adj), "value_changed",
-                        GTK_SIGNAL_FUNC (_adjustmentChanged), _csel);
+    g_signal_connect (G_OBJECT (_adj), "value_changed",
+                        G_CALLBACK (_adjustmentChanged), _csel);
 
-    gtk_signal_connect (GTK_OBJECT (_slider), "grabbed",
-                        GTK_SIGNAL_FUNC (_sliderGrabbed), _csel);
-    gtk_signal_connect (GTK_OBJECT (_slider), "released",
-                        GTK_SIGNAL_FUNC (_sliderReleased), _csel);
-    gtk_signal_connect (GTK_OBJECT (_slider), "changed",
-                        GTK_SIGNAL_FUNC (_sliderChanged), _csel);
+    g_signal_connect (G_OBJECT (_slider), "grabbed",
+                        G_CALLBACK (_sliderGrabbed), _csel);
+    g_signal_connect (G_OBJECT (_slider), "released",
+                        G_CALLBACK (_sliderReleased), _csel);
+    g_signal_connect (G_OBJECT (_slider), "changed",
+                        G_CALLBACK (_sliderChanged), _csel);
 }
 
 static void
@@ -700,7 +700,7 @@ void ColorICCSelector::_setProfile( SVGICCColor* profile )
                                                 SPColor(1.0, 1.0, 1.0).toRGBA32(0xff) );
 /*
                     _fooAdj[i] = GTK_ADJUSTMENT( gtk_adjustment_new( val, 0.0, _fooScales[i],  step, page, page ) );
-                    gtk_signal_connect( GTK_OBJECT( _fooAdj[i] ), "value_changed", GTK_SIGNAL_FUNC( _adjustmentChanged ), _csel );
+                    g_signal_connect( G_OBJECT( _fooAdj[i] ), "value_changed", G_CALLBACK( _adjustmentChanged ), _csel );
 
                     sp_color_slider_set_adjustment( SP_COLOR_SLIDER(_fooSlider[i]), _fooAdj[i] );
                     gtk_spin_button_set_adjustment( GTK_SPIN_BUTTON(_fooBtn[i]), _fooAdj[i] );

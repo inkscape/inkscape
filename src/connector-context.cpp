@@ -1640,8 +1640,8 @@ static void cc_active_shape_add_knot(SPDesktop* desktop, SPItem* item, Connectio
                 knot->_event_handler_id);
         knot->_event_handler_id = 0;
 
-        gtk_signal_connect(GTK_OBJECT(knot->item), "event",
-                GTK_SIGNAL_FUNC(cc_generic_knot_handler), knot);
+        g_signal_connect(G_OBJECT(knot->item), "event",
+                G_CALLBACK(cc_generic_knot_handler), knot);
         sp_knot_set_position(knot, item->avoidRef->getConnectionPointPos(cp.type, cp.id) * desktop->doc2dt(), 0);
         sp_knot_show(knot);
         cphandles[knot] = cp;
@@ -1826,8 +1826,8 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
                     knot->_event_handler_id);
             knot->_event_handler_id = 0;
 
-            gtk_signal_connect(GTK_OBJECT(knot->item), "event",
-                    GTK_SIGNAL_FUNC(cc_generic_knot_handler), knot);
+            g_signal_connect(G_OBJECT(knot->item), "event",
+                    G_CALLBACK(cc_generic_knot_handler), knot);
 
             cc->endpt_handle[i] = knot;
         }

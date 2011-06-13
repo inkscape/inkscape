@@ -168,14 +168,14 @@ void ColorScales::init()
 		/* Attach channel value to adjustment */
 		gtk_object_set_data (GTK_OBJECT (_a[i]), "channel", GINT_TO_POINTER (i));
 		/* Signals */
-		gtk_signal_connect (GTK_OBJECT (_a[i]), "value_changed",
-					GTK_SIGNAL_FUNC (_adjustmentAnyChanged), _csel);
-		gtk_signal_connect (GTK_OBJECT (_s[i]), "grabbed",
-					GTK_SIGNAL_FUNC (_sliderAnyGrabbed), _csel);
-		gtk_signal_connect (GTK_OBJECT (_s[i]), "released",
-					GTK_SIGNAL_FUNC (_sliderAnyReleased), _csel);
-		gtk_signal_connect (GTK_OBJECT (_s[i]), "changed",
-					GTK_SIGNAL_FUNC (_sliderAnyChanged), _csel);
+		g_signal_connect (G_OBJECT (_a[i]), "value_changed",
+					G_CALLBACK (_adjustmentAnyChanged), _csel);
+		g_signal_connect (G_OBJECT (_s[i]), "grabbed",
+					G_CALLBACK (_sliderAnyGrabbed), _csel);
+		g_signal_connect (G_OBJECT (_s[i]), "released",
+					G_CALLBACK (_sliderAnyReleased), _csel);
+		g_signal_connect (G_OBJECT (_s[i]), "changed",
+					G_CALLBACK (_sliderAnyChanged), _csel);
 	}
 
 	/* Initial mode is none, so it works */

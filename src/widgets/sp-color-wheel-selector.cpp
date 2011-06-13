@@ -196,25 +196,25 @@ void ColorWheelSelector::init()
     gtk_table_attach (GTK_TABLE (t), _sbtn, 2, 3, row, row + 1, (GtkAttachOptions)0, (GtkAttachOptions)0, XPAD, YPAD);
 
     /* Signals */
-    gtk_signal_connect (GTK_OBJECT (_adj), "value_changed",
-                        GTK_SIGNAL_FUNC (_adjustmentChanged), _csel);
+    g_signal_connect (G_OBJECT (_adj), "value_changed",
+                        G_CALLBACK (_adjustmentChanged), _csel);
 
-    gtk_signal_connect (GTK_OBJECT (_slider), "grabbed",
-                        GTK_SIGNAL_FUNC (_sliderGrabbed), _csel);
-    gtk_signal_connect (GTK_OBJECT (_slider), "released",
-                        GTK_SIGNAL_FUNC (_sliderReleased), _csel);
-    gtk_signal_connect (GTK_OBJECT (_slider), "changed",
-                        GTK_SIGNAL_FUNC (_sliderChanged), _csel);
+    g_signal_connect (G_OBJECT (_slider), "grabbed",
+                        G_CALLBACK (_sliderGrabbed), _csel);
+    g_signal_connect (G_OBJECT (_slider), "released",
+                        G_CALLBACK (_sliderReleased), _csel);
+    g_signal_connect (G_OBJECT (_slider), "changed",
+                        G_CALLBACK (_sliderChanged), _csel);
 
-    gtk_signal_connect( GTK_OBJECT(_wheel), "changed",
-                        GTK_SIGNAL_FUNC(_wheelChanged), _csel );
+    g_signal_connect( G_OBJECT(_wheel), "changed",
+                        G_CALLBACK (_wheelChanged), _csel );
 
 
     // GTK does not automatically scale the color wheel, so we have to add that in:
-    gtk_signal_connect( GTK_OBJECT(_wheel), "size-allocate",
-                        GTK_SIGNAL_FUNC(handleWheelAllocation), _csel );
-    gtk_signal_connect( GTK_OBJECT(_wheel), "style-set",
-                        GTK_SIGNAL_FUNC(handleWheelStyleSet), _csel );
+    g_signal_connect( G_OBJECT (_wheel), "size-allocate",
+                        G_CALLBACK (handleWheelAllocation), _csel );
+    g_signal_connect( G_OBJECT (_wheel), "style-set",
+                        G_CALLBACK (handleWheelStyleSet), _csel );
 }
 
 static void

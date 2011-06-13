@@ -130,12 +130,13 @@ static void sp_font_selector_class_init(SPFontSelectorClass *c)
 
     fs_parent_class = (GtkHBoxClass* )gtk_type_class(GTK_TYPE_HBOX);
 
-    fs_signals[FONT_SET] = gtk_signal_new ("font_set",
-                                           GTK_RUN_FIRST,
-                                           GTK_CLASS_TYPE(object_class),
-                                           GTK_SIGNAL_OFFSET(SPFontSelectorClass, font_set),
+    fs_signals[FONT_SET] = g_signal_new ("font_set",
+                                           G_TYPE_FROM_CLASS(object_class),
+                                           G_SIGNAL_RUN_FIRST,
+                                           G_STRUCT_OFFSET(SPFontSelectorClass, font_set),
+					   NULL, NULL,
                                            gtk_marshal_NONE__POINTER,
-                                           GTK_TYPE_NONE,
+                                           G_TYPE_NONE,
                                            1, GTK_TYPE_POINTER);
 
     object_class->destroy = sp_font_selector_destroy;
@@ -388,7 +389,7 @@ static void sp_font_selector_emit_set (SPFontSelector *fsel)
             fsel->font->Unref();
         }
         fsel->font = font;
-        gtk_signal_emit(GTK_OBJECT(fsel), fs_signals[FONT_SET], fsel->font);
+        g_signal_emit(G_OBJECT(fsel), fs_signals[FONT_SET], 0, fsel->font);
     }
     fsel->fontsize_dirty = false;
     if (font) {

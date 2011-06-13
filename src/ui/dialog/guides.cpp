@@ -215,12 +215,12 @@ void GuidelinePropertiesDialog::_setup() {
     _relative_toggle.set_active(_relative_toggle_status);
 
     // don't know what this exactly does, but it results in that the dialog closes when entering a value and pressing enter (see LP bug 484187)
-    gtk_signal_connect_object(GTK_OBJECT(_spin_button_x.getWidget()->gobj()), "activate",
-                              GTK_SIGNAL_FUNC(gtk_window_activate_default), gobj());
-    gtk_signal_connect_object(GTK_OBJECT(_spin_button_y.getWidget()->gobj()), "activate",
-                              GTK_SIGNAL_FUNC(gtk_window_activate_default), gobj());
-    gtk_signal_connect_object(GTK_OBJECT(_spin_angle.getWidget()->gobj()), "activate",
-                              GTK_SIGNAL_FUNC(gtk_window_activate_default), gobj());
+    g_signal_connect_swapped(G_OBJECT(_spin_button_x.getWidget()->gobj()), "activate",
+                              G_CALLBACK(gtk_window_activate_default), gobj());
+    g_signal_connect_swapped(G_OBJECT(_spin_button_y.getWidget()->gobj()), "activate",
+                              G_CALLBACK(gtk_window_activate_default), gobj());
+    g_signal_connect_swapped(G_OBJECT(_spin_angle.getWidget()->gobj()), "activate",
+                              G_CALLBACK(gtk_window_activate_default), gobj());
 
 
     // dialog

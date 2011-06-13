@@ -91,11 +91,11 @@ sp_item_widget_new (void)
 
     /* Create container widget */
     spw = sp_widget_new_global (INKSCAPE);
-    gtk_signal_connect ( GTK_OBJECT (spw), "modify_selection",
-                         GTK_SIGNAL_FUNC (sp_item_widget_modify_selection),
+    g_signal_connect ( G_OBJECT (spw), "modify_selection",
+                         G_CALLBACK (sp_item_widget_modify_selection),
                          spw );
-    gtk_signal_connect ( GTK_OBJECT (spw), "change_selection",
-                         GTK_SIGNAL_FUNC (sp_item_widget_change_selection),
+    g_signal_connect ( G_OBJECT (spw), "change_selection",
+                         G_CALLBACK (sp_item_widget_change_selection),
                          spw );
 
     vb = gtk_vbox_new (FALSE, 0);
@@ -136,8 +136,8 @@ sp_item_widget_new (void)
     gtk_table_attach ( GTK_TABLE (t), pb, 2, 3, 0, 1,
                        (GtkAttachOptions)( GTK_SHRINK | GTK_FILL ),
                        (GtkAttachOptions)0, 0, 0 );
-    gtk_signal_connect ( GTK_OBJECT (pb), "clicked",
-                         GTK_SIGNAL_FUNC (sp_item_widget_label_changed),
+    g_signal_connect ( G_OBJECT (pb), "clicked",
+                         G_CALLBACK (sp_item_widget_label_changed),
                          spw );
 
     /* Create the label for the object label */
@@ -226,8 +226,8 @@ sp_item_widget_new (void)
     gtk_table_attach ( GTK_TABLE (t), cb, 1, 2, 0, 1,
                        (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
                        (GtkAttachOptions)0, 0, 0 );
-    gtk_signal_connect ( GTK_OBJECT (cb), "toggled",
-                         GTK_SIGNAL_FUNC (sp_item_widget_sensitivity_toggled),
+    g_signal_connect ( G_OBJECT (cb), "toggled",
+                         G_CALLBACK (sp_item_widget_sensitivity_toggled),
                          spw );
     gtk_object_set_data (GTK_OBJECT (spw), "sensitive", cb);
 
@@ -525,9 +525,9 @@ sp_item_dialog (void)
         wd.stop = 0;
 
         g_signal_connect   ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd);
-        gtk_signal_connect ( GTK_OBJECT (dlg), "event", GTK_SIGNAL_FUNC (sp_dialog_event_handler), dlg);
-        gtk_signal_connect ( GTK_OBJECT (dlg), "destroy", G_CALLBACK (sp_item_dialog_destroy), dlg);
-        gtk_signal_connect ( GTK_OBJECT (dlg), "delete_event", G_CALLBACK (sp_item_dialog_delete), dlg);
+        g_signal_connect ( G_OBJECT (dlg), "event", G_CALLBACK (sp_dialog_event_handler), dlg);
+        g_signal_connect ( G_OBJECT (dlg), "destroy", G_CALLBACK (sp_item_dialog_destroy), dlg);
+        g_signal_connect ( G_OBJECT (dlg), "delete_event", G_CALLBACK (sp_item_dialog_delete), dlg);
         g_signal_connect   ( G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (sp_item_dialog_delete), dlg);
         g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg);
         g_signal_connect   ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg);
