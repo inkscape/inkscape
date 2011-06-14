@@ -1731,7 +1731,7 @@ static void buildOrthogonalChannelInfo(Router *router,
         Polygon& displayRoute = (*curr)->displayRoute();
         // Determine all line segments that we are interested in shifting.
         // We don't consider the first or last segment of a path.
-        for (size_t i = 1; i < displayRoute.size(); ++i)
+        for (size_t i = 1; i < displayRoute.size()-1; ++i)
         {
             if (displayRoute.ps[i - 1][dim] == displayRoute.ps[i][dim])
             {
