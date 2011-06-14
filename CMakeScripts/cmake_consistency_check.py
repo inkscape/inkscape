@@ -74,6 +74,14 @@ IGNORE = (
     "src/inkscape/src/libnr/nr-types-test.h",
     "src/inkscape/src/sp-skeleton.h",
     "src/inkscape/src/svg/test-stubs.h",
+    
+    # generated files, created by an in-source build
+    "CMakeFiles/CompilerIdC/CMakeCCompilerId.c",
+    "CMakeFiles/CompilerIdCXX/CMakeCXXCompilerId.cpp",
+    "src/helper/sp-marshal.cpp",
+    "src/helper/sp-marshal.h",
+    "src/inkscape-version.cpp",
+    "config.h",
     )
 
 import os
