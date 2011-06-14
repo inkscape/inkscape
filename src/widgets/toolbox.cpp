@@ -367,6 +367,7 @@ static gchar const * ui_descr =
 
         "  <toolbar name='MeasureToolbar'>"
         "    <toolitem action='MeasureFontSizeAction' />"
+        "    <toolitem action='MeasureUnitsAction' />"
         "  </toolbar>"
 
         "  <toolbar name='StarToolbar'>"
@@ -1642,10 +1643,21 @@ sp_measure_fontsize_value_changed(GtkAdjustment *adj, GObject *tbl)
     }
 }
 
+static void measure_unit_changed(GtkAction* /*act*/, GObject* tbl)
+{
+    UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(tbl, "tracker"));
+    SPUnit const *unit = tracker->getActiveUnit();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt("/tools/measure/unitid", unit->unit_id);
+}
 
 static void sp_measure_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObject* holder)
 {
-    EgeAdjustmentAction* eact = 0;
+    UnitTracker* tracker = new UnitTracker( SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE );
+    tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
+    g_object_set_data( holder, "tracker", tracker );
+
+    EgeAdjustmentAction *eact = 0;
 
     /* Font Size */
     {
@@ -1658,6 +1670,13 @@ static void sp_measure_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainAct
                                          0, 0, 0,
                                          sp_measure_fontsize_value_changed);
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+    }
+
+    // add the units menu
+    {
+        GtkAction* act = tracker->createAction( "MeasureUnitsAction", _("Units"), _("Units:") );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(measure_unit_changed), (GObject*)holder );
+        gtk_action_group_add_action( mainActions, act );
     }
 } // end of sp_measure_toolbox_prep()
 

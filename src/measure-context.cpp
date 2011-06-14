@@ -11,7 +11,7 @@
 
 
 #include <gdk/gdkkeysyms.h>
-
+#include "helper/units.h"
 #include "macros.h"
 #include "display/curve.h"
 #include "sp-shape.h"
@@ -292,6 +292,9 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 }
 
+                SPUnitId unitid = static_cast<SPUnitId>(prefs->getInt("/tools/measure/unitid", SP_UNIT_PX));
+                SPUnit unit = sp_unit_get_by_id(unitid);
+
                 double fontsize = prefs->getInt("/tools/measure/fontsize");
 
                 Geom::Point previous_point;
@@ -302,8 +305,11 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     Geom::Point measure_text_pos = (previous_point + intersections[idx])/2;
 //TODO: shift label a few pixels in the y coordinate
 
+                    double lengthval = (intersections[idx] - previous_point).length();
+                    sp_convert_distance(&lengthval, &sp_unit_get_by_id(SP_UNIT_PX), &unit);
+
                     char* measure_str = (char*) malloc(sizeof(char)*20);
-                    sprintf(measure_str, "%.2f", (intersections[idx] - previous_point).length());
+                    sprintf(measure_str, "%.2f %s", lengthval, unit.abbr);
                     SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->dt2doc(measure_text_pos), measure_str);
 
                     sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
@@ -315,7 +321,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 char* angle_str = (char*) malloc(sizeof(char)*20);
                 sprintf(angle_str, "%.2f °", angle * 180/3.1415 );
-                SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, motion_dt + desktop->w2d(Geom::Point(50,0)), angle_str);
+                SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, motion_dt + desktop->w2d(Geom::Point(5*fontsize,0)), angle_str);
                 sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
                 sp_canvastext_set_rgba32 (SP_CANVASTEXT(canvas_tooltip), 0x337f33ff, 0xffffffff);
 
