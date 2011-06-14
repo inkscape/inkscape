@@ -28,11 +28,11 @@ G_BEGIN_DECLS
 
 /* standard macros */
 #define GDL_TYPE_DOCK_NOTEBOOK            (gdl_dock_notebook_get_type ())
-#define GDL_DOCK_NOTEBOOK(obj)            (GTK_CHECK_CAST ((obj), GDL_TYPE_DOCK_NOTEBOOK, GdlDockNotebook))
-#define GDL_DOCK_NOTEBOOK_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GDL_TYPE_DOCK_NOTEBOOK, GdlDockNotebookClass))
-#define GDL_IS_DOCK_NOTEBOOK(obj)         (GTK_CHECK_TYPE ((obj), GDL_TYPE_DOCK_NOTEBOOK))
-#define GDL_IS_DOCK_NOTEBOOK_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DOCK_NOTEBOOK))
-#define GDL_DOCK_NOTEBOOK_GET_CLASS(obj)  (GTK_CHECK_GET_CLASS ((obj), GTK_TYPE_DOCK_NOTEBOOK, GdlDockNotebookClass))
+#define GDL_DOCK_NOTEBOOK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDL_TYPE_DOCK_NOTEBOOK, GdlDockNotebook))
+#define GDL_DOCK_NOTEBOOK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GDL_TYPE_DOCK_NOTEBOOK, GdlDockNotebookClass))
+#define GDL_IS_DOCK_NOTEBOOK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDL_TYPE_DOCK_NOTEBOOK))
+#define GDL_IS_DOCK_NOTEBOOK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DOCK_NOTEBOOK))
+#define GDL_DOCK_NOTEBOOK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_DOCK_NOTEBOOK, GdlDockNotebookClass))
 
 /* data types & structures */
 typedef struct _GdlDockNotebook        GdlDockNotebook;

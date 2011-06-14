@@ -19,8 +19,8 @@
 #include "icon-size.h"
 
 #define SP_TYPE_ICON SPIcon::getType()
-#define SP_ICON(o) (GTK_CHECK_CAST ((o), SP_TYPE_ICON, SPIcon))
-#define SP_IS_ICON(o) (GTK_CHECK_TYPE ((o), SP_TYPE_ICON))
+#define SP_ICON(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_ICON, SPIcon))
+#define SP_IS_ICON(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_ICON))
 
 #include <gtk/gtk.h>
 

@@ -19,10 +19,10 @@
 G_BEGIN_DECLS
 
 #define SP_TYPE_CANVAS_ARENA (sp_canvas_arena_get_type ())
-#define SP_CANVAS_ARENA(obj) (GTK_CHECK_CAST ((obj), SP_TYPE_CANVAS_ARENA, SPCanvasArena))
-#define SP_CANVAS_ARENA_CLASS(klass) (GTK_CHECK_CLASS_CAST ((klass), SP_TYPE_CANVAS_ARENA, SPCanvasArenaClass))
-#define SP_IS_CANVAS_ARENA(obj) (GTK_CHECK_TYPE ((obj), SP_TYPE_CANVAS_ARENA))
-#define SP_IS_CANVAS_ARENA_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), SP_TYPE_CANVAS_ARENA))
+#define SP_CANVAS_ARENA(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CANVAS_ARENA, SPCanvasArena))
+#define SP_CANVAS_ARENA_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_CANVAS_ARENA, SPCanvasArenaClass))
+#define SP_IS_CANVAS_ARENA(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_CANVAS_ARENA))
+#define SP_IS_CANVAS_ARENA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_CANVAS_ARENA))
 
 typedef struct _SPCanvasArena      SPCanvasArena;
 typedef struct _SPCanvasArenaClass SPCanvasArenaClass;

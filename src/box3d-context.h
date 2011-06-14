@@ -22,10 +22,10 @@
 #include "vanishing-point.h"
 
 #define SP_TYPE_BOX3D_CONTEXT            (sp_box3d_context_get_type ())
-#define SP_BOX3D_CONTEXT(obj)            (GTK_CHECK_CAST ((obj), SP_TYPE_BOX3D_CONTEXT, Box3DContext))
-#define SP_BOX3D_CONTEXT_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), SP_TYPE_BOX3D_CONTEXT, Box3DContextClass))
-#define SP_IS_BOX3D_CONTEXT(obj)         (GTK_CHECK_TYPE ((obj), SP_TYPE_BOX3D_CONTEXT))
-#define SP_IS_BOX3D_CONTEXT_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), SP_TYPE_BOX3D_CONTEXT))
+#define SP_BOX3D_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_BOX3D_CONTEXT, Box3DContext))
+#define SP_BOX3D_CONTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_BOX3D_CONTEXT, Box3DContextClass))
+#define SP_IS_BOX3D_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_BOX3D_CONTEXT))
+#define SP_IS_BOX3D_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_BOX3D_CONTEXT))
 
 class Box3DContext;
 class Box3DContextClass;

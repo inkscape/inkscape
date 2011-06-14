@@ -17,8 +17,8 @@
 
 
 #define SP_TYPE_CTRLQUADR (sp_ctrlquadr_get_type ())
-#define SP_CTRLQUADR(obj) (GTK_CHECK_CAST ((obj), SP_TYPE_CTRLQUADR, SPCtrlQuadr))
-#define SP_IS_CTRLQUADR(obj) (GTK_CHECK_TYPE ((obj), SP_TYPE_CTRLQUADR))
+#define SP_CTRLQUADR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CTRLQUADR, SPCtrlQuadr))
+#define SP_IS_CTRLQUADR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_CTRLQUADR))
 
 struct SPCtrlQuadr;
 struct SPCtrlQuadrClass;

@@ -14,10 +14,10 @@
 
 
 #define SP_TYPE_CTRL            (sp_ctrl_get_type ())
-#define SP_CTRL(obj)            (GTK_CHECK_CAST ((obj), SP_TYPE_CTRL, SPCtrl))
-#define SP_CTRL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), SP_TYPE_CTRL, SPCtrlClass))
-#define SP_IS_CTRL(obj)         (GTK_CHECK_TYPE ((obj), SP_TYPE_CTRL))
-#define SP_IS_CTRL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), SP_TYPE_CTRL))
+#define SP_CTRL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CTRL, SPCtrl))
+#define SP_CTRL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_CTRL, SPCtrlClass))
+#define SP_IS_CTRL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_CTRL))
+#define SP_IS_CTRL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_CTRL))
 
 typedef enum {
     SP_CTRL_SHAPE_SQUARE,

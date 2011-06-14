@@ -18,10 +18,10 @@
 #include "forward.h"
 #include "sp-item.h"
 #define SP_TYPE_PATTERN (sp_pattern_get_type ())
-#define SP_PATTERN(o) (GTK_CHECK_CAST ((o), SP_TYPE_PATTERN, SPPattern))
-#define SP_PATTERN_CLASS(k) (GTK_CHECK_CLASS_CAST ((k), SP_TYPE_PATTERN, SPPatternClass))
-#define SP_IS_PATTERN(o) (GTK_CHECK_TYPE ((o), SP_TYPE_PATTERN))
-#define SP_IS_PATTERN_CLASS(k) (GTK_CHECK_CLASS_TYPE ((k), SP_TYPE_PATTERN))
+#define SP_PATTERN(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_PATTERN, SPPattern))
+#define SP_PATTERN_CLASS(k) (G_TYPE_CHECK_CLASS_CAST ((k), SP_TYPE_PATTERN, SPPatternClass))
+#define SP_IS_PATTERN(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_PATTERN))
+#define SP_IS_PATTERN_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE ((k), SP_TYPE_PATTERN))
 
 GType sp_pattern_get_type (void);
 

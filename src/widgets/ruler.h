@@ -22,9 +22,9 @@
 void sp_ruler_set_metric (GtkRuler * ruler, SPMetric  metric);
 
 
-#define SP_HRULER(obj)          GTK_CHECK_CAST (obj, sp_hruler_get_type (), SPHRuler)
-#define SP_HRULER_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, sp_hruler_get_type (), SPHRulerClass)
-#define SP_IS_HRULER(obj)       GTK_CHECK_TYPE (obj, sp_hruler_get_type ())
+#define SP_HRULER(obj)          G_TYPE_CHECK_INSTANCE_CAST (obj, sp_hruler_get_type (), SPHRuler)
+#define SP_HRULER_CLASS(klass)  G_TYPE_CHECK_CLASS_CAST (klass, sp_hruler_get_type (), SPHRulerClass)
+#define SP_IS_HRULER(obj)       G_TYPE_CHECK_INSTANCE_TYPE (obj, sp_hruler_get_type ())
 
 
 struct SPHRuler
@@ -47,9 +47,9 @@ GtkWidget* sp_hruler_new      (void);
 
 
 
-#define SP_VRULER(obj)          GTK_CHECK_CAST (obj, sp_vruler_get_type (), SPVRuler)
-#define SP_VRULER_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, sp_vruler_get_type (), SPVRulerClass)
-#define SP_IS_VRULER(obj)       GTK_CHECK_TYPE (obj, sp_vruler_get_type ())
+#define SP_VRULER(obj)          G_TYPE_CHECK_INSTANCE_CAST (obj, sp_vruler_get_type (), SPVRuler)
+#define SP_VRULER_CLASS(klass)  G_TYPE_CHECK_CLASS_CAST (klass, sp_vruler_get_type (), SPVRulerClass)
+#define SP_IS_VRULER(obj)       G_TYPE_CHECK_INSTANCE_TYPE (obj, sp_vruler_get_type ())
 
 
 struct SPVRuler

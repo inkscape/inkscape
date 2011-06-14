@@ -24,8 +24,8 @@
 #include <glib-object.h>
 
 #define SP_TYPE_CANVAS_GROUP (sp_canvas_group_get_type())
-#define SP_CANVAS_GROUP(obj) (GTK_CHECK_CAST((obj), SP_TYPE_CANVAS_GROUP, SPCanvasGroup))
-#define SP_IS_CANVAS_GROUP(obj) (GTK_CHECK_TYPE((obj), SP_TYPE_CANVAS_GROUP))
+#define SP_CANVAS_GROUP(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_CANVAS_GROUP, SPCanvasGroup))
+#define SP_IS_CANVAS_GROUP(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_CANVAS_GROUP))
 
 GType sp_canvas_group_get_type();
 

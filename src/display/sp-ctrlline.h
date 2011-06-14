@@ -19,8 +19,8 @@
 struct SPItem;
 
 #define SP_TYPE_CTRLLINE (sp_ctrlline_get_type ())
-#define SP_CTRLLINE(obj) (GTK_CHECK_CAST ((obj), SP_TYPE_CTRLLINE, SPCtrlLine))
-#define SP_IS_CTRLLINE(obj) (GTK_CHECK_TYPE ((obj), SP_TYPE_CTRLLINE))
+#define SP_CTRLLINE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CTRLLINE, SPCtrlLine))
+#define SP_IS_CTRLLINE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_CTRLLINE))
 
 struct SPCtrlLine : public SPCanvasItem{
     SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users

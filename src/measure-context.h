@@ -15,8 +15,8 @@
 #include "event-context.h"
 
 #define SP_TYPE_MEASURE_CONTEXT (sp_measure_context_get_type ())
-#define SP_MEASURE_CONTEXT(obj) (GTK_CHECK_CAST ((obj), SP_TYPE_MEASURE_CONTEXT, SPMeasureContext))
-#define SP_IS_MEASURE_CONTEXT(obj) (GTK_CHECK_TYPE ((obj), SP_TYPE_MEASURE_CONTEXT))
+#define SP_MEASURE_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_MEASURE_CONTEXT, SPMeasureContext))
+#define SP_IS_MEASURE_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_MEASURE_CONTEXT))
 
 class SPMeasureContext;
 class SPMeasureContextClass;

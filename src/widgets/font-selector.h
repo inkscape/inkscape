@@ -20,12 +20,12 @@ struct SPFontSelector;
 struct SPFontPreview;
 
 #define SP_TYPE_FONT_SELECTOR (sp_font_selector_get_type ())
-#define SP_FONT_SELECTOR(o) (GTK_CHECK_CAST ((o), SP_TYPE_FONT_SELECTOR, SPFontSelector))
-#define SP_IS_FONT_SELECTOR(o) (GTK_CHECK_TYPE ((o), SP_TYPE_FONT_SELECTOR))
+#define SP_FONT_SELECTOR(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_FONT_SELECTOR, SPFontSelector))
+#define SP_IS_FONT_SELECTOR(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_FONT_SELECTOR))
 
 #define SP_TYPE_FONT_PREVIEW (sp_font_preview_get_type ())
-#define SP_FONT_PREVIEW(o) (GTK_CHECK_CAST ((o), SP_TYPE_FONT_PREVIEW, SPFontPreview))
-#define SP_IS_FONT_PREVIEW(o) (GTK_CHECK_TYPE ((o), SP_TYPE_FONT_PREVIEW))
+#define SP_FONT_PREVIEW(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_FONT_PREVIEW, SPFontPreview))
+#define SP_IS_FONT_PREVIEW(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_FONT_PREVIEW))
 
 #include <libnrtype/nrtype-forward.h>
 #include <gtk/gtk.h>

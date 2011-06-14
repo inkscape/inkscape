@@ -18,8 +18,8 @@
 #include "sp-canvas-item.h"
 
 #define SP_TYPE_GUIDELINE (sp_guideline_get_type())
-#define SP_GUIDELINE(o) (GTK_CHECK_CAST((o), SP_TYPE_GUIDELINE, SPGuideLine))
-#define SP_IS_GUIDELINE(o) (GTK_CHECK_TYPE((o), SP_TYPE_GUIDELINE))
+#define SP_GUIDELINE(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_GUIDELINE, SPGuideLine))
+#define SP_IS_GUIDELINE(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_GUIDELINE))
 
 class SPCtrlPoint;
 

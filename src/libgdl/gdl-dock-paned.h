@@ -30,11 +30,11 @@ G_BEGIN_DECLS
 
 /* standard macros */
 #define GDL_TYPE_DOCK_PANED                  (gdl_dock_paned_get_type ())
-#define GDL_DOCK_PANED(obj)                  (GTK_CHECK_CAST ((obj), GDL_TYPE_DOCK_PANED, GdlDockPaned))
-#define GDL_DOCK_PANED_CLASS(klass)          (GTK_CHECK_CLASS_CAST ((klass), GDL_TYPE_DOCK_PANED, GdlDockPanedClass))
-#define GDL_IS_DOCK_PANED(obj)               (GTK_CHECK_TYPE ((obj), GDL_TYPE_DOCK_PANED))
-#define GDL_IS_DOCK_PANED_CLASS(klass)       (GTK_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DOCK_PANED))
-#define GDL_DOCK_PANED_GET_CLASS(obj)        (GTK_CHECK_GET_CLASS ((obj), GDL_TYE_DOCK_PANED, GdlDockPanedClass))
+#define GDL_DOCK_PANED(obj)                  (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDL_TYPE_DOCK_PANED, GdlDockPaned))
+#define GDL_DOCK_PANED_CLASS(klass)          (G_TYPE_CHECK_CLASS_CAST ((klass), GDL_TYPE_DOCK_PANED, GdlDockPanedClass))
+#define GDL_IS_DOCK_PANED(obj)               (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDL_TYPE_DOCK_PANED))
+#define GDL_IS_DOCK_PANED_CLASS(klass)       (G_TYPE_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DOCK_PANED))
+#define GDL_DOCK_PANED_GET_CLASS(obj)        (G_TYPE_INSTANCE_GET_CLASS ((obj), GDL_TYE_DOCK_PANED, GdlDockPanedClass))
 
 /* data types & structures */
 typedef struct _GdlDockPaned      GdlDockPaned;

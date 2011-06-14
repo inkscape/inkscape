@@ -36,9 +36,9 @@ struct SPCanvasGroup;
 typedef struct _SPCanvasItemClass SPCanvasItemClass;
 
 #define SP_TYPE_CANVAS_ITEM (sp_canvas_item_get_type())
-#define SP_CANVAS_ITEM(obj) (GTK_CHECK_CAST((obj), SP_TYPE_CANVAS_ITEM, SPCanvasItem))
-#define SP_IS_CANVAS_ITEM(obj) (GTK_CHECK_TYPE((obj), SP_TYPE_CANVAS_ITEM))
-#define SP_CANVAS_ITEM_GET_CLASS(o) (GTK_CHECK_GET_CLASS((o), SP_TYPE_CANVAS_ITEM, SPCanvasItemClass))
+#define SP_CANVAS_ITEM(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_CANVAS_ITEM, SPCanvasItem))
+#define SP_IS_CANVAS_ITEM(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_CANVAS_ITEM))
+#define SP_CANVAS_ITEM_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), SP_TYPE_CANVAS_ITEM, SPCanvasItemClass))
 
 GType sp_canvas_item_get_type();
 

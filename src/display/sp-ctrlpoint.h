@@ -17,8 +17,8 @@
 struct SPItem;
 
 #define SP_TYPE_CTRLPOINT (sp_ctrlpoint_get_type ())
-#define SP_CTRLPOINT(obj) (GTK_CHECK_CAST ((obj), SP_TYPE_CTRLPOINT, SPCtrlPoint))
-#define SP_IS_CTRLPOINT(obj) (GTK_CHECK_TYPE ((obj), SP_TYPE_CTRLPOINT))
+#define SP_CTRLPOINT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CTRLPOINT, SPCtrlPoint))
+#define SP_IS_CTRLPOINT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_CTRLPOINT))
 
 struct SPCtrlPoint : public SPCanvasItem {
     SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users

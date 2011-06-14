@@ -20,8 +20,8 @@ struct SPItem;
 struct SPDesktop;
 
 #define SP_TYPE_CANVASTEXT (sp_canvastext_get_type ())
-#define SP_CANVASTEXT(obj) (GTK_CHECK_CAST ((obj), SP_TYPE_CANVASTEXT, SPCanvasText))
-#define SP_IS_CANVASTEXT(obj) (GTK_CHECK_TYPE ((obj), SP_TYPE_CANVASTEXT))
+#define SP_CANVASTEXT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CANVASTEXT, SPCanvasText))
+#define SP_IS_CANVASTEXT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_CANVASTEXT))
 
 struct SPCanvasText : public SPCanvasItem {
     SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users

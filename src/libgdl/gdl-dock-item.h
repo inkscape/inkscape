@@ -36,11 +36,11 @@ G_BEGIN_DECLS
 
 /* standard macros */
 #define GDL_TYPE_DOCK_ITEM            (gdl_dock_item_get_type ())
-#define GDL_DOCK_ITEM(obj)            (GTK_CHECK_CAST ((obj), GDL_TYPE_DOCK_ITEM, GdlDockItem))
-#define GDL_DOCK_ITEM_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GDL_TYPE_DOCK_ITEM, GdlDockItemClass))
-#define GDL_IS_DOCK_ITEM(obj)         (GTK_CHECK_TYPE ((obj), GDL_TYPE_DOCK_ITEM))
-#define GDL_IS_DOCK_ITEM_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DOCK_ITEM))
-#define GDL_DOCK_ITEM_GET_CLASS(obj)  (GTK_CHECK_GET_CLASS ((obj), GTK_TYPE_DOCK_ITEM, GdlDockItemClass))
+#define GDL_DOCK_ITEM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDL_TYPE_DOCK_ITEM, GdlDockItem))
+#define GDL_DOCK_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GDL_TYPE_DOCK_ITEM, GdlDockItemClass))
+#define GDL_IS_DOCK_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDL_TYPE_DOCK_ITEM))
+#define GDL_IS_DOCK_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DOCK_ITEM))
+#define GDL_DOCK_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_DOCK_ITEM, GdlDockItemClass))
 
 /* data types & structures */
 typedef enum {

@@ -20,15 +20,15 @@ G_BEGIN_DECLS
 
 #define GDL_TYPE_DOCK_ITEM_GRIP            (gdl_dock_item_grip_get_type())
 #define GDL_DOCK_ITEM_GRIP(obj)            \
-    (GTK_CHECK_CAST ((obj), GDL_TYPE_DOCK_ITEM_GRIP, GdlDockItemGrip))
+    (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDL_TYPE_DOCK_ITEM_GRIP, GdlDockItemGrip))
 #define GDL_DOCK_ITEM_GRIP_CLASS(klass)    \
-    (GTK_CHECK_CLASS_CAST ((klass), GDL_TYPE_DOCK_ITEM_GRIP, GdlDockItemGripClass))
+    (G_TYPE_CHECK_CLASS_CAST ((klass), GDL_TYPE_DOCK_ITEM_GRIP, GdlDockItemGripClass))
 #define GDL_IS_DOCK_ITEM_GRIP(obj)         \
-    (GTK_CHECK_TYPE ((obj), GDL_TYPE_DOCK_ITEM_GRIP))
+    (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDL_TYPE_DOCK_ITEM_GRIP))
 #define GDL_IS_DOCK_ITEM_GRIP_CLASS(klass) \
-    (GTK_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DOCK_ITEM_GRIP))
+    (G_TYPE_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DOCK_ITEM_GRIP))
 #define GDL_DOCK_ITEM_GRIP_GET_CLASS(obj)  \
-    (GTK_CHECK_GET_CLASS ((obj), GDL_TYPE_DOCK_ITEM_GRIP, GdlDockItemGripClass))
+    (G_TYPE_INSTANCE_GET_CLASS ((obj), GDL_TYPE_DOCK_ITEM_GRIP, GdlDockItemGripClass))
 
 typedef struct _GdlDockItemGrip        GdlDockItemGrip;
 typedef struct _GdlDockItemGripClass   GdlDockItemGripClass;
