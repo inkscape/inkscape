@@ -13,8 +13,15 @@ cmake_minimum_required(VERSION 2.8.0)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
 if(COMMAND cmake_policy)
-  cmake_policy(SET CMP0003 NEW)
-  cmake_policy(SET CMP0005 NEW) # propper define quoting
+	cmake_policy(SET CMP0003 NEW)
+	cmake_policy(SET CMP0005 NEW) # propper define quoting
+endif()
+
+# workaround for omission in cmake 2.8.4's GNU.cmake, fixed in 2.8.5
+if(CMAKE_COMPILER_IS_GNUCC)
+	if(NOT DARWIN)
+		set(CMAKE_INCLUDE_SYSTEM_FLAG_C "-isystem ")
+	endif()
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeScripts")

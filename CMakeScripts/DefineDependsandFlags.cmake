@@ -137,7 +137,7 @@ include(IncludeJava)
 # message(FATAL_ERROR "Whee: ${INKSCAPE_LINK_DIRS}")
 
 # C/C++ Flags
-include_directories(${INKSCAPE_INCS})
+include_directories(SYSTEM ${INKSCAPE_INCS})
 unset(INKSCAPE_INCS)
 
 include(ConfigChecks)
