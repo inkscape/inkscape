@@ -234,7 +234,7 @@ sp_text_context_setup(SPEventContext *ec)
         g_signal_connect(G_OBJECT(canvas), "focus_out_event", G_CALLBACK(sptc_focus_out), tc);
         g_signal_connect(G_OBJECT(tc->imc), "commit", G_CALLBACK(sptc_commit), tc);
 
-        if (GTK_WIDGET_HAS_FOCUS(canvas)) {
+        if (gtk_widget_has_focus(canvas)) {
             sptc_focus_in(canvas, NULL, tc);
         }
     }

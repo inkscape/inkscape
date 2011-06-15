@@ -644,7 +644,7 @@ gdl_dock_item_remove (GtkContainer *container,
     
     item = GDL_DOCK_ITEM (container);
     if (item->_priv && widget == item->_priv->grip) {
-        gboolean grip_was_visible = GTK_WIDGET_VISIBLE (widget);
+        gboolean grip_was_visible = gtk_widget_get_visible (widget);
         gtk_widget_unparent (widget);
         item->_priv->grip = NULL;
         if (grip_was_visible)
@@ -658,7 +658,7 @@ gdl_dock_item_remove (GtkContainer *container,
     
     g_return_if_fail (item->child == widget);
     
-    was_visible = GTK_WIDGET_VISIBLE (widget);
+    was_visible = gtk_widget_get_visible (widget);
 
     gtk_widget_unparent (widget);
     item->child = NULL;
@@ -781,14 +781,14 @@ gdl_dock_item_size_allocate (GtkWidget     *widget,
     item->_priv->preferred_height = -1;
     item->_priv->preferred_width = -1;
     
-    if (GTK_WIDGET_REALIZED (widget))
+    if (gtk_widget_get_realized (widget))
         gdk_window_move_resize (widget->window,
                                 widget->allocation.x,
                                 widget->allocation.y,
                                 widget->allocation.width,
                                 widget->allocation.height);
 
-    if (item->child && GTK_WIDGET_VISIBLE (item->child)) {
+    if (item->child && gtk_widget_get_visible (item->child)) {
         GtkAllocation  child_allocation;
         int            border_width;
 
@@ -843,13 +843,13 @@ gdl_dock_item_map (GtkWidget *widget)
     gdk_window_show (widget->window);
 
     if (item->child
-        && GTK_WIDGET_VISIBLE (item->child)
-        && !GTK_WIDGET_MAPPED (item->child))
+        && gtk_widget_get_visible (item->child)
+        && !gtk_widget_get_mapped (item->child))
         gtk_widget_map (item->child);
 
     if (item->_priv->grip
-        && GTK_WIDGET_VISIBLE (item->_priv->grip)
-        && !GTK_WIDGET_MAPPED (item->_priv->grip))
+        && gtk_widget_get_visible (item->_priv->grip)
+        && !gtk_widget_get_mapped (item->_priv->grip))
         gtk_widget_map (item->_priv->grip);
 }
 
@@ -906,7 +906,7 @@ gdl_dock_item_realize (GtkWidget *widget)
   
     widget->style = gtk_style_attach (widget->style, widget->window);
     gtk_style_set_background (widget->style, widget->window, 
-                              GTK_WIDGET_STATE (item));
+                              gtk_widget_get_state (GTK_WIDGET(item)));
     gdk_window_set_back_pixmap (widget->window, NULL, TRUE);
 
     if (item->child)
@@ -923,10 +923,10 @@ gdl_dock_item_style_set (GtkWidget *widget,
     g_return_if_fail (widget != NULL);
     g_return_if_fail (GDL_IS_DOCK_ITEM (widget));
 
-    if (GTK_WIDGET_REALIZED (widget) && !GTK_WIDGET_NO_WINDOW (widget)) {
+    if (gtk_widget_get_realized (widget) && gtk_widget_get_has_window (widget)) {
         gtk_style_set_background (widget->style, widget->window,
                                   widget->state);
-        if (GTK_WIDGET_DRAWABLE (widget))
+        if (gtk_widget_is_drawable (widget))
             gdk_window_clear (widget->window);
     }
 }
@@ -941,7 +941,7 @@ gdl_dock_item_paint (GtkWidget      *widget,
 
     gtk_paint_box (widget->style,
                    widget->window,
-                   GTK_WIDGET_STATE (widget),
+                   gtk_widget_get_state (widget),
                    GTK_SHADOW_NONE,
                    &event->area, widget,
                    "dockitem",
@@ -956,7 +956,7 @@ gdl_dock_item_expose (GtkWidget      *widget,
     g_return_val_if_fail (GDL_IS_DOCK_ITEM (widget), FALSE);
     g_return_val_if_fail (event != NULL, FALSE);
 
-    if (GTK_WIDGET_DRAWABLE (widget) && event->window == widget->window) {
+    if (gtk_widget_is_drawable (widget) && event->window == widget->window) {
         gdl_dock_item_paint (widget, event);
         GDL_CALL_PARENT_GBOOLEAN(GTK_WIDGET_CLASS, expose_event, (widget,event));
     }
@@ -1426,7 +1426,7 @@ gdl_dock_item_dock (GdlDockObject    *object,
         gtk_container_add (GTK_CONTAINER (parent), GTK_WIDGET (new_parent));
 
     /* show automatic object */
-    if (GTK_WIDGET_VISIBLE (object))
+    if (gtk_widget_get_visible (GTK_WIDGET (object)))
         gtk_widget_show (GTK_WIDGET (new_parent));
     
     /* use extra docking parameter */
@@ -1506,7 +1506,7 @@ gdl_dock_item_drag_start (GdlDockItem *item)
 {
     GdkCursor *fleur;
 
-    if (!GTK_WIDGET_REALIZED (item))
+    if (!gtk_widget_get_realized (GTK_WIDGET (item)))
         gtk_widget_realize (GTK_WIDGET (item));
     
     GDL_DOCK_ITEM_SET_FLAGS (item, GDL_DOCK_IN_DRAG);
@@ -1632,7 +1632,7 @@ gdl_dock_item_real_set_orientation (GdlDockItem    *item,
 {
     item->orientation = orientation;
     
-    if (GTK_WIDGET_DRAWABLE (item))
+    if (gtk_widget_is_drawable (GTK_WIDGET (item)))
         gtk_widget_queue_draw (GTK_WIDGET (item));
     gtk_widget_queue_resize (GTK_WIDGET (item));
 }
@@ -2030,8 +2030,8 @@ gdl_dock_item_or_child_has_focus (GdlDockItem *item)
          item_child = GTK_CONTAINER (item_child)->focus_child) ;
     
     item_or_child_has_focus =
-        (GTK_WIDGET_HAS_FOCUS (GTK_WIDGET (item)) || 
-         (GTK_IS_WIDGET (item_child) && GTK_WIDGET_HAS_FOCUS (item_child)));
+        (gtk_widget_has_focus (GTK_WIDGET (item)) || 
+         (GTK_IS_WIDGET (item_child) && gtk_widget_has_focus (item_child)));
     
     return item_or_child_has_focus;
 }

@@ -213,7 +213,7 @@ void CMSPrefWatcher::_setCmsSensitive(bool enabled)
 #if ENABLE_LCMS
     for ( std::list<SPDesktopWidget*>::iterator it = _widget_list.begin(); it != _widget_list.end(); ++it ) {
         SPDesktopWidget *dtw = *it;
-        if ( GTK_WIDGET_SENSITIVE( dtw->cms_adjust ) != enabled ) {
+        if ( gtk_widget_get_sensitive( dtw->cms_adjust ) != enabled ) {
             cms_adjust_set_sensitive( dtw, enabled );
         }
     }
@@ -231,7 +231,7 @@ SPDesktopWidget::setMessage (Inkscape::MessageType type, const gchar *message)
     gtk_label_set_markup (sb, message ? message : "");
 
     // make sure the important messages are displayed immediately!
-    if (type == Inkscape::IMMEDIATE_MESSAGE && GTK_WIDGET_DRAWABLE (GTK_WIDGET(sb))) {
+    if (type == Inkscape::IMMEDIATE_MESSAGE && gtk_widget_is_drawable (GTK_WIDGET(sb))) {
         gtk_widget_queue_draw(GTK_WIDGET(sb));
         gdk_window_process_updates(GTK_WIDGET(sb)->window, TRUE);
     }
@@ -697,7 +697,7 @@ sp_desktop_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
         return;
     }
 
-    if (GTK_WIDGET_REALIZED (widget)) {
+    if (gtk_widget_get_realized (widget)) {
         Geom::Rect const area = dtw->desktop->get_display_area();
         double zoom = dtw->desktop->current_zoom();
 
@@ -1077,7 +1077,7 @@ SPDesktopWidget::letZoomGrabFocus()
 void
 SPDesktopWidget::getWindowGeometry (gint &x, gint &y, gint &w, gint &h)
 {
-    gboolean vis = GTK_WIDGET_VISIBLE (this);
+    gboolean vis = gtk_widget_get_visible (GTK_WIDGET(this));
     (void)vis; // TODO figure out why it is here but not used.
 
     Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
@@ -1803,7 +1803,7 @@ void
 sp_desktop_widget_toggle_rulers (SPDesktopWidget *dtw)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (GTK_WIDGET_VISIBLE (dtw->hruler)) {
+    if (gtk_widget_get_visible (dtw->hruler)) {
         gtk_widget_hide_all (dtw->hruler);
         gtk_widget_hide_all (dtw->vruler);
         prefs->setBool(dtw->desktop->is_fullscreen() ? "/fullscreen/rulers/state" : "/window/rulers/state", false);
@@ -1818,7 +1818,7 @@ void
 sp_desktop_widget_toggle_scrollbars (SPDesktopWidget *dtw)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (GTK_WIDGET_VISIBLE (dtw->hscrollbar)) {
+    if (gtk_widget_get_visible (dtw->hscrollbar)) {
         gtk_widget_hide_all (dtw->hscrollbar);
         gtk_widget_hide_all (dtw->vscrollbar_box);
         gtk_widget_hide_all( dtw->cms_adjust );
@@ -1834,7 +1834,7 @@ sp_desktop_widget_toggle_scrollbars (SPDesktopWidget *dtw)
 void sp_desktop_widget_toggle_color_prof_adj( SPDesktopWidget *dtw )
 {
 
-    if ( GTK_WIDGET_SENSITIVE( dtw->cms_adjust ) ) {
+    if ( gtk_widget_get_sensitive( dtw->cms_adjust ) ) {
         if ( SP_BUTTON_IS_DOWN(dtw->cms_adjust) ) {
             sp_button_toggle_set_down( SP_BUTTON(dtw->cms_adjust), FALSE );
         } else {
@@ -1848,7 +1848,7 @@ void
 sp_spw_toggle_menubar (SPDesktopWidget *dtw, bool is_fullscreen)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (GTK_WIDGET_VISIBLE (dtw->menubar)) {
+    if (gtk_widget_get_visible (dtw->menubar)) {
         gtk_widget_hide_all (dtw->menubar);
         prefs->setBool(is_fullscreen ? "/fullscreen/menu/state" : "/window/menu/state", false);
     } else {

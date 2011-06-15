@@ -246,7 +246,7 @@ sp_ruler_common_draw_ticks (GtkRuler *ruler)
 
     g_return_if_fail (ruler != NULL);
 
-    if (!GTK_WIDGET_DRAWABLE (ruler)) 
+    if (!gtk_widget_is_drawable (GTK_WIDGET (ruler)))
         return;
 
     g_object_get(G_OBJECT(ruler), "orientation", &orientation, NULL);
@@ -425,6 +425,6 @@ sp_ruler_set_metric (GtkRuler *ruler,
 
   ruler->metric = const_cast<GtkRulerMetric *>(&sp_ruler_metrics[metric]);
 
-  if (GTK_WIDGET_DRAWABLE (ruler))
+  if (gtk_widget_is_drawable (GTK_WIDGET (ruler)))
     gtk_widget_queue_draw (GTK_WIDGET (ruler));
 }

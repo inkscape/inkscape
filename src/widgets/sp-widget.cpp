@@ -188,7 +188,7 @@ sp_widget_expose (GtkWidget *widget, GdkEventExpose *event)
             gtk_container_propagate_expose (GTK_CONTAINER(widget), bin->child, event);
         }
 	/*
-	if ((bin->child) && (GTK_WIDGET_NO_WINDOW (bin->child))) {
+	if ((bin->child) && (!gtk_widget_get_has_window (bin->child))) {
 		GdkEventExpose ce;
 		ce = *event;
 		gtk_widget_event (bin->child, (GdkEvent *) &ce);
@@ -237,7 +237,7 @@ sp_widget_construct_global (SPWidget *spw, Inkscape::Application *inkscape)
 	g_return_val_if_fail (!spw->inkscape, NULL);
 
 	spw->inkscape = inkscape;
-	if (GTK_WIDGET_VISIBLE (spw)) {
+	if (gtk_widget_get_visible (GTK_WIDGET(spw))) {
 		g_signal_connect (G_OBJECT (inkscape), "modify_selection", G_CALLBACK (sp_widget_modify_selection), spw);
 		g_signal_connect (G_OBJECT (inkscape), "change_selection", G_CALLBACK (sp_widget_change_selection), spw);
 		g_signal_connect (G_OBJECT (inkscape), "set_selection", G_CALLBACK (sp_widget_set_selection), spw);

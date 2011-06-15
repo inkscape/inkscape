@@ -176,7 +176,7 @@ void IconImpl::classInit(SPIconClass *klass)
 
 void IconImpl::init(SPIcon *icon)
 {
-    GTK_WIDGET_FLAGS(icon) |= GTK_NO_WINDOW;
+    gtk_widget_set_has_window (GTK_WIDGET (icon), FALSE);
     icon->lsize = Inkscape::ICON_SIZE_BUTTON;
     icon->psize = 0;
     icon->name = 0;
@@ -224,14 +224,14 @@ void IconImpl::sizeAllocate(GtkWidget *widget, GtkAllocation *allocation)
 {
     widget->allocation = *allocation;
 
-    if (GTK_WIDGET_DRAWABLE(widget)) {
+    if (gtk_widget_is_drawable(widget)) {
         gtk_widget_queue_draw(widget);
     }
 }
 
 int IconImpl::expose(GtkWidget *widget, GdkEventExpose *event)
 {
-    if ( GTK_WIDGET_DRAWABLE(widget) ) {
+    if ( gtk_widget_is_drawable(widget) ) {
         SPIcon *icon = SP_ICON(widget);
         if ( !icon->pb ) {
             fetchPixbuf( icon );
@@ -995,13 +995,13 @@ void IconImpl::paint(SPIcon *icon, GdkRectangle const */*area*/)
     bool unref_image = false;
 
     /* copied from the expose function of GtkImage */
-    if (GTK_WIDGET_STATE (icon) != GTK_STATE_NORMAL && image) {
+    if (gtk_widget_get_state (GTK_WIDGET(icon)) != GTK_STATE_NORMAL && image) {
         GtkIconSource *source = gtk_icon_source_new();
         gtk_icon_source_set_pixbuf(source, icon->pb);
         gtk_icon_source_set_size(source, GTK_ICON_SIZE_SMALL_TOOLBAR); // note: this is boilerplate and not used
         gtk_icon_source_set_size_wildcarded(source, FALSE);
         image = gtk_style_render_icon (widget.style, source, gtk_widget_get_direction(&widget),
-            (GtkStateType) GTK_WIDGET_STATE(&widget), (GtkIconSize)-1, &widget, "gtk-image");
+            (GtkStateType) gtk_widget_get_state(&widget), (GtkIconSize)-1, &widget, "gtk-image");
         gtk_icon_source_free(source);
         unref_image = true;
     }

@@ -1794,7 +1794,7 @@ void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientati
 {
 #if DUMP_DETAILS
     g_message("Set orientation for %p to be %d", toolbox, orientation);
-    GType type = GTK_WIDGET_TYPE(toolbox);
+    GType type = G_OBJECT_TYPE(toolbox);
     g_message("        [%s]", g_type_name(type));
     g_message("             %p", g_object_get_data(G_OBJECT(toolbox), BAR_ID_KEY));
 #endif
@@ -1809,7 +1809,7 @@ void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientati
         GtkWidget* child = gtk_bin_get_child(GTK_BIN(toolbox));
         if (child) {
 #if DUMP_DETAILS
-            GType type2 = GTK_WIDGET_TYPE(child);
+            GType type2 = G_OBJECT_TYPE(child);
             g_message("            child    [%s]", g_type_name(type2));
 #endif // DUMP_DETAILS
 
@@ -1823,7 +1823,7 @@ void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientati
                     for (GList* curr = children; curr; curr = g_list_next(curr)) {
                         GtkWidget* child2 = GTK_WIDGET(curr->data);
 #if DUMP_DETAILS
-                        GType type3 = GTK_WIDGET_TYPE(child2);
+                        GType type3 = G_OBJECT_TYPE(child2);
                         g_message("                child2   [%s]", g_type_name(type3));
 #endif // DUMP_DETAILS
 
@@ -1833,7 +1833,7 @@ void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientati
                                 for (GList* curr2 = children2; curr2; curr2 = g_list_next(curr2)) {
                                     GtkWidget* child3 = GTK_WIDGET(curr2->data);
 #if DUMP_DETAILS
-                                    GType type4 = GTK_WIDGET_TYPE(child3);
+                                    GType type4 = G_OBJECT_TYPE(child3);
                                     g_message("                    child3   [%s]", g_type_name(type4));
 #endif // DUMP_DETAILS
                                     if (GTK_IS_TOOLBAR(child3)) {

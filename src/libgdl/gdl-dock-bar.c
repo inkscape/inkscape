@@ -481,7 +481,7 @@ static void gdl_dock_bar_size_vrequest (GtkWidget *widget,
       child = children->data;
       children = children->next;
 
-      if (GTK_WIDGET_VISIBLE (child->widget))
+      if (gtk_widget_get_visible (child->widget))
 	{
 	  gtk_widget_size_request (child->widget, &child_requisition);
 
@@ -539,7 +539,7 @@ static void gdl_dock_bar_size_vallocate (GtkWidget     *widget,
       child = children->data;
       children = children->next;
 
-      if (GTK_WIDGET_VISIBLE (child->widget))
+      if (gtk_widget_get_visible (child->widget))
 	{
 	  nvis_children += 1;
 	  if (child->expand)
@@ -577,7 +577,7 @@ static void gdl_dock_bar_size_vallocate (GtkWidget     *widget,
 	  child = children->data;
 	  children = children->next;
 
-	  if ((child->pack == GTK_PACK_START) && GTK_WIDGET_VISIBLE (child->widget))
+	  if ((child->pack == GTK_PACK_START) && gtk_widget_get_visible (child->widget))
 	    {
 	      if (box->homogeneous)
 		{
@@ -636,7 +636,7 @@ static void gdl_dock_bar_size_vallocate (GtkWidget     *widget,
 	  child = children->data;
 	  children = children->next;
 
-	  if ((child->pack == GTK_PACK_END) && GTK_WIDGET_VISIBLE (child->widget))
+	  if ((child->pack == GTK_PACK_END) && gtk_widget_get_visible (child->widget))
 	    {
 	      GtkRequisition child_requisition;
 	      gtk_widget_get_child_requisition (child->widget, &child_requisition);
@@ -706,7 +706,7 @@ static void gdl_dock_bar_size_hrequest (GtkWidget *widget,
       child = children->data;
       children = children->next;
 
-      if (GTK_WIDGET_VISIBLE (child->widget))
+      if (gtk_widget_get_visible (child->widget))
 	{
 	  GtkRequisition child_requisition;
 
@@ -768,7 +768,7 @@ static void gdl_dock_bar_size_hallocate (GtkWidget     *widget,
       child = children->data;
       children = children->next;
 
-      if (GTK_WIDGET_VISIBLE (child->widget))
+      if (gtk_widget_get_visible (child->widget))
 	{
 	  nvis_children += 1;
 	  if (child->expand)
@@ -806,7 +806,7 @@ static void gdl_dock_bar_size_hallocate (GtkWidget     *widget,
 	  child = children->data;
 	  children = children->next;
 
-	  if ((child->pack == GTK_PACK_START) && GTK_WIDGET_VISIBLE (child->widget))
+	  if ((child->pack == GTK_PACK_START) && gtk_widget_get_visible (child->widget))
 	    {
 	      if (box->homogeneous)
 		{
@@ -869,7 +869,7 @@ static void gdl_dock_bar_size_hallocate (GtkWidget     *widget,
 	  child = children->data;
 	  children = children->next;
 
-	  if ((child->pack == GTK_PACK_END) && GTK_WIDGET_VISIBLE (child->widget))
+	  if ((child->pack == GTK_PACK_END) && gtk_widget_get_visible (child->widget))
 	    {
 	      GtkRequisition child_requisition;
 	      gtk_widget_get_child_requisition (child->widget, &child_requisition);

@@ -324,14 +324,14 @@ gdl_dock_tablabel_size_allocate (GtkWidget     *widget,
   
     widget->allocation = *allocation;
 
-    if (GTK_WIDGET_REALIZED (widget))
+    if (gtk_widget_get_realized (widget))
         gdk_window_move_resize (tablabel->event_window, 
                                 allocation->x, 
                                 allocation->y,
                                 allocation->width, 
                                 allocation->height);
 
-    if (bin->child && GTK_WIDGET_VISIBLE (bin->child)) {
+    if (bin->child && gtk_widget_get_visible (bin->child)) {
         GtkAllocation  child_allocation;
 
         child_allocation.x = widget->allocation.x + border_width;
@@ -386,7 +386,7 @@ gdl_dock_tablabel_expose (GtkWidget      *widget,
     g_return_val_if_fail (GDL_IS_DOCK_TABLABEL (widget), FALSE);
     g_return_val_if_fail (event != NULL, FALSE);
 
-    if (GTK_WIDGET_VISIBLE (widget) && GTK_WIDGET_MAPPED (widget)) {
+    if (gtk_widget_get_visible (widget) && gtk_widget_get_mapped (widget)) {
         GDL_CALL_PARENT_GBOOLEAN(GTK_WIDGET_CLASS, expose_event, (widget,event));
         gdl_dock_tablabel_paint (widget, event);
     };

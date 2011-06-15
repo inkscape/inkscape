@@ -620,7 +620,7 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
 {
     SPFontPreview *fprev = SP_FONT_PREVIEW(widget);
 
-    if (GTK_WIDGET_DRAWABLE (widget)) {
+    if (gtk_widget_is_drawable (widget)) {
         if (fprev->rfont) {
 
             int glyphs[SPFP_MAX_LEN];
@@ -811,13 +811,13 @@ void sp_font_preview_set_font(SPFontPreview *fprev, font_instance *font, SPFontS
             fprev->rfont = fprev->font->RasterFont(flip, 0);
         }
 
-        if (GTK_WIDGET_DRAWABLE (fprev)) gtk_widget_queue_draw (GTK_WIDGET (fprev));
+        if (gtk_widget_is_drawable (GTK_WIDGET (fprev))) gtk_widget_queue_draw (GTK_WIDGET (fprev));
 }
 
 void sp_font_preview_set_rgba32(SPFontPreview *fprev, guint32 rgba)
 {
     fprev->rgba = rgba;
-    if (GTK_WIDGET_DRAWABLE (fprev)) {
+    if (gtk_widget_is_drawable (GTK_WIDGET (fprev))) {
         gtk_widget_queue_draw (GTK_WIDGET (fprev));
     }
 }
@@ -830,7 +830,7 @@ void sp_font_preview_set_phrase(SPFontPreview *fprev, const gchar *phrase)
     } else {
         fprev->phrase = NULL;
     }
-    if (GTK_WIDGET_DRAWABLE(fprev)) {
+    if (gtk_widget_is_drawable( GTK_WIDGET (fprev))) {
         gtk_widget_queue_draw (GTK_WIDGET (fprev));
     }
 }

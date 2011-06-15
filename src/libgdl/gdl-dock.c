@@ -561,7 +561,7 @@ gdl_dock_size_request (GtkWidget      *widget,
     border_width = container->border_width;
 
     /* make request to root */
-    if (dock->root && GTK_WIDGET_VISIBLE (dock->root))
+    if (dock->root && gtk_widget_get_visible (dock->root))
         gtk_widget_size_request (GTK_WIDGET (dock->root), requisition);
     else {
         requisition->width = 0;
@@ -597,7 +597,7 @@ gdl_dock_size_allocate (GtkWidget     *widget,
     allocation->width = MAX (1, allocation->width - 2 * border_width);
     allocation->height = MAX (1, allocation->height - 2 * border_width);
 
-    if (dock->root && GTK_WIDGET_VISIBLE (dock->root))
+    if (dock->root && gtk_widget_get_visible (dock->root))
         gtk_widget_size_allocate (GTK_WIDGET (dock->root), allocation);
 }
 
@@ -616,7 +616,7 @@ gdl_dock_map (GtkWidget *widget)
 
     if (dock->root) {
         child = GTK_WIDGET (dock->root);
-        if (GTK_WIDGET_VISIBLE (child) && !GTK_WIDGET_MAPPED (child))
+        if (gtk_widget_get_visible (child) && !gtk_widget_get_mapped (child))
             gtk_widget_map (child);
     }
 }
@@ -636,7 +636,7 @@ gdl_dock_unmap (GtkWidget *widget)
 
     if (dock->root) {
         child = GTK_WIDGET (dock->root);
-        if (GTK_WIDGET_VISIBLE (child) && GTK_WIDGET_MAPPED (child))
+        if (gtk_widget_get_visible (child) && gtk_widget_get_mapped (child))
             gtk_widget_unmap (child);
     }
     
@@ -720,14 +720,14 @@ gdl_dock_remove (GtkContainer *container,
     g_return_if_fail (widget != NULL);
 
     dock = GDL_DOCK (container);
-    was_visible = GTK_WIDGET_VISIBLE (widget);
+    was_visible = gtk_widget_get_visible (widget);
 
     if (GTK_WIDGET (dock->root) == widget) {
         dock->root = NULL;
         GDL_DOCK_OBJECT_UNSET_FLAGS (widget, GDL_DOCK_ATTACHED);
         gtk_widget_unparent (widget);
 
-        if (was_visible && GTK_WIDGET_VISIBLE (GTK_WIDGET (container)))
+        if (was_visible && gtk_widget_get_visible (GTK_WIDGET (container)))
             gtk_widget_queue_resize (GTK_WIDGET (dock));
     }
 }
@@ -927,15 +927,15 @@ gdl_dock_dock (GdlDockObject    *object,
 
         /* Realize the item (create its corresponding GdkWindow) when 
            GdlDock has been realized. */
-        if (GTK_WIDGET_REALIZED (dock))
+        if (gtk_widget_get_realized (dock))
             gtk_widget_realize (widget);
         
         /* Map the widget if it's visible and the parent is visible and has 
            been mapped. This is done to make sure that the GdkWindow is 
            visible. */
-        if (GTK_WIDGET_VISIBLE (dock) && 
-            GTK_WIDGET_VISIBLE (widget)) {
-            if (GTK_WIDGET_MAPPED (dock))
+        if (gtk_widget_get_visible (dock) && 
+            gtk_widget_get_visible (widget)) {
+            if (gtk_widget_get_mapped (dock))
                 gtk_widget_map (widget);
             
             /* Make the widget resize. */
@@ -1258,9 +1258,9 @@ gdl_dock_add_floating_item (GdlDock        *dock,
                                        "floaty", y,
                                        NULL));
     
-    if (GTK_WIDGET_VISIBLE (dock)) {
+    if (gtk_widget_get_visible (dock)) {
         gtk_widget_show (GTK_WIDGET (new_dock));
-        if (GTK_WIDGET_MAPPED (dock))
+        if (gtk_widget_get_mapped (dock))
             gtk_widget_map (GTK_WIDGET (new_dock));
         
         /* Make the widget resize. */
@@ -1335,7 +1335,7 @@ gdl_dock_xor_rect (GdlDock      *dock,
     widget = GTK_WIDGET (dock);
 
     if (!dock->_priv->xor_gc) {
-        if (GTK_WIDGET_REALIZED (widget)) {
+        if (gtk_widget_get_realized (widget)) {
             GdkGCValues values;
 
             values.function = GDK_INVERT;

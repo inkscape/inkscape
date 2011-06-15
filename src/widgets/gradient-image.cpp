@@ -165,7 +165,7 @@ sp_gradient_image_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 
 	widget->allocation = *allocation;
 
-	if (GTK_WIDGET_REALIZED (widget)) {
+	if (gtk_widget_get_realized (widget)) {
 		g_free (image->px);
 		image->px = g_new (guchar, 3 * VBLOCK * allocation->width);
 	}
@@ -180,7 +180,7 @@ sp_gradient_image_expose (GtkWidget *widget, GdkEventExpose *event)
 
 	image = SP_GRADIENT_IMAGE (widget);
 
-	if (GTK_WIDGET_DRAWABLE (widget)) {
+	if (gtk_widget_is_drawable (widget)) {
 		gint x0, y0, x1, y1;
 		x0 = MAX (event->area.x, widget->allocation.x);
 		y0 = MAX (event->area.y, widget->allocation.y);
@@ -288,7 +288,7 @@ sp_gradient_image_update (SPGradientImage *image)
 		nr_pixblock_release (&pb);
 	}
 
-	if (GTK_WIDGET_DRAWABLE (image)) {
+	if (gtk_widget_is_drawable (GTK_WIDGET (image))) {
 		gtk_widget_queue_draw (GTK_WIDGET (image));
 	}
 }

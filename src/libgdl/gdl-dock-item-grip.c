@@ -59,10 +59,10 @@ gdl_dock_item_grip_get_title_area (GdlDockItemGrip *grip,
     
     alloc_height = MAX (grip->_priv->close_button->allocation.height, alloc_height);
     alloc_height = MAX (grip->_priv->iconify_button->allocation.height, alloc_height);
-    if (GTK_WIDGET_VISIBLE (grip->_priv->close_button)) {
+    if (gtk_widget_get_visible (grip->_priv->close_button)) {
         area->width -= grip->_priv->close_button->allocation.width;
     }
-    if (GTK_WIDGET_VISIBLE (grip->_priv->iconify_button)) {
+    if (gtk_widget_get_visible (grip->_priv->iconify_button)) {
         area->width -= grip->_priv->iconify_button->allocation.width;
     }
 

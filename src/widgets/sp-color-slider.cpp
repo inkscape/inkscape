@@ -235,7 +235,7 @@ sp_color_slider_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 
 	widget->allocation = *allocation;
 
-	if (GTK_WIDGET_REALIZED (widget)) {
+	if (gtk_widget_get_realized (widget)) {
 		/* Resize GdkWindow */
 		gdk_window_move_resize (widget->window, allocation->x, allocation->y, allocation->width, allocation->height);
 	}
@@ -248,7 +248,7 @@ sp_color_slider_expose (GtkWidget *widget, GdkEventExpose *event)
 
 	slider = SP_COLOR_SLIDER (widget);
 
-	if (GTK_WIDGET_DRAWABLE (widget)) {
+	if (gtk_widget_is_drawable (widget)) {
 		gint width, height;
 		width = widget->allocation.width;
 		height = widget->allocation.height;

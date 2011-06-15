@@ -537,7 +537,7 @@ sp_canvas_item_grab (SPCanvasItem *item, guint event_mask, GdkCursor *cursor, gu
 {
     g_return_val_if_fail (item != NULL, -1);
     g_return_val_if_fail (SP_IS_CANVAS_ITEM (item), -1);
-    g_return_val_if_fail (GTK_WIDGET_MAPPED (item->canvas), -1);
+    g_return_val_if_fail (gtk_widget_get_mapped (GTK_WIDGET (item->canvas)), -1);
 
     if (item->canvas->grabbed_item)
         return -1;
@@ -628,7 +628,7 @@ sp_canvas_item_grab_focus (SPCanvasItem *item)
 {
     g_return_if_fail (item != NULL);
     g_return_if_fail (SP_IS_CANVAS_ITEM (item));
-    g_return_if_fail (GTK_WIDGET_CAN_FOCUS (GTK_WIDGET (item->canvas)));
+    g_return_if_fail (gtk_widget_get_can_focus (GTK_WIDGET (item->canvas)));
 
     SPCanvasItem *focused_item = item->canvas->focused_item;
 
@@ -1241,7 +1241,7 @@ sp_canvas_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 
     widget->allocation = *allocation;
 
-    if (GTK_WIDGET_REALIZED (widget)) {
+    if (gtk_widget_get_realized (widget)) {
         gdk_window_move_resize (widget->window,
                                 widget->allocation.x, widget->allocation.y,
                                 widget->allocation.width, widget->allocation.height);
@@ -1967,7 +1967,7 @@ sp_canvas_expose (GtkWidget *widget, GdkEventExpose *event)
 {
     SPCanvas *canvas = SP_CANVAS (widget);
 
-    if (!GTK_WIDGET_DRAWABLE (widget) ||
+    if (!gtk_widget_is_drawable (widget) ||
         (event->window != SP_CANVAS_WINDOW (canvas)))
         return FALSE;
 
@@ -2121,7 +2121,7 @@ do_update (SPCanvas *canvas)
     }
 
     /* Paint if able to */
-    if (GTK_WIDGET_DRAWABLE (canvas)) {
+    if (gtk_widget_is_drawable ( GTK_WIDGET (canvas))) {
             return paint (canvas);
     }
 
@@ -2205,7 +2205,7 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear,
         // scrolling without zoom; redraw only the newly exposed areas
         if ((dx != 0) || (dy != 0)) {
             canvas->is_scrolling = is_scrolling;
-            if (GTK_WIDGET_REALIZED (canvas)) {
+            if (gtk_widget_get_realized (GTK_WIDGET (canvas))) {
                 gdk_window_scroll (SP_CANVAS_WINDOW (canvas), -dx, -dy);
             }
         }
@@ -2254,7 +2254,7 @@ sp_canvas_request_redraw (SPCanvas *canvas, int x0, int y0, int x1, int y1)
     g_return_if_fail (canvas != NULL);
     g_return_if_fail (SP_IS_CANVAS (canvas));
 
-    if (!GTK_WIDGET_DRAWABLE (canvas)) return;
+    if (!gtk_widget_is_drawable ( GTK_WIDGET (canvas))) return;
     if ((x0 >= x1) || (y0 >= y1)) return;
 
     bbox.x0 = x0;

@@ -110,7 +110,7 @@ sp_color_preview_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 
     widget->allocation = *allocation;
 
-    if (GTK_WIDGET_DRAWABLE (image)) {
+    if (gtk_widget_is_drawable (GTK_WIDGET (image))) {
         gtk_widget_queue_draw (GTK_WIDGET (image));
     }
 }
@@ -122,7 +122,7 @@ sp_color_preview_expose (GtkWidget *widget, GdkEventExpose *event)
 
     cp = SP_COLOR_PREVIEW (widget);
 
-    if (GTK_WIDGET_DRAWABLE (widget)) {
+    if (gtk_widget_is_drawable (widget)) {
         sp_color_preview_paint (cp, &event->area);
     }
 
@@ -146,7 +146,7 @@ sp_color_preview_set_rgba32 (SPColorPreview *cp, guint32 rgba)
 {
     cp->rgba = rgba;
 
-    if (GTK_WIDGET_DRAWABLE (cp)) {
+    if (gtk_widget_is_drawable (GTK_WIDGET (cp))) {
         gtk_widget_queue_draw (GTK_WIDGET (cp));
     }
 }

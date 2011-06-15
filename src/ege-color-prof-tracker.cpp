@@ -448,7 +448,7 @@ void target_hierarchy_changed_cb(GtkWidget* widget, GtkWidget* prev_top, gpointe
 {
     if ( !prev_top && gtk_widget_get_toplevel(widget) ) {
         GtkWidget* top = gtk_widget_get_toplevel(widget);
-        if ( GTK_WIDGET_TOPLEVEL(top) ) {
+        if ( gtk_widget_is_toplevel(top) ) {
             GtkWindow* win = GTK_WINDOW(top);
             g_signal_connect( G_OBJECT(win), "event-after", G_CALLBACK( event_after_cb ), user_data );
             g_object_weak_ref( G_OBJECT(win), window_finalized, user_data );

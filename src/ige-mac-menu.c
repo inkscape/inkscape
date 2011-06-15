@@ -667,10 +667,10 @@ sync_menu_shell (GtkMenuShell *menu_shell,
 	  if (GTK_IS_SEPARATOR_MENU_ITEM (menu_item))
 	    attributes |= kMenuItemAttrSeparator;
 
-	  if (!GTK_WIDGET_IS_SENSITIVE (menu_item))
+	  if (!gtk_widget_is_sensitive (menu_item))
 	    attributes |= kMenuItemAttrDisabled;
 
-	  if (!GTK_WIDGET_VISIBLE (menu_item))
+	  if (!gtk_widget_get_visible (menu_item))
 	    attributes |= kMenuItemAttrHidden;
 
 	  InsertMenuItemTextWithCFString (carbon_menu, cfstr,
