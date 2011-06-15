@@ -7,7 +7,7 @@
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *   Bruno Dilly <bruno.dilly@gmail.com>
  *
- * Copyright (C) 2004-2007 Authors
+ * Copyright (C) 2004-2011 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -270,6 +270,9 @@ void InkscapePreferences::initPageSteps()
     _steps_rot_snap.init("/options/rotationsnapsperpi/value", labels, values, num_items, 12);
     _page_steps.add_line( false, _("Rotation snaps every:"), _steps_rot_snap, _("degrees"),
                            _("Rotating with Ctrl pressed snaps every that much degrees; also, pressing [ or ] rotates by this amount"), false);
+    _steps_rot_relative.init ( _("Relative snapping of guideline angles"), "/options/relativeguiderotationsnap/value", false);
+    _page_steps.add_line( false, "", _steps_rot_relative, "",
+                            _("When on, the snap angles when rotating a guideline will be relative to the original angle"));
     _steps_zoom.init ( "/options/zoomincrement/value", 101.0, 500.0, 1.0, 1.0, 1.414213562, true, true);
     _page_steps.add_line( false, _("Zoom in/out by:"), _steps_zoom, _("%"),
                           _("Zoom tool click, +/- keys, and middle click zoom in and out by this multiplier"), false);

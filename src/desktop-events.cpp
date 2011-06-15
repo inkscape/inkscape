@@ -319,11 +319,17 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         if (event->motion.state & GDK_CONTROL_MASK) {
                             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                             unsigned const snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
+                            bool const relative_snaps = abs(prefs->getBool("/options/relativeguiderotationsnap/value", false));
                             if (snaps) {
-                                Geom::Angle orig_angle(guide->normal_to_line);
-                                Geom::Angle snap_angle = angle - orig_angle;
-                                double sections = floor(snap_angle.radians0() * snaps / M_PI + .5);
-                                angle = (M_PI / snaps) * sections + orig_angle.radians0();
+                                if (relative_snaps) {
+                                    Geom::Angle orig_angle(guide->normal_to_line);
+                                    Geom::Angle snap_angle = angle - orig_angle;
+                                    double sections = floor(snap_angle.radians0() * snaps / M_PI + .5);
+                                    angle = (M_PI / snaps) * sections + orig_angle.radians0();
+                                } else {
+                                    double sections = floor(angle.radians0() * snaps / M_PI + .5);
+                                    angle = (M_PI / snaps) * sections;
+                                }
                             }
                         }
                         sp_guide_set_normal(*guide, Geom::Point::polar(angle).cw(), false);
@@ -387,11 +393,17 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                                 if (event->motion.state & GDK_CONTROL_MASK) {
                                     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                                     unsigned const snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
+                                    bool const relative_snaps = abs(prefs->getBool("/options/relativeguiderotationsnap/value", false));
                                     if (snaps) {
-                                        Geom::Angle orig_angle(guide->normal_to_line);
-                                        Geom::Angle snap_angle = angle - orig_angle;
-                                        double sections = floor(snap_angle.radians0() * snaps / M_PI + .5);
-                                        angle = (M_PI / snaps) * sections + orig_angle.radians0();
+                                        if (relative_snaps) {
+                                            Geom::Angle orig_angle(guide->normal_to_line);
+                                            Geom::Angle snap_angle = angle - orig_angle;
+                                            double sections = floor(snap_angle.radians0() * snaps / M_PI + .5);
+                                            angle = (M_PI / snaps) * sections + orig_angle.radians0();
+                                        } else {
+                                            double sections = floor(angle.radians0() * snaps / M_PI + .5);
+                                            angle = (M_PI / snaps) * sections;
+                                        }
                                     }
                                 }
                                 sp_guide_set_normal(*guide, Geom::Point::polar(angle).cw(), true);

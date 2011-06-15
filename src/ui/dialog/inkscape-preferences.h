@@ -179,6 +179,7 @@ protected:
     UI::Widget::PrefCheckButton _snap_mouse_pointer;
 
     UI::Widget::PrefCombo       _steps_rot_snap;
+    UI::Widget::PrefCheckButton _steps_rot_relative;
     UI::Widget::PrefCheckButton _steps_compass;
     UI::Widget::PrefSpinUnit    _steps_arrow;
     UI::Widget::PrefSpinUnit    _steps_scale;
