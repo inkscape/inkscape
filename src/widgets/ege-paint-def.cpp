@@ -50,6 +50,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <glibmm/i18n.h>
 #include <glibmm/stringutils.h>
 
 #if !defined(_)
