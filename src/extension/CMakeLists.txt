@@ -50,43 +50,6 @@ set(extension_SRC
 	internal/javafx-out.cpp
 	internal/svg.cpp
 	internal/svgz.cpp
-	internal/wpg-input.cpp
-
-	internal/bitmap/adaptiveThreshold.cpp
-	internal/bitmap/addNoise.cpp
-	internal/bitmap/blur.cpp
-	internal/bitmap/channel.cpp
-	internal/bitmap/charcoal.cpp
-	internal/bitmap/colorize.cpp
-	internal/bitmap/contrast.cpp
-	internal/bitmap/cycleColormap.cpp
-	internal/bitmap/despeckle.cpp
-	internal/bitmap/edge.cpp
-	internal/bitmap/emboss.cpp
-	internal/bitmap/enhance.cpp
-	internal/bitmap/equalize.cpp
-	internal/bitmap/gaussianBlur.cpp
-	internal/bitmap/imagemagick.cpp
-	internal/bitmap/implode.cpp
-	internal/bitmap/level.cpp
-	internal/bitmap/levelChannel.cpp
-	internal/bitmap/medianFilter.cpp
-	internal/bitmap/modulate.cpp
-	internal/bitmap/negate.cpp
-	internal/bitmap/normalize.cpp
-	internal/bitmap/oilPaint.cpp
-	internal/bitmap/opacity.cpp
-	internal/bitmap/raise.cpp
-	internal/bitmap/reduceNoise.cpp
-	internal/bitmap/sample.cpp
-	internal/bitmap/shade.cpp
-	internal/bitmap/sharpen.cpp
-	internal/bitmap/solarize.cpp
-	internal/bitmap/spread.cpp
-	internal/bitmap/swirl.cpp
-	internal/bitmap/threshold.cpp
-	internal/bitmap/unsharpmask.cpp
-	internal/bitmap/wave.cpp
 
 	internal/filter/filter-all.cpp
 	internal/filter/filter-file.cpp
@@ -141,41 +104,6 @@ set(extension_SRC
 	implementation/script.h
 	implementation/xslt.h
 
-	internal/bitmap/adaptiveThreshold.h
-	internal/bitmap/addNoise.h
-	internal/bitmap/blur.h
-	internal/bitmap/channel.h
-	internal/bitmap/charcoal.h
-	internal/bitmap/colorize.h
-	internal/bitmap/contrast.h
-	internal/bitmap/cycleColormap.h
-	internal/bitmap/despeckle.h
-	internal/bitmap/edge.h
-	internal/bitmap/emboss.h
-	internal/bitmap/enhance.h
-	internal/bitmap/equalize.h
-	internal/bitmap/gaussianBlur.h
-	internal/bitmap/imagemagick.h
-	internal/bitmap/implode.h
-	internal/bitmap/level.h
-	internal/bitmap/levelChannel.h
-	internal/bitmap/medianFilter.h
-	internal/bitmap/modulate.h
-	internal/bitmap/negate.h
-	internal/bitmap/normalize.h
-	internal/bitmap/oilPaint.h
-	internal/bitmap/opacity.h
-	internal/bitmap/raise.h
-	internal/bitmap/reduceNoise.h
-	internal/bitmap/sample.h
-	internal/bitmap/shade.h
-	internal/bitmap/sharpen.h
-	internal/bitmap/solarize.h
-	internal/bitmap/spread.h
-	internal/bitmap/swirl.h
-	internal/bitmap/threshold.h
-	internal/bitmap/unsharpmask.h
-	internal/bitmap/wave.h
 	internal/bluredge.h
 	internal/cairo-png-out.h
 	internal/cairo-ps-out.h
@@ -209,7 +137,6 @@ set(extension_SRC
 	internal/svg.h
 	internal/svgz.h
 	internal/win32.h
-	internal/wpg-input.h
 
 	script/InkscapeScript.h
 )
@@ -218,6 +145,88 @@ if(WIN32)
 	list(APPEND extension_SRC
 		internal/win32.cpp
 		internal/win32.h
+	)
+endif()
+
+if(LibWPG_FOUND)
+	list(APPEND extension_SRC
+		internal/wpg-input.cpp
+		internal/wpg-input.h
+	)
+endif()
+
+if(ImageMagick_FOUND)
+	list(APPEND extension_SRC
+		internal/bitmap/adaptiveThreshold.cpp
+		internal/bitmap/adaptiveThreshold.h
+		internal/bitmap/addNoise.cpp
+		internal/bitmap/addNoise.h
+		internal/bitmap/blur.cpp
+		internal/bitmap/blur.h
+		internal/bitmap/channel.cpp
+		internal/bitmap/channel.h
+		internal/bitmap/charcoal.cpp
+		internal/bitmap/charcoal.h
+		internal/bitmap/colorize.cpp
+		internal/bitmap/colorize.h
+		internal/bitmap/contrast.cpp
+		internal/bitmap/contrast.h
+		internal/bitmap/cycleColormap.cpp
+		internal/bitmap/cycleColormap.h
+		internal/bitmap/despeckle.cpp
+		internal/bitmap/despeckle.h
+		internal/bitmap/edge.cpp
+		internal/bitmap/edge.h
+		internal/bitmap/emboss.cpp
+		internal/bitmap/emboss.h
+		internal/bitmap/enhance.cpp
+		internal/bitmap/enhance.h
+		internal/bitmap/equalize.cpp
+		internal/bitmap/equalize.h
+		internal/bitmap/gaussianBlur.cpp
+		internal/bitmap/gaussianBlur.h
+		internal/bitmap/imagemagick.cpp
+		internal/bitmap/imagemagick.h
+		internal/bitmap/implode.cpp
+		internal/bitmap/implode.h
+		internal/bitmap/level.cpp
+		internal/bitmap/level.h
+		internal/bitmap/levelChannel.cpp
+		internal/bitmap/levelChannel.h
+		internal/bitmap/medianFilter.cpp
+		internal/bitmap/medianFilter.h
+		internal/bitmap/modulate.cpp
+		internal/bitmap/modulate.h
+		internal/bitmap/negate.cpp
+		internal/bitmap/negate.h
+		internal/bitmap/normalize.cpp
+		internal/bitmap/normalize.h
+		internal/bitmap/oilPaint.cpp
+		internal/bitmap/oilPaint.h
+		internal/bitmap/opacity.cpp
+		internal/bitmap/opacity.h
+		internal/bitmap/raise.cpp
+		internal/bitmap/raise.h
+		internal/bitmap/reduceNoise.cpp
+		internal/bitmap/reduceNoise.h
+		internal/bitmap/sample.cpp
+		internal/bitmap/sample.h
+		internal/bitmap/shade.cpp
+		internal/bitmap/shade.h
+		internal/bitmap/sharpen.cpp
+		internal/bitmap/sharpen.h
+		internal/bitmap/solarize.cpp
+		internal/bitmap/solarize.h
+		internal/bitmap/spread.cpp
+		internal/bitmap/spread.h
+		internal/bitmap/swirl.cpp
+		internal/bitmap/swirl.h
+		internal/bitmap/threshold.cpp
+		internal/bitmap/threshold.h
+		internal/bitmap/unsharpmask.cpp
+		internal/bitmap/unsharpmask.h
+		internal/bitmap/wave.cpp
+		internal/bitmap/wave.h
 	)
 endif()
 
