@@ -335,7 +335,7 @@ public:
                   "<param name=\"simply\" gui-text=\"" N_("Strength:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"20.00\">0.6</param>\n"
                   "<param name=\"clean\" gui-text=\"" N_("Clean-up:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"500\">10</param>\n"
                   "<param name=\"erase\" gui-text=\"" N_("Erase:") "\" type=\"float\" appearance=\"full\" min=\"0\" max=\"60\">0</param>\n"
-                  "<param name=\"transluscent\" gui-text=\"" N_("Transluscent") "\" type=\"boolean\" >false</param>\n"
+                  "<param name=\"translucent\" gui-text=\"" N_("Translucent") "\" type=\"boolean\" >false</param>\n"
                   "<_param name=\"smoothheader\" type=\"description\" appearance=\"header\">Smoothness</_param>\n"
                     "<param name=\"smooth\" gui-text=\"" N_("Strength:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"20.00\">0.6</param>\n"
                     "<param name=\"dilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" appearance=\"full\" min=\"1\" max=\"50\">6</param>\n"
