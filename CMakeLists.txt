@@ -5,11 +5,13 @@
 #
 # ideasman42
 
+cmake_minimum_required(VERSION 2.8.0)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeScripts")
+
 project(inkscape)
 
 set(INKSCAPE_VERSION 0.48+devel)
 set(PROJECT_NAME inkscape)
-cmake_minimum_required(VERSION 2.8.0)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
 if(COMMAND cmake_policy)
@@ -24,7 +26,11 @@ if(CMAKE_COMPILER_IS_GNUCC)
 	endif()
 endif()
 
-list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeScripts")
+#-----------------------------------------------------------------------------
+# Redirect output files
+
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin CACHE INTERNAL "" FORCE )
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE )
 
 # -----------------------------------------------------------------------------
 # Options
@@ -95,7 +101,7 @@ if(UNIX)
 	)
 
 	install(
-		PROGRAMS ${CMAKE_BINARY_DIR}/src/inkscape
+		PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/inkscape
 		DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
 	)
 

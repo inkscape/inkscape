@@ -112,7 +112,7 @@ list(APPEND INKSCAPE_INCS ${LIBXML2_INCLUDE_DIR})
 list(APPEND INKSCAPE_LIBS ${LIBXML2_LIBRARIES})
 add_definitions(${LIBXML2_DEFINITIONS})
 
-find_package(OpenMP REQUIRED)  # cmake's
+find_package(OpenMP)
 if(OpenMP_FOUND)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
@@ -121,7 +121,7 @@ if(OpenMP_FOUND)
 	endif()
 	mark_as_advanced(OpenMP_C_FLAGS)
 	mark_as_advanced(OpenMP_CXX_FLAGS)
-endif(OpenMP_FOUND)
+endif()
 
 find_package(ZLIB REQUIRED)
 list(APPEND INKSCAPE_INCS ${ZLIB_INCLUDE_DIRS})
@@ -131,14 +131,11 @@ find_package(ImageMagick COMPONENTS MagickCore Magick++)
 if(ImageMagick_FOUND)
 	list(APPEND INKSCAPE_INCS ${ImageMagick_MagickCore_INCLUDE_DIR})
 	list(APPEND INKSCAPE_LIBS ${ImageMagick_Magick++_LIBRARY})
-endif(ImageMagick_FOUND)
+endif()
 
 include(IncludeJava)
 # end Dependencies
 
-# message(FATAL_ERROR "Whee: ${INKSCAPE_INCS}")
-# message(FATAL_ERROR "Whee: ${INKSCAPE_LIBS}")
-# message(FATAL_ERROR "Whee: ${INKSCAPE_LINK_DIRS}")
 
 # C/C++ Flags
 include_directories(SYSTEM ${INKSCAPE_INCS})
