@@ -82,6 +82,11 @@ protected:
     UI::Widget::NotebookPage   _page_snap;
     UI::Widget::NotebookPage   _page_cms;
     UI::Widget::NotebookPage   _page_scripting;
+
+    Gtk::Notebook _scripting_notebook;
+    UI::Widget::NotebookPage _page_external_scripts;
+    UI::Widget::NotebookPage _page_embedded_scripts;
+
     Gtk::VBox      _grids_vbox;
 
     UI::Widget::Registry _wr;

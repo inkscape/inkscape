@@ -88,6 +88,7 @@ DocumentProperties::DocumentProperties()
     : UI::Widget::Panel ("", "/dialogs/documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
       _page_page(1, 1, true, true), _page_guides(1, 1),
       _page_snap(1, 1), _page_cms(1, 1), _page_scripting(1, 1),
+      _page_external_scripts(1, 1), _page_embedded_scripts(1, 1),
     //---------------------------------------------------------------
       _rcb_canb(_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false),
       _rcb_bord(_("Border on _top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false),
@@ -584,27 +585,36 @@ DocumentProperties::build_scripting()
 {
     _page_scripting.show();
 
+    _page_scripting.set_spacing (4);
+    _page_scripting.pack_start(_scripting_notebook, true, true);
+
+    _scripting_notebook.append_page(_page_external_scripts, _("External scripts"));
+    _scripting_notebook.append_page(_page_embedded_scripts, _("Embedded scripts"));
+
+    _page_external_scripts.show();
+    _page_embedded_scripts.show();
+
     Gtk::Label *label_script= manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
     label_script->set_markup (_("<b>External script files:</b>"));
 
     _add_btn.set_label(_("Add"));
 
-    _page_scripting.set_spacing(4);
+    _page_external_scripts.set_spacing(4);
     gint row = 0;
 
     label_script->set_alignment(0.0);
-    _page_scripting.table().attach(*label_script, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_external_scripts.table().attach(*label_script, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
-    _page_scripting.table().attach(_ExternalScriptsListScroller, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_external_scripts.table().attach(_ExternalScriptsListScroller, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
 
     Gtk::HBox* spacer = Gtk::manage(new Gtk::HBox());
     spacer->set_size_request(SPACE_SIZE_X, SPACE_SIZE_Y);
-    _page_scripting.table().attach(*spacer, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_external_scripts.table().attach(*spacer, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
 
-    _page_scripting.table().attach(_script_entry, 0, 2, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
-    _page_scripting.table().attach(_add_btn, 2, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_external_scripts.table().attach(_script_entry, 0, 2, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_external_scripts.table().attach(_add_btn, 2, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
 
     //# Set up the External Scripts box
@@ -675,8 +685,11 @@ void DocumentProperties::removeExternalScript(){
         if (name == script->xlinkhref){
 
             //XML Tree being used directly here while it shouldn't be.
-            sp_repr_unparent(obj->getRepr());
-            DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_EXTERNAL_SCRIPT, _("Remove external script"));
+            Inkscape::XML::Node *repr = obj->getRepr();
+            if (repr){
+                sp_repr_unparent(repr);
+                DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_EXTERNAL_SCRIPT, _("Remove external script"));
+            }
         }
         current = g_slist_next(current);
     }
