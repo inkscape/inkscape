@@ -20,6 +20,7 @@
 #include <gtkmm/label.h>
 #include <gtkmm/stock.h>
 #include <gtkmm/adjustment.h>
+#include <gtkmm/colorbutton.h>
 #include "ui/widget/button.h"
 #include "ui/widget/spinbutton.h"
 #include "ui/widget/unit-menu.h"
@@ -57,6 +58,7 @@ protected:
 
     void _response(gint response);
     void _modeChanged();
+    void _colorChanged();
 
 private:
     GuidelinePropertiesDialog(GuidelinePropertiesDialog const &); // no copy
@@ -73,6 +75,7 @@ private:
     Inkscape::UI::Widget::ScalarUnit _spin_button_x;
     Inkscape::UI::Widget::ScalarUnit _spin_button_y;
     Inkscape::UI::Widget::Entry _label_entry;
+    Gtk::ColorButton _color;
 
     Inkscape::UI::Widget::ScalarUnit _spin_angle;
     static Glib::ustring _angle_unit_status; // remember the status of the _relative_toggle_status button across instances

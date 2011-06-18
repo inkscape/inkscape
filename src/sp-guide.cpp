@@ -412,6 +412,23 @@ void sp_guide_set_normal(SPGuide &guide, Geom::Point const normal_to_line, bool 
 */
 }
 
+void sp_guide_set_color(SPGuide &guide, const unsigned char r, const unsigned char g, const unsigned char b, bool const commit)
+{
+    g_assert(SP_IS_GUIDE(&guide));
+    guide.color = (r << 24) | (g << 16) | (b << 8) | 0x7f;
+
+    if (guide.views){
+        sp_guideline_set_color(SP_GUIDELINE(guide.views->data), guide.color);
+    }
+
+    if (commit){
+        std::ostringstream os;
+        os << "rgb(" << r << "," << g << "," << b << ")";
+        //XML Tree being used directly while it shouldn't be
+        guide.getRepr()->setAttribute("inkscape:color", os.str().c_str());
+    }
+}
+
 void sp_guide_set_label(SPGuide &guide, const char* label, bool const commit)
 {
     g_assert(SP_IS_GUIDE(&guide));

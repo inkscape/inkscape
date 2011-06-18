@@ -63,6 +63,14 @@ void GuidelinePropertiesDialog::showDialog(SPGuide *guide, SPDesktop *desktop) {
     dialog.run();
 }
 
+void GuidelinePropertiesDialog::_colorChanged()
+{
+    const Gdk::Color c = _color.get_color();
+    char r = c.get_red()/257, g = c.get_green()/257, b = c.get_blue()/257;
+    //TODO: why 257? verify this!
+    sp_guide_set_color(*_guide, r, g, b, true);
+}
+
 void GuidelinePropertiesDialog::_modeChanged()
 {
     _mode = !_relative_toggle.get_active();
@@ -177,6 +185,11 @@ void GuidelinePropertiesDialog::_setup() {
     _layout_table.attach(_label_entry,
                          1, 3, 2, 3, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
 
+    _layout_table.attach(_color,
+                         1, 3, 3, 4, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+    _color.signal_color_set().connect(sigc::mem_fun(*this, &GuidelinePropertiesDialog::_colorChanged));
+
+
     // unitmenus
     /* fixme: We should allow percents here too, as percents of the canvas size */
     _unit_menu.setUnitType(UNIT_TYPE_LINEAR);
@@ -254,6 +267,9 @@ void GuidelinePropertiesDialog::_setup() {
 
     // init name entry
     _label_entry.getEntry()->set_text(_guide->label ? _guide->label : "");
+    Gdk::Color c;
+    c.set_rgb_p(((_guide->color>>24)&0xff) / 255.0, ((_guide->color>>16)&0xff) / 255.0, ((_guide->color>>8)&0xff) / 255.0);
+    _color.set_color(c);
 
     _modeChanged(); // sets values of spinboxes.
 
