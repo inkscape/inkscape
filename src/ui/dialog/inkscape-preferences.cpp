@@ -487,7 +487,7 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_measure, _("Measure"), iter_tools, PREFS_PAGE_TOOLS_MEASURE);
     PrefCheckButton* cb = Gtk::manage( new PrefCheckButton);
     cb->init ( _("Ignore first and last points"), "/tools/measure/ignore_1st_and_last", true);
-    _page_measure.add_line( false, "", *cb, "", _("The beggining and end of the measurement tool's control line will not be considered for calculating lengths. Only lengths between actual curve intersections will be displayed."));
+    _page_measure.add_line( false, "", *cb, "", _("The start and end of the measurement tool's control line will not be considered for calculating lengths. Only lengths between actual curve intersections will be displayed."));
 
     //Shapes
     Gtk::TreeModel::iterator iter_shapes = this->AddPage(_page_shapes, _("Shapes"), iter_tools, PREFS_PAGE_TOOLS_SHAPES);
