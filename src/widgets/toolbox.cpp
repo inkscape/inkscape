@@ -4757,7 +4757,7 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         gdouble values[] = {5, 20, 35, 50, 70, 85, 100};
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayPopulationAction",
                                                               _("Amount"), _("Amount:"),
-                                                              _("Adjusts the number of items sprayed per clic"),
+                                                              _("Adjusts the number of items sprayed per click"),
                                                               "/tools/spray/population", 70,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-population",
                                                               1, 100, 1.0, 10.0,

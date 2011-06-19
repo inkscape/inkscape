@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-06-15 21:40+0200\n"
+"POT-Creation-Date: 2011-06-19 14:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -966,6 +966,7 @@ msgid "Leaves on the ground in Fall, or living foliage"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:1
+#: ../src/extension/internal/filter/experimental.h:338
 msgid "Translucent"
 msgstr ""
 
@@ -3793,7 +3794,7 @@ msgid "Move guide"
 msgstr ""
 
 #: ../src/desktop-events.cpp:429 ../src/desktop-events.cpp:475
-#: ../src/ui/dialog/guides.cpp:125
+#: ../src/ui/dialog/guides.cpp:133
 msgid "Delete guide"
 msgstr ""
 
@@ -4899,7 +4900,7 @@ msgid "_Set"
 msgstr ""
 
 #. Create the label for the object label
-#: ../src/dialogs/item-properties.cpp:144
+#: ../src/dialogs/item-properties.cpp:144 ../src/ui/dialog/guides.cpp:45
 msgid "_Label:"
 msgstr ""
 
@@ -5044,16 +5045,14 @@ msgid "URL:"
 msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:52
-#: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:43
-#: ../src/ui/dialog/tile.cpp:618 ../src/widgets/desktop-widget.cpp:514
-#: ../src/widgets/toolbox.cpp:1563
+#: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/tile.cpp:618
+#: ../src/widgets/desktop-widget.cpp:514 ../src/widgets/toolbox.cpp:1563
 msgid "X:"
 msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:53
-#: ../src/dialogs/object-attributes.cpp:61 ../src/ui/dialog/guides.cpp:44
-#: ../src/ui/dialog/tile.cpp:619 ../src/widgets/desktop-widget.cpp:517
-#: ../src/widgets/toolbox.cpp:1581
+#: ../src/dialogs/object-attributes.cpp:61 ../src/ui/dialog/tile.cpp:619
+#: ../src/widgets/desktop-widget.cpp:517 ../src/widgets/toolbox.cpp:1581
 msgid "Y:"
 msgstr ""
 
@@ -7214,10 +7213,6 @@ msgstr ""
 msgid "Erase:"
 msgstr ""
 
-#: ../src/extension/internal/filter/experimental.h:338
-msgid "Transluscent"
-msgstr ""
-
 #: ../src/extension/internal/filter/experimental.h:344
 msgid "Level:"
 msgstr ""
@@ -7425,7 +7420,7 @@ msgid "Render"
 msgstr ""
 
 #: ../src/extension/internal/grid.cpp:211
-#: ../src/ui/dialog/document-properties.cpp:119
+#: ../src/ui/dialog/document-properties.cpp:120
 #: ../src/ui/dialog/inkscape-preferences.cpp:1082
 #: ../src/widgets/toolbox.cpp:2390
 msgid "Grids"
@@ -7977,7 +7972,7 @@ msgid "Wrap"
 msgstr ""
 
 #: ../src/filter-enums.cpp:94 ../src/live_effects/lpe-ruler.cpp:34
-#: ../src/ui/dialog/document-properties.cpp:326
+#: ../src/ui/dialog/document-properties.cpp:327
 #: ../src/ui/dialog/filter-effects-dialog.cpp:477
 #: ../src/ui/dialog/inkscape-preferences.cpp:267
 #: ../src/ui/dialog/inkscape-preferences.cpp:433
@@ -8841,7 +8836,7 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-notebook.c:134
 #: ../src/ui/dialog/align-and-distribute.cpp:1034
-#: ../src/ui/dialog/document-properties.cpp:117
+#: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1429
 #: ../src/widgets/desktop-widget.cpp:1725
 #: ../share/extensions/voronoi2svg.inx.h:8
@@ -11682,23 +11677,23 @@ msgstr ""
 msgid "Guides Around Page"
 msgstr ""
 
-#: ../src/sp-guide.cpp:444
+#: ../src/sp-guide.cpp:461
 msgid ""
 "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to "
 "delete"
 msgstr ""
 
-#: ../src/sp-guide.cpp:449
+#: ../src/sp-guide.cpp:466
 #, c-format
 msgid "vertical, at %s"
 msgstr ""
 
-#: ../src/sp-guide.cpp:452
+#: ../src/sp-guide.cpp:469
 #, c-format
 msgid "horizontal, at %s"
 msgstr ""
 
-#: ../src/sp-guide.cpp:457
+#: ../src/sp-guide.cpp:474
 #, c-format
 msgid "at %d degrees, through (%s,%s)"
 msgstr ""
@@ -13047,242 +13042,242 @@ msgid "<b>License</b>"
 msgstr ""
 
 #. ---------------------------------------------------------------
-#: ../src/ui/dialog/document-properties.cpp:92
+#: ../src/ui/dialog/document-properties.cpp:93
 msgid "Show page _border"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:92
+#: ../src/ui/dialog/document-properties.cpp:93
 msgid "If set, rectangular page border is shown"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:93
+#: ../src/ui/dialog/document-properties.cpp:94
 msgid "Border on _top of drawing"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:93
+#: ../src/ui/dialog/document-properties.cpp:94
 msgid "If set, border is always on top of the drawing"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:94
+#: ../src/ui/dialog/document-properties.cpp:95
 msgid "_Show border shadow"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:94
+#: ../src/ui/dialog/document-properties.cpp:95
 msgid "If set, page border shows a shadow on its right and lower side"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:95
+#: ../src/ui/dialog/document-properties.cpp:96
 msgid "Back_ground:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:95
+#: ../src/ui/dialog/document-properties.cpp:96
 msgid "Background color"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:95
+#: ../src/ui/dialog/document-properties.cpp:96
 msgid ""
 "Color and transparency of the page background (also used for bitmap export)"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:96
+#: ../src/ui/dialog/document-properties.cpp:97
 msgid "Border _color:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:96
+#: ../src/ui/dialog/document-properties.cpp:97
 msgid "Page border color"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:96
+#: ../src/ui/dialog/document-properties.cpp:97
 msgid "Color of the page border"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:97
+#: ../src/ui/dialog/document-properties.cpp:98
 msgid "Default _units:"
 msgstr ""
 
 #. ---------------------------------------------------------------
 #. General snap options
-#: ../src/ui/dialog/document-properties.cpp:101
+#: ../src/ui/dialog/document-properties.cpp:102
 msgid "Show _guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:101
+#: ../src/ui/dialog/document-properties.cpp:102
 msgid "Show or hide guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:102
+#: ../src/ui/dialog/document-properties.cpp:103
 msgid "_Snap guides while dragging"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:102
+#: ../src/ui/dialog/document-properties.cpp:103
 msgid ""
 "While dragging a guide, snap to object nodes or bounding box corners ('Snap "
 "to nodes' or 'snap to bounding box corners' must be enabled; only a small "
 "part of the guide near the cursor will snap)"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:104
+#: ../src/ui/dialog/document-properties.cpp:105
 msgid "Guide co_lor:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:104
+#: ../src/ui/dialog/document-properties.cpp:105
 msgid "Guideline color"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:104
+#: ../src/ui/dialog/document-properties.cpp:105
 msgid "Color of guidelines"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:105
+#: ../src/ui/dialog/document-properties.cpp:106
 msgid "_Highlight color:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:105
+#: ../src/ui/dialog/document-properties.cpp:106
 msgid "Highlighted guideline color"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:105
+#: ../src/ui/dialog/document-properties.cpp:106
 msgid "Color of a guideline when it is under mouse"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:108
+#: ../src/ui/dialog/document-properties.cpp:109
 msgctxt "Grid"
 msgid "_New"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:108
+#: ../src/ui/dialog/document-properties.cpp:109
 msgid "Create new grid."
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:109
+#: ../src/ui/dialog/document-properties.cpp:110
 msgctxt "Grid"
 msgid "_Remove"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:109
+#: ../src/ui/dialog/document-properties.cpp:110
 msgid "Remove selected grid."
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:118
+#: ../src/ui/dialog/document-properties.cpp:119
 #: ../src/widgets/toolbox.cpp:2399
 msgid "Guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:120 ../src/verbs.cpp:2597
+#: ../src/ui/dialog/document-properties.cpp:121 ../src/verbs.cpp:2597
 msgid "Snap"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:121
+#: ../src/ui/dialog/document-properties.cpp:122
 msgid "Color Management"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:122
+#: ../src/ui/dialog/document-properties.cpp:123
 msgid "Scripting"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:220
+#: ../src/ui/dialog/document-properties.cpp:221
 msgid "<b>General</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:222
+#: ../src/ui/dialog/document-properties.cpp:223
 msgid "<b>Border</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:224
+#: ../src/ui/dialog/document-properties.cpp:225
 msgid "<b>Page Size</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:252
+#: ../src/ui/dialog/document-properties.cpp:253
 msgid "<b>Guides</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:271
+#: ../src/ui/dialog/document-properties.cpp:272
 msgid "Snap _distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:271
+#: ../src/ui/dialog/document-properties.cpp:272
 msgid "Snap only when _closer than:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:271
-#: ../src/ui/dialog/document-properties.cpp:277
-#: ../src/ui/dialog/document-properties.cpp:283
+#: ../src/ui/dialog/document-properties.cpp:272
+#: ../src/ui/dialog/document-properties.cpp:278
+#: ../src/ui/dialog/document-properties.cpp:284
 msgid "Always snap"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:272
+#: ../src/ui/dialog/document-properties.cpp:273
 msgid "Snapping distance, in screen pixels, for snapping to objects"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:272
+#: ../src/ui/dialog/document-properties.cpp:273
 msgid "Always snap to objects, regardless of their distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:273
+#: ../src/ui/dialog/document-properties.cpp:274
 msgid ""
 "If set, objects only snap to another object when it's within the range "
 "specified below"
 msgstr ""
 
 #. Options for snapping to grids
-#: ../src/ui/dialog/document-properties.cpp:277
+#: ../src/ui/dialog/document-properties.cpp:278
 msgid "Snap d_istance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:277
+#: ../src/ui/dialog/document-properties.cpp:278
 msgid "Snap only when c_loser than:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:278
+#: ../src/ui/dialog/document-properties.cpp:279
 msgid "Snapping distance, in screen pixels, for snapping to grid"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:278
+#: ../src/ui/dialog/document-properties.cpp:279
 msgid "Always snap to grids, regardless of the distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:279
+#: ../src/ui/dialog/document-properties.cpp:280
 msgid ""
 "If set, objects only snap to a grid line when it's within the range "
 "specified below"
 msgstr ""
 
 #. Options for snapping to guides
-#: ../src/ui/dialog/document-properties.cpp:283
+#: ../src/ui/dialog/document-properties.cpp:284
 msgid "Snap dist_ance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:283
+#: ../src/ui/dialog/document-properties.cpp:284
 msgid "Snap only when close_r than:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:284
+#: ../src/ui/dialog/document-properties.cpp:285
 msgid "Snapping distance, in screen pixels, for snapping to guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:284
+#: ../src/ui/dialog/document-properties.cpp:285
 msgid "Always snap to guides, regardless of the distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:285
+#: ../src/ui/dialog/document-properties.cpp:286
 msgid ""
 "If set, objects only snap to a guide when it's within the range specified "
 "below"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:289
+#: ../src/ui/dialog/document-properties.cpp:290
 msgid "<b>Snap to objects</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:291
+#: ../src/ui/dialog/document-properties.cpp:292
 msgid "<b>Snap to grids</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:293
+#: ../src/ui/dialog/document-properties.cpp:294
 msgid "<b>Snap to guides</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:322
+#: ../src/ui/dialog/document-properties.cpp:323
 msgid "(invalid UTF-8 string)"
 msgstr ""
 
@@ -13290,60 +13285,101 @@ msgstr ""
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:431 ../src/verbs.cpp:2763
+#: ../src/ui/dialog/document-properties.cpp:432 ../src/verbs.cpp:2763
 msgid "Link Color Profile"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:508
+#: ../src/ui/dialog/document-properties.cpp:525
 msgid "Remove linked color profile"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:522
+#: ../src/ui/dialog/document-properties.cpp:539
 msgid "<b>Linked Color Profiles:</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:524
+#: ../src/ui/dialog/document-properties.cpp:541
 msgid "<b>Available Color Profiles:</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:526
+#: ../src/ui/dialog/document-properties.cpp:543
 msgid "Link Profile"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:557
+#: ../src/ui/dialog/document-properties.cpp:574
 msgid "Profile Name"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:588
+#: ../src/ui/dialog/document-properties.cpp:607
+msgid "External scripts"
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:608
+msgid "Embedded scripts"
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:614
 msgid "<b>External script files:</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:590
+#: ../src/ui/dialog/document-properties.cpp:616
 msgid "Add"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:613
+#: ../src/ui/dialog/document-properties.cpp:639
 msgid "Filename"
 msgstr ""
 
+#: ../src/ui/dialog/document-properties.cpp:648
+msgid "<b>Embedded script files:</b>"
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:650
+msgid "New"
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:672
+msgid "Script id"
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:678
+msgid "<b>Content:</b>"
+msgstr ""
+
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:653
+#: ../src/ui/dialog/document-properties.cpp:741
 msgid "Add external script..."
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:679
+#. inform the document, so we can undo
+#: ../src/ui/dialog/document-properties.cpp:758
+msgid "Add embedded script..."
+msgstr ""
+
+#. inform the document, so we can undo
+#: ../src/ui/dialog/document-properties.cpp:788
 msgid "Remove external script"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:760
+#. inform the document, so we can undo
+#: ../src/ui/dialog/document-properties.cpp:820
+msgid "Remove embedded script"
+msgstr ""
+
+#. TODO repr->set_content(_EmbeddedContent.get_buffer()->get_text());
+#. inform the document, so we can undo
+#: ../src/ui/dialog/document-properties.cpp:903
+msgid "Edit embedded script"
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:988
 msgid "<b>Creation</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:761
+#: ../src/ui/dialog/document-properties.cpp:989
 msgid "<b>Defined grids</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:972
+#: ../src/ui/dialog/document-properties.cpp:1200
 msgid "Remove grid"
 msgstr ""
 
@@ -14874,33 +14910,38 @@ msgstr ""
 msgid "Move and/or rotate the guide relative to current settings"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:45
-msgid "Label:"
+#: ../src/ui/dialog/guides.cpp:43
+msgid "_X:"
+msgstr ""
+
+#: ../src/ui/dialog/guides.cpp:44 ../src/widgets/sp-color-icc-selector.cpp:217
+#: ../src/widgets/sp-color-icc-selector.cpp:218
+#: ../src/widgets/sp-color-scales.cpp:462
+msgid "_Y:"
 msgstr ""
 
 #: ../src/ui/dialog/guides.cpp:45
 msgid "Optionally give this guideline a name"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:46 ../src/widgets/toolbox.cpp:5195
-#: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
-msgid "Angle:"
+#: ../src/ui/dialog/guides.cpp:46
+msgid "_Angle:"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:112
+#: ../src/ui/dialog/guides.cpp:120
 msgid "Set guide properties"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:151
+#: ../src/ui/dialog/guides.cpp:159
 msgid "Guideline"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:243
+#: ../src/ui/dialog/guides.cpp:256
 #, c-format
 msgid "Guideline ID: %s"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:249
+#: ../src/ui/dialog/guides.cpp:262
 #, c-format
 msgid "Current: %s"
 msgstr ""
@@ -15518,7 +15559,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:490
 msgid ""
-"The beggining and end of the measurement tool's control line will not be "
+"The start and end of the measurement tool's control line will not be "
 "considered for calculating lengths. Only lengths between actual curve "
 "intersections will be displayed."
 msgstr ""
@@ -21061,12 +21102,12 @@ msgstr ""
 msgid "Note:"
 msgstr ""
 
-#: ../src/widgets/ege-paint-def.cpp:69 ../src/widgets/ege-paint-def.cpp:91
+#: ../src/widgets/ege-paint-def.cpp:70 ../src/widgets/ege-paint-def.cpp:92
 #: ../src/widgets/gradient-selector.cpp:173
 msgid "none"
 msgstr ""
 
-#: ../src/widgets/ege-paint-def.cpp:88
+#: ../src/widgets/ege-paint-def.cpp:89
 msgid "remove"
 msgstr ""
 
@@ -21502,12 +21543,6 @@ msgstr ""
 #: ../src/widgets/sp-color-icc-selector.cpp:218
 #: ../src/widgets/sp-color-scales.cpp:459
 msgid "_M:"
-msgstr ""
-
-#: ../src/widgets/sp-color-icc-selector.cpp:217
-#: ../src/widgets/sp-color-icc-selector.cpp:218
-#: ../src/widgets/sp-color-scales.cpp:462
-msgid "_Y:"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:217
@@ -22827,7 +22862,7 @@ msgid "Amount"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4760
-msgid "Adjusts the number of items sprayed per clic"
+msgid "Adjusts the number of items sprayed per click"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4776
@@ -22950,6 +22985,11 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5195
 msgid "Pen Angle"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:5195 ../share/extensions/motion.inx.h:1
+#: ../share/extensions/restack.inx.h:1
+msgid "Angle:"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5196
