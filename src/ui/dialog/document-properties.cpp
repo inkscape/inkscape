@@ -844,6 +844,15 @@ void DocumentProperties::changeEmbeddedScript(){
         SPObject* obj = SP_OBJECT(current->data);
         if (id == obj->getId()){
 
+            int count=0;
+            for ( SPObject *child = obj->children ; child; child = child->next )
+            {
+                count++;
+            }
+
+            if (count>1)
+                g_warning("TODO: Found a script element with multiple (%d) child nodes! We must implement support for that!", count);
+
             //XML Tree being used directly here while it shouldn't be.
             SPObject* child = obj->firstChild();
             //TODO: shouldnt we get all children instead of simply the first child?
