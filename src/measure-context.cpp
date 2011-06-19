@@ -26,6 +26,7 @@
 #include "inkscape.h"
 #include "desktop-handles.h"
 #include "measure-context.h"
+#include "draw-context.h"
 #include "display/canvas-text.h"
 #include "path-chemistry.h"
 #include "2geom/line.h"
@@ -184,17 +185,21 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
                 Geom::Point const motion_dt(desktop->w2d(motion_w));
+                Geom::Point end_point = motion_dt;
 
-                sp_ctrlline_set_coords (SP_CTRLLINE(line), start_point[Geom::X], start_point[Geom::Y], motion_dt[Geom::X], motion_dt[Geom::Y]);
+                if (event->motion.state & GDK_CONTROL_MASK)
+                    spdc_endpoint_snap_rotation(event_context, end_point, start_point, event->motion.state);
+
+                sp_ctrlline_set_coords (SP_CTRLLINE(line), start_point[Geom::X], start_point[Geom::Y], end_point[Geom::X], end_point[Geom::Y]);
 
                 Geom::PathVector lineseg;
                 Geom::Path p;
                 p.start(desktop->dt2doc(start_point));
-                p.appendNew<Geom::LineSegment>(desktop->dt2doc(motion_dt));
+                p.appendNew<Geom::LineSegment>(desktop->dt2doc(end_point));
                 lineseg.push_back(p);
 
-                double deltax = motion_dt[Geom::X] - start_point[Geom::X];
-                double deltay = motion_dt[Geom::Y] - start_point[Geom::Y];
+                double deltax = end_point[Geom::X] - start_point[Geom::X];
+                double deltay = end_point[Geom::Y] - start_point[Geom::Y];
                 double angle = atan2(deltay, deltax);
 
 //TODO: calculate NPOINTS
@@ -204,7 +209,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 std::vector<Geom::Point> points;
                 double i;
                 for (i=0; i<NPOINTS; i++){
-                    points.push_back(desktop->d2w(start_point + (i/NPOINTS)*(motion_dt-start_point)));
+                    points.push_back(desktop->d2w(start_point + (i/NPOINTS)*(end_point-start_point)));
                 }
 
                 //select elements crossed by line segment:
@@ -260,7 +265,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 }
 
                 if (!ignore_1st_and_last){
-                    intersections.push_back(desktop->dt2doc(motion_dt));
+                    intersections.push_back(desktop->dt2doc(end_point));
                 }
 
                 //sort intersections
@@ -321,7 +326,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 char* angle_str = (char*) malloc(sizeof(char)*20);
                 sprintf(angle_str, "%.2f °", angle * 180/3.1415 );
-                SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, motion_dt + desktop->w2d(Geom::Point(5*fontsize,0)), angle_str);
+                SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(5*fontsize,0)), angle_str);
                 sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
                 sp_canvastext_set_rgba32 (SP_CANVASTEXT(canvas_tooltip), 0x337f33ff, 0xffffffff);
 
