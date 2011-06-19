@@ -460,6 +460,13 @@ void DocumentProperties::external_scripts_list_button_release(GdkEventButton* ev
     }
 }
 
+void DocumentProperties::embedded_scripts_list_button_release(GdkEventButton* event)
+{
+    if((event->type == GDK_BUTTON_RELEASE) && (event->button == 3)) {
+        _EmbeddedScriptsContextMenu.popup(event->button, event->time);
+    }
+}
+
 void DocumentProperties::linked_profiles_list_button_release(GdkEventButton* event)
 {
     if((event->type == GDK_BUTTON_RELEASE) && (event->button == 3)) {
@@ -477,13 +484,22 @@ void DocumentProperties::cms_create_popup_menu(Gtk::Widget& parent, sigc::slot<v
 }
 
 
-void DocumentProperties::scripting_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
+void DocumentProperties::external_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
 {
     Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
     _ExternalScriptsContextMenu.append(*mi);
     mi->signal_activate().connect(rem);
     mi->show();
     _ExternalScriptsContextMenu.accelerate(parent);
+}
+
+void DocumentProperties::embedded_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
+{
+    Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
+    _EmbeddedScriptsContextMenu.append(*mi);
+    mi->signal_activate().connect(rem);
+    mi->show();
+    _EmbeddedScriptsContextMenu.accelerate(parent);
 }
 
 void DocumentProperties::removeSelectedProfile(){
@@ -591,26 +607,26 @@ DocumentProperties::build_scripting()
     _scripting_notebook.append_page(_page_external_scripts, _("External scripts"));
     _scripting_notebook.append_page(_page_embedded_scripts, _("Embedded scripts"));
 
+    //# External scripts tab
     _page_external_scripts.show();
-    _page_embedded_scripts.show();
-
-    Gtk::Label *label_script= manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
-    label_script->set_markup (_("<b>External script files:</b>"));
+    
+    Gtk::Label *label_external= manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
+    label_external->set_markup (_("<b>External script files:</b>"));
 
     _add_btn.set_label(_("Add"));
 
     _page_external_scripts.set_spacing(4);
     gint row = 0;
 
-    label_script->set_alignment(0.0);
-    _page_external_scripts.table().attach(*label_script, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    label_external->set_alignment(0.0);
+    _page_external_scripts.table().attach(*label_external, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
     _page_external_scripts.table().attach(_ExternalScriptsListScroller, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
 
-    Gtk::HBox* spacer = Gtk::manage(new Gtk::HBox());
-    spacer->set_size_request(SPACE_SIZE_X, SPACE_SIZE_Y);
-    _page_external_scripts.table().attach(*spacer, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    Gtk::HBox* spacer_external = Gtk::manage(new Gtk::HBox());
+    spacer_external->set_size_request(SPACE_SIZE_X, SPACE_SIZE_Y);
+    _page_external_scripts.table().attach(*spacer_external, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
 
     _page_external_scripts.table().attach(_script_entry, 0, 2, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
@@ -624,7 +640,58 @@ DocumentProperties::build_scripting()
     _ExternalScriptsList.set_headers_visible(true);
 // TODO restore?    _ExternalScriptsList.set_fixed_height_mode(true);
 
-    populate_external_scripts_box();
+
+    //# Embedded scripts tab
+    _page_embedded_scripts.show();
+
+    Gtk::Label *label_embedded= manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
+    label_embedded->set_markup (_("<b>Embedded script files:</b>"));
+
+    _new_btn.set_label(_("New"));
+
+    _page_embedded_scripts.set_spacing(4);
+    row = 0;
+
+    label_embedded->set_alignment(0.0);
+    _page_embedded_scripts.table().attach(*label_embedded, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+    _page_embedded_scripts.table().attach(_EmbeddedScriptsListScroller, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+
+    Gtk::HBox* spacer_embedded = Gtk::manage(new Gtk::HBox());
+    spacer_embedded->set_size_request(SPACE_SIZE_X, SPACE_SIZE_Y);
+    _page_embedded_scripts.table().attach(*spacer_embedded, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+
+    _page_embedded_scripts.table().attach(_new_btn, 2, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+
+    //# Set up the Embedded Scripts box
+    _EmbeddedScriptsListStore = Gtk::ListStore::create(_EmbeddedScriptsListColumns);
+    _EmbeddedScriptsList.set_model(_EmbeddedScriptsListStore);
+    _EmbeddedScriptsList.append_column(_("Script id"), _EmbeddedScriptsListColumns.idColumn);
+    _EmbeddedScriptsList.set_headers_visible(true);
+// TODO restore?    _EmbeddedScriptsList.set_fixed_height_mode(true);
+
+    //# Set up the Embedded Scripts content box
+    Gtk::Label *label_embedded_content= manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
+    label_embedded_content->set_markup (_("<b>Content:</b>"));
+
+    label_embedded_content->set_alignment(0.0);
+    _page_embedded_scripts.table().attach(*label_embedded_content, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+
+    _page_embedded_scripts.table().attach(_EmbeddedContentScroller, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+
+    _EmbeddedContentScroller.add(_EmbeddedContent);
+    _EmbeddedContentScroller.set_shadow_type(Gtk::SHADOW_IN);
+    _EmbeddedContentScroller.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    _EmbeddedContentScroller.set_size_request(-1, -1);
+
+    _EmbeddedScriptsList.signal_cursor_changed().connect(sigc::mem_fun(*this, &DocumentProperties::changeEmbeddedScript));
+    _EmbeddedContent.get_buffer()->signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::editEmbeddedScript));
+
+    populate_script_lists();
 
     _ExternalScriptsListScroller.add(_ExternalScriptsList);
     _ExternalScriptsListScroller.set_shadow_type(Gtk::SHADOW_IN);
@@ -633,17 +700,28 @@ DocumentProperties::build_scripting()
 
     _add_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::addExternalScript));
 
+    _EmbeddedScriptsListScroller.add(_EmbeddedScriptsList);
+    _EmbeddedScriptsListScroller.set_shadow_type(Gtk::SHADOW_IN);
+    _EmbeddedScriptsListScroller.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_ALWAYS);
+    _EmbeddedScriptsListScroller.set_size_request(-1, 90);
+
+    _new_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::addEmbeddedScript));
+
+
 #if ENABLE_LCMS
     _ExternalScriptsList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::external_scripts_list_button_release));
-    scripting_create_popup_menu(_ExternalScriptsList, sigc::mem_fun(*this, &DocumentProperties::removeExternalScript));
+    external_create_popup_menu(_ExternalScriptsList, sigc::mem_fun(*this, &DocumentProperties::removeExternalScript));
+
+    _EmbeddedScriptsList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::embedded_scripts_list_button_release));
+    embedded_create_popup_menu(_EmbeddedScriptsList, sigc::mem_fun(*this, &DocumentProperties::removeEmbeddedScript));
 #endif // ENABLE_LCMS
 
 //TODO: review this observers code:
     const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
     if (current) {
-        _ext_scripts_observer.set(SP_OBJECT(current->data)->parent);
+        _scripts_observer.set(SP_OBJECT(current->data)->parent);
     }
-    _ext_scripts_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_external_scripts_box));
+    _scripts_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_script_lists));
 }
 
 
@@ -662,7 +740,24 @@ void DocumentProperties::addExternalScript(){
         // inform the document, so we can undo
         DocumentUndo::done(desktop->doc(), SP_VERB_EDIT_ADD_EXTERNAL_SCRIPT, _("Add external script..."));
 
-        populate_external_scripts_box();
+        populate_script_lists();
+    }
+}
+
+void DocumentProperties::addEmbeddedScript(){
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (!desktop){
+        g_warning("No active desktop");
+    } else {
+        Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
+        Inkscape::XML::Node *scriptRepr = xml_doc->createElement("svg:script");
+
+        xml_doc->root()->addChild(scriptRepr, NULL);
+
+        // inform the document, so we can undo
+        DocumentUndo::done(desktop->doc(), SP_VERB_EDIT_ADD_EMBEDDED_SCRIPT, _("Add embedded script..."));
+
+        populate_script_lists();
     }
 }
 
@@ -688,20 +783,126 @@ void DocumentProperties::removeExternalScript(){
             Inkscape::XML::Node *repr = obj->getRepr();
             if (repr){
                 sp_repr_unparent(repr);
+
+                // inform the document, so we can undo
                 DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_EXTERNAL_SCRIPT, _("Remove external script"));
             }
         }
         current = g_slist_next(current);
     }
 
-    populate_external_scripts_box();
-
+    populate_script_lists();
 }
 
-void DocumentProperties::populate_external_scripts_box(){
-    _ExternalScriptsListStore->clear();
+void DocumentProperties::removeEmbeddedScript(){
+    Glib::ustring id;
+    if(_EmbeddedScriptsList.get_selection()) {
+        Gtk::TreeModel::iterator i = _EmbeddedScriptsList.get_selection()->get_selected();
+
+        if(i){
+            id = (*i)[_EmbeddedScriptsListColumns.idColumn];
+        } else {
+            return;
+        }
+    }
+
     const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    if (current) _ext_scripts_observer.set(SP_OBJECT(current->data)->parent);
+    while ( current ) {
+        SPObject* obj = SP_OBJECT(current->data);
+        if (id == obj->getId()){
+
+            //XML Tree being used directly here while it shouldn't be.
+            Inkscape::XML::Node *repr = obj->getRepr();
+            if (repr){
+                sp_repr_unparent(repr);
+
+                // inform the document, so we can undo
+                DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_EMBEDDED_SCRIPT, _("Remove embedded script"));
+            }
+        }
+        current = g_slist_next(current);
+    }
+
+    populate_script_lists();
+}
+
+void DocumentProperties::changeEmbeddedScript(){
+    Glib::ustring id;
+    if(_EmbeddedScriptsList.get_selection()) {
+        Gtk::TreeModel::iterator i = _EmbeddedScriptsList.get_selection()->get_selected();
+
+        if(i){
+            id = (*i)[_EmbeddedScriptsListColumns.idColumn];
+        } else {
+            return;
+        }
+    }
+
+    bool voidscript=true;
+    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    while ( current ) {
+        SPObject* obj = SP_OBJECT(current->data);
+        if (id == obj->getId()){
+
+            //XML Tree being used directly here while it shouldn't be.
+            SPObject* child = obj->firstChild();
+            //TODO: shouldnt we get all children instead of simply the first child?
+
+            if (child && child->getRepr()){
+                const gchar* content = child->getRepr()->content();
+                if (content){
+                    voidscript=false;
+                    _EmbeddedContent.get_buffer()->set_text(content);
+                }
+            }
+        }
+        current = g_slist_next(current);
+    }
+
+    if (voidscript)
+        _EmbeddedContent.get_buffer()->set_text("");
+}
+
+void DocumentProperties::editEmbeddedScript(){
+    Glib::ustring id;
+    if(_EmbeddedScriptsList.get_selection()) {
+        Gtk::TreeModel::iterator i = _EmbeddedScriptsList.get_selection()->get_selected();
+
+        if(i){
+            id = (*i)[_EmbeddedScriptsListColumns.idColumn];
+        } else {
+            return;
+        }
+    }
+
+    Inkscape::XML::Document *xml_doc = SP_ACTIVE_DOCUMENT->getReprDoc();
+    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    while ( current ) {
+        SPObject* obj = SP_OBJECT(current->data);
+        if (id == obj->getId()){
+
+            //XML Tree being used directly here while it shouldn't be.
+            Inkscape::XML::Node *repr = obj->getRepr();
+            if (repr){
+                SPObject *child;
+                while (NULL != (child = obj->firstChild())) child->deleteObject();
+                obj->appendChildRepr(xml_doc->createTextNode(_EmbeddedContent.get_buffer()->get_text().c_str()));
+
+                //TODO repr->set_content(_EmbeddedContent.get_buffer()->get_text());
+
+                // inform the document, so we can undo
+                DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_EMBEDDED_SCRIPT, _("Edit embedded script"));
+            }
+        }
+        current = g_slist_next(current);
+    }
+}
+
+void DocumentProperties::populate_script_lists(){
+    _ExternalScriptsListStore->clear();
+    _EmbeddedScriptsListStore->clear();
+    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    if (current) _scripts_observer.set(SP_OBJECT(current->data)->parent);
     while ( current ) {
         SPObject* obj = SP_OBJECT(current->data);
         SPScript* script = (SPScript*) obj;
@@ -709,6 +910,11 @@ void DocumentProperties::populate_external_scripts_box(){
         {
             Gtk::TreeModel::Row row = *(_ExternalScriptsListStore->append());
             row[_ExternalScriptsListColumns.filenameColumn] = script->xlinkhref;
+        }
+        else // Embedded scripts
+        {
+            Gtk::TreeModel::Row row = *(_EmbeddedScriptsListStore->append());
+            row[_EmbeddedScriptsListColumns.idColumn] = obj->getId();
         }
 
         current = g_slist_next(current);
