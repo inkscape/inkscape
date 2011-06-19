@@ -47,7 +47,6 @@ static SPEventContextClass *parent_class;
 static gint xp = 0, yp = 0; // where drag started
 static gint tolerance = 0;
 static bool within_tolerance = false;
-static SPCanvasItem * line = NULL;
 Geom::Point start_point;
 std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
 
@@ -153,14 +152,6 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 ret = TRUE;
             }
 
-            if (!line){
-                SPDesktop *desktop = inkscape_active_desktop();
-                line = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLLINE, NULL);
-            }
-
-            sp_ctrlline_set_coords (SP_CTRLLINE(line), start_point, start_point);
-            sp_canvas_item_show (line);
-
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
 								GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
 								NULL, event->button.time);
@@ -183,14 +174,26 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 // motion notify coordinates as given (no snapping back to origin)
                 within_tolerance = false;
 
+                //clear previous temporary canvas items, we'll draw new ones
+                unsigned int idx;
+                for (idx=0; idx<measure_tmp_items.size(); idx++){
+                    desktop->remove_temporary_canvasitem(measure_tmp_items[idx]);
+                }
+                measure_tmp_items.clear();
+
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
                 Geom::Point const motion_dt(desktop->w2d(motion_w));
                 Geom::Point end_point = motion_dt;
 
+                //rotation constraint
                 if (event->motion.state & GDK_CONTROL_MASK)
                     spdc_endpoint_snap_rotation(event_context, end_point, start_point, event->motion.state);
 
-                sp_ctrlline_set_coords (SP_CTRLLINE(line), start_point[Geom::X], start_point[Geom::Y], end_point[Geom::X], end_point[Geom::Y]);
+                //draw control line
+                SPCanvasItem * control_line = NULL;
+                control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                sp_ctrlline_set_coords(SP_CTRLLINE(control_line), start_point, end_point);
+                measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
                 Geom::PathVector lineseg;
                 Geom::Path p;
@@ -273,12 +276,6 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     std::sort(intersections.begin(), intersections.end(), GeomPointSortPredicate);
                 }
 
-                unsigned int idx;
-                for (idx=0; idx<measure_tmp_items.size(); idx++){
-                    desktop->remove_temporary_canvasitem(measure_tmp_items[idx]);
-                }
-                measure_tmp_items.clear();
-
                 for (idx=0;idx<intersections.size(); idx++){
                     // Display the intersection indicator (i.e. the cross)
                     SPCanvasItem * canvasitem = NULL;
@@ -340,10 +337,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
       	case GDK_BUTTON_RELEASE:
         {
-            if (line){
-                sp_canvas_item_hide(line);
-            }
-
+            //clear all temporary canvas items related to the measurement tool.
             unsigned int idx;
             for (idx=0; idx<measure_tmp_items.size(); idx++){
                 desktop->remove_temporary_canvasitem(measure_tmp_items[idx]);
