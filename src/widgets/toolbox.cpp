@@ -367,6 +367,8 @@ static gchar const * ui_descr =
 
         "  <toolbar name='MeasureToolbar'>"
         "    <toolitem action='MeasureFontSizeAction' />"
+        "    <separator />"
+        "    <toolitem action='measure_units_label' />"
         "    <toolitem action='MeasureUnitsAction' />"
         "  </toolbar>"
 
@@ -1672,9 +1674,18 @@ static void sp_measure_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainAct
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
 
-    // add the units menu
+
+    // units label
     {
-        GtkAction* act = tracker->createAction( "MeasureUnitsAction", _("Units"), _("Units:") );
+        EgeOutputAction* act = ege_output_action_new( "measure_units_label", _("Units:"), _("The units to be used for the measurements"), 0 ); 
+        ege_output_action_set_use_markup( act, TRUE );
+        g_object_set( act, "visible-overflown", FALSE, NULL );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+    }
+
+    // units menu
+    {
+        GtkAction* act = tracker->createAction( "MeasureUnitsAction", _("Units:"), _("The units to be used for the measurements") );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(measure_unit_changed), (GObject*)holder );
         gtk_action_group_add_action( mainActions, act );
     }
