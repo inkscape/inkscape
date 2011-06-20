@@ -15,6 +15,9 @@
 #include "macros.h"
 #include "display/curve.h"
 #include "sp-shape.h"
+#include "sp-text.h"
+#include "sp-flowtext.h"
+#include "text-editing.h"
 #include "display/sp-ctrlline.h"
 #include "display/sodipodi-ctrl.h"
 #include "display/sp-canvas-item.h"
@@ -129,6 +132,23 @@ bool GeomPointSortPredicate(const Geom::Point& p1, const Geom::Point& p2)
   return p1[Geom::Y] < p2[Geom::Y];
 }
 
+void calculate_intersections(Geom::PathVector *lineseg, Geom::PathVector *pathv, std::vector<Geom::Point> *intersections){
+    // Find all intersections of the control-line with this shape
+    Geom::CrossingSet cs = Geom::crossings(*lineseg, *pathv);
+    // Store the results as intersection points
+    unsigned int index = 0;
+    for (Geom::CrossingSet::const_iterator i = cs.begin(); i != cs.end(); i++) {
+        if (index >= lineseg->size()) {
+            break;
+        }
+        // Reconstruct and store the points of intersection
+        for (Geom::Crossings::const_iterator m = (*i).begin(); m != (*i).end(); m++) {
+            intersections->push_back((*lineseg)[index].pointAt((*m).ta));
+        }
+        index++;
+    }
+}
+
 static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
     SPDesktop *desktop = event_context->desktop;
@@ -219,7 +239,6 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 GSList *items = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, points);
                 SPItem* item;
                 GSList *l;
-                int counter=0;
                 std::vector<Geom::Point> intersections;
                 Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                 bool ignore_1st_and_last = prefs->getBool("/tools/measure/ignore_1st_and_last", true);
@@ -230,42 +249,43 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 for (l = items; l != NULL; l = l->next){
                     item = (SPItem*) (l->data);
-#if 0
-//TODO: deal with all kinds of objects:
 
-                    Inkscape::XML::Node *repr = sp_selected_item_to_curved_repr(item, 0);
-
-                    if (!repr) continue;
-                    item = (SPItem *) doc->getObjectByRepr(repr);
-                    if (!item) continue;
-                    SPCurve* curve = SP_SHAPE(item)->getCurve();
-#else
                     SPCurve* curve = NULL;
                     if (SP_IS_SHAPE(item)) {
                         curve = SP_SHAPE(item)->getCurve();
-                    } 
-#endif
-                    if (!curve) continue;
-                    counter++;
+                        curve->transform(item->i2doc_affine());
+                        Geom::PathVector pathv = curve->get_pathvector();
 
-                    curve->transform(item->i2doc_affine());
-                    Geom::PathVector pathv = curve->get_pathvector();
+                        calculate_intersections(&lineseg, &pathv, &intersections);
+                    } else {
+                        if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)){
+                            Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin(); 
+                            do {
+                                Inkscape::Text::Layout::iterator iter_next = iter;
+                                iter_next.nextGlyph(); // iter_next is one glyph ahead from iter
+                                if (iter == iter_next)
+                                    break;
 
-                    // Find all intersections of the control-line with this shape
-                    Geom::CrossingSet cs = Geom::crossings(lineseg, pathv);
-                    // Store the results as intersection points
-                    unsigned int index = 0;
-                    for (Geom::CrossingSet::const_iterator i = cs.begin(); i != cs.end(); i++) {
-                        if (index >= lineseg.size()) {
-                            break;
+                                // get path from iter to iter_next:
+                                SPCurve *curve = te_get_layout(item)->convertToCurves(iter, iter_next);
+                                iter = iter_next; // shift to next glyph
+                                if (!curve) continue; // error converting this glyph
+                                if (curve->is_empty()) { // whitespace glyph?
+                                    curve->unref();
+                                    continue;
+                                }
+
+                                curve->transform(item->i2doc_affine());
+                                Geom::PathVector pathv = curve->get_pathvector();
+
+                                calculate_intersections(&lineseg, &pathv, &intersections);
+
+                                if (iter == te_get_layout(item)->end())
+                                    break;
+
+                            } while (true);
                         }
-                        // Reconstruct and store the points of intersection
-                        for (Geom::Crossings::const_iterator m = (*i).begin(); m != (*i).end(); m++) {
-                            intersections.push_back(lineseg[index].pointAt((*m).ta));
-                        }
-                        index++;
                     }
-                    //g_free(repr);
                 }
 
                 if (!ignore_1st_and_last){
