@@ -29,7 +29,7 @@ public:
     void toggle_finite (Proj::Axis axis);
     double get_infinite_angle (Proj::Axis axis) {
         if (has_finite_image(axis)) {
-            return 1e18; //this used to be NR_HUGE before 2geom conversion
+            return Geom::infinity();
         }
         Pt2 vp(column(axis));
         return Geom::atan2(Geom::Point(vp[0], vp[1])) * 180.0/M_PI;

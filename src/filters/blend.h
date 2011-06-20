@@ -1,10 +1,6 @@
-#ifndef SP_FEBLEND_H_SEEN
-#define SP_FEBLEND_H_SEEN
-
-/** \file
- * SVG <feBlend> implementation, see Blend.cpp.
- */
-/*
+/** @file
+ * @brief SVG blend filter effect
+ *//*
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *   Niko Kiirala <niko@kiirala.com>
@@ -14,16 +10,21 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "sp-filter.h"
-#include "blend-fns.h"
+#ifndef SP_FEBLEND_H_SEEN
+#define SP_FEBLEND_H_SEEN
 
+#include "sp-filter-primitive.h"
 #include "display/nr-filter-blend.h"
 
-/* FeBlend base class */
+#define SP_TYPE_FEBLEND (sp_feBlend_get_type())
+#define SP_FEBLEND(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FEBLEND, SPFeBlend))
+#define SP_FEBLEND_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FEBLEND, SPFeBlendClass))
+#define SP_IS_FEBLEND(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEBLEND))
+#define SP_IS_FEBLEND_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEBLEND))
+
 class SPFeBlendClass;
 
 struct SPFeBlend : public SPFilterPrimitive {
-    /** BLEND ATTRIBUTES HERE */
     Inkscape::Filters::FilterBlendMode blend_mode;
     int in2;
 };

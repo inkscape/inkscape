@@ -17,30 +17,293 @@
  * Released under GNU GPL version 2 (or later), read the file 'COPYING' for more information
  */
 
-#include "display/nr-arena-item.h"
+#include "display/cairo-templates.h"
+#include "display/cairo-utils.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-turbulence.h"
 #include "display/nr-filter-units.h"
 #include "display/nr-filter-utils.h"
 #include "libnr/nr-rect-l.h"
-#include "libnr/nr-blit.h"
 #include <math.h>
 
 namespace Inkscape {
 namespace Filters{
 
+class TurbulenceGenerator {
+public:
+    TurbulenceGenerator()
+        : _wrapx(0)
+        , _wrapy(0)
+        , _wrapw(0)
+        , _wraph(0)
+        , _inited(false)
+    {}
+
+    void init(long seed, Geom::Rect const &tile, Geom::Point const &freq, bool stitch,
+        bool fractalnoise, int octaves)
+    {
+        // setup random number generator
+        _setupSeed(seed);
+
+        // set values
+        _tile = tile;
+        _baseFreq = freq;
+        _stitchTiles = stitch;
+        _fractalnoise = fractalnoise;
+        _octaves = octaves;
+
+        int i;
+        for (int k = 0; k < 4; ++k) {
+            for (i = 0; i < BSize; ++i) {
+                _latticeSelector[i] = i;
+
+                _gradient[i][k][0] = static_cast<double>(_random() % (BSize*2) - BSize) / BSize;
+                _gradient[i][k][1] = static_cast<double>(_random() % (BSize*2) - BSize) / BSize;
+
+                // normalize gradient
+                double s = hypot(_gradient[i][k][0], _gradient[i][k][1]);
+                _gradient[i][k][0] /= s;
+                _gradient[i][k][1] /= s;
+            }
+        }
+        while (--i) {
+            // shuffle lattice selectors
+            int j = _random() % BSize;
+            std::swap(_latticeSelector[i], _latticeSelector[j]);
+        }
+
+        // fill out the remaining part of the gradient
+        for (i = 0; i < BSize + 2; ++i)
+        {
+            _latticeSelector[BSize + i] = _latticeSelector[i];
+
+            for(int k = 0; k < 4; ++k) {
+                _gradient[BSize + i][k][0] = _gradient[i][k][0];
+                _gradient[BSize + i][k][1] = _gradient[i][k][1];
+            }
+        }
+
+        // When stitching tiled turbulence, the frequencies must be adjusted
+        // so that the tile borders will be continuous.
+        if (_stitchTiles) {
+            if (_baseFreq[Geom::X] != 0.0)
+            {
+                double freq = _baseFreq[Geom::X];
+                double lo = floor(_tile.width() * freq) / _tile.width();
+                double hi = ceil(_tile.width() * freq) / _tile.width();
+                _baseFreq[Geom::X] = freq / lo < hi / freq ? lo : hi;
+            }
+            if (_baseFreq[Geom::Y] != 0.0)
+            {
+                double freq = _baseFreq[Geom::Y];
+                double lo = floor(_tile.height() * freq) / _tile.height();
+                double hi = ceil(_tile.height() * freq) / _tile.height();
+                _baseFreq[Geom::Y] = freq / lo < hi / freq ? lo : hi;
+            }
+
+            _wrapw = _tile.width() * _baseFreq[Geom::X] + 0.5;
+            _wraph = _tile.height() * _baseFreq[Geom::Y] + 0.5;
+            _wrapx = _tile.left() * _baseFreq[Geom::X] + PerlinOffset + _wrapw;
+            _wrapy = _tile.top() * _baseFreq[Geom::Y] + PerlinOffset + _wraph;
+        }
+        _inited = true;
+    }
+
+    G_GNUC_PURE
+    guint32 turbulencePixel(Geom::Point const &p) const {
+        int wrapx = _wrapx, wrapy = _wrapy, wrapw = _wrapw, wraph = _wraph;
+
+        double pixel[4];
+        double x = p[Geom::X] * _baseFreq[Geom::X];
+        double y = p[Geom::Y] * _baseFreq[Geom::Y];
+        double ratio = 1.0;
+
+        for (int k = 0; k < 4; ++k)
+            pixel[k] = 0.0;
+
+        for(int octave = 0; octave < _octaves; ++octave)
+        {
+            double tx = x + PerlinOffset;
+            double bx = floor(tx);
+            double rx0 = tx - bx, rx1 = rx0 - 1.0;
+            int bx0 = bx, bx1 = bx0 + 1;
+
+            double ty = y + PerlinOffset;
+            double by = floor(ty);
+            double ry0 = ty - by, ry1 = ry0 - 1.0;
+            int by0 = by, by1 = by0 + 1;
+
+            if (_stitchTiles) {
+                if (bx0 >= wrapx) bx0 -= wrapw;
+                if (bx1 >= wrapx) bx1 -= wrapw;
+                if (by0 >= wrapy) by0 -= wraph;
+                if (by1 >= wrapy) by1 -= wraph;
+            }
+            bx0 &= BMask;
+            bx1 &= BMask;
+            by0 &= BMask;
+            by1 &= BMask;
+
+            int i = _latticeSelector[bx0];
+            int j = _latticeSelector[bx1];
+            int b00 = _latticeSelector[i + by0];
+            int b01 = _latticeSelector[i + by1];
+            int b10 = _latticeSelector[j + by0];
+            int b11 = _latticeSelector[j + by1];
+
+            double sx = _scurve(rx0);
+            double sy = _scurve(ry0);
+
+            double result[4];
+            // channel numbering: R=0, G=1, B=2, A=3
+            for (int k = 0; k < 4; ++k) {
+                double const *qxa = _gradient[b00][k];
+                double const *qxb = _gradient[b10][k];
+                double a = _lerp(sx, rx0 * qxa[0] + ry0 * qxa[1],
+                                     rx1 * qxb[0] + ry0 * qxb[1]);
+                double const *qya = _gradient[b01][k];
+                double const *qyb = _gradient[b11][k];
+                double b = _lerp(sx, rx0 * qya[0] + ry1 * qya[1],
+                                     rx1 * qyb[0] + ry1 * qyb[1]);
+                result[k] = _lerp(sy, a, b);
+            }
+
+            if (_fractalnoise) {
+                for (int k = 0; k < 4; ++k)
+                    pixel[k] += result[k] / ratio;
+            } else {
+                for (int k = 0; k < 4; ++k)
+                    pixel[k] += fabs(result[k]) / ratio;
+            }
+
+            x *= 2;
+            y *= 2;
+            ratio *= 2;
+
+            if(_stitchTiles)
+            {
+                // Update stitch values. Subtracting PerlinOffset before the multiplication and
+                // adding it afterward simplifies to subtracting it once.
+                wrapw *= 2;
+                wraph *= 2;
+                wrapx = wrapx*2 - PerlinOffset;
+                wrapy = wrapy*2 - PerlinOffset;
+            }
+        }
+
+        if (_fractalnoise) {
+            guint32 r = CLAMP_D_TO_U8((pixel[0]*255.0 + 255.0) / 2);
+            guint32 g = CLAMP_D_TO_U8((pixel[1]*255.0 + 255.0) / 2);
+            guint32 b = CLAMP_D_TO_U8((pixel[2]*255.0 + 255.0) / 2);
+            guint32 a = CLAMP_D_TO_U8((pixel[3]*255.0 + 255.0) / 2);
+            r = premul_alpha(r, a);
+            g = premul_alpha(g, a);
+            b = premul_alpha(b, a);
+            ASSEMBLE_ARGB32(pxout, a,r,g,b);
+            return pxout;
+        } else {
+            guint32 r = CLAMP_D_TO_U8(pixel[0]*255.0);
+            guint32 g = CLAMP_D_TO_U8(pixel[1]*255.0);
+            guint32 b = CLAMP_D_TO_U8(pixel[2]*255.0);
+            guint32 a = CLAMP_D_TO_U8(pixel[3]*255.0);
+            r = premul_alpha(r, a);
+            g = premul_alpha(g, a);
+            b = premul_alpha(b, a);
+            ASSEMBLE_ARGB32(pxout, a,r,g,b);
+            return pxout;
+        }
+    }
+
+    //G_GNUC_PURE
+    /*guint32 turbulencePixel(Geom::Point const &p) const {
+        if (!_fractalnoise) {
+            guint32 r = CLAMP_D_TO_U8(turbulence(0, p)*255.0);
+            guint32 g = CLAMP_D_TO_U8(turbulence(1, p)*255.0);
+            guint32 b = CLAMP_D_TO_U8(turbulence(2, p)*255.0);
+            guint32 a = CLAMP_D_TO_U8(turbulence(3, p)*255.0);
+            r = premul_alpha(r, a);
+            g = premul_alpha(g, a);
+            b = premul_alpha(b, a);
+            ASSEMBLE_ARGB32(pxout, a,r,g,b);
+            return pxout;
+        } else {
+            guint32 r = CLAMP_D_TO_U8((turbulence(0, p)*255.0 + 255.0) / 2);
+            guint32 g = CLAMP_D_TO_U8((turbulence(1, p)*255.0 + 255.0) / 2);
+            guint32 b = CLAMP_D_TO_U8((turbulence(2, p)*255.0 + 255.0) / 2);
+            guint32 a = CLAMP_D_TO_U8((turbulence(3, p)*255.0 + 255.0) / 2);
+            r = premul_alpha(r, a);
+            g = premul_alpha(g, a);
+            b = premul_alpha(b, a);
+            ASSEMBLE_ARGB32(pxout, a,r,g,b);
+            return pxout;
+        }
+    }*/
+
+    bool ready() const { return _inited; }
+    void dirty() { _inited = false; }
+
+private:
+    void _setupSeed(long seed) {
+        _seed = seed;
+        if (_seed <= 0) _seed = -(_seed % (RAND_m - 1)) + 1;
+        if (_seed > RAND_m - 1) _seed = RAND_m - 1;
+    }
+    long _random() {
+        /* Produces results in the range [1, 2**31 - 2].
+         * Algorithm is: r = (a * r) mod m
+         * where a = 16807 and m = 2**31 - 1 = 2147483647
+         * See [Park & Miller], CACM vol. 31 no. 10 p. 1195, Oct. 1988
+         * To test: the algorithm should produce the result 1043618065
+         * as the 10,000th generated number if the original seed is 1. */
+        _seed = RAND_a * (_seed % RAND_q) - RAND_r * (_seed / RAND_q);
+        if (_seed <= 0) _seed += RAND_m;
+        return _seed;
+    }
+    static inline double _scurve(double t) {
+        return t * t * (3.0 - 2.0*t);
+    }
+    static inline double _lerp(double t, double a, double b) {
+        return a + t * (b-a);
+    }
+
+    // random number generator constants
+    static long const
+        RAND_m = 2147483647, // 2**31 - 1
+        RAND_a = 16807, // 7**5; primitive root of m
+        RAND_q = 127773, // m / a
+        RAND_r = 2836; // m % a
+
+    // other constants
+    static int const
+        BSize = 0x100,
+        BMask = 0xff;
+    static double const
+        PerlinOffset = 4096.0;
+
+    Geom::Rect _tile;
+    Geom::Point _baseFreq;
+    int _latticeSelector[2*BSize + 2];
+    double _gradient[2*BSize + 2][4][2];
+    long _seed;
+    int _octaves;
+    bool _stitchTiles;
+    int _wrapx, _wrapy, _wrapw, _wraph;
+    bool _inited;
+    bool _fractalnoise;
+};
+
 FilterTurbulence::FilterTurbulence()
-: XbaseFrequency(0),
-  YbaseFrequency(0),
-  numOctaves(1),
-  seed(0),
-  updated(false),
-  updated_area(NR::IPoint(), NR::IPoint()),
-  pix(NULL),
-  fTileWidth(10), //guessed
-  fTileHeight(10), //guessed
-  fTileX(1), //guessed
-  fTileY(1) //guessed
+    : gen(new TurbulenceGenerator())
+    , XbaseFrequency(0)
+    , YbaseFrequency(0)
+    , numOctaves(1)
+    , seed(0)
+    , updated(false)
+    , updated_area(NR::IPoint(), NR::IPoint())
+    , fTileWidth(10) //guessed
+    , fTileHeight(10) //guessed
+    , fTileX(1) //guessed
+    , fTileY(1) //guessed
 {
 }
 
@@ -50,305 +313,79 @@ FilterPrimitive * FilterTurbulence::create() {
 
 FilterTurbulence::~FilterTurbulence()
 {
-    if (pix) {
-        nr_pixblock_release(pix);
-        delete pix;
-    }
+    delete gen;
 }
 
 void FilterTurbulence::set_baseFrequency(int axis, double freq){
     if (axis==0) XbaseFrequency=freq;
     if (axis==1) YbaseFrequency=freq;
+    gen->dirty();
 }
 
 void FilterTurbulence::set_numOctaves(int num){
-    numOctaves=num;
+    numOctaves = num;
+    gen->dirty();
 }
 
 void FilterTurbulence::set_seed(double s){
-    seed=s;
+    seed = s;
+    gen->dirty();
 }
 
 void FilterTurbulence::set_stitchTiles(bool st){
-    stitchTiles=st;
+    stitchTiles = st;
+    gen->dirty();
 }
 
 void FilterTurbulence::set_type(FilterTurbulenceType t){
-    type=t;
+    type = t;
+    gen->dirty();
 }
 
 void FilterTurbulence::set_updated(bool u){
-    updated=u;
 }
 
-void FilterTurbulence::render_area(NRPixBlock *pix, NR::IRect &full_area, FilterUnits const &units) {
-    const int bbox_x0 = full_area.min()[NR::X];
-    const int bbox_y0 = full_area.min()[NR::Y];
-    const int bbox_x1 = full_area.max()[NR::X];
-    const int bbox_y1 = full_area.max()[NR::Y];
+struct Turbulence {
+    Turbulence(TurbulenceGenerator const &gen, Geom::Affine const &trans, int x0, int y0)
+        : _gen(gen)
+        , _trans(trans)
+        , _x0(x0), _y0(y0)
+    {}
+    guint32 operator()(int x, int y) {
+        Geom::Point point(x + _x0, y + _y0);
+        point *= _trans;
+        return _gen.turbulencePixel(point);
+    }
+private:
+    TurbulenceGenerator const &_gen;
+    Geom::Affine _trans;
+    int _x0, _y0;
+};
 
-    Geom::Affine unit_trans = units.get_matrix_primitiveunits2pb().inverse();
+void FilterTurbulence::render_cairo(FilterSlot &slot)
+{
+    cairo_surface_t *input = slot.getcairo(_input);
+    cairo_surface_t *out = ink_cairo_surface_create_same_size(input, CAIRO_CONTENT_COLOR_ALPHA);
 
-    double point[2];
-
-    unsigned char *pb = NR_PIXBLOCK_PX(pix);
-
-    if (type==TURBULENCE_TURBULENCE){
-        for (int y = std::max(bbox_y0, pix->area.y0); y < std::min(bbox_y1, pix->area.y1); y++){
-            int out_line = (y - pix->area.y0) * pix->rs;
-            point[1] = y * unit_trans[3] + unit_trans[5];
-            for (int x = std::max(bbox_x0, pix->area.x0); x < std::min(bbox_x1, pix->area.x1); x++){
-                int out_pos = out_line + 4 * (x - pix->area.x0);
-                point[0] = x * unit_trans[0] + unit_trans[4];
-                pb[out_pos] = CLAMP_D_TO_U8( turbulence(0,point)*255 ); // CLAMP includes rounding!
-                pb[out_pos + 1] = CLAMP_D_TO_U8( turbulence(1,point)*255 );
-                pb[out_pos + 2] = CLAMP_D_TO_U8( turbulence(2,point)*255 );
-                pb[out_pos + 3] = CLAMP_D_TO_U8( turbulence(3,point)*255 );
-            }
-        }
-    } else {
-        for (int y = std::max(bbox_y0, pix->area.y0); y < std::min(bbox_y1, pix->area.y1); y++){
-            int out_line = (y - pix->area.y0) * pix->rs;
-            point[1] = y * unit_trans[3] + unit_trans[5];
-            for (int x = std::max(bbox_x0, pix->area.x0); x < std::min(bbox_x1, pix->area.x1); x++){
-                int out_pos = out_line + 4 * (x - pix->area.x0);
-                point[0] = x * unit_trans[0] + unit_trans[4];
-                pb[out_pos] = CLAMP_D_TO_U8( ((turbulence(0,point)*255) +255)/2 );
-                pb[out_pos + 1] = CLAMP_D_TO_U8( ((turbulence(1,point)*255)+255)/2 );
-                pb[out_pos + 2] = CLAMP_D_TO_U8( ((turbulence(2,point)*255) +255)/2 );
-                pb[out_pos + 3] = CLAMP_D_TO_U8( ((turbulence(3,point)*255) +255)/2 );
-            }
-        }
+    if (!gen->ready()) {
+        Geom::Point ta(fTileX, fTileY);
+        Geom::Point tb(fTileX + fTileWidth, fTileY + fTileHeight);
+        gen->init(seed, Geom::Rect(ta, tb),
+            Geom::Point(XbaseFrequency, YbaseFrequency), stitchTiles,
+            type == TURBULENCE_FRACTALNOISE, numOctaves);
     }
 
-    pix->empty = FALSE;
-}
+    Geom::Affine unit_trans = slot.get_units().get_matrix_primitiveunits2pb().inverse();
+    Geom::Rect slot_area = slot.get_slot_area();
+    double x0 = slot_area.min()[Geom::X];
+    double y0 = slot_area.min()[Geom::Y];
 
-void FilterTurbulence::update_pixbuffer(NR::IRect &area, FilterUnits const &units) {
-    int bbox_x0 = area.min()[NR::X];
-    int bbox_y0 = area.min()[NR::Y];
-    int bbox_x1 = area.max()[NR::X];
-    int bbox_y1 = area.max()[NR::Y];
+    ink_cairo_surface_synthesize(out, Turbulence(*gen, unit_trans, x0, y0));
 
-    TurbulenceInit((long)seed);
+    cairo_surface_mark_dirty(out);
 
-    if (!pix){
-        pix = new NRPixBlock;
-        nr_pixblock_setup_fast(pix, NR_PIXBLOCK_MODE_R8G8B8A8N, bbox_x0, bbox_y0, bbox_x1, bbox_y1, true);
-    }
-    else if (bbox_x0 != pix->area.x0 || bbox_y0 != pix->area.y0 ||
-        bbox_x1 != pix->area.x1 || bbox_y1 != pix->area.y1)
-    {
-        /* TODO: release-setup cycle not actually needed, if pixblock
-         * width and height don't change */
-        nr_pixblock_release(pix);
-        nr_pixblock_setup_fast(pix, NR_PIXBLOCK_MODE_R8G8B8A8N, bbox_x0, bbox_y0, bbox_x1, bbox_y1, true);
-    }
-
-    /* This limits pre-rendered turbulence to two megapixels. This is
-     * arbitary limit and could be something other, too.
-     * If bigger area is needed, visible area is rendered on demand. */
-    if (!pix || (pix->size != NR_PIXBLOCK_SIZE_TINY && pix->data.px == NULL) ||
-        ((bbox_x1 - bbox_x0) * (bbox_y1 - bbox_y0) > 2*1024*1024)) {
-        pix_data = NULL;
-        return;
-    }
-
-    render_area(pix, area, units);
-
-    pix_data = NR_PIXBLOCK_PX(pix);
-    
-    updated=true;
-    updated_area = area;
-}
-
-int FilterTurbulence::render(FilterSlot &slot, FilterUnits const &units) {
-    NR::IRect area = units.get_pixblock_filterarea_paraller();
-    // TODO: could be faster - updated_area only has to be same size as area
-    if (!updated || updated_area != area) update_pixbuffer(area, units);
-
-    NRPixBlock *in = slot.get(_input);
-    if (!in) {
-        g_warning("Missing source image for feTurbulence (in=%d)", _input);
-        return 1;
-    }
-
-    NRPixBlock *out = new NRPixBlock;
-    int x0 = in->area.x0, y0 = in->area.y0;
-    int x1 = in->area.x1, y1 = in->area.y1;
-    nr_pixblock_setup_fast(out, NR_PIXBLOCK_MODE_R8G8B8A8N, x0, y0, x1, y1, true);
-
-    if (pix_data) {
-        /* If pre-rendered output of whole filter area exists, just copy it. */
-        nr_blit_pixblock_pixblock(out, pix);
-    } else {
-        /* No pre-rendered output, render the required area here. */
-        render_area(out, area, units);
-    }
-
-    out->empty = FALSE;
     slot.set(_output, out);
-    return 0;
-}
-
-long FilterTurbulence::Turbulence_setup_seed(long lSeed)
-{
-  if (lSeed <= 0) lSeed = -(lSeed % (RAND_m - 1)) + 1;
-  if (lSeed > RAND_m - 1) lSeed = RAND_m - 1;
-  return lSeed;
-}
-
-long FilterTurbulence::TurbulenceRandom(long lSeed)
-{
-  long result;
-  result = RAND_a * (lSeed % RAND_q) - RAND_r * (lSeed / RAND_q);
-  if (result <= 0) result += RAND_m;
-  return result;
-}
-
-void FilterTurbulence::TurbulenceInit(long lSeed)
-{
-  double s;
-  int i, j, k;
-  lSeed = Turbulence_setup_seed(lSeed);
-  for(k = 0; k < 4; k++)
-  {
-    for(i = 0; i < BSize; i++)
-    {
-      uLatticeSelector[i] = i;
-      for (j = 0; j < 2; j++)
-        fGradient[k][i][j] = (double)(((lSeed = TurbulenceRandom(lSeed)) % (BSize + BSize)) - BSize) / BSize;
-      s = double(sqrt(fGradient[k][i][0] * fGradient[k][i][0] + fGradient[k][i][1] * fGradient[k][i][1]));
-      fGradient[k][i][0] /= s;
-      fGradient[k][i][1] /= s;
-    }
-  }
-  while(--i)
-  {
-    k = uLatticeSelector[i];
-    uLatticeSelector[i] = uLatticeSelector[j = (lSeed = TurbulenceRandom(lSeed)) % BSize];
-    uLatticeSelector[j] = k;
-  }
-  for(i = 0; i < BSize + 2; i++)
-  {
-    uLatticeSelector[BSize + i] = uLatticeSelector[i];
-    for(k = 0; k < 4; k++)
-      for(j = 0; j < 2; j++)
-        fGradient[k][BSize + i][j] = fGradient[k][i][j];
-  }
-}
-
-double FilterTurbulence::TurbulenceNoise2(int nColorChannel, double vec[2], StitchInfo *pStitchInfo)
-{
-  int bx0, bx1, by0, by1, b00, b10, b01, b11;
-  double rx0, rx1, ry0, ry1, *q, sx, sy, a, b, t, u, v;
-  int i, j;
-  t = vec[0] + PerlinN;
-  bx0 = (int)t;
-  bx1 = bx0+1;
-  rx0 = t - (int)t;
-  rx1 = rx0 - 1.0f;
-  t = vec[1] + PerlinN;
-  by0 = (int)t;
-  by1 = by0+1;
-  ry0 = t - (int)t;
-  ry1 = ry0 - 1.0f;
-  // If stitching, adjust lattice points accordingly.
-  if(pStitchInfo != NULL)
-  {
-    if(bx0 >= pStitchInfo->nWrapX)
-      bx0 -= pStitchInfo->nWidth;
-    if(bx1 >= pStitchInfo->nWrapX)
-      bx1 -= pStitchInfo->nWidth;
-    if(by0 >= pStitchInfo->nWrapY)
-      by0 -= pStitchInfo->nHeight;
-    if(by1 >= pStitchInfo->nWrapY)
-      by1 -= pStitchInfo->nHeight;
-  }
-  bx0 &= BM;
-  bx1 &= BM;
-  by0 &= BM;
-  by1 &= BM;
-  i = uLatticeSelector[bx0];
-  j = uLatticeSelector[bx1];
-  b00 = uLatticeSelector[i + by0];
-  b10 = uLatticeSelector[j + by0];
-  b01 = uLatticeSelector[i + by1];
-  b11 = uLatticeSelector[j + by1];
-  sx = double(s_curve(rx0));
-  sy = double(s_curve(ry0));
-  q = fGradient[nColorChannel][b00]; u = rx0 * q[0] + ry0 * q[1];
-  q = fGradient[nColorChannel][b10]; v = rx1 * q[0] + ry0 * q[1];
-  a = turb_lerp(sx, u, v);
-  q = fGradient[nColorChannel][b01]; u = rx0 * q[0] + ry1 * q[1];
-  q = fGradient[nColorChannel][b11]; v = rx1 * q[0] + ry1 * q[1];
-  b = turb_lerp(sx, u, v);
-  return turb_lerp(sy, a, b);
-}
-
-double FilterTurbulence::turbulence(int nColorChannel, double *point)
-{
-  StitchInfo stitch;
-  StitchInfo *pStitchInfo = NULL; // Not stitching when NULL.
-  // Adjust the base frequencies if necessary for stitching.
-  if(stitchTiles)
-  {
-    // When stitching tiled turbulence, the frequencies must be adjusted
-    // so that the tile borders will be continuous.
-    if(XbaseFrequency != 0.0)
-    {
-      double fLoFreq = double(floor(fTileWidth * XbaseFrequency)) / fTileWidth;
-      double fHiFreq = double(ceil(fTileWidth * XbaseFrequency)) / fTileWidth;
-      if(XbaseFrequency / fLoFreq < fHiFreq / XbaseFrequency)
-        XbaseFrequency = fLoFreq;
-      else
-        XbaseFrequency = fHiFreq;
-    }
-    if(YbaseFrequency != 0.0)
-    {
-      double fLoFreq = double(floor(fTileHeight * YbaseFrequency)) / fTileHeight;
-      double fHiFreq = double(ceil(fTileHeight * YbaseFrequency)) / fTileHeight;
-      if(YbaseFrequency / fLoFreq < fHiFreq / YbaseFrequency)
-        YbaseFrequency = fLoFreq;
-      else
-        YbaseFrequency = fHiFreq;
-    }
-    // Set up TurbulenceInitial stitch values.
-    pStitchInfo = &stitch;
-    stitch.nWidth = int(fTileWidth * XbaseFrequency + 0.5f);
-    stitch.nWrapX = int(fTileX * XbaseFrequency + PerlinN + stitch.nWidth);
-    stitch.nHeight = int(fTileHeight * YbaseFrequency + 0.5f);
-    stitch.nWrapY = int(fTileY * YbaseFrequency + PerlinN + stitch.nHeight);
-  }
-  double fSum = 0.0f;
-  double vec[2];
-  vec[0] = point[0] * XbaseFrequency;
-  vec[1] = point[1] * YbaseFrequency;
-  double ratio = 1;
-  for(int nOctave = 0; nOctave < numOctaves; nOctave++)
-  {
-    if(type==TURBULENCE_FRACTALNOISE)
-      fSum += double(TurbulenceNoise2(nColorChannel, vec, pStitchInfo) / ratio);
-    else
-      fSum += double(fabs(TurbulenceNoise2(nColorChannel, vec, pStitchInfo)) / ratio);
-    vec[0] *= 2;
-    vec[1] *= 2;
-    ratio *= 2;
-    if(pStitchInfo != NULL)
-    {
-      // Update stitch values. Subtracting PerlinN before the multiplication and
-      // adding it afterward simplifies to subtracting it once.
-      stitch.nWidth *= 2;
-      stitch.nWrapX = 2 * stitch.nWrapX - PerlinN;
-      stitch.nHeight *= 2;
-      stitch.nWrapY = 2 * stitch.nWrapY - PerlinN;
-    }
-  }
-  return fSum;
-}
-
-FilterTraits FilterTurbulence::get_input_traits() {
-    return TRAIT_PARALLER;
+    cairo_surface_destroy(out);
 }
 
 } /* namespace Filters */

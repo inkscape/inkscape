@@ -11,8 +11,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "display/nr-plain-stuff-gdk.h"
-#include "color-preview.h"
+#include "ui/widget/color-preview.h"
+#include "display/cairo-utils.h"
 
 #define SPCP_DEFAULT_WIDTH 32
 #define SPCP_DEFAULT_HEIGHT 12
@@ -76,6 +76,9 @@ ColorPreview::paint (GdkRectangle *area)
     if (!gdk_rectangle_intersect (area, &warea, &wpaint)) 
         return;
 
+    GtkWidget *widget = GTK_WIDGET(this->gobj());
+    cairo_t *ct = gdk_cairo_create(widget->window);
+
     /* Transparent area */
 
     w2 = warea.width / 2;
@@ -86,11 +89,15 @@ ColorPreview::paint (GdkRectangle *area)
     carea.height = warea.height;
 
     if (gdk_rectangle_intersect (area, &carea, &cpaint)) {
-        nr_gdk_draw_rgba32_solid (get_window()->gobj(), 
-                                    get_style()->get_black_gc()->gobj(),
-				    cpaint.x, cpaint.y,
-				    cpaint.width, cpaint.height,
-				    _rgba);
+        cairo_pattern_t *checkers = ink_cairo_pattern_create_checkerboard();
+
+        cairo_rectangle(ct, carea.x, carea.y, carea.width, carea.height);
+        cairo_set_source(ct, checkers);
+        cairo_fill_preserve(ct);
+        ink_cairo_set_source_rgba32(ct, _rgba);
+        cairo_fill(ct);
+
+        cairo_pattern_destroy(checkers);
     }
 
     /* Solid area */
@@ -101,12 +108,12 @@ ColorPreview::paint (GdkRectangle *area)
     carea.height = warea.height;
 
     if (gdk_rectangle_intersect (area, &carea, &cpaint)) {
-	nr_gdk_draw_rgba32_solid (get_window()->gobj(), 
-                                          get_style()->get_black_gc()->gobj(),
-					  cpaint.x, cpaint.y,
-					  cpaint.width, cpaint.height,
-					  _rgba | 0xff);
+        cairo_rectangle(ct, carea.x, carea.y, carea.width, carea.height);
+        ink_cairo_set_source_rgba32(ct, _rgba | 0xff);
+        cairo_fill(ct);
     }
+
+    cairo_destroy(ct);
 }
 
 }}}

@@ -13,11 +13,11 @@
  */
 
 #include "display/nr-filter-primitive.h"
-#include "display/nr-filter-slot.h"
-#include "display/nr-filter-units.h"
 
 namespace Inkscape {
 namespace Filters {
+
+class FilterSlot;
 
 enum FilterMorphologyOperator {
     MORPHOLOGY_OPERATOR_ERODE,
@@ -31,9 +31,8 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterMorphology();
 
-    virtual int render(FilterSlot &slot, FilterUnits const &units);
+    virtual void render_cairo(FilterSlot &slot);
     virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
-    virtual FilterTraits get_input_traits();
     void set_operator(FilterMorphologyOperator &o);
     void set_xradius(double x);
     void set_yradius(double y);

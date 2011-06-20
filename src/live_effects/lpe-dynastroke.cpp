@@ -97,11 +97,11 @@ LPEDynastroke::LPEDynastroke(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(& round_ends) );
     registerParameter( dynamic_cast<Parameter *>(& capping) );
 
-    width.param_set_range(0, NR_HUGE);
+    width.param_set_range(0, Geom::infinity());
     roundness.param_set_range(0.01, 1);
     angle.param_set_range(-360, 360);
-    growfor.param_set_range(0, NR_HUGE);
-    fadefor.param_set_range(0, NR_HUGE);
+    growfor.param_set_range(0, Geom::infinity());
+    fadefor.param_set_range(0, Geom::infinity());
 
     show_orig_path = true;
 }

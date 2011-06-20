@@ -3454,7 +3454,7 @@ static void box3d_set_button_and_adjustment(Persp3D *persp,
         gtk_action_set_sensitive(act, TRUE);
 
         double angle = persp3d_get_infinite_angle(persp, axis);
-        if (angle != NR_HUGE) { // FIXME: We should catch this error earlier (don't show the spinbutton at all)
+        if (angle != Geom::infinity()) { // FIXME: We should catch this error earlier (don't show the spinbutton at all)
             gtk_adjustment_set_value(adj, box3d_normalize_angle(angle));
         }
     } else {

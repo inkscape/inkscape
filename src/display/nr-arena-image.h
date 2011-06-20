@@ -13,28 +13,25 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <2geom/rect.h>
+#include "nr-arena-item.h"
+#include "style.h"
+
 #define NR_TYPE_ARENA_IMAGE (nr_arena_image_get_type ())
 #define NR_ARENA_IMAGE(o) (NR_CHECK_INSTANCE_CAST ((o), NR_TYPE_ARENA_IMAGE, NRArenaImage))
 #define NR_IS_ARENA_IMAGE(o) (NR_CHECK_INSTANCE_TYPE ((o), NR_TYPE_ARENA_IMAGE))
 
-#include "nr-arena-item.h"
-#include "style.h"
-
 NRType nr_arena_image_get_type (void);
 
 struct NRArenaImage : public NRArenaItem {
-    unsigned char *px;
-    unsigned int pxw;
-    unsigned int pxh;
-    unsigned int pxrs;
+    GdkPixbuf *pixbuf;
+    cairo_surface_t *surface;
 
-    double x, y;
-    double width, height;
-
-    Geom::Point c00, c01, c11, c10; // all 4 corners of the image, for outline mode rect
-
-    /* From GRID to PIXELS */
-    Geom::Affine grid2px;
+    Geom::Affine ctm;
+    Geom::Rect clipbox;
+    double ox, oy;
+    double sx, sy;
 
     SPStyle *style;
 
@@ -49,10 +46,11 @@ struct NRArenaImageClass {
     NRArenaItemClass parent_class;
 };
 
-void nr_arena_image_set_pixels (NRArenaImage *image, unsigned char const *px, unsigned int pxw, unsigned int pxh, unsigned int pxrs);
-void nr_arena_image_set_geometry (NRArenaImage *image, double x, double y, double width, double height);
+void nr_arena_image_set_argb32_pixbuf (NRArenaImage *image, GdkPixbuf *pb);
 void nr_arena_image_set_style (NRArenaImage *image, SPStyle *style);
-
+void nr_arena_image_set_clipbox (NRArenaImage *image, Geom::Rect const &clip);
+void nr_arena_image_set_origin (NRArenaImage *image, Geom::Point const &origin);
+void nr_arena_image_set_scale (NRArenaImage *image, double sx, double sy);
 
 #endif
 

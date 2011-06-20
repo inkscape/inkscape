@@ -28,7 +28,6 @@ GType sp_pattern_get_type (void);
 class SPPatternClass;
 
 #include <libnr/nr-rect.h>
-#include <libnr/nr-matrix.h>
 #include "svg/svg-length.h"
 #include "sp-paint-server.h"
 #include "uri-references.h"

@@ -122,7 +122,7 @@ get_scale_transform_with_stroke (Geom::Rect const &bbox_param, gdouble strokewid
     
     Geom::Affine direct_constant_r = Geom::Scale(flip_x * ratio_x, flip_y * ratio_y);
 
-    if (transform_stroke && r0 != 0 && r0 != NR_HUGE) { // there's stroke, and we need to scale it
+    if (transform_stroke && r0 != 0 && r0 != Geom::infinity()) { // there's stroke, and we need to scale it
         // These coefficients are obtained from the assumption that scaling applies to the
         // non-stroked "shape proper" and that stroke scale is scaled by the expansion of that
         // matrix. We're trying to solve this equation:
@@ -147,7 +147,7 @@ get_scale_transform_with_stroke (Geom::Rect const &bbox_param, gdouble strokewid
             scale *= direct;
         }
     } else {
-        if (r0 == 0 || r0 == NR_HUGE) { // no stroke to scale
+        if (r0 == 0 || r0 == Geom::infinity()) { // no stroke to scale
             scale *= direct;
         } else {// nonscaling strokewidth
             scale *= direct_constant_r;
@@ -174,7 +174,7 @@ get_visual_bbox (Geom::OptRect const &initial_geom_bbox, Geom::Affine const &abs
     }
 
     Geom::Rect new_visual_bbox = new_geom_bbox; 
-    if (initial_strokewidth > 0 && initial_strokewidth < NR_HUGE) {
+    if (initial_strokewidth > 0 && initial_strokewidth < Geom::infinity()) {
         if (transform_stroke) {
             // scale stroke by: sqrt (((w1-r0)/(w0-r0))*((h1-r0)/(h0-r0))) (for visual bboxes, see get_scale_transform_with_stroke)
             // equals scaling by: sqrt ((w1/w0)*(h1/h0)) for geometrical bboxes            

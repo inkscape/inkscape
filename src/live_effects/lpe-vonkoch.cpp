@@ -66,9 +66,9 @@ LPEVonKoch::LPEVonKoch(LivePathEffectObject *lpeobject) :
     //registerParameter( dynamic_cast<Parameter *>(&draw_boxes) );
 
     nbgenerations.param_make_integer();
-    nbgenerations.param_set_range(0, NR_HUGE);
+    nbgenerations.param_set_range(0, Geom::infinity());
     maxComplexity.param_make_integer();
-    maxComplexity.param_set_range(0, NR_HUGE);
+    maxComplexity.param_set_range(0, Geom::infinity());
 }
 
 LPEVonKoch::~LPEVonKoch()

@@ -29,6 +29,7 @@
 #include "inkscape.h"
 #include "document.h"
 #include "sp-item.h"
+#include "display/cairo-utils.h"
 #include "display/nr-arena.h"
 #include "display/nr-arena-item.h"
 #include "io/sys.h"
@@ -88,7 +89,7 @@ struct IconImpl {
 
     static std::list<gchar*> &icons_svg_paths();
     static guchar *load_svg_pixels(std::list<Glib::ustring> const &names,
-                                   unsigned lsize, unsigned psize);
+                                   unsigned psize, unsigned &stride);
 
     static std::string fileEscape( std::string const & str );
  
@@ -1072,8 +1073,10 @@ GdkPixbuf *IconImpl::loadPixmap(gchar const *name, unsigned /*lsize*/, unsigned 
 }
 
 // takes doc, root, icon, and icon name to produce pixels
-extern "C" guchar *sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
-                                     gchar const *name, unsigned psize )
+extern "C" guchar *
+sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
+                  gchar const *name, unsigned psize,
+                  unsigned &stride)
 {
     bool const dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpSvg");
     guchar *px = NULL;
@@ -1174,22 +1177,29 @@ extern "C" guchar *sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                     g_message( "   area   --'%s'  (%f,%f)-(%f,%f)", name, (double)area.x0, (double)area.y0, (double)area.x1, (double)area.y1 );
                     g_message( "   ua     --'%s'  (%f,%f)-(%f,%f)", name, (double)ua.x0, (double)ua.y0, (double)ua.x1, (double)ua.y1 );
                 }
+
+                stride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, psize);
+
                 /* Set up pixblock */
-                px = g_new(guchar, 4 * psize * psize);
-                memset(px, 0x00, 4 * psize * psize);
+                px = g_new(guchar, stride * psize);
+                memset(px, 0x00, stride * psize);
+
                 /* Render */
-                NRPixBlock B;
-                nr_pixblock_setup_extern( &B, NR_PIXBLOCK_MODE_R8G8B8A8N,
-                                          ua.x0, ua.y0, ua.x1, ua.y1,
-                                          px + 4 * psize * (ua.y0 - area.y0) +
-                                          4 * (ua.x0 - area.x0),
-                                          4 * psize, FALSE, FALSE );
-                nr_arena_item_invoke_render(NULL, root, &ua, &B,
+                cairo_surface_t *s = cairo_image_surface_create_for_data(px,
+                    CAIRO_FORMAT_ARGB32, psize, psize, stride);
+                cairo_t *ct = cairo_create(s);
+                cairo_translate(ct, -ua.x0, -ua.y0);
+
+                nr_arena_item_invoke_render(ct, root, &ua, NULL,
                                              NR_ARENA_ITEM_RENDER_NO_CACHE );
-                nr_pixblock_release(&B);
+                cairo_destroy(ct);
+                cairo_surface_destroy(s);
+
+                // convert to GdkPixbuf format
+                convert_pixels_argb32_to_pixbuf(px, psize, psize, stride);
 
                 if ( Inkscape::Preferences::get()->getBool("/debug/icons/overlaySvg") ) {
-                    IconImpl::overlayPixels( px, psize, psize, 4 * psize, 0x00, 0x00, 0xff );
+                    IconImpl::overlayPixels( px, psize, psize, stride, 0x00, 0x00, 0xff );
                 }
             }
         }
@@ -1245,7 +1255,7 @@ std::list<gchar*> &IconImpl::icons_svg_paths()
 
 // this function renders icons from icons.svg and returns the pixels.
 guchar *IconImpl::load_svg_pixels(std::list<Glib::ustring> const &names,
-                                  unsigned /*lsize*/, unsigned psize)
+                                  unsigned psize, unsigned &stride)
 {
     bool const dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpSvg");
     std::list<gchar *> &sources = icons_svg_paths();
@@ -1292,7 +1302,7 @@ guchar *IconImpl::load_svg_pixels(std::list<Glib::ustring> const &names,
         }
         if (info) {
             for (std::list<Glib::ustring>::const_iterator it = names.begin(); !px && (it != names.end()); ++it ) {
-                px = sp_icon_doc_icon( info->doc, info->root, it->c_str(), psize );
+                px = sp_icon_doc_icon( info->doc, info->root, it->c_str(), psize, stride );
             }
         }
     }
@@ -1416,10 +1426,11 @@ bool IconImpl::prerenderIcon(gchar const *name, GtkIconSize lsize, unsigned psiz
                         g_message("load_svg_pixels([%s] = %s, %d, %d)", name, legacyNames[name].c_str(), lsize, psize);
                     }
                 }
-                guchar* px = load_svg_pixels(names, lsize, psize);
+                unsigned stride;
+                guchar* px = load_svg_pixels(names, psize, stride);
                 if (px) {
                     GdkPixbuf* pb = gdk_pixbuf_new_from_data( px, GDK_COLORSPACE_RGB, TRUE, 8,
-                                                              psize, psize, psize * 4,
+                                                              psize, psize, stride,
                                                               reinterpret_cast<GdkPixbufDestroyNotify>(g_free), NULL );
                     pb_cache[key] = pb;
                     addToIconSet(pb, name, lsize, psize);
@@ -1457,10 +1468,11 @@ GdkPixbuf *IconImpl::loadSvg(std::list<Glib::ustring> const &names, GtkIconSize 
     // did we already load this icon at this scale/size?
     GdkPixbuf* pb = get_cached_pixbuf(key);
     if (!pb) {
-        guchar *px = load_svg_pixels(names, lsize, psize);
+        unsigned stride;
+        guchar *px = load_svg_pixels(names, psize, stride);
         if (px) {
             pb = gdk_pixbuf_new_from_data(px, GDK_COLORSPACE_RGB, TRUE, 8,
-                                          psize, psize, psize * 4,
+                                          psize, psize, stride,
                                           (GdkPixbufDestroyNotify)g_free, NULL);
             pb_cache[key] = pb;
             addToIconSet(pb, names.begin()->c_str(), lsize, psize);

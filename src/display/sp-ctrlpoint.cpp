@@ -18,7 +18,7 @@
 # include "config.h"
 #endif
 #include <color.h>
-#include "display/inkscape-cairo.h"
+#include "display/cairo-utils.h"
 
 
 static void sp_ctrlpoint_class_init (SPCtrlPointClass *klass);

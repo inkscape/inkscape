@@ -51,15 +51,6 @@
 #define SP_MODULE_KEY_PRINT_LATEX    "org.inkscape.print.latex"
 /** Defines the key for printing with GNOME Print */
 #define SP_MODULE_KEY_PRINT_GNOME "org.inkscape.print.gnome"
-/** Defines the key for printing under Win32 */
-#define SP_MODULE_KEY_PRINT_WIN32 "org.inkscape.print.win32"
-#ifdef WIN32
-/** Defines the default printing to use */
-#define SP_MODULE_KEY_PRINT_DEFAULT  SP_MODULE_KEY_PRINT_WIN32
-#else
-/** Defines the default printing to use */
-#define SP_MODULE_KEY_PRINT_DEFAULT  SP_MODULE_KEY_PRINT_PS
-#endif
 
 /** Mime type for SVG */
 #define MIME_SVG "image/svg+xml"

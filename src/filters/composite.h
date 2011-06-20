@@ -1,10 +1,6 @@
-#ifndef SP_FECOMPOSITE_H_SEEN
-#define SP_FECOMPOSITE_H_SEEN
-
-/** \file
- * SVG <feComposite> implementation, see Composite.cpp.
- */
-/*
+/** @file
+ * @brief SVG composite filter effect
+ *//*
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *
@@ -12,9 +8,16 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+#ifndef SP_FECOMPOSITE_H_SEEN
+#define SP_FECOMPOSITE_H_SEEN
 
-#include "sp-filter.h"
-#include "composite-fns.h"
+#include "sp-filter-primitive.h"
+
+#define SP_TYPE_FECOMPOSITE (sp_feComposite_get_type())
+#define SP_FECOMPOSITE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FECOMPOSITE, SPFeComposite))
+#define SP_FECOMPOSITE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FECOMPOSITE, SPFeCompositeClass))
+#define SP_IS_FECOMPOSITE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FECOMPOSITE))
+#define SP_IS_FECOMPOSITE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FECOMPOSITE))
 
 enum FeCompositeOperator {
     // Default value is 'over', but let's distinquish specifying the
@@ -29,7 +32,6 @@ enum FeCompositeOperator {
     COMPOSITE_ENDOPERATOR
 };
 
-/* FeComposite base class */
 class SPFeCompositeClass;
 
 struct SPFeComposite : public SPFilterPrimitive {
@@ -43,7 +45,6 @@ struct SPFeCompositeClass {
 };
 
 GType sp_feComposite_get_type();
-
 
 #endif /* !SP_FECOMPOSITE_H_SEEN */
 

@@ -28,8 +28,6 @@
 using Geom::X;
 using Geom::Y;
 
-#define NR_HUGE   1e18
-
 //#################################################################################
 // BOUNDING BOX CALCULATIONS
 
@@ -423,7 +421,7 @@ pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, Geom::Aff
 {
     if (pathv.empty()) {
         if (wind) *wind = 0;
-        if (dist) *dist = NR_HUGE;
+        if (dist) *dist = Geom::infinity();
         return;
     }
 

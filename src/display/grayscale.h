@@ -19,10 +19,6 @@ namespace Grayscale {
     guint32 process(guchar r, guchar g, guchar b, guchar a);
     guchar  luminance(guchar r, guchar g, guchar b);
 
-    const float red_factor = 0.3;
-    const float green_factor = 0.59;
-    const float blue_factor = 0.11;
-
     bool activeDesktopIsGrayscale();
 };
 

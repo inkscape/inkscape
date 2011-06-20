@@ -1,10 +1,6 @@
-#ifndef SP_FESPECULARLIGHTING_H_SEEN
-#define SP_FESPECULARLIGHTING_H_SEEN
-
-/** \file
- * SVG <feSpecularLighting> implementation, see SpecularLighting.cpp.
- */
-/*
+/** @file
+ * @brief SVG specular lighting filter effect
+ *//*
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *   Jean-Rene Reinhard <jr@komite.net>
@@ -15,8 +11,17 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "sp-filter.h"
-#include "specularlighting-fns.h"
+#ifndef SP_FESPECULARLIGHTING_H_SEEN
+#define SP_FESPECULARLIGHTING_H_SEEN
+
+#include "sp-filter-primitive.h"
+#include "number-opt-number.h"
+
+#define SP_TYPE_FESPECULARLIGHTING (sp_feSpecularLighting_get_type())
+#define SP_FESPECULARLIGHTING(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FESPECULARLIGHTING, SPFeSpecularLighting))
+#define SP_FESPECULARLIGHTING_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FESPECULARLIGHTING, SPFeSpecularLightingClass))
+#define SP_IS_FESPECULARLIGHTING(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FESPECULARLIGHTING))
+#define SP_IS_FESPECULARLIGHTING_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FESPECULARLIGHTING))
 
 namespace Inkscape {
 namespace Filters {
@@ -24,23 +29,16 @@ class FilterSpecularLighting;
 }
 }
 
-/* FeSpecularLighting base class */
 class SPFeSpecularLightingClass;
 
 struct SPFeSpecularLighting : public SPFilterPrimitive {
-    /** SPECULARLIGHTING ATTRIBUTES HERE */
-    /** surfaceScale attribute */
     gfloat surfaceScale;
     guint surfaceScale_set : 1;
-    /** specularConstant attribute */
     gfloat specularConstant;
     guint specularConstant_set : 1;
-    /** specularConstant attribute */
     gfloat specularExponent;
     guint specularExponent_set : 1;
-    /** kernelUnitLenght attribute */
     NumberOptNumber kernelUnitLength;
-    /** lighting-color property */
     guint32 lighting_color;
     guint lighting_color_set : 1;
 

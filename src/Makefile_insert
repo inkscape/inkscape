@@ -153,7 +153,6 @@ ink_common_sources +=	\
 	sp-desc.cpp sp-desc.h						\
 	sp-ellipse.cpp sp-ellipse.h					\
 	sp-filter.cpp sp-filter.h number-opt-number.h			\
-	sp-filter-fns.h							\
 	sp-filter-primitive.cpp	sp-filter-primitive.h			\
 	sp-filter-reference.cpp	sp-filter-reference.h			\
 	sp-filter-units.h						\
@@ -162,8 +161,6 @@ ink_common_sources +=	\
 	sp-flowtext.h sp-flowtext.cpp					\
         sp-font.cpp sp-font.h						\
         sp-font-face.cpp sp-font-face.h					\
-	sp-gaussian-blur.cpp sp-gaussian-blur.h				\
-	sp-gaussian-blur-fns.h						\
         sp-glyph.cpp sp-glyph.h						\
         sp-glyph-kerning.cpp sp-glyph-kerning.h				\
 	sp-gradient.cpp sp-gradient.h					\

@@ -48,7 +48,7 @@ Pt2::normalize() {
 Geom::Point
 Pt2::affine() {
   if (fabs(pt[2]) < epsilon) {
-    return Geom::Point (NR_HUGE, NR_HUGE);
+    return Geom::Point (Geom::infinity(), Geom::infinity());
   }
   return Geom::Point (pt[0]/pt[2], pt[1]/pt[2]);
 }

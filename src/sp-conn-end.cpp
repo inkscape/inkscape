@@ -4,7 +4,6 @@
 #include <limits>
 
 #include "display/curve.h"
-#include "libnr/nr-matrix-fns.h"
 #include "xml/repr.h"
 #include "sp-conn-end.h"
 #include "sp-path.h"

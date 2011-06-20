@@ -18,10 +18,12 @@
 
 #include "attributes.h"
 #include "svg/svg.h"
-#include "displacementmap.h"
+#include "filters/displacementmap.h"
 #include "xml/repr.h"
-#include "display/nr-filter-displacement-map.h"
+#include "sp-filter.h"
 #include "helper-fns.h"
+#include "display/nr-filter.h"
+#include "display/nr-filter-displacement-map.h"
 
 /* FeDisplacementMap base class */
 

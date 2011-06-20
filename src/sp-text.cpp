@@ -28,7 +28,6 @@
 #endif
 
 #include <2geom/affine.h>
-#include <libnr/nr-matrix-fns.h>
 #include <libnrtype/FontFactory.h>
 #include <libnrtype/font-instance.h>
 #include <libnrtype/font-style-to-pos.h>
@@ -624,7 +623,7 @@ void SPText::_adjustFontsizeRecursive(SPItem *item, double ex, bool is_root)
 {
     SPStyle *style = item->style;
 
-    if (style && !NR_DF_TEST_CLOSE (ex, 1.0, NR_EPSILON)) {
+    if (style && !Geom::are_near(ex, 1.0)) {
         if (!style->font_size.set && is_root) {
             style->font_size.set = 1;
         }

@@ -824,7 +824,7 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
     newscale = CLAMP(newscale, SP_DESKTOP_ZOOM_MIN, SP_DESKTOP_ZOOM_MAX); // unit: 'screen pixels' per 'document pixels'
 
     int clear = FALSE;
-    if (!NR_DF_TEST_CLOSE (newscale, scale, 1e-4 * scale)) {
+    if (!Geom::are_near(newscale, scale, Geom::EPSILON * scale)) {
         // zoom changed - set new zoom factors
         _d2w = Geom::Scale(newscale, -newscale);
         _w2d = Geom::Scale(1/newscale, 1/-newscale);

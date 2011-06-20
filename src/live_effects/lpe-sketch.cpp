@@ -89,24 +89,24 @@ LPESketch::LPESketch(LivePathEffectObject *lpeobject) :
 #endif
 
     nbiter_approxstrokes.param_make_integer();
-    nbiter_approxstrokes.param_set_range(0, NR_HUGE);
-    strokelength.param_set_range(1, NR_HUGE);
+    nbiter_approxstrokes.param_set_range(0, Geom::infinity());
+    strokelength.param_set_range(1, Geom::infinity());
     strokelength.param_set_increments(1., 5.);
     strokelength_rdm.param_set_range(0, 1.);
     strokeoverlap.param_set_range(0, 1.);
     strokeoverlap.param_set_increments(0.1, 0.30);
     ends_tolerance.param_set_range(0., 1.);
-    parallel_offset.param_set_range(0, NR_HUGE);
+    parallel_offset.param_set_range(0, Geom::infinity());
     tremble_frequency.param_set_range(0.01, 100.);
     tremble_frequency.param_set_increments(.5, 1.5);
     strokeoverlap_rdm.param_set_range(0, 1.);
 
 #ifdef LPE_SKETCH_USE_CONSTRUCTION_LINES
     nbtangents.param_make_integer();
-    nbtangents.param_set_range(0, NR_HUGE);
-    tgtscale.param_set_range(0, NR_HUGE);
+    nbtangents.param_set_range(0, Geom::infinity());
+    tgtscale.param_set_range(0, Geom::infinity());
     tgtscale.param_set_increments(.1, .5);
-    tgtlength.param_set_range(0, NR_HUGE);
+    tgtlength.param_set_range(0, Geom::infinity());
     tgtlength.param_set_increments(1., 5.);
     tgtlength_rdm.param_set_range(0, 1.);
     tgt_places_rdmness.param_set_range(0, 1.);

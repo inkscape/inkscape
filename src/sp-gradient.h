@@ -19,7 +19,7 @@
 
 #include <gdk/gdk.h>
 #include <glibmm/ustring.h>
-#include "libnr/nr-matrix.h"
+#include <2geom/affine.h>
 #include "sp-paint-server.h"
 #include "sp-gradient-spread.h"
 #include "sp-gradient-units.h"
@@ -99,11 +99,6 @@ public:
 
     /** Composed vector */
     SPGradientVector vector;
-
-    /** Rendered color array (4 * 1024 bytes) */
-    guchar *color;
-    /** Rendered color array in grayscale (for grayscale viewmode) (4 * 1024 bytes) */
-    guchar *color_grayscale;
 
     sigc::connection modified_connection;
 

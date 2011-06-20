@@ -20,7 +20,7 @@ Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, int num_p
     _tolerance = std::max(snapped_tolerance, 1.0);
     _always_snap = always_snap;
     _curve = curve;
-    _second_distance = NR_HUGE;
+    _second_distance = Geom::infinity();
     _second_tolerance = 1;
     _second_always_snap = false;
     _point = snapped_point;
@@ -36,11 +36,11 @@ Inkscape::SnappedCurve::SnappedCurve()
 {
     _num_path = 0;
     _num_segm = 0;
-    _distance = NR_HUGE;
+    _distance = Geom::infinity();
     _tolerance = 1;
     _always_snap = false;
     _curve = NULL;
-    _second_distance = NR_HUGE;
+    _second_distance = Geom::infinity();
     _second_tolerance = 1;
     _second_always_snap = false;
     _point = Geom::Point(0,0);
@@ -67,8 +67,8 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
 
     if (cs.size() > 0) {
         // There might be multiple intersections: find the closest
-        Geom::Coord best_dist = NR_HUGE;
-        Geom::Point best_p = Geom::Point(NR_HUGE, NR_HUGE);
+        Geom::Coord best_dist = Geom::infinity();
+        Geom::Point best_p = Geom::Point(Geom::infinity(), Geom::infinity());
         for (Geom::Crossings::const_iterator i = cs.begin(); i != cs.end(); i++) {
             Geom::Point p_ix = this->_curve->pointAt((*i).ta);
             Geom::Coord dist = Geom::distance(p_ix, p);
@@ -106,7 +106,7 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
     }
 
     // No intersection
-    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, 0, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, false, NR_HUGE, 0, false);
+    return SnappedPoint(Geom::Point(Geom::infinity(), Geom::infinity()), SNAPSOURCE_UNDEFINED, 0, SNAPTARGET_UNDEFINED, Geom::infinity(), 0, false, false, false, false, Geom::infinity(), 0, false);
 }
 
 // search for the closest snapped line

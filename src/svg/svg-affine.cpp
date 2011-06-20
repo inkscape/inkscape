@@ -20,11 +20,8 @@
 #include <cstdlib>
 #include <cstdio>
 #include <glib/gstrfuncs.h>
-#include <libnr/nr-matrix-fns.h>
-#include <libnr/nr-matrix-ops.h>
 #include <2geom/transforms.h>
 #include <2geom/angle.h>
-#include <libnr/nr-convert2geom.h>
 #include "svg.h"
 #include "preferences.h"
 

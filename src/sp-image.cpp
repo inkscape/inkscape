@@ -21,33 +21,26 @@
 #include <png.h>
 
 #include <cstring>
+#include <algorithm>
 #include <string>
-#include <libnr/nr-matrix-fns.h>
-#include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-translate-matrix-ops.h>
-#include <libnr/nr-scale-translate-ops.h>
-#include <libnr/nr-convert2geom.h>
-#include <2geom/rect.h>
-//#define GDK_PIXBUF_ENABLE_BACKEND 1
-//#include <gdk-pixbuf/gdk-pixbuf-io.h>
-#include "display/nr-arena-image.h"
-#include <display/curve.h>
 #include <glib/gstdio.h>
+#include <2geom/rect.h>
+#include <glibmm/i18n.h>
 
+#include "display/nr-arena-image.h"
+#include "display/cairo-utils.h"
+#include "display/curve.h"
 //Added for preserveAspectRatio support -- EAF
 #include "enums.h"
 #include "attributes.h"
-
 #include "print.h"
 #include "brokenimage.xpm"
 #include "document.h"
 #include "sp-image.h"
 #include "sp-clippath.h"
-#include <glibmm/i18n.h>
 #include "xml/quote.h"
-#include <xml/repr.h>
+#include "xml/repr.h"
 #include "snap-candidate.h"
-#include "libnr/nr-matrix-fns.h"
 
 #include "io/sys.h"
 #if ENABLE_LCMS
@@ -96,6 +89,7 @@ static void sp_image_set_curve(SPImage *image);
 
 static GdkPixbuf *sp_image_repr_read_image( time_t& modTime, gchar*& pixPath, const gchar *href, const gchar *absref, const gchar *base );
 static GdkPixbuf *sp_image_pixbuf_force_rgba (GdkPixbuf * pixbuf);
+static void sp_image_update_arenaitem (SPImage *img, NRArenaImage *ai);
 static void sp_image_update_canvas_image (SPImage *image);
 static GdkPixbuf * sp_image_repr_read_dataURI (const gchar * uri_data);
 static GdkPixbuf * sp_image_repr_read_b64 (const gchar * uri_data);
@@ -612,15 +606,9 @@ static void sp_image_init( SPImage *image )
     image->width.unset();
     image->height.unset();
     image->aspect_align = SP_ASPECT_NONE;
-
-    image->trimx = 0;
-    image->trimy = 0;
-    image->trimwidth = 0;
-    image->trimheight = 0;
-    image->viewx = 0;
-    image->viewy = 0;
-    image->viewwidth = 0;
-    image->viewheight = 0;
+    image->clipbox = Geom::Rect();
+    image->sx = image->sy = 1.0;
+    image->ox = image->oy = 0.0;
 
     image->curve = NULL;
 
@@ -924,16 +912,38 @@ static void sp_image_update( SPObject *object, SPCtx *ctx, unsigned int flags )
                 }
 #endif // ENABLE_LCMS
                 image->pixbuf = pixbuf;
+                // convert to premultiplied native-endian ARGB for display with Cairo
+                convert_pixbuf_normal_to_argb32(image->pixbuf);
             }
         }
     }
+
+    if (image->pixbuf) {
+        /* fixme: We are slightly violating spec here (Lauris) */
+        if (!image->width._set) {
+            image->width.computed = gdk_pixbuf_get_width(image->pixbuf);
+        }
+        if (!image->height._set) {
+            image->height.computed = gdk_pixbuf_get_height(image->pixbuf);
+        }
+    }
+
+    Geom::Point p(image->x.computed, image->y.computed);
+    Geom::Point wh(image->width.computed, image->height.computed);
+    image->clipbox = Geom::Rect(p, p + wh);
+
+    image->ox = image->x.computed;
+    image->oy = image->y.computed;
+
+    int pixwidth = gdk_pixbuf_get_width (image->pixbuf);
+    int pixheight = gdk_pixbuf_get_height (image->pixbuf);
+
+    image->sx = image->width.computed / pixwidth;
+    image->sy = image->height.computed / pixheight;
+
     // preserveAspectRatio calculate bounds / clipping rectangle -- EAF
     if (image->pixbuf && (image->aspect_align != SP_ASPECT_NONE)) {
-        int imagewidth, imageheight;
-        double x,y;
-
-        imagewidth = gdk_pixbuf_get_width (image->pixbuf);
-        imageheight = gdk_pixbuf_get_height (image->pixbuf);
+        double x, y;
 
         switch (image->aspect_align) {
             case SP_ASPECT_XMIN_YMIN:
@@ -979,43 +989,19 @@ static void sp_image_update( SPObject *object, SPCtx *ctx, unsigned int flags )
         }
 
         if (image->aspect_clip == SP_ASPECT_SLICE) {
-            image->viewx = image->x.computed;
-            image->viewy = image->y.computed;
-            image->viewwidth = image->width.computed;
-            image->viewheight = image->height.computed;
-            if ((imagewidth*image->height.computed)>(image->width.computed*imageheight)) {
-                // Pixels aspect is wider than bounding box
-                image->trimheight = imageheight;
-                image->trimwidth = static_cast<int>(static_cast<double>(imageheight) * image->width.computed / image->height.computed);
-                image->trimy = 0;
-                image->trimx = static_cast<int>(static_cast<double>(imagewidth - image->trimwidth) * x);
-            } else {
-                // Pixels aspect is taller than bounding box
-                image->trimwidth = imagewidth;
-                image->trimheight = static_cast<int>(static_cast<double>(imagewidth) * image->height.computed / image->width.computed);
-                image->trimx = 0;
-                image->trimy = static_cast<int>(static_cast<double>(imageheight - image->trimheight) * y);
-            }
+            double scale = std::max(image->sx, image->sy);
+            image->sx = scale;
+            image->sy = scale;
         } else {
-            // Otherwise, assume SP_ASPECT_MEET
-            image->trimx = 0;
-            image->trimy = 0;
-            image->trimwidth = imagewidth;
-            image->trimheight = imageheight;
-            if ((imagewidth*image->height.computed)>(image->width.computed*imageheight)) {
-                // Pixels aspect is wider than bounding boz
-                image->viewwidth = image->width.computed;
-                image->viewheight = image->viewwidth * imageheight / imagewidth;
-                image->viewx=image->x.computed;
-                image->viewy=(image->height.computed - image->viewheight) * y + image->y.computed;
-            } else {
-                // Pixels aspect is taller than bounding box
-                image->viewheight = image->height.computed;
-                image->viewwidth = image->viewheight * imagewidth / imageheight;
-                image->viewy=image->y.computed;
-                image->viewx=(image->width.computed - image->viewwidth) * x + image->x.computed;
-            }
+            double scale = std::min(image->sx, image->sy);
+            image->sx = scale;
+            image->sy = scale;
         }
+
+        double vw = pixwidth * image->sx;
+        double vh = pixheight * image->sy;
+        image->ox += x * (image->width.computed - vw);
+        image->oy += y * (image->height.computed - vh);
     }
     sp_image_update_canvas_image ((SPImage *) object);
 }
@@ -1095,32 +1081,44 @@ static void sp_image_print( SPItem *item, SPPrintContext *ctx )
     SPImage *image = SP_IMAGE(item);
 
     if (image->pixbuf && (image->width.computed > 0.0) && (image->height.computed > 0.0) ) {
-        guchar *px = gdk_pixbuf_get_pixels(image->pixbuf);
-        int w = gdk_pixbuf_get_width(image->pixbuf);
-        int h = gdk_pixbuf_get_height(image->pixbuf);
-        int rs = gdk_pixbuf_get_rowstride(image->pixbuf);
-        int pixskip = gdk_pixbuf_get_n_channels(image->pixbuf) * gdk_pixbuf_get_bits_per_sample(image->pixbuf) / 8;
+        GdkPixbuf *pb = gdk_pixbuf_copy(image->pixbuf);
+        convert_pixbuf_argb32_to_normal(pb);
 
-        Geom::Affine t;
+        guchar *px = gdk_pixbuf_get_pixels(pb);
+        int w = gdk_pixbuf_get_width(pb);
+        int h = gdk_pixbuf_get_height(pb);
+        int rs = gdk_pixbuf_get_rowstride(pb);
+        int pixskip = gdk_pixbuf_get_n_channels(pb) * gdk_pixbuf_get_bits_per_sample(pb) / 8;
+
         if (image->aspect_align == SP_ASPECT_NONE) {
-            /* fixme: (Lauris) */
+            Geom::Affine t;
             Geom::Translate tp(image->x.computed, image->y.computed);
             Geom::Scale s(image->width.computed, -image->height.computed);
             Geom::Translate ti(0.0, -1.0);
             t = s * tp;
             t = ti * t;
+            sp_print_image_R8G8B8A8_N(ctx, px, w, h, rs, &t, item->style);
         } else { // preserveAspectRatio
-            Geom::Translate tp(image->viewx, image->viewy);
-            Geom::Scale s(image->viewwidth, -image->viewheight);
+            double vw = image->width.computed / image->sx;
+            double vh = image->height.computed / image->sy;
+
+            int trimwidth = std::min<int>(w, ceil(image->width.computed / vw * w));
+            int trimheight = std::min<int>(h, ceil(image->height.computed / vh * h));
+            int trimx = std::max<int>(0, floor((image->x.computed - image->ox) / vw * w));
+            int trimy = std::max<int>(0, floor((image->y.computed - image->oy) / vh * h));
+
+            double vx = std::max<double>(image->ox, image->x.computed);
+            double vy = std::max<double>(image->oy, image->y.computed);
+            double vcw = std::min<double>(image->width.computed, vw);
+            double vch = std::min<double>(image->height.computed, vh);
+
+            Geom::Affine t;
+            Geom::Translate tp(vx, vy);
+            Geom::Scale s(vcw, -vch);
             Geom::Translate ti(0.0, -1.0);
             t = s * tp;
             t = ti * t;
-        }
-
-        if (image->aspect_align == SP_ASPECT_NONE) {
-            sp_print_image_R8G8B8A8_N(ctx, px, w, h, rs, &t, item->style);
-        } else { // preserveAspectRatio
-            sp_print_image_R8G8B8A8_N(ctx, px + image->trimx*pixskip + image->trimy*rs, image->trimwidth, image->trimheight, rs, &t, item->style);
+            sp_print_image_R8G8B8A8_N(ctx, px + trimx*pixskip + trimy*rs, trimwidth, trimheight, rs, &t, item->style);
         }
     }
 }
@@ -1153,31 +1151,7 @@ static NRArenaItem *sp_image_show( SPItem *item, NRArena *arena, unsigned int /*
     SPImage * image = SP_IMAGE(item);
     NRArenaItem *ai = NRArenaImage::create(arena);
 
-    if (image->pixbuf) {
-        int pixskip = gdk_pixbuf_get_n_channels(image->pixbuf) * gdk_pixbuf_get_bits_per_sample(image->pixbuf) / 8;
-        int rs = gdk_pixbuf_get_rowstride(image->pixbuf);
-        nr_arena_image_set_style(NR_ARENA_IMAGE(ai), item->style);
-        if (image->aspect_align == SP_ASPECT_NONE) {
-            nr_arena_image_set_pixels(NR_ARENA_IMAGE(ai),
-                                       gdk_pixbuf_get_pixels(image->pixbuf),
-                                       gdk_pixbuf_get_width(image->pixbuf),
-                                       gdk_pixbuf_get_height(image->pixbuf),
-                                       rs);
-        } else { // preserveAspectRatio
-            nr_arena_image_set_pixels(NR_ARENA_IMAGE(ai),
-                                       gdk_pixbuf_get_pixels(image->pixbuf) + image->trimx*pixskip + image->trimy*rs,
-                                       image->trimwidth,
-                                       image->trimheight,
-                                       rs);
-        }
-    } else {
-        nr_arena_image_set_pixels(NR_ARENA_IMAGE(ai), NULL, 0, 0, 0);
-    }
-    if (image->aspect_align == SP_ASPECT_NONE) {
-        nr_arena_image_set_geometry(NR_ARENA_IMAGE(ai), image->x.computed, image->y.computed, image->width.computed, image->height.computed);
-    } else { // preserveAspectRatio
-        nr_arena_image_set_geometry(NR_ARENA_IMAGE(ai), image->viewx, image->viewy, image->viewwidth, image->viewheight);
-    }
+    sp_image_update_arenaitem(image, NR_ARENA_IMAGE(ai));
 
     return ai;
 }
@@ -1287,44 +1261,23 @@ static GdkPixbuf *sp_image_pixbuf_force_rgba( GdkPixbuf * pixbuf )
 }
 
 /* We assert that realpixbuf is either NULL or identical size to pixbuf */
+static void
+sp_image_update_arenaitem (SPImage *image, NRArenaImage *ai)
+{
+    nr_arena_image_set_style(ai, SP_OBJECT(image)->style);
+    nr_arena_image_set_argb32_pixbuf(ai, image->pixbuf);
+    nr_arena_image_set_origin(ai, Geom::Point(image->ox, image->oy));
+    nr_arena_image_set_scale(ai, image->sx, image->sy);
+    nr_arena_image_set_clipbox(ai, image->clipbox);
+}
 
-static void sp_image_update_canvas_image( SPImage *image )
+static void
+sp_image_update_canvas_image (SPImage *image)
 {
     SPItem *item = SP_ITEM(image);
 
-    if (image->pixbuf) {
-        /* fixme: We are slightly violating spec here (Lauris) */
-        if (!image->width._set) {
-            image->width.computed = gdk_pixbuf_get_width(image->pixbuf);
-        }
-        if (!image->height._set) {
-            image->height.computed = gdk_pixbuf_get_height(image->pixbuf);
-        }
-    }
-
     for (SPItemView *v = item->display; v != NULL; v = v->next) {
-        int pixskip = gdk_pixbuf_get_n_channels(image->pixbuf) * gdk_pixbuf_get_bits_per_sample(image->pixbuf) / 8;
-        int rs = gdk_pixbuf_get_rowstride(image->pixbuf);
-        nr_arena_image_set_style(NR_ARENA_IMAGE(v->arenaitem), image->style);
-        if (image->aspect_align == SP_ASPECT_NONE) {
-            nr_arena_image_set_pixels(NR_ARENA_IMAGE(v->arenaitem),
-                                       gdk_pixbuf_get_pixels(image->pixbuf),
-                                       gdk_pixbuf_get_width(image->pixbuf),
-                                       gdk_pixbuf_get_height(image->pixbuf),
-                                       rs);
-            nr_arena_image_set_geometry(NR_ARENA_IMAGE(v->arenaitem),
-                                         image->x.computed, image->y.computed,
-                                         image->width.computed, image->height.computed);
-        } else { // preserveAspectRatio
-            nr_arena_image_set_pixels(NR_ARENA_IMAGE(v->arenaitem),
-                                       gdk_pixbuf_get_pixels(image->pixbuf) + image->trimx*pixskip + image->trimy*rs,
-                                       image->trimwidth,
-                                       image->trimheight,
-                                       rs);
-            nr_arena_image_set_geometry(NR_ARENA_IMAGE(v->arenaitem),
-                                         image->viewx, image->viewy,
-                                         image->viewwidth, image->viewheight);
-        }
+        sp_image_update_arenaitem(image, NR_ARENA_IMAGE(v->arenaitem));
     }
 }
 

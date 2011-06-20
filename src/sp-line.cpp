@@ -12,7 +12,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+# include "config.h"
 #endif
 #include "attributes.h"
 #include "style.h"
@@ -20,8 +20,7 @@
 #include "sp-guide.h"
 #include "display/curve.h"
 #include <glibmm/i18n.h>
-#include <libnr/nr-matrix-fns.h>
-#include <xml/repr.h>
+#include "xml/repr.h"
 #include "document.h"
 #include "inkscape.h"
 

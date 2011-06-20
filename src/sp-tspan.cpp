@@ -40,7 +40,6 @@
 #include "sp-textpath.h"
 #include "text-editing.h"
 #include "style.h"
-#include "libnr/nr-matrix-fns.h"
 #include "xml/repr.h"
 #include "document.h"
 
@@ -593,9 +592,10 @@ sp_textpath_to_text(SPObject *tp)
 {
     SPObject *text = tp->parent;
 
-    NRRect bbox;
-    SP_ITEM(text)->invoke_bbox( &bbox, SP_ITEM(text)->i2doc_affine(), TRUE);
-    Geom::Point xy(bbox.x0, bbox.y0);
+    Geom::OptRect bbox;
+    SP_ITEM(text)->invoke_bbox(bbox, SP_ITEM(text)->i2doc_affine(), TRUE);
+    if (!bbox) return;
+    Geom::Point xy = bbox->min();
 
     // make a list of textpath children
     GSList *tp_reprs = NULL;

@@ -10,9 +10,12 @@
  */
 
 #include <cmath>
+#include <algorithm>
+#include "display/cairo-templates.h"
+#include "display/cairo-utils.h"
 #include "display/nr-filter-morphology.h"
+#include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
-#include "libnr/nr-blit.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -28,94 +31,126 @@ FilterPrimitive * FilterMorphology::create() {
 FilterMorphology::~FilterMorphology()
 {}
 
-int FilterMorphology::render(FilterSlot &slot, FilterUnits const &units) {
-    NRPixBlock *in = slot.get(_input);
-    if (!in) {
-        g_warning("Missing source image for feMorphology (in=%d)", _input);
-        return 1;
-    }
+enum MorphologyOp {
+    ERODE,
+    DILATE
+};
 
-    NRPixBlock *out = new NRPixBlock;
+namespace {
 
-    // this primitive is defined for premultiplied RGBA values,
-    // thus convert them to that format
-    bool free_in_on_exit = false;
-    if (in->mode != NR_PIXBLOCK_MODE_R8G8B8A8P) {
-        NRPixBlock *original_in = in;
-        in = new NRPixBlock;
-        nr_pixblock_setup_fast(in, NR_PIXBLOCK_MODE_R8G8B8A8P,
-                               original_in->area.x0, original_in->area.y0,
-                               original_in->area.x1, original_in->area.y1,
-                               true);
-        nr_blit_pixblock_pixblock(in, original_in);
-        free_in_on_exit = true;
-    }
+/* This performs one "half" of the morphology operation by calculating 
+ * the componentwise extreme in the specified axis with the given radius.
+ * Performing the operation one axis at a time gives us a MASSIVE performance boost
+ * at large morphology radii. Extreme of row extremes is equal to the extreme
+ * of components, so this doesn't change the result. */
+template <MorphologyOp OP, Geom::Dim2 axis>
+struct Morphology : public SurfaceSynth {
+    Morphology(cairo_surface_t *in, double xradius)
+        : SurfaceSynth(in)
+        , _radius(round(xradius))
+    {}
+    guint32 operator()(int x, int y) {
+        int start, end;
+        if (axis == Geom::X) {
+            start = std::max(0, x - _radius);
+            end = std::min(x + _radius + 1, _w);
+        } else {
+            start = std::max(0, y - _radius);
+            end = std::min(y + _radius + 1, _h);
+        }
 
-    Geom::Affine p2pb = units.get_matrix_primitiveunits2pb();
-    int const xradius = (int)round(this->xradius * p2pb.expansionX());
-    int const yradius = (int)round(this->yradius * p2pb.expansionY());
+        guint32 ao = (OP == DILATE ? 0 : 255);
+        guint32 ro = (OP == DILATE ? 0 : 255);
+        guint32 go = (OP == DILATE ? 0 : 255);
+        guint32 bo = (OP == DILATE ? 0 : 255);
 
-    int x0=in->area.x0;
-    int y0=in->area.y0;
-    int x1=in->area.x1;
-    int y1=in->area.y1;
-    int w=x1-x0, h=y1-y0;
-    int x, y, i, j;
-    int rmax,gmax,bmax,amax;
-    int rmin,gmin,bmin,amin;
-
-    nr_pixblock_setup_fast(out, in->mode, x0, y0, x1, y1, true);
-
-    unsigned char *in_data = NR_PIXBLOCK_PX(in);
-    unsigned char *out_data = NR_PIXBLOCK_PX(out);
-
-    for(x = 0 ; x < w ; x++){
-        for(y = 0 ; y < h ; y++){
-            rmin = gmin = bmin = amin = 255;
-            rmax = gmax = bmax = amax = 0;
-            for(i = x - xradius ; i < x + xradius ; i++){
-                if (i < 0 || i >= w) continue;
-                for(j = y - yradius ; j < y + yradius ; j++){
-                    if (j < 0 || j >= h) continue;
-                    if(in_data[4*(i + w*j)]>rmax) rmax = in_data[4*(i + w*j)];
-                    if(in_data[4*(i + w*j)+1]>gmax) gmax = in_data[4*(i + w*j)+1];
-                    if(in_data[4*(i + w*j)+2]>bmax) bmax = in_data[4*(i + w*j)+2];
-                    if(in_data[4*(i + w*j)+3]>amax) amax = in_data[4*(i + w*j)+3];
-
-                    if(in_data[4*(i + w*j)]<rmin) rmin = in_data[4*(i + w*j)];
-                    if(in_data[4*(i + w*j)+1]<gmin) gmin = in_data[4*(i + w*j)+1];
-                    if(in_data[4*(i + w*j)+2]<bmin) bmin = in_data[4*(i + w*j)+2];
-                    if(in_data[4*(i + w*j)+3]<amin) amin = in_data[4*(i + w*j)+3];
+        if (_alpha) {
+            ao = (OP == DILATE ? 0 : 0xff000000);
+            for (int i = start; i < end; ++i) {
+                guint32 px = (axis == Geom::X ? pixelAt(i, y) : pixelAt(x, i));
+                if (OP == DILATE) {
+                    if (px > ao) ao = px;
+                } else {
+                    if (px < ao) ao = px;
                 }
             }
-            if (Operator==MORPHOLOGY_OPERATOR_DILATE){
-                out_data[4*(x + w*y)]=rmax;
-                out_data[4*(x + w*y)+1]=gmax;
-                out_data[4*(x + w*y)+2]=bmax;
-                out_data[4*(x + w*y)+3]=amax;
-            } else {
-                out_data[4*(x + w*y)]=rmin;
-                out_data[4*(x + w*y)+1]=gmin;
-                out_data[4*(x + w*y)+2]=bmin;
-                out_data[4*(x + w*y)+3]=amin;
+            return ao;
+        } else {
+            for (int i = start; i < end; ++i) {
+                guint32 px = (axis == Geom::X ? pixelAt(i, y) : pixelAt(x, i));
+                EXTRACT_ARGB32(px, a,r,g,b);
+
+                // this will be compiled to conditional moves;
+                // the operator comparison will be evaluated at compile time.
+                // therefore there will be no branching in this loop
+                if (OP == DILATE) {
+                    if (a > ao) ao = a;
+                    if (r > ro) ro = r;
+                    if (g > go) go = g;
+                    if (b > bo) bo = b;
+                } else {
+                    if (a < ao) ao = a;
+                    if (r < ro) ro = r;
+                    if (g < go) go = g;
+                    if (b < bo) bo = b;
+                }
+
+                // TODO: verify whether this check gives any speedup.
+                if (OP == ERODE && a == 0) break;
             }
+
+            ASSEMBLE_ARGB32(pxout, ao,ro,go,bo)
+            return pxout;
         }
     }
+private:
+    int _radius;
+};
 
-    if (free_in_on_exit) {
-        nr_pixblock_release(in);
-        delete in;
+} // end anonymous namespace
+
+void FilterMorphology::render_cairo(FilterSlot &slot)
+{
+    cairo_surface_t *input = slot.getcairo(_input);
+
+    if (xradius == 0.0 || yradius == 0.0) {
+        // output is transparent black
+        cairo_surface_t *out = ink_cairo_surface_create_identical(input);
+        slot.set(_output, out);
+        cairo_surface_destroy(out);
+        return;
     }
 
-    out->empty = FALSE;
+    Geom::Affine p2pb = slot.get_units().get_matrix_primitiveunits2pb();
+    double xr = xradius * p2pb.expansionX();
+    double yr = yradius * p2pb.expansionY();
+
+    cairo_surface_t *interm = ink_cairo_surface_create_identical(input);
+
+    if (Operator == MORPHOLOGY_OPERATOR_DILATE) {
+        ink_cairo_surface_synthesize(interm, Morphology<DILATE, Geom::X>(input, xr));
+    } else {
+        ink_cairo_surface_synthesize(interm, Morphology<ERODE, Geom::X>(input, xr));
+    }
+
+    cairo_surface_t *out = ink_cairo_surface_create_identical(input);
+
+    if (Operator == MORPHOLOGY_OPERATOR_DILATE) {
+        ink_cairo_surface_synthesize(out, Morphology<DILATE, Geom::Y>(interm, yr));
+    } else {
+        ink_cairo_surface_synthesize(out, Morphology<ERODE, Geom::Y>(interm, yr));
+    }
+
+    cairo_surface_destroy(interm);
+
     slot.set(_output, out);
-    return 0;
+    cairo_surface_destroy(out);
 }
 
 void FilterMorphology::area_enlarge(NRRectL &area, Geom::Affine const &trans)
 {
-    int const enlarge_x = (int)std::ceil(this->xradius * (std::fabs(trans[0]) + std::fabs(trans[1])));
-    int const enlarge_y = (int)std::ceil(this->yradius * (std::fabs(trans[2]) + std::fabs(trans[3])));
+    int enlarge_x = ceil(xradius * trans.expansionX());
+    int enlarge_y = ceil(yradius * trans.expansionY());
 
     area.x0 -= enlarge_x;
     area.x1 += enlarge_x;
@@ -133,10 +168,6 @@ void FilterMorphology::set_xradius(double x){
 
 void FilterMorphology::set_yradius(double y){
     yradius = y;
-}
-
-FilterTraits FilterMorphology::get_input_traits() {
-    return TRAIT_PARALLER;
 }
 
 } /* namespace Filters */

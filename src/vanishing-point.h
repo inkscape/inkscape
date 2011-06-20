@@ -67,7 +67,7 @@ public:
         return persp3d_get_VP (_persp, _axis).is_finite();
     }
     inline Geom::Point get_pos() const {
-        g_return_val_if_fail (_persp, Geom::Point (NR_HUGE, NR_HUGE));
+        g_return_val_if_fail (_persp, Geom::Point (Geom::infinity(), Geom::infinity()));
         return persp3d_get_VP (_persp,_axis).affine();
     }
     inline Persp3D * get_perspective() const {

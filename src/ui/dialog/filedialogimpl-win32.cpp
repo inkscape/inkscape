@@ -29,15 +29,13 @@
 
 //Inkscape includes
 #include "inkscape.h"
-#include <dialogs/dialog-events.h>
-#include <extension/input.h>
-#include <extension/output.h>
-#include <extension/db.h>
+#include "dialogs/dialog-events.h"
+#include "extension/input.h"
+#include "extension/output.h"
+#include "extension/db.h"
 
-#include <libnr/nr-pixops.h>
-#include <libnr/nr-translate-scale-ops.h>
-#include <display/nr-arena-item.h>
-#include <display/nr-arena.h>
+#include "display/nr-arena-item.h"
+#include "display/nr-arena.h"
 #include "sp-item.h"
 #include "display/canvas-arena.h"
 
@@ -955,6 +953,10 @@ void FileOpenDialogImplWin32::free_preview()
 
 bool FileOpenDialogImplWin32::set_svg_preview()
 {
+    return false;
+    // NOTE: it's not worth the effort to fix this to use Cairo.
+    // Native file dialogs are unmaintainable and should be removed anyway.
+    #if 0
     const int PreviewSize = 512;
 
     gchar *utf8string = g_utf16_to_utf8((const gunichar2*)_path_string,
@@ -1055,6 +1057,7 @@ bool FileOpenDialogImplWin32::set_svg_preview()
     _mutex->unlock();
 
     return true;
+    #endif
 }
 
 void FileOpenDialogImplWin32::destroy_svg_rendering(const guint8 *buffer)

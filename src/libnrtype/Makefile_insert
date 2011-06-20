@@ -20,10 +20,6 @@ ink_common_sources +=	\
 	libnrtype/one-box.h	\
 	libnrtype/one-glyph.h	\
 	libnrtype/one-para.h	\
-	libnrtype/RasterFont.cpp \
-	libnrtype/RasterFont.h \
-	libnrtype/raster-glyph.h	\
-	libnrtype/raster-position.h	\
 	libnrtype/text-boundary.h	\
 	libnrtype/TextWrapper.cpp \
 	libnrtype/TextWrapper.h \

@@ -20,8 +20,6 @@
 #include <cstring>
 #include <string>
 
-#include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-matrix-fns.h>
 #include <2geom/transforms.h>
 #include <glibmm/i18n.h>
 #include "display/nr-arena-group.h"

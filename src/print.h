@@ -41,7 +41,6 @@ void sp_print_get_param(SPPrintContext *ctx, gchar *name, bool *value);
 
 
 /* UI */
-void sp_print_preview_document(SPDocument *doc);
 void sp_print_document(Gtk::Window& parentWindow, SPDocument *doc);
 void sp_print_document_to_file(SPDocument *doc, gchar const *filename);
 

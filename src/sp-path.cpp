@@ -24,8 +24,7 @@
 #include "live_effects/lpeobject-reference.h"
 #include "sp-lpe-item.h"
 
-#include <display/curve.h>
-#include <libnr/nr-matrix-fns.h>
+#include "display/curve.h"
 #include <2geom/pathvector.h>
 #include <2geom/bezier-curve.h>
 #include <2geom/hvlinesegment.h>

@@ -10,15 +10,15 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <libnr/nr-blit.h>
 #include <gtk/gtk.h>
 
-#include <display/sp-canvas-util.h>
+#include "display/display-forward.h"
+#include "display/sp-canvas-util.h"
 #include "helper/sp-marshal.h"
-#include <display/nr-arena.h>
-#include <display/nr-arena-group.h>
-#include <display/canvas-arena.h>
-#include <display/inkscape-cairo.h>
+#include "display/nr-arena.h"
+#include "display/nr-arena-group.h"
+#include "display/canvas-arena.h"
+#include "display/cairo-utils.h"
 
 enum {
     ARENA_EVENT,
@@ -188,6 +188,7 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
     gint bw, bh;
  
     SPCanvasArena *arena = SP_CANVAS_ARENA (item);
+    //SPCanvas *canvas = item->canvas;
 
     nr_arena_item_invoke_update (arena->root, NULL, &arena->gc,
                                  NR_ARENA_ITEM_STATE_BBOX | NR_ARENA_ITEM_STATE_RENDER,
@@ -200,28 +201,17 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
     if ((bw < 1) || (bh < 1)) return;
 
     NRRectL area;
-    NRPixBlock cb;
 
     area.x0 = buf->rect.x0;
     area.y0 = buf->rect.y0;
     area.x1 = buf->rect.x1;
     area.y1 = buf->rect.y1;
 
-    nr_pixblock_setup_extern (&cb, NR_PIXBLOCK_MODE_R8G8B8A8P, area.x0, area.y0, area.x1, area.y1,
-                              buf->buf,
-                              buf->buf_rowstride,
-                              FALSE, FALSE);
-
-    cb.visible_area = buf->visible_rect;
-    cairo_t *ct = nr_create_cairo_context (&area, &cb);
-    nr_arena_item_invoke_render (ct, arena->root, &area, &cb, 0);
-
-    cairo_surface_t *cst = cairo_get_target(ct);
-    cairo_destroy (ct);
-    cairo_surface_finish (cst);
-    cairo_surface_destroy (cst);
-
-    nr_pixblock_release (&cb);
+    sp_canvas_prepare_buffer(buf);
+    cairo_save(buf->ct);
+    cairo_translate(buf->ct, -area.x0, -area.y0);
+    nr_arena_item_invoke_render (buf->ct, arena->root, &area, NULL, 0);
+    cairo_restore(buf->ct);
 }
 
 static double
@@ -368,22 +358,15 @@ sp_canvas_arena_set_sticky (SPCanvasArena *ca, gboolean sticky)
 }
 
 void
-sp_canvas_arena_render_pixblock (SPCanvasArena *ca, NRPixBlock *pb)
+sp_canvas_arena_render_surface (SPCanvasArena *ca, cairo_surface_t *surface, NRRectL const &r)
 {
-    NRRectL area;
-
     g_return_if_fail (ca != NULL);
     g_return_if_fail (SP_IS_CANVAS_ARENA (ca));
 
-    /* fixme: */
-    pb->empty = FALSE;
-
-    area.x0 = pb->area.x0;
-    area.y0 = pb->area.y0;
-    area.x1 = pb->area.x1;
-    area.y1 = pb->area.y1;
-
-    nr_arena_item_invoke_render (NULL, ca->root, &area, pb, 0);
+    cairo_t *ct = cairo_create(surface);
+    cairo_translate(ct, -r.x0, -r.y0);
+    nr_arena_item_invoke_render (ct, ca->root, &r, NULL, 0);
+    cairo_destroy(ct);
 }
 
 

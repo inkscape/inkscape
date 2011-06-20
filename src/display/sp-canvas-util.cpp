@@ -13,12 +13,10 @@
  */
 
 
-#include <string.h>  // for memset
 #include <2geom/affine.h>
-#include "libnr/nr-pixops.h"
-#include "sp-canvas-item.h"
 #include "sp-canvas-util.h"
-
+#include "sp-canvas-item.h"
+#include "sp-canvas.h"
 
 void
 sp_canvas_update_bbox (SPCanvasItem *item, int x1, int y1, int x2, int y2)
@@ -43,38 +41,13 @@ sp_canvas_item_reset_bounds (SPCanvasItem *item)
 void
 sp_canvas_prepare_buffer (SPCanvasBuf *buf)
 {
-    if (buf->is_empty) {
-        sp_canvas_clear_buffer(buf);
-        buf->is_empty = false;
-    }
-}
-
-void
-sp_canvas_clear_buffer (SPCanvasBuf *buf)
-{
-    unsigned char r, g, b;
-
-    r = (buf->bg_color >> 16) & 0xff;
-    g = (buf->bg_color >> 8) & 0xff;
-    b = buf->bg_color & 0xff;
-
-    if ((r != g) || (r != b)) {
-        int x, y;
-        for (y = buf->rect.y0; y < buf->rect.y1; y++) {
-            unsigned char *p;
-            p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride;
-            for (x = buf->rect.x0; x < buf->rect.x1; x++) {
-                *p++ = r;
-                *p++ = g;
-                *p++ = b;
-            }
-        }
-    } else {
+    /*if (buf->is_empty) {
         int y;
         for (y = buf->rect.y0; y < buf->rect.y1; y++) {
-            memset (buf->buf + (y - buf->rect.y0) * buf->buf_rowstride, r, 4 * (buf->rect.x1 - buf->rect.x0)); 
+            memset (buf->buf + (y - buf->rect.y0) * buf->buf_rowstride, 0, 4 * (buf->rect.x1 - buf->rect.x0)); 
         }
-    }
+        buf->is_empty = false;
+    }*/
 }
 
 Geom::Affine sp_canvas_item_i2p_affine (SPCanvasItem * item)

@@ -16,24 +16,23 @@
 
 #include "trace/potrace/inkscape-potrace.h"
 
-#include <inkscape.h>
-#include <desktop.h>
-#include <desktop-handles.h>
-#include <document.h>
-#include <message-stack.h>
+#include "inkscape.h"
+#include "desktop.h"
+#include "desktop-handles.h"
+#include "document.h"
+#include "message-stack.h"
 #include <gtkmm.h>
 #include <glibmm/i18n.h>
-#include <selection.h>
-#include <xml/repr.h>
-#include <xml/attribute-record.h>
-#include <sp-item.h>
-#include <sp-shape.h>
-#include <sp-image.h>
-#include <libnr/nr-matrix-ops.h>
+#include "selection.h"
+#include "xml/repr.h"
+#include "xml/attribute-record.h"
+#include "sp-item.h"
+#include "sp-shape.h"
+#include "sp-image.h"
 #include <2geom/transforms.h>
 
-#include <display/nr-arena.h>
-#include <display/nr-arena-shape.h>
+#include "display/nr-arena.h"
+#include "display/nr-arena-shape.h"
 
 #include "siox.h"
 #include "imagemap-gdk.h"

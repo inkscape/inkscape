@@ -19,8 +19,9 @@
 
 #include "attributes.h"
 #include "xml/repr.h"
-#include "mergenode.h"
-#include "merge.h"
+#include "filters/mergenode.h"
+#include "filters/merge.h"
+#include "display/nr-filter-types.h"
 
 static void sp_feMergeNode_class_init(SPFeMergeNodeClass *klass);
 static void sp_feMergeNode_init(SPFeMergeNode *skeleton);

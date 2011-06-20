@@ -6,6 +6,7 @@
 	rm -f 2geom/lib2geom.a $(2geom_lib2geom_a_OBJECTS)
 
 2geom_lib2geom_a_SOURCES = \
+	2geom/affine.h	\
 	2geom/affine.cpp	\
 	2geom/angle.h	\
 	2geom/basic-intersection.cpp	\
@@ -50,7 +51,6 @@
 	2geom/linear.h	\
 	2geom/line.cpp	\
 	2geom/line.h	\
-	2geom/matrix.h	\
 	2geom/nearest-point.cpp	\
 	2geom/nearest-point.h	\
 	2geom/numeric/fitting-model.h	\

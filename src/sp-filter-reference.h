@@ -2,8 +2,10 @@
 #define SEEN_SP_FILTER_REFERENCE_H
 
 #include "uri-references.h"
-#include "sp-filter-fns.h"
+
 class SPObject;
+class SPDocument;
+class SPFilter;
 
 class SPFilterReference : public Inkscape::URIReference {
 public:
@@ -17,7 +19,6 @@ public:
 protected:
     virtual bool _acceptObject(SPObject *obj) const;
 };
-
 
 #endif /* !SEEN_SP_FILTER_REFERENCE_H */
 

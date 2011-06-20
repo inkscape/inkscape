@@ -271,13 +271,13 @@ LPERoughHatches::LPERoughHatches(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&front_thickness) );
     registerParameter( dynamic_cast<Parameter *>(&back_thickness) );
 
-    //hatch_dist.param_set_range(0.1, NR_HUGE);
-    growth.param_set_range(0, NR_HUGE);
+    //hatch_dist.param_set_range(0.1, Geom::infinity());
+    growth.param_set_range(0, Geom::infinity());
     dist_rdm.param_set_range(0, 99.);
-    stroke_width_top.param_set_range(0,  NR_HUGE);
-    stroke_width_bot.param_set_range(0,  NR_HUGE);
-    front_thickness.param_set_range(0, NR_HUGE);
-    back_thickness.param_set_range(0, NR_HUGE);
+    stroke_width_top.param_set_range(0,  Geom::infinity());
+    stroke_width_bot.param_set_range(0,  Geom::infinity());
+    front_thickness.param_set_range(0, Geom::infinity());
+    back_thickness.param_set_range(0, Geom::infinity());
 
     // hide the widgets for direction and bender vectorparams
     direction.widget_is_visible = false;

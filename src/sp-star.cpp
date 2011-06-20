@@ -19,6 +19,7 @@
 
 #include <cstring>
 #include <string>
+#include <glib.h>
 #include <glibmm/i18n.h>
 
 #include "svg/svg.h"
@@ -175,7 +176,7 @@ sp_star_set (SPObject *object, unsigned int key, const gchar *value)
     case SP_ATTR_SODIPODI_SIDES:
         if (value) {
             star->sides = atoi (value);
-            star->sides = NR_CLAMP(star->sides, 3, 1024);
+            star->sides = CLAMP(star->sides, 3, 1024);
         } else {
             star->sides = 5;
         }
@@ -528,13 +529,13 @@ sp_star_position_set (SPStar *star, gint sides, Geom::Point center, gdouble r1, 
     g_return_if_fail (star != NULL);
     g_return_if_fail (SP_IS_STAR (star));
 
-    star->sides = NR_CLAMP(sides, 3, 1024);
+    star->sides = CLAMP(sides, 3, 1024);
     star->center = center;
     star->r[0] = MAX (r1, 0.001);
     if (isflat == false) {
-        star->r[1] = NR_CLAMP(r2, 0.0, star->r[0]);
+        star->r[1] = CLAMP(r2, 0.0, star->r[0]);
     } else {
-        star->r[1] = NR_CLAMP( r1*cos(M_PI/sides) ,0.0, star->r[0] );
+        star->r[1] = CLAMP( r1*cos(M_PI/sides) ,0.0, star->r[0] );
     }
     star->arg[0] = arg1;
     star->arg[1] = arg2;

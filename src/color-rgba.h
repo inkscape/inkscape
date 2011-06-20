@@ -14,7 +14,6 @@
 
 #include <glib.h> // g_assert()
 #include <glib/gmessages.h>
-#include "libnr/nr-pixops.h"
 #include "decimal-round.h"
 
 /**
@@ -56,12 +55,12 @@ public:
         TODO : maybe get rid of the NR_RGBA32_x C-style functions and replace
             the calls with the bitshifting they do
     */
-    ColorRGBA(unsigned int intcolor)
+    ColorRGBA(guint32 intcolor)
     {
-         _c[0] = NR_RGBA32_R(intcolor)/255.0;
-         _c[1] = NR_RGBA32_G(intcolor)/255.0;
-         _c[2] = NR_RGBA32_B(intcolor)/255.0;
-         _c[3] = NR_RGBA32_A(intcolor)/255.0;
+         _c[0] = ((intcolor & 0xff000000) >> 24) / 255.0;
+         _c[1] = ((intcolor & 0x00ff0000) >> 16) / 255.0;
+         _c[2] = ((intcolor & 0x0000ff00) >>  8) / 255.0;
+         _c[3] = ((intcolor & 0x000000ff) >>  0) / 255.0;
 
     }
 

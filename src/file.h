@@ -183,11 +183,6 @@ would be useful as instance methods
  */
 void sp_file_print (Gtk::Window& parentWindow);
 
-/**
- *
- */
-void sp_file_print_preview (gpointer object, gpointer data);
-
 /*#####################
 ## U T I L I T Y
 #####################*/

@@ -15,28 +15,23 @@
 # include "config.h"
 #endif
 
-#include <interface.h>
-#include <libnr/nr-pixops.h>
 #include <glib.h>
 #include <glib/gmessages.h>
 #include <png.h>
-#include "png-write.h"
-#include <display/nr-arena-item.h>
-#include <display/nr-arena.h>
-#include <document.h>
-#include <sp-item.h>
-#include <sp-root.h>
-#include <sp-use.h>
-#include <sp-defs.h>
+
+#include "interface.h"
+#include "helper/png-write.h"
+#include "display/cairo-utils.h"
+#include "display/nr-arena-item.h"
+#include "display/nr-arena.h"
+#include "document.h"
+#include "sp-item.h"
+#include "sp-root.h"
+#include "sp-use.h"
+#include "sp-defs.h"
 #include "unit-constants.h"
 
-#include "libnr/nr-matrix-translate-ops.h"
-#include "libnr/nr-scale-ops.h"
-#include "libnr/nr-scale-translate-ops.h"
-#include "libnr/nr-translate-matrix-ops.h"
-#include "libnr/nr-translate-scale-ops.h"
-
-#include "pixbuf-ops.h"
+#include "helper/pixbuf-ops.h"
 
 // TODO look for copy-n-past duplication of this function:
 /**
@@ -155,50 +150,32 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
 
      nr_arena_item_invoke_update(root, &final_bbox, &gc, NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
 
-    guchar *px = NULL;
-    guint64 size = 4L * (guint64)width * (guint64)height;
-    if(size < (guint64)G_MAXSIZE) {
-        // g_try_new is limited to g_size type which is defined as unisgned int. Need to test for very large nubers
-        px = g_try_new(guchar, size);
-    }
+    cairo_surface_t *surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 
-    if(px != NULL)
-    {
+    if (cairo_surface_status(surface) == CAIRO_STATUS_SUCCESS) {
+        cairo_t *ct = cairo_create(surface);
 
-         NRPixBlock B;
-         //g_warning("sp_generate_internal_bitmap: nr_pixblock_setup_extern.");
-         nr_pixblock_setup_extern( &B, NR_PIXBLOCK_MODE_R8G8B8A8N,
-                                   final_bbox.x0, final_bbox.y0, final_bbox.x1, final_bbox.y1,
-                                   px, 4 * width, FALSE, FALSE );
+        // clear to background
+        ink_cairo_set_source_rgba32(ct, bgcolor);
+        cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
+        cairo_paint(ct);
+        cairo_set_operator(ct, CAIRO_OPERATOR_OVER);
 
-         unsigned char dtc[4];
-         dtc[0] = NR_RGBA32_R(bgcolor);
-         dtc[1] = NR_RGBA32_G(bgcolor);
-         dtc[2] = NR_RGBA32_B(bgcolor);
-         dtc[3] = NR_RGBA32_A(bgcolor);
+        // render items
+        nr_arena_item_invoke_render(ct, root, &final_bbox, NULL, NR_ARENA_ITEM_RENDER_NO_CACHE );
 
-         // fill pixelblock using background colour
-         for (gsize fy = 0; fy < height; fy++) {
-             guchar *p = NR_PIXBLOCK_PX(&B) + fy * (gsize)B.rs;
-             for (unsigned int fx = 0; fx < width; fx++) {
-                 for (int i = 0; i < 4; i++) {
-                     *p++ = dtc[i];
-                 }
-             }
-         }
-
-
-         nr_arena_item_invoke_render(NULL, root, &final_bbox, &B, NR_ARENA_ITEM_RENDER_NO_CACHE );
-
-         pixbuf = gdk_pixbuf_new_from_data(px, GDK_COLORSPACE_RGB,
-                                              TRUE,
-                                              8, width, height, width * 4,
-                                              (GdkPixbufDestroyNotify)g_free,
-                                              NULL);
+        pixbuf = gdk_pixbuf_new_from_data(cairo_image_surface_get_data(surface),
+                                          GDK_COLORSPACE_RGB, TRUE,
+                                          8, width, height, cairo_image_surface_get_stride(surface),
+                                          (GdkPixbufDestroyNotify) cairo_surface_destroy,
+                                          NULL);
+        convert_pixbuf_argb32_to_normal(pixbuf);
     }
     else
     {
+        long long size = (long long) height * (long long) cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, width);
         g_warning("sp_generate_internal_bitmap: not enough memory to create pixel buffer. Need %lld.", size);
+        cairo_surface_destroy(surface);
     }
      SP_ITEM(doc->getRoot())->invoke_hide(dkey);
      nr_object_unref((NRObject *) arena);

@@ -20,7 +20,6 @@
 #include "style.h"
 #include "preferences.h"
 #include "macros.h"
-#include <libnr/nr-matrix-ops.h>
 #include "sp-pattern.h"
 #include "snap.h"
 #include "desktop.h"

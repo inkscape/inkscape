@@ -15,9 +15,7 @@
  */
 
 #include "sp-object.h"
-#include "display/nr-filter.h"
-#include "display/nr-filter-primitive.h"
-#include "display/nr-filter-types.h"
+#include "svg/svg-length.h"
 
 #define SP_TYPE_FILTER_PRIMITIVE (sp_filter_primitive_get_type ())
 #define SP_FILTER_PRIMITIVE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FILTER_PRIMITIVE, SPFilterPrimitive))
@@ -27,6 +25,12 @@
 
 class SPFilterPrimitive;
 class SPFilterPrimitiveClass;
+namespace Inkscape {
+namespace Filters {
+class Filter;
+class FilterPrimitive;
+} }
+
 
 struct SPFilterPrimitive : public SPObject {
     int image_in, image_out;

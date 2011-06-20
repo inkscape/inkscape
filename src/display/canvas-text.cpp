@@ -13,19 +13,19 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "sp-canvas-util.h"
-#include "canvas-text.h"
-#include "display/inkscape-cairo.h"
-#include <sstream>
-#include <string.h>
-#include "desktop.h"
-
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include <color.h>
 
-#include <libnr/nr-pixops.h>
+#include <sstream>
+#include <string.h>
+
+#include "display-forward.h"
+#include "sp-canvas-util.h"
+#include "canvas-text.h"
+#include "display/cairo-utils.h"
+#include "desktop.h"
+#include "color.h"
 
 static void sp_canvastext_class_init (SPCanvasTextClass *klass);
 static void sp_canvastext_init (SPCanvasText *canvastext);
@@ -123,13 +123,11 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
     cairo_set_font_size(buf->ct, cl->fontsize);
     cairo_text_path(buf->ct, cl->text);
 
-    cairo_set_source_rgba(buf->ct, SP_RGBA32_B_F(cl->rgba_stroke), SP_RGBA32_G_F(cl->rgba_stroke), SP_RGBA32_R_F(cl->rgba_stroke), SP_RGBA32_A_F(cl->rgba_stroke));
+    ink_cairo_set_source_rgba32(buf->ct, cl->rgba_stroke);
     cairo_set_line_width (buf->ct, 2.0);
     cairo_stroke_preserve(buf->ct);
-    cairo_set_source_rgba(buf->ct, SP_RGBA32_B_F(cl->rgba), SP_RGBA32_G_F(cl->rgba), SP_RGBA32_R_F(cl->rgba), SP_RGBA32_A_F(cl->rgba));
+    ink_cairo_set_source_rgba32(buf->ct, cl->rgba);
     cairo_fill(buf->ct);
-
-    cairo_new_path(buf->ct);
 }
 
 static void

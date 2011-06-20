@@ -18,8 +18,6 @@
  */
 
 #include "display/nr-filter-primitive.h"
-#include "display/nr-filter-slot.h"
-#include "display/nr-filter-units.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -39,7 +37,8 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterBlend();
 
-    virtual int render(FilterSlot &slot, FilterUnits const &units);
+    virtual void render_cairo(FilterSlot &slot);
+    virtual bool can_handle_affine(Geom::Affine const &);
 
     virtual void set_input(int slot);
     virtual void set_input(int input, int slot);

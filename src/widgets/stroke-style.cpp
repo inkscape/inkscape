@@ -613,7 +613,7 @@ static gboolean stroke_width_set_unit(SPUnitSelector *,
 
         gdouble average = stroke_average_width (objects);
 
-        if (average == NR_HUGE || average == 0)
+        if (average == Geom::infinity() || average == 0)
             return FALSE;
 
         a->set_value (100.0 * w / average);

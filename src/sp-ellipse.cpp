@@ -17,8 +17,6 @@
 # include "config.h"
 #endif
 
-
-#include "libnr/nr-matrix-fns.h"
 #include "svg/svg.h"
 #include "svg/path-string.h"
 #include "xml/repr.h"

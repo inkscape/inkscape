@@ -15,40 +15,24 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <libnr/nr-pixblock.h>
+#include <cairo.h>
 #include "sp-object.h"
 #include "uri-references.h"
 
-struct SPPainter;
-struct SPPaintServer;
+struct NRRect;
 
-#define SP_TYPE_PAINT_SERVER (SPPaintServer::getType())
+#define SP_TYPE_PAINT_SERVER (SPPaintServer::get_type())
 #define SP_PAINT_SERVER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_PAINT_SERVER, SPPaintServer))
 #define SP_PAINT_SERVER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_PAINT_SERVER, SPPaintServerClass))
 #define SP_IS_PAINT_SERVER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_PAINT_SERVER))
 #define SP_IS_PAINT_SERVER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_PAINT_SERVER))
 
-typedef void (* SPPainterFillFunc) (SPPainter *painter, NRPixBlock *pb);
-
-
-/* fixme: I do not like that class thingie (Lauris) */
-struct SPPainter {
-    SPPainter *next;
-    SPPaintServer *server;
-    GType server_type;
-//    SPPainterType type;
-    SPPainterFillFunc fill;
-};
-
 struct SPPaintServer : public SPObject {
-    /** List of paints */
-    SPPainter *painters;
-
 protected:
     bool swatch;
 public:
 
-    static GType getType(void);
+    static GType get_type(void);
 
     bool isSwatch() const;
     bool isSolid() const;
@@ -60,14 +44,10 @@ private:
 struct SPPaintServerClass {
     SPObjectClass sp_object_class;
     /** Get SPPaint instance. */
-    SPPainter * (* painter_new) (SPPaintServer *ps, Geom::Affine const &full_transform, Geom::Affine const &parent_transform, const NRRect *bbox);
-    /** Free SPPaint instance. */
-    void (* painter_free) (SPPaintServer *ps, SPPainter *painter);
+    cairo_pattern_t *(*pattern_new)(SPPaintServer *ps, cairo_t *ct, const NRRect *bbox, double opacity);
 };
 
-SPPainter *sp_paint_server_painter_new (SPPaintServer *ps, Geom::Affine const &full_transform, Geom::Affine const &parent_transform, const NRRect *bbox);
-
-SPPainter *sp_painter_free (SPPainter *painter);
+cairo_pattern_t *sp_paint_server_create_pattern(SPPaintServer *ps, cairo_t *ct, NRRect const *bbox, double opacity);
 
 
 #endif // SEEN_SP_PAINT_SERVER_H

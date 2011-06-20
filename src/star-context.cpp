@@ -457,14 +457,14 @@ static void sp_star_drag(SPStarContext *sc, Geom::Point p, guint state)
     double const sides = (gdouble) sc->magnitude;
     Geom::Point const d = p1 - p0;
     Geom::Coord const r1 = Geom::L2(d);
-    double arg1 = atan2(from_2geom(d));
+    double arg1 = atan2(d);
 
     if (state & GDK_CONTROL_MASK) {
         /* Snap angle */
         arg1 = sp_round(arg1, M_PI / snaps);
     }
 
-    sp_star_position_set(star, sc->magnitude, from_2geom(p0), r1, r1 * sc->proportion,
+    sp_star_position_set(star, sc->magnitude, p0, r1, r1 * sc->proportion,
                          arg1, arg1 + M_PI / sides, sc->isflatsided, sc->rounded, sc->randomized);
 
     /* status text */

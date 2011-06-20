@@ -1,10 +1,6 @@
-#ifndef SP_FETILE_H_SEEN
-#define SP_FETILE_H_SEEN
-
-/** \file
- * SVG <feTile> implementation, see Tile.cpp.
- */
-/*
+/** @file
+ * @brief SVG tile filter effect
+ *//*
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *
@@ -13,17 +9,21 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "sp-filter.h"
-#include "tile-fns.h"
+#ifndef SP_FETILE_H_SEEN
+#define SP_FETILE_H_SEEN
 
-#include "display/nr-filter.h"
-#include "display/nr-filter-tile.h"
+#include "sp-filter-primitive.h"
+
+#define SP_TYPE_FETILE (sp_feTile_get_type())
+#define SP_FETILE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FETILE, SPFeTile))
+#define SP_FETILE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FETILE, SPFeTileClass))
+#define SP_IS_FETILE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FETILE))
+#define SP_IS_FETILE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FETILE))
 
 /* FeTile base class */
 class SPFeTileClass;
 
 struct SPFeTile : public SPFilterPrimitive {
-    /** TILE ATTRIBUTES HERE */
     
 };
 
@@ -32,7 +32,6 @@ struct SPFeTileClass {
 };
 
 GType sp_feTile_get_type();
-
 
 #endif /* !SP_FETILE_H_SEEN */
 

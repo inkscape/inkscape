@@ -15,9 +15,6 @@
 #include "print.h"
 #include "extension/print.h"
 #include "livarot/Path.h"
-#include "libnr/nr-matrix-fns.h"
-#include "libnr/nr-scale-matrix-ops.h"
-#include "libnr/nr-convert2geom.h"
 #include "font-instance.h"
 #include "svg/svg-length.h"
 #include "extension/internal/cairo-render-context.h"
@@ -288,7 +285,7 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
             }
         } while (glyph_index < _glyphs.size()
                  && _path_fitted == NULL
-                 && NR::transform_equalp(font_matrix, glyph_matrix, NR_EPSILON)
+                 && (font_matrix * glyph_matrix.inverse()).isIdentity()
                  && _characters[_glyphs[glyph_index].in_character].in_span == this_span_index);
 
         // remove vertical flip

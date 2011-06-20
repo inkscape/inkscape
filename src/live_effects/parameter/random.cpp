@@ -32,8 +32,8 @@ RandomParam::RandomParam( const Glib::ustring& label, const Glib::ustring& tip,
 {
     defvalue = default_value;
     value = defvalue;
-    min = -NR_HUGE;
-    max = NR_HUGE;
+    min = -Geom::infinity();
+    max = Geom::infinity();
     integer = false;
 
     defseed = default_seed;

@@ -19,9 +19,10 @@
 
 #include "attributes.h"
 #include "svg/svg.h"
-#include "offset.h"
+#include "filters/offset.h"
 #include "helper-fns.h"
 #include "xml/repr.h"
+#include "display/nr-filter.h"
 #include "display/nr-filter-offset.h"
 
 /* FeOffset base class */

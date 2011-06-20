@@ -38,7 +38,7 @@ LPEInterpolate::LPEInterpolate(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&number_of_steps) );
 
     number_of_steps.param_make_integer();
-    number_of_steps.param_set_range(2, NR_HUGE);
+    number_of_steps.param_set_range(2, Geom::infinity());
 }
 
 LPEInterpolate::~LPEInterpolate()

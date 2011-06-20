@@ -37,7 +37,7 @@
 #include "display/nr-arena-group.h"
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
-#include "display/inkscape-cairo.h"
+#include "display/cairo-utils.h"
 #include "sp-item.h"
 #include "sp-item-group.h"
 #include "style.h"

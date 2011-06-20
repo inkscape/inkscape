@@ -11,7 +11,6 @@ struct font_glyph {
     double         v_advance, v_width;
     double         bbox[4];            // bbox of the path (and the artbpath), not the bbox of the glyph
 																			 // as the fonts sometimes contain
-    Path*          outline;            // outline as a livarot Path
     Geom::PathVector* pathvector;      // outline as 2geom pathvector, for text->curve stuff (should be unified with livarot)
 };
 

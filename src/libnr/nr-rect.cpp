@@ -11,6 +11,7 @@
 
 #include "nr-rect-l.h"
 #include <algorithm>
+#include "nr-point-ops.h"
 
 NRRect::NRRect(NR::Rect const &rect)
 : x0(rect.min()[NR::X]), y0(rect.min()[NR::Y]),
@@ -220,6 +221,8 @@ nr_rect_d_union_xy (NRRect *d, NR::Coord x, NR::Coord y)
 NRRect *
 nr_rect_d_matrix_transform(NRRect *d, NRRect const *const s, NR::Matrix const &m)
 {
+    // defunct
+    /*
     using NR::X;
     using NR::Y;
 
@@ -238,7 +241,7 @@ nr_rect_d_matrix_transform(NRRect *d, NRRect const *const s, NR::Matrix const &m
                          std::max(c10[X], c11[X]));
         d->y1 = std::max(std::max(c00[Y], c01[Y]),
                          std::max(c10[Y], c11[Y]));
-    }
+    }*/
     return d;
 }
 

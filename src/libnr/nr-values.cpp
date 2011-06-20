@@ -1,14 +1,12 @@
 #define __NR_VALUES_C__
 
 #include <libnr/nr-rect-l.h>
-#include <libnr/nr-matrix-fns.h>
-
+#include "libnr/nr-rect.h"
 
 /*
 The following predefined objects are for reference
 and comparison.
 */
-NR::Matrix NR_MATRIX_IDENTITY = NR::identity();
 NRRect   NR_RECT_EMPTY(NR_HUGE, NR_HUGE, -NR_HUGE, -NR_HUGE);
 NRRectL  NR_RECT_L_EMPTY =
        {NR_HUGE_L, NR_HUGE_L, -NR_HUGE_L, -NR_HUGE_L};

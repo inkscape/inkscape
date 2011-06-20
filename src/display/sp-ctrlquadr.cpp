@@ -12,10 +12,13 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include "sp-canvas-util.h"
+
+#include "display-forward.h"
 #include "sp-canvas-item.h"
+#include "sp-canvas.h"
+#include "sp-canvas-util.h"
 #include "sp-ctrlquadr.h"
-#include "display/inkscape-cairo.h"
+#include "display/cairo-utils.h"
 #include "color.h"
 
 struct SPCtrlQuadr : public SPCanvasItem{

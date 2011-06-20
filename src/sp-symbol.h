@@ -24,7 +24,6 @@
 class SPSymbol;
 class SPSymbolClass;
 
-#include <libnr/nr-matrix.h>
 #include <2geom/affine.h>
 #include <libnr/nr-rect.h>
 #include "svg/svg-length.h"

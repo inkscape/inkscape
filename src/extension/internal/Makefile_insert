@@ -131,8 +131,6 @@ ink_common_sources +=	\
 	extension/internal/filter/filter.h \
 	extension/internal/filter/drop-shadow.h \
 	extension/internal/filter/snow.h \
-	extension/internal/win32.h \
-	extension/internal/win32.cpp \
 	extension/internal/emf-win32-print.h \
 	extension/internal/emf-win32-print.cpp \
 	extension/internal/emf-win32-inout.h \

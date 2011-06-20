@@ -27,12 +27,12 @@
 
 #include "2geom/isnan.h"
 
+#include "display/cairo-utils.h"
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-types.h"
 #include "display/nr-filter-units.h"
-#include "libnr/nr-blit.h"
-#include "libnr/nr-pixblock.h"
+#include "display/nr-filter-slot.h"
 #include <2geom/affine.h>
 #include "util/fixed_point.h"
 #include "preferences.h"
@@ -82,7 +82,7 @@ static inline Tt round_cast(Ts v) {
     static Ts const rndoffset(.5);
     return static_cast<Tt>(v+rndoffset);
 }
-
+/*
 template<>
 inline unsigned char round_cast(double v) {
     // This (fast) rounding method is based on:
@@ -99,7 +99,7 @@ inline unsigned char round_cast(double v) {
     static double const rndoffset(.5);
     return static_cast<unsigned char>(v+rndoffset);
 #endif
-}
+}*/
 
 template<typename Tt, typename Ts>
 static inline Tt clip_round_cast(Ts const v) {
@@ -142,7 +142,7 @@ FilterGaussian::~FilterGaussian()
 static int
 _effect_area_scr(double const deviation)
 {
-    return (int)std::ceil(deviation * 3.0);
+    return (int)std::ceil(std::fabs(deviation) * 3.0);
 }
 
 static void
@@ -223,21 +223,6 @@ _effect_subsample_step_log2(double const deviation, int const quality)
     return stepsize_l2;
 }
 
-/**
- * Sanity check function for indexing pixblocks.
- * Catches reading and writing outside the pixblock area.
- * When enabled, decreases filter rendering speed massively.
- */
-static inline void
-_check_index(NRPixBlock const * const pb, int const location, int const line)
-{
-    if (false) {
-        int max_loc = pb->rs * (pb->area.y1 - pb->area.y0);
-        if (location < 0 || location >= max_loc)
-            g_warning("Location %d out of bounds (0 ... %d) at line %d", location, max_loc, line);
-    }
-}
-
 static void calcFilter(double const sigma, double b[N]) {
     assert(N==3);
     std::complex<double> const d1_org(1.40098,  1.00236);
@@ -315,6 +300,14 @@ filter2D_IIR(PT *const dest, int const dstr1, int const dstr2,
              int const n1, int const n2, IIRValue const b[N+1], double const M[N*N],
              IIRValue *const tmpdata[], int const num_threads)
 {
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+    static unsigned int const alpha_PC = PC-1;
+    #define PREMUL_ALPHA_LOOP for(unsigned int c=0; c<PC-1; ++c)
+#else
+    static unsigned int const alpha_PC = 0;
+    #define PREMUL_ALPHA_LOOP for(unsigned int c=1; c<PC; ++c)
+#endif
+
 #if HAVE_OPENMP
 #pragma omp parallel for num_threads(num_threads)
 #else
@@ -350,8 +343,8 @@ filter2D_IIR(PT *const dest, int const dstr1, int const dstr2,
         calcTriggsSdikaInitialization<PC>(M, u, iplus, iplus, b[0], v);
         dstimg -= dstr1;
         if ( PREMULTIPLIED_ALPHA ) {
-            dstimg[PC-1] = clip_round_cast<PT>(v[0][PC-1]);
-            for(unsigned int c=0; c<PC-1; c++) dstimg[c] = clip_round_cast_varmax<PT>(v[0][c], v[0][PC-1], dstimg[PC-1]);
+            dstimg[alpha_PC] = clip_round_cast<PT>(v[0][alpha_PC]);
+            PREMUL_ALPHA_LOOP dstimg[c] = clip_round_cast_varmax<PT>(v[0][c], v[0][alpha_PC], dstimg[alpha_PC]);
         } else {
             for(unsigned int c=0; c<PC; c++) dstimg[c] = clip_round_cast<PT>(v[0][c]);
         }
@@ -365,8 +358,8 @@ filter2D_IIR(PT *const dest, int const dstr1, int const dstr2,
             }
             dstimg -= dstr1;
             if ( PREMULTIPLIED_ALPHA ) {
-                dstimg[PC-1] = clip_round_cast<PT>(v[0][PC-1]);
-                for(unsigned int c=0; c<PC-1; c++) dstimg[c] = clip_round_cast_varmax<PT>(v[0][c], v[0][PC-1], dstimg[PC-1]);
+                dstimg[alpha_PC] = clip_round_cast<PT>(v[0][alpha_PC]);
+                PREMUL_ALPHA_LOOP dstimg[c] = clip_round_cast_varmax<PT>(v[0][c], v[0][alpha_PC], dstimg[alpha_PC]);
             } else {
                 for(unsigned int c=0; c<PC; c++) dstimg[c] = clip_round_cast<PT>(v[0][c]);
             }
@@ -481,401 +474,196 @@ filter2D_FIR(PT *const dst, int const dstr1, int const dstr2,
     }
 }
 
-template<typename PT, unsigned int PC>
 static void
-downsample(PT *const dst, int const dstr1, int const dstr2, int const dn1, int const dn2,
-           PT const *const src, int const sstr1, int const sstr2, int const sn1, int const sn2,
-           int const step1_l2, int const step2_l2)
+gaussian_pass_IIR(Geom::Dim2 d, double deviation, cairo_surface_t *src, cairo_surface_t *dest,
+    IIRValue **tmpdata, int num_threads)
 {
-    unsigned int const divisor_l2 = step1_l2+step2_l2; // step1*step2=2^(step1_l2+step2_l2)
-    unsigned int const round_offset = (1<<divisor_l2)/2;
-    int const step1 = 1<<step1_l2;
-    int const step2 = 1<<step2_l2;
-    int const step1_2 = step1/2;
-    int const step2_2 = step2/2;
-    for(int dc2 = 0 ; dc2 < dn2 ; dc2++) {
-        int const sc2_begin = (dc2<<step2_l2)-step2_2;
-        int const sc2_end = sc2_begin+step2;
-        for(int dc1 = 0 ; dc1 < dn1 ; dc1++) {
-            int const sc1_begin = (dc1<<step1_l2)-step1_2;
-            int const sc1_end = sc1_begin+step1;
-            unsigned int sum[PC];
-            std::fill_n(sum, PC, 0);
-            for(int sc2 = sc2_begin ; sc2 < sc2_end ; sc2++) {
-                for(int sc1 = sc1_begin ; sc1 < sc1_end ; sc1++) {
-                    for(unsigned int ch = 0 ; ch < PC ; ch++) {
-                        sum[ch] += src[clip(sc2,0,sn2-1)*sstr2+clip(sc1,0,sn1-1)*sstr1+ch];
-                    }
-                }
-            }
-            for(unsigned int ch = 0 ; ch < PC ; ch++) {
-                dst[dc2*dstr2+dc1*dstr1+ch] = static_cast<PT>((sum[ch]+round_offset)>>divisor_l2);
-            }
-        }
+    // Filter variables
+    IIRValue b[N+1];  // scaling coefficient + filter coefficients (can be 10.21 fixed point)
+    double bf[N];  // computed filter coefficients
+    double M[N*N]; // matrix used for initialization procedure (has to be double)
+
+    // Compute filter
+    calcFilter(deviation, bf);
+    for(size_t i=0; i<N; i++) bf[i] = -bf[i];
+    b[0] = 1; // b[0] == alpha (scaling coefficient)
+    for(size_t i=0; i<N; i++) {
+        b[i+1] = bf[i];
+        b[0] -= b[i+1];
     }
+
+    // Compute initialization matrix
+    calcTriggsSdikaM(bf, M);
+
+    int stride = cairo_image_surface_get_stride(src);
+    int w = cairo_image_surface_get_width(src);
+    int h = cairo_image_surface_get_height(src);
+    if (d != Geom::X) std::swap(w, h);
+
+    // Filter
+    switch (cairo_image_surface_get_format(src)) {
+    case CAIRO_FORMAT_A8:        ///< Grayscale
+        filter2D_IIR<unsigned char,1,false>(
+            cairo_image_surface_get_data(dest), d == Geom::X ? 1 : stride, d == Geom::X ? stride : 1,
+            cairo_image_surface_get_data(src),  d == Geom::X ? 1 : stride, d == Geom::X ? stride : 1,
+            w, h, b, M, tmpdata, num_threads);
+        break;
+    case CAIRO_FORMAT_ARGB32: ///< Premultiplied 8 bit RGBA
+        filter2D_IIR<unsigned char,4,true>(
+            cairo_image_surface_get_data(dest), d == Geom::X ? 4 : stride, d == Geom::X ? stride : 4,
+            cairo_image_surface_get_data(src),  d == Geom::X ? 4 : stride, d == Geom::X ? stride : 4,
+            w, h, b, M, tmpdata, num_threads);
+        break;
+    default:
+        assert(false);
+    };
 }
 
-template<typename PT, unsigned int PC>
 static void
-upsample(PT *const dst, int const dstr1, int const dstr2, unsigned int const dn1, unsigned int const dn2,
-         PT const *const src, int const sstr1, int const sstr2, unsigned int const sn1, unsigned int const sn2,
-         unsigned int const step1_l2, unsigned int const step2_l2)
+gaussian_pass_FIR(Geom::Dim2 d, double deviation, cairo_surface_t *src, cairo_surface_t *dest,
+    int num_threads)
 {
-    assert(((sn1-1)<<step1_l2)>=dn1 && ((sn2-1)<<step2_l2)>=dn2); // The last pixel of the source image should fall outside the destination image
-    unsigned int const divisor_l2 = step1_l2+step2_l2; // step1*step2=2^(step1_l2+step2_l2)
-    unsigned int const round_offset = (1<<divisor_l2)/2;
-    unsigned int const step1 = 1<<step1_l2;
-    unsigned int const step2 = 1<<step2_l2;
-    for ( unsigned int sc2 = 0 ; sc2 < sn2-1 ; sc2++ ) {
-        unsigned int const dc2_begin = (sc2 << step2_l2);
-        unsigned int const dc2_end = std::min(dn2, dc2_begin+step2);
-        for ( unsigned int sc1 = 0 ; sc1 < sn1-1 ; sc1++ ) {
-            unsigned int const dc1_begin = (sc1 << step1_l2);
-            unsigned int const dc1_end = std::min(dn1, dc1_begin+step1);
-            for ( unsigned int byte = 0 ; byte < PC ; byte++) {
+    int scr_len = _effect_area_scr(deviation);
+    // Filter kernel for x direction
+    FIRValue kernel[scr_len+1];
+    _make_kernel(kernel, deviation);
 
-                // get 4 values at the corners of the pixel from src
-                PT a00 = src[sstr2* sc2    + sstr1* sc1    + byte];
-                PT a10 = src[sstr2* sc2    + sstr1*(sc1+1) + byte];
-                PT a01 = src[sstr2*(sc2+1) + sstr1* sc1    + byte];
-                PT a11 = src[sstr2*(sc2+1) + sstr1*(sc1+1) + byte];
+    int stride = cairo_image_surface_get_stride(src);
+    int w = cairo_image_surface_get_width(src);
+    int h = cairo_image_surface_get_height(src);
+    if (d != Geom::X) std::swap(w, h);
 
-                // initialize values for linear interpolation
-                unsigned int a0 = a00*step2/*+a01*0*/;
-                unsigned int a1 = a10*step2/*+a11*0*/;
-
-                // iterate over the rectangle to be interpolated
-                for ( unsigned int dc2 = dc2_begin ; dc2 < dc2_end ; dc2++ ) {
-
-                    // prepare linear interpolation for this row
-                    unsigned int a = a0*step1/*+a1*0*/+round_offset;
-
-                    for ( unsigned int dc1 = dc1_begin ; dc1 < dc1_end ; dc1++ ) {
-
-                        // simple linear interpolation
-                        dst[dstr2*dc2 + dstr1*dc1 + byte] = static_cast<PT>(a>>divisor_l2);
-
-                        // compute a = a0*(ix-1)+a1*(xi+1)+round_offset
-                        a = a - a0 + a1;
-                    }
-
-                    // compute a0 = a00*(iy-1)+a01*(yi+1) and similar for a1
-                    a0 = a0 - a00 + a01;
-                    a1 = a1 - a10 + a11;
-                }
-            }
-        }
-    }
+    // Filter (x)
+    switch (cairo_image_surface_get_format(src)) {
+    case CAIRO_FORMAT_A8:        ///< Grayscale
+        filter2D_FIR<unsigned char,1>(
+            cairo_image_surface_get_data(dest), d == Geom::X ? 1 : stride, d == Geom::X ? stride : 1,
+            cairo_image_surface_get_data(src),  d == Geom::X ? 1 : stride, d == Geom::X ? stride : 1,
+            w, h, kernel, scr_len, num_threads);
+        break;
+    case CAIRO_FORMAT_ARGB32: ///< Premultiplied 8 bit RGBA
+        filter2D_FIR<unsigned char,4>(
+            cairo_image_surface_get_data(dest), d == Geom::X ? 4 : stride, d == Geom::X ? stride : 4,
+            cairo_image_surface_get_data(src),  d == Geom::X ? 4 : stride, d == Geom::X ? stride : 4,
+            w, h, kernel, scr_len, num_threads);
+        break;
+    default:
+        assert(false);
+    };
 }
 
-int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
+void FilterGaussian::render_cairo(FilterSlot &slot)
 {
-    // TODO: Meaningful return values? (If they're checked at all.)
+    cairo_surface_t *in = slot.getcairo(_input);
+    if (!in) return;
 
-    /* in holds the input pixblock */
-    NRPixBlock *original_in = slot.get(_input);
-
-    /* If to either direction, the standard deviation is zero or
-     * input image is not defined,
-     * a transparent black image should be returned. */
-    if (_deviation_x <= 0 || _deviation_y <= 0 || original_in == NULL) {
-        NRPixBlock *src = original_in;
-        if (src == NULL) {
-            g_warning("Missing source image for feGaussianBlur (in=%d)", _input);
-            // A bit guessing here, but source graphic is likely to be of
-            // right size
-            src = slot.get(NR_FILTER_SOURCEGRAPHIC);
-        }
-        NRPixBlock *out = new NRPixBlock;
-        nr_pixblock_setup_fast(out, src->mode, src->area.x0, src->area.y0,
-                               src->area.x1, src->area.y1, true);
-        if (out->size != NR_PIXBLOCK_SIZE_TINY && out->data.px != NULL) {
-            out->empty = false;
-            slot.set(_output, out);
-        }
-        return 0;
+    // zero deviation = transparent black as output
+    if (_deviation_x <= 0 || _deviation_y <= 0) {
+        cairo_surface_t *blank = ink_cairo_surface_create_identical(in);
+        slot.set(_output, blank);
+        cairo_surface_destroy(blank);
+        return;
     }
 
-    // Gaussian blur is defined to operate on non-premultiplied color values.
-    //   So, convert the input first it uses non-premultiplied color values.
-    //   And please note that this should not be done AFTER resampling, as resampling a non-premultiplied image
-    //   does not simply yield a non-premultiplied version of the resampled premultiplied image!!!
-    NRPixBlock *in = original_in;
-    if (in->mode == NR_PIXBLOCK_MODE_R8G8B8A8N) {
-        in = nr_pixblock_new_fast(NR_PIXBLOCK_MODE_R8G8B8A8P,
-                                  original_in->area.x0, original_in->area.y0,
-                                  original_in->area.x1, original_in->area.y1,
-                                  false);
-        if (!in) {
-            // ran out of memory
-            return 0;
-        }
-        nr_blit_pixblock_pixblock(in, original_in);
+    Geom::Affine trans = slot.get_units().get_matrix_primitiveunits2pb();
+
+    int w_orig = ink_cairo_surface_get_width(in);
+    int h_orig = ink_cairo_surface_get_height(in);
+    double deviation_x_orig = _deviation_x * trans.expansionX();
+    double deviation_y_orig = _deviation_y * trans.expansionY();
+    cairo_format_t fmt = cairo_image_surface_get_format(in);
+    int bytes_per_pixel = 0;
+    switch (fmt) {
+        case CAIRO_FORMAT_A8:
+            bytes_per_pixel = 1; break;
+        case CAIRO_FORMAT_ARGB32:
+        default:
+            bytes_per_pixel = 4; break;
     }
 
-    Geom::Affine trans = units.get_matrix_primitiveunits2pb();
-
-    // Some common constants
-    int const width_org = in->area.x1-in->area.x0, height_org = in->area.y1-in->area.y0;
-    double const deviation_x_org = _deviation_x * trans.expansionX();
-    double const deviation_y_org = _deviation_y * trans.expansionY();
-    int const PC = NR_PIXBLOCK_BPP(in);
 #if HAVE_OPENMP
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int const NTHREADS = prefs->getIntLimited("/options/threading/numthreads", omp_get_num_procs(), 1, 256);
+    int threads = prefs->getIntLimited("/options/threading/numthreads", omp_get_num_procs(), 1, 256);
 #else
-    int const NTHREADS = 1;
-#endif // HAVE_OPENMP
+    int threads = 1;
+#endif
 
-    // Subsampling constants
-    int const quality = slot.get_blurquality();
-    int const x_step_l2 = _effect_subsample_step_log2(deviation_x_org, quality);
-    int const y_step_l2 = _effect_subsample_step_log2(deviation_y_org, quality);
-    int const x_step = 1<<x_step_l2;
-    int const y_step = 1<<y_step_l2;
-    bool const resampling = x_step > 1 || y_step > 1;
-    int const width = resampling ? static_cast<int>(ceil(static_cast<double>(width_org)/x_step))+1 : width_org;
-    int const height = resampling ? static_cast<int>(ceil(static_cast<double>(height_org)/y_step))+1 : height_org;
-    double const deviation_x = deviation_x_org / x_step;
-    double const deviation_y = deviation_y_org / y_step;
-    int const scr_len_x = _effect_area_scr(deviation_x);
-    int const scr_len_y = _effect_area_scr(deviation_y);
+    int quality = slot.get_blurquality();
+    int x_step = 1 << _effect_subsample_step_log2(deviation_x_orig, quality);
+    int y_step = 1 << _effect_subsample_step_log2(deviation_y_orig, quality);
+    bool resampling = x_step > 1 || y_step > 1;
+    int w_downsampled = resampling ? static_cast<int>(ceil(static_cast<double>(w_orig)/x_step))+1 : w_orig;
+    int h_downsampled = resampling ? static_cast<int>(ceil(static_cast<double>(h_orig)/y_step))+1 : h_orig;
+    double deviation_x = deviation_x_orig / x_step;
+    double deviation_y = deviation_y_orig / y_step;
+    int scr_len_x = _effect_area_scr(deviation_x);
+    int scr_len_y = _effect_area_scr(deviation_y);
 
     // Decide which filter to use for X and Y
     // This threshold was determined by trial-and-error for one specific machine,
     // so there's a good chance that it's not optimal.
     // Whatever you do, don't go below 1 (and preferrably not even below 2), as
     // the IIR filter gets unstable there.
-    bool const use_IIR_x = deviation_x > 3;
-    bool const use_IIR_y = deviation_y > 3;
+    bool use_IIR_x = deviation_x > 3;
+    bool use_IIR_y = deviation_y > 3;
 
-    // new buffer for the subsampled output
-    NRPixBlock *out = new NRPixBlock;
-    nr_pixblock_setup_fast(out, in->mode, in->area.x0/x_step,       in->area.y0/y_step,
-                                          in->area.x0/x_step+width, in->area.y0/y_step+height, true);
-    if (out->size != NR_PIXBLOCK_SIZE_TINY && out->data.px == NULL) {
-        // alas, we've accomplished a lot, but ran out of memory - so abort
-        if (in != original_in) nr_pixblock_free(in);
-        delete out;
-        return 0;
-    }
     // Temporary storage for IIR filter
     // NOTE: This can be eliminated, but it reduces the precision a bit
-    IIRValue * tmpdata[NTHREADS];
-    std::fill_n(tmpdata, NTHREADS, (IIRValue*)0);
+    IIRValue * tmpdata[threads];
+    std::fill_n(tmpdata, threads, (IIRValue*)0);
     if ( use_IIR_x || use_IIR_y ) {
-        for(int i=0; i<NTHREADS; i++) {
-            tmpdata[i] = new IIRValue[std::max(width,height)*PC];
-            if (tmpdata[i] == NULL) {
-                if (in != original_in) nr_pixblock_free(in);
-                nr_pixblock_release(out);
-                while(i-->0) {
-                    delete[] tmpdata[i];
-                }
-                delete out;
-                return 0;
-            }
+        for(int i = 0; i < threads; ++i) {
+            tmpdata[i] = new IIRValue[std::max(w_downsampled,h_downsampled)*bytes_per_pixel];
         }
     }
 
-    // Resampling (if necessary), goes from in -> out (setting ssin to out if used)
-    NRPixBlock *ssin = in;
-    if ( resampling ) {
-        ssin = out;
-        // Downsample
-        switch(in->mode) {
-        case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
-            downsample<unsigned char,1>(NR_PIXBLOCK_PX(out), 1, out->rs, width, height, NR_PIXBLOCK_PX(in), 1, in->rs, width_org, height_org, x_step_l2, y_step_l2);
-            break;
-        case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
-            downsample<unsigned char,3>(NR_PIXBLOCK_PX(out), 3, out->rs, width, height, NR_PIXBLOCK_PX(in), 3, in->rs, width_org, height_org, x_step_l2, y_step_l2);
-            break;
-        //case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-        //    downsample<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, width, height, NR_PIXBLOCK_PX(in), 4, in->rs, width_org, height_org, x_step_l2, y_step_l2);
-        //    break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8P: ///< Premultiplied 8 bit RGBA
-            downsample<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, width, height, NR_PIXBLOCK_PX(in), 4, in->rs, width_org, height_org, x_step_l2, y_step_l2);
-            break;
-        default:
-            assert(false);
-        };
-    }
-
-    // Horizontal filtering, goes from ssin -> out (ssin might be equal to out, but these algorithms can be used in-place)
-    if (use_IIR_x) {
-        // Filter variables
-        IIRValue b[N+1];  // scaling coefficient + filter coefficients (can be 10.21 fixed point)
-        double bf[N];  // computed filter coefficients
-        double M[N*N]; // matrix used for initialization procedure (has to be double)
-
-        // Compute filter (x)
-        calcFilter(deviation_x, bf);
-        for(size_t i=0; i<N; i++) bf[i] = -bf[i];
-        b[0] = 1; // b[0] == alpha (scaling coefficient)
-        for(size_t i=0; i<N; i++) {
-            b[i+1] = bf[i];
-            b[0] -= b[i+1];
-        }
-
-        // Compute initialization matrix (x)
-        calcTriggsSdikaM(bf, M);
-
-        // Filter (x)
-        switch(in->mode) {
-        case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
-            filter2D_IIR<unsigned char,1,false>(NR_PIXBLOCK_PX(out), 1, out->rs, NR_PIXBLOCK_PX(ssin), 1, ssin->rs, width, height, b, M, tmpdata, NTHREADS);
-            break;
-        case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
-            filter2D_IIR<unsigned char,3,false>(NR_PIXBLOCK_PX(out), 3, out->rs, NR_PIXBLOCK_PX(ssin), 3, ssin->rs, width, height, b, M, tmpdata, NTHREADS);
-            break;
-        //case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-        //    filter2D_IIR<unsigned char,4,false>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata, NTHREADS);
-        //    break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8P: ///< Premultiplied 8 bit RGBA
-            filter2D_IIR<unsigned char,4,true >(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata, NTHREADS);
-            break;
-        default:
-            assert(false);
-        };
-    } else if ( scr_len_x > 0 ) { // !use_IIR_x
-        // Filter kernel for x direction
-        FIRValue kernel[scr_len_x+1];
-        _make_kernel(kernel, deviation_x);
-
-        // Filter (x)
-        switch(in->mode) {
-        case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
-            filter2D_FIR<unsigned char,1>(NR_PIXBLOCK_PX(out), 1, out->rs, NR_PIXBLOCK_PX(ssin), 1, ssin->rs, width, height, kernel, scr_len_x, NTHREADS);
-            break;
-        case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
-            filter2D_FIR<unsigned char,3>(NR_PIXBLOCK_PX(out), 3, out->rs, NR_PIXBLOCK_PX(ssin), 3, ssin->rs, width, height, kernel, scr_len_x, NTHREADS);
-            break;
-        //case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-        //    filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, kernel, scr_len_x, NTHREADS);
-        //    break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8P: ///< Premultiplied 8 bit RGBA
-            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, kernel, scr_len_x, NTHREADS);
-            break;
-        default:
-            assert(false);
-        };
-    } else if ( out != ssin ) { // out can be equal to ssin if resampling is used
-        nr_blit_pixblock_pixblock(out, ssin);
-    }
-
-    // Vertical filtering, goes from out -> out
-    if (use_IIR_y) {
-        // Filter variables
-        IIRValue b[N+1];  // scaling coefficient + filter coefficients (can be 10.21 fixed point)
-        double bf[N];  // computed filter coefficients
-        double M[N*N]; // matrix used for initialization procedure (has to be double)
-
-        // Compute filter (y)
-        calcFilter(deviation_y, bf);
-        for(size_t i=0; i<N; i++) bf[i] = -bf[i];
-        b[0] = 1; // b[0] == alpha (scaling coefficient)
-        for(size_t i=0; i<N; i++) {
-            b[i+1] = bf[i];
-            b[0] -= b[i+1];
-        }
-
-        // Compute initialization matrix (y)
-        calcTriggsSdikaM(bf, M);
-
-        // Filter (y)
-        switch(in->mode) {
-        case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
-            filter2D_IIR<unsigned char,1,false>(NR_PIXBLOCK_PX(out), out->rs, 1, NR_PIXBLOCK_PX(out), out->rs, 1, height, width, b, M, tmpdata, NTHREADS);
-            break;
-        case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
-            filter2D_IIR<unsigned char,3,false>(NR_PIXBLOCK_PX(out), out->rs, 3, NR_PIXBLOCK_PX(out), out->rs, 3, height, width, b, M, tmpdata, NTHREADS);
-            break;
-        //case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-        //    filter2D_IIR<unsigned char,4,false>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata, NTHREADS);
-        //    break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8P: ///< Premultiplied 8 bit RGBA
-            filter2D_IIR<unsigned char,4,true >(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata, NTHREADS);
-            break;
-        default:
-            assert(false);
-        };
-    } else if ( scr_len_y > 0 ) { // !use_IIR_y
-        // Filter kernel for y direction
-        FIRValue kernel[scr_len_y+1];
-        _make_kernel(kernel, deviation_y);
-
-        // Filter (y)
-        switch(in->mode) {
-        case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
-            filter2D_FIR<unsigned char,1>(NR_PIXBLOCK_PX(out), out->rs, 1, NR_PIXBLOCK_PX(out), out->rs, 1, height, width, kernel, scr_len_y, NTHREADS);
-            break;
-        case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
-            filter2D_FIR<unsigned char,3>(NR_PIXBLOCK_PX(out), out->rs, 3, NR_PIXBLOCK_PX(out), out->rs, 3, height, width, kernel, scr_len_y, NTHREADS);
-            break;
-        //case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-        //    filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, kernel, scr_len_y, NTHREADS);
-        //    break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8P: ///< Premultiplied 8 bit RGBA
-            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, kernel, scr_len_y, NTHREADS);
-            break;
-        default:
-            assert(false);
-        };
-    }
-
-    for(int i=0; i<NTHREADS; i++) {
-        delete[] tmpdata[i]; // deleting a nullptr has no effect, so this is safe
-    }
-
-    // Upsampling, stores (the upsampled) out using slot.set(_output, ...)
-    if ( !resampling ) {
-        // No upsampling needed
-        out->empty = FALSE;
-        slot.set(_output, out);
+    cairo_surface_t *downsampled = NULL;
+    if (resampling) {
+        downsampled = cairo_surface_create_similar(in, cairo_surface_get_content(in),
+            w_downsampled, h_downsampled);
+        cairo_t *ct = cairo_create(downsampled);
+        cairo_scale(ct, static_cast<double>(w_downsampled)/w_orig, static_cast<double>(h_downsampled)/h_orig);
+        cairo_set_source_surface(ct, in, 0, 0);
+        cairo_paint(ct);
+        cairo_destroy(ct);
     } else {
-        // New buffer for the final output, same resolution as the in buffer
-        NRPixBlock *finalout = new NRPixBlock;
-        nr_pixblock_setup_fast(finalout, in->mode, in->area.x0, in->area.y0,
-                                                   in->area.x1, in->area.y1, true);
-        if (finalout->size != NR_PIXBLOCK_SIZE_TINY && finalout->data.px == NULL) {
-            // alas, we've accomplished a lot, but ran out of memory - so abort
-            if (in != original_in) nr_pixblock_free(in);
-            nr_pixblock_release(out);
-            delete out;
-            return 0;
+        downsampled = ink_cairo_surface_copy(in);
+    }
+    cairo_surface_flush(downsampled);
+
+    if (scr_len_x > 0) {
+        if (use_IIR_x) {
+            gaussian_pass_IIR(Geom::X, deviation_x, downsampled, downsampled, tmpdata, threads);
+        } else {
+            gaussian_pass_FIR(Geom::X, deviation_x, downsampled, downsampled, threads);
         }
-
-        // Upsample
-        switch(in->mode) {
-        case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
-            upsample<unsigned char,1>(NR_PIXBLOCK_PX(finalout), 1, finalout->rs, width_org, height_org, NR_PIXBLOCK_PX(out), 1, out->rs, width, height, x_step_l2, y_step_l2);
-            break;
-        case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
-            upsample<unsigned char,3>(NR_PIXBLOCK_PX(finalout), 3, finalout->rs, width_org, height_org, NR_PIXBLOCK_PX(out), 3, out->rs, width, height, x_step_l2, y_step_l2);
-            break;
-        //case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-        //    upsample<unsigned char,4>(NR_PIXBLOCK_PX(finalout), 4, finalout->rs, width_org, height_org, NR_PIXBLOCK_PX(out), 4, out->rs, width, height, x_step_l2, y_step_l2);
-        //    break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8P: ///< Premultiplied 8 bit RGBA
-            upsample<unsigned char,4>(NR_PIXBLOCK_PX(finalout), 4, finalout->rs, width_org, height_org, NR_PIXBLOCK_PX(out), 4, out->rs, width, height, x_step_l2, y_step_l2);
-            break;
-        default:
-            assert(false);
-        };
-
-        // We don't need the out buffer anymore
-        nr_pixblock_release(out);
-        delete out;
-
-        // The final out buffer gets returned
-        finalout->empty = FALSE;
-        slot.set(_output, finalout);
     }
 
-    // If we downsampled the input, clean up the downsampled data
-    if (in != original_in) nr_pixblock_free(in);
+    if (scr_len_y > 0) {
+        if (use_IIR_y) {
+            gaussian_pass_IIR(Geom::Y, deviation_y, downsampled, downsampled, tmpdata, threads);
+        } else {
+            gaussian_pass_FIR(Geom::Y, deviation_y, downsampled, downsampled, threads);
+        }
+    }
 
-    return 0;
+    cairo_surface_mark_dirty(downsampled);
+    if (resampling) {
+        cairo_surface_t *upsampled = cairo_surface_create_similar(downsampled, cairo_surface_get_content(downsampled),
+            w_orig, h_orig);
+        cairo_t *ct = cairo_create(upsampled);
+        cairo_scale(ct, static_cast<double>(w_orig)/w_downsampled, static_cast<double>(h_orig)/h_downsampled);
+        cairo_set_source_surface(ct, downsampled, 0, 0);
+        cairo_paint(ct);
+        cairo_destroy(ct);
+
+        slot.set(_output, upsampled);
+        cairo_surface_destroy(upsampled);
+        cairo_surface_destroy(downsampled);
+    } else {
+        slot.set(_output, downsampled);
+        cairo_surface_destroy(downsampled);
+    }
 }
 
 void FilterGaussian::area_enlarge(NRRectL &area, Geom::Affine const &trans)
@@ -891,8 +679,13 @@ void FilterGaussian::area_enlarge(NRRectL &area, Geom::Affine const &trans)
     area.y1 += area_max;
 }
 
-FilterTraits FilterGaussian::get_input_traits() {
-    return TRAIT_PARALLER;
+bool FilterGaussian::can_handle_affine(Geom::Affine const &)
+{
+    // Previously we tried to be smart and return true for rotations.
+    // However, the transform passed here is NOT the total transform
+    // from filter user space to screen.
+    // TODO: fix this, or replace can_handle_affine() with isotropic().
+    return false;
 }
 
 void FilterGaussian::set_deviation(double deviation)

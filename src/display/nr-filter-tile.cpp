@@ -10,6 +10,7 @@
  */
 
 #include "display/nr-filter-tile.h"
+#include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
 
 namespace Inkscape {
@@ -17,7 +18,6 @@ namespace Filters {
 
 FilterTile::FilterTile()
 {
-    g_warning("FilterTile::render not implemented.");
 }
 
 FilterPrimitive * FilterTile::create() {
@@ -27,38 +27,22 @@ FilterPrimitive * FilterTile::create() {
 FilterTile::~FilterTile()
 {}
 
-int FilterTile::render(FilterSlot &slot, FilterUnits const &/*units*/) {
-    NRPixBlock *in = slot.get(_input);
-    if (!in) {
-        g_warning("Missing source image for feTile (in=%d)", _input);
-        return 1;
-    }
-
-    NRPixBlock *out = new NRPixBlock;
-
-    nr_pixblock_setup_fast(out, in->mode,
-                           in->area.x0, in->area.y0, in->area.x1, in->area.y1,
-                           true);
-
-    unsigned char *in_data = NR_PIXBLOCK_PX(in);
-    unsigned char *out_data = NR_PIXBLOCK_PX(out);
+void FilterTile::render_cairo(FilterSlot &slot)
+{
+    static bool tile_warning = false;
 
 //IMPLEMENT ME!
-    g_warning("Renderer for feTile is not implemented.");
-    (void)in_data;
-    (void)out_data;
+    if (!tile_warning) {
+        g_warning("Renderer for feTile is not implemented.");
+        tile_warning = true;
+    }
 
-    out->empty = FALSE;
-    slot.set(_output, out);
-    return 0;
+    cairo_surface_t *in = slot.getcairo(_input);
+    slot.set(_output, in);
 }
 
 void FilterTile::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*trans*/)
 {
-}
-
-FilterTraits FilterTile::get_input_traits() {
-    return TRAIT_PARALLER;
 }
 
 } /* namespace Filters */

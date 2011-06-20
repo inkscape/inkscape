@@ -17,9 +17,10 @@
 
 #include <cstring>
 #include <string>
+#include <cairomm/cairomm.h>
 
-#include <libnr/nr-blit.h>
-#include <libnr/nr-pixops.h>
+#include "display/cairo-utils.h"
+#include "display/cairo-templates.h"
 #include "nr-arena.h"
 #include "nr-arena-item.h"
 #include "gc-core.h"
@@ -83,6 +84,7 @@ nr_arena_item_init (NRArenaItem *item)
     memset (&item->bbox, 0, sizeof (item->bbox));
     memset (&item->drawbox, 0, sizeof (item->drawbox));
     item->transform = NULL;
+    item->ctm.setIdentity();
     item->opacity = 255;
     item->render_opacity = FALSE;
 
@@ -103,6 +105,11 @@ nr_arena_item_private_finalize (NRObject *object)
 
     item->px = NULL;
     item->transform = NULL;
+
+    if (item->clip)
+        nr_arena_item_detach(item, item->clip);
+    if (item->mask)
+        nr_arena_item_detach(item, item->mask);
 
     ((NRObjectClass *) (parent_class))->finalize (object);
 }
@@ -258,12 +265,15 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
     if (item->state & NR_ARENA_ITEM_STATE_INVALID)
         return item->state;
 
-    // get a copy of bbox
-    memcpy(&item->drawbox, &item->bbox, sizeof(item->bbox));
-
     /* Enlarge the drawbox to contain filter effects */
-    if (item->filter && filter) {
-        item->filter->bbox_enlarge (item->drawbox);
+    if (item->filter && filter && item->item_bbox) {
+        item->drawbox.x0 = item->item_bbox->min()[Geom::X];
+        item->drawbox.y0 = item->item_bbox->min()[Geom::Y];
+        item->drawbox.x1 = item->item_bbox->max()[Geom::X];
+        item->drawbox.y1 = item->item_bbox->max()[Geom::Y];
+        item->filter->compute_drawbox (item, item->drawbox);
+    } else {
+        memcpy(&item->drawbox, &item->bbox, sizeof(item->bbox));
     }
     // fixme: to fix the display glitches, in outline mode bbox must be a combination of 
     // full item bbox and its clip and mask (after we have the API to get these)
@@ -301,11 +311,16 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
     return item->state;
 }
 
-/**
- *    Render item to pixblock.
- *
- *    \return Has NR_ARENA_ITEM_STATE_RENDER set on success.
- */
+struct MaskLuminanceToAlpha {
+    guint32 operator()(guint32 in) {
+        EXTRACT_ARGB32(in, a, r, g, b)
+        // the operation of unpremul -> luminance-to-alpha -> multiply by alpha
+        // is equivalent to luminance-to-alpha on premultiplied color values
+        // original computation in double: r*0.2125 + g*0.7154 + b*0.0721
+        guint32 ao = r*109 + g*366 + b*37; // coeffs add up to 512
+        return ((ao + 256) << 15) & 0xff000000; // equivalent to ((ao + 256) / 512) << 24
+    }
+};
 
 unsigned int
 nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area,
@@ -314,13 +329,13 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
    bool outline = (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
     bool filter = (item->arena->rendermode != Inkscape::RENDERMODE_OUTLINE &&
                    item->arena->rendermode != Inkscape::RENDERMODE_NO_FILTERS);
-    bool print_colors = (item->arena->colorrendermode == Inkscape::COLORRENDERMODE_PRINT_COLORS_PREVIEW);
 
     nr_return_val_if_fail (item != NULL, NR_ARENA_ITEM_STATE_INVALID);
     nr_return_val_if_fail (NR_IS_ARENA_ITEM (item),
                            NR_ARENA_ITEM_STATE_INVALID);
     nr_return_val_if_fail (item->state & NR_ARENA_ITEM_STATE_BBOX,
                            item->state);
+    if (!ct) return item->state;
 
 #ifdef NR_ARENA_ITEM_VERBOSE
     g_message ("Invoke render %p on %p: %d %d - %d %d, %d %d - %d %d", item, pb,
@@ -334,6 +349,8 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
     if (!item->visible)
         return item->state | NR_ARENA_ITEM_STATE_RENDER;
 
+    // carea is the bounding box for intermediate rendering.
+    // NOTE: carea might be larger than area, because of filter effects.
     NRRectL carea;
     nr_rect_l_intersect (&carea, area, &item->drawbox);
     if (nr_rect_l_test_empty(carea))
@@ -344,272 +361,152 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
     }
 
     if (outline) {
-    // No caching in outline mode for now; investigate if it really gives any advantage with cairo.
-    // Also no attempts to clip anything; just render everything: item, clip, mask   
-            // First, render the object itself 
-            unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, pb, flags);
-            if (state & NR_ARENA_ITEM_STATE_INVALID) {
-                /* Clean up and return error */
-                item->state |= NR_ARENA_ITEM_STATE_INVALID;
-                return item->state;
-            }
+        // No caching in outline mode for now; investigate if it really gives any advantage with cairo.
+        // Also no attempts to clip anything; just render everything: item, clip, mask   
+        // First, render the object itself 
+        unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, pb, flags);
+        if (state & NR_ARENA_ITEM_STATE_INVALID) {
+            /* Clean up and return error */
+            item->state |= NR_ARENA_ITEM_STATE_INVALID;
+            return item->state;
+        }
 
-            // render clip and mask, if any
-            guint32 saved_rgba = item->arena->outlinecolor; // save current outline color
-            // render clippath as an object, using a different color
-            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-            if (item->clip) {
-                item->arena->outlinecolor = prefs->getInt("/options/wireframecolors/clips", 0x00ff00ff); // green clips
-                NR_ARENA_ITEM_VIRTUAL (item->clip, render) (ct, item->clip, &carea, pb, flags);
-            } 
-            // render mask as an object, using a different color
-            if (item->mask) {
-                item->arena->outlinecolor = prefs->getInt("/options/wireframecolors/masks", 0x0000ffff); // blue masks
-                NR_ARENA_ITEM_VIRTUAL (item->mask, render) (ct, item->mask, &carea, pb, flags);
-            }
-            item->arena->outlinecolor = saved_rgba; // restore outline color
+        // render clip and mask, if any
+        guint32 saved_rgba = item->arena->outlinecolor; // save current outline color
+        // render clippath as an object, using a different color
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        if (item->clip) {
+            item->arena->outlinecolor = prefs->getInt("/options/wireframecolors/clips", 0x00ff00ff); // green clips
+            NR_ARENA_ITEM_VIRTUAL (item->clip, render) (ct, item->clip, &carea, pb, flags);
+        } 
+        // render mask as an object, using a different color
+        if (item->mask) {
+            item->arena->outlinecolor = prefs->getInt("/options/wireframecolors/masks", 0x0000ffff); // blue masks
+            NR_ARENA_ITEM_VIRTUAL (item->mask, render) (ct, item->mask, &carea, pb, flags);
+        }
+        item->arena->outlinecolor = saved_rgba; // restore outline color
 
-            return item->state | NR_ARENA_ITEM_STATE_RENDER;
-    }
-
-    NRPixBlock cpb;
-    if (item->px) {
-        /* Has cache pixblock, render this and return */
-        nr_pixblock_setup_extern (&cpb, NR_PIXBLOCK_MODE_R8G8B8A8P,
-                                  /* fixme: This probably cannot overflow, because we render only if visible */
-                                  /* fixme: and pixel cache is there only for small items */
-                                  /* fixme: But this still needs extra check (Lauris) */
-                                  item->drawbox.x0, item->drawbox.y0,
-                                  item->drawbox.x1, item->drawbox.y1,
-                                  item->px,
-                                  4 * (item->drawbox.x1 - item->drawbox.x0), FALSE,
-                                  FALSE);
-        nr_blit_pixblock_pixblock (pb, &cpb);
-        nr_pixblock_release (&cpb);
-        pb->empty = FALSE;
         return item->state | NR_ARENA_ITEM_STATE_RENDER;
     }
 
-    NRPixBlock *dpb = pb;
+    using namespace Inkscape;
 
-    /* Setup cache if we can */
-    if ((!(flags & NR_ARENA_ITEM_RENDER_NO_CACHE)) &&
-        (carea.x0 <= item->drawbox.x0) && (carea.y0 <= item->drawbox.y0) &&
-        (carea.x1 >= item->drawbox.x1) && (carea.y1 >= item->drawbox.y1) &&
-        (((item->drawbox.x1 - item->drawbox.x0) * (item->drawbox.y1 -
-                                             item->drawbox.y0)) <= 4096)) {
-        // Item drawbox is fully in renderable area and size is acceptable
-        carea.x0 = item->drawbox.x0;
-        carea.y0 = item->drawbox.y0;
-        carea.x1 = item->drawbox.x1;
-        carea.y1 = item->drawbox.y1;
-        item->px =
-            new (GC::ATOMIC) unsigned char[4 * (carea.x1 - carea.x0) *
-                                           (carea.y1 - carea.y0)];
-        nr_pixblock_setup_extern (&cpb, NR_PIXBLOCK_MODE_R8G8B8A8P, carea.x0,
-                                  carea.y0, carea.x1, carea.y1, item->px,
-                                  4 * (carea.x1 - carea.x0), TRUE, TRUE);
-        cpb.visible_area = pb->visible_area;
-        dpb = &cpb;
-        // Set nocache flag for downstream rendering
-        flags |= NR_ARENA_ITEM_RENDER_NO_CACHE;
-    }
+    // clipping and masks
+    unsigned int state;
 
-    /* Determine, whether we need temporary buffer */
-    if (item->clip || item->mask
-        || ((item->opacity != 255) && !item->render_opacity)
-        || (item->filter && filter) || item->background_new) {
+    cairo_t *this_ct = ct;
+    NRRectL *this_area = const_cast<NRRectL*>(area);
 
-        /* Setup and render item buffer */
-        NRPixBlock ipb;
-        nr_pixblock_setup_fast (&ipb, NR_PIXBLOCK_MODE_R8G8B8A8P,
-                                carea.x0, carea.y0, carea.x1, carea.y1,
-                                TRUE);
+    bool needs_intermediate_rendering = false;
+    bool &nir = needs_intermediate_rendering;
+    bool needs_opacity = (item->opacity != 255 && !item->render_opacity);
 
-        //  if memory allocation failed, abort render
-        if (ipb.size != NR_PIXBLOCK_SIZE_TINY && ipb.data.px == NULL) {
-            nr_pixblock_release (&ipb);
-            return (item->state);
-        }
+    // this item needs an intermediate rendering if:
+    nir |= (item->mask != NULL); // 1. it has a mask
+    nir |= (item->filter != NULL && filter); // 2. it has a filter
+    nir |= needs_opacity; // 3. it is non-opaque
 
-        /* If background access is used, save the pixblock address.
-         * This address is set to NULL at the end of this block */
-        if (item->background_new) {
-            item->background_pb = &ipb;
-        }
+    double opacity = static_cast<double>(item->opacity) / 255.0;
 
-        ipb.visible_area = pb->visible_area;
-        if (item->filter && filter) {
-              item->filter->area_enlarge (ipb.visible_area, item);
-        }
-
-        unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, &ipb, flags);
-        if (state & NR_ARENA_ITEM_STATE_INVALID) {
-            /* Clean up and return error */
-            nr_pixblock_release (&ipb);
-            if (dpb != pb)
-                nr_pixblock_release (dpb);
-            item->state |= NR_ARENA_ITEM_STATE_INVALID;
-            return item->state;
-        }
-        ipb.empty = FALSE;
-
-        /* Run filtering, if a filter is set for this object */
-        if (item->filter && filter) {
-            item->filter->render (item, &ipb);
-        }
-
-        if (item->clip || item->mask) {
-            /* Setup mask pixblock */
-            NRPixBlock mpb;
-            nr_pixblock_setup_fast (&mpb, NR_PIXBLOCK_MODE_A8, carea.x0,
-                                    carea.y0, carea.x1, carea.y1, TRUE);
-
-            if (mpb.data.px != NULL) { // if memory allocation was successful
-
-                mpb.visible_area = pb->visible_area;
-                /* Do clip if needed */
-                if (item->clip) {
-                    state = nr_arena_item_invoke_clip (item->clip, &carea, &mpb);
-                    if (state & NR_ARENA_ITEM_STATE_INVALID) {
-                        /* Clean up and return error */
-                        nr_pixblock_release (&mpb);
-                        nr_pixblock_release (&ipb);
-                        if (dpb != pb)
-                            nr_pixblock_release (dpb);
-                        item->state |= NR_ARENA_ITEM_STATE_INVALID;
-                        return item->state;
-                    }
-                    mpb.empty = FALSE;
-                }
-                /* Do mask if needed */
-                if (item->mask) {
-                    NRPixBlock tpb;
-                    /* Set up yet another temporary pixblock */
-                    nr_pixblock_setup_fast (&tpb, NR_PIXBLOCK_MODE_R8G8B8A8N,
-                                            carea.x0, carea.y0, carea.x1,
-                                            carea.y1, TRUE);
-
-                    if (tpb.data.px != NULL) { // if memory allocation was successful
-
-                        tpb.visible_area = pb->visible_area;
-                        unsigned int state = NR_ARENA_ITEM_VIRTUAL (item->mask, render) (ct, item->mask, &carea, &tpb, flags);
-                        if (state & NR_ARENA_ITEM_STATE_INVALID) {
-                            /* Clean up and return error */
-                            nr_pixblock_release (&tpb);
-                            nr_pixblock_release (&mpb);
-                            nr_pixblock_release (&ipb);
-                            if (dpb != pb)
-                                nr_pixblock_release (dpb);
-                            item->state |= NR_ARENA_ITEM_STATE_INVALID;
-                            return item->state;
-                        }
-                        /* Composite with clip */
-                        if (item->clip) {
-                            int x, y;
-                            for (y = carea.y0; y < carea.y1; y++) {
-                                unsigned char *s, *d;
-                                s = NR_PIXBLOCK_PX (&tpb) + (y -
-                                                             carea.y0) * tpb.rs;
-                                d = NR_PIXBLOCK_PX (&mpb) + (y -
-                                                             carea.y0) * mpb.rs;
-                                for (x = carea.x0; x < carea.x1; x++) {
-                                    // See below for calculation
-                                    unsigned int m;
-                                    m = NR_PREMUL_112 ( (NR_PREMUL_112 (s[0],  54) +
-                                                         NR_PREMUL_112 (s[1], 183) +
-                                                         NR_PREMUL_112 (s[2],  19) ) >> 8, s[3]);
-                                    d[0] = FAST_DIV_ROUND < 255 * 255 > ( NR_PREMUL_123 (d[0], m));
-                                    s += 4;
-                                    d += 1;
-                                }
-                            }
-                        } else {
-                            int x, y;
-                            for (y = carea.y0; y < carea.y1; y++) {
-                                unsigned char *s, *d;
-                                s = NR_PIXBLOCK_PX (&tpb) + (y -
-                                                             carea.y0) * tpb.rs;
-                                d = NR_PIXBLOCK_PX (&mpb) + (y -
-                                                             carea.y0) * mpb.rs;
-                                for (x = carea.x0; x < carea.x1; x++) {
-                                    unsigned int m;
-                                    // m = NR_PREMUL_112 (s[0] + s[1] + s[2], s[3]);
-                                    // d[0] = FAST_DIV_ROUND < 3 * 255 > (m);
-                                    // Must use luminance to alpha from feColorMatrix.
-                                    // This is an approximation, optimized(?) for speed.
-                                    // 0.2125 * 256 =  54.4000
-                                    // 0.7154 * 256 = 183.1424
-                                    // 0.0721 * 256 =  18.4576
-                                    m = NR_PREMUL_112 ( (NR_PREMUL_112 (s[0],  54) +
-                                                         NR_PREMUL_112 (s[1], 183) +
-                                                         NR_PREMUL_112 (s[2],  19) ) >> 8, s[3]);
-                                    d[0] = FAST_DIV_ROUND < 255 > (m);
-                                    s += 4;
-                                    d += 1;
-                                }
-                            }
-                            mpb.empty = FALSE;
-                        }
-                    }
-                    nr_pixblock_release (&tpb);
-                }
-                /* Multiply with opacity if needed */
-                if ((item->opacity != 255) && !item->render_opacity
-                    ) {
-                    int x, y;
-                    unsigned int a;
-                    a = item->opacity;
-                    for (y = carea.y0; y < carea.y1; y++) {
-                        unsigned char *d;
-                        d = NR_PIXBLOCK_PX (&mpb) + (y - carea.y0) * mpb.rs;
-                        for (x = carea.x0; x < carea.x1; x++) {
-                            d[0] = NR_PREMUL_111 (d[0], a);
-                            d += 1;
-                        }
-                    }
-                }
-                /* Compose rendering pixblock int destination */
-                nr_blit_pixblock_pixblock_mask (dpb, &ipb, &mpb);
-            }
-            nr_pixblock_release (&mpb);
-        } else {
-            if (item->render_opacity) { // opacity was already rendered in, just copy to dpb here
-                nr_blit_pixblock_pixblock(dpb, &ipb);
-            } else { // copy while multiplying by opacity
-                nr_blit_pixblock_pixblock_alpha (dpb, &ipb, item->opacity);
-            }
-        }
-        nr_pixblock_release (&ipb);
-        dpb->empty = FALSE;
-        /* This pointer wouldn't be valid outside this block, so clear it */
-        item->background_pb = NULL;
+    if (needs_intermediate_rendering) {
+        cairo_surface_t *intermediate = cairo_surface_create_similar(
+            cairo_get_target(ct), CAIRO_CONTENT_COLOR_ALPHA,
+            carea.x1 - carea.x0, carea.y1 - carea.y0);
+        this_ct = cairo_create(intermediate);
+        cairo_translate(this_ct, -carea.x0, -carea.y0);
+        this_area = &carea;
+        cairo_surface_destroy(intermediate); // the surface will be held in memory by this_ct
     } else {
-        /* Just render */
-        unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, dpb, flags);
+        cairo_reference(this_ct);
+    }
+
+    // The pipeline needs to be different for filters.
+    // First we render the item into an intermediate surface. Then the filter rotates
+    // the surface to user coordinates (if necessary) and runs the rendering.
+    // Once that's done we retrieve the result, rotating it back to screen coords.
+    // Clipping and masking happens after the filter result is ready.
+    if (item->filter && filter) {
+    }
+
+    Cairo::Context cct(this_ct, true);
+    Cairo::Context base_ct(ct);
+    Cairo::RefPtr<Cairo::Pattern> mask;
+    CairoSave clipsave(ct); // RAII for save / restore
+    CairoGroup maskgroup(this_ct); // RAII for push_group / pop_group
+    CairoGroup drawgroup(this_ct);
+    CairoGroup maskopacitygroup(this_ct);
+
+    // always clip the base context, not the one on the intermediate surface
+    // this is because filters must be done before clipping
+    if (item->clip) {
+        clipsave.save();
+        state = nr_arena_item_invoke_clip(ct, item->clip, const_cast<NRRectL*>(area));
         if (state & NR_ARENA_ITEM_STATE_INVALID) {
-            /* Clean up and return error */
-            if (dpb != pb)
-                nr_pixblock_release (dpb);
             item->state |= NR_ARENA_ITEM_STATE_INVALID;
             return item->state;
         }
-        dpb->empty = FALSE;
+        base_ct.clip();
     }
 
-    if (dpb != pb) {
-        /* Have to blit from cache */
-        nr_blit_pixblock_pixblock (pb, dpb);
-        nr_pixblock_release (dpb);
-        pb->empty = FALSE;
-        item->state |= NR_ARENA_ITEM_STATE_IMAGE;
+    // render mask on the intermediate context and store it
+    if (item->mask) {
+        maskgroup.push_with_content(CAIRO_CONTENT_COLOR_ALPHA);
+        // handle opacity of a masked object by composing it with the mask
+        if (needs_opacity) {
+            maskopacitygroup.push();
+        }
+        state = NR_ARENA_ITEM_VIRTUAL (item->mask, render) (this_ct, item->mask, this_area, pb, flags);
+        if (state & NR_ARENA_ITEM_STATE_INVALID) {
+            item->state |= NR_ARENA_ITEM_STATE_INVALID;
+            return item->state;
+        }
+        if (needs_opacity) {
+            maskopacitygroup.pop_to_source();
+            cct.paint_with_alpha(opacity);
+        }
+        mask = maskgroup.popmm();
+        // convert luminance to alpha
+        cairo_pattern_t *p = mask->cobj();
+        cairo_surface_t *s;
+        cairo_pattern_get_surface(p, &s);
+        ink_cairo_surface_filter(s, s, MaskLuminanceToAlpha());
+    }
+
+    // render the object (possibly to the intermediate surface)
+    state = NR_ARENA_ITEM_VIRTUAL (item, render) (this_ct, item, this_area, pb, flags);
+    if (state & NR_ARENA_ITEM_STATE_INVALID) {
+        /* Clean up and return error */
+        item->state |= NR_ARENA_ITEM_STATE_INVALID;
+        return item->state;
+    }
+
+    // apply filter
+    if (item->filter && filter) {
+        item->filter->render(item, ct, area, this_ct, &carea);
+    }
+
+    if (needs_intermediate_rendering) {
+        cairo_surface_t *intermediate = cairo_get_target(this_ct);
+        cairo_set_source_surface(ct, intermediate, carea.x0, carea.y0);
+        if (mask) {
+            cairo_mask(ct, mask->cobj());
+            // opacity of masked objects is handled by premultiplying the mask
+        } else {
+            // opacity of non-masked objects must be rendered explicitly
+            if (needs_opacity) {
+                cairo_paint_with_alpha(ct, opacity);
+            } else {
+                cairo_paint(ct);
+            }
+        }
+        cairo_set_source_rgba(ct,0,0,0,0);
     }
 
     return item->state | NR_ARENA_ITEM_STATE_RENDER;
 }
 
 unsigned int
-nr_arena_item_invoke_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
+nr_arena_item_invoke_clip (cairo_t *ct, NRArenaItem *item, NRRectL *area)
 {
     nr_return_val_if_fail (item != NULL, NR_ARENA_ITEM_STATE_INVALID);
     nr_return_val_if_fail (NR_IS_ARENA_ITEM (item),
@@ -618,12 +515,12 @@ nr_arena_item_invoke_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
      * NR_ARENA_ITEM_STATE_CLIP (and showed a warning on the console);
      * anyone know why we stopped doing so?
      */
-    nr_return_val_if_fail ((pb->area.x1 - pb->area.x0) >=
+    /*nr_return_val_if_fail ((pb->area.x1 - pb->area.x0) >=
                            (area->x1 - area->x0),
                            NR_ARENA_ITEM_STATE_INVALID);
     nr_return_val_if_fail ((pb->area.y1 - pb->area.y0) >=
                            (area->y1 - area->y0),
-                           NR_ARENA_ITEM_STATE_INVALID);
+                           NR_ARENA_ITEM_STATE_INVALID);*/
 
 #ifdef NR_ARENA_ITEM_VERBOSE
     printf ("Invoke clip by %p: %d %d - %d %d, item bbox %d %d - %d %d\n",
@@ -635,7 +532,7 @@ nr_arena_item_invoke_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
         /* Need render that item */
         if (((NRArenaItemClass *) NR_OBJECT_GET_CLASS (item))->clip) {
             return ((NRArenaItemClass *) NR_OBJECT_GET_CLASS (item))->
-                clip (item, area, pb);
+                clip (ct, item, area);
         }
     }
 
@@ -663,7 +560,8 @@ nr_arena_item_invoke_pick (NRArenaItem *item, Geom::Point p, double delta,
 
     if (((x + delta) >= item->bbox.x0) &&
         ((x - delta) < item->bbox.x1) &&
-        ((y + delta) >= item->bbox.y0) && ((y - delta) < item->bbox.y1)) {
+        ((y + delta) >= item->bbox.y0) && ((y - delta) < item->bbox.y1))
+    {
         if (((NRArenaItemClass *) NR_OBJECT_GET_CLASS (item))->pick)
             return ((NRArenaItemClass *) NR_OBJECT_GET_CLASS (item))->
                 pick (item, p, delta, sticky);
@@ -872,13 +770,7 @@ nr_arena_item_set_item_bbox (NRArenaItem *item, Geom::OptRect &bbox)
 NRPixBlock *
 nr_arena_item_get_background (NRArenaItem const *item)
 {
-    if (item->background_new) {
-        return item->background_pb;
-    } else if (item->parent) {
-        return nr_arena_item_get_background (item->parent);
-    } else {
-        return NULL;
-    }
+    return NULL;
 }
 
 /* Helpers */

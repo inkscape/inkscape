@@ -9,11 +9,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "display/cairo-templates.h"
+#include "display/cairo-utils.h"
 #include "display/nr-filter-displacement-map.h"
 #include "display/nr-filter-types.h"
 #include "display/nr-filter-units.h"
-#include "libnr/nr-blit.h"
-#include "libnr/nr-pixops.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -28,6 +28,7 @@ FilterPrimitive * FilterDisplacementMap::create() {
 FilterDisplacementMap::~FilterDisplacementMap()
 {}
 
+#if 0
 struct pixel_t {
     unsigned char channels[4];
     inline unsigned char operator[](int c) const { return channels[c]; }
@@ -147,7 +148,65 @@ static void performDisplacement(NRPixBlock const* texture, NRPixBlock const* map
         }
     }
 }
+#endif
 
+struct Displace {
+    Displace(cairo_surface_t *texture, cairo_surface_t *map,
+            unsigned xch, unsigned ych, double scalex, double scaley)
+        : _texture(texture)
+        , _map(map)
+        , _xch(xch)
+        , _ych(ych)
+        , _scalex(scalex/255.0)
+        , _scaley(scaley/255.0)
+    {}
+    guint32 operator()(int x, int y) {
+        guint32 mappx = _map.pixelAt(x, y);
+        guint32 a = (mappx & 0xff000000) >> 24;
+        guint32 xpx = 0, ypx = 0;
+        double xtex = x, ytex = y;
+        if (a) {
+            guint32 xshift = _xch * 8, yshift = _ych * 8;
+            xpx = (mappx & (0xff << xshift)) >> xshift;
+            ypx = (mappx & (0xff << yshift)) >> yshift;
+            if (_xch != 3) xpx = unpremul_alpha(xpx, a);
+            if (_ych != 3) ypx = unpremul_alpha(ypx, a);
+            xtex += _scalex * (xpx - 127.5);
+            ytex += _scaley * (ypx - 127.5);
+        }
+
+        if (xtex >= 0 && xtex < (_texture._w - 1) &&
+            ytex >= 0 && ytex < (_texture._h - 1))
+        {
+            return _texture.pixelAt(xtex, ytex);
+        } else {
+            return 0;
+        }
+    }
+private:
+    SurfaceSynth _texture;
+    SurfaceSynth _map;
+    unsigned _xch, _ych;
+    double _scalex, _scaley;
+};
+
+void FilterDisplacementMap::render_cairo(FilterSlot &slot)
+{
+    cairo_surface_t *texture = slot.getcairo(_input);
+    cairo_surface_t *map = slot.getcairo(_input2);
+    cairo_surface_t *out = ink_cairo_surface_create_identical(texture);
+
+    Geom::Affine trans = slot.get_units().get_matrix_primitiveunits2pb();
+    double scalex = scale * trans.expansionX();
+    double scaley = scale * trans.expansionY();
+
+    ink_cairo_surface_synthesize(out, Displace(texture, map, Xchannel, Ychannel, scalex, scaley));
+
+    slot.set(_output, out);
+    cairo_surface_destroy(out);
+}
+
+/*
 int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *texture = slot.get(_input);
     NRPixBlock *map = slot.get(_input2);
@@ -212,7 +271,7 @@ int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
     out->empty = FALSE;
     slot.set(_output, out);
             return 0;
-}
+}*/
 
 void FilterDisplacementMap::set_input(int slot) {
     _input = slot;
@@ -233,8 +292,26 @@ void FilterDisplacementMap::set_channel_selector(int s, FilterDisplacementMapCha
         return;
     }
 
-    if (s == 0) Xchannel = channel;
-    if (s == 1) Ychannel = channel;
+    // channel numbering:
+    // a = 3, r = 2, g = 1, b = 0
+    // this way we can get the component value using:
+    // component = (color & (ch*8)) >> (ch*8)
+    unsigned ch = 4;
+    switch (channel) {
+    case DISPLACEMENTMAP_CHANNEL_ALPHA:
+        ch = 3; break;
+    case DISPLACEMENTMAP_CHANNEL_RED:
+        ch = 2; break;
+    case DISPLACEMENTMAP_CHANNEL_GREEN:
+        ch = 1; break;
+    case DISPLACEMENTMAP_CHANNEL_BLUE:
+        ch = 0; break;
+    default: break;
+    }
+    if (ch == 4) return;
+
+    if (s == 0) Xchannel = ch;
+    if (s == 1) Ychannel = ch;
 }
 
 void FilterDisplacementMap::area_enlarge(NRRectL &area, Geom::Affine const &trans)
@@ -250,10 +327,6 @@ void FilterDisplacementMap::area_enlarge(NRRectL &area, Geom::Affine const &tran
     area.x1 += (int)(scalex)+2;
     area.y0 -= (int)(scaley)+2;
     area.y1 += (int)(scaley)+2;
-}
-
-FilterTraits FilterDisplacementMap::get_input_traits() {
-    return TRAIT_PARALLER;
 }
 
 } /* namespace Filters */

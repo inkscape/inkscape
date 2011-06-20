@@ -345,7 +345,6 @@ static char const preferences_skeleton[] =
 "           colorsontop=\"0\"\n"
 "           floatallowed=\"0\"\n"
 "           partialdynamic=\"0\"/>\n"
-"    <group id=\"threading\" numthreads=\"1\"/>\n"
 "  </group>\n"
 "\n"
 "  <group id=\"extensions\">"

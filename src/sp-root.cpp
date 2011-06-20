@@ -27,11 +27,6 @@
 #include "document.h"
 #include "sp-defs.h"
 #include "sp-root.h"
-#include <libnr/nr-matrix-fns.h>
-#include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-matrix-translate-ops.h>
-#include <libnr/nr-scale-ops.h>
-#include <libnr/nr-translate-scale-ops.h>
 #include <xml/repr.h>
 #include "svg/stringstream.h"
 #include "inkscape-version.h"

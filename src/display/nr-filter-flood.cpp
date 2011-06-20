@@ -14,10 +14,12 @@
 # include "config.h"
 #endif
 
+#include "display/cairo-utils.h"
 #include "display/nr-filter-flood.h"
-#include "display/nr-filter-utils.h"
+#include "display/nr-filter-slot.h"
 #include "svg/svg-icc-color.h"
 #include "svg/svg-color.h"
+#include "color.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -32,67 +34,40 @@ FilterPrimitive * FilterFlood::create() {
 FilterFlood::~FilterFlood()
 {}
 
-int FilterFlood::render(FilterSlot &slot, FilterUnits const &units) {
-//g_message("rendering feflood");
-    NRPixBlock *in = slot.get(_input);
-    if (!in) {
-        g_warning("Missing source image for feFlood (in=%d)", _input);
-        return 1;
+void FilterFlood::render_cairo(FilterSlot &slot)
+{
+    cairo_surface_t *input = slot.getcairo(_input);
+
+    double r = SP_RGBA32_R_F(color);
+    double g = SP_RGBA32_G_F(color);
+    double b = SP_RGBA32_B_F(color);
+    double a = opacity;
+
+    #if ENABLE_LCMS
+    if (icc) {
+        guchar ru, gu, bu;
+        icc_color_to_sRGB(icc, &ru, &gu, &bu);
+        r = SP_COLOR_U_TO_F(ru);
+        g = SP_COLOR_U_TO_F(gu);
+        b = SP_COLOR_U_TO_F(bu);
     }
+    #endif
 
-    // Region being drawn on screen in screen coordinates.
-    int x0 = in->area.x0, y0 = in->area.y0;
-    int x1 = in->area.x1, y1 = in->area.y1;
-    int w = x1 - x0;
+    cairo_surface_t *out = ink_cairo_surface_create_same_size(input, CAIRO_CONTENT_COLOR_ALPHA);
+    cairo_t *ct = cairo_create(out);
+    cairo_set_source_rgba(ct, r, g, b, a);
+    cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
+    cairo_paint(ct);
+    cairo_destroy(ct);
 
-    // Set up pix block
-    NRPixBlock *out = new NRPixBlock;
-    nr_pixblock_setup_fast(out, NR_PIXBLOCK_MODE_R8G8B8A8N, x0, y0, x1, y1,  true);
-    unsigned char *out_data = NR_PIXBLOCK_PX(out);
-
-    // Get RGBA values.
-    unsigned char r,g,b,a;
-    r = CLAMP_D_TO_U8((color >> 24) % 256);
-    g = CLAMP_D_TO_U8((color >> 16) % 256);
-    b = CLAMP_D_TO_U8((color >>  8) % 256);
-    a = CLAMP_D_TO_U8(opacity*255);
-
-#if ENABLE_LCMS
-    icc_color_to_sRGB(icc, &r, &g, &b);
-    //g_message("result: r:%d g:%d b:%d", r, g, b);
-#endif //ENABLE_LCMS
-
-    // Only fill primitive subregion
-
-    // Get subregion in user units
-    Geom::Rect fp = filter_primitive_area( units );
-
-    // Need to convert to pixbuff units
-    Geom::Rect fp_pb = fp * units.get_matrix_user2pb();
-
-    // Make sure we are in pixbuff area
-    int fp_x0 = fp_pb.min()[Geom::X];
-    int fp_x1 = fp_pb.max()[Geom::X];
-    int fp_y0 = fp_pb.min()[Geom::Y];
-    int fp_y1 = fp_pb.max()[Geom::Y];
-    if( fp_x0 < x0 ) fp_x0 = x0;
-    if( fp_x1 > x1 ) fp_x1 = x1;
-    if( fp_y0 < y0 ) fp_y0 = y0;
-    if( fp_y1 > y1 ) fp_y1 = y1;
-
-    // Do fill
-    for (int x=fp_x0; x < fp_x1; x++){
-        for (int y=fp_y0; y < fp_y1; y++){
-            out_data[ 4*((x - x0) + w*(y - y0))     ] = r;
-            out_data[ 4*((x - x0) + w*(y - y0)) + 1 ] = g;
-            out_data[ 4*((x - x0) + w*(y - y0)) + 2 ] = b;
-            out_data[ 4*((x - x0) + w*(y - y0)) + 3 ] = a;
-        }
-    }
-
-    out->empty = FALSE;
     slot.set(_output, out);
-    return 0;
+    cairo_surface_destroy(out);
+}
+
+bool FilterFlood::can_handle_affine(Geom::Affine const &)
+{
+    // flood is a per-pixel primitive and is immutable under transformations
+    return true;
 }
 
 void FilterFlood::set_color(guint32 c) {

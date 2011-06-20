@@ -38,12 +38,16 @@ struct SPImage : public SPItem {
     SVGLength width;
     SVGLength height;
 
+    Geom::Rect clipbox;
+    double sx, sy;
+    double ox, oy;
+
     // Added by EAF
     /* preserveAspectRatio */
     unsigned int aspect_align : 4;
     unsigned int aspect_clip : 1;
-    int trimx, trimy, trimwidth, trimheight;
-    double viewx, viewy, viewwidth, viewheight;
+    //int trimx, trimy, trimwidth, trimheight;
+    //double viewx, viewy, viewwidth, viewheight;
 
     SPCurve *curve; // This curve is at the image's boundary for snapping
 

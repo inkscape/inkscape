@@ -22,7 +22,11 @@
 #include "svg/svg.h"
 #include "sp-object.h"
 #include "svg/svg-color.h"
-#include "diffuselighting.h"
+#include "filters/diffuselighting.h"
+#include "filters/distantlight.h"
+#include "filters/pointlight.h"
+#include "filters/spotlight.h"
+#include "display/nr-filter.h"
 #include "xml/repr.h"
 #include "display/nr-filter-diffuselighting.h"
 

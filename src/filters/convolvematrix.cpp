@@ -18,15 +18,15 @@
 #endif
 
 #include <string.h>
-
+#include <math.h>
 #include <vector>
 #include "attributes.h"
 #include "svg/svg.h"
-#include "convolvematrix.h"
+#include "filters/convolvematrix.h"
 #include "helper-fns.h"
 #include "xml/repr.h"
+#include "display/nr-filter.h"
 #include "display/nr-filter-convolve-matrix.h"
-#include <math.h>
 
 /* FeConvolveMatrix base class */
 

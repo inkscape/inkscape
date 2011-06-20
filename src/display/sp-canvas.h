@@ -56,18 +56,16 @@ enum {
 };
 
 /**
- * The canvas buf contains the actual pixels.
+ * Structure used when rendering canvas items.
  */
-struct SPCanvasBuf{
-    guchar *buf;
-    int buf_rowstride;
+struct SPCanvasBuf {
+    cairo_t *ct;
     NRRectL rect;
     NRRectL visible_rect;
-    /// Background color, given as 0xrrggbb
-    guint32 bg_color;
-    // If empty, ignore contents of buffer and use a solid area of bg_color
+
+    unsigned char *buf;
+    int buf_rowstride;
     bool is_empty;
-    cairo_t *ct;
 };
 
 G_END_DECLS

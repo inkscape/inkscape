@@ -28,7 +28,7 @@
 #include "filters/blend.h"
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
-#include "sp-gaussian-blur.h"
+#include "filters/gaussian-blur.h"
 #include "sp-flowtext.h"
 #include "sp-flowregion.h"
 #include "sp-flowdiv.h"
@@ -410,7 +410,7 @@ gdouble
 stroke_average_width (GSList const *objects)
 {
     if (g_slist_length ((GSList *) objects) == 0)
-        return NR_HUGE;
+        return Geom::infinity();
 
     gdouble avgwidth = 0.0;
     bool notstroked = true;
@@ -435,7 +435,7 @@ stroke_average_width (GSList const *objects)
     }
 
     if (notstroked)
-        return NR_HUGE;
+        return Geom::infinity();
 
     return avgwidth / (g_slist_length ((GSList *) objects) - n_notstroked);
 }

@@ -21,7 +21,6 @@
 #include "desktop-handles.h"
 #include "transformation.h"
 #include "align-and-distribute.h"
-#include "libnr/nr-matrix-ops.h"
 #include "inkscape.h"
 #include "selection.h"
 #include "selection-chemistry.h"

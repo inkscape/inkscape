@@ -22,9 +22,9 @@
  */
 
 #include "display/nr-filter-skeleton.h"
+#include "display/cairo-utils.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
-#include "libnr/nr-pixblock.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -39,17 +39,17 @@ FilterPrimitive * FilterSkeleton::create() {
 FilterSkeleton::~FilterSkeleton()
 {}
 
-int FilterSkeleton::render(FilterSlot &slot,
-                           FilterUnits const &/*units*/) {
-    //NRPixBlock *in = slot.get(_input);
-    NRPixBlock *out = new NRPixBlock();
+void FilterSkeleton::render_cairo(FilterSlot &slot) {
+    cairo_surface_t *in = slot.getcairo(_input);
+    cairo_surface_t *out = ink_cairo_surface_create_identical(in);
+    cairo_t *ct = cairo_create(out);
 
-    /* Insert rendering code here */
+//    cairo_set_source_surface(ct, in, offset[X], offset[Y]);
+//    cairo_paint(ct);
+//    cairo_destroy(ct);
 
-    out->empty = FALSE;
     slot.set(_output, out);
-
-    return 0;
+    cairo_surface_destroy(out);
 }
 
 } /* namespace Filters */

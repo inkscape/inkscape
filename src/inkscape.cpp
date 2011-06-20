@@ -25,10 +25,6 @@
 # define HAS_PROC_SELF_EXE  //to get path of executable
 #else
 
-// For now to get at is_os_wide().
-# include "extension/internal/win32.h"
-using Inkscape::Extension::Internal::PrintWin32;
-
 #define _WIN32_IE 0x0400
 //#define HAS_SHGetSpecialFolderPath
 #define HAS_SHGetSpecialFolderLocation
@@ -1351,24 +1347,18 @@ profile_path(const char *filename)
             if ( SHGetSpecialFolderLocation( NULL, CSIDL_APPDATA, &pidl ) == NOERROR ) {
                 gchar * utf8Path = NULL;
 
-                if ( PrintWin32::is_os_wide() ) {
+                {
                     wchar_t pathBuf[MAX_PATH+1];
                     g_assert(sizeof(wchar_t) == sizeof(gunichar2));
 
                     if ( SHGetPathFromIDListW( pidl, pathBuf ) ) {
                         utf8Path = g_utf16_to_utf8( (gunichar2*)(&pathBuf[0]), -1, NULL, NULL, NULL );
                     }
-                } else {
-                    char pathBuf[MAX_PATH+1];
-
-                    if ( SHGetPathFromIDListA( pidl, pathBuf ) ) {
-                        utf8Path = g_filename_to_utf8( pathBuf, -1, NULL, NULL, NULL );
-                    }
                 }
 
                 if ( utf8Path ) {
                     if (!g_utf8_validate(utf8Path, -1, NULL)) {
-                        g_warning( "SHGetPathFromIDList%c() resulted in invalid UTF-8", (PrintWin32::is_os_wide() ? 'W' : 'A') );
+                        g_warning( "SHGetPathFromIDListW() resulted in invalid UTF-8");
                         g_free( utf8Path );
                         utf8Path = 0;
                     } else {

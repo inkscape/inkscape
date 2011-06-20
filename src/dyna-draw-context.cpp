@@ -33,6 +33,7 @@
 
 #include "svg/svg.h"
 #include "display/canvas-bpath.h"
+#include "display/cairo-utils.h"
 #include <2geom/isnan.h>
 #include <2geom/pathvector.h>
 #include <2geom/bezier-utils.h>
@@ -439,16 +440,16 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
     double trace_thick = 1;
     if (dc->trace_bg) {
         // pick single pixel
-        NRPixBlock pb;
-        int x = (int) floor(brush_w[Geom::X]);
-        int y = (int) floor(brush_w[Geom::Y]);
-        nr_pixblock_setup_fast(&pb, NR_PIXBLOCK_MODE_R8G8B8A8P, x, y, x+1, y+1, TRUE);
-        sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(sp_desktop_drawing(SP_EVENT_CONTEXT(dc)->desktop)), &pb);
-        const unsigned char *s = NR_PIXBLOCK_PX(&pb);
-        double R = s[0] / 255.0;
-        double G = s[1] / 255.0;
-        double B = s[2] / 255.0;
-        double A = s[3] / 255.0;
+        double R, G, B, A;
+        NRRectL area;
+        area.x0 = floor(brush_w[Geom::X]);
+        area.y0 = floor(brush_w[Geom::Y]);
+        area.x1 = area.x0 + 1;
+        area.y1 = area.y0 + 1;
+        cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
+        sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(SP_EVENT_CONTEXT(dc)->desktop)), s, area);
+        ink_cairo_surface_average_color_premul(s, R, G, B, A);
+        cairo_surface_destroy(s);
         double max = MAX (MAX (R, G), B);
         double min = MIN (MIN (R, G), B);
         double L = A * (max + min)/2 + (1 - A); // blend with white bg

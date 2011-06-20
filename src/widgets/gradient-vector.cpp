@@ -424,7 +424,7 @@ void SPGradientVectorSelector::setSwatched()
   ##################################################################*/
 
 #include "../widgets/sp-color-notebook.h"
-#include "../widgets/sp-color-preview.h"
+#include "ui/widget/color-preview.h"
 #include "../widgets/widget-sizes.h"
 #include "../xml/node-event-vector.h"
 #include "../svg/svg-color.h"
@@ -562,7 +562,8 @@ static void update_stop_list( GtkWidget *mnu, SPGradient *gradient, SPStop *new_
                 gtk_widget_show(i);
                 g_object_set_data(G_OBJECT(i), "stop", stop);
                 GtkWidget *hb = gtk_hbox_new(FALSE, 4);
-                GtkWidget *cpv = sp_color_preview_new(sp_stop_get_rgba32(stop));
+                GtkWidget *cpv = GTK_WIDGET(Gtk::manage(
+                    new Inkscape::UI::Widget::ColorPreview(sp_stop_get_rgba32(stop)))->gobj());
                 gtk_widget_show(cpv);
                 gtk_container_add( GTK_CONTAINER(hb), cpv );
                 g_object_set_data( G_OBJECT(i), "preview", cpv );
@@ -1188,8 +1189,8 @@ static void sp_gradient_vector_color_changed(SPColorSelector *csel, GtkObject *o
 
     blocked = FALSE;
 
-    SPColorPreview *cpv = static_cast<SPColorPreview *>(g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))), "preview"));
-    sp_color_preview_set_rgba32(cpv, sp_stop_get_rgba32(stop));
+    Inkscape::UI::Widget::ColorPreview *cpv = static_cast<Inkscape::UI::Widget::ColorPreview *>(g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))), "preview"));
+    cpv->setRgba32(sp_stop_get_rgba32(stop));
 }
 
 /*

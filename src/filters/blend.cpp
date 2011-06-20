@@ -19,9 +19,10 @@
 
 #include <string.h>
 
+#include "sp-filter.h"
+#include "filters/blend.h"
 #include "attributes.h"
 #include "svg/svg.h"
-#include "blend.h"
 #include "xml/repr.h"
 
 #include "display/nr-filter.h"

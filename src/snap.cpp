@@ -206,7 +206,7 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapCandidatePoint const 
                                              Geom::OptRect const &bbox_to_snap) const
 {
     if (!someSnapperMightSnap()) {
-        return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false);
+        return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, Geom::infinity(), 0, false, false, false);
     }
 
     SnappedConstraints sc;
@@ -263,7 +263,7 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t, Geom::Point c
     if (_desktop && _desktop->gridsEnabled()) {
         bool success = false;
         Geom::Point nearest_multiple;
-        Geom::Coord nearest_distance = NR_HUGE;
+        Geom::Coord nearest_distance = Geom::infinity();
         Inkscape::SnappedPoint bestSnappedPoint(t);
 
         // It will snap to the grid for which we find the closest snap. This might be a different
@@ -717,10 +717,10 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     /* The current best transformation */
     Geom::Point best_transformation = transformation;
 
-    /* The current best metric for the best transformation; lower is better, NR_HUGE
+    /* The current best metric for the best transformation; lower is better, Geom::infinity()
     ** means that we haven't snapped anything.
     */
-    Geom::Point best_scale_metric(NR_HUGE, NR_HUGE);
+    Geom::Point best_scale_metric(Geom::infinity(), Geom::infinity());
     Inkscape::SnappedPoint best_snapped_point;
     g_assert(best_snapped_point.getAlwaysSnap() == false); // Check initialization of snapped point
     g_assert(best_snapped_point.getAtIntersection() == false);
@@ -929,10 +929,10 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
 
     Geom::Coord best_metric;
     if (transformation_type == SCALE) {
-        // When scaling, don't ever exit with one of scaling components set to NR_HUGE
+        // When scaling, don't ever exit with one of scaling components set to Geom::infinity()
         for (int index = 0; index < 2; index++) {
-            if (best_transformation[index] == NR_HUGE) {
-                if (uniform && best_transformation[1-index] < NR_HUGE) {
+            if (best_transformation[index] == Geom::infinity()) {
+                if (uniform && best_transformation[1-index] < Geom::infinity()) {
                     best_transformation[index] = best_transformation[1-index];
                 } else {
                     best_transformation[index] = transformation[index];
@@ -943,9 +943,9 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
 
     best_metric = best_snapped_point.getSnapDistance();
     best_snapped_point.setTransformation(best_transformation);
-    // Using " < 1e6" instead of " < NR_HUGE" for catching some rounding errors
+    // Using " < 1e6" instead of " < Geom::infinity()" for catching some rounding errors
     // These rounding errors might be caused by NRRects, see bug #1584301
-    best_snapped_point.setSnapDistance(best_metric < 1e6 ? best_metric : NR_HUGE);
+    best_snapped_point.setSnapDistance(best_metric < 1e6 ? best_metric : Geom::infinity());
 
     if (_snapindicator) {
         if (best_snapped_point.getSnapped()) {
@@ -954,7 +954,6 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
             _desktop->snapindicator->remove_snaptarget();
         }
     }
-
     return best_snapped_point;
 }
 

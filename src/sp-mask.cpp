@@ -16,7 +16,6 @@
 
 #include "display/nr-arena.h"
 #include "display/nr-arena-group.h"
-#include "libnr/nr-matrix-ops.h"
 #include <xml/repr.h>
 
 #include "enums.h"
@@ -353,10 +352,10 @@ sp_mask_set_bbox (SPMask *mask, unsigned int key, NRRect *bbox)
 {
 	for (SPMaskView *v = mask->display; v != NULL; v = v->next) {
 		if (v->key == key) {
-			if (!NR_DF_TEST_CLOSE (v->bbox.x0, bbox->x0, NR_EPSILON) ||
-			    !NR_DF_TEST_CLOSE (v->bbox.y0, bbox->y0, NR_EPSILON) ||
-			    !NR_DF_TEST_CLOSE (v->bbox.x1, bbox->x1, NR_EPSILON) ||
-			    !NR_DF_TEST_CLOSE (v->bbox.y1, bbox->y1, NR_EPSILON)) {
+			if (!Geom::are_near(v->bbox.x0, bbox->x0) ||
+			    !Geom::are_near(v->bbox.y0, bbox->y0) ||
+			    !Geom::are_near(v->bbox.x1, bbox->x1) ||
+			    !Geom::are_near(v->bbox.y1, bbox->y1)) {
 				v->bbox = *bbox;
 			}
 			break;

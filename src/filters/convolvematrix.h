@@ -1,8 +1,5 @@
-#ifndef SP_FECONVOLVEMATRIX_H_SEEN
-#define SP_FECONVOLVEMATRIX_H_SEEN
-
-/** \file
- * SVG <feConvolveMatrix> implementation, see ConvolveMatrix.cpp.
+/** @file
+ * @brief SVG matrix convolution filter effect
  */
 /*
  * Authors:
@@ -13,18 +10,23 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+#ifndef SP_FECONVOLVEMATRIX_H_SEEN
+#define SP_FECONVOLVEMATRIX_H_SEEN
 
-#include "sp-filter.h"
-#include "convolvematrix-fns.h"
+#include <vector>
+#include "sp-filter-primitive.h"
 #include "number-opt-number.h"
 #include "display/nr-filter-convolve-matrix.h"
-#include <vector>
 
-/* FeConvolveMatrix base class */
+#define SP_TYPE_FECONVOLVEMATRIX (sp_feConvolveMatrix_get_type())
+#define SP_FECONVOLVEMATRIX(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FECONVOLVEMATRIX, SPFeConvolveMatrix))
+#define SP_FECONVOLVEMATRIX_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FECONVOLVEMATRIX, SPFeConvolveMatrixClass))
+#define SP_IS_FECONVOLVEMATRIX(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FECONVOLVEMATRIX))
+#define SP_IS_FECONVOLVEMATRIX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FECONVOLVEMATRIX))
+
 class SPFeConvolveMatrixClass;
 
 struct SPFeConvolveMatrix : public SPFilterPrimitive {
-    /* CONVOLVEMATRIX ATTRIBUTES */
     NumberOptNumber order;
     std::vector<gdouble> kernelMatrix;
     double divisor, bias;
@@ -32,7 +34,7 @@ struct SPFeConvolveMatrix : public SPFilterPrimitive {
     Inkscape::Filters::FilterConvolveMatrixEdgeMode edgeMode;
     NumberOptNumber kernelUnitLength;
     bool preserveAlpha;
-    //some helper variables:
+
     bool targetXIsSet;
     bool targetYIsSet;
     bool divisorIsSet;
@@ -44,7 +46,6 @@ struct SPFeConvolveMatrixClass {
 };
 
 GType sp_feConvolveMatrix_get_type();
-
 
 #endif /* !SP_FECONVOLVEMATRIX_H_SEEN */
 

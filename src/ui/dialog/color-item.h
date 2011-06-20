@@ -58,8 +58,7 @@ public:
 
     void setGradient(SPGradient *grad);
     SPGradient * getGradient() const { return _grad; }
-
-    void setPixData(guchar* px, int width, int height);
+    void setPattern(cairo_pattern_t *pattern);
 
     void setState( bool fill, bool stroke );
     bool isFill() { return _isFill; }
@@ -104,9 +103,7 @@ private:
     int _linkGray;
     ColorItem* _linkSrc;
     SPGradient* _grad;
-    guchar *_pixData;
-    int _pixWidth;
-    int _pixHeight;
+    cairo_pattern_t *_pattern;
     std::vector<ColorItem*> _listeners;
 };
 

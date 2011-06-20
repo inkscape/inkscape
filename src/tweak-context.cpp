@@ -39,8 +39,6 @@
 #include "pixmaps/cursor-roughen.xpm"
 #include "pixmaps/cursor-color.xpm"
 #include <boost/optional.hpp>
-#include "libnr/nr-matrix-ops.h"
-#include "libnr/nr-scale-translate-ops.h"
 #include "xml/repr.h"
 #include "context-fns.h"
 #include "sp-item.h"
@@ -72,8 +70,7 @@
 #include "box3d.h"
 #include "sp-item-transform.h"
 #include "filter-chemistry.h"
-#include "sp-gaussian-blur-fns.h"
-#include "sp-gaussian-blur.h"
+#include "filters/gaussian-blur.h"
 
 #include "tweak-context.h"
 

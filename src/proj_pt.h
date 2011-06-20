@@ -13,7 +13,6 @@
  */
 
 #include <2geom/point.h>
-#include "libnr/nr-values.h"
 #include <gtk/gtk.h>
 
 namespace Proj {
@@ -29,12 +28,12 @@ public:
     Pt2 (const gchar *coord_str);
 
     inline double operator[] (unsigned int index) const {
-        if (index > 2) { return NR_HUGE; }
+        if (index > 2) { return Geom::infinity(); }
         return pt[index];
     }
     inline double &operator[] (unsigned int index) {
         // FIXME: How should we handle wrong indices?
-        //if (index > 2) { return NR_HUGE; }
+        //if (index > 2) { return Geom::infinity(); }
         return pt[index];
     }
     inline bool operator== (Pt2 &rhs) {
@@ -137,12 +136,12 @@ public:
     }
     
     inline double operator[] (unsigned int index) const {
-        if (index > 3) { return NR_HUGE; }
+        if (index > 3) { return Geom::infinity(); }
         return pt[index];
     }
     inline double &operator[] (unsigned int index) {
         // FIXME: How should we handle wrong indices?
-        //if (index > 3) { return NR_HUGE; }
+        //if (index > 3) { return Geom::infinity(); }
         return pt[index];
     }
     void normalize();

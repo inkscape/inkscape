@@ -21,14 +21,22 @@
 
 namespace Grayscale {
 
+/* Original values from Johan:
+const float red_factor = 0.3;
+const float green_factor = 0.59;
+const float blue_factor = 0.11;
+*/
+
+// Values below are from the SVG specification
+const float red_factor = 0.2125;
+const float green_factor = 0.7154;
+const float blue_factor = 0.0721;
+
 guint32 process(guint32 rgba) {
     return process(SP_RGBA32_R_U(rgba), SP_RGBA32_G_U(rgba), SP_RGBA32_B_U(rgba), SP_RGBA32_A_U(rgba));
 }
 
 guint32 process(guchar r, guchar g, guchar b, guchar a) {
-    float red_factor = 0.3;
-    float green_factor = 0.59;
-    float blue_factor = 0.11;
 
     /** To reduce banding in gradients, this calculation is tweaked a bit
      *  by outputing blue+1 or red+1 or both. The luminance is calculated

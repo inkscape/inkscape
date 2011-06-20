@@ -25,6 +25,7 @@
 #include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
 #include "display/curve.h"
+#include "display/cairo-utils.h"
 #include "svg/svg-color.h"
 #include "color.h"
 #include "color-rgba.h"
@@ -40,7 +41,6 @@
 
 #include "dropper-context.h"
 #include "message-context.h"
-//#include "libnr/nr-scale-translate-ops.h"
 
 using Inkscape::DocumentUndo;
 
@@ -203,7 +203,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                 // otherwise, constantly calculate color no matter is any button pressed or not
 
                 double rw = 0.0;
-                double W(0), R(0), G(0), B(0), A(0);
+                double R(0), G(0), B(0), A(0);
 
                 if (dc->dragging) {
                     // calculate average
@@ -223,56 +223,32 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                     sp_canvas_item_show(dc->area);
 
                     /* Get buffer */
-                    const int x0 = (int) floor(dc->centre[Geom::X] - rw);
-                    const int y0 = (int) floor(dc->centre[Geom::Y] - rw);
-                    const int x1 = (int) ceil(dc->centre[Geom::X] + rw);
-                    const int y1 = (int) ceil(dc->centre[Geom::Y] + rw);
-
-                    if ((x1 > x0) && (y1 > y0)) {
-                        NRPixBlock pb;
-                        nr_pixblock_setup_fast(&pb, NR_PIXBLOCK_MODE_R8G8B8A8P, x0, y0, x1, y1, TRUE);
-                        /* fixme: (Lauris) */
-                        sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(sp_desktop_drawing(desktop)), &pb);
-                        for (int y = y0; y < y1; y++) {
-                            const unsigned char *s = NR_PIXBLOCK_PX(&pb) + (y - y0) * pb.rs;
-                            for (int x = x0; x < x1; x++) {
-                                const double dx = x - dc->centre[Geom::X];
-                                const double dy = y - dc->centre[Geom::Y];
-                                const double w = exp(-((dx * dx) + (dy * dy)) / (rw * rw));
-                                W += w;
-                                R += w * s[0];
-                                G += w * s[1];
-                                B += w * s[2];
-                                A += w * s[3];
-                                s += 4;
-                            }
-                        }
-                        nr_pixblock_release(&pb);
-
-                        R = (R + 0.001) / (255.0 * W);
-                        G = (G + 0.001) / (255.0 * W);
-                        B = (B + 0.001) / (255.0 * W);
-                        A = (A + 0.001) / (255.0 * W);
-
-                        R = CLAMP(R, 0.0, 1.0);
-                        G = CLAMP(G, 0.0, 1.0);
-                        B = CLAMP(B, 0.0, 1.0);
-                        A = CLAMP(A, 0.0, 1.0);
+                    Geom::Rect r(dc->centre, dc->centre);
+                    r.expandBy(rw);
+                    if (!r.hasZeroArea()) {
+                        NRRectL area;
+                        area.x0 = r[Geom::X].min();
+                        area.y0 = r[Geom::Y].min();
+                        area.x1 = r[Geom::X].max();
+                        area.y1 = r[Geom::Y].max();
+                        int w = area.x1 - area.x0;
+                        int h = area.y1 - area.y0;
+                        cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, w, h);
+                        sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(desktop)), s, area);
+                        ink_cairo_surface_average_color_premul(s, R, G, B, A);
+                        cairo_surface_destroy(s);
                     }
-
                 } else {
                     // pick single pixel
-                    NRPixBlock pb;
-                    int x = (int) floor(event->button.x);
-                    int y = (int) floor(event->button.y);
-                    nr_pixblock_setup_fast(&pb, NR_PIXBLOCK_MODE_R8G8B8A8P, x, y, x+1, y+1, TRUE);
-                    sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(sp_desktop_drawing(desktop)), &pb);
-                    const unsigned char *s = NR_PIXBLOCK_PX(&pb);
-
-                    R = s[0] / 255.0;
-                    G = s[1] / 255.0;
-                    B = s[2] / 255.0;
-                    A = s[3] / 255.0;
+                    NRRectL area;
+                    area.x0 = floor(event->button.x);
+                    area.y0 = floor(event->button.y);
+                    area.x1 = area.x0 + 1;
+                    area.y1 = area.y0 + 1;
+                    cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
+                    sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(desktop)), s, area);
+                    ink_cairo_surface_average_color_premul(s, R, G, B, A);
+                    cairo_surface_destroy(s);
                 }
 
                 if (pick == SP_DROPPER_PICK_VISIBLE) {

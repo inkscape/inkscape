@@ -13,9 +13,8 @@
  */
 
 #include "display/nr-filter-primitive.h"
-#include "display/nr-filter-slot.h"
-#include "display/nr-filter-units.h"
-#include "svg/svg-color.h"
+
+class SVGICCColor;
 
 namespace Inkscape {
 namespace Filters {
@@ -25,11 +24,12 @@ public:
     FilterFlood();
     static FilterPrimitive *create();
     virtual ~FilterFlood();
-    
+
+    virtual void render_cairo(FilterSlot &slot);
+    virtual bool can_handle_affine(Geom::Affine const &);
     virtual void set_opacity(double o);
     virtual void set_color(guint32 c);
     virtual void set_icc(SVGICCColor *icc_color);
-    virtual int render(FilterSlot &slot, FilterUnits const &units);
     virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
 private:
     double opacity;

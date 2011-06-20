@@ -45,7 +45,6 @@
 #include "xml/repr.h"
 #include "xml/repr-sorting.h"
 #include <2geom/pathvector.h>
-#include <libnr/nr-scale-matrix-ops.h>
 #include "helper/geom.h"
 
 #include "livarot/Path.h"

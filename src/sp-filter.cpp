@@ -28,6 +28,7 @@ using std::pair;
 #include "document.h"
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
+#include "sp-filter-primitive.h"
 #include "uri.h"
 #include "xml/repr.h"
 #include <cstring>

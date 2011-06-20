@@ -17,6 +17,9 @@
 # include "config.h"
 #endif
 
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
 #include "extension/implementation/implementation.h"
 //#include "extension/extension.h"
 

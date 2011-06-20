@@ -14,10 +14,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "libnr/nr-pixblock.h"
+#include <map>
+#include <cairo.h>
 #include "display/nr-filter-types.h"
 #include "display/nr-filter-units.h"
-#include <vector>
 
 struct NRArenaItem;
 
@@ -26,14 +26,9 @@ namespace Filters {
 
 class FilterSlot {
 public:
-    /** Creates a new FilterSlot object.
-     * First parameter specifies the amount of slots this SilterSlot
-     * should reserve beforehand. If a negative number is given,
-     * two slots will be reserved.
-     * Second parameter specifies the arena item, which should be used
-     * for background accesses from filters.
-     */
-    FilterSlot(int slots, NRArenaItem const *item);
+    /** Creates a new FilterSlot object. */
+    FilterSlot(NRArenaItem *item, cairo_t *bgct, NRRectL const *bgarea,
+        cairo_surface_t *graphic, NRRectL const *graphicarea, FilterUnits const &u);
     /** Destroys the FilterSlot object and all its contents */
     virtual ~FilterSlot();
 
@@ -43,37 +38,22 @@ public:
      * NR_FILTER_SOURCEGRAPHIC, NR_FILTER_SOURCEALPHA,
      * NR_FILTER_BACKGROUNDIMAGE, NR_FILTER_BACKGROUNDALPHA,
      * NR_FILTER_FILLPAINT, NR_FILTER_SOURCEPAINT.
-     * If the defined filter slot is not set before, this function
-     * returns NULL. Also, that filter slot is created in process.
      */
-    NRPixBlock *get(int slot);
-
-    /** Gets the final result from this filter.
-     * The result is fetched from the specified slot, see description of
-     * method get for valid values. The pixblock 'result' will be modified
-     * to contain the result image, ready to be used in the rest of rendering
-     * pipeline
-     */
-    void get_final(int slot, NRPixBlock *result);
+    cairo_surface_t *getcairo(int slot);
 
     /** Sets or re-sets the pixblock associated with given slot.
      * If there was a pixblock already assigned with this slot,
      * that pixblock is destroyed.
-     * Pixblocks passed to this function should be considered
-     * managed by this FilterSlot object if takeOwnership==true.
-     * Pixblocks passed to this function should be reserved with
-     * c++ -style new-operator (if managed by FilterSlot).
      */
-    void set(int slot, NRPixBlock *pb, bool takeOwnership=true);
+    void set(int slot, cairo_surface_t *s);
+
+    cairo_surface_t *get_result(int slot_nr);
 
     /** Returns the number of slots in use. */
     int get_slot_count();
 
-    /** arenaitem getter method*/
-    NRArenaItem const* get_arenaitem();
-
     /** Sets the unit system to be used for the internal images. */
-    void set_units(FilterUnits const &units);
+    //void set_units(FilterUnits const &units);
 
     /** Sets the filtering quality. Affects used interpolation methods */
     void set_quality(FilterQuality const q);
@@ -84,30 +64,36 @@ public:
     /** Gets the gaussian filtering quality. Affects used interpolation methods */
     int get_blurquality(void);
 
+    FilterUnits const &get_units() const { return _units; }
+    Geom::Rect get_slot_area() const;
+    NRRectL const &get_sg_area() const { return *_source_graphic_area; }
+
 private:
-    struct slot_entry_t {
-        NRPixBlock* pb;
-        int number;
-        bool owned;
-        slot_entry_t() : pb(0), number(NR_FILTER_SLOT_NOT_SET), owned(false) {}
-        ~slot_entry_t();
-    };
-    std::vector<slot_entry_t> _slots;
+    typedef std::map<int, cairo_surface_t *> SlotMap;
+    SlotMap _slots;
+    NRArenaItem *_item;
 
+    //Geom::Rect _source_bbox; ///< bounding box of source graphic surface
+    //Geom::Rect _intermediate_bbox; ///< bounding box of intermediate surfaces
+
+//    NRRectL _slot_area;
+    int _slot_w, _slot_h;
+    double _slot_x, _slot_y;
+    cairo_surface_t *_source_graphic;
+    cairo_t *_background_ct;
+    NRRectL const *_source_graphic_area;
+    NRRectL const *_background_area; ///< needed to extract background
+    FilterUnits const &_units;
     int _last_out;
-
     FilterQuality filterquality;
-
     int blurquality;
 
-    NRArenaItem const *_arena_item;
+    cairo_surface_t *_get_transformed_source_graphic();
+    cairo_surface_t *_get_transformed_background();
+    cairo_surface_t *_get_fill_paint();
+    cairo_surface_t *_get_stroke_paint();
 
-    FilterUnits units;
-
-    /** Returns the table index of given slot. If that slot does not exist,
-     * it is created. Table index can be used to read the correct
-     * pixblock from _slot */
-    int _get_index(int slot);
+    void _set_internal(int slot, cairo_surface_t *s);
 };
 
 } /* namespace Filters */

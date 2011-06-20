@@ -1,46 +1,46 @@
-#ifndef SP_FEDIFFUSELIGHTING_H_SEEN
-#define SP_FEDIFFUSELIGHTING_H_SEEN
-
-/** \file
- * SVG <feDiffuseLighting> implementation, see DiffuseLighting.cpp.
- */
-/*
+/** @file
+ * @brief SVG diffuse lighting filter effect
+ *//*
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *   Jean-Rene Reinhard <jr@komite.net>
  *
- * Copyright (C) 2006 Hugo Rodrigues
- *               2007 authors
- *
+ * Copyright (C) 2006-2007 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "sp-filter.h"
-#include "diffuselighting-fns.h"
+#ifndef SP_FEDIFFUSELIGHTING_H_SEEN
+#define SP_FEDIFFUSELIGHTING_H_SEEN
+
+#include "sp-filter-primitive.h"
+#include "number-opt-number.h"
 
 namespace Inkscape {
 namespace Filters {
 class FilterDiffuseLighting;
-}
-}
+} }
 
-/* FeDiffuseLighting base class */
+#define SP_TYPE_FEDIFFUSELIGHTING (sp_feDiffuseLighting_get_type())
+#define SP_FEDIFFUSELIGHTING(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FEDIFFUSELIGHTING, SPFeDiffuseLighting))
+#define SP_FEDIFFUSELIGHTING_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FEDIFFUSELIGHTING, SPFeDiffuseLightingClass))
+#define SP_IS_FEDIFFUSELIGHTING(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEDIFFUSELIGHTING))
+#define SP_IS_FEDIFFUSELIGHTING_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEDIFFUSELIGHTING))
+
+namespace Inkscape {
+namespace Filters {
+class FilterDiffuseLighting;
+} }
+
 class SPFeDiffuseLightingClass;
 
 struct SPFeDiffuseLighting : public SPFilterPrimitive {
-    /** DIFFUSELIGHTING ATTRIBUTES HERE */
-    /** surfaceScale attribute */
     gfloat surfaceScale;
     guint surfaceScale_set : 1;
-    /** diffuseConstant attribute */
     gfloat diffuseConstant;
     guint diffuseConstant_set : 1;
-    /** kernelUnitLength attribute */
     NumberOptNumber kernelUnitLength;
-    /** lighting-color property */
     guint32 lighting_color;
     guint lighting_color_set : 1;
-    /** pointer to the associated renderer */
     Inkscape::Filters::FilterDiffuseLighting *renderer;
 };
 
@@ -49,7 +49,6 @@ struct SPFeDiffuseLightingClass {
 };
 
 GType sp_feDiffuseLighting_get_type();
-
 
 #endif /* !SP_FEDIFFUSELIGHTING_H_SEEN */
 

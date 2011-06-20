@@ -46,7 +46,7 @@
 #include "widgets/desktop-widget.h"
 #include "widgets/gradient-vector.h"
 #include "widgets/eek-preview.h"
-#include "display/nr-plain-stuff.h"
+#include "display/cairo-utils.h"
 #include "sp-gradient-reference.h"
 #include "dialog-manager.h"
 
@@ -886,7 +886,7 @@ void SwatchesPanel::_setDocument( SPDocument *document )
 
 static void recalcSwatchContents(SPDocument* doc,
                 std::vector<ColorItem*> &tmpColors,
-                std::map<ColorItem*, guchar*> &previewMappings,
+                std::map<ColorItem*, cairo_pattern_t*> &previewMappings,
                 std::map<ColorItem*, SPGradient*> &gradMappings)
 {
     std::vector<SPGradient*> newList;
@@ -904,30 +904,29 @@ static void recalcSwatchContents(SPDocument* doc,
         for ( std::vector<SPGradient*>::iterator it = newList.begin(); it != newList.end(); ++it )
         {
             SPGradient* grad = *it;
-            grad->ensureVector();
-            SPGradientStop first = grad->vector.stops[0];
-            SPColor color = first.color;
-            guint32 together = color.toRGBA32(first.opacity);
 
-            SPGradientStop second = (*it)->vector.stops[1];
-            SPColor color2 = second.color;
+            cairo_surface_t *preview = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+                PREVIEW_PIXBUF_WIDTH, VBLOCK);
+            cairo_t *ct = cairo_create(preview);
 
             Glib::ustring name( grad->getId() );
-            unsigned int r = SP_RGBA32_R_U(together);
-            unsigned int g = SP_RGBA32_G_U(together);
-            unsigned int b = SP_RGBA32_B_U(together);
-            ColorItem* item = new ColorItem( r, g, b, name );
+            ColorItem* item = new ColorItem( 0, 0, 0, name );
 
-            gint width = PREVIEW_PIXBUF_WIDTH;
-            gint height = VBLOCK;
-            guchar* px = g_new( guchar, 3 * height * width );
-            nr_render_checkerboard_rgb( px, width, height, 3 * width, 0, 0 );
+            cairo_pattern_t *check = ink_cairo_pattern_create_checkerboard();
+            cairo_pattern_t *gradient = sp_gradient_create_preview_pattern(grad, PREVIEW_PIXBUF_WIDTH);
+            cairo_set_source(ct, check);
+            cairo_paint(ct);
+            cairo_set_source(ct, gradient);
+            cairo_paint(ct);
 
-            sp_gradient_render_vector_block_rgb( grad,
-                                                 px, width, height, 3 * width,
-                                                 0, width, TRUE );
+            cairo_destroy(ct);
+            cairo_pattern_destroy(gradient);
+            cairo_pattern_destroy(check);
 
-            previewMappings[item] = px;
+            cairo_pattern_t *prevpat = cairo_pattern_create_for_surface(preview);
+            cairo_surface_destroy(preview);
+
+            previewMappings[item] = prevpat;
 
             tmpColors.push_back(item);
             gradMappings[item] = grad;
@@ -940,12 +939,13 @@ void SwatchesPanel::handleGradientsChange(SPDocument *document)
     SwatchPage *docPalette = (docPalettes.find(document) != docPalettes.end()) ? docPalettes[document] : 0;
     if (docPalette) {
         std::vector<ColorItem*> tmpColors;
-        std::map<ColorItem*, guchar*> tmpPrevs;
+        std::map<ColorItem*, cairo_pattern_t*> tmpPrevs;
         std::map<ColorItem*, SPGradient*> tmpGrads;
         recalcSwatchContents(document, tmpColors, tmpPrevs, tmpGrads);
 
-        for (std::map<ColorItem*, guchar*>::iterator it = tmpPrevs.begin(); it != tmpPrevs.end(); ++it) {
-            it->first->setPixData(it->second, PREVIEW_PIXBUF_WIDTH, VBLOCK);
+        for (std::map<ColorItem*, cairo_pattern_t*>::iterator it = tmpPrevs.begin(); it != tmpPrevs.end(); ++it) {
+            it->first->setPattern(it->second);
+            cairo_pattern_destroy(it->second);
         }
 
         for (std::map<ColorItem*, SPGradient*>::iterator it = tmpGrads.begin(); it != tmpGrads.end(); ++it) {
@@ -956,7 +956,6 @@ void SwatchesPanel::handleGradientsChange(SPDocument *document)
         for (std::vector<ColorItem*>::iterator it = tmpColors.begin(); it != tmpColors.end(); ++it) {
             delete *it;
         }
-
 
         // Figure out which SwatchesPanel instances are affected and update them.
 
@@ -978,7 +977,7 @@ void SwatchesPanel::handleDefsModified(SPDocument *document)
     SwatchPage *docPalette = (docPalettes.find(document) != docPalettes.end()) ? docPalettes[document] : 0;
     if (docPalette && !DocTrack::queueUpdateIfNeeded(document) ) {
         std::vector<ColorItem*> tmpColors;
-        std::map<ColorItem*, guchar*> tmpPrevs;
+        std::map<ColorItem*, cairo_pattern_t*> tmpPrevs;
         std::map<ColorItem*, SPGradient*> tmpGrads;
         recalcSwatchContents(document, tmpColors, tmpPrevs, tmpGrads);
 
@@ -999,9 +998,16 @@ void SwatchesPanel::handleDefsModified(SPDocument *document)
                     oldColor->setGradient(tmpGrads[newColor]);
                 }
                 if ( tmpPrevs.find(newColor) != tmpPrevs.end() ) {
-                    oldColor->setPixData(tmpPrevs[newColor], PREVIEW_PIXBUF_WIDTH, VBLOCK);
+                    oldColor->setPattern(tmpPrevs[newColor]);
                 }
             }
+        }
+
+        for (std::map<ColorItem*, cairo_pattern_t*>::iterator it = tmpPrevs.begin(); it != tmpPrevs.end(); ++it) {
+            cairo_pattern_destroy(it->second);
+        }
+        for (std::vector<ColorItem*>::iterator it = tmpColors.begin(); it != tmpColors.end(); ++it) {
+            delete *it;
         }
     }
 }

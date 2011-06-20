@@ -7,14 +7,14 @@
  */
 
 #include "livarot/Shape.h"
-#include <libnr/nr-matrix-fns.h>
-#include <libnr/nr-point-fns.h>
 #include "livarot/Path.h"
 #include "livarot/path-description.h"
 #include <glib.h>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <2geom/point.h>
+#include <2geom/affine.h>
 
 /*
  * polygon offset and polyline to path reassembling (when using back data)

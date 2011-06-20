@@ -14,20 +14,20 @@
 
 #include <2geom/pathvector.h>
 #include <2geom/transforms.h>
-#include "../style.h"
 #include <cairo.h>
 #include <vector>
+#include "style.h"
 #include "svg/svg.h"
-#include "inkscape-cairo.h"
-#include "nr-svgfonts.h"
-#include "../sp-path.h"
-#include "../sp-object-group.h"
-#include "../sp-use.h"
-#include "../sp-use-reference.h"
-#include "curve.h"
+#include "display/cairo-utils.h"
+#include "display/nr-svgfonts.h"
+#include "display/nr-svgfonts.h"
+#include "sp-path.h"
+#include "sp-object-group.h"
+#include "sp-use.h"
+#include "sp-use-reference.h"
+#include "display/curve.h"
 #include "xml/repr.h"
 #include "sp-font-face.h"
-
 
 //*************************//
 // UserFont Implementation //

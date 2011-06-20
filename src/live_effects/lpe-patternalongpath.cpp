@@ -139,9 +139,9 @@ LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > con
         }
         //TODO: dynamical update of parameter ranges?
         //if (prop_units.get_value()){
-        //        spacing.param_set_range(-.9, NR_HUGE);
+        //        spacing.param_set_range(-.9, Geom::infinity());
         //    }else{
-        //        spacing.param_set_range(-pattBndsX.extent()*.9, NR_HUGE);
+        //        spacing.param_set_range(-pattBndsX.extent()*.9, Geom::infinity());
         //    }
 
         y0+=noffset;

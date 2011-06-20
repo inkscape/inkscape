@@ -19,8 +19,7 @@ SPGradientSpread sp_gradient_get_spread (SPGradient *gradient);
 void sp_gradient_repr_write_vector(SPGradient *gr);
 void sp_gradient_repr_clear_vector(SPGradient *gr);
 
-void sp_gradient_render_vector_block_rgba(SPGradient *gr, guchar *px, gint w, gint h, gint rs, gint pos, gint span, bool horizontal);
-void sp_gradient_render_vector_block_rgb(SPGradient *gr, guchar *px, gint w, gint h, gint rs, gint pos, gint span, bool horizontal);
+cairo_pattern_t *sp_gradient_create_preview_pattern(SPGradient *gradient, double width);
 
 /** Transforms to/from gradient position space in given environment */
 Geom::Affine sp_gradient_get_g2d_matrix(SPGradient const *gr, Geom::Affine const &ctm,

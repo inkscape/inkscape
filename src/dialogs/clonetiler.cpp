@@ -18,32 +18,33 @@
 #include <gtk/gtk.h>
 #include <glibmm/i18n.h>
 
-#include "../desktop.h"
-#include "../desktop-handles.h"
+#include "desktop.h"
+#include "desktop-handles.h"
 #include "dialog-events.h"
+#include "display/cairo-utils.h"
 #include "display/nr-arena.h"
 #include "display/nr-arena-item.h"
-#include "../document.h"
-#include "../filter-chemistry.h"
+#include "document.h"
+#include "filter-chemistry.h"
 #include "helper/unit-menu.h"
 #include "helper/units.h"
 #include "helper/window.h"
-#include "../inkscape.h"
-#include "../interface.h"
-#include "../macros.h"
-#include "../message-stack.h"
+#include "inkscape.h"
+#include "interface.h"
+#include "macros.h"
+#include "message-stack.h"
 #include "preferences.h"
-#include "../selection.h"
-#include "../sp-filter.h"
-#include "../sp-namedview.h"
-#include "../sp-use.h"
-#include "../style.h"
+#include "selection.h"
+#include "sp-filter.h"
+#include "sp-namedview.h"
+#include "sp-use.h"
+#include "style.h"
 #include "svg/svg-color.h"
 #include "svg/svg.h"
 #include "ui/icon-names.h"
 #include "ui/widget/color-picker.h"
 #include "unclump.h"
-#include "../verbs.h"
+#include "verbs.h"
 #include "widgets/icon.h"
 #include "xml/repr.h"
 #include "sp-root.h"
@@ -879,60 +880,25 @@ static guint32 clonetiler_trace_pick(Geom::Rect box)
 
     /* Item integer bbox in points */
     NRRectL ibox;
-    ibox.x0 = (int) floor(trace_zoom * box[Geom::X].min() + 0.5);
-    ibox.y0 = (int) floor(trace_zoom * box[Geom::Y].min() + 0.5);
-    ibox.x1 = (int) floor(trace_zoom * box[Geom::X].max() + 0.5);
-    ibox.y1 = (int) floor(trace_zoom * box[Geom::Y].max() + 0.5);
+    ibox.x0 = floor(trace_zoom * box[Geom::X].min());
+    ibox.y0 = floor(trace_zoom * box[Geom::Y].min());
+    ibox.x1 = ceil(trace_zoom * box[Geom::X].max());
+    ibox.y1 = ceil(trace_zoom * box[Geom::Y].max());
 
     /* Find visible area */
     int width = ibox.x1 - ibox.x0;
     int height = ibox.y1 - ibox.y0;
-
-    /* Set up pixblock */
-    guchar *px = g_new(guchar, 4 * width * height);
-
-    if (px == NULL) {
-        return 0; // buffer is too big or too small, cannot pick, so return 0
-    }
-
-    memset(px, 0x00, 4 * width * height);
-
-    /* Render */
-    NRPixBlock pb;
-    nr_pixblock_setup_extern( &pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
-                              ibox.x0, ibox.y0, ibox.x1, ibox.y1,
-                              px, 4 * width, FALSE, FALSE );
-    nr_arena_item_invoke_render(NULL, trace_root, &ibox, &pb,
-                                 NR_ARENA_ITEM_RENDER_NO_CACHE );
-
     double R = 0, G = 0, B = 0, A = 0;
-    double count = 0;
-    double weight = 0;
 
-    for (int y = ibox.y0; y < ibox.y1; y++) {
-        const unsigned char *s = NR_PIXBLOCK_PX (&pb) + (y - ibox.y0) * pb.rs;
-        for (int x = ibox.x0; x < ibox.x1; x++) {
-            count += 1;
-            weight += s[3] / 255.0;
-            R += s[0] / 255.0;
-            G += s[1] / 255.0;
-            B += s[2] / 255.0;
-            A += s[3] / 255.0;
-            s += 4;
-        }
-    }
-
-    nr_pixblock_release(&pb);
-
-    R = R / weight;
-    G = G / weight;
-    B = B / weight;
-    A = A / count;
-
-    R = CLAMP (R, 0.0, 1.0);
-    G = CLAMP (G, 0.0, 1.0);
-    B = CLAMP (B, 0.0, 1.0);
-    A = CLAMP (A, 0.0, 1.0);
+    cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+    cairo_t *ct = cairo_create(s);
+    cairo_translate(ct, -ibox.x0, -ibox.y0);
+    /* Render */
+    nr_arena_item_invoke_render(ct, trace_root, &ibox, NULL,
+                                 NR_ARENA_ITEM_RENDER_NO_CACHE );
+    cairo_destroy(ct);
+    ink_cairo_surface_average_color(s, R, G, B, A);
+    cairo_surface_destroy(s);
 
     return SP_RGBA32_F_COMPOSE (R, G, B, A);
 }

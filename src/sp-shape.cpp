@@ -18,10 +18,6 @@
 # include "config.h"
 #endif
 
-#include <libnr/nr-matrix-fns.h>
-#include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-matrix-translate-ops.h>
-#include <libnr/nr-scale-matrix-ops.h>
 #include <2geom/rect.h>
 #include <2geom/transforms.h>
 #include <2geom/pathvector.h>
@@ -249,7 +245,7 @@ void SPShape::sp_shape_update(SPObject *object, SPCtx *ctx, unsigned int flags)
         SPStyle *style = object->style;
         if (style->stroke_width.unit == SP_CSS_UNIT_PERCENT) {
             SPItemCtx *ictx = (SPItemCtx *) ctx;
-            double const aw = 1.0 / NR::expansion(ictx->i2vp);
+            double const aw = 1.0 / ictx->i2vp.descrim();
             style->stroke_width.computed = style->stroke_width.value * aw;
             for (SPItemView *v = ((SPItem *) (shape))->display; v != NULL; v = v->next) {
                 nr_arena_shape_set_style ((NRArenaShape *) v->arenaitem, style);
@@ -589,7 +585,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const
 
                                     // get bbox of the marker with that transform
                                     NRRect marker_bbox;
-                                    marker_item->invoke_bbox ( &marker_bbox, from_2geom(tr), true);
+                                    marker_item->invoke_bbox ( &marker_bbox, tr, true);
                                     // union it with the shape bbox
                                     nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                                 }
@@ -617,7 +613,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const
                                     }
                                     tr = marker_item->transform * marker->c2p * tr * transform;
                                     NRRect marker_bbox;
-                                    marker_item->invoke_bbox ( &marker_bbox, from_2geom(tr), true);
+                                    marker_item->invoke_bbox ( &marker_bbox, tr, true);
                                     nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                                 }
                                 // MID position
@@ -644,7 +640,7 @@ void SPShape::sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const
                                             }
                                             tr = marker_item->transform * marker->c2p * tr * transform;
                                             NRRect marker_bbox;
-                                            marker_item->invoke_bbox ( &marker_bbox, from_2geom(tr), true);
+                                            marker_item->invoke_bbox ( &marker_bbox, tr, true);
                                             nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                                         }
 

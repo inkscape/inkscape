@@ -9,8 +9,6 @@
 #include "Path.h"
 #include "Shape.h"
 #include "livarot/path-description.h"
-
-#include <libnr/nr-matrix.h>
 #include <2geom/transforms.h>
 
 /*

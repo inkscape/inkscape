@@ -477,6 +477,7 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p,
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     unsigned const snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
+
     SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
     m.setup(SP_EVENT_CONTEXT_DESKTOP(ec));
 

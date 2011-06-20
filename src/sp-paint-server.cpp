@@ -14,7 +14,6 @@
  */
 
 #include <string.h>
-#include "libnr/nr-pixblock-pattern.h"
 #include "sp-paint-server-reference.h"
 #include "sp-paint-server.h"
 
@@ -23,13 +22,9 @@
 
 static void sp_paint_server_class_init(SPPaintServerClass *psc);
 
-static void sp_paint_server_release(SPObject *object);
-
-static void sp_painter_stale_fill(SPPainter *painter, NRPixBlock *pb);
+static cairo_pattern_t *sp_paint_server_create_dummy_pattern(SPPaintServer *ps, cairo_t *ct, NRRect const *bbox, double opacity);
 
 static SPObjectClass *parent_class;
-static GSList *stale_painters = NULL;
-
 
 SPPaintServer *SPPaintServerReference::getObject() const
 {
@@ -41,7 +36,7 @@ bool SPPaintServerReference::_acceptObject(SPObject *obj) const
     return SP_IS_PAINT_SERVER(obj);
 }
 
-GType SPPaintServer::getType(void)
+GType SPPaintServer::get_type(void)
 {
     static GType type = 0;
     if (!type) {
@@ -64,108 +59,43 @@ GType SPPaintServer::getType(void)
 
 static void sp_paint_server_class_init(SPPaintServerClass *psc)
 {
-    SPObjectClass *sp_object_class = (SPObjectClass *) psc;
-    sp_object_class->release = sp_paint_server_release;
+    psc->pattern_new = sp_paint_server_create_dummy_pattern;
+
     parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
 }
 
 void SPPaintServer::init(SPPaintServer *ps)
 {
-    ps->painters = NULL;
-    ps->swatch = false;
 }
 
-static void sp_paint_server_release(SPObject *object)
+cairo_pattern_t *sp_paint_server_create_pattern(SPPaintServer *ps,
+                                                cairo_t *ct,
+                                                NRRect const *bbox,
+                                                double opacity)
 {
-    SPPaintServer *ps = SP_PAINT_SERVER(object);
-
-    while (ps->painters) {
-        SPPainter *painter = ps->painters;
-        ps->painters = painter->next;
-        stale_painters = g_slist_prepend(stale_painters, painter);
-        painter->next = NULL;
-        painter->server = NULL;
-        painter->fill = sp_painter_stale_fill;
-    }
-
-    if (((SPObjectClass *) parent_class)->release) {
-        ((SPObjectClass *) parent_class)->release(object);
-    }
-}
-
-SPPainter *sp_paint_server_painter_new(SPPaintServer *ps,
-                                       Geom::Affine const &full_transform,
-                                       Geom::Affine const &parent_transform,
-                                       const NRRect *bbox)
-{
+    // NOTE: the ct argument is used for when rendering patterns
+    // to create a group, instead of explicitly creating a temporary surface
     g_return_val_if_fail(ps != NULL, NULL);
     g_return_val_if_fail(SP_IS_PAINT_SERVER(ps), NULL);
     g_return_val_if_fail(bbox != NULL, NULL);
 
-    SPPainter *painter = NULL;
-    SPPaintServerClass *psc = SP_PAINT_SERVER_CLASS( G_OBJECT_GET_CLASS(ps) );
-    if ( psc->painter_new ) {
-        painter = (*psc->painter_new)(ps, full_transform, parent_transform, bbox);
+    cairo_pattern_t *cp = NULL;
+    SPPaintServerClass *psc = (SPPaintServerClass *) G_OBJECT_GET_CLASS(ps);
+    if ( psc->pattern_new ) {
+        cp = (*psc->pattern_new)(ps, ct, bbox, opacity);
     }
 
-    if (painter) {
-        painter->next = ps->painters;
-        painter->server = ps;
-        painter->server_type = G_OBJECT_TYPE(ps);
-        ps->painters = painter;
-    }
-
-    return painter;
+    return cp;
 }
 
-static void sp_paint_server_painter_free(SPPaintServer *ps, SPPainter *painter)
+static cairo_pattern_t *
+sp_paint_server_create_dummy_pattern(SPPaintServer */*ps*/,
+                                     cairo_t */* ct */,
+                                     NRRect const */*bbox*/,
+                                     double /* opacity */)
 {
-    g_return_if_fail(ps != NULL);
-    g_return_if_fail(SP_IS_PAINT_SERVER(ps));
-    g_return_if_fail(painter != NULL);
-
-    SPPaintServerClass *psc = SP_PAINT_SERVER_CLASS( G_OBJECT_GET_CLASS(ps) );
-
-    SPPainter *r = NULL;
-    for (SPPainter *p = ps->painters; p != NULL; p = p->next) {
-        if (p == painter) {
-            if (r) {
-                r->next = p->next;
-            } else {
-                ps->painters = p->next;
-            }
-            p->next = NULL;
-            if (psc->painter_free) {
-                (*psc->painter_free) (ps, painter);
-            }
-            return;
-        }
-        r = p;
-    }
-
-    g_assert_not_reached();
-}
-
-SPPainter *sp_painter_free(SPPainter *painter)
-{
-    g_return_val_if_fail(painter != NULL, NULL);
-
-    if (painter->server) {
-        sp_paint_server_painter_free(painter->server, painter);
-    } else {
-        SPPaintServerClass *psc = SP_PAINT_SERVER_CLASS( g_type_class_ref(painter->server_type) );
-        if (psc->painter_free) {
-            (*psc->painter_free)(NULL, painter);
-        }
-        stale_painters = g_slist_remove(stale_painters, painter);
-    }
-
-    return NULL;
-}
-
-static void sp_painter_stale_fill(SPPainter */*painter*/, NRPixBlock *pb)
-{
-    nr_pixblock_render_gray_noise(pb, NULL);
+    cairo_pattern_t *cp = cairo_pattern_create_rgb(1.0, 0.0, 1.0);
+    return cp;
 }
 
 bool SPPaintServer::isSwatch() const
@@ -184,9 +114,6 @@ bool SPPaintServer::isSolid() const
     }
     return solid;
 }
-
-
-
 
 /*
   Local Variables:

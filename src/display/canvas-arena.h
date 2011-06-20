@@ -13,8 +13,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "sp-canvas-item.h"
-#include "nr-arena-item.h"
+#include <cairo.h>
+#include <2geom/rect.h>
+#include "display/sp-canvas.h"
+#include "display/sp-canvas-item.h"
+#include "display/nr-arena-item.h"
 
 G_BEGIN_DECLS
 
@@ -55,7 +58,7 @@ GtkType sp_canvas_arena_get_type (void);
 void sp_canvas_arena_set_pick_delta (SPCanvasArena *ca, gdouble delta);
 void sp_canvas_arena_set_sticky (SPCanvasArena *ca, gboolean sticky);
 
-void sp_canvas_arena_render_pixblock (SPCanvasArena *ca, NRPixBlock *pb);
+void sp_canvas_arena_render_surface (SPCanvasArena *ca, cairo_surface_t *surface, NRRectL const &area);
 
 G_END_DECLS
 

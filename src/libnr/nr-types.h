@@ -18,7 +18,6 @@
 #include <libnr/nr-coord.h>
 #include <libnr/nr-dim2.h>
 #include <libnr/nr-i-coord.h>
-#include <libnr/nr-matrix.h>
 #include <libnr/nr-point.h>
 #include <libnr/nr-point-l.h>
 #include <libnr/nr-point-ops.h>

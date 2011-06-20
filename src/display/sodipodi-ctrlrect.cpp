@@ -17,7 +17,7 @@
 
 #include "sp-canvas-util.h"
 #include "sodipodi-ctrlrect.h"
-#include "libnr/nr-pixops.h"
+#include "display/cairo-utils.h"
 
 /*
  * Currently we do not have point method, as it should always be painted
@@ -83,7 +83,7 @@ static void sp_ctrlrect_destroy(GtkObject *object)
         (* GTK_OBJECT_CLASS(parent_class)->destroy)(object);
     }
 }
-
+#if 0
 /* FIXME: use definitions from somewhere else */
 #define RGBA_R(v) ((v) >> 24)
 #define RGBA_G(v) (((v) >> 16) & 0xff)
@@ -153,6 +153,7 @@ static void sp_ctrlrect_area(SPCanvasBuf *buf, gint xs, gint ys, gint xe, gint y
         }
     }
 }
+#endif
 
 static void sp_ctrlrect_render(SPCanvasItem *item, SPCanvasBuf *buf)
 {
@@ -188,13 +189,38 @@ void CtrlRect::init()
 
 void CtrlRect::render(SPCanvasBuf *buf)
 {
+    static double const dashes[2] = {4.0, 4.0};
+
     if ((_area.x0 != 0 || _area.x1 != 0 || _area.y0 != 0 || _area.y1 != 0) &&
         (_area.x0 < buf->rect.x1) &&
         (_area.y0 < buf->rect.y1) &&
         ((_area.x1 + _shadow_size) >= buf->rect.x0) &&
-        ((_area.y1 + _shadow_size) >= buf->rect.y0)) {
-        sp_canvas_prepare_buffer(buf);
+        ((_area.y1 + _shadow_size) >= buf->rect.y0))
+    {
+        cairo_save(buf->ct);
+        cairo_translate(buf->ct, -buf->rect.x0, -buf->rect.y0);
+        cairo_set_line_width(buf->ct, 1);
+        if (_dashed) cairo_set_dash(buf->ct, dashes, 2, 0);
+        cairo_rectangle(buf->ct, 0.5 + _area.x0, 0.5 + _area.y0,
+            _area.x1 - _area.x0, _area.y1 - _area.y0);
 
+        if (_has_fill) {
+            ink_cairo_set_source_rgba32(buf->ct, _fill_color);
+            cairo_fill_preserve(buf->ct);
+        }
+        ink_cairo_set_source_rgba32(buf->ct, _border_color);
+        cairo_stroke(buf->ct);
+
+        if (_shadow_size > 0) {
+            ink_cairo_set_source_rgba32(buf->ct, _shadow_color);
+            cairo_rectangle(buf->ct, 1 + _area.x1, _area.y0 + _shadow_size,
+                _shadow_size, _area.y1 - _area.y0 + 1); // right shadow
+            cairo_rectangle(buf->ct, _area.x0 + _shadow_size, 1 + _area.y1,
+                _area.x1 - _area.x0 - _shadow_size + 1, _shadow_size);
+            cairo_fill(buf->ct);
+        }
+        cairo_restore(buf->ct);
+#if 0
         /* Top */
         sp_ctrlrect_hline(buf, _area.y0, _area.x0, _area.x1, _border_color, _dashed);
         /* Bottom */
@@ -216,6 +242,7 @@ void CtrlRect::render(SPCanvasBuf *buf)
             sp_ctrlrect_area(buf, _area.x0 + 1, _area.y0 + 1,
                              _area.x1 - 1, _area.y1 - 1, _fill_color);
         }
+#endif
     }
 }
 

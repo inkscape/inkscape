@@ -30,18 +30,11 @@
 #include "desktop-handles.h"
 #include "sp-namedview.h"
 #include "live_effects/effect.h"
-
 #include "sp-pattern.h"
 #include "sp-path.h"
-
 #include <glibmm/i18n.h>
-
 #include "object-edit.h"
-
-#include <libnr/nr-scale-ops.h>
-
 #include "xml/repr.h"
-
 #include "2geom/isnan.h"
 
 #define sp_round(v,m) (((v) < 0.0) ? ((ceil((v) / (m) - 0.5)) * (m)) : ((floor((v) / (m) + 0.5)) * (m)))

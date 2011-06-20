@@ -14,7 +14,6 @@
 
 #include <vector>
 #include <list>
-#include <libnr/nr-values.h> //Because of NR_HUGE
 #include <2geom/geom.h>
 #include <snap-candidate.h>
 
@@ -64,7 +63,7 @@ public:
     bool getAtIntersection() const {return _at_intersection;}
     bool getFullyConstrained() const {return _fully_constrained;}
     bool getConstrainedSnap() const {return _constrained_snap;}
-    bool getSnapped() const {return _distance < NR_HUGE;}
+    bool getSnapped() const {return _distance < Geom::infinity();}
     Geom::Point getTransformation() const {return _transformation;}
     void setTransformation(Geom::Point const t) {_transformation = t;}
     void setTarget(SnapTargetType const target) {_target = target;}

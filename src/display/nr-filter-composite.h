@@ -26,7 +26,8 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterComposite();
 
-    virtual int render(FilterSlot &slot, FilterUnits const &units);
+    virtual void render_cairo(FilterSlot &);
+    virtual bool can_handle_affine(Geom::Affine const &);
 
     virtual void set_input(int input);
     virtual void set_input(int input, int slot);

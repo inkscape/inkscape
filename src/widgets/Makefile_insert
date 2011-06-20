@@ -42,8 +42,6 @@ ink_common_sources +=	\
 	widgets/sp-color-icc-selector.h	\
 	widgets/sp-color-notebook.cpp	\
 	widgets/sp-color-notebook.h	\
-	widgets/sp-color-preview.cpp	\
-	widgets/sp-color-preview.h	\
 	widgets/sp-color-scales.cpp	\
 	widgets/sp-color-scales.h	\
 	widgets/sp-color-selector.cpp	\

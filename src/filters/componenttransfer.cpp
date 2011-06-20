@@ -21,9 +21,10 @@
 #include "document.h"
 #include "attributes.h"
 #include "svg/svg.h"
-#include "componenttransfer.h"
-#include "componenttransfer-funcnode.h"
+#include "filters/componenttransfer.h"
+#include "filters/componenttransfer-funcnode.h"
 #include "xml/repr.h"
+#include "display/nr-filter.h"
 #include "display/nr-filter-component-transfer.h"
 
 /* FeComponentTransfer base class */

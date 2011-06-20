@@ -31,41 +31,19 @@
 #include "sp-root.h"
 #include "sp-path.h"
 #include "style.h"
-//#include "color.h"
-//#include "display/curve.h"
-//#include "libnr/nr-point-matrix-ops.h"
-//#include "gtk/gtk.h"
 #include "print.h"
-//#include "glibmm/i18n.h"
-//#include "extension/extension.h"
 #include "extension/system.h"
 #include "extension/print.h"
 #include "extension/db.h"
 #include "extension/output.h"
-//#include "document.h"
 #include "display/nr-arena.h"
 #include "display/nr-arena-item.h"
-
-//#include "libnr/nr-rect.h"
-//#include "libnr/nr-matrix.h"
-//#include "libnr/nr-pixblock.h"
-
-//#include <stdio.h>
-//#include <string.h>
-
-//#include <vector>
-//#include <string>
-
-//#include "io/sys.h"
-
 #include "unit-constants.h"
-
 #include "clear-n_.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-#include "win32.h"
 #include "emf-win32-print.h"
 #include "emf-win32-inout.h"
 
@@ -2321,12 +2299,7 @@ EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
     HMETAFILE hmf;
     HENHMETAFILE hemf;
 
-    if (PrintWin32::is_os_wide()) {
-        fp = CreateFileW(unicode_uri, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-    }
-    else {
-        fp = CreateFileA(ansi_uri, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-    }
+    fp = CreateFileW(unicode_uri, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
     if ( fp != INVALID_HANDLE_VALUE ) {
         filesize = GetFileSize(fp, NULL);
@@ -2334,36 +2307,21 @@ EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
     }
 
     // Try open as Enhanced Metafile
-    if (PrintWin32::is_os_wide())
-        hemf = GetEnhMetaFileW(unicode_uri);
-    else
-        hemf = GetEnhMetaFileA(ansi_uri);
+    hemf = GetEnhMetaFileW(unicode_uri);
 
     if (!hemf) {
         // Try open as Windows Metafile
-        if (PrintWin32::is_os_wide())
-            hmf = GetMetaFileW(unicode_uri);
-        else
-            hmf = GetMetaFileA(ansi_uri);
+        hmf = GetMetaFileW(unicode_uri);
 
         METAFILEPICT mp;
         HDC hDC;
 
         if (!hmf) {
-            if (PrintWin32::is_os_wide()) {
-                WCHAR szTemp[MAX_PATH];
+            WCHAR szTemp[MAX_PATH];
 
-                DWORD dw = GetShortPathNameW( unicode_uri, szTemp, MAX_PATH );
-                if (dw) {
-                    hmf = GetMetaFileW( szTemp );
-                }
-            } else {
-                CHAR szTemp[MAX_PATH];
-
-                DWORD dw = GetShortPathNameA( ansi_uri, szTemp, MAX_PATH );
-                if (dw) {
-                    hmf = GetMetaFileA( szTemp );
-                }
+            DWORD dw = GetShortPathNameW( unicode_uri, szTemp, MAX_PATH );
+            if (dw) {
+                hmf = GetMetaFileW( szTemp );
             }
         }
 
@@ -2410,10 +2368,7 @@ EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
         else {
             // Try open as Aldus Placeable Metafile
             HANDLE hFile;
-            if (PrintWin32::is_os_wide())
-                hFile = CreateFileW( unicode_uri, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-            else
-                hFile = CreateFileA( ansi_uri, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+            hFile = CreateFileW( unicode_uri, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 
             if (hFile != INVALID_HANDLE_VALUE) {
                 DWORD nSize = GetFileSize( hFile, NULL );

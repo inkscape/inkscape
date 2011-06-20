@@ -56,10 +56,6 @@
 //#include "libnrtype/font-instance.h"
 //#include "libnrtype/font-style-to-pos.h"
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-
-#include "win32.h"
 #include "emf-win32-print.h"
 
 #include "unit-constants.h"
@@ -185,14 +181,11 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     snprintf(buff+len+1, sizeof(buff)-len-2, "%s", p);
     
     // Create the Metafile
-    if (PrintWin32::is_os_wide()) {
+    {
         WCHAR wbuff[1024];
         ZeroMemory(wbuff, sizeof(wbuff));
         MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, buff, sizeof(buff)/sizeof(buff[0]), wbuff, sizeof(wbuff)/sizeof(wbuff[0]));
         hdc = CreateEnhMetaFileW( hScreenDC, unicode_uri, &rc, wbuff );
-    }
-    else {
-        hdc = CreateEnhMetaFileA( hScreenDC, ansi_uri, &rc, buff );
     }
 
     // Release the reference DC
@@ -878,76 +871,40 @@ PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char const *text, Geom
 #endif
 
     if (!hfont) {
-        if (PrintWin32::is_os_wide()) {
-            LOGFONTW *lf = (LOGFONTW*)g_malloc(sizeof(LOGFONTW));
-            g_assert(lf != NULL);
-            
-            lf->lfHeight = style->font_size.computed * IN_PER_PX * dwDPI;
-            lf->lfWidth = 0;
-            lf->lfEscapement = rot;
-            lf->lfOrientation = rot;
-            lf->lfWeight =
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_100 ? FW_THIN :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_200 ? FW_EXTRALIGHT :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_300 ? FW_LIGHT :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_400 ? FW_NORMAL :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_500 ? FW_MEDIUM :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_600 ? FW_SEMIBOLD :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_700 ? FW_BOLD :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_800 ? FW_EXTRABOLD :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_900 ? FW_HEAVY :
-                FW_NORMAL;
-            lf->lfItalic = (style->font_style.computed == SP_CSS_FONT_STYLE_ITALIC);
-            lf->lfUnderline = style->text_decoration.underline;
-            lf->lfStrikeOut = style->text_decoration.line_through;
-            lf->lfCharSet = DEFAULT_CHARSET;
-            lf->lfOutPrecision = OUT_DEFAULT_PRECIS;
-            lf->lfClipPrecision = CLIP_DEFAULT_PRECIS;
-            lf->lfQuality = DEFAULT_QUALITY;
-            lf->lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-            
-            gunichar2 *unicode_name = g_utf8_to_utf16( style->text->font_family.value, -1, NULL, NULL, NULL );
-            wcsncpy(lf->lfFaceName, (wchar_t*) unicode_name, LF_FACESIZE-1);
-            g_free(unicode_name);
-            
-            hfont = CreateFontIndirectW(lf);
-            
-            g_free(lf);
-        }
-        else {
-            LOGFONTA *lf = (LOGFONTA*)g_malloc(sizeof(LOGFONTA));
-            g_assert(lf != NULL);
-            
-            lf->lfHeight = style->font_size.computed * IN_PER_PX * dwDPI;
-            lf->lfWidth = 0;
-            lf->lfEscapement = rot;
-            lf->lfOrientation = rot;
-            lf->lfWeight =
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_100 ? FW_THIN :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_200 ? FW_EXTRALIGHT :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_300 ? FW_LIGHT :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_400 ? FW_NORMAL :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_500 ? FW_MEDIUM :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_600 ? FW_SEMIBOLD :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_700 ? FW_BOLD :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_800 ? FW_EXTRABOLD :
-                style->font_weight.computed == SP_CSS_FONT_WEIGHT_900 ? FW_HEAVY :
-                FW_NORMAL;
-            lf->lfItalic = (style->font_style.computed == SP_CSS_FONT_STYLE_ITALIC);
-            lf->lfUnderline = style->text_decoration.underline;
-            lf->lfStrikeOut = style->text_decoration.line_through;
-            lf->lfCharSet = DEFAULT_CHARSET;
-            lf->lfOutPrecision = OUT_DEFAULT_PRECIS;
-            lf->lfClipPrecision = CLIP_DEFAULT_PRECIS;
-            lf->lfQuality = DEFAULT_QUALITY;
-            lf->lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-            
-            strncpy(lf->lfFaceName, (char*) style->text->font_family.value, LF_FACESIZE-1);
-
-            hfont = CreateFontIndirectA(lf);
-            
-            g_free(lf);
-        }
+        LOGFONTW *lf = (LOGFONTW*)g_malloc(sizeof(LOGFONTW));
+        g_assert(lf != NULL);
+        
+        lf->lfHeight = style->font_size.computed * IN_PER_PX * dwDPI;
+        lf->lfWidth = 0;
+        lf->lfEscapement = rot;
+        lf->lfOrientation = rot;
+        lf->lfWeight =
+            style->font_weight.computed == SP_CSS_FONT_WEIGHT_100 ? FW_THIN :
+            style->font_weight.computed == SP_CSS_FONT_WEIGHT_200 ? FW_EXTRALIGHT :
+            style->font_weight.computed == SP_CSS_FONT_WEIGHT_300 ? FW_LIGHT :
+            style->font_weight.computed == SP_CSS_FONT_WEIGHT_400 ? FW_NORMAL :
+            style->font_weight.computed == SP_CSS_FONT_WEIGHT_500 ? FW_MEDIUM :
+            style->font_weight.computed == SP_CSS_FONT_WEIGHT_600 ? FW_SEMIBOLD :
+            style->font_weight.computed == SP_CSS_FONT_WEIGHT_700 ? FW_BOLD :
+            style->font_weight.computed == SP_CSS_FONT_WEIGHT_800 ? FW_EXTRABOLD :
+            style->font_weight.computed == SP_CSS_FONT_WEIGHT_900 ? FW_HEAVY :
+            FW_NORMAL;
+        lf->lfItalic = (style->font_style.computed == SP_CSS_FONT_STYLE_ITALIC);
+        lf->lfUnderline = style->text_decoration.underline;
+        lf->lfStrikeOut = style->text_decoration.line_through;
+        lf->lfCharSet = DEFAULT_CHARSET;
+        lf->lfOutPrecision = OUT_DEFAULT_PRECIS;
+        lf->lfClipPrecision = CLIP_DEFAULT_PRECIS;
+        lf->lfQuality = DEFAULT_QUALITY;
+        lf->lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
+        
+        gunichar2 *unicode_name = g_utf8_to_utf16( style->text->font_family.value, -1, NULL, NULL, NULL );
+        wcsncpy(lf->lfFaceName, (wchar_t*) unicode_name, LF_FACESIZE-1);
+        g_free(unicode_name);
+        
+        hfont = CreateFontIndirectW(lf);
+        
+        g_free(lf);
     }
     
     HFONT hfontOld = (HFONT) SelectObject(hdc, hfont);
@@ -972,12 +929,9 @@ PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char const *text, Geom
     LONG const xpos = (LONG) round(p[Geom::X]);
     LONG const ypos = (LONG) round(rc.bottom-p[Geom::Y]);
 
-    if (PrintWin32::is_os_wide()) {
+    {
         gunichar2 *unicode_text = g_utf8_to_utf16( text, -1, NULL, NULL, NULL );
         TextOutW(hdc, xpos, ypos, (WCHAR*)unicode_text, wcslen((wchar_t*)unicode_text));
-    }
-    else {
-        TextOutA(hdc, xpos, ypos, (CHAR*)text, strlen((char*)text));
     }
 
     SelectObject(hdc, hfontOld);

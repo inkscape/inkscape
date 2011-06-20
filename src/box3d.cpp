@@ -386,7 +386,7 @@ Geom::Point
 box3d_get_corner_screen (SPBox3D const *box, guint id, bool item_coords) {
     Proj::Pt3 proj_corner (box3d_get_proj_corner (box, id));
     if (!box3d_get_perspective(box)) {
-        return Geom::Point (NR_HUGE, NR_HUGE);
+        return Geom::Point (Geom::infinity(), Geom::infinity());
     }
     Geom::Affine const i2d (SP_ITEM(box)->i2d_affine ());
     if (item_coords) {
@@ -410,7 +410,7 @@ Geom::Point
 box3d_get_center_screen (SPBox3D *box) {
     Proj::Pt3 proj_center (box3d_get_proj_center (box));
     if (!box3d_get_perspective(box)) {
-        return Geom::Point (NR_HUGE, NR_HUGE);
+        return Geom::Point (Geom::infinity(), Geom::infinity());
     }
     Geom::Affine const i2d (SP_ITEM(box)->i2d_affine ());
     return box3d_get_perspective(box)->perspective_impl->tmat.image(proj_center).affine() * i2d.inverse();
@@ -484,7 +484,7 @@ box3d_snap (SPBox3D *box, int id, Proj::Pt3 const &pt_proj, Proj::Pt3 const &sta
 
     // find the closest snapping point
     int snap_index = -1;
-    double snap_dist = NR_HUGE;
+    double snap_dist = Geom::infinity();
     for (int i = 0; i < num_snap_lines; ++i) {
         if (snap_dists[i] < snap_dist) {
             snap_index = i;

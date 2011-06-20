@@ -85,43 +85,6 @@ unsigned int sp_print_text(SPPrintContext *ctx, char const *text, Geom::Point p,
 /* UI */
 
 void
-sp_print_preview_document(SPDocument *doc)
-{
-    Inkscape::Extension::Print *mod;
-    unsigned int ret;
-
-    doc->ensureUpToDate();
-
-    mod = Inkscape::Extension::get_print(SP_MODULE_KEY_PRINT_DEFAULT);
-
-    ret = mod->set_preview();
-
-    if (ret) {
-        SPPrintContext context;
-        context.module = mod;
-
-        /* fixme: This has to go into module constructor somehow */
-        /* Create new arena */
-        mod->base = SP_ITEM(doc->getRoot());
-        mod->arena = NRArena::create();
-        mod->dkey = SPItem::display_key_new(1);
-        mod->root = (mod->base)->invoke_show(mod->arena, mod->dkey, SP_ITEM_SHOW_DISPLAY);
-        /* Print document */
-        ret = mod->begin(doc);
-        (mod->base)->invoke_print(&context);
-        ret = mod->finish();
-        /* Release arena */
-        (mod->base)->invoke_hide(mod->dkey);
-        mod->base = NULL;
-        mod->root = NULL;
-        nr_object_unref((NRObject *) mod->arena);
-        mod->arena = NULL;
-    }
-
-    return;
-}
-
-void
 sp_print_document(Gtk::Window& parentWindow, SPDocument *doc)
 {
     doc->ensureUpToDate();

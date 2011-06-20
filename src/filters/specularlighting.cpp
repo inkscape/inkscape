@@ -22,8 +22,12 @@
 #include "svg/svg.h"
 #include "sp-object.h"
 #include "svg/svg-color.h"
-#include "specularlighting.h"
+#include "filters/specularlighting.h"
+#include "filters/distantlight.h"
+#include "filters/pointlight.h"
+#include "filters/spotlight.h"
 #include "xml/repr.h"
+#include "display/nr-filter.h"
 #include "display/nr-filter-specularlighting.h"
 
 /* FeSpecularLighting base class */

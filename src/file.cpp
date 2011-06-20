@@ -31,7 +31,6 @@
 #include <gtk/gtk.h>
 #include <glib/gmem.h>
 #include <glibmm/i18n.h>
-#include <libnr/nr-pixops.h>
 
 #include "desktop.h"
 #include "desktop-handles.h"
@@ -1521,20 +1520,6 @@ sp_file_print(Gtk::Window& parentWindow)
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
     if (doc)
         sp_print_document(parentWindow, doc);
-}
-
-/**
- * Display what the drawing would look like, if
- * printed.
- */
-void
-sp_file_print_preview(gpointer /*object*/, gpointer /*data*/)
-{
-
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
-    if (doc)
-        sp_print_preview_document(doc);
-
 }
 
 

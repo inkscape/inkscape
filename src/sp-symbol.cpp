@@ -17,8 +17,6 @@
 #include <cstring>
 #include <string>
 
-#include "libnr/nr-matrix-fns.h"
-#include "libnr/nr-matrix-ops.h"
 #include <2geom/transforms.h>
 #include "display/nr-arena-group.h"
 #include "xml/repr.h"

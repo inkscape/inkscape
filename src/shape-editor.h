@@ -24,7 +24,6 @@ class SPNodeContext;
 class ShapeEditorsCollective;
 class LivePathEffectObject;
 
-#include "libnr/nr-path-code.h"
 #include <2geom/point.h>
 #include <boost/optional.hpp>
 #include <vector>

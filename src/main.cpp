@@ -96,9 +96,8 @@
 #include <extension/input.h>
 
 #ifdef WIN32
+#include <windows.h>
 #include "registrytool.h"
-#include "extension/internal/win32.h"
-using Inkscape::Extension::Internal::PrintWin32;
 #endif // WIN32
 
 #include "extension/init.h"
@@ -698,9 +697,6 @@ main(int argc, char **argv)
     }
 
 #ifdef WIN32
-#ifndef REPLACEARGS_ANSI
-    if ( PrintWin32::is_os_wide() )
-#endif // REPLACEARGS_ANSI
     {
         // If the call fails, we'll need to convert charsets
         needToRecodeParams = !replaceArgs( argc, argv );

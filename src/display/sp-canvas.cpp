@@ -15,21 +15,18 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+# include <config.h>
 #endif
 
-#include <libnr/nr-pixblock.h>
-
 #include <gtk/gtk.h>
-
 #include <gtkmm.h>
 
 #include "helper/sp-marshal.h"
 #include <helper/recthull.h>
+#include "display-forward.h"
+#include <2geom/affine.h>
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-group.h"
-#include <2geom/affine.h>
-#include "libnr/nr-convex-hull.h"
 #include "preferences.h"
 #include "inkscape.h"
 #include "sodipodi-ctrlrect.h"
@@ -37,8 +34,7 @@
 #include "color-profile-fns.h"
 #endif // ENABLE_LCMS
 #include "display/rendermode.h"
-#include "libnr/nr-blit.h"
-#include "display/inkscape-cairo.h"
+#include "display/cairo-utils.h"
 #include "debug/gdk-event-latency-tracker.h"
 #include "desktop.h"
 #include "sp-namedview.h"
@@ -315,7 +311,7 @@ sp_canvas_item_invoke_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **a
     if (SP_CANVAS_ITEM_GET_CLASS (item)->point)
         return SP_CANVAS_ITEM_GET_CLASS (item)->point (item, p, actual_item);
 
-    return NR_HUGE;
+    return Geom::infinity();
 }
 
 /**
@@ -1629,17 +1625,12 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
 {
     GtkWidget *widget = GTK_WIDGET (canvas);
 
-    SPCanvasBuf buf;
-    if (canvas->rendermode != Inkscape::RENDERMODE_OUTLINE) {
-        buf.buf = nr_pixelstore_256K_new (FALSE, 0);
-    } else {
-        buf.buf = nr_pixelstore_1M_new (FALSE, 0);
-    }
-
     // Mark the region clean
     sp_canvas_mark_rect(canvas, x0, y0, x1, y1, 0);
 
-    buf.buf_rowstride = sw * 4;
+    SPCanvasBuf buf;
+    buf.buf = NULL;
+    buf.buf_rowstride = 0;
     buf.rect.x0 = x0;
     buf.rect.y0 = y0;
     buf.rect.x1 = x1;
@@ -1648,114 +1639,75 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
     buf.visible_rect.y0 = draw_y1;
     buf.visible_rect.x1 = draw_x2;
     buf.visible_rect.y1 = draw_y2;
-    GdkColor *color = &widget->style->bg[GTK_STATE_NORMAL];
-    buf.bg_color = (((color->red & 0xff00) << 8)
-                    | (color->green & 0xff00)
-                    | (color->blue >> 8));
     buf.is_empty = true;
+    //buf.ct = gdk_cairo_create(widget->window);
 
-    buf.ct = nr_create_cairo_context_canvasbuf (&(buf.visible_rect), &buf);
+    // create temporary surface
+    int w = x1 - x0;
+    int h = y1 - y0;
+    cairo_surface_t *imgs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, x1 - x0, y1 - y0);
+    buf.ct = cairo_create(imgs);
+    //cairo_translate(buf.ct, -x0, -y0);
+
+    // fix coordinates, clip all drawing to the tile and clear the background
+    //cairo_translate(buf.ct, x0 - canvas->x0, y0 - canvas->y0);
+    //cairo_rectangle(buf.ct, 0, 0, x1 - x0, y1 - y0);
+    //cairo_set_line_width(buf.ct, 3);
+    //cairo_set_source_rgba(buf.ct, 1.0, 0.0, 0.0, 0.1);
+    //cairo_stroke_preserve(buf.ct);
+    //cairo_clip(buf.ct);
+
+    gdk_cairo_set_source_color(buf.ct, &widget->style->bg[GTK_STATE_NORMAL]);
+    cairo_set_operator(buf.ct, CAIRO_OPERATOR_SOURCE);
+    //cairo_rectangle(buf.ct, 0, 0, x1 - x0, y1 - y0);
+    cairo_paint(buf.ct);
+    cairo_set_operator(buf.ct, CAIRO_OPERATOR_OVER);
 
     if (canvas->root->flags & SP_CANVAS_ITEM_VISIBLE) {
         SP_CANVAS_ITEM_GET_CLASS (canvas->root)->render (canvas->root, &buf);
     }
 
-#if ENABLE_LCMS
-    cmsHTRANSFORM transf = 0;
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool fromDisplay = prefs->getBool( "/options/displayprofile/from_display");
-    if ( fromDisplay ) {
-        transf = Inkscape::colorprofile_get_display_per( canvas->cms_key ? *(canvas->cms_key) : "" );
-    } else {
-        transf = Inkscape::colorprofile_get_display_transform();
-    }
-#endif // ENABLE_LCMS
+    // output to X
+    cairo_destroy(buf.ct);
 
-    if (buf.is_empty) {
 #if ENABLE_LCMS
-        if ( transf && canvas->enable_cms_display_adj ) {
-            cmsDoTransform( transf, &buf.bg_color, &buf.bg_color, 1 );
+    if (canvas->enable_cms_display_adj) {
+        cmsHTRANSFORM transf = 0;
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        bool fromDisplay = prefs->getBool( "/options/displayprofile/from_display");
+        if ( fromDisplay ) {
+            transf = Inkscape::colorprofile_get_display_per( canvas->cms_key ? *(canvas->cms_key) : "" );
+        } else {
+            transf = Inkscape::colorprofile_get_display_transform();
         }
-#endif // ENABLE_LCMS
-        gdk_rgb_gc_set_foreground (canvas->pixmap_gc, buf.bg_color);
-        gdk_draw_rectangle (SP_CANVAS_WINDOW (canvas),
-                            canvas->pixmap_gc,
-                            TRUE,
-                            x0 - canvas->x0, y0 - canvas->y0,
-                            x1 - x0, y1 - y0);
-    } else {
-
-#if ENABLE_LCMS
-        if ( transf && canvas->enable_cms_display_adj ) {
-            for ( gint yy = 0; yy < (y1 - y0); yy++ ) {
-                guchar* p = buf.buf + (buf.buf_rowstride * yy);
-                cmsDoTransform( transf, p, p, (x1 - x0) );
+        
+        if (transf) {
+            cairo_surface_flush(imgs);
+            unsigned char *px = cairo_image_surface_get_data(imgs);
+            int stride = cairo_image_surface_get_stride(imgs);
+            for (int i=0; i<h; ++i) {
+                unsigned char *row = px + i*stride;
+                cmsDoTransform(transf, row, row, w);
             }
+            cairo_surface_mark_dirty(imgs);
         }
+    }
 #endif // ENABLE_LCMS
 
-// Now we only need to output the prepared pixmap to the actual screen, and this define chooses one
-// of the two ways to do it. The cairo way is direct and straightforward, but unfortunately
-// noticeably slower. I asked Carl Worth but he was unable so far to suggest any specific reason
-// for this slowness. So, for now we use the oldish method: squeeze out 32bpp buffer to 24bpp and
-// use gdk_draw_rgb_image_dithalign, for unfortunately gdk can only handle 24 bpp, which cairo
-// cannot handle at all. Still, this way is currently faster even despite the blit with squeeze.
+    cairo_t *xct = gdk_cairo_create(widget->window);
+    cairo_translate(xct, x0 - canvas->x0, y0 - canvas->y0);
+    cairo_rectangle(xct, 0, 0, x1-x0, y1-y0);
+    cairo_clip(xct);
+    cairo_set_source_surface(xct, imgs, 0, 0);
+    cairo_set_operator(xct, CAIRO_OPERATOR_SOURCE);
+    cairo_paint(xct);
+    cairo_destroy(xct);
+    cairo_surface_destroy(imgs);
 
-///#define CANVAS_OUTPUT_VIA_CAIRO
-
-#ifdef CANVAS_OUTPUT_VIA_CAIRO
-
-        buf.cst = cairo_image_surface_create_for_data (
-            buf.buf,
-            CAIRO_FORMAT_ARGB32,  // unpacked, i.e. 32 bits! one byte is unused
-            x1 - x0, y1 - y0,
-            buf.buf_rowstride
-            );
-        cairo_t *window_ct = gdk_cairo_create(SP_CANVAS_WINDOW (canvas));
-        cairo_set_source_surface (window_ct, buf.cst, x0 - canvas->x0, y0 - canvas->y0);
-        cairo_paint (window_ct);
-        cairo_destroy (window_ct);
-        cairo_surface_finish (buf.cst);
-        cairo_surface_destroy (buf.cst);
-
-#else
-
-        NRPixBlock b3;
-        nr_pixblock_setup_fast (&b3, NR_PIXBLOCK_MODE_R8G8B8, x0, y0, x1, y1, TRUE);
-
-        NRPixBlock b4;
-        nr_pixblock_setup_extern (&b4, NR_PIXBLOCK_MODE_R8G8B8A8P, x0, y0, x1, y1,
-                                  buf.buf,
-                                  buf.buf_rowstride,
-                                  FALSE, FALSE);
-
-        // this does the 32->24 squishing, using an assembler routine:
-        nr_blit_pixblock_pixblock (&b3, &b4);
-
-        gdk_draw_rgb_image_dithalign (SP_CANVAS_WINDOW (canvas),
-                                      canvas->pixmap_gc,
-                                      x0 - canvas->x0, y0 - canvas->y0,
-                                      x1 - x0, y1 - y0,
-                                      GDK_RGB_DITHER_MAX,
-                                      NR_PIXBLOCK_PX(&b3),
-                                      sw * 3,
-                                      x0 - canvas->x0, y0 - canvas->y0);
-
-        nr_pixblock_release (&b3);
-        nr_pixblock_release (&b4);
-#endif
-    }
-
-    cairo_surface_t *cst = cairo_get_target(buf.ct);
-    cairo_destroy (buf.ct);
-    cairo_surface_finish (cst);
-    cairo_surface_destroy (cst);
-
-    if (canvas->rendermode != Inkscape::RENDERMODE_OUTLINE) {
-        nr_pixelstore_256K_free (buf.buf);
-    } else {
-        nr_pixelstore_1M_free (buf.buf);
-    }
+    //cairo_surface_t *cst = cairo_get_target(buf.ct);
+    //cairo_destroy (buf.ct);
+    //cairo_surface_finish (cst);
+    //cairo_surface_destroy (cst);
 }
 
 struct PaintRectSetup {
@@ -1815,11 +1767,21 @@ sp_canvas_paint_rect_internal (PaintRectSetup const *setup, NRRectL this_rect)
 
     if (bw * bh < setup->max_pixels) {
         // We are small enough
+        /*GdkRectangle r;
+        r.x = this_rect.x0 - setup->canvas->x0;
+        r.y = this_rect.y0 - setup->canvas->y0;
+        r.width = this_rect.x1 - this_rect.x0;
+        r.height = this_rect.y1 - this_rect.y0;
+
+        GdkWindow *window = GTK_WIDGET(setup->canvas)->window;
+        gdk_window_begin_paint_rect(window, &r);*/
+
         sp_canvas_paint_single_buffer (setup->canvas,
                                        this_rect.x0, this_rect.y0,
                                        this_rect.x1, this_rect.y1,
                                        setup->big_rect.x0, setup->big_rect.y0,
                                        setup->big_rect.x1, setup->big_rect.y1, bw);
+        //gdk_window_end_paint(window);
         return 1;
     }
 

@@ -16,22 +16,21 @@
 # include "config.h"
 #endif
 
-#include <interface.h>
-#include <libnr/nr-pixops.h>
-#include <libnr/nr-translate-scale-ops.h>
+#include "interface.h"
 #include <2geom/rect.h>
 #include <glib/gmessages.h>
 #include <png.h>
 #include "png-write.h"
 #include "io/sys.h"
-#include <display/nr-arena-item.h>
-#include <display/nr-arena.h>
-#include <document.h>
-#include <sp-item.h>
-#include <sp-root.h>
-#include <sp-defs.h>
+#include "display/nr-arena-item.h"
+#include "display/nr-arena.h"
+#include "document.h"
+#include "sp-item.h"
+#include "sp-root.h"
+#include "sp-defs.h"
 #include "preferences.h"
 #include "rdf.h"
+#include "display/cairo-utils.h"
 
 /* This is an example of how to use libpng to read and write PNG files.
  * The file libpng.txt is much more verbose then this.  If you have not
@@ -49,7 +48,7 @@ static unsigned int const MAX_STRIPE_SIZE = 1024*1024;
 
 struct SPEBP {
     unsigned long int width, height, sheight;
-    guchar r, g, b, a;
+    guint32 background;
     NRArenaItem *root; // the root arena item to show; it is assumed that all unneeded items are hidden
     guchar *px;
     unsigned (*status)(float, void *);
@@ -122,7 +121,7 @@ void PngTextList::add(gchar const* key, gchar const* text)
 static bool
 sp_png_write_rgba_striped(SPDocument *doc,
                           gchar const *filename, unsigned long int width, unsigned long int height, double xdpi, double ydpi,
-                          int (* get_rows)(guchar const **rows, int row, int num_rows, void *data),
+                          int (* get_rows)(guchar const **rows, void **to_free, int row, int num_rows, void *data),
                           void *data)
 {
     struct SPEBP *ebp = (struct SPEBP *) data;
@@ -272,10 +271,12 @@ sp_png_write_rgba_striped(SPDocument *doc,
     png_bytep* row_pointers = new png_bytep[ebp->sheight];
 
     r = 0;
-    while (r < static_cast< png_uint_32 > (height) ) {
-        int n = get_rows((unsigned char const **) row_pointers, r, height-r, data);
+    while (r < static_cast<png_uint_32>(height)) {
+        void *to_free;
+        int n = get_rows((unsigned char const **) row_pointers, &to_free, r, height-r, data);
         if (!n) break;
         png_write_rows(png_ptr, row_pointers, n);
+        g_free(to_free);
         r += n;
     }
 
@@ -305,7 +306,7 @@ sp_png_write_rgba_striped(SPDocument *doc,
  *
  */
 static int
-sp_export_get_rows(guchar const **rows, int row, int num_rows, void *data)
+sp_export_get_rows(guchar const **rows, void **to_free, int row, int num_rows, void *data)
 {
     struct SPEBP *ebp = (struct SPEBP *) data;
 
@@ -332,29 +333,34 @@ sp_export_get_rows(guchar const **rows, int row, int num_rows, void *data)
     nr_arena_item_invoke_update(ebp->root, &bbox, &gc,
            NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
 
-    NRPixBlock pb;
-    nr_pixblock_setup_extern(&pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
-                             bbox.x0, bbox.y0, bbox.x1, bbox.y1,
-                             ebp->px, 4 * ebp->width, FALSE, FALSE);
+    int stride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, ebp->width);
+    unsigned char *px = g_new(guchar, num_rows * stride);
 
-    for (int r = 0; r < num_rows; r++) {
-        guchar *p = NR_PIXBLOCK_PX(&pb) + r * pb.rs;
-        for (int c = 0; c < static_cast<int>(ebp->width); c++) {
-            *p++ = ebp->r;
-            *p++ = ebp->g;
-            *p++ = ebp->b;
-            *p++ = ebp->a;
-        }
-    }
+    cairo_surface_t *s = cairo_image_surface_create_for_data(
+        px, CAIRO_FORMAT_ARGB32, ebp->width, num_rows, stride);
+    cairo_t *ct = cairo_create(s);
+    cairo_translate(ct, -bbox.x0, -bbox.y0);
+
+    ink_cairo_set_source_rgba32(ct, ebp->background);
+    cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
+    cairo_paint(ct);
+    cairo_set_operator(ct, CAIRO_OPERATOR_OVER);
 
     /* Render */
-    nr_arena_item_invoke_render(NULL, ebp->root, &bbox, &pb, 0);
+    nr_arena_item_invoke_render(ct, ebp->root, &bbox, NULL, 0);
+
+    cairo_destroy(ct);
+    cairo_surface_destroy(s);
+
+    *to_free = px;
+
+    // PNG stores data as unpremultiplied big-endian RGBA, which means
+    // it's identical to the GdkPixbuf format.
+    convert_pixels_argb32_to_pixbuf(px, ebp->width, num_rows, stride);
 
     for (int r = 0; r < num_rows; r++) {
-        rows[r] = NR_PIXBLOCK_PX(&pb) + r * pb.rs;
+        rows[r] = px + r * stride;
     }
-
-    nr_pixblock_release(&pb);
 
     return num_rows;
 }
@@ -451,10 +457,7 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     struct SPEBP ebp;
     ebp.width  = width;
     ebp.height = height;
-    ebp.r      = NR_RGBA32_R(bgcolor);
-    ebp.g      = NR_RGBA32_G(bgcolor);
-    ebp.b      = NR_RGBA32_B(bgcolor);
-    ebp.a      = NR_RGBA32_A(bgcolor);
+    ebp.background = bgcolor;
 
     /* Create new arena */
     NRArena *const arena = NRArena::create();
@@ -475,15 +478,12 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     ebp.status = status;
     ebp.data   = data;
 
-    bool write_status;
-    if ((width < 256) || ((width * height) < 32768)) {
-        ebp.px = nr_pixelstore_64K_new(FALSE, 0);
-        ebp.sheight = 65536 / (4 * width);
-        write_status = sp_png_write_rgba_striped(doc, filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
-        nr_pixelstore_64K_free(ebp.px);
-    } else {
-        ebp.sheight = 64;
-        ebp.px = g_try_new(guchar, 4 * ebp.sheight * width);
+    bool write_status = false;;
+
+    ebp.sheight = 64;
+    ebp.px = g_try_new(guchar, 4 * ebp.sheight * width);
+
+    if (ebp.px) {
         write_status = sp_png_write_rgba_striped(doc, filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         g_free(ebp.px);
     }

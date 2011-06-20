@@ -1,10 +1,6 @@
-#ifndef SP_FEFLOOD_H_SEEN
-#define SP_FEFLOOD_H_SEEN
-
-/** \file
- * SVG <feFlood> implementation, see Flood.cpp.
- */
-/*
+/** @file
+ * @brief SVG flood filter effect
+ *//*
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *
@@ -13,18 +9,21 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "sp-filter.h"
-#include "flood-fns.h"
+#ifndef SP_FEFLOOD_H_SEEN
+#define SP_FEFLOOD_H_SEEN
+
+#include "sp-filter-primitive.h"
 #include "svg/svg-icc-color.h"
 
-#include "display/nr-filter.h"
-#include "display/nr-filter-flood.h"
+#define SP_TYPE_FEFLOOD (sp_feFlood_get_type())
+#define SP_FEFLOOD(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FEFLOOD, SPFeFlood))
+#define SP_FEFLOOD_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FEFLOOD, SPFeFloodClass))
+#define SP_IS_FEFLOOD(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEFLOOD))
+#define SP_IS_FEFLOOD_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEFLOOD))
 
-/* FeFlood base class */
 class SPFeFloodClass;
 
 struct SPFeFlood : public SPFilterPrimitive {
-    /** FLOOD ATTRIBUTES HERE */
     guint32 color;
     SVGICCColor *icc;
     double opacity;

@@ -2,10 +2,7 @@
 # include <config.h>
 #endif
 
-#include <libnr/nr-blit.h>
 #include <libnrtype/font-instance.h>
-#include <libnrtype/raster-glyph.h>
-#include <libnrtype/RasterFont.h>
 #include <libnrtype/TextWrapper.h>
 #include <libnrtype/one-glyph.h>
 

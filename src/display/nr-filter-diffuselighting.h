@@ -18,16 +18,22 @@
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
-#include "filters/distantlight.h"
-#include "filters/pointlight.h"
-#include "filters/spotlight.h"
-#include "color.h"
+
+class SPFeDistantLight;
+class SPFePointLight;
+class SPFeSpotLight;
 
 namespace Inkscape {
 namespace Filters {
     
 class FilterDiffuseLighting : public FilterPrimitive {
 public:
+    FilterDiffuseLighting();
+    static FilterPrimitive *create();
+    virtual ~FilterDiffuseLighting();
+    virtual void render_cairo(FilterSlot &slot);
+    virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
+
     union {
         SPFeDistantLight *distant;
         SPFePointLight *point;
@@ -37,13 +43,6 @@ public:
     gdouble diffuseConstant;
     gdouble surfaceScale;
     guint32 lighting_color;
-    
-    FilterDiffuseLighting();
-    static FilterPrimitive *create();
-    virtual ~FilterDiffuseLighting();
-    virtual int render(FilterSlot &slot, FilterUnits const &units);
-    virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
-    virtual FilterTraits get_input_traits();
 
 private:
 };

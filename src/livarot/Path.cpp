@@ -9,7 +9,6 @@
 #include <glib.h>
 #include "Path.h"
 #include "livarot/path-description.h"
-#include <libnr/nr-matrix-ops.h>
 
 /*
  * manipulation of the path data: path description and polyline

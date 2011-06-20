@@ -33,7 +33,6 @@
 #include "uri.h"
 
 #include "display/nr-arena-group.h"
-#include "libnr/nr-matrix-fns.h"
 #include "xml/node.h"
 #include "xml/repr.h"
 

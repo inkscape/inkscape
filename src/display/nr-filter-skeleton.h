@@ -37,7 +37,7 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterSkeleton();
 
-    virtual int render(FilterSlot &slot, FilterUnits const &units);
+    virtual void render_cairo(FilterSlot &slot);
 
 private:
 

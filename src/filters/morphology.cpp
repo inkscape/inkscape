@@ -23,6 +23,7 @@
 #include "svg/svg.h"
 #include "morphology.h"
 #include "xml/repr.h"
+#include "display/nr-filter.h"
 #include "display/nr-filter-morphology.h"
 
 /* FeMorphology base class */

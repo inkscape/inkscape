@@ -16,9 +16,7 @@
 #endif
 
 
-#include <display/curve.h>
-#include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-matrix-fns.h>
+#include "display/curve.h"
 #include <2geom/rect.h>
 
 #include "inkscape.h"

@@ -1,3 +1,4 @@
+#include "sp-filter.h"
 #include "sp-filter-reference.h"
 
 bool

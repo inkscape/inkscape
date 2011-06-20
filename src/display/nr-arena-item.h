@@ -1,6 +1,3 @@
-#ifndef __NR_ARENA_ITEM_H__
-#define __NR_ARENA_ITEM_H__
-
 /*
  * RGBA display list system for inkscape
  *
@@ -12,6 +9,21 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#ifndef SEEN_DISPLAY_NR_ARENA_ITEM_H
+#define SEEN_DISPLAY_NR_ARENA_ITEM_H
+
+#include <cairo.h>
+#include <2geom/affine.h>
+#include "libnr/nr-rect-l.h"
+#include "libnr/nr-object.h"
+#include "gc-soft-ptr.h"
+#include "nr-arena-forward.h"
+
+namespace Inkscape {
+namespace Filters {
+class Filter;
+} }
 
 #define NR_TYPE_ARENA_ITEM (nr_arena_item_get_type ())
 #define NR_ARENA_ITEM(o) (NR_CHECK_INSTANCE_CAST ((o), NR_TYPE_ARENA_ITEM, NRArenaItem))
@@ -52,15 +64,6 @@
 
 #define NR_ARENA_ITEM_RENDER_NO_CACHE (1 << 0)
 
-#include <2geom/affine.h>
-#include <libnr/nr-rect-l.h>
-#include <libnr/nr-pixblock.h>
-#include <libnr/nr-object.h>
-#include "gc-soft-ptr.h"
-#include "nr-arena-forward.h"
-#include "display/nr-filter.h"
-#include <cairo.h>
-
 struct NRGC {
     NRGC(NRGC const *p) : parent(p) {}
     NRGC const *parent;
@@ -84,35 +87,22 @@ struct NRArenaItem : public NRObject {
     /* Opacity itself */
     unsigned int opacity : 8;
 
-    /* Key for secondary rendering */
-    unsigned int key;
+    unsigned int key; ///< Some SPItems can have more than one NRArenaItem,
+                      ///this value is a hack used to distinguish between them
 
-    /* BBox in grid coordinates */
-    NRRectL bbox;
-    /* Redraw area in grid coordinates = bbox filter-enlarged and clipped/masked */
-    NRRectL drawbox;
-    /* BBox in item coordinates - this should be a bounding box as
-     * specified in SVG standard. Required by filters. */
-    Geom::OptRect item_bbox;
-    /* Our affine */
-    Geom::Affine *transform;
-    /* Clip item */
-    NRArenaItem *clip;
-    /* Mask item */
-    NRArenaItem *mask;
-    /* Filter to be applied after rendering this object, NULL if none */
-    Inkscape::Filters::Filter *filter;
-    /* Rendered buffer */
-    unsigned char *px;
+    NRRectL bbox; ///< Bounding box in pixel grid coordinates; (0,0) is at page origin
+    NRRectL drawbox; ///< Bounding box enlarged by filters, shrinked by clips and masks
+    Geom::OptRect item_bbox; ///< Bounding box in item coordinates, required by filters
+    Geom::Affine *transform; ///< Incremental transform of this item, as given by the transform= attribute
+    Geom::Affine ctm; ///< Total transform from pixel grid to item coords
+    NRArenaItem *clip; ///< Clipping path
+    NRArenaItem *mask; ///< Mask
+    Inkscape::Filters::Filter *filter; ///< Filter
+    unsigned char *px; ///< Render cache; unused
 
-    /* Single data member */
-    void *data;
+    void *data; ///< Anonymous data member - this is used to associate SPItems with arena items
 
-    /* Current Transformation Matrix */
-    Geom::Affine ctm;
-
-    /* These hold background buffer state for filter rendering */
-    NRPixBlock *background_pb;
+    NRPixBlock *background_pb; ///< Background for filters; unused
     bool background_new;
 
     void init(NRArena *arena) {
@@ -129,7 +119,7 @@ struct NRArenaItemClass : public NRObjectClass {
 
     unsigned int (* update) (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int state, unsigned int reset);
     unsigned int (* render) (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
-    unsigned int (* clip) (NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
+    unsigned int (* clip) (cairo_t *ct, NRArenaItem *item, NRRectL *area);
     NRArenaItem * (* pick) (NRArenaItem *item, Geom::Point p, double delta, unsigned int sticky);
 };
 
@@ -159,7 +149,7 @@ unsigned int nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC
 
 unsigned int nr_arena_item_invoke_render(cairo_t *ct, NRArenaItem *item, NRRectL const *area, NRPixBlock *pb, unsigned int flags);
 
-unsigned int nr_arena_item_invoke_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
+unsigned int nr_arena_item_invoke_clip (cairo_t *ct, NRArenaItem *item, NRRectL *area);
 NRArenaItem *nr_arena_item_invoke_pick (NRArenaItem *item, Geom::Point p, double delta, unsigned int sticky);
 
 void nr_arena_item_request_update (NRArenaItem *item, unsigned int reset, unsigned int propagate);
@@ -194,8 +184,7 @@ NRArenaItem *nr_arena_item_detach (NRArenaItem *parent, NRArenaItem *child);
 #define NR_ARENA_ITEM_SET_KEY(i,k) (((NRArenaItem *) (i))->key = (k))
 #define NR_ARENA_ITEM_GET_KEY(i) (((NRArenaItem *) (i))->key)
 
-
-#endif /* !__NR_ARENA_ITEM_H__ */
+#endif /* !SEEN_DISPLAY_NR_ARENA_ITEM_H */
 
 /*
   Local Variables:

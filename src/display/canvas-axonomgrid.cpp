@@ -15,25 +15,24 @@
   * For example: the line drawing code should not be here. There _must_ be a function somewhere else that can provide this functionality...
   */
 
-#include "sp-canvas-util.h"
-#include "canvas-axonomgrid.h"
-#include "util/mathfns.h"
 #include "2geom/line.h"
-#include <libnr/nr-pixops.h>
-
+#include "desktop.h"
 #include "canvas-grid.h"
 #include "desktop-handles.h"
-#include "helper/units.h"
-#include "svg/svg-color.h"
-#include "xml/node-event-vector.h"
-#include "sp-object.h"
-
-#include "sp-namedview.h"
-#include "inkscape.h"
-#include "desktop.h"
-
+#include "display/cairo-utils.h"
+#include "display/canvas-axonomgrid.h"
+#include "display/canvas-grid.h"
+#include "display/display-forward.h"
+#include "display/sp-canvas-util.h"
 #include "document.h"
+#include "helper/units.h"
+#include "inkscape.h"
 #include "preferences.h"
+#include "sp-namedview.h"
+#include "sp-object.h"
+#include "svg/svg-color.h"
+#include "util/mathfns.h"
+#include "xml/node-event-vector.h"
 
 #define SAFE_SETPIXEL   //undefine this when it is certain that setpixel is never called with invalid params
 
@@ -45,37 +44,6 @@ enum Dim3 { X=0, Y, Z };
 
 static double deg_to_rad(double deg) { return deg*M_PI/180.0;}
 
-
-/**
-    \brief  This function renders a pixel on a particular buffer.
-
-    The topleft of the buffer equals
-                        ( rect.x0 , rect.y0 )  in screen coordinates
-                        ( 0 , 0 )  in setpixel coordinates
-    The bottomright of the buffer equals
-                        ( rect.x1 , rect,y1 )  in screen coordinates
-                        ( rect.x1 - rect.x0 , rect.y1 - rect.y0 )  in setpixel coordinates
-*/
-static void
-sp_caxonomgrid_setpixel (SPCanvasBuf *buf, gint x, gint y, guint32 rgba)
-{
-#ifdef SAFE_SETPIXEL
-    if ( (x >= buf->rect.x0) && (x < buf->rect.x1) && (y >= buf->rect.y0) && (y < buf->rect.y1) ) {
-#endif
-        guint r, g, b, a;
-        r = NR_RGBA32_R (rgba);
-        g = NR_RGBA32_G (rgba);
-        b = NR_RGBA32_B (rgba);
-        a = NR_RGBA32_A (rgba);
-        guchar * p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 4;
-        p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
-        p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
-        p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
-#ifdef SAFE_SETPIXEL
-    }
-#endif
-}
-
 /**
     \brief  This function renders a line on a particular canvas buffer,
             using Bresenham's line drawing function.
@@ -85,6 +53,12 @@ sp_caxonomgrid_setpixel (SPCanvasBuf *buf, gint x, gint y, guint32 rgba)
 static void
 sp_caxonomgrid_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, guint32 rgba)
 {
+    cairo_move_to(buf->ct, 0.5 + x0, 0.5 + y0);
+    cairo_line_to(buf->ct, 0.5 + x1, 0.5 + y1);
+    ink_cairo_set_source_rgba32(buf->ct, rgba);
+    cairo_stroke(buf->ct);
+
+#if 0
     int dy = y1 - y0;
     int dx = x1 - x0;
     int stepx, stepy;
@@ -118,30 +92,19 @@ sp_caxonomgrid_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, g
             sp_caxonomgrid_setpixel(buf, x0, y0, rgba);
         }
     }
-
+#endif
 }
 
 static void
 sp_grid_vline (SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba)
 {
-    if ((x >= buf->rect.x0) && (x < buf->rect.x1)) {
-        guint r, g, b, a;
-        gint y0, y1, y;
-        guchar *p;
-        r = NR_RGBA32_R(rgba);
-        g = NR_RGBA32_G (rgba);
-        b = NR_RGBA32_B (rgba);
-        a = NR_RGBA32_A (rgba);
-        y0 = MAX (buf->rect.y0, ys);
-        y1 = MIN (buf->rect.y1, ye + 1);
-        p = buf->buf + (y0 - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 4;
-        for (y = y0; y < y1; y++) {
-            p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
-            p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
-            p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
-            p += buf->buf_rowstride;
-        }
-    }
+    if ((x < buf->rect.x0) || (x >= buf->rect.x1))
+        return;
+
+    cairo_move_to(buf->ct, 0.5 + x, 0.5 + ys);
+    cairo_line_to(buf->ct, 0.5 + x, 0.5 + ye);
+    ink_cairo_set_source_rgba32(buf->ct, rgba);
+    cairo_stroke(buf->ct);
 }
 
 namespace Inkscape {
@@ -561,6 +524,11 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
         _empcolor = empcolor;
     }
 
+    cairo_save(buf->ct);
+    cairo_translate(buf->ct, -buf->rect.x0, -buf->rect.y0);
+    cairo_set_line_width(buf->ct, 1.0);
+    cairo_set_line_cap(buf->ct, CAIRO_LINE_CAP_SQUARE);
+
     // gc = gridcoordinates (the coordinates calculated from the grids origin 'grid->ow'.
     // sc = screencoordinates ( for example "buf->rect.x0" is in screencoordinates )
     // bc = buffer patch coordinates
@@ -658,6 +626,8 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, _empcolor);
         }
     }
+
+    cairo_restore(buf->ct);
 }
 
 CanvasAxonomGridSnapper::CanvasAxonomGridSnapper(CanvasAxonomGrid *grid, SnapManager *sm, Geom::Coord const d) : LineSnapper(sm, d)

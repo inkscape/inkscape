@@ -1,6 +1,3 @@
-#ifndef __SP_FILTER_CHEMISTRY_H__
-#define __SP_FILTER_CHEMISTRY_H__
-
 /*
  * Various utility methods for filters
  *
@@ -14,8 +11,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifndef SEEN_SP_FILTER_CHEMISTRY_H
+#define SEEN_SP_FILTER_CHEMISTRY_H
+
 #include "forward.h"
-#include "sp-filter.h"
+#include "display/nr-filter-types.h"
+
+class SPFilter;
+class SPFilterPrimitive;
 
 SPFilterPrimitive *filter_add_primitive(SPFilter *filter, Inkscape::Filters::FilterPrimitiveType);
 SPFilter *new_filter (SPDocument *document);

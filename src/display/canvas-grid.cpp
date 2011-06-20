@@ -12,25 +12,26 @@
  * Don't be shy to correct things.
  */
 
-#include "sp-canvas-group.h"
+#include "desktop.h"
 #include "sp-canvas-util.h"
 #include "util/mathfns.h"
-#include "libnr/nr-pixops.h"
+#include "display-forward.h"
 #include "desktop-handles.h"
+#include "display/cairo-utils.h"
+#include "display/canvas-axonomgrid.h"
+#include "display/canvas-grid.h"
+#include "display/display-forward.h"
+#include "display/sp-canvas-util.h"
+#include "display/sp-canvas-group.h"
+#include "document.h"
 #include "helper/units.h"
-#include "svg/svg-color.h"
-#include "xml/node-event-vector.h"
-#include "sp-object.h"
-
-#include "sp-namedview.h"
 #include "inkscape.h"
-#include "desktop.h"
-
-#include "../document.h"
 #include "preferences.h"
-
-#include "canvas-grid.h"
-#include "canvas-axonomgrid.h"
+#include "sp-namedview.h"
+#include "sp-object.h"
+#include "svg/svg-color.h"
+#include "util/mathfns.h"
+#include "xml/node-event-vector.h"
 
 using Inkscape::DocumentUndo;
 
@@ -831,65 +832,86 @@ CanvasXYGrid::Update (Geom::Affine const &affine, unsigned int /*flags*/)
 static void
 grid_hline (SPCanvasBuf *buf, gint y, gint xs, gint xe, guint32 rgba)
 {
-    if ((y >= buf->rect.y0) && (y < buf->rect.y1)) {
-        guint r, g, b, a;
-        gint x0, x1, x;
-        guchar *p;
-        r = NR_RGBA32_R (rgba);
-        g = NR_RGBA32_G (rgba);
-        b = NR_RGBA32_B (rgba);
-        a = NR_RGBA32_A (rgba);
-        x0 = MAX (buf->rect.x0, xs);
-        x1 = MIN (buf->rect.x1, xe + 1);
-        p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 4;
-        for (x = x0; x < x1; x++) {
-            p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
-            p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
-            p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
-            p += 4;
-        }
+    if ((y < buf->rect.y0) || (y >= buf->rect.y1))
+        return;
+
+    cairo_move_to(buf->ct, 0.5 + xs, 0.5 + y);
+    cairo_line_to(buf->ct, 0.5 + xe, 0.5 + y);
+    ink_cairo_set_source_rgba32(buf->ct, rgba);
+    cairo_stroke(buf->ct);
+#if 0
+    guint r, g, b, a;
+    gint x0, x1, x;
+    guchar *p;
+    r = NR_RGBA32_R (rgba);
+    g = NR_RGBA32_G (rgba);
+    b = NR_RGBA32_B (rgba);
+    a = NR_RGBA32_A (rgba);
+    x0 = MAX (buf->rect.x0, xs);
+    x1 = MIN (buf->rect.x1, xe + 1);
+    p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 4;
+    for (x = x0; x < x1; x++) {
+        p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
+        p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
+        p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
+        p += 4;
     }
+#endif
 }
 
 static void
 grid_vline (SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba)
 {
-    if ((x >= buf->rect.x0) && (x < buf->rect.x1)) {
-        guint r, g, b, a;
-        gint y0, y1, y;
-        guchar *p;
-        r = NR_RGBA32_R(rgba);
-        g = NR_RGBA32_G (rgba);
-        b = NR_RGBA32_B (rgba);
-        a = NR_RGBA32_A (rgba);
-        y0 = MAX (buf->rect.y0, ys);
-        y1 = MIN (buf->rect.y1, ye + 1);
-        p = buf->buf + (y0 - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 4;
-        for (y = y0; y < y1; y++) {
-            p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
-            p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
-            p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
-            p += buf->buf_rowstride;
-        }
+    if ((x < buf->rect.x0) || (x >= buf->rect.x1))
+        return;
+
+    cairo_move_to(buf->ct, 0.5 + x, 0.5 + ys);
+    cairo_line_to(buf->ct, 0.5 + x, 0.5 + ye);
+    ink_cairo_set_source_rgba32(buf->ct, rgba);
+    cairo_stroke(buf->ct);
+    #if 0
+    guint r, g, b, a;
+    gint y0, y1, y;
+    guchar *p;
+    r = NR_RGBA32_R(rgba);
+    g = NR_RGBA32_G (rgba);
+    b = NR_RGBA32_B (rgba);
+    a = NR_RGBA32_A (rgba);
+    y0 = MAX (buf->rect.y0, ys);
+    y1 = MIN (buf->rect.y1, ye + 1);
+    p = buf->buf + (y0 - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 4;
+    for (y = y0; y < y1; y++) {
+        p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
+        p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
+        p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
+        p += buf->buf_rowstride;
     }
+    #endif
 }
 
 static void
 grid_dot (SPCanvasBuf *buf, gint x, gint y, guint32 rgba)
 {
-    if ( (y >= buf->rect.y0) && (y < buf->rect.y1)
-         && (x >= buf->rect.x0) && (x < buf->rect.x1) ) {
-        guint r, g, b, a;
-        guchar *p;
-        r = NR_RGBA32_R (rgba);
-        g = NR_RGBA32_G (rgba);
-        b = NR_RGBA32_B (rgba);
-        a = NR_RGBA32_A (rgba);
-        p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 4;
-        p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
-        p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
-        p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
-    }
+    if ( (y < buf->rect.y0) || (y >= buf->rect.y1)
+         || (x < buf->rect.x0) || (x >= buf->rect.x1) )
+        return;
+
+    cairo_rectangle(buf->ct, x, y, 1, 1);
+    ink_cairo_set_source_rgba32(buf->ct, rgba);
+    cairo_fill(buf->ct);
+
+#if 0
+    guint r, g, b, a;
+    guchar *p;
+    r = NR_RGBA32_R (rgba);
+    g = NR_RGBA32_G (rgba);
+    b = NR_RGBA32_B (rgba);
+    a = NR_RGBA32_A (rgba);
+    p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 4;
+    p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
+    p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
+    p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
+#endif
 }
 
 void
@@ -909,6 +931,11 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     } else {
         _empcolor = empcolor;
     }
+
+    cairo_save(buf->ct);
+    cairo_translate(buf->ct, -buf->rect.x0, -buf->rect.y0);
+    cairo_set_line_width(buf->ct, 1.0);
+    cairo_set_line_cap(buf->ct, CAIRO_LINE_CAP_SQUARE);
 
     if (!render_dotted) {
         gint ylinenum;
@@ -961,6 +988,7 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
 
         }
     }
+    cairo_restore(buf->ct);
 }
 
 CanvasXYGridSnapper::CanvasXYGridSnapper(CanvasXYGrid *grid, SnapManager *sm, Geom::Coord const d) : LineSnapper(sm, d)

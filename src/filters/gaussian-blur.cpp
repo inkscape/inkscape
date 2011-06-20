@@ -19,7 +19,7 @@
 
 #include "attributes.h"
 #include "svg/svg.h"
-#include "sp-gaussian-blur.h"
+#include "filters/gaussian-blur.h"
 #include "xml/repr.h"
 
 #include "display/nr-filter.h"

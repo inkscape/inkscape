@@ -61,11 +61,6 @@
 #include "sp-title.h"
 #include "sp-desc.h"
 
-#include "libnr/nr-matrix-fns.h"
-#include "libnr/nr-matrix-scale-ops.h"
-#include "libnr/nr-matrix-translate-ops.h"
-#include "libnr/nr-scale-translate-ops.h"
-#include "libnr/nr-translate-scale-ops.h"
 #include "libnr/nr-convert2geom.h"
 #include "util/find-last-if.h"
 #include "util/reverse-list.h"
@@ -743,8 +738,8 @@ void SPItem::invoke_bbox_full( Geom::OptRect &bbox, Geom::Affine const &transfor
     // TODO: replace NRRect by Geom::Rect, for all SPItemClasses, and for SP_CLIPPATH
 
     NRRect temp_bbox;
-    temp_bbox.x0 = temp_bbox.y0 = NR_HUGE;
-    temp_bbox.x1 = temp_bbox.y1 = -NR_HUGE;
+    temp_bbox.x0 = temp_bbox.y0 = Geom::infinity();
+    temp_bbox.x1 = temp_bbox.y1 = -Geom::infinity();
 
     // call the subclass method
     if (((SPItemClass *) G_OBJECT_GET_CLASS(this))->bbox) {
@@ -816,7 +811,7 @@ void SPItem::invoke_bbox_full( Geom::OptRect &bbox, Geom::Affine const &transfor
 
     if (temp_bbox.x0 > temp_bbox.x1 || temp_bbox.y0 > temp_bbox.y1) {
         // Either the bbox hasn't been touched by the SPItemClass' bbox method
-        // (it still has its initial values, see above: x0 = y0 = NR_HUGE and x1 = y1 = -NR_HUGE)
+        // (it still has its initial values, see above: x0 = y0 = Geom::infinity() and x1 = y1 = -Geom::infinity())
         // or it has explicitely been set to be like this (e.g. in sp_shape_bbox)
 
         // When x0 > x1 or y0 > y1, the bbox is considered to be "nothing", although it has not been
@@ -1190,7 +1185,9 @@ void SPItem::adjust_gradient( Geom::Affine const &postmul, bool set )
 
 void SPItem::adjust_stroke( gdouble ex )
 {
-    if ( style && !style->stroke.isNone() && !NR_DF_TEST_CLOSE(ex, 1.0, NR_EPSILON) ) {
+    SPStyle *style = this->style;
+
+    if (style && !style->stroke.isNone() && !Geom::are_near(ex, 1.0, Geom::EPSILON)) {
         style->stroke_width.computed *= ex;
         style->stroke_width.set = TRUE;
 

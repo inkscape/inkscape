@@ -9,28 +9,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <cmath>
 #include <vector>
-
-#include "2geom/isnan.h"
-#include "filters/merge.h"
+#include "display/cairo-utils.h"
 #include "display/nr-filter-merge.h"
-#include "display/nr-filter-pixops.h"
 #include "display/nr-filter-slot.h"
-#include "display/nr-filter-units.h"
 #include "display/nr-filter-utils.h"
-#include "libnr/nr-blit.h"
-#include "libnr/nr-pixblock.h"
-#include "libnr/nr-pixops.h"
-
-inline void
-composite_over(unsigned char *r, unsigned char const *a, unsigned char const *b)
-{
-    r[0] = a[0] + NR_NORMALIZE_21(b[0] * (255 - a[3]));
-    r[1] = a[1] + NR_NORMALIZE_21(b[1] * (255 - a[3]));
-    r[2] = a[2] + NR_NORMALIZE_21(b[2] * (255 - a[3]));
-    r[3] = a[3] + NR_NORMALIZE_21(b[3] * (255 - a[3]));
-}
 
 namespace Inkscape {
 namespace Filters {
@@ -46,70 +29,42 @@ FilterPrimitive * FilterMerge::create() {
 FilterMerge::~FilterMerge()
 {}
 
-int FilterMerge::render(FilterSlot &slot, FilterUnits const &/*units*/) {
-    NRPixBlock *in[_input_image.size()];
-    NRPixBlock *original_in[_input_image.size()];
+void FilterMerge::render_cairo(FilterSlot &slot)
+{
+    if (_input_image.size() == 0) return;
 
-    for (unsigned int i = 0 ; i < _input_image.size() ; i++) {
-        in[i] = slot.get(_input_image[i]);
-        original_in[i] = in[i];
-    }
-
-    NRPixBlock *out;
-
-    // Bail out if one of source images is missing
-    for (unsigned int i = 0 ; i < _input_image.size() ; i++) {
-        bool missing = false;
-        if (!in[i]) {
-            g_warning("Missing source image for feMerge (number=%d slot=%d)", i, _input_image[i]);
-            missing = true;
-        }
-        if (missing) return 1;
-    }
-
-    out = new NRPixBlock;
-    NRRectL out_area = in[0]->area;
-    for (unsigned int i = 1 ; i < _input_image.size() ; i++) {
-        nr_rect_l_union(&out_area, &out_area, &in[i]->area);
-    }
-    nr_pixblock_setup_fast(out, NR_PIXBLOCK_MODE_R8G8B8A8P,
-                           out_area.x0, out_area.y0, out_area.x1, out_area.y1,
-                           true);
-
-    // Merge is defined for premultiplied RGBA values, thus convert them to
-    // that format before blending
-    for (unsigned int i = 0 ; i < _input_image.size() ; i++) {
-        if (in[i]->mode != NR_PIXBLOCK_MODE_R8G8B8A8P) {
-            in[i] = new NRPixBlock;
-            nr_pixblock_setup_fast(in[i], NR_PIXBLOCK_MODE_R8G8B8A8P,
-                                   original_in[i]->area.x0,
-                                   original_in[i]->area.y0,
-                                   original_in[i]->area.x1,
-                                   original_in[i]->area.y1,
-                                   false);
-            nr_blit_pixblock_pixblock(in[i], original_in[i]);
+    // output is RGBA if at least one input is RGBA
+    bool rgba32 = false;
+    cairo_surface_t *out = NULL;
+    for (std::vector<int>::iterator i = _input_image.begin(); i != _input_image.end(); ++i) {
+        cairo_surface_t *in = slot.getcairo(*i);
+        if (cairo_surface_get_content(in) == CAIRO_CONTENT_COLOR_ALPHA) {
+            out = ink_cairo_surface_create_identical(in);
+            rgba32 = true;
+            break;
         }
     }
 
-    /* pixops_mix is defined in display/nr-filter-pixops.h
-     * It mixes the two input images with the function given as template
-     * and places the result in output image.
-     */
-    for (unsigned int i = 0 ; i < _input_image.size() ; i++) {
-        pixops_mix<composite_over>(*out, *in[i], *out);
+    if (!rgba32) {
+        out = ink_cairo_surface_create_identical(slot.getcairo(_input_image[0]));
+    }
+    cairo_t *out_ct = cairo_create(out);
+
+    for (std::vector<int>::iterator i = _input_image.begin(); i != _input_image.end(); ++i) {
+        cairo_surface_t *in = slot.getcairo(*i);
+        cairo_set_source_surface(out_ct, in, 0, 0);
+        cairo_paint(out_ct);
     }
 
-    for (unsigned int i = 0 ; i < _input_image.size() ; i++) {
-        if (in[i] != original_in[i]) {
-            nr_pixblock_release(in[i]);
-            delete in[i];
-        }
-    }
-
-    out->empty = FALSE;
+    cairo_destroy(out_ct);
     slot.set(_output, out);
+    cairo_surface_destroy(out);
+}
 
-    return 0;
+bool FilterMerge::can_handle_affine(Geom::Affine const &)
+{
+    // Merge is a per-pixel primitive and is immutable under transformations
+    return true;
 }
 
 void FilterMerge::set_input(int slot) {

@@ -5,9 +5,6 @@ class font_factory;
 struct font_glyph;
 class font_instance;
 struct font_style;
-class raster_font;
-class raster_glyph;
-class raster_position;
 
 #endif /* !SEEN_LIBNRTYPE_NRTYPE_FORWARD_H */
 

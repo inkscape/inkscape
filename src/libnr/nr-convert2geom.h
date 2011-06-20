@@ -9,7 +9,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <libnr/nr-matrix.h>
 #include <libnr/nr-rect.h>
 #include <libnr/nr-point.h>
 #include <2geom/affine.h>
@@ -22,19 +21,6 @@ inline Geom::Point to_2geom(NR::Point const & _pt) {
 }
 inline NR::Point from_2geom(Geom::Point const & _pt) {
     return NR::Point(_pt[0], _pt[1]);
-}
-
-inline Geom::Affine to_2geom(NR::Matrix const & mat) {
-    Geom::Affine mat2geom(mat[0], mat[1], mat[2], mat[3], mat[4], mat[5]);
-    return mat2geom;
-}
-inline NR::Matrix from_2geom(Geom::Affine const & mat) {
-    NR::Matrix mat2geom(mat[0], mat[1], mat[2], mat[3], mat[4], mat[5]);
-    return mat2geom;
-}
-
-inline Geom::Translate to_2geom(NR::translate const & mat) {
-    return Geom::Translate( mat.offset[0], mat.offset[1] );
 }
 
 inline Geom::Rect to_2geom(NR::Rect const & rect) {
@@ -52,13 +38,6 @@ inline Geom::OptRect to_2geom(boost::optional<NR::Rect> const & rect) {
     }
     rect2geom = to_2geom(*rect);
     return rect2geom;
-}
-
-inline NR::scale from_2geom(Geom::Scale const & in) {
-    return NR::scale(in[Geom::X], in[Geom::Y]);
-}
-inline Geom::Scale to_2geom(NR::scale const & in) {
-    return Geom::Scale(in[NR::X], in[NR::Y]);
 }
 
 #endif

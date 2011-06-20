@@ -19,14 +19,15 @@
  *
  */
 
-#include "sp-canvas-util.h"
-#include "sp-ctrlline.h"
-
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include <color.h>
-#include "display/inkscape-cairo.h"
+
+#include "display/sp-ctrlline.h"
+#include "display/display-forward.h"
+#include "display/sp-canvas-util.h"
+#include "display/cairo-utils.h"
+#include "color.h"
 
 
 static void sp_ctrlline_class_init (SPCtrlLineClass *klass);
@@ -105,11 +106,7 @@ sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf)
     if (cl->s == cl->e)
         return;
 
-    sp_canvas_prepare_buffer (buf);
-
-    guint32 rgba = cl->rgba;
-    cairo_set_source_rgba(buf->ct, SP_RGBA32_B_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_R_F(rgba), SP_RGBA32_A_F(rgba));
-
+    ink_cairo_set_source_rgba32(buf->ct, cl->rgba);
     cairo_set_line_width(buf->ct, 1);
     cairo_new_path(buf->ct);
 

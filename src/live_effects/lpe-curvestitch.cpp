@@ -58,7 +58,7 @@ LPECurveStitch::LPECurveStitch(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&scale_y_rel) );
 
     nrofpaths.param_make_integer();
-    nrofpaths.param_set_range(2, NR_HUGE);
+    nrofpaths.param_set_range(2, Geom::infinity());
 
     prop_scale.param_set_digits(3);
     prop_scale.param_set_increments(0.01, 0.10);

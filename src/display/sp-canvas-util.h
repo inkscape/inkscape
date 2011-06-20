@@ -21,11 +21,6 @@ void sp_canvas_update_bbox (SPCanvasItem *item, int x1, int y1, int x2, int y2);
 void sp_canvas_item_reset_bounds (SPCanvasItem *item);
 void sp_canvas_prepare_buffer (SPCanvasBuf *buf);
 
-/* fill buffer with background color */
-
-void
-sp_canvas_clear_buffer (SPCanvasBuf * buf);
-
 /* get i2p (item to parent) affine transformation as general 6-element array */
 
 Geom::Affine sp_canvas_item_i2p_affine (SPCanvasItem * item);

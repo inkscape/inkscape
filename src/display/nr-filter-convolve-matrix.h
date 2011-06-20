@@ -13,13 +13,13 @@
  */
 
 #include "display/nr-filter-primitive.h"
-#include "display/nr-filter-slot.h"
-#include "display/nr-filter-units.h"
 #include "libnr/nr-rect-l.h"
 #include <vector>
 
 namespace Inkscape {
 namespace Filters {
+
+class FilterSlot;
 
 enum FilterConvolveMatrixEdgeMode {
     CONVOLVEMATRIX_EDGEMODE_DUPLICATE,
@@ -34,9 +34,8 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterConvolveMatrix();
 
-    virtual int render(FilterSlot &slot, FilterUnits const &units);
+    virtual void render_cairo(FilterSlot &slot);
     virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
-    virtual FilterTraits get_input_traits();
 
     void set_targetY(int coord);
     void set_targetX(int coord);

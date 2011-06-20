@@ -28,12 +28,24 @@ namespace NR {
 /**
  * a type of 3 gdouble components vectors
  */
-typedef gdouble Fvector[3];
+struct Fvector {
+    Fvector() {
+        v[0] = v[1] = v[2] = 0.0;
+    }
+    Fvector(double x, double y, double z) {
+        v[0] = x;
+        v[1] = y;
+        v[2] = z;
+    }
+    double v[3];
+    double &operator[](unsigned i) { return v[i]; }
+    double operator[](unsigned i) const { return v[i]; }
+};
 
 /**
  * The eye vector
  */
-const static Fvector EYE_VECTOR = {0, 0, 1};
+const static Fvector EYE_VECTOR(0, 0, 1);
 
 /**
  * returns the euclidian norm of the vector v
@@ -67,22 +79,6 @@ gdouble scalar_product(const Fvector &a, const Fvector &b);
  * \param b a Fvector reference
  */
 void normalized_sum(Fvector &r, const Fvector &a, const Fvector &b);
-
-/**
- * Computes the unit suface normal vector of surface given by "in" at (i, j)
- * and store it into N. "in" is a (NRPixBlock *) in mode RGBA but only the alpha
- * channel is considered as a bump map. ss is the altitude when for the alpha
- * value 255. dx and dy are the deltas used to compute in our discrete setting
- *
- * \param N a reference to a Fvector in which we store the unit surface normal
- * \param ss the surface scale
- * \param in a NRPixBlock * whose alpha channel codes the surface
- * \param i the x coordinate of the point at which we compute the normal
- * \param j the y coordinate of the point at which we compute the normal
- * \param dx the delta used in the x coordinate
- * \param dy the delta used in the y coordinate
- */
-void compute_surface_normal(Fvector &N, gdouble ss, NRPixBlock *in, int i, int j, int dx, int dy);
 
 /**
  * Applies the transformation matrix to (x, y, z). This function assumes that

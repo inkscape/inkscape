@@ -369,8 +369,11 @@ sp_text_edit_dialog (void)
             }
 
             /* Font preview */
-            GtkWidget *preview = sp_font_preview_new ();
-            gtk_box_pack_start (GTK_BOX (vb), preview, TRUE, TRUE, 4);
+            GtkLabel *preview = (GtkLabel*) gtk_label_new(NULL);
+            gtk_label_set_ellipsize(preview, PANGO_ELLIPSIZE_END);
+            gtk_label_set_justify(preview, GTK_JUSTIFY_CENTER);
+            gtk_label_set_line_wrap(preview, FALSE);
+            gtk_box_pack_start (GTK_BOX (vb), (GtkWidget*) preview, TRUE, TRUE, 4);
             g_object_set_data (G_OBJECT (dlg), "preview", preview);
         }
 
@@ -697,7 +700,7 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
 
     g_object_set_data (G_OBJECT (dlg), "blocked", GINT_TO_POINTER (TRUE));
 
-    GtkWidget *notebook = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "notebook");
+    //GtkWidget *notebook = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "notebook");
     GtkWidget *textw = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "textw");
     GtkWidget *fontsel = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "fontsel");
     GtkWidget *preview = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "preview");
@@ -707,6 +710,12 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
     GtkTextBuffer *tb = (GtkTextBuffer*)g_object_get_data (G_OBJECT (dlg), "text");
 
     SPItem *text = sp_ted_get_selected_text_item ();
+
+    /* TRANSLATORS: Test string used in text and font dialog (when no
+     * text has been entered) to get a preview of the font.  Choose
+     * some representative characters that users of your locale will be
+     * interested in. */
+    gchar *phrase = g_strdup(_("AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()"));
 
     Inkscape::XML::Node *repr;
     if (text)
@@ -732,12 +741,10 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
                     gtk_text_buffer_set_text (tb, str, strlen (str));
                     gtk_text_buffer_set_modified (tb, FALSE);
                 }
-                sp_font_preview_set_phrase (SP_FONT_PREVIEW (preview), str);
-                g_free (str);
+                phrase = str;
 
             } else {
                 gtk_text_buffer_set_text (tb, "", 0);
-                sp_font_preview_set_phrase (SP_FONT_PREVIEW (preview), NULL);
             }
         } // end of if (docontent)
         repr = text->getRepr();
@@ -774,7 +781,13 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
         if (font) {
             // the font is oversized, so we need to pass the true size separately
             sp_font_selector_set_font (SP_FONT_SELECTOR (fontsel), font, query->font_size.computed);
-            sp_font_preview_set_font (SP_FONT_PREVIEW (preview), font, SP_FONT_SELECTOR(fontsel));
+            char *desc = pango_font_description_to_string(font->descr);
+            double size = sp_font_selector_get_size(SP_FONT_SELECTOR(fontsel));
+            gchar *markup = g_strdup_printf("<span font=\"%s\" size=\"%d\">%s</span>",
+                desc, (int) size * PANGO_SCALE, phrase);
+            gtk_label_set_markup(GTK_LABEL(preview), markup);
+            g_free(desc);
+            g_free(markup);
             font->Unref();
             font=NULL;
         }
@@ -812,7 +825,7 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
 
         sp_style_unref(query);
     }
-
+    g_free(phrase);
     g_object_set_data (G_OBJECT (dlg), "blocked", NULL);
 }
 
@@ -820,7 +833,7 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
 static void
 sp_text_edit_dialog_text_changed (GtkTextBuffer *tb, GtkWidget *dlg)
 {
-    GtkWidget *textw, *preview, *apply, *def;
+    GtkWidget *textw, *preview, *apply, *def, *fontsel;
     GtkTextIter start, end;
     gchar *str;
 
@@ -833,14 +846,23 @@ sp_text_edit_dialog_text_changed (GtkTextBuffer *tb, GtkWidget *dlg)
     preview = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "preview");
     apply = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "apply");
     def = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "default");
+    fontsel = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "fontsel");
 
     gtk_text_buffer_get_bounds (tb, &start, &end);
     str = gtk_text_buffer_get_text (tb, &start, &end, TRUE);
+    font_instance *font = sp_font_selector_get_font(SP_FONT_SELECTOR(fontsel));
 
-    if (str && *str) {
-        sp_font_preview_set_phrase (SP_FONT_PREVIEW (preview), str);
+    if (font) {
+        gchar *phrase = str && *str ? str : _("AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()");
+        char *desc = pango_font_description_to_string(font->descr);
+        double size = sp_font_selector_get_size(SP_FONT_SELECTOR(fontsel));
+        gchar *markup = g_strdup_printf("<span font=\"%s\" size=\"%d\">%s</span>",
+            desc, (int) size * PANGO_SCALE, phrase);
+        gtk_label_set_markup(GTK_LABEL(preview), markup);
+        g_free(desc);
+        g_free(markup);
     } else {
-        sp_font_preview_set_phrase (SP_FONT_PREVIEW (preview), NULL);
+        gtk_label_set_markup(GTK_LABEL(preview), NULL);
     }
     g_free (str);
 
@@ -865,7 +887,9 @@ sp_text_edit_dialog_font_changed ( SPFontSelector *fsel,
                                    font_instance *font,
                                    GtkWidget *dlg )
 {
-    GtkWidget *preview, *apply, *def;
+    GtkWidget *preview, *apply, *def, *fontsel;
+    GtkTextIter start, end;
+    gchar *str;
 
     if (g_object_get_data (G_OBJECT (dlg), "blocked"))
         return;
@@ -875,11 +899,27 @@ sp_text_edit_dialog_font_changed ( SPFontSelector *fsel,
     preview = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "preview");
     apply = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "apply");
     def = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "default");
+    fontsel = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "fontsel");
 
-    sp_font_preview_set_font (SP_FONT_PREVIEW (preview), font, SP_FONT_SELECTOR(fsel));
+    GtkTextBuffer *tb = (GtkTextBuffer*)g_object_get_data (G_OBJECT (dlg), "text");
+    gtk_text_buffer_get_bounds (tb, &start, &end);
+    str = gtk_text_buffer_get_text (tb, &start, &end, TRUE);
 
-    if (text)
-    {
+    if (font) {
+        gchar *phrase = str && *str ? str : _("AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()");
+        char *desc = pango_font_description_to_string(font->descr);
+        double size = sp_font_selector_get_size(SP_FONT_SELECTOR(fontsel));
+        gchar *markup = g_strdup_printf("<span font=\"%s\" size=\"%d\">%s</span>",
+            desc, (int) size * PANGO_SCALE, phrase);
+        gtk_label_set_markup(GTK_LABEL(preview), markup);
+        g_free(desc);
+        g_free(markup);
+    } else {
+        gtk_label_set_markup(GTK_LABEL(preview), NULL);
+    }
+    g_free(str);
+
+    if (text) {
         gtk_widget_set_sensitive (apply, TRUE);
     }
     gtk_widget_set_sensitive (def, TRUE);

@@ -16,18 +16,22 @@
 
 #include <stdexcept>
 #include <limits>
+#include <glib.h>
 
 #include "libnr/nr-values.h"
 #include <libnr/nr-coord.h>
 #include <libnr/nr-i-coord.h>
 #include <libnr/nr-dim2.h>
 #include <libnr/nr-point.h>
+#include "libnr/nr-point-ops.h"
+#include "libnr/nr-macros.h"
 #include <boost/optional.hpp>
-#include <libnr/nr-point-matrix-ops.h>
 #include <libnr/nr-forward.h>
 #include <2geom/rect.h>
 
 namespace NR {
+
+class Matrix;
 
 /** A rectangle is always aligned to the X and Y axis.  This means it
  * can be defined using only 4 coordinates, and determining
@@ -134,11 +138,6 @@ public:
     /** Scales the rect by s, with origin at 0, 0 */
     inline Rect operator*(double const s) const {
         return Rect(s * min(), s * max());
-    }
-
-    /** Transforms the rect by m. Note that it gives correct results only for scales and translates */
-    inline Rect operator*(Matrix const m) const {
-        return Rect(_min * m, _max * m);
     }
 
     inline bool operator==(Rect const &in_rect) {

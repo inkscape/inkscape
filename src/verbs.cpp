@@ -824,9 +824,6 @@ FileVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_FILE_VACUUM:
             sp_file_vacuum();
             break;
-        case SP_VERB_FILE_PRINT_PREVIEW:
-            sp_file_print_preview(NULL, NULL);
-            break;
         case SP_VERB_FILE_IMPORT:
             sp_file_import(*parent);
             break;
@@ -2258,8 +2255,6 @@ Verb *Verb::_base_verbs[] = {
     // TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
     new FileVerb(SP_VERB_FILE_VACUUM, "FileVacuum", N_("Vac_uum Defs"), N_("Remove unused definitions (such as gradients or clipping paths) from the &lt;defs&gt; of the document"),
                  INKSCAPE_ICON_DOCUMENT_CLEANUP ),
-    new FileVerb(SP_VERB_FILE_PRINT_PREVIEW, "FilePrintPreview", N_("Print Previe_w"),
-                 N_("Preview document printout"), GTK_STOCK_PRINT_PREVIEW ),
     new FileVerb(SP_VERB_FILE_IMPORT, "FileImport", N_("_Import..."),
                  N_("Import a bitmap or SVG image into this document"), INKSCAPE_ICON_DOCUMENT_IMPORT),
     new FileVerb(SP_VERB_FILE_EXPORT, "FileExport", N_("_Export Bitmap..."),

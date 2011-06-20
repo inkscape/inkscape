@@ -24,8 +24,6 @@
 
 #include "display/nr-arena-group.h"
 #include "display/curve.h"
-#include "libnr/nr-matrix-ops.h"
-#include "libnr/nr-matrix-fns.h"
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "document.h"
@@ -707,7 +705,7 @@ void CGroup::calculateBBox(NRRect *bbox, Geom::Affine const &transform, unsigned
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM(o) && !SP_ITEM(o)->isHidden()) {
             SPItem *child = SP_ITEM(o);
-            Geom::Affine const ct(to_2geom(child->transform) * transform);
+            Geom::Affine const ct(child->transform * transform);
             child->invoke_bbox_full( dummy_bbox, ct, flags, FALSE);
         }
         l = g_slist_remove (l, o);

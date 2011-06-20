@@ -12,13 +12,13 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "display/nr-filter-primitive.h"
-#include "display/nr-filter-slot.h"
-#include "display/nr-filter-units.h"
 #include <vector>
+#include "display/nr-filter-primitive.h"
 
 namespace Inkscape {
 namespace Filters {
+
+class FilterSlot;
 
 enum FilterComponentTransferType {
     COMPONENTTRANSFER_TYPE_IDENTITY,
@@ -35,7 +35,8 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterComponentTransfer();
 
-    virtual int render(FilterSlot &slot, FilterUnits const &units);
+    virtual void render_cairo(FilterSlot &slot);
+    virtual bool can_handle_affine(Geom::Affine const &);
     virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
 
     FilterComponentTransferType type[4];

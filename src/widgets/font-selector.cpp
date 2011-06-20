@@ -20,24 +20,24 @@
 # include "config.h"
 #endif
 
-#include <libnr/nr-blit.h>
-#include <libnr/nr-convert2geom.h>
 #include <libnrtype/font-instance.h>
-#include <libnrtype/raster-glyph.h>
-#include <libnrtype/RasterFont.h>
-#include <libnrtype/TextWrapper.h>
-#include <libnrtype/one-glyph.h>
 #include <libnrtype/font-lister.h>
 
 #include <2geom/transforms.h>
 
 #include <gtk/gtk.h>
+#include <gtk/gtkframe.h>
+#include <gtk/gtkscrolledwindow.h>
+#include <gtk/gtkclist.h>
+#include <gtk/gtkvbox.h>
+#include <gtk/gtkcombo.h>
+#include <gtk/gtkentry.h>
+#include <gtk/gtkdrawingarea.h>
 
-#include "../display/nr-plain-stuff-gdk.h"
 #include <glibmm/i18n.h>
 
-#include "../desktop.h"
-#include "font-selector.h"
+#include "desktop.h"
+#include "widgets/font-selector.h"
 
 /* SPFontSelector */
 
@@ -130,13 +130,12 @@ static void sp_font_selector_class_init(SPFontSelectorClass *c)
 
     fs_parent_class = (GtkHBoxClass* )gtk_type_class(GTK_TYPE_HBOX);
 
-    fs_signals[FONT_SET] = g_signal_new ("font_set",
-                                           G_TYPE_FROM_CLASS(object_class),
-                                           G_SIGNAL_RUN_FIRST,
-                                           G_STRUCT_OFFSET(SPFontSelectorClass, font_set),
-					   NULL, NULL,
+    fs_signals[FONT_SET] = gtk_signal_new ("font_set",
+                                           GTK_RUN_FIRST,
+                                           GTK_CLASS_TYPE(object_class),
+                                           GTK_SIGNAL_OFFSET(SPFontSelectorClass, font_set),
                                            gtk_marshal_NONE__POINTER,
-                                           G_TYPE_NONE,
+                                           GTK_TYPE_NONE,
                                            1, GTK_TYPE_POINTER);
 
     object_class->destroy = sp_font_selector_destroy;
@@ -148,10 +147,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_box_set_spacing(GTK_BOX(fsel), 4);
 
         /* Family frame */
-		GtkWidget *ft = gtk_label_new_with_mnemonic(_("F_ont family"));
-        GtkWidget *f = gtk_frame_new(NULL);
-		gtk_frame_set_label_widget ((GtkFrame*)f, ft);
-		
+        GtkWidget *f = gtk_frame_new(_("Font family"));
         gtk_widget_show (f);
         gtk_box_pack_start (GTK_BOX(fsel), f, TRUE, TRUE, 0);
 
@@ -175,7 +171,6 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_tree_view_set_model (GTK_TREE_VIEW(fsel->family_treeview), GTK_TREE_MODEL (Glib::unwrap (store)));
         gtk_container_add(GTK_CONTAINER(sw), fsel->family_treeview);
         gtk_widget_show_all (sw);
-		gtk_label_set_mnemonic_widget((GtkLabel*)ft, fsel->family_treeview);
 
         GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(fsel->family_treeview));
         g_signal_connect (G_OBJECT(selection), "changed", G_CALLBACK (sp_font_selector_family_select_row), fsel);
@@ -183,9 +178,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
 
 
         /* Style frame */
-		ft = gtk_label_new_with_mnemonic(C_("Font selector", "_Style"));
-        f = gtk_frame_new(NULL);
-		gtk_frame_set_label_widget ((GtkFrame*)f, ft);
+        f = gtk_frame_new(C_("Font selector", "Style"));
         gtk_widget_show(f);
         gtk_box_pack_start(GTK_BOX (fsel), f, TRUE, TRUE, 0);
 
@@ -210,7 +203,6 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(fsel->style_treeview), FALSE);
         gtk_container_add(GTK_CONTAINER(sw), fsel->style_treeview);
         gtk_widget_show_all (sw);
-		gtk_label_set_mnemonic_widget((GtkLabel*)ft, fsel->style_treeview);
 
         selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(fsel->style_treeview));
         g_signal_connect (G_OBJECT(selection), "changed", G_CALLBACK (sp_font_selector_style_select_row), fsel);
@@ -224,14 +216,13 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         g_signal_connect (G_OBJECT(fsel->size), "changed", G_CALLBACK (sp_font_selector_size_changed), fsel);
         gtk_box_pack_end (GTK_BOX(hb), fsel->size, FALSE, FALSE, 0);
 
-        GtkWidget *l = gtk_label_new_with_mnemonic(_("Font si_ze:"));
+        GtkWidget *l = gtk_label_new(_("Font size:"));
         gtk_widget_show_all (l);
         gtk_box_pack_end(GTK_BOX (hb), l, FALSE, FALSE, 0);
-		gtk_label_set_mnemonic_widget((GtkLabel*)l, fsel->size);
 
         for (unsigned int n = 0; sizes[n]; ++n)
             {
-                gtk_combo_box_append_text ((GtkComboBox *)fsel->size, sizes[n]);
+                gtk_combo_box_append_text (GTK_COMBO_BOX(fsel->size), sizes[n]);
             }
 
         gtk_widget_show_all (fsel->size);
@@ -389,7 +380,7 @@ static void sp_font_selector_emit_set (SPFontSelector *fsel)
             fsel->font->Unref();
         }
         fsel->font = font;
-        g_signal_emit(G_OBJECT(fsel), fs_signals[FONT_SET], 0, fsel->font);
+        gtk_signal_emit(GTK_OBJECT(fsel), fs_signals[FONT_SET], fsel->font);
     }
     fsel->fontsize_dirty = false;
     if (font) {
@@ -520,321 +511,6 @@ double sp_font_selector_get_size(SPFontSelector *fsel)
 {
     return fsel->fontsize;
 }
-
-/* SPFontPreview */
-
-struct SPFontPreview
-{
-    GtkDrawingArea darea;
-
-    font_instance *font;
-    raster_font *rfont;
-    gchar *phrase;
-    unsigned long rgba;
-};
-
-struct SPFontPreviewClass
-{
-    GtkDrawingAreaClass parent_class;
-};
-
-static void sp_font_preview_class_init(SPFontPreviewClass *c);
-static void sp_font_preview_init(SPFontPreview *fsel);
-static void sp_font_preview_destroy(GtkObject *object);
-
-void sp_font_preview_size_request(GtkWidget *widget, GtkRequisition *req);
-static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event);
-
-static GtkDrawingAreaClass *fp_parent_class = NULL;
-
-GType sp_font_preview_get_type()
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPFontPreviewClass),
-            0, // base_init
-            0, // base_finalize
-            (GClassInitFunc)sp_font_preview_class_init,
-            0, // class_finalize
-            0, // class_data
-            sizeof(SPFontPreview),
-            0, // n_preallocs
-            (GInstanceInitFunc)sp_font_preview_init,
-            0 // value_table
-        };
-        type = g_type_register_static(GTK_TYPE_DRAWING_AREA, "SPFontPreview", &info, static_cast<GTypeFlags>(0));
-    }
-    return type;
-}
-
-static void sp_font_preview_class_init (SPFontPreviewClass *c)
-{
-    GtkObjectClass *object_class = (GtkObjectClass *) c;
-    GtkWidgetClass *widget_class = (GtkWidgetClass *) c;
-
-    fp_parent_class = (GtkDrawingAreaClass*) gtk_type_class(GTK_TYPE_DRAWING_AREA);
-
-    object_class->destroy = sp_font_preview_destroy;
-
-    widget_class->size_request = sp_font_preview_size_request;
-    widget_class->expose_event = sp_font_preview_expose;
-}
-
-static void sp_font_preview_init(SPFontPreview *fprev)
-{
-    fprev->rgba = 0x000000ff;
-}
-
-static void sp_font_preview_destroy(GtkObject *object)
-{
-    SPFontPreview *fprev = SP_FONT_PREVIEW (object);
-
-    if (fprev->rfont) {
-        fprev->rfont->Unref();
-        fprev->rfont = NULL;
-    }
-
-    if (fprev->font) {
-        fprev->font->Unref();
-        fprev->font = NULL;
-    }
-
-    g_free(fprev->phrase);
-    fprev->phrase = NULL;
-
-    if (GTK_OBJECT_CLASS (fp_parent_class)->destroy) {
-        GTK_OBJECT_CLASS (fp_parent_class)->destroy(object);
-    }
-}
-
-void sp_font_preview_size_request(GtkWidget */*widget*/, GtkRequisition *req)
-{
-    req->width = 256;
-    req->height = 32;
-}
-
-#define SPFP_MAX_LEN 64
-
-static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
-{
-    SPFontPreview *fprev = SP_FONT_PREVIEW(widget);
-
-    if (gtk_widget_is_drawable (widget)) {
-        if (fprev->rfont) {
-
-            int glyphs[SPFP_MAX_LEN];
-            double hpos[SPFP_MAX_LEN];
-
-            font_instance *tface = fprev->rfont->daddy;
-
-            double theSize = fprev->rfont->style.transform.descrim();
-
-            gchar const *p;
-            if (fprev->phrase) {
-                p = fprev->phrase;
-            } else {
-                /* TRANSLATORS: Test string used in text and font dialog (when no
-                 * text has been entered) to get a preview of the font.  Choose
-                 * some representative characters that users of your locale will be
-                 * interested in. */
-                p = _("AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()");
-            }
-            int len = 0;
-
-            NRRect bbox;
-            bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
-
-            text_wrapper* str_text=new text_wrapper;
-            str_text->SetDefaultFont(tface);
-            str_text->AppendUTF8(p,-1);
-            if ( str_text->uni32_length > 0 ) {
-                str_text->DoLayout();
-                if ( str_text->glyph_length > 0 ) {
-                    PangoFont *curPF = NULL;
-                    font_instance *curF = NULL;
-                    for (int i = 0; i < str_text->glyph_length && i < SPFP_MAX_LEN; i++) {
-                        if ( str_text->glyph_text[i].font != curPF ) {
-                            curPF = str_text->glyph_text[i].font;
-                            if (curF) {
-                                curF->Unref();
-                            }
-                            curF = NULL;
-                            if ( curPF ) {
-                                PangoFontDescription* pfd = pango_font_describe(curPF);
-                                curF = (font_factory::Default())->Face(pfd);
-                                pango_font_description_free(pfd);
-                            }
-                        }
-                        Geom::Point base_pt(str_text->glyph_text[i].x, str_text->glyph_text[i].y);
-                        base_pt *= theSize;
-
-                        glyphs[len] = str_text->glyph_text[i].gl;
-                        hpos[len] = base_pt[0];
-                        len++;
-                        if ( curF ) {
-                            Geom::OptRect nbbox = curF->BBox(str_text->glyph_text[i].gl);
-                            if (nbbox) {
-                                bbox.x0 = MIN(bbox.x0, base_pt[Geom::X] + theSize * (nbbox->min())[0]);
-                                bbox.y0 = MIN(bbox.y0, base_pt[Geom::Y] - theSize * (nbbox->max())[1]);
-                                bbox.x1 = MAX(bbox.x1, base_pt[Geom::X] + theSize * (nbbox->max())[0]);
-                                bbox.y1 = MAX(bbox.y1, base_pt[Geom::Y] - theSize * (nbbox->min())[1]);
-                            }
-                        }
-                    }
-                    if ( curF ) {
-                        curF->Unref();
-                    }
-                }
-            }
-
-            // XXX: FIXME: why does this code ignore adv.y
-            /*                  while (p && *p && (len < SPFP_MAX_LEN)) {
-                                unsigned int unival;
-                                NRRect gbox;
-                                unival = g_utf8_get_char (p);
-                                glyphs[len] =  tface->MapUnicodeChar( unival);
-                                hpos[len] = (int)px;
-                                Geom::Point adv = fprev->rfont->Advance(glyphs[len]);
-                                fprev->rfont->BBox( glyphs[len], &gbox);
-                                bbox.x0 = MIN (px + gbox.x0, bbox.x0);
-                                bbox.y0 = MIN (py + gbox.y0, bbox.y0);
-                                bbox.x1 = MAX (px + gbox.x1, bbox.x1);
-                                bbox.y1 = MAX (py + gbox.y1, bbox.y1);
-                                px += adv[Geom::X];
-                                len += 1;
-                                p = g_utf8_next_char (p);
-                                }*/
-
-            float startx = (widget->allocation.width - (bbox.x1 - bbox.x0)) / 2;
-            float starty = widget->allocation.height - (widget->allocation.height - (bbox.y1 - bbox.y0)) / 2 - bbox.y1;
-
-            for (int y = event->area.y; y < event->area.y + event->area.height; y += 64) {
-                for (int x = event->area.x; x < event->area.x + event->area.width; x += 64) {
-                    NRPixBlock pb, m;
-                    int x0 = x;
-                    int y0 = y;
-                    int x1 = MIN(x0 + 64, event->area.x + event->area.width);
-                    int y1 = MIN(y0 + 64, event->area.y + event->area.height);
-                    guchar *ps = nr_pixelstore_16K_new (TRUE, 0xff);
-                    nr_pixblock_setup_extern(&pb, NR_PIXBLOCK_MODE_R8G8B8, x0, y0, x1, y1, ps, 3 * (x1 - x0), FALSE, FALSE);
-                    nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, x0, y0, x1, y1, TRUE);
-                    pb.empty = FALSE;
-
-                    PangoFont *curPF = NULL;
-                    font_instance *curF = NULL;
-                    raster_font *curRF = NULL;
-                    for (int i=0; i < len; i++) {
-                        if ( str_text->glyph_text[i].font != curPF ) {
-                            curPF=str_text->glyph_text[i].font;
-                            if ( curF ) {
-                                curF->Unref();
-                            }
-                            curF = NULL;
-                            if ( curPF ) {
-                                PangoFontDescription* pfd = pango_font_describe(curPF);
-                                curF=(font_factory::Default())->Face(pfd);
-                                pango_font_description_free(pfd);
-                            }
-                            if ( curF ) {
-                                if ( curRF ) {
-                                    curRF->Unref();
-                                }
-                                curRF = NULL;
-                                curRF = curF->RasterFont(fprev->rfont->style);
-                            }
-                        }
-                        raster_glyph *g = (curRF) ? curRF->GetGlyph(glyphs[i]) : NULL;
-                        if ( g ) {
-                            g->Blit(Geom::Point(hpos[i] + startx, starty), m);
-                        }
-                    }
-                    if (curRF) {
-                        curRF->Unref();
-                    }
-                    if (curF) {
-                        curF->Unref();
-                    }
-
-                    nr_blit_pixblock_mask_rgba32(&pb, &m, fprev->rgba);
-                    gdk_draw_rgb_image(widget->window, widget->style->black_gc,
-                                       x0, y0, x1 - x0, y1 - y0,
-                                       GDK_RGB_DITHER_NONE, NR_PIXBLOCK_PX (&pb), pb.rs);
-                    nr_pixblock_release(&m);
-                    nr_pixblock_release(&pb);
-                    nr_pixelstore_16K_free(ps);
-                }
-            }
-
-            delete str_text;
-
-        } else {
-            nr_gdk_draw_gray_garbage(widget->window, widget->style->black_gc,
-                                     event->area.x, event->area.y,
-                                     event->area.width, event->area.height);
-        }
-    }
-
-    return TRUE;
-}
-
-GtkWidget * sp_font_preview_new()
-{
-    GtkWidget *w = (GtkWidget*) gtk_type_new(SP_TYPE_FONT_PREVIEW);
-
-    return w;
-}
-
-void sp_font_preview_set_font(SPFontPreview *fprev, font_instance *font, SPFontSelector *fsel)
-{
-        if (font)
-        {
-            font->Ref();
-        }
-
-        if (fprev->font)
-        {
-            fprev->font->Unref();
-        }
-
-        fprev->font = font;
-
-        if (fprev->rfont)
-        {
-            fprev->rfont->Unref();
-            fprev->rfont=NULL;
-        }
-
-        if (fprev->font)
-        {
-            Geom::Affine flip(Geom::Scale(fsel->fontsize, -fsel->fontsize));
-            fprev->rfont = fprev->font->RasterFont(flip, 0);
-        }
-
-        if (gtk_widget_is_drawable (GTK_WIDGET (fprev))) gtk_widget_queue_draw (GTK_WIDGET (fprev));
-}
-
-void sp_font_preview_set_rgba32(SPFontPreview *fprev, guint32 rgba)
-{
-    fprev->rgba = rgba;
-    if (gtk_widget_is_drawable (GTK_WIDGET (fprev))) {
-        gtk_widget_queue_draw (GTK_WIDGET (fprev));
-    }
-}
-
-void sp_font_preview_set_phrase(SPFontPreview *fprev, const gchar *phrase)
-{
-    g_free (fprev->phrase);
-    if (phrase) {
-        fprev->phrase = g_strdup (phrase);
-    } else {
-        fprev->phrase = NULL;
-    }
-    if (gtk_widget_is_drawable( GTK_WIDGET (fprev))) {
-        gtk_widget_queue_draw (GTK_WIDGET (fprev));
-    }
-}
-
 
 /*
   Local Variables:

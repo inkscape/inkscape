@@ -1,6 +1,3 @@
-#ifndef __NR_FILTER_PRIMITIVE_H__
-#define __NR_FILTER_PRIMITIVE_H__
-
 /*
  * SVG filters rendering
  *
@@ -11,14 +8,19 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+#ifndef SEEN_NR_FILTER_PRIMITIVE_H
+#define SEEN_NR_FILTER_PRIMITIVE_H
 
-#include "display/nr-filter-slot.h"
-#include "libnr/nr-pixblock.h"
-#include "libnr/nr-rect-l.h"
+#include <2geom/forward.h>
 #include "svg/svg-length.h"
+
+struct NRRectL;
 
 namespace Inkscape {
 namespace Filters {
+
+class FilterSlot;
+class FilterUnits;
 
 /*
  * Different filter effects need different types of inputs. This is what
@@ -43,7 +45,8 @@ public:
     FilterPrimitive();
     virtual ~FilterPrimitive();
 
-    virtual int render(FilterSlot &slot, FilterUnits const &units) = 0;
+    virtual void render_cairo(FilterSlot &slot);
+    virtual int render(FilterSlot &slot, FilterUnits const &units) { return 0; }
     virtual void area_enlarge(NRRectL &area, Geom::Affine const &m);
 
     /**
@@ -107,6 +110,20 @@ public:
      * each other.
      */
     virtual FilterTraits get_input_traits();
+
+    /** @brief Indicate whether the filter primitive can handle the given affine.
+     *
+     * Results of some filter primitives depend on the coordinate system used when rendering.
+     * A gaussian blur with equal x and y deviation will remain unchanged by rotations.
+     * Per-pixel filters like color matrix and blend will not change regardless of
+     * the transformation.
+     *
+     * When any filter returns false, filter rendering is performed on an intermediate surface
+     * with edges parallel to the axes of the user coordinate system. This means
+     * the matrices from FilterUnits will contain at most a (possibly non-uniform) scale
+     * and a translation. When all primitives of the filter return false, the rendering is
+     * performed in display coordinate space and no intermediate surface is used. */
+    virtual bool can_handle_affine(Geom::Affine const &) { return false; }
 
 protected:
     int _input;

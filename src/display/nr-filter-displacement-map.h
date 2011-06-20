@@ -31,15 +31,13 @@ public:
     virtual void set_input(int input, int slot);
     virtual void set_scale(double s);
     virtual void set_channel_selector(int s, FilterDisplacementMapChannelSelector channel);
-    virtual int render(FilterSlot &slot, FilterUnits const &units);
+    virtual void render_cairo(FilterSlot &slot);
     virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
-    virtual FilterTraits get_input_traits();
 
 private:
     double scale;
     int _input2;
-    FilterDisplacementMapChannelSelector Xchannel;
-    FilterDisplacementMapChannelSelector Ychannel;
+    unsigned Xchannel, Ychannel;
 };
 
 } /* namespace Filters */

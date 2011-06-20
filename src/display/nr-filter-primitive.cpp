@@ -13,8 +13,8 @@
  */
 
 #include "display/nr-filter-primitive.h"
+#include "display/nr-filter-slot.h"
 #include "display/nr-filter-types.h"
-#include "libnr/nr-pixblock.h"
 #include "svg/svg-length.h"
 
 namespace Inkscape {
@@ -46,6 +46,13 @@ FilterPrimitive::FilterPrimitive()
 FilterPrimitive::~FilterPrimitive()
 {
     // Nothing to do here
+}
+
+void FilterPrimitive::render_cairo(FilterSlot &slot)
+{
+    // passthrough
+    cairo_surface_t *in = slot.getcairo(_input);
+    slot.set(_output, in);
 }
 
 void FilterPrimitive::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*m*/)
