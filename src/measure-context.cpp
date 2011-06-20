@@ -248,6 +248,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     if (!curve) continue;
                     counter++;
 
+                    curve->transform(item->i2doc_affine());
                     Geom::PathVector pathv = curve->get_pathvector();
 
                     // Find all intersections of the control-line with this shape
