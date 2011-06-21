@@ -120,7 +120,7 @@ override) the bindings in the main default.xml.
   <bind action="ArcPrefs" />
 
   <bind key="m" action="ToolMeasure" />
-  <bind key="M" action="ToolMeasure" />
+  <bind key="M" action="ToolMeasure" display="true" />
 
   <bind key="F9" modifiers="Shift" action="ToolStar" />
   <bind key="asterisk" modifiers="Shift" action="ToolStar" /> 	 
