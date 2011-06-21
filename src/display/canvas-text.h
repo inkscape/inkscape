@@ -27,6 +27,10 @@ struct SPCanvasText : public SPCanvasItem {
     SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users
     guint32 rgba;
     guint32 rgba_stroke;
+    guint32 rgba_background;
+    bool outline;
+    bool background;
+
     SPDesktop *desktop; // the desktop to which this text is attached; needed for coordinate transforms (TODO: these should be eliminated)
 
     gchar* text;
