@@ -72,6 +72,7 @@ sp_canvastext_class_init (SPCanvasTextClass *klass)
 static void
 sp_canvastext_init (SPCanvasText *canvastext)
 {
+    canvastext->anchor_position = TEXT_ANCHOR_CENTER;
     canvastext->rgba = 0x33337fff;
     canvastext->rgba_stroke = 0xffffffff;
     canvastext->rgba_background = 0x0000007f;
@@ -100,9 +101,6 @@ sp_canvastext_destroy (GtkObject *object)
         (* GTK_OBJECT_CLASS (parent_class_ct)->destroy) (object);
 }
 
-// FIXME: remove this as soon as we know how to correctly determine the text extent
-static const double arbitrary_factor = 0.8;
-
 // these are set in sp_canvastext_update() and then re-used in sp_canvastext_render(), which is called afterwards
 static double anchor_offset_x = 0;
 static double anchor_offset_y = 0;
@@ -119,7 +117,9 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
     double offsetx = s[Geom::X] - buf->rect.x0;
     double offsety = s[Geom::Y] - buf->rect.y0;
     offsetx -= anchor_offset_x;
-    offsety += anchor_offset_y;
+    offsety -= anchor_offset_y;
+
+    cairo_set_font_size(buf->ct, cl->fontsize);
 
     if (cl->background){
         cairo_text_extents_t extents;
@@ -136,7 +136,6 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
     }
 
     cairo_move_to(buf->ct, offsetx, offsety);
-    cairo_set_font_size(buf->ct, cl->fontsize);
     cairo_text_path(buf->ct, cl->text);
 
     if (cl->outline){
@@ -169,24 +168,43 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
     cairo_surface_t *tmp_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
     cairo_t* tmp_buf = cairo_create(tmp_surface);
 
+    cairo_set_font_size(tmp_buf, cl->fontsize);
     cairo_text_extents_t extents;
     cairo_text_extents(tmp_buf, cl->text, &extents);
-    double border = extents.height*1.5;
+    double border = extents.height;
 
-    item->x1 = s[Geom::X] - extents.x_bearing - border;
-    item->y1 = s[Geom::Y] + extents.y_bearing - border;
-    item->x2 = s[Geom::X] + extents.width + border;
-    item->y2 = s[Geom::Y] + extents.height + border;
+    item->x1 = s[Geom::X] - extents.x_bearing - 2*border;
+    item->y1 = s[Geom::Y] + extents.y_bearing - 2*border;
+    item->x2 = s[Geom::X] + extents.width + 2*border;
+    item->y2 = s[Geom::Y] + extents.height + 2*border;
 
     // adjust update region according to anchor shift
-    // FIXME: use the correct text extent
-    anchor_offset_x = arbitrary_factor * cl->fontsize * strlen(cl->text) * (cl->anchor_x + 1.0) / 2.0;
-    anchor_offset_y = cl->fontsize * (cl->anchor_y + 1.0) / 2.0;
+    switch (cl->anchor_position){
+        case TEXT_ANCHOR_LEFT:
+            anchor_offset_x = -2*border;
+            anchor_offset_y = -extents.height/2;
+        case TEXT_ANCHOR_RIGHT:
+            anchor_offset_x = extents.width + 2*border;
+            anchor_offset_y = -extents.height/2;
+        case TEXT_ANCHOR_BOTTOM:
+            anchor_offset_x = extents.width/2;
+            anchor_offset_y = 2*border;
+        case TEXT_ANCHOR_TOP:
+            anchor_offset_x = extents.width/2;
+            anchor_offset_y = -extents.height - 2*border;
+        case TEXT_ANCHOR_ZERO:
+            anchor_offset_x = 0;
+            anchor_offset_y = 0;
+        case TEXT_ANCHOR_CENTER:
+        default:
+            anchor_offset_x = extents.width/2;
+            anchor_offset_y = -extents.height/2;
+    }
 
     item->x1 -= anchor_offset_x;
     item->x2 -= anchor_offset_x;
-    item->y1 += anchor_offset_y;
-    item->y2 += anchor_offset_y;
+    item->y1 -= anchor_offset_y;
+    item->y2 -= anchor_offset_y;
 
     sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 }

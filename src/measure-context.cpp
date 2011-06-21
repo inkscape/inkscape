@@ -346,6 +346,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x0000007f;
                     SP_CANVASTEXT(canvas_tooltip)->outline = false;
                     SP_CANVASTEXT(canvas_tooltip)->background = true;
+                    SP_CANVASTEXT(canvas_tooltip)->anchor_position = TEXT_ANCHOR_CENTER;
 
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
                     free(measure_str);

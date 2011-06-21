@@ -23,6 +23,15 @@ struct SPDesktop;
 #define SP_CANVASTEXT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CANVASTEXT, SPCanvasText))
 #define SP_IS_CANVASTEXT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_CANVASTEXT))
 
+enum CanvasTextAnchorPositionEnum {
+    TEXT_ANCHOR_CENTER,
+    TEXT_ANCHOR_TOP,
+    TEXT_ANCHOR_BOTTOM,
+    TEXT_ANCHOR_LEFT,
+    TEXT_ANCHOR_RIGHT,
+    TEXT_ANCHOR_ZERO
+};
+
 struct SPCanvasText : public SPCanvasItem {
     SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users
     guint32 rgba;
@@ -30,6 +39,7 @@ struct SPCanvasText : public SPCanvasItem {
     guint32 rgba_background;
     bool outline;
     bool background;
+    CanvasTextAnchorPositionEnum anchor_position;
 
     SPDesktop *desktop; // the desktop to which this text is attached; needed for coordinate transforms (TODO: these should be eliminated)
 
