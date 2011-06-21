@@ -132,20 +132,28 @@ bool GeomPointSortPredicate(const Geom::Point& p1, const Geom::Point& p2)
   return p1[Geom::Y] < p2[Geom::Y];
 }
 
-void calculate_intersections(Geom::PathVector *lineseg, Geom::PathVector *pathv, std::vector<Geom::Point> *intersections){
+void calculate_intersections(SPDesktop *desktop, SPItem* item, Geom::PathVector *lineseg, SPCurve *curve, std::vector<Geom::Point> *intersections){
+    curve->transform(item->i2doc_affine());
+
     // Find all intersections of the control-line with this shape
-    Geom::CrossingSet cs = Geom::crossings(*lineseg, *pathv);
-    // Store the results as intersection points
-    unsigned int index = 0;
-    for (Geom::CrossingSet::const_iterator i = cs.begin(); i != cs.end(); i++) {
-        if (index >= lineseg->size()) {
-            break;
+    Geom::CrossingSet cs = Geom::crossings(*lineseg, curve->get_pathvector());
+
+    // Reconstruct and store the points of intersection
+    for (Geom::Crossings::const_iterator m = cs[0].begin(); m != cs[0].end(); m++) {
+#if 0
+//TODO: consider only visible intersections
+        Geom::Point intersection = (*lineseg)[0].pointAt((*m).ta);
+        double eps = 0.0001;
+        SPDocument* doc = sp_desktop_document(desktop);
+        if (((*m).ta > eps &&
+             item == doc->getItemAtPoint(desktop->dkey, (*lineseg)[0].pointAt((*m).ta - eps), false, NULL)) ||
+            ((*m).ta + eps < 1 &&
+             item == doc->getItemAtPoint(desktop->dkey, (*lineseg)[0].pointAt((*m).ta + eps), false, NULL)) ){
+            intersections->push_back(intersection);
         }
-        // Reconstruct and store the points of intersection
-        for (Geom::Crossings::const_iterator m = (*i).begin(); m != (*i).end(); m++) {
-            intersections->push_back((*lineseg)[index].pointAt((*m).ta));
-        }
-        index++;
+#else
+        intersections->push_back((*lineseg)[0].pointAt((*m).ta));
+#endif
     }
 }
 
@@ -250,13 +258,8 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 for (l = items; l != NULL; l = l->next){
                     item = (SPItem*) (l->data);
 
-                    SPCurve* curve = NULL;
                     if (SP_IS_SHAPE(item)) {
-                        curve = SP_SHAPE(item)->getCurve();
-                        curve->transform(item->i2doc_affine());
-                        Geom::PathVector pathv = curve->get_pathvector();
-
-                        calculate_intersections(&lineseg, &pathv, &intersections);
+                       calculate_intersections(desktop, item, &lineseg, SP_SHAPE(item)->getCurve(), &intersections);
                     } else {
                         if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)){
                             Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin(); 
@@ -278,7 +281,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                                 curve->transform(item->i2doc_affine());
                                 Geom::PathVector pathv = curve->get_pathvector();
 
-                                calculate_intersections(&lineseg, &pathv, &intersections);
+                                calculate_intersections(desktop, item, &lineseg, curve, &intersections);
 
                                 if (iter == te_get_layout(item)->end())
                                     break;
