@@ -1,5 +1,6 @@
 
 set(display_SRC
+	cairo-utils.cpp
 	canvas-arena.cpp
 	canvas-axonomgrid.cpp
 	canvas-bpath.cpp
@@ -11,7 +12,6 @@ set(display_SRC
 	gnome-canvas-acetate.cpp
 	grayscale.cpp
 	guideline.cpp
-	inkscape-cairo.cpp
 	nr-3dutils.cpp
 	nr-arena-glyphs.cpp
 	nr-arena-group.cpp
@@ -28,7 +28,6 @@ set(display_SRC
 	nr-filter-displacement-map.cpp
 	nr-filter-flood.cpp
 	nr-filter-gaussian.cpp
-	nr-filter-getalpha.cpp
 	nr-filter-image.cpp
 	nr-filter-merge.cpp
 	nr-filter-morphology.cpp
@@ -43,12 +42,9 @@ set(display_SRC
 	nr-filter-utils.cpp
 	nr-filter.cpp
 	nr-light.cpp
-	nr-plain-stuff-gdk.cpp
-	nr-plain-stuff.cpp
+	nr-style.cpp
 	nr-svgfonts.cpp
 	nr-svgfonts.h
-	pixblock-scaler.cpp
-	pixblock-transform.cpp
 	snap-indicator.cpp
 	sodipodi-ctrl.cpp
 	sodipodi-ctrlrect.cpp
@@ -61,6 +57,8 @@ set(display_SRC
 
 	# -------
 	# Headers
+	cairo-templates.h
+	cairo-utils.h
 	canvas-arena.h
 	canvas-axonomgrid.h
 	canvas-bpath.h
@@ -70,10 +68,10 @@ set(display_SRC
 	canvas-text.h
 	curve-test.h
 	curve.h
+	display-forward.h
 	gnome-canvas-acetate.h
 	grayscale.h
 	guideline.h
-	inkscape-cairo.h
 	nr-3dutils.h
 	nr-arena-forward.h
 	nr-arena-glyphs.h
@@ -91,12 +89,10 @@ set(display_SRC
 	nr-filter-displacement-map.h
 	nr-filter-flood.h
 	nr-filter-gaussian.h
-	nr-filter-getalpha.h
 	nr-filter-image.h
 	nr-filter-merge.h
 	nr-filter-morphology.h
 	nr-filter-offset.h
-	nr-filter-pixops.h
 	nr-filter-primitive.h
 	nr-filter-skeleton.h
 	nr-filter-slot.h
@@ -109,10 +105,7 @@ set(display_SRC
 	nr-filter.h
 	nr-light-types.h
 	nr-light.h
-	nr-plain-stuff-gdk.h
-	nr-plain-stuff.h
-	pixblock-scaler.h
-	pixblock-transform.h
+	nr-style.h
 	rendermode.h
 	snap-indicator.h
 	sodipodi-ctrl.h

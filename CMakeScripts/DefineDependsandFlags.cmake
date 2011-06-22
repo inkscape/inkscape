@@ -85,6 +85,12 @@ list(APPEND INKSCAPE_LIBS
 
 )
 
+## XXX, we need a way to get this properly
+# pkg-config gtkmm-2.4 --cflags-only-I
+list(APPEND INKSCAPE_INCS
+	"/usr/lib/cairomm-1.0/include"
+)
+
 find_package(Freetype REQUIRED)
 list(APPEND INKSCAPE_INCS ${FREETYPE_INCLUDE_DIRS})
 list(APPEND INKSCAPE_LIBS ${FREETYPE_LIBRARIES})

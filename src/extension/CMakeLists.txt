@@ -136,15 +136,12 @@ set(extension_SRC
 	internal/pov-out.h
 	internal/svg.h
 	internal/svgz.h
-	internal/win32.h
 
 	script/InkscapeScript.h
 )
 
 if(WIN32)
 	list(APPEND extension_SRC
-		internal/win32.cpp
-		internal/win32.h
 	)
 endif()
 

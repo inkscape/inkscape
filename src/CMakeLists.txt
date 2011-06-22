@@ -25,7 +25,6 @@ set(sp_SRC
 	sp-flowtext.cpp
 	sp-font-face.cpp
 	sp-font.cpp
-	sp-gaussian-blur.cpp
 	sp-glyph-kerning.cpp
 	sp-glyph.cpp
 	sp-gradient-reference.cpp
@@ -85,7 +84,6 @@ set(sp_SRC
 	sp-defs.h
 	sp-desc.h
 	sp-ellipse.h
-	sp-filter-fns.h
 	sp-filter-primitive.h
 	sp-filter-reference.h
 	sp-filter-units.h
@@ -95,8 +93,6 @@ set(sp_SRC
 	sp-flowtext.h
 	sp-font-face.h
 	sp-font.h
-	sp-gaussian-blur-fns.h
-	sp-gaussian-blur.h
 	sp-glyph-kerning.h
 	sp-glyph.h
 	sp-gradient-fns.h

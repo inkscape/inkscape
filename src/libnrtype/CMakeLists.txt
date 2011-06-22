@@ -12,13 +12,11 @@ set(nrtype_SRC
 	Layout-TNG-Scanline-Makers.cpp
 	nr-type-pos-def.cpp
 	nr-type-primitives.cpp
-	RasterFont.cpp
 	TextWrapper.cpp
 
 	FontFactory.h
 	Layout-TNG-Scanline-Maker.h
 	Layout-TNG.h
-	RasterFont.h
 	TextWrapper.h
 	boundary-type.h
 	font-glyph.h
@@ -32,8 +30,6 @@ set(nrtype_SRC
 	one-box.h
 	one-glyph.h
 	one-para.h
-	raster-glyph.h
-	raster-position.h
 	text-boundary.h
 )
 

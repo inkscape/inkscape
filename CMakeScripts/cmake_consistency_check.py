@@ -95,6 +95,7 @@ print("Scanning:", base)
 
 global_h = set()
 global_c = set()
+global_refs = {}
 
 
 def source_list(path, filename_check=None):
@@ -197,8 +198,10 @@ def cmake_get_src(f):
 
                         if is_c_header(new_file):
                             sources_h.append(new_file)
+                            global_refs.setdefault(new_file, []).append((f, i))
                         elif is_c(new_file):
                             sources_c.append(new_file)
+                            global_refs.setdefault(new_file, []).append((f, i))
                         elif l in ("PARENT_SCOPE", ):
                             # cmake var, ignore
                             pass
@@ -240,13 +243,37 @@ def is_ignore(f):
             return True
     return False
 
+
 # First do stupid check, do these files exist?
+print("\nChecking for missing references:")
+import sys
+is_err = False
+errs = []
 for f in (global_h | global_c):
     if f.endswith("dna.c"):
         continue
 
     if not os.path.exists(f):
-        raise Exception("CMake referenced file missing: " + f)
+        refs = global_refs[f]
+        if refs:
+            for cf, i in refs:
+                errs.append((cf, i))
+        else:
+            raise Exception("CMake referenecs missing, internal error, aborting!")
+        is_err = True
+
+errs.sort()
+errs.reverse()
+for cf, i in errs:
+    print("%s:%d" % (cf, i))
+    # Write a 'sed' script, useful if we get a lot of these
+    # print("sed '%dd' '%s' > '%s.tmp' ; mv '%s.tmp' '%s'" % (i, cf, cf, cf, cf))
+
+
+if is_err:
+    raise Exception("CMake referenecs missing files, aborting!")
+del is_err
+del errs
 
 # now check on files not accounted for.
 print("\nC/C++ Files CMake doesnt know about...")
@@ -254,7 +281,7 @@ for cf in sorted(source_list(base, is_c)):
     if not is_ignore(cf):
         if cf not in global_c:
             print("missing_c: ", cf)
-        
+
         # check if automake builds a corrasponding .o file.
         '''
         if cf in global_c:

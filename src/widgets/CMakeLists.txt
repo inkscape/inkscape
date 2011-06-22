@@ -20,7 +20,6 @@ set(widgets_SRC
 	sp-color-gtkselector.cpp
 	sp-color-icc-selector.cpp
 	sp-color-notebook.cpp
-	sp-color-preview.cpp
 	sp-color-scales.cpp
 	sp-color-selector.cpp
 	sp-color-slider.cpp
@@ -56,7 +55,6 @@ set(widgets_SRC
 	sp-color-gtkselector.h
 	sp-color-icc-selector.h
 	sp-color-notebook.h
-	sp-color-preview.h
 	sp-color-scales.h
 	sp-color-selector.h
 	sp-color-slider.h

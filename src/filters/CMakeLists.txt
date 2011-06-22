@@ -2,14 +2,15 @@
 set(filters_SRC
 	blend.cpp
 	colormatrix.cpp
-	componenttransfer.cpp
 	componenttransfer-funcnode.cpp
+	componenttransfer.cpp
 	composite.cpp
 	convolvematrix.cpp
 	diffuselighting.cpp
 	displacementmap.cpp
 	distantlight.cpp
 	flood.cpp
+	gaussian-blur.cpp
 	image.cpp
 	merge.cpp
 	mergenode.cpp
@@ -23,40 +24,26 @@ set(filters_SRC
 
 	# -------
 	# Headers
-	blend-fns.h
 	blend.h
-	colormatrix-fns.h
 	colormatrix.h
-	componenttransfer-fns.h
 	componenttransfer-funcnode.h
 	componenttransfer.h
-	composite-fns.h
 	composite.h
-	convolvematrix-fns.h
 	convolvematrix.h
-	diffuselighting-fns.h
 	diffuselighting.h
-	displacementmap-fns.h
 	displacementmap.h
 	distantlight.h
-	flood-fns.h
 	flood.h
-	image-fns.h
+	gaussian-blur.h
 	image.h
-	merge-fns.h
 	merge.h
 	mergenode.h
-	morphology-fns.h
 	morphology.h
-	offset-fns.h
 	offset.h
 	pointlight.h
-	specularlighting-fns.h
 	specularlighting.h
 	spotlight.h
-	tile-fns.h
 	tile.h
-	turbulence-fns.h
 	turbulence.h
 )
 
