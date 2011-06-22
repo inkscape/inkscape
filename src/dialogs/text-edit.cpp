@@ -341,23 +341,16 @@ sp_text_edit_dialog (void)
 
                 {
                     GtkWidget *row = gtk_hbox_new (FALSE, VB_MARGIN);
-                    GtkWidget *c = gtk_combo_new ();
-                    gtk_combo_set_value_in_list ((GtkCombo *) c, FALSE, FALSE);
-                    gtk_combo_set_use_arrows ((GtkCombo *) c, TRUE);
-                    gtk_combo_set_use_arrows_always ((GtkCombo *) c, TRUE);
+                    GtkWidget *c = gtk_combo_box_text_new_with_entry ();
                     gtk_widget_set_size_request (c, 90, -1);
 
                     { /* Setup strings */
-                        GList *sl = NULL;
                         for (int i = 0; spacings[i]; i++) {
-                            sl = g_list_prepend (sl, (void *) spacings[i]);
+				gtk_combo_box_text_append_text((GtkComboBoxText *) c, spacings[i]);
                         }
-                        sl = g_list_reverse (sl);
-                        gtk_combo_set_popdown_strings ((GtkCombo *) c, sl);
-                        g_list_free (sl);
                     }
                     
-                    g_signal_connect ( (GObject *) ((GtkCombo *) c)->entry,
+                    g_signal_connect ( (GObject *) c,
                                        "changed",
                                        (GCallback) sp_text_edit_dialog_line_spacing_changed,
                                        dlg );
@@ -609,7 +602,7 @@ sp_get_text_dialog_style ()
         // Note that CSS 1.1 does not support line-height; we set it for consistency, but also set
         // sodipodi:linespacing for backwards compatibility; in 1.2 we use line-height for flowtext
         GtkWidget *combo = (GtkWidget*)g_object_get_data ((GObject *) dlg, "line_spacing");
-        const char *sstr = gtk_entry_get_text ((GtkEntry *) ((GtkCombo *) (combo))->entry);
+        const gchar *sstr = gtk_combo_box_text_get_active_text ((GtkComboBoxText *) combo);
         sp_repr_css_set_property (css, "line-height", sstr);
 
         return css;
@@ -820,7 +813,7 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
             height = query->line_height.value;
         else height = query->line_height.computed;
         gchar *sstr = g_strdup_printf ("%d%%", (int) floor(height * 100 + 0.5));
-        gtk_entry_set_text ((GtkEntry *) ((GtkCombo *) (combo))->entry, sstr);
+        gtk_entry_set_text ((GtkEntry *) gtk_bin_get_child ((GtkBin *) (combo)), sstr);
         g_free(sstr);
 
         sp_style_unref(query);
