@@ -341,16 +341,49 @@ sp_text_edit_dialog (void)
 
                 {
                     GtkWidget *row = gtk_hbox_new (FALSE, VB_MARGIN);
+
+//This would introduce dependency on gtk version 2.24 which is currently not available in
+// Trisquel GNU/Linux 4.5.1 (released on May 25th, 2011)
+//This conditional and its #else block can be deleted in the future.
+#if GTK_CHECK_VERSION(2, 24,0)
                     GtkWidget *c = gtk_combo_box_text_new_with_entry ();
+#else
+                    GtkWidget *c = gtk_combo_new ();
+                    gtk_combo_set_value_in_list ((GtkCombo *) c, FALSE, FALSE);
+                    gtk_combo_set_use_arrows ((GtkCombo *) c, TRUE); 
+                    gtk_combo_set_use_arrows_always ((GtkCombo *) c, TRUE);
+#endif
                     gtk_widget_set_size_request (c, 90, -1);
 
+//This would introduce dependency on gtk version 2.24 which is currently not available in
+// Trisquel GNU/Linux 4.5.1 (released on May 25th, 2011)
+//This conditional and its #else block can be deleted in the future.
+#if GTK_CHECK_VERSION(2, 24,0)
                     { /* Setup strings */
                         for (int i = 0; spacings[i]; i++) {
 				gtk_combo_box_text_append_text((GtkComboBoxText *) c, spacings[i]);
                         }
                     }
-                    
+#else
+                    { /* Setup strings */
+                        GList *sl = NULL;
+                        for (int i = 0; spacings[i]; i++) {
+			    sl = g_list_prepend (sl, (void *) spacings[i]);
+                        }
+                        sl = g_list_reverse (sl);
+                        gtk_combo_set_popdown_strings ((GtkCombo *) c, sl);
+                        g_list_free (sl);
+                    }
+#endif
+
+//This would introduce dependency on gtk version 2.24 which is currently not available in
+// Trisquel GNU/Linux 4.5.1 (released on May 25th, 2011)
+//This conditional and its #else block can be deleted in the future.            
+#if GTK_CHECK_VERSION(2, 24,0)
                     g_signal_connect ( (GObject *) c,
+#else
+                    g_signal_connect ( (GObject *) ((GtkCombo *) c)->entry,
+#endif
                                        "changed",
                                        (GCallback) sp_text_edit_dialog_line_spacing_changed,
                                        dlg );
@@ -602,7 +635,15 @@ sp_get_text_dialog_style ()
         // Note that CSS 1.1 does not support line-height; we set it for consistency, but also set
         // sodipodi:linespacing for backwards compatibility; in 1.2 we use line-height for flowtext
         GtkWidget *combo = (GtkWidget*)g_object_get_data ((GObject *) dlg, "line_spacing");
+
+//This would introduce dependency on gtk version 2.24 which is currently not available in
+// Trisquel GNU/Linux 4.5.1 (released on May 25th, 2011)
+//This conditional and its #else block can be deleted in the future.
+#if GTK_CHECK_VERSION(2, 24,0)
         const gchar *sstr = gtk_combo_box_text_get_active_text ((GtkComboBoxText *) combo);
+#else
+        const char *sstr = gtk_entry_get_text ((GtkEntry *) ((GtkCombo *) (combo))->entry);
+#endif
         sp_repr_css_set_property (css, "line-height", sstr);
 
         return css;
@@ -813,7 +854,15 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
             height = query->line_height.value;
         else height = query->line_height.computed;
         gchar *sstr = g_strdup_printf ("%d%%", (int) floor(height * 100 + 0.5));
+
+//This would introduce dependency on gtk version 2.24 which is currently not available in
+// Trisquel GNU/Linux 4.5.1 (released on May 25th, 2011)
+//This conditional and its #else block can be deleted in the future.
+#if GTK_CHECK_VERSION(2, 24,0)
         gtk_entry_set_text ((GtkEntry *) gtk_bin_get_child ((GtkBin *) (combo)), sstr);
+#else
+        gtk_entry_set_text ((GtkEntry *) ((GtkCombo *) (combo))->entry, sstr);
+#endif
         g_free(sstr);
 
         sp_style_unref(query);
