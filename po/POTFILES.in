@@ -127,7 +127,6 @@ src/extension/internal/pdfinput/pdf-input.cpp
 src/extension/internal/pov-out.cpp
 src/extension/internal/svg.cpp
 src/extension/internal/svgz.cpp
-src/extension/internal/win32.cpp
 src/extension/internal/wpg-input.cpp
 src/extension/param/bool.cpp
 src/extension/param/description.cpp
