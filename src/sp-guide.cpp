@@ -163,6 +163,9 @@ static void sp_guide_build(SPObject *object, SPDocument *document, Inkscape::XML
     object->readAttr( "inkscape:label" );
     object->readAttr( "orientation" );
     object->readAttr( "position" );
+
+    /* Register */
+    document->addResource("guide", object);
 }
 
 static void sp_guide_release(SPObject *object)
@@ -172,6 +175,11 @@ static void sp_guide_release(SPObject *object)
     while (guide->views) {
         sp_guideline_delete(SP_GUIDELINE(guide->views->data));
         guide->views = g_slist_remove(guide->views, guide->views->data);
+    }
+
+    if (object->document) {
+        // Unregister ourselves
+        object->document->removeResource("guide", object);
     }
 
     if (((SPObjectClass *) parent_class)->release) {
@@ -297,6 +305,18 @@ sp_guide_create_guides_around_page(SPDesktop *dt) {
     sp_guide_pt_pairs_to_guides(dt, pts);
 
     DocumentUndo::done(doc, SP_VERB_NONE, _("Create Guides Around the Page"));
+}
+
+void
+sp_guide_delete_all_guides(SPDesktop *dt) {
+    SPDocument *doc=sp_desktop_document(dt);
+    const GSList *current;
+    while ( (current = doc->getResourceList("guide")) ) {
+        SPGuide* guide = SP_GUIDE(current->data);
+        sp_guide_remove(guide);
+    }
+
+    DocumentUndo::done(doc, SP_VERB_NONE, _("Delete All Guides"));
 }
 
 void SPGuide::showSPGuide(SPCanvasGroup *group, GCallback handler)
