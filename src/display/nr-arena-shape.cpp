@@ -394,20 +394,24 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
 }
 
 
-static guint
-nr_arena_shape_clip(cairo_t *ct, NRArenaItem *item, NRRectL *area)
+static guint nr_arena_shape_clip(cairo_t *ct, NRArenaItem *item, NRRectL * /*area*/)
 {
+    guint result = 0;
+
     // NOTE: for now this is incorrect, because it doesn't honor clip-rule,
     // and will be incorrect for nested clipping paths.
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
-    if (!shape->curve) return item->state;
+    if (!shape->curve) {
+        result = item->state;
+    } else {
+        cairo_save(ct);
+        ink_cairo_transform(ct, shape->ctm);
+        feed_pathvector_to_cairo(ct, shape->curve->get_pathvector());
+        cairo_restore(ct);
 
-    cairo_save(ct);
-    ink_cairo_transform(ct, shape->ctm);
-    feed_pathvector_to_cairo(ct, shape->curve->get_pathvector());
-    cairo_restore(ct);
-
-    return item->state;
+        result = item->state;
+    }
+    return result;
 }
 
 static NRArenaItem *
@@ -508,7 +512,7 @@ nr_arena_shape_pick(NRArenaItem *item, Geom::Point p, double delta, unsigned int
  *  curve and adds it to the shape.  Finally, it requests an update of the
  *  arena for the shape.
  */
-void nr_arena_shape_set_path(NRArenaShape *shape, SPCurve *curve,bool justTrans)
+void nr_arena_shape_set_path(NRArenaShape *shape, SPCurve *curve, bool /*justTrans*/)
 {
     g_return_if_fail(shape != NULL);
     g_return_if_fail(NR_IS_ARENA_SHAPE(shape));

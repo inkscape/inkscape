@@ -160,7 +160,7 @@ void FilterDiffuseLighting::render_cairo(FilterSlot &slot)
     cairo_surface_destroy(out);
 }
 
-void FilterDiffuseLighting::area_enlarge(NRRectL &area, Geom::Affine const &trans)
+void FilterDiffuseLighting::area_enlarge(NRRectL &area, Geom::Affine const & /*trans*/)
 {
     // TODO: support kernelUnitLength
 

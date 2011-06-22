@@ -135,7 +135,8 @@ bool GeomPointSortPredicate(const Geom::Point& p1, const Geom::Point& p2)
         return p1[Geom::Y] < p2[Geom::Y];
 }
 
-void calculate_intersections(SPDesktop *desktop, SPItem* item, Geom::PathVector *lineseg, SPCurve *curve, std::vector<Geom::Point> *intersections){
+void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom::PathVector *lineseg, SPCurve *curve, std::vector<Geom::Point> *intersections)
+{
     curve->transform(item->i2doc_affine());
 
     // Find all intersections of the control-line with this shape

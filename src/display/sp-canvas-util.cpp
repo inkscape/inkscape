@@ -38,8 +38,7 @@ sp_canvas_item_reset_bounds (SPCanvasItem *item)
     item->y2 = 0.0;
 }
 
-void
-sp_canvas_prepare_buffer (SPCanvasBuf *buf)
+void sp_canvas_prepare_buffer(SPCanvasBuf * /*buf*/)
 {
     /*if (buf->is_empty) {
         int y;

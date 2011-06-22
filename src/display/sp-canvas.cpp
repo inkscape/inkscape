@@ -1620,8 +1620,7 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
     return status;
 }
 
-static void
-sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1, int draw_x1, int draw_y1, int draw_x2, int draw_y2, int sw)
+static void sp_canvas_paint_single_buffer(SPCanvas *canvas, int x0, int y0, int x1, int y1, int draw_x1, int draw_y1, int draw_x2, int draw_y2, int /*sw*/)
 {
     GtkWidget *widget = GTK_WIDGET (canvas);
 

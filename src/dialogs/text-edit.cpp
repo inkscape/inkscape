@@ -925,7 +925,7 @@ sp_text_edit_dialog_default_set_insensitive ()
 }
 
 static void
-sp_text_edit_dialog_font_changed ( SPFontSelector *fsel,
+sp_text_edit_dialog_font_changed ( SPFontSelector * /*fsel*/,
                                    font_instance *font,
                                    GtkWidget *dlg )
 {

@@ -64,7 +64,7 @@ static void sp_paint_server_class_init(SPPaintServerClass *psc)
     parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
 }
 
-void SPPaintServer::init(SPPaintServer *ps)
+void SPPaintServer::init(SPPaintServer * /*ps*/)
 {
 }
 

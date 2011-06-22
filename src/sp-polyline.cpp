@@ -46,7 +46,7 @@ GType SPPolyLine::sp_polyline_get_type(void)
 
 void SPPolyLineClass::sp_polyline_class_init(SPPolyLineClass *klass)
 {
-    GObjectClass * gobject_class = (GObjectClass *) klass;
+    //GObjectClass * gobject_class = (GObjectClass *) klass;
     SPObjectClass * sp_object_class = (SPObjectClass *) klass;
     SPItemClass * item_class = (SPItemClass *) klass;
 
@@ -134,7 +134,7 @@ void SPPolyLine::set(SPObject *object, unsigned int key, const gchar *value)
 
 Inkscape::XML::Node *SPPolyLine::write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
-    SPPolyLine *polyline = SP_POLYLINE (object);
+    SP_POLYLINE(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:polyline");

@@ -134,18 +134,20 @@ nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned 
     return NR_ARENA_ITEM_STATE_ALL;
 }
 
-static unsigned int
-nr_arena_image_render( cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int /*flags*/ )
+static unsigned int nr_arena_image_render( cairo_t *ct, NRArenaItem *item, NRRectL * /*area*/, NRPixBlock * /*pb*/, unsigned int /*flags*/ )
 {
-    if (!ct)
+    if (!ct) {
         return item->state;
+    }
 
     bool outline = (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     NRArenaImage *image = NR_ARENA_IMAGE (item);
 
     if (!outline) {
-        if (!image->pixbuf) return item->state;
+        if (!image->pixbuf) {
+            return item->state;
+        }
 
         // FIXME: at the moment gdk_cairo_set_source_pixbuf creates an ARGB copy
         // of the pixbuf. Fix this in Cairo and/or GDK.

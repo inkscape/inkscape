@@ -46,7 +46,7 @@ public:
     virtual ~FilterPrimitive();
 
     virtual void render_cairo(FilterSlot &slot);
-    virtual int render(FilterSlot &slot, FilterUnits const &units) { return 0; }
+    virtual int render(FilterSlot & /*slot*/, FilterUnits const & /*units*/) { return 0; }
     virtual void area_enlarge(NRRectL &area, Geom::Affine const &m);
 
     /**

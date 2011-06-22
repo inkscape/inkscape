@@ -43,13 +43,15 @@ namespace Inkscape {
 namespace Extension {
 namespace Internal {
 
-bool
-CairoRendererPdfOutput::check (Inkscape::Extension::Extension * module)
+bool CairoRendererPdfOutput::check(Inkscape::Extension::Extension * /*module*/)
 {
-    if (NULL == Inkscape::Extension::db.get("org.inkscape.output.pdf.cairorenderer"))
-        return FALSE;
+    bool result = true;
 
-    return TRUE;
+    if (NULL == Inkscape::Extension::db.get("org.inkscape.output.pdf.cairorenderer")) {
+        result = false;
+    }
+
+    return result;
 }
 
 static bool

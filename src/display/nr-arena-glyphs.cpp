@@ -149,8 +149,7 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
     return NR_ARENA_ITEM_STATE_ALL;
 }
 
-static guint
-nr_arena_glyphs_clip(cairo_t *ct, NRArenaItem *item, NRRectL */*area*/)
+static guint nr_arena_glyphs_clip(cairo_t * /*ct*/, NRArenaItem *item, NRRectL * /*area*/)
 {
     NRArenaGlyphs *glyphs;
 
@@ -158,7 +157,7 @@ nr_arena_glyphs_clip(cairo_t *ct, NRArenaItem *item, NRRectL */*area*/)
 
     if (!glyphs->font) return item->state;
 
-    /* TODO : render to greyscale pixblock provided for clipping */
+    // TODO : render to greyscale pixblock provided for clipping
 
     return item->state;
 }
@@ -283,15 +282,16 @@ nr_arena_glyphs_group_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint s
 }
 
 
-static unsigned int
-nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int /*flags*/)
+static unsigned int nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock * /*pb*/, unsigned int /*flags*/)
 {
-    NRArenaItem *child;
+    NRArenaItem *child = 0;
 
     NRArenaGroup *group = NR_ARENA_GROUP(item);
     NRArenaGlyphsGroup *ggroup = NR_ARENA_GLYPHS_GROUP(item);
 
-    if (!ct) return item->state;
+    if (!ct) {
+        return item->state;
+    }
 
     if (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE) {
 
@@ -352,14 +352,13 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
     return item->state;
 }
 
-static unsigned int
-nr_arena_glyphs_group_clip(cairo_t *ct, NRArenaItem *item, NRRectL *area)
+static unsigned int nr_arena_glyphs_group_clip(cairo_t * /*ct*/, NRArenaItem *item, NRRectL * /*area*/)
 {
     //NRArenaGroup *group = NR_ARENA_GROUP(item);
 
     guint ret = item->state;
 
-    /* Render children fill mask */
+    // Render children fill mask
     /*
     for (NRArenaItem *child = group->children; child != NULL; child = child->next) {
         ret = nr_arena_glyphs_fill_mask(NR_ARENA_GLYPHS(child), area, pb);

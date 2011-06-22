@@ -304,7 +304,7 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
     return 0;
 }*/
 
-void FilterSpecularLighting::area_enlarge(NRRectL &area, Geom::Affine const &trans)
+void FilterSpecularLighting::area_enlarge(NRRectL &area, Geom::Affine const & /*trans*/)
 {
     // TODO: support kernelUnitLength
 

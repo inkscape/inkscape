@@ -41,7 +41,7 @@ GType SPObjectGroup::sp_objectgroup_get_type(void)
 
 void SPObjectGroupClass::sp_objectgroup_class_init(SPObjectGroupClass *klass)
 {
-    GObjectClass * object_class = (GObjectClass *) klass;
+    //GObjectClass * object_class = (GObjectClass *) klass;
     SPObjectClass * sp_object_class = (SPObjectClass *) klass;
 
     static_parent_class = (SPObjectClass *)g_type_class_ref(SP_TYPE_OBJECT);

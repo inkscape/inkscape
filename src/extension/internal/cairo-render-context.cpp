@@ -1419,14 +1419,14 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
     return true;
 }
 
-bool
-CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsigned int rs,
-                                Geom::Affine const *image_transform, SPStyle const *style)
+bool CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsigned int rs,
+                                     Geom::Affine const *image_transform, SPStyle const * /*style*/)
 {
     g_assert( _is_valid );
 
-    if (_render_mode == RENDER_MODE_CLIP)
+    if (_render_mode == RENDER_MODE_CLIP) {
         return true;
+    }
 
     guchar* px_rgba = NULL;
     guint64 size = 4L * (guint64)w * (guint64)h;
@@ -1514,8 +1514,8 @@ CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsi
 
 #define GLYPH_ARRAY_SIZE 64
 
-unsigned int
-CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoGlyphInfo> const &glyphtext, bool path)
+// TODO investigate why the font is being ignored:
+unsigned int CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont * /*font*/, std::vector<CairoGlyphInfo> const &glyphtext, bool path)
 {
     cairo_glyph_t glyph_array[GLYPH_ARRAY_SIZE];
     cairo_glyph_t *glyphs = glyph_array;
@@ -1551,8 +1551,9 @@ CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoG
         cairo_show_glyphs(cr, glyphs, num_glyphs - num_invalid_glyphs);
     }
 
-    if (num_glyphs > GLYPH_ARRAY_SIZE)
+    if (num_glyphs > GLYPH_ARRAY_SIZE) {
         g_free(glyphs);
+    }
 
     return num_glyphs - num_invalid_glyphs;
 }

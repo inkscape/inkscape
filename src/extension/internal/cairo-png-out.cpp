@@ -43,10 +43,9 @@ namespace Inkscape {
 namespace Extension {
 namespace Internal {
 
-bool
-CairoRendererOutput::check (Inkscape::Extension::Extension * module)
+bool CairoRendererOutput::check(Inkscape::Extension::Extension * /*module*/)
 {
-	return TRUE;
+    return true;
 }
 
 static bool
@@ -93,13 +92,11 @@ png_render_document_to_file(SPDocument *doc, gchar const *filename)
 	\param  doc   Document to be saved
     \param  uri   Filename to save to (probably will end in .png)
 */
-void
-CairoRendererOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filename)
+void CairoRendererOutput::save(Inkscape::Extension::Output * /*mod*/, SPDocument *doc, gchar const *filename)
 {
-    if (!png_render_document_to_file(doc, filename))
+    if (!png_render_document_to_file(doc, filename)) {
         throw Inkscape::Extension::Output::save_failed();
-
-	return;
+    }
 }
 
 /**

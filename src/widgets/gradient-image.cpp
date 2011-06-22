@@ -106,11 +106,10 @@ sp_gradient_image_destroy (GtkObject *object)
 		(* ((GtkObjectClass *) (parent_class))->destroy) (object);
 }
 
-static void
-sp_gradient_image_size_request (GtkWidget *widget, GtkRequisition *requisition)
+static void sp_gradient_image_size_request(GtkWidget * /*widget*/, GtkRequisition *requisition)
 {
-	requisition->width = 64;
-	requisition->height = 12;
+    requisition->width = 64;
+    requisition->height = 12;
 }
 
 static gint

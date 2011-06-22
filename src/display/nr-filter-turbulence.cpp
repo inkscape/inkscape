@@ -342,7 +342,8 @@ void FilterTurbulence::set_type(FilterTurbulenceType t){
     gen->dirty();
 }
 
-void FilterTurbulence::set_updated(bool u){
+void FilterTurbulence::set_updated(bool /*u*/)
+{
 }
 
 struct Turbulence {

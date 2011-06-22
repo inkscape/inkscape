@@ -68,8 +68,8 @@ namespace Extension {
 namespace Internal {
 
 
-SPDocument *
-WpgInput::open(Inkscape::Extension::Input * mod, const gchar * uri) {
+SPDocument *WpgInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * uri)
+{
 #if WITH_LIBWPG01
     WPXInputStream* input = new libwpg::WPGFileStream(uri);
 #elif WITH_LIBWPG02

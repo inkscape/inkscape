@@ -70,8 +70,7 @@ PowerStrokePointArrayParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
 }
 
 
-void
-PowerStrokePointArrayParam::param_transform_multiply(Geom::Affine const& postmul, bool /*set*/)
+void PowerStrokePointArrayParam::param_transform_multiply(Geom::Affine const& /*postmul*/, bool /*set*/)
 {
 //    param_set_and_write_new_value( (*this) * postmul );
 }

@@ -165,8 +165,7 @@ DockBehavior::set_title(Glib::ustring title)
     _dock_item.set_title(title);
 }
 
-void
-DockBehavior::set_sensitive(bool sensitive)
+void DockBehavior::set_sensitive(bool sensitive)
 {
     // TODO check this. Seems to be bad that we ignore the parameter
     get_vbox()->set_sensitive();

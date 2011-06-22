@@ -107,7 +107,6 @@ KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape:
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, true, item);
 
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     // constrainedSnap() will first project the point p onto the constraint line and then try to snap along that line.
     // This way the constraint is already enforced, no need to worry about that later on
     Inkscape::Snapper::SnapConstraint transformed_constraint = Inkscape::Snapper::SnapConstraint(constraint.getPoint() * i2d, (constraint.getPoint() + constraint.getDirection()) * i2d - constraint.getPoint() * i2d);

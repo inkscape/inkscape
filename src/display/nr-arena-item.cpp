@@ -767,8 +767,7 @@ nr_arena_item_set_item_bbox (NRArenaItem *item, Geom::OptRect &bbox)
 }
 
 /** Returns a background image for use with filter effects. */
-NRPixBlock *
-nr_arena_item_get_background (NRArenaItem const *item)
+NRPixBlock *nr_arena_item_get_background(NRArenaItem const * /*item*/)
 {
     return NULL;
 }

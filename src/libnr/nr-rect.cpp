@@ -218,8 +218,8 @@ nr_rect_d_union_xy (NRRect *d, NR::Coord x, NR::Coord y)
 	return d;
 }
 
-NRRect *
-nr_rect_d_matrix_transform(NRRect *d, NRRect const *const s, NR::Matrix const &m)
+// TODO investigate for removal:
+NRRect *nr_rect_d_matrix_transform(NRRect *d, NRRect const *const /*s*/, NR::Matrix const & /*m*/)
 {
     // defunct
     /*
