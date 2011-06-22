@@ -23,75 +23,12 @@
 
 # <pep8 compliant>
 
-IGNORE = (
-    # dirs
-    "/cxxtest/",
-    "/dom/work/",
-    "/extension/dbus/",
-    "/pedro/",
-    "/src/extension/dxf2svg/",
-
-    # files
-    "buildtool.cpp",
-    "jabber_whiteboard/node-tracker.cpp",
-    "jabber_whiteboard/node-utilities.cpp",
-    "packaging/macosx/ScriptExec/main.c",
-    "share/ui/keybindings.rc",
-    "src/2geom/conic_section_clipper_impl.cpp",
-    "src/2geom/conicsec.cpp",
-    "src/2geom/recursive-bezier-intersection.cpp",
-    "src/deptool.cpp",
-    "src/display/nr-filter-skeleton.cpp",
-    "src/display/testnr.cpp",
-    "src/dom/io/httpclient.cpp",
-    "src/dom/odf/SvgOdg.cpp",
-    "src/dom/xmlwriter.cpp",
-    "src/inkview.cpp",
-    "src/inkview.rc",
-    "src/io/streamtest.cpp",
-    "src/libcola/cycle_detector.cpp",
-    "src/libnr/nr-compose-reference.cpp",
-    "src/libnr/testnr.cp",
-    "src/live_effects/lpe-skeleton.cpp",
-    "src/sp-animation.cpp",
-    "src/sp-skeleton.cpp",
-    "src/svg/test-stubs.cpp",
-    "src/ui/dialog/session-player.cpp",
-    "src/ui/dialog/whiteboard-connect.cpp",
-    "src/ui/dialog/whiteboard-sharewithchat.cpp",
-    "src/ui/dialog/whiteboard-sharewithuser.cpp",
-    "src/winconsole.cpp",
-
-    # header files
-    "share/filters/filters.svg.h",
-    "share/palettes/palettes.h",
-    "src/inkscape/share/palettes/palettes.h",
-    "src/inkscape/share/patterns/patterns.svg.h",
-    "src/inkscape/src/libcola/cycle_detector.h",
-    "src/inkscape/src/libnr/in-svg-plane-test.h",
-    "src/inkscape/src/libnr/nr-point-fns-test.h",
-    "src/inkscape/src/libnr/nr-translate-test.h",
-    "src/inkscape/src/libnr/nr-types-test.h",
-    "src/inkscape/src/sp-skeleton.h",
-    "src/inkscape/src/svg/test-stubs.h",
-    
-    # generated files, created by an in-source build
-    "CMakeFiles/CompilerIdC/CMakeCCompilerId.c",
-    "CMakeFiles/CompilerIdCXX/CMakeCXXCompilerId.cpp",
-    "src/helper/sp-marshal.cpp",
-    "src/helper/sp-marshal.h",
-    "src/inkscape-version.cpp",
-    "config.h",
-    )
+from cmake_consistency_check_config import IGNORE, UTF8_CHECK, SOURCE_DIR
 
 import os
 from os.path import join, dirname, normpath, abspath, splitext
 
-base = join(os.path.dirname(__file__), "..")
-base = normpath(base)
-base = abspath(base)
-
-print("Scanning:", base)
+print("Scanning:", SOURCE_DIR)
 
 global_h = set()
 global_c = set()
@@ -233,7 +170,7 @@ def cmake_get_src(f):
     filen.close()
 
 
-for cmake in source_list(base, is_cmake):
+for cmake in source_list(SOURCE_DIR, is_cmake):
     cmake_get_src(cmake)
 
 
@@ -277,7 +214,7 @@ del errs
 
 # now check on files not accounted for.
 print("\nC/C++ Files CMake doesnt know about...")
-for cf in sorted(source_list(base, is_c)):
+for cf in sorted(source_list(SOURCE_DIR, is_c)):
     if not is_ignore(cf):
         if cf not in global_c:
             print("missing_c: ", cf)
@@ -294,7 +231,24 @@ for cf in sorted(source_list(base, is_c)):
         '''
 
 print("\nC/C++ Headers CMake doesnt know about...")
-for hf in sorted(source_list(base, is_c_header)):
+for hf in sorted(source_list(SOURCE_DIR, is_c_header)):
     if not is_ignore(hf):
         if hf not in global_h:
             print("missing_h: ", hf)
+
+if UTF8_CHECK:
+    # test encoding
+    import traceback
+    for files in (global_c, global_h):
+        for f in sorted(files):
+            if os.path.exists(f):
+                # ignore outside of our source tree
+                if "extern" not in f:
+                    i = 1
+                    try:
+                        for l in open(f, "r", encoding="utf8"):
+                            i += 1
+                    except:
+                        print("Non utf8: %s:%d" % (f, i))
+                        if i > 1:
+                            traceback.print_exc()
