@@ -131,15 +131,6 @@ sp_item_widget_new (void)
     // focus is in the id field initially:
     gtk_widget_grab_focus (GTK_WIDGET (tf));
 
-    /* Button for setting the object's id, label, title and description. */
-    pb = gtk_button_new_with_mnemonic (_("_Set"));
-    gtk_table_attach ( GTK_TABLE (t), pb, 2, 3, 0, 1,
-                       (GtkAttachOptions)( GTK_SHRINK | GTK_FILL ),
-                       (GtkAttachOptions)0, 0, 0 );
-    g_signal_connect ( G_OBJECT (pb), "clicked",
-                         G_CALLBACK (sp_item_widget_label_changed),
-                         spw );
-
     /* Create the label for the object label */
     l = gtk_label_new_with_mnemonic (_("_Label:"));
     gtk_misc_set_alignment (GTK_MISC (l), 1, 0.5);
@@ -218,6 +209,13 @@ sp_item_widget_new (void)
                        (GtkAttachOptions)0, 0, 0 );
     g_signal_connect (G_OBJECT(cb), "toggled", G_CALLBACK(sp_item_widget_hidden_toggled), spw);
     gtk_object_set_data(GTK_OBJECT(spw), "hidden", cb);
+
+    /* Button for setting the object's id, label, title and description. */
+    pb = gtk_button_new_with_mnemonic (_("_Set"));
+    gtk_box_pack_start (GTK_BOX (hb_cb), pb, TRUE, TRUE, 10);
+    g_signal_connect ( G_OBJECT (pb), "clicked",
+                         G_CALLBACK (sp_item_widget_label_changed),
+                         spw );
 
     /* Lock */
     // TRANSLATORS: "Lock" is a verb here
