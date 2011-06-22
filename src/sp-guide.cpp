@@ -296,7 +296,7 @@ sp_guide_create_guides_around_page(SPDesktop *dt) {
 
     sp_guide_pt_pairs_to_guides(dt, pts);
 
-    DocumentUndo::done(doc, SP_VERB_NONE, _("Guides Around Page"));
+    DocumentUndo::done(doc, SP_VERB_NONE, _("Create Guides Around the Page"));
 }
 
 void SPGuide::showSPGuide(SPCanvasGroup *group, GCallback handler)

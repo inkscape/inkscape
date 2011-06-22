@@ -2338,7 +2338,7 @@ Verb *Verb::_base_verbs[] = {
                  N_("Select previous object or node"), NULL),
     new EditVerb(SP_VERB_EDIT_DESELECT, "EditDeselect", N_("D_eselect"),
                  N_("Deselect any selected objects or nodes"), INKSCAPE_ICON_EDIT_SELECT_NONE),
-    new EditVerb(SP_VERB_EDIT_GUIDES_AROUND_PAGE, "EditGuidesAroundPage", N_("_Guides Around Page"),
+    new EditVerb(SP_VERB_EDIT_GUIDES_AROUND_PAGE, "EditGuidesAroundPage", N_("Create _Guides Around the Page"),
                  N_("Create four guides aligned with the page borders"), NULL),
     new EditVerb(SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER, "EditNextPathEffectParameter", N_("Next path effect parameter"),
                  N_("Show next editable path effect parameter"), INKSCAPE_ICON_PATH_EFFECT_PARAMETER_NEXT),
