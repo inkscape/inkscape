@@ -183,22 +183,28 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
         case TEXT_ANCHOR_LEFT:
             anchor_offset_x = -2*border;
             anchor_offset_y = -extents.height/2;
+            break;
         case TEXT_ANCHOR_RIGHT:
             anchor_offset_x = extents.width + 2*border;
             anchor_offset_y = -extents.height/2;
+            break;
         case TEXT_ANCHOR_BOTTOM:
             anchor_offset_x = extents.width/2;
             anchor_offset_y = 2*border;
+            break;
         case TEXT_ANCHOR_TOP:
             anchor_offset_x = extents.width/2;
             anchor_offset_y = -extents.height - 2*border;
+            break;
         case TEXT_ANCHOR_ZERO:
             anchor_offset_x = 0;
             anchor_offset_y = 0;
+            break;
         case TEXT_ANCHOR_CENTER:
         default:
             anchor_offset_x = extents.width/2;
             anchor_offset_y = -extents.height/2;
+            break;
     }
 
     item->x1 -= anchor_offset_x;
