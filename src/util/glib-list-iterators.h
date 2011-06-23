@@ -33,7 +33,7 @@ template <typename T>
 class GSListConstIterator<T *> {
 public:
     typedef std::forward_iterator_tag iterator_category;
-    typedef T * const value_type;
+    typedef T * const value_type G_GNUC_MAY_ALIAS;
     typedef std::ptrdiff_t difference_type;
     typedef value_type *pointer;
     typedef value_type &reference;
@@ -72,7 +72,7 @@ template <typename T>
 class GSListIterator<T *> {
 public:
     typedef std::forward_iterator_tag iterator_category;
-    typedef T *value_type;
+    typedef T *value_type G_GNUC_MAY_ALIAS;
     typedef std::ptrdiff_t difference_type;
     typedef value_type *pointer;
     typedef value_type &reference;
@@ -117,7 +117,7 @@ template <typename T>
 class GListConstIterator<T *> {
 public:
     typedef std::bidirectional_iterator_tag iterator_category;
-    typedef T * const value_type;
+    typedef T * const value_type G_GNUC_MAY_ALIAS;
     typedef std::ptrdiff_t difference_type;
     typedef value_type *pointer;
     typedef value_type &reference;
@@ -166,7 +166,7 @@ template <typename T>
 class GListIterator<T *> {
 public:
     typedef std::bidirectional_iterator_tag iterator_category;
-    typedef T *value_type;
+    typedef T *value_type G_GNUC_MAY_ALIAS;
     typedef std::ptrdiff_t difference_type;
     typedef value_type *pointer;
     typedef value_type &reference;
