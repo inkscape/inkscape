@@ -216,9 +216,7 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
             }
         }
 
-    } else {
-        gtk_window_set_policy(GTK_WINDOW(win->gobj()), TRUE, TRUE, TRUE);
-    }
+    } 
 
     if ( completeDropTargets == 0 || completeDropTargetsCount == 0 )
     {

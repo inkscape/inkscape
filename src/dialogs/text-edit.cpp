@@ -186,8 +186,6 @@ sp_text_edit_dialog (void)
         g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg );
         g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg );
 
-        gtk_window_set_policy (GTK_WINDOW (dlg), TRUE, TRUE, FALSE);
-
         // box containing the notebook and the bottom buttons
         GtkWidget *mainvb = gtk_vbox_new (FALSE, 0);
         gtk_container_add (GTK_CONTAINER (dlg), mainvb);

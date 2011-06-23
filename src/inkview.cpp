@@ -312,7 +312,6 @@ main (int argc, const char **argv)
     gtk_window_set_default_size (GTK_WINDOW (w),
 				 MIN ((int)(ss.doc)->getWidth (), (int)gdk_screen_width () - 64),
 				 MIN ((int)(ss.doc)->getHeight (), (int)gdk_screen_height () - 64));
-    gtk_window_set_policy (GTK_WINDOW (w), TRUE, TRUE, FALSE);
     ss.window = w;
 
     g_signal_connect (G_OBJECT (w), "delete_event", (GCallback) sp_svgview_main_delete, &ss);

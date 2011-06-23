@@ -1317,7 +1317,7 @@ void cmd_new_element_node(GtkObject */*object*/, gpointer /*data*/)
     window = sp_window_new(NULL, TRUE);
     gtk_container_set_border_width(GTK_CONTAINER(window), 4);
     gtk_window_set_title(GTK_WINDOW(window), _("New element node..."));
-    gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, TRUE);
+    gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     gtk_window_set_transient_for(GTK_WINDOW(window), GTK_WINDOW(dlg));
     gtk_window_set_modal(GTK_WINDOW(window), TRUE);
