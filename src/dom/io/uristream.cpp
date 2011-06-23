@@ -91,19 +91,6 @@ void UriInputStream::init() throw (StreamException)
             dataLen     = uri.getPath().size();
             break;
             }
-
-        case URI::SCHEME_HTTP:
-        case URI::SCHEME_HTTPS:
-            {
-            if (!httpClient.openGet(uri))
-                {
-                DOMString err = "UriInputStream cannot open URL ";
-                err.append(uri.toString());
-                throw StreamException(err);
-                }
-            break;
-            }
-
         }
 
     closed = false;
@@ -159,14 +146,6 @@ void UriInputStream::close() throw(StreamException)
             //do nothing
             break;
             }
-
-        case URI::SCHEME_HTTP:
-        case URI::SCHEME_HTTPS:
-            {
-            httpClient.close();
-            break;
-            }
-
         }//switch
 
     closed = true;
@@ -211,14 +190,6 @@ int UriInputStream::get() throw(StreamException)
                 }
             break;
             }
-
-        case URI::SCHEME_HTTP:
-        case URI::SCHEME_HTTPS:
-            {
-            retVal = httpClient.read();
-            break;
-            }
-
     }//switch
 
     return retVal;

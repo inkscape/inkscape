@@ -673,43 +673,6 @@ CPPFLAGS=$ink_svd_CPPFLAGS
 LIBS=$ink_svd_LIBS
 
 dnl ******************************
-dnl Inkboard dependency checking
-dnl ******************************
-
-dnl with_inkboard="no"
-dnl with_inkboard_ssl="no"
-
-dnl INKBOARD_CFLAGS=""
-
-dnl AC_ARG_ENABLE(inkboard,
-dnl 		AS_HELP_STRING([--enable-inkboard], [enable Inkboard online whiteboard facility (disabled by default)]),
-dnl        with_inkboard=$enableval,with_inkboard=no)
-
-dnl if test "x$with_inkboard" = "xyes"; then
-dnl 		with_inkboard="yes"
-dnl 		AC_DEFINE(WITH_INKBOARD,1,[Build in Inkboard support])
-		
-		dnl Test for OpenSSL
-dnl 		PKG_CHECK_MODULES(INKBOARD, openssl, with_inkboard_ssl=yes, with_inkboard_ssl=no)
-dnl 		if test "x$with_inkboard_ssl" = "xyes"; then
-			dnl OpenSSL found; enable SSL support in Pedro
-dnl 			INKBOARD_CFLAGS="$INKBOARD_CFLAGS -DHAVE_SSL"
-dnl 			RELAYTOOL([ssl], INKBOARD_LIBS, INKBOARD_CFLAGS, [inkboard_weak=yes])
-dnl 			RELAYTOOL([crypto], INKBOARD_LIBS, INKBOARD_CFLAGS, [inkboard_weak=yes])
-dnl 			AC_DEFINE(WITH_INKBOARD_SSL,1,[Build in SSL support for Inkboard])
-dnl 		fi
-dnl else
-dnl 	with_inkboard="no"
-dnl fi
-
-dnl AM_CONDITIONAL(WITH_INKBOARD, test "x$with_inkboard" = "xyes")
-
-INKBOARD_CFLAGS=""
-INKBOARD_LIBS=""
-AC_SUBST(INKBOARD_LIBS)
-AC_SUBST(INKBOARD_CFLAGS)
-
-dnl ******************************
 dnl Check for libwpg for extension
 dnl ******************************
 
@@ -1035,8 +998,6 @@ src/libavoid/makefile
 src/livarot/makefile
 src/live_effects/makefile
 src/live_effects/parameter/makefile
-src/pedro/makefile
-src/jabber_whiteboard/makefile
 src/svg/makefile
 src/trace/makefile
 src/ui/cache/makefile

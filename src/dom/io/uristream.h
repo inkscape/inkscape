@@ -39,7 +39,6 @@
 
 #include "../uri.h"
 #include "domstream.h"
-#include "httpclient.h"
 
 
 namespace org
@@ -89,9 +88,6 @@ private:
     URI uri;
 
     int scheme;
-
-    HttpClient httpClient;
-
 }; // class UriInputStream
 
 
@@ -161,9 +157,6 @@ private:
     URI uri;
 
     int scheme;
-
-    HttpClient httpClient;
-
 }; // class UriOutputStream
 
 
