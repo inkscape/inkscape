@@ -251,7 +251,7 @@ sp_text_edit_dialog (void)
                     {
                         // TODO - replace with Inkscape-specific call
                         GtkWidget *px = gtk_image_new_from_stock ( GTK_STOCK_JUSTIFY_CENTER, GTK_ICON_SIZE_LARGE_TOOLBAR );
-                        GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
+                        GtkWidget *b = gtk_radio_button_new (gtk_radio_button_get_group (GTK_RADIO_BUTTON (group)));
                         /* TRANSLATORS: `Center' here is a verb. */
                         gtk_widget_set_tooltip_text (b, _("Center lines"));
                         gtk_button_set_relief (GTK_BUTTON (b), GTK_RELIEF_NONE);
@@ -266,7 +266,7 @@ sp_text_edit_dialog (void)
                     {
                         // TODO - replace with Inkscape-specific call
                         GtkWidget *px = gtk_image_new_from_stock ( GTK_STOCK_JUSTIFY_RIGHT, GTK_ICON_SIZE_LARGE_TOOLBAR );
-                        GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
+                        GtkWidget *b = gtk_radio_button_new (gtk_radio_button_get_group (GTK_RADIO_BUTTON (group)));
                         gtk_widget_set_tooltip_text (b, _("Align lines right"));
                         gtk_button_set_relief (GTK_BUTTON (b), GTK_RELIEF_NONE);
                         g_signal_connect ( G_OBJECT (b), "toggled", G_CALLBACK (sp_text_edit_dialog_any_toggled), dlg );
@@ -280,7 +280,7 @@ sp_text_edit_dialog (void)
                     {
                         // TODO - replace with Inkscape-specific call
                         GtkWidget *px = gtk_image_new_from_stock ( GTK_STOCK_JUSTIFY_FILL, GTK_ICON_SIZE_LARGE_TOOLBAR );
-                        GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
+                        GtkWidget *b = gtk_radio_button_new (gtk_radio_button_get_group (GTK_RADIO_BUTTON (group)));
                         gtk_widget_set_tooltip_text (b, _("Justify lines"));
                         gtk_button_set_relief (GTK_BUTTON (b), GTK_RELIEF_NONE);
                         g_signal_connect ( G_OBJECT (b), "toggled", G_CALLBACK (sp_text_edit_dialog_any_toggled), dlg );
@@ -316,7 +316,7 @@ sp_text_edit_dialog (void)
                     {
                         GtkWidget *px = sp_icon_new( Inkscape::ICON_SIZE_LARGE_TOOLBAR,
                                                       INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_VERTICAL );
-                        GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
+                        GtkWidget *b = gtk_radio_button_new (gtk_radio_button_get_group (GTK_RADIO_BUTTON (group)));
                         gtk_widget_set_tooltip_text (b, _("Vertical text"));
                         gtk_button_set_relief (GTK_BUTTON (b), GTK_RELIEF_NONE);
                         g_signal_connect ( G_OBJECT (b), "toggled", G_CALLBACK (sp_text_edit_dialog_any_toggled), dlg );

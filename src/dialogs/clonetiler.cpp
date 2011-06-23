@@ -2514,7 +2514,7 @@ void clonetiler_dialog(void)
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_COLOR);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("Opacity"));
+                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), _("Opacity"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the total accumulated opacity"));
                     clonetiler_table_attach (table, radio, 0.0, 2, 1);
                     g_signal_connect (G_OBJECT (radio), "toggled",
@@ -2522,7 +2522,7 @@ void clonetiler_dialog(void)
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_OPACITY);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("R"));
+                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), _("R"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the Red component of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 1, 2);
                     g_signal_connect (G_OBJECT (radio), "toggled",
@@ -2530,7 +2530,7 @@ void clonetiler_dialog(void)
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_R);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("G"));
+                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), _("G"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the Green component of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 2, 2);
                     g_signal_connect (G_OBJECT (radio), "toggled",
@@ -2538,7 +2538,7 @@ void clonetiler_dialog(void)
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_G);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("B"));
+                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), _("B"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the Blue component of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 3, 2);
                     g_signal_connect (G_OBJECT (radio), "toggled",
@@ -2546,7 +2546,7 @@ void clonetiler_dialog(void)
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_B);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color hue", "H"));
+                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color hue", "H"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the hue of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 1, 3);
                     g_signal_connect (G_OBJECT (radio), "toggled",
@@ -2554,7 +2554,7 @@ void clonetiler_dialog(void)
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_H);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color saturation", "S"));
+                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color saturation", "S"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the saturation of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 2, 3);
                     g_signal_connect (G_OBJECT (radio), "toggled",
@@ -2562,7 +2562,7 @@ void clonetiler_dialog(void)
                     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_S);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color lightness", "L"));
+                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color lightness", "L"));
                     gtk_widget_set_tooltip_text (radio, _("Pick the lightness of the color"));
                     clonetiler_table_attach (table, radio, 0.0, 3, 3);
                     g_signal_connect (G_OBJECT (radio), "toggled",
@@ -2785,7 +2785,7 @@ void clonetiler_dialog(void)
                 gtk_toggle_button_toggled (GTK_TOGGLE_BUTTON (radio));
             }
             {
-                radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("Width, height: "));
+                radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), _("Width, height: "));
                 gtk_widget_set_tooltip_text (radio, _("Fill the specified width and height with the tiling"));
                 clonetiler_table_attach (table, radio, 0.0, 2, 1);
                 g_signal_connect (G_OBJECT (radio), "toggled", G_CALLBACK (clonetiler_switch_to_fill), (gpointer) dlg);
