@@ -4633,12 +4633,6 @@ static void sp_spray_standard_deviation_value_changed( GtkAdjustment *adj, GObje
     prefs->setDouble( "/tools/spray/standard_deviation", adj->value );
 }
 
-static void sp_spray_pressure_state_changed( GtkToggleAction *act, gpointer /*data*/ )
-{
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setBool("/tools/spray/usepressure", gtk_toggle_action_get_active(act));
-}
-
 static void sp_spray_mode_changed( EgeSelectOneAction *act, GObject * /*tbl*/ )
 {
     int mode = ege_select_one_action_get_active( act );
