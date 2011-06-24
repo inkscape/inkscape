@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: greek translation of inkscape-0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-12-15 22:51+0100\n"
-"PO-Revision-Date: 2011-06-23 14:12+0200\n"
+"PO-Revision-Date: 2011-06-24 16:07+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <<dmtrs32@gmail.com>, 2011>\n"
 "Language-Team:  <dmtrs32@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -4746,13 +4746,12 @@ msgid "This extension requires two selected paths."
 msgstr "Αυτή η επέκταση απαιτεί δύο επιλεγμένα μονοπάτια."
 
 #: ../share/extensions/pathalongpath.py:227
-#, fuzzy
 msgid ""
 "The total length of the pattern is too small :\n"
 "Please choose a larger object or set 'Space between copies' > 0"
 msgstr ""
 "Το συνολικό μήκος του μοτίβου είναι υπερβολικά μικρό:\n"
-"Παρακαλώ επιλέξτε ένα μεγαλύτερο αντικείμενο ή ορίστε 'Space between copies' > 0 (διάκενο μεταξύ αντιγράφων >0)"
+"Παρακαλώ επιλέξτε ένα μεγαλύτερο αντικείμενο ή ορίστε 'διάκενο μεταξύ αντιγράφων' > 0 "
 
 #: ../share/extensions/pathmodifier.py:229
 #, python-format
