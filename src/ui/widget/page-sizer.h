@@ -219,6 +219,7 @@ protected:
     RegisteredScalar     _marginBottom;
     Gtk::Alignment       _fitPageButtonAlign;
     Gtk::Button          _fitPageButton;
+    bool                 _lockMarginUpdate;
 
     //callback
     void on_value_changed();

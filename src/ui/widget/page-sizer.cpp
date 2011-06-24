@@ -235,7 +235,7 @@ PageSizer::PageSizer(Registry & _wr)
       _marginLeft( _("L_eft:"), _("Left margin"), "fit-margin-left", _wr),
       _marginRight( _("Ri_ght:"), _("Right margin"), "fit-margin-right", _wr),
       _marginBottom( _("Botto_m:"), _("Bottom margin"), "fit-margin-bottom", _wr),
-      
+      _lockMarginUpdate(false),
       _widgetRegistry(&_wr)
 {
     //# Set up the Paper Size combo box
@@ -464,18 +464,20 @@ PageSizer::setDim (double w, double h, bool changeList)
 void 
 PageSizer::updateFitMarginsUI(Inkscape::XML::Node *nv_repr)
 {
-    double value = 0.0;
-    if (sp_repr_get_double(nv_repr, "fit-margin-top", &value)) {
-        _marginTop.setValue(value);
-    }
-    if (sp_repr_get_double(nv_repr, "fit-margin-left", &value)) {
-        _marginLeft.setValue(value);
-    }
-    if (sp_repr_get_double(nv_repr, "fit-margin-right", &value)) {
-        _marginRight.setValue(value);
-    }
-    if (sp_repr_get_double(nv_repr, "fit-margin-bottom", &value)) {
-        _marginBottom.setValue(value);
+    if (!_lockMarginUpdate) {
+        double value = 0.0;
+        if (sp_repr_get_double(nv_repr, "fit-margin-top", &value)) {
+            _marginTop.setValue(value);
+        }
+        if (sp_repr_get_double(nv_repr, "fit-margin-left", &value)) {
+            _marginLeft.setValue(value);
+        }
+        if (sp_repr_get_double(nv_repr, "fit-margin-right", &value)) {
+            _marginRight.setValue(value);
+        }
+        if (sp_repr_get_double(nv_repr, "fit-margin-bottom", &value)) {
+            _marginBottom.setValue(value);
+        }
     }
 }
 
@@ -537,14 +539,18 @@ PageSizer::fire_fit_canvas_to_selection_or_drawing()
     SPDocument *doc;
     SPNamedView *nv;
     Inkscape::XML::Node *nv_repr;
+	
     if ((doc = sp_desktop_document(SP_ACTIVE_DESKTOP))
         && (nv = sp_document_namedview(doc, 0))
         && (nv_repr = nv->getRepr())) {
+        _lockMarginUpdate = true;
         sp_repr_set_svg_double(nv_repr, "fit-margin-top", _marginTop.getValue());
         sp_repr_set_svg_double(nv_repr, "fit-margin-left", _marginLeft.getValue());
         sp_repr_set_svg_double(nv_repr, "fit-margin-right", _marginRight.getValue());
         sp_repr_set_svg_double(nv_repr, "fit-margin-bottom", _marginBottom.getValue());
+        _lockMarginUpdate = false;
     }
+
     Verb *verb = Verb::get( SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING );
     if (verb) {
         SPAction *action = verb->get_action(dt);
