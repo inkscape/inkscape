@@ -114,7 +114,7 @@ struct SPPaintSelectorClass {
     void (* fillrule_changed) (SPPaintSelector *psel, SPPaintSelector::FillRule fillrule);
 };
 
-GtkType sp_paint_selector_get_type (void);
+GType sp_paint_selector_get_type (void);
 
 SPPaintSelector *sp_paint_selector_new(FillOrStroke kind);
 

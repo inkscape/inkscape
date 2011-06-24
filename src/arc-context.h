@@ -45,7 +45,7 @@ struct SPArcContextClass {
 
 /* Standard Gtk function */
 
-GtkType sp_arc_context_get_type(void);
+GType sp_arc_context_get_type(void);
 
 
 #endif /* !SEEN_ARC_CONTEXT_H */

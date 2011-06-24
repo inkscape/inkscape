@@ -84,7 +84,7 @@ static void sp_flood_finish(SPFloodContext *rc);
 static SPEventContextClass *parent_class;
 
 
-GtkType sp_flood_context_get_type()
+GType sp_flood_context_get_type()
 {
     static GType type = 0;
     if (!type) {

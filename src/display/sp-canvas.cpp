@@ -169,7 +169,7 @@ sp_canvas_item_init (SPCanvasItem *item)
  * Constructs new SPCanvasItem on SPCanvasGroup.
  */
 SPCanvasItem *
-sp_canvas_item_new (SPCanvasGroup *parent, GtkType type, gchar const *first_arg_name, ...)
+sp_canvas_item_new (SPCanvasGroup *parent, GType type, gchar const *first_arg_name, ...)
 {
     va_list args;
 

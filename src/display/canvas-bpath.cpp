@@ -38,20 +38,22 @@ static double sp_canvas_bpath_point (SPCanvasItem *item, Geom::Point p, SPCanvas
 
 static SPCanvasItemClass *parent_class;
 
-GtkType
+GType
 sp_canvas_bpath_get_type (void)
 {
-    static GtkType type = 0;
+    static GType type = 0;
     if (!type) {
-        GtkTypeInfo info = {
-            (gchar *)"SPCanvasBPath",
-            sizeof (SPCanvasBPath),
+	GTypeInfo info = {
             sizeof (SPCanvasBPathClass),
-            (GtkClassInitFunc) sp_canvas_bpath_class_init,
-            (GtkObjectInitFunc) sp_canvas_bpath_init,
-            NULL, NULL, NULL
-        };
-        type = gtk_type_unique (SP_TYPE_CANVAS_ITEM, &info);
+	    NULL, NULL,
+            (GClassInitFunc) sp_canvas_bpath_class_init,
+	    NULL, NULL,
+            sizeof (SPCanvasBPath),
+	    0,
+            (GInstanceInitFunc) sp_canvas_bpath_init,
+	    NULL
+	};
+        type = g_type_register_static (SP_TYPE_CANVAS_ITEM, "SPCanvasBPath", &info, (GTypeFlags)0);
     }
     return type;
 }

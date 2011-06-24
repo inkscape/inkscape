@@ -134,7 +134,7 @@ static SPGradientSelector *getGradientFromData(SPPaintSelector const *psel)
 
 GType sp_paint_selector_get_type(void)
 {
-    static GtkType type = 0;
+    static GType type = 0;
     if (!type) {
         GTypeInfo info = {
             sizeof(SPPaintSelectorClass),

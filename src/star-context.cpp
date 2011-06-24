@@ -64,7 +64,7 @@ static void sp_star_cancel(SPStarContext * sc);
 
 static SPEventContextClass * parent_class;
 
-GtkType
+GType
 sp_star_context_get_type (void)
 {
     static GType type = 0;

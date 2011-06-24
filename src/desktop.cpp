@@ -648,7 +648,7 @@ SPDesktop::change_document (SPDocument *theDocument)
  * Make desktop switch event contexts.
  */
 void
-SPDesktop::set_event_context (GtkType type, const gchar *config)
+SPDesktop::set_event_context (GType type, const gchar *config)
 {
     SPEventContext *ec;
     while (event_context) {
@@ -679,7 +679,7 @@ SPDesktop::set_event_context (GtkType type, const gchar *config)
  * Push event context onto desktop's context stack.
  */
 void
-SPDesktop::push_event_context (GtkType type, const gchar *config, unsigned int key)
+SPDesktop::push_event_context (GType type, const gchar *config, unsigned int key)
 {
     SPEventContext *ref, *ec;
 

@@ -52,7 +52,7 @@ struct SPCanvasText : public SPCanvasItem {
 };
 struct SPCanvasTextClass : public SPCanvasItemClass{};
 
-GtkType sp_canvastext_get_type (void);
+GType sp_canvastext_get_type (void);
 
 SPCanvasItem *sp_canvastext_new(SPCanvasGroup *parent, SPDesktop *desktop, Geom::Point pos, gchar const *text);
 

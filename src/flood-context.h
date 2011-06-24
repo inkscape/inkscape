@@ -46,7 +46,7 @@ struct SPFloodContextClass {
 
 /* Standard Gtk function */
 
-GtkType sp_flood_context_get_type (void);
+GType sp_flood_context_get_type (void);
 
 GList* flood_channels_dropdown_items_list (void);
 GList* flood_autogap_dropdown_items_list (void);

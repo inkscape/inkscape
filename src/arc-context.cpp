@@ -63,7 +63,7 @@ static void sp_arc_cancel(SPArcContext *ec);
 
 static SPEventContextClass *parent_class;
 
-GtkType sp_arc_context_get_type()
+GType sp_arc_context_get_type()
 {
     static GType type = 0;
     if (!type) {

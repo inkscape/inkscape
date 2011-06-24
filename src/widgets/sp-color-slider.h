@@ -53,7 +53,7 @@ struct SPColorSliderClass {
 	void (* changed) (SPColorSlider *slider);
 };
 
-GtkType sp_color_slider_get_type (void);
+GType sp_color_slider_get_type (void);
 
 GtkWidget *sp_color_slider_new (GtkAdjustment *adjustment);
 

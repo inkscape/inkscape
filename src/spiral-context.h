@@ -48,6 +48,6 @@ struct SPSpiralContextClass {
 
 /* Standard Gtk function */
 
-GtkType sp_spiral_context_get_type (void);
+GType sp_spiral_context_get_type (void);
 
 #endif

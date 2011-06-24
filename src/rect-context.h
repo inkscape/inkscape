@@ -46,6 +46,6 @@ struct SPRectContextClass {
 
 /* Standard Gtk function */
 
-GtkType sp_rect_context_get_type (void);
+GType sp_rect_context_get_type (void);
 
 #endif

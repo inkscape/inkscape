@@ -27,7 +27,7 @@ struct SPFontSelector;
 
 /* SPFontSelector */
 
-GtkType sp_font_selector_get_type (void);
+GType sp_font_selector_get_type (void);
 
 GtkWidget *sp_font_selector_new (void);
 

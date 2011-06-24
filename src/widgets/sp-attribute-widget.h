@@ -64,7 +64,7 @@ struct SPAttributeWidgetClass {
     GtkEntryClass entry_class;
 };
 
-GtkType sp_attribute_widget_get_type (void);
+GType sp_attribute_widget_get_type (void);
 
 GtkWidget *sp_attribute_widget_new (SPObject *object, const gchar *attribute);
 GtkWidget *sp_attribute_widget_new_repr (Inkscape::XML::Node *repr, const gchar *attribute);
@@ -99,7 +99,7 @@ struct SPAttributeTableClass {
     GtkEntryClass entry_class;
 };
 
-GtkType sp_attribute_table_get_type (void);
+GType sp_attribute_table_get_type (void);
 
 GtkWidget *sp_attribute_table_new ( SPObject *object, gint num_attr, 
                                     const gchar **labels, 

@@ -79,7 +79,7 @@ static void  gdl_dock_item_forall        (GtkContainer *container,
                                           gboolean      include_internals,
                                           GtkCallback   callback,
                                           gpointer      callback_data);
-static GtkType gdl_dock_item_child_type  (GtkContainer *container);
+static GType gdl_dock_item_child_type  (GtkContainer *container);
 
 static void  gdl_dock_item_set_focus_child (GtkContainer *container,
                                             GtkWidget    *widget,
@@ -684,7 +684,7 @@ gdl_dock_item_forall (GtkContainer *container,
         (* callback) (item->child, callback_data);
 }
 
-static GtkType
+static GType
 gdl_dock_item_child_type (GtkContainer *container)
 {
     g_return_val_if_fail (GDL_IS_DOCK_ITEM (container), G_TYPE_NONE);

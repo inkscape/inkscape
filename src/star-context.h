@@ -52,6 +52,6 @@ struct SPStarContextClass {
     SPEventContextClass parent_class;
 };
 
-GtkType sp_star_context_get_type (void);
+GType sp_star_context_get_type (void);
 
 #endif

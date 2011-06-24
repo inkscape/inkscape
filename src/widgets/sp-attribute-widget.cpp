@@ -42,7 +42,7 @@ static GtkEntryClass *parent_class;
 
 GType sp_attribute_widget_get_type(void)
 {
-    static GtkType type = 0;
+    static GType type = 0;
     if (!type) {
         GTypeInfo info = {
             sizeof(SPAttributeWidgetClass),
@@ -361,7 +361,7 @@ static GtkVBoxClass *table_parent_class;
 
 GType sp_attribute_table_get_type(void)
 {
-    static GtkType type = 0;
+    static GType type = 0;
     if (!type) {
         GTypeInfo info = {
             sizeof(SPAttributeTableClass),

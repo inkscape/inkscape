@@ -125,25 +125,23 @@ sp_xmlview_tree_set_repr (SPXMLViewTree * tree, Inkscape::XML::Node * repr)
 	gtk_clist_thaw (GTK_CLIST (tree));
 }
 
-GtkType
+GType
 sp_xmlview_tree_get_type (void)
 {
-    //TODO: switch to GObject
-    // GtkType and such calls were deprecated a while back with the
-    // introduction of GObject as a separate layer, with GType instead. --JonCruz
-
-	static GtkType type = 0;
+	static GType type = 0;
 
 	if (!type) {
-		static const GtkTypeInfo info = {
-			(gchar*) "SPXMLViewTree",
-			sizeof (SPXMLViewTree),
+		static const GTypeInfo info = {
 			sizeof (SPXMLViewTreeClass),
-			(GtkClassInitFunc) sp_xmlview_tree_class_init,
-			(GtkObjectInitFunc) sp_xmlview_tree_init,
-			NULL, NULL, NULL
+			NULL, NULL,
+			(GClassInitFunc) sp_xmlview_tree_class_init,
+			NULL, NULL,
+			sizeof (SPXMLViewTree),
+			0,
+			(GInstanceInitFunc) sp_xmlview_tree_init,
+			NULL
 		};
-		type = gtk_type_unique (GTK_TYPE_CTREE, &info);
+		type = g_type_register_static (GTK_TYPE_CTREE, "SPXMLViewTree", &info, (GTypeFlags)0);
 	}
 
 	return type;

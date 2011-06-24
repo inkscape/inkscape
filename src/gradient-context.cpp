@@ -63,7 +63,7 @@ static void sp_gradient_drag(SPGradientContext &rc, Geom::Point const pt, guint 
 static SPEventContextClass *parent_class;
 
 
-GtkType sp_gradient_context_get_type()
+GType sp_gradient_context_get_type()
 {
     static GType type = 0;
     if (!type) {

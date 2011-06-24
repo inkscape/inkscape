@@ -57,7 +57,7 @@ private:
 
 struct SPCtrlRectClass : public SPCanvasItemClass {};
 
-GtkType sp_ctrlrect_get_type();
+GType sp_ctrlrect_get_type();
 
 #endif // SEEN_RUBBERBAND_H
 

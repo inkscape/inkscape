@@ -240,8 +240,8 @@ public:
     void activate_guides (bool activate);
     void change_document (SPDocument *document);
 
-    void set_event_context (GtkType type, const gchar *config);
-    void push_event_context (GtkType type, const gchar *config, unsigned int key);
+    void set_event_context (GType type, const gchar *config);
+    void push_event_context (GType type, const gchar *config, unsigned int key);
 
     void set_coordinate_status (Geom::Point p);
     SPItem *getItemFromListAtPointBottom(const GSList *list, Geom::Point const p) const;

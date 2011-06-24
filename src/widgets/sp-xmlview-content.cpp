@@ -80,7 +80,7 @@ sp_xmlview_content_set_repr (SPXMLViewContent * text, Inkscape::XML::Node * repr
 
 GType sp_xmlview_content_get_type(void)
 {
-    static GtkType type = 0;
+    static GType type = 0;
 
     if (!type) {
         GTypeInfo info = {

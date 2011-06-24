@@ -36,21 +36,23 @@ static void sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass *parent_class_ct;
 
-GtkType
+GType
 sp_canvastext_get_type (void)
 {
-    static GtkType type = 0;
+    static GType type = 0;
 
     if (!type) {
-        GtkTypeInfo info = {
-            (gchar *)"SPCanvasText",
-            sizeof (SPCanvasText),
+	GTypeInfo info = {
             sizeof (SPCanvasTextClass),
-            (GtkClassInitFunc) sp_canvastext_class_init,
-            (GtkObjectInitFunc) sp_canvastext_init,
-            NULL, NULL, NULL
-        };
-        type = gtk_type_unique (SP_TYPE_CANVAS_ITEM, &info);
+	    NULL, NULL,
+            (GClassInitFunc) sp_canvastext_class_init,
+	    NULL, NULL,
+            sizeof (SPCanvasText),
+	    0,
+            (GInstanceInitFunc) sp_canvastext_init,
+	    NULL
+	};
+        type = g_type_register_static (SP_TYPE_CANVAS_ITEM, "SPCanvasText", &info, (GTypeFlags)0);
     }
     return type;
 }

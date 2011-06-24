@@ -653,7 +653,7 @@ gdl_dock_item_grip_forall (GtkContainer *container,
     }
 }
 
-static GtkType
+static GType
 gdl_dock_item_grip_child_type (GtkContainer *container)
 {
     return G_TYPE_NONE;

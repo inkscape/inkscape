@@ -42,7 +42,7 @@ struct SPWidgetClass {
 	void (* set_selection) (SPWidget *spw, Inkscape::Selection *selection);
 };
 
-GtkType sp_widget_get_type (void);
+GType sp_widget_get_type (void);
 
 /* fixme: Think (Lauris) */
 /* Generic constructor for global widget */

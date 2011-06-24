@@ -80,7 +80,7 @@ struct SPTextContextClass {
 };
 
 /* Standard Gtk function */
-GtkType sp_text_context_get_type (void);
+GType sp_text_context_get_type (void);
 
 bool sp_text_paste_inline(SPEventContext *ec);
 Glib::ustring sp_text_get_selected_text(SPEventContext const *ec);

@@ -66,7 +66,7 @@ static void sp_box3d_finish(Box3DContext *bc);
 
 static SPEventContextClass *parent_class;
 
-GtkType sp_box3d_context_get_type()
+GType sp_box3d_context_get_type()
 {
     static GType type = 0;
     if (!type) {

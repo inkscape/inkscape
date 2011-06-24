@@ -99,7 +99,7 @@ struct SPSprayContextClass
     SPEventContextClass parent_class;
 };
 
-GtkType sp_spray_context_get_type(void);
+GType sp_spray_context_get_type(void);
 
 
 #endif

@@ -86,7 +86,7 @@ struct SPTweakContextClass
     SPEventContextClass parent_class;
 };
 
-GtkType sp_tweak_context_get_type(void);
+GType sp_tweak_context_get_type(void);
 
 #endif
 

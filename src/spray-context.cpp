@@ -98,7 +98,7 @@ inline double NormalDistribution(double mu, double sigma)
   return mu + sigma * sqrt( -2.0 * log(g_random_double_range(0, 1)) ) * cos( 2.0*M_PI*g_random_double_range(0, 1) );
 }
 
-GtkType sp_spray_context_get_type(void)
+GType sp_spray_context_get_type(void)
 {
     static GType type = 0;
     if (!type) {

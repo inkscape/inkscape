@@ -27,7 +27,7 @@ class SPSVGSPViewWidgetClass;
 #define SP_IS_SVG_VIEW_WIDGET(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_SVG_VIEW_WIDGET))
 #define SP_IS_SVG_VIEW_WIDGET_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_SVG_VIEW_WIDGET))
 
-GtkType sp_svg_view_widget_get_type (void);
+GType sp_svg_view_widget_get_type (void);
 
 GtkWidget *sp_svg_view_widget_new (SPDocument *doc);
 

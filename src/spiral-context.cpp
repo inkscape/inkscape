@@ -59,7 +59,7 @@ static void sp_spiral_cancel(SPSpiralContext *sc);
 
 static SPEventContextClass *parent_class;
 
-GtkType
+GType
 sp_spiral_context_get_type()
 {
     static GType type = 0;

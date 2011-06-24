@@ -254,7 +254,7 @@ static GTimer *overallTimer = 0;
  */
 GType SPDesktopWidget::getType(void)
 {
-    static GtkType type = 0;
+    static GType type = 0;
     if (!type) {
         GTypeInfo info = {
             sizeof(SPDesktopWidgetClass),

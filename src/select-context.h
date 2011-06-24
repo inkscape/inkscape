@@ -55,6 +55,6 @@ struct SPSelectContextClass {
 
 /* Standard Gtk function */
 
-GtkType sp_select_context_get_type (void);
+GType sp_select_context_get_type (void);
 
 #endif

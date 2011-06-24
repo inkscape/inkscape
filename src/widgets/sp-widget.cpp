@@ -43,24 +43,25 @@ static void sp_widget_set_selection (Inkscape::Application *inkscape, Inkscape::
 static GtkBinClass *parent_class;
 static guint signals[LAST_SIGNAL] = {0};
 
-GtkType
+GType
 sp_widget_get_type (void)
 {
-    //TODO: switch to GObject
-    // GtkType and such calls were deprecated a while back with the
-    // introduction of GObject as a separate layer, with GType instead. --JonCruz
-
-	static GtkType type = 0;
+	static GType type = 0;
 	if (!type) {
-		static const GtkTypeInfo info = {
-			(gchar*) "SPWidget",
-			sizeof (SPWidget),
+		static const GTypeInfo info = {
 			sizeof (SPWidgetClass),
-			(GtkClassInitFunc) sp_widget_class_init,
-			(GtkObjectInitFunc) sp_widget_init,
-			NULL, NULL, NULL
+			NULL, NULL,
+			(GClassInitFunc) sp_widget_class_init,
+			NULL, NULL,
+			sizeof (SPWidget),
+			0,
+			(GInstanceInitFunc) sp_widget_init,
+			NULL			
 		};
-		type = gtk_type_unique (GTK_TYPE_BIN, &info);
+		type = g_type_register_static (GTK_TYPE_BIN, 
+				              "SPWidget",
+					      &info,
+					      (GTypeFlags)0);
 	}
 	return type;
 }

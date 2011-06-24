@@ -90,7 +90,7 @@ static gint sp_tweak_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
 static SPEventContextClass *parent_class;
 
-GtkType
+GType
 sp_tweak_context_get_type(void)
 {
     static GType type = 0;

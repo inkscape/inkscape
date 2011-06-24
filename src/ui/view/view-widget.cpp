@@ -27,22 +27,21 @@ static GtkEventBoxClass *widget_parent_class;
 /**
  * Registers the SPViewWidget class with Glib and returns its type number.
  */
-GtkType sp_view_widget_get_type(void)
+GType sp_view_widget_get_type(void)
 {
-    static GtkType type = 0;
-    //TODO: switch to GObject
-    // GtkType and such calls were deprecated a while back with the
-    // introduction of GObject as a separate layer, with GType instead. --JonCruz
+    static GType type = 0;
     if (!type) {
-        GtkTypeInfo info = {
-            (gchar*) "SPViewWidget",
-            sizeof(SPViewWidget),
+	GTypeInfo info = {
             sizeof(SPViewWidgetClass),
-            (GtkClassInitFunc) sp_view_widget_class_init,
-            (GtkObjectInitFunc) sp_view_widget_init,
-            NULL, NULL, NULL
-        };
-        type = gtk_type_unique(GTK_TYPE_EVENT_BOX, &info);
+	    NULL, NULL,
+            (GClassInitFunc) sp_view_widget_class_init,
+	    NULL, NULL,
+            sizeof(SPViewWidget),
+	    0,
+            (GInstanceInitFunc) sp_view_widget_init,
+	    NULL
+	};
+        type = g_type_register_static (GTK_TYPE_EVENT_BOX, "SPViewWidget", &info, (GTypeFlags)0);
     }
     
     return type;

@@ -66,7 +66,7 @@ struct Box3DContextClass {
 
 /* Standard Gtk function */
 
-GtkType sp_box3d_context_get_type (void);
+GType sp_box3d_context_get_type (void);
 
 void sp_box3d_context_update_lines(SPEventContext *ec);
 

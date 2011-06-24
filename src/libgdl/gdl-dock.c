@@ -79,7 +79,7 @@ static void  gdl_dock_forall          (GtkContainer *container,
                                        gboolean      include_internals,
                                        GtkCallback   callback,
                                        gpointer      callback_data);
-static GtkType  gdl_dock_child_type   (GtkContainer *container);
+static GType  gdl_dock_child_type   (GtkContainer *container);
 
 static void     gdl_dock_detach       (GdlDockObject    *object,
                                        gboolean          recursive);
@@ -750,7 +750,7 @@ gdl_dock_forall (GtkContainer *container,
         (*callback) (GTK_WIDGET (dock->root), callback_data);
 }
 
-static GtkType
+static GType
 gdl_dock_child_type (GtkContainer *container)
 {
     return GDL_TYPE_DOCK_ITEM;

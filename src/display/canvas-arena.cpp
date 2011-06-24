@@ -48,20 +48,22 @@ NRArenaEventVector carenaev = {
 static SPCanvasItemClass *parent_class;
 static guint signals[LAST_SIGNAL] = {0};
 
-GtkType
+GType
 sp_canvas_arena_get_type (void)
 {
-    static GtkType type = 0;
+    static GType type = 0;
     if (!type) {
-        GtkTypeInfo info = {
-            (gchar *)"SPCanvasArena",
-            sizeof (SPCanvasArena),
+	GTypeInfo info = {
             sizeof (SPCanvasArenaClass),
-            (GtkClassInitFunc) sp_canvas_arena_class_init,
-            (GtkObjectInitFunc) sp_canvas_arena_init,
-            NULL, NULL, NULL
-        };
-        type = gtk_type_unique (SP_TYPE_CANVAS_ITEM, &info);
+	    NULL, NULL,
+            (GClassInitFunc) sp_canvas_arena_class_init,
+	    NULL, NULL,
+            sizeof (SPCanvasArena),
+	    0,
+            (GInstanceInitFunc) sp_canvas_arena_init,
+	    NULL
+	};
+        type = g_type_register_static (SP_TYPE_CANVAS_ITEM, "SPCanvasArena", &info, (GTypeFlags)0);
     }
     return type;
 }

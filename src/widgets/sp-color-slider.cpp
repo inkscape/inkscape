@@ -54,24 +54,22 @@ static const guchar *sp_color_slider_render_map (gint x0, gint y0, gint width, g
 static GtkWidgetClass *parent_class;
 static guint slider_signals[LAST_SIGNAL] = {0};
 
-GtkType
+GType
 sp_color_slider_get_type (void)
 {
-    //TODO: switch to GObject
-    // GtkType and such calls were deprecated a while back with the
-    // introduction of GObject as a separate layer, with GType instead. --JonCruz
-
-	static GtkType type = 0;
+	static GType type = 0;
 	if (!type) {
-		GtkTypeInfo info = {
-			(gchar*) "SPColorSlider",
-			sizeof (SPColorSlider),
+		GTypeInfo info = {
 			sizeof (SPColorSliderClass),
-			(GtkClassInitFunc) sp_color_slider_class_init,
-			(GtkObjectInitFunc) sp_color_slider_init,
-			NULL, NULL, NULL
+			NULL, NULL,
+			(GClassInitFunc) sp_color_slider_class_init,
+			NULL, NULL,
+			sizeof (SPColorSlider),
+			0,
+			(GInstanceInitFunc) sp_color_slider_init,
+			NULL
 		};
-		type = gtk_type_unique (GTK_TYPE_WIDGET, &info);
+		type = g_type_register_static (GTK_TYPE_WIDGET, "SPColorSlider", &info, (GTypeFlags)0);
 	}
 	return type;
 }

@@ -38,7 +38,7 @@ struct SPXMLViewAttrListClass
 	void (* row_changed) (SPXMLViewAttrList *list, gint row);
 };
 
-GtkType sp_xmlview_attr_list_get_type (void);
+GType sp_xmlview_attr_list_get_type (void);
 GtkWidget * sp_xmlview_attr_list_new (Inkscape::XML::Node * repr);
 
 #define SP_XMLVIEW_ATTR_LIST_GET_REPR(list) (SP_XMLVIEW_ATTR_LIST (list)->repr)

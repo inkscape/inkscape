@@ -65,7 +65,7 @@ static void sp_rect_cancel(SPRectContext *rc);
 static SPEventContextClass *parent_class;
 
 
-GtkType sp_rect_context_get_type()
+GType sp_rect_context_get_type()
 {
     static GType type = 0;
     if (!type) {

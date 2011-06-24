@@ -40,7 +40,7 @@ struct SPXMLViewTreeClass
 	GtkCTreeClass parent_class;
 };
 
-GtkType sp_xmlview_tree_get_type (void);
+GType sp_xmlview_tree_get_type (void);
 GtkWidget * sp_xmlview_tree_new (Inkscape::XML::Node * repr, void * factory, void * data);
 
 #define SP_XMLVIEW_TREE_REPR(tree) (SP_XMLVIEW_TREE (tree)->repr)

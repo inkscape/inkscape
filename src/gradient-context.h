@@ -49,7 +49,7 @@ struct SPGradientContextClass {
 };
 
 /* Standard Gtk function */
-GtkType sp_gradient_context_get_type();
+GType sp_gradient_context_get_type();
 
 void sp_gradient_context_select_next (SPEventContext *event_context);
 void sp_gradient_context_select_prev (SPEventContext *event_context);

@@ -238,7 +238,7 @@ struct SPDesktopWidget {
 
     Inkscape::UI::Widget::Dock* getDock();
 
-    static GtkType getType();
+    static GType getType();
     static SPDesktopWidget* createInstance(SPNamedView *namedview);
 
     void updateNamedview();

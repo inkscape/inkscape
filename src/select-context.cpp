@@ -69,7 +69,7 @@ static gint xp = 0, yp = 0; // where drag started
 static gint tolerance = 0;
 static bool within_tolerance = false;
 
-GtkType
+GType
 sp_select_context_get_type(void)
 {
     static GType type = 0;

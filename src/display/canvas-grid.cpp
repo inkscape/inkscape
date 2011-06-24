@@ -58,22 +58,24 @@ static void grid_canvasitem_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass * parent_class;
 
-GtkType
+GType
 grid_canvasitem_get_type (void)
 {
-    static GtkType grid_canvasitem_type = 0;
+    static GType grid_canvasitem_type = 0;
 
     if (!grid_canvasitem_type) {
-        GtkTypeInfo grid_canvasitem_info = {
-            (gchar *)"GridCanvasItem",
-            sizeof (GridCanvasItem),
+	GTypeInfo grid_canvasitem_info = {
             sizeof (GridCanvasItemClass),
-            (GtkClassInitFunc) grid_canvasitem_class_init,
-            (GtkObjectInitFunc) grid_canvasitem_init,
-            NULL, NULL,
-            (GtkClassInitFunc) NULL
-        };
-        grid_canvasitem_type = gtk_type_unique (sp_canvas_item_get_type (), &grid_canvasitem_info);
+	    NULL, NULL,
+            (GClassInitFunc) grid_canvasitem_class_init,
+	    NULL, NULL,
+            sizeof (GridCanvasItem),
+	    0,
+            (GInstanceInitFunc) grid_canvasitem_init,
+	    NULL
+	};
+        
+	grid_canvasitem_type = g_type_register_static (sp_canvas_item_get_type (), "GridCanvasItem", &grid_canvasitem_info, (GTypeFlags)0);
     }
     return grid_canvasitem_type;
 }

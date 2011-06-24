@@ -67,7 +67,7 @@ struct _SPCanvasItemClass : public GtkObjectClass {
     int (* event) (SPCanvasItem *item, GdkEvent *event);
 };
 
-SPCanvasItem *sp_canvas_item_new(SPCanvasGroup *parent, GtkType type, const gchar *first_arg_name, ...);
+SPCanvasItem *sp_canvas_item_new(SPCanvasGroup *parent, GType type, const gchar *first_arg_name, ...);
 
 G_END_DECLS
 

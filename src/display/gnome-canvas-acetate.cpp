@@ -25,20 +25,22 @@ static double sp_canvas_acetate_point (SPCanvasItem *item, Geom::Point p, SPCanv
 
 static SPCanvasItemClass *parent_class;
 
-GtkType
+GType
 sp_canvas_acetate_get_type (void)
 {
-	static GtkType acetate_type = 0;
+	static GType acetate_type = 0;
 	if (!acetate_type) {
-		GtkTypeInfo acetate_info = {
-			(gchar *)"SPCanvasAcetate",
-			sizeof (SPCanvasAcetate),
+		GTypeInfo acetate_info = {
 			sizeof (SPCanvasAcetateClass),
-			(GtkClassInitFunc) sp_canvas_acetate_class_init,
-			(GtkObjectInitFunc) sp_canvas_acetate_init,
-			NULL, NULL, NULL
+			NULL, NULL,
+			(GClassInitFunc) sp_canvas_acetate_class_init,
+			NULL, NULL,
+			sizeof (SPCanvasAcetate),
+			0,
+			(GInstanceInitFunc) sp_canvas_acetate_init,
+			NULL
 		};
-		acetate_type = gtk_type_unique (sp_canvas_item_get_type (), &acetate_info);
+		acetate_type = g_type_register_static (sp_canvas_item_get_type (), "SPCanvasAcetate", &acetate_info, (GTypeFlags)0);
 	}
 	return acetate_type;
 }

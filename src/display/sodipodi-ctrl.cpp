@@ -40,10 +40,10 @@ static double sp_ctrl_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **a
 
 static SPCanvasItemClass *parent_class;
 
-GtkType
+GType
 sp_ctrl_get_type (void)
 {
-    static GtkType ctrl_type = 0;
+    static GType ctrl_type = 0;
     if (!ctrl_type) {
         static GTypeInfo const ctrl_info = {
             sizeof (SPCtrlClass),

@@ -90,7 +90,7 @@ struct SPCanvasBPathClass {
     SPCanvasItemClass parent_class;
 };
 
-GtkType sp_canvas_bpath_get_type (void);
+GType sp_canvas_bpath_get_type (void);
 
 SPCanvasItem *sp_canvas_bpath_new (SPCanvasGroup *parent, SPCurve *curve);
 

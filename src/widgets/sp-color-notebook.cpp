@@ -62,7 +62,7 @@ static SPColorSelectorClass *parent_class;
 
 GType sp_color_notebook_get_type(void)
 {
-    static GtkType type = 0;
+    static GType type = 0;
     if (!type) {
         GTypeInfo info = {
             sizeof(SPColorNotebookClass),

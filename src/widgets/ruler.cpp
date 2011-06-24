@@ -37,30 +37,25 @@ static gint sp_hruler_motion_notify (GtkWidget      *widget, GdkEventMotion *eve
 
 static GtkWidgetClass *hruler_parent_class;
 
-GtkType
+GType
 sp_hruler_get_type (void)
 {
-    //TODO: switch to GObject
-    // GtkType and such calls were deprecated a while back with the
-    // introduction of GObject as a separate layer, with GType instead. --JonCruz
-
-  static GtkType hruler_type = 0;
+  static GType hruler_type = 0;
 
   if (!hruler_type)
     {
-      static const GtkTypeInfo hruler_info =
-      {
-        (gchar*) "SPHRuler",
-        sizeof (SPHRuler),
+      static const GTypeInfo hruler_info = {
         sizeof (SPHRulerClass),
-        (GtkClassInitFunc) sp_hruler_class_init,
-        (GtkObjectInitFunc) sp_hruler_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	NULL, NULL,
+        (GClassInitFunc) sp_hruler_class_init,
+	NULL, NULL,
+        sizeof (SPHRuler),
+	0,
+        (GInstanceInitFunc) sp_hruler_init,
+	NULL
       };
   
-      hruler_type = gtk_type_unique (gtk_ruler_get_type (), &hruler_info);
+      hruler_type = g_type_register_static (gtk_ruler_get_type (), "SPHRuler", &hruler_info, (GTypeFlags)0);
     }
 
   return hruler_type;
@@ -128,30 +123,25 @@ static void sp_vruler_size_request (GtkWidget *widget, GtkRequisition *requisiti
 
 static GtkWidgetClass *vruler_parent_class;
 
-GtkType
+GType
 sp_vruler_get_type (void)
 {
-    //TODO: switch to GObject
-    // GtkType and such calls were deprecated a while back with the
-    // introduction of GObject as a separate layer, with GType instead. --JonCruz
-
-  static GtkType vruler_type = 0;
+  static GType vruler_type = 0;
 
   if (!vruler_type)
     {
-      static const GtkTypeInfo vruler_info =
-      {
-	(gchar*) "SPVRuler",
-	sizeof (SPVRuler),
+      static const GTypeInfo vruler_info = {
 	sizeof (SPVRulerClass),
-	(GtkClassInitFunc) sp_vruler_class_init,
-	(GtkObjectInitFunc) sp_vruler_init,
-	/* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	NULL, NULL,
+	(GClassInitFunc) sp_vruler_class_init,
+	NULL, NULL,
+	sizeof (SPVRuler),
+	0,
+	(GInstanceInitFunc) sp_vruler_init,
+	NULL
       };
 
-      vruler_type = gtk_type_unique (gtk_ruler_get_type (), &vruler_info);
+      vruler_type = g_type_register_static (gtk_ruler_get_type (), "SPVRuler", &vruler_info, (GTypeFlags)0);
     }
 
   return vruler_type;
