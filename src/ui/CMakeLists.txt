@@ -166,9 +166,6 @@ set(ui_SRC
 	dialog/tracedialog.h
 	dialog/transformation.h
 	dialog/undo-history.h
-	dialog/whiteboard-connect.h
-	dialog/whiteboard-sharewithchat.h
-	dialog/whiteboard-sharewithuser.h
 
 	tool/commit-events.h
 	tool/control-point-selection.h

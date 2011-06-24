@@ -69,8 +69,6 @@ set(dom_SRC
 	io/bufferstream.h
 	io/domstream.h
 	io/gzipstream.h
-	io/httpclient.h
-	io/socket.h
 	io/stringstream.h
 	io/uristream.h
 
