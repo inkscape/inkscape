@@ -45,7 +45,8 @@ add_definitions(${POPT_DEFINITIONS})
 # ----------------------------------------------------------------------------
 
 # Include dependencies:
-find_package(GTK2 COMPONENTS gtk gtkmm REQUIRED)
+# use patched version until GTK2_CAIROMMCONFIG_INCLUDE_DIR is added
+find_package(GTK2_patched COMPONENTS gtk gtkmm REQUIRED)
 list(APPEND INKSCAPE_INCS_SYS
 	${GTK2_GDK_INCLUDE_DIR}
 	${GTK2_GDKMM_INCLUDE_DIR}
@@ -66,10 +67,12 @@ list(APPEND INKSCAPE_INCS_SYS
 	${GTK2_PANGOMMCONFIG_INCLUDE_DIR}
 	${GTK2_CAIRO_INCLUDE_DIR}
 	${GTK2_CAIROMM_INCLUDE_DIR}
+	${GTK2_CAIROMMCONFIG_INCLUDE_DIR} # <-- not in cmake 2.8.4
 	${GTK2_GIOMM_INCLUDE_DIR}
 	${GTK2_SIGC++_INCLUDE_DIR}
 	${GTK2_SIGC++CONFIG_INCLUDE_DIR}
 )
+
 list(APPEND INKSCAPE_LIBS
 	${GTK2_GDK_LIBRARY}
 	${GTK2_GDKMM_LIBRARY}
@@ -89,11 +92,6 @@ list(APPEND INKSCAPE_LIBS
 
 )
 
-## XXX, we need a way to get this properly
-# pkg-config gtkmm-2.4 --cflags-only-I
-list(APPEND INKSCAPE_INCS_SYS
-	"/usr/lib/cairomm-1.0/include"
-)
 
 find_package(Freetype REQUIRED)
 list(APPEND INKSCAPE_INCS_SYS ${FREETYPE_INCLUDE_DIRS})
