@@ -2408,7 +2408,7 @@ cr_parser_parse_stylesheet (CRParser * a_this)
                                                  import_string,
                                                  NULL, &location) ;
 
-                                        if ((PRIVATE (a_this)->sac_handler->resolve_import == TRUE)) {
+                                        if (PRIVATE (a_this)->sac_handler->resolve_import == TRUE) {
                                                 /*
                                                  *TODO: resolve the
                                                  *import rule.

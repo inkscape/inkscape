@@ -72,7 +72,7 @@ void Block::setUpConstraintHeap(PairingHeap<Constraint*>* &h,bool in) {
 		for (Cit j=cs->begin();j!=cs->end();++j) {
 			Constraint *c=*j;
 			c->timeStamp=blockTimeCtr;
-			if (c->left->block != this && in || c->right->block != this && !in) {
+			if ((c->left->block != this && in) || (c->right->block != this && !in)) {
 				h->insert(c);
 			}
 		}

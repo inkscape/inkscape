@@ -422,7 +422,7 @@ Constraint* IncSolver::mostViolated(Constraints &l) {
     // downwards.  There is always at least 1 element in the
     // vector because of search.
     // TODO check this logic and add parens:
-    if((deletePoint != end) && ((minSlack < ZERO_UPPERBOUND) && !v->active || v->equality)) {
+    if((deletePoint != end) && (((minSlack < ZERO_UPPERBOUND) && !v->active) || v->equality)) {
         *deletePoint = l[l.size()-1];
         l.resize(l.size()-1);
     }

@@ -1306,12 +1306,12 @@ cc_connector_rerouting_finish(SPConnectorContext *const cc, Geom::Point *const p
 
         if (found) {
             if (cc->clickedhandle == cc->endpt_handle[0]) {
-                cc->clickeditem->setAttribute("inkscape:connection-start", shape_label, false);
-                cc->clickeditem->setAttribute("inkscape:connection-start-point", cpid, false);
+                cc->clickeditem->setAttribute("inkscape:connection-start", shape_label, NULL);
+                cc->clickeditem->setAttribute("inkscape:connection-start-point", cpid, NULL);
             }
             else {
-                cc->clickeditem->setAttribute("inkscape:connection-end", shape_label, false);
-                cc->clickeditem->setAttribute("inkscape:connection-end-point", cpid, false);
+                cc->clickeditem->setAttribute("inkscape:connection-end", shape_label, NULL);
+                cc->clickeditem->setAttribute("inkscape:connection-end-point", cpid, NULL);
             }
             g_free(shape_label);
         }
@@ -1451,23 +1451,23 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
 
         bool connection = false;
         cc->newconn->setAttribute( "inkscape:connector-type",
-                                   cc->isOrthogonal ? "orthogonal" : "polyline", false );
+                                   cc->isOrthogonal ? "orthogonal" : "polyline", NULL );
         cc->newconn->setAttribute( "inkscape:connector-curvature",
-                                   Glib::Ascii::dtostr(cc->curvature).c_str(), false );
+                                   Glib::Ascii::dtostr(cc->curvature).c_str(), NULL );
         if (cc->shref)
         {
-            cc->newconn->setAttribute( "inkscape:connection-start", cc->shref, false);
+            cc->newconn->setAttribute( "inkscape:connection-start", cc->shref, NULL);
             if (cc->scpid) {
-                cc->newconn->setAttribute( "inkscape:connection-start-point", cc->scpid, false);
+                cc->newconn->setAttribute( "inkscape:connection-start-point", cc->scpid, NULL);
             }
             connection = true;
         }
 
         if (cc->ehref)
         {
-            cc->newconn->setAttribute( "inkscape:connection-end", cc->ehref, false);
+            cc->newconn->setAttribute( "inkscape:connection-end", cc->ehref, NULL);
             if (cc->ecpid) {
-                cc->newconn->setAttribute( "inkscape:connection-end-point", cc->ecpid, false);
+                cc->newconn->setAttribute( "inkscape:connection-end-point", cc->ecpid, NULL);
             }
             connection = true;
         }
@@ -1950,7 +1950,7 @@ void cc_selection_set_avoid(bool const set_avoid)
         char const *value = (set_avoid) ? "true" : NULL;
 
         if (cc_item_is_shape(item)) {
-            item->setAttribute("inkscape:connector-avoid", value, false);
+            item->setAttribute("inkscape:connector-avoid", value, NULL);
             item->avoidRef->handleSettingChange();
             changes++;
         }

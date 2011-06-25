@@ -324,7 +324,7 @@ Effect::set_last_effect (Effect * in_effect)
 Inkscape::XML::Node *
 Effect::find_menu (Inkscape::XML::Node * menustruct, const gchar *name)
 {
-    if (menustruct == NULL) return false;
+    if (menustruct == NULL) return NULL;
     for (Inkscape::XML::Node * child = menustruct;
             child != NULL;
             child = child->next()) {
