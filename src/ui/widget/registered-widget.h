@@ -62,8 +62,6 @@ public:
 
     bool is_updating() {if (_wr) return _wr->isUpdating(); else return false;}
 
-    operator const Gtk::Widget() { return *this; }
-
 protected:
     RegisteredWidget() : W() { construct(); }
     template< typename A >
