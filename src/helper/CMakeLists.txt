@@ -1,5 +1,5 @@
 
-include(UseGlibMarshal)
+include(${CMAKE_SOURCE_DIR}/CMakeScripts/UseGlibMarshal.cmake)
 
 GLIB_MARSHAL(sp_marshal sp-marshal "${CMAKE_CURRENT_BINARY_DIR}/helper")
 
@@ -45,6 +45,8 @@ set(helper_SRC
 	units.h
 	window.h
 )
+
+set_source_files_properties(sp_marshal_SRC PROPERTIES GENERATED true)
 
 # add_inkscape_lib(helper_LIB "${helper_SRC}")
 add_inkscape_source("${helper_SRC}")

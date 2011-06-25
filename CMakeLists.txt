@@ -6,7 +6,7 @@
 # ideasman42
 
 cmake_minimum_required(VERSION 2.8.0)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeScripts")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeScripts/Modules")
 
 project(inkscape)
 
@@ -40,9 +40,9 @@ option(WITH_DBUS "Compile with support for DBus interface" OFF)
 
 option(WITH_PROFILING "Turn on profiling" OFF) # Set to true if compiler/linker should enable profiling
 
-include(ConfigPaths) # Installation Paths
-include(DefineDependsandFlags) # Includes, Compiler Flags, and Link Libraries
-include(HelperMacros) # Misc Utility Macros
+include(CMakeScripts/ConfigPaths.cmake) # Installation Paths
+include(CMakeScripts/DefineDependsandFlags.cmake) # Includes, Compiler Flags, and Link Libraries
+include(CMakeScripts/HelperMacros.cmake) # Misc Utility Macros
 
 
 

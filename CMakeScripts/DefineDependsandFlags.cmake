@@ -141,7 +141,7 @@ if(ImageMagick_FOUND)
 	list(APPEND INKSCAPE_LIBS ${ImageMagick_Magick++_LIBRARY})
 endif()
 
-include(IncludeJava)
+include(${CMAKE_CURRENT_LIST_DIR}/IncludeJava.cmake)
 # end Dependencies
 
 
@@ -152,4 +152,4 @@ include_directories(SYSTEM ${INKSCAPE_INCS_SYS})
 unset(INKSCAPE_INCS)
 unset(INKSCAPE_INCS_SYS)
 
-include(ConfigChecks)
+include(${CMAKE_CURRENT_LIST_DIR}/ConfigChecks.cmake)
