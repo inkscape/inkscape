@@ -166,7 +166,7 @@ void ColorScales::init()
 		gtk_table_attach (GTK_TABLE (t), _b[i], 2, 3, i, i + 1, (GtkAttachOptions)0, (GtkAttachOptions)0, XPAD, YPAD);
 
 		/* Attach channel value to adjustment */
-		gtk_object_set_data (GTK_OBJECT (_a[i]), "channel", GINT_TO_POINTER (i));
+		g_object_set_data (G_OBJECT (_a[i]), "channel", GINT_TO_POINTER (i));
 		/* Signals */
 		g_signal_connect (G_OBJECT (_a[i]), "value_changed",
 					G_CALLBACK (_adjustmentAnyChanged), _csel);

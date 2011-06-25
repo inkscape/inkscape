@@ -232,7 +232,7 @@ spus_rebuild_menu(SPUnitSelector *us)
         //        i = gtk_menu_item_new_with_label((us->abbr) ? (us->plural) ? u->abbr_plural : u->abbr : (us->plural) ? u->plural : u->name);
         GtkWidget *i = gtk_menu_item_new_with_label( u->abbr );
 
-        gtk_object_set_data(GTK_OBJECT(i), "unit", (gpointer) u);
+        g_object_set_data(G_OBJECT(i), "unit", (gpointer) u);
         g_signal_connect(G_OBJECT(i), "activate", G_CALLBACK(spus_unit_activate), us);
 
         sp_set_font_size_smaller (i);

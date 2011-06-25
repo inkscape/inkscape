@@ -497,7 +497,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (dtw->zoom_status), GTK_UPDATE_ALWAYS);
     g_signal_connect (G_OBJECT (dtw->zoom_status), "input", G_CALLBACK (sp_dtw_zoom_input), dtw);
     g_signal_connect (G_OBJECT (dtw->zoom_status), "output", G_CALLBACK (sp_dtw_zoom_output), dtw);
-    gtk_object_set_data (GTK_OBJECT (dtw->zoom_status), "dtw", dtw->canvas);
+    g_object_set_data (G_OBJECT (dtw->zoom_status), "dtw", dtw->canvas);
     g_signal_connect (G_OBJECT (dtw->zoom_status), "focus-in-event", G_CALLBACK (spinbutton_focus_in), dtw->zoom_status);
     g_signal_connect (G_OBJECT (dtw->zoom_status), "key-press-event", G_CALLBACK (spinbutton_keypress), dtw->zoom_status);
     dtw->zoom_update = g_signal_connect (G_OBJECT (dtw->zoom_status), "value_changed", G_CALLBACK (sp_dtw_zoom_value_changed), dtw);

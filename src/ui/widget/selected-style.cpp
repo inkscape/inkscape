@@ -412,7 +412,7 @@ void
 SelectedStyle::setDesktop(SPDesktop *desktop)
 {
     _desktop = desktop;
-    gtk_object_set_data (GTK_OBJECT(_opacity_sb.gobj()), "dtw", _desktop->canvas);
+    g_object_set_data (G_OBJECT(_opacity_sb.gobj()), "dtw", _desktop->canvas);
 
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 

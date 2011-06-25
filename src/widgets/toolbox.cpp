@@ -2560,8 +2560,8 @@ void ToolboxFactory::showAuxToolbox(GtkWidget *toolbox_toplevel)
 static GtkWidget *sp_empty_toolbox_new(SPDesktop *desktop)
 {
     GtkWidget *tbl = gtk_toolbar_new();
-    gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
-    gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
+    g_object_set_data(G_OBJECT(tbl), "dtw", desktop->canvas);
+    g_object_set_data(G_OBJECT(tbl), "desktop", desktop);
 
     gtk_widget_show_all(tbl);
     sp_set_font_size_smaller (tbl);
@@ -2948,7 +2948,7 @@ void sp_toolbox_add_label(GtkWidget *tbl, gchar const *title, bool wide)
     } else {
         gtk_box_pack_start(GTK_BOX(tbl), boxl, FALSE, FALSE, 0);
     }
-    gtk_object_set_data(GTK_OBJECT(tbl), "mode_label", l);
+    g_object_set_data(G_OBJECT(tbl), "mode_label", l);
 }
 
 

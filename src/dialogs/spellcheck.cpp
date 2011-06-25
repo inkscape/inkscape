@@ -191,7 +191,7 @@ sp_spellcheck_new_button (GtkWidget *dlg, GtkWidget *hb, const gchar *label, con
     gtk_widget_set_tooltip_text (b, tip);
     gtk_box_pack_start (GTK_BOX (hb), b, TRUE, TRUE, 0);
     g_signal_connect ( G_OBJECT (b), "clicked", G_CALLBACK (function), dlg );
-    gtk_object_set_data (GTK_OBJECT (dlg), cookie, b);
+    g_object_set_data (G_OBJECT (dlg), cookie, b);
     gtk_widget_show (b);
 }
 
@@ -935,7 +935,7 @@ sp_spellcheck_dialog (void)
         {
             GtkWidget *hb = gtk_hbox_new (FALSE, 0);
             GtkWidget *l = gtk_label_new (NULL);
-            gtk_object_set_data (GTK_OBJECT (dlg), "banner", l);
+            g_object_set_data (G_OBJECT (dlg), "banner", l);
             gtk_box_pack_start (GTK_BOX (hb), l, FALSE, FALSE, 0);
             gtk_box_pack_start (GTK_BOX (vb), hb, FALSE, FALSE, 0);
         }
@@ -948,7 +948,7 @@ sp_spellcheck_dialog (void)
 
             GtkListStore *model = gtk_list_store_new (1, G_TYPE_STRING);
             GtkWidget *tree_view = gtk_tree_view_new ();
-            gtk_object_set_data (GTK_OBJECT (dlg), "suggestions", tree_view);
+            g_object_set_data (G_OBJECT (dlg), "suggestions", tree_view);
             gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window),
                                                    tree_view);
             gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view), GTK_TREE_MODEL (model));

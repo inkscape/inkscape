@@ -35,7 +35,7 @@ spinbutton_focus_in (GtkWidget *w, GdkEventKey */*event*/, gpointer /*data*/)
 	*ini = gtk_spin_button_get_value (GTK_SPIN_BUTTON(w));
 
 	// remember it
-	gtk_object_set_data (GTK_OBJECT (w), "ini", ini);
+	g_object_set_data (G_OBJECT (w), "ini", ini);
 
 	return FALSE; // I didn't consume the event
 }
@@ -53,7 +53,7 @@ spinbutton_defocus (GtkObject *container)
 	// defocus spinbuttons by moving focus to the canvas, unless "stay" is on
 	gboolean stay = GPOINTER_TO_INT(gtk_object_get_data (GTK_OBJECT (container), "stay"));
 	if (stay) {
-		gtk_object_set_data (GTK_OBJECT (container), "stay", GINT_TO_POINTER (FALSE));
+		g_object_set_data (G_OBJECT (container), "stay", GINT_TO_POINTER (FALSE));
 	} else {
 		GtkWidget *canvas = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (container), "dtw");
 		if (canvas) {
@@ -82,7 +82,7 @@ spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 	case GDK_Tab:
 	case GDK_ISO_Left_Tab:
 		// set the flag meaning "do not leave toolbar when changing value"
-		gtk_object_set_data (GTK_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
+		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
 		return FALSE; // I didn't consume the event
 		break;
 
@@ -91,7 +91,7 @@ spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 
 	case GDK_Up:
 	case GDK_KP_Up:
-		gtk_object_set_data (GTK_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
+		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
 		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON (w));
 		v += SPIN_STEP;
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), v);
@@ -99,7 +99,7 @@ spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 		break;
 	case GDK_Down:
 	case GDK_KP_Down:
-		gtk_object_set_data (GTK_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
+		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
 		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON (w));
 		v -= SPIN_STEP;
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), v);
@@ -107,7 +107,7 @@ spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 		break;
 	case GDK_Page_Up:
 	case GDK_KP_Page_Up:
-		gtk_object_set_data (GTK_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
+		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
 		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON (w));
 		v += SPIN_PAGE_STEP;
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), v);
@@ -115,7 +115,7 @@ spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 		break;
 	case GDK_Page_Down:
 	case GDK_KP_Page_Down:
-		gtk_object_set_data (GTK_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
+		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
 		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON (w));
 		v -= SPIN_PAGE_STEP;
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), v);
@@ -123,7 +123,7 @@ spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 		break;
 	case GDK_z:
 	case GDK_Z:
-		gtk_object_set_data (GTK_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
+		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
 		if (event->state & GDK_CONTROL_MASK) {
 			spinbutton_undo (w);
 			return TRUE; // I consumed the event

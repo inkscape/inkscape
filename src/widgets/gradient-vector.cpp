@@ -797,7 +797,7 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     update_stop_list(GTK_WIDGET(mnu), gradient, NULL);
     g_signal_connect(G_OBJECT(mnu), "changed", G_CALLBACK(sp_grad_edit_select), vb);
     gtk_widget_show(mnu);
-    gtk_object_set_data(GTK_OBJECT(vb), "stopmenu", mnu);
+    g_object_set_data(G_OBJECT(vb), "stopmenu", mnu);
     gtk_box_pack_start(GTK_BOX(vb), mnu, FALSE, FALSE, 0);
 
     /* Add and Remove buttons */
@@ -830,7 +830,7 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     /* Adjustment */
     GtkAdjustment *Offset_adj = NULL;
     Offset_adj= (GtkAdjustment *) gtk_adjustment_new(0.0, 0.0, 1.0, 0.01, 0.01, 0.0);
-    gtk_object_set_data(GTK_OBJECT(vb), "offset", Offset_adj);
+    g_object_set_data(G_OBJECT(vb), "offset", Offset_adj);
     GtkMenu *m = GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(mnu)));
     SPStop *stop = SP_STOP(g_object_get_data(G_OBJECT(gtk_menu_get_active(m)), "stop"));
     gtk_adjustment_set_value(Offset_adj, stop->offset);
@@ -840,14 +840,14 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     gtk_scale_set_draw_value( GTK_SCALE(slider), FALSE );
     gtk_widget_show(slider);
     gtk_box_pack_start(GTK_BOX(hb),slider, TRUE, TRUE, AUX_BETWEEN_BUTTON_GROUPS);
-    gtk_object_set_data(GTK_OBJECT(vb), "offslide", slider);
+    g_object_set_data(G_OBJECT(vb), "offslide", slider);
 
     /* Spinbutton */
     GtkWidget *sbtn = gtk_spin_button_new(GTK_ADJUSTMENT(Offset_adj), 0.01, 2);
     sp_dialog_defocus_on_enter(sbtn);
     gtk_widget_show(sbtn);
     gtk_box_pack_start(GTK_BOX(hb),sbtn, FALSE, TRUE, AUX_BETWEEN_BUTTON_GROUPS);
-    gtk_object_set_data(GTK_OBJECT(vb), "offspn", sbtn);
+    g_object_set_data(G_OBJECT(vb), "offspn", sbtn);
 
     if (stop->offset>0 && stop->offset<1) {
         gtk_widget_set_sensitive(slider, TRUE);

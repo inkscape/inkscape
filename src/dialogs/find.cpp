@@ -423,7 +423,7 @@ sp_find_new_searchfield (GtkWidget *dlg, GtkWidget *vb, const gchar *label, cons
     GtkWidget *tf = gtk_entry_new ();
     gtk_entry_set_max_length (GTK_ENTRY (tf), 64);
     gtk_box_pack_start (GTK_BOX (hb), tf, TRUE, TRUE, 0);
-    gtk_object_set_data (GTK_OBJECT (dlg), id, tf);
+    g_object_set_data (G_OBJECT (dlg), id, tf);
     gtk_widget_set_tooltip_text (tf, tip);
     g_signal_connect ( G_OBJECT (tf), "activate", G_CALLBACK (sp_find_dialog_find), dlg );
     gtk_label_set_mnemonic_widget   (GTK_LABEL(l), tf);
@@ -494,7 +494,7 @@ sp_find_types_checkbox (GtkWidget *w, const gchar *data, gboolean active,
         GtkWidget *b  = gtk_check_button_new_with_label (label);
         gtk_widget_show (b);
         gtk_toggle_button_set_active ((GtkToggleButton *) b, active);
-        gtk_object_set_data (GTK_OBJECT (w), data, b);
+        g_object_set_data (G_OBJECT (w), data, b);
         gtk_widget_set_tooltip_text (b, tip);
         if (toggled)
             g_signal_connect (G_OBJECT (b), "toggled", G_CALLBACK (toggled), w);
@@ -592,7 +592,7 @@ sp_find_types ()
                 gtk_box_pack_start (GTK_BOX (hb), c, FALSE, FALSE, 0);
             }
 
-            gtk_object_set_data (GTK_OBJECT (vb), "shapes-pane", hb);
+            g_object_set_data (G_OBJECT (vb), "shapes-pane", hb);
 
             gtk_box_pack_start (GTK_BOX (vb_all), hb, FALSE, FALSE, 0);
             gtk_widget_hide_all (hb);
@@ -633,7 +633,7 @@ sp_find_types ()
         }
 
         gtk_box_pack_start (GTK_BOX (vb), vb_all, FALSE, FALSE, 0);
-        gtk_object_set_data (GTK_OBJECT (vb), "all-pane", vb_all);
+        g_object_set_data (G_OBJECT (vb), "all-pane", vb_all);
         gtk_widget_hide_all (vb_all);
     }
 
@@ -699,7 +699,7 @@ sp_find_dialog_old (void)
         gtk_widget_show_all (vb);
 
         GtkWidget *types = sp_find_types ();
-        gtk_object_set_data (GTK_OBJECT (dlg), "types", types);
+        g_object_set_data (G_OBJECT (dlg), "types", types);
         gtk_box_pack_start (GTK_BOX (vb), types, FALSE, FALSE, 0);
 
         {
@@ -711,7 +711,7 @@ sp_find_dialog_old (void)
             GtkWidget *b  = gtk_check_button_new_with_mnemonic (_("Search in s_election"));
             gtk_widget_show (b);
             gtk_toggle_button_set_active ((GtkToggleButton *) b, FALSE);
-            gtk_object_set_data (GTK_OBJECT (dlg), "inselection", b);
+            g_object_set_data (G_OBJECT (dlg), "inselection", b);
             gtk_widget_set_tooltip_text (b, _("Limit search to the current selection"));
             gtk_box_pack_start (GTK_BOX (vb), b, FALSE, FALSE, 0);
             }
@@ -720,7 +720,7 @@ sp_find_dialog_old (void)
             GtkWidget *b  = gtk_check_button_new_with_mnemonic (_("Search in current _layer"));
             gtk_widget_show (b);
             gtk_toggle_button_set_active ((GtkToggleButton *) b, FALSE);
-            gtk_object_set_data (GTK_OBJECT (dlg), "inlayer", b);
+            g_object_set_data (G_OBJECT (dlg), "inlayer", b);
             gtk_widget_set_tooltip_text (b, _("Limit search to the current layer"));
             gtk_box_pack_start (GTK_BOX (vb), b, FALSE, FALSE, 0);
             }
@@ -729,7 +729,7 @@ sp_find_dialog_old (void)
             GtkWidget *b  = gtk_check_button_new_with_mnemonic (_("Include _hidden"));
             gtk_widget_show (b);
             gtk_toggle_button_set_active ((GtkToggleButton *) b, FALSE);
-            gtk_object_set_data (GTK_OBJECT (dlg), "includehidden", b);
+            g_object_set_data (G_OBJECT (dlg), "includehidden", b);
             gtk_widget_set_tooltip_text (b, _("Include hidden objects in search"));
             gtk_box_pack_start (GTK_BOX (vb), b, FALSE, FALSE, 0);
             }
@@ -738,7 +738,7 @@ sp_find_dialog_old (void)
             GtkWidget *b  = gtk_check_button_new_with_mnemonic (_("Include l_ocked"));
             gtk_widget_show (b);
             gtk_toggle_button_set_active ((GtkToggleButton *) b, FALSE);
-            gtk_object_set_data (GTK_OBJECT (dlg), "includelocked", b);
+            g_object_set_data (G_OBJECT (dlg), "includelocked", b);
             gtk_widget_set_tooltip_text (b, _("Include locked objects in search"));
             gtk_box_pack_start (GTK_BOX (vb), b, FALSE, FALSE, 0);
             }
