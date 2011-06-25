@@ -987,7 +987,7 @@ static gboolean process_tab( GtkWidget* widget, int direction )
                             GList* subChildren = gtk_container_get_children( GTK_CONTAINER(child) );
                             if ( subChildren ) {
                                 GList* last = g_list_last(subChildren);
-                                if ( last && GTK_IS_SPIN_BUTTON(last->data) && GTK_WIDGET_IS_SENSITIVE( GTK_WIDGET(last->data) ) ) {
+                                if ( last && GTK_IS_SPIN_BUTTON(last->data) && gtk_widget_is_sensitive( GTK_WIDGET(last->data) ) ) {
                                     gtk_widget_grab_focus( GTK_WIDGET(last->data) );
                                     handled = TRUE;
                                     mid = 0; /* to stop loop */
