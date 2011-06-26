@@ -294,7 +294,7 @@ void ColorNotebook::init()
                 GtkWidget *item = gtk_check_menu_item_new_with_label (_(entry->name));
                 gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), entry->enabledFull);
                 gtk_widget_show (item);
-                gtk_menu_append (menu, item);
+                gtk_menu_shell_append (GTK_MENU_SHELL(menu), item);
 
                 g_signal_connect (G_OBJECT (item), "activate",
                                   G_CALLBACK (sp_color_notebook_menuitem_response),

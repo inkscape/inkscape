@@ -830,7 +830,7 @@ sp_pattern_menu_build (GtkWidget *m, GSList *pattern_list, SPDocument */*source*
                 gtk_widget_show(hb);
                 gtk_container_add(GTK_CONTAINER(i), hb);
 
-                gtk_menu_append(GTK_MENU(m), i);
+                gtk_menu_shell_append(GTK_MENU_SHELL(m), i);
             }
         }
 
@@ -887,7 +887,7 @@ ink_pattern_menu_populate_menu(GtkWidget *m, SPDocument *doc)
         gchar const *patid = "";
         g_object_set_data (G_OBJECT(i), "pattern", (void *) patid);
         gtk_widget_show(i);
-        gtk_menu_append(GTK_MENU(m), i);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m), i);
     }
 
     // suck in from patterns.svg
@@ -911,7 +911,7 @@ ink_pattern_menu(GtkWidget *mnu)
         GtkWidget *i;
         i = gtk_menu_item_new_with_label(_("No document selected"));
         gtk_widget_show(i);
-        gtk_menu_append(GTK_MENU(m), i);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m), i);
         gtk_widget_set_sensitive(mnu, FALSE);
     } else {
 

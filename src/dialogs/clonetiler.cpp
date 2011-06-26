@@ -1864,7 +1864,7 @@ void clonetiler_dialog(void)
                                      G_CALLBACK (clonetiler_symgroup_changed),
                                      GINT_TO_POINTER (sg.group) );
 
-                gtk_menu_append (GTK_MENU (m), item);
+                gtk_menu_shell_append(GTK_MENU_SHELL (m), item);
             }
 
             gtk_option_menu_set_menu (GTK_OPTION_MENU (om), m);

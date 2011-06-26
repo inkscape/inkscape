@@ -274,19 +274,19 @@ static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
         GtkWidget *i;
         i = gtk_menu_item_new_with_label(_("No document selected"));
         gtk_widget_show(i);
-        gtk_menu_append(GTK_MENU(m), i);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m), i);
         gtk_widget_set_sensitive(gvs->menu, FALSE);
     } else if (!gl) {
         GtkWidget *i;
         i = gtk_menu_item_new_with_label(_("No gradients in document"));
         gtk_widget_show(i);
-        gtk_menu_append(GTK_MENU(m), i);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m), i);
         gtk_widget_set_sensitive(gvs->menu, FALSE);
     } else if (!gvs->gr) {
         GtkWidget *i;
         i = gtk_menu_item_new_with_label(_("No gradient selected"));
         gtk_widget_show(i);
-        gtk_menu_append(GTK_MENU(m), i);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m), i);
         gtk_widget_set_sensitive(gvs->menu, FALSE);
     } else {
         while (gl) {
@@ -320,7 +320,7 @@ static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
 
             gtk_container_add(GTK_CONTAINER(i), w);
 
-            gtk_menu_append(GTK_MENU(m), i);
+            gtk_menu_shell_append(GTK_MENU_SHELL(m), i);
 
             if (gr == gvs->gr) {
                 pos = idx;
@@ -551,7 +551,7 @@ static void update_stop_list( GtkWidget *mnu, SPGradient *gradient, SPStop *new_
     if (!sl) {
         GtkWidget *i = gtk_menu_item_new_with_label(_("No stops in gradient"));
         gtk_widget_show(i);
-        gtk_menu_append(GTK_MENU(m), i);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m), i);
         gtk_widget_set_sensitive(mnu, FALSE);
     } else {
 
@@ -574,7 +574,7 @@ static void update_stop_list( GtkWidget *mnu, SPGradient *gradient, SPStop *new_
                 gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, 0);
                 gtk_widget_show(hb);
                 gtk_container_add(GTK_CONTAINER(i), hb);
-                gtk_menu_append(GTK_MENU(m), i);
+                gtk_menu_shell_append(GTK_MENU_SHELL(m), i);
             }
         }
 

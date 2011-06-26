@@ -171,17 +171,17 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
 
     GtkWidget *m = gtk_menu_new();
     GtkWidget *mi = gtk_menu_item_new_with_label(_("none"));
-    gtk_menu_append (GTK_MENU (m), mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL (m), mi);
     g_object_set_data (G_OBJECT (mi), "gradientSpread", GUINT_TO_POINTER (SP_GRADIENT_SPREAD_PAD));
     g_signal_connect (G_OBJECT (mi), "activate", G_CALLBACK (sp_gradient_selector_spread_activate), sel);
     mi = gtk_menu_item_new_with_label (_("reflected"));
     g_object_set_data (G_OBJECT (mi), "gradientSpread", GUINT_TO_POINTER (SP_GRADIENT_SPREAD_REFLECT));
     g_signal_connect (G_OBJECT (mi), "activate", G_CALLBACK (sp_gradient_selector_spread_activate), sel);
-    gtk_menu_append (GTK_MENU (m), mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL (m), mi);
     mi = gtk_menu_item_new_with_label (_("direct"));
     g_object_set_data (G_OBJECT (mi), "gradientSpread", GUINT_TO_POINTER (SP_GRADIENT_SPREAD_REPEAT));
     g_signal_connect (G_OBJECT (mi), "activate", G_CALLBACK (sp_gradient_selector_spread_activate), sel);
-    gtk_menu_append (GTK_MENU (m), mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL (m), mi);
     gtk_widget_show_all (m);
 
     gtk_option_menu_set_menu( GTK_OPTION_MENU(sel->spread), m );
