@@ -231,7 +231,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
     gint ret = FALSE;
 
     SPGuide *guide = SP_GUIDE(data);
-    SPDesktop *desktop = static_cast<SPDesktop*>(gtk_object_get_data(GTK_OBJECT(item->canvas), "SPDesktop"));
+    SPDesktop *desktop = static_cast<SPDesktop*>(g_object_get_data(G_OBJECT(item->canvas), "SPDesktop"));
 
     switch (event->type) {
     case GDK_2BUTTON_PRESS:

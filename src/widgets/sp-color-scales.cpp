@@ -538,7 +538,7 @@ guint ColorScales::getSubmode() const
 
 void ColorScales::_adjustmentAnyChanged( GtkAdjustment *adjustment, SPColorScales *cs )
 {
-	gint channel = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (adjustment), "channel"));
+	gint channel = GPOINTER_TO_INT (g_object_get_data(G_OBJECT (adjustment), "channel"));
 
 	_adjustmentChanged(cs, channel);
 }

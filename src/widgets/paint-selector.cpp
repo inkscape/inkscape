@@ -127,7 +127,7 @@ static SPGradientSelector *getGradientFromData(SPPaintSelector const *psel)
             grad = swatchsel->getGradientSelector();
         }
     } else {
-        grad = reinterpret_cast<SPGradientSelector*>(gtk_object_get_data(GTK_OBJECT(psel->selector), "gradient-selector"));
+        grad = reinterpret_cast<SPGradientSelector*>(g_object_get_data(G_OBJECT(psel->selector), "gradient-selector"));
     }
     return grad;
 }
@@ -323,7 +323,7 @@ static void
 sp_paint_selector_style_button_toggled(GtkToggleButton *tb, SPPaintSelector *psel)
 {
     if (!psel->update && gtk_toggle_button_get_active(tb)) {
-        psel->setMode(static_cast<SPPaintSelector::Mode>(GPOINTER_TO_UINT(gtk_object_get_data(GTK_OBJECT(tb), "mode"))));
+        psel->setMode(static_cast<SPPaintSelector::Mode>(GPOINTER_TO_UINT(g_object_get_data(G_OBJECT(tb), "mode"))));
     }
 }
 
@@ -440,7 +440,7 @@ void SPPaintSelector::setColorAlpha(SPColor const &color, float alpha)
         setMode(MODE_COLOR_RGB);
     }
 
-    csel = reinterpret_cast<SPColorSelector*>(gtk_object_get_data(GTK_OBJECT(selector), "color-selector"));
+    csel = reinterpret_cast<SPColorSelector*>(g_object_get_data(G_OBJECT(selector), "color-selector"));
     rgba = color.toRGBA32( alpha );
     csel->base->setColorAlpha( color, alpha );
 }
@@ -646,7 +646,7 @@ static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelec
 
     if ((psel->mode == SPPaintSelector::MODE_COLOR_RGB) || (psel->mode == SPPaintSelector::MODE_COLOR_CMYK)) {
         /* Already have color selector */
-        csel = (GtkWidget*)gtk_object_get_data(GTK_OBJECT(psel->selector), "color-selector");
+        csel = (GtkWidget*)g_object_get_data(G_OBJECT(psel->selector), "color-selector");
     } else {
 
         sp_paint_selector_clear_frame(psel);
@@ -716,7 +716,7 @@ static void sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSe
 
     if ((psel->mode == SPPaintSelector::MODE_GRADIENT_LINEAR) || (psel->mode == SPPaintSelector::MODE_GRADIENT_RADIAL)) {
         /* Already have gradient selector */
-        gsel = (GtkWidget*)gtk_object_get_data(GTK_OBJECT(psel->selector), "gradient-selector");
+        gsel = (GtkWidget*)g_object_get_data(G_OBJECT(psel->selector), "gradient-selector");
     } else {
         sp_paint_selector_clear_frame(psel);
         /* Create new gradient selector */
@@ -943,7 +943,7 @@ void SPPaintSelector::updatePatternList( SPPattern *pattern )
 
     /* Set history */
 
-    if (pattern && !gtk_object_get_data(GTK_OBJECT(mnu), "update")) {
+    if (pattern && !g_object_get_data(G_OBJECT(mnu), "update")) {
 
         g_object_set_data(G_OBJECT(mnu), "update", GINT_TO_POINTER(TRUE));
 
@@ -984,7 +984,7 @@ static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSel
 
     if (psel->mode == SPPaintSelector::MODE_PATTERN) {
         /* Already have pattern menu */
-        tbl = (GtkWidget*)gtk_object_get_data(GTK_OBJECT(psel->selector), "pattern-selector");
+        tbl = (GtkWidget*)g_object_get_data(G_OBJECT(psel->selector), "pattern-selector");
     } else {
         sp_paint_selector_clear_frame(psel);
 

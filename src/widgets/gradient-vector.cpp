@@ -610,7 +610,7 @@ static void sp_grad_edit_select(GtkOptionMenu *mnu, GtkWidget *tbl)
     GtkWidget *offspin = GTK_WIDGET(g_object_get_data(G_OBJECT(tbl), "offspn"));
     GtkWidget *offslide =GTK_WIDGET(g_object_get_data(G_OBJECT(tbl), "offslide"));
 
-    GtkAdjustment *adj = static_cast<GtkAdjustment*>(gtk_object_get_data(GTK_OBJECT(tbl), "offset"));
+    GtkAdjustment *adj = static_cast<GtkAdjustment*>(g_object_get_data(G_OBJECT(tbl), "offset"));
 
     bool isEndStop = false;
 

@@ -189,7 +189,7 @@ sp_item_properties(GtkMenuItem *menuitem, SPItem *item)
 
     g_assert(SP_IS_ITEM(item));
 
-    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
     sp_desktop_selection(desktop)->set(item);
@@ -205,7 +205,7 @@ sp_set_mask(GtkMenuItem *menuitem, SPItem *item)
 
     g_assert(SP_IS_ITEM(item));
 
-    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
 	sp_selection_set_mask(desktop, false, false);
@@ -219,7 +219,7 @@ sp_release_mask(GtkMenuItem *menuitem, SPItem *item)
 
     g_assert(SP_IS_ITEM(item));
 
-    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
     sp_selection_unset_mask(desktop, false);
@@ -233,7 +233,7 @@ sp_set_clip(GtkMenuItem *menuitem, SPItem *item)
 
     g_assert(SP_IS_ITEM(item));
 
-    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
 	sp_selection_set_mask(desktop, true, false);
@@ -247,7 +247,7 @@ sp_release_clip(GtkMenuItem *menuitem, SPItem *item)
 
     g_assert(SP_IS_ITEM(item));
 
-    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
     sp_selection_unset_mask(desktop, true);
@@ -261,7 +261,7 @@ sp_item_select_this(GtkMenuItem *menuitem, SPItem *item)
 
     g_assert(SP_IS_ITEM(item));
 
-    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
     sp_desktop_selection(desktop)->set(item);
@@ -273,7 +273,7 @@ sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
     g_assert(SP_IS_ITEM(item));
     g_assert(!SP_IS_ANCHOR(item));
 
-    SPDesktop *desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    SPDesktop *desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
     Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
@@ -325,7 +325,7 @@ sp_item_group_ungroup_activate(GtkMenuItem *menuitem, SPGroup *group)
 
     g_assert(SP_IS_GROUP(group));
 
-    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
     children = NULL;
@@ -495,7 +495,7 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
  
     if ( errThing ) {
         g_warning("Problem launching editor (%d). %s", errThing->code, errThing->message);
-        SPDesktop *desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+        SPDesktop *desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, errThing->message);
         g_error_free(errThing);
         errThing = 0;
@@ -511,7 +511,7 @@ sp_fill_settings(GtkMenuItem *menuitem, SPItem *item)
 
     g_assert(SP_IS_ITEM(item));
 
-    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
     if (sp_desktop_selection(desktop)->isEmpty()) {
@@ -548,7 +548,7 @@ sp_text_settings(GtkMenuItem *menuitem, SPItem *item)
 
     g_assert(SP_IS_ITEM(item));
 
-    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
     if (sp_desktop_selection(desktop)->isEmpty()) {
@@ -567,7 +567,7 @@ sp_spellcheck_settings(GtkMenuItem *menuitem, SPItem *item)
 
     g_assert(SP_IS_ITEM(item));
 
-    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
     if (sp_desktop_selection(desktop)->isEmpty()) {

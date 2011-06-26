@@ -163,7 +163,7 @@ sp_unit_selector_get_unit(SPUnitSelector const *us)
 static void
 spus_unit_activate(GtkWidget *widget, SPUnitSelector *us)
 {
-    SPUnit const *unit = (SPUnit const *) gtk_object_get_data(GTK_OBJECT(widget), "unit");
+    SPUnit const *unit = (SPUnit const *) g_object_get_data(G_OBJECT(widget), "unit");
     g_return_if_fail(unit != NULL);
 
 #ifdef UNIT_SELECTOR_VERBOSE

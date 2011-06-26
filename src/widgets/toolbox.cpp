@@ -2808,10 +2808,10 @@ static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
     bool isFlatSided = prefs->getBool("/tools/shapes/star/isflatsided", true);
 
     if (!strcmp(name, "inkscape:randomized")) {
-        adj = GTK_ADJUSTMENT( gtk_object_get_data(GTK_OBJECT(tbl), "randomized") );
+        adj = GTK_ADJUSTMENT( g_object_get_data(G_OBJECT(tbl), "randomized") );
         gtk_adjustment_set_value(adj, sp_repr_get_double_attribute(repr, "inkscape:randomized", 0.0));
     } else if (!strcmp(name, "inkscape:rounded")) {
-        adj = GTK_ADJUSTMENT( gtk_object_get_data(GTK_OBJECT(tbl), "rounded") );
+        adj = GTK_ADJUSTMENT( g_object_get_data(G_OBJECT(tbl), "rounded") );
         gtk_adjustment_set_value(adj, sp_repr_get_double_attribute(repr, "inkscape:rounded", 0.0));
     } else if (!strcmp(name, "inkscape:flatsided")) {
         GtkAction* prop_action = GTK_ACTION( g_object_get_data(G_OBJECT(tbl), "prop_action") );
@@ -2825,7 +2825,7 @@ static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
             gtk_action_set_sensitive( prop_action, FALSE );
         }
     } else if ((!strcmp(name, "sodipodi:r1") || !strcmp(name, "sodipodi:r2")) && (!isFlatSided) ) {
-        adj = (GtkAdjustment*)gtk_object_get_data(GTK_OBJECT(tbl), "proportion");
+        adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "proportion");
         gdouble r1 = sp_repr_get_double_attribute(repr, "sodipodi:r1", 1.0);
         gdouble r2 = sp_repr_get_double_attribute(repr, "sodipodi:r2", 1.0);
         if (r2 < r1) {
@@ -2834,7 +2834,7 @@ static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
             gtk_adjustment_set_value(adj, r1/r2);
         }
     } else if (!strcmp(name, "sodipodi:sides")) {
-        adj = (GtkAdjustment*)gtk_object_get_data(GTK_OBJECT(tbl), "magnitude");
+        adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "magnitude");
         gtk_adjustment_set_value(adj, sp_repr_get_int_attribute(repr, "sodipodi:sides", 0));
     }
 
@@ -3480,21 +3480,21 @@ static void box3d_resync_toolbar(Inkscape::XML::Node *persp_repr, GObject *data)
         return;
     }
     {
-        adj = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(tbl), "box3d_angle_x"));
+        adj = GTK_ADJUSTMENT(g_object_get_data(G_OBJECT(tbl), "box3d_angle_x"));
         act = GTK_ACTION(g_object_get_data(G_OBJECT(tbl), "box3d_angle_x_action"));
         tact = &INK_TOGGLE_ACTION(g_object_get_data(G_OBJECT(tbl), "box3d_vp_x_state_action"))->action;
 
         box3d_set_button_and_adjustment(persp, Proj::X, adj, act, tact);
     }
     {
-        adj = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(tbl), "box3d_angle_y"));
+        adj = GTK_ADJUSTMENT(g_object_get_data(G_OBJECT(tbl), "box3d_angle_y"));
         act = GTK_ACTION(g_object_get_data(G_OBJECT(tbl), "box3d_angle_y_action"));
         tact = &INK_TOGGLE_ACTION(g_object_get_data(G_OBJECT(tbl), "box3d_vp_y_state_action"))->action;
 
         box3d_set_button_and_adjustment(persp, Proj::Y, adj, act, tact);
     }
     {
-        adj = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(tbl), "box3d_angle_z"));
+        adj = GTK_ADJUSTMENT(g_object_get_data(G_OBJECT(tbl), "box3d_angle_z"));
         act = GTK_ACTION(g_object_get_data(G_OBJECT(tbl), "box3d_angle_z_action"));
         tact = &INK_TOGGLE_ACTION(g_object_get_data(G_OBJECT(tbl), "box3d_vp_z_state_action"))->action;
 
@@ -3861,15 +3861,15 @@ static void sp_spl_tb_defaults(GtkWidget * /*widget*/, GtkObject *obj)
     gdouble exp = 1.0;
     gdouble t0 = 0.0;
 
-    adj = (GtkAdjustment*)gtk_object_get_data(obj, "revolution");
+    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(obj), "revolution");
     gtk_adjustment_set_value(adj, rev);
     gtk_adjustment_value_changed(adj);
 
-    adj = (GtkAdjustment*)gtk_object_get_data(obj, "expansion");
+    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(obj), "expansion");
     gtk_adjustment_set_value(adj, exp);
     gtk_adjustment_value_changed(adj);
 
-    adj = (GtkAdjustment*)gtk_object_get_data(obj, "t0");
+    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(obj), "t0");
     gtk_adjustment_set_value(adj, t0);
     gtk_adjustment_value_changed(adj);
 
@@ -3895,13 +3895,13 @@ static void spiral_tb_event_attr_changed(Inkscape::XML::Node *repr,
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
 
     GtkAdjustment *adj;
-    adj = (GtkAdjustment*)gtk_object_get_data(GTK_OBJECT(tbl), "revolution");
+    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "revolution");
     gtk_adjustment_set_value(adj, (sp_repr_get_double_attribute(repr, "sodipodi:revolution", 3.0)));
 
-    adj = (GtkAdjustment*)gtk_object_get_data(GTK_OBJECT(tbl), "expansion");
+    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "expansion");
     gtk_adjustment_set_value(adj, (sp_repr_get_double_attribute(repr, "sodipodi:expansion", 1.0)));
 
-    adj = (GtkAdjustment*)gtk_object_get_data(GTK_OBJECT(tbl), "t0");
+    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "t0");
     gtk_adjustment_set_value(adj, (sp_repr_get_double_attribute(repr, "sodipodi:t0", 0.0)));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
@@ -4186,7 +4186,7 @@ static void sp_pencil_tb_defaults(GtkWidget * /*widget*/, GtkObject *obj)
     // fixme: make settable
     gdouble tolerance = 4;
 
-    adj = (GtkAdjustment*)gtk_object_get_data(obj, "tolerance");
+    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(obj), "tolerance");
     gtk_adjustment_set_value(adj, tolerance);
     gtk_adjustment_value_changed(adj);
 
@@ -8180,7 +8180,7 @@ static void connector_tb_event_attr_changed(Inkscape::XML::Node *repr,
 
     if ( !g_object_get_data(G_OBJECT(tbl), "freeze")
          && (strcmp(name, "inkscape:connector-spacing") == 0) ) {
-        GtkAdjustment *adj = static_cast<GtkAdjustment*>(gtk_object_get_data(GTK_OBJECT(tbl), "spacing"));
+        GtkAdjustment *adj = static_cast<GtkAdjustment*>(g_object_get_data(G_OBJECT(tbl), "spacing"));
         gdouble spacing = defaultConnSpacing;
         sp_repr_get_double(repr, "inkscape:connector-spacing", &spacing);
 

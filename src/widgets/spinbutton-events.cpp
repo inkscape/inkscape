@@ -27,7 +27,7 @@ spinbutton_focus_in (GtkWidget *w, GdkEventKey */*event*/, gpointer /*data*/)
 {
 	gdouble *ini;
 
-	ini = (gdouble *) gtk_object_get_data (GTK_OBJECT (w), "ini");
+	ini = (gdouble *) g_object_get_data(G_OBJECT (w), "ini");
 	if (ini) g_free (ini); // free the old value if any
 
 	// retrieve the value
@@ -43,7 +43,7 @@ spinbutton_focus_in (GtkWidget *w, GdkEventKey */*event*/, gpointer /*data*/)
 void
 spinbutton_undo (GtkWidget *w)
 {
-	gdouble *ini = (gdouble *) gtk_object_get_data (GTK_OBJECT (w), "ini");
+	gdouble *ini = (gdouble *) g_object_get_data(G_OBJECT (w), "ini");
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), *ini);
 }
 
@@ -51,11 +51,11 @@ void
 spinbutton_defocus (GtkObject *container)
 {
 	// defocus spinbuttons by moving focus to the canvas, unless "stay" is on
-	gboolean stay = GPOINTER_TO_INT(gtk_object_get_data (GTK_OBJECT (container), "stay"));
+	gboolean stay = GPOINTER_TO_INT(g_object_get_data(G_OBJECT (container), "stay"));
 	if (stay) {
 		g_object_set_data (G_OBJECT (container), "stay", GINT_TO_POINTER (FALSE));
 	} else {
-		GtkWidget *canvas = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (container), "dtw");
+		GtkWidget *canvas = (GtkWidget *) g_object_get_data(G_OBJECT (container), "dtw");
 		if (canvas) {
 			gtk_widget_grab_focus (GTK_WIDGET(canvas));
 		}

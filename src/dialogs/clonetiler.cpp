@@ -1588,21 +1588,21 @@ static void clonetiler_reset_recursive(GtkWidget *w)
 {
     if (w && GTK_IS_OBJECT(w)) {
         {
-            int r = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT(w), "zeroable"));
+            int r = GPOINTER_TO_INT (g_object_get_data(G_OBJECT(w), "zeroable"));
             if (r && GTK_IS_SPIN_BUTTON(w)) { // spinbutton
                 GtkAdjustment *a = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON(w));
                 gtk_adjustment_set_value (a, 0);
             }
         }
         {
-            int r = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT(w), "oneable"));
+            int r = GPOINTER_TO_INT (g_object_get_data(G_OBJECT(w), "oneable"));
             if (r && GTK_IS_SPIN_BUTTON(w)) { // spinbutton
                 GtkAdjustment *a = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON(w));
                 gtk_adjustment_set_value (a, 1);
             }
         }
         {
-            int r = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT(w), "uncheckable"));
+            int r = GPOINTER_TO_INT (g_object_get_data(G_OBJECT(w), "uncheckable"));
             if (r && GTK_IS_TOGGLE_BUTTON(w)) { // checkbox
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), FALSE);
             }
