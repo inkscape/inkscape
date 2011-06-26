@@ -37,6 +37,7 @@ EXTRA_DIST = \
 	utf8-to-roff \
 	inkscape.1		\
 	inkscape.fr.1		\
+	inkscape.ja.1		\
 	inkscape.sk.1		\
 	inkscape.zh_TW.1		\
 	inkscape.pod		\
@@ -233,7 +234,7 @@ DISTCLEANFILES = inkscape.desktop \
 #ACLOCAL_AMFLAGS = -I m4
 
 SUFFIXES = .pod .1
-inkscape.1 inkscape.fr.1 inkscape.sk.1 inkscape.zh_TW.1 : fix-roff-punct Makefile.am AUTHORS
+inkscape.1 inkscape.fr.1 inkscape.ja.1 inkscape.sk.1 inkscape.zh_TW.1 : fix-roff-punct Makefile.am AUTHORS
 .pod.1:
 	set -e; \
 	d=`sed -n 's,/,-,g;s,.*\$$[D]ate: \(..........\).*,\1,p' $<`; \
