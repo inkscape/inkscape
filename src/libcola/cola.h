@@ -32,12 +32,13 @@ namespace cola {
         void moveRectangles(double x, double y);
         Rectangle* getBoundingBox();
     };
+
     // for a graph of n nodes, return connected components
     void connectedComponents(
             const vector<Rectangle*> &rs,
             const vector<Edge> &es,
             const SimpleConstraints &scx,
-            const SimpleConstraints &scy, 
+            const SimpleConstraints &scy,
             vector<Component*> &components);
 
     // move the contents of each component so that the components do not
@@ -48,11 +49,11 @@ namespace cola {
     // will be altered to prefer points u-b-v are in a linear arrangement
     // such that b is placed at u+t(v-u).
     struct LinearConstraint {
-        LinearConstraint(unsigned u, unsigned v, unsigned b, double w, 
+        LinearConstraint(unsigned u, unsigned v, unsigned b, double w,
                 double frac_ub, double frac_bv,
-                double* X, double* Y) 
+                double* X, double* Y)
             : u(u),v(v),b(b),w(w),frac_ub(frac_ub),frac_bv(frac_bv),
-              tAtProjection(true) 
+              tAtProjection(true)
         {
             assert(frac_ub<=1.0);
             assert(frac_bv<=1.0);
@@ -88,7 +89,7 @@ namespace cola {
             dvv=t*t;
             dvb=-t;
             dbb=1;
-             //printf("New LC: t=%f\n",t); 
+             //printf("New LC: t=%f\n",t);
         }
         unsigned u;
         unsigned v;
@@ -108,61 +109,63 @@ namespace cola {
         double frac_bv;
         bool tAtProjection;
     };
+
     typedef vector<LinearConstraint*> LinearConstraints;
-	
-	class TestConvergence {
-    public:
-        double old_stress;
-		TestConvergence(const double& tolerance = 0.001, const unsigned maxiterations = 1000)
-			: tolerance(tolerance),
-              maxiterations(maxiterations) { reset(); }
-        virtual ~TestConvergence() {}
 
-		virtual bool operator()(double new_stress, double* X, double* Y) {
-            //std::cout<<"iteration="<<iterations<<", new_stress="<<new_stress<<std::endl;
-			if (old_stress == DBL_MAX) {
-				old_stress = new_stress;
-                if(++iterations>=maxiterations) {;
-                    return true;
-                } else {
-          			return false;
-                }
-			}
-            bool converged = 
-                fabs(new_stress - old_stress) / (new_stress + 1e-10) < tolerance
-                || ++iterations > maxiterations;
+class TestConvergence {
+public:
+    double old_stress;
+    TestConvergence(const double& tolerance = 0.001, const unsigned maxiterations = 1000)
+        : tolerance(tolerance),
+          maxiterations(maxiterations) { reset(); }
+    virtual ~TestConvergence() {}
+
+    virtual bool operator()(double new_stress, double* X, double* Y) {
+        //std::cout<<"iteration="<<iterations<<", new_stress="<<new_stress<<std::endl;
+        if (old_stress == DBL_MAX) {
             old_stress = new_stress;
-			return converged;
-		}
-        void reset() {
-            old_stress = DBL_MAX;
-            iterations = 0;
-        }
-  	private:
-        const double tolerance;
-        const unsigned maxiterations;
-        unsigned iterations;
-  	};
-    static TestConvergence defaultTest(0.0001,100);
-	class ConstrainedMajorizationLayout {
-    public:
-		ConstrainedMajorizationLayout(
-                vector<Rectangle*>& rs,
-                vector<Edge>& es,
-				double* eweights,
-                double idealLength,
-				TestConvergence& done=defaultTest);
-
-        void moveBoundingBoxes() {
-            for(unsigned i=0;i<lapSize;i++) {
-                boundingBoxes[i]->moveCentreX(X[i]);
-                boundingBoxes[i]->moveCentreY(Y[i]);
+            if(++iterations>=maxiterations) {;
+                return true;
+            } else {
+                return false;
             }
         }
+        bool converged =
+            fabs(new_stress - old_stress) / (new_stress + 1e-10) < tolerance
+            || ++iterations > maxiterations;
+        old_stress = new_stress;
+        return converged;
+    }
+    void reset() {
+        old_stress = DBL_MAX;
+        iterations = 0;
+    }
+private:
+    const double tolerance;
+    const unsigned maxiterations;
+    unsigned iterations;
+};
+
+static TestConvergence defaultTest(0.0001,100);
+class ConstrainedMajorizationLayout {
+public:
+    ConstrainedMajorizationLayout(
+        vector<Rectangle*>& rs,
+        vector<Edge>& es,
+        double* eweights,
+        double idealLength,
+        TestConvergence& done=defaultTest);
+
+    void moveBoundingBoxes() {
+        for(unsigned i=0;i<lapSize;i++) {
+            boundingBoxes[i]->moveCentreX(X[i]);
+            boundingBoxes[i]->moveCentreY(Y[i]);
+        }
+    }
 
         void setupConstraints(
                 AlignmentConstraints* acsx, AlignmentConstraints* acsy,
-                bool avoidOverlaps, 
+                bool avoidOverlaps,
                 PageBoundaryConstraints* pbcx = NULL,
                 PageBoundaryConstraints* pbcy = NULL,
                 SimpleConstraints* scx = NULL,
@@ -191,7 +194,7 @@ namespace cola {
             delete [] X;
             delete [] Y;
         }
-		bool run();
+    bool run();
         void straighten(vector<straightener::Edge*>&, Dim);
         bool avoidOverlaps;
         bool constrainedLayout;
@@ -203,7 +206,7 @@ namespace cola {
         }
         double compute_stress(double **Dij);
         void majlayout(double** Dij,GradientProjection* gp, double* coords);
-        void majlayout(double** Dij,GradientProjection* gp, double* coords, 
+        void majlayout(double** Dij,GradientProjection* gp, double* coords,
                 double* b);
         unsigned n; // is lapSize + dummyVars
         unsigned lapSize; // lapSize is the number of variables for actual nodes
@@ -211,7 +214,7 @@ namespace cola {
         double** Q; // quadratic terms matrix used in computations
         double** Dij;
         double tol;
-		TestConvergence& done;
+    TestConvergence& done;
         Rectangle** boundingBoxes;
         double *X, *Y;
         Clusters* clusters;
@@ -219,7 +222,17 @@ namespace cola {
         LinearConstraints *linearConstraints;
         GradientProjection *gpX, *gpY;
         vector<straightener::Edge*>* straightenEdges;
-	};
+};
+
 }
-#endif				// COLA_H
+#endif                          // COLA_H
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=4:softtabstop=4
