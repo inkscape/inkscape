@@ -275,9 +275,6 @@ void sp_xml_tree_dialog()
         g_signal_connect_after( G_OBJECT(tree), "tree_move",
                                  G_CALLBACK(after_tree_move), NULL);
 
-        /* TODO: replace gtk_signal_connect_while_alive() with something
-         * else...
-         */
         toolbar = gtk_toolbar_new();
         gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
         gtk_container_set_border_width(GTK_CONTAINER(toolbar), 0);
@@ -291,17 +288,17 @@ void sp_xml_tree_dialog()
                 G_CALLBACK(cmd_new_element_node),
                 NULL);
 
-        gtk_signal_connect_while_alive( GTK_OBJECT(tree),
+        g_signal_connect_object (G_OBJECT(tree),
                         "tree_select_row",
                         G_CALLBACK(on_tree_select_row_enable_if_element),
                         button,
-                        GTK_OBJECT(button));
+                        (GConnectFlags)0);
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree),
+        g_signal_connect_object (G_OBJECT(tree),
                         "tree_unselect_row",
                         G_CALLBACK(on_tree_unselect_row_disable),
                         button,
-                        GTK_OBJECT(button));
+                        (GConnectFlags)0);
 
         gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 
@@ -312,17 +309,17 @@ void sp_xml_tree_dialog()
                 G_CALLBACK(cmd_new_text_node),
                 NULL);
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree),
+        g_signal_connect_object(G_OBJECT(tree),
                         "tree_select_row",
                         G_CALLBACK(on_tree_select_row_enable_if_element),
                         button,
-                        GTK_OBJECT(button));
+			(GConnectFlags)0);
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree),
+        g_signal_connect_object(G_OBJECT(tree),
                         "tree_unselect_row",
                         G_CALLBACK(on_tree_unselect_row_disable),
                         button,
-                        GTK_OBJECT(button));
+			(GConnectFlags)0);
 
         gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 
@@ -333,15 +330,16 @@ void sp_xml_tree_dialog()
                 G_CALLBACK(cmd_duplicate_node),
                 NULL);
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree),
+        g_signal_connect_object(G_OBJECT(tree),
                         "tree_select_row",
                         G_CALLBACK(on_tree_select_row_enable_if_mutable),
                         button,
-                        GTK_OBJECT(button));
+			(GConnectFlags)0);
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_unselect_row",
+        g_signal_connect_object(G_OBJECT(tree), "tree_unselect_row",
                         G_CALLBACK(on_tree_unselect_row_disable),
-                        button, GTK_OBJECT(button));
+                        button, 
+			(GConnectFlags)0);
 
         gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 
@@ -353,12 +351,14 @@ void sp_xml_tree_dialog()
                              INKSCAPE_ICON_XML_NODE_DELETE ),
                                            G_CALLBACK(cmd_delete_node), NULL );
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_select_row",
+        g_signal_connect_object(G_OBJECT(tree), "tree_select_row",
                         G_CALLBACK(on_tree_select_row_enable_if_mutable),
-                        button, GTK_OBJECT(button));
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_unselect_row",
+                        button, 
+			(GConnectFlags)0);
+        g_signal_connect_object(G_OBJECT(tree), "tree_unselect_row",
                         G_CALLBACK(on_tree_unselect_row_disable),
-                        button, GTK_OBJECT(button));
+                        button, 
+			(GConnectFlags)0);
         gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 
         gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
@@ -368,13 +368,15 @@ void sp_xml_tree_dialog()
                         gtk_arrow_new(GTK_ARROW_LEFT, GTK_SHADOW_IN),
                         G_CALLBACK(cmd_unindent_node), NULL);
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_select_row",
+        g_signal_connect_object(G_OBJECT(tree), "tree_select_row",
                     G_CALLBACK(on_tree_select_row_enable_if_has_grandparent),
-                    button, GTK_OBJECT(button));
+                    button, 
+		    (GConnectFlags)0);
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_unselect_row",
+        g_signal_connect_object(G_OBJECT(tree), "tree_unselect_row",
                         G_CALLBACK(on_tree_unselect_row_disable),
-                        button, GTK_OBJECT(button));
+                        button, 
+			(GConnectFlags)0);
 
         gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 
@@ -382,36 +384,42 @@ void sp_xml_tree_dialog()
                         _("Indent node"), NULL,
                         gtk_arrow_new(GTK_ARROW_RIGHT, GTK_SHADOW_IN),
                         G_CALLBACK(cmd_indent_node), NULL);
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_select_row",
+        g_signal_connect_object(G_OBJECT(tree), "tree_select_row",
                         G_CALLBACK(on_tree_select_row_enable_if_indentable),
-                        button, GTK_OBJECT(button));
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_unselect_row",
+                        button, 
+			(GConnectFlags)0);
+        g_signal_connect_object(G_OBJECT(tree), "tree_unselect_row",
                        (GCallback) on_tree_unselect_row_disable,
-                        button, GTK_OBJECT(button));
+                        button, 
+			(GConnectFlags)0);
         gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 
         button = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar), "^",
                         _("Raise node"), NULL,
                         gtk_arrow_new(GTK_ARROW_UP, GTK_SHADOW_IN),
                         G_CALLBACK(cmd_raise_node), NULL);
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_select_row",
+        g_signal_connect_object(G_OBJECT(tree), "tree_select_row",
                     G_CALLBACK(on_tree_select_row_enable_if_not_first_child),
-                    button, GTK_OBJECT(button));
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_unselect_row",
+                    button, 
+		    (GConnectFlags)0);
+        g_signal_connect_object(G_OBJECT(tree), "tree_unselect_row",
                         G_CALLBACK(on_tree_unselect_row_disable),
-                        button, GTK_OBJECT(button));
+                        button, 
+			(GConnectFlags)0);
         gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 
         button = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar), "v",
                         _("Lower node"), NULL,
                         gtk_arrow_new(GTK_ARROW_DOWN, GTK_SHADOW_IN),
                         G_CALLBACK(cmd_lower_node), NULL);
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_select_row",
+        g_signal_connect_object(G_OBJECT(tree), "tree_select_row",
                         G_CALLBACK(on_tree_select_row_enable_if_not_last_child),
-                        button, GTK_OBJECT(button));
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_unselect_row",
+                        button, 
+			(GConnectFlags)0);
+        g_signal_connect_object(G_OBJECT(tree), "tree_unselect_row",
                         G_CALLBACK(on_tree_unselect_row_disable),
-                        button, GTK_OBJECT(button));
+                        button, 
+			(GConnectFlags)0);
         gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 
         gtk_box_pack_start(GTK_BOX(box), toolbar, FALSE, TRUE, 0);
@@ -453,17 +461,17 @@ void sp_xml_tree_dialog()
                              INKSCAPE_ICON_XML_ATTRIBUTE_DELETE ),
                (GCallback) cmd_delete_attr, NULL);
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(attributes), "select_row",
+        g_signal_connect_object(G_OBJECT(attributes), "select_row",
                        (GCallback) on_attr_select_row_enable, button,
-                        GTK_OBJECT(button));
+                        (GConnectFlags)0);
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(attributes), "unselect_row",
+        g_signal_connect_object(G_OBJECT(attributes), "unselect_row",
                        (GCallback) on_attr_unselect_row_disable, button,
-                        GTK_OBJECT(button));
+                        (GConnectFlags)0);
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_unselect_row",
+        g_signal_connect_object(G_OBJECT(tree), "tree_unselect_row",
                        (GCallback) on_tree_unselect_row_disable, button,
-                        GTK_OBJECT(button));
+                        (GConnectFlags)0);
 
         gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 
@@ -573,23 +581,27 @@ void sp_xml_tree_dialog()
 
         gtk_widget_show_all(GTK_WIDGET(dlg));
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_select_row",
+        g_signal_connect_object(G_OBJECT(tree), "tree_select_row",
                        (GCallback) on_tree_select_row_show_if_element,
-                        attr_container, GTK_OBJECT(attr_container));
+                        attr_container, 
+			(GConnectFlags)0);
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_unselect_row",
+        g_signal_connect_object(G_OBJECT(tree), "tree_unselect_row",
                        (GCallback) on_tree_unselect_row_hide,
-                        attr_container, GTK_OBJECT(attr_container));
+                        attr_container, 
+			(GConnectFlags)0);
 
         gtk_widget_hide(attr_container);
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_select_row",
+        g_signal_connect_object(G_OBJECT(tree), "tree_select_row",
                        (GCallback) on_tree_select_row_show_if_text,
-                        text_container, GTK_OBJECT(text_container));
+                        text_container, 
+			(GConnectFlags)0);
 
-        gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_unselect_row",
+        g_signal_connect_object(G_OBJECT(tree), "tree_unselect_row",
                        (GCallback) on_tree_unselect_row_hide,
-                        text_container, GTK_OBJECT(text_container));
+                        text_container, 
+			(GConnectFlags)0);
 
         gtk_widget_hide(text_container);
 
