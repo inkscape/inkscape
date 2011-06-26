@@ -2,9 +2,9 @@
  * @brief PowerStroke LPE effect, see lpe-powerstroke.cpp.
  */
 /* Authors:
- *   Johan Engelen <j.b.c.engelen@utwente.nl>
+ *   Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
  *
- * Copyright (C) 2010 Authors
+ * Copyright (C) 2010-2011 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -33,6 +33,7 @@ private:
     PowerStrokePointArrayParam offset_points;
     BoolParam sort_points;
     EnumParam<unsigned> interpolator_type;
+    EnumParam<unsigned> linecap_type;
 
     LPEPowerStroke(const LPEPowerStroke&);
     LPEPowerStroke& operator=(const LPEPowerStroke&);

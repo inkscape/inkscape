@@ -3,9 +3,9 @@
  * @brief  PowerStroke LPE implementation. Creates curves with modifiable stroke width.
  */
 /* Authors:
- *   Johan Engelen <j.b.c.engelen@utwente.nl>
+ *   Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
  *
- * Copyright (C) 2010 Authors
+ * Copyright (C) 2010-2011 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -20,6 +20,7 @@
 #include <2geom/sbasis-geometric.h>
 #include <2geom/transforms.h>
 #include <2geom/bezier-utils.h>
+#include <2geom/svg-elliptical-arc.h>
 
 #include "live_effects/bezctx.h"
 #include "live_effects/bezctx_intf.h"
@@ -275,11 +276,24 @@ static const Util::EnumData<unsigned> InterpolatorTypeData[] = {
 };
 static const Util::EnumDataConverter<unsigned> InterpolatorTypeConverter(InterpolatorTypeData, sizeof(InterpolatorTypeData)/sizeof(*InterpolatorTypeData));
 
+enum LineCapType {
+  LINECAP_BUTT,
+  LINECAP_ROUND,
+  LINECAP_SHARP
+};
+static const Util::EnumData<unsigned> LineCapTypeData[] = {
+    {LINECAP_BUTT  ,  N_("Butt"),  "Butt"},
+    {LINECAP_ROUND ,  N_("Round"), "Round"},
+    {LINECAP_SHARP  , N_("Sharp"), "Sharp"}
+};
+static const Util::EnumDataConverter<unsigned> LineCapTypeConverter(LineCapTypeData, sizeof(LineCapTypeData)/sizeof(*LineCapTypeData));
+
 LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     offset_points(_("Offset points"), _("Offset points"), "offset_points", &wr, this),
     sort_points(_("Sort points"), _("Sort offset points according to their time value along the curve."), "sort_points", &wr, this, true),
-    interpolator_type(_("Interpolator type"), _("Determines which kind of interpolator will be used to interpolate between stroke width along the path."), "interpolator_type", InterpolatorTypeConverter, &wr, this, Geom::Interpolate::INTERP_CUBICBEZIER_JOHAN)
+    interpolator_type(_("Interpolator type"), _("Determines which kind of interpolator will be used to interpolate between stroke width along the path."), "interpolator_type", InterpolatorTypeConverter, &wr, this, Geom::Interpolate::INTERP_CUBICBEZIER_JOHAN),
+    linecap_type(_("Line cap type"), _("Determines the shape of the path ends."), "linecap_type", LineCapTypeConverter, &wr, this, LINECAP_ROUND)
 {
     show_orig_path = true;
 
@@ -288,6 +302,7 @@ LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&offset_points) );
     registerParameter( dynamic_cast<Parameter *>(&sort_points) );
     registerParameter( dynamic_cast<Parameter *>(&interpolator_type) );
+    registerParameter( dynamic_cast<Parameter *>(&linecap_type) );
 }
 
 LPEPowerStroke::~LPEPowerStroke()
@@ -332,35 +347,88 @@ LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & 
 
     Piecewise<D2<SBasis> > output;
     if (!closed_path) {
+        LineCapType linecap = static_cast<LineCapType>(linecap_type.get_value());
+
         // perhaps use std::list instead of std::vector?
         std::vector<Geom::Point> ts(offset_points.data().size() + 2);
-        // first and last point coincide with input path (for now at least)
-        ts.front() = Point(pwd2_in.domain().min(),0);
-        ts.back()  = Point(pwd2_in.domain().max(),0);
         for (unsigned int i = 0; i < offset_points.data().size(); ++i) {
             ts.at(i+1) = offset_points.data().at(i);
         }
-
         if (sort_points) {
-            sort(ts.begin(), ts.end(), compare_offsets);
+            sort(ts.begin()+1, ts.end()-1, compare_offsets);
+        }
+        switch (linecap) {
+            case LINECAP_SHARP:
+                // first and last point coincide with input path to make sharp points on ends
+                ts.front() = Point(pwd2_in.domain().min(),0);
+                ts.back()  = Point(pwd2_in.domain().max(),0);
+                break;
+            case LINECAP_BUTT:
+            case LINECAP_ROUND:
+            default:
+                // first and last point have same distance from path as second and second to last points, respectively.
+                ts.front() = Point(pwd2_in.domain().min(), (*(ts.begin()+1))[Geom::Y] );
+                ts.back()  = Point(pwd2_in.domain().max(), (*(ts.end()-2))[Geom::Y] );
+                break;
         }
 
         // create stroke path where points (x,y) := (t, offset)
         Geom::Interpolate::Interpolator *interpolator = Geom::Interpolate::Interpolator::create(static_cast<Geom::Interpolate::InterpolatorType>(interpolator_type.get_value()));
         Geom::Path strokepath = interpolator->interpolateToPath(ts);
-        Geom::Path mirroredpath = strokepath.reverse() * Geom::Scale(1,-1);
         delete interpolator;
 
-        strokepath.append(mirroredpath, Geom::Path::STITCH_DISCONTINUOUS);
-        strokepath.close();
+        switch (linecap) {
+            case LINECAP_SHARP:
+            case LINECAP_BUTT:
+            {
+                Geom::Path mirroredpath = strokepath.reverse() * Geom::Scale(1,-1);
+                strokepath.append(mirroredpath, Geom::Path::STITCH_DISCONTINUOUS);
+                strokepath.close();
 
-        D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(strokepath.toPwSb());
-        Piecewise<SBasis> x = Piecewise<SBasis>(patternd2[0]);
-        Piecewise<SBasis> y = Piecewise<SBasis>(patternd2[1]);
+                D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(strokepath.toPwSb());
+                Piecewise<SBasis> x = Piecewise<SBasis>(patternd2[0]);
+                Piecewise<SBasis> y = Piecewise<SBasis>(patternd2[1]);
 
-        output = compose(pwd2_in,x) + y*compose(n,x);
+                output = compose(pwd2_in,x) + y*compose(n,x);
+                break;
+            }
+            case LINECAP_ROUND:
+            default:
+            {
+                D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(strokepath.toPwSb());
+                Piecewise<SBasis> x = Piecewise<SBasis>(patternd2[0]);
+                Piecewise<SBasis> y = Piecewise<SBasis>(patternd2[1]);
+
+                // find time values for which x lies outside path domain
+                // and only take portion of x and y that lies within those time values
+                std::vector< double > rtsmin = roots (x - pwd2_in.domain().min());
+                std::vector< double > rtsmax = roots (x - pwd2_in.domain().max());
+                if ( !rtsmin.empty() && !rtsmax.empty() ) {
+                    x = portion(x, rtsmin.at(0), rtsmax.at(0));
+                    y = portion(y, rtsmin.at(0), rtsmax.at(0));
+                }
+
+                output = compose(pwd2_in,x) + y*compose(n,x);
+                x = reverse(x);
+                y = reverse(y);
+                Piecewise<D2<SBasis> > mirrorpath = compose(pwd2_in,x) - y*compose(n,x);
+
+                double radius1 = 0.5 * distance(output.lastValue(), mirrorpath.firstValue());
+                Geom::SVGEllipticalArc cap1(output.lastValue(), radius1, radius1, M_PI/2., false, false, mirrorpath.firstValue());
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap1.toSBasis()));
+
+                output.continuousConcat(mirrorpath);
+
+                double radius2 = 0.5 * distance(output.firstValue(), output.lastValue());
+                Geom::SVGEllipticalArc cap2(output.lastValue(), radius2, radius2, M_PI/2., false, false, output.firstValue());
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap2.toSBasis()));
+
+                break;
+            }
+        }
     } else {
         // path is closed
+        // linecap parameter can be ignored
 
         // perhaps use std::list instead of std::vector?
         std::vector<Geom::Point> ts = offset_points.data();
