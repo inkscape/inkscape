@@ -21,6 +21,7 @@ DISTCHECK_CONFIGURE_FLAGS = --enable-localinstall
 man_MANS = \
 	inkscape.1 \
 	inkscape.fr.1		\
+	inkscape.ja.1		\
 	inkscape.sk.1		\
 	inkscape.zh_TW.1		\
 	inkview.1

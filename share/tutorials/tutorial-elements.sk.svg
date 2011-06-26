@@ -88,7 +88,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e37"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Čiara je definované ako značka s dĺžkou a smerom vytvorená bodom pohybujúcim sa po povrchu. Čiara môžu mať rozličnú dĺžku, šírku, smer, zakrivenie a farbu. Čiara môže byť dvojrozmerná (stopa ceruzky na papiery) alebo predpokladaná trojrozmerná.</flowDiv>
+  <flowDiv xml:space="preserve">Čiara je definované ako značka s dĺžkou a smerom vytvorená bodom pohybujúcim sa po povrchu. Čiara môžu mať rozličnú dĺžku, šírku, smer, zakrivenie a farbu. Čiara môže byť dvojrozmerná (stopa ceruzky na papieri) alebo predpokladaná trojrozmerná.</flowDiv>
  </flowRoot>
  <g id="elements-f02-sk.svgg2037" transform="translate(10, 399.3347492) translate(0.000000,-424.1680)">
   <rect id="elements-f02-sk.svgrect1933" height="100.99" width="305.16" stroke="#000" y="424.42" x="7.5753" stroke-width="0.49832" fill="none"/>
@@ -652,9 +652,9 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e368"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Zvláštne poďkovanie si zaslúži Linda Kim (<flowSpan font-weight="bold" font-family="Sans">http://www.redlucite.org</flowSpan>) za to, že mi pomohla (<flowSpan font-weight="bold" font-family="Sans">http://www.rejon.org/</flowSpan>) s týmto návodom. Tiež ďakujem Open Clip Art Library (<flowSpan font-weight="bold" font-family="Sans">http://www.openclipart.org/</flowSpan>) za grafiku, ktorú ľudia do tohto projektu zaslali.</flowDiv>
+  <flowDiv xml:space="preserve">Zvláštne poďakovanie si zaslúži Linda Kim (<flowSpan font-weight="bold" font-family="Sans">http://www.redlucite.org</flowSpan>) za to, že mi pomohla (<flowSpan font-weight="bold" font-family="Sans">http://www.rejon.org/</flowSpan>) s týmto návodom. Tiež ďakujem Open Clip Art Library (<flowSpan font-weight="bold" font-family="Sans">http://www.openclipart.org/</flowSpan>) za grafiku, ktorú ľudia do tohto projektu zaslali.</flowDiv>
  </flowRoot>
- <g transform="translate(0, 3161.0277291)">
+ <g transform="translate(0, 3170.0036661)">
   <defs id="defs3" xmlns:cc="http://creativecommons.org/ns#">
    <linearGradient id="linearGradient2465" y2="-7528.7" xlink:href="#linearGradient841" gradientUnits="userSpaceOnUse" x2="76.847" gradientTransform="matrix(2.149642,0.000000,0.000000,0.465194,-0.130153,3495.428)" y1="-7656.4" x1="76.847" inkscape:collect="always"/>
    <filter id="filter56" height="1.2" width="1.2" color-interpolation-filters="sRGB" y="-0.1" x="-0.1" inkscape:label="Drop shadow, custom">

@@ -318,7 +318,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e298"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Keďže úchopy na zmenu veľkosti sú dva, môžete meniť veľkosť obdĺžnika v akomkoľvek smere alebo ho dokonca posúvať po stanách. Úchopy na zmenu veľkosti vždy zachovávajú polomery zaoblenia.</flowDiv>
+  <flowDiv xml:space="preserve">Keďže úchopy na zmenu veľkosti sú dva, môžete meniť veľkosť obdĺžnika v akomkoľvek smere alebo ho dokonca posúvať po stranách. Úchopy na zmenu veľkosti vždy zachovávajú polomery zaoblenia.</flowDiv>
  </flowRoot>
  <rect id="d0e301" display="none" height="1000px" width="288" y="2183.4" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="Serif" line-height="133.00000%" fill="#000000">
@@ -561,7 +561,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e436"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Všimnite si skupiny úzkych úsekov vľavo v tvare ventilátora. Bolo jednoduché ich vytvoriť pomocou <flowSpan font-style="italic">prichytávania úchopu k uhlu</flowSpan> pri stlačenom <flowSpan font-weight="bold">Ctrl</flowSpan>. Du sú skratky úchopov oblúkov/segmentov:</flowDiv>
+  <flowDiv xml:space="preserve">Všimnite si skupiny úzkych úsekov vľavo v tvare ventilátora. Bolo jednoduché ich vytvoriť pomocou <flowSpan font-style="italic">prichytávania úchopu k uhlu</flowSpan> pri stlačenom <flowSpan font-weight="bold">Ctrl</flowSpan>. Tu sú skratky úchopov oblúkov/segmentov:</flowDiv>
  </flowRoot>
  <circle cy="0" cx="0" r="2" transform="translate(15, 3357.218699600001)"/>
  <rect id="d0e448" display="none" height="1000px" width="258" y="3351.2" x="20"/>
