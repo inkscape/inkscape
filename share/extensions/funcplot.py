@@ -28,6 +28,8 @@ Changes:
 import inkex, simplepath, simplestyle
 from math import *
 from random import *
+import gettext
+_ = gettext.gettext
 
 def drawfunction(xstart, xend, ybottom, ytop, samples, width, height, left, bottom, 
     fx = "sin(x)", fpx = "cos(x)", fponum = True, times2pi = False, polar = False, isoscale = True, drawaxis = True, endpts = False):
@@ -235,6 +237,7 @@ class FuncPlot(inkex.Effect):
                         help="dummy") 
 
     def effect(self):
+        newpath = None
         for id, node in self.selected.iteritems():
             if node.tag == inkex.addNS('rect','svg'):
                 # create new path with basic dimensions of selected rectangle
@@ -283,7 +286,9 @@ class FuncPlot(inkex.Effect):
                 # option wether to remove the rectangle or not.
                 if self.options.remove:
                     node.getparent().remove(node)
-                
+        if newpath is None:
+            inkex.errormsg(_("Please select a rectangle"))
+
 if __name__ == '__main__':
     e = FuncPlot()
     e.affect()
