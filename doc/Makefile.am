@@ -9,12 +9,8 @@ EXTRA_DIST = README.document \
 	HACKING.pt_BR.txt \
 	HACKING.txt \
 	keys.README \
-	keys.xml \
-	keys.de.xml \
-	keys.fr.xml \
-	keys-svg.xsl \
-	keys-html.xsl \
-	keys.html \
 	keys.de.html \
+    keys.en.html \
 	keys.fr.html \
+    keys.ja.html \
 	refcounting.txt
