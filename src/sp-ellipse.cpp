@@ -276,7 +276,7 @@ static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscap
     g_assert(SP_IS_GENERICELLIPSE(item));
 
     // Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
-    if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide())) {
+    if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide() || snapprefs->getSnapModeOthers())) {
         return;
     }
 
@@ -317,7 +317,7 @@ static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscap
     // Add the centre, if we have a closed slice or when explicitly asked for
     if ((snapprefs->getSnapToItemNode() && slice && ellipse->closed) || snapprefs->getSnapObjectMidpoints()) {
         pt = Geom::Point(cx, cy) * i2d;
-        p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_CENTER, Inkscape::SNAPTARGET_CENTER));
+        p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
     }
 
     // And if we have a slice, also snap to the endpoints

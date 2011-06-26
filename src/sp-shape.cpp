@@ -1190,7 +1190,7 @@ void SPShape::sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::Snap
     }
 
     // Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
-    if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide())) {
+    if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide() || snapprefs->getSnapModeOthers())) {
         return;
     }
 

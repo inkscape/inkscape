@@ -251,6 +251,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     object->readAttr( "inkscape:snap-global" );
     object->readAttr( "inkscape:snap-bbox" );
     object->readAttr( "inkscape:snap-nodes" );
+    object->readAttr( "inkscape:snap-others" );
     object->readAttr( "inkscape:snap-from-guide" );
     object->readAttr( "inkscape:snap-center" );
     object->readAttr( "inkscape:snap-smooth-nodes" );
@@ -308,8 +309,6 @@ static void sp_namedview_release(SPObject *object)
 static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *value)
 {
     SPNamedView *nv = SP_NAMEDVIEW(object);
-    // TODO investigate why we grab this and then never use it
-    SPUnit const &px = sp_unit_get_by_id(SP_UNIT_PX);
 
     switch (key) {
     case SP_ATTR_VIEWONLY:
@@ -334,17 +333,17 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_GRIDTOLERANCE:
-        nv->snap_manager.snapprefs.setGridTolerance(value ? g_ascii_strtod(value, NULL) : 10000);
-        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-        break;
+            nv->snap_manager.snapprefs.setGridTolerance(value ? g_ascii_strtod(value, NULL) : 10000);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
     case SP_ATTR_GUIDETOLERANCE:
-        nv->snap_manager.snapprefs.setGuideTolerance(value ? g_ascii_strtod(value, NULL) : 20);
-        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-        break;
+            nv->snap_manager.snapprefs.setGuideTolerance(value ? g_ascii_strtod(value, NULL) : 20);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
     case SP_ATTR_OBJECTTOLERANCE:
-        nv->snap_manager.snapprefs.setObjectTolerance(value ? g_ascii_strtod(value, NULL) : 20);
-        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-        break;
+            nv->snap_manager.snapprefs.setObjectTolerance(value ? g_ascii_strtod(value, NULL) : 20);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
     case SP_ATTR_GUIDECOLOR:
             nv->guidecolor = (nv->guidecolor & 0xff) | (DEFAULTGUIDECOLOR & 0xffffff00);
             if (value) {
@@ -451,9 +450,9 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_WINDOW_MAXIMIZED:
-        nv->window_maximized = value ? atoi(value) : 0;
-        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-        break;
+            nv->window_maximized = value ? atoi(value) : 0;
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
     case SP_ATTR_INKSCAPE_SNAP_GLOBAL:
             nv->snap_manager.snapprefs.setSnapEnabledGlobally(value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -466,18 +465,22 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             nv->snap_manager.snapprefs.setSnapModeNode(value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
+    case SP_ATTR_INKSCAPE_SNAP_OTHERS:
+            nv->snap_manager.snapprefs.setSnapModeOthers(value ? sp_str_to_bool(value) : TRUE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
     case SP_ATTR_INKSCAPE_SNAP_CENTER:
             nv->snap_manager.snapprefs.setIncludeItemCenter(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_GRIDS:
-        nv->snap_manager.snapprefs.setSnapToGrids(value ? sp_str_to_bool(value) : TRUE);
-        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-        break;
+            nv->snap_manager.snapprefs.setSnapToGrids(value ? sp_str_to_bool(value) : TRUE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
     case SP_ATTR_INKSCAPE_SNAP_TO_GUIDES:
-        nv->snap_manager.snapprefs.setSnapToGuides(value ? sp_str_to_bool(value) : TRUE);
-        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-        break;
+            nv->snap_manager.snapprefs.setSnapToGuides(value ? sp_str_to_bool(value) : TRUE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
     case SP_ATTR_INKSCAPE_SNAP_SMOOTH_NODES:
             nv->snap_manager.snapprefs.setSnapSmoothNodes(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -487,17 +490,17 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_OBJECT_MIDPOINTS:
-        nv->snap_manager.snapprefs.setSnapObjectMidpoints(value ? sp_str_to_bool(value) : FALSE);
-        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-        break;
+            nv->snap_manager.snapprefs.setSnapObjectMidpoints(value ? sp_str_to_bool(value) : FALSE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE_MIDPOINTS:
-        nv->snap_manager.snapprefs.setSnapBBoxEdgeMidpoints(value ? sp_str_to_bool(value) : FALSE);
-        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-        break;
+            nv->snap_manager.snapprefs.setSnapBBoxEdgeMidpoints(value ? sp_str_to_bool(value) : FALSE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX_MIDPOINTS:
-        nv->snap_manager.snapprefs.setSnapBBoxMidpoints(value ? sp_str_to_bool(value) : FALSE);
-        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-        break;
+            nv->snap_manager.snapprefs.setSnapBBoxMidpoints(value ? sp_str_to_bool(value) : FALSE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
     case SP_ATTR_INKSCAPE_SNAP_FROM_GUIDE:
             nv->snap_manager.snapprefs.setSnapModeGuide(value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);

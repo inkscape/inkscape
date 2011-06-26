@@ -39,7 +39,6 @@ enum SnapTargetType {
     SNAPTARGET_PAGE_CORNER,
     SNAPTARGET_CONVEX_HULL_CORNER,
     SNAPTARGET_ELLIPSE_QUADRANT_POINT,
-    SNAPTARGET_CENTER, // of ellipse
     SNAPTARGET_CORNER, // of image or of rectangle
     SNAPTARGET_TEXT_BASELINE,
     SNAPTARGET_CONSTRAINED_ANGLE,
@@ -66,16 +65,15 @@ enum SnapSourceType {
     SNAPSOURCE_CONVEX_HULL_CORNER,
     SNAPSOURCE_ELLIPSE_QUADRANT_POINT,
     SNAPSOURCE_NODE_HANDLE, // eg. nodes in the path editor, handles of stars or rectangles, etc. (tied to a stroke)
-    SNAPSOURCE_OBJECT_MIDPOINT, // midpoint of rectangles, polygon, etc.
     //-------------------------------------------------------------------
     // Other points (e.g. guides, gradient knots) will snap to both bounding boxes and nodes
-    SNAPSOURCE_OTHER_CATEGORY = 1024, // will be used as a flag and must therefore be a power of two
+    SNAPSOURCE_OTHERS_CATEGORY = 1024, // will be used as a flag and must therefore be a power of two
     SNAPSOURCE_ROTATION_CENTER,
-    SNAPSOURCE_CENTER, // of ellipse
+    SNAPSOURCE_OBJECT_MIDPOINT, // midpoint of rectangles, ellipses, polygon, etc.
     SNAPSOURCE_GUIDE,
     SNAPSOURCE_GUIDE_ORIGIN,
     SNAPSOURCE_TEXT_BASELINE,
-    SNAPSOURCE_OTHER_HANDLE, // eg. the handle of a gradient of a connector (ie not being tied to a stroke)
+    SNAPSOURCE_OTHER_HANDLE, // eg. the handle of a gradient or of a connector (ie not being tied to a stroke)
     SNAPSOURCE_GRID_PITCH, // eg. when pasting or alt-dragging in the selector tool; not realy a snap source
 };
 

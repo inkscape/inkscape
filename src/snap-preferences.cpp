@@ -27,7 +27,7 @@ Inkscape::SnapPreferences::SnapPreferences() :
     _snap_to_page_border(false),
     _strict_snapping(true)
 {
-    setSnapFrom(SnapSourceType(SNAPSOURCE_BBOX_CATEGORY | SNAPSOURCE_NODE_CATEGORY | SNAPSOURCE_OTHER_CATEGORY), true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
+    setSnapFrom(SnapSourceType(SNAPSOURCE_BBOX_CATEGORY | SNAPSOURCE_NODE_CATEGORY | SNAPSOURCE_OTHERS_CATEGORY), true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
 }
 
 /*
@@ -68,10 +68,25 @@ bool Inkscape::SnapPreferences::getSnapModeNode() const
     return (_snap_from & Inkscape::SNAPSOURCE_NODE_CATEGORY);
 }
 
-bool Inkscape::SnapPreferences::getSnapModeBBoxOrNodes() const
+void Inkscape::SnapPreferences::setSnapModeOthers(bool enabled)
 {
-    return (_snap_from & (Inkscape::SNAPSOURCE_BBOX_CATEGORY | Inkscape::SNAPSOURCE_NODE_CATEGORY) );
+    if (enabled) {
+        _snap_from = SnapSourceType(_snap_from | Inkscape::SNAPSOURCE_OTHERS_CATEGORY);
+    } else {
+        _snap_from = SnapSourceType(_snap_from & ~Inkscape::SNAPSOURCE_OTHERS_CATEGORY);
+    }
 }
+
+bool Inkscape::SnapPreferences::getSnapModeOthers() const
+{
+    return (_snap_from & Inkscape::SNAPSOURCE_OTHERS_CATEGORY);
+}
+
+
+//bool Inkscape::SnapPreferences::getSnapModeBBoxOrNodes() const
+//{
+//    return (_snap_from & (Inkscape::SNAPSOURCE_BBOX_CATEGORY | Inkscape::SNAPSOURCE_NODE_CATEGORY) );
+//}
 
 bool Inkscape::SnapPreferences::getSnapModeAny() const
 {
@@ -81,15 +96,15 @@ bool Inkscape::SnapPreferences::getSnapModeAny() const
 void Inkscape::SnapPreferences::setSnapModeGuide(bool enabled)
 {
     if (enabled) {
-        _snap_from = SnapSourceType(_snap_from | Inkscape::SNAPSOURCE_OTHER_CATEGORY);
+        _snap_from = SnapSourceType(_snap_from | Inkscape::SNAPSOURCE_OTHERS_CATEGORY);
     } else {
-        _snap_from = SnapSourceType(_snap_from & ~Inkscape::SNAPSOURCE_OTHER_CATEGORY);
+        _snap_from = SnapSourceType(_snap_from & ~Inkscape::SNAPSOURCE_OTHERS_CATEGORY);
     }
 }
 
 bool Inkscape::SnapPreferences::getSnapModeGuide() const
 {
-    return (_snap_from & Inkscape::SNAPSOURCE_OTHER_CATEGORY);
+    return (_snap_from & Inkscape::SNAPSOURCE_OTHERS_CATEGORY);
 }
 
 /**

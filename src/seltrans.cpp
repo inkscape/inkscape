@@ -359,7 +359,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     // points immediately.
 
     if (prefs->getBool("/options/snapclosestonly/value", false)) {
-        if (m.snapprefs.getSnapModeNode()) {
+        if (m.snapprefs.getSnapModeNode() || m.snapprefs.getSnapModeOthers()) {
             m.keepClosestPointOnly(_snap_points, p);
         } else {
             _snap_points.clear(); // don't keep any point

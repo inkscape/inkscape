@@ -2176,6 +2176,10 @@ static void toggle_snap_callback(GtkToggleAction *act, gpointer data) //data poi
             v = nv->snap_manager.snapprefs.getSnapIntersectionCS();
             sp_repr_set_boolean(repr, "inkscape:snap-intersection-paths", !v);
             break;
+        case SP_ATTR_INKSCAPE_SNAP_OTHERS:
+            v = nv->snap_manager.snapprefs.getSnapModeOthers();
+            sp_repr_set_boolean(repr, "inkscape:snap-others", !v);
+            break;
         case SP_ATTR_INKSCAPE_SNAP_CENTER:
             v = nv->snap_manager.snapprefs.getIncludeItemCenter();
             sp_repr_set_boolean(repr, "inkscape:snap-center", !v);
@@ -2244,6 +2248,8 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='ToggleSnapToItemNode' />"
         "    <toolitem action='ToggleSnapToSmoothNodes' />"
         "    <toolitem action='ToggleSnapToFromLineMidpoints' />"
+        "    <separator />"
+        "    <toolitem action='ToggleSnapFromOthers' />"
         "    <toolitem action='ToggleSnapToFromObjectCenters' />"
         "    <toolitem action='ToggleSnapToFromRotationCenter' />"
         "    <separator />"
@@ -2370,6 +2376,14 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
     }
 
     {
+        InkToggleAction* act = ink_toggle_action_new("ToggleSnapFromOthers",
+                                                     _("Others"), _("Snap other points (centers, guide origins, gradient handles, etc.)"), INKSCAPE_ICON_SNAP_OTHERS, secondarySize, SP_ATTR_INKSCAPE_SNAP_OTHERS);
+
+        gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
+    }
+
+    {
         InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromObjectCenters",
                                                      _("Object Centers"), _("Snap from and to centers of objects"),
                                                      INKSCAPE_ICON_SNAP_NODES_CENTER, secondarySize, SP_ATTR_INKSCAPE_SNAP_OBJECT_MIDPOINTS);
@@ -2476,7 +2490,8 @@ void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, SPEventContext * /*ev
     Glib::RefPtr<Gtk::Action> act7 = mainActions->get_action("ToggleSnapToItemNode");
     Glib::RefPtr<Gtk::Action> act8 = mainActions->get_action("ToggleSnapToSmoothNodes");
     Glib::RefPtr<Gtk::Action> act9 = mainActions->get_action("ToggleSnapToFromLineMidpoints");
-    Glib::RefPtr<Gtk::Action> act10 = mainActions->get_action("ToggleSnapToFromObjectCenters");
+    Glib::RefPtr<Gtk::Action> act10 = mainActions->get_action("ToggleSnapFromOthers");
+    Glib::RefPtr<Gtk::Action> act10b = mainActions->get_action("ToggleSnapToFromObjectCenters");
     Glib::RefPtr<Gtk::Action> act11 = mainActions->get_action("ToggleSnapToFromRotationCenter");
     Glib::RefPtr<Gtk::Action> act12 = mainActions->get_action("ToggleSnapToPageBorder");
     //Glib::RefPtr<Gtk::Action> act13 = mainActions->get_action("ToggleSnapToGridGuideIntersections");
@@ -2524,10 +2539,14 @@ void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, SPEventContext * /*ev
     gtk_action_set_sensitive(GTK_ACTION(act8->gobj()), c1 && c3);
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act9->gobj()), nv->snap_manager.snapprefs.getSnapLineMidpoints());
     gtk_action_set_sensitive(GTK_ACTION(act9->gobj()), c1 && c3);
-    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act10->gobj()), nv->snap_manager.snapprefs.getSnapObjectMidpoints());
-    gtk_action_set_sensitive(GTK_ACTION(act10->gobj()), c1 && c3);
+
+    bool const c5 = nv->snap_manager.snapprefs.getSnapModeOthers();
+    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act10->gobj()), c5);
+    gtk_action_set_sensitive(GTK_ACTION(act10->gobj()), c1);
+    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act10b->gobj()), nv->snap_manager.snapprefs.getSnapObjectMidpoints());
+    gtk_action_set_sensitive(GTK_ACTION(act10b->gobj()), c1 && c5);
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act11->gobj()), nv->snap_manager.snapprefs.getIncludeItemCenter());
-    gtk_action_set_sensitive(GTK_ACTION(act11->gobj()), c1 && c3);
+    gtk_action_set_sensitive(GTK_ACTION(act11->gobj()), c1 && c5);
 
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act12->gobj()), nv->snap_manager.snapprefs.getSnapToPageBorder());
     gtk_action_set_sensitive(GTK_ACTION(act12->gobj()), c1);

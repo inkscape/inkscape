@@ -675,7 +675,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
 
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
                 Geom::Point motion_dt(desktop->w2d(motion_w));
-                m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE));
+                m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_OTHER_HANDLE));
                 m.unSetup();
             }
             break;

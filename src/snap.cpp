@@ -916,7 +916,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 // We might still need to apply a constraint though, if we tried a constrained snap. And
                 // in case of a free snap we might have use for the transformed point, so let's return that
                 // point, whether it's constrained or not
-                if (best_snapped_point.isOtherSnapBetter(snapped_point, true)) {
+                if (best_snapped_point.isOtherSnapBetter(snapped_point, true) || points.size() == 1) {
                     // .. so we must keep track of the best non-snapped constrained point
                     best_transformation = result;
                     best_snapped_point = snapped_point;
@@ -1440,7 +1440,7 @@ void SnapManager::_displaySnapsource(Inkscape::SnapCandidatePoint const &p) cons
     if (prefs->getBool("/options/snapclosestonly/value")) {
         bool p_is_a_node = p.getSourceType() & Inkscape::SNAPSOURCE_NODE_CATEGORY;
         bool p_is_a_bbox = p.getSourceType() & Inkscape::SNAPSOURCE_BBOX_CATEGORY;
-        bool p_is_other = p.getSourceType() & Inkscape::SNAPSOURCE_OTHER_CATEGORY;
+        bool p_is_other = p.getSourceType() & Inkscape::SNAPSOURCE_OTHERS_CATEGORY;
 
         g_assert(_desktop != NULL);
         if (snapprefs.getSnapEnabledGlobally() && (p_is_other || (p_is_a_node && snapprefs.getSnapModeNode()) || (p_is_a_bbox && snapprefs.getSnapModeBBox()))) {

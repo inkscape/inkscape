@@ -138,9 +138,6 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
             case SNAPTARGET_ELLIPSE_QUADRANT_POINT:
                 target_name = _("quadrant point");
                 break;
-            case SNAPTARGET_CENTER:
-                target_name = _("center");
-                break;
             case SNAPTARGET_CORNER:
                 target_name = _("corner");
                 break;
@@ -205,9 +202,6 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
                 break;
             case SNAPSOURCE_ELLIPSE_QUADRANT_POINT:
                 source_name = _("Quadrant point");
-                break;
-            case SNAPSOURCE_CENTER:
-                source_name = _("Center");
                 break;
             case SNAPSOURCE_CORNER:
                 source_name = _("Corner");

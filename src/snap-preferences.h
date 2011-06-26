@@ -26,10 +26,12 @@ public:
 
     void setSnapModeBBox(bool enabled);
     void setSnapModeNode(bool enabled);
+    void setSnapModeOthers(bool enabled);
     void setSnapModeGuide(bool enabled);
     bool getSnapModeBBox() const;
     bool getSnapModeNode() const;
-    bool getSnapModeBBoxOrNodes() const;
+    bool getSnapModeOthers() const;
+    //bool getSnapModeBBoxOrNodes() const;
     bool getSnapModeAny() const;
     bool getSnapModeGuide() const;
 

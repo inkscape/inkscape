@@ -567,7 +567,7 @@ static void sp_rect_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
     g_assert(SP_IS_RECT(item));
 
     // Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
-    if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide())) {
+    if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide() || snapprefs->getSnapModeOthers())) {
         return;
     }
 

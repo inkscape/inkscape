@@ -458,6 +458,8 @@
     "snap-nodes"
 #define INKSCAPE_ICON_SNAP_NODES_CENTER \
     "snap-nodes-center"
+#define INKSCAPE_ICON_SNAP_OTHERS \
+    "snap-nodes-others"
 #define INKSCAPE_ICON_SNAP_NODES_CUSP \
     "snap-nodes-cusp"
 #define INKSCAPE_ICON_SNAP_NODES_INTERSECTION \

@@ -769,7 +769,7 @@ void CanvasAxonomGridSnapper::_addSnappedPoint(SnappedConstraints &sc, Geom::Poi
 
 bool CanvasAxonomGridSnapper::ThisSnapperMightSnap() const
 {
-    return _snap_enabled && _snapmanager->snapprefs.getSnapToGrids() && _snapmanager->snapprefs.getSnapModeBBoxOrNodes();
+    return _snap_enabled && _snapmanager->snapprefs.getSnapToGrids() && _snapmanager->snapprefs.getSnapModeAny();
 }
 
 
