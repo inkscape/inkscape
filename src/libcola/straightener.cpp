@@ -25,6 +25,8 @@
 using std::set;
 using std::vector;
 using std::list;
+using std::pair;
+using std::make_pair;
 
 namespace straightener {
 

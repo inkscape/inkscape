@@ -12,21 +12,21 @@
 #include "straightener.h"
 
 
-typedef vector<unsigned> Cluster;
-typedef vector<Cluster*> Clusters;
+typedef std::vector<unsigned> Cluster;
+typedef std::vector<Cluster*> Clusters;
 namespace vpsc { class Rectangle; }
 
 namespace cola {
     using vpsc::Rectangle;
-    typedef pair<unsigned, unsigned> Edge;
+    typedef std::pair<unsigned, unsigned> Edge;
 
     // a graph component with a list of node_ids giving indices for some larger list of nodes
     // for the nodes in this component, and a list of edges - node indices relative to this component
     class Component {
     public:
-        vector<unsigned> node_ids;
-        vector<Rectangle*> rects;
-        vector<Edge> edges;
+        std::vector<unsigned> node_ids;
+        std::vector<Rectangle*> rects;
+        std::vector<Edge> edges;
         SimpleConstraints scx, scy;
         virtual ~Component();
         void moveRectangles(double x, double y);
@@ -35,15 +35,15 @@ namespace cola {
 
     // for a graph of n nodes, return connected components
     void connectedComponents(
-            const vector<Rectangle*> &rs,
-            const vector<Edge> &es,
+            const std::vector<Rectangle*> &rs,
+            const std::vector<Edge> &es,
             const SimpleConstraints &scx,
             const SimpleConstraints &scy,
-            vector<Component*> &components);
+            std::vector<Component*> &components);
 
     // move the contents of each component so that the components do not
     // overlap.
-    void separateComponents(const vector<Component*> &components);
+    void separateComponents(const std::vector<Component*> &components);
 
     // defines references to three variables for which the goal function
     // will be altered to prefer points u-b-v are in a linear arrangement
@@ -110,7 +110,7 @@ namespace cola {
         bool tAtProjection;
     };
 
-    typedef vector<LinearConstraint*> LinearConstraints;
+    typedef std::vector<LinearConstraint*> LinearConstraints;
 
 class TestConvergence {
 public:
@@ -150,8 +150,8 @@ static TestConvergence defaultTest(0.0001,100);
 class ConstrainedMajorizationLayout {
 public:
     ConstrainedMajorizationLayout(
-        vector<Rectangle*>& rs,
-        vector<Edge>& es,
+        std::vector<Rectangle*>& rs,
+        std::vector<Edge>& es,
         double* eweights,
         double idealLength,
         TestConvergence& done=defaultTest);
@@ -171,7 +171,7 @@ public:
                 SimpleConstraints* scx = NULL,
                 SimpleConstraints* scy = NULL,
                 Clusters* cs = NULL,
-                vector<straightener::Edge*>* straightenEdges = NULL);
+                std::vector<straightener::Edge*>* straightenEdges = NULL);
 
         void addLinearConstraints(LinearConstraints* linearConstraints);
 
@@ -195,7 +195,7 @@ public:
             delete [] Y;
         }
     bool run();
-        void straighten(vector<straightener::Edge*>&, Dim);
+        void straighten(std::vector<straightener::Edge*>&, Dim);
         bool avoidOverlaps;
         bool constrainedLayout;
     private:
@@ -214,14 +214,14 @@ public:
         double** Q; // quadratic terms matrix used in computations
         double** Dij;
         double tol;
-    TestConvergence& done;
+        TestConvergence& done;
         Rectangle** boundingBoxes;
         double *X, *Y;
         Clusters* clusters;
         double edge_length;
         LinearConstraints *linearConstraints;
         GradientProjection *gpX, *gpY;
-        vector<straightener::Edge*>* straightenEdges;
+        std::vector<straightener::Edge*>* straightenEdges;
 };
 
 }

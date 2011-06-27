@@ -4,6 +4,8 @@
 #include "shortest_paths.h"
 #include "2geom/isnan.h"
 
+using namespace std;
+
 namespace cola {
 
 /**
@@ -16,8 +18,8 @@ inline double dummy_var_euclidean_dist(GradientProjection* gpx, GradientProjecti
 }
 ConstrainedMajorizationLayout
 ::ConstrainedMajorizationLayout(
-        vector<Rectangle*>& rs,
-        vector<Edge>& es,
+        std::vector<Rectangle*>& rs,
+        std::vector<Edge>& es,
         double* eweights,
         double idealLength,
         TestConvergence& done)
@@ -85,10 +87,10 @@ ConstrainedMajorizationLayout
                 for(Cluster::iterator vit=c->begin();
                         vit!=c->end(); ++vit) {
                     double pos = coords[k][*vit];
-                    minPos=min(pos,minPos);
-                    maxPos=max(pos,maxPos);
-                    p->leftof.push_back(make_pair(*vit,0)); 
-                    p->rightof.push_back(make_pair(*vit,0)); 
+                    minPos = std::min(pos, minPos);
+                    maxPos = std::max(pos, maxPos);
+                    p->leftof.push_back(std::make_pair(*vit,0)); 
+                    p->rightof.push_back(std::make_pair(*vit,0)); 
                 }
                 p->place_l = minPos;
                 p->place_r = maxPos;
@@ -108,7 +110,7 @@ void ConstrainedMajorizationLayout::majlayout(
         double** Dij, GradientProjection* gp, double* coords) 
 {
     double b[n];
-    fill(b,b+n,0);
+    std::fill(b,b+n,0);
     majlayout(Dij,gp,coords,b);
 }
 void ConstrainedMajorizationLayout::majlayout(
@@ -123,7 +125,7 @@ void ConstrainedMajorizationLayout::majlayout(
             for (unsigned j = 0; j < lapSize; j++) {
                 if (j == i) continue;
                 dist_ij = euclidean_distance(i, j);
-                if (dist_ij > 1e-30 && Dij[i][j] > 1e-30) {	/* skip zero distances */
+                if (dist_ij > 1e-30 && Dij[i][j] > 1e-30) {     /* skip zero distances */
                     /* calculate L_ij := w_{ij}*d_{ij}/dist_{ij} */
                     L_ij = 1.0 / (dist_ij * Dij[i][j]);
                     degree -= L_ij;
@@ -216,11 +218,11 @@ bool ConstrainedMajorizationLayout::run() {
     return true;
 }
 static bool straightenToProjection=true;
-void ConstrainedMajorizationLayout::straighten(vector<straightener::Edge*>& sedges, Dim dim) {
-	vector<straightener::Node*> snodes;
-	for (unsigned i=0;i<lapSize;i++) {
-		snodes.push_back(new straightener::Node(i,boundingBoxes[i]));
-	}
+void ConstrainedMajorizationLayout::straighten(std::vector<straightener::Edge*>& sedges, Dim dim) {
+    std::vector<straightener::Node*> snodes;
+    for (unsigned i=0;i<lapSize;i++) {
+        snodes.push_back(new straightener::Node(i,boundingBoxes[i]));
+    }
     SimpleConstraints cs;
     straightener::generateConstraints(snodes,sedges,cs,dim);
     n=snodes.size();
@@ -244,7 +246,7 @@ void ConstrainedMajorizationLayout::straighten(vector<straightener::Edge*>& sedg
     LinearConstraints linearConstraints;
     for(unsigned i=0;i<sedges.size();i++) {
         sedges[i]->nodePath(snodes);
-        vector<unsigned>& path=sedges[i]->path;
+        std::vector<unsigned>& path=sedges[i]->path;
         // take u and v as the ends of the line
         //unsigned u=path[0];
         //unsigned v=path[path.size()-1];
@@ -267,7 +269,7 @@ void ConstrainedMajorizationLayout::straighten(vector<straightener::Edge*>& sedg
     //cout << "Generated "<<linearConstraints.size()<< " linear constraints"<<endl;
     assert(snodes.size()==lapSize+linearConstraints.size());
     double b[n],*coords=dim==HORIZONTAL?X:Y,dist_ub,dist_bv;
-    fill(b,b+n,0);
+    std::fill(b,b+n,0);
     for(LinearConstraints::iterator i=linearConstraints.begin();
            i!= linearConstraints.end();i++) {
         LinearConstraint* c=*i;
@@ -286,10 +288,10 @@ void ConstrainedMajorizationLayout::straighten(vector<straightener::Edge*>& sedg
             double wbv=edge_length*c->frac_bv;
             dist_ub=euclidean_distance(c->u,c->b)*wub;
             dist_bv=euclidean_distance(c->b,c->v)*wbv;
-            wub=max(wub,0.00001);
-            wbv=max(wbv,0.00001);
-            dist_ub=max(dist_ub,0.00001);
-            dist_bv=max(dist_bv,0.00001);
+            wub = std::max(wub,0.00001);
+            wbv = std::max(wbv,0.00001);
+            dist_ub = std::max(dist_ub,0.00001);
+            dist_bv = std::max(dist_bv,0.00001);
             wub=1/(wub*wub);
             wbv=1/(wbv*wbv);
             Q[c->u][c->u]-=wub;
@@ -306,8 +308,8 @@ void ConstrainedMajorizationLayout::straighten(vector<straightener::Edge*>& sedg
                    - coords[c->b] / dist_ub - coords[c->b] / dist_bv;
         }
     }
-	GradientProjection gp(dim,n,Q,coords,tol,100,
-            (AlignmentConstraints*)NULL,false,(vpsc::Rectangle**)NULL,(PageBoundaryConstraints*)NULL,&cs);
+    GradientProjection gp(dim,n,Q,coords,tol,100,
+			  (AlignmentConstraints*)NULL,false,(vpsc::Rectangle**)NULL,(PageBoundaryConstraints*)NULL,&cs);
     constrainedLayout = true;
     majlayout(Dij,&gp,coords,b);
     for(unsigned i=0;i<sedges.size();i++) {
@@ -337,16 +339,14 @@ void ConstrainedMajorizationLayout::setupConstraints(
         PageBoundaryConstraints* pbcx, PageBoundaryConstraints* pbcy,
         SimpleConstraints* scx, SimpleConstraints* scy,
         Clusters* cs,
-        vector<straightener::Edge*>* straightenEdges) {
+        std::vector<straightener::Edge*>* straightenEdges) {
     constrainedLayout = true;
     this->avoidOverlaps = avoidOverlaps;
     if(cs) {
         clusters=cs;
     }
-	gpX=new GradientProjection(
-            HORIZONTAL,n,Q,X,tol,100,acsx,avoidOverlaps,boundingBoxes,pbcx,scx);
-	gpY=new GradientProjection(
-            VERTICAL,n,Q,Y,tol,100,acsy,avoidOverlaps,boundingBoxes,pbcy,scy);
+    gpX = new GradientProjection(HORIZONTAL,n,Q,X,tol,100,acsx,avoidOverlaps,boundingBoxes,pbcx,scx);
+    gpY = new GradientProjection(VERTICAL,n,Q,Y,tol,100,acsy,avoidOverlaps,boundingBoxes,pbcy,scy);
     this->straightenEdges = straightenEdges;
 }
 } // namespace cola
