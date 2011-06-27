@@ -31,7 +31,7 @@ public:
     virtual void init();
 
     SPColorSelector* getCurrentSelector();
-    void switchPage( GtkNotebook *notebook, GtkNotebookPage *page, guint page_num );
+    void switchPage( GtkNotebook *notebook, GtkWidget *page, guint page_num );
 
     GtkWidget* addPage( GType page_type, guint submode );
     void removePage( GType page_type, guint submode );

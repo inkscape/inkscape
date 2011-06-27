@@ -102,7 +102,7 @@ sp_color_notebook_class_init (SPColorNotebookClass *klass)
 
 static void
 sp_color_notebook_switch_page(GtkNotebook *notebook,
-                              GtkNotebookPage *page,
+                              GtkWidget   *page,
                               guint page_num,
                               SPColorNotebook *colorbook)
 {
@@ -111,14 +111,14 @@ sp_color_notebook_switch_page(GtkNotebook *notebook,
         ColorNotebook* nb = (ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base);
         nb->switchPage( notebook, page, page_num );
 
-        // remember the page we seitched to
+        // remember the page we switched to
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setInt("/colorselector/page", page_num);
     }
 }
 
 void ColorNotebook::switchPage(GtkNotebook*,
-                              GtkNotebookPage*,
+                              GtkWidget*,
                               guint page_num)
 {
     SPColorSelector* csel;

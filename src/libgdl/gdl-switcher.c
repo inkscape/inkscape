@@ -615,15 +615,12 @@ gdl_switcher_notify_cb (GObject *g_object, GParamSpec *pspec,
 }
 
 static void
-gdl_switcher_switch_page_cb (GtkNotebook *nb, GtkNotebookPage *page,
+gdl_switcher_switch_page_cb (GtkNotebook *nb, GtkWidget *page_widget,
                              gint page_num, GdlSwitcher *switcher)
 {
-    GtkWidget       *page_widget;
-    GtkWidget       *tablabel;
     gint             switcher_id;
     
     /* Change switcher button */
-    page_widget = gtk_notebook_get_nth_page (nb, page_num);
     switcher_id = gdl_switcher_get_page_id (page_widget);
     gdl_switcher_select_button (GDL_SWITCHER (switcher), switcher_id);
 }
