@@ -198,6 +198,8 @@ SPSVGView::setDocument (SPDocument *document)
         g_signal_connect (G_OBJECT (_drawing), "arena_event", G_CALLBACK (arena_handler), this);
     }
 
+    View::setDocument (document);
+
     if (document) {
         NRArenaItem *ai = SP_ITEM( document->getRoot() )->invoke_show(
                 SP_CANVAS_ARENA (_drawing)->arena,
@@ -210,8 +212,6 @@ SPSVGView::setDocument (SPDocument *document)
 
         doRescale (!_rescale);
     }
-
-    View::setDocument (document);
 }
 
 /**
