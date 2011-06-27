@@ -36,6 +36,10 @@
 #include <2geom/path-intersection.h>
 #include <2geom/pathvector.h>
 #include <2geom/crossing.h>
+#include <2geom/angle.h>
+#include "snap.h"
+#include "sp-namedview.h"
+
 
 static void sp_measure_context_class_init(SPMeasureContextClass *klass);
 static void sp_measure_context_init(SPMeasureContext *measure_context);
@@ -184,16 +188,32 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 ret = TRUE;
             }
 
+            SnapManager &m = desktop->namedview->snap_manager;
+            m.setup(desktop);
+            m.freeSnapReturnByRef(start_point, Inkscape::SNAPSOURCE_OTHER_HANDLE);
+            m.unSetup();
+
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
-								GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
-								NULL, event->button.time);
+                                GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
+                                NULL, event->button.time);
             mc->grabbed = SP_CANVAS_ITEM(desktop->acetate);
             break;
         }
 
 	case GDK_MOTION_NOTIFY:
         {
-            if (event->motion.state & GDK_BUTTON1_MASK && !event_context->space_panning) {
+            if (!((event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning)) {
+                if (!(event->motion.state & GDK_SHIFT_MASK)) {
+                    Geom::Point const motion_w(event->motion.x, event->motion.y);
+                    Geom::Point const motion_dt(desktop->w2d(motion_w));
+
+                    SnapManager &m = desktop->namedview->snap_manager;
+                    m.setup(desktop);
+
+                    m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_OTHER_HANDLE));
+                    m.unSetup();
+                }
+            } else {
                 ret = TRUE;
 
                 if ( within_tolerance
@@ -217,9 +237,16 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 Geom::Point const motion_dt(desktop->w2d(motion_w));
                 Geom::Point end_point = motion_dt;
 
-                //rotation constraint
-                if (event->motion.state & GDK_CONTROL_MASK)
+                if (event->motion.state & GDK_CONTROL_MASK) {
                     spdc_endpoint_snap_rotation(event_context, end_point, start_point, event->motion.state);
+                } else {
+                    if (!(event->motion.state & GDK_SHIFT_MASK)) {
+                        SnapManager &m = desktop->namedview->snap_manager;
+                        m.setup(desktop);
+                        m.freeSnapReturnByRef(end_point, Inkscape::SNAPSOURCE_OTHER_HANDLE);
+                        m.unSetup();
+                    }
+                }
 
                 //draw control line
                 SPCanvasItem * control_line = NULL;
@@ -246,6 +273,10 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 for (i=0; i<NPOINTS; i++){
                     points.push_back(desktop->d2w(start_point + (i/NPOINTS)*(end_point-start_point)));
                 }
+
+// TODO: Felipe, why don't you simply iterate over all items, and test whether their bounding boxes intersect
+// with the measurement line, instead of interpolating? E.g. bbox_of_measurement_line.intersects(*bbox_of_item).
+// That's also how the object-snapper works, see _findCandidates() in object-snapper.cpp.
 
                 //select elements crossed by line segment:
                 GSList *items = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, points);
@@ -355,7 +386,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 }
 
                 char* angle_str = (char*) malloc(sizeof(char)*20);
-                sprintf(angle_str, "%.2f °", angle * 180/3.1415 );
+                sprintf(angle_str, "%.2f °", angle * 180/M_PI );
                 SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(5*fontsize,0)), angle_str);
                 sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
                 sp_canvastext_set_rgba32 (SP_CANVASTEXT(canvas_tooltip), 0x337f33ff, 0xffffffff);
@@ -374,6 +405,8 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
       	case GDK_BUTTON_RELEASE:
         {
+            sp_event_context_discard_delayed_snap_event(event_context);
+
             //clear all temporary canvas items related to the measurement tool.
             unsigned int idx;
             for (idx=0; idx<measure_tmp_items.size(); idx++){
