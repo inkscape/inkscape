@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, cubicsuperpath, simplestyle, copy, math, bezmisc
+import inkex, cubicsuperpath, simplestyle, copy, math, bezmisc, simpletransform
 
 def numsegs(csp):
     return sum([len(p)-1 for p in csp])
@@ -125,6 +125,9 @@ class Interp(inkex.Effect):
             if node.tag ==inkex.addNS('path','svg'):
                 paths[id] = cubicsuperpath.parsePath(node.get('d'))
                 styles[id] = simplestyle.parseStyle(node.get('style'))
+                trans = node.get('transform')
+                if trans:
+                    simpletransform.applyTransformToPath(simpletransform.parseTransform(trans), paths[id])
             else:
                 self.options.ids.remove(id)
 
