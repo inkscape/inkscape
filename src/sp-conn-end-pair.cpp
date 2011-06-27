@@ -224,7 +224,7 @@ SPConnEndPair::getEndpoints(Geom::Point endPts[]) const {
             g_assert(h2attItem[h]->avoidRef);
             endPts[h] = h2attItem[h]->avoidRef->getConnectionPointPos(_connEnd[h]->type, _connEnd[h]->id);
         }
-        else
+        else if (!curve->is_empty())
         {
             if (h == 0) {
                 endPts[h] = *(curve->first_point())*i2d;
