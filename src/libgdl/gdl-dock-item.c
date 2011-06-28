@@ -82,8 +82,7 @@ static void  gdl_dock_item_forall        (GtkContainer *container,
 static GType gdl_dock_item_child_type  (GtkContainer *container);
 
 static void  gdl_dock_item_set_focus_child (GtkContainer *container,
-                                            GtkWidget    *widget,
-                                            gpointer      callback_data);
+                                            GtkWidget    *widget);
 
 static void  gdl_dock_item_size_request  (GtkWidget *widget,
                                           GtkRequisition *requisition);
@@ -697,13 +696,13 @@ gdl_dock_item_child_type (GtkContainer *container)
 
 static void
 gdl_dock_item_set_focus_child (GtkContainer *container,
-                               GtkWidget    *child,
-                               gpointer      callback_data)
+                               GtkWidget    *child)
 {
     g_return_if_fail (GDL_IS_DOCK_ITEM (container));
     
-    if (GTK_CONTAINER_CLASS (parent_class)->set_focus_child)
+    if (GTK_CONTAINER_CLASS (parent_class)->set_focus_child) {
         (* GTK_CONTAINER_CLASS (parent_class)->set_focus_child) (container, child);
+    }
 
     gdl_dock_item_showhide_grip (GDL_DOCK_ITEM (container));
 }
@@ -920,6 +919,8 @@ static void
 gdl_dock_item_style_set (GtkWidget *widget,
                          GtkStyle  *previous_style)
 {
+    (void)previous_style;
+
     g_return_if_fail (widget != NULL);
     g_return_if_fail (GDL_IS_DOCK_ITEM (widget));
 
@@ -1454,9 +1455,10 @@ static void
 gdl_dock_item_detach_menu (GtkWidget *widget,
                            GtkMenu   *menu)
 {
-    GdlDockItem *item;
-   
-    item = GDL_DOCK_ITEM (widget);
+    GdlDockItem *item = GDL_DOCK_ITEM(widget);
+
+    (void)menu;
+
     item->_priv->menu = NULL;
 }
 
@@ -1539,12 +1541,13 @@ gdl_dock_item_tab_button (GtkWidget      *widget,
                           GdkEventButton *event,
                           gpointer        data)
 {
-    GdlDockItem *item;
+    GdlDockItem *item = GDL_DOCK_ITEM(data);
 
-    item = GDL_DOCK_ITEM (data);
+    (void)widget;
 
-    if (!GDL_DOCK_ITEM_NOT_LOCKED (item))
+    if (!GDL_DOCK_ITEM_NOT_LOCKED (item)) {
         return;
+    }
 
     switch (event->button) {
     case 1:
@@ -1577,7 +1580,9 @@ gdl_dock_item_hide_cb (GtkWidget   *widget,
                        GdlDockItem *item)
 {
     GdlDockMaster *master;
-    
+
+    (void)widget;
+
     g_return_if_fail (item != NULL);
 
     master = GDL_DOCK_OBJECT_GET_MASTER (item);
@@ -1590,6 +1595,8 @@ gdl_dock_item_lock_cb (GtkWidget   *widget,
 {
     g_return_if_fail (item != NULL);
 
+    (void)widget;
+
     gdl_dock_item_lock (item);
 }
 
@@ -1598,6 +1605,8 @@ gdl_dock_item_unlock_cb (GtkWidget   *widget,
                        GdlDockItem *item)
 {
     g_return_if_fail (item != NULL);
+
+    (void)widget;
 
     gdl_dock_item_unlock (item);
 }
@@ -1705,6 +1714,8 @@ gdl_dock_item_dock_to (GdlDockItem      *item,
                        GdlDockPlacement  position,
                        gint              docking_param)
 {
+    (void)docking_param;
+
     g_return_if_fail (item != NULL);
     g_return_if_fail (item != target);
     g_return_if_fail (target != NULL || position == GDL_DOCK_FLOATING);

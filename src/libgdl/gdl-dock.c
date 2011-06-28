@@ -275,6 +275,8 @@ gdl_dock_floating_configure_event_cb (GtkWidget         *widget,
 {
     GdlDock *dock;
 
+    (void)widget;
+
     g_return_val_if_fail (user_data != NULL && GDL_IS_DOCK (user_data), TRUE);
 
     dock = GDL_DOCK (user_data);
@@ -510,7 +512,10 @@ gdl_dock_notify_cb (GObject    *object,
                     gpointer    user_data)
 {
     GdlDock *dock;
-    
+
+    (void)pspec;
+    (void)user_data;
+
     g_return_if_fail (object != NULL || GDL_IS_DOCK (object));
     
     dock = GDL_DOCK (object);
@@ -561,7 +566,7 @@ gdl_dock_size_request (GtkWidget      *widget,
     border_width = container->border_width;
 
     /* make request to root */
-    if (dock->root && gtk_widget_get_visible (dock->root))
+    if (dock->root && gtk_widget_get_visible( GTK_WIDGET(dock->root) ))
         gtk_widget_size_request (GTK_WIDGET (dock->root), requisition);
     else {
         requisition->width = 0;
@@ -597,8 +602,9 @@ gdl_dock_size_allocate (GtkWidget     *widget,
     allocation->width = MAX (1, allocation->width - 2 * border_width);
     allocation->height = MAX (1, allocation->height - 2 * border_width);
 
-    if (dock->root && gtk_widget_get_visible (dock->root))
+    if (dock->root && gtk_widget_get_visible( GTK_WIDGET(dock->root) )) {
         gtk_widget_size_allocate (GTK_WIDGET (dock->root), allocation);
+    }
 }
 
 static void
@@ -740,6 +746,8 @@ gdl_dock_forall (GtkContainer *container,
 {
     GdlDock *dock;
 
+    (void)include_internals;
+
     g_return_if_fail (container != NULL);
     g_return_if_fail (GDL_IS_DOCK (container));
     g_return_if_fail (callback != NULL);
@@ -753,6 +761,7 @@ gdl_dock_forall (GtkContainer *container,
 static GType
 gdl_dock_child_type (GtkContainer *container)
 {
+    (void)container;
     return GDL_TYPE_DOCK_ITEM;
 }
 
@@ -927,15 +936,16 @@ gdl_dock_dock (GdlDockObject    *object,
 
         /* Realize the item (create its corresponding GdkWindow) when 
            GdlDock has been realized. */
-        if (gtk_widget_get_realized (dock))
+        if ( gtk_widget_get_realized( GTK_WIDGET(dock) )) {
             gtk_widget_realize (widget);
-        
+        }
+
         /* Map the widget if it's visible and the parent is visible and has 
            been mapped. This is done to make sure that the GdkWindow is 
            visible. */
-        if (gtk_widget_get_visible (dock) && 
+        if (gtk_widget_get_visible( GTK_WIDGET(dock) ) && 
             gtk_widget_get_visible (widget)) {
-            if (gtk_widget_get_mapped (dock))
+            if (gtk_widget_get_mapped( GTK_WIDGET(dock) ))
                 gtk_widget_map (widget);
             
             /* Make the widget resize. */
@@ -1023,8 +1033,11 @@ gdl_dock_present (GdlDockObject *object,
 {
     GdlDock *dock = GDL_DOCK (object);
 
-    if (dock->_priv->floating)
+    (void)child;
+
+    if (dock->_priv->floating) {
         gtk_window_present (GTK_WINDOW (dock->_priv->window));
+    }
 }
 
 
@@ -1097,6 +1110,8 @@ gdl_dock_select_larger_item (GdlDockItem *dock_item_1,
                              gint level /* for debugging */)
 {
     GtkRequisition size_1, size_2;
+
+    (void)level;
     
     g_return_val_if_fail (dock_item_1 != NULL, dock_item_2);
     g_return_val_if_fail (dock_item_2 != NULL, dock_item_1);
@@ -1218,7 +1233,7 @@ gdl_dock_add_item (GdlDock          *dock,
         /* Non-floating item. */
         if (dock->root) {
             GdlDockPlacement local_placement;
-            GtkRequisition preferred_size;
+            /* GtkRequisition preferred_size; */
             
             best_dock_item =
                 gdl_dock_find_best_placement_item (GDL_DOCK_ITEM (dock->root),
@@ -1258,10 +1273,11 @@ gdl_dock_add_floating_item (GdlDock        *dock,
                                        "floaty", y,
                                        NULL));
     
-    if (gtk_widget_get_visible (dock)) {
+    if (gtk_widget_get_visible( GTK_WIDGET(dock) )) {
         gtk_widget_show (GTK_WIDGET (new_dock));
-        if (gtk_widget_get_mapped (dock))
+        if (gtk_widget_get_mapped( GTK_WIDGET(dock) )) {
             gtk_widget_map (GTK_WIDGET (new_dock));
+        }
         
         /* Make the widget resize. */
         gtk_widget_queue_resize (GTK_WIDGET (new_dock));

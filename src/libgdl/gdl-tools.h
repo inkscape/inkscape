@@ -104,6 +104,7 @@ static void                                                                     
 type_as_function ## _class_init_trampoline (gpointer klass,                     \
 					    gpointer data)                      \
 {                                                                               \
+        (void)data;                                                             \
 	parent_class = (parent_type ## Class *)g_type_class_ref (               \
 		parent_type_macro);                                             \
 	type_as_function ## _class_init ((type ## Class *)klass);               \
@@ -122,7 +123,8 @@ type_as_function ## _get_type (void)                                            
 		    NULL,               /* class_data */                        \
 		    sizeof (type),                                              \
 		    0,                  /* n_preallocs */                       \
-		    (GInstanceInitFunc) type_as_function ## _instance_init      \
+		    (GInstanceInitFunc) type_as_function ## _instance_init ,    \
+		    NULL,               /* value_table */                       \
 		};                                                              \
 		object_type = register_type_macro                               \
 			(type, type_as_function, corba_type,                    \

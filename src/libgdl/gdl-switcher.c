@@ -609,6 +609,8 @@ gdl_switcher_notify_cb (GObject *g_object, GParamSpec *pspec,
                         GdlSwitcher *switcher) 
 {
     gboolean show_tabs;
+    (void)g_object;
+    (void)pspec;
     g_return_if_fail (switcher != NULL && GDL_IS_SWITCHER (switcher));
     show_tabs = gtk_notebook_get_show_tabs (GTK_NOTEBOOK (switcher));
     gdl_switcher_set_show_buttons (switcher, !show_tabs);
@@ -619,7 +621,9 @@ gdl_switcher_switch_page_cb (GtkNotebook *nb, GtkWidget *page_widget,
                              gint page_num, GdlSwitcher *switcher)
 {
     gint             switcher_id;
-    
+
+    (void)nb;
+    (void)page_num;
     /* Change switcher button */
     switcher_id = gdl_switcher_get_page_id (page_widget);
     gdl_switcher_select_button (GDL_SWITCHER (switcher), switcher_id);
@@ -630,7 +634,9 @@ gdl_switcher_page_added_cb (GtkNotebook *nb, GtkWidget *page,
                             gint page_num, GdlSwitcher *switcher)
 {
     gint         switcher_id;
- 
+
+    (void)nb;
+    (void)page_num;
     switcher_id = gdl_switcher_get_page_id (page);
     
     gdl_switcher_add_button (GDL_SWITCHER (switcher), NULL, NULL, NULL, NULL,
@@ -676,6 +682,7 @@ gdl_switcher_class_init (GdlSwitcherClass *klass)
     GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
+    (void)notebook_class;
 
     container_class->forall = gdl_switcher_forall;
     container_class->remove = gdl_switcher_remove;
@@ -755,12 +762,13 @@ gdl_switcher_add_button (GdlSwitcher *switcher, const gchar *label,
     gtk_container_add (GTK_CONTAINER (button_widget), hbox);
     gtk_widget_show (hbox);
 
-    if (stock_id)
+    if (stock_id) {
         icon_widget = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
-    else if (pixbuf_icon)
+    } else if (pixbuf_icon) {
         icon_widget = gtk_image_new_from_pixbuf (pixbuf_icon);
-    else
+    } else {
         icon_widget = gtk_image_new_from_stock (GTK_STOCK_NEW, GTK_ICON_SIZE_BUTTON);
+    }
 
     gtk_widget_show (icon_widget);
     
