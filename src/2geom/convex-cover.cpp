@@ -145,7 +145,7 @@ ConvexHull::graham_scan() {
         double o = SignedTriangleArea(boundary[stac-2],
                                       boundary[stac-1],
                                       boundary[i]);
-        if(o == 0) { // colinear - dangerous...
+        if(fabs(o) < 1e-8) { // colinear - dangerous...
             stac--;
         } else if(o < 0) { // anticlockwise
         } else { // remove concavity
