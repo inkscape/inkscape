@@ -769,6 +769,16 @@ else
 fi
 PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.24  gtk+-2.0 >= 2.20  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo  sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.10.0)
 
+# Check for GTK+ backend target
+AC_MSG_CHECKING([for GTK+ backend target])
+gtk_backend_target=`pkg-config --variable=target gtk+-2.0`
+AC_MSG_RESULT($gtk_backend_target)
+
+# Add X11 library if needed
+if test "x$gtk_backend_target" = "xx11"; then
+  INKSCAPE_LIBS="$INKSCAPE_LIBS -lx11"
+fi
+
 # Check for Apple Mac OS X Carbon framework
 carbon_ok=no
 AC_MSG_CHECKING([for Mac OS X Carbon support])
@@ -793,7 +803,7 @@ if test "x$cairo_pdf" = "xyes"; then
 fi
 
 dnl Shouldn't we test for libpng and libz?
-INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz -lX11 -lxml2 -ldl"
+INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz -lxml2 -ldl"
 if test "x$openmp_ok" = "xyes"; then
 	INKSCAPE_LIBS="$INKSCAPE_LIBS -lgomp"
 fi
@@ -1075,4 +1085,5 @@ Configuration:
         ImageMagick Magick++:     ${magick_ok}
         Libwpg:                   ${with_libwpg}
         Doing Local Install:      ${with_localinstall}
+        GTK+ backend target:      ${gtk_backend_target}
 "
