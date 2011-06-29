@@ -641,7 +641,7 @@ main(int argc, char **argv)
 
     gboolean use_gui;
 
-#ifndef WIN32
+#if !defined(WIN32) && !defined(GDK_WINDOWING_QUARTZ)
     use_gui = (g_getenv("DISPLAY") != NULL);
 #else
     use_gui = TRUE;
