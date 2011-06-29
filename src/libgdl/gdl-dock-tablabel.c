@@ -254,6 +254,7 @@ gdl_dock_tablabel_item_notify (GObject    *master,
     gboolean         locked;
     gchar           *label;
     GtkBin          *bin;
+    (void)pspec;
     
     g_object_get (master,
                   "locked", &locked,

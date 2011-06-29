@@ -205,6 +205,7 @@ gdl_dock_paned_notify_cb (GObject    *g_object,
                           gpointer    user_data) 
 {
     GdlDockPaned *paned;
+    (void)g_object;
 
     g_return_if_fail (user_data != NULL && GDL_IS_DOCK_PANED (user_data));
     
@@ -255,6 +256,7 @@ gdl_dock_paned_button_cb (GtkWidget      *widget,
                           gpointer        user_data)
 {
     GdlDockPaned *paned;
+    (void)widget;
     
     g_return_val_if_fail (user_data != NULL && GDL_IS_DOCK_PANED (user_data), FALSE);
     

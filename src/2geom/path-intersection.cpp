@@ -228,8 +228,6 @@ intersect_polish_f (const gsl_vector * x, void *params,
 static void 
 intersect_polish_root (Curve const &A, double &s,
                        Curve const &B, double &t) {
-    int status;
-    size_t iter = 0;
     std::vector<Point> as, bs;
     as = A.pointAndDerivatives(s, 2);
     bs = B.pointAndDerivatives(t, 2);
