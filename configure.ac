@@ -722,7 +722,7 @@ AC_MSG_RESULT($gtk_backend_target)
 
 # Add X11 library if needed
 if test "x$gtk_backend_target" = "xx11"; then
-  INKSCAPE_LIBS="$INKSCAPE_LIBS -lx11"
+  INKSCAPE_LIBS="$INKSCAPE_LIBS -lX11"
 fi
 
 # Check for Apple Mac OS X Carbon framework
