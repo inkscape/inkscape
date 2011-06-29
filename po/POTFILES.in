@@ -114,7 +114,9 @@ src/extension/internal/filter/drop-shadow.h
 src/extension/internal/filter/experimental.h
 src/extension/internal/filter/filter-file.cpp
 src/extension/internal/filter/filter.cpp
+src/extension/internal/filter/image.h
 src/extension/internal/filter/morphology.h
+src/extension/internal/filter/shadows.h
 src/extension/internal/filter/snow.h
 src/extension/internal/gdkpixbuf-input.cpp
 src/extension/internal/gimpgrad.cpp
