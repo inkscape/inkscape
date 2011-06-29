@@ -343,60 +343,6 @@ AC_MSG_RESULT([$platform_solaris])
 AM_CONDITIONAL(PLATFORM_SOLARIS, test "$platform_solaris" = "yes")
 
 dnl ******************************
-dnl Xft checking
-dnl ******************************
-
-AC_ARG_WITH(xft,
-            AC_HELP_STRING([--with-xft], [use xft scalable font database (default is auto)]),
-            [with_xft=$withval], [with_xft=auto])
-
-if test "x$with_xft" != "xno" ; then
-	dnl Test fontconfig package
-	PKG_CHECK_MODULES(XFT, fontconfig, xft_ok=yes, xft_ok=no)
-	if test "x$xft_ok" != "xyes"; then
-		dnl test xft package
-		PKG_CHECK_MODULES(XFT, xft, xft_ok=yes, xft_ok=no)
-		if test "x$xft_ok" != "xyes"; then
-			dnl Have to test xft presence
-			AC_CHECK_HEADER(X11/Xft/Xft.h, xft_ok=yes, xft_ok=no)
-			if test "x$xft_ok" != "xyes"; then
-				dnl No xft found
-				if test "x$with_xft" = "xyes"; then
-					dnl Xft was explicitly asked, so stop
-					AC_MSG_ERROR([--with-xft was specified, but appropriate development packages could not be found])
-				fi
-			else
-				dnl Working Xft1
-				XFT_LIBS="-L/usr/X11R6/lib -lXft "
-			fi
-		fi
-	fi
-else
-	dnl Asked to ignore xft
-	xft_ok=no
-fi
-
-AC_SUBST(XFT_CFLAGS)
-AC_SUBST(XFT_LIBS)
-
-AM_CONDITIONAL(USE_XFT, test "x$xft_ok" = "xyes")
-if test "x$xft_ok" = "xyes"; then
-	AC_DEFINE(WITH_XFT, 1, [Use Xft font database])
-fi
-
-dnl ******************************
-dnl pangoft2 for xft
-dnl ******************************
-
-if test "x$xft_ok" = "xyes"; then
-	PKG_CHECK_MODULES(PANGOFT2, pangoft2, pango_ok=yes, pango_ok=no)
-	if test "x$pango_ok" = "xyes"; then
-		XFT_LIBS="$XFT_LIBS $PANGOFT2_LIBS"
-	fi
-fi
-
-
-dnl ******************************
 dnl gnome vfs checking
 dnl ******************************
 
@@ -1073,7 +1019,6 @@ Configuration:
         CFLAGS:                   ${CFLAGS}
         LDFLAGS:                  ${LDFLAGS}
 
-        Use Xft font database:    ${xft_ok}
         Use gnome-vfs:            ${gnome_vfs}
         Use openoffice files:     ${ij}
         Use relocation support:   ${enable_binreloc}
