@@ -7,7 +7,7 @@
  *   Ivan Louette (filters)
  *   Nicolas Dufour (UI) <nicoduf@yahoo.fr>
  *
- * Color filters
+ * Shadow filters
  *   Drop shadow
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -34,7 +34,12 @@ namespace Filter {
     * Blur radius (0.->200., default 3) -> blur (stdDeviation)
     * Horizontal offset (-50.->50., default 6.0) -> offset (dx)
     * Vertical offset (-50.->50., default 6.0) -> offset (dy)
+    * Blur type (enum, default outer) ->
+        outer = composite1 (operator="in"), composite2 (operator="over", in1="SourceGraphic", in2="offset")
+        inner = composite1 (operator="out"), composite2 (operator="atop", in1="offset", in2="SourceGraphic")
+        cutout = composite1 (operator="in"), composite2 (operator="out", in1="offset", in2="SourceGraphic")
     * Color (guint, default 0,0,0,127) -> flood (flood-opacity, flood-color)
+    * Use object's color (boolean, default false) -> composite1 (in1, in2)
 */
 class ColorizableDropShadow : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
@@ -47,21 +52,33 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-                "<name>" N_("Drop shadow, custom (Shadows and Glows)") "</name>\n"
-                "<id>org.inkscape.effect.filter.ColorDropShadow</id>\n"
-                "<param name=\"blur\" gui-text=\"" N_("Blur radius (px):") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"200.0\">3.0</param>\n"
-                "<param name=\"xoffset\" gui-text=\"" N_("Horizontal offset (px):") "\" type=\"float\" appearance=\"full\" min=\"-50.0\" max=\"50.0\">6.0</param>\n"
-                "<param name=\"yoffset\" gui-text=\"" N_("Vertical offset (px):") "\" type=\"float\" appearance=\"full\" min=\"-50.0\" max=\"50.0\">6.0</param>\n"
-                "<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">127</param>\n"
-                "<effect>\n"
-                    "<object-type>all</object-type>\n"
-                    "<effects-menu>\n"
-                        "<submenu name=\"" N_("Filters") "\">\n"
-                           "<submenu name=\"" N_("Experimental") "\"/>\n"
+              "<name>" N_("Drop shadow, custom (Shadows and Glows)") "</name>\n"
+              "<id>org.inkscape.effect.filter.ColorDropShadow</id>\n"
+              "<param name=\"tab\" type=\"notebook\">\n"
+                "<page name=\"optionstab\" _gui-text=\"Options\">\n"
+                  "<param name=\"blur\" gui-text=\"" N_("Blur radius (px):") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"200.0\">3.0</param>\n"
+                  "<param name=\"xoffset\" gui-text=\"" N_("Horizontal offset (px):") "\" type=\"float\" appearance=\"full\" min=\"-50.0\" max=\"50.0\">6.0</param>\n"
+                  "<param name=\"yoffset\" gui-text=\"" N_("Vertical offset (px):") "\" type=\"float\" appearance=\"full\" min=\"-50.0\" max=\"50.0\">6.0</param>\n"
+                  "<param name=\"type\" gui-text=\"" N_("Blur type:") "\" type=\"enum\" >\n"
+                    "<_item value=\"outer\">Outer</_item>\n"
+                    "<_item value=\"inner\">Inner</_item>\n"
+                    "<_item value=\"cutout\">Cutout</_item>\n"
+                  "</param>\n"
+                "</page>\n"
+                "<page name=\"coltab\" _gui-text=\"Blur color\">\n"
+                  "<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">127</param>\n"
+                  "<param name=\"objcolor\" gui-text=\"" N_("Use object's color") "\" type=\"boolean\" >false</param>\n"
+                "</page>\n"
+              "</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                     "<submenu name=\"" N_("Experimental") "\"/>\n"
                   "</submenu>\n"
-                    "</effects-menu>\n"
-                    "<menu-tip>" N_("Colorizable Drop shadow") "</menu-tip>\n"
-                "</effect>\n"
+                "</effects-menu>\n"
+              "<menu-tip>" N_("Colorizable Drop shadow") "</menu-tip>\n"
+              "</effect>\n"
             "</inkscape-extension>\n", new ColorizableDropShadow());
     };
 
@@ -79,9 +96,15 @@ ColorizableDropShadow::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream b;
     std::ostringstream x;
     std::ostringstream y;
-
+    std::ostringstream comp1in1;
+    std::ostringstream comp1in2;
+    std::ostringstream comp1op;
+    std::ostringstream comp2in1;
+    std::ostringstream comp2in2;
+    std::ostringstream comp2op;
+    
+    const gchar *type = ext->get_param_enum("type");
     guint32 color = ext->get_param_color("color");
-
     blur << ext->get_param_float("blur");
     x << ext->get_param_float("xoffset");
     y << ext->get_param_float("yoffset");
@@ -90,14 +113,43 @@ ColorizableDropShadow::get_filter_text (Inkscape::Extension::Extension * ext)
     g << ((color >> 16) & 0xff);
     b << ((color >>  8) & 0xff);
 
+    if (ext->get_param_bool("objcolor")) {
+        comp1in1 << "SourceGraphic";
+        comp1in2 << "flood";
+    } else {
+        comp1in1 << "flood";
+        comp1in2 << "SourceGraphic";
+    }
+
+    if ((g_ascii_strcasecmp("outer", type) == 0)) {
+        comp1op << "in";
+        comp2op << "over";
+        comp2in1 << "SourceGraphic";
+        comp2in2 << "offset";
+    } else if ((g_ascii_strcasecmp("inner", type) == 0)) {
+        comp1op << "out";
+        comp2op << "atop";
+        comp2in1 << "offset";
+        comp2in2 << "SourceGraphic";
+    } else {
+        comp1op << "in";
+        comp2op << "out";
+        comp2in1 << "offset";
+        comp2in2 << "SourceGraphic";
+    }
+    
+    
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1.2\" width=\"1.2\" y=\"-0.1\" x=\"-0.1\" inkscape:label=\"Drop shadow, custom\">\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
-          "<feComposite in=\"flood\" in2=\"SourceGraphic\" operator=\"in\" result=\"composite1\" />\n"
+          "<feComposite in=\"%s\" in2=\"%s\" operator=\"%s\" result=\"composite1\" />\n"
           "<feGaussianBlur in=\"composite1\" stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feOffset dx=\"%s\" dy=\"%s\" result=\"offset\" />\n"
-          "<feComposite in=\"SourceGraphic\" in2=\"offset\" operator=\"over\" result=\"composite2\" />\n"
-        "</filter>\n", a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(), blur.str().c_str(), x.str().c_str(), y.str().c_str());
+          "<feComposite in=\"%s\" in2=\"%s\" operator=\"%s\" result=\"composite2\" />\n"
+        "</filter>\n", a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(),
+                       comp1in1.str().c_str(), comp1in2.str().c_str(), comp1op.str().c_str(),
+                       blur.str().c_str(), x.str().c_str(), y.str().c_str(),
+                       comp2in1.str().c_str(), comp2in2.str().c_str(), comp2op.str().c_str());
 
     return _filter;
 };

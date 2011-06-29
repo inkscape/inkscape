@@ -11,6 +11,7 @@
 #include "abc.h"
 #include "color.h"
 #include "drop-shadow.h"
+#include "image.h"
 #include "morphology.h"
 #include "shadows.h"
 #include "snow.h"
@@ -56,6 +57,9 @@ Filter::filters_all (void )
     Quadritone::init();
     Solarize::init();
     Tritone::init();
+
+    // Image
+    EdgeDetect::init();
 
     // Morphology
     Crosssmooth::init();
