@@ -2208,6 +2208,10 @@ static void toggle_snap_callback(GtkToggleAction *act, gpointer data) //data poi
             v = nv->snap_manager.snapprefs.getSnapObjectMidpoints();
             sp_repr_set_boolean(repr, "inkscape:snap-object-midpoints", !v);
             break;
+        case SP_ATTR_INKSCAPE_SNAP_TEXT_BASELINE:
+            v = nv->snap_manager.snapprefs.getSnapTextBaseline();
+            sp_repr_set_boolean(repr, "inkscape:snap-text-baseline", !v);
+            break;
         case SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE_MIDPOINTS:
             v = nv->snap_manager.snapprefs.getSnapBBoxEdgeMidpoints();
             sp_repr_set_boolean(repr, "inkscape:snap-bbox-edge-midpoints", !v);
@@ -2252,6 +2256,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='ToggleSnapFromOthers' />"
         "    <toolitem action='ToggleSnapToFromObjectCenters' />"
         "    <toolitem action='ToggleSnapToFromRotationCenter' />"
+        "    <toolitem action='ToggleSnapToFromTextBaseline' />"
         "    <separator />"
         "    <toolitem action='ToggleSnapToPageBorder' />"
         "    <toolitem action='ToggleSnapToGrids' />"
@@ -2402,6 +2407,16 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
     }
 
     {
+        InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromTextBaseline",
+                                                     _("Text baseline"), _("Snap from and to text anchors and baselines"),
+                                                     INKSCAPE_ICON_SNAP_TEXT_BASELINE, secondarySize, SP_ATTR_INKSCAPE_SNAP_TEXT_BASELINE);
+
+        gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
+    }
+
+
+    {
         InkToggleAction* act = ink_toggle_action_new("ToggleSnapToPageBorder",
                                                      _("Page border"), _("Snap to the page border"), INKSCAPE_ICON_SNAP_PAGE,
                                                      secondarySize, SP_ATTR_INKSCAPE_SNAP_PAGE);
@@ -2493,6 +2508,7 @@ void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, SPEventContext * /*ev
     Glib::RefPtr<Gtk::Action> act10 = mainActions->get_action("ToggleSnapFromOthers");
     Glib::RefPtr<Gtk::Action> act10b = mainActions->get_action("ToggleSnapToFromObjectCenters");
     Glib::RefPtr<Gtk::Action> act11 = mainActions->get_action("ToggleSnapToFromRotationCenter");
+    Glib::RefPtr<Gtk::Action> act11b = mainActions->get_action("ToggleSnapToFromTextBaseline");
     Glib::RefPtr<Gtk::Action> act12 = mainActions->get_action("ToggleSnapToPageBorder");
     //Glib::RefPtr<Gtk::Action> act13 = mainActions->get_action("ToggleSnapToGridGuideIntersections");
     Glib::RefPtr<Gtk::Action> act14 = mainActions->get_action("ToggleSnapToGrids");
@@ -2546,6 +2562,8 @@ void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, SPEventContext * /*ev
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act10b->gobj()), nv->snap_manager.snapprefs.getSnapObjectMidpoints());
     gtk_action_set_sensitive(GTK_ACTION(act10b->gobj()), c1 && c5);
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act11->gobj()), nv->snap_manager.snapprefs.getIncludeItemCenter());
+    gtk_action_set_sensitive(GTK_ACTION(act11->gobj()), c1 && c5);
+    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act11b->gobj()), nv->snap_manager.snapprefs.getSnapTextBaseline());
     gtk_action_set_sensitive(GTK_ACTION(act11->gobj()), c1 && c5);
 
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act12->gobj()), nv->snap_manager.snapprefs.getSnapToPageBorder());

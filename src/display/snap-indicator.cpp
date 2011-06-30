@@ -141,6 +141,9 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
             case SNAPTARGET_CORNER:
                 target_name = _("corner");
                 break;
+            case SNAPTARGET_TEXT_ANCHOR:
+                target_name = _("text anchor");
+                break;
             case SNAPTARGET_TEXT_BASELINE:
                 target_name = _("text baseline");
                 break;
@@ -206,8 +209,8 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
             case SNAPSOURCE_CORNER:
                 source_name = _("Corner");
                 break;
-            case SNAPSOURCE_TEXT_BASELINE:
-                source_name = _("Text baseline");
+            case SNAPSOURCE_TEXT_ANCHOR:
+                source_name = _("Text anchor");
                 break;
             case SNAPSOURCE_GRID_PITCH:
                 source_name = _("Multiple of grid spacing");

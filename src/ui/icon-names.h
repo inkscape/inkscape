@@ -470,6 +470,8 @@
     "snap-nodes-path"
 #define INKSCAPE_ICON_SNAP_NODES_ROTATION_CENTER \
     "snap-nodes-rotation-center"
+#define INKSCAPE_ICON_SNAP_TEXT_BASELINE \
+    "snap-text-baseline"
 #define INKSCAPE_ICON_SNAP_NODES_SMOOTH \
     "snap-nodes-smooth"
 #define INKSCAPE_ICON_SNAP_PAGE \

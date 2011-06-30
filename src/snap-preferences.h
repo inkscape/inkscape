@@ -40,6 +40,7 @@ public:
     void setSnapSmoothNodes(bool enabled) {_smoothNodes = enabled;}
     void setSnapLineMidpoints(bool enabled) {_line_midpoints = enabled;}
     void setSnapObjectMidpoints(bool enabled) {_object_midpoints = enabled;}
+    void setSnapTextBaseline(bool enabled) {_text_baseline = enabled;}
     void setSnapBBoxEdgeMidpoints(bool enabled) {_bbox_edge_midpoints = enabled;}
     void setSnapBBoxMidpoints(bool enabled) {_bbox_midpoints = enabled;}
     bool getSnapIntersectionGG() const {return _intersectionGG;}
@@ -47,6 +48,7 @@ public:
     bool getSnapSmoothNodes() const {return _smoothNodes;}
     bool getSnapLineMidpoints() const {return _line_midpoints;}
     bool getSnapObjectMidpoints() const {return _object_midpoints;}
+    bool getSnapTextBaseline() const {return _text_baseline;}
     bool getSnapBBoxEdgeMidpoints() const {return _bbox_edge_midpoints;}
     bool getSnapBBoxMidpoints() const {return _bbox_midpoints;}
 
@@ -89,7 +91,6 @@ public:
     void setGuideTolerance(gdouble val) {_guide_tolerance = val;}
     void setObjectTolerance(gdouble val) {_object_tolerance = val;}
 
-
 private:
     bool _include_item_center; //If true, snapping nodes will also snap the item's center
     bool _intersectionGG; //Consider snapping to intersections of grid and guides
@@ -97,6 +98,7 @@ private:
     bool _smoothNodes;
     bool _line_midpoints;
     bool _object_midpoints; // the midpoint of shapes (e.g. a circle, rect, polygon) or of any other shape (at [h/2, w/2])
+    bool _text_baseline; // both anchor point and baseline of the text
     bool _bbox_edge_midpoints;
     bool _bbox_midpoints;
     bool _snap_to_grids;

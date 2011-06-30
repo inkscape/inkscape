@@ -106,6 +106,7 @@ private:
     Geom::PathVector* _getBorderPathv() const;
     Geom::PathVector* _getPathvFromRect(Geom::Rect const rect) const;
     void _getBorderNodes(std::vector<SnapCandidatePoint> *points) const;
+    bool _allowSourceToSnapToTarget(SnapSourceType source, SnapTargetType target, bool strict_snapping) const;
 
 }; // end of ObjectSnapper class
 

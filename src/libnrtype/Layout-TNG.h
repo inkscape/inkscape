@@ -486,6 +486,8 @@ public:
     For rightmost text, the rightmost... you probably got it by now ;-)*/
     boost::optional<Geom::Point> baselineAnchorPoint() const;
 
+    Geom::Path baseline() const;
+
     /** This is that value to apply to the x,y attributes of tspan role=line
     elements, and hence it takes alignment into account. */
     Geom::Point chunkAnchorPoint(iterator const &it) const;

@@ -355,6 +355,7 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"inkscape:snap-smooth-nodes", true},
     {"inkscape:snap-midpoints", true},
     {"inkscape:snap-object-midpoints", true},
+    {"inkscape:snap-text-baseline", true},
     {"inkscape:snap-bbox-edge-midpoints", true},
     {"inkscape:snap-bbox-midpoints", true},
     //{"inkscape:snap-intersection-grid-guide", true},

@@ -32,10 +32,11 @@ Inkscape::SnapPreferences::SnapPreferences() :
 
 /*
  *  The snappers have too many parameters to adjust individually. Therefore only
- *  two snapping modes are presented to the user: snapping bounding box corners (to
+ *  three snapping modes are presented to the user: snapping bounding box corners (to
  *  other bounding boxes, grids or guides), and/or snapping nodes (to other nodes,
- *  paths, grids or guides). To select either of these modes (or both), use the
- *  methods defined below: setSnapModeBBox() and setSnapModeNode().
+ *  paths, grids or guides), and or snapping to/from others (e.g. grids, guide, text, etc)
+ *  To select either of these three modes (or all), use the
+ *  methods defined below: setSnapModeBBox(), setSnapModeNode(), or setSnapModeOthers()
  *
  * */
 

@@ -15,36 +15,6 @@
 
 namespace Inkscape {
 
-enum SnapTargetType {
-    SNAPTARGET_UNDEFINED = 0,
-    SNAPTARGET_GRID,
-    SNAPTARGET_GRID_INTERSECTION,
-    SNAPTARGET_GUIDE,
-    SNAPTARGET_GUIDE_INTERSECTION,
-    SNAPTARGET_GUIDE_ORIGIN,
-    SNAPTARGET_GRID_GUIDE_INTERSECTION,
-    SNAPTARGET_NODE_SMOOTH,
-    SNAPTARGET_NODE_CUSP,
-    SNAPTARGET_LINE_MIDPOINT,
-    SNAPTARGET_OBJECT_MIDPOINT,
-    SNAPTARGET_ROTATION_CENTER,
-    SNAPTARGET_HANDLE,
-    SNAPTARGET_PATH,
-    SNAPTARGET_PATH_INTERSECTION,
-    SNAPTARGET_BBOX_CORNER,
-    SNAPTARGET_BBOX_EDGE,
-    SNAPTARGET_BBOX_EDGE_MIDPOINT,
-    SNAPTARGET_BBOX_MIDPOINT,
-    SNAPTARGET_PAGE_BORDER,
-    SNAPTARGET_PAGE_CORNER,
-    SNAPTARGET_CONVEX_HULL_CORNER,
-    SNAPTARGET_ELLIPSE_QUADRANT_POINT,
-    SNAPTARGET_CORNER, // of image or of rectangle
-    SNAPTARGET_TEXT_BASELINE,
-    SNAPTARGET_CONSTRAINED_ANGLE,
-    SNAPTARGET_CONSTRAINT
-};
-
 enum SnapSourceType {
     SNAPSOURCE_UNDEFINED = 0,
     //-------------------------------------------------------------------
@@ -72,9 +42,46 @@ enum SnapSourceType {
     SNAPSOURCE_OBJECT_MIDPOINT, // midpoint of rectangles, ellipses, polygon, etc.
     SNAPSOURCE_GUIDE,
     SNAPSOURCE_GUIDE_ORIGIN,
-    SNAPSOURCE_TEXT_BASELINE,
+    SNAPSOURCE_TEXT_ANCHOR,
     SNAPSOURCE_OTHER_HANDLE, // eg. the handle of a gradient or of a connector (ie not being tied to a stroke)
     SNAPSOURCE_GRID_PITCH, // eg. when pasting or alt-dragging in the selector tool; not realy a snap source
+};
+
+enum SnapTargetType {
+    SNAPTARGET_UNDEFINED = 0,
+    //-------------------------------------------------------------------
+    SNAPTARGET_BBOX_CATEGORY = 256, // will be used as a flag and must therefore be a power of two
+    SNAPTARGET_BBOX_CORNER,
+    SNAPTARGET_BBOX_EDGE,
+    SNAPTARGET_BBOX_EDGE_MIDPOINT,
+    SNAPTARGET_BBOX_MIDPOINT,
+    //-------------------------------------------------------------------
+    SNAPTARGET_NODE_CATEGORY = 512, // will be used as a flag and must therefore be a power of two
+    SNAPTARGET_NODE_SMOOTH,
+    SNAPTARGET_NODE_CUSP,
+    SNAPTARGET_LINE_MIDPOINT,
+    SNAPTARGET_PATH,
+    SNAPTARGET_PATH_INTERSECTION,
+    SNAPTARGET_ELLIPSE_QUADRANT_POINT,
+    SNAPTARGET_CORNER, // of image or of rectangle
+    //-------------------------------------------------------------------
+    SNAPTARGET_OTHERS_CATEGORY = 1024, // will be used as a flag and must therefore be a power of two
+    SNAPTARGET_GRID,
+    SNAPTARGET_GRID_INTERSECTION,
+    SNAPTARGET_GUIDE,
+    SNAPTARGET_GUIDE_INTERSECTION,
+    SNAPTARGET_GUIDE_ORIGIN,
+    SNAPTARGET_GRID_GUIDE_INTERSECTION,
+    SNAPTARGET_OBJECT_MIDPOINT,
+    SNAPTARGET_ROTATION_CENTER,
+    SNAPTARGET_HANDLE,
+    SNAPTARGET_PAGE_BORDER,
+    SNAPTARGET_PAGE_CORNER,
+    SNAPTARGET_CONVEX_HULL_CORNER,
+    SNAPTARGET_TEXT_ANCHOR,
+    SNAPTARGET_TEXT_BASELINE,
+    SNAPTARGET_CONSTRAINED_ANGLE,
+    SNAPTARGET_CONSTRAINT
 };
 
 }

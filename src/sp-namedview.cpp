@@ -257,6 +257,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     object->readAttr( "inkscape:snap-smooth-nodes" );
     object->readAttr( "inkscape:snap-midpoints" );
     object->readAttr( "inkscape:snap-object-midpoints" );
+    object->readAttr( "inkscape:snap-text-baseline" );
     object->readAttr( "inkscape:snap-bbox-edge-midpoints" );
     object->readAttr( "inkscape:snap-bbox-midpoints" );
     object->readAttr( "inkscape:snap-to-guides" );
@@ -491,6 +492,10 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
     case SP_ATTR_INKSCAPE_SNAP_OBJECT_MIDPOINTS:
             nv->snap_manager.snapprefs.setSnapObjectMidpoints(value ? sp_str_to_bool(value) : FALSE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+    case SP_ATTR_INKSCAPE_SNAP_TEXT_BASELINE:
+            nv->snap_manager.snapprefs.setSnapTextBaseline(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE_MIDPOINTS:

@@ -102,6 +102,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INKSCAPE_SNAP_SMOOTH_NODES, "inkscape:snap-smooth-nodes"},
     {SP_ATTR_INKSCAPE_SNAP_LINE_MIDPOINTS, "inkscape:snap-midpoints"},
     {SP_ATTR_INKSCAPE_SNAP_OBJECT_MIDPOINTS, "inkscape:snap-object-midpoints"},
+    {SP_ATTR_INKSCAPE_SNAP_TEXT_BASELINE, "inkscape:snap-text-baseline"},
     {SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE_MIDPOINTS, "inkscape:snap-bbox-edge-midpoints"},
     {SP_ATTR_INKSCAPE_SNAP_BBOX_MIDPOINTS, "inkscape:snap-bbox-midpoints"},
     {SP_ATTR_INKSCAPE_SNAP_INTERS_PATHS, "inkscape:snap-intersection-paths"},

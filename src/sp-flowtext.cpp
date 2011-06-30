@@ -388,15 +388,17 @@ static gchar *sp_flowtext_description(SPItem *item)
     }
 }
 
-static void sp_flowtext_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const */*snapprefs*/)
+static void sp_flowtext_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
 {
-    // Choose a point on the baseline for snapping from or to, with the horizontal position
-    // of this point depending on the text alignment (left vs. right)
-    Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);
-    if (layout != NULL && layout->outputExists()) {
-        boost::optional<Geom::Point> pt = layout->baselineAnchorPoint();
-        if (pt) {
-            p.push_back(Inkscape::SnapCandidatePoint((*pt) * item->i2d_affine(), Inkscape::SNAPSOURCE_TEXT_BASELINE, Inkscape::SNAPTARGET_TEXT_BASELINE));
+    if (snapprefs->getSnapTextBaseline()) {
+        // Choose a point on the baseline for snapping from or to, with the horizontal position
+        // of this point depending on the text alignment (left vs. right)
+        Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);
+        if (layout != NULL && layout->outputExists()) {
+            boost::optional<Geom::Point> pt = layout->baselineAnchorPoint();
+            if (pt) {
+                p.push_back(Inkscape::SnapCandidatePoint((*pt) * item->i2d_affine(), Inkscape::SNAPSOURCE_TEXT_ANCHOR, Inkscape::SNAPTARGET_TEXT_ANCHOR));
+            }
         }
     }
 }

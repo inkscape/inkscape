@@ -13,6 +13,7 @@
 #include "font-instance.h"
 #include "svg/svg-length.h"
 #include <2geom/transforms.h>
+#include <2geom/line.h>
 #include "style.h"
 
 namespace Inkscape {
@@ -249,6 +250,26 @@ boost::optional<Geom::Point> Layout::baselineAnchorPoint() const
             break;
     }
 }
+
+Geom::Path Layout::baseline() const
+{
+    iterator pos = this->begin();
+    Geom::Point left_pt = this->characterAnchorPoint(pos);
+    pos.thisEndOfLine();
+    Geom::Point right_pt = this->characterAnchorPoint(pos);
+
+    if (this->_blockProgression() == LEFT_TO_RIGHT || this->_blockProgression() == RIGHT_TO_LEFT) {
+        left_pt = Geom::Point(left_pt[Geom::Y], left_pt[Geom::X]);
+        right_pt = Geom::Point(right_pt[Geom::Y], right_pt[Geom::X]);
+    }
+
+    Geom::Path baseline;
+    baseline.start(left_pt);
+    baseline.appendNew<Geom::LineSegment>(right_pt);
+
+    return baseline;
+}
+
 
 Geom::Point Layout::chunkAnchorPoint(iterator const &it) const
 {
