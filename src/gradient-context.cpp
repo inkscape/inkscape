@@ -557,10 +557,12 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (!(event->button.state & GDK_CONTROL_MASK))
                     event_context->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, TRUE);
 
-                SnapManager &m = desktop->namedview->snap_manager;
-                m.setup(desktop);
-                m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
-                m.unSetup();
+                if (!selection->isEmpty()) {
+                    SnapManager &m = desktop->namedview->snap_manager;
+                    m.setup(desktop);
+                    m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
+                    m.unSetup();
+                }
                 rc->origin = from_2geom(button_dt);
             }
 
@@ -595,7 +597,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
             ret = TRUE;
         } else {
-            if (!drag->mouseOver()) {
+            if (!drag->mouseOver() && !selection->isEmpty()) {
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
 
