@@ -1556,10 +1556,10 @@ static GtkWidget * clonetiler_spinbox(const char *tip, const char *attr, double 
     return hb;
 }
 
-static void clonetiler_symgroup_changed(GtkMenuItem */*item*/, gpointer data)
+static void clonetiler_symgroup_changed(GtkComboBox *cb, gpointer /*data*/)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    gint group_new = GPOINTER_TO_INT (data);
+    gint group_new = gtk_combo_box_get_active (cb);
     prefs->setInt(prefs_path + "symmetrygroup", group_new);
 }
 
@@ -1811,21 +1811,14 @@ void clonetiler_dialog(void)
 // Symmetry
         {
             GtkWidget *vb = clonetiler_new_tab (nb, _("_Symmetry"));
-
-            GtkWidget *om = gtk_option_menu_new ();
-            /* TRANSLATORS: For the following 17 symmetry groups, see
+            
+	    /* TRANSLATORS: For the following 17 symmetry groups, see
              * http://www.bib.ulb.ac.be/coursmath/doc/17.htm (visual examples);
              * http://www.clarku.edu/~djoyce/wallpaper/seventeen.html (English vocabulary); or
              * http://membres.lycos.fr/villemingerard/Geometri/Sym1D.htm (French vocabulary).
              */
-            gtk_widget_set_tooltip_text (om, _("Select one of the 17 symmetry groups for the tiling"));
-            gtk_box_pack_start (GTK_BOX (vb), om, FALSE, FALSE, SB_MARGIN);
-
-            GtkWidget *m = gtk_menu_new ();
-            int current = prefs->getInt(prefs_path + "symmetrygroup", 0);
-
             struct SymGroups {
-                int group;
+                gint group;
                 gchar const *label;
             } const sym_groups[] = {
                 // TRANSLATORS: "translation" means "shift" / "displacement" here.
@@ -1850,25 +1843,40 @@ void clonetiler_dialog(void)
                 {TILE_P6M, _("<b>P6M</b>: reflection + 60&#176; rotation")},
             };
 
-            for (unsigned j = 0; j < G_N_ELEMENTS(sym_groups); ++j) {
+            gint current = prefs->getInt(prefs_path + "symmetrygroup", 0);
+
+            // Create a list structure containing all the data to be displayed in
+	    // the symmetry group combo box.
+	    GtkListStore *store = gtk_list_store_new (1, G_TYPE_STRING);
+	    GtkTreeIter iter;
+            
+	    for (unsigned j = 0; j < G_N_ELEMENTS(sym_groups); ++j) {
                 SymGroups const &sg = sym_groups[j];
 
-                GtkWidget *l = gtk_label_new ("");
-                gtk_label_set_markup (GTK_LABEL(l), sg.label);
-                gtk_misc_set_alignment (GTK_MISC(l), 0, 0.5);
-
-                GtkWidget *item = gtk_menu_item_new ();
-                gtk_container_add (GTK_CONTAINER (item), l);
-
-                g_signal_connect ( G_OBJECT (item), "activate",
-                                     G_CALLBACK (clonetiler_symgroup_changed),
-                                     GINT_TO_POINTER (sg.group) );
-
-                gtk_menu_shell_append(GTK_MENU_SHELL (m), item);
+		// Add the description of the symgroup to a new row
+		gtk_list_store_append (store, &iter);
+		gtk_list_store_set (store, &iter, 
+				    0, sg.label, 
+				    -1);
             }
 
-            gtk_option_menu_set_menu (GTK_OPTION_MENU (om), m);
-            gtk_option_menu_set_history ( GTK_OPTION_MENU (om), current);
+	    // Add a new combo box widget with the list of symmetry groups to the vbox
+	    GtkWidget *combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL (store));
+            gtk_widget_set_tooltip_text (combo, _("Select one of the 17 symmetry groups for the tiling"));
+            gtk_box_pack_start (GTK_BOX (vb), combo, FALSE, FALSE, SB_MARGIN);
+
+            // Specify the rendering of data from the list in a combo box cell
+            GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
+	    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), renderer, FALSE);
+	    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo), renderer,
+			                    "markup", 0,
+					    NULL);
+
+	    gtk_combo_box_set_active (GTK_COMBO_BOX (combo), current);
+
+	    g_signal_connect (G_OBJECT (combo), "changed",
+			      G_CALLBACK (clonetiler_symgroup_changed),
+			      NULL);
         }
 
         table_row_labels = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
