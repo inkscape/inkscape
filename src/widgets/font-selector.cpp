@@ -26,13 +26,6 @@
 #include <2geom/transforms.h>
 
 #include <gtk/gtk.h>
-#include <gtk/gtkframe.h>
-#include <gtk/gtkscrolledwindow.h>
-#include <gtk/gtkclist.h>
-#include <gtk/gtkvbox.h>
-#include <gtk/gtkcombo.h>
-#include <gtk/gtkentry.h>
-#include <gtk/gtkdrawingarea.h>
 
 #include <glibmm/i18n.h>
 
