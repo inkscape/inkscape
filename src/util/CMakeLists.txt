@@ -6,6 +6,9 @@ set(util_SRC
 	share.cpp
 	units.cpp
 
+
+	# -------
+	# Headers
 	accumulators.h
 	compose.hpp
 	copy.h

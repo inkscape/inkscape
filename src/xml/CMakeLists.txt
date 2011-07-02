@@ -17,6 +17,9 @@ set(xml_SRC
 	helper-observer.cpp
 	rebase-hrefs.cpp
 
+
+	# -------
+	# Headers
 	attribute-record.h
 	comment-node.h
 	composite-node-observer.h

@@ -46,6 +46,9 @@ set(2geom_SRC
 	transforms.cpp
 	utils.cpp
 
+
+	# -------
+	# Headers
 	affine.h
 	angle.h
 	basic-intersection.h

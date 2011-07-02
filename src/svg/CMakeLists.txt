@@ -14,6 +14,9 @@ set(svg_SRC
 	svg-path.cpp
 	# test-stubs.cpp
 
+
+	# -------
+	# Headers
 	css-ostringstream-test.h
 	css-ostringstream.h
 	path-string.h

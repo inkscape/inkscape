@@ -74,7 +74,10 @@ set(sp_SRC
 	sp-use.cpp
 	spiral-context.cpp
 	splivarot.cpp
-	
+
+
+	# -------
+	# Headers
 	sp-anchor.h
 	sp-animation.h
 	sp-clippath.h

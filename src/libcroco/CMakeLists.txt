@@ -28,6 +28,9 @@ set(libcroco_SRC
 	cr-token.c
 	cr-utils.c
 
+
+	# -------
+	# Headers
 	cr-additional-sel.h
 	cr-attr-sel.h
 	cr-cascade.h

@@ -21,6 +21,9 @@ set(livarot_SRC
 	sweep-tree.cpp
 	sweep-tree-list.cpp
 
+
+	# -------
+	# Headers
 	AVL.h
 	AlphaLigne.h
 	BitLigne.h

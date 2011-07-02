@@ -14,6 +14,9 @@ set(nrtype_SRC
 	nr-type-primitives.cpp
 	TextWrapper.cpp
 
+
+	# -------
+	# Headers
 	FontFactory.h
 	Layout-TNG-Scanline-Maker.h
 	Layout-TNG.h

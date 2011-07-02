@@ -118,6 +118,7 @@ set(extension_SRC
 	internal/filter/drop-shadow.h
 	internal/filter/experimental.h
 	internal/filter/filter.h
+	internal/filter/image.h
 	internal/filter/morphology.h
 	internal/filter/shadows.h
 	internal/filter/snow.h

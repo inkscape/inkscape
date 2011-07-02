@@ -34,6 +34,9 @@ set(widgets_SRC
 	swatch-selector.cpp
 	toolbox.cpp
 
+
+	# -------
+	# Headers
 	button.h
 	dash-selector.h
 	desktop-widget.h
