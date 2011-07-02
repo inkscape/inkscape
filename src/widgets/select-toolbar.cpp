@@ -242,7 +242,14 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         gdouble strokewidth = stroke_average_width (selection->itemList());
         int transform_stroke = prefs->getBool("/options/transform/stroke", true) ? 1 : 0;
 
-        Geom::Affine scaler = get_scale_transform_with_stroke (*bbox, strokewidth, transform_stroke, x0, y0, x1, y1);
+        Geom::Affine scaler;
+        if (bbox_type == SPItem::APPROXIMATE_BBOX) {
+            // get_scale_transform_with_stroke() is intended for VISUAL (or APPROXIMATE) bounding boxes, not geometrical ones!
+            scaler = get_scale_transform_with_stroke (*bbox, strokewidth, transform_stroke, x0, y0, x1, y1);
+        } else {
+            // we'll trick it into using a geometrical bounding box though, by setting the stroke width to zero
+            scaler = get_scale_transform_with_stroke (*bbox, 0, false, x0, y0, x1, y1);
+        }
 
         sp_selection_apply_affine(selection, scaler);
         DocumentUndo::maybeDone(document, actionkey, SP_VERB_CONTEXT_SELECT,
