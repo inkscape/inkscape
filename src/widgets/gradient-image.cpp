@@ -144,7 +144,7 @@ sp_gradient_image_new (SPGradient *gradient)
 {
 	SPGradientImage *image;
 
-	image = (SPGradientImage*)gtk_type_new (SP_TYPE_GRADIENT_IMAGE);
+	image = (SPGradientImage*)g_object_new (SP_TYPE_GRADIENT_IMAGE, NULL);
 
 	sp_gradient_image_set_gradient (image, gradient);
 

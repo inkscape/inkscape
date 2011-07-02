@@ -79,12 +79,7 @@ GType sp_unit_selector_get_type(void)
 static void
 sp_unit_selector_class_init(SPUnitSelectorClass *klass)
 {
-    GObjectClass *object_class;
-    GtkWidgetClass *widget_class;
-
-    object_class = G_OBJECT_CLASS(klass);
-    widget_class = GTK_WIDGET_CLASS(klass);
-
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
     unit_selector_parent_class = (GtkHBoxClass*)gtk_type_class(GTK_TYPE_HBOX);
 
     signals[SET_UNIT] = g_signal_new("set_unit",
@@ -138,7 +133,7 @@ sp_unit_selector_finalize(GObject *object)
 GtkWidget *
 sp_unit_selector_new(guint bases)
 {
-    SPUnitSelector *us = (SPUnitSelector*)gtk_type_new(SP_TYPE_UNIT_SELECTOR);
+    SPUnitSelector *us = (SPUnitSelector*)g_object_new(SP_TYPE_UNIT_SELECTOR, NULL);
 
     sp_unit_selector_set_bases(us, bases);
 

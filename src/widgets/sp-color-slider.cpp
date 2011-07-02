@@ -321,7 +321,7 @@ sp_color_slider_new (GtkAdjustment *adjustment)
 {
 	SPColorSlider *slider;
 
-	slider = (SPColorSlider*)gtk_type_new (SP_TYPE_COLOR_SLIDER);
+	slider = (SPColorSlider*)g_object_new (SP_TYPE_COLOR_SLIDER, NULL);
 
 	sp_color_slider_set_adjustment (slider, adjustment);
 

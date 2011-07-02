@@ -212,7 +212,7 @@ sp_svg_view_widget_new (SPDocument *doc)
 
 	g_return_val_if_fail (doc != NULL, NULL);
 
-	widget = (GtkWidget*)gtk_type_new (SP_TYPE_SVG_VIEW_WIDGET);
+	widget = (GtkWidget*)g_object_new (SP_TYPE_SVG_VIEW_WIDGET, NULL);
 
 	reinterpret_cast<SPSVGView*>(SP_VIEW_WIDGET_VIEW (widget))->setDocument (doc);
 

@@ -431,7 +431,7 @@ sp_color_notebook_new (void)
 {
     SPColorNotebook *colorbook;
 
-    colorbook = (SPColorNotebook*)gtk_type_new (SP_TYPE_COLOR_NOTEBOOK);
+    colorbook = (SPColorNotebook*)g_object_new (SP_TYPE_COLOR_NOTEBOOK, NULL);
 
     return GTK_WIDGET (colorbook);
 }

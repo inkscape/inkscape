@@ -46,7 +46,7 @@ sp_xmlview_content_new (Inkscape::XML::Node * repr)
     SPXMLViewContent *text;
 
     tb = gtk_text_buffer_new (NULL);
-    text = (SPXMLViewContent*)gtk_type_new (SP_TYPE_XMLVIEW_CONTENT);
+    text = (SPXMLViewContent*)g_object_new (SP_TYPE_XMLVIEW_CONTENT, NULL);
     gtk_text_view_set_buffer (GTK_TEXT_VIEW (text), tb);
     gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text), GTK_WRAP_CHAR);
 

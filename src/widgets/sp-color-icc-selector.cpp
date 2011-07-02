@@ -432,7 +432,7 @@ sp_color_icc_selector_new (void)
 {
     SPColorICCSelector *csel;
 
-    csel = (SPColorICCSelector*)gtk_type_new (SP_TYPE_COLOR_ICC_SELECTOR);
+    csel = (SPColorICCSelector*)g_object_new (SP_TYPE_COLOR_ICC_SELECTOR, NULL);
 
     return GTK_WIDGET (csel);
 }

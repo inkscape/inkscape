@@ -67,11 +67,9 @@ static void
 sp_attribute_widget_class_init (SPAttributeWidgetClass *klass)
 {
     GtkObjectClass *object_class;
-    GtkWidgetClass *widget_class;
     GtkEditableClass *editable_class;
 
     object_class = GTK_OBJECT_CLASS (klass);
-    widget_class = GTK_WIDGET_CLASS (klass);
     editable_class = GTK_EDITABLE_CLASS (klass);
 
     parent_class = (GtkEntryClass*)gtk_type_class (GTK_TYPE_ENTRY);
@@ -177,7 +175,7 @@ sp_attribute_widget_new ( SPObject *object, const gchar *attribute )
     g_return_val_if_fail (!object || SP_IS_OBJECT (object), NULL);
     g_return_val_if_fail (!object || attribute, NULL);
 
-    spaw = (SPAttributeWidget*)gtk_type_new (SP_TYPE_ATTRIBUTE_WIDGET);
+    spaw = (SPAttributeWidget*)g_object_new (SP_TYPE_ATTRIBUTE_WIDGET, NULL);
 
     sp_attribute_widget_set_object (spaw, object, attribute);
 
@@ -192,7 +190,7 @@ sp_attribute_widget_new_repr ( Inkscape::XML::Node *repr, const gchar *attribute
 {
     SPAttributeWidget *spaw;
 
-    spaw = (SPAttributeWidget*)gtk_type_new (SP_TYPE_ATTRIBUTE_WIDGET);
+    spaw = (SPAttributeWidget*)g_object_new (SP_TYPE_ATTRIBUTE_WIDGET, NULL);
 
     sp_attribute_widget_set_repr (spaw, repr, attribute);
 
@@ -385,11 +383,7 @@ GType sp_attribute_table_get_type(void)
 static void
 sp_attribute_table_class_init (SPAttributeTableClass *klass)
 {
-    GtkObjectClass *object_class;
-    GtkWidgetClass *widget_class;
-
-    object_class = GTK_OBJECT_CLASS (klass);
-    widget_class = GTK_WIDGET_CLASS (klass);
+    GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
 
     table_parent_class = (GtkVBoxClass*)gtk_type_class (GTK_TYPE_VBOX);
 
@@ -472,7 +466,7 @@ sp_attribute_table_new ( SPObject *object,
     g_return_val_if_fail (!object || (num_attr > 0), NULL);
     g_return_val_if_fail (!num_attr || (labels && attributes), NULL);
 
-    spat = (SPAttributeTable*)gtk_type_new (SP_TYPE_ATTRIBUTE_TABLE);
+    spat = (SPAttributeTable*)g_object_new (SP_TYPE_ATTRIBUTE_TABLE, NULL);
 
     sp_attribute_table_set_object (spat, object, num_attr, labels, attributes);
 
@@ -492,7 +486,7 @@ sp_attribute_table_new_repr ( Inkscape::XML::Node *repr,
 
     g_return_val_if_fail (!num_attr || (labels && attributes), NULL);
 
-    spat = (SPAttributeTable*)gtk_type_new (SP_TYPE_ATTRIBUTE_TABLE);
+    spat = (SPAttributeTable*)g_object_new (SP_TYPE_ATTRIBUTE_TABLE, NULL);
 
     sp_attribute_table_set_repr (spat, repr, num_attr, labels, attributes);
 

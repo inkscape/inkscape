@@ -241,7 +241,7 @@ sp_color_wheel_selector_new (void)
 {
     SPColorWheelSelector *csel;
 
-    csel = (SPColorWheelSelector*)gtk_type_new (SP_TYPE_COLOR_WHEEL_SELECTOR);
+    csel = (SPColorWheelSelector*)g_object_new (SP_TYPE_COLOR_WHEEL_SELECTOR, NULL);
 
     return GTK_WIDGET (csel);
 }

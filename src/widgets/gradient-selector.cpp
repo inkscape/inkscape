@@ -212,7 +212,7 @@ sp_gradient_selector_new (void)
 {
     SPGradientSelector *sel;
 
-    sel = (SPGradientSelector*)gtk_type_new (SP_TYPE_GRADIENT_SELECTOR);
+    sel = (SPGradientSelector*)g_object_new (SP_TYPE_GRADIENT_SELECTOR, NULL);
 
     return (GtkWidget *) sel;
 }

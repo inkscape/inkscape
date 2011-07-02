@@ -165,7 +165,7 @@ GtkWidget *sp_gradient_vector_selector_new(SPDocument *doc, SPGradient *gr)
     g_return_val_if_fail(!gr || SP_IS_GRADIENT(gr), NULL);
     g_return_val_if_fail(!gr || (gr->document == doc), NULL);
 
-    gvs = static_cast<GtkWidget*>(gtk_type_new(SP_TYPE_GRADIENT_VECTOR_SELECTOR));
+    gvs = static_cast<GtkWidget*>(g_object_new(SP_TYPE_GRADIENT_VECTOR_SELECTOR, NULL));
 
     if (doc) {
         sp_gradient_vector_selector_set_gradient(SP_GRADIENT_VECTOR_SELECTOR(gvs), doc, gr);

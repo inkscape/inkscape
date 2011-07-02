@@ -206,7 +206,7 @@ sp_color_scales_new (void)
 {
 	SPColorScales *csel;
 
-	csel = (SPColorScales*)gtk_type_new (SP_TYPE_COLOR_SCALES);
+	csel = (SPColorScales*)g_object_new (SP_TYPE_COLOR_SCALES, NULL);
 
 	return GTK_WIDGET (csel);
 }

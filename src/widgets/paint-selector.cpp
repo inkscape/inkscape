@@ -156,11 +156,7 @@ GType sp_paint_selector_get_type(void)
 static void
 sp_paint_selector_class_init(SPPaintSelectorClass *klass)
 {
-    GtkObjectClass *object_class;
-    GtkWidgetClass *widget_class;
-
-    object_class = (GtkObjectClass *) klass;
-    widget_class = (GtkWidgetClass *) klass;
+    GtkObjectClass *object_class = (GtkObjectClass *) klass;
 
     parent_class = (GtkVBoxClass*)gtk_type_class(GTK_TYPE_VBOX);
 
@@ -352,7 +348,7 @@ sp_paint_selector_show_fillrule(SPPaintSelector *psel, bool is_fill)
 
 SPPaintSelector *sp_paint_selector_new(FillOrStroke kind)
 {
-    SPPaintSelector *psel = static_cast<SPPaintSelector*>(gtk_type_new(SP_TYPE_PAINT_SELECTOR));
+    SPPaintSelector *psel = static_cast<SPPaintSelector*>(g_object_new(SP_TYPE_PAINT_SELECTOR, NULL));
 
     psel->setMode(SPPaintSelector::MODE_MULTIPLE);
 

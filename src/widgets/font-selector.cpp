@@ -384,7 +384,7 @@ static void sp_font_selector_emit_set (SPFontSelector *fsel)
 
 GtkWidget *sp_font_selector_new()
 {
-    SPFontSelector *fsel = (SPFontSelector*) gtk_type_new(SP_TYPE_FONT_SELECTOR);
+    SPFontSelector *fsel = (SPFontSelector*) g_object_new(SP_TYPE_FONT_SELECTOR, NULL);
 
     return (GtkWidget *) fsel;
 }

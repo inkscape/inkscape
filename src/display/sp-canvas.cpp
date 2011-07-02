@@ -177,7 +177,7 @@ sp_canvas_item_new (SPCanvasGroup *parent, GType type, gchar const *first_arg_na
     g_return_val_if_fail (SP_IS_CANVAS_GROUP (parent), NULL);
     g_return_val_if_fail (gtk_type_is_a (type, sp_canvas_item_get_type ()), NULL);
 
-    SPCanvasItem *item = SP_CANVAS_ITEM (gtk_type_new (type));
+    SPCanvasItem *item = SP_CANVAS_ITEM (g_object_new (type, NULL));
 
     va_start (args, first_arg_name);
     sp_canvas_item_construct (item, parent, first_arg_name, args);
@@ -1025,7 +1025,7 @@ sp_canvas_init (SPCanvas *canvas)
     canvas->pick_event.crossing.y = 0;
 
     /* Create the root item as a special case */
-    canvas->root = SP_CANVAS_ITEM (gtk_type_new (sp_canvas_group_get_type ()));
+    canvas->root = SP_CANVAS_ITEM (g_object_new (sp_canvas_group_get_type (), NULL));
     canvas->root->canvas = canvas;
 
     gtk_object_ref (GTK_OBJECT (canvas->root));
@@ -1125,7 +1125,7 @@ static void track_latency(GdkEvent const *event) {
 GtkWidget *
 sp_canvas_new_aa (void)
 {
-    SPCanvas *canvas = (SPCanvas *)gtk_type_new (sp_canvas_get_type ());
+    SPCanvas *canvas = (SPCanvas *)g_object_new (sp_canvas_get_type (), NULL);
 
     return (GtkWidget *) canvas;
 }
@@ -1464,9 +1464,6 @@ pick_current_item (SPCanvas *canvas, GdkEvent *event)
         && (canvas->current_item != NULL)
         && !canvas->left_grabbed_item) {
         GdkEvent new_event;
-        SPCanvasItem *item;
-
-        item = canvas->current_item;
 
         new_event = canvas->pick_event;
         new_event.type = GDK_LEAVE_NOTIFY;

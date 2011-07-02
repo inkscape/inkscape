@@ -113,7 +113,7 @@ sp_color_gtkselector_new( GType )
 {
 	SPColorGtkselector *csel;
 
-	csel = (SPColorGtkselector*)gtk_type_new (SP_TYPE_COLOR_GTKSELECTOR);
+	csel = (SPColorGtkselector*)g_object_new (SP_TYPE_COLOR_GTKSELECTOR, NULL);
 
 	return GTK_WIDGET (csel);
 }

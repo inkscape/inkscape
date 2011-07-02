@@ -91,7 +91,7 @@ sp_hruler_init (SPHRuler *hruler)
 GtkWidget*
 sp_hruler_new (void)
 {
-  return GTK_WIDGET (gtk_type_new (sp_hruler_get_type ()));
+  return GTK_WIDGET (g_object_new (sp_hruler_get_type (), NULL));
 }
 
 static gint
@@ -179,7 +179,7 @@ sp_vruler_init (SPVRuler *vruler)
 GtkWidget*
 sp_vruler_new (void)
 {
-  return GTK_WIDGET (gtk_type_new (sp_vruler_get_type ()));
+  return GTK_WIDGET (g_object_new (sp_vruler_get_type (), NULL));
 }
 
 
@@ -212,8 +212,7 @@ static void
 sp_ruler_common_draw_ticks (GtkRuler *ruler)
 {
     GtkWidget *widget;
-    GdkGC *gc, *bg_gc;
-    PangoFontDescription *pango_desc;
+    GdkGC *gc;
     PangoContext *pango_context;
     PangoLayout *pango_layout;
     gint i, j, tick_index;
@@ -242,9 +241,7 @@ sp_ruler_common_draw_ticks (GtkRuler *ruler)
     g_object_get(G_OBJECT(ruler), "orientation", &orientation, NULL);
     widget = GTK_WIDGET (ruler);
     gc = widget->style->fg_gc[GTK_STATE_NORMAL];
-    bg_gc = widget->style->bg_gc[GTK_STATE_NORMAL];
 
-    pango_desc = widget->style->font_desc;
     pango_context = gtk_widget_get_pango_context (widget);
     pango_layout = pango_layout_new (pango_context);
     PangoFontDescription *fs = pango_font_description_new ();
