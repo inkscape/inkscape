@@ -562,10 +562,9 @@ static void update_stop_list( GtkWidget *mnu, SPGradient *gradient, SPStop *new_
                 gtk_widget_show(i);
                 g_object_set_data(G_OBJECT(i), "stop", stop);
                 GtkWidget *hb = gtk_hbox_new(FALSE, 4);
-                GtkWidget *cpv = GTK_WIDGET(Gtk::manage(
-                    new Inkscape::UI::Widget::ColorPreview(sp_stop_get_rgba32(stop)))->gobj());
-                gtk_widget_show(cpv);
-                gtk_container_add( GTK_CONTAINER(hb), cpv );
+                Gtk::Widget *cpv = Gtk::manage(new Inkscape::UI::Widget::ColorPreview(sp_stop_get_rgba32(stop)));
+                cpv->show();
+                gtk_container_add( GTK_CONTAINER(hb), cpv->gobj() );
                 g_object_set_data( G_OBJECT(i), "preview", cpv );
                 Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(sl->data)->getRepr();
                 GtkWidget *l = gtk_label_new(repr->attribute("id"));
