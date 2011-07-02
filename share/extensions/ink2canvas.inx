@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Convert to html5 canvas</_name>
+    <id>org.inkscape.output.html5canvas</id>
+	<dependency type="executable" location="extensions">ink2canvas.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<output>
+        <extension>.html</extension>
+        <mimetype>text/html</mimetype>
+        <_filetypename>HTML 5 canvas (*.html)</_filetypename>
+        <_filetypetooltip>HTML 5 canvas code</_filetypetooltip>
+    </output>
+    <script>
+        <command reldir="extensions" interpreter="python">ink2canvas.py</command>
+    </script>
+</inkscape-extension>

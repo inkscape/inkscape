@@ -4,6 +4,7 @@ SUBDIRS = \
 	Barcode \
 	Poly3DObjects \
 	test \
+  ink2canvas \
 	xaml2svg
 
 extensiondir = $(datadir)/inkscape/extensions
@@ -73,6 +74,7 @@ extensions = \
 	handles.py \
 	hpgl_output.py \
 	ill2svg.pl \
+  ink2canvas.py \
 	inkex.py \
 	Inkscape.pm \
 	inkwebeffect.py \
@@ -249,6 +251,7 @@ modules = \
 	guillotine.inx \
 	handles.inx \
 	hpgl_output.inx \
+  ink2canvas.inx \
 	inkscape_help_askaquestion.inx \
 	inkscape_help_commandline.inx \
 	inkscape_help_faq.inx\
