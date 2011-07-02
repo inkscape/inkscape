@@ -22,7 +22,7 @@ namespace Widget {
 
 SVGCanvas::SVGCanvas()
 {
-    void *canvas = gtk_type_new (sp_canvas_get_type ());
+    void *canvas = g_object_new (sp_canvas_get_type (), NULL);
     _spcanvas = static_cast<SPCanvas*>(canvas);
     _widget = Glib::wrap (static_cast<GtkWidget*> (canvas));
     _dt = 0;
