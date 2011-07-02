@@ -525,8 +525,8 @@ gaussian_pass_FIR(Geom::Dim2 d, double deviation, cairo_surface_t *src, cairo_su
 {
     int scr_len = _effect_area_scr(deviation);
     // Filter kernel for x direction
-    FIRValue kernel[scr_len+1];
-    _make_kernel(kernel, deviation);
+    std::vector<FIRValue> kernel(scr_len + 1);
+    _make_kernel(&kernel[0], deviation);
 
     int stride = cairo_image_surface_get_stride(src);
     int w = cairo_image_surface_get_width(src);
@@ -539,13 +539,13 @@ gaussian_pass_FIR(Geom::Dim2 d, double deviation, cairo_surface_t *src, cairo_su
         filter2D_FIR<unsigned char,1>(
             cairo_image_surface_get_data(dest), d == Geom::X ? 1 : stride, d == Geom::X ? stride : 1,
             cairo_image_surface_get_data(src),  d == Geom::X ? 1 : stride, d == Geom::X ? stride : 1,
-            w, h, kernel, scr_len, num_threads);
+            w, h, &kernel[0], scr_len, num_threads);
         break;
     case CAIRO_FORMAT_ARGB32: ///< Premultiplied 8 bit RGBA
         filter2D_FIR<unsigned char,4>(
             cairo_image_surface_get_data(dest), d == Geom::X ? 4 : stride, d == Geom::X ? stride : 4,
             cairo_image_surface_get_data(src),  d == Geom::X ? 4 : stride, d == Geom::X ? stride : 4,
-            w, h, kernel, scr_len, num_threads);
+            w, h, &kernel[0], scr_len, num_threads);
         break;
     default:
         assert(false);

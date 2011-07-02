@@ -68,13 +68,13 @@ find_parametric_bezier_roots(Geom::Point const *w, /* The control points  */
         break;
     }
 
-    /* Otherwise, solve recursively after subdividing control polygon  */
-    Geom::Point Left[degree+1],	/* New left and right  */
-        Right[degree+1];	/* control polygons  */
-    Bezier(w, degree, 0.5, Left, Right);
+    // Otherwise, solve recursively after subdividing control polygon
+    std::vector<Geom::Point> Left(degree + 1);    // New left and right
+    std::vector<Geom::Point> Right(degree + 1);   // control polygons
+    Bezier(w, degree, 0.5, &Left[0], &Right[0]);
     total_subs ++;
-    find_parametric_bezier_roots(Left,  degree, solutions, depth+1);
-    find_parametric_bezier_roots(Right, degree, solutions, depth+1);
+    find_parametric_bezier_roots(&Left[0],  degree, solutions, depth + 1);
+    find_parametric_bezier_roots(&Right[0], degree, solutions, depth + 1);
 }
 
 

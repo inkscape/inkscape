@@ -426,6 +426,9 @@ box3d_get_center_screen (SPBox3D *box) {
 static double remember_snap_threshold = 30;
 static guint remember_snap_index = 0;
 
+// constant for sizing the array of points to be considered:
+static const int MAX_POINT_COUNT = 4;
+
 static Proj::Pt3
 box3d_snap (SPBox3D *box, int id, Proj::Pt3 const &pt_proj, Proj::Pt3 const &start_pt) {
     double z_coord = start_pt[Proj::Z];
@@ -455,7 +458,7 @@ box3d_snap (SPBox3D *box, int id, Proj::Pt3 const &pt_proj, Proj::Pt3 const &sta
     Box3D::Line diag2(A, E); // diag2 is only taken into account if id equals -1, i.e., if we are snapping the center
 
     int num_snap_lines = (id != -1) ? 3 : 4;
-    Geom::Point snap_pts[num_snap_lines];
+    Geom::Point snap_pts[MAX_POINT_COUNT];
 
     snap_pts[0] = pl1.closest_to (pt);
     snap_pts[1] = pl2.closest_to (pt);
@@ -467,7 +470,7 @@ box3d_snap (SPBox3D *box, int id, Proj::Pt3 const &pt_proj, Proj::Pt3 const &sta
     gdouble const zoom = inkscape_active_desktop()->current_zoom();
 
     // determine the distances to all potential snapping points
-    double snap_dists[num_snap_lines];
+    double snap_dists[MAX_POINT_COUNT];
     for (int i = 0; i < num_snap_lines; ++i) {
         snap_dists[i] = Geom::L2 (snap_pts[i] - pt) * zoom;
     }

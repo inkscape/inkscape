@@ -73,6 +73,7 @@ void dijkstra(
         }
     }
 }
+
 void dijkstra(
         unsigned s,
         unsigned n,
@@ -80,21 +81,22 @@ void dijkstra(
         vector<Edge>& es,
         double* eweights)
 {
-    assert(s<n);
-    Node vs[n];
-    dijkstra_init(vs,es,eweights);
-    dijkstra(s,n,vs,d);
+    assert(s < n);
+    std::vector<Node> vs(n);
+    dijkstra_init(&vs[0], es, eweights);
+    dijkstra(s, n, &vs[0], d);
 }
+
 void johnsons(
         unsigned n,
         double** D, 
         vector<Edge>& es,
         double* eweights) 
 {
-    Node vs[n];
-    dijkstra_init(vs,es,eweights);
-    for(unsigned k=0;k<n;k++) {
-        dijkstra(k,n,vs,D[k]);
+    std::vector<Node> vs(n);
+    dijkstra_init(&vs[0], es, eweights);
+    for (unsigned k = 0; k < n; k++) {
+        dijkstra(k,n,&vs[0],D[k]);
     }
 }
 }
