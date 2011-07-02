@@ -649,12 +649,12 @@ void sp_knot_update_ctrl(SPKnot *knot)
         return;
     }
 
-    gtk_object_set(GTK_OBJECT(knot->item), "shape", knot->shape, NULL);
-    gtk_object_set(GTK_OBJECT(knot->item), "mode", knot->mode, NULL);
-    gtk_object_set(GTK_OBJECT(knot->item), "size", (gdouble) knot->size, NULL);
-    gtk_object_set(GTK_OBJECT(knot->item), "anchor", knot->anchor, NULL);
+    g_object_set(knot->item, "shape", knot->shape, NULL);
+    g_object_set(knot->item, "mode", knot->mode, NULL);
+    g_object_set(knot->item, "size", (gdouble) knot->size, NULL);
+    g_object_set(knot->item, "anchor", knot->anchor, NULL);
     if (knot->pixbuf) {
-        gtk_object_set(GTK_OBJECT (knot->item), "pixbuf", knot->pixbuf, NULL);
+        g_object_set(knot->item, "pixbuf", knot->pixbuf, NULL);
     }
 
     sp_knot_set_ctrl_state(knot);
@@ -666,29 +666,29 @@ void sp_knot_update_ctrl(SPKnot *knot)
 static void sp_knot_set_ctrl_state(SPKnot *knot)
 {
     if (knot->flags & SP_KNOT_DRAGGING) {
-        gtk_object_set(GTK_OBJECT (knot->item),
+        g_object_set(knot->item,
                        "fill_color",
                        knot->fill[SP_KNOT_STATE_DRAGGING],
                        NULL);
-        gtk_object_set(GTK_OBJECT (knot->item),
+        g_object_set(knot->item,
                        "stroke_color",
                        knot->stroke[SP_KNOT_STATE_DRAGGING],
                        NULL);
     } else if (knot->flags & SP_KNOT_MOUSEOVER) {
-        gtk_object_set(GTK_OBJECT(knot->item),
+        g_object_set(knot->item,
                        "fill_color",
                        knot->fill[SP_KNOT_STATE_MOUSEOVER],
                        NULL);
-        gtk_object_set(GTK_OBJECT(knot->item),
+        g_object_set(knot->item,
                        "stroke_color",
                        knot->stroke[SP_KNOT_STATE_MOUSEOVER],
                        NULL);
     } else {
-        gtk_object_set(GTK_OBJECT(knot->item),
+        g_object_set(knot->item,
                        "fill_color",
                         knot->fill[SP_KNOT_STATE_NORMAL],
                        NULL);
-        gtk_object_set(GTK_OBJECT(knot->item),
+        g_object_set(knot->item,
                        "stroke_color",
                        knot->stroke[SP_KNOT_STATE_NORMAL],
                        NULL);

@@ -72,7 +72,7 @@ SPCanvasItem *sp_canvas_item_new(SPCanvasGroup *parent, GType type, const gchar 
 G_END_DECLS
 
 
-#define sp_canvas_item_set gtk_object_set
+#define sp_canvas_item_set g_object_set
 
 void sp_canvas_item_affine_absolute(SPCanvasItem *item, Geom::Affine const &aff);
 
