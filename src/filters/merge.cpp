@@ -1,5 +1,3 @@
-#define __SP_FEMERGE_CPP__
-
 /** \file
  * SVG <feMerge> implementation.
  *

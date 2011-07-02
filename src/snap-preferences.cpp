@@ -1,5 +1,3 @@
-#define __SNAPPREFERENCES_CPP__
-
 /**
  *  \file snap-preferences.cpp
  *  \brief Storing of snapping preferences

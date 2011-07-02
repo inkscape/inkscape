@@ -1,5 +1,3 @@
-#define __NR_LIGHT_CPP__
-
 /*
  * Light rendering helpers
  *

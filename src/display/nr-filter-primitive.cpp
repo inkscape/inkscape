@@ -1,5 +1,3 @@
-#define __NR_FILTER_PRIMITIVE_CPP__
-
 /*
  * SVG filters rendering
  *

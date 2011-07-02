@@ -1,5 +1,3 @@
-#define __NR_FILTER_GAUSSIAN_CPP__
-
 /*
  * Gaussian blur renderer
  *

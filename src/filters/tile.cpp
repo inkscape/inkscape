@@ -1,5 +1,3 @@
-#define __SP_FETILE_CPP__
-
 /** \file
  * SVG <feTile> implementation.
  *
