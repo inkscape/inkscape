@@ -156,11 +156,12 @@ void graphlayout(GSList const *const items) {
          ++i)
     {
         SPItem *iu=*i;
-        map<string,unsigned>::iterator i=nodelookup.find(iu->getId());
-        if(i==nodelookup.end()) {
+        map<string,unsigned>::iterator i_iter=nodelookup.find(iu->getId());
+        map<string,unsigned>::iterator i_iter_end=nodelookup.end();
+        if(i_iter==i_iter_end) {
             continue;
         }
-        unsigned u=i->second;
+        unsigned u=i_iter->second;
         GSList *nlist=iu->avoidRef->getAttachedConnectors(Avoid::runningFrom);
         list<SPItem *> connectors;
 
