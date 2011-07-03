@@ -936,10 +936,6 @@ static void
 gdl_dock_item_paint (GtkWidget      *widget,
                      GdkEventExpose *event)
 {
-    GdlDockItem  *item;
-
-    item = GDL_DOCK_ITEM (widget);
-
     gtk_paint_box (widget->style,
                    widget->window,
                    gtk_widget_get_state (widget),
@@ -1579,13 +1575,10 @@ static void
 gdl_dock_item_hide_cb (GtkWidget   *widget, 
                        GdlDockItem *item)
 {
-    GdlDockMaster *master;
-
     (void)widget;
 
     g_return_if_fail (item != NULL);
 
-    master = GDL_DOCK_OBJECT_GET_MASTER (item);
     gdl_dock_item_hide_item (item);
 }
 
@@ -1798,7 +1791,7 @@ gdl_dock_item_set_tablabel (GdlDockItem *item,
     }
     
     if (tablabel) {
-        gtk_widget_ref (tablabel);
+        g_object_ref (G_OBJECT (tablabel));
         gtk_object_sink (GTK_OBJECT (tablabel));
         item->_priv->tab_label = tablabel;
         if (GDL_IS_DOCK_TABLABEL (tablabel)) {
