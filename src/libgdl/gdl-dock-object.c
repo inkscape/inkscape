@@ -416,7 +416,7 @@ gdl_dock_object_real_reduce (GdlDockObject *object)
             g_object_unref (child);
         }
         /* sink the widget, so any automatic floating widget is destroyed */
-        gtk_object_sink (GTK_OBJECT (object));
+        g_object_ref_sink (object);
         /* don't reenter */
         object->reduce_pending = FALSE;
         gdl_dock_object_thaw (object);

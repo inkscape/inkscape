@@ -334,7 +334,7 @@ void sp_color_slider_set_adjustment(SPColorSlider *slider, GtkAdjustment *adjust
 
 		slider->adjustment = adjustment;
 		gtk_object_ref (GTK_OBJECT (adjustment));
-		gtk_object_sink (GTK_OBJECT (adjustment));
+		g_object_ref_sink (adjustment);
 
 		g_signal_connect (G_OBJECT (adjustment), "changed",
 				    G_CALLBACK (sp_color_slider_adjustment_changed), slider);

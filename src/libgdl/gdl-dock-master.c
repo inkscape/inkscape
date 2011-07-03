@@ -807,8 +807,7 @@ gdl_dock_master_add (GdlDockMaster *master,
                        master, object, object->name, found_object);
         }
         else {
-            g_object_ref (object);
-            gtk_object_sink (GTK_OBJECT (object));
+            g_object_ref_sink (object);
             g_hash_table_insert (master->dock_objects, g_strdup (object->name), object);
         }
     }

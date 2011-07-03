@@ -1786,13 +1786,12 @@ gdl_dock_item_set_tablabel (GdlDockItem *item,
                                                   NULL, item);
             g_object_set (item->_priv->tab_label, "item", NULL, NULL);
         }
-        gtk_widget_unref (item->_priv->tab_label);
+        g_object_unref (item->_priv->tab_label);
         item->_priv->tab_label = NULL;
     }
     
     if (tablabel) {
-        g_object_ref (G_OBJECT (tablabel));
-        gtk_object_sink (GTK_OBJECT (tablabel));
+        g_object_ref_sink (G_OBJECT (tablabel));
         item->_priv->tab_label = tablabel;
         if (GDL_IS_DOCK_TABLABEL (tablabel)) {
             g_object_set (tablabel, "item", item, NULL);
@@ -1887,8 +1886,7 @@ gdl_dock_item_hide_item (GdlDockItem *item)
                           "floatx", x,
                           "floaty", y,
                           NULL));
-        g_object_ref (item->_priv->ph);
-        gtk_object_sink (GTK_OBJECT (item->_priv->ph));
+        g_object_ref_sink (item->_priv->ph);
     }
     
     gdl_dock_object_freeze (GDL_DOCK_OBJECT (item));
@@ -1992,8 +1990,7 @@ gdl_dock_item_set_default_position (GdlDockItem   *item,
 
     if (reference && GDL_DOCK_OBJECT_ATTACHED (reference)) {
         if (GDL_IS_DOCK_PLACEHOLDER (reference)) {
-            g_object_ref (reference);
-            gtk_object_sink (GTK_OBJECT (reference));
+            g_object_ref_sink (reference);
             item->_priv->ph = GDL_DOCK_PLACEHOLDER (reference);
         } else {
             item->_priv->ph = GDL_DOCK_PLACEHOLDER (
@@ -2001,8 +1998,7 @@ gdl_dock_item_set_default_position (GdlDockItem   *item,
                               "sticky", TRUE,
                               "host", reference,
                               NULL));
-            g_object_ref (item->_priv->ph);
-            gtk_object_sink (GTK_OBJECT (item->_priv->ph));
+            g_object_ref_sink (item->_priv->ph);
         }
     }
 }

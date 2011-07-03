@@ -884,7 +884,7 @@ static void
 group_add (SPCanvasGroup *group, SPCanvasItem *item)
 {
     gtk_object_ref (GTK_OBJECT (item));
-    gtk_object_sink (GTK_OBJECT (item));
+    g_object_ref_sink (item);
 
     if (!group->items) {
         group->items = g_list_append (group->items, item);
@@ -1029,7 +1029,7 @@ sp_canvas_init (SPCanvas *canvas)
     canvas->root->canvas = canvas;
 
     gtk_object_ref (GTK_OBJECT (canvas->root));
-    gtk_object_sink (GTK_OBJECT (canvas->root));
+    g_object_ref_sink (canvas->root);
 
     canvas->need_repick = TRUE;
 
