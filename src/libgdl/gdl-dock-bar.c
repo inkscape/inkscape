@@ -302,7 +302,7 @@ gdl_dock_bar_add_item (GdlDockBar  *dockbar,
         label = gtk_label_new (name);
         if (dockbar->_priv->orientation == GTK_ORIENTATION_VERTICAL)
             gtk_label_set_angle (GTK_LABEL (label), 90);
-        gtk_box_pack_start_defaults (GTK_BOX (box), label);
+        gtk_box_pack_start (GTK_BOX (box), label, TRUE, TRUE, 0);
     }
     
     /* FIXME: For now AUTO behaves same as BOTH */
@@ -320,7 +320,7 @@ gdl_dock_bar_add_item (GdlDockBar  *dockbar,
             image = gtk_image_new_from_stock (GTK_STOCK_NEW,
                                               GTK_ICON_SIZE_SMALL_TOOLBAR);
         }
-        gtk_box_pack_start_defaults (GTK_BOX (box), image);
+        gtk_box_pack_start (GTK_BOX (box), image, TRUE, TRUE, 0);
     }
     
     gtk_container_add (GTK_CONTAINER (button), box);
