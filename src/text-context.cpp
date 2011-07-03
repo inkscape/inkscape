@@ -297,7 +297,7 @@ sp_text_context_finish(SPEventContext *ec)
     }
 
     if (tc->timeout) {
-        gtk_timeout_remove(tc->timeout);
+        g_source_remove(tc->timeout);
         tc->timeout = 0;
     }
 
