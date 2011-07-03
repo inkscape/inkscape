@@ -727,7 +727,7 @@ sp_canvas_group_class_init (SPCanvasGroupClass *klass)
     GtkObjectClass *object_class = (GtkObjectClass *) klass;
     SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
 
-    group_parent_class = (SPCanvasItemClass*)gtk_type_class (sp_canvas_item_get_type ());
+    group_parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
     object_class->destroy = sp_canvas_group_destroy;
 
@@ -989,7 +989,7 @@ sp_canvas_class_init (SPCanvasClass *klass)
     GtkObjectClass *object_class = (GtkObjectClass *) klass;
     GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
 
-    canvas_parent_class = (GtkWidgetClass *)gtk_type_class (GTK_TYPE_WIDGET);
+    canvas_parent_class = (GtkWidgetClass *)g_type_class_peek_parent (klass);
 
     object_class->destroy = sp_canvas_destroy;
 

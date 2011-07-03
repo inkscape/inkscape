@@ -71,7 +71,7 @@ sp_ctrl_class_init (SPCtrlClass *klass)
     object_class = (GtkObjectClass *) klass;
     item_class = (SPCanvasItemClass *) klass;
 
-    parent_class = (SPCanvasItemClass *)gtk_type_class (sp_canvas_item_get_type ());
+    parent_class = (SPCanvasItemClass *)g_type_class_peek_parent (klass);
 
     gtk_object_add_arg_type ("SPCtrl::shape", GTK_TYPE_INT, GTK_ARG_READWRITE, ARG_SHAPE);
     gtk_object_add_arg_type ("SPCtrl::mode", GTK_TYPE_INT, GTK_ARG_READWRITE, ARG_MODE);

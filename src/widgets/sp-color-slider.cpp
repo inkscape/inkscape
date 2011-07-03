@@ -83,7 +83,7 @@ sp_color_slider_class_init (SPColorSliderClass *klass)
 	object_class = (GtkObjectClass *) klass;
 	widget_class = (GtkWidgetClass *) klass;
 
-	parent_class = (GtkWidgetClass*)gtk_type_class (GTK_TYPE_WIDGET);
+	parent_class = (GtkWidgetClass*)g_type_class_peek_parent (klass);
 
 	slider_signals[GRABBED] = g_signal_new ("grabbed",
 						  G_TYPE_FROM_CLASS(object_class),
@@ -182,11 +182,8 @@ sp_color_slider_destroy (GtkObject *object)
 static void
 sp_color_slider_realize (GtkWidget *widget)
 {
-	SPColorSlider *slider;
 	GdkWindowAttr attributes;
 	gint attributes_mask;
-
-	slider = SP_COLOR_SLIDER (widget);
 
 	gtk_widget_set_realized (widget, TRUE);
 
@@ -216,10 +213,6 @@ sp_color_slider_realize (GtkWidget *widget)
 static void
 sp_color_slider_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
-	SPColorSlider *slider;
-
-	slider = SP_COLOR_SLIDER (widget);
-
 	requisition->width = SLIDER_WIDTH + widget->style->xthickness * 2;
 	requisition->height = SLIDER_HEIGHT + widget->style->ythickness * 2;
 }
@@ -227,10 +220,6 @@ sp_color_slider_size_request (GtkWidget *widget, GtkRequisition *requisition)
 static void
 sp_color_slider_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
-	SPColorSlider *slider;
-
-	slider = SP_COLOR_SLIDER (widget);
-
 	widget->allocation = *allocation;
 
 	if (gtk_widget_get_realized (widget)) {
@@ -247,9 +236,6 @@ sp_color_slider_expose (GtkWidget *widget, GdkEventExpose *event)
 	slider = SP_COLOR_SLIDER (widget);
 
 	if (gtk_widget_is_drawable (widget)) {
-		gint width, height;
-		width = widget->allocation.width;
-		height = widget->allocation.height;
 		sp_color_slider_paint (slider, &event->area);
 	}
 

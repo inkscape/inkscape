@@ -83,7 +83,7 @@ sp_gradient_selector_class_init (SPGradientSelectorClass *klass)
 
     object_class = (GtkObjectClass *) klass;
 
-    parent_class = (GtkVBoxClass*)gtk_type_class (GTK_TYPE_VBOX);
+    parent_class = (GtkVBoxClass*)g_type_class_peek_parent (klass);
 
     signals[GRABBED] =  g_signal_new ("grabbed",
                                         G_TYPE_FROM_CLASS(object_class),

@@ -108,7 +108,7 @@ sp_xmlview_attr_list_class_init (SPXMLViewAttrListClass * klass)
 	object_class = (GtkObjectClass *) klass;
 	object_class->destroy = sp_xmlview_attr_list_destroy;
 
-	parent_class = (GtkCListClass*)gtk_type_class (GTK_TYPE_CLIST);
+	parent_class = (GtkCListClass*)g_type_class_peek_parent (klass);
 
         g_signal_new (  "row-value-changed",
 			G_TYPE_FROM_CLASS(klass),

@@ -72,7 +72,7 @@ sp_attribute_widget_class_init (SPAttributeWidgetClass *klass)
     object_class = GTK_OBJECT_CLASS (klass);
     editable_class = GTK_EDITABLE_CLASS (klass);
 
-    parent_class = (GtkEntryClass*)gtk_type_class (GTK_TYPE_ENTRY);
+    parent_class = (GtkEntryClass*)g_type_class_peek_parent (klass);
 
     object_class->destroy = sp_attribute_widget_destroy;
 
@@ -385,7 +385,7 @@ sp_attribute_table_class_init (SPAttributeTableClass *klass)
 {
     GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
 
-    table_parent_class = (GtkVBoxClass*)gtk_type_class (GTK_TYPE_VBOX);
+    table_parent_class = (GtkVBoxClass*)g_type_class_peek_parent (klass);
 
     object_class->destroy = sp_attribute_table_destroy;
 

@@ -153,7 +153,7 @@ sp_xmlview_tree_class_init (SPXMLViewTreeClass * klass)
 	GtkObjectClass * object_class;
 
 	object_class = (GtkObjectClass *) klass;
-	parent_class = (GtkCTreeClass *) gtk_type_class (GTK_TYPE_CTREE);
+	parent_class = (GtkCTreeClass *) g_type_class_peek_parent (klass);
 
 	GTK_CTREE_CLASS (object_class)->tree_move = tree_move;
 

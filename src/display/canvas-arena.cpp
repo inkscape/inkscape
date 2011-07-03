@@ -77,7 +77,7 @@ sp_canvas_arena_class_init (SPCanvasArenaClass *klass)
     object_class = (GtkObjectClass *) klass;
     item_class = (SPCanvasItemClass *) klass;
 
-    parent_class = (SPCanvasItemClass*)gtk_type_class (SP_TYPE_CANVAS_ITEM);
+    parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
     signals[ARENA_EVENT] = g_signal_new ("arena_event",
                                            G_TYPE_FROM_CLASS(object_class),

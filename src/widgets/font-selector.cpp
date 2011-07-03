@@ -121,7 +121,7 @@ static void sp_font_selector_class_init(SPFontSelectorClass *c)
 {
     GtkObjectClass *object_class = (GtkObjectClass *) c;
 
-    fs_parent_class = (GtkHBoxClass* )gtk_type_class(GTK_TYPE_HBOX);
+    fs_parent_class = (GtkHBoxClass* )g_type_class_peek_parent (c);
 
     fs_signals[FONT_SET] = gtk_signal_new ("font_set",
                                            GTK_RUN_FIRST,

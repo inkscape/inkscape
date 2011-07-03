@@ -63,7 +63,7 @@ sp_canvastext_class_init (SPCanvasTextClass *klass)
     GtkObjectClass *object_class = (GtkObjectClass *) klass;
     SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
 
-    parent_class_ct = (SPCanvasItemClass*)gtk_type_class (SP_TYPE_CANVAS_ITEM);
+    parent_class_ct = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
     object_class->destroy = sp_canvastext_destroy;
 

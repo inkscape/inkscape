@@ -108,7 +108,7 @@ sp_xmlview_content_class_init (SPXMLViewContentClass * klass)
 
     object_class = (GtkObjectClass *) klass;
 
-    parent_class = (GtkTextViewClass*)gtk_type_class (GTK_TYPE_TEXT_VIEW);
+    parent_class = (GtkTextViewClass*)g_type_class_peek_parent (klass);
 
     object_class->destroy = sp_xmlview_content_destroy;
 }

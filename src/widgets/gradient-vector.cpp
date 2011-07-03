@@ -102,7 +102,7 @@ static void sp_gradient_vector_selector_class_init(SPGradientVectorSelectorClass
 
     object_class = GTK_OBJECT_CLASS(klass);
 
-    parent_class = static_cast<GtkVBoxClass*>(gtk_type_class(GTK_TYPE_VBOX));
+    parent_class = static_cast<GtkVBoxClass*>(g_type_class_peek_parent(klass));
 
     signals[VECTOR_SET] = g_signal_new( "vector_set",
 		                        G_TYPE_FROM_CLASS(object_class),

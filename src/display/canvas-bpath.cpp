@@ -67,7 +67,7 @@ sp_canvas_bpath_class_init (SPCanvasBPathClass *klass)
     object_class = GTK_OBJECT_CLASS (klass);
     item_class = (SPCanvasItemClass *) klass;
 
-    parent_class = (SPCanvasItemClass*)gtk_type_class (SP_TYPE_CANVAS_ITEM);
+    parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
     object_class->destroy = sp_canvas_bpath_destroy;
 

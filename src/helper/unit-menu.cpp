@@ -80,7 +80,7 @@ static void
 sp_unit_selector_class_init(SPUnitSelectorClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
-    unit_selector_parent_class = (GtkHBoxClass*)gtk_type_class(GTK_TYPE_HBOX);
+    unit_selector_parent_class = (GtkHBoxClass*)g_type_class_peek_parent(klass);
 
     signals[SET_UNIT] = g_signal_new("set_unit",
                                      G_TYPE_FROM_CLASS(klass),

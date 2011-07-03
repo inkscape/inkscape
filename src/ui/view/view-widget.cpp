@@ -54,7 +54,7 @@ static void sp_view_widget_class_init(SPViewWidgetClass *vwc)
 {
     GtkObjectClass *object_class = GTK_OBJECT_CLASS(vwc);
 
-    widget_parent_class = (GtkEventBoxClass*) gtk_type_class(GTK_TYPE_EVENT_BOX);
+    widget_parent_class = (GtkEventBoxClass*) g_type_class_peek_parent(vwc);
     
     object_class->destroy = sp_view_widget_destroy;
 }

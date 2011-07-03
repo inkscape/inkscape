@@ -158,7 +158,7 @@ sp_paint_selector_class_init(SPPaintSelectorClass *klass)
 {
     GtkObjectClass *object_class = (GtkObjectClass *) klass;
 
-    parent_class = (GtkVBoxClass*)gtk_type_class(GTK_TYPE_VBOX);
+    parent_class = (GtkVBoxClass*)g_type_class_peek_parent(klass);
 
     psel_signals[MODE_CHANGED] = g_signal_new("mode_changed",
                                                 G_TYPE_FROM_CLASS(object_class),

@@ -64,7 +64,7 @@ static void sp_ctrlrect_class_init(SPCtrlRectClass *c)
     GtkObjectClass *object_class = (GtkObjectClass *) c;
     SPCanvasItemClass *item_class = (SPCanvasItemClass *) c;
 
-    parent_class = (SPCanvasItemClass*) gtk_type_class(sp_canvas_item_get_type());
+    parent_class = (SPCanvasItemClass*) g_type_class_peek_parent(c);
 
     object_class->destroy = sp_ctrlrect_destroy;
 

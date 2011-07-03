@@ -75,7 +75,7 @@ sp_widget_class_init (SPWidgetClass *klass)
 	object_class = (GtkObjectClass *) klass;
 	widget_class = (GtkWidgetClass *) klass;
 
-	parent_class = (GtkBinClass*)gtk_type_class (GTK_TYPE_BIN);
+	parent_class = (GtkBinClass*)g_type_class_peek_parent (klass);
 
 	object_class->destroy = sp_widget_destroy;
 

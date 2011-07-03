@@ -89,7 +89,7 @@ grid_canvasitem_class_init (GridCanvasItemClass *klass)
     object_class = (GtkObjectClass *) klass;
     item_class = (SPCanvasItemClass *) klass;
 
-    parent_class = (SPCanvasItemClass*)gtk_type_class (sp_canvas_item_get_type ());
+    parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
     object_class->destroy = grid_canvasitem_destroy;
 

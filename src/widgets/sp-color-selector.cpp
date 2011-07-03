@@ -68,7 +68,7 @@ void sp_color_selector_class_init( SPColorSelectorClass *klass )
     object_class = GTK_OBJECT_CLASS(klass);
     widget_class = GTK_WIDGET_CLASS(klass);
 
-    parent_class = GTK_VBOX_CLASS( gtk_type_class(GTK_TYPE_VBOX) );
+    parent_class = GTK_VBOX_CLASS( g_type_class_peek_parent(klass) );
 
     csel_signals[GRABBED] = g_signal_new( "grabbed",
                                             G_TYPE_FROM_CLASS(object_class),

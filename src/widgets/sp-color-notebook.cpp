@@ -231,7 +231,7 @@ void ColorNotebook::init()
         if (!g_type_is_a (selector_types[i], SP_TYPE_COLOR_NOTEBOOK))
         {
             guint howmany = 1;
-            gpointer klass = gtk_type_class (selector_types[i]);
+            gpointer klass = g_type_class_ref (selector_types[i]);
             if ( klass && SP_IS_COLOR_SELECTOR_CLASS (klass) )
             {
                 SPColorSelectorClass *ck = SP_COLOR_SELECTOR_CLASS (klass);

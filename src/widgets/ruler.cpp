@@ -67,7 +67,7 @@ sp_hruler_class_init (SPHRulerClass *klass)
   GtkWidgetClass *widget_class;
   GtkRulerClass *ruler_class;
 
-  hruler_parent_class = (GtkWidgetClass *) gtk_type_class (GTK_TYPE_RULER);
+  hruler_parent_class = (GtkWidgetClass *) g_type_class_peek_parent (klass);
 
   widget_class = (GtkWidgetClass*) klass;
   ruler_class = (GtkRulerClass*) klass;
@@ -153,7 +153,7 @@ sp_vruler_class_init (SPVRulerClass *klass)
   GtkWidgetClass *widget_class;
   GtkRulerClass *ruler_class;
 
-  vruler_parent_class = (GtkWidgetClass *) gtk_type_class (GTK_TYPE_RULER);
+  vruler_parent_class = (GtkWidgetClass *) g_type_class_peek_parent (klass);
 
   widget_class = (GtkWidgetClass*) klass;
   ruler_class = (GtkRulerClass*) klass;

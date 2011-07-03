@@ -65,7 +65,7 @@ sp_gradient_image_class_init (SPGradientImageClass *klass)
 	object_class = (GtkObjectClass *) klass;
 	widget_class = (GtkWidgetClass *) klass;
 
-	parent_class = (GtkWidgetClass*)gtk_type_class (GTK_TYPE_WIDGET);
+	parent_class = (GtkWidgetClass*)g_type_class_peek_parent (klass);
 
 	object_class->destroy = sp_gradient_image_destroy;
 
