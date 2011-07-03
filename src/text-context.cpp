@@ -215,7 +215,7 @@ sp_text_context_setup(SPEventContext *ec)
     SP_CTRLRECT(tc->frame)->setColor(0x0000ff7f, false, 0);
     sp_canvas_item_hide(tc->frame);
 
-    tc->timeout = gtk_timeout_add(timeout, (GtkFunction) sp_text_context_timeout, ec);
+    tc->timeout = g_timeout_add(timeout, (GSourceFunc) sp_text_context_timeout, ec);
 
     tc->imc = gtk_im_multicontext_new();
     if (tc->imc) {
