@@ -402,7 +402,7 @@ GtkWidget* create_tool_item( GtkAction* action )
 
     }
 
-    gtk_action_connect_proxy( GTK_ACTION( action ), item );
+    gtk_activatable_set_related_action( GTK_ACTIVATABLE (item), GTK_ACTION( action ) );
     gtk_widget_show_all( item );
 
   } else {

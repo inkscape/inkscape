@@ -735,7 +735,7 @@ GtkWidget* create_tool_item( GtkAction* action )
                 g_signal_connect( G_OBJECT(ract), "changed", G_CALLBACK( proxy_action_chagned_cb ), act );
 
                 sub = gtk_action_create_tool_item( GTK_ACTION(ract) );
-                gtk_action_connect_proxy( GTK_ACTION(ract), sub );
+                gtk_activatable_set_related_action( GTK_ACTIVATABLE (sub), GTK_ACTION(ract) );
                 gtk_tool_item_set_tooltip_text( GTK_TOOL_ITEM(sub), tip );
 
                 gtk_box_pack_start( GTK_BOX(holder), sub, FALSE, FALSE, 0 );
