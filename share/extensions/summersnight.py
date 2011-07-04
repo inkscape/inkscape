@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 """
-import inkex, os, simplepath, cubicsuperpath
+import inkex, os, simplepath, cubicsuperpath, simpletransform, voronoi2svg
 from ffgeom import *
 import gettext
 _ = gettext.gettext
@@ -45,10 +45,12 @@ class Project(inkex.Effect):
         if obj.tag == inkex.addNS('path','svg') or obj.tag == inkex.addNS('g','svg'):
             if trafo.tag == inkex.addNS('path','svg'):
                 #distil trafo into four node points
+                mat = simpletransform.composeParents(trafo, [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
                 trafo = cubicsuperpath.parsePath(trafo.get('d'))
                 if len(trafo[0]) < 4:
                     inkex.errormsg(_("This extension requires that the second selected path be four nodes long."))
                     exit()
+                simpletransform.applyTransformToPath(mat, trafo)
                 trafo = [[Point(csp[1][0],csp[1][1]) for csp in subs] for subs in trafo][0][:4]
 
                 #vectors pointing away from the trafo origin
@@ -95,13 +97,17 @@ class Project(inkex.Effect):
                 self.process_group(node)
 
     def process_path(self,path):
+        mat = simpletransform.composeParents(path, [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
         d = path.get('d')
         p = cubicsuperpath.parsePath(d)
+        simpletransform.applyTransformToPath(mat, p)
         for subs in p:
             for csp in subs:
                 csp[0] = self.trafopoint(csp[0])
                 csp[1] = self.trafopoint(csp[1])
                 csp[2] = self.trafopoint(csp[2])
+        mat = voronoi2svg.Voronoi2svg().invertTransform(mat)
+        simpletransform.applyTransformToPath(mat, p)
         path.set('d',cubicsuperpath.formatPath(p))
 
     def trafopoint(self,(x,y)):
