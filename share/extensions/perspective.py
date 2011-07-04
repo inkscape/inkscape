@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 Perspective approach & math by Dmitry Platonov, shadowjack@mail.ru, 2006
 """
-import sys, inkex, os, re, simplepath, cubicsuperpath 
+import sys, inkex, os, re, simplepath, cubicsuperpath, simpletransform, voronoi2svg
 import gettext
 _ = gettext.gettext
 from ffgeom import *
@@ -69,10 +69,12 @@ class Project(inkex.Effect):
             exit()
         if obj.tag == inkex.addNS('path','svg') or obj.tag == inkex.addNS('g','svg'):
             if envelope.tag == inkex.addNS('path','svg'):
+                mat = simpletransform.composeParents(envelope, [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
                 path = cubicsuperpath.parsePath(envelope.get('d'))
                 if len(path) < 1 or len(path[0]) < 4:
                     inkex.errormsg(_("This extension requires that the second selected path be four nodes long."))
                     exit()
+                simpletransform.applyTransformToPath(mat, path)
                 dp = zeros((4,2), dtype=float64)
                 for i in range(4):
                     dp[i][0] = path[0][i][1][0]
@@ -127,7 +129,6 @@ class Project(inkex.Effect):
         if obj.tag == inkex.addNS("g",'svg'):
             self.process_group(obj,projmatrix)
 
-
     def process_group(self,group,m):
         for node in group:
             if node.tag == inkex.addNS('path','svg'):
@@ -135,18 +136,19 @@ class Project(inkex.Effect):
             if node.tag == inkex.addNS('g','svg'):
                 self.process_group(node,m)    
 
-
     def process_path(self,path,m):
+        mat = simpletransform.composeParents(path, [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
         d = path.get('d')
         p = cubicsuperpath.parsePath(d)
+        simpletransform.applyTransformToPath(mat, p)
         for subs in p:
             for csp in subs:
                 csp[0] = self.project_point(csp[0],m)
                 csp[1] = self.project_point(csp[1],m)
                 csp[2] = self.project_point(csp[2],m)
+        mat = voronoi2svg.Voronoi2svg().invertTransform(mat)
+        simpletransform.applyTransformToPath(mat, p)
         path.set('d',cubicsuperpath.formatPath(p))
-
-
 
     def project_point(self,p,m):
         x = p[0]
