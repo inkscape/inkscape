@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
-    <_name>Area</_name>
-    <id>ru.cnc-club.filter.gcodetools_area_area_artefacts_ptg</id>
+    <name>Area</name>
+    <id>ru.cnc-club.filter.gcodetools_area_area_fill_area_artefacts_ptg</id>
 	<dependency type="executable" location="extensions">gcodetools.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<param name='active-tab' type="notebook">
 
-		<page name='area' msgctxt="gcodetools extension" _gui-text='Area'>	
+		<page name='area' _gui-text='Area'>	
 			<param name="max-area-curves" type="int" min="0" max="1000" _gui-text="Maximum area cutting curves:">100</param>
 			<param name="area-inkscape-radius" type="float" min="-1000" max="1000" _gui-text="Area width:">-10</param>
+			<param name="area-tool-overlap" type="float" min="0" max="1" _gui-text="Area tool overlap (0..0.9):">0</param>
 
 			<_param name="help" type="description">
 "Create area offset": creates several Inkscape path offsets to fill original path's area up to "Area radius" value. 
@@ -18,8 +20,18 @@ Only one offset will be created if the "Area width" is equal to "1/2 D".
 			</_param>
 		</page>		
 
-		<page name='area_artefacts' _gui-text='Area artefacts'>	
-			<param name="area-find-artefacts-diameter" type="float" min="0.01" max="1000" _gui-text="Artefact diameter:">5.0</param>
+		<page name='area_fill' _gui-text='Fill area'>
+			<param name="area-fill-angle" type="float" min="-360" max="360" _gui-text="Area fill anlge">0</param>
+			<param name="area-fill-shift" type="float" min="-1" max="1" _gui-text="Area fill shift">0</param>
+			<param name="area-fill-method" type="float" min="-1" max="1" _gui-text="Area fill shift">0</param>
+			<param name="area-fill-method"  _gui-text="Filling method" type="optiongroup">
+				<_option value="zig-zag">Zig zag</_option>
+				<_option value="spiral">Spiral</_option>
+			</param>
+		</page>
+
+		<page name='area_artefacts' _gui-text='Area artifacts'>	
+			<param name="area-find-artefacts-diameter" type="float" min="0.01" max="1000" _gui-text="Artifact diameter:">5.0</param>
 			<param name="area-find-artefacts-action" type="optiongroup" _gui-text="Action:">
 				<_option value="mark with an arrow">mark with an arrow</_option>
 				<_option value="mark with style">mark with style</_option>
@@ -38,9 +50,19 @@ Suspected small objects will be marked out by colored arrows.
 		<page name='path-to-gcode' _gui-text='Path to Gcode'>	
 				<param name="biarc-tolerance" type='float' precision="5" _gui-text='Biarc interpolation tolerance:'>1</param>
 				<param name="biarc-max-split-depth" type="int" _gui-text="Maximum splitting depth:">4</param>
+				<param name="path-to-gcode-order"  _gui-text="Cutting order" type="optiongroup" appearance="minimal">
+					<_option value="subpath by subpath">Subpath by subpath</_option>
+					<_option value="path by path">Path by path</_option>
+					<_option value="pass by pass">Pass by Pass</_option>
+				</param>
+				
+				<param name="path-to-gcode-depth-function" type="string" _gui-text="Depth function:">d</param>			
+				<param name="path-to-gcode-sort-paths" type="boolean" _gui-text="Sort paths to reduse rapid distance">True</param>			
+				
 				<_param name="help" type="description">
 Biarc interpolation tolerance is the maximum distance between path and its approximation.
-The segment will be split into two segments if the distance between path's segment and it's approximation exceeds biarc interpolation tolerance.
+The segment will be split into two segments if the distance between path's segment and its approximation exceeds biarc interpolation tolerance.
+For depth function c=color intensity from 0.0 (white) to 1.0 (black), d is the depth defined by orientation points, s - surface defined by orientation points. 
 </_param>
 		</page>
 
@@ -49,6 +71,9 @@ The segment will be split into two segments if the distance between path's segme
 			<param name="Zoffset" type="float" precision="5" min="-100000" max="100000" _gui-text="Offset along Z axis:">0.0</param>
 			<param name="auto_select_paths" type="boolean" _gui-text="Select all paths if nothing is selected">true</param>
 			<param name="min-arc-radius" type="float" precision="5" min="-1000" max="1000"  _gui-text="Minimum arc radius:">0.05</param>
+			<param name="comment-gcode" type="string" _gui-text="Comment Gcode:"></param>
+			<param name="comment-gcode-from-properties" type="boolean" _gui-text="Get additional comments from object's properties">False</param>
+			
 		</page>
 
 		<page name='preferences' _gui-text='Preferences'>
@@ -59,14 +84,15 @@ The segment will be split into two segments if the distance between path's segme
 
 			<param name="Zsafe" type="float" precision="5" min="-1000" max="1000" _gui-text="Z safe height for G00 move over blank:">5</param>
 			<param name="unit" type="enum" _gui-text="Units (mm or in):">
-				<item value="G21 (All units in mm)">mm</item>
-				<item value="G20 (All units in inches)">in</item>
+				<_item value="G21 (All units in mm)">mm</_item>
+				<_item value="G20 (All units in inches)">in</_item>
 			</param>
 			<param name="postprocessor" type="enum" _gui-text="Post-processor:">
-				<item value=" ">None</item>
-				<item value="parameterize();">Parameterize Gcode</item>
-				<item value="flip(y);parameterize();">Flip y axis and parameterize Gcode</item>
-				<item value="round(4);">Round all values to 4 digits</item>
+				<_item value=" ">None</_item>
+				<_item value="parameterize();">Parameterize Gcode</_item>
+				<_item value="flip(y);parameterize();">Flip y axis and parameterize Gcode</_item>
+				<_item value="round(4);">Round all values to 4 digits</_item>
+				<_item value='regex("G01 Z([0-9\.\-]+).*\(Penetrate\)", lambda match: "G00 Z%f (Fast pre-penetrate)\n%s" %(float(match.group(1))+5, match.group(0)));'>Fast pre-penetrate</_item>
 			</param>
 			<param name="postprocessor-custom" type="string" _gui-text="Additional post-processor:"></param>			
 			
@@ -88,9 +114,9 @@ English support forum:
 and Russian support forum:
 	http://www.cnc-club.ru/gcodetoolsru
 
-Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas.
+Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas, Chris Lusby Taylor.
 
-Gcodetools ver. 1.6.01
+Gcodetools ver. 1.7
 </_param>	
 
 		</page>
@@ -105,5 +131,4 @@ Gcodetools ver. 1.6.01
     <script>
         <command reldir="extensions" interpreter="python">gcodetools.py</command>
     </script>
-    
 </inkscape-extension>

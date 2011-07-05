@@ -1,29 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
-    <name>Path to Gcode</name>
-    <id>ru.cnc-club.filter.gcodetools_ptg</id>
+    <name>Graffiti</name>
+    <id>ru.cnc-club.filter.gcodetools_graffiti_orientation</id>
 	<dependency type="executable" location="extensions">gcodetools.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<param name='active-tab' type="notebook">
 
-		<page name='path-to-gcode' _gui-text='Path to Gcode'>	
-				<param name="biarc-tolerance" type='float' precision="5" _gui-text='Biarc interpolation tolerance:'>1</param>
-				<param name="biarc-max-split-depth" type="int" _gui-text="Maximum splitting depth:">4</param>
-				<param name="path-to-gcode-order"  _gui-text="Cutting order" type="optiongroup" appearance="minimal">
-					<_option value="subpath by subpath">Subpath by subpath</_option>
-					<_option value="path by path">Path by path</_option>
-					<_option value="pass by pass">Pass by Pass</_option>
-				</param>
-				
-				<param name="path-to-gcode-depth-function" type="string" _gui-text="Depth function:">d</param>			
-				<param name="path-to-gcode-sort-paths" type="boolean" _gui-text="Sort paths to reduse rapid distance">True</param>			
-				
-				<_param name="help" type="description">
-Biarc interpolation tolerance is the maximum distance between path and its approximation.
-The segment will be split into two segments if the distance between path's segment and its approximation exceeds biarc interpolation tolerance.
-For depth function c=color intensity from 0.0 (white) to 1.0 (black), d is the depth defined by orientation points, s - surface defined by orientation points. 
-</_param>
+	<page name='graffiti' _gui-text='Graffiti'>	
+		<param name="graffiti-max-seg-length" type="float" precision="5" min="0" max="1000" _gui-text="Maximum segment length:">10</param>
+		<param name="graffiti-min-radius" type="float" precision="5" min="0" max="1000" _gui-text="Minimal connector radius:">10</param>
+		<param name="graffiti-start-pos" type="string" _gui-text="Start position (x;y):">(0.0;0.0)</param>
+		<param name="graffiti-create-preview" type="boolean" _gui-text="Create preview">true</param>
+		<param name="graffiti-create-linearization-preview" type="boolean" _gui-text="Create linearization preview">true</param>
+		<param name="graffiti-preview-size" type="int" min="100" max="10000" _gui-text="Preview's size (px):">800</param>
+		<param name="graffiti-preview-emmit" type="int" min="100" max="10000" _gui-text="Preview's paint emmit (pts/s):">1000</param>
+	</page>
+
+		<page name='orientation' _gui-text='Orientation'>	
+
+			<param name="orientation-points-count" type="optiongroup" _gui-text="Orientation type:">
+<_option value="2">2-points mode
+(move and rotate,
+maintained aspect ratio X/Y)</_option>
+<_option value="3">3-points mode
+(move, rotate and mirror, 
+different X/Y scale)</_option>
+<_option value="graffiti">graffiti points</_option>
+<_option value="in-out reference point">in-out reference point</_option>
+
+			</param>
+			<param name="Zsurface" type="float" precision="5" min="-1000" max="1000" _gui-text="Z surface:">0</param>
+			<param name="Zdepth" type="float" precision="5" min="-1000" max="1000" _gui-text="Z depth:">-1</param>
+			<param name="unit" type="enum" _gui-text="Units (mm or in):">
+				<_item value="G21 (All units in mm)">mm</_item>
+				<_item value="G20 (All units in inches)">in</_item>
+			</param>
+
+			<_param name="help" type="description">
+Orientation points are used to calculate transformation (offset,scale,mirror,rotation in XY plane) of the path.
+3-points mode only: do not put all three into one line (use 2-points mode instead).
+
+You can modify Z surface, Z depth values later using text tool (3rd coordinates).
+
+If there are no orientation points inside current layer they are taken from the upper layer.
+
+Do not ungroup orientation points! You can select them using double click to enter the group or by Ctrl+Click.
+
+Now press apply to create control points (independent set for each layer).
+			</_param>
 		</page>
 
 		<page name='options' _gui-text='Options'>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
-    <_name>Check for updates</_name>
+    <name>Check for updates</name>
     <id>ru.cnc-club.filter.gcodetools_update_no_options_no_preferences</id>
 	<dependency type="executable" location="extensions">gcodetools.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
@@ -22,9 +23,9 @@ English support forum:
 and Russian support forum:
 	http://www.cnc-club.ru/gcodetoolsru
 
-Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas.
+Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas, Chris Lusby Taylor.
 
-Gcodetools ver. 1.6.01
+Gcodetools ver. 1.7
 </_param>	
 
 		</page>
@@ -39,5 +40,4 @@ Gcodetools ver. 1.6.01
     <script>
         <command reldir="extensions" interpreter="python">gcodetools.py</command>
     </script>
-    
 </inkscape-extension>

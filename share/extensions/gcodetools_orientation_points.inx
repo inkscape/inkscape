@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
-    <_name>Orientation points</_name>
+    <name>Orientation points</name>
     <id>ru.cnc-club.filter.gcodetools_orientation_no_options_no_preferences</id>
 	<dependency type="executable" location="extensions">gcodetools.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
@@ -15,12 +16,15 @@ maintained aspect ratio X/Y)</_option>
 <_option value="3">3-points mode
 (move, rotate and mirror, 
 different X/Y scale)</_option>
+<_option value="graffiti">graffiti points</_option>
+<_option value="in-out reference point">in-out reference point</_option>
+
 			</param>
 			<param name="Zsurface" type="float" precision="5" min="-1000" max="1000" _gui-text="Z surface:">0</param>
 			<param name="Zdepth" type="float" precision="5" min="-1000" max="1000" _gui-text="Z depth:">-1</param>
 			<param name="unit" type="enum" _gui-text="Units (mm or in):">
-				<item value="G21 (All units in mm)">mm</item>
-				<item value="G20 (All units in inches)">in</item>
+				<_item value="G21 (All units in mm)">mm</_item>
+				<_item value="G20 (All units in inches)">in</_item>
 			</param>
 
 			<_param name="help" type="description">
@@ -49,9 +53,9 @@ English support forum:
 and Russian support forum:
 	http://www.cnc-club.ru/gcodetoolsru
 
-Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas.
+Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas, Chris Lusby Taylor.
 
-Gcodetools ver. 1.6.01
+Gcodetools ver. 1.7
 </_param>	
 
 		</page>
@@ -66,5 +70,4 @@ Gcodetools ver. 1.6.01
     <script>
         <command reldir="extensions" interpreter="python">gcodetools.py</command>
     </script>
-    
 </inkscape-extension>

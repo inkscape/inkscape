@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
-    <_name>DXF Points</_name>
+    <name>DXF Points</name>
     <id>ru.cnc-club.filter.gcodetools_dxfpoints_no_options</id>
 	<dependency type="executable" location="extensions">gcodetools.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
@@ -29,14 +30,15 @@ Also you can manually select object, open XML editor (Shift+Ctrl+X) and add or r
 
 			<param name="Zsafe" type="float" precision="5" min="-1000" max="1000" _gui-text="Z safe height for G00 move over blank:">5</param>
 			<param name="unit" type="enum" _gui-text="Units (mm or in):">
-				<item value="G21 (All units in mm)">mm</item>
-				<item value="G20 (All units in inches)">in</item>
+				<_item value="G21 (All units in mm)">mm</_item>
+				<_item value="G20 (All units in inches)">in</_item>
 			</param>
 			<param name="postprocessor" type="enum" _gui-text="Post-processor:">
-				<item value=" ">None</item>
-				<item value="parameterize();">Parameterize Gcode</item>
-				<item value="flip(y);parameterize();">Flip y axis and parameterize Gcode</item>
-				<item value="round(4);">Round all values to 4 digits</item>
+				<_item value=" ">None</_item>
+				<_item value="parameterize();">Parameterize Gcode</_item>
+				<_item value="flip(y);parameterize();">Flip y axis and parameterize Gcode</_item>
+				<_item value="round(4);">Round all values to 4 digits</_item>
+				<_item value='regex("G01 Z([0-9\.\-]+).*\(Penetrate\)", lambda match: "G00 Z%f (Fast pre-penetrate)\n%s" %(float(match.group(1))+5, match.group(0)));'>Fast pre-penetrate</_item>
 			</param>
 			<param name="postprocessor-custom" type="string" _gui-text="Additional post-processor:"></param>			
 			
@@ -58,9 +60,9 @@ English support forum:
 and Russian support forum:
 	http://www.cnc-club.ru/gcodetoolsru
 
-Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas.
+Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas, Chris Lusby Taylor.
 
-Gcodetools ver. 1.6.01
+Gcodetools ver. 1.7
 </_param>	
 
 		</page>
@@ -75,5 +77,4 @@ Gcodetools ver. 1.6.01
     <script>
         <command reldir="extensions" interpreter="python">gcodetools.py</command>
     </script>
-    
 </inkscape-extension>
