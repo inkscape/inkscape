@@ -118,8 +118,6 @@ include extension/script/Makefile_insert
 include filters/Makefile_insert
 include helper/Makefile_insert
 include io/Makefile_insert
-#include pedro/Makefile_insert
-#include jabber_whiteboard/Makefile_insert
 include libcroco/Makefile_insert
 include libgdl/Makefile_insert
 include libnr/Makefile_insert

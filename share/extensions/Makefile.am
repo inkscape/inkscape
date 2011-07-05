@@ -233,14 +233,16 @@ modules = \
 	fractalize.inx \
 	funcplot.inx \
 	gears.inx\
-    gcodetools_all_in_one.inx\
+    gcodetools_about.inx\
     gcodetools_area.inx\
     gcodetools_check_for_updates.inx\
     gcodetools_dxf_points.inx\
     gcodetools_engraving.inx\
+    gcodetools_graffiti.inx\
     gcodetools_lathe.inx\
     gcodetools_orientation_points.inx\
     gcodetools_path_to_gcode.inx\
+    gcodetools_prepare_path_for_plasma.inx\
     gcodetools_tools_library.inx\
 	generate_voronoi.inx \
 	gimp_xcf.inx \
