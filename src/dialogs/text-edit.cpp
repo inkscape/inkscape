@@ -450,11 +450,11 @@ sp_text_edit_dialog (void)
 
         {
             GtkWidget *b = gtk_button_new_from_stock (GTK_STOCK_APPLY);
-            gtk_widget_set_can_default (b, TRUE);
-            gtk_widget_grab_default (b);
             g_signal_connect ( G_OBJECT (b), "clicked",
                                G_CALLBACK (sp_text_edit_dialog_apply), dlg );
             gtk_box_pack_end ( GTK_BOX (hb), b, FALSE, FALSE, 0 );
+            gtk_widget_set_can_default (b, TRUE);
+            gtk_widget_grab_default (b);
             g_object_set_data (G_OBJECT (dlg), "apply", b);
         }
 
