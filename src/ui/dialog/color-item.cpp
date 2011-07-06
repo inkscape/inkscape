@@ -517,11 +517,13 @@ void ColorItem::_regenPreview(EekPreview * preview)
                                (def.getG() << 8) | def.getG(),
                                (def.getB() << 8) | def.getB() );
     } else {
-        double w;
-        cairo_pattern_get_linear_points(_pattern, NULL, NULL, &w, NULL);
-        int width = ceil(w);
+        // These correspond to PREVIEW_PIXBUF_WIDTH and VBLOCK from swatches.cpp
+        // TODO: the pattern to draw should be in the widget that draws the preview,
+        //       so the preview can be scalable
+        int w = 128;
+        int h = 16;
 
-        cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, 1);
+        cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, w, h);
         cairo_t *ct = cairo_create(s);
         cairo_set_source(ct, _pattern);
         cairo_paint(ct);
@@ -530,7 +532,7 @@ void ColorItem::_regenPreview(EekPreview * preview)
 
         GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( cairo_image_surface_get_data(s),
                                                       GDK_COLORSPACE_RGB, TRUE, 8,
-                                                      width, 1, cairo_image_surface_get_stride(s),
+                                                      w, h, cairo_image_surface_get_stride(s),
                                                       (GdkPixbufDestroyNotify) cairo_surface_destroy, NULL);
         convert_pixbuf_argb32_to_normal(pixbuf);
         eek_preview_set_pixbuf( preview, pixbuf );
