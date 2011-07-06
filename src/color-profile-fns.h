@@ -38,7 +38,6 @@ std::vector<Glib::ustring> colorprofile_get_display_names();
 std::vector<Glib::ustring> colorprofile_get_softproof_names();
 
 Glib::ustring get_path_for_profile(Glib::ustring const& name);
-void colorprofile_load_profiles(bool force_refresh = false);
 
 #endif
 

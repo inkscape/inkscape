@@ -8,11 +8,9 @@
 #include "sp-color-slider.h"
 #include "sp-color-selector.h"
 
-#if ENABLE_LCMS
-#include "color-profile.h"
-#endif // ENABLE_LCMS
-
-
+namespace Inkscape {
+struct ColorProfile;
+}
 
 struct SPColorICCSelector;
 struct SPColorICCSelectorClass;

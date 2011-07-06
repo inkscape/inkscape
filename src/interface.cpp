@@ -56,10 +56,6 @@
 #include "message-context.h"
 #include "ui/uxmanager.h"
 
-// Added for color drag-n-drop
-#if ENABLE_LCMS
-#include "lcms.h"
-#endif // ENABLE_LCMS
 #include "display/sp-canvas.h"
 #include "color.h"
 #include "svg/svg-color.h"

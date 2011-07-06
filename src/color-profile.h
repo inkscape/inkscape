@@ -23,6 +23,8 @@ enum {
     RENDERING_INTENT_ABSOLUTE_COLORIMETRIC = 5
 };
 
+class ColorProfileImpl;
+
 /// The SPColorProfile vtable.
 struct ColorProfileClass {
     SPObjectClass parent_class;
@@ -30,17 +32,17 @@ struct ColorProfileClass {
 
 /** Color Profile. */
 struct ColorProfile : public SPObject {
+    friend cmsHPROFILE colorprofile_get_handle( SPDocument*, guint*, gchar const* );
+
     static GType getType();
     static void classInit( ColorProfileClass *klass );
 
-    static std::list<Glib::ustring> getBaseProfileDirs();
-    static std::list<Glib::ustring> getProfileFiles();
+    static std::vector<Glib::ustring> getBaseProfileDirs();
+    static std::vector<Glib::ustring> getProfileFiles();
+    static std::vector<std::pair<Glib::ustring, Glib::ustring> > getProfileFilesWithNames();
 #if ENABLE_LCMS
-    static cmsHPROFILE getSRGBProfile();
-    static cmsHPROFILE getNULLProfile();
-
-    icColorSpaceSignature getColorSpace() const {return _profileSpace;}
-    icProfileClassSignature getProfileClass() const {return _profileClass;}
+    icColorSpaceSignature getColorSpace() const;
+    icProfileClassSignature getProfileClass() const;
     cmsHTRANSFORM getTransfToSRGB8();
     cmsHTRANSFORM getTransfFromSRGB8();
     cmsHTRANSFORM getTransfGamutCheck();
@@ -53,9 +55,6 @@ struct ColorProfile : public SPObject {
     gchar* name;
     gchar* intentStr;
     guint rendering_intent;
-#if ENABLE_LCMS
-    cmsHPROFILE profHandle;
-#endif // ENABLE_LCMS
 
 private:
     static void init( ColorProfile *cprof );
@@ -64,19 +63,8 @@ private:
     static void build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr );
     static void set( SPObject *object, unsigned key, gchar const *value );
     static Inkscape::XML::Node *write( SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags );
-#if ENABLE_LCMS
-    static DWORD _getInputFormat( icColorSpaceSignature space );
-    void _clearProfile();
 
-    static cmsHPROFILE _sRGBProf;
-    static cmsHPROFILE _NullProf;
-
-    icProfileClassSignature _profileClass;
-    icColorSpaceSignature _profileSpace;
-    cmsHTRANSFORM _transf;
-    cmsHTRANSFORM _revTransf;
-    cmsHTRANSFORM _gamutTransf;
-#endif // ENABLE_LCMS
+    ColorProfileImpl *impl;
 };
 
 } // namespace Inkscape

@@ -37,6 +37,7 @@
 #include "../inkscape.h"
 #include "../document.h"
 #include "../profile-manager.h"
+#include "color-profile.h"
 
 struct SPColorNotebookTracker {
     const gchar* name;
@@ -529,7 +530,7 @@ void ColorNotebook::_updateRgbaEntry( const SPColor& color, gfloat alpha )
     if (color.icc){
         Inkscape::ColorProfile* target_profile = SP_ACTIVE_DOCUMENT->profileManager->find(color.icc->colorProfile.c_str());
         if ( target_profile )
-            gtk_widget_set_sensitive (_box_outofgamut, target_profile->GamutCheck(color));
+            gtk_widget_set_sensitive(_box_outofgamut, target_profile->GamutCheck(color));
     }
 
     /* update too-much-ink icon */

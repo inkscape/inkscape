@@ -43,8 +43,6 @@
 #include "xml/repr.h"
 
 #if ENABLE_LCMS
-#include <lcms.h>
-//#include "color-profile-fns.h"
 #include "color-profile.h"
 #endif // ENABLE_LCMS
 
@@ -309,53 +307,29 @@ DocumentProperties::build_snap()
  }
 
 #if ENABLE_LCMS
-static void
-lcms_profile_get_name (cmsHPROFILE   profile, const gchar **name)
-{
-  if (profile)
-    {
-      *name = cmsTakeProductDesc (profile);
-
-      if (! *name)
-        *name = cmsTakeProductName (profile);
-
-      if (*name && ! g_utf8_validate (*name, -1, NULL))
-        *name = _("(invalid UTF-8 string)");
-    }
-  else
-    {
-      *name = _("None");
-    }
-}
-
-void
-DocumentProperties::populate_available_profiles(){
+void DocumentProperties::populate_available_profiles(){
     Glib::ListHandle<Gtk::Widget*> children = _menu.get_children();
     for ( Glib::ListHandle<Gtk::Widget*>::iterator it2 = children.begin(); it2 != children.end(); ++it2 ) {
         _menu.remove(**it2);
         delete(*it2);
     }
 
-    std::list<Glib::ustring> files = ColorProfile::getProfileFiles();
-    for ( std::list<Glib::ustring>::const_iterator it = files.begin(); it != files.end(); ++it ) {
-        cmsHPROFILE hProfile = cmsOpenProfileFromFile(it->c_str(), "r");
-        if ( hProfile ){
-            const gchar* name = 0;
-            lcms_profile_get_name(hProfile, &name);
-            Gtk::MenuItem* mi = manage(new Gtk::MenuItem());
-            mi->set_data("filepath", g_strdup(it->c_str()));
-            mi->set_data("name", g_strdup(name));
-            Gtk::HBox *hbox = manage(new Gtk::HBox());
-            hbox->show();
-            Gtk::Label* lbl = manage(new Gtk::Label(name));
-            lbl->show();
-            hbox->pack_start(*lbl, true, true, 0);
-            mi->add(*hbox);
-            mi->show_all();
-            _menu.append(*mi);
-//            g_free((void*)name);
-            cmsCloseProfile(hProfile);
-        }
+    std::vector<std::pair<Glib::ustring, Glib::ustring> > pairs = ColorProfile::getProfileFilesWithNames();
+    for ( std::vector<std::pair<Glib::ustring, Glib::ustring> >::const_iterator it = pairs.begin(); it != pairs.end(); ++it ) {
+        Glib::ustring file = it->first;
+        Glib::ustring name = it->second;
+
+        Gtk::MenuItem* mi = manage(new Gtk::MenuItem());
+        mi->set_data("filepath", g_strdup(file.c_str()));
+        mi->set_data("name", g_strdup(name.c_str()));
+        Gtk::HBox *hbox = manage(new Gtk::HBox());
+        hbox->show();
+        Gtk::Label* lbl = manage(new Gtk::Label(name));
+        lbl->show();
+        hbox->pack_start(*lbl, true, true, 0);
+        mi->add(*hbox);
+        mi->show_all();
+        _menu.append(*mi);
     }
 
     _menu.show_all();
