@@ -294,26 +294,26 @@ static unsigned int nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item,
     }
 
     if (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE) {
-
+        cairo_save(ct);
         guint32 rgba = item->arena->outlinecolor;
         ink_cairo_set_source_rgba32(ct, rgba);
         cairo_set_tolerance(ct, 1.25); // low quality, but good enough for outline mode
-
-        NRRect temp(area->x0, area->y0, area->x1, area->y1);
-        Geom::OptRect area_2geom = temp.upgrade_2geom();
+        cairo_new_path(ct);
+        ink_cairo_transform(ct, ggroup->ctm);
 
         for (child = group->children; child != NULL; child = child->next) {
             NRArenaGlyphs *g = NR_ARENA_GLYPHS(child);
 
             Geom::PathVector const * pathv = g->font->PathVector(g->glyph);
-            Geom::Affine transform = g->g_transform * group->ctm;
+            Geom::Affine transform = g->g_transform;
 
-            cairo_new_path(ct);
+            cairo_save(ct);
             ink_cairo_transform(ct, transform);
             feed_pathvector_to_cairo (ct, *pathv);
             cairo_fill(ct);
+            cairo_restore(ct);
         }
-
+        cairo_restore(ct);
         return item->state;
     }
 
