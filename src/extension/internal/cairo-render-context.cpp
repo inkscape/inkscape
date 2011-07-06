@@ -1419,7 +1419,7 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
     return true;
 }
 
-bool CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsigned int rs,
+bool CairoRenderContext::renderImage(GdkPixbuf *pb,
                                      Geom::Affine const *image_transform, SPStyle const * /*style*/)
 {
     g_assert( _is_valid );
@@ -1428,62 +1428,17 @@ bool CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h,
         return true;
     }
 
-    guchar* px_rgba = NULL;
-    guint64 size = 4L * (guint64)w * (guint64)h;
+    int w = gdk_pixbuf_get_width (pb);
+    int h = gdk_pixbuf_get_height (pb);
 
-    if(size < (guint64)G_MAXSIZE) {
-        px_rgba = (guchar*)g_try_malloc(4 * w * h);
-        if (!px_rgba) {
-            g_warning ("Could not allocate %lu bytes for pixel buffer!", (long unsigned) size);
-            return false;
-        }
-    } else {
-        g_warning ("the requested memory exceeds the system limit");
-        return false;
-    }
+    // TODO: reenable merge_opacity if useful
+    float opacity = _state->opacity;
 
-
-    float opacity;
-    if (_state->merge_opacity)
-        opacity = _state->opacity;
-    else
-        opacity = 1.0;
-
-    // make a copy of the original pixbuf with premultiplied alpha
-    // if we pass the original pixbuf it will get messed up
-    /// @todo optimize this code, it costs a lot of time
-    for (unsigned i = 0; i < h; i++) {
-        guchar const *src = px + i * rs;
-        guint32 *dst = (guint32 *)(px_rgba + i * rs);
-    	for (unsigned j = 0; j < w; j++) {
-            guchar r, g, b, alpha_dst;
-
-            // calculate opacity-modified alpha
-            alpha_dst = src[3];
-            if ((opacity != 1.0) && _vector_based_target)
-                alpha_dst = (guchar)ceil((float)alpha_dst * opacity);
-
-            // premul alpha (needed because this will be undone by cairo-pdf)
-            r = src[0]*alpha_dst/255;
-            g = src[1]*alpha_dst/255;
-            b = src[2]*alpha_dst/255;
-
-            *dst = (((alpha_dst) << 24) | (((r)) << 16) | (((g)) << 8) | (b));
-
-            dst++;  // pointer to 4byte variables
-            src += 4;   // pointer to 1byte variables
-    	}
-    }
-
-    cairo_surface_t *image_surface = cairo_image_surface_create_for_data(px_rgba, CAIRO_FORMAT_ARGB32, w, h, w * 4);
+    cairo_surface_t *image_surface = ink_cairo_surface_create_for_argb32_pixbuf(pb);
     if (cairo_surface_status(image_surface)) {
         TRACE(("Image surface creation failed:\n%s\n", cairo_status_to_string(cairo_surface_status(image_surface))));
     	return false;
     }
-
-    // setup automatic freeing of the image data when destroying the surface
-    static cairo_user_data_key_t key;
-    cairo_surface_set_user_data(image_surface, &key, px_rgba, (cairo_destroy_func_t)g_free);
 
     cairo_save(_cr);
 
@@ -1499,16 +1454,10 @@ bool CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h,
         cairo_rectangle(_cr, 0, 0, w, h);
         cairo_clip(_cr);
     }
-
-    if (_vector_based_target)
-        cairo_paint(_cr);
-    else
-        cairo_paint_with_alpha(_cr, opacity);
+    cairo_paint_with_alpha(_cr, opacity);
 
     cairo_restore(_cr);
-
     cairo_surface_destroy(image_surface);
-
     return true;
 }
 

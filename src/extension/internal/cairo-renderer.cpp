@@ -41,6 +41,7 @@
 #include "display/nr-arena-group.h"
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
+#include "display/cairo-utils.h"
 #include "sp-item.h"
 #include "sp-item-group.h"
 #include "style.h"
@@ -345,18 +346,15 @@ static void sp_flowtext_render(SPItem *item, CairoRenderContext *ctx)
 static void sp_image_render(SPItem *item, CairoRenderContext *ctx)
 {
     SPImage *image;
-    guchar *px;
-    int w, h, rs;
+    int w, h;
 
     image = SP_IMAGE (item);
 
     if (!image->pixbuf) return;
     if ((image->width.computed <= 0.0) || (image->height.computed <= 0.0)) return;
 
-    px = gdk_pixbuf_get_pixels (image->pixbuf);
     w = gdk_pixbuf_get_width (image->pixbuf);
     h = gdk_pixbuf_get_height (image->pixbuf);
-    rs = gdk_pixbuf_get_rowstride (image->pixbuf);
 
     double x = image->x.computed;
     double y = image->y.computed;
@@ -376,7 +374,7 @@ static void sp_image_render(SPItem *item, CairoRenderContext *ctx)
     Geom::Scale s(width / (double)w, height / (double)h);
     Geom::Affine t(s * tp);
 
-    ctx->renderImage (px, w, h, rs, &t, item->style);
+    ctx->renderImage (image->pixbuf, &t, item->style);
 }
 
 static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx)
@@ -516,11 +514,9 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
 
     if (pb) {
         TEST(gdk_pixbuf_save( pb, "bitmap.png", "png", NULL, NULL ));
-        unsigned char *px = gdk_pixbuf_get_pixels (pb);
-        unsigned int w = gdk_pixbuf_get_width(pb);
-        unsigned int h = gdk_pixbuf_get_height(pb);
-        unsigned int rs = gdk_pixbuf_get_rowstride(pb);
-        ctx->renderImage(px, w, h, rs, &t, item->style);
+        // TODO this is stupid - we just converted to pixbuf format when generating the bitmap!
+        convert_pixbuf_normal_to_argb32(pb);
+        ctx->renderImage(pb, &t, item->style);
         gdk_pixbuf_unref(pb);
         pb = 0;
     }

@@ -139,7 +139,7 @@ public:
 
     /* Rendering methods */
     bool renderPathVector(Geom::PathVector const & pathv, SPStyle const *style, NRRect const *pbox);
-    bool renderImage(unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
+    bool renderImage(GdkPixbuf *pb,
                      Geom::Affine const *image_transform, SPStyle const *style);
     bool renderGlyphtext(PangoFont *font, Geom::Affine const *font_matrix,
                          std::vector<CairoGlyphInfo> const &glyphtext, SPStyle const *style);
