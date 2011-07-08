@@ -40,6 +40,17 @@ list(APPEND INKSCAPE_INCS_SYS ${POPT_INCLUDE_DIR})
 list(APPEND INKSCAPE_LIBS ${POPT_LIBRARIES})
 add_definitions(${POPT_DEFINITIONS})
 
+if(WITH_DBUS)
+	find_package(DBus REQUIRED)
+	if(DBUS_FOUND)
+		list(APPEND INKSCAPE_INCS_SYS ${DBUS_INCLUDE_DIR})
+		list(APPEND INKSCAPE_INCS_SYS ${DBUS_ARCH_INCLUDE_DIR})
+		list(APPEND INKSCAPE_LIBS ${DBUS_LIBRARIES})
+	else()
+		set(WITH_DBUS OFF)
+	endif()
+endif()
+
 # ----------------------------------------------------------------------------
 # CMake's builtin
 # ----------------------------------------------------------------------------
