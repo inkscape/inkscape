@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# $Id: cmake_consistency_check.py 36708 2011-05-16 06:11:14Z gsrb3d $
+# $Id: cmake_consistency_check.py 38013 2011-07-01 12:33:34Z campbellbarton $
 # ***** BEGIN GPL LICENSE BLOCK *****
 #
 # This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 from cmake_consistency_check_config import IGNORE, UTF8_CHECK, SOURCE_DIR
 
 import os
-from os.path import join, dirname, normpath, abspath, splitext
+from os.path import join, dirname, normpath, splitext
 
 print("Scanning:", SOURCE_DIR)
 
@@ -183,7 +183,6 @@ def is_ignore(f):
 
 # First do stupid check, do these files exist?
 print("\nChecking for missing references:")
-import sys
 is_err = False
 errs = []
 for f in (global_h | global_c):

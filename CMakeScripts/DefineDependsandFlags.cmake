@@ -46,7 +46,7 @@ add_definitions(${POPT_DEFINITIONS})
 
 # Include dependencies:
 # use patched version until GTK2_CAIROMMCONFIG_INCLUDE_DIR is added
-find_package(GTK2_patched COMPONENTS gtk gtkmm REQUIRED)
+find_package(GTK2 COMPONENTS gtk gtkmm REQUIRED)
 list(APPEND INKSCAPE_INCS_SYS
 	${GTK2_GDK_INCLUDE_DIR}
 	${GTK2_GDKMM_INCLUDE_DIR}
