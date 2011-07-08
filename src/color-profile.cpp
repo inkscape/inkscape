@@ -103,8 +103,10 @@ static SPObjectClass *cprof_parent_class;
 
 class ColorProfileImpl {
 public:
+#if ENABLE_LCMS
     static cmsHPROFILE _sRGBProf;
     static cmsHPROFILE _NullProf;
+#endif // ENABLE_LCMS
 
     ColorProfileImpl();
 
@@ -125,8 +127,9 @@ public:
 #endif // ENABLE_LCMS
 };
 
-ColorProfileImpl::ColorProfileImpl() :
+ColorProfileImpl::ColorProfileImpl()
 #if ENABLE_LCMS
+	:
     _profHandle(0),
     _profileClass(icSigInputClass),
     _profileSpace(icSigRgbData),
