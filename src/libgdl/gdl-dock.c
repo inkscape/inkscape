@@ -1139,6 +1139,8 @@ gdl_dock_select_larger_item (GdlDockItem *dock_item_1,
         return ((size_1.width * size_1.height)
                     >= (size_2.width * size_2.height)?
                     dock_item_1 : dock_item_2);
+    } else if (placement == GDL_DOCK_NONE) {
+	return dock_item_1;
     } else {
         g_warning ("Should not reach here: %s:%d", __FUNCTION__, __LINE__);
     }

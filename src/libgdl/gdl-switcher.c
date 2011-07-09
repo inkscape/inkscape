@@ -216,7 +216,7 @@ button_toggled_callback (GtkToggleButton *toggle_button,
 static int
 layout_buttons (GdlSwitcher *switcher)
 {
-    GtkRequisition client_requisition;
+    GtkRequisition client_requisition = {0,};
     GtkAllocation *allocation = & GTK_WIDGET (switcher)->allocation;
     GdlSwitcherStyle switcher_style;
     gboolean icons_only;

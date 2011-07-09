@@ -21,9 +21,7 @@
 #ifndef _GDL_COMBO_BUTTON_H_
 #define _GDL_COMBO_BUTTON_H_
 
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkmenu.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
