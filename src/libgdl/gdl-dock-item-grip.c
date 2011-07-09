@@ -214,9 +214,11 @@ gdl_dock_item_grip_item_notify (GObject    *master,
         ensure_title_and_icon_pixbuf (grip);
 
     } else if (strcmp (pspec->name, "long-name") == 0) {
+        if (grip->_priv->title_layout) {
+                g_object_unref (grip->_priv->title_layout);
+                grip->_priv->title_layout = NULL;
+        }
         g_free (grip->_priv->title);
-        g_object_unref (grip->_priv->title_layout);
-        grip->_priv->title_layout = NULL;
         grip->_priv->title = NULL;
         ensure_title_and_icon_pixbuf (grip);
 	gtk_widget_queue_draw (GTK_WIDGET (grip));
