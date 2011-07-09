@@ -20,7 +20,7 @@
 
 #include "ui/widget/dock-item.h"
 
-#include "libgdl/libgdl.h"
+#include "libgdl/gdl.h"
 
 namespace Inkscape {
 namespace UI {

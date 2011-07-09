@@ -4,7 +4,7 @@
 #ifndef __LIBGDLTYPEBUILTINS_H__
 #define __LIBGDLTYPEBUILTINS_H__ 1
 
-#include "libgdl/libgdl.h"
+#include "libgdl/gdl.h"
 
 G_BEGIN_DECLS
 

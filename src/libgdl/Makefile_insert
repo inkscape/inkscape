@@ -40,4 +40,4 @@ libgdl_libgdl_a_SOURCES =	\
 	libgdl/libgdltypebuiltins.c	\
 	libgdl/libgdlmarshal.h		\
 	libgdl/libgdlmarshal.c		\
-	libgdl/libgdl.h		
+	libgdl/gdl.h		

@@ -396,6 +396,7 @@ gdl_dock_object_real_reduce (GdlDockObject *object)
     children = gtk_container_get_children (GTK_CONTAINER (object));
     if (g_list_length (children) <= 1) {
         GList *l;
+        GList *dchildren = NULL;
         
         /* detach ourselves and then re-attach our children to our
            current parent.  if we are not currently attached, the
@@ -403,18 +404,41 @@ gdl_dock_object_real_reduce (GdlDockObject *object)
         if (parent)
             gdl_dock_object_freeze (parent);
         gdl_dock_object_freeze (object);
-        gdl_dock_object_detach (object, FALSE);
+        /* Detach the children before detaching this object, since in this
+         * way the children can have access to the whole object hierarchy.
+         * Set the InDetach flag now, so the children know that this object
+         * is going to be detached. */
+        
+        
+        GDL_DOCK_OBJECT_SET_FLAGS (object, GDL_DOCK_IN_DETACH);
+        
         for (l = children; l; l = l->next) {
-            GdlDockObject *child = GDL_DOCK_OBJECT (l->data);
+            GdlDockObject *child;
+            
+            if (!GDL_IS_DOCK_OBJECT (l->data))
+                continue;
+            
+            child = GDL_DOCK_OBJECT (l->data);
 
             g_object_ref (child);
-            GDL_DOCK_OBJECT_SET_FLAGS (child, GDL_DOCK_IN_REFLOW);
             gdl_dock_object_detach (child, FALSE);
+            GDL_DOCK_OBJECT_SET_FLAGS (child, GDL_DOCK_IN_REFLOW);
             if (parent)
-                gtk_container_add (GTK_CONTAINER (parent), GTK_WIDGET (child));
+                dchildren = g_list_append (dchildren, child);
             GDL_DOCK_OBJECT_UNSET_FLAGS (child, GDL_DOCK_IN_REFLOW);
-            g_object_unref (child);
         }
+        /* Now it can be detached */
+        gdl_dock_object_detach (object, FALSE);
+        
+        /* After detaching the reduced object, we can add the
+        children (the only child in fact) to the new parent */
+        for (l = dchildren; l; l = l->next) {
+            gtk_container_add (GTK_CONTAINER (parent), l->data);
+            g_object_unref (l->data);
+        }
+        g_list_free (dchildren);
+        
+        
         /* sink the widget, so any automatic floating widget is destroyed */
         g_object_ref_sink (object);
         /* don't reenter */
@@ -469,6 +493,9 @@ gdl_dock_object_detach (GdlDockObject *object,
 {
     g_return_if_fail (object != NULL);
 
+    if (!GDL_IS_DOCK_OBJECT (object))
+        return;
+    
     if (!GDL_DOCK_OBJECT_ATTACHED (object))
         return;
     

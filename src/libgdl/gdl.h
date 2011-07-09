@@ -28,10 +28,12 @@
 #include "libgdl/gdl-dock-master.h"
 #include "libgdl/gdl-dock.h"
 #include "libgdl/gdl-dock-item.h"
+#include "libgdl/gdl-dock-layout.h"
 #include "libgdl/gdl-dock-paned.h"
 #include "libgdl/gdl-dock-notebook.h"
 #include "libgdl/gdl-dock-tablabel.h"
 #include "libgdl/gdl-dock-bar.h"
+#include "libgdl/gdl-combo-button.h"
 #include "libgdl/gdl-switcher.h"
 
 #endif

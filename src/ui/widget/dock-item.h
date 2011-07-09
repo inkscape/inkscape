@@ -19,7 +19,7 @@
 #include <gtkmm/paned.h>
 #include <gtkmm/window.h>
 
-#include "libgdl/libgdl.h"
+#include "libgdl/gdl.h"
 
 namespace Inkscape {
 namespace UI {

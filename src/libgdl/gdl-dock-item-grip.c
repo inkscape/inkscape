@@ -293,10 +293,10 @@ gdl_dock_item_grip_set_property (GObject      *object,
         case PROP_ITEM:
             grip->item = g_value_get_object (value);
             if (grip->item) {
-                g_signal_connect (grip->item, "notify::long_name",
+                g_signal_connect (grip->item, "notify::long-name",
                                   G_CALLBACK (gdl_dock_item_grip_item_notify),
                                   grip);
-                g_signal_connect (grip->item, "notify::stock_id",
+                g_signal_connect (grip->item, "notify::stock-id",
                                   G_CALLBACK (gdl_dock_item_grip_item_notify),
                                   grip);
 		g_signal_connect (grip->item, "notify::behavior",

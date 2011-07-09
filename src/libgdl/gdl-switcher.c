@@ -55,7 +55,7 @@ static void gdl_switcher_add_button  (GdlSwitcher *switcher,
                                       const gchar *stock_id,
                                       const GdkPixbuf *pixbuf_icon,
                                       gint switcher_id);
-static void gdl_switcher_remove_button (GdlSwitcher *switcher, gint switcher_id);
+/* static void gdl_switcher_remove_button (GdlSwitcher *switcher, gint switcher_id); */
 static void gdl_switcher_select_page (GdlSwitcher *switcher, gint switcher_id);
 static void gdl_switcher_select_button (GdlSwitcher *switcher, gint switcher_id);
 static void gdl_switcher_set_show_buttons (GdlSwitcher *switcher, gboolean show);
@@ -514,7 +514,7 @@ gdl_switcher_expose (GtkWidget *widget, GdkEventExpose *event)
         }
     }
     return GDL_CALL_PARENT_WITH_DEFAULT (GTK_WIDGET_CLASS, expose_event,
-                                  (widget, event), FALSE);
+                                         (widget, event), FALSE);
 }
 
 static void
@@ -678,11 +678,9 @@ gdl_switcher_select_page (GdlSwitcher *switcher, gint id)
 static void
 gdl_switcher_class_init (GdlSwitcherClass *klass)
 {
-    GtkNotebookClass *notebook_class = GTK_NOTEBOOK_CLASS (klass);
     GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
-    (void)notebook_class;
 
     container_class->forall = gdl_switcher_forall;
     container_class->remove = gdl_switcher_remove;
@@ -763,11 +761,11 @@ gdl_switcher_add_button (GdlSwitcher *switcher, const gchar *label,
     gtk_widget_show (hbox);
 
     if (stock_id) {
-        icon_widget = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+        icon_widget = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
     } else if (pixbuf_icon) {
         icon_widget = gtk_image_new_from_pixbuf (pixbuf_icon);
     } else {
-        icon_widget = gtk_image_new_from_stock (GTK_STOCK_NEW, GTK_ICON_SIZE_BUTTON);
+        icon_widget = gtk_image_new_from_stock (GTK_STOCK_NEW, GTK_ICON_SIZE_MENU);
     }
 
     gtk_widget_show (icon_widget);
@@ -810,6 +808,7 @@ gdl_switcher_add_button (GdlSwitcher *switcher, const gchar *label,
     gtk_widget_queue_resize (GTK_WIDGET (switcher));
 }
 
+#if 0
 static void
 gdl_switcher_remove_button (GdlSwitcher *switcher, gint switcher_id)
 {
@@ -827,6 +826,7 @@ gdl_switcher_remove_button (GdlSwitcher *switcher, gint switcher_id)
     }
     gtk_widget_queue_resize (GTK_WIDGET (switcher));
 }
+#endif
 
 static void
 gdl_switcher_select_button (GdlSwitcher *switcher, gint switcher_id)

@@ -1257,8 +1257,9 @@ gdl_dock_item_dock (GdlDockObject    *object,
                     GdlDockPlacement  position,
                     GValue           *other_data)
 {
-    GdlDockObject *new_parent, *parent;
-    gboolean       add_ourselves_first;
+    GdlDockObject *new_parent = NULL;
+    GdlDockObject *parent, *requestor_parent;
+    gboolean       add_ourselves_first = FALSE;
 
     guint	   available_space=0;
     gint	   pref_size=-1;
@@ -1372,11 +1373,16 @@ gdl_dock_item_dock (GdlDockObject    *object,
             pref_size = req.width;
             break;
         case GDL_DOCK_CENTER:
-            new_parent = g_object_new (gdl_dock_object_type_from_nick ("notebook"),
-                                       "preferred-width", object_req.width,
-                                       "preferred-height", object_req.height,
-                                       NULL);
-            add_ourselves_first = TRUE;
+            /* If the parent is already a DockNotebook, we don't need
+             to create a new one. */
+            if (!GDL_IS_DOCK_NOTEBOOK (parent))
+            {
+                new_parent = g_object_new (gdl_dock_object_type_from_nick ("notebook"),
+                                           "preferred-width", object_req.width,
+                                           "preferred-height", object_req.height,
+                                           NULL);
+                add_ourselves_first = TRUE;
+            }
             break;
         default: 
         {
@@ -1396,9 +1402,12 @@ gdl_dock_item_dock (GdlDockObject    *object,
         gdl_dock_object_freeze (parent);
 
     /* ref ourselves since we could be destroyed when detached */
-    g_object_ref (object);
-    GDL_DOCK_OBJECT_SET_FLAGS (object, GDL_DOCK_IN_REFLOW);
-    gdl_dock_object_detach (object, FALSE);
+    if (new_parent)
+    {
+        g_object_ref (object);
+        GDL_DOCK_OBJECT_SET_FLAGS (object, GDL_DOCK_IN_REFLOW);
+        gdl_dock_object_detach (object, FALSE);
+    }
 
     /* freeze the new parent, so reduce won't get called before it's
        actually added to our parent */
@@ -1424,7 +1433,14 @@ gdl_dock_item_dock (GdlDockObject    *object,
 
     /* show automatic object */
     if (gtk_widget_get_visible (GTK_WIDGET (object)))
+    {
         gtk_widget_show (GTK_WIDGET (new_parent));
+        GDL_DOCK_OBJECT_UNSET_FLAGS (object, GDL_DOCK_IN_REFLOW);
+        gdl_dock_object_thaw (new_parent);
+    }
+    else // If the parent is already a DockNotebook, we don't need
+  	                                 // to create a new one.
+        gtk_container_add (GTK_CONTAINER (parent), GTK_WIDGET (requestor));
     
     /* use extra docking parameter */
     if (position != GDL_DOCK_CENTER && other_data &&
@@ -1437,10 +1453,17 @@ gdl_dock_item_dock (GdlDockObject    *object,
         g_object_set (G_OBJECT (new_parent), "position", splitpos, NULL);
     }
     
-    GDL_DOCK_OBJECT_UNSET_FLAGS (object, GDL_DOCK_IN_REFLOW);
     g_object_unref (object);
 
-    gdl_dock_object_thaw (new_parent);
+    requestor_parent = gdl_dock_object_get_parent_object (requestor);
+    if (GDL_IS_DOCK_NOTEBOOK (requestor_parent))
+    {
+        /* Activate the page we just added */
+        GdlDockItem* notebook = GDL_DOCK_ITEM (gdl_dock_object_get_parent_object (requestor));
+        gtk_notebook_set_page (GTK_NOTEBOOK (notebook->child), 
+                               gtk_notebook_page_num (GTK_NOTEBOOK (notebook->child), GTK_WIDGET (requestor)));
+    }
+                               
     if (parent)
         gdl_dock_object_thaw (parent);
 
