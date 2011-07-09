@@ -55,7 +55,7 @@ class WebSlicer_CreateGroup(WebSlicer_Effect):
     def get_base_elements(self):
         self.layer = self.get_slicer_layer()
         if is_empty(self.layer):
-            inkex.errormsg(_('You must to create and select some "Slicer rectangles" before try to group.'))
+            inkex.errormsg(_('You must create and select some "Slicer rectangles" before trying to group.'))
             exit(3)
         self.layer_descendants = self.get_descendants_in_array(self.layer)
 
@@ -74,7 +74,7 @@ class WebSlicer_CreateGroup(WebSlicer_Effect):
             exit(1)
         for id,node in self.selected.iteritems():
             if node not in self.layer_descendants:
-                inkex.errormsg(_('Opss... The element "%s" is not in the Web Slicer layer') % id)
+                inkex.errormsg(_('Oops... The element "%s" is not in the Web Slicer layer') % id)
                 exit(2)
         g_parent = self.getParentNode(node)
         group = inkex.etree.SubElement(g_parent, 'g')
