@@ -39,7 +39,7 @@
 #include "helper/sp-marshal.h"
 #include "xml/node-event-vector.h"
 #include "attributes.h"
-#include "color-profile-fns.h"
+#include "color-profile.h"
 #include "document.h"
 #include "style.h"
 #include "sp-object-repr.h"

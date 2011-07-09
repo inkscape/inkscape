@@ -5,12 +5,11 @@
  * SPColorProfile: SVG <color-profile> implementation
  */
 
+#include <vector>
 #include <glib/gtypes.h>
 #include <sp-object.h>
 #include <glibmm/ustring.h>
-#if ENABLE_LCMS
-#include <lcms.h>
-#endif // ENABLE_LCMS
+#include "cms-color-types.h"
 
 namespace Inkscape {
 
@@ -25,6 +24,7 @@ enum {
 
 class ColorProfileImpl;
 
+
 /// The SPColorProfile vtable.
 struct ColorProfileClass {
     SPObjectClass parent_class;
@@ -32,9 +32,8 @@ struct ColorProfileClass {
 
 /** Color Profile. */
 struct ColorProfile : public SPObject {
-#if ENABLE_LCMS
     friend cmsHPROFILE colorprofile_get_handle( SPDocument*, guint*, gchar const* );
-#endif // ENABLE_LCMS
+
     static GType getType();
     static void classInit( ColorProfileClass *klass );
 
@@ -42,8 +41,10 @@ struct ColorProfile : public SPObject {
     static std::vector<Glib::ustring> getProfileFiles();
     static std::vector<std::pair<Glib::ustring, Glib::ustring> > getProfileFilesWithNames();
 #if ENABLE_LCMS
-    icColorSpaceSignature getColorSpace() const;
-    icProfileClassSignature getProfileClass() const;
+    //icColorSpaceSignature getColorSpace() const;
+    ColorSpaceSig getColorSpace() const;
+    //icProfileClassSignature getProfileClass() const;
+    ColorProfileClassSig getProfileClass() const;
     cmsHTRANSFORM getTransfToSRGB8();
     cmsHTRANSFORM getTransfFromSRGB8();
     cmsHTRANSFORM getTransfGamutCheck();
@@ -68,7 +69,15 @@ private:
     ColorProfileImpl *impl;
 };
 
+GType colorprofile_get_type();
+
 } // namespace Inkscape
+
+#define COLORPROFILE_TYPE (Inkscape::colorprofile_get_type())
+#define COLORPROFILE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), COLORPROFILE_TYPE, Inkscape::ColorProfile))
+#define COLORPROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), COLORPROFILE_TYPE, Inkscape::ColorProfileClass))
+#define IS_COLORPROFILE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), COLORPROFILE_TYPE))
+#define IS_COLORPROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), COLORPROFILE_TYPE))
 
 #endif // !SEEN_COLOR_PROFILE_H
 

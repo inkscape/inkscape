@@ -16,6 +16,7 @@
 
 #if ENABLE_LCMS
 #include "color-profile-fns.h"
+#include "color-profile-cms-fns.h"
 #include "color-profile.h"
 
 #ifdef DEBUG_LCMS
@@ -497,12 +498,12 @@ void ColorICCSelector::_switchToProfile( gchar const* name )
 #ifdef DEBUG_LCMS
                     g_message("got on out [%04x] [%04x] [%04x] [%04x]", post[0], post[1], post[2], post[3]);
 #endif // DEBUG_LCMS
-                    guint count = _cmsChannelsOf( newProf->getColorSpace() );
+                    guint count = _cmsChannelsOf( asICColorSpaceSig(newProf->getColorSpace()) );
 
                     gchar const** names = 0;
                     gchar const** tips = 0;
                     guint const* scales = 0;
-                    getThings( newProf->getColorSpace(), names, tips, scales );
+                    getThings( asICColorSpaceSig(newProf->getColorSpace()), names, tips, scales );
 
                     for ( guint i = 0; i < count; i++ ) {
                         gdouble val = (((gdouble)post[i])/65535.0) * (gdouble)scales[i];
@@ -680,12 +681,12 @@ void ColorICCSelector::_setProfile( SVGICCColor* profile )
 
     if ( profile ) {
         _prof = SP_ACTIVE_DOCUMENT->profileManager->find(profile->colorProfile.c_str());
-        if ( _prof && _prof->getProfileClass() != icSigNamedColorClass ) {
-            _profChannelCount = _cmsChannelsOf( _prof->getColorSpace() );
+        if ( _prof && (asICColorProfileClassSig(_prof->getProfileClass()) != icSigNamedColorClass) ) {
+            _profChannelCount = _cmsChannelsOf( asICColorSpaceSig(_prof->getColorSpace()) );
 
             gchar const** names = 0;
             gchar const** tips = 0;
-            getThings( _prof->getColorSpace(), names, tips, _fooScales );
+            getThings( asICColorSpaceSig(_prof->getColorSpace()), names, tips, _fooScales );
 
             if ( profChanged ) {
                 for ( guint i = 0; i < _profChannelCount; i++ ) {

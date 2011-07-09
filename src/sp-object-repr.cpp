@@ -55,7 +55,7 @@
 
 #include "sp-style-elem.h"
 #include "sp-switch.h"
-#include "color-profile-fns.h"
+#include "color-profile.h"
 #include "xml/repr.h"
 #include "sp-filter.h"
 #include "filters/blend.h"

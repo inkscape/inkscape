@@ -32,6 +32,7 @@
 #include "color.h"
 #include "color-profile.h"
 #include "color-profile-fns.h"
+#include "color-profile-cms-fns.h"
 #include "attributes.h"
 #include "inkscape.h"
 #include "document.h"
@@ -100,7 +101,6 @@ extern guint update_in_progress;
 
 static SPObjectClass *cprof_parent_class;
 
-
 class ColorProfileImpl {
 public:
 #if ENABLE_LCMS
@@ -126,6 +126,22 @@ public:
     cmsHTRANSFORM _gamutTransf;
 #endif // ENABLE_LCMS
 };
+
+
+
+namespace Inkscape {
+
+icColorSpaceSignature asICColorSpaceSig(ColorSpaceSig const & sig)
+{
+    return ColorSpaceSigWrapper(sig);
+}
+
+icProfileClassSignature asICColorProfileClassSig(ColorProfileClassSig const & sig)
+{
+    return ColorProfileClassSigWrapper(sig);
+}
+
+} // namespace Inkscape
 
 ColorProfileImpl::ColorProfileImpl()
 #if ENABLE_LCMS
@@ -554,12 +570,12 @@ cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, guint* inte
     return prof;
 }
 
-icColorSpaceSignature ColorProfile::getColorSpace() const {
-    return impl->_profileSpace;
+Inkscape::ColorSpaceSig ColorProfile::getColorSpace() const {
+    return ColorSpaceSigWrapper(impl->_profileSpace);
 }
 
-icProfileClassSignature ColorProfile::getProfileClass() const {
-    return impl->_profileClass;
+Inkscape::ColorProfileClassSig ColorProfile::getProfileClass() const {
+    return ColorProfileClassSigWrapper(impl->_profileClass);
 }
 
 cmsHTRANSFORM ColorProfile::getTransfToSRGB8()
@@ -678,6 +694,22 @@ Glib::ustring Inkscape::get_path_for_profile(Glib::ustring const& name)
 
     return result;
 }
+
+void Inkscape::colorprofile_cmsDoTransform(cmsHTRANSFORM transform, void *inBuf, void *outBuf, unsigned int size)
+{
+    cmsDoTransform(transform, inBuf, outBuf, size);
+}
+
+bool Inkscape::colorprofile_isPrintColorSpace(ColorProfile const *profile)
+{
+    bool isPrint = false;
+    if ( profile ) {
+        ColorSpaceSigWrapper colorspace = profile->getColorSpace();
+        isPrint = (colorspace == icSigCmykData) || (colorspace == icSigCmyData);
+    }
+    return isPrint;
+}
+
 #endif // ENABLE_LCMS
 
 std::vector<Glib::ustring> ColorProfile::getBaseProfileDirs() {

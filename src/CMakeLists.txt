@@ -306,7 +306,9 @@ set(inkscape_SRC
 	box3d-context.h
 	box3d-side.h
 	box3d.h
+	cms-color-types.h
 	color-profile-fns.h
+	color-profile-cms-fns.h
 	color-profile-test.h
 	color-profile.h
 	color-rgba.h

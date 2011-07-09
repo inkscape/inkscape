@@ -1683,7 +1683,7 @@ static void sp_canvas_paint_single_buffer(SPCanvas *canvas, int x0, int y0, int 
             int stride = cairo_image_surface_get_stride(imgs);
             for (int i=0; i<h; ++i) {
                 unsigned char *row = px + i*stride;
-                cmsDoTransform(transf, row, row, w);
+                Inkscape::colorprofile_cmsDoTransform(transf, row, row, w);
             }
             cairo_surface_mark_dirty(imgs);
         }

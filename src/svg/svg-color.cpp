@@ -43,7 +43,9 @@
 #include "document.h"
 #include "inkscape.h"
 #include "profile-manager.h"
+#include "color-profile-cms-fns.h"
 #endif // ENABLE_LCMS
+#include "color-profile-fns.h"
 
 using std::sprintf;
 
@@ -479,10 +481,12 @@ g_message("profile name: %s", icc->colorProfile.c_str());
                 gchar const** names = 0;
                 gchar const** tips = 0;
                 guint const* scales = 0;
-                getThings( prof->getColorSpace(), names, tips, scales );
+                getThings( asICColorSpaceSig(prof->getColorSpace()), names, tips, scales );
 
-                guint count = _cmsChannelsOf( prof->getColorSpace() );
-                if (count>4) count=4; //do we need it? Should we allow an arbitrary number of color values? Or should we limit to a maximum? (max==4?)
+                guint count = _cmsChannelsOf( asICColorSpaceSig(prof->getColorSpace()) );
+                if (count > 4) {
+                    count = 4; //do we need it? Should we allow an arbitrary number of color values? Or should we limit to a maximum? (max==4?)
+                }
                 for (guint i=0;i<count; i++){
                     color_in[i] = (guchar) ((((gdouble)icc->colors[i])*256.0) * (gdouble)scales[i]);
 g_message("input[%d]: %d",i, color_in[i]);

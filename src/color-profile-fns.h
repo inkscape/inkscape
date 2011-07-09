@@ -10,8 +10,8 @@
 #if ENABLE_LCMS
 #include <vector>
 #include <glibmm/ustring.h>
-#include <lcms.h>
 #endif // ENABLE_LCMS
+#include "cms-color-types.h"
 
 class SPDocument;
 
@@ -22,8 +22,6 @@ class Node;
 } // namespace XML
 
 class ColorProfile;
-
-GType colorprofile_get_type();
 
 #if ENABLE_LCMS
 
@@ -39,15 +37,13 @@ std::vector<Glib::ustring> colorprofile_get_softproof_names();
 
 Glib::ustring get_path_for_profile(Glib::ustring const& name);
 
-#endif
+void colorprofile_cmsDoTransform(cmsHTRANSFORM transform, void *inBuf, void *outBuf, unsigned int size);
+
+bool colorprofile_isPrintColorSpace(ColorProfile const *profile);
+
+#endif //  ENABLE_LCMS
 
 } // namespace Inkscape
-
-#define COLORPROFILE_TYPE (Inkscape::colorprofile_get_type())
-#define COLORPROFILE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), COLORPROFILE_TYPE, Inkscape::ColorProfile))
-#define COLORPROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), COLORPROFILE_TYPE, Inkscape::ColorProfileClass))
-#define IS_COLORPROFILE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), COLORPROFILE_TYPE))
-#define IS_COLORPROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), COLORPROFILE_TYPE))
 
 
 #endif // !SEEN_COLOR_PROFILE_FNS_H
