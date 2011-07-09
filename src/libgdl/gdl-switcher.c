@@ -702,6 +702,15 @@ gdl_switcher_class_init (GdlSwitcherClass *klass)
                            GDL_TYPE_SWITCHER_STYLE,
                            GDL_SWITCHER_STYLE_BOTH,
                            G_PARAM_READWRITE));
+    
+    gtk_rc_parse_string ("style \"gdl-button-style\"\n"
+                         "{\n"
+                         "GtkWidget::focus-padding = 1\n"
+                         "GtkWidget::focus-line-width = 1\n"
+                         "xthickness = 0\n"
+                         "ythickness = 0\n"
+                         "}\n"
+                         "widget \"*.gdl-button\" style \"gdl-button-style\"");
 }
 
 static void
@@ -743,6 +752,7 @@ gdl_switcher_add_button (GdlSwitcher *switcher, const gchar *label,
                          const gchar *tooltips, const gchar *stock_id,
                          const GdkPixbuf *pixbuf_icon, gint switcher_id)
 {
+    GtkWidget *event_box;
     GtkWidget *button_widget;
     GtkWidget *hbox;
     GtkWidget *icon_widget;
@@ -750,6 +760,8 @@ gdl_switcher_add_button (GdlSwitcher *switcher, const gchar *label,
     GtkWidget *arrow;
     
     button_widget = gtk_toggle_button_new ();
+    gtk_widget_set_name (button_widget, "gdl-button");
+    gtk_button_set_relief (GTK_BUTTON(button_widget), GTK_RELIEF_HALF);
     if (switcher->priv->show)
         gtk_widget_show (button_widget);
     g_signal_connect (button_widget, "toggled",
@@ -779,8 +791,11 @@ gdl_switcher_add_button (GdlSwitcher *switcher, const gchar *label,
     }
     gtk_misc_set_alignment (GTK_MISC (label_widget), 0.0, 0.5);
     gtk_widget_show (label_widget);
-    gtk_widget_set_tooltip_text (button_widget, tooltips);        
-
+    
+    
+    gtk_widget_set_tooltip_text (button_widget,
+                                 tooltips);
+    
     switch (INTERNAL_MODE (switcher)) {
     case GDL_SWITCHER_STYLE_TEXT:
         gtk_box_pack_start (GTK_BOX (hbox), label_widget, TRUE, TRUE, 0);
@@ -801,10 +816,10 @@ gdl_switcher_add_button (GdlSwitcher *switcher, const gchar *label,
     switcher->priv->buttons =
         g_slist_append (switcher->priv->buttons,
                         button_new (button_widget, label_widget,
-                                    icon_widget, 
+                                    icon_widget,
                                     arrow, hbox, switcher_id));
+    
     gtk_widget_set_parent (button_widget, GTK_WIDGET (switcher));
-
     gtk_widget_queue_resize (GTK_WIDGET (switcher));
 }
 

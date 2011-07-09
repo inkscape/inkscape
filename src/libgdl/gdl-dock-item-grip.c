@@ -386,9 +386,9 @@ gdl_dock_item_grip_instance_init (GdlDockItemGrip *grip)
                       G_CALLBACK (gdl_dock_item_grip_iconify_clicked), grip);
 
     gtk_widget_set_tooltip_text (grip->_priv->iconify_button,
-                          _("Iconify"));
+                          _("Iconify this dock"));
     gtk_widget_set_tooltip_text (grip->_priv->close_button,
-                          _("Close"));
+                          _("Close this dock"));
 }
 
 static void

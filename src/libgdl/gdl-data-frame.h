@@ -29,11 +29,11 @@
 G_BEGIN_DECLS
 
 #define GDL_TYPE_DATA_FRAME            (gdl_data_frame_get_type ())
-#define GDL_DATA_FRAME(obj)            (GTK_CHECK_CAST ((obj), GDL_TYPE_DATA_FRAME, GdlDataFrame))
-#define GDL_DATA_FRAME_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GDL_DATA_VIEW_FRAM, GdlDataFrame))
-#define GDL_IS_DATA_FRAME(obj)         (GTK_CHECK_TYPE ((obj), GDL_TYPE_DATA_FRAME))
-#define GDL_IS_DATA_FRAME_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DATA_FRAME))
-#define GDL_DATA_FRAME_GET_CLASS(obj)  (GTK_CHECK_GET_CLASS ((obj), GDL_TYPE_DATA_FRAME, GdlDataFrameClass))
+#define GDL_DATA_FRAME(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDL_TYPE_DATA_FRAME, GdlDataFrame))
+#define GDL_DATA_FRAME_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GDL_DATA_VIEW_FRAM, GdlDataFrame))
+#define GDL_IS_DATA_FRAME(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDL_TYPE_DATA_FRAME))
+#define GDL_IS_DATA_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DATA_FRAME))
+#define GDL_DATA_FRAME_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GDL_TYPE_DATA_FRAME, GdlDataFrameClass))
 
 typedef struct _GdlDataFrame        GdlDataFrame;
 typedef struct _GdlDataFramePrivate GdlDataFramePrivate;

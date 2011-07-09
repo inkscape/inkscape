@@ -31,11 +31,11 @@ G_BEGIN_DECLS
 
 /* standard macros */
 #define	GDL_TYPE_DOCK_LAYOUT		  (gdl_dock_layout_get_type ())
-#define GDL_DOCK_LAYOUT(object)		  (GTK_CHECK_CAST ((object), GDL_TYPE_DOCK_LAYOUT, GdlDockLayout))
-#define GDL_DOCK_LAYOUT_CLASS(klass)	  (GTK_CHECK_CLASS_CAST ((klass), GDL_TYPE_DOCK_LAYOUT, GdlDockLayoutClass))
-#define GDL_IS_DOCK_LAYOUT(object)	  (GTK_CHECK_TYPE ((object), GDL_TYPE_DOCK_LAYOUT))
-#define GDL_IS_DOCK_LAYOUT_CLASS(klass)	  (GTK_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DOCK_LAYOUT))
-#define	GDL_DOCK_LAYOUT_GET_CLASS(object) (GTK_CHECK_GET_CLASS ((object), GDL_TYPE_DOCK_LAYOUT, GdlDockLayoutClass))
+#define GDL_DOCK_LAYOUT(object)		  (G_TYPE_CHECK_INSTANCE_CAST ((object), GDL_TYPE_DOCK_LAYOUT, GdlDockLayout))
+#define GDL_DOCK_LAYOUT_CLASS(klass)	  (G_TYPE_CHECK_CLASS_CAST ((klass), GDL_TYPE_DOCK_LAYOUT, GdlDockLayoutClass))
+#define GDL_IS_DOCK_LAYOUT(object)	  (G_TYPE_CHECK_INSTANCE_TYPE ((object), GDL_TYPE_DOCK_LAYOUT))
+#define GDL_IS_DOCK_LAYOUT_CLASS(klass)	  (G_TYPE_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DOCK_LAYOUT))
+#define	GDL_DOCK_LAYOUT_GET_CLASS(object) (G_TYPE_INSTANCE_GET_CLASS ((object), GDL_TYPE_DOCK_LAYOUT, GdlDockLayoutClass))
 
 /* data types & structures */
 typedef struct _GdlDockLayout GdlDockLayout;

@@ -1460,7 +1460,7 @@ gdl_dock_item_dock (GdlDockObject    *object,
     {
         /* Activate the page we just added */
         GdlDockItem* notebook = GDL_DOCK_ITEM (gdl_dock_object_get_parent_object (requestor));
-        gtk_notebook_set_page (GTK_NOTEBOOK (notebook->child), 
+        gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook->child), 
                                gtk_notebook_page_num (GTK_NOTEBOOK (notebook->child), GTK_WIDGET (requestor)));
     }
                                

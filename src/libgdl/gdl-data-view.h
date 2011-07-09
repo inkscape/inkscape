@@ -29,11 +29,11 @@
 G_BEGIN_DECLS
 
 #define GDL_TYPE_DATA_VIEW              (gdl_data_view_get_type ())
-#define GDL_DATA_VIEW(obj)              (GTK_CHECK_CAST ((obj), GDL_TYPE_DATA_VIEW, GdlDataView))
-#define GDL_DATA_VIEW_CLASS(klass)      (GTK_CHECK_CLASS_CAST ((klass), GDL_TYPE_DATA_VIEW, GdlDataViewClass))
-#define GDL_IS_DATA_VIEW(obj)           (GTK_CHECK_TYPE ((obj), GDL_TYPE_DATA_VIEW))
-#define GDL_IS_DATA_VIEW_CLASS(klass)   (GTK_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DATA_VIEW))
-#define GDL_DATA_VIEW_GET_CLASS(obj)    (GTK_CHECK_GET_CLASS ((obj), GDL_TYPE_DATA_VIEW, GdlDataViewClass))
+#define GDL_DATA_VIEW(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDL_TYPE_DATA_VIEW, GdlDataView))
+#define GDL_DATA_VIEW_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), GDL_TYPE_DATA_VIEW, GdlDataViewClass))
+#define GDL_IS_DATA_VIEW(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDL_TYPE_DATA_VIEW))
+#define GDL_IS_DATA_VIEW_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DATA_VIEW))
+#define GDL_DATA_VIEW_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), GDL_TYPE_DATA_VIEW, GdlDataViewClass))
 
 typedef struct _GdlDataView        GdlDataView;
 typedef struct _GdlDataViewClass   GdlDataViewClass;
@@ -53,7 +53,7 @@ struct _GdlDataViewClass {
 	GtkLayoutClass parent_class;
 };
 
-GtkType    gdl_data_view_get_type            (void);
+GType    gdl_data_view_get_type            (void);
 GtkWidget *gdl_data_view_new                 (void);
 void       gdl_data_view_set_model           (GdlDataView  *view,
 					      GdlDataModel *model);
