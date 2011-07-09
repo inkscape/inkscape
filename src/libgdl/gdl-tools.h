@@ -79,9 +79,10 @@ G_BEGIN_DECLS
 
 #endif /* DO_GDL_TRACE */
 
-/**
+/*
  * Class boilerplate and base class call macros copied from
  * bonobo/bonobo-macros.h.  Original copyright follows.
+ * 
  *
  * Author:
  *   Darin Adler <darin@bentspoon.com>
