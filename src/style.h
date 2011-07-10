@@ -206,21 +206,24 @@ enum {
     SP_BASELINE_SHIFT_PERCENTAGE
 };
 
-#define SP_FONT_SIZE ((1 << 24) - 1)
-
+/*
+Not used anymore, originally for SPIFontSize
 #define SP_F8_16_TO_FLOAT(v) ((gdouble) (v) / (1 << 16))
 #define SP_F8_16_FROM_FLOAT(v) ((int) ((v) * ((1 << 16) + 0.9999)))
+*/
 
 #define SP_STYLE_FLAG_IFSET (1 << 0)
 #define SP_STYLE_FLAG_IFDIFF (1 << 1)
 #define SP_STYLE_FLAG_ALWAYS (1 << 2)
 
-/// Fontsize type internal to SPStyle.
+/// Fontsize type internal to SPStyle (also used by libnrtype/Layout-TNG-Input.cpp).
 struct SPIFontSize {
     unsigned set : 1;
     unsigned inherit : 1;
     unsigned type : 2;
-    unsigned value : 24;
+    unsigned unit : 4;
+    unsigned literal: 4;
+    float value;
     float computed;
 };
 

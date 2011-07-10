@@ -1343,11 +1343,11 @@ sp_style_merge_font_size_from_parent(SPIFontSize &child, SPIFontSize const &pare
          * fixme: SVG and CSS do not specify clearly, whether we should use
          * user or screen coordinates (Lauris)
          */
-        if (child.value < SP_CSS_FONT_SIZE_SMALLER) {
-            child.computed = font_size_table[child.value];
-        } else if (child.value == SP_CSS_FONT_SIZE_SMALLER) {
+        if (child.literal < SP_CSS_FONT_SIZE_SMALLER) {
+            child.computed = font_size_table[child.literal];
+        } else if (child.literal == SP_CSS_FONT_SIZE_SMALLER) {
             child.computed = parent.computed / 1.2;
-        } else if (child.value == SP_CSS_FONT_SIZE_LARGER) {
+        } else if (child.literal == SP_CSS_FONT_SIZE_LARGER) {
             child.computed = parent.computed * 1.2;
         } else {
             /* Illegal value */
@@ -1355,7 +1355,21 @@ sp_style_merge_font_size_from_parent(SPIFontSize &child, SPIFontSize const &pare
     } else if (child.type == SP_FONT_SIZE_PERCENTAGE) {
         /* Unlike most other lengths, percentage for font size is relative to parent computed value
          * rather than viewport. */
-        child.computed = parent.computed * SP_F8_16_TO_FLOAT(child.value);
+        child.computed = parent.computed * child.value;
+    } else if (child.type == SP_FONT_SIZE_LENGTH) {
+        switch (child.unit) {
+            case SP_CSS_UNIT_EM:
+                /* Relative to parent font size */
+                child.computed = parent.computed * child.value;
+                break;
+            case SP_CSS_UNIT_EX:
+                /* Relative to parent font size */
+                child.computed = parent.computed * child.value * 0.5; /* Hack */
+                break;
+            default:
+                /* No change */
+                break;
+        }
     }
 }
 
@@ -1790,7 +1804,7 @@ get_relative_font_size_frac(SPIFontSize const &font_size)
 {
     switch (font_size.type) {
         case SP_FONT_SIZE_LITERAL: {
-            switch (font_size.value) {
+            switch (font_size.literal) {
                 case SP_CSS_FONT_SIZE_SMALLER:
                     return 5.0 / 6.0;
 
@@ -1803,10 +1817,20 @@ get_relative_font_size_frac(SPIFontSize const &font_size)
         }
 
         case SP_FONT_SIZE_PERCENTAGE:
-            return SP_F8_16_TO_FLOAT(font_size.value);
+            return font_size.value;
 
-        case SP_FONT_SIZE_LENGTH:
-            g_assert_not_reached();
+        case SP_FONT_SIZE_LENGTH: {
+            switch (font_size.unit ) {
+                case SP_CSS_UNIT_EM:
+                    return font_size.value;
+
+                case SP_CSS_UNIT_EX:
+                    return font_size.value * 0.5;
+
+                default:
+                    g_assert_not_reached();
+            }
+        }
     }
     g_assert_not_reached();
 }
@@ -1853,20 +1877,29 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
     {
         /* font-size.  Note that we update the computed font-size of style,
            to assist in em calculations later in this function. */
+
         if (parent->font_size.set && !parent->font_size.inherit) {
+            /* Parent has defined font-size */
+
             if (!style->font_size.set || style->font_size.inherit) {
                 /* font_size inherits the computed value, so we can use the parent value
                  * verbatim. */
                 style->font_size = parent->font_size;
-            } else if ( style->font_size.type == SP_FONT_SIZE_LENGTH ) {
+
+            } else if ( style->font_size.type == SP_FONT_SIZE_LENGTH  && 
+                        style->font_size.unit != SP_CSS_UNIT_EM &&
+                        style->font_size.unit != SP_CSS_UNIT_EX ) {
+
                 /* Child already has absolute size (stored in computed value), so do nothing. */
+
             } else if ( style->font_size.type == SP_FONT_SIZE_LITERAL
-                        && style->font_size.value < SP_CSS_FONT_SIZE_SMALLER ) {
+                        && style->font_size.literal < SP_CSS_FONT_SIZE_SMALLER ) {
                 /* Child already has absolute size, but we ensure that the computed value
                    is up-to-date. */
-                unsigned const ix = style->font_size.value;
+                unsigned const ix = style->font_size.literal;
                 g_assert(ix < G_N_ELEMENTS(font_size_table));
                 style->font_size.computed = font_size_table[ix];
+
             } else {
                 /* Child has relative size. */
                 double const child_frac(get_relative_font_size_frac(style->font_size));
@@ -1875,17 +1908,26 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
                 style->font_size.computed = parent->font_size.computed * child_frac;
 
                 if ( ( parent->font_size.type == SP_FONT_SIZE_LITERAL
-                       && parent->font_size.value < SP_CSS_FONT_SIZE_SMALLER )
-                     || parent->font_size.type == SP_FONT_SIZE_LENGTH )
-                {
+                       && parent->font_size.literal < SP_CSS_FONT_SIZE_SMALLER ) ||
+                     ( parent->font_size.type == SP_FONT_SIZE_LENGTH &&
+                       parent->font_size.unit != SP_CSS_UNIT_EM &&
+                       parent->font_size.unit != SP_CSS_UNIT_EX ) ) {
+
                     /* Absolute value. */
                     style->font_size.type = SP_FONT_SIZE_LENGTH;
-                    /* .value is unused for SP_FONT_SIZE_LENGTH. */
+                    /* .value is unused for non ex/em SP_FONT_SIZE_LENGTH. */
+
                 } else {
                     /* Relative value. */
+                        
                     double const parent_frac(get_relative_font_size_frac(parent->font_size));
-                    style->font_size.type = SP_FONT_SIZE_PERCENTAGE;
-                    style->font_size.value = SP_F8_16_FROM_FLOAT(parent_frac * child_frac);
+                    if( style->font_size.type == SP_FONT_SIZE_LENGTH ) {
+                        /* Value in terms of ex/em */
+                        style->font_size.value *= parent_frac;
+                    } else {
+                        style->font_size.value = parent_frac * child_frac;
+                        style->font_size.type = SP_FONT_SIZE_PERCENTAGE;
+                    }
                 }
             }
         }
@@ -2677,7 +2719,7 @@ sp_style_clear(SPStyle *style)
 
     style->font_size.set = FALSE;
     style->font_size.type = SP_FONT_SIZE_LITERAL;
-    style->font_size.value = SP_CSS_FONT_SIZE_MEDIUM;
+    style->font_size.literal = SP_CSS_FONT_SIZE_MEDIUM;
     style->font_size.computed = 12.0;
     style->font_style.set = FALSE;
     style->font_style.value = style->font_style.computed = SP_CSS_FONT_STYLE_NORMAL;
@@ -3008,6 +3050,7 @@ sp_style_read_ienum(SPIEnum *val, gchar const *str, SPStyleEnum const *dict,
             }
         }
     }
+    return;
 }
 
 
@@ -3284,52 +3327,26 @@ sp_style_read_ifontsize(SPIFontSize *val, gchar const *str)
                 val->set = TRUE;
                 val->inherit = FALSE;
                 val->type = SP_FONT_SIZE_LITERAL;
-                val->value = enum_font_size[i].value;
+                val->literal = enum_font_size[i].value;
                 return;
             }
         }
         /* Invalid */
         return;
     } else {
-        gdouble value;
-        gchar *e;
-        /* fixme: Move this to standard place (Lauris) */
-        value = g_ascii_strtod(str, &e);
-        if ((gchar const *) e != str) {
-            if (!*e) {
-                /* Userspace */
-            } else if (!strcmp(e, "px")) {
-                /* Userspace */
-            } else if (!strcmp(e, "pt")) {
-                /* Userspace * DEVICESCALE */
-                value *= PX_PER_PT;
-            } else if (!strcmp(e, "pc")) {
-                /* 12pt */
-                value *= PX_PER_PT * 12.0;
-            } else if (!strcmp(e, "mm")) {
-                value *= PX_PER_MM;
-            } else if (!strcmp(e, "cm")) {
-                value *= PX_PER_CM;
-            } else if (!strcmp(e, "in")) {
-                value *= PX_PER_IN;
-            } else if (!strcmp(e, "%")) {
-                /* Percentage */
-                val->set = TRUE;
-                val->inherit = FALSE;
-                val->type = SP_FONT_SIZE_PERCENTAGE;
-                val->value = SP_F8_16_FROM_FLOAT(value / 100.0);
-                return;
-            } else {
-                /* Invalid */
-                return;
-            }
-            /* Length */
-            val->set = TRUE;
-            val->inherit = FALSE;
+        SPILength length;
+        sp_style_read_ilength(&length, str);
+        val->set      = length.set;
+        val->inherit  = length.inherit;
+        val->unit     = length.unit;
+        val->value    = length.value;
+        val->computed = length.computed;
+        if( val->unit == SP_CSS_UNIT_PERCENT ) {
+            val->type = SP_FONT_SIZE_PERCENTAGE;
+        } else {
             val->type = SP_FONT_SIZE_LENGTH;
-            val->computed = value;
-            return;
         }
+        return; 
     }
 }
 
@@ -3935,7 +3952,7 @@ sp_style_write_ifontsize(gchar *p, gint const len, gchar const *key,
             return g_strlcpy(p, os.str().c_str(), len);
         } else if (val->type == SP_FONT_SIZE_PERCENTAGE) {
             Inkscape::CSSOStringStream os;
-            os << key << ":" << (SP_F8_16_TO_FLOAT(val->value) * 100.0) << "%;";
+            os << key << ":" << (val->value * 100.0) << "%;";
             return g_strlcpy(p, os.str().c_str(), len);
         }
     }

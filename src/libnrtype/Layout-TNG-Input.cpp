@@ -135,7 +135,7 @@ float Layout::InputStreamTextSource::styleComputeFontSize() const
         if (this_style->font_size.set && !this_style->font_size.inherit) {
             switch (this_style->font_size.type) {
                 case SP_FONT_SIZE_LITERAL: {
-                    switch(this_style->font_size.value) {   // these multipliers are straight out of the CSS spec
+                    switch(this_style->font_size.literal) {   // these multipliers are straight out of the CSS spec
 	                    case SP_CSS_FONT_SIZE_XX_SMALL: return medium_font_size * inherit_multiplier * (3.0/5.0);
 	                    case SP_CSS_FONT_SIZE_X_SMALL:  return medium_font_size * inherit_multiplier * (3.0/4.0);
 	                    case SP_CSS_FONT_SIZE_SMALL:    return medium_font_size * inherit_multiplier * (8.0/9.0);

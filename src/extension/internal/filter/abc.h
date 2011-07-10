@@ -218,7 +218,7 @@ ColorShift::get_filter_text (Inkscape::Extension::Extension * ext)
     * Smoothness (0.->10., default 6.) -> blur (stdDeviation)
     * Elevation (0->360, default 25) -> feDistantLight (elevation)
     * Azimuth (0->360, default 235) -> feDistantLight (azimuth)
-    * Lightning color (guint, default -1 [white]) -> diffuse (lighting-color)
+    * Lighting color (guint, default -1 [white]) -> diffuse (lighting-color)
 */
 
 class DiffuseLight : public Inkscape::Extension::Internal::Filter::Filter {
@@ -237,7 +237,7 @@ public:
               "<param name=\"smooth\" gui-text=\"" N_("Smoothness:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"10\">6</param>\n"
               "<param name=\"elevation\" gui-text=\"" N_("Elevation (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">25</param>\n"
               "<param name=\"azimuth\" gui-text=\"" N_("Azimuth (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">235</param>\n"
-              "<param name=\"color\" gui-text=\"" N_("Lightning color") "\" type=\"color\">-1</param>\n"
+              "<param name=\"color\" gui-text=\"" N_("Lighting color") "\" type=\"color\">-1</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -355,7 +355,7 @@ Feather::get_filter_text (Inkscape::Extension::Extension * ext)
     * Brightness (0.0->5., default .9) -> specular (specularConstant)
     * Elevation (0->360, default 60) -> feDistantLight (elevation)
     * Azimuth (0->360, default 225) -> feDistantLight (azimuth)
-    * Lightning color (guint, default -1 [white]) -> specular (lighting-color)
+    * Lighting color (guint, default -1 [white]) -> specular (lighting-color)
 */
 
 class MatteJelly : public Inkscape::Extension::Internal::Filter::Filter {
@@ -375,7 +375,7 @@ public:
               "<param name=\"bright\" gui-text=\"" N_("Brightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.00\" max=\"5.00\">0.9</param>\n"
               "<param name=\"elevation\" gui-text=\"" N_("Elevation (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">60</param>\n"
               "<param name=\"azimuth\" gui-text=\"" N_("Azimuth (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">225</param>\n"
-              "<param name=\"color\" gui-text=\"" N_("Lightning color") "\" type=\"color\">-1</param>\n"
+              "<param name=\"color\" gui-text=\"" N_("Lighting color") "\" type=\"color\">-1</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -795,7 +795,7 @@ Silhouette::get_filter_text (Inkscape::Extension::Extension * ext)
     * Brightness (0.0->5., default 1.) -> specular (specularConstant)
     * Elevation (0->360, default 45) -> feDistantLight (elevation)
     * Azimuth (0->360, default 235) -> feDistantLight (azimuth)
-    * Lightning color (guint, default -1 [white]) -> specular (lighting-color)
+    * Lighting color (guint, default -1 [white]) -> specular (lighting-color)
 */
 
 class SpecularLight : public Inkscape::Extension::Internal::Filter::Filter {
@@ -815,7 +815,7 @@ public:
               "<param name=\"bright\" gui-text=\"" N_("Brightness:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"5\">1</param>\n"
               "<param name=\"elevation\" gui-text=\"" N_("Elevation (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">45</param>\n"
               "<param name=\"azimuth\" gui-text=\"" N_("Azimuth (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">235</param>\n"
-              "<param name=\"color\" gui-text=\"" N_("Lightning color") "\" type=\"color\">-1</param>\n"
+              "<param name=\"color\" gui-text=\"" N_("Lighting color") "\" type=\"color\">-1</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"

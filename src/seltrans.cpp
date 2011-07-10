@@ -1566,7 +1566,7 @@ Geom::Point Inkscape::SelTrans::_getGeomHandlePos(Geom::Point const &visual_hand
     // Calculate the absolute affine while taking into account the scaling of the stroke width
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool transform_stroke = prefs->getBool("/options/transform/stroke", true);
-    Geom::Affine abs_affine = get_scale_transform_with_stroke (*_bbox, _strokewidth, transform_stroke,
+    Geom::Affine abs_affine = get_scale_transform_with_uniform_stroke (*_bbox, _strokewidth, transform_stroke,
                     new_bbox.min()[Geom::X], new_bbox.min()[Geom::Y], new_bbox.max()[Geom::X], new_bbox.max()[Geom::Y]);
 
     // Calculate the scaled geometrical bbox
@@ -1613,7 +1613,7 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineDefault(Geom::Scale const default_
         strokewidth = _strokewidth;
     }
 
-    _absolute_affine = get_scale_transform_with_stroke (*_approximate_bbox, strokewidth, transform_stroke,
+    _absolute_affine = get_scale_transform_with_uniform_stroke (*_approximate_bbox, strokewidth, transform_stroke,
                     new_bbox_min[Geom::X], new_bbox_min[Geom::Y], new_bbox_max[Geom::X], new_bbox_max[Geom::Y]);
 
     // return the new handle position

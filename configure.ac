@@ -325,7 +325,6 @@ else
   platform_osx=no
 fi
 AC_MSG_RESULT([$platform_osx])
-AM_CONDITIONAL(EXPORT_DYNAMIC_DIRECT, test "$platform_osx" = "yes")
 	
 AC_MSG_CHECKING([for Solaris platform])
 case "$host" in

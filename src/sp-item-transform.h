@@ -9,7 +9,8 @@ void sp_item_scale_rel (SPItem *item, Geom::Scale const &scale);
 void sp_item_skew_rel (SPItem *item, double skewX, double skewY);
 void sp_item_move_rel(SPItem *item, Geom::Translate const &tr);
 
-Geom::Affine get_scale_transform_with_stroke (Geom::Rect const &bbox, gdouble strokewidth, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1);
+Geom::Affine get_scale_transform_with_uniform_stroke (Geom::Rect const &bbox_visual, gdouble strokewidth, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1);
+Geom::Affine get_scale_transform_with_unequal_stroke (Geom::Rect const &bbox_visual, Geom::Rect const &bbox_geom, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1);
 Geom::Rect get_visual_bbox (Geom::OptRect const &initial_geom_bbox, Geom::Affine const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke);
 
 

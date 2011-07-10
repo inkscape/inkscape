@@ -8,7 +8,7 @@
  * Authors:
  *   Diederik van Lierop <mail@diedenrezi.nl>
  *
- * Copyright (C) 2008 - 2010 Authors
+ * Copyright (C) 2008 - 2011 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
