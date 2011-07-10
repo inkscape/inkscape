@@ -33,6 +33,7 @@ struct ColorProfileClass {
 /** Color Profile. */
 struct ColorProfile : public SPObject {
     friend cmsHPROFILE colorprofile_get_handle( SPDocument*, guint*, gchar const* );
+    friend class CMSSystem;
 
     static GType getType();
     static void classInit( ColorProfileClass *klass );

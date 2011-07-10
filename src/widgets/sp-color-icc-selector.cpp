@@ -15,9 +15,9 @@
 #define noDEBUG_LCMS
 
 #if ENABLE_LCMS
-#include "color-profile-fns.h"
-#include "color-profile-cms-fns.h"
 #include "color-profile.h"
+#include "cms-system.h"
+#include "color-profile-cms-fns.h"
 
 #ifdef DEBUG_LCMS
 #include "preferences.h"
@@ -259,6 +259,12 @@ void getThings( DWORD space, gchar const**& namers, gchar const**& tippies, guin
     tippies = tips[index];
     scalies = scales[index];
 }
+
+
+void getThings( Inkscape::ColorProfile *prof, gchar const**& namers, gchar const**& tippies, guint const*& scalies ) {
+    getThings( asICColorSpaceSig(prof->getColorSpace()), namers, tippies, scalies );
+}
+
 #endif // ENABLE_LCMS
 
 

@@ -41,7 +41,7 @@
 #include "ui/widget/spinbutton.h"
 #include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-types.h"
-#include "color-profile-fns.h"
+#include "cms-system.h"
 #include "color-profile.h"
 #include "display/canvas-grid.h"
 #include "path-prefix.h"
@@ -62,6 +62,7 @@ using Inkscape::UI::Widget::PrefCheckButton;
 using Inkscape::UI::Widget::PrefRadioButton;
 using Inkscape::UI::Widget::PrefSpinButton;
 using Inkscape::UI::Widget::StyleSwatch;
+using Inkscape::CMSSystem;
 
 
 InkscapePreferences::InkscapePreferences()
@@ -858,7 +859,7 @@ static void profileComboChanged( Gtk::ComboBoxText* combo )
     } else {
         Glib::ustring active = combo->get_active_text();
 
-        Glib::ustring path = get_path_for_profile(active);
+        Glib::ustring path = CMSSystem::getPathForProfile(active);
         if ( !path.empty() ) {
             prefs->setString("/options/displayprofile/uri", path);
         }
@@ -868,7 +869,7 @@ static void profileComboChanged( Gtk::ComboBoxText* combo )
 static void proofComboChanged( Gtk::ComboBoxText* combo )
 {
     Glib::ustring active = combo->get_active_text();
-    Glib::ustring path = get_path_for_profile(active);
+    Glib::ustring path = CMSSystem::getPathForProfile(active);
 
     if ( !path.empty() ) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -975,7 +976,7 @@ void InkscapePreferences::initPageCMS()
 
 #if ENABLE_LCMS
     {
-        std::vector<Glib::ustring> names = ::Inkscape::colorprofile_get_display_names();
+        std::vector<Glib::ustring> names = ::Inkscape::CMSSystem::getDisplayNames();
         Glib::ustring current = prefs->getString( "/options/displayprofile/uri" );
 
         gint index = 0;
@@ -983,7 +984,7 @@ void InkscapePreferences::initPageCMS()
         index++;
         for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
             _cms_display_profile.append_text( *it );
-            Glib::ustring path = get_path_for_profile(*it);
+            Glib::ustring path = CMSSystem::getPathForProfile(*it);
             if ( !path.empty() && path == current ) {
                 _cms_display_profile.set_active(index);
             }
@@ -993,12 +994,12 @@ void InkscapePreferences::initPageCMS()
             _cms_display_profile.set_active(0);
         }
 
-        names = ::Inkscape::colorprofile_get_softproof_names();
+        names = ::Inkscape::CMSSystem::getSoftproofNames();
         current = prefs->getString("/options/softproof/uri");
         index = 0;
         for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
             _cms_proof_profile.append_text( *it );
-            Glib::ustring path = get_path_for_profile(*it);
+            Glib::ustring path = CMSSystem::getPathForProfile(*it);
             if ( !path.empty() && path == current ) {
                 _cms_proof_profile.set_active(index);
             }

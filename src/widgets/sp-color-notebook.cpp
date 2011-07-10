@@ -36,11 +36,9 @@
 #include "../document.h"
 #include "../profile-manager.h"
 #include "color-profile.h"
-#include "color-profile-fns.h"
-#if ENABLE_LCMS
-//#include "lcms.h"
-//#include "color-profile-cms-fns.h"
-#endif // ENABLE_LCMS
+#include "cms-system.h"
+
+using Inkscape::CMSSystem;
 
 struct SPColorNotebookTracker {
     const gchar* name;
@@ -540,7 +538,7 @@ void ColorNotebook::_updateRgbaEntry( const SPColor& color, gfloat alpha )
     gtk_widget_set_sensitive (_box_toomuchink, false);
     if (color.icc){
         Inkscape::ColorProfile* prof = SP_ACTIVE_DOCUMENT->profileManager->find(color.icc->colorProfile.c_str());
-        if ( prof && colorprofile_isPrintColorSpace(prof) ) {
+        if ( prof && CMSSystem::isPrintColorSpace(prof) ) {
             gtk_widget_show(GTK_WIDGET(_box_toomuchink));
             double ink_sum = 0;
             for (unsigned int i=0; i<color.icc->colors.size(); i++){

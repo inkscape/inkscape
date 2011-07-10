@@ -13,9 +13,10 @@ ink_common_sources +=	\
 	box3d-side.cpp box3d-side.h					\
 	brokenimage.xpm							\
 	cms-color-types.h						\
+	cms-system.h							\
 	color.cpp color.h						\
 	color-profile.cpp color-profile.h				\
-	color-profile-fns.h color-profile-cms-fns.h			\
+	color-profile-cms-fns.h						\
 	color-rgba.h							\
 	common-context.cpp common-context.h				\
 	composite-undo-stack-observer.cpp				\

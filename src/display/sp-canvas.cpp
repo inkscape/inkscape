@@ -30,9 +30,7 @@
 #include "preferences.h"
 #include "inkscape.h"
 #include "sodipodi-ctrlrect.h"
-#if ENABLE_LCMS
-#include "color-profile-fns.h"
-#endif // ENABLE_LCMS
+#include "cms-system.h"
 #include "display/rendermode.h"
 #include "display/cairo-utils.h"
 #include "debug/gdk-event-latency-tracker.h"
@@ -1672,9 +1670,9 @@ static void sp_canvas_paint_single_buffer(SPCanvas *canvas, int x0, int y0, int 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         bool fromDisplay = prefs->getBool( "/options/displayprofile/from_display");
         if ( fromDisplay ) {
-            transf = Inkscape::colorprofile_get_display_per( canvas->cms_key ? *(canvas->cms_key) : "" );
+            transf = Inkscape::CMSSystem::getDisplayPer( canvas->cms_key ? *(canvas->cms_key) : "" );
         } else {
-            transf = Inkscape::colorprofile_get_display_transform();
+            transf = Inkscape::CMSSystem::getDisplayTransform();
         }
         
         if (transf) {
@@ -1683,7 +1681,7 @@ static void sp_canvas_paint_single_buffer(SPCanvas *canvas, int x0, int y0, int 
             int stride = cairo_image_surface_get_stride(imgs);
             for (int i=0; i<h; ++i) {
                 unsigned char *row = px + i*stride;
-                Inkscape::colorprofile_cmsDoTransform(transf, row, row, w);
+                Inkscape::CMSSystem::doTransform(transf, row, row, w);
             }
             cairo_surface_mark_dirty(imgs);
         }

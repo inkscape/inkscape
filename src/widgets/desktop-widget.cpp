@@ -28,7 +28,7 @@
 #include <gtk/gtk.h>
 
 #include "box3d-context.h"
-#include "color-profile-fns.h"
+#include "cms-system.h"
 #include "conn-avoid-ref.h"
 #include "desktop-events.h"
 #include "desktop-handles.h"
@@ -193,7 +193,7 @@ void CMSPrefWatcher::hook(EgeColorProfTracker */*tracker*/, gint screen, gint mo
     guint len = 0;
 
     ege_color_prof_tracker_get_profile_for( screen, monitor, reinterpret_cast<gpointer*>(&buf), &len );
-    Glib::ustring id = Inkscape::colorprofile_set_display_per( buf, len, screen, monitor );
+    Glib::ustring id = Inkscape::CMSSystem::setDisplayPer( buf, len, screen, monitor );
 #endif // ENABLE_LCMS
 }
 
@@ -540,7 +540,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #if ENABLE_LCMS
     bool fromDisplay = prefs->getBool( "/options/displayprofile/from_display");
     if ( fromDisplay ) {
-        Glib::ustring id = Inkscape::colorprofile_get_display_id( 0, 0 );
+        Glib::ustring id = Inkscape::CMSSystem::getDisplayId( 0, 0 );
 
         bool enabled = false;
         if ( dtw->canvas->cms_key ) {
@@ -805,7 +805,7 @@ void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidge
     GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(dtw));
     gint screenNum = gdk_screen_get_number(screen);
     gint monitor = gdk_screen_get_monitor_at_window(screen, gtk_widget_get_toplevel(GTK_WIDGET(dtw))->window);
-    Glib::ustring id = Inkscape::colorprofile_get_display_id( screenNum, monitor );
+    Glib::ustring id = Inkscape::CMSSystem::getDisplayId( screenNum, monitor );
     bool enabled = false;
     if ( dtw->canvas->cms_key ) {
         *(dtw->canvas->cms_key) = id;
