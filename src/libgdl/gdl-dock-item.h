@@ -93,17 +93,16 @@ struct _GdlDockItemClass {
     gboolean            has_grip;
     
     /* virtuals */
-    void     (* dock_drag_begin)  (GdlDockItem      *item);
-    void     (* dock_drag_motion) (GdlDockItem      *item,
-                                   gint              x,
-                                   gint              y);
-    void     (* dock_drag_end)    (GdlDockItem      *item,
-                                   gboolean          cancelled);
+    void     (* dock_drag_begin)  (GdlDockItem    *item);
+    void     (* dock_drag_motion) (GdlDockItem    *item,
+                                   gint            x,
+                                   gint            y);
+    void     (* dock_drag_end)    (GdlDockItem    *item,
+                                   gboolean        cancelled);
     void     (* move_focus_child) (GdlDockItem      *item,
                                    GtkDirectionType  direction);
-                                   
-    void     (* set_orientation)  (GdlDockItem      *item,
-                                   GtkOrientation    orientation);
+    void     (* set_orientation)  (GdlDockItem    *item,
+                                   GtkOrientation  orientation);
 };
 
 /* additional macros */
@@ -163,8 +162,10 @@ void           gdl_dock_item_set_orientation   (GdlDockItem    *item,
 GtkWidget     *gdl_dock_item_get_tablabel      (GdlDockItem *item);
 void           gdl_dock_item_set_tablabel      (GdlDockItem *item,
                                                 GtkWidget   *tablabel);
+GtkWidget     *gdl_dock_item_get_grip          (GdlDockItem *item);
 void           gdl_dock_item_hide_grip         (GdlDockItem *item);
 void           gdl_dock_item_show_grip         (GdlDockItem *item);
+void           gdl_dock_item_notify_selected   (GdlDockItem *item);
 
 /* bind and unbind items to a dock */
 void           gdl_dock_item_bind              (GdlDockItem *item,

@@ -221,7 +221,7 @@ GType                 gdl_dock_object_set_type_for_nick (const gchar *nick,
 	   __PRETTY_FUNCTION__,               \
            G_OBJECT_TYPE_NAME (object), object, \
            G_OBJECT (object)->ref_count, \
-           (GTK_IS_OBJECT (object) && GTK_OBJECT_FLOATING (object)) ? "(float)" : "", \
+           (GTK_IS_OBJECT (object) && g_object_is_floating (object)) ? "(float)" : "", \
            GDL_IS_DOCK_OBJECT (object) ? GDL_DOCK_OBJECT (object)->freeze_count : -1, \
 	   ##args); } G_STMT_END                   
     

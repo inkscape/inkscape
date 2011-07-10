@@ -349,21 +349,6 @@ gdl_dock_constructor (GType                  type,
             g_signal_connect (dock, "notify::long-name",
                               (GCallback) gdl_dock_notify_cb, NULL);
             
-            /* set transient for the first dock if that is a non-floating dock */
-            controller = gdl_dock_master_get_controller (master);
-            if (controller && GDL_IS_DOCK (controller)) {
-                gboolean first_is_floating;
-                g_object_get (controller, "floating", &first_is_floating, NULL);
-                if (!first_is_floating) {
-                    GtkWidget *toplevel =
-                        gtk_widget_get_toplevel (GTK_WIDGET (controller));
-
-                    if (GTK_IS_WINDOW (toplevel))
-                        gtk_window_set_transient_for (GTK_WINDOW (dock->_priv->window),
-                                                      GTK_WINDOW (toplevel));
-                }
-            }
-
             gtk_container_add (GTK_CONTAINER (dock->_priv->window), GTK_WIDGET (dock));
     
             g_signal_connect (dock->_priv->window, "delete_event",

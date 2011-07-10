@@ -44,6 +44,15 @@ typedef struct _GdlDockMaster        GdlDockMaster;
 typedef struct _GdlDockMasterClass   GdlDockMasterClass;
 typedef struct _GdlDockMasterPrivate GdlDockMasterPrivate;
 
+typedef enum {
+    GDL_SWITCHER_STYLE_TEXT,
+    GDL_SWITCHER_STYLE_ICON,
+    GDL_SWITCHER_STYLE_BOTH,
+    GDL_SWITCHER_STYLE_TOOLBAR,
+    GDL_SWITCHER_STYLE_TABS,
+    GDL_SWITCHER_STYLE_NONE
+} GdlSwitcherStyle;
+
 struct _GdlDockMaster {
     GObject               object;
 

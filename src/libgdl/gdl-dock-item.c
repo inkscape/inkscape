@@ -163,6 +163,7 @@ enum {
     DOCK_DRAG_BEGIN,
     DOCK_DRAG_MOTION,
     DOCK_DRAG_END,
+    SELECTED,
     MOVE_FOCUS_CHILD,
     LAST_SIGNAL
 };
@@ -407,6 +408,22 @@ gdl_dock_item_class_init (GdlDockItemClass *klass)
                       1,
                       G_TYPE_BOOLEAN);
 
+    /**
+     * GdlDockItem::selected:
+     *
+     * Signals that this dock has been selected from a switcher.
+     */
+    gdl_dock_item_signals [SELECTED] =
+        g_signal_new ("selected",
+                      G_TYPE_FROM_CLASS (klass),
+                      G_SIGNAL_RUN_FIRST,
+                      0,
+                      NULL,
+                      NULL,
+                      g_cclosure_marshal_VOID__VOID,
+                      G_TYPE_NONE,
+                      0);
+    
     gdl_dock_item_signals [MOVE_FOCUS_CHILD] =
         g_signal_new ("move_focus_child",
                       G_TYPE_FROM_CLASS (klass),
@@ -1925,6 +1942,23 @@ gdl_dock_item_set_tablabel (GdlDockItem *item,
 }
 
 /**
+ * gdl_dock_item_get_grip:
+ * @item: The dock item from which to to get the grip of.
+ * 
+ * This function returns the dock item's grip label widget.
+ * 
+ * Returns: Returns the current label widget.
+ **/
+GtkWidget *
+gdl_dock_item_get_grip(GdlDockItem *item)
+{
+    g_return_if_fail (item != NULL);
+    g_return_val_if_fail (GDL_IS_DOCK_ITEM (item), NULL);
+
+    return item->_priv->grip;
+}
+
+/**
  * gdl_dock_item_hide_grip:
  * @item: The dock item to hide the grip of.
  * 
@@ -1955,6 +1989,19 @@ gdl_dock_item_show_grip (GdlDockItem *item)
         item->_priv->grip_shown = TRUE;
         gdl_dock_item_showhide_grip (item);
     };
+}
+
+/**
+ * gdl_dock_item_notify_selected:
+ * @item: the dock item to emit a selected signal on.
+ *
+ * This function emits the selected signal. It is to be used by #GdlSwitcher 
+ * to let clients know that this item has been switched to.
+ **/
+void
+gdl_dock_item_notify_selected (GdlDockItem *item)
+{
+    g_signal_emit (item, gdl_dock_item_signals [SELECTED], 0);
 }
 
 /* convenient function (and to preserve source compat) */

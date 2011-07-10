@@ -270,7 +270,7 @@ gdl_dock_notebook_switch_page_cb (GtkNotebook     *nb,
 {
     GdlDockNotebook *notebook;
     GtkWidget       *tablabel;
-    (void)page_num;
+    GdlDockItem     *item;
     
     notebook = GDL_DOCK_NOTEBOOK (data);
 
@@ -293,6 +293,10 @@ gdl_dock_notebook_switch_page_cb (GtkNotebook     *nb,
         GDL_DOCK_OBJECT (notebook)->master)
         g_signal_emit_by_name (GDL_DOCK_OBJECT (notebook)->master,
                                "layout-changed");
+
+    /* Signal that a new dock item has been selected */
+    item = GDL_DOCK_ITEM (gtk_notebook_get_nth_page (nb, page_num));
+    gdl_dock_item_notify_selected (item);
 }
 
 static void

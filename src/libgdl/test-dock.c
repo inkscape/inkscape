@@ -81,6 +81,9 @@ create_styles_item (GtkWidget *dock)
 	group = create_style_button (dock, vbox1, group,
 				     GDL_SWITCHER_STYLE_TABS,
 				     "Notebook tabs");
+	group = create_style_button (dock, vbox1, group,
+				     GDL_SWITCHER_STYLE_NONE,
+                                     "None of the above");
 	return vbox1;
 }
 

@@ -4,19 +4,21 @@
  * Copyright (C) 2003  Ettore Perazzoli,
  *               2007  Naba Kumar
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of version 2 of the GNU General Public
- * License as published by the Free Software Foundation.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * General Public License for more details.
+ * Library General Public License for more details.
  *
- * You should have received a copy of the GNU General Public
- * License along with this program; if not, write to the
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
+ *
  *
  * Copied and adapted from ESidebar.[ch] from evolution
  * 
@@ -35,10 +37,6 @@
 #include "libgdltypebuiltins.h"
 
 #include <gtk/gtk.h>
-
-#if HAVE_GNOME
-#include <gconf/gconf-client.h>
-#endif
 
 static void gdl_switcher_set_property  (GObject            *object,
                                         guint               prop_id,
@@ -608,12 +606,6 @@ static void
 gdl_switcher_notify_cb (GObject *g_object, GParamSpec *pspec,
                         GdlSwitcher *switcher) 
 {
-    gboolean show_tabs;
-    (void)g_object;
-    (void)pspec;
-    g_return_if_fail (switcher != NULL && GDL_IS_SWITCHER (switcher));
-    show_tabs = gtk_notebook_get_show_tabs (GTK_NOTEBOOK (switcher));
-    gdl_switcher_set_show_buttons (switcher, !show_tabs);
 }
 
 static void
@@ -879,178 +871,86 @@ gdl_switcher_insert_page (GdlSwitcher *switcher, GtkWidget *page,
 }
 
 static void
-set_switcher_style_internal (GdlSwitcher *switcher,
-                             GdlSwitcherStyle switcher_style )
+set_switcher_style_toolbar (GdlSwitcher *switcher,
+                            GdlSwitcherStyle switcher_style)
 {
     GSList *p;
     
-    if (switcher_style == GDL_SWITCHER_STYLE_TABS &&
-        switcher->priv->show == FALSE)
+    if (switcher_style == GDL_SWITCHER_STYLE_NONE
+        || switcher_style == GDL_SWITCHER_STYLE_TABS)
         return;
 
-    if (switcher_style == GDL_SWITCHER_STYLE_TABS)
-    {
-        gtk_notebook_set_show_tabs (GTK_NOTEBOOK (switcher), TRUE);
-        return;
-    }
-    
-    gtk_notebook_set_show_tabs (GTK_NOTEBOOK (switcher), FALSE);
-    
+    if (switcher_style == GDL_SWITCHER_STYLE_TOOLBAR)
+        switcher_style = GDL_SWITCHER_STYLE_BOTH;
+
     if (switcher_style == INTERNAL_MODE (switcher))
         return;
-    
+
+    gtk_notebook_set_show_tabs (GTK_NOTEBOOK (switcher), FALSE);
+
     for (p = switcher->priv->buttons; p != NULL; p = p->next) {
         Button *button = p->data;
 
         gtk_container_remove (GTK_CONTAINER (button->hbox), button->arrow);
+
+        if (gtk_widget_get_parent (button->icon))
+            gtk_container_remove (GTK_CONTAINER (button->hbox), button->icon);
+        if (gtk_widget_get_parent (button->label))
+            gtk_container_remove (GTK_CONTAINER (button->hbox), button->label);
+
         switch (switcher_style) {
         case GDL_SWITCHER_STYLE_TEXT:
-            gtk_container_remove (GTK_CONTAINER (button->hbox), button->icon);
-            if (INTERNAL_MODE (switcher)
-                == GDL_SWITCHER_STYLE_ICON) {
-                gtk_box_pack_start (GTK_BOX (button->hbox), button->label,
-                                    TRUE, TRUE, 0);
-                gtk_widget_show (button->label);
-            }
-            break;
-        case GDL_SWITCHER_STYLE_ICON:
-            gtk_container_remove(GTK_CONTAINER (button->hbox), button->label);
-            if (INTERNAL_MODE (switcher)
-                == GDL_SWITCHER_STYLE_TEXT) {
-                gtk_box_pack_start (GTK_BOX (button->hbox), button->icon,
-                                    TRUE, TRUE, 0);
-                gtk_widget_show (button->icon);
-            } else
-                gtk_container_child_set (GTK_CONTAINER (button->hbox),
-                                         button->icon, "expand", TRUE, NULL);
-            break;
-        case GDL_SWITCHER_STYLE_BOTH:
-            if (INTERNAL_MODE (switcher)
-                == GDL_SWITCHER_STYLE_TEXT) {
-                gtk_container_remove (GTK_CONTAINER (button->hbox),
-                                      button->label);
-                gtk_box_pack_start (GTK_BOX (button->hbox), button->icon,
-                                    FALSE, TRUE, 0);
-                gtk_widget_show (button->icon);
-            } else {
-                gtk_container_child_set (GTK_CONTAINER (button->hbox),
-                                         button->icon, "expand", FALSE, NULL);
-            }
-
-            gtk_box_pack_start (GTK_BOX (button->hbox), button->label, TRUE,
-                                TRUE, 0);
+            gtk_box_pack_start (GTK_BOX (button->hbox), button->label,
+                                TRUE, TRUE, 0);
             gtk_widget_show (button->label);
             break;
+
+        case GDL_SWITCHER_STYLE_ICON:
+            gtk_box_pack_start (GTK_BOX (button->hbox), button->icon,
+                                TRUE, TRUE, 0);
+            gtk_widget_show (button->icon);
+            break;
+
+        case GDL_SWITCHER_STYLE_BOTH:
+            gtk_box_pack_start (GTK_BOX (button->hbox), button->icon,
+                                FALSE, TRUE, 0);
+            gtk_box_pack_start (GTK_BOX (button->hbox), button->label,
+                                TRUE, TRUE, 0);
+            gtk_widget_show (button->icon);
+            gtk_widget_show (button->label);
+            break;
+
         default:
             break;
         }
-        gtk_box_pack_start (GTK_BOX (button->hbox), button->arrow, FALSE,
-                            FALSE, 0);
+
+        gtk_box_pack_start (GTK_BOX (button->hbox), button->arrow,
+                            FALSE, FALSE, 0);
     }
-}
 
-#if HAVE_GNOME
-static GConfEnumStringPair toolbar_styles[] = {
-    { GDL_SWITCHER_STYLE_TEXT, "text" },
-    { GDL_SWITCHER_STYLE_ICON, "icons" },
-    { GDL_SWITCHER_STYLE_BOTH, "both" },
-    { GDL_SWITCHER_STYLE_BOTH, "both-horiz" },
-    { GDL_SWITCHER_STYLE_BOTH, "both_horiz" },
-    { -1, NULL }
-};
-
-static void
-style_changed_notify (GConfClient *gconf, guint id, GConfEntry *entry,
-                      void *data)
-{
-    GdlSwitcher *switcher = data;
-    char *val;
-    int switcher_style;    
-    
-    val = gconf_client_get_string (gconf,
-                                   "/desktop/gnome/interface/toolbar_style",
-                                   NULL);
-    if (val == NULL || !gconf_string_to_enum (toolbar_styles, val,
-                                              &switcher_style))
-        switcher_style = GDL_SWITCHER_STYLE_BOTH;
-    g_free(val);
-
-    set_switcher_style_internal (GDL_SWITCHER (switcher), switcher_style);
-    switcher->priv->toolbar_style = switcher_style;
-
-    gtk_widget_queue_resize (GTK_WIDGET (switcher));
+    gdl_switcher_set_show_buttons (switcher, TRUE);
 }
 
 static void
 gdl_switcher_set_style (GdlSwitcher *switcher, GdlSwitcherStyle switcher_style)
 {
-    GConfClient *gconf_client = gconf_client_get_default ();
-    
-    if (switcher_style == GDL_SWITCHER_STYLE_TABS &&
-        switcher->priv->show == FALSE)
-        return;
-    
-    if (switcher->priv->switcher_style == switcher_style &&
-        switcher->priv->show == TRUE)
+    if (switcher->priv->switcher_style == switcher_style)
         return;
 
-    if (switcher->priv->switcher_style == GDL_SWITCHER_STYLE_TOOLBAR) {
-        if (switcher->priv->style_changed_id) {
-            gconf_client_notify_remove (gconf_client,
-                                switcher->priv->style_changed_id);
-            switcher->priv->style_changed_id = 0;
-        }        
+    if (switcher_style == GDL_SWITCHER_STYLE_NONE) {
+        gdl_switcher_set_show_buttons (switcher, FALSE);
+        gtk_notebook_set_show_tabs (GTK_NOTEBOOK (switcher), FALSE);
     }
-    
-    if (switcher_style != GDL_SWITCHER_STYLE_TOOLBAR) {
-        set_switcher_style_internal (switcher, switcher_style);
-
-        gtk_widget_queue_resize (GTK_WIDGET (switcher));
-    } else {
-        /* This is a little bit tricky, toolbar style is more
-         * of a meta-style where the actual style is dictated by
-         * the gnome toolbar setting, so that is why we have
-         * the is_toolbar_style bool - it tracks the toolbar
-         * style while the switcher_style member is the actual look and
-         * feel */
-        switcher->priv->style_changed_id =
-            gconf_client_notify_add (gconf_client,
-                                     "/desktop/gnome/interface/toolbar_style",
-                                     style_changed_notify, switcher,
-                                     NULL, NULL);
-        style_changed_notify (gconf_client, 0, NULL, switcher);
+    else if (switcher_style == GDL_SWITCHER_STYLE_TABS) {
+        gdl_switcher_set_show_buttons (switcher, FALSE);
+        gtk_notebook_set_show_tabs (GTK_NOTEBOOK (switcher), TRUE);
     }
-    
-    g_object_unref (gconf_client);
+    else
+        set_switcher_style_toolbar (switcher, switcher_style);
 
-    if (switcher_style != GDL_SWITCHER_STYLE_TABS)
-        switcher->priv->switcher_style = switcher_style;
-}
-
-#else /* HAVE_GNOME */
-
-static void
-gdl_switcher_set_style (GdlSwitcher *switcher, GdlSwitcherStyle switcher_style)
-{
-    if (switcher_style == GDL_SWITCHER_STYLE_TABS &&
-        switcher->priv->show == FALSE)
-        return;
-    
-    if (switcher->priv->switcher_style == switcher_style &&
-        switcher->priv->show == TRUE)
-        return;
-
-    set_switcher_style_internal (switcher,
-                                 ((switcher_style ==
-                                   GDL_SWITCHER_STYLE_TOOLBAR)?
-                                  GDL_SWITCHER_STYLE_BOTH : switcher_style));
     gtk_widget_queue_resize (GTK_WIDGET (switcher));
-    
-    if (switcher_style != GDL_SWITCHER_STYLE_TABS)
-        switcher->priv->switcher_style = switcher_style;
+    switcher->priv->switcher_style = switcher_style;
 }
-
-#endif /* HAVE_GNOME */
 
 static void
 gdl_switcher_set_show_buttons (GdlSwitcher *switcher, gboolean show)

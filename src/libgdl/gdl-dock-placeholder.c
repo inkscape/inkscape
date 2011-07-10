@@ -30,6 +30,7 @@
 #include "gdl-tools.h"
 #include "gdl-dock-placeholder.h"
 #include "gdl-dock-item.h"
+#include "gdl-dock-paned.h"
 #include "gdl-dock-master.h"
 #include "libgdltypebuiltins.h"
 
@@ -494,7 +495,7 @@ gdl_dock_placeholder_dock (GdlDockObject    *object,
         GdlDockObject *toplevel;
         
         if (!gdl_dock_object_is_bound (GDL_DOCK_OBJECT (ph))) {
-            g_warning ("%s",_("Attempt to dock a dock object to an unbound placeholder"));
+            g_warning ("%s", _("Attempt to dock a dock object to an unbound placeholder"));
             return;
         }
         
@@ -543,7 +544,7 @@ gdl_dock_placeholder_present (GdlDockObject *object,
 /* ----- Public interface ----- */ 
 								   
 GtkWidget * 
-gdl_dock_placeholder_new (gchar            *name,
+gdl_dock_placeholder_new (const gchar     *name,
                           GdlDockObject    *object,
                           GdlDockPlacement  position,
                           gboolean          sticky)

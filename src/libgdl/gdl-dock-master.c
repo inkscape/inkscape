@@ -31,6 +31,8 @@
 #include "gdl-dock-master.h"
 #include "gdl-dock.h"
 #include "gdl-dock-item.h"
+#include "gdl-dock-notebook.h"
+#include "gdl-switcher.h"
 #include "libgdlmarshal.h"
 #include "libgdltypebuiltins.h"
 #ifdef WIN32

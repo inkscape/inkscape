@@ -55,7 +55,7 @@ struct _GdlDockPlaceholderClass {
 
 GType       gdl_dock_placeholder_get_type (void);
 
-GtkWidget  *gdl_dock_placeholder_new      (gchar              *name,
+GtkWidget  *gdl_dock_placeholder_new      (const gchar       *name,
                                            GdlDockObject      *object,
                                            GdlDockPlacement    position,
                                            gboolean            sticky);

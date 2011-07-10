@@ -710,6 +710,7 @@ gdl_dock_paned_dock (GdlDockObject    *object,
     }
     else {
         gdl_dock_item_show_grip (GDL_DOCK_ITEM (requestor));
+        gtk_widget_show (GTK_WIDGET (requestor));
         GDL_DOCK_OBJECT_SET_FLAGS (requestor, GDL_DOCK_ATTACHED);
     }
 }

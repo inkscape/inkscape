@@ -1,13 +1,30 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4; tab-width: 8 -*- */
-/**
+/*
  * gdl-dock-item-grip.h
- * 
- * Based on bonobo-dock-item-grip.  Original copyright notice follows.
  *
- * Author:
- *    Michael Meeks
+ * Author: Michael Meeks Copyright (C) 2002 Sun Microsystems, Inc.
  *
- * Copyright (C) 2002 Sun Microsystems, Inc.
+ * Based on BonoboDockItemGrip.  Original copyright notice follows.
+ *
+ * Copyright (C) 1998 Ettore Perazzoli
+ * Copyright (C) 1998 Elliot Lee
+ * Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald 
+ * All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
 #ifndef _GDL_DOCK_ITEM_GRIP_H_
@@ -50,6 +67,10 @@ struct _GdlDockItemGripClass {
 
 GType      gdl_dock_item_grip_get_type (void);
 GtkWidget *gdl_dock_item_grip_new      (GdlDockItem *item);
+void       gdl_dock_item_grip_set_label (GdlDockItemGrip *grip,
+                                          GtkWidget *label);
+void       gdl_dock_item_grip_hide_handle (GdlDockItemGrip *grip);
+void       gdl_dock_item_grip_show_handle (GdlDockItemGrip *grip);
 
 G_END_DECLS
 
