@@ -131,6 +131,7 @@ public:
 
 namespace Inkscape {
 
+#ifdef ENABLE_LCMS
 icColorSpaceSignature asICColorSpaceSig(ColorSpaceSig const & sig)
 {
     return ColorSpaceSigWrapper(sig);
@@ -140,6 +141,7 @@ icProfileClassSignature asICColorProfileClassSig(ColorProfileClassSig const & si
 {
     return ColorProfileClassSigWrapper(sig);
 }
+#endif //  ENABLE_LCMS
 
 } // namespace Inkscape
 
