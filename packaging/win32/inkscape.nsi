@@ -124,6 +124,7 @@ ShowUninstDetails hide
 !insertmacro INKLANGFILE French
 !insertmacro INKLANGFILE Galician
 !insertmacro INKLANGFILE German
+!insertmacro INKLANGFILE Greek
 !insertmacro INKLANGFILE Indonesian
 !insertmacro INKLANGFILE Italian
 !insertmacro INKLANGFILE Japanese
@@ -657,6 +658,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro LanguageAutoSelect French        1036
   !insertmacro LanguageAutoSelect Galician      1110
   !insertmacro LanguageAutoSelect German        1031
+  !insertmacro LanguageAutoSelect Greek         1032
   !insertmacro LanguageAutoSelect Indonesian    1057
   !insertmacro LanguageAutoSelect Italian       1040
   !insertmacro LanguageAutoSelect Japanese      1041
