@@ -28,7 +28,6 @@
 #include "libgdl/gdl-dock.h"
 #include "libgdl/gdl-dock-item.h"
 #include "libgdl/gdl-dock-item-grip.h"
-#include "libgdl/gdl-dock-layout.h"
 #include "libgdl/gdl-dock-bar.h"
 
 #endif
