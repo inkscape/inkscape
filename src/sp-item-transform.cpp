@@ -183,11 +183,11 @@ get_scale_transform_with_uniform_stroke (Geom::Rect const &bbox_visual, gdouble 
             scale *= direct;
         }
     } else { // The stroke should not be scaled, or is zero
-        if (!transform_stroke) { // Nonscaling strokewidth
+        if (r0 == 0 || r0 == Geom::infinity() ) { // Strokewidth is zero or infinite
+            scale *= direct;
+        } else { // Nonscaling strokewidth
             scale *= direct_constant_r;
             unbudge *= Geom::Translate (flip_x * 0.5 * r0 * (1 - ratio_x), flip_y * 0.5 * r0 * (1 - ratio_y));
-        } else { // Strokewidth is zero or infinite
-            scale *= direct;
         }
     }
 
@@ -336,11 +336,11 @@ get_scale_transform_with_unequal_stroke (Geom::Rect const &bbox_visual, Geom::Re
             scale *= direct;
         }
     } else { // The stroke should not be scaled, or is zero (or infinite)
-        if (!transform_stroke) {
+        if (r0w == 0 || r0w == Geom::infinity() || r0h == 0 || r0h == Geom::infinity()) { // can't calculate, because apparently strokewidth is zero or infinite
+            scale *= direct;
+        } else {
             scale *= direct_constant_r;
             unbudge *= Geom::Translate (flip_x * stroke_ratio_w * r0w * (1 - ratio_x), flip_y * stroke_ratio_h * r0h * (1 - ratio_y));
-        } else { // can't calculate, because apparently strokewidth is zero or infinite
-            scale *= direct;
         }
     }
 
@@ -350,7 +350,6 @@ get_scale_transform_with_unequal_stroke (Geom::Rect const &bbox_visual, Geom::Re
 Geom::Rect
 get_visual_bbox (Geom::OptRect const &initial_geom_bbox, Geom::Affine const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke)
 {
-    
     g_assert(initial_geom_bbox);
     
     // Find the new geometric bounding box; Do this by transforming each corner of
