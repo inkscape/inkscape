@@ -7,18 +7,18 @@
 	<param name="tab" type="notebook">
 		<page name="options" _gui-text="Options">
 			<param name="auto" type="boolean" _gui-text="Use automatic scaling to size A4">true</param>
-			<param name="scale" type="string" _gui-text="Or, use manual scale factor">1.0</param>
-			<param name="xmin" type="string" _gui-text="Manual x-axis origin (mm)">0.0</param>
-			<param name="ymin" type="string" _gui-text="Manual y-axis origin (mm)">0.0</param>
+			<param name="scale" type="string" _gui-text="Or, use manual scale factor:">1.0</param>
+			<param name="xmin" type="string" _gui-text="Manual x-axis origin (mm):">0.0</param>
+			<param name="ymin" type="string" _gui-text="Manual y-axis origin (mm):">0.0</param>
 			<param name="gcodetoolspoints" type="boolean" _gui-text="Gcodetools compatible point import">false</param>
 			<param name="sep1" type="description">-------------------------------------------------------------------------</param>
-			<param name="encoding" type="enum" _gui-text="Character Encoding">
+			<param name="encoding" type="enum" _gui-text="Character encoding:">
 				<item value="latin_1">Latin 1</item>
 				<item value="cp1250">CP 1250</item>
 				<item value="cp1252">CP 1252</item>
 				<item value="utf_8">UTF 8</item>
 			</param>
-			<param name="font" type="string" _gui-text="Text Font">Arial</param>
+			<param name="font" type="string" _gui-text="Text Font:">Arial</param>
 		</page>
 		<page name="help" _gui-text="Help">
 			<_param name="inputhelp" type="description" xml:space="preserve">- AutoCAD Release 13 and newer.
