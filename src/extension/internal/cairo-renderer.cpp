@@ -475,9 +475,11 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     }
 
     // The width and height of the bitmap in pixels
-    unsigned width = (unsigned) floor ((bbox->max()[Geom::X] - bbox->min()[Geom::X]) * (res / PX_PER_IN));
-    unsigned height =(unsigned) floor ((bbox->max()[Geom::Y] - bbox->min()[Geom::Y]) * (res / PX_PER_IN));
-    
+    unsigned width =  ceil((bbox->max()[Geom::X] - bbox->min()[Geom::X]) * (res / PX_PER_IN));
+    unsigned height = ceil((bbox->max()[Geom::Y] - bbox->min()[Geom::Y]) * (res / PX_PER_IN));
+
+    if (width == 0 || height == 0) return;
+
     // Scale to exactly fit integer bitmap inside bounding box
     double scale_x = (bbox->max()[Geom::X] - bbox->min()[Geom::X]) / width;
     double scale_y = (bbox->max()[Geom::Y] - bbox->min()[Geom::Y]) / height;

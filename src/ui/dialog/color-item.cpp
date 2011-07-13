@@ -225,7 +225,7 @@ static void colorItemDragBegin( GtkWidget */*widget*/, GdkDragContext* dc, gpoin
                 pixbuf = gdk_pixbuf_new_from_data(cairo_image_surface_get_data(s),
                                                   GDK_COLORSPACE_RGB, TRUE, 8,
                                                   width, height, cairo_image_surface_get_stride(s),
-                                                  (GdkPixbufDestroyNotify) cairo_surface_destroy, NULL);
+                                                  ink_cairo_pixbuf_cleanup, s);
                 convert_pixbuf_argb32_to_normal(pixbuf);
             } else {
                 Glib::RefPtr<Gdk::Pixbuf> thumb = Gdk::Pixbuf::create( Gdk::COLORSPACE_RGB, false, 8, width, height );
@@ -533,7 +533,7 @@ void ColorItem::_regenPreview(EekPreview * preview)
         GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( cairo_image_surface_get_data(s),
                                                       GDK_COLORSPACE_RGB, TRUE, 8,
                                                       w, h, cairo_image_surface_get_stride(s),
-                                                      (GdkPixbufDestroyNotify) cairo_surface_destroy, NULL);
+                                                      ink_cairo_pixbuf_cleanup, s);
         convert_pixbuf_argb32_to_normal(pixbuf);
         eek_preview_set_pixbuf( preview, pixbuf );
     }

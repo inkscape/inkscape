@@ -107,6 +107,7 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
                             GSList *items_only)
 
 {
+    if (width == 0 || height == 0) return NULL;
 
      GdkPixbuf* pixbuf = NULL;
      /* Create new arena for offscreen rendering*/
@@ -167,8 +168,8 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
         pixbuf = gdk_pixbuf_new_from_data(cairo_image_surface_get_data(surface),
                                           GDK_COLORSPACE_RGB, TRUE,
                                           8, width, height, cairo_image_surface_get_stride(surface),
-                                          (GdkPixbufDestroyNotify) cairo_surface_destroy,
-                                          NULL);
+                                          ink_cairo_pixbuf_cleanup,
+                                          surface);
         convert_pixbuf_argb32_to_normal(pixbuf);
     }
     else

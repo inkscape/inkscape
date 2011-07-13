@@ -345,6 +345,18 @@ ink_cairo_surface_create_for_argb32_pixbuf(GdkPixbuf *pb)
     return pbs;
 }
 
+/** @brief Cleanup function for GdkPixbuf.
+ * This function should be passed as the GdkPixbufDestroyNotify parameter
+ * to gdk_pixbuf_new_from_data when creating a GdkPixbuf backed by
+ * a Cairo surface.
+ */
+void
+ink_cairo_pixbuf_cleanup(guchar *pixels, void *data)
+{
+    cairo_surface_t *surface = reinterpret_cast<cairo_surface_t*>(data);
+    cairo_surface_destroy(surface);
+}
+
 /** @brief Create an exact copy of a surface.
  * Creates a surface that has the same type, content type, dimensions and contents
  * as the specified surface. */

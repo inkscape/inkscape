@@ -106,6 +106,7 @@ void convert_pixels_argb32_to_pixbuf(guchar *data, int w, int h, int rs);
 void convert_pixbuf_normal_to_argb32(GdkPixbuf *);
 void convert_pixbuf_argb32_to_normal(GdkPixbuf *);
 cairo_surface_t *ink_cairo_surface_create_for_argb32_pixbuf(GdkPixbuf *pb);
+void ink_cairo_pixbuf_cleanup(guchar *pixels, void *surface);
 
 G_GNUC_CONST guint32 argb32_from_pixbuf(guint32 in);
 G_GNUC_CONST guint32 pixbuf_from_argb32(guint32 in);
