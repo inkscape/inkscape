@@ -10,10 +10,10 @@
 	<page name='about' _gui-text='About'>	
 		<_param name="help" type="description">Gcodetools was developed to make simple Gcode from Inkscape's paths. Gcode is a special format which is used in most of CNC machines. So Gcodetools allows you to use Inkscape as CAM program. 
 
-It can be use with a lot of machone types:  
+It can be use with a lot of machine types:  
 	Mills 
 	Lathes
-	Laser and Palsma cutters and engravers 
+	Laser and Plasma cutters and engravers 
 	Mill engravers
 	Plotters
 	etc.

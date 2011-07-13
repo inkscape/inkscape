@@ -10,7 +10,7 @@
 		<page name='path-to-gcode' _gui-text='Path to Gcode'>	
 				<param name="biarc-tolerance" type='float' precision="5" _gui-text='Biarc interpolation tolerance:'>1</param>
 				<param name="biarc-max-split-depth" type="int" _gui-text="Maximum splitting depth:">4</param>
-				<param name="path-to-gcode-order"  _gui-text="Cutting order" type="optiongroup" appearance="minimal">
+				<param name="path-to-gcode-order"  _gui-text="Cutting order:" type="optiongroup" appearance="minimal">
 					<_option value="subpath by subpath">Subpath by subpath</_option>
 					<_option value="path by path">Path by path</_option>
 					<_option value="pass by pass">Pass by Pass</_option>
