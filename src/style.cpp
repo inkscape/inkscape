@@ -6,6 +6,7 @@
  *   Peter Moulder <pmoulder@mail.csse.monash.edu.au>
  *   bulia byak <buliabyak@users.sf.net>
  *   Abhishek Sharma
+ *   Tavmjong Bah <tavmjong@free.fr>
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
@@ -911,8 +912,137 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
                 style->text->font.value = g_strdup(val);
                 style->text->font.set = TRUE;
                 style->text->font.inherit = (val && !strcmp(val, "inherit"));
+
+                // Break string into white space separated tokens
+                std::stringstream os( val );
+                Glib::ustring param;
+
+                while (os >> param) {
+
+                    // CSS is case insensitive but we're comparing against lowercase strings
+                    Glib::ustring lparam = param.lowercase();
+
+                    if (lparam == "/") {
+
+                        os >> param;
+                        // Eat the line-height for the moment as it is not an SVG property.
+                        // lparam = param.lowercase();
+                        // sp_style_read_ilengthornormal(&style->line_height, lparam);
+
+                    } else {
+
+                        // Skip if "normal" as that is the default (and we don't know which attribute it applies to).
+                        if (lparam == "normal") continue;
+
+                        // Check each property in turn
+
+                        // font-style
+                        SPIEnum test_style;
+                        test_style.set = FALSE;
+
+                        // Read once to see if param is valid style. If valid, .set will be TRUE.
+                        sp_style_read_ienum(&test_style, lparam.c_str(), enum_font_style, true);
+
+                        // If valid style parameter
+                        if (test_style.set) {
+
+                            // If not previously set
+                            if (!style->font_style.set) {
+                                style->font_style.set      = TRUE;
+                                style->font_style.inherit  = test_style.inherit;
+                                style->font_style.value    = test_style.value;
+                                style->font_style.computed = test_style.computed;
+                            }
+                            continue; // Next parameter.
+                        }
+
+                        // font-variant (small-caps)
+                        SPIEnum test_variant;
+                        test_variant.set = FALSE;
+                        sp_style_read_ienum(&test_variant, lparam.c_str(), enum_font_variant, true);
+
+                        // If valid variant parameter
+                        if (test_variant.set) {
+
+                            // If not previously set
+                            if (!style->font_variant.set) {
+                                style->font_variant.set      = TRUE;
+                                style->font_variant.inherit  = test_variant.inherit;
+                                style->font_variant.value    = test_variant.value;
+                                style->font_variant.computed = test_variant.computed;
+                            }
+                            continue; // Next parameter.
+                        }
+
+                        // font-weight
+                        SPIEnum test_weight;
+                        test_weight.set = FALSE;
+                        sp_style_read_ienum(&test_weight, lparam.c_str(), enum_font_weight, true);
+
+                        // If valid weight parameter
+                        if (test_weight.set) {
+
+                            // If not previously set
+                            if (!style->font_weight.set) {
+                                style->font_weight.set      = TRUE;
+                                style->font_weight.inherit  = test_weight.inherit;
+                                style->font_weight.value    = test_weight.value;
+                                style->font_weight.computed = test_weight.computed;
+                            }
+                            continue; // Next parameter
+                        }
+
+                        // Font-size
+                        SPIFontSize test_size;
+                        test_size.set = FALSE;
+
+                        // Read once to see if param is valid size.
+                        sp_style_read_ifontsize( &test_size, lparam.c_str() );
+
+                        // If valid size parameter
+                        if (test_size.set) {
+
+                            // If not previously set
+                            if (!style->font_size.set) {
+                                style->font_size.set      = TRUE;
+                                style->font_size.inherit  = test_size.inherit;
+                                style->font_size.unit     = test_size.unit;
+                                style->font_size.value    = test_size.value;
+                                style->font_size.computed = test_size.computed;
+                                style->font_size.type     = test_size.type;
+                                style->font_size.literal  = test_size.literal;
+                            }
+                            continue;
+                        }
+
+                        // No valid property value found.
+                        break;
+                    }
+                } // params
+
+                // The rest must be font-family...
+                std::string val_s = val;
+                std::string family = val_s.substr( val_s.find( param ) );
+
+                if (!style->text_private) sp_style_privatize_text(style);
+                if (!style->text->font_family.set) {
+                    gchar *val_unquoted = attribute_unquote( family.c_str() );
+                    sp_style_read_istring(&style->text->font_family, val_unquoted);
+                    if (val_unquoted) g_free (val_unquoted);
+                }
+
+                // Set all properties to their default values per CSS 2.1 spec if not already set
+                SPS_READ_IFONTSIZE_IF_UNSET(&style->font_size, "medium" );
+                SPS_READ_IENUM_IF_UNSET(&style->font_style,   "normal", enum_font_style,   true);
+                SPS_READ_IENUM_IF_UNSET(&style->font_variant, "normal", enum_font_variant, true);
+                SPS_READ_IENUM_IF_UNSET(&style->font_weight,  "normal", enum_font_weight,  true);
+                // Line height is not an SVG property but Inkscape uses it for multi-line text.
+                // sp_style_read_ilengthornormal(&style->line_height, "normal");
+
             }
+
             break;
+
             /* Text */
         case SP_PROP_TEXT_INDENT:
             SPS_READ_ILENGTH_IF_UNSET(&style->text_indent, val);
@@ -3109,9 +3239,8 @@ sp_style_read_ilength(SPILength *val, gchar const *str)
                 val->unit = SP_CSS_UNIT_PT;
                 val->computed = value * PX_PER_PT;
             } else if (!strcmp(e, "pc")) {
-                /* 1 pica = 12pt; FIXME: add it to SPUnit */
                 val->unit = SP_CSS_UNIT_PC;
-                val->computed = value * PX_PER_PT * 12;
+                val->computed = value * PX_PER_PC;
             } else if (!strcmp(e, "mm")) {
                 val->unit = SP_CSS_UNIT_MM;
                 val->computed = value * PX_PER_MM;
@@ -3335,16 +3464,19 @@ sp_style_read_ifontsize(SPIFontSize *val, gchar const *str)
         return;
     } else {
         SPILength length;
+        length.set = FALSE;
         sp_style_read_ilength(&length, str);
-        val->set      = length.set;
-        val->inherit  = length.inherit;
-        val->unit     = length.unit;
-        val->value    = length.value;
-        val->computed = length.computed;
-        if( val->unit == SP_CSS_UNIT_PERCENT ) {
-            val->type = SP_FONT_SIZE_PERCENTAGE;
-        } else {
-            val->type = SP_FONT_SIZE_LENGTH;
+        if( length.set ) {
+            val->set      = TRUE;
+            val->inherit  = length.inherit;
+            val->unit     = length.unit;
+            val->value    = length.value;
+            val->computed = length.computed;
+            if( val->unit == SP_CSS_UNIT_PERCENT ) {
+                val->type = SP_FONT_SIZE_PERCENTAGE;
+            } else {
+                val->type = SP_FONT_SIZE_LENGTH;
+            }
         }
         return; 
     }
