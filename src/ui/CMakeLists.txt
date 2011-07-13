@@ -159,7 +159,6 @@ set(ui_SRC
 	dialog/print-colors-preview-dialog.h
 	dialog/print.h
 	dialog/scriptdialog.h
-	dialog/session-player.h
 	dialog/svg-fonts-dialog.h
 	dialog/swatches.h
 	dialog/tile.h
