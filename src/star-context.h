@@ -16,8 +16,8 @@
 
 #include <stddef.h>
 #include <sigc++/sigc++.h>
+#include <2geom/point.h>
 #include "event-context.h"
-#include "libnr/nr-point.h"
 
 #define SP_TYPE_STAR_CONTEXT (sp_star_context_get_type ())
 #define SP_STAR_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_STAR_CONTEXT, SPStarContext))

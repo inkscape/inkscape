@@ -22,9 +22,9 @@
 
 #include <cstring>
 #include <string>
-#include <libnr/nr-macros.h>
 #include <gtk/gtk.h>
 #include <glibmm/i18n.h>
+#include <2geom/coord.h>
 
 #include "style.h"
 #include "dialogs/dialog-events.h"
@@ -144,7 +144,7 @@ SPDashSelector::set_dash (int ndash, double *dash, double o)
             if (np == ndash) {
                 int j;
                 for (j = 0; j < ndash; j++) {
-                    if (!NR_DF_TEST_CLOSE (dash[j], pattern[j], delta))
+                    if (!Geom::are_near(dash[j], pattern[j], delta))
                         break;
                 }
                 if (j == ndash) {

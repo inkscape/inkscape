@@ -63,7 +63,6 @@
 #include "display/canvas-arena.h"
 #include "display/curve.h"
 #include "livarot/Shape.h"
-#include <2geom/isnan.h>
 #include <2geom/transforms.h>
 #include "preferences.h"
 #include "style.h"

@@ -12,7 +12,6 @@
 #include <2geom/affine.h>
 #include <2geom/bezier-curve.h>
 #include <2geom/hvlinesegment.h>
-#include <2geom/isnan.h>
 #include "helper/geom-nodetype.h"
 #include "helper/geom-curves.h"
 

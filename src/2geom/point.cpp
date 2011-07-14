@@ -1,3 +1,38 @@
+/**
+ *  \file
+ *  \brief Cartesian point / 2D vector and related operations
+ *//*
+ *  Authors:
+ *    Michael G. Sloan <mgsloan@gmail.com>
+ *    Nathan Hurst <njh@njhurst.com>
+ *    Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *
+ * Copyright (C) 2006-2009 Authors
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it either under the terms of the GNU Lesser General Public
+ * License version 2.1 as published by the Free Software Foundation
+ * (the "LGPL") or, at your option, under the terms of the Mozilla
+ * Public License Version 1.1 (the "MPL"). If you do not alter this
+ * notice, a recipient may use your version of this file under either
+ * the MPL or the LGPL.
+ *
+ * You should have received a copy of the LGPL along with this library
+ * in the file COPYING-LGPL-2.1; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the MPL along with this library
+ * in the file COPYING-MPL-1.1
+ *
+ * The contents of this file are subject to the Mozilla Public License
+ * Version 1.1 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
+ * OF ANY KIND, either express or implied. See the LGPL or the MPL for
+ * the specific language governing rights and limitations.
+ */
+
 #include <assert.h>
 #include <math.h>
 #include <2geom/point.h>
@@ -14,8 +49,8 @@ namespace Geom {
  * from the origin (point at 0,0) to the stored coordinates,
  * and has methods implementing several vector operations (like length()).
  *
- * \par Operator note
- * \par
+ * @par Operator note
+ * @par
  * Most operators are provided by Boost operator helpers, so they are not visible in this class.
  * If @a p, @a q, @a r denote points, @a s a floating-point scalar, and @a m a transformation matrix,
  * then the following operations are available:
@@ -149,12 +184,11 @@ Point unit_vector(Point const &a)
  * that the origin (0, 0), its negation is returned. You can check whether
  * the points' vectors have the same direction (e.g. lie
  * on the same line passing through the origin) using
- * @code abs(a).normalize() == abs(b).normalize() @endcode.
+ * @code abs(a).normalize() == abs(b).normalize() @endcode
  * To check with some margin of error, use
- * @code are_near(abs(a).normalize(), abs(b).normalize()) @endcode.
+ * @code are_near(abs(a).normalize(), abs(b).normalize()) @endcode
  * Although naively this should take the absolute value of each coordinate, such an operation
  * is not very useful.
- * @return \f$p' = (p_X, -p_Y)\f$
  * @relates Point */
 Point abs(Point const &b)
 {
@@ -178,8 +212,8 @@ Point &Point::operator*=(Affine const &m) {
     return *this;
 }
 
-/** @brief Snap the angle B - A - dir to miltiples of \f$2\pi/n\f$.
- * The 'dir' argument must be normalized (have an unit length), otherwise the result
+/** @brief Snap the angle B - A - dir to multiples of \f$2\pi/n\f$.
+ * The 'dir' argument must be normalized (have unit length), otherwise the result
  * is undefined.
  * @return Point with the same distance from A as B, with a snapped angle.
  * @post distance(A, B) == distance(A, result)

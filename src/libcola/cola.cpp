@@ -2,7 +2,7 @@
 #include "conjugate_gradient.h"
 #include "straightener.h"
 #include "shortest_paths.h"
-#include "2geom/isnan.h"
+#include <2geom/math-utils.h>
 
 using namespace std;
 

@@ -35,7 +35,7 @@
 #include <glibmm/i18n.h>
 #include "object-edit.h"
 #include "xml/repr.h"
-#include "2geom/isnan.h"
+#include <2geom/math-utils.h>
 
 #define sp_round(v,m) (((v) < 0.0) ? ((ceil((v) / (m) - 0.5)) * (m)) : ((floor((v) / (m) + 0.5)) * (m)))
 
@@ -959,7 +959,7 @@ StarKnotHolderEntity1::knot_set(Geom::Point const &p, Geom::Point const &/*origi
 
     Geom::Point const s = snap_knot_position(p);
 
-    Geom::Point d = s - to_2geom(star->center);
+    Geom::Point d = s - star->center;
 
     double arg1 = atan2(d);
     double darg1 = arg1 - star->arg[0];
@@ -986,7 +986,7 @@ StarKnotHolderEntity2::knot_set(Geom::Point const &p, Geom::Point const &/*origi
     Geom::Point const s = snap_knot_position(p);
 
     if (star->flatsided == false) {
-        Geom::Point d = s - to_2geom(star->center);
+        Geom::Point d = s - star->center;
 
         double arg1 = atan2(d);
         double darg1 = arg1 - star->arg[1];

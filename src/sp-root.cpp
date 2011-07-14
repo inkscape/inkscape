@@ -19,6 +19,7 @@
 
 #include <cstring>
 #include <string>
+#include <2geom/transforms.h>
 
 #include "svg/svg.h"
 #include "display/nr-arena-group.h"

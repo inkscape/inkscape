@@ -13,8 +13,8 @@
  */
 
 #include <2geom/forward.h>
-#include <libnr/nr-forward.h>
-#include <libnr/nr-coord.h>
+#include <2geom/rect.h>
+#include <2geom/affine.h>
 
 Geom::OptRect bounds_fast_transformed(Geom::PathVector const & pv, Geom::Affine const & t);
 Geom::OptRect bounds_exact_transformed(Geom::PathVector const & pv, Geom::Affine const & t);

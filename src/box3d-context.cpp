@@ -301,11 +301,11 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             m.setup(desktop, true, bc->item);
             m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
             m.unSetup();
-            bc->center = from_2geom(button_dt);
+            bc->center = button_dt;
 
-            bc->drag_origin = from_2geom(button_dt);
-            bc->drag_ptB = from_2geom(button_dt);
-            bc->drag_ptC = from_2geom(button_dt);
+            bc->drag_origin = button_dt;
+            bc->drag_ptB = button_dt;
+            bc->drag_ptC = button_dt;
 
             // This can happen after saving when the last remaining perspective was purged and must be recreated.
             if (!cur_persp) {
@@ -314,7 +314,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             }
 
             /* Projective preimages of clicked point under current perspective */
-            bc->drag_origin_proj = cur_persp->perspective_impl->tmat.preimage (from_2geom(button_dt), 0, Proj::Z);
+            bc->drag_origin_proj = cur_persp->perspective_impl->tmat.preimage (button_dt, 0, Proj::Z);
             bc->drag_ptB_proj = bc->drag_origin_proj;
             bc->drag_ptC_proj = bc->drag_origin_proj;
             bc->drag_ptC_proj.normalize();
@@ -358,10 +358,10 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             }
 
             if (!bc->extruded) {
-                bc->drag_ptB = from_2geom(motion_dt);
-                bc->drag_ptC = from_2geom(motion_dt);
+                bc->drag_ptB = motion_dt;
+                bc->drag_ptC = motion_dt;
 
-                bc->drag_ptB_proj = cur_persp->perspective_impl->tmat.preimage (from_2geom(motion_dt), 0, Proj::Z);
+                bc->drag_ptB_proj = cur_persp->perspective_impl->tmat.preimage (motion_dt, 0, Proj::Z);
                 bc->drag_ptC_proj = bc->drag_ptB_proj;
                 bc->drag_ptC_proj.normalize();
                 bc->drag_ptC_proj[Proj::Z] = 0.25;
@@ -371,15 +371,15 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                 if (!bc->ctrl_dragged) {
                     /* snapping */
                     Box3D::PerspectiveLine pline (bc->drag_ptB, Proj::Z, document->getCurrentPersp3D());
-                    bc->drag_ptC = pline.closest_to (from_2geom(motion_dt));
+                    bc->drag_ptC = pline.closest_to (motion_dt);
 
                     bc->drag_ptB_proj.normalize();
                     bc->drag_ptC_proj = cur_persp->perspective_impl->tmat.preimage (bc->drag_ptC, bc->drag_ptB_proj[Proj::X], Proj::X);
                 } else {
-                    bc->drag_ptC = from_2geom(motion_dt);
+                    bc->drag_ptC = motion_dt;
 
                     bc->drag_ptB_proj.normalize();
-                    bc->drag_ptC_proj = cur_persp->perspective_impl->tmat.preimage (from_2geom(motion_dt), bc->drag_ptB_proj[Proj::X], Proj::X);
+                    bc->drag_ptC_proj = cur_persp->perspective_impl->tmat.preimage (motion_dt, bc->drag_ptB_proj[Proj::X], Proj::X);
                 }
                 m.freeSnapReturnByRef(bc->drag_ptC, Inkscape::SNAPSOURCE_NODE_HANDLE);
             }

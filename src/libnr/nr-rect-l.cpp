@@ -1,21 +1,50 @@
-#include <libnr/nr-rect-l.h>
+#include "libnr/nr-rect-l.h"
 
-boost::optional<NR::Rect> NRRectL::upgrade() const {
-    if (nr_rect_l_test_empty_ptr(this)) {
-        return boost::optional<NR::Rect>();
+NRRectL::NRRectL()
+{
+    x0 = G_MAXINT32;
+    y0 = G_MAXINT32;
+    x1 = G_MININT32;
+    y1 = G_MININT32;
+}
+
+NRRectL::NRRectL(gint32 xmin, gint32 ymin, gint32 xmax, gint32 ymax)
+{
+    x0 = xmin;
+    y0 = ymin;
+    x1 = xmax;
+    y1 = ymax;
+}
+
+NRRectL::NRRectL(Geom::OptIntRect const &r)
+{
+    if (r) {
+        x0 = r->left();
+        y0 = r->top();
+        x1 = r->right();
+        y1 = r->bottom();
     } else {
-        return NR::Rect(NR::Point(x0, y0), NR::Point(x1, y1));
+        x0 = G_MAXINT32;
+        y0 = G_MAXINT32;
+        x1 = G_MININT32;
+        y1 = G_MININT32;
     }
 }
 
-namespace NR {
-
-IRect::IRect(Rect const &r) :
-    _min(int(floor(r.min()[X])), int(floor(r.min()[Y]))),
-    _max(int(ceil(r.min()[X])), int(ceil(r.min()[Y])))
+NRRectL::NRRectL(Geom::IntRect const &r)
 {
+    x0 = r.left();
+    y0 = r.top();
+    x1 = r.right();
+    y1 = r.bottom();
 }
 
+Geom::OptIntRect NRRectL::upgrade_2geom() const
+{
+    Geom::OptIntRect ret;
+    if (x0 > x1 || y0 > y1) return ret;
+    ret = Geom::IntRect(x0, y0, x1, y1);
+    return ret;
 }
 
 /*

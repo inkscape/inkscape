@@ -18,8 +18,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <2geom/point.h>
 #include "event-context.h"
-#include <libnr/nr-point.h>
 //#include "ui/widget/spray-option.h"
 #include "ui/dialog/dialog.h"
 

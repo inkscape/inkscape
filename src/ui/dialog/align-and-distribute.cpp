@@ -20,8 +20,8 @@
 # include <config.h>
 #endif
 
+#include <2geom/transforms.h>
 #include "ui/widget/spinbutton.h"
-
 #include "desktop-handles.h"
 #include "unclump.h"
 #include "document.h"
@@ -357,7 +357,7 @@ private :
                   it < sorted.end();
                   it ++ )
             {
-                if (!NR_DF_TEST_CLOSE (pos, it->bbox.min()[_orientation], 1e-6)) {
+                if (!Geom::are_near(pos, it->bbox.min()[_orientation], 1e-6)) {
                     Geom::Point t(0.0, 0.0);
                     t[_orientation] = pos - it->bbox.min()[_orientation];
                     sp_item_move_rel(it->item, Geom::Translate(t));
@@ -380,7 +380,7 @@ private :
                 //new anchor position
                 float pos = sorted.front().anchor + i * step;
                 //Don't move if we are really close
-                if (!NR_DF_TEST_CLOSE (pos, it.anchor, 1e-6)) {
+                if (!Geom::are_near(pos, it.anchor, 1e-6)) {
                     //Compute translation
                     Geom::Point t(0.0, 0.0);
                     t[_orientation] = pos - it.anchor;

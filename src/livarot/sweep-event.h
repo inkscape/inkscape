@@ -4,7 +4,7 @@
  * Intersection events.
  */
 
-#include <libnr/nr-point.h>
+#include <2geom/point.h>
 class SweepTree;
 
 

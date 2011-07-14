@@ -1,7 +1,7 @@
 /**
  * \file
- * \brief  \todo brief description
- *
+ * \brief Obsolete 2D SBasis function class
+ *//*
  * Authors:
  *      Nathan Hurst <?@?.?>
  *      JFBarraud <?@?.?>

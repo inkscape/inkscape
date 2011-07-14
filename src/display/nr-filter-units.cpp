@@ -158,22 +158,13 @@ Geom::Affine FilterUnits::get_matrix_user2primitiveunits() const {
     return get_matrix_user2units(primitiveUnits);
 }
 
-NR::IRect FilterUnits::get_pixblock_filterarea_paraller() const {
+Geom::IntRect FilterUnits::get_pixblock_filterarea_paraller() const {
     g_assert(filter_area);
 
-    int min_x = INT_MAX, min_y = INT_MAX, max_x = INT_MIN, max_y = INT_MIN;
     Geom::Affine u2pb = get_matrix_user2pb();
-
-    for (int i = 0 ; i < 4 ; i++) {
-        Geom::Point p = filter_area->corner(i);
-        p *= u2pb;
-        if (p[X] < min_x) min_x = (int)std::floor(p[X]);
-        if (p[X] > max_x) max_x = (int)std::ceil(p[X]);
-        if (p[Y] < min_y) min_y = (int)std::floor(p[Y]);
-        if (p[Y] > max_y) max_y = (int)std::ceil(p[Y]);
-    }
-    NR::IRect ret(NR::IPoint(min_x, min_y), NR::IPoint(max_x, max_y));
-    return ret;
+    Geom::Rect r = *filter_area * u2pb;
+    Geom::IntRect ir = r.roundOutwards();
+    return ir;
 }
 
 FilterUnits& FilterUnits::operator=(FilterUnits const &other) {

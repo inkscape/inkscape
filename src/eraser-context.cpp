@@ -62,7 +62,7 @@
 #include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
 #include "livarot/Shape.h"
-#include <2geom/isnan.h>
+#include <2geom/math-utils.h>
 #include <2geom/pathvector.h>
 
 #include "eraser-context.h"

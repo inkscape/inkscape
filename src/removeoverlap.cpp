@@ -10,12 +10,13 @@
 *
 * Released under GNU LGPL.  Read the file 'COPYING' for more information.
 */
+#include <utility>
+#include <2geom/transforms.h>
 #include "util/glib-list-iterators.h"
 #include "sp-item.h"
 #include "sp-item-transform.h"
 #include "libvpsc/generate-constraints.h"
 #include "libvpsc/remove_rectangle_overlap.h"
-#include <utility>
 
 using vpsc::Rectangle;
 

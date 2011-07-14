@@ -22,6 +22,7 @@
 #include "forward.h"
 #include "nr-arena-item.h"
 #include "nr-style.h"
+#include "libnr/nr-rect.h"
 
 NRType nr_arena_shape_get_type (void);
 

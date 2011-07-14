@@ -375,7 +375,7 @@ Geom::OptRect Selection::bounds(SPItem::BBoxType type) const
 
     Geom::OptRect bbox;
     for ( GSList const *i = items ; i != NULL ; i = i->next ) {
-        bbox = unify(bbox, SP_ITEM(i->data)->getBboxDesktop(type));
+        bbox.unionWith(SP_ITEM(i->data)->getBboxDesktop(type));
     }
     return bbox;
 }
@@ -403,7 +403,7 @@ NRRect *Selection::boundsInDocument(NRRect *bbox, SPItem::BBoxType type) const {
 
 Geom::OptRect Selection::boundsInDocument(SPItem::BBoxType type) const {
     NRRect r;
-    return to_2geom(boundsInDocument(&r, type)->upgrade());
+    return to_2geom(boundsInDocument(&r, type));
 }
 
 /** Extract the position of the center from the first selected object */

@@ -14,8 +14,8 @@
 #include <cstdlib>
 #include <cstring>
 #include <vector>
+#include <2geom/point.h>
 
-#include "libnr/nr-point.h"
 #include "livarot/livarot-forward.h"
 #include "livarot/LivarotDefs.h"
 

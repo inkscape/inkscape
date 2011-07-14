@@ -281,14 +281,14 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
 
             /* Position center */
             Geom::Point button_dt(desktop->w2d(button_w));
-            rc->center = from_2geom(button_dt);
+            rc->center = button_dt;
 
             /* Snap center */
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop);
             m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
             m.unSetup();
-            rc->center = from_2geom(button_dt);
+            rc->center = button_dt;
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 ( GDK_KEY_PRESS_MASK |

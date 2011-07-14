@@ -25,7 +25,6 @@
 #include <gtkmm/table.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/label.h>
-#include "libnr/nr-dim2.h"
 #include "libnr/nr-rect.h"
 
 

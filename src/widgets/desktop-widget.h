@@ -14,7 +14,6 @@
 
 #include <gtk/gtk.h>
 
-#include "libnr/nr-point.h"
 #include "forward.h"
 #include "sp-object.h"
 #include "message.h"
@@ -23,6 +22,7 @@
 
 #include <stddef.h>
 #include <sigc++/connection.h>
+#include <2geom/point.h>
 
 // forward declaration
 typedef struct _EgeColorProfTracker EgeColorProfTracker;

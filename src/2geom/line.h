@@ -1,8 +1,11 @@
 /**
  * \file
- * \brief  Infinite Straight Line
- *
- * Copyright 2008  Marco Cecchetti <mrcekets at gmail.com>
+ * \brief  Infinite straight line
+ *//*
+ * Authors:
+ *   Marco Cecchetti <mrcekets at gmail.com>
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ * Copyright 2008-2011 Authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -28,21 +31,16 @@
  * the specific language governing rights and limitations.
  */
 
-#ifndef _2GEOM_LINE_H_
-#define _2GEOM_LINE_H_
-
+#ifndef LIB2GEOM_SEEN_LINE_H
+#define LIB2GEOM_SEEN_LINE_H
 
 #include <cmath>
-
+#include <boost/optional.hpp>
 #include <2geom/bezier-curve.h> // for LineSegment
 #include <2geom/rect.h>
 #include <2geom/crossing.h>
 #include <2geom/exception.h>
-
 #include <2geom/ray.h>
-
-#include <boost/optional.hpp>
-
 
 namespace Geom
 {
@@ -226,8 +224,8 @@ public:
      * @return Ray starting at t and going in the direction of the versor */
     Ray ray(Coord t) {
         Ray result;
-        result.origin(pointAt(t));
-        result.versor(m_versor);
+        result.setOrigin(pointAt(t));
+        result.setVersor(m_versor);
         return result;
     }
 
@@ -448,17 +446,16 @@ OptCrossing intersection(LineSegment const& ls1, LineSegment const& ls2);
 } // end namespace Geom
 
 
-#endif // _2GEOM_LINE_H_
+#endif // LIB2GEOM_SEEN_LINE_H
 
 
 /*
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(substatement-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
-  c-brace-offset:0
   fill-column:99
   End:
-  vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
 */
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

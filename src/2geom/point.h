@@ -42,7 +42,7 @@
 #include <boost/operators.hpp>
 #include <2geom/forward.h>
 #include <2geom/coord.h>
-#include <2geom/isnan.h> //temporary fix for isnan()
+#include <2geom/int-point.h>
 #include <2geom/math-utils.h>
 #include <2geom/utils.h>
 
@@ -61,8 +61,9 @@ class Point
       > > > > > > > > > // this uses chaining so it looks weird, but works
 {
     Coord _pt[2];
-
 public:
+    /// @name Create points
+    /// @{
     /** Construct a point on the origin. */
     Point()
     { _pt[X] = _pt[Y] = 0; }
@@ -70,6 +71,11 @@ public:
     /** Construct a point from its coordinates. */
     Point(Coord x, Coord y) {
         _pt[X] = x; _pt[Y] = y;
+    }
+    /** Construct from integer point. */
+    Point(IntPoint const &p) {
+        _pt[X] = p[X];
+        _pt[Y] = p[Y];
     }
     Point(Point const &p) {
         for (unsigned i = 0; i < 2; ++i)
@@ -80,6 +86,23 @@ public:
             _pt[i] = p._pt[i];
         return *this;
     }
+    /** @brief Construct a point from its polar coordinates.
+     * The angle is specified in radians, in the mathematical convention (increasing
+     * counter-clockwise from +X). */
+    static Point polar(Coord angle, Coord radius) {
+        Point ret(polar(angle));
+        ret *= radius;
+        return ret;
+    }
+    /** @brief Construct an unit vector from its angle.
+     * The angle is specified in radians, in the mathematical convention (increasing
+     * counter-clockwise from +X). */
+    static Point polar(Coord angle) {
+        Point ret;
+        sincos(angle, ret[Y], ret[X]);
+        return ret;
+    }
+    /// @}
 
     /// @name Access the coordinates of a point
     /// @{
@@ -157,57 +180,54 @@ public:
     }
     /// @}
 
+    /// @name Conversion to integer points
+    /// @{
+    /** @brief Round to nearest integer coordinates. */
+    IntPoint round() const {
+        IntPoint ret(::round(_pt[X]), ::round(_pt[Y]));
+        return ret;
+    }
+    /** @brief Round coordinates downwards. */
+    IntPoint floor() const {
+        IntPoint ret(::floor(_pt[X]), ::floor(_pt[Y]));
+        return ret;
+    }
+    /** @brief Round coordinates upwards. */
+    IntPoint ceil() const {
+        IntPoint ret(::ceil(_pt[X]), ::ceil(_pt[Y]));
+        return ret;
+    }
+    /// @}
+
     /// @name Various utilities
     /// @{
-    /** @brief Lower the precision of the point.
-     * This will round both coordinates to multiples of \f$10^p\f$. */
-    void round (int p = 0) {
-        _pt[X] = (Coord)(decimal_round((double)_pt[X], p));
-        _pt[Y] = (Coord)(decimal_round((double)_pt[Y], p));
-        return;
-    }
-
-    /** @brief Check whether both coordinates are finite.
-     * @return True if neither coordinate is infinite. */
+    /** @brief Check whether both coordinates are finite. */
     bool isFinite() const {
         for ( unsigned i = 0 ; i < 2 ; ++i ) {
             if(!IS_FINITE(_pt[i])) return false;
         }
         return true;
     }
+    /** @brief Check whether both coordinates are zero. */
+    bool isZero() const {
+        return _pt[X] == 0 && _pt[Y] == 0;
+    }
+    /** @brief Check whether the length of the vector is close to 1. */
+    bool isNormalized(Coord eps=EPSILON) const {
+        return are_near(length(), 1.0, eps);
+    }
     /** @brief Equality operator.
      * This tests for exact identity (as opposed to are_near()). Note that due to numerical
      * errors, this test might return false even if the points should be identical. */
     bool operator==(const Point &in_pnt) const {
-        return ((_pt[X] == in_pnt[X]) && (_pt[Y] == in_pnt[Y]));
+        return (_pt[X] == in_pnt[X]) && (_pt[Y] == in_pnt[Y]);
     }
     /** @brief Lexicographical ordering for points.
      * Y coordinate is regarded as more significant. When sorting according to this
      * ordering, the points will be sorted according to the Y coordinate, and within
      * points with the same Y coordinate according to the X coordinate. */
     bool operator<(const Point &p) const {
-        return ( ( _pt[Y] < p[Y] ) ||
-             (( _pt[Y] == p[Y] ) && ( _pt[X] < p[X] )));
-    }
-    /// @}
-
-    /// @name Point factories
-    /// @{
-    /** @brief Construct a point from its polar coordinates.
-     * The angle is specified in radians, in the mathematical convention (increasing
-     * counter-clockwise from +X). */
-    static Point polar(Coord angle, Coord radius) {
-        Point ret(polar(angle));
-        ret *= radius;
-        return ret;
-    }
-    /** @brief Construct an unit vector from its angle.
-     * The angle is specified in radians, in the mathematical convention (increasing
-     * counter-clockwise from +X). */
-    static Point polar(Coord angle) {
-        Point ret;
-        sincos(angle, ret[Y], ret[X]);
-        return ret;
+        return _pt[Y] < p[Y] || (_pt[Y] == p[Y] && _pt[X] < p[X]);
     }
     /// @}
 
@@ -315,7 +335,7 @@ inline Point lerp(double const t, Point const &a, Point const &b)
  * For perpendicular vectors, it is zero. For parallel ones, its absolute value is highest,
  * and the sign depends on whether they point in the same direction (+) or opposite ones (-).
  * @return \f$a \cdot b = a_X b_X + a_Y b_Y\f$.
- * @relates Point*/
+ * @relates Point */
 inline Coord dot(Point const &a, Point const &b)
 {
     return a[0] * b[0] + a[1] * b[1];
@@ -349,8 +369,8 @@ Coord L1(Point const &p);
 Coord LInfty(Point const &p);
 bool is_zero(Point const &p);
 bool is_unit_vector(Point const &p);
-extern double atan2(Point const &p);
-extern double angle_between(Point const &a, Point const &b);
+double atan2(Point const &p);
+double angle_between(Point const &a, Point const &b);
 Point abs(Point const &b);
 Point constrain_angle(Point const &A, Point const &B, unsigned int n = 4, Geom::Point const &dir = Geom::Point(1,0));
 

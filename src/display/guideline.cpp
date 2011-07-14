@@ -112,8 +112,8 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
     cairo_set_line_cap(buf->ct, CAIRO_LINE_CAP_SQUARE);
     cairo_set_font_size(buf->ct, 10);
 
-    int px = (int) Inkscape::round(gl->point_on_line[Geom::X]);
-    int py = (int) Inkscape::round(gl->point_on_line[Geom::Y]);
+    int px = round(gl->point_on_line[Geom::X]);
+    int py = round(gl->point_on_line[Geom::Y]);
 
     if (gl->label) {
         cairo_save(buf->ct);
@@ -126,12 +126,12 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
     }
 
     if (gl->is_vertical()) {
-        int position = (int) Inkscape::round(gl->point_on_line[Geom::X]);
+        int position = round(gl->point_on_line[Geom::X]);
         cairo_move_to(buf->ct, position + 0.5, buf->rect.y0 + 0.5);
         cairo_line_to(buf->ct, position + 0.5, buf->rect.y1 - 0.5);
         cairo_stroke(buf->ct);
     } else if (gl->is_horizontal()) {
-        int position = (int) Inkscape::round(gl->point_on_line[Geom::Y]);
+        int position = round(gl->point_on_line[Geom::Y]);
         cairo_move_to(buf->ct, buf->rect.x0 + 0.5, position + 0.5);
         cairo_line_to(buf->ct, buf->rect.x1 - 0.5, position + 0.5);
         cairo_stroke(buf->ct);
@@ -193,9 +193,9 @@ static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, 
     sp_canvas_item_request_update(SP_CANVAS_ITEM (gl->origin));
 
     if (gl->is_horizontal()) {
-        sp_canvas_update_bbox (item, -1000000, (int) Inkscape::round(gl->point_on_line[Geom::Y] - 16), 1000000, (int) Inkscape::round(gl->point_on_line[Geom::Y] + 1));
+        sp_canvas_update_bbox (item, -1000000, round(gl->point_on_line[Geom::Y] - 16), 1000000, round(gl->point_on_line[Geom::Y] + 1));
     } else if (gl->is_vertical()) {
-        sp_canvas_update_bbox (item, (int) Inkscape::round(gl->point_on_line[Geom::X]), -1000000, (int) Inkscape::round(gl->point_on_line[Geom::X] + 16), 1000000);
+        sp_canvas_update_bbox (item, round(gl->point_on_line[Geom::X]), -1000000, round(gl->point_on_line[Geom::X] + 16), 1000000);
     } else {
         //TODO: labels in angled guidelines are not showing up for some reason.
         sp_canvas_update_bbox (item, -1000000, -1000000, 1000000, 1000000);

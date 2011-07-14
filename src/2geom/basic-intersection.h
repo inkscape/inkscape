@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief  \todo brief description
+ * \brief Basic intersection routines
  *
  * Authors:
  *      ? <?@?.?>

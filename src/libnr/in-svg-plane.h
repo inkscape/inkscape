@@ -1,8 +1,7 @@
 #ifndef SEEN_LIBNR_IN_SVG_PLANE_H
 #define SEEN_LIBNR_IN_SVG_PLANE_H
 
-#include "libnr/nr-point-fns.h"
-
+#include <2geom/point.h>
 
 /**
  * Returns true iff the coordinates of \a p are finite, non-NaN, and "small enough".  Currently we
@@ -13,7 +12,7 @@
  * in SVG Tiny (which uses fixed-point arithmetic).
  */
 inline bool
-in_svg_plane(NR::Point const p)
+in_svg_plane(Geom::Point const &p)
 {
     return Geom::LInfty(p) < 1e18;
 }

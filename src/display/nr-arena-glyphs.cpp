@@ -135,10 +135,10 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
     }
 
     if (b) {
-        item->bbox.x0 = static_cast<NR::ICoord>(floor(b->left()));
-        item->bbox.y0 = static_cast<NR::ICoord>(floor(b->top()));
-        item->bbox.x1 = static_cast<NR::ICoord>(ceil (b->right()));
-        item->bbox.y1 = static_cast<NR::ICoord>(ceil (b->bottom()));
+        item->bbox.x0 = floor(b->left());
+        item->bbox.y0 = floor(b->top());
+        item->bbox.x1 = ceil (b->right());
+        item->bbox.y1 = ceil (b->bottom());
     } else {
         item->bbox.x0 = 0;
         item->bbox.y0 = 0;
@@ -282,7 +282,8 @@ nr_arena_glyphs_group_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint s
 }
 
 
-static unsigned int nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock * /*pb*/, unsigned int /*flags*/)
+static unsigned int
+nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock * /*pb*/, unsigned int /*flags*/)
 {
     NRArenaItem *child = 0;
 
@@ -352,20 +353,34 @@ static unsigned int nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item,
     return item->state;
 }
 
-static unsigned int nr_arena_glyphs_group_clip(cairo_t * /*ct*/, NRArenaItem *item, NRRectL * /*area*/)
+static unsigned int nr_arena_glyphs_group_clip(cairo_t *ct, NRArenaItem *item, NRRectL * /*area*/)
 {
-    //NRArenaGroup *group = NR_ARENA_GROUP(item);
+    NRArenaGroup *ggroup = NR_ARENA_GLYPHS_GROUP(item);
 
-    guint ret = item->state;
+    cairo_save(ct);
+    // handle clip-rule
+    if (ggroup->style) {
+        if (ggroup->style->clip_rule.computed == SP_WIND_RULE_EVENODD) {
+            cairo_set_fill_rule(ct, CAIRO_FILL_RULE_EVEN_ODD);
+        } else {
+            cairo_set_fill_rule(ct, CAIRO_FILL_RULE_WINDING);
+        }
+    }
+    ink_cairo_transform(ct, ggroup->ctm);
 
-    // Render children fill mask
-    /*
-    for (NRArenaItem *child = group->children; child != NULL; child = child->next) {
-        ret = nr_arena_glyphs_fill_mask(NR_ARENA_GLYPHS(child), area, pb);
-        if (!(ret & NR_ARENA_ITEM_STATE_RENDER)) return ret;
-    }*/
+    for (NRArenaItem *child = ggroup->children; child != NULL; child = child->next) {
+        NRArenaGlyphs *g = NR_ARENA_GLYPHS(child);
+        Geom::PathVector const &pathv = *g->font->PathVector(g->glyph);
 
-    return ret;
+        cairo_save(ct);
+        ink_cairo_transform(ct, g->g_transform);
+        feed_pathvector_to_cairo(ct, pathv);
+        cairo_restore(ct);
+    }
+    cairo_fill(ct);
+    cairo_restore(ct);
+
+    return item->state;
 }
 
 static NRArenaItem *

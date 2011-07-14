@@ -57,10 +57,10 @@ static gint pencil_handle_button_release(SPPencilContext *const pc, GdkEventButt
 static gint pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint const state);
 static gint pencil_handle_key_release(SPPencilContext *const pc, guint const keyval, guint const state);
 
-static void spdc_set_startpoint(SPPencilContext *pc, Geom::Point const p);
-static void spdc_set_endpoint(SPPencilContext *pc, Geom::Point const p);
+static void spdc_set_startpoint(SPPencilContext *pc, Geom::Point const &p);
+static void spdc_set_endpoint(SPPencilContext *pc, Geom::Point const &p);
 static void spdc_finish_endpoint(SPPencilContext *pc);
-static void spdc_add_freehand_point(SPPencilContext *pc, Geom::Point p, guint state);
+static void spdc_add_freehand_point(SPPencilContext *pc, Geom::Point const &p, guint state);
 static void fit_and_split(SPPencilContext *pc);
 static void interpolate(SPPencilContext *pc);
 static void sketch_interpolate(SPPencilContext *pc);
@@ -644,7 +644,7 @@ pencil_handle_key_release(SPPencilContext *const pc, guint const keyval, guint c
  * Reset points and set new starting point.
  */
 static void
-spdc_set_startpoint(SPPencilContext *const pc, Geom::Point const p)
+spdc_set_startpoint(SPPencilContext *const pc, Geom::Point const &p)
 {
     pc->npoints = 0;
     pc->red_curve_is_valid = false;
@@ -664,7 +664,7 @@ spdc_set_startpoint(SPPencilContext *const pc, Geom::Point const p)
  * We change RED curve.
  */
 static void
-spdc_set_endpoint(SPPencilContext *const pc, Geom::Point const p)
+spdc_set_endpoint(SPPencilContext *const pc, Geom::Point const &p)
 {
     if (pc->npoints == 0) {
         return;
@@ -716,7 +716,7 @@ spdc_finish_endpoint(SPPencilContext *const pc)
 
 
 static void
-spdc_add_freehand_point(SPPencilContext *pc, Geom::Point p, guint /*state*/)
+spdc_add_freehand_point(SPPencilContext *pc, Geom::Point const &p, guint /*state*/)
 {
     g_assert( pc->npoints > 0 );
     g_return_if_fail(unsigned(pc->npoints) < G_N_ELEMENTS(pc->p));

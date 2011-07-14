@@ -15,11 +15,10 @@
 # include <config.h>
 #endif
 
-#include <glibmm/i18n.h>
-#include <glibmm/ustring.h>
-#include <glibmm/refptr.h>
-#include <gtkmm/clipboard.h>
-#include <gdk/gdkkeysyms.h>
+#include <glibmm.h>
+#include <gtkmm.h>
+#include <gdk/gdk.h>
+#include <2geom/transforms.h>
 
 #include "macros.h"
 #include "display/canvas-bpath.h"

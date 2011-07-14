@@ -38,7 +38,6 @@
 #include "display/sp-ctrlline.h"
 #include "display/sodipodi-ctrl.h"
 #include <glibmm/i18n.h>
-#include "libnr/nr-point-ops.h"
 #include "helper/units.h"
 #include "macros.h"
 #include "context-fns.h"
@@ -913,7 +912,7 @@ pen_redraw_all (SPPenContext *const pc)
     if (last_seg) {
         Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const *>( last_seg );
         if ( cubic &&
-             (*cubic)[2] != to_2geom(pc->p[0]) )
+             (*cubic)[2] != pc->p[0] )
         {
             Geom::Point p2 = (*cubic)[2];
             SP_CTRL(pc->c0)->moveto(p2);

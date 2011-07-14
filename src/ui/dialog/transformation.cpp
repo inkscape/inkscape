@@ -16,6 +16,7 @@
 
 #include <gtkmm/stock.h>
 #include <gtkmm/dialog.h>
+#include <2geom/transforms.h>
 
 #include "document.h"
 #include "desktop-handles.h"

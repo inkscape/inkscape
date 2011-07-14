@@ -21,6 +21,7 @@
 
 #include "display/cairo-utils.h"
 #include "display/cairo-templates.h"
+#include "display/canvas-arena.h"
 #include "nr-arena.h"
 #include "nr-arena-item.h"
 #include "gc-core.h"
@@ -214,6 +215,7 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
 {
     NRGC childgc (gc);
     bool filter = (item->arena->rendermode == Inkscape::RENDERMODE_NORMAL);
+    bool outline = (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     nr_return_val_if_fail (item != NULL, NR_ARENA_ITEM_STATE_INVALID);
     nr_return_val_if_fail (NR_IS_ARENA_ITEM (item),
@@ -242,7 +244,7 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
         return item->state;
     /* Test whether to return immediately */
     if (area && (item->state & NR_ARENA_ITEM_STATE_BBOX)) {
-        if (!nr_rect_l_test_intersect_ptr(area, &item->drawbox))
+        if (!nr_rect_l_test_intersect_ptr(area, outline ? &item->bbox : &item->drawbox))
             return item->state;
     }
 
@@ -275,8 +277,6 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
     } else {
         memcpy(&item->drawbox, &item->bbox, sizeof(item->bbox));
     }
-    // fixme: to fix the display glitches, in outline mode bbox must be a combination of 
-    // full item bbox and its clip and mask (after we have the API to get these)
 
     /* Clipping */
     if (item->clip) {
@@ -288,8 +288,12 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
             item->state |= NR_ARENA_ITEM_STATE_INVALID;
             return item->state;
         }
-        // for clipping, we need geometric bbox
-        nr_rect_l_intersect (&item->drawbox, &item->drawbox, &item->clip->bbox);
+        if (outline) {
+            nr_rect_l_union(&item->bbox, &item->bbox, &item->clip->bbox);
+        } else {
+            // for clipping, we need geometric bbox
+            nr_rect_l_intersect (&item->drawbox, &item->drawbox, &item->clip->bbox);
+        }
     }
     /* Masking */
     if (item->mask) {
@@ -298,8 +302,12 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
             item->state |= NR_ARENA_ITEM_STATE_INVALID;
             return item->state;
         }
-        // for masking, we need full drawbox of mask
-        nr_rect_l_intersect (&item->drawbox, &item->drawbox, &item->mask->drawbox);
+        if (outline) {
+            nr_rect_l_union(&item->bbox, &item->bbox, &item->mask->bbox);
+        } else {
+            // for masking, we need full drawbox of mask
+            nr_rect_l_intersect (&item->drawbox, &item->drawbox, &item->mask->drawbox);
+        }
     }
 
     // now that we know drawbox, dirty the corresponding rect on canvas:
@@ -349,18 +357,14 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
     if (!item->visible)
         return item->state | NR_ARENA_ITEM_STATE_RENDER;
 
-    // carea is the bounding box for intermediate rendering.
-    // NOTE: carea might be larger than area, because of filter effects.
-    NRRectL carea;
-    nr_rect_l_intersect (&carea, area, &item->drawbox);
-    if (nr_rect_l_test_empty(carea))
-        return item->state | NR_ARENA_ITEM_STATE_RENDER;
-    if (item->filter && filter) {
-        item->filter->area_enlarge (carea, item);
-        nr_rect_l_intersect (&carea, &carea, &item->drawbox);
-    }
-
     if (outline) {
+        // intersect with bbox rather than drawbox, as we want to render things outside
+        // of the clipping path as well
+        NRRectL carea;
+        nr_rect_l_intersect (&carea, area, &item->bbox);
+        if (nr_rect_l_test_empty(carea))
+            return item->state | NR_ARENA_ITEM_STATE_RENDER;
+
         // No caching in outline mode for now; investigate if it really gives any advantage with cairo.
         // Also no attempts to clip anything; just render everything: item, clip, mask   
         // First, render the object itself 
@@ -388,121 +392,143 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
 
         return item->state | NR_ARENA_ITEM_STATE_RENDER;
     }
+    
+    // carea is the bounding box for intermediate rendering.
+    // NOTE: carea might be larger than area, because of filter effects.
+    NRRectL carea;
+    nr_rect_l_intersect (&carea, area, &item->drawbox);
+    if (nr_rect_l_test_empty(carea))
+        return item->state | NR_ARENA_ITEM_STATE_RENDER;
+    if (item->filter && filter) {
+        item->filter->area_enlarge (carea, item);
+        nr_rect_l_intersect (&carea, &carea, &item->drawbox);
+    }
 
     using namespace Inkscape;
 
-    // clipping and masks
-    unsigned int state;
+    unsigned state;
+    unsigned retstate;
 
-    cairo_t *this_ct = ct;
-    NRRectL *this_area = const_cast<NRRectL*>(area);
-
+    // determine whether this shape needs intermediate rendering.
     bool needs_intermediate_rendering = false;
     bool &nir = needs_intermediate_rendering;
     bool needs_opacity = (item->opacity != 255 && !item->render_opacity);
 
     // this item needs an intermediate rendering if:
-    nir |= (item->mask != NULL); // 1. it has a mask
-    nir |= (item->filter != NULL && filter); // 2. it has a filter
-    nir |= needs_opacity; // 3. it is non-opaque
+    nir |= (item->clip != NULL); // 1. it has a clipping path
+    nir |= (item->mask != NULL); // 2. it has a mask
+    nir |= (item->filter != NULL && filter); // 3. it has a filter
+    nir |= needs_opacity; // 4. it is non-opaque
 
     double opacity = static_cast<double>(item->opacity) / 255.0;
 
-    if (needs_intermediate_rendering) {
-        cairo_surface_t *intermediate = cairo_surface_create_similar(
-            cairo_get_target(ct), CAIRO_CONTENT_COLOR_ALPHA,
-            carea.x1 - carea.x0, carea.y1 - carea.y0);
-        this_ct = cairo_create(intermediate);
-        cairo_translate(this_ct, -carea.x0, -carea.y0);
-        this_area = &carea;
-        cairo_surface_destroy(intermediate); // the surface will be held in memory by this_ct
-    } else {
-        cairo_reference(this_ct);
+    /* How the rendering is done.
+     *
+     * Clipping, masking and opacity are done by rendering them to a surface
+     * and then compositing the object's rendering onto it with the IN operator.
+     * The object itself is rendered to a group.
+     *
+     * Opacity is done by rendering the clipping path with an alpha
+     * value corresponding to the opacity. If there is no clipping path,
+     * the entire intermediate surface is painted with alpha corresponding
+     * to the opacity value.
+     */
+
+    // short-circuit the simple case.
+    if (!needs_intermediate_rendering) {
+        state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, pb, flags);
+        if (state & NR_ARENA_ITEM_STATE_INVALID) {
+            item->state |= NR_ARENA_ITEM_STATE_INVALID;
+            return item->state;
+        }
+        return item->state | NR_ARENA_ITEM_STATE_RENDER;
     }
 
-    // The pipeline needs to be different for filters.
-    // First we render the item into an intermediate surface. Then the filter rotates
-    // the surface to user coordinates (if necessary) and runs the rendering.
-    // Once that's done we retrieve the result, rotating it back to screen coords.
-    // Clipping and masking happens after the filter result is ready.
-    if (item->filter && filter) {
-    }
+    cairo_surface_t *intermediate = cairo_surface_create_similar(
+        cairo_get_group_target(ct), CAIRO_CONTENT_COLOR_ALPHA,
+        carea.x1 - carea.x0, carea.y1 - carea.y0);
+    cairo_t *ict = cairo_create(intermediate);
+    cairo_translate(ict, -carea.x0, -carea.y0);
 
-    Cairo::Context cct(this_ct, true);
-    Cairo::Context base_ct(ct);
-    Cairo::RefPtr<Cairo::Pattern> mask;
-    CairoSave clipsave(ct); // RAII for save / restore
-    CairoGroup maskgroup(this_ct); // RAII for push_group / pop_group
-    CairoGroup drawgroup(this_ct);
-    CairoGroup maskopacitygroup(this_ct);
-
-    // always clip the base context, not the one on the intermediate surface
-    // this is because filters must be done before clipping
+    // 1. Render clipping path with alpha = opacity.
+    cairo_set_source_rgba(ict, 0,0,0,opacity);
+    // Since clip can be combined with opacity, the result could be incorrect
+    // for overlapping clip children. To fix this we use the SOURCE operator
+    // instead of the default OVER.
+    cairo_set_operator(ict, CAIRO_OPERATOR_SOURCE);
     if (item->clip) {
-        clipsave.save();
-        state = nr_arena_item_invoke_clip(ct, item->clip, const_cast<NRRectL*>(area));
+        state = nr_arena_item_invoke_clip(ict, item->clip, const_cast<NRRectL*>(area));
         if (state & NR_ARENA_ITEM_STATE_INVALID) {
-            item->state |= NR_ARENA_ITEM_STATE_INVALID;
-            return item->state;
+            retstate = (item->state |= NR_ARENA_ITEM_STATE_INVALID);
+            goto cleanup;
         }
-        base_ct.clip();
+    } else {
+        // if there is no clipping path, fill the entire surface with alpha = opacity.
+        cairo_paint(ict);
     }
+    // reset back to default
+    cairo_set_operator(ict, CAIRO_OPERATOR_OVER);
 
-    // render mask on the intermediate context and store it
+    // 2. Render the mask if present and compose it with the clipping path + opacity.
     if (item->mask) {
-        maskgroup.push_with_content(CAIRO_CONTENT_COLOR_ALPHA);
-        // handle opacity of a masked object by composing it with the mask
-        if (needs_opacity) {
-            maskopacitygroup.push();
-        }
-        state = NR_ARENA_ITEM_VIRTUAL (item->mask, render) (this_ct, item->mask, this_area, pb, flags);
+        cairo_push_group(ict);
+        state = NR_ARENA_ITEM_VIRTUAL (item->mask, render) (ict, item->mask, &carea, NULL, flags);
         if (state & NR_ARENA_ITEM_STATE_INVALID) {
-            item->state |= NR_ARENA_ITEM_STATE_INVALID;
-            return item->state;
+            retstate = (item->state |= NR_ARENA_ITEM_STATE_INVALID);
+            goto cleanup;
         }
-        if (needs_opacity) {
-            maskopacitygroup.pop_to_source();
-            cct.paint_with_alpha(opacity);
-        }
-        mask = maskgroup.popmm();
-        // convert luminance to alpha
-        cairo_pattern_t *p = mask->cobj();
-        cairo_surface_t *s;
-        cairo_pattern_get_surface(p, &s);
-        ink_cairo_surface_filter(s, s, MaskLuminanceToAlpha());
+        cairo_surface_t *mask_s = cairo_get_group_target(ict);
+        // Convert mask's luminance to alpha
+        ink_cairo_surface_filter(mask_s, mask_s, MaskLuminanceToAlpha());
+        cairo_pop_group_to_source(ict);
+        cairo_set_operator(ict, CAIRO_OPERATOR_IN);
+        cairo_paint(ict);
+        cairo_set_operator(ict, CAIRO_OPERATOR_OVER);
     }
 
-    // render the object (possibly to the intermediate surface)
-    state = NR_ARENA_ITEM_VIRTUAL (item, render) (this_ct, item, this_area, pb, flags);
+    // 3. Render object itself.
+    cairo_push_group(ict);
+    state = NR_ARENA_ITEM_VIRTUAL (item, render) (ict, item, &carea, pb, flags);
     if (state & NR_ARENA_ITEM_STATE_INVALID) {
-        /* Clean up and return error */
-        item->state |= NR_ARENA_ITEM_STATE_INVALID;
-        return item->state;
+        retstate = (item->state |= NR_ARENA_ITEM_STATE_INVALID);
+        goto cleanup;
     }
 
-    // apply filter
+    // 4. Apply filter.
     if (item->filter && filter) {
-        item->filter->render(item, ct, area, this_ct, &carea);
-    }
-
-    if (needs_intermediate_rendering) {
-        cairo_surface_t *intermediate = cairo_get_target(this_ct);
-        cairo_set_source_surface(ct, intermediate, carea.x0, carea.y0);
-        if (mask) {
-            cairo_mask(ct, mask->cobj());
-            // opacity of masked objects is handled by premultiplying the mask
+        // HACK: SPCanvasArena doesn't exist when this is called for offscreen rendering
+        // Proper fix: call this function with a drawing context class
+        // that contains information about the surface's bounds
+        NRRectL bgarea;
+        if (flags & NR_ARENA_ITEM_RENDER_NO_CACHE || !item->arena->canvasarena) {
+            bgarea = carea;
         } else {
-            // opacity of non-masked objects must be rendered explicitly
-            if (needs_opacity) {
-                cairo_paint_with_alpha(ct, opacity);
-            } else {
-                cairo_paint(ct);
-            }
+            bgarea = NRRectL(item->arena->canvasarena->cache_area);
         }
-        cairo_set_source_rgba(ct,0,0,0,0);
+        item->filter->render(item, ct, &bgarea, ict, &carea);
+        // Note that because the object was rendered to a group,
+        // the internals of the filter need to use cairo_get_group_target()
+        // instead of cairo_get_target().
     }
 
-    return item->state | NR_ARENA_ITEM_STATE_RENDER;
+    // 5. Render object inside the composited mask + clip
+    cairo_pop_group_to_source(ict);
+    cairo_set_operator(ict, CAIRO_OPERATOR_IN);
+    cairo_paint(ict);
+
+    // 6. Paint the completed rendering onto the base context
+    cairo_set_source_surface(ct, intermediate, carea.x0, carea.y0);
+    cairo_paint(ct);
+    cairo_set_source_rgba(ct, 0,0,0,0);
+    // the call above is to clear a ref on the intermediate surface held by ct
+
+    retstate = item->state | NR_ARENA_ITEM_STATE_RENDER;
+
+    cleanup:
+    cairo_destroy(ict);
+    cairo_surface_destroy(intermediate);
+
+    return retstate;
 }
 
 unsigned int
@@ -511,16 +537,6 @@ nr_arena_item_invoke_clip (cairo_t *ct, NRArenaItem *item, NRRectL *area)
     nr_return_val_if_fail (item != NULL, NR_ARENA_ITEM_STATE_INVALID);
     nr_return_val_if_fail (NR_IS_ARENA_ITEM (item),
                            NR_ARENA_ITEM_STATE_INVALID);
-    /* we originally short-circuited if the object state included
-     * NR_ARENA_ITEM_STATE_CLIP (and showed a warning on the console);
-     * anyone know why we stopped doing so?
-     */
-    /*nr_return_val_if_fail ((pb->area.x1 - pb->area.x0) >=
-                           (area->x1 - area->x0),
-                           NR_ARENA_ITEM_STATE_INVALID);
-    nr_return_val_if_fail ((pb->area.y1 - pb->area.y0) >=
-                           (area->y1 - area->y0),
-                           NR_ARENA_ITEM_STATE_INVALID);*/
 
 #ifdef NR_ARENA_ITEM_VERBOSE
     printf ("Invoke clip by %p: %d %d - %d %d, item bbox %d %d - %d %d\n",
@@ -528,15 +544,40 @@ nr_arena_item_invoke_clip (cairo_t *ct, NRArenaItem *item, NRRectL *area)
             (&item->bbox)->y0, (&item->bbox)->x1, (&item->bbox)->y1);
 #endif
 
+    unsigned retstate = 0;
+    
+    // don't bother if the object does not implement clipping (e.g. NRArenaImage)
+    if (!((NRArenaItemClass *) NR_OBJECT_GET_CLASS (item))->clip)
+        return retstate;
+
     if (item->visible && nr_rect_l_test_intersect_ptr(area, &item->bbox)) {
-        /* Need render that item */
-        if (((NRArenaItemClass *) NR_OBJECT_GET_CLASS (item))->clip) {
-            return ((NRArenaItemClass *) NR_OBJECT_GET_CLASS (item))->
-                clip (ct, item, area);
+        // The item used as the clipping path itself has a clipping path.
+        // Render this item's clipping path onto a temporary surface, then composite it with the item
+        // using the IN operator
+        if (item->clip) {
+            cairo_push_group_with_content(ct, CAIRO_CONTENT_ALPHA);
+            cairo_save(ct);
+            cairo_set_source_rgba(ct, 0,0,0,1);
+            nr_arena_item_invoke_clip(ct, item->clip, area);
+            cairo_restore(ct);
+            cairo_push_group_with_content(ct, CAIRO_CONTENT_ALPHA);
+        }
+
+        // rasterize the clipping path
+        retstate = ((NRArenaItemClass *) NR_OBJECT_GET_CLASS (item))->
+            clip (ct, item, area);
+        
+        if (item->clip) {
+            cairo_pop_group_to_source(ct);
+            cairo_set_operator(ct, CAIRO_OPERATOR_IN);
+            cairo_paint(ct);
+            cairo_pop_group_to_source(ct);
+            cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
+            cairo_paint(ct);
         }
     }
 
-    return item->state;
+    return retstate;
 }
 
 NRArenaItem *
@@ -597,7 +638,8 @@ nr_arena_item_request_render (NRArenaItem *item)
     nr_return_if_fail (item != NULL);
     nr_return_if_fail (NR_IS_ARENA_ITEM (item));
 
-    nr_arena_request_render_rect (item->arena, &item->drawbox);
+    bool outline = (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
+    nr_arena_request_render_rect (item->arena, outline ? &item->bbox : &item->drawbox);
 }
 
 /* Public */

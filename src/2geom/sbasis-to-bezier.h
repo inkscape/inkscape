@@ -1,7 +1,7 @@
 /**
  * \file
- * \brief  \todo brief description
- *
+ * \brief Conversion between SBasis and Bezier basis polynomials
+ *//*
  * Authors:
  *      ? <?@?.?>
  * 

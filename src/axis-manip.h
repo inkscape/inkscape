@@ -12,8 +12,8 @@
 #ifndef SEEN_AXIS_MANIP_H
 #define SEEN_AXIS_MANIP_H
 
+#include <utility>
 #include <gtk/gtk.h>
-#include "libnr/nr-point.h"
 
 namespace Proj {
 

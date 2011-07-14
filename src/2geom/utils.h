@@ -1,10 +1,7 @@
-#ifndef LIB2GEOM_UTILS_HEADER
-#define LIB2GEOM_UTILS_HEADER
-
 /**
  * \file
  * \brief  Various utility functions.
- *
+ *//*
  * Copyright 2007 Johan Engelen <goejendaagh@zonnet.nl>
  * Copyright 2006 Michael G. Sloan <mgsloan@gmail.com>
  *
@@ -33,6 +30,9 @@
  *
  */
 
+#ifndef SEEN_LIB2GEOM_UTILS_H
+#define SEEN_LIB2GEOM_UTILS_H
+
 #include <cstddef>
 #include <vector>
 
@@ -59,9 +59,9 @@ struct MultipliableNoncommutative : B
     }
 };
 
-}
+} // end namespace Geom
 
-#endif
+#endif // SEEN_LIB2GEOM_UTILS_H
 
 /*
   Local Variables:

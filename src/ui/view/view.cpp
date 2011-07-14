@@ -16,7 +16,7 @@
 # include "config.h"
 #endif
 
-#include "libnr/nr-point.h"
+#include <2geom/point.h>
 #include "document.h"
 #include "view.h"
 #include "message-stack.h"

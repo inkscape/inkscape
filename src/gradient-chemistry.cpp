@@ -1013,7 +1013,7 @@ Geom::Point sp_item_gradient_get_coords(SPItem *item, guint point_type, guint po
     Geom::Point p (0, 0);
 
     if (!gradient)
-        return from_2geom(p);
+        return p;
 
     if (SP_IS_LINEARGRADIENT(gradient)) {
         SPLinearGradient *lg = SP_LINEARGRADIENT(gradient);
@@ -1071,7 +1071,7 @@ Geom::Point sp_item_gradient_get_coords(SPItem *item, guint point_type, guint po
         }
     }
     p *= Geom::Affine(gradient->gradientTransform) * (Geom::Affine)item->i2d_affine();
-    return from_2geom(p);
+    return p;
 }
 
 

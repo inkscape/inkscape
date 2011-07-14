@@ -12,9 +12,8 @@
 #include <vector>
 #include "LivarotDefs.h"
 #include "livarot/livarot-forward.h"
-#include "libnr/nr-point.h"
 #include <libnr/nr-rect-l.h>
-#include <2geom/forward.h>
+#include <2geom/point.h>
 
 struct SPStyle;
 

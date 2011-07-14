@@ -19,9 +19,9 @@
 #include "forward.h"
 #include "extension/extension-forward.h"
 #include "libnr/nr-forward.h"
-#include "libnr/nr-point.h"
 #include "xml/node.h"
 #include <2geom/forward.h>
+#include <2geom/point.h>
 
 namespace Inkscape {
 namespace Extension {

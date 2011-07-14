@@ -1,8 +1,8 @@
 #ifndef SEEN_INKSCAPE_LIVAROT_PATH_DESCRIPTION_H
 #define SEEN_INKSCAPE_LIVAROT_PATH_DESCRIPTION_H
 
+#include <2geom/point.h>
 #include "svg/stringstream.h"
-#include "libnr/nr-point.h"
 
 // path description commands
 /* FIXME: these should be unnecessary once the refactoring of the path

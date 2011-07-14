@@ -34,7 +34,7 @@
 #include "svg/svg.h"
 #include "display/canvas-bpath.h"
 #include "display/cairo-utils.h"
-#include <2geom/isnan.h>
+#include <2geom/math-utils.h>
 #include <2geom/pathvector.h>
 #include <2geom/bezier-utils.h>
 #include "display/curve.h"

@@ -1,7 +1,4 @@
-/**
- * \file
- * \brief Circle Curve
- *
+/*
  * Authors:
  *      Nathan Hurst <njh@njhurst.com
  *

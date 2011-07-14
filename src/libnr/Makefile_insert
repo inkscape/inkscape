@@ -3,25 +3,16 @@
 ink_common_sources +=	\
 	libnr/in-svg-plane.h	\
 	libnr/nr-convert2geom.h	\
-	libnr/nr-coord.h	\
-	libnr/nr-dim2.h	\
 	libnr/nr-forward.h	\
-	libnr/nr-i-coord.h	\
 	libnr/nr-macros.h	\
 	libnr/nr-object.cpp	\
 	libnr/nr-object.h	\
-	libnr/nr-point-fns.cpp	\
-	libnr/nr-point-fns.h	\
-	libnr/nr-point-l.h	\
-	libnr/nr-point-ops.h	\
-	libnr/nr-point.h	\
+	libnr/nr-point-fns.cpp \
+	libnr/nr-point-fns.h \
 	libnr/nr-rect-l.cpp	\
 	libnr/nr-rect-l.h	\
 	libnr/nr-rect.cpp	\
 	libnr/nr-rect.h	\
-	libnr/nr-rect-ops.h	\
-	libnr/nr-types.cpp	\
-	libnr/nr-types.h	\
 	libnr/nr-values.cpp	\
 	libnr/nr-values.h
 

@@ -225,9 +225,9 @@ sp_star_context_set (SPEventContext *ec, Inkscape::Preferences::Entry *val)
     Glib::ustring path = val->getEntryName();
 
     if (path == "magnitude") {
-        sc->magnitude = NR_CLAMP(val->getInt(5), 3, 1024);
+        sc->magnitude = CLAMP(val->getInt(5), 3, 1024);
     } else if (path == "proportion") {
-        sc->proportion = NR_CLAMP(val->getDouble(0.5), 0.01, 2.0);
+        sc->proportion = CLAMP(val->getDouble(0.5), 0.01, 2.0);
     } else if (path == "isflatsided") {
         sc->isflatsided = val->getBool();
     } else if (path == "rounded") {
@@ -446,7 +446,7 @@ static void sp_star_drag(SPStarContext *sc, Geom::Point p, guint state)
     /* Snap corner point with no constraints */
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, true, sc->item);
-    Geom::Point pt2g = to_2geom(p);
+    Geom::Point pt2g = p;
     m.freeSnapReturnByRef(pt2g, Inkscape::SNAPSOURCE_NODE_HANDLE);
     m.unSetup();
     Geom::Point const p0 = desktop->dt2doc(sc->center);

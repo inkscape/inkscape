@@ -156,7 +156,7 @@ cairo_surface_t *FilterSlot::_get_transformed_background()
 {
     Geom::Affine trans = _units.get_matrix_display2pb();
 
-    cairo_surface_t *bg = cairo_get_target(_background_ct);
+    cairo_surface_t *bg = cairo_get_group_target(_background_ct);
     cairo_surface_t *tbg = cairo_surface_create_similar(
         bg, cairo_surface_get_content(bg),
         _slot_w, _slot_h);

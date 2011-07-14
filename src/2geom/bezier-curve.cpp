@@ -1,8 +1,5 @@
-/**
- * \file
- * \brief Bezier curve
+/* Bezier curve implementation
  *
- *//*
  * Authors:
  *   MenTaLguY <mental@rydia.net>
  *   Marco Cecchetti <mrcekets at gmail.com>
@@ -41,7 +38,7 @@ namespace Geom
 
 /**
  * @class BezierCurve
- * @brief Two-dimensional Bezier curve of arbitrary order. (this is an abstract class)
+ * @brief Two-dimensional Bezier curve of arbitrary order.
  *
  * Bezier curves are an expansion of the concept of linear interpolation to n points.
  * Linear segments in 2Geom are in fact Bezier curves of order 1.
@@ -82,28 +79,40 @@ namespace Geom
  * have an intutive geometric interpretation. Because of this, they are frequently used
  * in vector graphics editors.
  *
- * Every bezier curve is contained in its control polygon (the convex polygon composed
+ * Every Bezier curve is contained in its control polygon (the convex polygon composed
  * of its control points). This fact is useful for sweepline algorithms and intersection.
  *
- * Bezier curves of order 1, 2 and 3 are common enough to have their own more specific subclasses:
- * LineSegment, QuadraticBezier, and CubicBezier.
- * Note that you cannot create a generic BezierCurve, you can only create a BezierCurve of a
- * specific order, by creating a BezierCurveN.
+ * @par Implementation notes
+ * The order of a Bezier curve is immuable once it has been created. Normally, you should
+ * know the order at compile time and use the BezierCurveN template. If you need to determine
+ * the order at runtime, use the BezierCurve::create() function. It will create a BezierCurveN
+ * for orders 1, 2 and 3 (up to cubic Beziers), so you can later <tt>dynamic_cast</tt>
+ * to those types, and for higher orders it will create an instance of BezierCurve.
  *
  * @relates BezierCurveN
  * @ingroup Curves
  */
 
- /**
+/**
  * @class BezierCurveN
+ * @brief Bezier curve with compile-time specified order.
+ *
  * @tparam degree unsigned value indicating the order of the bezier curve
- * @brief Two-dimensional Bezier curve of specific order.
  * 
  * @relates BezierCurve 
  * @ingroup Curves
  */
 
- 
+
+BezierCurve::BezierCurve(std::vector<Point> const &pts)
+{
+    inner = D2<Bezier>(Bezier::Order(pts.size()-1), Bezier::Order(pts.size()-1));
+    for (unsigned d = 0; d < 2; ++d) {
+        for(unsigned i = 0; i <= pts.size(); i++)
+            inner[d][i] = pts[i][d];
+    }
+}
+
 Coord BezierCurve::length(Coord tolerance) const
 {
     switch (order())
@@ -126,6 +135,48 @@ Coord BezierCurve::length(Coord tolerance) const
         return bezier_length(points(), tolerance);
     }
 }
+
+BezierCurve *BezierCurve::create(std::vector<Point> const &pts)
+{
+    switch (pts.size()) {
+    case 0:
+    case 1:
+        THROW_LOGICALERROR("BezierCurve::create: too few points in vector");
+        return NULL;
+    case 2:
+        return new LineSegment(pts[0], pts[1]);
+    case 3:
+        return new QuadraticBezier(pts[0], pts[1], pts[2]);
+    case 4:
+        return new CubicBezier(pts[0], pts[1], pts[2], pts[3]);
+    default:
+        return new BezierCurve(pts);
+    }
+}
+
+// optimized specializations for LineSegment
+
+template <>
+Curve *BezierCurveN<1>::derivative() const {
+    double dx = inner[X][1] - inner[X][0], dy = inner[Y][1] - inner[Y][0];
+    return new BezierCurveN<1>(Point(dx,dy),Point(dx,dy));
+}
+
+template<>
+Coord BezierCurveN<1>::nearestPoint(Point const& p, Coord from, Coord to) const
+{
+    if ( from > to ) std::swap(from, to);
+    Point ip = pointAt(from);
+    Point fp = pointAt(to);
+    Point v = fp - ip;
+    Coord l2v = L2sq(v);
+    if (l2v == 0) return 0;
+    Coord t = dot( p - ip, v ) / l2v;
+    if ( t <= 0 )  		return from;
+    else if ( t >= 1 )  return to;
+    else return from + t*(to-from);
+}
+
 
 static Coord bezier_length_internal(std::vector<Point> &v1, Coord tolerance)
 {
@@ -178,7 +229,7 @@ static Coord bezier_length_internal(std::vector<Point> &v1, Coord tolerance)
      * After loop with i==2
      * # # 2 3 4
      *  # 1 ? ?
-     *   0 ? ? -> wirte 0 to v2[2]
+     *   0 ? ? -> write 0 to v2[2]
      *    ? ?
      *     ?
      *
@@ -204,7 +255,7 @@ static Coord bezier_length_internal(std::vector<Point> &v1, Coord tolerance)
 }
 
 /** @brief Compute the length of a bezier curve given by a vector of its control points
- * @relates BezierCurve */
+ * @relatesalso BezierCurve */
 Coord bezier_length(std::vector<Point> const &points, Coord tolerance)
 {
     if (points.size() < 2) return 0.0;
@@ -213,7 +264,7 @@ Coord bezier_length(std::vector<Point> const &points, Coord tolerance)
 }
 
 /** @brief Compute the length of a quadratic bezier curve given by its control points
- * @relates QuadraticBezier */
+ * @relatesalso QuadraticBezier */
 Coord bezier_length(Point a0, Point a1, Point a2, Coord tolerance)
 {
     Coord lower = distance(a0, a2);
@@ -231,7 +282,7 @@ Coord bezier_length(Point a0, Point a1, Point a2, Coord tolerance)
 }
 
 /** @brief Compute the length of a cubic bezier curve given by its control points
- * @relates CubicBezier */
+ * @relatesalso CubicBezier */
 Coord bezier_length(Point a0, Point a1, Point a2, Point a3, Coord tolerance)
 {
     Coord lower = distance(a0, a3);

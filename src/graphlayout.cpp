@@ -19,6 +19,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <float.h>
+#include <2geom/transforms.h>
 
 #include "desktop.h"
 #include "inkscape.h"

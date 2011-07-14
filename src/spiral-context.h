@@ -18,8 +18,8 @@
 #include <gtk/gtk.h>
 #include <stddef.h>
 #include <sigc++/sigc++.h>
+#include <2geom/point.h>
 #include "event-context.h"
-#include "libnr/nr-point.h"
 
 #define SP_TYPE_SPIRAL_CONTEXT            (sp_spiral_context_get_type ())
 #define SP_SPIRAL_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_SPIRAL_CONTEXT, SPSpiralContext))

@@ -24,8 +24,9 @@
 # include "config.h"
 #endif
 
-#include <gtkmm/paned.h>
 #include <gtk/gtk.h>
+#include <gtkmm.h>
+#include <2geom/rect.h>
 
 #include "box3d-context.h"
 #include "cms-system.h"
@@ -543,10 +544,8 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
         Glib::ustring id = Inkscape::CMSSystem::getDisplayId( 0, 0 );
 
         bool enabled = false;
-        if ( dtw->canvas->cms_key ) {
-            *(dtw->canvas->cms_key) = id;
-            enabled = !dtw->canvas->cms_key->empty();
-        }
+        dtw->canvas->cms_key = id;
+        enabled = !dtw->canvas->cms_key.empty();
         cms_adjust_set_sensitive( dtw, enabled );
     }
 #endif // ENABLE_LCMS
@@ -807,11 +806,9 @@ void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidge
     gint monitor = gdk_screen_get_monitor_at_window(screen, gtk_widget_get_toplevel(GTK_WIDGET(dtw))->window);
     Glib::ustring id = Inkscape::CMSSystem::getDisplayId( screenNum, monitor );
     bool enabled = false;
-    if ( dtw->canvas->cms_key ) {
-        *(dtw->canvas->cms_key) = id;
-        dtw->requestCanvasUpdate();
-        enabled = !dtw->canvas->cms_key->empty();
-    }
+    dtw->canvas->cms_key = id;
+    dtw->requestCanvasUpdate();
+    enabled = !dtw->canvas->cms_key.empty();
     cms_adjust_set_sensitive( dtw, enabled );
 #endif // ENABLE_LCMS
 }
@@ -1161,7 +1158,7 @@ bool SPDesktopWidget::showInfoDialog( Glib::ustring const &message )
                 GTK_BUTTONS_OK,
                 "%s", message.c_str());
         gtk_window_set_title( GTK_WINDOW(dialog), _("Note:")); // probably want to take this as a parameter.
-        gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+        gtk_dialog_run(GTK_DIALOG(dialog));
         gtk_widget_destroy(dialog);
     }
     return result;
@@ -1522,7 +1519,7 @@ sp_desktop_widget_update_hruler (SPDesktopWidget *dtw)
      * the latter is used for drawing e.g. the grids and guides. Only when the viewbox
      * coincides with the pixel buffer, everything will line up nicely.
      */
-    NR::IRect viewbox = dtw->canvas->getViewboxIntegers();
+    Geom::IntRect viewbox = dtw->canvas->getViewboxIntegers();
 
     double const scale = dtw->desktop->current_zoom();
     double s = viewbox.min()[Geom::X] / scale - dtw->ruler_origin[Geom::X];
@@ -1538,7 +1535,7 @@ sp_desktop_widget_update_vruler (SPDesktopWidget *dtw)
      * the latter is used for drawing e.g. the grids and guides. Only when the viewbox
      * coincides with the pixel buffer, everything will line up nicely.
      */
-    NR::IRect viewbox = dtw->canvas->getViewboxIntegers();
+    Geom::IntRect viewbox = dtw->canvas->getViewboxIntegers();
 
     double const scale = dtw->desktop->current_zoom();
     double s = viewbox.min()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
@@ -1887,7 +1884,7 @@ sp_desktop_widget_update_scrollbars (SPDesktopWidget *dtw, double scale)
     Geom::Rect darea ( Geom::Point(-doc->getWidth(), -doc->getHeight()),
                      Geom::Point(2 * doc->getWidth(), 2 * doc->getHeight())  );
 
-    Geom::OptRect deskarea = Geom::unify(darea, doc->getRoot()->getBboxDesktop());
+    Geom::OptRect deskarea = darea | doc->getRoot()->getBboxDesktop();
 
     /* Canvas region we always show unconditionally */
     Geom::Rect carea( Geom::Point(deskarea->min()[Geom::X] * scale - 64, deskarea->max()[Geom::Y] * -scale - 64),

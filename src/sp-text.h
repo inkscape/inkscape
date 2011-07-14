@@ -19,7 +19,6 @@
 #include "sp-item.h"
 #include "sp-string.h"
 #include "text-tag-attributes.h"
-#include "libnr/nr-point.h"
 #include "libnrtype/Layout-TNG.h"
 
 

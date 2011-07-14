@@ -18,6 +18,7 @@
 #include "nr-filter-types.h"
 #include "preferences.h"
 #include "color.h"
+#include "libnr/nr-rect.h"
 
 static void nr_arena_class_init (NRArenaClass *klass);
 static void nr_arena_init (NRArena *arena);

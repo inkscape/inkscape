@@ -38,7 +38,7 @@ public:
 	void add(Rect const &r) {
 		// Note that this is a hack.  when convexhull actually works
 		// you will need to add all four points.
-        _bounds = unify(_bounds, r);
+        _bounds.unionWith(r);
 	}
 	void add(RectHull const &h) {
         if (h._bounds) {

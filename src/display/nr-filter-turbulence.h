@@ -64,7 +64,6 @@ private:
     bool stitchTiles;
     FilterTurbulenceType type;
     bool updated;
-    NR::IRect updated_area;
     unsigned char *pix_data;
 
     double fTileWidth;

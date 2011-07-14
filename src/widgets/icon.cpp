@@ -23,6 +23,7 @@
 #include <gtkmm.h>
 #include <gdkmm/pixbuf.h>
 #include <glibmm/fileutils.h>
+#include <2geom/transforms.h>
 
 #include "path-prefix.h"
 #include "preferences.h"

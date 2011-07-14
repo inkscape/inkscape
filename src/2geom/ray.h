@@ -1,7 +1,7 @@
 /**
  * \file
- * \brief  Infinite Straight Ray
- *
+ * \brief  Infinite straight ray
+ *//*
  * Copyright 2008  Marco Cecchetti <mrcekets at gmail.com>
  *
  * This library is free software; you can redistribute it and/or
@@ -35,6 +35,7 @@
 #include <2geom/point.h>
 #include <2geom/bezier-curve.h> // for LineSegment
 #include <2geom/exception.h>
+#include <2geom/math-utils.h>
 
 namespace Geom
 {
@@ -49,171 +50,88 @@ namespace Geom
  */
 class Ray {
 private:
-    Point m_origin;
-    Point m_versor;
+    Point _origin;
+    Point _versor;
 
 public:
-	Ray()
-		: m_origin(0,0), m_versor(1,0)
-	{
-	}
-
-	Ray(Point const& _origin, Coord angle )
-		: m_origin(_origin), m_versor(std::cos(angle), std::sin(angle))
-	{
-	}
-
-	Ray(Point const& A, Point const& B)
-	{
-		setBy2Points(A, B);
-	}
-
-	Point origin() const
-	{
-		return m_origin;
-	}
-
-	Point versor() const
-	{
-		return m_versor;
-	}
-
-	void origin(Point const& _point)
-	{
-		m_origin = _point;
-	}
-
-	void versor(Point const& _versor)
-	{
-		m_versor = _versor;
-	}
-
-	Coord angle() const
-	{
-		double a = std::atan2(m_versor[Y], m_versor[X]);
-		if (a < 0) a += 2*M_PI;
-		return a;
-	}
-
-	void angle(Coord _angle)
-	{
-		m_versor[X] = std::cos(_angle);
-		m_versor[Y] = std::sin(_angle);
-	}
-
-	void setBy2Points(Point const& A, Point const& B)
-	{
-		m_origin = A;
-		m_versor = B - A;
-		if ( are_near(m_versor, Point(0,0)) )
-			m_versor = Point(0,0);
-		else
-			m_versor.normalize();
-	}
-
-	bool isDegenerate() const
-	{
-		return ( m_versor[X] == 0 && m_versor[Y] == 0 );
-	}
-
-	Point pointAt(Coord t) const
-	{
-		if (t < 0)	THROW_RANGEERROR("Ray::pointAt, negative t value passed");
-		return m_origin + m_versor * t;
-	}
-
-	Coord valueAt(Coord t, Dim2 d) const
-	{
-		if (t < 0)
-			THROW_RANGEERROR("Ray::valueAt, negative t value passed");
-		if (d < 0 || d > 1)
-			THROW_RANGEERROR("Ray::valueAt, dimension argument out of range");
-		return m_origin[d] + m_versor[d] * t;
-	}
-
-	std::vector<Coord> roots(Coord v, Dim2 d) const
-	{
-		if (d < 0 || d > 1)
-			THROW_RANGEERROR("Ray::roots, dimension argument out of range");
-		std::vector<Coord> result;
-		if ( m_versor[d] != 0 )
-		{
-			double t = (v - m_origin[d]) / m_versor[d];
-			if (t >= 0)	result.push_back(t);
-		}
-		// TODO: else ?
-		return result;
-	}
-
-	// require are_near(_point, *this)
-	// on the contrary the result value is meaningless
-	Coord timeAt(Point const& _point) const
-	{
-		Coord t;
-		if ( m_versor[X] != 0 )
-		{
-			t = (_point[X] - m_origin[X]) / m_versor[X];
-		}
-		else if ( m_versor[Y] != 0 )
-		{
-			t = (_point[Y] - m_origin[Y]) / m_versor[Y];
-		}
-		else // degenerate case
-		{
-			t = 0;
-		}
-		return t;
-	}
-
-	Coord nearestPoint(Point const& _point) const
-	{
-		if ( isDegenerate() ) return 0;
-		double t = dot( _point - m_origin, m_versor );
-		if (t < 0) t = 0;
-		return t;
-	}
-
-	Ray reverse() const
-	{
-		Ray result;
-		result.origin(m_origin);
-		result.versor(-m_versor);
-		return result;
-	}
-
-	Curve* portion(Coord  f, Coord t) const
-	{
-		LineSegment* seg = new LineSegment(pointAt(f), pointAt(t));
-		return seg;
-	}
-
-	LineSegment segment(Coord  f, Coord t) const
-	{
-		return LineSegment(pointAt(f), pointAt(t));
-	}
-
-	Ray transformed(Affine const& m) const
-	{
-		return Ray(m_origin * m, (m_origin + m_versor) * m);
-	}
-};  // end class ray
+    Ray() : _origin(0,0), _versor(1,0) {}
+    Ray(Point const& origin, Coord angle)
+        : _origin(origin)
+    {
+        sincos(angle, _versor[Y], _versor[X]);
+    }
+    Ray(Point const& A, Point const& B) {
+        setPoints(A, B);
+    }
+    Point origin() const { return _origin; }
+    Point versor() const { return _versor; }
+    void setOrigin(Point const &o) { _origin = o; }
+    void setVersor(Point const& v) { _versor = v; }
+    Coord angle() const { return std::atan2(_versor[Y], _versor[X]); }
+    void setAngle(Coord a) { sincos(a, _versor[Y], _versor[X]); }
+    void setPoints(Point const &a, Point const &b) {
+        _origin = a;
+        _versor = b - a;
+        if (are_near(_versor, Point(0,0)) )
+            _versor = Point(0,0);
+        else
+            _versor.normalize();
+    }
+    bool isDegenerate() const {
+        return ( _versor[X] == 0 && _versor[Y] == 0 );
+    }
+    Point pointAt(Coord t) const {
+        return _origin + _versor * t;
+    }
+    Coord valueAt(Coord t, Dim2 d) const {
+        return _origin[d] + _versor[d] * t;
+    }
+    std::vector<Coord> roots(Coord v, Dim2 d) const {
+        std::vector<Coord> result;
+        if ( _versor[d] != 0 ) {
+            double t = (v - _origin[d]) / _versor[d];
+            if (t >= 0)	result.push_back(t);
+        } else if (_versor[(d+1)%2] == v) {
+            THROW_INFINITESOLUTIONS();
+        }
+        return result;
+    }
+    Coord nearestPoint(Point const& point) const {
+        if ( isDegenerate() ) return 0;
+        double t = dot(point - _origin, _versor);
+        if (t < 0) t = 0;
+        return t;
+    }
+    Ray reverse() const {
+        Ray result;
+        result.setOrigin(_origin);
+        result.setVersor(-_versor);
+        return result;
+    }
+    Curve *portion(Coord f, Coord t) const {
+        return new LineSegment(pointAt(f), pointAt(t));
+    }
+    LineSegment segment(Coord f, Coord t) const {
+        return LineSegment(pointAt(f), pointAt(t));
+    }
+    Ray transformed(Affine const& m) const {
+        return Ray(_origin * m, (_origin + _versor) * m);
+    }
+}; // end class Ray
 
 inline
-double distance(Point const& _point, Ray const& _ray)
-{
+double distance(Point const& _point, Ray const& _ray) {
 	double t = _ray.nearestPoint(_point);
 	return ::Geom::distance(_point, _ray.pointAt(t));
 }
 
 inline
-bool are_near(Point const& _point, Ray const& _ray, double eps = EPSILON)
-{
+bool are_near(Point const& _point, Ray const& _ray, double eps = EPSILON) {
 	return are_near(distance(_point, _ray), 0, eps);
 }
 
 inline
-bool are_same(Ray const& r1, Ray const& r2, double eps = EPSILON)
-{
+bool are_same(Ray const& r1, Ray const& r2, double eps = EPSILON) {
 	return are_near(r1.versor(), r2.versor(), eps)
 			&& are_near(r1.origin(), r2.origin(), eps);
 }
@@ -221,14 +139,12 @@ bool are_same(Ray const& r1, Ray const& r2, double eps = EPSILON)
 // evaluate the angle between r1 and r2 rotating r1 in cw or ccw direction on r2
 // the returned value is an angle in the interval [0, 2PI[
 inline
-double angle_between(Ray const& r1, Ray const& r2, bool cw = true)
-{
+double angle_between(Ray const& r1, Ray const& r2, bool cw = true) {
 	double angle = angle_between(r1.versor(), r2.versor());
 	if (angle < 0) angle += 2*M_PI;
 	if (!cw) angle = 2*M_PI - angle;
 	return angle;
 }
-
 
 inline
 Ray make_angle_bisector_ray(Ray const& r1, Ray const& r2)
@@ -243,22 +159,17 @@ Ray make_angle_bisector_ray(Ray const& r1, Ray const& r2)
     return Ray(r1.origin(), M);
 }
 
-
 }  // end namespace Geom
 
-
-
-#endif /*_2GEOM_RAY_H_*/
-
+#endif // LIB2GEOM_SEEN_RAY_H
 
 /*
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(substatement-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
-  c-brace-offset:0
   fill-column:99
   End:
-  vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
 */
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

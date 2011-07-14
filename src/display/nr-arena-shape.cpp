@@ -21,6 +21,7 @@
 #include <2geom/svg-path-parser.h>
 #include "display/cairo-utils.h"
 #include "display/canvas-arena.h"
+#include "display/canvas-bpath.h"
 #include "display/curve.h"
 #include "display/nr-arena.h"
 #include "display/nr-arena-shape.h"
@@ -223,10 +224,10 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
             if (shape->curve) {
                 boundingbox = bounds_exact_transformed(shape->curve->get_pathvector(), gc->transform);
                 if (boundingbox) {
-                    item->bbox.x0 = static_cast<NR::ICoord>(floor((*boundingbox)[0][0])); // Floor gives the coordinate in which the point resides
-                    item->bbox.y0 = static_cast<NR::ICoord>(floor((*boundingbox)[1][0]));
-                    item->bbox.x1 = static_cast<NR::ICoord>(ceil ((*boundingbox)[0][1])); // Ceil gives the first coordinate beyond the point
-                    item->bbox.y1 = static_cast<NR::ICoord>(ceil ((*boundingbox)[1][1]));
+                    item->bbox.x0 = floor((*boundingbox)[0][0]); // Floor gives the coordinate in which the point resides
+                    item->bbox.y0 = floor((*boundingbox)[1][0]);
+                    item->bbox.x1 = ceil ((*boundingbox)[0][1]); // Ceil gives the first coordinate beyond the point
+                    item->bbox.y1 = ceil ((*boundingbox)[1][1]);
                 } else {
                     item->bbox = NR_RECT_L_EMPTY;
                 }
@@ -274,10 +275,10 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
 
     /// \todo  just write item->bbox = boundingbox
     if (boundingbox) {
-        shape->approx_bbox.x0 = static_cast<NR::ICoord>(floor((*boundingbox)[0][0]));
-        shape->approx_bbox.y0 = static_cast<NR::ICoord>(floor((*boundingbox)[1][0]));
-        shape->approx_bbox.x1 = static_cast<NR::ICoord>(ceil ((*boundingbox)[0][1]));
-        shape->approx_bbox.y1 = static_cast<NR::ICoord>(ceil ((*boundingbox)[1][1]));
+        shape->approx_bbox.x0 = floor(boundingbox->left());
+        shape->approx_bbox.y0 = floor(boundingbox->top());
+        shape->approx_bbox.x1 = ceil (boundingbox->right());
+        shape->approx_bbox.y1 = ceil (boundingbox->bottom());
     } else {
         shape->approx_bbox = NR_RECT_L_EMPTY;
     }
@@ -396,22 +397,26 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
 
 static guint nr_arena_shape_clip(cairo_t *ct, NRArenaItem *item, NRRectL * /*area*/)
 {
-    guint result = 0;
-
-    // NOTE: for now this is incorrect, because it doesn't honor clip-rule,
-    // and will be incorrect for nested clipping paths.
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
     if (!shape->curve) {
-        result = item->state;
-    } else {
-        cairo_save(ct);
-        ink_cairo_transform(ct, shape->ctm);
-        feed_pathvector_to_cairo(ct, shape->curve->get_pathvector());
-        cairo_restore(ct);
-
-        result = item->state;
+        return item->state;
     }
-    return result;
+
+    cairo_save(ct);
+    // handle clip-rule
+    if (shape->style) {
+        if (shape->style->clip_rule.computed == SP_WIND_RULE_EVENODD) {
+            cairo_set_fill_rule(ct, CAIRO_FILL_RULE_EVEN_ODD);
+        } else {
+            cairo_set_fill_rule(ct, CAIRO_FILL_RULE_WINDING);
+        }
+    }
+    ink_cairo_transform(ct, shape->ctm);
+    feed_pathvector_to_cairo(ct, shape->curve->get_pathvector());
+    cairo_fill(ct);
+    cairo_restore(ct);
+
+    return item->state;
 }
 
 static NRArenaItem *

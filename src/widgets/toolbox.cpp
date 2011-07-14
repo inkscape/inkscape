@@ -6808,11 +6808,11 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
             unsigned writing_mode = item->style->writing_mode.value;
             // below, variable names suggest horizontal move, but we check the writing direction
             // and move in the corresponding axis
-            int axis;
+            Geom::Dim2 axis;
             if (writing_mode == SP_CSS_WRITING_MODE_LR_TB || writing_mode == SP_CSS_WRITING_MODE_RL_TB) {
-                axis = NR::X;
+                axis = Geom::X;
             } else {
-                axis = NR::Y;
+                axis = Geom::Y;
             }
 
             Geom::OptRect bbox
@@ -6865,7 +6865,7 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
                 }
             }
             Geom::Point XY = SP_TEXT(item)->attributes.firstXY();
-            if (axis == NR::X) {
+            if (axis == Geom::X) {
                 XY = XY + Geom::Point (move, 0);
             } else {
                 XY = XY + Geom::Point (0, move);

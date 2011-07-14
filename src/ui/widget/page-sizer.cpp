@@ -24,6 +24,7 @@
 #include <string>
 #include <string.h>
 #include <vector>
+#include <2geom/transforms.h>
 
 #include "desktop-handles.h"
 #include "document.h"

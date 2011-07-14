@@ -1,8 +1,8 @@
 #ifndef INKSCAPE_LIVAROT_SWEEP_TREE_H
 #define INKSCAPE_LIVAROT_SWEEP_TREE_H
 
-#include "libnr/nr-point.h"
 #include "livarot/AVL.h"
+#include <2geom/point.h>
 
 class Shape;
 class SweepEvent;

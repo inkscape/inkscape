@@ -17,6 +17,7 @@
 #include <glib/gmem.h>
 #include <gtk/gtk.h>
 #include <glibmm/i18n.h>
+#include <2geom/transforms.h>
 
 #include "desktop.h"
 #include "desktop-handles.h"

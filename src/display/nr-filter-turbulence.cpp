@@ -299,7 +299,6 @@ FilterTurbulence::FilterTurbulence()
     , numOctaves(1)
     , seed(0)
     , updated(false)
-    , updated_area(NR::IPoint(), NR::IPoint())
     , fTileWidth(10) //guessed
     , fTileHeight(10) //guessed
     , fTileX(1) //guessed

@@ -10,34 +10,14 @@
  */
 
 #include <libnr/nr-rect.h>
-#include <libnr/nr-point.h>
-#include <2geom/affine.h>
-#include <2geom/d2.h>
-#include <2geom/transforms.h>
-#include <2geom/point.h>
+#include <2geom/rect.h>
 
-inline Geom::Point to_2geom(NR::Point const & _pt) {
-    return Geom::Point(_pt[0], _pt[1]);
-}
-inline NR::Point from_2geom(Geom::Point const & _pt) {
-    return NR::Point(_pt[0], _pt[1]);
-}
-
-inline Geom::Rect to_2geom(NR::Rect const & rect) {
-    Geom::Rect rect2geom(to_2geom(rect.min()), to_2geom(rect.max()));
-    return rect2geom;
-}
-inline NR::Rect from_2geom(Geom::Rect const & rect2geom) {
-    NR::Rect rect(rect2geom.min(), rect2geom.max());
-    return rect;
-}
-inline Geom::OptRect to_2geom(boost::optional<NR::Rect> const & rect) {
-    Geom::OptRect rect2geom;
-    if (!rect) {
-        return rect2geom;
-    }
-    rect2geom = to_2geom(*rect);
-    return rect2geom;
+inline Geom::OptRect to_2geom(NRRect const *nr) {
+    Geom::OptRect ret;
+    if (!nr) return ret;
+    if (nr->x1 < nr->x0 || nr->y1 < nr->y0) return ret;
+    ret = Geom::Rect(Geom::Point(nr->x0, nr->y0), Geom::Point(nr->x1, nr->y1));
+    return ret;
 }
 
 #endif

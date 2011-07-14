@@ -361,7 +361,10 @@ sp_flowtext_print(SPItem *item, SPPrintContext *ctx)
     if (!bbox_maybe) {
         return;
     }
-    bbox = NRRect(from_2geom(*bbox_maybe));
+    bbox.x0 = bbox_maybe->min()[Geom::X];
+    bbox.y0 = bbox_maybe->min()[Geom::Y];
+    bbox.x1 = bbox_maybe->max()[Geom::X];
+    bbox.y1 = bbox_maybe->max()[Geom::Y];
 
     NRRect dbox;
     dbox.x0 = 0.0;

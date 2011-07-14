@@ -330,8 +330,10 @@ struct SPStyle {
     unsigned cursor_set : 1;
     unsigned overflow_set : 1;
     unsigned clip_path_set : 1;
-    unsigned clip_rule_set : 1;
     unsigned mask_set : 1;
+
+    /** clip-rule: 0 nonzero, 1 evenodd */
+    SPIEnum clip_rule;
 
     /** display */
     SPIEnum display;

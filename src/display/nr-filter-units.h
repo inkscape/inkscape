@@ -133,7 +133,7 @@ public:
      * NOTE: use only in filters, that define TRAIT_PARALLER in
      * get_input_traits. The filter effects area may not be representable
      * by simple rectangle otherwise. */
-    NR::IRect get_pixblock_filterarea_paraller() const;
+    Geom::IntRect get_pixblock_filterarea_paraller() const;
 
     FilterUnits& operator=(FilterUnits const &other);
 

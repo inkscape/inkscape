@@ -1,11 +1,10 @@
 /**
  * \file
- * \brief  Do not include this file \todo brief description
+ * \brief  Do not include this file
  *
  * We don't actually want anyone to
- * include this, other than D2.h.  If somone else tries, D2
- * won't be defined.  If it is, this will already be included.
- *
+ * include this, other than D2.h.
+ *//*
  * Authors:
  *      ? <?@?.?>
  * 
@@ -36,11 +35,11 @@
  *
  */
 
-#ifdef _2GEOM_D2  /*This is intentional: we don't actually want anyone to
-                    include this, other than D2.h.  If somone else tries, D2
-                    won't be defined.  If it is, this will already be included. */
-#ifndef __2GEOM_SBASIS_CURVE_H
-#define __2GEOM_SBASIS_CURVE_H
+#ifdef SEEN_LIB2GEOM_D2_H  /*This is intentional: we don't actually want anyone to
+                             include this, other than D2.h.  If somone else tries, D2
+                             won't be defined.  If it is, this will already be included. */
+#ifndef SEEN_LIB2GEOM_D2_SBASIS_H
+#define SEEN_LIB2GEOM_D2_SBASIS_H
 
 #include <2geom/sbasis.h>
 #include <2geom/sbasis-2d.h>

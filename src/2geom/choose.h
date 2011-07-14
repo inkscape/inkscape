@@ -1,7 +1,7 @@
 /**
- * \file choose.h
- * \brief  \todo brief description
- *
+ * \file
+ * \brief Calculation of binomial cefficients
+ *//*
  * Copyright 2006 Nathan Hurst <njh@mail.csse.monash.edu.au>
  *
  * This library is free software; you can redistribute it and/or
@@ -29,9 +29,12 @@
  *
  */
 
-#ifndef _CHOOSE_H
-#define _CHOOSE_H
+#ifndef LIB2GEOM_SEEN_CHOOSE_H
+#define LIB2GEOM_SEEN_CHOOSE_H
+
 #include <vector>
+
+namespace Geom {
 
 // XXX: Can we keep only the left terms easily?
 // this would more than halve the array
@@ -121,13 +124,9 @@ class BinomialCoefficient
     container_type coefficients;
 };
 
+} // end namespace Geom
 
-
-
-
-
-
-#endif
+#endif // LIB2GEOM_SEEN_CHOOSE_H
 
 /*
   Local Variables:

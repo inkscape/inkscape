@@ -1,12 +1,12 @@
 /**
  * \file
  * \brief  Path - Series of continuous curves
- *
+ *//*
  * Authors:
- * 		MenTaLguY <mental@rydia.net>
- * 		Marco Cecchetti <mrcekets at gmail.com>
+ *   MenTaLguY <mental@rydia.net>
+ *   Marco Cecchetti <mrcekets at gmail.com>
  * 
- * Copyright 2007-2008  authors
+ * Copyright 2007-2008 Authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -32,23 +32,16 @@
  * the specific language governing rights and limitations.
  */
 
+#ifndef LIB2GEOM_SEEN_PATH_H
+#define LIB2GEOM_SEEN_PATH_H
 
-
-
-#ifndef SEEN_GEOM_PATH_H
-#define SEEN_GEOM_PATH_H
-
-
+#include <iterator>
+#include <algorithm>
 #include <boost/shared_ptr.hpp>
 #include <2geom/curve.h>
 #include <2geom/bezier-curve.h>
 
-#include <iterator>
-#include <algorithm>
-
-
-namespace Geom
-{
+namespace Geom {
 
 class Path;
 
@@ -696,17 +689,13 @@ Coord nearest_point(Point const& p, Path const& c)
 namespace std {
 
 template <>
-inline void swap<Geom::Path>(Geom::Path &a, Geom::Path &b)
-{
+inline void swap<Geom::Path>(Geom::Path &a, Geom::Path &b) {
   a.swap(b);
 }
 
 }  // end namespace std
 
-#endif // SEEN_GEOM_PATH_H
-
-
-
+#endif // LIB2GEOM_SEEN_PATH_H
 
 /*
   Local Variables:

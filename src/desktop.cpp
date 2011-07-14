@@ -57,6 +57,7 @@
 #include <sigc++/functors/mem_fun.h>
 #include <gtkmm.h>
 
+#include <2geom/transforms.h>
 #include <2geom/rect.h>
 #include "macros.h"
 #include "inkscape-private.h"

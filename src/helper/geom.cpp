@@ -511,15 +511,15 @@ namespace Geom {
 
 bool transform_equalp(Geom::Affine const &m0, Geom::Affine const &m1, Geom::Coord const epsilon) {
     return
-        NR_DF_TEST_CLOSE(m0[0], m1[0], epsilon) &&
-        NR_DF_TEST_CLOSE(m0[1], m1[1], epsilon) &&
-        NR_DF_TEST_CLOSE(m0[2], m1[2], epsilon) &&
-        NR_DF_TEST_CLOSE(m0[3], m1[3], epsilon);
+        Geom::are_near(m0[0], m1[0], epsilon) &&
+        Geom::are_near(m0[1], m1[1], epsilon) &&
+        Geom::are_near(m0[2], m1[2], epsilon) &&
+        Geom::are_near(m0[3], m1[3], epsilon);
 }
 
 
 bool translate_equalp(Geom::Affine const &m0, Geom::Affine const &m1, Geom::Coord const epsilon) {
-    return NR_DF_TEST_CLOSE(m0[4], m1[4], epsilon) && NR_DF_TEST_CLOSE(m0[5], m1[5], epsilon);
+    return Geom::are_near(m0[4], m1[4], epsilon) && Geom::are_near(m0[5], m1[5], epsilon);
 }
 
 

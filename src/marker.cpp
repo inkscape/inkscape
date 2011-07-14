@@ -19,6 +19,7 @@
 
 #include "libnr/nr-convert2geom.h"
 #include <2geom/affine.h>
+#include <2geom/transforms.h>
 #include "svg/svg.h"
 #include "display/nr-arena-group.h"
 #include "xml/repr.h"

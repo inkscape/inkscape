@@ -89,6 +89,7 @@ void SPClipPath::build(SPObject *object, SPDocument *document, Inkscape::XML::No
     if (((SPObjectClass *) SPClipPathClass::static_parent_class)->build)
         ((SPObjectClass *) SPClipPathClass::static_parent_class)->build(object, document, repr);
 
+    object->readAttr( "style" );
     object->readAttr( "clipPathUnits" );
 
     /* Register ourselves */
@@ -132,8 +133,13 @@ void SPClipPath::set(SPObject *object, unsigned int key, gchar const *value)
             object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:
-            if (((SPObjectClass *) SPClipPathClass::static_parent_class)->set) {
-                ((SPObjectClass *) SPClipPathClass::static_parent_class)->set(object, key, value);
+            if (SP_ATTRIBUTE_IS_CSS(key)) {
+                sp_style_read_from_object(object->style, object);
+                object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+            } else {
+                if (((SPObjectClass *) SPClipPathClass::static_parent_class)->set) {
+                    ((SPObjectClass *) SPClipPathClass::static_parent_class)->set(object, key, value);
+                }
             }
             break;
     }
@@ -258,6 +264,7 @@ NRArenaItem *SPClipPath::show(NRArena *arena, unsigned int key)
         t[5] = display->bbox.y0;
         nr_arena_group_set_child_transform(NR_ARENA_GROUP(ai), &t);
     }
+    nr_arena_group_set_style(NR_ARENA_GROUP(ai), this->style);
 
     return ai;
 }

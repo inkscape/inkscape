@@ -32,12 +32,12 @@
  * the specific language governing rights and limitations.
  */
 
-#ifndef SEEN_Geom_TRANSFORMS_H
-#define SEEN_Geom_TRANSFORMS_H
+#ifndef LIB2GEOM_SEEN_TRANSFORMS_H
+#define LIB2GEOM_SEEN_TRANSFORMS_H
 
+#include <cmath>
 #include <2geom/forward.h>
 #include <2geom/affine.h>
-#include <cmath>
 
 namespace Geom {
 
@@ -66,7 +66,8 @@ struct TransformConcept {
     }
 };
 
-/** @brief Base template for transforms. */
+/** @brief Base template for transforms.
+ * This class is an implementation detail and should not be used directly. */
 template <typename T>
 class TransformOperations
     : boost::equality_comparable< T
@@ -198,6 +199,7 @@ public:
 };
 
 /** @brief Common base for shearing transforms.
+ * This class is an implementation detail and should not be used directly.
  * @ingroup Transforms */
 template <typename S>
 class ShearBase
@@ -259,10 +261,9 @@ inline Translate pow(Translate const &t, int n) {
 
 //TODO: matrix to trans/scale/rotate
 
-} /* namespace Geom */
+} // end namespace Geom
 
-
-#endif /* !SEEN_Geom_TRANSFORMS_H */
+#endif // LIB2GEOM_SEEN_TRANSFORMS_H
 
 /*
   Local Variables:

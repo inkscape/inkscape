@@ -16,9 +16,9 @@
 #ifndef INKSCAPE_UI_VIEW_EDIT_WIDGET_IFACE_H
 #define INKSCAPE_UI_VIEW_EDIT_WIDGET_IFACE_H
 
-#include "libnr/nr-point.h"
 #include "message.h"
 #include <gtkmm/window.h>
+#include <2geom/point.h>
 
 namespace Inkscape { namespace UI { namespace Widget { class Dock; } } }
 

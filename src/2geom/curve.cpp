@@ -1,8 +1,5 @@
-/**
- * \file
- * \brief Abstract curve type - implementation of default methods
+/* Abstract curve type - implementation of default methods
  *
- *//*
  * Authors:
  *   MenTaLguY <mental@rydia.net>
  *   Marco Cecchetti <mrcekets at gmail.com>

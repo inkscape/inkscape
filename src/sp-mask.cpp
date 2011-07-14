@@ -13,10 +13,11 @@
 
 #include <cstring>
 #include <string>
+#include <2geom/transforms.h>
 
 #include "display/nr-arena.h"
 #include "display/nr-arena-group.h"
-#include <xml/repr.h>
+#include "xml/repr.h"
 
 #include "enums.h"
 #include "attributes.h"

@@ -10,19 +10,9 @@
  * This code is in public domain
  */
 
-namespace NR {
-class Matrix;
-class Point;
-class Rect;
-class rotate;
-class scale;
-class translate;
-}
-
 struct NRPixBlock;
 struct NRRect;
 struct NRRectL;
-
 
 #endif
 

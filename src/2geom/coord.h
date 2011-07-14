@@ -1,7 +1,7 @@
 /**
  *  \file
  *  \brief Defines the Coord "real" type with sufficient precision for coordinates.
- *
+ *//*
  * Copyright 2006 Nathan Hurst <njh@mail.csse.monash.edu.au>
  *
  * This library is free software; you can redistribute it and/or
@@ -29,15 +29,16 @@
  *
  */
 
-#ifndef SEEN_Geom_COORD_H
-#define SEEN_Geom_COORD_H
+#ifndef LIB2GEOM_SEEN_COORD_H
+#define LIB2GEOM_SEEN_COORD_H
 
 #include <cmath>
 #include <limits>
+#include <2geom/forward.h>
 
 namespace Geom {
 
-/** @brief Axis enum (X or Y). */
+/** @brief 2D axis enumeration (X or Y). */
 enum Dim2 { X=0, Y=1 };
 
 /**
@@ -48,6 +49,7 @@ enum Dim2 { X=0, Y=1 };
  * differences of on-canvas points.
  */
 typedef double Coord;
+typedef int IntCoord;
 
 const Coord EPSILON = 1e-5; //1e-18;
 
@@ -57,13 +59,36 @@ inline Coord infinity() {  return std::numeric_limits<Coord>::infinity();  }
 inline bool are_near(Coord a, Coord b, double eps=EPSILON) { return a-b <= eps && a-b >= -eps; }
 inline bool rel_error_bound(Coord a, Coord b, double eps=EPSILON) { return a <= eps*b && a >= -eps*b; }
 
+template <typename C>
+struct CoordTraits {};
 
-typedef long IntCoord;
+template<>
+struct CoordTraits<IntCoord> {
+    typedef IntPoint PointType;
+    typedef IntInterval IntervalType;
+    typedef OptIntInterval OptIntervalType;
+    typedef IntRect RectType;
+    typedef OptIntRect OptRectType;
+    inline static bool contains(IntCoord low, IntCoord high, IntCoord testlow, IntCoord testhigh) {
+        return low <= testlow && testhigh < high;
+    }
+};
 
-} /* namespace Geom */
+template<>
+struct CoordTraits<Coord> {
+    typedef Point PointType;
+    typedef Interval IntervalType;
+    typedef OptInterval OptIntervalType;
+    typedef Rect RectType;
+    typedef OptRect OptRectType;
+    inline static bool contains(Coord low, Coord high, Coord testlow, Coord testhigh) {
+        return low <= testlow && testhigh <= high;
+    }
+};
 
+} // end namespace Geom
 
-#endif /* !SEEN_Geom_COORD_H */
+#endif // LIB2GEOM_SEEN_COORD_H
 
 /*
   Local Variables:

@@ -40,6 +40,7 @@
 #include <gtk/gtk.h>
 #include <string>
 #include <cstring>
+#include <2geom/transforms.h>
 
 #include "desktop.h"
 #include "dir-util.h"
@@ -647,7 +648,7 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
 
     Geom::Translate const tr(
             Geom::Point(0, old_height - rect_with_margins.height())
-            - to_2geom(rect_with_margins.min()));
+            - rect_with_margins.min());
     root->translateChildItems(tr);
 
     if(nv) {

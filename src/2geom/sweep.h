@@ -1,7 +1,7 @@
 /**
  * \file
- * \brief  \todo brief description
- *
+ * \brief Sweepline intersection of groups of rectangles
+ *//*
  * Authors:
  *      ? <?@?.?>
  * 

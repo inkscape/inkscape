@@ -1,9 +1,6 @@
-#ifndef GEOM_CONVEX_COVER_H
-#define GEOM_CONVEX_COVER_H
-
 /**
  * \file
- * \brief \todo brief description
+ * \brief Dynamic convex hull structure
  *
  * Copyright 2006 Nathan Hurst <njh@mail.csse.monash.edu.au>
  * Copyright 2006 Michael G. Sloan <mgsloan@gmail.com>
@@ -33,14 +30,17 @@
  *
  */
 
-/** A convex cover is a sequence of convex polygons that completely cover the path.  For now a
- * convex hull class is included here (the convex-hull header is wrong)
- */
+#ifndef GEOM_CONVEX_COVER_H
+#define GEOM_CONVEX_COVER_H
 
 #include <2geom/point.h>
 #include <vector>
 
 namespace Geom{
+
+/* A convex cover is a sequence of convex polygons that completely cover the path.  For now a
+ * convex hull class is included here (the convex-hull header is wrong)
+ */
 
 /** ConvexHull
  * A convexhull is a convex region - every point between two points in the convex hull is also in

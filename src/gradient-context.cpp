@@ -548,9 +548,9 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
             dragging = true;
 
-            Geom::Point button_dt = to_2geom(desktop->w2d(button_w));
+            Geom::Point button_dt = desktop->w2d(button_w);
             if (event->button.state & GDK_SHIFT_MASK) {
-                Inkscape::Rubberband::get(desktop)->start(desktop, from_2geom(button_dt));
+                Inkscape::Rubberband::get(desktop)->start(desktop, button_dt);
             } else {
                 // remember clicked item, disregarding groups, honoring Alt; do nothing with Crtl to
                 // enable Ctrl+doubleclick of exactly the selected item(s)
@@ -563,7 +563,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
                     m.unSetup();
                 }
-                rc->origin = from_2geom(button_dt);
+                rc->origin = button_dt;
             }
 
             ret = TRUE;

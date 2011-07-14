@@ -31,7 +31,10 @@ static void sp_canvas_arena_destroy(GtkObject *object);
 
 static void sp_canvas_arena_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf);
+static void sp_canvas_arena_render_cache (SPCanvasItem *item, Geom::IntRect const &area);
+static void sp_canvas_arena_dirty_cache (SPCanvasArena *arena, NRRectL *area);
 static double sp_canvas_arena_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
+static void sp_canvas_arena_visible_area_changed (SPCanvasItem *item, Geom::IntRect const &old_area, Geom::IntRect const &new_area);
 static gint sp_canvas_arena_event (SPCanvasItem *item, GdkEvent *event);
 
 static gint sp_canvas_arena_send_event (SPCanvasArena *arena, GdkEvent *event);
@@ -93,6 +96,7 @@ sp_canvas_arena_class_init (SPCanvasArenaClass *klass)
     item_class->render = sp_canvas_arena_render;
     item_class->point = sp_canvas_arena_point;
     item_class->event = sp_canvas_arena_event;
+    item_class->visible_area_changed = sp_canvas_arena_visible_area_changed;
 }
 
 static void
@@ -106,6 +110,9 @@ sp_canvas_arena_init (SPCanvasArena *arena)
     nr_arena_group_set_transparent (NR_ARENA_GROUP (arena->root), TRUE);
 
     arena->active = NULL;
+    arena->cache = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
+    arena->cache_area = Geom::IntRect::from_xywh(0,0,1,1);
+    arena->dirty = cairo_region_create();
 
     nr_active_object_add_listener ((NRActiveObject *) arena->arena, (NRObjectEventVector *) &carenaev, sizeof (carenaev), arena);
 }
@@ -131,6 +138,11 @@ sp_canvas_arena_destroy (GtkObject *object)
         nr_object_unref ((NRObject *) arena->arena);
         arena->arena = NULL;
     }
+    if (arena->cache) {
+        cairo_surface_destroy(arena->cache);
+        arena->cache = NULL;
+    }
+    cairo_region_destroy(arena->dirty);
 
     if (GTK_OBJECT_CLASS (parent_class)->destroy)
         (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
@@ -187,33 +199,74 @@ sp_canvas_arena_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned
 static void
 sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
 {
-    gint bw, bh;
- 
     SPCanvasArena *arena = SP_CANVAS_ARENA (item);
     //SPCanvas *canvas = item->canvas;
+
+    //nr_arena_item_invoke_update (arena->root, NULL, &arena->gc,
+    //                             NR_ARENA_ITEM_STATE_BBOX | NR_ARENA_ITEM_STATE_RENDER,
+    //                             NR_ARENA_ITEM_STATE_NONE);
+
+    Geom::OptIntRect r = buf->rect;
+    if (!r || r->hasZeroArea()) return;
+    
+    cairo_rectangle_int_t crect;
+    crect.x = r->left();
+    crect.y = r->top();
+    crect.width = r->width();
+    crect.height = r->height();
+    if (cairo_region_contains_rectangle(arena->dirty, &crect) != CAIRO_REGION_OVERLAP_OUT) {
+        sp_canvas_arena_render_cache(item, *r);
+        cairo_region_subtract_rectangle(arena->dirty, &crect);
+    }
+
+    cairo_save(buf->ct);
+    cairo_translate(buf->ct, -r->left(), -r->top());
+    //cairo_rectangle(buf->ct, r->left(), r->top(), r->width(), r->height());
+    //cairo_clip(buf->ct);
+    cairo_set_source_surface(buf->ct, arena->cache, arena->cache_area.left(), arena->cache_area.top());
+    cairo_paint(buf->ct);
+    //nr_arena_item_invoke_render (buf->ct, arena->root, &area, NULL, 0);
+    cairo_restore(buf->ct);
+}
+
+static void sp_canvas_arena_render_cache (SPCanvasItem *item, Geom::IntRect const &area)
+{
+    SPCanvasArena *arena = SP_CANVAS_ARENA (item);
+    
+    Geom::OptIntRect r = Geom::intersect(arena->cache_area, area);
+    if (!r || r->hasZeroArea()) return; // nothing to do
+    
+    cairo_t *ct = cairo_create(arena->cache);
+    cairo_translate(ct, -arena->cache_area.left(), -arena->cache_area.top());
+    
+    // clear area to paint
+    cairo_rectangle(ct, area.left(), area.top(), area.width(), area.height());
+    cairo_clip(ct);
+    cairo_save(ct);
+    cairo_set_source_rgba(ct, 0,0,0,0);
+    cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
+    cairo_paint(ct);
+    cairo_restore(ct);
+    
+    NRRectL nr_area(r);
 
     nr_arena_item_invoke_update (arena->root, NULL, &arena->gc,
                                  NR_ARENA_ITEM_STATE_BBOX | NR_ARENA_ITEM_STATE_RENDER,
                                  NR_ARENA_ITEM_STATE_NONE);
+    nr_arena_item_invoke_render (ct, arena->root, &nr_area, NULL, 0);
 
-    sp_canvas_prepare_buffer(buf);
+    cairo_destroy(ct);
+}
 
-    bw = buf->rect.x1 - buf->rect.x0;
-    bh = buf->rect.y1 - buf->rect.y0;
-    if ((bw < 1) || (bh < 1)) return;
-
-    NRRectL area;
-
-    area.x0 = buf->rect.x0;
-    area.y0 = buf->rect.y0;
-    area.x1 = buf->rect.x1;
-    area.y1 = buf->rect.y1;
-
-    sp_canvas_prepare_buffer(buf);
-    cairo_save(buf->ct);
-    cairo_translate(buf->ct, -area.x0, -area.y0);
-    nr_arena_item_invoke_render (buf->ct, arena->root, &area, NULL, 0);
-    cairo_restore(buf->ct);
+static void
+sp_canvas_arena_dirty_cache (SPCanvasArena *arena, NRRectL *area)
+{
+    cairo_rectangle_int_t rect;
+    rect.x = area->x0;
+    rect.y = area->y0;
+    rect.width = area->x1 - area->x0;
+    rect.height = area->y1 - area->y0;
+    cairo_region_union_rectangle(arena->dirty, &rect);
 }
 
 static double
@@ -235,6 +288,67 @@ sp_canvas_arena_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_
     }
 
     return 1e18;
+}
+
+static void
+sp_canvas_arena_visible_area_changed (SPCanvasItem *item, Geom::IntRect const &old_area, Geom::IntRect const &new_area)
+{
+    SPCanvasArena *arena = SP_CANVAS_ARENA(item);
+
+    cairo_surface_t *new_cache = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+        new_area.width(), new_area.height());
+    cairo_t *ct = cairo_create(new_cache);
+    cairo_set_source_surface(ct, arena->cache, old_area.left() - new_area.left(), old_area.top() - new_area.top());
+    cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
+    cairo_paint(ct);
+    cairo_destroy(ct);
+    cairo_surface_destroy(arena->cache);
+    arena->cache = new_cache;
+    arena->cache_area = new_area;
+
+    cairo_rectangle_int_t crect;
+    crect.x = new_area.left();
+    crect.y = new_area.top();
+    crect.width = new_area.width();
+    crect.height = new_area.height();
+    cairo_region_intersect_rectangle(arena->dirty, &crect);
+
+    // invalidate newly exposed areas
+    /*
+     * +----------------------+
+     * |      top strip       |
+     * +-------+------+-------+
+     * |       |      |       |
+     * | left  | old  | right |
+     * | strip | area | strip |
+     * |       |      |       |
+     * +-------+------+-------+
+     * |     bottom strip     |
+     * +----------------------+
+     */
+    
+    // top strip
+    if (new_area.top() < old_area.top()) {
+        NRRectL top_strip(new_area.left(), new_area.top(), new_area.right(), old_area.top());
+        sp_canvas_arena_dirty_cache(arena, &top_strip);
+    }
+    // left strip
+    if (new_area.left() < old_area.left()) {
+        NRRectL left_strip(new_area.left(), std::max(new_area.top(), old_area.top()),
+            old_area.left(), std::min(new_area.bottom(), old_area.bottom()));
+        sp_canvas_arena_dirty_cache(arena, &left_strip);
+    }
+    // right strip
+    if (new_area.right() > old_area.right()) {
+        NRRectL right_strip(old_area.right(), std::max(new_area.top(), old_area.top()),
+            new_area.right(), std::min(new_area.bottom(), old_area.bottom()));
+        sp_canvas_arena_dirty_cache(arena, &right_strip);
+    }
+    // bottom strip
+    if (new_area.bottom() > old_area.bottom()) {
+        NRRectL bottom_strip(new_area.left(), old_area.bottom(), new_area.right(), new_area.bottom());
+        sp_canvas_arena_dirty_cache(arena, &bottom_strip);
+    }
 }
 
 static gint
@@ -336,6 +450,8 @@ sp_canvas_arena_request_update (NRArena */*arena*/, NRArenaItem */*item*/, void 
 static void
 sp_canvas_arena_request_render (NRArena */*arena*/, NRRectL *area, void *data)
 {
+    if (!area) return;
+    sp_canvas_arena_dirty_cache (SP_CANVAS_ARENA(data), area);
     sp_canvas_request_redraw (SP_CANVAS_ITEM (data)->canvas, area->x0, area->y0, area->x1, area->y1);
 }
 

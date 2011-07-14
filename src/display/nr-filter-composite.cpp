@@ -11,7 +11,6 @@
 
 #include <cmath>
 
-#include "2geom/isnan.h"
 #include "display/cairo-templates.h"
 #include "display/cairo-utils.h"
 #include "display/nr-filter-composite.h"

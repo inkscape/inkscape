@@ -18,6 +18,7 @@
 
 #include "interface.h"
 #include <2geom/rect.h>
+#include <2geom/transforms.h>
 #include <glib/gmessages.h>
 #include <png.h>
 #include "png-write.h"

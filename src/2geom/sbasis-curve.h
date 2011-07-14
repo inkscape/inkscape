@@ -33,8 +33,8 @@
  * the specific language governing rights and limitations.
  */
 
-#ifndef _2GEOM_SBASIS_CURVE_H_
-#define _2GEOM_SBASIS_CURVE_H_
+#ifndef LIB2GEOM_SEEN_SBASIS_CURVE_H
+#define LIB2GEOM_SEEN_SBASIS_CURVE_H
 
 #include <2geom/curve.h>
 #include <2geom/nearest-point.h>
@@ -45,24 +45,45 @@ namespace Geom
 
 /** @brief Symmetric power basis curve.
  *
- * Symmetric power basis (S-basis for short) polynomials are a versatile numeric representation
- * of arbitrary continuous curves. They combine the properties of Bezier curves
- * (geometric interpretation of parameters, numerical stability near ends of the curve)
- * and the monomial basis (fast evaluation). They are the main representation of curves
+ * Symmetric power basis (S-basis for short) polynomials are a versatile numeric
+ * representation of arbitrary continuous curves. They are the main representation of curves
  * in 2Geom.
+ *
+ * S-basis is defined for odd degrees and composed of the following polynomials:
+ * \f{align*}{
+         P_k^0(t) &= t^k (1-t)^{k+1} \\
+         P_k^1(t) &= t^{k+1} (1-t)^k \f}
+ * This can be understood more easily with the help of the chart below. Each square
+ * represents a product of a specific number of \f$t\f$ and \f$(1-t)\f$ terms. Red dots
+ * are the canonical (monomial) basis, the green dots are the Bezier basis, and the blue
+ * dots are the S-basis, all of them of degree 7.
+ *
+ * @image html sbasis.png "Illustration of the monomial, Bezier and symmetric power bases"
+ *
+ * The S-Basis has several important properties:
+ * - S-basis polynomials are closed under multiplication.
+ * - Evaluation is fast, using a modified Horner scheme.
+ * - Degree change is as trivial as in the monomial basis. To elevate, just add extra
+ *   zero coefficients. To reduce the degree, truncate the terms in the highest powers.
+ *   Compare this with Bezier curves, where degree change is complicated.
+ * - Conversion between S-basis and Bezier basis is numerically stable.
+ *
+ * More in-depth information can be found in the following paper:
+ * J Sanchez-Reyes, "The symmetric analogue of the polynomial power basis".
+ * ACM Transactions on Graphics, Vol. 16, No. 3, July 1997, pages 319--357.
+ * http://portal.acm.org/citation.cfm?id=256162
  *
  * @ingroup Curves
  */
 class SBasisCurve : public Curve {
-
 private:
-    SBasisCurve();
     D2<SBasis> inner;
   
 public:
     explicit SBasisCurve(D2<SBasis> const &sb) : inner(sb) {}
     explicit SBasisCurve(Curve const &other) : inner(other.toSBasis()) {}
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     virtual Curve *duplicate() const { return new SBasisCurve(*this); }
     virtual Point initialPoint() const    { return inner.at0(); }
     virtual Point finalPoint() const      { return inner.at1(); }
@@ -104,16 +125,12 @@ public:
     virtual int degreesOfFreedom() const {
         return inner[0].degreesOfFreedom() + inner[1].degreesOfFreedom();
     }
+#endif
 };
-
 
 } // end namespace Geom
 
-
-#endif // _2GEOM_SBASIS_CURVE_H_
-
-
-
+#endif // LIB2GEOM_SEEN_SBASIS_CURVE_H
 
 /*
   Local Variables:

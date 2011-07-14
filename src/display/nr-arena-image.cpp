@@ -301,7 +301,7 @@ nr_arena_image_rect (NRArenaImage *image)
         Geom::Point p(image->ox, image->oy);
         Geom::Point wh(vw, vh);
         Geom::Rect view(p, p+wh);
-        Geom::OptRect res = Geom::intersect(r, view);
+        Geom::OptRect res = r & view;
         r = res ? *res : r;
     }
 

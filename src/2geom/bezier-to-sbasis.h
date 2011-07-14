@@ -1,7 +1,7 @@
 /**
- * \file bezier-to-sbasis.h
- * \brief  \todo brief description
- *
+ * \file
+ * \brief Conversion between Bezier control points and SBasis curves
+ *//*
  * Copyright 2006 Nathan Hurst <njh@mail.csse.monash.edu.au>
  *
  * This library is free software; you can redistribute it and/or

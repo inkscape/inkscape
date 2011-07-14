@@ -13,6 +13,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <2geom/transforms.h>
 #include "display/canvas-arena.h"
 #include "document.h"
 #include "sp-item.h"

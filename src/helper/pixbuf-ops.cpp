@@ -18,6 +18,7 @@
 #include <glib.h>
 #include <glib/gmessages.h>
 #include <png.h>
+#include <2geom/transforms.h>
 
 #include "interface.h"
 #include "helper/png-write.h"

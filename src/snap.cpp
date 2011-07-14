@@ -19,6 +19,7 @@
  */
 
 #include <utility>
+#include <2geom/transforms.h>
 
 #include "sp-namedview.h"
 #include "snap.h"
@@ -293,7 +294,7 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t, Geom::Point c
                     // use getSnapDistance() instead of getWeightedDistance() here because the pointer's position
                     // doesn't tell us anything about which node to snap
                     success = true;
-                    nearest_multiple = s.getPoint() - to_2geom(grid->origin);
+                    nearest_multiple = s.getPoint() - grid->origin;
                     nearest_distance = s.getSnapDistance();
                     bestSnappedPoint = s;
                 }

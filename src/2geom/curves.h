@@ -32,9 +32,8 @@
  * the specific language governing rights and limitations.
  */
 
-#ifndef _2GEOM_CURVES_H_
-#define _2GEOM_CURVES_H_
-
+#ifndef LIB2GEOM_SEEN_CURVES_H
+#define LIB2GEOM_SEEN_CURVES_H
 
 #include <2geom/curve.h>
 #include <2geom/sbasis-curve.h>
@@ -43,7 +42,7 @@
 #include <2geom/elliptical-arc.h>
 #include <2geom/svg-elliptical-arc.h>
 
-#endif // _2GEOM_CURVES_H_
+#endif // LIB2GEOM_SEEN_CURVES_H
 
 /*
   Local Variables:

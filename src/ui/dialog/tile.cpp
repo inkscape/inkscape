@@ -21,6 +21,7 @@
 #include <gtk/gtk.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
 #include <gtkmm/stock.h>
+#include <2geom/transforms.h>
 
 #include "verbs.h"
 #include "preferences.h"

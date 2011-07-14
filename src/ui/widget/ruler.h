@@ -13,7 +13,7 @@
  */
 
 #include <gtkmm/eventbox.h>
-#include "libnr/nr-point.h"
+#include <2geom/point.h>
 
 struct SPCanvasItem;
 struct SPDesktop;

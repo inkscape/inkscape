@@ -32,13 +32,13 @@
 #ifndef SEEN_GEOM_PW_SB_H
 #define SEEN_GEOM_PW_SB_H
 
-#include <2geom/sbasis.h>
 #include <vector>
 #include <map>
-
-#include <2geom/concepts.h>
-#include <2geom/isnan.h>
 #include <boost/concept_check.hpp>
+#include <2geom/concepts.h>
+#include <2geom/math-utils.h>
+#include <2geom/sbasis.h>
+
 
 namespace Geom {
 /**

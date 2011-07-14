@@ -15,6 +15,8 @@
 
 #include <cairo.h>
 #include <2geom/affine.h>
+#include <2geom/rect.h>
+#include "libnr/nr-forward.h"
 #include "libnr/nr-rect-l.h"
 #include "libnr/nr-object.h"
 #include "gc-soft-ptr.h"

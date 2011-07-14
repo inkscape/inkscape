@@ -13,7 +13,7 @@
  */
 
 #include "event-context.h"
-#include <libnr/nr-point.h>
+#include <2geom/point.h>
 
 #define SP_TYPE_TWEAK_CONTEXT (sp_tweak_context_get_type())
 #define SP_TWEAK_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_TWEAK_CONTEXT, SPTweakContext))

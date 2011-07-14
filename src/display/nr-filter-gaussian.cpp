@@ -23,8 +23,6 @@
 #include <omp.h>
 #endif //HAVE_OPENMP
 
-#include "2geom/isnan.h"
-
 #include "display/cairo-utils.h"
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-gaussian.h"

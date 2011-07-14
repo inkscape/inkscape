@@ -1,10 +1,10 @@
 /**
- * \file
- * \brief  \todo brief description
- *
+ * @file
+ * @brief Structure representing the intersection of two curves
+ *//*
  * Authors:
- *      Michael Sloane <?@?.?>
- *      Marco <?@?.?>
+ *   Michael Sloan <mgsloan@gmail.com>
+ *   Marco Cecchetti <mrcekets at gmail.com>
  * 
  * Copyright 2006-2008  authors
  *

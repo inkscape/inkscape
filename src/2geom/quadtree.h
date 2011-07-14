@@ -1,7 +1,7 @@
 /**
  * \file
- * \brief  \todo brief description
- *
+ * \brief Quad tree data structure
+ *//*
  * Authors:
  *      ? <?@?.?>
  * 

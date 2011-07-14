@@ -25,6 +25,7 @@
 #include <string>
 #include <glib/gstdio.h>
 #include <2geom/rect.h>
+#include <2geom/transforms.h>
 #include <glibmm/i18n.h>
 
 #include "display/nr-arena-image.h"
@@ -1498,7 +1499,7 @@ static void sp_image_set_curve( SPImage *image )
     } else {
         NRRect rect;
         sp_image_bbox(image, &rect, Geom::identity(), 0);
-        Geom::Rect rect2 = to_2geom(*rect.upgrade());
+        Geom::Rect rect2 = *to_2geom(&rect);
         SPCurve *c = SPCurve::new_from_rect(rect2, true);
 
         if (image->curve) {

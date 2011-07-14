@@ -160,7 +160,7 @@ int Filter::render(NRArenaItem const *item, cairo_t *bgct, NRRectL const *bgarea
         }
     }
 
-    FilterSlot slot(const_cast<NRArenaItem*>(item), bgct, bgarea, cairo_get_target(graphic), area, units);
+    FilterSlot slot(const_cast<NRArenaItem*>(item), bgct, bgarea, cairo_get_group_target(graphic), area, units);
     slot.set_quality(filterquality);
     slot.set_blurquality(blurquality);
 
@@ -236,10 +236,10 @@ void Filter::compute_drawbox(NRArenaItem const *item, NRRectL &item_bbox) {
     Geom::Rect enlarged = filter_effect_area(tmp_bbox);
     enlarged = enlarged * item->ctm;
 
-    item_bbox.x0 = (NR::ICoord) floor(enlarged.min()[X]);
-    item_bbox.y0 = (NR::ICoord) floor(enlarged.min()[Y]);
-    item_bbox.x1 = (NR::ICoord) ceil(enlarged.max()[X]);
-    item_bbox.y1 = (NR::ICoord) ceil(enlarged.max()[Y]);
+    item_bbox.x0 = floor(enlarged.min()[X]);
+    item_bbox.y0 = floor(enlarged.min()[Y]);
+    item_bbox.x1 = ceil(enlarged.max()[X]);
+    item_bbox.y1 = ceil(enlarged.max()[Y]);
 }
 
 Geom::Rect Filter::filter_effect_area(Geom::Rect const &bbox)

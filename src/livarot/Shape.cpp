@@ -2225,7 +2225,7 @@ double distance(Shape const *s, Geom::Point const &p)
             if ( el > 0.001 ) {
                 double const npr = Geom::dot(d, e);
                 if ( npr > 0 && npr < el ) {
-                    double const nl = fabs( NR::cross(d, e) );
+                    double const nl = fabs( Geom::cross(d, e) );
                     double ndot = nl * nl / el;
                     if ( ndot < bdot ) {
                         bdot = ndot;
@@ -2271,7 +2271,7 @@ bool distanceLessThanOrEqual(Shape const *s, Geom::Point const &p, double const 
     double const max_l1 = max_l2 * M_SQRT2;
     for (int i = 0; i < s->numberOfPoints(); i++) {
         Geom::Point const offset( p - s->getPoint(i).x );
-        double const l1 = NR::L1(offset);
+        double const l1 = Geom::L1(offset);
         if ( (l1 <= max_l2) || ((l1 <= max_l1) && (Geom::L2(offset) <= max_l2)) ) {
             return true;
         }
@@ -2288,7 +2288,7 @@ bool distanceLessThanOrEqual(Shape const *s, Geom::Point const &p, double const 
                 Geom::Point const e_unit(e / el);
                 double const npr = Geom::dot(d, e_unit);
                 if ( npr > 0 && npr < el ) {
-                    double const nl = fabs(NR::cross(d, e_unit));
+                    double const nl = fabs(Geom::cross(d, e_unit));
                     if ( nl <= max_l2 ) {
                         return true;
                     }

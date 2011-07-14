@@ -1,7 +1,7 @@
 /**
  * \file
- * \brief Circle Curve
- *
+ * \brief Circles
+ *//*
  * Authors:
  *      Marco Cecchetti <mrcekets at gmail.com>
  *
@@ -31,18 +31,15 @@
  * the specific language governing rights and limitations.
  */
 
+#ifndef LIB2GEOM_SEEN_CIRCLE_H
+#define LIB2GEOM_SEEN_CIRCLE_H
 
-#ifndef _2GEOM_CIRCLE_H_
-#define _2GEOM_CIRCLE_H_
-
-
+#include <vector>
 #include <2geom/point.h>
 #include <2geom/exception.h>
 #include <2geom/path.h>
-#include <vector>
 
-namespace Geom
-{
+namespace Geom {
 
 class EllipticalArc;
 
@@ -115,13 +112,9 @@ class Circle
     Coord m_ray;
 };
 
-
 } // end namespace Geom
 
-
-
-#endif // _2GEOM_CIRCLE_H_
-
+#endif // LIB2GEOM_SEEN_CIRCLE_H
 
 /*
   Local Variables:

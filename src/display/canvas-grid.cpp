@@ -920,9 +920,9 @@ void
 CanvasXYGrid::Render (SPCanvasBuf *buf)
 {
     gdouble const sxg = floor ((buf->rect.x0 - ow[Geom::X]) / sw[Geom::X]) * sw[Geom::X] + ow[Geom::X];
-    gint const  xlinestart = (gint) Inkscape::round((sxg - ow[Geom::X]) / sw[Geom::X]);
+    gint const  xlinestart = round((sxg - ow[Geom::X]) / sw[Geom::X]);
     gdouble const syg = floor ((buf->rect.y0 - ow[Geom::Y]) / sw[Geom::Y]) * sw[Geom::Y] + ow[Geom::Y];
-    gint const  ylinestart = (gint) Inkscape::round((syg - ow[Geom::Y]) / sw[Geom::Y]);
+    gint const  ylinestart = round((syg - ow[Geom::Y]) / sw[Geom::Y]);
 
     //set correct coloring, depending preference (when zoomed out, always major coloring or minor coloring)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -943,7 +943,7 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
         gint ylinenum;
         gdouble y;
         for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[Geom::Y], ylinenum++) {
-            gint const y0 = (gint) Inkscape::round(y);
+            gint const y0 = round(y);
             if (!scaled[Geom::Y] && (ylinenum % empspacing) != 0) {
                 grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, color);
             } else {
@@ -954,7 +954,7 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
         gint xlinenum;
         gdouble x;
         for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[Geom::X], xlinenum++) {
-            gint const ix = (gint) Inkscape::round(x);
+            gint const ix = round(x);
             if (!scaled[Geom::X] && (xlinenum % empspacing) != 0) {
                 grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, color);
             } else {
@@ -965,12 +965,12 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
         gint ylinenum;
         gdouble y;
         for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[Geom::Y], ylinenum++) {
-            gint const iy = (gint) Inkscape::round(y);
+            gint const iy = round(y);
 
             gint xlinenum;
             gdouble x;
             for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[Geom::X], xlinenum++) {
-                gint const ix = (gint) Inkscape::round(x);
+                gint const ix = round(x);
                 if ( (!scaled[Geom::X] && (xlinenum % empspacing) != 0)
                      || (!scaled[Geom::Y] && (ylinenum % empspacing) != 0)
                      || ((scaled[Geom::X] || scaled[Geom::Y]) && no_emp_when_zoomed_out) )

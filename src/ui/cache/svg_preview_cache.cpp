@@ -21,6 +21,7 @@
 
 #include <glib/gmem.h>
 #include <gtk/gtk.h>
+#include <2geom/transforms.h>
 #include "sp-namedview.h"
 #include "selection.h"
 #include "inkscape.h"

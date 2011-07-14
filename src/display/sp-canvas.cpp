@@ -689,6 +689,7 @@ static void sp_canvas_group_destroy (GtkObject *object);
 static void sp_canvas_group_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static double sp_canvas_group_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
 static void sp_canvas_group_render (SPCanvasItem *item, SPCanvasBuf *buf);
+static void sp_canvas_group_visible_area_changed (SPCanvasItem *item, Geom::IntRect const &old_area, Geom::IntRect const &new_area);
 
 static SPCanvasItemClass *group_parent_class;
 
@@ -732,6 +733,7 @@ sp_canvas_group_class_init (SPCanvasGroupClass *klass)
     item_class->update = sp_canvas_group_update;
     item_class->render = sp_canvas_group_render;
     item_class->point = sp_canvas_group_point;
+    item_class->visible_area_changed = sp_canvas_group_visible_area_changed;
 }
 
 /**
@@ -871,6 +873,20 @@ sp_canvas_group_render (SPCanvasItem *item, SPCanvasBuf *buf)
                 if (SP_CANVAS_ITEM_GET_CLASS (child)->render)
                     SP_CANVAS_ITEM_GET_CLASS (child)->render (child, buf);
             }
+        }
+    }
+}
+
+static void
+sp_canvas_group_visible_area_changed (SPCanvasItem *item, Geom::IntRect const &old_area, Geom::IntRect const &new_area)
+{
+    SPCanvasGroup *group = SP_CANVAS_GROUP (item);
+    
+    for (GList *list = group->items; list; list = list->next) {
+        SPCanvasItem *child = (SPCanvasItem *)list->data;
+        if (child->flags & SP_CANVAS_ITEM_VISIBLE) {
+            if (SP_CANVAS_ITEM_GET_CLASS (child)->visible_area_changed)
+                SP_CANVAS_ITEM_GET_CLASS (child)->visible_area_changed (child, old_area, new_area);
         }
     }
 }
@@ -1045,7 +1061,7 @@ sp_canvas_init (SPCanvas *canvas)
 
 #if ENABLE_LCMS
     canvas->enable_cms_display_adj = false;
-    canvas->cms_key = new Glib::ustring("");
+    new (&canvas->cms_key) Glib::ustring("");
 #endif // ENABLE_LCMS
 
     canvas->is_scrolling = false;
@@ -1105,6 +1121,8 @@ sp_canvas_destroy (GtkObject *object)
 
     shutdown_transients (canvas);
 
+    canvas->cms_key.~ustring();
+
     if (GTK_OBJECT_CLASS (canvas_parent_class)->destroy)
         (* GTK_OBJECT_CLASS (canvas_parent_class)->destroy) (object);
 }
@@ -1134,8 +1152,6 @@ sp_canvas_new_aa (void)
 static void
 sp_canvas_realize (GtkWidget *widget)
 {
-    SPCanvas *canvas = SP_CANVAS (widget);
-
     GdkWindowAttr attributes;
     attributes.window_type = GDK_WINDOW_CHILD;
     attributes.x = widget->allocation.x;
@@ -1171,8 +1187,6 @@ sp_canvas_realize (GtkWidget *widget)
     widget->style = gtk_style_attach (widget->style, widget->window);
 
     gtk_widget_set_realized (widget, TRUE);
-
-    canvas->pixmap_gc = gdk_gc_new (SP_CANVAS_WINDOW (canvas));
 }
 
 /**
@@ -1188,9 +1202,6 @@ sp_canvas_unrealize (GtkWidget *widget)
     canvas->focused_item = NULL;
 
     shutdown_transients (canvas);
-
-    gdk_gc_destroy (canvas->pixmap_gc);
-    canvas->pixmap_gc = NULL;
 
     if (GTK_WIDGET_CLASS (canvas_parent_class)->unrealize)
         (* GTK_WIDGET_CLASS (canvas_parent_class)->unrealize) (widget);
@@ -1216,8 +1227,16 @@ sp_canvas_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
     SPCanvas *canvas = SP_CANVAS (widget);
 
+    Geom::IntRect old_area = Geom::IntRect::from_xywh(canvas->x0, canvas->y0,
+        widget->allocation.width, widget->allocation.height);
+    Geom::IntRect new_area = Geom::IntRect::from_xywh(canvas->x0, canvas->y0,
+        allocation->width, allocation->height);
+
     /* Schedule redraw of new region */
     sp_canvas_resize_tiles(canvas,canvas->x0,canvas->y0,canvas->x0+allocation->width,canvas->y0+allocation->height);
+    if (SP_CANVAS_ITEM_GET_CLASS (canvas->root)->visible_area_changed)
+        SP_CANVAS_ITEM_GET_CLASS (canvas->root)->visible_area_changed (canvas->root, old_area, new_area);
+    
     if (allocation->width > widget->allocation.width) {
         sp_canvas_request_redraw (canvas,
                                   canvas->x0 + widget->allocation.width,
@@ -1602,7 +1621,7 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
     if (event->window != SP_CANVAS_WINDOW (canvas))
         return FALSE;
 
-    if (canvas->pixmap_gc == NULL) // canvas being deleted
+    if (canvas->root == NULL) // canvas being deleted
         return FALSE;
 
     canvas->state = event->state;
@@ -1670,7 +1689,7 @@ static void sp_canvas_paint_single_buffer(SPCanvas *canvas, int x0, int y0, int 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         bool fromDisplay = prefs->getBool( "/options/displayprofile/from_display");
         if ( fromDisplay ) {
-            transf = Inkscape::CMSSystem::getDisplayPer( canvas->cms_key ? *(canvas->cms_key) : "" );
+            transf = Inkscape::CMSSystem::getDisplayPer( canvas->cms_key );
         } else {
             transf = Inkscape::CMSSystem::getDisplayTransform();
         }
@@ -1856,16 +1875,6 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
     rect.y0 = MAX (rect.y0, canvas->y0);
     rect.x1 = MIN (rect.x1, canvas->x0/*draw_x1*/ + GTK_WIDGET (canvas)->allocation.width);
     rect.y1 = MIN (rect.y1, canvas->y0/*draw_y1*/ + GTK_WIDGET (canvas)->allocation.height);
-
-#ifdef DEBUG_REDRAW
-    // paint the area to redraw yellow
-    gdk_rgb_gc_set_foreground (canvas->pixmap_gc, 0xFFFF00);
-    gdk_draw_rectangle (SP_CANVAS_WINDOW (canvas),
-                        canvas->pixmap_gc,
-                        TRUE,
-                        rect.x0 - canvas->x0, rect.y0 - canvas->y0,
-                        rect.x1 - rect.x0, rect.y1 - rect.y0);
-#endif
 
     PaintRectSetup setup;
 
@@ -2064,7 +2073,7 @@ paint (SPCanvas *canvas)
 static int
 do_update (SPCanvas *canvas)
 {
-    if (!canvas->root || !canvas->pixmap_gc) // canvas may have already be destroyed by closing desktop during interrupted display!
+    if (!canvas->root) // canvas may have already be destroyed by closing desktop during interrupted display!
         return TRUE;
         
     if (canvas->drawing_disabled)
@@ -2150,12 +2159,17 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear,
     int dx = ix - canvas->x0; // dx and dy specify the displacement (scroll) of the
     int dy = iy - canvas->y0; // canvas w.r.t its previous position
 
+    Geom::IntRect old_area = canvas->getViewboxIntegers();
+    Geom::IntRect new_area = old_area + Geom::IntPoint(dx, dy);
+    
     canvas->dx0 = cx; // here the 'd' stands for double, not delta!
     canvas->dy0 = cy;
     canvas->x0 = ix;
     canvas->y0 = iy;
 
     sp_canvas_resize_tiles (canvas, canvas->x0, canvas->y0, canvas->x0+canvas->widget.allocation.width, canvas->y0+canvas->widget.allocation.height);
+    if (SP_CANVAS_ITEM_GET_CLASS (canvas->root)->visible_area_changed)
+        SP_CANVAS_ITEM_GET_CLASS (canvas->root)->visible_area_changed (canvas->root, old_area, new_area);
 
     if (!clear) {
         // scrolling without zoom; redraw only the newly exposed areas
@@ -2168,7 +2182,6 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear,
     } else {
         // scrolling as part of zoom; do nothing here - the next do_update will perform full redraw
     }
-
 }
 
 /**
@@ -2301,13 +2314,15 @@ Geom::Rect SPCanvas::getViewbox() const
 }
 
 /**
- * Return canvas window coordinates as IRect (a rectangle defined by integers).
+ * Return canvas window coordinates as integer rectangle.
  */
-NR::IRect SPCanvas::getViewboxIntegers() const
+Geom::IntRect SPCanvas::getViewboxIntegers() const
 {
     GtkWidget const *w = GTK_WIDGET(this);
-    return NR::IRect(NR::IPoint(x0, y0),
-                    NR::IPoint(x0 + w->allocation.width, y0 + w->allocation.height));
+    Geom::IntRect ret;
+    ret.setMin(Geom::IntPoint(x0, y0));
+    ret.setMax(Geom::IntPoint(x0 + w->allocation.width, y0 + w->allocation.height));
+    return ret;
 }
 
 inline int sp_canvas_tile_floor(int x)

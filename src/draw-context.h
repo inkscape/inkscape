@@ -16,9 +16,9 @@
 
 #include <stddef.h>
 #include <sigc++/sigc++.h>
+#include <2geom/point.h>
 #include "event-context.h"
 #include <forward.h>
-#include <libnr/nr-point.h>
 #include "live_effects/effect.h"
 
 /* Freehand context */

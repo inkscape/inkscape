@@ -299,7 +299,7 @@ Geom::Point SPItem::getCenter() const {
 
     Geom::OptRect bbox = getBounds(i2d_affine());
     if (bbox) {
-        return to_2geom(bbox->midpoint()) + Geom::Point (transform_center_x, transform_center_y);
+        return bbox->midpoint() + Geom::Point (transform_center_x, transform_center_y);
     } else {
         return Geom::Point(0, 0); // something's wrong!
     }
@@ -825,7 +825,7 @@ void SPItem::invoke_bbox_full( Geom::OptRect &bbox, Geom::Affine const &transfor
     // would therefore be translated into empty Geom::OptRect() (see bug https://bugs.launchpad.net/inkscape/+bug/168684)
     Geom::OptRect temp_bbox_new = Geom::Rect(Geom::Point(temp_bbox.x0, temp_bbox.y0), Geom::Point(temp_bbox.x1, temp_bbox.y1));
 
-    bbox = Geom::unify(bbox, temp_bbox_new);
+    bbox.unionWith(temp_bbox_new);
 }
 
 // DEPRECATED to phase out the use of NRRect in favor of Geom::OptRect

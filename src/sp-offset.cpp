@@ -844,7 +844,7 @@ sp_offset_distance_to_original (SPOffset * offset, Geom::Point px)
                 {
                     // we have a new minimum distance
                     // now we need to wheck if px is inside or outside (for the sign)
-                    nx = px - to_2geom(theRes->getPoint(i).x);
+                    nx = px - theRes->getPoint(i).x;
                     double nlen = sqrt (dot(nx , nx));
                     nx /= nlen;
                     int pb, cb, fb;

@@ -1,7 +1,8 @@
-/** \file
- *  \brief 3x3 affine transformation matrix.
+/** 
+ * \file
+ * \brief 3x3 affine transformation matrix.
  *//*
- * Main authors:
+ * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com> (Original NRAffine definition and related macros)
  *   Nathan Hurst <njh@mail.csse.monash.edu.au> (Geom::Affine class version of the above)
  *   Michael G. Sloan <mgsloan@gmail.com> (reorganization and additions)
@@ -10,8 +11,8 @@
  * This code is in public domain.
  */
 
-#ifndef SEEN_LIB2GEOM_MATRIX_H
-#define SEEN_LIB2GEOM_MATRIX_H
+#ifndef SEEN_LIB2GEOM_AFFINE_H
+#define SEEN_LIB2GEOM_AFFINE_H
 
 #include <boost/operators.hpp>
 #include <2geom/forward.h>
@@ -236,9 +237,9 @@ inline Affine Affine::identity() {
     return ret; // allow NRVO
 }
 
-} /* namespace Geom */
+} // end namespace Geom
 
-#endif /* !__Geom_MATRIX_H__ */
+#endif // LIB2GEOM_SEEN_AFFINE_H
 
 /*
   Local Variables:

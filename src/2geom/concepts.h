@@ -1,7 +1,7 @@
 /**
  * \file
- * \brief Declares various mathematical concepts, for restriction of template parameters
- *
+ * \brief Template concepts used by 2Geom
+ *//*
  * Copyright 2007 Michael Sloan <mgsloan@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
@@ -26,15 +26,15 @@
  * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
  * OF ANY KIND, either express or implied. See the LGPL or the MPL for
  * the specific language governing rights and limitations.
- *
  */
 
-#ifndef SEEN_CONCEPTS_H
-#define SEEN_CONCEPTS_H
+#ifndef LIB2GEOM_SEEN_CONCEPTS_H
+#define LIB2GEOM_SEEN_CONCEPTS_H
 
 #include <2geom/sbasis.h>
 #include <2geom/interval.h>
 #include <2geom/point.h>
+#include <2geom/rect.h>
 #include <vector>
 #include <boost/concept_check.hpp>
 #include <2geom/forward.h>
@@ -49,7 +49,7 @@ template <> struct ResultTraits<double> {
   typedef SBasis sb_type;
 };
 
-template <> struct ResultTraits<Point > {
+template <> struct ResultTraits<Point> {
   typedef OptRect bounds_type;
   typedef D2<SBasis> sb_type;
 };
@@ -130,7 +130,7 @@ struct ScalableConcept {
     }
 };
 
-template <class T>
+template <typename T>
 struct AddableConcept {
     T i, j;
     void constraints() {
@@ -139,7 +139,7 @@ struct AddableConcept {
     }
 };
 
-template <class T>
+template <typename T>
 struct MultiplicableConcept {
     T i, j;
     void constraints() {
@@ -147,9 +147,9 @@ struct MultiplicableConcept {
     }
 };
 
-};
+} // end namespace Geom
 
-#endif //SEEN_CONCEPTS_H
+#endif // LIB2GEOM_SEEN_CONCEPTS_H
 
 /*
   Local Variables:

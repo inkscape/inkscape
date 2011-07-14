@@ -17,6 +17,7 @@
 #include "config.h"
 #include <cstring>
 #include <string>
+#include <2geom/transforms.h>
 
 #include "display/canvas-grid.h"
 #include "display/guideline.h"
@@ -1107,8 +1108,7 @@ void SPNamedView::translateGuides(Geom::Translate const &tr) {
     for (GSList *l = guides; l != NULL; l = l->next) {
         SPGuide &guide = *SP_GUIDE(l->data);
         Geom::Point point_on_line = guide.point_on_line;
-        point_on_line[0] += tr[0];
-        point_on_line[1] += tr[1];
+        point_on_line *= tr;
         sp_guide_moveto(guide, point_on_line, true);
     }
 }

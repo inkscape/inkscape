@@ -45,6 +45,10 @@ struct _SPCanvasArena {
     /* fixme: */
     NRArenaItem *picked;
     gdouble delta;
+
+    Geom::IntRect cache_area;
+    cairo_surface_t *cache;
+    cairo_region_t *dirty;
 };
 
 struct _SPCanvasArenaClass {

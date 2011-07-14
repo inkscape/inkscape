@@ -35,7 +35,7 @@
 #ifndef SEEN_LINEAR_H
 #define SEEN_LINEAR_H
 #include <2geom/interval.h>
-#include <2geom/isnan.h>
+#include <2geom/math-utils.h>
 
 
 //#define USE_SBASIS_OF

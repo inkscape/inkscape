@@ -1,7 +1,7 @@
 /**
  * \file
  * \brief   Lifts one dimensional objects into 2d 
- *
+ *//*
  * Copyright 2007 Michael Sloan <mgsloan@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
@@ -29,12 +29,13 @@
  *
  */
 
-#ifndef _2GEOM_D2  //If this is change, change the guard in rect.h as well.
-#define _2GEOM_D2
+#ifndef SEEN_LIB2GEOM_D2_H
+#define SEEN_LIB2GEOM_D2_H
 
 #include <2geom/point.h>
 #include <2geom/interval.h>
 #include <2geom/affine.h>
+#include <2geom/rect.h>
 
 #include <boost/concept_check.hpp>
 #include <2geom/concepts.h>
@@ -426,7 +427,6 @@ inline std::ostream &operator<< (std::ostream &out_file, const Geom::D2<T> &in_d
 
 } //end namespace Geom
 
-#include <2geom/rect.h>
 #include <2geom/d2-sbasis.h>
 
 namespace Geom{

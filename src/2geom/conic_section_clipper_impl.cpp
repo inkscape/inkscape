@@ -1,6 +1,4 @@
-/**
- * \file
- * \brief Conic section clipping with respect to a rectangle
+/* Conic section clipping with respect to a rectangle
  *
  * Authors:
  *      Marco Cecchetti <mrcekets at gmail>
@@ -31,29 +29,12 @@
  * the specific language governing rights and limitations.
  */
 
-
-
-
 #ifndef CLIP_WITH_CAIRO_SUPPORT
     #include <2geom/conic_section_clipper.h>
 #endif
 
-
-
-
 namespace Geom
 {
-
-struct lex_lesser
-{
-    bool operator() (const Point & P, const Point & Q) const
-    {
-        if (P[X] < Q[X])  return true;
-        if (P[X] == Q[X] && P[Y] < Q[Y]) return true;
-        return false;
-    }
-};
-
 
 /*
  *  Find rectangle-conic crossing points. They are returned in the
@@ -192,7 +173,7 @@ bool CLIPPER_CLASS::intersect (std::vector<Point> & crossing_points) const
               cpts.size())
 
     // remove duplicates
-    std::sort (cpts.begin(), cpts.end(), lex_lesser());
+    std::sort (cpts.begin(), cpts.end(), Point::LexOrder<X>());
     cpts.erase (std::unique (cpts.begin(), cpts.end()), cpts.end());
 
 

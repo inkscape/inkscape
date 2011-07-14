@@ -1,9 +1,3 @@
-#define __Geom_MATRIX_C__
-
-/** \file
- * Various matrix routines.  Currently includes some Geom::Rotate etc. routines too.
- */
-
 /*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -387,10 +381,10 @@ Coord Affine::descrim2() const {
 }
 
 /** @brief Calculate the descriminant.
- * If the matrix doesn't contain a non-uniform scaling or shearing component, this value says
- * how will the length any line segment change after applying this transformation
- * to arbitrary objects on a plane (the new length will be
- * @code line_seg.length() * m.descrim()) @endcode.
+ * If the matrix doesn't contain a shearing or non-uniform scaling component, this value says
+ * how will the length of any line segment change after applying this transformation
+ * to arbitrary objects on a plane. The new length will be
+ * @code line_seg.length() * m.descrim()) @endcode
  * @return \f$\sqrt{|\det A|}\f$. */
 Coord Affine::descrim() const {
     return sqrt(descrim2());

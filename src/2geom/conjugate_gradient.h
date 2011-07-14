@@ -1,7 +1,7 @@
 /**
- * \file
- * \brief \todo brief description
- *
+ * @file
+ * @brief Routines for solving a system of linear equations using the conjugate gradient method
+ *//*
  * Copyright 2006 Nathan Hurst <njh@mail.csse.monash.edu.au>
  *
  * This library is free software; you can redistribute it and/or

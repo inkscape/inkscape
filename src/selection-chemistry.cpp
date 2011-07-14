@@ -777,7 +777,7 @@ enclose_items(GSList const *items)
 
     Geom::OptRect r;
     for (GSList const *i = items; i; i = i->next) {
-        r = Geom::unify(r, ((SPItem *) i->data)->getBboxDesktop());
+        r.unionWith(((SPItem *) i->data)->getBboxDesktop());
     }
     return r;
 }

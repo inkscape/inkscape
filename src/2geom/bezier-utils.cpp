@@ -1,9 +1,5 @@
-#define __SP_BEZIER_UTILS_C__
-
-/** \file
- * Bezier interpolation for inkscape drawing code.
- */
-/*
+/* Bezier interpolation for inkscape drawing code.
+ *
  * Original code published in:
  *   An Algorithm for Automatically Fitting Digitized Curves
  *   by Philip J. Schneider
@@ -52,8 +48,7 @@
 #endif
 
 #include <2geom/bezier-utils.h>
-
-#include <2geom/isnan.h>
+#include <2geom/math-utils.h>
 #include <assert.h>
 
 namespace Geom {

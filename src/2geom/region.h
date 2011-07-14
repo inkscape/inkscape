@@ -1,7 +1,7 @@
 /**
  * \file
- * \brief  \todo brief description
- *
+ * \brief Uncrossed path for boolean algorithms
+ *//*
  * Authors:
  *      ? <?@?.?>
  * 

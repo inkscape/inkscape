@@ -43,7 +43,6 @@
 #include "xml/repr.h"
 #include "xml/simple-document.h"
 #include "unit-constants.h"
-#include "2geom/isnan.h"
 #include "macros.h"
 #include "preferences.h"
 
@@ -334,6 +333,12 @@ static SPStyleEnum const enum_text_rendering[] = {
 static SPStyleEnum const enum_enable_background[] = {
     {"accumulate", SP_CSS_BACKGROUND_ACCUMULATE},
     {"new", SP_CSS_BACKGROUND_NEW},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_clip_rule[] = {
+    {"nonzero", SP_WIND_RULE_NONZERO},
+    {"evenodd", SP_WIND_RULE_EVENODD},
     {NULL, -1}
 };
 
@@ -769,6 +774,9 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     SPS_READ_PENUM_IF_UNSET(&style->enable_background, repr,
                             "enable-background", enum_enable_background, true);
 
+    /* clip-rule */
+    SPS_READ_PENUM_IF_UNSET(&style->clip_rule, repr, "clip-rule", enum_clip_rule, true);
+
     /* 3. Merge from parent */
     if (object) {
         if (object->parent) {
@@ -1151,7 +1159,9 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             style->object->getRepr()->setAttribute("clip-path", val);
             break;
         case SP_PROP_CLIP_RULE:
-            g_warning("Unimplemented style property SP_PROP_CLIP_RULE: value: %s", val);
+            if (!style->clip_rule.set) {
+                sp_style_read_ienum(&style->clip_rule, val, enum_clip_rule, true);
+            }
             break;
         case SP_PROP_MASK:
             /** \todo
@@ -1790,6 +1800,11 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
     if(style->enable_background.inherit) {
         style->enable_background.value = parent->enable_background.value;
     }
+
+    /* Clipping */
+    if (!style->clip_rule.set || style->clip_rule.inherit) {
+        style->clip_rule.computed = parent->clip_rule.computed;
+    }
 }
 
 template <typename T>
@@ -2079,7 +2094,7 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
     /* Enum values that don't have any relative settings (other than `inherit'). */
     {
         SPIEnum SPStyle::*const fields[] = {
-            //nyi: SPStyle::clip_rule,
+            &SPStyle::clip_rule,
             //nyi: SPStyle::color_interpolation,
             //nyi: SPStyle::color_interpolation_filters,
             //nyi: SPStyle::color_rendering,
@@ -2619,6 +2634,9 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
 
     p += sp_style_write_ienum(p, c + BMAX - p, "enable-background", enum_enable_background, &style->enable_background, NULL, flags);
 
+    /* clipping */
+    p += sp_style_write_ienum(p, c + BMAX - p, "clip-rule", enum_clip_rule, &style->clip_rule, NULL, flags);
+
     /* fixme: */
     p += sp_text_style_write(p, c + BMAX - p, style->text, flags);
 
@@ -2764,6 +2782,8 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
     p += sp_style_write_ienum(p, c + BMAX - p, "enable-background", enum_enable_background, &from->enable_background, &to->enable_background, SP_STYLE_FLAG_IFSET);
 
     p += sp_text_style_write(p, c + BMAX - p, from->text, SP_STYLE_FLAG_IFDIFF);
+
+    p += sp_style_write_ienum(p, c + BMAX - p, "clip-rule", enum_clip_rule, &from->clip_rule, &to->clip_rule, SP_STYLE_FLAG_IFDIFF);
 
     /** \todo
      * The reason we use IFSET rather than IFDIFF is the belief that the IFDIFF
@@ -2956,6 +2976,8 @@ sp_style_clear(SPStyle *style)
     style->enable_background.value = SP_CSS_BACKGROUND_ACCUMULATE;
     style->enable_background.set = false;
     style->enable_background.inherit = false;
+
+    style->clip_rule.value = style->clip_rule.computed = SP_WIND_RULE_NONZERO;
 }
 
 
@@ -4327,6 +4349,9 @@ sp_style_unset_property_attrs(SPObject *o)
     }
     if (style->enable_background.set) {
         repr->setAttribute("enable-background", NULL);
+    }
+    if (style->clip_rule.set) {
+        repr->setAttribute("clip-rule", NULL);
     }
 }
 

@@ -107,11 +107,18 @@ public:
         if (ret < 0) ret += 360;
         return ret;
     }
-
+    /** @brief Create an angle from its measure in radians. */
+    static Angle from_radians(Coord d) {
+        Angle a(d);
+        return a;
+    }
+    /** @brief Create an angle from its measure in degrees. */
     static Angle from_degrees(Coord d) {
         Angle a(d * M_PI / 180);
         return a;
     }
+    /** @brief Create an angle from its measure in degrees in clock convention.
+     * @see Angle::degreesClock() */
     static Angle from_degrees_clock(Coord d) {
         // first make sure d is in [0, 360)
         d = std::fmod(d, 360.0);
@@ -208,9 +215,12 @@ protected:
     bool _sweep;
 };
 
-inline double deg_to_rad(double deg) { return deg*M_PI/180.0;}
-
-inline double rad_to_deg(double rad) { return rad*180.0/M_PI;}
+/** @brief Given an angle in degrees, return radians
+ * @relates Angle */
+inline Coord deg_to_rad(Coord deg) { return deg*M_PI/180.0;}
+/** @brief Given an angle in radians, return degrees
+ * @relates Angle */
+inline Coord rad_to_deg(Coord rad) { return rad*180.0/M_PI;}
 
 /*
  *  start_angle and angle must belong to [0, 2PI[
@@ -294,8 +304,7 @@ bool arc_contains (double a, double sa, double ia, double ea)
 
 } // end namespace Geom
 
-#endif
-
+#endif // LIB2GEOM_SEEN_ANGLE_H
 
 /*
   Local Variables:

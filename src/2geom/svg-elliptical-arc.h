@@ -1,7 +1,6 @@
 /**
  * \file
  * \brief SVG 1.1-compliant elliptical arc curve
- *
  *//*
  * Authors:
  *    MenTaLguY <mental@rydia.net>
@@ -35,8 +34,8 @@
  */
 
 
-#ifndef _2GEOM_SVG_ELLIPTICAL_ARC_H_
-#define _2GEOM_SVG_ELLIPTICAL_ARC_H_
+#ifndef LIB2GEOM_SEEN_SVG_ELLIPTICAL_ARC_H
+#define LIB2GEOM_SEEN_SVG_ELLIPTICAL_ARC_H
 
 #include <2geom/curve.h>
 #include <2geom/angle.h>
@@ -49,8 +48,7 @@
 #include <2geom/numeric/fitting-model.h>
 #include <algorithm>
 
-namespace Geom
-{
+namespace Geom {
 
 class SVGEllipticalArc : public EllipticalArc {
 public:
@@ -267,13 +265,9 @@ class make_elliptical_arc
       bool svg_compliant;
 };
 
-
 } // end namespace Geom
 
-
-
-
-#endif /* _2GEOM_SVG_ELLIPTICAL_ARC_H_ */
+#endif // LIB2GEOM_SEEN_SVG_ELLIPTICAL_ARC_H
 
 /*
   Local Variables:
