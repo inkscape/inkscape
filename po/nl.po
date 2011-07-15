@@ -23,7 +23,7 @@
 # Commands Bar  -  Opdrachtenbalk
 # connector  -  verbinding
 # directory  -  map
-# dpi - ppi (staat voor punten per inch)
+# dpi - ppi (staat voor punten per duim)
 # emboss/embossing  -  reliëf
 # eraser/eraser pen - gom
 # gradient  -  kleurverloop
@@ -53,7 +53,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-07-10 19:44+0200\n"
-"PO-Revision-Date: 2011-07-12 21:27+0100\n"
+"PO-Revision-Date: 2011-07-15 23:12+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -221,11 +221,11 @@ msgstr ""
 
 #: ../share/extensions/gcodetools.py:4286
 msgid "Document has no layers! Add at least one layer using layers panel (Ctrl+Shift+L)"
-msgstr ""
+msgstr "Document bevat geen lagen! Voeg op zijn minst een laag toe met het dialoogvenster Lagen (Ctrl+Shift+L)."
 
 #: ../share/extensions/gcodetools.py:4290
 msgid "Warning! There are some paths in the root of the document, but not in any layer! Using bottom-most layer for them."
-msgstr ""
+msgstr "Waarschuwing! Sommige paden bevinden zich in het document, maar niet in een laag! De onderste laag wordt hiervoor gebruikt."
 
 #: ../share/extensions/gcodetools.py:4367
 #, python-format
@@ -279,7 +279,7 @@ msgstr "Selecteer minstens één pad om te graveren en voer opnieuw uit."
 
 #: ../share/extensions/gcodetools.py:5515
 msgid "Unknown unit selected. mm assumed"
-msgstr ""
+msgstr "Onbekende geselecteerde eenheid. Mm worden verondersteld."
 
 #: ../share/extensions/gcodetools.py:5536
 #, python-format
@@ -289,7 +289,7 @@ msgstr "Gereedschap '%s' heeft geen vorm. 45 graden conus wordt verondersteld!"
 #: ../share/extensions/gcodetools.py:5607
 #: ../share/extensions/gcodetools.py:5612
 msgid "csp_normalised_normal error. See log."
-msgstr ""
+msgstr "csp_normalised_normal fout. Zie log."
 
 #: ../share/extensions/gcodetools.py:5800
 msgid "No need to engrave sharp angles."
@@ -334,7 +334,9 @@ msgstr "X- en Z-as herindeling van draaibank zouden gelijk moeten zijn. Bezig me
 msgid ""
 "Select one of the action tabs - Path to Gcode, Area, Engraving, DXF points, Orientation, Offset, Lathe or Tools library.\n"
 " Current active tab id is %s"
-msgstr "Selecteer een van de actietabs - Pad naar Gcode, Oppervlak, Oppervlakteartefacten, Gravure, DXF-punten, Gereedschappenbibliotheek of Oriëntatie."
+msgstr ""
+"Selecteer een van de actietabs - Pad naar Gcode, Oppervlak, Oppervlakteartefacten, Gravure, DXF-punten, Oriëntatie, Offset, Draaiban of Gereedschappenbibliotheek.\n"
+" De actieve tab id is %s"
 
 #: ../share/extensions/gcodetools.py:6664
 msgid "Orientation points have not been defined! A default set of orientation points has been automatically added."
@@ -5722,7 +5724,7 @@ msgstr "hoek"
 
 #: ../src/display/snap-indicator.cpp:145
 msgid "text anchor"
-msgstr ""
+msgstr "tekstanker"
 
 #: ../src/display/snap-indicator.cpp:148
 msgid "text baseline"
@@ -5799,9 +5801,8 @@ msgid "Corner"
 msgstr "Hoek"
 
 #: ../src/display/snap-indicator.cpp:213
-#, fuzzy
 msgid "Text anchor"
-msgstr "Lettertype tekst"
+msgstr "Tekstanker"
 
 #: ../src/display/snap-indicator.cpp:216
 msgid "Multiple of grid spacing"
@@ -6868,9 +6869,8 @@ msgstr "Azimut (°):"
 #: ../src/extension/internal/filter/abc.h:240
 #: ../src/extension/internal/filter/abc.h:378
 #: ../src/extension/internal/filter/abc.h:818
-#, fuzzy
 msgid "Lighting color"
-msgstr "Belichtingskleur"
+msgstr ""
 
 #: ../src/extension/internal/filter/abc.h:311
 msgid "Feather, custom (ABCs)"
@@ -7464,27 +7464,23 @@ msgstr "Map voor uitbreidingen niet beschikbaar.  Filters kunnen niet geladen wo
 
 #: ../src/extension/internal/filter/image.h:49
 msgid "Edge detect, custom (Image)"
-msgstr ""
+msgstr "Randherkenning, aanpasbaar (afbeeldingseffecten)"
 
 #: ../src/extension/internal/filter/image.h:51
-#, fuzzy
 msgid "Detect:"
-msgstr "Datum:"
+msgstr "Detecteren:"
 
 #: ../src/extension/internal/filter/image.h:52
-#, fuzzy
 msgid "All"
-msgstr "alle"
+msgstr "Alle"
 
 #: ../src/extension/internal/filter/image.h:53
-#, fuzzy
 msgid "Vertical lines"
-msgstr "Verticale straal"
+msgstr "Verticale lijnen"
 
 #: ../src/extension/internal/filter/image.h:54
-#, fuzzy
 msgid "Horizontal lines"
-msgstr "Horizontale straal"
+msgstr "Horizontale lijnen"
 
 #: ../src/extension/internal/filter/morphology.h:51
 msgid "Cross-smooth, custom (Morphology)"
@@ -7495,9 +7491,8 @@ msgid "Smooth edges and angles of shapes"
 msgstr "Randen en hoeken van vormen vervagen"
 
 #: ../src/extension/internal/filter/shadows.h:55
-#, fuzzy
 msgid "Drop shadow, custom (Shadows and Glows)"
-msgstr "Schaduw en gloed"
+msgstr "Slagschadux, aanpasbaar (Schaduw en gloed)"
 
 #. ## end option page
 #: ../src/extension/internal/filter/shadows.h:58
@@ -7532,29 +7527,24 @@ msgid "Options"
 msgstr "Opties"
 
 #: ../src/extension/internal/filter/shadows.h:62
-#, fuzzy
 msgid "Blur type:"
-msgstr "Vervagen"
+msgstr ""
 
 #: ../src/extension/internal/filter/shadows.h:63
-#, fuzzy
 msgid "Outer"
-msgstr "Anders"
+msgstr ""
 
 #: ../src/extension/internal/filter/shadows.h:64
-#, fuzzy
 msgid "Inner"
-msgstr "Inverteren"
+msgstr ""
 
 #: ../src/extension/internal/filter/shadows.h:68
-#, fuzzy
 msgid "Blur color"
-msgstr "Vulkleur"
+msgstr "Kleur vervagen"
 
 #: ../src/extension/internal/filter/shadows.h:70
-#, fuzzy
 msgid "Use object's color"
-msgstr "Kleurnamen gebruiken"
+msgstr "Objectkleur gebruiken"
 
 #: ../src/extension/internal/filter/shadows.h:80
 msgid "Colorizable Drop shadow"
@@ -7942,7 +7932,7 @@ msgstr "default.nl.svg"
 
 #: ../src/file.cpp:265
 msgid "Broken links have been changed to point to existing files."
-msgstr ""
+msgstr "Verbroken links werden aangepast naar bestaande bestanden."
 
 #: ../src/file.cpp:273
 #: ../src/file.cpp:1072
@@ -8648,7 +8638,7 @@ msgstr "Px"
 #. You can add new elements from this point forward
 #: ../src/helper/units.cpp:42
 msgid "Percent"
-msgstr "procent"
+msgstr "Procent"
 
 #: ../src/helper/units.cpp:42
 #: ../src/ui/dialog/inkscape-preferences.cpp:278
@@ -8657,11 +8647,11 @@ msgstr "%"
 
 #: ../src/helper/units.cpp:42
 msgid "Percents"
-msgstr "procent"
+msgstr "Procent"
 
 #: ../src/helper/units.cpp:43
 msgid "Millimeter"
-msgstr "millimeter"
+msgstr "Millimeter"
 
 #: ../src/helper/units.cpp:43
 #: ../src/ui/widget/selected-style.cpp:298
@@ -8679,11 +8669,11 @@ msgstr "mm"
 
 #: ../src/helper/units.cpp:43
 msgid "Millimeters"
-msgstr "millimeter"
+msgstr "Millimeter"
 
 #: ../src/helper/units.cpp:44
 msgid "Centimeter"
-msgstr "centimeter"
+msgstr "Centimeter"
 
 #: ../src/helper/units.cpp:44
 #: ../share/extensions/dxf_outlines.inx.h:11
@@ -8692,11 +8682,11 @@ msgstr "cm"
 
 #: ../src/helper/units.cpp:44
 msgid "Centimeters"
-msgstr "centimeter"
+msgstr "Centimeter"
 
 #: ../src/helper/units.cpp:45
 msgid "Meter"
-msgstr "meter"
+msgstr "Meter"
 
 #: ../src/helper/units.cpp:45
 #: ../share/extensions/dxf_outlines.inx.h:14
@@ -8705,12 +8695,12 @@ msgstr "m"
 
 #: ../src/helper/units.cpp:45
 msgid "Meters"
-msgstr "meter"
+msgstr "Meter"
 
 #. no svg_unit
 #: ../src/helper/units.cpp:46
 msgid "Inch"
-msgstr "inch"
+msgstr "Duim"
 
 #: ../src/helper/units.cpp:46
 #: ../share/extensions/dxf_outlines.inx.h:13
@@ -8723,11 +8713,11 @@ msgstr "inch"
 #: ../share/extensions/gcodetools_orientation_points.inx.h:13
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:36
 msgid "in"
-msgstr "inch"
+msgstr "duim"
 
 #: ../src/helper/units.cpp:46
 msgid "Inches"
-msgstr "inch"
+msgstr "Duim"
 
 #: ../src/helper/units.cpp:47
 msgid "Foot"
@@ -9012,9 +9002,8 @@ msgid "Resizable"
 msgstr "Herschaalbaar"
 
 #: ../src/libgdl/gdl-dock-item.c:314
-#, fuzzy
 msgid "If set, the dock item can be resized when docked in a GtkPanel widget"
-msgstr "Indien aangevinkt, kan het dockitem herschalen wanneer het in een paneel gezet is"
+msgstr "Indien aangevinkt, kan het dockitem herschalen in een GtkPanel widget"
 
 #: ../src/libgdl/gdl-dock-item.c:321
 msgid "Item behavior"
@@ -9269,7 +9258,6 @@ msgid "X-Coordinate"
 msgstr "X-coördinaat"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:193
-#, fuzzy
 msgid "X-Coordinate for dock when floating"
 msgstr "X-coördinaat voor zwevend paneel"
 
@@ -9278,7 +9266,6 @@ msgid "Y-Coordinate"
 msgstr "Y-coördinaat"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:200
-#, fuzzy
 msgid "Y-Coordinate for dock when floating"
 msgstr "Y-coördinaat voor zwevend paneel"
 
@@ -10936,7 +10923,7 @@ msgstr "Inscape wordt gestart met de standaardinstellingen. Nieuwe instellingen 
 #: ../src/preferences.cpp:146
 #, c-format
 msgid "Cannot create profile directory %s."
-msgstr "Kan profieldirectory %s niet aanmaken."
+msgstr "Kan profielmap %s niet aanmaken."
 
 #. The profile dir is not actually a directory
 #. _reportError(Glib::ustring::compose(_("%1 is not a valid directory."),
@@ -10944,7 +10931,7 @@ msgstr "Kan profieldirectory %s niet aanmaken."
 #: ../src/preferences.cpp:164
 #, c-format
 msgid "%s is not a valid directory."
-msgstr "%s is geen geldige directory"
+msgstr "%s is geen geldige maps."
 
 #. The write failed.
 #. _reportError(Glib::ustring::compose(_("Failed to create the preferences file %1."),
@@ -13720,7 +13707,7 @@ msgstr "Doelhoogte"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1387
 msgid "Resolution (dots per inch)"
-msgstr "Resolutie (in punten per inch)"
+msgstr "Resolutie (in punten per duim)"
 
 #. #########################################
 #. ## EXTRA WIDGET -- SOURCE SIDE
@@ -15088,12 +15075,11 @@ msgstr "_Y:"
 
 #: ../src/ui/dialog/guides.cpp:45
 msgid "Optionally give this guideline a name"
-msgstr ""
+msgstr "De hulplijn een optionele naam geven"
 
 #: ../src/ui/dialog/guides.cpp:46
-#, fuzzy
 msgid "_Angle:"
-msgstr "Hoek:"
+msgstr "_Hoek:"
 
 #: ../src/ui/dialog/guides.cpp:120
 msgid "Set guide properties"
@@ -16185,7 +16171,7 @@ msgstr "Standaardresolutie voor exporteren:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:838
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
-msgstr "Standaardresolutie voor bitmaps (in punten per inch) in het 'Bitmap exporteren'-dialoogvenster"
+msgstr "Standaardresolutie voor bitmaps (in punten per duim) in het 'Bitmap exporteren'-dialoogvenster"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:840
 msgid "Open Clip Art Library Server Name:"
@@ -16842,11 +16828,11 @@ msgstr "Interface"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1214
 msgid "Use current directory for \"Save As ...\""
-msgstr "Huidige directory gebruiken voor \"Opslaan als...\""
+msgstr "Huidige map gebruiken voor \"Opslaan als...\""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1216
 msgid "When this option is on, the \"Save as...\" and \"Save a Copy\" dialogs will always open in the directory where the currently open document is; when it's off, each will open in the directory where you last saved a file using it"
-msgstr "Indien aangevinkt, openen \"Opslaan als\" en \"Kopie opslaan als\" altijd in de directory waar het huidig geopende document zich bevindt. Indien niet geselecteerd openen de dialoogvensters in de directory waar je laatst een bestand bewaarde met dat venster."
+msgstr "Indien aangevinkt, openen \"Opslaan als\" en \"Kopie opslaan als\" altijd in de map waar het huidig geopende document zich bevindt. Indien niet geselecteerd openen de dialoogvensters in de map waar je laatst een bestand bewaarde met dat venster."
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1220
@@ -18679,7 +18665,7 @@ msgstr "Bitmap-instellingen"
 
 #: ../src/ui/widget/rendering-options.cpp:44
 msgid "Preferred resolution of rendering, in dots per inch."
-msgstr "Gewenste resolutie van de rendering (in punten per inch)."
+msgstr "Gewenste resolutie van de rendering (in punten per duim)."
 
 #: ../src/ui/widget/rendering-options.cpp:52
 msgid "Render using Cairo vector operations.  The resulting image is usually smaller in file size and can be arbitrarily scaled, but some filter effects will not be correctly rendered."
@@ -19637,7 +19623,6 @@ msgid "Deselect any selected objects or nodes"
 msgstr "Alles deselecteren"
 
 #: ../src/verbs.cpp:2344
-#, fuzzy
 msgid "Create _Guides Around the Page"
 msgstr "_Hulplijnen rond pagina"
 
@@ -21107,9 +21092,8 @@ msgstr "Patroon instellen op lijn"
 
 #. Family frame
 #: ../src/widgets/font-selector.cpp:143
-#, fuzzy
 msgid "Font family"
-msgstr "L_ettertypefamilie"
+msgstr "Lettertypefamilie"
 
 #. Style frame
 #: ../src/widgets/font-selector.cpp:174
@@ -21932,7 +21916,6 @@ msgstr "Lettertypegrootte voor de meetlabels"
 
 #: ../src/widgets/toolbox.cpp:1680
 #: ../src/widgets/toolbox.cpp:1688
-#, fuzzy
 msgid "The units to be used for the measurements"
 msgstr "Lettertypegrootte voor de meetlabels"
 
@@ -22017,13 +22000,12 @@ msgid "Snap from and to midpoints of line segments"
 msgstr "Aan midden van lijnsegmenten kleven"
 
 #: ../src/widgets/toolbox.cpp:2385
-#, fuzzy
 msgid "Others"
-msgstr "Anders"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2385
 msgid "Snap other points (centers, guide origins, gradient handles, etc.)"
-msgstr ""
+msgstr "Kleven aan andere punten (middelpunten, oorsprong hulplijn, kleurverloophandvatten, etc.)"
 
 #: ../src/widgets/toolbox.cpp:2393
 msgid "Object Centers"
@@ -22046,9 +22028,8 @@ msgid "Text baseline"
 msgstr "Grondlijn tekst"
 
 #: ../src/widgets/toolbox.cpp:2411
-#, fuzzy
 msgid "Snap from and to text anchors and baselines"
-msgstr "Aan het middelpunt van objecten kleven"
+msgstr "Aan tekstankers en basislijnen kleven"
 
 #: ../src/widgets/toolbox.cpp:2421
 msgid "Page border"
@@ -22806,7 +22787,6 @@ msgid "(maximum scatter)"
 msgstr "(maximum spreiding)"
 
 #: ../src/widgets/toolbox.cpp:4741
-#, fuzzy
 msgctxt "Spray tool"
 msgid "Scatter"
 msgstr "Verspreiden"
@@ -22850,7 +22830,6 @@ msgid "Amount"
 msgstr "Hoeveelheid"
 
 #: ../src/widgets/toolbox.cpp:4802
-#, fuzzy
 msgid "Adjusts the number of items sprayed per click"
 msgstr "Het aantal verstoven objecten per klik"
 
@@ -24608,7 +24587,7 @@ msgstr ""
 
 #: ../share/extensions/gears.inx.h:2
 msgid "Diameter of center hole (0 for none):"
-msgstr ""
+msgstr "Diameter van het centraal gat (0 voro geen):"
 
 #: ../share/extensions/gears.inx.h:3
 msgid "Gear"
@@ -24623,9 +24602,8 @@ msgid "Pressure angle (degrees):"
 msgstr "Drukhoek (graden):"
 
 #: ../share/extensions/gcodetools_about.inx.h:1
-#, fuzzy
 msgid "About"
-msgstr "Hoeveelheid"
+msgstr "Over"
 
 #: ../share/extensions/gcodetools_about.inx.h:2
 #: ../share/extensions/gcodetools_area.inx.h:24
@@ -24652,13 +24630,12 @@ msgstr "Gcodetools"
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:14
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:5
 #: ../share/extensions/gcodetools_tools_library.inx.h:2
-#, fuzzy
 msgid "Gcodetools plug-in: converts paths to Gcode (using circular interpolation), makes offset paths and engraves sharp corners using cone cutters. This plug-in calculates Gcode for paths using circular interpolation or linear motion when needed. Tutorials, manuals and support can be found at English support forum: http://www.cnc-club.ru/gcodetools and Russian support forum: http://www.cnc-club.ru/gcodetoolsru Credits: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas, Chris Lusby Taylor. Gcodetools ver. 1.7"
-msgstr "Gcodetools uitbreiding: converteert paden in Gcode (met behulp van cirkelinterpolatie), maakt offsetpaden en graveert scherpe hoeken met conische snijmessen. Deze plugin berekent Gcode voor paden met behulp van cirkelinterpolatie of lineare verplaatsing. Tutorials, handleidingen en ondersteuning zijn beschikbaar op het Engelstalige forum: http://www.cnc-club.ru/gcodetools en op het Russische forum http://www.cnc-club.ru/gcodetoolsru. Auteurs: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas. Gcodetools ver. 1.6.01"
+msgstr "Gcodetools uitbreiding: converteert paden in Gcode (met behulp van cirkelinterpolatie), maakt offsetpaden en graveert scherpe hoeken met conische snijmessen. Deze uitbreiding berekent Gcode voor paden met behulp van cirkelinterpolatie of lineaire verplaatsing. Tutorials, handleidingen en ondersteuning zijn beschikbaar op het Engelstalige forum: http://www.cnc-club.ru/gcodetools en op het Russische forum http://www.cnc-club.ru/gcodetoolsru. Auteurs: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas, Chris Lusby Taylor. Gcodetools ver. 1.7"
 
 #: ../share/extensions/gcodetools_about.inx.h:4
 msgid "Gcodetools was developed to make simple Gcode from Inkscape's paths. Gcode is a special format which is used in most of CNC machines. So Gcodetools allows you to use Inkscape as CAM program. It can be use with a lot of machone types: Mills Lathes Laser and Palsma cutters and engravers Mill engravers Plotters etc. To get more info visit developers page at http://www.cnc-club.ru/gcodetools"
-msgstr ""
+msgstr "Gcodetools is ontworpen om eenvoudige Gcode uit Inkscape paden te maken. Gcode is een speciaal formaat gebruikt door de meeste CNC machines. Gcodetools laat je zo toe Inkscape als CAM programma te gebruiken. Het kan gebruikt worden met vele machinetypes: maalmachines, draaibanken, laser- en plasmasnijders en graveermachines. Meer info beschikbaar op het ontwikkelaarsforum op http://www.cnc-club.ru/gcodetools."
 
 #: ../share/extensions/gcodetools_area.inx.h:1
 msgid "\"Create area offset\": creates several Inkscape path offsets to fill original path's area up to \"Area radius\" value. Outlines start from \"1/2 D\" up to \"Area width\" total width with \"D\" steps where D is taken from the nearest tool definition (\"Tool diameter\" value). Only one offset will be created if the \"Area width\" is equal to \"1/2 D\"."
@@ -24691,37 +24668,34 @@ msgid "Area"
 msgstr "Oppervlakte"
 
 #: ../share/extensions/gcodetools_area.inx.h:6
-#, fuzzy
 msgid "Area artifacts"
 msgstr "Oppervlakartefacten"
 
 #: ../share/extensions/gcodetools_area.inx.h:7
 msgid "Area fill anlge"
-msgstr ""
+msgstr "Hoek"
 
 #: ../share/extensions/gcodetools_area.inx.h:8
 msgid "Area fill shift"
-msgstr ""
+msgstr "Verplaatsing"
 
 #: ../share/extensions/gcodetools_area.inx.h:9
 msgid "Area tool overlap (0..0.9):"
-msgstr ""
+msgstr "Overlap oppervlaktegereedschap (0..0.9):"
 
 #: ../share/extensions/gcodetools_area.inx.h:10
 msgid "Area width:"
 msgstr "Contourbreedte:"
 
 #: ../share/extensions/gcodetools_area.inx.h:11
-#, fuzzy
 msgid "Artifact diameter:"
 msgstr "Artefactdiameter:"
 
 #: ../share/extensions/gcodetools_area.inx.h:12
 #: ../share/extensions/gcodetools_lathe.inx.h:3
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:3
-#, fuzzy
 msgid "Biarc interpolation tolerance is the maximum distance between path and its approximation. The segment will be split into two segments if the distance between path's segment and its approximation exceeds biarc interpolation tolerance. For depth function c=color intensity from 0.0 (white) to 1.0 (black), d is the depth defined by orientation points, s - surface defined by orientation points."
-msgstr "Bicirkelinterpolatietolerantie is de maximum afstand tussen het pad en zijn benadering. Het segment zal opgesplitst worden in twee segmenten indien de afstand tussen het segment en zijn benadering de bicirkelinterpolatietolerantie overschrijdt."
+msgstr "Bicirkelinterpolatietolerantie is de maximum afstand tussen het pad en zijn benadering. Het segment zal opgesplitst worden in twee segmenten indien de afstand tussen het segment en zijn benadering de bicirkelinterpolatietolerantie overschrijdt. Voor dieptefunctie c=kleurintensiteit van 0.0 (wit) tot 1.0 (zwart), d is de diepte bepaald door oriëntatiepunten, s- oppervlak gedefiniëerd door oriëntatiepunten."
 
 #: ../share/extensions/gcodetools_area.inx.h:13
 #: ../share/extensions/gcodetools_lathe.inx.h:4
@@ -24735,21 +24709,19 @@ msgstr "Bicirkelinterpolatietolerantie"
 #: ../share/extensions/gcodetools_lathe.inx.h:5
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:5
 msgid "Comment Gcode:"
-msgstr ""
+msgstr "Commentaar gcode:"
 
 #: ../share/extensions/gcodetools_area.inx.h:15
 #: ../share/extensions/gcodetools_lathe.inx.h:7
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:6
-#, fuzzy
 msgid "Cutting order"
-msgstr "Spitse rand"
+msgstr "Volgorde snijden"
 
 #: ../share/extensions/gcodetools_area.inx.h:16
 #: ../share/extensions/gcodetools_lathe.inx.h:8
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:7
-#, fuzzy
 msgid "Depth function:"
-msgstr "Roodfunctie:"
+msgstr "Dieptefunctie:"
 
 #: ../share/extensions/gcodetools_area.inx.h:17
 #: ../share/extensions/gcodetools_dxf_points.inx.h:6
@@ -24758,7 +24730,7 @@ msgstr "Roodfunctie:"
 #: ../share/extensions/gcodetools_lathe.inx.h:9
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:8
 msgid "Directory:"
-msgstr "Directorie:"
+msgstr "Map:"
 
 #: ../share/extensions/gcodetools_area.inx.h:18
 #: ../share/extensions/gcodetools_dxf_points.inx.h:7
@@ -24767,7 +24739,7 @@ msgstr "Directorie:"
 #: ../share/extensions/gcodetools_lathe.inx.h:10
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:9
 msgid "Fast pre-penetrate"
-msgstr ""
+msgstr "Snel voorindrukken"
 
 #: ../share/extensions/gcodetools_area.inx.h:19
 #: ../share/extensions/gcodetools_dxf_points.inx.h:8
@@ -24779,14 +24751,12 @@ msgid "File:"
 msgstr "Bestand:"
 
 #: ../share/extensions/gcodetools_area.inx.h:20
-#, fuzzy
 msgid "Fill area"
-msgstr "Afgebakend gebied vullen"
+msgstr "Vulling oppervlak"
 
 #: ../share/extensions/gcodetools_area.inx.h:21
-#, fuzzy
 msgid "Filling method"
-msgstr "Verdeelmethode:"
+msgstr "Vulmethode:"
 
 #: ../share/extensions/gcodetools_area.inx.h:22
 #: ../share/extensions/gcodetools_dxf_points.inx.h:9
@@ -24795,7 +24765,7 @@ msgstr "Verdeelmethode:"
 #: ../share/extensions/gcodetools_lathe.inx.h:14
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:11
 msgid "Flip y axis and parameterize Gcode"
-msgstr ""
+msgstr "Y-as omdraaien en gcode parametriseren"
 
 #: ../share/extensions/gcodetools_area.inx.h:23
 #: ../share/extensions/gcodetools_dxf_points.inx.h:10
@@ -24821,7 +24791,7 @@ msgstr "Logbestand genereren"
 #: ../share/extensions/gcodetools_lathe.inx.h:19
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:16
 msgid "Get additional comments from object's properties"
-msgstr ""
+msgstr "Additionele commentaar van objecteigenschappen verkrijgen"
 
 #: ../share/extensions/gcodetools_area.inx.h:29
 msgid "Maximum area cutting curves:"
@@ -24855,22 +24825,20 @@ msgstr "Offset langs Z-as:"
 #: ../share/extensions/gcodetools_graffiti.inx.h:28
 #: ../share/extensions/gcodetools_lathe.inx.h:33
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:23
-#, fuzzy
 msgid "Parameterize Gcode"
-msgstr "Parameters"
+msgstr "Gcode parametriseren"
 
 #: ../share/extensions/gcodetools_area.inx.h:36
 #: ../share/extensions/gcodetools_lathe.inx.h:34
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:24
 msgid "Pass by Pass"
-msgstr ""
+msgstr "Pas per pas"
 
 #: ../share/extensions/gcodetools_area.inx.h:37
 #: ../share/extensions/gcodetools_lathe.inx.h:35
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:25
-#, fuzzy
 msgid "Path by path"
-msgstr "Pad plakken"
+msgstr "Pad per pad"
 
 #: ../share/extensions/gcodetools_area.inx.h:38
 #: ../share/extensions/gcodetools_lathe.inx.h:36
@@ -24903,7 +24871,7 @@ msgstr "Voorkeuren"
 #: ../share/extensions/gcodetools_lathe.inx.h:39
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:29
 msgid "Round all values to 4 digits"
-msgstr ""
+msgstr "Alle waarden afronden op 4 cijfers"
 
 #: ../share/extensions/gcodetools_area.inx.h:42
 #: ../share/extensions/gcodetools_engraving.inx.h:26
@@ -24919,19 +24887,19 @@ msgstr "Schalen langs Z-as:"
 #: ../share/extensions/gcodetools_lathe.inx.h:41
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:31
 msgid "Select all paths if nothing is selected"
-msgstr "Alle paden selecteren indien niets is geselecteerd"
+msgstr "Alle paden selecteren indien niets geselecteerd is"
 
 #: ../share/extensions/gcodetools_area.inx.h:44
 #: ../share/extensions/gcodetools_lathe.inx.h:42
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:32
 msgid "Sort paths to reduse rapid distance"
-msgstr ""
+msgstr "Paden sorteren om afstand te verminderen"
 
 #: ../share/extensions/gcodetools_area.inx.h:46
 #: ../share/extensions/gcodetools_lathe.inx.h:43
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:33
 msgid "Subpath by subpath"
-msgstr ""
+msgstr "Subpad per subpad"
 
 #: ../share/extensions/gcodetools_area.inx.h:47
 #: ../share/extensions/gcodetools_dxf_points.inx.h:20
@@ -24957,13 +24925,12 @@ msgid "Z safe height for G00 move over blank:"
 msgstr "Veilige Z-hoogte voor G00-verplaatsing over blanco:"
 
 #: ../share/extensions/gcodetools_area.inx.h:50
-#, fuzzy
 msgid "Zig zag"
 msgstr "Zigzag"
 
 #: ../share/extensions/gcodetools_area.inx.h:51
 msgid "delete"
-msgstr "verwijderen"
+msgstr "Verwijderen"
 
 #: ../share/extensions/gcodetools_area.inx.h:53
 msgid "mark with an arrow"
@@ -25007,7 +24974,7 @@ msgstr "instellen als dxf-punt en vorm bewaren"
 
 #: ../share/extensions/gcodetools_engraving.inx.h:1
 msgid "Accuracy factor (2 low to 10 high):"
-msgstr ""
+msgstr "Nauwkeurigheidsfactor (2 laag tot 12 hoog):"
 
 #: ../share/extensions/gcodetools_engraving.inx.h:6
 msgid "Draw additional graphics to see engraving path"
@@ -25023,12 +24990,11 @@ msgstr "Maximum afstand voor gravure (mm/duim):"
 
 #: ../share/extensions/gcodetools_engraving.inx.h:28
 msgid "Smooth convex corners between this value and 180 degrees:"
-msgstr ""
+msgstr "Afgeronde convexe hoeken tussen deze waarde en 180 graden:"
 
 #: ../share/extensions/gcodetools_engraving.inx.h:29
-#, fuzzy
 msgid "This function creates path to engrave letters or any shape with sharp angles. Cutter's depth as a function of radius is defined by the tool. Depth may be any Python expression. For instance: cone....(45 degrees)......................: w cone....(height/diameter=10/3)..: 10*w/3 sphere..(radius r)...........................: math.sqrt(max(0,r**2-w**2)) ellipse.(minor axis r, major 4r).....: math.sqrt(max(0,r**2-w**2))*4"
-msgstr "Deze functie maakt een pad voor het graveren van scherpe hoeken. De functie voor de mesvorm wordt bepaald door het gereedschap. Enkele eenvoudige vormen: kegel...(45 graden)............: w kegel...(hoogte/diameter=10/3).: 10/3 w bol..(\"r\" diameter).........: math.sqrt(max(0,r**2-w**2)) ellips..(R1=r en R2=r*4r).....: math.sqrt(max(0,r**2-w**2))*4"
+msgstr "Deze functie maakt een pad voor het graveren van letters of andere vormen met scherpe hoeken. Snijdiepte als functie van de straal is bepaald door het gereedschap. De diepte kan gegeven zijn door elke Python uitdrukking. Bijvoorbeeld kegel....(45 graden)......................: w kegel....(hoogte/diameter=10/3)..: 10*w/3 sfeer..(straal r)...........................: math.sqrt(max(0,r**2-w**2)) ellips.(korte as r, lange as 4r).....: math.sqrt(max(0,r**2-w**2))*4"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:1
 #: ../share/extensions/gcodetools_orientation_points.inx.h:1
@@ -25042,25 +25008,23 @@ msgstr "3-punts modus (verplaatsen, roteren en spiegelen, X/Y aspectratio versch
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:6
 msgid "Create linearization preview"
-msgstr "Voorvertoning linearisatie maken"
+msgstr "Voorvertoning linearisatie"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:7
 msgid "Create preview"
-msgstr "Voorvertoning maken"
+msgstr "Voorvertoning"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:17
 msgid "Graffiti"
 msgstr "Graffiti"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:19
-#, fuzzy
 msgid "Maximum segment length:"
-msgstr "Maximum segmentlengte (px):"
+msgstr "Maximum segmentlengte:"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:20
-#, fuzzy
 msgid "Minimal connector radius:"
-msgstr "Minimum straal boog:"
+msgstr "Minimum straal verbinding:"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:26
 #: ../share/extensions/gcodetools_orientation_points.inx.h:7
@@ -25077,19 +25041,17 @@ msgid "Preview's paint emmit (pts/s):"
 msgstr ""
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:32
-#, fuzzy
 msgid "Preview's size (px):"
-msgstr "Grootte punt (px):"
+msgstr "Grootte voorvertoning (px):"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:36
-#, fuzzy
 msgid "Start position (x;y):"
-msgstr "Layoutplaatsing:"
+msgstr "Startpositie (x;y):"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:38
 #: ../share/extensions/gcodetools_orientation_points.inx.h:10
 msgid "Z depth:"
-msgstr "Z diepte:"
+msgstr "Z-diepte:"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:40
 #: ../share/extensions/gcodetools_orientation_points.inx.h:11
@@ -25098,15 +25060,13 @@ msgstr "Z-oppervlak:"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:41
 #: ../share/extensions/gcodetools_orientation_points.inx.h:12
-#, fuzzy
 msgid "graffiti points"
-msgstr "Oriëntatiepunten"
+msgstr "Graffitipunten"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:43
 #: ../share/extensions/gcodetools_orientation_points.inx.h:14
-#, fuzzy
 msgid "in-out reference point"
-msgstr "Kleurverloopvoorkeuren"
+msgstr "In-uit referentiepunt"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:6
 msgid "Create fine cut using:"
@@ -25133,89 +25093,80 @@ msgid "Lathe Z axis remap:"
 msgstr "Draaibank Z-as herindeling:"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:24
-#, fuzzy
 msgid "Lathe modify path"
-msgstr "Pad aanpassen"
+msgstr ""
 
 #: ../share/extensions/gcodetools_lathe.inx.h:25
 msgid "Lathe width:"
 msgstr "Breedte draaibank:"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:28
-#, fuzzy
 msgid "Move path"
-msgstr "Patronen verplaatsen"
+msgstr "Pad verplaatsen"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:44
 msgid "This function modifies path so it will be able to be cut with the rectangular cutter."
-msgstr ""
+msgstr "Deze funties past het pad aan zodat het gesneden kan worden met een recht snijmes."
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:1
 msgid "-------------------------------------------------"
-msgstr ""
+msgstr "-------------------------------------------------"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:2
-#, fuzzy
 msgid "Create in-out paths"
-msgstr "Spiraal maken"
+msgstr "In-uit pad maken"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:3
 msgid "Do not add in-out reference points"
-msgstr ""
+msgstr "Geen in-uit referentiepunten maken"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:7
-#, fuzzy
 msgid "In-out path length:"
-msgstr "Padlengte"
+msgstr "In-uit padlengte"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:8
 msgid "In-out path max distance to reference point:"
-msgstr ""
+msgstr "In-uit pad max afstand tot referentiepunt:"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:9
 msgid "In-out path radius for round path:"
-msgstr ""
+msgstr "In-uit padafstand voor rond pad:"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:10
 msgid "In-out path type:"
-msgstr ""
+msgstr "In-uit padtype:"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:11
 msgid "Maximum angle for corner (0-180 deg):"
-msgstr ""
+msgstr "Maximum hoek voor hoek (0-180 graden):"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:12
-#, fuzzy
 msgid "Perpendicular"
-msgstr "Loodrechte deellijn"
+msgstr "Loodrecht"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:13
-#, fuzzy
 msgid "Prepare corners"
-msgstr "paginahoek"
+msgstr "Hoeken voorbereiden"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:14
 msgid "Prepare path for plasma or laser cuters"
-msgstr ""
+msgstr "Pad voorbereiden voor plasma- of lasersnijder"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:15
-#, fuzzy
 msgid "Replace original path"
-msgstr "Afsnijpad uitschakelen"
+msgstr "Origineel pad vervangen"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:16
-#, fuzzy
 msgid "Round"
-msgstr "Afgerond"
+msgstr "Rond"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:17
-#, fuzzy
 msgid "Stepout distance for corners:"
-msgstr "Aan hoeken van omvattend vak kleven"
+msgstr "In-uit afstand voor hoeken:"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:18
 msgid "Tangent"
-msgstr "Tangens"
+msgstr "Rakend"
 
 #: ../share/extensions/gcodetools_tools_library.inx.h:4
 msgid "Just check tools"
@@ -25235,31 +25186,31 @@ msgstr "Type gereedschap:"
 
 #: ../share/extensions/gcodetools_tools_library.inx.h:8
 msgid "cone"
-msgstr "kegel"
+msgstr "Kegel"
 
 #: ../share/extensions/gcodetools_tools_library.inx.h:9
 msgid "cylinder"
-msgstr "cilinder"
+msgstr "Cilinder"
 
 #: ../share/extensions/gcodetools_tools_library.inx.h:10
 msgid "default"
-msgstr "standaard"
+msgstr "Standaard"
 
 #: ../share/extensions/gcodetools_tools_library.inx.h:11
 msgid "graffiti"
-msgstr "graffiti"
+msgstr "Graffiti"
 
 #: ../share/extensions/gcodetools_tools_library.inx.h:12
 msgid "lathe cutter"
-msgstr "frees"
+msgstr "Frees"
 
 #: ../share/extensions/gcodetools_tools_library.inx.h:13
 msgid "plasma"
-msgstr "plasma"
+msgstr "Plasma"
 
 #: ../share/extensions/gcodetools_tools_library.inx.h:14
 msgid "tangent knife"
-msgstr "tangensmes"
+msgstr "Tangensmes"
 
 #: ../share/extensions/generate_voronoi.inx.h:1
 msgid "Average size of cell (px):"
@@ -25600,7 +25551,7 @@ msgstr "Verticale hulplijn elke:"
 
 #: ../share/extensions/guillotine.inx.h:1
 msgid "Directory to save images to"
-msgstr "Pad om afbeeldingn op te slaan"
+msgstr "Pad om afbeeldingen op te slaan"
 
 #: ../share/extensions/guillotine.inx.h:2
 msgid "Export"
@@ -26597,7 +26548,7 @@ msgstr "Dit effect verspreidt een patroon langs willekeurige \"skeletpaden\". He
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in):"
-msgstr "Overschot (inches):"
+msgstr "Overschot (duim):"
 
 #: ../share/extensions/perfectboundcover.inx.h:2
 msgid "Bond Weight #"
@@ -26605,7 +26556,7 @@ msgstr "Gewichtsnummer"
 
 #: ../share/extensions/perfectboundcover.inx.h:3
 msgid "Book Height (inches):"
-msgstr "Boekhoogte (inches):"
+msgstr "Boekhoogte (duim):"
 
 #: ../share/extensions/perfectboundcover.inx.h:4
 msgid "Book Properties"
@@ -26613,11 +26564,11 @@ msgstr "Boekeigenschappen"
 
 #: ../share/extensions/perfectboundcover.inx.h:5
 msgid "Book Width (inches):"
-msgstr "Boekbreedte (inches):"
+msgstr "Boekbreedte (duim):"
 
 #: ../share/extensions/perfectboundcover.inx.h:6
 msgid "Caliper (inches)"
-msgstr "Dikte (inches)"
+msgstr "Dikte (duim)"
 
 #: ../share/extensions/perfectboundcover.inx.h:7
 msgid "Cover"
@@ -26641,7 +26592,7 @@ msgstr "Aantal pagina's:"
 
 #: ../share/extensions/perfectboundcover.inx.h:12
 msgid "Pages Per Inch (PPI)"
-msgstr "Pagina's per inch (PPI)"
+msgstr "Pagina's per duim (PPI)"
 
 #: ../share/extensions/perfectboundcover.inx.h:13
 msgid "Paper Thickness Measurement:"
@@ -27494,7 +27445,7 @@ msgstr "Gecomprimeerde Inkscape-SVG met media export"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:4
 msgid "Image zip directory:"
-msgstr "Afbeeldingendirectory voor zip:"
+msgstr "Afbeeldingenmap voor zip:"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:5
 msgid "Inkscape's native file format compressed with Zip and including all media files"
@@ -27738,7 +27689,7 @@ msgstr "Opties voor Voronoidiagram"
 
 #: ../share/extensions/voronoi2svg.inx.h:9
 msgid "Select a set of objects. Their centroids will be used as the sites of the Voronoi diagram. Text objects are not handled."
-msgstr ""
+msgstr "Selecteer een aantal objecten. Hun middelpunten worden gebruikt voor het Voronoi diagram. Textobjecten worden niet in rekening gebracht."
 
 #: ../share/extensions/voronoi2svg.inx.h:10
 msgid "Show the bounding box"
@@ -27942,15 +27893,15 @@ msgstr "Rechtsboven"
 
 #: ../share/extensions/webslicer_export.inx.h:1
 msgid "All sliced images, and optionaly code, will be generated as you had configured and saved to one directory."
-msgstr "Alle deelafbeeldingen en optionele code worden gegenereerd volgens de opgegeven voorkeuren en bewaard in één directory."
+msgstr "Alle deelafbeeldingen en optionele code worden gegenereerd volgens de opgegeven voorkeuren en bewaard in één map."
 
 #: ../share/extensions/webslicer_export.inx.h:2
 msgid "Create directory, if it does not exists"
-msgstr "Directory maken indien deze niet bestaat"
+msgstr "Map maken indien deze niet bestaat"
 
 #: ../share/extensions/webslicer_export.inx.h:3
 msgid "Directory path to export:"
-msgstr "Directory voor exporteren:"
+msgstr "Map voor exporteren:"
 
 #: ../share/extensions/webslicer_export.inx.h:4
 msgid "Export layout pieces and HTML+CSS code"
@@ -28188,7 +28139,7 @@ msgstr "XAML-invoer"
 #~ msgid "Draw additional graphics to debug engraving path:"
 #~ msgstr "Additionele afbeeldingen tekenen om graveringspad te debuggen:"
 #~ msgid "Number of sample points used to calculate distance:"
-#~ msgstr "Aantal controlepunten gebruikt voor afstandsberekening:"
+#~ msgstr "Aantal controlepunten voor afstandsberekening:"
 #~ msgid "Sharp angle tolerance:"
 #~ msgstr "Tolerantie scherpe hoek:"
 #~ msgid "DXF Points"
