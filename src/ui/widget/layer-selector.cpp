@@ -95,7 +95,7 @@ LayerSelector::LayerSelector(SPDesktop *desktop)
     AlternateIcons *label;
 
     label = Gtk::manage(new AlternateIcons(Inkscape::ICON_SIZE_DECORATION,
-        INKSCAPE_ICON("object-visible"), INKSCAPE_ICON("object-visible")));
+        INKSCAPE_ICON("object-visible"), INKSCAPE_ICON("object-hidden")));
     _visibility_toggle.add(*label);
     _visibility_toggle.signal_toggled().connect(
         sigc::compose(
@@ -116,7 +116,7 @@ LayerSelector::LayerSelector(SPDesktop *desktop)
     pack_start(_visibility_toggle, Gtk::PACK_EXPAND_PADDING);
 
     label = Gtk::manage(new AlternateIcons(Inkscape::ICON_SIZE_DECORATION,
-        INKSCAPE_ICON("object-unlocked"), INKSCAPE_ICON("object-unlocked")));
+        INKSCAPE_ICON("object-unlocked"), INKSCAPE_ICON("object-locked")));
     _lock_toggle.add(*label);
     _lock_toggle.signal_toggled().connect(
         sigc::compose(
