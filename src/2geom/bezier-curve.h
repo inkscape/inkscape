@@ -46,8 +46,7 @@ namespace Geom
 class BezierCurve : public Curve {
 protected:
     D2<Bezier> inner;
-    BezierCurve() : Curve() {}
-    BezierCurve(BezierCurve const &b) : Curve(b), inner(b.inner) {}
+    BezierCurve() {}
     BezierCurve(D2<Bezier> const &b) : inner(b) {}
     BezierCurve(Bezier const &x, Bezier const &y) : inner(x, y) {}
     BezierCurve(std::vector<Point> const &pts);
