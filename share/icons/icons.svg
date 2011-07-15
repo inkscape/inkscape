@@ -20019,7 +20019,7 @@ http://www.inkscape.org/</dc:description>
   </g>
   <g
      transform="matrix(0.8557944,0,0,0.8106021,188.92188,242.35843)"
-     id="spray-copy-mode">
+     id="spray-mode-copy">
     <path
        d="m 368.21875,315.40625 c -0.5938,0 -1.09375,0.49995 -1.09375,1.09375 l 0,8.1875 -6.625,0 c -0.5938,0 -1.09375,0.4687 -1.09375,1.0625 l 0,18.96875 c 0,0.41391 0.2519,0.75879 0.59375,0.9375 0.026,0.0136 0.0353,0.051 0.0625,0.0625 0.17831,0.34313 0.52264,0.59376 0.9375,0.59375 l 24.625,0 c 0.5938,0 1.09376,-0.46869 1.09375,-1.0625 l 0,-8.71875 6.125,0 c 0.5938,0 1.06251,-0.46869 1.0625,-1.0625 l 0,-18.96875 c 0,-0.5938 -0.4687,-1.09375 -1.0625,-1.09375 l -24.625,0 z"
        id="rect6196"
@@ -20059,7 +20059,7 @@ http://www.inkscape.org/</dc:description>
   </g>
   <g
      transform="matrix(0.8413762,0,0,0.8105392,266.3079,183.1218)"
-     id="spray-union-mode">
+     id="spray-mode-union">
     <path
        d="m 377.48731,389.03977 c -0.5938,0 -1.09375,0.49995 -1.09375,1.09375 l 0,8.1875 -6.625,0 c -0.5938,0 -1.09375,0.4687 -1.09375,1.0625 l 0,18.96875 c 0,0.41391 0.2519,0.75879 0.59375,0.9375 0.026,0.0136 0.0353,0.0511 0.0625,0.0625 0.17831,0.34313 0.52264,0.59376 0.9375,0.59375 l 24.625,0 c 0.5938,0 1.09376,-0.46869 1.09375,-1.0625 l 0,-8.71875 6.125,0 c 0.5938,0 1.06251,-0.46869 1.0625,-1.0625 l 0,-18.96875 c 0,-0.5938 -0.4687,-1.09375 -1.0625,-1.09375 l -24.625,0 z"
        id="path6506"
@@ -20071,7 +20071,7 @@ http://www.inkscape.org/</dc:description>
   </g>
   <g
      transform="translate(164.42529,191.5008)"
-     id="spray-clone-mode"
+     id="spray-mode-clone"
      inkscape:label="#g5793">
     <path
        transform="matrix(0.8269532,0,0,0.8236011,70.705122,33.206996)"
@@ -21245,9 +21245,9 @@ http://www.inkscape.org/</dc:description>
   </g>
   <g
      style="display:inline"
-     id="measure"
+     id="tool-measure"
      transform="matrix(0,0.99999999,0.99999999,0,303.35939,23.950225)"
-     inkscape:label="#measure">
+     inkscape:label="#tool-measure">
     <rect
        transform="matrix(-0.5,0.86602541,0.86602541,0.5,0,0)"
        style="fill:url(#linearGradient10236);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient10238);stroke-width:0.99999982;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline"

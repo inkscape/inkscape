@@ -552,7 +552,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
-                                              INKSCAPE_ICON_PAINT_GRADIENT_LINEAR,
+                                              INKSCAPE_ICON("paint-gradient-linear"),
                                               _("Create linear gradient") );
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_type), tbl);
     g_object_set_data(G_OBJECT(tbl), "linear", button);
@@ -565,7 +565,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
-                                              INKSCAPE_ICON_PAINT_GRADIENT_RADIAL,
+                                              INKSCAPE_ICON("paint-gradient-radial"),
                                               _("Create radial (elliptic or circular) gradient"));
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_type), tbl);
     g_object_set_data(G_OBJECT(tbl), "radial", button);
@@ -592,7 +592,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
-                                              INKSCAPE_ICON_OBJECT_FILL,
+                                              INKSCAPE_ICON("object-fill"),
                                               _("Create gradient in the fill"));
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_fillstroke), tbl);
     g_object_set_data(G_OBJECT(tbl), "fill", button);
@@ -605,7 +605,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
-                                              INKSCAPE_ICON_OBJECT_STROKE,
+                                              INKSCAPE_ICON("object-stroke"),
                                               _("Create gradient in the stroke"));
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_fillstroke), tbl);
     g_object_set_data(G_OBJECT(tbl), "stroke", button);

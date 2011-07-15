@@ -378,9 +378,9 @@ static void toggle_pattern( GtkToggleAction* act, gpointer data )
 static void toggle_lock( GtkToggleAction *act, gpointer /*data*/ ) {
     gboolean active = gtk_toggle_action_get_active( act );
     if ( active ) {
-        g_object_set( G_OBJECT(act), "iconId", INKSCAPE_ICON_OBJECT_LOCKED, NULL );
+        g_object_set( G_OBJECT(act), "iconId", INKSCAPE_ICON("object-locked"), NULL );
     } else {
-        g_object_set( G_OBJECT(act), "iconId", INKSCAPE_ICON_OBJECT_UNLOCKED, NULL );
+        g_object_set( G_OBJECT(act), "iconId", INKSCAPE_ICON("object-unlocked"), NULL );
     }
 }
 
@@ -507,7 +507,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     InkToggleAction* itact = ink_toggle_action_new( "LockAction",
                                                     _("Lock width and height"),
                                                     _("When locked, change both width and height by the same proportion"),
-                                                    INKSCAPE_ICON_OBJECT_UNLOCKED,
+                                                    INKSCAPE_ICON("object-unlocked"),
                                                     Inkscape::ICON_SIZE_DECORATION );
     g_object_set( itact, "short_label", "Lock", NULL );
     g_object_set_data( G_OBJECT(spw), "lock", itact );
@@ -554,7 +554,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     // "Transform with object" buttons
 
     {
-        EgeOutputAction* act = ege_output_action_new( "transform_affect_label", _("Affect:"), _("Control whether or not to scale stroke widths, scale rectangle corners, transform gradient fills, and transform pattern fills with the object"), 0 ); 
+        EgeOutputAction* act = ege_output_action_new( "transform_affect_label", _("Affect:"), _("Control whether or not to scale stroke widths, scale rectangle corners, transform gradient fills, and transform pattern fills with the object"), 0 );
         ege_output_action_set_use_markup( act, TRUE );
         g_object_set( act, "visible-overflown", FALSE, NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
@@ -564,7 +564,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     InkToggleAction* itact = ink_toggle_action_new( "transform_stroke",
                                                     _("Scale stroke width"),
                                                     _("When scaling objects, scale the stroke width by the same proportion"),
-                                                    INKSCAPE_ICON_TRANSFORM_AFFECT_STROKE,
+                                                    INKSCAPE_ICON("transform-affect-stroke"),
                                                     Inkscape::ICON_SIZE_DECORATION );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs->getBool("/options/transform/stroke", true) );
     g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_stroke), desktop) ;
@@ -575,7 +575,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     InkToggleAction* itact = ink_toggle_action_new( "transform_corners",
                                                     _("Scale rounded corners"),
                                                     _("When scaling rectangles, scale the radii of rounded corners"),
-                                                    INKSCAPE_ICON_TRANSFORM_AFFECT_ROUNDED_CORNERS,
+                                                    INKSCAPE_ICON("transform-affect-rounded-corners"),
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs->getBool("/options/transform/rectcorners", true) );
     g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_corners), desktop) ;
@@ -586,7 +586,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     InkToggleAction* itact = ink_toggle_action_new( "transform_gradient",
                                                     _("Move gradients"),
                                                     _("Move gradients (in fill or stroke) along with the objects"),
-                                                    INKSCAPE_ICON_TRANSFORM_AFFECT_GRADIENT,
+                                                    INKSCAPE_ICON("transform-affect-gradient"),
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs->getBool("/options/transform/gradient", true) );
     g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_gradient), desktop) ;
@@ -597,7 +597,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     InkToggleAction* itact = ink_toggle_action_new( "transform_pattern",
                                                     _("Move patterns"),
                                                     _("Move patterns (in fill or stroke) along with the objects"),
-                                                    INKSCAPE_ICON_TRANSFORM_AFFECT_PATTERN,
+                                                    INKSCAPE_ICON("transform-affect-pattern"),
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs->getBool("/options/transform/pattern", true) );
     g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_pattern), desktop) ;

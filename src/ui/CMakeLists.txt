@@ -120,7 +120,7 @@ set(ui_SRC
 	previewfillable.h
 	previewholder.h
 	uxmanager.h
-	
+
 	cache/svg_preview_cache.h
 
 	dialog/aboutbox.h

@@ -334,7 +334,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->hbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_end( GTK_BOX (dtw->vbox), dtw->hbox, TRUE, TRUE, 0 );
     gtk_widget_show(dtw->hbox);
- 
+
     dtw->aux_toolbox = ToolboxFactory::createAuxToolbox();
     gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->aux_toolbox, FALSE, TRUE, 0);
 
@@ -388,7 +388,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->sticky_zoom = sp_button_new_from_data ( Inkscape::ICON_SIZE_DECORATION,
                                                  SP_BUTTON_TYPE_TOGGLE,
                                                  NULL,
-                                                 INKSCAPE_ICON_ZOOM_ORIGINAL,
+                                                 INKSCAPE_ICON("zoom-original"),
                                                  _("Zoom drawing if window size changes"));
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dtw->sticky_zoom), prefs->getBool("/options/stickyzoom/value"));
     gtk_box_pack_start (GTK_BOX (dtw->vscrollbar_box), dtw->sticky_zoom, FALSE, FALSE, 0);
@@ -410,7 +410,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->cms_adjust = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                                SP_BUTTON_TYPE_TOGGLE,
                                                NULL,
-                                               INKSCAPE_ICON_COLOR_MANAGEMENT,
+                                               INKSCAPE_ICON("color-management"),
                                                tip );
 #if ENABLE_LCMS
     {
@@ -1558,12 +1558,12 @@ void SPDesktopWidget::namedviewModified(SPObject *obj, guint flags)
         /* This loops through all the grandchildren of aux toolbox,
          * and for each that it finds, it performs an sp_search_by_data_recursive(),
          * looking for widgets that hold some "tracker" data (this is used by
-         * all toolboxes to refer to the unit selector). The default document units 
+         * all toolboxes to refer to the unit selector). The default document units
          * is then selected within these unit selectors.
          *
          * Of course it would be nice to be able to refer to the toolbox and the
          * unit selector directly by name, but I don't yet see a way to do that.
-         * 
+         *
          * This should solve: https://bugs.launchpad.net/inkscape/+bug/362995
          */
         if (GTK_IS_CONTAINER(aux_toolbox)) {
@@ -1571,7 +1571,7 @@ void SPDesktopWidget::namedviewModified(SPObject *obj, guint flags)
             for (GList *i = ch; i != NULL; i = i->next) {
                 if (GTK_IS_CONTAINER(i->data)) {
                     GList *grch = gtk_container_get_children (GTK_CONTAINER(i->data));
-                    for (GList *j = grch; j != NULL; j = j->next) {                        
+                    for (GList *j = grch; j != NULL; j = j->next) {
                         if (!GTK_IS_WIDGET(j->data)) // wasn't a widget
                             continue;
 

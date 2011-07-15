@@ -138,7 +138,7 @@ LivePathEffectEditor::LivePathEffectEditor()
 
     //Add the visibility icon column:
     Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler(
-        INKSCAPE_ICON_OBJECT_VISIBLE, INKSCAPE_ICON_OBJECT_HIDDEN) );
+        INKSCAPE_ICON("object-visible"), INKSCAPE_ICON("object-visible")) );
     int visibleColNum = effectlist_view.append_column("is_visible", *eyeRenderer) - 1;
     eyeRenderer->signal_toggled().connect( sigc::mem_fun(*this, &LivePathEffectEditor::on_visibility_toggled) );
     eyeRenderer->property_activatable() = true;
@@ -245,7 +245,7 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
         // this was triggered by selecting a row in the list, so skip reloading
         lpe_list_locked = false;
         return;
-    } 
+    }
 
     effectlist_store->clear();
     current_lpeitem = NULL;
@@ -265,7 +265,7 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
                     Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(lpeitem);
                     if (lpe) {
                         showParams(*lpe);
-                        lpe_list_locked = true; 
+                        lpe_list_locked = true;
                         selectInList(lpe);
                     } else {
                         showText(_("Unknown effect is applied"));

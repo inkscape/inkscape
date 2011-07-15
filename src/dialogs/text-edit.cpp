@@ -299,7 +299,7 @@ sp_text_edit_dialog (void)
                     // horizontal
                     {
                         GtkWidget *px = sp_icon_new( Inkscape::ICON_SIZE_LARGE_TOOLBAR,
-                                                      INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_HORIZONTAL );
+                                                      INKSCAPE_ICON("format-text-direction-horizontal") );
                         GtkWidget *b = group = gtk_radio_button_new (NULL);
                         gtk_widget_set_tooltip_text (b, _("Horizontal text"));
                         gtk_button_set_relief (GTK_BUTTON (b), GTK_RELIEF_NONE);
@@ -307,13 +307,13 @@ sp_text_edit_dialog (void)
                         gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (b), FALSE);
                         gtk_container_add (GTK_CONTAINER (b), px);
                         gtk_box_pack_start (GTK_BOX (row), b, FALSE, FALSE, 0);
-                        g_object_set_data (G_OBJECT (dlg), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_HORIZONTAL, b);
+                        g_object_set_data (G_OBJECT (dlg), INKSCAPE_ICON("format-text-direction-horizontal"), b);
                     }
 
                     // vertical
                     {
                         GtkWidget *px = sp_icon_new( Inkscape::ICON_SIZE_LARGE_TOOLBAR,
-                                                      INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_VERTICAL );
+                                                      INKSCAPE_ICON("format-text-direction-vertical") );
                         GtkWidget *b = gtk_radio_button_new (gtk_radio_button_get_group (GTK_RADIO_BUTTON (group)));
                         gtk_widget_set_tooltip_text (b, _("Vertical text"));
                         gtk_button_set_relief (GTK_BUTTON (b), GTK_RELIEF_NONE);
@@ -321,12 +321,12 @@ sp_text_edit_dialog (void)
                         gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (b), FALSE);
                         gtk_container_add (GTK_CONTAINER (b), px);
                         gtk_box_pack_start (GTK_BOX (row), b, FALSE, FALSE, 0);
-                        g_object_set_data (G_OBJECT (dlg), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_VERTICAL, b);
+                        g_object_set_data (G_OBJECT (dlg), INKSCAPE_ICON("format-text-direction-vertical"), b);
                     }
 
                     gtk_box_pack_start (GTK_BOX (l_vb), row, FALSE, FALSE, 0);
                 }
-				
+
                 {
                     GtkWidget *row = gtk_hbox_new (FALSE, VB_MARGIN);
 
@@ -604,7 +604,7 @@ sp_get_text_dialog_style ()
             }
         }
 
-        b = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_HORIZONTAL );
+        b = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), INKSCAPE_ICON("format-text-direction-horizontal") );
 
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (b))) {
             sp_repr_css_set_property (css, "writing-mode", "lr");
@@ -818,9 +818,9 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (b), TRUE);
 
         if (query->writing_mode.computed == SP_CSS_WRITING_MODE_LR_TB) {
-            b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_HORIZONTAL );
+            b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), INKSCAPE_ICON("format-text-direction-horizontal") );
         } else {
-            b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_VERTICAL );
+            b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), INKSCAPE_ICON("format-text-direction-vertical") );
         }
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (b), TRUE);
 

@@ -221,19 +221,19 @@ sp_paint_selector_init(SPPaintSelector *psel)
     gtk_box_pack_start(GTK_BOX(psel), psel->style, FALSE, FALSE, 0);
 
     /* Buttons */
-    psel->none = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_NONE,
+    psel->none = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON("paint-none"),
                                                     SPPaintSelector::MODE_NONE, _("No paint"));
-    psel->solid = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_SOLID,
+    psel->solid = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON("paint-solid"),
                                                      SPPaintSelector::MODE_COLOR_RGB, _("Flat color"));
-    psel->gradient = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_GRADIENT_LINEAR,
+    psel->gradient = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON("paint-gradient-linear"),
                                                         SPPaintSelector::MODE_GRADIENT_LINEAR, _("Linear gradient"));
-    psel->radial = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_GRADIENT_RADIAL,
+    psel->radial = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON("paint-gradient-radial"),
                                                       SPPaintSelector::MODE_GRADIENT_RADIAL, _("Radial gradient"));
-    psel->pattern = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_PATTERN,
+    psel->pattern = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON("paint-pattern"),
                                                        SPPaintSelector::MODE_PATTERN, _("Pattern"));
-    psel->swatch = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_SWATCH,
+    psel->swatch = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON("paint-swatch"),
                                                        SPPaintSelector::MODE_SWATCH, _("Swatch"));
-    psel->unset = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_UNKNOWN,
+    psel->unset = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON("paint-unknown"),
                                                      SPPaintSelector::MODE_UNSET, _("Unset paint (make it undefined so it can be inherited)"));
 
     /* Fillrule */
@@ -248,7 +248,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
         // TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
         gtk_widget_set_tooltip_text(psel->evenodd, _("Any path self-intersections or subpaths create holes in the fill (fill-rule: evenodd)"));
         g_object_set_data(G_OBJECT(psel->evenodd), "mode", GUINT_TO_POINTER(SPPaintSelector::FILLRULE_EVENODD));
-        w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_FILL_RULE_EVEN_ODD);
+        w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON("fill-rule-even-odd"));
         gtk_container_add(GTK_CONTAINER(psel->evenodd), w);
         gtk_box_pack_start(GTK_BOX(psel->fillrulebox), psel->evenodd, FALSE, FALSE, 0);
         g_signal_connect(G_OBJECT(psel->evenodd), "toggled", G_CALLBACK(sp_paint_selector_fillrule_toggled), psel);
@@ -259,7 +259,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
         // TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
         gtk_widget_set_tooltip_text(psel->nonzero, _("Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"));
         g_object_set_data(G_OBJECT(psel->nonzero), "mode", GUINT_TO_POINTER(SPPaintSelector::FILLRULE_NONZERO));
-        w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_FILL_RULE_NONZERO);
+        w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON("fill-rule-nonzero"));
         gtk_container_add(GTK_CONTAINER(psel->nonzero), w);
         gtk_box_pack_start(GTK_BOX(psel->fillrulebox), psel->nonzero, FALSE, FALSE, 0);
         g_signal_connect(G_OBJECT(psel->nonzero), "toggled", G_CALLBACK(sp_paint_selector_fillrule_toggled), psel);

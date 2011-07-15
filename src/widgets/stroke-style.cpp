@@ -721,7 +721,7 @@ sp_stroke_style_line_widget_new(void)
 
     tb = NULL;
 
-    tb = sp_stroke_radio_button(tb, INKSCAPE_ICON_STROKE_JOIN_MITER,
+    tb = sp_stroke_radio_button(tb, INKSCAPE_ICON("stroke-join-miter"),
                                 hb, spw, "join", "miter");
 
     // TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
@@ -730,7 +730,7 @@ sp_stroke_style_line_widget_new(void)
     tt->set_tip(*tb, _("Miter join"));
     spw->set_data("miter join", tb);
 
-    tb = sp_stroke_radio_button(tb, INKSCAPE_ICON_STROKE_JOIN_ROUND,
+    tb = sp_stroke_radio_button(tb, INKSCAPE_ICON("stroke-join-round"),
                                 hb, spw, "join", "round");
 
 
@@ -740,7 +740,7 @@ sp_stroke_style_line_widget_new(void)
     tt->set_tip(*tb, _("Round join"));
     spw->set_data("round join", tb);
 
-    tb = sp_stroke_radio_button(tb, INKSCAPE_ICON_STROKE_JOIN_BEVEL,
+    tb = sp_stroke_radio_button(tb, INKSCAPE_ICON("stroke-join-bevel"),
                                 hb, spw, "join", "bevel");
 
 
@@ -787,7 +787,7 @@ sp_stroke_style_line_widget_new(void)
 
     tb = NULL;
 
-    tb = sp_stroke_radio_button(tb, INKSCAPE_ICON_STROKE_CAP_BUTT,
+    tb = sp_stroke_radio_button(tb, INKSCAPE_ICON("stroke-cap-butt"),
                                 hb, spw, "cap", "butt");
     spw->set_data("cap butt", tb);
 
@@ -795,7 +795,7 @@ sp_stroke_style_line_widget_new(void)
     //  of the line; the ends of the line are square
     tt->set_tip(*tb, _("Butt cap"));
 
-    tb = sp_stroke_radio_button(tb, INKSCAPE_ICON_STROKE_CAP_ROUND,
+    tb = sp_stroke_radio_button(tb, INKSCAPE_ICON("stroke-cap-round"),
                                 hb, spw, "cap", "round");
     spw->set_data("cap round", tb);
 
@@ -803,7 +803,7 @@ sp_stroke_style_line_widget_new(void)
     //  line; the ends of the line are rounded
     tt->set_tip(*tb, _("Round cap"));
 
-    tb = sp_stroke_radio_button(tb, INKSCAPE_ICON_STROKE_CAP_SQUARE,
+    tb = sp_stroke_radio_button(tb, INKSCAPE_ICON("stroke-cap-square"),
                                 hb, spw, "cap", "square");
     spw->set_data("cap square", tb);
 
@@ -949,13 +949,13 @@ sp_jointype_set (Gtk::Container *spw, unsigned const jointype)
     Gtk::RadioButton *tb = NULL;
     switch (jointype) {
         case SP_STROKE_LINEJOIN_MITER:
-            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON_STROKE_JOIN_MITER));
+            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON("stroke-join-miter")));
             break;
         case SP_STROKE_LINEJOIN_ROUND:
-            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON_STROKE_JOIN_ROUND));
+            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON("stroke-join-round")));
             break;
         case SP_STROKE_LINEJOIN_BEVEL:
-            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON_STROKE_JOIN_BEVEL));
+            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON("stroke-join-bevel")));
             break;
         default:
             break;
@@ -972,13 +972,13 @@ sp_captype_set (Gtk::Container *spw, unsigned const captype)
     Gtk::RadioButton *tb = NULL;
     switch (captype) {
         case SP_STROKE_LINECAP_BUTT:
-            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON_STROKE_CAP_BUTT));
+            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON("stroke-cap-butt")));
             break;
         case SP_STROKE_LINECAP_ROUND:
-            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON_STROKE_CAP_ROUND));
+            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON("stroke-cap-round")));
             break;
         case SP_STROKE_LINECAP_SQUARE:
-            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON_STROKE_CAP_SQUARE));
+            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON("stroke-cap-square")));
             break;
         default:
             break;
@@ -1325,16 +1325,16 @@ sp_stroke_style_set_join_buttons(Gtk::Container *spw, Gtk::ToggleButton *active)
 {
     Gtk::RadioButton *tb;
 
-    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON_STROKE_JOIN_MITER));
+    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON("stroke-join-miter")));
     tb->set_active(active == tb);
 
     Gtk::SpinButton *ml = static_cast<Gtk::SpinButton *>(spw->get_data("miterlimit_sb"));
     ml->set_sensitive(active == tb);
 
-    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON_STROKE_JOIN_ROUND));
+    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON("stroke-join-round")));
     tb->set_active(active == tb);
 
-    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON_STROKE_JOIN_BEVEL));
+    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON("stroke-join-bevel")));
     tb->set_active(active == tb);
 }
 
@@ -1346,11 +1346,11 @@ sp_stroke_style_set_cap_buttons(Gtk::Container *spw, Gtk::ToggleButton *active)
 {
     Gtk::RadioButton *tb;
 
-    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON_STROKE_CAP_BUTT));
+    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON("stroke-cap-butt")));
     tb->set_active(active == tb);
-    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON_STROKE_CAP_ROUND));
+    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON("stroke-cap-round")));
     tb->set_active(active == tb);
-    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON_STROKE_CAP_SQUARE));
+    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_ICON("stroke-cap-square")));
     tb->set_active(active == tb);
 }
 

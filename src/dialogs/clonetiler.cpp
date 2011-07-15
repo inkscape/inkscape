@@ -1183,7 +1183,7 @@ static void clonetiler_apply(GtkWidget */*widget*/, void *)
         y0 = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-y0", 0);
     } else {
         bool prefs_bbox = prefs->getBool("/tools/bounding_box", false);
-        SPItem::BBoxType bbox_type = ( prefs_bbox ? 
+        SPItem::BBoxType bbox_type = ( prefs_bbox ?
             SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX );
         Geom::OptRect r = SP_ITEM(obj)->getBounds(SP_ITEM(obj)->i2doc_affine(),
                                                         bbox_type);
@@ -1641,7 +1641,7 @@ static GtkWidget * clonetiler_table_x_y_rand(int values)
     {
         GtkWidget *hb = gtk_hbox_new (FALSE, 0);
 
-        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_OBJECT_ROWS);
+        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON("object-rows"));
         gtk_box_pack_start (GTK_BOX (hb), i, FALSE, FALSE, 2);
 
         GtkWidget *l = gtk_label_new ("");
@@ -1654,7 +1654,7 @@ static GtkWidget * clonetiler_table_x_y_rand(int values)
     {
         GtkWidget *hb = gtk_hbox_new (FALSE, 0);
 
-        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_OBJECT_COLUMNS);
+        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON("object-columns"));
         gtk_box_pack_start (GTK_BOX (hb), i, FALSE, FALSE, 2);
 
         GtkWidget *l = gtk_label_new ("");
@@ -1812,7 +1812,7 @@ void clonetiler_dialog(void)
 // Symmetry
         {
             GtkWidget *vb = clonetiler_new_tab (nb, _("_Symmetry"));
-            
+
 	    /* TRANSLATORS: For the following 17 symmetry groups, see
              * http://www.bib.ulb.ac.be/coursmath/doc/17.htm (visual examples);
              * http://www.clarku.edu/~djoyce/wallpaper/seventeen.html (English vocabulary); or
@@ -1850,14 +1850,14 @@ void clonetiler_dialog(void)
 	    // the symmetry group combo box.
 	    GtkListStore *store = gtk_list_store_new (1, G_TYPE_STRING);
 	    GtkTreeIter iter;
-            
+
 	    for (unsigned j = 0; j < G_N_ELEMENTS(sym_groups); ++j) {
                 SymGroups const &sg = sym_groups[j];
 
 		// Add the description of the symgroup to a new row
 		gtk_list_store_append (store, &iter);
-		gtk_list_store_set (store, &iter, 
-				    0, sg.label, 
+		gtk_list_store_set (store, &iter,
+				    0, sg.label,
 				    -1);
             }
 

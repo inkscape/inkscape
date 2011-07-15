@@ -582,7 +582,7 @@ LayersPanel::LayersPanel() :
     _tree.set_headers_visible(false);
 
     Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler(
-        INKSCAPE_ICON_OBJECT_VISIBLE, INKSCAPE_ICON_OBJECT_HIDDEN) );
+        INKSCAPE_ICON("object-visible"), INKSCAPE_ICON("object-visible")) );
     int visibleColNum = _tree.append_column("vis", *eyeRenderer) - 1;
     eyeRenderer->signal_pre_toggle().connect( sigc::mem_fun(*this, &LayersPanel::_preToggle) );
     eyeRenderer->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_VISIBLE) );
@@ -593,7 +593,7 @@ LayersPanel::LayersPanel() :
     }
 
     Inkscape::UI::Widget::ImageToggler * renderer = manage( new Inkscape::UI::Widget::ImageToggler(
-        INKSCAPE_ICON_OBJECT_LOCKED, INKSCAPE_ICON_OBJECT_UNLOCKED) );
+        INKSCAPE_ICON("object-locked"), INKSCAPE_ICON("object-locked")) );
     int lockedColNum = _tree.append_column("lock", *renderer) - 1;
     renderer->signal_pre_toggle().connect( sigc::mem_fun(*this, &LayersPanel::_preToggle) );
     renderer->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_LOCKED) );
