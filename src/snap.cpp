@@ -746,6 +746,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
 
     // std::cout << std::endl;
     bool first_free_snap = true;
+
     for (std::vector<Inkscape::SnapCandidatePoint>::const_iterator i = points.begin(); i != points.end(); i++) {
 
         /* Snap it */
@@ -850,6 +851,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                         result[0] = result[1];
                     }
                 }
+
                 // Compare the resulting scaling with the desired scaling
                 Geom::Point scale_metric = Geom::abs(result - transformation); // One or both of its components might be NR_HUGE
                 if (scale_metric[0] == NR_HUGE || scale_metric[1] == NR_HUGE) {
@@ -930,10 +932,10 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
 
     Geom::Coord best_metric;
     if (transformation_type == SCALE) {
-        // When scaling, don't ever exit with one of scaling components set to Geom::infinity()
+        // When scaling, don't ever exit with one of scaling components uninitialized
         for (int index = 0; index < 2; index++) {
-            if (best_transformation[index] == Geom::infinity()) {
-                if (uniform && best_transformation[1-index] < Geom::infinity()) {
+            if (fabs(best_transformation[index]) >= 1e12) {
+                if (uniform && fabs(best_transformation[1-index]) < 1e12) {
                     best_transformation[index] = best_transformation[1-index];
                 } else {
                     best_transformation[index] = transformation[index];
