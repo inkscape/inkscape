@@ -105,7 +105,12 @@ sp_ctrl_init (SPCtrl *ctrl)
     ctrl->stroked = 0;
     ctrl->fill_color = 0x000000ff;
     ctrl->stroke_color = 0x000000ff;
-    ctrl->_moved = false;
+
+    // This way we make sure that the first sp_ctrl_update() call finishes properly;
+    // in subsequent calls it will not update anything it the control hasn't moved
+    // Consider for example the case in which a snap indicator is drawn at (0, 0);
+    // If moveto() is called then it will not set _moved to true because we're initially already at (0, 0)
+    ctrl->_moved = true; // Is this flag ever going to be set back to false? I can't find where that is supposed to happen
 
     ctrl->box.x0 = ctrl->box.y0 = ctrl->box.x1 = ctrl->box.y1 = 0;
     ctrl->cache = NULL;
