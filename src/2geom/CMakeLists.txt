@@ -27,6 +27,7 @@ set(2geom_SRC
 	point.cpp
 	poly.cpp
 	quadtree.cpp
+	rect.cpp
 	# recursive-bezier-intersection.cpp
 	region.cpp
 	sbasis-2d.cpp
@@ -43,6 +44,7 @@ set(2geom_SRC
 	svg-path-parser.cpp
 	svg-path.cpp
 	sweep.cpp
+	toposweep.cpp
 	transforms.cpp
 	utils.cpp
 
@@ -76,10 +78,14 @@ set(2geom_SRC
 	elliptical-arc.h
 	exception.h
 	forward.h
+	generic-interval.h
+	generic-rect.h
 	geom.h
 	hvlinesegment.h
+	int-interval.h
+	int-point.h
+	int-rect.h
 	interval.h
-	isnan.h
 	line.h
 	linear.h
 	math-utils.h
@@ -89,7 +95,6 @@ set(2geom_SRC
 	path.h
 	pathvector.h
 	piecewise.h
-	point-l.h
 	point-ops.h
 	point.h
 	poly.h
@@ -106,11 +111,11 @@ set(2geom_SRC
 	sbasis.h
 	shape.h
 	solver.h
-	sturm.h
 	svg-elliptical-arc.h
 	svg-path-parser.h
 	svg-path.h
 	sweep.h
+	toposweep.h
 	transforms.h
 	utils.h
 

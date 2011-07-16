@@ -1120,9 +1120,9 @@ sp_canvas_destroy (GtkObject *object)
     }
 
     shutdown_transients (canvas);
-
+#if ENABLE_LCMS
     canvas->cms_key.~ustring();
-
+#endif
     if (GTK_OBJECT_CLASS (canvas_parent_class)->destroy)
         (* GTK_OBJECT_CLASS (canvas_parent_class)->destroy) (object);
 }
