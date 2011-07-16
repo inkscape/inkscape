@@ -34,6 +34,7 @@
 #include "display/nr-arena.h"
 #include "display/nr-arena-item.h"
 #include "io/sys.h"
+#include "sp-root.h"
 
 #include "icon.h"
 
@@ -1085,9 +1086,10 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
     if (doc) {
         SPObject *object = doc->getObjectById(name);
         if (object && SP_IS_ITEM(object)) {
-            /* Find bbox in document */
-            Geom::Affine const i2doc(SP_ITEM(object)->i2doc_affine());
-            Geom::OptRect dbox = SP_ITEM(object)->getBounds(i2doc);
+            SPItem *item = SP_ITEM(object);
+            // Find bbox in document
+            Geom::Affine const i2doc(item->i2doc_affine());
+            Geom::OptRect dbox = item->getBounds(i2doc);
 
             if ( object->parent == NULL )
             {
@@ -1294,7 +1296,7 @@ guchar *IconImpl::load_svg_pixels(std::list<Glib::ustring> const &names,
                 // fixme: Memory manage root if needed (Lauris)
                 // This needs to be fixed indeed; this leads to a memory leak of a few megabytes these days
                 // because shapes are being rendered which are not being freed
-                NRArenaItem *root = SP_ITEM(doc->getRoot())->invoke_show( arena, visionkey, SP_ITEM_SHOW_DISPLAY );
+                NRArenaItem *root = doc->getRoot()->invoke_show( arena, visionkey, SP_ITEM_SHOW_DISPLAY );
 
                 // store into the cache
                 info = new SVGDocCache(doc, root);

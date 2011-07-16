@@ -225,7 +225,6 @@ Inkscape::XML::Node * SPShape::sp_shape_write(SPObject *object, Inkscape::XML::D
  */
 void SPShape::sp_shape_update(SPObject *object, SPCtx *ctx, unsigned int flags)
 {
-    SPItem *item = (SPItem *) object;
     SPShape *shape = (SPShape *) object;
 
     if (((SPObjectClass *) (SPShapeClass::parent_class))->update) {
@@ -257,7 +256,7 @@ void SPShape::sp_shape_update(SPObject *object, SPCtx *ctx, unsigned int flags)
         /* This is suboptimal, because changing parent style schedules recalculation */
         /* But on the other hand - how can we know that parent does not tie style and transform */
         Geom::OptRect paintbox = SP_ITEM(object)->getBounds(Geom::identity(), SPItem::GEOMETRIC_BBOX);
-        for (SPItemView *v = SP_ITEM (shape)->display; v != NULL; v = v->next) {
+        for (SPItemView *v = shape->display; v != NULL; v = v->next) {
             NRArenaShape * const s = NR_ARENA_SHAPE(v->arenaitem);
             if (flags & SP_OBJECT_MODIFIED_FLAG) {
                 nr_arena_shape_set_path(s, shape->curve, (flags & SP_OBJECT_USER_MODIFIED_FLAG_B));
@@ -270,7 +269,7 @@ void SPShape::sp_shape_update(SPObject *object, SPCtx *ctx, unsigned int flags)
 
     if (shape->hasMarkers ()) {
         /* Dimension marker views */
-        for (SPItemView *v = item->display; v != NULL; v = v->next) {
+        for (SPItemView *v = shape->display; v != NULL; v = v->next) {
             if (!v->arenaitem->key) {
                 NR_ARENA_ITEM_SET_KEY (v->arenaitem, SPItem::display_key_new (SP_MARKER_LOC_QTY));
             }
@@ -284,7 +283,7 @@ void SPShape::sp_shape_update(SPObject *object, SPCtx *ctx, unsigned int flags)
         }
 
         /* Update marker views */
-        for (SPItemView *v = item->display; v != NULL; v = v->next) {
+        for (SPItemView *v = shape->display; v != NULL; v = v->next) {
             sp_shape_update_marker_view (shape, v->arenaitem);
         }
     }
@@ -495,7 +494,7 @@ void SPShape::sp_shape_modified(SPObject *object, unsigned int flags)
     }
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-        for (SPItemView *v = SP_ITEM (shape)->display; v != NULL; v = v->next) {
+        for (SPItemView *v = shape->display; v != NULL; v = v->next) {
             nr_arena_shape_set_style (NR_ARENA_SHAPE (v->arenaitem), object->style);
         }
     }

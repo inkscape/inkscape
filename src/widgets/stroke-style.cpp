@@ -157,8 +157,9 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
 {
     // Retrieve the marker named 'mname' from the source SVG document
     SPObject const *marker = source->getObjectById(mname);
-    if (marker == NULL)
+    if (marker == NULL) {
         return NULL;
+    }
 
     // Create a copy repr of the marker with id="sample"
     Inkscape::XML::Document *xml_doc = sandbox->getReprDoc();
@@ -168,8 +169,9 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
     // Replace the old sample in the sandbox by the new one
     Inkscape::XML::Node *defsrepr = sandbox->getObjectById("defs")->getRepr();
     SPObject *oldmarker = sandbox->getObjectById("sample");
-    if (oldmarker)
+    if (oldmarker) {
         oldmarker->deleteObject(false);
+    }
     defsrepr->appendChild(mrepr);
     Inkscape::GC::release(mrepr);
 
@@ -183,12 +185,14 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
     sandbox->getRoot()->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     sandbox->ensureUpToDate();
 
-    if (object == NULL || !SP_IS_ITEM(object))
+    if (object == NULL || !SP_IS_ITEM(object)) {
         return NULL; // sandbox broken?
+    }
 
+    SPItem *item = SP_ITEM(object);
     // Find object's bbox in document
-    Geom::Affine const i2doc(SP_ITEM(object)->i2doc_affine());
-    Geom::OptRect dbox = SP_ITEM(object)->getBounds(i2doc);
+    Geom::Affine const i2doc(item->i2doc_affine());
+    Geom::OptRect dbox = item->getBounds(i2doc);
 
     if (!dbox) {
         return NULL;
@@ -246,7 +250,7 @@ sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, SPDocument *source, SPD
     // Do this here, outside of loop, to speed up preview generation:
     NRArena const *arena = NRArena::create();
     unsigned const visionkey = SPItem::display_key_new(1);
-    NRArenaItem *root =  SP_ITEM(sandbox->getRoot())->invoke_show((NRArena *) arena, visionkey, SP_ITEM_SHOW_DISPLAY);
+    NRArenaItem *root = sandbox->getRoot()->invoke_show((NRArena *) arena, visionkey, SP_ITEM_SHOW_DISPLAY);
 
     for (; marker_list != NULL; marker_list = marker_list->next) {
         Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(marker_list->data)->getRepr();
@@ -284,7 +288,7 @@ sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, SPDocument *source, SPD
         m->append(*i);
     }
 
-    SP_ITEM(sandbox->getRoot())->invoke_hide(visionkey);
+    sandbox->getRoot()->invoke_hide(visionkey);
     nr_object_unref((NRObject *) arena);
 }
 

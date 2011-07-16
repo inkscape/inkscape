@@ -432,7 +432,7 @@ bool sp_spray_recursive(SPDesktop *desktop,
     
     if (SP_IS_BOX3D(item) ) {
         // convert 3D boxes to ordinary groups before spraying their shapes
-        item = SP_ITEM(box3d_convert_to_group(SP_BOX3D(item)));
+        item = box3d_convert_to_group(SP_BOX3D(item));
         selection->add(item);
     }
 

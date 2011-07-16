@@ -228,8 +228,11 @@ public:
     Inkscape::UI::Widget::Dock* getDock() { return _widget->getDock(); }
 
     void set_active (bool new_active);
+
+    // TODO look into making these return a more specific subclass:
     SPObject *currentRoot() const;
     SPObject *currentLayer() const;
+
     void setCurrentLayer(SPObject *object);
     void toggleLayerSolo(SPObject *object);
     SPObject *layerForObject(SPObject *object);

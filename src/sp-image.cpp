@@ -1017,7 +1017,7 @@ static void sp_image_modified( SPObject *object, unsigned int flags )
     }
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-        for (SPItemView *v = SP_ITEM (image)->display; v != NULL; v = v->next) {
+        for (SPItemView *v = image->display; v != NULL; v = v->next) {
             nr_arena_image_set_style (NR_ARENA_IMAGE (v->arenaitem), object->style);
         }
     }
@@ -1273,8 +1273,7 @@ sp_image_update_arenaitem (SPImage *image, NRArenaImage *ai)
     nr_arena_image_set_clipbox(ai, image->clipbox);
 }
 
-static void
-sp_image_update_canvas_image (SPImage *image)
+static void sp_image_update_canvas_image(SPImage *image)
 {
     SPItem *item = SP_ITEM(image);
 

@@ -14,8 +14,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#define __SP_ARC_CONTEXT_C__
-
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif

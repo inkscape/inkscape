@@ -624,7 +624,7 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool page
     g_assert( ctx != NULL );
 
     if (!base) {
-        base = SP_ITEM(doc->getRoot());
+        base = doc->getRoot();
     }
 
     NRRect d;

@@ -26,17 +26,15 @@ void
 GroupBBoxEffect::original_bbox(SPLPEItem *lpeitem, bool absolute)
 {
     // Get item bounding box
-    SPItem* item = SP_ITEM(lpeitem);
-    
     Geom::Affine transform;
     if (absolute) {
-        transform = item->i2doc_affine();
+        transform = lpeitem->i2doc_affine();
     }
     else {
         transform = Geom::identity();
     }
 
-    Geom::OptRect bbox = item->getBounds(transform, SPItem::GEOMETRIC_BBOX);
+    Geom::OptRect bbox = lpeitem->getBounds(transform, SPItem::GEOMETRIC_BBOX);
     if (bbox) {
         boundingbox_X = (*bbox)[Geom::X];
         boundingbox_Y = (*bbox)[Geom::Y];

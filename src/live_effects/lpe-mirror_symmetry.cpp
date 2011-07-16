@@ -45,9 +45,8 @@ LPEMirrorSymmetry::doOnApply (SPLPEItem *lpeitem)
 {
     using namespace Geom;
 
-    SPItem *item = SP_ITEM(lpeitem);
-    Geom::Affine t = item->i2d_affine();
-    Geom::Rect bbox = *item->getBounds(t); // fixme: what happens if getBounds does not return a valid rect?
+    Geom::Affine t = lpeitem->i2d_affine();
+    Geom::Rect bbox = *lpeitem->getBounds(t); // fixme: what happens if getBounds does not return a valid rect?
 
     Point A(bbox.left(), bbox.bottom());
     Point B(bbox.left(), bbox.top());

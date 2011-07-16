@@ -388,7 +388,7 @@ box3d_get_corner_screen (SPBox3D const *box, guint id, bool item_coords) {
     if (!box3d_get_perspective(box)) {
         return Geom::Point (Geom::infinity(), Geom::infinity());
     }
-    Geom::Affine const i2d (SP_ITEM(box)->i2d_affine ());
+    Geom::Affine const i2d(box->i2d_affine ());
     if (item_coords) {
         return box3d_get_perspective(box)->perspective_impl->tmat.image(proj_corner).affine() * i2d.inverse();
     } else {
@@ -412,7 +412,7 @@ box3d_get_center_screen (SPBox3D *box) {
     if (!box3d_get_perspective(box)) {
         return Geom::Point (Geom::infinity(), Geom::infinity());
     }
-    Geom::Affine const i2d (SP_ITEM(box)->i2d_affine ());
+    Geom::Affine const i2d(box->i2d_affine ());
     return box3d_get_perspective(box)->perspective_impl->tmat.image(proj_center).affine() * i2d.inverse();
 }
 
@@ -1180,7 +1180,7 @@ box3d_set_z_orders (SPBox3D *box) {
         for (unsigned int i = 0; i < 6; ++i) {
             side = sides.find(box->z_orders[i]);
             if (side != sides.end()) {
-                SP_ITEM((*side).second)->lowerToBottom();
+                ((*side).second)->lowerToBottom();
             }
         }
     }

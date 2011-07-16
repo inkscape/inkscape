@@ -669,7 +669,7 @@ void sp_lpe_item_edit_next_param_oncanvas(SPLPEItem *lpeitem, SPDesktop *dt)
 {
     Inkscape::LivePathEffect::LPEObjectReference *lperef = sp_lpe_item_get_current_lpereference(lpeitem);
     if (lperef && lperef->lpeobject && lperef->lpeobject->get_lpe()) {
-        lperef->lpeobject->get_lpe()->editNextParamOncanvas(SP_ITEM(lpeitem), dt);
+        lperef->lpeobject->get_lpe()->editNextParamOncanvas(lpeitem, dt);
     }
 }
 

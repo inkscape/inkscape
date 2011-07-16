@@ -517,7 +517,7 @@ void collectPathsAndWidths (SPLPEItem const *lpeitem, std::vector<Geom::Path> &p
             for (unsigned i=0; i<subpaths.size(); i++){
                 paths.push_back(subpaths[i]);
                 //FIXME: do we have to be more carefull when trying to access stroke width?
-                stroke_widths.push_back(SP_ITEM(lpeitem)->style->stroke_width.computed);
+                stroke_widths.push_back(lpeitem->style->stroke_width.computed);
             }
         }
     }

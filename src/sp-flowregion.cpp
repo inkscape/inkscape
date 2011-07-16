@@ -116,15 +116,13 @@ sp_flowregion_dispose(GObject *object)
     group->computed.~vector<Shape*>();
 }
 
-static void
-sp_flowregion_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
+static void sp_flowregion_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
-	SPItem *item;
+	SP_ITEM(object);
 
-	item = SP_ITEM (object);
-
-	if (((SPObjectClass *) (flowregion_parent_class))->child_added)
+	if (((SPObjectClass *) (flowregion_parent_class))->child_added) {
 		(* ((SPObjectClass *) (flowregion_parent_class))->child_added) (object, child, ref);
+        }
 
 	object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
@@ -332,15 +330,13 @@ sp_flowregionexclude_dispose(GObject *object)
     }
 }
 
-static void
-sp_flowregionexclude_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
+static void sp_flowregionexclude_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
-	SPItem *item;
+	SP_ITEM(object);
 
-	item = SP_ITEM (object);
-
-	if (((SPObjectClass *) (flowregionexclude_parent_class))->child_added)
+	if (((SPObjectClass *) (flowregionexclude_parent_class))->child_added) {
 		(* ((SPObjectClass *) (flowregionexclude_parent_class))->child_added) (object, child, ref);
+        }
 
 	object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }

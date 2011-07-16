@@ -483,9 +483,15 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
          * manually when applicable.
          * */
         if (node_tool_active) {
-            SPCurve *curve = curve_for_item(SP_ITEM(selected_path));
+            // TODO fix the function to be const correct:
+            SPCurve *curve = curve_for_item(const_cast<SPPath*>(selected_path));
             if (curve) {
-                Geom::PathVector *pathv = pathvector_for_curve(SP_ITEM(selected_path), curve, true, true, Geom::identity(), Geom::identity()); // We will get our own copy of the path, which must be freed at some point
+                Geom::PathVector *pathv = pathvector_for_curve(const_cast<SPPath*>(selected_path),
+                                                               curve,
+                                                               true,
+                                                               true,
+                                                               Geom::identity(),
+                                                               Geom::identity()); // We will get our own copy of the path, which must be freed at some point
                 _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(pathv, SNAPTARGET_PATH, Geom::OptRect(), true));
                 curve->unref();
             }

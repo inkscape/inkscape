@@ -285,7 +285,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
 
     _modified_connection = namedview->connectModified(sigc::bind<2>(sigc::ptr_fun(&_namedview_modified), this));
 
-    NRArenaItem *ai = SP_ITEM(document->getRoot())->invoke_show(
+    NRArenaItem *ai = document->getRoot()->invoke_show(
             SP_CANVAS_ARENA (drawing)->arena,
             dkey,
             SP_ITEM_SHOW_DISPLAY);
@@ -402,7 +402,7 @@ void SPDesktop::destroy()
     }
 
     if (drawing) {
-        SP_ITEM(doc()->getRoot())->invoke_hide(dkey);
+        doc()->getRoot()->invoke_hide(dkey);
         drawing = NULL;
     }
 
@@ -541,8 +541,9 @@ void SPDesktop::toggleLayerSolo(SPObject *object) {
     }
 
 
-    if ( SP_ITEM(object)->isHidden() ) {
-        SP_ITEM(object)->setHidden(false);
+    SPItem *item = SP_ITEM(object);
+    if ( item->isHidden() ) {
+        item->setHidden(false);
     }
 
     for ( std::vector<SPObject*>::iterator it = layers.begin(); it != layers.end(); ++it ) {
@@ -1131,7 +1132,7 @@ void
 SPDesktop::zoom_drawing()
 {
     g_return_if_fail (doc() != NULL);
-    SPItem *docitem = SP_ITEM(doc()->getRoot());
+    SPItem *docitem = doc()->getRoot();
     g_return_if_fail (docitem != NULL);
 
     Geom::OptRect d = docitem->getBboxDesktop();
@@ -1536,7 +1537,7 @@ SPDesktop::setDocument (SPDocument *doc)
 {
     if (this->doc() && doc) {
         namedview->hide(this);
-        SP_ITEM(this->doc()->getRoot())->invoke_hide(dkey);
+        this->doc()->getRoot()->invoke_hide(dkey);
     }
 
     if (_layer_hierarchy) {
@@ -1567,7 +1568,7 @@ SPDesktop::setDocument (SPDocument *doc)
         _modified_connection = namedview->connectModified(sigc::bind<2>(sigc::ptr_fun(&_namedview_modified), this));
         number = namedview->getViewCount();
 
-        ai = SP_ITEM(doc->getRoot())->invoke_show(
+        ai = doc->getRoot()->invoke_show(
                 SP_CANVAS_ARENA (drawing)->arena,
                 dkey,
                 SP_ITEM_SHOW_DISPLAY);

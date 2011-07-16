@@ -1232,7 +1232,7 @@ sp_te_adjust_linespacing_screen (SPItem *text, Inkscape::Text::Layout::iterator 
     gdouble zby = by / (desktop->current_zoom() * (line_count == 0 ? 1 : line_count));
 
     // divide increment by matrix expansion
-    Geom::Affine t (SP_ITEM(text)->i2doc_affine ());
+    Geom::Affine t(text->i2doc_affine());
     zby = zby / t.descrim();
 
     switch (style->line_height.unit) {

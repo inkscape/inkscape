@@ -638,19 +638,19 @@ void SPItem::sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
 
 Inkscape::XML::Node *SPItem::sp_item_write(SPObject *const object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
-    SPObject *child;
     SPItem *item = SP_ITEM(object);
 
     // in the case of SP_OBJECT_WRITE_BUILD, the item should always be newly created,
     // so we need to add any children from the underlying object to the new repr
     if (flags & SP_OBJECT_WRITE_BUILD) {
-        Inkscape::XML::Node *crepr;
-        GSList *l;
-        l = NULL;
-        for (child = object->firstChild(); child != NULL; child = child->next ) {
-            if (!SP_IS_TITLE(child) && !SP_IS_DESC(child)) continue;
-            crepr = child->updateRepr(xml_doc, NULL, flags);
-            if (crepr) l = g_slist_prepend (l, crepr);
+        GSList *l = NULL;
+        for (SPObject *child = object->firstChild(); child != NULL; child = child->next ) {
+            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) {
+                Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
+                if (crepr) {
+                    l = g_slist_prepend (l, crepr);
+                }
+            }
         }
         while (l) {
             repr->addChild((Inkscape::XML::Node *) l->data, NULL);
@@ -658,9 +658,10 @@ Inkscape::XML::Node *SPItem::sp_item_write(SPObject *const object, Inkscape::XML
             l = g_slist_remove (l, l->data);
         }
     } else {
-        for (child = object->firstChild() ; child != NULL; child = child->next ) {
-            if (!SP_IS_TITLE(child) && !SP_IS_DESC(child)) continue;
-            child->updateRepr(flags);
+        for (SPObject *child = object->firstChild() ; child != NULL; child = child->next ) {
+            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) {
+                child->updateRepr(flags);
+            }
         }
     }
 

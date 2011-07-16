@@ -417,7 +417,7 @@ sp_rect_set_visible_rx(SPRect *rect, gdouble rx)
         rect->rx.computed = rx / vector_stretch(
             Geom::Point(rect->x.computed + 1, rect->y.computed),
             Geom::Point(rect->x.computed, rect->y.computed),
-            SP_ITEM(rect)->transform);
+            rect->transform);
         rect->rx._set = true;
     }
     SP_OBJECT(rect)->updateRepr();
@@ -433,7 +433,7 @@ sp_rect_set_visible_ry(SPRect *rect, gdouble ry)
         rect->ry.computed = ry / vector_stretch(
             Geom::Point(rect->x.computed, rect->y.computed + 1),
             Geom::Point(rect->x.computed, rect->y.computed),
-            SP_ITEM(rect)->transform);
+            rect->transform);
         rect->ry._set = true;
     }
     SP_OBJECT(rect)->updateRepr();
@@ -447,7 +447,7 @@ sp_rect_get_visible_rx(SPRect *rect)
     return rect->rx.computed * vector_stretch(
         Geom::Point(rect->x.computed + 1, rect->y.computed),
         Geom::Point(rect->x.computed, rect->y.computed),
-        SP_ITEM(rect)->transform);
+        rect->transform);
 }
 
 gdouble
@@ -458,7 +458,7 @@ sp_rect_get_visible_ry(SPRect *rect)
     return rect->ry.computed * vector_stretch(
         Geom::Point(rect->x.computed, rect->y.computed + 1),
         Geom::Point(rect->x.computed, rect->y.computed),
-        SP_ITEM(rect)->transform);
+        rect->transform);
 }
 
 Geom::Rect
@@ -481,9 +481,9 @@ sp_rect_compensate_rxry(SPRect *rect, Geom::Affine xform)
     Geom::Point cy = c + Geom::Point(0, 1);
 
     // apply previous transform if any
-    c *= SP_ITEM(rect)->transform;
-    cx *= SP_ITEM(rect)->transform;
-    cy *= SP_ITEM(rect)->transform;
+    c *= rect->transform;
+    cx *= rect->transform;
+    cy *= rect->transform;
 
     // find out stretches that we need to compensate
     gdouble eX = vector_stretch(cx, c, xform);
@@ -513,7 +513,7 @@ sp_rect_set_visible_width(SPRect *rect, gdouble width)
     rect->width.computed = width / vector_stretch(
         Geom::Point(rect->x.computed + 1, rect->y.computed),
         Geom::Point(rect->x.computed, rect->y.computed),
-        SP_ITEM(rect)->transform);
+        rect->transform);
     rect->width._set = true;
     SP_OBJECT(rect)->updateRepr();
 }
@@ -524,7 +524,7 @@ sp_rect_set_visible_height(SPRect *rect, gdouble height)
     rect->height.computed = height / vector_stretch(
         Geom::Point(rect->x.computed, rect->y.computed + 1),
         Geom::Point(rect->x.computed, rect->y.computed),
-        SP_ITEM(rect)->transform);
+        rect->transform);
     rect->height._set = true;
     SP_OBJECT(rect)->updateRepr();
 }
@@ -537,7 +537,7 @@ sp_rect_get_visible_width(SPRect *rect)
     return rect->width.computed * vector_stretch(
         Geom::Point(rect->x.computed + 1, rect->y.computed),
         Geom::Point(rect->x.computed, rect->y.computed),
-        SP_ITEM(rect)->transform);
+        rect->transform);
 }
 
 gdouble
@@ -548,7 +548,7 @@ sp_rect_get_visible_height(SPRect *rect)
     return rect->height.computed * vector_stretch(
         Geom::Point(rect->x.computed, rect->y.computed + 1),
         Geom::Point(rect->x.computed, rect->y.computed),
-        SP_ITEM(rect)->transform);
+        rect->transform);
 }
 
 /**
@@ -606,13 +606,13 @@ sp_rect_convert_to_guides(SPItem *item) {
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (!prefs->getBool("/tools/shapes/rect/convertguides", true)) {
-        SP_ITEM(rect)->convert_to_guides();
+        rect->convert_to_guides();
         return;
     }
 
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
-    Geom::Affine const i2d (SP_ITEM(rect)->i2d_affine());
+    Geom::Affine const i2d(rect->i2d_affine());
 
     Geom::Point A1(Geom::Point(rect->x.computed, rect->y.computed) * i2d);
     Geom::Point A2(Geom::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d);

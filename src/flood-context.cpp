@@ -783,8 +783,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
     document->ensureUpToDate();
     
-    SPItem *document_root = SP_ITEM(document->getRoot());
-    Geom::OptRect bbox = document_root->getBounds(Geom::identity());
+    Geom::OptRect bbox = document->getRoot()->getBounds(Geom::identity());
 
     if (!bbox) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Area is not bounded</b>, cannot fill."));
@@ -812,7 +811,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     Geom::Affine affine = scale * Geom::Translate(-origin * scale);
     
     /* Create ArenaItems and set transform */
-    NRArenaItem *root = SP_ITEM(document->getRoot())->invoke_show( arena, dkey, SP_ITEM_SHOW_DISPLAY);
+    NRArenaItem *root = document->getRoot()->invoke_show( arena, dkey, SP_ITEM_SHOW_DISPLAY);
     nr_arena_item_set_transform(NR_ARENA_ITEM(root), affine);
 
     NRGC gc(NULL);
@@ -851,7 +850,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     cairo_surface_destroy(s);
     
     // Hide items
-    SP_ITEM(document->getRoot())->invoke_hide(dkey);
+    document->getRoot()->invoke_hide(dkey);
 
     nr_object_unref((NRObject *) arena);
     

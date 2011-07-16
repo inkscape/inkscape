@@ -18,7 +18,7 @@
 #include "document.h"
 #include "sp-item.h"
 #include "svg-view.h"
-
+#include "sp-root.h"
 
 /**
  * Constructs new SPSVGView object and returns pointer to it.
@@ -41,7 +41,7 @@ SPSVGView::~SPSVGView()
 {
     if (doc() && _drawing)
     {
-        SP_ITEM( doc()->getRoot() )->invoke_hide(_dkey);
+        doc()->getRoot()->invoke_hide(_dkey);
         _drawing = NULL;
     }
 }
@@ -191,7 +191,7 @@ void
 SPSVGView::setDocument (SPDocument *document)
 {
     if (doc()) {
-        SP_ITEM( doc()->getRoot() )->invoke_hide(_dkey);
+        doc()->getRoot()->invoke_hide(_dkey);
     }
 
     if (!_drawing) {
@@ -202,7 +202,7 @@ SPSVGView::setDocument (SPDocument *document)
     View::setDocument (document);
 
     if (document) {
-        NRArenaItem *ai = SP_ITEM( document->getRoot() )->invoke_show(
+        NRArenaItem *ai = document->getRoot()->invoke_show(
                 SP_CANVAS_ARENA (_drawing)->arena,
                 _dkey,
                 SP_ITEM_SHOW_DISPLAY);

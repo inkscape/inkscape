@@ -79,7 +79,7 @@ ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int l
     }
     else {
         // we want to export the entire document from root
-        base = SP_ITEM(doc->getRoot());
+        base = doc->getRoot();
         pageBoundingBox = !exportDrawing;
     }
 

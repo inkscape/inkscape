@@ -125,7 +125,6 @@ void CSwitch::_reevaluate(bool /*add_to_arena*/) {
 
     _releaseLastItem(_cached_item);
 
-    SPItem * child;
     for ( GSList *l = _childList(false, SPObject::ActionShow);
             NULL != l ; l = g_slist_remove (l, l->data))
     {
@@ -134,7 +133,7 @@ void CSwitch::_reevaluate(bool /*add_to_arena*/) {
             continue;
         }
 
-        child = SP_ITEM (o);
+        SPItem * child = SP_ITEM(o);
         child->setEvaluated(o == evaluated_child);
     }
 
@@ -161,16 +160,14 @@ void CSwitch::_releaseLastItem(SPObject *obj)
 void CSwitch::_showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, unsigned int flags) {
     SPObject *evaluated_child = _evaluateFirst();
 
-    NRArenaItem *ac = NULL;
     NRArenaItem *ar = NULL;
-    SPItem * child;
     GSList *l = _childList(false, SPObject::ActionShow);
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM (o)) {
-            child = SP_ITEM (o);
+            SPItem * child = SP_ITEM(o);
             child->setEvaluated(o == evaluated_child);
-            ac = child->invoke_show (arena, key, flags);
+            NRArenaItem *ac = child->invoke_show (arena, key, flags);
             if (ac) {
                 nr_arena_item_add_child (ai, ac, ar);
                 ar = ac;

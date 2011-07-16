@@ -191,14 +191,9 @@ sp_marker_release (SPObject *object)
  *     SP_ATTR_VIEWBOX
  *     SP_ATTR_PRESERVEASPECTRATIO
  */
-static void
-sp_marker_set (SPObject *object, unsigned int key, const gchar *value)
+static void sp_marker_set(SPObject *object, unsigned int key, const gchar *value)
 {
-	SPItem *item;
-	SPMarker *marker;
-
-	item = SP_ITEM (object);
-	marker = SP_MARKER (object);
+	SPMarker *marker = SP_MARKER(object);
 
 	switch (key) {
 	case SP_ATTR_MARKERUNITS:
@@ -339,18 +334,12 @@ sp_marker_set (SPObject *object, unsigned int key, const gchar *value)
  * Updates <marker> when its attributes have changed.  Takes care of setting up
  * transformations and viewBoxes.
  */
-static void
-sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
+static void sp_marker_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-	SPItem *item;
-	SPMarker *marker;
+	SPMarker *marker = SP_MARKER(object);
 	SPItemCtx rctx;
-    Geom::Rect vb;
+        Geom::Rect vb;
 	double x, y, width, height;
-	SPMarkerView *v;
-
-	item = SP_ITEM (object);
-	marker = SP_MARKER (object);
 
 	/* fixme: We have to set up clip here too */
 
@@ -450,19 +439,20 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
             rctx.i2vp = Geom::identity();
 	}
 
-	/* And invoke parent method */
-	if (((SPObjectClass *) (parent_class))->update)
+	// And invoke parent method
+	if (((SPObjectClass *) (parent_class))->update) {
 		((SPObjectClass *) (parent_class))->update (object, (SPCtx *) &rctx, flags);
+        }
 
-	/* As last step set additional transform of arena group */
-	for (v = marker->views; v != NULL; v = v->next) {
-      for (unsigned i = 0 ; i < v->items.size() ; i++) {
+        // As last step set additional transform of arena group
+        for (SPMarkerView *v = marker->views; v != NULL; v = v->next) {
+            for (unsigned i = 0 ; i < v->items.size() ; i++) {
                 if (v->items[i]) {
                     Geom::Affine tmp = marker->c2p;
                     nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->items[i]), &tmp);
                 }
-      }
-	}
+            }
+        }
 }
 
 /**

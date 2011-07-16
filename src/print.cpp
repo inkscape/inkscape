@@ -21,6 +21,7 @@
 #include "extension/print.h"
 #include "extension/system.h"
 #include "print.h"
+#include "sp-root.h"
 
 #include "ui/dialog/print.h"
 
@@ -90,7 +91,7 @@ sp_print_document(Gtk::Window& parentWindow, SPDocument *doc)
     doc->ensureUpToDate();
 
     // Build arena
-    SPItem      *base = SP_ITEM(doc->getRoot());
+    SPItem      *base = doc->getRoot();
     NRArena    *arena = NRArena::create();
     unsigned int dkey = SPItem::display_key_new(1);
     // TODO investigate why we are grabbing root and then ignoring it.
@@ -126,7 +127,7 @@ sp_print_document_to_file(SPDocument *doc, gchar const *filename)
     context.module = mod;
     /* fixme: This has to go into module constructor somehow */
     /* Create new arena */
-    mod->base = SP_ITEM(doc->getRoot());
+    mod->base = doc->getRoot();
     mod->arena = NRArena::create();
     mod->dkey = SPItem::display_key_new(1);
     mod->root = (mod->base)->invoke_show(mod->arena, mod->dkey, SP_ITEM_SHOW_DISPLAY);

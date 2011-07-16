@@ -395,12 +395,8 @@ static void sp_root_remove_child(SPObject *object, Inkscape::XML::Node *child)
 /**
  * This callback routine updates the SPRoot object when its attributes have been changed.
  */
-static void
-sp_root_update(SPObject *object, SPCtx *ctx, guint flags)
+static void sp_root_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    SPItemView *v;
-
-    SPItem *item = SP_ITEM(object);
     SPRoot *root = SP_ROOT(object);
     SPItemCtx *ictx = (SPItemCtx *) ctx;
 
@@ -543,7 +539,7 @@ sp_root_update(SPObject *object, SPCtx *ctx, guint flags)
         ((SPObjectClass *) (parent_class))->update(object, (SPCtx *) &rctx, flags);
 
     /* As last step set additional transform of arena group */
-    for (v = item->display; v != NULL; v = v->next) {
+    for (SPItemView *v = root->display; v != NULL; v = v->next) {
         nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), root->c2p);
     }
 }

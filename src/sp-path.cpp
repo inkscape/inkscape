@@ -169,7 +169,7 @@ sp_path_convert_to_guides(SPItem *item)
 
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
-    Geom::Affine const i2d (SP_ITEM(path)->i2d_affine());
+    Geom::Affine const i2d(path->i2d_affine());
 
     Geom::PathVector const & pv = curve->get_pathvector();
     for(Geom::PathVector::const_iterator pit = pv.begin(); pit != pv.end(); ++pit) {

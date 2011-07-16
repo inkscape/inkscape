@@ -466,8 +466,8 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     nr_arena_set_renderoffscreen(arena);
     unsigned const dkey = SPItem::display_key_new(1);
 
-    /* Create ArenaItems and set transform */
-    ebp.root = SP_ITEM(doc->getRoot())->invoke_show(arena, dkey, SP_ITEM_SHOW_DISPLAY);
+    // Create ArenaItems and set transform
+    ebp.root = doc->getRoot()->invoke_show(arena, dkey, SP_ITEM_SHOW_DISPLAY);
     nr_arena_item_set_transform(NR_ARENA_ITEM(ebp.root), affine);
 
     // We show all and then hide all items we don't want, instead of showing only requested items,
@@ -490,7 +490,7 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     }
 
     // Hide items, this releases arenaitem
-    SP_ITEM(doc->getRoot())->invoke_hide(dkey);
+    doc->getRoot()->invoke_hide(dkey);
 
     /* Free arena */
     nr_object_unref((NRObject *) arena);

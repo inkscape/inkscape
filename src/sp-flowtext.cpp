@@ -554,12 +554,11 @@ void SPFlowtext::_clearFlow(NRArenaGroup *in_arena)
     }
 }
 
-Inkscape::XML::Node *
-SPFlowtext::getAsText()
+Inkscape::XML::Node *SPFlowtext::getAsText()
 {
-    if (!this->layout.outputExists()) return NULL;
-
-    SPItem *item = SP_ITEM(this);
+    if (!this->layout.outputExists()) {
+        return NULL;
+    }
 
     Inkscape::XML::Document *xml_doc = this->document->getReprDoc();
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:text");
@@ -588,7 +587,7 @@ SPFlowtext::getAsText()
             // set x,y attributes only when we need to
             bool set_x = false;
             bool set_y = false;
-            if (!item->transform.isIdentity()) {
+            if (!this->transform.isIdentity()) {
                 set_x = set_y = true;
             } else {
                 Inkscape::Text::Layout::iterator it_chunk_start = it;

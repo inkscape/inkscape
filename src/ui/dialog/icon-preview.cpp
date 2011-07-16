@@ -356,11 +356,10 @@ void IconPreviewPanel::refreshPreview()
                     GSList const *items = sel->itemList();
                     while ( items && !target ) {
                         SPItem* item = SP_ITEM( items->data );
-                        SPObject * obj = item;
-                        gchar const *id = obj->getId();
+                        gchar const *id = item->getId();
                         if ( id ) {
                             targetId = id;
-                            target = obj;
+                            target = item;
                         }
 
                         items = g_slist_next(items);
@@ -447,7 +446,7 @@ void IconPreviewPanel::renderPreview( SPObject* obj )
     /* Create ArenaItem and set transform */
     unsigned int visionkey = SPItem::display_key_new(1);
 
-    root = SP_ITEM( doc->getRoot() )->invoke_show( arena, visionkey, SP_ITEM_SHOW_DISPLAY );
+    root = doc->getRoot()->invoke_show( arena, visionkey, SP_ITEM_SHOW_DISPLAY );
 
     for ( int i = 0; i < numEntries; i++ ) {
         unsigned unused;
@@ -465,7 +464,7 @@ void IconPreviewPanel::renderPreview( SPObject* obj )
     }
     updateMagnify();
 
-    SP_ITEM(doc->getRoot())->invoke_hide(visionkey);
+    doc->getRoot()->invoke_hide(visionkey);
     nr_object_unref((NRObject *) arena);
     renderTimer->stop();
     minDelay = std::max( 0.1, renderTimer->elapsed() * 3.0 );

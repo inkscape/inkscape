@@ -150,7 +150,7 @@ text_put_on_path()
     Inkscape::Text::Layout::Alignment text_alignment = layout->paragraphAlignment(layout->begin());
 
     // remove transform from text, but recursively scale text's fontsize by the expansion
-    SP_TEXT(text)->_adjustFontsizeRecursive (text, SP_ITEM(text)->transform.descrim());
+    SP_TEXT(text)->_adjustFontsizeRecursive (text, text->transform.descrim());
     text->getRepr()->setAttribute("transform", NULL);
 
     // make a list of text children
@@ -316,7 +316,7 @@ text_flow_into_shape()
 
     if (SP_IS_TEXT(text)) {
       // remove transform from text, but recursively scale text's fontsize by the expansion
-      SP_TEXT(text)->_adjustFontsizeRecursive(text, SP_ITEM(text)->transform.descrim());
+      SP_TEXT(text)->_adjustFontsizeRecursive(text, text->transform.descrim());
       text->getRepr()->setAttribute("transform", NULL);
     }
 
@@ -433,7 +433,7 @@ text_unflow ()
         rtext->setAttribute("style", flowtext->getRepr()->attribute("style")); // fixme: transfer style attrs too; and from descendants
 
         Geom::OptRect bbox;
-        SP_ITEM(flowtext)->invoke_bbox(bbox, SP_ITEM(flowtext)->i2doc_affine(), TRUE);
+        flowtext->invoke_bbox(bbox, flowtext->i2doc_affine(), TRUE);
         if (bbox) {
             Geom::Point xy = bbox->min();
             sp_repr_set_svg_double(rtext, "x", xy[Geom::X]);
@@ -454,7 +454,8 @@ text_unflow ()
         SPObject *text_object = doc->getObjectByRepr(rtext);
 
         // restore the font size multiplier from the flowtext's transform
-        SP_TEXT(text_object)->_adjustFontsizeRecursive(SP_ITEM(text_object), ex);
+        SPText *text = SP_TEXT(text_object);
+        text->_adjustFontsizeRecursive(text, ex);
 
         new_objs = g_slist_prepend (new_objs, text_object);
         old_objs = g_slist_prepend (old_objs, flowtext);

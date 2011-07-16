@@ -205,14 +205,16 @@ sp_selected_path_break_apart(SPDesktop *desktop)
 
         SPItem *item = (SPItem *) items->data;
 
-        if (!SP_IS_PATH(item))
+        if (!SP_IS_PATH(item)) {
             continue;
+        }
 
         SPPath *path = SP_PATH(item);
 
-        SPCurve *curve = sp_path_get_curve_for_edit(SP_PATH(path));
-        if (curve == NULL)
+        SPCurve *curve = sp_path_get_curve_for_edit(path);
+        if (curve == NULL) {
             continue;
+        }
 
         did = true;
 
@@ -225,7 +227,7 @@ sp_selected_path_break_apart(SPDesktop *desktop)
         // XML Tree being used directly here while it shouldn't be...
         gchar *path_effect = g_strdup(item->getRepr()->attribute("inkscape:path-effect"));
 
-        Geom::PathVector apv = curve->get_pathvector() * SP_ITEM(path)->transform;
+        Geom::PathVector apv = curve->get_pathvector() * path->transform;
 
         curve->unref();
 

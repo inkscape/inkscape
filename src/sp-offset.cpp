@@ -1026,23 +1026,20 @@ sp_offset_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPOffset *offse
     }
 }
 
-static void
-sp_offset_move_compensate(Geom::Affine const *mp, SPItem */*original*/, SPOffset *self)
+static void sp_offset_move_compensate(Geom::Affine const *mp, SPItem */*original*/, SPOffset *self)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     guint mode = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_PARALLEL);
 
-    SPItem *item = SP_ITEM(self);
-
     Geom::Affine m(*mp);
     if (!(m.isTranslation()) || mode == SP_CLONE_COMPENSATION_NONE) {
         self->sourceDirty=true;
-        item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        self->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         return;
     }
 
     // calculate the compensation matrix and the advertized movement matrix
-    item->readAttr("transform");
+    self->readAttr("transform");
 
     Geom::Affine t = self->transform;
     Geom::Affine offset_move = t.inverse() * m * t;
@@ -1061,9 +1058,9 @@ sp_offset_move_compensate(Geom::Affine const *mp, SPItem */*original*/, SPOffset
     self->sourceDirty=true;
 
     // commit the compensation
-    item->transform *= offset_move;
-    item->doWriteTransform(item->getRepr(), item->transform, &advertized_move);
-    item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    self->transform *= offset_move;
+    self->doWriteTransform(self->getRepr(), self->transform, &advertized_move);
+    self->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 static void

@@ -406,7 +406,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
     if (SP_IS_BOX3D(item) && !is_transform_mode(mode) && !is_color_mode(mode)) {
         // convert 3D boxes to ordinary groups before tweaking their shapes
-        item = SP_ITEM(box3d_convert_to_group(SP_BOX3D(item)));
+        item = box3d_convert_to_group(SP_BOX3D(item));
         selection->add(item);
     }
 

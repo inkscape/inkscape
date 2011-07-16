@@ -70,7 +70,7 @@ latex_render_document_text_to_file( SPDocument *doc, gchar const *filename,
     }
     else {
         // we want to export the entire document from root
-        base = SP_ITEM(doc->getRoot());
+        base = doc->getRoot();
         pageBoundingBox = !exportDrawing;
     }
 
@@ -585,7 +585,7 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
 // The boundingbox calculation here should be exactly the same as the one by CairoRenderer::setupDocument !
 
     if (!base) {
-        base = SP_ITEM(doc->getRoot());
+        base = doc->getRoot();
     }
 
     Geom::OptRect d;

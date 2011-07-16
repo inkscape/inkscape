@@ -132,7 +132,7 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
      Geom::Affine affine = scale * Geom::Translate(-origin * scale);
 
      /* Create ArenaItems and set transform */
-     NRArenaItem *root = SP_ITEM(doc->getRoot())->invoke_show( arena, dkey, SP_ITEM_SHOW_DISPLAY);
+     NRArenaItem *root = doc->getRoot()->invoke_show( arena, dkey, SP_ITEM_SHOW_DISPLAY);
      nr_arena_item_set_transform(NR_ARENA_ITEM(root), affine);
 
      NRGC gc(NULL);
@@ -179,7 +179,7 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
         g_warning("sp_generate_internal_bitmap: not enough memory to create pixel buffer. Need %lld.", size);
         cairo_surface_destroy(surface);
     }
-     SP_ITEM(doc->getRoot())->invoke_hide(dkey);
+     doc->getRoot()->invoke_hide(dkey);
      nr_object_unref((NRObject *) arena);
 
 //    gdk_pixbuf_save (pixbuf, "C:\\temp\\internal.jpg", "jpeg", NULL, "quality","100", NULL);

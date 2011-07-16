@@ -141,12 +141,11 @@ sp_conn_get_route_and_redraw(SPPath *const path,
         return;
     }
 
-    SPItem *h2attItem[2];
+    SPItem *h2attItem[2] = {0};
     path->connEndPair.getAttachedItems(h2attItem);
 
-    SPItem const *const path_item = SP_ITEM(path);
-    SPObject const *const ancestor = get_nearest_common_ancestor(path_item, h2attItem);
-    Geom::Affine const path2anc(i2anc_affine(path_item, ancestor));
+    SPObject const *const ancestor = get_nearest_common_ancestor(path, h2attItem);
+    Geom::Affine const path2anc(i2anc_affine(path, ancestor));
 
     // Set sensible values incase there the connector ends are not
     // attached to any shapes.

@@ -1593,8 +1593,8 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
     if (tc->text) {
         Geom::Point p0, p1;
         sp_te_get_cursor_coords(tc->text, tc->text_sel_end, p0, p1);
-        Geom::Point const d0 = p0 * SP_ITEM(tc->text)->i2d_affine();
-        Geom::Point const d1 = p1 * SP_ITEM(tc->text)->i2d_affine();
+        Geom::Point const d0 = p0 * tc->text->i2d_affine();
+        Geom::Point const d1 = p1 * tc->text->i2d_affine();
 
         // scroll to show cursor
         if (scroll_to_see) {

@@ -169,17 +169,15 @@ sp_group_dispose(GObject *object)
     delete SP_GROUP(object)->group;
 }
 
-static void
-sp_group_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
+static void sp_group_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
-    SPItem *item;
+    SPGroup *group = SP_GROUP(object);
 
-    item = SP_ITEM (object);
-
-    if (((SPObjectClass *) (parent_class))->child_added)
+    if (((SPObjectClass *) (parent_class))->child_added) {
         (* ((SPObjectClass *) (parent_class))->child_added) (object, child, ref);
+    }
 
-    SP_GROUP(object)->group->onChildAdded(child);
+    group->group->onChildAdded(child);
 }
 
 /* fixme: hide (Lauris) */
@@ -347,7 +345,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
     SPRoot *root = doc->getRoot();
     SPObject *defs = root->defs;
 
-    SPItem *gitem = SP_ITEM (group);
+    SPItem *gitem = group;
     Inkscape::XML::Node *grepr = gitem->getRepr();
 
     g_return_if_fail (!strcmp (grepr->name(), "svg:g") || !strcmp (grepr->name(), "svg:a") || !strcmp (grepr->name(), "svg:switch"));
@@ -360,7 +358,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 
 	if (SP_IS_BOX3D(gitem)) {
 		group = box3d_convert_to_group(SP_BOX3D(gitem));
-		gitem = SP_ITEM(group);
+		gitem = group;
 	}
 
 	sp_lpe_item_remove_all_path_effects(SP_LPE_ITEM(group), false);

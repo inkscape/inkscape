@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_LATTICE_CPP
 /** \file
  * LPE <lattice> implementation
  
@@ -283,7 +282,7 @@ LPELattice::addHelperPathsImpl(SPLPEItem *lpeitem, SPDesktop *desktop)
     c->lineto(grid_point3);
 
     // TODO: factor this out (and remove the #include of desktop.h above)
-    SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, c, SP_ITEM(lpeitem), 0x009000ff);
+    SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, c, lpeitem, 0x009000ff);
     Inkscape::Display::TemporaryItem* tmpitem = desktop->add_temporary_canvasitem (canvasitem, 0);
     lpeitem->lpe_helperpaths.push_back(tmpitem);
 

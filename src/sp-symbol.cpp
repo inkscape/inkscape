@@ -4,6 +4,7 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1999-2003 Lauris Kaplinski
  *
@@ -63,16 +64,10 @@ sp_symbol_get_type (void)
     return type;
 }
 
-static void
-sp_symbol_class_init (SPSymbolClass *klass)
+static void sp_symbol_class_init(SPSymbolClass *klass)
 {
-    GObjectClass *object_class;
-    SPObjectClass *sp_object_class;
-    SPItemClass *sp_item_class;
-
-    object_class = G_OBJECT_CLASS (klass);
-    sp_object_class = (SPObjectClass *) klass;
-    sp_item_class = (SPItemClass *) klass;
+    SPObjectClass *sp_object_class = (SPObjectClass *) klass;
+    SPItemClass *sp_item_class = (SPItemClass *) klass;
 
     parent_class = (SPGroupClass *)g_type_class_ref (SP_TYPE_GROUP);
 
@@ -90,49 +85,33 @@ sp_symbol_class_init (SPSymbolClass *klass)
     sp_item_class->print = sp_symbol_print;
 }
 
-static void
-sp_symbol_init (SPSymbol *symbol)
+static void sp_symbol_init(SPSymbol *symbol)
 {
     symbol->viewBox_set = FALSE;
 
     symbol->c2p = Geom::identity();
 }
 
-static void
-sp_symbol_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void sp_symbol_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    SPGroup *group;
-    SPSymbol *symbol;
-
-    group = (SPGroup *) object;
-    symbol = (SPSymbol *) object;
-
     object->readAttr( "viewBox" );
     object->readAttr( "preserveAspectRatio" );
 
-    if (((SPObjectClass *) parent_class)->build)
+    if (((SPObjectClass *) parent_class)->build) {
         ((SPObjectClass *) parent_class)->build (object, document, repr);
+    }
 }
 
-static void
-sp_symbol_release (SPObject *object)
+static void sp_symbol_release(SPObject *object)
 {
-    SPSymbol * symbol;
-
-    symbol = (SPSymbol *) object;
-
-    if (((SPObjectClass *) parent_class)->release)
+    if (((SPObjectClass *) parent_class)->release) {
         ((SPObjectClass *) parent_class)->release (object);
+    }
 }
 
-static void
-sp_symbol_set (SPObject *object, unsigned int key, const gchar *value)
+static void sp_symbol_set(SPObject *object, unsigned int key, const gchar *value)
 {
-    SPItem *item;
-    SPSymbol *symbol;
-
-    item = SP_ITEM (object);
-    symbol = SP_SYMBOL (object);
+    SPSymbol *symbol = SP_SYMBOL(object);
 
     switch (key) {
     case SP_ATTR_VIEWBOX:
@@ -232,30 +211,18 @@ sp_symbol_set (SPObject *object, unsigned int key, const gchar *value)
     }
 }
 
-static void
-sp_symbol_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
+static void sp_symbol_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
-    SPSymbol *symbol;
-    SPGroup *group;
-
-    symbol = (SPSymbol *) object;
-    group = (SPGroup *) object;
-
-    if (((SPObjectClass *) (parent_class))->child_added)
+    if (((SPObjectClass *) (parent_class))->child_added) {
         ((SPObjectClass *) (parent_class))->child_added (object, child, ref);
+    }
 }
 
-static void
-sp_symbol_update (SPObject *object, SPCtx *ctx, guint flags)
+static void sp_symbol_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    SPItem *item;
-    SPSymbol *symbol;
-    SPItemCtx *ictx, rctx;
-    SPItemView *v;
-
-    item = SP_ITEM (object);
-    symbol = SP_SYMBOL (object);
-    ictx = (SPItemCtx *) ctx;
+    SPSymbol *symbol = SP_SYMBOL(object);
+    SPItemCtx *ictx = (SPItemCtx *) ctx;
+    SPItemCtx rctx;
 
     if (object->cloned) {
         /* Cloned <symbol> is actually renderable */
@@ -353,38 +320,35 @@ sp_symbol_update (SPObject *object, SPCtx *ctx, guint flags)
             rctx.i2vp = Geom::identity();
         }
 
-        /* And invoke parent method */
-        if (((SPObjectClass *) (parent_class))->update)
+        // And invoke parent method
+        if (((SPObjectClass *) (parent_class))->update) {
             ((SPObjectClass *) (parent_class))->update (object, (SPCtx *) &rctx, flags);
+	}
 
-        /* As last step set additional transform of arena group */
-        for (v = item->display; v != NULL; v = v->next) {
+        // As last step set additional transform of arena group
+        for (SPItemView *v = symbol->display; v != NULL; v = v->next) {
             nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), symbol->c2p);
         }
     } else {
-        /* No-op */
-        if (((SPObjectClass *) (parent_class))->update)
+        // No-op
+        if (((SPObjectClass *) (parent_class))->update) {
             ((SPObjectClass *) (parent_class))->update (object, ctx, flags);
+	}
     }
 }
 
-static void
-sp_symbol_modified (SPObject *object, guint flags)
+static void sp_symbol_modified(SPObject *object, guint flags)
 {
-    SPSymbol *symbol;
+    SP_SYMBOL(object);
 
-    symbol = SP_SYMBOL (object);
-
-    if (((SPObjectClass *) (parent_class))->modified)
+    if (((SPObjectClass *) (parent_class))->modified) {
         (* ((SPObjectClass *) (parent_class))->modified) (object, flags);
+    }
 }
 
-static Inkscape::XML::Node *
-sp_symbol_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *sp_symbol_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
-    SPSymbol *symbol;
-
-    symbol = SP_SYMBOL (object);
+    SP_SYMBOL(object);
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:symbol");
@@ -403,52 +367,42 @@ sp_symbol_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::X
     return repr;
 }
 
-static NRArenaItem *
-sp_symbol_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags)
+static NRArenaItem *sp_symbol_show(SPItem *item, NRArena *arena, unsigned int key, unsigned int flags)
 {
-    SPSymbol *symbol;
-    NRArenaItem *ai;
-
-    symbol = SP_SYMBOL (item);
+    SPSymbol *symbol = SP_SYMBOL(item);
+    NRArenaItem *ai = 0;
 
     if (symbol->cloned) {
-        /* Cloned <symbol> is actually renderable */
+        // Cloned <symbol> is actually renderable
         if (((SPItemClass *) (parent_class))->show) {
             ai = ((SPItemClass *) (parent_class))->show (item, arena, key, flags);
             if (ai) {
                 nr_arena_group_set_child_transform(NR_ARENA_GROUP(ai), symbol->c2p);
             }
-        } else {
-            ai = NULL;
         }
-    } else {
-        ai = NULL;
     }
 
     return ai;
 }
 
-static void
-sp_symbol_hide (SPItem *item, unsigned int key)
+static void sp_symbol_hide(SPItem *item, unsigned int key)
 {
-    SPSymbol *symbol;
-
-    symbol = SP_SYMBOL (item);
+    SPSymbol *symbol = SP_SYMBOL(item);
 
     if (symbol->cloned) {
         /* Cloned <symbol> is actually renderable */
-        if (((SPItemClass *) (parent_class))->hide)
+        if (((SPItemClass *) (parent_class))->hide) {
             ((SPItemClass *) (parent_class))->hide (item, key);
+	}
     }
 }
 
-static void
-sp_symbol_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags)
+static void sp_symbol_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags)
 {
     SPSymbol const *symbol = SP_SYMBOL(item);
 
     if (symbol->cloned) {
-        /* Cloned <symbol> is actually renderable */
+        // Cloned <symbol> is actually renderable
 
         if (((SPItemClass *) (parent_class))->bbox) {
             Geom::Affine const a( symbol->c2p * transform );
@@ -457,12 +411,11 @@ sp_symbol_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, 
     }
 }
 
-static void
-sp_symbol_print (SPItem *item, SPPrintContext *ctx)
+static void sp_symbol_print(SPItem *item, SPPrintContext *ctx)
 {
     SPSymbol *symbol = SP_SYMBOL(item);
     if (symbol->cloned) {
-        /* Cloned <symbol> is actually renderable */
+        // Cloned <symbol> is actually renderable
 
         sp_print_bind(ctx, &symbol->c2p, 1.0);
 
