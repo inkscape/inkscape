@@ -4,7 +4,8 @@
 #include <cmath>
 
 #include "libnr/in-svg-plane.h"
-#include "2geom/isnan.h"
+#include <2geom/math-utils.h>
+#include <2geom/point.h>
 
 class InSvgPlaneTest : public CxxTest::TestSuite
 {
@@ -38,14 +39,14 @@ public:
     }
 
     bool setupValid;
-    NR::Point const p3n4;
-    NR::Point const p0;
+    Geom::Point const p3n4;
+    Geom::Point const p0;
     double const small;
     double const inf;
     double const nan;
-    NR::Point const small_left;
-    NR::Point const small_n3_4;
-    NR::Point const part_nan;
+    Geom::Point const small_left;
+    Geom::Point const small_n3_4;
+    Geom::Point const part_nan;
 
 
     void testInSvgPlane(void)
@@ -55,13 +56,13 @@ public:
         TS_ASSERT( in_svg_plane(small_left) );
         TS_ASSERT( in_svg_plane(small_n3_4) );
         TS_ASSERT_DIFFERS( nan, nan );
-        TS_ASSERT( !in_svg_plane(NR::Point(nan, 3.)) );
-        TS_ASSERT( !in_svg_plane(NR::Point(inf, nan)) );
-        TS_ASSERT( !in_svg_plane(NR::Point(0., -inf)) );
+        TS_ASSERT( !in_svg_plane(Geom::Point(nan, 3.)) );
+        TS_ASSERT( !in_svg_plane(Geom::Point(inf, nan)) );
+        TS_ASSERT( !in_svg_plane(Geom::Point(0., -inf)) );
         double const xs[] = {inf, -inf, nan, 1., -2., small, -small};
         for (unsigned i = 0; i < G_N_ELEMENTS(xs); ++i) {
             for (unsigned j = 0; j < G_N_ELEMENTS(xs); ++j) {
-                TS_ASSERT_EQUALS( in_svg_plane(NR::Point(xs[i], xs[j])),
+                TS_ASSERT_EQUALS( in_svg_plane(Geom::Point(xs[i], xs[j])),
                                   (fabs(xs[i]) < inf &&
                                    fabs(xs[j]) < inf   ) );
             }

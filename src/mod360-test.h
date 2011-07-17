@@ -3,9 +3,7 @@
 #define SEEN_MOD_360_TEST_H
 
 #include <cxxtest/TestSuite.h>
-
-#include "2geom/isnan.h"
-
+#include <2geom/math-utils.h>
 #include "mod360.h"
 
 

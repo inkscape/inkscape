@@ -20,6 +20,4 @@ ink_common_sources +=	\
 # ### CxxTest stuff ####
 # ######################
 CXXTEST_TESTSUITES += \
-	$(srcdir)/libnr/in-svg-plane-test.h	\
-	$(srcdir)/libnr/nr-point-fns-test.h	\
-	$(srcdir)/libnr/nr-types-test.h
+	$(srcdir)/libnr/in-svg-plane-test.h
