@@ -147,7 +147,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                             item->i2doc_affine() * additional_affine * _snapmanager->getDesktop()->doc2dt(),
                             true);
                     } else {
-                        item->invoke_bbox( bbox_of_item, item->i2d_affine(), true);
+                        item->invoke_bbox( bbox_of_item, item->i2dt_affine(), true);
                     }
                     if (bbox_of_item) {
                         // See if the item is within range
@@ -406,7 +406,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
                             Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) root_item);
                             if (layout != NULL && layout->outputExists()) {
                                 Geom::PathVector *pv = new Geom::PathVector();
-                                pv->push_back(layout->baseline() * root_item->i2d_affine() * (*i).additional_affine * _snapmanager->getDesktop()->doc2dt());
+                                pv->push_back(layout->baseline() * root_item->i2dt_affine() * (*i).additional_affine * _snapmanager->getDesktop()->doc2dt());
                                 _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(pv, SNAPTARGET_TEXT_BASELINE, Geom::OptRect()));
                             }
                         }
@@ -432,7 +432,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
                                 // Geom::PathVector *pv = pathvector_for_curve(root_item, curve, true, true, Geom::identity(), (*i).additional_affine);
 
                                 Geom::PathVector *pv = new Geom::PathVector(curve->get_pathvector());
-                                (*pv) *= root_item->i2d_affine() * (*i).additional_affine * _snapmanager->getDesktop()->doc2dt(); // (_edit_transform * _i2d_transform);
+                                (*pv) *= root_item->i2dt_affine() * (*i).additional_affine * _snapmanager->getDesktop()->doc2dt(); // (_edit_transform * _i2d_transform);
 
                                 _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(pv, SNAPTARGET_PATH, Geom::OptRect())); // Perhaps for speed, get a reference to the Geom::pathvector, and store the transformation besides it.
                                 curve->unref();

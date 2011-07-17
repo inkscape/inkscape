@@ -445,7 +445,7 @@ static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
         Geom::Point c = r.midpoint();
         if (!ctrl_save) {
             if (fabs(dir[Geom::X]) > 1E-6 && fabs(dir[Geom::Y]) > 1E-6) {
-                Geom::Affine const i2d ((ac->item)->i2d_affine ());
+                Geom::Affine const i2d ( (ac->item)->i2dt_affine() );
                 Geom::Point new_dir = pt * i2d - c;
                 new_dir[Geom::X] *= dir[Geom::Y] / dir[Geom::X];
                 double lambda = new_dir.length() / dir[Geom::Y];

@@ -450,7 +450,7 @@ static void sp_text_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
         if (layout != NULL && layout->outputExists()) {
             boost::optional<Geom::Point> pt = layout->baselineAnchorPoint();
             if (pt) {
-                p.push_back(Inkscape::SnapCandidatePoint((*pt) * item->i2d_affine(), Inkscape::SNAPSOURCE_TEXT_ANCHOR, Inkscape::SNAPTARGET_TEXT_ANCHOR));
+                p.push_back(Inkscape::SnapCandidatePoint((*pt) * item->i2dt_affine(), Inkscape::SNAPSOURCE_TEXT_ANCHOR, Inkscape::SNAPTARGET_TEXT_ANCHOR));
             }
         }
     }
@@ -517,7 +517,7 @@ sp_text_print (SPItem *item, SPPrintContext *ctx)
     dbox.y0 = 0.0;
     dbox.x1 = item->document->getWidth();
     dbox.y1 = item->document->getHeight();
-    Geom::Affine const ctm (item->i2d_affine());
+    Geom::Affine const ctm (item->i2dt_affine());
 
     group->layout.print(ctx,&pbox,&dbox,&bbox,ctm);
 }

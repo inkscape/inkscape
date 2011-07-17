@@ -34,7 +34,7 @@ unclump_center (SPItem *item)
         return i->second;
     }
 
-    Geom::OptRect r = item->getBounds(item->i2d_affine());
+    Geom::OptRect r = item->getBounds(item->i2dt_affine());
     if (r) {
         Geom::Point const c = r->midpoint();
         c_cache[item->getId()] = c;
@@ -53,7 +53,7 @@ unclump_wh (SPItem *item)
     if ( i != wh_cache.end() ) {
         wh = i->second;
     } else {
-        Geom::OptRect r = item->getBounds(item->i2d_affine());
+        Geom::OptRect r = item->getBounds(item->i2dt_affine());
         if (r) {
             wh = r->dimensions();
             wh_cache[item->getId()] = wh;
@@ -297,7 +297,7 @@ unclump_push (SPItem *from, SPItem *what, double dist)
 
     //g_print ("push %s at %g,%g from %g,%g by %g,%g, dist %g\n", what->getId(), it[Geom::X],it[Geom::Y], p[Geom::X],p[Geom::Y], by[Geom::X],by[Geom::Y], dist);
 
-    what->set_i2d_affine(what->i2d_affine() * move);
+    what->set_i2d_affine(what->i2dt_affine() * move);
     what->doWriteTransform(what->getRepr(), what->transform, NULL);
 }
 
@@ -320,7 +320,7 @@ unclump_pull (SPItem *to, SPItem *what, double dist)
 
     //g_print ("pull %s at %g,%g to %g,%g by %g,%g, dist %g\n", what->getId(), it[Geom::X],it[Geom::Y], p[Geom::X],p[Geom::Y], by[Geom::X],by[Geom::Y], dist);
 
-    what->set_i2d_affine(what->i2d_affine() * move);
+    what->set_i2d_affine(what->i2dt_affine() * move);
     what->doWriteTransform(what->getRepr(), what->transform, NULL);
 }
 

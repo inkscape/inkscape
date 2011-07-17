@@ -439,7 +439,7 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
         /* Curve list */
         /* We keep it in desktop coordinates to eliminate calculation errors */
         SPCurve *norm = sp_path_get_curve_for_edit (SP_PATH(item));
-        norm->transform((dc->white_item)->i2d_affine());
+        norm->transform((dc->white_item)->i2dt_affine());
         g_return_if_fail( norm != NULL );
         dc->white_curves = g_slist_reverse(norm->split());
         norm->unref();
@@ -821,7 +821,7 @@ void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char cons
        current stroke width, multiplied by the amount specified in the preferences */
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    Geom::Affine const i2d (item->i2d_affine ());
+    Geom::Affine const i2d (item->i2dt_affine ());
     Geom::Point pp = pt;
     double rad = 0.5 * prefs->getDouble(tool_path + "/dot-size", 3.0);
     if (event_state & GDK_MOD1_MASK) {

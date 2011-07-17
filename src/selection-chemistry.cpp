@@ -1399,7 +1399,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
             item->readAttr( "transform" );
 
             // calculate the matrix we need to apply to the clone to cancel its induced transform from its original
-            Geom::Affine parent2dt = SP_ITEM(item->parent)->i2d_affine();
+            Geom::Affine parent2dt = SP_ITEM(item->parent)->i2dt_affine();
             Geom::Affine t = parent2dt * affine * parent2dt.inverse();
             Geom::Affine t_inv = t.inverse();
             Geom::Affine result = t_inv * item->transform * t;
@@ -1442,7 +1442,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine cons
 
         } else {
             if (set_i2d) {
-                item->set_i2d_affine(item->i2d_affine() * (Geom::Affine)affine);
+                item->set_i2d_affine(item->i2dt_affine() * (Geom::Affine)affine);
             }
             item->doWriteTransform(item->getRepr(), item->transform, NULL, compensate);
         }
@@ -2248,8 +2248,8 @@ sp_select_clone_original(SPDesktop *desktop)
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         bool highlight = prefs->getBool("/options/highlightoriginal/value");
         if (highlight) {
-            Geom::OptRect a = item->getBounds(item->i2d_affine());
-            Geom::OptRect b = original->getBounds(original->i2d_affine());
+            Geom::OptRect a = item->getBounds(item->i2dt_affine());
+            Geom::OptRect b = original->getBounds(original->i2dt_affine());
             if ( a && b ) {
                 // draw a flashing line between the objects
                 SPCurve *curve = new SPCurve();
@@ -2766,7 +2766,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
     }
 
     // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
-    Geom::Affine eek(SP_ITEM(parent_object)->i2d_affine());
+    Geom::Affine eek(SP_ITEM(parent_object)->i2dt_affine());
     Geom::Affine t;
 
     double shift_x = bbox->min()[Geom::X];
@@ -2775,7 +2775,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
         shift_x = round(shift_x);
         shift_y = -round(-shift_y); // this gets correct rounding despite coordinate inversion, remove the negations when the inversion is gone
     }
-    t = Geom::Scale(1, -1) * Geom::Translate(shift_x, shift_y) * eek.inverse();
+    t = Geom::Scale(1, -1) * Geom::Translate(shift_x, shift_y) * eek.inverse();  /// @fixme hardcoded doc2dt transform?
 
     // Do the export
     sp_export_png_file(document, filepath,
@@ -3231,7 +3231,7 @@ fit_canvas_to_drawing(SPDocument *doc, bool with_margins)
 
     doc->ensureUpToDate();
     SPItem const *const root = doc->getRoot();
-    Geom::OptRect const bbox(root->getBounds(root->i2d_affine(), SPItem::RENDERING_BBOX));
+    Geom::OptRect const bbox(root->getBounds(root->i2dt_affine(), SPItem::RENDERING_BBOX));
     if (bbox) {
         doc->fitToRect(*bbox, with_margins);
         return true;

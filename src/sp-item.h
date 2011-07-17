@@ -201,7 +201,7 @@ public:
     void getBboxDesktop(NRRect *bbox, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
     Geom::OptRect getBboxDesktop(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
     Geom::Affine i2doc_affine() const;
-    Geom::Affine i2d_affine() const;
+    Geom::Affine i2dt_affine() const;
     void set_i2d_affine(Geom::Affine const &transform);
     Geom::Affine dt2i_affine() const;
     void convert_to_guides();

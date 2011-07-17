@@ -562,8 +562,8 @@ static void sp_star_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
     }
 
     if (snapprefs->getSnapObjectMidpoints()) {
-        Geom::Affine const i2d (item->i2d_affine ());
-        p.push_back(Inkscape::SnapCandidatePoint(SP_STAR(item)->center * i2d,Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
+        Geom::Affine const i2dt (item->i2dt_affine ());
+        p.push_back(Inkscape::SnapCandidatePoint(SP_STAR(item)->center * i2dt,Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
     }
 }
 

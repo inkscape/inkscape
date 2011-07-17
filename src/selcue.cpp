@@ -191,7 +191,7 @@ void Inkscape::SelCue::_newTextBaselines()
                         NULL);
 
                     sp_canvas_item_show(baseline_point);
-                    SP_CTRL(baseline_point)->moveto((*pt) * item->i2d_affine());
+                    SP_CTRL(baseline_point)->moveto((*pt) * item->i2dt_affine());
                     sp_canvas_item_move_to_z(baseline_point, 0);
                 }
             }

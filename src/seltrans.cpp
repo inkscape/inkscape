@@ -267,7 +267,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
         SPItem *it = reinterpret_cast<SPItem*>(sp_object_ref(SP_ITEM(l->data), NULL));
         _items.push_back(it);
         _items_const.push_back(it);
-        _items_affines.push_back(it->i2d_affine());
+        _items_affines.push_back(it->i2dt_affine());
         _items_centers.push_back(it->getCenter()); // for content-dragging, we need to remember original centers
     }
 
@@ -586,7 +586,7 @@ void Inkscape::SelTrans::stamp()
 
             Geom::Affine const *new_affine;
             if (_show == SHOW_OUTLINE) {
-                Geom::Affine const i2d(original_item->i2d_affine());
+                Geom::Affine const i2d(original_item->i2dt_affine());
                 Geom::Affine const i2dnew( i2d * _current_relative_affine );
                 copy_item->set_i2d_affine(i2dnew);
                 new_affine = &copy_item->transform;

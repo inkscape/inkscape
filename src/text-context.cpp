@@ -1593,8 +1593,8 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
     if (tc->text) {
         Geom::Point p0, p1;
         sp_te_get_cursor_coords(tc->text, tc->text_sel_end, p0, p1);
-        Geom::Point const d0 = p0 * tc->text->i2d_affine();
-        Geom::Point const d1 = p1 * tc->text->i2d_affine();
+        Geom::Point const d0 = p0 * tc->text->i2dt_affine();
+        Geom::Point const d1 = p1 * tc->text->i2dt_affine();
 
         // scroll to show cursor
         if (scroll_to_see) {
@@ -1675,7 +1675,7 @@ static void sp_text_context_update_text_selection(SPTextContext *tc)
 
     std::vector<Geom::Point> quads;
     if (tc->text != NULL)
-        quads = sp_te_create_selection_quads(tc->text, tc->text_sel_start, tc->text_sel_end, (tc->text)->i2d_affine());
+        quads = sp_te_create_selection_quads(tc->text, tc->text_sel_start, tc->text_sel_end, (tc->text)->i2dt_affine());
     for (unsigned i = 0 ; i < quads.size() ; i += 4) {
         SPCanvasItem *quad_canvasitem;
         quad_canvasitem = sp_canvas_item_new(sp_desktop_controls(tc->desktop), SP_TYPE_CTRLQUADR, NULL);

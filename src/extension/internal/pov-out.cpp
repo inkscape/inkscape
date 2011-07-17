@@ -301,7 +301,7 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
     povShapes.push_back(shapeInfo); //passed all tests.  save the info
 
     // convert the path to only lineto's and cubic curveto's:
-    Geom::Affine tf = item->i2d_affine();
+    Geom::Affine tf = item->i2dt_affine();
     Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
 
     /*

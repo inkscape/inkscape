@@ -41,7 +41,7 @@ void sp_item_notify_moveto(SPItem &item, SPGuide const &mv_g, int const snappoin
        s = (position - pos0) / dot(dir, dir). */
     Geom::Translate const tr( ( position - pos0 )
                             * ( dir / dir_lensq ) );
-    item.set_i2d_affine(item.i2d_affine() * tr);
+    item.set_i2d_affine(item.i2dt_affine() * tr);
     /// \todo Reget snappoints, check satisfied.
 
     if (commit) {

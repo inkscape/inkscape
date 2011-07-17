@@ -1816,8 +1816,7 @@ Geom::Affine SPDesktop::doc2dt() const
 
 Geom::Affine SPDesktop::dt2doc() const
 {
-    // doc2dt is its own inverse
-    return _doc2dt;
+    return _doc2dt.inverse();
 }
 
 Geom::Point SPDesktop::doc2dt(Geom::Point const &p) const

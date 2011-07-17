@@ -485,7 +485,7 @@ gint ink_node_tool_root_handler(SPEventContext *event_context, GdkEvent *event)
             nt->flashed_item = over_item;
             SPCurve *c = SP_SHAPE(over_item)->getCurveBeforeLPE();
             if (!c) break; // break out when curve doesn't exist
-            c->transform(over_item->i2d_affine());
+            c->transform(over_item->i2dt_affine());
             SPCanvasItem *flash = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), c);
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(flash),
                 prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff), 1.0,

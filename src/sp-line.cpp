@@ -179,10 +179,10 @@ void SPLine::convertToGuides(SPItem *item)
     SPLine *line = SP_LINE(item);
     Geom::Point points[2];
 
-    Geom::Affine const i2d(item->i2d_affine());
+    Geom::Affine const i2dt(item->i2dt_affine());
 
-    points[0] = Geom::Point(line->x1.computed, line->y1.computed)*i2d;
-    points[1] = Geom::Point(line->x2.computed, line->y2.computed)*i2d;
+    points[0] = Geom::Point(line->x1.computed, line->y1.computed)*i2dt;
+    points[1] = Geom::Point(line->x2.computed, line->y2.computed)*i2dt;
 
     SPGuide::createSPGuide(inkscape_active_desktop(), points[0], points[1]);
 }

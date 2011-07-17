@@ -534,9 +534,9 @@ static void sp_spiral_snappoints(SPItem const *item, std::vector<Inkscape::SnapC
     }
 
     if (snapprefs->getSnapObjectMidpoints()) {
-        Geom::Affine const i2d (item->i2d_affine ());
+        Geom::Affine const i2dt (item->i2dt_affine ());
         SPSpiral *spiral = SP_SPIRAL(item);
-        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(spiral->cx, spiral->cy) * i2d, Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
+        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(spiral->cx, spiral->cy) * i2dt, Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
         // This point is the start-point of the spiral, which is also returned when _snap_to_itemnode has been set
         // in the object snapper. In that case we will get a duplicate!
     }

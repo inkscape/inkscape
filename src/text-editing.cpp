@@ -87,7 +87,7 @@ bool sp_te_input_is_empty(SPObject const *item)
 Inkscape::Text::Layout::iterator
 sp_te_get_position_by_coords (SPItem const *item, Geom::Point const &i_p)
 {
-    Geom::Affine im (item->i2d_affine ());
+    Geom::Affine im (item->i2dt_affine ());
     im = im.inverse();
 
     Geom::Point p = i_p * im;

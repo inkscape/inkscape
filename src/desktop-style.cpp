@@ -420,7 +420,7 @@ stroke_average_width (GSList const *objects)
         if (!SP_IS_ITEM (l->data))
             continue;
 
-        Geom::Affine i2d = SP_ITEM(l->data)->i2d_affine();
+        Geom::Affine i2dt = SP_ITEM(l->data)->i2dt_affine();
 
         SPObject *object = SP_OBJECT(l->data);
 
@@ -431,7 +431,7 @@ stroke_average_width (GSList const *objects)
             notstroked = false;
         }
 
-        avgwidth += object->style->stroke_width.computed * i2d.descrim();
+        avgwidth += object->style->stroke_width.computed * i2dt.descrim();
     }
 
     if (notstroked)
@@ -725,7 +725,7 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
 
         noneSet &= style->stroke.isNone();
 
-        Geom::Affine i2d = SP_ITEM(obj)->i2d_affine();
+        Geom::Affine i2d = SP_ITEM(obj)->i2dt_affine();
         double sw = style->stroke_width.computed * i2d.descrim();
 
         if (prev_sw != -1 && fabs(sw - prev_sw) > 1e-3)
@@ -961,7 +961,7 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
         }
 
         texts ++;
-        size += style->font_size.computed * Geom::Affine(SP_ITEM(obj)->i2d_affine()).descrim(); /// \todo FIXME: we assume non-% units here
+        size += style->font_size.computed * Geom::Affine(SP_ITEM(obj)->i2dt_affine()).descrim(); /// \todo FIXME: we assume non-% units here
 
         if (style->letter_spacing.normal) {
             if (!different && (letterspacing_prev == 0 || letterspacing_prev == letterspacing)) {
@@ -1428,7 +1428,7 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
             continue;
         }
 
-        Geom::Affine i2d = SP_ITEM(obj)->i2d_affine();
+        Geom::Affine i2d = SP_ITEM(obj)->i2dt_affine();
 
         items ++;
 

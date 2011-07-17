@@ -25,7 +25,7 @@ sp_item_rotate_rel(SPItem *item, Geom::Rotate const &rotation)
     Geom::Affine affine = Geom::Affine(s).inverse() * Geom::Affine(rotation) * Geom::Affine(s);
 
     // Rotate item.
-    item->set_i2d_affine(item->i2d_affine() * (Geom::Affine)affine);
+    item->set_i2d_affine(item->i2dt_affine() * (Geom::Affine)affine);
     // Use each item's own transform writer, consistent with sp_selection_apply_affine()
     item->doWriteTransform(item->getRepr(), item->transform);
 
@@ -42,7 +42,7 @@ sp_item_scale_rel (SPItem *item, Geom::Scale const &scale)
     Geom::OptRect bbox = item->getBboxDesktop();
     if (bbox) {
         Geom::Translate const s(bbox->midpoint()); // use getCenter?
-        item->set_i2d_affine(item->i2d_affine() * s.inverse() * scale * s);
+        item->set_i2d_affine(item->i2dt_affine() * s.inverse() * scale * s);
         item->doWriteTransform(item->getRepr(), item->transform);
     }
 }
@@ -56,7 +56,7 @@ sp_item_skew_rel (SPItem *item, double skewX, double skewY)
     Geom::Affine const skew(1, skewY, skewX, 1, 0, 0);
     Geom::Affine affine = Geom::Affine(s).inverse() * skew * Geom::Affine(s);
 
-    item->set_i2d_affine(item->i2d_affine() * affine);
+    item->set_i2d_affine(item->i2dt_affine() * affine);
     item->doWriteTransform(item->getRepr(), item->transform);
 
     // Restore the center position (it's changed because the bbox center changed)
@@ -68,7 +68,7 @@ sp_item_skew_rel (SPItem *item, double skewX, double skewY)
 
 void sp_item_move_rel(SPItem *item, Geom::Translate const &tr)
 {
-    item->set_i2d_affine(item->i2d_affine() * tr);
+    item->set_i2d_affine(item->i2dt_affine() * tr);
 
     item->doWriteTransform(item->getRepr(), item->transform);
 }

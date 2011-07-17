@@ -995,7 +995,7 @@ bool FileOpenDialogImplWin32::set_svg_preview()
     Geom::OptRect maybeArea(area);
     svgDoc->ensureUpToDate();
     svgDoc->getRoot()->invoke_bbox( maybeArea,
-                                    svgDoc->getRoot()->i2d_affine(), TRUE);
+                                    svgDoc->getRoot()->i2dt_affine(), TRUE);
 
     NRArena *const arena = NRArena::create();
 

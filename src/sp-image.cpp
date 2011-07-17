@@ -1303,7 +1303,7 @@ static void sp_image_snappoints( SPItem const *item, std::vector<Inkscape::SnapC
         double const y0 = image.y.computed;
         double const x1 = x0 + image.width.computed;
         double const y1 = y0 + image.height.computed;
-        Geom::Affine const i2d (item->i2d_affine ());
+        Geom::Affine const i2d (item->i2dt_affine ());
         p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y0) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
         p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y1) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
         p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x1, y1) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));

@@ -573,12 +573,12 @@ static void sp_rect_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
 
     SPRect *rect = SP_RECT(item);
 
-    Geom::Affine const i2d (item->i2d_affine ());
+    Geom::Affine const i2dt (item->i2dt_affine ());
 
-    Geom::Point p0 = Geom::Point(rect->x.computed, rect->y.computed) * i2d;
-    Geom::Point p1 = Geom::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d;
-    Geom::Point p2 = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d;
-    Geom::Point p3 = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d;
+    Geom::Point p0 = Geom::Point(rect->x.computed, rect->y.computed) * i2dt;
+    Geom::Point p1 = Geom::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2dt;
+    Geom::Point p2 = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2dt;
+    Geom::Point p3 = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2dt;
 
     if (snapprefs->getSnapToItemNode()) {
         p.push_back(Inkscape::SnapCandidatePoint(p0, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
@@ -612,12 +612,12 @@ sp_rect_convert_to_guides(SPItem *item) {
 
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
-    Geom::Affine const i2d(rect->i2d_affine());
+    Geom::Affine const i2dt(rect->i2dt_affine());
 
-    Geom::Point A1(Geom::Point(rect->x.computed, rect->y.computed) * i2d);
-    Geom::Point A2(Geom::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d);
-    Geom::Point A3(Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d);
-    Geom::Point A4(Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d);
+    Geom::Point A1(Geom::Point(rect->x.computed, rect->y.computed) * i2dt);
+    Geom::Point A2(Geom::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2dt);
+    Geom::Point A3(Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2dt);
+    Geom::Point A4(Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2dt);
 
     pts.push_back(std::make_pair(A1, A2));
     pts.push_back(std::make_pair(A2, A3));

@@ -169,7 +169,7 @@ sp_path_convert_to_guides(SPItem *item)
 
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
-    Geom::Affine const i2d(path->i2d_affine());
+    Geom::Affine const i2dt(path->i2dt_affine());
 
     Geom::PathVector const & pv = curve->get_pathvector();
     for(Geom::PathVector::const_iterator pit = pv.begin(); pit != pv.end(); ++pit) {
@@ -177,7 +177,7 @@ sp_path_convert_to_guides(SPItem *item)
             // only add curves for straight line segments
             if( is_straight_curve(*cit) )
             {
-                pts.push_back(std::make_pair(cit->initialPoint() * i2d, cit->finalPoint() * i2d));
+                pts.push_back(std::make_pair(cit->initialPoint() * i2dt, cit->finalPoint() * i2dt));
             }
         }
     }

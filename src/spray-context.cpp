@@ -137,7 +137,7 @@ void sp_spray_rotate_rel(Geom::Point c, SPDesktop */*desktop*/, SPItem *item, Ge
     Geom::Translate const s(c);
     Geom::Affine affine = Geom::Affine(s).inverse() * Geom::Affine(rotation) * Geom::Affine(s);
     // Rotate item.
-    item->set_i2d_affine(item->i2d_affine() * (Geom::Affine)affine);
+    item->set_i2d_affine(item->i2dt_affine() * (Geom::Affine)affine);
     // Use each item's own transform writer, consistent with sp_selection_apply_affine()
     item->doWriteTransform(item->getRepr(), item->transform);
     // Restore the center position (it's changed because the bbox center changed)
@@ -151,7 +151,7 @@ void sp_spray_rotate_rel(Geom::Point c, SPDesktop */*desktop*/, SPItem *item, Ge
 void sp_spray_scale_rel(Geom::Point c, SPDesktop */*desktop*/, SPItem *item, Geom::Scale const &scale)
 {
     Geom::Translate const s(c);
-    item->set_i2d_affine(item->i2d_affine() * s.inverse() * scale * s);
+    item->set_i2d_affine(item->i2dt_affine() * s.inverse() * scale * s);
     item->doWriteTransform(item->getRepr(), item->transform);
 }
 

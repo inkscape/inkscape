@@ -806,7 +806,7 @@ private :
                 Inkscape::Text::Layout const *layout = te_get_layout(*it);
                 boost::optional<Geom::Point> pt = layout->baselineAnchorPoint();
                 if (pt) {
-                    Geom::Point base = *pt * (*it)->i2d_affine();
+                    Geom::Point base = *pt * (*it)->i2dt_affine();
                     if (base[Geom::X] < b_min[Geom::X]) b_min[Geom::X] = base[Geom::X];
                     if (base[Geom::Y] < b_min[Geom::Y]) b_min[Geom::Y] = base[Geom::Y];
                     if (base[Geom::X] > b_max[Geom::X]) b_max[Geom::X] = base[Geom::X];
@@ -849,7 +849,7 @@ private :
                     Inkscape::Text::Layout const *layout = te_get_layout(*it);
                     boost::optional<Geom::Point> pt = layout->baselineAnchorPoint();
                     if (pt) {
-                        Geom::Point base = *pt * (*it)->i2d_affine();
+                        Geom::Point base = *pt * (*it)->i2dt_affine();
                         Geom::Point t(0.0, 0.0);
                         t[_orientation] = b_min[_orientation] - base[_orientation];
                         sp_item_move_rel(*it, Geom::Translate(t));

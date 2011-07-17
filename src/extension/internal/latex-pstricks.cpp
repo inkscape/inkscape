@@ -141,7 +141,7 @@ PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
         os << "\\begin{pspicture}(" << doc->getWidth() << "," << doc->getHeight() << ")\n";
     }
 
-    m_tr_stack.push( Geom::Scale(1, -1) * Geom::Translate(0, doc->getHeight()));
+    m_tr_stack.push( Geom::Scale(1, -1) * Geom::Translate(0, doc->getHeight()));  /// @fixme hardcoded doc2dt transform
 
     return fprintf(_stream, "%s", os.str().c_str());
 }

@@ -593,7 +593,7 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
         d = Geom::Rect( Geom::Point(0,0),
                         Geom::Point(doc->getWidth(), doc->getHeight()) );
     } else {
-        base->invoke_bbox( d, base->i2d_affine(), TRUE, SPItem::RENDERING_BBOX);
+        base->invoke_bbox( d, base->i2dt_affine(), TRUE, SPItem::RENDERING_BBOX);
     }
     if (!d) {
         g_message("LaTeXTextRenderer: could not retrieve boundingbox.");
@@ -612,7 +612,7 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
     }
 
     // flip y-axis
-    push_transform( Geom::Scale(1,-1) * Geom::Translate(0, doc->getHeight()) );
+    push_transform( Geom::Scale(1,-1) * Geom::Translate(0, doc->getHeight()) ); /// @fixme hardcoded desktop transform!
 
     // write the info to LaTeX
     Inkscape::SVGOStringStream os;

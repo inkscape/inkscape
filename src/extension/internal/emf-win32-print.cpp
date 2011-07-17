@@ -144,7 +144,7 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
         d.y1 = _height;
     } else {
         SPItem* doc_item = doc->getRoot();
-        doc_item->invoke_bbox(&d, doc_item->i2d_affine(), TRUE);
+        doc_item->invoke_bbox(&d, doc_item->i2dt_affine(), TRUE);
     }
 
     d.x0 *= IN_PER_PX;
@@ -226,7 +226,7 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     g_free(local_fn);
     g_free(unicode_fn);
 
-    m_tr_stack.push( Geom::Scale(1, -1) * Geom::Translate(0, doc->getHeight()));
+    m_tr_stack.push( Geom::Scale(1, -1) * Geom::Translate(0, doc->getHeight())); /// @fixme hardcoded doc2dt transform
 
     return 0;
 }

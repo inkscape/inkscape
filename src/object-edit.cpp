@@ -474,7 +474,7 @@ Box3DKnotHolderEntity::knot_set_generic(SPItem *item, unsigned int knot_id, Geom
 
     g_assert(item != NULL);
     SPBox3D *box = SP_BOX3D(item);
-    Geom::Affine const i2d (item->i2d_affine ());
+    Geom::Affine const i2dt (item->i2dt_affine ());
 
     Box3D::Axis movement;
     if ((knot_id < 4) != (state & GDK_SHIFT_MASK)) {
@@ -483,7 +483,7 @@ Box3DKnotHolderEntity::knot_set_generic(SPItem *item, unsigned int knot_id, Geom
         movement = Box3D::Z;
     }
 
-    box3d_set_corner (box, knot_id, s * i2d, movement, (state & GDK_CONTROL_MASK));
+    box3d_set_corner (box, knot_id, s * i2dt, movement, (state & GDK_CONTROL_MASK));
     box3d_set_z_orders(box);
     box3d_position_set(box);
 }
@@ -650,9 +650,9 @@ Box3DKnotHolderEntityCenter::knot_set(Geom::Point const &new_pos, Geom::Point co
     Geom::Point const s = snap_knot_position(new_pos);
 
     SPBox3D *box = SP_BOX3D(item);
-    Geom::Affine const i2d (item->i2d_affine ());
+    Geom::Affine const i2dt (item->i2dt_affine ());
 
-    box3d_set_center (SP_BOX3D(item), s * i2d, origin * i2d, !(state & GDK_SHIFT_MASK) ? Box3D::XY : Box3D::Z,
+    box3d_set_center (SP_BOX3D(item), s * i2dt, origin * i2dt, !(state & GDK_SHIFT_MASK) ? Box3D::XY : Box3D::Z,
                       state & GDK_CONTROL_MASK);
 
     box3d_set_z_orders(box);

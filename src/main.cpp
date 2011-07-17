@@ -1321,7 +1321,7 @@ sp_do_export_png(SPDocument *doc)
             // write object bbox to area
             doc->ensureUpToDate();
             Geom::OptRect areaMaybe;
-            static_cast<SPItem *>(o_area)->invoke_bbox( areaMaybe, static_cast<SPItem *>(o_area)->i2d_affine(), TRUE);
+            static_cast<SPItem *>(o_area)->invoke_bbox( areaMaybe, static_cast<SPItem *>(o_area)->i2dt_affine(), TRUE);
             if (areaMaybe) {
                 area = *areaMaybe;
             } else {

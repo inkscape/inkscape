@@ -75,9 +75,9 @@ KnotHolderEntity::~KnotHolderEntity()
 void
 KnotHolderEntity::update_knot()
 {
-    Geom::Affine const i2d(item->i2d_affine());
+    Geom::Affine const i2dt(item->i2dt_affine());
 
-    Geom::Point dp(knot_get() * i2d);
+    Geom::Point dp(knot_get() * i2dt);
 
     _moved_connection.block();
     sp_knot_set_position(knot, dp, SP_KNOT_STATE_NORMAL);
@@ -87,21 +87,21 @@ KnotHolderEntity::update_knot()
 Geom::Point
 KnotHolderEntity::snap_knot_position(Geom::Point const &p)
 {
-    Geom::Affine const i2d (item->i2d_affine());
-    Geom::Point s = p * i2d;
+    Geom::Affine const i2dt (item->i2dt_affine());
+    Geom::Point s = p * i2dt;
 
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, true, item);
     m.freeSnapReturnByRef(s, Inkscape::SNAPSOURCE_NODE_HANDLE);
     m.unSetup();
 
-    return s * i2d.inverse();
+    return s * i2dt.inverse();
 }
 
 Geom::Point
 KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::SnapConstraint const &constraint)
 {
-    Geom::Affine const i2d (item->i2d_affine());
+    Geom::Affine const i2d (item->i2dt_affine());
     Geom::Point s = p * i2d;
 
     SnapManager &m = desktop->namedview->snap_manager;

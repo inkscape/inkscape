@@ -983,7 +983,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
                 }
 
                 double blur_now = 0;
-                Geom::Affine i2d = item->i2d_affine ();
+                Geom::Affine i2dt = item->i2dt_affine ();
                 if (style->filter.set && style->getFilter()) {
                     //cycle through filter primitives
                     SPObject *primitive_obj = style->getFilter()->children;
@@ -994,7 +994,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
                             if(SP_IS_GAUSSIANBLUR(primitive)) {
                                 SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
                                 float num = spblur->stdDeviation.getNumber();
-                                blur_now += num * i2d.descrim(); // sum all blurs in the filter
+                                blur_now += num * i2dt.descrim(); // sum all blurs in the filter
                             }
                         }
                         primitive_obj = primitive_obj->next;

@@ -977,7 +977,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
                 m.unSetup();
 
                 // Update the hidden path
-                Geom::Affine i2d = (cc->clickeditem)->i2d_affine();
+                Geom::Affine i2d ( (cc->clickeditem)->i2dt_affine() );
                 Geom::Affine d2i = i2d.inverse();
                 SPPath *path = SP_PATH(cc->clickeditem);
                 SPCurve *curve = path->original_curve ? path->original_curve : path->curve;
@@ -1607,7 +1607,7 @@ endpt_handler(SPKnot */*knot*/, GdkEvent *event, SPConnectorContext *cc)
 
                 // Show the red path for dragging.
                 cc->red_curve = SP_PATH(cc->clickeditem)->original_curve ? SP_PATH(cc->clickeditem)->original_curve->copy() : SP_PATH(cc->clickeditem)->curve->copy();
-                Geom::Affine i2d = (cc->clickeditem)->i2d_affine();
+                Geom::Affine i2d = (cc->clickeditem)->i2dt_affine();
                 cc->red_curve->transform(i2d);
                 sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve);
 
@@ -1766,7 +1766,7 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
     g_assert( SP_IS_PATH(item) );
 
     SPCurve *curve = SP_PATH(item)->original_curve ? SP_PATH(item)->original_curve : SP_PATH(item)->curve;
-    Geom::Affine i2d = item->i2d_affine();
+    Geom::Affine i2dt = item->i2dt_affine();
 
     if (cc->active_conn == item)
     {
@@ -1780,10 +1780,10 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
         else
         {
             // Just adjust handle positions.
-            Geom::Point startpt = *(curve->first_point()) * i2d;
+            Geom::Point startpt = *(curve->first_point()) * i2dt;
             sp_knot_set_position(cc->endpt_handle[0], startpt, 0);
 
-            Geom::Point endpt = *(curve->last_point()) * i2d;
+            Geom::Point endpt = *(curve->last_point()) * i2dt;
             sp_knot_set_position(cc->endpt_handle[1], endpt, 0);
         }
 
@@ -1855,10 +1855,10 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
         return;
     }
 
-    Geom::Point startpt = *(curve->first_point()) * i2d;
+    Geom::Point startpt = *(curve->first_point()) * i2dt;
     sp_knot_set_position(cc->endpt_handle[0], startpt, 0);
 
-    Geom::Point endpt = *(curve->last_point()) * i2d;
+    Geom::Point endpt = *(curve->last_point()) * i2dt;
     sp_knot_set_position(cc->endpt_handle[1], endpt, 0);
 
     sp_knot_show(cc->endpt_handle[0]);

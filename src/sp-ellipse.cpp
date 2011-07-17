@@ -282,7 +282,7 @@ static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscap
 
     SPGenericEllipse *ellipse = SP_GENERICELLIPSE(item);
     sp_genericellipse_normalize(ellipse);
-    Geom::Affine const i2d = item->i2d_affine();
+    Geom::Affine const i2dt = item->i2dt_affine();
 
     // figure out if we have a slice, while guarding against rounding errors
     bool slice = false;
@@ -308,7 +308,7 @@ static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscap
         double angle = 0;
         for (angle = 0; angle < SP_2PI; angle += M_PI_2) {
             if (angle >= ellipse->start && angle <= ellipse->end) {
-                pt = Geom::Point(cx + cos(angle)*rx, cy + sin(angle)*ry) * i2d;
+                pt = Geom::Point(cx + cos(angle)*rx, cy + sin(angle)*ry) * i2dt;
                 p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_ELLIPSE_QUADRANT_POINT, Inkscape::SNAPTARGET_ELLIPSE_QUADRANT_POINT));
             }
         }
@@ -316,7 +316,7 @@ static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscap
 
     // Add the centre, if we have a closed slice or when explicitly asked for
     if ((snapprefs->getSnapToItemNode() && slice && ellipse->closed) || snapprefs->getSnapObjectMidpoints()) {
-        pt = Geom::Point(cx, cy) * i2d;
+        pt = Geom::Point(cx, cy) * i2dt;
         p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
     }
 
@@ -324,12 +324,12 @@ static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscap
     if (snapprefs->getSnapToItemNode() && slice) {
         // Add the start point, if it's not coincident with a quadrant point
         if (fmod(ellipse->start, M_PI_2) != 0.0 ) {
-            pt = Geom::Point(cx + cos(ellipse->start)*rx, cy + sin(ellipse->start)*ry) * i2d;
+            pt = Geom::Point(cx + cos(ellipse->start)*rx, cy + sin(ellipse->start)*ry) * i2dt;
             p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
         }
         // Add the end point, if it's not coincident with a quadrant point
         if (fmod(ellipse->end, M_PI_2) != 0.0 ) {
-            pt = Geom::Point(cx + cos(ellipse->end)*rx, cy + sin(ellipse->end)*ry) * i2d;
+            pt = Geom::Point(cx + cos(ellipse->end)*rx, cy + sin(ellipse->end)*ry) * i2dt;
             p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
         }
     }

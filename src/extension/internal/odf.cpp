@@ -946,10 +946,10 @@ static Glib::ustring formatTransform(Geom::Affine &tf)
 static Geom::Affine getODFTransform(const SPItem *item)
 {
     //### Get SVG-to-ODF transform
-    Geom::Affine tf (item->i2d_affine());
+    Geom::Affine tf (item->i2dt_affine());
     //Flip Y into document coordinates
     double doc_height    = SP_ACTIVE_DOCUMENT->getHeight();
-    Geom::Affine doc2dt_tf = Geom::Affine(Geom::Scale(1.0, -1.0));
+    Geom::Affine doc2dt_tf = Geom::Affine(Geom::Scale(1.0, -1.0));                    /// @fixme hardcoded desktop transform
     doc2dt_tf            = doc2dt_tf * Geom::Affine(Geom::Translate(0, doc_height));
     tf                   = tf * doc2dt_tf;
     tf                   = tf * Geom::Affine(Geom::Scale(pxToCm));
@@ -986,7 +986,7 @@ static Geom::OptRect getODFBoundingBox(const SPItem *item)
  */
 static Geom::Affine getODFItemTransform(const SPItem *item)
 {
-    Geom::Affine itemTransform (Geom::Scale(1, -1));
+    Geom::Affine itemTransform (Geom::Scale(1, -1));  /// @fixme hardcoded doc2dt transform?
     itemTransform = itemTransform * (Geom::Affine)item->transform;
     itemTransform = itemTransform * Geom::Scale(1, -1);
     return itemTransform;

@@ -272,7 +272,7 @@ void SPItem::setCenter(Geom::Point object_centre) {
     // for getBounds() to work
     document->ensureUpToDate();
 
-    Geom::OptRect bbox = getBounds(i2d_affine());
+    Geom::OptRect bbox = getBounds(i2dt_affine());
     if (bbox) {
         transform_center_x = object_centre[Geom::X] - bbox->midpoint()[Geom::X];
         if (fabs(transform_center_x) < 1e-5) // rounding error
@@ -297,7 +297,7 @@ Geom::Point SPItem::getCenter() const {
     // for getBounds() to work
     document->ensureUpToDate();
 
-    Geom::OptRect bbox = getBounds(i2d_affine());
+    Geom::OptRect bbox = getBounds(i2dt_affine());
     if (bbox) {
         return bbox->midpoint() + Geom::Point (transform_center_x, transform_center_y);
     } else {
@@ -790,11 +790,11 @@ void SPItem::invoke_bbox_full( Geom::OptRect &bbox, Geom::Affine const &transfor
                 }
 
                 // transform the expansions by the item's transform:
-                Geom::Affine i2d(i2d_affine ());
-                dx0 *= i2d.expansionX();
-                dx1 *= i2d.expansionX();
-                dy0 *= i2d.expansionY();
-                dy1 *= i2d.expansionY();
+                Geom::Affine i2dt(i2dt_affine ());
+                dx0 *= i2dt.expansionX();
+                dx1 *= i2dt.expansionX();
+                dy0 *= i2dt.expansionY();
+                dy1 *= i2dt.expansionY();
 
                 // expand the bbox
                 temp_bbox.x0 += dx0;
@@ -890,13 +890,13 @@ void SPItem::getBboxDesktop(NRRect *bbox, SPItem::BBoxType type)
 {
     g_assert(bbox != NULL);
 
-    invoke_bbox( bbox, i2d_affine(), TRUE, type);
+    invoke_bbox( bbox, i2dt_affine(), TRUE, type);
 }
 
 Geom::OptRect SPItem::getBboxDesktop(SPItem::BBoxType type)
 {
     Geom::OptRect rect = Geom::OptRect();
-    invoke_bbox( rect, i2d_affine(), TRUE, type);
+    invoke_bbox( rect, i2dt_affine(), TRUE, type);
     return rect;
 }
 
@@ -907,7 +907,7 @@ void SPItem::sp_item_private_snappoints(SPItem const *item, std::vector<Inkscape
      * We don't know what shape we could be dealing with here, so we'll just
      * return the corners of the bounding box */
 
-    Geom::OptRect bbox = item->getBounds(item->i2d_affine());
+    Geom::OptRect bbox = item->getBounds(item->i2dt_affine());
 
     if (bbox) {
         Geom::Point p1, p2;
@@ -953,7 +953,7 @@ void SPItem::getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscap
                     for (std::vector<Inkscape::SnapCandidatePoint>::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); p_orig++) {
                         // All snappoints are in desktop coordinates, but the item's transformation is
                         // in document coordinates. Hence the awkward construction below
-                        Geom::Point pt = desktop->dt2doc((*p_orig).getPoint()) * i2d_affine();
+                        Geom::Point pt = desktop->dt2doc((*p_orig).getPoint()) * i2dt_affine();
                         p.push_back(Inkscape::SnapCandidatePoint(pt, (*p_orig).getSourceType(), (*p_orig).getTargetType()));
                     }
                 }
@@ -1465,11 +1465,13 @@ Geom::Affine SPItem::i2doc_affine() const
 /**
  * Returns the transformation from item to desktop coords
  */
-Geom::Affine SPItem::i2d_affine() const
+Geom::Affine SPItem::i2dt_affine() const
 {
-    Geom::Affine const ret( i2doc_affine()
-                          * Geom::Scale(1, -1)
-                          * Geom::Translate(0, document->getHeight()) );
+//    Geom::Affine const ret( i2doc_affine()
+//                          * Geom::Scale(1, -1)
+//                          * Geom::Translate(0, document->getHeight()) );
+    SPDesktop const *desktop = inkscape_active_desktop();
+    Geom::Affine const ret( i2doc_affine() * desktop->doc2dt() );
     return ret;
 }
 
@@ -1477,10 +1479,10 @@ void SPItem::set_i2d_affine(Geom::Affine const &i2dt)
 {
     Geom::Affine dt2p; /* desktop to item parent transform */
     if (parent) {
-        dt2p = static_cast<SPItem *>(parent)->i2d_affine().inverse();
+        dt2p = static_cast<SPItem *>(parent)->i2dt_affine().inverse();
     } else {
         dt2p = ( Geom::Translate(0, -document->getHeight())
-                 * Geom::Scale(1, -1) );
+                 * Geom::Scale(1, -1) );   /// @fixme hardcoded doc2dt transform?
     }
 
     Geom::Affine const i2p( i2dt * dt2p );
@@ -1494,7 +1496,7 @@ void SPItem::set_i2d_affine(Geom::Affine const &i2dt)
 Geom::Affine SPItem::dt2i_affine() const
 {
     /* fixme: Implement the right way (Lauris) */
-    return i2d_affine().inverse();
+    return i2dt_affine().inverse();
 }
 
 /* Item views */

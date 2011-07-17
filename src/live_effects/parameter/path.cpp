@@ -208,7 +208,7 @@ PathParam::param_editOncanvas(SPItem *item, SPDesktop * dt)
     ShapeRecord r;
 
     r.role = SHAPE_ROLE_LPE_PARAM;
-    r.edit_transform = item->i2d_affine(); // TODO is it right?
+    r.edit_transform = item->i2dt_affine(); // TODO is it right?
     if (!href) {
         r.item = reinterpret_cast<SPItem*>(param_effect->getLPEObj());
         r.lpe_key = param_key;
