@@ -31,6 +31,7 @@ import bezmisc
 import simplepath
 import os
 import sys
+import re
 import gettext
 _ = gettext.gettext
 
@@ -65,6 +66,33 @@ def combinePaths( pathA, pathB ):
 		return pathA
 	else:
 		return pathA + pathB
+
+def reverseComponent(c):
+	nc = []
+	last = c.pop()
+	nc.append(['M', last[1][-2:]])
+	while c:
+		this = c.pop()
+		cmd = last[0]
+		if cmd == 'C':
+			nc.append([last[0], last[1][2:4] + last[1][:2] + this[1][-2:]])
+		else:
+			nc.append([last[0], this[1][-2:]])
+		last = this
+	return nc
+
+def reversePath(sp):
+	rp = []
+	component = []
+	for p in sp:
+		cmd, params = p
+		if cmd == 'Z':
+			rp.extend(reverseComponent(component))
+			rp.append(['Z', []])
+			component = []
+		else:
+			component.append(p)
+	return rp
 
 def flipLeftRight( sp, width ):
 	for cmd,params in sp:
@@ -200,11 +228,13 @@ def mxfm( image, width, height, stack ):								# returns possibly transformed i
 	tbimage = image	
 	if ( stack[0] == "-" ):							  # top-bottom flip
 		flipTopBottom(tbimage, height)
+		tbimage = reversePath(tbimage)
 		stack.pop( 0 )
 
 	lrimage = tbimage
 	if ( stack[0] == "|" ):							  # left-right flip
 		flipLeftRight(tbimage, width)
+		lrimage = reversePath(lrimage)
 		stack.pop( 0 )
 	return lrimage
 
@@ -292,14 +322,14 @@ def draw_crop_scale( stack, zoom ):							# draw, crop and scale letter image
 	simplepath.scalePath(image, zoom/units, zoom/units)
 	return image, bbox[1] - bbox[0], bbox[3] - bbox[2]
 
-def randomize_input_string( str, zoom ):					   # generate list of images based on input string
+def randomize_input_string(tokens, zoom ):					   # generate a glyph starting from each token in the input string
 	imagelist = []
 
-	for i in range(0,len(str)):
-		char = str[i]
+	for i in range(0,len(tokens)):
+		char = tokens[i]
 		#if ( re.match("[a-zA-Z0-9?]", char)):
 		if ( alphabet.has_key(char)):
-			if ((i > 0) and (char == str[i-1])):		 # if this letter matches previous letter
+			if ((i > 0) and (char == tokens[i-1])):		 # if this letter matches previous letter
 				imagelist.append(imagelist[len(stack)-1])# make them the same image
 			else:										# generate image for letter
 				stack = string.split( alphabet[char][random.randint(0,(len(alphabet[char])-1))] , "." )
@@ -308,15 +338,33 @@ def randomize_input_string( str, zoom ):					   # generate list of images based 
 		elif( char == " "):							  # add a " " space to the image list
 			imagelist.append( " " )
 		else:											# this character is not in config.alphabet, skip it
-			inkex.errormsg(_("bad character") + " = 0x%x" % ord(char))
+			sys.stderr.write('bad character "%s"\n' % char)
+	return imagelist
+
+def generate_random_string( tokens, zoom ):                       # generate a totally random glyph for each glyph in the input string
+	imagelist = []
+	for char in tokens:
+		if ( char == " "):                               # add a " " space to the image list
+			imagelist.append( " " )
+		else:
+			if ( re.match("[a-z]", char )):              # generate lowercase letter
+				stack = generate("lc")
+			elif ( re.match("[A-Z]", char )):            # generate uppercase letter
+				stack = generate("UC")
+			else:                                        # this character is not in config.alphabet, skip it
+				sys.stderr.write('bad character"%s"\n' % char)
+				stack = generate("start")
+			imagelist.append( draw_crop_scale( stack, zoom ))
+
 	return imagelist
 
 def optikern( image, width, zoom ):                                   # optical kerning algorithm
 	left  = []
 	right = []
 
-	for i in range( 0, 36 ):
-		y = 0.5 * (i + 0.5) * zoom
+	resolution = 8
+	for i in range( 0, 18 * resolution ):
+		y = 1.0/resolution * (i + 0.5) * zoom
 		xmin = None
 		xmax = None
 
@@ -425,6 +473,29 @@ def layoutstring( imagelist, zoom ):					 # layout string of letter-images using
 
 	return workspace
 
+def tokenize(text):
+	"""Tokenize the string, looking for LaTeX style, multi-character tokens in the string, like \\yogh."""
+	tokens = []
+	i = 0
+	while i < len(text):
+		c = text[i]
+		i += 1
+		if c == '\\': # found the beginning of an escape
+			t = ''
+			while i < len(text): # gobble up content of the escape
+				c = text[i]
+				if c == '\\': # found another escape, stop this one
+					break
+				i += 1
+				if c == ' ': # a space terminates this escape
+					break
+				t += c # stick this character onto the token
+			if t:
+				tokens.append(t)
+		else:
+			tokens.append(c)
+	return tokens
+
 class AlphabetSoup(inkex.Effect):
 	def __init__(self):
 		inkex.Effect.__init__(self)
@@ -436,16 +507,20 @@ class AlphabetSoup(inkex.Effect):
 						action="store", type="float", 
 						dest="zoom", default="8.0",
 						help="The zoom on the output graphics")
-		self.OptionParser.add_option("-s", "--seed",
-						action="store", type="int", 
-						dest="seed", default="0",
-						help="The random seed for the soup")
+		self.OptionParser.add_option("-r", "--randomize",
+						action="store", type="inkbool", 
+						dest="randomize", default=False,
+						help="Generate random (unreadable) text")
 
 	def effect(self):
 		zoom = self.options.zoom
-		random.seed(self.options.seed)
 
-		imagelist = randomize_input_string(self.options.text, zoom)
+		if self.options.randomize:
+			imagelist = generate_random_string(self.options.text, zoom)
+		else:
+			tokens = tokenize(self.options.text)
+			imagelist = randomize_input_string(tokens, zoom)
+
 		image = layoutstring( imagelist, zoom )
 
 		if image:
