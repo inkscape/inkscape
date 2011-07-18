@@ -40,7 +40,6 @@
 #include "desktop.h"
 #include "sp-namedview.h"
 #include <2geom/angle.h>
-#include <2geom/transforms.h>
 #include "document.h"
 
 using Inkscape::DocumentUndo;
@@ -322,14 +321,7 @@ sp_guide_delete_all_guides(SPDesktop *dt) {
 
 void SPGuide::showSPGuide(SPCanvasGroup *group, GCallback handler)
 {
-    // historically, normal_to_line and point_on_line are stored in desktop coordinates (without desktop rotation)
-    // therefore, we have to correct for this first...
-    SPDesktop const *desktop = inkscape_active_desktop(); /// @fixme Obtain SPDesktop in better way...
-    Geom::Affine correction = Geom::Translate(0, -desktop->namedview->document->getHeight()) * Geom::Scale(1, -1);
-    Geom::Point normal_dt = normal_to_line * correction.withoutTranslation() * desktop->doc2dt().withoutTranslation();
-    Geom::Point point_on_line_dt = point_on_line * correction * desktop->doc2dt();
-
-    SPCanvasItem *item = sp_guideline_new(group, label, point_on_line_dt, normal_dt);
+    SPCanvasItem *item = sp_guideline_new(group, label, point_on_line, normal_to_line);
     sp_guideline_set_color(SP_GUIDELINE(item), color);
 
     g_signal_connect(G_OBJECT(item), "event", G_CALLBACK(handler), this);
@@ -387,14 +379,8 @@ void sp_guide_moveto(SPGuide &guide, Geom::Point const point_on_line, bool const
 {
     g_assert(SP_IS_GUIDE(&guide));
 
-    // historically, normal_to_line and point_on_line are stored in desktop coordinates (without desktop rotation)
-    // therefore, we have to correct for this first...
-    SPDesktop const *desktop = inkscape_active_desktop(); /// @fixme Obtain SPDesktop in better way...
-    Geom::Affine correction = Geom::Translate(0, -desktop->namedview->document->getHeight()) * Geom::Scale(1, -1);
-    Geom::Point point_on_line_dt = point_on_line * correction * desktop->doc2dt();
-
     for (GSList *l = guide.views; l != NULL; l = l->next) {
-        sp_guideline_set_position(SP_GUIDELINE(l->data), point_on_line_dt);
+        sp_guideline_set_position(SP_GUIDELINE(l->data), point_on_line);
     }
 
     /* Calling sp_repr_set_point must precede calling sp_item_notify_moveto in the commit
@@ -424,14 +410,8 @@ void sp_guide_set_normal(SPGuide &guide, Geom::Point const normal_to_line, bool 
 {
     g_assert(SP_IS_GUIDE(&guide));
 
-    // historically, normal_to_line and point_on_line are stored in desktop coordinates (without desktop rotation)
-    // therefore, we have to correct for this first...
-    SPDesktop const *desktop = inkscape_active_desktop(); /// @fixme Obtain SPDesktop in better way...
-    Geom::Affine correction = Geom::Translate(0, -desktop->namedview->document->getHeight()) * Geom::Scale(1, -1);
-    Geom::Point normal_dt = normal_to_line * correction.withoutTranslation() * desktop->doc2dt().withoutTranslation();
-
     for (GSList *l = guide.views; l != NULL; l = l->next) {
-        sp_guideline_set_normal(SP_GUIDELINE(l->data), normal_dt);
+        sp_guideline_set_normal(SP_GUIDELINE(l->data), normal_to_line);
     }
 
     /* Calling sp_repr_set_svg_point must precede calling sp_item_notify_moveto in the commit
