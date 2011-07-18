@@ -13,11 +13,16 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <2geom/coord.h>
 #include <2geom/transforms.h>
 #include "sp-canvas-util.h"
 #include "sp-ctrlpoint.h"
 #include "guideline.h"
 #include "display/cairo-utils.h"
+
+#include "inkscape.h" // for inkscape_active_desktop()
+#include "desktop.h"
+#include "sp-namedview.h"
 
 static void sp_guideline_class_init(SPGuideLineClass *c);
 static void sp_guideline_init(SPGuideLine *guideline);
@@ -112,45 +117,46 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
     cairo_set_line_cap(buf->ct, CAIRO_LINE_CAP_SQUARE);
     cairo_set_font_size(buf->ct, 10);
 
-    int px = round(gl->point_on_line[Geom::X]);
-    int py = round(gl->point_on_line[Geom::Y]);
+    Geom::Point normal_dt = /*unit_vector*/(gl->normal_to_line * gl->affine.withoutTranslation()); // note that normal_dt does not have unit length
+    Geom::Point point_on_line_dt = gl->point_on_line * gl->affine;
 
     if (gl->label) {
+        int px = round(point_on_line_dt[Geom::X]);
+        int py = round(point_on_line_dt[Geom::Y]);
         cairo_save(buf->ct);
         cairo_translate(buf->ct, px, py);
-        cairo_rotate(buf->ct, atan2(gl->normal_to_line[Geom::X], gl->normal_to_line[Geom::Y]));
+        cairo_rotate(buf->ct, atan2(normal_dt.cw()));
         cairo_translate(buf->ct, 0, -5);
         cairo_move_to(buf->ct, 0, 0);
         cairo_show_text(buf->ct, gl->label);
         cairo_restore(buf->ct);
     }
 
-    if (gl->is_vertical()) {
-        int position = round(gl->point_on_line[Geom::X]);
+    if ( Geom::are_near(normal_dt[Geom::Y], 0.) ) { // is vertical?
+        int position = round(point_on_line_dt[Geom::X]);
         cairo_move_to(buf->ct, position + 0.5, buf->rect.y0 + 0.5);
         cairo_line_to(buf->ct, position + 0.5, buf->rect.y1 - 0.5);
         cairo_stroke(buf->ct);
-    } else if (gl->is_horizontal()) {
-        int position = round(gl->point_on_line[Geom::Y]);
+    } else if ( Geom::are_near(normal_dt[Geom::X], 0.) ) { // is horizontal?
+        int position = round(point_on_line_dt[Geom::Y]);
         cairo_move_to(buf->ct, buf->rect.x0 + 0.5, position + 0.5);
         cairo_line_to(buf->ct, buf->rect.x1 - 0.5, position + 0.5);
         cairo_stroke(buf->ct);
     } else {
-        // render angled line, once intersection has been detected, draw from there.
-        Geom::Point parallel_to_line( gl->normal_to_line[Geom::Y],
-                                      /*should be minus, but inverted y axis*/ gl->normal_to_line[Geom::X]);
+        // render angled line. Once intersection has been detected, draw from there.
+        Geom::Point parallel_to_line( normal_dt.ccw() );
 
         //try to intersect with left vertical of rect
-        double y_intersect_left = (buf->rect.x0 - gl->point_on_line[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + gl->point_on_line[Geom::Y];
+        double y_intersect_left = (buf->rect.x0 - point_on_line_dt[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + point_on_line_dt[Geom::Y];
         if ( (y_intersect_left >= buf->rect.y0) && (y_intersect_left <= buf->rect.y1) ) {
             // intersects with left vertical!
-            double y_intersect_right = (buf->rect.x1 - gl->point_on_line[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + gl->point_on_line[Geom::Y];
+            double y_intersect_right = (buf->rect.x1 - point_on_line_dt[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + point_on_line_dt[Geom::Y];
             sp_guideline_drawline (buf, buf->rect.x0, static_cast<gint>(round(y_intersect_left)), buf->rect.x1, static_cast<gint>(round(y_intersect_right)), gl->rgba);
             goto end;
         }
 
         //try to intersect with right vertical of rect
-        double y_intersect_right = (buf->rect.x1 - gl->point_on_line[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + gl->point_on_line[Geom::Y];
+        double y_intersect_right = (buf->rect.x1 - point_on_line_dt[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + point_on_line_dt[Geom::Y];
         if ( (y_intersect_right >= buf->rect.y0) && (y_intersect_right <= buf->rect.y1) ) {
             // intersects with right vertical!
             sp_guideline_drawline (buf, buf->rect.x1, static_cast<gint>(round(y_intersect_right)), buf->rect.x0, static_cast<gint>(round(y_intersect_left)), gl->rgba);
@@ -158,16 +164,16 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
         }
 
         //try to intersect with top horizontal of rect
-        double x_intersect_top = (buf->rect.y0 - gl->point_on_line[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + gl->point_on_line[Geom::X];
+        double x_intersect_top = (buf->rect.y0 - point_on_line_dt[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + point_on_line_dt[Geom::X];
         if ( (x_intersect_top >= buf->rect.x0) && (x_intersect_top <= buf->rect.x1) ) {
             // intersects with top horizontal!
-            double x_intersect_bottom = (buf->rect.y1 - gl->point_on_line[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + gl->point_on_line[Geom::X];
+            double x_intersect_bottom = (buf->rect.y1 - point_on_line_dt[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + point_on_line_dt[Geom::X];
             sp_guideline_drawline (buf, static_cast<gint>(round(x_intersect_top)), buf->rect.y0, static_cast<gint>(round(x_intersect_bottom)), buf->rect.y1, gl->rgba);
             goto end;
         }
 
         //try to intersect with bottom horizontal of rect
-        double x_intersect_bottom = (buf->rect.y1 - gl->point_on_line[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + gl->point_on_line[Geom::X];
+        double x_intersect_bottom = (buf->rect.y1 - point_on_line_dt[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + point_on_line_dt[Geom::X];
         if ( (x_intersect_top >= buf->rect.x0) && (x_intersect_top <= buf->rect.x1) ) {
             // intersects with bottom horizontal!
             sp_guideline_drawline (buf, static_cast<gint>(round(x_intersect_bottom)), buf->rect.y1, static_cast<gint>(round(x_intersect_top)), buf->rect.y0, gl->rgba);
@@ -186,16 +192,16 @@ static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, 
         ((SPCanvasItemClass *) parent_class)->update(item, affine, flags);
     }
 
-    gl->point_on_line[Geom::X] = affine[4];
-    gl->point_on_line[Geom::Y] = affine[5];
+    gl->affine = affine;
 
-    sp_ctrlpoint_set_coords(gl->origin, gl->point_on_line * affine.inverse());
+    sp_ctrlpoint_set_coords(gl->origin, gl->point_on_line);
     sp_canvas_item_request_update(SP_CANVAS_ITEM (gl->origin));
 
+    Geom::Point pol_transformed = gl->point_on_line*affine;
     if (gl->is_horizontal()) {
-        sp_canvas_update_bbox (item, -1000000, round(gl->point_on_line[Geom::Y] - 16), 1000000, round(gl->point_on_line[Geom::Y] + 1));
+        sp_canvas_update_bbox (item, -1000000, round(pol_transformed[Geom::Y] - 16), 1000000, round(pol_transformed[Geom::Y] + 1));
     } else if (gl->is_vertical()) {
-        sp_canvas_update_bbox (item, round(gl->point_on_line[Geom::X]), -1000000, round(gl->point_on_line[Geom::X] + 16), 1000000);
+        sp_canvas_update_bbox (item, round(pol_transformed[Geom::X]), -1000000, round(pol_transformed[Geom::X] + 16), 1000000);
     } else {
         //TODO: labels in angled guidelines are not showing up for some reason.
         sp_canvas_update_bbox (item, -1000000, -1000000, 1000000, 1000000);
@@ -213,8 +219,8 @@ static double sp_guideline_point(SPCanvasItem *item, Geom::Point p, SPCanvasItem
 
     *actual_item = item;
 
-    Geom::Point vec(gl->normal_to_line[Geom::X], - gl->normal_to_line[Geom::Y]);
-    double distance = Geom::dot((p - gl->point_on_line), vec);
+    Geom::Point vec = gl->normal_to_line * gl->affine.withoutTranslation();
+    double distance = Geom::dot((p - gl->point_on_line * gl->affine), unit_vector(vec));
     return MAX(fabs(distance)-1, 0);
 }
 
@@ -250,8 +256,8 @@ void sp_guideline_set_label(SPGuideLine *gl, const char* label)
 
 void sp_guideline_set_position(SPGuideLine *gl, Geom::Point point_on_line)
 {
-    sp_canvas_item_affine_absolute(SP_CANVAS_ITEM (gl), Geom::Affine(Geom::Translate(point_on_line)));
-    sp_canvas_item_affine_absolute(SP_CANVAS_ITEM (gl->origin), Geom::Affine(Geom::Translate(point_on_line)));
+    gl->point_on_line = point_on_line;
+    sp_canvas_item_request_update(SP_CANVAS_ITEM (gl));
 }
 
 void sp_guideline_set_normal(SPGuideLine *gl, Geom::Point normal_to_line)

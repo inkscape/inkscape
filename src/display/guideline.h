@@ -25,6 +25,8 @@ class SPCtrlPoint;
 
 struct SPGuideLine {
     SPCanvasItem item;
+    Geom::Affine affine;
+
     SPCtrlPoint *origin; // unlike 'item', this is only held locally
 
     guint32 rgba;
