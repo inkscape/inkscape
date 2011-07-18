@@ -385,7 +385,7 @@ unsigned int font_instance::Attribute(const gchar *key, gchar *str, unsigned int
             }
         }
         if (free_res) {
-            free(res);
+            g_free(res);
         }
         return len;
     }
