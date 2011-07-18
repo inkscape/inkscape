@@ -1481,8 +1481,8 @@ void SPItem::set_i2d_affine(Geom::Affine const &i2dt)
     if (parent) {
         dt2p = static_cast<SPItem *>(parent)->i2dt_affine().inverse();
     } else {
-        dt2p = ( Geom::Translate(0, -document->getHeight())
-                 * Geom::Scale(1, -1) );   /// @fixme hardcoded doc2dt transform?
+        SPDesktop *dt = inkscape_active_desktop();
+        dt2p = dt->dt2doc();
     }
 
     Geom::Affine const i2p( i2dt * dt2p );
