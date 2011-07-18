@@ -287,7 +287,7 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
     for (std::vector<SnapCandidatePoint>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
         if (_allowSourceToSnapToTarget(p.getSourceType(), (*k).getTargetType(), strict_snapping)) {
             Geom::Point target_pt = (*k).getPoint();
-            Geom::Coord dist = NR_HUGE;
+            Geom::Coord dist = Geom::infinity();
             if (!c.isUndefined()) {
                 // We're snapping to nodes along a constraint only, so find out if this node
                 // is at the constraint, while allowing for a small margin
