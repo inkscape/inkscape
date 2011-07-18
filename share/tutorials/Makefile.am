@@ -123,6 +123,7 @@ tutorial_DATA = \
     tutorial-interpolate.svg \
     tutorial-interpolate.be.svg \
     tutorial-interpolate.de.svg \
+    tutorial-interpolate.el.svg \
     tutorial-interpolate.fr.svg \
     tutorial-interpolate.hu.svg \
     tutorial-interpolate.ja.svg \
