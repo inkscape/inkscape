@@ -474,11 +474,12 @@ char *sp_guide_description(SPGuide const *guide, const bool verbose)
 {
     using Geom::X;
     using Geom::Y;
-            
+
+    SPNamedView *namedview = sp_document_namedview(guide->document, NULL);
     GString *position_string_x = SP_PX_TO_METRIC_STRING(guide->point_on_line[X],
-                                                        SP_ACTIVE_DESKTOP->namedview->getDefaultMetric());
+                                                        namedview->getDefaultMetric());
     GString *position_string_y = SP_PX_TO_METRIC_STRING(guide->point_on_line[Y],
-                                                        SP_ACTIVE_DESKTOP->namedview->getDefaultMetric());
+                                                        namedview->getDefaultMetric());
 
     gchar *shortcuts = g_strdup_printf("; %s", _("<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to delete"));
     gchar *descr;
