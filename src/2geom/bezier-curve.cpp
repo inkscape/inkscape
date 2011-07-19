@@ -106,10 +106,11 @@ namespace Geom
 
 BezierCurve::BezierCurve(std::vector<Point> const &pts)
 {
-    inner = D2<Bezier>(Bezier::Order(pts.size()-1), Bezier::Order(pts.size()-1));
+    inner = D2<Bezier>(Bezier::Order(pts.size() - 1), Bezier::Order(pts.size() - 1));
     for (unsigned d = 0; d < 2; ++d) {
-        for(unsigned i = 0; i <= pts.size(); i++)
+        for (unsigned i = 0; i < pts.size(); i++) {
             inner[d][i] = pts[i][d];
+        }
     }
 }
 
