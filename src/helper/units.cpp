@@ -60,8 +60,8 @@ sp_unit_get_by_abbreviation(gchar const *abbreviation)
     g_return_val_if_fail(abbreviation != NULL, NULL);
 
     for (unsigned i = 0 ; i < sp_num_units ; i++) {
-        if (!g_strcasecmp(abbreviation, sp_units[i].abbr)) return &sp_units[i];
-        if (!g_strcasecmp(abbreviation, sp_units[i].abbr_plural)) return &sp_units[i];
+        if (!g_ascii_strcasecmp(abbreviation, sp_units[i].abbr)) return &sp_units[i];
+        if (!g_ascii_strcasecmp(abbreviation, sp_units[i].abbr_plural)) return &sp_units[i];
     }
 
     return NULL;

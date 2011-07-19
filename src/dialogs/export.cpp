@@ -358,18 +358,18 @@ gchar* create_filepath_from_id (const gchar *id, const gchar *file_entry_text) {
     if (id == NULL) /* This should never happen */
         id = "bitmap";
 
-    gchar * directory = NULL;
+    gchar *directory = NULL;
 
     if (directory == NULL && file_entry_text != NULL && file_entry_text[0] != '\0') {
         // std::cout << "Directory from dialog" << std::endl;
-        directory = g_dirname(file_entry_text);
+        directory = g_path_get_dirname(file_entry_text);
     }
 
     if (directory == NULL) {
         /* Grab document directory */
         if ( SP_ACTIVE_DOCUMENT->getURI() ) {
             // std::cout << "Directory from document" << std::endl;
-            directory = g_dirname( SP_ACTIVE_DOCUMENT->getURI() );
+            directory = g_path_get_dirname( SP_ACTIVE_DOCUMENT->getURI() );
         }
     }
 
@@ -1053,7 +1053,7 @@ filename_add_extension (const gchar *filename, const gchar *extension)
       return g_strconcat (filename, extension, NULL);
     else
     {
-      if (g_strcasecmp (dot + 1, extension) == 0)
+      if (g_ascii_strcasecmp (dot + 1, extension) == 0)
         return g_strdup (filename);
       else
       {
@@ -1282,11 +1282,13 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
             for(; reprlst != NULL; reprlst = reprlst->next) {
                 Inkscape::XML::Node * repr = (Inkscape::XML::Node *)reprlst->data;
                 const gchar * temp_string;
+                gchar *dir = g_path_get_dirname(filename);
+                gchar *docdir = g_path_get_dirname(SP_ACTIVE_DOCUMENT->getURI());
 
                 if (repr->attribute("id") == NULL ||
                         !(g_strrstr(filename_ext, repr->attribute("id")) != NULL &&
                           ( !SP_ACTIVE_DOCUMENT->getURI() ||
-                            strcmp(g_dirname(filename), g_dirname(SP_ACTIVE_DOCUMENT->getURI())) == 0))) {
+                            strcmp(dir, docdir) == 0))) {
                     temp_string = repr->attribute("inkscape:export-filename");
                     if (temp_string == NULL || strcmp(temp_string, filename_ext)) {
                         repr->setAttribute("inkscape:export-filename", filename_ext);
@@ -1303,6 +1305,8 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
                     sp_repr_set_svg_double(repr, "inkscape:export-ydpi", ydpi);
                     modified = true;
                 }
+                g_free(dir);
+                g_free(docdir);
             }
             DocumentUndo::setUndoSensitive(doc, saved);
 

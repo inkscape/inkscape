@@ -631,9 +631,7 @@ SPDesktopWidget::updateTitle(gchar const* uri)
     Gtk::Window *window = (Gtk::Window*)g_object_get_data(G_OBJECT(this), "window");
 
     if (window) {
-        gchar const *fname = ( TRUE
-                               ? uri
-                               : g_basename(uri) );
+        gchar const *fname = uri;
         GString *name = g_string_new ("");
 
         gchar const *grayscalename = "(grayscale) ";

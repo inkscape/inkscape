@@ -2691,14 +2691,15 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
     g_strcanon(basename, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.=+~$#@^&!?", '_');
 
     // Build the complete path by adding document base dir, if set, otherwise home dir
-    gchar * directory = NULL;
+    gchar *directory = NULL;
     if ( document->getURI() ) {
-        directory = g_dirname( document->getURI() );
+        directory = g_path_get_dirname( document->getURI() );
     }
     if (directory == NULL) {
         directory = homedir_path(NULL);
     }
     gchar *filepath = g_build_filename(directory, basename, NULL);
+    g_free(directory);
 
     //g_print("%s\n", filepath);
 

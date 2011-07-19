@@ -340,8 +340,8 @@ br_strndup (char *str, size_t size)
  * path: A path.
  * Returns: A directory name. This string should be freed when no longer needed.
  *
- * Extracts the directory component of path. Similar to g_dirname() or the dirname
- * commandline application.
+ * Extracts the directory component of path. Similar to g_path_get_dirname()
+ * or the dirname commandline application.
  *
  * Example:
  * br_extract_dir ("/usr/local/foobar");  --> Returns: "/usr/local"
