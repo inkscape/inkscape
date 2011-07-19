@@ -2564,7 +2564,7 @@ void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, SPEventContext * /*ev
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act11->gobj()), nv->snap_manager.snapprefs.getIncludeItemCenter());
     gtk_action_set_sensitive(GTK_ACTION(act11->gobj()), c1 && c5);
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act11b->gobj()), nv->snap_manager.snapprefs.getSnapTextBaseline());
-    gtk_action_set_sensitive(GTK_ACTION(act11->gobj()), c1 && c5);
+    gtk_action_set_sensitive(GTK_ACTION(act11b->gobj()), c1 && c5);
 
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act12->gobj()), nv->snap_manager.snapprefs.getSnapToPageBorder());
     gtk_action_set_sensitive(GTK_ACTION(act12->gobj()), c1);
