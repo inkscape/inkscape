@@ -43,7 +43,7 @@ public:
     inline bool isHorizontal() const { return (normal_to_line[Geom::X] == 0.); };
     inline bool isVertical() const { return (normal_to_line[Geom::Y] == 0.); };
     inline double angle() const { return std::atan2( - normal_to_line[Geom::X], normal_to_line[Geom::Y] ); };
-    static SPGuide *createSPGuide(SPDesktop *desktop, Geom::Point const &pt1, Geom::Point const &pt2);
+    static SPGuide *createSPGuide(SPDocument *doc, Geom::Point const &pt1, Geom::Point const &pt2);
     void showSPGuide(SPCanvasGroup *group, GCallback handler);
     void hideSPGuide(SPCanvas *canvas);
     void sensitize(SPCanvas *canvas, gboolean sensitive);
@@ -58,7 +58,7 @@ public:
 
 GType sp_guide_get_type();
 
-void sp_guide_pt_pairs_to_guides(SPDesktop *dt, std::list<std::pair<Geom::Point, Geom::Point> > &pts);
+void sp_guide_pt_pairs_to_guides(SPDocument *doc, std::list<std::pair<Geom::Point, Geom::Point> > &pts);
 void sp_guide_create_guides_around_page(SPDesktop *dt);
 void sp_guide_delete_all_guides(SPDesktop *dt);
 

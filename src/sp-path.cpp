@@ -182,7 +182,7 @@ sp_path_convert_to_guides(SPItem *item)
         }
     }
 
-    sp_guide_pt_pairs_to_guides(inkscape_active_desktop(), pts);
+    sp_guide_pt_pairs_to_guides(item->document, pts);
 }
 
 /**

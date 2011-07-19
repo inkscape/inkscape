@@ -261,9 +261,8 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
     }
 }
 
-SPGuide *SPGuide::createSPGuide(SPDesktop *desktop, Geom::Point const &pt1, Geom::Point const &pt2)
+SPGuide *SPGuide::createSPGuide(SPDocument *doc, Geom::Point const &pt1, Geom::Point const &pt2)
 {
-    SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
@@ -273,7 +272,10 @@ SPGuide *SPGuide::createSPGuide(SPDesktop *desktop, Geom::Point const &pt1, Geom
     sp_repr_set_point(repr, "position", pt1);
     sp_repr_set_point(repr, "orientation", n);
 
-    desktop->namedview->appendChild(repr);
+    SPNamedView *namedview = sp_document_namedview(doc, NULL);
+    if (namedview) {
+        namedview->appendChild(repr);
+    }
     Inkscape::GC::release(repr);
 
     SPGuide *guide= SP_GUIDE(doc->getObjectByRepr(repr));
@@ -281,9 +283,9 @@ SPGuide *SPGuide::createSPGuide(SPDesktop *desktop, Geom::Point const &pt1, Geom
 }
 
 void
-sp_guide_pt_pairs_to_guides(SPDesktop *dt, std::list<std::pair<Geom::Point, Geom::Point> > &pts) {
+sp_guide_pt_pairs_to_guides(SPDocument *doc, std::list<std::pair<Geom::Point, Geom::Point> > &pts) {
     for (std::list<std::pair<Geom::Point, Geom::Point> >::iterator i = pts.begin(); i != pts.end(); ++i) {
-        SPGuide::createSPGuide(dt, (*i).first, (*i).second);
+        SPGuide::createSPGuide(doc, (*i).first, (*i).second);
     }
 }
 
@@ -302,7 +304,7 @@ sp_guide_create_guides_around_page(SPDesktop *dt) {
     pts.push_back(std::make_pair<Geom::Point, Geom::Point>(C, D));
     pts.push_back(std::make_pair<Geom::Point, Geom::Point>(D, A));
 
-    sp_guide_pt_pairs_to_guides(dt, pts);
+    sp_guide_pt_pairs_to_guides(doc, pts);
 
     DocumentUndo::done(doc, SP_VERB_NONE, _("Create Guides Around the Page"));
 }

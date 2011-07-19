@@ -1574,9 +1574,6 @@ SPItem *sp_item_first_item_child(SPObject *obj)
 }
 
 void SPItem::convert_to_guides() {
-    SPDesktop *dt = inkscape_active_desktop();
-    sp_desktop_namedview(dt);
-
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int prefs_bbox = prefs->getInt("/tools/bounding_box", 0);
     SPItem::BBoxType bbox_type = (prefs_bbox ==0)?
@@ -1600,7 +1597,7 @@ void SPItem::convert_to_guides() {
     pts.push_back(std::make_pair(C, D));
     pts.push_back(std::make_pair(D, A));
 
-    sp_guide_pt_pairs_to_guides(dt, pts);
+    sp_guide_pt_pairs_to_guides(document, pts);
 }
 
 /*

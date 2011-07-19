@@ -624,7 +624,7 @@ sp_rect_convert_to_guides(SPItem *item) {
     pts.push_back(std::make_pair(A3, A4));
     pts.push_back(std::make_pair(A4, A1));
 
-    sp_guide_pt_pairs_to_guides(inkscape_active_desktop(), pts);
+    sp_guide_pt_pairs_to_guides(item->document, pts);
 }
 
 /*

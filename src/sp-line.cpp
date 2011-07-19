@@ -184,7 +184,7 @@ void SPLine::convertToGuides(SPItem *item)
     points[0] = Geom::Point(line->x1.computed, line->y1.computed)*i2dt;
     points[1] = Geom::Point(line->x2.computed, line->y2.computed)*i2dt;
 
-    SPGuide::createSPGuide(inkscape_active_desktop(), points[0], points[1]);
+    SPGuide::createSPGuide(item->document, points[0], points[1]);
 }
 
 Geom::Affine SPLine::setTransform(SPItem *item, Geom::Affine const &xform)
