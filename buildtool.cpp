@@ -6982,8 +6982,14 @@ public:
                 }
             //## Make sure destination directory exists
             if (!createDirectory(destPath))
+            {
+                if (f)
+                {
+                fclose(f);
+                }
                 return false;
-                
+            }
+			
             //## Check whether it needs to be done
             String destName;
             if (destPath.size()>0)
@@ -9793,7 +9799,8 @@ bool Make::parsePropertyFile(const String &fileName,
             {
             error("property file %s, line %d: expected keyword",
                     fileName.c_str(), linenr);
-            return false;
+            fclose(f);
+			return false;
             }
         if (prefix.size() > 0)
             {

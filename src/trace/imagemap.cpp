@@ -78,10 +78,16 @@ GrayMap *GrayMapCreate(int width, int height)
     me->height = height;
     me->pixels = (unsigned long *)
               malloc(sizeof(unsigned long) * width * height);
+    if (!me->pixels)
+        {
+        free(me);
+        return NULL;
+        }
     me->rows = (unsigned long **)
               malloc(sizeof(unsigned long *) *  height);
-    if (!me->pixels || !me->rows)
+    if (!me->rows)
         {
+        free(me->pixels);
         free(me);
         return NULL;
         }

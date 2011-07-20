@@ -219,13 +219,15 @@ int main(int argc, char **argv)
     // create temp files somewhere else instead of current dir
     // TODO: clean them up too
     char * testpath = strdup("/tmp/streamtest-XXXXXX");
-    testpath = mkdtemp(testpath);
-    if (!testpath)
+    char * testpath2;
+    testpath2 = mkdtemp(testpath);
+    free(testpath);
+    if (!testpath2)
     {
 	    perror("mkdtemp");
 	    return 1;
     }
-    if (chdir(testpath))
+    if (chdir(testpath2))
     {
 	    perror("chdir");
 	    return 1;
