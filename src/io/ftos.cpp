@@ -320,6 +320,7 @@ string ftos(double val, char mode, int sigfig, int precision, int options)
             break;
 
         default:
+            g_free(p);
             return "**bad mode**";
     }
 
@@ -413,6 +414,7 @@ string ftos(double val, char mode, int sigfig, int precision, int options)
     fprintf(stderr, "*** End of ftos with ascii = ", ascii.c_str());
 #endif
     /* finally, we can return */
+	g_free(p);
     return ascii;
 }
 
