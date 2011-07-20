@@ -53,7 +53,7 @@ public:
                 "<_item value=\"vertical\">" N_("Vertical lines") "</_item>\n"
                 "<_item value=\"horizontal\">" N_("Horizontal lines") "</_item>\n"
               "</param>\n"
-              "<param name=\"level\" gui-text=\"" N_("Level:") "\" type=\"float\" appearance=\"full\" min=\"0.01\" max=\"10.0\">1.0</param>\n"
+              "<param name=\"level\" gui-text=\"" N_("Level:") "\" type=\"float\" appearance=\"full\" min=\"0.1\" max=\"100.0\">1.0</param>\n"
               "<param name=\"inverted\" gui-text=\"" N_("Invert colors") "\" type=\"boolean\" >false</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
@@ -80,14 +80,14 @@ EdgeDetect::get_filter_text (Inkscape::Extension::Extension * ext)
     
     const gchar *type = ext->get_param_enum("type");
 
-    level << ext->get_param_float("level");
+    level << 1 / ext->get_param_float("level");
     
     if ((g_ascii_strcasecmp("vertical", type) == 0)) {
         matrix << "0 0 0 1 -2 1 0 0 0";
     } else if ((g_ascii_strcasecmp("horizontal", type) == 0)) {
         matrix << "0 1 0 0 -2 0 0 1 0";
     } else {
-        matrix << "1 1 1 1 -8 1 1 1 1";
+        matrix << "0 1 0 1 -4 1 0 1 0";
     }
     
     if (ext->get_param_bool("inverted")) {

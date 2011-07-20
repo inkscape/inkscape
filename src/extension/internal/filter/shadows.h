@@ -37,7 +37,8 @@ namespace Filter {
     * Blur type (enum, default outer) ->
         outer = composite1 (operator="in"), composite2 (operator="over", in1="SourceGraphic", in2="offset")
         inner = composite1 (operator="out"), composite2 (operator="atop", in1="offset", in2="SourceGraphic")
-        cutout = composite1 (operator="in"), composite2 (operator="out", in1="offset", in2="SourceGraphic")
+        innercut = composite1 (operator="in"), composite2 (operator="out", in1="offset", in2="SourceGraphic")
+        outercut = composite1 (operator="out"), composite2 (operator="in", in1="SourceGraphic", in2="offset")
     * Color (guint, default 0,0,0,127) -> flood (flood-opacity, flood-color)
     * Use object's color (boolean, default false) -> composite1 (in1, in2)
 */
@@ -62,7 +63,8 @@ public:
                   "<param name=\"type\" gui-text=\"" N_("Blur type:") "\" type=\"enum\" >\n"
                     "<_item value=\"outer\">" N_("Outer") "</_item>\n"
                     "<_item value=\"inner\">" N_("Inner") "</_item>\n"
-                    "<_item value=\"cutout\">" N_("Cutout") "</_item>\n"
+                    "<_item value=\"innercut\">" N_("Inner cutout") "</_item>\n"
+                    "<_item value=\"outercut\">" N_("Outer cutout") "</_item>\n"
                   "</param>\n"
                 "</page>\n"
                 "<page name=\"coltab\" _gui-text=\"" N_("Blur color") "\">\n"
@@ -113,14 +115,26 @@ ColorizableDropShadow::get_filter_text (Inkscape::Extension::Extension * ext)
     g << ((color >> 16) & 0xff);
     b << ((color >>  8) & 0xff);
 
-    if (ext->get_param_bool("objcolor")) {
-        comp1in1 << "SourceGraphic";
-        comp1in2 << "flood";
+    // Select object or user-defined color
+    if ((g_ascii_strcasecmp("outercut", type) == 0)) {
+        if (ext->get_param_bool("objcolor")) {
+            comp2in1 << "SourceGraphic";
+            comp2in2 << "offset";
+        } else {
+            comp2in1 << "offset";
+            comp2in2 << "SourceGraphic";
+        }
     } else {
-        comp1in1 << "flood";
-        comp1in2 << "SourceGraphic";
+        if (ext->get_param_bool("objcolor")) {
+            comp1in1 << "SourceGraphic";
+            comp1in2 << "flood";
+        } else {
+            comp1in1 << "flood";
+            comp1in2 << "SourceGraphic";
+        }
     }
 
+    // Shadow mode
     if ((g_ascii_strcasecmp("outer", type) == 0)) {
         comp1op << "in";
         comp2op << "over";
@@ -131,14 +145,18 @@ ColorizableDropShadow::get_filter_text (Inkscape::Extension::Extension * ext)
         comp2op << "atop";
         comp2in1 << "offset";
         comp2in2 << "SourceGraphic";
-    } else {
+    } else if ((g_ascii_strcasecmp("innercut", type) == 0)) {
         comp1op << "in";
         comp2op << "out";
         comp2in1 << "offset";
         comp2in2 << "SourceGraphic";
+    } else { //outercut
+        comp1op << "out";
+        comp1in1 << "flood";
+        comp1in2 << "SourceGraphic";
+        comp2op << "in";
     }
-    
-    
+
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1.2\" width=\"1.2\" y=\"-0.1\" x=\"-0.1\" inkscape:label=\"Drop shadow, custom\">\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"

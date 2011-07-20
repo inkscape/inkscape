@@ -39,9 +39,10 @@ namespace Filter {
     Brightness filter.
 
     Filter's parameters:
-    * Strength (-10.->10., default 1) -> colorMatrix (RVB entries)
-    * Vibration (-10.->10., default 0.) -> colorMatrix (6 other entries)
+    * Brightness (1.->10., default 2.) -> colorMatrix (RVB entries)
+    * Over-saturation (0.->10., default 0.5) -> colorMatrix (6 other entries)
     * Lightness (-10.->10., default 0.) -> colorMatrix (last column)
+    * Inverted (boolean, default false) -> colorMatrix
     
     Matrix:
       St Vi Vi 0  Li
@@ -62,9 +63,10 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Brightness, custom (Color)") "</name>\n"
               "<id>org.inkscape.effect.filter.Brightness</id>\n"
-              "<param name=\"strength\" gui-text=\"" N_("Strength:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">1</param>\n"
-              "<param name=\"vibration\" gui-text=\"" N_("Vibration:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0</param>\n"
+              "<param name=\"brightness\" gui-text=\"" N_("Brightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"1\" max=\"10.00\">2</param>\n"
+              "<param name=\"sat\" gui-text=\"" N_("Over-saturation:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.0\" max=\"10.00\">0.5</param>\n"
               "<param name=\"lightness\" gui-text=\"" N_("Lightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0</param>\n"
+              "<param name=\"invert\" gui-text=\"" N_("Inverted") "\" type=\"boolean\">false</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -83,21 +85,29 @@ Brightness::get_filter_text (Inkscape::Extension::Extension * ext)
 {
     if (_filter != NULL) g_free((void *)_filter);
 
-    std::ostringstream strength;
-    std::ostringstream vibration;
+    std::ostringstream brightness;
+    std::ostringstream sat;
     std::ostringstream lightness;
 
-    strength << ext->get_param_float("strength");
-    vibration << ext->get_param_float("vibration");
-    lightness << ext->get_param_float("lightness");
+    if (ext->get_param_bool("invert")) {
+        brightness << -ext->get_param_float("brightness");
+        sat << 1 + ext->get_param_float("sat");
+        lightness << -ext->get_param_float("lightness");
+    } else {
+        brightness << ext->get_param_float("brightness");
+        sat << -ext->get_param_float("sat");
+        lightness << ext->get_param_float("lightness");
+    }
+    
+    
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Brightness, custom\">\n"
           "<feColorMatrix values=\"%s %s %s 0 %s %s %s %s 0 %s %s %s %s 0 %s 0 0 0 1 0 \" />\n"
-        "</filter>\n", strength.str().c_str(), vibration.str().c_str(), vibration.str().c_str(),
-            lightness.str().c_str(), vibration.str().c_str(), strength.str().c_str(),
-            vibration.str().c_str(), lightness.str().c_str(), vibration.str().c_str(),
-            vibration.str().c_str(), strength.str().c_str(), lightness.str().c_str());
+        "</filter>\n", brightness.str().c_str(), sat.str().c_str(), sat.str().c_str(),
+            lightness.str().c_str(), sat.str().c_str(), brightness.str().c_str(),
+            sat.str().c_str(), lightness.str().c_str(), sat.str().c_str(),
+            sat.str().c_str(), brightness.str().c_str(), lightness.str().c_str());
 
     return _filter;
 }; /* Brightness filter */
@@ -192,11 +202,12 @@ Colorize::get_filter_text (Inkscape::Extension::Extension * ext)
     nlight << ext->get_param_float("nlight");
     blend1 << ext->get_param_enum("blend1");
     blend2 << ext->get_param_enum("blend2");
-    if (ext->get_param_bool("duotone"))
+    if (ext->get_param_bool("duotone")) {
         duotone << "0";
-    else
+    } else {
         duotone << "1";
-
+    }
+    
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Colorize, custom\">\n"
           "<feComposite in2=\"SourceGraphic\" operator=\"arithmetic\" k1=\"%s\" k2=\"%s\" result=\"composite1\" />\n"
@@ -297,17 +308,17 @@ Duochrome::get_filter_text (Inkscape::Extension::Extension * ext)
     b2 << ((color2 >>  8) & 0xff);
     fluo << fluorescence;
 
-    if((g_ascii_strcasecmp("full", swaptype) == 0)) {
+    if ((g_ascii_strcasecmp("full", swaptype) == 0)) {
         swap1 << "in";
         swap2 << "out";
         a1 << (color1 & 0xff) / 255.0F;
         a2 << (color2 & 0xff) / 255.0F;
-    } else if((g_ascii_strcasecmp("color", swaptype) == 0)) {
+    } else if ((g_ascii_strcasecmp("color", swaptype) == 0)) {
         swap1 << "in";
         swap2 << "out";
         a1 << (color2 & 0xff) / 255.0F;
         a2 << (color1 & 0xff) / 255.0F;
-    } else if((g_ascii_strcasecmp("alpha", swaptype) == 0)) {
+    } else if ((g_ascii_strcasecmp("alpha", swaptype) == 0)) {
         swap1 << "out";
         swap2 << "in";
         a1 << (color2 & 0xff) / 255.0F;
@@ -395,8 +406,9 @@ Electrize::get_filter_text (Inkscape::Extension::Extension * ext)
     // TransfertComponent table values are calculated based on the effect level and inverted parameters.
     int val = 0;
     int levels = ext->get_param_int("levels") + 1;
-    if (ext->get_param_bool("invert"))
+    if (ext->get_param_bool("invert")) {
         val = 1;
+    }
     values << val;
     for ( int step = 1 ; step <= levels ; step++ ) {
         if (val == 1) {
@@ -721,7 +733,7 @@ Solarize::get_filter_text (Inkscape::Extension::Extension * ext)
 
     rotate << ext->get_param_int("rotate");
     const gchar *type = ext->get_param_enum("type");
-    if((g_ascii_strcasecmp("solarize", type) == 0)) {
+    if ((g_ascii_strcasecmp("solarize", type) == 0)) {
     // Solarize
         blend1 << "darken";
         blend2 << "screen";
@@ -854,21 +866,21 @@ Tritone::get_filter_text (Inkscape::Extension::Extension * ext)
     glight << ext->get_param_float("glight");
     
     const gchar *type = ext->get_param_enum("type");
-    if((g_ascii_strcasecmp("enhue", type) == 0)) {
+    if ((g_ascii_strcasecmp("enhue", type) == 0)) {
     // Enhance hue
         c1in << "qminp";
         c1in2 << "flood";
         c2in << "SourceGraphic";
         c2in2 << "blend6";
         b6in2 << "qminpc";
-    } else if((g_ascii_strcasecmp("rad", type) == 0)) {
+    } else if ((g_ascii_strcasecmp("rad", type) == 0)) {
     // Radiation
         c1in << "qminp";
         c1in2 << "flood";
         c2in << "blend6";
         c2in2 << "qminpc";
         b6in2 << "SourceGraphic";
-    } else if((g_ascii_strcasecmp("htb", type) == 0)) {
+    } else if ((g_ascii_strcasecmp("htb", type) == 0)) {
     // Hue to background
         c1in << "qminp";
         c1in2 << "BackgroundImage";

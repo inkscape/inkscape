@@ -580,7 +580,7 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
         Normal = feComponentTransfer
         Dented = Normal + intermediate values
     * Transfer type (enum, default "descrete") -> component (type)
-    * Levels (1->15, default 5) -> component (tableValues)
+    * Levels (0->15, default 5) -> component (tableValues)
     * Blend mode (enum, default "Lighten") -> blend (mode)
     * Primary simplify (0.01->100., default 4.) -> blur1 (stdDeviation)
     * Secondary simplify (0.01->100., default 0.5) -> blur2 (stdDeviation)
@@ -609,11 +609,13 @@ public:
                 "<_item value=\"discrete\">Poster</_item>\n"
                 "<_item value=\"table\">Painting</_item>\n"
               "</param>\n"
-              "<param name=\"levels\" gui-text=\"" N_("Levels:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"15\">5</param>\n"
+              "<param name=\"levels\" gui-text=\"" N_("Levels:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"15\">5</param>\n"
               "<param name=\"blend\" gui-text=\"" N_("Blend mode:") "\" type=\"enum\">\n"
                 "<_item value=\"lighten\">Lighten</_item>\n"
                 "<_item value=\"normal\">Normal</_item>\n"
                 "<_item value=\"darken\">Darken</_item>\n"
+                "<_item value=\"multiply\">Multiply</_item>\n"
+                "<_item value=\"screen\">Screen</_item>\n"
               "</param>\n"
               "<param name=\"blur1\" gui-text=\"" N_("Simplify (primary):") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.00\">4.0</param>\n"
               "<param name=\"blur2\" gui-text=\"" N_("Simplify (secondary):") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.00\">0.5</param>\n"
@@ -659,11 +661,19 @@ Posterize::get_filter_text (Inkscape::Extension::Extension * ext)
     int levels = ext->get_param_int("levels") + 1;
     const gchar *effecttype =  ext->get_param_enum("type");
     float val = 0.0;
-    for ( int step = 1 ; step <= levels ; step++ ) {
-        val = (float) step / levels;
-        transf << " " << val;
-        if((g_ascii_strcasecmp("dented", effecttype) == 0)) {
-            transf << " " << (val - ((float) 1 / (3 * levels))) << " " << (val + ((float) 1 / (2 * levels)));
+    if (levels == 1) {
+        if ((g_ascii_strcasecmp("dented", effecttype) == 0)) {
+            transf << " 1 0 1";
+        } else {
+            transf << " 1";
+        }
+    } else {
+        for ( int step = 1 ; step <= levels ; step++ ) {
+            val = (float) step / levels;
+            transf << " " << val;
+            if ((g_ascii_strcasecmp("dented", effecttype) == 0)) {
+                transf << " " << (val - ((float) 1 / (3 * levels))) << " " << (val + ((float) 1 / (2 * levels)));
+            }
         }
     }
     transf << " 1";
