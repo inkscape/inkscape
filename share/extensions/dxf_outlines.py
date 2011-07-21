@@ -161,7 +161,7 @@ class MyEffect(inkex.Effect):
         if style:
             style = simplestyle.parseStyle(style)
             if style.has_key('stroke'):
-                if style['stroke'] and style['stroke'] != 'none':
+                if style['stroke'] and style['stroke'] != 'none' and style['stroke'][0:3] != 'url':
                     rgb = simplestyle.parseColor(style['stroke'])
         hsl = coloreffect.ColorEffect.rgb_to_hsl(coloreffect.ColorEffect(),rgb[0]/255.0,rgb[1]/255.0,rgb[2]/255.0)
         self.color = 7                                  # default is black
