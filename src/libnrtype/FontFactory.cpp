@@ -404,7 +404,10 @@ Glib::ustring font_factory::GetUIFamilyString(PangoFontDescription const *fontDe
 
     if (fontDescr) {
         // For now, keep it as family name taken from pango
-        family = pango_font_description_get_family(fontDescr);
+        const char *pangoFamily = pango_font_description_get_family(fontDescr);
+        if( pangoFamily ) {
+            family = pangoFamily;
+        }
     }
 
     return family;
