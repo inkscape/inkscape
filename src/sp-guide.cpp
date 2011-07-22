@@ -476,6 +476,10 @@ char *sp_guide_description(SPGuide const *guide, const bool verbose)
     using Geom::Y;
 
     SPNamedView *namedview = sp_document_namedview(guide->document, NULL);
+    if (!namedview) {
+        // Guide has probably been deleted and no longer has an attached namedview.
+        return g_strdup_printf(_("Deleted"));
+    }
     GString *position_string_x = SP_PX_TO_METRIC_STRING(guide->point_on_line[X],
                                                         namedview->getDefaultMetric());
     GString *position_string_y = SP_PX_TO_METRIC_STRING(guide->point_on_line[Y],
