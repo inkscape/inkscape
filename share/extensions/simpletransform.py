@@ -200,7 +200,7 @@ def computeBBox(aList,mat=[[1,0,0],[0,1,0]]):
             d = node.get('d')
         elif node.get('points'):
             d = 'M' + node.get('points')
-        elif node.tag in [ inkex.addNS('rect','svg'), 'rect' ]:
+        elif node.tag in [ inkex.addNS('rect','svg'), 'rect', inkex.addNS('image','svg'), 'image' ]:
             d = 'M' + node.get('x', '0') + ',' + node.get('y', '0') + \
                 'h' + node.get('width') + 'v' + node.get('height') + \
                 'h-' + node.get('width')
