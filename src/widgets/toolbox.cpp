@@ -6361,6 +6361,20 @@ static void cell_data_func(GtkCellLayout * /*cell_layout*/,
 }
 
 // Font family
+//
+// In most cases we should just be able to set the new family name
+// but there may be cases where a font family doesn't follow the
+// standard naming pattern. To handle those cases, we do a song and
+// dance to use Pango to find the best match. To do that we start
+// with the old "fontSpec" (which is the returned string from
+// pango_font_description_to_string() with the size unset). This
+// has the form "[family-list] [style-options]" where the
+// family-list is a comma separated list of font-family names
+// (optionally terminated by a comma). An example would be
+// "DejaVu Sans, Sans Bold". Only a "fontSpec" containing a
+// single font-family will work with Pango's best match routine.
+// If we can't obtain a good "fontSpec", we then resort to blindly
+// changing the font-family.
 static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GObject *tbl )
 {
 #ifdef DEBUG_TEXT
@@ -6385,6 +6399,9 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
     int result_fontspec = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
     Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
+#ifdef DEBUG_TEXT
+    std::cout << "  fontSpec from query :" << fontSpec << ":" << std::endl;
+#endif
 
     // If that didn't work, try to get font spec from style
     if (fontSpec.empty()) {
@@ -6400,90 +6417,90 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
             fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
             fontFromStyle->Unref();
         }
+
 #ifdef DEBUG_TEXT
-        std::cout << "  Fontspec not defined, reconstructed from style :" << fontSpec << ":" << std::endl;
+        std::cout << "  fontSpec empty, try from style" << std::endl;
+        std::cout << "           from style :" << fontSpec << ":" << std::endl;
         sp_print_font( query );
 #endif
+
     }
 
-    // And if that didn't work use default
-    if( fontSpec.empty() ) {
+    // And if that didn't work use default. DO WE REALLY WANT TO DO THIS?
+    if ( fontSpec.empty() ) {
+
         sp_style_read_from_prefs(query, "/tools/text");
-#ifdef DEBUG_TEXT
-        std::cout << "    read style from prefs:" << std::endl;
-        sp_print_font( query );
-#endif
+
         // Construct a new font specification if it does not yet exist
         font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
-        if( fontFromStyle ) {
+        if ( fontFromStyle ) {
             fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
             fontFromStyle->Unref();
         }
+
 #ifdef DEBUG_TEXT
-        std::cout << "  Fontspec not defined, reconstructed from style :" << fontSpec << ":" << std::endl;
+        std::cout << "  fontSpec empty, trying from prefs" << std::endl;
+        std::cout << "           from prefs :" << fontSpec << ":" << std::endl;
         sp_print_font( query );
 #endif
     }
 
+    // Now we have a font specification, replace family.
+    Glib::ustring  newFontSpec = "";
     SPCSSAttr *css = sp_repr_css_attr_new ();
-    if (!fontSpec.empty()) {
 
-        // Now we have a font specification, replace family.
-        Glib::ustring  newFontSpec = font_factory::Default()->ReplaceFontSpecificationFamily(fontSpec, family);
+    if (!fontSpec.empty()) newFontSpec = font_factory::Default()->ReplaceFontSpecificationFamily(fontSpec, family);
 
 #ifdef DEBUG_TEXT
-        std::cout << "  New FontSpec from ReplaceFontSpecificationFamily :" << newFontSpec << ":" << std::endl;
+    std::cout << "  New FontSpec from ReplaceFontSpecificationFamily :" << newFontSpec << ":" << std::endl;
 #endif
 
-        if (!newFontSpec.empty()) {
+    if (!fontSpec.empty() && !newFontSpec.empty() ) {
 
-            if (fontSpec != newFontSpec) {
+        if (fontSpec != newFontSpec) {
 
-                font_instance *font = font_factory::Default()->FaceFromFontSpecification(newFontSpec.c_str());
+            font_instance *font = font_factory::Default()->FaceFromFontSpecification(newFontSpec.c_str());
 
-                if (font) {
-                    sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str());
+            if (font) {
+                sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str());
 
-                    // Set all the these just in case they were altered when finding the best
-                    // match for the new family and old style...
+                // Set all the these just in case they were altered when finding the best
+                // match for the new family and old style...  Unnecessary?
 
-                    gchar c[256];
+                gchar c[256];
 
-                    font->Family(c, 256);
+                font->Family(c, 256);
 
-                    sp_repr_css_set_property (css, "font-family", c);
+                sp_repr_css_set_property (css, "font-family", c);
 
-                    font->Attribute( "weight", c, 256);
-                    sp_repr_css_set_property (css, "font-weight", c);
+                font->Attribute( "weight", c, 256);
+                sp_repr_css_set_property (css, "font-weight", c);
 
-                    font->Attribute("style", c, 256);
-                    sp_repr_css_set_property (css, "font-style", c);
+                font->Attribute("style", c, 256);
+                sp_repr_css_set_property (css, "font-style", c);
 
-                    font->Attribute("stretch", c, 256);
-                    sp_repr_css_set_property (css, "font-stretch", c);
+                font->Attribute("stretch", c, 256);
+                sp_repr_css_set_property (css, "font-stretch", c);
 
-                    font->Attribute("variant", c, 256);
-                    sp_repr_css_set_property (css, "font-variant", c);
+                font->Attribute("variant", c, 256);
+                sp_repr_css_set_property (css, "font-variant", c);
 
-                    font->Unref();
-                }
+                font->Unref();
+            } else {
+                g_warning(_("Failed to find font matching: %s\n"), newFontSpec.c_str());
             }
+        }   
+    } else {
 
-        } else {
+        // Either old font does not exist on system or ReplaceFontSpecificationFamily() failed.
+        // Blindly fall back to setting the family to text in the font-family chooser.
 
-            // newFontSpec empty
-            // If the old font on selection (or default) does not exist on the system,
-            // or the new font family does not exist,
-            // ReplaceFontSpecificationFamily does not work. In that case we fall back to blindly
-            // setting the family reported by the family chooser.
-
-            // g_print ("fallback setting family: %s\n", family);
-            sp_repr_css_set_property (css, "-inkscape-font-specification", family);
-            sp_repr_css_set_property (css, "font-family", family);
-            // Shoud we set other css font attributes?
-        }
-
-    }  // fontSpec not empty or not
+#ifdef DEBUG_TEXT
+        std::cout << "  Failed to find new font, blindly setting family: " << family << std::endl;
+#endif
+        sp_repr_css_set_property (css, "-inkscape-font-specification", family);
+        sp_repr_css_set_property (css, "font-family", family);
+    }
 
     // If querying returned nothing, update default style.
     if (result_fontspec == QUERY_STYLE_NOTHING)
@@ -6600,7 +6617,7 @@ static void sp_text_style_changed( InkToggleAction* act, GObject *tbl )
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
 
         font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
-        if( fontFromStyle ) {
+        if ( fontFromStyle ) {
             fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
             fontFromStyle->Unref();
         }
@@ -6617,67 +6634,51 @@ static void sp_text_style_changed( InkToggleAction* act, GObject *tbl )
         case 0:
         {
             // Bold
-            if (!fontSpec.empty()) {
+            if (!fontSpec.empty())  newFontSpec = font_factory::Default()->FontSpecificationSetBold(fontSpec, active);
+            if ( !fontSpec.empty() && !newFontSpec.empty() ) {
 
-                newFontSpec = font_factory::Default()->FontSpecificationSetBold(fontSpec, active);
-
-                if (!newFontSpec.empty()) {
-
-                    // Set weight if we found font.
-                    font_instance * font = font_factory::Default()->FaceFromFontSpecification(newFontSpec.c_str());
-                    if (font) {
-                        gchar c[256];
-                        font->Attribute( "weight", c, 256);
-                        sp_repr_css_set_property (css, "font-weight", c);
-                        font->Unref();
-                        font = NULL;
-                    }
-                    nochange = false;
+                // Set weight using new font if found.
+                font_instance * font = font_factory::Default()->FaceFromFontSpecification(newFontSpec.c_str());
+                if (font) {
+                    gchar c[256];
+                    font->Attribute( "weight", c, 256);
+                    sp_repr_css_set_property (css, "font-weight", c);
+                    font->Unref();
+                    font = NULL;
                 }
+                nochange = false;
+            } else {
+
+                // Blindly set weight.
+                sp_repr_css_set_property (css, "font-weight", (active == 0 ? "normal" : "bold") );
             }
-            // Reset button if no change.
-            // The reset code didn't work in 0.47 and doesn't here... one must prevent an infinite loop
-            /*
-            if(nochange) {
-                gtk_action_block_activate( GTK_ACTION(act) );
-                gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), !active );
-                gtk_action_unblock_activate( GTK_ACTION(act) );
-            }
-            */
             break;
         }
 
         case 1:
         {
             // Italic/Oblique
-            if (!fontSpec.empty()) {
+            if (!fontSpec.empty()) newFontSpec = font_factory::Default()->FontSpecificationSetItalic(fontSpec, active);
 
-                newFontSpec = font_factory::Default()->FontSpecificationSetItalic(fontSpec, active);
+            if ( !fontSpec.empty() && !newFontSpec.empty() ) {
 
-                if (!newFontSpec.empty()) {
-
-                    // Don't even set the italic/oblique if the font didn't exist on the system
-                    if( active ) {
-                        if( newFontSpec.find( "Italic" ) != Glib::ustring::npos ) {
-                            sp_repr_css_set_property (css, "font-style", "italic");
-                        } else {
-                            sp_repr_css_set_property (css, "font-style", "oblique");
-                        }
+                // Don't even set the italic/oblique if the font didn't exist on the system
+                if ( active ) {
+                    if ( newFontSpec.find( "Italic" ) != Glib::ustring::npos ) {
+                        sp_repr_css_set_property (css, "font-style", "italic");
                     } else {
-                        sp_repr_css_set_property (css, "font-style", "normal");
+                        sp_repr_css_set_property (css, "font-style", "oblique");
                     }
-                    nochange = false;
+                } else {
+                    sp_repr_css_set_property (css, "font-style", "normal");
                 }
+                nochange = false;
+
+            } else {
+
+                // Blindly set style.
+                sp_repr_css_set_property (css, "font-style", (active == 0 ? "normal" : "italic") );
             }
-            // Reset button if no change.
-            // The reset code didn't work in 0.47... one must prevent an infinite loop
-            /*
-            if(nochange) {
-                gtk_action_block_activate( GTK_ACTION(act) );
-                gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), !active );
-                gtk_action_unblock_activate( GTK_ACTION(act) );
-            }
-            */
             break;
         }
     }
@@ -7228,7 +7229,7 @@ static void sp_text_orientation_mode_changed( EgeSelectOneAction *act, GObject *
  * This function sets up the text-tool tool-controls, setting the entry boxes
  * etc. to the values from the current selection or the default if no selection.
  * It is called whenever a text selection is changed, including stepping cursor
- * through text.
+ * through text, or setting focus to text.
  */
 static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/, GObject *tbl)
 {
