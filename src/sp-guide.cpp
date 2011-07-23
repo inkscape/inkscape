@@ -475,40 +475,43 @@ char *sp_guide_description(SPGuide const *guide, const bool verbose)
     using Geom::X;
     using Geom::Y;
 
-    SPNamedView *namedview = sp_document_namedview(guide->document, NULL);
-    if (!namedview) {
+    char *descr = 0;
+    if ( !guide->document ) {
         // Guide has probably been deleted and no longer has an attached namedview.
-        return g_strdup_printf(_("Deleted"));
-    }
-    GString *position_string_x = SP_PX_TO_METRIC_STRING(guide->point_on_line[X],
-                                                        namedview->getDefaultMetric());
-    GString *position_string_y = SP_PX_TO_METRIC_STRING(guide->point_on_line[Y],
-                                                        namedview->getDefaultMetric());
-
-    gchar *shortcuts = g_strdup_printf("; %s", _("<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to delete"));
-    gchar *descr;
-
-    if ( are_near(guide->normal_to_line, component_vectors[X]) ||
-         are_near(guide->normal_to_line, -component_vectors[X]) ) {
-        descr = g_strdup_printf(_("vertical, at %s"), position_string_x->str);
-    } else if ( are_near(guide->normal_to_line, component_vectors[Y]) ||
-                are_near(guide->normal_to_line, -component_vectors[Y]) ) {
-        descr = g_strdup_printf(_("horizontal, at %s"), position_string_y->str);
+        descr = g_strdup_printf(_("Deleted"));
     } else {
-        double const radians = guide->angle();
-        double const degrees = Geom::rad_to_deg(radians);
-        int const degrees_int = (int) round(degrees);
-        descr = g_strdup_printf(_("at %d degrees, through (%s,%s)"), 
-                                degrees_int, position_string_x->str, position_string_y->str);
+        SPNamedView *namedview = sp_document_namedview(guide->document, NULL);
+
+        GString *position_string_x = SP_PX_TO_METRIC_STRING(guide->point_on_line[X],
+                                                            namedview->getDefaultMetric());
+        GString *position_string_y = SP_PX_TO_METRIC_STRING(guide->point_on_line[Y],
+                                                            namedview->getDefaultMetric());
+
+        gchar *shortcuts = g_strdup_printf("; %s", _("<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to delete"));
+
+        if ( are_near(guide->normal_to_line, component_vectors[X]) ||
+             are_near(guide->normal_to_line, -component_vectors[X]) ) {
+            descr = g_strdup_printf(_("vertical, at %s"), position_string_x->str);
+        } else if ( are_near(guide->normal_to_line, component_vectors[Y]) ||
+                    are_near(guide->normal_to_line, -component_vectors[Y]) ) {
+            descr = g_strdup_printf(_("horizontal, at %s"), position_string_y->str);
+        } else {
+            double const radians = guide->angle();
+            double const degrees = Geom::rad_to_deg(radians);
+            int const degrees_int = (int) round(degrees);
+            descr = g_strdup_printf(_("at %d degrees, through (%s,%s)"), 
+                                    degrees_int, position_string_x->str, position_string_y->str);
+        }
+
+        g_string_free(position_string_x, TRUE);
+        g_string_free(position_string_y, TRUE);
+
+        if (verbose) {
+            descr = g_strconcat(descr, shortcuts, NULL);
+        }
+        g_free(shortcuts);
     }
 
-    g_string_free(position_string_x, TRUE);
-    g_string_free(position_string_y, TRUE);
-
-    if (verbose) {
-        descr = g_strconcat(descr, shortcuts, NULL);
-    }
-    g_free(shortcuts);
     return descr;
 }
 
