@@ -83,77 +83,7 @@ static void sp_ctrlrect_destroy(GtkObject *object)
         (* GTK_OBJECT_CLASS(parent_class)->destroy)(object);
     }
 }
-#if 0
-/* FIXME: use definitions from somewhere else */
-#define RGBA_R(v) ((v) >> 24)
-#define RGBA_G(v) (((v) >> 16) & 0xff)
-#define RGBA_B(v) (((v) >> 8) & 0xff)
-#define RGBA_A(v) ((v) & 0xff)
 
-static void sp_ctrlrect_hline(SPCanvasBuf *buf, gint y, gint xs, gint xe, guint32 rgba, guint dashed)
-{
-    if (y >= buf->rect.y0 && y < buf->rect.y1) {
-        guint const r = RGBA_R(rgba);
-        guint const g = RGBA_G(rgba);
-        guint const b = RGBA_B(rgba);
-        guint const a = RGBA_A(rgba);
-        gint const x0 = MAX(buf->rect.x0, xs);
-        gint const x1 = MIN(buf->rect.x1, xe + 1);
-        guchar *p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 4;
-        for (gint x = x0; x < x1; x++) {
-            if (!dashed || ((x / DASH_LENGTH) % 2)) {
-                p[0] = INK_COMPOSE(r, a, p[0]);
-                p[1] = INK_COMPOSE(g, a, p[1]);
-                p[2] = INK_COMPOSE(b, a, p[2]);
-            }
-            p += 4;
-        }
-    }
-}
-
-static void sp_ctrlrect_vline(SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba, guint dashed)
-{
-    if (x >= buf->rect.x0 && x < buf->rect.x1) {
-        guint const r = RGBA_R(rgba);
-        guint const g = RGBA_G(rgba);
-        guint const b = RGBA_B(rgba);
-        guint const a = RGBA_A(rgba);
-        gint const y0 = MAX(buf->rect.y0, ys);
-        gint const y1 = MIN(buf->rect.y1, ye + 1);
-        guchar *p = buf->buf + (y0 - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 4;
-        for (gint y = y0; y < y1; y++) {
-            if (!dashed || ((y / DASH_LENGTH) % 2)) {
-                p[0] = INK_COMPOSE(r, a, p[0]);
-                p[1] = INK_COMPOSE(g, a, p[1]);
-                p[2] = INK_COMPOSE(b, a, p[2]);
-            }
-            p += buf->buf_rowstride;
-        }
-    }
-}
-
-/** Fills the pixels in [xs, xe)*[ys,ye) clipped to the tile with rgb * a. */
-static void sp_ctrlrect_area(SPCanvasBuf *buf, gint xs, gint ys, gint xe, gint ye, guint32 rgba)
-{
-    guint const r = RGBA_R(rgba);
-    guint const g = RGBA_G(rgba);
-    guint const b = RGBA_B(rgba);
-    guint const a = RGBA_A(rgba);
-    gint const x0 = MAX(buf->rect.x0, xs);
-    gint const x1 = MIN(buf->rect.x1, xe + 1);
-    gint const y0 = MAX(buf->rect.y0, ys);
-    gint const y1 = MIN(buf->rect.y1, ye + 1);
-    for (gint y = y0; y < y1; y++) {
-        guchar *p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 4;
-        for (gint x = x0; x < x1; x++) {
-            p[0] = INK_COMPOSE(r, a, p[0]);
-            p[1] = INK_COMPOSE(g, a, p[1]);
-            p[2] = INK_COMPOSE(b, a, p[2]);
-            p += 4;
-        }
-    }
-}
-#endif
 
 static void sp_ctrlrect_render(SPCanvasItem *item, SPCanvasBuf *buf)
 {
@@ -220,29 +150,6 @@ void CtrlRect::render(SPCanvasBuf *buf)
             cairo_fill(buf->ct);
         }
         cairo_restore(buf->ct);
-#if 0
-        /* Top */
-        sp_ctrlrect_hline(buf, _area.y0, _area.x0, _area.x1, _border_color, _dashed);
-        /* Bottom */
-        sp_ctrlrect_hline(buf, _area.y1, _area.x0, _area.x1, _border_color, _dashed);
-        /* Left */
-        sp_ctrlrect_vline(buf, _area.x0, _area.y0 + 1, _area.y1 - 1, _border_color, _dashed);
-        /* Right */
-        sp_ctrlrect_vline(buf, _area.x1, _area.y0 + 1, _area.y1 - 1, _border_color, _dashed);
-        if (_shadow_size > 0) {
-            /* Right shadow */
-            sp_ctrlrect_area(buf, _area.x1 + 1, _area.y0 + _shadow_size,
-                             _area.x1 + _shadow_size, _area.y1 + _shadow_size, _shadow_color);
-            /* Bottom shadow */
-            sp_ctrlrect_area(buf, _area.x0 + _shadow_size, _area.y1 + 1,
-                             _area.x1, _area.y1 + _shadow_size, _shadow_color);
-        }
-        if (_has_fill) {
-            /* Fill */
-            sp_ctrlrect_area(buf, _area.x0 + 1, _area.y0 + 1,
-                             _area.x1 - 1, _area.y1 - 1, _fill_color);
-        }
-#endif
     }
 }
 
