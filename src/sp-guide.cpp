@@ -507,7 +507,9 @@ char *sp_guide_description(SPGuide const *guide, const bool verbose)
         g_string_free(position_string_y, TRUE);
 
         if (verbose) {
-            descr = g_strconcat(descr, shortcuts, NULL);
+            gchar *oldDescr = descr;
+            descr = g_strconcat(oldDescr, shortcuts, NULL);
+            g_free(oldDescr);
         }
         g_free(shortcuts);
     }
