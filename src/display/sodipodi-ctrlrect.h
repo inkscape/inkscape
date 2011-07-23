@@ -18,7 +18,8 @@
 
 #include <glib/gtypes.h>
 #include "sp-canvas-item.h"
-#include "libnr/nr-rect-l.h"
+#include <2geom/rect.h>
+#include <2geom/int-rect.h>
 
 struct SPCanvasBuf;
 
@@ -47,7 +48,7 @@ private:
     Geom::Rect _rect;
     bool _has_fill;
     bool _dashed;
-    NRRectL _area;
+    Geom::OptIntRect _area;
     gint _shadow_size;
     guint32 _border_color;
     guint32 _fill_color;
