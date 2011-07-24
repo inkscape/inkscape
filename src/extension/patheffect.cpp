@@ -65,11 +65,9 @@ PathEffect::processPathEffects (SPDocument * doc, Inkscape::XML::Node * path)
         Inkscape::Extension::PathEffect * peffect;
         peffect = dynamic_cast<Inkscape::Extension::PathEffect *>(Inkscape::Extension::db.get(ext_id));
         if (peffect != NULL) {
-
+            peffect->processPath(doc, path, prefs);
             continue;
         }
-
-        peffect->processPath(doc, path, prefs);
     }
 
     g_strfreev(patheffects);
