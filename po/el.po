@@ -22628,7 +22628,7 @@ msgstr "tutorial-basic.el.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1914
 msgid "tutorial-shapes.svg"
-msgstr "tutorial-shapes.svg"
+msgstr "tutorial-shapes.el.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1918
