@@ -83,6 +83,11 @@ public:
     }
     IntCoord operator[](Dim2 d) const { return _pt[d]; }
     IntCoord &operator[](Dim2 d) { return _pt[d]; }
+
+    IntCoord x() const throw() { return _pt[X]; }
+    IntCoord &x() throw() { return _pt[X]; }
+    IntCoord y() const throw() { return _pt[Y]; }
+    IntCoord &y() throw() { return _pt[Y]; }
     /// @}
 
     /// @name Vector-like arithmetic operations

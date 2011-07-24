@@ -1,8 +1,11 @@
 /**
- *  \file
- *  \brief Axis-aligned rectangle with integer coordinates
+ * \file
+ * \brief Include everything
  *//*
- * Copyright 2011 Krzysztof Kosiński <tweenk.pl@gmail.com>
+ * Authors:
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ * 
+ * Copyright 2011 Authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -28,41 +31,38 @@
  * the specific language governing rights and limitations.
  */
 
-#ifndef LIB2GEOM_SEEN_INT_RECT_H
-#define LIB2GEOM_SEEN_INT_RECT_H
+#ifndef SEEN_LIB2GEOM_2GEOM_H
+#define SEEN_LIB2GEOM_2GEOM_H
 
+#include <2geom/forward.h>
+
+// primitives
 #include <2geom/coord.h>
-#include <2geom/int-interval.h>
-#include <2geom/generic-rect.h>
+#include <2geom/point.h>
+#include <2geom/interval.h>
+#include <2geom/rect.h>
+#include <2geom/angle.h>
+#include <2geom/ray.h>
+#include <2geom/line.h>
+#include <2geom/affine.h>
+#include <2geom/transforms.h>
 
-namespace Geom {
+// curves and paths
+#include <2geom/curves.h>
+#include <2geom/path.h>
+#include <2geom/pathvector.h>
 
-typedef GenericRect<IntCoord> IntRect;
-typedef GenericOptRect<IntCoord> OptIntRect;
+// fragments
+#include <2geom/d2.h>
+#include <2geom/linear.h>
+#include <2geom/bezier.h>
+#include <2geom/sbasis.h>
 
-// the functions below do not work when defined generically
-inline OptIntRect operator&(IntRect const &a, IntRect const &b) {
-    OptIntRect ret(a);
-    ret.intersectWith(b);
-    return ret;
-}
-inline OptIntRect intersect(IntRect const &a, IntRect const &b) {
-    return a & b;
-}
-inline OptIntRect intersect(OptIntRect const &a, OptIntRect const &b) {
-    return a & b;
-}
-inline IntRect unify(IntRect const &a, IntRect const &b) {
-    return a | b;
-}
-inline OptIntRect unify(OptIntRect const &a, OptIntRect const &b) {
-    return a | b;
-}
+// others
+#include <2geom/math-utils.h>
+#include <2geom/utils.h>
 
-} // end namespace Geom
-
-#endif // !LIB2GEOM_SEEN_INT_RECT_H
-
+#endif // SEEN_LIB2GEOM_HEADER_H
 /*
   Local Variables:
   mode:c++
@@ -72,4 +72,4 @@ inline OptIntRect unify(OptIntRect const &a, OptIntRect const &b) {
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

@@ -65,7 +65,8 @@ class Affine
     , MultipliableNoncommutative< Affine, Rotate
     , MultipliableNoncommutative< Affine, HShear
     , MultipliableNoncommutative< Affine, VShear
-      > > > > > > >
+    , MultipliableNoncommutative< Affine, Zoom
+      > > > > > > > >
 {
     Coord _c[6];
 public:
@@ -113,6 +114,7 @@ public:
     Affine &operator*=(Rotate const &r);
     Affine &operator*=(HShear const &h);
     Affine &operator*=(VShear const &v);
+    Affine &operator*=(Zoom const &);
     /// @}
 
     bool operator==(Affine const &o) const {

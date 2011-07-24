@@ -106,11 +106,11 @@ public:
     /// @{
     /** @brief Check whether the interval includes this number. */
     bool contains(C val) const {
-        return CoordTraits<C>::contains(min(), max(), val, val);
+        return min() <= val && val <= max();
     }
     /** @brief Check whether the interval includes the given interval. */
     bool contains(Self const &val) const {
-        return CoordTraits<C>::contains(min(), max(), val.min(), val.max());
+        return min() <= val.min() && val.max() <= max();
     }
     /** @brief Check whether the intervals have any common elements. */
     bool intersects(Self const &val) const {

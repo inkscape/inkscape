@@ -58,7 +58,8 @@ class Point
     , MultipliableNoncommutative< Point, Scale
     , MultipliableNoncommutative< Point, HShear
     , MultipliableNoncommutative< Point, VShear
-      > > > > > > > > > // this uses chaining so it looks weird, but works
+    , MultipliableNoncommutative< Point, Zoom
+      > > > > > > > > > > // this uses chaining so it looks weird, but works
 {
     Coord _pt[2];
 public:
@@ -111,6 +112,11 @@ public:
 
     Coord operator[](Dim2 d) const throw() { return _pt[d]; }
     Coord &operator[](Dim2 d) throw() { return _pt[d]; }
+
+    Coord x() const throw() { return _pt[X]; }
+    Coord &x() throw() { return _pt[X]; }
+    Coord y() const throw() { return _pt[Y]; }
+    Coord &y() throw() { return _pt[Y]; }
     /// @}
 
     /// @name Vector operations
@@ -172,12 +178,7 @@ public:
     Point &operator*=(Rotate const &r);
     Point &operator*=(HShear const &s);
     Point &operator*=(VShear const &s);
-    /** @brief Transform the point by the inverse of the specified matrix. */
-    template <typename T>
-    Point &operator/=(T const &m) {
-        *this *= m.inverse();
-        return *this;
-    }
+    Point &operator*=(Zoom const &z);
     /// @}
 
     /// @name Conversion to integer points

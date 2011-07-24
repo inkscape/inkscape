@@ -49,8 +49,8 @@ namespace Geom {
  * from the origin (point at 0,0) to the stored coordinates,
  * and has methods implementing several vector operations (like length()).
  *
- * @par Operator note
- * @par
+ * @section OpNotePoint Operator note
+ *
  * Most operators are provided by Boost operator helpers, so they are not visible in this class.
  * If @a p, @a q, @a r denote points, @a s a floating-point scalar, and @a m a transformation matrix,
  * then the following operations are available:

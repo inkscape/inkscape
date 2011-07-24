@@ -64,7 +64,7 @@ typedef GenericOptInterval<Coord> OptInterval;
 class Interval
     : public GenericInterval<Coord>
     , boost::multipliable< Interval
-    , boost::multipliable< Interval, Coord
+    , boost::multiplicative< Interval, Coord
       > >
 {
     typedef GenericInterval<Coord> Base;
@@ -180,7 +180,20 @@ public:
     /// @}
 };
 
+// functions required for Python bindings
+inline Interval unify(Interval const &a, Interval const &b)
+{
+    Interval r = a | b;
+    return r;
 }
+inline OptInterval intersect(Interval const &a, Interval const &b)
+{
+    OptInterval r = a & b;
+    return r;
+}
+
+} // end namespace Geom
+
 #endif //SEEN_INTERVAL_H
 
 /*

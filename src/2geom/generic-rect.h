@@ -40,6 +40,7 @@
 #ifndef LIB2GEOM_SEEN_GENERIC_RECT_H
 #define LIB2GEOM_SEEN_GENERIC_RECT_H
 
+#include <limits>
 #include <boost/optional.hpp>
 
 namespace Geom {
@@ -53,10 +54,10 @@ class GenericOptRect;
  */
 template <typename C>
 class GenericRect
-    : boost::additive< GenericRect<C>, typename CoordTraits<C>::PointType
-    , boost::equality_comparable< GenericRect<C>
-    , boost::orable< GenericRect<C>
-    , boost::orable< GenericRect<C>, typename CoordTraits<C>::OptRectType
+    : boost::additive< typename CoordTraits<C>::RectType, typename CoordTraits<C>::PointType
+    , boost::equality_comparable< typename CoordTraits<C>::RectType
+    , boost::orable< typename CoordTraits<C>::RectType
+    , boost::orable< typename CoordTraits<C>::RectType, typename CoordTraits<C>::OptRectType
       > > > >
 {
     typedef typename CoordTraits<C>::IntervalType CInterval;
@@ -93,30 +94,37 @@ public:
      * @param end   End of the range
      * @return Rectangle that contains all points from [start, end). */
     template <typename InputIterator>
-    static GenericRect<C> from_range(InputIterator start, InputIterator end) {
+    static CRect from_range(InputIterator start, InputIterator end) {
         assert(start != end);
         CPoint p1 = *start++;
-        GenericRect<C> result(p1, p1);
+        CRect result(p1, p1);
         for (; start != end; ++start) {
             result.expandTo(*start);
         }
         return result;
     }
     /** @brief Create a rectangle from a C-style array of points it should contain. */
-    static GenericRect<C> from_array(CPoint const *c, unsigned n) {
-        GenericRect<C> result = GenericRect<C>::from_range(c, c+n);
+    static CRect from_array(CPoint const *c, unsigned n) {
+        CRect result = GenericRect<C>::from_range(c, c+n);
         return result;
     }
     /** @brief Create rectangle from origin and dimensions. */
-    static GenericRect<C> from_xywh(C x, C y, C w, C h) {
+    static CRect from_xywh(C x, C y, C w, C h) {
         CPoint xy(x, y);
         CPoint wh(w, h);
-        GenericRect<C> result(xy, xy + wh);
+        CRect result(xy, xy + wh);
         return result;
     }
     /** @brief Create rectangle from origin and dimensions. */
-    static GenericRect<C> from_xywh(CPoint const &xy, CPoint const &wh) {
-        GenericRect<C> result(xy, xy + wh);
+    static CRect from_xywh(CPoint const &xy, CPoint const &wh) {
+        CRect result(xy, xy + wh);
+        return result;
+    }
+    /// Create infinite rectangle.
+    static CRect infinite() {
+        CPoint p0(std::numeric_limits<C>::min(), std::numeric_limits<C>::min());
+        CPoint p1(std::numeric_limits<C>::max(), std::numeric_limits<C>::max());
+        CRect result(p0, p1);
         return result;
     }
     /// @}
@@ -155,6 +163,8 @@ public:
     C width() const { return f[X].extent(); }
     /** @brief Get the vertical extent of the rectangle. */
     C height() const { return f[Y].extent(); }
+    /** @brief Get the ratio of width to height of the rectangle. */
+    Coord aspectRatio() const { return Coord(width()) / Coord(height()); }
 
     /** @brief Get rectangle's width and height as a point.
      * @return Point with X coordinate corresponding to the width and the Y coordinate
@@ -215,7 +225,7 @@ public:
         f[X].expandTo(p[X]);  f[Y].expandTo(p[Y]);
     }
     /** @brief Enlarge the rectangle to contain the given rectangle. */
-    void unionWith(GenericRect<C> const &b) { 
+    void unionWith(CRect const &b) { 
         f[X].unionWith(b[X]); f[Y].unionWith(b[Y]);
     }
     /** @brief Enlarge the rectangle to contain the given rectangle.
@@ -255,7 +265,7 @@ public:
         return *this;
     }
     /** @brief Union two rectangles. */
-    GenericRect<C> &operator|=(GenericRect<C> const &o) {
+    GenericRect<C> &operator|=(CRect const &o) {
         unionWith(o);
         return *this;
     }
@@ -275,9 +285,9 @@ public:
 template <typename C>
 class GenericOptRect
     : public boost::optional<typename CoordTraits<C>::RectType>
-    , boost::orable< GenericOptRect<C>
-    , boost::andable< GenericOptRect<C>
-    , boost::andable< GenericOptRect<C>, typename CoordTraits<C>::RectType
+    , boost::orable< typename CoordTraits<C>::OptRectType
+    , boost::andable< typename CoordTraits<C>::OptRectType
+    , boost::andable< typename CoordTraits<C>::OptRectType, typename CoordTraits<C>::RectType
       > > >
 {
     typedef typename CoordTraits<C>::IntervalType CInterval;

@@ -35,8 +35,20 @@
 #include <boost/concept_check.hpp>
 #include <2geom/point.h>
 #include <2geom/transforms.h>
+#include <2geom/rect.h>
 
 namespace Geom {
+
+/** @brief Zoom between rectangles.
+ * Given two rectangles, compute a zoom that maps one to the other.
+ * Rectangles are assumed to have the same aspect ratio. */
+Zoom Zoom::map_rect(Rect const &old_r, Rect const &new_r)
+{
+    Zoom ret;
+    ret._scale = new_r.width() / old_r.width();
+    ret._trans = new_r.min() - old_r.min();
+    return ret;
+}
 
 // Point transformation methods.
 Point &Point::operator*=(Translate const &t)
@@ -66,6 +78,14 @@ Point &Point::operator*=(HShear const &h)
 Point &Point::operator*=(VShear const &v)
 {
     _pt[Y] += v.f * _pt[Y];
+    return *this;
+}
+Point &Point::operator*=(Zoom const &z)
+{
+    _pt[X] += z._trans[X];
+    _pt[Y] += z._trans[Y];
+    _pt[X] *= z._scale;
+    _pt[Y] *= z._scale;
     return *this;
 }
 
@@ -110,6 +130,14 @@ Affine &Affine::operator*=(VShear const &v) {
     return *this;
 }
 
+Affine &Affine::operator*=(Zoom const &z) {
+    _c[0] *= z._scale; _c[1] *= z._scale;
+    _c[2] *= z._scale; _c[3] *= z._scale;
+    _c[4] += z._trans[X]; _c[5] += z._trans[Y];
+    _c[4] *= z._scale; _c[5] *= z._scale;
+    return *this;
+}
+
 // this checks whether the requirements of TransformConcept are satisfied for all transforms.
 // if you add a new transform type, include it here!
 void check_transforms()
@@ -120,6 +148,7 @@ void check_transforms()
     BOOST_CONCEPT_ASSERT((TransformConcept<Rotate>));
     BOOST_CONCEPT_ASSERT((TransformConcept<HShear>));
     BOOST_CONCEPT_ASSERT((TransformConcept<VShear>));
+    BOOST_CONCEPT_ASSERT((TransformConcept<Zoom>));
     BOOST_CONCEPT_ASSERT((TransformConcept<Affine>)); // Affine is also a transform
 #endif
 
@@ -130,14 +159,16 @@ void check_transforms()
     Rotate r(Rotate::identity());
     HShear h(HShear::identity());
     VShear v(VShear::identity());
+    Zoom z(Zoom::identity());
 
     // notice that the first column is always the same and enumerates all transform types,
     // while the second one changes to each transform type in turn.
-    m = t * t; m = t * s; m = t * r; m = t * h; m = t * v;
-    m = s * t; m = s * s; m = s * r; m = s * h; m = s * v;
-    m = r * t; m = r * s; m = r * r; m = r * h; m = r * v;
-    m = h * t; m = h * s; m = h * r; m = h * h; m = h * v;
-    m = v * t; m = v * s; m = v * r; m = v * h; m = v * v;
+    m = t * t; m = t * s; m = t * r; m = t * h; m = t * v; m = t * z;
+    m = s * t; m = s * s; m = s * r; m = s * h; m = s * v; m = s * z;
+    m = r * t; m = r * s; m = r * r; m = r * h; m = r * v; m = r * z;
+    m = h * t; m = h * s; m = h * r; m = h * h; m = h * v; m = h * z;
+    m = v * t; m = v * s; m = v * r; m = v * h; m = v * v; m = v * z;
+    m = z * t; m = z * s; m = z * r; m = z * h; m = z * v; m = z * z;
 }
 
 }

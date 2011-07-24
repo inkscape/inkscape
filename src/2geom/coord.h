@@ -69,9 +69,6 @@ struct CoordTraits<IntCoord> {
     typedef OptIntInterval OptIntervalType;
     typedef IntRect RectType;
     typedef OptIntRect OptRectType;
-    inline static bool contains(IntCoord low, IntCoord high, IntCoord testlow, IntCoord testhigh) {
-        return low <= testlow && testhigh < high;
-    }
 };
 
 template<>
@@ -81,9 +78,6 @@ struct CoordTraits<Coord> {
     typedef OptInterval OptIntervalType;
     typedef Rect RectType;
     typedef OptRect OptRectType;
-    inline static bool contains(Coord low, Coord high, Coord testlow, Coord testhigh) {
-        return low <= testlow && testhigh <= high;
-    }
 };
 
 } // end namespace Geom

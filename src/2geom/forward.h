@@ -97,6 +97,7 @@ class Rotate;
 class Scale;
 class HShear;
 class VShear;
+class Zoom;
 
 // templates
 template <typename> class D2;
