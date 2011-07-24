@@ -3139,7 +3139,7 @@ public:
             val = iter->second;
         String sval;
         if (!getSubstitutions(val, sval))
-            return false;
+            return String();
         return sval;
         }
 
