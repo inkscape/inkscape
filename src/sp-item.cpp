@@ -1467,11 +1467,18 @@ Geom::Affine SPItem::i2doc_affine() const
  */
 Geom::Affine SPItem::i2dt_affine() const
 {
-//    Geom::Affine const ret( i2doc_affine()
-//                          * Geom::Scale(1, -1)
-//                          * Geom::Translate(0, document->getHeight()) );
+    Geom::Affine ret;
     SPDesktop const *desktop = inkscape_active_desktop();
-    Geom::Affine const ret( i2doc_affine() * desktop->doc2dt() );
+    if ( desktop ) {
+        ret = i2doc_affine() * desktop->doc2dt();
+    } else {
+        // TODO temp code to prevent crashing on command-line launch:
+        ret = i2doc_affine()
+            * Geom::Scale(1, -1)
+            * Geom::Translate(0, document->getHeight());
+
+        g_return_val_if_fail(desktop != NULL, ret);
+    }
     return ret;
 }
 
