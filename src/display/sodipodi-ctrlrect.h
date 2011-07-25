@@ -48,7 +48,7 @@ private:
     Geom::Rect _rect;
     bool _has_fill;
     bool _dashed;
-    Geom::IntRect _area;
+    Geom::OptIntRect _area;
     gint _shadow_size;
     guint32 _border_color;
     guint32 _fill_color;
