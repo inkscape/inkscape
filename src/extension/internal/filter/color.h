@@ -9,6 +9,7 @@
  *
  * Color filters
  *   Brightness
+ *   Channel painting
  *   Colorize
  *   Duochrome
  *   Electrize
@@ -98,8 +99,6 @@ Brightness::get_filter_text (Inkscape::Extension::Extension * ext)
         sat << -ext->get_param_float("sat");
         lightness << ext->get_param_float("lightness");
     }
-    
-    
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Brightness, custom\">\n"
@@ -111,6 +110,120 @@ Brightness::get_filter_text (Inkscape::Extension::Extension * ext)
 
     return _filter;
 }; /* Brightness filter */
+
+
+/**
+    \brief    Custom predefined Channel Painting filter.
+    
+    Channel Painting filter.
+
+    Filter's parameters:
+    * Saturation (0.->1., default 1.) -> colormatrix1 (values)
+    * Red (-10.->10., default -1.) -> colormatrix2 (values)
+    * Green (-10.->10., default 0.5) -> colormatrix2 (values)
+    * Blue (-10.->10., default 0.5) -> colormatrix2 (values)
+    * Alpha (-10.->10., default 1.) -> colormatrix2 (values)
+    * Flood colors (guint, default 16777215) -> flood (flood-opacity, flood-color)
+    * Inverted (boolean, default false) -> composite1 (operator, true='in', false='out')
+    
+    Matrix:
+      1  0  0  0  0
+      0  1  0  0  0
+      0  0  1  0  0
+      R  G  B  A  0
+*/
+class ChannelPaint : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    ChannelPaint ( ) : Filter() { };
+    virtual ~ChannelPaint ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+    
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Channel painting, custom (Color)") "</name>\n"
+              "<id>org.inkscape.effect.filter.ChannelPaint</id>\n"
+                "<param name=\"tab\" type=\"notebook\">\n"
+                  "<page name=\"optionstab\" _gui-text=\"Options\">\n"
+                    "<param name=\"saturation\" gui-text=\"" N_("Saturation:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1.\">1</param>\n"
+                    "<param name=\"red\" gui-text=\"" N_("Red:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">-1</param>\n"
+                    "<param name=\"green\" gui-text=\"" N_("Green:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0.5</param>\n"
+                    "<param name=\"blue\" gui-text=\"" N_("Blue:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0.5</param>\n"
+                    "<param name=\"alpha\" gui-text=\"" N_("Alpha:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1.\">1</param>\n"
+                    "<param name=\"invert\" gui-text=\"" N_("Inverted") "\" type=\"boolean\">false</param>\n"
+                  "</page>\n"
+                  "<page name=\"colortab\" _gui-text=\"Color\">\n"
+                    "<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">16777215</param>\n"
+                  "</page>\n"
+                "</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Replace RGB by any color") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new ChannelPaint());
+    };
+};
+
+gchar const *
+ChannelPaint::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream saturation;
+    std::ostringstream red;
+    std::ostringstream green;
+    std::ostringstream blue;
+    std::ostringstream alpha;
+    std::ostringstream invert;
+    std::ostringstream floodRed;
+    std::ostringstream floodGreen;
+    std::ostringstream floodBlue;
+    std::ostringstream floodAlpha;
+
+    saturation << ext->get_param_float("saturation");
+    red << ext->get_param_float("red");
+    green << ext->get_param_float("green");
+    blue << ext->get_param_float("blue");
+    alpha << ext->get_param_float("alpha");
+
+    guint32 color = ext->get_param_color("color");
+    floodRed << ((color >> 24) & 0xff);
+    floodGreen << ((color >> 16) & 0xff);
+    floodBlue << ((color >>  8) & 0xff);
+    floodAlpha << (color & 0xff) / 255.0F;
+
+    if (ext->get_param_bool("invert")) {
+        invert << "in";
+    } else {
+        invert << "out";
+    }
+    
+    _filter = g_strdup_printf(
+        "<filter inkscape:label=\"Color channel painting\" color-interpolation-filters=\"sRGB\" x=\"0\" y=\"0\" width=\"1\" height=\"1\">\n"
+          "<feColorMatrix values=\"%s\" type=\"saturate\" result=\"colormatrix1\" />\n"
+          "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 %s %s %s %s 0 \" in=\"SourceGraphic\" result=\"colormatrix2\" />\n"
+          "<feFlood flood-color=\"rgb(%s,%s,%s)\" flood-opacity=\"%s\" result=\"flood\" />\n"
+          "<feComposite in2=\"colormatrix2\" operator=\"%s\" result=\"composite1\" />\n"
+          "<feMerge result=\"merge\">\n"
+            "<feMergeNode in=\"colormatrix1\" />\n"
+            "<feMergeNode in=\"composite1\" />\n"
+          "</feMerge>\n"
+          "<feComposite in=\"merge\" in2=\"SourceGraphic\" operator=\"in\" result=\"composite2\" />\n"
+        "</filter>\n", saturation.str().c_str(), red.str().c_str(), green.str().c_str(),
+                       blue.str().c_str(), alpha.str().c_str(), floodRed.str().c_str(),
+                       floodGreen.str().c_str(), floodBlue.str().c_str(), floodAlpha.str().c_str(),
+                       invert.str().c_str());
+
+    return _filter;
+}; /* Channel Painting filter */
+
 
 /**
     \brief    Custom predefined Colorize filter.

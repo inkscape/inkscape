@@ -49,6 +49,7 @@ Filter::filters_all (void )
 
     // Color
     Brightness::init();
+    ChannelPaint::init();
     Colorize::init();
     Duochrome::init();
     Electrize::init();

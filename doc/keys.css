@@ -1,0 +1,201 @@
+/*------------------------------------------------------------------ 
+Project:      Inkscape, Keyboard and mouse reference
+Last change:  2010-10-15
+--------------------------------------------------------------------
+[Table of contents] 
+1. Body
+2. Header / #header
+3. Table of content / .toc 
+4. Page content
+    4.1. Headings
+    4.2. Sections
+    4.3. Shortcuts list
+5. Footer / #footer
+-------------------------------------------------------------------*/  
+
+/*------------------------------------------------------------------ 
+[1. Body] 
+*/
+
+body {
+    margin: 1em;
+    font: 1em serif;
+    background-color: #ffffff;
+}
+
+/*------------------------------------------------------------------ 
+[2. Header ]
+*/
+
+h1 {
+    margin-top: 0.5em;
+    padding-left: 40px;
+    padding-bottom: 0em;
+    margin-bottom: 0em;
+    letter-spacing: -0.02em;
+}
+
+.releaseinfo, .pubdate {
+	font-family: sans-serif;
+	font-size: 0.7em;
+	font-weight: bold;
+    padding-left: 60px;
+}
+
+/*------------------------------------------------------------------ 
+[3. Table of content ]
+*/
+
+.toc {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    padding: 1em;
+    padding-left: 40px;
+    background-color: #eeeeee;
+    font-size: 0.8em;
+    line-height: 1.5em;
+}
+
+.toc-title {
+    font-size: 1.6em;
+    font-weight: bold;
+    letter-spacing: 0.4em;
+}
+
+.toc-section {
+    font-size: 1.4em;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.toc-group {
+    font-size: 0.9em;
+    text-decoration: none;
+}
+
+.toc a:hover {
+    text-decoration: underline;
+}
+/*------------------------------------------------------------------ 
+[4. Content ]
+*/
+
+/*-- [4.1. Headings] --*/
+
+h2,h3 {
+    padding-bottom: 0em;
+    margin-bottom: 0.2em;
+}
+
+h2 {
+    margin-top: 0.5em;
+    padding-left: 40px;
+    font-size: 1.6em;
+}
+
+h3 {
+    font-size: 1.1em;
+    font-style: italic;
+    margin-top: 1em;
+    margin-left:40px;
+    margin-right:40px;
+    padding-left: 20px;
+    border-bottom: 1px solid #999;
+}
+
+/*-- [4.2. Sections] --*/
+
+table {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border: 0;
+    margin:0;
+    padding: 4px;
+    width: 100%;
+}
+
+.color1 {background-color: #f5f5f5;}
+.color2 {background-color: #f0eae7;}
+.color3 {background-color: #f8f3e9;}
+.color4 {background-color: #e5f1e7;}
+.color5 {background-color: #efcfdf;}
+.color6 {background-color: #f3f2e2;}
+.color7 {background-color: #e8fae1;}
+.color8 {background-color: #f6f9d9;}
+.color9 {background-color: #f4ecf5;}
+.color10 {background-color: #f9f1d9;}
+.color11 {background-color: #eee4dc;}
+.color12 {background-color: #f9f1d9;}
+.color13 {background-color: #f2f1ea;}
+.color14 {background-color: #ebf1fd;}
+.color15 {background-color: #cff4e2;}
+.color16 {background-color: #ffece8;}
+.color17 {background-color: #f8f7d5;}
+.color18 {background-color: #f3f3f3;}
+.color19 {background-color: #e7e9f3;}
+.color20 {background-color: #e9efc5;}
+.color21 {background-color: #e7f5d7;}
+.color22 {background-color: #e9dfef;}
+.color23 {background-color: #f2f9da;}
+.color24 {background-color: #e9f3e7;}
+.color25 {background-color: #feeffa;}
+.color26 {background-color: #eefdf3;}
+
+/*-- [4.3. Shortcuts list] --*/
+
+.keys {
+    text-align: right;
+    line-height: 1.5em;
+    width: 45%;
+    padding-top: 2px;
+}
+
+.shortcut {
+    font-weight: bold;
+}
+
+.keypad {
+    background-color: #eeeee6;
+    padding: 1px 5px;
+    border: 1px solid #999999;
+    margin: 0 -2px;
+    -moz-border-radius: 0.3em;
+    -webkit-border-radius: 0.3em;
+    border-radius: 0.3em;
+}
+
+.plussign {
+  margin: 0 2px;
+}
+
+.action {
+    line-height: 1.5em;
+    padding-left: 10px;
+}
+
+.note {
+    padding-left: 80px;
+    padding-right: 40px;
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.note span {
+    display: block;
+    font-size: 70%;
+    font-family: sans-serif;
+    color: #333333;
+    border-left: 1px solid #999999;
+    padding-left: 5px;
+}
+
+/*------------------------------------------------------------------ 
+[5. Footer] 
+*/
+
+img {
+    border: 0;
+}
