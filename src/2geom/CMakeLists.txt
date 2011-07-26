@@ -50,6 +50,7 @@ set(2geom_SRC
 
 
 	# -------
+	2geom.h
 	# Headers
 	affine.h
 	angle.h
