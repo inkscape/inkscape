@@ -62,6 +62,12 @@ void MessageStack::cancel(MessageId id) {
     }
 }
 
+MessageId MessageStack::flash(MessageType type, Glib::ustring const &message)
+{
+    MessageId id = flash( type, message.c_str() );
+    return id;
+}
+
 MessageId MessageStack::flash(MessageType type, gchar const *message) {
     switch (type) {
     case INFORMATION_MESSAGE: // stay rather long so as to seem permanent, but eventually disappear

@@ -18,6 +18,7 @@
 
 #include <glibmm/i18n.h>
 #include <gtkmm.h>
+#include <iomanip>
 
 #include "trace/filterset.h"
 #include "trace/quantize.h"
@@ -31,7 +32,7 @@
 #include "curve.h"
 #include "bitmap.h"
 
-
+using Glib::ustring;
 
 static void updateGui()
 {
@@ -57,6 +58,12 @@ static void potraceStatusCallback(double /*progress*/, void *userData) /* callba
 }
 
 
+namespace {
+ustring twohex( int value )
+{
+    return ustring::format(std::hex, std::setfill(L'0'), std::setw(2), value);
+}
+} // namespace
 
 
 //required by potrace
@@ -471,67 +478,56 @@ PotraceTracingEngine::traceGrayMap(GrayMap *grayMap)
 /**
  *  Called for multiple-scanning algorithms
  */
-std::vector<TracingEngineResult>
-PotraceTracingEngine::traceBrightnessMulti(GdkPixbuf * thePixbuf)
+std::vector<TracingEngineResult> PotraceTracingEngine::traceBrightnessMulti(GdkPixbuf * thePixbuf)
 {
-
     std::vector<TracingEngineResult> results;
 
-    if (!thePixbuf)
-        return results;
+    if ( thePixbuf ) {
+        double low     = 0.2; //bottom of range
+        double high    = 0.9; //top of range
+        double delta   = (high - low ) / ((double)multiScanNrColors);
 
-    double low     = 0.2; //bottom of range
-    double high    = 0.9; //top of range
-    double delta   = (high - low ) / ((double)multiScanNrColors);
+        brightnessFloor = 0.0; //Set bottom to black
 
-    brightnessFloor = 0.0; //Set bottom to black
+        int traceCount = 0;
 
-    int traceCount = 0;
+        for ( brightnessThreshold = low ;
+              brightnessThreshold <= high ;
+              brightnessThreshold += delta) {
+            GrayMap *grayMap = filter(*this, thePixbuf);
+            if ( grayMap ) {
+                long nodeCount;
+                std::string d = grayMapToPath(grayMap, &nodeCount);
 
-    for ( brightnessThreshold = low ;
-          brightnessThreshold <= high ;
-          brightnessThreshold += delta)
+                grayMap->destroy(grayMap);
 
-        {
+                if ( !d.empty() ) {
+                    //### get style info
+                    int grayVal = (int)(256.0 * brightnessThreshold);
+                    ustring style = ustring::compose("fill-opacity:1.0;fill:%1%2%3", twohex(grayVal), twohex(grayVal), twohex(grayVal) );
 
-        GrayMap *grayMap = filter(*this, thePixbuf);
-        if (!grayMap)
-            return results;
+                    //g_message("### GOT '%s' \n", style.c_str());
+                    TracingEngineResult result(style, d, nodeCount);
+                    results.push_back(result);
 
-        long nodeCount;
-        std::string d = grayMapToPath(grayMap, &nodeCount);
+                    if (!multiScanStack) {
+                        brightnessFloor = brightnessThreshold;
+                    }
 
-        grayMap->destroy(grayMap);
-
-        if (d.size() == 0)
-            return results;
-
-        int grayVal = (int)(256.0 * brightnessThreshold);
-        char style[31];
-        sprintf(style, "fill-opacity:1.0;fill:#%02x%02x%02x",
-                    grayVal, grayVal, grayVal);
-
-        //g_message("### GOT '%s' \n", d);
-        TracingEngineResult result(style, d, nodeCount);
-        results.push_back(result);
-
-        if (!multiScanStack)
-            brightnessFloor = brightnessThreshold;
-
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-        if (desktop)
-            {
-            gchar *msg = g_strdup_printf(_("Trace: %d.  %ld nodes"), traceCount++, nodeCount);
-            sp_desktop_message_stack(desktop)->flash(Inkscape::NORMAL_MESSAGE, msg);
-            g_free(msg);
+                    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+                    if (desktop) {
+                        ustring msg = ustring::compose(_("Trace: %1.  %2 nodes"), traceCount++, nodeCount);
+                        sp_desktop_message_stack(desktop)->flash(Inkscape::NORMAL_MESSAGE, msg);
+                    }
+                }
             }
         }
 
-    //# Remove the bottom-most scan, if requested
-    if (results.size() > 1 && multiScanRemoveBackground)
-        {
-        results.erase(results.end() - 1);
+        //# Remove the bottom-most scan, if requested
+        if (results.size() > 1 && multiScanRemoveBackground) {
+            results.erase(results.end() - 1);
         }
+    }
 
     return results;
 }
@@ -540,77 +536,64 @@ PotraceTracingEngine::traceBrightnessMulti(GdkPixbuf * thePixbuf)
 /**
  *  Quantization
  */
-std::vector<TracingEngineResult>
-PotraceTracingEngine::traceQuant(GdkPixbuf * thePixbuf)
+std::vector<TracingEngineResult> PotraceTracingEngine::traceQuant(GdkPixbuf * thePixbuf)
 {
-
     std::vector<TracingEngineResult> results;
 
-    if (!thePixbuf)
-        return results;
-
-    IndexedMap *iMap = filterIndexed(*this, thePixbuf);
-    if (!iMap)
-        return results;
-
-    //Create and clear a gray map
-    GrayMap *gm = GrayMapCreate(iMap->width, iMap->height);
-    for (int row=0 ; row<gm->height ; row++)
-        for (int col=0 ; col<gm->width ; col++)
-            gm->setPixel(gm, col, row, GRAYMAP_WHITE);
-
-
-    for (int colorIndex=0 ; colorIndex<iMap->nrColors ; colorIndex++)
-        {
-
-        /*Make a gray map for each color index */
-        for (int row=0 ; row<iMap->height ; row++)
-            {
-            for (int col=0 ; col<iMap->width ; col++)
-                {
-                int indx = (int) iMap->getPixel(iMap, col, row);
-                if (indx == colorIndex)
-                    gm->setPixel(gm, col, row, GRAYMAP_BLACK); //black
-                else if (!multiScanStack)
-                    gm->setPixel(gm, col, row, GRAYMAP_WHITE); //white
+    if (thePixbuf) {
+        IndexedMap *iMap = filterIndexed(*this, thePixbuf);
+        if ( iMap ) {
+            //Create and clear a gray map
+            GrayMap *gm = GrayMapCreate(iMap->width, iMap->height);
+            for (int row=0 ; row<gm->height ; row++) {
+                for (int col=0 ; col<gm->width ; col++) {
+                    gm->setPixel(gm, col, row, GRAYMAP_WHITE);
                 }
             }
 
-        //## Now we have a traceable graymap
-        long nodeCount;
-        std::string d = grayMapToPath(gm, &nodeCount);
+            for (int colorIndex=0 ; colorIndex<iMap->nrColors ; colorIndex++) {
+                // Make a gray map for each color index
+                for (int row=0 ; row<iMap->height ; row++) {
+                    for (int col=0 ; col<iMap->width ; col++) {
+                        int indx = (int) iMap->getPixel(iMap, col, row);
+                        if (indx == colorIndex) {
+                            gm->setPixel(gm, col, row, GRAYMAP_BLACK); //black
+                        } else if (!multiScanStack) {
+                            gm->setPixel(gm, col, row, GRAYMAP_WHITE); //white
+                        }
+                    }
+                }
 
-        if (d.size() == 0)
-            return results;
+                //## Now we have a traceable graymap
+                long nodeCount;
+                std::string d = grayMapToPath(gm, &nodeCount);
 
-        //### get style info
-        char style[13];
-        RGB rgb = iMap->clut[colorIndex];
-        sprintf(style, "fill:#%02x%02x%02x", rgb.r, rgb.g, rgb.b);
+                if ( !d.empty() ) {
+                    //### get style info
+                    RGB rgb = iMap->clut[colorIndex];
+                    ustring style = ustring::compose("fill:#%1%2%3", twohex(rgb.r), twohex(rgb.g), twohex(rgb.b) );
 
-        //g_message("### GOT '%s' \n", d);
-        TracingEngineResult result(style, d, nodeCount);
-        results.push_back(result);
+                    //g_message("### GOT '%s' \n", style.c_str());
+                    TracingEngineResult result(style, d, nodeCount);
+                    results.push_back(result);
 
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-        if (desktop)
-            {
-            gchar *msg = g_strdup_printf(_("Trace: %d.  %ld nodes"), colorIndex, nodeCount);
-            sp_desktop_message_stack(desktop)->flash(Inkscape::NORMAL_MESSAGE, msg);
-            g_free(msg);
-            }
+                    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+                    if (desktop) {
+                        ustring msg = ustring::compose(_("Trace: %1.  %2 nodes"), colorIndex, nodeCount);
+                        sp_desktop_message_stack(desktop)->flash(Inkscape::NORMAL_MESSAGE, msg);
+                    }
+                }
+            }// for colorIndex
 
-
-        }// for colorIndex
-
-    gm->destroy(gm);
-    iMap->destroy(iMap);
-
-    //# Remove the bottom-most scan, if requested
-    if (results.size() > 1 && multiScanRemoveBackground)
-        {
-        results.erase(results.end() - 1);
+            gm->destroy(gm);
+            iMap->destroy(iMap);
         }
+
+        //# Remove the bottom-most scan, if requested
+        if (results.size() > 1 && multiScanRemoveBackground) {
+            results.erase(results.end() - 1);
+        }
+    }
 
     return results;
 }
@@ -667,3 +650,13 @@ PotraceTracingEngine::abort()
 }  // namespace Trace
 }  // namespace Inkscape
 
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
