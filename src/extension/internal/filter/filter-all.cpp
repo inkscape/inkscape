@@ -9,6 +9,8 @@
 
 /* Put your filter here */
 #include "abc.h"
+#include "blurs.h"
+//#include "bumps.h"
 #include "color.h"
 #include "drop-shadow.h"
 #include "image.h"
@@ -47,9 +49,16 @@ Filter::filters_all (void )
     Silhouette::init();
     SpecularLight::init();
 
+    // Blurs
+    CrossBlur::init();
+    
+    // Bumps
+//    SpecularBump::init();
+    
     // Color
     Brightness::init();
     ChannelPaint::init();
+    ChannelTransparency::init();
     Colorize::init();
     Duochrome::init();
     Electrize::init();

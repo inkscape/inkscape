@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-20 18:03+0200\n"
-"PO-Revision-Date: 2011-07-20 18:06+0100\n"
+"POT-Creation-Date: 2011-07-27 20:43+0200\n"
+"PO-Revision-Date: 2011-07-27 20:50+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "Language: \n"
@@ -756,8 +756,9 @@ msgstr "Désaturer"
 #: ../src/extension/internal/filter/abc.h:477
 #: ../src/extension/internal/filter/abc.h:580
 #: ../src/extension/internal/filter/abc.h:740
-#: ../src/extension/internal/filter/color.h:163
-#: ../src/extension/internal/filter/color.h:818
+#: ../src/extension/internal/filter/color.h:159
+#: ../src/extension/internal/filter/color.h:361
+#: ../src/extension/internal/filter/color.h:1016
 #: ../src/extension/internal/filter/experimental.h:97
 #: ../src/extension/internal/filter/shadows.h:71
 #: ../share/extensions/color_blackandwhite.inx.h:2
@@ -1343,7 +1344,7 @@ msgstr "Effet de bosselage classique ou coloré : niveaux de gris, couleur et r
 
 #: ../share/filters/filters.svg.h:1
 #: ../src/extension/internal/bitmap/solarize.cpp:38
-#: ../src/extension/internal/filter/color.h:708
+#: ../src/extension/internal/filter/color.h:906
 msgid "Solarize"
 msgstr "Solariser"
 
@@ -1352,7 +1353,7 @@ msgid "Classical photographic solarization effect"
 msgstr "Effet de solarisation photographique classique"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/color.h:709
+#: ../src/extension/internal/filter/color.h:907
 msgid "Moonarize"
 msgstr "Lunariser"
 
@@ -1967,7 +1968,7 @@ msgid "Quadritone fantasy"
 msgstr "Quadritone fantaisie"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/color.h:641
+#: ../src/extension/internal/filter/color.h:839
 msgid "Replace hue by two colors"
 msgstr "Remplace la teinte par deux couleurs"
 
@@ -2140,7 +2141,7 @@ msgid "Convert to a colorizable transparent positive or negative"
 msgstr "Convertit en un positif ou un négatif transparent qu’il est possible de colorer"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/color.h:146
+#: ../src/extension/internal/filter/color.h:344
 msgid "Duotone"
 msgstr "Duotone"
 
@@ -3777,12 +3778,12 @@ msgid "Select <b>at least one non-connector object</b>."
 msgstr "Sélectionner <b>au moins un objet non connecteur</b>."
 
 #: ../src/connector-context.cpp:1968
-#: ../src/widgets/toolbox.cpp:8298
+#: ../src/widgets/toolbox.cpp:8299
 msgid "Make connectors avoid selected objects"
 msgstr "Faire que les connecteurs évitent les objets sélectionnés"
 
 #: ../src/connector-context.cpp:1969
-#: ../src/widgets/toolbox.cpp:8308
+#: ../src/widgets/toolbox.cpp:8309
 msgid "Make connectors ignore selected objects"
 msgstr "Faire que les connecteurs ignorent les objets sélectionnés"
 
@@ -5072,8 +5073,8 @@ msgstr "Cible :"
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/dialogs/object-attributes.cpp:35
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/extension/internal/filter/color.h:707
-#: ../src/extension/internal/filter/color.h:795
+#: ../src/extension/internal/filter/color.h:905
+#: ../src/extension/internal/filter/color.h:993
 #: ../src/extension/internal/filter/morphology.h:53
 #: ../src/rdf.cpp:240
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
@@ -5275,12 +5276,12 @@ msgid "Justify lines"
 msgstr "Justifier les lignes"
 
 #: ../src/dialogs/text-edit.cpp:304
-#: ../src/widgets/toolbox.cpp:7755
+#: ../src/widgets/toolbox.cpp:7756
 msgid "Horizontal text"
 msgstr "Texte horizontal"
 
 #: ../src/dialogs/text-edit.cpp:318
-#: ../src/widgets/toolbox.cpp:7762
+#: ../src/widgets/toolbox.cpp:7763
 msgid "Vertical text"
 msgstr "Texte vertical"
 
@@ -6032,7 +6033,7 @@ msgstr "Seuil adaptatif"
 
 #. Label
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/extension/internal/filter/color.h:552
+#: ../src/extension/internal/filter/color.h:750
 #: ../src/extension/internal/filter/experimental.h:355
 #: ../src/widgets/gradient-vector.cpp:824
 #: ../share/extensions/printing-marks.inx.h:9
@@ -6349,6 +6350,7 @@ msgstr "Teinte :"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
 #: ../src/extension/internal/filter/abc.h:177
+#: ../src/extension/internal/filter/color.h:151
 #: ../src/extension/internal/filter/experimental.h:85
 msgid "Saturation:"
 msgstr "Saturation :"
@@ -6356,7 +6358,7 @@ msgstr "Saturation :"
 #: ../src/extension/internal/bitmap/modulate.cpp:43
 #: ../src/extension/internal/filter/abc.h:375
 #: ../src/extension/internal/filter/abc.h:815
-#: ../src/extension/internal/filter/color.h:66
+#: ../src/extension/internal/filter/color.h:68
 msgid "Brightness:"
 msgstr "Brillance :"
 
@@ -6492,7 +6494,7 @@ msgstr "Seuil"
 #: ../src/ui/dialog/tracedialog.cpp:420
 #: ../src/ui/dialog/tracedialog.cpp:453
 #: ../src/ui/dialog/tracedialog.cpp:596
-#: ../src/widgets/toolbox.cpp:8539
+#: ../src/widgets/toolbox.cpp:8540
 msgid "Threshold:"
 msgstr "Seuil :"
 
@@ -6714,15 +6716,17 @@ msgstr "Flou vertical :"
 #: ../src/extension/internal/filter/abc.h:675
 #: ../src/extension/internal/filter/abc.h:744
 #: ../src/extension/internal/filter/abc.h:822
-#: ../src/extension/internal/filter/color.h:73
-#: ../src/extension/internal/filter/color.h:169
-#: ../src/extension/internal/filter/color.h:271
-#: ../src/extension/internal/filter/color.h:384
-#: ../src/extension/internal/filter/color.h:476
-#: ../src/extension/internal/filter/color.h:556
-#: ../src/extension/internal/filter/color.h:637
-#: ../src/extension/internal/filter/color.h:714
-#: ../src/extension/internal/filter/color.h:824
+#: ../src/extension/internal/filter/color.h:75
+#: ../src/extension/internal/filter/color.h:165
+#: ../src/extension/internal/filter/color.h:270
+#: ../src/extension/internal/filter/color.h:367
+#: ../src/extension/internal/filter/color.h:469
+#: ../src/extension/internal/filter/color.h:582
+#: ../src/extension/internal/filter/color.h:674
+#: ../src/extension/internal/filter/color.h:754
+#: ../src/extension/internal/filter/color.h:835
+#: ../src/extension/internal/filter/color.h:912
+#: ../src/extension/internal/filter/color.h:1022
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:104
 #: ../src/extension/internal/filter/experimental.h:110
@@ -6752,15 +6756,17 @@ msgstr "Filtres"
 #: ../src/extension/internal/filter/abc.h:676
 #: ../src/extension/internal/filter/abc.h:745
 #: ../src/extension/internal/filter/abc.h:823
-#: ../src/extension/internal/filter/color.h:74
-#: ../src/extension/internal/filter/color.h:170
-#: ../src/extension/internal/filter/color.h:272
-#: ../src/extension/internal/filter/color.h:385
-#: ../src/extension/internal/filter/color.h:477
-#: ../src/extension/internal/filter/color.h:557
-#: ../src/extension/internal/filter/color.h:638
-#: ../src/extension/internal/filter/color.h:715
-#: ../src/extension/internal/filter/color.h:825
+#: ../src/extension/internal/filter/color.h:76
+#: ../src/extension/internal/filter/color.h:166
+#: ../src/extension/internal/filter/color.h:271
+#: ../src/extension/internal/filter/color.h:368
+#: ../src/extension/internal/filter/color.h:470
+#: ../src/extension/internal/filter/color.h:583
+#: ../src/extension/internal/filter/color.h:675
+#: ../src/extension/internal/filter/color.h:755
+#: ../src/extension/internal/filter/color.h:836
+#: ../src/extension/internal/filter/color.h:913
+#: ../src/extension/internal/filter/color.h:1023
 #: ../src/extension/internal/filter/experimental.h:111
 #: ../src/extension/internal/filter/experimental.h:243
 #: ../src/extension/internal/filter/experimental.h:362
@@ -6890,8 +6896,10 @@ msgid "Erosion:"
 msgstr "Érosion :"
 
 #: ../src/extension/internal/filter/abc.h:474
-#: ../src/extension/internal/filter/color.h:69
-#: ../src/extension/internal/filter/color.h:380
+#: ../src/extension/internal/filter/color.h:71
+#: ../src/extension/internal/filter/color.h:156
+#: ../src/extension/internal/filter/color.h:266
+#: ../src/extension/internal/filter/color.h:578
 #: ../src/extension/internal/filter/experimental.h:83
 msgid "Inverted"
 msgstr "Inversé"
@@ -6938,282 +6946,314 @@ msgstr "Recouvre l’objet d’une couleur monochrome"
 msgid "Specular light, custom (ABCs)"
 msgstr "Éclairage spéculaire, paramétrable (ABC)"
 
-#: ../src/extension/internal/filter/color.h:64
+#: ../src/extension/internal/filter/color.h:66
 msgid "Brightness, custom (Color)"
 msgstr "Brillance, paramétrable (Couleur)"
 
-#: ../src/extension/internal/filter/color.h:67
-#: ../src/extension/internal/filter/color.h:626
+#: ../src/extension/internal/filter/color.h:69
+#: ../src/extension/internal/filter/color.h:824
 msgid "Over-saturation:"
 msgstr "Sur-saturation :"
 
-#: ../src/extension/internal/filter/color.h:68
-#: ../src/extension/internal/filter/color.h:471
+#: ../src/extension/internal/filter/color.h:70
+#: ../src/extension/internal/filter/color.h:669
 #: ../src/extension/internal/filter/experimental.h:84
 #: ../src/extension/internal/filter/experimental.h:505
 msgid "Lightness:"
 msgstr "Luminosité :"
 
-#: ../src/extension/internal/filter/color.h:77
+#: ../src/extension/internal/filter/color.h:79
 msgid "Brightness filter"
 msgstr "Filtre de luminosité"
 
-#: ../src/extension/internal/filter/color.h:140
+#: ../src/extension/internal/filter/color.h:147
+#, fuzzy
+msgid "Channel painting, custom (Color)"
+msgstr "Quadritone fantaisie, paramétrable (Couleur)"
+
+#: ../src/extension/internal/filter/color.h:152
+#: ../src/extension/internal/filter/color.h:262
+#: ../src/extension/internal/filter/color.h:666
+msgid "Red:"
+msgstr "Rouge :"
+
+#: ../src/extension/internal/filter/color.h:153
+#: ../src/extension/internal/filter/color.h:263
+#: ../src/extension/internal/filter/color.h:667
+msgid "Green:"
+msgstr "Vert :"
+
+#: ../src/extension/internal/filter/color.h:154
+#: ../src/extension/internal/filter/color.h:264
+#: ../src/extension/internal/filter/color.h:668
+msgid "Blue:"
+msgstr "Bleu :"
+
+#: ../src/extension/internal/filter/color.h:155
+#: ../src/extension/internal/filter/color.h:265
+#, fuzzy
+msgid "Alpha:"
+msgstr "Opacité"
+
+#: ../src/extension/internal/filter/color.h:169
+#, fuzzy
+msgid "Replace RGB by any color"
+msgstr "Remplace la teinte par deux couleurs"
+
+#: ../src/extension/internal/filter/color.h:260
+#, fuzzy
+msgid "Channel transparency, custom (Color)"
+msgstr "Quadritone fantaisie, paramétrable (Couleur)"
+
+#: ../src/extension/internal/filter/color.h:274
+#, fuzzy
+msgid "Replace RGB by transparency"
+msgstr "Transparence barbouillée"
+
+#: ../src/extension/internal/filter/color.h:338
 msgid "Colorize, custom (Color)"
 msgstr "Colorer, paramétrable (Couleur)"
 
-#: ../src/extension/internal/filter/color.h:144
+#: ../src/extension/internal/filter/color.h:342
 msgid "Harsh light:"
 msgstr "Lumière crue :"
 
-#: ../src/extension/internal/filter/color.h:145
+#: ../src/extension/internal/filter/color.h:343
 msgid "Normal light:"
 msgstr "Lumière normale :"
 
-#: ../src/extension/internal/filter/color.h:147
-#: ../src/extension/internal/filter/color.h:621
+#: ../src/extension/internal/filter/color.h:345
+#: ../src/extension/internal/filter/color.h:819
 msgid "Blend 1:"
 msgstr "Fondu 1 :"
 
-#: ../src/extension/internal/filter/color.h:148
-#: ../src/extension/internal/filter/color.h:156
-#: ../src/extension/internal/filter/color.h:623
-#: ../src/extension/internal/filter/color.h:630
-#: ../src/extension/internal/filter/color.h:804
-#: ../src/extension/internal/filter/color.h:810
+#: ../src/extension/internal/filter/color.h:346
+#: ../src/extension/internal/filter/color.h:354
+#: ../src/extension/internal/filter/color.h:821
+#: ../src/extension/internal/filter/color.h:828
+#: ../src/extension/internal/filter/color.h:1002
+#: ../src/extension/internal/filter/color.h:1008
 #: ../src/filter-enums.cpp:52
 msgid "Multiply"
 msgstr "Produit"
 
-#: ../src/extension/internal/filter/color.h:149
-#: ../src/extension/internal/filter/color.h:157
-#: ../src/extension/internal/filter/color.h:622
-#: ../src/extension/internal/filter/color.h:628
-#: ../src/extension/internal/filter/color.h:796
-#: ../src/extension/internal/filter/color.h:809
+#: ../src/extension/internal/filter/color.h:347
+#: ../src/extension/internal/filter/color.h:355
+#: ../src/extension/internal/filter/color.h:820
+#: ../src/extension/internal/filter/color.h:826
+#: ../src/extension/internal/filter/color.h:994
+#: ../src/extension/internal/filter/color.h:1007
 #: ../src/filter-enums.cpp:51
 #: ../src/ui/dialog/inkscape-preferences.cpp:597
 msgid "Normal"
 msgstr "Normal"
 
-#: ../src/extension/internal/filter/color.h:150
-#: ../src/extension/internal/filter/color.h:155
-#: ../src/extension/internal/filter/color.h:624
-#: ../src/extension/internal/filter/color.h:629
-#: ../src/extension/internal/filter/color.h:803
+#: ../src/extension/internal/filter/color.h:348
+#: ../src/extension/internal/filter/color.h:353
+#: ../src/extension/internal/filter/color.h:822
+#: ../src/extension/internal/filter/color.h:827
+#: ../src/extension/internal/filter/color.h:1001
 #: ../src/filter-enums.cpp:53
 #: ../src/ui/dialog/input.cpp:362
 msgid "Screen"
 msgstr "Superposition"
 
-#: ../src/extension/internal/filter/color.h:151
-#: ../src/extension/internal/filter/color.h:158
-#: ../src/extension/internal/filter/color.h:631
-#: ../src/extension/internal/filter/color.h:802
+#: ../src/extension/internal/filter/color.h:349
+#: ../src/extension/internal/filter/color.h:356
+#: ../src/extension/internal/filter/color.h:829
+#: ../src/extension/internal/filter/color.h:1000
 #: ../src/filter-enums.cpp:55
 msgid "Lighten"
 msgstr "Éclaircir"
 
-#: ../src/extension/internal/filter/color.h:152
-#: ../src/extension/internal/filter/color.h:159
-#: ../src/extension/internal/filter/color.h:632
-#: ../src/extension/internal/filter/color.h:805
-#: ../src/extension/internal/filter/color.h:811
+#: ../src/extension/internal/filter/color.h:350
+#: ../src/extension/internal/filter/color.h:357
+#: ../src/extension/internal/filter/color.h:830
+#: ../src/extension/internal/filter/color.h:1003
+#: ../src/extension/internal/filter/color.h:1009
 #: ../src/filter-enums.cpp:54
 msgid "Darken"
 msgstr "Obscurcir"
 
-#: ../src/extension/internal/filter/color.h:154
-#: ../src/extension/internal/filter/color.h:627
+#: ../src/extension/internal/filter/color.h:352
+#: ../src/extension/internal/filter/color.h:825
 msgid "Blend 2:"
 msgstr "Fondu 2 :"
 
-#: ../src/extension/internal/filter/color.h:173
+#: ../src/extension/internal/filter/color.h:371
 #, fuzzy
 msgid "Blend image or object with a flood color"
 msgstr "Mélange un image ou un objet avec une couleur de remplissage, et définit sa luminosité et son contraste"
 
-#: ../src/extension/internal/filter/color.h:249
+#: ../src/extension/internal/filter/color.h:447
 msgid "Duochrome, custom (Color)"
 msgstr "Duochrome, paramétrable (Couleur)"
 
-#: ../src/extension/internal/filter/color.h:253
+#: ../src/extension/internal/filter/color.h:451
 msgid "Fluorescence level:"
 msgstr "Niveau de fluorescence :"
 
-#: ../src/extension/internal/filter/color.h:254
+#: ../src/extension/internal/filter/color.h:452
 msgid "Swap:"
 msgstr "Inverser :"
 
-#: ../src/extension/internal/filter/color.h:255
+#: ../src/extension/internal/filter/color.h:453
 msgid "No swap"
 msgstr "Aucune inversion"
 
-#: ../src/extension/internal/filter/color.h:256
+#: ../src/extension/internal/filter/color.h:454
 msgid "Color and alpha"
 msgstr "Couleur et opacité"
 
-#: ../src/extension/internal/filter/color.h:257
+#: ../src/extension/internal/filter/color.h:455
 msgid "Color only"
 msgstr "Couleur seulement"
 
-#: ../src/extension/internal/filter/color.h:258
+#: ../src/extension/internal/filter/color.h:456
 msgid "Alpha only"
 msgstr "Opacité seulement"
 
-#: ../src/extension/internal/filter/color.h:262
+#: ../src/extension/internal/filter/color.h:460
 msgid "Color 1"
 msgstr "Couleur 1"
 
-#: ../src/extension/internal/filter/color.h:265
+#: ../src/extension/internal/filter/color.h:463
 msgid "Color 2"
 msgstr "Couleur 2"
 
-#: ../src/extension/internal/filter/color.h:275
+#: ../src/extension/internal/filter/color.h:473
 #, fuzzy
 msgid "Convert luminance values to a duochrome palette"
 msgstr "Modifie les couleurs avec une palette à deux tons"
 
-#: ../src/extension/internal/filter/color.h:372
+#: ../src/extension/internal/filter/color.h:570
 msgid "Electrize, custom (Color)"
 msgstr "Électriser, paramétrable (Couleur)"
 
-#: ../src/extension/internal/filter/color.h:374
+#: ../src/extension/internal/filter/color.h:572
 #: ../src/extension/internal/filter/experimental.h:503
 #: ../src/extension/internal/filter/experimental.h:729
 msgid "Simplify:"
 msgstr "Simplification :"
 
-#: ../src/extension/internal/filter/color.h:375
+#: ../src/extension/internal/filter/color.h:573
 #: ../src/extension/internal/filter/experimental.h:604
 msgid "Effect type:"
 msgstr "Type d'effet :"
 
-#: ../src/extension/internal/filter/color.h:376
+#: ../src/extension/internal/filter/color.h:574
 #: ../src/filter-enums.cpp:83
 msgid "Table"
 msgstr "Table"
 
-#: ../src/extension/internal/filter/color.h:377
+#: ../src/extension/internal/filter/color.h:575
 #: ../src/filter-enums.cpp:84
 msgid "Discrete"
 msgstr "Discret"
 
-#: ../src/extension/internal/filter/color.h:379
+#: ../src/extension/internal/filter/color.h:577
 #: ../src/extension/internal/filter/experimental.h:612
 #: ../src/extension/internal/filter/experimental.h:728
 msgid "Levels:"
 msgstr "Niveaux :"
 
-#: ../src/extension/internal/filter/color.h:388
+#: ../src/extension/internal/filter/color.h:586
 msgid "Electro solarization effects"
 msgstr "Effets d'électro-solarisation"
 
-#: ../src/extension/internal/filter/color.h:466
+#: ../src/extension/internal/filter/color.h:664
 msgid "Greyscale, custom (Color)"
 msgstr "Niveaux de gris, paramétrable (Couleur)"
 
-#: ../src/extension/internal/filter/color.h:468
-msgid "Red:"
-msgstr "Rouge :"
-
-#: ../src/extension/internal/filter/color.h:469
-msgid "Green:"
-msgstr "Vert :"
-
-#: ../src/extension/internal/filter/color.h:470
-msgid "Blue:"
-msgstr "Bleu :"
-
-#: ../src/extension/internal/filter/color.h:472
+#: ../src/extension/internal/filter/color.h:670
 #: ../src/extension/internal/filter/experimental.h:81
 #: ../src/extension/internal/filter/experimental.h:238
 msgid "Transparent"
 msgstr "Transparent"
 
-#: ../src/extension/internal/filter/color.h:480
+#: ../src/extension/internal/filter/color.h:678
 msgid "Customize greyscale components"
 msgstr "Ajuste les composantes de niveau de gris"
 
-#: ../src/extension/internal/filter/color.h:548
+#: ../src/extension/internal/filter/color.h:746
 msgid "Lightness, custom (Color)"
 msgstr "Clarté, paramétrable (Couleur)"
 
-#: ../src/extension/internal/filter/color.h:550
+#: ../src/extension/internal/filter/color.h:748
 msgid "Lights:"
 msgstr "Lumières :"
 
-#: ../src/extension/internal/filter/color.h:551
+#: ../src/extension/internal/filter/color.h:749
 msgid "Shadows:"
 msgstr "Ombres :"
 
-#: ../src/extension/internal/filter/color.h:560
+#: ../src/extension/internal/filter/color.h:758
 msgid "Modify lights and shadows separately"
 msgstr "Modifie les lumières et les ombres séparément"
 
-#: ../src/extension/internal/filter/color.h:617
+#: ../src/extension/internal/filter/color.h:815
 msgid "Quadritone fantasy, custom (Color)"
 msgstr "Quadritone fantaisie, paramétrable (Couleur)"
 
-#: ../src/extension/internal/filter/color.h:619
 #: ../src/extension/internal/filter/color.h:817
+#: ../src/extension/internal/filter/color.h:1015
 msgid "Hue distribution (°):"
 msgstr "Distribution de la teinte (°) :"
 
-#: ../src/extension/internal/filter/color.h:620
+#: ../src/extension/internal/filter/color.h:818
 #: ../src/ui/dialog/tracedialog.cpp:477
 msgid "Colors:"
 msgstr "Couleurs :"
 
-#: ../src/extension/internal/filter/color.h:704
+#: ../src/extension/internal/filter/color.h:902
 msgid "Solarize, custom (Color)"
 msgstr "Solariser, paramétrable (Couleur)"
 
-#: ../src/extension/internal/filter/color.h:706
+#: ../src/extension/internal/filter/color.h:904
 msgid "Hue rotation (°):"
 msgstr "Rotation de teinte (°) :"
 
-#: ../src/extension/internal/filter/color.h:718
+#: ../src/extension/internal/filter/color.h:916
 msgid "Classic photographic solarization effect"
 msgstr "Effet de solarisation photographique classique"
 
-#: ../src/extension/internal/filter/color.h:791
+#: ../src/extension/internal/filter/color.h:989
 msgid "Tritone, custom (Color)"
 msgstr "Tritone, paramétrable (Couleur)"
 
-#: ../src/extension/internal/filter/color.h:797
+#: ../src/extension/internal/filter/color.h:995
 msgid "Enhance hue"
 msgstr "Teinte augmentée"
 
-#: ../src/extension/internal/filter/color.h:798
+#: ../src/extension/internal/filter/color.h:996
 msgid "Radiation"
 msgstr "Radiation"
 
-#: ../src/extension/internal/filter/color.h:799
+#: ../src/extension/internal/filter/color.h:997
 msgid "Hue to background"
 msgstr "Teinte en arrière-plan"
 
-#: ../src/extension/internal/filter/color.h:801
+#: ../src/extension/internal/filter/color.h:999
 msgid "Global blend:"
 msgstr "Fondu global :"
 
-#: ../src/extension/internal/filter/color.h:807
+#: ../src/extension/internal/filter/color.h:1005
 msgid "Glow:"
 msgstr "Lueur :"
 
-#: ../src/extension/internal/filter/color.h:808
+#: ../src/extension/internal/filter/color.h:1006
 msgid "Glow blend:"
 msgstr "Fondu de la lueur :"
 
-#: ../src/extension/internal/filter/color.h:813
+#: ../src/extension/internal/filter/color.h:1011
 msgid "Local light:"
 msgstr "Éclairage local :"
 
-#: ../src/extension/internal/filter/color.h:814
+#: ../src/extension/internal/filter/color.h:1012
 msgid "Global light:"
 msgstr "Éclairage global :"
 
-#: ../src/extension/internal/filter/color.h:828
+#: ../src/extension/internal/filter/color.h:1026
 msgid "Create a custom tritone palette with additional glow, blend modes and hue moving"
 msgstr "Crée une palette à trois tons paramétrable avec lueur, modes de fondu et déplacement de teinte"
 
@@ -7303,7 +7343,7 @@ msgid "Clean-up:"
 msgstr "Nettoyage :"
 
 #: ../src/extension/internal/filter/experimental.h:237
-#: ../src/widgets/toolbox.cpp:8366
+#: ../src/widgets/toolbox.cpp:8367
 msgid "Length:"
 msgstr "Longueur :"
 
@@ -7316,9 +7356,8 @@ msgid "Drawing, custom"
 msgstr "Dessin, paramétrable"
 
 #: ../src/extension/internal/filter/experimental.h:337
-#, fuzzy
 msgid "Erase:"
-msgstr "Gomme"
+msgstr "Effacement :"
 
 #: ../src/extension/internal/filter/experimental.h:344
 #: ../src/extension/internal/filter/image.h:56
@@ -7542,12 +7581,12 @@ msgid "Link or embed image:"
 msgstr "Lier ou incorporer l’image :"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:153
-msgid "embed"
-msgstr "incorporer"
+msgid "Embed"
+msgstr "Incorporer"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:154
-msgid "link"
-msgstr "lier"
+msgid "Link"
+msgstr "Lier"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:156
 msgid "Embed results in stand-alone, larger SVG files. Link references a file outside this SVG document and all files must be moved together."
@@ -7606,9 +7645,9 @@ msgstr "Décalage vertical :"
 #: ../share/extensions/polyhedron_3d.inx.h:31
 #: ../share/extensions/printing-marks.inx.h:14
 #: ../share/extensions/render_alphabetsoup.inx.h:3
-#: ../share/extensions/render_barcode.inx.h:5
-#: ../share/extensions/render_barcode_datamatrix.inx.h:2
-#: ../share/extensions/render_barcode_qrcode.inx.h:12
+#: ../share/extensions/render_barcode.inx.h:6
+#: ../share/extensions/render_barcode_datamatrix.inx.h:3
+#: ../share/extensions/render_barcode_qrcode.inx.h:13
 #: ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/spirograph.inx.h:6
 #: ../share/extensions/svgcalendar.inx.h:20
@@ -8543,7 +8582,7 @@ msgstr "Unité"
 #: ../src/widgets/toolbox.cpp:1597
 #: ../src/widgets/toolbox.cpp:3438
 #: ../src/widgets/toolbox.cpp:6156
-#: ../src/widgets/toolbox.cpp:8558
+#: ../src/widgets/toolbox.cpp:8559
 #: ../share/extensions/dxf_outlines.inx.h:10
 msgid "Units"
 msgstr "Unités"
@@ -8956,7 +8995,7 @@ msgstr "Élément d’attache qui « possède » cette prise"
 
 #. Name
 #: ../src/libgdl/gdl-dock-item.c:297
-#: ../src/widgets/toolbox.cpp:7767
+#: ../src/widgets/toolbox.cpp:7768
 #: ../share/extensions/gcodetools_graffiti.inx.h:25
 #: ../share/extensions/gcodetools_orientation_points.inx.h:6
 msgid "Orientation"
@@ -9302,7 +9341,7 @@ msgstr "Coordonnée Y pour un point d’attache flottant"
 msgid "Dock #%d"
 msgstr "Point d’attache #%d"
 
-#: ../src/libnrtype/FontFactory.cpp:907
+#: ../src/libnrtype/FontFactory.cpp:910
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Ignorer les polices sans famille qui font planter Pango"
 
@@ -11597,13 +11636,13 @@ msgstr "Boîte 3D"
 #: ../share/extensions/replace_font.inx.h:10
 #: ../share/extensions/split.inx.h:6
 #: ../share/extensions/text_braille.inx.h:2
-#: ../share/extensions/text_flipcase.inx.h:1
-#: ../share/extensions/text_lowercase.inx.h:1
-#: ../share/extensions/text_randomcase.inx.h:1
+#: ../share/extensions/text_flipcase.inx.h:2
+#: ../share/extensions/text_lowercase.inx.h:2
+#: ../share/extensions/text_randomcase.inx.h:2
 #: ../share/extensions/text_replace.inx.h:4
-#: ../share/extensions/text_sentencecase.inx.h:2
-#: ../share/extensions/text_titlecase.inx.h:1
-#: ../share/extensions/text_uppercase.inx.h:1
+#: ../share/extensions/text_sentencecase.inx.h:3
+#: ../share/extensions/text_titlecase.inx.h:2
+#: ../share/extensions/text_uppercase.inx.h:2
 msgid "Text"
 msgstr "Texte"
 
@@ -11853,21 +11892,27 @@ msgstr "Créer des guides autour de la page"
 msgid "Delete All Guides"
 msgstr "Supprimer tous les guides"
 
-#: ../src/sp-guide.cpp:484
+#. Guide has probably been deleted and no longer has an attached namedview.
+#: ../src/sp-guide.cpp:481
+#, c-format
+msgid "Deleted"
+msgstr "Supprimé"
+
+#: ../src/sp-guide.cpp:490
 msgid "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to delete"
 msgstr "<b>Maj+déplacer</b> pour pivoter, <b>Ctrl+déplacer</b>pour déplacer l’origine, <b>Del</b> pour supprimer"
 
-#: ../src/sp-guide.cpp:489
+#: ../src/sp-guide.cpp:494
 #, c-format
 msgid "vertical, at %s"
 msgstr "vertical, à %s"
 
-#: ../src/sp-guide.cpp:492
+#: ../src/sp-guide.cpp:497
 #, c-format
 msgid "horizontal, at %s"
 msgstr "horizontal, à %s"
 
-#: ../src/sp-guide.cpp:497
+#: ../src/sp-guide.cpp:502
 #, c-format
 msgid "at %d degrees, through (%s,%s)"
 msgstr "à %d degrés, passe par (%s,%s)"
@@ -12521,10 +12566,10 @@ msgstr "<b>Cliquer-déplacer</b> pour effacer"
 msgid "Choose a subtool from the toolbar"
 msgstr "Sélectionner un outil secondaire dans la barre d’outils"
 
-#: ../src/trace/potrace/inkscape-potrace.cpp:524
-#: ../src/trace/potrace/inkscape-potrace.cpp:598
-#, c-format
-msgid "Trace: %d.  %ld nodes"
+#: ../src/trace/potrace/inkscape-potrace.cpp:519
+#: ../src/trace/potrace/inkscape-potrace.cpp:582
+#, fuzzy
+msgid "Trace: %1.  %2 nodes"
 msgstr "Vectoriser : %d. %ld nœuds"
 
 #: ../src/trace/trace.cpp:72
@@ -12912,12 +12957,12 @@ msgstr "_V :"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:512
 #: ../src/ui/dialog/align-and-distribute.cpp:894
-#: ../src/widgets/toolbox.cpp:8395
+#: ../src/widgets/toolbox.cpp:8396
 msgid "Remove overlaps"
 msgstr "Supprimer les chevauchements"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:543
-#: ../src/widgets/toolbox.cpp:8188
+#: ../src/widgets/toolbox.cpp:8189
 msgid "Arrange connector network"
 msgstr "Arranger le réseau de connecteurs"
 
@@ -13047,7 +13092,7 @@ msgid "Distribute baselines of texts vertically"
 msgstr "Distribuer des distances égales verticalement entre lignes de base des textes"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:986
-#: ../src/widgets/toolbox.cpp:8357
+#: ../src/widgets/toolbox.cpp:8358
 msgid "Nicely arrange selected connector network"
 msgstr "Dispose le réseau de connecteurs sélectionnés de façon agréable"
 
@@ -13782,9 +13827,8 @@ msgstr "Angle pour la direction de la source de lumière dans le plan XY, en deg
 #. default z:
 #: ../src/ui/dialog/filter-effects-dialog.cpp:968
 #: ../src/ui/dialog/filter-effects-dialog.cpp:971
-#, fuzzy
 msgid "Location:"
-msgstr "Localisation"
+msgstr "Localisation :"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:968
 #: ../src/ui/dialog/filter-effects-dialog.cpp:971
@@ -21881,7 +21925,7 @@ msgid "Y coordinate of selected node(s)"
 msgstr "Coordonnée Y de la sélection"
 
 #: ../src/widgets/toolbox.cpp:1667
-#: ../src/widgets/toolbox.cpp:7625
+#: ../src/widgets/toolbox.cpp:7626
 msgid "Font Size"
 msgstr "Taille de police"
 
@@ -22205,7 +22249,7 @@ msgstr "Disperser aléatoirement les sommets et les angles"
 #: ../src/widgets/toolbox.cpp:3117
 #: ../src/widgets/toolbox.cpp:4052
 #: ../src/widgets/toolbox.cpp:4307
-#: ../src/widgets/toolbox.cpp:8604
+#: ../src/widgets/toolbox.cpp:8605
 msgid "Defaults"
 msgstr "R-à-z"
 
@@ -23253,59 +23297,64 @@ msgstr "Effacer une partie d’objet"
 msgid "The width of the eraser pen (relative to the visible canvas area)"
 msgstr "Largeur de la gomme (relativement à la zone de travail visible)"
 
-#: ../src/widgets/toolbox.cpp:6507
+#: ../src/widgets/toolbox.cpp:6490
+#, fuzzy, c-format
+msgid "Failed to find font matching: %s\n"
+msgstr "Échec de lecture sur le tube fils (%s)"
+
+#: ../src/widgets/toolbox.cpp:6524
 msgid "Text: Change font family"
 msgstr "Texte : modifier la police"
 
-#: ../src/widgets/toolbox.cpp:6564
+#: ../src/widgets/toolbox.cpp:6581
 msgid "Text: Change font size"
 msgstr "Texte : modifier la taille de police"
 
-#: ../src/widgets/toolbox.cpp:6703
+#: ../src/widgets/toolbox.cpp:6704
 msgid "Text: Change font style"
 msgstr "Texte : modifier le style de la police"
 
-#: ../src/widgets/toolbox.cpp:6782
+#: ../src/widgets/toolbox.cpp:6783
 msgid "Text: Change superscript or subscript"
 msgstr "Texte : passe en exposant ou en indice"
 
-#: ../src/widgets/toolbox.cpp:6928
+#: ../src/widgets/toolbox.cpp:6929
 msgid "Text: Change alignment"
 msgstr "Texte : modifier l’alignement"
 
-#: ../src/widgets/toolbox.cpp:6971
+#: ../src/widgets/toolbox.cpp:6972
 msgid "Text: Change line-height"
 msgstr "Texte : modifier la hauteur de ligne"
 
-#: ../src/widgets/toolbox.cpp:7020
+#: ../src/widgets/toolbox.cpp:7021
 msgid "Text: Change word-spacing"
 msgstr "Texte : modifier l’espacement intermot"
 
-#: ../src/widgets/toolbox.cpp:7062
+#: ../src/widgets/toolbox.cpp:7063
 msgid "Text: Change letter-spacing"
 msgstr "Texte : modifier l’interlettrage"
 
-#: ../src/widgets/toolbox.cpp:7103
+#: ../src/widgets/toolbox.cpp:7104
 msgid "Text: Change dx (kern)"
 msgstr "Texte : modifier dx (crénage)"
 
-#: ../src/widgets/toolbox.cpp:7137
+#: ../src/widgets/toolbox.cpp:7138
 msgid "Text: Change dy"
 msgstr "Texte : modifier dy"
 
-#: ../src/widgets/toolbox.cpp:7172
+#: ../src/widgets/toolbox.cpp:7173
 msgid "Text: Change rotate"
 msgstr "Texte : modifier la rotation"
 
-#: ../src/widgets/toolbox.cpp:7220
+#: ../src/widgets/toolbox.cpp:7221
 msgid "Text: Change orientation"
 msgstr "Texte : modifier l’orientation"
 
-#: ../src/widgets/toolbox.cpp:7585
+#: ../src/widgets/toolbox.cpp:7586
 msgid "Font Family"
 msgstr "Famille de police"
 
-#: ../src/widgets/toolbox.cpp:7586
+#: ../src/widgets/toolbox.cpp:7587
 msgid "Select Font Family (Alt-X to access)"
 msgstr "Sélectionner une famille de police (Alt+X pour y accéder)"
 
@@ -23313,358 +23362,358 @@ msgstr "Sélectionner une famille de police (Alt+X pour y accéder)"
 #. Extra list width
 #. Cell layout
 #. Enable entry completion
-#: ../src/widgets/toolbox.cpp:7593
+#: ../src/widgets/toolbox.cpp:7594
 msgid "Font not found on system"
 msgstr "Police indisponible sur votre système"
 
-#: ../src/widgets/toolbox.cpp:7626
+#: ../src/widgets/toolbox.cpp:7627
 msgid "Font size (px)"
 msgstr "Taille de police (px)"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7638
+#: ../src/widgets/toolbox.cpp:7639
 msgid "Toggle Bold"
 msgstr "Inverser la graisse"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7639
+#: ../src/widgets/toolbox.cpp:7640
 msgid "Toggle bold or normal weight"
 msgstr "Basculer entre gras et normal"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7651
+#: ../src/widgets/toolbox.cpp:7652
 msgid "Toggle Italic/Oblique"
 msgstr "Inverser Italique/Oblique"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7652
+#: ../src/widgets/toolbox.cpp:7653
 msgid "Toggle italic/oblique style"
 msgstr "Basculer le style entre Italique/Oblique et normal"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7664
+#: ../src/widgets/toolbox.cpp:7665
 msgid "Toggle Superscript"
 msgstr "Inverser le mode exposant"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7665
+#: ../src/widgets/toolbox.cpp:7666
 msgid "Toggle superscript"
 msgstr "Inverser le mode exposant"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7677
+#: ../src/widgets/toolbox.cpp:7678
 msgid "Toggle Subscript"
 msgstr "Inverser le mode indice"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7678
+#: ../src/widgets/toolbox.cpp:7679
 msgid "Toggle subscript"
 msgstr "Inverser le mode indice"
 
-#: ../src/widgets/toolbox.cpp:7695
 #: ../src/widgets/toolbox.cpp:7696
+#: ../src/widgets/toolbox.cpp:7697
 msgid "Align left"
 msgstr "Aligner à gauche"
 
-#: ../src/widgets/toolbox.cpp:7703
 #: ../src/widgets/toolbox.cpp:7704
+#: ../src/widgets/toolbox.cpp:7705
 msgid "Align center"
 msgstr "Centrer"
 
-#: ../src/widgets/toolbox.cpp:7711
 #: ../src/widgets/toolbox.cpp:7712
+#: ../src/widgets/toolbox.cpp:7713
 msgid "Align right"
 msgstr "Aligner à droite"
 
-#: ../src/widgets/toolbox.cpp:7719
+#: ../src/widgets/toolbox.cpp:7720
 msgid "Justify"
 msgstr "Justifier"
 
-#: ../src/widgets/toolbox.cpp:7720
+#: ../src/widgets/toolbox.cpp:7721
 msgid "Justify (only flowed text)"
 msgstr "Justifier (texte encadré seulement)"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7726
+#: ../src/widgets/toolbox.cpp:7727
 msgid "Alignment"
 msgstr "Alignement"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7727
+#: ../src/widgets/toolbox.cpp:7728
 msgid "Text alignment"
 msgstr "Alignement du texte"
 
-#: ../src/widgets/toolbox.cpp:7754
+#: ../src/widgets/toolbox.cpp:7755
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: ../src/widgets/toolbox.cpp:7761
+#: ../src/widgets/toolbox.cpp:7762
 msgid "Vertical"
 msgstr "Vertical"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7768
+#: ../src/widgets/toolbox.cpp:7769
 msgid "Text orientation"
 msgstr "Orientation du texte"
 
 #. Drop down menu
-#: ../src/widgets/toolbox.cpp:7791
+#: ../src/widgets/toolbox.cpp:7792
 msgid "Smaller spacing"
 msgstr "Espacement plus faible"
 
-#: ../src/widgets/toolbox.cpp:7791
-#: ../src/widgets/toolbox.cpp:7822
-#: ../src/widgets/toolbox.cpp:7853
+#: ../src/widgets/toolbox.cpp:7792
+#: ../src/widgets/toolbox.cpp:7823
+#: ../src/widgets/toolbox.cpp:7854
 msgctxt "Text tool"
 msgid "Normal"
 msgstr "Normal"
 
-#: ../src/widgets/toolbox.cpp:7791
+#: ../src/widgets/toolbox.cpp:7792
 msgid "Larger spacing"
 msgstr "Espacement plus important"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7796
+#: ../src/widgets/toolbox.cpp:7797
 msgid "Line Height"
 msgstr "Hauteur de ligne"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7797
+#: ../src/widgets/toolbox.cpp:7798
 msgid "Line:"
 msgstr "Ligne :"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7798
+#: ../src/widgets/toolbox.cpp:7799
 msgid "Spacing between lines (times font size)"
 msgstr "Espacement entre les lignes (nombre de fois la taille de la police)"
 
 #. Drop down menu
-#: ../src/widgets/toolbox.cpp:7822
-#: ../src/widgets/toolbox.cpp:7853
+#: ../src/widgets/toolbox.cpp:7823
+#: ../src/widgets/toolbox.cpp:7854
 msgid "Negative spacing"
 msgstr "Espacement négatif"
 
-#: ../src/widgets/toolbox.cpp:7822
-#: ../src/widgets/toolbox.cpp:7853
+#: ../src/widgets/toolbox.cpp:7823
+#: ../src/widgets/toolbox.cpp:7854
 msgid "Positive spacing"
 msgstr "Espacement positif"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7827
+#: ../src/widgets/toolbox.cpp:7828
 msgid "Word spacing"
 msgstr "Espacement intermot"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7828
+#: ../src/widgets/toolbox.cpp:7829
 msgid "Word:"
 msgstr "Mot :"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7829
+#: ../src/widgets/toolbox.cpp:7830
 msgid "Spacing between words (px)"
 msgstr "Espacement entre les mots (px)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7858
+#: ../src/widgets/toolbox.cpp:7859
 msgid "Letter spacing"
 msgstr "Interlettrage"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7859
+#: ../src/widgets/toolbox.cpp:7860
 msgid "Letter:"
 msgstr "Lettre :"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7860
+#: ../src/widgets/toolbox.cpp:7861
 msgid "Spacing between letters (px)"
 msgstr "Espacement entre les lettres (px)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7889
+#: ../src/widgets/toolbox.cpp:7890
 msgid "Kerning"
 msgstr "Crénage"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7890
+#: ../src/widgets/toolbox.cpp:7891
 msgid "Kern:"
 msgstr "Crénage :"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7891
+#: ../src/widgets/toolbox.cpp:7892
 msgid "Horizontal kerning (px)"
 msgstr "Crénage horizontal (px)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7920
+#: ../src/widgets/toolbox.cpp:7921
 msgid "Vertical Shift"
 msgstr "Décalage vertical"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7921
+#: ../src/widgets/toolbox.cpp:7922
 msgid "Vert:"
 msgstr "Vertical :"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7922
+#: ../src/widgets/toolbox.cpp:7923
 msgid "Vertical shift (px)"
 msgstr "Décalage vertical (px)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7951
+#: ../src/widgets/toolbox.cpp:7952
 msgid "Letter rotation"
 msgstr "Rotation des caractères"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7952
+#: ../src/widgets/toolbox.cpp:7953
 msgid "Rot:"
 msgstr "Rotation :"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7953
+#: ../src/widgets/toolbox.cpp:7954
 msgid "Character rotation (degrees)"
 msgstr "Rotation des caractères (degrés)"
 
-#: ../src/widgets/toolbox.cpp:8068
+#: ../src/widgets/toolbox.cpp:8069
 msgid "Set connector type: orthogonal"
 msgstr "Type de connecteur : orthogonal"
 
-#: ../src/widgets/toolbox.cpp:8068
+#: ../src/widgets/toolbox.cpp:8069
 msgid "Set connector type: polyline"
 msgstr "Type de connecteur : polyligne"
 
-#: ../src/widgets/toolbox.cpp:8117
+#: ../src/widgets/toolbox.cpp:8118
 msgid "Change connector curvature"
 msgstr "Modifier la courbure du connecteur"
 
-#: ../src/widgets/toolbox.cpp:8168
+#: ../src/widgets/toolbox.cpp:8169
 msgid "Change connector spacing"
 msgstr "Modifier la marge des connecteurs"
 
-#: ../src/widgets/toolbox.cpp:8282
+#: ../src/widgets/toolbox.cpp:8283
 msgid "EditMode"
 msgstr "ModeÉdition"
 
-#: ../src/widgets/toolbox.cpp:8283
+#: ../src/widgets/toolbox.cpp:8284
 msgid "Switch between connection point editing and connector drawing mode"
 msgstr "Alterner entre le mode Édition de point de connexion et le mode Tracé de connecteur"
 
-#: ../src/widgets/toolbox.cpp:8297
+#: ../src/widgets/toolbox.cpp:8298
 msgid "Avoid"
 msgstr "Éviter"
 
-#: ../src/widgets/toolbox.cpp:8307
+#: ../src/widgets/toolbox.cpp:8308
 msgid "Ignore"
 msgstr "Ignorer"
 
-#: ../src/widgets/toolbox.cpp:8318
+#: ../src/widgets/toolbox.cpp:8319
 msgid "Orthogonal"
 msgstr "Othogonal"
 
-#: ../src/widgets/toolbox.cpp:8319
+#: ../src/widgets/toolbox.cpp:8320
 msgid "Make connector orthogonal or polyline"
 msgstr "Rend les connecteurs orthogonaux ou polylignes"
 
-#: ../src/widgets/toolbox.cpp:8333
+#: ../src/widgets/toolbox.cpp:8334
 msgid "Connector Curvature"
 msgstr "Courbure du connecteur"
 
-#: ../src/widgets/toolbox.cpp:8333
+#: ../src/widgets/toolbox.cpp:8334
 msgid "Curvature:"
 msgstr "Courbure :"
 
-#: ../src/widgets/toolbox.cpp:8334
+#: ../src/widgets/toolbox.cpp:8335
 msgid "The amount of connectors curvature"
 msgstr "Quantité de courbure des connecteurs"
 
-#: ../src/widgets/toolbox.cpp:8344
+#: ../src/widgets/toolbox.cpp:8345
 msgid "Connector Spacing"
 msgstr "Espacement des connecteurs"
 
-#: ../src/widgets/toolbox.cpp:8344
+#: ../src/widgets/toolbox.cpp:8345
 msgid "Spacing:"
 msgstr "Espacement :"
 
-#: ../src/widgets/toolbox.cpp:8345
+#: ../src/widgets/toolbox.cpp:8346
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Espace laissé autour des objets par les connecteurs routés automatiquement"
 
-#: ../src/widgets/toolbox.cpp:8356
+#: ../src/widgets/toolbox.cpp:8357
 msgid "Graph"
 msgstr "Graphe"
 
-#: ../src/widgets/toolbox.cpp:8366
+#: ../src/widgets/toolbox.cpp:8367
 msgid "Connector Length"
 msgstr "Longueur des connecteurs"
 
-#: ../src/widgets/toolbox.cpp:8367
+#: ../src/widgets/toolbox.cpp:8368
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Longueur idéale pour les connecteurs après routage"
 
-#: ../src/widgets/toolbox.cpp:8379
+#: ../src/widgets/toolbox.cpp:8380
 msgid "Downwards"
 msgstr "Vers le bas"
 
-#: ../src/widgets/toolbox.cpp:8380
+#: ../src/widgets/toolbox.cpp:8381
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Faire que les connecteurs avec des marqueurs de fin (des flèches) pointent vers le bas"
 
-#: ../src/widgets/toolbox.cpp:8396
+#: ../src/widgets/toolbox.cpp:8397
 msgid "Do not allow overlapping shapes"
 msgstr "Ne pas permettre que deux formes se chevauchent"
 
-#: ../src/widgets/toolbox.cpp:8411
+#: ../src/widgets/toolbox.cpp:8412
 msgid "New connection point"
 msgstr "Nouveau point de connexion"
 
-#: ../src/widgets/toolbox.cpp:8412
+#: ../src/widgets/toolbox.cpp:8413
 msgid "Add a new connection point to the currently selected item"
 msgstr "Ajoute un nouveau point de connexion à l’élément sélectionné"
 
-#: ../src/widgets/toolbox.cpp:8423
+#: ../src/widgets/toolbox.cpp:8424
 msgid "Remove connection point"
 msgstr "Supprimer le point de connexion"
 
-#: ../src/widgets/toolbox.cpp:8424
+#: ../src/widgets/toolbox.cpp:8425
 msgid "Remove the currently selected connection point"
 msgstr "Supprime le point de connexion sélectionné"
 
-#: ../src/widgets/toolbox.cpp:8526
+#: ../src/widgets/toolbox.cpp:8527
 msgid "Fill by"
 msgstr "Type de remplissage"
 
-#: ../src/widgets/toolbox.cpp:8527
+#: ../src/widgets/toolbox.cpp:8528
 msgid "Fill by:"
 msgstr "Type de remplissage :"
 
-#: ../src/widgets/toolbox.cpp:8539
+#: ../src/widgets/toolbox.cpp:8540
 msgid "Fill Threshold"
 msgstr "Seuil de remplissage :"
 
-#: ../src/widgets/toolbox.cpp:8540
+#: ../src/widgets/toolbox.cpp:8541
 msgid "The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"
 msgstr "La différence maximale entre le pixel du clic et les pixels voisins pour qu’ils soient ajoutés dans le remplissage"
 
-#: ../src/widgets/toolbox.cpp:8566
+#: ../src/widgets/toolbox.cpp:8567
 msgid "Grow/shrink by"
 msgstr "Agrandir/rétrécir de"
 
-#: ../src/widgets/toolbox.cpp:8566
+#: ../src/widgets/toolbox.cpp:8567
 msgid "Grow/shrink by:"
 msgstr "Agrandir/rétrécir de :"
 
-#: ../src/widgets/toolbox.cpp:8567
+#: ../src/widgets/toolbox.cpp:8568
 msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr "Agrandit (si positif) ou rétrécit (si négatif) de cette quantité le chemin créé par remplissage."
 
-#: ../src/widgets/toolbox.cpp:8592
+#: ../src/widgets/toolbox.cpp:8593
 msgid "Close gaps"
 msgstr "Combler les vides"
 
-#: ../src/widgets/toolbox.cpp:8593
+#: ../src/widgets/toolbox.cpp:8594
 msgid "Close gaps:"
 msgstr "Combler les vides :"
 
-#: ../src/widgets/toolbox.cpp:8605
+#: ../src/widgets/toolbox.cpp:8606
 msgid "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
 msgstr "Restaurer les préférences par défaut de l’outil de remplissage au seau (changez les valeurs par défaut dans Inkscape Préférences>Outils)"
 
@@ -24248,9 +24297,8 @@ msgid "Or, use manual scale factor:"
 msgstr "Ou utiliser un facteur d’échelle manuel"
 
 #: ../share/extensions/dxf_input.inx.h:17
-#, fuzzy
 msgid "Text Font:"
-msgstr "Police du texte"
+msgstr "Police du texte :"
 
 #: ../share/extensions/dxf_input.inx.h:18
 msgid "Use automatic scaling to size A4"
@@ -24584,9 +24632,8 @@ msgid "Number of teeth:"
 msgstr "Nombre de dents :"
 
 #: ../share/extensions/gears.inx.h:5
-#, fuzzy
 msgid "Pressure angle (degrees):"
-msgstr "Angle d’appui :"
+msgstr "Angle de pression (°) :"
 
 #: ../share/extensions/gcodetools_about.inx.h:1
 msgid "About"
@@ -24705,9 +24752,8 @@ msgstr ""
 #: ../share/extensions/gcodetools_area.inx.h:15
 #: ../share/extensions/gcodetools_lathe.inx.h:7
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:6
-#, fuzzy
 msgid "Cutting order:"
-msgstr "Contour en arête"
+msgstr "Ordre de découpe :"
 
 #: ../share/extensions/gcodetools_area.inx.h:16
 #: ../share/extensions/gcodetools_lathe.inx.h:8
@@ -24744,14 +24790,12 @@ msgid "File:"
 msgstr "Fichier :"
 
 #: ../share/extensions/gcodetools_area.inx.h:20
-#, fuzzy
 msgid "Fill area"
-msgstr "Remplissage d’une zone bornée"
+msgstr "Zone de remplissage"
 
 #: ../share/extensions/gcodetools_area.inx.h:21
-#, fuzzy
 msgid "Filling method"
-msgstr "Méthode de division :"
+msgstr "Méthode de remplissage"
 
 #: ../share/extensions/gcodetools_area.inx.h:22
 #: ../share/extensions/gcodetools_dxf_points.inx.h:9
@@ -24834,9 +24878,8 @@ msgstr ""
 #: ../share/extensions/gcodetools_area.inx.h:37
 #: ../share/extensions/gcodetools_lathe.inx.h:35
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:25
-#, fuzzy
 msgid "Path by path"
-msgstr "Coller le chemin"
+msgstr "Chemin par chemin"
 
 #: ../share/extensions/gcodetools_area.inx.h:38
 #: ../share/extensions/gcodetools_lathe.inx.h:36
@@ -24898,7 +24941,7 @@ msgstr ""
 #: ../share/extensions/gcodetools_lathe.inx.h:43
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:33
 msgid "Subpath by subpath"
-msgstr ""
+msgstr "Sous-chemin par sous-chemin"
 
 #: ../share/extensions/gcodetools_area.inx.h:47
 #: ../share/extensions/gcodetools_dxf_points.inx.h:20
@@ -25111,9 +25154,8 @@ msgid "Lathe width:"
 msgstr "Largeur du tour :"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:28
-#, fuzzy
 msgid "Move path"
-msgstr "Déplacer les motifs"
+msgstr "Déplacer le chemin"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:44
 msgid "This function modifies path so it will be able to be cut with the rectangular cutter."
@@ -25154,9 +25196,8 @@ msgid "Maximum angle for corner (0-180 deg):"
 msgstr ""
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:12
-#, fuzzy
 msgid "Perpendicular"
-msgstr "Médiatrice"
+msgstr "Perpendiculaire"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:13
 #, fuzzy
@@ -25168,12 +25209,10 @@ msgid "Prepare path for plasma or laser cuters"
 msgstr ""
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:15
-#, fuzzy
 msgid "Replace original path"
-msgstr "Remplacer des polices"
+msgstr "Remplacer le chemin original"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:16
-#, fuzzy
 msgid "Round"
 msgstr "Arrondi"
 
@@ -25183,9 +25222,8 @@ msgid "Stepout distance for corners:"
 msgstr "Aimanter aux coins des boîtes englobantes"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:18
-#, fuzzy
 msgid "Tangent"
-msgstr "Magenta"
+msgstr "Tangente"
 
 #: ../share/extensions/gcodetools_tools_library.inx.h:4
 msgid "Just check tools"
@@ -26962,8 +27000,8 @@ msgid "Alphabet Soup"
 msgstr "Soupe alphabet"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:5
-#: ../share/extensions/render_barcode_datamatrix.inx.h:5
-#: ../share/extensions/render_barcode_qrcode.inx.h:16
+#: ../share/extensions/render_barcode_datamatrix.inx.h:6
+#: ../share/extensions/render_barcode_qrcode.inx.h:17
 msgid "Text:"
 msgstr "Texte :"
 
@@ -26972,37 +27010,39 @@ msgid "Bar Height:"
 msgstr "Hauteur des barres :"
 
 #: ../share/extensions/render_barcode.inx.h:2
+#: ../share/extensions/render_barcode_datamatrix.inx.h:1
+#: ../share/extensions/render_barcode_qrcode.inx.h:2
 msgid "Barcode"
-msgstr "Code-barre"
+msgstr "Code-barres"
 
 #: ../share/extensions/render_barcode.inx.h:3
 msgid "Barcode Data:"
-msgstr "Données du code-barre :"
+msgstr "Données du code-barres :"
 
 #: ../share/extensions/render_barcode.inx.h:4
 msgid "Barcode Type:"
-msgstr "Type de code-barre :"
+msgstr "Type de code-barres :"
 
-#: ../share/extensions/render_barcode_datamatrix.inx.h:1
-msgid "Barcode - Datamatrix"
-msgstr "Code barre - Datamatrix"
+#: ../share/extensions/render_barcode.inx.h:5
+msgid "Classic"
+msgstr "Classique"
 
-#: ../share/extensions/render_barcode_datamatrix.inx.h:3
-#: ../share/extensions/render_barcode_qrcode.inx.h:14
+#: ../share/extensions/render_barcode_datamatrix.inx.h:2
+msgid "Datamatrix"
+msgstr "Datamatrix"
+
+#: ../share/extensions/render_barcode_datamatrix.inx.h:4
+#: ../share/extensions/render_barcode_qrcode.inx.h:15
 msgid "Size, in unit squares:"
 msgstr "Taille, en nombre de carrés :"
 
-#: ../share/extensions/render_barcode_datamatrix.inx.h:4
+#: ../share/extensions/render_barcode_datamatrix.inx.h:5
 msgid "Square Size (px):"
 msgstr "Taille du carré (px) :"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:1
 msgid "Auto"
 msgstr "Auto"
-
-#: ../share/extensions/render_barcode_qrcode.inx.h:2
-msgid "Barcode - QR Code"
-msgstr "Code barre - Code QR"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:3
 msgid "Error correction level:"
@@ -27028,17 +27068,21 @@ msgstr "M (environ 15 %)"
 msgid "Q (Approx. 25%)"
 msgstr "Q (environ 25 %)"
 
-#: ../share/extensions/render_barcode_qrcode.inx.h:13
+#: ../share/extensions/render_barcode_qrcode.inx.h:12
+msgid "QR Code"
+msgstr "QR Code"
+
+#: ../share/extensions/render_barcode_qrcode.inx.h:14
 msgid "See http://www.denso-wave.com/qrcode/index-e.html for details"
 msgstr "Voir http://www.denso-wave.com/qrcode/index-e.html pour de plus amples détails"
 
-#: ../share/extensions/render_barcode_qrcode.inx.h:15
+#: ../share/extensions/render_barcode_qrcode.inx.h:16
 msgid "Square size (px):"
 msgstr "Taille du carré (px) :"
 
-#: ../share/extensions/render_barcode_qrcode.inx.h:17
+#: ../share/extensions/render_barcode_qrcode.inx.h:18
 msgid "With \"Auto\", the size of the barcode depends on the length of the text and the error correction level"
-msgstr "Avec \"Auto\", la taille du code barre dépend de la longueur du texte et du niveau de correction d'erreur"
+msgstr "Avec \"Auto\", la taille du code-barres dépend de la longueur du texte et du niveau de correction d'erreur"
 
 #: ../share/extensions/replace_font.inx.h:1
 msgid "And replace with: "
@@ -27586,15 +27630,24 @@ msgstr "Ajuster les noms en fonction de votre langue :"
 msgid "Convert to Braille"
 msgstr "Convertir en Braille"
 
-#: ../share/extensions/text_flipcase.inx.h:2
+#: ../share/extensions/text_flipcase.inx.h:1
+#: ../share/extensions/text_lowercase.inx.h:1
+#: ../share/extensions/text_randomcase.inx.h:1
+#: ../share/extensions/text_sentencecase.inx.h:1
+#: ../share/extensions/text_titlecase.inx.h:1
+#: ../share/extensions/text_uppercase.inx.h:1
+msgid "Change Case"
+msgstr "Modifier la casse"
+
+#: ../share/extensions/text_flipcase.inx.h:3
 msgid "fLIP cASE"
 msgstr "iNVERSER lA cASSE"
 
-#: ../share/extensions/text_lowercase.inx.h:2
+#: ../share/extensions/text_lowercase.inx.h:3
 msgid "lowercase"
 msgstr "minuscules"
 
-#: ../share/extensions/text_randomcase.inx.h:2
+#: ../share/extensions/text_randomcase.inx.h:3
 msgid "rANdOm CasE"
 msgstr "cAssE ALÉatOIRe"
 
@@ -27610,15 +27663,15 @@ msgstr "Remplacer le texte"
 msgid "Replace:"
 msgstr "Remplacer :"
 
-#: ../share/extensions/text_sentencecase.inx.h:1
+#: ../share/extensions/text_sentencecase.inx.h:2
 msgid "Sentence case"
 msgstr "Casse des phrases"
 
-#: ../share/extensions/text_titlecase.inx.h:2
+#: ../share/extensions/text_titlecase.inx.h:3
 msgid "Title Case"
 msgstr "Casse du titre"
 
-#: ../share/extensions/text_uppercase.inx.h:2
+#: ../share/extensions/text_uppercase.inx.h:3
 msgid "UPPERCASE"
 msgstr "MAJUSCULES"
 
@@ -28119,6 +28172,11 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Entrée XAML"
+
+#~ msgid "link"
+#~ msgstr "lier"
+#~ msgid "Barcode - QR Code"
+#~ msgstr "Code barre - Code QR"
 
 #, fuzzy
 #~ msgid "Vibration:"
@@ -29638,8 +29696,6 @@ msgstr "Entrée XAML"
 #~ msgstr "Note : l’extension du fichier est ajoutée automatiquement"
 #~ msgid "_Input Devices (new)..."
 #~ msgstr "Périphériques de saisie... (nouveau)"
-#~ msgid "Failed to read from child pipe (%s)"
-#~ msgstr "Échec de lecture sur le tube fils (%s)"
 #~ msgid "Failed to change to directory '%s' (%s)"
 #~ msgstr ""
 #~ "Impossible de choisir le répertoire %s.\n"

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
-	<_name>Barcode - Datamatrix</_name>
-	<id>il.datamatrix</id>
-	<dependency type="executable" location="extensions">render_barcode_datamatrix.py</dependency>
-	<dependency type="executable" location="extensions">inkex.py</dependency>
-	<param name="text" type="string" _gui-text="Text:">Inkscape</param>
+  <_name>Datamatrix</_name>
+  <id>il.datamatrix</id>
+  <dependency type="executable" location="extensions">render_barcode_datamatrix.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <param name="text" type="string" _gui-text="Text:">Inkscape</param>
   <param name="symbol" _gui-text="Size, in unit squares:" type="enum">
     <item value="sq10">10x10</item>
     <item value="sq12">12x12</item>
@@ -37,14 +37,16 @@
     <item value="rect16x36">16x36</item>
     <item value="rect16x48">16x48</item>
   </param>
-	<param name="size" type="int" min="1" max="1000" _gui-text="Square Size (px):">4</param>
-	<effect>
-		<object-type>all</object-type>
-		<effects-menu>
-			<submenu _name="Render"/>
-		</effects-menu>
-	</effect>
-	<script>
-		<command reldir="extensions" interpreter="python">render_barcode_datamatrix.py</command>
-	</script>
+  <param name="size" type="int" min="1" max="1000" _gui-text="Square Size (px):">4</param>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Render">
+        <submenu _name="Barcode" />
+      </submenu>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">render_barcode_datamatrix.py</command>
+  </script>
 </inkscape-extension>

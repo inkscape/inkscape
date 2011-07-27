@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-20 18:03+0200\n"
+"POT-Creation-Date: 2011-07-27 20:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -772,8 +772,9 @@ msgstr ""
 #: ../src/extension/internal/filter/abc.h:477
 #: ../src/extension/internal/filter/abc.h:580
 #: ../src/extension/internal/filter/abc.h:740
-#: ../src/extension/internal/filter/color.h:163
-#: ../src/extension/internal/filter/color.h:818
+#: ../src/extension/internal/filter/color.h:159
+#: ../src/extension/internal/filter/color.h:361
+#: ../src/extension/internal/filter/color.h:1016
 #: ../src/extension/internal/filter/experimental.h:97
 #: ../src/extension/internal/filter/shadows.h:71
 #: ../share/extensions/color_blackandwhite.inx.h:2
@@ -1359,7 +1360,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:1
 #: ../src/extension/internal/bitmap/solarize.cpp:38
-#: ../src/extension/internal/filter/color.h:708
+#: ../src/extension/internal/filter/color.h:906
 msgid "Solarize"
 msgstr ""
 
@@ -1368,7 +1369,7 @@ msgid "Classical photographic solarization effect"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/color.h:709
+#: ../src/extension/internal/filter/color.h:907
 msgid "Moonarize"
 msgstr ""
 
@@ -1995,7 +1996,7 @@ msgid "Quadritone fantasy"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/color.h:641
+#: ../src/extension/internal/filter/color.h:839
 msgid "Replace hue by two colors"
 msgstr ""
 
@@ -2175,7 +2176,7 @@ msgid "Convert to a colorizable transparent positive or negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/color.h:146
+#: ../src/extension/internal/filter/color.h:344
 msgid "Duotone"
 msgstr ""
 
@@ -3816,11 +3817,11 @@ msgstr ""
 msgid "Select <b>at least one non-connector object</b>."
 msgstr ""
 
-#: ../src/connector-context.cpp:1968 ../src/widgets/toolbox.cpp:8298
+#: ../src/connector-context.cpp:1968 ../src/widgets/toolbox.cpp:8299
 msgid "Make connectors avoid selected objects"
 msgstr ""
 
-#: ../src/connector-context.cpp:1969 ../src/widgets/toolbox.cpp:8308
+#: ../src/connector-context.cpp:1969 ../src/widgets/toolbox.cpp:8309
 msgid "Make connectors ignore selected objects"
 msgstr ""
 
@@ -5043,8 +5044,8 @@ msgstr ""
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/dialogs/object-attributes.cpp:35
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/extension/internal/filter/color.h:707
-#: ../src/extension/internal/filter/color.h:795
+#: ../src/extension/internal/filter/color.h:905
+#: ../src/extension/internal/filter/color.h:993
 #: ../src/extension/internal/filter/morphology.h:53 ../src/rdf.cpp:240
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2272
@@ -5234,11 +5235,11 @@ msgstr ""
 msgid "Justify lines"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:304 ../src/widgets/toolbox.cpp:7755
+#: ../src/dialogs/text-edit.cpp:304 ../src/widgets/toolbox.cpp:7756
 msgid "Horizontal text"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:318 ../src/widgets/toolbox.cpp:7762
+#: ../src/dialogs/text-edit.cpp:318 ../src/widgets/toolbox.cpp:7763
 msgid "Vertical text"
 msgstr ""
 
@@ -5976,7 +5977,7 @@ msgstr ""
 
 #. Label
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/extension/internal/filter/color.h:552
+#: ../src/extension/internal/filter/color.h:750
 #: ../src/extension/internal/filter/experimental.h:355
 #: ../src/widgets/gradient-vector.cpp:824
 #: ../share/extensions/printing-marks.inx.h:9
@@ -6298,6 +6299,7 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
 #: ../src/extension/internal/filter/abc.h:177
+#: ../src/extension/internal/filter/color.h:151
 #: ../src/extension/internal/filter/experimental.h:85
 msgid "Saturation:"
 msgstr ""
@@ -6305,7 +6307,7 @@ msgstr ""
 #: ../src/extension/internal/bitmap/modulate.cpp:43
 #: ../src/extension/internal/filter/abc.h:375
 #: ../src/extension/internal/filter/abc.h:815
-#: ../src/extension/internal/filter/color.h:66
+#: ../src/extension/internal/filter/color.h:68
 msgid "Brightness:"
 msgstr ""
 
@@ -6447,7 +6449,7 @@ msgstr ""
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:45
 #: ../src/ui/dialog/inkscape-preferences.cpp:213
 #: ../src/ui/dialog/tracedialog.cpp:420 ../src/ui/dialog/tracedialog.cpp:453
-#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:8539
+#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:8540
 msgid "Threshold:"
 msgstr ""
 
@@ -6668,15 +6670,17 @@ msgstr ""
 #: ../src/extension/internal/filter/abc.h:675
 #: ../src/extension/internal/filter/abc.h:744
 #: ../src/extension/internal/filter/abc.h:822
-#: ../src/extension/internal/filter/color.h:73
-#: ../src/extension/internal/filter/color.h:169
-#: ../src/extension/internal/filter/color.h:271
-#: ../src/extension/internal/filter/color.h:384
-#: ../src/extension/internal/filter/color.h:476
-#: ../src/extension/internal/filter/color.h:556
-#: ../src/extension/internal/filter/color.h:637
-#: ../src/extension/internal/filter/color.h:714
-#: ../src/extension/internal/filter/color.h:824
+#: ../src/extension/internal/filter/color.h:75
+#: ../src/extension/internal/filter/color.h:165
+#: ../src/extension/internal/filter/color.h:270
+#: ../src/extension/internal/filter/color.h:367
+#: ../src/extension/internal/filter/color.h:469
+#: ../src/extension/internal/filter/color.h:582
+#: ../src/extension/internal/filter/color.h:674
+#: ../src/extension/internal/filter/color.h:754
+#: ../src/extension/internal/filter/color.h:835
+#: ../src/extension/internal/filter/color.h:912
+#: ../src/extension/internal/filter/color.h:1022
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:104
 #: ../src/extension/internal/filter/experimental.h:110
@@ -6706,15 +6710,17 @@ msgstr ""
 #: ../src/extension/internal/filter/abc.h:676
 #: ../src/extension/internal/filter/abc.h:745
 #: ../src/extension/internal/filter/abc.h:823
-#: ../src/extension/internal/filter/color.h:74
-#: ../src/extension/internal/filter/color.h:170
-#: ../src/extension/internal/filter/color.h:272
-#: ../src/extension/internal/filter/color.h:385
-#: ../src/extension/internal/filter/color.h:477
-#: ../src/extension/internal/filter/color.h:557
-#: ../src/extension/internal/filter/color.h:638
-#: ../src/extension/internal/filter/color.h:715
-#: ../src/extension/internal/filter/color.h:825
+#: ../src/extension/internal/filter/color.h:76
+#: ../src/extension/internal/filter/color.h:166
+#: ../src/extension/internal/filter/color.h:271
+#: ../src/extension/internal/filter/color.h:368
+#: ../src/extension/internal/filter/color.h:470
+#: ../src/extension/internal/filter/color.h:583
+#: ../src/extension/internal/filter/color.h:675
+#: ../src/extension/internal/filter/color.h:755
+#: ../src/extension/internal/filter/color.h:836
+#: ../src/extension/internal/filter/color.h:913
+#: ../src/extension/internal/filter/color.h:1023
 #: ../src/extension/internal/filter/experimental.h:111
 #: ../src/extension/internal/filter/experimental.h:243
 #: ../src/extension/internal/filter/experimental.h:362
@@ -6844,8 +6850,10 @@ msgid "Erosion:"
 msgstr ""
 
 #: ../src/extension/internal/filter/abc.h:474
-#: ../src/extension/internal/filter/color.h:69
-#: ../src/extension/internal/filter/color.h:380
+#: ../src/extension/internal/filter/color.h:71
+#: ../src/extension/internal/filter/color.h:156
+#: ../src/extension/internal/filter/color.h:266
+#: ../src/extension/internal/filter/color.h:578
 #: ../src/extension/internal/filter/experimental.h:83
 msgid "Inverted"
 msgstr ""
@@ -6891,273 +6899,300 @@ msgstr ""
 msgid "Specular light, custom (ABCs)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:64
+#: ../src/extension/internal/filter/color.h:66
 msgid "Brightness, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:67
-#: ../src/extension/internal/filter/color.h:626
+#: ../src/extension/internal/filter/color.h:69
+#: ../src/extension/internal/filter/color.h:824
 msgid "Over-saturation:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:68
-#: ../src/extension/internal/filter/color.h:471
+#: ../src/extension/internal/filter/color.h:70
+#: ../src/extension/internal/filter/color.h:669
 #: ../src/extension/internal/filter/experimental.h:84
 #: ../src/extension/internal/filter/experimental.h:505
 msgid "Lightness:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:77
+#: ../src/extension/internal/filter/color.h:79
 msgid "Brightness filter"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:140
+#: ../src/extension/internal/filter/color.h:147
+msgid "Channel painting, custom (Color)"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:152
+#: ../src/extension/internal/filter/color.h:262
+#: ../src/extension/internal/filter/color.h:666
+msgid "Red:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:153
+#: ../src/extension/internal/filter/color.h:263
+#: ../src/extension/internal/filter/color.h:667
+msgid "Green:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:154
+#: ../src/extension/internal/filter/color.h:264
+#: ../src/extension/internal/filter/color.h:668
+msgid "Blue:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:155
+#: ../src/extension/internal/filter/color.h:265
+msgid "Alpha:"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:169
+msgid "Replace RGB by any color"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:260
+msgid "Channel transparency, custom (Color)"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:274
+msgid "Replace RGB by transparency"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:338
 msgid "Colorize, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:144
+#: ../src/extension/internal/filter/color.h:342
 msgid "Harsh light:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:145
+#: ../src/extension/internal/filter/color.h:343
 msgid "Normal light:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:147
-#: ../src/extension/internal/filter/color.h:621
+#: ../src/extension/internal/filter/color.h:345
+#: ../src/extension/internal/filter/color.h:819
 msgid "Blend 1:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:148
-#: ../src/extension/internal/filter/color.h:156
-#: ../src/extension/internal/filter/color.h:623
-#: ../src/extension/internal/filter/color.h:630
-#: ../src/extension/internal/filter/color.h:804
-#: ../src/extension/internal/filter/color.h:810 ../src/filter-enums.cpp:52
+#: ../src/extension/internal/filter/color.h:346
+#: ../src/extension/internal/filter/color.h:354
+#: ../src/extension/internal/filter/color.h:821
+#: ../src/extension/internal/filter/color.h:828
+#: ../src/extension/internal/filter/color.h:1002
+#: ../src/extension/internal/filter/color.h:1008 ../src/filter-enums.cpp:52
 msgid "Multiply"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:149
-#: ../src/extension/internal/filter/color.h:157
-#: ../src/extension/internal/filter/color.h:622
-#: ../src/extension/internal/filter/color.h:628
-#: ../src/extension/internal/filter/color.h:796
-#: ../src/extension/internal/filter/color.h:809 ../src/filter-enums.cpp:51
+#: ../src/extension/internal/filter/color.h:347
+#: ../src/extension/internal/filter/color.h:355
+#: ../src/extension/internal/filter/color.h:820
+#: ../src/extension/internal/filter/color.h:826
+#: ../src/extension/internal/filter/color.h:994
+#: ../src/extension/internal/filter/color.h:1007 ../src/filter-enums.cpp:51
 #: ../src/ui/dialog/inkscape-preferences.cpp:597
 msgid "Normal"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:150
-#: ../src/extension/internal/filter/color.h:155
-#: ../src/extension/internal/filter/color.h:624
-#: ../src/extension/internal/filter/color.h:629
-#: ../src/extension/internal/filter/color.h:803 ../src/filter-enums.cpp:53
+#: ../src/extension/internal/filter/color.h:348
+#: ../src/extension/internal/filter/color.h:353
+#: ../src/extension/internal/filter/color.h:822
+#: ../src/extension/internal/filter/color.h:827
+#: ../src/extension/internal/filter/color.h:1001 ../src/filter-enums.cpp:53
 #: ../src/ui/dialog/input.cpp:362
 msgid "Screen"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:151
-#: ../src/extension/internal/filter/color.h:158
-#: ../src/extension/internal/filter/color.h:631
-#: ../src/extension/internal/filter/color.h:802 ../src/filter-enums.cpp:55
+#: ../src/extension/internal/filter/color.h:349
+#: ../src/extension/internal/filter/color.h:356
+#: ../src/extension/internal/filter/color.h:829
+#: ../src/extension/internal/filter/color.h:1000 ../src/filter-enums.cpp:55
 msgid "Lighten"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:152
-#: ../src/extension/internal/filter/color.h:159
-#: ../src/extension/internal/filter/color.h:632
-#: ../src/extension/internal/filter/color.h:805
-#: ../src/extension/internal/filter/color.h:811 ../src/filter-enums.cpp:54
+#: ../src/extension/internal/filter/color.h:350
+#: ../src/extension/internal/filter/color.h:357
+#: ../src/extension/internal/filter/color.h:830
+#: ../src/extension/internal/filter/color.h:1003
+#: ../src/extension/internal/filter/color.h:1009 ../src/filter-enums.cpp:54
 msgid "Darken"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:154
-#: ../src/extension/internal/filter/color.h:627
+#: ../src/extension/internal/filter/color.h:352
+#: ../src/extension/internal/filter/color.h:825
 msgid "Blend 2:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:173
+#: ../src/extension/internal/filter/color.h:371
 msgid "Blend image or object with a flood color"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:249
+#: ../src/extension/internal/filter/color.h:447
 msgid "Duochrome, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:253
+#: ../src/extension/internal/filter/color.h:451
 msgid "Fluorescence level:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:254
+#: ../src/extension/internal/filter/color.h:452
 msgid "Swap:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:255
+#: ../src/extension/internal/filter/color.h:453
 msgid "No swap"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:256
+#: ../src/extension/internal/filter/color.h:454
 msgid "Color and alpha"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:257
+#: ../src/extension/internal/filter/color.h:455
 msgid "Color only"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:258
+#: ../src/extension/internal/filter/color.h:456
 msgid "Alpha only"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:262
+#: ../src/extension/internal/filter/color.h:460
 msgid "Color 1"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:265
+#: ../src/extension/internal/filter/color.h:463
 msgid "Color 2"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:275
+#: ../src/extension/internal/filter/color.h:473
 msgid "Convert luminance values to a duochrome palette"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:372
+#: ../src/extension/internal/filter/color.h:570
 msgid "Electrize, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:374
+#: ../src/extension/internal/filter/color.h:572
 #: ../src/extension/internal/filter/experimental.h:503
 #: ../src/extension/internal/filter/experimental.h:729
 msgid "Simplify:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:375
+#: ../src/extension/internal/filter/color.h:573
 #: ../src/extension/internal/filter/experimental.h:604
 msgid "Effect type:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:376 ../src/filter-enums.cpp:83
+#: ../src/extension/internal/filter/color.h:574 ../src/filter-enums.cpp:83
 msgid "Table"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:377 ../src/filter-enums.cpp:84
+#: ../src/extension/internal/filter/color.h:575 ../src/filter-enums.cpp:84
 msgid "Discrete"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:379
+#: ../src/extension/internal/filter/color.h:577
 #: ../src/extension/internal/filter/experimental.h:612
 #: ../src/extension/internal/filter/experimental.h:728
 msgid "Levels:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:388
+#: ../src/extension/internal/filter/color.h:586
 msgid "Electro solarization effects"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:466
+#: ../src/extension/internal/filter/color.h:664
 msgid "Greyscale, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:468
-msgid "Red:"
-msgstr ""
-
-#: ../src/extension/internal/filter/color.h:469
-msgid "Green:"
-msgstr ""
-
-#: ../src/extension/internal/filter/color.h:470
-msgid "Blue:"
-msgstr ""
-
-#: ../src/extension/internal/filter/color.h:472
+#: ../src/extension/internal/filter/color.h:670
 #: ../src/extension/internal/filter/experimental.h:81
 #: ../src/extension/internal/filter/experimental.h:238
 msgid "Transparent"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:480
+#: ../src/extension/internal/filter/color.h:678
 msgid "Customize greyscale components"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:548
+#: ../src/extension/internal/filter/color.h:746
 msgid "Lightness, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:550
+#: ../src/extension/internal/filter/color.h:748
 msgid "Lights:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:551
+#: ../src/extension/internal/filter/color.h:749
 msgid "Shadows:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:560
+#: ../src/extension/internal/filter/color.h:758
 msgid "Modify lights and shadows separately"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:617
+#: ../src/extension/internal/filter/color.h:815
 msgid "Quadritone fantasy, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:619
 #: ../src/extension/internal/filter/color.h:817
+#: ../src/extension/internal/filter/color.h:1015
 msgid "Hue distribution (°):"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:620
+#: ../src/extension/internal/filter/color.h:818
 #: ../src/ui/dialog/tracedialog.cpp:477
 msgid "Colors:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:704
+#: ../src/extension/internal/filter/color.h:902
 msgid "Solarize, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:706
+#: ../src/extension/internal/filter/color.h:904
 msgid "Hue rotation (°):"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:718
+#: ../src/extension/internal/filter/color.h:916
 msgid "Classic photographic solarization effect"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:791
+#: ../src/extension/internal/filter/color.h:989
 msgid "Tritone, custom (Color)"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:797
+#: ../src/extension/internal/filter/color.h:995
 msgid "Enhance hue"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:798
+#: ../src/extension/internal/filter/color.h:996
 msgid "Radiation"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:799
+#: ../src/extension/internal/filter/color.h:997
 msgid "Hue to background"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:801
+#: ../src/extension/internal/filter/color.h:999
 msgid "Global blend:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:807
+#: ../src/extension/internal/filter/color.h:1005
 msgid "Glow:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:808
+#: ../src/extension/internal/filter/color.h:1006
 msgid "Glow blend:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:813
+#: ../src/extension/internal/filter/color.h:1011
 msgid "Local light:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:814
+#: ../src/extension/internal/filter/color.h:1012
 msgid "Global light:"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:828
+#: ../src/extension/internal/filter/color.h:1026
 msgid ""
 "Create a custom tritone palette with additional glow, blend modes and hue "
 "moving"
@@ -7249,7 +7284,7 @@ msgid "Clean-up:"
 msgstr ""
 
 #: ../src/extension/internal/filter/experimental.h:237
-#: ../src/widgets/toolbox.cpp:8366
+#: ../src/widgets/toolbox.cpp:8367
 msgid "Length:"
 msgstr ""
 
@@ -7482,11 +7517,11 @@ msgid "Link or embed image:"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:153
-msgid "embed"
+msgid "Embed"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:154
-msgid "link"
+msgid "Link"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:156
@@ -7546,9 +7581,9 @@ msgstr ""
 #: ../share/extensions/polyhedron_3d.inx.h:31
 #: ../share/extensions/printing-marks.inx.h:14
 #: ../share/extensions/render_alphabetsoup.inx.h:3
-#: ../share/extensions/render_barcode.inx.h:5
-#: ../share/extensions/render_barcode_datamatrix.inx.h:2
-#: ../share/extensions/render_barcode_qrcode.inx.h:12
+#: ../share/extensions/render_barcode.inx.h:6
+#: ../share/extensions/render_barcode_datamatrix.inx.h:3
+#: ../share/extensions/render_barcode_qrcode.inx.h:13
 #: ../share/extensions/rtree.inx.h:4 ../share/extensions/spirograph.inx.h:6
 #: ../share/extensions/svgcalendar.inx.h:20
 #: ../share/extensions/triangle.inx.h:10
@@ -8454,7 +8489,7 @@ msgstr ""
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:525
 #: ../src/widgets/toolbox.cpp:1597 ../src/widgets/toolbox.cpp:3438
-#: ../src/widgets/toolbox.cpp:6156 ../src/widgets/toolbox.cpp:8558
+#: ../src/widgets/toolbox.cpp:6156 ../src/widgets/toolbox.cpp:8559
 #: ../share/extensions/dxf_outlines.inx.h:10
 msgid "Units"
 msgstr ""
@@ -8848,7 +8883,7 @@ msgid "Dockitem which 'owns' this grip"
 msgstr ""
 
 #. Name
-#: ../src/libgdl/gdl-dock-item.c:297 ../src/widgets/toolbox.cpp:7767
+#: ../src/libgdl/gdl-dock-item.c:297 ../src/widgets/toolbox.cpp:7768
 #: ../share/extensions/gcodetools_graffiti.inx.h:25
 #: ../share/extensions/gcodetools_orientation_points.inx.h:6
 msgid "Orientation"
@@ -9205,7 +9240,7 @@ msgstr ""
 msgid "Dock #%d"
 msgstr ""
 
-#: ../src/libnrtype/FontFactory.cpp:907
+#: ../src/libnrtype/FontFactory.cpp:910
 msgid "Ignoring font without family that will crash Pango"
 msgstr ""
 
@@ -11574,13 +11609,13 @@ msgstr ""
 #: ../share/extensions/lorem_ipsum.inx.h:7
 #: ../share/extensions/replace_font.inx.h:10 ../share/extensions/split.inx.h:6
 #: ../share/extensions/text_braille.inx.h:2
-#: ../share/extensions/text_flipcase.inx.h:1
-#: ../share/extensions/text_lowercase.inx.h:1
-#: ../share/extensions/text_randomcase.inx.h:1
+#: ../share/extensions/text_flipcase.inx.h:2
+#: ../share/extensions/text_lowercase.inx.h:2
+#: ../share/extensions/text_randomcase.inx.h:2
 #: ../share/extensions/text_replace.inx.h:4
-#: ../share/extensions/text_sentencecase.inx.h:2
-#: ../share/extensions/text_titlecase.inx.h:1
-#: ../share/extensions/text_uppercase.inx.h:1
+#: ../share/extensions/text_sentencecase.inx.h:3
+#: ../share/extensions/text_titlecase.inx.h:2
+#: ../share/extensions/text_uppercase.inx.h:2
 msgid "Text"
 msgstr ""
 
@@ -11835,23 +11870,29 @@ msgstr ""
 msgid "Delete All Guides"
 msgstr ""
 
-#: ../src/sp-guide.cpp:484
+#. Guide has probably been deleted and no longer has an attached namedview.
+#: ../src/sp-guide.cpp:481
+#, c-format
+msgid "Deleted"
+msgstr ""
+
+#: ../src/sp-guide.cpp:490
 msgid ""
 "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to "
 "delete"
 msgstr ""
 
-#: ../src/sp-guide.cpp:489
+#: ../src/sp-guide.cpp:494
 #, c-format
 msgid "vertical, at %s"
 msgstr ""
 
-#: ../src/sp-guide.cpp:492
+#: ../src/sp-guide.cpp:497
 #, c-format
 msgid "horizontal, at %s"
 msgstr ""
 
-#: ../src/sp-guide.cpp:497
+#: ../src/sp-guide.cpp:502
 #, c-format
 msgid "at %d degrees, through (%s,%s)"
 msgstr ""
@@ -12538,10 +12579,9 @@ msgstr ""
 msgid "Choose a subtool from the toolbar"
 msgstr ""
 
-#: ../src/trace/potrace/inkscape-potrace.cpp:524
-#: ../src/trace/potrace/inkscape-potrace.cpp:598
-#, c-format
-msgid "Trace: %d.  %ld nodes"
+#: ../src/trace/potrace/inkscape-potrace.cpp:519
+#: ../src/trace/potrace/inkscape-potrace.cpp:582
+msgid "Trace: %1.  %2 nodes"
 msgstr ""
 
 #: ../src/trace/trace.cpp:72 ../src/trace/trace.cpp:137
@@ -12911,12 +12951,12 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:512
 #: ../src/ui/dialog/align-and-distribute.cpp:894
-#: ../src/widgets/toolbox.cpp:8395
+#: ../src/widgets/toolbox.cpp:8396
 msgid "Remove overlaps"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:543
-#: ../src/widgets/toolbox.cpp:8188
+#: ../src/widgets/toolbox.cpp:8189
 msgid "Arrange connector network"
 msgstr ""
 
@@ -13046,7 +13086,7 @@ msgid "Distribute baselines of texts vertically"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:986
-#: ../src/widgets/toolbox.cpp:8357
+#: ../src/widgets/toolbox.cpp:8358
 msgid "Nicely arrange selected connector network"
 msgstr ""
 
@@ -22076,7 +22116,7 @@ msgstr ""
 msgid "Y coordinate of selected node(s)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1667 ../src/widgets/toolbox.cpp:7625
+#: ../src/widgets/toolbox.cpp:1667 ../src/widgets/toolbox.cpp:7626
 msgid "Font Size"
 msgstr ""
 
@@ -22395,7 +22435,7 @@ msgid "Scatter randomly the corners and angles"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3117 ../src/widgets/toolbox.cpp:4052
-#: ../src/widgets/toolbox.cpp:4307 ../src/widgets/toolbox.cpp:8604
+#: ../src/widgets/toolbox.cpp:4307 ../src/widgets/toolbox.cpp:8605
 msgid "Defaults"
 msgstr ""
 
@@ -23451,59 +23491,64 @@ msgstr ""
 msgid "The width of the eraser pen (relative to the visible canvas area)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6507
+#: ../src/widgets/toolbox.cpp:6490
+#, c-format
+msgid "Failed to find font matching: %s\n"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:6524
 msgid "Text: Change font family"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6564
+#: ../src/widgets/toolbox.cpp:6581
 msgid "Text: Change font size"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6703
+#: ../src/widgets/toolbox.cpp:6704
 msgid "Text: Change font style"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6782
+#: ../src/widgets/toolbox.cpp:6783
 msgid "Text: Change superscript or subscript"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6928
+#: ../src/widgets/toolbox.cpp:6929
 msgid "Text: Change alignment"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6971
+#: ../src/widgets/toolbox.cpp:6972
 msgid "Text: Change line-height"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7020
+#: ../src/widgets/toolbox.cpp:7021
 msgid "Text: Change word-spacing"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7062
+#: ../src/widgets/toolbox.cpp:7063
 msgid "Text: Change letter-spacing"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7103
+#: ../src/widgets/toolbox.cpp:7104
 msgid "Text: Change dx (kern)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7137
+#: ../src/widgets/toolbox.cpp:7138
 msgid "Text: Change dy"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7172
+#: ../src/widgets/toolbox.cpp:7173
 msgid "Text: Change rotate"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7220
+#: ../src/widgets/toolbox.cpp:7221
 msgid "Text: Change orientation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7585
+#: ../src/widgets/toolbox.cpp:7586
 msgid "Font Family"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7586
+#: ../src/widgets/toolbox.cpp:7587
 msgid "Select Font Family (Alt-X to access)"
 msgstr ""
 
@@ -23511,355 +23556,355 @@ msgstr ""
 #. Extra list width
 #. Cell layout
 #. Enable entry completion
-#: ../src/widgets/toolbox.cpp:7593
+#: ../src/widgets/toolbox.cpp:7594
 msgid "Font not found on system"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7626
+#: ../src/widgets/toolbox.cpp:7627
 msgid "Font size (px)"
 msgstr ""
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7638
+#: ../src/widgets/toolbox.cpp:7639
 msgid "Toggle Bold"
 msgstr ""
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7639
+#: ../src/widgets/toolbox.cpp:7640
 msgid "Toggle bold or normal weight"
 msgstr ""
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7651
+#: ../src/widgets/toolbox.cpp:7652
 msgid "Toggle Italic/Oblique"
 msgstr ""
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7652
+#: ../src/widgets/toolbox.cpp:7653
 msgid "Toggle italic/oblique style"
 msgstr ""
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7664
+#: ../src/widgets/toolbox.cpp:7665
 msgid "Toggle Superscript"
 msgstr ""
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7665
+#: ../src/widgets/toolbox.cpp:7666
 msgid "Toggle superscript"
 msgstr ""
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7677
+#: ../src/widgets/toolbox.cpp:7678
 msgid "Toggle Subscript"
 msgstr ""
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7678
+#: ../src/widgets/toolbox.cpp:7679
 msgid "Toggle subscript"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7695 ../src/widgets/toolbox.cpp:7696
+#: ../src/widgets/toolbox.cpp:7696 ../src/widgets/toolbox.cpp:7697
 msgid "Align left"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7703 ../src/widgets/toolbox.cpp:7704
+#: ../src/widgets/toolbox.cpp:7704 ../src/widgets/toolbox.cpp:7705
 msgid "Align center"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7711 ../src/widgets/toolbox.cpp:7712
+#: ../src/widgets/toolbox.cpp:7712 ../src/widgets/toolbox.cpp:7713
 msgid "Align right"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7719
+#: ../src/widgets/toolbox.cpp:7720
 msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7720
+#: ../src/widgets/toolbox.cpp:7721
 msgid "Justify (only flowed text)"
 msgstr ""
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7726
+#: ../src/widgets/toolbox.cpp:7727
 msgid "Alignment"
 msgstr ""
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7727
+#: ../src/widgets/toolbox.cpp:7728
 msgid "Text alignment"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7754
+#: ../src/widgets/toolbox.cpp:7755
 msgid "Horizontal"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7761
+#: ../src/widgets/toolbox.cpp:7762
 msgid "Vertical"
 msgstr ""
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7768
+#: ../src/widgets/toolbox.cpp:7769
 msgid "Text orientation"
 msgstr ""
 
 #. Drop down menu
-#: ../src/widgets/toolbox.cpp:7791
+#: ../src/widgets/toolbox.cpp:7792
 msgid "Smaller spacing"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7791 ../src/widgets/toolbox.cpp:7822
-#: ../src/widgets/toolbox.cpp:7853
+#: ../src/widgets/toolbox.cpp:7792 ../src/widgets/toolbox.cpp:7823
+#: ../src/widgets/toolbox.cpp:7854
 msgctxt "Text tool"
 msgid "Normal"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7791
+#: ../src/widgets/toolbox.cpp:7792
 msgid "Larger spacing"
 msgstr ""
 
 #. name
-#: ../src/widgets/toolbox.cpp:7796
+#: ../src/widgets/toolbox.cpp:7797
 msgid "Line Height"
 msgstr ""
 
 #. label
-#: ../src/widgets/toolbox.cpp:7797
+#: ../src/widgets/toolbox.cpp:7798
 msgid "Line:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7798
+#: ../src/widgets/toolbox.cpp:7799
 msgid "Spacing between lines (times font size)"
 msgstr ""
 
 #. Drop down menu
-#: ../src/widgets/toolbox.cpp:7822 ../src/widgets/toolbox.cpp:7853
+#: ../src/widgets/toolbox.cpp:7823 ../src/widgets/toolbox.cpp:7854
 msgid "Negative spacing"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7822 ../src/widgets/toolbox.cpp:7853
+#: ../src/widgets/toolbox.cpp:7823 ../src/widgets/toolbox.cpp:7854
 msgid "Positive spacing"
 msgstr ""
 
 #. name
-#: ../src/widgets/toolbox.cpp:7827
+#: ../src/widgets/toolbox.cpp:7828
 msgid "Word spacing"
 msgstr ""
 
 #. label
-#: ../src/widgets/toolbox.cpp:7828
+#: ../src/widgets/toolbox.cpp:7829
 msgid "Word:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7829
+#: ../src/widgets/toolbox.cpp:7830
 msgid "Spacing between words (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/toolbox.cpp:7858
+#: ../src/widgets/toolbox.cpp:7859
 msgid "Letter spacing"
 msgstr ""
 
 #. label
-#: ../src/widgets/toolbox.cpp:7859
+#: ../src/widgets/toolbox.cpp:7860
 msgid "Letter:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7860
+#: ../src/widgets/toolbox.cpp:7861
 msgid "Spacing between letters (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/toolbox.cpp:7889
+#: ../src/widgets/toolbox.cpp:7890
 msgid "Kerning"
 msgstr ""
 
 #. label
-#: ../src/widgets/toolbox.cpp:7890
+#: ../src/widgets/toolbox.cpp:7891
 msgid "Kern:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7891
+#: ../src/widgets/toolbox.cpp:7892
 msgid "Horizontal kerning (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/toolbox.cpp:7920
+#: ../src/widgets/toolbox.cpp:7921
 msgid "Vertical Shift"
 msgstr ""
 
 #. label
-#: ../src/widgets/toolbox.cpp:7921
+#: ../src/widgets/toolbox.cpp:7922
 msgid "Vert:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7922
+#: ../src/widgets/toolbox.cpp:7923
 msgid "Vertical shift (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/toolbox.cpp:7951
+#: ../src/widgets/toolbox.cpp:7952
 msgid "Letter rotation"
 msgstr ""
 
 #. label
-#: ../src/widgets/toolbox.cpp:7952
+#: ../src/widgets/toolbox.cpp:7953
 msgid "Rot:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7953
+#: ../src/widgets/toolbox.cpp:7954
 msgid "Character rotation (degrees)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8068
+#: ../src/widgets/toolbox.cpp:8069
 msgid "Set connector type: orthogonal"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8068
+#: ../src/widgets/toolbox.cpp:8069
 msgid "Set connector type: polyline"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8117
+#: ../src/widgets/toolbox.cpp:8118
 msgid "Change connector curvature"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8168
+#: ../src/widgets/toolbox.cpp:8169
 msgid "Change connector spacing"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8282
+#: ../src/widgets/toolbox.cpp:8283
 msgid "EditMode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8283
+#: ../src/widgets/toolbox.cpp:8284
 msgid "Switch between connection point editing and connector drawing mode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8297
+#: ../src/widgets/toolbox.cpp:8298
 msgid "Avoid"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8307
+#: ../src/widgets/toolbox.cpp:8308
 msgid "Ignore"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8318
+#: ../src/widgets/toolbox.cpp:8319
 msgid "Orthogonal"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8319
+#: ../src/widgets/toolbox.cpp:8320
 msgid "Make connector orthogonal or polyline"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8333
+#: ../src/widgets/toolbox.cpp:8334
 msgid "Connector Curvature"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8333
+#: ../src/widgets/toolbox.cpp:8334
 msgid "Curvature:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8334
+#: ../src/widgets/toolbox.cpp:8335
 msgid "The amount of connectors curvature"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8344
+#: ../src/widgets/toolbox.cpp:8345
 msgid "Connector Spacing"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8344
+#: ../src/widgets/toolbox.cpp:8345
 msgid "Spacing:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8345
+#: ../src/widgets/toolbox.cpp:8346
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8356
+#: ../src/widgets/toolbox.cpp:8357
 msgid "Graph"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8366
+#: ../src/widgets/toolbox.cpp:8367
 msgid "Connector Length"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8367
+#: ../src/widgets/toolbox.cpp:8368
 msgid "Ideal length for connectors when layout is applied"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8379
+#: ../src/widgets/toolbox.cpp:8380
 msgid "Downwards"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8380
+#: ../src/widgets/toolbox.cpp:8381
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8396
+#: ../src/widgets/toolbox.cpp:8397
 msgid "Do not allow overlapping shapes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8411
+#: ../src/widgets/toolbox.cpp:8412
 msgid "New connection point"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8412
+#: ../src/widgets/toolbox.cpp:8413
 msgid "Add a new connection point to the currently selected item"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8423
+#: ../src/widgets/toolbox.cpp:8424
 msgid "Remove connection point"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8424
+#: ../src/widgets/toolbox.cpp:8425
 msgid "Remove the currently selected connection point"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8526
+#: ../src/widgets/toolbox.cpp:8527
 msgid "Fill by"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8527
+#: ../src/widgets/toolbox.cpp:8528
 msgid "Fill by:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8539
+#: ../src/widgets/toolbox.cpp:8540
 msgid "Fill Threshold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8540
+#: ../src/widgets/toolbox.cpp:8541
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8566
+#: ../src/widgets/toolbox.cpp:8567
 msgid "Grow/shrink by"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8566
+#: ../src/widgets/toolbox.cpp:8567
 msgid "Grow/shrink by:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8567
+#: ../src/widgets/toolbox.cpp:8568
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8592
+#: ../src/widgets/toolbox.cpp:8593
 msgid "Close gaps"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8593
+#: ../src/widgets/toolbox.cpp:8594
 msgid "Close gaps:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:8605
+#: ../src/widgets/toolbox.cpp:8606
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -27161,8 +27206,8 @@ msgid "Alphabet Soup"
 msgstr ""
 
 #: ../share/extensions/render_alphabetsoup.inx.h:5
-#: ../share/extensions/render_barcode_datamatrix.inx.h:5
-#: ../share/extensions/render_barcode_qrcode.inx.h:16
+#: ../share/extensions/render_barcode_datamatrix.inx.h:6
+#: ../share/extensions/render_barcode_qrcode.inx.h:17
 msgid "Text:"
 msgstr ""
 
@@ -27171,6 +27216,8 @@ msgid "Bar Height:"
 msgstr ""
 
 #: ../share/extensions/render_barcode.inx.h:2
+#: ../share/extensions/render_barcode_datamatrix.inx.h:1
+#: ../share/extensions/render_barcode_qrcode.inx.h:2
 msgid "Barcode"
 msgstr ""
 
@@ -27182,25 +27229,25 @@ msgstr ""
 msgid "Barcode Type:"
 msgstr ""
 
-#: ../share/extensions/render_barcode_datamatrix.inx.h:1
-msgid "Barcode - Datamatrix"
+#: ../share/extensions/render_barcode.inx.h:5
+msgid "Classic"
 msgstr ""
 
-#: ../share/extensions/render_barcode_datamatrix.inx.h:3
-#: ../share/extensions/render_barcode_qrcode.inx.h:14
-msgid "Size, in unit squares:"
+#: ../share/extensions/render_barcode_datamatrix.inx.h:2
+msgid "Datamatrix"
 msgstr ""
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:4
+#: ../share/extensions/render_barcode_qrcode.inx.h:15
+msgid "Size, in unit squares:"
+msgstr ""
+
+#: ../share/extensions/render_barcode_datamatrix.inx.h:5
 msgid "Square Size (px):"
 msgstr ""
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:1
 msgid "Auto"
-msgstr ""
-
-#: ../share/extensions/render_barcode_qrcode.inx.h:2
-msgid "Barcode - QR Code"
 msgstr ""
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:3
@@ -27227,15 +27274,19 @@ msgstr ""
 msgid "Q (Approx. 25%)"
 msgstr ""
 
-#: ../share/extensions/render_barcode_qrcode.inx.h:13
+#: ../share/extensions/render_barcode_qrcode.inx.h:12
+msgid "QR Code"
+msgstr ""
+
+#: ../share/extensions/render_barcode_qrcode.inx.h:14
 msgid "See http://www.denso-wave.com/qrcode/index-e.html for details"
 msgstr ""
 
-#: ../share/extensions/render_barcode_qrcode.inx.h:15
+#: ../share/extensions/render_barcode_qrcode.inx.h:16
 msgid "Square size (px):"
 msgstr ""
 
-#: ../share/extensions/render_barcode_qrcode.inx.h:17
+#: ../share/extensions/render_barcode_qrcode.inx.h:18
 msgid ""
 "With \"Auto\", the size of the barcode depends on the length of the text and "
 "the error correction level"
@@ -27810,15 +27861,24 @@ msgstr ""
 msgid "Convert to Braille"
 msgstr ""
 
-#: ../share/extensions/text_flipcase.inx.h:2
+#: ../share/extensions/text_flipcase.inx.h:1
+#: ../share/extensions/text_lowercase.inx.h:1
+#: ../share/extensions/text_randomcase.inx.h:1
+#: ../share/extensions/text_sentencecase.inx.h:1
+#: ../share/extensions/text_titlecase.inx.h:1
+#: ../share/extensions/text_uppercase.inx.h:1
+msgid "Change Case"
+msgstr ""
+
+#: ../share/extensions/text_flipcase.inx.h:3
 msgid "fLIP cASE"
 msgstr ""
 
-#: ../share/extensions/text_lowercase.inx.h:2
+#: ../share/extensions/text_lowercase.inx.h:3
 msgid "lowercase"
 msgstr ""
 
-#: ../share/extensions/text_randomcase.inx.h:2
+#: ../share/extensions/text_randomcase.inx.h:3
 msgid "rANdOm CasE"
 msgstr ""
 
@@ -27834,15 +27894,15 @@ msgstr ""
 msgid "Replace:"
 msgstr ""
 
-#: ../share/extensions/text_sentencecase.inx.h:1
+#: ../share/extensions/text_sentencecase.inx.h:2
 msgid "Sentence case"
 msgstr ""
 
-#: ../share/extensions/text_titlecase.inx.h:2
+#: ../share/extensions/text_titlecase.inx.h:3
 msgid "Title Case"
 msgstr ""
 
-#: ../share/extensions/text_uppercase.inx.h:2
+#: ../share/extensions/text_uppercase.inx.h:3
 msgid "UPPERCASE"
 msgstr ""
 

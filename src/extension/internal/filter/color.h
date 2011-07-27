@@ -10,6 +10,7 @@
  * Color filters
  *   Brightness
  *   Channel painting
+ *   Channel transparency
  *   Colorize
  *   Duochrome
  *   Electrize
@@ -223,6 +224,90 @@ ChannelPaint::get_filter_text (Inkscape::Extension::Extension * ext)
 
     return _filter;
 }; /* Channel Painting filter */
+
+
+/**
+    \brief    Custom predefined Channel transparency filter.
+    
+    Channel transparency filter.
+
+    Filter's parameters:
+    * Saturation (0.->1., default 1.) -> colormatrix1 (values)
+    * Red (-10.->10., default -1.) -> colormatrix2 (values)
+    * Green (-10.->10., default 0.5) -> colormatrix2 (values)
+    * Blue (-10.->10., default 0.5) -> colormatrix2 (values)
+    * Alpha (-10.->10., default 1.) -> colormatrix2 (values)
+    * Flood colors (guint, default 16777215) -> flood (flood-opacity, flood-color)
+    * Inverted (boolean, default false) -> composite1 (operator, true='in', false='out')
+    
+    Matrix:
+      1  0  0  0  0
+      0  1  0  0  0
+      0  0  1  0  0
+      R  G  B  A  0
+*/
+class ChannelTransparency : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    ChannelTransparency ( ) : Filter() { };
+    virtual ~ChannelTransparency ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+    
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Channel transparency, custom (Color)") "</name>\n"
+              "<id>org.inkscape.effect.filter.ChannelTransparency</id>\n"
+              "<param name=\"red\" gui-text=\"" N_("Red:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">-1</param>\n"
+              "<param name=\"green\" gui-text=\"" N_("Green:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0.5</param>\n"
+              "<param name=\"blue\" gui-text=\"" N_("Blue:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0.5</param>\n"
+              "<param name=\"alpha\" gui-text=\"" N_("Alpha:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1.\">1</param>\n"
+              "<param name=\"invert\" gui-text=\"" N_("Inverted") "\" type=\"boolean\">false</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Replace RGB by transparency") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new ChannelTransparency());
+    };
+};
+
+gchar const *
+ChannelTransparency::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream red;
+    std::ostringstream green;
+    std::ostringstream blue;
+    std::ostringstream alpha;
+    std::ostringstream invert;
+
+    red << ext->get_param_float("red");
+    green << ext->get_param_float("green");
+    blue << ext->get_param_float("blue");
+    alpha << ext->get_param_float("alpha");
+
+    if (!ext->get_param_bool("invert")) {
+        invert << "in";
+    } else {
+        invert << "xor";
+    }
+    
+    _filter = g_strdup_printf(
+        "<filter inkscape:label=\"Color channel painting\" color-interpolation-filters=\"sRGB\" x=\"0\" y=\"0\" width=\"1\" height=\"1\">\n"
+          "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 %s %s %s %s 0 \" in=\"SourceGraphic\" result=\"colormatrix\" />\n"
+          "<feComposite in=\"colormatrix\" in2=\"SourceGraphic\" operator=\"%s\" result=\"composite1\" />\n"
+        "</filter>\n", red.str().c_str(), green.str().c_str(), blue.str().c_str(), alpha.str().c_str(),
+                       invert.str().c_str());
+
+    return _filter;
+}; /* Channel Transparency filter */
 
 
 /**
