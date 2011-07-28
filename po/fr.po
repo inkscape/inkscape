@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-07-27 20:43+0200\n"
-"PO-Revision-Date: 2011-07-27 20:50+0100\n"
+"PO-Revision-Date: 2011-07-27 21:02+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "Language: \n"
@@ -6967,9 +6967,8 @@ msgid "Brightness filter"
 msgstr "Filtre de luminosité"
 
 #: ../src/extension/internal/filter/color.h:147
-#, fuzzy
 msgid "Channel painting, custom (Color)"
-msgstr "Quadritone fantaisie, paramétrable (Couleur)"
+msgstr "Peinture par canal, paramétrable (Couleur)"
 
 #: ../src/extension/internal/filter/color.h:152
 #: ../src/extension/internal/filter/color.h:262
@@ -6996,19 +6995,16 @@ msgid "Alpha:"
 msgstr "Opacité"
 
 #: ../src/extension/internal/filter/color.h:169
-#, fuzzy
 msgid "Replace RGB by any color"
-msgstr "Remplace la teinte par deux couleurs"
+msgstr "Remplace les canaux RVB par une couleur"
 
 #: ../src/extension/internal/filter/color.h:260
-#, fuzzy
 msgid "Channel transparency, custom (Color)"
-msgstr "Quadritone fantaisie, paramétrable (Couleur)"
+msgstr "Transparence par canal, paramétrable (Couleur)"
 
 #: ../src/extension/internal/filter/color.h:274
-#, fuzzy
 msgid "Replace RGB by transparency"
-msgstr "Transparence barbouillée"
+msgstr "Remplace les canaux RVB par de la transparence"
 
 #: ../src/extension/internal/filter/color.h:338
 msgid "Colorize, custom (Color)"
@@ -7081,9 +7077,8 @@ msgid "Blend 2:"
 msgstr "Fondu 2 :"
 
 #: ../src/extension/internal/filter/color.h:371
-#, fuzzy
 msgid "Blend image or object with a flood color"
-msgstr "Mélange un image ou un objet avec une couleur de remplissage, et définit sa luminosité et son contraste"
+msgstr "Mélange un image ou un objet avec une couleur de remplissage"
 
 #: ../src/extension/internal/filter/color.h:447
 msgid "Duochrome, custom (Color)"
@@ -7122,9 +7117,8 @@ msgid "Color 2"
 msgstr "Couleur 2"
 
 #: ../src/extension/internal/filter/color.h:473
-#, fuzzy
 msgid "Convert luminance values to a duochrome palette"
-msgstr "Modifie les couleurs avec une palette à deux tons"
+msgstr "Convertit les valeurs de luminance en une palette à deux tons"
 
 #: ../src/extension/internal/filter/color.h:570
 msgid "Electrize, custom (Color)"
@@ -24873,7 +24867,7 @@ msgstr "Paramètres"
 #: ../share/extensions/gcodetools_lathe.inx.h:34
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:24
 msgid "Pass by Pass"
-msgstr ""
+msgstr "Passe par passe"
 
 #: ../share/extensions/gcodetools_area.inx.h:37
 #: ../share/extensions/gcodetools_lathe.inx.h:35
@@ -25200,9 +25194,8 @@ msgid "Perpendicular"
 msgstr "Perpendiculaire"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:13
-#, fuzzy
 msgid "Prepare corners"
-msgstr "coin de page"
+msgstr "Préparer les coins"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:14
 msgid "Prepare path for plasma or laser cuters"

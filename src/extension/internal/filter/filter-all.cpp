@@ -10,7 +10,7 @@
 /* Put your filter here */
 #include "abc.h"
 #include "blurs.h"
-//#include "bumps.h"
+#include "bumps.h"
 #include "color.h"
 #include "drop-shadow.h"
 #include "image.h"
@@ -36,7 +36,7 @@ Filter::filters_all (void )
 
     /* Experimental custom predefined filters */
 
-    // ABCs
+    // ABC
     Blur::init();
     CleanEdges::init();
     ColorShift::init();
@@ -53,7 +53,7 @@ Filter::filters_all (void )
     CrossBlur::init();
     
     // Bumps
-//    SpecularBump::init();
+    Bump::init();
     
     // Color
     Brightness::init();
