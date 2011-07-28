@@ -403,8 +403,9 @@ TraceDialogImpl::TraceDialogImpl() :
 
     // brightness
 
-    modeBrightnessRadioButton.set_label(_("Brightness cutoff"));
+    modeBrightnessRadioButton.set_label(_("_Brightness cutoff"));
     modeGroup = modeBrightnessRadioButton.get_group();
+    modeBrightnessRadioButton.set_use_underline(true);
     modeBrightnessBox.pack_start(modeBrightnessRadioButton, false, false, MARGIN);
     tips.set_tip(modeBrightnessRadioButton,
                  _("Trace by a given brightness level"));
@@ -417,7 +418,9 @@ TraceDialogImpl::TraceDialogImpl() :
     tips.set_tip(modeBrightnessSpinner,
                  _("Brightness cutoff for black/white"));
 
-    modeBrightnessSpinnerLabel.set_label(_("Threshold:"));
+    modeBrightnessSpinnerLabel.set_label(_("_Threshold:"));
+    modeBrightnessSpinnerLabel.set_use_underline(true);
+    modeBrightnessSpinnerLabel.set_mnemonic_widget(modeBrightnessSpinner);
     modeBrightnessBox.pack_end(modeBrightnessSpinnerLabel, false, false, MARGIN);
 
     modeBrightnessVBox.pack_start(modeBrightnessBox, false, false, MARGIN);
@@ -427,8 +430,9 @@ TraceDialogImpl::TraceDialogImpl() :
     // canny edge detection
     // TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
 
-    modeCannyRadioButton.set_label(_("Edge detection"));
+    modeCannyRadioButton.set_label(_("_Edge detection"));
     modeCannyRadioButton.set_group(modeGroup);
+    modeCannyRadioButton.set_use_underline(true);
     modeCannyBox.pack_start(modeCannyRadioButton, false, false, MARGIN);
     tips.set_tip(modeCannyRadioButton,
                  _("Trace with optimal edge detection by J. Canny's algorithm"));
@@ -450,7 +454,9 @@ TraceDialogImpl::TraceDialogImpl() :
     tips.set_tip(modeCannyHiSpinner,
                  _("Brightness cutoff for adjacent pixels (determines edge thickness)"));
 
-    modeCannyHiSpinnerLabel.set_label(_("Threshold:"));
+    modeCannyHiSpinnerLabel.set_label(_("T_hreshold:"));
+    modeCannyHiSpinnerLabel.set_use_underline(true);
+    modeCannyHiSpinnerLabel.set_mnemonic_widget(modeCannyHiSpinner);
     modeCannyBox.pack_end(modeCannyHiSpinnerLabel, false, false, MARGIN);
 
     modeBrightnessVBox.pack_start(modeCannyBox, false, false, MARGIN);
@@ -460,8 +466,9 @@ TraceDialogImpl::TraceDialogImpl() :
     // of colors in an image by selecting an optimized set of representative
     // colors and then re-applying this reduced set to the original image.
 
-    modeQuantRadioButton.set_label(_("Color quantization"));
+    modeQuantRadioButton.set_label(_("Color _quantization"));
     modeQuantRadioButton.set_group(modeGroup);
+    modeQuantRadioButton.set_use_underline(true);
     modeQuantBox.pack_start(modeQuantRadioButton, false, false, MARGIN);
     tips.set_tip(modeQuantRadioButton,
                  _("Trace along the boundaries of reduced colors"));
@@ -474,14 +481,17 @@ TraceDialogImpl::TraceDialogImpl() :
     tips.set_tip(modeQuantNrColorSpinner,
                  _("The number of reduced colors"));
 
-    modeQuantNrColorLabel.set_label(_("Colors:"));
+    modeQuantNrColorLabel.set_label(_("_Colors:"));
+    modeQuantNrColorLabel.set_mnemonic_widget(modeQuantNrColorSpinner);
+    modeQuantNrColorLabel.set_use_underline(true);
     modeQuantBox.pack_end(modeQuantNrColorLabel, false, false, MARGIN);
 
     modeBrightnessVBox.pack_start(modeQuantBox, false, false, MARGIN);
 
     // swap black and white
-    modeInvertButton.set_label(_("Invert image"));
+    modeInvertButton.set_label(_("_Invert image"));
     modeInvertButton.set_active(false);
+    modeInvertButton.set_use_underline(true);
     modeInvertBox.pack_start(modeInvertButton, false, false, MARGIN);
     modeBrightnessVBox.pack_start(modeInvertBox, false, false, MARGIN);
     tips.set_tip(modeInvertButton,
@@ -494,8 +504,9 @@ TraceDialogImpl::TraceDialogImpl() :
 
     //# begin multiple scan
 
-    modeMultiScanBrightnessRadioButton.set_label(_("Brightness steps"));
+    modeMultiScanBrightnessRadioButton.set_label(_("B_rightness steps"));
     modeMultiScanBrightnessRadioButton.set_group(modeGroup);
+    modeMultiScanBrightnessRadioButton.set_use_underline(true);
     modeMultiScanHBox1.pack_start(modeMultiScanBrightnessRadioButton, false, false, MARGIN);
     tips.set_tip(modeMultiScanBrightnessRadioButton,
                  _("Trace the given number of brightness levels"));
@@ -505,23 +516,27 @@ TraceDialogImpl::TraceDialogImpl() :
     modeMultiScanNrColorSpinner.set_range(2.0, 256.0);
     modeMultiScanNrColorSpinner.set_value(8.0);
     modeMultiScanHBox1.pack_end(modeMultiScanNrColorSpinner, false, false, MARGIN);
-    modeMultiScanNrColorLabel.set_label(_("Scans:"));
+    modeMultiScanNrColorLabel.set_label(_("Sc_ans:"));
+    modeMultiScanNrColorLabel.set_use_underline(true);
+    modeMultiScanNrColorLabel.set_mnemonic_widget(modeMultiScanNrColorSpinner);
     modeMultiScanHBox1.pack_end(modeMultiScanNrColorLabel, false, false, MARGIN);
     tips.set_tip(modeMultiScanNrColorSpinner,
                  _("The desired number of scans"));
 
     modeMultiScanVBox.pack_start(modeMultiScanHBox1, false, false, MARGIN);
 
-    modeMultiScanColorRadioButton.set_label(_("Colors"));
+    modeMultiScanColorRadioButton.set_label(_("Co_lors"));
     modeMultiScanColorRadioButton.set_group(modeGroup);
+    modeMultiScanColorRadioButton.set_use_underline(true);
     modeMultiScanHBox2.pack_start(modeMultiScanColorRadioButton, false, false, MARGIN);
     tips.set_tip(modeMultiScanColorRadioButton,
                  _("Trace the given number of reduced colors"));
 
     modeMultiScanVBox.pack_start(modeMultiScanHBox2, false, false, MARGIN);
 
-    modeMultiScanMonoRadioButton.set_label(_("Grays"));
+    modeMultiScanMonoRadioButton.set_label(_("_Grays"));
     modeMultiScanMonoRadioButton.set_group(modeGroup);
+    modeMultiScanMonoRadioButton.set_use_underline(true);
     modeMultiScanHBox3.pack_start(modeMultiScanMonoRadioButton, false, false, MARGIN);
     tips.set_tip(modeMultiScanMonoRadioButton,
                  _("Same as Colors, but the result is converted to grayscale"));
@@ -529,20 +544,23 @@ TraceDialogImpl::TraceDialogImpl() :
     modeMultiScanVBox.pack_start(modeMultiScanHBox3, false, false, MARGIN);
 
     // TRANSLATORS: "Smooth" is a verb here
-    modeMultiScanSmoothButton.set_label(_("Smooth"));
+    modeMultiScanSmoothButton.set_label(_("S_mooth"));
+    modeMultiScanSmoothButton.set_use_underline(true);
     modeMultiScanSmoothButton.set_active(true);
     modeMultiScanHBox4.pack_start(modeMultiScanSmoothButton, false, false, MARGIN);
     tips.set_tip(modeMultiScanSmoothButton,
                  _("Apply Gaussian blur to the bitmap before tracing"));
 
     // TRANSLATORS: "Stack" is a verb here
-    modeMultiScanStackButton.set_label(_("Stack scans"));
+    modeMultiScanStackButton.set_label(_("Stac_k scans"));
+    modeMultiScanStackButton.set_use_underline(true);
     modeMultiScanStackButton.set_active(true);
     modeMultiScanHBox4.pack_start(modeMultiScanStackButton, false, false, MARGIN);
     tips.set_tip(modeMultiScanStackButton, _("Stack scans on top of one another (no gaps) instead of tiling (usually with gaps)"));
 
 
-    modeMultiScanBackgroundButton.set_label(_("Remove background"));
+    modeMultiScanBackgroundButton.set_label(_("Remo_ve background"));
+    modeMultiScanBackgroundButton.set_use_underline(true);
     modeMultiScanBackgroundButton.set_active(false);
     modeMultiScanHBox4.pack_start(modeMultiScanBackgroundButton, false, false, MARGIN);
     // TRANSLATORS: "Layer" refers to one of the stacked paths in the multiscan
@@ -560,13 +578,14 @@ TraceDialogImpl::TraceDialogImpl() :
 
     //## end mode page
 
-    notebook.append_page(modePageBox, _("Mode"));
+    notebook.append_page(modePageBox, _("_Mode"), true);
 
     //## begin option page
 
     //# potrace parameters
 
-    optionsSpecklesButton.set_label(_("Suppress speckles"));
+    optionsSpecklesButton.set_label(_("Suppress _speckles"));
+    optionsSpecklesButton.set_use_underline(true);
     tips.set_tip(optionsSpecklesButton,
                  _("Ignore small spots (speckles) in the bitmap"));
     optionsSpecklesButton.set_active(true);
@@ -578,10 +597,13 @@ TraceDialogImpl::TraceDialogImpl() :
     tips.set_tip(optionsSpecklesSizeSpinner,
                  _("Speckles of up to this many pixels will be suppressed"));
     optionsSpecklesBox.pack_end(optionsSpecklesSizeSpinner, false, false, MARGIN);
-    optionsSpecklesSizeLabel.set_label(_("Size:"));
+    optionsSpecklesSizeLabel.set_label(_("S_ize:"));
+    optionsSpecklesSizeLabel.set_use_underline(true);
+    optionsSpecklesSizeLabel.set_mnemonic_widget(optionsSpecklesSizeSpinner);
     optionsSpecklesBox.pack_end(optionsSpecklesSizeLabel, false, false, MARGIN);
 
-    optionsCornersButton.set_label(_("Smooth corners"));
+    optionsCornersButton.set_label(_("Smooth _corners"));
+    optionsCornersButton.set_use_underline(true);
     tips.set_tip(optionsCornersButton,
                  _("Smooth out sharp corners of the trace"));
     optionsCornersButton.set_active(true);
@@ -593,10 +615,13 @@ TraceDialogImpl::TraceDialogImpl() :
     optionsCornersBox.pack_end(optionsCornersThresholdSpinner, false, false, MARGIN);
     tips.set_tip(optionsCornersThresholdSpinner,
                  _("Increase this to smooth corners more"));
-    optionsCornersThresholdLabel.set_label(_("Threshold:"));
+    optionsCornersThresholdLabel.set_label(_("_Threshold:"));
+    optionsCornersThresholdLabel.set_use_underline(true);
+    optionsCornersThresholdLabel.set_mnemonic_widget(optionsCornersThresholdSpinner);
     optionsCornersBox.pack_end(optionsCornersThresholdLabel, false, false, MARGIN);
 
-    optionsOptimButton.set_label(_("Optimize paths"));
+    optionsOptimButton.set_label(_("Optimize p_aths"));
+    optionsOptimButton.set_use_underline(true);
     optionsOptimButton.set_active(true);
     tips.set_tip(optionsOptimButton,
                  _("Try to optimize paths by joining adjacent Bezier curve segments"));
@@ -608,7 +633,9 @@ TraceDialogImpl::TraceDialogImpl() :
     optionsOptimBox.pack_end(optionsOptimToleranceSpinner, false, false, MARGIN);
     tips.set_tip(optionsOptimToleranceSpinner,
                  _("Increase this to reduce the number of nodes in the trace by more aggressive optimization"));
-    optionsOptimToleranceLabel.set_label(_("Tolerance:"));
+    optionsOptimToleranceLabel.set_label(_("To_lerance:"));
+    optionsOptimToleranceLabel.set_use_underline(true);
+    optionsOptimToleranceLabel.set_mnemonic_widget(optionsOptimToleranceSpinner);
     optionsOptimBox.pack_end(optionsOptimToleranceLabel, false, false, MARGIN);
 
     optionsVBox.pack_start(optionsSpecklesBox, false, false, MARGIN);
@@ -620,7 +647,7 @@ TraceDialogImpl::TraceDialogImpl() :
 
     //## end option page
 
-    notebook.append_page(optionsPageBox, _("Options"));
+    notebook.append_page(optionsPageBox, _("O_ptions"), true);
 
     //### credits
 
@@ -641,7 +668,8 @@ TraceDialogImpl::TraceDialogImpl() :
 
     //## SIOX
 
-    sioxButton.set_label(_("SIOX foreground selection"));
+    sioxButton.set_label(_("SIOX _foreground selection"));
+    sioxButton.set_use_underline(true);
     sioxBox.pack_start(sioxButton, false, false, MARGIN);
     tips.set_tip(sioxButton,
                  _("Cover the area you want to select as the foreground"));
@@ -649,7 +677,8 @@ TraceDialogImpl::TraceDialogImpl() :
 
     //## preview
 
-    previewButton.set_label(_("Update"));
+    previewButton.set_label(_("_Update"));
+    previewButton.set_use_underline(true);
     previewButton.signal_clicked().connect(
          sigc::mem_fun(*this, &TraceDialogImpl::previewCallback) );
     previewVBox.pack_end(previewButton, false, false, 0);
