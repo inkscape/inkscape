@@ -1952,7 +1952,7 @@ gdl_dock_item_set_tablabel (GdlDockItem *item,
 GtkWidget *
 gdl_dock_item_get_grip(GdlDockItem *item)
 {
-    g_return_if_fail (item != NULL);
+    g_return_val_if_fail (item != NULL, NULL);
     g_return_val_if_fail (GDL_IS_DOCK_ITEM (item), NULL);
 
     return item->_priv->grip;

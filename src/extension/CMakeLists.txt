@@ -114,6 +114,7 @@ set(extension_SRC
 	internal/emf-win32-inout.h
 	internal/emf-win32-print.h
 	internal/filter/abc.h
+	internal/filter/blurs.h
 	internal/filter/color.h
 	internal/filter/drop-shadow.h
 	internal/filter/experimental.h
