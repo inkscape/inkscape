@@ -758,7 +758,7 @@ GtkWidget* create_tool_item( GtkAction* action )
             GtkWidget *normal = (act->private_data->selectionMode == SELECTION_OPEN) ?
                 gtk_combo_box_entry_new_with_model( act->private_data->model, act->private_data->labelColumn ) :
                 gtk_combo_box_new_with_model( act->private_data->model );
-            if ((act->private_data->selectionMode == SELECTION_OPEN)) {
+            if (act->private_data->selectionMode == SELECTION_OPEN) {
                 GtkWidget *child = gtk_bin_get_child( GTK_BIN(normal) );
                 if (GTK_IS_ENTRY(child)) {
                     int maxUsed = scan_max_width( act->private_data->model, act->private_data->labelColumn );

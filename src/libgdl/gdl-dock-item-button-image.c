@@ -49,7 +49,7 @@ gdl_dock_item_button_image_expose (GtkWidget      *widget,
     cairo_set_line_width(cr, 1.0);
     
     style = gtk_widget_get_style (widget);
-    g_return_if_fail (style != NULL);
+    g_return_val_if_fail (style != NULL, 0);
     color = &style->fg[GTK_STATE_NORMAL];
     cairo_set_source_rgba(cr, color->red / 65535.0,
         color->green / 65535.0, color->blue / 65535.0, 0.55);
