@@ -20,6 +20,7 @@ DISTCHECK_CONFIGURE_FLAGS = --enable-localinstall
 
 man_MANS = \
 	inkscape.1 \
+	inkscape.el.1		\
 	inkscape.fr.1		\
 	inkscape.ja.1		\
 	inkscape.sk.1		\
@@ -37,11 +38,13 @@ EXTRA_DIST = \
 	po/check-markup \
 	utf8-to-roff \
 	inkscape.1		\
+	inkscape.el.1		\
 	inkscape.fr.1		\
 	inkscape.ja.1		\
 	inkscape.sk.1		\
 	inkscape.zh_TW.1		\
 	inkscape.pod		\
+	inkscape.el.pod		\
 	inkscape.fr.pod		\
 	inkscape.sk.pod		\
 	inkscape.zh_TW.pod		\
