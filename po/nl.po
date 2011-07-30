@@ -52,8 +52,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-10 19:44+0200\n"
-"PO-Revision-Date: 2011-07-15 23:12+0100\n"
+"POT-Creation-Date: 2011-07-27 20:43+0200\n"
+"PO-Revision-Date: 2011-07-30 21:04+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -330,12 +330,12 @@ msgid "Lathe X and Z axis remap should be the same. Exiting..."
 msgstr "X- en Z-as herindeling van draaibank zouden gelijk moeten zijn. Bezig met afronden..."
 
 #: ../share/extensions/gcodetools.py:6658
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Select one of the action tabs - Path to Gcode, Area, Engraving, DXF points, Orientation, Offset, Lathe or Tools library.\n"
 " Current active tab id is %s"
 msgstr ""
-"Selecteer een van de actietabs - Pad naar Gcode, Oppervlak, Oppervlakteartefacten, Gravure, DXF-punten, Oriëntatie, Offset, Draaiban of Gereedschappenbibliotheek.\n"
+"Selecteer een van de actietabs - Pad naar Gcode, Oppervlak, Oppervlakteartefacten, Gravure, DXF-punten, Oriëntatie, Offset, Draaibank of Gereedschappenbibliotheek.\n"
 " De actieve tab id is %s"
 
 #: ../share/extensions/gcodetools.py:6664
@@ -572,7 +572,6 @@ msgstr "Randen vervagen gedeeltelijk naar de buitenkant toe"
 
 #: ../share/filters/filters.svg.h:1
 #: ../src/extension/internal/filter/abc.h:739
-#: ../src/extension/internal/filter/shadows.h:65
 msgid "Cutout"
 msgstr "Uitsnijding"
 
@@ -794,16 +793,17 @@ msgid "Desaturate"
 msgstr "Onverzadigd maken"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/dialogs/clonetiler.cpp:2517
-#: ../src/dialogs/clonetiler.cpp:2656
+#: ../src/dialogs/clonetiler.cpp:2519
+#: ../src/dialogs/clonetiler.cpp:2658
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../src/extension/internal/filter/abc.h:477
 #: ../src/extension/internal/filter/abc.h:580
 #: ../src/extension/internal/filter/abc.h:740
-#: ../src/extension/internal/filter/color.h:153
-#: ../src/extension/internal/filter/color.h:806
+#: ../src/extension/internal/filter/color.h:159
+#: ../src/extension/internal/filter/color.h:361
+#: ../src/extension/internal/filter/color.h:1016
 #: ../src/extension/internal/filter/experimental.h:97
-#: ../src/extension/internal/filter/shadows.h:69
+#: ../src/extension/internal/filter/shadows.h:71
 #: ../share/extensions/color_blackandwhite.inx.h:2
 #: ../share/extensions/color_brighter.inx.h:2
 #: ../share/extensions/color_custom.inx.h:9
@@ -1389,7 +1389,7 @@ msgstr "Klassiek of gekleurd reliëf-effect: grijswaarden, kleur en 3D-reliëf"
 
 #: ../share/filters/filters.svg.h:1
 #: ../src/extension/internal/bitmap/solarize.cpp:38
-#: ../src/extension/internal/filter/color.h:696
+#: ../src/extension/internal/filter/color.h:906
 msgid "Solarize"
 msgstr "Solariseren"
 
@@ -1398,7 +1398,7 @@ msgid "Classical photographic solarization effect"
 msgstr "Klassiek fotografisch solarisatie-effect"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/color.h:697
+#: ../src/extension/internal/filter/color.h:907
 msgid "Moonarize"
 msgstr "Lunariseren"
 
@@ -1481,7 +1481,7 @@ msgstr "Inhoud vervagen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Blur the contents of objects, preserving the outline"
-msgstr "De inhoud van objecten vervagen met behoud van de contouren"
+msgstr "De inhoud van objecten vervagen met behoud van contouren"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Specular light"
@@ -1506,7 +1506,7 @@ msgstr "Verdwijnend"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Blur the contents of objects, preserving the outline and adding progressive transparency at edges"
-msgstr "De inhoud van objecten vervagen met behoud van de contouren en toevoeging van toenemende transparantie aan de randen"
+msgstr "De inhoud van objecten vervagen met behoud van contouren en toevoeging van toenemende transparantie aan de randen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Chalk and sponge"
@@ -1912,7 +1912,7 @@ msgstr "Zeer flexibel belicht reliëf met transparantie"
 
 #: ../share/filters/filters.svg.h:1
 #: ../src/ui/dialog/align-and-distribute.cpp:1035
-#: ../src/widgets/desktop-widget.cpp:1729
+#: ../src/widgets/desktop-widget.cpp:1724
 msgid "Drawing"
 msgstr "Tekening"
 
@@ -2013,7 +2013,7 @@ msgid "Quadritone fantasy"
 msgstr "Quadritone fantasie"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/color.h:629
+#: ../src/extension/internal/filter/color.h:839
 msgid "Replace hue by two colors"
 msgstr "Tint door twee kleuren vervangen"
 
@@ -2186,7 +2186,7 @@ msgid "Convert to a colorizable transparent positive or negative"
 msgstr "Omzetten naar een verkleurbaar transparant positief of negatief"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/color.h:136
+#: ../src/extension/internal/filter/color.h:344
 msgid "Duotone"
 msgstr "Duotone"
 
@@ -3718,46 +3718,46 @@ msgstr "Richting"
 msgid "Defines the direction and magnitude of the extrusion"
 msgstr "Bepaalt de richting en mate van uitrekking"
 
-#: ../src/sp-flowtext.cpp:382
+#: ../src/sp-flowtext.cpp:385
 #: ../src/sp-text.cpp:434
 #: ../src/text-context.cpp:1627
 msgid " [truncated]"
 msgstr " [afgekort]"
 
-#: ../src/sp-flowtext.cpp:385
+#: ../src/sp-flowtext.cpp:388
 #, c-format
 msgid "<b>Flowed text</b> (%d character%s)"
 msgid_plural "<b>Flowed text</b> (%d characters%s)"
 msgstr[0] "<b>Ingekaderde tekst</b> (%d teken%s)"
 msgstr[1] "<b>Ingekaderde tekst</b> (%d tekens%s)"
 
-#: ../src/sp-flowtext.cpp:387
+#: ../src/sp-flowtext.cpp:390
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character%s)"
 msgid_plural "<b>Linked flowed text</b> (%d characters%s)"
 msgstr[0] "<b>Gekoppelde ingekaderde tekst</b> (%d teken%s)"
 msgstr[1] "<b>Gekoppelde ingekaderde tekst</b> (%d tekens%s)"
 
-#: ../src/arc-context.cpp:330
+#: ../src/arc-context.cpp:328
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr "<b>Ctrl</b>: tekent een cirkel of een ellips met gehele verhoudingen, beperkt de boog-/segmenthoek"
 
-#: ../src/arc-context.cpp:331
+#: ../src/arc-context.cpp:329
 #: ../src/rect-context.cpp:375
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Shift</b>: tekent rond het startpunt"
 
-#: ../src/arc-context.cpp:482
+#: ../src/arc-context.cpp:480
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Ellips</b>: %s &#215; %s (verhouding %d:%d); gebruik <b>Shift</b> om rond het startpunt te tekenen"
 
-#: ../src/arc-context.cpp:484
+#: ../src/arc-context.cpp:482
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Ellips</b>: %s &#215; %s; gebruik <b>Ctrl</b> om een ellips met gehele verhoudingen te maken; gebruik <b>Shift</b> om rond het startpunt te tekenen"
 
-#: ../src/arc-context.cpp:510
+#: ../src/arc-context.cpp:508
 msgid "Create ellipse"
 msgstr "Ellips maken"
 
@@ -3824,12 +3824,12 @@ msgid "Select <b>at least one non-connector object</b>."
 msgstr "Selecteer <b>minstens één object</b> dat geen verbindingsobject is."
 
 #: ../src/connector-context.cpp:1968
-#: ../src/widgets/toolbox.cpp:8298
+#: ../src/widgets/toolbox.cpp:8299
 msgid "Make connectors avoid selected objects"
 msgstr "Ervoor zorgen dat verbindingen geselecteerde objecten ontwijken"
 
 #: ../src/connector-context.cpp:1969
-#: ../src/widgets/toolbox.cpp:8308
+#: ../src/widgets/toolbox.cpp:8309
 msgid "Make connectors ignore selected objects"
 msgstr "Ervoor zorgen dat verbindingen geselecteerde objecten negeren"
 
@@ -3862,677 +3862,677 @@ msgstr "Hulplijn verwijderen"
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Hulplijn</b>: %s"
 
-#: ../src/desktop.cpp:881
+#: ../src/desktop.cpp:883
 msgid "No previous zoom."
 msgstr "Er is geen vorige zoom."
 
-#: ../src/desktop.cpp:906
+#: ../src/desktop.cpp:908
 msgid "No next zoom."
 msgstr "Er is geen volgende zoom."
 
-#: ../src/dialogs/clonetiler.cpp:146
+#: ../src/dialogs/clonetiler.cpp:147
 msgid "<small>Nothing selected.</small>"
 msgstr "<small>Niets geselecteerd.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:152
+#: ../src/dialogs/clonetiler.cpp:153
 msgid "<small>More than one object selected.</small>"
 msgstr "<small>Meer dan één object geselecteerd.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:159
+#: ../src/dialogs/clonetiler.cpp:160
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
 msgstr "<small>Het object heeft <b>%d</b> getegelde klonen.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:164
+#: ../src/dialogs/clonetiler.cpp:165
 msgid "<small>Object has no tiled clones.</small>"
 msgstr "<small>Het object heeft geen getegelde klonen.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:928
+#: ../src/dialogs/clonetiler.cpp:929
 msgid "Select <b>one object</b> whose tiled clones to unclump."
 msgstr "Selecteer <b>één object</b> wiens klonen ontklonterd moeten worden."
 
-#: ../src/dialogs/clonetiler.cpp:950
+#: ../src/dialogs/clonetiler.cpp:951
 msgid "Unclump tiled clones"
 msgstr "Getegelde klonen ontklonteren"
 
-#: ../src/dialogs/clonetiler.cpp:979
+#: ../src/dialogs/clonetiler.cpp:980
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Selecteer <b>één object</b> waarvan de getegelde klonen verwijderd moeten worden."
 
-#: ../src/dialogs/clonetiler.cpp:1002
+#: ../src/dialogs/clonetiler.cpp:1003
 msgid "Delete tiled clones"
 msgstr "Verwijder getegelde klonen"
 
-#: ../src/dialogs/clonetiler.cpp:1049
+#: ../src/dialogs/clonetiler.cpp:1050
 #: ../src/selection-chemistry.cpp:2044
 msgid "Select an <b>object</b> to clone."
 msgstr "Selecteer een <b>object</b> om te klonen."
 
-#: ../src/dialogs/clonetiler.cpp:1055
+#: ../src/dialogs/clonetiler.cpp:1056
 msgid "If you want to clone several objects, <b>group</b> them and <b>clone the group</b>."
 msgstr "Als u meerdere objecten wilt klonen, <b>groepeer</b> ze dan en <b>kloon de groep</b>."
 
-#: ../src/dialogs/clonetiler.cpp:1064
+#: ../src/dialogs/clonetiler.cpp:1065
 msgid "<small>Creating tiled clones...</small>"
 msgstr "<small>Getegelde klonen maken...</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1467
+#: ../src/dialogs/clonetiler.cpp:1469
 msgid "Create tiled clones"
 msgstr "Tegelen met klonen"
 
-#: ../src/dialogs/clonetiler.cpp:1647
+#: ../src/dialogs/clonetiler.cpp:1649
 msgid "<small>Per row:</small>"
 msgstr "<small>Per rij:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1660
+#: ../src/dialogs/clonetiler.cpp:1662
 msgid "<small>Per column:</small>"
 msgstr "<small>Per kolom:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1668
+#: ../src/dialogs/clonetiler.cpp:1670
 msgid "<small>Randomize:</small>"
 msgstr "<small>Willekeurig:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1813
+#: ../src/dialogs/clonetiler.cpp:1815
 msgid "_Symmetry"
 msgstr "_Symmetrie"
 
 #. TRANSLATORS: "translation" means "shift" / "displacement" here.
-#: ../src/dialogs/clonetiler.cpp:1825
+#: ../src/dialogs/clonetiler.cpp:1827
 msgid "<b>P1</b>: simple translation"
 msgstr "<b>P1</b>: eenvoudige verplaatsing"
 
-#: ../src/dialogs/clonetiler.cpp:1826
+#: ../src/dialogs/clonetiler.cpp:1828
 msgid "<b>P2</b>: 180&#176; rotation"
 msgstr "<b>P2</b>: 180&#176; draaien"
 
-#: ../src/dialogs/clonetiler.cpp:1827
+#: ../src/dialogs/clonetiler.cpp:1829
 msgid "<b>PM</b>: reflection"
 msgstr "<b>PM</b>: spiegeling"
 
 #. TRANSLATORS: "glide reflection" is a reflection and a translation combined.
 #. For more info, see http://mathforum.org/sum95/suzanne/symsusan.html
-#: ../src/dialogs/clonetiler.cpp:1830
+#: ../src/dialogs/clonetiler.cpp:1832
 msgid "<b>PG</b>: glide reflection"
 msgstr "<b>PG</b>: schuifspiegeling"
 
-#: ../src/dialogs/clonetiler.cpp:1831
+#: ../src/dialogs/clonetiler.cpp:1833
 msgid "<b>CM</b>: reflection + glide reflection"
 msgstr "<b>CM</b>: spiegeling + schuifspiegeling"
 
-#: ../src/dialogs/clonetiler.cpp:1832
+#: ../src/dialogs/clonetiler.cpp:1834
 msgid "<b>PMM</b>: reflection + reflection"
 msgstr "<b>PMM</b>: spiegeling + spiegeling"
 
-#: ../src/dialogs/clonetiler.cpp:1833
+#: ../src/dialogs/clonetiler.cpp:1835
 msgid "<b>PMG</b>: reflection + 180&#176; rotation"
 msgstr "<b>PMG</b>: spiegeling + 180&#176; draaien"
 
-#: ../src/dialogs/clonetiler.cpp:1834
+#: ../src/dialogs/clonetiler.cpp:1836
 msgid "<b>PGG</b>: glide reflection + 180&#176; rotation"
 msgstr "<b>PGG</b>: schuifspiegeling + 180&#176; draaien"
 
-#: ../src/dialogs/clonetiler.cpp:1835
+#: ../src/dialogs/clonetiler.cpp:1837
 msgid "<b>CMM</b>: reflection + reflection + 180&#176; rotation"
 msgstr "<b>CMM</b>: spiegeling + spiegeling + 180&#176; draaien"
 
-#: ../src/dialogs/clonetiler.cpp:1836
+#: ../src/dialogs/clonetiler.cpp:1838
 msgid "<b>P4</b>: 90&#176; rotation"
 msgstr "<b>P4</b>: 90&#176; draaien"
 
-#: ../src/dialogs/clonetiler.cpp:1837
+#: ../src/dialogs/clonetiler.cpp:1839
 msgid "<b>P4M</b>: 90&#176; rotation + 45&#176; reflection"
 msgstr "<b>P4M</b>: 90&#176; draaien + 45&#176; spiegeling"
 
-#: ../src/dialogs/clonetiler.cpp:1838
+#: ../src/dialogs/clonetiler.cpp:1840
 msgid "<b>P4G</b>: 90&#176; rotation + 90&#176; reflection"
 msgstr "<b>P4G</b>: 90&#176; draaien + 90&#176; spiegeling"
 
-#: ../src/dialogs/clonetiler.cpp:1839
+#: ../src/dialogs/clonetiler.cpp:1841
 msgid "<b>P3</b>: 120&#176; rotation"
 msgstr "<b>P3</b>: 120&#176; draaien"
 
-#: ../src/dialogs/clonetiler.cpp:1840
+#: ../src/dialogs/clonetiler.cpp:1842
 msgid "<b>P31M</b>: reflection + 120&#176; rotation, dense"
 msgstr "<b>P31M</b>: spiegeling + 120&#176; draaien, dicht"
 
-#: ../src/dialogs/clonetiler.cpp:1841
+#: ../src/dialogs/clonetiler.cpp:1843
 msgid "<b>P3M1</b>: reflection + 120&#176; rotation, sparse"
 msgstr "<b>P3M1</b>: spiegeling + 120&#176; draaien, dun"
 
-#: ../src/dialogs/clonetiler.cpp:1842
+#: ../src/dialogs/clonetiler.cpp:1844
 msgid "<b>P6</b>: 60&#176; rotation"
 msgstr "<b>P6</b>: 60&#176; draaien"
 
-#: ../src/dialogs/clonetiler.cpp:1843
+#: ../src/dialogs/clonetiler.cpp:1845
 msgid "<b>P6M</b>: reflection + 60&#176; rotation"
 msgstr "<b>P6M</b>: spiegeling + 60&#176; draaien"
 
-#: ../src/dialogs/clonetiler.cpp:1865
+#: ../src/dialogs/clonetiler.cpp:1867
 msgid "Select one of the 17 symmetry groups for the tiling"
 msgstr "Selecteer één van de 17 symmetriegroepen voor het tegelen"
 
-#: ../src/dialogs/clonetiler.cpp:1886
+#: ../src/dialogs/clonetiler.cpp:1888
 msgid "S_hift"
 msgstr "Ver_plaatsing"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
-#: ../src/dialogs/clonetiler.cpp:1896
+#: ../src/dialogs/clonetiler.cpp:1898
 #, no-c-format
 msgid "<b>Shift X:</b>"
 msgstr "<b>X-verplaatsing:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1904
+#: ../src/dialogs/clonetiler.cpp:1906
 #, no-c-format
 msgid "Horizontal shift per row (in % of tile width)"
 msgstr "Horizontale verplaatsing voor elke volgende rij (in % van de tegelbreedte)"
 
-#: ../src/dialogs/clonetiler.cpp:1912
+#: ../src/dialogs/clonetiler.cpp:1914
 #, no-c-format
 msgid "Horizontal shift per column (in % of tile width)"
 msgstr "Horizontale verplaatsing voor elke volgende kolom (in % van de tegelbreedte)"
 
-#: ../src/dialogs/clonetiler.cpp:1918
+#: ../src/dialogs/clonetiler.cpp:1920
 msgid "Randomize the horizontal shift by this percentage"
 msgstr "De horizontale positie binnen dit percentage willekeurig aanpassen"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) vertically by this amount
-#: ../src/dialogs/clonetiler.cpp:1928
+#: ../src/dialogs/clonetiler.cpp:1930
 #, no-c-format
 msgid "<b>Shift Y:</b>"
 msgstr "<b>Y-verplaatsing:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1936
+#: ../src/dialogs/clonetiler.cpp:1938
 #, no-c-format
 msgid "Vertical shift per row (in % of tile height)"
 msgstr "Verticale verplaatsing voor elke volgende rij (in % van de tegelhoogte)"
 
-#: ../src/dialogs/clonetiler.cpp:1944
+#: ../src/dialogs/clonetiler.cpp:1946
 #, no-c-format
 msgid "Vertical shift per column (in % of tile height)"
 msgstr "Verticale verplaatsing voor elke volgende kolom (in % van de tegelhoogte)"
 
-#: ../src/dialogs/clonetiler.cpp:1951
+#: ../src/dialogs/clonetiler.cpp:1953
 msgid "Randomize the vertical shift by this percentage"
 msgstr "De verticale positie binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:1959
-#: ../src/dialogs/clonetiler.cpp:2105
+#: ../src/dialogs/clonetiler.cpp:1961
+#: ../src/dialogs/clonetiler.cpp:2107
 msgid "<b>Exponent:</b>"
 msgstr "<b>Exponent:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1966
+#: ../src/dialogs/clonetiler.cpp:1968
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "Of de rij-afstand gelijk blijft (1), afneemt (<1) of toeneemt (>1)"
 
-#: ../src/dialogs/clonetiler.cpp:1973
+#: ../src/dialogs/clonetiler.cpp:1975
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "Of de kolom-afstand gelijk blijft (1), afneemt (<1) of toeneemt (>1)"
 
 #. TRANSLATORS: "Alternate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:1981
-#: ../src/dialogs/clonetiler.cpp:2145
-#: ../src/dialogs/clonetiler.cpp:2221
-#: ../src/dialogs/clonetiler.cpp:2294
-#: ../src/dialogs/clonetiler.cpp:2340
-#: ../src/dialogs/clonetiler.cpp:2462
+#: ../src/dialogs/clonetiler.cpp:1983
+#: ../src/dialogs/clonetiler.cpp:2147
+#: ../src/dialogs/clonetiler.cpp:2223
+#: ../src/dialogs/clonetiler.cpp:2296
+#: ../src/dialogs/clonetiler.cpp:2342
+#: ../src/dialogs/clonetiler.cpp:2464
 msgid "<small>Alternate:</small>"
 msgstr "<small>Afwisselen:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1987
+#: ../src/dialogs/clonetiler.cpp:1989
 msgid "Alternate the sign of shifts for each row"
 msgstr "De verplaatsingen voor elke rij om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:1992
+#: ../src/dialogs/clonetiler.cpp:1994
 msgid "Alternate the sign of shifts for each column"
 msgstr "De verplaatsingen voor elke kolom om-en-om afwisselen"
 
 #. TRANSLATORS: "Cumulate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:1999
-#: ../src/dialogs/clonetiler.cpp:2163
-#: ../src/dialogs/clonetiler.cpp:2239
+#: ../src/dialogs/clonetiler.cpp:2001
+#: ../src/dialogs/clonetiler.cpp:2165
+#: ../src/dialogs/clonetiler.cpp:2241
 msgid "<small>Cumulate:</small>"
 msgstr "<small>Optellen:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:2005
+#: ../src/dialogs/clonetiler.cpp:2007
 msgid "Cumulate the shifts for each row"
 msgstr "De verplaatsingen voor elke rij optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2010
+#: ../src/dialogs/clonetiler.cpp:2012
 msgid "Cumulate the shifts for each column"
 msgstr "De verplaatsingen voor elke kolom optellen"
 
 #. TRANSLATORS: "Cumulate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:2017
+#: ../src/dialogs/clonetiler.cpp:2019
 msgid "<small>Exclude tile:</small>"
 msgstr "<small>Tegel uitsluiten:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:2023
+#: ../src/dialogs/clonetiler.cpp:2025
 msgid "Exclude tile height in shift"
 msgstr "Tegelhoogte niet bij verplaatsing optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2028
+#: ../src/dialogs/clonetiler.cpp:2030
 msgid "Exclude tile width in shift"
 msgstr "Tegelbreedte niet bij verplaatsing optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2037
+#: ../src/dialogs/clonetiler.cpp:2039
 msgid "Sc_ale"
 msgstr "_Schalen"
 
-#: ../src/dialogs/clonetiler.cpp:2045
+#: ../src/dialogs/clonetiler.cpp:2047
 msgid "<b>Scale X:</b>"
 msgstr "<b>X-vergroting:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2053
+#: ../src/dialogs/clonetiler.cpp:2055
 #, no-c-format
 msgid "Horizontal scale per row (in % of tile width)"
 msgstr "Horizontale vergroting voor elke volgende rij (in % van de tegelbreedte)"
 
-#: ../src/dialogs/clonetiler.cpp:2061
+#: ../src/dialogs/clonetiler.cpp:2063
 #, no-c-format
 msgid "Horizontal scale per column (in % of tile width)"
 msgstr "Horizontale vergroting voor elke volgende kolom (in % van de tegelbreedte)"
 
-#: ../src/dialogs/clonetiler.cpp:2067
+#: ../src/dialogs/clonetiler.cpp:2069
 msgid "Randomize the horizontal scale by this percentage"
 msgstr "De horizontale afmeting binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2075
+#: ../src/dialogs/clonetiler.cpp:2077
 msgid "<b>Scale Y:</b>"
 msgstr "<b>Y-vergroting:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2083
+#: ../src/dialogs/clonetiler.cpp:2085
 #, no-c-format
 msgid "Vertical scale per row (in % of tile height)"
 msgstr "Verticale vergroting voor elke volgende rij (in % van de tegelhoogte)"
 
-#: ../src/dialogs/clonetiler.cpp:2091
+#: ../src/dialogs/clonetiler.cpp:2093
 #, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
 msgstr "Verticale vergroting voor elke volgende kolom (in % van de tegelhoogte)"
 
-#: ../src/dialogs/clonetiler.cpp:2097
+#: ../src/dialogs/clonetiler.cpp:2099
 msgid "Randomize the vertical scale by this percentage"
 msgstr "De verticale afmeting binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2111
+#: ../src/dialogs/clonetiler.cpp:2113
 msgid "Whether row scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr "Soort rijvergroting: uniform (1), convergent (<1) of divergent (>1)"
 
-#: ../src/dialogs/clonetiler.cpp:2117
+#: ../src/dialogs/clonetiler.cpp:2119
 msgid "Whether column scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr "Soort kolomvergroting: uniform (1), convergent (<1) of divergent (>1)"
 
-#: ../src/dialogs/clonetiler.cpp:2125
+#: ../src/dialogs/clonetiler.cpp:2127
 msgid "<b>Base:</b>"
 msgstr "<b>Grondtal:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2131
-#: ../src/dialogs/clonetiler.cpp:2137
+#: ../src/dialogs/clonetiler.cpp:2133
+#: ../src/dialogs/clonetiler.cpp:2139
 msgid "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
 msgstr "Grondtal voor logaritmische spiraal: ongebruikt (0), convergent (<1) of divergent (>1)"
 
-#: ../src/dialogs/clonetiler.cpp:2151
+#: ../src/dialogs/clonetiler.cpp:2153
 msgid "Alternate the sign of scales for each row"
 msgstr "De vergroting voor elke rij om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2156
+#: ../src/dialogs/clonetiler.cpp:2158
 msgid "Alternate the sign of scales for each column"
 msgstr "De vergroting voor elke kolom om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2169
+#: ../src/dialogs/clonetiler.cpp:2171
 msgid "Cumulate the scales for each row"
 msgstr "De vergrotingen voor elke rij optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2174
+#: ../src/dialogs/clonetiler.cpp:2176
 msgid "Cumulate the scales for each column"
 msgstr "De vergrotingen voor elke kolom optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2183
+#: ../src/dialogs/clonetiler.cpp:2185
 msgid "_Rotation"
 msgstr "_Rotatie"
 
-#: ../src/dialogs/clonetiler.cpp:2191
+#: ../src/dialogs/clonetiler.cpp:2193
 msgid "<b>Angle:</b>"
 msgstr "<b>Hoek:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2199
+#: ../src/dialogs/clonetiler.cpp:2201
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
 msgstr "Voor elke volgende rij de tegels over deze hoek draaien"
 
-#: ../src/dialogs/clonetiler.cpp:2207
+#: ../src/dialogs/clonetiler.cpp:2209
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
 msgstr "Voor elke volgende kolom de tegels over deze hoek draaien"
 
-#: ../src/dialogs/clonetiler.cpp:2213
+#: ../src/dialogs/clonetiler.cpp:2215
 msgid "Randomize the rotation angle by this percentage"
 msgstr "De draaihoek binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2227
+#: ../src/dialogs/clonetiler.cpp:2229
 msgid "Alternate the rotation direction for each row"
 msgstr "De draairichting voor elke rij om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2232
+#: ../src/dialogs/clonetiler.cpp:2234
 msgid "Alternate the rotation direction for each column"
 msgstr "De draairichting voor elke kolom om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2245
+#: ../src/dialogs/clonetiler.cpp:2247
 msgid "Cumulate the rotation for each row"
 msgstr "De rotaties voor elke rij optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2250
+#: ../src/dialogs/clonetiler.cpp:2252
 msgid "Cumulate the rotation for each column"
 msgstr "De rotaties voor elke kolom optellen"
 
-#: ../src/dialogs/clonetiler.cpp:2259
+#: ../src/dialogs/clonetiler.cpp:2261
 msgid "_Blur & opacity"
 msgstr "_Vervaging & ondoorzichtigheid"
 
-#: ../src/dialogs/clonetiler.cpp:2268
+#: ../src/dialogs/clonetiler.cpp:2270
 msgid "<b>Blur:</b>"
 msgstr "<b>Vervaging:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2274
+#: ../src/dialogs/clonetiler.cpp:2276
 msgid "Blur tiles by this percentage for each row"
 msgstr "De tegels elke volgende rij met dit percentage vervagen"
 
-#: ../src/dialogs/clonetiler.cpp:2280
+#: ../src/dialogs/clonetiler.cpp:2282
 msgid "Blur tiles by this percentage for each column"
 msgstr "De tegels elke volgende kolom met dit percentage vervagen"
 
-#: ../src/dialogs/clonetiler.cpp:2286
+#: ../src/dialogs/clonetiler.cpp:2288
 msgid "Randomize the tile blur by this percentage"
 msgstr "Tegels binnen dit percentage willekeurig vervagen"
 
-#: ../src/dialogs/clonetiler.cpp:2300
+#: ../src/dialogs/clonetiler.cpp:2302
 msgid "Alternate the sign of blur change for each row"
 msgstr "De vervaging voor elke rij om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2305
+#: ../src/dialogs/clonetiler.cpp:2307
 msgid "Alternate the sign of blur change for each column"
 msgstr "De vervaging voor elke kolom om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2314
+#: ../src/dialogs/clonetiler.cpp:2316
 msgid "<b>Opacity:</b>"
 msgstr "<b>Ondoorzichtigheid</b>:"
 
-#: ../src/dialogs/clonetiler.cpp:2320
+#: ../src/dialogs/clonetiler.cpp:2322
 msgid "Decrease tile opacity by this percentage for each row"
 msgstr "De ondoorzichtigheid elke volgende rij met dit percentage verminderen"
 
-#: ../src/dialogs/clonetiler.cpp:2326
+#: ../src/dialogs/clonetiler.cpp:2328
 msgid "Decrease tile opacity by this percentage for each column"
 msgstr "De ondoorzichtigheid elke volgende kolom met dit percentage verminderen"
 
-#: ../src/dialogs/clonetiler.cpp:2332
+#: ../src/dialogs/clonetiler.cpp:2334
 msgid "Randomize the tile opacity by this percentage"
 msgstr "De ondoorzichtigheid binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2346
+#: ../src/dialogs/clonetiler.cpp:2348
 msgid "Alternate the sign of opacity change for each row"
 msgstr "De doorzichtigheid voor elke rij om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2351
+#: ../src/dialogs/clonetiler.cpp:2353
 msgid "Alternate the sign of opacity change for each column"
 msgstr "De doorzichtigheid voor elke kolom om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2359
+#: ../src/dialogs/clonetiler.cpp:2361
 msgid "Co_lor"
 msgstr "_Kleur"
 
-#: ../src/dialogs/clonetiler.cpp:2364
+#: ../src/dialogs/clonetiler.cpp:2366
 msgid "Initial color: "
 msgstr "Beginkleur: "
 
-#: ../src/dialogs/clonetiler.cpp:2368
+#: ../src/dialogs/clonetiler.cpp:2370
 msgid "Initial color of tiled clones"
 msgstr "Beginkleur van getegelde klonen"
 
-#: ../src/dialogs/clonetiler.cpp:2368
+#: ../src/dialogs/clonetiler.cpp:2370
 msgid "Initial color for clones (works only if the original has unset fill or stroke)"
 msgstr "Beginkleur van klonen (werkt alleen als het origineel geen vulling of lijn heeft)"
 
-#: ../src/dialogs/clonetiler.cpp:2383
+#: ../src/dialogs/clonetiler.cpp:2385
 msgid "<b>H:</b>"
 msgstr "<b>Tint:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2389
+#: ../src/dialogs/clonetiler.cpp:2391
 msgid "Change the tile hue by this percentage for each row"
 msgstr "De tint elke volgende rij met dit percentage aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2395
+#: ../src/dialogs/clonetiler.cpp:2397
 msgid "Change the tile hue by this percentage for each column"
 msgstr "De tint elke volgende kolom met dit percentage aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2401
+#: ../src/dialogs/clonetiler.cpp:2403
 msgid "Randomize the tile hue by this percentage"
 msgstr "De tint binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2410
+#: ../src/dialogs/clonetiler.cpp:2412
 msgid "<b>S:</b>"
 msgstr "<b>Verzadiging:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2416
+#: ../src/dialogs/clonetiler.cpp:2418
 msgid "Change the color saturation by this percentage for each row"
 msgstr "De verzadiging elke volgende rij met dit percentage aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2422
+#: ../src/dialogs/clonetiler.cpp:2424
 msgid "Change the color saturation by this percentage for each column"
 msgstr "De verzadiging elke volgende kolom met dit percentage aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2428
+#: ../src/dialogs/clonetiler.cpp:2430
 msgid "Randomize the color saturation by this percentage"
 msgstr "De verzadiging binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2436
+#: ../src/dialogs/clonetiler.cpp:2438
 msgid "<b>L:</b>"
 msgstr "<b>Helderheid:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2442
+#: ../src/dialogs/clonetiler.cpp:2444
 msgid "Change the color lightness by this percentage for each row"
 msgstr "De helderheid elke volgende rij met dit percentage aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2448
+#: ../src/dialogs/clonetiler.cpp:2450
 msgid "Change the color lightness by this percentage for each column"
 msgstr "De helderheid elke volgende kolom met dit percentage aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2454
+#: ../src/dialogs/clonetiler.cpp:2456
 msgid "Randomize the color lightness by this percentage"
 msgstr "De helderheid binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2468
+#: ../src/dialogs/clonetiler.cpp:2470
 msgid "Alternate the sign of color changes for each row"
 msgstr "De kleurwijzigingen voor elke rij om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2473
+#: ../src/dialogs/clonetiler.cpp:2475
 msgid "Alternate the sign of color changes for each column"
 msgstr "De kleurwijzigingen voor elke kolom om-en-om afwisselen"
 
-#: ../src/dialogs/clonetiler.cpp:2481
+#: ../src/dialogs/clonetiler.cpp:2483
 msgid "_Trace"
 msgstr "_Overtrekken"
 
-#: ../src/dialogs/clonetiler.cpp:2488
+#: ../src/dialogs/clonetiler.cpp:2490
 msgid "Trace the drawing under the tiles"
 msgstr "De tekening onder de tegels gebruiken"
 
-#: ../src/dialogs/clonetiler.cpp:2492
+#: ../src/dialogs/clonetiler.cpp:2494
 msgid "For each clone, pick a value from the drawing in that clone's location and apply it to the clone"
 msgstr "Voor elke kloon een eigenschap van de tekening op dat punt gebruiken om die kloon te beïnvloeden."
 
-#: ../src/dialogs/clonetiler.cpp:2506
+#: ../src/dialogs/clonetiler.cpp:2508
 msgid "1. Pick from the drawing:"
 msgstr "1. Kies een eigenschap uit de tekening:"
 
-#: ../src/dialogs/clonetiler.cpp:2518
+#: ../src/dialogs/clonetiler.cpp:2520
 msgid "Pick the visible color and opacity"
 msgstr "Selecteer de zichtbare kleur en de ondoorzichtigheid"
 
-#: ../src/dialogs/clonetiler.cpp:2525
-#: ../src/dialogs/clonetiler.cpp:2666
+#: ../src/dialogs/clonetiler.cpp:2527
+#: ../src/dialogs/clonetiler.cpp:2668
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/widgets/toolbox.cpp:4601
 #: ../share/extensions/interp_att_g.inx.h:14
 msgid "Opacity"
 msgstr "Ondoorzichtigheid"
 
-#: ../src/dialogs/clonetiler.cpp:2526
+#: ../src/dialogs/clonetiler.cpp:2528
 msgid "Pick the total accumulated opacity"
 msgstr "Selecteer de gesommeerde ondoorzichtigheid"
 
-#: ../src/dialogs/clonetiler.cpp:2533
+#: ../src/dialogs/clonetiler.cpp:2535
 msgid "R"
 msgstr "R"
 
-#: ../src/dialogs/clonetiler.cpp:2534
+#: ../src/dialogs/clonetiler.cpp:2536
 msgid "Pick the Red component of the color"
 msgstr "Selecteer de roodcomponent van de kleur"
 
-#: ../src/dialogs/clonetiler.cpp:2541
+#: ../src/dialogs/clonetiler.cpp:2543
 msgid "G"
 msgstr "G"
 
-#: ../src/dialogs/clonetiler.cpp:2542
+#: ../src/dialogs/clonetiler.cpp:2544
 msgid "Pick the Green component of the color"
 msgstr "Selecteer de groencomponent van de kleur"
 
-#: ../src/dialogs/clonetiler.cpp:2549
+#: ../src/dialogs/clonetiler.cpp:2551
 msgid "B"
 msgstr "B"
 
-#: ../src/dialogs/clonetiler.cpp:2550
+#: ../src/dialogs/clonetiler.cpp:2552
 msgid "Pick the Blue component of the color"
 msgstr "Selecteer de blauwcomponent van de kleur"
 
-#: ../src/dialogs/clonetiler.cpp:2557
+#: ../src/dialogs/clonetiler.cpp:2559
 msgctxt "Clonetiler color hue"
 msgid "H"
 msgstr "T"
 
-#: ../src/dialogs/clonetiler.cpp:2558
+#: ../src/dialogs/clonetiler.cpp:2560
 msgid "Pick the hue of the color"
 msgstr "De tint van de kleur kiezen"
 
-#: ../src/dialogs/clonetiler.cpp:2565
+#: ../src/dialogs/clonetiler.cpp:2567
 msgctxt "Clonetiler color saturation"
 msgid "S"
 msgstr "V"
 
-#: ../src/dialogs/clonetiler.cpp:2566
+#: ../src/dialogs/clonetiler.cpp:2568
 msgid "Pick the saturation of the color"
 msgstr "De verzadiging van de kleur kiezen"
 
-#: ../src/dialogs/clonetiler.cpp:2573
+#: ../src/dialogs/clonetiler.cpp:2575
 msgctxt "Clonetiler color lightness"
 msgid "L"
 msgstr "L"
 
-#: ../src/dialogs/clonetiler.cpp:2574
+#: ../src/dialogs/clonetiler.cpp:2576
 msgid "Pick the lightness of the color"
 msgstr "De helderheid van de kleur kiezen"
 
-#: ../src/dialogs/clonetiler.cpp:2584
+#: ../src/dialogs/clonetiler.cpp:2586
 msgid "2. Tweak the picked value:"
 msgstr "2. De geselecteerde eigenschap fijnafstemmen:"
 
-#: ../src/dialogs/clonetiler.cpp:2594
+#: ../src/dialogs/clonetiler.cpp:2596
 msgid "Gamma-correct:"
 msgstr "Gammacorrectie:"
 
-#: ../src/dialogs/clonetiler.cpp:2598
+#: ../src/dialogs/clonetiler.cpp:2600
 msgid "Shift the mid-range of the picked value upwards (>0) or downwards (<0)"
 msgstr "Het middengebied van de gekozen eigenschap verhogen (>0) of verlagen (<0)"
 
-#: ../src/dialogs/clonetiler.cpp:2605
+#: ../src/dialogs/clonetiler.cpp:2607
 msgid "Randomize:"
 msgstr "Willekeur:"
 
-#: ../src/dialogs/clonetiler.cpp:2609
+#: ../src/dialogs/clonetiler.cpp:2611
 msgid "Randomize the picked value by this percentage"
 msgstr "De geselecteerde eigenschap binnen dit percentage willekeurig aanpassen"
 
-#: ../src/dialogs/clonetiler.cpp:2616
+#: ../src/dialogs/clonetiler.cpp:2618
 msgid "Invert:"
 msgstr "Omdraaien:"
 
-#: ../src/dialogs/clonetiler.cpp:2620
+#: ../src/dialogs/clonetiler.cpp:2622
 msgid "Invert the picked value"
 msgstr "Draai de geselecteerde eigenschap om"
 
-#: ../src/dialogs/clonetiler.cpp:2626
+#: ../src/dialogs/clonetiler.cpp:2628
 msgid "3. Apply the value to the clones':"
 msgstr "3. De relatie tussen de eigenschap en de klonen:"
 
-#: ../src/dialogs/clonetiler.cpp:2636
+#: ../src/dialogs/clonetiler.cpp:2638
 msgid "Presence"
 msgstr "Aanwezigheid"
 
-#: ../src/dialogs/clonetiler.cpp:2639
+#: ../src/dialogs/clonetiler.cpp:2641
 msgid "Each clone is created with the probability determined by the picked value in that point"
 msgstr "De kans dat een kloon op een plek wordt gemaakt is afhankelijk van de waarde van de geselecteerde eigenschap op dat punt."
 
-#: ../src/dialogs/clonetiler.cpp:2646
+#: ../src/dialogs/clonetiler.cpp:2648
 msgid "Size"
 msgstr "Afmeting"
 
-#: ../src/dialogs/clonetiler.cpp:2649
+#: ../src/dialogs/clonetiler.cpp:2651
 msgid "Each clone's size is determined by the picked value in that point"
 msgstr "De grootte van een kloon is afhankelijk van de waarde van de geselecteerde eigenschap op dat punt"
 
-#: ../src/dialogs/clonetiler.cpp:2659
+#: ../src/dialogs/clonetiler.cpp:2661
 msgid "Each clone is painted by the picked color (the original must have unset fill or stroke)"
 msgstr "Klonen worden getekend in de geselecteerde kleur (werkt alleen als de kleur van de lijnen of de vulling van het origineel verwijderd is)"
 
-#: ../src/dialogs/clonetiler.cpp:2669
+#: ../src/dialogs/clonetiler.cpp:2671
 msgid "Each clone's opacity is determined by the picked value in that point"
 msgstr "De ondoorzichtigheid van een kloon is afhankelijk van de waarde van de geselecteerde eigenschap op dat punt"
 
-#: ../src/dialogs/clonetiler.cpp:2696
+#: ../src/dialogs/clonetiler.cpp:2698
 msgid "How many rows in the tiling"
 msgstr "Hoeveel rijen er betegeld moeten worden"
 
-#: ../src/dialogs/clonetiler.cpp:2716
+#: ../src/dialogs/clonetiler.cpp:2718
 msgid "How many columns in the tiling"
 msgstr "Hoeveel kolommen er betegeld moeten worden"
 
-#: ../src/dialogs/clonetiler.cpp:2746
+#: ../src/dialogs/clonetiler.cpp:2748
 msgid "Width of the rectangle to be filled"
 msgstr "Breedte van de rechthoek die gevuld moet worden"
 
-#: ../src/dialogs/clonetiler.cpp:2771
+#: ../src/dialogs/clonetiler.cpp:2773
 msgid "Height of the rectangle to be filled"
 msgstr "Hoogte van de rechthoek die gevuld moet worden"
 
-#: ../src/dialogs/clonetiler.cpp:2786
+#: ../src/dialogs/clonetiler.cpp:2788
 msgid "Rows, columns: "
 msgstr "Rijen, kolommen: "
 
-#: ../src/dialogs/clonetiler.cpp:2787
+#: ../src/dialogs/clonetiler.cpp:2789
 msgid "Create the specified number of rows and columns"
 msgstr "Het opgegeven aantal rijen en kolommen aanmaken"
 
-#: ../src/dialogs/clonetiler.cpp:2796
+#: ../src/dialogs/clonetiler.cpp:2798
 msgid "Width, height: "
 msgstr "Breedte, hoogte: "
 
-#: ../src/dialogs/clonetiler.cpp:2797
+#: ../src/dialogs/clonetiler.cpp:2799
 msgid "Fill the specified width and height with the tiling"
 msgstr "Vul een gebied met opgegeven breedte en hoogte met de betegeling"
 
-#: ../src/dialogs/clonetiler.cpp:2813
+#: ../src/dialogs/clonetiler.cpp:2815
 msgid "Use saved size and position of the tile"
 msgstr "De opgeslagen grootte en positie van de tegel gebruiken"
 
-#: ../src/dialogs/clonetiler.cpp:2816
+#: ../src/dialogs/clonetiler.cpp:2818
 msgid "Pretend that the size and position of the tile are the same as the last time you tiled it (if any), instead of using the current size"
 msgstr "Doen alsof de grootte en positie van de tegel hetzelfde zijn als de laatste keer dat u er mee tegelde, in plaats van de huidige grootte en positie te gebruiken."
 
-#: ../src/dialogs/clonetiler.cpp:2840
+#: ../src/dialogs/clonetiler.cpp:2842
 msgid " <b>_Create</b> "
 msgstr " <b>_Aanmaken</b> "
 
-#: ../src/dialogs/clonetiler.cpp:2842
+#: ../src/dialogs/clonetiler.cpp:2844
 msgid "Create and tile the clones of the selection"
 msgstr "Maak klonen van de selectie en gebruik ze als betegeling"
 
@@ -4541,28 +4541,28 @@ msgstr "Maak klonen van de selectie en gebruik ze als betegeling"
 #. diagrams on the left in the following screenshot:
 #. http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
 #. So unclumping is the process of spreading a number of objects out more evenly.
-#: ../src/dialogs/clonetiler.cpp:2857
+#: ../src/dialogs/clonetiler.cpp:2859
 msgid " _Unclump "
 msgstr " _Ontklonteren "
 
-#: ../src/dialogs/clonetiler.cpp:2858
+#: ../src/dialogs/clonetiler.cpp:2860
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
 msgstr "De klonen verspreiden om ze te ontklonteren; kan herhaaldelijk worden toegepast"
 
-#: ../src/dialogs/clonetiler.cpp:2864
+#: ../src/dialogs/clonetiler.cpp:2866
 msgid " Re_move "
 msgstr " Ver_wijderen "
 
-#: ../src/dialogs/clonetiler.cpp:2865
+#: ../src/dialogs/clonetiler.cpp:2867
 msgid "Remove existing tiled clones of the selected object (siblings only)"
 msgstr "Verwijder bestaande getegelde klonen van het geselecteerde object"
 
-#: ../src/dialogs/clonetiler.cpp:2881
+#: ../src/dialogs/clonetiler.cpp:2883
 msgid " R_eset "
 msgstr " _Beginwaarden "
 
 #. TRANSLATORS: "change" is a noun here
-#: ../src/dialogs/clonetiler.cpp:2883
+#: ../src/dialogs/clonetiler.cpp:2885
 msgid "Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"
 msgstr "Alle verplaatsingen, vergrotingen, rotaties en kleurveranderingen in het venster terugzetten op nul"
 
@@ -4627,8 +4627,8 @@ msgstr "<big><b>Bitmap-grootte</b></big>"
 #: ../src/dialogs/export.cpp:487
 #: ../src/live_effects/lpe-bendpath.cpp:56
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
-#: ../src/ui/dialog/transformation.cpp:87
-#: ../src/ui/widget/page-sizer.cpp:232
+#: ../src/ui/dialog/transformation.cpp:88
+#: ../src/ui/widget/page-sizer.cpp:233
 msgid "_Width:"
 msgstr "B_reedte:"
 
@@ -4642,8 +4642,8 @@ msgid "dp_i"
 msgstr "pp_i"
 
 #: ../src/dialogs/export.cpp:501
-#: ../src/ui/dialog/transformation.cpp:89
-#: ../src/ui/widget/page-sizer.cpp:233
+#: ../src/ui/dialog/transformation.cpp:90
+#: ../src/ui/widget/page-sizer.cpp:234
 msgid "_Height:"
 msgstr "_Hoogte:"
 
@@ -4727,8 +4727,8 @@ msgstr "Map %s bestaat niet of is geen map.\n"
 msgid "Exporting %s (%lu x %lu)"
 msgstr "Exporteren van %s (%lu x %lu)"
 
-#: ../src/dialogs/export.cpp:1333
-#: ../src/dialogs/export.cpp:1368
+#: ../src/dialogs/export.cpp:1337
+#: ../src/dialogs/export.cpp:1372
 msgid "Select a filename for exporting"
 msgstr "Selecteer een bestandsnaam om naar te exporteren"
 
@@ -5110,8 +5110,8 @@ msgstr "Doel:"
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/dialogs/object-attributes.cpp:35
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/extension/internal/filter/color.h:695
-#: ../src/extension/internal/filter/color.h:783
+#: ../src/extension/internal/filter/color.h:905
+#: ../src/extension/internal/filter/color.h:993
 #: ../src/extension/internal/filter/morphology.h:53
 #: ../src/rdf.cpp:240
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
@@ -5157,16 +5157,16 @@ msgstr "URL:"
 
 #: ../src/dialogs/object-attributes.cpp:52
 #: ../src/dialogs/object-attributes.cpp:60
-#: ../src/ui/dialog/tile.cpp:618
-#: ../src/widgets/desktop-widget.cpp:514
+#: ../src/ui/dialog/tile.cpp:619
+#: ../src/widgets/desktop-widget.cpp:515
 #: ../src/widgets/toolbox.cpp:1565
 msgid "X:"
 msgstr "X:"
 
 #: ../src/dialogs/object-attributes.cpp:53
 #: ../src/dialogs/object-attributes.cpp:61
-#: ../src/ui/dialog/tile.cpp:619
-#: ../src/widgets/desktop-widget.cpp:517
+#: ../src/ui/dialog/tile.cpp:620
+#: ../src/widgets/desktop-widget.cpp:518
 #: ../src/widgets/toolbox.cpp:1583
 msgid "Y:"
 msgstr "Y:"
@@ -5313,12 +5313,12 @@ msgid "Justify lines"
 msgstr "Lijnen uitvullen"
 
 #: ../src/dialogs/text-edit.cpp:304
-#: ../src/widgets/toolbox.cpp:7755
+#: ../src/widgets/toolbox.cpp:7756
 msgid "Horizontal text"
 msgstr "Horizontale tekst"
 
 #: ../src/dialogs/text-edit.cpp:318
-#: ../src/widgets/toolbox.cpp:7762
+#: ../src/widgets/toolbox.cpp:7763
 msgid "Vertical text"
 msgstr "Verticale tekst"
 
@@ -5463,103 +5463,103 @@ msgstr "Item verwijderen"
 msgid "Change attribute"
 msgstr "Attribuut instellen"
 
-#: ../src/display/canvas-axonomgrid.cpp:356
+#: ../src/display/canvas-axonomgrid.cpp:357
 #: ../src/display/canvas-grid.cpp:674
 msgid "Grid _units:"
 msgstr "Raster_eenheid:"
 
-#: ../src/display/canvas-axonomgrid.cpp:358
+#: ../src/display/canvas-axonomgrid.cpp:359
 #: ../src/display/canvas-grid.cpp:676
 msgid "_Origin X:"
 msgstr "X-_oorsprong:"
 
-#: ../src/display/canvas-axonomgrid.cpp:358
+#: ../src/display/canvas-axonomgrid.cpp:359
 #: ../src/display/canvas-grid.cpp:676
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
 #: ../src/ui/dialog/inkscape-preferences.cpp:1068
 msgid "X coordinate of grid origin"
 msgstr "X-coördinaat vanaf de rasteroorsprong"
 
-#: ../src/display/canvas-axonomgrid.cpp:360
+#: ../src/display/canvas-axonomgrid.cpp:361
 #: ../src/display/canvas-grid.cpp:678
 msgid "O_rigin Y:"
 msgstr "Y-oo_rsprong:"
 
-#: ../src/display/canvas-axonomgrid.cpp:360
+#: ../src/display/canvas-axonomgrid.cpp:361
 #: ../src/display/canvas-grid.cpp:678
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
 #: ../src/ui/dialog/inkscape-preferences.cpp:1069
 msgid "Y coordinate of grid origin"
 msgstr "Y-coördinaat vanaf de rasteroorsprong"
 
-#: ../src/display/canvas-axonomgrid.cpp:362
+#: ../src/display/canvas-axonomgrid.cpp:363
 #: ../src/display/canvas-grid.cpp:682
 msgid "Spacing _Y:"
 msgstr "_Y-tussenafstand:"
 
-#: ../src/display/canvas-axonomgrid.cpp:362
+#: ../src/display/canvas-axonomgrid.cpp:363
 #: ../src/ui/dialog/inkscape-preferences.cpp:1071
 msgid "Base length of z-axis"
 msgstr "Basislengte van z-as"
 
-#: ../src/display/canvas-axonomgrid.cpp:364
+#: ../src/display/canvas-axonomgrid.cpp:365
 #: ../src/ui/dialog/inkscape-preferences.cpp:1074
 #: ../src/widgets/toolbox.cpp:3708
 msgid "Angle X:"
 msgstr "X-hoek:"
 
-#: ../src/display/canvas-axonomgrid.cpp:364
+#: ../src/display/canvas-axonomgrid.cpp:365
 #: ../src/ui/dialog/inkscape-preferences.cpp:1074
 msgid "Angle of x-axis"
 msgstr "Hoek van de x-as"
 
-#: ../src/display/canvas-axonomgrid.cpp:366
+#: ../src/display/canvas-axonomgrid.cpp:367
 #: ../src/ui/dialog/inkscape-preferences.cpp:1075
 #: ../src/widgets/toolbox.cpp:3787
 msgid "Angle Z:"
 msgstr "Z-hoek:"
 
-#: ../src/display/canvas-axonomgrid.cpp:366
+#: ../src/display/canvas-axonomgrid.cpp:367
 #: ../src/ui/dialog/inkscape-preferences.cpp:1075
 msgid "Angle of z-axis"
 msgstr "Hoek van de z-as"
 
-#: ../src/display/canvas-axonomgrid.cpp:370
+#: ../src/display/canvas-axonomgrid.cpp:371
 #: ../src/display/canvas-grid.cpp:686
 msgid "Grid line _color:"
 msgstr "Kleur rasterlijn:"
 
-#: ../src/display/canvas-axonomgrid.cpp:370
+#: ../src/display/canvas-axonomgrid.cpp:371
 #: ../src/display/canvas-grid.cpp:686
 msgid "Grid line color"
 msgstr "Kleur hulplijnen"
 
-#: ../src/display/canvas-axonomgrid.cpp:370
+#: ../src/display/canvas-axonomgrid.cpp:371
 #: ../src/display/canvas-grid.cpp:686
 msgid "Color of grid lines"
 msgstr "Kleur van de rasterlijnen"
 
-#: ../src/display/canvas-axonomgrid.cpp:375
+#: ../src/display/canvas-axonomgrid.cpp:376
 #: ../src/display/canvas-grid.cpp:691
 msgid "Ma_jor grid line color:"
 msgstr "Kleur _hoofdrasterlijnen:"
 
-#: ../src/display/canvas-axonomgrid.cpp:375
+#: ../src/display/canvas-axonomgrid.cpp:376
 #: ../src/display/canvas-grid.cpp:691
 msgid "Major grid line color"
 msgstr "Kleur van hoofdrasterlijnen"
 
-#: ../src/display/canvas-axonomgrid.cpp:376
+#: ../src/display/canvas-axonomgrid.cpp:377
 #: ../src/display/canvas-grid.cpp:692
 msgid "Color of the major (highlighted) grid lines"
 msgstr "Kleur van de (geselecteerde) hoofdrasterlijnen"
 
-#: ../src/display/canvas-axonomgrid.cpp:380
+#: ../src/display/canvas-axonomgrid.cpp:381
 #: ../src/display/canvas-grid.cpp:696
 msgid "_Major grid line every:"
 msgstr "Een hoofdr_asterlijn elke:"
 
-#: ../src/display/canvas-axonomgrid.cpp:380
+#: ../src/display/canvas-axonomgrid.cpp:381
 #: ../src/display/canvas-grid.cpp:696
 msgid "lines"
 msgstr "rasterlijnen"
@@ -5812,17 +5812,17 @@ msgstr "Veelvoud van rasterafstand"
 msgid " to "
 msgstr " met "
 
-#: ../src/document.cpp:471
+#: ../src/document.cpp:472
 #, c-format
 msgid "New document %d"
 msgstr "Nieuw document %d"
 
-#: ../src/document.cpp:502
+#: ../src/document.cpp:503
 #, c-format
 msgid "Memory document %d"
 msgstr "Omvang van document in het geheugen %d"
 
-#: ../src/document.cpp:690
+#: ../src/document.cpp:691
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Naamloos document %d"
@@ -5851,33 +5851,33 @@ msgstr "Enkele stip maken"
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
-#: ../src/dropper-context.cpp:289
+#: ../src/dropper-context.cpp:288
 #, c-format
 msgid " alpha %.3g"
 msgstr " alfa %.3g"
 
 #. where the color is picked, to show in the statusbar
-#: ../src/dropper-context.cpp:291
+#: ../src/dropper-context.cpp:290
 #, c-format
 msgid ", averaged with radius %d"
 msgstr ", het gemiddelde in een cirkel met straal %d"
 
-#: ../src/dropper-context.cpp:291
+#: ../src/dropper-context.cpp:290
 #, c-format
 msgid " under cursor"
 msgstr " onder de cursor"
 
 #. message, to show in the statusbar
-#: ../src/dropper-context.cpp:293
+#: ../src/dropper-context.cpp:292
 msgid "<b>Release mouse</b> to set color."
 msgstr "<b>Laat de muisknop los</b> om de kleur in te stellen."
 
-#: ../src/dropper-context.cpp:293
+#: ../src/dropper-context.cpp:292
 #: ../src/tools-switch.cpp:223
 msgid "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> to copy the color under mouse to clipboard"
 msgstr "<b>Klik</b> om de vulkleur te kiezen, <b>Shift+klik</b> voor lijnkleur, <b>sleep</b> voor gemiddelde kleur van een gebied, <b>Alt</b> voor geïnverteerde kleur, <b>Ctrl+C</b> om kleur naar het klembord te kopiëren."
 
-#: ../src/dropper-context.cpp:331
+#: ../src/dropper-context.cpp:330
 msgid "Set picked color"
 msgstr "Gekozen kleur instellen"
 
@@ -6068,7 +6068,7 @@ msgstr "Aanpassende drempelwaarde"
 
 #. Label
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/extension/internal/filter/color.h:540
+#: ../src/extension/internal/filter/color.h:750
 #: ../src/extension/internal/filter/experimental.h:355
 #: ../src/widgets/gradient-vector.cpp:824
 #: ../share/extensions/printing-marks.inx.h:9
@@ -6387,6 +6387,7 @@ msgstr "Tint:"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
 #: ../src/extension/internal/filter/abc.h:177
+#: ../src/extension/internal/filter/color.h:151
 #: ../src/extension/internal/filter/experimental.h:85
 msgid "Saturation:"
 msgstr "Verzadiging:"
@@ -6394,6 +6395,7 @@ msgstr "Verzadiging:"
 #: ../src/extension/internal/bitmap/modulate.cpp:43
 #: ../src/extension/internal/filter/abc.h:375
 #: ../src/extension/internal/filter/abc.h:815
+#: ../src/extension/internal/filter/color.h:68
 msgid "Brightness:"
 msgstr "Helderheid:"
 
@@ -6532,7 +6534,7 @@ msgstr "Drempelwaarde"
 #: ../src/ui/dialog/tracedialog.cpp:420
 #: ../src/ui/dialog/tracedialog.cpp:453
 #: ../src/ui/dialog/tracedialog.cpp:596
-#: ../src/widgets/toolbox.cpp:8539
+#: ../src/widgets/toolbox.cpp:8540
 msgid "Threshold:"
 msgstr "Grenswaarde:"
 
@@ -6754,28 +6756,30 @@ msgstr "Vertical vervaging:"
 #: ../src/extension/internal/filter/abc.h:675
 #: ../src/extension/internal/filter/abc.h:744
 #: ../src/extension/internal/filter/abc.h:822
-#: ../src/extension/internal/filter/color.h:71
-#: ../src/extension/internal/filter/color.h:159
-#: ../src/extension/internal/filter/color.h:260
-#: ../src/extension/internal/filter/color.h:373
-#: ../src/extension/internal/filter/color.h:464
-#: ../src/extension/internal/filter/color.h:544
-#: ../src/extension/internal/filter/color.h:625
-#: ../src/extension/internal/filter/color.h:702
-#: ../src/extension/internal/filter/color.h:812
+#: ../src/extension/internal/filter/color.h:75
+#: ../src/extension/internal/filter/color.h:165
+#: ../src/extension/internal/filter/color.h:270
+#: ../src/extension/internal/filter/color.h:367
+#: ../src/extension/internal/filter/color.h:469
+#: ../src/extension/internal/filter/color.h:582
+#: ../src/extension/internal/filter/color.h:674
+#: ../src/extension/internal/filter/color.h:754
+#: ../src/extension/internal/filter/color.h:835
+#: ../src/extension/internal/filter/color.h:912
+#: ../src/extension/internal/filter/color.h:1022
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:104
 #: ../src/extension/internal/filter/experimental.h:110
 #: ../src/extension/internal/filter/experimental.h:242
 #: ../src/extension/internal/filter/experimental.h:361
 #: ../src/extension/internal/filter/experimental.h:515
-#: ../src/extension/internal/filter/experimental.h:626
-#: ../src/extension/internal/filter/experimental.h:723
+#: ../src/extension/internal/filter/experimental.h:628
+#: ../src/extension/internal/filter/experimental.h:733
 #: ../src/extension/internal/filter/filter-file.cpp:150
 #: ../src/extension/internal/filter/filter.cpp:216
 #: ../src/extension/internal/filter/image.h:61
 #: ../src/extension/internal/filter/morphology.h:61
-#: ../src/extension/internal/filter/shadows.h:76
+#: ../src/extension/internal/filter/shadows.h:78
 #: ../src/extension/internal/filter/snow.h:38
 #: ../src/ui/dialog/inkscape-preferences.cpp:802
 msgid "Filters"
@@ -6792,24 +6796,26 @@ msgstr "Filters"
 #: ../src/extension/internal/filter/abc.h:676
 #: ../src/extension/internal/filter/abc.h:745
 #: ../src/extension/internal/filter/abc.h:823
-#: ../src/extension/internal/filter/color.h:72
-#: ../src/extension/internal/filter/color.h:160
-#: ../src/extension/internal/filter/color.h:261
-#: ../src/extension/internal/filter/color.h:374
-#: ../src/extension/internal/filter/color.h:465
-#: ../src/extension/internal/filter/color.h:545
-#: ../src/extension/internal/filter/color.h:626
-#: ../src/extension/internal/filter/color.h:703
-#: ../src/extension/internal/filter/color.h:813
+#: ../src/extension/internal/filter/color.h:76
+#: ../src/extension/internal/filter/color.h:166
+#: ../src/extension/internal/filter/color.h:271
+#: ../src/extension/internal/filter/color.h:368
+#: ../src/extension/internal/filter/color.h:470
+#: ../src/extension/internal/filter/color.h:583
+#: ../src/extension/internal/filter/color.h:675
+#: ../src/extension/internal/filter/color.h:755
+#: ../src/extension/internal/filter/color.h:836
+#: ../src/extension/internal/filter/color.h:913
+#: ../src/extension/internal/filter/color.h:1023
 #: ../src/extension/internal/filter/experimental.h:111
 #: ../src/extension/internal/filter/experimental.h:243
 #: ../src/extension/internal/filter/experimental.h:362
 #: ../src/extension/internal/filter/experimental.h:516
-#: ../src/extension/internal/filter/experimental.h:627
-#: ../src/extension/internal/filter/experimental.h:724
+#: ../src/extension/internal/filter/experimental.h:629
+#: ../src/extension/internal/filter/experimental.h:734
 #: ../src/extension/internal/filter/image.h:62
 #: ../src/extension/internal/filter/morphology.h:62
-#: ../src/extension/internal/filter/shadows.h:77
+#: ../src/extension/internal/filter/shadows.h:79
 msgid "Experimental"
 msgstr "Experimenteel"
 
@@ -6823,7 +6829,6 @@ msgstr "Randen schoonmaken, aanpasbaar (basis)"
 
 #: ../src/extension/internal/filter/abc.h:118
 #: ../src/extension/internal/filter/abc.h:313
-#: ../src/extension/internal/filter/color.h:65
 #: ../src/extension/internal/filter/experimental.h:236
 #: ../src/extension/internal/filter/experimental.h:335
 #: ../src/extension/internal/filter/experimental.h:340
@@ -6931,7 +6936,10 @@ msgid "Erosion:"
 msgstr "Erosie:"
 
 #: ../src/extension/internal/filter/abc.h:474
-#: ../src/extension/internal/filter/color.h:369
+#: ../src/extension/internal/filter/color.h:71
+#: ../src/extension/internal/filter/color.h:156
+#: ../src/extension/internal/filter/color.h:266
+#: ../src/extension/internal/filter/color.h:578
 #: ../src/extension/internal/filter/experimental.h:83
 msgid "Inverted"
 msgstr "Geïnverteerd"
@@ -6977,283 +6985,307 @@ msgstr "Alle zichtbare monochrome delen hertekenen"
 msgid "Specular light, custom (ABCs)"
 msgstr "Spiegelende belichting, aanpasbaar (basis)"
 
-#: ../src/extension/internal/filter/color.h:63
+#: ../src/extension/internal/filter/color.h:66
 msgid "Brightness, custom (Color)"
 msgstr "Helderheid, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:66
-msgid "Vibration:"
-msgstr "Vibratie:"
+#: ../src/extension/internal/filter/color.h:69
+#: ../src/extension/internal/filter/color.h:824
+msgid "Over-saturation:"
+msgstr "Oververzadiging:"
 
-#: ../src/extension/internal/filter/color.h:67
-#: ../src/extension/internal/filter/color.h:459
+#: ../src/extension/internal/filter/color.h:70
+#: ../src/extension/internal/filter/color.h:669
 #: ../src/extension/internal/filter/experimental.h:84
 #: ../src/extension/internal/filter/experimental.h:505
 msgid "Lightness:"
 msgstr "Lichtheid:"
 
-#: ../src/extension/internal/filter/color.h:75
+#: ../src/extension/internal/filter/color.h:79
 msgid "Brightness filter"
 msgstr "Helderheidsfilter"
 
-#: ../src/extension/internal/filter/color.h:130
+#: ../src/extension/internal/filter/color.h:147
+msgid "Channel painting, custom (Color)"
+msgstr "Kleur vervangen, aanpasbaar (kleur)"
+
+#: ../src/extension/internal/filter/color.h:152
+#: ../src/extension/internal/filter/color.h:262
+#: ../src/extension/internal/filter/color.h:666
+msgid "Red:"
+msgstr "Rood:"
+
+#: ../src/extension/internal/filter/color.h:153
+#: ../src/extension/internal/filter/color.h:263
+#: ../src/extension/internal/filter/color.h:667
+msgid "Green:"
+msgstr "Groen:"
+
+#: ../src/extension/internal/filter/color.h:154
+#: ../src/extension/internal/filter/color.h:264
+#: ../src/extension/internal/filter/color.h:668
+msgid "Blue:"
+msgstr "Blauw:"
+
+#: ../src/extension/internal/filter/color.h:155
+#: ../src/extension/internal/filter/color.h:265
+msgid "Alpha:"
+msgstr "Alfa:"
+
+#: ../src/extension/internal/filter/color.h:169
+msgid "Replace RGB by any color"
+msgstr "RGB vervangen door een kleur"
+
+#: ../src/extension/internal/filter/color.h:260
+msgid "Channel transparency, custom (Color)"
+msgstr "Kleurkanaal transparantie, aanpasbaar (kleur)"
+
+#: ../src/extension/internal/filter/color.h:274
+msgid "Replace RGB by transparency"
+msgstr "RGB vervangen door transparantie"
+
+#: ../src/extension/internal/filter/color.h:338
 msgid "Colorize, custom (Color)"
 msgstr "Verkleuren, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:134
+#: ../src/extension/internal/filter/color.h:342
 msgid "Harsh light:"
 msgstr "Hard licht:"
 
-#: ../src/extension/internal/filter/color.h:135
+#: ../src/extension/internal/filter/color.h:343
 msgid "Normal light:"
 msgstr "Normaal licht:"
 
-#: ../src/extension/internal/filter/color.h:137
-#: ../src/extension/internal/filter/color.h:609
+#: ../src/extension/internal/filter/color.h:345
+#: ../src/extension/internal/filter/color.h:819
 msgid "Blend 1:"
 msgstr "Mengen 1:"
 
-#: ../src/extension/internal/filter/color.h:138
-#: ../src/extension/internal/filter/color.h:146
-#: ../src/extension/internal/filter/color.h:611
-#: ../src/extension/internal/filter/color.h:618
-#: ../src/extension/internal/filter/color.h:792
-#: ../src/extension/internal/filter/color.h:798
+#: ../src/extension/internal/filter/color.h:346
+#: ../src/extension/internal/filter/color.h:354
+#: ../src/extension/internal/filter/color.h:821
+#: ../src/extension/internal/filter/color.h:828
+#: ../src/extension/internal/filter/color.h:1002
+#: ../src/extension/internal/filter/color.h:1008
 #: ../src/filter-enums.cpp:52
 msgid "Multiply"
 msgstr "Vermenigvuldigen"
 
-#: ../src/extension/internal/filter/color.h:139
-#: ../src/extension/internal/filter/color.h:147
-#: ../src/extension/internal/filter/color.h:610
-#: ../src/extension/internal/filter/color.h:616
-#: ../src/extension/internal/filter/color.h:784
-#: ../src/extension/internal/filter/color.h:797
+#: ../src/extension/internal/filter/color.h:347
+#: ../src/extension/internal/filter/color.h:355
+#: ../src/extension/internal/filter/color.h:820
+#: ../src/extension/internal/filter/color.h:826
+#: ../src/extension/internal/filter/color.h:994
+#: ../src/extension/internal/filter/color.h:1007
 #: ../src/filter-enums.cpp:51
 #: ../src/ui/dialog/inkscape-preferences.cpp:597
 msgid "Normal"
 msgstr "Normaal"
 
-#: ../src/extension/internal/filter/color.h:140
-#: ../src/extension/internal/filter/color.h:145
-#: ../src/extension/internal/filter/color.h:612
-#: ../src/extension/internal/filter/color.h:617
-#: ../src/extension/internal/filter/color.h:791
+#: ../src/extension/internal/filter/color.h:348
+#: ../src/extension/internal/filter/color.h:353
+#: ../src/extension/internal/filter/color.h:822
+#: ../src/extension/internal/filter/color.h:827
+#: ../src/extension/internal/filter/color.h:1001
 #: ../src/filter-enums.cpp:53
 #: ../src/ui/dialog/input.cpp:362
 msgid "Screen"
 msgstr "Scherm"
 
-#: ../src/extension/internal/filter/color.h:141
-#: ../src/extension/internal/filter/color.h:148
-#: ../src/extension/internal/filter/color.h:619
-#: ../src/extension/internal/filter/color.h:790
+#: ../src/extension/internal/filter/color.h:349
+#: ../src/extension/internal/filter/color.h:356
+#: ../src/extension/internal/filter/color.h:829
+#: ../src/extension/internal/filter/color.h:1000
 #: ../src/filter-enums.cpp:55
 msgid "Lighten"
 msgstr "Lichter"
 
-#: ../src/extension/internal/filter/color.h:142
-#: ../src/extension/internal/filter/color.h:149
-#: ../src/extension/internal/filter/color.h:620
-#: ../src/extension/internal/filter/color.h:793
-#: ../src/extension/internal/filter/color.h:799
+#: ../src/extension/internal/filter/color.h:350
+#: ../src/extension/internal/filter/color.h:357
+#: ../src/extension/internal/filter/color.h:830
+#: ../src/extension/internal/filter/color.h:1003
+#: ../src/extension/internal/filter/color.h:1009
 #: ../src/filter-enums.cpp:54
 msgid "Darken"
 msgstr "Donkerder"
 
-#: ../src/extension/internal/filter/color.h:144
-#: ../src/extension/internal/filter/color.h:615
+#: ../src/extension/internal/filter/color.h:352
+#: ../src/extension/internal/filter/color.h:825
 msgid "Blend 2:"
 msgstr "Mengen 2:"
 
-#: ../src/extension/internal/filter/color.h:163
+#: ../src/extension/internal/filter/color.h:371
 msgid "Blend image or object with a flood color"
 msgstr "Afbeelding of object mengen met een vulkleur"
 
-#: ../src/extension/internal/filter/color.h:238
+#: ../src/extension/internal/filter/color.h:447
 msgid "Duochrome, custom (Color)"
 msgstr "Duochroom, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:242
+#: ../src/extension/internal/filter/color.h:451
 msgid "Fluorescence level:"
 msgstr "Fluorescentieniveau:"
 
-#: ../src/extension/internal/filter/color.h:243
+#: ../src/extension/internal/filter/color.h:452
 msgid "Swap:"
 msgstr "Verwisselen:"
 
-#: ../src/extension/internal/filter/color.h:244
+#: ../src/extension/internal/filter/color.h:453
 msgid "No swap"
 msgstr "Niet verwisselen"
 
-#: ../src/extension/internal/filter/color.h:245
+#: ../src/extension/internal/filter/color.h:454
 msgid "Color and alpha"
 msgstr "Kleur en alfa"
 
-#: ../src/extension/internal/filter/color.h:246
+#: ../src/extension/internal/filter/color.h:455
 msgid "Color only"
 msgstr "Alleen kleur"
 
-#: ../src/extension/internal/filter/color.h:247
+#: ../src/extension/internal/filter/color.h:456
 msgid "Alpha only"
 msgstr "Alleen alfa"
 
-#: ../src/extension/internal/filter/color.h:251
+#: ../src/extension/internal/filter/color.h:460
 msgid "Color 1"
 msgstr "Kleur 1"
 
-#: ../src/extension/internal/filter/color.h:254
+#: ../src/extension/internal/filter/color.h:463
 msgid "Color 2"
 msgstr "Kleur 2"
 
-#: ../src/extension/internal/filter/color.h:264
+#: ../src/extension/internal/filter/color.h:473
 msgid "Convert luminance values to a duochrome palette"
 msgstr "Luminantiewaarden omzetten naar een twee-kleurenpalet"
 
-#: ../src/extension/internal/filter/color.h:361
+#: ../src/extension/internal/filter/color.h:570
 msgid "Electrize, custom (Color)"
 msgstr "Elektrificeren, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:363
+#: ../src/extension/internal/filter/color.h:572
 #: ../src/extension/internal/filter/experimental.h:503
-#: ../src/extension/internal/filter/experimental.h:719
+#: ../src/extension/internal/filter/experimental.h:729
 msgid "Simplify:"
 msgstr "Vereenvoudigen:"
 
-#: ../src/extension/internal/filter/color.h:364
+#: ../src/extension/internal/filter/color.h:573
 #: ../src/extension/internal/filter/experimental.h:604
 msgid "Effect type:"
 msgstr "Effecttype:"
 
-#: ../src/extension/internal/filter/color.h:365
+#: ../src/extension/internal/filter/color.h:574
 #: ../src/filter-enums.cpp:83
 msgid "Table"
 msgstr "Tabel"
 
-#: ../src/extension/internal/filter/color.h:366
+#: ../src/extension/internal/filter/color.h:575
 #: ../src/filter-enums.cpp:84
 msgid "Discrete"
 msgstr "Discreet"
 
-#: ../src/extension/internal/filter/color.h:368
+#: ../src/extension/internal/filter/color.h:577
 #: ../src/extension/internal/filter/experimental.h:612
-#: ../src/extension/internal/filter/experimental.h:718
+#: ../src/extension/internal/filter/experimental.h:728
 msgid "Levels:"
 msgstr "Niveaus:"
 
-#: ../src/extension/internal/filter/color.h:377
+#: ../src/extension/internal/filter/color.h:586
 msgid "Electro solarization effects"
 msgstr "Electro solarisatie-effecten"
 
-#: ../src/extension/internal/filter/color.h:454
+#: ../src/extension/internal/filter/color.h:664
 msgid "Greyscale, custom (Color)"
 msgstr "Grijswaarden, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:456
-msgid "Red:"
-msgstr "Rood:"
-
-#: ../src/extension/internal/filter/color.h:457
-msgid "Green:"
-msgstr "Groen:"
-
-#: ../src/extension/internal/filter/color.h:458
-msgid "Blue:"
-msgstr "Blauw:"
-
-#: ../src/extension/internal/filter/color.h:460
+#: ../src/extension/internal/filter/color.h:670
 #: ../src/extension/internal/filter/experimental.h:81
 #: ../src/extension/internal/filter/experimental.h:238
 msgid "Transparent"
 msgstr "Transparant"
 
-#: ../src/extension/internal/filter/color.h:468
+#: ../src/extension/internal/filter/color.h:678
 msgid "Customize greyscale components"
 msgstr "Grijswaarden aanpassen"
 
-#: ../src/extension/internal/filter/color.h:536
+#: ../src/extension/internal/filter/color.h:746
 msgid "Lightness, custom (Color)"
 msgstr "Lichtheid, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:538
+#: ../src/extension/internal/filter/color.h:748
 msgid "Lights:"
 msgstr "Lichte delen:"
 
-#: ../src/extension/internal/filter/color.h:539
+#: ../src/extension/internal/filter/color.h:749
 msgid "Shadows:"
 msgstr "Schaduwen:"
 
-#: ../src/extension/internal/filter/color.h:548
+#: ../src/extension/internal/filter/color.h:758
 msgid "Modify lights and shadows separately"
 msgstr "Lichte delen en schaduwen afzonderlijk aanpassen"
 
-#: ../src/extension/internal/filter/color.h:605
+#: ../src/extension/internal/filter/color.h:815
 msgid "Quadritone fantasy, custom (Color)"
 msgstr "Quadritone fantasie, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:607
-#: ../src/extension/internal/filter/color.h:805
+#: ../src/extension/internal/filter/color.h:817
+#: ../src/extension/internal/filter/color.h:1015
 msgid "Hue distribution (°):"
 msgstr "Tintdistributie (°):"
 
-#: ../src/extension/internal/filter/color.h:608
+#: ../src/extension/internal/filter/color.h:818
 #: ../src/ui/dialog/tracedialog.cpp:477
 msgid "Colors:"
 msgstr "Kleuren:"
 
-#: ../src/extension/internal/filter/color.h:614
-msgid "Over-saturation:"
-msgstr "Oververzadiging:"
-
-#: ../src/extension/internal/filter/color.h:692
+#: ../src/extension/internal/filter/color.h:902
 msgid "Solarize, custom (Color)"
 msgstr "Solariseren, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:694
+#: ../src/extension/internal/filter/color.h:904
 msgid "Hue rotation (°):"
 msgstr "Tintrotatie (°):"
 
-#: ../src/extension/internal/filter/color.h:706
+#: ../src/extension/internal/filter/color.h:916
 msgid "Classic photographic solarization effect"
 msgstr "Klassiek fotografisch solarisatie-effect"
 
-#: ../src/extension/internal/filter/color.h:779
+#: ../src/extension/internal/filter/color.h:989
 msgid "Tritone, custom (Color)"
 msgstr "Tritone, aanpasbaar (kleur)"
 
-#: ../src/extension/internal/filter/color.h:785
+#: ../src/extension/internal/filter/color.h:995
 msgid "Enhance hue"
 msgstr "Tint verbeteren"
 
-#: ../src/extension/internal/filter/color.h:786
+#: ../src/extension/internal/filter/color.h:996
 msgid "Radiation"
 msgstr "Straling"
 
-#: ../src/extension/internal/filter/color.h:787
+#: ../src/extension/internal/filter/color.h:997
 msgid "Hue to background"
 msgstr "Tint naar achtergrond"
 
-#: ../src/extension/internal/filter/color.h:789
+#: ../src/extension/internal/filter/color.h:999
 msgid "Global blend:"
 msgstr "Globaal mengen:"
 
-#: ../src/extension/internal/filter/color.h:795
+#: ../src/extension/internal/filter/color.h:1005
 msgid "Glow:"
 msgstr "Gloed:"
 
-#: ../src/extension/internal/filter/color.h:796
+#: ../src/extension/internal/filter/color.h:1006
 msgid "Glow blend:"
 msgstr "Mengen gloed:"
 
-#: ../src/extension/internal/filter/color.h:801
+#: ../src/extension/internal/filter/color.h:1011
 msgid "Local light:"
 msgstr "Lokaal licht:"
 
-#: ../src/extension/internal/filter/color.h:802
+#: ../src/extension/internal/filter/color.h:1012
 msgid "Global light:"
 msgstr "Globaal licht:"
 
-#: ../src/extension/internal/filter/color.h:816
+#: ../src/extension/internal/filter/color.h:1026
 msgid "Create a custom tritone palette with additional glow, blend modes and hue moving"
 msgstr "Een eigen tritone palen maen met aanpasbare gloed, mengmodi en tintrotatie"
 
@@ -7263,7 +7295,7 @@ msgstr "Slagschaduw"
 
 #: ../src/extension/internal/filter/drop-shadow.h:37
 #: ../src/extension/internal/filter/drop-shadow.h:97
-#: ../src/extension/internal/filter/shadows.h:59
+#: ../src/extension/internal/filter/shadows.h:60
 msgid "Blur radius (px):"
 msgstr "Straal vervagen (px):"
 
@@ -7274,13 +7306,13 @@ msgstr "Ondoorzichtigheid (%):"
 
 #: ../src/extension/internal/filter/drop-shadow.h:39
 #: ../src/extension/internal/filter/drop-shadow.h:99
-#: ../src/extension/internal/filter/shadows.h:60
+#: ../src/extension/internal/filter/shadows.h:61
 msgid "Horizontal offset (px):"
 msgstr "Horizontale verplaatsing (px):"
 
 #: ../src/extension/internal/filter/drop-shadow.h:40
 #: ../src/extension/internal/filter/drop-shadow.h:100
-#: ../src/extension/internal/filter/shadows.h:61
+#: ../src/extension/internal/filter/shadows.h:62
 msgid "Vertical offset (px):"
 msgstr "Verticale verplaatsing (px):"
 
@@ -7343,7 +7375,7 @@ msgid "Clean-up:"
 msgstr "Uiteinde:"
 
 #: ../src/extension/internal/filter/experimental.h:237
-#: ../src/widgets/toolbox.cpp:8366
+#: ../src/widgets/toolbox.cpp:8367
 msgid "Length:"
 msgstr "Lengte:"
 
@@ -7418,35 +7450,35 @@ msgstr "Poster, aanpasbaar"
 msgid "Transfer type:"
 msgstr "Uitvoer:"
 
-#: ../src/extension/internal/filter/experimental.h:618
+#: ../src/extension/internal/filter/experimental.h:620
 msgid "Simplify (primary):"
 msgstr "Vereenvoudigen (primair):"
 
-#: ../src/extension/internal/filter/experimental.h:619
+#: ../src/extension/internal/filter/experimental.h:621
 msgid "Simplify (secondary):"
 msgstr "Vereenvoudigen (secundair):"
 
-#: ../src/extension/internal/filter/experimental.h:620
+#: ../src/extension/internal/filter/experimental.h:622
 msgid "Pre-saturation:"
 msgstr "Pre-verzadiging:"
 
-#: ../src/extension/internal/filter/experimental.h:621
+#: ../src/extension/internal/filter/experimental.h:623
 msgid "Post-saturation:"
 msgstr "Post-verzadiging:"
 
-#: ../src/extension/internal/filter/experimental.h:622
+#: ../src/extension/internal/filter/experimental.h:624
 msgid "Simulate antialiasing"
 msgstr "Anti-aliasing simuleren"
 
-#: ../src/extension/internal/filter/experimental.h:630
+#: ../src/extension/internal/filter/experimental.h:632
 msgid "Poster and painting effects"
 msgstr "Poster- en schilderijeffecten"
 
-#: ../src/extension/internal/filter/experimental.h:716
+#: ../src/extension/internal/filter/experimental.h:726
 msgid "Posterize basic, custom"
 msgstr "Posteriseren, basis, aanpasbaar"
 
-#: ../src/extension/internal/filter/experimental.h:727
+#: ../src/extension/internal/filter/experimental.h:737
 msgid "Simple posterizing effect"
 msgstr "Eenvoudig posterisatie-effect"
 
@@ -7490,12 +7522,12 @@ msgstr "Kruis-vervagen, aanpasbaar (morfologie)"
 msgid "Smooth edges and angles of shapes"
 msgstr "Randen en hoeken van vormen vervagen"
 
-#: ../src/extension/internal/filter/shadows.h:55
+#: ../src/extension/internal/filter/shadows.h:56
 msgid "Drop shadow, custom (Shadows and Glows)"
-msgstr "Slagschadux, aanpasbaar (Schaduw en gloed)"
+msgstr "Slagschaduw, aanpasbaar (Schaduw en gloed)"
 
 #. ## end option page
-#: ../src/extension/internal/filter/shadows.h:58
+#: ../src/extension/internal/filter/shadows.h:59
 #: ../src/ui/dialog/tracedialog.cpp:617
 #: ../src/ui/dialog/tracedialog.cpp:623
 #: ../share/extensions/color_custom.inx.h:14
@@ -7526,27 +7558,35 @@ msgstr "Slagschadux, aanpasbaar (Schaduw en gloed)"
 msgid "Options"
 msgstr "Opties"
 
-#: ../src/extension/internal/filter/shadows.h:62
-msgid "Blur type:"
-msgstr ""
-
 #: ../src/extension/internal/filter/shadows.h:63
-msgid "Outer"
-msgstr ""
+msgid "Blur type:"
+msgstr "Type vervaging:"
 
 #: ../src/extension/internal/filter/shadows.h:64
-msgid "Inner"
-msgstr ""
+msgid "Outer"
+msgstr "Buiten"
 
-#: ../src/extension/internal/filter/shadows.h:68
+#: ../src/extension/internal/filter/shadows.h:65
+msgid "Inner"
+msgstr "Binnen"
+
+#: ../src/extension/internal/filter/shadows.h:66
+msgid "Inner cutout"
+msgstr "Binnen uitgesneden"
+
+#: ../src/extension/internal/filter/shadows.h:67
+msgid "Outer cutout"
+msgstr "Buiten uitgesneden"
+
+#: ../src/extension/internal/filter/shadows.h:70
 msgid "Blur color"
 msgstr "Kleur vervagen"
 
-#: ../src/extension/internal/filter/shadows.h:70
+#: ../src/extension/internal/filter/shadows.h:72
 msgid "Use object's color"
 msgstr "Objectkleur gebruiken"
 
-#: ../src/extension/internal/filter/shadows.h:80
+#: ../src/extension/internal/filter/shadows.h:82
 msgid "Colorizable Drop shadow"
 msgstr "Gekleurde slagschaduw"
 
@@ -7572,12 +7612,12 @@ msgid "Link or embed image:"
 msgstr "Afbeelding linken of invoegen:"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:153
-msgid "embed"
-msgstr "invoegen"
+msgid "Embed"
+msgstr "Invoegen"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:154
-msgid "link"
-msgstr "linken"
+msgid "Link"
+msgstr "Linken"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:156
 msgid "Embed results in stand-alone, larger SVG files. Link references a file outside this SVG document and all files must be moved together."
@@ -7636,9 +7676,9 @@ msgstr "Verticale inspringing:"
 #: ../share/extensions/polyhedron_3d.inx.h:31
 #: ../share/extensions/printing-marks.inx.h:14
 #: ../share/extensions/render_alphabetsoup.inx.h:3
-#: ../share/extensions/render_barcode.inx.h:5
-#: ../share/extensions/render_barcode_datamatrix.inx.h:2
-#: ../share/extensions/render_barcode_qrcode.inx.h:12
+#: ../share/extensions/render_barcode.inx.h:6
+#: ../share/extensions/render_barcode_datamatrix.inx.h:3
+#: ../share/extensions/render_barcode_qrcode.inx.h:13
 #: ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/spirograph.inx.h:6
 #: ../share/extensions/svgcalendar.inx.h:20
@@ -7670,15 +7710,15 @@ msgstr "JavaFX (*.fx)"
 msgid "JavaFX Raytracer File"
 msgstr "JavaFX Raytracer Bestand"
 
-#: ../src/extension/internal/latex-pstricks-out.cpp:107
+#: ../src/extension/internal/latex-pstricks-out.cpp:101
 msgid "LaTeX Output"
 msgstr "LaTeX-uitvoer"
 
-#: ../src/extension/internal/latex-pstricks-out.cpp:112
+#: ../src/extension/internal/latex-pstricks-out.cpp:106
 msgid "LaTeX With PSTricks macros (*.tex)"
 msgstr "LaTeX met PSTricks macros (*.tex)"
 
-#: ../src/extension/internal/latex-pstricks-out.cpp:113
+#: ../src/extension/internal/latex-pstricks-out.cpp:107
 msgid "LaTeX PSTricks File"
 msgstr "LaTeX PSTricks Bestand"
 
@@ -7723,7 +7763,7 @@ msgstr "kunstvak"
 # Zonder dubbele punt is duidelijker.
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:74
 msgid "Select page:"
-msgstr "Importeer pagina"
+msgstr "Pagina importeren:"
 
 # Met haakjes is duidelijker.
 #. Display total number of pages
@@ -8219,7 +8259,7 @@ msgstr "Meer rijen"
 #: ../src/ui/dialog/input.cpp:608
 #: ../src/ui/dialog/input.cpp:1269
 #: ../src/verbs.cpp:2241
-#: ../src/widgets/stroke-style.cpp:366
+#: ../src/widgets/stroke-style.cpp:370
 #: ../src/widgets/toolbox.cpp:4171
 #: ../share/extensions/gcodetools_area.inx.h:32
 #: ../share/extensions/gcodetools_dxf_points.inx.h:15
@@ -8358,25 +8398,25 @@ msgid_plural "Area filled, path with <b>%d</b> nodes created."
 msgstr[0] "Gebied is gevuld, pad met <b>%d</b> knooppunt is gemaakt."
 msgstr[1] "Gebied is gevuld, pad met <b>%d</b> knooppunten is gemaakt."
 
-#: ../src/flood-context.cpp:790
-#: ../src/flood-context.cpp:1094
+#: ../src/flood-context.cpp:789
+#: ../src/flood-context.cpp:1093
 msgid "<b>Area is not bounded</b>, cannot fill."
 msgstr "<b>Gebied is niet gesloten</b>, kan het niet vullen."
 
-#: ../src/flood-context.cpp:1099
+#: ../src/flood-context.cpp:1098
 msgid "<b>Only the visible part of the bounded area was filled.</b> If you want to fill all of the area, undo, zoom out, and fill again."
 msgstr "<b>Enkel het zichtbare deel van een afgebakend gebied werd gevuld.</b> Als u het hele gebied wilt vullen, ongedaan maken, uitzoomen en opnieuw vullen."
 
-#: ../src/flood-context.cpp:1117
-#: ../src/flood-context.cpp:1276
+#: ../src/flood-context.cpp:1116
+#: ../src/flood-context.cpp:1275
 msgid "Fill bounded area"
 msgstr "Afgebakend gebied vullen"
 
-#: ../src/flood-context.cpp:1136
+#: ../src/flood-context.cpp:1135
 msgid "Set style on object"
 msgstr "Stijl aan object geven"
 
-#: ../src/flood-context.cpp:1195
+#: ../src/flood-context.cpp:1194
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
 msgstr "<b>Sleep over</b> gebieden om ze aan vulling toe te voegen; gebruik <b>Alt</b> voor aanraakvulling"
 
@@ -8571,11 +8611,11 @@ msgstr "Eenheid"
 
 #. Add the units menu.
 #: ../src/helper/units.cpp:37
-#: ../src/widgets/select-toolbar.cpp:521
+#: ../src/widgets/select-toolbar.cpp:525
 #: ../src/widgets/toolbox.cpp:1597
 #: ../src/widgets/toolbox.cpp:3438
 #: ../src/widgets/toolbox.cpp:6156
-#: ../src/widgets/toolbox.cpp:8558
+#: ../src/widgets/toolbox.cpp:8559
 #: ../share/extensions/dxf_outlines.inx.h:10
 msgid "Units"
 msgstr "Eenheden"
@@ -8931,24 +8971,24 @@ msgstr "Vervangen"
 msgid "Node or handle drag canceled."
 msgstr "Het slepen van knooppunt of handvat is geannuleerd."
 
-#: ../src/knotholder.cpp:152
+#: ../src/knotholder.cpp:150
 msgid "Change handle"
 msgstr "Handvat aanpassen"
 
-#: ../src/knotholder.cpp:231
+#: ../src/knotholder.cpp:229
 msgid "Move handle"
 msgstr "Handvat verplaatsen"
 
 #. TRANSLATORS: This refers to the pattern that's inside the object
-#: ../src/knotholder.cpp:252
+#: ../src/knotholder.cpp:250
 msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "De patroonvulling van het object <b>verplaatsen</b>"
 
-#: ../src/knotholder.cpp:255
+#: ../src/knotholder.cpp:253
 msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
 msgstr "De patroonvulling <b>schalen</b>; uniform indien met <b>Ctrl</b>"
 
-#: ../src/knotholder.cpp:258
+#: ../src/knotholder.cpp:256
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
 msgstr "De patroonvulling van het object <b>draaien</b>; <b>Ctrl</b> om te draaien in stappen"
 
@@ -8987,7 +9027,7 @@ msgstr "Paneelitem die dit grijppunt 'beheert'"
 
 #. Name
 #: ../src/libgdl/gdl-dock-item.c:297
-#: ../src/widgets/toolbox.cpp:7767
+#: ../src/widgets/toolbox.cpp:7768
 #: ../share/extensions/gcodetools_graffiti.inx.h:25
 #: ../share/extensions/gcodetools_orientation_points.inx.h:6
 msgid "Orientation"
@@ -9119,7 +9159,7 @@ msgstr "De nieuwe dock-controller %p is automatisch.  Enkel manuele dock-objecte
 #: ../src/ui/dialog/align-and-distribute.cpp:1034
 #: ../src/ui/dialog/document-properties.cpp:116
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1429
-#: ../src/widgets/desktop-widget.cpp:1725
+#: ../src/widgets/desktop-widget.cpp:1720
 #: ../share/extensions/voronoi2svg.inx.h:8
 msgid "Page"
 msgstr "Pagina"
@@ -9129,7 +9169,7 @@ msgid "The index of the current page"
 msgstr "De index van de huidige pagina"
 
 #: ../src/libgdl/gdl-dock-object.c:120
-#: ../src/ui/widget/page-sizer.cpp:244
+#: ../src/ui/widget/page-sizer.cpp:245
 msgid "Name"
 msgstr "Naam"
 
@@ -9330,7 +9370,7 @@ msgstr "Y-coördinaat voor een zwevend paneel"
 msgid "Dock #%d"
 msgstr "Paneel #%d"
 
-#: ../src/libnrtype/FontFactory.cpp:907
+#: ../src/libnrtype/FontFactory.cpp:910
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Lettertype zonder familie (welke Pango doet crashen) wordt genegeerd"
 
@@ -10759,100 +10799,100 @@ msgstr "Selecteer <b>pad(en)</b> om in stukken te breken."
 msgid "Breaking apart paths..."
 msgstr "Opdelen van paden..."
 
-#: ../src/path-chemistry.cpp:285
+#: ../src/path-chemistry.cpp:287
 msgid "Break apart"
 msgstr "Opdelen"
 
-#: ../src/path-chemistry.cpp:287
+#: ../src/path-chemistry.cpp:289
 msgid "<b>No path(s)</b> to break apart in the selection."
 msgstr "<b>Geen paden geselecteerd</b> om in stukken te breken."
 
-#: ../src/path-chemistry.cpp:299
+#: ../src/path-chemistry.cpp:301
 msgid "Select <b>object(s)</b> to convert to path."
 msgstr "Selecteer <b>object(en)</b> om te converteren naar een pad."
 
-#: ../src/path-chemistry.cpp:305
+#: ../src/path-chemistry.cpp:307
 msgid "Converting objects to paths..."
 msgstr "Converteren van objecten naar paden..."
 
-#: ../src/path-chemistry.cpp:327
+#: ../src/path-chemistry.cpp:329
 msgid "Object to path"
 msgstr "Object naar pad"
 
-#: ../src/path-chemistry.cpp:329
+#: ../src/path-chemistry.cpp:331
 msgid "<b>No objects</b> to convert to path in the selection."
 msgstr "<b>Geen objecten geselecteerd</b> om te converteren naar een pad."
 
-#: ../src/path-chemistry.cpp:597
+#: ../src/path-chemistry.cpp:599
 msgid "Select <b>path(s)</b> to reverse."
 msgstr "Selecteer <b>pad(en)</b> om om te keren."
 
-#: ../src/path-chemistry.cpp:606
+#: ../src/path-chemistry.cpp:608
 msgid "Reversing paths..."
 msgstr "Omkeren van paden..."
 
-#: ../src/path-chemistry.cpp:641
+#: ../src/path-chemistry.cpp:643
 msgid "Reverse path"
 msgstr "Pad omkeren"
 
-#: ../src/path-chemistry.cpp:643
+#: ../src/path-chemistry.cpp:645
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "<b>Geen pad(en) geselecteerd</b> om om te keren."
 
-#: ../src/pen-context.cpp:254
+#: ../src/pen-context.cpp:253
 #: ../src/pencil-context.cpp:555
 msgid "Drawing cancelled"
 msgstr "Tekenen is geannuleerd"
 
-#: ../src/pen-context.cpp:496
+#: ../src/pen-context.cpp:495
 #: ../src/pencil-context.cpp:280
 msgid "Continuing selected path"
 msgstr "Huidig pad wordt voortgezet"
 
-#: ../src/pen-context.cpp:506
+#: ../src/pen-context.cpp:505
 #: ../src/pencil-context.cpp:288
 msgid "Creating new path"
 msgstr "Maken van nieuw pad"
 
-#: ../src/pen-context.cpp:508
+#: ../src/pen-context.cpp:507
 #: ../src/pencil-context.cpp:291
 msgid "Appending to selected path"
 msgstr "Toevoegen aan het geselecteerde pad"
 
-#: ../src/pen-context.cpp:669
+#: ../src/pen-context.cpp:668
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr "<b>Klik</b> of <b>klik en sleep</b> om een pad te sluiten."
 
-#: ../src/pen-context.cpp:679
+#: ../src/pen-context.cpp:678
 msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr "<b>Klik</b> of <b>klik en sleep</b> om vanaf daar het pad voort te zetten."
 
-#: ../src/pen-context.cpp:1290
+#: ../src/pen-context.cpp:1289
 #, c-format
 msgid "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
 msgstr "<b>Segment curve</b>: hoek %3.2f&#176;, afstand %s; gebruik <b>Ctrl</b> om in stappen te draaien, <b>Enter</b> om het pad af te maken"
 
-#: ../src/pen-context.cpp:1291
+#: ../src/pen-context.cpp:1290
 #, c-format
 msgid "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
 msgstr "<b>Segment lijn</b>: hoek %3.2f&#176;, afstand %s; gebruik <b>Ctrl</b> om in stappen te draaien, <b>Enter</b> om het pad af te maken"
 
-#: ../src/pen-context.cpp:1309
+#: ../src/pen-context.cpp:1308
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Handvat curve</b>: hoek %3.2f&#176;, lengte %s; gebruik <b>Ctrl</b> om in stappen te draaien"
 
-#: ../src/pen-context.cpp:1331
+#: ../src/pen-context.cpp:1330
 #, c-format
 msgid "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
 msgstr "<b>Symmetrisch handvat curve</b>: hoek %3.2f&#176;, lengte %s; gebruik <b>Ctrl</b> om in stappen te draaien, <b>Shift</b> om enkel dit handvat te verplaatsen"
 
-#: ../src/pen-context.cpp:1332
+#: ../src/pen-context.cpp:1331
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
 msgstr "<b>Handvat curve</b>: hoek %3.2f&#176;, lengte %s; gebruik <b>Ctrl</b> om in stappen te draaien, <b>Shift</b> om enkel dit handvat te verplaatsen"
 
-#: ../src/pen-context.cpp:1380
+#: ../src/pen-context.cpp:1379
 msgid "Drawing finished"
 msgstr "Tekenen is voltooid"
 
@@ -11244,7 +11284,7 @@ msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "<b>Geen groepen geselecteerd</b> om op te heffen."
 
 #: ../src/selection-chemistry.cpp:719
-#: ../src/sp-item-group.cpp:501
+#: ../src/sp-item-group.cpp:499
 msgid "Ungroup"
 msgstr "Groep opheffen"
 
@@ -11372,7 +11412,7 @@ msgstr "90 graden draaien; MKM"
 
 #: ../src/selection-chemistry.cpp:1597
 #: ../src/seltrans.cpp:517
-#: ../src/ui/dialog/transformation.cpp:770
+#: ../src/ui/dialog/transformation.cpp:771
 msgid "Rotate"
 msgstr "Roteren"
 
@@ -11382,7 +11422,7 @@ msgstr "Per pixel draaien"
 
 #: ../src/selection-chemistry.cpp:1674
 #: ../src/seltrans.cpp:514
-#: ../src/ui/dialog/transformation.cpp:748
+#: ../src/ui/dialog/transformation.cpp:749
 #: ../share/extensions/interp_att_g.inx.h:19
 msgid "Scale"
 msgstr "Schalen"
@@ -11402,7 +11442,7 @@ msgstr "Horizontaal verplaatsen"
 #: ../src/selection-chemistry.cpp:1720
 #: ../src/selection-chemistry.cpp:1746
 #: ../src/seltrans.cpp:511
-#: ../src/ui/dialog/transformation.cpp:691
+#: ../src/ui/dialog/transformation.cpp:692
 msgid "Move"
 msgstr "Verplaatsen"
 
@@ -11507,54 +11547,54 @@ msgstr "Selecteer eerst de <b>objecten</b> om een bitmapkopie van te maken."
 msgid "Rendering bitmap..."
 msgstr "Renderen van bitmap..."
 
-#: ../src/selection-chemistry.cpp:2834
+#: ../src/selection-chemistry.cpp:2835
 msgid "Create bitmap"
 msgstr "Bitmap maken"
 
-#: ../src/selection-chemistry.cpp:2866
+#: ../src/selection-chemistry.cpp:2867
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Selecteer de <b>objecten</b> om een afsnijpad/masker van te maken."
 
-#: ../src/selection-chemistry.cpp:2869
+#: ../src/selection-chemistry.cpp:2870
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Selecteer het maskerobject en de <b>object(en)</b> om het afsnijpad/masker op toe te passen."
 
-#: ../src/selection-chemistry.cpp:3050
+#: ../src/selection-chemistry.cpp:3051
 msgid "Set clipping path"
 msgstr "Afsnijpad inschakelen"
 
-#: ../src/selection-chemistry.cpp:3052
+#: ../src/selection-chemistry.cpp:3053
 msgid "Set mask"
 msgstr "Masker inschakelen"
 
-#: ../src/selection-chemistry.cpp:3067
+#: ../src/selection-chemistry.cpp:3068
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Selecteer <b>object(en)</b> om het afsnijpad/masker van uit te schakelen."
 
-#: ../src/selection-chemistry.cpp:3178
+#: ../src/selection-chemistry.cpp:3179
 msgid "Release clipping path"
 msgstr "Afsnijpad uitschakelen"
 
-#: ../src/selection-chemistry.cpp:3180
+#: ../src/selection-chemistry.cpp:3181
 msgid "Release mask"
 msgstr "Masker uitschakelen"
 
-#: ../src/selection-chemistry.cpp:3199
+#: ../src/selection-chemistry.cpp:3200
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr "Selecteer <b>object(en)</b> voor aanpassing van het canvas"
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:3219
+#: ../src/selection-chemistry.cpp:3220
 #: ../src/verbs.cpp:2747
 msgid "Fit Page to Selection"
 msgstr "Pagina naar selectie schalen"
 
-#: ../src/selection-chemistry.cpp:3248
+#: ../src/selection-chemistry.cpp:3249
 #: ../src/verbs.cpp:2749
 msgid "Fit Page to Drawing"
 msgstr "Pagina naar tekening schalen"
 
-#: ../src/selection-chemistry.cpp:3269
+#: ../src/selection-chemistry.cpp:3270
 #: ../src/verbs.cpp:2751
 msgid "Fit Page to Selection or Drawing"
 msgstr "Pagina naar selectie of inhoud schalen"
@@ -11625,13 +11665,13 @@ msgstr "3D-kubus"
 #: ../share/extensions/replace_font.inx.h:10
 #: ../share/extensions/split.inx.h:6
 #: ../share/extensions/text_braille.inx.h:2
-#: ../share/extensions/text_flipcase.inx.h:1
-#: ../share/extensions/text_lowercase.inx.h:1
-#: ../share/extensions/text_randomcase.inx.h:1
+#: ../share/extensions/text_flipcase.inx.h:2
+#: ../share/extensions/text_lowercase.inx.h:2
+#: ../share/extensions/text_randomcase.inx.h:2
 #: ../share/extensions/text_replace.inx.h:4
-#: ../share/extensions/text_sentencecase.inx.h:2
-#: ../share/extensions/text_titlecase.inx.h:1
-#: ../share/extensions/text_uppercase.inx.h:1
+#: ../share/extensions/text_sentencecase.inx.h:3
+#: ../share/extensions/text_titlecase.inx.h:2
+#: ../share/extensions/text_uppercase.inx.h:2
 msgid "Text"
 msgstr "Tekst"
 
@@ -11719,8 +11759,8 @@ msgstr "Gebruik <b>Shift+D</b> om het kaderobject te vinden"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:209
-#: ../src/spray-context.cpp:226
-#: ../src/tweak-context.cpp:203
+#: ../src/spray-context.cpp:225
+#: ../src/tweak-context.cpp:202
 #, c-format
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
@@ -11765,7 +11805,7 @@ msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
 #: ../src/seltrans.cpp:520
-#: ../src/ui/dialog/transformation.cpp:829
+#: ../src/ui/dialog/transformation.cpp:830
 msgid "Skew"
 msgstr "Scheeftrekken"
 
@@ -11858,7 +11898,7 @@ msgid "<b>Arc</b>"
 msgstr "<b>Boog</b>"
 
 #. TRANSLATORS: "Flow region" is an area where text is allowed to flow
-#: ../src/sp-flowregion.cpp:266
+#: ../src/sp-flowregion.cpp:264
 #, c-format
 msgid "Flow region"
 msgstr "Gebied met tekstvormen"
@@ -11867,80 +11907,86 @@ msgstr "Gebied met tekstvormen"
 #. * flow excluded region.  flowRegionExclude in SVG 1.2: see
 #. * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegion-elem and
 #. * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegionExclude-elem.
-#: ../src/sp-flowregion.cpp:479
+#: ../src/sp-flowregion.cpp:475
 #, c-format
 msgid "Flow excluded region"
 msgstr "Gebied zonder tekstvormen"
 
-#: ../src/sp-guide.cpp:307
+#: ../src/sp-guide.cpp:309
 msgid "Create Guides Around the Page"
 msgstr "Hulplijnen rond pagina maken"
 
-#: ../src/sp-guide.cpp:319
+#: ../src/sp-guide.cpp:321
 #: ../src/verbs.cpp:2346
 msgid "Delete All Guides"
 msgstr "Alle hulplijnen verwijderen"
 
+#. Guide has probably been deleted and no longer has an attached namedview.
 #: ../src/sp-guide.cpp:481
+#, c-format
+msgid "Deleted"
+msgstr "Verwijderd"
+
+#: ../src/sp-guide.cpp:490
 msgid "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to delete"
 msgstr "<b>Shift+sleep</b> om te draaien, <b>Ctrl+sleep</b> om de oorsprong te verplaatsen, <b>Del</b> om te verwijderen"
 
-#: ../src/sp-guide.cpp:486
+#: ../src/sp-guide.cpp:494
 #, c-format
 msgid "vertical, at %s"
 msgstr "verticaal, op %s"
 
-#: ../src/sp-guide.cpp:489
+#: ../src/sp-guide.cpp:497
 #, c-format
 msgid "horizontal, at %s"
 msgstr "horizontaal, op %s"
 
-#: ../src/sp-guide.cpp:494
+#: ../src/sp-guide.cpp:502
 #, c-format
 msgid "at %d degrees, through (%s,%s)"
 msgstr "op %d graden, door (%s,%s)"
 
-#: ../src/sp-image.cpp:1133
+#: ../src/sp-image.cpp:1134
 msgid "embedded"
 msgstr "ingevoegd"
 
-#: ../src/sp-image.cpp:1141
+#: ../src/sp-image.cpp:1142
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr "<b>Afbeelding met ongeldige referentie</b>: %s"
 
-#: ../src/sp-image.cpp:1142
+#: ../src/sp-image.cpp:1143
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Afbeelding</b> %d &#215; %d: %s"
 
-#: ../src/sp-item-group.cpp:742
+#: ../src/sp-item-group.cpp:740
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] "<b>Groep</b> van <b>%d</b> object"
 msgstr[1] "<b>Groep</b> van <b>%d</b> objecten"
 
-#: ../src/sp-item.cpp:983
+#: ../src/sp-item.cpp:984
 msgid "Object"
 msgstr "Object"
 
-#: ../src/sp-item.cpp:996
+#: ../src/sp-item.cpp:997
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr "%s; <i>afgesneden</i>"
 
-#: ../src/sp-item.cpp:1001
+#: ../src/sp-item.cpp:1002
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr "%s; <i>gemaskeerd</i>"
 
-#: ../src/sp-item.cpp:1009
+#: ../src/sp-item.cpp:1010
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr "%s; <i>gefilterd (%s)</i>"
 
-#: ../src/sp-item.cpp:1011
+#: ../src/sp-item.cpp:1012
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr "%s; <i>gefilterd</i>"
@@ -12206,42 +12252,42 @@ msgstr "Vereenvoudigen"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "Er zijn <b>geen paden</b> geselecteerd om te vereenvoudigen."
 
-#: ../src/spray-context.cpp:228
-#: ../src/tweak-context.cpp:205
+#: ../src/spray-context.cpp:227
+#: ../src/tweak-context.cpp:204
 #, c-format
 msgid "<b>Nothing</b> selected"
 msgstr "Er is <b>niets</b> geselecteerd."
 
-#: ../src/spray-context.cpp:234
+#: ../src/spray-context.cpp:233
 #, c-format
 msgid "%s. Drag, click or scroll to spray <b>copies</b> of the initial selection."
 msgstr "%s. Sleep, klik of scroll om <b>kopieën</b> van de initiële selectie te verstuiven."
 
-#: ../src/spray-context.cpp:237
+#: ../src/spray-context.cpp:236
 #, c-format
 msgid "%s. Drag, click or scroll to spray <b>clones</b> of the initial selection."
 msgstr "%s. Sleep, klik of scroll om <b>klonen</b> van de initiële selectie te verstuiven."
 
-#: ../src/spray-context.cpp:240
+#: ../src/spray-context.cpp:239
 #, c-format
 msgid "%s. Drag, click or scroll to spray in a <b>single path</b> of the initial selection."
 msgstr "%s. Sleep, klik of scroll om de initiële selectie in een <b>enkele richting</b> te verstuiven."
 
-#: ../src/spray-context.cpp:706
+#: ../src/spray-context.cpp:705
 msgid "<b>Nothing selected!</b> Select objects to spray."
 msgstr "<b>Niets geselecteerd!</b> Selecteer objecten voor verstuiving."
 
-#: ../src/spray-context.cpp:781
+#: ../src/spray-context.cpp:780
 #: ../src/widgets/toolbox.cpp:4759
 msgid "Spray with copies"
 msgstr "Verstuiven met kopieën"
 
-#: ../src/spray-context.cpp:785
+#: ../src/spray-context.cpp:784
 #: ../src/widgets/toolbox.cpp:4766
 msgid "Spray with clones"
 msgstr "Verstuiven met klonen"
 
-#: ../src/spray-context.cpp:789
+#: ../src/spray-context.cpp:788
 msgid "Spray in single path"
 msgstr "Verstuiven in één richting"
 
@@ -12319,23 +12365,23 @@ msgstr "Tekst in een vorm plaatsen"
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "Selecteer <b>ingekaderde tekst</b> om het uit de vorm te halen."
 
-#: ../src/text-chemistry.cpp:477
+#: ../src/text-chemistry.cpp:478
 msgid "Unflow flowed text"
 msgstr "Ingekaderde tekst uit vorm halen"
 
-#: ../src/text-chemistry.cpp:489
+#: ../src/text-chemistry.cpp:490
 msgid "Select <b>flowed text(s)</b> to convert."
 msgstr "Selecteer <b>ingekaderde tekst(en)</b> om om te zetten."
 
-#: ../src/text-chemistry.cpp:507
+#: ../src/text-chemistry.cpp:508
 msgid "The flowed text(s) must be <b>visible</b> in order to be converted."
 msgstr "Ingekaderde tekst moet <b>zichtbaar</b> om het om te kunnen zetten."
 
-#: ../src/text-chemistry.cpp:535
+#: ../src/text-chemistry.cpp:536
 msgid "Convert flowed text to text"
 msgstr "Ingekaderde tekst omzetten naar tekst"
 
-#: ../src/text-chemistry.cpp:540
+#: ../src/text-chemistry.cpp:541
 msgid "<b>No flowed text(s)</b> to convert in the selection."
 msgstr "Er zijn <b>geen ingekaderde tekst(en)</b> geselecteerd om om te zetten."
 
@@ -12549,11 +12595,10 @@ msgstr "<b>Sleep</b> om te verwijderen"
 msgid "Choose a subtool from the toolbar"
 msgstr "Een secundair gereedschap uit de gereedschappenbalk selecteren"
 
-#: ../src/trace/potrace/inkscape-potrace.cpp:524
-#: ../src/trace/potrace/inkscape-potrace.cpp:598
-#, c-format
-msgid "Trace: %d.  %ld nodes"
-msgstr "Overtrekken: %d.  %ld knooppunten"
+#: ../src/trace/potrace/inkscape-potrace.cpp:519
+#: ../src/trace/potrace/inkscape-potrace.cpp:582
+msgid "Trace: %1.  %2 nodes"
+msgstr "Overtrekken: %1.  %2 knooppunten"
 
 #: ../src/trace/trace.cpp:72
 #: ../src/trace/trace.cpp:137
@@ -12600,126 +12645,126 @@ msgstr "Bitmap overtrekken"
 msgid "Trace: Done. %ld nodes created"
 msgstr "Overtrekken: klaar.  %ld knooppunten gemaakt"
 
-#: ../src/tweak-context.cpp:210
+#: ../src/tweak-context.cpp:209
 #, c-format
 msgid "%s. Drag to <b>move</b>."
 msgstr "%s. Sleep om te <b>verplaatsen</b>."
 
-#: ../src/tweak-context.cpp:214
+#: ../src/tweak-context.cpp:213
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
 msgstr "%s. Sleep of klik om te <b>verplaatsen naar de cursor toe</b>; met Shift om te <b>verplaatsen van de cursor weg</b>."
 
-#: ../src/tweak-context.cpp:218
+#: ../src/tweak-context.cpp:217
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
 msgstr "%s. Sleep of klik om <b>ad random te verplaatsen</b>."
 
-#: ../src/tweak-context.cpp:222
+#: ../src/tweak-context.cpp:221
 #, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
 msgstr "%s. Sleep of klik om te <b>verkleinen</b>; met Shift om te <b>vergroten</b>."
 
-#: ../src/tweak-context.cpp:226
+#: ../src/tweak-context.cpp:225
 #, c-format
 msgid "%s. Drag or click to <b>rotate clockwise</b>; with Shift, <b>counterclockwise</b>."
 msgstr "%s. Sleep of klik om in te <b>draaien met de klok mee</b>; met Shift om te <b>draaien tegen de richting van de klok in</b>."
 
-#: ../src/tweak-context.cpp:230
+#: ../src/tweak-context.cpp:229
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr "%s. Sleep of klik om te <b>dupliceren</b>; met Shift, <b>verwijderen</b>."
 
-#: ../src/tweak-context.cpp:234
+#: ../src/tweak-context.cpp:233
 #, c-format
 msgid "%s. Drag to <b>push paths</b>."
 msgstr "%s. Sleep om <b>paden te duwen</b>."
 
-#: ../src/tweak-context.cpp:238
+#: ../src/tweak-context.cpp:237
 #, c-format
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
 msgstr "%s. Sleep of klik om <b>paden te versmallen</b>; met Shift om te <b>verbreden</b>."
 
-#: ../src/tweak-context.cpp:246
+#: ../src/tweak-context.cpp:245
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
 msgstr "%s. Sleep of klik om <b>paden aan te trekken</b>; met Shift om <b>af te stoten</b>."
 
-#: ../src/tweak-context.cpp:254
+#: ../src/tweak-context.cpp:253
 #, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
 msgstr "%s. Sleep of klik om <b>paden ruwer te maken</b>."
 
-#: ../src/tweak-context.cpp:258
+#: ../src/tweak-context.cpp:257
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
 msgstr "%s. Sleep of klik om <b>objecten te verven</b> in kleur."
 
-#: ../src/tweak-context.cpp:262
+#: ../src/tweak-context.cpp:261
 #, c-format
 msgid "%s. Drag or click to <b>randomize colors</b>."
 msgstr "%s. Sleep of klik om <b>kleuren te randomiseren</b>."
 
-#: ../src/tweak-context.cpp:266
+#: ../src/tweak-context.cpp:265
 #, c-format
 msgid "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
 msgstr "%s. Sleep of klik om <b>vervaging te verhogen</b>; met Shift om te <b>verlagen</b>."
 
-#: ../src/tweak-context.cpp:1235
+#: ../src/tweak-context.cpp:1234
 msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr "<b>Niets geselecteerd!</b> Selecteer objecten om te retoucheren."
 
 # deze en onderstaande boodschappen staan in de bewerkingsgeschiedenis (menu "bewerken" > "Geschiedenis")
 # tweak wordt retoucheren genoemd
-#: ../src/tweak-context.cpp:1269
+#: ../src/tweak-context.cpp:1268
 msgid "Move tweak"
 msgstr "Verplaatsing"
 
-#: ../src/tweak-context.cpp:1273
+#: ../src/tweak-context.cpp:1272
 msgid "Move in/out tweak"
 msgstr "Verplaatsing (naar/van cursor)"
 
-#: ../src/tweak-context.cpp:1277
+#: ../src/tweak-context.cpp:1276
 msgid "Move jitter tweak"
 msgstr "Verplaatsing (random)"
 
-#: ../src/tweak-context.cpp:1281
+#: ../src/tweak-context.cpp:1280
 msgid "Scale tweak"
 msgstr "Vergroten/verkleinen"
 
-#: ../src/tweak-context.cpp:1285
+#: ../src/tweak-context.cpp:1284
 msgid "Rotate tweak"
 msgstr "Roteren"
 
-#: ../src/tweak-context.cpp:1289
+#: ../src/tweak-context.cpp:1288
 msgid "Duplicate/delete tweak"
 msgstr "Dupliceren/verwijderen"
 
-#: ../src/tweak-context.cpp:1293
+#: ../src/tweak-context.cpp:1292
 msgid "Push path tweak"
 msgstr "Pad duwen"
 
-#: ../src/tweak-context.cpp:1297
+#: ../src/tweak-context.cpp:1296
 msgid "Shrink/grow path tweak"
 msgstr "Pad verdunnen/verdikken"
 
-#: ../src/tweak-context.cpp:1301
+#: ../src/tweak-context.cpp:1300
 msgid "Attract/repel path tweak"
 msgstr "Pad aantrekken/afstoten"
 
-#: ../src/tweak-context.cpp:1305
+#: ../src/tweak-context.cpp:1304
 msgid "Roughen path tweak"
 msgstr "Pad verruwen"
 
-#: ../src/tweak-context.cpp:1309
+#: ../src/tweak-context.cpp:1308
 msgid "Color paint tweak"
 msgstr "Verver"
 
-#: ../src/tweak-context.cpp:1313
+#: ../src/tweak-context.cpp:1312
 msgid "Color jitter tweak"
 msgstr "Verkleuren"
 
-#: ../src/tweak-context.cpp:1317
+#: ../src/tweak-context.cpp:1316
 msgid "Blur tweak"
 msgstr "Vervagen"
 
@@ -12941,12 +12986,12 @@ msgstr "V:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:512
 #: ../src/ui/dialog/align-and-distribute.cpp:894
-#: ../src/widgets/toolbox.cpp:8395
+#: ../src/widgets/toolbox.cpp:8396
 msgid "Remove overlaps"
 msgstr "Overlappingen verwijderen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:543
-#: ../src/widgets/toolbox.cpp:8188
+#: ../src/widgets/toolbox.cpp:8189
 msgid "Arrange connector network"
 msgstr "Het verbindingennetwerk herschikken"
 
@@ -13076,7 +13121,7 @@ msgid "Distribute baselines of texts vertically"
 msgstr "Grondlijnen van geselecteerde teksten verticaal verdelen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:986
-#: ../src/widgets/toolbox.cpp:8357
+#: ../src/widgets/toolbox.cpp:8358
 msgid "Nicely arrange selected connector network"
 msgstr "Het geselecteerde verbindingennetwerk netjes schikken"
 
@@ -13139,7 +13184,7 @@ msgstr "Kleinste object"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1036
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1433
-#: ../src/widgets/desktop-widget.cpp:1733
+#: ../src/widgets/desktop-widget.cpp:1728
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Selectie"
@@ -13812,8 +13857,8 @@ msgstr "Richtingshoek voor de lichtbron op het YZ-vlak, in graden"
 #. default z:
 #: ../src/ui/dialog/filter-effects-dialog.cpp:968
 #: ../src/ui/dialog/filter-effects-dialog.cpp:971
-msgid "Location"
-msgstr "Locatie"
+msgid "Location:"
+msgstr "Locatie:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:968
 #: ../src/ui/dialog/filter-effects-dialog.cpp:971
@@ -14238,7 +14283,7 @@ msgstr "Het <b>feFlood</b>-filtereffect vult een regio met een opgegeven kleur e
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2336
 msgid "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is commonly used together with feOffset to create a drop shadow effect."
-msgstr "Het <b>feGaussianBlur</b>-filtereffect vervaagt de invoer uniform.  Het wordt vaak gebruikt samen met <i>feOffset</i> om een schaduweffect te creëren."
+msgstr "Het <b>feGaussianBlur</b>-filtereffect vervaagt de invoer uniform. Het wordt vaak samen met <i>feOffset</i> gebruikt om een schaduweffect te creëren."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2340
 msgid "The <b>feImage</b> filter primitive fills the region with an external image or another part of the document."
@@ -15223,7 +15268,7 @@ msgstr "Indien aangevinkt, zal het indrukken en ingedrukt houden van de spatieba
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:218
 msgid "Mouse wheel zooms by default"
-msgstr "Muiswiel zoomt standaard"
+msgstr "Standaard zoom muiswiel"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:220
 msgid "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when off, it zooms with Ctrl and scrolls without Ctrl"
@@ -15325,11 +15370,11 @@ msgstr "Het aantal graden per stap wanneer Ctrl ingedrukt wordt tijdens het draa
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:274
 msgid "Relative snapping of guideline angles"
-msgstr ""
+msgstr "Relateif kleven van hulplijnhoeken"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:276
 msgid "When on, the snap angles when rotating a guideline will be relative to the original angle"
-msgstr ""
+msgstr "Indien aangevinkt, zijn de kleefhoeken bij het draaien van een hulplijn relatief ten opzichte van de originele hoek"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:278
 msgid "Zoom in/out by:"
@@ -15638,7 +15683,7 @@ msgstr "Verstuiven"
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:483
 #: ../src/verbs.cpp:2530
-#: ../src/widgets/desktop-widget.cpp:493
+#: ../src/widgets/desktop-widget.cpp:494
 msgid "Zoom"
 msgstr "Zoomen"
 
@@ -15655,7 +15700,7 @@ msgstr "De eerste en laatste punten negeren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:491
 msgid "The start and end of the measurement tool's control line will not be considered for calculating lengths. Only lengths between actual curve intersections will be displayed."
-msgstr ""
+msgstr "Het begin en einde van de controlelijn van de meetlat worden niet gebruikt voor het berekenen van lengtes. Alleen afstanden tussen echte lijnen worden weergegeven."
 
 #. Shapes
 #: ../src/ui/dialog/inkscape-preferences.cpp:494
@@ -15964,7 +16009,7 @@ msgid "Clippaths and masks"
 msgstr "Maskers en maskerpaden"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:718
-#: ../src/widgets/select-toolbar.cpp:561
+#: ../src/widgets/select-toolbar.cpp:565
 msgid "Scale stroke width"
 msgstr "Lijndikte mee schalen"
 
@@ -15989,22 +16034,22 @@ msgid "Preserved"
 msgstr "Behouden"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:726
-#: ../src/widgets/select-toolbar.cpp:562
+#: ../src/widgets/select-toolbar.cpp:566
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr "Wanneer objecten worden vergroot of verkleind, de lijndikte evenveel mee vergroten of verkleinen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:728
-#: ../src/widgets/select-toolbar.cpp:573
+#: ../src/widgets/select-toolbar.cpp:577
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr "Wanneer rechthoeken worden vergroot of verkleind, de straal van de hoek mee vergroten of verkleinen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:730
-#: ../src/widgets/select-toolbar.cpp:584
+#: ../src/widgets/select-toolbar.cpp:588
 msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "Kleurverlopen (bij vulling of lijn) verplaatsen samen met de objecten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:732
-#: ../src/widgets/select-toolbar.cpp:595
+#: ../src/widgets/select-toolbar.cpp:599
 msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "Patronen (bij vulling of lijn) verplaatsen samen met de objecten"
 
@@ -16400,7 +16445,7 @@ msgstr "Hoofdrasterlijn elke:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Show dots instead of lines"
-msgstr "Punten tonen in plaats van lijnen"
+msgstr "Punten in plaats van lijnen tonen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "If set, display dots at gridpoints instead of gridlines"
@@ -17581,74 +17626,74 @@ msgstr "Converteren"
 msgid "Palettes directory (%s) is unavailable."
 msgstr "De palettenmap (%s) is niet beschikbaar."
 
-#: ../src/ui/dialog/tile.cpp:348
+#: ../src/ui/dialog/tile.cpp:349
 msgid "Arrange in a grid"
 msgstr "Ordenen in raster"
 
-#: ../src/ui/dialog/tile.cpp:618
+#: ../src/ui/dialog/tile.cpp:619
 msgid "Horizontal spacing between columns."
 msgstr "Horizontale ruimte tussen kolommen."
 
-#: ../src/ui/dialog/tile.cpp:619
+#: ../src/ui/dialog/tile.cpp:620
 msgid "Vertical spacing between rows."
 msgstr "Verticale ruimte tussen rijen."
 
-#: ../src/ui/dialog/tile.cpp:661
+#: ../src/ui/dialog/tile.cpp:662
 msgid "_Rows:"
 msgstr "_Rijen:"
 
-#: ../src/ui/dialog/tile.cpp:670
+#: ../src/ui/dialog/tile.cpp:671
 msgid "Number of rows"
 msgstr "Aantal rijen"
 
-#: ../src/ui/dialog/tile.cpp:674
+#: ../src/ui/dialog/tile.cpp:675
 msgid "Equal _height"
 msgstr "Gelijke _hoogte"
 
-#: ../src/ui/dialog/tile.cpp:685
+#: ../src/ui/dialog/tile.cpp:686
 msgid "If not set, each row has the height of the tallest object in it"
 msgstr "Indien uitgeschakeld, krijgt elke rij de hoogte van het hoogste object erin"
 
 #. #### Radio buttons to control vertical alignment ####
 #. #### Radio buttons to control horizontal alignment ####
-#: ../src/ui/dialog/tile.cpp:691
-#: ../src/ui/dialog/tile.cpp:763
+#: ../src/ui/dialog/tile.cpp:692
+#: ../src/ui/dialog/tile.cpp:764
 msgid "Align:"
 msgstr "Uitlijning:"
 
 #. #### Number of columns ####
-#: ../src/ui/dialog/tile.cpp:733
+#: ../src/ui/dialog/tile.cpp:734
 msgid "_Columns:"
 msgstr "_Kolommen:"
 
-#: ../src/ui/dialog/tile.cpp:742
+#: ../src/ui/dialog/tile.cpp:743
 msgid "Number of columns"
 msgstr "Aantal kolommen"
 
-#: ../src/ui/dialog/tile.cpp:746
+#: ../src/ui/dialog/tile.cpp:747
 msgid "Equal _width"
 msgstr "Gelijke br_eedte"
 
-#: ../src/ui/dialog/tile.cpp:756
+#: ../src/ui/dialog/tile.cpp:757
 msgid "If not set, each column has the width of the widest object in it"
 msgstr "Indien uitgeschakeld, krijgt elke kolom de breedte van het breedste object erin"
 
 #. #### Radio buttons to control spacing manually or to fit selection bbox ####
-#: ../src/ui/dialog/tile.cpp:802
+#: ../src/ui/dialog/tile.cpp:803
 msgid "_Fit into selection box"
 msgstr "_Aan selectievak aanpassen"
 
-#: ../src/ui/dialog/tile.cpp:809
+#: ../src/ui/dialog/tile.cpp:810
 msgid "_Set spacing:"
 msgstr "_Tussenafstand:"
 
 #. ## The OK button
-#: ../src/ui/dialog/tile.cpp:853
+#: ../src/ui/dialog/tile.cpp:854
 msgctxt "Rows and columns dialog"
 msgid "_Arrange"
 msgstr "_Ordenen"
 
-#: ../src/ui/dialog/tile.cpp:855
+#: ../src/ui/dialog/tile.cpp:856
 msgid "Arrange selected objects"
 msgstr "Geselecteerde objecten ordenen"
 
@@ -17877,133 +17922,133 @@ msgstr "Het overtrekken afbreken"
 msgid "Execute the trace"
 msgstr "Het overtrekken starten"
 
-#: ../src/ui/dialog/transformation.cpp:83
-#: ../src/ui/dialog/transformation.cpp:93
+#: ../src/ui/dialog/transformation.cpp:84
+#: ../src/ui/dialog/transformation.cpp:94
 msgid "_Horizontal:"
 msgstr "_Horizontaal:"
 
-#: ../src/ui/dialog/transformation.cpp:83
+#: ../src/ui/dialog/transformation.cpp:84
 msgid "Horizontal displacement (relative) or position (absolute)"
 msgstr "Horizontale verplaatsing (relatief) of positie (absoluut)"
 
-#: ../src/ui/dialog/transformation.cpp:85
-#: ../src/ui/dialog/transformation.cpp:95
+#: ../src/ui/dialog/transformation.cpp:86
+#: ../src/ui/dialog/transformation.cpp:96
 msgid "_Vertical:"
 msgstr "_Verticaal:"
 
-#: ../src/ui/dialog/transformation.cpp:85
+#: ../src/ui/dialog/transformation.cpp:86
 msgid "Vertical displacement (relative) or position (absolute)"
 msgstr "Verticale verplaatsing (relatief) of positie (absoluut)"
 
-#: ../src/ui/dialog/transformation.cpp:87
+#: ../src/ui/dialog/transformation.cpp:88
 msgid "Horizontal size (absolute or percentage of current)"
 msgstr "Horizontale grootte (absoluut of procentueel van huidige)"
 
-#: ../src/ui/dialog/transformation.cpp:89
+#: ../src/ui/dialog/transformation.cpp:90
 msgid "Vertical size (absolute or percentage of current)"
 msgstr "Verticale grootte (absoluut of procentueel van huidige)"
 
-#: ../src/ui/dialog/transformation.cpp:91
+#: ../src/ui/dialog/transformation.cpp:92
 msgid "A_ngle:"
 msgstr "Hoe_k:"
 
-#: ../src/ui/dialog/transformation.cpp:91
+#: ../src/ui/dialog/transformation.cpp:92
 msgid "Rotation angle (positive = counterclockwise)"
 msgstr "Rotatiehoek (positief is met de klok mee)"
 
-#: ../src/ui/dialog/transformation.cpp:93
+#: ../src/ui/dialog/transformation.cpp:94
 msgid "Horizontal skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"
 msgstr "Horizontale rotatiehoek (positief is met de klok mee), absolute verplaatsing of percentage verplaatsing"
 
-#: ../src/ui/dialog/transformation.cpp:95
+#: ../src/ui/dialog/transformation.cpp:96
 msgid "Vertical skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"
 msgstr "Verticale rotatiehoek (positief is met de klok mee), absolute verplaatsing of percentage verplaatsing"
 
-#: ../src/ui/dialog/transformation.cpp:98
+#: ../src/ui/dialog/transformation.cpp:99
 msgid "Transformation matrix element A"
 msgstr "Transformatiematrix-element A"
 
-#: ../src/ui/dialog/transformation.cpp:99
+#: ../src/ui/dialog/transformation.cpp:100
 msgid "Transformation matrix element B"
 msgstr "Transformatiematrix-element B"
 
-#: ../src/ui/dialog/transformation.cpp:100
+#: ../src/ui/dialog/transformation.cpp:101
 msgid "Transformation matrix element C"
 msgstr "Transformatiematrix-element C"
 
-#: ../src/ui/dialog/transformation.cpp:101
+#: ../src/ui/dialog/transformation.cpp:102
 msgid "Transformation matrix element D"
 msgstr "Transformatiematrix-element D"
 
-#: ../src/ui/dialog/transformation.cpp:102
+#: ../src/ui/dialog/transformation.cpp:103
 msgid "Transformation matrix element E"
 msgstr "Transformatiematrix-element E"
 
-#: ../src/ui/dialog/transformation.cpp:103
+#: ../src/ui/dialog/transformation.cpp:104
 msgid "Transformation matrix element F"
 msgstr "Transformatiematrix-element F"
 
-#: ../src/ui/dialog/transformation.cpp:105
+#: ../src/ui/dialog/transformation.cpp:106
 msgid "Rela_tive move"
 msgstr "Rela_tieve verplaatsing"
 
-#: ../src/ui/dialog/transformation.cpp:105
+#: ../src/ui/dialog/transformation.cpp:106
 msgid "Add the specified relative displacement to the current position; otherwise, edit the current absolute position directly"
 msgstr "Tel de opgegeven relatieve verplaatsing op bij de huidige positie; anders, bewerk de huidige absolute positie direct"
 
-#: ../src/ui/dialog/transformation.cpp:106
+#: ../src/ui/dialog/transformation.cpp:107
 msgid "_Scale proportionally"
 msgstr "Proportioneel s_chalen"
 
-#: ../src/ui/dialog/transformation.cpp:106
+#: ../src/ui/dialog/transformation.cpp:107
 msgid "Preserve the width/height ratio of the scaled objects"
 msgstr "De breedte/hoogteverhouding van de geschaalde objecten behouden"
 
-#: ../src/ui/dialog/transformation.cpp:107
+#: ../src/ui/dialog/transformation.cpp:108
 msgid "Apply to each _object separately"
 msgstr "_Op ieder object apart toepassen"
 
-#: ../src/ui/dialog/transformation.cpp:107
+#: ../src/ui/dialog/transformation.cpp:108
 msgid "Apply the scale/rotate/skew to each selected object separately; otherwise, transform the selection as a whole"
 msgstr "De acties schalen/roteren/scheeftrekken op ieder geselecteerd object onafhankelijk toepassen; anders de hele selectie als een geheel transformeren"
 
-#: ../src/ui/dialog/transformation.cpp:108
+#: ../src/ui/dialog/transformation.cpp:109
 msgid "Edit c_urrent matrix"
 msgstr "_Huidige matrix bewerken"
 
-#: ../src/ui/dialog/transformation.cpp:108
+#: ../src/ui/dialog/transformation.cpp:109
 msgid "Edit the current transform= matrix; otherwise, post-multiply transform= by this matrix"
 msgstr "De huidige transformatiematrix bewerken; zoniet, navermenigvuldigen transformatiematrix met deze matrix"
 
-#: ../src/ui/dialog/transformation.cpp:118
+#: ../src/ui/dialog/transformation.cpp:119
 msgid "_Move"
 msgstr "_Verplaatsen"
 
-#: ../src/ui/dialog/transformation.cpp:121
+#: ../src/ui/dialog/transformation.cpp:122
 msgid "_Scale"
 msgstr "_Schalen"
 
-#: ../src/ui/dialog/transformation.cpp:124
+#: ../src/ui/dialog/transformation.cpp:125
 msgid "_Rotate"
 msgstr "_Roteren"
 
-#: ../src/ui/dialog/transformation.cpp:127
+#: ../src/ui/dialog/transformation.cpp:128
 msgid "Ske_w"
 msgstr "Scheef_trekken"
 
-#: ../src/ui/dialog/transformation.cpp:130
+#: ../src/ui/dialog/transformation.cpp:131
 msgid "Matri_x"
 msgstr "Matri_x"
 
-#: ../src/ui/dialog/transformation.cpp:154
+#: ../src/ui/dialog/transformation.cpp:155
 msgid "Reset the values on the current tab to defaults"
 msgstr "Op het huidige tabblad de standaarwaarden terugzetten"
 
-#: ../src/ui/dialog/transformation.cpp:161
+#: ../src/ui/dialog/transformation.cpp:162
 msgid "Apply transformation to selection"
 msgstr "Transformatie toepassen op selectie"
 
-#: ../src/ui/dialog/transformation.cpp:856
+#: ../src/ui/dialog/transformation.cpp:857
 msgid "Edit transformation matrix"
 msgstr "Transformatiematrix bewerken"
 
@@ -18485,85 +18530,85 @@ msgstr "Vervaging wijzigen"
 msgid "Change opacity"
 msgstr "Ondoorzichtigheid wijzigen"
 
-#: ../src/ui/widget/page-sizer.cpp:231
+#: ../src/ui/widget/page-sizer.cpp:232
 msgid "U_nits:"
 msgstr "Ee_nheden:"
 
-#: ../src/ui/widget/page-sizer.cpp:232
+#: ../src/ui/widget/page-sizer.cpp:233
 msgid "Width of paper"
 msgstr "Breedte van het papier"
 
-#: ../src/ui/widget/page-sizer.cpp:233
+#: ../src/ui/widget/page-sizer.cpp:234
 msgid "Height of paper"
 msgstr "Hoogte van het papier"
 
-#: ../src/ui/widget/page-sizer.cpp:234
+#: ../src/ui/widget/page-sizer.cpp:235
 msgid "T_op margin:"
 msgstr "_Bovenmarge"
 
-#: ../src/ui/widget/page-sizer.cpp:234
+#: ../src/ui/widget/page-sizer.cpp:235
 msgid "Top margin"
 msgstr "Bovenmarge"
 
-#: ../src/ui/widget/page-sizer.cpp:235
+#: ../src/ui/widget/page-sizer.cpp:236
 msgid "L_eft:"
 msgstr "_Links:"
 
-#: ../src/ui/widget/page-sizer.cpp:235
+#: ../src/ui/widget/page-sizer.cpp:236
 msgid "Left margin"
 msgstr "Linkermarge"
 
-#: ../src/ui/widget/page-sizer.cpp:236
+#: ../src/ui/widget/page-sizer.cpp:237
 msgid "Ri_ght:"
 msgstr "_Rechts:"
 
-#: ../src/ui/widget/page-sizer.cpp:236
+#: ../src/ui/widget/page-sizer.cpp:237
 msgid "Right margin"
 msgstr "Rechtermarge"
 
-#: ../src/ui/widget/page-sizer.cpp:237
+#: ../src/ui/widget/page-sizer.cpp:238
 msgid "Botto_m:"
 msgstr "_Onder:"
 
-#: ../src/ui/widget/page-sizer.cpp:237
+#: ../src/ui/widget/page-sizer.cpp:238
 msgid "Bottom margin"
 msgstr "Ondermarge"
 
-#: ../src/ui/widget/page-sizer.cpp:246
+#: ../src/ui/widget/page-sizer.cpp:247
 msgid "Description"
 msgstr "Beschrijving"
 
-#: ../src/ui/widget/page-sizer.cpp:287
+#: ../src/ui/widget/page-sizer.cpp:288
 msgid "Orientation:"
 msgstr "Oriëntatie:"
 
-#: ../src/ui/widget/page-sizer.cpp:290
+#: ../src/ui/widget/page-sizer.cpp:291
 msgid "_Landscape"
 msgstr "_Liggend"
 
-#: ../src/ui/widget/page-sizer.cpp:295
+#: ../src/ui/widget/page-sizer.cpp:296
 msgid "_Portrait"
 msgstr "_Staand"
 
 #. ## Set up custom size frame
-#: ../src/ui/widget/page-sizer.cpp:311
+#: ../src/ui/widget/page-sizer.cpp:312
 msgid "Custom size"
 msgstr "Aangepaste grootte"
 
-#: ../src/ui/widget/page-sizer.cpp:334
+#: ../src/ui/widget/page-sizer.cpp:335
 msgid "Resi_ze page to content..."
 msgstr "_Pagina schalen naar inhoud..."
 
-#: ../src/ui/widget/page-sizer.cpp:360
+#: ../src/ui/widget/page-sizer.cpp:361
 msgid "_Resize page to drawing or selection"
 msgstr "Pagina _schalen naar tekening of selectie"
 
-#: ../src/ui/widget/page-sizer.cpp:361
+#: ../src/ui/widget/page-sizer.cpp:362
 msgid "Resize the page to fit the current selection, or the entire drawing if there is no selection"
 msgstr "De afmetingen van de pagina zodanig aanpassen dat de huidige selectie er precies op past, of de volledige tekening als er niets geselecteerd is"
 
 # XXX Waar wordt dit gebruikt?
-#: ../src/ui/widget/page-sizer.cpp:426
+#: ../src/ui/widget/page-sizer.cpp:427
 msgid "Set page size"
 msgstr "Paginagrootte instellen"
 
@@ -19329,7 +19374,7 @@ msgstr "Document of selectie als bitmap-afbeelding exporteren"
 msgid "Import a document from Open Clip Art Library"
 msgstr "Een document uit de 'Open Clip Art'-mediatheek importeren"
 
-#. new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_EXPORT_OCAL),
+#. new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON("document-export-ocal")),
 #: ../src/verbs.cpp:2267
 msgid "N_ext Window"
 msgstr "V_olgende venster"
@@ -20960,62 +21005,62 @@ msgstr "Streepjespatroon"
 msgid "Pattern offset"
 msgstr "Patroonverplaatsing"
 
-#: ../src/widgets/desktop-widget.cpp:391
+#: ../src/widgets/desktop-widget.cpp:392
 msgid "Zoom drawing if window size changes"
 msgstr "In- of uitzoomen wanneer venstergrootte verandert"
 
-#: ../src/widgets/desktop-widget.cpp:513
+#: ../src/widgets/desktop-widget.cpp:514
 msgid "Cursor coordinates"
 msgstr "Cursorcoördinaten"
 
-#: ../src/widgets/desktop-widget.cpp:528
+#: ../src/widgets/desktop-widget.cpp:529
 msgid "Z:"
 msgstr "Z:"
 
 #. display the initial welcome message in the statusbar
-#: ../src/widgets/desktop-widget.cpp:563
+#: ../src/widgets/desktop-widget.cpp:562
 msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."
 msgstr "<b>Welkom bij Inkscape!</b> Gebruik vorm- of tekengereedschappen om objecten te maken, gebruik aanwijsgereedschap om ze te verplaatsen of te vervormen."
 
-#: ../src/widgets/desktop-widget.cpp:657
+#: ../src/widgets/desktop-widget.cpp:654
 #, c-format
 msgid "%s: %d (outline%s) - Inkscape"
 msgstr "%s: %d (silhouet%s) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:659
+#: ../src/widgets/desktop-widget.cpp:656
 #, c-format
 msgid "%s: %d (no filters%s) - Inkscape"
 msgstr "%s: %d (geen  filters%s) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:661
+#: ../src/widgets/desktop-widget.cpp:658
 #, c-format
 msgid "%s: %d %s- Inkscape"
 msgstr "%s: %d %s- Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:665
+#: ../src/widgets/desktop-widget.cpp:662
 #, c-format
 msgid "%s (outline%s) - Inkscape"
 msgstr "%s (silhouet%s) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:667
+#: ../src/widgets/desktop-widget.cpp:664
 #, c-format
 msgid "%s (no filters%s) - Inkscape"
 msgstr "%s (geen filters%s) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:669
+#: ../src/widgets/desktop-widget.cpp:666
 #, c-format
 msgid "%s %s- Inkscape"
 msgstr "%s %s- Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:831
+#: ../src/widgets/desktop-widget.cpp:826
 msgid "Color-managed display is <b>enabled</b> in this window"
 msgstr "Kleurmanagementweergave is <b>actief</b>voor dit venster"
 
-#: ../src/widgets/desktop-widget.cpp:833
+#: ../src/widgets/desktop-widget.cpp:828
 msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr "Kleurmanagementweergave is <b>inactief</b> voor dit venster"
 
-#: ../src/widgets/desktop-widget.cpp:888
+#: ../src/widgets/desktop-widget.cpp:883
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n"
@@ -21026,12 +21071,12 @@ msgstr ""
 "\n"
 "Als u afsluit zonder opslaan, gaan de wijzigingen verloren."
 
-#: ../src/widgets/desktop-widget.cpp:895
-#: ../src/widgets/desktop-widget.cpp:951
+#: ../src/widgets/desktop-widget.cpp:890
+#: ../src/widgets/desktop-widget.cpp:946
 msgid "Close _without saving"
 msgstr "Sluiten _zonder opslaan"
 
-#: ../src/widgets/desktop-widget.cpp:944
+#: ../src/widgets/desktop-widget.cpp:939
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format that may cause data loss!</span>\n"
@@ -21042,11 +21087,11 @@ msgstr ""
 "\n"
 "Wilt u dit bestand opslaan in het Inkscape SVG-formaat?"
 
-#: ../src/widgets/desktop-widget.cpp:954
+#: ../src/widgets/desktop-widget.cpp:949
 msgid "_Save as SVG"
 msgstr "Op_slaan als SVG"
 
-#: ../src/widgets/desktop-widget.cpp:1163
+#: ../src/widgets/desktop-widget.cpp:1158
 msgid "Note:"
 msgstr ""
 
@@ -21195,7 +21240,7 @@ msgstr "<b>Wijzigen:</b>"
 
 #: ../src/widgets/gradient-vector.cpp:275
 #: ../src/widgets/paint-selector.cpp:908
-#: ../src/widgets/stroke-style.cpp:421
+#: ../src/widgets/stroke-style.cpp:425
 msgid "No document selected"
 msgstr "Geen document geselecteerd"
 
@@ -21304,124 +21349,124 @@ msgstr "Gebruik het <b>knooppunten-gereedschap</b> om positie, schaal en rotatie
 msgid "Swatch fill"
 msgstr "Vullingspalet"
 
-#: ../src/widgets/select-toolbar.cpp:256
+#: ../src/widgets/select-toolbar.cpp:260
 msgid "Transform by toolbar"
 msgstr "Transformeren met behulp van de gereedschappenbalk"
 
-#: ../src/widgets/select-toolbar.cpp:329
+#: ../src/widgets/select-toolbar.cpp:333
 msgid "Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."
 msgstr "De <b>lijndikte</b> wordt nu <b>meegeschaald</b> wanneer objecten geschaald worden."
 
-#: ../src/widgets/select-toolbar.cpp:331
+#: ../src/widgets/select-toolbar.cpp:335
 msgid "Now <b>stroke width</b> is <b>not scaled</b> when objects are scaled."
 msgstr "De <b>lijndikte</b> wordt nu <b>niet geschaald</b> wanneer objecten geschaald worden."
 
-#: ../src/widgets/select-toolbar.cpp:342
+#: ../src/widgets/select-toolbar.cpp:346
 msgid "Now <b>rounded rectangle corners</b> are <b>scaled</b> when rectangles are scaled."
 msgstr "<b>Afgeronde hoeken</b> worden nu <b>meegeschaald</b> wanneer rechthoeken worden geschaald."
 
-#: ../src/widgets/select-toolbar.cpp:344
+#: ../src/widgets/select-toolbar.cpp:348
 msgid "Now <b>rounded rectangle corners</b> are <b>not scaled</b> when rectangles are scaled."
 msgstr "<b>Afgeronde hoeken</b> worden nu <b>niet geschaald</b> wanneer rechthoeken worden geschaald."
 
-#: ../src/widgets/select-toolbar.cpp:355
+#: ../src/widgets/select-toolbar.cpp:359
 msgid "Now <b>gradients</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."
 msgstr "<b>Kleurverlopen</b> worden nu <b>meeveranderd</b> wanneer hun objecten worden veranderd (verplaatst, geschaald, gedraaid, of scheefgetrokken)."
 
-#: ../src/widgets/select-toolbar.cpp:357
+#: ../src/widgets/select-toolbar.cpp:361
 msgid "Now <b>gradients</b> remain <b>fixed</b> when objects are transformed (moved, scaled, rotated, or skewed)."
 msgstr "<b>Kleurverlopen</b> blijven nu <b>gefixeerd</b> wanneer hun objecten worden veranderd (verplaatst, geschaald, gedraaid, of scheefgetrokken)."
 
-#: ../src/widgets/select-toolbar.cpp:368
+#: ../src/widgets/select-toolbar.cpp:372
 msgid "Now <b>patterns</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."
 msgstr "<b>Patronen</b> worden nu <b>meeveranderd</b> wanneer hun objecten worden veranderd (verplaatst, geschaald, gedraaid, of scheefgetrokken)."
 
-#: ../src/widgets/select-toolbar.cpp:370
+#: ../src/widgets/select-toolbar.cpp:374
 msgid "Now <b>patterns</b> remain <b>fixed</b> when objects are transformed (moved, scaled, rotated, or skewed)."
 msgstr "<b>Patronen</b> blijven nu <b>gefixeerd</b> wanneer hun objecten worden veranderd (verplaatst, geschaald, gedraaid, of scheefgetrokken)."
 
 #. four spinbuttons
-#: ../src/widgets/select-toolbar.cpp:483
+#: ../src/widgets/select-toolbar.cpp:487
 msgctxt "Select toolbar"
 msgid "X position"
 msgstr "X-Positie"
 
-#: ../src/widgets/select-toolbar.cpp:483
+#: ../src/widgets/select-toolbar.cpp:487
 msgctxt "Select toolbar"
 msgid "X:"
 msgstr "X:"
 
-#: ../src/widgets/select-toolbar.cpp:485
+#: ../src/widgets/select-toolbar.cpp:489
 msgid "Horizontal coordinate of selection"
 msgstr "Horizontale coördinaat van de selectie"
 
-#: ../src/widgets/select-toolbar.cpp:489
+#: ../src/widgets/select-toolbar.cpp:493
 msgctxt "Select toolbar"
 msgid "Y position"
 msgstr "Y-Positie"
 
-#: ../src/widgets/select-toolbar.cpp:489
+#: ../src/widgets/select-toolbar.cpp:493
 msgctxt "Select toolbar"
 msgid "Y:"
 msgstr "Y:"
 
-#: ../src/widgets/select-toolbar.cpp:491
+#: ../src/widgets/select-toolbar.cpp:495
 msgid "Vertical coordinate of selection"
 msgstr "Verticale coördinaat van de selectie"
 
-#: ../src/widgets/select-toolbar.cpp:495
+#: ../src/widgets/select-toolbar.cpp:499
 msgctxt "Select toolbar"
 msgid "Width"
 msgstr "Breedte"
 
-#: ../src/widgets/select-toolbar.cpp:495
+#: ../src/widgets/select-toolbar.cpp:499
 msgctxt "Select toolbar"
 msgid "W:"
 msgstr "B:"
 
-#: ../src/widgets/select-toolbar.cpp:497
+#: ../src/widgets/select-toolbar.cpp:501
 msgid "Width of selection"
 msgstr "Breedte van de selectie"
 
-#: ../src/widgets/select-toolbar.cpp:504
+#: ../src/widgets/select-toolbar.cpp:508
 msgid "Lock width and height"
 msgstr "Verhouding tussen breedte en hoogte vastzetten"
 
-#: ../src/widgets/select-toolbar.cpp:505
+#: ../src/widgets/select-toolbar.cpp:509
 msgid "When locked, change both width and height by the same proportion"
 msgstr "Indien vastgezet, breedte en hoogte in dezelfde mate aanpassen"
 
-#: ../src/widgets/select-toolbar.cpp:514
+#: ../src/widgets/select-toolbar.cpp:518
 msgctxt "Select toolbar"
 msgid "Height"
 msgstr "Hoogte"
 
-#: ../src/widgets/select-toolbar.cpp:514
+#: ../src/widgets/select-toolbar.cpp:518
 msgctxt "Select toolbar"
 msgid "H:"
 msgstr "H:"
 
-#: ../src/widgets/select-toolbar.cpp:516
+#: ../src/widgets/select-toolbar.cpp:520
 msgid "Height of selection"
 msgstr "Hoogte van de selectie"
 
-#: ../src/widgets/select-toolbar.cpp:553
+#: ../src/widgets/select-toolbar.cpp:557
 msgid "Affect:"
 msgstr "Werking:"
 
-#: ../src/widgets/select-toolbar.cpp:553
+#: ../src/widgets/select-toolbar.cpp:557
 msgid "Control whether or not to scale stroke widths, scale rectangle corners, transform gradient fills, and transform pattern fills with the object"
 msgstr "Al dan niet lijnbreedte schalen, hoeken rechthoek schalen, vulkleurverloop aanpassen en vulpatroon aanpassen met het object"
 
-#: ../src/widgets/select-toolbar.cpp:572
+#: ../src/widgets/select-toolbar.cpp:576
 msgid "Scale rounded corners"
 msgstr "Afgeronde hoeken schalen"
 
-#: ../src/widgets/select-toolbar.cpp:583
+#: ../src/widgets/select-toolbar.cpp:587
 msgid "Move gradients"
 msgstr "Kleurverlopen verplaatsen"
 
-#: ../src/widgets/select-toolbar.cpp:594
+#: ../src/widgets/select-toolbar.cpp:598
 msgid "Move patterns"
 msgstr "Patronen verplaatsen"
 
@@ -21593,17 +21638,17 @@ msgstr "Waarde"
 
 #: ../src/widgets/sp-xmlview-content.cpp:170
 msgid "Type text in a text node"
-msgstr "Tik tekst in een tekstobject"
+msgstr "Tekst tikken in een tekstobject"
 
-#: ../src/widgets/stroke-style.cpp:507
+#: ../src/widgets/stroke-style.cpp:511
 msgid "Set markers"
 msgstr "Markeringen instellen"
 
-#: ../src/widgets/stroke-style.cpp:693
+#: ../src/widgets/stroke-style.cpp:697
 msgid "Stroke width"
 msgstr "Lijnbreedte"
 
-#: ../src/widgets/stroke-style.cpp:695
+#: ../src/widgets/stroke-style.cpp:699
 msgctxt "Stroke width"
 msgid "_Width:"
 msgstr "_Breedte:"
@@ -21611,95 +21656,95 @@ msgstr "_Breedte:"
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/widgets/stroke-style.cpp:718
+#: ../src/widgets/stroke-style.cpp:722
 msgid "Join:"
 msgstr "Hoekpunten:"
 
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:730
+#: ../src/widgets/stroke-style.cpp:734
 msgid "Miter join"
 msgstr "Scherpe hoek"
 
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:740
+#: ../src/widgets/stroke-style.cpp:744
 msgid "Round join"
 msgstr "Afgeronde hoek"
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:750
+#: ../src/widgets/stroke-style.cpp:754
 msgid "Bevel join"
 msgstr "Schuine hoek"
 
-#: ../src/widgets/stroke-style.cpp:770
+#: ../src/widgets/stroke-style.cpp:774
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr "Maximale lengte (in lijnbreedtes) van de punt die kan ontstaan bij scherpe hoeken"
 
-#: ../src/widgets/stroke-style.cpp:772
+#: ../src/widgets/stroke-style.cpp:776
 msgid "Miter _limit:"
 msgstr "_Hoeklimiet:"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
 #. spw_label(t, _("_Cap:"), 0, i);
-#: ../src/widgets/stroke-style.cpp:784
+#: ../src/widgets/stroke-style.cpp:788
 msgid "Cap:"
 msgstr "Uiteinde:"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:796
+#: ../src/widgets/stroke-style.cpp:800
 msgid "Butt cap"
 msgstr "Afgekapt einde"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/widgets/stroke-style.cpp:804
+#: ../src/widgets/stroke-style.cpp:808
 msgid "Round cap"
 msgstr "Rond einde"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:812
+#: ../src/widgets/stroke-style.cpp:816
 msgid "Square cap"
 msgstr "Vierkant einde"
 
 #. Dash
-#: ../src/widgets/stroke-style.cpp:818
+#: ../src/widgets/stroke-style.cpp:822
 msgid "Dashes:"
 msgstr "Streepjes:"
 
-#: ../src/widgets/stroke-style.cpp:841
+#: ../src/widgets/stroke-style.cpp:845
 msgid "_Start Markers:"
 msgstr "_Beginmarkering:"
 
-#: ../src/widgets/stroke-style.cpp:842
+#: ../src/widgets/stroke-style.cpp:846
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr "Beginmarkeringen worden getekend bij het eerste knooppunt van een pad of vorm"
 
-#: ../src/widgets/stroke-style.cpp:853
+#: ../src/widgets/stroke-style.cpp:857
 msgid "_Mid Markers:"
 msgstr "_Middenmarkering:"
 
-#: ../src/widgets/stroke-style.cpp:854
+#: ../src/widgets/stroke-style.cpp:858
 msgid "Mid Markers are drawn on every node of a path or shape except the first and last nodes"
 msgstr "Middennmarkeringen worden getekend bij elk knooppunt van een pad of vorm behalve het eerste en laatste knooppunt"
 
-#: ../src/widgets/stroke-style.cpp:865
+#: ../src/widgets/stroke-style.cpp:869
 msgid "_End Markers:"
 msgstr "_Eindmarkering:"
 
-#: ../src/widgets/stroke-style.cpp:866
+#: ../src/widgets/stroke-style.cpp:870
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr "Eindmarkeringen worden getekend bij het laatste knooppunt van een pad of vorm"
 
-#: ../src/widgets/stroke-style.cpp:1219
-#: ../src/widgets/stroke-style.cpp:1316
+#: ../src/widgets/stroke-style.cpp:1223
+#: ../src/widgets/stroke-style.cpp:1320
 msgid "Set stroke style"
 msgstr "Lijnstijl instellen"
 
@@ -21902,7 +21947,7 @@ msgid "Y coordinate of selected node(s)"
 msgstr "Y-coördinaat van geselecteerd knooppunt"
 
 #: ../src/widgets/toolbox.cpp:1667
-#: ../src/widgets/toolbox.cpp:7625
+#: ../src/widgets/toolbox.cpp:7626
 msgid "Font Size"
 msgstr "Lettertypegrootte"
 
@@ -22226,7 +22271,7 @@ msgstr "Punten en hoeken willekeurig uitspreiden"
 #: ../src/widgets/toolbox.cpp:3117
 #: ../src/widgets/toolbox.cpp:4052
 #: ../src/widgets/toolbox.cpp:4307
-#: ../src/widgets/toolbox.cpp:8604
+#: ../src/widgets/toolbox.cpp:8605
 msgid "Defaults"
 msgstr "Standaardwaarden"
 
@@ -23271,59 +23316,64 @@ msgstr "Van objecten uitsnijden"
 msgid "The width of the eraser pen (relative to the visible canvas area)"
 msgstr "De breedte van de gom (relatief ten opzichte van het zichtbare canvasoppervlak)"
 
-#: ../src/widgets/toolbox.cpp:6507
+#: ../src/widgets/toolbox.cpp:6490
+#, c-format
+msgid "Failed to find font matching: %s\n"
+msgstr "Kan passend lettertype niet vinden: %s\n"
+
+#: ../src/widgets/toolbox.cpp:6524
 msgid "Text: Change font family"
 msgstr "Tekst: lettertypefamilie veranderen"
 
-#: ../src/widgets/toolbox.cpp:6564
+#: ../src/widgets/toolbox.cpp:6581
 msgid "Text: Change font size"
 msgstr "Tekst: lettertypegrootte veranderen"
 
-#: ../src/widgets/toolbox.cpp:6703
+#: ../src/widgets/toolbox.cpp:6704
 msgid "Text: Change font style"
 msgstr "Tekst: lettertypestijl veranderen"
 
-#: ../src/widgets/toolbox.cpp:6782
+#: ../src/widgets/toolbox.cpp:6783
 msgid "Text: Change superscript or subscript"
 msgstr "Tekst: superscript en subscript veranderen"
 
-#: ../src/widgets/toolbox.cpp:6928
+#: ../src/widgets/toolbox.cpp:6929
 msgid "Text: Change alignment"
 msgstr "Tekst: uitlijning veranderen"
 
-#: ../src/widgets/toolbox.cpp:6971
+#: ../src/widgets/toolbox.cpp:6972
 msgid "Text: Change line-height"
 msgstr "Tekst: lijnhoogte veranderen"
 
-#: ../src/widgets/toolbox.cpp:7020
+#: ../src/widgets/toolbox.cpp:7021
 msgid "Text: Change word-spacing"
 msgstr "Tekst: woordafstand veranderen"
 
-#: ../src/widgets/toolbox.cpp:7062
+#: ../src/widgets/toolbox.cpp:7063
 msgid "Text: Change letter-spacing"
 msgstr "Tekst: letterafstand veranderen"
 
-#: ../src/widgets/toolbox.cpp:7103
+#: ../src/widgets/toolbox.cpp:7104
 msgid "Text: Change dx (kern)"
 msgstr "Tekst: dx veranderen (kerning)"
 
-#: ../src/widgets/toolbox.cpp:7137
+#: ../src/widgets/toolbox.cpp:7138
 msgid "Text: Change dy"
 msgstr "Tekst: dy veranderen"
 
-#: ../src/widgets/toolbox.cpp:7172
+#: ../src/widgets/toolbox.cpp:7173
 msgid "Text: Change rotate"
 msgstr "Tekst: draaiing veranderen"
 
-#: ../src/widgets/toolbox.cpp:7220
+#: ../src/widgets/toolbox.cpp:7221
 msgid "Text: Change orientation"
 msgstr "Tekst: oriëntatie veranderen"
 
-#: ../src/widgets/toolbox.cpp:7585
+#: ../src/widgets/toolbox.cpp:7586
 msgid "Font Family"
 msgstr "Lettertypefamilie"
 
-#: ../src/widgets/toolbox.cpp:7586
+#: ../src/widgets/toolbox.cpp:7587
 msgid "Select Font Family (Alt-X to access)"
 msgstr "Selecteer lettertypefamilie (Alt+X voor dialoog)"
 
@@ -23331,358 +23381,358 @@ msgstr "Selecteer lettertypefamilie (Alt+X voor dialoog)"
 #. Extra list width
 #. Cell layout
 #. Enable entry completion
-#: ../src/widgets/toolbox.cpp:7593
+#: ../src/widgets/toolbox.cpp:7594
 msgid "Font not found on system"
 msgstr "Lettertype niet aanwezig op systeem"
 
-#: ../src/widgets/toolbox.cpp:7626
+#: ../src/widgets/toolbox.cpp:7627
 msgid "Font size (px)"
 msgstr "Lettertypegrootte (px)"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7638
+#: ../src/widgets/toolbox.cpp:7639
 msgid "Toggle Bold"
 msgstr "Status vet veranderen"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7639
+#: ../src/widgets/toolbox.cpp:7640
 msgid "Toggle bold or normal weight"
 msgstr "Vet"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7651
+#: ../src/widgets/toolbox.cpp:7652
 msgid "Toggle Italic/Oblique"
 msgstr "Cursief"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7652
+#: ../src/widgets/toolbox.cpp:7653
 msgid "Toggle italic/oblique style"
 msgstr "Cursief"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7664
+#: ../src/widgets/toolbox.cpp:7665
 msgid "Toggle Superscript"
 msgstr "Superscript"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7665
+#: ../src/widgets/toolbox.cpp:7666
 msgid "Toggle superscript"
 msgstr "Superscript"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7677
+#: ../src/widgets/toolbox.cpp:7678
 msgid "Toggle Subscript"
 msgstr "Subscript"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7678
+#: ../src/widgets/toolbox.cpp:7679
 msgid "Toggle subscript"
 msgstr "Subscript"
 
-#: ../src/widgets/toolbox.cpp:7695
 #: ../src/widgets/toolbox.cpp:7696
+#: ../src/widgets/toolbox.cpp:7697
 msgid "Align left"
 msgstr "Links uitlijnen"
 
-#: ../src/widgets/toolbox.cpp:7703
 #: ../src/widgets/toolbox.cpp:7704
+#: ../src/widgets/toolbox.cpp:7705
 msgid "Align center"
 msgstr "Centreren"
 
-#: ../src/widgets/toolbox.cpp:7711
 #: ../src/widgets/toolbox.cpp:7712
+#: ../src/widgets/toolbox.cpp:7713
 msgid "Align right"
 msgstr "Rechts uitlijnen"
 
-#: ../src/widgets/toolbox.cpp:7719
+#: ../src/widgets/toolbox.cpp:7720
 msgid "Justify"
 msgstr "Uitgevuld"
 
-#: ../src/widgets/toolbox.cpp:7720
+#: ../src/widgets/toolbox.cpp:7721
 msgid "Justify (only flowed text)"
 msgstr "Uitvullen (enkel ingekaderde tekst)"
 
 #. Name
-#: ../src/widgets/toolbox.cpp:7726
+#: ../src/widgets/toolbox.cpp:7727
 msgid "Alignment"
 msgstr "Uitlijning"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7727
+#: ../src/widgets/toolbox.cpp:7728
 msgid "Text alignment"
 msgstr "Tekstuitlijning"
 
-#: ../src/widgets/toolbox.cpp:7754
+#: ../src/widgets/toolbox.cpp:7755
 msgid "Horizontal"
 msgstr "Horizontaal"
 
-#: ../src/widgets/toolbox.cpp:7761
+#: ../src/widgets/toolbox.cpp:7762
 msgid "Vertical"
 msgstr "Verticaal"
 
 #. Label
-#: ../src/widgets/toolbox.cpp:7768
+#: ../src/widgets/toolbox.cpp:7769
 msgid "Text orientation"
 msgstr "Tekstoriëntatie"
 
 #. Drop down menu
-#: ../src/widgets/toolbox.cpp:7791
+#: ../src/widgets/toolbox.cpp:7792
 msgid "Smaller spacing"
 msgstr "Kleinere afstand"
 
-#: ../src/widgets/toolbox.cpp:7791
-#: ../src/widgets/toolbox.cpp:7822
-#: ../src/widgets/toolbox.cpp:7853
+#: ../src/widgets/toolbox.cpp:7792
+#: ../src/widgets/toolbox.cpp:7823
+#: ../src/widgets/toolbox.cpp:7854
 msgctxt "Text tool"
 msgid "Normal"
 msgstr "Normal"
 
-#: ../src/widgets/toolbox.cpp:7791
+#: ../src/widgets/toolbox.cpp:7792
 msgid "Larger spacing"
 msgstr "Grotere afstand"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7796
+#: ../src/widgets/toolbox.cpp:7797
 msgid "Line Height"
 msgstr "Lijnhoogte"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7797
+#: ../src/widgets/toolbox.cpp:7798
 msgid "Line:"
 msgstr "Lijn:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7798
+#: ../src/widgets/toolbox.cpp:7799
 msgid "Spacing between lines (times font size)"
 msgstr "Ruimte tussen lijnen (maal lettertypegrootte)"
 
 #. Drop down menu
-#: ../src/widgets/toolbox.cpp:7822
-#: ../src/widgets/toolbox.cpp:7853
+#: ../src/widgets/toolbox.cpp:7823
+#: ../src/widgets/toolbox.cpp:7854
 msgid "Negative spacing"
 msgstr "Negatieve afstand"
 
-#: ../src/widgets/toolbox.cpp:7822
-#: ../src/widgets/toolbox.cpp:7853
+#: ../src/widgets/toolbox.cpp:7823
+#: ../src/widgets/toolbox.cpp:7854
 msgid "Positive spacing"
 msgstr "Positieve afstand"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7827
+#: ../src/widgets/toolbox.cpp:7828
 msgid "Word spacing"
 msgstr "Woordafstand"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7828
+#: ../src/widgets/toolbox.cpp:7829
 msgid "Word:"
 msgstr "Woord:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7829
+#: ../src/widgets/toolbox.cpp:7830
 msgid "Spacing between words (px)"
 msgstr "Ruimte tussen woorden (px)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7858
+#: ../src/widgets/toolbox.cpp:7859
 msgid "Letter spacing"
 msgstr "Letterafstand"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7859
+#: ../src/widgets/toolbox.cpp:7860
 msgid "Letter:"
 msgstr "Letter:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7860
+#: ../src/widgets/toolbox.cpp:7861
 msgid "Spacing between letters (px)"
 msgstr "Ruimte tussen letters (px)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7889
+#: ../src/widgets/toolbox.cpp:7890
 msgid "Kerning"
 msgstr "Overhang"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7890
+#: ../src/widgets/toolbox.cpp:7891
 msgid "Kern:"
 msgstr "Overhang:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7891
+#: ../src/widgets/toolbox.cpp:7892
 msgid "Horizontal kerning (px)"
 msgstr "Horizontale overhang (px)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7920
+#: ../src/widgets/toolbox.cpp:7921
 msgid "Vertical Shift"
 msgstr "Verticale verplaatsing"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7921
+#: ../src/widgets/toolbox.cpp:7922
 msgid "Vert:"
 msgstr "Vert:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7922
+#: ../src/widgets/toolbox.cpp:7923
 msgid "Vertical shift (px)"
 msgstr "Verticale verplaatsing (px)"
 
 #. name
-#: ../src/widgets/toolbox.cpp:7951
+#: ../src/widgets/toolbox.cpp:7952
 msgid "Letter rotation"
 msgstr "Letterrotatie"
 
 #. label
-#: ../src/widgets/toolbox.cpp:7952
+#: ../src/widgets/toolbox.cpp:7953
 msgid "Rot:"
 msgstr "Rot:"
 
 #. short label
-#: ../src/widgets/toolbox.cpp:7953
+#: ../src/widgets/toolbox.cpp:7954
 msgid "Character rotation (degrees)"
 msgstr "Karakterrotatie (graden)"
 
-#: ../src/widgets/toolbox.cpp:8068
+#: ../src/widgets/toolbox.cpp:8069
 msgid "Set connector type: orthogonal"
 msgstr "Type verbinding instellen: orthogonaal"
 
-#: ../src/widgets/toolbox.cpp:8068
+#: ../src/widgets/toolbox.cpp:8069
 msgid "Set connector type: polyline"
 msgstr "Type verbinding instellen: veellijn"
 
-#: ../src/widgets/toolbox.cpp:8117
+#: ../src/widgets/toolbox.cpp:8118
 msgid "Change connector curvature"
 msgstr "Kromming verbinding aanpassen"
 
-#: ../src/widgets/toolbox.cpp:8168
+#: ../src/widgets/toolbox.cpp:8169
 msgid "Change connector spacing"
 msgstr "Verbindingsafstanden aanpassen"
 
-#: ../src/widgets/toolbox.cpp:8282
+#: ../src/widgets/toolbox.cpp:8283
 msgid "EditMode"
 msgstr "Bewerkmodus"
 
-#: ../src/widgets/toolbox.cpp:8283
+#: ../src/widgets/toolbox.cpp:8284
 msgid "Switch between connection point editing and connector drawing mode"
 msgstr "Wisselen tussen bewerkmodus voor verbindingspunten en tekenmodus voor verbindingen"
 
-#: ../src/widgets/toolbox.cpp:8297
+#: ../src/widgets/toolbox.cpp:8298
 msgid "Avoid"
 msgstr "Vermijden"
 
-#: ../src/widgets/toolbox.cpp:8307
+#: ../src/widgets/toolbox.cpp:8308
 msgid "Ignore"
 msgstr "Negeren"
 
-#: ../src/widgets/toolbox.cpp:8318
+#: ../src/widgets/toolbox.cpp:8319
 msgid "Orthogonal"
 msgstr "Orthogonaal"
 
-#: ../src/widgets/toolbox.cpp:8319
+#: ../src/widgets/toolbox.cpp:8320
 msgid "Make connector orthogonal or polyline"
 msgstr "Verbinding orthogonaal of veellijn maken"
 
-#: ../src/widgets/toolbox.cpp:8333
+#: ../src/widgets/toolbox.cpp:8334
 msgid "Connector Curvature"
 msgstr "Kromming verbinding"
 
-#: ../src/widgets/toolbox.cpp:8333
+#: ../src/widgets/toolbox.cpp:8334
 msgid "Curvature:"
 msgstr "Kromming:"
 
-#: ../src/widgets/toolbox.cpp:8334
+#: ../src/widgets/toolbox.cpp:8335
 msgid "The amount of connectors curvature"
 msgstr "Hoeveelheid kromming van verbindingen"
 
-#: ../src/widgets/toolbox.cpp:8344
+#: ../src/widgets/toolbox.cpp:8345
 msgid "Connector Spacing"
 msgstr "Verbindingsafstanden"
 
-#: ../src/widgets/toolbox.cpp:8344
+#: ../src/widgets/toolbox.cpp:8345
 msgid "Spacing:"
 msgstr "Afstand:"
 
-#: ../src/widgets/toolbox.cpp:8345
+#: ../src/widgets/toolbox.cpp:8346
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "De vrij te laten ruimte rond objecten bij het automatisch routeren van verbindingen"
 
-#: ../src/widgets/toolbox.cpp:8356
+#: ../src/widgets/toolbox.cpp:8357
 msgid "Graph"
 msgstr "Diagram"
 
-#: ../src/widgets/toolbox.cpp:8366
+#: ../src/widgets/toolbox.cpp:8367
 msgid "Connector Length"
 msgstr "Verbindingslengte"
 
-#: ../src/widgets/toolbox.cpp:8367
+#: ../src/widgets/toolbox.cpp:8368
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Ideale lengte van verbindingen bij herschikken"
 
-#: ../src/widgets/toolbox.cpp:8379
+#: ../src/widgets/toolbox.cpp:8380
 msgid "Downwards"
 msgstr "Omlaag"
 
-#: ../src/widgets/toolbox.cpp:8380
+#: ../src/widgets/toolbox.cpp:8381
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Eindmarkeringen (pijlen) van verbindingen wijzen omlaag"
 
-#: ../src/widgets/toolbox.cpp:8396
+#: ../src/widgets/toolbox.cpp:8397
 msgid "Do not allow overlapping shapes"
 msgstr "Geen overlappende vormen toestaan"
 
-#: ../src/widgets/toolbox.cpp:8411
+#: ../src/widgets/toolbox.cpp:8412
 msgid "New connection point"
 msgstr "Nieuw verbindingspunt"
 
-#: ../src/widgets/toolbox.cpp:8412
+#: ../src/widgets/toolbox.cpp:8413
 msgid "Add a new connection point to the currently selected item"
 msgstr "Een nieuw verbindingspunt naar het geselecteerde item toevoegen"
 
-#: ../src/widgets/toolbox.cpp:8423
+#: ../src/widgets/toolbox.cpp:8424
 msgid "Remove connection point"
 msgstr "Verbindingspunt verwijderen"
 
-#: ../src/widgets/toolbox.cpp:8424
+#: ../src/widgets/toolbox.cpp:8425
 msgid "Remove the currently selected connection point"
 msgstr "Het geselecteerde verbindingspunt verwijderen"
 
-#: ../src/widgets/toolbox.cpp:8526
+#: ../src/widgets/toolbox.cpp:8527
 msgid "Fill by"
 msgstr "Vullen met"
 
-#: ../src/widgets/toolbox.cpp:8527
+#: ../src/widgets/toolbox.cpp:8528
 msgid "Fill by:"
 msgstr "Vullen met:"
 
-#: ../src/widgets/toolbox.cpp:8539
+#: ../src/widgets/toolbox.cpp:8540
 msgid "Fill Threshold"
 msgstr "Vullingsdrempel"
 
-#: ../src/widgets/toolbox.cpp:8540
+#: ../src/widgets/toolbox.cpp:8541
 msgid "The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"
 msgstr "Het maximaal toegestane verschil tussen de aangeklikte pixel en de naastliggende pixels geteld in de vulling"
 
-#: ../src/widgets/toolbox.cpp:8566
+#: ../src/widgets/toolbox.cpp:8567
 msgid "Grow/shrink by"
 msgstr "Verdikken/verdunnen met"
 
-#: ../src/widgets/toolbox.cpp:8566
+#: ../src/widgets/toolbox.cpp:8567
 msgid "Grow/shrink by:"
 msgstr "Verdikken/verdunnen met:"
 
-#: ../src/widgets/toolbox.cpp:8567
+#: ../src/widgets/toolbox.cpp:8568
 msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr "De hoeveelheid waarmee het vullingspad verdikt (positief) of verdund (negatief) moet worden"
 
-#: ../src/widgets/toolbox.cpp:8592
+#: ../src/widgets/toolbox.cpp:8593
 msgid "Close gaps"
 msgstr "Gaten opvullen"
 
-#: ../src/widgets/toolbox.cpp:8593
+#: ../src/widgets/toolbox.cpp:8594
 msgid "Close gaps:"
 msgstr "Gaten opvullen:"
 
-#: ../src/widgets/toolbox.cpp:8605
+#: ../src/widgets/toolbox.cpp:8606
 msgid "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
 msgstr "Herinitialiseer afgebakende gebieden vullen naar standaardwaarden (gebruik Inkscape-voorkeuren > Gereedschappen om de standaardwaarden te veranderen)"
 
@@ -23904,6 +23954,7 @@ msgid "Converts to HSL, randomizes hue and/or saturation and/or lightness and co
 msgstr "Converteert naar TVL, randomiseert tint en/of verzadiging en/of lichtheid en converteert terug naar RGB."
 
 #: ../share/extensions/color_randomize.inx.h:7
+#: ../share/extensions/render_alphabetsoup.inx.h:2
 msgid "Randomize"
 msgstr "Willekeurig maken"
 
@@ -24235,8 +24286,8 @@ msgid "AutoCAD DXF R13 (*.dxf)"
 msgstr "AutoCAD DXF R13 (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:8
-msgid "Character Encoding"
-msgstr "Karakterencodering"
+msgid "Character encoding:"
+msgstr "Karakterencodering:"
 
 #: ../share/extensions/dxf_input.inx.h:9
 msgid "DXF Input"
@@ -24251,20 +24302,20 @@ msgid "Import AutoCAD's Document Exchange Format"
 msgstr "AutoCAD's Document Exchange Format importeren"
 
 #: ../share/extensions/dxf_input.inx.h:13
-msgid "Manual x-axis origin (mm)"
-msgstr "Handmatige oorsprong x-as (mm)"
+msgid "Manual x-axis origin (mm):"
+msgstr "Handmatige oorsprong x-as (mm):"
 
 #: ../share/extensions/dxf_input.inx.h:14
-msgid "Manual y-axis origin (mm)"
-msgstr "Handmatige oorsprong y-as (mm)"
+msgid "Manual y-axis origin (mm):"
+msgstr "Handmatige oorsprong y-as (mm):"
 
 #: ../share/extensions/dxf_input.inx.h:16
-msgid "Or, use manual scale factor"
-msgstr "Of manuele schalingsfactor gebruiken"
+msgid "Or, use manual scale factor:"
+msgstr "Of manuele schalingsfactor gebruiken:"
 
 #: ../share/extensions/dxf_input.inx.h:17
-msgid "Text Font"
-msgstr "Lettertype tekst"
+msgid "Text Font:"
+msgstr "Lettertype tekst:"
 
 #: ../share/extensions/dxf_input.inx.h:18
 msgid "Use automatic scaling to size A4"
@@ -24634,7 +24685,7 @@ msgid "Gcodetools plug-in: converts paths to Gcode (using circular interpolation
 msgstr "Gcodetools uitbreiding: converteert paden in Gcode (met behulp van cirkelinterpolatie), maakt offsetpaden en graveert scherpe hoeken met conische snijmessen. Deze uitbreiding berekent Gcode voor paden met behulp van cirkelinterpolatie of lineaire verplaatsing. Tutorials, handleidingen en ondersteuning zijn beschikbaar op het Engelstalige forum: http://www.cnc-club.ru/gcodetools en op het Russische forum http://www.cnc-club.ru/gcodetoolsru. Auteurs: Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas, Chris Lusby Taylor. Gcodetools ver. 1.7"
 
 #: ../share/extensions/gcodetools_about.inx.h:4
-msgid "Gcodetools was developed to make simple Gcode from Inkscape's paths. Gcode is a special format which is used in most of CNC machines. So Gcodetools allows you to use Inkscape as CAM program. It can be use with a lot of machone types: Mills Lathes Laser and Palsma cutters and engravers Mill engravers Plotters etc. To get more info visit developers page at http://www.cnc-club.ru/gcodetools"
+msgid "Gcodetools was developed to make simple Gcode from Inkscape's paths. Gcode is a special format which is used in most of CNC machines. So Gcodetools allows you to use Inkscape as CAM program. It can be use with a lot of machine types: Mills Lathes Laser and Plasma cutters and engravers Mill engravers Plotters etc. To get more info visit developers page at http://www.cnc-club.ru/gcodetools"
 msgstr "Gcodetools is ontworpen om eenvoudige Gcode uit Inkscape paden te maken. Gcode is een speciaal formaat gebruikt door de meeste CNC machines. Gcodetools laat je zo toe Inkscape als CAM programma te gebruiken. Het kan gebruikt worden met vele machinetypes: maalmachines, draaibanken, laser- en plasmasnijders en graveermachines. Meer info beschikbaar op het ontwikkelaarsforum op http://www.cnc-club.ru/gcodetools."
 
 #: ../share/extensions/gcodetools_area.inx.h:1
@@ -24672,7 +24723,7 @@ msgid "Area artifacts"
 msgstr "Oppervlakartefacten"
 
 #: ../share/extensions/gcodetools_area.inx.h:7
-msgid "Area fill anlge"
+msgid "Area fill angle"
 msgstr "Hoek"
 
 #: ../share/extensions/gcodetools_area.inx.h:8
@@ -24714,8 +24765,8 @@ msgstr "Commentaar gcode:"
 #: ../share/extensions/gcodetools_area.inx.h:15
 #: ../share/extensions/gcodetools_lathe.inx.h:7
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:6
-msgid "Cutting order"
-msgstr "Volgorde snijden"
+msgid "Cutting order:"
+msgstr "Volgorde snijden:"
 
 #: ../share/extensions/gcodetools_area.inx.h:16
 #: ../share/extensions/gcodetools_lathe.inx.h:8
@@ -26952,13 +27003,9 @@ msgstr "De normaaldistributie gebruiken"
 msgid "Alphabet Soup"
 msgstr "Lettersoep"
 
-#: ../share/extensions/render_alphabetsoup.inx.h:2
-msgid "Random Seed:"
-msgstr "Randomisatiewaarde:"
-
 #: ../share/extensions/render_alphabetsoup.inx.h:5
-#: ../share/extensions/render_barcode_datamatrix.inx.h:5
-#: ../share/extensions/render_barcode_qrcode.inx.h:16
+#: ../share/extensions/render_barcode_datamatrix.inx.h:6
+#: ../share/extensions/render_barcode_qrcode.inx.h:17
 msgid "Text:"
 msgstr "Tekst:"
 
@@ -26967,6 +27014,8 @@ msgid "Bar Height:"
 msgstr "Hoogte van streepjes:"
 
 #: ../share/extensions/render_barcode.inx.h:2
+#: ../share/extensions/render_barcode_datamatrix.inx.h:1
+#: ../share/extensions/render_barcode_qrcode.inx.h:2
 msgid "Barcode"
 msgstr "Streepjescode"
 
@@ -26978,26 +27027,26 @@ msgstr "Streepjescodedata:"
 msgid "Barcode Type:"
 msgstr "Soort streepjescode:"
 
-#: ../share/extensions/render_barcode_datamatrix.inx.h:1
-msgid "Barcode - Datamatrix"
-msgstr "Streepjescode - datamatrix"
+#: ../share/extensions/render_barcode.inx.h:5
+msgid "Classic"
+msgstr "Klassiek"
 
-#: ../share/extensions/render_barcode_datamatrix.inx.h:3
-#: ../share/extensions/render_barcode_qrcode.inx.h:14
+#: ../share/extensions/render_barcode_datamatrix.inx.h:2
+msgid "Datamatrix"
+msgstr "Datamatrix"
+
+#: ../share/extensions/render_barcode_datamatrix.inx.h:4
+#: ../share/extensions/render_barcode_qrcode.inx.h:15
 msgid "Size, in unit squares:"
 msgstr "Grootte, in punten:"
 
-#: ../share/extensions/render_barcode_datamatrix.inx.h:4
+#: ../share/extensions/render_barcode_datamatrix.inx.h:5
 msgid "Square Size (px):"
 msgstr "Grootte vierkant (px):"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:1
 msgid "Auto"
 msgstr "Automatisch"
-
-#: ../share/extensions/render_barcode_qrcode.inx.h:2
-msgid "Barcode - QR Code"
-msgstr "Streepjescode - QR code"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:3
 msgid "Error correction level:"
@@ -27023,15 +27072,19 @@ msgstr "M (Ong. 15%)"
 msgid "Q (Approx. 25%)"
 msgstr "Q (Ong. 25%)"
 
-#: ../share/extensions/render_barcode_qrcode.inx.h:13
+#: ../share/extensions/render_barcode_qrcode.inx.h:12
+msgid "QR Code"
+msgstr "QR-code"
+
+#: ../share/extensions/render_barcode_qrcode.inx.h:14
 msgid "See http://www.denso-wave.com/qrcode/index-e.html for details"
 msgstr "Zie http://www.denso-wave.com/qrcode/index-e.html voor details"
 
-#: ../share/extensions/render_barcode_qrcode.inx.h:15
+#: ../share/extensions/render_barcode_qrcode.inx.h:16
 msgid "Square size (px):"
 msgstr "Grootte punt (px):"
 
-#: ../share/extensions/render_barcode_qrcode.inx.h:17
+#: ../share/extensions/render_barcode_qrcode.inx.h:18
 msgid "With \"Auto\", the size of the barcode depends on the length of the text and the error correction level"
 msgstr "Met \"Automatisch\" ahngt de grootte van de barcode af van de lengte van de tekst en het foutcorrectieniveau"
 
@@ -27171,7 +27224,7 @@ msgstr "Groepen maken voor gelijkende attributen"
 
 #: ../share/extensions/scour.inx.h:3
 msgid "Embed rasters"
-msgstr "Rasters invoegen"
+msgstr "Rasterafbeeldingen invoegen"
 
 #: ../share/extensions/scour.inx.h:4
 msgid "Enable viewboxing"
@@ -27202,6 +27255,12 @@ msgid ""
 "    * Preserve these ID names, comma-separated: you can use this in conjunction with the other preserve options if you wish to preserve some more specific ID names.\n"
 "    * Preserve ID names starting with: usually, optimised SVG output removes all unused ID names, but if all of your preserved ID names start with the same prefix (e.g. #flag-mx, #flag-pt), you may use this option."
 msgstr ""
+"Specifieke ID-opties:\n"
+"    * Ongebruikte ID-namen voor elementen verwijderen: alle ongerefereerde ID-attributen verwijderen.\n"
+"    * ID's afkorten: de lengte van alle ID-attributen reduceren door toekenning van de kortst mogelijke lengte voor de meest gerefereerde elementen. Bijvoorbeeld, #linearGradient5621 100 maal gerefereerd, kan #a worden.\n"
+"    * Manueel aangemaakte ID-namen die niet op cijfers eindigen, behouden: normaal verwijdert geoptimaliseerde SVG-uitvoer deze, maar indien ze nodig zijn voor het refereren (bv. #middelpunt), mag je deze optie gebruiken.\n"
+"    * Deze ID-namen, gescheiden door komma's, behouden: je kan dit in combinatie met de andere opties gebruiken om specifieke ID-namen te behouden.\n"
+"    * ID-namen behouden die beginnen met: normaal verwijderd geoptimaliseerd CVG-uitvoer alle ongebruikte ID-namen, maar indien al je te behouden ID-namen met dezelfde prefix beginnen (bv. #vlag-mx, #vlag-pt), kan je deze optie gebruiken."
 
 #: ../share/extensions/scour.inx.h:15
 msgid "Keep editor data"
@@ -27284,6 +27343,19 @@ msgid ""
 "    * Number of significant digits for coords: all coordinates are output with that number of significant digits. For example, if 3 is specified, the coordinate 3.5153 is output as 3.51 and the coordinate 471.55 is output as 472.\n"
 "    * XML indentation (pretty-printing): either None for no indentation, Space to use one space per nesting level, or Tab to use one tab per nesting level."
 msgstr ""
+"Deze uitbreiding optimaliseert het SVG-bestand volgens deze opties:\n"
+"    * Kleurwaarden afkorten: alle kleuren van omzetten in #RRGGBB of #RGB formaat.\n"
+"    * CSS-attributen omzetten in XML-attributen: stijlen van &lt;style&gt; tags en inline style=\"\" declaraties omzetten in XML-attributen.\n"
+"    * Groepen samenvouwen: verwijdert ongebruikte &lt;g&gt; elementen om de inhoud één niveau hoger te plaatsen. Hiervoor moet \"Ongebruikte ID-namen voor elementen verwijderd\" ingeschakeld zijn.\n"
+"    * Groepen maken voor gelijkaardige attributen: &lt;g&gt; elementen maken voor een serie elementen met ten minste een gemeenschappelijk attribuut (bv. vulkleur, lijntransparantie, ...).\n"
+"    * Rasterafbeeldingen invoegen: rasterafbeeldingen invoegen als base64-geëncodeerde data URL's.\n"
+"    * Programmadata behouden: geen Inkscape, Sodipodi of Adobe Illustrator elementen en attributen verwijderen.\n"
+"    * Metadata verwijderen: &lt;metadata&gt; tags verwijderen, die licentiemetadata, alternatieve versies voor niet-SVG-compatibele browsers, etc. bevatten.\n"
+"    * Opmerkingen verwijderen: &lt;!-- --&gt; tags verwijderen.\n"
+"    * Omzeilen van renderbugs: maakt iets grotere SVG-data aan, maar omzeilt een in bug de librsvg renderer, die door Eye of GNOME en andere applicaties gebruikt wordt.\n"
+"    * Viewbox activeren: stel afbeelding in op 100%/100% en introduceert een viewBox.\n"
+"    * Aantal beduidende cijfers voor coördinaten: alle coördinaten worden weggeschreven met dit aantal beduidende cijfers. Bijvoorbeeld, indien 3 is opgegeven wordt de coördinaat 3.5153 weggeschreven als 3.51 en de coördinaat 471.55 als 472.\n"
+"    * XML inspringen (mooie afdruk): ofwel Geen voor geen inspringing, Spatie voor een spatie per niveau, ofwel Tab voor een tab per niveau."
 
 #: ../share/extensions/scour.inx.h:47
 msgid "Work around renderer bugs"
@@ -27575,15 +27647,24 @@ msgstr "U kan de namen veranderen voor andere talen:"
 msgid "Convert to Braille"
 msgstr "Omzetten naar Braille"
 
-#: ../share/extensions/text_flipcase.inx.h:2
+#: ../share/extensions/text_flipcase.inx.h:1
+#: ../share/extensions/text_lowercase.inx.h:1
+#: ../share/extensions/text_randomcase.inx.h:1
+#: ../share/extensions/text_sentencecase.inx.h:1
+#: ../share/extensions/text_titlecase.inx.h:1
+#: ../share/extensions/text_uppercase.inx.h:1
+msgid "Change Case"
+msgstr "Hoofdlettergebruik"
+
+#: ../share/extensions/text_flipcase.inx.h:3
 msgid "fLIP cASE"
 msgstr "Hoofd- en kleine letters omwisselen"
 
-#: ../share/extensions/text_lowercase.inx.h:2
+#: ../share/extensions/text_lowercase.inx.h:3
 msgid "lowercase"
 msgstr "kleine letters"
 
-#: ../share/extensions/text_randomcase.inx.h:2
+#: ../share/extensions/text_randomcase.inx.h:3
 msgid "rANdOm CasE"
 msgstr "wiLLeKeURige hOofDleTteRs"
 
@@ -27599,15 +27680,15 @@ msgstr "Tekst vervangen"
 msgid "Replace:"
 msgstr "Vervangen:"
 
-#: ../share/extensions/text_sentencecase.inx.h:1
+#: ../share/extensions/text_sentencecase.inx.h:2
 msgid "Sentence case"
 msgstr "Eerste woord in zin met hoofdletter"
 
-#: ../share/extensions/text_titlecase.inx.h:2
+#: ../share/extensions/text_titlecase.inx.h:3
 msgid "Title Case"
 msgstr "Elk Woord Met Hoofdletter"
 
-#: ../share/extensions/text_uppercase.inx.h:2
+#: ../share/extensions/text_uppercase.inx.h:3
 msgid "UPPERCASE"
 msgstr "HOOFDLETTERS"
 
@@ -28109,6 +28190,14 @@ msgstr "Windows Metafile-invoer"
 msgid "XAML Input"
 msgstr "XAML-invoer"
 
+#~ msgid "link"
+#~ msgstr "Linken"
+#~ msgid "Barcode - QR Code"
+#~ msgstr "Streepjescode - QR code"
+#~ msgid "Vibration:"
+#~ msgstr "Vibratie:"
+#~ msgid "Random Seed:"
+#~ msgstr "Randomisatiewaarde:"
 #~ msgid "center"
 #~ msgstr "midden"
 #~ msgid "Center"
