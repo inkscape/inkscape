@@ -752,6 +752,7 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
                     gtk_text_buffer_set_text (tb, str, strlen (str));
                     gtk_text_buffer_set_modified (tb, FALSE);
                 }
+                g_free(phrase);
                 phrase = str;
 
             } else {

@@ -312,6 +312,15 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
     document->rdoc = rdoc;
     document->rroot = rroot;
 
+    if (document->uri){
+        g_free(document->uri);
+    }
+    if (document->base){
+        g_free(document->base);
+    }
+    if (document->name){
+        g_free(document->name);
+    }
 #ifndef WIN32
     document->uri = prepend_current_dir_if_relative(uri);
 #else
@@ -503,7 +512,7 @@ SPDocument *SPDocument::createNewDocFromMem(gchar const *buffer, gint length, un
     name = g_strdup_printf(_("Memory document %d"), ++doc_count);
 
     doc = createDoc(rdoc, NULL, NULL, name, keepalive);
-
+    g_free(name);
     return doc;
 }
 

@@ -226,7 +226,6 @@ static void calcFilter(double const sigma, double b[N]) {
     double qbeg = 1; // Don't go lower than sigma==2 (we'd probably want a normal convolution in that case anyway)
     double qend = 2*sigma;
     double const sigmasqr = sqr(sigma);
-    double s;
     do { // Binary search for right q (a linear interpolation scheme is suggested, but this should work fine as well)
         double const q = (qbeg+qend)/2;
         // Compute scaled filter coefficients
@@ -239,7 +238,6 @@ static void calcFilter(double const sigma, double b[N]) {
         } else {
             qend = q;
         }
-        s = sqrt(ssqr);
     } while(qend-qbeg>(sigma/(1<<30)));
     // Compute filter coefficients
     double const q = (qbeg+qend)/2;
