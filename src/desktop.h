@@ -138,7 +138,7 @@ public:
 
 
     Inkscape::ObjectHierarchy *_layer_hierarchy;
-    gchar * _reconstruction_old_layer_id;
+    Glib::ustring _reconstruction_old_layer_id;
 
     sigc::signal<void, sp_verb_t>      _tool_changed;
     sigc::signal<void, SPObject *>     _layer_changed_signal;

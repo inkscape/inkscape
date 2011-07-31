@@ -156,7 +156,7 @@ SPDesktop::SPDesktop() :
     gr_point_i( 0 ),
     gr_fill_or_stroke( true ),
     _layer_hierarchy( 0 ),
-    _reconstruction_old_layer_id( 0 ),
+    _reconstruction_old_layer_id(), // an id attribute is not allowed to be the empty string
     _display_mode(Inkscape::RENDERMODE_NORMAL),
     _display_color_mode(Inkscape::COLORRENDERMODE_NORMAL),
     _widget( 0 ),
@@ -305,7 +305,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
         document->connectReconstructionStart(sigc::bind(sigc::ptr_fun(_reconstruction_start), this));
     _reconstruction_finish_connection =
         document->connectReconstructionFinish(sigc::bind(sigc::ptr_fun(_reconstruction_finish), this));
-    _reconstruction_old_layer_id = NULL;
+    _reconstruction_old_layer_id.clear();
 
     // ?
     // sp_active_desktop_set (desktop);
@@ -1694,14 +1694,10 @@ _layer_hierarchy_changed(SPObject */*top*/, SPObject *bottom,
 }
 
 /// Called when document is starting to be rebuilt.
-static void
-_reconstruction_start (SPDesktop * desktop)
+static void _reconstruction_start(SPDesktop * desktop)
 {
     // printf("Desktop, starting reconstruction\n");
-    if (desktop->_reconstruction_old_layer_id){
-        g_free(desktop->_reconstruction_old_layer_id);
-    }
-    desktop->_reconstruction_old_layer_id = g_strdup(desktop->currentLayer()->getId());
+    desktop->_reconstruction_old_layer_id = desktop->currentLayer()->getId() ? desktop->currentLayer()->getId() : "";
     desktop->_layer_hierarchy->setBottom(desktop->currentRoot());
 
     /*
@@ -1716,21 +1712,18 @@ _reconstruction_start (SPDesktop * desktop)
 }
 
 /// Called when document rebuild is finished.
-static void
-_reconstruction_finish (SPDesktop * desktop)
+static void _reconstruction_finish(SPDesktop * desktop)
 {
     // printf("Desktop, finishing reconstruction\n");
-    if (desktop->_reconstruction_old_layer_id == NULL)
-        return;
+    if ( !desktop->_reconstruction_old_layer_id.empty() ) {
+        SPObject * newLayer = desktop->namedview->document->getObjectById(desktop->_reconstruction_old_layer_id);
+        if (newLayer != NULL) {
+            desktop->setCurrentLayer(newLayer);
+        }
 
-    SPObject * newLayer = desktop->namedview->document->getObjectById(desktop->_reconstruction_old_layer_id);
-    if (newLayer != NULL)
-        desktop->setCurrentLayer(newLayer);
-
-    g_free(desktop->_reconstruction_old_layer_id);
-    desktop->_reconstruction_old_layer_id = NULL;
-    // printf("Desktop, finishing reconstruction end\n");
-    return;
+        desktop->_reconstruction_old_layer_id.clear();
+        // printf("Desktop, finishing reconstruction end\n");
+    }
 }
 
 /**
