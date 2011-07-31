@@ -314,12 +314,15 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
 
     if (document->uri){
         g_free(document->uri);
+        document->uri = 0;
     }
     if (document->base){
         g_free(document->base);
+        document->base = 0;
     }
     if (document->name){
         g_free(document->name);
+        document->name = 0;
     }
 #ifndef WIN32
     document->uri = prepend_current_dir_if_relative(uri);
@@ -850,6 +853,11 @@ void
 SPDocument::removeUndoObserver(Inkscape::UndoStackObserver& observer)
 {
     this->priv->undoStackObservers.remove(observer);
+}
+
+SPObject *SPDocument::getObjectById(Glib::ustring const &id) const
+{
+    return getObjectById( id.c_str() );
 }
 
 SPObject *SPDocument::getObjectById(gchar const *id) const

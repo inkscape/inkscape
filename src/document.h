@@ -174,6 +174,7 @@ public:
     sigc::connection connectCommit(CommitSignal::slot_type slot);
 
     void bindObjectToId(gchar const *id, SPObject *object);
+    SPObject *getObjectById(Glib::ustring const &id) const;
     SPObject *getObjectById(gchar const *id) const;
     sigc::connection connectIdChanged(const gchar *id, IDChangedSignal::slot_type slot);
 
