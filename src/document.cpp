@@ -497,25 +497,21 @@ SPDocument *SPDocument::createNewDoc(gchar const *uri, unsigned int keepalive, b
 
 SPDocument *SPDocument::createNewDocFromMem(gchar const *buffer, gint length, unsigned int keepalive)
 {
-    SPDocument *doc;
-    Inkscape::XML::Document *rdoc;
-    Inkscape::XML::Node *rroot;
-    gchar *name;
+    SPDocument *doc = 0;
 
-    rdoc = sp_repr_read_mem(buffer, length, SP_SVG_NS_URI);
+    Inkscape::XML::Document *rdoc = sp_repr_read_mem(buffer, length, SP_SVG_NS_URI);
+    if ( rdoc ) {
+        // Only continue to create a non-null doc if it could be loaded
+        Inkscape::XML::Node *rroot = rdoc->root();
+        if ( strcmp(rroot->name(), "svg:svg") != 0 ) {
+            // If xml file is not svg, return NULL without warning
+            // TODO fixme: destroy document
+        } else {
+            Glib::ustring name = Glib::ustring::compose( _("Memory document %1"), ++doc_count );
+            doc = createDoc(rdoc, NULL, NULL, name.c_str(), keepalive);
+        }
+    }
 
-    /* If it cannot be loaded, return NULL without warning */
-    if (rdoc == NULL) return NULL;
-
-    rroot = rdoc->root();
-    /* If xml file is not svg, return NULL without warning */
-    /* fixme: destroy document */
-    if (strcmp(rroot->name(), "svg:svg") != 0) return NULL;
-
-    name = g_strdup_printf(_("Memory document %d"), ++doc_count);
-
-    doc = createDoc(rdoc, NULL, NULL, name, keepalive);
-    g_free(name);
     return doc;
 }
 
