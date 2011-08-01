@@ -1,5 +1,5 @@
-#ifndef __INKSCAPE_EXTENSION_INTERNAL_FILTER_BLURS_H__
-#define __INKSCAPE_EXTENSION_INTERNAL_FILTER_BLURS_H__
+#ifndef SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_BLURS_H__
+#define SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_BLURS_H__
 /* Change the 'BLURS' above to be your file name */
 
 /*
@@ -111,4 +111,4 @@ CrossBlur::get_filter_text (Inkscape::Extension::Extension * ext)
 }; /* namespace Inkscape */
 
 /* Change the 'BLURS' below to be your file name */
-#endif /* __INKSCAPE_EXTENSION_INTERNAL_FILTER_BLURS_H__ */
+#endif /* SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_BLURS_H__ */

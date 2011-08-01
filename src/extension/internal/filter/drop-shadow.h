@@ -1,5 +1,5 @@
-#ifndef __INKSCAPE_EXTENSION_INTERNAL_FILTER_DROP_SHADOW_H__
-#define __INKSCAPE_EXTENSION_INTERNAL_FILTER_DROP_SHADOW_H__
+#ifndef SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_DROP_SHADOW_H__
+#define SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_DROP_SHADOW_H__
 /* Change the 'DROP_SHADOW' above to be your file name */
 
 /*
@@ -147,4 +147,4 @@ DropGlow::get_filter_text (Inkscape::Extension::Extension * ext)
 }; /* namespace Inkscape */
 
 /* Change the 'DROP_SHADOW' below to be your file name */
-#endif /* __INKSCAPE_EXTENSION_INTERNAL_FILTER_DROP_SHADOW_H__ */
+#endif /* SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_DROP_SHADOW_H__ */

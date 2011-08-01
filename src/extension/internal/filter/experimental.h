@@ -1,5 +1,5 @@
-#ifndef __INKSCAPE_EXTENSION_INTERNAL_FILTER_EXPERIMENTAL_H__
-#define __INKSCAPE_EXTENSION_INTERNAL_FILTER_EXPERIMENTAL_H__
+#ifndef SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_EXPERIMENTAL_H__
+#define SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_EXPERIMENTAL_H__
 /* Change the 'EXPERIMENTAL' above to be your file name */
 
 /*
@@ -779,4 +779,4 @@ PosterizeBasic::get_filter_text (Inkscape::Extension::Extension * ext)
 }; /* namespace Inkscape */
 
 /* Change the 'EXPERIMENTAL' below to be your file name */
-#endif /* __INKSCAPE_EXTENSION_INTERNAL_FILTER_EXPERIMENTAL_H__ */
+#endif /* SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_EXPERIMENTAL_H__ */

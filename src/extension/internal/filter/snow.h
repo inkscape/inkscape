@@ -1,5 +1,5 @@
-#ifndef __INKSCAPE_EXTENSION_INTERNAL_FILTER_SNOW_H__
-#define __INKSCAPE_EXTENSION_INTERNAL_FILTER_SNOW_H__
+#ifndef SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_SNOW_H__
+#define SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_SNOW_H__
 /* Change the 'SNOW' above to be your file name */
 
 /*
@@ -79,4 +79,4 @@ Snow::get_filter_text (Inkscape::Extension::Extension * ext)
 }; /* namespace Inkscape */
 
 /* Change the 'SNOW' below to be your file name */
-#endif /* __INKSCAPE_EXTENSION_INTERNAL_FILTER_SNOW_H__ */
+#endif /* SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_SNOW_H__ */

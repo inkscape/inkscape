@@ -1,5 +1,5 @@
-#ifndef __INKSCAPE_EXTENSION_INTERNAL_FILTER_ABC_H__
-#define __INKSCAPE_EXTENSION_INTERNAL_FILTER_ABC_H__
+#ifndef SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_ABC_H__
+#define SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_ABC_H__
 /* Change the 'ABC' above to be your file name */
 
 /*
@@ -875,4 +875,4 @@ SpecularLight::get_filter_text (Inkscape::Extension::Extension * ext)
 }; /* namespace Inkscape */
 
 /* Change the 'ABC' below to be your file name */
-#endif /* __INKSCAPE_EXTENSION_INTERNAL_FILTER_ABC_H__ */
+#endif /* SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_ABC_H__ */
