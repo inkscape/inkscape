@@ -327,7 +327,7 @@ pix_to_x_point(PEMF_CALLBACK_DATA d, double px, double py)
     double ppy = _pix_y_to_point(d, py);
 
     double x = ppx * d->dc[d->level].worldTransform.eM11 + ppy * d->dc[d->level].worldTransform.eM21 + d->dc[d->level].worldTransform.eDx;
-    x *= d->dc[d->level].ScaleOutX ? d->dc[d->level].ScaleOutX : device_scale;
+    x *= device_scale;
     
     return x;
 }
@@ -339,7 +339,7 @@ pix_to_y_point(PEMF_CALLBACK_DATA d, double px, double py)
     double ppy = _pix_y_to_point(d, py);
 
     double y = ppx * d->dc[d->level].worldTransform.eM12 + ppy * d->dc[d->level].worldTransform.eM22 + d->dc[d->level].worldTransform.eDy;
-    y *= d->dc[d->level].ScaleOutY ? d->dc[d->level].ScaleOutY : device_scale;
+    y *= device_scale;
     
     return y;
 }
@@ -351,9 +351,9 @@ pix_to_size_point(PEMF_CALLBACK_DATA d, double px)
     double ppy = 0;
 
     double dx = ppx * d->dc[d->level].worldTransform.eM11 + ppy * d->dc[d->level].worldTransform.eM21;
-    dx *= d->dc[d->level].ScaleOutX ? d->dc[d->level].ScaleOutX : device_scale;
+    dx *= device_scale;
     double dy = ppx * d->dc[d->level].worldTransform.eM12 + ppy * d->dc[d->level].worldTransform.eM22;
-    dy *= d->dc[d->level].ScaleOutY ? d->dc[d->level].ScaleOutY : device_scale;
+    dy *= device_scale;
 
     double tmp = sqrt(dx * dx + dy * dy);
     return tmp;
@@ -1056,15 +1056,6 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
                 d->dc[d->level].ScaleInY = 1;
             }
 
-            if (d->dc[d->level].sizeView.cx && d->dc[d->level].sizeView.cy) {
-                d->dc[d->level].ScaleOutX = (double) d->dc[d->level].PixelsOutX / (double) d->dc[d->level].sizeView.cx;
-                d->dc[d->level].ScaleOutY = (double) d->dc[d->level].PixelsOutY / (double) d->dc[d->level].sizeView.cy;
-            }
-            else {
-                d->dc[d->level].ScaleOutX = device_scale;
-                d->dc[d->level].ScaleOutY = device_scale;
-            }
-
             break;
         }
         case EMR_SETWINDOWORGEX:
@@ -1105,15 +1096,6 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             else {
                 d->dc[d->level].ScaleInX = 1;
                 d->dc[d->level].ScaleInY = 1;
-            }
-
-            if (d->dc[d->level].sizeView.cx && d->dc[d->level].sizeView.cy) {
-                d->dc[d->level].ScaleOutX = (double) d->dc[d->level].PixelsOutX / (double) d->dc[d->level].sizeView.cx;
-                d->dc[d->level].ScaleOutY = (double) d->dc[d->level].PixelsOutY / (double) d->dc[d->level].sizeView.cy;
-            }
-            else {
-                d->dc[d->level].ScaleOutX = device_scale;
-                d->dc[d->level].ScaleOutY = device_scale;
             }
 
             break;
