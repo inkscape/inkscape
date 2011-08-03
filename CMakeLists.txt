@@ -8,6 +8,9 @@
 cmake_minimum_required(VERSION 2.8.0)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeScripts/Modules")
 
+# avoid having empty buildtype
+set(CMAKE_BUILD_TYPE_INIT "Release")
+
 project(inkscape)
 
 set(INKSCAPE_VERSION 0.48+devel)
@@ -36,6 +39,7 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE )
 # Options
 # -----------------------------------------------------------------------------
 option(WITH_DBUS "Compile with support for DBus interface" OFF)
+option(ENABLE_LCMS "Compile with LCMS support" OFF)
 option(WITH_GNOME_VFS "Compile with support for Gnome VFS" OFF)
 #option(WITH_INKJAR "Enable support for openoffice files (SVG jars)" ON)
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# $Id: cmake_consistency_check.py 38450 2011-07-17 12:42:03Z campbellbarton $
+# $Id: cmake_consistency_check.py 38869 2011-07-31 03:15:37Z campbellbarton $
 # ***** BEGIN GPL LICENSE BLOCK *****
 #
 # This program is free software; you can redistribute it and/or
@@ -39,12 +39,12 @@ def replace_line(f, i, text, keep_indent=True):
     file_handle = open(f, 'r')
     data = file_handle.readlines()
     file_handle.close()
-    
+
     l = data[i]
     ws = l[:len(l) - len(l.lstrip())]
-    
+
     data[i] = "%s%s\n" % (ws, text)
-    
+
     file_handle = open(f, 'w')
     file_handle.writelines(data)
     file_handle.close()
@@ -182,13 +182,13 @@ def cmake_get_src(f):
 
                                 if new_path_rel != l:
                                     print("overly relative path:\n  %s:%d\n  %s\n  %s" % (f, i, l, new_path_rel))
-                                    
+
                                     ## Save time. just replace the line
                                     # replace_line(f, i - 1, new_path_rel)
-                                    
+
                             else:
                                 raise Exception("non existant include %s:%d -> %s" % (f, i, new_file))
-                            
+
                         # print(new_file)
 
             global_h.update(set(sources_h))
@@ -206,7 +206,7 @@ def cmake_get_src(f):
                 if ff not in sources_c:
                     print("  missing: " + ff)
             '''
-            
+
             # reset
             sources_h[:] = []
             sources_c[:] = []
