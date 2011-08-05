@@ -621,29 +621,35 @@ dnl ******************************
 dnl Check for libwpg for extension
 dnl ******************************
 
+AC_ARG_ENABLE(wpg,
+       [  --disable-wpg           compile without support for WordPerfect Graphics],
+       enable_wpg=$enableval,enable_wpg=yes)
+
 with_libwpg=no
 
-PKG_CHECK_MODULES(LIBWPG01, libwpg-0.1 libwpg-stream-0.1, with_libwpg01=yes, with_libwpg01=no)
-if test "x$with_libwpg01" = "xyes"; then
-	AC_DEFINE(WITH_LIBWPG01,1,[Build in libwpg 0.1.x])
-	with_libwpg=yes
-	AC_SUBST(LIBWPG_LIBS, $LIBWPG01_LIBS)
-	AC_SUBST(LIBWPG_CFLAGS, $LIBWPG01_CFLAGS)
+if test "x$enable_wpg" = "xyes"; then
+	PKG_CHECK_MODULES(LIBWPG01, libwpg-0.1 libwpg-stream-0.1, with_libwpg01=yes, with_libwpg01=no)
+	if test "x$with_libwpg01" = "xyes"; then
+		AC_DEFINE(WITH_LIBWPG01,1,[Build in libwpg 0.1.x])
+		with_libwpg=yes
+		AC_SUBST(LIBWPG_LIBS, $LIBWPG01_LIBS)
+		AC_SUBST(LIBWPG_CFLAGS, $LIBWPG01_CFLAGS)
+	fi
+
+	PKG_CHECK_MODULES(LIBWPG02, libwpg-0.2 libwpd-0.9 libwpd-stream-0.9, with_libwpg02=yes, with_libwpg02=no)
+	if test "x$with_libwpg02" = "xyes"; then
+		AC_DEFINE(WITH_LIBWPG02,1,[Build in libwpg 0.2.x])
+		with_libwpg=yes
+		AC_SUBST(LIBWPG_LIBS, $LIBWPG02_LIBS)
+		AC_SUBST(LIBWPG_CFLAGS, $LIBWPG02_CFLAGS)
+	fi
+
+	if test "x$with_libwpg" = "xyes"; then
+		AC_DEFINE(WITH_LIBWPG,1,[Build in libwpg])
+	fi
 fi
 AM_CONDITIONAL(WITH_LIBWPG01, test "x$with_libwpg01" = "xyes")
-
-PKG_CHECK_MODULES(LIBWPG02, libwpg-0.2 libwpd-0.9 libwpd-stream-0.9, with_libwpg02=yes, with_libwpg02=no)
-if test "x$with_libwpg02" = "xyes"; then
-	AC_DEFINE(WITH_LIBWPG02,1,[Build in libwpg 0.2.x])
-	with_libwpg=yes
-	AC_SUBST(LIBWPG_LIBS, $LIBWPG02_LIBS)
-	AC_SUBST(LIBWPG_CFLAGS, $LIBWPG02_CFLAGS)
-fi
 AM_CONDITIONAL(WITH_LIBWPG02, test "x$with_libwpg02" = "xyes")
-
-if test "x$with_libwpg" = "xyes"; then
-	AC_DEFINE(WITH_LIBWPG,1,[Build in libwpg])
-fi
 AM_CONDITIONAL(WITH_LIBWPG, test "x$with_libwpg" = "xyes")
 
 dnl ******************************
