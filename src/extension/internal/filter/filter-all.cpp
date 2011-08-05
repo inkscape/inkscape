@@ -37,7 +37,6 @@ Filter::filters_all (void )
     /* Experimental custom predefined filters */
 
     // ABC
-    Blur::init();
     CleanEdges::init();
     ColorShift::init();
     DiffuseLight::init();
@@ -50,7 +49,9 @@ Filter::filters_all (void )
     SpecularLight::init();
 
     // Blurs
+    Blur::init();
     CrossBlur::init();
+    ImageBlur::init();
     
     // Bumps
     Bump::init();

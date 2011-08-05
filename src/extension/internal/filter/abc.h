@@ -8,7 +8,6 @@
  *   Nicolas Dufour (UI) <nicoduf@yahoo.fr>
  *
  * Basic filters
- *   Blur
  *   Clean edges
  *   Color shift
  *   Diffuse light
@@ -34,64 +33,6 @@ namespace Inkscape {
 namespace Extension {
 namespace Internal {
 namespace Filter {
-
-/**
-    \brief    Custom predefined Blur filter.
-    
-    Simple horizontal and vertical blur
-
-    Filter's parameters:
-    * Horizontal blur (0.01->100., default 2) -> blur (stdDeviation)
-    * Vertical blur (0.01->100., default 2) -> blur (stdDeviation)
-*/
-
-class Blur : public Inkscape::Extension::Internal::Filter::Filter {
-protected:
-    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
-
-public:
-    Blur ( ) : Filter() { };
-    virtual ~Blur ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
-
-    static void init (void) {
-        Inkscape::Extension::build_from_mem(
-            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Blur, custom (ABCs)") "</name>\n"
-              "<id>org.inkscape.effect.filter.Blur</id>\n"
-              "<param name=\"hblur\" gui-text=\"" N_("Horizontal blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.00\">2</param>\n"
-              "<param name=\"vblur\" gui-text=\"" N_("Vertical blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.00\">2</param>\n"
-              "<effect>\n"
-                "<object-type>all</object-type>\n"
-                "<effects-menu>\n"
-                  "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
-                  "</submenu>\n"
-                "</effects-menu>\n"
-                "<menu-tip>" N_("Simple vertical and horizontal blur effect") "</menu-tip>\n"
-              "</effect>\n"
-            "</inkscape-extension>\n", new Blur());
-    };
-
-};
-
-gchar const *
-Blur::get_filter_text (Inkscape::Extension::Extension * ext)
-{
-    if (_filter != NULL) g_free((void *)_filter);
-
-    std::ostringstream hblur;
-    std::ostringstream vblur;
-
-    hblur << ext->get_param_float("hblur");
-    vblur << ext->get_param_float("vblur");
-
-    _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Blur, custom\">\n"
-          "<feGaussianBlur stdDeviation=\"%s %s\" result=\"blur\" />\n"
-        "</filter>\n", hblur.str().c_str(), vblur.str().c_str());
-
-    return _filter;
-}; /* Blur filter */
 
 /**
     \brief    Custom predefined Clean edges filter.

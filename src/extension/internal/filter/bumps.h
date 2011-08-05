@@ -172,6 +172,7 @@ Bump::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream floodRed;
     std::ostringstream floodGreen;
     std::ostringstream floodBlue;
+    std::ostringstream floodAlpha;
     std::ostringstream colorize;
 
     
@@ -231,6 +232,7 @@ Bump::get_filter_text (Inkscape::Extension::Extension * ext)
     floodRed << ((imageColor >> 24) & 0xff);
     floodGreen << ((imageColor >> 16) & 0xff);
     floodBlue << ((imageColor >>  8) & 0xff);
+    floodAlpha << (imageColor & 0xff) / 255.0F;
     
     if (ext->get_param_bool("colorize")) {
         colorize << "flood" ;
@@ -248,14 +250,14 @@ Bump::get_filter_text (Inkscape::Extension::Extension * ext)
         "%s\n"
           "%s\n"
         "%s\n"
-        "<feFlood flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
+        "<feFlood flood-color=\"rgb(%s,%s,%s)\" flood-opacity=\"%s\" result=\"flood\" />\n"
         "<feComposite in=\"lighting\" in2=\"%s\" operator=\"arithmetic\" k3=\"1\" k2=\"1\" result=\"composite2\" />\n"
         "<feBlend in2=\"SourceGraphic\" mode=\"%s\" result=\"blend\" />\n"
         "<feComposite in=\"blend\" in2=\"SourceGraphic\" operator=\"in\" k2=\"1\" result=\"composite3\" />\n"
         "</filter>\n", simplifyImage.str().c_str(), bumpSource.str().c_str(), red.str().c_str(), green.str().c_str(), blue.str().c_str(),
                        crop.str().c_str(), simplifyBump.str().c_str(),
                        lightStart.str().c_str(), lightOptions.str().c_str(), lightEnd.str().c_str(),
-                       floodRed.str().c_str(), floodGreen.str().c_str(), floodBlue.str().c_str(),
+                       floodRed.str().c_str(), floodGreen.str().c_str(), floodBlue.str().c_str(), floodAlpha.str().c_str(),
                        colorize.str().c_str(), blend.str().c_str());
 
     return _filter;
