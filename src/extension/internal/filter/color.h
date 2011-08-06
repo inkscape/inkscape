@@ -10,7 +10,7 @@
  * Color filters
  *   Brightness
  *   Channel painting
- *   Channel transparency
+ *   Color shift
  *   Colorize
  *   Duochrome
  *   Electrize
@@ -63,7 +63,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Brightness, custom (Color)") "</name>\n"
+              "<name>" N_("Brightness") "</name>\n"
               "<id>org.inkscape.effect.filter.Brightness</id>\n"
               "<param name=\"brightness\" gui-text=\"" N_("Brightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"1\" max=\"10.00\">2</param>\n"
               "<param name=\"sat\" gui-text=\"" N_("Over-saturation:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.0\" max=\"10.00\">0.5</param>\n"
@@ -73,7 +73,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Brightness filter") "</menu-tip>\n"
@@ -112,7 +112,6 @@ Brightness::get_filter_text (Inkscape::Extension::Extension * ext)
     return _filter;
 }; /* Brightness filter */
 
-
 /**
     \brief    Custom predefined Channel Painting filter.
     
@@ -144,7 +143,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Channel painting, custom (Color)") "</name>\n"
+              "<name>" N_("Channel painting") "</name>\n"
               "<id>org.inkscape.effect.filter.ChannelPaint</id>\n"
                 "<param name=\"tab\" type=\"notebook\">\n"
                   "<page name=\"optionstab\" _gui-text=\"Options\">\n"
@@ -163,7 +162,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Replace RGB by any color") "</menu-tip>\n"
@@ -225,90 +224,64 @@ ChannelPaint::get_filter_text (Inkscape::Extension::Extension * ext)
     return _filter;
 }; /* Channel Painting filter */
 
-
 /**
-    \brief    Custom predefined Channel transparency filter.
+    \brief    Custom predefined Color shift filter.
     
-    Channel transparency filter.
+    Rotate and desaturate hue
 
     Filter's parameters:
-    * Saturation (0.->1., default 1.) -> colormatrix1 (values)
-    * Red (-10.->10., default -1.) -> colormatrix2 (values)
-    * Green (-10.->10., default 0.5) -> colormatrix2 (values)
-    * Blue (-10.->10., default 0.5) -> colormatrix2 (values)
-    * Alpha (-10.->10., default 1.) -> colormatrix2 (values)
-    * Flood colors (guint, default 16777215) -> flood (flood-opacity, flood-color)
-    * Inverted (boolean, default false) -> composite1 (operator, true='in', false='out')
-    
-    Matrix:
-      1  0  0  0  0
-      0  1  0  0  0
-      0  0  1  0  0
-      R  G  B  A  0
+    * Shift (0->360, default 330) -> color1 (values)
+    * Saturation (0.->1., default 0.6) -> color2 (values)
 */
-class ChannelTransparency : public Inkscape::Extension::Internal::Filter::Filter {
+
+class ColorShift : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
     virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
 
 public:
-    ChannelTransparency ( ) : Filter() { };
-    virtual ~ChannelTransparency ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
-    
+    ColorShift ( ) : Filter() { };
+    virtual ~ColorShift ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Channel transparency, custom (Color)") "</name>\n"
-              "<id>org.inkscape.effect.filter.ChannelTransparency</id>\n"
-              "<param name=\"red\" gui-text=\"" N_("Red:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">-1</param>\n"
-              "<param name=\"green\" gui-text=\"" N_("Green:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0.5</param>\n"
-              "<param name=\"blue\" gui-text=\"" N_("Blue:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0.5</param>\n"
-              "<param name=\"alpha\" gui-text=\"" N_("Alpha:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1.\">1</param>\n"
-              "<param name=\"invert\" gui-text=\"" N_("Inverted") "\" type=\"boolean\">false</param>\n"
+              "<name>" N_("Color shift") "</name>\n"
+              "<id>org.inkscape.effect.filter.ColorShift</id>\n"
+              "<param name=\"shift\" gui-text=\"" N_("Shift (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">330</param>\n"
+              "<param name=\"sat\" gui-text=\"" N_("Saturation:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1\">0.6</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
-                "<menu-tip>" N_("Replace RGB by transparency") "</menu-tip>\n"
+                "<menu-tip>" N_("Rotate and desaturate hue") "</menu-tip>\n"
               "</effect>\n"
-            "</inkscape-extension>\n", new ChannelTransparency());
+            "</inkscape-extension>\n", new ColorShift());
     };
+
 };
 
 gchar const *
-ChannelTransparency::get_filter_text (Inkscape::Extension::Extension * ext)
+ColorShift::get_filter_text (Inkscape::Extension::Extension * ext)
 {
     if (_filter != NULL) g_free((void *)_filter);
 
-    std::ostringstream red;
-    std::ostringstream green;
-    std::ostringstream blue;
-    std::ostringstream alpha;
-    std::ostringstream invert;
+    std::ostringstream shift;
+    std::ostringstream sat;
 
-    red << ext->get_param_float("red");
-    green << ext->get_param_float("green");
-    blue << ext->get_param_float("blue");
-    alpha << ext->get_param_float("alpha");
+    shift << ext->get_param_int("shift");
+    sat << ext->get_param_float("sat");
 
-    if (!ext->get_param_bool("invert")) {
-        invert << "in";
-    } else {
-        invert << "xor";
-    }
-    
     _filter = g_strdup_printf(
-        "<filter inkscape:label=\"Color channel painting\" color-interpolation-filters=\"sRGB\" x=\"0\" y=\"0\" width=\"1\" height=\"1\">\n"
-          "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 %s %s %s %s 0 \" in=\"SourceGraphic\" result=\"colormatrix\" />\n"
-          "<feComposite in=\"colormatrix\" in2=\"SourceGraphic\" operator=\"%s\" result=\"composite1\" />\n"
-        "</filter>\n", red.str().c_str(), green.str().c_str(), blue.str().c_str(), alpha.str().c_str(),
-                       invert.str().c_str());
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Color shift\">\n"
+          "<feColorMatrix type=\"hueRotate\" values=\"%s\" result=\"color1\" />\n"
+          "<feColorMatrix type=\"saturate\" values=\"%s\" result=\"color2\" />\n"
+        "</filter>\n", shift.str().c_str(), sat.str().c_str());
 
     return _filter;
-}; /* Channel Transparency filter */
-
+}; /* ColorShift filter */
 
 /**
     \brief    Custom predefined Colorize filter.
@@ -335,7 +308,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-                "<name>" N_("Colorize, custom (Color)") "</name>\n"
+                "<name>" N_("Colorize") "</name>\n"
                 "<id>org.inkscape.effect.filter.Colorize</id>\n"
                 "<param name=\"tab\" type=\"notebook\">\n"
                   "<page name=\"optionstab\" _gui-text=\"Options\">\n"
@@ -365,7 +338,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
                   "</submenu>\n"
                   "</effects-menu>\n"
                 "<menu-tip>" N_("Blend image or object with a flood color") "</menu-tip>\n"
@@ -420,7 +393,6 @@ Colorize::get_filter_text (Inkscape::Extension::Extension * ext)
     return _filter;
 }; /* Colorize filter */
 
-
 /**
     \brief    Custom predefined Duochrome filter.
     
@@ -444,7 +416,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Duochrome, custom (Color)") "</name>\n"
+              "<name>" N_("Duochrome") "</name>\n"
               "<id>org.inkscape.effect.filter.Duochrome</id>\n"
               "<param name=\"tab\" type=\"notebook\">\n"
                 "<page name=\"optionstab\" _gui-text=\"Options\">\n"
@@ -467,7 +439,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Convert luminance values to a duochrome palette") "</menu-tip>\n"
@@ -567,7 +539,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Electrize, custom (Color)") "</name>\n"
+              "<name>" N_("Electrize") "</name>\n"
               "<id>org.inkscape.effect.filter.Electrize</id>\n"
               "<param name=\"blur\" gui-text=\"" N_("Simplify:") "\" type=\"float\" appearance=\"full\" min=\"0.01\" max=\"10.0\">2.0</param>\n"
               "<param name=\"type\" gui-text=\"" N_("Effect type:") "\" type=\"enum\">\n"
@@ -580,7 +552,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Electro solarization effects") "</menu-tip>\n"
@@ -661,7 +633,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Greyscale, custom (Color)") "</name>\n"
+              "<name>" N_("Greyscale") "</name>\n"
               "<id>org.inkscape.effect.filter.Greyscale</id>\n"
               "<param name=\"red\" gui-text=\"" N_("Red:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0.21</param>\n"
               "<param name=\"green\" gui-text=\"" N_("Green:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0.72</param>\n"
@@ -672,7 +644,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Customize greyscale components") "</menu-tip>\n"
@@ -743,7 +715,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Lightness, custom (Color)") "</name>\n"
+              "<name>" N_("Lightness") "</name>\n"
               "<id>org.inkscape.effect.filter.Lightness</id>\n"
               "<param name=\"amplitude\" gui-text=\"" N_("Lights:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.00\" max=\"20.00\">1</param>\n"
               "<param name=\"exponent\" gui-text=\"" N_("Shadows:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.00\" max=\"20.00\">1</param>\n"
@@ -752,7 +724,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Modify lights and shadows separately") "</menu-tip>\n"
@@ -812,7 +784,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Quadritone fantasy, custom (Color)") "</name>\n"
+              "<name>" N_("Quadritone fantasy") "</name>\n"
               "<id>org.inkscape.effect.filter.Quadritone</id>\n"
                 "<param name=\"dist\" gui-text=\"" N_("Hue distribution (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">280</param>\n"
                 "<param name=\"colors\" gui-text=\"" N_("Colors:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">100</param>\n"
@@ -833,7 +805,7 @@ public:
                   "<object-type>all</object-type>\n"
                   "<effects-menu>\n"
                     "<submenu name=\"" N_("Filters") "\">\n"
-                      "<submenu name=\"" N_("Experimental") "\"/>\n"
+                      "<submenu name=\"" N_("Color") "\"/>\n"
                     "</submenu>\n"
                   "</effects-menu>\n"
                 "<menu-tip>" N_("Replace hue by two colors") "</menu-tip>\n"
@@ -874,7 +846,6 @@ Quadritone::get_filter_text (Inkscape::Extension::Extension * ext)
     return _filter;
 }; /* Quadritone filter */
 
-
 /**
     \brief    Custom predefined Solarize filter.
     
@@ -899,7 +870,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Solarize, custom (Color)") "</name>\n"
+              "<name>" N_("Solarize") "</name>\n"
               "<id>org.inkscape.effect.filter.Solarize</id>\n"
               "<param name=\"rotate\" gui-text=\"" N_("Hue rotation (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">0</param>\n"
               "<param name=\"type\" gui-text=\"" N_("Type:") "\" type=\"enum\">\n"
@@ -910,7 +881,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Classic photographic solarization effect") "</menu-tip>\n"
@@ -954,7 +925,6 @@ Solarize::get_filter_text (Inkscape::Extension::Extension * ext)
     return _filter;
 }; /* Solarize filter */
 
-
 /**
     \brief    Custom predefined Tritone filter.
     
@@ -986,7 +956,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Tritone, custom (Color)") "</name>\n"
+              "<name>" N_("Tritone") "</name>\n"
               "<id>org.inkscape.effect.filter.Tritone</id>\n"
               "<param name=\"tab\" type=\"notebook\">\n"
                 "<page name=\"optionstab\" _gui-text=\"Options\">\n"
@@ -1020,7 +990,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Create a custom tritone palette with additional glow, blend modes and hue moving") "</menu-tip>\n"

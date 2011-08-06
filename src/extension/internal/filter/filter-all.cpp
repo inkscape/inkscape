@@ -8,17 +8,17 @@
 #include "filter.h"
 
 /* Put your filter here */
-#include "abc.h"
 #include "blurs.h"
 #include "bumps.h"
 #include "color.h"
-#include "drop-shadow.h"
+#include "distort.h"
 #include "image.h"
 #include "morphology.h"
+#include "overlays.h"
+#include "paint.h"
+#include "protrusions.h"
 #include "shadows.h"
-#include "snow.h"
-
-#include "experimental.h"
+#include "transparency.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -30,36 +30,26 @@ void
 Filter::filters_all (void )
 {
 	// Here come the filters which are coded in C++ in order to present a parameters dialog
-	DropShadow::init();
-	DropGlow::init();
-	Snow::init();
 
     /* Experimental custom predefined filters */
 
-    // ABC
-    CleanEdges::init();
-    ColorShift::init();
-    DiffuseLight::init();
-    Feather::init();
-    MatteJelly::init();
-    NoiseFill::init();
-    Outline::init();
-    Roughen::init();
-    Silhouette::init();
-    SpecularLight::init();
-
     // Blurs
     Blur::init();
+    CleanEdges::init();
     CrossBlur::init();
+    Feather::init();
     ImageBlur::init();
     
     // Bumps
     Bump::init();
-    
+    DiffuseLight::init();
+    MatteJelly::init();
+    SpecularLight::init();
+
     // Color
     Brightness::init();
     ChannelPaint::init();
-    ChannelTransparency::init();
+    ColorShift::init();
     Colorize::init();
     Duochrome::init();
     Electrize::init();
@@ -69,22 +59,36 @@ Filter::filters_all (void )
     Solarize::init();
     Tritone::init();
 
-    // Image
+    // Distort
+    Roughen::init();
+
+    // Image effect
     EdgeDetect::init();
 
-    // Morphology
-    Crosssmooth::init();
-
-    // Shadows and glows
-    ColorizableDropShadow::init();
-
-    // TDB
+    // Image paint and draw
     Chromolitho::init();
     CrossEngraving::init();
     Drawing::init();
     NeonDraw::init();
     Posterize::init();
     PosterizeBasic::init();
+
+    // Morphology
+    Crosssmooth::init();
+    Outline::init();
+
+    // Overlays
+    NoiseFill::init();
+
+    // Protrusions
+    Snow::init();
+
+    // Shadows and glows
+    ColorizableDropShadow::init();
+
+    // Fill and transparency
+    ChannelTransparency::init();
+    Silhouette::init();
 
 	// Here come the rest of the filters that are read from SVG files in share/filters and
 	// .config/Inkscape/filters

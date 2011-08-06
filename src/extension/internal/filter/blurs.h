@@ -9,7 +9,9 @@
  *
  * Blur filters
  *   Blur
+ *   Clean edges
  *   Cross blur
+ *   Feather
  *   Image blur
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -48,7 +50,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Blur, custom (Blurs)") "</name>\n"
+              "<name>" N_("Blur") "</name>\n"
               "<id>org.inkscape.effect.filter.Blur</id>\n"
               "<param name=\"hblur\" gui-text=\"" N_("Horizontal blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.00\">2</param>\n"
               "<param name=\"vblur\" gui-text=\"" N_("Vertical blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.00\">2</param>\n"
@@ -56,7 +58,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Blurs") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Simple vertical and horizontal blur effect") "</menu-tip>\n"
@@ -78,13 +80,68 @@ Blur::get_filter_text (Inkscape::Extension::Extension * ext)
     vblur << ext->get_param_float("vblur");
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Blur, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Blur\">\n"
           "<feGaussianBlur stdDeviation=\"%s %s\" result=\"blur\" />\n"
         "</filter>\n", hblur.str().c_str(), vblur.str().c_str());
 
     return _filter;
 }; /* Blur filter */
 
+/**
+    \brief    Custom predefined Clean edges filter.
+    
+    Removes or decreases glows and jaggeries around objects edges after applying some filters
+
+    Filter's parameters:
+    * Strength (0.01->2., default 0.4) -> blur (stdDeviation)
+*/
+
+class CleanEdges : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    CleanEdges ( ) : Filter() { };
+    virtual ~CleanEdges ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Clean edges") "</name>\n"
+              "<id>org.inkscape.effect.filter.CleanEdges</id>\n"
+              "<param name=\"blur\" gui-text=\"" N_("Strength:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"2.00\">0.4</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Blurs") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Removes or decreases glows and jaggeries around objects edges after applying some filters") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new CleanEdges());
+    };
+
+};
+
+gchar const *
+CleanEdges::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream blur;
+
+    blur << ext->get_param_float("blur");
+
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Clean edges\">\n"
+          "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
+          "<feComposite in=\"SourceGraphic\" in2=\"blur\" operator=\"in\" result=\"composite1\" />\n"
+          "<feComposite in=\"composite1\" in2=\"composite1\" k2=\"1\" operator=\"in\" result=\"composite2\" />\n"
+        "</filter>\n", blur.str().c_str());
+
+    return _filter;
+}; /* CleanEdges filter */
 
 /**
     \brief    Custom predefined Cross blur filter.
@@ -110,7 +167,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Cross blur, custom (Blurs)") "</name>\n"
+              "<name>" N_("Cross blur") "</name>\n"
               "<id>org.inkscape.effect.filter.CrossBlur</id>\n"
               "<param name=\"bright\" gui-text=\"" N_("Brightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"10.00\">0</param>\n"
               "<param name=\"fade\" gui-text=\"" N_("Fading:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1.00\">0</param>\n"
@@ -126,7 +183,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Blurs") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Combine vertical and horizontal blur") "</menu-tip>\n"
@@ -154,7 +211,7 @@ CrossBlur::get_filter_text (Inkscape::Extension::Extension * ext)
     blend << ext->get_param_enum("blend");
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Cross blur, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Cross blur\">\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"colormatrix\" />\n"
           "<feComposite in=\"SourceGraphic\" in2=\"colormatrix\" operator=\"arithmetic\" k2=\"1\" k3=\"%s\" k4=\"%s\" result=\"composite\" />\n"
           "<feGaussianBlur stdDeviation=\"%s 0.01\" result=\"blur1\" />\n"
@@ -165,6 +222,62 @@ CrossBlur::get_filter_text (Inkscape::Extension::Extension * ext)
     return _filter;
 }; /* Cross blur filter */
 
+/**
+    \brief    Custom predefined Feather filter.
+    
+    Blurred mask on the edge without altering the contents
+
+    Filter's parameters:
+    * Strength (0.01->100., default 5) -> blur (stdDeviation)
+*/
+
+class Feather : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    Feather ( ) : Filter() { };
+    virtual ~Feather ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Feather") "</name>\n"
+              "<id>org.inkscape.effect.filter.Feather</id>\n"
+              "<param name=\"blur\" gui-text=\"" N_("Strength:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.00\">5</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Blurs") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Blurred mask on the edge without altering the contents") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new Feather());
+    };
+
+};
+
+gchar const *
+Feather::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream blur;
+
+    blur << ext->get_param_float("blur");
+
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Feather\">\n"
+          "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
+          "<feComposite in=\"SourceGraphic\" in2=\"blur\" operator=\"atop\" result=\"composite1\" />\n"
+          "<feComposite in2=\"composite1\" operator=\"in\" result=\"composite2\" />\n"
+          "<feComposite in2=\"composite2\" operator=\"in\" result=\"composite3\" />\n"
+        "</filter>\n", blur.str().c_str());
+
+    return _filter;
+}; /* Feather filter */
 
 /**
     \brief    Custom predefined Image blur filter.
@@ -194,7 +307,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Image blur, custom (Blurs)") "</name>\n"
+              "<name>" N_("Image blur") "</name>\n"
               "<id>org.inkscape.effect.filter.ImageBlur</id>\n"
               "<param name=\"tab\" type=\"notebook\">\n"
                 "<page name=\"optionstab\" _gui-text=\"Options\">\n"
@@ -220,7 +333,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Blurs") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Blur eroded by white or transparency") "</menu-tip>\n"
@@ -267,7 +380,7 @@ ImageBlur::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Image blur, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Image blur\">\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"colormatrix1\" />\n"
           "<feGaussianBlur in=\"colormatrix1\" stdDeviation=\"%s %s\" result=\"blur\" />\n"
@@ -281,8 +394,6 @@ ImageBlur::get_filter_text (Inkscape::Extension::Extension * ext)
 
     return _filter;
 }; /* Image blur filter */
-
-
 
 }; /* namespace Filter */
 }; /* namespace Internal */

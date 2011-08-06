@@ -1,10 +1,16 @@
-#ifndef SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_SNOW_H__
-#define SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_SNOW_H__
-/* Change the 'SNOW' above to be your file name */
+#ifndef SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_PROTRUSIONS_H__
+#define SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_PROTRUSIONS_H__
+/* Change the 'PROTRUSIONS' above to be your file name */
 
 /*
  * Copyright (C) 2008 Authors:
  *   Ted Gould <ted@gould.cx>
+ * Copyright (C) 2011 Authors:
+ *   Ivan Louette (filters)
+ *   Nicolas Dufour (UI) <nicoduf@yahoo.fr>
+ *
+ * Protrusion filters
+ *   Snow
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -12,11 +18,21 @@
 
 #include "filter.h"
 
+#include "extension/internal/clear-n_.h"
+#include "extension/system.h"
+#include "extension/extension.h"
+
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
 namespace Filter {
 
+
+/**
+    \brief    Custom predefined Snow filter.
+    
+    Snow has fallen on object.
+*/
 class Snow : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
 	virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
@@ -71,12 +87,13 @@ Snow::get_filter_text (Inkscape::Extension::Extension * ext)
 				"</filter>\n", drift.str().c_str());
 
 	return _filter;
-};
+}; /* Snow filter */
+
 
 }; /* namespace Filter */
 }; /* namespace Internal */
 }; /* namespace Extension */
 }; /* namespace Inkscape */
 
-/* Change the 'SNOW' below to be your file name */
-#endif /* SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_SNOW_H__ */
+/* Change the 'PROTRUSIONS' below to be your file name */
+#endif /* SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_PROTRUSIONS_H__ */

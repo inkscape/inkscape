@@ -1,13 +1,13 @@
-#ifndef SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_EXPERIMENTAL_H__
-#define SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_EXPERIMENTAL_H__
-/* Change the 'EXPERIMENTAL' above to be your file name */
+#ifndef SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_PAINT_H__
+#define SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_PAINT_H__
+/* Change the 'PAINT' above to be your file name */
 
 /*
  * Copyright (C) 2011 Authors:
  *   Ivan Louette (filters)
  *   Nicolas Dufour (UI) <nicoduf@yahoo.fr>
  *
- * Experimental filters (no assigned menu)
+ * Image paint and draw filters
  *   Chromolitho
  *   Cross engraving
  *   Drawing
@@ -66,7 +66,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Chromolitho, custom") "</name>\n"
+              "<name>" N_("Chromolitho") "</name>\n"
               "<id>org.inkscape.effect.filter.Chromolitho</id>\n"
               "<param name=\"tab\" type=\"notebook\">\n"
                 "<page name=\"optionstab\" _gui-text=\"Options\">\n"
@@ -108,7 +108,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Image Paint and Draw") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Chromo effect with customizable edge drawing and graininess") "</menu-tip>\n"
@@ -181,7 +181,7 @@ Chromolitho::get_filter_text (Inkscape::Extension::Extension * ext)
         graincol << "0";
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Chromolitho, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Chromolitho\">\n"
           "<feComposite stdDeviation=\"1\" in=\"SourceGraphic\" in2=\"SourceGraphic\" operator=\"arithmetic\" k1=\"%s\" k2=\"1\" result=\"composite1\" />\n"
           "<feConvolveMatrix in=\"composite1\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" order=\"3 3\" stdDeviation=\"1\" result=\"convolve1\" />\n"
           "<feBlend in=\"%s\" in2=\"composite1\" mode=\"%s\" blend=\"normal\" stdDeviation=\"1\" result=\"blend1\" />\n"
@@ -228,7 +228,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Cross engraving, custom") "</name>\n"
+              "<name>" N_("Cross engraving") "</name>\n"
               "<id>org.inkscape.effect.filter.CrossEngraving</id>\n"
               "<param name=\"clean\" gui-text=\"" N_("Clean-up:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"500\">30</param>\n"
               "<param name=\"dilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" appearance=\"full\" min=\"1\" max=\"50\">1</param>\n"
@@ -240,7 +240,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Image Paint and Draw") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Convert image to an engraving made of vertical and horizontal lines") "</menu-tip>\n"
@@ -272,7 +272,7 @@ CrossEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
         trans << "blend";
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Cross engraving, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Cross engraving\">\n"
           "<feConvolveMatrix in=\"SourceGraphic\" targetY=\"1\" targetX=\"1\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" order=\"3 3\" result=\"convolve\" />\n"
           "<feComposite in=\"convolve\" in2=\"convolve\" k1=\"1\" k2=\"1\" operator=\"arithmetic\" result=\"composite1\" />\n"
           "<feColorMatrix in=\"composite1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"color1\" />\n"
@@ -327,7 +327,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Drawing, custom") "</name>\n"
+              "<name>" N_("Drawing") "</name>\n"
               "<id>org.inkscape.effect.filter.Drawing</id>\n"
               "<param name=\"tab\" type=\"notebook\">\n"
                 "<page name=\"optionstab\" _gui-text=\"Options\">\n"
@@ -359,7 +359,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Image Paint and Draw") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Convert images to duochrome drawings") "</menu-tip>\n"
@@ -432,7 +432,7 @@ Drawing::get_filter_text (Inkscape::Extension::Extension * ext)
         ios << "flood2";
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Drawing, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Drawing\">\n"
         "<feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%s\" result=\"blur1\" />\n"
         "<feConvolveMatrix in=\"blur1\" targetX=\"1\" targetY=\"1\" order=\"3 3\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" result=\"convolve1\" />\n"
         "<feComposite in=\"convolve1\" in2=\"convolve1\" k1=\"1\" k2=\"1\" k4=\"%s\" operator=\"arithmetic\" stdDeviation=\"1\" result=\"composite1\" />\n"
@@ -494,7 +494,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Neon draw, custom") "</name>\n"
+              "<name>" N_("Neon draw") "</name>\n"
               "<id>org.inkscape.effect.filter.NeonDraw</id>\n"
               "<param name=\"type\" gui-text=\"" N_("Line type:") "\" type=\"enum\">\n"
                 "<_item value=\"table\">Smoothed</_item>\n"
@@ -513,7 +513,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Image Paint and Draw") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Posterize and draw smooth lines around color shapes") "</menu-tip>\n"
@@ -549,7 +549,7 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
         dark << "component1";
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Neon draw, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Neon draw\">\n"
           "<feBlend blend=\"normal\" mode=\"%s\" result=\"blend\" />\n"
           "<feGaussianBlur in=\"blend\" stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feComponentTransfer result=\"component1\">\n"
@@ -599,7 +599,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Poster paint, custom") "</name>\n"
+              "<name>" N_("Poster paint") "</name>\n"
               "<id>org.inkscape.effect.filter.Posterize</id>\n"
               "<param name=\"type\" gui-text=\"" N_("Effect type:") "\" type=\"enum\">\n"
                 "<_item value=\"normal\">Normal</_item>\n"
@@ -626,7 +626,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Image Paint and Draw") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Poster and painting effects") "</menu-tip>\n"
@@ -684,7 +684,7 @@ Posterize::get_filter_text (Inkscape::Extension::Extension * ext)
         antialias << "0.01";
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Poster paint, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Poster paint\">\n"
           "<feComposite operator=\"arithmetic\" k2=\"1\" result=\"composite1\" />\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feGaussianBlur in=\"composite1\" stdDeviation=\"%s\" result=\"blur2\" />\n"
@@ -723,7 +723,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Posterize basic, custom") "</name>\n"
+              "<name>" N_("Posterize basic") "</name>\n"
               "<id>org.inkscape.effect.filter.PosterizeBasic</id>\n"
               "<param name=\"levels\" gui-text=\"" N_("Levels:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"20\">5</param>\n"
               "<param name=\"blur\" gui-text=\"" N_("Simplify:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"20.00\">4.0</param>\n"
@@ -731,7 +731,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Experimental") "\"/>\n"
+                    "<submenu name=\"" N_("Image Paint and Draw") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Simple posterizing effect") "</menu-tip>\n"
@@ -760,7 +760,7 @@ PosterizeBasic::get_filter_text (Inkscape::Extension::Extension * ext)
     transf << " 1";
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Posterize basic, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Posterize basic\">\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feComponentTransfer stdDeviation=\"2\" in=\"blur1\" result=\"component1\">\n"
             "<feFuncR type=\"discrete\" tableValues=\"%s\" />\n"
@@ -778,5 +778,5 @@ PosterizeBasic::get_filter_text (Inkscape::Extension::Extension * ext)
 }; /* namespace Extension */
 }; /* namespace Inkscape */
 
-/* Change the 'EXPERIMENTAL' below to be your file name */
-#endif /* SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_EXPERIMENTAL_H__ */
+/* Change the 'PAINT' below to be your file name */
+#endif /* SEEN_INKSCAPE_EXTENSION_INTERNAL_FILTER_PAINT_H__ */
