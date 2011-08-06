@@ -34,27 +34,34 @@ ParamInt::ParamInt (const gchar * name,
                     Inkscape::XML::Node * xml,
                     AppearanceMode mode) :
         Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext),
-                  _value(0), _mode(mode), _min(0), _max(10)
+                  _value(0), _mode(mode), _indent(0), _min(0), _max(10)
 {
     const char * defaultval = NULL;
-    if (sp_repr_children(xml) != NULL)
+    if (sp_repr_children(xml) != NULL) {
         defaultval = sp_repr_children(xml)->content();
+    }
     if (defaultval != NULL) {
         _value = atoi(defaultval);
     }
 
     const char * maxval = xml->attribute("max");
-    if (maxval != NULL)
+    if (maxval != NULL) {
         _max = atoi(maxval);
+    }
 
     const char * minval = xml->attribute("min");
-    if (minval != NULL)
+    if (minval != NULL) {
         _min = atoi(minval);
-
+    }
     /* We're handling this by just killing both values */
     if (_max < _min) {
         _max = 10;
         _min = 0;
+    }
+
+    const char * indent = xml->attribute("indent");
+    if (indent != NULL) {
+        _indent = atoi(indent) * 12;
     }
 
     gchar *pref_name = this->pref_name();
@@ -64,8 +71,12 @@ ParamInt::ParamInt (const gchar * name,
 
     // std::cout << "New Int::  value: " << _value << "  max: " << _max << "  min: " << _min << std::endl;
 
-    if (_value > _max) _value = _max;
-    if (_value < _min) _value = _min;
+    if (_value > _max) {
+        _value = _max;
+    }
+    if (_value < _min) {
+        _value = _min;
+    }
 
     return;
 }
@@ -83,8 +94,12 @@ int
 ParamInt::set (int in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     _value = in;
-    if (_value > _max) _value = _max;
-    if (_value < _min) _value = _min;
+    if (_value > _max) {
+        _value = _max;
+    }
+    if (_value < _min) {
+        _value = _min;
+    }
 
     gchar * prefname = this->pref_name();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -139,13 +154,15 @@ ParamIntAdjustment::val_changed (void)
 Gtk::Widget *
 ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
-	if (_gui_hidden) return NULL;
+    if (_gui_hidden) {
+        return NULL;
+    }
 
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
     label->show();
-    hbox->pack_start(*label, true, true);
+    hbox->pack_start(*label, true, true, _indent);
 
     ParamIntAdjustment * fadjust = Gtk::manage(new ParamIntAdjustment(this, doc, node, changeSignal));
 

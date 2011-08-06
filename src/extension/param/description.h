@@ -36,6 +36,7 @@ private:
     /** \brief  Internal value. */
     gchar * _value;
     AppearanceMode _mode;
+    int _indent;
     const gchar* _context;
 };
 

@@ -39,18 +39,26 @@ ParamDescription::ParamDescription (const gchar * name,
                                     Inkscape::Extension::Extension * ext,
                                     Inkscape::XML::Node * xml,
                                     AppearanceMode mode) :
-    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext), _value(NULL), _mode(mode)
+    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext),
+              _value(NULL), _mode(mode), _indent(0)
 {
     // printf("Building Description\n");
     const char * defaultval = NULL;
-    if (sp_repr_children(xml) != NULL)
+    if (sp_repr_children(xml) != NULL) {
         defaultval = sp_repr_children(xml)->content();
+    }
 
-    if (defaultval != NULL)
+    if (defaultval != NULL) {
         _value = g_strdup(defaultval);
-        
+    }
+
     _context = xml->attribute("msgctxt");
-    
+
+    const char * indent = xml->attribute("indent");
+    if (indent != NULL) {
+        _indent = atoi(indent) * 12;
+    }
+
     return;
 }
 
@@ -58,7 +66,9 @@ ParamDescription::ParamDescription (const gchar * name,
 Gtk::Widget *
 ParamDescription::get_widget (SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * /*changeSignal*/)
 {
-	if (_gui_hidden) return NULL;
+	if (_gui_hidden) {
+        return NULL;
+    }
 
     Glib::ustring newguitext;
 
@@ -69,12 +79,12 @@ ParamDescription::get_widget (SPDocument * /*doc*/, Inkscape::XML::Node * /*node
     }
     
     Gtk::Label * label;
-    int padding = 12;
+    int padding = 12 + _indent;
     if (_mode == HEADER) {
         label = Gtk::manage(new Gtk::Label(Glib::ustring("<b>") +newguitext + Glib::ustring("</b>"), Gtk::ALIGN_LEFT));
         label->set_padding(0,5);
         label->set_use_markup(true);
-        padding = 0;
+        padding = _indent;
     } else {
         label = Gtk::manage(new Gtk::Label(newguitext, Gtk::ALIGN_LEFT));
     }

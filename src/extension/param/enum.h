@@ -33,7 +33,7 @@ private:
                 been allocated in memory.  And should be free'd.
                 It is the value of the current selected string */
     gchar * _value;
-
+    int _indent;
     GSList * choices; /**< A table to store the choice strings  */
 
 public:

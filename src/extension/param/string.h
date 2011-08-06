@@ -23,6 +23,7 @@ private:
     gchar * _value;
     /** \brief Internal value. This indicates the maximum leght of the string. Zero meaning unlimited. 
       */
+    int _indent;
     gint _max_length;
 public:
     ParamString(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);

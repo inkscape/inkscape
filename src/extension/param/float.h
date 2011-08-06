@@ -42,6 +42,7 @@ private:
     /** \brief  Internal value. */
     float _value;
     AppearanceMode _mode;
+    int _indent;
     float _min;
     float _max;
     int _precision;

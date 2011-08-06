@@ -23,16 +23,23 @@ namespace Extension {
 
 /** \brief  Use the superclass' allocator and set the \c _value */
 ParamBool::ParamBool (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-        Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext), _value(false)
+        Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext),
+                  _value(false), _indent(0)
 {
     const char * defaultval = NULL;
-    if (sp_repr_children(xml) != NULL)
+    if (sp_repr_children(xml) != NULL) {
         defaultval = sp_repr_children(xml)->content();
+    }
 
     if (defaultval != NULL && (!strcmp(defaultval, "true") || !strcmp(defaultval, "true") || !strcmp(defaultval, "1"))) {
         _value = true;
     } else {
         _value = false;
+    }
+
+    const char * indent = xml->attribute("indent");
+    if (indent != NULL) {
+        _indent = atoi(indent) * 12;
     }
 
     gchar * pref_name = this->pref_name();
@@ -134,7 +141,10 @@ ParamBool::string (std::string &string)
 Gtk::Widget *
 ParamBool::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
-	if (_gui_hidden) return NULL;
+    if (_gui_hidden) {
+        return NULL;
+    }
+
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
@@ -143,7 +153,7 @@ ParamBool::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signa
 
     ParamBoolCheckButton * checkbox = Gtk::manage(new ParamBoolCheckButton(this, doc, node, changeSignal));
     checkbox->show();
-    hbox->pack_start(*checkbox, false, false);
+    hbox->pack_start(*checkbox, false, false, _indent);
 
     hbox->show();
 

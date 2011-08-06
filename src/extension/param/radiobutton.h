@@ -55,7 +55,7 @@ private:
                 It is the value of the current selected string */
     gchar * _value;
     AppearanceMode _mode;
-
+    int _indent;
     GSList * choices; /**< A table to store the choice strings  */
 
 }; /* class ParamRadioButton */

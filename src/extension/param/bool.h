@@ -20,6 +20,7 @@ class ParamBool : public Parameter {
 private:
     /** \brief  Internal value. */
     bool _value;
+    int _indent;
 public:
     ParamBool(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     bool get (const SPDocument * doc, const Inkscape::XML::Node * node);

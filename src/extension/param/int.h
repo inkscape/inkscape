@@ -41,6 +41,7 @@ private:
     /** \brief  Internal value. */
     int _value;
     AppearanceMode _mode;
+    int _indent;
     int _min;
     int _max;
 };
