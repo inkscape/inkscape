@@ -13,7 +13,6 @@
  *   Color shift
  *   Colorize
  *   Duochrome
- *   Electrize
  *   Greyscale
  *   Lightness
  *   Quadritone
@@ -102,7 +101,7 @@ Brightness::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Brightness, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Brightness\">\n"
           "<feColorMatrix values=\"%s %s %s 0 %s %s %s %s 0 %s %s %s %s 0 %s 0 0 0 1 0 \" />\n"
         "</filter>\n", brightness.str().c_str(), sat.str().c_str(), sat.str().c_str(),
             lightness.str().c_str(), sat.str().c_str(), brightness.str().c_str(),
@@ -143,7 +142,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Channel painting") "</name>\n"
+              "<name>" N_("Channel Painting") "</name>\n"
               "<id>org.inkscape.effect.filter.ChannelPaint</id>\n"
                 "<param name=\"tab\" type=\"notebook\">\n"
                   "<page name=\"optionstab\" _gui-text=\"Options\">\n"
@@ -206,7 +205,7 @@ ChannelPaint::get_filter_text (Inkscape::Extension::Extension * ext)
     }
     
     _filter = g_strdup_printf(
-        "<filter inkscape:label=\"Color channel painting\" color-interpolation-filters=\"sRGB\" x=\"0\" y=\"0\" width=\"1\" height=\"1\">\n"
+        "<filter inkscape:label=\"Channel Painting\" color-interpolation-filters=\"sRGB\" x=\"0\" y=\"0\" width=\"1\" height=\"1\">\n"
           "<feColorMatrix values=\"%s\" type=\"saturate\" result=\"colormatrix1\" />\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 %s %s %s %s 0 \" in=\"SourceGraphic\" result=\"colormatrix2\" />\n"
           "<feFlood flood-color=\"rgb(%s,%s,%s)\" flood-opacity=\"%s\" result=\"flood\" />\n"
@@ -245,7 +244,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Color shift") "</name>\n"
+              "<name>" N_("Color Shift") "</name>\n"
               "<id>org.inkscape.effect.filter.ColorShift</id>\n"
               "<param name=\"shift\" gui-text=\"" N_("Shift (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">330</param>\n"
               "<param name=\"sat\" gui-text=\"" N_("Saturation:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1\">0.6</param>\n"
@@ -275,7 +274,7 @@ ColorShift::get_filter_text (Inkscape::Extension::Extension * ext)
     sat << ext->get_param_float("sat");
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Color shift\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Color Shift\">\n"
           "<feColorMatrix type=\"hueRotate\" values=\"%s\" result=\"color1\" />\n"
           "<feColorMatrix type=\"saturate\" values=\"%s\" result=\"color2\" />\n"
         "</filter>\n", shift.str().c_str(), sat.str().c_str());
@@ -380,7 +379,7 @@ Colorize::get_filter_text (Inkscape::Extension::Extension * ext)
     }
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Colorize, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Colorize\">\n"
           "<feComposite in2=\"SourceGraphic\" operator=\"arithmetic\" k1=\"%s\" k2=\"%s\" result=\"composite1\" />\n"
           "<feColorMatrix in=\"composite1\" values=\"%s\" type=\"saturate\" result=\"colormatrix1\" />\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood1\" />\n"
@@ -501,7 +500,7 @@ Duochrome::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Duochrome, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Duochrome\">\n"
           "<feColorMatrix type=\"luminanceToAlpha\" result=\"colormatrix1\" />\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood1\" />\n"
           "<feComposite in2=\"colormatrix1\" operator=\"%s\" result=\"composite1\" />\n"
@@ -516,92 +515,6 @@ Duochrome::get_filter_text (Inkscape::Extension::Extension * ext)
 
     return _filter;
 }; /* Duochrome filter */
-
-/**
-    \brief    Custom predefined Electrize filter.
-    
-    Electro solarization effects.
-
-    Filter's parameters:
-    * Simplify (0.01->10., default 2.) -> blur (stdDeviation)
-    * Effect type (enum: table or discrete, default "table") -> component (type)
-    * Level (0->10, default 3) -> component (tableValues)
-    * Inverted (boolean, default false) -> component (tableValues)
-*/
-class Electrize : public Inkscape::Extension::Internal::Filter::Filter {
-protected:
-    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
-
-public:
-    Electrize ( ) : Filter() { };
-    virtual ~Electrize ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
-
-    static void init (void) {
-        Inkscape::Extension::build_from_mem(
-            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Electrize") "</name>\n"
-              "<id>org.inkscape.effect.filter.Electrize</id>\n"
-              "<param name=\"blur\" gui-text=\"" N_("Simplify:") "\" type=\"float\" appearance=\"full\" min=\"0.01\" max=\"10.0\">2.0</param>\n"
-              "<param name=\"type\" gui-text=\"" N_("Effect type:") "\" type=\"enum\">\n"
-                "<_item value=\"table\">" N_("Table") "</_item>\n"
-                "<_item value=\"discrete\">" N_("Discrete") "</_item>\n"
-              "</param>\n"
-              "<param name=\"levels\" gui-text=\"" N_("Levels:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"10\">3</param>\n"
-              "<param name=\"invert\" gui-text=\"" N_("Inverted") "\" type=\"boolean\">false</param>\n"
-              "<effect>\n"
-                "<object-type>all</object-type>\n"
-                "<effects-menu>\n"
-                  "<submenu name=\"" N_("Filters") "\">\n"
-                    "<submenu name=\"" N_("Color") "\"/>\n"
-                  "</submenu>\n"
-                "</effects-menu>\n"
-                "<menu-tip>" N_("Electro solarization effects") "</menu-tip>\n"
-              "</effect>\n"
-            "</inkscape-extension>\n", new Electrize());
-    };
-};
-
-gchar const *
-Electrize::get_filter_text (Inkscape::Extension::Extension * ext)
-{
-    if (_filter != NULL) g_free((void *)_filter);
-
-    std::ostringstream blur;
-    std::ostringstream type;
-    std::ostringstream values;
-
-    blur << ext->get_param_float("blur");
-    type << ext->get_param_enum("type");
-
-    // TransfertComponent table values are calculated based on the effect level and inverted parameters.
-    int val = 0;
-    int levels = ext->get_param_int("levels") + 1;
-    if (ext->get_param_bool("invert")) {
-        val = 1;
-    }
-    values << val;
-    for ( int step = 1 ; step <= levels ; step++ ) {
-        if (val == 1) {
-            val = 0;
-        }
-        else {
-            val = 1;
-        }
-        values << " " << val;
-    }
-  
-    _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Electrize, custom\">\n"
-          "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
-          "<feComponentTransfer in=\"blur\" stdDeviation=\"2\" result=\"component\" >\n"
-            "<feFuncR type=\"%s\" tableValues=\"%s\" />\n"
-            "<feFuncG type=\"%s\" tableValues=\"%s\" />\n"
-            "<feFuncB type=\"%s\" tableValues=\"%s\" />\n"
-          "</feComponentTransfer>\n"
-        "</filter>\n", blur.str().c_str(), type.str().c_str(), values.str().c_str(), type.str().c_str(), values.str().c_str(), type.str().c_str(), values.str().c_str());
-
-    return _filter;
-}; /* Electrize filter */
 
 /**
     \brief    Custom predefined Greyscale filter.
@@ -688,7 +601,7 @@ Greyscale::get_filter_text (Inkscape::Extension::Extension * ext)
     }
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Greyscale, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Greyscale\">\n"
           "<feColorMatrix values=\"%s 0 %s 0 %s 0 %s 0 \" />\n"
         "</filter>\n", line.str().c_str(), line.str().c_str(), line.str().c_str(), transparency.str().c_str());
     return _filter;
@@ -747,7 +660,7 @@ Lightness::get_filter_text (Inkscape::Extension::Extension * ext)
     offset << ext->get_param_float("offset");
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Lightness, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Lightness\">\n"
           "<feComponentTransfer in=\"blur\" stdDeviation=\"2\" result=\"component\" >\n"
           "<feFuncR type=\"gamma\" amplitude=\"%s\" exponent=\"%s\" offset=\"%s\" />\n"
           "<feFuncG type=\"gamma\" amplitude=\"%s\" exponent=\"%s\" offset=\"%s\" />\n"
@@ -833,7 +746,7 @@ Quadritone::get_filter_text (Inkscape::Extension::Extension * ext)
     blend2 << ext->get_param_enum("blend2");
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Quadritone fantasy, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Quadritone fantasy\">\n"
           "<feColorMatrix in=\"SourceGraphic\" type=\"hueRotate\" values=\"%s\" result=\"colormatrix1\" />\n"
           "<feColorMatrix type=\"matrix\" values=\"0.5 0 0.5 0 0 0 1 0 0 0 0.5 0 0.5 0 0 0 0 0 1 0 \" result=\"colormatrix2\" />\n"
           "<feColorMatrix type=\"hueRotate\" values=\"%s\" result=\"colormatrix3\" />\n"
@@ -913,7 +826,7 @@ Solarize::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Solarize, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Solarize\">\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 1 \" />\n"
           "<feColorMatrix type=\"hueRotate\" values=\"%s\" result=\"colormatrix2\" />\n"
           "<feColorMatrix in=\"colormatrix2\" values=\"-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 \" result=\"colormatrix3\" />\n"
@@ -1065,7 +978,7 @@ Tritone::get_filter_text (Inkscape::Extension::Extension * ext)
     }
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Tritone, custom\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Tritone\">\n"
           "<feColorMatrix type=\"hueRotate\" result=\"colormatrix1\" values=\"%s\" />\n"
           "<feColorMatrix in=\"colormatrix1\" result=\"r\" type=\"matrix\" values=\"1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1 \" />\n"
           "<feColorMatrix in=\"colormatrix1\" result=\"g\" type=\"matrix\" values=\"0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 1 \" />\n"

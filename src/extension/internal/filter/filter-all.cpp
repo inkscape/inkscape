@@ -52,7 +52,6 @@ Filter::filters_all (void )
     ColorShift::init();
     Colorize::init();
     Duochrome::init();
-    Electrize::init();
     Greyscale::init();
     Lightness::init();
     Quadritone::init();
@@ -69,6 +68,7 @@ Filter::filters_all (void )
     Chromolitho::init();
     CrossEngraving::init();
     Drawing::init();
+    Electrize::init();
     NeonDraw::init();
     Posterize::init();
     PosterizeBasic::init();

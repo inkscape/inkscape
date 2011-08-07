@@ -46,7 +46,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Edge detect") "</name>\n"
+              "<name>" N_("Edge Detect") "</name>\n"
               "<id>org.inkscape.effect.filter.EdgeDetect</id>\n"
               "<param name=\"type\" gui-text=\"" N_("Detect:") "\" type=\"enum\" >\n"
                 "<_item value=\"all\">" N_("All") "</_item>\n"
@@ -59,7 +59,7 @@ public:
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                   "<submenu name=\"" N_("Filters") "\">\n"
-                     "<submenu name=\"" N_("Image effects") "\"/>\n"
+                     "<submenu name=\"" N_("Image Effects") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
               "<menu-tip>" N_("Detect color edges in object") "</menu-tip>\n"
@@ -97,7 +97,7 @@ EdgeDetect::get_filter_text (Inkscape::Extension::Extension * ext)
     }
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1.2\" width=\"1.2\" y=\"-0.1\" x=\"-0.1\" inkscape:label=\"Edge detect\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1.2\" width=\"1.2\" y=\"-0.1\" x=\"-0.1\" inkscape:label=\"Edge Detect\">\n"
           "<feConvolveMatrix in=\"SourceGraphic\" kernelMatrix=\"%s\" order=\"3 3\" bias=\"%s\" divisor=\"%s\" targetX=\"1\" targetY=\"1\" preserveAlpha=\"true\" result=\"convolve\" />\n"
         "</filter>\n", matrix.str().c_str(), inverted.str().c_str(), level.str().c_str());
 

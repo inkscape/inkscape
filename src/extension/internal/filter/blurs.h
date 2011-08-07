@@ -107,7 +107,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Clean edges") "</name>\n"
+              "<name>" N_("Clean Edges") "</name>\n"
               "<id>org.inkscape.effect.filter.CleanEdges</id>\n"
               "<param name=\"blur\" gui-text=\"" N_("Strength:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"2.00\">0.4</param>\n"
               "<effect>\n"
@@ -134,7 +134,7 @@ CleanEdges::get_filter_text (Inkscape::Extension::Extension * ext)
     blur << ext->get_param_float("blur");
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Clean edges\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Clean Edges\">\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feComposite in=\"SourceGraphic\" in2=\"blur\" operator=\"in\" result=\"composite1\" />\n"
           "<feComposite in=\"composite1\" in2=\"composite1\" k2=\"1\" operator=\"in\" result=\"composite2\" />\n"
@@ -167,7 +167,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Cross blur") "</name>\n"
+              "<name>" N_("Cross Blur") "</name>\n"
               "<id>org.inkscape.effect.filter.CrossBlur</id>\n"
               "<param name=\"bright\" gui-text=\"" N_("Brightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"10.00\">0</param>\n"
               "<param name=\"fade\" gui-text=\"" N_("Fading:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1.00\">0</param>\n"
@@ -211,7 +211,7 @@ CrossBlur::get_filter_text (Inkscape::Extension::Extension * ext)
     blend << ext->get_param_enum("blend");
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Cross blur\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Cross Blur\">\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"colormatrix\" />\n"
           "<feComposite in=\"SourceGraphic\" in2=\"colormatrix\" operator=\"arithmetic\" k2=\"1\" k3=\"%s\" k4=\"%s\" result=\"composite\" />\n"
           "<feGaussianBlur stdDeviation=\"%s 0.01\" result=\"blur1\" />\n"
@@ -307,7 +307,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Image blur") "</name>\n"
+              "<name>" N_("Image Blur") "</name>\n"
               "<id>org.inkscape.effect.filter.ImageBlur</id>\n"
               "<param name=\"tab\" type=\"notebook\">\n"
                 "<page name=\"optionstab\" _gui-text=\"Options\">\n"
@@ -380,7 +380,7 @@ ImageBlur::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Image blur\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Image Blur\">\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"colormatrix1\" />\n"
           "<feGaussianBlur in=\"colormatrix1\" stdDeviation=\"%s %s\" result=\"blur\" />\n"

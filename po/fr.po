@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-27 20:43+0200\n"
-"PO-Revision-Date: 2011-07-27 21:02+0100\n"
+"POT-Creation-Date: 2011-08-07 15:00+0200\n"
+"PO-Revision-Date: 2011-08-07 15:02+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "Language: \n"
@@ -183,7 +183,7 @@ msgstr ""
 
 #: ../share/extensions/gcodetools.py:4286
 msgid "Document has no layers! Add at least one layer using layers panel (Ctrl+Shift+L)"
-msgstr ""
+msgstr "Le document n'a pas de calque ! Veuillez en ajouter au moins un avec la boîte de dialogue des calques (Maj+Ctrl+L)"
 
 #: ../share/extensions/gcodetools.py:4290
 msgid "Warning! There are some paths in the root of the document, but not in any layer! Using bottom-most layer for them."
@@ -475,7 +475,7 @@ msgid "ABCs"
 msgstr "ABC"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/abc.h:386
+#: ../src/extension/internal/filter/bumps.h:387
 msgid "Bulging, matte jelly covering"
 msgstr "Couche de gel mat et bombé"
 
@@ -504,6 +504,11 @@ msgid "Motion blur, horizontal"
 msgstr "Flou cinétique horizontal"
 
 #: ../share/filters/filters.svg.h:1
+#: ../src/extension/internal/filter/blurs.h:61
+#: ../src/extension/internal/filter/blurs.h:117
+#: ../src/extension/internal/filter/blurs.h:186
+#: ../src/extension/internal/filter/blurs.h:252
+#: ../src/extension/internal/filter/blurs.h:336
 msgid "Blurs"
 msgstr "Flous"
 
@@ -528,13 +533,12 @@ msgid "Edges are partly feathered out"
 msgstr "Les bords sont partiellement diffusés vers l’extérieur"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/abc.h:739
+#: ../src/extension/internal/filter/transparency.h:137
 msgid "Cutout"
 msgstr "Découpe"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/drop-shadow.h:45
-#: ../src/extension/internal/filter/drop-shadow.h:105
+#: ../src/extension/internal/filter/shadows.h:79
 msgid "Shadows and Glows"
 msgstr "Ombres et lueurs"
 
@@ -551,11 +555,12 @@ msgid "Low, sharp bevel"
 msgstr "Biseau bas et net"
 
 #: ../share/filters/filters.svg.h:1
+#: ../src/extension/internal/filter/distort.h:53
 msgid "Roughen"
 msgstr "Agitation"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/abc.h:679
+#: ../src/extension/internal/filter/distort.h:71
 msgid "Small-scale roughening to edges and content"
 msgstr "Agite les bords et le contenu sur une petite amplitude"
 
@@ -564,6 +569,7 @@ msgid "Rubber stamp"
 msgstr "Tampon en caoutchouc"
 
 #: ../share/filters/filters.svg.h:1
+#: ../src/extension/internal/filter/overlays.h:80
 msgid "Overlays"
 msgstr "Superpositions"
 
@@ -612,6 +618,7 @@ msgid "Ripple"
 msgstr "Ondulation"
 
 #: ../share/filters/filters.svg.h:1
+#: ../src/extension/internal/filter/distort.h:68
 msgid "Distort"
 msgstr "Déformation"
 
@@ -753,14 +760,25 @@ msgstr "Désaturer"
 #: ../src/dialogs/clonetiler.cpp:2519
 #: ../src/dialogs/clonetiler.cpp:2658
 #: ../src/extension/internal/bitmap/colorize.cpp:51
-#: ../src/extension/internal/filter/abc.h:477
-#: ../src/extension/internal/filter/abc.h:580
-#: ../src/extension/internal/filter/abc.h:740
-#: ../src/extension/internal/filter/color.h:159
-#: ../src/extension/internal/filter/color.h:361
-#: ../src/extension/internal/filter/color.h:1016
-#: ../src/extension/internal/filter/experimental.h:97
+#: ../src/extension/internal/filter/bumps.h:103
+#: ../src/extension/internal/filter/color.h:75
+#: ../src/extension/internal/filter/color.h:157
+#: ../src/extension/internal/filter/color.h:164
+#: ../src/extension/internal/filter/color.h:255
+#: ../src/extension/internal/filter/color.h:333
+#: ../src/extension/internal/filter/color.h:340
+#: ../src/extension/internal/filter/color.h:441
+#: ../src/extension/internal/filter/color.h:560
+#: ../src/extension/internal/filter/color.h:640
+#: ../src/extension/internal/filter/color.h:721
+#: ../src/extension/internal/filter/color.h:797
+#: ../src/extension/internal/filter/color.h:899
+#: ../src/extension/internal/filter/color.h:906
+#: ../src/extension/internal/filter/morphology.h:137
+#: ../src/extension/internal/filter/overlays.h:73
+#: ../src/extension/internal/filter/paint.h:98
 #: ../src/extension/internal/filter/shadows.h:71
+#: ../src/extension/internal/filter/transparency.h:138
 #: ../share/extensions/color_blackandwhite.inx.h:2
 #: ../share/extensions/color_brighter.inx.h:2
 #: ../share/extensions/color_custom.inx.h:9
@@ -895,6 +913,10 @@ msgid "HSL Bumps"
 msgstr "Bosselage TSL"
 
 #: ../share/filters/filters.svg.h:1
+#: ../src/extension/internal/filter/bumps.h:144
+#: ../src/extension/internal/filter/bumps.h:303
+#: ../src/extension/internal/filter/bumps.h:384
+#: ../src/extension/internal/filter/bumps.h:468
 msgid "Bumps"
 msgstr "Bosselage"
 
@@ -1000,7 +1022,7 @@ msgid "Leaves on the ground in Fall, or living foliage"
 msgstr "Feuilles sur le sol en automne, ou feuillage vivant"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/experimental.h:338
+#: ../src/extension/internal/filter/paint.h:339
 msgid "Translucent"
 msgstr "Verre translucide"
 
@@ -1009,6 +1031,7 @@ msgid "Illuminated translucent plastic or glass effect"
 msgstr "Effet de plastique ou de verre translucide et lumineux"
 
 #: ../share/filters/filters.svg.h:1
+#: ../src/extension/internal/filter/morphology.h:52
 msgid "Cross-smooth"
 msgstr "Adoucissement"
 
@@ -1114,11 +1137,11 @@ msgstr "Contour fortement surélevé sur une surface plate"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Metallized ridge"
-msgstr "Arête métalisée"
+msgstr "Arête métallisée"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Gel Ridge metallized at its top"
-msgstr "Arête de gel métalisé sur le dessus"
+msgstr "Arête de gel métallisé sur le dessus"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Fat oil"
@@ -1130,6 +1153,7 @@ msgstr "Huile grasse avec quelques turbulences ajustables"
 
 #: ../share/filters/filters.svg.h:1
 #: ../src/extension/internal/bitmap/colorize.cpp:49
+#: ../src/extension/internal/filter/color.h:310
 msgid "Colorize"
 msgstr "Colorer"
 
@@ -1142,6 +1166,8 @@ msgid "Parallel hollow"
 msgstr "Évidement parallèle"
 
 #: ../share/filters/filters.svg.h:1
+#: ../src/extension/internal/filter/morphology.h:63
+#: ../src/extension/internal/filter/morphology.h:144
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "Morphologie"
@@ -1327,6 +1353,7 @@ msgid "Glow of object's own color at the edges"
 msgstr "Rayonnement de la couleur de l’objet sur ses bords"
 
 #: ../share/filters/filters.svg.h:1
+#: ../src/extension/internal/filter/morphology.h:127
 msgid "Outline"
 msgstr "Contour"
 
@@ -1344,7 +1371,8 @@ msgstr "Effet de bosselage classique ou coloré : niveaux de gris, couleur et r
 
 #: ../share/filters/filters.svg.h:1
 #: ../src/extension/internal/bitmap/solarize.cpp:38
-#: ../src/extension/internal/filter/color.h:906
+#: ../src/extension/internal/filter/color.h:786
+#: ../src/extension/internal/filter/color.h:790
 msgid "Solarize"
 msgstr "Solariser"
 
@@ -1353,7 +1381,7 @@ msgid "Classical photographic solarization effect"
 msgstr "Effet de solarisation photographique classique"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/color.h:907
+#: ../src/extension/internal/filter/color.h:791
 msgid "Moonarize"
 msgstr "Lunariser"
 
@@ -1422,11 +1450,12 @@ msgid "Displace the outside of shapes and pictures without altering their conten
 msgstr "Déplace l’extérieur des formes et images sans en altérer le contenu"
 
 #: ../share/filters/filters.svg.h:1
+#: ../src/extension/internal/filter/blurs.h:245
 msgid "Feather"
 msgstr "Estompage du pourtour"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/abc.h:321
+#: ../src/extension/internal/filter/blurs.h:255
 msgid "Blurred mask on the edge without altering the contents"
 msgstr "Masque flou sur les bords sans altération du contenu"
 
@@ -1443,7 +1472,7 @@ msgid "Specular light"
 msgstr "Éclairage spéculaire"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/abc.h:826
+#: ../src/extension/internal/filter/bumps.h:471
 msgid "Basic specular bevel to use for building textures"
 msgstr "Biseau spéculaire de base pour la construction de textures"
 
@@ -1516,7 +1545,7 @@ msgid "Diffuse light"
 msgstr "Éclairage diffus"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/abc.h:248
+#: ../src/extension/internal/filter/bumps.h:306
 msgid "Basic diffuse bevel to use for building textures"
 msgstr "Biseau diffus simple pour la construction de textures"
 
@@ -1866,6 +1895,7 @@ msgid "Highly flexible specular bump with transparency"
 msgstr "Bosselage spéculaire extrêmement flexible avec transparence"
 
 #: ../share/filters/filters.svg.h:1
+#: ../src/extension/internal/filter/paint.h:331
 #: ../src/ui/dialog/align-and-distribute.cpp:1035
 #: ../src/widgets/desktop-widget.cpp:1724
 msgid "Drawing"
@@ -1901,7 +1931,7 @@ msgstr "Donne un effet de remplissage transparent et coloré aux bitmaps et mati
 
 #: ../share/filters/filters.svg.h:1
 msgid "Chewing gum"
-msgstr "Chewing gum"
+msgstr "Chewing-gum"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Creates colorizable blotches which smoothly flow over the edges of the lines at their crossings"
@@ -1964,11 +1994,12 @@ msgid "Create a turbulent contour around"
 msgstr "Crée un contour agité"
 
 #: ../share/filters/filters.svg.h:1
+#: ../src/extension/internal/filter/color.h:700
 msgid "Quadritone fantasy"
 msgstr "Quadritone fantaisie"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/color.h:839
+#: ../src/extension/internal/filter/color.h:724
 msgid "Replace hue by two colors"
 msgstr "Remplace la teinte par deux couleurs"
 
@@ -2141,7 +2172,7 @@ msgid "Convert to a colorizable transparent positive or negative"
 msgstr "Convertit en un positif ou un négatif transparent qu’il est possible de colorer"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/color.h:344
+#: ../src/extension/internal/filter/color.h:316
 msgid "Duotone"
 msgstr "Duotone"
 
@@ -2183,7 +2214,7 @@ msgstr "Crible la surface et ajoute du bosselage aux images"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Wrinkled varnish"
-msgstr "Verni ridé"
+msgstr "Vernis ridé"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Thick glossy and translucent paint texture with high depth"
@@ -2226,7 +2257,7 @@ msgid "Clean edges"
 msgstr "Nettoie les bords"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/abc.h:126
+#: ../src/extension/internal/filter/blurs.h:120
 msgid "Removes or decreases glows and jaggeries around objects edges after applying some filters"
 msgstr "Supprime ou diminue l’éclat et l’agitation qui apparaissent autour des bords lors de l’application de certains effets"
 
@@ -2323,6 +2354,7 @@ msgid "Oversaturate colors which can be fluorescent in real world"
 msgstr "Rend fluorescentes les couleurs les plus saturées"
 
 #: ../share/filters/filters.svg.h:1
+#: ../src/extension/internal/filter/color.h:872
 msgid "Tritone"
 msgstr "Tritone"
 
@@ -5073,9 +5105,9 @@ msgstr "Cible :"
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/dialogs/object-attributes.cpp:35
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
-#: ../src/extension/internal/filter/color.h:905
-#: ../src/extension/internal/filter/color.h:993
-#: ../src/extension/internal/filter/morphology.h:53
+#: ../src/extension/internal/filter/color.h:789
+#: ../src/extension/internal/filter/color.h:876
+#: ../src/extension/internal/filter/morphology.h:54
 #: ../src/rdf.cpp:240
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2272
@@ -5140,7 +5172,7 @@ msgstr "Y :"
 #: ../src/extension/internal/bitmap/raise.cpp:41
 #: ../src/extension/internal/bitmap/sample.cpp:40
 #: ../src/extension/internal/bluredge.cpp:136
-#: ../src/extension/internal/filter/abc.h:574
+#: ../src/extension/internal/filter/morphology.h:131
 #: ../src/widgets/toolbox.cpp:4395
 #: ../src/widgets/toolbox.cpp:4709
 #: ../src/widgets/toolbox.cpp:5204
@@ -5154,6 +5186,7 @@ msgstr "Épaisseur :"
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:41
 #: ../src/extension/internal/bitmap/raise.cpp:42
 #: ../src/extension/internal/bitmap/sample.cpp:41
+#: ../src/extension/internal/filter/bumps.h:100
 #: ../share/extensions/foldablebox.inx.h:4
 msgid "Height:"
 msgstr "Hauteur :"
@@ -5310,8 +5343,8 @@ msgstr "Appliquer un style à un texte"
 #. * some representative characters that users of your locale will be
 #. * interested in.
 #: ../src/dialogs/text-edit.cpp:732
-#: ../src/dialogs/text-edit.cpp:868
-#: ../src/dialogs/text-edit.cpp:921
+#: ../src/dialogs/text-edit.cpp:869
+#: ../src/dialogs/text-edit.cpp:922
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -5777,17 +5810,16 @@ msgstr "Multiple d’espacement de grille"
 msgid " to "
 msgstr " à "
 
-#: ../src/document.cpp:472
+#: ../src/document.cpp:484
 #, c-format
 msgid "New document %d"
 msgstr "Nouveau document %d"
 
-#: ../src/document.cpp:503
-#, c-format
-msgid "Memory document %d"
-msgstr "Document d’information %d"
+#: ../src/document.cpp:510
+msgid "Memory document %1"
+msgstr "Document d’information %1"
 
-#: ../src/document.cpp:691
+#: ../src/document.cpp:699
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Document sans nom %d"
@@ -6033,8 +6065,8 @@ msgstr "Seuil adaptatif"
 
 #. Label
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/extension/internal/filter/color.h:750
-#: ../src/extension/internal/filter/experimental.h:355
+#: ../src/extension/internal/filter/color.h:635
+#: ../src/extension/internal/filter/paint.h:356
 #: ../src/widgets/gradient-vector.cpp:824
 #: ../share/extensions/printing-marks.inx.h:9
 msgid "Offset:"
@@ -6114,6 +6146,7 @@ msgid "Add random noise to selected bitmap(s)"
 msgstr "Ajouter du bruit aux bitmaps sélectionnés"
 
 #: ../src/extension/internal/bitmap/blur.cpp:37
+#: ../src/extension/internal/filter/blurs.h:53
 msgid "Blur"
 msgstr "Flou"
 
@@ -6349,16 +6382,17 @@ msgid "Hue:"
 msgstr "Teinte :"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
-#: ../src/extension/internal/filter/abc.h:177
-#: ../src/extension/internal/filter/color.h:151
-#: ../src/extension/internal/filter/experimental.h:85
+#: ../src/extension/internal/filter/color.h:149
+#: ../src/extension/internal/filter/color.h:250
+#: ../src/extension/internal/filter/paint.h:86
 msgid "Saturation:"
 msgstr "Saturation :"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:43
-#: ../src/extension/internal/filter/abc.h:375
-#: ../src/extension/internal/filter/abc.h:815
-#: ../src/extension/internal/filter/color.h:68
+#: ../src/extension/internal/filter/blurs.h:172
+#: ../src/extension/internal/filter/bumps.h:376
+#: ../src/extension/internal/filter/bumps.h:460
+#: ../src/extension/internal/filter/color.h:67
 msgid "Brightness:"
 msgstr "Brillance :"
 
@@ -6391,6 +6425,7 @@ msgid "Stylize selected bitmap(s) so that they appear to be painted with oils"
 msgstr "Styliser les bitmaps sélectionnés en leur donnant l’apparence d’une peinture à l’huile"
 
 #: ../src/extension/internal/bitmap/opacity.cpp:39
+#: ../src/extension/internal/filter/blurs.h:318
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2240
 #: ../src/widgets/toolbox.cpp:5796
 msgid "Opacity:"
@@ -6440,10 +6475,12 @@ msgid "Shade"
 msgstr "Ombre"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
+#: ../src/extension/internal/filter/bumps.h:112
 msgid "Azimuth:"
 msgstr "Azimut :"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
+#: ../src/extension/internal/filter/bumps.h:113
 msgid "Elevation:"
 msgstr "Élévation :"
 
@@ -6491,9 +6528,6 @@ msgstr "Seuil"
 #: ../src/extension/internal/bitmap/threshold.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:45
 #: ../src/ui/dialog/inkscape-preferences.cpp:213
-#: ../src/ui/dialog/tracedialog.cpp:420
-#: ../src/ui/dialog/tracedialog.cpp:453
-#: ../src/ui/dialog/tracedialog.cpp:596
 #: ../src/widgets/toolbox.cpp:8540
 msgid "Threshold:"
 msgstr "Seuil :"
@@ -6576,7 +6610,7 @@ msgstr "PostScript niveau 2"
 #: ../src/extension/internal/cairo-ps-out.cpp:325
 #: ../src/extension/internal/cairo-ps-out.cpp:363
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
-#: ../src/extension/internal/emf-win32-inout.cpp:2511
+#: ../src/extension/internal/emf-win32-inout.cpp:2493
 msgid "Convert texts to paths"
 msgstr "Convertir les textes en chemins"
 
@@ -6657,792 +6691,644 @@ msgstr "PDF 1.4"
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
 msgstr "PDF+LaTeX : exclure le texte du fichier PDF, et créer un fichier LaTeX"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2481
+#: ../src/extension/internal/emf-win32-inout.cpp:2463
 msgid "EMF Input"
 msgstr "Entrée EMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2486
+#: ../src/extension/internal/emf-win32-inout.cpp:2468
 msgid "Enhanced Metafiles (*.emf)"
 msgstr "Métafichier amélioré (*.emf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2487
+#: ../src/extension/internal/emf-win32-inout.cpp:2469
 msgid "Enhanced Metafiles"
 msgstr "Métafichier amélioré"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2495
+#: ../src/extension/internal/emf-win32-inout.cpp:2477
 msgid "WMF Input"
 msgstr "Entrée WMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2500
+#: ../src/extension/internal/emf-win32-inout.cpp:2482
 msgid "Windows Metafiles (*.wmf)"
 msgstr "Métafichier Windows (*.wmf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2501
+#: ../src/extension/internal/emf-win32-inout.cpp:2483
 msgid "Windows Metafiles"
 msgstr "Métafichier Windows"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2509
+#: ../src/extension/internal/emf-win32-inout.cpp:2491
 msgid "EMF Output"
 msgstr "Sortie EMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2515
+#: ../src/extension/internal/emf-win32-inout.cpp:2497
 msgid "Enhanced Metafile (*.emf)"
 msgstr "Métafichier amélioré (*.emf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2516
+#: ../src/extension/internal/emf-win32-inout.cpp:2498
 msgid "Enhanced Metafile"
 msgstr "Métafichier amélioré"
 
-#: ../src/extension/internal/filter/abc.h:59
-msgid "Blur, custom (ABCs)"
-msgstr "Flou, paramétrable (ABC)"
-
-#: ../src/extension/internal/filter/abc.h:61
+#: ../src/extension/internal/filter/blurs.h:55
+#: ../src/extension/internal/filter/blurs.h:174
+#: ../src/extension/internal/filter/blurs.h:314
 msgid "Horizontal blur:"
 msgstr "Flou horizontal :"
 
-#: ../src/extension/internal/filter/abc.h:62
+#: ../src/extension/internal/filter/blurs.h:56
+#: ../src/extension/internal/filter/blurs.h:175
+#: ../src/extension/internal/filter/blurs.h:315
 msgid "Vertical blur:"
 msgstr "Flou vertical :"
 
-#: ../src/extension/internal/filter/abc.h:66
-#: ../src/extension/internal/filter/abc.h:122
-#: ../src/extension/internal/filter/abc.h:181
-#: ../src/extension/internal/filter/abc.h:244
-#: ../src/extension/internal/filter/abc.h:317
-#: ../src/extension/internal/filter/abc.h:382
-#: ../src/extension/internal/filter/abc.h:483
-#: ../src/extension/internal/filter/abc.h:586
-#: ../src/extension/internal/filter/abc.h:675
-#: ../src/extension/internal/filter/abc.h:744
-#: ../src/extension/internal/filter/abc.h:822
-#: ../src/extension/internal/filter/color.h:75
-#: ../src/extension/internal/filter/color.h:165
-#: ../src/extension/internal/filter/color.h:270
-#: ../src/extension/internal/filter/color.h:367
-#: ../src/extension/internal/filter/color.h:469
-#: ../src/extension/internal/filter/color.h:582
-#: ../src/extension/internal/filter/color.h:674
-#: ../src/extension/internal/filter/color.h:754
-#: ../src/extension/internal/filter/color.h:835
-#: ../src/extension/internal/filter/color.h:912
-#: ../src/extension/internal/filter/color.h:1022
-#: ../src/extension/internal/filter/drop-shadow.h:44
-#: ../src/extension/internal/filter/drop-shadow.h:104
-#: ../src/extension/internal/filter/experimental.h:110
-#: ../src/extension/internal/filter/experimental.h:242
-#: ../src/extension/internal/filter/experimental.h:361
-#: ../src/extension/internal/filter/experimental.h:515
-#: ../src/extension/internal/filter/experimental.h:628
-#: ../src/extension/internal/filter/experimental.h:733
+#: ../src/extension/internal/filter/blurs.h:60
+#: ../src/extension/internal/filter/blurs.h:116
+#: ../src/extension/internal/filter/blurs.h:185
+#: ../src/extension/internal/filter/blurs.h:251
+#: ../src/extension/internal/filter/blurs.h:335
+#: ../src/extension/internal/filter/bumps.h:143
+#: ../src/extension/internal/filter/bumps.h:302
+#: ../src/extension/internal/filter/bumps.h:383
+#: ../src/extension/internal/filter/bumps.h:467
+#: ../src/extension/internal/filter/color.h:74
+#: ../src/extension/internal/filter/color.h:163
+#: ../src/extension/internal/filter/color.h:254
+#: ../src/extension/internal/filter/color.h:339
+#: ../src/extension/internal/filter/color.h:440
+#: ../src/extension/internal/filter/color.h:559
+#: ../src/extension/internal/filter/color.h:639
+#: ../src/extension/internal/filter/color.h:720
+#: ../src/extension/internal/filter/color.h:796
+#: ../src/extension/internal/filter/color.h:905
+#: ../src/extension/internal/filter/distort.h:67
 #: ../src/extension/internal/filter/filter-file.cpp:150
 #: ../src/extension/internal/filter/filter.cpp:216
 #: ../src/extension/internal/filter/image.h:61
-#: ../src/extension/internal/filter/morphology.h:61
+#: ../src/extension/internal/filter/morphology.h:62
+#: ../src/extension/internal/filter/morphology.h:143
+#: ../src/extension/internal/filter/overlays.h:79
+#: ../src/extension/internal/filter/paint.h:111
+#: ../src/extension/internal/filter/paint.h:243
+#: ../src/extension/internal/filter/paint.h:362
+#: ../src/extension/internal/filter/paint.h:506
+#: ../src/extension/internal/filter/paint.h:602
+#: ../src/extension/internal/filter/paint.h:715
+#: ../src/extension/internal/filter/paint.h:820
+#: ../src/extension/internal/filter/protrusions.h:54
 #: ../src/extension/internal/filter/shadows.h:78
-#: ../src/extension/internal/filter/snow.h:38
+#: ../src/extension/internal/filter/transparency.h:70
+#: ../src/extension/internal/filter/transparency.h:142
 #: ../src/ui/dialog/inkscape-preferences.cpp:802
 msgid "Filters"
 msgstr "Filtres"
 
-#: ../src/extension/internal/filter/abc.h:67
-#: ../src/extension/internal/filter/abc.h:123
-#: ../src/extension/internal/filter/abc.h:182
-#: ../src/extension/internal/filter/abc.h:245
-#: ../src/extension/internal/filter/abc.h:318
-#: ../src/extension/internal/filter/abc.h:383
-#: ../src/extension/internal/filter/abc.h:484
-#: ../src/extension/internal/filter/abc.h:587
-#: ../src/extension/internal/filter/abc.h:676
-#: ../src/extension/internal/filter/abc.h:745
-#: ../src/extension/internal/filter/abc.h:823
-#: ../src/extension/internal/filter/color.h:76
-#: ../src/extension/internal/filter/color.h:166
-#: ../src/extension/internal/filter/color.h:271
-#: ../src/extension/internal/filter/color.h:368
-#: ../src/extension/internal/filter/color.h:470
-#: ../src/extension/internal/filter/color.h:583
-#: ../src/extension/internal/filter/color.h:675
-#: ../src/extension/internal/filter/color.h:755
-#: ../src/extension/internal/filter/color.h:836
-#: ../src/extension/internal/filter/color.h:913
-#: ../src/extension/internal/filter/color.h:1023
-#: ../src/extension/internal/filter/experimental.h:111
-#: ../src/extension/internal/filter/experimental.h:243
-#: ../src/extension/internal/filter/experimental.h:362
-#: ../src/extension/internal/filter/experimental.h:516
-#: ../src/extension/internal/filter/experimental.h:629
-#: ../src/extension/internal/filter/experimental.h:734
-#: ../src/extension/internal/filter/image.h:62
-#: ../src/extension/internal/filter/morphology.h:62
-#: ../src/extension/internal/filter/shadows.h:79
-msgid "Experimental"
-msgstr "Expérimental"
-
-#: ../src/extension/internal/filter/abc.h:70
+#: ../src/extension/internal/filter/blurs.h:64
 msgid "Simple vertical and horizontal blur effect"
 msgstr "Effet de flou vertical et horizontal simple"
 
-#: ../src/extension/internal/filter/abc.h:116
-msgid "Clean edges, custom (ABCs)"
-msgstr "Nettoyage des bords, paramétrable (ABC)"
+#: ../src/extension/internal/filter/blurs.h:110
+msgid "Clean Edges"
+msgstr "Nettoyage des bords"
 
-#: ../src/extension/internal/filter/abc.h:118
-#: ../src/extension/internal/filter/abc.h:313
-#: ../src/extension/internal/filter/experimental.h:236
-#: ../src/extension/internal/filter/experimental.h:335
-#: ../src/extension/internal/filter/experimental.h:340
+#: ../src/extension/internal/filter/blurs.h:112
+#: ../src/extension/internal/filter/blurs.h:247
+#: ../src/extension/internal/filter/paint.h:237
+#: ../src/extension/internal/filter/paint.h:336
+#: ../src/extension/internal/filter/paint.h:341
 msgid "Strength:"
-msgstr "Force  :"
+msgstr "Force :"
 
-#: ../src/extension/internal/filter/abc.h:174
-msgid "Color shift, custom (ABCs)"
-msgstr "Décalage de couleur, paramétrable (ABC)"
+#: ../src/extension/internal/filter/blurs.h:170
+msgid "Cross Blur"
+msgstr "Flou croisé"
 
-#: ../src/extension/internal/filter/abc.h:176
-msgid "Shift (°):"
-msgstr "Décalage (°) :"
+#: ../src/extension/internal/filter/blurs.h:173
+msgid "Fading:"
+msgstr "Décoloration :"
 
-#: ../src/extension/internal/filter/abc.h:185
-msgid "Rotate and desaturate hue"
-msgstr "Modifie et désature la teinte"
-
-#: ../src/extension/internal/filter/abc.h:235
-msgid "Diffuse light, custom (ABCs)"
-msgstr "Éclairage diffus, paramétrable (ABC)"
-
-#: ../src/extension/internal/filter/abc.h:237
-#: ../src/extension/internal/filter/abc.h:374
-#: ../src/extension/internal/filter/abc.h:814
-#: ../src/extension/internal/filter/experimental.h:87
-#: ../share/extensions/fractalize.inx.h:3
-msgid "Smoothness:"
-msgstr "Lissage :"
-
-#: ../src/extension/internal/filter/abc.h:238
-#: ../src/extension/internal/filter/abc.h:376
-#: ../src/extension/internal/filter/abc.h:816
-msgid "Elevation (°):"
-msgstr "Élévation (°) :"
-
-#: ../src/extension/internal/filter/abc.h:239
-#: ../src/extension/internal/filter/abc.h:377
-#: ../src/extension/internal/filter/abc.h:817
-msgid "Azimuth (°):"
-msgstr "Azimut (°) :"
-
-#: ../src/extension/internal/filter/abc.h:240
-#: ../src/extension/internal/filter/abc.h:378
-#: ../src/extension/internal/filter/abc.h:818
-msgid "Lighting color"
-msgstr "Couleur d'éclairage :"
-
-#: ../src/extension/internal/filter/abc.h:311
-msgid "Feather, custom (ABCs)"
-msgstr "Estompage du pourtour, paramétrable (ABC)"
-
-#: ../src/extension/internal/filter/abc.h:372
-msgid "Matte jelly, custom (ABCs)"
-msgstr "Gel mat, paramétrable (ABC)"
-
-#: ../src/extension/internal/filter/abc.h:460
-msgid "Noise fill, custom (ABCs)"
-msgstr "Remplissage turbulent, paramétrable (ABC)"
-
-#: ../src/extension/internal/filter/abc.h:464
-#: ../src/extension/internal/filter/abc.h:663
-msgid "Turbulence type:"
-msgstr "Type de turbulence :"
-
-#: ../src/extension/internal/filter/abc.h:468
-#: ../src/extension/internal/filter/abc.h:667
-#: ../src/extension/internal/filter/experimental.h:91
-msgid "Horizontal frequency:"
-msgstr "Fréquence horizontale :"
-
-#: ../src/extension/internal/filter/abc.h:469
-#: ../src/extension/internal/filter/abc.h:668
-#: ../src/extension/internal/filter/experimental.h:92
-msgid "Vertical frequency:"
-msgstr "Fréquence verticale :"
-
-#: ../src/extension/internal/filter/abc.h:470
-#: ../src/extension/internal/filter/abc.h:669
-#: ../src/extension/internal/filter/experimental.h:93
-msgid "Complexity:"
-msgstr "Complexité :"
-
-#: ../src/extension/internal/filter/abc.h:471
-#: ../src/extension/internal/filter/abc.h:670
-#: ../src/extension/internal/filter/experimental.h:94
-msgid "Variation:"
-msgstr "Variante :"
-
-#: ../src/extension/internal/filter/abc.h:472
-#: ../src/extension/internal/filter/abc.h:576
-#: ../src/extension/internal/filter/experimental.h:234
-#: ../src/extension/internal/filter/experimental.h:341
-#: ../src/extension/internal/filter/experimental.h:345
-msgid "Dilatation:"
-msgstr "Dilatation :"
-
-#: ../src/extension/internal/filter/abc.h:473
-#: ../src/extension/internal/filter/abc.h:577
-#: ../src/extension/internal/filter/experimental.h:96
-#: ../src/extension/internal/filter/experimental.h:235
-#: ../src/extension/internal/filter/experimental.h:342
-#: ../src/extension/internal/filter/experimental.h:346
-msgid "Erosion:"
-msgstr "Érosion :"
-
-#: ../src/extension/internal/filter/abc.h:474
-#: ../src/extension/internal/filter/color.h:71
-#: ../src/extension/internal/filter/color.h:156
-#: ../src/extension/internal/filter/color.h:266
-#: ../src/extension/internal/filter/color.h:578
-#: ../src/extension/internal/filter/experimental.h:83
-msgid "Inverted"
-msgstr "Inversé"
-
-#: ../src/extension/internal/filter/abc.h:487
-#, fuzzy
-msgid "Basic noise fill and transparency texture"
-msgstr "Texture en transparence turbulente de base"
-
-#: ../src/extension/internal/filter/abc.h:570
-msgid "Outline, custom (ABCs)"
-msgstr "Soulignement du contour, paramétrable (ABC)"
-
-#: ../src/extension/internal/filter/abc.h:575
-msgid "Melt:"
+#: ../src/extension/internal/filter/blurs.h:176
+msgid "Blend:"
 msgstr "Fondu :"
 
-#: ../src/extension/internal/filter/abc.h:590
-msgid "Adds a colorizable outline"
-msgstr "Ajoute un contour qui peut être coloré"
+#: ../src/extension/internal/filter/blurs.h:177
+#: ../src/extension/internal/filter/blurs.h:324
+#: ../src/extension/internal/filter/bumps.h:133
+#: ../src/extension/internal/filter/color.h:322
+#: ../src/extension/internal/filter/color.h:329
+#: ../src/extension/internal/filter/color.h:715
+#: ../src/extension/internal/filter/color.h:886
+#: ../src/extension/internal/filter/color.h:892
+#: ../src/filter-enums.cpp:54
+msgid "Darken"
+msgstr "Obscurcir"
 
-#: ../src/extension/internal/filter/abc.h:661
-msgid "Roughen, custom (ABCs)"
-msgstr "Agitation, paramétrable (ABC)"
-
-#: ../src/extension/internal/filter/abc.h:671
-msgid "Intensity:"
-msgstr "Intensité :"
-
-#: ../src/extension/internal/filter/abc.h:736
-msgid "Silhouette, custom (ABCs)"
-msgstr "Silhouette, paramétrable (ABC)"
-
-#: ../src/extension/internal/filter/abc.h:738
-#: ../src/extension/internal/filter/morphology.h:57
-msgid "Blur:"
-msgstr "Flou :"
-
-#: ../src/extension/internal/filter/abc.h:748
-msgid "Repaint anything visible monochrome"
-msgstr "Recouvre l’objet d’une couleur monochrome"
-
-#: ../src/extension/internal/filter/abc.h:812
-msgid "Specular light, custom (ABCs)"
-msgstr "Éclairage spéculaire, paramétrable (ABC)"
-
-#: ../src/extension/internal/filter/color.h:66
-msgid "Brightness, custom (Color)"
-msgstr "Brillance, paramétrable (Couleur)"
-
-#: ../src/extension/internal/filter/color.h:69
-#: ../src/extension/internal/filter/color.h:824
-msgid "Over-saturation:"
-msgstr "Sur-saturation :"
-
-#: ../src/extension/internal/filter/color.h:70
-#: ../src/extension/internal/filter/color.h:669
-#: ../src/extension/internal/filter/experimental.h:84
-#: ../src/extension/internal/filter/experimental.h:505
-msgid "Lightness:"
-msgstr "Luminosité :"
-
-#: ../src/extension/internal/filter/color.h:79
-msgid "Brightness filter"
-msgstr "Filtre de luminosité"
-
-#: ../src/extension/internal/filter/color.h:147
-msgid "Channel painting, custom (Color)"
-msgstr "Peinture par canal, paramétrable (Couleur)"
-
-#: ../src/extension/internal/filter/color.h:152
-#: ../src/extension/internal/filter/color.h:262
-#: ../src/extension/internal/filter/color.h:666
-msgid "Red:"
-msgstr "Rouge :"
-
-#: ../src/extension/internal/filter/color.h:153
-#: ../src/extension/internal/filter/color.h:263
-#: ../src/extension/internal/filter/color.h:667
-msgid "Green:"
-msgstr "Vert :"
-
-#: ../src/extension/internal/filter/color.h:154
-#: ../src/extension/internal/filter/color.h:264
-#: ../src/extension/internal/filter/color.h:668
-msgid "Blue:"
-msgstr "Bleu :"
-
-#: ../src/extension/internal/filter/color.h:155
-#: ../src/extension/internal/filter/color.h:265
-#, fuzzy
-msgid "Alpha:"
-msgstr "Opacité"
-
-#: ../src/extension/internal/filter/color.h:169
-msgid "Replace RGB by any color"
-msgstr "Remplace les canaux RVB par une couleur"
-
-#: ../src/extension/internal/filter/color.h:260
-msgid "Channel transparency, custom (Color)"
-msgstr "Transparence par canal, paramétrable (Couleur)"
-
-#: ../src/extension/internal/filter/color.h:274
-msgid "Replace RGB by transparency"
-msgstr "Remplace les canaux RVB par de la transparence"
-
-#: ../src/extension/internal/filter/color.h:338
-msgid "Colorize, custom (Color)"
-msgstr "Colorer, paramétrable (Couleur)"
-
-#: ../src/extension/internal/filter/color.h:342
-msgid "Harsh light:"
-msgstr "Lumière crue :"
-
-#: ../src/extension/internal/filter/color.h:343
-msgid "Normal light:"
-msgstr "Lumière normale :"
-
-#: ../src/extension/internal/filter/color.h:345
-#: ../src/extension/internal/filter/color.h:819
-msgid "Blend 1:"
-msgstr "Fondu 1 :"
-
-#: ../src/extension/internal/filter/color.h:346
-#: ../src/extension/internal/filter/color.h:354
-#: ../src/extension/internal/filter/color.h:821
-#: ../src/extension/internal/filter/color.h:828
-#: ../src/extension/internal/filter/color.h:1002
-#: ../src/extension/internal/filter/color.h:1008
-#: ../src/filter-enums.cpp:52
-msgid "Multiply"
-msgstr "Produit"
-
-#: ../src/extension/internal/filter/color.h:347
-#: ../src/extension/internal/filter/color.h:355
-#: ../src/extension/internal/filter/color.h:820
-#: ../src/extension/internal/filter/color.h:826
-#: ../src/extension/internal/filter/color.h:994
-#: ../src/extension/internal/filter/color.h:1007
-#: ../src/filter-enums.cpp:51
-#: ../src/ui/dialog/inkscape-preferences.cpp:597
-msgid "Normal"
-msgstr "Normal"
-
-#: ../src/extension/internal/filter/color.h:348
-#: ../src/extension/internal/filter/color.h:353
-#: ../src/extension/internal/filter/color.h:822
-#: ../src/extension/internal/filter/color.h:827
-#: ../src/extension/internal/filter/color.h:1001
+#: ../src/extension/internal/filter/blurs.h:178
+#: ../src/extension/internal/filter/blurs.h:325
+#: ../src/extension/internal/filter/bumps.h:134
+#: ../src/extension/internal/filter/color.h:320
+#: ../src/extension/internal/filter/color.h:325
+#: ../src/extension/internal/filter/color.h:707
+#: ../src/extension/internal/filter/color.h:712
+#: ../src/extension/internal/filter/color.h:884
 #: ../src/filter-enums.cpp:53
 #: ../src/ui/dialog/input.cpp:362
 msgid "Screen"
 msgstr "Superposition"
 
-#: ../src/extension/internal/filter/color.h:349
-#: ../src/extension/internal/filter/color.h:356
-#: ../src/extension/internal/filter/color.h:829
-#: ../src/extension/internal/filter/color.h:1000
+#: ../src/extension/internal/filter/blurs.h:179
+#: ../src/extension/internal/filter/blurs.h:326
+#: ../src/extension/internal/filter/bumps.h:135
+#: ../src/extension/internal/filter/color.h:318
+#: ../src/extension/internal/filter/color.h:326
+#: ../src/extension/internal/filter/color.h:706
+#: ../src/extension/internal/filter/color.h:713
+#: ../src/extension/internal/filter/color.h:885
+#: ../src/extension/internal/filter/color.h:891
+#: ../src/filter-enums.cpp:52
+msgid "Multiply"
+msgstr "Produit"
+
+#: ../src/extension/internal/filter/blurs.h:180
+#: ../src/extension/internal/filter/blurs.h:327
+#: ../src/extension/internal/filter/bumps.h:136
+#: ../src/extension/internal/filter/color.h:321
+#: ../src/extension/internal/filter/color.h:328
+#: ../src/extension/internal/filter/color.h:714
+#: ../src/extension/internal/filter/color.h:883
 #: ../src/filter-enums.cpp:55
 msgid "Lighten"
 msgstr "Éclaircir"
 
-#: ../src/extension/internal/filter/color.h:350
-#: ../src/extension/internal/filter/color.h:357
-#: ../src/extension/internal/filter/color.h:830
-#: ../src/extension/internal/filter/color.h:1003
-#: ../src/extension/internal/filter/color.h:1009
-#: ../src/filter-enums.cpp:54
-msgid "Darken"
-msgstr "Obscurcir"
+#: ../src/extension/internal/filter/blurs.h:189
+msgid "Combine vertical and horizontal blur"
+msgstr "Combinaison de flou vertical et horizontal"
 
-#: ../src/extension/internal/filter/color.h:352
-#: ../src/extension/internal/filter/color.h:825
+#: ../src/extension/internal/filter/blurs.h:310
+msgid "Image Blur"
+msgstr "Flou par image"
+
+#: ../src/extension/internal/filter/blurs.h:316
+#: ../src/extension/internal/filter/morphology.h:133
+#: ../src/extension/internal/filter/overlays.h:68
+#: ../src/extension/internal/filter/paint.h:235
+#: ../src/extension/internal/filter/paint.h:342
+#: ../src/extension/internal/filter/paint.h:346
+msgid "Dilatation:"
+msgstr "Dilatation :"
+
+#: ../src/extension/internal/filter/blurs.h:317
+#: ../src/extension/internal/filter/morphology.h:134
+#: ../src/extension/internal/filter/overlays.h:69
+#: ../src/extension/internal/filter/paint.h:97
+#: ../src/extension/internal/filter/paint.h:236
+#: ../src/extension/internal/filter/paint.h:343
+#: ../src/extension/internal/filter/paint.h:347
+msgid "Erosion:"
+msgstr "Érosion :"
+
+#: ../src/extension/internal/filter/blurs.h:321
+#: ../src/ui/dialog/document-properties.cpp:94
+msgid "Background color"
+msgstr "Couleur de fond"
+
+#: ../src/extension/internal/filter/blurs.h:322
+#: ../src/extension/internal/filter/bumps.h:131
+msgid "Blend type:"
+msgstr "Type de fondu :"
+
+#: ../src/extension/internal/filter/blurs.h:323
+#: ../src/extension/internal/filter/bumps.h:132
+#: ../src/extension/internal/filter/color.h:319
+#: ../src/extension/internal/filter/color.h:327
+#: ../src/extension/internal/filter/color.h:705
+#: ../src/extension/internal/filter/color.h:711
+#: ../src/extension/internal/filter/color.h:877
+#: ../src/extension/internal/filter/color.h:890
+#: ../src/filter-enums.cpp:51
+#: ../src/ui/dialog/inkscape-preferences.cpp:597
+msgid "Normal"
+msgstr "Normal"
+
+#: ../src/extension/internal/filter/blurs.h:329
+msgid "Blend to background"
+msgstr "Fondre avec l'arrière-plan"
+
+#: ../src/extension/internal/filter/blurs.h:339
+msgid "Blur eroded by white or transparency"
+msgstr "Flou érodé par du blanc ou de la transparence"
+
+#: ../src/extension/internal/filter/bumps.h:82
+msgid "Bump"
+msgstr "Bosselage"
+
+#: ../src/extension/internal/filter/bumps.h:86
+msgid "Image simplification:"
+msgstr "Simplification de l'image :"
+
+#: ../src/extension/internal/filter/bumps.h:87
+msgid "Bump simplification:"
+msgstr "Simplification du bosselage :"
+
+#: ../src/extension/internal/filter/bumps.h:88
+msgid "Crop:"
+msgstr "Découpage :"
+
+#: ../src/extension/internal/filter/bumps.h:89
+msgid "Bump source"
+msgstr "Source du bosselage"
+
+#: ../src/extension/internal/filter/bumps.h:90
+#: ../src/extension/internal/filter/color.h:150
+#: ../src/extension/internal/filter/color.h:551
+#: ../src/extension/internal/filter/transparency.h:62
+msgid "Red:"
+msgstr "Rouge :"
+
+#: ../src/extension/internal/filter/bumps.h:91
+#: ../src/extension/internal/filter/color.h:151
+#: ../src/extension/internal/filter/color.h:552
+#: ../src/extension/internal/filter/transparency.h:63
+msgid "Green:"
+msgstr "Vert :"
+
+#: ../src/extension/internal/filter/bumps.h:92
+#: ../src/extension/internal/filter/color.h:152
+#: ../src/extension/internal/filter/color.h:553
+#: ../src/extension/internal/filter/transparency.h:64
+msgid "Blue:"
+msgstr "Bleu :"
+
+#: ../src/extension/internal/filter/bumps.h:93
+msgid "Bump from background"
+msgstr "Bosseler à partir de l'arrière-plan"
+
+#: ../src/extension/internal/filter/bumps.h:96
+msgid "Lighting type:"
+msgstr "Type d'éclairage : "
+
+#: ../src/extension/internal/filter/bumps.h:97
+msgid "Specular"
+msgstr "Spéculaire"
+
+#: ../src/extension/internal/filter/bumps.h:98
+msgid "Diffuse"
+msgstr "Diffus"
+
+#: ../src/extension/internal/filter/bumps.h:101
+#: ../src/extension/internal/filter/color.h:69
+#: ../src/extension/internal/filter/color.h:554
+#: ../src/extension/internal/filter/paint.h:85
+#: ../src/extension/internal/filter/paint.h:592
+msgid "Lightness:"
+msgstr "Luminosité :"
+
+#: ../src/extension/internal/filter/bumps.h:102
+#: ../share/extensions/measure.inx.h:10
+msgid "Precision:"
+msgstr "Précision :"
+
+#: ../src/extension/internal/filter/bumps.h:106
+msgid "Light source:"
+msgstr "Source de lumière :"
+
+#: ../src/extension/internal/filter/bumps.h:107
+msgid "Distant"
+msgstr "Distante"
+
+#: ../src/extension/internal/filter/bumps.h:108
+#: ../src/helper/units.cpp:38
+msgid "Point"
+msgstr "Point"
+
+#: ../src/extension/internal/filter/bumps.h:109
+msgid "Spot"
+msgstr "Spot"
+
+#: ../src/extension/internal/filter/bumps.h:111
+msgid "Distant light options"
+msgstr "Options de lumière distante"
+
+#: ../src/extension/internal/filter/bumps.h:114
+msgid "Point light options"
+msgstr "Options de lumière ponctuelle"
+
+#: ../src/extension/internal/filter/bumps.h:115
+#: ../src/extension/internal/filter/bumps.h:119
+msgid "X location:"
+msgstr "Position sur l'axe X : "
+
+#: ../src/extension/internal/filter/bumps.h:116
+#: ../src/extension/internal/filter/bumps.h:120
+msgid "Y location:"
+msgstr "Position sur l'axe Y : "
+
+#: ../src/extension/internal/filter/bumps.h:117
+#: ../src/extension/internal/filter/bumps.h:121
+msgid "Z location:"
+msgstr "Position sur l'axe Z : "
+
+#: ../src/extension/internal/filter/bumps.h:118
+msgid "Spot light options"
+msgstr "Options de lumière spot"
+
+#: ../src/extension/internal/filter/bumps.h:122
+msgid "X target:"
+msgstr "Cible sur l'axe X :"
+
+#: ../src/extension/internal/filter/bumps.h:123
+msgid "Y target:"
+msgstr "Cible sur l'axe Y :"
+
+#: ../src/extension/internal/filter/bumps.h:124
+msgid "Z target:"
+msgstr "Cible sur l'axe Z :"
+
+#: ../src/extension/internal/filter/bumps.h:125
+msgid "Specular exponent:"
+msgstr "Exposant spéculaire :"
+
+#: ../src/extension/internal/filter/bumps.h:126
+msgid "Cone angle:"
+msgstr "Angle du cône :"
+
+#: ../src/extension/internal/filter/bumps.h:129
+msgid "Image color"
+msgstr "Couleur de l'image"
+
+#: ../src/extension/internal/filter/bumps.h:130
+msgid "Color bump"
+msgstr "Colorer le bosselage"
+
+#: ../src/extension/internal/filter/bumps.h:147
+msgid "All purposes bump filter"
+msgstr "Filtre de bosselage multi-usages"
+
+#: ../src/extension/internal/filter/bumps.h:293
+msgid "Diffuse Light"
+msgstr "Éclairage diffus"
+
+#: ../src/extension/internal/filter/bumps.h:295
+#: ../src/extension/internal/filter/bumps.h:375
+#: ../src/extension/internal/filter/bumps.h:459
+#: ../src/extension/internal/filter/paint.h:88
+#: ../share/extensions/fractalize.inx.h:3
+msgid "Smoothness:"
+msgstr "Lissage :"
+
+#: ../src/extension/internal/filter/bumps.h:296
+#: ../src/extension/internal/filter/bumps.h:377
+#: ../src/extension/internal/filter/bumps.h:461
+msgid "Elevation (°):"
+msgstr "Élévation (°) :"
+
+#: ../src/extension/internal/filter/bumps.h:297
+#: ../src/extension/internal/filter/bumps.h:378
+#: ../src/extension/internal/filter/bumps.h:462
+msgid "Azimuth (°):"
+msgstr "Azimut (°) :"
+
+#: ../src/extension/internal/filter/bumps.h:298
+#: ../src/extension/internal/filter/bumps.h:379
+#: ../src/extension/internal/filter/bumps.h:463
+msgid "Lighting color"
+msgstr "Couleur d'éclairage :"
+
+#: ../src/extension/internal/filter/bumps.h:373
+msgid "Matte Jelly"
+msgstr "Gel mat"
+
+#: ../src/extension/internal/filter/bumps.h:457
+msgid "Specular Light"
+msgstr "Éclairage spéculaire"
+
+#: ../src/extension/internal/filter/color.h:65
+msgid "Brightness"
+msgstr "Brillance"
+
+#: ../src/extension/internal/filter/color.h:68
+#: ../src/extension/internal/filter/color.h:709
+msgid "Over-saturation:"
+msgstr "Sur-saturation :"
+
+#: ../src/extension/internal/filter/color.h:70
+#: ../src/extension/internal/filter/color.h:154
+#: ../src/extension/internal/filter/overlays.h:70
+#: ../src/extension/internal/filter/paint.h:84
+#: ../src/extension/internal/filter/paint.h:502
+#: ../src/extension/internal/filter/transparency.h:66
+msgid "Inverted"
+msgstr "Inversé"
+
+#: ../src/extension/internal/filter/color.h:78
+msgid "Brightness filter"
+msgstr "Filtre de luminosité"
+
+#: ../src/extension/internal/filter/color.h:145
+msgid "Channel Painting"
+msgstr "Peinture par canal"
+
+#: ../src/extension/internal/filter/color.h:153
+#: ../src/extension/internal/filter/transparency.h:65
+msgid "Alpha:"
+msgstr "Opacité :"
+
+#: ../src/extension/internal/filter/color.h:167
+msgid "Replace RGB by any color"
+msgstr "Remplace les canaux RVB par une couleur"
+
+#: ../src/extension/internal/filter/color.h:247
+msgid "Color Shift"
+msgstr "Décalage de couleur"
+
+#: ../src/extension/internal/filter/color.h:249
+msgid "Shift (°):"
+msgstr "Décalage (°) :"
+
+#: ../src/extension/internal/filter/color.h:258
+msgid "Rotate and desaturate hue"
+msgstr "Modifie et désature la teinte"
+
+#: ../src/extension/internal/filter/color.h:314
+msgid "Harsh light:"
+msgstr "Lumière crue :"
+
+#: ../src/extension/internal/filter/color.h:315
+msgid "Normal light:"
+msgstr "Lumière normale :"
+
+#: ../src/extension/internal/filter/color.h:317
+#: ../src/extension/internal/filter/color.h:704
+msgid "Blend 1:"
+msgstr "Fondu 1 :"
+
+#: ../src/extension/internal/filter/color.h:324
+#: ../src/extension/internal/filter/color.h:710
 msgid "Blend 2:"
 msgstr "Fondu 2 :"
 
-#: ../src/extension/internal/filter/color.h:371
+#: ../src/extension/internal/filter/color.h:343
 msgid "Blend image or object with a flood color"
 msgstr "Mélange un image ou un objet avec une couleur de remplissage"
 
-#: ../src/extension/internal/filter/color.h:447
-msgid "Duochrome, custom (Color)"
-msgstr "Duochrome, paramétrable (Couleur)"
+#: ../src/extension/internal/filter/color.h:418
+msgid "Duochrome"
+msgstr "Duochrome"
 
-#: ../src/extension/internal/filter/color.h:451
+#: ../src/extension/internal/filter/color.h:422
 msgid "Fluorescence level:"
 msgstr "Niveau de fluorescence :"
 
-#: ../src/extension/internal/filter/color.h:452
+#: ../src/extension/internal/filter/color.h:423
 msgid "Swap:"
 msgstr "Inverser :"
 
-#: ../src/extension/internal/filter/color.h:453
+#: ../src/extension/internal/filter/color.h:424
 msgid "No swap"
 msgstr "Aucune inversion"
 
-#: ../src/extension/internal/filter/color.h:454
+#: ../src/extension/internal/filter/color.h:425
 msgid "Color and alpha"
 msgstr "Couleur et opacité"
 
-#: ../src/extension/internal/filter/color.h:455
+#: ../src/extension/internal/filter/color.h:426
 msgid "Color only"
 msgstr "Couleur seulement"
 
-#: ../src/extension/internal/filter/color.h:456
+#: ../src/extension/internal/filter/color.h:427
 msgid "Alpha only"
 msgstr "Opacité seulement"
 
-#: ../src/extension/internal/filter/color.h:460
+#: ../src/extension/internal/filter/color.h:431
 msgid "Color 1"
 msgstr "Couleur 1"
 
-#: ../src/extension/internal/filter/color.h:463
+#: ../src/extension/internal/filter/color.h:434
 msgid "Color 2"
 msgstr "Couleur 2"
 
-#: ../src/extension/internal/filter/color.h:473
+#: ../src/extension/internal/filter/color.h:444
 msgid "Convert luminance values to a duochrome palette"
 msgstr "Convertit les valeurs de luminance en une palette à deux tons"
 
-#: ../src/extension/internal/filter/color.h:570
-msgid "Electrize, custom (Color)"
-msgstr "Électriser, paramétrable (Couleur)"
+#: ../src/extension/internal/filter/color.h:549
+msgid "Greyscale"
+msgstr "Niveaux de gris"
 
-#: ../src/extension/internal/filter/color.h:572
-#: ../src/extension/internal/filter/experimental.h:503
-#: ../src/extension/internal/filter/experimental.h:729
-msgid "Simplify:"
-msgstr "Simplification :"
-
-#: ../src/extension/internal/filter/color.h:573
-#: ../src/extension/internal/filter/experimental.h:604
-msgid "Effect type:"
-msgstr "Type d'effet :"
-
-#: ../src/extension/internal/filter/color.h:574
-#: ../src/filter-enums.cpp:83
-msgid "Table"
-msgstr "Table"
-
-#: ../src/extension/internal/filter/color.h:575
-#: ../src/filter-enums.cpp:84
-msgid "Discrete"
-msgstr "Discret"
-
-#: ../src/extension/internal/filter/color.h:577
-#: ../src/extension/internal/filter/experimental.h:612
-#: ../src/extension/internal/filter/experimental.h:728
-msgid "Levels:"
-msgstr "Niveaux :"
-
-#: ../src/extension/internal/filter/color.h:586
-msgid "Electro solarization effects"
-msgstr "Effets d'électro-solarisation"
-
-#: ../src/extension/internal/filter/color.h:664
-msgid "Greyscale, custom (Color)"
-msgstr "Niveaux de gris, paramétrable (Couleur)"
-
-#: ../src/extension/internal/filter/color.h:670
-#: ../src/extension/internal/filter/experimental.h:81
-#: ../src/extension/internal/filter/experimental.h:238
+#: ../src/extension/internal/filter/color.h:555
+#: ../src/extension/internal/filter/paint.h:82
+#: ../src/extension/internal/filter/paint.h:239
 msgid "Transparent"
 msgstr "Transparent"
 
-#: ../src/extension/internal/filter/color.h:678
+#: ../src/extension/internal/filter/color.h:563
 msgid "Customize greyscale components"
 msgstr "Ajuste les composantes de niveau de gris"
 
-#: ../src/extension/internal/filter/color.h:746
-msgid "Lightness, custom (Color)"
-msgstr "Clarté, paramétrable (Couleur)"
+#: ../src/extension/internal/filter/color.h:631
+#: ../src/flood-context.cpp:246
+#: ../src/widgets/sp-color-icc-selector.cpp:231
+#: ../src/widgets/sp-color-scales.cpp:435
+#: ../src/widgets/sp-color-scales.cpp:436
+#: ../src/widgets/toolbox.cpp:4585
+#: ../share/extensions/color_randomize.inx.h:5
+msgid "Lightness"
+msgstr "Luminosité"
 
-#: ../src/extension/internal/filter/color.h:748
+#: ../src/extension/internal/filter/color.h:633
 msgid "Lights:"
 msgstr "Lumières :"
 
-#: ../src/extension/internal/filter/color.h:749
+#: ../src/extension/internal/filter/color.h:634
 msgid "Shadows:"
 msgstr "Ombres :"
 
-#: ../src/extension/internal/filter/color.h:758
+#: ../src/extension/internal/filter/color.h:643
 msgid "Modify lights and shadows separately"
 msgstr "Modifie les lumières et les ombres séparément"
 
-#: ../src/extension/internal/filter/color.h:815
-msgid "Quadritone fantasy, custom (Color)"
-msgstr "Quadritone fantaisie, paramétrable (Couleur)"
-
-#: ../src/extension/internal/filter/color.h:817
-#: ../src/extension/internal/filter/color.h:1015
+#: ../src/extension/internal/filter/color.h:702
+#: ../src/extension/internal/filter/color.h:898
 msgid "Hue distribution (°):"
 msgstr "Distribution de la teinte (°) :"
 
-#: ../src/extension/internal/filter/color.h:818
-#: ../src/ui/dialog/tracedialog.cpp:477
+#: ../src/extension/internal/filter/color.h:703
 msgid "Colors:"
 msgstr "Couleurs :"
 
-#: ../src/extension/internal/filter/color.h:902
-msgid "Solarize, custom (Color)"
-msgstr "Solariser, paramétrable (Couleur)"
-
-#: ../src/extension/internal/filter/color.h:904
+#: ../src/extension/internal/filter/color.h:788
 msgid "Hue rotation (°):"
 msgstr "Rotation de teinte (°) :"
 
-#: ../src/extension/internal/filter/color.h:916
+#: ../src/extension/internal/filter/color.h:800
 msgid "Classic photographic solarization effect"
 msgstr "Effet de solarisation photographique classique"
 
-#: ../src/extension/internal/filter/color.h:989
-msgid "Tritone, custom (Color)"
-msgstr "Tritone, paramétrable (Couleur)"
-
-#: ../src/extension/internal/filter/color.h:995
+#: ../src/extension/internal/filter/color.h:878
 msgid "Enhance hue"
 msgstr "Teinte augmentée"
 
-#: ../src/extension/internal/filter/color.h:996
+#: ../src/extension/internal/filter/color.h:879
 msgid "Radiation"
 msgstr "Radiation"
 
-#: ../src/extension/internal/filter/color.h:997
+#: ../src/extension/internal/filter/color.h:880
 msgid "Hue to background"
 msgstr "Teinte en arrière-plan"
 
-#: ../src/extension/internal/filter/color.h:999
+#: ../src/extension/internal/filter/color.h:882
 msgid "Global blend:"
 msgstr "Fondu global :"
 
-#: ../src/extension/internal/filter/color.h:1005
+#: ../src/extension/internal/filter/color.h:888
 msgid "Glow:"
 msgstr "Lueur :"
 
-#: ../src/extension/internal/filter/color.h:1006
+#: ../src/extension/internal/filter/color.h:889
 msgid "Glow blend:"
 msgstr "Fondu de la lueur :"
 
-#: ../src/extension/internal/filter/color.h:1011
+#: ../src/extension/internal/filter/color.h:894
 msgid "Local light:"
 msgstr "Éclairage local :"
 
-#: ../src/extension/internal/filter/color.h:1012
+#: ../src/extension/internal/filter/color.h:895
 msgid "Global light:"
 msgstr "Éclairage global :"
 
-#: ../src/extension/internal/filter/color.h:1026
+#: ../src/extension/internal/filter/color.h:909
 msgid "Create a custom tritone palette with additional glow, blend modes and hue moving"
 msgstr "Crée une palette à trois tons paramétrable avec lueur, modes de fondu et déplacement de teinte"
 
-#: ../src/extension/internal/filter/drop-shadow.h:35
-msgid "Drop Shadow"
-msgstr "Ombre portée"
+#: ../src/extension/internal/filter/distort.h:55
+#: ../src/extension/internal/filter/overlays.h:60
+msgid "Turbulence type:"
+msgstr "Type de turbulence :"
 
-#: ../src/extension/internal/filter/drop-shadow.h:37
-#: ../src/extension/internal/filter/drop-shadow.h:97
-#: ../src/extension/internal/filter/shadows.h:60
-msgid "Blur radius (px):"
-msgstr "Rayon du flou (px) :"
+#: ../src/extension/internal/filter/distort.h:59
+#: ../src/extension/internal/filter/overlays.h:64
+#: ../src/extension/internal/filter/paint.h:92
+msgid "Horizontal frequency:"
+msgstr "Fréquence horizontale :"
 
-#: ../src/extension/internal/filter/drop-shadow.h:38
-#: ../src/extension/internal/filter/drop-shadow.h:98
-msgid "Opacity (%):"
-msgstr "Opacité (%) :"
+#: ../src/extension/internal/filter/distort.h:60
+#: ../src/extension/internal/filter/overlays.h:65
+#: ../src/extension/internal/filter/paint.h:93
+msgid "Vertical frequency:"
+msgstr "Fréquence verticale :"
 
-#: ../src/extension/internal/filter/drop-shadow.h:39
-#: ../src/extension/internal/filter/drop-shadow.h:99
-#: ../src/extension/internal/filter/shadows.h:61
-msgid "Horizontal offset (px):"
-msgstr "Décalage horizontal (px) :"
+#: ../src/extension/internal/filter/distort.h:61
+#: ../src/extension/internal/filter/overlays.h:66
+#: ../src/extension/internal/filter/paint.h:94
+msgid "Complexity:"
+msgstr "Complexité :"
 
-#: ../src/extension/internal/filter/drop-shadow.h:40
-#: ../src/extension/internal/filter/drop-shadow.h:100
-#: ../src/extension/internal/filter/shadows.h:62
-msgid "Vertical offset (px):"
-msgstr "Décalage vertical (px) :"
+#: ../src/extension/internal/filter/distort.h:62
+#: ../src/extension/internal/filter/overlays.h:67
+#: ../src/extension/internal/filter/paint.h:95
+msgid "Variation:"
+msgstr "Variante :"
 
-#: ../src/extension/internal/filter/drop-shadow.h:48
-msgid "Black, blurred drop shadow"
-msgstr "Ombre portée, noire et diffuse"
-
-#: ../src/extension/internal/filter/drop-shadow.h:95
-msgid "Drop Glow"
-msgstr "Lueur projetée"
-
-#: ../src/extension/internal/filter/drop-shadow.h:108
-msgid "White, blurred drop glow"
-msgstr "Lueur portée, blanche et diffuse"
-
-#: ../src/extension/internal/filter/experimental.h:69
-msgid "Chromolitho, custom"
-msgstr "Chromolitho, paramétrable"
-
-#: ../src/extension/internal/filter/experimental.h:73
-#: ../share/extensions/jessyInk_keyBindings.inx.h:5
-msgid "Drawing mode"
-msgstr "Mode dessin"
-
-#: ../src/extension/internal/filter/experimental.h:74
-msgid "Drawing blend:"
-msgstr "Fondu du dessin :"
-
-#: ../src/extension/internal/filter/experimental.h:82
-msgid "Dented"
-msgstr "Irrégulier"
-
-#: ../src/extension/internal/filter/experimental.h:86
-msgid "Noise reduction:"
-msgstr "Réduction de bruit :"
-
-#: ../src/extension/internal/filter/experimental.h:90
-msgid "Grain mode"
-msgstr "Mode grain"
-
-#: ../src/extension/internal/filter/experimental.h:95
-msgid "Expansion:"
-msgstr "Extension :"
-
-#: ../src/extension/internal/filter/experimental.h:98
-msgid "Grain blend:"
-msgstr "Fusion du grain :"
-
-#: ../src/extension/internal/filter/experimental.h:114
-msgid "Chromo effect with customizable edge drawing and graininess"
-msgstr "Effet chromo avec dessin des bords et grain paramétrables"
-
-#: ../src/extension/internal/filter/experimental.h:231
-msgid "Cross engraving, custom"
-msgstr "Gravure croisée, paramétrable"
-
-#: ../src/extension/internal/filter/experimental.h:233
-#: ../src/extension/internal/filter/experimental.h:336
-msgid "Clean-up:"
-msgstr "Nettoyage :"
-
-#: ../src/extension/internal/filter/experimental.h:237
-#: ../src/widgets/toolbox.cpp:8367
-msgid "Length:"
-msgstr "Longueur :"
-
-#: ../src/extension/internal/filter/experimental.h:246
-msgid "Convert image to an engraving made of vertical and horizontal lines"
-msgstr "Converti l'image en une gravure composée de lignes verticales et horizontales"
-
-#: ../src/extension/internal/filter/experimental.h:330
-msgid "Drawing, custom"
-msgstr "Dessin, paramétrable"
-
-#: ../src/extension/internal/filter/experimental.h:337
-msgid "Erase:"
-msgstr "Effacement :"
-
-#: ../src/extension/internal/filter/experimental.h:344
-#: ../src/extension/internal/filter/image.h:56
-msgid "Level:"
-msgstr "Niveau :"
-
-#: ../src/extension/internal/filter/experimental.h:349
-msgid "Fill color"
-msgstr "Couleur du remplissage"
-
-#: ../src/extension/internal/filter/experimental.h:350
-msgid "Image on fill"
-msgstr "Image sur le remplissage"
-
-#: ../src/extension/internal/filter/experimental.h:353
-msgid "Stroke color"
-msgstr "Couleur du contour"
-
-#: ../src/extension/internal/filter/experimental.h:354
-msgid "Image on stroke"
-msgstr "Image sur le contour"
-
-#: ../src/extension/internal/filter/experimental.h:365
-msgid "Convert images to duochrome drawings"
-msgstr "Convertit les images en dessins duochromes"
-
-#: ../src/extension/internal/filter/experimental.h:497
-msgid "Neon draw, custom"
-msgstr "Dessin néon, paramétrable"
-
-#: ../src/extension/internal/filter/experimental.h:499
-msgid "Line type:"
-msgstr "Type de ligne : "
-
-#: ../src/extension/internal/filter/experimental.h:504
-msgid "Line width:"
-msgstr "Largeur de ligne :"
-
-#: ../src/extension/internal/filter/experimental.h:506
-#: ../src/extension/internal/filter/experimental.h:613
-#: ../src/ui/widget/filter-effect-chooser.cpp:25
-msgid "Blend mode:"
-msgstr "Mode de fondu :"
-
-#: ../src/extension/internal/filter/experimental.h:511
-msgid "Dark mode"
-msgstr "Mode assombri"
-
-#: ../src/extension/internal/filter/experimental.h:519
-msgid "Posterize and draw smooth lines around color shapes"
-msgstr "Postérise et dessine des lignes douces autours des formes de couleur"
-
-#: ../src/extension/internal/filter/experimental.h:602
-msgid "Poster paint, custom"
-msgstr "Peinture et poster, paramétrable"
-
-#: ../src/extension/internal/filter/experimental.h:608
-msgid "Transfer type:"
-msgstr "Type de transfert :"
-
-#: ../src/extension/internal/filter/experimental.h:620
-msgid "Simplify (primary):"
-msgstr "Simplification (primaire) :"
-
-#: ../src/extension/internal/filter/experimental.h:621
-msgid "Simplify (secondary):"
-msgstr "Simplification (secondaire) :"
-
-#: ../src/extension/internal/filter/experimental.h:622
-msgid "Pre-saturation:"
-msgstr "Pré-saturation :"
-
-#: ../src/extension/internal/filter/experimental.h:623
-msgid "Post-saturation:"
-msgstr "Post-saturation :"
-
-#: ../src/extension/internal/filter/experimental.h:624
-msgid "Simulate antialiasing"
-msgstr "Simuler l'antialiasing"
-
-#: ../src/extension/internal/filter/experimental.h:632
-msgid "Poster and painting effects"
-msgstr "Effets de poster et de peinture"
-
-#: ../src/extension/internal/filter/experimental.h:726
-msgid "Posterize basic, custom"
-msgstr "Postérisation simple, paramétrable"
-
-#: ../src/extension/internal/filter/experimental.h:737
-msgid "Simple posterizing effect"
-msgstr "Effet de postérisation simple"
+#: ../src/extension/internal/filter/distort.h:63
+msgid "Intensity:"
+msgstr "Intensité :"
 
 #: ../src/extension/internal/filter/filter-file.cpp:33
 msgid "Bundled"
@@ -7457,8 +7343,8 @@ msgid "Null external module directory name.  Filters will not be loaded."
 msgstr "Le nom de dossier des modules externes est vide. Les filtres ne seront pas chargés."
 
 #: ../src/extension/internal/filter/image.h:49
-msgid "Edge detect, custom (Image)"
-msgstr "Détection de bord, paramétrable (Image)"
+msgid "Edge Detect"
+msgstr "Détection des bords"
 
 #: ../src/extension/internal/filter/image.h:51
 msgid "Detect:"
@@ -7476,23 +7362,261 @@ msgstr "Lignes verticales"
 msgid "Horizontal lines"
 msgstr "Lignes horizontales"
 
-#: ../src/extension/internal/filter/morphology.h:51
-#, fuzzy
-msgid "Cross-smooth, custom (Morphology)"
-msgstr "Adoucissement"
+#: ../src/extension/internal/filter/image.h:56
+#: ../src/extension/internal/filter/paint.h:345
+msgid "Level:"
+msgstr "Niveau :"
 
-#: ../src/extension/internal/filter/morphology.h:65
+#: ../src/extension/internal/filter/image.h:62
+msgid "Image Effects"
+msgstr "Effets d’image"
+
+#: ../src/extension/internal/filter/morphology.h:58
+#: ../src/extension/internal/filter/transparency.h:136
+msgid "Blur:"
+msgstr "Flou :"
+
+#: ../src/extension/internal/filter/morphology.h:66
 msgid "Smooth edges and angles of shapes"
 msgstr "Adouci les bords et les angles des formes"
 
-#: ../src/extension/internal/filter/shadows.h:56
-msgid "Drop shadow, custom (Shadows and Glows)"
-msgstr "Ombre portée, paramétrable (Ombres et lueurs)"
+#: ../src/extension/internal/filter/morphology.h:132
+msgid "Melt:"
+msgstr "Fondu :"
 
-#. ## end option page
+#: ../src/extension/internal/filter/morphology.h:147
+msgid "Adds a colorizable outline"
+msgstr "Ajoute un contour qui peut être coloré"
+
+#: ../src/extension/internal/filter/overlays.h:56
+msgid "Noise Fill"
+msgstr "Remplissage turbulent"
+
+#: ../src/extension/internal/filter/overlays.h:83
+msgid "Basic noise fill and transparency texture"
+msgstr "Texture en transparence turbulente de base"
+
+#: ../src/extension/internal/filter/paint.h:70
+msgid "Chromolitho"
+msgstr "Chromolitho"
+
+#: ../src/extension/internal/filter/paint.h:74
+#: ../share/extensions/jessyInk_keyBindings.inx.h:5
+msgid "Drawing mode"
+msgstr "Mode dessin"
+
+#: ../src/extension/internal/filter/paint.h:75
+msgid "Drawing blend:"
+msgstr "Fondu du dessin :"
+
+#: ../src/extension/internal/filter/paint.h:83
+msgid "Dented"
+msgstr "Irrégulier"
+
+#: ../src/extension/internal/filter/paint.h:87
+msgid "Noise reduction:"
+msgstr "Réduction de bruit :"
+
+#: ../src/extension/internal/filter/paint.h:91
+msgid "Grain mode"
+msgstr "Mode grain"
+
+#: ../src/extension/internal/filter/paint.h:96
+msgid "Expansion:"
+msgstr "Extension :"
+
+#: ../src/extension/internal/filter/paint.h:99
+msgid "Grain blend:"
+msgstr "Fusion du grain :"
+
+#: ../src/extension/internal/filter/paint.h:112
+#: ../src/extension/internal/filter/paint.h:244
+#: ../src/extension/internal/filter/paint.h:363
+#: ../src/extension/internal/filter/paint.h:507
+#: ../src/extension/internal/filter/paint.h:603
+#: ../src/extension/internal/filter/paint.h:716
+#: ../src/extension/internal/filter/paint.h:821
+msgid "Image Paint and Draw"
+msgstr "Dessin et peinture d'image"
+
+#: ../src/extension/internal/filter/paint.h:115
+msgid "Chromo effect with customizable edge drawing and graininess"
+msgstr "Effet chromo avec dessin des bords et grain paramétrables"
+
+#: ../src/extension/internal/filter/paint.h:232
+msgid "Cross Engraving"
+msgstr "Gravure croisée"
+
+#: ../src/extension/internal/filter/paint.h:234
+#: ../src/extension/internal/filter/paint.h:337
+msgid "Clean-up:"
+msgstr "Nettoyage :"
+
+#: ../src/extension/internal/filter/paint.h:238
+#: ../src/widgets/toolbox.cpp:8367
+msgid "Length:"
+msgstr "Longueur :"
+
+#: ../src/extension/internal/filter/paint.h:247
+msgid "Convert image to an engraving made of vertical and horizontal lines"
+msgstr "Converti l'image en une gravure composée de lignes verticales et horizontales"
+
+#: ../src/extension/internal/filter/paint.h:335
+#: ../src/splivarot.cpp:2017
+msgid "Simplify"
+msgstr "Simplifier"
+
+#: ../src/extension/internal/filter/paint.h:338
+msgid "Erase:"
+msgstr "Effacement :"
+
+#: ../src/extension/internal/filter/paint.h:340
+msgid "Smoothness"
+msgstr "Lissage"
+
+#: ../src/extension/internal/filter/paint.h:344
+msgid "Melt"
+msgstr "Fondu"
+
+#: ../src/extension/internal/filter/paint.h:350
+msgid "Fill color"
+msgstr "Couleur du remplissage"
+
+#: ../src/extension/internal/filter/paint.h:351
+msgid "Image on fill"
+msgstr "Image sur le remplissage"
+
+#: ../src/extension/internal/filter/paint.h:354
+msgid "Stroke color"
+msgstr "Couleur du contour"
+
+#: ../src/extension/internal/filter/paint.h:355
+msgid "Image on stroke"
+msgstr "Image sur le contour"
+
+#: ../src/extension/internal/filter/paint.h:366
+msgid "Convert images to duochrome drawings"
+msgstr "Convertit les images en dessins duochromes"
+
+#: ../src/extension/internal/filter/paint.h:494
+msgid "Electrize"
+msgstr "Électrisation"
+
+#: ../src/extension/internal/filter/paint.h:496
+#: ../src/extension/internal/filter/paint.h:590
+#: ../src/extension/internal/filter/paint.h:816
+msgid "Simplify:"
+msgstr "Simplification :"
+
+#: ../src/extension/internal/filter/paint.h:497
+#: ../src/extension/internal/filter/paint.h:691
+msgid "Effect type:"
+msgstr "Type d'effet :"
+
+#: ../src/extension/internal/filter/paint.h:498
+#: ../src/filter-enums.cpp:83
+msgid "Table"
+msgstr "Table"
+
+#: ../src/extension/internal/filter/paint.h:499
+#: ../src/filter-enums.cpp:84
+msgid "Discrete"
+msgstr "Discret"
+
+#: ../src/extension/internal/filter/paint.h:501
+#: ../src/extension/internal/filter/paint.h:699
+#: ../src/extension/internal/filter/paint.h:815
+msgid "Levels:"
+msgstr "Niveaux :"
+
+#: ../src/extension/internal/filter/paint.h:510
+msgid "Electro solarization effects"
+msgstr "Effets d'électro-solarisation"
+
+#: ../src/extension/internal/filter/paint.h:584
+msgid "Neon Draw"
+msgstr "Dessin néon"
+
+#: ../src/extension/internal/filter/paint.h:586
+msgid "Line type:"
+msgstr "Type de ligne : "
+
+#: ../src/extension/internal/filter/paint.h:591
+msgid "Line width:"
+msgstr "Largeur de ligne :"
+
+#: ../src/extension/internal/filter/paint.h:593
+#: ../src/extension/internal/filter/paint.h:700
+#: ../src/ui/widget/filter-effect-chooser.cpp:25
+msgid "Blend mode:"
+msgstr "Mode de fondu :"
+
+#: ../src/extension/internal/filter/paint.h:598
+msgid "Dark mode"
+msgstr "Mode assombri"
+
+#: ../src/extension/internal/filter/paint.h:606
+msgid "Posterize and draw smooth lines around color shapes"
+msgstr "Postérise et dessine des lignes douces autours des formes de couleur"
+
+#: ../src/extension/internal/filter/paint.h:689
+msgid "Poster Paint"
+msgstr "Peinture et poster"
+
+#: ../src/extension/internal/filter/paint.h:695
+msgid "Transfer type:"
+msgstr "Type de transfert :"
+
+#: ../src/extension/internal/filter/paint.h:707
+msgid "Simplify (primary):"
+msgstr "Simplification (primaire) :"
+
+#: ../src/extension/internal/filter/paint.h:708
+msgid "Simplify (secondary):"
+msgstr "Simplification (secondaire) :"
+
+#: ../src/extension/internal/filter/paint.h:709
+msgid "Pre-saturation:"
+msgstr "Pré-saturation :"
+
+#: ../src/extension/internal/filter/paint.h:710
+msgid "Post-saturation:"
+msgstr "Post-saturation :"
+
+#: ../src/extension/internal/filter/paint.h:711
+msgid "Simulate antialiasing"
+msgstr "Simuler l'antialiasing"
+
+#: ../src/extension/internal/filter/paint.h:719
+msgid "Poster and painting effects"
+msgstr "Effets de poster et de peinture"
+
+#: ../src/extension/internal/filter/paint.h:813
+msgid "Posterize Basic"
+msgstr "Postérisation simple"
+
+#: ../src/extension/internal/filter/paint.h:824
+msgid "Simple posterizing effect"
+msgstr "Effet de postérisation simple"
+
+#: ../src/extension/internal/filter/protrusions.h:48
+msgid "Snow crest"
+msgstr "Crête neigeuse"
+
+#: ../src/extension/internal/filter/protrusions.h:50
+msgid "Drift Size:"
+msgstr "Dimension de l’amas :"
+
+#: ../src/extension/internal/filter/protrusions.h:58
+msgid "Snow has fallen on object"
+msgstr "La neige est tombée sur l’objet"
+
+#: ../src/extension/internal/filter/shadows.h:56
+msgid "Drop Shadow"
+msgstr "Ombre portée"
+
 #: ../src/extension/internal/filter/shadows.h:59
-#: ../src/ui/dialog/tracedialog.cpp:617
-#: ../src/ui/dialog/tracedialog.cpp:623
+#: ../src/ui/dialog/tracedialog.cpp:644
 #: ../share/extensions/color_custom.inx.h:14
 #: ../share/extensions/color_randomize.inx.h:6
 #: ../share/extensions/dots.inx.h:5
@@ -7520,6 +7644,18 @@ msgstr "Ombre portée, paramétrable (Ombres et lueurs)"
 #: ../share/extensions/web-transmit-att.inx.h:6
 msgid "Options"
 msgstr "Options"
+
+#: ../src/extension/internal/filter/shadows.h:60
+msgid "Blur radius (px):"
+msgstr "Rayon du flou (px) :"
+
+#: ../src/extension/internal/filter/shadows.h:61
+msgid "Horizontal offset (px):"
+msgstr "Décalage horizontal (px) :"
+
+#: ../src/extension/internal/filter/shadows.h:62
+msgid "Vertical offset (px):"
+msgstr "Décalage vertical (px) :"
 
 #: ../src/extension/internal/filter/shadows.h:63
 msgid "Blur type:"
@@ -7553,17 +7689,26 @@ msgstr "Utiliser la couleur de l'objet"
 msgid "Colorizable Drop shadow"
 msgstr "Ombre portée colorisable"
 
-#: ../src/extension/internal/filter/snow.h:32
-msgid "Snow crest"
-msgstr "Crête neigeuse"
+#: ../src/extension/internal/filter/transparency.h:60
+msgid "Channel Transparency"
+msgstr "Transparence par canal"
 
-#: ../src/extension/internal/filter/snow.h:34
-msgid "Drift Size:"
-msgstr "Dimension de l’amas :"
+#: ../src/extension/internal/filter/transparency.h:71
+#: ../src/extension/internal/filter/transparency.h:143
+msgid "Fill and Transparency"
+msgstr "Remplissage et transparence"
 
-#: ../src/extension/internal/filter/snow.h:42
-msgid "Snow has fallen on object"
-msgstr "La neige est tombée sur l’objet"
+#: ../src/extension/internal/filter/transparency.h:74
+msgid "Replace RGB with transparency"
+msgstr "Remplace les canaux RVB par de la transparence"
+
+#: ../src/extension/internal/filter/transparency.h:134
+msgid "Silhouette"
+msgstr "Silhouette"
+
+#: ../src/extension/internal/filter/transparency.h:146
+msgid "Repaint anything visible monochrome"
+msgstr "Recouvre l’objet d’une couleur monochrome"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:147
 #, c-format
@@ -8312,15 +8457,6 @@ msgstr "Teinte"
 msgid "Saturation"
 msgstr "Saturation"
 
-#: ../src/flood-context.cpp:246
-#: ../src/widgets/sp-color-icc-selector.cpp:231
-#: ../src/widgets/sp-color-scales.cpp:435
-#: ../src/widgets/sp-color-scales.cpp:436
-#: ../src/widgets/toolbox.cpp:4585
-#: ../share/extensions/color_randomize.inx.h:5
-msgid "Lightness"
-msgstr "Luminosité"
-
 #: ../src/flood-context.cpp:258
 msgctxt "Flood autogap"
 msgid "None"
@@ -8580,10 +8716,6 @@ msgstr "Unité"
 #: ../share/extensions/dxf_outlines.inx.h:10
 msgid "Units"
 msgstr "Unités"
-
-#: ../src/helper/units.cpp:38
-msgid "Point"
-msgstr "Point"
 
 #: ../src/helper/units.cpp:38
 #: ../src/ui/widget/selected-style.cpp:294
@@ -9004,9 +9136,8 @@ msgid "Resizable"
 msgstr "Redimensionnable"
 
 #: ../src/libgdl/gdl-dock-item.c:314
-#, fuzzy
 msgid "If set, the dock item can be resized when docked in a GtkPanel widget"
-msgstr "Si coché, l’élément détachable peut être redimensionné quand il est attaché à un panneau"
+msgstr "Si coché, l’élément détachable peut être redimensionné quand il est attaché à un widget GtkPanel"
 
 #: ../src/libgdl/gdl-dock-item.c:321
 msgid "Item behavior"
@@ -9261,7 +9392,6 @@ msgid "X-Coordinate"
 msgstr "Coordonnée X"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:193
-#, fuzzy
 msgid "X-Coordinate for dock when floating"
 msgstr "Coordonnée X du point d’attache quand il est flottant"
 
@@ -9270,7 +9400,6 @@ msgid "Y-Coordinate"
 msgstr "Coordonnée Y"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:200
-#, fuzzy
 msgid "Y-Coordinate for dock when floating"
 msgstr "Coordonnée Y du point d’attache quand il est flottant"
 
@@ -12209,10 +12338,6 @@ msgstr "Fait - <b>%d</b> chemins simplifiés."
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Sélectionner un ou des <b>chemin(s)</b> à simplifier."
 
-#: ../src/splivarot.cpp:2017
-msgid "Simplify"
-msgstr "Simplifier"
-
 #: ../src/splivarot.cpp:2019
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>Aucun chemin</b> à simplifier dans la sélection."
@@ -12562,9 +12687,8 @@ msgstr "Sélectionner un outil secondaire dans la barre d’outils"
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:519
 #: ../src/trace/potrace/inkscape-potrace.cpp:582
-#, fuzzy
 msgid "Trace: %1.  %2 nodes"
-msgstr "Vectoriser : %d. %ld nœuds"
+msgstr "Vectoriser : %1. %2 nœuds"
 
 #: ../src/trace/trace.cpp:72
 #: ../src/trace/trace.cpp:137
@@ -13266,10 +13390,6 @@ msgstr "Si coché, la bordure de page est ombrée en bas et à droite"
 #: ../src/ui/dialog/document-properties.cpp:94
 msgid "Back_ground:"
 msgstr "Couleur de _fond :"
-
-#: ../src/ui/dialog/document-properties.cpp:94
-msgid "Background color"
-msgstr "Couleur de fond"
 
 #: ../src/ui/dialog/document-properties.cpp:94
 msgid "Color and transparency of the page background (also used for bitmap export)"
@@ -14014,7 +14134,6 @@ msgid "K4:"
 msgstr "K4 :"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2216
-#: ../src/ui/dialog/tracedialog.cpp:581
 msgid "Size:"
 msgstr "Taille :"
 
@@ -17664,177 +17783,196 @@ msgstr "Organiser les objets sélectionnés"
 #. # begin single scan
 #. brightness
 #: ../src/ui/dialog/tracedialog.cpp:406
-msgid "Brightness cutoff"
-msgstr "Seuil de luminosité"
+msgid "_Brightness cutoff"
+msgstr "Seuil de _luminosité"
 
-#: ../src/ui/dialog/tracedialog.cpp:410
+#: ../src/ui/dialog/tracedialog.cpp:411
 msgid "Trace by a given brightness level"
 msgstr "Vectoriser suivant un niveau de luminosité"
 
-#: ../src/ui/dialog/tracedialog.cpp:418
+#: ../src/ui/dialog/tracedialog.cpp:419
 msgid "Brightness cutoff for black/white"
 msgstr "Limite de luminosité pour la détermination blanc/noir"
 
-#: ../src/ui/dialog/tracedialog.cpp:425
+#: ../src/ui/dialog/tracedialog.cpp:421
+#: ../src/ui/dialog/tracedialog.cpp:618
+msgid "_Threshold:"
+msgstr "_Seuil :"
+
+#: ../src/ui/dialog/tracedialog.cpp:428
 msgid "Single scan: creates a path"
 msgstr "Passe simple : crée un chemin"
 
 #. canny edge detection
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
-#: ../src/ui/dialog/tracedialog.cpp:430
-msgid "Edge detection"
-msgstr "Détection de contour"
+#: ../src/ui/dialog/tracedialog.cpp:433
+msgid "_Edge detection"
+msgstr "_Détection de contour"
 
-#: ../src/ui/dialog/tracedialog.cpp:434
+#: ../src/ui/dialog/tracedialog.cpp:438
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
 msgstr "Vectoriser en utilisant l’algorithme détection d’arêtes de J. Canny"
 
-#: ../src/ui/dialog/tracedialog.cpp:451
+#: ../src/ui/dialog/tracedialog.cpp:455
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
 msgstr "Limite de luminosité pour déterminer les pixels adjacents (détermine la finesse des arrêtes)"
+
+#: ../src/ui/dialog/tracedialog.cpp:457
+msgid "T_hreshold:"
+msgstr "_Seuil :"
 
 #. quantization
 #. TRANSLATORS: Color Quantization: the process of reducing the number
 #. of colors in an image by selecting an optimized set of representative
 #. colors and then re-applying this reduced set to the original image.
-#: ../src/ui/dialog/tracedialog.cpp:463
-msgid "Color quantization"
-msgstr "Quantification des couleurs"
+#: ../src/ui/dialog/tracedialog.cpp:469
+msgid "Color _quantization"
+msgstr "_Quantification des couleurs"
 
-#: ../src/ui/dialog/tracedialog.cpp:467
+#: ../src/ui/dialog/tracedialog.cpp:474
 msgid "Trace along the boundaries of reduced colors"
 msgstr "Vectoriser les contours déterminés par les couleurs réduites"
 
-#: ../src/ui/dialog/tracedialog.cpp:475
+#: ../src/ui/dialog/tracedialog.cpp:482
 msgid "The number of reduced colors"
 msgstr "Nombre de couleurs réduites"
 
-#. swap black and white
-#: ../src/ui/dialog/tracedialog.cpp:483
-msgid "Invert image"
-msgstr "Inverser l’image"
+#: ../src/ui/dialog/tracedialog.cpp:484
+msgid "_Colors:"
+msgstr "_Couleurs :"
 
-#: ../src/ui/dialog/tracedialog.cpp:488
+#. swap black and white
+#: ../src/ui/dialog/tracedialog.cpp:492
+msgid "_Invert image"
+msgstr "_Inverser l’image"
+
+#: ../src/ui/dialog/tracedialog.cpp:498
 msgid "Invert black and white regions"
 msgstr "Inverser les régions blanches et noires"
 
 #. # end single scan
 #. # begin multiple scan
-#: ../src/ui/dialog/tracedialog.cpp:497
-msgid "Brightness steps"
-msgstr "Niveaux de luminosité"
+#: ../src/ui/dialog/tracedialog.cpp:507
+msgid "B_rightness steps"
+msgstr "_Niveaux de luminosité"
 
-#: ../src/ui/dialog/tracedialog.cpp:501
+#: ../src/ui/dialog/tracedialog.cpp:512
 msgid "Trace the given number of brightness levels"
 msgstr "Vectoriser suivant les différents niveaux de luminosité"
 
-#: ../src/ui/dialog/tracedialog.cpp:508
-msgid "Scans:"
-msgstr "Passes :"
+#: ../src/ui/dialog/tracedialog.cpp:519
+msgid "Sc_ans:"
+msgstr "_Passes :"
 
-#: ../src/ui/dialog/tracedialog.cpp:511
+#: ../src/ui/dialog/tracedialog.cpp:524
 msgid "The desired number of scans"
 msgstr "Nombre de passes désiré"
 
-#: ../src/ui/dialog/tracedialog.cpp:515
-#: ../share/extensions/svgcalendar.inx.h:4
-msgid "Colors"
-msgstr "Couleurs"
+#: ../src/ui/dialog/tracedialog.cpp:528
+msgid "Co_lors"
+msgstr "Cou_leurs"
 
-#: ../src/ui/dialog/tracedialog.cpp:519
+#: ../src/ui/dialog/tracedialog.cpp:533
 msgid "Trace the given number of reduced colors"
 msgstr "Vectoriser suivant les différentes couleurs réduites"
 
-#: ../src/ui/dialog/tracedialog.cpp:523
-msgid "Grays"
-msgstr "Niveaux de gris"
+#: ../src/ui/dialog/tracedialog.cpp:537
+msgid "_Grays"
+msgstr "Niveaux de _gris"
 
-#: ../src/ui/dialog/tracedialog.cpp:527
+#: ../src/ui/dialog/tracedialog.cpp:542
 msgid "Same as Colors, but the result is converted to grayscale"
 msgstr "Comme pour couleur, mais le résultat est converti en niveaux de gris"
 
 #. TRANSLATORS: "Smooth" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:532
-msgid "Smooth"
-msgstr "Adoucir"
+#: ../src/ui/dialog/tracedialog.cpp:547
+msgid "S_mooth"
+msgstr "_Adoucir"
 
-#: ../src/ui/dialog/tracedialog.cpp:536
+#: ../src/ui/dialog/tracedialog.cpp:552
 msgid "Apply Gaussian blur to the bitmap before tracing"
 msgstr "Appliquer un flou gaussien sur le bitmap avant de le vectoriser"
 
 #. TRANSLATORS: "Stack" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:539
-msgid "Stack scans"
-msgstr "Empiler les passes"
+#: ../src/ui/dialog/tracedialog.cpp:555
+msgid "Stac_k scans"
+msgstr "Em_piler les passes"
 
-#: ../src/ui/dialog/tracedialog.cpp:542
+#: ../src/ui/dialog/tracedialog.cpp:559
 msgid "Stack scans on top of one another (no gaps) instead of tiling (usually with gaps)"
 msgstr "Empiler les passes verticalement (sans espacement) au lieu de les juxtaposer (souvent avec de l’espacement)"
 
-#: ../src/ui/dialog/tracedialog.cpp:545
-msgid "Remove background"
-msgstr "Retirer l’arrière-plan"
+#: ../src/ui/dialog/tracedialog.cpp:562
+msgid "Remo_ve background"
+msgstr "_Retirer l’arrière-plan"
 
-#: ../src/ui/dialog/tracedialog.cpp:550
+#: ../src/ui/dialog/tracedialog.cpp:568
 msgid "Remove bottom (background) layer when done"
 msgstr "Retirer le calque du fond (arrière-plan) après l’opération"
 
-#: ../src/ui/dialog/tracedialog.cpp:554
+#: ../src/ui/dialog/tracedialog.cpp:572
 msgid "Multiple scans: creates a group of paths"
 msgstr "Passes multiples : crée un groupe de chemins"
 
 #. # end multiple scan
 #. ## end mode page
-#: ../src/ui/dialog/tracedialog.cpp:563
-#: ../src/widgets/toolbox.cpp:4520
-#: ../src/widgets/toolbox.cpp:4778
-msgid "Mode"
-msgstr "Mode"
+#: ../src/ui/dialog/tracedialog.cpp:581
+msgid "_Mode"
+msgstr "_Mode"
 
 #. ## begin option page
 #. # potrace parameters
-#: ../src/ui/dialog/tracedialog.cpp:569
-msgid "Suppress speckles"
-msgstr "Supprimer les parasites"
+#: ../src/ui/dialog/tracedialog.cpp:587
+msgid "Suppress _speckles"
+msgstr "Supprimer les _parasites"
 
-#: ../src/ui/dialog/tracedialog.cpp:571
+#: ../src/ui/dialog/tracedialog.cpp:590
 msgid "Ignore small spots (speckles) in the bitmap"
 msgstr "Ignorer les petits points (parasites) présents dans le bitmap"
 
-#: ../src/ui/dialog/tracedialog.cpp:579
+#: ../src/ui/dialog/tracedialog.cpp:598
 msgid "Speckles of up to this many pixels will be suppressed"
 msgstr "Les taches comportant jusqu’à ce nombre de pixels seront supprimées."
 
-#: ../src/ui/dialog/tracedialog.cpp:584
-msgid "Smooth corners"
-msgstr "Adoucir les coins"
+#: ../src/ui/dialog/tracedialog.cpp:600
+msgid "S_ize:"
+msgstr "_Taille :"
 
-#: ../src/ui/dialog/tracedialog.cpp:586
+#: ../src/ui/dialog/tracedialog.cpp:605
+msgid "Smooth _corners"
+msgstr "_Adoucir les coins"
+
+#: ../src/ui/dialog/tracedialog.cpp:608
 msgid "Smooth out sharp corners of the trace"
 msgstr "Adoucir les coins anguleux de la vectorisation"
 
-#: ../src/ui/dialog/tracedialog.cpp:595
+#: ../src/ui/dialog/tracedialog.cpp:617
 msgid "Increase this to smooth corners more"
 msgstr "Augmenter ce paramètre pour adoucir les coins"
 
-#: ../src/ui/dialog/tracedialog.cpp:599
-msgid "Optimize paths"
-msgstr "Optimiser les chemins"
+#: ../src/ui/dialog/tracedialog.cpp:623
+msgid "Optimize p_aths"
+msgstr "_Optimiser les chemins"
 
-#: ../src/ui/dialog/tracedialog.cpp:602
+#: ../src/ui/dialog/tracedialog.cpp:627
 msgid "Try to optimize paths by joining adjacent Bezier curve segments"
 msgstr "Tenter d’optimiser les chemins en joignant les segments de courbes de Bézier adjacents"
 
-#: ../src/ui/dialog/tracedialog.cpp:610
+#: ../src/ui/dialog/tracedialog.cpp:635
 msgid "Increase this to reduce the number of nodes in the trace by more aggressive optimization"
 msgstr "Augmenter ce paramètre pour diminuer le nombre de nœuds de la vectorisation avec une optimisation plus aggressive"
 
-#: ../src/ui/dialog/tracedialog.cpp:611
-msgid "Tolerance:"
-msgstr "Tolérance :"
+#: ../src/ui/dialog/tracedialog.cpp:636
+msgid "To_lerance:"
+msgstr "_Tolérance :"
+
+#. ## end option page
+#: ../src/ui/dialog/tracedialog.cpp:650
+msgid "O_ptions"
+msgstr "_Options"
 
 #. ### credits
-#: ../src/ui/dialog/tracedialog.cpp:627
+#: ../src/ui/dialog/tracedialog.cpp:654
 msgid ""
 "Inkscape bitmap tracing\n"
 "is based on Potrace,\n"
@@ -17848,38 +17986,38 @@ msgstr ""
 "\n"
 "http://potrace.sourceforge.net"
 
-#: ../src/ui/dialog/tracedialog.cpp:630
+#: ../src/ui/dialog/tracedialog.cpp:657
 msgid "Credits"
 msgstr "Crédits"
 
 #. #### begin right panel
 #. ## SIOX
-#: ../src/ui/dialog/tracedialog.cpp:644
-msgid "SIOX foreground selection"
-msgstr "Sélection du premier plan avec SIOX"
+#: ../src/ui/dialog/tracedialog.cpp:671
+msgid "SIOX _foreground selection"
+msgstr "_Sélection du premier plan avec SIOX"
 
-#: ../src/ui/dialog/tracedialog.cpp:647
+#: ../src/ui/dialog/tracedialog.cpp:675
 msgid "Cover the area you want to select as the foreground"
 msgstr "Couvrez la zone que vous voulez sélectionner comme premier plan"
 
 #. ## preview
-#: ../src/ui/dialog/tracedialog.cpp:652
-msgid "Update"
-msgstr "Mettre à jour"
+#: ../src/ui/dialog/tracedialog.cpp:680
+msgid "_Update"
+msgstr "_Mettre à jour"
 
-#: ../src/ui/dialog/tracedialog.cpp:658
+#: ../src/ui/dialog/tracedialog.cpp:687
 msgid "Preview the intermediate bitmap with the current settings, without actual tracing"
 msgstr "Aperçu du bitmap intermédiaire avec les paramètres définis, sans vectorisation effective"
 
-#: ../src/ui/dialog/tracedialog.cpp:662
+#: ../src/ui/dialog/tracedialog.cpp:691
 msgid "Preview"
 msgstr "Aperçu"
 
-#: ../src/ui/dialog/tracedialog.cpp:679
+#: ../src/ui/dialog/tracedialog.cpp:708
 msgid "Abort a trace in progress"
 msgstr "Annuler une vectorisation en cours"
 
-#: ../src/ui/dialog/tracedialog.cpp:683
+#: ../src/ui/dialog/tracedialog.cpp:712
 msgid "Execute the trace"
 msgstr "Lancer la vectorisation"
 
@@ -22045,9 +22183,8 @@ msgid "Text baseline"
 msgstr "Ligne de base de texte"
 
 #: ../src/widgets/toolbox.cpp:2411
-#, fuzzy
 msgid "Snap from and to text anchors and baselines"
-msgstr "Aimanter depuis et vers le centre des objets"
+msgstr "Aimanter depuis et vers les ancres et les lignes de base"
 
 #: ../src/widgets/toolbox.cpp:2421
 msgid "Page border"
@@ -22695,6 +22832,11 @@ msgstr "Mode flou"
 msgid "Blur selected objects more; with Shift, blur less"
 msgstr "Ajoute du flou à la sélection ; avec Maj, retire du flou"
 
+#: ../src/widgets/toolbox.cpp:4520
+#: ../src/widgets/toolbox.cpp:4778
+msgid "Mode"
+msgstr "Mode"
+
 #: ../src/widgets/toolbox.cpp:4542
 msgid "Channels:"
 msgstr "Canaux :"
@@ -23292,9 +23434,9 @@ msgid "The width of the eraser pen (relative to the visible canvas area)"
 msgstr "Largeur de la gomme (relativement à la zone de travail visible)"
 
 #: ../src/widgets/toolbox.cpp:6490
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to find font matching: %s\n"
-msgstr "Échec de lecture sur le tube fils (%s)"
+msgstr "Impossible de trouver une police correspondant à : %s\n"
 
 #: ../src/widgets/toolbox.cpp:6524
 msgid "Text: Change font family"
@@ -24259,9 +24401,8 @@ msgid "AutoCAD DXF R13 (*.dxf)"
 msgstr "DXF AutoCAD R13 (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:8
-#, fuzzy
 msgid "Character encoding:"
-msgstr "Encodage de caractère"
+msgstr "Encodage de caractère :"
 
 #: ../share/extensions/dxf_input.inx.h:9
 msgid "DXF Input"
@@ -24276,19 +24417,16 @@ msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Importer depuis le format Document Exchange d’AutoCAD"
 
 #: ../share/extensions/dxf_input.inx.h:13
-#, fuzzy
 msgid "Manual x-axis origin (mm):"
-msgstr "Origine manuelle de l'axe x (mm)"
+msgstr "Origine manuelle de l'axe x (mm) :"
 
 #: ../share/extensions/dxf_input.inx.h:14
-#, fuzzy
 msgid "Manual y-axis origin (mm):"
-msgstr "Origine manuelle de l'axe y (mm)"
+msgstr "Origine manuelle de l'axe y (mm) :"
 
 #: ../share/extensions/dxf_input.inx.h:16
-#, fuzzy
 msgid "Or, use manual scale factor:"
-msgstr "Ou utiliser un facteur d’échelle manuel"
+msgstr "Ou utiliser un facteur d’échelle manuel :"
 
 #: ../share/extensions/dxf_input.inx.h:17
 msgid "Text Font:"
@@ -24700,9 +24838,8 @@ msgid "Area artifacts"
 msgstr ""
 
 #: ../share/extensions/gcodetools_area.inx.h:7
-#, fuzzy
 msgid "Area fill angle"
-msgstr "Rotation à gauche :"
+msgstr "Angle de remplissage de la zone"
 
 #: ../share/extensions/gcodetools_area.inx.h:8
 msgid "Area fill shift"
@@ -24713,9 +24850,8 @@ msgid "Area tool overlap (0..0.9):"
 msgstr ""
 
 #: ../share/extensions/gcodetools_area.inx.h:10
-#, fuzzy
 msgid "Area width:"
-msgstr "Définir la largeur :"
+msgstr "Largeur de la zone :"
 
 #: ../share/extensions/gcodetools_area.inx.h:11
 #, fuzzy
@@ -24752,9 +24888,8 @@ msgstr "Ordre de découpe :"
 #: ../share/extensions/gcodetools_area.inx.h:16
 #: ../share/extensions/gcodetools_lathe.inx.h:8
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:7
-#, fuzzy
 msgid "Depth function:"
-msgstr "Fonction pour le rouge :"
+msgstr "Fonction de profondeur :"
 
 #: ../share/extensions/gcodetools_area.inx.h:17
 #: ../share/extensions/gcodetools_dxf_points.inx.h:6
@@ -25085,9 +25220,8 @@ msgid "Preview's size (px):"
 msgstr "Taille de l'aperçu (px) :"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:36
-#, fuzzy
 msgid "Start position (x;y):"
-msgstr "Disposition du composant :"
+msgstr "Position de départ (x;y) :"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:38
 #: ../share/extensions/gcodetools_orientation_points.inx.h:10
@@ -26387,10 +26521,6 @@ msgstr "Type de mesure :"
 msgid "Offset (px):"
 msgstr "Décalage (px) :"
 
-#: ../share/extensions/measure.inx.h:10
-msgid "Precision:"
-msgstr "Précision :"
-
 #: ../share/extensions/measure.inx.h:11
 msgid "Scale Factor (Drawing:Real Length) = 1:"
 msgstr "Facteur d’échelle (Dessin:Longueur réelle) = 1"
@@ -27256,7 +27386,8 @@ msgid "Keep editor data"
 msgstr "Conserve les données d’édition"
 
 #: ../share/extensions/scour.inx.h:17
-msgid "Number of significant digits for coords"
+#, fuzzy
+msgid "Number of significant digits for coords:"
 msgstr "Nombre de chiffres significatifs pour les coordonnées"
 
 #: ../share/extensions/scour.inx.h:18
@@ -27338,7 +27469,7 @@ msgid "Work around renderer bugs"
 msgstr "Contourner les défauts de rendu"
 
 #: ../share/extensions/scour.inx.h:48
-msgid "XML indentation (pretty-printing)"
+msgid "XML indentation (pretty-printing):"
 msgstr ""
 
 #: ../share/extensions/sk1_input.inx.h:1
@@ -27510,6 +27641,10 @@ msgstr "Calendrier"
 #: ../share/extensions/svgcalendar.inx.h:3
 msgid "Char Encoding:"
 msgstr "Encodage des caractères :"
+
+#: ../share/extensions/svgcalendar.inx.h:4
+msgid "Colors"
+msgstr "Couleurs"
 
 #: ../share/extensions/svgcalendar.inx.h:6
 msgid "Day color:"
@@ -28166,6 +28301,72 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "Blur, custom (ABCs)"
+#~ msgstr "Flou, paramétrable (ABC)"
+#~ msgid "Experimental"
+#~ msgstr "Expérimental"
+#~ msgid "Clean edges, custom (ABCs)"
+#~ msgstr "Nettoyage des bords, paramétrable (ABC)"
+#~ msgid "Color shift, custom (ABCs)"
+#~ msgstr "Décalage de couleur, paramétrable (ABC)"
+#~ msgid "Diffuse light, custom (ABCs)"
+#~ msgstr "Éclairage diffus, paramétrable (ABC)"
+#~ msgid "Feather, custom (ABCs)"
+#~ msgstr "Estompage du pourtour, paramétrable (ABC)"
+#~ msgid "Matte jelly, custom (ABCs)"
+#~ msgstr "Gel mat, paramétrable (ABC)"
+#~ msgid "Noise fill, custom (ABCs)"
+#~ msgstr "Remplissage turbulent, paramétrable (ABC)"
+#~ msgid "Outline, custom (ABCs)"
+#~ msgstr "Soulignement du contour, paramétrable (ABC)"
+#~ msgid "Roughen, custom (ABCs)"
+#~ msgstr "Agitation, paramétrable (ABC)"
+#~ msgid "Silhouette, custom (ABCs)"
+#~ msgstr "Silhouette, paramétrable (ABC)"
+#~ msgid "Specular light, custom (ABCs)"
+#~ msgstr "Éclairage spéculaire, paramétrable (ABC)"
+#~ msgid "Brightness, custom (Color)"
+#~ msgstr "Brillance, paramétrable (Couleur)"
+#~ msgid "Channel painting, custom (Color)"
+#~ msgstr "Peinture par canal, paramétrable (Couleur)"
+#~ msgid "Channel transparency, custom (Color)"
+#~ msgstr "Transparence par canal, paramétrable (Couleur)"
+#~ msgid "Colorize, custom (Color)"
+#~ msgstr "Colorer, paramétrable (Couleur)"
+#~ msgid "Duochrome, custom (Color)"
+#~ msgstr "Duochrome, paramétrable (Couleur)"
+#~ msgid "Electrize, custom (Color)"
+#~ msgstr "Électriser, paramétrable (Couleur)"
+#~ msgid "Greyscale, custom (Color)"
+#~ msgstr "Niveaux de gris, paramétrable (Couleur)"
+#~ msgid "Lightness, custom (Color)"
+#~ msgstr "Clarté, paramétrable (Couleur)"
+#~ msgid "Quadritone fantasy, custom (Color)"
+#~ msgstr "Quadritone fantaisie, paramétrable (Couleur)"
+#~ msgid "Solarize, custom (Color)"
+#~ msgstr "Solariser, paramétrable (Couleur)"
+#~ msgid "Tritone, custom (Color)"
+#~ msgstr "Tritone, paramétrable (Couleur)"
+#~ msgid "Opacity (%):"
+#~ msgstr "Opacité (%) :"
+#~ msgid "Black, blurred drop shadow"
+#~ msgstr "Ombre portée, noire et diffuse"
+#~ msgid "Drop Glow"
+#~ msgstr "Lueur projetée"
+#~ msgid "White, blurred drop glow"
+#~ msgstr "Lueur portée, blanche et diffuse"
+#~ msgid "Cross engraving, custom"
+#~ msgstr "Gravure croisée, paramétrable"
+#~ msgid "Drawing, custom"
+#~ msgstr "Dessin, paramétrable"
+#~ msgid "Edge detect, custom (Image)"
+#~ msgstr "Détection de bord, paramétrable (Image)"
+
+#, fuzzy
+#~ msgid "Cross-smooth, custom (Morphology)"
+#~ msgstr "Adoucissement"
+#~ msgid "Drop shadow, custom (Shadows and Glows)"
+#~ msgstr "Ombre portée, paramétrable (Ombres et lueurs)"
 #~ msgid "link"
 #~ msgstr "lier"
 #~ msgid "Barcode - QR Code"
@@ -28321,12 +28522,6 @@ msgstr "Entrée XAML"
 #~ msgstr "Bruit fractal"
 
 #, fuzzy
-#~ msgid "Smoothness"
-#~ msgstr "Lissage :"
-#~ msgid "Melt"
-#~ msgstr "Mélange"
-
-#, fuzzy
 #~ msgid "Smoothed"
 #~ msgstr "Adoucir"
 
@@ -28337,10 +28532,6 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Poster"
 #~ msgstr "Plâtre"
-
-#, fuzzy
-#~ msgid "Painting"
-#~ msgstr "Peinture à l’huile"
 #~ msgid "Primary blur:"
 #~ msgstr "Flou primaire :"
 #~ msgid "Secondary blur:"
@@ -29173,14 +29364,6 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Drop shadow, color"
 #~ msgstr "Ombre portée couleur -Expérimentale-"
-
-#, fuzzy
-#~ msgid "Simplification:"
-#~ msgstr "Seuil de simplification :"
-
-#, fuzzy
-#~ msgid "Fading:"
-#~ msgstr "Ombrage"
 #~ msgctxt "Filter blend mode"
 #~ msgid "Normal"
 #~ msgstr "Normal"

@@ -37,7 +37,7 @@ namespace Filter {
     Options
       * Image simplification (0.01->10., default 0.01) -> blur1 (stdDeviation)
       * Bump simplification (0.01->10., default 0.01) -> blur2 (stdDeviation)
-      * Crop (-1.->1., default 0) -> composite1 (k3)
+      * Crop (-50.->50., default 1) -> composite1 (k3)
       * Red (-50.->50., default 0.) -> colormatrix1 (values)
       * Green (-50.->50., default 0.) -> colormatrix1 (values)
       * Blue (-50.->50., default 0.) -> colormatrix1 (values)
@@ -85,8 +85,8 @@ public:
                 "<page name=\"optionstab\" _gui-text=\"Options\">\n"
                   "<param name=\"simplifyImage\" gui-text=\"" N_("Image simplification:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"10.00\">0.01</param>\n"
                   "<param name=\"simplifyBump\" gui-text=\"" N_("Bump simplification:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"10.00\">0.01</param>\n"
-                  "<param name=\"crop\" gui-text=\"" N_("Crop:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-1.\" max=\"1.\">0</param>\n"
-                  "<_param name=\"sourceHeader\" type=\"description\" appearance=\"header\">Bump source</_param>\n"
+                  "<param name=\"crop\" gui-text=\"" N_("Crop:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-50.\" max=\"50.\">1</param>\n"
+                  "<_param name=\"sourceHeader\" type=\"description\" appearance=\"header\">" N_("Bump source") "</_param>\n"
                     "<param name=\"red\" gui-text=\"" N_("Red:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-50.\" max=\"50.\">0</param>\n"
                     "<param name=\"green\" gui-text=\"" N_("Green:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-50.\" max=\"50.\">0</param>\n"
                     "<param name=\"blue\" gui-text=\"" N_("Blue:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-50.\" max=\"50.\">0</param>\n"
@@ -108,14 +108,14 @@ public:
                     "<_item value=\"point\">" N_("Point") "</_item>\n"
                     "<_item value=\"spot\">" N_("Spot") "</_item>\n"
                   "</param>\n"
-                  "<_param name=\"distantHeader\" type=\"description\" appearance=\"header\">Distant light options</_param>\n"
+                  "<_param name=\"distantHeader\" type=\"description\" appearance=\"header\">" N_("Distant light options") "</_param>\n"
                     "<param name=\"distantAzimuth\" gui-text=\"" N_("Azimuth:") "\" type=\"int\" indent=\"1\" appearance=\"full\" min=\"0\" max=\"360\">225</param>\n"
                     "<param name=\"distantElevation\" gui-text=\"" N_("Elevation:") "\" type=\"int\" indent=\"1\" appearance=\"full\" min=\"0\" max=\"180\">45</param>\n"
-                  "<_param name=\"pointHeader\" type=\"description\" appearance=\"header\">Point light options</_param>\n"
+                  "<_param name=\"pointHeader\" type=\"description\" appearance=\"header\">" N_("Point light options") "</_param>\n"
                     "<param name=\"pointX\" gui-text=\"" N_("X location:") "\" type=\"int\" indent=\"1\" appearance=\"full\" min=\"-5000\" max=\"5000\">526</param>\n"
                     "<param name=\"pointY\" gui-text=\"" N_("Y location:") "\" type=\"int\" indent=\"1\" appearance=\"full\" min=\"-5000\" max=\"5000\">372</param>\n"
                     "<param name=\"pointZ\" gui-text=\"" N_("Z location:") "\" type=\"int\" indent=\"1\" appearance=\"full\" min=\"0\" max=\"5000\">150</param>\n"
-                  "<_param name=\"spotHeader\" type=\"description\" appearance=\"header\">Spot light options</_param>\n"
+                  "<_param name=\"spotHeader\" type=\"description\" appearance=\"header\">" N_("Spot light options") "</_param>\n"
                     "<param name=\"spotX\" gui-text=\"" N_("X location:") "\" type=\"int\" indent=\"1\" appearance=\"full\" min=\"-5000\" max=\"5000\">526</param>\n"
                     "<param name=\"spotY\" gui-text=\"" N_("Y location:") "\" type=\"int\" indent=\"1\" appearance=\"full\" min=\"-5000\" max=\"5000\">372</param>\n"
                     "<param name=\"spotZ\" gui-text=\"" N_("Z location:") "\" type=\"int\" indent=\"1\" appearance=\"full\" min=\"-5000\" max=\"5000\">150</param>\n"
@@ -290,7 +290,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Diffuse light") "</name>\n"
+              "<name>" N_("Diffuse Light") "</name>\n"
               "<id>org.inkscape.effect.filter.DiffuseLight</id>\n"
               "<param name=\"smooth\" gui-text=\"" N_("Smoothness:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"10\">6</param>\n"
               "<param name=\"elevation\" gui-text=\"" N_("Elevation (°):") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"360\">25</param>\n"
@@ -334,7 +334,7 @@ DiffuseLight::get_filter_text (Inkscape::Extension::Extension * ext)
     a << (color & 0xff) / 255.0F;
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Diffuse light\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Diffuse Light\">\n"
           "<feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feDiffuseLighting diffuseConstant=\"1\" surfaceScale=\"10\" lighting-color=\"rgb(%s,%s,%s)\" result=\"diffuse\">\n"
             "<feDistantLight elevation=\"%s\" azimuth=\"%s\" />\n"
@@ -370,7 +370,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Matte jelly") "</name>\n"
+              "<name>" N_("Matte Jelly") "</name>\n"
               "<id>org.inkscape.effect.filter.MatteJelly</id>\n"
               "<param name=\"smooth\" gui-text=\"" N_("Smoothness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.00\" max=\"10.00\">7</param>\n"
               "<param name=\"bright\" gui-text=\"" N_("Brightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.00\" max=\"5.00\">0.9</param>\n"
@@ -417,7 +417,7 @@ MatteJelly::get_filter_text (Inkscape::Extension::Extension * ext)
     a << (color & 0xff) / 255.0F;
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Matte jelly\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Matte Jelly\">\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.85 0\" result=\"color\" in=\"SourceGraphic\" />\n"
           "<feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feSpecularLighting in=\"blur\" specularExponent=\"25\" specularConstant=\"%s\" surfaceScale=\"5\" lighting-color=\"rgb(%s,%s,%s)\" result=\"specular\">\n"
@@ -454,7 +454,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Specular light") "</name>\n"
+              "<name>" N_("Specular Light") "</name>\n"
               "<id>org.inkscape.effect.filter.SpecularLight</id>\n"
               "<param name=\"smooth\" gui-text=\"" N_("Smoothness:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"10\">6</param>\n"
               "<param name=\"bright\" gui-text=\"" N_("Brightness:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"5\">1</param>\n"
@@ -501,7 +501,7 @@ SpecularLight::get_filter_text (Inkscape::Extension::Extension * ext)
     a << (color & 0xff) / 255.0F;
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Specular light\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Specular Light\">\n"
           "<feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feSpecularLighting in=\"blur\" specularExponent=\"25\" specularConstant=\"%s\" surfaceScale=\"10\" lighting-color=\"rgb(%s,%s,%s)\" result=\"specular\">\n"
             "<feDistantLight elevation=\"%s\" azimuth=\"%s\" />\n"

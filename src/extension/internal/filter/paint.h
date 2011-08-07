@@ -11,6 +11,7 @@
  *   Chromolitho
  *   Cross engraving
  *   Drawing
+ *   Electrize
  *   Neon draw
  *   Posterize
  *   Posterize basic
@@ -228,7 +229,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Cross engraving") "</name>\n"
+              "<name>" N_("Cross Engraving") "</name>\n"
               "<id>org.inkscape.effect.filter.CrossEngraving</id>\n"
               "<param name=\"clean\" gui-text=\"" N_("Clean-up:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"500\">30</param>\n"
               "<param name=\"dilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" appearance=\"full\" min=\"1\" max=\"50\">1</param>\n"
@@ -272,7 +273,7 @@ CrossEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
         trans << "blend";
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Cross engraving\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Cross Engraving\">\n"
           "<feConvolveMatrix in=\"SourceGraphic\" targetY=\"1\" targetX=\"1\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" order=\"3 3\" result=\"convolve\" />\n"
           "<feComposite in=\"convolve\" in2=\"convolve\" k1=\"1\" k2=\"1\" operator=\"arithmetic\" result=\"composite1\" />\n"
           "<feColorMatrix in=\"composite1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"color1\" />\n"
@@ -331,16 +332,16 @@ public:
               "<id>org.inkscape.effect.filter.Drawing</id>\n"
               "<param name=\"tab\" type=\"notebook\">\n"
                 "<page name=\"optionstab\" _gui-text=\"Options\">\n"
-                  "<_param name=\"simplifyheader\" type=\"description\" appearance=\"header\">Simplify</_param>\n"
+                  "<_param name=\"simplifyheader\" type=\"description\" appearance=\"header\">" N_("Simplify") "</_param>\n"
                   "<param name=\"simply\" gui-text=\"" N_("Strength:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"20.00\">0.6</param>\n"
                   "<param name=\"clean\" gui-text=\"" N_("Clean-up:") "\" type=\"int\" indent=\"1\" appearance=\"full\" min=\"1\" max=\"500\">10</param>\n"
                   "<param name=\"erase\" gui-text=\"" N_("Erase:") "\" type=\"float\" indent=\"1\" appearance=\"full\" min=\"0\" max=\"60\">0</param>\n"
                   "<param name=\"translucent\" gui-text=\"" N_("Translucent") "\" indent=\"1\" type=\"boolean\" >false</param>\n"
-                  "<_param name=\"smoothheader\" type=\"description\" appearance=\"header\">Smoothness</_param>\n"
+                  "<_param name=\"smoothheader\" type=\"description\" appearance=\"header\">" N_("Smoothness") "</_param>\n"
                     "<param name=\"smooth\" gui-text=\"" N_("Strength:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"20.00\">0.6</param>\n"
                     "<param name=\"dilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" indent=\"1\" appearance=\"full\" min=\"1\" max=\"50\">6</param>\n"
                     "<param name=\"erosion\" gui-text=\"" N_("Erosion:") "\" type=\"float\" indent=\"1\" appearance=\"full\" min=\"0\" max=\"50\">2</param>\n"
-                  "<_param name=\"meltheader\" type=\"description\" appearance=\"header\">Melt</_param>\n"
+                  "<_param name=\"meltheader\" type=\"description\" appearance=\"header\">" N_("Melt") "</_param>\n"
                     "<param name=\"blur\" gui-text=\"" N_("Level:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"20.00\">1</param>\n"
                     "<param name=\"bdilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" indent=\"1\" appearance=\"full\" min=\"1\" max=\"50\">6</param>\n"
                     "<param name=\"berosion\" gui-text=\"" N_("Erosion:") "\" type=\"float\" indent=\"1\" appearance=\"full\" min=\"0\" max=\"50\">2</param>\n"
@@ -469,6 +470,92 @@ Drawing::get_filter_text (Inkscape::Extension::Extension * ext)
 
 
 /**
+    \brief    Custom predefined Electrize filter.
+    
+    Electro solarization effects.
+
+    Filter's parameters:
+    * Simplify (0.01->10., default 2.) -> blur (stdDeviation)
+    * Effect type (enum: table or discrete, default "table") -> component (type)
+    * Level (0->10, default 3) -> component (tableValues)
+    * Inverted (boolean, default false) -> component (tableValues)
+*/
+class Electrize : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    Electrize ( ) : Filter() { };
+    virtual ~Electrize ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Electrize") "</name>\n"
+              "<id>org.inkscape.effect.filter.Electrize</id>\n"
+              "<param name=\"blur\" gui-text=\"" N_("Simplify:") "\" type=\"float\" appearance=\"full\" min=\"0.01\" max=\"10.0\">2.0</param>\n"
+              "<param name=\"type\" gui-text=\"" N_("Effect type:") "\" type=\"enum\">\n"
+                "<_item value=\"table\">" N_("Table") "</_item>\n"
+                "<_item value=\"discrete\">" N_("Discrete") "</_item>\n"
+              "</param>\n"
+              "<param name=\"levels\" gui-text=\"" N_("Levels:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"10\">3</param>\n"
+              "<param name=\"invert\" gui-text=\"" N_("Inverted") "\" type=\"boolean\">false</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Image Paint and Draw") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Electro solarization effects") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new Electrize());
+    };
+};
+
+gchar const *
+Electrize::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream blur;
+    std::ostringstream type;
+    std::ostringstream values;
+
+    blur << ext->get_param_float("blur");
+    type << ext->get_param_enum("type");
+
+    // TransfertComponent table values are calculated based on the effect level and inverted parameters.
+    int val = 0;
+    int levels = ext->get_param_int("levels") + 1;
+    if (ext->get_param_bool("invert")) {
+        val = 1;
+    }
+    values << val;
+    for ( int step = 1 ; step <= levels ; step++ ) {
+        if (val == 1) {
+            val = 0;
+        }
+        else {
+            val = 1;
+        }
+        values << " " << val;
+    }
+  
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Electrize\">\n"
+          "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
+          "<feComponentTransfer in=\"blur\" stdDeviation=\"2\" result=\"component\" >\n"
+            "<feFuncR type=\"%s\" tableValues=\"%s\" />\n"
+            "<feFuncG type=\"%s\" tableValues=\"%s\" />\n"
+            "<feFuncB type=\"%s\" tableValues=\"%s\" />\n"
+          "</feComponentTransfer>\n"
+        "</filter>\n", blur.str().c_str(), type.str().c_str(), values.str().c_str(), type.str().c_str(), values.str().c_str(), type.str().c_str(), values.str().c_str());
+
+    return _filter;
+}; /* Electrize filter */
+
+/**
     \brief    Custom predefined Neon draw filter.
     
     Posterize and draw smooth lines around color shapes
@@ -494,7 +581,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Neon draw") "</name>\n"
+              "<name>" N_("Neon Draw") "</name>\n"
               "<id>org.inkscape.effect.filter.NeonDraw</id>\n"
               "<param name=\"type\" gui-text=\"" N_("Line type:") "\" type=\"enum\">\n"
                 "<_item value=\"table\">Smoothed</_item>\n"
@@ -549,7 +636,7 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
         dark << "component1";
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Neon draw\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Neon Draw\">\n"
           "<feBlend blend=\"normal\" mode=\"%s\" result=\"blend\" />\n"
           "<feGaussianBlur in=\"blend\" stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feComponentTransfer result=\"component1\">\n"
@@ -599,7 +686,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Poster paint") "</name>\n"
+              "<name>" N_("Poster Paint") "</name>\n"
               "<id>org.inkscape.effect.filter.Posterize</id>\n"
               "<param name=\"type\" gui-text=\"" N_("Effect type:") "\" type=\"enum\">\n"
                 "<_item value=\"normal\">Normal</_item>\n"
@@ -684,7 +771,7 @@ Posterize::get_filter_text (Inkscape::Extension::Extension * ext)
         antialias << "0.01";
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Poster paint\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Poster Paint\">\n"
           "<feComposite operator=\"arithmetic\" k2=\"1\" result=\"composite1\" />\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feGaussianBlur in=\"composite1\" stdDeviation=\"%s\" result=\"blur2\" />\n"
@@ -723,7 +810,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Posterize basic") "</name>\n"
+              "<name>" N_("Posterize Basic") "</name>\n"
               "<id>org.inkscape.effect.filter.PosterizeBasic</id>\n"
               "<param name=\"levels\" gui-text=\"" N_("Levels:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"20\">5</param>\n"
               "<param name=\"blur\" gui-text=\"" N_("Simplify:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"20.00\">4.0</param>\n"
@@ -760,7 +847,7 @@ PosterizeBasic::get_filter_text (Inkscape::Extension::Extension * ext)
     transf << " 1";
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Posterize basic\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Posterize Basic\">\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feComponentTransfer stdDeviation=\"2\" in=\"blur1\" result=\"component1\">\n"
             "<feFuncR type=\"discrete\" tableValues=\"%s\" />\n"
