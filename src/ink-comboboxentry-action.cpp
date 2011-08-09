@@ -628,7 +628,6 @@ static gint check_comma_separated_text( Ink_ComboBoxEntry_Action* action ) {
   gchar** tokens = g_strsplit( action->text, ",", 0 );
 
   gint i = 0;
-  gboolean first = TRUE;
   while( tokens[i] != NULL ) {
 
     // Remove any surrounding white space.
