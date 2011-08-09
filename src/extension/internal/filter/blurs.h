@@ -12,7 +12,7 @@
  *   Clean edges
  *   Cross blur
  *   Feather
- *   Image blur
+ *   Out of focus
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -280,7 +280,7 @@ Feather::get_filter_text (Inkscape::Extension::Extension * ext)
 }; /* Feather filter */
 
 /**
-    \brief    Custom predefined Image blur filter.
+    \brief    Custom predefined Out of Focus filter.
     
     Blur eroded by white or transparency
 
@@ -307,7 +307,7 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Image Blur") "</name>\n"
+              "<name>" N_("Out of Focus") "</name>\n"
               "<id>org.inkscape.effect.filter.ImageBlur</id>\n"
               "<param name=\"tab\" type=\"notebook\">\n"
                 "<page name=\"optionstab\" _gui-text=\"Options\">\n"
@@ -380,7 +380,7 @@ ImageBlur::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Image Blur\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Out of Focus\">\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"colormatrix1\" />\n"
           "<feGaussianBlur in=\"colormatrix1\" stdDeviation=\"%s %s\" result=\"blur\" />\n"
@@ -393,7 +393,7 @@ ImageBlur::get_filter_text (Inkscape::Extension::Extension * ext)
                        background.str().c_str(), blend.str().c_str(), opacity.str().c_str());
 
     return _filter;
-}; /* Image blur filter */
+}; /* Out of Focus filter */
 
 }; /* namespace Filter */
 }; /* namespace Internal */

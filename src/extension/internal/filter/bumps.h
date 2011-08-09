@@ -12,6 +12,7 @@
  *   Diffuse light
  *   Matte jelly
  *   Specular light
+ *   Wax bump
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -37,7 +38,7 @@ namespace Filter {
     Options
       * Image simplification (0.01->10., default 0.01) -> blur1 (stdDeviation)
       * Bump simplification (0.01->10., default 0.01) -> blur2 (stdDeviation)
-      * Crop (-50.->50., default 1) -> composite1 (k3)
+      * Crop (-50.->50., default 0.) -> composite1 (k3)
       * Red (-50.->50., default 0.) -> colormatrix1 (values)
       * Green (-50.->50., default 0.) -> colormatrix1 (values)
       * Blue (-50.->50., default 0.) -> colormatrix1 (values)
@@ -85,7 +86,7 @@ public:
                 "<page name=\"optionstab\" _gui-text=\"Options\">\n"
                   "<param name=\"simplifyImage\" gui-text=\"" N_("Image simplification:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"10.00\">0.01</param>\n"
                   "<param name=\"simplifyBump\" gui-text=\"" N_("Bump simplification:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"10.00\">0.01</param>\n"
-                  "<param name=\"crop\" gui-text=\"" N_("Crop:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-50.\" max=\"50.\">1</param>\n"
+                  "<param name=\"crop\" gui-text=\"" N_("Crop:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-50.\" max=\"50.\">0</param>\n"
                   "<_param name=\"sourceHeader\" type=\"description\" appearance=\"header\">" N_("Bump source") "</_param>\n"
                     "<param name=\"red\" gui-text=\"" N_("Red:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-50.\" max=\"50.\">0</param>\n"
                     "<param name=\"green\" gui-text=\"" N_("Green:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-50.\" max=\"50.\">0</param>\n"
@@ -512,6 +513,221 @@ SpecularLight::get_filter_text (Inkscape::Extension::Extension * ext)
 
     return _filter;
 }; /* SpecularLight filter */
+
+/**
+    \brief    Custom predefined Wax Bump filter.
+    
+    Turns an image to jelly
+    
+    Filter's parameters:
+    Options
+      * Image simplification (0.01->10., default 1.5) -> blur1 (stdDeviation)
+      * Bump simplification (0.01->10., default 1) -> blur2 (stdDeviation)
+      * Crop (-10.->10., default 1.) -> colormatrix2 (4th value of the last line)
+      * Red (-10.->10., default 0.) -> colormatrix2 (values, substract 0.21)
+      * Green (-10.->10., default 0.) -> colormatrix2 (values, substract 0.72)
+      * Blue (-10.->10., default 0.) -> colormatrix2 (values, substract 0.07)
+      * Background (enum, default color) ->
+        * color: colormatrix1 (in="flood1")
+        * image: colormatrix1 (in="SourceGraphic")
+        * blurred image: colormatrix1 (in="blur1")
+      * Background opacity (0.->1., default 0) -> colormatrix1 (last value)
+    Lighting (specular, distant light)
+      * Color (guint, default -1 (RGB:255,255,255))-> lighting (lighting-color)
+      * Height (-50.->50., default 5.) -> lighting (surfaceScale)
+      * Lightness (0.->10., default 1.4) -> lighting [diffuselighting (diffuseConstant)|specularlighting (specularConstant)]
+      * Precision (0->50, default 35) -> lighting (specularExponent)
+      * Azimuth (0->360, default 225) -> lightsOptions (distantAzimuth)
+      * Elevation (0->180, default 60) -> lightsOptions (distantElevation)
+      * Lighting blend (enum, default screen) -> blend1 (mode)
+      * Highlight blend (enum, default screen) -> blend2 (mode)
+    Bump
+      * Trasparency type (enum [in,atop], default atop) -> composite2 (operator)
+      * Color (guint, default -520083713 (RGB:225,0,38)) -> flood2 (flood-color)
+      * Revert bump (boolean, default false) -> composite1 (false: operator="out", true operator="in")
+*/
+
+class WaxBump : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    WaxBump ( ) : Filter() { };
+    virtual ~WaxBump ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Wax Bump") "</name>\n"
+              "<id>org.inkscape.effect.filter.WaxBump</id>\n"
+              "<param name=\"tab\" type=\"notebook\">\n"
+                "<page name=\"optionstab\" _gui-text=\"Options\">\n"
+                  "<param name=\"simplifyImage\" gui-text=\"" N_("Image simplification:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"10.00\">1.5</param>\n"
+                  "<param name=\"simplifyBump\" gui-text=\"" N_("Bump simplification:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"10.00\">1</param>\n"
+                  "<param name=\"crop\" gui-text=\"" N_("Crop:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.\" max=\"10.\">1</param>\n"
+                  "<_param name=\"sourceHeader\" type=\"description\" appearance=\"header\">" N_("Bump source") "</_param>\n"
+                    "<param name=\"red\" gui-text=\"" N_("Red:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-10.\" max=\"10.\">0</param>\n"
+                    "<param name=\"green\" gui-text=\"" N_("Green:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-10.\" max=\"10.\">0</param>\n"
+                    "<param name=\"blue\" gui-text=\"" N_("Blue:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-10.\" max=\"10.\">0</param>\n"
+                    "<param name=\"background\" gui-text=\"" N_("Background:") "\" type=\"enum\">\n"
+                      "<_item value=\"flood1\">" N_("Color") "</_item>\n"
+                      "<_item value=\"SourceGraphic\">" N_("Image") "</_item>\n"
+                      "<_item value=\"blur1\">" N_("Blurred image") "</_item>\n"
+                    "</param>\n"
+                    "<param name=\"bgopacity\" gui-text=\"" N_("Background opacity:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1.\">0</param>\n"
+                "</page>\n"
+                "<page name=\"lightingtab\" _gui-text=\"Lighting\">\n"
+                  "<param name=\"lightingColor\" gui-text=\"" N_("Color") "\" type=\"color\">-1</param>\n"
+                  "<param name=\"height\" gui-text=\"" N_("Height:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-50.\" max=\"50.\">5</param>\n"
+                  "<param name=\"lightness\" gui-text=\"" N_("Lightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0\" max=\"10.\">1.4</param>\n"
+                  "<param name=\"precision\" gui-text=\"" N_("Precision:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"50\">35</param>\n"
+                  "<param name=\"distantAzimuth\" gui-text=\"" N_("Azimuth:") "\" type=\"int\" indent=\"1\" appearance=\"full\" min=\"0\" max=\"360\">225</param>\n"
+                  "<param name=\"distantElevation\" gui-text=\"" N_("Elevation:") "\" type=\"int\" indent=\"1\" appearance=\"full\" min=\"0\" max=\"180\">60</param>\n"
+                  "<param name=\"lightingblend\" gui-text=\"" N_("Lighting blend:") "\" type=\"enum\">\n"
+                    "<_item value=\"screen\">" N_("Screen") "</_item>\n"
+                    "<_item value=\"normal\">" N_("Normal") "</_item>\n"
+                    "<_item value=\"darken\">" N_("Darken") "</_item>\n"
+                    "<_item value=\"multiply\">" N_("Multiply") "</_item>\n"
+                    "<_item value=\"lighten\">" N_("Lighten") "</_item>\n"
+                  "</param>\n"
+                  "<param name=\"highlightblend\" gui-text=\"" N_("Highlight blend:") "\" type=\"enum\">\n"
+                    "<_item value=\"screen\">" N_("Screen") "</_item>\n"
+                    "<_item value=\"normal\">" N_("Normal") "</_item>\n"
+                    "<_item value=\"darken\">" N_("Darken") "</_item>\n"
+                    "<_item value=\"multiply\">" N_("Multiply") "</_item>\n"
+                    "<_item value=\"lighten\">" N_("Lighten") "</_item>\n"
+                  "</param>\n"
+                "</page>\n"
+                "<page name=\"colortab\" _gui-text=\"Bump\">\n"
+                  "<param name=\"imageColor\" gui-text=\"" N_("Bump color") "\" type=\"color\">-520083713</param>\n"
+                  "<param name=\"revert\" gui-text=\"" N_("Revert bump") "\" type=\"boolean\" >false</param>\n"
+                  "<param name=\"transparency\" gui-text=\"" N_("Transparency type:") "\" type=\"enum\">\n"
+                    "<_item value=\"atop\">" N_("Atop") "</_item>\n"
+                    "<_item value=\"in\">" N_("In") "</_item>\n"
+                  "</param>\n"
+                "</page>\n"
+              "</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Bumps") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Turns an image to jelly") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new WaxBump());
+    };
+
+};
+
+gchar const *
+WaxBump::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream simplifyImage;
+    std::ostringstream simplifyBump;
+    std::ostringstream crop;
+
+    std::ostringstream red;
+    std::ostringstream green;
+    std::ostringstream blue;
+
+    std::ostringstream background;
+    std::ostringstream bgopacity;
+    
+    std::ostringstream height;
+    std::ostringstream lightness;
+    std::ostringstream precision;
+    std::ostringstream distantAzimuth;
+    std::ostringstream distantElevation;
+    
+    std::ostringstream lightRed;
+    std::ostringstream lightGreen;
+    std::ostringstream lightBlue;
+
+    std::ostringstream floodRed;
+    std::ostringstream floodGreen;
+    std::ostringstream floodBlue;
+    std::ostringstream floodAlpha;
+
+    std::ostringstream revert;
+    std::ostringstream lightingblend;
+    std::ostringstream highlightblend;
+    std::ostringstream transparency;
+
+    simplifyImage << ext->get_param_float("simplifyImage");
+    simplifyBump << ext->get_param_float("simplifyBump");
+    crop << ext->get_param_float("crop");
+
+    red << ext->get_param_float("red") - 0.21;
+    green << ext->get_param_float("green") - 0.72;
+    blue << ext->get_param_float("blue") - 0.07;
+
+    background << ext->get_param_enum("background");
+    bgopacity << ext->get_param_float("bgopacity");
+
+    height << ext->get_param_float("height");
+    lightness << ext->get_param_float("lightness");
+    precision << ext->get_param_int("precision");
+    distantAzimuth << ext->get_param_int("distantAzimuth");
+    distantElevation << ext->get_param_int("distantElevation");
+
+    guint32 lightingColor = ext->get_param_color("lightingColor");
+    lightRed << ((lightingColor >> 24) & 0xff);
+    lightGreen << ((lightingColor >> 16) & 0xff);
+    lightBlue << ((lightingColor >>  8) & 0xff);
+
+    guint32 imageColor = ext->get_param_color("imageColor");
+    floodRed << ((imageColor >> 24) & 0xff);
+    floodGreen << ((imageColor >> 16) & 0xff);
+    floodBlue << ((imageColor >>  8) & 0xff);
+    floodAlpha << (imageColor & 0xff) / 255.0F;
+    
+    if (ext->get_param_bool("revert")) {
+        revert << "in" ;
+    } else {
+        revert << "out" ;
+    }
+
+    lightingblend << ext->get_param_enum("lightingblend");
+    highlightblend << ext->get_param_enum("highlightblend");
+    transparency << ext->get_param_enum("transparency");
+
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Wax Bump\">\n"
+          "<feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%s\" result=\"blur1\" />\n"
+          "<feFlood in=\"SourceGraphic\" flood-opacity=\"1\" flood-color=\"rgb(0,255,255)\" result=\"flood1\" />\n"
+          "<feColorMatrix in=\"%s\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 %s \" result=\"colormatrix1\" />\n"
+          "<feColorMatrix in=\"blur1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 %s %s %s %s 0 \" result=\"colormatrix2\" />\n"
+          "<feFlood stdDeviation=\"1\" flood-color=\"rgb(%s,%s,%s)\" flood-opacity=\"%s\" result=\"flood2\" />\n"
+          "<feComposite in=\"flood2\" in2=\"colormatrix2\" stdDeviation=\"1\" operator=\"%s\" result=\"composite1\" />\n"
+          "<feGaussianBlur in=\"composite1\" stdDeviation=\"%s\" result=\"blur2\" />\n"
+
+          "<feSpecularLighting in=\"blur2\" lighting-color=\"rgb(%s,%s,%s)\" specularConstant=\"%s\" surfaceScale=\"%s\" specularExponent=\"%s\" result=\"specular\">\n"
+            "<feDistantLight elevation=\"%s\" azimuth=\"%s\" />\n"
+          "</feSpecularLighting>\n"
+          "<feBlend in=\"specular\" in2=\"blur2\" specularConstant=\"1\" mode=\"%s\" blend=\"normal\" result=\"blend1\" />\n"
+          "<feComposite in=\"blend1\" in2=\"blur2\" k2=\"0\" operator=\"%s\" k1=\"0.5\" k3=\"0.5\" k4=\"0\" result=\"composite2\" />\n"
+          "<feMerge result=\"merge\">\n"
+            "<feMergeNode in=\"colormatrix1\" />\n"
+            "<feMergeNode in=\"composite2\" />\n"
+          "</feMerge>\n"
+          "<feBlend in2=\"composite2\" mode=\"%s\" blend=\"normal\" result=\"blend2\" />\n"
+          "<feComposite in=\"blend2\" in2=\"SourceGraphic\" operator=\"in\" result=\"composite3\" />\n"
+        "</filter>\n", simplifyImage.str().c_str(), background.str().c_str(), bgopacity.str().c_str(),
+                       red.str().c_str(), green.str().c_str(), blue.str().c_str(), crop.str().c_str(),
+                       floodRed.str().c_str(), floodGreen.str().c_str(), floodBlue.str().c_str(), floodAlpha.str().c_str(),
+                       revert.str().c_str(), simplifyBump.str().c_str(),
+                       lightRed.str().c_str(), lightGreen.str().c_str(), lightBlue.str().c_str(),
+                       lightness.str().c_str(), height.str().c_str(), precision.str().c_str(),
+                       distantElevation.str().c_str(), distantAzimuth.str().c_str(),
+                       lightingblend.str().c_str(), transparency.str().c_str(), highlightblend.str().c_str() );
+
+    return _filter;
+
+}; /* Wax bump filter */
 
 }; /* namespace Filter */
 }; /* namespace Internal */

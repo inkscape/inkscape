@@ -628,12 +628,13 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
     lightness << ext->get_param_float("lightness");
 
     const gchar *typestr = ext->get_param_enum("type");
-    if (ext->get_param_bool("dark"))
+    if (ext->get_param_bool("dark")) {
         dark << "component2";
-    else if ((g_ascii_strcasecmp("table", typestr) == 0))
+    } else if ((g_ascii_strcasecmp("table", typestr) == 0)) {
         dark << "blur2";
-    else
+    } else {
         dark << "component1";
+    }
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Neon Draw\">\n"

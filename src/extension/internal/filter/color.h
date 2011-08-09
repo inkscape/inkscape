@@ -8,12 +8,13 @@
  *   Nicolas Dufour (UI) <nicoduf@yahoo.fr>
  *
  * Color filters
- *   Brightness
+ *   Brilliance
  *   Channel painting
  *   Color shift
  *   Colorize
  *   Duochrome
  *   Greyscale
+ *   Invert
  *   Lightness
  *   Quadritone
  *   Solarize
@@ -35,12 +36,12 @@ namespace Internal {
 namespace Filter {
 
 /**
-    \brief    Custom predefined Brightness filter.
+    \brief    Custom predefined Brilliance filter.
     
-    Brightness filter.
+    Brilliance filter.
 
     Filter's parameters:
-    * Brightness (1.->10., default 2.) -> colorMatrix (RVB entries)
+    * Brilliance (1.->10., default 2.) -> colorMatrix (RVB entries)
     * Over-saturation (0.->10., default 0.5) -> colorMatrix (6 other entries)
     * Lightness (-10.->10., default 0.) -> colorMatrix (last column)
     * Inverted (boolean, default false) -> colorMatrix
@@ -51,18 +52,18 @@ namespace Filter {
       Vi Vi St 0  Li
       0  0  0  1  0
 */
-class Brightness : public Inkscape::Extension::Internal::Filter::Filter {
+class Brilliance : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
     virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
 
 public:
-    Brightness ( ) : Filter() { };
-    virtual ~Brightness ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+    Brilliance ( ) : Filter() { };
+    virtual ~Brilliance ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
 
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Brightness") "</name>\n"
+              "<name>" N_("Brilliance") "</name>\n"
               "<id>org.inkscape.effect.filter.Brightness</id>\n"
               "<param name=\"brightness\" gui-text=\"" N_("Brightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"1\" max=\"10.00\">2</param>\n"
               "<param name=\"sat\" gui-text=\"" N_("Over-saturation:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.0\" max=\"10.00\">0.5</param>\n"
@@ -77,12 +78,12 @@ public:
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Brightness filter") "</menu-tip>\n"
               "</effect>\n"
-            "</inkscape-extension>\n", new Brightness());
+            "</inkscape-extension>\n", new Brilliance());
     };
 };
 
 gchar const *
-Brightness::get_filter_text (Inkscape::Extension::Extension * ext)
+Brilliance::get_filter_text (Inkscape::Extension::Extension * ext)
 {
     if (_filter != NULL) g_free((void *)_filter);
 
@@ -101,7 +102,7 @@ Brightness::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Brightness\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Brilliance\">\n"
           "<feColorMatrix values=\"%s %s %s 0 %s %s %s %s 0 %s %s %s %s 0 %s 0 0 0 1 0 \" />\n"
         "</filter>\n", brightness.str().c_str(), sat.str().c_str(), sat.str().c_str(),
             lightness.str().c_str(), sat.str().c_str(), brightness.str().c_str(),
@@ -109,7 +110,7 @@ Brightness::get_filter_text (Inkscape::Extension::Extension * ext)
             sat.str().c_str(), brightness.str().c_str(), lightness.str().c_str());
 
     return _filter;
-}; /* Brightness filter */
+}; /* Brilliance filter */
 
 /**
     \brief    Custom predefined Channel Painting filter.
@@ -606,6 +607,145 @@ Greyscale::get_filter_text (Inkscape::Extension::Extension * ext)
         "</filter>\n", line.str().c_str(), line.str().c_str(), line.str().c_str(), transparency.str().c_str());
     return _filter;
 }; /* Greyscale filter */
+
+/**
+    \brief    Custom predefined Invert filter.
+    
+    Manage hue, lightness and transparency inversions
+
+    Filter's parameters:
+    * Invert hue (boolean, default false) -> color1 (values, true: 180, false: 0)
+    * Invert lightness (boolean, default false) -> color1 (values, true: 180, false: 0; XOR with Invert hue),
+                                                   color2 (values: from a00 to a22, if 1, set -1 and set 1 in ax4, if -1, set 1 and set 0 in ax4)
+    * Invert transparency (boolean, default false) -> color2 (values: negate a30, a31 and a32, substract 1 from a33)
+    * Invert channels (enum, default Red and blue) -> color2 (values -for R&B: swap ax0 and ax2 in the first 3 lines)
+    * Light transparency (0.->1., default 0.) -> color2 (values: a33=a33-x)
+*/
+
+class Invert : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    Invert ( ) : Filter() { };
+    virtual ~Invert ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Invert") "</name>\n"
+              "<id>org.inkscape.effect.filter.Invert</id>\n"
+              "<param name=\"channels\" gui-text=\"" N_("Invert channels:") "\" type=\"enum\">\n"
+                "<_item value=\"0\">" N_("No invertion") "</_item>\n"
+                "<_item value=\"1\">" N_("Red and blue") "</_item>\n"
+                "<_item value=\"2\">" N_("Red and green") "</_item>\n"
+                "<_item value=\"3\">" N_("Green and blue") "</_item>\n"
+              "</param>\n"
+              "<param name=\"opacify\" gui-text=\"" N_("Light transparency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1\">0</param>\n"
+              "<param name=\"hue\" gui-text=\"" N_("Invert hue") "\" type=\"boolean\" >false</param>\n"
+              "<param name=\"lightness\" gui-text=\"" N_("Invert lightness") "\" type=\"boolean\" >false</param>\n"
+              "<param name=\"transparency\" gui-text=\"" N_("Invert transparency") "\" type=\"boolean\" >false</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Manage hue, lightness and transparency inversions") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new Invert());
+    };
+
+};
+
+gchar const *
+Invert::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream line1;
+    std::ostringstream line2;
+    std::ostringstream line3;
+
+    std::ostringstream col5;
+    std::ostringstream transparency;
+    std::ostringstream hue;
+
+    if (ext->get_param_bool("hue") xor ext->get_param_bool("lightness")) {
+        hue << "<feColorMatrix type=\"hueRotate\" values=\"180\" result=\"color1\" />\n";
+    } else {
+        hue << "";
+    }
+         
+    if (ext->get_param_bool("transparency")) {
+        transparency << "0.21 0.72 0.07 " << 1 - ext->get_param_float("opacify");
+    } else {
+        transparency << "-0.21 -0.72 -0.07 " << 2 - ext->get_param_float("opacify");  
+    }
+    
+    if (ext->get_param_bool("lightness")) {
+        switch (atoi(ext->get_param_enum("channels"))) {
+            case 1:
+                line1 << "0 0 -1";
+                line2 << "0 -1 0";
+                line3 << "-1 0 0";
+                break;
+            case 2:
+                line1 << "0 -1 0";
+                line2 << "-1 0 0";
+                line3 << "0 0 -1";
+                break;
+            case 3:
+                line1 << "-1 0 0";
+                line2 << "0 0 -1";
+                line3 << "0 -1 0";
+                break;
+            default:
+                line1 << "-1 0 0";
+                line2 << "0 -1 0";
+                line3 << "0 0 -1";
+                break;
+        }
+        col5 << "1";
+    } else {
+        switch (atoi(ext->get_param_enum("channels"))) {
+            case 1:
+                line1 << "0 0 1";
+                line2 << "0 1 0";
+                line3 << "1 0 0";
+                break;
+            case 2:
+                line1 << "0 1 0";
+                line2 << "1 0 0";
+                line3 << "0 0 1";
+                break;
+            case 3:
+                line1 << "1 0 0";
+                line2 << "0 0 1";
+                line3 << "0 1 0";
+                break;
+            default:
+                line1 << "1 0 0";
+                line2 << "0 1 0";
+                line3 << "0 0 1";
+                break;
+        }
+        col5 << "0";
+    }
+
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Invert\">\n"
+          "%s"
+          "<feColorMatrix values=\"%s 0 %s %s 0 %s %s 0 %s %s 0 \" result=\"color2\" />\n"
+        "</filter>\n", hue.str().c_str(),
+                       line1.str().c_str(), col5.str().c_str(),
+                       line2.str().c_str(), col5.str().c_str(),
+                       line3.str().c_str(), col5.str().c_str(),
+                       transparency.str().c_str() );
+
+    return _filter;
+}; /* Invert filter */
 
 /**
     \brief    Custom predefined Lightness filter.

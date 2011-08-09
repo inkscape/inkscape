@@ -45,20 +45,23 @@ Filter::filters_all (void )
     DiffuseLight::init();
     MatteJelly::init();
     SpecularLight::init();
+    WaxBump::init();
 
     // Color
-    Brightness::init();
+    Brilliance::init();
     ChannelPaint::init();
     ColorShift::init();
     Colorize::init();
     Duochrome::init();
     Greyscale::init();
+    Invert::init();
     Lightness::init();
     Quadritone::init();
     Solarize::init();
     Tritone::init();
 
     // Distort
+    FeltFeather::init();
     Roughen::init();
 
     // Image effect
@@ -70,6 +73,7 @@ Filter::filters_all (void )
     Drawing::init();
     Electrize::init();
     NeonDraw::init();
+    //PointEngraving::init();
     Posterize::init();
     PosterizeBasic::init();
 
@@ -86,6 +90,9 @@ Filter::filters_all (void )
     // Shadows and glows
     ColorizableDropShadow::init();
 
+    // Textures
+    // InkBlot::init();
+    
     // Fill and transparency
     ChannelTransparency::init();
     Silhouette::init();
