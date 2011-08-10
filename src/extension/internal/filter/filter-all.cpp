@@ -18,6 +18,7 @@
 #include "paint.h"
 #include "protrusions.h"
 #include "shadows.h"
+#include "textures.h"
 #include "transparency.h"
 
 namespace Inkscape {
@@ -53,6 +54,7 @@ Filter::filters_all (void )
     ColorShift::init();
     Colorize::init();
     Duochrome::init();
+    ExtractChannel::init();
     Greyscale::init();
     Invert::init();
     Lightness::init();
@@ -91,9 +93,10 @@ Filter::filters_all (void )
     ColorizableDropShadow::init();
 
     // Textures
-    // InkBlot::init();
+    InkBlot::init();
     
     // Fill and transparency
+    Blend::init();
     ChannelTransparency::init();
     Silhouette::init();
 

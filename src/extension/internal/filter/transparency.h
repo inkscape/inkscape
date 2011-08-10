@@ -8,6 +8,7 @@
  *   Nicolas Dufour (UI) <nicoduf@yahoo.fr>
  *
  * Fill and transparency filters
+ *   Blend
  *   Channel transparency
  *   Silhouette
  *
@@ -25,6 +26,73 @@ namespace Inkscape {
 namespace Extension {
 namespace Internal {
 namespace Filter {
+
+/**
+    \brief    Custom predefined Blend filter.
+    
+    Blend objecs with background images or with themselves
+
+    Filter's parameters:
+    * Source (enum [SourceGraphic,BackgroundImage], default BackgroundImage) -> blend (in2)
+    * Mode (enum, all blend modes, default Multiply) -> blend (mode)
+*/
+
+class Blend : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    Blend ( ) : Filter() { };
+    virtual ~Blend ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Blend") "</name>\n"
+              "<id>org.inkscape.effect.filter.Blend</id>\n"
+              "<param name=\"source\" gui-text=\"" N_("Source:") "\" type=\"enum\">\n"
+                "<_item value=\"BackgroundImage\">" N_("Background") "</_item>\n"
+                "<_item value=\"SourceGraphic\">" N_("Image") "</_item>\n"
+              "</param>\n"
+              "<param name=\"mode\" gui-text=\"" N_("Mode:") "\" type=\"enum\">\n"
+                "<_item value=\"multiply\">" N_("Multiply") "</_item>\n"
+                "<_item value=\"normal\">" N_("Normal") "</_item>\n"
+                "<_item value=\"screen\">" N_("Screen") "</_item>\n"
+                "<_item value=\"darken\">" N_("Darken") "</_item>\n"
+                "<_item value=\"lighten\">" N_("Lighten") "</_item>\n"
+              "</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Fill and Transparency") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Blend objecs with background images or with themselves") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new Blend());
+    };
+
+};
+
+gchar const *
+Blend::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream source;
+    std::ostringstream mode;
+
+    source << ext->get_param_enum("source");
+    mode << ext->get_param_enum("mode");
+
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Blend\">\n"
+          "<feBlend blend=\"normal\" in2=\"%s\" mode=\"%s\" result=\"blend\" />\n"
+        "</filter>\n", source.str().c_str(), mode.str().c_str() );
+
+    return _filter;
+}; /* Blend filter */
 
 /**
     \brief    Custom predefined Channel transparency filter.
