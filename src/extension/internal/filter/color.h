@@ -17,6 +17,7 @@
  *   Greyscale
  *   Invert
  *   Lightness
+ *   Nudge
  *   Quadritone
  *   Solarize
  *   Tritone
@@ -65,7 +66,7 @@ public:
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Brilliance") "</name>\n"
-              "<id>org.inkscape.effect.filter.Brightness</id>\n"
+              "<id>org.inkscape.effect.filter.Brilliance</id>\n"
               "<param name=\"brightness\" gui-text=\"" N_("Brightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"1\" max=\"10.00\">2</param>\n"
               "<param name=\"sat\" gui-text=\"" N_("Over-saturation:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.0\" max=\"10.00\">0.5</param>\n"
               "<param name=\"lightness\" gui-text=\"" N_("Lightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-10.00\" max=\"10.00\">0</param>\n"
@@ -915,6 +916,149 @@ Lightness::get_filter_text (Inkscape::Extension::Extension * ext)
 
     return _filter;
 }; /* Lightness filter */
+
+/**
+    \brief    Custom predefined Nudge filter.
+    
+    Nudge separately RGB channels and blend them to different types of backgrounds
+
+    Filter's parameters:
+    Offsets
+      * Red
+        * x (-100.->100., default -7) -> offset1 (dx)
+        * y (-100.->100., default 5) -> offset1 (dy)
+      * Green
+        * x (-100.->100., default 0) -> offset2 (dx)
+        * y (-100.->100., default 10) -> offset2 (dy)
+      * Blue
+        * x (-100.->100., default 3) -> offset3 (dx)
+        * y (-100.->100., default -9) -> offset3 (dy)
+    Color
+      * Background color (guint, default -1)-> flood (flood-color, flood-opacity)
+      * Blend type (enum [normal,multiply and screen], default screen) -> blend1,2,3 (mode)
+      * Blend source (enum, default color) ->
+        * color: blend1 (in="flood")
+        * image: blend1 (in="SourceGraphic")
+        * background: blend1 (in="BackgroundImage")
+      * Composite (enum [in,over], default over) -> composite (operator)
+
+*/
+class Nudge : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    Nudge ( ) : Filter() { };
+    virtual ~Nudge ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Nudge") "</name>\n"
+              "<id>org.inkscape.effect.filter.Nudge</id>\n"
+              "<param name=\"tab\" type=\"notebook\">\n"
+                "<page name=\"offsettab\" _gui-text=\"Offset\">\n"
+                  "<_param name=\"redOffset\" type=\"description\" appearance=\"header\">" N_("Red offset") "</_param>\n"
+                    "<param name=\"rx\" gui-text=\"" N_("X:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-100.\" max=\"100.\">-7</param>\n"
+                    "<param name=\"ry\" gui-text=\"" N_("Y:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-100.\" max=\"100.\">5</param>\n"
+                "<_param name=\"greenOffset\" type=\"description\" appearance=\"header\">" N_("Green offset") "</_param>\n"
+                    "<param name=\"gx\" gui-text=\"" N_("X:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-100.\" max=\"100.\">0</param>\n"
+                    "<param name=\"gy\" gui-text=\"" N_("Y:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-100.\" max=\"100.\">10</param>\n"
+                  "<_param name=\"redOffset\" type=\"description\" appearance=\"header\">" N_("Blue offset") "</_param>\n"
+                    "<param name=\"bx\" gui-text=\"" N_("X:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-100.\" max=\"100.\">3</param>\n"
+                    "<param name=\"by\" gui-text=\"" N_("Y:") "\" type=\"float\" indent=\"1\" appearance=\"full\" precision=\"2\" min=\"-100.\" max=\"100.\">-9</param>\n"
+                "</page>\n"
+                "<page name=\"coltab\" _gui-text=\"Color\">\n"
+                  "<param name=\"color\" gui-text=\"" N_("Background color") "\" type=\"color\">255</param>\n"
+                  "<param name=\"blend\" gui-text=\"" N_("Blend type:") "\" type=\"enum\">\n"
+                    "<_item value=\"screen\">" N_("Screen") "</_item>\n"
+                    "<_item value=\"multiply\">" N_("Multiply") "</_item>\n"
+                    "<_item value=\"normal\">" N_("Normal") "</_item>\n"
+                  "</param>\n"
+                  "<param name=\"source\" gui-text=\"" N_("Blend source:") "\" type=\"enum\">\n"
+                    "<_item value=\"flood\">" N_("Color") "</_item>\n"
+                    "<_item value=\"SourceGraphic\">" N_("Image") "</_item>\n"
+                    "<_item value=\"BackgroundImage\">" N_("Background") "</_item>\n"
+                  "</param>\n"
+                  "<param name=\"composite\" gui-text=\"" N_("Composite:") "\" type=\"enum\">\n"
+                    "<_item value=\"over\">" N_("Over") "</_item>\n"
+                    "<_item value=\"in\">" N_("In") "</_item>\n"
+                  "</param>\n"
+                "</page>\n"
+              "</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Nudge separately RGB channels and blend them to different types of backgrounds") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new Nudge());
+    };
+};
+
+gchar const *
+Nudge::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream rx;
+    std::ostringstream ry;
+    std::ostringstream gx;
+    std::ostringstream gy;
+    std::ostringstream bx;
+    std::ostringstream by;
+
+    std::ostringstream blend;
+    std::ostringstream source;
+    std::ostringstream composite;
+
+    std::ostringstream a;
+    std::ostringstream r;
+    std::ostringstream g;
+    std::ostringstream b;
+
+    rx << ext->get_param_float("rx");
+    ry << ext->get_param_float("ry");
+    gx << ext->get_param_float("gx");
+    gy << ext->get_param_float("gy");
+    bx << ext->get_param_float("bx");
+    by << ext->get_param_float("by");
+
+    blend << ext->get_param_enum("blend");
+    source << ext->get_param_enum("source");
+    composite << ext->get_param_enum("composite");
+
+    guint32 color = ext->get_param_color("color");
+    r << ((color >> 24) & 0xff);
+    g << ((color >> 16) & 0xff);
+    b << ((color >>  8) & 0xff);
+    a << (color & 0xff) / 255.0F;
+    
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Nudge\">\n"
+          "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
+          "<feColorMatrix in=\"SourceGraphic\" values=\"0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 \" result=\"colormatrix1\" />\n"
+          "<feOffset dy=\"%s\" dx=\"%s\" result=\"offset1\" />\n"
+          "<feBlend in2=\"%s\" mode=\"%s\" blend=\"normal\" result=\"blend1\" />\n"
+          "<feColorMatrix in=\"SourceGraphic\" values=\"0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 \" result=\"colormatrix2\" />\n"
+          "<feOffset dy=\"%s\" dx=\"%s\" result=\"offset2\" />\n"
+          "<feBlend in2=\"blend1\" mode=\"%s\" blend=\"normal\" result=\"blend2\" />\n"
+          "<feOffset dy=\"%s\" dx=\"%s\" result=\"offset3\" />\n"
+          "<feColorMatrix in=\"SourceGraphic\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 \" result=\"colormatrix3\" />\n"
+          "<feBlend in2=\"offset3\" mode=\"%s\" blend=\"normal\" result=\"blend3\" />\n"
+          "<feComposite in2=\"SourceGraphic\" operator=\"%s\" />\n"
+        "</filter>\n", a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(),
+                       rx.str().c_str(), ry.str().c_str(), source.str().c_str(), blend.str().c_str(), 
+                       gx.str().c_str(), gy.str().c_str(), blend.str().c_str(), 
+                       bx.str().c_str(), by.str().c_str(), blend.str().c_str(), 
+                       composite.str().c_str());
+
+    return _filter;
+
+}; /* Nudge filter */
 
 /**
     \brief    Custom predefined Quadritone filter.

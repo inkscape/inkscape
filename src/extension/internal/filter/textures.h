@@ -34,7 +34,7 @@ namespace Filter {
     Filter's parameters:
 
     * Turbulence type (enum, default fractalNoise else turbulence) -> turbulence (type)
-    * Frequency (0.001->1., default 0.04) -> turbulence (baseFrequency)
+    * Frequency (0.001->1., default 0.04) -> turbulence (baseFrequency [/100])
     * Complexity (1->5, default 3) -> turbulence (numOctaves)
     * Variation (0->100, default 0) -> turbulence (seed)
     * Horizontal inlay (0.01->30., default 10) -> blur1 (stdDeviation x)
@@ -65,7 +65,7 @@ public:
                 "<_item value=\"fractalNoise\">Fractal noise</_item>\n"
                 "<_item value=\"turbulence\">Turbulence</_item>\n"
               "</param>\n"
-              "<param name=\"freq\" gui-text=\"" N_("Frequency:") "\" type=\"float\" appearance=\"full\" precision=\"3\" min=\"0.001\" max=\"1.00\">0.04</param>\n"
+              "<param name=\"freq\" gui-text=\"" N_("Frequency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.00\">4</param>\n"
               "<param name=\"complexity\" gui-text=\"" N_("Complexity:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"5\">3</param>\n"
               "<param name=\"variation\" gui-text=\"" N_("Variation:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"100\">0</param>\n"
               "<param name=\"hblur\" gui-text=\"" N_("Horizontal inlay:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"30.00\">10</param>\n"
@@ -115,7 +115,7 @@ InkBlot::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream custom;
 
     type << ext->get_param_enum("type");
-    freq << ext->get_param_float("freq");
+    freq << ext->get_param_float("freq") / 100;
     complexity << ext->get_param_int("complexity");
     variation << ext->get_param_int("variation");
     hblur << ext->get_param_float("hblur");

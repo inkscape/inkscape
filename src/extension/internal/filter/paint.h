@@ -13,6 +13,7 @@
  *   Drawing
  *   Electrize
  *   Neon draw
+ *   Point engraving
  *   Posterize
  *   Posterize basic
  *
@@ -657,6 +658,160 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
 
     return _filter;
 }; /* NeonDraw filter */
+
+/**
+    \brief    Custom predefined Point engraving filter.
+    
+    Convert image to a transparent point engraving
+
+    Filter's parameters:
+
+    * Turbulence type (enum, default fractalNoise else turbulence) -> turbulence (type)
+    * Horizontal frequency (0.001->1., default 1) -> turbulence (baseFrequency [/100])
+    * Vertical frequency (0.001->1., default 1) -> turbulence (baseFrequency [/100])
+    * Complexity (1->5, default 3) -> turbulence (numOctaves)
+    * Variation (0->1000, default 0) -> turbulence (seed)
+    * Noise reduction (-1000->-1500, default -1045) -> convolve (kernelMatrix, central value)
+    * Noise blend (enum, all blend options, default normal) -> blend (mode)
+    * Lightness (0.->10., default 2.5) -> composite1 (k1)
+    * Grain lightness (0.->10., default 1.3) -> composite1 (k2)
+    * Erase (0.00->1., default 0) -> composite1 (k4)
+    * Blur (0.01->2., default 0.5) -> blur (stdDeviation)
+    
+    * Drawing color (guint32, default rgb(73,69,40)) -> flood1 (flood-color, flood-opacity)
+    
+    * Background color (guint32, default rgb(255,255,255)) -> flood2 (flood-color, flood-opacity)
+*/
+
+class PointEngraving : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    PointEngraving ( ) : Filter() { };
+    virtual ~PointEngraving ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Point Engraving") "</name>\n"
+              "<id>org.inkscape.effect.filter.PointEngraving</id>\n"
+              "<param name=\"tab\" type=\"notebook\">\n"
+                "<page name=\"optionstab\" _gui-text=\"Options\">\n"
+                  "<param name=\"type\" gui-text=\"" N_("Turbulence type:") "\" type=\"enum\">\n"
+                    "<_item value=\"fractalNoise\">Fractal noise</_item>\n"
+                  "<_item value=\"turbulence\">Turbulence</_item>\n"
+                  "</param>\n"
+                  "<param name=\"hfreq\" gui-text=\"" N_("Horizontal frequency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.1\" max=\"100.00\">100</param>\n"
+                  "<param name=\"vfreq\" gui-text=\"" N_("Vertical frequency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.1\" max=\"100.00\">100</param>\n"
+                  "<param name=\"complexity\" gui-text=\"" N_("Complexity:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"5\">3</param>\n"
+                  "<param name=\"variation\" gui-text=\"" N_("Variation:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"100\">0</param>\n"
+                  "<param name=\"reduction\" gui-text=\"" N_("Noise reduction:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"500\">45</param>\n"
+                  "<param name=\"blend\" gui-text=\"" N_("Noise blend:") "\" type=\"enum\">\n"
+                    "<_item value=\"normal\">" N_("Normal") "</_item>\n"
+                    "<_item value=\"screen\">" N_("Screen") "</_item>\n"
+                    "<_item value=\"multiply\">" N_("Multiply") "</_item>\n"
+                    "<_item value=\"lighten\">" N_("Lighten") "</_item>\n"
+                    "<_item value=\"darken\">" N_("Darken") "</_item>\n"
+                  "</param>\n"
+                  "<param name=\"lightness\" gui-text=\"" N_("Lightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0\" max=\"10\">2.5</param>\n"
+                  "<param name=\"grain\" gui-text=\"" N_("Grain lightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0\" max=\"10\">1.3</param>\n"
+                  "<param name=\"erase\" gui-text=\"" N_("Erase:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0\" max=\"1\">0</param>\n"
+                  "<param name=\"blur\" gui-text=\"" N_("Blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"2\">0.5</param>\n"
+                "</page>\n"
+                "<page name=\"drawingcolortab\" _gui-text=\"Drawing color\">\n"
+                  "<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">1229269247</param>\n"
+                "</page>\n"
+                "<page name=\"bgcolortab\" _gui-text=\"Background color\">\n"
+                  "<param name=\"bgcolor\" gui-text=\"" N_("Color") "\" type=\"color\">255</param>\n"
+                "</page>\n"
+              "</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Image Paint and Draw") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Convert image to a transparent point engraving") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new PointEngraving());
+    };
+
+};
+
+gchar const *
+PointEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+  
+    std::ostringstream type;
+    std::ostringstream hfreq;
+    std::ostringstream vfreq;
+    std::ostringstream complexity;
+    std::ostringstream variation;
+    std::ostringstream reduction;
+    std::ostringstream blend;
+    std::ostringstream lightness;
+    std::ostringstream grain;
+    std::ostringstream erase;
+    std::ostringstream blur;
+    std::ostringstream r;
+    std::ostringstream g;
+    std::ostringstream b;
+    std::ostringstream a;
+    std::ostringstream br;
+    std::ostringstream bg;
+    std::ostringstream bb;
+    std::ostringstream ba;
+    
+    type << ext->get_param_enum("type");
+    hfreq << ext->get_param_float("hfreq") / 100;
+    vfreq << ext->get_param_float("vfreq") / 100;
+    complexity << ext->get_param_int("complexity");
+    variation << ext->get_param_int("variation");
+    reduction << (-1000 - ext->get_param_int("reduction"));
+    blend << ext->get_param_enum("blend");
+    lightness << ext->get_param_float("lightness");
+    grain << ext->get_param_float("grain");
+    erase << ext->get_param_float("erase");
+    blur << ext->get_param_float("blur");
+    
+    guint32 color = ext->get_param_color("color");
+    r << ((color >> 24) & 0xff);
+    g << ((color >> 16) & 0xff);
+    b << ((color >>  8) & 0xff);
+    a << (color & 0xff) / 255.0F; 
+    
+    guint32 bgcolor = ext->get_param_color("bgcolor");
+    br << ((bgcolor >> 24) & 0xff);
+    bg << ((bgcolor >> 16) & 0xff);
+    bb << ((bgcolor >>  8) & 0xff);
+    ba << (bgcolor & 0xff) / 255.0F; 
+
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Point Engraving\" x=\"0\" y=\"0\" width=\"1\" height=\"1\" color-interpolation-filters=\"sRGB\">\n"
+          "<feConvolveMatrix in=\"SourceGraphic\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0\" order=\"3 3\" result=\"convolve\" />\n"
+          "<feBlend in=\"convolve\" in2=\"SourceGraphic\" mode=\"%s\" blend=\"normal\" result=\"blend\" />\n"
+          "<feTurbulence type=\"%s\" baseFrequency=\"%s %s\" numOctaves=\"%s\" seed=\"%s\" result=\"turbulence\" />\n"
+          "<feColorMatrix in=\"blend\" type=\"luminanceToAlpha\" result=\"colormatrix1\" />\n"
+          "<feComposite in=\"turbulence\" in2=\"colormatrix1\" k1=\"%s\" k2=\"%s\" k4=\"%s\" operator=\"arithmetic\" result=\"composite1\" />\n"
+          "<feColorMatrix in=\"composite1\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 -9 \" result=\"colormatrix2\" />\n"
+          "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
+          "<feFlood in=\"blur\" flood-color=\"rgb(%s,%s,%s)\" flood-opacity=\"%s\" result=\"flood1\" />\n"
+          "<feComposite in=\"flood1\" in2=\"blur\" operator=\"out\" stdDeviation=\"2\" result=\"composite2\" />\n"
+          "<feFlood in=\"blur\" flood-color=\"rgb(%s,%s,%s)\" flood-opacity=\"%s\" result=\"flood2\" />\n"
+          "<feComposite in2=\"blur\" operator=\"in\" result=\"composite3\" />\n"
+          "<feComposite in=\"composite3\" in2=\"composite2\" k3=\"1\" k2=\"1\" operator=\"arithmetic\" result=\"composite4\" />\n"
+          "<feComposite in2=\"SourceGraphic\" operator=\"in\" result=\"composite5\" />\n"
+        "</filter>\n", reduction.str().c_str(), blend.str().c_str(),
+                       type.str().c_str(), hfreq.str().c_str(), vfreq.str().c_str(), complexity.str().c_str(), variation.str().c_str(),
+                       lightness.str().c_str(), grain.str().c_str(), erase.str().c_str(), blur.str().c_str(),
+                       r.str().c_str(), g.str().c_str(), b.str().c_str(), a.str().c_str(),
+                       br.str().c_str(), bg.str().c_str(), bb.str().c_str(), ba.str().c_str() );
+
+    return _filter;
+}; /* Point engraving filter */
 
 /**
     \brief    Custom predefined Poster paint filter.

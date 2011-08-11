@@ -44,13 +44,13 @@ namespace Filter {
         Wide = composite4 (operator="over")
         Narrow = composite4 (operator="in")
         No fill = composite4 (operator="xor")
-
     * Roughness (group)  
     * Turbulence type (enum, default fractalNoise else turbulence) -> turbulence (type)
-    * Horizontal frequency (0.001->1., default 0.05) -> turbulence (baseFrequency [/1000])
-    * Vertical frequency (0.001->1., default 0.05) -> turbulence (baseFrequency [/1000])
+    * Horizontal frequency (0.001->1., default 0.05) -> turbulence (baseFrequency [/100])
+    * Vertical frequency (0.001->1., default 0.05) -> turbulence (baseFrequency [/100])
     * Complexity (1->5, default 3) -> turbulence (numOctaves)
     * Variation (0->100, default 0) -> turbulence (seed)
+    * Intensity (0.0->100., default 30) -> displacement (scale)
 */
 
 class FeltFeather : public Inkscape::Extension::Internal::Filter::Filter {
@@ -84,10 +84,11 @@ public:
                 "<_item value=\"fractalNoise\">Fractal noise</_item>\n"
                 "<_item value=\"turbulence\">Turbulence</_item>\n"
               "</param>\n"
-              "<param name=\"hfreq\" gui-text=\"" N_("Horizontal frequency:") "\" type=\"float\" appearance=\"full\" precision=\"3\" min=\"0.001\" max=\"1.\">0.05</param>\n"
-              "<param name=\"vfreq\" gui-text=\"" N_("Vertical frequency:") "\" type=\"float\" appearance=\"full\" precision=\"3\" min=\"0.001\" max=\"1.\">0.05</param>\n"
+              "<param name=\"hfreq\" gui-text=\"" N_("Horizontal frequency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.\">5</param>\n"
+              "<param name=\"vfreq\" gui-text=\"" N_("Vertical frequency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.\">5</param>\n"
               "<param name=\"complexity\" gui-text=\"" N_("Complexity:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"5\">3</param>\n"
               "<param name=\"variation\" gui-text=\"" N_("Variation:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"100\">0</param>\n"
+              "<param name=\"intensity\" gui-text=\"" N_("Intensity:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"100\">30</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -118,7 +119,8 @@ FeltFeather::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream vfreq;
     std::ostringstream complexity;
     std::ostringstream variation;
-    
+    std::ostringstream intensity;
+
     std::ostringstream map;
     std::ostringstream stroke;
     
@@ -128,11 +130,12 @@ FeltFeather::get_filter_text (Inkscape::Extension::Extension * ext)
     erosion << -ext->get_param_float("erosion");
     
     turbulence << ext->get_param_enum("turbulence");
-    hfreq << ext->get_param_float("hfreq");
-    vfreq << ext->get_param_float("vfreq");
+    hfreq << ext->get_param_float("hfreq") / 100;
+    vfreq << ext->get_param_float("vfreq") / 100;
     complexity << ext->get_param_int("complexity");
     variation << ext->get_param_int("variation");
-    
+    intensity << ext->get_param_float("intensity");
+
     stroke << ext->get_param_enum("stroke");
     
     const gchar *maptype = ext->get_param_enum("type");
@@ -149,12 +152,12 @@ FeltFeather::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feComposite in2=\"composite1\" operator=\"in\" result=\"composite2\" />\n"
           "<feComposite in2=\"composite2\" operator=\"in\" result=\"composite3\" />\n"
           "<feTurbulence type=\"%s\" numOctaves=\"%s\" seed=\"%s\" baseFrequency=\"%s %s\" result=\"turbulence\" />\n"
-          "<feDisplacementMap in=\"%s\" in2=\"turbulence\" xChannelSelector=\"R\" scale=\"30\" yChannelSelector=\"G\" result=\"map\" />\n"
+          "<feDisplacementMap in=\"%s\" in2=\"turbulence\" xChannelSelector=\"R\" scale=\"%s\" yChannelSelector=\"G\" result=\"map\" />\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"colormatrix\" />\n"
           "<feComposite in=\"composite3\" in2=\"colormatrix\" operator=\"%s\" result=\"composite4\" />\n"
         "</filter>\n", hblur.str().c_str(), vblur.str().c_str(), 
                        turbulence.str().c_str(), complexity.str().c_str(), variation.str().c_str(), hfreq.str().c_str(), vfreq.str().c_str(),
-                       map.str().c_str(), dilat.str().c_str(), erosion.str().c_str(), stroke.str().c_str() );
+                       map.str().c_str(), intensity.str().c_str(), dilat.str().c_str(), erosion.str().c_str(), stroke.str().c_str() );
 
     return _filter;
 }; /* Felt feather filter */
@@ -166,8 +169,8 @@ FeltFeather::get_filter_text (Inkscape::Extension::Extension * ext)
 
     Filter's parameters:
     * Turbulence type (enum, default fractalNoise else turbulence) -> turbulence (type)
-    * Horizontal frequency (0.01->10., default 0.013) -> turbulence (baseFrequency)
-    * Vertical frequency (0.01->10., default 0.013) -> turbulence (baseFrequency)
+    * Horizontal frequency (0.001->10., default 0.013) -> turbulence (baseFrequency [/100])
+    * Vertical frequency (0.001->10., default 0.013) -> turbulence (baseFrequency [/100])
     * Complexity (1->5, default 5) -> turbulence (numOctaves)
     * Variation (1->360, default 1) -> turbulence (seed)
     * Intensity (0.0->50., default 6.6) -> displacement (scale)
@@ -190,8 +193,8 @@ public:
                 "<_item value=\"fractalNoise\">Fractal noise</_item>\n"
                 "<_item value=\"turbulence\">Turbulence</_item>\n"
               "</param>\n"
-              "<param name=\"hfreq\" gui-text=\"" N_("Horizontal frequency:") "\" type=\"float\" appearance=\"full\" precision=\"3\" min=\"0.001\" max=\"10.00\">0.013</param>\n"
-              "<param name=\"vfreq\" gui-text=\"" N_("Vertical frequency:") "\" type=\"float\" appearance=\"full\" precision=\"3\" min=\"0.001\" max=\"10.00\">0.013</param>\n"
+              "<param name=\"hfreq\" gui-text=\"" N_("Horizontal frequency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.1\" max=\"1000.00\">1.3</param>\n"
+              "<param name=\"vfreq\" gui-text=\"" N_("Vertical frequency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.1\" max=\"1000.00\">1.3</param>\n"
               "<param name=\"complexity\" gui-text=\"" N_("Complexity:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"5\">5</param>\n"
               "<param name=\"variation\" gui-text=\"" N_("Variation:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"360\">0</param>\n"
               "<param name=\"intensity\" gui-text=\"" N_("Intensity:") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"50\">6.6</param>\n"
@@ -222,8 +225,8 @@ Roughen::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream intensity;
     
     type << ext->get_param_enum("type");
-    hfreq << ext->get_param_float("hfreq");
-    vfreq << ext->get_param_float("vfreq");
+    hfreq << ext->get_param_float("hfreq") / 100;
+    vfreq << ext->get_param_float("vfreq") / 100;
     complexity << ext->get_param_int("complexity");
     variation << ext->get_param_int("variation");
     intensity << ext->get_param_float("intensity");

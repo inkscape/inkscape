@@ -120,6 +120,7 @@ src/extension/internal/filter/overlays.h
 src/extension/internal/filter/paint.h
 src/extension/internal/filter/protrusions.h
 src/extension/internal/filter/shadows.h
+src/extension/internal/filter/textures.h
 src/extension/internal/filter/transparency.h
 src/extension/internal/gdkpixbuf-input.cpp
 src/extension/internal/gimpgrad.cpp

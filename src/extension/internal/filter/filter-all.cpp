@@ -58,6 +58,7 @@ Filter::filters_all (void )
     Greyscale::init();
     Invert::init();
     Lightness::init();
+    Nudge::init();
     Quadritone::init();
     Solarize::init();
     Tritone::init();
@@ -75,7 +76,7 @@ Filter::filters_all (void )
     Drawing::init();
     Electrize::init();
     NeonDraw::init();
-    //PointEngraving::init();
+    PointEngraving::init();
     Posterize::init();
     PosterizeBasic::init();
 
