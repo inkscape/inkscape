@@ -21,7 +21,7 @@
 			</param>
 		</page>
 		<page name="help" _gui-text="Help">
-			<_param name="inputhelp" type="description" xml:space="preserve">- AutoCAD Release 13 format.
+			<_param name="inputhelp" type="description" xml:space="preserve">- AutoCAD Release 14 DXF format.
 - assume svg drawing is in pixels, at 90 dpi.
 - only line and spline elements are supported.
 - ROBO-Master spline output is a specialized spline readable only by ROBO-Master and AutoDesk viewers, not Inkscape.
@@ -31,7 +31,7 @@
 	<output>
 		<extension>.dxf</extension>
 		<mimetype>image/dxf</mimetype>
-		<_filetypename>Desktop Cutting Plotter (R13) (*.dxf)</_filetypename>
+		<_filetypename>Desktop Cutting Plotter (AutoCAD DXF R14) (*.dxf)</_filetypename>
 		<_filetypetooltip>Desktop Cutting Plotter</_filetypetooltip>
 		<dataloss>true</dataloss>
 	</output>
