@@ -3,6 +3,10 @@
 Copyright (C) 2005,2007,2008 Aaron Spike, aaron@ekips.org
 Copyright (C) 2008,2010 Alvin Penner, penner@vaxxine.com
 
+This file output script for Inkscape creates a AutoCAD R14 DXF file.
+The spec can be found here: http://www.autodesk.com/techpubs/autocad/acadr14/dxf/index.htm.
+
+File history:
 - template dxf_outlines.dxf added Feb 2008 by Alvin Penner
 - ROBO-Master output option added Aug 2008
 - ROBO-Master multispline output added Sept 2008
@@ -155,7 +159,7 @@ class MyEffect(inkex.Effect):
         for i in range(fits):
             self.dxf_add(" 11\n%f\n 21\n%f\n 31\n0.0\n" % (self.xfit[i],self.yfit[i]))
 
-    def process_path(self, node, mat):
+    def process_shape(self, node, mat):
         rgb = (0,0,0)
         style = node.get('style')
         if style:
@@ -203,6 +207,33 @@ class MyEffect(inkex.Effect):
                 else:
                     self.dxf_spline([s[1],s[2],e[0],e[1]])
 
+    def process_clone(self, node):
+        trans = node.get('transform')
+        x = node.get('x')
+        y = node.get('y')
+        mat = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]
+        if trans:
+            mat = simpletransform.composeTransform(mat, simpletransform.parseTransform(trans))
+        if x:
+            mat = simpletransform.composeTransform(mat, [[1.0, 0.0, float(x)], [0.0, 1.0, 0.0]])
+        if y:
+            mat = simpletransform.composeTransform(mat, [[1.0, 0.0, 0.0], [0.0, 1.0, float(y)]])
+        # push transform
+        if trans or x or y:
+            self.groupmat.append(simpletransform.composeTransform(self.groupmat[-1], mat))
+        # get referenced node
+        refid = node.get(inkex.addNS('href','xlink'))
+        refnode = self.getElementById(refid[1:])
+        if refnode.tag == inkex.addNS('g','svg'):
+            self.process_group(refnode)
+        elif refnode.tag == inkex.addNS('use', 'svg'):
+            self.process_clone(refnode)
+        else:
+            self.process_shape(refnode, self.groupmat[-1])
+        # pop transform
+        if trans or x or y:
+            self.groupmat.pop()
+
     def process_group(self, group):
         if group.get(inkex.addNS('groupmode', 'inkscape')) == 'layer':
             layer = group.get(inkex.addNS('label', 'inkscape'))
@@ -215,8 +246,10 @@ class MyEffect(inkex.Effect):
         for node in group:
             if node.tag == inkex.addNS('g','svg'):
                 self.process_group(node)
+            elif node.tag == inkex.addNS('use', 'svg'):
+                self.process_clone(node)
             else:
-                self.process_path(node, self.groupmat[-1])
+                self.process_shape(node, self.groupmat[-1])
         if trans:
             self.groupmat.pop()
 
@@ -224,7 +257,7 @@ class MyEffect(inkex.Effect):
         #References:   Minimum Requirements for Creating a DXF File of a 3D Model By Paul Bourke
         #              NURB Curves: A Guide for the Uninitiated By Philip J. Schneider
         #              The NURBS Book By Les Piegl and Wayne Tiller (Springer, 1995)
-        self.dxf_add("999\nDXF created by Inkscape\n")
+        # self.dxf_add("999\nDXF created by Inkscape\n")  # Some programs do not take comments in DXF files (KLayout 0.21.12 for example)
         self.dxf_add(dxf_templates.r14_header)
         for node in self.document.getroot().xpath('//svg:g', namespaces=inkex.NSS):
             if node.get(inkex.addNS('groupmode', 'inkscape')) == 'layer':
@@ -239,7 +272,7 @@ class MyEffect(inkex.Effect):
 
         scale = eval(self.options.units)
         if not scale:
-            scale = 25.4/90
+            scale = 25.4/90     # if no scale is specified, assume inch as baseunit
         h = inkex.unittouu(self.document.getroot().xpath('@height', namespaces=inkex.NSS)[0])
         self.groupmat = [[[scale, 0.0, 0.0], [0.0, -scale, h*scale]]]
         doc = self.document.getroot()
