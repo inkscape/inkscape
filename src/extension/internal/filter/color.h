@@ -12,6 +12,7 @@
  *   Channel painting
  *   Color shift
  *   Colorize
+ *   Component transfer
  *   Duochrome
  *   Extract channel
  *   Greyscale
@@ -394,6 +395,88 @@ Colorize::get_filter_text (Inkscape::Extension::Extension * ext)
 
     return _filter;
 }; /* Colorize filter */
+
+/**
+    \brief    Custom predefined ComponentTransfer filter.
+    
+    Basic component transfer structure.
+
+    Filter's parameters:
+    * Type (enum, default identity) -> component function
+
+*/
+class ComponentTransfer : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    ComponentTransfer ( ) : Filter() { };
+    virtual ~ComponentTransfer ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Component Transfer") "</name>\n"
+              "<id>org.inkscape.effect.filter.ComponentTransfer</id>\n"
+              "<param name=\"type\" gui-text=\"" N_("Type:") "\" type=\"enum\">\n"
+                "<_item value=\"identity\">" N_("Identity") "</_item>\n"
+                "<_item value=\"table\">" N_("Table") "</_item>\n"
+                "<_item value=\"discrete\">" N_("Discrete") "</_item>\n"
+                "<_item value=\"linear\">" N_("Linear") "</_item>\n"
+                "<_item value=\"gamma\">" N_("Gamma") "</_item>\n"
+              "</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Basic component transfer structure") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new ComponentTransfer());
+    };
+};
+
+gchar const *
+ComponentTransfer::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream CTfunction;
+    const gchar *type = ext->get_param_enum("type");
+
+    if ((g_ascii_strcasecmp("identity", type) == 0)) {
+        CTfunction << "<feFuncR type=\"identity\" tableValues=\"1 0\" />\n"
+                 << "<feFuncG type=\"identity\" tableValues=\"1 0\" />\n"
+                 << "<feFuncB type=\"identity\" tableValues=\"1 0\" />\n"
+                 << "<feFuncA type=\"identity\" tableValues=\"0 1\" />\n";
+    } else if ((g_ascii_strcasecmp("table", type) == 0)) {
+        CTfunction << "<feFuncR type=\"table\" tableValues=\"0 1 0\" />\n"
+                 << "<feFuncG type=\"table\" tableValues=\"0 1 0\" />\n"
+                 << "<feFuncB type=\"table\" tableValues=\"0 1 0\" />\n";
+    } else if ((g_ascii_strcasecmp("discrete", type) == 0)) {
+        CTfunction << "<feFuncR tableValues=\"0 0.2 0.4 0.6 0.8 1 1\" type=\"discrete\" />\n"
+                 << "<feFuncG tableValues=\"0 0.2 0.4 0.6 0.8 1 1\" type=\"discrete\" />\n"
+                 << "<feFuncB tableValues=\"0 0.2 0.4 0.6 0.8 1 1\" type=\"discrete\" />\n";
+    } else if ((g_ascii_strcasecmp("linear", type) == 0)) {
+        CTfunction << "<feFuncR type=\"linear\" slope=\".5\" intercept=\".10\" />\n"
+                 << "<feFuncG type=\"linear\" slope=\".5\" intercept=\".10\" />\n"
+                 << "<feFuncB type=\"linear\" slope=\".5\" intercept=\".10\" />\n";
+    } else { //Gamma
+        CTfunction << "<feFuncR type=\"gamma\" amplitude=\"3\" exponent=\"3\" offset=\"0.1\" />\n"
+                 << "<feFuncG type=\"gamma\" amplitude=\"3\" exponent=\"3\" offset=\"0.1\" />\n"
+                 << "<feFuncB type=\"gamma\" amplitude=\"3\" exponent=\"3\" offset=\"0.1\" />\n";
+    }
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Component Transfer\">\n"
+        "<feComponentTransfer>\n"
+        "%s\n"
+        "</feComponentTransfer>\n"
+        "</filter>\n", CTfunction.str().c_str());
+
+    return _filter;
+}; /* ComponentTransfer filter */
 
 /**
     \brief    Custom predefined Duochrome filter.

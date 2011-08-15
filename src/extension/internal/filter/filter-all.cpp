@@ -53,6 +53,7 @@ Filter::filters_all (void )
     ChannelPaint::init();
     ColorShift::init();
     Colorize::init();
+    ComponentTransfer::init();
     Duochrome::init();
     ExtractChannel::init();
     Greyscale::init();
