@@ -127,7 +127,7 @@ NoiseFill::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feTurbulence type=\"%s\" baseFrequency=\"%s %s\" numOctaves=\"%s\" seed=\"%s\" result=\"turbulence\"/>\n"
           "<feComposite in=\"SourceGraphic\" in2=\"turbulence\" operator=\"%s\" result=\"composite1\" />\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"color\" />\n"
-          "<feFlood in=\"color\" flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
+          "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
           "<feMerge result=\"merge\">\n"
             "<feMergeNode in=\"flood\" />\n"
             "<feMergeNode in=\"color\" />\n"

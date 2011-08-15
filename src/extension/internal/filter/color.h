@@ -1234,7 +1234,7 @@ Solarize::get_filter_text (Inkscape::Extension::Extension * ext)
     * Option (enum, default Normal) ->
         Normal = composite1 (in="qminp", in2="flood"), composite2 (in="p", in2="blend6"), blend6 (in2="qminpc")
         Enhance hue = Normal + composite2 (in="SourceGraphic")
-        Radiation = Normal + blend6 (in2="SourceGraphic") composite2 (in="blend6", in2="qminpc")
+        Phosphorescence = Normal + blend6 (in2="SourceGraphic") composite2 (in="blend6", in2="qminpc")
         Hue to background = Normal + composite1 (in2="BackgroundImage") [a template with an activated background is needed, or colors become black]
     * Hue distribution (0->360, default 0) -> colormatrix1 (values)
     * Colors (guint, default -73203457) -> flood (flood-opacity, flood-color)
@@ -1263,7 +1263,7 @@ public:
                   "<param name=\"type\" gui-text=\"" N_("Type:") "\" type=\"enum\">\n"
                     "<_item value=\"normal\">" N_("Normal") "</_item>\n"
                     "<_item value=\"enhue\">" N_("Enhance hue") "</_item>\n"
-                    "<_item value=\"rad\">" N_("Radiation") "</_item>\n"
+                    "<_item value=\"rad\">" N_("Phosphorescence") "</_item>\n"
                     "<_item value=\"htb\">" N_("Hue to background") "</_item>\n"
                   "</param>\n"
                   "<param name=\"globalblend\" gui-text=\"" N_("Global blend:") "\" type=\"enum\">\n"
@@ -1342,7 +1342,7 @@ Tritone::get_filter_text (Inkscape::Extension::Extension * ext)
         c2in2 << "blend6";
         b6in2 << "qminpc";
     } else if ((g_ascii_strcasecmp("rad", type) == 0)) {
-    // Radiation
+    // Phosphorescence
         c1in << "qminp";
         c1in2 << "flood";
         c2in << "blend6";
@@ -1379,7 +1379,7 @@ Tritone::get_filter_text (Inkscape::Extension::Extension * ext)
           "</feComponentTransfer>\n"
           "<feBlend in2=\"q2\" mode=\"%s\" in=\"p\" result=\"pq\" />\n"
           "<feColorMatrix in=\"pq\" result=\"qminp\" type=\"matrix\" values=\"-1 1 0 0 0 -1 1 0 0 0 -1 1 0 0 0 0 0 0 0 1 \" />\n"
-          "<feFlood in=\"qminp\" flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
+          "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
           "<feComposite in=\"%s\" in2=\"%s\" result=\"qminpc\" operator=\"arithmetic\" k1=\"1\" />\n"
           "<feGaussianBlur stdDeviation=\"%s\" />\n"
           "<feBlend in2=\"%s\" blend=\"normal\" result=\"blend6\" mode=\"%s\" />\n"

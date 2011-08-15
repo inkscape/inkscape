@@ -182,7 +182,7 @@ Outline::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feColorMatrix result=\"color1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 200 -1 \" />\n"
           "<feGaussianBlur in=\"color1\" stdDeviation=\"%s\" result=\"blur2\" />\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"color2\" />\n"
-          "<feFlood in=\"color2\" result=\"flood\" flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" />\n"
+          "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
           "<feComposite in=\"flood\" in2=\"color2\" operator=\"in\" result=\"composite\" />\n"
           "<feBlend in=\"SourceGraphic\" in2=\"composite\" mode=\"normal\" blend=\"normal\" />\n"
         "</filter>\n", width.str().c_str(), melt.str().c_str(), dilat.str().c_str(), erosion.str().c_str(), a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str());

@@ -243,7 +243,7 @@ Silhouette::get_filter_text (Inkscape::Extension::Extension * ext)
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Silhouette\">\n"
-          "<feFlood in=\"SourceGraphic\" flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
+          "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
           "<feComposite in=\"flood\" in2=\"SourceGraphic\" operator=\"%s\" result=\"composite\" />\n"
           "<feGaussianBlur stdDeviation=\"%s\" />\n"
         "</filter>\n", a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(), cutout.str().c_str(), blur.str().c_str());
