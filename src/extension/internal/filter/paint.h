@@ -719,11 +719,13 @@ public:
                   "<param name=\"erase\" gui-text=\"" N_("Erase:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0\" max=\"1\">0</param>\n"
                   "<param name=\"blur\" gui-text=\"" N_("Blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"2\">0.5</param>\n"
                 "</page>\n"
-                "<page name=\"drawingcolortab\" _gui-text=\"Drawing color\">\n"
+                "<page name=\"drawingcolortab\" _gui-text=\"Fill color\">\n"
                   "<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">1229269247</param>\n"
+                  "<param name=\"iof\" gui-text=\"" N_("Image on fill") "\" type=\"boolean\" >false</param>\n"
                 "</page>\n"
-                "<page name=\"bgcolortab\" _gui-text=\"Background color\">\n"
+                "<page name=\"bgcolortab\" _gui-text=\"Points color\">\n"
                   "<param name=\"bgcolor\" gui-text=\"" N_("Color") "\" type=\"color\">-16843009</param>\n"
+                  "<param name=\"iop\" gui-text=\"" N_("Image on points") "\" type=\"boolean\" >false</param>\n"
                 "</page>\n"
               "</param>\n"
               "<effect>\n"
@@ -764,7 +766,9 @@ PointEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream bg;
     std::ostringstream bb;
     std::ostringstream ba;
-    
+    std::ostringstream iof;
+    std::ostringstream iop;
+
     type << ext->get_param_enum("type");
     hfreq << ext->get_param_float("hfreq") / 100;
     vfreq << ext->get_param_float("vfreq") / 100;
@@ -789,6 +793,16 @@ PointEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
     bb << ((bgcolor >>  8) & 0xff);
     ba << (bgcolor & 0xff) / 255.0F; 
 
+    if (ext->get_param_bool("iof"))
+        iof << "SourceGraphic";
+    else
+        iof << "flood1";
+
+    if (ext->get_param_bool("iop"))
+        iop << "SourceGraphic";
+    else
+        iop << "flood2";
+
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Point Engraving\" x=\"0\" y=\"0\" width=\"1\" height=\"1\" color-interpolation-filters=\"sRGB\">\n"
           "<feConvolveMatrix in=\"SourceGraphic\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0\" order=\"3 3\" result=\"convolve\" />\n"
@@ -799,16 +813,17 @@ PointEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feColorMatrix in=\"composite1\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 -9 \" result=\"colormatrix2\" />\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feFlood flood-color=\"rgb(%s,%s,%s)\" flood-opacity=\"%s\" result=\"flood1\" />\n"
-          "<feComposite in=\"flood1\" in2=\"blur\" operator=\"out\" stdDeviation=\"2\" result=\"composite2\" />\n"
+          "<feComposite in=\"%s\" in2=\"blur\" operator=\"out\" result=\"composite2\" />\n"
           "<feFlood in=\"blur\" flood-color=\"rgb(%s,%s,%s)\" flood-opacity=\"%s\" result=\"flood2\" />\n"
-          "<feComposite in2=\"blur\" operator=\"in\" result=\"composite3\" />\n"
-          "<feComposite in=\"composite3\" in2=\"composite2\" k3=\"1\" k2=\"1\" operator=\"arithmetic\" result=\"composite4\" />\n"
+          "<feComposite in=\"%s\" in2=\"blur\" operator=\"in\" result=\"composite3\" />\n"
+          "<feComposite in=\"composite3\" in2=\"composite2\" k2=\"%s\" k3=\"%s\"  operator=\"arithmetic\" result=\"composite4\" />\n"
           "<feComposite in2=\"SourceGraphic\" operator=\"in\" result=\"composite5\" />\n"
         "</filter>\n", reduction.str().c_str(), blend.str().c_str(),
                        type.str().c_str(), hfreq.str().c_str(), vfreq.str().c_str(), complexity.str().c_str(), variation.str().c_str(),
                        lightness.str().c_str(), grain.str().c_str(), erase.str().c_str(), blur.str().c_str(),
-                       r.str().c_str(), g.str().c_str(), b.str().c_str(), a.str().c_str(),
-                       br.str().c_str(), bg.str().c_str(), bb.str().c_str(), ba.str().c_str() );
+                       r.str().c_str(), g.str().c_str(), b.str().c_str(), a.str().c_str(), iof.str().c_str(),
+                       br.str().c_str(), bg.str().c_str(), bb.str().c_str(), ba.str().c_str(), iop.str().c_str(),
+                       ba.str().c_str(), a.str().c_str() );
 
     return _filter;
 }; /* Point engraving filter */

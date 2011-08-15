@@ -2355,42 +2355,6 @@ sodipodi:docname="filters.svg">
 <feBlend in2="result1" in="result3" mode="normal" result="result8" />
 <feComposite in2="SourceGraphic" in="result8" operator="in" result="result7" />
 </filter>
-<filter id="f211" inkscape:label="CT Gamma" inkscape:menu="Color" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
-<feComponentTransfer>
-<feFuncR type="gamma" amplitude="3" exponent="3" offset="0,1" />
-<feFuncG type="gamma" amplitude="3" exponent="3" offset="0,1" />
-<feFuncB type="gamma" amplitude="3" exponent="3" offset="0,1" />
-</feComponentTransfer>
-</filter>
-<filter id="f212" inkscape:label="CT Linear" inkscape:menu="Color" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
-<feComponentTransfer id="feComponentTransfer3167">
-<feFuncR type="linear" slope=".5" intercept=".10" />
-<feFuncG type="linear" slope=".5" intercept=".10" />
-<feFuncB type="linear" slope=".5" intercept=".10" />
-</feComponentTransfer>
-</filter>
-<filter id="f213" inkscape:label="CT Identity" inkscape:menu="Color" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
-<feComponentTransfer>
-<feFuncR type="identity" tableValues="1 0" />
-<feFuncG type="identity" tableValues="1 0" />
-<feFuncB type="identity" tableValues="1 0" />
-<feFuncA type="identity" tableValues="0 1" />
-</feComponentTransfer>
-</filter>
-<filter id="f214" inkscape:label="CT Discrete" inkscape:menu="Color" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
-<feComponentTransfer id="feComponentTransfer3132" result="result1" in="SourceGraphic" >
-<feFuncR tableValues="0 0.2 0.4 0.6 0.8 1 1" type="discrete" />
-<feFuncG tableValues="0 0.2 0.4 0.6 0.8 1 1" type="discrete" />
-<feFuncB tableValues="0 0.2 0.4 0.6 0.8 1 1" type="discrete" />
-</feComponentTransfer>
-</filter>
-<filter id="f215" inkscape:label="CT Table" inkscape:menu="Color" color-interpolation-filters="sRGB" height="1" width="1" y="0" x="0">
-<feComponentTransfer in="SourceGraphic" result="result1">
-<feFuncR type="table" tableValues="0 1 0" />
-<feFuncG type="table" tableValues="0 1 0" />
-<feFuncB type="table" tableValues="0 1 0" />
-</feComponentTransfer>
-</filter>
 <filter id="f216" inkscape:label="Liquid" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Colorizable filling with liquid transparency" height="2" y="-0.5" width="1.5" x="-0.25" color-interpolation-filters="sRGB">
 <feFlood flood-color="rgb(158,236,254)" result="result9" />
 <feGaussianBlur stdDeviation="7" result="result8" in="SourceGraphic" />
