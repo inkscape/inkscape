@@ -113,17 +113,19 @@ set(extension_SRC
 	internal/clear-n_.h
 	internal/emf-win32-inout.h
 	internal/emf-win32-print.h
-	internal/filter/abc.h
 	internal/filter/blurs.h
 	internal/filter/bumps.h
 	internal/filter/color.h
-	internal/filter/drop-shadow.h
-	internal/filter/experimental.h
+	internal/filter/distort.h
 	internal/filter/filter.h
 	internal/filter/image.h
 	internal/filter/morphology.h
+	internal/filter/overlays.h
+	internal/filter/paint.h
+	internal/filter/protrusions.h
 	internal/filter/shadows.h
-	internal/filter/snow.h
+	internal/filter/textures.h
+	internal/filter/transparency.h
 	internal/gdkpixbuf-input.h
 	internal/gimpgrad.h
 	internal/grid.h
