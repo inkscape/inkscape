@@ -698,11 +698,11 @@ WaxBump::get_filter_text (Inkscape::Extension::Extension * ext)
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Wax Bump\">\n"
           "<feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%s\" result=\"blur1\" />\n"
-          "<feFlood in=\"SourceGraphic\" flood-opacity=\"1\" flood-color=\"rgb(255,255,255)\" result=\"flood1\" />\n"
+          "<feFlood flood-opacity=\"1\" flood-color=\"rgb(255,255,255)\" result=\"flood1\" />\n"
           "<feColorMatrix in=\"%s\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 %s \" result=\"colormatrix1\" />\n"
           "<feColorMatrix in=\"blur1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 %s %s %s %s 0 \" result=\"colormatrix2\" />\n"
           "<feFlood flood-color=\"rgb(%s,%s,%s)\" flood-opacity=\"%s\" result=\"flood2\" />\n"
-          "<feComposite in=\"flood2\" in2=\"colormatrix2\" stdDeviation=\"1\" operator=\"%s\" result=\"composite1\" />\n"
+          "<feComposite in=\"flood2\" in2=\"colormatrix2\" operator=\"%s\" result=\"composite1\" />\n"
           "<feGaussianBlur in=\"composite1\" stdDeviation=\"%s\" result=\"blur2\" />\n"
           "<feSpecularLighting in=\"blur2\" lighting-color=\"rgb(%s,%s,%s)\" specularConstant=\"%s\" surfaceScale=\"%s\" specularExponent=\"%s\" result=\"specular\">\n"
             "<feDistantLight elevation=\"%s\" azimuth=\"%s\" />\n"

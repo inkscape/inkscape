@@ -184,16 +184,16 @@ Chromolitho::get_filter_text (Inkscape::Extension::Extension * ext)
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Chromolitho\">\n"
-          "<feComposite stdDeviation=\"1\" in=\"SourceGraphic\" in2=\"SourceGraphic\" operator=\"arithmetic\" k1=\"%s\" k2=\"1\" result=\"composite1\" />\n"
-          "<feConvolveMatrix in=\"composite1\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" order=\"3 3\" stdDeviation=\"1\" result=\"convolve1\" />\n"
-          "<feBlend in=\"%s\" in2=\"composite1\" mode=\"%s\" blend=\"normal\" stdDeviation=\"1\" result=\"blend1\" />\n"
+          "<feComposite in=\"SourceGraphic\" in2=\"SourceGraphic\" operator=\"arithmetic\" k1=\"%s\" k2=\"1\" result=\"composite1\" />\n"
+          "<feConvolveMatrix in=\"composite1\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" order=\"3 3\" result=\"convolve1\" />\n"
+          "<feBlend in=\"%s\" in2=\"composite1\" mode=\"%s\" blend=\"normal\" result=\"blend1\" />\n"
           "<feGaussianBlur in=\"blend1\" stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feTurbulence baseFrequency=\"%s %s\" numOctaves=\"%s\" seed=\"%s\" type=\"fractalNoise\" result=\"turbulence1\" />\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"colormatrix1\" />\n"
-          "<feColorMatrix type=\"saturate\" stdDeviation=\"3\" values=\"%s\" result=\"colormatrix2\" />\n"
-          "<feBlend in=\"%s\" in2=\"blur1\" stdDeviation=\"1\" blend=\"normal\" mode=\"%s\" result=\"blend2\" />\n"
+          "<feColorMatrix type=\"saturate\" values=\"%s\" result=\"colormatrix2\" />\n"
+          "<feBlend in=\"%s\" in2=\"blur1\" blend=\"normal\" mode=\"%s\" result=\"blend2\" />\n"
           "<feColorMatrix in=\"blend2\" type=\"saturate\" values=\"%s\" result=\"colormatrix3\" />\n"
-          "<feComponentTransfer in=\"colormatrix3\" stdDeviation=\"2\" result=\"component1\">\n"
+          "<feComponentTransfer in=\"colormatrix3\" result=\"component1\">\n"
             "<feFuncR type=\"discrete\" tableValues=\"%s\" />\n"
             "<feFuncG type=\"discrete\" tableValues=\"%s\" />\n"
             "<feFuncB type=\"discrete\" tableValues=\"%s\" />\n"
@@ -437,19 +437,19 @@ Drawing::get_filter_text (Inkscape::Extension::Extension * ext)
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Drawing\">\n"
         "<feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%s\" result=\"blur1\" />\n"
         "<feConvolveMatrix in=\"blur1\" targetX=\"1\" targetY=\"1\" order=\"3 3\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" result=\"convolve1\" />\n"
-        "<feComposite in=\"convolve1\" in2=\"convolve1\" k1=\"1\" k2=\"1\" k4=\"%s\" operator=\"arithmetic\" stdDeviation=\"1\" result=\"composite1\" />\n"
+        "<feComposite in=\"convolve1\" in2=\"convolve1\" k1=\"1\" k2=\"1\" k4=\"%s\" operator=\"arithmetic\" result=\"composite1\" />\n"
         "<feColorMatrix in=\"composite1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"color1\" />\n"
         "<feGaussianBlur stdDeviation=\"%s\" result=\"blur2\" />\n"
         "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"color2\" />\n"
         "<feFlood flood-color=\"rgb(255,255,255)\" result=\"flood1\" />\n"
         "<feBlend in2=\"color2\" mode=\"multiply\" blend=\"normal\" result=\"blend1\" />\n"
-        "<feComponentTransfer in=\"blend1\" stdDeviation=\"2\" result=\"component1\">\n"
+        "<feComponentTransfer in=\"blend1\" result=\"component1\">\n"
           "<feFuncR type=\"discrete\" tableValues=\"0 1 1 1\" />\n"
           "<feFuncG type=\"discrete\" tableValues=\"0 1 1 1\" />\n"
           "<feFuncB type=\"discrete\" tableValues=\"0 1 1 1\" />\n"
         "</feComponentTransfer>\n"
         "<feGaussianBlur stdDeviation=\"%s\" result=\"blur3\" />\n"
-        "<feColorMatrix in=\"blur3\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.2125 -0.7154 -0.0721 1 0 \" stdDeviation=\"1\" result=\"color3\" />\n"
+        "<feColorMatrix in=\"blur3\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"color3\" />\n"
         "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"color4\" />\n"
         "<feFlood flood-color=\"rgb(%s,%s,%s)\" result=\"flood2\" />\n"
         "<feComposite in=\"%s\" in2=\"color4\" operator=\"in\" result=\"composite2\" />\n"
@@ -546,7 +546,7 @@ Electrize::get_filter_text (Inkscape::Extension::Extension * ext)
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Electrize\">\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
-          "<feComponentTransfer in=\"blur\" stdDeviation=\"2\" result=\"component\" >\n"
+          "<feComponentTransfer in=\"blur\" result=\"component\" >\n"
             "<feFuncR type=\"%s\" tableValues=\"%s\" />\n"
             "<feFuncG type=\"%s\" tableValues=\"%s\" />\n"
             "<feFuncB type=\"%s\" tableValues=\"%s\" />\n"
@@ -796,12 +796,12 @@ PointEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
     if (ext->get_param_bool("iof"))
         iof << "SourceGraphic";
     else
-        iof << "flood1";
+        iof << "flood2";
 
     if (ext->get_param_bool("iop"))
         iop << "SourceGraphic";
     else
-        iop << "flood2";
+        iop << "flood1";
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Point Engraving\" x=\"0\" y=\"0\" width=\"1\" height=\"1\" color-interpolation-filters=\"sRGB\">\n"
@@ -814,16 +814,16 @@ PointEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feFlood flood-color=\"rgb(%s,%s,%s)\" flood-opacity=\"%s\" result=\"flood1\" />\n"
           "<feComposite in=\"%s\" in2=\"blur\" operator=\"out\" result=\"composite2\" />\n"
-          "<feFlood in=\"blur\" flood-color=\"rgb(%s,%s,%s)\" flood-opacity=\"%s\" result=\"flood2\" />\n"
+          "<feFlood flood-color=\"rgb(%s,%s,%s)\" flood-opacity=\"%s\" result=\"flood2\" />\n"
           "<feComposite in=\"%s\" in2=\"blur\" operator=\"in\" result=\"composite3\" />\n"
           "<feComposite in=\"composite3\" in2=\"composite2\" k2=\"%s\" k3=\"%s\"  operator=\"arithmetic\" result=\"composite4\" />\n"
           "<feComposite in2=\"SourceGraphic\" operator=\"in\" result=\"composite5\" />\n"
         "</filter>\n", reduction.str().c_str(), blend.str().c_str(),
                        type.str().c_str(), hfreq.str().c_str(), vfreq.str().c_str(), complexity.str().c_str(), variation.str().c_str(),
                        lightness.str().c_str(), grain.str().c_str(), erase.str().c_str(), blur.str().c_str(),
-                       r.str().c_str(), g.str().c_str(), b.str().c_str(), a.str().c_str(), iof.str().c_str(),
                        br.str().c_str(), bg.str().c_str(), bb.str().c_str(), ba.str().c_str(), iop.str().c_str(),
-                       ba.str().c_str(), a.str().c_str() );
+                       r.str().c_str(), g.str().c_str(), b.str().c_str(), a.str().c_str(), iof.str().c_str(),
+                       a.str().c_str(), ba.str().c_str() );
 
     return _filter;
 }; /* Point engraving filter */
@@ -1020,7 +1020,7 @@ PosterizeBasic::get_filter_text (Inkscape::Extension::Extension * ext)
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Posterize Basic\">\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur1\" />\n"
-          "<feComponentTransfer stdDeviation=\"2\" in=\"blur1\" result=\"component1\">\n"
+          "<feComponentTransfer in=\"blur1\" result=\"component1\">\n"
             "<feFuncR type=\"discrete\" tableValues=\"%s\" />\n"
             "<feFuncG type=\"discrete\" tableValues=\"%s\" />\n"
             "<feFuncB type=\"discrete\" tableValues=\"%s\" />\n"

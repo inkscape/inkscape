@@ -100,6 +100,7 @@ Filter::filters_all (void )
     // Fill and transparency
     Blend::init();
     ChannelTransparency::init();
+    LightEraser::init();
     Silhouette::init();
 
 	// Here come the rest of the filters that are read from SVG files in share/filters and

@@ -590,7 +590,7 @@ Duochrome::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feColorMatrix type=\"luminanceToAlpha\" result=\"colormatrix1\" />\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood1\" />\n"
           "<feComposite in2=\"colormatrix1\" operator=\"%s\" result=\"composite1\" />\n"
-          "<feFlood in=\"colormatrix1\" flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood2\" />\n"
+          "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood2\" />\n"
           "<feComposite in2=\"colormatrix1\" result=\"composite2\" operator=\"%s\" />\n"
           "<feComposite in=\"composite2\" in2=\"composite1\" k2=\"1\"  k3=\"1\" operator=\"arithmetic\" result=\"composite3\" />\n"
           "<feColorMatrix in=\"composite3\" type=\"matrix\" values=\"2 -1 0 0 0 0 2 -1 0 0 -1 0 2 0 0 0 0 0 1 0 \" result=\"colormatrix2\" />\n"
@@ -988,7 +988,7 @@ Lightness::get_filter_text (Inkscape::Extension::Extension * ext)
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Lightness\">\n"
-          "<feComponentTransfer in=\"blur\" stdDeviation=\"2\" result=\"component\" >\n"
+          "<feComponentTransfer in=\"blur\" result=\"component\" >\n"
           "<feFuncR type=\"gamma\" amplitude=\"%s\" exponent=\"%s\" offset=\"%s\" />\n"
           "<feFuncG type=\"gamma\" amplitude=\"%s\" exponent=\"%s\" offset=\"%s\" />\n"
           "<feFuncB type=\"gamma\" amplitude=\"%s\" exponent=\"%s\" offset=\"%s\" />\n"
