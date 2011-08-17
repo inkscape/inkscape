@@ -238,7 +238,7 @@ DISTCLEANFILES = inkscape.desktop \
 #ACLOCAL_AMFLAGS = -I m4
 
 SUFFIXES = .pod .1
-inkscape.1 inkscape.fr.1 inkscape.ja.1 inkscape.sk.1 inkscape.zh_TW.1 : fix-roff-punct Makefile.am AUTHORS
+inkscape.1 inkscape.el.1 inkscape.fr.1 inkscape.ja.1 inkscape.sk.1 inkscape.zh_TW.1 : fix-roff-punct Makefile.am AUTHORS
 .pod.1:
 	set -e; \
 	d=`sed -n 's,/,-,g;s,.*\$$[D]ate: \(..........\).*,\1,p' $<`; \
@@ -255,10 +255,17 @@ inkscape.1 inkscape.fr.1 inkscape.ja.1 inkscape.sk.1 inkscape.zh_TW.1 : fix-roff
 po/inkscape.pot:
 	(cd $(srcdir)/po ; intltool-update --pot --output-file=$(distdir)/po/inkscape.pot)
 
-install-data-local: inkscape.fr.1
+install-data-local: inkscape.el.1 inkscape.fr.1 inkscape.ja.1 inkscape.sk.1 inkscape.zh_TW.1
+	$(mkinstalldirs) $(DESTDIR)$(mandir)/el/man1
 	$(mkinstalldirs) $(DESTDIR)$(mandir)/fr/man1
+	$(mkinstalldirs) $(DESTDIR)$(mandir)/ja/man1
+	$(mkinstalldirs) $(DESTDIR)$(mandir)/sk/man1
+	$(mkinstalldirs) $(DESTDIR)$(mandir)/zh_TW/man1
+	$(INSTALL_DATA) `if [ -f inkscape.el.1 ]; then :; else echo $(srcdir)/;fi`inkscape.el.1 $(DESTDIR)$(mandir)/el/man1/inkscape.1
 	$(INSTALL_DATA) `if [ -f inkscape.fr.1 ]; then :; else echo $(srcdir)/;fi`inkscape.fr.1 $(DESTDIR)$(mandir)/fr/man1/inkscape.1
-
+	$(INSTALL_DATA) `if [ -f inkscape.ja.1 ]; then :; else echo $(srcdir)/;fi`inkscape.ja.1 $(DESTDIR)$(mandir)/ja/man1/inkscape.1
+	$(INSTALL_DATA) `if [ -f inkscape.sk.1 ]; then :; else echo $(srcdir)/;fi`inkscape.sk.1 $(DESTDIR)$(mandir)/sk/man1/inkscape.1
+	$(INSTALL_DATA) `if [ -f inkscape.zh_TW.1 ]; then :; else echo $(srcdir)/;fi`inkscape.zh_TW.1 $(DESTDIR)$(mandir)/zh_TW/man1/inkscape.1
 #.PHONY: warn_markup
 noinst_DATA = warn_markup
 warn_markup:
