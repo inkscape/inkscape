@@ -11,6 +11,7 @@
  *   Blend
  *   Channel transparency
  *   Light eraser
+ *   Opacity
  *   Silhouette
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -184,8 +185,8 @@ ChannelTransparency::get_filter_text (Inkscape::Extension::Extension * ext)
     Make the lightest parts of the object progressively transparent.
 
     Filter's parameters:
-    * Expand (1->1000, default 250) -> colormatrix (first 3 values, multiplicator)
-    * Erode (0->1000, default 75) -> colormatrix (4th value, multiplicator)
+    * Expansion (1.->1000., default 100) -> colormatrix (first 3 values, multiplicator)
+    * Erosion (0.->1000., default 50) -> colormatrix (4th value, multiplicator)
     * Global opacity (0.->1., default 1.) -> composite (k2)
     * Inverted (boolean, default false) -> colormatrix (values, true: first 3 values positive, 4th negative)
     
@@ -203,8 +204,8 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Light Eraser") "</name>\n"
               "<id>org.inkscape.effect.filter.LightEraser</id>\n"
-              "<param name=\"expand\" gui-text=\"" N_("Expansion:") "\" type=\"int\" appearance=\"full\"  min=\"1\" max=\"1000\">100</param>\n"
-              "<param name=\"erode\" gui-text=\"" N_("Erosion:") "\" type=\"int\" appearance=\"full\" min=\"0\" max=\"1000\">50</param>\n"
+              "<param name=\"expand\" gui-text=\"" N_("Expansion:") "\" type=\"float\" appearance=\"full\"  min=\"1\" max=\"1000\">100</param>\n"
+              "<param name=\"erode\" gui-text=\"" N_("Erosion:") "\" type=\"float\" appearance=\"full\" min=\"0\" max=\"1000\">50</param>\n"
               "<param name=\"opacity\" gui-text=\"" N_("Global opacity:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1.\">1</param>\n"
               "<param name=\"invert\" gui-text=\"" N_("Inverted") "\" type=\"boolean\">false</param>\n"
               "<effect>\n"
@@ -232,15 +233,15 @@ LightEraser::get_filter_text (Inkscape::Extension::Extension * ext)
     opacity << ext->get_param_float("opacity");
 
     if (ext->get_param_bool("invert")) {
-        expand << (ext->get_param_int("expand") * 0.2125) << " "
-               << (ext->get_param_int("expand") * 0.7154) << " "
-               << (ext->get_param_int("expand") * 0.0721);
-        erode << (-ext->get_param_int("erode") * 720 / 1000);
+        expand << (ext->get_param_float("expand") * 0.2125) << " "
+               << (ext->get_param_float("expand") * 0.7154) << " "
+               << (ext->get_param_float("expand") * 0.0721);
+        erode << (-ext->get_param_float("erode") * 720 / 1000);
     } else {
-        expand << (-ext->get_param_int("expand") * 0.2125) << " "
-               << (-ext->get_param_int("expand") * 0.7154) << " "
-               << (-ext->get_param_int("expand") * 0.0721);
-        erode << (ext->get_param_int("erode") * 720 / 1000);
+        expand << (-ext->get_param_float("expand") * 0.2125) << " "
+               << (-ext->get_param_float("expand") * 0.7154) << " "
+               << (-ext->get_param_float("expand") * 0.0721);
+        erode << (ext->get_param_float("erode") * 720 / 1000);
     }
 
     _filter = g_strdup_printf(
@@ -251,6 +252,69 @@ LightEraser::get_filter_text (Inkscape::Extension::Extension * ext)
 
     return _filter;
 }; /* Light Eraser filter */
+
+
+/**
+    \brief    Custom predefined Opacity filter.
+    
+    Set opacity and strength of opacity boundaries.
+
+    Filter's parameters:
+    * Expansion (0.->1000., default 5) -> colormatrix (last-1th value)
+    * Erosion (0.->1000., default 1) -> colormatrix (last value)
+    * Global opacity (0.->1., default 1.) -> composite (k2)
+    
+*/
+class Opacity : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    Opacity ( ) : Filter() { };
+    virtual ~Opacity ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+    
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Opacity") "</name>\n"
+              "<id>org.inkscape.effect.filter.Opacity</id>\n"
+              "<param name=\"expand\" gui-text=\"" N_("Expansion:") "\" type=\"float\" appearance=\"full\"  min=\"1\" max=\"1000\">5</param>\n"
+              "<param name=\"erode\" gui-text=\"" N_("Erosion:") "\" type=\"float\" appearance=\"full\" min=\"0\" max=\"1000\">1</param>\n"
+              "<param name=\"opacity\" gui-text=\"" N_("Global opacity:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1.\">1</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Fill and Transparency") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Set opacity and strength of opacity boundaries") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new Opacity());
+    };
+};
+
+gchar const *
+Opacity::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream matrix;
+    std::ostringstream opacity;
+
+    opacity << ext->get_param_float("opacity");
+
+    matrix << (ext->get_param_float("expand")) << " "
+           << (-ext->get_param_float("erode"));
+
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Opacity\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" color-interpolation-filters=\"sRGB\" >\n"
+          "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s \" result=\"colormatrix\" />\n"
+          "<feComposite in2=\"colormatrix\" operator=\"arithmetic\" k2=\"%s\" result=\"composite\" />\n"
+        "</filter>\n", matrix.str().c_str(), opacity.str().c_str());
+
+    return _filter;
+}; /* Opacity filter */
 
 /**
     \brief    Custom predefined Silhouette filter.

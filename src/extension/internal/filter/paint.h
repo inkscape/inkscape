@@ -678,9 +678,9 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
     * Erase (0.00->1., default 0) -> composite1 (k4)
     * Blur (0.01->2., default 0.5) -> blur (stdDeviation)
     
-    * Drawing color (guint32, default rgb(73,69,40)) -> flood1 (flood-color, flood-opacity)
+    * Drawing color (guint32, default rgb(255,255,255)) -> flood1 (flood-color, flood-opacity)
     
-    * Background color (guint32, default rgb(255,255,255)) -> flood2 (flood-color, flood-opacity)
+    * Background color (guint32, default rgb(99,89,46)) -> flood2 (flood-color, flood-opacity)
 */
 
 class PointEngraving : public Inkscape::Extension::Internal::Filter::Filter {
@@ -719,12 +719,12 @@ public:
                   "<param name=\"erase\" gui-text=\"" N_("Erase:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0\" max=\"1\">0</param>\n"
                   "<param name=\"blur\" gui-text=\"" N_("Blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"2\">0.5</param>\n"
                 "</page>\n"
-                "<page name=\"drawingcolortab\" _gui-text=\"Fill color\">\n"
-                  "<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">1229269247</param>\n"
+                "<page name=\"fcolortab\" _gui-text=\"Fill color\">\n"
+                  "<param name=\"fcolor\" gui-text=\"" N_("Color") "\" type=\"color\">-1</param>\n"
                   "<param name=\"iof\" gui-text=\"" N_("Image on fill") "\" type=\"boolean\" >false</param>\n"
                 "</page>\n"
-                "<page name=\"bgcolortab\" _gui-text=\"Points color\">\n"
-                  "<param name=\"bgcolor\" gui-text=\"" N_("Color") "\" type=\"color\">-16843009</param>\n"
+                "<page name=\"pcolortab\" _gui-text=\"Points color\">\n"
+                  "<param name=\"pcolor\" gui-text=\"" N_("Color") "\" type=\"color\">1666789119</param>\n"
                   "<param name=\"iop\" gui-text=\"" N_("Image on points") "\" type=\"boolean\" >false</param>\n"
                 "</page>\n"
               "</param>\n"
@@ -781,17 +781,17 @@ PointEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
     erase << ext->get_param_float("erase");
     blur << ext->get_param_float("blur");
     
-    guint32 color = ext->get_param_color("color");
-    r << ((color >> 24) & 0xff);
-    g << ((color >> 16) & 0xff);
-    b << ((color >>  8) & 0xff);
-    a << (color & 0xff) / 255.0F; 
+    guint32 fcolor = ext->get_param_color("fcolor");
+    r << ((fcolor >> 24) & 0xff);
+    g << ((fcolor >> 16) & 0xff);
+    b << ((fcolor >>  8) & 0xff);
+    a << (fcolor & 0xff) / 255.0F; 
     
-    guint32 bgcolor = ext->get_param_color("bgcolor");
-    br << ((bgcolor >> 24) & 0xff);
-    bg << ((bgcolor >> 16) & 0xff);
-    bb << ((bgcolor >>  8) & 0xff);
-    ba << (bgcolor & 0xff) / 255.0F; 
+    guint32 pcolor = ext->get_param_color("pcolor");
+    br << ((pcolor >> 24) & 0xff);
+    bg << ((pcolor >> 16) & 0xff);
+    bb << ((pcolor >>  8) & 0xff);
+    ba << (pcolor & 0xff) / 255.0F; 
 
     if (ext->get_param_bool("iof"))
         iof << "SourceGraphic";

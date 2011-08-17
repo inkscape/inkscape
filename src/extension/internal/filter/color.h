@@ -108,9 +108,9 @@ Brilliance::get_filter_text (Inkscape::Extension::Extension * ext)
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Brilliance\">\n"
           "<feColorMatrix values=\"%s %s %s 0 %s %s %s %s 0 %s %s %s %s 0 %s 0 0 0 1 0 \" />\n"
         "</filter>\n", brightness.str().c_str(), sat.str().c_str(), sat.str().c_str(),
-            lightness.str().c_str(), sat.str().c_str(), brightness.str().c_str(),
-            sat.str().c_str(), lightness.str().c_str(), sat.str().c_str(),
-            sat.str().c_str(), brightness.str().c_str(), lightness.str().c_str());
+                       lightness.str().c_str(), sat.str().c_str(), brightness.str().c_str(),
+                       sat.str().c_str(), lightness.str().c_str(), sat.str().c_str(),
+                       sat.str().c_str(), brightness.str().c_str(), lightness.str().c_str() );
 
     return _filter;
 }; /* Brilliance filter */
@@ -222,7 +222,7 @@ ChannelPaint::get_filter_text (Inkscape::Extension::Extension * ext)
         "</filter>\n", saturation.str().c_str(), red.str().c_str(), green.str().c_str(),
                        blue.str().c_str(), alpha.str().c_str(), floodRed.str().c_str(),
                        floodGreen.str().c_str(), floodBlue.str().c_str(), floodAlpha.str().c_str(),
-                       invert.str().c_str());
+                       invert.str().c_str() );
 
     return _filter;
 }; /* Channel Painting filter */
@@ -281,7 +281,7 @@ ColorShift::get_filter_text (Inkscape::Extension::Extension * ext)
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Color Shift\">\n"
           "<feColorMatrix type=\"hueRotate\" values=\"%s\" result=\"color1\" />\n"
           "<feColorMatrix type=\"saturate\" values=\"%s\" result=\"color2\" />\n"
-        "</filter>\n", shift.str().c_str(), sat.str().c_str());
+        "</filter>\n", shift.str().c_str(), sat.str().c_str() );
 
     return _filter;
 }; /* ColorShift filter */
@@ -391,7 +391,9 @@ Colorize::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feBlend in2=\"blend1\" mode=\"%s\" result=\"blend2\" />\n"
           "<feColorMatrix in=\"blend2\" values=\"1\" type=\"saturate\" result=\"colormatrix2\" />\n"
           "<feComposite in=\"colormatrix2\" in2=\"SourceGraphic\" operator=\"in\" k2=\"1\" result=\"composite2\" />\n"
-        "</filter>\n", hlight.str().c_str(), nlight.str().c_str(), duotone.str().c_str(), a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(), blend1.str().c_str(), blend2.str().c_str());
+        "</filter>\n", hlight.str().c_str(), nlight.str().c_str(), duotone.str().c_str(),
+                       a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(),
+                       blend1.str().c_str(), blend2.str().c_str() );
 
     return _filter;
 }; /* Colorize filter */
@@ -597,7 +599,9 @@ Duochrome::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feComposite in=\"colormatrix2\" in2=\"composite3\" operator=\"arithmetic\" k2=\"%s\" result=\"composite4\" />\n"
           "<feBlend in=\"composite4\" in2=\"composite3\" blend=\"normal\" mode=\"normal\" result=\"blend\" />\n"
           "<feComposite in2=\"SourceGraphic\" operator=\"in\" />\n"
-        "</filter>\n", a1.str().c_str(), r1.str().c_str(), g1.str().c_str(), b1.str().c_str(), swap1.str().c_str(), a2.str().c_str(), r2.str().c_str(), g2.str().c_str(), b2.str().c_str(), swap2.str().c_str(), fluo.str().c_str());
+        "</filter>\n", a1.str().c_str(), r1.str().c_str(), g1.str().c_str(), b1.str().c_str(), swap1.str().c_str(),
+                       a2.str().c_str(), r2.str().c_str(), g2.str().c_str(), b2.str().c_str(), swap2.str().c_str(),
+                       fluo.str().c_str() );
 
     return _filter;
 }; /* Duochrome filter */
@@ -791,7 +795,7 @@ Greyscale::get_filter_text (Inkscape::Extension::Extension * ext)
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Greyscale\">\n"
           "<feColorMatrix values=\"%s 0 %s 0 %s 0 %s 0 \" />\n"
-        "</filter>\n", line.str().c_str(), line.str().c_str(), line.str().c_str(), transparency.str().c_str());
+        "</filter>\n", line.str().c_str(), line.str().c_str(), line.str().c_str(), transparency.str().c_str() );
     return _filter;
 }; /* Greyscale filter */
 
@@ -994,8 +998,8 @@ Lightness::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feFuncB type=\"gamma\" amplitude=\"%s\" exponent=\"%s\" offset=\"%s\" />\n"
           "</feComponentTransfer>\n"
         "</filter>\n", amplitude.str().c_str(), exponent.str().c_str(), offset.str().c_str(),
-            amplitude.str().c_str(), exponent.str().c_str(), offset.str().c_str(),
-            amplitude.str().c_str(), exponent.str().c_str(), offset.str().c_str());
+                       amplitude.str().c_str(), exponent.str().c_str(), offset.str().c_str(),
+                       amplitude.str().c_str(), exponent.str().c_str(), offset.str().c_str() );
 
     return _filter;
 }; /* Lightness filter */
@@ -1137,7 +1141,7 @@ Nudge::get_filter_text (Inkscape::Extension::Extension * ext)
                        rx.str().c_str(), ry.str().c_str(), source.str().c_str(), blend.str().c_str(), 
                        gx.str().c_str(), gy.str().c_str(), blend.str().c_str(), 
                        bx.str().c_str(), by.str().c_str(), blend.str().c_str(), 
-                       composite.str().c_str());
+                       composite.str().c_str() );
 
     return _filter;
 
@@ -1224,7 +1228,7 @@ Quadritone::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feColorMatrix type=\"matrix\" values=\"2.5 -0.75 -0.75 0 0 -0.75 2.5 -0.75 0 0 -0.75 -0.75 2.5 0 0 0 0 0 1 0 \" result=\"colormatrix4\" />\n"
           "<feComposite in=\"colormatrix4\" in2=\"blend1\" operator=\"arithmetic\" k2=\"%s\" result=\"composite1\" />\n"
           "<feBlend in2=\"blend1\" blend=\"normal\" mode=\"%s\" result=\"blend2\" />\n"
-        "</filter>\n", dist.str().c_str(), colors.str().c_str(), blend1.str().c_str(), sat.str().c_str(), blend2.str().c_str());
+        "</filter>\n", dist.str().c_str(), colors.str().c_str(), blend1.str().c_str(), sat.str().c_str(), blend2.str().c_str() );
 
     return _filter;
 }; /* Quadritone filter */
@@ -1303,7 +1307,7 @@ Solarize::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feBlend in=\"colormatrix3\" in2=\"colormatrix2\" mode=\"%s\" result=\"blend1\" />\n"
           "<feBlend in2=\"blend1\" mode=\"%s\" result=\"blend2\" />\n"
           "<feComposite in2=\"SourceGraphic\" operator=\"in\" />\n"
-        "</filter>\n", rotate.str().c_str(), blend1.str().c_str(), blend2.str().c_str());
+        "</filter>\n", rotate.str().c_str(), blend1.str().c_str(), blend2.str().c_str() );
 
     return _filter;
 }; /* Solarize filter */
@@ -1315,14 +1319,15 @@ Solarize::get_filter_text (Inkscape::Extension::Extension * ext)
 
     Filter's parameters:
     * Option (enum, default Normal) ->
-        Normal = composite1 (in="qminp", in2="flood"), composite2 (in="p", in2="blend6"), blend6 (in2="qminpc")
+        Normal = composite1 (in2="flood"), composite2 (in="p", in2="blend6"), blend6 (in2="composite1")
         Enhance hue = Normal + composite2 (in="SourceGraphic")
-        Phosphorescence = Normal + blend6 (in2="SourceGraphic") composite2 (in="blend6", in2="qminpc")
+        Phosphorescence = Normal + blend6 (in2="SourceGraphic") composite2 (in="blend6", in2="composite1")
+        PhosphorescenceB = Normal + blend6 (in2="flood") composite1 (in2="SourceGraphic")
         Hue to background = Normal + composite1 (in2="BackgroundImage") [a template with an activated background is needed, or colors become black]
     * Hue distribution (0->360, default 0) -> colormatrix1 (values)
     * Colors (guint, default -73203457) -> flood (flood-opacity, flood-color)
     * Global blend (enum, default Lighten) -> blend5 (mode) [Multiply, Screen, Darken, Lighten only!]
-    * Glow (0.01->10., default 0.01) -> feGaussianBlur (stdDeviation)
+    * Glow (0.01->10., default 0.01) -> blur (stdDeviation)
     * Glow & blend (enum, default Normal) -> blend6 (mode) [Normal, Multiply and Darken only!]
     * Local light (0.->10., default 0) -> composite2 (k1)
     * Global light (0.->10., default 1) -> composite2 (k3) [k2 must be fixed to 1].
@@ -1346,7 +1351,8 @@ public:
                   "<param name=\"type\" gui-text=\"" N_("Type:") "\" type=\"enum\">\n"
                     "<_item value=\"normal\">" N_("Normal") "</_item>\n"
                     "<_item value=\"enhue\">" N_("Enhance hue") "</_item>\n"
-                    "<_item value=\"rad\">" N_("Phosphorescence") "</_item>\n"
+                    "<_item value=\"phospho\">" N_("Phosphorescence") "</_item>\n"
+                    "<_item value=\"phosphoB\">" N_("Phosphorescence B") "</_item>\n"
                     "<_item value=\"htb\">" N_("Hue to background") "</_item>\n"
                   "</param>\n"
                   "<param name=\"globalblend\" gui-text=\"" N_("Global blend:") "\" type=\"enum\">\n"
@@ -1398,7 +1404,6 @@ Tritone::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream glowblend;
     std::ostringstream llight;
     std::ostringstream glight;
-    std::ostringstream c1in;
     std::ostringstream c1in2;
     std::ostringstream c2in;
     std::ostringstream c2in2;
@@ -1419,56 +1424,61 @@ Tritone::get_filter_text (Inkscape::Extension::Extension * ext)
     const gchar *type = ext->get_param_enum("type");
     if ((g_ascii_strcasecmp("enhue", type) == 0)) {
     // Enhance hue
-        c1in << "qminp";
         c1in2 << "flood";
         c2in << "SourceGraphic";
         c2in2 << "blend6";
-        b6in2 << "qminpc";
-    } else if ((g_ascii_strcasecmp("rad", type) == 0)) {
+        b6in2 << "composite1";
+    } else if ((g_ascii_strcasecmp("phospho", type) == 0)) {
     // Phosphorescence
-        c1in << "qminp";
         c1in2 << "flood";
         c2in << "blend6";
-        c2in2 << "qminpc";
+        c2in2 << "composite1";
         b6in2 << "SourceGraphic";
+    } else if ((g_ascii_strcasecmp("phosphoB", type) == 0)) {
+    // Phosphorescence B
+        c1in2 << "SourceGraphic";
+        c2in << "blend6";
+        c2in2 << "composite1";
+        b6in2 << "flood";
     } else if ((g_ascii_strcasecmp("htb", type) == 0)) {
     // Hue to background
-        c1in << "qminp";
         c1in2 << "BackgroundImage";
-        c2in << "p";
+        c2in << "blend2";
         c2in2 << "blend6";
-        b6in2 << "qminpc";
+        b6in2 << "composite1";
     } else {
     // Normal
-        c1in << "qminp";
         c1in2 << "flood";
-        c2in << "p";
+        c2in << "blend2";
         c2in2 << "blend6";
-        b6in2 << "qminpc";
+        b6in2 << "composite";
     }
     
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Tritone\">\n"
-          "<feColorMatrix type=\"hueRotate\" result=\"colormatrix1\" values=\"%s\" />\n"
-          "<feColorMatrix in=\"colormatrix1\" result=\"r\" type=\"matrix\" values=\"1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1 \" />\n"
-          "<feColorMatrix in=\"colormatrix1\" result=\"g\" type=\"matrix\" values=\"0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 1 \" />\n"
-          "<feColorMatrix in=\"colormatrix1\" result=\"b\" type=\"matrix\" values=\"0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 1 \" />\n"
-          "<feBlend in2=\"g\" mode=\"darken\" in=\"r\" result=\"minrg\" />\n"
-          "<feBlend in2=\"b\" mode=\"darken\" in=\"minrg\" result=\"p\" />\n"
-          "<feBlend in2=\"g\" mode=\"lighten\" in=\"r\" result=\"maxrg\" />\n"
-          "<feBlend in2=\"b\" mode=\"lighten\" in=\"maxrg\" result=\"q\" />\n"
-          "<feComponentTransfer in=\"q\" result=\"q2\">\n"
+          "<feColorMatrix type=\"hueRotate\" values=\"%s\" result=\"colormatrix1\" />\n"
+          "<feColorMatrix in=\"colormatrix1\" type=\"matrix\" values=\"1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1 \" result=\"colormatrix2\" />\n"
+          "<feColorMatrix in=\"colormatrix1\" type=\"matrix\" values=\"0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 1 \" result=\"colormatrix3\" />\n"
+          "<feColorMatrix in=\"colormatrix1\" type=\"matrix\" values=\"0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 1 \" result=\"colormatrix4\" />\n"
+          "<feBlend in=\"colormatrix2\" in2=\"colormatrix3\" mode=\"darken\" result=\"blend1\" />\n"
+          "<feBlend in=\"blend1\" in2=\"colormatrix4\" mode=\"darken\"  result=\"blend2\" />\n"
+          "<feBlend in=\"colormatrix2\" in2=\"colormatrix3\" mode=\"lighten\" result=\"blend3\" />\n"
+          "<feBlend in=\"blend3\" in2=\"colormatrix4\" mode=\"lighten\" result=\"blend4\" />\n"
+          "<feComponentTransfer in=\"blend4\" result=\"componentTransfer\">\n"
             "<feFuncR type=\"linear\" slope=\"0\" />\n"
           "</feComponentTransfer>\n"
-          "<feBlend in2=\"q2\" mode=\"%s\" in=\"p\" result=\"pq\" />\n"
-          "<feColorMatrix in=\"pq\" result=\"qminp\" type=\"matrix\" values=\"-1 1 0 0 0 -1 1 0 0 0 -1 1 0 0 0 0 0 0 0 1 \" />\n"
+          "<feBlend in=\"blend2\" in2=\"componentTransfer\" mode=\"%s\" result=\"blend5\" />\n"
+          "<feColorMatrix in=\"blend5\" type=\"matrix\" values=\"-1 1 0 0 0 -1 1 0 0 0 -1 1 0 0 0 0 0 0 0 1 \" result=\"colormatrix5\" />\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
-          "<feComposite in=\"%s\" in2=\"%s\" result=\"qminpc\" operator=\"arithmetic\" k1=\"1\" />\n"
-          "<feGaussianBlur stdDeviation=\"%s\" />\n"
-          "<feBlend in2=\"%s\" blend=\"normal\" result=\"blend6\" mode=\"%s\" />\n"
+          "<feComposite in=\"colormatrix5\" in2=\"%s\" operator=\"arithmetic\" k1=\"1\" result=\"composite1\" />\n"
+          "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
+          "<feBlend in2=\"%s\" blend=\"normal\" mode=\"%s\" result=\"blend6\" />\n"
           "<feComposite in=\"%s\" in2=\"%s\" operator=\"arithmetic\" k1=\"%s\" k2=\"1\" k3=\"%s\" k4=\"0\" result=\"composite2\" />\n"
-          "<feComposite in2=\"SourceGraphic\" in=\"composite2\" operator=\"in\" />\n"
-        "</filter>\n", dist.str().c_str(), globalblend.str().c_str(), a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(), c1in.str().c_str(), c1in2.str().c_str(), glow.str().c_str(), b6in2.str().c_str(), glowblend.str().c_str(), c2in.str().c_str(), c2in2.str().c_str(), llight.str().c_str(), glight.str().c_str());
+          "<feComposite in2=\"SourceGraphic\" operator=\"in\" result=\"composite3\" />\n"
+        "</filter>\n", dist.str().c_str(), globalblend.str().c_str(),
+                       a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(),
+                       c1in2.str().c_str(), glow.str().c_str(), b6in2.str().c_str(), glowblend.str().c_str(),
+                       c2in.str().c_str(), c2in2.str().c_str(), llight.str().c_str(), glight.str().c_str() );
 
     return _filter;
 }; /* Tritone filter */

@@ -37,6 +37,7 @@ namespace Filter {
     Filter's parameters:
     * Horizontal blur (0.01->100., default 2) -> blur (stdDeviation)
     * Vertical blur (0.01->100., default 2) -> blur (stdDeviation)
+    * Blur content only (boolean, default false) -> 
 */
 
 class Blur : public Inkscape::Extension::Internal::Filter::Filter {
@@ -54,6 +55,7 @@ public:
               "<id>org.inkscape.effect.filter.Blur</id>\n"
               "<param name=\"hblur\" gui-text=\"" N_("Horizontal blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.00\">2</param>\n"
               "<param name=\"vblur\" gui-text=\"" N_("Vertical blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"100.00\">2</param>\n"
+              "<param name=\"content\" gui-text=\"" N_("Blur content only") "\" type=\"boolean\">False</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -73,16 +75,29 @@ Blur::get_filter_text (Inkscape::Extension::Extension * ext)
 {
     if (_filter != NULL) g_free((void *)_filter);
 
+    std::ostringstream bbox;
     std::ostringstream hblur;
     std::ostringstream vblur;
+    std::ostringstream content;
 
     hblur << ext->get_param_float("hblur");
     vblur << ext->get_param_float("vblur");
 
+    if (ext->get_param_bool("content")) {
+        bbox << "height=\"1\" width=\"1\" y=\"0\" x=\"0\"";
+        content << "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 50 0 \" result=\"colormatrix\" />\n"
+                << "<feComposite in=\"colormatrix\" in2=\"SourceGraphic\" operator=\"in\" />\n";
+    } else {
+        bbox << "" ;
+        content << "" ;
+    }
+
+
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Blur\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" %s color-interpolation-filters=\"sRGB\" inkscape:label=\"Blur\">\n"
           "<feGaussianBlur stdDeviation=\"%s %s\" result=\"blur\" />\n"
-        "</filter>\n", hblur.str().c_str(), vblur.str().c_str());
+          "%s"
+        "</filter>\n", bbox.str().c_str(), hblur.str().c_str(), vblur.str().c_str(), content.str().c_str() );
 
     return _filter;
 }; /* Blur filter */
