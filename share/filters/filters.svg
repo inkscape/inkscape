@@ -26,7 +26,6 @@ sodipodi:docname="filters.svg">
 </metadata>
 <sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="640" inkscape:window-height="480" id="namedview1264" showgrid="false" inkscape:zoom="0.16" inkscape:cx="372.045" inkscape:cy="1050" inkscape:window-x="253" inkscape:window-y="520" inkscape:current-layer="svg2" />
 <defs id="defs4">
-<inkscape:perspective sodipodi:type="inkscape:persp3d" inkscape:vp_x="0 : 1050 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="744.09 : 1050 : 1" inkscape:persp3d-origin="372.045 : 700 : 1" id="perspective1268" />
 <filter id="f001" inkscape:label="Smart Jelly" inkscape:menu="Bevels" inkscape:menu-tooltip="Same as Matte jelly but with more controls" height="1" width="1" y="0" x="0" color-interpolation-filters="sRGB">
 <feBlend in2="SourceGraphic" mode="normal" result="result3" />
 <feComposite result="result4" operator="arithmetic" k2="1" in2="result3" />

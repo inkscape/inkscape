@@ -597,7 +597,7 @@ Duochrome::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feComposite in=\"composite2\" in2=\"composite1\" k2=\"1\"  k3=\"1\" operator=\"arithmetic\" result=\"composite3\" />\n"
           "<feColorMatrix in=\"composite3\" type=\"matrix\" values=\"2 -1 0 0 0 0 2 -1 0 0 -1 0 2 0 0 0 0 0 1 0 \" result=\"colormatrix2\" />\n"
           "<feComposite in=\"colormatrix2\" in2=\"composite3\" operator=\"arithmetic\" k2=\"%s\" result=\"composite4\" />\n"
-          "<feBlend in=\"composite4\" in2=\"composite3\" blend=\"normal\" mode=\"normal\" result=\"blend\" />\n"
+          "<feBlend in=\"composite4\" in2=\"composite3\" mode=\"normal\" result=\"blend\" />\n"
           "<feComposite in2=\"SourceGraphic\" operator=\"in\" />\n"
         "</filter>\n", a1.str().c_str(), r1.str().c_str(), g1.str().c_str(), b1.str().c_str(), swap1.str().c_str(),
                        a2.str().c_str(), r2.str().c_str(), g2.str().c_str(), b2.str().c_str(), swap2.str().c_str(),
@@ -702,7 +702,7 @@ ExtractChannel::get_filter_text (Inkscape::Extension::Extension * ext)
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Extract Channel\">\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"%s %s %s 0 \" result=\"colormatrix\" />\n"
-          "<feBlend in2=\"BackgroundImage\" blend=\"normal\" mode=\"%s\" result=\"blend\" />\n"
+          "<feBlend in2=\"BackgroundImage\" mode=\"%s\" result=\"blend\" />\n"
         "</filter>\n", colors.str().c_str(), alpha.str().c_str(), invert.str().c_str(), blend.str().c_str() );
 
     return _filter;
@@ -1129,13 +1129,13 @@ Nudge::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 \" result=\"colormatrix1\" />\n"
           "<feOffset dy=\"%s\" dx=\"%s\" result=\"offset1\" />\n"
-          "<feBlend in2=\"%s\" mode=\"%s\" blend=\"normal\" result=\"blend1\" />\n"
+          "<feBlend in2=\"%s\" mode=\"%s\" result=\"blend1\" />\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 \" result=\"colormatrix2\" />\n"
           "<feOffset dy=\"%s\" dx=\"%s\" result=\"offset2\" />\n"
-          "<feBlend in2=\"blend1\" mode=\"%s\" blend=\"normal\" result=\"blend2\" />\n"
+          "<feBlend in2=\"blend1\" mode=\"%s\" result=\"blend2\" />\n"
           "<feOffset dy=\"%s\" dx=\"%s\" result=\"offset3\" />\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 \" result=\"colormatrix3\" />\n"
-          "<feBlend in2=\"offset3\" mode=\"%s\" blend=\"normal\" result=\"blend3\" />\n"
+          "<feBlend in2=\"offset3\" mode=\"%s\" result=\"blend3\" />\n"
           "<feComposite in2=\"SourceGraphic\" operator=\"%s\" />\n"
         "</filter>\n", a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(),
                        rx.str().c_str(), ry.str().c_str(), source.str().c_str(), blend.str().c_str(), 
@@ -1224,10 +1224,10 @@ Quadritone::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feColorMatrix in=\"SourceGraphic\" type=\"hueRotate\" values=\"%s\" result=\"colormatrix1\" />\n"
           "<feColorMatrix type=\"matrix\" values=\"0.5 0 0.5 0 0 0 1 0 0 0 0.5 0 0.5 0 0 0 0 0 1 0 \" result=\"colormatrix2\" />\n"
           "<feColorMatrix type=\"hueRotate\" values=\"%s\" result=\"colormatrix3\" />\n"
-          "<feBlend in2=\"colormatrix3\" blend=\"normal\" mode=\"%s\" result=\"blend1\" />\n"
+          "<feBlend in2=\"colormatrix3\" mode=\"%s\" result=\"blend1\" />\n"
           "<feColorMatrix type=\"matrix\" values=\"2.5 -0.75 -0.75 0 0 -0.75 2.5 -0.75 0 0 -0.75 -0.75 2.5 0 0 0 0 0 1 0 \" result=\"colormatrix4\" />\n"
           "<feComposite in=\"colormatrix4\" in2=\"blend1\" operator=\"arithmetic\" k2=\"%s\" result=\"composite1\" />\n"
-          "<feBlend in2=\"blend1\" blend=\"normal\" mode=\"%s\" result=\"blend2\" />\n"
+          "<feBlend in2=\"blend1\" mode=\"%s\" result=\"blend2\" />\n"
         "</filter>\n", dist.str().c_str(), colors.str().c_str(), blend1.str().c_str(), sat.str().c_str(), blend2.str().c_str() );
 
     return _filter;
@@ -1352,7 +1352,7 @@ public:
                     "<_item value=\"normal\">" N_("Normal") "</_item>\n"
                     "<_item value=\"enhue\">" N_("Enhance hue") "</_item>\n"
                     "<_item value=\"phospho\">" N_("Phosphorescence") "</_item>\n"
-                    "<_item value=\"phosphoB\">" N_("Phosphorescence B") "</_item>\n"
+                    "<_item value=\"phosphoB\">" N_("Colored nights") "</_item>\n"
                     "<_item value=\"htb\">" N_("Hue to background") "</_item>\n"
                   "</param>\n"
                   "<param name=\"globalblend\" gui-text=\"" N_("Global blend:") "\" type=\"enum\">\n"
@@ -1472,7 +1472,7 @@ Tritone::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
           "<feComposite in=\"colormatrix5\" in2=\"%s\" operator=\"arithmetic\" k1=\"1\" result=\"composite1\" />\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
-          "<feBlend in2=\"%s\" blend=\"normal\" mode=\"%s\" result=\"blend6\" />\n"
+          "<feBlend in2=\"%s\" mode=\"%s\" result=\"blend6\" />\n"
           "<feComposite in=\"%s\" in2=\"%s\" operator=\"arithmetic\" k1=\"%s\" k2=\"1\" k3=\"%s\" k4=\"0\" result=\"composite2\" />\n"
           "<feComposite in2=\"SourceGraphic\" operator=\"in\" result=\"composite3\" />\n"
         "</filter>\n", dist.str().c_str(), globalblend.str().c_str(),

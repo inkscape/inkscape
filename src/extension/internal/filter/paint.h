@@ -186,12 +186,12 @@ Chromolitho::get_filter_text (Inkscape::Extension::Extension * ext)
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Chromolitho\">\n"
           "<feComposite in=\"SourceGraphic\" in2=\"SourceGraphic\" operator=\"arithmetic\" k1=\"%s\" k2=\"1\" result=\"composite1\" />\n"
           "<feConvolveMatrix in=\"composite1\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" order=\"3 3\" result=\"convolve1\" />\n"
-          "<feBlend in=\"%s\" in2=\"composite1\" mode=\"%s\" blend=\"normal\" result=\"blend1\" />\n"
+          "<feBlend in=\"%s\" in2=\"composite1\" mode=\"%s\" result=\"blend1\" />\n"
           "<feGaussianBlur in=\"blend1\" stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feTurbulence baseFrequency=\"%s %s\" numOctaves=\"%s\" seed=\"%s\" type=\"fractalNoise\" result=\"turbulence1\" />\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"colormatrix1\" />\n"
           "<feColorMatrix type=\"saturate\" values=\"%s\" result=\"colormatrix2\" />\n"
-          "<feBlend in=\"%s\" in2=\"blur1\" blend=\"normal\" mode=\"%s\" result=\"blend2\" />\n"
+          "<feBlend in=\"%s\" in2=\"blur1\" mode=\"%s\" result=\"blend2\" />\n"
           "<feColorMatrix in=\"blend2\" type=\"saturate\" values=\"%s\" result=\"colormatrix3\" />\n"
           "<feComponentTransfer in=\"colormatrix3\" result=\"component1\">\n"
             "<feFuncR type=\"discrete\" tableValues=\"%s\" />\n"
@@ -284,7 +284,7 @@ CrossEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feGaussianBlur in=\"composite2\" stdDeviation=\"0.01 %s\" result=\"blur2\" />\n"
           "<feComposite in=\"blur2\" in2=\"blur1\" k3=\"1\" k2=\"1\" operator=\"arithmetic\" result=\"composite3\" />\n"
           "<feFlood flood-color=\"rgb(255,255,255)\" flood-opacity=\"1\" result=\"flood\" />\n"
-          "<feBlend in=\"flood\" in2=\"composite3\" blend=\"normal\" mode=\"multiply\" result=\"blend\" />\n"
+          "<feBlend in=\"flood\" in2=\"composite3\" mode=\"multiply\" result=\"blend\" />\n"
           "<feComposite in=\"%s\" in2=\"SourceGraphic\" operator=\"in\" result=\"composite4\" />\n"
         "</filter>\n", clean.str().c_str(), dilat.str().c_str(), erosion.str().c_str(), strength.str().c_str(), length.str().c_str(), length.str().c_str(), trans.str().c_str());
 
@@ -442,7 +442,7 @@ Drawing::get_filter_text (Inkscape::Extension::Extension * ext)
         "<feGaussianBlur stdDeviation=\"%s\" result=\"blur2\" />\n"
         "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"color2\" />\n"
         "<feFlood flood-color=\"rgb(255,255,255)\" result=\"flood1\" />\n"
-        "<feBlend in2=\"color2\" mode=\"multiply\" blend=\"normal\" result=\"blend1\" />\n"
+        "<feBlend in2=\"color2\" mode=\"multiply\" result=\"blend1\" />\n"
         "<feComponentTransfer in=\"blend1\" result=\"component1\">\n"
           "<feFuncR type=\"discrete\" tableValues=\"0 1 1 1\" />\n"
           "<feFuncG type=\"discrete\" tableValues=\"0 1 1 1\" />\n"
@@ -639,7 +639,7 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Neon Draw\">\n"
-          "<feBlend blend=\"normal\" mode=\"%s\" result=\"blend\" />\n"
+          "<feBlend mode=\"%s\" result=\"blend\" />\n"
           "<feGaussianBlur in=\"blend\" stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feComponentTransfer result=\"component1\">\n"
             "<feFuncR type=\"discrete\" tableValues=\"0 0.3 0.6 1 1\" />\n"
@@ -806,7 +806,7 @@ PointEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Point Engraving\" x=\"0\" y=\"0\" width=\"1\" height=\"1\" color-interpolation-filters=\"sRGB\">\n"
           "<feConvolveMatrix in=\"SourceGraphic\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0\" order=\"3 3\" result=\"convolve\" />\n"
-          "<feBlend in=\"convolve\" in2=\"SourceGraphic\" mode=\"%s\" blend=\"normal\" result=\"blend\" />\n"
+          "<feBlend in=\"convolve\" in2=\"SourceGraphic\" mode=\"%s\" result=\"blend\" />\n"
           "<feTurbulence type=\"%s\" baseFrequency=\"%s %s\" numOctaves=\"%s\" seed=\"%s\" result=\"turbulence\" />\n"
           "<feColorMatrix in=\"blend\" type=\"luminanceToAlpha\" result=\"colormatrix1\" />\n"
           "<feComposite in=\"turbulence\" in2=\"colormatrix1\" k1=\"%s\" k2=\"%s\" k4=\"%s\" operator=\"arithmetic\" result=\"composite1\" />\n"

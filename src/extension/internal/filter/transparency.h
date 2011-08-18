@@ -90,7 +90,7 @@ Blend::get_filter_text (Inkscape::Extension::Extension * ext)
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Blend\">\n"
-          "<feBlend blend=\"normal\" in2=\"%s\" mode=\"%s\" result=\"blend\" />\n"
+          "<feBlend in2=\"%s\" mode=\"%s\" result=\"blend\" />\n"
         "</filter>\n", source.str().c_str(), mode.str().c_str() );
 
     return _filter;
@@ -308,7 +308,7 @@ Opacity::get_filter_text (Inkscape::Extension::Extension * ext)
            << (-ext->get_param_float("erode"));
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Opacity\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" color-interpolation-filters=\"sRGB\" >\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Opacity\" color-interpolation-filters=\"sRGB\" >\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s \" result=\"colormatrix\" />\n"
           "<feComposite in2=\"colormatrix\" operator=\"arithmetic\" k2=\"%s\" result=\"composite\" />\n"
         "</filter>\n", matrix.str().c_str(), opacity.str().c_str());

@@ -707,13 +707,13 @@ WaxBump::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feSpecularLighting in=\"blur2\" lighting-color=\"rgb(%s,%s,%s)\" specularConstant=\"%s\" surfaceScale=\"%s\" specularExponent=\"%s\" result=\"specular\">\n"
             "<feDistantLight elevation=\"%s\" azimuth=\"%s\" />\n"
           "</feSpecularLighting>\n"
-          "<feBlend in=\"specular\" in2=\"blur2\" specularConstant=\"1\" mode=\"%s\" blend=\"normal\" result=\"blend1\" />\n"
+          "<feBlend in=\"specular\" in2=\"blur2\" specularConstant=\"1\" mode=\"%s\" result=\"blend1\" />\n"
           "<feComposite in=\"blend1\" in2=\"blur2\" k2=\"0\" operator=\"%s\" k1=\"0.5\" k3=\"0.5\" k4=\"0\" result=\"composite2\" />\n"
           "<feMerge result=\"merge\">\n"
             "<feMergeNode in=\"colormatrix1\" />\n"
             "<feMergeNode in=\"composite2\" />\n"
           "</feMerge>\n"
-          "<feBlend in2=\"composite2\" mode=\"%s\" blend=\"normal\" result=\"blend2\" />\n"
+          "<feBlend in2=\"composite2\" mode=\"%s\" result=\"blend2\" />\n"
           "<feComposite in=\"blend2\" in2=\"SourceGraphic\" operator=\"in\" result=\"composite3\" />\n"
         "</filter>\n", simplifyImage.str().c_str(), background.str().c_str(), bgopacity.str().c_str(),
                        red.str().c_str(), green.str().c_str(), blue.str().c_str(), crop.str().c_str(),

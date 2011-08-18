@@ -231,7 +231,7 @@ CrossBlur::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feComposite in=\"SourceGraphic\" in2=\"colormatrix\" operator=\"arithmetic\" k2=\"1\" k3=\"%s\" k4=\"%s\" result=\"composite\" />\n"
           "<feGaussianBlur stdDeviation=\"%s 0.01\" result=\"blur1\" />\n"
           "<feGaussianBlur in=\"composite\" stdDeviation=\"0.01 %s\" result=\"blur2\" />\n"
-          "<feBlend in=\"blur2\" in2=\"blur1\" blend=\"normal\" mode=\"%s\" result=\"blend\" />\n"
+          "<feBlend in=\"blur2\" in2=\"blur1\" mode=\"%s\" result=\"blend\" />\n"
         "</filter>\n", bright.str().c_str(), fade.str().c_str(), hblur.str().c_str(), vblur.str().c_str(), blend.str().c_str());
 
     return _filter;
@@ -400,7 +400,7 @@ ImageBlur::get_filter_text (Inkscape::Extension::Extension * ext)
           "<feColorMatrix in=\"SourceGraphic\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"colormatrix1\" />\n"
           "<feGaussianBlur in=\"colormatrix1\" stdDeviation=\"%s %s\" result=\"blur\" />\n"
           "<feColorMatrix in=\"blur\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"colormatrix2\" />\n"
-          "<feBlend in=\"colormatrix2\" in2=\"%s\" blend=\"normal\" mode=\"%s\" result=\"blend\" />\n"
+          "<feBlend in=\"colormatrix2\" in2=\"%s\" mode=\"%s\" result=\"blend\" />\n"
           "<feComposite in=\"blend\" in2=\"blend\" operator=\"arithmetic\" k2=\"%s\" result=\"composite1\" />\n"
           "<feComposite in2=\"SourceGraphic\" operator=\"in\" />\n"
         "</filter>\n", a.str().c_str(), r.str().c_str(), g.str().c_str(), b.str().c_str(),
