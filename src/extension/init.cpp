@@ -66,6 +66,7 @@
 #include "internal/bitmap/charcoal.h"
 #include "internal/bitmap/colorize.h"
 #include "internal/bitmap/contrast.h"
+#include "internal/bitmap/crop.h"
 #include "internal/bitmap/cycleColormap.h"
 #include "internal/bitmap/despeckle.h"
 #include "internal/bitmap/edge.h"
@@ -200,6 +201,7 @@ init()
     Internal::Bitmap::Charcoal::init();
     Internal::Bitmap::Colorize::init();
     Internal::Bitmap::Contrast::init();
+    Internal::Bitmap::Crop::init();
     Internal::Bitmap::CycleColormap::init();
     Internal::Bitmap::Edge::init();
     Internal::Bitmap::Despeckle::init();

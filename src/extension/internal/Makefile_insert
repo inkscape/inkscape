@@ -25,6 +25,8 @@ ink_common_sources +=			\
 	extension/internal/bitmap/colorize.h			\
 	extension/internal/bitmap/contrast.cpp			\
 	extension/internal/bitmap/contrast.h			\
+	extension/internal/bitmap/crop.cpp			\
+	extension/internal/bitmap/crop.h			\
 	extension/internal/bitmap/cycleColormap.cpp		\
 	extension/internal/bitmap/cycleColormap.h		\
 	extension/internal/bitmap/despeckle.cpp			\
