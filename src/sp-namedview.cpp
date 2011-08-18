@@ -133,14 +133,14 @@ static void sp_namedview_generate_old_grid(SPNamedView * /*nv*/, SPDocument *doc
     const char* gridoriginy     = "0px";
     const char* gridoriginx     = "0px";
     const char* gridempspacing  = "5";
-    const char* gridcolor       = "#0000ff";
-    const char* gridempcolor    = "#0000ff";
-    const char* gridopacity     = "0.2";
-    const char* gridempopacity  = "0.4";
+    const char* gridcolor       = "#3f3fff";
+    const char* gridempcolor    = "#3f3fff";
+    const char* gridopacity     = "0.15";
+    const char* gridempopacity  = "0.38";
 
     const char* value = NULL;
     if ((value = repr->attribute("gridoriginx"))) {
-        gridspacingx = value;
+        gridoriginx = value;
         old_grid_settings_present = true;
     }
     if ((value = repr->attribute("gridoriginy"))) {
