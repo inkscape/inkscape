@@ -56,9 +56,11 @@ Filter::filters_all (void )
     ComponentTransfer::init();
     Duochrome::init();
     ExtractChannel::init();
+    FadeToBW::init();
     Greyscale::init();
     Invert::init();
     Lightness::init();
+    LightnessContrast::init();
     Nudge::init();
     Quadritone::init();
     Solarize::init();

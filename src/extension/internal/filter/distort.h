@@ -146,7 +146,7 @@ FeltFeather::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" x=\"-0.3\" width=\"1.6\" y=\"-0.3\" height=\"1.6\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Felt Feather\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" x=\"-0.3\" width=\"1.6\" y=\"-0.3\" height=\"1.6\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Felt Feather\">\n"
           "<feGaussianBlur stdDeviation=\"%s %s\" result=\"blur\" />\n"
           "<feComposite in=\"SourceGraphic\" in2=\"blur\" operator=\"atop\" result=\"composite1\" />\n"
           "<feComposite in2=\"composite1\" operator=\"in\" result=\"composite2\" />\n"
@@ -232,7 +232,7 @@ Roughen::get_filter_text (Inkscape::Extension::Extension * ext)
     intensity << ext->get_param_float("intensity");
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Roughen\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Roughen\">\n"
           "<feTurbulence  type=\"%s\" numOctaves=\"%s\" seed=\"%s\" baseFrequency=\"%s %s\" result=\"turbulence\" />\n"
           "<feDisplacementMap in=\"SourceGraphic\" in2=\"turbulence\" scale=\"%s\" yChannelSelector=\"G\" xChannelSelector=\"R\" />\n"
         "</filter>\n", type.str().c_str(), complexity.str().c_str(), variation.str().c_str(), hfreq.str().c_str(), vfreq.str().c_str(), intensity.str().c_str());

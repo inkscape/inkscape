@@ -15,9 +15,11 @@
  *   Component transfer
  *   Duochrome
  *   Extract channel
+ *   Fade to black or white
  *   Greyscale
  *   Invert
  *   Lightness
+ *   Lightness-contrast
  *   Nudge
  *   Quadritone
  *   Solarize
@@ -105,7 +107,7 @@ Brilliance::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Brilliance\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Brilliance\">\n"
           "<feColorMatrix values=\"%s %s %s 0 %s %s %s %s 0 %s %s %s %s 0 %s 0 0 0 1 0 \" />\n"
         "</filter>\n", brightness.str().c_str(), sat.str().c_str(), sat.str().c_str(),
                        lightness.str().c_str(), sat.str().c_str(), brightness.str().c_str(),
@@ -209,7 +211,7 @@ ChannelPaint::get_filter_text (Inkscape::Extension::Extension * ext)
     }
     
     _filter = g_strdup_printf(
-        "<filter inkscape:label=\"Channel Painting\" color-interpolation-filters=\"sRGB\" x=\"0\" y=\"0\" width=\"1\" height=\"1\">\n"
+        "<filter inkscape:label=\"Channel Painting\" style=\"color-interpolation-filters:sRGB;\" x=\"0\" y=\"0\" width=\"1\" height=\"1\">\n"
           "<feColorMatrix values=\"%s\" type=\"saturate\" result=\"colormatrix1\" />\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 %s %s %s %s 0 \" in=\"SourceGraphic\" result=\"colormatrix2\" />\n"
           "<feFlood flood-color=\"rgb(%s,%s,%s)\" flood-opacity=\"%s\" result=\"flood\" />\n"
@@ -278,7 +280,7 @@ ColorShift::get_filter_text (Inkscape::Extension::Extension * ext)
     sat << ext->get_param_float("sat");
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Color Shift\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Color Shift\">\n"
           "<feColorMatrix type=\"hueRotate\" values=\"%s\" result=\"color1\" />\n"
           "<feColorMatrix type=\"saturate\" values=\"%s\" result=\"color2\" />\n"
         "</filter>\n", shift.str().c_str(), sat.str().c_str() );
@@ -383,7 +385,7 @@ Colorize::get_filter_text (Inkscape::Extension::Extension * ext)
     }
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Colorize\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Colorize\">\n"
           "<feComposite in2=\"SourceGraphic\" operator=\"arithmetic\" k1=\"%s\" k2=\"%s\" result=\"composite1\" />\n"
           "<feColorMatrix in=\"composite1\" values=\"%s\" type=\"saturate\" result=\"colormatrix1\" />\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood1\" />\n"
@@ -471,7 +473,7 @@ ComponentTransfer::get_filter_text (Inkscape::Extension::Extension * ext)
                  << "<feFuncB type=\"gamma\" amplitude=\"3\" exponent=\"3\" offset=\"0.1\" />\n";
     }
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Component Transfer\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Component Transfer\">\n"
         "<feComponentTransfer>\n"
         "%s\n"
         "</feComponentTransfer>\n"
@@ -588,7 +590,7 @@ Duochrome::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Duochrome\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Duochrome\">\n"
           "<feColorMatrix type=\"luminanceToAlpha\" result=\"colormatrix1\" />\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood1\" />\n"
           "<feComposite in2=\"colormatrix1\" operator=\"%s\" result=\"composite1\" />\n"
@@ -700,13 +702,89 @@ ExtractChannel::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Extract Channel\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Extract Channel\">\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"%s %s %s 0 \" result=\"colormatrix\" />\n"
           "<feBlend in2=\"BackgroundImage\" mode=\"%s\" result=\"blend\" />\n"
         "</filter>\n", colors.str().c_str(), alpha.str().c_str(), invert.str().c_str(), blend.str().c_str() );
 
     return _filter;
 }; /* ExtractChannel filter */
+
+/**
+    \brief    Custom predefined Fade to Black or White filter.
+    
+    Fade to black or white.
+
+    Filter's parameters:
+    * Level (0.->1., default 1.) -> colorMatrix (RVB entries)
+    * Fade to (enum [black|white], default black) -> colorMatrix (RVB entries)
+    
+    Matrix
+     black           white
+    Lv 0  0  0 0    Lv 0  0  1-lv 0
+    0  Lv 0  0 0    0  Lv 0  1-lv 0
+    0  0  Lv 0 0    0  0  Lv 1-lv 0
+    0  0  0  1 0    0  0  0  1    0
+*/
+class FadeToBW : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    FadeToBW ( ) : Filter() { };
+    virtual ~FadeToBW ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Fade to Black or White") "</name>\n"
+              "<id>org.inkscape.effect.filter.FadeToBW</id>\n"
+              "<param name=\"level\" gui-text=\"" N_("Level:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0\" max=\"1\">1</param>\n"
+              "<param name=\"fadeto\" gui-text=\"" N_("Fade to:") "\" type=\"enum\">\n"
+                "<_item value=\"black\">" N_("Black") "</_item>\n"
+                "<_item value=\"white\">" N_("White") "</_item>\n"
+              "</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Fade to black or white") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new FadeToBW());
+    };
+};
+
+gchar const *
+FadeToBW::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream level;
+    std::ostringstream wlevel;
+
+    level << ext->get_param_float("level");
+
+    const gchar *fadeto = ext->get_param_enum("fadeto");
+    if ((g_ascii_strcasecmp("white", fadeto) == 0)) {
+    // White
+        wlevel << (1 - ext->get_param_float("level"));
+    } else {
+    // Black
+        wlevel << "0";
+    }
+
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Fade to Black or White\">\n"
+          "<feColorMatrix values=\"%s 0 0 0 %s 0 %s 0 0 %s 0 0 %s 0 %s 0 0 0 1 0\" />\n"
+        "</filter>\n", level.str().c_str(), wlevel.str().c_str(),
+                       level.str().c_str(), wlevel.str().c_str(),
+                       level.str().c_str(), wlevel.str().c_str() );
+
+    return _filter;
+}; /* Fade to black or white filter */
 
 /**
     \brief    Custom predefined Greyscale filter.
@@ -793,7 +871,7 @@ Greyscale::get_filter_text (Inkscape::Extension::Extension * ext)
     }
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Greyscale\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Greyscale\">\n"
           "<feColorMatrix values=\"%s 0 %s 0 %s 0 %s 0 \" />\n"
         "</filter>\n", line.str().c_str(), line.str().c_str(), line.str().c_str(), transparency.str().c_str() );
     return _filter;
@@ -926,7 +1004,7 @@ Invert::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Invert\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Invert\">\n"
           "%s"
           "<feColorMatrix values=\"%s 0 %s %s 0 %s %s 0 %s %s 0 \" result=\"color2\" />\n"
         "</filter>\n", hue.str().c_str(),
@@ -991,7 +1069,7 @@ Lightness::get_filter_text (Inkscape::Extension::Extension * ext)
     offset << ext->get_param_float("offset");
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Lightness\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Lightness\">\n"
           "<feComponentTransfer in=\"blur\" result=\"component\" >\n"
           "<feFuncR type=\"gamma\" amplitude=\"%s\" exponent=\"%s\" offset=\"%s\" />\n"
           "<feFuncG type=\"gamma\" amplitude=\"%s\" exponent=\"%s\" offset=\"%s\" />\n"
@@ -1003,6 +1081,80 @@ Lightness::get_filter_text (Inkscape::Extension::Extension * ext)
 
     return _filter;
 }; /* Lightness filter */
+
+/**
+    \brief    Custom predefined Lightness-Contrast filter.
+    
+    Modify lightness and contrast separately.
+
+    Filter's parameters:
+    * Lightness (0.->100., default 0.) -> colorMatrix
+    * Contrast (0.->100., default 0.) -> colorMatrix
+    
+    Matrix:
+      Co/10 0     0     1+(Co-1)*Li/2000  -(Co-1)/20
+      0     Co/10 0     1+(Co-1)*Li/2000  -(Co-1)/20
+      0     0     Co/10 1+(Co-1)*Li/2000  -(Co-1)/20
+      0     0     0     1                 0
+*/
+class LightnessContrast : public Inkscape::Extension::Internal::Filter::Filter {
+protected:
+    virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
+
+public:
+    LightnessContrast ( ) : Filter() { };
+    virtual ~LightnessContrast ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+
+    static void init (void) {
+        Inkscape::Extension::build_from_mem(
+            "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+              "<name>" N_("Lightness-Contrast") "</name>\n"
+              "<id>org.inkscape.effect.filter.LightnessContrast</id>\n"
+              "<param name=\"lightness\" gui-text=\"" N_("Lightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-100\" max=\"100\">0</param>\n"
+              "<param name=\"contrast\" gui-text=\"" N_("Contrast:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-100\" max=\"100\">0</param>\n"
+              "<effect>\n"
+                "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                  "<submenu name=\"" N_("Filters") "\">\n"
+                    "<submenu name=\"" N_("Color") "\"/>\n"
+                  "</submenu>\n"
+                "</effects-menu>\n"
+                "<menu-tip>" N_("Modify lightness and contrast separately") "</menu-tip>\n"
+              "</effect>\n"
+            "</inkscape-extension>\n", new LightnessContrast());
+    };
+};
+
+gchar const *
+LightnessContrast::get_filter_text (Inkscape::Extension::Extension * ext)
+{
+    if (_filter != NULL) g_free((void *)_filter);
+
+    std::ostringstream lightness;
+    std::ostringstream contrast;
+    std::ostringstream contrast5;
+
+    gfloat c5;
+    if (ext->get_param_float("contrast") > 0) {
+        contrast << (1 + ext->get_param_float("contrast") / 10);
+        c5 = (- ext->get_param_float("contrast") / 20);
+    } else {
+        contrast << (1 + ext->get_param_float("contrast") / 100);
+        c5 =(- ext->get_param_float("contrast") / 200);
+    } 
+
+    contrast5 << c5;
+    lightness << ((1 - c5) * ext->get_param_float("lightness") / 100);
+
+    _filter = g_strdup_printf(
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Lightness-Contrast\">\n"
+          "<feColorMatrix values=\"%s 0 0 %s %s 0 %s 0 %s %s 0 0 %s %s %s 0 0 0 1 0\" />\n"
+        "</filter>\n", contrast.str().c_str(), lightness.str().c_str(), contrast5.str().c_str(),
+                       contrast.str().c_str(), lightness.str().c_str(), contrast5.str().c_str(),
+                       contrast.str().c_str(), lightness.str().c_str(), contrast5.str().c_str() );
+
+    return _filter;
+}; /* Lightness-Contrast filter */
 
 /**
     \brief    Custom predefined Nudge filter.
@@ -1125,7 +1277,7 @@ Nudge::get_filter_text (Inkscape::Extension::Extension * ext)
     a << (color & 0xff) / 255.0F;
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Nudge\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Nudge\">\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 \" result=\"colormatrix1\" />\n"
           "<feOffset dy=\"%s\" dx=\"%s\" result=\"offset1\" />\n"
@@ -1220,7 +1372,7 @@ Quadritone::get_filter_text (Inkscape::Extension::Extension * ext)
     blend2 << ext->get_param_enum("blend2");
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Quadritone fantasy\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Quadritone fantasy\">\n"
           "<feColorMatrix in=\"SourceGraphic\" type=\"hueRotate\" values=\"%s\" result=\"colormatrix1\" />\n"
           "<feColorMatrix type=\"matrix\" values=\"0.5 0 0.5 0 0 0 1 0 0 0 0.5 0 0.5 0 0 0 0 0 1 0 \" result=\"colormatrix2\" />\n"
           "<feColorMatrix type=\"hueRotate\" values=\"%s\" result=\"colormatrix3\" />\n"
@@ -1300,7 +1452,7 @@ Solarize::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Solarize\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Solarize\">\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 1 \" />\n"
           "<feColorMatrix type=\"hueRotate\" values=\"%s\" result=\"colormatrix2\" />\n"
           "<feColorMatrix in=\"colormatrix2\" values=\"-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 \" result=\"colormatrix3\" />\n"
@@ -1455,7 +1607,7 @@ Tritone::get_filter_text (Inkscape::Extension::Extension * ext)
     }
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Tritone\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Tritone\">\n"
           "<feColorMatrix type=\"hueRotate\" values=\"%s\" result=\"colormatrix1\" />\n"
           "<feColorMatrix in=\"colormatrix1\" type=\"matrix\" values=\"1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1 \" result=\"colormatrix2\" />\n"
           "<feColorMatrix in=\"colormatrix1\" type=\"matrix\" values=\"0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 1 \" result=\"colormatrix3\" />\n"

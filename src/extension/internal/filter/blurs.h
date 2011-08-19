@@ -94,7 +94,7 @@ Blur::get_filter_text (Inkscape::Extension::Extension * ext)
 
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" %s color-interpolation-filters=\"sRGB\" inkscape:label=\"Blur\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" %s style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Blur\">\n"
           "<feGaussianBlur stdDeviation=\"%s %s\" result=\"blur\" />\n"
           "%s"
         "</filter>\n", bbox.str().c_str(), hblur.str().c_str(), vblur.str().c_str(), content.str().c_str() );
@@ -149,7 +149,7 @@ CleanEdges::get_filter_text (Inkscape::Extension::Extension * ext)
     blur << ext->get_param_float("blur");
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Clean Edges\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Clean Edges\">\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feComposite in=\"SourceGraphic\" in2=\"blur\" operator=\"in\" result=\"composite1\" />\n"
           "<feComposite in=\"composite1\" in2=\"composite1\" k2=\"1\" operator=\"in\" result=\"composite2\" />\n"
@@ -226,7 +226,7 @@ CrossBlur::get_filter_text (Inkscape::Extension::Extension * ext)
     blend << ext->get_param_enum("blend");
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Cross Blur\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Cross Blur\">\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"colormatrix\" />\n"
           "<feComposite in=\"SourceGraphic\" in2=\"colormatrix\" operator=\"arithmetic\" k2=\"1\" k3=\"%s\" k4=\"%s\" result=\"composite\" />\n"
           "<feGaussianBlur stdDeviation=\"%s 0.01\" result=\"blur1\" />\n"
@@ -284,7 +284,7 @@ Feather::get_filter_text (Inkscape::Extension::Extension * ext)
     blur << ext->get_param_float("blur");
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Feather\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Feather\">\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feComposite in=\"SourceGraphic\" in2=\"blur\" operator=\"atop\" result=\"composite1\" />\n"
           "<feComposite in2=\"composite1\" operator=\"in\" result=\"composite2\" />\n"
@@ -395,7 +395,7 @@ ImageBlur::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Out of Focus\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Out of Focus\">\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"colormatrix1\" />\n"
           "<feGaussianBlur in=\"colormatrix1\" stdDeviation=\"%s %s\" result=\"blur\" />\n"

@@ -71,7 +71,7 @@ Snow::get_filter_text (Inkscape::Extension::Extension * ext)
         drift << ext->get_param_float("drift");
 
 	_filter = g_strdup_printf(
-				"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Snow\">\n"
+				"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Snow\">\n"
 					"<feConvolveMatrix order=\"3 3\" kernelMatrix=\"1 1 1 0 0 0 -1 -1 -1\" preserveAlpha=\"false\" divisor=\"3\"/>\n"
 					"<feMorphology operator=\"dilate\" radius=\"1 %s\"/>\n"
 					"<feGaussianBlur stdDeviation=\"1.6270889487870621\" result=\"result0\"/>\n"

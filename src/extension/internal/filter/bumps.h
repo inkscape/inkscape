@@ -245,7 +245,7 @@ Bump::get_filter_text (Inkscape::Extension::Extension * ext)
     }
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1.2\" width=\"1.2\" y=\"-0.1\" x=\"-0.1\" inkscape:label=\"Bump\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1.2\" width=\"1.2\" y=\"-0.1\" x=\"-0.1\" inkscape:label=\"Bump\">\n"
         "<feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%s\" result=\"blur1\" />\n"
         "<feColorMatrix in=\"%s\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 %s %s %s 1 0 \" result=\"colormatrix1\" />\n"
         "<feColorMatrix in=\"colormatrix1\" type=\"luminanceToAlpha\" result=\"colormatrix2\" />\n"
@@ -335,7 +335,7 @@ DiffuseLight::get_filter_text (Inkscape::Extension::Extension * ext)
     a << (color & 0xff) / 255.0F;
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Diffuse Light\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Diffuse Light\">\n"
           "<feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feDiffuseLighting diffuseConstant=\"1\" surfaceScale=\"10\" lighting-color=\"rgb(%s,%s,%s)\" result=\"diffuse\">\n"
             "<feDistantLight elevation=\"%s\" azimuth=\"%s\" />\n"
@@ -418,7 +418,7 @@ MatteJelly::get_filter_text (Inkscape::Extension::Extension * ext)
     a << (color & 0xff) / 255.0F;
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Matte Jelly\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Matte Jelly\">\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.85 0\" result=\"color\" in=\"SourceGraphic\" />\n"
           "<feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feSpecularLighting in=\"blur\" specularExponent=\"25\" specularConstant=\"%s\" surfaceScale=\"5\" lighting-color=\"rgb(%s,%s,%s)\" result=\"specular\">\n"
@@ -502,7 +502,7 @@ SpecularLight::get_filter_text (Inkscape::Extension::Extension * ext)
     a << (color & 0xff) / 255.0F;
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Specular Light\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Specular Light\">\n"
           "<feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feSpecularLighting in=\"blur\" specularExponent=\"25\" specularConstant=\"%s\" surfaceScale=\"10\" lighting-color=\"rgb(%s,%s,%s)\" result=\"specular\">\n"
             "<feDistantLight elevation=\"%s\" azimuth=\"%s\" />\n"
@@ -696,7 +696,7 @@ WaxBump::get_filter_text (Inkscape::Extension::Extension * ext)
     transparency << ext->get_param_enum("transparency");
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Wax Bump\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Wax Bump\">\n"
           "<feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feFlood flood-opacity=\"1\" flood-color=\"rgb(255,255,255)\" result=\"flood1\" />\n"
           "<feColorMatrix in=\"%s\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 %s \" result=\"colormatrix1\" />\n"

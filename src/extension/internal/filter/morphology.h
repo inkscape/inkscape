@@ -88,7 +88,7 @@ Crosssmooth::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Cross-smooth\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Cross-smooth\">\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feComposite in=\"%s\" in2=\"blur\" operator=\"atop\" result=\"composite1\" />\n"
           "<feComposite in2=\"composite1\" operator=\"in\" result=\"composite2\" />\n"
@@ -177,7 +177,7 @@ Outline::get_filter_text (Inkscape::Extension::Extension * ext)
     a << (color & 0xff) / 255.0F;
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1.3\" width=\"1.3\" y=\"-0.15\" x=\"-0.15\" inkscape:label=\"Outline\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1.3\" width=\"1.3\" y=\"-0.15\" x=\"-0.15\" inkscape:label=\"Outline\">\n"
           "<feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feColorMatrix result=\"color1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 200 -1 \" />\n"
           "<feGaussianBlur in=\"color1\" stdDeviation=\"%s\" result=\"blur2\" />\n"

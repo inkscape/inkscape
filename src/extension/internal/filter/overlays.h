@@ -123,7 +123,7 @@ NoiseFill::get_filter_text (Inkscape::Extension::Extension * ext)
         inverted << "in";
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" inkscape:label=\"Noise Fill\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Noise Fill\">\n"
           "<feTurbulence type=\"%s\" baseFrequency=\"%s %s\" numOctaves=\"%s\" seed=\"%s\" result=\"turbulence\"/>\n"
           "<feComposite in=\"SourceGraphic\" in2=\"turbulence\" operator=\"%s\" result=\"composite1\" />\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"color\" />\n"

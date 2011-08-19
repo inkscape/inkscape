@@ -97,7 +97,7 @@ EdgeDetect::get_filter_text (Inkscape::Extension::Extension * ext)
     }
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" height=\"1.2\" width=\"1.2\" y=\"-0.1\" x=\"-0.1\" inkscape:label=\"Edge Detect\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1.2\" width=\"1.2\" y=\"-0.1\" x=\"-0.1\" inkscape:label=\"Edge Detect\">\n"
           "<feConvolveMatrix in=\"SourceGraphic\" kernelMatrix=\"%s\" order=\"3 3\" bias=\"%s\" divisor=\"%s\" targetX=\"1\" targetY=\"1\" preserveAlpha=\"true\" result=\"convolve\" />\n"
         "</filter>\n", matrix.str().c_str(), inverted.str().c_str(), level.str().c_str());
 

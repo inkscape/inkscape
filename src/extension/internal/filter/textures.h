@@ -133,7 +133,7 @@ InkBlot::get_filter_text (Inkscape::Extension::Extension * ext)
     stroke << ext->get_param_enum("stroke");
 
 	_filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" color-interpolation-filters=\"sRGB\" x=\"-0.15\" width=\"1.3\" y=\"-0.15\" height=\"1.3\" inkscape:label=\"Ink Blot\" >\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" x=\"-0.15\" width=\"1.3\" y=\"-0.15\" height=\"1.3\" inkscape:label=\"Ink Blot\" >\n"
           "<feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%s %s\" result=\"blur1\" />\n"
           "<feTurbulence type=\"%s\" baseFrequency=\"%s\" numOctaves=\"%s\" seed=\"%s\" result=\"turbulence\" />\n"
           "<feDisplacementMap in=\"blur1\" in2=\"turbulence\" xChannelSelector=\"R\" yChannelSelector=\"G\" scale=\"%s\" result=\"map\" />\n"
