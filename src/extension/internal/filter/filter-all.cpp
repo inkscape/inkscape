@@ -8,6 +8,7 @@
 #include "filter.h"
 
 /* Put your filter here */
+#include "bevels.h"
 #include "blurs.h"
 #include "bumps.h"
 #include "color.h"
@@ -34,6 +35,11 @@ Filter::filters_all (void )
 
     /* Experimental custom predefined filters */
 
+    // Bevels
+    DiffuseLight::init();
+    MatteJelly::init();
+    SpecularLight::init();
+
     // Blurs
     Blur::init();
     CleanEdges::init();
@@ -43,9 +49,6 @@ Filter::filters_all (void )
     
     // Bumps
     Bump::init();
-    DiffuseLight::init();
-    MatteJelly::init();
-    SpecularLight::init();
     WaxBump::init();
 
     // Color

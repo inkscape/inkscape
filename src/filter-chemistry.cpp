@@ -123,7 +123,7 @@ filter_add_primitive(SPFilter *filter, const Inkscape::Filters::FilterPrimitiveT
     // set default values
     switch(type) {
         case Inkscape::Filters::NR_FILTER_BLEND:
-            repr->setAttribute("blend", "normal");
+            repr->setAttribute("mode", "normal");
             break;
         case Inkscape::Filters::NR_FILTER_COLORMATRIX:
             break;
