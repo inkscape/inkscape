@@ -113,6 +113,7 @@ set(extension_SRC
 	internal/clear-n_.h
 	internal/emf-win32-inout.h
 	internal/emf-win32-print.h
+	internal/filter/bevels.h
 	internal/filter/blurs.h
 	internal/filter/bumps.h
 	internal/filter/color.h
@@ -173,6 +174,8 @@ if(ImageMagick_FOUND)
 		internal/bitmap/colorize.h
 		internal/bitmap/contrast.cpp
 		internal/bitmap/contrast.h
+		internal/bitmap/crop.cpp
+		internal/bitmap/crop.h
 		internal/bitmap/cycleColormap.cpp
 		internal/bitmap/cycleColormap.h
 		internal/bitmap/despeckle.cpp
