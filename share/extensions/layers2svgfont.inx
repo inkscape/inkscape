@@ -3,7 +3,7 @@
   <_name>3 - Convert Glyph Layers to SVG Font</_name>
   <id>org.inkscape.typography.layers2svgfont</id>
   <dependency type="executable" location="extensions">inkex.py</dependency>
-  <dependency type="executable" location="extensions">PathData.py</dependency>
+  <dependency type="executable" location="extensions">simplepath.py</dependency>
   <dependency type="executable" location="extensions">layers2svgfont.py</dependency>
   <effect>
     <object-type>all</object-type>

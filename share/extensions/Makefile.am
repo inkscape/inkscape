@@ -104,7 +104,6 @@ extensions = \
 	next_glyph_layer.py \
 	previous_glyph_layer.py \
 	outline2svg.pl	\
-	PathData.py \
 	param_curves.py \
 	pathalongpath.py\
 	pathscatter.py\
