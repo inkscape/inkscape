@@ -129,7 +129,7 @@ void sp_file_import (Gtk::Window &parentWindow);
 /**
  * Imports a resource
  */
-void file_import(SPDocument *in_doc, const Glib::ustring &uri,
+SPObject* file_import(SPDocument *in_doc, const Glib::ustring &uri,
                  Inkscape::Extension::Extension *key);
 
 /*######################

@@ -952,7 +952,7 @@ sp_file_save_a_copy(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
 /**
  *  Import a resource.  Called by sp_file_import()
  */
-void
+SPObject *
 file_import(SPDocument *in_doc, const Glib::ustring &uri,
                Inkscape::Extension::Extension *key)
 {
@@ -1067,14 +1067,14 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
         doc->doUnref();
         DocumentUndo::done(in_doc, SP_VERB_FILE_IMPORT,
                            _("Import"));
-
+        return new_obj;
     } else {
         gchar *text = g_strdup_printf(_("Failed to load the requested file %s"), uri.c_str());
         sp_ui_error_dialog(text);
         g_free(text);
     }
 
-    return;
+    return NULL;
 }
 
 

@@ -147,7 +147,7 @@ dbus_init_desktop_interface (SPDesktop * dt)
           &dbus_glib_document_interface_object_info, name.c_str());
 	obj->desk = dt;
     obj->updates = TRUE;
-
+    dt->dbus_document_interface=obj;
     return strdup(name.c_str());
 }
 

@@ -352,6 +352,27 @@
       </doc:doc>
     </method>
 
+    <method name="import">
+      <arg type="s" name="pathname" direction="in" >
+        <doc:doc>
+          <doc:summary>The path to a valid svg file.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="object_name" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The name of the new image.</doc:summary>
+        </doc:doc>
+      </arg>      
+      <doc:doc>
+        <doc:description>
+          <doc:para>Imports the file at pathname. Similar to the image
+          method.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    
     <method name="node">
       <arg type="s" name="svgtype" direction="in" >
         <doc:doc>
@@ -453,6 +474,56 @@
       </doc:doc>
     </method>
 
+
+
+    <method name="document_set_display_area">
+      <arg type="d" name="x0" direction="in" >
+        <doc:doc>
+          <doc:summary></doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="y0" direction="in" >
+        <doc:doc>
+          <doc:summary></doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="x1" direction="in" >
+        <doc:doc>
+          <doc:summary></doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="y1" direction="in" >
+        <doc:doc>
+          <doc:summary></doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="d" name="border" direction="in" >
+        <doc:doc>
+          <doc:summary></doc:summary>
+        </doc:doc>
+      </arg>        
+      <doc:doc>
+        <doc:description>
+          <doc:para>Set display area.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+    <method name="document_get_display_area">
+      <doc:doc>
+        <doc:description>
+          <doc:para>Get display area.</doc:para>
+        </doc:description>
+      </doc:doc>
+      <arg type="ad" name="area" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value=""/>
+        <doc:doc>
+          <doc:summary>area</doc:summary>
+        </doc:doc>
+      </arg>      
+    </method>
+      
+    
     <!-- OBJECT FUNCTIONS -->
 
     <method name="set_attribute">
@@ -499,6 +570,43 @@
     </method>
 
 
+    <method name="text_apply_style">
+      <arg type="s" name="shape" direction="in" >
+        <doc:doc>
+          <doc:summary>The id of an object.</doc:summary>
+        </doc:doc>
+      </arg>
+
+      <arg type="i" name="start" direction="in" >
+        <doc:doc>
+          <doc:summary>start text pos.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="i" name="end" direction="in" >
+        <doc:doc>
+          <doc:summary>end text pos.</doc:summary>
+        </doc:doc>
+      </arg>
+      
+      <arg type="s" name="css_attrib" direction="in" >
+        <doc:doc>
+          <doc:summary>css attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+
+      <arg type="s" name="css_attrib_val" direction="in" >
+        <doc:doc>
+          <doc:summary>css attribute value.</doc:summary>
+        </doc:doc>
+      </arg>
+      
+      
+      <doc:doc>
+        <doc:description>
+          <doc:para>set styling of partial text object.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
     
 
     <method name="set_int_attribute">
@@ -864,6 +972,9 @@
         </doc:description>
       </doc:doc>
     </method>
+
+
+    
     <!--
     <method name="print_to_file" >
       <doc:doc>
@@ -1379,6 +1490,56 @@
       </doc:doc>
     </method>
 
+<!-- signals -->
+    <signal name="ObjectMoved">
+      <arg name="object_name" type="s">
+        <doc:doc>
+          <doc:summary>The id of the object.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Emitted when an object has been moved.</doc:para>
+        </doc:description>
+      </doc:doc>
+    </signal>
+<!-- tree -->
 
-  </interface>
+    <method name="get_children" >
+      <arg type="s" name="type" direction="in" >
+        <doc:doc>
+          <doc:summary>Any node with an "id" attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="as" name="parentid" direction="out" >
+        <doc:doc>
+          <doc:summary>The ids of this nodes children, NULL if bottom level.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Returns the children of any node.  This function along with <doc:ref type="method" to="get_parent">get_parent()</doc:ref> can be used to navigate the XML tree. </doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+    <method name="get_parent" >
+      <arg type="s" name="type" direction="in" >
+        <doc:doc>
+          <doc:summary>Any node with an "id" attribute.</doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type="s" name="parentid" direction="out" >
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+        <doc:doc>
+          <doc:summary>The id of this nodes parent, NULL if toplevel.</doc:summary>
+        </doc:doc>
+      </arg>
+      <doc:doc>
+        <doc:description>
+          <doc:para>Returns the parent of any node.  This function along with <doc:ref type="method" to="get_children">get_children()</doc:ref> can be used to navigate the XML tree. </doc:para>
+        </doc:description>
+      </doc:doc>
+    </method>
+
+</interface>
 </node>

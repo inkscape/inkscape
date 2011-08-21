@@ -50,6 +50,7 @@ struct SPItem;
 struct SPNamedView;
 struct SPObject;
 struct SPStyle;
+typedef struct _DocumentInterface DocumentInterface;//struct DocumentInterface;
 
 namespace Gtk
 {
@@ -98,7 +99,7 @@ public:
     SPEventContext            *event_context;
     Inkscape::LayerManager    *layer_manager;
     Inkscape::EventLog        *event_log;
-
+    DocumentInterface *dbus_document_interface;
     Inkscape::Display::TemporaryItemList *temporary_item_list;
     Inkscape::Display::SnapIndicator *snapindicator;
 

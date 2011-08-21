@@ -17,7 +17,7 @@
 
 #include "document-interface.h"
 #include <string.h>
-
+#include <dbus/dbus-glib.h>
 #include "desktop-handles.h" //sp_desktop_document()
 #include "desktop-style.h" //sp_desktop_get_style
 #include "display/canvas-text.h" //text
@@ -55,6 +55,25 @@
 #include "xml/repr.h" //sp_repr_document_new
 
 //#include "2geom/svg-path-parser.h" //get_node_coordinates
+
+#include <glib.h>
+#include <dbus/dbus-glib.h>
+
+#if 0
+#include <libxml/tree.h>
+#include <libxml/parser.h>
+#include <libxml/xpath.h>
+#include <libxml/xpathInternals.h>
+#endif
+ 
+ enum
+ {
+   OBJECT_MOVED_SIGNAL,
+   LAST_SIGNAL
+ };
+ 
+ static guint signals[LAST_SIGNAL] = { 0 };
+
 
 /****************************************************************************
      HELPER / SHORTCUT FUNCTIONS
@@ -280,6 +299,14 @@ document_interface_class_init (DocumentInterfaceClass *klass)
         GObjectClass *object_class;
         object_class = G_OBJECT_CLASS (klass);
         object_class->finalize = document_interface_finalize;
+        signals[OBJECT_MOVED_SIGNAL] =
+        g_signal_new ("object_moved",
+                      G_OBJECT_CLASS_TYPE (klass),
+                      G_SIGNAL_RUN_LAST,
+                      0,
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__STRING,
+                      G_TYPE_NONE, 1, G_TYPE_STRING);        
 }
 
 static void
@@ -587,6 +614,44 @@ document_interface_document_resize_to_fit_selection (DocumentInterface *object,
     return TRUE;
 }
 
+gboolean
+document_interface_document_set_display_area (DocumentInterface *object,
+                                              double x0,
+                                              double y0,
+                                              double x1,
+                                              double y1,
+                                              double border,
+                                              GError **error)
+{
+      object->desk->set_display_area (x0,
+                    y0,
+                    x1,
+                    y1,
+                    border, false);
+      return TRUE;
+}
+
+
+GArray *
+document_interface_document_get_display_area (DocumentInterface *object)
+{
+  Geom::Rect const d = object->desk->get_display_area();
+  
+  GArray * dArr = g_array_new (TRUE, TRUE, sizeof(double));
+
+  double x0 = d.min()[Geom::X];
+  double y0 = d.min()[Geom::Y];
+  double x1 = d.max()[Geom::X];
+  double y1 = d.max()[Geom::Y];
+  g_array_append_val (dArr, x0); //
+  g_array_append_val (dArr, y0);
+  g_array_append_val (dArr, x1);
+  g_array_append_val (dArr, y1);
+  return dArr;
+
+}
+
+
 /****************************************************************************
      OBJECT FUNCTIONS
 ****************************************************************************/
@@ -835,6 +900,35 @@ document_interface_set_text (DocumentInterface *object, gchar *name, gchar *text
 }
 
 
+
+gboolean
+document_interface_text_apply_style (DocumentInterface *object, gchar *name,
+                                     int start_pos, int end_pos,  gchar *style, gchar *styleval,
+                                     GError **error)
+{
+
+  SPItem* text_obj=(SPItem* )get_object_by_name(object->desk, name, error);
+
+  //void sp_te_apply_style(SPItem *text, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, SPCSSAttr const *css)
+  //TODO verify object type
+  if (!text_obj)
+    return FALSE;
+  Inkscape::Text::Layout const *layout = te_get_layout(text_obj);
+  Inkscape::Text::Layout::iterator start = layout->charIndexToIterator (start_pos);
+  Inkscape::Text::Layout::iterator end = layout->charIndexToIterator (end_pos);
+
+  SPCSSAttr *css = sp_repr_css_attr_new();
+  sp_repr_css_set_property(css, style, styleval);
+    
+  sp_te_apply_style(text_obj,
+                    start,
+                    end,
+                    css);
+  return TRUE;
+      
+}
+
+
 /****************************************************************************
      FILE I/O FUNCTIONS
 ****************************************************************************/
@@ -861,8 +955,22 @@ gboolean document_interface_load(DocumentInterface *object,
     return TRUE;
 }
 
-gboolean document_interface_save_as(DocumentInterface *object, 
-                                    const gchar *filename, GError ** /*error*/)
+gchar *
+document_interface_import (DocumentInterface *object, 
+                           gchar *filename, GError **error)
+{
+    desktop_ensure_active (object->desk);
+    const Glib::ustring file(filename);
+    SPDocument * doc = sp_desktop_document(object->desk);
+
+    SPObject *new_obj = NULL;
+    new_obj = file_import(doc, file, NULL);
+    return strdup(new_obj->getRepr()->attribute("id"));
+}
+
+gboolean 
+document_interface_save_as (DocumentInterface *object, 
+                           const gchar *filename, GError **error)
 {
     SPDocument * doc = sp_desktop_document(object->desk);
     #ifdef WITH_GNOME_VFS
@@ -1329,6 +1437,73 @@ document_interface_layer_previous (DocumentInterface *object, GError **error)
     return dbus_call_verb (object, SP_VERB_LAYER_PREV, error);
 }
 
+
+//////////////signals
+
+
+DocumentInterface *fugly;
+gboolean dbus_send_ping (SPDesktop* desk,     SPItem *item)
+{
+  //DocumentInterface *obj;
+  g_signal_emit (desk->dbus_document_interface, signals[OBJECT_MOVED_SIGNAL], 0, item->getId());
+  g_print("Ping!\n");
+  return TRUE;
+}
+
+//////////tree
+
+
+gboolean
+document_interface_get_children (DocumentInterface *object,  char *name, char ***out, GError **error)
+{
+  SPItem* parent=(SPItem* )get_object_by_name(object->desk, name, error);
+
+  GSList const *children = parent->childList(false);
+
+    int size = g_slist_length((GSList *) children);
+
+    *out = g_new0 (char *, size + 1);
+
+    int i = 0;
+    for (GSList const *iter = children; iter != NULL; iter = iter->next) {
+      (*out)[i] = g_strdup(SP_OBJECT(iter->data)->getRepr()->attribute("id"));
+        i++;
+    }
+    (*out)[i] = NULL;
+
+    return TRUE;
+
+}
+
+
+gchar* 
+document_interface_get_parent (DocumentInterface *object,  char *name, GError **error)
+{
+  SPItem* node=(SPItem* )get_object_by_name(object->desk, name, error);
+  
+  SPObject* parent=node->parent;
+
+  return g_strdup(parent->getRepr()->attribute("id"));
+
+}
+
+#if 0
+//just pseudo code
+gboolean
+document_interface_get_xpath (DocumentInterface *object,  char *xpath_expression, char ***out, GError **error){
+  SPDocument * doc = sp_desktop_document (object->desk);
+  Inkscape::XML::Document *repr = doc->getReprDoc();
+
+  xmlXPathObjectPtr xpathObj;
+  xmlXPathContextPtr xpathCtx;
+  xpathCtx = xmlXPathNewContext(repr);//XmlDocPtr
+  xpathObj = xmlXPathEvalExpression(xmlCharStrdup(xpath_expression), xpathCtx);
+  
+  //xpathresult result = xpatheval(repr, xpath_selection);
+  //convert resut to a string array we can return via dbus
+  return TRUE;
+}
+#endif
 /*
   Local Variables:
   mode:c++

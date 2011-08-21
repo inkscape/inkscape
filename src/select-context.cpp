@@ -33,6 +33,9 @@
 
 #include "select-context.h"
 #include "selection-chemistry.h"
+#ifdef WITH_DBUS
+#include "extension/dbus/document-interface.h"
+#endif
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "sp-root.h"
@@ -46,6 +49,7 @@
 #include "display/nr-arena-item.h"
 
 using Inkscape::DocumentUndo;
+
 
 static void sp_select_context_class_init(SPSelectContextClass *klass);
 static void sp_select_context_init(SPSelectContext *select_context);
@@ -622,6 +626,10 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         // item has been moved
                         seltrans->ungrab();
                         sc->moved = FALSE;
+#ifdef WITH_DBUS
+                        g_print("moved!\n");//JAVE
+                        dbus_send_ping(desktop, sc->item);
+#endif
                     } else if (sc->item && !drag_escaped) {
                         // item has not been moved -> simply a click, do selecting
                         if (!selection->isEmpty()) {

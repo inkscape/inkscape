@@ -40,19 +40,6 @@
       </doc:doc>
     </signal>
 
-    <signal name="ObjectMoved">
-      <arg name="object_name" type="s">
-        <doc:doc>
-          <doc:summary>The id of the object.</doc:summary>
-        </doc:doc>
-      </arg>
-      <doc:doc>
-        <doc:description>
-          <doc:para>Emitted when an object has been moved.</doc:para>
-        </doc:description>
-      </doc:doc>
-    </signal>
-
     <signal name="ObjectStyleModified">
       <arg name="object_name" type="s">
         <doc:doc>
@@ -136,43 +123,6 @@
 
 
 <!-- USE document-subset.h FILES -->
-    <method name="get_parent" >
-      <arg type="s" name="type" direction="in" >
-        <doc:doc>
-          <doc:summary>Any node with an "id" attribute.</doc:summary>
-        </doc:doc>
-      </arg>
-      <arg type="s" name="parentid" direction="out" >
-        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
-        <doc:doc>
-          <doc:summary>The id of this nodes parent, NULL if toplevel.</doc:summary>
-        </doc:doc>
-      </arg>
-      <doc:doc>
-        <doc:description>
-          <doc:para>Returns the parent of any node.  This function along with <doc:ref type="method" to="proposed.get_children">get_children()</doc:ref> can be used to navigate the XML tree.  In proposed because I think it might confuse users who don't know about the SVG tree structure.  In the main API I have de-emphasized nodes and required no knowledge of internal representation.</doc:para>
-        </doc:description>
-      </doc:doc>
-    </method>
-
-    <method name="get_children" >
-      <arg type="s" name="type" direction="in" >
-        <doc:doc>
-          <doc:summary>Any node with an "id" attribute.</doc:summary>
-        </doc:doc>
-      </arg>
-      <arg type="as" name="parentid" direction="out" >
-        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
-        <doc:doc>
-          <doc:summary>The ids of this nodes children, NULL if bottom level.</doc:summary>
-        </doc:doc>
-      </arg>
-      <doc:doc>
-        <doc:description>
-          <doc:para>Returns the children of any node.  This function along with <doc:ref type="method" to="proposed.get_parent">get_parent()</doc:ref> can be used to navigate the XML tree.  In proposed because I think it might confuse users who don't know about the SVG tree structure.  In the main API I have de-emphasized nodes and required no knowledge of internal representation.</doc:para>
-        </doc:description>
-      </doc:doc>
-    </method>
 
     <method name="selection_remove">
       <arg type="s" name="name" direction="in" >
