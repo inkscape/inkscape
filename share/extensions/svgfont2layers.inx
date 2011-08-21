@@ -5,6 +5,7 @@
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <dependency type="executable" location="extensions">simplepath.py</dependency>
   <dependency type="executable" location="extensions">svgfont2layers.py</dependency>
+  <param name="limitglyphs" type="boolean" _gui-text="Load only the first 30 glyphs (Recommended)"></param>
   <effect>
     <object-type>all</object-type>
     <effects-menu>
