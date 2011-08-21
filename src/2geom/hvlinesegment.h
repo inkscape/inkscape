@@ -1,4 +1,4 @@
-/**
+﻿/**
  * \file
  * \brief  Horizontal and vertical line segment
  *//*
@@ -96,14 +96,13 @@ public:
     }
     virtual Point pointAt(Coord t) const {
         if ( t < 0 || t > 1 )
-            THROW_RANGEERROR("HLineSegment: Time value out of range");
-        Coord x = initialPoint()[axis] + t * (finalPoint()[axis] - initialPoint()[axis]);
-        Point ret(x, initialPoint()[other_axis]);
+            THROW_RANGEERROR("AxisLineSegment: Time value out of range");
+        Point ret = initialPoint() + t * (finalPoint() - initialPoint());
         return ret;
     }
     virtual Coord valueAt(Coord t, Dim2 d) const {
         if ( t < 0 || t > 1 )
-            THROW_RANGEERROR("HLineSegment: Time value out of range");
+            THROW_RANGEERROR("AxisLineSegment: Time value out of range");
         if (d != axis) return initialPoint()[other_axis];
         return initialPoint()[axis] + t * (finalPoint()[axis] - initialPoint()[axis]);
     }
@@ -111,8 +110,8 @@ public:
         std::vector<Point> result;
         result.push_back(pointAt(t));
         if (n > 0) {
-            Coord x = finalPoint()[axis] - initialPoint()[axis];
-            result.push_back( Point(x, 0) );
+            Point der = finalPoint() - initialPoint();
+            result.push_back( der );
         }
         if (n > 1) {
             /* higher order derivatives are zero,
