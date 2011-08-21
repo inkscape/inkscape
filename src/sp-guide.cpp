@@ -231,23 +231,27 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
         break;
     case SP_ATTR_POSITION:
         {
-            gchar ** strarray = g_strsplit(value, ",", 2);
-            double newx, newy;
-            unsigned int success = sp_svg_number_read_d(strarray[0], &newx);
-            success += sp_svg_number_read_d(strarray[1], &newy);
-            g_strfreev (strarray);
-            if (success == 2) {
-                guide->point_on_line = Geom::Point(newx, newy);
-            } else if (success == 1) {
-                // before 0.46 style guideline definition.
-                const gchar *attr = object->getRepr()->attribute("orientation");
-                if (attr && !strcmp(attr, "horizontal")) {
-                    guide->point_on_line = Geom::Point(0, newx);
-                } else {
-                    guide->point_on_line = Geom::Point(newx, 0);
+            if (value) {
+                gchar ** strarray = g_strsplit(value, ",", 2);
+                double newx, newy;
+                unsigned int success = sp_svg_number_read_d(strarray[0], &newx);
+                success += sp_svg_number_read_d(strarray[1], &newy);
+                g_strfreev (strarray);
+                if (success == 2) {
+                    guide->point_on_line = Geom::Point(newx, newy);
+                } else if (success == 1) {
+                    // before 0.46 style guideline definition.
+                    const gchar *attr = object->getRepr()->attribute("orientation");
+                    if (attr && !strcmp(attr, "horizontal")) {
+                        guide->point_on_line = Geom::Point(0, newx);
+                    } else {
+                        guide->point_on_line = Geom::Point(newx, 0);
+                    }
                 }
+            } else {
+                // default to (0,0) for bad arguments
+                guide->point_on_line = Geom::Point(0,0);
             }
-
             // update position in non-committing way
             // fixme: perhaps we need to add an update method instead, and request_update here
             sp_guide_moveto(*guide, guide->point_on_line, false);
