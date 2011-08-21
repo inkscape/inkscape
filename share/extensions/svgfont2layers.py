@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 import inkex
 import sys
-from PathData import PathData
+import simplepath
 
 class SVGFont2Layers(inkex.Effect):
 	def __init__(self):
@@ -39,20 +39,10 @@ class SVGFont2Layers(inkex.Effect):
 		return node
 
 	def flip_cordinate_system(self, d, emsize, baseline):
-
-		try:
-			pathdata = PathData(d)
-		except:
-			return d
-
-		def flip_cordinates(coordinates, emsize, baseline, relative):
-			x, y = coordinates
-			if relative:
-				return (x, -y)
-			else:
-				return (x, emsize - baseline - y)	
-
-		return pathdata.transform_coordinate_values(flip_cordinates, int(emsize), int(baseline))
+		pathdata = simplepath.parsePath(d)
+		simplepath.scalePath(pathdata, 1,-1)
+		simplepath.translatePath(pathdata, 0, int(emsize) - int(baseline))
+		return simplepath.formatPath(pathdata)
 
 	def effect(self):
 		# Get access to main SVG document element
