@@ -853,7 +853,9 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 }
 
                 // Compare the resulting scaling with the desired scaling
-                Geom::Point scale_metric = Geom::abs(result - transformation); // One or both of its components might be Geom::infinity()
+                Geom::Point scale_metric = result - transformation; // One or both of its components might be Geom::infinity()
+                scale_metric[0] = fabs(scale_metric[0]);
+                scale_metric[1] = fabs(scale_metric[1]);
                 if (scale_metric[0] == Geom::infinity() || scale_metric[1] == Geom::infinity()) {
                     snapped_point.setSnapDistance(std::min(scale_metric[0], scale_metric[1]));
                 } else {
