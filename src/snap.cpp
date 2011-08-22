@@ -1456,7 +1456,14 @@ void SnapManager::_displaySnapsource(Inkscape::SnapCandidatePoint const &p) cons
 
 void SnapManager::keepClosestPointOnly(std::vector<Inkscape::SnapCandidatePoint> &points, const Geom::Point &reference) const
 {
-    if (points.size() < 2) return;
+    if (points.size() == 0) {
+        return;
+    }
+
+    if (points.size() == 1) {
+        points.front().setSourceNum(-1); // Just in case
+        return;
+    }
 
     Inkscape::SnapCandidatePoint closest_point = Inkscape::SnapCandidatePoint(Geom::Point(Geom::infinity(), Geom::infinity()), Inkscape::SNAPSOURCE_UNDEFINED, Inkscape::SNAPTARGET_UNDEFINED);
     Geom::Coord closest_dist = Geom::infinity();

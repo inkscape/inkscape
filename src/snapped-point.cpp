@@ -131,6 +131,10 @@ bool Inkscape::SnappedPoint::isOtherSnapBetter(Inkscape::SnappedPoint const &oth
         return false;
     }
 
+    if (!getSnapped() && other_one.getSnapped()) {
+        return true;
+    }
+
     double dist_other = other_one.getSnapDistance();
     double dist_this = getSnapDistance();
 
