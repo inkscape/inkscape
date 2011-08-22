@@ -82,6 +82,7 @@ class SVGFont2Layers(inkex.Effect):
 
 		#TODO: missing-glyph
 		glyphs = font.findall(inkex.addNS('glyph', 'svg'))
+		first_glyph = True
 		for glyph in glyphs:
 			unicode_char = glyph.get("unicode")
 			if unicode_char is None:
@@ -90,6 +91,11 @@ class SVGFont2Layers(inkex.Effect):
 			layer = inkex.etree.SubElement(self.svg, inkex.addNS('g', 'svg'))
 			layer.set(inkex.addNS('label', 'inkscape'), "GlyphLayer-" + unicode_char)
 			layer.set(inkex.addNS('groupmode', 'inkscape'), "layer")
+
+      #glyph layers (except the first one) are innitially hidden
+			if not first_glyph:
+				layer.set("style", "display:none")
+			first_glyph = False
 
 			#TODO: interpret option 1
 
