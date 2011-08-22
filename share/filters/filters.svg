@@ -738,22 +738,6 @@ sodipodi:docname="filters.svg">
 <feComposite in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.4" k3="1.7" in2="result2" />
 <feBlend result="fbSourceGraphic" mode="normal" in2="result2" />
 </filter>
-<filter id="f061" inkscape:label="Parallel Hollow" inkscape:menu="Morphology" inkscape:menu-tooltip="A blurry hollow going parallel to the edge on the inside" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="7.5" in="SourceAlpha" result="result1" />
-<feComposite operator="arithmetic" k2="3.2" k1="-1" k4="-2" in2="result1" />
-<feColorMatrix values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 3 0 " result="result91" />
-<feComposite result="fbSourceGraphic" in="SourceGraphic" operator="out" in2="result91" />
-<feGaussianBlur in="fbSourceGraphic" stdDeviation="2" result="result92" />
-<feComposite operator="out" in="fbSourceGraphic" in2="result92" result="result93" />
-<feBlend mode="multiply" in2="result93" result="result94" />
-<feBlend mode="darken" in2="result94" />
-</filter>
-<filter id="f062" inkscape:label="Hole" inkscape:menu="Morphology" inkscape:menu-tooltip="Opens a smooth hole inside the shape" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="12" in="SourceAlpha" result="result1" />
-<feComposite operator="arithmetic" k2="3.5" k4="-2" result="result2" in2="result1" />
-<feComposite in="SourceGraphic" operator="out" in2="result2" result="result91" />
-<feBlend mode="darken" in2="result91" />
-</filter>
 <filter id="f063" inkscape:label="Black Hole" inkscape:menu="Morphology" inkscape:menu-tooltip="Creates a black light inside and outside" height="1.5" width="1.5" y="-0.25" x="-0.25" style="color-interpolation-filters:sRGB;">
 <feGaussianBlur stdDeviation="5" in="SourceAlpha" result="result1" />
 <feComposite operator="arithmetic" k2="3.2" k1="-1" k4="-2" result="result3" in2="result1" />
@@ -761,13 +745,6 @@ sodipodi:docname="filters.svg">
 <feComposite result="fbSourceGraphic" in="SourceGraphic" operator="out" in2="result2" />
 <feBlend mode="multiply" in="result1" in2="fbSourceGraphic" result="result91" />
 <feBlend mode="screen" in="fbSourceGraphic" in2="result91" />
-</filter>
-<filter id="f064" inkscape:label="Smooth Outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Outlining the lines and smoothing their crossings" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="4" />
-<feColorMatrix result="fbSourceGraphic" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 7 -4 " />
-<feGaussianBlur stdDeviation="0.7" result="result91" />
-<feComposite operator="xor" in2="result91" result="result92" />
-<feBlend mode="darken" in2="result92" />
 </filter>
 <filter id="f065" inkscape:label="Cubes" inkscape:menu="Scatter" inkscape:menu-tooltip="Scattered cubes; adjust the Morphology primitive to vary size" style="color-interpolation-filters:sRGB;">
 <feTurbulence baseFrequency="0.14" numOctaves="1" type="fractalNoise" />
@@ -947,23 +924,6 @@ sodipodi:docname="filters.svg">
 </feMerge>
 <feComposite result="result4" in="SourceGraphic" operator="in" in2="result2" id="feComposite2438" />
 </filter>
-<filter id="f080" inkscape:label="Inner Outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Draws an outline around" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur result="result1" in="SourceAlpha" stdDeviation="3" />
-<feComposite result="result3" k4="-2" k1="-1" k2="3.2" operator="arithmetic" in2="result1" />
-<feColorMatrix result="result2" values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 0 " />
-<feComposite operator="out" in="SourceGraphic" result="fbSourceGraphic" in2="result2" />
-<feBlend mode="darken" in2="fbSourceGraphic" in="fbSourceGraphic" />
-</filter>
-<filter id="f081" inkscape:label="Outline Double" inkscape:menu="Morphology" inkscape:menu-tooltip="Draws a smooth line inside colorized with the color it overlays" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="3" in="SourceAlpha" result="result1" />
-<feComposite operator="arithmetic" k2="3.2" k1="-1" k4="-2" result="result3" in2="result1" />
-<feColorMatrix values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 0 " result="result2" />
-<feComposite result="fbSourceGraphic" in="SourceGraphic" operator="out" in2="result2" />
-<feGaussianBlur in="fbSourceGraphic" stdDeviation="0.5" result="result4" />
-<feComposite operator="xor" in="result4" result="result5" in2="result4" />
-<feBlend result="result6" mode="darken" in="result5" in2="result5" />
-<feBlend in="result6" in2="result6" mode="darken" />
-</filter>
 <filter id="f083" x="-0.25" width="1.5" y="-0.5" height="2" inkscape:menu-tooltip="Colorizable filling with flow inside like transparency" inkscape:menu="Non realistic 3D shaders" inkscape:label="Shaken Liquid" style="color-interpolation-filters:sRGB;">
 <feFlood flood-color="rgb(158,236,254)" result="result9" />
 <feGaussianBlur result="result8" stdDeviation="7" in="SourceGraphic" />
@@ -978,11 +938,6 @@ sodipodi:docname="filters.svg">
 <feMergeNode in="fbSourceGraphic" />
 </feMerge>
 <feComposite in2="SourceAlpha" operator="in" result="result11" />
-</filter>
-<filter id="f084" inkscape:label="Outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Adds a glowing blur and removes the shape" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="5" result="result2" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 -2 " result="result1" />
-<feComposite operator="arithmetic" in="SourceGraphic" k2="-1" k3="1" in2="result1" />
 </filter>
 <filter id="f085" inkscape:label="Soft Focus Lens" inkscape:menu="Image effects" inkscape:menu-tooltip="Glowing image content without blurring it" height="1" y="0" width="1" x="0" style="color-interpolation-filters:sRGB;">
 <feGaussianBlur stdDeviation="5" result="result3" />
@@ -1163,14 +1118,6 @@ sodipodi:docname="filters.svg">
 <feGaussianBlur stdDeviation="0.5" result="result7" />
 <feDisplacementMap scale="25" result="result5" xChannelSelector="R" in="SourceGraphic" in2="result7" />
 <feComposite in="SourceGraphic" operator="atop" in2="result5" />
-</filter>
-<filter id="f105" inkscape:label="Color Outline, in" inkscape:menu="Morphology" inkscape:menu-tooltip="A colorizable inner outline with adjustable width and blur" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="2" result="result8" />
-<feColorMatrix result="result5" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 -9 " />
-<feComposite result="result6" in="SourceGraphic" operator="in" in2="result5" />
-<feFlood result="result10" in="result6" flood-opacity="1" flood-color="rgb(203,134,255)" />
-<feComposite result="result2" operator="in" in2="SourceGraphic" />
-<feBlend mode="normal" in="result6" in2="result2" />
 </filter>
 <filter id="f106" inkscape:label="Liquid" inkscape:menu="Textures" inkscape:menu-tooltip="Colorizable filling with liquid transparency" height="2" y="-0.5" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB;">
 <feGaussianBlur stdDeviation="5" result="result8" />
