@@ -1282,7 +1282,7 @@ static void sp_image_update_canvas_image(SPImage *image)
     }
 }
 
-static void sp_image_snappoints( SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const */*snapprefs*/ )
+static void sp_image_snappoints( SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs )
 {
     /* An image doesn't have any nodes to snap, but still we want to be able snap one image
     to another. Therefore we will create some snappoints at the corner, similar to a rect. If
@@ -1297,17 +1297,19 @@ static void sp_image_snappoints( SPItem const *item, std::vector<Inkscape::SnapC
         //far far away from the visible part from the clipped image
         //TODO Do return snappoints, but only when within visual bounding box
     } else {
-        // The image has not been clipped: return its corners, which might be rotated for example
-        SPImage &image = *SP_IMAGE(item);
-        double const x0 = image.x.computed;
-        double const y0 = image.y.computed;
-        double const x1 = x0 + image.width.computed;
-        double const y1 = y0 + image.height.computed;
-        Geom::Affine const i2d (item->i2dt_affine ());
-        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y0) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
-        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y1) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
-        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x1, y1) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
-        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x1, y0) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
+        if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_IMG_CORNER)) {
+            // The image has not been clipped: return its corners, which might be rotated for example
+            SPImage &image = *SP_IMAGE(item);
+            double const x0 = image.x.computed;
+            double const y0 = image.y.computed;
+            double const x1 = x0 + image.width.computed;
+            double const y1 = y0 + image.height.computed;
+            Geom::Affine const i2d (item->i2dt_affine ());
+            p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y0) * i2d, Inkscape::SNAPSOURCE_IMG_CORNER, Inkscape::SNAPTARGET_IMG_CORNER));
+            p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y1) * i2d, Inkscape::SNAPSOURCE_IMG_CORNER, Inkscape::SNAPTARGET_IMG_CORNER));
+            p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x1, y1) * i2d, Inkscape::SNAPSOURCE_IMG_CORNER, Inkscape::SNAPTARGET_IMG_CORNER));
+            p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x1, y0) * i2d, Inkscape::SNAPSOURCE_IMG_CORNER, Inkscape::SNAPTARGET_IMG_CORNER));
+        }
     }
 }
 

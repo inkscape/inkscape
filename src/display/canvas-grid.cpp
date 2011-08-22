@@ -1072,7 +1072,7 @@ void CanvasXYGridSnapper::_addSnappedPoint(SnappedConstraints &sc, Geom::Point c
  */
 bool CanvasXYGridSnapper::ThisSnapperMightSnap() const
 {
-    return _snap_enabled && _snapmanager->snapprefs.getSnapToGrids() && _snapmanager->snapprefs.getSnapModeAny();
+    return _snap_enabled && _snapmanager->snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GRID);
 }
 
 } // namespace Inkscape

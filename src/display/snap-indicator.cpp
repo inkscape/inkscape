@@ -120,9 +120,6 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
             case SNAPTARGET_ROTATION_CENTER:
                 target_name = _("object rotation center");
                 break;
-            case SNAPTARGET_HANDLE:
-                target_name = _("handle");
-                break;
             case SNAPTARGET_BBOX_EDGE_MIDPOINT:
                 target_name = _("bounding box side midpoint");
                 break;
@@ -132,13 +129,11 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
             case SNAPTARGET_PAGE_CORNER:
                 target_name = _("page corner");
                 break;
-            case SNAPTARGET_CONVEX_HULL_CORNER:
-                target_name = _("convex hull corner");
-                break;
             case SNAPTARGET_ELLIPSE_QUADRANT_POINT:
                 target_name = _("quadrant point");
                 break;
-            case SNAPTARGET_CORNER:
+            case SNAPTARGET_RECT_CORNER:
+            case SNAPTARGET_IMG_CORNER:
                 target_name = _("corner");
                 break;
             case SNAPTARGET_TEXT_ANCHOR:
@@ -206,7 +201,8 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
             case SNAPSOURCE_ELLIPSE_QUADRANT_POINT:
                 source_name = _("Quadrant point");
                 break;
-            case SNAPSOURCE_CORNER:
+            case SNAPSOURCE_RECT_CORNER:
+            case SNAPSOURCE_IMG_CORNER:
                 source_name = _("Corner");
                 break;
             case SNAPSOURCE_TEXT_ANCHOR:

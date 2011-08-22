@@ -548,20 +548,15 @@ sp_star_position_set (SPStar *star, gint sides, Geom::Point center, gdouble r1, 
 static void sp_star_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
 {
     // We will determine the star's midpoint ourselves, instead of trusting on the base class
-    // Therefore setSnapObjectMidpoints() is set to false temporarily
+    // Therefore snapping to object midpoints is temporarily disabled
     Inkscape::SnapPreferences local_snapprefs = *snapprefs;
-    local_snapprefs.setSnapObjectMidpoints(false);
+    local_snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT, false);
 
     if (((SPItemClass *) parent_class)->snappoints) {
         ((SPItemClass *) parent_class)->snappoints (item, p, &local_snapprefs);
     }
 
-    // Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
-    if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide() || snapprefs->getSnapModeOthers())) {
-        return;
-    }
-
-    if (snapprefs->getSnapObjectMidpoints()) {
+    if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT)) {
         Geom::Affine const i2dt (item->i2dt_affine ());
         p.push_back(Inkscape::SnapCandidatePoint(SP_STAR(item)->center * i2dt,Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
     }

@@ -1188,18 +1188,13 @@ void SPShape::sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::Snap
         return;
     }
 
-    // Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
-    if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide() || snapprefs->getSnapModeOthers())) {
-        return;
-    }
-
     Geom::PathVector const &pathv = shape->curve->get_pathvector();
     if (pathv.empty())
         return;
 
     Geom::Affine const i2dt (item->i2dt_affine ());
 
-    if (snapprefs->getSnapObjectMidpoints()) {
+    if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT)) {
         Geom::OptRect bbox = item->getBounds(i2dt);
         if (bbox) {
             p.push_back(Inkscape::SnapCandidatePoint(bbox->midpoint(), Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
@@ -1207,7 +1202,7 @@ void SPShape::sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::Snap
     }
 
     for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
-        if (snapprefs->getSnapToItemNode()) {
+        if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP)) {
             // Add the first point of the path
             p.push_back(Inkscape::SnapCandidatePoint(path_it->initialPoint() * i2dt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
         }
@@ -1217,14 +1212,14 @@ void SPShape::sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::Snap
         while (curve_it1 != path_it->end_default())
         {
             // For each path: consider midpoints of line segments for snapping
-            if (snapprefs->getSnapLineMidpoints()) { // only do this when we're snapping nodes (enforces strict snapping)
+            if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_LINE_MIDPOINT)) {
                 if (Geom::LineSegment const* line_segment = dynamic_cast<Geom::LineSegment const*>(&(*curve_it1))) {
                     p.push_back(Inkscape::SnapCandidatePoint(Geom::middle_point(*line_segment) * i2dt, Inkscape::SNAPSOURCE_LINE_MIDPOINT, Inkscape::SNAPTARGET_LINE_MIDPOINT));
                 }
             }
 
             if (curve_it2 == path_it->end_default()) { // Test will only pass for the last iteration of the while loop
-                if (snapprefs->getSnapToItemNode() && !path_it->closed()) {
+                if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP) && !path_it->closed()) {
                     // Add the last point of the path, but only for open paths
                     // (for closed paths the first and last point will coincide)
                     p.push_back(Inkscape::SnapCandidatePoint((*curve_it1).finalPoint() * i2dt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
@@ -1235,8 +1230,8 @@ void SPShape::sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::Snap
 
                 Geom::NodeType nodetype = Geom::get_nodetype(*curve_it1, *curve_it2);
 
-                bool c1 = snapprefs->getSnapToItemNode() && (nodetype == Geom::NODE_CUSP || nodetype == Geom::NODE_NONE);
-                bool c2 = snapprefs->getSnapSmoothNodes() && (nodetype == Geom::NODE_SMOOTH || nodetype == Geom::NODE_SYMM);
+                bool c1 = snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP) && (nodetype == Geom::NODE_CUSP || nodetype == Geom::NODE_NONE);
+                bool c2 = snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_SMOOTH) && (nodetype == Geom::NODE_SMOOTH || nodetype == Geom::NODE_SYMM);
 
                 if (c1 || c2) {
                     Inkscape::SnapSourceType sst;
@@ -1266,7 +1261,7 @@ void SPShape::sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::Snap
 
         // Find the internal intersections of each path and consider these for snapping
         // (using "Method 1" as described in Inkscape::ObjectSnapper::_collectNodes())
-        if (snapprefs->getSnapIntersectionCS()) {
+        if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_PATH_INTERSECTION)) {
             Geom::Crossings cs;
             try {
                 cs = self_crossings(*path_it);

@@ -433,9 +433,9 @@ std::vector<Inkscape::SnapCandidatePoint> Selection::getSnapPoints(SnapPreferenc
     GSList const *items = const_cast<Selection *>(this)->itemList();
 
     SnapPreferences snapprefs_dummy = *snapprefs; // create a local copy of the snapping prefs
-    snapprefs_dummy.setIncludeItemCenter(false); // locally disable snapping to the item center
-    snapprefs_dummy.setSnapToItemNode(true); // consider any type of nodes as a snap source
-    snapprefs_dummy.setSnapSmoothNodes(true); // i.e. disregard the smooth / cusp node preference
+    snapprefs_dummy.setTargetSnappable(Inkscape::SNAPTARGET_ROTATION_CENTER, false); // locally disable snapping to the item center
+    //snapprefs_dummy.setTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP, true); // consider any type of nodes as a snap source
+    //snapprefs_dummy.setTargetSnappable(Inkscape::SNAPTARGET_NODE_SMOOTH, true); // i.e. disregard the smooth / cusp node preference
     std::vector<Inkscape::SnapCandidatePoint> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
         SPItem *this_item = SP_ITEM(iter->data);
@@ -443,7 +443,7 @@ std::vector<Inkscape::SnapCandidatePoint> Selection::getSnapPoints(SnapPreferenc
 
         //Include the transformation origin for snapping
         //For a selection or group only the overall origin is considered
-        if (snapprefs != NULL && snapprefs->getIncludeItemCenter()) {
+        if (snapprefs != NULL && snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_ROTATION_CENTER)) {
             p.push_back(Inkscape::SnapCandidatePoint(this_item->getCenter(), SNAPSOURCE_ROTATION_CENTER));
         }
     }
@@ -456,8 +456,8 @@ std::vector<Inkscape::SnapCandidatePoint> Selection::getSnapPointsConvexHull(Sna
     GSList const *items = const_cast<Selection *>(this)->itemList();
 
     SnapPreferences snapprefs_dummy = *snapprefs; // create a local copy of the snapping prefs
-    snapprefs_dummy.setSnapToItemNode(true); // consider any type of nodes as a snap source
-    snapprefs_dummy.setSnapSmoothNodes(true); // i.e. disregard the smooth / cusp node preference
+    snapprefs_dummy.setTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP, true); // consider any type of nodes as a snap source
+    snapprefs_dummy.setTargetSnappable(Inkscape::SNAPTARGET_NODE_SMOOTH, true); // i.e. disregard the smooth / cusp node preference
 
     std::vector<Inkscape::SnapCandidatePoint> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {

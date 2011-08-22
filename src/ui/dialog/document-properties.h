@@ -106,7 +106,6 @@ protected:
     UI::Widget::PageSizer             _page_sizer;
     //---------------------------------------------------------------
     UI::Widget::RegisteredCheckButton _rcb_sgui;
-    UI::Widget::RegisteredCheckButton _rcbsng;
     UI::Widget::RegisteredColorPicker _rcp_gui;
     UI::Widget::RegisteredColorPicker _rcp_hgui;
     //---------------------------------------------------------------

@@ -770,7 +770,7 @@ void CanvasAxonomGridSnapper::_addSnappedPoint(SnappedConstraints &sc, Geom::Poi
 
 bool CanvasAxonomGridSnapper::ThisSnapperMightSnap() const
 {
-    return _snap_enabled && _snapmanager->snapprefs.getSnapToGrids() && _snapmanager->snapprefs.getSnapModeAny();
+    return _snap_enabled && _snapmanager->snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GRID);
 }
 
 

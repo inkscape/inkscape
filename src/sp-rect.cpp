@@ -566,11 +566,6 @@ static void sp_rect_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
     g_assert(item != NULL);
     g_assert(SP_IS_RECT(item));
 
-    // Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
-    if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide() || snapprefs->getSnapModeOthers())) {
-        return;
-    }
-
     SPRect *rect = SP_RECT(item);
 
     Geom::Affine const i2dt (item->i2dt_affine ());
@@ -580,21 +575,21 @@ static void sp_rect_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
     Geom::Point p2 = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2dt;
     Geom::Point p3 = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2dt;
 
-    if (snapprefs->getSnapToItemNode()) {
-        p.push_back(Inkscape::SnapCandidatePoint(p0, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
-        p.push_back(Inkscape::SnapCandidatePoint(p1, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
-        p.push_back(Inkscape::SnapCandidatePoint(p2, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
-        p.push_back(Inkscape::SnapCandidatePoint(p3, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
+    if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_RECT_CORNER)) {
+        p.push_back(Inkscape::SnapCandidatePoint(p0, Inkscape::SNAPSOURCE_RECT_CORNER, Inkscape::SNAPTARGET_RECT_CORNER));
+        p.push_back(Inkscape::SnapCandidatePoint(p1, Inkscape::SNAPSOURCE_RECT_CORNER, Inkscape::SNAPTARGET_RECT_CORNER));
+        p.push_back(Inkscape::SnapCandidatePoint(p2, Inkscape::SNAPSOURCE_RECT_CORNER, Inkscape::SNAPTARGET_RECT_CORNER));
+        p.push_back(Inkscape::SnapCandidatePoint(p3, Inkscape::SNAPSOURCE_RECT_CORNER, Inkscape::SNAPTARGET_RECT_CORNER));
     }
 
-    if (snapprefs->getSnapLineMidpoints()) { // only do this when we're snapping nodes (enforce strict snapping)
+    if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_LINE_MIDPOINT)) {
         p.push_back(Inkscape::SnapCandidatePoint((p0 + p1)/2, Inkscape::SNAPSOURCE_LINE_MIDPOINT, Inkscape::SNAPTARGET_LINE_MIDPOINT));
         p.push_back(Inkscape::SnapCandidatePoint((p1 + p2)/2, Inkscape::SNAPSOURCE_LINE_MIDPOINT, Inkscape::SNAPTARGET_LINE_MIDPOINT));
         p.push_back(Inkscape::SnapCandidatePoint((p2 + p3)/2, Inkscape::SNAPSOURCE_LINE_MIDPOINT, Inkscape::SNAPTARGET_LINE_MIDPOINT));
         p.push_back(Inkscape::SnapCandidatePoint((p3 + p0)/2, Inkscape::SNAPSOURCE_LINE_MIDPOINT, Inkscape::SNAPTARGET_LINE_MIDPOINT));
     }
 
-    if (snapprefs->getSnapObjectMidpoints()) { // only do this when we're snapping nodes (enforce strict snapping)
+    if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT)) {
         p.push_back(Inkscape::SnapCandidatePoint((p0 + p2)/2, Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
     }
 

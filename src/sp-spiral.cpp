@@ -520,20 +520,15 @@ sp_spiral_position_set       (SPSpiral          *spiral,
 static void sp_spiral_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
 {
     // We will determine the spiral's midpoint ourselves, instead of trusting on the base class
-    // Therefore setSnapObjectMidpoints() is set to false temporarily
+    // Therefore snapping to object midpoints is temporarily disabled
     Inkscape::SnapPreferences local_snapprefs = *snapprefs;
-    local_snapprefs.setSnapObjectMidpoints(false);
+    local_snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT, false);
 
     if (((SPItemClass *) parent_class)->snappoints) {
         ((SPItemClass *) parent_class)->snappoints (item, p, &local_snapprefs);
     }
 
-    // Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
-    if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide() || snapprefs->getSnapModeOthers())) {
-        return;
-    }
-
-    if (snapprefs->getSnapObjectMidpoints()) {
+    if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT)) {
         Geom::Affine const i2dt (item->i2dt_affine ());
         SPSpiral *spiral = SP_SPIRAL(item);
         p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(spiral->cx, spiral->cy) * i2dt, Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));

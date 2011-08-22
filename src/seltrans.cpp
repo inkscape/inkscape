@@ -324,18 +324,19 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     _bbox_points_for_translating.clear();
     // Collect the bounding box's corners and midpoints for each selected item
     if (m.snapprefs.getSnapModeBBox()) {
-        bool mp = m.snapprefs.getSnapBBoxMidpoints();
-        bool emp = m.snapprefs.getSnapBBoxEdgeMidpoints();
+        bool c = m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_CORNER);
+        bool mp = m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_MIDPOINT);
+        bool emp = m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_EDGE_MIDPOINT);
         // Preferably we'd use the bbox of each selected item, instead of the bbox of the selection as a whole; for translations
         // this is easy to do, but when snapping the visual bbox while scaling we will have to compensate for the scaling of the
         // stroke width. (see get_scale_transform_with_stroke()). This however is currently only implemented for a single bbox.
         // That's why we have both _bbox_points_for_translating and _bbox_points.
-        getBBoxPoints(selection->bounds(_snap_bbox_type), &_bbox_points, false, true, emp, mp);
+        getBBoxPoints(selection->bounds(_snap_bbox_type), &_bbox_points, false, c, emp, mp);
         if (((_items.size() > 0) && (_items.size() < 50)) || prefs->getBool("/options/snapclosestonly/value", false)) {
             // More than 50 items will produce at least 200 bbox points, which might make Inkscape crawl
             // (see the comment a few lines above). In that case we will use the bbox of the selection as a whole
             for (unsigned i = 0; i < _items.size(); i++) {
-                getBBoxPoints(_items[i]->getBboxDesktop(_snap_bbox_type), &_bbox_points_for_translating, false, true, emp, mp);
+                getBBoxPoints(_items[i]->getBboxDesktop(_snap_bbox_type), &_bbox_points_for_translating, false, c, emp, mp);
             }
         } else {
             _bbox_points_for_translating = _bbox_points; // use the bbox points of the selection as a whole

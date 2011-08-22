@@ -95,7 +95,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INKSCAPE_SNAP_BBOX, "inkscape:snap-bbox"},
     {SP_ATTR_INKSCAPE_SNAP_NODES, "inkscape:snap-nodes"},
     {SP_ATTR_INKSCAPE_SNAP_OTHERS, "inkscape:snap-others"},
-    {SP_ATTR_INKSCAPE_SNAP_FROM_GUIDE, "inkscape:snap-from-guide"},
+    //{SP_ATTR_INKSCAPE_SNAP_FROM_GUIDE, "inkscape:snap-from-guide"},
     {SP_ATTR_INKSCAPE_SNAP_CENTER, "inkscape:snap-center"},
     {SP_ATTR_INKSCAPE_SNAP_GRIDS, "inkscape:snap-grids"},
     {SP_ATTR_INKSCAPE_SNAP_TO_GUIDES, "inkscape:snap-to-guides"},

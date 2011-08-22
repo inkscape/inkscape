@@ -275,11 +275,6 @@ static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscap
     g_assert(item != NULL);
     g_assert(SP_IS_GENERICELLIPSE(item));
 
-    // Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
-    if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide() || snapprefs->getSnapModeOthers())) {
-        return;
-    }
-
     SPGenericEllipse *ellipse = SP_GENERICELLIPSE(item);
     sp_genericellipse_normalize(ellipse);
     Geom::Affine const i2dt = item->i2dt_affine();
@@ -304,7 +299,7 @@ static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscap
 
     // Snap to the 4 quadrant points of the ellipse, but only if the arc
     // spans far enough to include them
-    if (snapprefs->getSnapToItemNode()) { //TODO: Make a separate snap option toggle for this?
+    if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_ELLIPSE_QUADRANT_POINT)) {
         double angle = 0;
         for (angle = 0; angle < SP_2PI; angle += M_PI_2) {
             if (angle >= ellipse->start && angle <= ellipse->end) {
@@ -315,13 +310,20 @@ static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscap
     }
 
     // Add the centre, if we have a closed slice or when explicitly asked for
-    if ((snapprefs->getSnapToItemNode() && slice && ellipse->closed) || snapprefs->getSnapObjectMidpoints()) {
+    bool c1 = snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP) && slice && ellipse->closed;
+    bool c2 = snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT);
+    if (c1 || c2) {
         pt = Geom::Point(cx, cy) * i2dt;
-        p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
+        if (c1) {
+            p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
+        }
+        if (c2) {
+            p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
+        }
     }
 
     // And if we have a slice, also snap to the endpoints
-    if (snapprefs->getSnapToItemNode() && slice) {
+    if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_NODE_CUSP) && slice) {
         // Add the start point, if it's not coincident with a quadrant point
         if (fmod(ellipse->start, M_PI_2) != 0.0 ) {
             pt = Geom::Point(cx + cos(ellipse->start)*rx, cy + sin(ellipse->start)*ry) * i2dt;

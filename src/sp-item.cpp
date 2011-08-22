@@ -900,26 +900,15 @@ Geom::OptRect SPItem::getBboxDesktop(SPItem::BBoxType type)
     return rect;
 }
 
-void SPItem::sp_item_private_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const */*snapprefs*/)
+void SPItem::sp_item_private_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
 {
     /* This will only be called if the derived class doesn't override this.
      * see for example sp_genericellipse_snappoints in sp-ellipse.cpp
      * We don't know what shape we could be dealing with here, so we'll just
-     * return the corners of the bounding box */
-
-    Geom::OptRect bbox = item->getBounds(item->i2dt_affine());
-
-    if (bbox) {
-        Geom::Point p1, p2;
-        p1 = bbox->min();
-        p2 = bbox->max();
-        p.push_back(Inkscape::SnapCandidatePoint(p1, Inkscape::SNAPSOURCE_BBOX_CORNER, Inkscape::SNAPTARGET_BBOX_CORNER));
-        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(p1[Geom::X], p2[Geom::Y]), Inkscape::SNAPSOURCE_BBOX_CORNER, Inkscape::SNAPTARGET_BBOX_CORNER));
-        p.push_back(Inkscape::SnapCandidatePoint(p2, Inkscape::SNAPSOURCE_BBOX_CORNER, Inkscape::SNAPTARGET_BBOX_CORNER));
-        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(p2[Geom::X], p1[Geom::Y]), Inkscape::SNAPSOURCE_BBOX_CORNER, Inkscape::SNAPTARGET_BBOX_CORNER));
-    }
-
+     * do nothing
+     */
 }
+
 
 void SPItem::getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs) const
 {
@@ -930,7 +919,7 @@ void SPItem::getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscap
     }
 
     // Get the snappoints at the item's center
-    if (snapprefs != NULL && snapprefs->getIncludeItemCenter()) {
+    if (snapprefs != NULL && snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_ROTATION_CENTER)) {
         p.push_back(Inkscape::SnapCandidatePoint(getCenter(), Inkscape::SNAPSOURCE_ROTATION_CENTER, Inkscape::SNAPTARGET_ROTATION_CENTER));
     }
 

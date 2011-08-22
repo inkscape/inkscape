@@ -97,7 +97,7 @@ SnapManager::getGridSnappers() const
 {
     SnapperList s;
 
-    if (_desktop && _desktop->gridsEnabled() && snapprefs.getSnapToGrids()) {
+    if (_desktop && _desktop->gridsEnabled() && snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GRID)) {
         for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
             Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
             s.push_back(grid->snapper);
@@ -577,7 +577,7 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal,
         return;
     }
 
-    if (!(object.ThisSnapperMightSnap() || snapprefs.getSnapToGuides())) {
+    if (!(object.ThisSnapperMightSnap() || snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GUIDE))) {
         return;
     }
 
@@ -624,7 +624,7 @@ void SnapManager::guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline)
         return;
     }
 
-    if (!(object.ThisSnapperMightSnap() || snapprefs.getSnapToGuides())) {
+    if (!(object.ThisSnapperMightSnap() || snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GUIDE))) {
         return;
     }
 
@@ -1202,7 +1202,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
         }
     }
 
-    if (snapprefs.getSnapIntersectionCS()) {
+    if (snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_PATH_INTERSECTION)) {
         // search for the closest snapped intersection of curves
         Inkscape::SnappedPoint closestCurvesIntersection;
         if (getClosestIntersectionCS(sc.curves, p.getPoint(), closestCurvesIntersection, _desktop->dt2doc())) {
@@ -1247,7 +1247,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
         }
 
         // search for the closest snapped intersection of grid with guide lines
-        if (snapprefs.getSnapIntersectionGG()) {
+        if (snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GRID_GUIDE_INTERSECTION)) {
             Inkscape::SnappedPoint closestGridGuidePoint;
             if (getClosestIntersectionSL(sc.grid_lines, sc.guide_lines, closestGridGuidePoint)) {
                 closestGridGuidePoint.setSource(p.getSourceType());

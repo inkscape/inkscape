@@ -443,7 +443,7 @@ static char * sp_text_description(SPItem *item)
 
 static void sp_text_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
 {
-    if (snapprefs->getSnapTextBaseline()) {
+    if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_TEXT_BASELINE)) {
         // Choose a point on the baseline for snapping from or to, with the horizontal position
         // of this point depending on the text alignment (left vs. right)
         Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);
