@@ -115,7 +115,22 @@ bool Inkscape::SnapPreferences::getSnapFrom(Inkscape::SnapSourceType t) const
 {
     return (_snap_from & t);
 }
-
+/**
+ *  \brief Map snap target to array index.
+ *
+ *  The status of each snap toggle (in the snap toolbar) is stored as a boolean value in an array. This method returns the position
+ *  of relevant boolean in that array, for any given type of snap target. For most snap targets, the enumerated value of that targets
+ *  matches the position in the array (primary snap targets). This however does not hold for snap targets which don't have their own
+ *  toggle button (secondary snap targets).
+ *
+ *  PS:
+ *  - For snap sources, just pass the corresponding snap target instead (each snap source should have a twin snap target, but not vice versa)
+ *  - All parameters are passed by reference, and will be overwritten
+ *
+ *  \param target Stores the enumerated snap target,  which can be modified to correspond to the array index of this snap target
+ *  \param always_on If true, then this snap target is always active and cannot be toggled
+ *  \param group_on If true, then this snap target is in a snap group that has been enabled (e.g. bbox group, nodes/paths group, or "others" group
+ */
 void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType &target, bool &always_on, bool &group_on) const
 {
     if (target & SNAPTARGET_BBOX_CATEGORY) {
@@ -186,12 +201,12 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
 void Inkscape::SnapPreferences::setTargetSnappable(Inkscape::SnapTargetType const target, bool enabled)
 {
     bool always_on = false;
-    bool group_on = false;
+    bool group_on = false; // Only needed as a dummy
     Inkscape::SnapTargetType index = target;
 
     _mapTargetToArrayIndex(index, always_on, group_on);
 
-    if (always_on) {
+    if (always_on) { // If true, then this snap target is always active and cannot be toggled
         // Catch coding errors
         g_warning("Snap-preferences warning: Trying to enable/disable a snap target (#%i) that's always on by definition", index);
     } else {
@@ -211,8 +226,8 @@ bool Inkscape::SnapPreferences::isTargetSnappable(Inkscape::SnapTargetType const
 
     _mapTargetToArrayIndex(index, always_on, group_on);
 
-    if (group_on) {
-        if (always_on) {
+    if (group_on) { // If true, then this snap target is in a snap group that has been enabled (e.g. bbox group, nodes/paths group, or "others" group
+        if (always_on) { // If true, then this snap target is always active and cannot be toggled
             return true;
         } else {
             if (_active_snap_targets[index] == -1) {
@@ -238,35 +253,22 @@ bool Inkscape::SnapPreferences::isTargetSnappable(Inkscape::SnapTargetType const
     return isTargetSnappable(target1) || isTargetSnappable(target2) || isTargetSnappable(target3) || isTargetSnappable(target4);
 }
 
-
-//bool Inkscape::SnapPreferences::isAnyBBoxSnappable() const {
-//    return getSnapModeBBox() || getSnapModeOthers() || (getSnapModeNode() && !_strict_snapping);
-//}
-
-//bool Inkscape::SnapPreferences::isAnyNodeOrPathSnappable() const {
-//    return getSnapModeNode() || getSnapModeOthers() || (getSnapModeBBox() && !_strict_snapping);
-//}
-
-//bool Inkscape::SnapPreferences::isAnyOtherSnappable() const {
-//    return getSnapModeOthers();
-//}
-
 bool Inkscape::SnapPreferences::isSnapButtonEnabled(Inkscape::SnapTargetType const target) const
 {
-    bool always_on = false;
-    bool group_on = false;
+    bool always_on = false; // Only needed as a dummy
+    bool group_on = false; // Only needed as a dummy
     Inkscape::SnapTargetType index = target;
 
     _mapTargetToArrayIndex(index, always_on, group_on);
 
     if (_active_snap_targets[index] == -1) {
         // Catch coding errors
-        g_warning("Snap-preferences warning: Using an uninitialized snap target setting");
+        g_warning("Snap-preferences warning: Using an uninitialized snap target setting (#%i)", index);
     } else {
         if (index == target) { // I.e. if it has not been re-mapped, then we have a primary target at hand, which does have its own toggle button
             return _active_snap_targets[index];
         } else { // If it has been re-mapped though, then this target does not have its own toggle button and therefore the button status cannot be read
-            g_warning("Snap-preferences warning: Trying to determine the button status of a secondary snap target; However, only primary targets have a button");
+            g_warning("Snap-preferences warning: Trying to determine the button status of a secondary snap target (#%i); However, only primary targets have a button", index);
         }
     }
 
