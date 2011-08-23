@@ -33,9 +33,15 @@ namespace Filter {
 
     Filter's parameters:
     * Type (enum, default "Smooth edges") ->
-        Smooth edges = composite1 (in="SourceGraphic", in2="blur")
-        Smooth all = composite1 (in="blur", in2="blur")
-    * Blur (0.01->10., default 5.) -> blur (stdDeviation)
+        Inner = composite1 (operator="in")
+        Outer = composite1 (operator="over")
+        Open = composite1 (operator="XOR")
+    * Width (0.01->30., default 10.) -> blur (stdDeviation)
+    * Level (0.2->2., default 1.) -> composite2 (k2)
+    * Dilatation (1.->100., default 10.) -> colormatrix1 (last-1 value)
+    * Erosion (1.->100., default 1.) -> colormatrix1 (last value)
+    * Antialiasing (0.01->1., default 1) -> blur2 (stdDeviation)
+    * Blur content (boolean, default false) -> blend (true: in="colormatrix2", false: in="SourceGraphic")
 */
 
 class Crosssmooth : public Inkscape::Extension::Internal::Filter::Filter {
@@ -52,10 +58,17 @@ public:
               "<name>" N_("Cross-smooth") "</name>\n"
               "<id>org.inkscape.effect.filter.crosssmooth</id>\n"
               "<param name=\"type\" gui-text=\"" N_("Type:") "\" type=\"enum\">\n"
-                "<_item value=\"edges\">Smooth edges</_item>\n"
-                "<_item value=\"all\">Smooth all</_item>\n"
+                "<_item value=\"in\">Inner</_item>\n"
+                "<_item value=\"over\">Outer</_item>\n"
+                "<_item value=\"xor\">Open</_item>\n"
               "</param>\n"
-              "<param name=\"blur\" gui-text=\"" N_("Blur:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"10.00\">5</param>\n"
+              "<param name=\"width\" gui-text=\"" N_("Width:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"30.\">10</param>\n"
+              "<param name=\"level\" gui-text=\"" N_("Level:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.2\" max=\"2\">1</param>\n"
+              "<param name=\"dilat\" gui-text=\"" N_("Dilatation:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"1\" max=\"100\">10</param>\n"
+              "<param name=\"erosion\" gui-text=\"" N_("Erosion:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"1\" max=\"100\">1</param>\n"
+              "<param name=\"antialias\" gui-text=\"" N_("Antialiasing:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"1\">1</param>\n"
+              "<param name=\"content\" gui-text=\"" N_("Blur content") "\" type=\"boolean\" >false</param>\n"
+
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -75,29 +88,43 @@ Crosssmooth::get_filter_text (Inkscape::Extension::Extension * ext)
 {
     if (_filter != NULL) g_free((void *)_filter);
 
-    std::ostringstream blur;
-    std::ostringstream c1in;
+    std::ostringstream type;
+    std::ostringstream width;
+    std::ostringstream level;
+    std::ostringstream dilat;
+    std::ostringstream erosion;
+    std::ostringstream antialias;
+    std::ostringstream content;
 
-    blur << ext->get_param_float("blur");
+    type << ext->get_param_enum("type");
+    width << ext->get_param_float("width");
+    level << ext->get_param_float("level");
+    dilat << ext->get_param_float("dilat");
+    erosion << (1 - ext->get_param_float("erosion"));
+    antialias << ext->get_param_float("antialias");
 
-    const gchar *type = ext->get_param_enum("type");
-    if((g_ascii_strcasecmp("all", type) == 0)) {
-        c1in << "blur";
+    if (ext->get_param_bool("content")) {
+        content << "colormatrix2";
     } else {
-        c1in << "SourceGraphic";
+        content << "SourceGraphic";
     }
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Cross-smooth\">\n"
-          "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
-          "<feComposite in=\"%s\" in2=\"blur\" operator=\"atop\" result=\"composite1\" />\n"
-          "<feComposite in2=\"composite1\" operator=\"in\" result=\"composite2\" />\n"
-          "<feComposite in2=\"composite2\" operator=\"in\" result=\"composite3\" />\n"
-          "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -10 \" result=\"colormatrix\" />\n"
-        "</filter>\n", blur.str().c_str(), c1in.str().c_str());
+          "<feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%s\" result=\"blur1\" />\n"
+          "<feComposite in=\"blur1\" in2=\"blur1\" operator=\"%s\" result=\"composite1\" />\n"
+          "<feComposite in=\"composite1\" in2=\"composite1\" k2=\"%s\" operator=\"arithmetic\" result=\"composite2\" />\n"
+          "<feColorMatrix in=\"composite2\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %s %s \" result=\"colormatrix1\" />\n"
+          "<feGaussianBlur stdDeviation=\"%s\" result=\"blur2\" />\n"
+          "<feColorMatrix in=\"blur2\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 -1 \" result=\"colormatrix2\" />\n"
+          "<feBlend in=\"%s\" in2=\"colormatrix2\" stdDeviation=\"17\" mode=\"normal\" result=\"blend\" />\n"
+          "<feComposite in=\"blend\" in2=\"colormatrix2\" operator=\"in\" result=\"composite3\" />\n"
+        "</filter>\n", width.str().c_str(), type.str().c_str(), level.str().c_str(),
+                       dilat.str().c_str(), erosion.str().c_str(), antialias.str().c_str(),
+                       content.str().c_str());
 
     return _filter;
-}; /* Crosssmooth filter */
+}; /* Cross-smooth filter */
 
 /**
     \brief    Custom predefined Outline filter.

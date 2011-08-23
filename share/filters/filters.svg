@@ -738,14 +738,6 @@ sodipodi:docname="filters.svg">
 <feComposite in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.4" k3="1.7" in2="result2" />
 <feBlend result="fbSourceGraphic" mode="normal" in2="result2" />
 </filter>
-<filter id="f063" inkscape:label="Black Hole" inkscape:menu="Morphology" inkscape:menu-tooltip="Creates a black light inside and outside" height="1.5" width="1.5" y="-0.25" x="-0.25" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="5" in="SourceAlpha" result="result1" />
-<feComposite operator="arithmetic" k2="3.2" k1="-1" k4="-2" result="result3" in2="result1" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 0 " result="result2" />
-<feComposite result="fbSourceGraphic" in="SourceGraphic" operator="out" in2="result2" />
-<feBlend mode="multiply" in="result1" in2="fbSourceGraphic" result="result91" />
-<feBlend mode="screen" in="fbSourceGraphic" in2="result91" />
-</filter>
 <filter id="f065" inkscape:label="Cubes" inkscape:menu="Scatter" inkscape:menu-tooltip="Scattered cubes; adjust the Morphology primitive to vary size" style="color-interpolation-filters:sRGB;">
 <feTurbulence baseFrequency="0.14" numOctaves="1" type="fractalNoise" />
 <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -3.5 " result="result5" />
