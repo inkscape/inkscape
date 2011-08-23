@@ -2188,7 +2188,7 @@ static void toggle_snap_callback(GtkToggleAction *act, gpointer data) //data poi
             v = nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_GRID);
             sp_repr_set_boolean(repr, "inkscape:snap-grids", !v);
             break;
-        case SP_ATTR_INKSCAPE_SNAP_TO_GUIDE:
+        case SP_ATTR_INKSCAPE_SNAP_GUIDE:
             v = nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_GUIDE);
             sp_repr_set_boolean(repr, "inkscape:snap-to-guides", !v);
             break;
@@ -2432,8 +2432,8 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
     {
         InkToggleAction* act = ink_toggle_action_new("ToggleSnapToGuides",
-                                                     _("Guides"), _("Snap to guides"), INKSCAPE_ICON("guides"), secondarySize,
-                                                     SP_ATTR_INKSCAPE_SNAP_TO_GUIDE);
+                                                     _("Guides"), _("Snap guides"), INKSCAPE_ICON("guides"), secondarySize,
+                                                     SP_ATTR_INKSCAPE_SNAP_GUIDE);
 
         gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );

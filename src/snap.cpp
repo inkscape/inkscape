@@ -560,11 +560,7 @@ Inkscape::SnappedPoint SnapManager::constrainedAngularSnap(Inkscape::SnapCandida
 }
 
 /**
- *  \brief Try to snap a point of a guide to another guide or to a node
- *
- *  Try to snap a point of a guide to another guide or to a node in two degrees-
- *  of-freedom, i.e. snap in any direction on the two dimensional canvas to the
- *  nearest snap target. This method is used when dragging or rotating a guide
+ *  \brief Wrapper method to make snapping of the guide origin a bit easier (i.e. simplifies the calling code)
  *
  *  PS: SnapManager::setup() must have been called before calling this method,
  *
@@ -573,11 +569,7 @@ Inkscape::SnappedPoint SnapManager::constrainedAngularSnap(Inkscape::SnapCandida
  */
 void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal, SPGuideDragType drag_type) const
 {
-    if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally()) {
-        return;
-    }
-
-    if (!(object.ThisSnapperMightSnap() || snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GUIDE))) {
+    if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally() || !snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GUIDE)) {
         return;
     }
 
@@ -586,15 +578,8 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal,
         candidate = Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_GUIDE);
     }
 
-    // Snap to nodes
     SnappedConstraints sc;
-    if (object.ThisSnapperMightSnap()) {
-        object.guideFreeSnap(sc, p, guide_normal);
-    }
-
-    // Snap to guides & grid lines
-    SnapperList snappers = getGridSnappers();
-    snappers.push_back(&guide);
+    SnapperList snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
         (*i)->freeSnap(sc, candidate, Geom::OptRect(), NULL, NULL);
     }
@@ -605,12 +590,7 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal,
 }
 
 /**
- *  \brief Try to snap a point on a guide to the intersection with another guide or a path
- *
- *  Try to snap a point on a guide to the intersection of that guide with another
- *  guide or with a path. The snapped point will lie somewhere on the guide-line,
- *  making this is a constrained snap, i.e. in only one degree-of-freedom.
- *  This method is used when dragging the origin of the guide along the guide itself.
+ *  \brief Wrapper method to make snapping of the guide origin a bit easier (i.e. simplifies the calling code)
  *
  *  PS: SnapManager::setup() must have been called before calling this method,
  *
@@ -620,26 +600,16 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal,
 
 void SnapManager::guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline) const
 {
-    if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally()) {
-        return;
-    }
-
-    if (!(object.ThisSnapperMightSnap() || snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GUIDE))) {
+    if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally() || !snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GUIDE)) {
         return;
     }
 
     Inkscape::SnapCandidatePoint candidate(p, Inkscape::SNAPSOURCE_GUIDE_ORIGIN, Inkscape::SNAPTARGET_UNDEFINED);
 
-    // Snap to nodes or paths
     SnappedConstraints sc;
     Inkscape::Snapper::SnapConstraint cl(guideline.point_on_line, Geom::rot90(guideline.normal_to_line));
-    if (object.ThisSnapperMightSnap()) {
-        object.constrainedSnap(sc, candidate, Geom::OptRect(), cl, NULL, NULL);
-    }
 
-    // Snap to guides & grid lines
-    SnapperList snappers = getGridSnappers();
-    snappers.push_back(&guide);
+    SnapperList snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
         (*i)->constrainedSnap(sc, candidate, Geom::OptRect(), cl, NULL, NULL);
     }

@@ -97,7 +97,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INKSCAPE_SNAP_OTHERS, "inkscape:snap-others"},
     {SP_ATTR_INKSCAPE_SNAP_ROTATION_CENTER, "inkscape:snap-center"},
     {SP_ATTR_INKSCAPE_SNAP_GRID, "inkscape:snap-grids"},
-    {SP_ATTR_INKSCAPE_SNAP_TO_GUIDE, "inkscape:snap-to-guides"},
+    {SP_ATTR_INKSCAPE_SNAP_GUIDE, "inkscape:snap-to-guides"},
     {SP_ATTR_INKSCAPE_SNAP_NODE_SMOOTH, "inkscape:snap-smooth-nodes"},
     {SP_ATTR_INKSCAPE_SNAP_LINE_MIDPOINT, "inkscape:snap-midpoints"},
     {SP_ATTR_INKSCAPE_SNAP_OBJECT_MIDPOINT, "inkscape:snap-object-midpoints"},

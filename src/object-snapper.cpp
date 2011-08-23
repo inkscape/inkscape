@@ -742,44 +742,6 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
     }
 }
 
-
-// This method is used to snap a guide to nodes, while dragging the guide around
-void Inkscape::ObjectSnapper::guideFreeSnap(SnappedConstraints &sc,
-                                        Geom::Point const &p,
-                                        Geom::Point const &guide_normal) const
-{
-    if (!_snapmanager->snapprefs.getSnapModeOthers()) {
-        return;
-    }
-
-
-    //std::vector<SPItem const *> const it; //just an empty list
-
-    freeSnap(sc, SnapCandidatePoint(p, SNAPSOURCE_GUIDE), Geom::Rect(p, p), NULL, NULL);
-    //_findCandidates(_snapmanager->getDocument()->getRoot(), &it, true, Geom::Rect(p, p), false, Geom::identity());
-    //_snapTranslatingGuide(sc, p, guide_normal);
-
-}
-
-// This method is used to snap the origin of a guide to nodes/paths, while dragging the origin along the guide
-void Inkscape::ObjectSnapper::guideConstrainedSnap(SnappedConstraints &sc,
-                                        Geom::Point const &p,
-                                        Geom::Point const &guide_normal,
-                                        SnapConstraint const &/*c*/) const
-{
-    /* Get a list of all the SPItems that we will try to snap to */
-    std::vector<SPItem*> cand;
-    std::vector<SPItem const *> const it; //just an empty list
-
-    std::cout << "guideConstrainedSnap" << std::endl;
-
-    if (_snapmanager->snapprefs.getSnapModeOthers()) {
-        _findCandidates(_snapmanager->getDocument()->getRoot(), &it, true, Geom::Rect(p, p), false, Geom::identity());
-        _snapTranslatingGuide(sc, p, guide_normal);
-    }
-
-}
-
 /**
  *  \return true if this Snapper will snap at least one kind of point.
  */

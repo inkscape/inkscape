@@ -9,7 +9,7 @@
  *   Carl Hetherington <inkscape@carlh.net>
  *   Diederik van Lierop <mail@diedenrezi.nl>
  *
- * Copyright (C) 2005 - 2008 Authors
+ * Copyright (C) 2005 - 2011 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -32,15 +32,6 @@ class ObjectSnapper : public Snapper
 public:
     ObjectSnapper(SnapManager *sm, Geom::Coord const d);
     ~ObjectSnapper();
-
-    void guideFreeSnap(SnappedConstraints &sc,
-                   Geom::Point const &p,
-                   Geom::Point const &guide_normal) const;
-
-    void guideConstrainedSnap(SnappedConstraints &sc,
-                       Geom::Point const &p,
-                       Geom::Point const &guide_normal,
-                       SnapConstraint const &c) const;
 
     bool ThisSnapperMightSnap() const;
 

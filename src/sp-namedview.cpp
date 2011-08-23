@@ -479,7 +479,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_GRID, value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-    case SP_ATTR_INKSCAPE_SNAP_TO_GUIDE:
+    case SP_ATTR_INKSCAPE_SNAP_GUIDE:
             nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_GUIDE, value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
