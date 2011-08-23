@@ -62,7 +62,7 @@ Filter::filters_all (void )
     FadeToBW::init();
     Greyscale::init();
     Invert::init();
-    Lightness::init();
+    Lighting::init();
     LightnessContrast::init();
     Nudge::init();
     Quadritone::init();

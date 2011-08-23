@@ -18,7 +18,7 @@
  *   Fade to black or white
  *   Greyscale
  *   Invert
- *   Lightness
+ *   Lighting
  *   Lightness-contrast
  *   Nudge
  *   Quadritone
@@ -1017,7 +1017,7 @@ Invert::get_filter_text (Inkscape::Extension::Extension * ext)
 }; /* Invert filter */
 
 /**
-    \brief    Custom predefined Lightness filter.
+    \brief    Custom predefined Lighting filter.
     
     Modify lights and shadows separately.
 
@@ -1026,19 +1026,19 @@ Invert::get_filter_text (Inkscape::Extension::Extension * ext)
     * Shadow (0.->20., default 1.) -> component (exponent)
     * Offset (-1.->1., default 0.) -> component (offset)
 */
-class Lightness : public Inkscape::Extension::Internal::Filter::Filter {
+class Lighting : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
     virtual gchar const * get_filter_text (Inkscape::Extension::Extension * ext);
 
 public:
-    Lightness ( ) : Filter() { };
-    virtual ~Lightness ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
+    Lighting ( ) : Filter() { };
+    virtual ~Lighting ( ) { if (_filter != NULL) g_free((void *)_filter); return; }
 
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Lightness") "</name>\n"
-              "<id>org.inkscape.effect.filter.Lightness</id>\n"
+              "<name>" N_("Lighting") "</name>\n"
+              "<id>org.inkscape.effect.filter.Lighting</id>\n"
               "<param name=\"amplitude\" gui-text=\"" N_("Lights:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.00\" max=\"20.00\">1</param>\n"
               "<param name=\"exponent\" gui-text=\"" N_("Shadows:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.00\" max=\"20.00\">1</param>\n"
               "<param name=\"offset\" gui-text=\"" N_("Offset:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"-1.00\" max=\"1.00\">0</param>\n"
@@ -1051,12 +1051,12 @@ public:
                 "</effects-menu>\n"
                 "<menu-tip>" N_("Modify lights and shadows separately") "</menu-tip>\n"
               "</effect>\n"
-            "</inkscape-extension>\n", new Lightness());
+            "</inkscape-extension>\n", new Lighting());
     };
 };
 
 gchar const *
-Lightness::get_filter_text (Inkscape::Extension::Extension * ext)
+Lighting::get_filter_text (Inkscape::Extension::Extension * ext)
 {
     if (_filter != NULL) g_free((void *)_filter);
 
@@ -1069,7 +1069,7 @@ Lightness::get_filter_text (Inkscape::Extension::Extension * ext)
     offset << ext->get_param_float("offset");
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Lightness\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Lighting\">\n"
           "<feComponentTransfer in=\"blur\" result=\"component\" >\n"
           "<feFuncR type=\"gamma\" amplitude=\"%s\" exponent=\"%s\" offset=\"%s\" />\n"
           "<feFuncG type=\"gamma\" amplitude=\"%s\" exponent=\"%s\" offset=\"%s\" />\n"
@@ -1080,7 +1080,7 @@ Lightness::get_filter_text (Inkscape::Extension::Extension * ext)
                        amplitude.str().c_str(), exponent.str().c_str(), offset.str().c_str() );
 
     return _filter;
-}; /* Lightness filter */
+}; /* Lighting filter */
 
 /**
     \brief    Custom predefined Lightness-Contrast filter.

@@ -924,7 +924,7 @@ sodipodi:docname="filters.svg">
 </feMerge>
 <feComposite result="result4" in="SourceGraphic" operator="in" in2="result2" id="feComposite2438" />
 </filter>
-<filter id="f083" x="-0.25" width="1.5" y="-0.5" height="2" inkscape:menu-tooltip="Colorizable filling with flow inside like transparency" inkscape:menu="Non realistic 3D shaders" inkscape:label="Shaken Liquid" style="color-interpolation-filters:sRGB;">
+<filter id="f083" x="-0.25" width="1.5" y="-0.5" height="2" inkscape:menu-tooltip="Colorizable filling with flow inside like transparency" inkscape:menu="Overlays" inkscape:label="Shaken Liquid" style="color-interpolation-filters:sRGB;">
 <feFlood flood-color="rgb(158,236,254)" result="result9" />
 <feGaussianBlur result="result8" stdDeviation="7" in="SourceGraphic" />
 <feTurbulence baseFrequency="0.05" numOctaves="2" type="fractalNoise" result="result7" seed="0" />
@@ -1119,15 +1119,6 @@ sodipodi:docname="filters.svg">
 <feDisplacementMap scale="25" result="result5" xChannelSelector="R" in="SourceGraphic" in2="result7" />
 <feComposite in="SourceGraphic" operator="atop" in2="result5" />
 </filter>
-<filter id="f106" inkscape:label="Liquid" inkscape:menu="Textures" inkscape:menu-tooltip="Colorizable filling with liquid transparency" height="2" y="-0.5" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="5" result="result8" />
-<feTurbulence seed="0" result="result7" type="turbulence" numOctaves="1" baseFrequency="0.02" />
-<feColorMatrix result="result5" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 4 0 " />
-<feComposite in2="result8" result="result6" operator="in" in="result8" />
-<feDisplacementMap in="result5" in2="result6" xChannelSelector="A" yChannelSelector="A" scale="120" result="result4" />
-<feComposite in2="result4" result="result2" operator="in" in="result8" />
-<feComposite result="fbSourceGraphic" in="SourceGraphic" operator="in" in2="result2" />
-</filter>
 <filter id="f107" inkscape:menu="Textures" inkscape:label="Watercolor" inkscape:menu-tooltip="Cloudy watercolor effect" height="2" y="-0.5" width="1.6" x="-0.3" style="color-interpolation-filters:sRGB;">
 <feGaussianBlur stdDeviation="15" result="result8" />
 <feTurbulence seed="27" result="result7" type="fractalNoise" numOctaves="5" baseFrequency="0.025" />
@@ -1251,15 +1242,6 @@ sodipodi:docname="filters.svg">
 <feDisplacementMap xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" in="result1" in2="result6" />
 <feComposite in2="result4" result="result2" operator="arithmetic" k1="1" in="SourceGraphic" />
 <feComposite operator="out" in="SourceGraphic" in2="result2" />
-</filter>
-<filter id="f118" x="-0.25" width="1.5" y="-0.5" height="2" inkscape:menu-tooltip="Colorizable filling with flow inside like transparency" inkscape:menu="Textures" inkscape:label="Shaken Liquid" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur result="result8" stdDeviation="4" />
-<feTurbulence baseFrequency="0.05" numOctaves="2" type="fractalNoise" result="result7" seed="0" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 2 -0.75 " result="result5" />
-<feComposite in="result8" operator="out" result="result6" in2="result7" />
-<feDisplacementMap result="result4" scale="120" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result5" />
-<feComposite in="result8" operator="arithmetic" result="result2" in2="result4" k1="1" k3="0.5" />
-<feComposite in2="result2" operator="in" in="SourceGraphic" result="fbSourceGraphic" />
 </filter>
 <filter id="f119" inkscape:label="Black Light" inkscape:menu="Color" inkscape:menu-tooltip="Light areas turn to black" x="0" width="1" y="0" height="1" style="color-interpolation-filters:sRGB;">
 <feColorMatrix type="luminanceToAlpha" result="result2" />
@@ -1404,21 +1386,6 @@ sodipodi:docname="filters.svg">
 <feBlend in2="result1" result="result3" mode="darken" in="result4" />
 <feColorMatrix type="saturate" values="1" result="result7" />
 <feComposite in2="SourceGraphic" operator="in" result="fbSourceGraphic" />
-</filter>
-<filter id="f133" x="-0.25" width="1.5" y="-0.5" height="2" inkscape:menu-tooltip="Colorizable filling with flow inside like transparency" inkscape:menu="Non realistic 3D shaders" inkscape:label="Shaken Liquid" style="color-interpolation-filters:sRGB;">
-<feFlood flood-color="rgb(158,236,254)" result="result9" />
-<feGaussianBlur result="result8" stdDeviation="7" in="SourceGraphic" />
-<feTurbulence baseFrequency="0.05" numOctaves="2" type="fractalNoise" result="result7" seed="0" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 2 -0.75 " result="result5" />
-<feComposite in2="result7" in="result8" operator="out" result="result6" />
-<feDisplacementMap in2="result6" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result5" />
-<feComposite in2="result4" in="result8" operator="arithmetic" result="result2" k1="1" k3="0.5" />
-<feComposite in2="result2" operator="in" in="SourceGraphic" result="fbSourceGraphic" />
-<feMerge result="result10">
-<feMergeNode in="result9" />
-<feMergeNode in="fbSourceGraphic" />
-</feMerge>
-<feComposite in2="SourceAlpha" operator="in" result="result11" />
 </filter>
 <filter id="f134" inkscape:label="Dots Transparency" x="0" y="0" width="1" height="1" inkscape:menu="Overlays" inkscape:menu-tooltip="Gives a pointillist HSL sensitive transparency" style="color-interpolation-filters:sRGB;">
 <feTurbulence result="result1" numOctaves="3" baseFrequency="1" type="fractalNoise" seed="50" />
@@ -2297,7 +2264,7 @@ sodipodi:docname="filters.svg">
 <feBlend in2="result1" in="result3" mode="normal" result="result8" />
 <feComposite in2="SourceGraphic" in="result8" operator="in" result="result7" />
 </filter>
-<filter id="f216" inkscape:label="Liquid" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Colorizable filling with liquid transparency" height="2" y="-0.5" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB;">
+<filter id="f216" inkscape:label="Liquid" inkscape:menu="Overlays" inkscape:menu-tooltip="Colorizable filling with liquid transparency" height="2" y="-0.5" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB;">
 <feFlood flood-color="rgb(158,236,254)" result="result9" />
 <feGaussianBlur stdDeviation="7" result="result8" in="SourceGraphic" />
 <feTurbulence seed="0" result="result7" type="turbulence" numOctaves="1" baseFrequency="0.02" />
