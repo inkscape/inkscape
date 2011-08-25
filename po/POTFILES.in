@@ -471,6 +471,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/svg_and_media_zip_output.inx
 [type: gettext/xml] share/extensions/svgcalendar.inx
 [type: gettext/xml] share/extensions/text_braille.inx
+[type: gettext/xml] share/extensions/text_extract.inx
 [type: gettext/xml] share/extensions/text_flipcase.inx
 [type: gettext/xml] share/extensions/text_lowercase.inx
 [type: gettext/xml] share/extensions/text_randomcase.inx

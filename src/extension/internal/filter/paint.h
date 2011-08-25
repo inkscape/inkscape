@@ -183,7 +183,7 @@ Chromolitho::get_filter_text (Inkscape::Extension::Extension * ext)
         graincol << "0";
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Chromolitho\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Chromolitho\">\n"
           "<feComposite in=\"SourceGraphic\" in2=\"SourceGraphic\" operator=\"arithmetic\" k1=\"%s\" k2=\"1\" result=\"composite1\" />\n"
           "<feConvolveMatrix in=\"composite1\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" order=\"3 3\" result=\"convolve1\" />\n"
           "<feBlend in=\"%s\" in2=\"composite1\" mode=\"%s\" result=\"blend1\" />\n"
@@ -274,7 +274,7 @@ CrossEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
         trans << "blend";
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Cross Engraving\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Cross Engraving\">\n"
           "<feConvolveMatrix in=\"SourceGraphic\" targetY=\"1\" targetX=\"1\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" order=\"3 3\" result=\"convolve\" />\n"
           "<feComposite in=\"convolve\" in2=\"convolve\" k1=\"1\" k2=\"1\" operator=\"arithmetic\" result=\"composite1\" />\n"
           "<feColorMatrix in=\"composite1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.2125 -0.7154 -0.0721 1 0 \" result=\"color1\" />\n"
@@ -434,7 +434,7 @@ Drawing::get_filter_text (Inkscape::Extension::Extension * ext)
         ios << "flood2";
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Drawing\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Drawing\">\n"
         "<feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"%s\" result=\"blur1\" />\n"
         "<feConvolveMatrix in=\"blur1\" targetX=\"1\" targetY=\"1\" order=\"3 3\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0 \" result=\"convolve1\" />\n"
         "<feComposite in=\"convolve1\" in2=\"convolve1\" k1=\"1\" k2=\"1\" k4=\"%s\" operator=\"arithmetic\" result=\"composite1\" />\n"
@@ -544,7 +544,7 @@ Electrize::get_filter_text (Inkscape::Extension::Extension * ext)
     }
   
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Electrize\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Electrize\">\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur\" />\n"
           "<feComponentTransfer in=\"blur\" result=\"component\" >\n"
             "<feFuncR type=\"%s\" tableValues=\"%s\" />\n"
@@ -638,7 +638,7 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Neon Draw\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Neon Draw\">\n"
           "<feBlend mode=\"%s\" result=\"blend\" />\n"
           "<feGaussianBlur in=\"blend\" stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feComponentTransfer result=\"component1\">\n"
@@ -804,7 +804,7 @@ PointEngraving::get_filter_text (Inkscape::Extension::Extension * ext)
         iop << "flood1";
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Point Engraving\" x=\"0\" y=\"0\" width=\"1\" height=\"1\" style=\"color-interpolation-filters:sRGB;\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Point Engraving\" style=\"color-interpolation-filters:sRGB;\">\n"
           "<feConvolveMatrix in=\"SourceGraphic\" kernelMatrix=\"0 250 0 250 %s 250 0 250 0\" order=\"3 3\" result=\"convolve\" />\n"
           "<feBlend in=\"convolve\" in2=\"SourceGraphic\" mode=\"%s\" result=\"blend\" />\n"
           "<feTurbulence type=\"%s\" baseFrequency=\"%s %s\" numOctaves=\"%s\" seed=\"%s\" result=\"turbulence\" />\n"
@@ -942,7 +942,7 @@ Posterize::get_filter_text (Inkscape::Extension::Extension * ext)
         antialias << "0.01";
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Poster Paint\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Poster Paint\">\n"
           "<feComposite operator=\"arithmetic\" k2=\"1\" result=\"composite1\" />\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feGaussianBlur in=\"composite1\" stdDeviation=\"%s\" result=\"blur2\" />\n"
@@ -1018,7 +1018,7 @@ PosterizeBasic::get_filter_text (Inkscape::Extension::Extension * ext)
     transf << " 1";
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" inkscape:label=\"Posterize Basic\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Posterize Basic\">\n"
           "<feGaussianBlur stdDeviation=\"%s\" result=\"blur1\" />\n"
           "<feComponentTransfer in=\"blur1\" result=\"component1\">\n"
             "<feFuncR type=\"discrete\" tableValues=\"%s\" />\n"

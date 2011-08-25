@@ -63,8 +63,8 @@ public:
                   "<param name=\"type\" gui-text=\"" N_("Blur type:") "\" type=\"enum\" >\n"
                     "<_item value=\"outer\">" N_("Outer") "</_item>\n"
                     "<_item value=\"inner\">" N_("Inner") "</_item>\n"
-                    "<_item value=\"innercut\">" N_("Inner cutout") "</_item>\n"
                     "<_item value=\"outercut\">" N_("Outer cutout") "</_item>\n"
+                    "<_item value=\"innercut\">" N_("Inner cutout") "</_item>\n"
                   "</param>\n"
                 "</page>\n"
                 "<page name=\"coltab\" _gui-text=\"" N_("Blur color") "\">\n"
@@ -116,7 +116,7 @@ ColorizableDropShadow::get_filter_text (Inkscape::Extension::Extension * ext)
     b << ((color >>  8) & 0xff);
 
     // Select object or user-defined color
-    if ((g_ascii_strcasecmp("outercut", type) == 0)) {
+    if ((g_ascii_strcasecmp("innercut", type) == 0)) {
         if (ext->get_param_bool("objcolor")) {
             comp2in1 << "SourceGraphic";
             comp2in2 << "offset";
@@ -145,12 +145,12 @@ ColorizableDropShadow::get_filter_text (Inkscape::Extension::Extension * ext)
         comp2op << "atop";
         comp2in1 << "offset";
         comp2in2 << "SourceGraphic";
-    } else if ((g_ascii_strcasecmp("innercut", type) == 0)) {
+    } else if ((g_ascii_strcasecmp("outercut", type) == 0)) {
         comp1op << "in";
         comp2op << "out";
         comp2in1 << "offset";
         comp2in2 << "SourceGraphic";
-    } else { //outercut
+    } else { //innercut
         comp1op << "out";
         comp1in1 << "flood";
         comp1in2 << "SourceGraphic";
@@ -158,7 +158,7 @@ ColorizableDropShadow::get_filter_text (Inkscape::Extension::Extension * ext)
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" height=\"1.2\" width=\"1.2\" y=\"-0.1\" x=\"-0.1\" inkscape:label=\"Drop Shadow\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Drop Shadow\">\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
           "<feComposite in=\"%s\" in2=\"%s\" operator=\"%s\" result=\"composite1\" />\n"
           "<feGaussianBlur in=\"composite1\" stdDeviation=\"%s\" result=\"blur\" />\n"

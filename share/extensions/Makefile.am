@@ -145,6 +145,7 @@ extensions = \
 	svgcalendar.py \
 	svg_regex.py \
 	svg_and_media_zip_output.py \
+    text_extract.py \
     svg_transform.py \
 	text_uppercase.py \
 	text_lowercase.py \
@@ -252,7 +253,7 @@ modules = \
 	guillotine.inx \
 	handles.inx \
 	hpgl_output.inx \
-  ink2canvas.inx \
+    ink2canvas.inx \
 	inkscape_help_askaquestion.inx \
 	inkscape_help_commandline.inx \
 	inkscape_help_faq.inx\
@@ -319,6 +320,7 @@ modules = \
 	svg2xaml.inx \
 	svg_and_media_zip_output.inx \
 	svgcalendar.inx \
+    text_extract.inx \
 	text_uppercase.inx\
 	text_lowercase.inx \
 	text_sentencecase.inx \

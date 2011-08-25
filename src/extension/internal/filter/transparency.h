@@ -170,7 +170,7 @@ ChannelTransparency::get_filter_text (Inkscape::Extension::Extension * ext)
     }
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Channel Transparency\" style=\"color-interpolation-filters:sRGB;\" x=\"0\" y=\"0\" width=\"1\" height=\"1\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Channel Transparency\" style=\"color-interpolation-filters:sRGB;\" >\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 %s %s %s %s 0 \" in=\"SourceGraphic\" result=\"colormatrix\" />\n"
           "<feComposite in=\"colormatrix\" in2=\"SourceGraphic\" operator=\"%s\" result=\"composite1\" />\n"
         "</filter>\n", red.str().c_str(), green.str().c_str(), blue.str().c_str(), alpha.str().c_str(),
@@ -236,16 +236,16 @@ LightEraser::get_filter_text (Inkscape::Extension::Extension * ext)
         expand << (ext->get_param_float("expand") * 0.2125) << " "
                << (ext->get_param_float("expand") * 0.7154) << " "
                << (ext->get_param_float("expand") * 0.0721);
-        erode << (-ext->get_param_float("erode") * 720 / 1000);
+        erode << (-ext->get_param_float("erode"));
     } else {
         expand << (-ext->get_param_float("expand") * 0.2125) << " "
                << (-ext->get_param_float("expand") * 0.7154) << " "
                << (-ext->get_param_float("expand") * 0.0721);
-        erode << (ext->get_param_float("erode") * 720 / 1000);
+        erode << ext->get_param_float("erode");
     }
 
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Light Eraser\" height=\"1\" width=\"1\" y=\"0\" x=\"0\" style=\"color-interpolation-filters:sRGB;\" >\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Light Eraser\" style=\"color-interpolation-filters:sRGB;\" >\n"
           "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 %s %s 0 \" result=\"colormatrix\" />\n"
           "<feComposite in2=\"colormatrix\" operator=\"arithmetic\" k2=\"%s\" result=\"composite\" />\n"
         "</filter>\n", expand.str().c_str(), erode.str().c_str(), opacity.str().c_str());
