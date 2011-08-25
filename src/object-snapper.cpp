@@ -177,7 +177,7 @@ void Inkscape::ObjectSnapper::_collectNodes(SnapSourceType const &t,
 
         bool p_is_a_node = t & SNAPSOURCE_NODE_CATEGORY;
         bool p_is_a_bbox = t & SNAPSOURCE_BBOX_CATEGORY;
-        bool p_is_other = t & SNAPSOURCE_OTHERS_CATEGORY;
+        bool p_is_other = t & SNAPSOURCE_OTHERS_CATEGORY || t & SNAPSOURCE_DATUMS_CATEGORY;
 
         // A point considered for snapping should be either a node, a bbox corner or a guide/other. Pick only ONE!
         if (((p_is_a_node && p_is_a_bbox) || (p_is_a_bbox && p_is_other) || (p_is_a_node && p_is_other))) {
@@ -364,7 +364,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
 
         bool p_is_a_node = source_type & SNAPSOURCE_NODE_CATEGORY;
         bool p_is_a_bbox = source_type & SNAPSOURCE_BBOX_CATEGORY;
-        bool p_is_other = source_type & SNAPSOURCE_OTHERS_CATEGORY;
+        bool p_is_other = source_type & SNAPSOURCE_OTHERS_CATEGORY || source_type & SNAPSOURCE_DATUMS_CATEGORY;
 
         if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_BBOX_EDGE)) {
             Preferences *prefs = Preferences::get();
@@ -444,7 +444,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
             }
 
             //Add the item's bounding box to snap to
-            if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_BBOX_EDGE) && (_snapmanager->snapprefs.getSnapModeBBox() || _snapmanager->snapprefs.getSnapModeOthers())) {
+            if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_BBOX_EDGE)) {
                 if (p_is_other || p_is_a_bbox || (!_snapmanager->snapprefs.getStrictSnapping() && p_is_a_node)) {
                     // Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
                     // of the item AND the bbox of the clipping path at the same time
@@ -747,10 +747,7 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
  */
 bool Inkscape::ObjectSnapper::ThisSnapperMightSnap() const
 {
-    return _snapmanager->snapprefs.getSnapModeBBox()
-            || _snapmanager->snapprefs.getSnapModeNode()
-            || _snapmanager->snapprefs.getSnapModeOthers()
-            || _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PAGE_CORNER);
+    return true;
 }
 
 void Inkscape::ObjectSnapper::_clear_paths() const
@@ -814,16 +811,13 @@ void Inkscape::getBBoxPoints(Geom::OptRect const bbox,
 
 bool Inkscape::ObjectSnapper::_allowSourceToSnapToTarget(SnapSourceType source, SnapTargetType target, bool strict_snapping) const
 {
-    bool allow_this_pair_to_snap = false;
+    bool allow_this_pair_to_snap = true;
 
     if (strict_snapping) { // bounding boxes will not snap to nodes/paths and vice versa
-        int source_cat = source & (SNAPSOURCE_BBOX_CATEGORY | SNAPSOURCE_NODE_CATEGORY | SNAPSOURCE_OTHERS_CATEGORY);
-        int target_cat = target & (SNAPTARGET_BBOX_CATEGORY | SNAPTARGET_NODE_CATEGORY | SNAPTARGET_OTHERS_CATEGORY);
-        if (source_cat == target_cat || source_cat == SNAPSOURCE_OTHERS_CATEGORY || target_cat == SNAPTARGET_OTHERS_CATEGORY) {
-            allow_this_pair_to_snap = true;
+        if (((source & SNAPSOURCE_BBOX_CATEGORY) && (target & SNAPTARGET_NODE_CATEGORY)) ||
+            ((source & SNAPSOURCE_NODE_CATEGORY) && (target & SNAPTARGET_BBOX_CATEGORY))) {
+            allow_this_pair_to_snap = false;
         }
-    } else { // anything will snap to anything
-        allow_this_pair_to_snap = true;
     }
 
     return allow_this_pair_to_snap;

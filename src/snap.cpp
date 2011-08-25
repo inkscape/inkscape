@@ -1413,9 +1413,10 @@ void SnapManager::_displaySnapsource(Inkscape::SnapCandidatePoint const &p) cons
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/options/snapclosestonly/value")) {
-        bool p_is_a_node = p.getSourceType() & Inkscape::SNAPSOURCE_NODE_CATEGORY;
-        bool p_is_a_bbox = p.getSourceType() & Inkscape::SNAPSOURCE_BBOX_CATEGORY;
-        bool p_is_other = p.getSourceType() & Inkscape::SNAPSOURCE_OTHERS_CATEGORY;
+        Inkscape::SnapSourceType t = p.getSourceType();
+        bool p_is_a_node = t & Inkscape::SNAPSOURCE_NODE_CATEGORY;
+        bool p_is_a_bbox = t & Inkscape::SNAPSOURCE_BBOX_CATEGORY;
+        bool p_is_other = t & Inkscape::SNAPSOURCE_OTHERS_CATEGORY || t & Inkscape::SNAPSOURCE_DATUMS_CATEGORY;
 
         g_assert(_desktop != NULL);
         if (snapprefs.getSnapEnabledGlobally() && (p_is_other || (p_is_a_node && snapprefs.getSnapModeNode()) || (p_is_a_bbox && snapprefs.getSnapModeBBox()))) {

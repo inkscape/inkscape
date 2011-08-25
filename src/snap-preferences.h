@@ -28,9 +28,6 @@ public:
     bool isTargetSnappable(Inkscape::SnapTargetType const target1, Inkscape::SnapTargetType const target2) const;
     bool isTargetSnappable(Inkscape::SnapTargetType const target1, Inkscape::SnapTargetType const target2, Inkscape::SnapTargetType const target3) const;
     bool isTargetSnappable(Inkscape::SnapTargetType const target1, Inkscape::SnapTargetType const target2, Inkscape::SnapTargetType const target3, Inkscape::SnapTargetType const target4) const;
-    //bool isAnyBBoxSnappable() const;
-    //bool isAnyNodeOrPathSnappable() const;
-    //bool isAnyOtherSnappable() const;
     bool isSnapButtonEnabled(Inkscape::SnapTargetType const target) const;
 
     void setSnapModeBBox(bool enabled);
@@ -38,6 +35,7 @@ public:
     void setSnapModeOthers(bool enabled);
     bool getSnapModeBBox() const;
     bool getSnapModeNode() const;
+    bool getSnapModeDatums() const;
     bool getSnapModeOthers() const;
     bool getSnapModeAny() const;
 

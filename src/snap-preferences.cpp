@@ -19,14 +19,13 @@ Inkscape::SnapPreferences::SnapPreferences() :
     _snap_postponed_globally(false),
     _strict_snapping(true)
 {
-    // Check for enough space to hold all snap target toggles in the "others" group; see the comments in snap-enums.h
-    g_assert(SNAPTARGET_MAX_ENUM_VALUE - SNAPTARGET_OTHERS_CATEGORY < SNAPTARGET_BBOX_CATEGORY);
     // Check for powers of two; see the comments in snap-enums.h
     g_assert((SNAPTARGET_BBOX_CATEGORY != 0) && !(SNAPTARGET_BBOX_CATEGORY & (SNAPTARGET_BBOX_CATEGORY - 1)));
     g_assert((SNAPTARGET_NODE_CATEGORY != 0) && !(SNAPTARGET_NODE_CATEGORY & (SNAPTARGET_NODE_CATEGORY - 1)));
+    g_assert((SNAPTARGET_DATUMS_CATEGORY != 0) && !(SNAPTARGET_DATUMS_CATEGORY & (SNAPTARGET_DATUMS_CATEGORY - 1)));
     g_assert((SNAPTARGET_OTHERS_CATEGORY != 0) && !(SNAPTARGET_OTHERS_CATEGORY & (SNAPTARGET_OTHERS_CATEGORY - 1)));
 
-    setSnapFrom(SnapSourceType(SNAPSOURCE_BBOX_CATEGORY | SNAPSOURCE_NODE_CATEGORY | SNAPSOURCE_OTHERS_CATEGORY), true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
+    setSnapFrom(SnapSourceType(SNAPSOURCE_BBOX_CATEGORY | SNAPSOURCE_NODE_CATEGORY | SNAPSOURCE_DATUMS_CATEGORY | SNAPSOURCE_OTHERS_CATEGORY), true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
     for (int n = 0; n < Inkscape::SNAPTARGET_MAX_ENUM_VALUE; n++) {
         _active_snap_targets[n] = -1;
     }
@@ -88,6 +87,11 @@ bool Inkscape::SnapPreferences::getSnapModeOthers() const
     return (_snap_from & Inkscape::SNAPSOURCE_OTHERS_CATEGORY);
 }
 
+bool Inkscape::SnapPreferences::getSnapModeDatums() const
+{
+    return isTargetSnappable(Inkscape::SNAPTARGET_GUIDE);
+}
+
 bool Inkscape::SnapPreferences::getSnapModeAny() const
 {
     return (_snap_from != 0);
@@ -135,11 +139,48 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
 {
     if (target & SNAPTARGET_BBOX_CATEGORY) {
         group_on = getSnapModeBBox(); // Only if the group with bbox sources/targets has been enabled, then we might snap to any of the bbox targets
+
+
     } else if (target & SNAPTARGET_NODE_CATEGORY) {
         group_on = getSnapModeNode(); // Only if the group with path/node sources/targets has been enabled, then we might snap to any of the nodes/paths
         if (target == SNAPTARGET_RECT_CORNER || target == SNAPTARGET_ELLIPSE_QUADRANT_POINT) { // Don't have their own button; on when the group is on
             target = SNAPTARGET_NODE_CATEGORY;
         }
+
+
+    } else if (target & SNAPTARGET_DATUMS_CATEGORY) {
+        group_on = true; // These snap targets cannot be disabled as part of a disabled group;
+        switch (target) {
+            // Some snap targets don't have their own toggle. These targets are called "secondary targets". We will re-map
+            // them to their cousin which does have a toggle, and which is called a "primary target"case SNAPTARGET_GRID_INTERSECTION:
+            case SNAPTARGET_GRID_INTERSECTION:
+                target = SNAPTARGET_GRID;
+                break;
+            case SNAPTARGET_GUIDE_INTERSECTION:
+            case SNAPTARGET_GUIDE_ORIGIN:
+                target = SNAPTARGET_GUIDE;
+                break;
+            case SNAPTARGET_PAGE_CORNER:
+                target = SNAPTARGET_PAGE_BORDER;
+                break;
+
+            // Some snap targets cannot be toggled at all, and are therefore always enabled
+            case SNAPTARGET_GRID_GUIDE_INTERSECTION:
+                always_on = true; // Doesn't have it's own button
+                break;
+
+            // These are only listed for completeness
+            case SNAPTARGET_GRID:
+            case SNAPTARGET_GUIDE:
+            case SNAPTARGET_PAGE_BORDER:
+            case SNAPTARGET_DATUMS_CATEGORY:
+                break;
+            default:
+                g_warning("Snap-preferences warning: Undefined snap target (#%i)", target);
+                break;
+        }
+
+
     } else if (target & SNAPTARGET_OTHERS_CATEGORY) {
         // Only if the group with "other" snap sources/targets has been enabled, then we might snap to any of those targets
         // ... but this doesn't hold for the page border, grids, and guides
@@ -147,19 +188,6 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
         switch (target) {
             // Some snap targets don't have their own toggle. These targets are called "secondary targets". We will re-map
             // them to their cousin which does have a toggle, and which is called a "primary target"
-            case SNAPTARGET_GRID_INTERSECTION:
-                group_on = true; // cannot be disabled as part of a disabled group;
-                target = SNAPTARGET_GRID;
-                break;
-            case SNAPTARGET_GUIDE_INTERSECTION:
-            case SNAPTARGET_GUIDE_ORIGIN:
-                group_on = true; // cannot be disabled as part of a disabled group;
-                target = SNAPTARGET_GUIDE;
-                break;
-            case SNAPTARGET_PAGE_CORNER:
-                group_on = true; // cannot be disabled as part of a disabled group;
-                target = SNAPTARGET_PAGE_BORDER;
-                break;
             case SNAPTARGET_TEXT_ANCHOR:
                 target = SNAPTARGET_TEXT_BASELINE;
                 break;
@@ -168,31 +196,23 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
                 target = SNAPTARGET_OTHERS_CATEGORY;
                 break;
             // Some snap targets cannot be toggled at all, and are therefore always enabled
-            case SNAPTARGET_GRID_GUIDE_INTERSECTION:
             case SNAPTARGET_CONSTRAINED_ANGLE:
             case SNAPTARGET_CONSTRAINT:
                 always_on = true; // Doesn't have it's own button
-                break;
-            case SNAPTARGET_GRID:
-            case SNAPTARGET_GUIDE:
-            case SNAPTARGET_PAGE_BORDER:
-                group_on = true; // cannot be disabled as part of a disabled group;
                 break;
 
             // These are only listed for completeness
             case SNAPTARGET_OBJECT_MIDPOINT:
             case SNAPTARGET_ROTATION_CENTER:
             case SNAPTARGET_TEXT_BASELINE:
-                break;
-
-            case SNAPTARGET_BBOX_CATEGORY:
-            case SNAPTARGET_NODE_CATEGORY:
             case SNAPTARGET_OTHERS_CATEGORY:
                 break;
             default:
                 g_warning("Snap-preferences warning: Undefined snap target (#%i)", target);
                 break;
         }
+
+
     } else if (target == SNAPTARGET_UNDEFINED ) {
         g_warning("Snap-preferences warning: Undefined snaptarget (#%i)", target);
     }
