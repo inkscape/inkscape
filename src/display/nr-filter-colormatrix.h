@@ -38,6 +38,7 @@ public:
     virtual void render_cairo(FilterSlot &slot);
     virtual bool can_handle_affine(Geom::Affine const &);
     virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
+    virtual double complexity(Geom::Affine const &ctm);
 
     virtual void set_type(FilterColorMatrixType type);
     virtual void set_value(gdouble value);

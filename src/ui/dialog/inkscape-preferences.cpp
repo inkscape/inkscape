@@ -124,7 +124,7 @@ InkscapePreferences::InkscapePreferences()
     initPageTransforms();
     initPageClones();
     initPageMasks();
-    initPageFilters();
+    initPageRendering();
     initPageBitmaps();
     initPageCMS();
     initPageGrids();
@@ -739,8 +739,22 @@ void InkscapePreferences::initPageTransforms()
     this->AddPage(_page_transforms, _("Transforms"), PREFS_PAGE_TRANSFORMS);
 }
 
-void InkscapePreferences::initPageFilters()
+void InkscapePreferences::initPageRendering()
 {
+    /* show infobox */
+    _show_filters_info_box.init( _("Show filter primitives infobox"), "/options/showfiltersinfobox/value", true);
+    _page_rendering.add_line(true, "", _show_filters_info_box, "",
+                        _("Show icons and descriptions for the filter primitives available at the filter effects dialog"));
+
+    /* threaded blur */ //related comments/widgets/functions should be renamed and option should be moved elsewhere when inkscape is fully multi-threaded
+    _filter_multi_threaded.init("/options/threading/numthreads", 1.0, 8.0, 1.0, 2.0, 4.0, true, false);
+    _page_rendering.add_line( false, _("Number of Threads:"), _filter_multi_threaded, _("(requires restart)"),
+                           _("Configure number of processors/threads to use when rendering filters"), false);
+
+    // rendering cache
+    _rendering_cache_size.init("/options/renderingcache/size", 0.0, 4096.0, 1.0, 32.0, 64.0, true, false);
+    _page_rendering.add_line( false, _("Rendering cache size:"), _rendering_cache_size, C_("mebibyte (2^20 bytes) abbreviation","MiB"), _("Set the amount of memory per document which can be used to store rendered parts of the drawing for later reuse; set to zero to disable caching"), false);
+
     /* blur quality */
     _blur_quality_best.init ( _("Best quality (slowest)"), "/options/blurquality/value",
                                   BLUR_QUALITY_BEST, false, 0);
@@ -753,16 +767,16 @@ void InkscapePreferences::initPageFilters()
     _blur_quality_worst.init ( _("Lowest quality (fastest)"), "/options/blurquality/value",
                                   BLUR_QUALITY_WORST, false, &_blur_quality_best);
 
-    _page_filters.add_group_header( _("Gaussian blur quality for display"));
-    _page_filters.add_line( true, "", _blur_quality_best, "",
+    _page_rendering.add_group_header( _("Gaussian blur quality for display"));
+    _page_rendering.add_line( true, "", _blur_quality_best, "",
                            _("Best quality, but display may be very slow at high zooms (bitmap export always uses best quality)"));
-    _page_filters.add_line( true, "", _blur_quality_better, "",
+    _page_rendering.add_line( true, "", _blur_quality_better, "",
                            _("Better quality, but slower display"));
-    _page_filters.add_line( true, "", _blur_quality_normal, "",
+    _page_rendering.add_line( true, "", _blur_quality_normal, "",
                            _("Average quality, acceptable display speed"));
-    _page_filters.add_line( true, "", _blur_quality_worse, "",
+    _page_rendering.add_line( true, "", _blur_quality_worse, "",
                            _("Lower quality (some artifacts), but display is faster"));
-    _page_filters.add_line( true, "", _blur_quality_worst, "",
+    _page_rendering.add_line( true, "", _blur_quality_worst, "",
                            _("Lowest quality (considerable artifacts), but display is fastest"));
 
     /* filter quality */
@@ -777,29 +791,19 @@ void InkscapePreferences::initPageFilters()
     _filter_quality_worst.init ( _("Lowest quality (fastest)"), "/options/filterquality/value",
                                   Inkscape::Filters::FILTER_QUALITY_WORST, false, &_filter_quality_best);
 
-    _page_filters.add_group_header( _("Filter effects quality for display"));
-    _page_filters.add_line( true, "", _filter_quality_best, "",
+    _page_rendering.add_group_header( _("Filter effects quality for display"));
+    _page_rendering.add_line( true, "", _filter_quality_best, "",
                            _("Best quality, but display may be very slow at high zooms (bitmap export always uses best quality)"));
-    _page_filters.add_line( true, "", _filter_quality_better, "",
+    _page_rendering.add_line( true, "", _filter_quality_better, "",
                            _("Better quality, but slower display"));
-    _page_filters.add_line( true, "", _filter_quality_normal, "",
+    _page_rendering.add_line( true, "", _filter_quality_normal, "",
                            _("Average quality, acceptable display speed"));
-    _page_filters.add_line( true, "", _filter_quality_worse, "",
+    _page_rendering.add_line( true, "", _filter_quality_worse, "",
                            _("Lower quality (some artifacts), but display is faster"));
-    _page_filters.add_line( true, "", _filter_quality_worst, "",
+    _page_rendering.add_line( true, "", _filter_quality_worst, "",
                            _("Lowest quality (considerable artifacts), but display is fastest"));
 
-    /* show infobox */
-    _show_filters_info_box.init( _("Show filter primitives infobox"), "/options/showfiltersinfobox/value", true);
-    _page_filters.add_line(true, "", _show_filters_info_box, "",
-                        _("Show icons and descriptions for the filter primitives available at the filter effects dialog"));
-
-    /* threaded blur */ //related comments/widgets/functions should be renamed and option should be moved elsewhere when inkscape is fully multi-threaded
-    _filter_multi_threaded.init("/options/threading/numthreads", 1.0, 8.0, 1.0, 2.0, 4.0, true, false);
-    _page_filters.add_line( false, _("Number of Threads:"), _filter_multi_threaded, _("(requires restart)"),
-                           _("Configure number of processors/threads to use with rendering of gaussian blur"), false);
-
-    this->AddPage(_page_filters, _("Filters"), PREFS_PAGE_FILTERS);
+    this->AddPage(_page_rendering, _("Rendering"), PREFS_PAGE_RENDERING);
 }
 
 

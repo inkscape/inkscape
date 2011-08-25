@@ -460,8 +460,8 @@ void ColorItem::_updatePreviews()
                 for ( std::vector<SwatchPage*>::iterator it2 = possible.begin(); it2 != possible.end() && !found; ++it2 ) {
                     SwatchPage* curr = *it2;
                     index = 0;
-                    for ( std::vector<ColorItem*>::iterator zz = curr->_colors.begin(); zz != curr->_colors.end(); ++zz ) {
-                        if ( this == *zz ) {
+                    for ( boost::ptr_vector<ColorItem>::iterator zz = curr->_colors.begin(); zz != curr->_colors.end(); ++zz ) {
+                        if ( this == &*zz ) {
                             found = true;
                             paletteName = curr->_name;
                             break;
@@ -734,12 +734,12 @@ void ColorItem::_wireMagicColors( SwatchPage *colorSet )
 {
     if ( colorSet )
     {
-        for ( std::vector<ColorItem*>::iterator it = colorSet->_colors.begin(); it != colorSet->_colors.end(); ++it )
+        for ( boost::ptr_vector<ColorItem>::iterator it = colorSet->_colors.begin(); it != colorSet->_colors.end(); ++it )
         {
-            std::string::size_type pos = (*it)->def.descr.find("*{");
+            std::string::size_type pos = it->def.descr.find("*{");
             if ( pos != std::string::npos )
             {
-                std::string subby = (*it)->def.descr.substr( pos + 2 );
+                std::string subby = it->def.descr.substr( pos + 2 );
                 std::string::size_type endPos = subby.find("}*");
                 if ( endPos != std::string::npos )
                 {
@@ -749,12 +749,12 @@ void ColorItem::_wireMagicColors( SwatchPage *colorSet )
 
                     if ( subby.find('E') != std::string::npos )
                     {
-                        (*it)->def.setEditable( true );
+                        it->def.setEditable( true );
                     }
 
                     if ( subby.find('L') != std::string::npos )
                     {
-                        (*it)->_isLive = true;
+                        it->_isLive = true;
                     }
 
                     std::string part;
@@ -764,7 +764,7 @@ void ColorItem::_wireMagicColors( SwatchPage *colorSet )
                         if ( popVal( colorIndex, part ) ) {
                             guint64 percent = 0;
                             if ( popVal( percent, part ) ) {
-                                (*it)->_linkTint( *(colorSet->_colors[colorIndex]), percent );
+                                it->_linkTint( colorSet->_colors[colorIndex], percent );
                             }
                         }
                     }
@@ -779,7 +779,7 @@ void ColorItem::_wireMagicColors( SwatchPage *colorSet )
                                 if ( !popVal( grayLevel, part ) ) {
                                     grayLevel = 0;
                                 }
-                                (*it)->_linkTone( *(colorSet->_colors[colorIndex]), percent, grayLevel );
+                                it->_linkTone( colorSet->_colors[colorIndex], percent, grayLevel );
                             }
                         }
                     }

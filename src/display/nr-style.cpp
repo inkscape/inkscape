@@ -13,6 +13,8 @@
 #include "style.h"
 #include "sp-paint-server.h"
 #include "display/canvas-bpath.h" // contains SPStrokeJoinType, SPStrokeCapType etc. (WTF!)
+#include "display/drawing-context.h"
+#include "libnr/nr-rect.h"
 
 void NRStyle::Paint::clear()
 {
@@ -142,14 +144,15 @@ void NRStyle::set(SPStyle *style)
     update();
 }
 
-bool NRStyle::prepareFill(cairo_t *ct, NRRect *paintbox)
+bool NRStyle::prepareFill(Inkscape::DrawingContext &ct, Geom::OptRect const &paintbox)
 {
     // update fill pattern
     if (!fill_pattern) {
         switch (fill.type) {
-        case PAINT_SERVER:
-            fill_pattern = sp_paint_server_create_pattern(fill.server, ct, paintbox, fill.opacity);
-            break;
+        case PAINT_SERVER: {
+            NRRect pb(paintbox);
+            fill_pattern = sp_paint_server_create_pattern(fill.server, ct.raw(), &pb, fill.opacity);
+            } break;
         case PAINT_COLOR: {
             SPColor const &c = fill.color;
             fill_pattern = cairo_pattern_create_rgba(
@@ -162,19 +165,20 @@ bool NRStyle::prepareFill(cairo_t *ct, NRRect *paintbox)
     return true;
 }
 
-void NRStyle::applyFill(cairo_t *ct)
+void NRStyle::applyFill(Inkscape::DrawingContext &ct)
 {
-    cairo_set_source(ct, fill_pattern);
-    cairo_set_fill_rule(ct, fill_rule);
+    ct.setSource(fill_pattern);
+    ct.setFillRule(fill_rule);
 }
 
-bool NRStyle::prepareStroke(cairo_t *ct, NRRect *paintbox)
+bool NRStyle::prepareStroke(Inkscape::DrawingContext &ct, Geom::OptRect const &paintbox)
 {
     if (!stroke_pattern) {
         switch (stroke.type) {
-        case PAINT_SERVER:
-            stroke_pattern = sp_paint_server_create_pattern(stroke.server, ct, paintbox, stroke.opacity);
-            break;
+        case PAINT_SERVER: {
+            NRRect pb(paintbox);
+            stroke_pattern = sp_paint_server_create_pattern(stroke.server, ct.raw(), &pb, stroke.opacity);
+            } break;
         case PAINT_COLOR: {
             SPColor const &c = stroke.color;
             stroke_pattern = cairo_pattern_create_rgba(
@@ -187,14 +191,14 @@ bool NRStyle::prepareStroke(cairo_t *ct, NRRect *paintbox)
     return true;
 }
 
-void NRStyle::applyStroke(cairo_t *ct)
+void NRStyle::applyStroke(Inkscape::DrawingContext &ct)
 {
-    cairo_set_source(ct, stroke_pattern);
-    cairo_set_line_width(ct, stroke_width);
-    cairo_set_line_cap(ct, line_cap);
-    cairo_set_line_join(ct, line_join);
-    cairo_set_miter_limit(ct, miter_limit);
-    cairo_set_dash(ct, dash, n_dash, dash_offset);
+    ct.setSource(stroke_pattern);
+    ct.setLineWidth(stroke_width);
+    ct.setLineCap(line_cap);
+    ct.setLineJoin(line_join);
+    ct.setMiterLimit(miter_limit);
+    cairo_set_dash(ct.raw(), dash, n_dash, dash_offset); // fixme
 }
 
 void NRStyle::update()

@@ -56,8 +56,8 @@ struct SPText : public SPItem {
     static void _adjustCoordsRecursive(SPItem *item, Geom::Affine const &m, double ex, bool is_root = true);
     static void _adjustFontsizeRecursive(SPItem *item, double ex, bool is_root = true);
 	
-    /** discards the NRArena objects representing this text. */
-    void _clearFlow(NRArenaGroup *in_arena);
+    /** discards the drawing objects representing this text. */
+    void _clearFlow(Inkscape::DrawingGroup *in_arena);
 
 private:
     /** Recursively walks the xml tree adding tags and their contents. The

@@ -300,10 +300,11 @@ static void ege_adjustment_action_finalize( GObject* object )
 
     action = EGE_ADJUSTMENT_ACTION( object );
 
-    if ( action->private_data->format ) {
-        g_free( action->private_data->format );
-        action->private_data->format = 0;
-    }
+    // g_free(NULL) does nothing
+    g_free( action->private_data->format );
+    g_free( action->private_data->selfId );
+    g_free( action->private_data->appearance );
+    g_free( action->private_data->iconId );
 
     egeAct_free_all_descriptions( action );
 

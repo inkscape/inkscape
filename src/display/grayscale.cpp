@@ -82,7 +82,7 @@ guchar luminance(guchar r, guchar g, guchar b) {
  */
 bool activeDesktopIsGrayscale() {
     if (SP_ACTIVE_DESKTOP) {
-        return (SP_ACTIVE_DESKTOP->getColorMode() == Inkscape::COLORRENDERMODE_GRAYSCALE);
+        return (SP_ACTIVE_DESKTOP->getColorMode() == Inkscape::COLORMODE_GRAYSCALE);
     } else {
         return false;
     }

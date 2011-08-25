@@ -23,6 +23,22 @@ ink_common_sources += \
 	display/canvas-text.h	\
 	display/curve.cpp	\
 	display/curve.h	\
+	display/drawing.cpp \
+	display/drawing.h \
+	display/drawing-context.cpp \
+	display/drawing-context.h \
+	display/drawing-group.cpp \
+	display/drawing-group.h \
+	display/drawing-image.cpp \
+	display/drawing-image.h \
+	display/drawing-item.cpp \
+	display/drawing-item.h \
+	display/drawing-shape.cpp \
+	display/drawing-shape.h \
+	display/drawing-surface.cpp \
+	display/drawing-surface.h \
+	display/drawing-text.cpp \
+	display/drawing-text.h \
 	display/gnome-canvas-acetate.cpp	\
 	display/gnome-canvas-acetate.h	\
 	display/grayscale.cpp	\
@@ -31,19 +47,7 @@ ink_common_sources += \
 	display/guideline.h	\
 	display/nr-3dutils.cpp \
 	display/nr-3dutils.h \
-	display/nr-arena.cpp	\
 	display/nr-arena-forward.h	\
-	display/nr-arena-glyphs.cpp	\
-	display/nr-arena-glyphs.h	\
-	display/nr-arena-group.cpp	\
-	display/nr-arena-group.h	\
-	display/nr-arena.h	\
-	display/nr-arena-image.cpp	\
-	display/nr-arena-image.h	\
-	display/nr-arena-item.cpp	\
-	display/nr-arena-item.h	\
-	display/nr-arena-shape.cpp	\
-	display/nr-arena-shape.h	\
 	display/nr-filter-blend.cpp     \
 	display/nr-filter-blend.h       \
 	display/nr-filter-colormatrix.cpp	\

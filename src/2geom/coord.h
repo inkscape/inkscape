@@ -34,6 +34,7 @@
 
 #include <cmath>
 #include <limits>
+#include <boost/operators.hpp>
 #include <2geom/forward.h>
 
 namespace Geom {
@@ -62,6 +63,9 @@ inline bool rel_error_bound(Coord a, Coord b, double eps=EPSILON) { return a <= 
 template <typename C>
 struct CoordTraits {};
 
+// NOTE: operator helpers for Rect and Interval are defined here.
+// This is to avoid increasing their size through multiple inheritance.
+
 template<>
 struct CoordTraits<IntCoord> {
     typedef IntPoint PointType;
@@ -69,6 +73,22 @@ struct CoordTraits<IntCoord> {
     typedef OptIntInterval OptIntervalType;
     typedef IntRect RectType;
     typedef OptIntRect OptRectType;
+
+    typedef
+      boost::equality_comparable< IntervalType
+    , boost::additive< IntervalType
+    , boost::additive< IntervalType, IntCoord
+    , boost::orable< IntervalType
+      > > > >
+        IntervalOps;
+
+    typedef
+      boost::equality_comparable< RectType
+    , boost::orable< RectType
+    , boost::orable< RectType, OptRectType
+    , boost::additive< RectType, PointType 
+      > > > >
+        RectOps;
 };
 
 template<>
@@ -78,6 +98,24 @@ struct CoordTraits<Coord> {
     typedef OptInterval OptIntervalType;
     typedef Rect RectType;
     typedef OptRect OptRectType;
+
+    typedef
+      boost::equality_comparable< IntervalType
+    , boost::additive< IntervalType
+    , boost::multipliable< IntervalType
+    , boost::orable< IntervalType
+    , boost::arithmetic< IntervalType, Coord
+      > > > > >
+        IntervalOps;
+
+    typedef
+      boost::equality_comparable< RectType
+    , boost::orable< RectType
+    , boost::orable< RectType, OptRectType
+    , boost::additive< RectType, PointType
+    , boost::multipliable< RectType, Affine
+      > > > > >
+        RectOps;
 };
 
 } // end namespace Geom

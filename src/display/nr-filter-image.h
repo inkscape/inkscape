@@ -29,6 +29,8 @@ public:
 
     virtual void render_cairo(FilterSlot &slot);
     virtual bool can_handle_affine(Geom::Affine const &);
+    virtual double complexity(Geom::Affine const &ctm);
+
     void set_document( SPDocument *document );
     void set_href(const gchar *href);
     void set_region(SVGLength x, SVGLength y, SVGLength width, SVGLength height);

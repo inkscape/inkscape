@@ -22,11 +22,14 @@
 #include "macros.h"
 #include "svg/svg.h"
 #include "display/cairo-utils.h"
-#include "display/nr-arena.h"
-#include "display/nr-arena-group.h"
+#include "display/drawing-context.h"
+#include "display/drawing-surface.h"
+#include "display/drawing.h"
+#include "display/drawing-group.h"
 #include "attributes.h"
 #include "document-private.h"
 #include "uri.h"
+#include "style.h"
 #include "sp-pattern.h"
 #include "xml/repr.h"
 #include "display/grayscale.h"
@@ -627,18 +630,19 @@ sp_pattern_create_pattern(SPPaintServer *ps,
         return cairo_pattern_create_rgba(0,0,0,0);
     }
 
-    /* Create arena */
-    NRArena *arena = NRArena::create();
+    /* Create drawing for rendering */
+    Inkscape::Drawing drawing;
     unsigned int dkey = SPItem::display_key_new (1);
-    NRArenaGroup *root = NRArenaGroup::create(arena);
+    Inkscape::DrawingGroup *root = new Inkscape::DrawingGroup(drawing);
+    drawing.setRoot(root);
 
     for (SPObject *child = shown->firstChild(); child != NULL; child = child->getNext() ) {
         if (SP_IS_ITEM (child)) {
-            // for each item in pattern, show it on our arena, add to the group,
+            // for each item in pattern, show it on our drawing, add to the group,
             // and connect to the release signal in case the item gets deleted
-            NRArenaItem *cai;
-            cai = SP_ITEM(child)->invoke_show (arena, dkey, SP_ITEM_SHOW_DISPLAY);
-            nr_arena_item_append_child (root, cai);
+            Inkscape::DrawingItem *cai;
+            cai = SP_ITEM(child)->invoke_show (drawing, dkey, SP_ITEM_SHOW_DISPLAY);
+            root->appendChild(cai);
         }
     }
 
@@ -658,9 +662,8 @@ sp_pattern_create_pattern(SPPaintServer *ps,
     }
     ps2user = Geom::Translate (pattern_x (pat), pattern_y (pat)) * ps2user;
 
-    Geom::Point p(pattern_x(pat), pattern_y(pat));
-    Geom::Point pd(pattern_width(pat), pattern_height(pat));
-    Geom::Rect pattern_tile(p, p + pd);
+    Geom::Rect pattern_tile = Geom::Rect::from_xywh(pattern_x(pat), pattern_y(pat),
+        pattern_width(pat), pattern_height(pat));
 
     if (pattern_patternUnits(pat) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
         // interpret x, y, width, height in relation to bbox
@@ -674,53 +677,42 @@ sp_pattern_create_pattern(SPPaintServer *ps,
 
     // oversample the pattern slightly
     // TODO: find optimum value
-    Geom::Point c(pattern_tile.dimensions()*ps2user.descrim()*full.descrim()*1.2);
+    // TODO: this is lame. instead of using descrim(), we should extract
+    //       the scaling component from the complete matrix and use it
+    //       to find the optimum tile size for rendering
+    Geom::Point c(pattern_tile.dimensions()*vb2ps.descrim()*ps2user.descrim()*full.descrim()*1.1);
     c[Geom::X] = ceil(c[Geom::X]);
     c[Geom::Y] = ceil(c[Geom::Y]);
-    Geom::Affine t = Geom::Scale(c) * Geom::Scale(pattern_tile.dimensions()).inverse();
-
-    NRRectL one_tile;
-    one_tile.x0 = (int) floor(pattern_tile[Geom::X].min());
-    one_tile.y0 = (int) floor(pattern_tile[Geom::Y].min());
-    one_tile.x1 = (int) ceil(pattern_tile[Geom::X].max());
-    one_tile.y1 = (int) ceil(pattern_tile[Geom::Y].max());
-
-    cairo_surface_t *target = cairo_get_target(base_ct);
-    cairo_surface_t *temp = cairo_surface_create_similar(target, CAIRO_CONTENT_COLOR_ALPHA,
-        c[Geom::X], c[Geom::Y]);
-    cairo_t *ct = cairo_create(temp);
-    // scale into a coord system where the surface w,h are equal to tile w,h
-    ink_cairo_transform(ct, t);
+    
+    Geom::IntRect one_tile = pattern_tile.roundOutwards();
+    Inkscape::DrawingSurface temp(pattern_tile, c.ceil());
+    Inkscape::DrawingContext ct(temp);
 
     // render pattern.
     if (needs_opacity) {
-        cairo_push_group(ct); // this group is for pattern + opacity
+        ct.pushGroup(); // this group is for pattern + opacity
     }
 
     // TODO: make sure there are no leaks.
-    NRGC gc(NULL);
-    gc.transform = vb2ps;
-    nr_arena_item_invoke_update (root, NULL, &gc, NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_ALL);
-    nr_arena_item_invoke_render (ct, root, &one_tile, NULL, 0);
+    Inkscape::UpdateContext ctx;
+    ctx.ctm = vb2ps;
+    drawing.update(Geom::IntRect::infinite(), ctx);
+    drawing.render(ct, one_tile);
     for (SPObject *child = shown->firstChild() ; child != NULL; child = child->getNext() ) {
         if (SP_IS_ITEM (child)) {
             SP_ITEM(child)->invoke_hide(dkey);
         }
     }
-    nr_object_unref(root);
-    nr_object_unref(arena);
 
     if (needs_opacity) {
-        cairo_pop_group_to_source(ct); // pop raw pattern
-        cairo_paint_with_alpha(ct, opacity); // apply opacity
+        ct.popGroupToSource(); // pop raw pattern
+        ct.paint(opacity); // apply opacity
     }
 
-    cairo_pattern_t *cp = cairo_pattern_create_for_surface(temp);
-    cairo_destroy(ct);
-    cairo_surface_destroy(temp);
+    cairo_pattern_t *cp = cairo_pattern_create_for_surface(temp.raw());
 
     // Apply transformation to user space. Also compensate for oversampling.
-    ink_cairo_pattern_set_matrix(cp, ps2user.inverse() * t);
+    ink_cairo_pattern_set_matrix(cp, ps2user.inverse() * temp.drawingTransform());
     cairo_pattern_set_extend(cp, CAIRO_EXTEND_REPEAT);
 
     return cp;

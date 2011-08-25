@@ -21,7 +21,7 @@
 #include <2geom/affine.h>
 #include <2geom/transforms.h>
 #include "svg/svg.h"
-#include "display/nr-arena-group.h"
+#include "display/drawing-group.h"
 #include "xml/repr.h"
 #include "attributes.h"
 #include "marker.h"
@@ -31,7 +31,7 @@
 struct SPMarkerView {
 	SPMarkerView *next;
 	unsigned int key;
-  std::vector<NRArenaItem *> items;
+  std::vector<Inkscape::DrawingItem *> items;
 };
 
 static void sp_marker_class_init (SPMarkerClass *klass);
@@ -43,7 +43,7 @@ static void sp_marker_set (SPObject *object, unsigned int key, const gchar *valu
 static void sp_marker_update (SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_marker_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static NRArenaItem *sp_marker_private_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
+static Inkscape::DrawingItem *sp_marker_private_show (SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 static void sp_marker_private_hide (SPItem *item, unsigned int key);
 static void sp_marker_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
 static void sp_marker_print (SPItem *item, SPPrintContext *ctx);
@@ -168,7 +168,7 @@ sp_marker_release (SPObject *object)
 	marker = (SPMarker *) object;
 
 	while (marker->views) {
-		/* Destroy all NRArenaitems etc. */
+		/* Destroy all DrawingItems etc. */
 		/* Parent class ::hide method */
 		((SPItemClass *) parent_class)->hide ((SPItem *) marker, marker->views->key);
 		sp_marker_view_remove (marker, marker->views, TRUE);
@@ -444,12 +444,12 @@ static void sp_marker_update(SPObject *object, SPCtx *ctx, guint flags)
 		((SPObjectClass *) (parent_class))->update (object, (SPCtx *) &rctx, flags);
         }
 
-        // As last step set additional transform of arena group
+        // As last step set additional transform of drawing group
         for (SPMarkerView *v = marker->views; v != NULL; v = v->next) {
             for (unsigned i = 0 ; i < v->items.size() ; i++) {
                 if (v->items[i]) {
-                    Geom::Affine tmp = marker->c2p;
-                    nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->items[i]), &tmp);
+                    Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->items[i]);
+                    g->setChildTransform(marker->c2p);
                 }
             }
         }
@@ -522,8 +522,8 @@ sp_marker_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::X
 /**
  * This routine is disabled to break propagation.
  */
-static NRArenaItem *
-sp_marker_private_show (SPItem */*item*/, NRArena */*arena*/, unsigned int /*key*/, unsigned int /*flags*/)
+static Inkscape::DrawingItem *
+sp_marker_private_show (SPItem */*item*/, Inkscape::Drawing &/*drawing*/, unsigned int /*key*/, unsigned int /*flags*/)
 {
     /* Break propagation */
     return NULL;
@@ -560,14 +560,14 @@ sp_marker_print (SPItem */*item*/, SPPrintContext */*ctx*/)
 
 /**
  * Removes any SPMarkerViews that a marker has with a specific key.
- * Set up the NRArenaItem array's size in the specified SPMarker's SPMarkerView.
+ * Set up the DrawingItem array's size in the specified SPMarker's SPMarkerView.
  * This is called from sp_shape_update() for shapes that have markers.  It
  * removes the old view of the marker and establishes a new one, registering
  * it with the marker's list of views for future updates.
  *
  * \param marker Marker to create views in.
  * \param key Key to give each SPMarkerView.
- * \param size Number of NRArenaItems to put in the SPMarkerView.
+ * \param size Number of DrawingItems to put in the SPMarkerView.
  */
 void
 sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size)
@@ -599,10 +599,10 @@ sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size)
 
 /**
  * Shows an instance of a marker.  This is called during sp_shape_update_marker_view()
- * show and transform a child item in the arena for all views with the given key.
+ * show and transform a child item in the drawing for all views with the given key.
  */
-NRArenaItem *
-sp_marker_show_instance ( SPMarker *marker, NRArenaItem *parent,
+Inkscape::DrawingItem *
+sp_marker_show_instance ( SPMarker *marker, Inkscape::DrawingItem *parent,
                           unsigned int key, unsigned int pos,
                           Geom::Affine const &base, float linewidth)
 {
@@ -621,14 +621,13 @@ sp_marker_show_instance ( SPMarker *marker, NRArenaItem *parent,
             if (!v->items[pos]) {
                 /* Parent class ::show method */
                 v->items[pos] = ((SPItemClass *) parent_class)->show ((SPItem *) marker,
-                                                                      parent->arena, key,
+                                                                      parent->drawing(), key,
                                                                       SP_ITEM_REFERENCE_FLAGS);
                 if (v->items[pos]) {
                     /* fixme: Position (Lauris) */
-                    nr_arena_item_add_child (parent, v->items[pos], NULL);
-                    /* nr_arena_item_unref (v->items[pos]); */
-                    Geom::Affine tmp = marker->c2p;
-                    nr_arena_group_set_child_transform((NRArenaGroup *) v->items[pos], &tmp);
+                    parent->prependChild(v->items[pos]);
+                    Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->items[pos]);
+                    if (g) g->setChildTransform(marker->c2p);
                 }
             }
             if (v->items[pos]) {
@@ -643,8 +642,7 @@ sp_marker_show_instance ( SPMarker *marker, NRArenaItem *parent,
                 if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                     m = Geom::Scale(linewidth) * m;
                 }
-                
-                nr_arena_item_set_transform(v->items[pos], m);
+                v->items[pos]->setTransform(m);
             }
             return v->items[pos];
         }
@@ -695,7 +693,7 @@ sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destro
 	if (destroyitems) {
       for (i = 0; i < view->items.size(); i++) {
 			/* We have to walk through the whole array because there may be hidden items */
-			if (view->items[i]) nr_arena_item_unref (view->items[i]);
+			delete view->items[i];
 		}
 	}
     view->items.clear();

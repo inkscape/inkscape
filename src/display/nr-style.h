@@ -13,22 +13,25 @@
 #define SEEN_INKSCAPE_DISPLAY_NR_ARENA_STYLE_H
 
 #include <cairo.h>
+#include <2geom/rect.h>
 #include "color.h"
 
 class SPColor;
 class SPPaintServer;
 class SPStyle;
-struct NRRect;
+namespace Inkscape {
+class DrawingContext;
+}
 
 struct NRStyle {
     NRStyle();
     ~NRStyle();
 
     void set(SPStyle *);
-    bool prepareFill(cairo_t *ct, NRRect *paintbox);
-    bool prepareStroke(cairo_t *ct, NRRect *paintbox);
-    void applyFill(cairo_t *ct);
-    void applyStroke(cairo_t *ct);
+    bool prepareFill(Inkscape::DrawingContext &ct, Geom::OptRect const &paintbox);
+    bool prepareStroke(Inkscape::DrawingContext &ct, Geom::OptRect const &paintbox);
+    void applyFill(Inkscape::DrawingContext &ct);
+    void applyStroke(Inkscape::DrawingContext &ct);
     void update();
 
     enum PaintType {

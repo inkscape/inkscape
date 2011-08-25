@@ -42,6 +42,7 @@
 
 #include <limits>
 #include <boost/optional.hpp>
+#include <2geom/coord.h>
 
 namespace Geom {
 
@@ -54,11 +55,7 @@ class GenericOptRect;
  */
 template <typename C>
 class GenericRect
-    : boost::additive< typename CoordTraits<C>::RectType, typename CoordTraits<C>::PointType
-    , boost::equality_comparable< typename CoordTraits<C>::RectType
-    , boost::orable< typename CoordTraits<C>::RectType
-    , boost::orable< typename CoordTraits<C>::RectType, typename CoordTraits<C>::OptRectType
-      > > > >
+    : CoordTraits<C>::RectOps
 {
     typedef typename CoordTraits<C>::IntervalType CInterval;
     typedef typename CoordTraits<C>::PointType CPoint;
@@ -131,15 +128,22 @@ public:
 
     /// @name Inspect dimensions.
     /// @{
-    CInterval &operator[](unsigned i)              { return f[i]; }
+    CInterval &operator[](unsigned i)             { return f[i]; }
     CInterval const &operator[](unsigned i) const { return f[i]; }
+    CInterval &operator[](Dim2 d)                 { return f[d]; }
+    CInterval const &operator[](Dim2 d) const     { return f[d]; }
 
+    /** @brief Get the corner of the rectangle with smallest coordinate values.
+     * In 2Geom standard coordinate system, this means upper left. */
     CPoint min() const { return CPoint(f[X].min(), f[Y].min()); }
+    /** @brief Get the corner of the rectangle with largest coordinate values.
+     * In 2Geom standard coordinate system, this means lower right. */
     CPoint max() const { return CPoint(f[X].max(), f[Y].max()); }
     /** @brief Return the n-th corner of the rectangle.
-     * If the Y axis grows upwards, this returns corners in clockwise order
-     * starting from the lower left. If Y grows downwards, it returns the corners
-     * in counter-clockwise order starting from the upper left. */
+     * Returns corners in the direction of growing angles, starting from
+     * the one given by min(). For the standard coordinate system used
+     * in 2Geom (+Y downwards), this means clockwise starting from
+     * the upper left. */
     CPoint corner(unsigned i) const {
         switch(i % 4) {
             case 0:  return CPoint(f[X].min(), f[Y].min());
@@ -196,10 +200,10 @@ public:
     }
 
     /** @brief Check whether the rectangles have any common points.
-     * A non-empty rectangle will not intersect empty rectangles. */
+     * Empty rectangles will not intersect with any other rectangle. */
     inline bool intersects(OptCRect const &r) const;
     /** @brief Check whether the rectangle includes all points in the given rectangle.
-     * A non-empty rectangle will contain any empty rectangle. */
+     * Empty rectangles will be contained in any non-empty rectangle. */
     inline bool contains(OptCRect const &r) const;
 
     /** @brief Check whether the given point is within the rectangle. */
@@ -224,11 +228,11 @@ public:
     void expandTo(CPoint const &p)        { 
         f[X].expandTo(p[X]);  f[Y].expandTo(p[Y]);
     }
-    /** @brief Enlarge the rectangle to contain the given rectangle. */
+    /** @brief Enlarge the rectangle to contain the argument. */
     void unionWith(CRect const &b) { 
         f[X].unionWith(b[X]); f[Y].unionWith(b[Y]);
     }
-    /** @brief Enlarge the rectangle to contain the given rectangle.
+    /** @brief Enlarge the rectangle to contain the argument.
      * Unioning with an empty rectangle results in no changes. */
     void unionWith(OptCRect const &b);
 
@@ -244,7 +248,8 @@ public:
      * This will expand the width by the X coordinate of the point in both directions
      * and the height by Y coordinate of the point. Negative coordinate values will
      * shrink the rectangle. If <code>-p[X]</code> is larger than half of the width,
-     * the X interval will contain only the X coordinate of the midpoint; same for height. */
+     * the X interval will contain only the X coordinate of the midpoint;
+     * same for height. */
     void expandBy(CPoint const &p) { 
         f[X].expandBy(p[X]);  f[Y].expandBy(p[Y]);
     }
@@ -297,30 +302,66 @@ class GenericOptRect
     typedef typename CoordTraits<C>::OptRectType OptCRect;
     typedef boost::optional<CRect> Base;
 public:
+    /// @name Create potentially empty rectangles.
+    /// @{
     GenericOptRect() : Base() {}
     GenericOptRect(GenericRect<C> const &a) : Base(CRect(a)) {}
     GenericOptRect(CPoint const &a, CPoint const &b) : Base(CRect(a, b)) {}
-    /**
-     * Creates an empty OptRect when one of the argument intervals is empty.
-     */
+    /// Creates an empty OptRect when one of the argument intervals is empty.
     GenericOptRect(OptCInterval const &x_int, OptCInterval const &y_int) {
         if (x_int && y_int) {
             *this = CRect(*x_int, *y_int);
         }
         // else, stay empty.
     }
+    /** @brief Create a rectangle from a range of points.
+     * The resulting rectangle will contain all ponts from the range.
+     * If the range contains no points, the result will be an empty rectangle.
+     * The return type of iterators must be convertible to the corresponding
+     * point type (Point or IntPoint).
+     * @param start Beginning of the range
+     * @param end   End of the range
+     * @return Rectangle that contains all points from [start, end). */
+    template <typename InputIterator>
+    static OptCRect from_range(InputIterator start, InputIterator end) {
+        OptCRect result;
+        for (; start != end; ++start) {
+            result.expandTo(*start);
+        }
+        return result;
+    }
+    /// @}
 
+    /// @name Check other rectangles and points for inclusion.
+    /// @{
     /** @brief Check for emptiness. */
     inline bool isEmpty() const { return !*this; };
-
+    /** @brief Check whether the rectangles have any common points.
+     * Empty rectangles will not intersect with any other rectangle. */
     bool intersects(CRect const &r) const { return r.intersects(*this); }
+    /** @brief Check whether the rectangle includes all points in the given rectangle.
+     * Empty rectangles will be contained in any non-empty rectangle. */
     bool contains(CRect const &r) const { return *this && (*this)->contains(r); }
 
+    /** @brief Check whether the rectangles have any common points.
+     * Empty rectangles will not intersect with any other rectangle.
+     * Two empty rectangles will not intersect each other. */
     bool intersects(OptCRect const &r) const { return *this && (*this)->intersects(r); }
+    /** @brief Check whether the rectangle includes all points in the given rectangle.
+     * Empty rectangles will be contained in any non-empty rectangle.
+     * An empty rectangle will not contain other empty rectangles. */
     bool contains(OptCRect const &r) const { return *this && (*this)->contains(r); }
 
+    /** @brief Check whether the given point is within the rectangle.
+     * An empty rectangle will not contain any points. */
     bool contains(CPoint const &p) const { return *this && (*this)->contains(p); }
+    /// @}
 
+    /// @name Modify the potentially empty rectangle.
+    /// @{
+    /** @brief Enlarge the rectangle to contain the argument.
+     * If this rectangle is empty, after callng this method it will
+     * be equal to the argument. */
     void unionWith(CRect const &b) {
         if (*this) {
             (*this)->unionWith(b);
@@ -328,9 +369,16 @@ public:
             *this = b;
         }
     }
+    /** @brief Enlarge the rectangle to contain the argument.
+     * Unioning with an empty rectangle results in no changes.
+     * If this rectangle is empty, after calling this method it will
+     * be equal to the argument. */
     void unionWith(OptCRect const &b) {
         if (b) unionWith(*b);
     }
+    /** @brief Leave only the area overlapping with the argument.
+     * If the rectangles do not have any points in common, after calling
+     * this method the rectangle will be empty. */
     void intersectWith(CRect const &b) {
         if (!*this) return;
         OptCInterval x = (**this)[X] & b[X], y = (**this)[Y] & b[Y];
@@ -340,6 +388,9 @@ public:
             *(static_cast<Base*>(this)) = boost::none;
         }
     }
+    /** @brief Leave only the area overlapping with the argument.
+     * If the argument is empty or the rectangles do not have any points
+     * in common, after calling this method the rectangle will be empty. */
     void intersectWith(OptCRect const &b) {
         if (b) {
             intersectWith(*b);
@@ -347,18 +398,36 @@ public:
             *(static_cast<Base*>(this)) = boost::none;
         }
     }
+    /** @brief Create or enlarge the rectangle to contain the given point.
+     * If the rectangle is empty, after calling this method it will be non-empty
+     * and it will contain only the given point. */
+    void expandTo(CPoint const &p) {
+        if (*this) {
+            (*this).expandTo(p);
+        } else {
+            *this = CRect(p, p);
+        }
+    }
+    /// @}
+    
+    /// @name Operators
+    /// @{
+    /** @brief Union with @a b */
     GenericOptRect<C> &operator|=(OptCRect const &b) {
         unionWith(b);
         return *this;
     }
+    /** @brief Intersect with @a b */
     GenericOptRect<C> &operator&=(CRect const &b) {
         intersectWith(b);
         return *this;
     }
+    /** @brief Intersect with @a b */
     GenericOptRect<C> &operator&=(OptCRect const &b) {
         intersectWith(b);
         return *this;
     }
+    /// @}
 };
 
 template <typename C>

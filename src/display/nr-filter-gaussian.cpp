@@ -509,7 +509,7 @@ gaussian_pass_IIR(Geom::Dim2 d, double deviation, cairo_surface_t *src, cairo_su
             w, h, b, M, tmpdata, num_threads);
         break;
     default:
-        assert(false);
+        g_warning("gaussian_pass_IIR: unsupported image format");
     };
 }
 
@@ -542,7 +542,7 @@ gaussian_pass_FIR(Geom::Dim2 d, double deviation, cairo_surface_t *src, cairo_su
             w, h, &kernel[0], scr_len, num_threads);
         break;
     default:
-        assert(false);
+        g_warning("gaussian_pass_FIR: unsupported image format");
     };
 }
 
@@ -641,6 +641,13 @@ void FilterGaussian::render_cairo(FilterSlot &slot)
         }
     }
 
+    // free the temporary data
+    if ( use_IIR_x || use_IIR_y ) {
+        for(int i = 0; i < threads; ++i) {
+            delete[] tmpdata[i];
+        }
+    }
+
     cairo_surface_mark_dirty(downsampled);
     if (resampling) {
         cairo_surface_t *upsampled = cairo_surface_create_similar(downsampled, cairo_surface_get_content(downsampled),
@@ -680,6 +687,13 @@ bool FilterGaussian::can_handle_affine(Geom::Affine const &)
     // from filter user space to screen.
     // TODO: fix this, or replace can_handle_affine() with isotropic().
     return false;
+}
+
+double FilterGaussian::complexity(Geom::Affine const &trans)
+{
+    int area_x = _effect_area_scr(_deviation_x * trans.expansionX());
+    int area_y = _effect_area_scr(_deviation_y * trans.expansionY());
+    return 2.0 * area_x * area_y;
 }
 
 void FilterGaussian::set_deviation(double deviation)

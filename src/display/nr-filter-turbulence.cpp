@@ -388,6 +388,11 @@ void FilterTurbulence::render_cairo(FilterSlot &slot)
     cairo_surface_destroy(out);
 }
 
+double FilterTurbulence::complexity(Geom::Affine const &)
+{
+    return 5.0;
+}
+
 } /* namespace Filters */
 } /* namespace Inkscape */
 

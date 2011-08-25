@@ -192,6 +192,11 @@ void FilterColorMatrix::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*tr
 {
 }
 
+double FilterColorMatrix::complexity(Geom::Affine const &)
+{
+    return 2.0;
+}
+
 void FilterColorMatrix::set_type(FilterColorMatrixType t){
         type = t;
 }

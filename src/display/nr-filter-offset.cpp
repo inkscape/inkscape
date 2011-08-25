@@ -85,6 +85,11 @@ void FilterOffset::area_enlarge(NRRectL &area, Geom::Affine const &trans)
     }
 }
 
+double FilterOffset::complexity(Geom::Affine const &)
+{
+    return 1.02;
+}
+
 } /* namespace Filters */
 } /* namespace Inkscape */
 

@@ -37,6 +37,7 @@ public:
     virtual void render_cairo(FilterSlot &slot);
     virtual void area_enlarge(NRRectL &area, Geom::Affine const &m);
     virtual bool can_handle_affine(Geom::Affine const &m);
+    virtual double complexity(Geom::Affine const &ctm);
 
     /**
      * Set the standard deviation value for gaussian blur. Deviation along

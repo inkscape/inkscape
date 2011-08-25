@@ -45,6 +45,11 @@ void FilterTile::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*trans*/)
 {
 }
 
+double FilterTile::complexity(Geom::Affine const &)
+{
+    return 1.0;
+}
+
 } /* namespace Filters */
 } /* namespace Inkscape */
 

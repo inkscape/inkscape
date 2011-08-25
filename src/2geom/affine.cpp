@@ -410,6 +410,9 @@ Affine &Affine::operator*=(Affine const &o) {
 }
 
 //TODO: What's this!?!
+/** Given a matrix m such that unit_circle = m*x, this returns the
+ * quadratic form x*A*x = 1.
+ * @relates Affine */
 Affine elliptic_quadratic_form(Affine const &m) {
     double od = m[0] * m[1]  +  m[2] * m[3];
     Affine ret (m[0]*m[0] + m[1]*m[1], od,
@@ -467,6 +470,15 @@ Eigen::Eigen(double m[2][2]) {
         vectors[i] = unit_vector(rot90(Point(m[0][0]-values[i], m[0][1])));
     for (int i = n; i < 2; i++) 
         vectors[i] = Point(0,0);
+}
+
+/** @brief Nearness predicate for affine transforms
+ * @returns True if all entries of matrices are within eps of each other */
+bool are_near(Affine const &a, Affine const &b, Coord eps)
+{
+    return are_near(a[0], b[0], eps) && are_near(a[1], b[1], eps) &&
+           are_near(a[2], b[2], eps) && are_near(a[3], b[3], eps) &&
+           are_near(a[4], b[4], eps) && are_near(a[5], b[5], eps);
 }
 
 }  //namespace Geom

@@ -36,9 +36,7 @@
 #include <glib/gmem.h>
 
 #include <glibmm/i18n.h>
-#include "display/nr-arena.h"
-#include "display/nr-arena-item.h"
-#include "display/nr-arena-group.h"
+#include "display/display-forward.h"
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
 #include "display/cairo-utils.h"
@@ -88,14 +86,14 @@
 struct SPClipPathView {
     SPClipPathView *next;
     unsigned int key;
-    NRArenaItem *arenaitem;
+    Inkscape::DrawingItem *arenaitem;
     NRRect bbox;
 };
 
 struct SPMaskView {
     SPMaskView *next;
     unsigned int key;
-    NRArenaItem *arenaitem;
+    Inkscape::DrawingItem *arenaitem;
     NRRect bbox;
 };
 

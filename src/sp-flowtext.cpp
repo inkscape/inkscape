@@ -31,7 +31,7 @@
 
 #include "livarot/Shape.h"
 
-#include "display/nr-arena-glyphs.h"
+#include "display/drawing-text.h"
 
 
 static void sp_flowtext_class_init(SPFlowtextClass *klass);
@@ -50,7 +50,7 @@ static void sp_flowtext_bbox(SPItem const *item, NRRect *bbox, Geom::Affine cons
 static void sp_flowtext_print(SPItem *item, SPPrintContext *ctx);
 static gchar *sp_flowtext_description(SPItem *item);
 static void sp_flowtext_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
-static NRArenaItem *sp_flowtext_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags);
+static Inkscape::DrawingItem *sp_flowtext_show(SPItem *item, Inkscape::Drawing &drawing, unsigned key, unsigned flags);
 static void sp_flowtext_hide(SPItem *item, unsigned key);
 
 static SPItemClass *parent_class;
@@ -179,10 +179,11 @@ static void sp_flowtext_update(SPObject *object, SPCtx *ctx, unsigned flags)
     NRRect paintbox;
     group->invoke_bbox( &paintbox, Geom::identity(), TRUE);
     for (SPItemView *v = group->display; v != NULL; v = v->next) {
-        group->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
-        nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), object->style);
+        Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+        group->_clearFlow(g);
+        g->setStyle(object->style);
         // pass the bbox of the flowtext object as paintbox (used for paintserver fills)
-        group->layout.show(NR_ARENA_GROUP(v->arenaitem), &paintbox);
+        group->layout.show(g, &paintbox);
     }
 }
 
@@ -200,9 +201,10 @@ static void sp_flowtext_modified(SPObject *object, guint flags)
         NRRect paintbox;
         text->invoke_bbox( &paintbox, Geom::identity(), TRUE);
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
-            text->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
-            nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), object->style);
-            text->layout.show(NR_ARENA_GROUP(v->arenaitem), &paintbox);
+            Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+            text->_clearFlow(g);
+            g->setStyle(object->style);
+            text->layout.show(g, &paintbox);
         }
     }
 
@@ -406,14 +408,13 @@ static void sp_flowtext_snappoints(SPItem const *item, std::vector<Inkscape::Sna
     }
 }
 
-static NRArenaItem *
-sp_flowtext_show(SPItem *item, NRArena *arena, unsigned/* key*/, unsigned /*flags*/)
+static Inkscape::DrawingItem *
+sp_flowtext_show(SPItem *item, Inkscape::Drawing &drawing, unsigned/* key*/, unsigned /*flags*/)
 {
     SPFlowtext *group = (SPFlowtext *) item;
-    NRArenaGroup *flowed = NRArenaGroup::create(arena);
-    nr_arena_group_set_transparent(flowed, FALSE);
-
-    nr_arena_group_set_style(flowed, group->style);
+    Inkscape::DrawingGroup *flowed = new Inkscape::DrawingGroup(drawing);
+    flowed->setPickChildren(false);
+    flowed->setStyle(group->style);
 
     // pass the bbox of the flowtext object as paintbox (used for paintserver fills)
     NRRect paintbox;
@@ -541,17 +542,9 @@ void SPFlowtext::rebuildLayout()
     //g_print(layout.dumpAsText().c_str());
 }
 
-void SPFlowtext::_clearFlow(NRArenaGroup *in_arena)
+void SPFlowtext::_clearFlow(Inkscape::DrawingGroup *in_arena)
 {
-    nr_arena_item_request_render(NR_ARENA_ITEM(in_arena));
-    for (NRArenaItem *child = in_arena->children; child != NULL; ) {
-        NRArenaItem *nchild = child->next;
-
-        nr_arena_glyphs_group_clear(NR_ARENA_GLYPHS_GROUP(child));
-        nr_arena_item_remove_child(NR_ARENA_ITEM(in_arena), child);
-
-        child = nchild;
-    }
+    in_arena->clearChildren();
 }
 
 Inkscape::XML::Node *SPFlowtext::getAsText()

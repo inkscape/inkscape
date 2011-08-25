@@ -28,8 +28,8 @@
 #include "desktop-style.h"
 #include "dialogs/dialog-events.h"
 #include "display/canvas-bpath.h" // for SP_STROKE_LINEJOIN_*
-#include "display/nr-arena.h"
-#include "display/nr-arena-item.h"
+#include "display/display-forward.h"
+#include "display/drawing.h"
 #include "document-private.h"
 #include "gradient-chemistry.h"
 #include "helper/stock-items.h"
@@ -153,7 +153,7 @@ sp_stroke_radio_button(Gtk::RadioButton *tb, char const *icon,
 static Gtk::Image *
 sp_marker_prev_new(unsigned psize, gchar const *mname,
                    SPDocument *source, SPDocument *sandbox,
-                   gchar const *menu_id, NRArena const * /*arena*/, unsigned /*visionkey*/, NRArenaItem *root)
+                   gchar const *menu_id, Inkscape::Drawing &drawing, unsigned /*visionkey*/)
 {
     // Retrieve the marker named 'mname' from the source SVG document
     SPObject const *marker = source->getObjectById(mname);
@@ -208,7 +208,7 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
     Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::wrap(svg_preview_cache.get_preview_from_cache(key));
 
     if (!pixbuf) {
-        pixbuf = Glib::wrap(render_pixbuf(root, sf, *dbox, psize));
+        pixbuf = Glib::wrap(render_pixbuf(drawing, sf, *dbox, psize));
         svg_preview_cache.set_preview_in_cache(key, pixbuf->gobj());
     }
 
@@ -248,9 +248,9 @@ static void
 sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, SPDocument *source, SPDocument *sandbox, gchar const *menu_id)
 {
     // Do this here, outside of loop, to speed up preview generation:
-    NRArena const *arena = NRArena::create();
+    Inkscape::Drawing drawing;
     unsigned const visionkey = SPItem::display_key_new(1);
-    NRArenaItem *root = sandbox->getRoot()->invoke_show((NRArena *) arena, visionkey, SP_ITEM_SHOW_DISPLAY);
+    drawing.setRoot(sandbox->getRoot()->invoke_show(drawing, visionkey, SP_ITEM_SHOW_DISPLAY));
 
     for (; marker_list != NULL; marker_list = marker_list->next) {
         Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(marker_list->data)->getRepr();
@@ -271,7 +271,7 @@ sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, SPDocument *source, SPD
 
         // generate preview
 
-        Gtk::Image *prv = sp_marker_prev_new (22, markid, source, sandbox, menu_id, arena, visionkey, root);
+        Gtk::Image *prv = sp_marker_prev_new (22, markid, source, sandbox, menu_id, drawing, visionkey);
         prv->show();
         hb->pack_start(*prv, false, false, 6);
 
@@ -289,7 +289,6 @@ sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, SPDocument *source, SPD
     }
 
     sandbox->getRoot()->invoke_hide(visionkey);
-    nr_object_unref((NRObject *) arena);
 }
 
 /**

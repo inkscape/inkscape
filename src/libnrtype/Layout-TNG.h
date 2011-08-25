@@ -37,7 +37,6 @@ using Inkscape::Extension::Internal::CairoRenderContext;
 
 class SPStyle;
 class Shape;
-class NRArenaGroup;
 class SPPrintContext;
 class SVGLength;
 class Path;
@@ -46,6 +45,8 @@ class font_instance;
 typedef struct _PangoFontDescription PangoFontDescription;
 
 namespace Inkscape {
+class DrawingGroup;
+
 namespace Text {
 
 /** \brief Generates the layout for either wrapped or non-wrapped text and stores the result
@@ -327,7 +328,7 @@ public:
      \param in_arena  The arena to add the glyphs group to
      \param paintbox  The current rendering tile
     */
-    void show(NRArenaGroup *in_arena, NRRect const *paintbox) const;
+    void show(DrawingGroup *in_arena, NRRect const *paintbox) const;
 
     /** Calculates the smallest rectangle completely enclosing all the
     glyphs.

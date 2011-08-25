@@ -28,7 +28,7 @@
 #include <2geom/transforms.h>
 #include <glibmm/i18n.h>
 
-#include "display/nr-arena-image.h"
+#include "display/drawing-image.h"
 #include "display/cairo-utils.h"
 #include "display/curve.h"
 //Added for preserveAspectRatio support -- EAF
@@ -84,14 +84,14 @@ static void sp_image_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &
 static void sp_image_print (SPItem * item, SPPrintContext *ctx);
 static gchar * sp_image_description (SPItem * item);
 static void sp_image_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
-static NRArenaItem *sp_image_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
+static Inkscape::DrawingItem *sp_image_show (SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 static Geom::Affine sp_image_set_transform (SPItem *item, Geom::Affine const &xform);
 static void sp_image_set_curve(SPImage *image);
 
 
 static GdkPixbuf *sp_image_repr_read_image( time_t& modTime, gchar*& pixPath, const gchar *href, const gchar *absref, const gchar *base );
 static GdkPixbuf *sp_image_pixbuf_force_rgba (GdkPixbuf * pixbuf);
-static void sp_image_update_arenaitem (SPImage *img, NRArenaImage *ai);
+static void sp_image_update_arenaitem (SPImage *img, Inkscape::DrawingImage *ai);
 static void sp_image_update_canvas_image (SPImage *image);
 static GdkPixbuf * sp_image_repr_read_dataURI (const gchar * uri_data);
 static GdkPixbuf * sp_image_repr_read_b64 (const gchar * uri_data);
@@ -1018,7 +1018,8 @@ static void sp_image_modified( SPObject *object, unsigned int flags )
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
         for (SPItemView *v = image->display; v != NULL; v = v->next) {
-            nr_arena_image_set_style (NR_ARENA_IMAGE (v->arenaitem), object->style);
+            Inkscape::DrawingImage *img = dynamic_cast<Inkscape::DrawingImage *>(v->arenaitem);
+            img->setStyle(object->style);
         }
     }
 }
@@ -1148,12 +1149,12 @@ static gchar *sp_image_description( SPItem *item )
     return ret;
 }
 
-static NRArenaItem *sp_image_show( SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int /*flags*/ )
+static Inkscape::DrawingItem *sp_image_show( SPItem *item, Inkscape::Drawing &drawing, unsigned int /*key*/, unsigned int /*flags*/ )
 {
     SPImage * image = SP_IMAGE(item);
-    NRArenaItem *ai = NRArenaImage::create(arena);
+    Inkscape::DrawingImage *ai = new Inkscape::DrawingImage(drawing);
 
-    sp_image_update_arenaitem(image, NR_ARENA_IMAGE(ai));
+    sp_image_update_arenaitem(image, ai);
 
     return ai;
 }
@@ -1264,13 +1265,13 @@ static GdkPixbuf *sp_image_pixbuf_force_rgba( GdkPixbuf * pixbuf )
 
 /* We assert that realpixbuf is either NULL or identical size to pixbuf */
 static void
-sp_image_update_arenaitem (SPImage *image, NRArenaImage *ai)
+sp_image_update_arenaitem (SPImage *image, Inkscape::DrawingImage *ai)
 {
-    nr_arena_image_set_style(ai, SP_OBJECT(image)->style);
-    nr_arena_image_set_argb32_pixbuf(ai, image->pixbuf);
-    nr_arena_image_set_origin(ai, Geom::Point(image->ox, image->oy));
-    nr_arena_image_set_scale(ai, image->sx, image->sy);
-    nr_arena_image_set_clipbox(ai, image->clipbox);
+    ai->setStyle(SP_OBJECT(image)->style);
+    ai->setARGB32Pixbuf(image->pixbuf);
+    ai->setOrigin(Geom::Point(image->ox, image->oy));
+    ai->setScale(image->sx, image->sy);
+    ai->setClipbox(image->clipbox);
 }
 
 static void sp_image_update_canvas_image(SPImage *image)
@@ -1278,7 +1279,7 @@ static void sp_image_update_canvas_image(SPImage *image)
     SPItem *item = SP_ITEM(image);
 
     for (SPItemView *v = item->display; v != NULL; v = v->next) {
-        sp_image_update_arenaitem(image, NR_ARENA_IMAGE(v->arenaitem));
+        sp_image_update_arenaitem(image, dynamic_cast<Inkscape::DrawingImage *>(v->arenaitem));
     }
 }
 

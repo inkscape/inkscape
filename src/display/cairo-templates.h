@@ -12,6 +12,10 @@
 #ifndef SEEN_INKSCAPE_DISPLAY_CAIRO_TEMPLATES_H
 #define SEEN_INKSCAPE_DISPLAY_CAIRO_TEMPLATES_H
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #ifdef HAVE_OPENMP
 #include <omp.h>
 #include "preferences.h"

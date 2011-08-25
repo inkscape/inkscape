@@ -18,7 +18,6 @@ ink_common_sources +=	\
 	helper/recthull.h	\
 	helper/sp-marshal.cpp	\
 	helper/sp-marshal.h	\
-	helper/stlport.h	\
 	helper/unit-menu.cpp	\
 	helper/unit-menu.h	\
 	helper/unit-tracker.cpp	\

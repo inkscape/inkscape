@@ -212,6 +212,11 @@ void FilterConvolveMatrix::area_enlarge(NRRectL &area, Geom::Affine const &/*tra
     area.y1 += orderY - targetY - 1;
 }
 
+double FilterConvolveMatrix::complexity(Geom::Affine const &)
+{
+    return kernelMatrix.size();
+}
+
 } /* namespace Filters */
 } /* namespace Inkscape */
 

@@ -23,7 +23,7 @@
 
 class SPClipPathView;
 
-#include "display/nr-arena-forward.h"
+#include "display/display-forward.h"
 #include "libnr/nr-forward.h"
 #include "sp-object-group.h"
 #include "uri-references.h"
@@ -40,7 +40,7 @@ public:
     static const gchar *create(GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform);
     static GType sp_clippath_get_type(void);
 
-    NRArenaItem *show(NRArena *arena, unsigned int key);
+    Inkscape::DrawingItem *show(Inkscape::Drawing &drawing, unsigned int key);
     void hide(unsigned int key);
 
     void setBBox(unsigned int key, NRRect *bbox);

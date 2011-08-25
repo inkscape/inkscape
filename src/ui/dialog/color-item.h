@@ -12,6 +12,7 @@
 #ifndef SEEN_DIALOGS_COLOR_ITEM_H
 #define SEEN_DIALOGS_COLOR_ITEM_H
 
+#include <boost/ptr_container/ptr_vector.hpp>
 #include <gtkmm/tooltips.h>
 
 #include "widgets/ege-paint-def.h"
@@ -33,7 +34,7 @@ public:
 
     Glib::ustring _name;
     int _prefWidth;
-    std::vector<ColorItem*> _colors;
+    boost::ptr_vector<ColorItem> _colors;
 };
 
 

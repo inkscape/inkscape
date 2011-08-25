@@ -161,10 +161,6 @@ Geom::Rect FilterPrimitive::filter_primitive_area(FilterUnits const &units)
     return area;
 }
 
-FilterTraits FilterPrimitive::get_input_traits() {
-    return TRAIT_ANYTHING;
-}
-
 } /* namespace Filters */
 } /* namespace Inkscape */
 

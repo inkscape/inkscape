@@ -12,6 +12,7 @@
 #define SEEN_NR_FILTER_PRIMITIVE_H
 
 #include <2geom/forward.h>
+#include "display/nr-filter-types.h"
 #include "svg/svg-length.h"
 
 struct NRRectL;
@@ -21,24 +22,6 @@ namespace Filters {
 
 class FilterSlot;
 class FilterUnits;
-
-/*
- * Different filter effects need different types of inputs. This is what
- * traits are used for: one can specify, what special restrictions
- * there are for inputs.
- *
- * Example: gaussian blur requires that x- and y-axis of input image
- * are paraller to blurred object's x- and y-axis, respectively.
- * Otherwise blur wouldn't rotate with the object.
- *
- * Values here should be powers of two, so these can be used as bitfield.
- * That is: any combination ef existing traits can be specified. (excluding
- * TRAIT_ANYTHING, which is alias for no traits defined)
- */
-enum FilterTraits {
-    TRAIT_ANYTHING = 0,
-    TRAIT_PARALLER = 1
-};
 
 class FilterPrimitive {
 public:
@@ -81,6 +64,18 @@ public:
      */
     virtual void set_output(int slot);
 
+    // returns cache score factor, reflecting the cost of rendering this filter
+    // this should return how many times slower this primitive is that normal rendering
+    virtual double complexity(Geom::Affine const &/*ctm*/) { return 1.0; }
+    
+    virtual bool uses_background() {
+        if (_input == NR_FILTER_BACKGROUNDIMAGE || _input == NR_FILTER_BACKGROUNDALPHA) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Sets the filter primitive subregion. Passing an unset length
      * (length._set == false) WILL change the parameter as it is
@@ -103,14 +98,6 @@ public:
      */
     Geom::Rect filter_primitive_area(FilterUnits const &units);
 
-    /**
-     * Queries the filter, which traits it needs from its input buffers.
-     * At the time of writing this, only one trait was needed, having
-     * user coordinate system and input pixelblock coordinates paraller to
-     * each other.
-     */
-    virtual FilterTraits get_input_traits();
-
     /** @brief Indicate whether the filter primitive can handle the given affine.
      *
      * Results of some filter primitives depend on the coordinate system used when rendering.
@@ -121,7 +108,7 @@ public:
      * When any filter returns false, filter rendering is performed on an intermediate surface
      * with edges parallel to the axes of the user coordinate system. This means
      * the matrices from FilterUnits will contain at most a (possibly non-uniform) scale
-     * and a translation. When all primitives of the filter return false, the rendering is
+     * and a translation. When all primitives of the filter return true, the rendering is
      * performed in display coordinate space and no intermediate surface is used. */
     virtual bool can_handle_affine(Geom::Affine const &) { return false; }
 

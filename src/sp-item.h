@@ -20,7 +20,7 @@
  */
 #include <vector>
 
-#include "display/nr-arena-forward.h"
+#include "display/display-forward.h"
 #include "sp-object.h"
 #include <2geom/affine.h>
 #include <libnr/nr-rect.h>
@@ -66,7 +66,7 @@ public:
     SPItemView *next;
     unsigned int flags;
     unsigned int key;
-    NRArenaItem *arenaitem;
+    Inkscape::DrawingItem *arenaitem;
 };
 
 /* flags */
@@ -169,9 +169,6 @@ public:
 
     Geom::OptRect getBounds(Geom::Affine const &transform, BBoxType type=APPROXIMATE_BBOX, unsigned int dkey=0) const;
 
-    sigc::connection _clip_ref_connection;
-    sigc::connection _mask_ref_connection;
-
     sigc::connection connectTransformed(sigc::slot<void, Geom::Affine const *, SPItem *> slot)  {
         return _transformed_signal.connect(slot);
     }
@@ -184,7 +181,7 @@ public:
     gchar *description();
     void invoke_print(SPPrintContext *ctx);
     static unsigned int display_key_new(unsigned int numkeys);
-    NRArenaItem *invoke_show(NRArena *arena, unsigned int key, unsigned int flags);
+    Inkscape::DrawingItem *invoke_show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
     void invoke_hide(unsigned int key);
     void getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs=0) const;
     void adjust_pattern(/* Geom::Affine const &premul, */ Geom::Affine const &postmul, bool set = false);
@@ -197,7 +194,7 @@ public:
     void set_item_transform(Geom::Affine const &transform_matrix);
     void convert_item_to_guides();
     gint emitEvent (SPEvent &event);
-    NRArenaItem *get_arenaitem(unsigned int key);
+    Inkscape::DrawingItem *get_arenaitem(unsigned int key);
     void getBboxDesktop(NRRect *bbox, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
     Geom::OptRect getBboxDesktop(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
     Geom::Affine i2doc_affine() const;
@@ -226,7 +223,7 @@ private:
     static gchar *sp_item_private_description(SPItem *item);
     static void sp_item_private_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 
-    static SPItemView *sp_item_view_new_prepend(SPItemView *list, SPItem *item, unsigned flags, unsigned key, NRArenaItem *arenaitem);
+    static SPItemView *sp_item_view_new_prepend(SPItemView *list, SPItem *item, unsigned flags, unsigned key, Inkscape::DrawingItem *arenaitem);
     static SPItemView *sp_item_view_list_remove(SPItemView *list, SPItemView *view);
     static void clip_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item);
     static void mask_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item);
@@ -249,7 +246,7 @@ public:
     /** Give short description of item (for status display) */
     gchar * (* description) (SPItem * item);
 
-    NRArenaItem * (* show) (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
+    Inkscape::DrawingItem * (* show) (SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
     void (* hide) (SPItem *item, unsigned int key);
 
     /** Write to an iterator the points that should be considered for snapping

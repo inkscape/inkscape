@@ -158,6 +158,13 @@ void FilterMorphology::area_enlarge(NRRectL &area, Geom::Affine const &trans)
     area.y1 += enlarge_y;
 }
 
+double FilterMorphology::complexity(Geom::Affine const &trans)
+{
+    int enlarge_x = ceil(xradius * trans.expansionX());
+    int enlarge_y = ceil(yradius * trans.expansionY());
+    return enlarge_x * enlarge_y;
+}
+
 void FilterMorphology::set_operator(FilterMorphologyOperator &o){
     Operator = o;
 }

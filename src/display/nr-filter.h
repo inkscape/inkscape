@@ -21,19 +21,20 @@
 #include "sp-filter-units.h"
 #include "gc-managed.h"
 
-struct NRArenaItem;
-
 namespace Inkscape {
+class DrawingContext;
+class DrawingItem;
+
 namespace Filters {
 
-class Filter : public Inkscape::GC::Managed<> {
+class Filter {
 public:
     /** Given background state from @a bgct and an intermediate rendering from the surface
      * backing @a graphic, modify the contents of the surface backing @a graphic to represent
      * the results of filter rendering. @a bgarea and @a area specify bounding boxes
      * of both surfaces in world coordinates; Cairo contexts are assumed to be in default state
      * (0,0 = surface origin, no path, OVER operator) */
-    int render(NRArenaItem const *item, cairo_t *bgct, NRRectL const *bgarea, cairo_t *graphic, NRRectL const *area);
+    int render(Inkscape::DrawingItem const *item, DrawingContext &graphic, DrawingContext *bgct);
 
     /**
      * Creates a new filter primitive under this filter object.
@@ -149,19 +150,25 @@ public:
      * to be rendered so that after filtering, the original area is
      * drawn correctly.
      */
-    void area_enlarge(NRRectL &area, NRArenaItem const *item) const;
+    void area_enlarge(Geom::IntRect &area, Inkscape::DrawingItem const *item) const;
     /**
      * Given an item bounding box (in user coords), this function enlarges it
      * to contain the filter effects region and transforms it to screen
      * coordinates
      */
-    void compute_drawbox(NRArenaItem const *item, NRRectL &item_bbox);
+    Geom::OptIntRect compute_drawbox(Inkscape::DrawingItem const *item, Geom::OptRect const &item_bbox);
     /**
      * Returns the filter effects area in user coordinate system.
      * The given bounding box should be a bounding box as specified in
      * SVG standard and in user coordinate system.
      */
-    Geom::Rect filter_effect_area(Geom::Rect const &bbox);
+    Geom::OptRect filter_effect_area(Geom::OptRect const &bbox);
+
+    // returns cache score factor
+    double complexity(Geom::Affine const &ctm);
+
+    // says whether the filter accesses any of the background images
+    bool uses_background();
 
     /** Creates a new filter with space for one filter element */
     Filter();

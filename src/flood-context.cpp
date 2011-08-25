@@ -20,53 +20,52 @@
 #include "config.h"
 #endif
 
+#include <2geom/pathvector.h>
 #include <gdk/gdkkeysyms.h>
 #include <queue>
 #include <deque>
+#include <glibmm/i18n.h>
 
-#include "macros.h"
+#include "color.h"
+#include "context-fns.h"
+#include "desktop.h"
+#include "desktop-handles.h"
+#include "desktop-style.h"
+#include "display/cairo-utils.h"
+#include "display/drawing-context.h"
+#include "display/drawing-image.h"
+#include "display/drawing-item.h"
+#include "display/drawing.h"
 #include "display/sp-canvas.h"
 #include "document.h"
-#include "sp-namedview.h"
-#include "sp-object.h"
-#include "sp-rect.h"
-#include "selection.h"
-#include "desktop-handles.h"
-#include "desktop.h"
-#include "desktop-style.h"
-#include "message-stack.h"
-#include "message-context.h"
-#include "pixmaps/cursor-paintbucket.xpm"
 #include "flood-context.h"
-#include "sp-metrics.h"
-#include <glibmm/i18n.h>
-#include "object-edit.h"
-#include "xml/repr.h"
-#include "xml/node-event-vector.h"
-#include "preferences.h"
-#include "context-fns.h"
-#include "rubberband.h"
-#include "shape-editor.h"
-
-#include "display/nr-arena-item.h"
-#include "display/nr-arena.h"
-#include "display/nr-arena-image.h"
-#include "display/canvas-arena.h"
-#include "display/cairo-utils.h"
-#include <2geom/pathvector.h>
-#include "sp-item.h"
-#include "sp-root.h"
-#include "sp-defs.h"
-#include "sp-path.h"
-#include "splivarot.h"
 #include "livarot/Path.h"
 #include "livarot/Shape.h"
+#include "macros.h"
+#include "message-context.h"
+#include "message-stack.h"
+#include "object-edit.h"
+#include "preferences.h"
+#include "rubberband.h"
+#include "selection.h"
+#include "shape-editor.h"
+#include "sp-defs.h"
+#include "sp-item.h"
+#include "splivarot.h"
+#include "sp-metrics.h"
+#include "sp-namedview.h"
+#include "sp-object.h"
+#include "sp-path.h"
+#include "sp-rect.h"
+#include "sp-root.h"
 #include "svg/svg.h"
-#include "color.h"
-
-#include "trace/trace.h"
 #include "trace/imagemap.h"
 #include "trace/potrace/inkscape-potrace.h"
+#include "trace/trace.h"
+#include "xml/node-event-vector.h"
+#include "xml/repr.h"
+
+#include "pixmaps/cursor-paintbucket.xpm"
 
 using Inkscape::DocumentUndo;
 
@@ -777,10 +776,6 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     SPDesktop *desktop = event_context->desktop;
     SPDocument *document = sp_desktop_document(desktop);
 
-    /* Create new arena */
-    NRArena *arena = NRArena::create();
-    unsigned dkey = SPItem::display_key_new(1);
-
     document->ensureUpToDate();
     
     Geom::OptRect bbox = document->getRoot()->getBounds(Geom::identity());
@@ -804,56 +799,51 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     Geom::Point origin(screen.min()[Geom::X],
                        document->getHeight() - screen.height() - screen.min()[Geom::Y]);
                     
-    origin[Geom::X] = origin[Geom::X] + (screen.width() * ((1 - padding) / 2));
-    origin[Geom::Y] = origin[Geom::Y] + (screen.height() * ((1 - padding) / 2));
+    origin[Geom::X] += (screen.width() * ((1 - padding) / 2));
+    origin[Geom::Y] += (screen.height() * ((1 - padding) / 2));
     
     Geom::Scale scale(zoom_scale, zoom_scale);
     Geom::Affine affine = scale * Geom::Translate(-origin * scale);
-    
-    /* Create ArenaItems and set transform */
-    NRArenaItem *root = document->getRoot()->invoke_show( arena, dkey, SP_ITEM_SHOW_DISPLAY);
-    nr_arena_item_set_transform(NR_ARENA_ITEM(root), affine);
-
-    NRGC gc(NULL);
-    gc.transform.setIdentity();
-    
-    NRRectL final_bbox;
-    final_bbox.x0 = 0;
-    final_bbox.y0 = 0; //row;
-    final_bbox.x1 = width;
-    final_bbox.y1 = height; //row + num_rows;
-    
-    nr_arena_item_invoke_update(root, &final_bbox, &gc, NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
 
     int stride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, width);
     guchar *px = g_new(guchar, stride * height);
-    
-    cairo_surface_t *s = cairo_image_surface_create_for_data(
-        px, CAIRO_FORMAT_ARGB32, width, height, stride);
-    cairo_t *ct = cairo_create(s);
-    // cairo_translate not necessary here - surface origin is at 0,0
+    guint32 bgcolor, dtc;
 
-    SPNamedView *nv = sp_desktop_namedview(desktop);
-    guint32 bgcolor = nv->pagecolor;
-    // bgcolor is 0xrrggbbaa, we need 0xaarrggbb
-    guint32 dtc = (bgcolor >> 8) | (bgcolor << 24);
+    { // this block limits the lifetime of Drawing and DrawingContext
+        /* Create DrawingItems and set transform */
+        unsigned dkey = SPItem::display_key_new(1);
+        Inkscape::Drawing drawing;
+        Inkscape::DrawingItem *root = document->getRoot()->invoke_show( drawing, dkey, SP_ITEM_SHOW_DISPLAY);
+        root->setTransform(affine);
+        drawing.setRoot(root);
 
-    ink_cairo_set_source_rgba32(ct, bgcolor);
-    cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
-    cairo_paint(ct);
-    cairo_set_operator(ct, CAIRO_OPERATOR_OVER);
+        Geom::IntRect final_bbox = Geom::IntRect::from_xywh(0, 0, width, height);
+        drawing.update(final_bbox);
 
-    nr_arena_item_invoke_render(ct, root, &final_bbox, NULL, NR_ARENA_ITEM_RENDER_NO_CACHE );
+        cairo_surface_t *s = cairo_image_surface_create_for_data(
+            px, CAIRO_FORMAT_ARGB32, width, height, stride);
+        Inkscape::DrawingContext ct(s, Geom::Point(0,0));
+        // cairo_translate not necessary here - surface origin is at 0,0
 
-    cairo_surface_flush(s);
-    cairo_destroy(ct);
-    cairo_surface_destroy(s);
-    
-    // Hide items
-    document->getRoot()->invoke_hide(dkey);
+        SPNamedView *nv = sp_desktop_namedview(desktop);
+        bgcolor = nv->pagecolor;
+        // bgcolor is 0xrrggbbaa, we need 0xaarrggbb
+        dtc = (bgcolor >> 8) | (bgcolor << 24);
 
-    nr_object_unref((NRObject *) arena);
-    
+        ct.setSource(bgcolor);
+        ct.setOperator(CAIRO_OPERATOR_SOURCE);
+        ct.paint();
+        ct.setOperator(CAIRO_OPERATOR_OVER);
+
+        drawing.render(ct, final_bbox);
+
+        cairo_surface_flush(s);
+        cairo_surface_destroy(s);
+        
+        // Hide items
+        document->getRoot()->invoke_hide(dkey);
+    }
+
     guchar *trace_px = g_new(guchar, width * height);
     memset(trace_px, 0x00, width * height);
     

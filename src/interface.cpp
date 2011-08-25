@@ -646,7 +646,7 @@ update_view_menu(GtkWidget *widget, GdkEventExpose */*event*/, gpointer user_dat
     Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(widget), "view");
     SPDesktop *dt = static_cast<SPDesktop*>(view);
     Inkscape::RenderMode mode = dt->getMode();
-    Inkscape::ColorRenderMode colormode = dt->getColorMode();
+    Inkscape::ColorMode colormode = dt->getColorMode();
 
     bool new_state = false;
     if (!strcmp(action->id, "ViewModeNormal")) {
@@ -656,11 +656,11 @@ update_view_menu(GtkWidget *widget, GdkEventExpose */*event*/, gpointer user_dat
     } else if (!strcmp(action->id, "ViewModeOutline")) {
         new_state = mode == Inkscape::RENDERMODE_OUTLINE;
     } else if (!strcmp(action->id, "ViewColorModeNormal")) {
-        new_state = colormode == Inkscape::COLORRENDERMODE_NORMAL;
+        new_state = colormode == Inkscape::COLORMODE_NORMAL;
     } else if (!strcmp(action->id, "ViewColorModeGrayscale")) {
-        new_state = colormode == Inkscape::COLORRENDERMODE_GRAYSCALE;
+        new_state = colormode == Inkscape::COLORMODE_GRAYSCALE;
     } else if (!strcmp(action->id, "ViewColorModePrintColorsPreview")) {
-        new_state = colormode == Inkscape::COLORRENDERMODE_PRINT_COLORS_PREVIEW;
+        new_state = colormode == Inkscape::COLORMODE_PRINT_COLORS_PREVIEW;
     } else {
         g_warning("update_view_menu does not handle this verb");
     }

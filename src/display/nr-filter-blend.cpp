@@ -196,6 +196,22 @@ bool FilterBlend::can_handle_affine(Geom::Affine const &)
     return true;
 }
 
+double FilterBlend::complexity(Geom::Affine const &)
+{
+    return 1.1;
+}
+
+bool FilterBlend::uses_background()
+{
+    if (_input == NR_FILTER_BACKGROUNDIMAGE || _input == NR_FILTER_BACKGROUNDALPHA ||
+        _input2 == NR_FILTER_BACKGROUNDIMAGE || _input2 == NR_FILTER_BACKGROUNDALPHA)
+    {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 void FilterBlend::set_input(int slot) {
     _input = slot;
 }

@@ -1,17 +1,22 @@
-#ifndef __SVG_PREVIEW_CACHE_H__
-#define __SVG_PREVIEW_CACHE_H__
-
-/** \file
- * SPIcon: Generic icon widget
+/** @file
+ * @brief Preview cache
  */
 /*
  * Copyright (C) 2007 Bryce W. Harrington <bryce@bryceharrington.org>
- *
  * Released under GNU GPL, read the file 'COPYING' for more information
- *
  */
 
-GdkPixbuf* render_pixbuf(NRArenaItem* root, double scale_factor, const Geom::Rect& dbox, unsigned psize);
+#ifndef SEEN_INKSCAPE_UI_SVG_PREVIEW_CACHE_H
+#define SEEN_INKSCAPE_UI_SVG_PREVIEW_CACHE_H
+
+#include <map>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <glibmm/ustring.h>
+#include <2geom/rect.h>
+
+#include "display/display-forward.h"
+
+GdkPixbuf* render_pixbuf(Inkscape::Drawing &drawing, double scale_factor, const Geom::Rect& dbox, unsigned psize);
 
 namespace Inkscape {
 namespace UI {
@@ -28,7 +33,7 @@ class SvgPreview {
     Glib::ustring cache_key(gchar const *uri, gchar const *name, unsigned psize) const;
     GdkPixbuf*    get_preview_from_cache(const Glib::ustring& key);
     void          set_preview_in_cache(const Glib::ustring& key, GdkPixbuf* px);
-    GdkPixbuf*    get_preview(const gchar* uri, const gchar* id, NRArenaItem *root, double scale_factor, unsigned int psize);
+    GdkPixbuf*    get_preview(const gchar* uri, const gchar* id, Inkscape::DrawingItem *root, double scale_factor, unsigned int psize);
 };
 
 }; // namespace Cache

@@ -27,10 +27,14 @@ public:
 
     virtual void render_cairo(FilterSlot &slot);
     virtual bool can_handle_affine(Geom::Affine const &);
+    virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
+    virtual double complexity(Geom::Affine const &ctm);
+    virtual bool uses_background() { return false; }
+    
     virtual void set_opacity(double o);
     virtual void set_color(guint32 c);
     virtual void set_icc(SVGICCColor *icc_color);
-    virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
+
 private:
     double opacity;
     guint32 color;

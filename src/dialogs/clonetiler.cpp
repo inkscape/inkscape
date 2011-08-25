@@ -14,6 +14,8 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
+
+#include <climits>
 #include <glib/gmem.h>
 #include <gtk/gtk.h>
 #include <glibmm/i18n.h>
@@ -23,8 +25,9 @@
 #include "desktop-handles.h"
 #include "dialog-events.h"
 #include "display/cairo-utils.h"
-#include "display/nr-arena.h"
-#include "display/nr-arena-item.h"
+#include "display/drawing.h"
+#include "display/drawing-context.h"
+#include "display/drawing-item.h"
 #include "document.h"
 #include "filter-chemistry.h"
 #include "helper/unit-menu.h"
@@ -829,15 +832,14 @@ static bool clonetiler_is_a_clone_of(SPObject *tile, SPObject *obj)
     return result;
 }
 
-static NRArena const *trace_arena = NULL;
+static Inkscape::Drawing *trace_drawing = NULL;
 static unsigned trace_visionkey;
-static NRArenaItem *trace_root;
 static gdouble trace_zoom;
-static SPDocument *trace_doc;
+static SPDocument *trace_doc = NULL;
 
 static void clonetiler_trace_hide_tiled_clones_recursively(SPObject *from)
 {
-    if (!trace_arena)
+    if (!trace_drawing)
         return;
 
     for (SPObject *o = from->firstChild(); o != NULL; o = o->next) {
@@ -849,11 +851,11 @@ static void clonetiler_trace_hide_tiled_clones_recursively(SPObject *from)
 
 static void clonetiler_trace_setup(SPDocument *doc, gdouble zoom, SPItem *original)
 {
-    trace_arena = NRArena::create();
+    trace_drawing = new Inkscape::Drawing();
     /* Create ArenaItem and set transform */
     trace_visionkey = SPItem::display_key_new(1);
     trace_doc = doc;
-    trace_root = trace_doc->getRoot()->invoke_show((NRArena *) trace_arena, trace_visionkey, SP_ITEM_SHOW_DISPLAY);
+    trace_drawing->setRoot(trace_doc->getRoot()->invoke_show(*trace_drawing, trace_visionkey, SP_ITEM_SHOW_DISPLAY));
 
     // hide the (current) original and any tiled clones, we only want to pick the background
     original->invoke_hide(trace_visionkey);
@@ -867,37 +869,22 @@ static void clonetiler_trace_setup(SPDocument *doc, gdouble zoom, SPItem *origin
 
 static guint32 clonetiler_trace_pick(Geom::Rect box)
 {
-    if (!trace_arena) {
+    if (!trace_drawing) {
         return 0;
     }
 
-    Geom::Affine t(Geom::Scale(trace_zoom, trace_zoom));
-    nr_arena_item_set_transform(trace_root, &t);
-    NRGC gc(NULL);
-    gc.transform.setIdentity();
-    nr_arena_item_invoke_update( trace_root, NULL, &gc,
-                                 NR_ARENA_ITEM_STATE_ALL,
-                                 NR_ARENA_ITEM_STATE_NONE );
+    trace_drawing->root()->setTransform(Geom::Scale(trace_zoom));
+    trace_drawing->update();
 
     /* Item integer bbox in points */
-    NRRectL ibox;
-    ibox.x0 = floor(trace_zoom * box[Geom::X].min());
-    ibox.y0 = floor(trace_zoom * box[Geom::Y].min());
-    ibox.x1 = ceil(trace_zoom * box[Geom::X].max());
-    ibox.y1 = ceil(trace_zoom * box[Geom::Y].max());
+    Geom::IntRect ibox = (box * Geom::Scale(trace_zoom)).roundOutwards();
 
     /* Find visible area */
-    int width = ibox.x1 - ibox.x0;
-    int height = ibox.y1 - ibox.y0;
-    double R = 0, G = 0, B = 0, A = 0;
-
-    cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
-    cairo_t *ct = cairo_create(s);
-    cairo_translate(ct, -ibox.x0, -ibox.y0);
+    cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, ibox.width(), ibox.height());
+    Inkscape::DrawingContext ct(s, ibox.min());
     /* Render */
-    nr_arena_item_invoke_render(ct, trace_root, &ibox, NULL,
-                                 NR_ARENA_ITEM_RENDER_NO_CACHE );
-    cairo_destroy(ct);
+    trace_drawing->render(ct, ibox);
+    double R = 0, G = 0, B = 0, A = 0;
     ink_cairo_surface_average_color(s, R, G, B, A);
     cairo_surface_destroy(s);
 
@@ -908,10 +895,9 @@ static void clonetiler_trace_finish()
 {
     if (trace_doc) {
         trace_doc->getRoot()->invoke_hide(trace_visionkey);
-    }
-    if (trace_arena) {
-        ((NRObject *) trace_arena)->unreference();
-        trace_arena = NULL;
+        delete trace_drawing;
+        trace_doc = NULL;
+        trace_drawing = NULL;
     }
 }
 

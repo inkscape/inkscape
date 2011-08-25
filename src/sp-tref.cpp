@@ -32,7 +32,6 @@
 #include "text-editing.h"
 #include "uri.h"
 
-#include "display/nr-arena-group.h"
 #include "xml/node.h"
 #include "xml/repr.h"
 

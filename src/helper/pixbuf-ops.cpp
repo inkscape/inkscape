@@ -23,8 +23,9 @@
 #include "interface.h"
 #include "helper/png-write.h"
 #include "display/cairo-utils.h"
-#include "display/nr-arena-item.h"
-#include "display/nr-arena.h"
+#include "display/drawing.h"
+#include "display/drawing-context.h"
+#include "display/drawing-item.h"
 #include "document.h"
 #include "sp-item.h"
 #include "sp-root.h"
@@ -110,61 +111,48 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
 {
     if (width == 0 || height == 0) return NULL;
 
-     GdkPixbuf* pixbuf = NULL;
-     /* Create new arena for offscreen rendering*/
-     NRArena *arena = NRArena::create();
-     nr_arena_set_renderoffscreen(arena);
-     unsigned dkey = SPItem::display_key_new(1);
+    GdkPixbuf* pixbuf = NULL;
+    /* Create new drawing for offscreen rendering*/
+    Inkscape::Drawing drawing;
+    drawing.setExact(true);
+    unsigned dkey = SPItem::display_key_new(1);
 
-     doc->ensureUpToDate();
+    doc->ensureUpToDate();
 
-     Geom::Rect screen=Geom::Rect(Geom::Point(x0,y0), Geom::Point(x1, y1));
+    Geom::Rect screen=Geom::Rect(Geom::Point(x0,y0), Geom::Point(x1, y1));
 
-     double padding = 1.0;
+    double padding = 1.0;
 
-     Geom::Point origin(screen.min()[Geom::X],
-                      doc->getHeight() - screen[Geom::Y].extent() - screen.min()[Geom::Y]);
+    Geom::Point origin(screen.min()[Geom::X],
+                  doc->getHeight() - screen[Geom::Y].extent() - screen.min()[Geom::Y]);
 
-     origin[Geom::X] = origin[Geom::X] + (screen[Geom::X].extent() * ((1 - padding) / 2));
-     origin[Geom::Y] = origin[Geom::Y] + (screen[Geom::Y].extent() * ((1 - padding) / 2));
+    origin[Geom::X] = origin[Geom::X] + (screen[Geom::X].extent() * ((1 - padding) / 2));
+    origin[Geom::Y] = origin[Geom::Y] + (screen[Geom::Y].extent() * ((1 - padding) / 2));
 
-     Geom::Scale scale( (xdpi / PX_PER_IN),   (ydpi / PX_PER_IN));
-     Geom::Affine affine = scale * Geom::Translate(-origin * scale);
+    Geom::Scale scale( (xdpi / PX_PER_IN),   (ydpi / PX_PER_IN));
+    Geom::Affine affine = scale * Geom::Translate(-origin * scale);
 
-     /* Create ArenaItems and set transform */
-     NRArenaItem *root = doc->getRoot()->invoke_show( arena, dkey, SP_ITEM_SHOW_DISPLAY);
-     nr_arena_item_set_transform(NR_ARENA_ITEM(root), affine);
+    /* Create ArenaItems and set transform */
+    Inkscape::DrawingItem *root = doc->getRoot()->invoke_show( drawing, dkey, SP_ITEM_SHOW_DISPLAY);
+    root->setTransform(affine);
+    drawing.setRoot(root);
 
-     NRGC gc(NULL);
-     gc.transform.setIdentity();
+    // We show all and then hide all items we don't want, instead of showing only requested items,
+    // because that would not work if the shown item references something in defs
+    if (items_only) {
+        hide_other_items_recursively(doc->getRoot(), items_only, dkey);
+    }
 
-     // We show all and then hide all items we don't want, instead of showing only requested items,
-     // because that would not work if the shown item references something in defs
-     if (items_only) {
-         hide_other_items_recursively(doc->getRoot(), items_only, dkey);
-     }
-
-     NRRectL final_bbox;
-     final_bbox.x0 = 0;
-     final_bbox.y0 = 0;//row;
-     final_bbox.x1 = width;
-     final_bbox.y1 = height;//row + num_rows;
-
-     nr_arena_item_invoke_update(root, &final_bbox, &gc, NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
+    Geom::IntRect final_bbox = Geom::IntRect::from_xywh(0, 0, width, height);
+    drawing.update(final_bbox);
 
     cairo_surface_t *surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 
     if (cairo_surface_status(surface) == CAIRO_STATUS_SUCCESS) {
-        cairo_t *ct = cairo_create(surface);
-
-        // clear to background
-        ink_cairo_set_source_rgba32(ct, bgcolor);
-        cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
-        cairo_paint(ct);
-        cairo_set_operator(ct, CAIRO_OPERATOR_OVER);
+        Inkscape::DrawingContext ct(surface, Geom::Point(0,0));
 
         // render items
-        nr_arena_item_invoke_render(ct, root, &final_bbox, NULL, NR_ARENA_ITEM_RENDER_NO_CACHE );
+        drawing.render(ct, final_bbox, Inkscape::DrawingItem::RENDER_BYPASS_CACHE);
 
         pixbuf = gdk_pixbuf_new_from_data(cairo_image_surface_get_data(surface),
                                           GDK_COLORSPACE_RGB, TRUE,
@@ -179,8 +167,7 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
         g_warning("sp_generate_internal_bitmap: not enough memory to create pixel buffer. Need %lld.", size);
         cairo_surface_destroy(surface);
     }
-     doc->getRoot()->invoke_hide(dkey);
-     nr_object_unref((NRObject *) arena);
+    doc->getRoot()->invoke_hide(dkey);
 
 //    gdk_pixbuf_save (pixbuf, "C:\\temp\\internal.jpg", "jpeg", NULL, "quality","100", NULL);
 

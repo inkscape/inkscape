@@ -139,6 +139,11 @@ void FilterComposite::set_arithmetic(double k1, double k2, double k3, double k4)
     this->k4 = k4;
 }
 
+double FilterComposite::complexity(Geom::Affine const &)
+{
+    return 1.1;
+}
+
 } /* namespace Filters */
 } /* namespace Inkscape */
 

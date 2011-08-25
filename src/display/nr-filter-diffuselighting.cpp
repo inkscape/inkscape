@@ -16,7 +16,6 @@
 #include "display/cairo-templates.h"
 #include "display/cairo-utils.h"
 #include "display/nr-3dutils.h"
-#include "display/nr-arena-item.h"
 #include "display/nr-filter-diffuselighting.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
@@ -170,6 +169,11 @@ void FilterDiffuseLighting::area_enlarge(NRRectL &area, Geom::Affine const & /*t
     area.x1 += 1;
     area.y0 -= 1;
     area.y1 += 1;
+}
+
+double FilterDiffuseLighting::complexity(Geom::Affine const &)
+{
+    return 9.0;
 }
 
 } /* namespace Filters */

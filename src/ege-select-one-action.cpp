@@ -52,6 +52,7 @@ enum {
 
 static void ege_select_one_action_class_init( EgeSelectOneActionClass* klass );
 static void ege_select_one_action_init( EgeSelectOneAction* action );
+static void ege_select_one_action_finalize( GObject* action );
 static void ege_select_one_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec );
 static void ege_select_one_action_set_property( GObject* obj, guint propId, const GValue *value, GParamSpec* pspec );
 
@@ -159,6 +160,7 @@ void ege_select_one_action_class_init( EgeSelectOneActionClass* klass )
 
         gDataName = g_quark_from_string("ege-select1-action");
 
+        objClass->finalize = ege_select_one_action_finalize;
         objClass->get_property = ege_select_one_action_get_property;
         objClass->set_property = ege_select_one_action_set_property;
 
@@ -280,6 +282,19 @@ void ege_select_one_action_init( EgeSelectOneAction* action )
     action->private_data->pendingText = 0;
 
 /*     g_signal_connect( action, "notify", G_CALLBACK( fixup_labels ), NULL ); */
+}
+
+void ege_select_one_action_finalize( GObject* object )
+{
+    EgeSelectOneAction *action = EGE_SELECT_ONE_ACTION( object );
+
+    g_free( action->private_data->iconProperty );
+    g_free( action->private_data->appearance );
+    g_free( action->private_data->selection );
+
+    if ( G_OBJECT_CLASS(gParentClass)->finalize ) {
+        (*G_OBJECT_CLASS(gParentClass)->finalize)(object);
+    }
 }
 
 EgeSelectOneAction* ege_select_one_action_new( const gchar *name,

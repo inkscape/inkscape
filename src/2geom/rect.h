@@ -59,7 +59,6 @@ typedef GenericOptRect<Coord> OptRect;
  */
 class Rect
     : public GenericRect<Coord>
-    , boost::multipliable< Rect, Affine >
 {
     typedef GenericRect<Coord> Base;
 public:

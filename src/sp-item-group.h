@@ -73,13 +73,13 @@ public:
     virtual void onPrint(SPPrintContext *ctx);
     virtual void onOrderChanged(Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
     virtual gchar *getDescription();
-    virtual NRArenaItem *show (NRArena *arena, unsigned int key, unsigned int flags);
+    virtual Inkscape::DrawingItem *show (Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
     virtual void hide (unsigned int key);
 
     gint getItemCount();
 
 protected:
-    virtual void _showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, unsigned int flags);
+    virtual void _showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *ai, unsigned int key, unsigned int flags);
 
     SPGroup *_group;
 };

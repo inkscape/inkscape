@@ -31,7 +31,6 @@
 
 class SPTextContext;
 class SPTextContextClass;
-class SPCanvasArena;
 
 struct SPTextContext : public SPEventContext {
 

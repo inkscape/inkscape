@@ -34,7 +34,7 @@
 #include <cassert>
 #include <boost/none.hpp>
 #include <boost/optional.hpp>
-#include <boost/operators.hpp>
+#include <2geom/coord.h>
 
 namespace Geom {
 
@@ -47,11 +47,7 @@ class GenericOptInterval;
  */
 template <typename C>
 class GenericInterval
-    : boost::equality_comparable< GenericInterval<C>
-    , boost::additive< GenericInterval<C>
-    , boost::additive< GenericInterval<C>, C
-    , boost::orable< GenericInterval<C>
-      > > > >
+    : CoordTraits<C>::IntervalOps
 {
     typedef GenericInterval<C> Self;
 protected:

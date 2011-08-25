@@ -34,8 +34,8 @@
 #include "extension/output.h"
 #include "extension/db.h"
 
-#include "display/nr-arena-item.h"
-#include "display/nr-arena.h"
+//#include "display/drawing-item.h"
+//#include "display/drawing.h"
 #include "sp-item.h"
 #include "display/canvas-arena.h"
 

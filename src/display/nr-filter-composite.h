@@ -28,6 +28,7 @@ public:
 
     virtual void render_cairo(FilterSlot &);
     virtual bool can_handle_affine(Geom::Affine const &);
+    virtual double complexity(Geom::Affine const &ctm);
 
     virtual void set_input(int input);
     virtual void set_input(int input, int slot);

@@ -42,7 +42,7 @@ public:
 
 protected:
     virtual GSList *_childList(bool add_ref, SPObject::Action action);
-    virtual void _showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, unsigned int flags);
+    virtual void _showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *ai, unsigned int key, unsigned int flags);
     
     SPObject *_evaluateFirst();
     void _reevaluate(bool add_to_arena = false);

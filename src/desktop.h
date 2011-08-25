@@ -212,19 +212,19 @@ public:
     Inkscape::RenderMode _display_mode;
     Inkscape::RenderMode getMode() const { return _display_mode; }
 
-    void _setDisplayColorMode(Inkscape::ColorRenderMode mode);
+    void _setDisplayColorMode(Inkscape::ColorMode mode);
     void setDisplayColorModeNormal() {
-        _setDisplayColorMode(Inkscape::COLORRENDERMODE_NORMAL);
+        _setDisplayColorMode(Inkscape::COLORMODE_NORMAL);
     }
     void setDisplayColorModeGrayscale() {
-        _setDisplayColorMode(Inkscape::COLORRENDERMODE_GRAYSCALE);
+        _setDisplayColorMode(Inkscape::COLORMODE_GRAYSCALE);
     }
 //    void setDisplayColorModePrintColorsPreview() {
-//        _setDisplayColorMode(Inkscape::COLORRENDERMODE_PRINT_COLORS_PREVIEW);
+//        _setDisplayColorMode(Inkscape::COLORMODE_PRINT_COLORS_PREVIEW);
 //    }
     void displayColorModeToggle();
-    Inkscape::ColorRenderMode _display_color_mode;
-    Inkscape::ColorRenderMode getColorMode() const { return _display_color_mode; }
+    Inkscape::ColorMode _display_color_mode;
+    Inkscape::ColorMode getColorMode() const { return _display_color_mode; }
 
     Inkscape::UI::Widget::Dock* getDock() { return _widget->getDock(); }
 

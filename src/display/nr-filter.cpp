@@ -38,8 +38,9 @@
 #include "display/nr-filter-tile.h"
 #include "display/nr-filter-turbulence.h"
 
-#include "display/nr-arena.h"
-#include "display/nr-arena-item.h"
+#include "display/drawing.h"
+#include "display/drawing-item.h"
+#include "display/drawing-context.h"
 #include <2geom/affine.h>
 #include <2geom/rect.h>
 #include "svg/svg-length.h"
@@ -96,50 +97,38 @@ Filter::~Filter()
 }
 
 
-int Filter::render(NRArenaItem const *item, cairo_t *bgct, NRRectL const *bgarea, cairo_t *graphic, NRRectL const *area)
+int Filter::render(Inkscape::DrawingItem const *item, DrawingContext &graphic, DrawingContext *bgct)
 {
     if (_primitive.empty()) {
         // when no primitives are defined, clear source graphic
-        cairo_set_source_rgba(graphic, 0,0,0,0);
-        cairo_set_operator(graphic, CAIRO_OPERATOR_SOURCE);
-        cairo_paint(graphic);
-        cairo_set_operator(graphic, CAIRO_OPERATOR_OVER);
+        graphic.setSource(0,0,0,0);
+        graphic.setOperator(CAIRO_OPERATOR_SOURCE);
+        graphic.paint();
+        graphic.setOperator(CAIRO_OPERATOR_OVER);
         return 1;
     }
 
-    FilterQuality const filterquality = (FilterQuality)item->arena->filterquality;
-    int const blurquality = item->arena->blurquality;
+    FilterQuality const filterquality = (FilterQuality)item->drawing().filterQuality();
+    int const blurquality = item->drawing().blurQuality();
 
-    Geom::Affine trans = item->ctm;
+    Geom::Affine trans = item->ctm();
 
-    Geom::Rect item_bbox;
-    {
-        Geom::OptRect maybe_bbox = item->item_bbox;
-        if (maybe_bbox.isEmpty()) {
-            // Code below needs a bounding box
-            return 1;
-        }
-        item_bbox = *maybe_bbox;
-    }
-    if (item_bbox.hasZeroArea()) {
-        // It's no use to try and filter an empty object.
-        return 1;
-    }
-    Geom::Rect filter_area = filter_effect_area(item_bbox);
+    Geom::OptRect filter_area = filter_effect_area(item->itemBounds());
+    if (!filter_area) return 1;
 
     FilterUnits units(_filter_units, _primitive_units);
     units.set_ctm(trans);
-    units.set_item_bbox(item_bbox);
-    units.set_filter_area(filter_area);
+    units.set_item_bbox(item->itemBounds());
+    units.set_filter_area(*filter_area);
 
     std::pair<double,double> resolution
-        = _filter_resolution(filter_area, trans, filterquality);
+        = _filter_resolution(*filter_area, trans, filterquality);
     if (!(resolution.first > 0 && resolution.second > 0)) {
         // zero resolution - clear source graphic and return
-        cairo_set_source_rgba(graphic, 0,0,0,0);
-        cairo_set_operator(graphic, CAIRO_OPERATOR_SOURCE);
-        cairo_paint(graphic);
-        cairo_set_operator(graphic, CAIRO_OPERATOR_OVER);
+        graphic.setSource(0,0,0,0);
+        graphic.setOperator(CAIRO_OPERATOR_SOURCE);
+        graphic.paint();
+        graphic.setOperator(CAIRO_OPERATOR_OVER);
         return 1;
     }
 
@@ -160,7 +149,7 @@ int Filter::render(NRArenaItem const *item, cairo_t *bgct, NRRectL const *bgarea
         }
     }
 
-    FilterSlot slot(const_cast<NRArenaItem*>(item), bgct, bgarea, cairo_get_group_target(graphic), area, units);
+    FilterSlot slot(const_cast<Inkscape::DrawingItem*>(item), bgct, graphic, units);
     slot.set_quality(filterquality);
     slot.set_blurquality(blurquality);
 
@@ -168,11 +157,12 @@ int Filter::render(NRArenaItem const *item, cairo_t *bgct, NRRectL const *bgarea
         _primitive[i]->render_cairo(slot);
     }
 
+    Geom::Point origin = graphic.targetLogicalBounds().min();
     cairo_surface_t *result = slot.get_result(_output_slot);
-    cairo_set_source_surface(graphic, result, area->x0, area->y0);
-    cairo_set_operator(graphic, CAIRO_OPERATOR_SOURCE);
-    cairo_paint(graphic);
-    cairo_set_operator(graphic, CAIRO_OPERATOR_OVER);
+    graphic.setSource(result, origin[Geom::X], origin[Geom::Y]);
+    graphic.setOperator(CAIRO_OPERATOR_SOURCE);
+    graphic.paint();
+    graphic.setOperator(CAIRO_OPERATOR_OVER);
     cairo_surface_destroy(result);
 
     return 0;
@@ -186,10 +176,12 @@ void Filter::set_primitive_units(SPFilterUnits unit) {
     _primitive_units = unit;
 }
 
-void Filter::area_enlarge(NRRectL &bbox, NRArenaItem const *item) const {
+void Filter::area_enlarge(Geom::IntRect &bbox, Inkscape::DrawingItem const *item) const {
+    NRRectL b(bbox);
     for (unsigned i = 0 ; i < _primitive.size() ; i++) {
-        if (_primitive[i]) _primitive[i]->area_enlarge(bbox, item->ctm);
+        if (_primitive[i]) _primitive[i]->area_enlarge(b, item->ctm());
     }
+    bbox = *b.upgrade_2geom();
 
 /*
   TODO: something. See images at the bottom of filters.svg with medium-low
@@ -204,7 +196,7 @@ void Filter::area_enlarge(NRRectL &bbox, NRArenaItem const *item) const {
     }
 
     Geom::Rect item_bbox;
-    Geom::OptRect maybe_bbox = item->item_bbox;
+    Geom::OptRect maybe_bbox = item->itemBounds();
     if (maybe_bbox.isEmpty()) {
         // Code below needs a bounding box
         return;
@@ -212,9 +204,9 @@ void Filter::area_enlarge(NRRectL &bbox, NRArenaItem const *item) const {
     item_bbox = *maybe_bbox;
 
     std::pair<double,double> res_low
-        = _filter_resolution(item_bbox, item->ctm, filterquality);
+        = _filter_resolution(item_bbox, item->ctm(), filterquality);
     //std::pair<double,double> res_full
-    //    = _filter_resolution(item_bbox, item->ctm, FILTER_QUALITY_BEST);
+    //    = _filter_resolution(item_bbox, item->ctm(), FILTER_QUALITY_BEST);
     double pixels_per_block = fmax(item_bbox.width() / res_low.first,
                                    item_bbox.height() / res_low.second);
     bbox.x0 -= (int)pixels_per_block;
@@ -224,39 +216,36 @@ void Filter::area_enlarge(NRRectL &bbox, NRArenaItem const *item) const {
 */
 }
 
-void Filter::compute_drawbox(NRArenaItem const *item, NRRectL &item_bbox) {
-    // Modifying empty bounding boxes confuses rest of the renderer, so
-    // let's not do that.
-    if (item_bbox.x0 > item_bbox.x1 || item_bbox.y0 > item_bbox.y1) return;
+Geom::OptIntRect Filter::compute_drawbox(Inkscape::DrawingItem const *item, Geom::OptRect const &item_bbox) {
 
-    Geom::Point min(item_bbox.x0, item_bbox.y0);
-    Geom::Point max(item_bbox.x1, item_bbox.y1);
-    Geom::Rect tmp_bbox(min, max);
+    Geom::OptRect enlarged = filter_effect_area(item_bbox);
+    if (enlarged) {
+        *enlarged *= item->ctm();
 
-    Geom::Rect enlarged = filter_effect_area(tmp_bbox);
-    enlarged = enlarged * item->ctm;
-
-    item_bbox.x0 = floor(enlarged.min()[X]);
-    item_bbox.y0 = floor(enlarged.min()[Y]);
-    item_bbox.x1 = ceil(enlarged.max()[X]);
-    item_bbox.y1 = ceil(enlarged.max()[Y]);
+        Geom::OptIntRect ret(enlarged->roundOutwards());
+        return ret;
+    } else {
+        return Geom::OptIntRect();
+    }
 }
 
-Geom::Rect Filter::filter_effect_area(Geom::Rect const &bbox)
+Geom::OptRect Filter::filter_effect_area(Geom::OptRect const &bbox)
 {
     Geom::Point minp, maxp;
-    double len_x = bbox.width();
-    double len_y = bbox.height();
+    double len_x = bbox ? bbox->width() : 0;
+    double len_y = bbox ? bbox->height() : 0;
     /* TODO: fetch somehow the object ex and em lengths */
     _region_x.update(12, 6, len_x);
     _region_y.update(12, 6, len_y);
     _region_width.update(12, 6, len_x);
     _region_height.update(12, 6, len_y);
     if (_filter_units == SP_FILTER_UNITS_OBJECTBOUNDINGBOX) {
+        if (!bbox) return Geom::OptRect();
+
         if (_region_x.unit == SVGLength::PERCENT) {
-            minp[X] = bbox.min()[X] + _region_x.computed;
+            minp[X] = bbox->left() + _region_x.computed;
         } else {
-            minp[X] = bbox.min()[X] + _region_x.computed * len_x;
+            minp[X] = bbox->left() + _region_x.computed * len_x;
         }
         if (_region_width.unit == SVGLength::PERCENT) {
             maxp[X] = minp[X] + _region_width.computed;
@@ -265,9 +254,9 @@ Geom::Rect Filter::filter_effect_area(Geom::Rect const &bbox)
         }
 
         if (_region_y.unit == SVGLength::PERCENT) {
-            minp[Y] = bbox.min()[Y] + _region_y.computed;
+            minp[Y] = bbox->top() + _region_y.computed;
         } else {
-            minp[Y] = bbox.min()[Y] + _region_y.computed * len_y;
+            minp[Y] = bbox->top() + _region_y.computed * len_y;
         }
         if (_region_height.unit == SVGLength::PERCENT) {
             maxp[Y] = minp[Y] + _region_height.computed;
@@ -283,8 +272,30 @@ Geom::Rect Filter::filter_effect_area(Geom::Rect const &bbox)
     } else {
         g_warning("Error in Inkscape::Filters::Filter::filter_effect_area: unrecognized value of _filter_units");
     }
-    Geom::Rect area(minp, maxp);
+    Geom::OptRect area(minp, maxp);
     return area;
+}
+
+double Filter::complexity(Geom::Affine const &ctm)
+{
+    double factor = 1.0;
+    for (unsigned i = 0 ; i < _primitive.size() ; i++) {
+        if (_primitive[i]) {
+            double f = _primitive[i]->complexity(ctm);
+            factor += (f - 1.0);
+        }
+    }
+    return factor;
+}
+
+bool Filter::uses_background()
+{
+    for (unsigned i = 0 ; i < _primitive.size() ; i++) {
+        if (_primitive[i] && _primitive[i]->uses_background()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 /* Constructor table holds pointers to static methods returning filter

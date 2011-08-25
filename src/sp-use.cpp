@@ -22,7 +22,7 @@
 
 #include <2geom/transforms.h>
 #include <glibmm/i18n.h>
-#include "display/nr-arena-group.h"
+#include "display/drawing-group.h"
 #include "attributes.h"
 #include "document.h"
 #include "sp-object-repr.h"
@@ -53,7 +53,7 @@ static void sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &tr
 static void sp_use_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 static void sp_use_print(SPItem *item, SPPrintContext *ctx);
 static gchar *sp_use_description(SPItem *item);
-static NRArenaItem *sp_use_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags);
+static Inkscape::DrawingItem *sp_use_show(SPItem *item, Inkscape::Drawing &drawing, unsigned key, unsigned flags);
 static void sp_use_hide(SPItem *item, unsigned key);
 
 static void sp_use_href_changed(SPObject *old_ref, SPObject *ref, SPUse *use);
@@ -346,23 +346,23 @@ sp_use_description(SPItem *item)
     }
 }
 
-static NRArenaItem *
-sp_use_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
+static Inkscape::DrawingItem *
+sp_use_show(SPItem *item, Inkscape::Drawing &drawing, unsigned key, unsigned flags)
 {
     SPUse *use = SP_USE(item);
 
-    NRArenaItem *ai = NRArenaGroup::create(arena);
-    nr_arena_group_set_transparent(NR_ARENA_GROUP(ai), FALSE);
-    nr_arena_group_set_style(NR_ARENA_GROUP(ai), item->style);
+    Inkscape::DrawingGroup *ai = new Inkscape::DrawingGroup(drawing);
+    ai->setPickChildren(false);
+    ai->setStyle(item->style);
 
     if (use->child) {
-        NRArenaItem *ac = SP_ITEM(use->child)->invoke_show(arena, key, flags);
+        Inkscape::DrawingItem *ac = SP_ITEM(use->child)->invoke_show(drawing, key, flags);
         if (ac) {
-            nr_arena_item_add_child(ai, ac, NULL);
+            ai->prependChild(ac);
         }
         Geom::Translate t(use->x.computed,
                         use->y.computed);
-        nr_arena_group_set_child_transform(NR_ARENA_GROUP(ai), Geom::Affine(t));
+        ai->setChildTransform(t);
     }
 
     return ai;
@@ -540,10 +540,10 @@ sp_use_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPUse *use)
                 (use->child)->invoke_build(use->document, childrepr, TRUE);
 
                 for (SPItemView *v = item->display; v != NULL; v = v->next) {
-                    NRArenaItem *ai;
-                    ai = SP_ITEM(use->child)->invoke_show(NR_ARENA_ITEM_ARENA(v->arenaitem), v->key, v->flags);
+                    Inkscape::DrawingItem *ai;
+                    ai = SP_ITEM(use->child)->invoke_show(v->arenaitem->drawing(), v->key, v->flags);
                     if (ai) {
-                        nr_arena_item_add_child(v->arenaitem, ai, NULL);
+                        v->arenaitem->prependChild(ai);
                     }
                 }
 
@@ -592,7 +592,8 @@ sp_use_update(SPObject *object, SPCtx *ctx, unsigned flags)
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
       for (SPItemView *v = SP_ITEM(object)->display; v != NULL; v = v->next) {
-        nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), object->style);
+        Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+        g->setStyle(object->style);
       }
     }
 
@@ -633,8 +634,9 @@ sp_use_update(SPObject *object, SPCtx *ctx, unsigned flags)
 
     /* As last step set additional transform of arena group */
     for (SPItemView *v = item->display; v != NULL; v = v->next) {
+        Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
         Geom::Affine t(Geom::Translate(use->x.computed, use->y.computed));
-        nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), t);
+        g->setChildTransform(t);
     }
 }
 
@@ -650,7 +652,8 @@ sp_use_modified(SPObject *object, guint flags)
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
       for (SPItemView *v = SP_ITEM(object)->display; v != NULL; v = v->next) {
-        nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), object->style);
+        Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+        g->setStyle(object->style);
       }
     }
 

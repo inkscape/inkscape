@@ -885,7 +885,7 @@ void SwatchesPanel::_setDocument( SPDocument *document )
 }
 
 static void recalcSwatchContents(SPDocument* doc,
-                std::vector<ColorItem*> &tmpColors,
+                boost::ptr_vector<ColorItem> &tmpColors,
                 std::map<ColorItem*, cairo_pattern_t*> &previewMappings,
                 std::map<ColorItem*, SPGradient*> &gradMappings)
 {
@@ -938,7 +938,7 @@ void SwatchesPanel::handleGradientsChange(SPDocument *document)
 {
     SwatchPage *docPalette = (docPalettes.find(document) != docPalettes.end()) ? docPalettes[document] : 0;
     if (docPalette) {
-        std::vector<ColorItem*> tmpColors;
+        boost::ptr_vector<ColorItem> tmpColors;
         std::map<ColorItem*, cairo_pattern_t*> tmpPrevs;
         std::map<ColorItem*, SPGradient*> tmpGrads;
         recalcSwatchContents(document, tmpColors, tmpPrevs, tmpGrads);
@@ -953,9 +953,6 @@ void SwatchesPanel::handleGradientsChange(SPDocument *document)
         }
 
         docPalette->_colors.swap(tmpColors);
-        for (std::vector<ColorItem*>::iterator it = tmpColors.begin(); it != tmpColors.end(); ++it) {
-            delete *it;
-        }
 
         // Figure out which SwatchesPanel instances are affected and update them.
 
@@ -976,7 +973,7 @@ void SwatchesPanel::handleDefsModified(SPDocument *document)
 {
     SwatchPage *docPalette = (docPalettes.find(document) != docPalettes.end()) ? docPalettes[document] : 0;
     if (docPalette && !DocTrack::queueUpdateIfNeeded(document) ) {
-        std::vector<ColorItem*> tmpColors;
+        boost::ptr_vector<ColorItem> tmpColors;
         std::map<ColorItem*, cairo_pattern_t*> tmpPrevs;
         std::map<ColorItem*, SPGradient*> tmpGrads;
         recalcSwatchContents(document, tmpColors, tmpPrevs, tmpGrads);
@@ -986,8 +983,8 @@ void SwatchesPanel::handleDefsModified(SPDocument *document)
         } else {
             int cap = std::min(docPalette->_colors.size(), tmpColors.size());
             for (int i = 0; i < cap; i++) {
-                ColorItem* newColor = tmpColors[i];
-                ColorItem* oldColor = docPalette->_colors[i];
+                ColorItem *newColor = &tmpColors[i];
+                ColorItem *oldColor = &docPalette->_colors[i];
                 if ( (newColor->def.getType() != oldColor->def.getType()) ||
                      (newColor->def.getR() != oldColor->def.getR()) ||
                      (newColor->def.getG() != oldColor->def.getG()) ||
@@ -1005,9 +1002,6 @@ void SwatchesPanel::handleDefsModified(SPDocument *document)
 
         for (std::map<ColorItem*, cairo_pattern_t*>::iterator it = tmpPrevs.begin(); it != tmpPrevs.end(); ++it) {
             cairo_pattern_destroy(it->second);
-        }
-        for (std::vector<ColorItem*>::iterator it = tmpColors.begin(); it != tmpColors.end(); ++it) {
-            delete *it;
         }
     }
 }
@@ -1098,8 +1092,8 @@ void SwatchesPanel::_updateFromSelection()
         }
         sp_style_unref(tmpStyle);
 
-        for ( std::vector<ColorItem*>::iterator it = docPalette->_colors.begin(); it != docPalette->_colors.end(); ++it ) {
-            ColorItem* item = *it;
+        for ( boost::ptr_vector<ColorItem>::iterator it = docPalette->_colors.begin(); it != docPalette->_colors.end(); ++it ) {
+            ColorItem* item = &*it;
             bool isFill = (fillId == item->def.descr);
             bool isStroke = (strokeId == item->def.descr);
             item->setState( isFill, isStroke );
@@ -1140,8 +1134,8 @@ void SwatchesPanel::_rebuild()
     _holder->freezeUpdates();
     // TODO restore once 'clear' works _holder->addPreview(_clear);
     _holder->addPreview(_remove);
-    for ( std::vector<ColorItem*>::iterator it = curr->_colors.begin(); it != curr->_colors.end(); it++ ) {
-        _holder->addPreview(*it);
+    for ( boost::ptr_vector<ColorItem>::iterator it = curr->_colors.begin(); it != curr->_colors.end(); it++ ) {
+        _holder->addPreview(&*it);
     }
     _holder->thawUpdates();
 }

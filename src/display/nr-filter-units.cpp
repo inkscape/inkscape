@@ -71,10 +71,10 @@ Geom::Affine FilterUnits::get_matrix_user2pb() const {
     Geom::Affine u2pb = ctm;
 
     if (paraller_axis || !automatic_resolution) {
-        u2pb[0] = resolution_x / (filter_area->max()[X] - filter_area->min()[X]);
+        u2pb[0] = resolution_x / filter_area->width();
         u2pb[1] = 0;
         u2pb[2] = 0;
-        u2pb[3] = resolution_y / (filter_area->max()[Y] - filter_area->min()[Y]);
+        u2pb[3] = resolution_y / filter_area->height();
         u2pb[4] = ctm[4];
         u2pb[5] = ctm[5];
     }

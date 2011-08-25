@@ -10,7 +10,7 @@
  */
 #include <glib/gmem.h>
 #include "Layout-TNG.h"
-#include "display/nr-arena-glyphs.h"
+#include "display/drawing-text.h"
 #include "style.h"
 #include "print.h"
 #include "extension/print.h"
@@ -81,28 +81,27 @@ void Layout::_getGlyphTransformMatrix(int glyph_index, Geom::Affine *matrix) con
     }
 }
 
-void Layout::show(NRArenaGroup *in_arena, NRRect const *paintbox) const
+void Layout::show(DrawingGroup *in_arena, NRRect const *paintbox) const
 {
     int glyph_index = 0;
     for (unsigned span_index = 0 ; span_index < _spans.size() ; span_index++) {
         if (_input_stream[_spans[span_index].in_input_stream_item]->Type() != TEXT_SOURCE) continue;
         InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_input_stream[_spans[span_index].in_input_stream_item]);
-        NRArenaGlyphsGroup *nr_group = NRArenaGlyphsGroup::create(in_arena->arena);
-        nr_arena_item_add_child(in_arena, nr_group, NULL);
-        nr_arena_item_unref(nr_group);
 
-        nr_arena_glyphs_group_set_style(nr_group, text_source->style);
+        DrawingText *nr_text = new DrawingText(in_arena->drawing());
+        nr_text->setStyle(text_source->style);
+
         while (glyph_index < (int)_glyphs.size() && _characters[_glyphs[glyph_index].in_character].in_span == span_index) {
             if (_characters[_glyphs[glyph_index].in_character].in_glyph != -1) {
                 Geom::Affine glyph_matrix;
                 _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
-                nr_arena_glyphs_group_add_component(nr_group, _spans[span_index].font, _glyphs[glyph_index].glyph, glyph_matrix);
+                nr_text->addComponent(_spans[span_index].font, _glyphs[glyph_index].glyph, glyph_matrix);
             }
             glyph_index++;
         }
-        nr_arena_glyphs_group_set_paintbox(NR_ARENA_GLYPHS_GROUP(nr_group), paintbox);
+        nr_text->setPaintBox(paintbox ? paintbox->upgrade_2geom() : Geom::OptRect());
+        in_arena->prependChild(nr_text);
     }
-    nr_arena_item_request_update(NR_ARENA_ITEM(in_arena), NR_ARENA_ITEM_STATE_ALL, FALSE);
 }
 
 void Layout::getBoundingBox(NRRect *bounding_box, Geom::Affine const &transform, int start, int length) const

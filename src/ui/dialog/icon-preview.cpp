@@ -16,6 +16,7 @@
 # include <config.h>
 #endif
 
+#include <boost/scoped_ptr.hpp>
 #include <gtk/gtk.h>
 #include <glib/gmem.h>
 #include <glibmm/i18n.h>
@@ -25,7 +26,7 @@
 
 #include "desktop.h"
 #include "desktop-handles.h"
-#include "display/nr-arena.h"
+#include "display/drawing.h"
 #include "document.h"
 #include "inkscape.h"
 #include "preferences.h"
@@ -36,9 +37,10 @@
 #include "icon-preview.h"
 
 extern "C" {
-// takes doc, root, icon, and icon name to produce pixels
+// takes doc, drawing, icon, and icon name to produce pixels
+// this is defined in widgets/icon.cpp
 guchar *
-sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
+sp_icon_doc_icon( SPDocument *doc, Inkscape::Drawing &drawing,
                   const gchar *name, unsigned int psize, unsigned &stride);
 }
 
@@ -438,20 +440,16 @@ void IconPreviewPanel::renderPreview( SPObject* obj )
     g_message("%s setting up to render '%s' as the icon", getTimestr().c_str(), id );
 #endif // ICON_VERBOSE
 
-    NRArenaItem *root = NULL;
+    Inkscape::Drawing drawing;
 
-    /* Create new arena */
-    NRArena *arena = NRArena::create();
-
-    /* Create ArenaItem and set transform */
+    /* Create drawing items and set transform */
     unsigned int visionkey = SPItem::display_key_new(1);
-
-    root = doc->getRoot()->invoke_show( arena, visionkey, SP_ITEM_SHOW_DISPLAY );
+    drawing.setRoot(doc->getRoot()->invoke_show( drawing, visionkey, SP_ITEM_SHOW_DISPLAY ));
 
     for ( int i = 0; i < numEntries; i++ ) {
         unsigned unused;
         int stride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, sizes[i]);
-        guchar * px = sp_icon_doc_icon( doc, root, id, sizes[i], unused);
+        guchar * px = sp_icon_doc_icon( doc, drawing, id, sizes[i], unused);
 //         g_message( " size %d %s", sizes[i], (px ? "worked" : "failed") );
         if ( px ) {
             memcpy( pixMem[i], px, sizes[i] * stride );
@@ -465,7 +463,6 @@ void IconPreviewPanel::renderPreview( SPObject* obj )
     updateMagnify();
 
     doc->getRoot()->invoke_hide(visionkey);
-    nr_object_unref((NRObject *) arena);
     renderTimer->stop();
     minDelay = std::max( 0.1, renderTimer->elapsed() * 3.0 );
 #if ICON_VERBOSE

@@ -38,6 +38,7 @@ public:
     virtual void render_cairo(FilterSlot &slot);
     virtual bool can_handle_affine(Geom::Affine const &);
     virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
+    virtual double complexity(Geom::Affine const &ctm);
 
     FilterComponentTransferType type[4];
     std::vector<gdouble> tableValues[4];

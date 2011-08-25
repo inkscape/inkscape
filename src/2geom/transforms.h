@@ -45,10 +45,11 @@ namespace Geom {
  * @ingroup Concepts */
 template <typename T>
 struct TransformConcept {
-    T t;
+    T t, t2;
     Affine m;
     Point p;
     bool bool_;
+    Coord epsilon;
     void constraints() {
         m = t;  //implicit conversion
         m *= t;
@@ -63,6 +64,8 @@ struct TransformConcept {
         bool_ = (t != t);
         t = T::identity();
         t = t.inverse();
+        bool_ = are_near(t, t2);
+        bool_ = are_near(t, t2, epsilon);
     }
 };
 
@@ -130,6 +133,10 @@ public:
     friend class Point;
 };
 
+inline bool are_near(Translate const &a, Translate const &b, Coord eps=EPSILON) {
+    return are_near(a[X], b[X], eps) && are_near(a[Y], b[Y], eps);
+}
+
 /** @brief Scaling from the origin.
  * During scaling, the point (0,0) will not move. To obtain a scale  with a different
  * invariant point, combine with translation to the origin and back.
@@ -163,6 +170,10 @@ public:
 
     friend class Point;
 };
+
+inline bool are_near(Scale const &a, Scale const &b, Coord eps=EPSILON) {
+    return are_near(a[X], b[X], eps) && are_near(a[Y], b[Y], eps);
+}
 
 /** @brief Rotation around the origin.
  * Combine with translations to the origin and back to get a rotation around a different point.
@@ -207,6 +218,10 @@ public:
     friend class Point;
 };
 
+inline bool are_near(Rotate const &a, Rotate const &b, Coord eps=EPSILON) {
+    return are_near(a[X], b[X], eps) && are_near(a[Y], b[Y], eps);
+}
+
 /** @brief Common base for shearing transforms.
  * This class is an implementation detail and should not be used directly.
  * @ingroup Transforms */
@@ -241,6 +256,10 @@ public:
     operator Affine() const { Affine ret(1, 0, f, 1, 0, 0); return ret; }
 };
 
+inline bool are_near(HShear const &a, HShear const &b, Coord eps=EPSILON) {
+    return are_near(a.factor(), b.factor(), eps);
+}
+
 /** @brief Vertical shearing.
  * Points on the Y axis will not move. Combine with translations to get a shear
  * with a different invariant line.
@@ -252,6 +271,10 @@ public:
     explicit VShear(Coord h) : ShearBase<VShear>(h) {}
     operator Affine() const { Affine ret(1, f, 0, 1, 0, 0); return ret; }
 };
+
+inline bool are_near(VShear const &a, VShear const &b, Coord eps=EPSILON) {
+    return are_near(a.factor(), b.factor(), eps);
+}
 
 /** @brief Combination of a translation and uniform scale.
  * The translation part is applied first, then the result is scaled from the new origin.
@@ -294,6 +317,11 @@ public:
     friend class Point;
     friend class Affine;
 };
+
+inline bool are_near(Zoom const &a, Zoom const &b, Coord eps=EPSILON) {
+    return are_near(a.scale(), b.scale(), eps) &&
+           are_near(a.translation(), b.translation(), eps);
+}
 
 /** @brief Specialization of exponentiation for Scale.
  * @relates Scale */

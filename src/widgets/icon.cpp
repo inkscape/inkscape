@@ -31,8 +31,9 @@
 #include "document.h"
 #include "sp-item.h"
 #include "display/cairo-utils.h"
-#include "display/nr-arena.h"
-#include "display/nr-arena-item.h"
+#include "display/drawing-context.h"
+#include "display/drawing-item.h"
+#include "display/drawing.h"
 #include "io/sys.h"
 #include "sp-root.h"
 
@@ -1074,9 +1075,22 @@ GdkPixbuf *IconImpl::loadPixmap(gchar const *name, unsigned /*lsize*/, unsigned 
     return pb;
 }
 
-// takes doc, root, icon, and icon name to produce pixels
+static Geom::IntRect round_rect(Geom::Rect const &r)
+{
+    using Geom::X;
+    using Geom::Y;
+    Geom::IntPoint a, b;
+    a[X] = round(r.left());
+    a[Y] = round(r.top());
+    b[X] = round(r.right());
+    b[Y] = round(r.bottom());
+    Geom::IntRect ret(a, b);
+    return ret;
+}
+
+// takes doc, drawing, icon, and icon name to produce pixels
 extern "C" guchar *
-sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
+sp_icon_doc_icon( SPDocument *doc, Inkscape::Drawing &drawing,
                   gchar const *name, unsigned psize,
                   unsigned &stride)
 {
@@ -1099,28 +1113,21 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
 
             /* This is in document coordinates, i.e. pixels */
             if ( dbox ) {
-                NRGC gc(NULL);
                 /* Update to renderable state */
                 double sf = 1.0;
-                nr_arena_item_set_transform(root, (Geom::Affine)Geom::Scale(sf, sf));
-                gc.transform.setIdentity();
-                nr_arena_item_invoke_update( root, NULL, &gc,
-                                             NR_ARENA_ITEM_STATE_ALL,
-                                             NR_ARENA_ITEM_STATE_NONE );
+                drawing.root()->setTransform(Geom::Scale(sf));
+                drawing.update();
                 /* Item integer bbox in points */
-                NRRectL ibox;
-                ibox.x0 = (int) floor(sf * dbox->min()[Geom::X] + 0.5);
-                ibox.y0 = (int) floor(sf * dbox->min()[Geom::Y] + 0.5);
-                ibox.x1 = (int) floor(sf * dbox->max()[Geom::X] + 0.5);
-                ibox.y1 = (int) floor(sf * dbox->max()[Geom::Y] + 0.5);
+                // NOTE: previously, each rect coordinate was rounded using floor(c + 0.5)
+                Geom::IntRect ibox = round_rect(*dbox);
 
                 if ( dump ) {
-                    g_message( "   box    --'%s'  (%f,%f)-(%f,%f)", name, (double)ibox.x0, (double)ibox.y0, (double)ibox.x1, (double)ibox.y1 );
+                    g_message( "   box    --'%s'  (%f,%f)-(%f,%f)", name, (double)ibox.left(), (double)ibox.top(), (double)ibox.right(), (double)ibox.bottom() );
                 }
 
                 /* Find button visible area */
-                int width = ibox.x1 - ibox.x0;
-                int height = ibox.y1 - ibox.y0;
+                int width = ibox.width();
+                int height = ibox.height();
 
                 if ( dump ) {
                     g_message( "   vis    --'%s'  (%d,%d)", name, width, height );
@@ -1134,51 +1141,37 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                         }
                         sf = (double)psize / (double)block;
 
-                        nr_arena_item_set_transform(root, (Geom::Affine)Geom::Scale(sf, sf));
-                        gc.transform.setIdentity();
-                        nr_arena_item_invoke_update( root, NULL, &gc,
-                                                     NR_ARENA_ITEM_STATE_ALL,
-                                                     NR_ARENA_ITEM_STATE_NONE );
-                        /* Item integer bbox in points */
-                        ibox.x0 = (int) floor(sf * dbox->min()[Geom::X] + 0.5);
-                        ibox.y0 = (int) floor(sf * dbox->min()[Geom::Y] + 0.5);
-                        ibox.x1 = (int) floor(sf * dbox->max()[Geom::X] + 0.5);
-                        ibox.y1 = (int) floor(sf * dbox->max()[Geom::Y] + 0.5);
+                        drawing.root()->setTransform(Geom::Scale(sf));
+                        drawing.update();
 
+                        ibox = round_rect(*dbox * Geom::Scale(sf));
                         if ( dump ) {
-                            g_message( "   box2   --'%s'  (%f,%f)-(%f,%f)", name, (double)ibox.x0, (double)ibox.y0, (double)ibox.x1, (double)ibox.y1 );
+                            g_message( "   box2   --'%s'  (%f,%f)-(%f,%f)", name, (double)ibox.left(), (double)ibox.top(), (double)ibox.right(), (double)ibox.bottom() );
                         }
 
                         /* Find button visible area */
-                        width = ibox.x1 - ibox.x0;
-                        height = ibox.y1 - ibox.y0;
+                        width = ibox.width();
+                        height = ibox.height();
                         if ( dump ) {
                             g_message( "   vis2   --'%s'  (%d,%d)", name, width, height );
                         }
                     }
                 }
 
+                Geom::IntPoint pdim(psize, psize);
                 int dx, dy;
                 //dx = (psize - width) / 2;
                 //dy = (psize - height) / 2;
                 dx=dy=psize;
                 dx=(dx-width)/2; // watch out for psize, since 'unsigned'-'signed' can cause problems if the result is negative
                 dy=(dy-height)/2;
-                NRRectL area;
-                area.x0 = ibox.x0 - dx;
-                area.y0 = ibox.y0 - dy;
-                area.x1 = area.x0 + psize;
-                area.y1 = area.y0 + psize;
+                Geom::IntRect area = Geom::IntRect::from_xywh(ibox.min() - Geom::IntPoint(dx,dy), pdim);
                 /* Actual renderable area */
-                NRRectL ua;
-                ua.x0 = MAX(ibox.x0, area.x0);
-                ua.y0 = MAX(ibox.y0, area.y0);
-                ua.x1 = MIN(ibox.x1, area.x1);
-                ua.y1 = MIN(ibox.y1, area.y1);
+                Geom::IntRect ua = *Geom::intersect(ibox, area);
 
                 if ( dump ) {
-                    g_message( "   area   --'%s'  (%f,%f)-(%f,%f)", name, (double)area.x0, (double)area.y0, (double)area.x1, (double)area.y1 );
-                    g_message( "   ua     --'%s'  (%f,%f)-(%f,%f)", name, (double)ua.x0, (double)ua.y0, (double)ua.x1, (double)ua.y1 );
+                    g_message( "   area   --'%s'  (%f,%f)-(%f,%f)", name, (double)area.left(), (double)area.top(), (double)area.right(), (double)area.bottom() );
+                    g_message( "   ua     --'%s'  (%f,%f)-(%f,%f)", name, (double)ua.left(), (double)ua.top(), (double)ua.right(), (double)ua.bottom() );
                 }
 
                 stride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, psize);
@@ -1190,12 +1183,9 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                 /* Render */
                 cairo_surface_t *s = cairo_image_surface_create_for_data(px,
                     CAIRO_FORMAT_ARGB32, psize, psize, stride);
-                cairo_t *ct = cairo_create(s);
-                cairo_translate(ct, -ua.x0, -ua.y0);
+                Inkscape::DrawingContext ct(s, ua.min());
 
-                nr_arena_item_invoke_render(ct, root, &ua, NULL,
-                                             NR_ARENA_ITEM_RENDER_NO_CACHE );
-                cairo_destroy(ct);
+                drawing.render(ct, ua);
                 cairo_surface_destroy(s);
 
                 // convert to GdkPixbuf format
@@ -1216,9 +1206,21 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
 class SVGDocCache
 {
 public:
-    SVGDocCache( SPDocument *doc, NRArenaItem *root ) : doc(doc), root(root) {}
+    SVGDocCache( SPDocument *doc )
+        : doc(doc)
+        , visionkey(SPItem::display_key_new(1))
+    {
+        doc->doRef();
+        doc->ensureUpToDate();
+        drawing.setRoot(doc->getRoot()->invoke_show(drawing, visionkey, SP_ITEM_SHOW_DISPLAY ));
+    }
+    ~SVGDocCache() {
+        doc->getRoot()->invoke_hide(visionkey);
+        doc->doUnref();
+    }
     SPDocument *doc;
-    NRArenaItem *root;
+    Inkscape::Drawing drawing;
+    unsigned visionkey;
 };
 
 static std::map<Glib::ustring, SVGDocCache *> doc_cache;
@@ -1285,27 +1287,14 @@ guchar *IconImpl::load_svg_pixels(std::list<Glib::ustring> const &names,
                 if ( dump ) {
                     g_message("Loaded icon file %s", doc_filename);
                 }
-                // prep the document
-                doc->ensureUpToDate();
-
-                // Create new arena
-                NRArena *arena = NRArena::create();
-
-                // Create ArenaItem and set transform
-                unsigned visionkey = SPItem::display_key_new(1);
-                // fixme: Memory manage root if needed (Lauris)
-                // This needs to be fixed indeed; this leads to a memory leak of a few megabytes these days
-                // because shapes are being rendered which are not being freed
-                NRArenaItem *root = doc->getRoot()->invoke_show( arena, visionkey, SP_ITEM_SHOW_DISPLAY );
-
                 // store into the cache
-                info = new SVGDocCache(doc, root);
+                info = new SVGDocCache(doc);
                 doc_cache[key] = info;
             }
         }
         if (info) {
             for (std::list<Glib::ustring>::const_iterator it = names.begin(); !px && (it != names.end()); ++it ) {
-                px = sp_icon_doc_icon( info->doc, info->root, it->c_str(), psize, stride );
+                px = sp_icon_doc_icon( info->doc, info->drawing, it->c_str(), psize, stride );
             }
         }
     }

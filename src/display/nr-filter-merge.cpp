@@ -67,6 +67,22 @@ bool FilterMerge::can_handle_affine(Geom::Affine const &)
     return true;
 }
 
+double FilterMerge::complexity(Geom::Affine const &)
+{
+    return 1.02;
+}
+
+bool FilterMerge::uses_background()
+{
+    for (int i = 0; i < _input_image.size(); ++i) {
+        int input = _input_image[i];
+        if (input == NR_FILTER_BACKGROUNDIMAGE || input == NR_FILTER_BACKGROUNDALPHA) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void FilterMerge::set_input(int slot) {
     _input_image[0] = slot;
 }

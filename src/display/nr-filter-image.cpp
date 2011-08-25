@@ -13,8 +13,9 @@
 #include "document.h"
 #include "sp-item.h"
 #include "display/cairo-utils.h"
-#include "display/nr-arena.h"
-#include "display/nr-arena-item.h"
+#include "display/drawing-context.h"
+#include "display/drawing.h"
+#include "display/drawing-item.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-image.h"
 #include "display/nr-filter-units.h"
@@ -69,21 +70,20 @@ void FilterImage::render_cairo(FilterSlot &slot)
 
         // TODO: do not recreate the rendering tree every time
         // TODO: the entire thing is a hack, we should give filter primitives an "update" method
-        //       like the one for NRArenaItems
+        //       like the one for DrawingItems
         document->ensureUpToDate();
 
-        NRArena* arena = NRArena::create();
+        Drawing drawing;
         Geom::OptRect optarea = SVGElem->getBounds(Geom::identity());
         if (!optarea) return;
 
         unsigned const key = SPItem::display_key_new(1);
-        NRArenaItem* ai = SVGElem->invoke_show(arena, key, SP_ITEM_SHOW_DISPLAY);
-
+        DrawingItem *ai = SVGElem->invoke_show(drawing, key, SP_ITEM_SHOW_DISPLAY);
         if (!ai) {
-            g_warning("feImage renderer: error creating NRArenaItem for SVG Element");
-            nr_object_unref((NRObject *) arena);
+            g_warning("feImage renderer: error creating DrawingItem for SVG Element");
             return;
         }
+        drawing.setRoot(ai);
 
         Geom::Rect area = *optarea;
         Geom::Affine pu2pb = slot.get_units().get_matrix_primitiveunits2pb();
@@ -94,30 +94,18 @@ void FilterImage::render_cairo(FilterSlot &slot)
         Geom::Rect sa = slot.get_slot_area();
         cairo_surface_t *out = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
             sa.width(), sa.height());
-        cairo_t *ct = cairo_create(out);
-        cairo_translate(ct, -sa.min()[Geom::X], -sa.min()[Geom::Y]);
-        ink_cairo_transform(ct, pu2pb); // we are now in primitive units
-        cairo_translate(ct, feImageX, feImageY);
-        cairo_scale(ct, scaleX, scaleY);
+        Inkscape::DrawingContext ct(out, sa.min());
+        ct.transform(pu2pb); // we are now in primitive units
+        ct.translate(feImageX, feImageY);
+        ct.scale(scaleX, scaleY);
 
-        NRRectL render_rect;
-        render_rect.x0 = floor(area.left());
-        render_rect.y0 = floor(area.top());
-        render_rect.x1 = ceil(area.right());
-        render_rect.y1 = ceil(area.bottom());
-        cairo_translate(ct, render_rect.x0, render_rect.y0);
+        Geom::IntRect render_rect = area.roundOutwards();
+        ct.translate(render_rect.min());
 
         // Update to renderable state
-        NRGC gc(NULL);
-        Geom::Affine t = Geom::identity();
-        nr_arena_item_set_transform(ai, &t);
-        gc.transform.setIdentity();
-        nr_arena_item_invoke_update(ai, NULL, &gc,
-                                    NR_ARENA_ITEM_STATE_ALL,
-                                    NR_ARENA_ITEM_STATE_NONE);
-        nr_arena_item_invoke_render(ct, ai, &render_rect, NULL, NR_ARENA_ITEM_RENDER_NO_CACHE);
+        drawing.update(render_rect);
+        drawing.render(ct, render_rect);
         SVGElem->invoke_hide(key);
-        nr_object_unref((NRObject*) arena);
 
         slot.set(_output, out);
         cairo_surface_destroy(out);
@@ -206,6 +194,12 @@ void FilterImage::render_cairo(FilterSlot &slot)
 bool FilterImage::can_handle_affine(Geom::Affine const &)
 {
     return true;
+}
+
+double FilterImage::complexity(Geom::Affine const &)
+{
+    // TODO: right now we cannot actually measure this in any meaningful way.
+    return 1.1;
 }
 
 void FilterImage::set_href(const gchar *href){

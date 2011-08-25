@@ -86,6 +86,13 @@ void FilterFlood::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*trans*/)
 {
 }
 
+double FilterFlood::complexity(Geom::Affine const &)
+{
+    // flood is actually less expensive than normal rendering,
+    // but when flood is processed, the object has already been rendered
+    return 1.0;
+}
+
 } /* namespace Filters */
 } /* namespace Inkscape */
 

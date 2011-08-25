@@ -15,6 +15,7 @@
 
 #include <2geom/transforms.h>
 #include "display/canvas-arena.h"
+#include "display/drawing-group.h"
 #include "document.h"
 #include "sp-item.h"
 #include "svg-view.h"
@@ -129,13 +130,13 @@ SPSVGView::mouseout()
  */
 /// \todo fixme.
 static gint
-arena_handler (SPCanvasArena */*arena*/, NRArenaItem *ai, GdkEvent *event, SPSVGView *svgview)
+arena_handler (SPCanvasArena */*arena*/, Inkscape::DrawingItem *ai, GdkEvent *event, SPSVGView *svgview)
 {
 	static gdouble x, y;
 	static gboolean active = FALSE;
 	SPEvent spev;
 
-	SPItem *spitem = (ai) ? (SPItem*)NR_ARENA_ITEM_GET_DATA (ai) : 0;
+	SPItem *spitem = (ai) ? (SPItem*) ai->data() : 0;
 
 	switch (event->type) {
 	case GDK_BUTTON_PRESS:
@@ -202,13 +203,13 @@ SPSVGView::setDocument (SPDocument *document)
     View::setDocument (document);
 
     if (document) {
-        NRArenaItem *ai = document->getRoot()->invoke_show(
-                SP_CANVAS_ARENA (_drawing)->arena,
+        Inkscape::DrawingItem *ai = document->getRoot()->invoke_show(
+                SP_CANVAS_ARENA (_drawing)->drawing,
                 _dkey,
                 SP_ITEM_SHOW_DISPLAY);
 
         if (ai) {
-            nr_arena_item_add_child (SP_CANVAS_ARENA (_drawing)->root, ai, NULL);
+            SP_CANVAS_ARENA (_drawing)->drawing.root()->prependChild(ai);
         }
 
         doRescale (!_rescale);

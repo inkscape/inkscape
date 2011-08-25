@@ -18,8 +18,8 @@
 #include "extension/system.h"
 #include "extension/print.h"
 #include "extension/db.h"
-#include "display/nr-arena.h"
-#include "display/nr-arena-item.h"
+#include "display/display-forward.h"
+#include "display/drawing.h"
 #include "sp-root.h"
 
 
@@ -61,21 +61,19 @@ void LatexOutput::save(Inkscape::Extension::Output * /*mod2*/, SPDocument *doc, 
     /* Start */
     context.module = mod;
     /* fixme: This has to go into module constructor somehow */
-    // Create new arena
     mod->base = doc->getRoot();
-    mod->arena = NRArena::create();
+    Inkscape::Drawing drawing;
     mod->dkey = SPItem::display_key_new (1);
-    mod->root = (mod->base)->invoke_show (mod->arena, mod->dkey, SP_ITEM_SHOW_DISPLAY);
+    mod->root = (mod->base)->invoke_show (drawing, mod->dkey, SP_ITEM_SHOW_DISPLAY);
+    drawing.setRoot(mod->root);
     /* Print document */
     ret = mod->begin (doc);
     (mod->base)->invoke_print (&context);
     ret = mod->finish ();
-    /* Release arena */
+    /* Release things */
     (mod->base)->invoke_hide (mod->dkey);
     mod->base = NULL;
-    mod->root = NULL;
-    nr_object_unref ((NRObject *) mod->arena);
-    mod->arena = NULL;
+    mod->root = NULL; // should have been deleted by invoke_hide
     /* end */
 
     mod->set_param_string("destination", oldoutput);

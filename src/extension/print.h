@@ -13,7 +13,7 @@
 
 #include "extension.h"
 
-#include "display/nr-arena-forward.h"
+#include "display/display-forward.h"
 #include "forward.h"
 #include "sp-item.h"
 namespace Inkscape {
@@ -22,10 +22,10 @@ namespace Extension {
 class Print : public Extension {
 
 public: /* TODO: These are public for the short term, but this should be fixed */
-    SPItem *base;            /**< TODO: Document these */
-    NRArena *arena;          /**< TODO: Document these */
-    NRArenaItem *root;       /**< TODO: Document these */
-    unsigned int dkey;       /**< TODO: Document these */
+    SPItem *base;
+    Inkscape::Drawing *drawing;
+    Inkscape::DrawingItem *root;
+    unsigned int dkey;
 
 public:
                   Print       (Inkscape::XML::Node * in_repr,

@@ -35,7 +35,7 @@
 #include <glibmm/i18n.h>
 #include "svg/svg.h"
 #include "svg/stringstream.h"
-#include "display/nr-arena-glyphs.h"
+#include "display/drawing-text.h"
 #include "attributes.h"
 #include "document.h"
 #include "desktop-handles.h"
@@ -72,7 +72,7 @@ static void sp_text_modified (SPObject *object, guint flags);
 static Inkscape::XML::Node *sp_text_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static void sp_text_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
-static NRArenaItem *sp_text_show (SPItem *item, NRArena *arena, unsigned key, unsigned flags);
+static Inkscape::DrawingItem *sp_text_show (SPItem *item, Inkscape::Drawing &drawing, unsigned key, unsigned flags);
 static void sp_text_hide (SPItem *item, unsigned key);
 static char *sp_text_description (SPItem *item);
 static void sp_text_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
@@ -251,10 +251,11 @@ static void sp_text_update(SPObject *object, SPCtx *ctx, guint flags)
         NRRect paintbox;
         text->invoke_bbox( &paintbox, Geom::identity(), TRUE);
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
-            text->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
-            nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), object->style);
+            Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+            text->_clearFlow(g);
+            g->setStyle(object->style);
             // pass the bbox of the text object as paintbox (used for paintserver fills)
-            text->layout.show(NR_ARENA_GROUP(v->arenaitem), &paintbox);
+            text->layout.show(g, &paintbox);
         }
     }
 }
@@ -270,18 +271,19 @@ static void sp_text_modified(SPObject *object, guint flags)
         cflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
 
-    // FIXME: all that we need to do here is nr_arena_glyphs_[group_]set_style, to set the changed
-    // style, but there's no easy way to access the arena glyphs or glyph groups corresponding to a
-    // text object. Therefore we do here the same as in _update, that is, destroy all arena items
+    // FIXME: all that we need to do here is to call setStyle, to set the changed
+    // style, but there's no easy way to access the drawing glyphs or texts corresponding to a
+    // text object. Therefore we do here the same as in _update, that is, destroy all items
     // and create new ones. This is probably quite wasteful.
     if (flags & ( SP_OBJECT_STYLE_MODIFIED_FLAG )) {
         SPText *text = SP_TEXT (object);
         NRRect paintbox;
         text->invoke_bbox( &paintbox, Geom::identity(), TRUE);
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
-            text->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
-            nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), object->style);
-            text->layout.show(NR_ARENA_GROUP(v->arenaitem), &paintbox);
+            Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+            text->_clearFlow(g);
+            g->setStyle(object->style);
+            text->layout.show(g, &paintbox);
         }
     }
 
@@ -383,15 +385,14 @@ sp_text_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, un
 }
 
 
-static NRArenaItem *
-sp_text_show(SPItem *item, NRArena *arena, unsigned /* key*/, unsigned /*flags*/)
+static Inkscape::DrawingItem *
+sp_text_show(SPItem *item, Inkscape::Drawing &drawing, unsigned /* key*/, unsigned /*flags*/)
 {
     SPText *group = (SPText *) item;
 
-    NRArenaGroup *flowed = NRArenaGroup::create(arena);
-    nr_arena_group_set_transparent (flowed, FALSE);
-
-    nr_arena_group_set_style(flowed, group->style);
+    Inkscape::DrawingGroup *flowed = new Inkscape::DrawingGroup(drawing);
+    flowed->setPickChildren(false);
+    flowed->setStyle(group->style);
 
     // pass the bbox of the text object as paintbox (used for paintserver fills)
     NRRect paintbox;
@@ -662,17 +663,9 @@ void SPText::_adjustCoordsRecursive(SPItem *item, Geom::Affine const &m, double 
 }
 
 
-void SPText::_clearFlow(NRArenaGroup *in_arena)
+void SPText::_clearFlow(Inkscape::DrawingGroup *in_arena)
 {
-    nr_arena_item_request_render (in_arena);
-    for (NRArenaItem *child = in_arena->children; child != NULL; ) {
-        NRArenaItem *nchild = child->next;
-
-        nr_arena_glyphs_group_clear(NR_ARENA_GLYPHS_GROUP(child));
-        nr_arena_item_remove_child (in_arena, child);
-
-        child=nchild;
-    }
+    in_arena->clearChildren();
 }
 
 

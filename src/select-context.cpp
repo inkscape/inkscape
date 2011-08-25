@@ -46,7 +46,7 @@
 #include "seltrans.h"
 #include "box3d.h"
 #include "display/sp-canvas.h"
-#include "display/nr-arena-item.h"
+#include "display/drawing-item.h"
 
 using Inkscape::DocumentUndo;
 
@@ -418,7 +418,7 @@ sp_select_context_cycle_through_items(SPSelectContext *sc, Inkscape::Selection *
     if (!sc->cycling_cur_item)
         return;
 
-    NRArenaItem *arenaitem;
+    Inkscape::DrawingItem *arenaitem;
     SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
     SPItem *item = SP_ITEM(sc->cycling_cur_item->data);
 
@@ -426,7 +426,7 @@ sp_select_context_cycle_through_items(SPSelectContext *sc, Inkscape::Selection *
     if (!g_list_find(sc->cycling_items_selected_before, item) && selection->includes(item))
         selection->remove(item);
     arenaitem = item->get_arenaitem(desktop->dkey);
-    nr_arena_item_set_opacity (arenaitem, 0.3);
+    arenaitem->setOpacity(0.3);
 
     // Find next item and activate it
     GList *next;
@@ -442,7 +442,7 @@ sp_select_context_cycle_through_items(SPSelectContext *sc, Inkscape::Selection *
     sc->cycling_cur_item = next;
     item = SP_ITEM(sc->cycling_cur_item->data);
     arenaitem = item->get_arenaitem(desktop->dkey);
-    nr_arena_item_set_opacity (arenaitem, 1.0);
+    arenaitem->setOpacity(1.0);
 
     if (shift_pressed)
         selection->add(item);
@@ -796,10 +796,10 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     g_assert(sc->cycling_cur_item != NULL || sc->cycling_items == NULL);
                 } else {
                     // ... otherwise reset opacities for outdated items ...
-                    NRArenaItem *arenaitem;
+                    Inkscape::DrawingItem *arenaitem;
                     for(GList *l = sc->cycling_items_cmp; l != NULL; l = l->next) {
                         arenaitem = SP_ITEM(l->data)->get_arenaitem(desktop->dkey);
-                        nr_arena_item_set_opacity (arenaitem, 1.0);
+                        arenaitem->setOpacity(1.0);
                         //if (!shift_pressed && !g_list_find(sc->cycling_items_selected_before, SP_ITEM(l->data)) && selection->includes(SP_ITEM(l->data)))
                         if (!g_list_find(sc->cycling_items_selected_before, SP_ITEM(l->data)) && selection->includes(SP_ITEM(l->data)))
                             selection->remove(SP_ITEM(l->data));
@@ -818,7 +818,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     for(GList *l = sc->cycling_items; l != NULL; l = l->next) {
                         item = SP_ITEM(l->data);
                         arenaitem = item->get_arenaitem(desktop->dkey);
-                        nr_arena_item_set_opacity (arenaitem, 0.3);
+                        arenaitem->setOpacity(0.3);
                         if (selection->includes(item)) {
                             // already selected items are stored separately, too
                             sc->cycling_items_selected_before = g_list_append(sc->cycling_items_selected_before, item);
@@ -1093,10 +1093,10 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (alt) { // TODO: Should we have a variable like is_cycling or is it harmless to run this piece of code each time?
                     // quit cycle-selection and reset opacities
                     SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
-                    NRArenaItem *arenaitem;
+                    Inkscape::DrawingItem *arenaitem;
                     for (GList *l = sc->cycling_items; l != NULL; l = g_list_next(l)) {
                         arenaitem = SP_ITEM(l->data)->get_arenaitem(desktop->dkey);
-                        nr_arena_item_set_opacity (arenaitem, 1.0);
+                        arenaitem->setOpacity(1.0);
                     }
                     g_list_free(sc->cycling_items);
                     g_list_free(sc->cycling_items_selected_before);

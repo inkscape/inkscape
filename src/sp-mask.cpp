@@ -15,8 +15,8 @@
 #include <string>
 #include <2geom/transforms.h>
 
-#include "display/nr-arena.h"
-#include "display/nr-arena-group.h"
+#include "display/drawing.h"
+#include "display/drawing-group.h"
 #include "xml/repr.h"
 
 #include "enums.h"
@@ -30,7 +30,7 @@
 struct SPMaskView {
 	SPMaskView *next;
 	unsigned int key;
-	NRArenaItem *arenaitem;
+	Inkscape::DrawingItem *arenaitem;
 	NRRect bbox;
 };
 
@@ -45,7 +45,7 @@ static void sp_mask_update (SPObject *object, SPCtx *ctx, guint flags);
 static void sp_mask_modified (SPObject *object, guint flags);
 static Inkscape::XML::Node *sp_mask_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-SPMaskView *sp_mask_view_new_prepend (SPMaskView *list, unsigned int key, NRArenaItem *arenaitem);
+SPMaskView *sp_mask_view_new_prepend (SPMaskView *list, unsigned int key, Inkscape::DrawingItem *arenaitem);
 SPMaskView *sp_mask_view_list_remove (SPMaskView *list, SPMaskView *view);
 
 static SPObjectGroupClass *parent_class;
@@ -179,11 +179,11 @@ sp_mask_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML
 	if (SP_IS_ITEM (ochild)) {
 		SPMask *cp = SP_MASK (object);
 		for (SPMaskView *v = cp->display; v != NULL; v = v->next) {
-			NRArenaItem *ac = SP_ITEM (ochild)->invoke_show (							       NR_ARENA_ITEM_ARENA (v->arenaitem),
+			Inkscape::DrawingItem *ac = SP_ITEM (ochild)->invoke_show (							       v->arenaitem->drawing(),
 							       v->key,
 							       SP_ITEM_REFERENCE_FLAGS);
 			if (ac) {
-				nr_arena_item_add_child (v->arenaitem, ac, NULL);
+			    v->arenaitem->prependChild(ac);
 			}
 		}
 	}
@@ -215,13 +215,14 @@ static void sp_mask_update(SPObject *object, SPCtx *ctx, guint flags)
 
     SPMask *mask = SP_MASK(object);
     for (SPMaskView *v = mask->display; v != NULL; v = v->next) {
+        Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
         if (mask->maskContentUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
             Geom::Affine t(Geom::Scale(v->bbox.x1 - v->bbox.x0, v->bbox.y1 - v->bbox.y0));
             t[4] = v->bbox.x0;
             t[5] = v->bbox.y0;
-            nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), &t);
+            g->setChildTransform(t);
         } else {
-            nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), NULL);
+            g->setChildTransform(Geom::identity());
         }
     }
 }
@@ -296,22 +297,19 @@ sp_mask_create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTr
     return mask_id;
 }
 
-NRArenaItem *sp_mask_show(SPMask *mask, NRArena *arena, unsigned int key)
+Inkscape::DrawingItem *sp_mask_show(SPMask *mask, Inkscape::Drawing &drawing, unsigned int key)
 {
 	g_return_val_if_fail (mask != NULL, NULL);
 	g_return_val_if_fail (SP_IS_MASK (mask), NULL);
-	g_return_val_if_fail (arena != NULL, NULL);
-	g_return_val_if_fail (NR_IS_ARENA (arena), NULL);
 
-	NRArenaItem *ai = NRArenaGroup::create(arena);
+	Inkscape::DrawingGroup *ai = new Inkscape::DrawingGroup(drawing);
 	mask->display = sp_mask_view_new_prepend (mask->display, key, ai);
 
 	for ( SPObject *child = mask->firstChild() ; child; child = child->getNext() ) {
 		if (SP_IS_ITEM (child)) {
-			NRArenaItem *ac = SP_ITEM (child)->invoke_show (arena, key, SP_ITEM_REFERENCE_FLAGS);
+			Inkscape::DrawingItem *ac = SP_ITEM (child)->invoke_show (drawing, key, SP_ITEM_REFERENCE_FLAGS);
 			if (ac) {
-				/* The order is not important in mask */
-				nr_arena_item_add_child (ai, ac, NULL);
+				ai->prependChild(ac);
 			}
 		}
 	}
@@ -320,7 +318,7 @@ NRArenaItem *sp_mask_show(SPMask *mask, NRArena *arena, unsigned int key)
         Geom::Affine t(Geom::Scale(mask->display->bbox.x1 - mask->display->bbox.x0, mask->display->bbox.y1 - mask->display->bbox.y0));
 		t[4] = mask->display->bbox.x0;
 		t[5] = mask->display->bbox.y0;
-		nr_arena_group_set_child_transform (NR_ARENA_GROUP (ai), &t);
+		ai->setChildTransform(t);
 	}
 
 	return ai;
@@ -367,13 +365,13 @@ sp_mask_set_bbox (SPMask *mask, unsigned int key, NRRect *bbox)
 /* Mask views */
 
 SPMaskView *
-sp_mask_view_new_prepend (SPMaskView *list, unsigned int key, NRArenaItem *arenaitem)
+sp_mask_view_new_prepend (SPMaskView *list, unsigned int key, Inkscape::DrawingItem *arenaitem)
 {
 	SPMaskView *new_mask_view = g_new (SPMaskView, 1);
 
 	new_mask_view->next = list;
 	new_mask_view->key = key;
-	new_mask_view->arenaitem = nr_arena_item_ref(arenaitem);
+	new_mask_view->arenaitem = arenaitem;
 	new_mask_view->bbox.x0 = new_mask_view->bbox.x1 = 0.0;
 	new_mask_view->bbox.y0 = new_mask_view->bbox.y1 = 0.0;
 
@@ -392,7 +390,7 @@ sp_mask_view_list_remove (SPMaskView *list, SPMaskView *view)
 		prev->next = view->next;
 	}
 
-	nr_arena_item_unref (view->arenaitem);
+	delete view->arenaitem;
 	g_free (view);
 
 	return list;

@@ -10,11 +10,29 @@ typedef struct _SPCanvasItemClass SPCanvasItemClass;
 struct SPCanvasGroup;
 struct SPCanvasGroupClass;
 class SPCurve;
+typedef struct _SPCanvasArena SPCanvasArena;
 
 namespace Inkscape {
+class Drawing;
+class DrawingItem;
+class DrawingGroup;
+class DrawingImage;
+class DrawingShape;
+class DrawingGlyphs;
+class DrawingText;
+class UpdateContext;
+
+class DrawingContext;
+class DrawingSurface;
+class DrawingCache;
+
 namespace Display {
     class TemporaryItem;
     class TemporaryItemList;
+}
+
+namespace Filters {
+    class Filter;
 }
 }
 

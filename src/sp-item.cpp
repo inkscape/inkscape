@@ -29,8 +29,7 @@
 #include "sp-item.h"
 #include "svg/svg.h"
 #include "print.h"
-#include "display/nr-arena.h"
-#include "display/nr-arena-item.h"
+#include "display/drawing-item.h"
 #include "attributes.h"
 #include "document.h"
 #include "uri.h"
@@ -145,14 +144,10 @@ void SPItem::init() {
     display = NULL;
 
     clip_ref = new SPClipPathReference(this);
-    sigc::signal<void, SPObject *, SPObject *> cs1 = clip_ref->changedSignal();
-    sigc::slot2<void,SPObject*, SPObject *> sl1 = sigc::bind(sigc::ptr_fun(clip_ref_changed), this);
-    _clip_ref_connection = cs1.connect(sl1);
+    clip_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(clip_ref_changed), this));
 
     mask_ref = new SPMaskReference(this);
-    sigc::signal<void, SPObject *, SPObject *> cs2 = mask_ref->changedSignal();
-    sigc::slot2<void,SPObject*, SPObject *> sl2=sigc::bind(sigc::ptr_fun(mask_ref_changed), this);
-    _mask_ref_connection = cs2.connect(sl2);
+    mask_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(mask_ref_changed), this));
 
     avoidRef = new SPAvoidRef(this);
 
@@ -204,10 +199,10 @@ bool SPItem::isHidden(unsigned display_key) const {
     for ( SPItemView *view(display) ; view ; view = view->next ) {
         if ( view->key == display_key ) {
             g_assert(view->arenaitem != NULL);
-            for ( NRArenaItem *arenaitem = view->arenaitem ;
-                  arenaitem ; arenaitem = arenaitem->parent )
+            for ( Inkscape::DrawingItem *arenaitem = view->arenaitem ;
+                  arenaitem ; arenaitem = arenaitem->parent() )
             {
-                if (!arenaitem->visible) {
+                if (!arenaitem->visible()) {
                     return true;
                 }
             }
@@ -394,35 +389,22 @@ void SPItem::sp_item_release(SPObject *object)
 {
     SPItem *item = (SPItem *) object;
 
-    item->_clip_ref_connection.disconnect();
-    item->_mask_ref_connection.disconnect();
-
     // Note: do this here before the clip_ref is deleted, since calling
     // ensureUpToDate() for triggered routing may reference
     // the deleted clip_ref.
-    if (item->avoidRef) {
-        delete item->avoidRef;
-        item->avoidRef = NULL;
-    }
+    delete item->avoidRef;
 
-    if (item->clip_ref) {
-        item->clip_ref->detach();
-        delete item->clip_ref;
-        item->clip_ref = NULL;
-    }
-
-    if (item->mask_ref) {
-        item->mask_ref->detach();
-        delete item->mask_ref;
-        item->mask_ref = NULL;
-    }
+    // we do NOT disconnect from the changed signal of those before deletion.
+    // The destructor will call *_ref_changed with NULL as the new value,
+    // which will cause the hide() function to be called.
+    delete item->clip_ref;
+    delete item->mask_ref;
 
     if (((SPObjectClass *) (SPItemClass::static_parent_class))->release) {
         ((SPObjectClass *) SPItemClass::static_parent_class)->release(object);
     }
 
     while (item->display) {
-        nr_arena_item_unparent(item->display->arenaitem);
         item->display = sp_item_view_list_remove(item->display, item->display);
     }
 
@@ -478,7 +460,7 @@ void SPItem::sp_item_set(SPObject *object, unsigned key, gchar const *value)
         case SP_ATTR_SODIPODI_INSENSITIVE:
             item->sensitive = !value;
             for (SPItemView *v = item->display; v != NULL; v = v->next) {
-                nr_arena_item_set_sensitive(v->arenaitem, item->sensitive);
+                v->arenaitem->setSensitive(item->sensitive);
             }
             break;
         case SP_ATTR_CONNECTOR_AVOID:
@@ -529,23 +511,21 @@ void SPItem::clip_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item)
         SPItemView *v;
         /* Hide clippath */
         for (v = item->display; v != NULL; v = v->next) {
-            SP_CLIPPATH(old_clip)->hide(NR_ARENA_ITEM_GET_KEY(v->arenaitem));
-            nr_arena_item_set_clip(v->arenaitem, NULL);
+            SP_CLIPPATH(old_clip)->hide(v->arenaitem->key());
         }
     }
     if (SP_IS_CLIPPATH(clip)) {
         NRRect bbox;
         item->invoke_bbox( &bbox, Geom::identity(), TRUE);
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
-            if (!v->arenaitem->key) {
-                NR_ARENA_ITEM_SET_KEY(v->arenaitem, SPItem::display_key_new(3));
+            if (!v->arenaitem->key()) {
+                v->arenaitem->setKey(SPItem::display_key_new(3));
             }
-            NRArenaItem *ai = SP_CLIPPATH(clip)->show(
-                                               NR_ARENA_ITEM_ARENA(v->arenaitem),
-                                               NR_ARENA_ITEM_GET_KEY(v->arenaitem));
-            nr_arena_item_set_clip(v->arenaitem, ai);
-            nr_arena_item_unref(ai);
-            SP_CLIPPATH(clip)->setBBox(NR_ARENA_ITEM_GET_KEY(v->arenaitem), &bbox);
+            Inkscape::DrawingItem *ai = SP_CLIPPATH(clip)->show(
+                                               v->arenaitem->drawing(),
+                                               v->arenaitem->key());
+            v->arenaitem->setClip(ai);
+            SP_CLIPPATH(clip)->setBBox(v->arenaitem->key(), &bbox);
             clip->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
     }
@@ -556,23 +536,21 @@ void SPItem::mask_ref_changed(SPObject *old_mask, SPObject *mask, SPItem *item)
     if (old_mask) {
         /* Hide mask */
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
-            sp_mask_hide(SP_MASK(old_mask), NR_ARENA_ITEM_GET_KEY(v->arenaitem));
-            nr_arena_item_set_mask(v->arenaitem, NULL);
+            sp_mask_hide(SP_MASK(old_mask), v->arenaitem->key());
         }
     }
     if (SP_IS_MASK(mask)) {
         NRRect bbox;
         item->invoke_bbox( &bbox, Geom::identity(), TRUE);
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
-            if (!v->arenaitem->key) {
-                NR_ARENA_ITEM_SET_KEY(v->arenaitem, SPItem::display_key_new(3));
+            if (!v->arenaitem->key()) {
+                v->arenaitem->setKey(SPItem::display_key_new(3));
             }
-            NRArenaItem *ai = sp_mask_show(SP_MASK(mask),
-                                           NR_ARENA_ITEM_ARENA(v->arenaitem),
-                                           NR_ARENA_ITEM_GET_KEY(v->arenaitem));
-            nr_arena_item_set_mask(v->arenaitem, ai);
-            nr_arena_item_unref(ai);
-            sp_mask_set_bbox(SP_MASK(mask), NR_ARENA_ITEM_GET_KEY(v->arenaitem), &bbox);
+            Inkscape::DrawingItem *ai = sp_mask_show(SP_MASK(mask),
+                                           v->arenaitem->drawing(),
+                                           v->arenaitem->key());
+            v->arenaitem->setMask(ai);
+            sp_mask_set_bbox(SP_MASK(mask), v->arenaitem->key(), &bbox);
             mask->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
     }
@@ -589,7 +567,7 @@ void SPItem::sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
     if (flags & (SP_OBJECT_CHILD_MODIFIED_FLAG | SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG)) {
         if (flags & SP_OBJECT_MODIFIED_FLAG) {
             for (SPItemView *v = item->display; v != NULL; v = v->next) {
-                nr_arena_item_set_transform(v->arenaitem, item->transform);
+                v->arenaitem->setTransform(item->transform);
             }
         }
 
@@ -601,20 +579,20 @@ void SPItem::sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
             item->invoke_bbox( &bbox, Geom::identity(), TRUE);
             if (clip_path) {
                 for (SPItemView *v = item->display; v != NULL; v = v->next) {
-                    clip_path->setBBox(NR_ARENA_ITEM_GET_KEY(v->arenaitem), &bbox);
+                    clip_path->setBBox(v->arenaitem->key(), &bbox);
                 }
             }
             if (mask) {
                 for (SPItemView *v = item->display; v != NULL; v = v->next) {
-                    sp_mask_set_bbox(mask, NR_ARENA_ITEM_GET_KEY(v->arenaitem), &bbox);
+                    sp_mask_set_bbox(mask, v->arenaitem->key(), &bbox);
                 }
             }
         }
 
         if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
             for (SPItemView *v = item->display; v != NULL; v = v->next) {
-                nr_arena_item_set_opacity(v->arenaitem, SP_SCALE24_TO_FLOAT(object->style->opacity.value));
-                nr_arena_item_set_visible(v->arenaitem, !item->isHidden());
+                v->arenaitem->setOpacity(SP_SCALE24_TO_FLOAT(object->style->opacity.value));
+                v->arenaitem->setVisible(!item->isHidden());
             }
         }
     }
@@ -627,7 +605,7 @@ void SPItem::sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
         SPItemView *itemview = item->display;
         do {
             if (itemview->arenaitem)
-                nr_arena_item_set_item_bbox(itemview->arenaitem, item_bbox);
+                itemview->arenaitem->setItemBounds(item_bbox);
         } while ( (itemview = itemview->next) );
     }
 
@@ -1025,34 +1003,30 @@ unsigned SPItem::display_key_new(unsigned numkeys)
     return dkey - numkeys;
 }
 
-NRArenaItem *SPItem::invoke_show(NRArena *arena, unsigned key, unsigned flags)
+Inkscape::DrawingItem *SPItem::invoke_show(Inkscape::Drawing &drawing, unsigned key, unsigned flags)
 {
-    g_assert(arena != NULL);
-    g_assert(NR_IS_ARENA(arena));
-
-    NRArenaItem *ai = NULL;
+    Inkscape::DrawingItem *ai = NULL;
     if (((SPItemClass *) G_OBJECT_GET_CLASS(this))->show) {
-        ai = ((SPItemClass *) G_OBJECT_GET_CLASS(this))->show(this, arena, key, flags);
+        ai = ((SPItemClass *) G_OBJECT_GET_CLASS(this))->show(this, drawing, key, flags);
     }
 
     if (ai != NULL) {
         display = sp_item_view_new_prepend(display, this, flags, key, ai);
-        nr_arena_item_set_transform(ai, transform);
-        nr_arena_item_set_opacity(ai, SP_SCALE24_TO_FLOAT(style->opacity.value));
-        nr_arena_item_set_visible(ai, !isHidden());
-        nr_arena_item_set_sensitive(ai, sensitive);
+        ai->setTransform(transform);
+        ai->setOpacity(SP_SCALE24_TO_FLOAT(style->opacity.value));
+        ai->setVisible(!isHidden());
+        ai->setSensitive(sensitive);
         if (clip_ref->getObject()) {
             SPClipPath *cp = clip_ref->getObject();
 
-            if (!display->arenaitem->key) {
-                NR_ARENA_ITEM_SET_KEY(display->arenaitem, display_key_new(3));
+            if (!display->arenaitem->key()) {
+                display->arenaitem->setKey(display_key_new(3));
             }
-            int clip_key = NR_ARENA_ITEM_GET_KEY(display->arenaitem);
+            int clip_key = display->arenaitem->key();
 
             // Show and set clip
-            NRArenaItem *ac = cp->show(arena, clip_key);
-            nr_arena_item_set_clip(ai, ac);
-            nr_arena_item_unref(ac);
+            Inkscape::DrawingItem *ac = cp->show(drawing, clip_key);
+            ai->setClip(ac);
 
             // Update bbox, in case the clip uses bbox units
             NRRect bbox;
@@ -1063,15 +1037,14 @@ NRArenaItem *SPItem::invoke_show(NRArena *arena, unsigned key, unsigned flags)
         if (mask_ref->getObject()) {
             SPMask *mask = mask_ref->getObject();
 
-            if (!display->arenaitem->key) {
-                NR_ARENA_ITEM_SET_KEY(display->arenaitem, display_key_new(3));
+            if (!display->arenaitem->key()) {
+                display->arenaitem->setKey(display_key_new(3));
             }
-            int mask_key = NR_ARENA_ITEM_GET_KEY(display->arenaitem);
+            int mask_key = display->arenaitem->key();
 
             // Show and set mask
-            NRArenaItem *ac = sp_mask_show(mask, arena, mask_key);
-            nr_arena_item_set_mask(ai, ac);
-            nr_arena_item_unref(ac);
+            Inkscape::DrawingItem *ac = sp_mask_show(mask, drawing, mask_key);
+            ai->setMask(ac);
 
             // Update bbox, in case the mask uses bbox units
             NRRect bbox;
@@ -1079,10 +1052,10 @@ NRArenaItem *SPItem::invoke_show(NRArena *arena, unsigned key, unsigned flags)
             sp_mask_set_bbox(SP_MASK(mask), mask_key, &bbox);
             mask->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
-        NR_ARENA_ITEM_SET_DATA(ai, this);
+        ai->setData(this);
         Geom::OptRect item_bbox;
         invoke_bbox( item_bbox, Geom::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
-        nr_arena_item_set_item_bbox(ai, item_bbox);
+        ai->setItemBounds(item_bbox);
     }
 
     return ai;
@@ -1100,20 +1073,19 @@ void SPItem::invoke_hide(unsigned key)
         SPItemView *next = v->next;
         if (v->key == key) {
             if (clip_ref->getObject()) {
-                (clip_ref->getObject())->hide(NR_ARENA_ITEM_GET_KEY(v->arenaitem));
-                nr_arena_item_set_clip(v->arenaitem, NULL);
+                (clip_ref->getObject())->hide(v->arenaitem->key());
+                v->arenaitem->setClip(NULL);
             }
             if (mask_ref->getObject()) {
-                sp_mask_hide(mask_ref->getObject(), NR_ARENA_ITEM_GET_KEY(v->arenaitem));
-                nr_arena_item_set_mask(v->arenaitem, NULL);
+                sp_mask_hide(mask_ref->getObject(), v->arenaitem->key());
+                v->arenaitem->setMask(NULL);
             }
             if (!ref) {
                 display = v->next;
             } else {
                 ref->next = v->next;
             }
-            nr_arena_item_unparent(v->arenaitem);
-            nr_arena_item_unref(v->arenaitem);
+            delete v->arenaitem;
             g_free(v);
         } else {
             ref = v;
@@ -1497,27 +1469,27 @@ Geom::Affine SPItem::dt2i_affine() const
 
 /* Item views */
 
-SPItemView *SPItem::sp_item_view_new_prepend(SPItemView *list, SPItem *item, unsigned flags, unsigned key, NRArenaItem *arenaitem)
+SPItemView *SPItem::sp_item_view_new_prepend(SPItemView *list, SPItem *item, unsigned flags, unsigned key, Inkscape::DrawingItem *drawing_item)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_ITEM(item));
-    g_assert(arenaitem != NULL);
-    g_assert(NR_IS_ARENA_ITEM(arenaitem));
+    g_assert(drawing_item != NULL);
 
     SPItemView *new_view = g_new(SPItemView, 1);
 
     new_view->next = list;
     new_view->flags = flags;
     new_view->key = key;
-    new_view->arenaitem = arenaitem;
+    new_view->arenaitem = drawing_item;
 
     return new_view;
 }
 
 SPItemView *SPItem::sp_item_view_list_remove(SPItemView *list, SPItemView *view)
 {
+    SPItemView *ret = list;
     if (view == list) {
-        list = list->next;
+        ret = list->next;
     } else {
         SPItemView *prev;
         prev = list;
@@ -1525,17 +1497,17 @@ SPItemView *SPItem::sp_item_view_list_remove(SPItemView *list, SPItemView *view)
         prev->next = view->next;
     }
 
-    nr_arena_item_unref(view->arenaitem);
+    delete view->arenaitem;
     g_free(view);
 
-    return list;
+    return ret;
 }
 
 /**
  * Return the arenaitem corresponding to the given item in the display
  * with the given key
  */
-NRArenaItem *SPItem::get_arenaitem(unsigned key)
+Inkscape::DrawingItem *SPItem::get_arenaitem(unsigned key)
 {
     for ( SPItemView *iv = display ; iv ; iv = iv->next ) {
         if ( iv->key == key ) {

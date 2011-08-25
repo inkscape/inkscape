@@ -140,6 +140,11 @@ void FilterDisplacementMap::area_enlarge(NRRectL &area, Geom::Affine const &tran
     area.y1 += (int)(scaley)+2;
 }
 
+double FilterDisplacementMap::complexity(Geom::Affine const &)
+{
+    return 3.0;
+}
+
 } /* namespace Filters */
 } /* namespace Inkscape */
 

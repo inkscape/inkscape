@@ -16,6 +16,7 @@
 
 struct SPDesktop;
 struct SPItem;
+struct SPEventContext;
 
 const double goldenratio = 1.61803398874989484820; // golden ratio
 

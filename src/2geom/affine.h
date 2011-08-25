@@ -200,9 +200,8 @@ inline std::ostream &operator<< (std::ostream &out_file, const Geom::Affine &m) 
     return out_file;
 }
 
-/** Given a matrix m such that unit_circle = m*x, this returns the
- * quadratic form x*A*x = 1.
- * @relates Affine */
+// Affine factories
+Affine from_basis(const Point x_basis, const Point y_basis, const Point offset=Point(0,0));
 Affine elliptic_quadratic_form(Affine const &m);
 
 /** Given a matrix (ignoring the translation) this returns the eigen
@@ -214,9 +213,6 @@ public:
     Eigen(Affine const &m);
     Eigen(double M[2][2]);
 };
-
-// Affine factories
-Affine from_basis(const Point x_basis, const Point y_basis, const Point offset=Point(0,0));
 
 /** @brief Create an identity matrix.
  * This is a convenience function identical to Affine::identity(). */
@@ -238,6 +234,8 @@ inline Affine Affine::identity() {
                0.0, 0.0);
     return ret; // allow NRVO
 }
+
+bool are_near(Affine const &a1, Affine const &a2, Coord eps=EPSILON);
 
 } // end namespace Geom
 

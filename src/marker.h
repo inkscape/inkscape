@@ -85,7 +85,7 @@ protected:
 };
 
 void sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size);
-NRArenaItem *sp_marker_show_instance (SPMarker *marker, NRArenaItem *parent,
+Inkscape::DrawingItem *sp_marker_show_instance (SPMarker *marker, Inkscape::DrawingItem *parent,
 				      unsigned int key, unsigned int pos,
 				      Geom::Affine const &base, float linewidth);
 void sp_marker_hide (SPMarker *marker, unsigned int key);

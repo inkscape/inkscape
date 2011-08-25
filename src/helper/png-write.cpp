@@ -23,8 +23,9 @@
 #include <png.h>
 #include "png-write.h"
 #include "io/sys.h"
-#include "display/nr-arena-item.h"
-#include "display/nr-arena.h"
+#include "display/drawing.h"
+#include "display/drawing-context.h"
+#include "display/drawing-item.h"
 #include "document.h"
 #include "sp-item.h"
 #include "sp-root.h"
@@ -50,7 +51,7 @@ static unsigned int const MAX_STRIPE_SIZE = 1024*1024;
 struct SPEBP {
     unsigned long int width, height, sheight;
     guint32 background;
-    NRArenaItem *root; // the root arena item to show; it is assumed that all unneeded items are hidden
+    Inkscape::Drawing *drawing; // it is assumed that all unneeded items are hidden
     guchar *px;
     unsigned (*status)(float, void *);
     void *data;
@@ -322,35 +323,24 @@ sp_export_get_rows(guchar const **rows, void **to_free, int row, int num_rows, v
     // bbox is now set to the entire image to prevent discontinuities
     // in the image when blur is used (the borders may still be a bit
     // off, but that's less noticeable).
-    NRRectL bbox;
-    bbox.x0 = 0;
-    bbox.y0 = row;
-    bbox.x1 = ebp->width;
-    bbox.y1 = row + num_rows;
-    /* Update to renderable state */
-    NRGC gc(NULL);
-    gc.transform.setIdentity();
+    Geom::IntRect bbox = Geom::IntRect::from_xywh(0, row, ebp->width, num_rows);
 
-    nr_arena_item_invoke_update(ebp->root, &bbox, &gc,
-           NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
+    /* Update to renderable state */
+    ebp->drawing->update(bbox);
 
     int stride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, ebp->width);
     unsigned char *px = g_new(guchar, num_rows * stride);
 
     cairo_surface_t *s = cairo_image_surface_create_for_data(
         px, CAIRO_FORMAT_ARGB32, ebp->width, num_rows, stride);
-    cairo_t *ct = cairo_create(s);
-    cairo_translate(ct, -bbox.x0, -bbox.y0);
-
-    ink_cairo_set_source_rgba32(ct, ebp->background);
-    cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
-    cairo_paint(ct);
-    cairo_set_operator(ct, CAIRO_OPERATOR_OVER);
+    Inkscape::DrawingContext ct(s, bbox.min());
+    ct.setSource(ebp->background);
+    ct.setOperator(CAIRO_OPERATOR_SOURCE);
+    ct.paint();
+    ct.setOperator(CAIRO_OPERATOR_OVER);
 
     /* Render */
-    nr_arena_item_invoke_render(ct, ebp->root, &bbox, NULL, 0);
-
-    cairo_destroy(ct);
+    ebp->drawing->render(ct, bbox);
     cairo_surface_destroy(s);
 
     *to_free = px;
@@ -460,15 +450,15 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     ebp.height = height;
     ebp.background = bgcolor;
 
-    /* Create new arena */
-    NRArena *const arena = NRArena::create();
-    // export with maximum blur rendering quality
-    nr_arena_set_renderoffscreen(arena);
+    /* Create new drawing */
+    Inkscape::Drawing drawing;
+    drawing.setExact(true); // export with maximum blur rendering quality
     unsigned const dkey = SPItem::display_key_new(1);
 
     // Create ArenaItems and set transform
-    ebp.root = doc->getRoot()->invoke_show(arena, dkey, SP_ITEM_SHOW_DISPLAY);
-    nr_arena_item_set_transform(NR_ARENA_ITEM(ebp.root), affine);
+    drawing.setRoot(doc->getRoot()->invoke_show(drawing, dkey, SP_ITEM_SHOW_DISPLAY));
+    drawing.root()->setTransform(affine);
+    ebp.drawing = &drawing;
 
     // We show all and then hide all items we don't want, instead of showing only requested items,
     // because that would not work if the shown item references something in defs
@@ -491,9 +481,6 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
 
     // Hide items, this releases arenaitem
     doc->getRoot()->invoke_hide(dkey);
-
-    /* Free arena */
-    nr_object_unref((NRObject *) arena);
 
     return write_status;
 }

@@ -44,7 +44,7 @@
 
 #include "desktop.h"
 #include "dir-util.h"
-#include "display/nr-arena-item.h"
+#include "display/drawing-item.h"
 #include "document-private.h"
 #include "helper/units.h"
 #include "inkscape-private.h"
@@ -1126,8 +1126,8 @@ SPItem *SPDocument::getItemFromListAtPointBottom(unsigned int dkey, SPGroup *gro
     for ( SPObject *o = group->firstChild() ; o && !bottomMost; o = o->getNext() ) {
         if ( SP_IS_ITEM(o) ) {
             SPItem *item = SP_ITEM(o);
-            NRArenaItem *arenaitem = item->get_arenaitem(dkey);
-            if (arenaitem && nr_arena_item_invoke_pick(arenaitem, p, delta, 1) != NULL
+            Inkscape::DrawingItem *arenaitem = item->get_arenaitem(dkey);
+            if (arenaitem && arenaitem->pick(p, delta, 1) != NULL
                 && (take_insensitive || item->isVisibleAndUnlocked(dkey))) {
                 if (g_slist_find((GSList *) list, item) != NULL) {
                     bottomMost = item;
@@ -1180,10 +1180,10 @@ SPItem *find_item_at_point(unsigned int dkey, SPGroup *group, Geom::Point const 
             }
         } else {
             SPItem *child = SP_ITEM(o);
-            NRArenaItem *arenaitem = child->get_arenaitem(dkey);
+            Inkscape::DrawingItem *arenaitem = child->get_arenaitem(dkey);
 
             // seen remembers the last (topmost) of items pickable at this point
-            if (arenaitem && nr_arena_item_invoke_pick(arenaitem, p, delta, 1) != NULL
+            if (arenaitem && arenaitem->pick(p, delta, 1) != NULL
                 && (take_insensitive || child->isVisibleAndUnlocked(dkey))) {
                 seen = child;
             }
@@ -1214,10 +1214,10 @@ SPItem *find_group_at_point(unsigned int dkey, SPGroup *group, Geom::Point const
         }
         if (SP_IS_GROUP(o) && SP_GROUP(o)->effectiveLayerMode(dkey) != SPGroup::LAYER ) {
             SPItem *child = SP_ITEM(o);
-            NRArenaItem *arenaitem = child->get_arenaitem(dkey);
+            Inkscape::DrawingItem *arenaitem = child->get_arenaitem(dkey);
 
             // seen remembers the last (topmost) of groups pickable at this point
-            if (arenaitem && nr_arena_item_invoke_pick(arenaitem, p, delta, 1) != NULL) {
+            if (arenaitem && arenaitem->pick(p, delta, 1) != NULL) {
                 seen = child;
             }
         }

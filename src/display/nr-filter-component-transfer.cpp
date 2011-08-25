@@ -308,6 +308,11 @@ void FilterComponentTransfer::area_enlarge(NRRectL &/*area*/, Geom::Affine const
 {
 }
 
+double FilterComponentTransfer::complexity(Geom::Affine const &)
+{
+    return 2.0;
+}
+
 } /* namespace Filters */
 } /* namespace Inkscape */
 

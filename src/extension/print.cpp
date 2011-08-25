@@ -15,25 +15,22 @@
 namespace Inkscape {
 namespace Extension {
 
-Print::Print (Inkscape::XML::Node * in_repr, Implementation::Implementation * in_imp) : Extension(in_repr, in_imp)
+Print::Print (Inkscape::XML::Node * in_repr, Implementation::Implementation * in_imp)
+    : Extension(in_repr, in_imp)
+    , base(NULL)
+    , drawing(NULL)
+    , root(NULL)
+    , dkey(0)
 {
-    base = NULL;
-    arena = NULL;
-    root = NULL;
-    dkey = 0;
-
-    return;
 }
 
 Print::~Print (void)
-{
-    return;
-}
+{}
 
 bool
 Print::check (void)
 {
-	return Extension::check();
+    return Extension::check();
 }
 
 unsigned int
@@ -108,14 +105,14 @@ Print::text (const char* text, Geom::Point p, const SPStyle* style)
 bool
 Print::textToPath (void)
 {
-	return imp->textToPath(this);
+    return imp->textToPath(this);
 }
 
 //whether embed font in print output (EPS especially)
 bool
 Print::fontEmbedded (void)
 {
-	return imp->fontEmbedded(this);
+    return imp->fontEmbedded(this);
 }
 
 } }  /* namespace Inkscape, Extension */

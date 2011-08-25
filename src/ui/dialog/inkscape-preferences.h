@@ -44,7 +44,7 @@ enum {
     PREFS_PAGE_TOOLS_SELECTOR,
     PREFS_PAGE_TOOLS_NODE,
     PREFS_PAGE_TOOLS_TWEAK,
-  PREFS_PAGE_TOOLS_SPRAY,
+    PREFS_PAGE_TOOLS_SPRAY,
     PREFS_PAGE_TOOLS_ZOOM,
     PREFS_PAGE_TOOLS_MEASURE,
     PREFS_PAGE_TOOLS_SHAPES,
@@ -67,7 +67,7 @@ enum {
     PREFS_PAGE_TRANSFORMS,
     PREFS_PAGE_CLONES,
     PREFS_PAGE_MASKS,
-    PREFS_PAGE_FILTERS,
+    PREFS_PAGE_RENDERING,
     PREFS_PAGE_BITMAPS,
     PREFS_PAGE_CMS,
     PREFS_PAGE_GRIDS,
@@ -124,7 +124,7 @@ protected:
     UI::Widget::DialogPage _page_clones;
     UI::Widget::DialogPage _page_mask;
     UI::Widget::DialogPage _page_transforms;
-    UI::Widget::DialogPage _page_filters;
+    UI::Widget::DialogPage _page_rendering;
     UI::Widget::DialogPage _page_select;
     UI::Widget::DialogPage _page_importexport;
     UI::Widget::DialogPage _page_cms;
@@ -254,6 +254,7 @@ protected:
     UI::Widget::PrefRadioButton _filter_quality_worse;
     UI::Widget::PrefRadioButton _filter_quality_worst;
     UI::Widget::PrefCheckButton _show_filters_info_box;
+    UI::Widget::PrefSpinButton  _rendering_cache_size;
     UI::Widget::PrefSpinButton  _filter_multi_threaded;
 
     UI::Widget::PrefCheckButton _trans_scale_stroke;
@@ -389,7 +390,7 @@ protected:
     void initPageClones();
     void initPageMasks();
     void initPageTransforms();
-    void initPageFilters();
+    void initPageRendering();
     void initPageSelecting();
     void initPageImportExport();
     void initPageCMS();

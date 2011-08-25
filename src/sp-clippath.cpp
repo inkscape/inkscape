@@ -15,8 +15,8 @@
 #include <cstring>
 #include <string>
 
-#include "display/nr-arena.h"
-#include "display/nr-arena-group.h"
+#include "display/drawing.h"
+#include "display/drawing-group.h"
 #include "xml/repr.h"
 
 #include "enums.h"
@@ -24,6 +24,7 @@
 #include "document.h"
 #include "document-private.h"
 #include "sp-item.h"
+#include "style.h"
 
 #include <2geom/transforms.h>
 
@@ -32,11 +33,11 @@
 struct SPClipPathView {
     SPClipPathView *next;
     unsigned int key;
-    NRArenaItem *arenaitem;
+    Inkscape::DrawingItem *arenaitem;
     NRRect bbox;
 };
 
-SPClipPathView *sp_clippath_view_new_prepend(SPClipPathView *list, unsigned int key, NRArenaItem *arenaitem);
+SPClipPathView *sp_clippath_view_new_prepend(SPClipPathView *list, unsigned int key, Inkscape::DrawingItem *arenaitem);
 SPClipPathView *sp_clippath_view_list_remove(SPClipPathView *list, SPClipPathView *view);
 
 SPObjectGroupClass * SPClipPathClass::static_parent_class = 0;
@@ -155,11 +156,11 @@ void SPClipPath::childAdded(SPObject *object, Inkscape::XML::Node *child, Inksca
     if (SP_IS_ITEM(ochild)) {
         SPClipPath *cp = SP_CLIPPATH(object);
         for (SPClipPathView *v = cp->display; v != NULL; v = v->next) {
-            NRArenaItem *ac = SP_ITEM(ochild)->invoke_show(                                                  NR_ARENA_ITEM_ARENA(v->arenaitem),
+            Inkscape::DrawingItem *ac = SP_ITEM(ochild)->invoke_show(                                                  v->arenaitem->drawing(),
                                                   v->key,
                                                   SP_ITEM_REFERENCE_FLAGS);
             if (ac) {
-                nr_arena_item_add_child(v->arenaitem, ac, NULL);
+                v->arenaitem->prependChild(ac);
             }
         }
     }
@@ -191,13 +192,14 @@ void SPClipPath::update(SPObject *object, SPCtx *ctx, guint flags)
 
     SPClipPath *cp = SP_CLIPPATH(object);
     for (SPClipPathView *v = cp->display; v != NULL; v = v->next) {
+        Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
         if (cp->clipPathUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
             Geom::Affine t(Geom::Scale(v->bbox.x1 - v->bbox.x0, v->bbox.y1 - v->bbox.y0));
             t[4] = v->bbox.x0;
             t[5] = v->bbox.y0;
-            nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), &t);
+            g->setChildTransform(t);
         } else {
-            nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), NULL);
+            g->setChildTransform(Geom::identity());
         }
     }
 }
@@ -240,20 +242,17 @@ Inkscape::XML::Node *SPClipPath::write(SPObject *object, Inkscape::XML::Document
     return repr;
 }
 
-NRArenaItem *SPClipPath::show(NRArena *arena, unsigned int key)
+Inkscape::DrawingItem *SPClipPath::show(Inkscape::Drawing &drawing, unsigned int key)
 {
-    g_return_val_if_fail(arena != NULL, NULL);
-    g_return_val_if_fail(NR_IS_ARENA(arena), NULL);
-
-    NRArenaItem *ai = NRArenaGroup::create(arena);
+    Inkscape::DrawingGroup *ai = new Inkscape::DrawingGroup(drawing);
     display = sp_clippath_view_new_prepend(display, key, ai);
 
     for ( SPObject *child = firstChild() ; child ; child = child->getNext() ) {
         if (SP_IS_ITEM(child)) {
-            NRArenaItem *ac = SP_ITEM(child)->invoke_show(arena, key, SP_ITEM_REFERENCE_FLAGS);
+            Inkscape::DrawingItem *ac = SP_ITEM(child)->invoke_show(drawing, key, SP_ITEM_REFERENCE_FLAGS);
             if (ac) {
                 /* The order is not important in clippath */
-                nr_arena_item_add_child(ai, ac, NULL);
+                ai->appendChild(ac);
             }
         }
     }
@@ -262,9 +261,9 @@ NRArenaItem *SPClipPath::show(NRArena *arena, unsigned int key)
         Geom::Affine t(Geom::Scale(display->bbox.x1 - display->bbox.x0, display->bbox.y1 - display->bbox.y0));
         t[4] = display->bbox.x0;
         t[5] = display->bbox.y0;
-        nr_arena_group_set_child_transform(NR_ARENA_GROUP(ai), &t);
+        ai->setChildTransform(t);
     }
-    nr_arena_group_set_style(NR_ARENA_GROUP(ai), this->style);
+    ai->setStyle(this->style);
 
     return ai;
 }
@@ -329,13 +328,13 @@ void SPClipPath::getBBox(NRRect *bbox, Geom::Affine const &transform, unsigned c
 /* ClipPath views */
 
 SPClipPathView *
-sp_clippath_view_new_prepend(SPClipPathView *list, unsigned int key, NRArenaItem *arenaitem)
+sp_clippath_view_new_prepend(SPClipPathView *list, unsigned int key, Inkscape::DrawingItem *arenaitem)
 {
     SPClipPathView *new_path_view = g_new(SPClipPathView, 1);
 
     new_path_view->next = list;
     new_path_view->key = key;
-    new_path_view->arenaitem = nr_arena_item_ref(arenaitem);
+    new_path_view->arenaitem = arenaitem;
     new_path_view->bbox.x0 = new_path_view->bbox.x1 = 0.0;
     new_path_view->bbox.y0 = new_path_view->bbox.y1 = 0.0;
 
@@ -354,7 +353,7 @@ sp_clippath_view_list_remove(SPClipPathView *list, SPClipPathView *view)
         prev->next = view->next;
     }
 
-    nr_arena_item_unref(view->arenaitem);
+    delete view->arenaitem;
     g_free(view);
 
     return list;

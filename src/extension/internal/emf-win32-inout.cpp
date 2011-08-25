@@ -36,8 +36,8 @@
 #include "extension/print.h"
 #include "extension/db.h"
 #include "extension/output.h"
-#include "display/nr-arena.h"
-#include "display/nr-arena-item.h"
+#include "display/drawing.h"
+#include "display/drawing-item.h"
 #include "unit-constants.h"
 #include "clear-n_.h"
 
@@ -106,9 +106,10 @@ emf_print_document_to_file(SPDocument *doc, gchar const *filename)
     /* fixme: This has to go into module constructor somehow */
     /* Create new arena */
     mod->base = doc->getRoot();
-    mod->arena = NRArena::create();
+    Inkscape::Drawing drawing;
     mod->dkey = SPItem::display_key_new(1);
-    mod->root = mod->base->invoke_show(mod->arena, mod->dkey, SP_ITEM_SHOW_DISPLAY);
+    mod->root = mod->base->invoke_show(drawing, mod->dkey, SP_ITEM_SHOW_DISPLAY);
+    drawing.setRoot(mod->root);
     /* Print document */
     ret = mod->begin(doc);
     if (ret) {
@@ -120,9 +121,7 @@ emf_print_document_to_file(SPDocument *doc, gchar const *filename)
     /* Release arena */
     mod->base->invoke_hide(mod->dkey);
     mod->base = NULL;
-    mod->root = NULL;
-    nr_object_unref((NRObject *) mod->arena);
-    mod->arena = NULL;
+    mod->root = NULL; // deleted by invoke_hide
 /* end */
 
     mod->set_param_string("destination", oldoutput);

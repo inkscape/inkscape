@@ -64,7 +64,7 @@ struct _SPCanvasItemClass : public GtkObjectClass {
     double (* point) (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
 
     int (* event) (SPCanvasItem *item, GdkEvent *event);
-    void (* visible_area_changed) (SPCanvasItem *item, Geom::IntRect const &old_area, Geom::IntRect const &new_area);
+    void (* viewbox_changed) (SPCanvasItem *item, Geom::IntRect const &new_area);
 };
 
 SPCanvasItem *sp_canvas_item_new(SPCanvasGroup *parent, GType type, const gchar *first_arg_name, ...);

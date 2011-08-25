@@ -65,7 +65,7 @@ namespace Inkscape {
 /**
  * View is an abstract base class of all UI document views.  This
  * includes both the editing window and the SVG preview, but does not
- * include the non-UI RGBA buffer-based NRArena nor the XML editor or
+ * include the non-UI RGBA buffer-based Inkscape::Drawing nor the XML editor or
  * similar views.  The View base class has very little functionality of
  * its own.
  */

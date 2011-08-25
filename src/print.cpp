@@ -15,6 +15,8 @@
 # include "config.h"
 #endif
 
+#include "display/drawing.h"
+#include "display/drawing-item.h"
 #include "inkscape.h"
 #include "desktop.h"
 #include "sp-item.h"
@@ -80,9 +82,6 @@ unsigned int sp_print_text(SPPrintContext *ctx, char const *text, Geom::Point p,
     return ctx->module->text(text, p, style);
 }
 
-#include "display/nr-arena.h"
-#include "display/nr-arena-item.h"
-
 /* UI */
 
 void
@@ -92,19 +91,11 @@ sp_print_document(Gtk::Window& parentWindow, SPDocument *doc)
 
     // Build arena
     SPItem      *base = doc->getRoot();
-    NRArena    *arena = NRArena::create();
-    unsigned int dkey = SPItem::display_key_new(1);
-    // TODO investigate why we are grabbing root and then ignoring it.
-    NRArenaItem *root = base->invoke_show(arena, dkey, SP_ITEM_SHOW_DISPLAY);
 
     // Run print dialog
     Inkscape::UI::Dialog::Print printop(doc,base);
     Gtk::PrintOperationResult res = printop.run(Gtk::PRINT_OPERATION_ACTION_PRINT_DIALOG, parentWindow);
     (void)res; // TODO handle this
-
-    // Release arena
-    base->invoke_hide(dkey);
-    nr_object_unref((NRObject *) arena);
 }
 
 void
@@ -126,21 +117,20 @@ sp_print_document_to_file(SPDocument *doc, gchar const *filename)
 /* Start */
     context.module = mod;
     /* fixme: This has to go into module constructor somehow */
-    /* Create new arena */
+    /* Create new drawing */
     mod->base = doc->getRoot();
-    mod->arena = NRArena::create();
+    Inkscape::Drawing drawing;
     mod->dkey = SPItem::display_key_new(1);
-    mod->root = (mod->base)->invoke_show(mod->arena, mod->dkey, SP_ITEM_SHOW_DISPLAY);
+    mod->root = (mod->base)->invoke_show(drawing, mod->dkey, SP_ITEM_SHOW_DISPLAY);
+    drawing.setRoot(mod->root);
     /* Print document */
     ret = mod->begin(doc);
     (mod->base)->invoke_print(&context);
     ret = mod->finish();
-    /* Release arena */
+    /* Release drawing items */
     (mod->base)->invoke_hide(mod->dkey);
     mod->base = NULL;
-    mod->root = NULL;
-    nr_object_unref((NRObject *) mod->arena);
-    mod->arena = NULL;
+    mod->root = NULL; // should be deleted by invoke_hide
 /* end */
 
     mod->set_param_string("destination", oldoutput);
