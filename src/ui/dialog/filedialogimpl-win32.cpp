@@ -1593,6 +1593,8 @@ FileSaveDialogImplWin32::FileSaveDialogImplWin32(Gtk::Window &parent,
             // double-directory bug on win32
             if (len != 0 && udir[len - 1] == '\\') udir.erase(len - 1);
             myFilename = udir.substr(0, udir.find_last_of( '.' ) ); // this removes the extension, or actually, removes everything past the last dot (hopefully this is what most people want)
+            if (1 + myFilename.find("\\\\",2))                      // remove one slash if double
+                myFilename.replace(myFilename.find("\\\\",2), 1, "");
         }
 }
 
