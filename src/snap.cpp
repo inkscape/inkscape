@@ -288,7 +288,7 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t, Geom::Point c
                 // Find the best snap for this grid, including intersections of the grid-lines
                 bool old_val = _snapindicator;
                 _snapindicator = false;
-                Inkscape::SnappedPoint s = findBestSnap(Inkscape::SnapCandidatePoint(t_offset, Inkscape::SNAPSOURCE_GRID_PITCH), sc, false, false, true);
+                Inkscape::SnappedPoint s = findBestSnap(Inkscape::SnapCandidatePoint(t_offset, Inkscape::SNAPSOURCE_GRID_PITCH), sc, false, true);
                 _snapindicator = old_val;
                 if (s.getSnapped() && (s.getSnapDistance() < nearest_distance)) {
                     // use getSnapDistance() instead of getWeightedDistance() here because the pointer's position
@@ -584,7 +584,7 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal,
         (*i)->freeSnap(sc, candidate, Geom::OptRect(), NULL, NULL);
     }
 
-    Inkscape::SnappedPoint const s = findBestSnap(candidate, sc, false, false);
+    Inkscape::SnappedPoint const s = findBestSnap(candidate, sc, false);
 
     s.getPointIfSnapped(p);
 }
@@ -1135,7 +1135,6 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapRotate(std::vector<Inkscape::
  * \param p Source point to be snapped
  * \param sc A structure holding all snap targets that have been found so far
  * \param constrained True if the snap is constrained, e.g. for stretching or for purely horizontal translation.
- * \param noCurves If true, then do consider snapping to intersections of curves, but not to the curves themselves
  * \param allowOffScreen If true, then snapping to points which are off the screen is allowed (needed for example when pasting to the grid)
  * \return An instance of the SnappedPoint class, which holds data on the snap source, snap target, and various metrics
  */
@@ -1143,7 +1142,6 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapRotate(std::vector<Inkscape::
 Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint const &p,
                                                  SnappedConstraints const &sc,
                                                  bool constrained,
-                                                 bool noCurves,
                                                  bool allowOffScreen) const
 {
     g_assert(_desktop != NULL);
@@ -1151,7 +1149,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
     /*
     std::cout << "Type and number of snapped constraints: " << std::endl;
     std::cout << "  Points      : " << sc.points.size() << std::endl;
-    std::cout << "  Lines       : " << sc.lines.size() << std::endl;
+    // std::cout << "  Lines       : " << sc.lines.size() << std::endl;
     std::cout << "  Grid lines  : " << sc.grid_lines.size()<< std::endl;
     std::cout << "  Guide lines : " << sc.guide_lines.size()<< std::endl;
     std::cout << "  Curves      : " << sc.curves.size()<< std::endl;
@@ -1167,7 +1165,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
     }
 
     // search for the closest snapped curve
-    if (!noCurves) {
+    if (snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_PATH)) { // We might have been looking for path intersections only, and not for the paths themselves
         Inkscape::SnappedCurve closestCurve;
         if (getClosestCurve(sc.curves, closestCurve)) {
             sp_list.push_back(Inkscape::SnappedPoint(closestCurve));

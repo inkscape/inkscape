@@ -28,6 +28,7 @@ public:
     bool isTargetSnappable(Inkscape::SnapTargetType const target1, Inkscape::SnapTargetType const target2) const;
     bool isTargetSnappable(Inkscape::SnapTargetType const target1, Inkscape::SnapTargetType const target2, Inkscape::SnapTargetType const target3) const;
     bool isTargetSnappable(Inkscape::SnapTargetType const target1, Inkscape::SnapTargetType const target2, Inkscape::SnapTargetType const target3, Inkscape::SnapTargetType const target4) const;
+    bool isTargetSnappable(Inkscape::SnapTargetType const target1, Inkscape::SnapTargetType const target2, Inkscape::SnapTargetType const target3, Inkscape::SnapTargetType const target4, Inkscape::SnapTargetType const target5) const;
     bool isSnapButtonEnabled(Inkscape::SnapTargetType const target) const;
 
     void setSnapModeBBox(bool enabled);

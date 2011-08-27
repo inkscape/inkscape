@@ -227,6 +227,9 @@ void Inkscape::ObjectSnapper::_collectNodes(SnapSourceType const &t,
                 // paths though but only to item nodes then we should still look for the intersections in sp_item_snappoints()
                 bool old_pref = _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH_INTERSECTION);
                 if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH)) {
+                    // So if we snap to paths, then findBestSnap will find the intersections
+                    // and therefore we temporarily disable SNAPTARGET_PATH_INTERSECTION, which will
+                    // avoid root_item->getSnappoints() below from returning intersections
                     _snapmanager->snapprefs.setTargetSnappable(SNAPTARGET_PATH_INTERSECTION, false);
                 }
 
@@ -322,7 +325,7 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuide(SnappedConstraints &sc,
     // Iterate through all nodes, find out which one is the closest to this guide, and snap to it!
     _collectNodes(SNAPSOURCE_GUIDE, true);
 
-    if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_BBOX_EDGE, SNAPTARGET_PAGE_BORDER)) {
+    if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION, SNAPTARGET_BBOX_EDGE, SNAPTARGET_PAGE_BORDER)) {
         _collectPaths(p, SNAPSOURCE_GUIDE, true);
         _snapPaths(sc, SnapCandidatePoint(p, SNAPSOURCE_GUIDE), NULL, NULL);
     }
@@ -399,7 +402,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
             //Build a list of all paths considered for snapping to
 
             //Add the item's path to snap to
-            if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_TEXT_BASELINE)) {
+            if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION, SNAPTARGET_TEXT_BASELINE)) {
                 if (p_is_other || p_is_a_node || (!_snapmanager->snapprefs.getStrictSnapping() && p_is_a_bbox)) {
                     if (SP_IS_TEXT(root_item) || SP_IS_FLOWTEXT(root_item)) {
                         if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_TEXT_BASELINE)) {
@@ -420,7 +423,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
                             very_complex_path = sp_nodes_in_path(SP_PATH(root_item)) > 500;
                         }
 
-                        if (!very_complex_path && root_item && _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH)) {
+                        if (!very_complex_path && root_item && _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION)) {
                             SPCurve *curve = NULL;
                             if (SP_IS_SHAPE(root_item)) {
                                curve = SP_SHAPE(root_item)->getCurve();
@@ -474,7 +477,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
     g_assert(_snapmanager->getDesktop() != NULL);
     Geom::Point const p_doc = _snapmanager->getDesktop()->dt2doc(p.getPoint());
 
-    bool const node_tool_active = _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH) && selected_path != NULL;
+    bool const node_tool_active = _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION) && selected_path != NULL;
 
     if (p.getSourceNum() <= 0) {
         /* findCandidates() is used for snapping to both paths and nodes. It ignores the path that is
@@ -689,7 +692,7 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
 
     _snapNodes(sc, p, unselected_nodes);
 
-    if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_BBOX_EDGE, SNAPTARGET_PAGE_BORDER, SNAPTARGET_TEXT_BASELINE)) {
+    if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION, SNAPTARGET_BBOX_EDGE, SNAPTARGET_PAGE_BORDER, SNAPTARGET_TEXT_BASELINE)) {
         unsigned n = (unselected_nodes == NULL) ? 0 : unselected_nodes->size();
         if (n > 0) {
             /* While editing a path in the node tool, findCandidates must ignore that path because
@@ -737,7 +740,7 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
 
     _snapNodes(sc, p, unselected_nodes, c, pp);
 
-    if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_BBOX_EDGE, SNAPTARGET_PAGE_BORDER, SNAPTARGET_TEXT_BASELINE)) {
+    if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION, SNAPTARGET_BBOX_EDGE, SNAPTARGET_PAGE_BORDER, SNAPTARGET_TEXT_BASELINE)) {
         _snapPathsConstrained(sc, p, c, pp);
     }
 }

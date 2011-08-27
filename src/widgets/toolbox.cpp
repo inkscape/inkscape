@@ -2529,11 +2529,10 @@ void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, SPEventContext * /*ev
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act5->gobj()), c3);
     gtk_action_set_sensitive(GTK_ACTION(act5->gobj()), c1);
 
-    bool const c4 = nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_PATH);
-    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act6->gobj()), c4);
+    gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act6->gobj()), nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_PATH));
     gtk_action_set_sensitive(GTK_ACTION(act6->gobj()), c1 && c3);
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act6b->gobj()), nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_PATH_INTERSECTION));
-    gtk_action_set_sensitive(GTK_ACTION(act6b->gobj()), c1 && c3 && c4);
+    gtk_action_set_sensitive(GTK_ACTION(act6b->gobj()), c1 && c3);
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act7->gobj()), nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_NODE_CUSP));
     gtk_action_set_sensitive(GTK_ACTION(act7->gobj()), c1 && c3);
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act8->gobj()), nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_NODE_SMOOTH));

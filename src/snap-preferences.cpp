@@ -273,6 +273,10 @@ bool Inkscape::SnapPreferences::isTargetSnappable(Inkscape::SnapTargetType const
     return isTargetSnappable(target1) || isTargetSnappable(target2) || isTargetSnappable(target3) || isTargetSnappable(target4);
 }
 
+bool Inkscape::SnapPreferences::isTargetSnappable(Inkscape::SnapTargetType const target1, Inkscape::SnapTargetType const target2, Inkscape::SnapTargetType const target3, Inkscape::SnapTargetType const target4, Inkscape::SnapTargetType const target5) const {
+    return isTargetSnappable(target1) || isTargetSnappable(target2) || isTargetSnappable(target3) || isTargetSnappable(target4) || isTargetSnappable(target5);
+}
+
 bool Inkscape::SnapPreferences::isSnapButtonEnabled(Inkscape::SnapTargetType const target) const
 {
     bool always_on = false; // Only needed as a dummy
