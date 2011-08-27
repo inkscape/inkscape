@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-08-23 19:46+0200\n"
-"PO-Revision-Date: 2011-08-23 19:55+0100\n"
+"POT-Creation-Date: 2011-08-25 21:34+0200\n"
+"PO-Revision-Date: 2011-08-27 14:33+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "Language: \n"
@@ -647,7 +647,8 @@ msgid "Sharpen"
 msgstr "Netteté"
 
 #: ../share/filters/filters.svg.h:1
-msgid "Image effects"
+#: ../src/extension/internal/filter/image.h:62
+msgid "Image Effects"
 msgstr "Effets d’image"
 
 #: ../share/filters/filters.svg.h:1
@@ -1019,8 +1020,8 @@ msgid "Black Hole"
 msgstr "Trou noir"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/morphology.h:63
-#: ../src/extension/internal/filter/morphology.h:176
+#: ../src/extension/internal/filter/morphology.h:76
+#: ../src/extension/internal/filter/morphology.h:203
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "Morphologie"
@@ -1199,14 +1200,6 @@ msgstr "Pourtour déchiré"
 #: ../share/filters/filters.svg.h:1
 msgid "Displace the outside of shapes and pictures without altering their content"
 msgstr "Déplace l’extérieur des formes et images sans en altérer le contenu"
-
-#: ../share/filters/filters.svg.h:1
-msgid "Blur Content"
-msgstr "Flou interne"
-
-#: ../share/filters/filters.svg.h:1
-msgid "Blur the contents of objects, preserving the outline"
-msgstr "Rend flou le contenu des objets, mais préserve le contour"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Roughen Inside"
@@ -1389,8 +1382,8 @@ msgid "Black Light"
 msgstr "Lumière noire"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/dialogs/clonetiler.cpp:2519
-#: ../src/dialogs/clonetiler.cpp:2658
+#: ../src/dialogs/clonetiler.cpp:2505
+#: ../src/dialogs/clonetiler.cpp:2644
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../src/extension/internal/filter/bumps.h:101
 #: ../src/extension/internal/filter/bumps.h:324
@@ -1415,7 +1408,7 @@ msgstr "Lumière noire"
 #: ../src/extension/internal/filter/color.h:1423
 #: ../src/extension/internal/filter/color.h:1527
 #: ../src/extension/internal/filter/color.h:1534
-#: ../src/extension/internal/filter/morphology.h:167
+#: ../src/extension/internal/filter/morphology.h:194
 #: ../src/extension/internal/filter/overlays.h:73
 #: ../src/extension/internal/filter/paint.h:99
 #: ../src/extension/internal/filter/paint.h:723
@@ -2006,9 +1999,8 @@ msgid "Enhance and redraw color edges in 1 bit black and white"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Poster Draw"
-msgstr "Plâtre"
+msgstr "Dessin de poster"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Enhance and redraw edges around posterized areas"
@@ -3553,20 +3545,20 @@ msgstr "Direction"
 msgid "Defines the direction and magnitude of the extrusion"
 msgstr "Définit la direction et l’amplitude de l’extrusion"
 
-#: ../src/sp-flowtext.cpp:385
-#: ../src/sp-text.cpp:434
+#: ../src/sp-flowtext.cpp:387
+#: ../src/sp-text.cpp:435
 #: ../src/text-context.cpp:1627
 msgid " [truncated]"
 msgstr " [tronqué]"
 
-#: ../src/sp-flowtext.cpp:388
+#: ../src/sp-flowtext.cpp:390
 #, c-format
 msgid "<b>Flowed text</b> (%d character%s)"
 msgid_plural "<b>Flowed text</b> (%d characters%s)"
 msgstr[0] "<b>Texte encadré</b> (%d caractère%s)"
 msgstr[1] "<b>Texte encadré</b> (%d caractères%s)"
 
-#: ../src/sp-flowtext.cpp:390
+#: ../src/sp-flowtext.cpp:392
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character%s)"
 msgid_plural "<b>Linked flowed text</b> (%d characters%s)"
@@ -3697,148 +3689,148 @@ msgstr "Supprimer le guide"
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Ligne de guide</b> : %s"
 
-#: ../src/desktop.cpp:883
+#: ../src/desktop.cpp:885
 msgid "No previous zoom."
 msgstr "Plus de zoom précédent."
 
-#: ../src/desktop.cpp:908
+#: ../src/desktop.cpp:910
 msgid "No next zoom."
 msgstr "Plus de zoom suivant."
 
-#: ../src/dialogs/clonetiler.cpp:147
+#: ../src/dialogs/clonetiler.cpp:150
 msgid "<small>Nothing selected.</small>"
 msgstr "<small>Aucune sélection.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:153
+#: ../src/dialogs/clonetiler.cpp:156
 msgid "<small>More than one object selected.</small>"
 msgstr "<small>Plus d’un objet est sélectionné.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:160
+#: ../src/dialogs/clonetiler.cpp:163
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
 msgstr "<small>L’objet possède <b>%d</b> clones de pavage.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:165
+#: ../src/dialogs/clonetiler.cpp:168
 msgid "<small>Object has no tiled clones.</small>"
 msgstr "<small>L’objet ne possède aucun clone de pavage.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:929
+#: ../src/dialogs/clonetiler.cpp:915
 msgid "Select <b>one object</b> whose tiled clones to unclump."
 msgstr "Sélectionner <b>un objet</b> pour en éparpiller les clones de pavage."
 
-#: ../src/dialogs/clonetiler.cpp:951
+#: ../src/dialogs/clonetiler.cpp:937
 msgid "Unclump tiled clones"
 msgstr "Éparpiller les clones de pavage"
 
-#: ../src/dialogs/clonetiler.cpp:980
+#: ../src/dialogs/clonetiler.cpp:966
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Sélectionner <b>un objet</b> pour en retirer les clones de pavage."
 
-#: ../src/dialogs/clonetiler.cpp:1003
+#: ../src/dialogs/clonetiler.cpp:989
 msgid "Delete tiled clones"
 msgstr "Supprimer les clones de pavage"
 
-#: ../src/dialogs/clonetiler.cpp:1050
+#: ../src/dialogs/clonetiler.cpp:1036
 #: ../src/selection-chemistry.cpp:2044
 msgid "Select an <b>object</b> to clone."
 msgstr "Sélectionner un <b>objet</b> à cloner."
 
-#: ../src/dialogs/clonetiler.cpp:1056
+#: ../src/dialogs/clonetiler.cpp:1042
 msgid "If you want to clone several objects, <b>group</b> them and <b>clone the group</b>."
 msgstr "Si vous voulez cloner plusieurs objets, <b>groupez</b>-les puis <b>clonez le groupe</b>."
 
-#: ../src/dialogs/clonetiler.cpp:1065
+#: ../src/dialogs/clonetiler.cpp:1051
 msgid "<small>Creating tiled clones...</small>"
 msgstr "<small>Création d’un pavage de clones...</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1469
+#: ../src/dialogs/clonetiler.cpp:1455
 msgid "Create tiled clones"
 msgstr "Créer un pavage avec des clones"
 
-#: ../src/dialogs/clonetiler.cpp:1649
+#: ../src/dialogs/clonetiler.cpp:1635
 msgid "<small>Per row:</small>"
 msgstr "<small>Par ligne :</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1662
+#: ../src/dialogs/clonetiler.cpp:1648
 msgid "<small>Per column:</small>"
 msgstr "<small>Par colonne :</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1670
+#: ../src/dialogs/clonetiler.cpp:1656
 msgid "<small>Randomize:</small>"
 msgstr "<small>Hasard :</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1815
+#: ../src/dialogs/clonetiler.cpp:1801
 msgid "_Symmetry"
 msgstr "_Symétrie"
 
 #. TRANSLATORS: "translation" means "shift" / "displacement" here.
-#: ../src/dialogs/clonetiler.cpp:1827
+#: ../src/dialogs/clonetiler.cpp:1813
 msgid "<b>P1</b>: simple translation"
 msgstr "<b>P1</b> : translation"
 
-#: ../src/dialogs/clonetiler.cpp:1828
+#: ../src/dialogs/clonetiler.cpp:1814
 msgid "<b>P2</b>: 180&#176; rotation"
 msgstr "<b>P2</b> : rotation de 180&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1829
+#: ../src/dialogs/clonetiler.cpp:1815
 msgid "<b>PM</b>: reflection"
 msgstr "<b>PM</b> : réflexion"
 
 #. TRANSLATORS: "glide reflection" is a reflection and a translation combined.
 #. For more info, see http://mathforum.org/sum95/suzanne/symsusan.html
-#: ../src/dialogs/clonetiler.cpp:1832
+#: ../src/dialogs/clonetiler.cpp:1818
 msgid "<b>PG</b>: glide reflection"
 msgstr "<b>PG</b> : réflexion glissée"
 
-#: ../src/dialogs/clonetiler.cpp:1833
+#: ../src/dialogs/clonetiler.cpp:1819
 msgid "<b>CM</b>: reflection + glide reflection"
 msgstr "<b>CM</b> : réflexion + réflexion glissée"
 
-#: ../src/dialogs/clonetiler.cpp:1834
+#: ../src/dialogs/clonetiler.cpp:1820
 msgid "<b>PMM</b>: reflection + reflection"
 msgstr "<b>PMM</b> : réflexion + réflexion"
 
-#: ../src/dialogs/clonetiler.cpp:1835
+#: ../src/dialogs/clonetiler.cpp:1821
 msgid "<b>PMG</b>: reflection + 180&#176; rotation"
 msgstr "<b>PMG</b> : réflexion + rotation de 180&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1836
+#: ../src/dialogs/clonetiler.cpp:1822
 msgid "<b>PGG</b>: glide reflection + 180&#176; rotation"
 msgstr "<b>PGG</b> : réflexion glissée + rotation de 180&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1837
+#: ../src/dialogs/clonetiler.cpp:1823
 msgid "<b>CMM</b>: reflection + reflection + 180&#176; rotation"
 msgstr "<b>CMM</b> : réflexion + réflexion + rotation de 180&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1838
+#: ../src/dialogs/clonetiler.cpp:1824
 msgid "<b>P4</b>: 90&#176; rotation"
 msgstr "<b>P4</b> : rotation de 90&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1839
+#: ../src/dialogs/clonetiler.cpp:1825
 msgid "<b>P4M</b>: 90&#176; rotation + 45&#176; reflection"
 msgstr "<b>P4M</b> : rotation de 90&#176; + réflexion à 45&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1840
+#: ../src/dialogs/clonetiler.cpp:1826
 msgid "<b>P4G</b>: 90&#176; rotation + 90&#176; reflection"
 msgstr "<b>P4G</b> : rotation de 90&#176; + réflexion à 90&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1841
+#: ../src/dialogs/clonetiler.cpp:1827
 msgid "<b>P3</b>: 120&#176; rotation"
 msgstr "<b>P3</b> : rotation de 120&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1842
+#: ../src/dialogs/clonetiler.cpp:1828
 msgid "<b>P31M</b>: reflection + 120&#176; rotation, dense"
 msgstr "<b>P31M</b> : réflexion + rotation de 120&#176;, dense"
 
-#: ../src/dialogs/clonetiler.cpp:1843
+#: ../src/dialogs/clonetiler.cpp:1829
 msgid "<b>P3M1</b>: reflection + 120&#176; rotation, sparse"
 msgstr "<b>P3M1</b> : réflexion + rotation de 120&#176;, clairsemé"
 
-#: ../src/dialogs/clonetiler.cpp:1844
+#: ../src/dialogs/clonetiler.cpp:1830
 msgid "<b>P6</b>: 60&#176; rotation"
 msgstr "<b>P6</b> : rotation de 60&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1845
+#: ../src/dialogs/clonetiler.cpp:1831
 msgid "<b>P6M</b>: reflection + 60&#176; rotation"
 msgstr "<b>P6M</b> : réflexion + rotation de 60&#176;"
 
@@ -3846,370 +3838,370 @@ msgstr "<b>P6M</b> : réflexion + rotation de 60&#176;"
 # http://www.bib.ulb.ac.be/coursmath/doc/17.htm (visual examples)
 # http://membres.lycos.fr/villemingerard/Geometri/Sym1D.htm (French vocabulary)
 # http://www.clarku.edu/~djoyce/wallpaper/seventeen.html (English vocabulary)
-#: ../src/dialogs/clonetiler.cpp:1867
+#: ../src/dialogs/clonetiler.cpp:1853
 msgid "Select one of the 17 symmetry groups for the tiling"
 msgstr "Sélectionner l’un de ces 17 groupes de symétrie pour le pavage"
 
-#: ../src/dialogs/clonetiler.cpp:1888
+#: ../src/dialogs/clonetiler.cpp:1874
 msgid "S_hift"
 msgstr "_Translation"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
-#: ../src/dialogs/clonetiler.cpp:1898
+#: ../src/dialogs/clonetiler.cpp:1884
 #, no-c-format
 msgid "<b>Shift X:</b>"
 msgstr "<b>Translation X :</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1906
+#: ../src/dialogs/clonetiler.cpp:1892
 #, no-c-format
 msgid "Horizontal shift per row (in % of tile width)"
 msgstr "Translation horizontale à chaque ligne (en % de la largeur du pavé de base)"
 
-#: ../src/dialogs/clonetiler.cpp:1914
+#: ../src/dialogs/clonetiler.cpp:1900
 #, no-c-format
 msgid "Horizontal shift per column (in % of tile width)"
 msgstr "Translation horizontale à chaque colonne (en % de la largeur du pavé de base)"
 
-#: ../src/dialogs/clonetiler.cpp:1920
+#: ../src/dialogs/clonetiler.cpp:1906
 msgid "Randomize the horizontal shift by this percentage"
 msgstr "Introduire ce pourcentage de hasard dans la translation horizontale"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) vertically by this amount
-#: ../src/dialogs/clonetiler.cpp:1930
+#: ../src/dialogs/clonetiler.cpp:1916
 #, no-c-format
 msgid "<b>Shift Y:</b>"
 msgstr "<b>Translation Y :</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1938
+#: ../src/dialogs/clonetiler.cpp:1924
 #, no-c-format
 msgid "Vertical shift per row (in % of tile height)"
 msgstr "Translation verticale à chaque ligne (en % de la hauteur du pavé de base)"
 
-#: ../src/dialogs/clonetiler.cpp:1946
+#: ../src/dialogs/clonetiler.cpp:1932
 #, no-c-format
 msgid "Vertical shift per column (in % of tile height)"
 msgstr "Translation verticale à chaque colonne (en % de la hauteur du pavé de base)"
 
-#: ../src/dialogs/clonetiler.cpp:1953
+#: ../src/dialogs/clonetiler.cpp:1939
 msgid "Randomize the vertical shift by this percentage"
 msgstr "Introduire ce pourcentage de hasard dans la translation verticale"
 
-#: ../src/dialogs/clonetiler.cpp:1961
-#: ../src/dialogs/clonetiler.cpp:2107
+#: ../src/dialogs/clonetiler.cpp:1947
+#: ../src/dialogs/clonetiler.cpp:2093
 msgid "<b>Exponent:</b>"
 msgstr "<b>Exposant :</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1968
+#: ../src/dialogs/clonetiler.cpp:1954
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "Selon la valeur, l’inter ligne reste constant (1), converge (<1) ou diverge (>1) "
 
-#: ../src/dialogs/clonetiler.cpp:1975
+#: ../src/dialogs/clonetiler.cpp:1961
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "Selon la valeur, l’inter colonne reste constant (1), converge (<1) ou diverge (>1) "
 
 #. TRANSLATORS: "Alternate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:1983
-#: ../src/dialogs/clonetiler.cpp:2147
-#: ../src/dialogs/clonetiler.cpp:2223
-#: ../src/dialogs/clonetiler.cpp:2296
-#: ../src/dialogs/clonetiler.cpp:2342
-#: ../src/dialogs/clonetiler.cpp:2464
+#: ../src/dialogs/clonetiler.cpp:1969
+#: ../src/dialogs/clonetiler.cpp:2133
+#: ../src/dialogs/clonetiler.cpp:2209
+#: ../src/dialogs/clonetiler.cpp:2282
+#: ../src/dialogs/clonetiler.cpp:2328
+#: ../src/dialogs/clonetiler.cpp:2450
 msgid "<small>Alternate:</small>"
 msgstr "<small>Alterner :</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1989
+#: ../src/dialogs/clonetiler.cpp:1975
 msgid "Alternate the sign of shifts for each row"
 msgstr "Alterner le signe de la translation à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:1994
+#: ../src/dialogs/clonetiler.cpp:1980
 msgid "Alternate the sign of shifts for each column"
 msgstr "Alterner le signe de la translation à chaque colonne"
 
 #. TRANSLATORS: "Cumulate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:2001
-#: ../src/dialogs/clonetiler.cpp:2165
-#: ../src/dialogs/clonetiler.cpp:2241
+#: ../src/dialogs/clonetiler.cpp:1987
+#: ../src/dialogs/clonetiler.cpp:2151
+#: ../src/dialogs/clonetiler.cpp:2227
 msgid "<small>Cumulate:</small>"
 msgstr "<small>Cumulatif :</small>"
 
-#: ../src/dialogs/clonetiler.cpp:2007
+#: ../src/dialogs/clonetiler.cpp:1993
 msgid "Cumulate the shifts for each row"
 msgstr "Décalage cumulatif des lignes"
 
-#: ../src/dialogs/clonetiler.cpp:2012
+#: ../src/dialogs/clonetiler.cpp:1998
 msgid "Cumulate the shifts for each column"
 msgstr "Décalage cumulatif des colonnes"
 
 #. TRANSLATORS: "Cumulate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:2019
+#: ../src/dialogs/clonetiler.cpp:2005
 msgid "<small>Exclude tile:</small>"
 msgstr "<small>Exclure la taille du pavé :</small>"
 
-#: ../src/dialogs/clonetiler.cpp:2025
+#: ../src/dialogs/clonetiler.cpp:2011
 msgid "Exclude tile height in shift"
 msgstr "Ne pas ajouter la hauteur du pavé au décalage"
 
-#: ../src/dialogs/clonetiler.cpp:2030
+#: ../src/dialogs/clonetiler.cpp:2016
 msgid "Exclude tile width in shift"
 msgstr "Ne pas ajouter la largeur du pavé au décalage"
 
-#: ../src/dialogs/clonetiler.cpp:2039
+#: ../src/dialogs/clonetiler.cpp:2025
 msgid "Sc_ale"
 msgstr "_Dimensions"
 
-#: ../src/dialogs/clonetiler.cpp:2047
+#: ../src/dialogs/clonetiler.cpp:2033
 msgid "<b>Scale X:</b>"
 msgstr "<b>Échelle X :</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2055
+#: ../src/dialogs/clonetiler.cpp:2041
 #, no-c-format
 msgid "Horizontal scale per row (in % of tile width)"
 msgstr "Redimensionnement horizontal à chaque ligne (en % de la largeur du pavé de base)"
 
-#: ../src/dialogs/clonetiler.cpp:2063
+#: ../src/dialogs/clonetiler.cpp:2049
 #, no-c-format
 msgid "Horizontal scale per column (in % of tile width)"
 msgstr "Redimensionnement horizontal à chaque colonne (en % de la largeur du pavé de base)"
 
-#: ../src/dialogs/clonetiler.cpp:2069
+#: ../src/dialogs/clonetiler.cpp:2055
 msgid "Randomize the horizontal scale by this percentage"
 msgstr "Introduire ce pourcentage de hasard dans le redimensionnement horizontal"
 
-#: ../src/dialogs/clonetiler.cpp:2077
+#: ../src/dialogs/clonetiler.cpp:2063
 msgid "<b>Scale Y:</b>"
 msgstr "<b>Échelle Y :</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2085
+#: ../src/dialogs/clonetiler.cpp:2071
 #, no-c-format
 msgid "Vertical scale per row (in % of tile height)"
 msgstr "Redimensionnement vertical à chaque ligne (en % de la hauteur du pavé de base)"
 
-#: ../src/dialogs/clonetiler.cpp:2093
+#: ../src/dialogs/clonetiler.cpp:2079
 #, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
 msgstr "Redimensionnement vertical à chaque colonne (en % de la largeur du pavé de base)"
 
-#: ../src/dialogs/clonetiler.cpp:2099
+#: ../src/dialogs/clonetiler.cpp:2085
 msgid "Randomize the vertical scale by this percentage"
 msgstr "Introduire ce pourcentage de hasard dans le redimensionnement vertical"
 
-#: ../src/dialogs/clonetiler.cpp:2113
+#: ../src/dialogs/clonetiler.cpp:2099
 msgid "Whether row scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr "Selon la valeur, le redimensionnement des lignes est uniforme (1), converge (<1) ou diverge (>1) "
 
-#: ../src/dialogs/clonetiler.cpp:2119
+#: ../src/dialogs/clonetiler.cpp:2105
 msgid "Whether column scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr "Selon la valeur, le redimensionnement des colonnes est uniforme (1), converge (<1) ou diverge (>1) "
 
-#: ../src/dialogs/clonetiler.cpp:2127
+#: ../src/dialogs/clonetiler.cpp:2113
 msgid "<b>Base:</b>"
 msgstr "<b>Base :</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2133
-#: ../src/dialogs/clonetiler.cpp:2139
+#: ../src/dialogs/clonetiler.cpp:2119
+#: ../src/dialogs/clonetiler.cpp:2125
 msgid "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
 msgstr "Base pour une spirale logarithmique : inutilisée (0), converge (<1), ou diverge (>1)"
 
-#: ../src/dialogs/clonetiler.cpp:2153
+#: ../src/dialogs/clonetiler.cpp:2139
 msgid "Alternate the sign of scales for each row"
 msgstr "Alterner le signe du redimensionnement à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:2158
+#: ../src/dialogs/clonetiler.cpp:2144
 msgid "Alternate the sign of scales for each column"
 msgstr "Alterner le signe du redimensionnement à chaque colonne"
 
-#: ../src/dialogs/clonetiler.cpp:2171
+#: ../src/dialogs/clonetiler.cpp:2157
 msgid "Cumulate the scales for each row"
 msgstr "Cumuler le redimensionnement à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:2176
+#: ../src/dialogs/clonetiler.cpp:2162
 msgid "Cumulate the scales for each column"
 msgstr "Cumuler le redimensionnement à chaque colonne"
 
-#: ../src/dialogs/clonetiler.cpp:2185
+#: ../src/dialogs/clonetiler.cpp:2171
 msgid "_Rotation"
 msgstr "_Rotation"
 
-#: ../src/dialogs/clonetiler.cpp:2193
+#: ../src/dialogs/clonetiler.cpp:2179
 msgid "<b>Angle:</b>"
 msgstr "<b>Angle :</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2201
+#: ../src/dialogs/clonetiler.cpp:2187
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
 msgstr "Faire tourner les pavés de cet angle à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:2209
+#: ../src/dialogs/clonetiler.cpp:2195
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
 msgstr "Faire tourner les pavés de cet angle à chaque colonne"
 
-#: ../src/dialogs/clonetiler.cpp:2215
+#: ../src/dialogs/clonetiler.cpp:2201
 msgid "Randomize the rotation angle by this percentage"
 msgstr "Introduire ce pourcentage de hasard dans l’angle de rotation"
 
-#: ../src/dialogs/clonetiler.cpp:2229
+#: ../src/dialogs/clonetiler.cpp:2215
 msgid "Alternate the rotation direction for each row"
 msgstr "Alterner le sens de la rotation à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:2234
+#: ../src/dialogs/clonetiler.cpp:2220
 msgid "Alternate the rotation direction for each column"
 msgstr "Alterner le sens de la rotation à chaque colonne"
 
-#: ../src/dialogs/clonetiler.cpp:2247
+#: ../src/dialogs/clonetiler.cpp:2233
 msgid "Cumulate the rotation for each row"
 msgstr "Cumuler l’angle de rotation à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:2252
+#: ../src/dialogs/clonetiler.cpp:2238
 msgid "Cumulate the rotation for each column"
 msgstr "Cumuler l’angle de rotation à chaque colonne"
 
-#: ../src/dialogs/clonetiler.cpp:2261
+#: ../src/dialogs/clonetiler.cpp:2247
 msgid "_Blur & opacity"
 msgstr "_Flou & opacité"
 
-#: ../src/dialogs/clonetiler.cpp:2270
+#: ../src/dialogs/clonetiler.cpp:2256
 msgid "<b>Blur:</b>"
 msgstr "<b>Flou :</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2276
+#: ../src/dialogs/clonetiler.cpp:2262
 msgid "Blur tiles by this percentage for each row"
 msgstr "Rendre les pavés flous de ce pourcentage à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:2282
+#: ../src/dialogs/clonetiler.cpp:2268
 msgid "Blur tiles by this percentage for each column"
 msgstr "Rendre les pavés flous de ce pourcentage à chaque colonne"
 
-#: ../src/dialogs/clonetiler.cpp:2288
+#: ../src/dialogs/clonetiler.cpp:2274
 msgid "Randomize the tile blur by this percentage"
 msgstr "Introduire ce pourcentage de hasard dans le flou"
 
-#: ../src/dialogs/clonetiler.cpp:2302
+#: ../src/dialogs/clonetiler.cpp:2288
 msgid "Alternate the sign of blur change for each row"
 msgstr "Alterner le signe de la modification de flou à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:2307
+#: ../src/dialogs/clonetiler.cpp:2293
 msgid "Alternate the sign of blur change for each column"
 msgstr "Alterner le signe de la modification de flou à chaque colonne"
 
-#: ../src/dialogs/clonetiler.cpp:2316
+#: ../src/dialogs/clonetiler.cpp:2302
 msgid "<b>Opacity:</b>"
 msgstr "<b>Opacité :</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2322
+#: ../src/dialogs/clonetiler.cpp:2308
 msgid "Decrease tile opacity by this percentage for each row"
 msgstr "Diminuer l’opacité des pavés de ce pourcentage à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:2328
+#: ../src/dialogs/clonetiler.cpp:2314
 msgid "Decrease tile opacity by this percentage for each column"
 msgstr "Diminuer l’opacité des pavés de ce pourcentage à chaque colonne"
 
-#: ../src/dialogs/clonetiler.cpp:2334
+#: ../src/dialogs/clonetiler.cpp:2320
 msgid "Randomize the tile opacity by this percentage"
 msgstr "Introduire ce pourcentage de hasard dans l’opacité"
 
-#: ../src/dialogs/clonetiler.cpp:2348
+#: ../src/dialogs/clonetiler.cpp:2334
 msgid "Alternate the sign of opacity change for each row"
 msgstr "Alterner le signe de la modification d’opacité à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:2353
+#: ../src/dialogs/clonetiler.cpp:2339
 msgid "Alternate the sign of opacity change for each column"
 msgstr "Alterner le signe de la modification d’opacité à chaque colonne"
 
-#: ../src/dialogs/clonetiler.cpp:2361
+#: ../src/dialogs/clonetiler.cpp:2347
 msgid "Co_lor"
 msgstr "Cou_leur"
 
-#: ../src/dialogs/clonetiler.cpp:2366
+#: ../src/dialogs/clonetiler.cpp:2352
 msgid "Initial color: "
 msgstr "Couleur initiale :"
 
-#: ../src/dialogs/clonetiler.cpp:2370
+#: ../src/dialogs/clonetiler.cpp:2356
 msgid "Initial color of tiled clones"
 msgstr "Couleur initiale des clones de pavage"
 
-#: ../src/dialogs/clonetiler.cpp:2370
+#: ../src/dialogs/clonetiler.cpp:2356
 msgid "Initial color for clones (works only if the original has unset fill or stroke)"
 msgstr "Couleur initiale pour les clones (ne fonctionne que si l’original a un remplissage ou un contour indéfini)"
 
-#: ../src/dialogs/clonetiler.cpp:2385
+#: ../src/dialogs/clonetiler.cpp:2371
 msgid "<b>H:</b>"
 msgstr "<b>T :</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2391
+#: ../src/dialogs/clonetiler.cpp:2377
 msgid "Change the tile hue by this percentage for each row"
 msgstr "Modifier la teinte des pavés de ce pourcentage à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:2397
+#: ../src/dialogs/clonetiler.cpp:2383
 msgid "Change the tile hue by this percentage for each column"
 msgstr "Modifier la teinte des pavés de ce pourcentage à chaque colonne"
 
-#: ../src/dialogs/clonetiler.cpp:2403
+#: ../src/dialogs/clonetiler.cpp:2389
 msgid "Randomize the tile hue by this percentage"
 msgstr "Introduire ce pourcentage de hasard dans la modification de teinte"
 
-#: ../src/dialogs/clonetiler.cpp:2412
+#: ../src/dialogs/clonetiler.cpp:2398
 msgid "<b>S:</b>"
 msgstr "<b>S :</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2418
+#: ../src/dialogs/clonetiler.cpp:2404
 msgid "Change the color saturation by this percentage for each row"
 msgstr "Modifier la saturation des pavés de ce pourcentage à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:2424
+#: ../src/dialogs/clonetiler.cpp:2410
 msgid "Change the color saturation by this percentage for each column"
 msgstr "Modifier la saturation des pavés de ce pourcentage à chaque colonne"
 
-#: ../src/dialogs/clonetiler.cpp:2430
+#: ../src/dialogs/clonetiler.cpp:2416
 msgid "Randomize the color saturation by this percentage"
 msgstr "Introduire ce pourcentage de hasard dans la modification de saturation"
 
-#: ../src/dialogs/clonetiler.cpp:2438
+#: ../src/dialogs/clonetiler.cpp:2424
 msgid "<b>L:</b>"
 msgstr "<b>L :</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2444
+#: ../src/dialogs/clonetiler.cpp:2430
 msgid "Change the color lightness by this percentage for each row"
 msgstr "Modifier la luminosité des pavés de ce pourcentage à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:2450
+#: ../src/dialogs/clonetiler.cpp:2436
 msgid "Change the color lightness by this percentage for each column"
 msgstr "Modifier la luminosité des pavés de ce pourcentage à chaque colonne"
 
-#: ../src/dialogs/clonetiler.cpp:2456
+#: ../src/dialogs/clonetiler.cpp:2442
 msgid "Randomize the color lightness by this percentage"
 msgstr "Introduire ce pourcentage de hasard dans la modification de luminosité"
 
-#: ../src/dialogs/clonetiler.cpp:2470
+#: ../src/dialogs/clonetiler.cpp:2456
 msgid "Alternate the sign of color changes for each row"
 msgstr "Alterner le signe de la modification de couleur à chaque ligne"
 
-#: ../src/dialogs/clonetiler.cpp:2475
+#: ../src/dialogs/clonetiler.cpp:2461
 msgid "Alternate the sign of color changes for each column"
 msgstr "Alterner le signe de la modification de couleur à chaque colonne"
 
-#: ../src/dialogs/clonetiler.cpp:2483
+#: ../src/dialogs/clonetiler.cpp:2469
 msgid "_Trace"
 msgstr "_Calquer"
 
-#: ../src/dialogs/clonetiler.cpp:2490
+#: ../src/dialogs/clonetiler.cpp:2476
 msgid "Trace the drawing under the tiles"
 msgstr "Calquer depuis le dessin sous les pavés"
 
-#: ../src/dialogs/clonetiler.cpp:2494
+#: ../src/dialogs/clonetiler.cpp:2480
 msgid "For each clone, pick a value from the drawing in that clone's location and apply it to the clone"
 msgstr "Pour chaque clone, capturer une valeur du dessin à l’emplacement du clone et l’appliquer au clone"
 
-#: ../src/dialogs/clonetiler.cpp:2508
+#: ../src/dialogs/clonetiler.cpp:2494
 msgid "1. Pick from the drawing:"
 msgstr "1. Capturer depuis le dessin :"
 
-#: ../src/dialogs/clonetiler.cpp:2520
+#: ../src/dialogs/clonetiler.cpp:2506
 msgid "Pick the visible color and opacity"
 msgstr "Capturer la couleur et l’opacité visibles"
 
-#: ../src/dialogs/clonetiler.cpp:2527
-#: ../src/dialogs/clonetiler.cpp:2668
+#: ../src/dialogs/clonetiler.cpp:2513
+#: ../src/dialogs/clonetiler.cpp:2654
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/filter/transparency.h:279
 #: ../src/widgets/toolbox.cpp:4584
@@ -4217,167 +4209,167 @@ msgstr "Capturer la couleur et l’opacité visibles"
 msgid "Opacity"
 msgstr "Opacité"
 
-#: ../src/dialogs/clonetiler.cpp:2528
+#: ../src/dialogs/clonetiler.cpp:2514
 msgid "Pick the total accumulated opacity"
 msgstr "Capturer l’opacité cumulée"
 
 # Red (in RGB)
-#: ../src/dialogs/clonetiler.cpp:2535
+#: ../src/dialogs/clonetiler.cpp:2521
 msgid "R"
 msgstr "R"
 
-#: ../src/dialogs/clonetiler.cpp:2536
+#: ../src/dialogs/clonetiler.cpp:2522
 msgid "Pick the Red component of the color"
 msgstr "Capturer la composante Rouge de la couleur"
 
 # Green (in RGB)
-#: ../src/dialogs/clonetiler.cpp:2543
+#: ../src/dialogs/clonetiler.cpp:2529
 msgid "G"
 msgstr "V"
 
-#: ../src/dialogs/clonetiler.cpp:2544
+#: ../src/dialogs/clonetiler.cpp:2530
 msgid "Pick the Green component of the color"
 msgstr "Capturer la composante Verte de la couleur"
 
 # Blue (in RGB)
-#: ../src/dialogs/clonetiler.cpp:2551
+#: ../src/dialogs/clonetiler.cpp:2537
 msgid "B"
 msgstr "B"
 
-#: ../src/dialogs/clonetiler.cpp:2552
+#: ../src/dialogs/clonetiler.cpp:2538
 msgid "Pick the Blue component of the color"
 msgstr "Capturer la composante Bleue de la couleur"
 
-#: ../src/dialogs/clonetiler.cpp:2559
+#: ../src/dialogs/clonetiler.cpp:2545
 msgctxt "Clonetiler color hue"
 msgid "H"
 msgstr "T"
 
-#: ../src/dialogs/clonetiler.cpp:2560
+#: ../src/dialogs/clonetiler.cpp:2546
 msgid "Pick the hue of the color"
 msgstr "Capturer la teinte de la couleur"
 
 # Saturation (in HSL)
-#: ../src/dialogs/clonetiler.cpp:2567
+#: ../src/dialogs/clonetiler.cpp:2553
 msgctxt "Clonetiler color saturation"
 msgid "S"
 msgstr "S"
 
-#: ../src/dialogs/clonetiler.cpp:2568
+#: ../src/dialogs/clonetiler.cpp:2554
 msgid "Pick the saturation of the color"
 msgstr "Capturer la saturation de la couleur"
 
 # Luminosity (in HSL)
-#: ../src/dialogs/clonetiler.cpp:2575
+#: ../src/dialogs/clonetiler.cpp:2561
 msgctxt "Clonetiler color lightness"
 msgid "L"
 msgstr "L"
 
-#: ../src/dialogs/clonetiler.cpp:2576
+#: ../src/dialogs/clonetiler.cpp:2562
 msgid "Pick the lightness of the color"
 msgstr "Capturer la luminosité de la couleur"
 
-#: ../src/dialogs/clonetiler.cpp:2586
+#: ../src/dialogs/clonetiler.cpp:2572
 msgid "2. Tweak the picked value:"
 msgstr "2. Modifier la valeur capturée"
 
-#: ../src/dialogs/clonetiler.cpp:2596
+#: ../src/dialogs/clonetiler.cpp:2582
 msgid "Gamma-correct:"
 msgstr "Corriger le Gamma"
 
-#: ../src/dialogs/clonetiler.cpp:2600
+#: ../src/dialogs/clonetiler.cpp:2586
 msgid "Shift the mid-range of the picked value upwards (>0) or downwards (<0)"
 msgstr "Décaler le milieu de la valeur capturée vers le haut (>0) ou vers le bas (<0)"
 
-#: ../src/dialogs/clonetiler.cpp:2607
+#: ../src/dialogs/clonetiler.cpp:2593
 msgid "Randomize:"
 msgstr "Hasard :"
 
-#: ../src/dialogs/clonetiler.cpp:2611
+#: ../src/dialogs/clonetiler.cpp:2597
 msgid "Randomize the picked value by this percentage"
 msgstr "Introduire ce pourcentage de hasard dans la capture de la valeur"
 
-#: ../src/dialogs/clonetiler.cpp:2618
+#: ../src/dialogs/clonetiler.cpp:2604
 msgid "Invert:"
 msgstr "Inverser :"
 
-#: ../src/dialogs/clonetiler.cpp:2622
+#: ../src/dialogs/clonetiler.cpp:2608
 msgid "Invert the picked value"
 msgstr "Inverser la valeur capturée"
 
-#: ../src/dialogs/clonetiler.cpp:2628
+#: ../src/dialogs/clonetiler.cpp:2614
 msgid "3. Apply the value to the clones':"
 msgstr "3. Appliquer la valeur aux clones :"
 
-#: ../src/dialogs/clonetiler.cpp:2638
+#: ../src/dialogs/clonetiler.cpp:2624
 msgid "Presence"
 msgstr "Présence"
 
-#: ../src/dialogs/clonetiler.cpp:2641
+#: ../src/dialogs/clonetiler.cpp:2627
 msgid "Each clone is created with the probability determined by the picked value in that point"
 msgstr "Chaque clone est créé selon une probabilité déterminée par la valeur capturée en ce point"
 
-#: ../src/dialogs/clonetiler.cpp:2648
+#: ../src/dialogs/clonetiler.cpp:2634
 msgid "Size"
 msgstr "Dimensions"
 
-#: ../src/dialogs/clonetiler.cpp:2651
+#: ../src/dialogs/clonetiler.cpp:2637
 msgid "Each clone's size is determined by the picked value in that point"
 msgstr "Les dimensions de chaque clone sont déterminées selon la valeur capturée en ce point "
 
-#: ../src/dialogs/clonetiler.cpp:2661
+#: ../src/dialogs/clonetiler.cpp:2647
 msgid "Each clone is painted by the picked color (the original must have unset fill or stroke)"
 msgstr "Chaque clone est peint selon la couleur capturée (l’original doit avoir un remplissage ou un contour indéfini)"
 
-#: ../src/dialogs/clonetiler.cpp:2671
+#: ../src/dialogs/clonetiler.cpp:2657
 msgid "Each clone's opacity is determined by the picked value in that point"
 msgstr "L’opacité de chaque clone est déterminée par la valeur capturée en ce point"
 
-#: ../src/dialogs/clonetiler.cpp:2698
+#: ../src/dialogs/clonetiler.cpp:2684
 msgid "How many rows in the tiling"
 msgstr "Nombre de lignes du pavage"
 
-#: ../src/dialogs/clonetiler.cpp:2718
+#: ../src/dialogs/clonetiler.cpp:2704
 msgid "How many columns in the tiling"
 msgstr "Nombre de colonnes du pavage"
 
-#: ../src/dialogs/clonetiler.cpp:2748
+#: ../src/dialogs/clonetiler.cpp:2734
 msgid "Width of the rectangle to be filled"
 msgstr "Largeur du rectangle à remplir"
 
-#: ../src/dialogs/clonetiler.cpp:2773
+#: ../src/dialogs/clonetiler.cpp:2759
 msgid "Height of the rectangle to be filled"
 msgstr "Hauteur du rectangle à remplir"
 
-#: ../src/dialogs/clonetiler.cpp:2788
+#: ../src/dialogs/clonetiler.cpp:2774
 msgid "Rows, columns: "
 msgstr "Lignes, colonnes :"
 
-#: ../src/dialogs/clonetiler.cpp:2789
+#: ../src/dialogs/clonetiler.cpp:2775
 msgid "Create the specified number of rows and columns"
 msgstr "Créer le nombre spécifié de lignes et de colonnes"
 
-#: ../src/dialogs/clonetiler.cpp:2798
+#: ../src/dialogs/clonetiler.cpp:2784
 msgid "Width, height: "
 msgstr "Largeur, hauteur :"
 
-#: ../src/dialogs/clonetiler.cpp:2799
+#: ../src/dialogs/clonetiler.cpp:2785
 msgid "Fill the specified width and height with the tiling"
 msgstr "Remplir avec le pavage selon la hauteur et la largeur spécifiées"
 
-#: ../src/dialogs/clonetiler.cpp:2815
+#: ../src/dialogs/clonetiler.cpp:2801
 msgid "Use saved size and position of the tile"
 msgstr "Utiliser les dimensions et position enregistrées du pavage"
 
-#: ../src/dialogs/clonetiler.cpp:2818
+#: ../src/dialogs/clonetiler.cpp:2804
 msgid "Pretend that the size and position of the tile are the same as the last time you tiled it (if any), instead of using the current size"
 msgstr "Utiliser les mêmes dimensions et position de pavés que lors du pavage précédent (si possible), au lieu d’utiliser les paramètres courants"
 
-#: ../src/dialogs/clonetiler.cpp:2842
+#: ../src/dialogs/clonetiler.cpp:2828
 msgid " <b>_Create</b> "
 msgstr " <b>_Créer</b> "
 
-#: ../src/dialogs/clonetiler.cpp:2844
+#: ../src/dialogs/clonetiler.cpp:2830
 msgid "Create and tile the clones of the selection"
 msgstr "Créer des clones et paver la sélection avec"
 
@@ -4386,28 +4378,28 @@ msgstr "Créer des clones et paver la sélection avec"
 #. diagrams on the left in the following screenshot:
 #. http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
 #. So unclumping is the process of spreading a number of objects out more evenly.
-#: ../src/dialogs/clonetiler.cpp:2859
+#: ../src/dialogs/clonetiler.cpp:2845
 msgid " _Unclump "
 msgstr "É_parpiller"
 
-#: ../src/dialogs/clonetiler.cpp:2860
+#: ../src/dialogs/clonetiler.cpp:2846
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
 msgstr "Disperser les clones de façon à reduire le rassemblement; peut être appliqué plusieurs fois"
 
-#: ../src/dialogs/clonetiler.cpp:2866
+#: ../src/dialogs/clonetiler.cpp:2852
 msgid " Re_move "
 msgstr "_Supprimer"
 
-#: ../src/dialogs/clonetiler.cpp:2867
+#: ../src/dialogs/clonetiler.cpp:2853
 msgid "Remove existing tiled clones of the selected object (siblings only)"
 msgstr "Retirer les clones de pavage de l’objet sélectionné (seulement les « enfants de mêmes parents »)"
 
-#: ../src/dialogs/clonetiler.cpp:2883
+#: ../src/dialogs/clonetiler.cpp:2869
 msgid " R_eset "
 msgstr " R-à-_z"
 
 #. TRANSLATORS: "change" is a noun here
-#: ../src/dialogs/clonetiler.cpp:2885
+#: ../src/dialogs/clonetiler.cpp:2871
 msgid "Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"
 msgstr "Remise à zéro de tous les décalages, redimensionnements, rotation et opacités dans la boîte de dialogue"
 
@@ -4493,8 +4485,8 @@ msgid "_Height:"
 msgstr "_Hauteur :"
 
 #: ../src/dialogs/export.cpp:512
-#: ../src/ui/dialog/inkscape-preferences.cpp:837
-#: ../src/ui/dialog/inkscape-preferences.cpp:1262
+#: ../src/ui/dialog/inkscape-preferences.cpp:841
+#: ../src/ui/dialog/inkscape-preferences.cpp:1266
 msgid "dpi"
 msgstr "ppp"
 
@@ -4959,7 +4951,7 @@ msgstr "Cible :"
 #: ../src/extension/internal/filter/color.h:1415
 #: ../src/extension/internal/filter/color.h:1503
 #: ../src/extension/internal/filter/distort.h:69
-#: ../src/extension/internal/filter/morphology.h:54
+#: ../src/extension/internal/filter/morphology.h:60
 #: ../src/rdf.cpp:240
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2272
@@ -5008,7 +5000,7 @@ msgstr "URL :"
 #: ../src/extension/internal/filter/color.h:1204
 #: ../src/extension/internal/filter/color.h:1207
 #: ../src/ui/dialog/tile.cpp:619
-#: ../src/widgets/desktop-widget.cpp:515
+#: ../src/widgets/desktop-widget.cpp:514
 #: ../src/widgets/toolbox.cpp:1565
 msgid "X:"
 msgstr "X :"
@@ -5019,7 +5011,7 @@ msgstr "X :"
 #: ../src/extension/internal/filter/color.h:1205
 #: ../src/extension/internal/filter/color.h:1208
 #: ../src/ui/dialog/tile.cpp:620
-#: ../src/widgets/desktop-widget.cpp:518
+#: ../src/widgets/desktop-widget.cpp:517
 #: ../src/widgets/toolbox.cpp:1583
 msgid "Y:"
 msgstr "Y :"
@@ -5030,6 +5022,7 @@ msgstr "Y :"
 #: ../src/extension/internal/bitmap/raise.cpp:41
 #: ../src/extension/internal/bitmap/sample.cpp:40
 #: ../src/extension/internal/bluredge.cpp:136
+#: ../src/extension/internal/filter/morphology.h:65
 #: ../src/widgets/toolbox.cpp:4378
 #: ../src/widgets/toolbox.cpp:4692
 #: ../src/widgets/toolbox.cpp:5187
@@ -5331,8 +5324,8 @@ msgstr "_Origine X :"
 
 #: ../src/display/canvas-axonomgrid.cpp:359
 #: ../src/display/canvas-grid.cpp:676
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
-#: ../src/ui/dialog/inkscape-preferences.cpp:1068
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1072
 msgid "X coordinate of grid origin"
 msgstr "Coordonnée X de l’origine de la grille"
 
@@ -5343,8 +5336,8 @@ msgstr "O_rigine Y :"
 
 #: ../src/display/canvas-axonomgrid.cpp:361
 #: ../src/display/canvas-grid.cpp:678
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
-#: ../src/ui/dialog/inkscape-preferences.cpp:1069
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
+#: ../src/ui/dialog/inkscape-preferences.cpp:1073
 msgid "Y coordinate of grid origin"
 msgstr "Coordonnée Y de l’origine de la grille"
 
@@ -5354,29 +5347,29 @@ msgid "Spacing _Y:"
 msgstr "Espacement _Y :"
 
 #: ../src/display/canvas-axonomgrid.cpp:363
-#: ../src/ui/dialog/inkscape-preferences.cpp:1071
+#: ../src/ui/dialog/inkscape-preferences.cpp:1075
 msgid "Base length of z-axis"
 msgstr "Longueur de base de l’axe z"
 
 #: ../src/display/canvas-axonomgrid.cpp:365
-#: ../src/ui/dialog/inkscape-preferences.cpp:1074
+#: ../src/ui/dialog/inkscape-preferences.cpp:1078
 #: ../src/widgets/toolbox.cpp:3691
 msgid "Angle X:"
 msgstr "Angle X :"
 
 #: ../src/display/canvas-axonomgrid.cpp:365
-#: ../src/ui/dialog/inkscape-preferences.cpp:1074
+#: ../src/ui/dialog/inkscape-preferences.cpp:1078
 msgid "Angle of x-axis"
 msgstr "Angle de l’axe x"
 
 #: ../src/display/canvas-axonomgrid.cpp:367
-#: ../src/ui/dialog/inkscape-preferences.cpp:1075
+#: ../src/ui/dialog/inkscape-preferences.cpp:1079
 #: ../src/widgets/toolbox.cpp:3770
 msgid "Angle Z:"
 msgstr "Angle Z :"
 
 #: ../src/display/canvas-axonomgrid.cpp:367
-#: ../src/ui/dialog/inkscape-preferences.cpp:1075
+#: ../src/ui/dialog/inkscape-preferences.cpp:1079
 msgid "Angle of z-axis"
 msgstr "Angle de l’axe z"
 
@@ -5461,12 +5454,12 @@ msgid "Spacing _X:"
 msgstr "Espacement _X :"
 
 #: ../src/display/canvas-grid.cpp:680
-#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "Distance between vertical grid lines"
 msgstr "Distance entre les lignes verticales de la grille"
 
 #: ../src/display/canvas-grid.cpp:682
-#: ../src/ui/dialog/inkscape-preferences.cpp:1052
+#: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Distance between horizontal grid lines"
 msgstr "Distance entre les lignes horizontales de la grille"
 
@@ -6451,143 +6444,143 @@ msgstr "Nombre de copies contractées/dilatées de l’objet à créer"
 msgid "Generate from Path"
 msgstr "Générer à partir du chemin"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:317
+#: ../src/extension/internal/cairo-ps-out.cpp:313
 #: ../share/extensions/ps_input.inx.h:1
 msgid "PostScript"
 msgstr "PostScript"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:319
-#: ../src/extension/internal/cairo-ps-out.cpp:357
+#: ../src/extension/internal/cairo-ps-out.cpp:315
+#: ../src/extension/internal/cairo-ps-out.cpp:353
 msgid "Restrict to PS level:"
 msgstr "Restreindre à la version de PostScript :"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:320
-#: ../src/extension/internal/cairo-ps-out.cpp:358
+#: ../src/extension/internal/cairo-ps-out.cpp:316
+#: ../src/extension/internal/cairo-ps-out.cpp:354
 msgid "PostScript level 3"
 msgstr "PostScript niveau 3"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:322
-#: ../src/extension/internal/cairo-ps-out.cpp:360
+#: ../src/extension/internal/cairo-ps-out.cpp:318
+#: ../src/extension/internal/cairo-ps-out.cpp:356
 msgid "PostScript level 2"
 msgstr "PostScript niveau 2"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:325
-#: ../src/extension/internal/cairo-ps-out.cpp:363
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
-#: ../src/extension/internal/emf-win32-inout.cpp:2493
+#: ../src/extension/internal/cairo-ps-out.cpp:321
+#: ../src/extension/internal/cairo-ps-out.cpp:359
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:247
+#: ../src/extension/internal/emf-win32-inout.cpp:2492
 msgid "Convert texts to paths"
 msgstr "Convertir les textes en chemins"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:326
+#: ../src/extension/internal/cairo-ps-out.cpp:322
 msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
 msgstr "PS+LaTeX : exclure le texte du fichier PS, et créer un fichier LaTeX"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:327
-#: ../src/extension/internal/cairo-ps-out.cpp:365
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:252
+#: ../src/extension/internal/cairo-ps-out.cpp:323
+#: ../src/extension/internal/cairo-ps-out.cpp:361
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:249
 msgid "Rasterize filter effects"
 msgstr "Rastériser les effets de filtre"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:328
-#: ../src/extension/internal/cairo-ps-out.cpp:366
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:253
+#: ../src/extension/internal/cairo-ps-out.cpp:324
+#: ../src/extension/internal/cairo-ps-out.cpp:362
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
 msgid "Resolution for rasterization (dpi):"
 msgstr "Résolution pour la rastérisation (ppp) :"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:329
-#: ../src/extension/internal/cairo-ps-out.cpp:367
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:254
+#: ../src/extension/internal/cairo-ps-out.cpp:325
+#: ../src/extension/internal/cairo-ps-out.cpp:363
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:251
 msgid "Export area is drawing"
 msgstr "Exporter le dessin"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:330
-#: ../src/extension/internal/cairo-ps-out.cpp:368
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:255
+#: ../src/extension/internal/cairo-ps-out.cpp:326
+#: ../src/extension/internal/cairo-ps-out.cpp:364
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:252
 msgid "Export area is page"
 msgstr "Exporter la page"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:331
-#: ../src/extension/internal/cairo-ps-out.cpp:369
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:256
+#: ../src/extension/internal/cairo-ps-out.cpp:327
+#: ../src/extension/internal/cairo-ps-out.cpp:365
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:253
 msgid "Limit export to the object with ID:"
 msgstr "Limiter l’exportation à l’objet ayant l’Id :"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:335
+#: ../src/extension/internal/cairo-ps-out.cpp:331
 #: ../share/extensions/ps_input.inx.h:2
 msgid "PostScript (*.ps)"
 msgstr "PostScript (*.ps)"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:336
+#: ../src/extension/internal/cairo-ps-out.cpp:332
 msgid "PostScript File"
 msgstr "Fichier PostScript"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:355
+#: ../src/extension/internal/cairo-ps-out.cpp:351
 #: ../share/extensions/eps_input.inx.h:2
 msgid "Encapsulated PostScript"
 msgstr "PostScript encapsulé"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:364
+#: ../src/extension/internal/cairo-ps-out.cpp:360
 msgid "EPS+LaTeX: Omit text in EPS, and create LaTeX file"
 msgstr "EPS+LaTeX : exclure le texte du fichier EPS, et créer un fichier LaTeX"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:373
+#: ../src/extension/internal/cairo-ps-out.cpp:369
 #: ../share/extensions/eps_input.inx.h:3
 msgid "Encapsulated PostScript (*.eps)"
 msgstr "PostScript encapsulé (*.eps)"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:374
+#: ../src/extension/internal/cairo-ps-out.cpp:370
 msgid "Encapsulated PostScript File"
 msgstr "Fichier PostScript Encapsulé"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:244
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:241
 msgid "Restrict to PDF version:"
 msgstr "Restreindre à la version de PDF :"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:246
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:243
 msgid "PDF 1.5"
 msgstr "PDF 1.5"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:245
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:251
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
 msgstr "PDF+LaTeX : exclure le texte du fichier PDF, et créer un fichier LaTeX"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2463
+#: ../src/extension/internal/emf-win32-inout.cpp:2462
 msgid "EMF Input"
 msgstr "Entrée EMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2468
+#: ../src/extension/internal/emf-win32-inout.cpp:2467
 msgid "Enhanced Metafiles (*.emf)"
 msgstr "Métafichier amélioré (*.emf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2469
+#: ../src/extension/internal/emf-win32-inout.cpp:2468
 msgid "Enhanced Metafiles"
 msgstr "Métafichier amélioré"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2477
+#: ../src/extension/internal/emf-win32-inout.cpp:2476
 msgid "WMF Input"
 msgstr "Entrée WMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2482
+#: ../src/extension/internal/emf-win32-inout.cpp:2481
 msgid "Windows Metafiles (*.wmf)"
 msgstr "Métafichier Windows (*.wmf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2483
+#: ../src/extension/internal/emf-win32-inout.cpp:2482
 msgid "Windows Metafiles"
 msgstr "Métafichier Windows"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2491
+#: ../src/extension/internal/emf-win32-inout.cpp:2490
 msgid "EMF Output"
 msgstr "Sortie EMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2497
+#: ../src/extension/internal/emf-win32-inout.cpp:2496
 msgid "Enhanced Metafile (*.emf)"
 msgstr "Métafichier amélioré (*.emf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2498
+#: ../src/extension/internal/emf-win32-inout.cpp:2497
 msgid "Enhanced Metafile"
 msgstr "Métafichier amélioré"
 
@@ -6652,8 +6645,8 @@ msgstr "Couleur d'éclairage :"
 #: ../src/extension/internal/filter/filter-file.cpp:150
 #: ../src/extension/internal/filter/filter.cpp:216
 #: ../src/extension/internal/filter/image.h:61
-#: ../src/extension/internal/filter/morphology.h:62
-#: ../src/extension/internal/filter/morphology.h:175
+#: ../src/extension/internal/filter/morphology.h:75
+#: ../src/extension/internal/filter/morphology.h:202
 #: ../src/extension/internal/filter/overlays.h:79
 #: ../src/extension/internal/filter/paint.h:112
 #: ../src/extension/internal/filter/paint.h:244
@@ -6671,7 +6664,6 @@ msgstr "Couleur d'éclairage :"
 #: ../src/extension/internal/filter/transparency.h:214
 #: ../src/extension/internal/filter/transparency.h:287
 #: ../src/extension/internal/filter/transparency.h:349
-#: ../src/ui/dialog/inkscape-preferences.cpp:802
 msgid "Filters"
 msgstr "Filtres"
 
@@ -6831,6 +6823,7 @@ msgstr "Hors focale"
 
 #: ../src/extension/internal/filter/blurs.h:331
 #: ../src/extension/internal/filter/distort.h:75
+#: ../src/extension/internal/filter/morphology.h:67
 #: ../src/extension/internal/filter/overlays.h:68
 #: ../src/extension/internal/filter/paint.h:236
 #: ../src/extension/internal/filter/paint.h:343
@@ -6840,6 +6833,7 @@ msgstr "Dilatation :"
 
 #: ../src/extension/internal/filter/blurs.h:332
 #: ../src/extension/internal/filter/distort.h:76
+#: ../src/extension/internal/filter/morphology.h:68
 #: ../src/extension/internal/filter/overlays.h:69
 #: ../src/extension/internal/filter/paint.h:98
 #: ../src/extension/internal/filter/paint.h:237
@@ -7092,7 +7086,7 @@ msgid "Transparency type:"
 msgstr "Type de transparence :"
 
 #: ../src/extension/internal/filter/bumps.h:356
-#: ../src/extension/internal/filter/morphology.h:149
+#: ../src/extension/internal/filter/morphology.h:176
 #: ../src/filter-enums.cpp:74
 msgid "Atop"
 msgstr "Atop"
@@ -7100,7 +7094,7 @@ msgstr "Atop"
 #: ../src/extension/internal/filter/bumps.h:357
 #: ../src/extension/internal/filter/color.h:1224
 #: ../src/extension/internal/filter/distort.h:70
-#: ../src/extension/internal/filter/morphology.h:147
+#: ../src/extension/internal/filter/morphology.h:174
 #: ../src/filter-enums.cpp:72
 msgid "In"
 msgstr "In"
@@ -7266,7 +7260,7 @@ msgstr "Extraire un canal"
 
 #: ../src/extension/internal/filter/color.h:637
 #: ../src/filter-enums.cpp:100
-#: ../src/flood-context.cpp:241
+#: ../src/flood-context.cpp:240
 #: ../src/widgets/sp-color-icc-selector.cpp:228
 #: ../src/widgets/sp-color-scales.cpp:403
 #: ../src/widgets/sp-color-scales.cpp:404
@@ -7275,7 +7269,7 @@ msgstr "Rouge"
 
 #: ../src/extension/internal/filter/color.h:638
 #: ../src/filter-enums.cpp:101
-#: ../src/flood-context.cpp:242
+#: ../src/flood-context.cpp:241
 #: ../src/widgets/sp-color-icc-selector.cpp:228
 #: ../src/widgets/sp-color-scales.cpp:406
 #: ../src/widgets/sp-color-scales.cpp:407
@@ -7284,7 +7278,7 @@ msgstr "Vert"
 
 #: ../src/extension/internal/filter/color.h:639
 #: ../src/filter-enums.cpp:102
-#: ../src/flood-context.cpp:243
+#: ../src/flood-context.cpp:242
 #: ../src/widgets/sp-color-icc-selector.cpp:228
 #: ../src/widgets/sp-color-scales.cpp:409
 #: ../src/widgets/sp-color-scales.cpp:410
@@ -7309,6 +7303,7 @@ msgstr "Décolorer en noir ou blanc"
 
 #: ../src/extension/internal/filter/color.h:742
 #: ../src/extension/internal/filter/image.h:56
+#: ../src/extension/internal/filter/morphology.h:66
 #: ../src/extension/internal/filter/paint.h:346
 msgid "Level:"
 msgstr "Niveau :"
@@ -7452,7 +7447,7 @@ msgid "Composite:"
 msgstr "Composite :"
 
 #: ../src/extension/internal/filter/color.h:1223
-#: ../src/extension/internal/filter/morphology.h:146
+#: ../src/extension/internal/filter/morphology.h:173
 #: ../src/filter-enums.cpp:71
 msgid "Over"
 msgstr "Over"
@@ -7540,7 +7535,7 @@ msgid "Felt Feather"
 msgstr "Estompage du pourtour"
 
 #: ../src/extension/internal/filter/distort.h:71
-#: ../src/extension/internal/filter/morphology.h:148
+#: ../src/extension/internal/filter/morphology.h:175
 #: ../src/filter-enums.cpp:73
 msgid "Out"
 msgstr "Out"
@@ -7665,107 +7660,102 @@ msgstr "Lignes horizontales"
 msgid "Invert colors"
 msgstr "Inverse les couleurs"
 
-#: ../src/extension/internal/filter/image.h:62
-msgid "Image Effects"
-msgstr "Effets d’image"
-
 #: ../src/extension/internal/filter/image.h:65
 msgid "Detect color edges in object"
 msgstr "Détecte les bords de couleur dans les objets"
 
-#: ../src/extension/internal/filter/morphology.h:52
+#: ../src/extension/internal/filter/morphology.h:58
 msgid "Cross-smooth"
 msgstr "Adoucissement"
 
-#: ../src/extension/internal/filter/morphology.h:58
-#: ../src/extension/internal/filter/paint.h:720
-#: ../src/extension/internal/filter/transparency.h:343
-msgid "Blur:"
-msgstr "Flou :"
+#: ../src/extension/internal/filter/morphology.h:69
+#: ../src/extension/internal/filter/morphology.h:190
+msgid "Antialiasing:"
+msgstr "Antialiasing :"
 
-#: ../src/extension/internal/filter/morphology.h:66
+#: ../src/extension/internal/filter/morphology.h:70
+msgid "Blur content"
+msgstr "Flou interne"
+
+#: ../src/extension/internal/filter/morphology.h:79
 msgid "Smooth edges and angles of shapes"
 msgstr "Adouci les bords et les angles des formes"
 
-#: ../src/extension/internal/filter/morphology.h:139
+#: ../src/extension/internal/filter/morphology.h:166
 msgid "Outline"
 msgstr "Contour"
 
-#: ../src/extension/internal/filter/morphology.h:143
+#: ../src/extension/internal/filter/morphology.h:170
 msgid "Fill image"
 msgstr "Remplir l'image"
 
-#: ../src/extension/internal/filter/morphology.h:144
+#: ../src/extension/internal/filter/morphology.h:171
 msgid "Hide image"
 msgstr "Cacher l'image"
 
-#: ../src/extension/internal/filter/morphology.h:145
+#: ../src/extension/internal/filter/morphology.h:172
 msgid "Composite type:"
 msgstr "Type de composite :"
 
-#: ../src/extension/internal/filter/morphology.h:150
+#: ../src/extension/internal/filter/morphology.h:177
 #: ../src/filter-enums.cpp:75
 msgid "XOR"
 msgstr "XOR"
 
-#: ../src/extension/internal/filter/morphology.h:152
+#: ../src/extension/internal/filter/morphology.h:179
 #: ../src/ui/dialog/layer-properties.cpp:159
 msgid "Position:"
 msgstr "Position :"
 
-#: ../src/extension/internal/filter/morphology.h:153
+#: ../src/extension/internal/filter/morphology.h:180
 msgid "Inside"
 msgstr "Interne"
 
-#: ../src/extension/internal/filter/morphology.h:154
+#: ../src/extension/internal/filter/morphology.h:181
 msgid "Outside"
 msgstr "Externe"
 
-#: ../src/extension/internal/filter/morphology.h:155
+#: ../src/extension/internal/filter/morphology.h:182
 msgid "Overlayed"
 msgstr "Superposé"
 
-#: ../src/extension/internal/filter/morphology.h:157
+#: ../src/extension/internal/filter/morphology.h:184
 msgid "Width 1:"
 msgstr "Épaisseur 1 :"
 
-#: ../src/extension/internal/filter/morphology.h:158
+#: ../src/extension/internal/filter/morphology.h:185
 msgid "Dilatation 1:"
 msgstr "Dilatation 1 :"
 
-#: ../src/extension/internal/filter/morphology.h:159
+#: ../src/extension/internal/filter/morphology.h:186
 msgid "Erosion 1:"
 msgstr "Érosion 1 :"
 
-#: ../src/extension/internal/filter/morphology.h:160
+#: ../src/extension/internal/filter/morphology.h:187
 msgid "Width 2:"
 msgstr "Épaisseur 2 :"
 
-#: ../src/extension/internal/filter/morphology.h:161
+#: ../src/extension/internal/filter/morphology.h:188
 msgid "Dilatation 2:"
 msgstr "Dilatation 2 :"
 
-#: ../src/extension/internal/filter/morphology.h:162
+#: ../src/extension/internal/filter/morphology.h:189
 msgid "Erosion 2:"
 msgstr "Érosion 2 :"
 
-#: ../src/extension/internal/filter/morphology.h:163
-msgid "Antialiasing:"
-msgstr "Antialiasing :"
-
-#: ../src/extension/internal/filter/morphology.h:164
+#: ../src/extension/internal/filter/morphology.h:191
 msgid "Smooth"
 msgstr "Adoucir"
 
-#: ../src/extension/internal/filter/morphology.h:168
+#: ../src/extension/internal/filter/morphology.h:195
 msgid "Fill opacity:"
 msgstr "Opacité du remplissage :"
 
-#: ../src/extension/internal/filter/morphology.h:169
+#: ../src/extension/internal/filter/morphology.h:196
 msgid "Stroke opacity:"
 msgstr "Opacité du contour :"
 
-#: ../src/extension/internal/filter/morphology.h:179
+#: ../src/extension/internal/filter/morphology.h:206
 msgid "Adds a colorizable outline"
 msgstr "Ajoute un contour qui peut être coloré"
 
@@ -7837,7 +7827,7 @@ msgstr "Converti l'image en une gravure composée de lignes verticales et horizo
 
 #: ../src/extension/internal/filter/paint.h:332
 #: ../src/ui/dialog/align-and-distribute.cpp:1035
-#: ../src/widgets/desktop-widget.cpp:1724
+#: ../src/widgets/desktop-widget.cpp:1723
 msgid "Drawing"
 msgstr "Dessin"
 
@@ -7942,6 +7932,11 @@ msgstr "Fondu du bruit :"
 #: ../src/extension/internal/filter/paint.h:718
 msgid "Grain lightness:"
 msgstr "Luminosité du grain :"
+
+#: ../src/extension/internal/filter/paint.h:720
+#: ../src/extension/internal/filter/transparency.h:343
+msgid "Blur:"
+msgstr "Flou :"
 
 #: ../src/extension/internal/filter/paint.h:728
 msgid "Image on points"
@@ -8062,12 +8057,12 @@ msgid "Inner"
 msgstr "Intérieur"
 
 #: ../src/extension/internal/filter/shadows.h:66
-msgid "Inner cutout"
-msgstr "Découpage intérieur"
-
-#: ../src/extension/internal/filter/shadows.h:67
 msgid "Outer cutout"
 msgstr "Découpage extérieur"
+
+#: ../src/extension/internal/filter/shadows.h:67
+msgid "Inner cutout"
+msgstr "Découpage intérieur"
 
 #: ../src/extension/internal/filter/shadows.h:70
 msgid "Blur color"
@@ -8270,7 +8265,7 @@ msgstr "Rendu"
 
 #: ../src/extension/internal/grid.cpp:211
 #: ../src/ui/dialog/document-properties.cpp:116
-#: ../src/ui/dialog/inkscape-preferences.cpp:1083
+#: ../src/ui/dialog/inkscape-preferences.cpp:1087
 #: ../src/widgets/toolbox.cpp:2426
 msgid "Grids"
 msgstr "Grilles"
@@ -8291,15 +8286,15 @@ msgstr "JavaFX (*.fx)"
 msgid "JavaFX Raytracer File"
 msgstr "Fichier JavaFX Raytracer"
 
-#: ../src/extension/internal/latex-pstricks-out.cpp:101
+#: ../src/extension/internal/latex-pstricks-out.cpp:99
 msgid "LaTeX Output"
 msgstr "Sortie Latex"
 
-#: ../src/extension/internal/latex-pstricks-out.cpp:106
+#: ../src/extension/internal/latex-pstricks-out.cpp:104
 msgid "LaTeX With PSTricks macros (*.tex)"
 msgstr "LaTeX avec des macros PSTricks (*.tex)"
 
-#: ../src/extension/internal/latex-pstricks-out.cpp:107
+#: ../src/extension/internal/latex-pstricks-out.cpp:105
 msgid "LaTeX PSTricks File"
 msgstr "Fichier LaTeX PSTricks"
 
@@ -8787,13 +8782,13 @@ msgstr "Retour à la ligne"
 #: ../src/ui/dialog/inkscape-preferences.cpp:268
 #: ../src/ui/dialog/inkscape-preferences.cpp:434
 #: ../src/ui/dialog/inkscape-preferences.cpp:596
-#: ../src/ui/dialog/inkscape-preferences.cpp:1249
-#: ../src/ui/dialog/inkscape-preferences.cpp:1298
+#: ../src/ui/dialog/inkscape-preferences.cpp:1253
+#: ../src/ui/dialog/inkscape-preferences.cpp:1302
 #: ../src/ui/dialog/input.cpp:607
 #: ../src/ui/dialog/input.cpp:608
 #: ../src/ui/dialog/input.cpp:1269
 #: ../src/verbs.cpp:2241
-#: ../src/widgets/stroke-style.cpp:370
+#: ../src/widgets/stroke-style.cpp:369
 #: ../src/widgets/toolbox.cpp:4154
 #: ../share/extensions/gcodetools_area.inx.h:32
 #: ../share/extensions/gcodetools_dxf_points.inx.h:15
@@ -8808,7 +8803,7 @@ msgid "None"
 msgstr "Aucun"
 
 #: ../src/filter-enums.cpp:103
-#: ../src/flood-context.cpp:247
+#: ../src/flood-context.cpp:246
 msgid "Alpha"
 msgstr "Opacité"
 
@@ -8836,11 +8831,11 @@ msgstr "Lumière ponctuelle (rayons omnidirectionnels)"
 msgid "Spot Light"
 msgstr "Lumière spot (cône de lumière)"
 
-#: ../src/flood-context.cpp:240
+#: ../src/flood-context.cpp:239
 msgid "Visible Colors"
 msgstr "Couleurs visibles"
 
-#: ../src/flood-context.cpp:244
+#: ../src/flood-context.cpp:243
 #: ../src/widgets/sp-color-icc-selector.cpp:230
 #: ../src/widgets/sp-color-icc-selector.cpp:231
 #: ../src/widgets/sp-color-scales.cpp:429
@@ -8850,8 +8845,8 @@ msgstr "Couleurs visibles"
 msgid "Hue"
 msgstr "Teinte"
 
-#: ../src/flood-context.cpp:245
-#: ../src/ui/dialog/inkscape-preferences.cpp:899
+#: ../src/flood-context.cpp:244
+#: ../src/ui/dialog/inkscape-preferences.cpp:903
 #: ../src/widgets/sp-color-icc-selector.cpp:230
 #: ../src/widgets/sp-color-icc-selector.cpp:231
 #: ../src/widgets/sp-color-scales.cpp:432
@@ -8861,7 +8856,7 @@ msgstr "Teinte"
 msgid "Saturation"
 msgstr "Saturation"
 
-#: ../src/flood-context.cpp:246
+#: ../src/flood-context.cpp:245
 #: ../src/widgets/sp-color-icc-selector.cpp:231
 #: ../src/widgets/sp-color-scales.cpp:435
 #: ../src/widgets/sp-color-scales.cpp:436
@@ -8870,63 +8865,63 @@ msgstr "Saturation"
 msgid "Lightness"
 msgstr "Luminosité"
 
-#: ../src/flood-context.cpp:258
+#: ../src/flood-context.cpp:257
 msgctxt "Flood autogap"
 msgid "None"
 msgstr "Aucun"
 
-#: ../src/flood-context.cpp:259
+#: ../src/flood-context.cpp:258
 msgctxt "Flood autogap"
 msgid "Small"
 msgstr "Petit"
 
-#: ../src/flood-context.cpp:260
+#: ../src/flood-context.cpp:259
 msgctxt "Flood autogap"
 msgid "Medium"
 msgstr "Moyen"
 
-#: ../src/flood-context.cpp:261
+#: ../src/flood-context.cpp:260
 msgctxt "Flood autogap"
 msgid "Large"
 msgstr "Grand"
 
-#: ../src/flood-context.cpp:474
+#: ../src/flood-context.cpp:473
 msgid "<b>Too much inset</b>, the result is empty."
 msgstr "<b>Trop de contraction</b>, le résultat est vide."
 
-#: ../src/flood-context.cpp:514
+#: ../src/flood-context.cpp:513
 #, c-format
 msgid "Area filled, path with <b>%d</b> node created and unioned with selection."
 msgid_plural "Area filled, path with <b>%d</b> nodes created and unioned with selection."
 msgstr[0] "Zone remplie, création d’un chemin de <b>%d</b> nœud, ajouté à la sélection."
 msgstr[1] "Zone remplie, création d’un chemin de <b>%d</b> nœuds, ajouté à la sélection."
 
-#: ../src/flood-context.cpp:518
+#: ../src/flood-context.cpp:517
 #, c-format
 msgid "Area filled, path with <b>%d</b> node created."
 msgid_plural "Area filled, path with <b>%d</b> nodes created."
 msgstr[0] "Zone remplie, création d’un chemin avec <b>%d</b> nœud."
 msgstr[1] "Zone remplie, création d’un chemin avec <b>%d</b> nœuds."
 
-#: ../src/flood-context.cpp:789
-#: ../src/flood-context.cpp:1093
+#: ../src/flood-context.cpp:784
+#: ../src/flood-context.cpp:1083
 msgid "<b>Area is not bounded</b>, cannot fill."
 msgstr "<b>Zone non bornée</b>, impossible de remplir."
 
-#: ../src/flood-context.cpp:1098
+#: ../src/flood-context.cpp:1088
 msgid "<b>Only the visible part of the bounded area was filled.</b> If you want to fill all of the area, undo, zoom out, and fill again."
 msgstr "<b>Seule la partie visible de la zone a été remplie.</b> Pour remplir toute la zone, annulez, dézoomez et remplissez à nouveau."
 
-#: ../src/flood-context.cpp:1116
-#: ../src/flood-context.cpp:1275
+#: ../src/flood-context.cpp:1106
+#: ../src/flood-context.cpp:1265
 msgid "Fill bounded area"
 msgstr "Remplissage d’une zone bornée"
 
-#: ../src/flood-context.cpp:1135
+#: ../src/flood-context.cpp:1125
 msgid "Set style on object"
 msgstr "Appliquer un style à l’objet"
 
-#: ../src/flood-context.cpp:1194
+#: ../src/flood-context.cpp:1184
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
 msgstr "<b>Dessiner au-dessus</b> d’une zone pour la remplir, avec <b>Alt</b> pour remplir au toucher"
 
@@ -9661,7 +9656,7 @@ msgstr "Le nouveau contrôleur d’attache %p est automatique. Seuls les ojbets 
 #: ../src/ui/dialog/align-and-distribute.cpp:1034
 #: ../src/ui/dialog/document-properties.cpp:114
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1434
-#: ../src/widgets/desktop-widget.cpp:1720
+#: ../src/widgets/desktop-widget.cpp:1719
 #: ../share/extensions/voronoi2svg.inx.h:8
 msgid "Page"
 msgstr "Page"
@@ -10539,11 +10534,13 @@ msgstr "La position relative à un point de référence définit globalement la 
 
 #: ../src/live_effects/lpe-ruler.cpp:27
 #: ../share/extensions/restack.inx.h:7
+#: ../share/extensions/text_extract.inx.h:5
 msgid "Left"
 msgstr "Gauche"
 
 #: ../src/live_effects/lpe-ruler.cpp:28
 #: ../share/extensions/restack.inx.h:14
+#: ../share/extensions/text_extract.inx.h:8
 msgid "Right"
 msgstr "Droite"
 
@@ -11607,7 +11604,7 @@ msgid "Unique URI to a related document"
 msgstr "URI unique vers un document apparenté"
 
 #: ../src/rdf.cpp:263
-#: ../src/ui/dialog/inkscape-preferences.cpp:1317
+#: ../src/ui/dialog/inkscape-preferences.cpp:1321
 msgid "Language:"
 msgstr "Langue principale :"
 
@@ -12163,6 +12160,7 @@ msgstr "Boîte 3D"
 #: ../share/extensions/replace_font.inx.h:10
 #: ../share/extensions/split.inx.h:6
 #: ../share/extensions/text_braille.inx.h:2
+#: ../share/extensions/text_extract.inx.h:10
 #: ../share/extensions/text_flipcase.inx.h:2
 #: ../share/extensions/text_lowercase.inx.h:2
 #: ../share/extensions/text_randomcase.inx.h:2
@@ -12444,47 +12442,47 @@ msgstr "horizontal, à %s"
 msgid "at %d degrees, through (%s,%s)"
 msgstr "à %d degrés, passe par (%s,%s)"
 
-#: ../src/sp-image.cpp:1134
+#: ../src/sp-image.cpp:1135
 msgid "embedded"
 msgstr "embarquée"
 
-#: ../src/sp-image.cpp:1142
+#: ../src/sp-image.cpp:1143
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr "<b>Image avec une mauvaise référence</b> : %s"
 
-#: ../src/sp-image.cpp:1143
+#: ../src/sp-image.cpp:1144
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Image</b> %d &#215; %d : %s"
 
-#: ../src/sp-item-group.cpp:740
+#: ../src/sp-item-group.cpp:742
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] "<b>Groupe</b> de <b>%d</b> objet"
 msgstr[1] "<b>Groupe</b> de <b>%d</b> objets"
 
-#: ../src/sp-item.cpp:973
+#: ../src/sp-item.cpp:951
 msgid "Object"
 msgstr "Objet"
 
-#: ../src/sp-item.cpp:986
+#: ../src/sp-item.cpp:964
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr "%s; <i>découpé</i>"
 
-#: ../src/sp-item.cpp:991
+#: ../src/sp-item.cpp:969
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr "%s; <i>masqué</i>"
 
-#: ../src/sp-item.cpp:999
+#: ../src/sp-item.cpp:977
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr "%s; <i>filtré (%s)</i>"
 
-#: ../src/sp-item.cpp:1001
+#: ../src/sp-item.cpp:979
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr "%s; <i>filtré</i>"
@@ -12567,30 +12565,30 @@ msgstr[0] "<b>Polygone</b> à %d sommet"
 msgstr[1] "<b>Polygone</b> à %d sommets"
 
 #. TRANSLATORS: For description of font with no name.
-#: ../src/sp-text.cpp:426
+#: ../src/sp-text.cpp:427
 msgid "&lt;no name found&gt;"
 msgstr "&lt;aucun nom trouvé&gt;"
 
-#: ../src/sp-text.cpp:438
+#: ../src/sp-text.cpp:439
 #, c-format
 msgid "<b>Text on path</b>%s (%s, %s)"
 msgstr "<b>Texte le long d’un chemin</b>%s (%s, %s)"
 
-#: ../src/sp-text.cpp:439
+#: ../src/sp-text.cpp:440
 #, c-format
 msgid "<b>Text</b>%s (%s, %s)"
 msgstr "<b>Texte</b>%s (%s, %s)"
 
-#: ../src/sp-tref.cpp:371
+#: ../src/sp-tref.cpp:370
 #, c-format
 msgid "<b>Cloned character data</b>%s%s"
 msgstr "<b>Données de caractères clonés</b>%s%s"
 
-#: ../src/sp-tref.cpp:372
+#: ../src/sp-tref.cpp:371
 msgid " from "
 msgstr " depuis "
 
-#: ../src/sp-tref.cpp:377
+#: ../src/sp-tref.cpp:376
 msgid "<b>Orphaned cloned character data</b>"
 msgstr "<b>Données de caractères clonés orphelines</b>"
 
@@ -13094,47 +13092,47 @@ msgstr "Sélectionner un outil secondaire dans la barre d’outils"
 msgid "Trace: %1.  %2 nodes"
 msgstr "Vectoriser : %1. %2 nœuds"
 
-#: ../src/trace/trace.cpp:72
-#: ../src/trace/trace.cpp:137
-#: ../src/trace/trace.cpp:145
-#: ../src/trace/trace.cpp:244
+#: ../src/trace/trace.cpp:61
+#: ../src/trace/trace.cpp:126
+#: ../src/trace/trace.cpp:134
+#: ../src/trace/trace.cpp:233
 msgid "Select an <b>image</b> to trace"
 msgstr "Sélectionner une <b>image</b> à vectoriser"
 
-#: ../src/trace/trace.cpp:107
+#: ../src/trace/trace.cpp:96
 msgid "Select only one <b>image</b> to trace"
 msgstr "Sélectionner une seule <b>image</b> à vectoriser"
 
-#: ../src/trace/trace.cpp:125
+#: ../src/trace/trace.cpp:114
 msgid "Select one image and one or more shapes above it"
 msgstr "Sélectionner une image et une ou plusieurs formes au dessus d’elle"
 
-#: ../src/trace/trace.cpp:235
+#: ../src/trace/trace.cpp:224
 msgid "Trace: No active desktop"
 msgstr "Vectoriser : pas de bureau actif"
 
-#: ../src/trace/trace.cpp:335
+#: ../src/trace/trace.cpp:321
 msgid "Invalid SIOX result"
 msgstr "Résultat de SIOX invalide"
 
-#: ../src/trace/trace.cpp:440
+#: ../src/trace/trace.cpp:415
 msgid "Trace: No active document"
 msgstr "Vectoriser : pas de document actif"
 
-#: ../src/trace/trace.cpp:463
+#: ../src/trace/trace.cpp:438
 msgid "Trace: Image has no bitmap data"
 msgstr "Vectoriser : l’image ne contient pas de données bitmap"
 
-#: ../src/trace/trace.cpp:470
+#: ../src/trace/trace.cpp:445
 msgid "Trace: Starting trace..."
 msgstr "Vectorisation : début de l’opération..."
 
 #. ## inform the document, so we can undo
-#: ../src/trace/trace.cpp:573
+#: ../src/trace/trace.cpp:548
 msgid "Trace bitmap"
 msgstr "Vectoriser un bitmap"
 
-#: ../src/trace/trace.cpp:577
+#: ../src/trace/trace.cpp:552
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Vectorisation effectuée. %ld nœuds créés."
@@ -13677,7 +13675,7 @@ msgstr "Objet le plus petit"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1036
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1438
-#: ../src/widgets/desktop-widget.cpp:1728
+#: ../src/widgets/desktop-widget.cpp:1727
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Sélection"
@@ -13699,7 +13697,7 @@ msgstr "Nom du profil :"
 #.
 #. -----------
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:52
-#: ../src/ui/dialog/inkscape-preferences.cpp:1243
+#: ../src/ui/dialog/inkscape-preferences.cpp:1247
 msgid "Save"
 msgstr "Enregistrement"
 
@@ -15608,25 +15606,25 @@ msgstr "Id de la ligne de guide : %s"
 msgid "Current: %s"
 msgstr "Courant : %s"
 
-#: ../src/ui/dialog/icon-preview.cpp:146
+#: ../src/ui/dialog/icon-preview.cpp:148
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/ui/dialog/icon-preview.cpp:158
+#: ../src/ui/dialog/icon-preview.cpp:160
 msgid "Magnified:"
 msgstr "Agrandi :"
 
-#: ../src/ui/dialog/icon-preview.cpp:227
+#: ../src/ui/dialog/icon-preview.cpp:229
 msgid "Actual Size:"
 msgstr "Taille réelle :"
 
-#: ../src/ui/dialog/icon-preview.cpp:232
+#: ../src/ui/dialog/icon-preview.cpp:234
 msgctxt "Icon preview window"
 msgid "Sele_ction"
 msgstr "Séle_ction"
 
-#: ../src/ui/dialog/icon-preview.cpp:234
+#: ../src/ui/dialog/icon-preview.cpp:236
 msgid "Selection only or whole document"
 msgstr "Seulement la sélection ou tout le document"
 
@@ -16147,7 +16145,7 @@ msgstr "Aérographe"
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:483
 #: ../src/verbs.cpp:2530
-#: ../src/widgets/desktop-widget.cpp:494
+#: ../src/widgets/desktop-widget.cpp:493
 msgid "Zoom"
 msgstr "Zoom"
 
@@ -16534,202 +16532,222 @@ msgstr "Toujours enregistrer les transformations dans l’attribut transform= de
 msgid "Transforms"
 msgstr "Transformations"
 
-#. blur quality
-#. filter quality
-#: ../src/ui/dialog/inkscape-preferences.cpp:745
-#: ../src/ui/dialog/inkscape-preferences.cpp:769
-msgid "Best quality (slowest)"
-msgstr "Haute qualité (le plus lent)"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:747
-#: ../src/ui/dialog/inkscape-preferences.cpp:771
-msgid "Better quality (slower)"
-msgstr "Bonne qualité (plus lent)"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:749
-#: ../src/ui/dialog/inkscape-preferences.cpp:773
-msgid "Average quality"
-msgstr "Qualité moyenne"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:751
-#: ../src/ui/dialog/inkscape-preferences.cpp:775
-msgid "Lower quality (faster)"
-msgstr "Basse qualité (plus rapide)"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:753
-#: ../src/ui/dialog/inkscape-preferences.cpp:777
-msgid "Lowest quality (fastest)"
-msgstr "Qualité médiocre (le plus rapide)"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:756
-msgid "Gaussian blur quality for display"
-msgstr "Qualité d’affichage du flou gaussien"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:758
-#: ../src/ui/dialog/inkscape-preferences.cpp:782
-msgid "Best quality, but display may be very slow at high zooms (bitmap export always uses best quality)"
-msgstr "La plus haute qualité, mais l’affichage peut être très lent pour des zooms importants (l’export en bitmap utilise toujours la plus haute qualité)"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:760
-#: ../src/ui/dialog/inkscape-preferences.cpp:784
-msgid "Better quality, but slower display"
-msgstr "Meilleure qualité, mais affichage plus lent"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:762
-#: ../src/ui/dialog/inkscape-preferences.cpp:786
-msgid "Average quality, acceptable display speed"
-msgstr "Qualité moyenne, vitesse d’affichage acceptable"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:764
-#: ../src/ui/dialog/inkscape-preferences.cpp:788
-msgid "Lower quality (some artifacts), but display is faster"
-msgstr "Qualité plus faible (présence d’artefacts), mais affichage plus rapide"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:766
-#: ../src/ui/dialog/inkscape-preferences.cpp:790
-msgid "Lowest quality (considerable artifacts), but display is fastest"
-msgstr "La plus mauvaise qualité (nombreux artefacts), mais l’affichage est bien plus rapide"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:780
-msgid "Filter effects quality for display"
-msgstr "Qualité d’affichage des effets de filtre"
-
 #. show infobox
-#: ../src/ui/dialog/inkscape-preferences.cpp:793
+#: ../src/ui/dialog/inkscape-preferences.cpp:745
 msgid "Show filter primitives infobox"
 msgstr "Affiche la boîte d’information des primitives de filtre"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:795
+#: ../src/ui/dialog/inkscape-preferences.cpp:747
 msgid "Show icons and descriptions for the filter primitives available at the filter effects dialog"
 msgstr "Afficher les icônes et les descriptions pour les primitives de filtre disponibles dans la boîte de dialogue des effets de filtre"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:799
+#: ../src/ui/dialog/inkscape-preferences.cpp:751
 msgid "Number of Threads:"
 msgstr "Nombre de threads :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:799
-#: ../src/ui/dialog/inkscape-preferences.cpp:1368
+#: ../src/ui/dialog/inkscape-preferences.cpp:751
+#: ../src/ui/dialog/inkscape-preferences.cpp:1372
 msgid "(requires restart)"
 msgstr "(nécessite un redémarrage)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:800
-msgid "Configure number of processors/threads to use with rendering of gaussian blur"
+#: ../src/ui/dialog/inkscape-preferences.cpp:752
+#, fuzzy
+msgid "Configure number of processors/threads to use when rendering filters"
 msgstr "Configure le nombre de processeurs/threads à utiliser pour le rendu du flou gaussien"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:808
+#: ../src/ui/dialog/inkscape-preferences.cpp:756
+msgid "Rendering cache size:"
+msgstr "Taille du cache de rendu :"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:756
+msgctxt "mebibyte (2^20 bytes) abbreviation"
+msgid "MiB"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:756
+msgid "Set the amount of memory per document which can be used to store rendered parts of the drawing for later reuse; set to zero to disable caching"
+msgstr ""
+
+#. blur quality
+#. filter quality
+#: ../src/ui/dialog/inkscape-preferences.cpp:759
+#: ../src/ui/dialog/inkscape-preferences.cpp:783
+msgid "Best quality (slowest)"
+msgstr "Haute qualité (le plus lent)"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:761
+#: ../src/ui/dialog/inkscape-preferences.cpp:785
+msgid "Better quality (slower)"
+msgstr "Bonne qualité (plus lent)"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:763
+#: ../src/ui/dialog/inkscape-preferences.cpp:787
+msgid "Average quality"
+msgstr "Qualité moyenne"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:765
+#: ../src/ui/dialog/inkscape-preferences.cpp:789
+msgid "Lower quality (faster)"
+msgstr "Basse qualité (plus rapide)"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:767
+#: ../src/ui/dialog/inkscape-preferences.cpp:791
+msgid "Lowest quality (fastest)"
+msgstr "Qualité médiocre (le plus rapide)"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:770
+msgid "Gaussian blur quality for display"
+msgstr "Qualité d’affichage du flou gaussien"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:772
+#: ../src/ui/dialog/inkscape-preferences.cpp:796
+msgid "Best quality, but display may be very slow at high zooms (bitmap export always uses best quality)"
+msgstr "La plus haute qualité, mais l’affichage peut être très lent pour des zooms importants (l’export en bitmap utilise toujours la plus haute qualité)"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:774
+#: ../src/ui/dialog/inkscape-preferences.cpp:798
+msgid "Better quality, but slower display"
+msgstr "Meilleure qualité, mais affichage plus lent"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:776
+#: ../src/ui/dialog/inkscape-preferences.cpp:800
+msgid "Average quality, acceptable display speed"
+msgstr "Qualité moyenne, vitesse d’affichage acceptable"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:778
+#: ../src/ui/dialog/inkscape-preferences.cpp:802
+msgid "Lower quality (some artifacts), but display is faster"
+msgstr "Qualité plus faible (présence d’artefacts), mais affichage plus rapide"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:780
+#: ../src/ui/dialog/inkscape-preferences.cpp:804
+msgid "Lowest quality (considerable artifacts), but display is fastest"
+msgstr "La plus mauvaise qualité (nombreux artefacts), mais l’affichage est bien plus rapide"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:794
+msgid "Filter effects quality for display"
+msgstr "Qualité d’affichage des effets de filtre"
+
+#. build custom preferences tab
+#: ../src/ui/dialog/inkscape-preferences.cpp:806
+#: ../src/ui/dialog/print.cpp:220
+msgid "Rendering"
+msgstr "Rendu"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:812
 msgid "Select in all layers"
 msgstr "Sélectionner dans tous les calques"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:809
+#: ../src/ui/dialog/inkscape-preferences.cpp:813
 msgid "Select only within current layer"
 msgstr "Sélectionner seulement dans le calque courant"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:810
+#: ../src/ui/dialog/inkscape-preferences.cpp:814
 msgid "Select in current layer and sublayers"
 msgstr "Sélectionner dans le calque courant et ses sous-calques"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:811
+#: ../src/ui/dialog/inkscape-preferences.cpp:815
 msgid "Ignore hidden objects and layers"
 msgstr "Ignorer les objets et calques cachés"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:812
+#: ../src/ui/dialog/inkscape-preferences.cpp:816
 msgid "Ignore locked objects and layers"
 msgstr "Ignorer les objets et calques verrouillés"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:813
+#: ../src/ui/dialog/inkscape-preferences.cpp:817
 msgid "Deselect upon layer change"
 msgstr "Désélectionner en changeant de calque"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:815
+#: ../src/ui/dialog/inkscape-preferences.cpp:819
 msgid "Ctrl+A, Tab, Shift+Tab"
 msgstr "Ctrl+A, Tab, Maj+Tab"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:817
+#: ../src/ui/dialog/inkscape-preferences.cpp:821
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr "Les commandes de sélection au clavier s’appliquent aux objets dans tous les calques"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:819
+#: ../src/ui/dialog/inkscape-preferences.cpp:823
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr "Les commandes de sélection au clavier s’appliquent seulement dans le calque courant"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:821
+#: ../src/ui/dialog/inkscape-preferences.cpp:825
 msgid "Make keyboard selection commands work on objects in current layer and all its sublayers"
 msgstr "Les commandes de sélection au clavier s’appliquent seulement dans le calque courant et dans ses sous-calques"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:823
+#: ../src/ui/dialog/inkscape-preferences.cpp:827
 msgid "Uncheck this to be able to select objects that are hidden (either by themselves or by being in a hidden layer)"
 msgstr "Si décoché, la sélection des objets cachés est possible (objets cachés isolés ou appartenant à calque caché)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:825
+#: ../src/ui/dialog/inkscape-preferences.cpp:829
 msgid "Uncheck this to be able to select objects that are locked (either by themselves or by being in a locked layer)"
 msgstr "Si décoché, la sélection des objets verrouillés est possible (objets verrouillés isolés ou appartenant à un calque verrouillé)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:828
+#: ../src/ui/dialog/inkscape-preferences.cpp:832
 msgid "Uncheck this to be able to keep the current objects selected when the current layer changes"
 msgstr "Si décoché, les objets sélectionnés restent sélectionnés lorsque vous passez du calque courant à un autre"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:830
+#: ../src/ui/dialog/inkscape-preferences.cpp:834
 msgid "Selecting"
 msgstr "Sélection"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:837
+#: ../src/ui/dialog/inkscape-preferences.cpp:841
 msgid "Default export resolution:"
 msgstr "Résolution par défaut d’exportation :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:838
+#: ../src/ui/dialog/inkscape-preferences.cpp:842
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr "Résolution par défaut (point par pouce) dans la boîte de dialogue exporter"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:840
+#: ../src/ui/dialog/inkscape-preferences.cpp:844
 msgid "Open Clip Art Library Server Name:"
 msgstr "Nom du serveur de bibliothèque Open Clip Art :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:841
+#: ../src/ui/dialog/inkscape-preferences.cpp:845
 msgid "The server name of the Open Clip Art Library webdav server; it's used by the Import and Export to OCAL function"
 msgstr "Le nom du serveur webdav de la bibliothèque Open Clip Art ; il est utilisé par la fonction d’import et export vers OCAL."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/ui/dialog/inkscape-preferences.cpp:847
 msgid "Open Clip Art Library Username:"
 msgstr "Nom d’utilisateur bibliothèque Open Clip Art :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/ui/dialog/inkscape-preferences.cpp:848
 msgid "The username used to log into Open Clip Art Library"
 msgstr "Le nom d’utilisateur pour se connecter à la bibliothèque Open Clip Art"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:846
+#: ../src/ui/dialog/inkscape-preferences.cpp:850
 msgid "Open Clip Art Library Password:"
 msgstr "Mot de passe de la bibliothèque Open Clip Art :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:847
+#: ../src/ui/dialog/inkscape-preferences.cpp:851
 msgid "The password used to log into Open Clip Art Library"
 msgstr "Le mot de passe pour se connecter à la bibliothèque Open Clip Art"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:849
+#: ../src/ui/dialog/inkscape-preferences.cpp:853
 msgid "Import/Export"
 msgstr "Importer/Exporter"
 
 #. TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm
-#: ../src/ui/dialog/inkscape-preferences.cpp:899
+#: ../src/ui/dialog/inkscape-preferences.cpp:903
 msgid "Perceptual"
 msgstr "Perceptif"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:899
+#: ../src/ui/dialog/inkscape-preferences.cpp:903
 msgid "Relative Colorimetric"
 msgstr "Colorimétrie relative"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:899
+#: ../src/ui/dialog/inkscape-preferences.cpp:903
 msgid "Absolute Colorimetric"
 msgstr "Colorimétrie absolue"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:903
+#: ../src/ui/dialog/inkscape-preferences.cpp:907
 msgid "(Note: Color management has been disabled in this build)"
 msgstr "(NB : les fonctionnalités colorimétriques sont désactivées dans cette version)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:907
+#: ../src/ui/dialog/inkscape-preferences.cpp:911
 msgid "Display adjustment"
 msgstr "Ajustement de l’affichage"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:917
+#: ../src/ui/dialog/inkscape-preferences.cpp:921
 #, c-format
 msgid ""
 "The ICC profile to use to calibrate display output.\n"
@@ -16738,813 +16756,813 @@ msgstr ""
 "Le profil ICC à utiliser pour calibrer l’affichage.\n"
 "Répertoires parcourus :%s"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:918
+#: ../src/ui/dialog/inkscape-preferences.cpp:922
 msgid "Display profile:"
 msgstr "Profil d’affichage :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:923
+#: ../src/ui/dialog/inkscape-preferences.cpp:927
 msgid "Retrieve profile from display"
 msgstr "Utiliser le profil proposé par le périphérique d’affichage."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:926
+#: ../src/ui/dialog/inkscape-preferences.cpp:930
 msgid "Retrieve profiles from those attached to displays via XICC"
 msgstr "Utiliser un profil parmi ceux correspondant aux périphériques d’affichage grâce à XICC"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:928
+#: ../src/ui/dialog/inkscape-preferences.cpp:932
 msgid "Retrieve profiles from those attached to displays"
 msgstr "Utiliser un profil parmi ceux correspondant aux périphériques d’affichage"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:933
+#: ../src/ui/dialog/inkscape-preferences.cpp:937
 msgid "Display rendering intent:"
 msgstr "Intention de rendu de l’affichage :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:934
+#: ../src/ui/dialog/inkscape-preferences.cpp:938
 msgid "The rendering intent to use to calibrate display output"
 msgstr "L’intention de rendu à utiliser pour calibrer la sortie de l’affichage"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:936
+#: ../src/ui/dialog/inkscape-preferences.cpp:940
 msgid "Proofing"
 msgstr "Gestion des couleurs"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:938
+#: ../src/ui/dialog/inkscape-preferences.cpp:942
 msgid "Simulate output on screen"
 msgstr "Simuler la sortie à l’écran"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:940
+#: ../src/ui/dialog/inkscape-preferences.cpp:944
 msgid "Simulates output of target device"
 msgstr "Simule la sortie du périphérique cible"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:942
+#: ../src/ui/dialog/inkscape-preferences.cpp:946
 msgid "Mark out of gamut colors"
 msgstr "Marquer les couleurs hors-gamut"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:944
+#: ../src/ui/dialog/inkscape-preferences.cpp:948
 msgid "Highlights colors that are out of gamut for the target device"
 msgstr "Mettre en exergue les couleurs qui sont en-dehors du gamut pour le périphérique cible"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:949
+#: ../src/ui/dialog/inkscape-preferences.cpp:953
 msgid "Out of gamut warning color:"
 msgstr "Couleur d’avertissement hors-gamut :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:950
+#: ../src/ui/dialog/inkscape-preferences.cpp:954
 msgid "Selects the color used for out of gamut warning"
 msgstr "La couleur utilisée pour prévenir des problèmes de gamut"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:952
+#: ../src/ui/dialog/inkscape-preferences.cpp:956
 msgid "Device profile:"
 msgstr "Profil du périphérique :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:953
+#: ../src/ui/dialog/inkscape-preferences.cpp:957
 msgid "The ICC profile to use to simulate device output"
 msgstr "Le profil ICC utilisé pour simuler la sortie du périphérique"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:956
+#: ../src/ui/dialog/inkscape-preferences.cpp:960
 msgid "Device rendering intent:"
 msgstr "Intention de rendu du périphérique :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:957
+#: ../src/ui/dialog/inkscape-preferences.cpp:961
 msgid "The rendering intent to use to calibrate device output"
 msgstr "L’intention de rendu à utiliser pour calibrer le périphérique de sortie"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:959
+#: ../src/ui/dialog/inkscape-preferences.cpp:963
 msgid "Black point compensation"
 msgstr "Compensation du point noir"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:961
+#: ../src/ui/dialog/inkscape-preferences.cpp:965
 msgid "Enables black point compensation"
 msgstr "Active la compensation du point noir"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:963
+#: ../src/ui/dialog/inkscape-preferences.cpp:967
 msgid "Preserve black"
 msgstr "Préserver le noir"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:968
+#: ../src/ui/dialog/inkscape-preferences.cpp:972
 msgid "(LittleCMS 1.15 or later required)"
 msgstr "(LittleCMS 1.15 ou version supérieure requis)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:970
+#: ../src/ui/dialog/inkscape-preferences.cpp:974
 msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "Préserver la composante N dans les transformaitons CMJN > CMJN"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:983
+#: ../src/ui/dialog/inkscape-preferences.cpp:987
 #: ../src/widgets/sp-color-icc-selector.cpp:304
 #: ../src/widgets/sp-color-icc-selector.cpp:577
 msgid "<none>"
 msgstr "<aucun>"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1028
+#: ../src/ui/dialog/inkscape-preferences.cpp:1032
 msgid "Color management"
 msgstr "Gestion de la couleur"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1033
+#: ../src/ui/dialog/inkscape-preferences.cpp:1037
 msgid "Major grid line emphasizing"
 msgstr "Mise en valeur de la grille principale"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1035
+#: ../src/ui/dialog/inkscape-preferences.cpp:1039
 msgid "Don't emphasize gridlines when zoomed out"
 msgstr "Ne pas mettre en valeur les lignes de grille lors du dézoom"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1036
+#: ../src/ui/dialog/inkscape-preferences.cpp:1040
 msgid "If set and zoomed out, the gridlines will be shown in normal color instead of major grid line color"
 msgstr "Si coché, lors du dézoom, les lignes de grille seront affichées en couleur normale plutôt qu’avec la couleur de grille principale"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1038
+#: ../src/ui/dialog/inkscape-preferences.cpp:1042
 msgid "Default grid settings"
 msgstr "Réglages par défaut de la grille"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1044
-#: ../src/ui/dialog/inkscape-preferences.cpp:1065
+#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1069
 msgid "Grid units:"
 msgstr "Unités de la grille :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
-#: ../src/ui/dialog/inkscape-preferences.cpp:1068
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1072
 msgid "Origin X:"
 msgstr "Origine X :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
-#: ../src/ui/dialog/inkscape-preferences.cpp:1069
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
+#: ../src/ui/dialog/inkscape-preferences.cpp:1073
 msgid "Origin Y:"
 msgstr "Origine Y :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "Spacing X:"
 msgstr "Espacement X :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1052
-#: ../src/ui/dialog/inkscape-preferences.cpp:1071
+#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1075
 msgid "Spacing Y:"
 msgstr "Espacement Y :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
-#: ../src/ui/dialog/inkscape-preferences.cpp:1076
-#: ../src/ui/dialog/inkscape-preferences.cpp:1077
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
+#: ../src/ui/dialog/inkscape-preferences.cpp:1080
+#: ../src/ui/dialog/inkscape-preferences.cpp:1081
 msgid "Grid line color:"
 msgstr "Couleur de la grille :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
-#: ../src/ui/dialog/inkscape-preferences.cpp:1077
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
+#: ../src/ui/dialog/inkscape-preferences.cpp:1081
 msgid "Color used for normal grid lines"
 msgstr "Sélectionner la couleur utilisée pour les lignes de la grille normale"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
-#: ../src/ui/dialog/inkscape-preferences.cpp:1078
-#: ../src/ui/dialog/inkscape-preferences.cpp:1079
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
+#: ../src/ui/dialog/inkscape-preferences.cpp:1082
+#: ../src/ui/dialog/inkscape-preferences.cpp:1083
 msgid "Major grid line color:"
 msgstr "Couleur de la grille principale :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
-#: ../src/ui/dialog/inkscape-preferences.cpp:1079
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
+#: ../src/ui/dialog/inkscape-preferences.cpp:1083
 msgid "Color used for major (highlighted) grid lines"
 msgstr "Couleur des lignes de la grille principale (mise en valeur)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1059
-#: ../src/ui/dialog/inkscape-preferences.cpp:1081
+#: ../src/ui/dialog/inkscape-preferences.cpp:1063
+#: ../src/ui/dialog/inkscape-preferences.cpp:1085
 msgid "Major grid line every:"
 msgstr "Grille principale toutes les :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1060
+#: ../src/ui/dialog/inkscape-preferences.cpp:1064
 msgid "Show dots instead of lines"
 msgstr "Afficher des points plutôt que des lignes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1061
+#: ../src/ui/dialog/inkscape-preferences.cpp:1065
 msgid "If set, display dots at gridpoints instead of gridlines"
 msgstr "Cocher pour afficher des points aux intersections de la grille plutôt que des lignes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1088
+#: ../src/ui/dialog/inkscape-preferences.cpp:1092
 msgid "Use named colors"
 msgstr "Utiliser les couleurs nommées"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1089
+#: ../src/ui/dialog/inkscape-preferences.cpp:1093
 msgid "If set, write the CSS name of the color when available (e.g. 'red' or 'magenta') instead of the numeric value"
 msgstr "Si coché, écrit le nom CSS de la couleur si elle est disponible (rouge ou magenta, par exemple) à la place de sa valeur numérique"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1091
+#: ../src/ui/dialog/inkscape-preferences.cpp:1095
 msgid "XML formatting"
 msgstr "Formatage XML"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1093
+#: ../src/ui/dialog/inkscape-preferences.cpp:1097
 msgid "Inline attributes"
 msgstr "Attributs en ligne"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1094
+#: ../src/ui/dialog/inkscape-preferences.cpp:1098
 msgid "Put attributes on the same line as the element tag"
 msgstr "Place les attributs sur la même ligne que l’étiquette de l’élément"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1097
+#: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid "Indent, spaces:"
 msgstr "Distance d’indentation (en espaces) :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1097
+#: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid "The number of spaces to use for indenting nested elements; set to 0 for no indentation"
 msgstr "Le nombre d’espaces utilisés pour l’indentation d’éléments imbriqués ; définir à 0 pour désactiver l’indentation"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1099
+#: ../src/ui/dialog/inkscape-preferences.cpp:1103
 msgid "Path data"
 msgstr "Données de chemin"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1101
+#: ../src/ui/dialog/inkscape-preferences.cpp:1105
 msgid "Allow relative coordinates"
 msgstr "Autorise les coordonnées relatives"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1102
+#: ../src/ui/dialog/inkscape-preferences.cpp:1106
 msgid "If set, relative coordinates may be used in path data"
 msgstr "Si coché, les coordonnées relatives peuvent être utilisées dans les données du chemin"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1104
+#: ../src/ui/dialog/inkscape-preferences.cpp:1108
 msgid "Force repeat commands"
 msgstr "Imposer les commandes répétitives"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1105
+#: ../src/ui/dialog/inkscape-preferences.cpp:1109
 msgid "Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead of 'L 1,2 3,4')"
 msgstr "Si coché, impose la répétition de la même commande de chemin (écrit 'L 1,2 L 3,4' à la place de 'L 1,2 3,4')."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1107
+#: ../src/ui/dialog/inkscape-preferences.cpp:1111
 msgid "Numbers"
 msgstr "Nombres"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1110
+#: ../src/ui/dialog/inkscape-preferences.cpp:1114
 msgid "Numeric precision:"
 msgstr "Précision numérique :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1110
+#: ../src/ui/dialog/inkscape-preferences.cpp:1114
 msgid "Significant figures of the values written to the SVG file"
 msgstr "Nombre de chiffres significatifs des valeurs écrites dans le fichier SVG"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1113
+#: ../src/ui/dialog/inkscape-preferences.cpp:1117
 msgid "Minimum exponent:"
 msgstr "Exposant minimum :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1113
+#: ../src/ui/dialog/inkscape-preferences.cpp:1117
 msgid "The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero"
 msgstr "La taille minimale d’un nombre écrite dans le SVG est 10 à la puissance de cet exposant ; les nombres plus petits s’écriront zéro"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1115
+#: ../src/ui/dialog/inkscape-preferences.cpp:1119
 msgid "SVG output"
 msgstr "Sortie SVG"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 msgid "System default"
 msgstr "Valeur par défaut du système d’exploitation"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 msgid "Albanian (sq)"
 msgstr "Albanais (sq)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 msgid "Amharic (am)"
 msgstr "Amharique (am)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 msgid "Arabic (ar)"
 msgstr "Arabe (ar)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 msgid "Armenian (hy)"
 msgstr "Arménien (hy)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 msgid "Azerbaijani (az)"
 msgstr "Azéri (az)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 msgid "Basque (eu)"
 msgstr "Basque (eu)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 msgid "Belarusian (be)"
 msgstr "Biélorusse (be)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1121
+#: ../src/ui/dialog/inkscape-preferences.cpp:1125
 msgid "Bulgarian (bg)"
 msgstr "Bulgare (bg)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1121
+#: ../src/ui/dialog/inkscape-preferences.cpp:1125
 msgid "Bengali (bn)"
 msgstr "Bengali (bn)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1121
+#: ../src/ui/dialog/inkscape-preferences.cpp:1125
 msgid "Breton (br)"
 msgstr "Breton (br)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1121
+#: ../src/ui/dialog/inkscape-preferences.cpp:1125
 msgid "Catalan (ca)"
 msgstr "Catalan (ca)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1121
+#: ../src/ui/dialog/inkscape-preferences.cpp:1125
 msgid "Valencian Catalan (ca@valencia)"
 msgstr "Catalan Valencien (ca@valencia)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1121
+#: ../src/ui/dialog/inkscape-preferences.cpp:1125
 msgid "Chinese/China (zh_CN)"
 msgstr "Chinois/Chine (zh_CN)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1126
 msgid "Chinese/Taiwan (zh_TW)"
 msgstr "Chinois/Taïwan (zh_TW)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1126
 msgid "Croatian (hr)"
 msgstr "Croate (hr)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1126
 msgid "Czech (cs)"
 msgstr "Tchèque (cs)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1123
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "Danish (da)"
 msgstr "Danois (da)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1123
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "Dutch (nl)"
 msgstr "Néerlandais (nl)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1123
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "Dzongkha (dz)"
 msgstr "Dzongkha (dz)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1123
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "German (de)"
 msgstr "Allemand (de)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1123
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "Greek (el)"
 msgstr "Grec (el)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1123
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "English (en)"
 msgstr "Anglais (en)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1123
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "English/Australia (en_AU)"
 msgstr "Anglais/Australie (en_AU)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1128
 msgid "English/Canada (en_CA)"
 msgstr "Anglais/Canada (en_CA)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1128
 msgid "English/Great Britain (en_GB)"
 msgstr "Anglais/Grande-Bretagne (en_GB)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1128
 msgid "Pig Latin (en_US@piglatin)"
 msgstr "Pig Latin (en_US@piglatin)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1125
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid "Esperanto (eo)"
 msgstr "Espéranto (eo)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1125
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid "Estonian (et)"
 msgstr "Estonien (et)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1125
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid "Farsi (fa)"
 msgstr "Farsi (fa)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1125
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid "Finnish (fi)"
 msgstr "Finnois (fi)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1126
+#: ../src/ui/dialog/inkscape-preferences.cpp:1130
 msgid "French (fr)"
 msgstr "Français (fr)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1126
+#: ../src/ui/dialog/inkscape-preferences.cpp:1130
 msgid "Irish (ga)"
 msgstr "Irlandais (ga)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1126
+#: ../src/ui/dialog/inkscape-preferences.cpp:1130
 msgid "Galician (gl)"
 msgstr "Galicien (gl)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1126
+#: ../src/ui/dialog/inkscape-preferences.cpp:1130
 msgid "Hebrew (he)"
 msgstr "Hébreu (he)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1126
+#: ../src/ui/dialog/inkscape-preferences.cpp:1130
 msgid "Hungarian (hu)"
 msgstr "Hongrois (hu)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1127
+#: ../src/ui/dialog/inkscape-preferences.cpp:1131
 msgid "Indonesian (id)"
 msgstr "Indonésien (id)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1127
+#: ../src/ui/dialog/inkscape-preferences.cpp:1131
 msgid "Italian (it)"
 msgstr "Italien (it)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1127
+#: ../src/ui/dialog/inkscape-preferences.cpp:1131
 msgid "Japanese (ja)"
 msgstr "Japonais (ja)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1127
+#: ../src/ui/dialog/inkscape-preferences.cpp:1131
 msgid "Khmer (km)"
 msgstr "Khmer (km)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1127
+#: ../src/ui/dialog/inkscape-preferences.cpp:1131
 msgid "Kinyarwanda (rw)"
 msgstr "Kinyarouanda (rw)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1127
+#: ../src/ui/dialog/inkscape-preferences.cpp:1131
 msgid "Korean (ko)"
 msgstr "Coréen (ko)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1127
+#: ../src/ui/dialog/inkscape-preferences.cpp:1131
 msgid "Lithuanian (lt)"
 msgstr "Lituanien (lt)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1127
+#: ../src/ui/dialog/inkscape-preferences.cpp:1131
 msgid "Macedonian (mk)"
 msgstr "Macédonien (mk)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1128
+#: ../src/ui/dialog/inkscape-preferences.cpp:1132
 msgid "Mongolian (mn)"
 msgstr "Mongol (mn)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1128
+#: ../src/ui/dialog/inkscape-preferences.cpp:1132
 msgid "Nepali (ne)"
 msgstr "Népalais (ne)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1128
+#: ../src/ui/dialog/inkscape-preferences.cpp:1132
 msgid "Norwegian Bokmål (nb)"
 msgstr "Norvégien Bokmål (nb)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1128
+#: ../src/ui/dialog/inkscape-preferences.cpp:1132
 msgid "Norwegian Nynorsk (nn)"
 msgstr "Norvégien Nynorsk (nn)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1128
+#: ../src/ui/dialog/inkscape-preferences.cpp:1132
 msgid "Panjabi (pa)"
 msgstr "Panjabi (pa)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1129
+#: ../src/ui/dialog/inkscape-preferences.cpp:1133
 msgid "Polish (pl)"
 msgstr "Polonais (pl)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1129
+#: ../src/ui/dialog/inkscape-preferences.cpp:1133
 msgid "Portuguese (pt)"
 msgstr "Portugais (pt)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1129
+#: ../src/ui/dialog/inkscape-preferences.cpp:1133
 msgid "Portuguese/Brazil (pt_BR)"
 msgstr "Portugais/Brésil (pt_BR)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1129
+#: ../src/ui/dialog/inkscape-preferences.cpp:1133
 msgid "Romanian (ro)"
 msgstr "Roumain (ro)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1129
+#: ../src/ui/dialog/inkscape-preferences.cpp:1133
 msgid "Russian (ru)"
 msgstr "Russe (ru)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1130
+#: ../src/ui/dialog/inkscape-preferences.cpp:1134
 msgid "Serbian (sr)"
 msgstr "Serbe (sr)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1130
+#: ../src/ui/dialog/inkscape-preferences.cpp:1134
 msgid "Serbian in Latin script (sr@latin)"
 msgstr "Serbe en alphabet latin (sr@latin)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1130
+#: ../src/ui/dialog/inkscape-preferences.cpp:1134
 msgid "Slovak (sk)"
 msgstr "Slovaque (sk)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1130
+#: ../src/ui/dialog/inkscape-preferences.cpp:1134
 msgid "Slovenian (sl)"
 msgstr "Slovène (sl)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1130
+#: ../src/ui/dialog/inkscape-preferences.cpp:1134
 msgid "Spanish (es)"
 msgstr "Espagnol (es)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1130
+#: ../src/ui/dialog/inkscape-preferences.cpp:1134
 msgid "Spanish/Mexico (es_MX)"
 msgstr "Espagnol/Mexique (es_MX)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1131
+#: ../src/ui/dialog/inkscape-preferences.cpp:1135
 msgid "Swedish (sv)"
 msgstr "Suédois (sv)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1131
+#: ../src/ui/dialog/inkscape-preferences.cpp:1135
 msgid "Telugu (te_IN)"
 msgstr "Télougou (te_IN)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1131
+#: ../src/ui/dialog/inkscape-preferences.cpp:1135
 msgid "Thai (th)"
 msgstr "Thaï (th)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1131
+#: ../src/ui/dialog/inkscape-preferences.cpp:1135
 msgid "Turkish (tr)"
 msgstr "Turc (tr)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1131
+#: ../src/ui/dialog/inkscape-preferences.cpp:1135
 msgid "Ukrainian (uk)"
 msgstr "Ukrainien (uk)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1131
+#: ../src/ui/dialog/inkscape-preferences.cpp:1135
 msgid "Vietnamese (vi)"
 msgstr "Vietnamien (vi)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1163
+#: ../src/ui/dialog/inkscape-preferences.cpp:1167
 msgid "Language (requires restart):"
 msgstr "Langue (nécessite un redémarrage)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1164
+#: ../src/ui/dialog/inkscape-preferences.cpp:1168
 msgid "Set the language for menus and number formats"
 msgstr "Définit la langue pour les menus et les formats numériques"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1166
+#: ../src/ui/dialog/inkscape-preferences.cpp:1170
 msgid "Large"
 msgstr "Grand"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1166
+#: ../src/ui/dialog/inkscape-preferences.cpp:1170
 msgid "Small"
 msgstr "Petit"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1166
+#: ../src/ui/dialog/inkscape-preferences.cpp:1170
 msgid "Smaller"
 msgstr "Minuscule"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1170
+#: ../src/ui/dialog/inkscape-preferences.cpp:1174
 msgid "Toolbox icon size:"
 msgstr "Taille des icônes de la barre d’outils :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1171
+#: ../src/ui/dialog/inkscape-preferences.cpp:1175
 msgid "Set the size for the tool icons (requires restart)"
 msgstr "Définit la taille des icônes de la barre d’outils (nécessite un redémarrage)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1174
+#: ../src/ui/dialog/inkscape-preferences.cpp:1178
 msgid "Control bar icon size:"
 msgstr "Taille des icônes de la barre de contrôle des outils :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1179
 msgid "Set the size for the icons in tools' control bars to use (requires restart)"
 msgstr "Définit la taille des icônes de la barre de contrôle des outils (nécessite un redémarrage)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1178
+#: ../src/ui/dialog/inkscape-preferences.cpp:1182
 msgid "Secondary toolbar icon size:"
 msgstr "Taille des icônes de la barre d’outils secondaire :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1179
+#: ../src/ui/dialog/inkscape-preferences.cpp:1183
 msgid "Set the size for the icons in secondary toolbars to use (requires restart)"
 msgstr "Définit la taille des icônes de la barre d’outils secondaire (nécessite un redémarrage)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1182
+#: ../src/ui/dialog/inkscape-preferences.cpp:1186
 msgid "Work-around color sliders not drawing"
 msgstr "Contourner le non affichage des barres de défilement de couleur"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1184
+#: ../src/ui/dialog/inkscape-preferences.cpp:1188
 msgid "When on, will attempt to work around bugs in certain GTK themes drawing color sliders"
 msgstr "Si activé, essayera de contourner un défaut d’affichage des barres de défilement de couleur lié à certains thèmes GTK"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1190
+#: ../src/ui/dialog/inkscape-preferences.cpp:1194
 msgid "Clear list"
 msgstr "Effacer la liste"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1195
+#: ../src/ui/dialog/inkscape-preferences.cpp:1199
 msgid "Maximum documents in Open Recent:"
 msgstr "Nombre maximum de documents récents :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1196
+#: ../src/ui/dialog/inkscape-preferences.cpp:1200
 msgid "Set the maximum length of the Open Recent list in the File menu, or clear the list"
 msgstr "Définit la longueur maximum de la liste « Documents récents » dans le menu « Fichier », ou efface la liste"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1199
+#: ../src/ui/dialog/inkscape-preferences.cpp:1203
 msgid "Zoom correction factor (in %):"
 msgstr "Niveau de correction du zoom (en %) :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1200
+#: ../src/ui/dialog/inkscape-preferences.cpp:1204
 msgid "Adjust the slider until the length of the ruler on your screen matches its real length. This information is used when zooming to 1:1, 1:2, etc., to display objects in their true sizes"
 msgstr "Ajuster le curseur pour faire correspondre la longueur de la règle sur l’écran avec sa vraie valeur. Cette information est utilisée lors des zoom de niveau 1:1, 1:2, etc. pour afficher les objets avec leur taille exacte"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1203
+#: ../src/ui/dialog/inkscape-preferences.cpp:1207
 msgid "Enable dynamic relayout for incomplete sections"
 msgstr "Activer la remise en forme dynamique des sections incomplètes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1205
+#: ../src/ui/dialog/inkscape-preferences.cpp:1209
 msgid "When on, will allow dynamic layout of components that are not completely finished being refactored"
 msgstr "Lorsqu’activé, autorise la mise en forme dynamique des composants dont le réusinage n’est pas complètement achevé"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1208
+#: ../src/ui/dialog/inkscape-preferences.cpp:1212
 msgid "Interface"
 msgstr "Interface"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1214
+#: ../src/ui/dialog/inkscape-preferences.cpp:1218
 msgid "Use current directory for \"Save As ...\""
 msgstr "« Enregistrer sous... » utilise le dossier courant "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1216
+#: ../src/ui/dialog/inkscape-preferences.cpp:1220
 msgid "When this option is on, the \"Save as...\" and \"Save a Copy\" dialogs will always open in the directory where the currently open document is; when it's off, each will open in the directory where you last saved a file using it"
 msgstr "Lorsque cette option est active, les boîtes de dialogue « Enregistrer sous... » et « Enregistrer une copie... » s’ouvrent toujours dans le dossier contenant le document actuellement ouvert ; si l’option est désactivée, elles ouvrent alors le dernier dossier dans lequel un fichier a été enregistré avec ces boîtes de dialogue"
 
 #. Autosave options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1220
+#: ../src/ui/dialog/inkscape-preferences.cpp:1224
 msgid "Enable autosave (requires restart)"
 msgstr "Activer l’enregistrement automatique (nécessite un redémarrage)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1221
+#: ../src/ui/dialog/inkscape-preferences.cpp:1225
 msgid "Automatically save the current document(s) at a given interval, thus minimizing loss in case of a crash"
 msgstr "Enregistre automatiquement les documents en cours, à intervalle donné, pour diminuer les risques de perte de données en cas de plantage de l’application"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1223
+#: ../src/ui/dialog/inkscape-preferences.cpp:1227
 msgid "Interval (in minutes):"
 msgstr "Intervalle (en minutes) :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1223
+#: ../src/ui/dialog/inkscape-preferences.cpp:1227
 msgid "Interval (in minutes) at which document will be autosaved"
 msgstr "Définit l’intervalle (en minutes) auquel l’espace de travail sera enregistré automatiquement"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1225
+#: ../src/ui/dialog/inkscape-preferences.cpp:1229
 msgctxt "Filesystem"
 msgid "Path:"
 msgstr "Chemin :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1225
+#: ../src/ui/dialog/inkscape-preferences.cpp:1229
 msgid "The directory where autosaves will be written"
 msgstr "Définit l’emplacement des enregistrements automatiques"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1227
+#: ../src/ui/dialog/inkscape-preferences.cpp:1231
 msgid "Maximum number of autosaves:"
 msgstr "Nombre maximum d’enregistrements :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1227
+#: ../src/ui/dialog/inkscape-preferences.cpp:1231
 msgid "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr "Nombre maximum d’enregistrements automatiques ; utiliser cette valeur pour limiter l’espace de stockage utilisé"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1249
+#: ../src/ui/dialog/inkscape-preferences.cpp:1253
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1249
+#: ../src/ui/dialog/inkscape-preferences.cpp:1253
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1249
+#: ../src/ui/dialog/inkscape-preferences.cpp:1253
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1249
+#: ../src/ui/dialog/inkscape-preferences.cpp:1253
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1253
+#: ../src/ui/dialog/inkscape-preferences.cpp:1257
 msgid "Oversample bitmaps:"
 msgstr "Sur-échantilloner les bitmaps :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1256
+#: ../src/ui/dialog/inkscape-preferences.cpp:1260
 msgid "Automatically reload bitmaps"
 msgstr "Recharger automatiquement les bitmaps"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1258
+#: ../src/ui/dialog/inkscape-preferences.cpp:1262
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr "Active le rechargement automatique des images liées lorsqu’elles ont été modifiées sur le disque"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1260
+#: ../src/ui/dialog/inkscape-preferences.cpp:1264
 msgid "Bitmap editor:"
 msgstr "Éditeur de bitmap :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1262
+#: ../src/ui/dialog/inkscape-preferences.cpp:1266
 msgid "Resolution for Create Bitmap Copy:"
 msgstr "Résolution pour Créer une copie bitmap :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1263
+#: ../src/ui/dialog/inkscape-preferences.cpp:1267
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr "Résolution utilisée par la commande Créer une copie bitmap"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1265
+#: ../src/ui/dialog/inkscape-preferences.cpp:1269
 msgid "Bitmaps"
 msgstr "Bitmaps"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1318
+#: ../src/ui/dialog/inkscape-preferences.cpp:1322
 msgid "Set the main spell check language"
 msgstr "Définit la langue principale du correcteur orthographique"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1321
+#: ../src/ui/dialog/inkscape-preferences.cpp:1325
 msgid "Second language:"
 msgstr "Deuxième langue :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1322
+#: ../src/ui/dialog/inkscape-preferences.cpp:1326
 msgid "Set the second spell check language; checking will only stop on words unknown in ALL chosen languages"
 msgstr "Définit la deuxième langue du correcteur orthographique ; la vérification ne s’arrêtera que sur les mots inconnus de toutes les langues sélectionnées"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1325
+#: ../src/ui/dialog/inkscape-preferences.cpp:1329
 msgid "Third language:"
 msgstr "Troisième langue :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1326
+#: ../src/ui/dialog/inkscape-preferences.cpp:1330
 msgid "Set the third spell check language; checking will only stop on words unknown in ALL chosen languages"
 msgstr "Définit la troisième langue du correcteur orthographique ; la vérification ne s’arrêtera que sur les mots inconnus de toutes les langues sélectionnées"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1328
+#: ../src/ui/dialog/inkscape-preferences.cpp:1332
 msgid "Ignore words with digits"
 msgstr "Ignorer les mots contenant des chiffres"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1330
+#: ../src/ui/dialog/inkscape-preferences.cpp:1334
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr "Ignorer les mots contenant des chiffres, comme « R2D2 »"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1332
+#: ../src/ui/dialog/inkscape-preferences.cpp:1336
 msgid "Ignore words in ALL CAPITALS"
 msgstr "Ignorer les mots tout en capitales"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1334
+#: ../src/ui/dialog/inkscape-preferences.cpp:1338
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr "Ignorer les mots tout en capitales, comme « GNU »"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1336
+#: ../src/ui/dialog/inkscape-preferences.cpp:1340
 msgid "Spellcheck"
 msgstr "Vérification orthographique"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1355
+#: ../src/ui/dialog/inkscape-preferences.cpp:1359
 msgid "Add label comments to printing output"
 msgstr "Ajouter les labels de commentaires à l’impression"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1357
+#: ../src/ui/dialog/inkscape-preferences.cpp:1361
 msgid "When on, a comment will be added to the raw print output, marking the rendered output for an object with its label"
 msgstr "Si coché, un commentaire est ajouté à l’impression brute, signalant le rendu d’un objet avec son label"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1359
+#: ../src/ui/dialog/inkscape-preferences.cpp:1363
 msgid "Prevent sharing of gradient definitions"
 msgstr "Interdire le partage des définitions de dégradé"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1361
+#: ../src/ui/dialog/inkscape-preferences.cpp:1365
 msgid "When on, shared gradient definitions are automatically forked on change; uncheck to allow sharing of gradient definitions so that editing one object may affect other objects using the same gradient"
 msgstr "Si coché, les définitions communes de dégradés sont automatiquement dupliquées lors d’une modification; décocher pour autoriser le partage des définitions de dégradé de manière à ce que la modification d’un objet puisse affecter tous les objets utilisant le même dégradé"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1364
+#: ../src/ui/dialog/inkscape-preferences.cpp:1368
 msgid "Simplification threshold:"
 msgstr "Seuil de simplification :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1365
+#: ../src/ui/dialog/inkscape-preferences.cpp:1369
 msgid "How strong is the Node tool's Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."
 msgstr "Force par défaut de la commande Simplifier. En faisant appel à cette commande plusieurs fois de suite, elle agira de façon de plus en plus agressive ; un appel après une pause restaurera la valeur par défaut."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1368
+#: ../src/ui/dialog/inkscape-preferences.cpp:1372
 msgid "Latency skew:"
 msgstr "Décalage temporel :"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1369
+#: ../src/ui/dialog/inkscape-preferences.cpp:1373
 msgid "Factor by which the event clock is skewed from the actual time (0.9766 on some systems)"
 msgstr "Facteur de décalage entre l’horloge de l’événement et le temps réel (0,9766 sur certains systèmes)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1371
+#: ../src/ui/dialog/inkscape-preferences.cpp:1375
 msgid "Pre-render named icons"
 msgstr "Préafficher les icônes nommées"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1373
+#: ../src/ui/dialog/inkscape-preferences.cpp:1377
 msgid "When on, named icons will be rendered before displaying the ui. This is for working around bugs in GTK+ named icon notification"
 msgstr "Si coché, les icônes nommées sont rendues avant l’affichage de l’interface utilisateur. Il s’agit du contournement d’un bug sur la notification des icônes nommées dans GTK+."
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
-#: ../src/ui/dialog/inkscape-preferences.cpp:1379
+#: ../src/ui/dialog/inkscape-preferences.cpp:1383
 msgid "User config: "
 msgstr "Configuration utilisateur : "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1383
+#: ../src/ui/dialog/inkscape-preferences.cpp:1387
 msgid "User data: "
 msgstr "Données utilisateur : "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1387
+#: ../src/ui/dialog/inkscape-preferences.cpp:1391
 msgid "User cache: "
 msgstr "Cache utilisateur : "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1391
+#: ../src/ui/dialog/inkscape-preferences.cpp:1395
 msgid "System config: "
 msgstr "Configuration système : "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1394
+#: ../src/ui/dialog/inkscape-preferences.cpp:1398
 msgid "System data: "
 msgstr "Données système : "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1397
+#: ../src/ui/dialog/inkscape-preferences.cpp:1401
 msgid "PIXMAP: "
 msgstr "Pixmap : "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1401
+#: ../src/ui/dialog/inkscape-preferences.cpp:1405
 msgid "DATA: "
 msgstr "Données : "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1405
+#: ../src/ui/dialog/inkscape-preferences.cpp:1409
 msgid "UI: "
 msgstr "Interface utilisateur : "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1414
+#: ../src/ui/dialog/inkscape-preferences.cpp:1418
 msgid "Icon theme: "
 msgstr "Thème d’icônes : "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1429
+#: ../src/ui/dialog/inkscape-preferences.cpp:1433
 msgid "System info"
 msgstr "Informations système"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1429
+#: ../src/ui/dialog/inkscape-preferences.cpp:1433
 msgid "General system information"
 msgstr "Informations générales"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1431
+#: ../src/ui/dialog/inkscape-preferences.cpp:1435
 msgid "Misc"
 msgstr "Divers"
 
@@ -17865,11 +17883,6 @@ msgstr "Document SVG"
 #: ../src/ui/dialog/print.cpp:186
 msgid "Print"
 msgstr "Imprimer"
-
-#. build custom preferences tab
-#: ../src/ui/dialog/print.cpp:220
-msgid "Rendering"
-msgstr "Rendu"
 
 #: ../src/ui/dialog/scriptdialog.cpp:211
 msgid "_Execute Javascript"
@@ -21467,62 +21480,62 @@ msgstr "Motif de pointillé"
 msgid "Pattern offset"
 msgstr "Décalage du motif"
 
-#: ../src/widgets/desktop-widget.cpp:392
+#: ../src/widgets/desktop-widget.cpp:391
 msgid "Zoom drawing if window size changes"
 msgstr "Zoomer le dessin si les dimensions de la fenêtre sont modifiées"
 
-#: ../src/widgets/desktop-widget.cpp:514
+#: ../src/widgets/desktop-widget.cpp:513
 msgid "Cursor coordinates"
 msgstr "Coordonnées du curseur"
 
-#: ../src/widgets/desktop-widget.cpp:529
+#: ../src/widgets/desktop-widget.cpp:528
 msgid "Z:"
 msgstr "Z :"
 
 #. display the initial welcome message in the statusbar
-#: ../src/widgets/desktop-widget.cpp:562
+#: ../src/widgets/desktop-widget.cpp:561
 msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."
 msgstr "<b>Bienvenue dans Inkscape!</b> Utilisez les formes ou l’outil de dessin à main levée pour créer des objets; utilisez les sélecteurs (flèches) pour les déplacer ou les modifier."
 
-#: ../src/widgets/desktop-widget.cpp:654
+#: ../src/widgets/desktop-widget.cpp:653
 #, c-format
 msgid "%s: %d (outline%s) - Inkscape"
 msgstr "%s: %d (contour%s) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:656
+#: ../src/widgets/desktop-widget.cpp:655
 #, c-format
 msgid "%s: %d (no filters%s) - Inkscape"
 msgstr "%s: %d (aucun filtre%s) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:658
+#: ../src/widgets/desktop-widget.cpp:657
 #, c-format
 msgid "%s: %d %s- Inkscape"
 msgstr "%s: %d %s- Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:662
+#: ../src/widgets/desktop-widget.cpp:661
 #, c-format
 msgid "%s (outline%s) - Inkscape"
 msgstr "%s (contour%s) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:664
+#: ../src/widgets/desktop-widget.cpp:663
 #, c-format
 msgid "%s (no filters%s) - Inkscape"
 msgstr "%s (aucun filtre%s) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:666
+#: ../src/widgets/desktop-widget.cpp:665
 #, c-format
 msgid "%s %s- Inkscape"
 msgstr "%s %s- Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:826
+#: ../src/widgets/desktop-widget.cpp:825
 msgid "Color-managed display is <b>enabled</b> in this window"
 msgstr "L’affichage avec gestion des couleurs est <b>activé</b> dans cette fenêtre"
 
-#: ../src/widgets/desktop-widget.cpp:828
+#: ../src/widgets/desktop-widget.cpp:827
 msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr "L’affichage avec gestion des couleurs est <b>désactivé</b> dans cette fenêtre"
 
-#: ../src/widgets/desktop-widget.cpp:883
+#: ../src/widgets/desktop-widget.cpp:882
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n"
@@ -21533,12 +21546,12 @@ msgstr ""
 "\n"
 "Si vous fermez sans enregistrer, vos modifications seront perdues."
 
-#: ../src/widgets/desktop-widget.cpp:890
-#: ../src/widgets/desktop-widget.cpp:946
+#: ../src/widgets/desktop-widget.cpp:889
+#: ../src/widgets/desktop-widget.cpp:945
 msgid "Close _without saving"
 msgstr "Fermer _sans enregistrer"
 
-#: ../src/widgets/desktop-widget.cpp:939
+#: ../src/widgets/desktop-widget.cpp:938
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format that may cause data loss!</span>\n"
@@ -21549,11 +21562,11 @@ msgstr ""
 "\n"
 "Voulez-vous enregistrer ce fichier au format SVG Inkscape ?"
 
-#: ../src/widgets/desktop-widget.cpp:949
+#: ../src/widgets/desktop-widget.cpp:948
 msgid "_Save as SVG"
 msgstr "Enregi_strer comme SVG"
 
-#: ../src/widgets/desktop-widget.cpp:1158
+#: ../src/widgets/desktop-widget.cpp:1157
 msgid "Note:"
 msgstr "Note :"
 
@@ -21702,7 +21715,7 @@ msgstr "<b>Modifier :</b>"
 
 #: ../src/widgets/gradient-vector.cpp:275
 #: ../src/widgets/paint-selector.cpp:908
-#: ../src/widgets/stroke-style.cpp:425
+#: ../src/widgets/stroke-style.cpp:424
 msgid "No document selected"
 msgstr "Aucun document sélectionné"
 
@@ -22108,15 +22121,15 @@ msgstr "Valeur"
 msgid "Type text in a text node"
 msgstr "Taper du texte dans un nœud texte"
 
-#: ../src/widgets/stroke-style.cpp:511
+#: ../src/widgets/stroke-style.cpp:510
 msgid "Set markers"
 msgstr "Appliquer des marqueurs"
 
-#: ../src/widgets/stroke-style.cpp:697
+#: ../src/widgets/stroke-style.cpp:696
 msgid "Stroke width"
 msgstr "Épaisseur du contour"
 
-#: ../src/widgets/stroke-style.cpp:699
+#: ../src/widgets/stroke-style.cpp:698
 msgctxt "Stroke width"
 msgid "_Width:"
 msgstr "_Épaisseur :"
@@ -22124,95 +22137,95 @@ msgstr "_Épaisseur :"
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/widgets/stroke-style.cpp:722
+#: ../src/widgets/stroke-style.cpp:721
 msgid "Join:"
 msgstr "Raccord :"
 
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:734
+#: ../src/widgets/stroke-style.cpp:733
 msgid "Miter join"
 msgstr "Raccord droit"
 
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:744
+#: ../src/widgets/stroke-style.cpp:743
 msgid "Round join"
 msgstr "Raccord arrondi"
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:754
+#: ../src/widgets/stroke-style.cpp:753
 msgid "Bevel join"
 msgstr "Raccord biseauté"
 
-#: ../src/widgets/stroke-style.cpp:774
+#: ../src/widgets/stroke-style.cpp:773
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr "Longueur maximum du raccord (en unités de l’épaisseur du contour)"
 
-#: ../src/widgets/stroke-style.cpp:776
+#: ../src/widgets/stroke-style.cpp:775
 msgid "Miter _limit:"
 msgstr "_Limite du raccord :"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
 #. spw_label(t, _("_Cap:"), 0, i);
-#: ../src/widgets/stroke-style.cpp:788
+#: ../src/widgets/stroke-style.cpp:787
 msgid "Cap:"
 msgstr "Terminaison :"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:800
+#: ../src/widgets/stroke-style.cpp:799
 msgid "Butt cap"
 msgstr "Terminaison sur le nœud"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/widgets/stroke-style.cpp:808
+#: ../src/widgets/stroke-style.cpp:807
 msgid "Round cap"
 msgstr "Terminaison arrondie"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:816
+#: ../src/widgets/stroke-style.cpp:815
 msgid "Square cap"
 msgstr "Terminaison carrée"
 
 #. Dash
-#: ../src/widgets/stroke-style.cpp:822
+#: ../src/widgets/stroke-style.cpp:821
 msgid "Dashes:"
 msgstr "Pointillés :"
 
-#: ../src/widgets/stroke-style.cpp:845
+#: ../src/widgets/stroke-style.cpp:844
 msgid "_Start Markers:"
 msgstr "_Marqueurs initiaux :"
 
-#: ../src/widgets/stroke-style.cpp:846
+#: ../src/widgets/stroke-style.cpp:845
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr "Les marqueurs de début sont dessinés sur le premier nœud d’un chemin ou objet"
 
-#: ../src/widgets/stroke-style.cpp:857
+#: ../src/widgets/stroke-style.cpp:856
 msgid "_Mid Markers:"
 msgstr "_intermédiaires :"
 
-#: ../src/widgets/stroke-style.cpp:858
+#: ../src/widgets/stroke-style.cpp:857
 msgid "Mid Markers are drawn on every node of a path or shape except the first and last nodes"
 msgstr "Les marqueurs intermédiaires sont dessinés sur chaque nœud d’un chemin ou objet, à l’exception du premier et du dernier"
 
-#: ../src/widgets/stroke-style.cpp:869
+#: ../src/widgets/stroke-style.cpp:868
 msgid "_End Markers:"
 msgstr "_terminaux :"
 
-#: ../src/widgets/stroke-style.cpp:870
+#: ../src/widgets/stroke-style.cpp:869
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr "Les marqueurs de fin sont dessinés sur le dernier nœud d’un chemin ou objet"
 
-#: ../src/widgets/stroke-style.cpp:1223
-#: ../src/widgets/stroke-style.cpp:1320
+#: ../src/widgets/stroke-style.cpp:1222
+#: ../src/widgets/stroke-style.cpp:1319
 msgid "Set stroke style"
 msgstr "Appliquer un style de contour"
 
@@ -22556,7 +22569,7 @@ msgid "Snap to grids"
 msgstr "Aimanter aux grilles"
 
 #: ../src/widgets/toolbox.cpp:2435
-msgid "Snap to guides"
+msgid "Snap guides"
 msgstr "Aimanter aux guides"
 
 #: ../src/widgets/toolbox.cpp:2635
@@ -25224,9 +25237,8 @@ msgid "Area width:"
 msgstr "Largeur de la zone :"
 
 #: ../share/extensions/gcodetools_area.inx.h:11
-#, fuzzy
 msgid "Artifact diameter:"
-msgstr "Coller le paramètre du chemin"
+msgstr "Diamètre de l’artefact :"
 
 #: ../share/extensions/gcodetools_area.inx.h:12
 #: ../share/extensions/gcodetools_lathe.inx.h:3
@@ -27626,6 +27638,7 @@ msgid "Arrange"
 msgstr "Organiser"
 
 #: ../share/extensions/restack.inx.h:4
+#: ../share/extensions/text_extract.inx.h:1
 msgid "Bottom"
 msgstr "Bas"
 
@@ -27642,6 +27655,7 @@ msgid "Left to Right (0)"
 msgstr "De gauche à droite (0)"
 
 #: ../share/extensions/restack.inx.h:9
+#: ../share/extensions/text_extract.inx.h:7
 msgid "Middle"
 msgstr "Milieu"
 
@@ -27666,6 +27680,7 @@ msgid "Right to Left (180)"
 msgstr "De droite à gauche (180)"
 
 #: ../share/extensions/restack.inx.h:16
+#: ../share/extensions/text_extract.inx.h:12
 msgid "Top"
 msgstr "Haut"
 
@@ -28127,6 +28142,38 @@ msgstr "Ajuster les noms en fonction de votre langue :"
 #: ../share/extensions/text_braille.inx.h:1
 msgid "Convert to Braille"
 msgstr "Convertir en Braille"
+
+#: ../share/extensions/text_extract.inx.h:2
+msgid "Bottom to top"
+msgstr "De bas en haut"
+
+#: ../share/extensions/text_extract.inx.h:3
+msgid "Extract"
+msgstr "Extraire"
+
+#: ../share/extensions/text_extract.inx.h:4
+msgid "Horizontal point:"
+msgstr "Point horizontal :"
+
+#: ../share/extensions/text_extract.inx.h:6
+msgid "Left to right"
+msgstr "De gauche à droite"
+
+#: ../share/extensions/text_extract.inx.h:9
+msgid "Right to left"
+msgstr "De droite à gauche"
+
+#: ../share/extensions/text_extract.inx.h:11
+msgid "Text direction:"
+msgstr "Direction du texte :"
+
+#: ../share/extensions/text_extract.inx.h:13
+msgid "Top to bottom"
+msgstr "De haut en bas"
+
+#: ../share/extensions/text_extract.inx.h:14
+msgid "Vertical point:"
+msgstr "Point vertical :"
 
 #: ../share/extensions/text_flipcase.inx.h:1
 #: ../share/extensions/text_lowercase.inx.h:1
@@ -28671,44 +28718,67 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "Image effects"
+#~ msgstr "Effets d’image"
+
+#~ msgid "Blur the contents of objects, preserving the outline"
+#~ msgstr "Rend flou le contenu des objets, mais préserve le contour"
+
 #~ msgid "Parallel Hollow"
 #~ msgstr "Évidement parallèle"
+
 #~ msgid "A blurry hollow going parallel to the edge on the inside"
 #~ msgstr "Sillon flou parallèle au bord à l’intérieur de l’objet"
+
 #~ msgid "Hole"
 #~ msgstr "Évidement"
+
 #~ msgid "Opens a smooth hole inside the shape"
 #~ msgstr "Ouvre un trou lisse à l’intérieur de la forme"
+
 #~ msgid "Smooth Outline"
 #~ msgstr "Contour lissé"
+
 #~ msgid "Outlining the lines and smoothing their crossings"
 #~ msgstr "Souligne les contours et adoucit leurs croisements"
+
 #~ msgid "Inner Outline"
 #~ msgstr "Contour interne"
+
 #~ msgid "Draws an outline around"
 #~ msgstr "Trace un contour"
+
 #~ msgid "Outline Double"
 #~ msgstr "Contour, double"
+
 #~ msgid "Draws a smooth line inside colorized with the color it overlays"
 #~ msgstr ""
 #~ "Dessine une ligne intérieure lissée, colorée avec la couleur qu’elle "
 #~ "recouvre"
+
 #~ msgid "Adds a glowing blur and removes the shape"
 #~ msgstr "Ajoute un flou lumineux et supprime la forme"
+
 #~ msgid "Color Outline, in"
 #~ msgstr "Soulignement du contour, interne"
+
 #~ msgid "A colorizable inner outline with adjustable width and blur"
 #~ msgstr ""
 #~ "Un soulignement du contour interne qu’il est possible de colorer, avec "
 #~ "une épaisseur ajustable et un flou"
+
 #~ msgid "handle"
 #~ msgstr "poignée"
+
 #~ msgid "convex hull corner"
 #~ msgstr "coin de l’enveloppe convexe"
+
 #~ msgid "Melt:"
 #~ msgstr "Fondu :"
+
 #~ msgid "_Snap guides while dragging"
 #~ msgstr "Aimanter les guides en déplaçant"
+
 #~ msgid ""
 #~ "While dragging a guide, snap to object nodes or bounding box corners "
 #~ "('Snap to nodes' or 'snap to bounding box corners' must be enabled; only "
@@ -28718,326 +28788,457 @@ msgstr "Entrée XAML"
 #~ "englobantes ('Aimanter aux nœuds d’objets' ou 'Aimanter aux coins des "
 #~ "boîtes englobantes' doit être activé ; seule une petite partie du guide "
 #~ "proche du curseur sera aimantée)"
+
 #~ msgid "Snap to bounding box corners"
 #~ msgstr "Aimanter aux coins des boîtes englobantes"
+
 #~ msgid "Expant:"
 #~ msgstr "Expansion :"
+
 #~ msgid "Erode:"
 #~ msgstr "Érosion"
+
 #~ msgid "Matte jelly"
 #~ msgstr "Gel mat"
+
 #~ msgid "ABCs"
 #~ msgstr "ABC"
+
 #~ msgid "Motion blur, horizontal"
 #~ msgstr "Flou cinétique horizontal"
+
 #~ msgid ""
 #~ "Blur as if the object flies horizontally; adjust Standard Deviation to "
 #~ "vary force"
 #~ msgstr ""
 #~ "Rendre flou comme si l’objet volait horizontalement ; ajuster la variance "
 #~ "pour en modifier la force"
+
 #~ msgid "Motion blur, vertical"
 #~ msgstr "Flou cinétique vertical"
+
 #~ msgid ""
 #~ "Blur as if the object flies vertically; adjust Standard Deviation to vary "
 #~ "force"
 #~ msgstr ""
 #~ "Rendre flou comme si l’objet volait verticalement ; ajuster la variance "
 #~ "pour en modifier la force"
+
 #~ msgid "Drop shadow under the cut-out of the shape"
 #~ msgstr "Ombre portée sous la découpe de la forme"
+
 #~ msgid "Edge detect"
 #~ msgstr "Détection des bords"
+
 #~ msgid "Horizontal edge detect"
 #~ msgstr "Détection des bords horizontale"
+
 #~ msgid "Detect horizontal color edges in object"
 #~ msgstr "Détecte les bords de couleur horizontaux dans les objets"
+
 #~ msgid "Vertical edge detect"
 #~ msgstr "Détection des bords verticale"
+
 #~ msgid "Detect vertical color edges in object"
 #~ msgstr "Détecte les bords de couleur verticaux dans les objets"
+
 #~ msgid "Render in shades of gray by reducing saturation to zero"
 #~ msgstr "Rendu en teintes de gris par réduction de la saturation à zéro"
+
 #~ msgid "Sepia"
 #~ msgstr "Sépia"
+
 #~ msgid "Render in warm sepia tones"
 #~ msgstr "Rendu en tons sépia chauds"
+
 #~ msgid "HSL Bumps"
 #~ msgstr "Bosselage TSL"
+
 #~ msgid "Highly flexible bump combining diffuse and specular lightings"
 #~ msgstr ""
 #~ "Bosselage extrêmement flexible combinant une lumière diffuse et une "
 #~ "lumière spéculaire"
+
 #~ msgid "Blur inner borders and intersections"
 #~ msgstr "Rend flou les bordures intérieures et les intersections"
+
 #~ msgid ""
 #~ "Blend image or object with a flood color and set lightness and contrast"
 #~ msgstr ""
 #~ "Mélange un image ou un objet avec une couleur de remplissage, et définit "
 #~ "sa luminosité et son contraste"
+
 #~ msgid "Invert hue, or rotate it"
 #~ msgstr "Inverse ou permute la teinte"
+
 #~ msgid "Fancy blur"
 #~ msgstr "Flou fantaisie"
+
 #~ msgid "Smooth colorized contour which allows desaturation and hue rotation"
 #~ msgstr ""
 #~ "Contour coloré lissé, qui permet la désaturation et la rotation de teinte"
+
 #~ msgid "Glow"
 #~ msgstr "Lueur"
+
 #~ msgid "Glow of object's own color at the edges"
 #~ msgstr "Rayonnement de la couleur de l’objet sur ses bords"
+
 #~ msgid "Color emboss"
 #~ msgstr "Bosselage de couleur"
+
 #~ msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 #~ msgstr ""
 #~ "Effet de bosselage classique ou coloré : niveaux de gris, couleur et "
 #~ "relief en 3D"
+
 #~ msgid "Classical photographic solarization effect"
 #~ msgstr "Effet de solarisation photographique classique"
+
 #~ msgid ""
 #~ "An effect between solarize and invert which often preserves sky and water "
 #~ "lights"
 #~ msgstr ""
 #~ "Un effet à mi-chemin de solarisation et inversion, qui préserve souvent "
 #~ "les lumières du ciel et de l’eau"
+
 #~ msgid "Image effects, transparent"
 #~ msgstr "Effets d’image transparents"
+
 #~ msgid "Smooth edges"
 #~ msgstr "Lissage du pourtour"
+
 #~ msgid ""
 #~ "Smooth the outside of shapes and pictures without altering their contents"
 #~ msgstr "Lisse l’extérieur des formes et images sans en altérer le contenu"
+
 #~ msgid "Specular light"
 #~ msgstr "Éclairage spéculaire"
+
 #~ msgid "Noise transparency"
 #~ msgstr "Transparence turbulente"
+
 #~ msgid "Noise fill"
 #~ msgstr "Remplissage turbulent"
+
 #~ msgid "Diffuse light"
 #~ msgstr "Éclairage diffus"
+
 #~ msgid "HSL Bumps, matte"
 #~ msgstr "Bosselage TSL mat"
+
 #~ msgid ""
 #~ "Same as HSL bumps but with a diffuse reflection instead of a specular one"
 #~ msgstr ""
 #~ "Identique à Bosselage TSL, mais avec une réflexion diffuse et non pas "
 #~ "spéculaire"
+
 #~ msgid "Simple blur"
 #~ msgstr "Flou"
+
 #~ msgid ""
 #~ "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 #~ msgstr ""
 #~ "Flou gaussien simple, identique au réglage de flou dans la boite de "
 #~ "dialogue Remplissage et contour"
+
 #~ msgid ""
 #~ "Emboss effect : Colors of the original images are preserved or modified "
 #~ "by Blend"
 #~ msgstr ""
 #~ "Effet d’embossage : les couleurs de l’image originale sont préservées ou "
 #~ "modifiées par Fondre"
+
 #~ msgid "Inkblot"
 #~ msgstr "Tache d’encre"
+
 #~ msgid "Combination of smooth shading and embossing"
 #~ msgstr "Combinaison d’ombrage doux et de bosselage"
+
 #~ msgid "Imitation of black and white cartoon shading"
 #~ msgstr "Imitation d’ombrage de bande dessinée en noir et blanc"
+
 #~ msgid "Brushed aluminium shader"
 #~ msgstr "Ombrage aluminium brossé"
+
 #~ msgid "Chrome dark"
 #~ msgstr "Chrome profond"
+
 #~ msgid "Dark version of chrome shading with a ground reflection simulation"
 #~ msgstr ""
 #~ "Version sombre de l’ombrage chrome avec une simulation de réflexion par "
 #~ "le sol"
+
 #~ msgid "3D wood"
 #~ msgstr "Bois en 3D"
+
 #~ msgid "Transparency utilities"
 #~ msgstr "Outils de transparence"
+
 #~ msgid "Noisy blur"
 #~ msgstr "Flou agité"
+
 #~ msgid "Small-scale roughening and blurring to edges and content"
 #~ msgstr ""
 #~ "Agite et rend flous les bords et le contenu, sur une petite amplitude"
+
 #~ msgid "HSL Bumps, transparent"
 #~ msgstr "Bosselage TSL transparent"
+
 #~ msgid "Highly flexible specular bump with transparency"
 #~ msgstr "Bosselage spéculaire extrêmement flexible avec transparence"
+
 #~ msgid ""
 #~ "Give lead pencil or chromolithography or engraving or other effects to "
 #~ "images and material filled objects"
 #~ msgstr ""
 #~ "Donne un effet crayon gras, chromolithographie, gravure ou d’autres "
 #~ "effets aux images et ou objets remplis avec une matière"
+
 #~ msgid "Alpha draw"
 #~ msgstr "Dessin transparent"
+
 #~ msgid "Gives a transparent drawing effect to bitmaps and materials"
 #~ msgstr "Donne un effet de dessin transparent aux bitmaps et matières"
+
 #~ msgid "Alpha draw, color"
 #~ msgstr "Dessin en couleur transparent"
+
 #~ msgid "Gives a transparent color fill effect to bitmaps and materials"
 #~ msgstr ""
 #~ "Donne un effet de remplissage transparent et coloré aux bitmaps et "
 #~ "matières"
+
 #~ msgid "Black outline"
 #~ msgstr "Soulignement du contour, noir"
+
 #~ msgid "Draws a black outline around"
 #~ msgstr "Trace un contour noir"
+
 #~ msgid "Color outline"
 #~ msgstr "Contour coloré"
+
 #~ msgid "Draws a colored outline around"
 #~ msgstr "Trace un contour coloré autour"
+
 #~ msgid "Inner Shadow"
 #~ msgstr "Ombre interne"
+
 #~ msgid "Darken edges"
 #~ msgstr "Pourtour assombri"
+
 #~ msgid "Darken the edges with an inner blur"
 #~ msgstr "Assombrit les bords avec un flou intérieur"
+
 #~ msgid "Fuzzy Glow"
 #~ msgstr "Lueur trouble"
+
 #~ msgid "Overlays a semi-transparent shifted copy to a blurred one"
 #~ msgstr ""
 #~ "Superpose une copie semi-transparente et décalée à l’original flouté"
+
 #~ msgid "Change colors to a duotone palette"
 #~ msgstr "Modifie les couleurs avec une palette à deux tons"
+
 #~ msgid "Light eraser, negative"
 #~ msgstr "Gomme lumière négative"
+
 #~ msgid "Like Light eraser but converts to negative"
 #~ msgstr "Équivalent à Gomme lumière, mais converti en négatif"
+
 #~ msgid "Repaint anything monochrome"
 #~ msgstr "Recouvre l’objet d’une couleur monochrome"
+
 #~ msgid "Increase or decrease lightness and contrast"
 #~ msgstr "Augmente ou diminue la luminosité et le contraste"
+
 #~ msgid "Clean edges"
 #~ msgstr "Nettoie les bords"
+
 #~ msgid "Copper and chocolate"
 #~ msgstr "Cuivre et chocolat"
+
 #~ msgid ""
 #~ "Specular bump which can be easily converted from metallic to molded "
 #~ "plastic effects"
 #~ msgstr ""
 #~ "Bosselage spéculaire dont l’effet métallique peut être facilement "
 #~ "converti en effet de plastique moulé"
+
 #~ msgid "Inner Glow"
 #~ msgstr "Lueur interne"
+
 #~ msgid "Adds a colorizable glow inside"
 #~ msgstr "Ajoute une lueur interne qui peut être colorée"
+
 #~ msgid "Create a tritone palette with hue selectable by flood"
 #~ msgstr ""
 #~ "Crée une palette à trois tons avec une teinte que l’on peut sélectionner "
 #~ "par remplissage"
+
 #~ msgid "Image Blur"
 #~ msgstr "Flou par image"
+
 #~ msgid "Radiation"
 #~ msgstr "Radiation"
+
 #~ msgid "Blur, custom (ABCs)"
 #~ msgstr "Flou, paramétrable (ABC)"
+
 #~ msgid "Experimental"
 #~ msgstr "Expérimental"
+
 #~ msgid "Clean edges, custom (ABCs)"
 #~ msgstr "Nettoyage des bords, paramétrable (ABC)"
+
 #~ msgid "Color shift, custom (ABCs)"
 #~ msgstr "Décalage de couleur, paramétrable (ABC)"
+
 #~ msgid "Diffuse light, custom (ABCs)"
 #~ msgstr "Éclairage diffus, paramétrable (ABC)"
+
 #~ msgid "Feather, custom (ABCs)"
 #~ msgstr "Estompage du pourtour, paramétrable (ABC)"
+
 #~ msgid "Matte jelly, custom (ABCs)"
 #~ msgstr "Gel mat, paramétrable (ABC)"
+
 #~ msgid "Noise fill, custom (ABCs)"
 #~ msgstr "Remplissage turbulent, paramétrable (ABC)"
+
 #~ msgid "Outline, custom (ABCs)"
 #~ msgstr "Soulignement du contour, paramétrable (ABC)"
+
 #~ msgid "Roughen, custom (ABCs)"
 #~ msgstr "Agitation, paramétrable (ABC)"
+
 #~ msgid "Silhouette, custom (ABCs)"
 #~ msgstr "Silhouette, paramétrable (ABC)"
+
 #~ msgid "Specular light, custom (ABCs)"
 #~ msgstr "Éclairage spéculaire, paramétrable (ABC)"
+
 #~ msgid "Brightness, custom (Color)"
 #~ msgstr "Brillance, paramétrable (Couleur)"
+
 #~ msgid "Channel painting, custom (Color)"
 #~ msgstr "Peinture par canal, paramétrable (Couleur)"
+
 #~ msgid "Channel transparency, custom (Color)"
 #~ msgstr "Transparence par canal, paramétrable (Couleur)"
+
 #~ msgid "Colorize, custom (Color)"
 #~ msgstr "Colorer, paramétrable (Couleur)"
+
 #~ msgid "Duochrome, custom (Color)"
 #~ msgstr "Duochrome, paramétrable (Couleur)"
+
 #~ msgid "Electrize, custom (Color)"
 #~ msgstr "Électriser, paramétrable (Couleur)"
+
 #~ msgid "Greyscale, custom (Color)"
 #~ msgstr "Niveaux de gris, paramétrable (Couleur)"
+
 #~ msgid "Lightness, custom (Color)"
 #~ msgstr "Clarté, paramétrable (Couleur)"
+
 #~ msgid "Quadritone fantasy, custom (Color)"
 #~ msgstr "Quadritone fantaisie, paramétrable (Couleur)"
+
 #~ msgid "Solarize, custom (Color)"
 #~ msgstr "Solariser, paramétrable (Couleur)"
+
 #~ msgid "Tritone, custom (Color)"
 #~ msgstr "Tritone, paramétrable (Couleur)"
+
 #~ msgid "Opacity (%):"
 #~ msgstr "Opacité (%) :"
+
 #~ msgid "Black, blurred drop shadow"
 #~ msgstr "Ombre portée, noire et diffuse"
+
 #~ msgid "Drop Glow"
 #~ msgstr "Lueur projetée"
+
 #~ msgid "White, blurred drop glow"
 #~ msgstr "Lueur portée, blanche et diffuse"
+
 #~ msgid "Cross engraving, custom"
 #~ msgstr "Gravure croisée, paramétrable"
+
 #~ msgid "Drawing, custom"
 #~ msgstr "Dessin, paramétrable"
+
 #~ msgid "Edge detect, custom (Image)"
 #~ msgstr "Détection de bord, paramétrable (Image)"
 
 #, fuzzy
 #~ msgid "Cross-smooth, custom (Morphology)"
 #~ msgstr "Adoucissement"
+
 #~ msgid "Drop shadow, custom (Shadows and Glows)"
 #~ msgstr "Ombre portée, paramétrable (Ombres et lueurs)"
+
 #~ msgid "link"
 #~ msgstr "lier"
+
 #~ msgid "Barcode - QR Code"
 #~ msgstr "Code barre - Code QR"
 
 #, fuzzy
 #~ msgid "Vibration:"
 #~ msgstr "Saturation :"
+
 #~ msgid "Random Seed:"
 #~ msgstr "Générateur pseudo-aléatoire :"
+
 #~ msgid "Iconify"
 #~ msgstr "Iconifier"
+
 #~ msgid "Close"
 #~ msgstr "Fermer"
+
 #~ msgid "(invalid UTF-8 string)"
 #~ msgstr "(chaîne UTF-8 invalide)"
+
 #~ msgid "All in one"
 #~ msgstr "Tout en un"
 
 #, fuzzy
 #~ msgid "Sharp angle tolerance:"
 #~ msgstr "Tolérance maximale de fin :"
+
 #~ msgid "DXF Points"
 #~ msgstr "Points DXF"
+
 #~ msgid "File"
 #~ msgstr "Fichier"
+
 #~ msgid "center"
 #~ msgstr "centre"
+
 #~ msgid "Center"
 #~ msgstr "Centre"
+
 #~ msgid "Windows 32-bit Print"
 #~ msgstr "Impression Windows 32-bits"
+
 #~ msgid "Print Previe_w"
 #~ msgstr "A_perçu avant impression"
+
 #~ msgid "Preview document printout"
 #~ msgstr "Prévisualiser avant impression"
 #~ msgctxt "Font selector"
+
 #~ msgid "_Style"
 #~ msgstr "_Style"
+
 #~ msgid "Font si_ze:"
 #~ msgstr "Ta_ille de police :"
+
 #~ msgid "Transluscent"
 #~ msgstr "Translucide"
+
 #~ msgid "Label:"
 #~ msgstr "Étiquette :"
 
@@ -29064,22 +29265,31 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Snap ancestors"
 #~ msgstr "Aimanter aux grilles"
+
 #~ msgid "Font"
 #~ msgstr "Police"
+
 #~ msgid "Angle (degrees):"
 #~ msgstr "Angle (degrés)"
+
 #~ msgid "Enable id stripping"
 #~ msgstr "Supprimer les identifiants"
+
 #~ msgid "Indent"
 #~ msgstr "Indentation"
+
 #~ msgid "Set precision"
 #~ msgstr "Précision"
+
 #~ msgid "Simplify colors"
 #~ msgstr "Simplifier les couleurs"
+
 #~ msgid "Strip xml prolog"
 #~ msgstr "Enlève le prologue xml"
+
 #~ msgid "Style to xml"
 #~ msgstr "Style en XML"
+
 #~ msgid ""
 #~ "This extension optimizes the SVG file according to the following "
 #~ "options:\n"
@@ -29120,24 +29330,33 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Y frequency:"
 #~ msgstr "Fréquence de base :"
+
 #~ msgid "To spray a path by pushing, select it and drag over it."
 #~ msgstr ""
 #~ "Pour pulvériser un chemin en le poussant, sélectionnez-le et faites "
 #~ "glisser la souris dessus."
+
 #~ msgid "(minimum mean)"
 #~ msgstr "(moyenne minimale)"
+
 #~ msgid "Toolbox|Scatter"
 #~ msgstr "Dispersion"
+
 #~ msgid "Toolbox|Scatter:"
 #~ msgstr "Dispersion :"
+
 #~ msgid "(low rotation variation)"
 #~ msgstr "(variation de rotation faible)"
+
 #~ msgid "(low scale variation)"
 #~ msgstr "(variation d’échelle faible)"
+
 #~ msgid "Toolbox|Scale"
 #~ msgstr "Échelle"
+
 #~ msgid "Toolbox|Scale:"
 #~ msgstr "Échelle :"
+
 #~ msgid "<b>Fade out:</b>"
 #~ msgstr "<b>Opacité :</b>"
 
@@ -29152,819 +29371,1014 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Contrasted"
 #~ msgstr "Contraste"
+
 #~ msgid "Primary blur:"
 #~ msgstr "Flou primaire :"
+
 #~ msgid "Secondary blur:"
 #~ msgstr "Flou secondaire :"
 
 #, fuzzy
 #~ msgid "Smooth all"
 #~ msgstr "Adoucir"
+
 #~ msgid "When the original is deleted, its clones:"
 #~ msgstr "Lors que l’original est supprimé, ses clones :"
+
 #~ msgid "_Blend mode:"
 #~ msgstr "Mode de _fondu :"
+
 #~ msgid "Cols:"
 #~ msgstr "Colonnes :"
+
 #~ msgid "Rows:"
 #~ msgstr "Lignes :"
 #~ msgctxt "Palette"
+
 #~ msgid "Blue1"
 #~ msgstr "Bleu1"
 #~ msgctxt "Palette"
+
 #~ msgid "Blue2"
 #~ msgstr "Bleu2"
 #~ msgctxt "Palette"
+
 #~ msgid "Blue3"
 #~ msgstr "Bleu3"
 #~ msgctxt "Palette"
+
 #~ msgid "Red1"
 #~ msgstr "Rouge1"
 #~ msgctxt "Palette"
+
 #~ msgid "Red2"
 #~ msgstr "Rouge2"
 #~ msgctxt "Palette"
+
 #~ msgid "Red3"
 #~ msgstr "Rouge3"
 #~ msgctxt "Palette"
+
 #~ msgid "Orange1"
 #~ msgstr "Orange1"
 #~ msgctxt "Palette"
+
 #~ msgid "Orange2"
 #~ msgstr "Orange2"
 #~ msgctxt "Palette"
+
 #~ msgid "Orange3"
 #~ msgstr "Orange3"
 #~ msgctxt "Palette"
+
 #~ msgid "Brown1"
 #~ msgstr "Brun1"
 #~ msgctxt "Palette"
+
 #~ msgid "Brown2"
 #~ msgstr "Brun2"
 #~ msgctxt "Palette"
+
 #~ msgid "Brown3"
 #~ msgstr "Brun3"
 #~ msgctxt "Palette"
+
 #~ msgid "Green1"
 #~ msgstr "Vert1"
 #~ msgctxt "Palette"
+
 #~ msgid "Green2"
 #~ msgstr "Vert2"
 #~ msgctxt "Palette"
+
 #~ msgid "Green3"
 #~ msgstr "Vert3"
 #~ msgctxt "Palette"
+
 #~ msgid "Purple1"
 #~ msgstr "Violet1"
 #~ msgctxt "Palette"
+
 #~ msgid "Purple2"
 #~ msgstr "Violet2"
 #~ msgctxt "Palette"
+
 #~ msgid "Purple3"
 #~ msgstr "Violet3"
 #~ msgctxt "Palette"
+
 #~ msgid "Metalic1"
 #~ msgstr "Métallique1"
 #~ msgctxt "Palette"
+
 #~ msgid "Metalic2"
 #~ msgstr "Métallique2"
 #~ msgctxt "Palette"
+
 #~ msgid "Metalic3"
 #~ msgstr "Métallique3"
 #~ msgctxt "Palette"
+
 #~ msgid "Metalic4"
 #~ msgstr "Métallique4"
 #~ msgctxt "Palette"
+
 #~ msgid "Grey1"
 #~ msgstr "Gris1"
 #~ msgctxt "Palette"
+
 #~ msgid "Grey2"
 #~ msgstr "Gris2"
 #~ msgctxt "Palette"
+
 #~ msgid "Grey3"
 #~ msgstr "Gris3"
 #~ msgctxt "Palette"
+
 #~ msgid "Grey4"
 #~ msgstr "Gris4"
 #~ msgctxt "Palette"
+
 #~ msgid "Grey5"
 #~ msgstr "Gris5"
 #~ msgctxt "Palette"
+
 #~ msgid "default outer 1"
 #~ msgstr "extérieur 1 (défaut)"
 #~ msgctxt "Palette"
+
 #~ msgid "default outer 2"
 #~ msgstr "extérieur 2 (défaut)"
 #~ msgctxt "Palette"
+
 #~ msgid "default outer 3"
 #~ msgstr "extérieur 3 (défaut)"
 #~ msgctxt "Palette"
+
 #~ msgid "default block"
 #~ msgstr "bloc (défaut)"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default added blue"
 #~ msgstr "bleu ajouté (défaut)"
 #~ msgctxt "Palette"
+
 #~ msgid "default block header"
 #~ msgstr "en-tête de bloc (défaut)"
 #~ msgctxt "Palette"
+
 #~ msgid "default alert block"
 #~ msgstr "bloc d'alerte (défaut)"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default added red"
 #~ msgstr "rouge ajouté (défaut)"
 #~ msgctxt "Palette"
+
 #~ msgid "default alert block header"
 #~ msgstr "en-tête de bloc d'alerte (défaut)"
 #~ msgctxt "Palette"
+
 #~ msgid "default example block"
 #~ msgstr "bloc d'exemple (défaut)"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default added green"
 #~ msgstr "vert ajouté (défaut)"
 #~ msgctxt "Palette"
+
 #~ msgid "default example block header"
 #~ msgstr "en-tête de bloc d'exemple (défaut)"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default covered text"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default covered bullet"
 #~ msgstr "Créer un texte encadré"
 #~ msgctxt "Palette"
+
 #~ msgid "default text"
 #~ msgstr "texte (défaut)"
 #~ msgctxt "Palette"
+
 #~ msgid "default light outer 1"
 #~ msgstr "extérieur 1 (default light)"
 #~ msgctxt "Palette"
+
 #~ msgid "default light outer 2"
 #~ msgstr "extérieur 2 (default light)"
 #~ msgctxt "Palette"
+
 #~ msgid "default light outer 3"
 #~ msgstr "extérieur 3 (default light)"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default light block"
 #~ msgstr "Titre par défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default light block header"
 #~ msgstr "Titre par défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default light block header text"
 #~ msgstr "Paramètres par défaut de l’interface"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default light alert block"
 #~ msgstr "Titre par défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default light alert block header"
 #~ msgstr "Titre par défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default light alert block header text"
 #~ msgstr "Paramètres par défaut de l’interface"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default light example block"
 #~ msgstr "Titre par défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default light example block header"
 #~ msgstr "Titre par défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default light example block header text"
 #~ msgstr "Paramètres par défaut de l’interface"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default light covered text"
 #~ msgstr "Paramètres par défaut de l’interface"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default light covered bullet"
 #~ msgstr "Paramètres par défaut de l’interface"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default light background"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "default light text"
 #~ msgstr "Titre par défaut"
 #~ msgctxt "Palette"
+
 #~ msgid "beetle outer 1"
 #~ msgstr "extérieur 1 (beetle)"
 #~ msgctxt "Palette"
+
 #~ msgid "beetle outer 2"
 #~ msgstr "extérieur 2 (beetle)"
 #~ msgctxt "Palette"
+
 #~ msgid "beetle outer 3"
 #~ msgstr "extérieur 3 (beetle)"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beetle added red"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beetle alert block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beetle added green"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beetle example block header text"
 #~ msgstr "Test en-tête de groupe"
 #~ msgctxt "Palette"
+
 #~ msgid "beetle header text"
 #~ msgstr "en-tête de texte (beetle)"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beetle added grey"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beetle covered bullet"
 #~ msgstr "Créer un texte encadré"
 #~ msgctxt "Palette"
+
 #~ msgid "beetle background"
 #~ msgstr "arrière-plan (beetle)"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beetle covered text"
 #~ msgstr "Créer un texte encadré"
 #~ msgctxt "Palette"
+
 #~ msgid "beetle text"
 #~ msgstr "texte (beetle)"
 #~ msgctxt "Palette"
+
 #~ msgid "albatross outer 1"
 #~ msgstr "extérieur 1 (albatross)"
 #~ msgctxt "Palette"
+
 #~ msgid "albatross outer 2"
 #~ msgstr "extérieur 2 (albatross)"
 #~ msgctxt "Palette"
+
 #~ msgid "albatross outer 3"
 #~ msgstr "extérieur 3 (albatross)"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross background"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross block"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross block header"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross bullet"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross covered bullet"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross covered text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross added red"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross alert block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross added green"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross example block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross added yellow"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "albatross added white"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "fly text"
 #~ msgstr "Taper du texte"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "fly added grey"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "fly outer"
 #~ msgstr "filtre"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "fly background"
 #~ msgstr "Fond"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "fly header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "fly covered bullet"
 #~ msgstr "Texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "fly covered text"
 #~ msgstr "Texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "fly added red"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "fly alert block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "fly added green"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "fly example block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "fly added blue"
 #~ msgstr "Test en-tête de groupe"
 #~ msgctxt "Palette"
+
 #~ msgid "seagull outer 1"
 #~ msgstr "extérieur 1 (seagull)"
 #~ msgctxt "Palette"
+
 #~ msgid "seagull outer 2"
 #~ msgstr "extérieur 2 (seagull)"
 #~ msgctxt "Palette"
+
 #~ msgid "seagull outer 3"
 #~ msgstr "extérieur 3 (seagull)"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "seagull block"
 #~ msgstr "défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "seagull added grey"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "seagull block header"
 #~ msgstr "Déverrouiller le calque"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "seagull covered text"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "seagull covered bullet"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "seagull background"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "seagull text"
 #~ msgstr "Texte vertical"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beaver outer frame"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beaver added red"
 #~ msgstr "Créer et éditer des dégradés"
 #~ msgctxt "Palette"
+
 #~ msgid "beaver outer 1"
 #~ msgstr "extérieur 1 (beaver)"
 #~ msgctxt "Palette"
+
 #~ msgid "beaver outer 2"
 #~ msgstr "extérieur 2 (beaver)"
 #~ msgctxt "Palette"
+
 #~ msgid "beaver outer 3"
 #~ msgstr "extérieur 3 (beaver)"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beaver added blue"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beaver block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beaver added green"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beaver example block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beaver alert block header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beaver covered text"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beaver covered bullet"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beaver background"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "beaver text"
 #~ msgstr "Créer un texte"
 #~ msgctxt "Palette"
+
 #~ msgid "crane outer 1"
 #~ msgstr "extérieur 1 (crane)"
 #~ msgctxt "Palette"
+
 #~ msgid "crane outer 2"
 #~ msgstr "extérieur 2 (crane)"
 #~ msgctxt "Palette"
+
 #~ msgid "crane outer 3"
 #~ msgstr "extérieur 3 (crane)"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "crane block"
 #~ msgstr "Déverrouiller le calque"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "crane added orange"
 #~ msgstr "angle contraint"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "crane block header"
 #~ msgstr "Déverrouiller le calque"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "crane alert block"
 #~ msgstr "défaut"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "crane added red"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "crane alert block header"
 #~ msgstr "Déverrouiller le calque"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "crane example block header"
 #~ msgstr "Déverrouiller le calque"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "crane covered text"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "crane covered bullet"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "crane bullet"
 #~ msgstr "Créer un texte"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "crane background"
 #~ msgstr "Tracer selon le fond"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "crane text"
 #~ msgstr "Créer un texte"
 #~ msgctxt "Palette"
+
 #~ msgid "wolverine outer 1"
 #~ msgstr "extérieur 1 (wolverine)"
 #~ msgctxt "Palette"
+
 #~ msgid "wolverine outer 2"
 #~ msgstr "extérieur 2 (wolverine)"
 #~ msgctxt "Palette"
+
 #~ msgid "wolverine outer 3"
 #~ msgstr "extérieur 3 (wolverine)"
 #~ msgctxt "Palette"
+
 #~ msgid "wolverine outer 4"
 #~ msgstr "extérieur 4 (wolverine)"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "wolverine added yellow"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "wolverine added blue"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "wolverine header text"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "wolverine added green"
 #~ msgstr "Créer et éditer des dégradés"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "wolverine example block title"
 #~ msgstr "Test en-tête de groupe"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "wolverine covered text"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "wolverine covered bullet"
 #~ msgstr "Créer un texte encadré"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "wolverine background"
 #~ msgstr "Retirer l’arrière-plan"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "wolverine text"
 #~ msgstr "Supprimer le texte"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Orange Hilight"
 #~ msgstr "Hauteur de ligne"
 #~ msgctxt "Palette"
+
 #~ msgid "Orange"
 #~ msgstr "Orange"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Orange Base"
 #~ msgstr "Orange 1"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Orange Shadow"
 #~ msgstr "Ombre interne"
 #~ msgctxt "Palette"
+
 #~ msgid "Yellow"
 #~ msgstr "Jaune"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Yellow Base"
 #~ msgstr "Casse des phrases"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Yellow Shadow"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Orange"
 #~ msgstr "Triangle exinscrit"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Red"
 #~ msgstr "centre"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Red Base"
 #~ msgstr "Casse des phrases"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Deep Red"
 #~ msgstr "centre"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Human Highlight"
 #~ msgstr "Hauteur de ligne"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Human"
 #~ msgstr "Han"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Human Base"
 #~ msgstr "Han"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Environmental Shadow"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Environmental Blue Highlight"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Environmental Blue Medium"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Environmental Blue Base"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Environmental Blue Shadow"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Blue Shadow"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Blue"
 #~ msgstr "centre"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Blue Base"
 #~ msgstr "Casse des phrases"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Green Highlight"
 #~ msgstr "Centre du cercle inscrit"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Green"
 #~ msgstr "Centre du cercle inscrit"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Green Base"
 #~ msgstr "Casse des phrases"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Green Shadow"
 #~ msgstr "Ombre interne"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Magenta Highlight"
 #~ msgstr "Magenta"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Magenta"
 #~ msgstr "Magenta"
 
 #, fuzzy
 #~ msgctxt "Palette"
+
 #~ msgid "Accent Dark Violet"
 #~ msgstr "Magenta"
 #~ msgctxt "Palette"
+
 #~ msgid "Grey 1"
 #~ msgstr "Gris 1"
 #~ msgctxt "Palette"
+
 #~ msgid "Grey 2"
 #~ msgstr "Gris 2"
 #~ msgctxt "Palette"
+
 #~ msgid "Grey 3"
 #~ msgstr "Gris 3"
 #~ msgctxt "Palette"
+
 #~ msgid "Grey 4"
 #~ msgstr "Gris 4"
 #~ msgctxt "Palette"
+
 #~ msgid "Grey 5"
 #~ msgstr "Gris 5"
 #~ msgctxt "Palette"
+
 #~ msgid "Grey 6"
 #~ msgstr "Gris 6"
+
 #~ msgid "%s: %d (print colors preview) - Inkscape"
 #~ msgstr "%s: %d (aperçu des couleurs d’impression) - Inkscape"
+
 #~ msgid "%s (print colors preview) - Inkscape"
 #~ msgstr "%s (aperçu des couleurs d’impression) - Inkscape"
 
@@ -29972,13 +30386,17 @@ msgstr "Entrée XAML"
 #~ msgid "Drop shadow, color"
 #~ msgstr "Ombre portée couleur -Expérimentale-"
 #~ msgctxt "Filter blend mode"
+
 #~ msgid "Normal"
 #~ msgstr "Normal"
 #~ msgctxt "Filter blend mode"
+
 #~ msgid "Screen"
 #~ msgstr "Superposition"
+
 #~ msgid "ZIP Output"
 #~ msgstr "Sortie ZIP"
+
 #~ msgid "Spread:"
 #~ msgstr "Dispersion :"
 
@@ -29993,25 +30411,34 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Change colors to a two colors palette"
 #~ msgstr "Modifie les couleurs avec une palette à deux tons"
+
 #~ msgid "tileClonesDialog|Arrange"
 #~ msgstr "Organiser"
+
 #~ msgid "Color Markers to Match Stroke"
 #~ msgstr "Colorer les marqueurs pour les assortir au contour"
 #~ msgctxt "Gap"
+
 #~ msgid "H:"
 #~ msgstr "H :"
 #~ msgctxt "Stroke width"
+
 #~ msgid "Width:"
 #~ msgstr "Épaisseur :"
+
 #~ msgid "Randomize hue"
 #~ msgstr "Rendre la teinte aléatoire"
+
 #~ msgid "Randomize lightness"
 #~ msgstr "Rendre la luminosité aléatoire"
+
 #~ msgid "Randomize saturation"
 #~ msgstr "Rendre la saturation aléatoire"
+
 #~ msgid "Year (0 for current):"
 #~ msgstr "Année (0 pour l’année en cours) :"
 #~ msgctxt "Node tool tip"
+
 #~ msgid ""
 #~ "<b>%u of %u nodes</b> selected. Drag to select nodes, click to edit only "
 #~ "this object (more: Shift)"
@@ -30019,22 +30446,29 @@ msgstr "Entrée XAML"
 #~ "<b>%u sur %u nœuds</b> sélectionnés. Cliquer-glisser pour sélectionner "
 #~ "des nœuds, cliquer pour éditer seulement cet objet (modificateur : Maj)"
 #~ msgctxt "Node tool tip"
+
 #~ msgid ""
 #~ "<b>%u of %u nodes</b> selected. Drag to select nodes, click clear the "
 #~ "selection"
 #~ msgstr ""
 #~ "<b>%u sur %u nœuds</b> sélectionnés. Cliquer-glisser pour sélectionner "
 #~ "des nœuds, cliquer libérer la sélection"
+
 #~ msgid "Create new objects with:"
 #~ msgstr "Créer de nouveaux objets avec :"
+
 #~ msgid "Paint objects with:"
 #~ msgstr "Peindre les objets avec :"
+
 #~ msgid "_Width"
 #~ msgstr "_Largeur"
+
 #~ msgid "_Height"
 #~ msgstr "_Hauteur"
+
 #~ msgid "A_ngle"
 #~ msgstr "A_ngle"
+
 #~ msgid "Opacity, %"
 #~ msgstr "Opacité, %"
 
@@ -30121,16 +30555,22 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Area width"
 #~ msgstr "Épaisseur du contour"
+
 #~ msgid "Spacing"
 #~ msgstr "Espacement"
+
 #~ msgid "Function applied to the blue channel"
 #~ msgstr "Fonction appliquée au canal bleu"
+
 #~ msgid "Function applied to the green channel"
 #~ msgstr "Fonction appliquée au canal vert"
+
 #~ msgid "Function applied to the red channel"
 #~ msgstr "Fonction appliquée au canal rouge"
+
 #~ msgid "Rotation (degrees):"
 #~ msgstr "Rotation (deg) :"
+
 #~ msgid "Rotation(degrees):"
 #~ msgstr "Rotation (deg) :"
 
@@ -30161,12 +30601,16 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Export aborted."
 #~ msgstr "Export en cours"
+
 #~ msgid "Side Length 'a'/px: "
 #~ msgstr "Longueur du côté a (px) :"
+
 #~ msgid "Side Length 'b'/px: "
 #~ msgstr "Longueur du côté b (px) :"
+
 #~ msgid "Side Length 'c'/px: "
 #~ msgstr "Longueur du côté c (px) :"
+
 #~ msgid ""
 #~ "Generate a random pattern of Voronoi cells. The pattern will be "
 #~ "accessible in the Fill and Stroke dialog. You must select an object or a "
@@ -30175,134 +30619,194 @@ msgstr "Entrée XAML"
 #~ "Génère un motif aléatoire de cellules de Voronoi. Le motif sera "
 #~ "accessible depuis la boîte de dialogue Remplissage et contour. Vous devez "
 #~ "sélectionner un objet ou un groupe."
+
 #~ msgid "Where to apply?"
 #~ msgstr "Où appliquer ?"
+
 #~ msgid "Order"
 #~ msgstr "Ordre"
+
 #~ msgid "Font size [px]"
 #~ msgstr "Taille de police (px)"
+
 #~ msgid "Angle"
 #~ msgstr "Angle"
+
 #~ msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
 #~ msgstr ""
 #~ "Redimensionnement isotrope (utilise le plus petit de : largeur/amplitude "
 #~ "en X ou hauteur/amplitude en Y)"
+
 #~ msgid "Radius"
 #~ msgstr "Rayon"
+
 #~ msgid "Next Path Effect Parameter"
 #~ msgstr "Paramètre suivant"
+
 #~ msgid "Show next Path Effect parameter for editing"
 #~ msgstr "Afficher le paramètre d’effet de chemin suivant pour le modifier"
+
 #~ msgid "Toggle snapping on or off"
 #~ msgstr "Activer ou désactiver le magnétisme"
+
 #~ msgid "Rows"
 #~ msgstr "Lignes"
+
 #~ msgid "Radius [px]"
 #~ msgstr "Rayon (px)"
+
 #~ msgid "Rotation [deg]"
 #~ msgstr "Rotation (deg)"
+
 #~ msgid "Font size"
 #~ msgstr "Taille de police"
+
 #~ msgid "gap|H:"
 #~ msgstr "H :"
+
 #~ msgid "Grid|_New"
 #~ msgstr "_Nouvelle"
+
 #~ msgid "find|Clones"
 #~ msgstr "Clones"
+
 #~ msgid "filesystem|Path:"
 #~ msgstr "Chemin :"
+
 #~ msgid "layers|Top"
 #~ msgstr "Haut"
 #~ msgctxt "Select toolbar"
+
 #~ msgid "X"
 #~ msgstr "X"
 #~ msgctxt "Select toolbar"
+
 #~ msgid "Y"
 #~ msgstr "Y"
 #~ msgctxt "Select toolbar"
+
 #~ msgid "W"
 #~ msgstr "L"
 #~ msgctxt "Select toolbar"
+
 #~ msgid "H"
 #~ msgstr "H"
+
 #~ msgid "StrokeWidth|Width:"
 #~ msgstr "Épaisseur :"
+
 #~ msgid "clonetiler|H"
 #~ msgstr "T"
+
 #~ msgid "clonetiler|S"
 #~ msgstr "S"
+
 #~ msgid "clonetiler|L"
 #~ msgstr "L"
+
 #~ msgid "pdfinput|medium"
 #~ msgstr "moyen"
+
 #~ msgid "filterBlendMode|Normal"
 #~ msgstr "Normal"
+
 #~ msgid "undo action|Raise"
 #~ msgstr "Monter"
+
 #~ msgid "action|Clone"
 #~ msgstr "Cloner"
+
 #~ msgid "web|Link"
 #~ msgstr "Lien"
+
 #~ msgid "object|Clone"
 #~ msgstr "Clone"
+
 #~ msgid "Connector network layout"
 #~ msgstr "Router un réseau de connecteurs"
+
 #~ msgid "swatches|Size"
 #~ msgstr "Taille"
+
 #~ msgid "small"
 #~ msgstr "Petit"
+
 #~ msgid "swatchesHeight|medium"
 #~ msgstr "Moyen"
+
 #~ msgid "large"
 #~ msgstr "Grand"
+
 #~ msgid "huge"
 #~ msgstr "Énorme"
+
 #~ msgid "swatches|Width"
 #~ msgstr "Largeur"
+
 #~ msgid "swatchesWidth|medium"
 #~ msgstr "Moyen"
+
 #~ msgid "wide"
 #~ msgstr "Large"
+
 #~ msgid "wider"
 #~ msgstr "Très large"
+
 #~ msgid "swatches|Wrap"
 #~ msgstr "Retour à la ligne"
+
 #~ msgid "sliders|Link"
 #~ msgstr "Lier"
+
 #~ msgid "_Print Colors Preview"
 #~ msgstr "A_perçu des couleurs d’impression"
+
 #~ msgid "Switch to print colors preview mode"
 #~ msgstr "Passer en mode aperçu des couleurs d’impression"
+
 #~ msgid "fontselector|Style"
 #~ msgstr "Style"
+
 #~ msgid "select toolbar|X position"
 #~ msgstr "position X"
+
 #~ msgid "select toolbar|X"
 #~ msgstr "X"
+
 #~ msgid "select toolbar|Y position"
 #~ msgstr "Position Y"
+
 #~ msgid "select toolbar|Y"
 #~ msgstr "Y"
+
 #~ msgid "select toolbar|Width"
 #~ msgstr "Largeur"
+
 #~ msgid "select toolbar|W"
 #~ msgstr "L"
+
 #~ msgid "select toolbar|Height"
 #~ msgstr "Hauteur"
+
 #~ msgid "select toolbar|H"
 #~ msgstr "select toolbar|H"
+
 #~ msgid "Task"
 #~ msgstr "Tâche"
+
 #~ msgid "Task:"
 #~ msgstr "Tâche :"
+
 #~ msgid "order"
 #~ msgstr "ordre"
+
 #~ msgid "type"
 #~ msgstr "type"
 
 #, fuzzy
 #~ msgid "mouse handler"
 #~ msgstr "gestionnaire de souris"
+
 #~ msgid "view"
 #~ msgstr "vue"
 
@@ -30325,14 +30829,19 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "Transform handle tip"
 #~ msgstr "Poignée de transformation"
+
 #~ msgid "Select Font Size"
 #~ msgstr "Définir la taille de la police"
+
 #~ msgid "Toggle On/Off Bold Style"
 #~ msgstr "Basculer le style Gras"
+
 #~ msgid "Toggle On/Off Italic/Oblique Style"
 #~ msgstr "Basculer le style Italique/Oblique"
+
 #~ msgid "Horizontal Text"
 #~ msgstr "Texte horizontal"
+
 #~ msgid "Vertical Text"
 #~ msgstr "Texte vertical"
 
@@ -30453,46 +30962,62 @@ msgstr "Entrée XAML"
 #, fuzzy
 #~ msgid "tr"
 #~ msgstr "Étoile"
+
 #~ msgid "Refresh the icons"
 #~ msgstr "Rafraîchir les icônes"
+
 #~ msgid "How many digits to write after the decimal dot"
 #~ msgstr "Combien de chiffres écrire après le point décimal"
+
 #~ msgid "Color/opacity used for color spraying"
 #~ msgstr "Couleur et opacités pour la pulvérisation de couleur"
+
 #~ msgid "Show node transformation handles"
 #~ msgstr "Afficher les poignées de transformation de nœud"
+
 #~ msgid "Show next path effect parameter for editing"
 #~ msgstr "Afficher le paramètre d’effet de chemin suivant pour le modifier"
+
 #~ msgid "Select Font Family"
 #~ msgstr "Définir la famille de la police"
+
 #~ msgid ""
 #~ "This font is currently not installed on your system. Inkscape will use "
 #~ "the default font instead."
 #~ msgstr ""
 #~ "Cette police n’est pas installée sur votre système. Inkscape utilisera la "
 #~ "police par défaut à la place"
+
 #~ msgid "Italic"
 #~ msgstr "Italique"
+
 #~ msgid "Note: The file extension is appended automatically."
 #~ msgstr "Note : l’extension du fichier est ajoutée automatiquement"
+
 #~ msgid "_Input Devices (new)..."
 #~ msgstr "Périphériques de saisie... (nouveau)"
+
 #~ msgid "Failed to change to directory '%s' (%s)"
 #~ msgstr ""
 #~ "Impossible de choisir le répertoire %s.\n"
 #~ "%s"
+
 #~ msgid "Failed to execute child process (%s)"
 #~ msgstr "Échec lors de l’exécution du processus fils (%s)"
+
 #~ msgid "Invalid program name: %s"
 #~ msgstr "Nom de programme erroné : %s"
+
 #~ msgid "Invalid string in argument vector at %d: %s"
 #~ msgstr "Chaîne invalide dans le vecteur d’argument dans %d: %s"
+
 #~ msgid "Invalid string in environment: %s"
 #~ msgstr "Chaîne invalide dans l’environnement : %s"
+
 #~ msgid "Failed to create pipe for communicating with child process (%s)"
 #~ msgstr ""
 #~ "Échec de création d’un tube pour la communication avec le processus fils "
 #~ "(%s)"
+
 #~ msgid "Failed to execute helper program (%s)"
 #~ msgstr "Échec de l’exécution du programme auxiliaire (%s)"
-
