@@ -1149,7 +1149,6 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
     /*
     std::cout << "Type and number of snapped constraints: " << std::endl;
     std::cout << "  Points      : " << sc.points.size() << std::endl;
-    // std::cout << "  Lines       : " << sc.lines.size() << std::endl;
     std::cout << "  Grid lines  : " << sc.grid_lines.size()<< std::endl;
     std::cout << "  Guide lines : " << sc.guide_lines.size()<< std::endl;
     std::cout << "  Curves      : " << sc.curves.size()<< std::endl;

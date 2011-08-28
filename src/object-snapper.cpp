@@ -502,8 +502,9 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
         }
     }
 
-    int num_path = 0;
-    int num_segm = 0;
+    int num_path = 0; // _paths_to_snap_to contains multiple path_vectors, each containing multiple paths.
+                      // num_path will count the paths, and will not be zeroed for each path_vector. It will
+                      // continue counting
 
     bool strict_snapping = _snapmanager->snapprefs.getStrictSnapping();
 
@@ -549,13 +550,12 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                     if (!being_edited || (c1 && c2)) {
                         Geom::Coord const dist = Geom::distance(sp_doc, p_doc);
                         if (dist < getSnapperTolerance()) {
-                            sc.curves.push_back(SnappedCurve(sp_dt, num_path, num_segm, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve, p.getSourceType(), p.getSourceNum(), it_p->target_type, it_p->target_bbox));
+                            sc.curves.push_back(SnappedCurve(sp_dt, num_path, index, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve, p.getSourceType(), p.getSourceNum(), it_p->target_type, it_p->target_bbox));
                         }
                     }
                 }
-                num_segm++;
+                num_path++;
             } // End of: for (Geom::PathVector::iterator ....)
-            num_path++;
         }
     }
 }
