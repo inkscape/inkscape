@@ -143,8 +143,10 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
 
     } else if (target & SNAPTARGET_NODE_CATEGORY) {
         group_on = getSnapModeNode(); // Only if the group with path/node sources/targets has been enabled, then we might snap to any of the nodes/paths
-        if (target == SNAPTARGET_RECT_CORNER || target == SNAPTARGET_ELLIPSE_QUADRANT_POINT) { // Don't have their own button; on when the group is on
-            target = SNAPTARGET_NODE_CATEGORY;
+        if (target == SNAPTARGET_RECT_CORNER) {
+            target = SNAPTARGET_NODE_CUSP;
+        } else if (target == SNAPTARGET_ELLIPSE_QUADRANT_POINT) {
+            target = SNAPTARGET_NODE_SMOOTH;
         }
 
 

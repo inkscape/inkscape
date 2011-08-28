@@ -2351,7 +2351,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
     {
         InkToggleAction* act = ink_toggle_action_new("ToggleSnapToItemNode",
-                                                     _("To nodes"), _("Snap cusp nodes"), INKSCAPE_ICON("snap-nodes-cusp"), secondarySize,
+                                                     _("To nodes"), _("Snap cusp nodes, incl. rectangle corners"), INKSCAPE_ICON("snap-nodes-cusp"), secondarySize,
                                                      SP_ATTR_INKSCAPE_SNAP_NODE_CUSP);
 
         gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
@@ -2360,7 +2360,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
     {
         InkToggleAction* act = ink_toggle_action_new("ToggleSnapToSmoothNodes",
-                                                     _("Smooth nodes"), _("Snap smooth nodes"), INKSCAPE_ICON("snap-nodes-smooth"),
+                                                     _("Smooth nodes"), _("Snap smooth nodes, incl. quadrant points of ellipses"), INKSCAPE_ICON("snap-nodes-smooth"),
                                                      secondarySize, SP_ATTR_INKSCAPE_SNAP_NODE_SMOOTH);
 
         gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
