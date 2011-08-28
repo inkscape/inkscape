@@ -664,7 +664,7 @@ sodipodi:docname="filters.svg">
 <feBlend mode="screen" in2="result91" />
 <feConvolveMatrix order="3 3" kernelMatrix="2 0 1 0 1 0 0 0 0 " targetX="1" targetY="1" divisor="3" />
 </filter>
-<filter id="f056" inkscape:label="Metallized Paint" inkscape:menu="Materials" inkscape:menu-tooltip="Metallized effect with a soft lighting, slightly translucent at the edges" height="1.1" width="1.1" y="-0.05" x="-0.05" style="color-interpolation-filters:sRGB;">
+<filter id="f056" inkscape:label="Metallized Paint" inkscape:menu="Materials" inkscape:menu-tooltip="Metallized effect with a soft lighting, slightly translucent at the edges" style="color-interpolation-filters:sRGB;">
 <feGaussianBlur stdDeviation="1" result="result1" />
 <feComposite in="result1" in2="result1" result="result4" operator="in" />
 <feBlend in="result1" mode="screen" result="result5" in2="result4" />

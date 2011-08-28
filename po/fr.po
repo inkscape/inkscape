@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-08-25 21:34+0200\n"
-"PO-Revision-Date: 2011-08-27 14:33+0100\n"
+"POT-Creation-Date: 2011-08-28 14:34+0200\n"
+"PO-Revision-Date: 2011-08-28 14:37+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "Language: \n"
@@ -1478,14 +1478,12 @@ msgid "Comics shader with creamy waves transparency"
 msgstr "Ombrage de bande dessinée avec une transparence en ondulations crémeuses"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Dark Metal"
-msgstr "Mode assombri"
+msgstr "Métal sombre"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Non realistic dark metal shader with strong speculars"
-msgstr "Ombrage chrome non réaliste avec des spéculaires fortes"
+msgstr "Ombrage métallique non réaliste sombre avec des spéculaires fortes"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Chewing Gum"
@@ -6870,6 +6868,7 @@ msgstr "Type de fondu :"
 #: ../src/extension/internal/filter/color.h:1518
 #: ../src/extension/internal/filter/distort.h:78
 #: ../src/extension/internal/filter/paint.h:712
+#: ../src/extension/internal/filter/textures.h:77
 #: ../src/extension/internal/filter/transparency.h:61
 #: ../src/filter-enums.cpp:51
 #: ../src/ui/dialog/inkscape-preferences.cpp:597
@@ -6964,6 +6963,11 @@ msgstr "Luminosité :"
 #: ../share/extensions/measure.inx.h:10
 msgid "Precision:"
 msgstr "Précision :"
+
+#: ../src/extension/internal/filter/bumps.h:103
+#, fuzzy
+msgid "Light source"
+msgstr "Source de lumière :"
 
 #: ../src/extension/internal/filter/bumps.h:104
 msgid "Light source:"
@@ -7064,6 +7068,11 @@ msgstr "Image floue"
 #: ../src/extension/internal/filter/bumps.h:328
 msgid "Background opacity:"
 msgstr "Opacité de fond : "
+
+#: ../src/extension/internal/filter/bumps.h:330
+#: ../src/extension/internal/filter/color.h:1040
+msgid "Lighting"
+msgstr "Éclairage"
 
 #: ../src/extension/internal/filter/bumps.h:337
 msgid "Lighting blend:"
@@ -7388,10 +7397,6 @@ msgstr "Inverser la transparence"
 msgid "Manage hue, lightness and transparency inversions"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:1040
-msgid "Lighting"
-msgstr "Éclairage"
-
 #: ../src/extension/internal/filter/color.h:1042
 msgid "Lights:"
 msgstr "Lumières :"
@@ -7548,11 +7553,13 @@ msgid "Stroke:"
 msgstr "Contour :"
 
 #: ../src/extension/internal/filter/distort.h:79
+#: ../src/extension/internal/filter/textures.h:76
 #: ../src/interface.cpp:850
 msgid "Wide"
 msgstr "Large"
 
 #: ../src/extension/internal/filter/distort.h:80
+#: ../src/extension/internal/filter/textures.h:78
 msgid "Narrow"
 msgstr "Étroit"
 
@@ -7565,6 +7572,22 @@ msgstr "Aucun remplissage"
 #: ../src/extension/internal/filter/distort.h:83
 msgid "Turbulence:"
 msgstr "Turbulence :"
+
+#: ../src/extension/internal/filter/distort.h:84
+#: ../src/extension/internal/filter/distort.h:193
+#: ../src/extension/internal/filter/overlays.h:61
+#: ../src/extension/internal/filter/paint.h:702
+msgid "Fractal noise"
+msgstr "Bruit fractal"
+
+#: ../src/extension/internal/filter/distort.h:85
+#: ../src/extension/internal/filter/distort.h:194
+#: ../src/extension/internal/filter/overlays.h:62
+#: ../src/extension/internal/filter/paint.h:703
+#: ../src/filter-enums.cpp:35
+#: ../src/filter-enums.cpp:117
+msgid "Turbulence"
+msgstr "Turbulence"
 
 #: ../src/extension/internal/filter/distort.h:87
 #: ../src/extension/internal/filter/distort.h:196
@@ -7668,6 +7691,20 @@ msgstr "Détecte les bords de couleur dans les objets"
 msgid "Cross-smooth"
 msgstr "Adoucissement"
 
+#: ../src/extension/internal/filter/morphology.h:61
+#: ../src/extension/internal/filter/shadows.h:65
+msgid "Inner"
+msgstr "Intérieur"
+
+#: ../src/extension/internal/filter/morphology.h:62
+#: ../src/extension/internal/filter/shadows.h:64
+msgid "Outer"
+msgstr "Extérieur"
+
+#: ../src/extension/internal/filter/morphology.h:63
+msgid "Open"
+msgstr "Overt"
+
 #: ../src/extension/internal/filter/morphology.h:69
 #: ../src/extension/internal/filter/morphology.h:190
 msgid "Antialiasing:"
@@ -7763,6 +7800,42 @@ msgstr "Ajoute un contour qui peut être coloré"
 msgid "Noise Fill"
 msgstr "Remplissage turbulent"
 
+#: ../src/extension/internal/filter/overlays.h:59
+#: ../src/extension/internal/filter/paint.h:700
+#: ../src/extension/internal/filter/shadows.h:59
+#: ../src/ui/dialog/tracedialog.cpp:644
+#: ../share/extensions/color_custom.inx.h:14
+#: ../share/extensions/color_randomize.inx.h:6
+#: ../share/extensions/dots.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:15
+#: ../share/extensions/dxf_outlines.inx.h:13
+#: ../share/extensions/gcodetools_area.inx.h:34
+#: ../share/extensions/gcodetools_engraving.inx.h:21
+#: ../share/extensions/gcodetools_graffiti.inx.h:24
+#: ../share/extensions/gcodetools_lathe.inx.h:32
+#: ../share/extensions/gcodetools_path_to_gcode.inx.h:22
+#: ../share/extensions/generate_voronoi.inx.h:7
+#: ../share/extensions/gimp_xcf.inx.h:4
+#: ../share/extensions/interp_att_g.inx.h:15
+#: ../share/extensions/jessyInk_uninstall.inx.h:3
+#: ../share/extensions/lorem_ipsum.inx.h:4
+#: ../share/extensions/pathalongpath.inx.h:7
+#: ../share/extensions/pathscatter.inx.h:10
+#: ../share/extensions/radiusrand.inx.h:6
+#: ../share/extensions/scour.inx.h:20
+#: ../share/extensions/split.inx.h:2
+#: ../share/extensions/voronoi2svg.inx.h:6
+#: ../share/extensions/webslicer_create_group.inx.h:7
+#: ../share/extensions/webslicer_export.inx.h:6
+#: ../share/extensions/web-set-att.inx.h:6
+#: ../share/extensions/web-transmit-att.inx.h:6
+msgid "Options"
+msgstr "Options"
+
+#: ../src/extension/internal/filter/overlays.h:72
+msgid "Noise color"
+msgstr "Couleur du bruit"
+
 #: ../src/extension/internal/filter/overlays.h:83
 msgid "Basic noise fill and transparency texture"
 msgstr "Texture en transparence turbulente de base"
@@ -7788,6 +7861,10 @@ msgstr "Irrégulier"
 #: ../src/extension/internal/filter/paint.h:709
 msgid "Noise reduction:"
 msgstr "Réduction de bruit :"
+
+#: ../src/extension/internal/filter/paint.h:91
+msgid "Grain"
+msgstr "Grain"
 
 #: ../src/extension/internal/filter/paint.h:92
 msgid "Grain mode"
@@ -7850,6 +7927,7 @@ msgid "Melt"
 msgstr "Fondu"
 
 #: ../src/extension/internal/filter/paint.h:351
+#: ../src/extension/internal/filter/paint.h:722
 msgid "Fill color"
 msgstr "Couleur du remplissage"
 
@@ -7903,6 +7981,14 @@ msgstr "Dessin néon"
 msgid "Line type:"
 msgstr "Type de ligne : "
 
+#: ../src/extension/internal/filter/paint.h:588
+msgid "Smoothed"
+msgstr "Adouci"
+
+#: ../src/extension/internal/filter/paint.h:589
+msgid "Contrasted"
+msgstr "Contrasté"
+
 #: ../src/extension/internal/filter/paint.h:592
 msgid "Line width:"
 msgstr "Largeur de ligne :"
@@ -7938,6 +8024,10 @@ msgstr "Luminosité du grain :"
 msgid "Blur:"
 msgstr "Flou :"
 
+#: ../src/extension/internal/filter/paint.h:726
+msgid "Points color"
+msgstr "Couleur des points"
+
 #: ../src/extension/internal/filter/paint.h:728
 msgid "Image on points"
 msgstr "Image sur les points"
@@ -7953,6 +8043,14 @@ msgstr "Peinture et poster"
 #: ../src/extension/internal/filter/paint.h:866
 msgid "Transfer type:"
 msgstr "Type de transfert :"
+
+#: ../src/extension/internal/filter/paint.h:867
+msgid "Poster"
+msgstr "Poster"
+
+#: ../src/extension/internal/filter/paint.h:868
+msgid "Painting"
+msgstr "Peinture"
 
 #: ../src/extension/internal/filter/paint.h:878
 msgid "Simplify (primary):"
@@ -8002,36 +8100,6 @@ msgstr "La neige est tombée sur l’objet"
 msgid "Drop Shadow"
 msgstr "Ombre portée"
 
-#: ../src/extension/internal/filter/shadows.h:59
-#: ../src/ui/dialog/tracedialog.cpp:644
-#: ../share/extensions/color_custom.inx.h:14
-#: ../share/extensions/color_randomize.inx.h:6
-#: ../share/extensions/dots.inx.h:5
-#: ../share/extensions/dxf_input.inx.h:15
-#: ../share/extensions/dxf_outlines.inx.h:13
-#: ../share/extensions/gcodetools_area.inx.h:34
-#: ../share/extensions/gcodetools_engraving.inx.h:21
-#: ../share/extensions/gcodetools_graffiti.inx.h:24
-#: ../share/extensions/gcodetools_lathe.inx.h:32
-#: ../share/extensions/gcodetools_path_to_gcode.inx.h:22
-#: ../share/extensions/generate_voronoi.inx.h:7
-#: ../share/extensions/gimp_xcf.inx.h:4
-#: ../share/extensions/interp_att_g.inx.h:15
-#: ../share/extensions/jessyInk_uninstall.inx.h:3
-#: ../share/extensions/lorem_ipsum.inx.h:4
-#: ../share/extensions/pathalongpath.inx.h:7
-#: ../share/extensions/pathscatter.inx.h:10
-#: ../share/extensions/radiusrand.inx.h:6
-#: ../share/extensions/scour.inx.h:20
-#: ../share/extensions/split.inx.h:2
-#: ../share/extensions/voronoi2svg.inx.h:6
-#: ../share/extensions/webslicer_create_group.inx.h:7
-#: ../share/extensions/webslicer_export.inx.h:6
-#: ../share/extensions/web-set-att.inx.h:6
-#: ../share/extensions/web-transmit-att.inx.h:6
-msgid "Options"
-msgstr "Options"
-
 #: ../src/extension/internal/filter/shadows.h:60
 msgid "Blur radius (px):"
 msgstr "Rayon du flou (px) :"
@@ -8047,14 +8115,6 @@ msgstr "Décalage vertical (px) :"
 #: ../src/extension/internal/filter/shadows.h:63
 msgid "Blur type:"
 msgstr "Type de flou :"
-
-#: ../src/extension/internal/filter/shadows.h:64
-msgid "Outer"
-msgstr "Extérieur"
-
-#: ../src/extension/internal/filter/shadows.h:65
-msgid "Inner"
-msgstr "Intérieur"
 
 #: ../src/extension/internal/filter/shadows.h:66
 msgid "Outer cutout"
@@ -8095,6 +8155,22 @@ msgstr "Incrustation verticale :"
 #: ../src/extension/internal/filter/textures.h:73
 msgid "Displacement:"
 msgstr "Déplacement :"
+
+#: ../src/extension/internal/filter/textures.h:79
+msgid "Overlapping"
+msgstr "Superposé"
+
+#: ../src/extension/internal/filter/textures.h:80
+msgid "External"
+msgstr "Externe"
+
+#: ../src/extension/internal/filter/textures.h:81
+#: ../src/interface.cpp:849
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1442
+#: ../share/extensions/color_custom.inx.h:10
+#: ../share/extensions/markers_strokepaint.inx.h:5
+msgid "Custom"
+msgstr "Personnalisée"
 
 #: ../src/extension/internal/filter/textures.h:83
 msgid "Custom stroke options"
@@ -8707,11 +8783,6 @@ msgstr "Éclairage spéculaire"
 #: ../src/filter-enums.cpp:34
 msgid "Tile"
 msgstr "Paver"
-
-#: ../src/filter-enums.cpp:35
-#: ../src/filter-enums.cpp:117
-msgid "Turbulence"
-msgstr "Turbulence"
 
 #: ../src/filter-enums.cpp:40
 msgid "Source Graphic"
@@ -9387,13 +9458,6 @@ msgstr "Afficher ou non la barre d’état (en bas de la fenêtre)"
 #: ../src/interface.cpp:848
 msgid "Default interface setup"
 msgstr "Paramètres par défaut de l’interface"
-
-#: ../src/interface.cpp:849
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1442
-#: ../share/extensions/color_custom.inx.h:10
-#: ../share/extensions/markers_strokepaint.inx.h:5
-msgid "Custom"
-msgstr "Personnalisée"
 
 #: ../src/interface.cpp:849
 msgid "Set the custom task"
@@ -29359,18 +29423,6 @@ msgstr "Entrée XAML"
 
 #~ msgid "<b>Fade out:</b>"
 #~ msgstr "<b>Opacité :</b>"
-
-#, fuzzy
-#~ msgid "Fractal noise"
-#~ msgstr "Bruit fractal"
-
-#, fuzzy
-#~ msgid "Smoothed"
-#~ msgstr "Adoucir"
-
-#, fuzzy
-#~ msgid "Contrasted"
-#~ msgstr "Contraste"
 
 #~ msgid "Primary blur:"
 #~ msgstr "Flou primaire :"
