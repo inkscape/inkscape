@@ -15,7 +15,6 @@
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
-#include "libnr/nr-rect-l.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -27,7 +26,7 @@ public:
     virtual ~FilterOffset();
 
     virtual void render_cairo(FilterSlot &slot);
-    virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
+    virtual void area_enlarge(Geom::IntRect &area, Geom::Affine const &trans);
     virtual bool can_handle_affine(Geom::Affine const &);
     virtual double complexity(Geom::Affine const &ctm);
 

@@ -243,8 +243,8 @@ gint compare_text_bboxes (gconstpointer a, gconstpointer b)
     SPItem *i1 = SP_ITEM(a);
     SPItem *i2 = SP_ITEM(b);
 
-    Geom::OptRect bbox1 = i1->getBounds(i1->i2dt_affine());
-    Geom::OptRect bbox2 = i2->getBounds(i2->i2dt_affine());
+    Geom::OptRect bbox1 = i1->desktopVisualBounds();
+    Geom::OptRect bbox2 = i2->desktopVisualBounds();
     if (!bbox1 || !bbox2) {
         return 0;
     }

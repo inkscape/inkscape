@@ -56,7 +56,7 @@ static void sp_tspan_release(SPObject *object);
 static void sp_tspan_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_tspan_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_tspan_modified(SPObject *object, unsigned flags);
-static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
+static Geom::OptRect sp_tspan_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
 static Inkscape::XML::Node *sp_tspan_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static char *sp_tspan_description (SPItem *item);
 
@@ -203,34 +203,30 @@ static void sp_tspan_modified(SPObject *object, unsigned flags)
     }
 }
 
-static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const /*flags*/)
+static Geom::OptRect
+sp_tspan_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type)
 {
+    Geom::OptRect bbox;
     // find out the ancestor text which holds our layout
     SPObject const *parent_text = item;
     while (parent_text && !SP_IS_TEXT(parent_text)) {
         parent_text = parent_text->parent;
     }
     if (parent_text == NULL) {
-        return;
+        return bbox;
     }
 
     // get the bbox of our portion of the layout
-    SP_TEXT(parent_text)->layout.getBoundingBox(bbox, transform, sp_text_get_length_upto(parent_text, item), sp_text_get_length_upto(item, NULL) - 1);
+    bbox = SP_TEXT(parent_text)->layout.bounds(transform, sp_text_get_length_upto(parent_text, item), sp_text_get_length_upto(item, NULL) - 1);
+    if (!bbox) return bbox;
 
     // Add stroke width
-    SPStyle* style = item->style;
-    if (!style->stroke.isNone()) {
-        double const scale = transform.descrim();
-        if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
-            double const width = MAX(0.125, style->stroke_width.computed * scale);
-            if ( fabs(bbox->x1 - bbox->x0) > -0.00001 && fabs(bbox->y1 - bbox->y0) > -0.00001 ) {
-                bbox->x0-=0.5*width;
-                bbox->x1+=0.5*width;
-                bbox->y0-=0.5*width;
-                bbox->y1+=0.5*width;
-            }
-        }
+    // FIXME this code is incorrect
+    if (type == SPItem::VISUAL_BBOX && !item->style->stroke.isNone()) {
+        double scale = transform.descrim();
+        bbox->expandBy(0.5 * item->style->stroke_width.computed * scale);
     }
+    return bbox;
 }
 
 static Inkscape::XML::Node *
@@ -592,8 +588,7 @@ sp_textpath_to_text(SPObject *tp)
 {
     SPObject *text = tp->parent;
 
-    Geom::OptRect bbox;
-    SP_ITEM(text)->invoke_bbox(bbox, SP_ITEM(text)->i2doc_affine(), TRUE);
+    Geom::OptRect bbox = SP_ITEM(text)->geometricBounds(SP_ITEM(text)->i2doc_affine());
     if (!bbox) return;
     Geom::Point xy = bbox->min();
 

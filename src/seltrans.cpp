@@ -90,7 +90,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _grabbed(false),
     _show_handles(true),
     _bbox(),
-    _approximate_bbox(),
+    _visual_bbox(),
     _absolute_affine(Geom::Scale(1,1)),
     _opposite(Geom::Point(0,0)),
     _opposite_for_specpoints(Geom::Point(0,0)),
@@ -104,7 +104,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int prefs_bbox = prefs->getBool("/tools/bounding_box");
     _snap_bbox_type = !prefs_bbox ?
-        SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
+        SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX;
 
     g_return_if_fail(desktop != NULL);
 
@@ -279,8 +279,8 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 
     // First, determine the bounding box
     _bbox = selection->bounds(_snap_bbox_type);
-    _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX); // Used for correctly scaling the strokewidth
-    _geometric_bbox = selection->bounds(SPItem::GEOMETRIC_BBOX);
+    _visual_bbox = selection->visualBounds(); // Used for correctly scaling the strokewidth
+    _geometric_bbox = selection->geometricBounds();
 
     _point = p;
     if (_geometric_bbox) {
@@ -336,7 +336,8 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
             // More than 50 items will produce at least 200 bbox points, which might make Inkscape crawl
             // (see the comment a few lines above). In that case we will use the bbox of the selection as a whole
             for (unsigned i = 0; i < _items.size(); i++) {
-                getBBoxPoints(_items[i]->getBboxDesktop(_snap_bbox_type), &_bbox_points_for_translating, false, c, emp, mp);
+                Geom::OptRect b = _items[i]->desktopBounds(_snap_bbox_type);
+                getBBoxPoints(b, &_bbox_points_for_translating, false, c, emp, mp);
             }
         } else {
             _bbox_points_for_translating = _bbox_points; // use the bbox points of the selection as a whole
@@ -696,7 +697,7 @@ void Inkscape::SelTrans::_updateVolatileState()
 
     //Update the bboxes
     _bbox = selection->bounds(_snap_bbox_type);
-    _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX);
+    _visual_bbox = selection->visualBounds();
 
     if (!_bbox) {
         _empty = true;
@@ -898,8 +899,7 @@ void Inkscape::SelTrans::_selChanged(Inkscape::Selection */*selection*/)
         // reread in case it changed on the fly:
         int prefs_bbox = prefs->getBool("/tools/bounding_box");
          _snap_bbox_type = !prefs_bbox ?
-            SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
-        //SPItem::APPROXIMATE_BBOX will be replaced by SPItem::VISUAL_BBOX, as soon as the latter is implemented properly
+            SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX;
 
         _updateVolatileState();
         _current_relative_affine.setIdentity();
@@ -1213,7 +1213,8 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, Geom::P
         SnapManager &m = _desktop->namedview->snap_manager;
         m.setup(_desktop, false, _items_const);
 
-        Inkscape::Snapper::SnapConstraint const constraint(component_vectors[dim_b]);
+        Geom::Point cvec; cvec[dim_b] = 1.;
+        Inkscape::Snapper::SnapConstraint const constraint(cvec);
         // When skewing, we cannot snap the corners of the bounding box, see the comment in "constrainedSnapSkew" for details
         Geom::Point const s(skew[dim_a], scale[dim_a]);
         Inkscape::SnappedPoint sn = m.constrainedSnapSkew(_snap_points, _point, constraint, s, _origin, Geom::Dim2(dim_b));
@@ -1475,14 +1476,15 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
             // the constraint-line once. The constraint lines are parallel, but might not be colinear.
             // Therefore we will have to set the point through which the constraint-line runs
             // individually for each point to be snapped; this will be handled however by _snapTransformed()
+            Geom::Point cvec; cvec[dim] = 1.;
             s.push_back(m.constrainedSnapTranslate(_bbox_points_for_translating,
                                                      _point,
-                                                     Inkscape::Snapper::SnapConstraint(component_vectors[dim]),
+                                                     Inkscape::Snapper::SnapConstraint(cvec),
                                                      dxy));
 
             s.push_back(m.constrainedSnapTranslate(_snap_points,
                                                      _point,
-                                                     Inkscape::Snapper::SnapConstraint(component_vectors[dim]),
+                                                     Inkscape::Snapper::SnapConstraint(cvec),
                                                      dxy));
         } else { // !control
 
@@ -1602,8 +1604,8 @@ Geom::Scale Inkscape::calcScaleFactors(Geom::Point const &initial_point, Geom::P
 Geom::Point Inkscape::SelTrans::_calcAbsAffineDefault(Geom::Scale const default_scale)
 {
     Geom::Affine abs_affine = Geom::Translate(-_origin) * Geom::Affine(default_scale) * Geom::Translate(_origin);
-    Geom::Point new_bbox_min = _approximate_bbox->min() * abs_affine;
-    Geom::Point new_bbox_max = _approximate_bbox->max() * abs_affine;
+    Geom::Point new_bbox_min = _visual_bbox->min() * abs_affine;
+    Geom::Point new_bbox_max = _visual_bbox->max() * abs_affine;
 
     bool transform_stroke = false;
     gdouble strokewidth = 0;
@@ -1614,7 +1616,7 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineDefault(Geom::Scale const default_
         strokewidth = _strokewidth;
     }
 
-    _absolute_affine = get_scale_transform_with_uniform_stroke (*_approximate_bbox, strokewidth, transform_stroke,
+    _absolute_affine = get_scale_transform_with_uniform_stroke (*_visual_bbox, strokewidth, transform_stroke,
                     new_bbox_min[Geom::X], new_bbox_min[Geom::Y], new_bbox_max[Geom::X], new_bbox_max[Geom::Y]);
 
     // return the new handle position

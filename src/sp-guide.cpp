@@ -116,7 +116,7 @@ static void sp_guide_class_init(SPGuideClass *gc)
 
 static void sp_guide_init(SPGuide *guide)
 {
-    guide->normal_to_line = component_vectors[Geom::Y];
+    guide->normal_to_line = Geom::Point(0.,1.);
     guide->point_on_line = Geom::Point(0.,0.);
     guide->color = 0x0000ff7f;
     guide->hicolor = 0xff00007f;
@@ -205,9 +205,9 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
         {
             if (value && !strcmp(value, "horizontal")) {
                 /* Visual representation of a horizontal line, constrain vertically (y coordinate). */
-                guide->normal_to_line = component_vectors[Geom::Y];
+                guide->normal_to_line = Geom::Point(0., 1.);
             } else if (value && !strcmp(value, "vertical")) {
-                guide->normal_to_line = component_vectors[Geom::X];
+                guide->normal_to_line = Geom::Point(1., 0.);
             } else if (value) {
                 gchar ** strarray = g_strsplit(value, ",", 2);
                 double newx, newy;
@@ -220,11 +220,11 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
                     guide->normal_to_line = direction;
                 } else {
                     // default to vertical line for bad arguments
-                    guide->normal_to_line = component_vectors[Geom::X];
+                    guide->normal_to_line = Geom::Point(1., 0.);
                 }
             } else {
                 // default to vertical line for bad arguments
-                guide->normal_to_line = component_vectors[Geom::X];
+                guide->normal_to_line = Geom::Point(1., 0.);
             }
             sp_guide_set_normal(*guide, guide->normal_to_line, false);
         }
@@ -493,11 +493,11 @@ char *sp_guide_description(SPGuide const *guide, const bool verbose)
 
         gchar *shortcuts = g_strdup_printf("; %s", _("<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to delete"));
 
-        if ( are_near(guide->normal_to_line, component_vectors[X]) ||
-             are_near(guide->normal_to_line, -component_vectors[X]) ) {
+        if ( are_near(guide->normal_to_line, Geom::Point(1., 0.)) ||
+             are_near(guide->normal_to_line, -Geom::Point(1., 0.)) ) {
             descr = g_strdup_printf(_("vertical, at %s"), position_string_x->str);
-        } else if ( are_near(guide->normal_to_line, component_vectors[Y]) ||
-                    are_near(guide->normal_to_line, -component_vectors[Y]) ) {
+        } else if ( are_near(guide->normal_to_line, Geom::Point(0., 1.)) ||
+                    are_near(guide->normal_to_line, -Geom::Point(0., 1.)) ) {
             descr = g_strdup_printf(_("horizontal, at %s"), position_string_y->str);
         } else {
             double const radians = guide->angle();

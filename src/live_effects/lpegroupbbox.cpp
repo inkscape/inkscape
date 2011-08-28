@@ -34,7 +34,7 @@ GroupBBoxEffect::original_bbox(SPLPEItem *lpeitem, bool absolute)
         transform = Geom::identity();
     }
 
-    Geom::OptRect bbox = lpeitem->getBounds(transform, SPItem::GEOMETRIC_BBOX);
+    Geom::OptRect bbox = lpeitem->geometricBounds(transform);
     if (bbox) {
         boundingbox_X = (*bbox)[Geom::X];
         boundingbox_Y = (*bbox)[Geom::Y];

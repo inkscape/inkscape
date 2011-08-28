@@ -70,7 +70,7 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
     if ( sel && !sel->isEmpty() ) {
         int prefs_bbox = prefs->getInt("/tools/bounding_box", 0);
         SPItem::BBoxType bbox_type = (prefs_bbox ==0)?
-            SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
+            SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX;
         Geom::OptRect const bbox(sel->bounds(bbox_type));
         if ( bbox ) {
             UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(G_OBJECT(spw), "tracker"));
@@ -160,12 +160,12 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     document->ensureUpToDate ();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    Geom::OptRect bbox_vis = selection->bounds(SPItem::APPROXIMATE_BBOX);
-    Geom::OptRect bbox_geom = selection->bounds(SPItem::GEOMETRIC_BBOX);
+    Geom::OptRect bbox_vis = selection->visualBounds();
+    Geom::OptRect bbox_geom = selection->geometricBounds();
 
     int prefs_bbox = prefs->getInt("/tools/bounding_box");
     SPItem::BBoxType bbox_type = (prefs_bbox == 0)?
-        SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
+        SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX;
     Geom::OptRect bbox_user = selection->bounds(bbox_type);
 
     if ( !bbox_user ) {
@@ -247,10 +247,10 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         int transform_stroke = prefs->getBool("/options/transform/stroke", true) ? 1 : 0;
 
         Geom::Affine scaler;
-        if (bbox_type == SPItem::APPROXIMATE_BBOX) {
+        if (bbox_type == SPItem::VISUAL_BBOX) {
             scaler = get_scale_transform_with_unequal_stroke (*bbox_vis, *bbox_geom, transform_stroke, x0, y0, x1, y1);
         } else {
-            // get_scale_transform_with_stroke() is intended for VISUAL (or APPROXIMATE) bounding boxes, not geometrical ones!
+            // get_scale_transform_with_stroke() is intended for visual bounding boxes, not geometrical ones!
             // we'll trick it into using a geometric bounding box though, by setting the stroke width to zero
             scaler = get_scale_transform_with_uniform_stroke (*bbox_user, 0, false, x0, y0, x1, y1);
         }

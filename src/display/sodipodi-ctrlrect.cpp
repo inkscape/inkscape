@@ -132,7 +132,7 @@ void CtrlRect::render(SPCanvasBuf *buf)
     if ( area_w_shadow.intersects(buf->rect) )
     {
         cairo_save(buf->ct);
-        cairo_translate(buf->ct, -buf->rect.x0, -buf->rect.y0);
+        cairo_translate(buf->ct, -buf->rect.left(), -buf->rect.top());
         cairo_set_line_width(buf->ct, 1);
         if (_dashed) cairo_set_dash(buf->ct, dashes, 2, 0);
         cairo_rectangle(buf->ct, 0.5 + area[X].min(), 0.5 + area[Y].min(),

@@ -1,5 +1,4 @@
 #include <desktop-handles.h>
-#include <libnr/nr-point-fns.h>
 #include <sp-guide.h>
 #include <sp-guide-constraint.h>
 #include <sp-namedview.h>

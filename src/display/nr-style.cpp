@@ -14,7 +14,6 @@
 #include "sp-paint-server.h"
 #include "display/canvas-bpath.h" // contains SPStrokeJoinType, SPStrokeCapType etc. (WTF!)
 #include "display/drawing-context.h"
-#include "libnr/nr-rect.h"
 
 void NRStyle::Paint::clear()
 {
@@ -150,8 +149,7 @@ bool NRStyle::prepareFill(Inkscape::DrawingContext &ct, Geom::OptRect const &pai
     if (!fill_pattern) {
         switch (fill.type) {
         case PAINT_SERVER: {
-            NRRect pb(paintbox);
-            fill_pattern = sp_paint_server_create_pattern(fill.server, ct.raw(), &pb, fill.opacity);
+            fill_pattern = sp_paint_server_create_pattern(fill.server, ct.raw(), paintbox, fill.opacity);
             } break;
         case PAINT_COLOR: {
             SPColor const &c = fill.color;
@@ -176,8 +174,7 @@ bool NRStyle::prepareStroke(Inkscape::DrawingContext &ct, Geom::OptRect const &p
     if (!stroke_pattern) {
         switch (stroke.type) {
         case PAINT_SERVER: {
-            NRRect pb(paintbox);
-            stroke_pattern = sp_paint_server_create_pattern(stroke.server, ct.raw(), &pb, stroke.opacity);
+            stroke_pattern = sp_paint_server_create_pattern(stroke.server, ct.raw(), paintbox, stroke.opacity);
             } break;
         case PAINT_COLOR: {
             SPColor const &c = stroke.color;

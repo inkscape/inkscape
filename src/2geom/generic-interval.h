@@ -49,6 +49,7 @@ template <typename C>
 class GenericInterval
     : CoordTraits<C>::IntervalOps
 {
+    typedef typename CoordTraits<C>::IntervalType CInterval;
     typedef GenericInterval<C> Self;
 protected:
     C _b[2];
@@ -76,15 +77,15 @@ public:
      * @param end   End of the range
      * @return Interval that contains all values from [start, end). */
     template <typename InputIterator>
-    static Self from_range(InputIterator start, InputIterator end) {
+    static CInterval from_range(InputIterator start, InputIterator end) {
         assert(start != end);
-        Self result(*start++);
+        CInterval result(*start++);
         for (; start != end; ++start) result.expandTo(*start);
         return result;
     }
     /** @brief Create an interval from a C-style array of values it should contain. */
-    static Self from_array(C const *c, unsigned n) {
-        Self result = from_range(c, c+n);
+    static CInterval from_array(C const *c, unsigned n) {
+        CInterval result = from_range(c, c+n);
         return result;
     }
     /// @}
@@ -94,7 +95,7 @@ public:
     C min() const { return _b[0]; }
     C max() const { return _b[1]; }
     C extent() const { return max() - min(); }
-    C middle() const { return (max() + min()) * 0.5; }
+    C middle() const { return (max() + min()) / 2; }
     bool isSingular() const { return min() == max(); }
     /// @}
 
@@ -105,11 +106,11 @@ public:
         return min() <= val && val <= max();
     }
     /** @brief Check whether the interval includes the given interval. */
-    bool contains(Self const &val) const {
+    bool contains(CInterval const &val) const {
         return min() <= val.min() && val.max() <= max();
     }
     /** @brief Check whether the intervals have any common elements. */
-    bool intersects(Self const &val) const {
+    bool intersects(CInterval const &val) const {
         return contains(val.min()) || contains(val.max()) || val.contains(*this);
     }
     /// @}
@@ -159,7 +160,7 @@ public:
      * The resulting interval will contain all points of both intervals.
      * It might also contain some points which didn't belong to either - this happens
      * when the intervals did not have any common elements. */
-    void unionWith(Self const &a) {
+    void unionWith(CInterval const &a) {
         if(a._b[0] < _b[0]) _b[0] = a._b[0];
         if(a._b[1] > _b[1]) _b[1] = a._b[1];
     }
@@ -187,7 +188,7 @@ public:
     /** @brief Add two intervals.
      * Sum is defined as the set of points that can be obtained by adding any two values
      * from both operands: \f$S = \{x \in A, y \in B: x + y\}\f$ */
-    Self &operator+=(Self const &o) {
+    Self &operator+=(CInterval const &o) {
         _b[0] += o._b[0];
         _b[1] += o._b[1];
         return *this;
@@ -196,7 +197,7 @@ public:
      * Difference is defined as the set of points that can be obtained by subtracting
      * any value from the second operand from any value from the first operand:
      * \f$S = \{x \in A, y \in B: x - y\}\f$ */
-    Self &operator-=(Self const &o) {
+    Self &operator-=(CInterval const &o) {
         // equal to *this += -o
         _b[0] -= o._b[1];
         _b[1] -= o._b[0];
@@ -205,12 +206,12 @@ public:
     /** @brief Union two intervals.
      * Note that the intersection-and-assignment operator is not defined,
      * because the result of an intersection can be empty, while Interval cannot. */
-    Self &operator|=(Self const &o) {
+    Self &operator|=(CInterval const &o) {
         unionWith(o);
         return *this;
     }
     /** @brief Test for interval equality. */
-    bool operator==(Self const &other) const {
+    bool operator==(CInterval const &other) const {
         return min() == other.min() && max() == other.max();
     }
     /// @}
@@ -230,15 +231,15 @@ inline GenericInterval<C> unify(GenericInterval<C> const &a, GenericInterval<C> 
 template <typename C>
 class GenericOptInterval
     : public boost::optional<typename CoordTraits<C>::IntervalType>
-    , boost::orable< GenericOptInterval<C>, typename CoordTraits<C>::OptIntervalType
-    , boost::andable< GenericOptInterval<C>, typename CoordTraits<C>::OptIntervalType
+    , boost::orable< GenericOptInterval<C>
+    , boost::andable< GenericOptInterval<C>
       > >
 {
     typedef typename CoordTraits<C>::IntervalType CInterval;
     typedef typename CoordTraits<C>::OptIntervalType OptCInterval;
     typedef boost::optional<CInterval> Base;
 public:
-    /// @name Create optionally empty intervals of integers.
+    /// @name Create optionally empty intervals.
     /// @{
     /** @brief Create an empty interval. */
     GenericOptInterval() : Base() {}

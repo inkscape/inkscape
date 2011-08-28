@@ -49,13 +49,13 @@ class Ray;
 template <typename> class GenericInterval;
 template <typename> class GenericOptInterval;
 class Interval;
-typedef GenericOptInterval<Coord> OptInterval;
+class OptInterval;
 typedef GenericInterval<IntCoord> IntInterval;
 typedef GenericOptInterval<IntCoord> OptIntInterval;
 template <typename> class GenericRect;
 template <typename> class GenericOptRect;
 class Rect;
-typedef GenericOptRect<Coord> OptRect;
+class OptRect;
 typedef GenericRect<IntCoord> IntRect;
 typedef GenericOptRect<IntCoord> OptIntRect;
 

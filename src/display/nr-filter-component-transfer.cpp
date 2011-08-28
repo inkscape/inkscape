@@ -304,10 +304,6 @@ bool FilterComponentTransfer::can_handle_affine(Geom::Affine const &)
     return true;
 }
 
-void FilterComponentTransfer::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*trans*/)
-{
-}
-
 double FilterComponentTransfer::complexity(Geom::Affine const &)
 {
     return 2.0;

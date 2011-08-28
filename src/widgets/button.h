@@ -17,7 +17,7 @@
 #define SP_IS_BUTTON(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_BUTTON))
 
 #include <gtk/gtk.h>
-
+#include <sigc++/sigc++.h>
 #include "helper/action.h"
 #include "icon-size.h"
 
@@ -38,6 +38,9 @@ struct SPButton {
 	unsigned int psize;
 	SPAction *action;
 	SPAction *doubleclick_action;
+
+	sigc::connection c_set_active;
+	sigc::connection c_set_sensitive;
 };
 
 struct SPButtonClass {

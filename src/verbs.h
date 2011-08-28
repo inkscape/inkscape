@@ -403,8 +403,8 @@ public:
     gchar const * set_tip (gchar const * tip) { _tip = tip; return _tip; }
 
 protected:
-    SPAction * make_action_helper (Inkscape::UI::View::View * view, SPActionEventVector * vector, void * in_pntr = NULL);
-    virtual SPAction * make_action (Inkscape::UI::View::View * view);
+    SPAction *make_action_helper (Inkscape::UI::View::View *view, void (*perform_fun)(SPAction *, void *), void *in_pntr = NULL);
+    virtual SPAction *make_action (Inkscape::UI::View::View *view);
 
 public:
     /** \brief Inititalizes the Verb with the parameters

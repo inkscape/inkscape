@@ -20,6 +20,7 @@
 #include <glibmm/i18n.h>
 #include <cstring>
 #include <string>
+#include <2geom/bezier-curve.h>
 
 #include "desktop-handles.h"
 #include "selection.h"
@@ -32,7 +33,6 @@
 #include "xml/repr.h"
 #include "svg/css-ostringstream.h"
 #include "svg/svg.h"
-#include "libnr/nr-point-fns.h"
 #include "preferences.h"
 #include "sp-item.h"
 #include "style.h"
@@ -339,7 +339,7 @@ guint32 GrDrag::getColor()
 SPStop *
 GrDrag::addStopNearPoint (SPItem *item, Geom::Point mouse_p, double tolerance)
 {
-    gfloat offset; // type of SPStop.offset = gfloat
+    gfloat offset = 0; // type of SPStop.offset = gfloat
     SPGradient *gradient;
     bool fill_or_stroke = true;
     bool r1_knot = false;
@@ -350,32 +350,34 @@ GrDrag::addStopNearPoint (SPItem *item, Geom::Point mouse_p, double tolerance)
         if (SP_IS_LINEARGRADIENT(gradient)) {
             Geom::Point begin   = sp_item_gradient_get_coords(item, POINT_LG_BEGIN, 0, fill_or_stroke);
             Geom::Point end     = sp_item_gradient_get_coords(item, POINT_LG_END, 0, fill_or_stroke);
-
-            Geom::Point nearest = snap_vector_midpoint (mouse_p, begin, end, 0);
-            double dist_screen = Geom::L2 (mouse_p - nearest);
+            Geom::LineSegment ls(begin, end);
+            double offset = ls.nearestPoint(mouse_p);
+            Geom::Point nearest = ls.pointAt(offset);
+            double dist_screen = Geom::distance(mouse_p, nearest);
             if ( dist_screen < tolerance ) {
                 // add the knot
-                offset = get_offset_between_points(nearest, begin, end);
                 addknot = true;
                 break; // break out of the while loop: add only one knot
             }
         } else if (SP_IS_RADIALGRADIENT(gradient)) {
             Geom::Point begin = sp_item_gradient_get_coords(item, POINT_RG_CENTER, 0, fill_or_stroke);
             Geom::Point end   = sp_item_gradient_get_coords(item, POINT_RG_R1, 0, fill_or_stroke);
-            Geom::Point nearest = snap_vector_midpoint (mouse_p, begin, end, 0);
-            double dist_screen = Geom::L2 (mouse_p - nearest);
+            Geom::LineSegment ls(begin, end);
+            double offset = ls.nearestPoint(mouse_p);
+            Geom::Point nearest = ls.pointAt(offset);
+            double dist_screen = Geom::distance(mouse_p, nearest);
             if ( dist_screen < tolerance ) {
-                offset = get_offset_between_points(nearest, begin, end);
                 addknot = true;
                 r1_knot = true;
                 break; // break out of the while loop: add only one knot
             }
 
             end    = sp_item_gradient_get_coords(item, POINT_RG_R2, 0, fill_or_stroke);
-            nearest = snap_vector_midpoint (mouse_p, begin, end, 0);
-            dist_screen = Geom::L2 (mouse_p - nearest);
+            ls = Geom::LineSegment(begin, end);
+            offset = ls.nearestPoint(mouse_p);
+            nearest = ls.pointAt(offset);
+            dist_screen = Geom::distance(mouse_p, nearest);
             if ( dist_screen < tolerance ) {
-                offset = get_offset_between_points(nearest, begin, end);
                 addknot = true;
                 r1_knot = false;
                 break; // break out of the while loop: add only one knot
@@ -442,7 +444,8 @@ GrDrag::dropColor(SPItem */*item*/, gchar const *c, Geom::Point p)
     if (lines) {
         for (GSList *l = lines; (l != NULL) && (!over_line); l = l->next) {
             line = (SPCtrlLine*) l->data;
-            Geom::Point nearest = snap_vector_midpoint (p, line->s, line->e, 0);
+            Geom::LineSegment ls(line->s, line->e);
+            Geom::Point nearest = ls.pointAt(ls.nearestPoint(p));
             double dist_screen = Geom::L2 (p - nearest) * desktop->current_zoom();
             if (line->item && dist_screen < 5) {
                 SPStop *stop = addStopNearPoint (line->item, p, 5/desktop->current_zoom());
@@ -847,9 +850,11 @@ gr_knot_moved_midpoint_handler(SPKnot */*knot*/, Geom::Point const &ppointer, gu
     gr_midpoint_limits(dragger, server, &begin, &end, &low_lim, &high_lim, &moving);
 
     if (state & GDK_CONTROL_MASK) {
-        p = snap_vector_midpoint (p, low_lim, high_lim, snap_fraction);
+        Geom::LineSegment ls(low_lim, high_lim);
+        p = ls.pointAt(round(ls.nearestPoint(p) / snap_fraction) * snap_fraction);
     } else {
-        p = snap_vector_midpoint (p, low_lim, high_lim, 0);
+        Geom::LineSegment ls(low_lim, high_lim);
+        p = ls.pointAt(ls.nearestPoint(p));
         if (!(state & GDK_SHIFT_MASK)) {
             Inkscape::Snapper::SnapConstraint cl(low_lim, high_lim - low_lim);
             SPDesktop *desktop = dragger->parent->desktop;
@@ -1788,15 +1793,15 @@ GrDrag::updateLevels ()
 
     for (GSList const* i = this->selection->itemList(); i != NULL; i = i->next) {
         SPItem *item = SP_ITEM(i->data);
-        Geom::OptRect rect = item->getBboxDesktop ();
+        Geom::OptRect rect = item->desktopVisualBounds();
         if (rect) {
             // Remember the edges of the bbox and the center axis
             hor_levels.push_back(rect->min()[Geom::Y]);
             hor_levels.push_back(rect->max()[Geom::Y]);
-            hor_levels.push_back(0.5 * (rect->min()[Geom::Y] + rect->max()[Geom::Y]));
+            hor_levels.push_back(rect->midpoint()[Geom::Y]);
             vert_levels.push_back(rect->min()[Geom::X]);
             vert_levels.push_back(rect->max()[Geom::X]);
-            vert_levels.push_back(0.5 * (rect->min()[Geom::X] + rect->max()[Geom::X]));
+            vert_levels.push_back(rect->midpoint()[Geom::X]);
         }
     }
 }
@@ -1885,8 +1890,8 @@ GrDrag::selected_move (double x, double y, bool write_repr, bool scale_radial)
         GSList *moving = NULL;
         gr_midpoint_limits(dragger, server, &begin, &end, &low_lim, &high_lim, &moving);
 
-        Geom::Point p(x, y);
-        p = snap_vector_midpoint (dragger->point + p, low_lim, high_lim, 0);
+        Geom::LineSegment ls(low_lim, high_lim);
+        Geom::Point p = ls.pointAt(ls.nearestPoint(dragger->point + p));
         Geom::Point displacement = p - dragger->point;
 
         for (GSList const* i = moving; i != NULL; i = i->next) {

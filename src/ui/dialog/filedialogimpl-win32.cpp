@@ -992,10 +992,8 @@ bool FileOpenDialogImplWin32::set_svg_preview()
     NRRectL bbox = {0, 0, scaledSvgWidth, scaledSvgHeight};
 
     // write object bbox to area
-    Geom::OptRect maybeArea(area);
     svgDoc->ensureUpToDate();
-    svgDoc->getRoot()->invoke_bbox( maybeArea,
-                                    svgDoc->getRoot()->i2dt_affine(), TRUE);
+    Geom::OptRect maybeArea = area | svgDoc->getRoot()->desktopVisualBounds();
 
     NRArena *const arena = NRArena::create();
 

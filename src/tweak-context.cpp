@@ -442,7 +442,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
     } else {
         if (mode == TWEAK_MODE_MOVE) {
 
-            Geom::OptRect a = item->getBounds(item->i2doc_affine());
+            Geom::OptRect a = item->documentVisualBounds();
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -455,7 +455,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_MOVE_IN_OUT) {
 
-            Geom::OptRect a = item->getBounds(item->i2doc_affine());
+            Geom::OptRect a = item->documentVisualBounds();
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -469,7 +469,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_MOVE_JITTER) {
 
-            Geom::OptRect a = item->getBounds(item->i2doc_affine());
+            Geom::OptRect a = item->documentVisualBounds();
             if (a) {
                 double dp = g_random_double_range(0, M_PI*2);
                 double dr = g_random_double_range(0, radius);
@@ -484,7 +484,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_SCALE) {
 
-            Geom::OptRect a = item->getBounds(item->i2doc_affine());
+            Geom::OptRect a = item->documentVisualBounds();
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -497,7 +497,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_ROTATE) {
 
-            Geom::OptRect a = item->getBounds(item->i2doc_affine());
+            Geom::OptRect a = item->documentVisualBounds();
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -510,7 +510,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_MORELESS) {
 
-            Geom::OptRect a = item->getBounds(item->i2doc_affine());
+            Geom::OptRect a = item->documentVisualBounds();
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -562,7 +562,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
             }
 
             // skip those paths whose bboxes are entirely out of reach with our radius
-            Geom::OptRect bbox = item->getBounds(item->i2doc_affine());
+            Geom::OptRect bbox = item->documentVisualBounds();
             if (bbox) {
                 bbox->expandBy(radius);
                 if (!bbox->contains(p)) {
@@ -946,8 +946,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
         if (!style) {
             return false;
         }
-        Geom::OptRect bbox = item->getBounds(item->i2doc_affine(),
-                                                        SPItem::GEOMETRIC_BBOX);
+        Geom::OptRect bbox = item->documentGeometricBounds();
         if (!bbox) {
             return false;
         }
@@ -976,8 +975,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
         if (this_force > 0.002) {
 
             if (do_blur) {
-                Geom::OptRect bbox = item->getBounds(item->i2doc_affine(),
-                                                        SPItem::GEOMETRIC_BBOX);
+                Geom::OptRect bbox = item->documentGeometricBounds();
                 if (!bbox) {
                     return did;
                 }

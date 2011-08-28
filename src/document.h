@@ -38,7 +38,6 @@ namespace Avoid {
 class Router;
 }
 
-struct NRRect;
 struct SPDesktop;
 struct SPItem;
 struct SPObject;

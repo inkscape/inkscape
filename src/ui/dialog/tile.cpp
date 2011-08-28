@@ -47,8 +47,8 @@ sp_compare_x_position(SPItem *first, SPItem *second)
     using Geom::X;
     using Geom::Y;
 
-    Geom::OptRect a = first->getBounds(first->i2doc_affine());
-    Geom::OptRect b = second->getBounds(second->i2doc_affine());
+    Geom::OptRect a = first->documentVisualBounds();
+    Geom::OptRect b = second->documentVisualBounds();
 
     if ( !a || !b ) {
         // FIXME?
@@ -87,8 +87,8 @@ sp_compare_x_position(SPItem *first, SPItem *second)
 int
 sp_compare_y_position(SPItem *first, SPItem *second)
 {
-    Geom::OptRect a = first->getBounds(first->i2doc_affine());
-    Geom::OptRect b = second->getBounds(second->i2doc_affine());
+    Geom::OptRect a = first->documentVisualBounds();
+    Geom::OptRect b = second->documentVisualBounds();
 
     if ( !a || !b ) {
         // FIXME?
@@ -167,7 +167,7 @@ void TileDialog::Grid_Arrange ()
     cnt=0;
     for (; items != NULL; items = items->next) {
         SPItem *item = SP_ITEM(items->data);
-        Geom::OptRect b = item->getBounds(item->i2doc_affine());
+        Geom::OptRect b = item->documentVisualBounds();
         if (!b) {
             continue;
         }
@@ -210,7 +210,7 @@ void TileDialog::Grid_Arrange ()
         const GSList *sizes = sorted;
         for (; sizes != NULL; sizes = sizes->next) {
             SPItem *item = SP_ITEM(sizes->data);
-            Geom::OptRect b = item->getBounds(item->i2doc_affine());
+            Geom::OptRect b = item->documentVisualBounds();
             if (b) {
                 width = b->dimensions()[Geom::X];
                 height = b->dimensions()[Geom::Y];
@@ -267,7 +267,7 @@ void TileDialog::Grid_Arrange ()
     }
 
 
-    Geom::OptRect sel_bbox = selection->bounds();
+    Geom::OptRect sel_bbox = selection->visualBounds();
     // Fit to bbox, calculate padding between rows accordingly.
     if ( sel_bbox && !SpaceManualRadioButton.get_active() ){
 #ifdef DEBUG_GRID_ARRANGE
@@ -317,7 +317,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
              for (; current_row != NULL; current_row = current_row->next) {
                  SPItem *item=SP_ITEM(current_row->data);
                  Inkscape::XML::Node *repr = item->getRepr();
-                 Geom::OptRect b = item->getBounds(item->i2doc_affine());
+                 Geom::OptRect b = item->documentVisualBounds();
                  Geom::Point min;
                  if (b) {
                      width = b->dimensions()[Geom::X];

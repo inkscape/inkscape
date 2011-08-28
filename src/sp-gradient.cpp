@@ -1155,7 +1155,7 @@ static void sp_lineargradient_build(SPObject *object,
 static void sp_lineargradient_set(SPObject *object, unsigned key, gchar const *value);
 static Inkscape::XML::Node *sp_lineargradient_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr,
                                                     guint flags);
-static cairo_pattern_t *sp_lineargradient_create_pattern(SPPaintServer *ps, cairo_t *ct, NRRect const *bbox, double opacity);
+static cairo_pattern_t *sp_lineargradient_create_pattern(SPPaintServer *ps, cairo_t *ct, Geom::OptRect const &bbox, double opacity);
 
 static SPGradientClass *lg_parent_class;
 
@@ -1318,7 +1318,7 @@ static void sp_radialgradient_build(SPObject *object,
 static void sp_radialgradient_set(SPObject *object, unsigned key, gchar const *value);
 static Inkscape::XML::Node *sp_radialgradient_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr,
                                                     guint flags);
-static cairo_pattern_t *sp_radialgradient_create_pattern(SPPaintServer *ps, cairo_t *ct, NRRect const *bbox, double opacity);
+static cairo_pattern_t *sp_radialgradient_create_pattern(SPPaintServer *ps, cairo_t *ct, Geom::OptRect const &bbox, double opacity);
 
 static SPGradientClass *rg_parent_class;
 
@@ -1494,7 +1494,7 @@ sp_radialgradient_set_position(SPRadialGradient *rg,
 static void
 sp_gradient_pattern_common_setup(cairo_pattern_t *cp,
                                  SPGradient *gr,
-                                 NRRect const *bbox,
+                                 Geom::OptRect const &bbox,
                                  double opacity)
 {
     // set spread type
@@ -1523,7 +1523,7 @@ sp_gradient_pattern_common_setup(cairo_pattern_t *cp,
     // set pattern matrix
     Geom::Affine gs2user = gr->gradientTransform;
     if (gr->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
-        Geom::Affine bbox2user(bbox->x1 - bbox->x0, 0, 0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
+        Geom::Affine bbox2user(bbox->width(), 0, 0, bbox->height(), bbox->left(), bbox->top());
         gs2user *= bbox2user;
     }
     ink_cairo_pattern_set_matrix(cp, gs2user.inverse());
@@ -1532,7 +1532,7 @@ sp_gradient_pattern_common_setup(cairo_pattern_t *cp,
 static cairo_pattern_t *
 sp_radialgradient_create_pattern(SPPaintServer *ps,
                                  cairo_t */* ct */,
-                                 NRRect const *bbox,
+                                 Geom::OptRect const &bbox,
                                  double opacity)
 {
     SPRadialGradient *rg = SP_RADIALGRADIENT(ps);
@@ -1552,7 +1552,7 @@ sp_radialgradient_create_pattern(SPPaintServer *ps,
 static cairo_pattern_t *
 sp_lineargradient_create_pattern(SPPaintServer *ps,
                                  cairo_t */* ct */,
-                                 NRRect const *bbox,
+                                 Geom::OptRect const &bbox,
                                  double opacity)
 {
     SPLinearGradient *lg = SP_LINEARGRADIENT(ps);

@@ -35,7 +35,7 @@ public:
     virtual ~FilterGaussian();
 
     virtual void render_cairo(FilterSlot &slot);
-    virtual void area_enlarge(NRRectL &area, Geom::Affine const &m);
+    virtual void area_enlarge(Geom::IntRect &area, Geom::Affine const &m);
     virtual bool can_handle_affine(Geom::Affine const &m);
     virtual double complexity(Geom::Affine const &ctm);
 

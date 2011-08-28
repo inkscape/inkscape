@@ -12,10 +12,9 @@
 #define SEEN_NR_FILTER_PRIMITIVE_H
 
 #include <2geom/forward.h>
+#include <2geom/rect.h>
 #include "display/nr-filter-types.h"
 #include "svg/svg-length.h"
-
-struct NRRectL;
 
 namespace Inkscape {
 namespace Filters {
@@ -30,7 +29,7 @@ public:
 
     virtual void render_cairo(FilterSlot &slot);
     virtual int render(FilterSlot & /*slot*/, FilterUnits const & /*units*/) { return 0; }
-    virtual void area_enlarge(NRRectL &area, Geom::Affine const &m);
+    virtual void area_enlarge(Geom::IntRect &area, Geom::Affine const &m);
 
     /**
      * Sets the input slot number 'slot' to be used as input in rendering

@@ -123,7 +123,6 @@ sp_root_init(SPRoot *root)
     root->width.unset(SVGLength::PERCENT, 1.0, 1.0);
     root->height.unset(SVGLength::PERCENT, 1.0, 1.0);
 
-    /* root->viewbox.set_identity(); */
     root->viewBox_set = FALSE;
 
     root->c2p.setIdentity();
@@ -253,10 +252,7 @@ sp_root_set(SPObject *object, unsigned int key, gchar const *value)
                 while (*eptr && ((*eptr == ',') || (*eptr == ' '))) eptr++;
                 if ((width > 0) && (height > 0)) {
                     /* Set viewbox */
-                    root->viewBox.x0 = x;
-                    root->viewBox.y0 = y;
-                    root->viewBox.x1 = x + width;
-                    root->viewBox.y1 = y + height;
+                    root->viewBox = Geom::Rect::from_xywh(x, y, width, height);
                     root->viewBox_set = TRUE;
                 } else {
                     root->viewBox_set = FALSE;
@@ -404,16 +400,16 @@ static void sp_root_update(SPObject *object, SPCtx *ctx, guint flags)
     /* fixme: We should calculate only if parent viewport has changed (Lauris) */
     /* If position is specified as percentage, calculate actual values */
     if (root->x.unit == SVGLength::PERCENT) {
-        root->x.computed = root->x.value * (ictx->vp.x1 - ictx->vp.x0);
+        root->x.computed = root->x.value * ictx->viewport.width();
     }
     if (root->y.unit == SVGLength::PERCENT) {
-        root->y.computed = root->y.value * (ictx->vp.y1 - ictx->vp.y0);
+        root->y.computed = root->y.value * ictx->viewport.height();
     }
     if (root->width.unit == SVGLength::PERCENT) {
-        root->width.computed = root->width.value * (ictx->vp.x1 - ictx->vp.x0);
+        root->width.computed = root->width.value * ictx->viewport.width();
     }
     if (root->height.unit == SVGLength::PERCENT) {
-        root->height.computed = root->height.value * (ictx->vp.y1 - ictx->vp.y0);
+        root->height.computed = root->height.value * ictx->viewport.height();
     }
 
     /* Create copy of item context */
@@ -445,11 +441,11 @@ static void sp_root_update(SPObject *object, SPCtx *ctx, guint flags)
         } else {
             double scalex, scaley, scale;
             /* Things are getting interesting */
-            scalex = root->width.computed / (root->viewBox.x1 - root->viewBox.x0);
-            scaley = root->height.computed / (root->viewBox.y1 - root->viewBox.y0);
+            scalex = root->width.computed / root->viewBox.width();
+            scaley = root->height.computed / root->viewBox.height();
             scale = (root->aspect_clip == SP_ASPECT_MEET) ? MIN(scalex, scaley) : MAX(scalex, scaley);
-            width = (root->viewBox.x1 - root->viewBox.x0) * scale;
-            height = (root->viewBox.y1 - root->viewBox.y0) * scale;
+            width = root->viewBox.width() * scale;
+            height = root->viewBox.height() * scale;
             /* Now place viewbox to requested position */
             /* todo: Use an array lookup to find the 0.0/0.5/1.0 coefficients,
                as is done for dialogs/align.cpp. */
@@ -498,38 +494,27 @@ static void sp_root_update(SPObject *object, SPCtx *ctx, guint flags)
         }
 
         /* Compose additional transformation from scale and position */
-        Geom::Point const viewBox_min(root->viewBox.x0,
-                                    root->viewBox.y0);
-        Geom::Point const viewBox_max(root->viewBox.x1,
-                                    root->viewBox.y1);
-        Geom::Scale const viewBox_length( viewBox_max - viewBox_min );
+        Geom::Scale const viewBox_length( root->viewBox.dimensions() );
         Geom::Scale const new_length(width, height);
 
         /* Append viewbox transformation */
         /* TODO: The below looks suspicious to me (pjrm): I wonder whether the RHS
            expression should have c2p at the beginning rather than at the end.  Test it. */
-        root->c2p = Geom::Translate(-viewBox_min) * ( new_length * viewBox_length.inverse() ) * Geom::Translate(x, y) * root->c2p;
+        root->c2p = Geom::Translate(-root->viewBox.min()) * ( new_length * viewBox_length.inverse() ) * Geom::Translate(x, y) * root->c2p;
     }
 
     rctx.i2doc = root->c2p * rctx.i2doc;
 
     /* Initialize child viewport */
     if (root->viewBox_set) {
-        rctx.vp.x0 = root->viewBox.x0;
-        rctx.vp.y0 = root->viewBox.y0;
-        rctx.vp.x1 = root->viewBox.x1;
-        rctx.vp.y1 = root->viewBox.y1;
+        rctx.viewport = root->viewBox;
     } else {
         /* fixme: I wonder whether this logic is correct (Lauris) */
+        Geom::Point minp(0,0);
         if (object->parent) {
-            rctx.vp.x0 = root->x.computed;
-            rctx.vp.y0 = root->y.computed;
-        } else {
-            rctx.vp.x0 = 0.0;
-            rctx.vp.y0 = 0.0;
+            minp = Geom::Point(root->x.computed, root->y.computed);
         }
-        rctx.vp.x1 = root->width.computed;
-        rctx.vp.y1 = root->height.computed;
+        rctx.viewport = Geom::Rect::from_xywh(minp[Geom::X], minp[Geom::Y], root->width.computed, root->height.computed);
     }
 
     rctx.i2vp = Geom::identity();
@@ -597,7 +582,8 @@ sp_root_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
 
     if (root->viewBox_set) {
         Inkscape::SVGOStringStream os;
-        os << root->viewBox.x0 << " " << root->viewBox.y0 << " " << root->viewBox.x1 - root->viewBox.x0 << " " << root->viewBox.y1 - root->viewBox.y0;
+        os << root->viewBox.left() << " " << root->viewBox.top() << " "
+           << root->viewBox.width() << " " << root->viewBox.height();
         repr->setAttribute("viewBox", os.str().c_str());
     }
 

@@ -27,17 +27,8 @@
 
 #include "ui/dialog/print.h"
 
-
-/* Identity typedef */
-
-unsigned int sp_print_bind(SPPrintContext *ctx, Geom::Affine const &transform, float opacity)
-{
-    Geom::Affine const ntransform(transform);
-    return sp_print_bind(ctx, &ntransform, opacity);
-}
-
 unsigned int
-sp_print_bind(SPPrintContext *ctx, Geom::Affine const *transform, float opacity)
+sp_print_bind(SPPrintContext *ctx, Geom::Affine const &transform, float opacity)
 {
     return ctx->module->bind(transform, opacity);
 }
@@ -55,15 +46,15 @@ sp_print_comment(SPPrintContext *ctx, char const *comment)
 }
 
 unsigned int
-sp_print_fill(SPPrintContext *ctx, Geom::PathVector const &pathv, Geom::Affine const *ctm, SPStyle const *style,
-              NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
+sp_print_fill(SPPrintContext *ctx, Geom::PathVector const &pathv, Geom::Affine const &ctm, SPStyle const *style,
+              Geom::OptRect const &pbox, Geom::OptRect const &dbox, Geom::OptRect const &bbox)
 {
     return ctx->module->fill(pathv, ctm, style, pbox, dbox, bbox);
 }
 
 unsigned int
-sp_print_stroke(SPPrintContext *ctx, Geom::PathVector const &pathv, Geom::Affine const *ctm, SPStyle const *style,
-                NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
+sp_print_stroke(SPPrintContext *ctx, Geom::PathVector const &pathv, Geom::Affine const &ctm, SPStyle const *style,
+                Geom::OptRect const &pbox, Geom::OptRect const &dbox, Geom::OptRect const &bbox)
 {
     return ctx->module->stroke(pathv, ctm, style, pbox, dbox, bbox);
 }
@@ -71,7 +62,7 @@ sp_print_stroke(SPPrintContext *ctx, Geom::PathVector const &pathv, Geom::Affine
 unsigned int
 sp_print_image_R8G8B8A8_N(SPPrintContext *ctx,
                           guchar *px, unsigned int w, unsigned int h, unsigned int rs,
-                          Geom::Affine const *transform, SPStyle const *style)
+                          Geom::Affine const &transform, SPStyle const *style)
 {
     return ctx->module->image(px, w, h, rs, transform, style);
 }

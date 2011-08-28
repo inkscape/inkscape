@@ -22,7 +22,6 @@
 #include <pango/pangoft2.h>
 #include <2geom/pathvector.h>
 #include <2geom/svg-path.h>
-#include "libnr/nr-rect.h"
 #include "libnrtype/font-glyph.h"
 #include "libnrtype/font-instance.h"
 #include "livarot/Path.h"

@@ -20,7 +20,6 @@
 #include <vector>
 
 #include <forward.h>
-#include <libnr/nr-forward.h>
 #include <2geom/point.h>
 #include <knot-enums.h>
 

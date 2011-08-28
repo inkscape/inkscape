@@ -48,12 +48,6 @@
 namespace Geom {
 
 /**
- * @brief Axis-aligned rectangle that can be empty.
- * @ingroup Primitives
- */
-typedef GenericOptRect<Coord> OptRect;
-
-/**
  * @brief Axis aligned, non-empty rectangle.
  * @ingroup Primitives
  */
@@ -118,7 +112,43 @@ public:
     /// @name Operators
     /// @{
     Rect &operator*=(Affine const &m);
+    bool operator==(IntRect const &ir) const {
+        return f[X] == ir[X] && f[Y] == ir[Y];
+    }
+    bool operator==(Rect const &other) const {
+        return Base::operator==(other);
+    }
     /// @}
+};
+
+/**
+ * @brief Axis-aligned rectangle that can be empty.
+ * @ingroup Primitives
+ */
+class OptRect
+    : public GenericOptRect<Coord>
+{
+    typedef GenericOptRect<Coord> Base;
+public:
+    OptRect() : Base() {}
+    OptRect(Rect const &a) : Base(a) {}
+    OptRect(Point const &a, Point const &b) : Base(a, b) {}
+    OptRect(Coord x0, Coord y0, Coord x1, Coord y1) : Base(x0, y0, x1, y1) {}
+    OptRect(OptInterval const &x_int, OptInterval const &y_int) : Base(x_int, y_int) {}
+    OptRect(Base const &b) : Base(b) {}
+
+    OptRect(IntRect const &r) : Base(Rect(r)) {}
+    OptRect(OptIntRect const &r) : Base() {
+        if (r) *this = Rect(*r);
+    }
+    // actually, the only reason we have this class, instead of typedefing
+    // to GenericOptRect<Coord>, are the above constructors
+    bool operator==(OptRect const &other) const {
+        return Base::operator==(other);
+    }
+    bool operator==(Rect const &other) const {
+        return Base::operator==(other);
+    }
 };
 
 Coord distanceSq(Point const &p, Rect const &rect);

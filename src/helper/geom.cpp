@@ -22,7 +22,6 @@
 #include <2geom/rect.h>
 #include <2geom/coord.h>
 #include <2geom/sbasis-to-bezier.h>
-#include <libnr/nr-convert2geom.h>
 #include <glibmm.h>
 
 using Geom::X;

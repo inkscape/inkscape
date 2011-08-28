@@ -49,7 +49,7 @@ static Inkscape::XML::Node *sp_use_write(SPObject *object, Inkscape::XML::Docume
 static void sp_use_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_use_modified(SPObject *object, guint flags);
 
-static void sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
+static Geom::OptRect sp_use_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
 static void sp_use_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 static void sp_use_print(SPItem *item, SPPrintContext *ctx);
 static gchar *sp_use_description(SPItem *item);
@@ -276,10 +276,11 @@ sp_use_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::
     return repr;
 }
 
-static void
-sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags)
+static Geom::OptRect
+sp_use_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type)
 {
     SPUse const *use = SP_USE(item);
+    Geom::OptRect bbox;
 
     if (use->child && SP_IS_ITEM(use->child)) {
         SPItem *child = SP_ITEM(use->child);
@@ -287,15 +288,9 @@ sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, uns
                              * Geom::Translate(use->x.computed,
                                                use->y.computed)
                              * transform );
-        Geom::OptRect optbbox;
-        child->invoke_bbox_full( optbbox, ct, flags, FALSE);
-        if (optbbox) {
-            bbox->x0 = (*optbbox)[0][0];
-            bbox->y0 = (*optbbox)[1][0];
-            bbox->x1 = (*optbbox)[0][1];
-            bbox->y1 = (*optbbox)[1][1];
-        }
+        bbox = child->bounds(type, ct);
     }
+    return bbox;
 }
 
 static void
@@ -599,21 +594,18 @@ sp_use_update(SPObject *object, SPCtx *ctx, unsigned flags)
 
     /* Set up child viewport */
     if (use->x.unit == SVGLength::PERCENT) {
-        use->x.computed = use->x.value * (ictx->vp.x1 - ictx->vp.x0);
+        use->x.computed = use->x.value * ictx->viewport.width();
     }
     if (use->y.unit == SVGLength::PERCENT) {
-        use->y.computed = use->y.value * (ictx->vp.y1 - ictx->vp.y0);
+        use->y.computed = use->y.value * ictx->viewport.height();
     }
     if (use->width.unit == SVGLength::PERCENT) {
-        use->width.computed = use->width.value * (ictx->vp.x1 - ictx->vp.x0);
+        use->width.computed = use->width.value * ictx->viewport.width();
     }
     if (use->height.unit == SVGLength::PERCENT) {
-        use->height.computed = use->height.value * (ictx->vp.y1 - ictx->vp.y0);
+        use->height.computed = use->height.value * ictx->viewport.height();
     }
-    cctx.vp.x0 = 0.0;
-    cctx.vp.y0 = 0.0;
-    cctx.vp.x1 = use->width.computed;
-    cctx.vp.y1 = use->height.computed;
+    cctx.viewport = Geom::Rect::from_xywh(0, 0, use->width.computed, use->height.computed);
     cctx.i2vp = Geom::identity();
     flags&=~SP_OBJECT_USER_MODIFIED_FLAG_B;
 

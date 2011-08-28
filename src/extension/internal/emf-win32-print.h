@@ -62,17 +62,21 @@ public:
     virtual unsigned int finish (Inkscape::Extension::Print * module);
 
     /* Rendering methods */
-    virtual unsigned int bind(Inkscape::Extension::Print *module, Geom::Affine const *transform, float opacity);
+    virtual unsigned int bind(Inkscape::Extension::Print *module, Geom::Affine const &transform, float opacity);
     virtual unsigned int release(Inkscape::Extension::Print *module);
-    virtual unsigned int fill (Inkscape::Extension::Print * module,
-                               Geom::PathVector const &pathv, const Geom::Affine *ctm, const SPStyle *style,
-                               const NRRect *pbox, const NRRect *dbox, const NRRect *bbox);
+    virtual unsigned int fill (Inkscape::Extension::Print *module,
+                               Geom::PathVector const &pathv,
+                               Geom::Affine const &ctm, SPStyle const *style,
+                               Geom::OptRect const &pbox, Geom::OptRect const &dbox,
+                               Geom::OptRect const &bbox);
     virtual unsigned int stroke (Inkscape::Extension::Print * module,
-                                 Geom::PathVector const &pathv, const Geom::Affine *transform, const SPStyle *style,
-                                 const NRRect *pbox, const NRRect *dbox, const NRRect *bbox);
+                                 Geom::PathVector const &pathv,
+                                 Geom::Affine const &ctm, SPStyle const *style,
+                                 Geom::OptRect const &pbox, Geom::OptRect const &dbox,
+                                 Geom::OptRect const &bbox);
     virtual unsigned int comment(Inkscape::Extension::Print *module, const char * comment);
     virtual unsigned int text(Inkscape::Extension::Print *module, char const *text,
-                              Geom::Point p, SPStyle const *style);
+                              Geom::Point const &p, SPStyle const *style);
     bool textToPath (Inkscape::Extension::Print * ext);
 
     static void init (void);

@@ -807,10 +807,7 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
     }
 
     // cancel any history of zooms up to this point
-    if (desktop->zooms_past) {
-        g_list_free(desktop->zooms_past);
-        desktop->zooms_past = NULL;
-    }
+    desktop->zooms_past.clear();
 }
 
 bool SPNamedView::getSnapGlobal() const

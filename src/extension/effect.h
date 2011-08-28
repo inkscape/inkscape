@@ -53,9 +53,7 @@ class Effect : public Extension {
                 back to the effect that created it.  */
     class EffectVerb : public Inkscape::Verb {
         private:
-            static void perform (SPAction * action, void * mydata, void * otherdata);
-            /** \brief  Function to call for specific actions */
-            static SPActionEventVector vector;
+            static void perform (SPAction * action, void * mydata);
 
             /** \brief  The effect that this verb represents. */
             Effect * _effect;

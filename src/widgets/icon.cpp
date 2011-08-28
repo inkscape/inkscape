@@ -1102,8 +1102,7 @@ sp_icon_doc_icon( SPDocument *doc, Inkscape::Drawing &drawing,
         if (object && SP_IS_ITEM(object)) {
             SPItem *item = SP_ITEM(object);
             // Find bbox in document
-            Geom::Affine const i2doc(item->i2doc_affine());
-            Geom::OptRect dbox = item->getBounds(i2doc);
+            Geom::OptRect dbox = item->documentVisualBounds();
 
             if ( object->parent == NULL )
             {

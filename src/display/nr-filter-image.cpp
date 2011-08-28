@@ -19,7 +19,6 @@
 #include "display/nr-filter.h"
 #include "display/nr-filter-image.h"
 #include "display/nr-filter-units.h"
-#include "libnr/nr-rect-l.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -74,7 +73,7 @@ void FilterImage::render_cairo(FilterSlot &slot)
         document->ensureUpToDate();
 
         Drawing drawing;
-        Geom::OptRect optarea = SVGElem->getBounds(Geom::identity());
+        Geom::OptRect optarea = SVGElem->visualBounds();
         if (!optarea) return;
 
         unsigned const key = SPItem::display_key_new(1);

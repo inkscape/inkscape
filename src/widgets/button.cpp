@@ -43,20 +43,10 @@ static gint sp_button_process_event (SPButton *button, GdkEvent *event);
 
 static void sp_button_set_action (SPButton *button, SPAction *action);
 static void sp_button_set_doubleclick_action (SPButton *button, SPAction *action);
-static void sp_button_action_set_active (SPAction *action, unsigned int active, void *data);
-static void sp_button_action_set_sensitive (SPAction *action, unsigned int sensitive, void *data);
-static void sp_button_action_set_shortcut (SPAction *action, unsigned int shortcut, void *data);
+static void sp_button_action_set_active (SPButton *button, bool active);
 static void sp_button_set_composed_tooltip (GtkWidget *widget, SPAction *action);
 
 static GtkToggleButtonClass *parent_class;
-SPActionEventVector button_event_vector = {
-	{NULL},
-	 NULL,
-	 sp_button_action_set_active,
-	 sp_button_action_set_sensitive,
-         sp_button_action_set_shortcut,
-         NULL
-};
 
 GType sp_button_get_type(void)
 {
@@ -98,6 +88,8 @@ sp_button_init (SPButton *button)
 {
 	button->action = NULL;
 	button->doubleclick_action = NULL;
+	new (&button->c_set_active) sigc::connection();
+	new (&button->c_set_sensitive) sigc::connection();
 
 	gtk_container_set_border_width (GTK_CONTAINER (button), 0);
 
@@ -111,17 +103,17 @@ sp_button_init (SPButton *button)
 static void
 sp_button_destroy (GtkObject *object)
 {
-	SPButton *button;
-
-	button = SP_BUTTON (object);
+	SPButton *button = SP_BUTTON (object);
 
 	if (button->action) {
 		sp_button_set_action (button, NULL);
 	}
-
 	if (button->doubleclick_action) {
 		sp_button_set_doubleclick_action (button, NULL);
 	}
+
+    button->c_set_active.~connection();
+    button->c_set_sensitive.~connection();
 
 	((GtkObjectClass *) (parent_class))->destroy (object);
 }
@@ -212,12 +204,13 @@ static void
 sp_button_set_doubleclick_action (SPButton *button, SPAction *action)
 {
 	if (button->doubleclick_action) {
-		nr_object_unref ((NRObject *) button->doubleclick_action);
+		g_object_unref (button->doubleclick_action);
 	}
 	button->doubleclick_action = action;
 	if (action) {
-		button->doubleclick_action = (SPAction *) nr_object_ref ((NRObject *) action);
+	    g_object_ref(action);
 	}
+	
 }
 
 static void
@@ -226,17 +219,25 @@ sp_button_set_action (SPButton *button, SPAction *action)
 	GtkWidget *child;
 
 	if (button->action) {
-		nr_active_object_remove_listener_by_data ((NRActiveObject *) button->action, button);
-		nr_object_unref ((NRObject *) button->action);
+	    button->c_set_active.disconnect();
+	    button->c_set_sensitive.disconnect();
 		child = gtk_bin_get_child (GTK_BIN (button));
 		if (child) {
 			gtk_container_remove (GTK_CONTAINER (button), child);
 		}
+		g_object_unref(button->action);
 	}
 	button->action = action;
 	if (action) {
-		button->action = (SPAction *) nr_object_ref ((NRObject *) action);
-		nr_active_object_add_listener ((NRActiveObject *) action, (NRObjectEventVector *) &button_event_vector, sizeof (SPActionEventVector), button);
+	    g_object_ref(action);
+		button->c_set_active = action->signal_set_active.connect(
+		    sigc::bind<0>(
+		        sigc::ptr_fun(&sp_button_action_set_active),
+		        SP_BUTTON(button)));
+		button->c_set_sensitive = action->signal_set_sensitive.connect(
+		    sigc::bind<0>(
+		        sigc::ptr_fun(&gtk_widget_set_sensitive),
+		        GTK_WIDGET(button)));
 		if (action->image) {
 			child = sp_icon_new (button->lsize, action->image);
 			gtk_widget_show (child);
@@ -248,10 +249,8 @@ sp_button_set_action (SPButton *button, SPAction *action)
 }
 
 static void
-sp_button_action_set_active (SPAction */*action*/, unsigned int active, void *data)
+sp_button_action_set_active (SPButton *button, bool active)
 {
-	SPButton *button;
-	button = (SPButton *) data;
 	if (button->type != SP_BUTTON_TYPE_TOGGLE) {
 		return;
 	}
@@ -260,19 +259,6 @@ sp_button_action_set_active (SPAction */*action*/, unsigned int active, void *da
 	if (0 && !active != !SP_BUTTON_IS_DOWN (button)) {
 		sp_button_toggle_set_down (button, active);
 	}
-}
-
-static void
-sp_button_action_set_sensitive (SPAction */*action*/, unsigned int sensitive, void *data)
-{
-	gtk_widget_set_sensitive (GTK_WIDGET (data), sensitive);
-}
-
-static void
-sp_button_action_set_shortcut (SPAction *action, unsigned int /*shortcut*/, void *data)
-{
-	SPButton *button=SP_BUTTON (data);
-	sp_button_set_composed_tooltip (GTK_WIDGET (button), action);
 }
 
 static void sp_button_set_composed_tooltip(GtkWidget *widget, SPAction *action)
@@ -308,7 +294,7 @@ sp_button_new_from_data( Inkscape::IconSize size,
 	GtkWidget *button;
 	SPAction *action=sp_action_new(view, name, name, tip, name, 0);
 	button = sp_button_new (size, type, action, NULL);
-	nr_object_unref ((NRObject *) action);
+	g_object_unref(action);
 	return button;
 }
 

@@ -46,8 +46,6 @@
 #include "extension/input.h"
 #include "extension/output.h"
 #include "selection-chemistry.h"
-#include "libnr/nr-rect.h"
-#include "libnr/nr-convert2geom.h"
 #include <2geom/rect.h>
 #include <2geom/transforms.h>
 #include "box3d.h"
@@ -467,7 +465,7 @@ bool ClipboardManagerImpl::pasteSize(SPDesktop *desktop, bool separately, bool a
         if (separately) {
             for (GSList *i = const_cast<GSList*>(selection->itemList()) ; i ; i = i->next) {
                 SPItem *item = SP_ITEM(i->data);
-                Geom::OptRect obj_size = item->getBboxDesktop();
+                Geom::OptRect obj_size = item->desktopVisualBounds();
                 if ( !obj_size ) {
                     continue;
                 }
@@ -476,7 +474,7 @@ bool ClipboardManagerImpl::pasteSize(SPDesktop *desktop, bool separately, bool a
         }
         // resize the selection as a whole
         else {
-            Geom::OptRect sel_size = selection->bounds();
+            Geom::OptRect sel_size = selection->visualBounds();
             if ( sel_size ) {
                 sp_selection_scale_relative(selection, sel_size->midpoint(),
                                             _getScale(desktop, min, max, *sel_size, apply_x, apply_y));
@@ -636,7 +634,7 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
         }
     }
 
-    Geom::OptRect size = selection->bounds();
+    Geom::OptRect size = selection->visualBounds();
     if (size) {
         sp_repr_set_point(_clipnode, "min", size->min());
         sp_repr_set_point(_clipnode, "max", size->max());
@@ -852,7 +850,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDesktop *desktop, SPDocument *clipdo
     target_document->ensureUpToDate();
 
     // move selection either to original position (in_place) or to mouse pointer
-    Geom::OptRect sel_bbox = selection->bounds();
+    Geom::OptRect sel_bbox = selection->visualBounds();
     if (sel_bbox) {
         // get offset of selection to original position of copied elements
         Geom::Point pos_original;

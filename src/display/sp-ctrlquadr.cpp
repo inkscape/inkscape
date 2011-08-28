@@ -97,15 +97,13 @@ sp_ctrlquadr_render (SPCanvasItem *item, SPCanvasBuf *buf)
 {
     SPCtrlQuadr *cq = SP_CTRLQUADR (item);
 
-    //Geom::Rect area (Geom::Point(buf->rect.x0, buf->rect.y0), Geom::Point(buf->rect.x1, buf->rect.y1));
-
     if (!buf->ct)
         return;
 
     // RGB / BGR
     cairo_new_path(buf->ct);
 
-    Geom::Point min = Geom::Point(buf->rect.x0, buf->rect.y0);
+    Geom::Point min = buf->rect.min();
 
     Geom::Point p1 = (cq->p1 * cq->affine) - min;
     Geom::Point p2 = (cq->p2 * cq->affine) - min;

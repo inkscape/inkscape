@@ -748,7 +748,7 @@ set_to_accumulated(SPEraserContext *dc)
             Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
 
             SPItem* acid = SP_ITEM(desktop->doc()->getObjectByRepr(dc->repr));
-            Geom::OptRect eraserBbox = acid->getBounds(Geom::identity());
+            Geom::OptRect eraserBbox = acid->visualBounds();
             Geom::Rect bounds = (*eraserBbox) * desktop->doc2dt();
             std::vector<SPItem*> remainingItems;
             GSList* toWorkOn = 0;
@@ -770,7 +770,7 @@ set_to_accumulated(SPEraserContext *dc)
                     for (GSList *i = toWorkOn ; i ; i = i->next ) {
                         SPItem *item = SP_ITEM(i->data);
                         if ( eraserMode ) {
-                            Geom::OptRect bbox = item->getBounds(Geom::identity());
+                            Geom::OptRect bbox = item->visualBounds();
                             if (bbox && bbox->intersects(*eraserBbox)) {
                                 Inkscape::XML::Node* dup = dc->repr->duplicate(xml_doc);
                                 dc->repr->parent()->appendChild(dup);

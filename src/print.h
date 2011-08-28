@@ -17,23 +17,21 @@
 #include "forward.h"
 #include "extension/extension-forward.h"
 
-struct NRRect;
 struct SPPrintContext {
     Inkscape::Extension::Print *module;
 };
 
 unsigned int sp_print_bind(SPPrintContext *ctx, Geom::Affine const &transform, float opacity);
-unsigned int sp_print_bind(SPPrintContext *ctx, Geom::Affine const *transform, float opacity);
 unsigned int sp_print_release(SPPrintContext *ctx);
 unsigned int sp_print_comment(SPPrintContext *ctx, char const *comment);
-unsigned int sp_print_fill(SPPrintContext *ctx, Geom::PathVector const &pathv, Geom::Affine const *ctm, SPStyle const *style,
-                           NRRect const *pbox, NRRect const *dbox, NRRect const *bbox);
-unsigned int sp_print_stroke(SPPrintContext *ctx, Geom::PathVector const &pathv, Geom::Affine const *transform, SPStyle const *style,
-                             NRRect const *pbox, NRRect const *dbox, NRRect const *bbox);
+unsigned int sp_print_fill(SPPrintContext *ctx, Geom::PathVector const &pathv, Geom::Affine const &ctm, SPStyle const *style,
+                           Geom::OptRect const &pbox, Geom::OptRect const &dbox, Geom::OptRect const &bbox);
+unsigned int sp_print_stroke(SPPrintContext *ctx, Geom::PathVector const &pathv, Geom::Affine const &ctm, SPStyle const *style,
+                             Geom::OptRect const &pbox, Geom::OptRect const &dbox, Geom::OptRect const &bbox);
 
 unsigned int sp_print_image_R8G8B8A8_N(SPPrintContext *ctx,
                                        guchar *px, unsigned int w, unsigned int h, unsigned int rs,
-                                       Geom::Affine const *transform, SPStyle const *style);
+                                       Geom::Affine const &transform, SPStyle const *style);
 
 unsigned int sp_print_text(SPPrintContext *ctx, char const *text, Geom::Point p,
                            SPStyle const *style);

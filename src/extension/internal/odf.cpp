@@ -573,7 +573,7 @@ void SingularValueDecomposition::calculate()
       //double eps = pow(2.0,-52.0);
       //double tiny = pow(2.0,-966.0);
       //let's just calculate these now
-      //a double can be e ± 308.25, so this is safe
+      //a double can be e Â± 308.25, so this is safe
       double eps = 2.22e-16;
       double tiny = 1.6e-291;
       while (p > 0) {
@@ -965,15 +965,10 @@ static Geom::Affine getODFTransform(const SPItem *item)
  */
 static Geom::OptRect getODFBoundingBox(const SPItem *item)
 {
-    Geom::OptRect bbox_temp = ((SPItem *)item)->getBboxDesktop();
-    Geom::OptRect bbox;
-    if (bbox_temp) {
-        bbox = *bbox_temp;
-        double doc_height    = SP_ACTIVE_DOCUMENT->getHeight();
-        Geom::Affine doc2dt_tf = Geom::Affine(Geom::Scale(1.0, -1.0));
-        doc2dt_tf            = doc2dt_tf * Geom::Affine(Geom::Translate(0, doc_height));
-        bbox                 = *bbox * doc2dt_tf;
-        bbox                 = *bbox * Geom::Affine(Geom::Scale(pxToCm));
+    // TODO: geometric or visual?
+    Geom::OptRect bbox = ((SPItem *)item)->documentVisualBounds();
+    if (bbox) {
+        *bbox *= Geom::Affine(Geom::Scale(pxToCm));
     }
     return bbox;
 }

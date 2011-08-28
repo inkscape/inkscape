@@ -376,16 +376,14 @@ sp_canvas_arena_set_sticky (SPCanvasArena *ca, gboolean sticky)
 }
 
 void
-sp_canvas_arena_render_surface (SPCanvasArena *ca, cairo_surface_t *surface, NRRectL const &r)
+sp_canvas_arena_render_surface (SPCanvasArena *ca, cairo_surface_t *surface, Geom::IntRect const &r)
 {
     g_return_if_fail (ca != NULL);
     g_return_if_fail (SP_IS_CANVAS_ARENA (ca));
 
-    Geom::OptIntRect area = r.upgrade_2geom();
-    if (!area) return;
-    Inkscape::DrawingContext ct(surface, area->min());
+    Inkscape::DrawingContext ct(surface, r.min());
     ca->drawing.update(Geom::IntRect::infinite(), ca->ctx);
-    ca->drawing.render(ct, *area);
+    ca->drawing.render(ct, r);
 }
 
 /*

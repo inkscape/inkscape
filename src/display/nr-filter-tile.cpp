@@ -9,6 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glib.h>
 #include "display/nr-filter-tile.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
@@ -39,10 +40,6 @@ void FilterTile::render_cairo(FilterSlot &slot)
 
     cairo_surface_t *in = slot.getcairo(_input);
     slot.set(_output, in);
-}
-
-void FilterTile::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*trans*/)
-{
 }
 
 double FilterTile::complexity(Geom::Affine const &)

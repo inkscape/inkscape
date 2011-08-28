@@ -118,8 +118,7 @@ namespace Inkscape {
            file operations. */
 class FileVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -137,8 +136,7 @@ public:
            edit operations. */
 class EditVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -156,8 +154,7 @@ public:
            selection operations. */
 class SelectionVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -175,8 +172,7 @@ public:
            layer operations. */
 class LayerVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -194,8 +190,7 @@ public:
            operations related to objects. */
 class ObjectVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -213,8 +208,7 @@ public:
            operations relative to context. */
 class ContextVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -232,8 +226,7 @@ public:
            zoom operations. */
 class ZoomVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -252,8 +245,7 @@ public:
            dialog operations. */
 class DialogVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -271,8 +263,7 @@ public:
            help operations. */
 class HelpVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -290,8 +281,7 @@ public:
            tutorial operations. */
 class TutorialVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -309,8 +299,7 @@ public:
            text operations. */
 class TextVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -363,9 +352,7 @@ Verb::Verb(gchar const *id, gchar const *name, gchar const *tip, gchar const *im
 Verb::~Verb(void)
 {
     /// \todo all the actions need to be cleaned up first.
-    if (_actions != NULL) {
-        delete _actions;
-    }
+    delete _actions;
 
     if (_full_tip) {
         g_free(_full_tip);
@@ -395,8 +382,8 @@ Verb::make_action(Inkscape::UI::View::View */*view*/)
 SPAction *
 FileVerb::make_action(Inkscape::UI::View::View *view)
 {
-    //std::cout << "fileverb: make_action: " << &vector << std::endl;
-    return make_action_helper(view, &vector);
+    //std::cout << "fileverb: make_action: " << &perform << std::endl;
+    return make_action_helper(view, &perform);
 }
 
 /** \brief  Create an action for a \c EditVerb
@@ -408,8 +395,8 @@ FileVerb::make_action(Inkscape::UI::View::View *view)
 SPAction *
 EditVerb::make_action(Inkscape::UI::View::View *view)
 {
-    //std::cout << "editverb: make_action: " << &vector << std::endl;
-    return make_action_helper(view, &vector);
+    //std::cout << "editverb: make_action: " << &perform << std::endl;
+    return make_action_helper(view, &perform);
 }
 
 /** \brief  Create an action for a \c SelectionVerb
@@ -421,7 +408,7 @@ EditVerb::make_action(Inkscape::UI::View::View *view)
 SPAction *
 SelectionVerb::make_action(Inkscape::UI::View::View *view)
 {
-    return make_action_helper(view, &vector);
+    return make_action_helper(view, &perform);
 }
 
 /** \brief  Create an action for a \c LayerVerb
@@ -433,7 +420,7 @@ SelectionVerb::make_action(Inkscape::UI::View::View *view)
 SPAction *
 LayerVerb::make_action(Inkscape::UI::View::View *view)
 {
-    return make_action_helper(view, &vector);
+    return make_action_helper(view, &perform);
 }
 
 /** \brief  Create an action for a \c ObjectVerb
@@ -445,7 +432,7 @@ LayerVerb::make_action(Inkscape::UI::View::View *view)
 SPAction *
 ObjectVerb::make_action(Inkscape::UI::View::View *view)
 {
-    return make_action_helper(view, &vector);
+    return make_action_helper(view, &perform);
 }
 
 /** \brief  Create an action for a \c ContextVerb
@@ -457,7 +444,7 @@ ObjectVerb::make_action(Inkscape::UI::View::View *view)
 SPAction *
 ContextVerb::make_action(Inkscape::UI::View::View *view)
 {
-    return make_action_helper(view, &vector);
+    return make_action_helper(view, &perform);
 }
 
 /** \brief  Create an action for a \c ZoomVerb
@@ -469,7 +456,7 @@ ContextVerb::make_action(Inkscape::UI::View::View *view)
 SPAction *
 ZoomVerb::make_action(Inkscape::UI::View::View *view)
 {
-    return make_action_helper(view, &vector);
+    return make_action_helper(view, &perform);
 }
 
 /** \brief  Create an action for a \c DialogVerb
@@ -481,7 +468,7 @@ ZoomVerb::make_action(Inkscape::UI::View::View *view)
 SPAction *
 DialogVerb::make_action(Inkscape::UI::View::View *view)
 {
-    return make_action_helper(view, &vector);
+    return make_action_helper(view, &perform);
 }
 
 /** \brief  Create an action for a \c HelpVerb
@@ -493,7 +480,7 @@ DialogVerb::make_action(Inkscape::UI::View::View *view)
 SPAction *
 HelpVerb::make_action(Inkscape::UI::View::View *view)
 {
-    return make_action_helper(view, &vector);
+    return make_action_helper(view, &perform);
 }
 
 /** \brief  Create an action for a \c TutorialVerb
@@ -505,7 +492,7 @@ HelpVerb::make_action(Inkscape::UI::View::View *view)
 SPAction *
 TutorialVerb::make_action(Inkscape::UI::View::View *view)
 {
-    return make_action_helper(view, &vector);
+    return make_action_helper(view, &perform);
 }
 
 /** \brief  Create an action for a \c TextVerb
@@ -517,7 +504,7 @@ TutorialVerb::make_action(Inkscape::UI::View::View *view)
 SPAction *
 TextVerb::make_action(Inkscape::UI::View::View *view)
 {
-    return make_action_helper(view, &vector);
+    return make_action_helper(view, &perform);
 }
 
 /** \brief A quick little convience function to make building actions
@@ -534,7 +521,7 @@ TextVerb::make_action(Inkscape::UI::View::View *view)
     the vector that is passed in.
 */
 SPAction *
-Verb::make_action_helper(Inkscape::UI::View::View *view, SPActionEventVector *vector, void *in_pntr)
+Verb::make_action_helper(Inkscape::UI::View::View *view, void (*perform_fun)(SPAction *, void *), void *in_pntr)
 {
     SPAction *action;
 
@@ -542,23 +529,14 @@ Verb::make_action_helper(Inkscape::UI::View::View *view, SPActionEventVector *ve
     action = sp_action_new(view, _id, _(_name),
                            _(_tip), _image, this);
 
-    if (action != NULL) {
-        if (in_pntr == NULL) {
-            nr_active_object_add_listener(
-                (NRActiveObject *) action,
-                (NRObjectEventVector *) vector,
-                sizeof(SPActionEventVector),
-                reinterpret_cast<void *>(_code)
-            );
-        } else {
-            nr_active_object_add_listener(
-                (NRActiveObject *) action,
-                (NRObjectEventVector *) vector,
-                sizeof(SPActionEventVector),
-                in_pntr
-            );
-        }
-    }
+    if (action == NULL) return NULL;
+    
+    action->signal_perform.connect(
+        sigc::bind(
+            sigc::bind(
+                sigc::ptr_fun(perform_fun),
+                in_pntr ? in_pntr : reinterpret_cast<void*>(_code)),
+            action));
 
     return action;
 }
@@ -703,8 +681,8 @@ Verb::delete_view(Inkscape::UI::View::View *view)
 
     if (action_found != _actions->end()) {
         SPAction *action = action_found->second;
-        nr_object_unref(NR_OBJECT(action));
         _actions->erase(action_found);
+        g_object_unref(action);
     }
 
     return;
@@ -785,7 +763,7 @@ Verb::getbyid(gchar const *id)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-FileVerb::perform(SPAction *action, void *data, void */*pdata*/)
+FileVerb::perform(SPAction *action, void *data)
 {
 #if 0
     /* These aren't used, but are here to remind people not to use
@@ -857,7 +835,7 @@ FileVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
+EditVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
@@ -988,7 +966,7 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-SelectionVerb::perform(SPAction *action, void *data, void */*pdata*/)
+SelectionVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
 
@@ -1108,7 +1086,7 @@ SelectionVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-LayerVerb::perform(SPAction *action, void *data, void */*pdata*/)
+LayerVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     size_t verb = reinterpret_cast<std::size_t>(data);
@@ -1312,7 +1290,7 @@ LayerVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
+ObjectVerb::perform( SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
@@ -1325,7 +1303,7 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
     if (sel->isEmpty())
         return;
 
-    Geom::OptRect bbox = sel->bounds();
+    Geom::OptRect bbox = sel->visualBounds();
     if (!bbox) {
         return;
     }
@@ -1395,7 +1373,7 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
+ContextVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt;
     sp_verb_t verb;
@@ -1579,7 +1557,7 @@ ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-TextVerb::perform(SPAction *action, void */*data*/, void */*pdata*/)
+TextVerb::perform(SPAction *action, void */*data*/)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
@@ -1593,7 +1571,7 @@ TextVerb::perform(SPAction *action, void */*data*/, void */*pdata*/)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
+ZoomVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
@@ -1754,7 +1732,7 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-DialogVerb::perform(SPAction *action, void *data, void */*pdata*/)
+DialogVerb::perform(SPAction *action, void *data)
 {
     if (reinterpret_cast<std::size_t>(data) != SP_VERB_DIALOG_TOGGLE) {
         // unhide all when opening a new dialog
@@ -1866,7 +1844,7 @@ DialogVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-HelpVerb::perform(SPAction *action, void *data, void */*pdata*/)
+HelpVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     g_assert(dt->_dlg_mgr != NULL);
@@ -1900,7 +1878,7 @@ HelpVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-TutorialVerb::perform(SPAction */*action*/, void *data, void */*pdata*/)
+TutorialVerb::perform(SPAction */*action*/, void *data)
 {
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_TUTORIAL_BASIC:
@@ -1942,92 +1920,12 @@ TutorialVerb::perform(SPAction */*action*/, void *data, void */*pdata*/)
     }
 } // end of sp_verb_action_tutorial_perform()
 
-
-/**
- * Action vector to define functions called if a staticly defined file verb
- * is called.
- */
-SPActionEventVector FileVerb::vector =
-            {{NULL},FileVerb::perform, NULL, NULL, NULL, NULL};
-/**
- * Action vector to define functions called if a staticly defined edit verb is
- * called.
- */
-SPActionEventVector EditVerb::vector =
-            {{NULL},EditVerb::perform, NULL, NULL, NULL, NULL};
-
-/**
- * Action vector to define functions called if a staticly defined selection
- * verb is called
- */
-SPActionEventVector SelectionVerb::vector =
-            {{NULL},SelectionVerb::perform, NULL, NULL, NULL, NULL};
-
-/**
- * Action vector to define functions called if a staticly defined layer
- * verb is called
- */
-SPActionEventVector LayerVerb::vector =
-            {{NULL}, LayerVerb::perform, NULL, NULL, NULL, NULL};
-
-/**
- * Action vector to define functions called if a staticly defined object
- * editing verb is called
- */
-SPActionEventVector ObjectVerb::vector =
-            {{NULL},ObjectVerb::perform, NULL, NULL, NULL, NULL};
-
-/**
- * Action vector to define functions called if a staticly defined context
- * verb is called
- */
-SPActionEventVector ContextVerb::vector =
-            {{NULL},ContextVerb::perform, NULL, NULL, NULL, NULL};
-
-/**
- * Action vector to define functions called if a staticly defined zoom verb
- * is called
- */
-SPActionEventVector ZoomVerb::vector =
-            {{NULL},ZoomVerb::perform, NULL, NULL, NULL, NULL};
-
-
-/**
- * Action vector to define functions called if a staticly defined dialog verb
- * is called
- */
-SPActionEventVector DialogVerb::vector =
-            {{NULL},DialogVerb::perform, NULL, NULL, NULL, NULL};
-
-/**
- * Action vector to define functions called if a staticly defined help verb
- * is called
- */
-SPActionEventVector HelpVerb::vector =
-            {{NULL},HelpVerb::perform, NULL, NULL, NULL, NULL};
-
-/**
- * Action vector to define functions called if a staticly defined tutorial verb
- * is called
- */
-SPActionEventVector TutorialVerb::vector =
-            {{NULL},TutorialVerb::perform, NULL, NULL, NULL, NULL};
-
-/**
- * Action vector to define functions called if a staticly defined tutorial verb
- * is called
- */
-SPActionEventVector TextVerb::vector =
-            {{NULL},TextVerb::perform, NULL, NULL, NULL, NULL};
-
-
 /* *********** Effect Last ********** */
 
 /** \brief A class to represent the last effect issued */
 class EffectLastVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -2043,12 +1941,6 @@ public:
     }
 }; /* EffectLastVerb class */
 
-/**
- * The vector to attach in the last effect verb.
- */
-SPActionEventVector EffectLastVerb::vector =
-            {{NULL},EffectLastVerb::perform, NULL, NULL, NULL, NULL};
-
 /** \brief  Create an action for a \c EffectLastVerb
     \param  view  Which view the action should be created for
     \return The built action.
@@ -2058,12 +1950,12 @@ SPActionEventVector EffectLastVerb::vector =
 SPAction *
 EffectLastVerb::make_action(Inkscape::UI::View::View *view)
 {
-    return make_action_helper(view, &vector);
+    return make_action_helper(view, &perform);
 }
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-EffectLastVerb::perform(SPAction *action, void *data, void */*pdata*/)
+EffectLastVerb::perform(SPAction *action, void *data)
 {
     /* These aren't used, but are here to remind people not to use
        the CURRENT_DOCUMENT macros unless they really have to. */
@@ -2094,8 +1986,7 @@ EffectLastVerb::perform(SPAction *action, void *data, void */*pdata*/)
 /** \brief A class to represent the canvas fitting verbs */
 class FitCanvasVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -2111,12 +2002,6 @@ public:
     }
 }; /* FitCanvasVerb class */
 
-/**
- * The vector to attach in the fit canvas verb.
- */
-SPActionEventVector FitCanvasVerb::vector =
-            {{NULL},FitCanvasVerb::perform, NULL, NULL, NULL, NULL};
-
 /** \brief  Create an action for a \c FitCanvasVerb
     \param  view  Which view the action should be created for
     \return The built action.
@@ -2126,13 +2011,13 @@ SPActionEventVector FitCanvasVerb::vector =
 SPAction *
 FitCanvasVerb::make_action(Inkscape::UI::View::View *view)
 {
-    SPAction *action = make_action_helper(view, &vector);
+    SPAction *action = make_action_helper(view, &perform);
     return action;
 }
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-FitCanvasVerb::perform(SPAction *action, void *data, void */*pdata*/)
+FitCanvasVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt) return;
@@ -2163,8 +2048,7 @@ FitCanvasVerb::perform(SPAction *action, void *data, void */*pdata*/)
 /** \brief A class to represent the object unlocking and unhiding verbs */
 class LockAndHideVerb : public Verb {
 private:
-    static void perform(SPAction *action, void *mydata, void *otherdata);
-    static SPActionEventVector vector;
+    static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
@@ -2180,12 +2064,6 @@ public:
     }
 }; /* LockAndHideVerb class */
 
-/**
- * The vector to attach in the lock'n'hide verb.
- */
-SPActionEventVector LockAndHideVerb::vector =
-            {{NULL},LockAndHideVerb::perform, NULL, NULL, NULL, NULL};
-
 /** \brief  Create an action for a \c LockAndHideVerb
     \param  view  Which view the action should be created for
     \return The built action.
@@ -2195,13 +2073,13 @@ SPActionEventVector LockAndHideVerb::vector =
 SPAction *
 LockAndHideVerb::make_action(Inkscape::UI::View::View *view)
 {
-    SPAction *action = make_action_helper(view, &vector);
+    SPAction *action = make_action_helper(view, &perform);
     return action;
 }
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-LockAndHideVerb::perform(SPAction *action, void *data, void */*pdata*/)
+LockAndHideVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt) return;

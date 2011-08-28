@@ -17,8 +17,6 @@
 #include <gdk/gdk.h>
 #include <2geom/forward.h>
 
-struct NRPixBlock;
-
 namespace NR {
 
 #define X_3D 0

@@ -394,7 +394,7 @@ Geom::Point SPAvoidRef::getConnectionPointPos(const int type, const int id)
     if ( type == ConnPointDefault )
     {
         // For now, just default to the centre of the item
-        Geom::OptRect bbox = item->getBounds(item->i2doc_affine());
+        Geom::OptRect bbox = item->documentVisualBounds();
         pos = (bbox) ? bbox->midpoint() : Geom::Point(0, 0);
     }
     else

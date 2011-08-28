@@ -34,7 +34,6 @@
 #include "desktop.h"
 #include "desktop-style.h"
 #include "message-context.h"
-#include "libnr/nr-macros.h"
 #include "pixmaps/cursor-star.xpm"
 #include "sp-metrics.h"
 #include <glibmm/i18n.h>

@@ -34,7 +34,7 @@ struct SPClipPathView {
     SPClipPathView *next;
     unsigned int key;
     Inkscape::DrawingItem *arenaitem;
-    NRRect bbox;
+    Geom::OptRect bbox;
 };
 
 SPClipPathView *sp_clippath_view_new_prepend(SPClipPathView *list, unsigned int key, Inkscape::DrawingItem *arenaitem);
@@ -193,10 +193,9 @@ void SPClipPath::update(SPObject *object, SPCtx *ctx, guint flags)
     SPClipPath *cp = SP_CLIPPATH(object);
     for (SPClipPathView *v = cp->display; v != NULL; v = v->next) {
         Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-        if (cp->clipPathUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
-            Geom::Affine t(Geom::Scale(v->bbox.x1 - v->bbox.x0, v->bbox.y1 - v->bbox.y0));
-            t[4] = v->bbox.x0;
-            t[5] = v->bbox.y0;
+        if (cp->clipPathUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX && v->bbox) {
+            Geom::Affine t = Geom::Scale(v->bbox->dimensions());
+            t.setTranslation(v->bbox->min());
             g->setChildTransform(t);
         } else {
             g->setChildTransform(Geom::identity());
@@ -257,10 +256,9 @@ Inkscape::DrawingItem *SPClipPath::show(Inkscape::Drawing &drawing, unsigned int
         }
     }
 
-    if (clipPathUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
-        Geom::Affine t(Geom::Scale(display->bbox.x1 - display->bbox.x0, display->bbox.y1 - display->bbox.y0));
-        t[4] = display->bbox.x0;
-        t[5] = display->bbox.y0;
+    if (clipPathUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX && display->bbox) {
+        Geom::Affine t = Geom::Scale(display->bbox->dimensions());
+        t.setTranslation(display->bbox->min());
         ai->setChildTransform(t);
     }
     ai->setStyle(this->style);
@@ -287,42 +285,26 @@ void SPClipPath::hide(unsigned int key)
     g_assert_not_reached();
 }
 
-void SPClipPath::setBBox(unsigned int key, NRRect *bbox)
+void SPClipPath::setBBox(unsigned int key, Geom::OptRect const &bbox)
 {
     for (SPClipPathView *v = display; v != NULL; v = v->next) {
         if (v->key == key) {
-            if (!Geom::are_near(v->bbox.x0, bbox->x0) ||
-                !Geom::are_near(v->bbox.y0, bbox->y0) ||
-                !Geom::are_near(v->bbox.x1, bbox->x1) ||
-                !Geom::are_near(v->bbox.y1, bbox->y1)) {
-                v->bbox = *bbox;
-            }
+            v->bbox = bbox;
             break;
         }
     }
 }
 
-void SPClipPath::getBBox(NRRect *bbox, Geom::Affine const &transform, unsigned const /*flags*/)
+Geom::OptRect SPClipPath::geometricBounds(Geom::Affine const &transform)
 {
     SPObject *i = 0;
-    for (i = firstChild(); i && !SP_IS_ITEM(i); i = i->getNext()) {
+    Geom::OptRect bbox;
+    for (i = firstChild(); i; i = i->getNext()) {
+        if (!SP_IS_ITEM(i)) continue;
+        Geom::OptRect tmp = SP_ITEM(i)->geometricBounds(Geom::Affine(SP_ITEM(i)->transform) * transform);
+        bbox.unionWith(tmp);
     }
-    if (!i)  {
-        return;
-    }
-
-    SP_ITEM(i)->invoke_bbox_full( bbox, Geom::Affine(SP_ITEM(i)->transform) * transform, SPItem::GEOMETRIC_BBOX, FALSE);
-    SPObject *i_start = i;
-
-    while (i != NULL) {
-        if (i != i_start) {
-            NRRect i_box;
-            SP_ITEM(i)->invoke_bbox_full( &i_box, Geom::Affine(SP_ITEM(i)->transform) * transform, SPItem::GEOMETRIC_BBOX, FALSE);
-            nr_rect_d_union (bbox, bbox, &i_box);
-        }
-        i = i->getNext();
-        for (; i && !SP_IS_ITEM(i); i = i->getNext()){};
-    }
+    return bbox;
 }
 
 /* ClipPath views */
@@ -335,8 +317,7 @@ sp_clippath_view_new_prepend(SPClipPathView *list, unsigned int key, Inkscape::D
     new_path_view->next = list;
     new_path_view->key = key;
     new_path_view->arenaitem = arenaitem;
-    new_path_view->bbox.x0 = new_path_view->bbox.x1 = 0.0;
-    new_path_view->bbox.y0 = new_path_view->bbox.y1 = 0.0;
+    new_path_view->bbox = Geom::OptRect();
 
     return new_path_view;
 }

@@ -31,7 +31,7 @@ struct SPMaskView {
 	SPMaskView *next;
 	unsigned int key;
 	Inkscape::DrawingItem *arenaitem;
-	NRRect bbox;
+	Geom::OptRect bbox;
 };
 
 static void sp_mask_class_init (SPMaskClass *klass);
@@ -216,10 +216,9 @@ static void sp_mask_update(SPObject *object, SPCtx *ctx, guint flags)
     SPMask *mask = SP_MASK(object);
     for (SPMaskView *v = mask->display; v != NULL; v = v->next) {
         Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
-        if (mask->maskContentUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
-            Geom::Affine t(Geom::Scale(v->bbox.x1 - v->bbox.x0, v->bbox.y1 - v->bbox.y0));
-            t[4] = v->bbox.x0;
-            t[5] = v->bbox.y0;
+        if (mask->maskContentUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX && v->bbox) {
+            Geom::Affine t = Geom::Scale(v->bbox->dimensions());
+            t.setTranslation(v->bbox->min());
             g->setChildTransform(t);
         } else {
             g->setChildTransform(Geom::identity());
@@ -314,11 +313,10 @@ Inkscape::DrawingItem *sp_mask_show(SPMask *mask, Inkscape::Drawing &drawing, un
 		}
 	}
 
-	if (mask->maskContentUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
-        Geom::Affine t(Geom::Scale(mask->display->bbox.x1 - mask->display->bbox.x0, mask->display->bbox.y1 - mask->display->bbox.y0));
-		t[4] = mask->display->bbox.x0;
-		t[5] = mask->display->bbox.y0;
-		ai->setChildTransform(t);
+	if (mask->maskContentUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX && mask->display->bbox) {
+	    Geom::Affine t = Geom::Scale(mask->display->bbox->dimensions());
+	    t.setTranslation(mask->display->bbox->min());
+	    ai->setChildTransform(t);
 	}
 
 	return ai;
@@ -347,17 +345,12 @@ void sp_mask_hide(SPMask *cp, unsigned int key)
 }
 
 void
-sp_mask_set_bbox (SPMask *mask, unsigned int key, NRRect *bbox)
+sp_mask_set_bbox (SPMask *mask, unsigned int key, Geom::OptRect const &bbox)
 {
 	for (SPMaskView *v = mask->display; v != NULL; v = v->next) {
 		if (v->key == key) {
-			if (!Geom::are_near(v->bbox.x0, bbox->x0) ||
-			    !Geom::are_near(v->bbox.y0, bbox->y0) ||
-			    !Geom::are_near(v->bbox.x1, bbox->x1) ||
-			    !Geom::are_near(v->bbox.y1, bbox->y1)) {
-				v->bbox = *bbox;
-			}
-			break;
+		    v->bbox = bbox;
+		    break;
 		}
 	}
 }
@@ -372,8 +365,7 @@ sp_mask_view_new_prepend (SPMaskView *list, unsigned int key, Inkscape::DrawingI
 	new_mask_view->next = list;
 	new_mask_view->key = key;
 	new_mask_view->arenaitem = arenaitem;
-	new_mask_view->bbox.x0 = new_mask_view->bbox.x1 = 0.0;
-	new_mask_view->bbox.y0 = new_mask_view->bbox.y1 = 0.0;
+	new_mask_view->bbox = Geom::OptRect();
 
 	return new_mask_view;
 }

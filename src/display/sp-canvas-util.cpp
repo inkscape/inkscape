@@ -38,15 +38,8 @@ sp_canvas_item_reset_bounds (SPCanvasItem *item)
     item->y2 = 0.0;
 }
 
-void sp_canvas_prepare_buffer(SPCanvasBuf * /*buf*/)
+void sp_canvas_prepare_buffer(SPCanvasBuf *)
 {
-    /*if (buf->is_empty) {
-        int y;
-        for (y = buf->rect.y0; y < buf->rect.y1; y++) {
-            memset (buf->buf + (y - buf->rect.y0) * buf->buf_rowstride, 0, 4 * (buf->rect.x1 - buf->rect.x0)); 
-        }
-        buf->is_empty = false;
-    }*/
 }
 
 Geom::Affine sp_canvas_item_i2p_affine (SPCanvasItem * item)

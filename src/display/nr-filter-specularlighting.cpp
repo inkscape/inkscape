@@ -21,7 +21,6 @@
 #include "display/nr-filter-units.h"
 #include "display/nr-filter-utils.h"
 #include "display/nr-light.h"
-#include "libnr/nr-rect-l.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -174,14 +173,10 @@ void FilterSpecularLighting::render_cairo(FilterSlot &slot)
     cairo_surface_destroy(out);
 }
 
-void FilterSpecularLighting::area_enlarge(NRRectL &area, Geom::Affine const & /*trans*/)
+void FilterSpecularLighting::area_enlarge(Geom::IntRect &area, Geom::Affine const & /*trans*/)
 {
     // TODO: support kernelUnitLength
-
-    area.x0 -= 1;
-    area.x1 += 1;
-    area.y0 -= 1;
-    area.y1 += 1;
+    area.expandBy(1);
 }
 
 double FilterSpecularLighting::complexity(Geom::Affine const &)

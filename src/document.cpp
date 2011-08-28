@@ -534,7 +534,7 @@ gdouble SPDocument::getWidth() const
 
     gdouble result = root->width.computed;
     if (root->width.unit == SVGLength::PERCENT && root->viewBox_set) {
-        result = root->viewBox.x1 - root->viewBox.x0;
+        result = root->viewBox.width();
     }
     return result;
 }
@@ -542,7 +542,7 @@ gdouble SPDocument::getWidth() const
 void SPDocument::setWidth(gdouble width, const SPUnit *unit)
 {
     if (root->width.unit == SVGLength::PERCENT && root->viewBox_set) { // set to viewBox=
-        root->viewBox.x1 = root->viewBox.x0 + sp_units_get_pixels (width, *unit);
+        root->viewBox.setMax(Geom::Point(root->viewBox.left() + sp_units_get_pixels (width, *unit), root->viewBox.bottom()));
     } else { // set to width=
         gdouble old_computed = root->width.computed;
         root->width.computed = sp_units_get_pixels (width, *unit);
@@ -557,16 +557,28 @@ void SPDocument::setWidth(gdouble width, const SPUnit *unit)
         }
 
         if (root->viewBox_set)
-            root->viewBox.x1 = root->viewBox.x0 + (root->width.computed / old_computed) * (root->viewBox.x1 - root->viewBox.x0);
+            root->viewBox.setMax(Geom::Point(root->viewBox.left() + (root->width.computed / old_computed) * root->viewBox.width(), root->viewBox.bottom()));
     }
 
     root->updateRepr();
 }
 
+gdouble SPDocument::getHeight() const
+{
+    g_return_val_if_fail(this->priv != NULL, 0.0);
+    g_return_val_if_fail(this->root != NULL, 0.0);
+
+    gdouble result = root->height.computed;
+    if (root->height.unit == SVGLength::PERCENT && root->viewBox_set) {
+        result = root->viewBox.height();
+    }
+    return result;
+}
+
 void SPDocument::setHeight(gdouble height, const SPUnit *unit)
 {
     if (root->height.unit == SVGLength::PERCENT && root->viewBox_set) { // set to viewBox=
-        root->viewBox.y1 = root->viewBox.y0 + sp_units_get_pixels (height, *unit);
+        root->viewBox.setMax(Geom::Point(root->viewBox.right(), root->viewBox.top() + sp_units_get_pixels (height, *unit)));
     } else { // set to height=
         gdouble old_computed = root->height.computed;
         root->height.computed = sp_units_get_pixels (height, *unit);
@@ -581,22 +593,10 @@ void SPDocument::setHeight(gdouble height, const SPUnit *unit)
         }
 
         if (root->viewBox_set)
-            root->viewBox.y1 = root->viewBox.y0 + (root->height.computed / old_computed) * (root->viewBox.y1 - root->viewBox.y0);
+            root->viewBox.setMax(Geom::Point(root->viewBox.right(), root->viewBox.top() + (root->height.computed / old_computed) * root->viewBox.height()));
     }
 
     root->updateRepr();
-}
-
-gdouble SPDocument::getHeight() const
-{
-    g_return_val_if_fail(this->priv != NULL, 0.0);
-    g_return_val_if_fail(this->root != NULL, 0.0);
-
-    gdouble result = root->height.computed;
-    if (root->height.unit == SVGLength::PERCENT && root->viewBox_set) {
-        result = root->viewBox.y1 - root->viewBox.y0;
-    }
-    return result;
 }
 
 Geom::Point SPDocument::getDimensions() const
@@ -941,15 +941,9 @@ void SPDocument::setupViewport(SPItemCtx *ctx)
     ctx->i2doc = Geom::identity();
     // Set up viewport in case svg has it defined as percentages
     if (root->viewBox_set) { // if set, take from viewBox
-        ctx->vp.x0 = root->viewBox.x0;
-        ctx->vp.y0 = root->viewBox.y0;
-        ctx->vp.x1 = root->viewBox.x1;
-        ctx->vp.y1 = root->viewBox.y1;
+        ctx->viewport = root->viewBox;
     } else { // as a last resort, set size to A4
-        ctx->vp.x0 = 0.0;
-        ctx->vp.y0 = 0.0;
-        ctx->vp.x1 = 210 * PX_PER_MM;
-        ctx->vp.y1 = 297 * PX_PER_MM;
+        ctx->viewport = Geom::Rect::from_xywh(0, 0, 210 * PX_PER_MM, 297 * PX_PER_MM);
     }
     ctx->i2vp = Geom::identity();
 }
@@ -1086,7 +1080,7 @@ static GSList *find_items_in_area(GSList *s, SPGroup *group, unsigned int dkey, 
                 s = find_items_in_area(s, SP_GROUP(o), dkey, area, test);
             } else {
                 SPItem *child = SP_ITEM(o);
-                Geom::OptRect box = child->getBboxDesktop();
+                Geom::OptRect box = child->desktopVisualBounds();
                 if ( box && test(area, *box) && (take_insensitive || child->isVisibleAndUnlocked(dkey))) {
                     s = g_slist_append(s, child);
                 }

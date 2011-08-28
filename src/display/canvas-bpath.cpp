@@ -26,8 +26,6 @@
 #include "display/cairo-utils.h"
 #include "helper/geom.h"
 
-void nr_pixblock_render_bpath_rgba (Shape* theS,uint32_t color,NRRectL &area,char* destBuf,int stride);
-
 static void sp_canvas_bpath_class_init (SPCanvasBPathClass *klass);
 static void sp_canvas_bpath_init (SPCanvasBPath *path);
 static void sp_canvas_bpath_destroy (GtkObject *object);
@@ -139,7 +137,7 @@ sp_canvas_bpath_render (SPCanvasItem *item, SPCanvasBuf *buf)
 {
     SPCanvasBPath *cbp = SP_CANVAS_BPATH (item);
 
-    Geom::Rect area (Geom::Point(buf->rect.x0, buf->rect.y0), Geom::Point(buf->rect.x1, buf->rect.y1));
+    Geom::Rect area = buf->rect;
 
     if ( !cbp->curve  || 
          ((cbp->stroke_rgba & 0xff) == 0 && (cbp->fill_rgba & 0xff) == 0 ) || 

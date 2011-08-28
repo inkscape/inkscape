@@ -105,7 +105,7 @@ sp_ctrlpoint_render (SPCanvasItem *item, SPCanvasBuf *buf)
 
     Geom::Point pt = cp->pt * cp->affine;
 
-    cairo_arc(buf->ct, pt[Geom::X] - buf->rect.x0, pt[Geom::Y] - buf->rect.y0, cp->radius, 0.0, 2 * M_PI);
+    cairo_arc(buf->ct, pt[Geom::X] - buf->rect.left(), pt[Geom::Y] - buf->rect.top(), cp->radius, 0.0, 2 * M_PI);
     cairo_stroke(buf->ct);
 }
 

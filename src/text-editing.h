@@ -16,7 +16,6 @@
 #include <glib/gtypes.h>
 #include <utility>   // std::pair
 #include "libnrtype/Layout-TNG.h"
-#include <libnr/nr-forward.h>
 #include "text-tag-attributes.h"
 
 class SPCSSAttr;

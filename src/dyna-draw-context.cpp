@@ -441,11 +441,7 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
     if (dc->trace_bg) {
         // pick single pixel
         double R, G, B, A;
-        NRRectL area;
-        area.x0 = floor(brush_w[Geom::X]);
-        area.y0 = floor(brush_w[Geom::Y]);
-        area.x1 = area.x0 + 1;
-        area.y1 = area.y0 + 1;
+        Geom::IntRect area = Geom::IntRect::from_xywh(brush_w.floor(), Geom::IntPoint(1, 1));
         cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
         sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(SP_EVENT_CONTEXT(dc)->desktop)), s, area);
         ink_cairo_surface_average_color_premul(s, R, G, B, A);

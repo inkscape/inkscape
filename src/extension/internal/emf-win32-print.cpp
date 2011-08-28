@@ -135,25 +135,22 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     _width = doc->getWidth();
     _height = doc->getHeight();
 
-    NRRect d;
     bool pageBoundingBox;
     pageBoundingBox = mod->get_param_bool("pageBoundingBox");
+
+    Geom::Rect d;
     if (pageBoundingBox) {
-        d.x0 = d.y0 = 0;
-        d.x1 = _width;
-        d.y1 = _height;
+        d = Geom::Rect::from_xywh(0, 0, _width, _height);
     } else {
         SPItem* doc_item = doc->getRoot();
-        doc_item->invoke_bbox(&d, doc_item->i2dt_affine(), TRUE);
+        Geom::OptRect bbox = doc_item->desktopVisualBounds();
+        if (bbox) d = *bbox;
     }
 
-    d.x0 *= IN_PER_PX;
-    d.y0 *= IN_PER_PX;
-    d.x1 *= IN_PER_PX;
-    d.y1 *= IN_PER_PX;
+    d *= IN_PER_PX;
 
-    float dwInchesX = (d.x1 - d.x0);
-    float dwInchesY = (d.y1 - d.y0);
+    float dwInchesX = d.width();
+    float dwInchesY = d.height();
 
     // dwInchesX x dwInchesY in .01mm units
     SetRect( &rc, 0, 0, (int) ceil(dwInchesX*2540), (int) ceil(dwInchesY*2540) );
@@ -451,15 +448,13 @@ PrintEmfWin32::flush_fill()
 }
 
 unsigned int
-PrintEmfWin32::bind(Inkscape::Extension::Print * /*mod*/, Geom::Affine const *transform, float /*opacity*/)
-{
-    Geom::Affine tr = *transform;
-    
+PrintEmfWin32::bind(Inkscape::Extension::Print * /*mod*/, Geom::Affine const &transform, float /*opacity*/)
+{   
     if (m_tr_stack.size()) {
         Geom::Affine tr_top = m_tr_stack.top();
-        m_tr_stack.push(tr * tr_top);
+        m_tr_stack.push(transform * tr_top);
     } else {
-        m_tr_stack.push(tr);
+        m_tr_stack.push(transform);
     }
 
     return 1;
@@ -474,8 +469,8 @@ PrintEmfWin32::release(Inkscape::Extension::Print * /*mod*/)
 
 unsigned int
 PrintEmfWin32::fill(Inkscape::Extension::Print * /*mod*/,
-                    Geom::PathVector const &pathv, Geom::Affine const * /*transform*/, SPStyle const *style,
-                    NRRect const * /*pbox*/, NRRect const * /*dbox*/, NRRect const * /*bbox*/)
+                    Geom::PathVector const &pathv, Geom::Affine const & /*transform*/, SPStyle const *style,
+                    Geom::OptRect const &/*pbox*/, Geom::OptRect const &/*dbox*/, Geom::OptRect const &/*bbox*/)
 {
     if (!hdc) return 0;
 
@@ -503,8 +498,8 @@ PrintEmfWin32::fill(Inkscape::Extension::Print * /*mod*/,
 
 unsigned int
 PrintEmfWin32::stroke (Inkscape::Extension::Print * /*mod*/,
-                       Geom::PathVector const &pathv, const Geom::Affine * /*transform*/, const SPStyle *style,
-                       const NRRect * /*pbox*/, const NRRect * /*dbox*/, const NRRect * /*bbox*/)
+                       Geom::PathVector const &pathv, const Geom::Affine &/*transform*/, const SPStyle *style,
+                       Geom::OptRect const &/*pbox*/, Geom::OptRect const &/*dbox*/, Geom::OptRect const &/*bbox*/)
 {
     if (!hdc) return 0;
 
@@ -849,7 +844,7 @@ PrintEmfWin32::textToPath(Inkscape::Extension::Print * ext)
 }
 
 unsigned int
-PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char const *text, Geom::Point p,
+PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char const *text, Geom::Point const &p,
                     SPStyle const *const style)
 {
     if (!hdc) return 0;

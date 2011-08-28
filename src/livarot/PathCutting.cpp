@@ -20,7 +20,6 @@
 #include "Path.h"
 #include "style.h"
 #include "livarot/path-description.h"
-#include "libnr/nr-convert2geom.h"
 #include <2geom/pathvector.h>
 #include <2geom/point.h>
 #include <2geom/affine.h>

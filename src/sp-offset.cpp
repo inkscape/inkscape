@@ -514,7 +514,7 @@ sp_offset_set_shape(SPShape *shape)
         theRes->ConvertToForme (orig, 1, originaux);
 
         SPItem *item = shape;
-        Geom::OptRect bbox = item->getBboxDesktop ();
+        Geom::OptRect bbox = item->desktopVisualBounds();
         if ( bbox ) {
             gdouble size = L2(bbox->dimensions());
             gdouble const exp = item->transform.descrim();

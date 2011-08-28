@@ -176,7 +176,7 @@ DrawingItem::setTransform(Geom::Affine const &new_trans)
         current = *_transform;
     }
     
-    if (!Geom::are_near(current, new_trans, NR_EPSILON)) {
+    if (!Geom::are_near(current, new_trans, 1e-18)) {
         // mark the area where the object was for redraw.
         _markForRendering();
         if (new_trans.isIdentity()) {
@@ -456,7 +456,7 @@ DrawingItem::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flag
 
     // If we are invisible, return immediately
     if (!_visible) return RENDER_OK;
-    if (_ctm.isSingular(NR_EPSILON)) return RENDER_OK;
+    if (_ctm.isSingular(1e-18)) return RENDER_OK;
 
     // TODO convert outline rendering to a separate virtual function
     if (outline) {

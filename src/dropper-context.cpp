@@ -225,25 +225,15 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                     Geom::Rect r(dc->centre, dc->centre);
                     r.expandBy(rw);
                     if (!r.hasZeroArea()) {
-                        NRRectL area;
-                        area.x0 = r[Geom::X].min();
-                        area.y0 = r[Geom::Y].min();
-                        area.x1 = r[Geom::X].max();
-                        area.y1 = r[Geom::Y].max();
-                        int w = area.x1 - area.x0;
-                        int h = area.y1 - area.y0;
-                        cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, w, h);
+                        Geom::IntRect area = r.roundOutwards();
+                        cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, area.width(), area.height());
                         sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(desktop)), s, area);
                         ink_cairo_surface_average_color_premul(s, R, G, B, A);
                         cairo_surface_destroy(s);
                     }
                 } else {
                     // pick single pixel
-                    NRRectL area;
-                    area.x0 = floor(event->button.x);
-                    area.y0 = floor(event->button.y);
-                    area.x1 = area.x0 + 1;
-                    area.y1 = area.y0 + 1;
+                    Geom::IntRect area = Geom::IntRect::from_xywh(floor(event->button.x), floor(event->button.y), 1, 1);
                     cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
                     sp_canvas_arena_render_surface(SP_CANVAS_ARENA(sp_desktop_drawing(desktop)), s, area);
                     ink_cairo_surface_average_color_premul(s, R, G, B, A);

@@ -9,7 +9,6 @@
 #include "live_effects/parameter/parameter.h"
 #include "live_effects/effect.h"
 #include "svg/svg.h"
-#include "libnr/nr-values.h"
 #include "xml/repr.h"
 #include <gtkmm.h>
 #include "ui/widget/registered-widget.h"

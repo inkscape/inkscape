@@ -188,10 +188,6 @@ bool FilterColorMatrix::can_handle_affine(Geom::Affine const &)
     return true;
 }
 
-void FilterColorMatrix::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*trans*/)
-{
-}
-
 double FilterColorMatrix::complexity(Geom::Affine const &)
 {
     return 2.0;

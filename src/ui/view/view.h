@@ -21,7 +21,6 @@
 #include "gc-managed.h"
 #include "gc-finalized.h"
 #include "gc-anchored.h"
-#include <libnr/nr-forward.h>
 #include <2geom/forward.h>
 
 /**

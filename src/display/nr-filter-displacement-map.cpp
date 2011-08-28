@@ -125,7 +125,7 @@ void FilterDisplacementMap::set_channel_selector(int s, FilterDisplacementMapCha
     if (s == 1) Ychannel = ch;
 }
 
-void FilterDisplacementMap::area_enlarge(NRRectL &area, Geom::Affine const &trans)
+void FilterDisplacementMap::area_enlarge(Geom::IntRect &area, Geom::Affine const &trans)
 {
     //I assume scale is in user coordinates (?!?)
     //FIXME: trans should be multiplied by some primitiveunits2user, shouldn't it?
@@ -134,10 +134,7 @@ void FilterDisplacementMap::area_enlarge(NRRectL &area, Geom::Affine const &tran
     double scaley = scale/2.*(std::fabs(trans[2])+std::fabs(trans[3]));
 
     //FIXME: no +2 should be there!... (noticable only for big scales at big zoom factor)
-    area.x0 -= (int)(scalex)+2;
-    area.x1 += (int)(scalex)+2;
-    area.y0 -= (int)(scaley)+2;
-    area.y1 += (int)(scaley)+2;
+    area.expandBy(scalex+2, scaley+2);
 }
 
 double FilterDisplacementMap::complexity(Geom::Affine const &)

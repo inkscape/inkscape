@@ -16,10 +16,9 @@
  */
 
 #include <cairo.h>
+#include <2geom/rect.h>
 #include "sp-object.h"
 #include "uri-references.h"
-
-struct NRRect;
 
 #define SP_TYPE_PAINT_SERVER (SPPaintServer::get_type())
 #define SP_PAINT_SERVER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_PAINT_SERVER, SPPaintServer))
@@ -44,10 +43,10 @@ private:
 struct SPPaintServerClass {
     SPObjectClass sp_object_class;
     /** Get SPPaint instance. */
-    cairo_pattern_t *(*pattern_new)(SPPaintServer *ps, cairo_t *ct, const NRRect *bbox, double opacity);
+    cairo_pattern_t *(*pattern_new)(SPPaintServer *ps, cairo_t *ct, Geom::OptRect const &bbox, double opacity);
 };
 
-cairo_pattern_t *sp_paint_server_create_pattern(SPPaintServer *ps, cairo_t *ct, NRRect const *bbox, double opacity);
+cairo_pattern_t *sp_paint_server_create_pattern(SPPaintServer *ps, cairo_t *ct, Geom::OptRect const &bbox, double opacity);
 
 
 #endif // SEEN_SP_PAINT_SERVER_H

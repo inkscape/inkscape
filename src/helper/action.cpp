@@ -1,5 +1,3 @@
-#define __SP_ACTION_C__
-
 /** \file
  * SPAction implementation
  *
@@ -23,26 +21,31 @@
 
 static void sp_action_class_init (SPActionClass *klass);
 static void sp_action_init (SPAction *action);
-static void sp_action_finalize (NRObject *object);
+static void sp_action_finalize (GObject *object);
 
-static NRActiveObjectClass *parent_class;
+static GObjectClass *parent_class;
 
 /**
  * Register SPAction class and return its type.
  */
-NRType
+GType
 sp_action_get_type (void)
 {
-	static unsigned int type = 0;
-	if (!type) {
-		type = nr_object_register_type (NR_TYPE_ACTIVE_OBJECT,
-						"SPAction",
-						sizeof (SPActionClass),
-						sizeof (SPAction),
-						(void (*) (NRObjectClass *)) sp_action_class_init,
-						(void (*) (NRObject *)) sp_action_init);
-	}
-	return type;
+    static GType type = 0;
+    if (!type) {
+        GTypeInfo info = {
+            sizeof(SPActionClass),
+            NULL, NULL,
+            (GClassInitFunc) sp_action_class_init,
+            NULL, NULL,
+            sizeof(SPAction),
+            0,
+            (GInstanceInitFunc) sp_action_init,
+            NULL
+        };
+        type = g_type_register_static(G_TYPE_OBJECT, "SPAction", &info, (GTypeFlags)0);
+    }
+    return type;
 }
 
 /**
@@ -51,14 +54,10 @@ sp_action_get_type (void)
 static void
 sp_action_class_init (SPActionClass *klass)
 {
-	NRObjectClass * object_class;
+    parent_class = (GObjectClass*) g_type_class_ref(G_TYPE_OBJECT);
 
-	object_class = (NRObjectClass *) klass;
-
-	parent_class = (NRActiveObjectClass *) (((NRObjectClass *) klass)->parent);
-
-	object_class->finalize = sp_action_finalize;
-	object_class->cpp_ctor = NRObject::invoke_ctor<SPAction>;
+    GObjectClass *object_class = (GObjectClass *) klass;
+    object_class->finalize = sp_action_finalize;
 }
 
 /**
@@ -72,24 +71,32 @@ sp_action_init (SPAction *action)
 	action->view = NULL;
 	action->id = action->name = action->tip = NULL;
 	action->image = NULL;
+	
+	new (&action->signal_perform) sigc::signal<void>();
+	new (&action->signal_set_sensitive) sigc::signal<void, bool>();
+	new (&action->signal_set_active) sigc::signal<void, bool>();
+	new (&action->signal_set_name) sigc::signal<void, Glib::ustring const &>();
 }
 
 /**
  * Called before SPAction object destruction.
  */
 static void
-sp_action_finalize (NRObject *object)
+sp_action_finalize (GObject *object)
 {
-	SPAction *action;
+	SPAction *action = SP_ACTION(object);
 
-	action = (SPAction *) object;
+	g_free (action->image);
+	g_free (action->tip);
+	g_free (action->name);
+	g_free (action->id);
 
-	if (action->image) free (action->image);
-	if (action->tip) free (action->tip);
-	if (action->name) free (action->name);
-	if (action->id) free (action->id);
+    action->signal_perform.~signal();
+    action->signal_set_sensitive.~signal();
+    action->signal_set_active.~signal();
+    action->signal_set_name.~signal();
 
-	((NRObjectClass *) (parent_class))->finalize (object);
+	parent_class->finalize (object);
 }
 
 /**
@@ -103,14 +110,14 @@ sp_action_new(Inkscape::UI::View::View *view,
               const gchar *image,
               Inkscape::Verb * verb)
 {
-	SPAction *action = (SPAction *)nr_object_new(SP_TYPE_ACTION);
+	SPAction *action = (SPAction *)g_object_new(SP_TYPE_ACTION, NULL);
 
 	action->view = view;
 	action->sensitive = TRUE;
-	if (id) action->id = strdup (id);
-	if (name) action->name = strdup (name);
-	if (tip) action->tip = strdup (tip);
-	if (image) action->image = strdup (image);
+	action->id = g_strdup (id);
+	action->name = g_strdup (name);
+	action->tip = g_strdup (tip);
+	action->image = g_strdup (image);
 	action->verb = verb;
 
 	return action;
@@ -147,41 +154,16 @@ public:
 	\return   None
 	\brief    Executes an action
 	\param    action   The action to be executed
-	\param    data     Data that is passed into the action.  This depends
-	                   on the situation that the action is used in.
-
-	This function implements the 'action' in SPActions.  It first validates
-	its parameters, making sure it got an action passed in.  Then it
-	turns that action into its parent class of NRActiveObject.  The
-	NRActiveObject allows for listeners to be attached to it.  This
-	function goes through those listeners and calls them with the
-	vector that was attached to the listener.
+	\param    data     ignored
 */
 void
 sp_action_perform (SPAction *action, void * data)
 {
-	NRActiveObject *aobject;
-
-	nr_return_if_fail (action != NULL);
-	nr_return_if_fail (SP_IS_ACTION (action));
+	g_return_if_fail (action != NULL);
+	g_return_if_fail (SP_IS_ACTION (action));
 
         Inkscape::Debug::EventTracker<ActionEvent> tracker(action);
-
-	aobject = NR_ACTIVE_OBJECT(action);
-	if (aobject->callbacks) {
-		unsigned int i;
-		for (i = 0; i < aobject->callbacks->length; i++) {
-			NRObjectListener *listener;
-			SPActionEventVector *avector;
-
-			listener = &aobject->callbacks->listeners[i];
-			avector = (SPActionEventVector *) listener->vector;
-
-			if ((listener->size >= sizeof (SPActionEventVector)) && avector != NULL && avector->perform != NULL) {
-				avector->perform (action, listener->data, data);
-			}
-		}
-	}
+        action->signal_perform.emit();
 }
 
 /**
@@ -190,26 +172,10 @@ sp_action_perform (SPAction *action, void * data)
 void
 sp_action_set_active (SPAction *action, unsigned int active)
 {
-	nr_return_if_fail (action != NULL);
-	nr_return_if_fail (SP_IS_ACTION (action));
+	g_return_if_fail (action != NULL);
+	g_return_if_fail (SP_IS_ACTION (action));
 
-	if (active != action->active) {
-		NRActiveObject *aobject;
-		action->active = active;
-		aobject = (NRActiveObject *) action;
-		if (aobject->callbacks) {
-			unsigned int i;
-			for (i = 0; i < aobject->callbacks->length; i++) {
-				NRObjectListener *listener;
-				SPActionEventVector *avector;
-				listener = aobject->callbacks->listeners + i;
-				avector = (SPActionEventVector *) listener->vector;
-				if ((listener->size >= sizeof (SPActionEventVector)) && avector->set_active) {
-					avector->set_active (action, active, listener->data);
-				}
-			}
-		}
-	}
+        action->signal_set_active.emit(active);
 }
 
 /**
@@ -218,58 +184,19 @@ sp_action_set_active (SPAction *action, unsigned int active)
 void
 sp_action_set_sensitive (SPAction *action, unsigned int sensitive)
 {
-	nr_return_if_fail (action != NULL);
-	nr_return_if_fail (SP_IS_ACTION (action));
+	g_return_if_fail (action != NULL);
+	g_return_if_fail (SP_IS_ACTION (action));
 
-	if (sensitive != action->sensitive) {
-		NRActiveObject *aobject;
-		action->sensitive = sensitive;
-		aobject = (NRActiveObject *) action;
-		if (aobject->callbacks) {
-			unsigned int i;
-			for (i = 0; i < aobject->callbacks->length; i++) {
-				NRObjectListener *listener;
-				SPActionEventVector *avector;
-				listener = aobject->callbacks->listeners + i;
-				avector = (SPActionEventVector *) listener->vector;
-				if ((listener->size >= sizeof (SPActionEventVector)) && avector->set_sensitive) {
-					avector->set_sensitive (action, sensitive, listener->data);
-				}
-			}
-		}
-	}
+	action->signal_set_sensitive.emit(sensitive);
 }
 
-
-/**
- * Change name for all actions that can be taken with the action.
- */
 void
-sp_action_set_name (SPAction *action, Glib::ustring name)
+sp_action_set_name (SPAction *action, Glib::ustring const &name)
 {
-	nr_return_if_fail (action != NULL);
-	nr_return_if_fail (SP_IS_ACTION (action));
-
-        NRActiveObject *aobject;
-        g_free(action->name);
-        action->name = g_strdup(name.c_str());
-        aobject = (NRActiveObject *) action;
-        if (aobject->callbacks) {
-            unsigned int i;
-            for (i = 0; i < aobject->callbacks->length; i++) {
-                NRObjectListener *listener;
-                SPActionEventVector *avector;
-                listener = aobject->callbacks->listeners + i;
-                avector = (SPActionEventVector *) listener->vector;
-                if ((listener->size >= sizeof (SPActionEventVector)) && avector->set_name) {
-                    avector->set_name (action, name, listener->data);
-                }
-            }
-        }
+    g_free(action->name);
+    action->name = g_strdup(name.data());
+    action->signal_set_name.emit(name);
 }
-
-
-
 
 /**
  * Return View associated with the action.

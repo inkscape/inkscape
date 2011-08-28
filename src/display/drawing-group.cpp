@@ -14,7 +14,6 @@
 #include "display/drawing-context.h"
 #include "display/drawing-item.h"
 #include "display/drawing-group.h"
-#include "libnr/nr-values.h"
 #include "style.h"
 
 namespace Inkscape {
@@ -58,7 +57,7 @@ DrawingGroup::setChildTransform(Geom::Affine const &new_trans)
         current = *_child_transform;
     }
 
-    if (!Geom::are_near(current, new_trans, NR_EPSILON)) {
+    if (!Geom::are_near(current, new_trans, 1e-18)) {
         // mark the area where the object was for redraw.
         _markForRendering();
         if (new_trans.isIdentity()) {

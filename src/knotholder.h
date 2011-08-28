@@ -20,7 +20,6 @@
 #include <glib/gtypes.h>
 #include "knot-enums.h"
 #include "forward.h"
-#include "libnr/nr-forward.h"
 #include <2geom/forward.h>
 #include "knot-holder-entity.h"
 #include <list>

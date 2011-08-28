@@ -13,7 +13,6 @@
  */
 
 #include "sp-filter-units.h"
-#include "libnr/nr-rect-l.h"
 #include <2geom/affine.h>
 #include <2geom/rect.h>
 

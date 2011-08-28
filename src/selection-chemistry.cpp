@@ -85,7 +85,6 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "sp-filter-reference.h"
 #include "gradient-drag.h"
 #include "uri-references.h"
-#include "libnr/nr-convert2geom.h"
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
 #include "inkscape-private.h"
@@ -777,7 +776,7 @@ enclose_items(GSList const *items)
 
     Geom::OptRect r;
     for (GSList const *i = items; i; i = i->next) {
-        r.unionWith(((SPItem *) i->data)->getBboxDesktop());
+        r.unionWith(((SPItem *) i->data)->desktopVisualBounds());
     }
     return r;
 }
@@ -829,7 +828,7 @@ sp_selection_raise(SPDesktop *desktop)
             for (SPObject *newref = child->next; newref; newref = newref->next) {
                 // if the sibling is an item AND overlaps our selection,
                 if (SP_IS_ITEM(newref)) {
-                    Geom::OptRect newref_bbox = SP_ITEM(newref)->getBboxDesktop();
+                    Geom::OptRect newref_bbox = SP_ITEM(newref)->desktopVisualBounds();
                     if ( newref_bbox && selected->intersects(*newref_bbox) ) {
                         // AND if it's not one of our selected objects,
                         if (!g_slist_find((GSList *) items, newref)) {
@@ -924,7 +923,7 @@ sp_selection_lower(SPDesktop *desktop)
             for (SPObject *newref = prev_sibling(child); newref; newref = prev_sibling(newref)) {
                 // if the sibling is an item AND overlaps our selection,
                 if (SP_IS_ITEM(newref)) {
-                    Geom::OptRect ref_bbox = SP_ITEM(newref)->getBboxDesktop();
+                    Geom::OptRect ref_bbox = SP_ITEM(newref)->desktopVisualBounds();
                     if ( ref_bbox && selected->intersects(*ref_bbox) ) {
                         // AND if it's not one of our selected objects,
                         if (!g_slist_find((GSList *) items, newref)) {
@@ -1481,7 +1480,7 @@ sp_selection_scale_absolute(Inkscape::Selection *selection,
     if (selection->isEmpty())
         return;
 
-    Geom::OptRect const bbox(selection->bounds());
+    Geom::OptRect bbox = selection->visualBounds();
     if ( !bbox ) {
         return;
     }
@@ -1503,7 +1502,7 @@ void sp_selection_scale_relative(Inkscape::Selection *selection, Geom::Point con
     if (selection->isEmpty())
         return;
 
-    Geom::OptRect const bbox(selection->bounds());
+    Geom::OptRect bbox = selection->visualBounds();
 
     if ( !bbox ) {
         return;
@@ -1621,7 +1620,7 @@ sp_selection_rotate_screen(Inkscape::Selection *selection, gdouble angle)
     if (selection->isEmpty())
         return;
 
-    Geom::OptRect const bbox(selection->bounds());
+    Geom::OptRect bbox = selection->visualBounds();
     boost::optional<Geom::Point> center = selection->center();
 
     if ( !bbox || !center ) {
@@ -1650,7 +1649,7 @@ sp_selection_scale(Inkscape::Selection *selection, gdouble grow)
     if (selection->isEmpty())
         return;
 
-    Geom::OptRect const bbox(selection->bounds());
+    Geom::OptRect bbox = selection->visualBounds();
     if (!bbox) {
         return;
     }
@@ -1687,7 +1686,7 @@ sp_selection_scale_times(Inkscape::Selection *selection, gdouble times)
     if (selection->isEmpty())
         return;
 
-    Geom::OptRect sel_bbox = selection->bounds();
+    Geom::OptRect sel_bbox = selection->visualBounds();
 
     if (!sel_bbox) {
         return;
@@ -2014,7 +2013,7 @@ SPItem *next_item(SPDesktop *desktop, GSList *path, SPObject *root,
 void scroll_to_show_item(SPDesktop *desktop, SPItem *item)
 {
     Geom::Rect dbox = desktop->get_display_area();
-    Geom::OptRect sbox = item->getBboxDesktop();
+    Geom::OptRect sbox = item->desktopVisualBounds();
 
     if ( sbox && dbox.contains(*sbox) == false ) {
         Geom::Point const s_dt = sbox->midpoint();
@@ -2248,8 +2247,8 @@ sp_select_clone_original(SPDesktop *desktop)
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         bool highlight = prefs->getBool("/options/highlightoriginal/value");
         if (highlight) {
-            Geom::OptRect a = item->getBounds(item->i2dt_affine());
-            Geom::OptRect b = original->getBounds(original->i2dt_affine());
+            Geom::OptRect a = item->desktopVisualBounds();
+            Geom::OptRect b = original->desktopVisualBounds();
             if ( a && b ) {
                 // draw a flashing line between the objects
                 SPCurve *curve = new SPCurve();
@@ -2291,7 +2290,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     }
 
     doc->ensureUpToDate();
-    Geom::OptRect r = selection->bounds(SPItem::RENDERING_BBOX);
+    Geom::OptRect r = selection->visualBounds();
     boost::optional<Geom::Point> c = selection->center();
     if ( !r || !c ) {
         return;
@@ -2322,7 +2321,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
         repr_copies = g_slist_prepend(repr_copies, dup);
     }
 
-    Geom::Rect bounds(desktop->dt2doc(r->min()), desktop->dt2doc(r->max()));
+    Geom::Rect bbox(desktop->dt2doc(r->min()), desktop->dt2doc(r->max()));
 
     if (apply) {
         // delete objects so that their clones don't get alerted; this object will be restored shortly
@@ -2339,7 +2338,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
     prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
-    gchar const *mark_id = generate_marker(repr_copies, bounds, doc,
+    gchar const *mark_id = generate_marker(repr_copies, bbox, doc,
                                            ( Geom::Affine(Geom::Translate(desktop->dt2doc(
                                                                               Geom::Point(r->min()[Geom::X],
                                                                                           r->max()[Geom::Y]))))
@@ -2416,7 +2415,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     }
 
     doc->ensureUpToDate();
-    Geom::OptRect r = selection->bounds(SPItem::RENDERING_BBOX);
+    Geom::OptRect r = selection->visualBounds();
     if ( !r ) {
         return;
     }
@@ -2447,7 +2446,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     // restore the z-order after prepends
     repr_copies = g_slist_reverse(repr_copies);
 
-    Geom::Rect bounds(desktop->dt2doc(r->min()), desktop->dt2doc(r->max()));
+    Geom::Rect bbox(desktop->dt2doc(r->min()), desktop->dt2doc(r->max()));
 
     if (apply) {
         // delete objects so that their clones don't get alerted; this object will be restored shortly
@@ -2464,7 +2463,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
     prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
-    gchar const *pat_id = pattern_tile(repr_copies, bounds, doc,
+    gchar const *pat_id = pattern_tile(repr_copies, bbox, doc,
                                        ( Geom::Affine(Geom::Translate(desktop->dt2doc(Geom::Point(r->min()[Geom::X],
                                                                                             r->max()[Geom::Y]))))
                                          * parent_transform.inverse() ),
@@ -2477,8 +2476,8 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
         Inkscape::XML::Node *rect = xml_doc->createElement("svg:rect");
         rect->setAttribute("style", g_strdup_printf("stroke:none;fill:url(#%s)", pat_id));
 
-        Geom::Point min = bounds.min() * parent_transform.inverse();
-        Geom::Point max = bounds.max() * parent_transform.inverse();
+        Geom::Point min = bbox.min() * parent_transform.inverse();
+        Geom::Point max = bbox.max() * parent_transform.inverse();
 
         sp_repr_set_svg_double(rect, "width", max[Geom::X] - min[Geom::X]);
         sp_repr_set_svg_double(rect, "height", max[Geom::Y] - min[Geom::Y]);
@@ -2663,7 +2662,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
 
     // Get the bounding box of the selection
     document->ensureUpToDate();
-    Geom::OptRect bbox = selection->bounds();
+    Geom::OptRect bbox = selection->visualBounds();
     if (!bbox) {
         desktop->clearWaitingCursor();
         return; // exceptional situation, so not bother with a translatable error message, just quit quietly
@@ -3200,7 +3199,7 @@ fit_canvas_to_selection(SPDesktop *desktop, bool with_margins)
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to fit canvas to."));
         return false;
     }
-    Geom::OptRect const bbox(desktop->selection->bounds(SPItem::RENDERING_BBOX));
+    Geom::OptRect const bbox(desktop->selection->visualBounds());
     if (bbox) {
         doc->fitToRect(*bbox, with_margins);
         return true;
@@ -3232,7 +3231,7 @@ fit_canvas_to_drawing(SPDocument *doc, bool with_margins)
 
     doc->ensureUpToDate();
     SPItem const *const root = doc->getRoot();
-    Geom::OptRect const bbox(root->getBounds(root->i2dt_affine(), SPItem::RENDERING_BBOX));
+    Geom::OptRect bbox = root->desktopVisualBounds();
     if (bbox) {
         doc->fitToRect(*bbox, with_margins);
         return true;

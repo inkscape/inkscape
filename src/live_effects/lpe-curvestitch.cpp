@@ -30,7 +30,6 @@
 #include <2geom/affine.h>
 
 #include "ui/widget/scalar.h"
-#include "libnr/nr-values.h"
 
 namespace Inkscape {
 namespace LivePathEffect {

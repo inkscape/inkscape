@@ -111,7 +111,7 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
     SPGuideLine const *gl = SP_GUIDELINE (item);
 
     cairo_save(buf->ct);
-    cairo_translate(buf->ct, -buf->rect.x0, -buf->rect.y0);
+    cairo_translate(buf->ct, -buf->rect.left(), -buf->rect.top());
     ink_cairo_set_source_rgba32(buf->ct, gl->rgba);
     cairo_set_line_width(buf->ct, 1);
     cairo_set_line_cap(buf->ct, CAIRO_LINE_CAP_SQUARE);
@@ -134,49 +134,49 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
 
     if ( Geom::are_near(normal_dt[Geom::Y], 0.) ) { // is vertical?
         int position = round(point_on_line_dt[Geom::X]);
-        cairo_move_to(buf->ct, position + 0.5, buf->rect.y0 + 0.5);
-        cairo_line_to(buf->ct, position + 0.5, buf->rect.y1 - 0.5);
+        cairo_move_to(buf->ct, position + 0.5, buf->rect.top() + 0.5);
+        cairo_line_to(buf->ct, position + 0.5, buf->rect.bottom() - 0.5);
         cairo_stroke(buf->ct);
     } else if ( Geom::are_near(normal_dt[Geom::X], 0.) ) { // is horizontal?
         int position = round(point_on_line_dt[Geom::Y]);
-        cairo_move_to(buf->ct, buf->rect.x0 + 0.5, position + 0.5);
-        cairo_line_to(buf->ct, buf->rect.x1 - 0.5, position + 0.5);
+        cairo_move_to(buf->ct, buf->rect.left() + 0.5, position + 0.5);
+        cairo_line_to(buf->ct, buf->rect.right() - 0.5, position + 0.5);
         cairo_stroke(buf->ct);
     } else {
         // render angled line. Once intersection has been detected, draw from there.
         Geom::Point parallel_to_line( normal_dt.ccw() );
 
         //try to intersect with left vertical of rect
-        double y_intersect_left = (buf->rect.x0 - point_on_line_dt[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + point_on_line_dt[Geom::Y];
-        if ( (y_intersect_left >= buf->rect.y0) && (y_intersect_left <= buf->rect.y1) ) {
+        double y_intersect_left = (buf->rect.left() - point_on_line_dt[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + point_on_line_dt[Geom::Y];
+        if ( (y_intersect_left >= buf->rect.top()) && (y_intersect_left <= buf->rect.bottom()) ) {
             // intersects with left vertical!
-            double y_intersect_right = (buf->rect.x1 - point_on_line_dt[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + point_on_line_dt[Geom::Y];
-            sp_guideline_drawline (buf, buf->rect.x0, static_cast<gint>(round(y_intersect_left)), buf->rect.x1, static_cast<gint>(round(y_intersect_right)), gl->rgba);
+            double y_intersect_right = (buf->rect.right() - point_on_line_dt[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + point_on_line_dt[Geom::Y];
+            sp_guideline_drawline (buf, buf->rect.left(), static_cast<gint>(round(y_intersect_left)), buf->rect.right(), static_cast<gint>(round(y_intersect_right)), gl->rgba);
             goto end;
         }
 
         //try to intersect with right vertical of rect
-        double y_intersect_right = (buf->rect.x1 - point_on_line_dt[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + point_on_line_dt[Geom::Y];
-        if ( (y_intersect_right >= buf->rect.y0) && (y_intersect_right <= buf->rect.y1) ) {
+        double y_intersect_right = (buf->rect.right() - point_on_line_dt[Geom::X]) * parallel_to_line[Geom::Y] / parallel_to_line[Geom::X] + point_on_line_dt[Geom::Y];
+        if ( (y_intersect_right >= buf->rect.top()) && (y_intersect_right <= buf->rect.bottom()) ) {
             // intersects with right vertical!
-            sp_guideline_drawline (buf, buf->rect.x1, static_cast<gint>(round(y_intersect_right)), buf->rect.x0, static_cast<gint>(round(y_intersect_left)), gl->rgba);
+            sp_guideline_drawline (buf, buf->rect.right(), static_cast<gint>(round(y_intersect_right)), buf->rect.left(), static_cast<gint>(round(y_intersect_left)), gl->rgba);
             goto end;
         }
 
         //try to intersect with top horizontal of rect
-        double x_intersect_top = (buf->rect.y0 - point_on_line_dt[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + point_on_line_dt[Geom::X];
-        if ( (x_intersect_top >= buf->rect.x0) && (x_intersect_top <= buf->rect.x1) ) {
+        double x_intersect_top = (buf->rect.top() - point_on_line_dt[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + point_on_line_dt[Geom::X];
+        if ( (x_intersect_top >= buf->rect.left()) && (x_intersect_top <= buf->rect.right()) ) {
             // intersects with top horizontal!
-            double x_intersect_bottom = (buf->rect.y1 - point_on_line_dt[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + point_on_line_dt[Geom::X];
-            sp_guideline_drawline (buf, static_cast<gint>(round(x_intersect_top)), buf->rect.y0, static_cast<gint>(round(x_intersect_bottom)), buf->rect.y1, gl->rgba);
+            double x_intersect_bottom = (buf->rect.bottom() - point_on_line_dt[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + point_on_line_dt[Geom::X];
+            sp_guideline_drawline (buf, static_cast<gint>(round(x_intersect_top)), buf->rect.top(), static_cast<gint>(round(x_intersect_bottom)), buf->rect.bottom(), gl->rgba);
             goto end;
         }
 
         //try to intersect with bottom horizontal of rect
-        double x_intersect_bottom = (buf->rect.y1 - point_on_line_dt[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + point_on_line_dt[Geom::X];
-        if ( (x_intersect_top >= buf->rect.x0) && (x_intersect_top <= buf->rect.x1) ) {
+        double x_intersect_bottom = (buf->rect.bottom() - point_on_line_dt[Geom::Y]) * parallel_to_line[Geom::X] / parallel_to_line[Geom::Y] + point_on_line_dt[Geom::X];
+        if ( (x_intersect_top >= buf->rect.left()) && (x_intersect_top <= buf->rect.right()) ) {
             // intersects with bottom horizontal!
-            sp_guideline_drawline (buf, static_cast<gint>(round(x_intersect_bottom)), buf->rect.y1, static_cast<gint>(round(x_intersect_top)), buf->rect.y0, gl->rgba);
+            sp_guideline_drawline (buf, static_cast<gint>(round(x_intersect_bottom)), buf->rect.bottom(), static_cast<gint>(round(x_intersect_top)), buf->rect.top(), gl->rgba);
             goto end;
         }
     }

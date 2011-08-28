@@ -8,7 +8,6 @@
 
 #include "livarot/Path.h"
 #include "livarot/path-description.h"
-#include <libnr/nr-point-fns.h>
 
 /*
  * the "outliner"

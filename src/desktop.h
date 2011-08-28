@@ -117,8 +117,9 @@ public:
     SPCSSAttr     *current;     ///< current style
     bool           _focusMode;  ///< Whether we're focused working or general working
 
-    GList *zooms_past;
-    GList *zooms_future;
+    std::list<Geom::Rect> zooms_past;
+    std::list<Geom::Rect> zooms_future;
+
     bool _quick_zoom_enabled; ///< Signifies that currently we're in quick zoom mode
     Geom::Rect _quick_zoom_stored_area;  ///< The area of the screen before quick zoom
     unsigned int dkey;
@@ -359,7 +360,7 @@ private:
     bool grids_visible; /* don't set this variable directly, use the method below */
     void set_grids_visible(bool visible);
 
-    void push_current_zoom (GList**);
+    void push_current_zoom(std::list<Geom::Rect> &);
 
     sigc::signal<void,SPDesktop*,SPDocument*>     _document_replaced_signal;
     sigc::signal<void>                 _activate_signal;

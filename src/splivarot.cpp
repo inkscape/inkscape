@@ -1942,7 +1942,7 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
 
     bool didSomething = false;
 
-    Geom::OptRect selectionBbox = selection->bounds();
+    Geom::OptRect selectionBbox = selection->visualBounds();
     if (!selectionBbox) {
         return false;
     }
@@ -1963,7 +1963,7 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
           continue;
 
         if (simplifyIndividualPaths) {
-            Geom::OptRect itemBbox = item->getBounds(item->i2dt_affine());
+            Geom::OptRect itemBbox = item->desktopVisualBounds();
             if (itemBbox) {
                 simplifySize      = L2(itemBbox->dimensions());
             } else {

@@ -244,25 +244,12 @@ public:
     guint numberOfParents();
 
     /** @brief Returns the bounding rectangle of the selection */
-    NRRect *bounds(NRRect *dest, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
-    /** @brief Returns the bounding rectangle of the selection */
-    Geom::OptRect bounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
+    Geom::OptRect bounds(SPItem::BBoxType type) const;
+    Geom::OptRect visualBounds() const;
+    Geom::OptRect geometricBounds() const;
 
-    /**
-     * @brief Returns the bounding rectangle of the selection
-     *
-     * Gives the coordinates in internal format, does not match onscreen guides.
-     * (0,0 is the upper left corner, not the lower left corner)
-     */
-    NRRect *boundsInDocument(NRRect *dest, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
-
-    /**
-     * @brief Returns the bounding rectangle of the selection
-     *
-     * Gives the coordinates in internal format, does not match onscreen guides.
-     * (0,0 is the upper left corner, not the lower left corner)
-     */
-    Geom::OptRect boundsInDocument(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
+    /// Returns the bounding rectangle of the selectionin document coordinates.
+    Geom::OptRect documentBounds(SPItem::BBoxType type) const;
 
     /**
      * @brief Returns the rotation/skew center of the selection

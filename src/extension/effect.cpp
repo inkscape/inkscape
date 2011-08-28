@@ -355,21 +355,15 @@ Effect::set_pref_dialog (PrefDialog * prefdialog)
     return;
 }
 
-/** \brief  Create an action for a \c EffectVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
 SPAction *
 Effect::EffectVerb::make_action (Inkscape::UI::View::View * view)
 {
-    return make_action_helper(view, &vector, static_cast<void *>(this));
+    return make_action_helper(view, &perform, static_cast<void *>(this));
 }
 
 /** \brief  Decode the verb code and take appropriate action */
 void
-Effect::EffectVerb::perform( SPAction *action, void * data, void */*pdata*/ )
+Effect::EffectVerb::perform( SPAction *action, void * data )
 {
     Inkscape::UI::View::View * current_view = sp_action_get_view(action);
 //  SPDocument * current_document = current_view->doc;
@@ -387,14 +381,6 @@ Effect::EffectVerb::perform( SPAction *action, void * data, void */*pdata*/ )
 
     return;
 }
-
-/**
- * Action vector to define functions called if a staticly defined file verb
- * is called.
- */
-SPActionEventVector Effect::EffectVerb::vector =
-            {{NULL}, Effect::EffectVerb::perform, NULL, NULL, NULL, NULL};
-
 
 } }  /* namespace Inkscape, Extension */
 

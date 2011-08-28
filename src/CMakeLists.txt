@@ -550,7 +550,6 @@ add_subdirectory(libcroco)
 add_subdirectory(libgdl)
 add_subdirectory(libvpsc)
 add_subdirectory(livarot)
-add_subdirectory(libnr)
 add_subdirectory(libnrtype)
 
 

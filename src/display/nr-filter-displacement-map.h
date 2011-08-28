@@ -16,7 +16,6 @@
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
-#include "libnr/nr-rect-l.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -28,7 +27,7 @@ public:
     virtual ~FilterDisplacementMap();
 
     virtual void render_cairo(FilterSlot &slot);
-    virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
+    virtual void area_enlarge(Geom::IntRect &area, Geom::Affine const &trans);
     virtual double complexity(Geom::Affine const &ctm);
 
     virtual void set_input(int slot);

@@ -1170,10 +1170,9 @@ static void clonetiler_apply(GtkWidget */*widget*/, void *)
         y0 = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-y0", 0);
     } else {
         bool prefs_bbox = prefs->getBool("/tools/bounding_box", false);
-        SPItem::BBoxType bbox_type = ( prefs_bbox ?
-            SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX );
-        Geom::OptRect r = item->getBounds(item->i2doc_affine(),
-                                                        bbox_type);
+        SPItem::BBoxType bbox_type = ( !prefs_bbox ?
+            SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX );
+        Geom::OptRect r = item->documentBounds(bbox_type);
         if (r) {
             w = r->dimensions()[Geom::X];
             h = r->dimensions()[Geom::Y];

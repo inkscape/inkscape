@@ -15,7 +15,7 @@
 namespace Inkscape {
 namespace Extension {
 
-Print::Print (Inkscape::XML::Node * in_repr, Implementation::Implementation * in_imp)
+Print::Print (Inkscape::XML::Node *in_repr, Implementation::Implementation *in_imp)
     : Extension(in_repr, in_imp)
     , base(NULL)
     , drawing(NULL)
@@ -24,23 +24,23 @@ Print::Print (Inkscape::XML::Node * in_repr, Implementation::Implementation * in
 {
 }
 
-Print::~Print (void)
+Print::~Print ()
 {}
 
 bool
-Print::check (void)
+Print::check ()
 {
     return Extension::check();
 }
 
 unsigned int
-Print::setup (void)
+Print::setup ()
 {
     return imp->setup(this);
 }
 
 unsigned int
-Print::set_preview (void)
+Print::set_preview ()
 {
     return imp->set_preview(this);
 }
@@ -52,65 +52,65 @@ Print::begin (SPDocument *doc)
 }
 
 unsigned int
-Print::finish (void)
+Print::finish ()
 {
     return imp->finish(this);
 }
 
 unsigned int
-Print::bind (const Geom::Affine *transform, float opacity)
+Print::bind (const Geom::Affine &transform, float opacity)
 {
     return imp->bind (this, transform, opacity);
 }
 
 unsigned int
-Print::release (void)
+Print::release ()
 {
     return imp->release(this);
 }
 
 unsigned int
-Print::comment (const char * comment)
+Print::comment (char const *comment)
 {
-    return imp->comment(this,comment);
+    return imp->comment(this, comment);
 }
 
 unsigned int
-Print::fill (Geom::PathVector const &pathv, const Geom::Affine *ctm, const SPStyle *style,
-                   const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
+Print::fill (Geom::PathVector const &pathv, Geom::Affine const &ctm, SPStyle const *style,
+             Geom::OptRect const &pbox, Geom::OptRect const &dbox, Geom::OptRect const &bbox)
 {
     return imp->fill (this, pathv, ctm, style, pbox, dbox, bbox);
 }
 
 unsigned int
-Print::stroke (Geom::PathVector const &pathv, const Geom::Affine *transform, const SPStyle *style,
-                 const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
+Print::stroke (Geom::PathVector const &pathv, Geom::Affine const &ctm, SPStyle const *style,
+               Geom::OptRect const &pbox, Geom::OptRect const &dbox, Geom::OptRect const &bbox)
 {
-    return imp->stroke (this, pathv, transform, style, pbox, dbox, bbox);
+    return imp->stroke (this, pathv, ctm, style, pbox, dbox, bbox);
 }
 
 unsigned int
 Print::image (unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
-                const Geom::Affine *transform, const SPStyle *style)
+              const Geom::Affine &transform, const SPStyle *style)
 {
     return imp->image (this, px, w, h, rs, transform, style);
 }
 
 unsigned int
-Print::text (const char* text, Geom::Point p, const SPStyle* style)
+Print::text (char const *text, Geom::Point const &p, SPStyle const *style)
 {
     return imp->text (this, text, p, style);
 }
 
 bool
-Print::textToPath (void)
+Print::textToPath ()
 {
     return imp->textToPath(this);
 }
 
 //whether embed font in print output (EPS especially)
 bool
-Print::fontEmbedded (void)
+Print::fontEmbedded ()
 {
     return imp->fontEmbedded(this);
 }

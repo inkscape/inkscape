@@ -1195,8 +1195,8 @@ do_query_dimension (SPDocument *doc, bool extent, Geom::Dim2 const axis, const g
         doc->ensureUpToDate();
         SPItem *item = ((SPItem *) o);
 
-        // "true" SVG bbox for scripting
-        Geom::OptRect area = item->getBounds(item->i2doc_affine());
+        // visual bbox in document coords for scripting
+        Geom::OptRect area = item->documentVisualBounds();
         if (area) {
             Inkscape::SVGOStringStream os;
             if (extent) {
@@ -1226,7 +1226,7 @@ do_query_all_recurse (SPObject *o)
 {
     SPItem *item = ((SPItem *) o);
     if (o->getId() && SP_IS_ITEM(item)) {
-        Geom::OptRect area = item->getBounds(item->i2doc_affine());
+        Geom::OptRect area = item->documentVisualBounds();
         if (area) {
             Inkscape::SVGOStringStream os;
             os << o->getId();
@@ -1320,8 +1320,7 @@ sp_do_export_png(SPDocument *doc)
 
             // write object bbox to area
             doc->ensureUpToDate();
-            Geom::OptRect areaMaybe;
-            static_cast<SPItem *>(o_area)->invoke_bbox( areaMaybe, static_cast<SPItem *>(o_area)->i2dt_affine(), TRUE);
+            Geom::OptRect areaMaybe = static_cast<SPItem *>(o_area)->desktopVisualBounds();
             if (areaMaybe) {
                 area = *areaMaybe;
             } else {

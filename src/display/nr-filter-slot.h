@@ -67,7 +67,6 @@ public:
 
     FilterUnits const &get_units() const { return _units; }
     Geom::Rect get_slot_area() const;
-    NRRectL get_sg_area() const { NRRectL ret(_source_graphic_area); return ret; }
 
 private:
     typedef std::map<int, cairo_surface_t *> SlotMap;
@@ -77,7 +76,6 @@ private:
     //Geom::Rect _source_bbox; ///< bounding box of source graphic surface
     //Geom::Rect _intermediate_bbox; ///< bounding box of intermediate surfaces
 
-//    NRRectL _slot_area;
     int _slot_w, _slot_h;
     double _slot_x, _slot_y;
     cairo_surface_t *_source_graphic;

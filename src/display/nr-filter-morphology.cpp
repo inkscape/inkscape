@@ -147,15 +147,12 @@ void FilterMorphology::render_cairo(FilterSlot &slot)
     cairo_surface_destroy(out);
 }
 
-void FilterMorphology::area_enlarge(NRRectL &area, Geom::Affine const &trans)
+void FilterMorphology::area_enlarge(Geom::IntRect &area, Geom::Affine const &trans)
 {
     int enlarge_x = ceil(xradius * trans.expansionX());
     int enlarge_y = ceil(yradius * trans.expansionY());
 
-    area.x0 -= enlarge_x;
-    area.x1 += enlarge_x;
-    area.y0 -= enlarge_y;
-    area.y1 += enlarge_y;
+    area.expandBy(enlarge_x, enlarge_y);
 }
 
 double FilterMorphology::complexity(Geom::Affine const &trans)

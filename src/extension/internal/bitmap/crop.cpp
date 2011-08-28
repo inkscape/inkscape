@@ -38,7 +38,7 @@ Crop::postEffect(Magick::Image *image, SPItem *item) {
     sp_item_scale_rel (item, scale);  
 
     // Translate proportionaly to the image/bbox ratio
-    Geom::OptRect bbox(item->getBboxDesktop());
+    Geom::OptRect bbox(item->desktopGeometricBounds());
     //g_warning("bbox. W:%f, H:%f, X:%f, Y:%f", bbox->dimensions()[Geom::X], bbox->dimensions()[Geom::Y], bbox->min()[Geom::X], bbox->min()[Geom::Y]);
 
     Geom::Translate translate (0,0);

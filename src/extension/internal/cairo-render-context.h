@@ -128,20 +128,20 @@ public:
     CairoRenderState *getParentState(void) const;
     void setStateForStyle(SPStyle const *style);
 
-    void transform(Geom::Affine const *transform);
-    void setTransform(Geom::Affine const *transform);
-    void getTransform(Geom::Affine *copy) const;
-    void getParentTransform(Geom::Affine *copy) const;
+    void transform(Geom::Affine const &transform);
+    void setTransform(Geom::Affine const &transform);
+    Geom::Affine getTransform() const;
+    Geom::Affine getParentTransform() const;
 
     /* Clipping methods */
     void addClipPath(Geom::PathVector const &pv, SPIEnum const *fill_rule);
     void addClippingRect(double x, double y, double width, double height);
 
     /* Rendering methods */
-    bool renderPathVector(Geom::PathVector const & pathv, SPStyle const *style, NRRect const *pbox);
+    bool renderPathVector(Geom::PathVector const &pathv, SPStyle const *style, Geom::OptRect const &pbox);
     bool renderImage(GdkPixbuf *pb,
-                     Geom::Affine const *image_transform, SPStyle const *style);
-    bool renderGlyphtext(PangoFont *font, Geom::Affine const *font_matrix,
+                     Geom::Affine const &image_transform, SPStyle const *style);
+    bool renderGlyphtext(PangoFont *font, Geom::Affine const &font_matrix,
                          std::vector<CairoGlyphInfo> const &glyphtext, SPStyle const *style);
 
     /* More general rendering methods will have to be added (like fill, stroke) */
@@ -183,18 +183,18 @@ protected:
     CairoClipMode _clip_mode;
 
     cairo_pattern_t *_createPatternForPaintServer(SPPaintServer const *const paintserver,
-                                                  NRRect const *pbox, float alpha);
-    cairo_pattern_t *_createPatternPainter(SPPaintServer const *const paintserver, NRRect const *pbox);
+                                                  Geom::OptRect const &pbox, float alpha);
+    cairo_pattern_t *_createPatternPainter(SPPaintServer const *const paintserver, Geom::OptRect const &pbox);
 
     unsigned int _showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoGlyphInfo> const &glyphtext, bool is_stroke);
 
     bool _finishSurfaceSetup(cairo_surface_t *surface, cairo_matrix_t *ctm = NULL);
-    void _setFillStyle(SPStyle const *style, NRRect const *pbox);
-    void _setStrokeStyle(SPStyle const *style, NRRect const *pbox);
+    void _setFillStyle(SPStyle const *style, Geom::OptRect const &pbox);
+    void _setStrokeStyle(SPStyle const *style, Geom::OptRect const &pbox);
 
-    void _initCairoMatrix(cairo_matrix_t *matrix, Geom::Affine const *transform);
+    void _initCairoMatrix(cairo_matrix_t *matrix, Geom::Affine const &transform);
     void _concatTransform(cairo_t *cr, double xx, double yx, double xy, double yy, double x0, double y0);
-    void _concatTransform(cairo_t *cr, Geom::Affine const *transform);
+    void _concatTransform(cairo_t *cr, Geom::Affine const &transform);
 
     GHashTable *font_table;
     static void font_data_free(gpointer data);

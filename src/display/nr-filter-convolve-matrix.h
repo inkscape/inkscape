@@ -13,7 +13,6 @@
  */
 
 #include "display/nr-filter-primitive.h"
-#include "libnr/nr-rect-l.h"
 #include <vector>
 
 namespace Inkscape {
@@ -35,7 +34,7 @@ public:
     virtual ~FilterConvolveMatrix();
 
     virtual void render_cairo(FilterSlot &slot);
-    virtual void area_enlarge(NRRectL &area, Geom::Affine const &trans);
+    virtual void area_enlarge(Geom::IntRect &area, Geom::Affine const &trans);
     virtual double complexity(Geom::Affine const &ctm);
 
     void set_targetY(int coord);

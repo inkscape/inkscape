@@ -362,48 +362,46 @@ Inkscape::XML::Node *Selection::singleRepr() {
     return obj ? obj->getRepr() : NULL;
 }
 
-NRRect *Selection::bounds(NRRect *bbox, SPItem::BBoxType type) const
+Geom::OptRect Selection::bounds(SPItem::BBoxType type) const
 {
-    g_return_val_if_fail (bbox != NULL, NULL);
-    *bbox = NRRect(bounds(type));
-    return bbox;
+    return (type == SPItem::GEOMETRIC_BBOX) ?
+        geometricBounds() : visualBounds();
 }
 
-Geom::OptRect Selection::bounds(SPItem::BBoxType type) const
+Geom::OptRect Selection::geometricBounds() const
 {
     GSList const *items = const_cast<Selection *>(this)->itemList();
 
     Geom::OptRect bbox;
     for ( GSList const *i = items ; i != NULL ; i = i->next ) {
-        bbox.unionWith(SP_ITEM(i->data)->getBboxDesktop(type));
+        bbox.unionWith(SP_ITEM(i->data)->desktopGeometricBounds());
     }
     return bbox;
 }
 
-NRRect *Selection::boundsInDocument(NRRect *bbox, SPItem::BBoxType type) const {
-    g_return_val_if_fail (bbox != NULL, NULL);
+Geom::OptRect Selection::visualBounds() const
+{
+    GSList const *items = const_cast<Selection *>(this)->itemList();
 
-    GSList const *items=const_cast<Selection *>(this)->itemList();
-    if (!items) {
-        bbox->x0 = bbox->y0 = bbox->x1 = bbox->y1 = 0.0;
-        return bbox;
+    Geom::OptRect bbox;
+    for ( GSList const *i = items ; i != NULL ; i = i->next ) {
+        bbox.unionWith(SP_ITEM(i->data)->desktopVisualBounds());
     }
+    return bbox;
+}
 
-    bbox->x0 = bbox->y0 = 1e18;
-    bbox->x1 = bbox->y1 = -1e18;
+Geom::OptRect Selection::documentBounds(SPItem::BBoxType type) const
+{
+    Geom::OptRect bbox;
+    GSList const *items = const_cast<Selection *>(this)->itemList();
+    if (!items) return bbox;
 
     for ( GSList const *iter=items ; iter != NULL ; iter = iter->next ) {
-        SPItem *item=SP_ITEM(iter->data);
-        Geom::Affine i2doc(item->i2doc_affine());
-        item->invoke_bbox( bbox, i2doc, FALSE, type);
+        SPItem *item = SP_ITEM(iter->data);
+        bbox |= item->documentBounds(type);
     }
 
     return bbox;
-}
-
-Geom::OptRect Selection::boundsInDocument(SPItem::BBoxType type) const {
-    NRRect r;
-    return to_2geom(boundsInDocument(&r, type));
 }
 
 /** Extract the position of the center from the first selected object */
@@ -418,9 +416,9 @@ boost::optional<Geom::Point> Selection::center() const {
             return first->getCenter();
         }
     }
-    Geom::OptRect bbox = bounds();
+    Geom::OptRect bbox = visualBounds();
     if (bbox) {
-        return bounds()->midpoint();
+        return bbox->midpoint();
     } else {
         return boost::optional<Geom::Point>();
     }

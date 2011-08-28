@@ -432,8 +432,7 @@ text_unflow ()
         /* Set style */
         rtext->setAttribute("style", flowtext->getRepr()->attribute("style")); // fixme: transfer style attrs too; and from descendants
 
-        Geom::OptRect bbox;
-        flowtext->invoke_bbox(bbox, flowtext->i2doc_affine(), TRUE);
+        Geom::OptRect bbox = flowtext->geometricBounds(flowtext->i2doc_affine());
         if (bbox) {
             Geom::Point xy = bbox->min();
             sp_repr_set_svg_double(rtext, "x", xy[Geom::X]);

@@ -20,7 +20,6 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "widgets/spw-utilities.h"
-#include "libnr/nr-convert2geom.h"
 
 namespace Inkscape {
 namespace UI {

@@ -155,7 +155,7 @@ private :
                 selected.erase(master);
             /*}*/
             //Compute the anchor point
-            Geom::OptRect b = thing->getBboxDesktop ();
+            Geom::OptRect b = thing->desktopVisualBounds();
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -172,7 +172,7 @@ private :
 
         case AlignAndDistribute::DRAWING:
         {
-            Geom::OptRect b = sp_desktop_document(desktop)->getRoot()->getBboxDesktop();
+            Geom::OptRect b = sp_desktop_document(desktop)->getRoot()->desktopVisualBounds();
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -184,7 +184,7 @@ private :
 
         case AlignAndDistribute::SELECTION:
         {
-            Geom::OptRect b =  selection->bounds();
+            Geom::OptRect b =  selection->visualBounds();
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -211,7 +211,7 @@ private :
         bool changed = false;
         Geom::OptRect b;
         if (sel_as_group)
-            b = selection->bounds();
+            b = selection->visualBounds();
 
         //Move each item in the selected list separately
         for (std::list<SPItem *>::iterator it(selected.begin());
@@ -220,7 +220,7 @@ private :
         {
             sp_desktop_document (desktop)->ensureUpToDate();
             if (!sel_as_group)
-                b = (*it)->getBboxDesktop();
+                b = (*it)->desktopVisualBounds();
             if (b) {
                 Geom::Point const sp(a.sx0 * b->min()[Geom::X] + a.sx1 * b->max()[Geom::X],
                                      a.sy0 * b->min()[Geom::Y] + a.sy1 * b->max()[Geom::Y]);
@@ -261,7 +261,7 @@ ActionAlign::Coeffs const ActionAlign::_allCoeffs[10] = {
     {0., 0., 1., 0., 0., 0., 0., 1.}
 };
 
-BBoxSort::BBoxSort(SPItem *pItem, Geom::Rect bounds, Geom::Dim2 orientation, double kBegin, double kEnd) :
+BBoxSort::BBoxSort(SPItem *pItem, Geom::Rect const &bounds, Geom::Dim2 orientation, double kBegin, double kEnd) :
         item(pItem),
         bbox (bounds)
 {
@@ -324,7 +324,7 @@ private :
             it != selected.end();
             ++it)
         {
-            Geom::OptRect bbox = (*it)->getBboxDesktop();
+            Geom::OptRect bbox = (*it)->desktopVisualBounds();
             if (bbox) {
                 sorted.push_back(BBoxSort(*it, *bbox, _orientation, _kBegin, _kEnd));
             }
@@ -699,7 +699,7 @@ private :
         //Check 2 or more selected objects
         if (selected.size() < 2) return;
 
-        Geom::OptRect sel_bbox = selection->bounds();
+        Geom::OptRect sel_bbox = selection->visualBounds();
         if (!sel_bbox) {
             return;
         }
@@ -721,7 +721,7 @@ private :
             ++it)
         {
             sp_desktop_document (desktop)->ensureUpToDate();
-            Geom::OptRect item_box = (*it)->getBboxDesktop ();
+            Geom::OptRect item_box = (*it)->desktopVisualBounds();
             if (item_box) {
                 // find new center, staying within bbox
                 double x = _dialog.randomize_bbox->min()[Geom::X] + (*item_box)[Geom::X].extent() /2 +
@@ -1245,7 +1245,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = -1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
-            Geom::OptRect b = (*it)->getBboxDesktop ();
+            Geom::OptRect b = (*it)->desktopVisualBounds();
             if (b) {
                 gdouble dim = (*b)[horizontal ? Geom::X : Geom::Y].extent();
                 if (dim > max) {
@@ -1262,7 +1262,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = 1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
-            Geom::OptRect b = (*it)->getBboxDesktop ();
+            Geom::OptRect b = (*it)->desktopVisualBounds();
             if (b) {
                 gdouble dim = (*b)[horizontal ? Geom::X : Geom::Y].extent();
                 if (dim < max) {

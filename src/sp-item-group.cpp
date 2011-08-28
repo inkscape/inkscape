@@ -65,7 +65,7 @@ static void sp_group_modified (SPObject *object, guint flags);
 static Inkscape::XML::Node *sp_group_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_group_set(SPObject *object, unsigned key, char const *value);
 
-static void sp_group_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
+static Geom::OptRect sp_group_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
 static void sp_group_print (SPItem * item, SPPrintContext *ctx);
 static gchar * sp_group_description (SPItem * item);
 static Inkscape::DrawingItem *sp_group_show (SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
@@ -274,10 +274,10 @@ static Inkscape::XML::Node * sp_group_write(SPObject *object, Inkscape::XML::Doc
     return repr;
 }
 
-static void
-sp_group_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags)
+static Geom::OptRect
+sp_group_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type)
 {
-    SP_GROUP(item)->group->calculateBBox(bbox, transform, flags);
+    return SP_GROUP(item)->group->bounds(type, transform);
 }
 
 static void
@@ -696,9 +696,9 @@ void CGroup::onModified(guint flags) {
     }
 }
 
-void CGroup::calculateBBox(NRRect *bbox, Geom::Affine const &transform, unsigned const flags) {
-
-    Geom::OptRect dummy_bbox;
+Geom::OptRect CGroup::bounds(SPItem::BBoxType type, Geom::Affine const &transform)
+{
+    Geom::OptRect bbox;
 
     GSList *l = _group->childList(false, SPObject::ActionBBox);
     while (l) {
@@ -706,12 +706,11 @@ void CGroup::calculateBBox(NRRect *bbox, Geom::Affine const &transform, unsigned
         if (SP_IS_ITEM(o) && !SP_ITEM(o)->isHidden()) {
             SPItem *child = SP_ITEM(o);
             Geom::Affine const ct(child->transform * transform);
-            child->invoke_bbox_full( dummy_bbox, ct, flags, FALSE);
+            bbox |= child->bounds(type, transform);
         }
         l = g_slist_remove (l, o);
     }
-
-    *bbox = NRRect(dummy_bbox);
+    return bbox;
 }
 
 void CGroup::onPrint(SPPrintContext *ctx) {

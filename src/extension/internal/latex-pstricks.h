@@ -33,7 +33,7 @@ class PrintLatex : public Inkscape::Extension::Implementation::Implementation {
     
     std::stack<Geom::Affine> m_tr_stack;
 
-    void print_pathvector(SVGOStringStream &os, Geom::PathVector const &pathv_in, const Geom::Affine * /*transform*/);
+    void print_pathvector(SVGOStringStream &os, Geom::PathVector const &pathv_in, const Geom::Affine & /*transform*/);
     void print_2geomcurve(SVGOStringStream &os, Geom::Curve const & c );
 
 public:
@@ -47,13 +47,17 @@ public:
         virtual unsigned int finish (Inkscape::Extension::Print * module);
 
         /* Rendering methods */
-        virtual unsigned int bind(Inkscape::Extension::Print *module, Geom::Affine const *transform, float opacity);
+        virtual unsigned int bind(Inkscape::Extension::Print *module, Geom::Affine const &transform, float opacity);
         virtual unsigned int release(Inkscape::Extension::Print *module);
 
-        virtual unsigned int fill (Inkscape::Extension::Print * module, Geom::PathVector const &pathv, const Geom::Affine *ctm, const SPStyle *style,
-                const NRRect *pbox, const NRRect *dbox, const NRRect *bbox);
-        virtual unsigned int stroke (Inkscape::Extension::Print * module, Geom::PathVector const &pathv, const Geom::Affine *transform, const SPStyle *style,
-                const NRRect *pbox, const NRRect *dbox, const NRRect *bbox);
+        virtual unsigned int fill (Inkscape::Extension::Print *module, Geom::PathVector const &pathv,
+                                   Geom::Affine const &ctm, SPStyle const *style,
+                                   Geom::OptRect const &pbox, Geom::OptRect const &dbox,
+                                   Geom::OptRect const &bbox);
+        virtual unsigned int stroke (Inkscape::Extension::Print *module, Geom::PathVector const &pathv,
+                                     Geom::Affine const &ctm, SPStyle const *style,
+                                     Geom::OptRect const &pbox, Geom::OptRect const &dbox,
+                                     Geom::OptRect const &bbox);
         virtual unsigned int comment(Inkscape::Extension::Print *module, const char * comment);
         bool textToPath (Inkscape::Extension::Print * ext);
 

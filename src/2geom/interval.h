@@ -47,12 +47,6 @@
 
 namespace Geom {
 
-/**
- * @brief Range of real numbers that can be empty.
- * @ingroup Primitives
- */
-typedef GenericOptInterval<Coord> OptInterval;
-
 /** 
  * @brief Range of real numbers that is never empty.
  *
@@ -128,8 +122,6 @@ public:
 
     /// @name Operators
     /// @{
-    inline operator OptInterval() { return OptInterval(*this); }
-    
     // IMPL: ScalableConcept
     /** @brief Scale an interval */
     Interval &operator*=(Coord s) {
@@ -158,6 +150,12 @@ public:
         expandTo(mx * o.max());
         return *this;
     }
+    bool operator==(IntInterval const &ii) const {
+        return min() == Coord(ii.min()) && max() == Coord(ii.max());
+    }
+    bool operator==(Interval const &other) const {
+        return Base::operator==(other);
+    }
     /// @}
     
     /// @name Rounding to integer values
@@ -175,6 +173,35 @@ public:
         return ret;
     }
     /// @}
+};
+
+/**
+ * @brief Range of real numbers that can be empty.
+ * @ingroup Primitives
+ */
+class OptInterval
+    : public GenericOptInterval<Coord>
+{
+    typedef GenericOptInterval<Coord> Base;
+public:
+    /// @name Create optionally empty intervals.
+    /// @{
+    /** @brief Create an empty interval. */
+    OptInterval() : Base() {}
+    /** @brief Wrap an existing interval. */
+    OptInterval(Interval const &a) : Base(a) {}
+    /** @brief Create an interval containing a single point. */
+    OptInterval(Coord u) : Base(u) {}
+    /** @brief Create an interval containing a range of numbers. */
+    OptInterval(Coord u, Coord v) : Base(u,v) {}
+    OptInterval(Base const &b) : Base(b) {}
+
+    /** @brief Promote from IntInterval. */
+    OptInterval(IntInterval const &i) : Base(Interval(i)) {}
+    /** @brief Promote from OptIntInterval. */
+    OptInterval(OptIntInterval const &i) : Base() {
+        if (i) *this = Interval(*i);
+    }
 };
 
 // functions required for Python bindings

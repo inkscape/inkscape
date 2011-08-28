@@ -14,7 +14,6 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include <libnr/nr-rect.h>
 #include <2geom/d2.h>
 #include <2geom/affine.h>
 #include <glibmm/ustring.h>
@@ -328,7 +327,7 @@ public:
      \param in_arena  The arena to add the glyphs group to
      \param paintbox  The current rendering tile
     */
-    void show(DrawingGroup *in_arena, NRRect const *paintbox) const;
+    void show(DrawingGroup *in_arena, Geom::OptRect const &paintbox) const;
 
     /** Calculates the smallest rectangle completely enclosing all the
     glyphs.
@@ -336,7 +335,7 @@ public:
       \param transform     The transform to be applied to the entire object
                            prior to calculating its bounds.
     */
-    void getBoundingBox(NRRect *bounding_box, Geom::Affine const &transform, int start = -1, int length = -1) const;
+    Geom::OptRect bounds(Geom::Affine const &transform, int start = -1, int length = -1) const;
 
     /** Sends all the glyphs to the given print context.
      \param ctx   I have
@@ -345,7 +344,7 @@ public:
      \param bbox  parameters
      \param ctm   do yet
     */
-    void print(SPPrintContext *ctx, NRRect const *pbox, NRRect const *dbox, NRRect const *bbox, Geom::Affine const &ctm) const;
+    void print(SPPrintContext *ctx, Geom::OptRect const &pbox, Geom::OptRect const &dbox, Geom::OptRect const &bbox, Geom::Affine const &ctm) const;
 
 #ifdef HAVE_CAIRO_PDF    
     /** Renders all the glyphs to the given Cairo rendering context.

@@ -53,7 +53,7 @@ void FilterPrimitive::render_cairo(FilterSlot &slot)
     slot.set(_output, in);
 }
 
-void FilterPrimitive::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*m*/)
+void FilterPrimitive::area_enlarge(Geom::IntRect &/*area*/, Geom::Affine const &/*m*/)
 {
     // This doesn't need to do anything by default
 }

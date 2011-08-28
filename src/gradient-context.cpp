@@ -46,8 +46,6 @@
 #include "sp-namedview.h"
 #include "rubberband.h"
 
-#include "libnr/nr-point-fns.h"
-
 using Inkscape::DocumentUndo;
 
 static void sp_gradient_context_class_init(SPGradientContextClass *klass);
@@ -254,7 +252,8 @@ sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, Geom::Poi
 
     SPCtrlLine* line = SP_CTRLLINE(item);
 
-    Geom::Point nearest = snap_vector_midpoint (rc->mousepoint_doc, line->s, line->e, 0);
+    Geom::LineSegment ls(line->s, line->e);
+    Geom::Point nearest = ls.pointAt(ls.nearestPoint(rc->mousepoint_doc));
     double dist_screen = Geom::L2 (rc->mousepoint_doc - nearest) * desktop->current_zoom();
 
     double tolerance = (double) SP_EVENT_CONTEXT(rc)->tolerance;

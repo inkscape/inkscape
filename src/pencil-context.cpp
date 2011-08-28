@@ -34,7 +34,6 @@
 #include <2geom/bezier-utils.h>
 #include "display/canvas-bpath.h"
 #include <glibmm/i18n.h>
-#include "libnr/in-svg-plane.h"
 #include "context-fns.h"
 #include "sp-namedview.h"
 #include "xml/repr.h"
@@ -68,6 +67,8 @@ static void sketch_interpolate(SPPencilContext *pc);
 static SPDrawContextClass *pencil_parent_class;
 static Geom::Point pencil_drag_origin_w(0, 0);
 static bool pencil_within_tolerance = false;
+
+static bool in_svg_plane(Geom::Point const &p) { return Geom::LInfty(p) < 1e18; }
 
 /**
  * Register SPPencilContext class with Gdk and return its type number.

@@ -22,7 +22,7 @@
 
 static void sp_paint_server_class_init(SPPaintServerClass *psc);
 
-static cairo_pattern_t *sp_paint_server_create_dummy_pattern(SPPaintServer *ps, cairo_t *ct, NRRect const *bbox, double opacity);
+static cairo_pattern_t *sp_paint_server_create_dummy_pattern(SPPaintServer *ps, cairo_t *ct, Geom::OptRect const &bbox, double opacity);
 
 static SPObjectClass *parent_class;
 
@@ -70,14 +70,11 @@ void SPPaintServer::init(SPPaintServer * /*ps*/)
 
 cairo_pattern_t *sp_paint_server_create_pattern(SPPaintServer *ps,
                                                 cairo_t *ct,
-                                                NRRect const *bbox,
+                                                Geom::OptRect const &bbox,
                                                 double opacity)
 {
-    // NOTE: the ct argument is used for when rendering patterns
-    // to create a group, instead of explicitly creating a temporary surface
     g_return_val_if_fail(ps != NULL, NULL);
     g_return_val_if_fail(SP_IS_PAINT_SERVER(ps), NULL);
-    g_return_val_if_fail(bbox != NULL, NULL);
 
     cairo_pattern_t *cp = NULL;
     SPPaintServerClass *psc = (SPPaintServerClass *) G_OBJECT_GET_CLASS(ps);
@@ -91,7 +88,7 @@ cairo_pattern_t *sp_paint_server_create_pattern(SPPaintServer *ps,
 static cairo_pattern_t *
 sp_paint_server_create_dummy_pattern(SPPaintServer */*ps*/,
                                      cairo_t */* ct */,
-                                     NRRect const */*bbox*/,
+                                     Geom::OptRect const &/*bbox*/,
                                      double /* opacity */)
 {
     cairo_pattern_t *cp = cairo_pattern_create_rgb(1.0, 0.0, 1.0);

@@ -191,8 +191,7 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
 
     SPItem *item = SP_ITEM(object);
     // Find object's bbox in document
-    Geom::Affine const i2doc(item->i2doc_affine());
-    Geom::OptRect dbox = item->getBounds(i2doc);
+    Geom::OptRect dbox = item->documentVisualBounds();
 
     if (!dbox) {
         return NULL;

@@ -7,11 +7,9 @@
 #include <require-config.h>
 #include "FontFactory.h"
 
-#include <libnr/nr-forward.h>
 #include <libnrtype/nrtype-forward.h>
 #include <libnrtype/font-style.h>
 #include <livarot/livarot-forward.h>
-#include "libnr/nr-rect.h"
 #include <2geom/d2.h>
 
 // the font_instance are the template of several raster_font; they provide metrics and outlines

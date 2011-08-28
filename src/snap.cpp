@@ -734,7 +734,8 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 Geom::Coord r = Geom::L2(b); // the radius of the circular constraint
                 dedicated_constraint = Inkscape::Snapper::SnapConstraint(origin, b, r);
             } else if (transformation_type == STRETCH) { // when non-uniform stretching {
-                dedicated_constraint = Inkscape::Snapper::SnapConstraint((*i).getPoint(), component_vectors[dim]);
+                Geom::Point cvec; cvec[dim] = 1.;
+                dedicated_constraint = Inkscape::Snapper::SnapConstraint((*i).getPoint(), cvec);
             } else if (transformation_type == TRANSLATE) {
                 // When doing a constrained translation, all points will move in the same direction, i.e.
                 // either horizontally or vertically. The lines along which they move are therefore all
@@ -751,7 +752,8 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 // When scaling, a point aligned either horizontally or vertically with the origin can only
                 // move in that specific direction; therefore it should only snap in that direction, otherwise
                 // we will get snapped points with an invalid transformation
-                dedicated_constraint = Inkscape::Snapper::SnapConstraint(origin, component_vectors[c1]);
+                Geom::Point cvec; cvec[c1] = 1.;
+                dedicated_constraint = Inkscape::Snapper::SnapConstraint(origin, cvec);
                 snapped_point = constrainedSnap(*j, dedicated_constraint, bbox);
             } else {
                 // If we have a collection of SnapCandidatePoints, with mixed constrained snapping and free snapping

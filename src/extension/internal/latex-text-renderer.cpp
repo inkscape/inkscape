@@ -588,27 +588,27 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
         base = doc->getRoot();
     }
 
-    Geom::OptRect d;
+    Geom::Rect d;
     if (pageBoundingBox) {
-        d = Geom::Rect( Geom::Point(0,0),
-                        Geom::Point(doc->getWidth(), doc->getHeight()) );
+        d = Geom::Rect::from_xywh(Geom::Point(0,0), doc->getDimensions());
     } else {
-        base->invoke_bbox( d, base->i2dt_affine(), TRUE, SPItem::RENDERING_BBOX);
-    }
-    if (!d) {
-        g_message("LaTeXTextRenderer: could not retrieve boundingbox.");
-        return false;
+        Geom::OptRect bbox = base->desktopVisualBounds();
+        if (!bbox) {
+            g_message("CairoRenderer: empty bounding box.");
+            return false;
+        }
+        d = *bbox;
     }
 
     // scale all coordinates, such that the width of the image is 1, this is convenient for scaling the image in LaTeX
-    double scale = 1/(d->width());
-    double _width = d->width() * scale;
-    double _height = d->height() * scale;
+    double scale = 1/(d.width());
+    double _width = d.width() * scale;
+    double _height = d.height() * scale;
     push_transform( Geom::Scale(scale, scale) );
 
     if (!pageBoundingBox)
     {
-        push_transform( Geom::Translate( - d->min() ) );
+        push_transform( Geom::Translate( -d.min() ) );
     }
 
     // flip y-axis
@@ -621,7 +621,7 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
     // scaling of the image when including it in LaTeX
 
     os << "  \\ifx\\svgwidth\\undefined%\n";
-    os << "    \\setlength{\\unitlength}{" << d->width() * PT_PER_PX << "bp}%\n"; // note: 'bp' is the Postscript pt unit in LaTeX, see LP bug #792384
+    os << "    \\setlength{\\unitlength}{" << d.width() * PT_PER_PX << "bp}%\n"; // note: 'bp' is the Postscript pt unit in LaTeX, see LP bug #792384
     os << "    \\ifx\\svgscale\\undefined%\n";
     os << "      \\relax%\n";
     os << "    \\else%\n";

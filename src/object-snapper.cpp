@@ -135,15 +135,14 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                 if (SP_IS_GROUP(o)) {
                     _findCandidates(o, it, false, bbox_to_snap, clip_or_mask, additional_affine);
                 } else {
-                    Geom::OptRect bbox_of_item = Geom::Rect();
+                    Geom::OptRect bbox_of_item;
                     if (clip_or_mask) {
                         // Oh oh, this will get ugly. We cannot use sp_item_i2d_affine directly because we need to
                         // insert an additional transformation in document coordinates (code copied from sp_item_i2d_affine)
-                        item->invoke_bbox(bbox_of_item,
-                            item->i2doc_affine() * additional_affine * _snapmanager->getDesktop()->doc2dt(),
-                            true);
+                        bbox_of_item = item->visualBounds(item->i2doc_affine() * additional_affine *
+                            _snapmanager->getDesktop()->doc2dt());
                     } else {
-                        item->invoke_bbox( bbox_of_item, item->i2dt_affine(), true);
+                        bbox_of_item = item->desktopVisualBounds();
                     }
                     if (bbox_of_item) {
                         // See if the item is within range
@@ -188,7 +187,7 @@ void Inkscape::ObjectSnapper::_collectNodes(SnapSourceType const &t,
             Preferences *prefs = Preferences::get();
             bool prefs_bbox = prefs->getBool("/tools/bounding_box");
             bbox_type = !prefs_bbox ?
-                SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
+                SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX;
         }
 
         // Consider the page border for snapping to
@@ -258,7 +257,7 @@ void Inkscape::ObjectSnapper::_collectNodes(SnapSourceType const &t,
                 // Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
                 // of the item AND the bbox of the clipping path at the same time
                 if (!(*i).clip_or_mask) {
-                    Geom::OptRect b = root_item->getBboxDesktop(bbox_type);
+                    Geom::OptRect b = root_item->desktopBounds(bbox_type);
                     getBBoxPoints(b, _points_to_snap_to, true,
                             _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_BBOX_CORNER),
                             _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_BBOX_EDGE_MIDPOINT),
@@ -373,7 +372,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
             Preferences *prefs = Preferences::get();
             int prefs_bbox = prefs->getBool("/tools/bounding_box", 0);
             bbox_type = !prefs_bbox ?
-                SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
+                SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX;
         }
 
         // Consider the page border for snapping
@@ -452,11 +451,10 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
                     // Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
                     // of the item AND the bbox of the clipping path at the same time
                     if (!(*i).clip_or_mask) {
-                        Geom::OptRect rect;
-                        root_item->invoke_bbox( rect, i2doc, TRUE, bbox_type);
+                        Geom::OptRect rect = root_item->bounds(bbox_type, i2doc);
                         if (rect) {
                             Geom::PathVector *path = _getPathvFromRect(*rect);
-                            rect = root_item->getBboxDesktop(bbox_type);
+                            rect = root_item->desktopBounds(bbox_type);
                             _paths_to_snap_to->push_back(SnapCandidatePath(path, SNAPTARGET_BBOX_EDGE, rect));
                         }
                     }

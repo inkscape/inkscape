@@ -112,7 +112,7 @@ sp_ctrl_init (SPCtrl *ctrl)
     // If moveto() is called then it will not set _moved to true because we're initially already at (0, 0)
     ctrl->_moved = true; // Is this flag ever going to be set back to false? I can't find where that is supposed to happen
 
-    ctrl->box.x0 = ctrl->box.y0 = ctrl->box.x1 = ctrl->box.y1 = 0;
+    new (&ctrl->box) Geom::IntRect(0,0,0,0);
     ctrl->cache = NULL;
     ctrl->pixbuf = NULL;
 
@@ -232,7 +232,7 @@ sp_ctrl_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int fla
     if (!ctrl->_moved) return;
 
     if (ctrl->shown) {
-        sp_canvas_request_redraw (item->canvas, ctrl->box.x0, ctrl->box.y0, ctrl->box.x1 + 1, ctrl->box.y1 + 1);
+        sp_canvas_request_redraw (item->canvas, ctrl->box.left(), ctrl->box.top(), ctrl->box.right() + 1, ctrl->box.bottom() + 1);
     }
 
     if (!ctrl->defined) return;
@@ -278,12 +278,8 @@ sp_ctrl_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int fla
             break;
     }
 
-    ctrl->box.x0 = x;
-    ctrl->box.y0 = y;
-    ctrl->box.x1 = ctrl->box.x0 + 2 * ctrl->span;
-    ctrl->box.y1 = ctrl->box.y0 + 2 * ctrl->span;
-
-    sp_canvas_update_bbox (item, ctrl->box.x0, ctrl->box.y0, ctrl->box.x1 + 1, ctrl->box.y1 + 1);
+    ctrl->box = Geom::IntRect::from_xywh(x, y, 2*ctrl->span, 2*ctrl->span);
+    sp_canvas_update_bbox (item, ctrl->box.left(), ctrl->box.top(), ctrl->box.right() + 1, ctrl->box.bottom() + 1);
 }
 
 static double
@@ -293,11 +289,7 @@ sp_ctrl_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item)
 
     *actual_item = item;
 
-    double const x = p[Geom::X];
-    double const y = p[Geom::Y];
-
-    if ((x >= ctrl->box.x0) && (x <= ctrl->box.x1) && (y >= ctrl->box.y0) && (y <= ctrl->box.y1)) return 0.0;
-
+    if (ctrl->box.contains(p.floor())) return 0.0;
     return 1e18;
 }
 
@@ -519,8 +511,8 @@ sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf)
         // 1. Copy the affected part of output to a temporary surface
         cairo_surface_t *work = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, w, h);
         cairo_t *cr = cairo_create(work);
-        cairo_translate(cr, -ctrl->box.x0, -ctrl->box.y0);
-        cairo_set_source_surface(cr, cairo_get_target(buf->ct), buf->rect.x0, buf->rect.y0);
+        cairo_translate(cr, -ctrl->box.left(), -ctrl->box.top());
+        cairo_set_source_surface(cr, cairo_get_target(buf->ct), buf->rect.left(), buf->rect.top());
         cairo_paint(cr);
         cairo_destroy(cr);
 
@@ -551,8 +543,8 @@ sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf)
         // 3. Replace the affected part of output with contents of temporary surface
         cairo_save(buf->ct);
         cairo_set_source_surface(buf->ct, work,
-            ctrl->box.x0 - buf->rect.x0, ctrl->box.y0 - buf->rect.y0);
-        cairo_rectangle(buf->ct, ctrl->box.x0 - buf->rect.x0, ctrl->box.y0 - buf->rect.y0, w, h);
+            ctrl->box.left() - buf->rect.left(), ctrl->box.top() - buf->rect.top());
+        cairo_rectangle(buf->ct, ctrl->box.left() - buf->rect.left(), ctrl->box.top() - buf->rect.top(), w, h);
         cairo_clip(buf->ct);
         cairo_set_operator(buf->ct, CAIRO_OPERATOR_SOURCE);
         cairo_paint(buf->ct);
@@ -562,7 +554,7 @@ sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf)
         cairo_surface_t *cache = cairo_image_surface_create_for_data(
             reinterpret_cast<unsigned char*>(ctrl->cache), CAIRO_FORMAT_ARGB32, w, h, w*4);
         cairo_set_source_surface(buf->ct, cache,
-            ctrl->box.x0 - buf->rect.x0, ctrl->box.y0 - buf->rect.y0);
+            ctrl->box.left() - buf->rect.left(), ctrl->box.top() - buf->rect.top());
         cairo_paint(buf->ct);
         cairo_surface_destroy(cache);
     }

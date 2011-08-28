@@ -866,10 +866,10 @@ sp_canvas_group_render (SPCanvasItem *item, SPCanvasBuf *buf)
     for (GList *list = group->items; list; list = list->next) {
         SPCanvasItem *child = (SPCanvasItem *)list->data;
         if (child->flags & SP_CANVAS_ITEM_VISIBLE) {
-            if ((child->x1 < buf->rect.x1) &&
-                (child->y1 < buf->rect.y1) &&
-                (child->x2 > buf->rect.x0) &&
-                (child->y2 > buf->rect.y0)) {
+            if ((child->x1 < buf->rect.right()) &&
+                (child->y1 < buf->rect.bottom()) &&
+                (child->x2 > buf->rect.left()) &&
+                (child->y2 > buf->rect.top())) {
                 if (SP_CANVAS_ITEM_GET_CLASS (child)->render)
                     SP_CANVAS_ITEM_GET_CLASS (child)->render (child, buf);
             }
@@ -963,8 +963,8 @@ static gint sp_canvas_focus_out (GtkWidget *widget, GdkEventFocus *event);
 static GtkWidgetClass *canvas_parent_class;
 
 static void sp_canvas_resize_tiles(SPCanvas* canvas, int nl, int nt, int nr, int nb);
-static void sp_canvas_dirty_rect(SPCanvas* canvas, int nl, int nt, int nr, int nb);
-static void sp_canvas_mark_rect(SPCanvas* canvas, int nl, int nt, int nr, int nb, uint8_t val);
+static void sp_canvas_dirty_rect(SPCanvas* canvas, Geom::IntRect const &area);
+static void sp_canvas_mark_rect(SPCanvas* canvas, Geom::IntRect const &area, uint8_t val);
 static int do_update (SPCanvas *canvas);
 
 /**
@@ -1634,46 +1634,38 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
     return status;
 }
 
-static void sp_canvas_paint_single_buffer(SPCanvas *canvas, int x0, int y0, int x1, int y1, int draw_x1, int draw_y1, int draw_x2, int draw_y2, int /*sw*/)
+static void sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect const &paint_rect, Geom::IntRect const &canvas_rect, int /*sw*/)
 {
     GtkWidget *widget = GTK_WIDGET (canvas);
 
     // Mark the region clean
-    sp_canvas_mark_rect(canvas, x0, y0, x1, y1, 0);
+    sp_canvas_mark_rect(canvas, paint_rect, 0);
 
     SPCanvasBuf buf;
     buf.buf = NULL;
     buf.buf_rowstride = 0;
-    buf.rect.x0 = x0;
-    buf.rect.y0 = y0;
-    buf.rect.x1 = x1;
-    buf.rect.y1 = y1;
-    buf.visible_rect.x0 = draw_x1;
-    buf.visible_rect.y0 = draw_y1;
-    buf.visible_rect.x1 = draw_x2;
-    buf.visible_rect.y1 = draw_y2;
+    buf.rect = paint_rect;
+    buf.visible_rect = canvas_rect;
     buf.is_empty = true;
     //buf.ct = gdk_cairo_create(widget->window);
 
     /*
     cairo_t *xctt = gdk_cairo_create(widget->window);
-    cairo_translate(xctt, x0 - canvas->x0, y0 - canvas->y0);
+    cairo_translate(xctt, paint_rect.left() - canvas->x0, paint_rect.top() - canvas->y0);
     cairo_set_source_rgb(xctt, 1,0,0);
-    cairo_rectangle(xctt, 0, 0, x1-x0, y1-y0);
+    cairo_rectangle(xctt, 0, 0, paint_rect.width(), paint_rect.height());
     cairo_fill(xctt);
     cairo_destroy(xctt);
     //*/
 
     // create temporary surface
-    int w = x1 - x0;
-    int h = y1 - y0;
-    cairo_surface_t *imgs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, x1 - x0, y1 - y0);
+    cairo_surface_t *imgs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, paint_rect.width(), paint_rect.height());
     buf.ct = cairo_create(imgs);
     //cairo_translate(buf.ct, -x0, -y0);
 
     // fix coordinates, clip all drawing to the tile and clear the background
-    //cairo_translate(buf.ct, x0 - canvas->x0, y0 - canvas->y0);
-    //cairo_rectangle(buf.ct, 0, 0, x1 - x0, y1 - y0);
+    //cairo_translate(buf.ct, paint_rect.left() - canvas->x0, paint_rect.top() - canvas->y0);
+    //cairo_rectangle(buf.ct, 0, 0, paint_rect.width(), paint_rect.height());
     //cairo_set_line_width(buf.ct, 3);
     //cairo_set_source_rgba(buf.ct, 1.0, 0.0, 0.0, 0.1);
     //cairo_stroke_preserve(buf.ct);
@@ -1681,7 +1673,7 @@ static void sp_canvas_paint_single_buffer(SPCanvas *canvas, int x0, int y0, int 
 
     gdk_cairo_set_source_color(buf.ct, &widget->style->bg[GTK_STATE_NORMAL]);
     cairo_set_operator(buf.ct, CAIRO_OPERATOR_SOURCE);
-    //cairo_rectangle(buf.ct, 0, 0, x1 - x0, y1 - y0);
+    //cairo_rectangle(buf.ct, 0, 0, paint_rect.width(), paint_rec.height());
     cairo_paint(buf.ct);
     cairo_set_operator(buf.ct, CAIRO_OPERATOR_OVER);
 
@@ -1707,9 +1699,9 @@ static void sp_canvas_paint_single_buffer(SPCanvas *canvas, int x0, int y0, int 
             cairo_surface_flush(imgs);
             unsigned char *px = cairo_image_surface_get_data(imgs);
             int stride = cairo_image_surface_get_stride(imgs);
-            for (int i=0; i<h; ++i) {
+            for (int i=0; i<paint_rect.height(); ++i) {
                 unsigned char *row = px + i*stride;
-                Inkscape::CMSSystem::doTransform(transf, row, row, w);
+                Inkscape::CMSSystem::doTransform(transf, row, row, paint_rect.height());
             }
             cairo_surface_mark_dirty(imgs);
         }
@@ -1717,8 +1709,8 @@ static void sp_canvas_paint_single_buffer(SPCanvas *canvas, int x0, int y0, int 
 #endif // ENABLE_LCMS
 
     cairo_t *xct = gdk_cairo_create(widget->window);
-    cairo_translate(xct, x0 - canvas->x0, y0 - canvas->y0);
-    cairo_rectangle(xct, 0, 0, x1-x0, y1-y0);
+    cairo_translate(xct, paint_rect.left() - canvas->x0, paint_rect.top() - canvas->y0);
+    cairo_rectangle(xct, 0, 0, paint_rect.width(), paint_rect.height());
     cairo_clip(xct);
     cairo_set_source_surface(xct, imgs, 0, 0);
     cairo_set_operator(xct, CAIRO_OPERATOR_SOURCE);
@@ -1734,7 +1726,7 @@ static void sp_canvas_paint_single_buffer(SPCanvas *canvas, int x0, int y0, int 
 
 struct PaintRectSetup {
     SPCanvas* canvas;
-    NRRectL big_rect;
+    Geom::IntRect big_rect;
     GTimeVal start_time;
     int max_pixels;
     Geom::Point mouse_loc;
@@ -1747,7 +1739,7 @@ struct PaintRectSetup {
  * @return true if the drawing completes
  */
 static int
-sp_canvas_paint_rect_internal (PaintRectSetup const *setup, NRRectL this_rect)
+sp_canvas_paint_rect_internal (PaintRectSetup const *setup, Geom::IntRect const &this_rect)
 {
     GTimeVal now;
     g_get_current_time (&now);
@@ -1782,8 +1774,8 @@ sp_canvas_paint_rect_internal (PaintRectSetup const *setup, NRRectL this_rect)
     }
 
     // Find the optimal buffer dimensions
-    int bw = this_rect.x1 - this_rect.x0;
-    int bh = this_rect.y1 - this_rect.y0;
+    int bw = this_rect.width();
+    int bh = this_rect.height();
     if ((bw < 1) || (bh < 1))
         return 0;
 
@@ -1799,16 +1791,12 @@ sp_canvas_paint_rect_internal (PaintRectSetup const *setup, NRRectL this_rect)
         gdk_window_begin_paint_rect(window, &r);*/
 
         sp_canvas_paint_single_buffer (setup->canvas,
-                                       this_rect.x0, this_rect.y0,
-                                       this_rect.x1, this_rect.y1,
-                                       setup->big_rect.x0, setup->big_rect.y0,
-                                       setup->big_rect.x1, setup->big_rect.y1, bw);
+                                       this_rect, setup->big_rect, bw);
         //gdk_window_end_paint(window);
         return 1;
     }
 
-    NRRectL lo = this_rect;
-    NRRectL hi = this_rect;
+    Geom::IntRect lo, hi;
 
 /*
 This test determines the redraw strategy:
@@ -1826,13 +1814,12 @@ faster.
 The default for now is the strips mode.
 */
     if (bw < bh || bh < 2 * TILE_SIZE) {
-        // to correctly calculate the mean of two ints, we need to sum them into a larger int type
-        int mid = ((long long) this_rect.x0 + (long long) this_rect.x1) / 2;
+        int mid = this_rect[Geom::X].middle();
         // Make sure that mid lies on a tile boundary
         mid = (mid / TILE_SIZE) * TILE_SIZE;
 
-        lo.x1 = mid;
-        hi.x0 = mid;
+        lo = Geom::IntRect(this_rect.left(), this_rect.top(), mid, this_rect.bottom());
+        hi = Geom::IntRect(mid, this_rect.top(), this_rect.right(), this_rect.bottom());
 
         if (setup->mouse_loc[Geom::X] < mid) {
             // Always paint towards the mouse first
@@ -1843,13 +1830,12 @@ The default for now is the strips mode.
                 && sp_canvas_paint_rect_internal(setup, lo);
         }
     } else {
-        // to correctly calculate the mean of two ints, we need to sum them into a larger int type
-        int mid = ((long long) this_rect.y0 + (long long) this_rect.y1) / 2;
+        int mid = this_rect[Geom::Y].middle();
         // Make sure that mid lies on a tile boundary
         mid = (mid / TILE_SIZE) * TILE_SIZE;
 
-        lo.y1 = mid;
-        hi.y0 = mid;
+        lo = Geom::IntRect(this_rect.left(), this_rect.top(), this_rect.right(), mid);
+        hi = Geom::IntRect(this_rect.left(), mid, this_rect.right(), this_rect.bottom());
 
         if (setup->mouse_loc[Geom::Y] < mid) {
             // Always paint towards the mouse first
@@ -1873,22 +1859,19 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
 {
     g_return_val_if_fail (!canvas->need_update, false);
 
-    NRRectL rect;
-    rect.x0 = xx0;
-    rect.x1 = xx1;
-    rect.y0 = yy0;
-    rect.y1 = yy1;
+    Geom::IntRect canvas_rect = Geom::IntRect::from_xywh(canvas->x0, canvas->y0,
+        GTK_WIDGET (canvas)->allocation.width, GTK_WIDGET (canvas)->allocation.height);
+    Geom::IntRect paint_rect(xx0, yy0, xx1, yy1);
 
-    // Clip rect-to-draw by the current visible area
-    rect.x0 = MAX (rect.x0, canvas->x0);
-    rect.y0 = MAX (rect.y0, canvas->y0);
-    rect.x1 = MIN (rect.x1, canvas->x0/*draw_x1*/ + GTK_WIDGET (canvas)->allocation.width);
-    rect.y1 = MIN (rect.y1, canvas->y0/*draw_y1*/ + GTK_WIDGET (canvas)->allocation.height);
+    Geom::OptIntRect area = paint_rect & canvas_rect;
+    if (!area || area->hasZeroArea()) return 0;
+
+    paint_rect = *area;
 
     PaintRectSetup setup;
 
     setup.canvas = canvas;
-    setup.big_rect = rect;
+    setup.big_rect = paint_rect;
 
     // Save the mouse location
     gint x, y;
@@ -1909,7 +1892,7 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
     g_get_current_time(&(setup.start_time));
 
     // Go
-    return sp_canvas_paint_rect_internal(&setup, rect);
+    return sp_canvas_paint_rect_internal(&setup, paint_rect);
 }
 
 /**
@@ -1950,14 +1933,11 @@ sp_canvas_expose (GtkWidget *widget, GdkEventExpose *event)
     gdk_region_get_rectangles (event->region, &rects, &n_rects);
 
     for (int i = 0; i < n_rects; i++) {
-        NRRectL rect;
+        Geom::IntRect r = Geom::IntRect::from_xywh(
+            rects[i].x + canvas->x0, rects[i].y + canvas->y0,
+            rects[i].width, rects[i].height);
 
-        rect.x0 = rects[i].x + canvas->x0;
-        rect.y0 = rects[i].y + canvas->y0;
-        rect.x1 = rect.x0 + rects[i].width;
-        rect.y1 = rect.y0 + rects[i].height;
-
-        sp_canvas_request_redraw (canvas, rect.x0, rect.y0, rect.x1, rect.y1);
+        sp_canvas_request_redraw (canvas, r.left(), r.top(), r.right(), r.bottom());
     }
 
     if (n_rects > 0)
@@ -2225,30 +2205,21 @@ sp_canvas_request_update (SPCanvas *canvas)
 void
 sp_canvas_request_redraw (SPCanvas *canvas, int x0, int y0, int x1, int y1)
 {
-    NRRectL bbox;
-    NRRectL visible;
-    NRRectL clip;
-
     g_return_if_fail (canvas != NULL);
     g_return_if_fail (SP_IS_CANVAS (canvas));
 
     if (!gtk_widget_is_drawable ( GTK_WIDGET (canvas))) return;
     if ((x0 >= x1) || (y0 >= y1)) return;
 
-    bbox.x0 = x0;
-    bbox.y0 = y0;
-    bbox.x1 = x1;
-    bbox.y1 = y1;
-
-    visible.x0 = canvas->x0;
-    visible.y0 = canvas->y0;
-    visible.x1 = visible.x0 + GTK_WIDGET (canvas)->allocation.width;
-    visible.y1 = visible.y0 + GTK_WIDGET (canvas)->allocation.height;
-
-    nr_rect_l_intersect (&clip, &bbox, &visible);
-
-    sp_canvas_dirty_rect(canvas, clip.x0, clip.y0, clip.x1, clip.y1);
-    add_idle (canvas);
+    Geom::IntRect bbox(x0, y0, x1, y1);
+    Geom::IntRect canvas_rect = Geom::IntRect::from_xywh(canvas->x0, canvas->y0,
+        GTK_WIDGET (canvas)->allocation.width, GTK_WIDGET (canvas)->allocation.height);
+    
+    Geom::OptIntRect clip = bbox & canvas_rect;
+    if (clip) {
+        sp_canvas_dirty_rect(canvas, *clip);
+        add_idle (canvas);
+    }
 }
 
 /**
@@ -2386,24 +2357,21 @@ static void sp_canvas_resize_tiles(SPCanvas* canvas, int nl, int nt, int nr, int
 /*
  * Helper that queues a canvas rectangle for redraw
  */
-static void sp_canvas_dirty_rect(SPCanvas* canvas, int nl, int nt, int nr, int nb) {
+static void sp_canvas_dirty_rect(SPCanvas* canvas, Geom::IntRect const &area) {
     canvas->need_redraw = TRUE;
 
-    sp_canvas_mark_rect(canvas, nl, nt, nr, nb, 1);
+    sp_canvas_mark_rect(canvas, area, 1);
 }
 
 /**
  * Helper that marks specific canvas rectangle as clean (val == 0) or dirty (otherwise)
  */
-void sp_canvas_mark_rect(SPCanvas* canvas, int nl, int nt, int nr, int nb, uint8_t val)
+void sp_canvas_mark_rect(SPCanvas* canvas, Geom::IntRect const &area, uint8_t val)
 {
-    if ( nl >= nr || nt >= nb ) {
-        return;
-    }
-    int tl=sp_canvas_tile_floor(nl);
-    int tt=sp_canvas_tile_floor(nt);
-    int tr=sp_canvas_tile_ceil(nr);
-    int tb=sp_canvas_tile_ceil(nb);
+    int tl=sp_canvas_tile_floor(area.left());
+    int tt=sp_canvas_tile_floor(area.top());
+    int tr=sp_canvas_tile_ceil(area.right());
+    int tb=sp_canvas_tile_ceil(area.bottom());
     if ( tl >= canvas->tRight || tr <= canvas->tLeft || tt >= canvas->tBottom || tb <= canvas->tTop ) return;
     if ( tl < canvas->tLeft ) tl=canvas->tLeft;
     if ( tr > canvas->tRight ) tr=canvas->tRight;

@@ -783,20 +783,22 @@ sp_export_selection_modified ( Inkscape::Application */*inkscape*/,
             if ( SP_ACTIVE_DESKTOP ) {
                 SPDocument *doc;
                 doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
-                Geom::OptRect bbox = doc->getRoot()->getBboxDesktop(SPItem::RENDERING_BBOX);
+                Geom::OptRect bbox = doc->getRoot()->desktopVisualBounds();
                 if (bbox) {
-                    sp_export_set_area (base, bbox->min()[Geom::X],
-                                              bbox->min()[Geom::Y],
-                                              bbox->max()[Geom::X],
-                                              bbox->max()[Geom::Y]);
+                    sp_export_set_area (base, bbox->left(),
+                                              bbox->top(),
+                                              bbox->right(),
+                                              bbox->bottom());
                 }
             }
             break;
         case SELECTION_SELECTION:
             if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
-                NRRect bbox;
-                (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds(&bbox, SPItem::RENDERING_BBOX);
-                sp_export_set_area (base, bbox.x0, bbox.y0, bbox.x1, bbox.y1);
+                Geom::OptRect bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->visualBounds();
+                sp_export_set_area (base, bbox->left(),
+                                          bbox->top(),
+                                          bbox->right(),
+                                          bbox->bottom());
             }
             break;
         default:
@@ -852,7 +854,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
             case SELECTION_SELECTION:
                 if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false)
                 {
-                    bbox = sp_desktop_selection (SP_ACTIVE_DESKTOP)->bounds(SPItem::RENDERING_BBOX);
+                    bbox = sp_desktop_selection (SP_ACTIVE_DESKTOP)->visualBounds();
                     /* Only if there is a selection that we can set
                        do we break, otherwise we fall through to the
                        drawing */
@@ -864,7 +866,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                 /** \todo
                  * This returns wrong values if the document has a viewBox.
                  */
-                bbox = doc->getRoot()->getBboxDesktop(SPItem::RENDERING_BBOX);
+                bbox = doc->getRoot()->desktopVisualBounds();
                 /* If the drawing is valid, then we'll use it and break
                    otherwise we drop through to the page settings */
                 if (bbox) {
@@ -1129,8 +1131,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
                 dpi = DPI_BASE;
             }
 
-            Geom::OptRect area;
-            item->invoke_bbox( area, item->i2dt_affine(), TRUE );
+            Geom::OptRect area = item->desktopVisualBounds();
             if (area) {
                 gint width = (gint) (area->width() * dpi / PX_PER_IN + 0.5);
                 gint height = (gint) (area->height() * dpi / PX_PER_IN + 0.5);
@@ -1493,7 +1494,7 @@ sp_export_detect_size(GtkObject * base) {
         switch (this_test[i]) {
             case SELECTION_SELECTION:
                 if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
-                    Geom::OptRect bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds(SPItem::RENDERING_BBOX);
+                    Geom::OptRect bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds(SPItem::VISUAL_BBOX);
 
                     //std::cout << "Selection " << bbox;
                     if ( bbox && sp_export_bbox_equal(*bbox,current_bbox)) {
@@ -1504,7 +1505,7 @@ sp_export_detect_size(GtkObject * base) {
             case SELECTION_DRAWING: {
                 SPDocument *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
-                Geom::OptRect bbox = doc->getRoot()->getBboxDesktop(SPItem::RENDERING_BBOX);
+                Geom::OptRect bbox = doc->getRoot()->desktopVisualBounds();
 
                 // std::cout << "Drawing " << bbox2;
                 if ( bbox && sp_export_bbox_equal(*bbox,current_bbox) ) {

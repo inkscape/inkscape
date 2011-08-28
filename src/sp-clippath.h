@@ -24,7 +24,6 @@
 class SPClipPathView;
 
 #include "display/display-forward.h"
-#include "libnr/nr-forward.h"
 #include "sp-object-group.h"
 #include "uri-references.h"
 #include "xml/node.h"
@@ -43,8 +42,8 @@ public:
     Inkscape::DrawingItem *show(Inkscape::Drawing &drawing, unsigned int key);
     void hide(unsigned int key);
 
-    void setBBox(unsigned int key, NRRect *bbox);
-    void getBBox(NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
+    void setBBox(unsigned int key, Geom::OptRect const &bbox);
+    Geom::OptRect geometricBounds(Geom::Affine const &transform);
 
 private:
     static void init(SPClipPath *clippath);

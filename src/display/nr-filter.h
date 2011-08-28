@@ -16,7 +16,6 @@
 #include <cairo.h>
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-types.h"
-#include "libnr/nr-rect.h"
 #include "svg/svg-length.h"
 #include "sp-filter-units.h"
 #include "gc-managed.h"

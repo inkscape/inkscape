@@ -39,7 +39,7 @@ sp_item_rotate_rel(SPItem *item, Geom::Rotate const &rotation)
 void
 sp_item_scale_rel (SPItem *item, Geom::Scale const &scale)
 {
-    Geom::OptRect bbox = item->getBboxDesktop();
+    Geom::OptRect bbox = item->desktopVisualBounds();
     if (bbox) {
         Geom::Translate const s(bbox->midpoint()); // use getCenter?
         item->set_i2d_affine(item->i2dt_affine() * s.inverse() * scale * s);

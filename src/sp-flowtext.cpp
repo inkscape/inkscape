@@ -46,7 +46,7 @@ static Inkscape::XML::Node *sp_flowtext_write(SPObject *object, Inkscape::XML::D
 static void sp_flowtext_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_flowtext_set(SPObject *object, unsigned key, gchar const *value);
 
-static void sp_flowtext_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
+static Geom::OptRect sp_flowtext_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
 static void sp_flowtext_print(SPItem *item, SPPrintContext *ctx);
 static gchar *sp_flowtext_description(SPItem *item);
 static void sp_flowtext_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
@@ -176,20 +176,19 @@ static void sp_flowtext_update(SPObject *object, SPCtx *ctx, unsigned flags)
 
     group->rebuildLayout();
 
-    NRRect paintbox;
-    group->invoke_bbox( &paintbox, Geom::identity(), TRUE);
+    Geom::OptRect pbox = group->geometricBounds();
     for (SPItemView *v = group->display; v != NULL; v = v->next) {
         Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
         group->_clearFlow(g);
         g->setStyle(object->style);
         // pass the bbox of the flowtext object as paintbox (used for paintserver fills)
-        group->layout.show(g, &paintbox);
+        group->layout.show(g, pbox);
     }
 }
 
 static void sp_flowtext_modified(SPObject *object, guint flags)
 {
-    SPObject *ft = SP_FLOWTEXT (object);
+    SPObject *ft = object;
     SPObject *region = NULL;
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
@@ -198,13 +197,12 @@ static void sp_flowtext_modified(SPObject *object, guint flags)
     // FIXME: the below stanza is copied over from sp_text_modified, consider factoring it out
     if (flags & ( SP_OBJECT_STYLE_MODIFIED_FLAG )) {
         SPFlowtext *text = SP_FLOWTEXT(object);
-        NRRect paintbox;
-        text->invoke_bbox( &paintbox, Geom::identity(), TRUE);
+        Geom::OptRect pbox = text->geometricBounds();
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
             Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
             text->_clearFlow(g);
             g->setStyle(object->style);
-            text->layout.show(g, &paintbox);
+            text->layout.show(g, pbox);
         }
     }
 
@@ -329,53 +327,33 @@ static Inkscape::XML::Node *sp_flowtext_write(SPObject *object, Inkscape::XML::D
     return repr;
 }
 
-static void
-sp_flowtext_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const /*flags*/)
+static Geom::OptRect
+sp_flowtext_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type)
 {
     SPFlowtext *group = SP_FLOWTEXT(item);
-    group->layout.getBoundingBox(bbox, transform);
+    Geom::OptRect bbox = group->layout.bounds(transform);
 
     // Add stroke width
-    SPStyle* style = item->style;
-    if ( !style->stroke.isNone() ) {
-        double const scale = transform.descrim();
-        if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
-            double const width = MAX(0.125, style->stroke_width.computed * scale);
-            if ( fabs(bbox->x1 - bbox->x0) > -0.00001 && fabs(bbox->y1 - bbox->y0) > -0.00001 ) {
-                bbox->x0-=0.5*width;
-                bbox->x1+=0.5*width;
-                bbox->y0-=0.5*width;
-                bbox->y1+=0.5*width;
-            }
-        }
+    // FIXME this code is incorrect
+    if (type == SPItem::VISUAL_BBOX && !item->style->stroke.isNone()) {
+        double scale = transform.descrim();
+        bbox->expandBy(0.5 * item->style->stroke_width.computed * scale);
     }
+    return bbox;
 }
 
 static void
 sp_flowtext_print(SPItem *item, SPPrintContext *ctx)
 {
     SPFlowtext *group = SP_FLOWTEXT(item);
+    Geom::OptRect pbox, bbox, dbox;
 
-    NRRect pbox;
-    item->invoke_bbox( &pbox, Geom::identity(), TRUE);
-    NRRect bbox;
-    Geom::OptRect bbox_maybe = item->getBboxDesktop();
-    if (!bbox_maybe) {
-        return;
-    }
-    bbox.x0 = bbox_maybe->min()[Geom::X];
-    bbox.y0 = bbox_maybe->min()[Geom::Y];
-    bbox.x1 = bbox_maybe->max()[Geom::X];
-    bbox.y1 = bbox_maybe->max()[Geom::Y];
-
-    NRRect dbox;
-    dbox.x0 = 0.0;
-    dbox.y0 = 0.0;
-    dbox.x1 = item->document->getWidth();
-    dbox.y1 = item->document->getHeight();
+    pbox = item->geometricBounds();
+    bbox = item->desktopVisualBounds();
+    dbox = Geom::Rect::from_xywh(Geom::Point(0,0), item->document->getDimensions());
     Geom::Affine const ctm (item->i2dt_affine());
 
-    group->layout.print(ctx, &pbox, &dbox, &bbox, ctm);
+    group->layout.print(ctx, pbox, dbox, bbox, ctm);
 }
 
 
@@ -417,9 +395,8 @@ sp_flowtext_show(SPItem *item, Inkscape::Drawing &drawing, unsigned/* key*/, uns
     flowed->setStyle(group->style);
 
     // pass the bbox of the flowtext object as paintbox (used for paintserver fills)
-    NRRect paintbox;
-    item->invoke_bbox( &paintbox, Geom::identity(), TRUE);
-    group->layout.show(flowed, &paintbox);
+    Geom::OptRect bbox = group->geometricBounds();
+    group->layout.show(flowed, bbox);
 
     return flowed;
 }

@@ -17,7 +17,6 @@
 #include <string>
 
 #include "svg/svg-length.h"
-#include "libnr/nr-forward.h"
 #include <2geom/forward.h>
 
 /* Generic */

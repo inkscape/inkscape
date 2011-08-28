@@ -127,8 +127,8 @@ void SPLine::update(SPObject *object, SPCtx *ctx, guint flags)
 
         SPStyle const *style = object->style;
         SPItemCtx const *ictx = (SPItemCtx const *) ctx;
-        double const w = (ictx->vp.x1 - ictx->vp.x0);
-        double const h = (ictx->vp.y1 - ictx->vp.y0);
+        double const w = ictx->viewport.width();
+        double const h = ictx->viewport.height();
         double const em = style->font_size.computed;
         double const ex = em * 0.5;  // fixme: get from pango or libnrtype.
         line->x1.update(em, ex, w);

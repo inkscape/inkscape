@@ -113,8 +113,8 @@ sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf)
     Geom::Point s = cl->s * cl->affine;
     Geom::Point e = cl->e * cl->affine;
 
-    cairo_move_to (buf->ct, s[Geom::X] - buf->rect.x0, s[Geom::Y] - buf->rect.y0);
-    cairo_line_to (buf->ct, e[Geom::X] - buf->rect.x0, e[Geom::Y] - buf->rect.y0);
+    cairo_move_to (buf->ct, s[Geom::X] - buf->rect.left(), s[Geom::Y] - buf->rect.top());
+    cairo_line_to (buf->ct, e[Geom::X] - buf->rect.left(), e[Geom::Y] - buf->rect.top());
 
     cairo_stroke(buf->ct);
 }

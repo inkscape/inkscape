@@ -432,7 +432,7 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                 } else {
                     SP_CTRLRECT(tc->indicator)->setColor(0x0000ff7f, false, 0);
                 }
-                Geom::OptRect ibbox = item_ungrouped->getBboxDesktop();
+                Geom::OptRect ibbox = item_ungrouped->desktopVisualBounds();
                 if (ibbox) {
                     SP_CTRLRECT(tc->indicator)->setRectangle(*ibbox);
                 }
@@ -1635,7 +1635,7 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
                     SP_CTRLRECT(tc->frame)->setColor(0x0000ff7f, false, 0);
                 }
                 sp_canvas_item_show(tc->frame);
-                Geom::OptRect frame_bbox = frame->getBboxDesktop();
+                Geom::OptRect frame_bbox = frame->desktopVisualBounds();
                 if (frame_bbox) {
                     SP_CTRLRECT(tc->frame)->setRectangle(*frame_bbox);
                 }

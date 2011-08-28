@@ -13,7 +13,6 @@
 #include "display/nr-filter-offset.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
-#include "libnr/nr-rect-l.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -65,24 +64,30 @@ void FilterOffset::set_dy(double amount) {
     dy = amount;
 }
 
-void FilterOffset::area_enlarge(NRRectL &area, Geom::Affine const &trans)
+void FilterOffset::area_enlarge(Geom::IntRect &area, Geom::Affine const &trans)
 {
     Geom::Point offset(dx, dy);
     offset *= trans;
     offset[X] -= trans[4];
     offset[Y] -= trans[5];
+    double x0, y0, x1, y1;
+    x0 = area.left();
+    y0 = area.top();
+    x1 = area.right();
+    y1 = area.bottom();
 
     if (offset[X] > 0) {
-        area.x0 -= ceil(offset[X]);
+        x0 -= ceil(offset[X]);
     } else {
-        area.x1 -= floor(offset[X]);
+        x1 -= floor(offset[X]);
     }
 
     if (offset[Y] > 0) {
-        area.y0 -= ceil(offset[Y]);
+        y0 -= ceil(offset[Y]);
     } else {
-        area.y1 -= floor(offset[Y]);
+        y1 -= floor(offset[Y]);
     }
+    area = Geom::IntRect(x0, y0, x1, y1);
 }
 
 double FilterOffset::complexity(Geom::Affine const &)

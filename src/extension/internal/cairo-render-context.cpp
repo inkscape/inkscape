@@ -87,19 +87,19 @@
 #define TEST(_args)
 
 // FIXME: expose these from sp-clippath/mask.cpp
-struct SPClipPathView {
+/*struct SPClipPathView {
     SPClipPathView *next;
     unsigned int key;
     Inkscape::DrawingItem *arenaitem;
-    NRRect bbox;
+    Geom::OptRect bbox;
 };
 
 struct SPMaskView {
     SPMaskView *next;
     unsigned int key;
     Inkscape::DrawingItem *arenaitem;
-    NRRect bbox;
-};
+    Geom::OptRect bbox;
+};*/
 
 namespace Inkscape {
 namespace Extension {
@@ -682,12 +682,12 @@ CairoRenderContext::popLayer(void)
             // copy the correct CTM to mask context
             /*
             if (_state->parent_has_userspace)
-                mask_ctx->setTransform(&getParentState()->transform);
+                mask_ctx->setTransform(getParentState()->transform);
             else
-                mask_ctx->setTransform(&_state->transform);
+                mask_ctx->setTransform(_state->transform);
             */
             // This is probably not correct... but it seems to do the trick.
-            mask_ctx->setTransform(&_state->item_transform);
+            mask_ctx->setTransform(_state->item_transform);
 
             // render mask contents to mask_ctx
             _renderer->applyMask(mask_ctx, mask);
@@ -915,7 +915,7 @@ CairoRenderContext::finish(void)
 }
 
 void
-CairoRenderContext::transform(Geom::Affine const *transform)
+CairoRenderContext::transform(Geom::Affine const &transform)
 {
     g_assert( _is_valid );
 
@@ -924,42 +924,44 @@ CairoRenderContext::transform(Geom::Affine const *transform)
     cairo_transform(_cr, &matrix);
 
     // store new CTM
-    getTransform(&_state->transform);
+    _state->transform = getTransform();
 }
 
 void
-CairoRenderContext::setTransform(Geom::Affine const *transform)
+CairoRenderContext::setTransform(Geom::Affine const &transform)
 {
     g_assert( _is_valid );
 
     cairo_matrix_t matrix;
     _initCairoMatrix(&matrix, transform);
     cairo_set_matrix(_cr, &matrix);
-    _state->transform = *transform;
+    _state->transform = transform;
 }
 
-void
-CairoRenderContext::getTransform(Geom::Affine *copy) const
+Geom::Affine
+CairoRenderContext::getTransform() const
 {
     g_assert( _is_valid );
 
     cairo_matrix_t ctm;
     cairo_get_matrix(_cr, &ctm);
-    (*copy)[0] = ctm.xx;
-    (*copy)[1] = ctm.yx;
-    (*copy)[2] = ctm.xy;
-    (*copy)[3] = ctm.yy;
-    (*copy)[4] = ctm.x0;
-    (*copy)[5] = ctm.y0;
+    Geom::Affine ret;
+    ret[0] = ctm.xx;
+    ret[1] = ctm.yx;
+    ret[2] = ctm.xy;
+    ret[3] = ctm.yy;
+    ret[4] = ctm.x0;
+    ret[5] = ctm.y0;
+    return ret;
 }
 
-void
-CairoRenderContext::getParentTransform(Geom::Affine *copy) const
+Geom::Affine
+CairoRenderContext::getParentTransform() const
 {
     g_assert( _is_valid );
 
     CairoRenderState *parent_state = getParentState();
-    memcpy(copy, &parent_state->transform, sizeof(Geom::Affine));
+    return parent_state->transform;
 }
 
 void
@@ -1002,7 +1004,7 @@ static bool pattern_hasItemChildren(SPPattern *pat)
 }
 
 cairo_pattern_t*
-CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver, NRRect const *pbox)
+CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver, Geom::OptRect const &pbox)
 {
     g_assert( SP_IS_PATTERN(paintserver) );
 
@@ -1023,10 +1025,10 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
     if (pbox && pattern_patternUnits(pat) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
         //Geom::Affine bbox2user (pbox->x1 - pbox->x0, 0.0, 0.0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
-        bbox_width_scaler = pbox->x1 - pbox->x0;
-        bbox_height_scaler = pbox->y1 - pbox->y0;
-        ps2user[4] = x * bbox_width_scaler + pbox->x0;
-        ps2user[5] = y * bbox_height_scaler + pbox->y0;
+        bbox_width_scaler = pbox->width();
+        bbox_height_scaler = pbox->height();
+        ps2user[4] = x * bbox_width_scaler + pbox->left();
+        ps2user[5] = y * bbox_height_scaler + pbox->top();
     } else {
         bbox_width_scaler = 1.0;
         bbox_height_scaler = 1.0;
@@ -1041,27 +1043,22 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
     // create pattern contents coordinate system
     if (pat->viewBox_set) {
-        NRRect *view_box = pattern_viewBox(pat);
+        Geom::Rect view_box = *pattern_viewBox(pat);
 
         double x, y, w, h;
-        double view_width, view_height;
         x = 0;
         y = 0;
         w = width * bbox_width_scaler;
         h = height * bbox_height_scaler;
 
-        view_width = view_box->x1 - view_box->x0;
-        view_height = view_box->y1 - view_box->y0;
-
         //calculatePreserveAspectRatio(pat->aspect_align, pat->aspect_clip, view_width, view_height, &x, &y, &w, &h);
-        pcs2dev[0] = w / view_width;
-        pcs2dev[3] = h / view_height;
-        pcs2dev[4] = x - view_box->x0 * pcs2dev[0];
-        pcs2dev[5] = y - view_box->y0 * pcs2dev[3];
+        pcs2dev[0] = w / view_box.width();
+        pcs2dev[3] = h / view_box.height();
+        pcs2dev[4] = x - view_box.left() * pcs2dev[0];
+        pcs2dev[5] = y - view_box.top() * pcs2dev[3];
     } else if (pbox && pattern_patternContentUnits(pat) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
-        pcs2dev[0] = pbox->x1 - pbox->x0;
-        pcs2dev[3] = pbox->y1 - pbox->y0;
-
+        pcs2dev[0] = pbox->width();
+        pcs2dev[3] = pbox->height();
     }
 
     // Calculate the size of the surface which has to be created
@@ -1089,7 +1086,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     ps2user[4] = ori[Geom::X];
     ps2user[5] = ori[Geom::Y];
 
-    pattern_ctx->setTransform(&pcs2dev);
+    pattern_ctx->setTransform(pcs2dev);
     pattern_ctx->pushState();
 
     // create drawing and group
@@ -1119,7 +1116,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
     // set pattern transformation
     cairo_matrix_t pattern_matrix;
-    _initCairoMatrix(&pattern_matrix, &ps2user);
+    _initCairoMatrix(&pattern_matrix, ps2user);
     cairo_matrix_invert(&pattern_matrix);
     cairo_pattern_set_matrix(result, &pattern_matrix);
 
@@ -1142,7 +1139,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
 cairo_pattern_t*
 CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const paintserver,
-                                                 NRRect const *pbox, float alpha)
+                                                 Geom::OptRect const &pbox, float alpha)
 {
     cairo_pattern_t *pattern = NULL;
     bool apply_bbox2user = FALSE;
@@ -1157,7 +1154,7 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
             Geom::Point p2 (lg->x2.computed, lg->y2.computed);
             if (pbox && SP_GRADIENT(lg)->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
                 // convert to userspace
-                Geom::Affine bbox2user(pbox->x1 - pbox->x0, 0, 0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
+                Geom::Affine bbox2user(pbox->width(), 0, 0, pbox->height(), pbox->left(), pbox->top());
                 p1 *= bbox2user;
                 p2 *= bbox2user;
             }
@@ -1237,7 +1234,7 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
         if (apply_bbox2user) {
             // convert to userspace
             cairo_matrix_t bbox2user;
-            cairo_matrix_init (&bbox2user, pbox->x1 - pbox->x0, 0, 0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
+            cairo_matrix_init (&bbox2user, pbox->width(), 0, 0, pbox->height(), pbox->left(), pbox->top());
             cairo_matrix_multiply (&pattern_matrix, &bbox2user, &pattern_matrix);
         }
         cairo_matrix_invert(&pattern_matrix);   // because Cairo expects a userspace->patternspace matrix
@@ -1248,7 +1245,7 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
 }
 
 void
-CairoRenderContext::_setFillStyle(SPStyle const *const style, NRRect const *pbox)
+CairoRenderContext::_setFillStyle(SPStyle const *const style, Geom::OptRect const &pbox)
 {
     g_return_if_fail( !style->fill.set
                       || style->fill.isColor()
@@ -1284,7 +1281,7 @@ CairoRenderContext::_setFillStyle(SPStyle const *const style, NRRect const *pbox
 }
 
 void
-CairoRenderContext::_setStrokeStyle(SPStyle const *style, NRRect const *pbox)
+CairoRenderContext::_setStrokeStyle(SPStyle const *style, Geom::OptRect const &pbox)
 {
     float alpha = SP_SCALE24_TO_FLOAT(style->stroke_opacity.value);
     if (_state->merge_opacity)
@@ -1351,7 +1348,7 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, NRRect const *pbox)
 }
 
 bool
-CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle const *style, NRRect const *pbox)
+CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle const *style, Geom::OptRect const &pbox)
 {
     g_assert( _is_valid );
 
@@ -1419,7 +1416,7 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
 }
 
 bool CairoRenderContext::renderImage(GdkPixbuf *pb,
-                                     Geom::Affine const *image_transform, SPStyle const * /*style*/)
+                                     Geom::Affine const &image_transform, SPStyle const * /*style*/)
 {
     g_assert( _is_valid );
 
@@ -1442,8 +1439,7 @@ bool CairoRenderContext::renderImage(GdkPixbuf *pb,
     cairo_save(_cr);
 
     // scaling by width & height is not needed because it will be done by Cairo
-    if (image_transform)
-        transform(image_transform);
+    transform(image_transform);
 
     cairo_set_source_surface(_cr, image_surface, 0.0, 0.0);
 
@@ -1507,7 +1503,7 @@ unsigned int CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont * /*font*/, 
 }
 
 bool
-CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Affine const *font_matrix,
+CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Affine const &font_matrix,
                                     std::vector<CairoGlyphInfo> const &glyphtext, SPStyle const *style)
 {
     // create a cairo_font_face from PangoFont
@@ -1575,7 +1571,7 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Affine const *font_ma
             stroke = true;
         }
         if (fill) {
-            _setFillStyle(style, NULL);
+            _setFillStyle(style, Geom::OptRect());
             if (_is_texttopath) {
                 _showGlyphs(_cr, font, glyphtext, true);
                 have_path = true;
@@ -1586,7 +1582,7 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Affine const *font_ma
             }
         }
         if (stroke) {
-            _setStrokeStyle(style, NULL);
+            _setStrokeStyle(style, Geom::OptRect());
             if (!have_path) _showGlyphs(_cr, font, glyphtext, true);
             cairo_stroke(_cr);
         }
@@ -1625,22 +1621,22 @@ CairoRenderContext::_concatTransform(cairo_t *cr, double xx, double yx, double x
 }
 
 void
-CairoRenderContext::_initCairoMatrix(cairo_matrix_t *matrix, Geom::Affine const *transform)
+CairoRenderContext::_initCairoMatrix(cairo_matrix_t *matrix, Geom::Affine const &transform)
 {
-    matrix->xx = (*transform)[0];
-    matrix->yx = (*transform)[1];
-    matrix->xy = (*transform)[2];
-    matrix->yy = (*transform)[3];
-    matrix->x0 = (*transform)[4];
-    matrix->y0 = (*transform)[5];
+    matrix->xx = transform[0];
+    matrix->yx = transform[1];
+    matrix->xy = transform[2];
+    matrix->yy = transform[3];
+    matrix->x0 = transform[4];
+    matrix->y0 = transform[5];
 }
 
 void
-CairoRenderContext::_concatTransform(cairo_t *cr, Geom::Affine const *transform)
+CairoRenderContext::_concatTransform(cairo_t *cr, Geom::Affine const &transform)
 {
-    _concatTransform(cr, (*transform)[0], (*transform)[1],
-                     (*transform)[2], (*transform)[3],
-                     (*transform)[4], (*transform)[5]);
+    _concatTransform(cr, transform[0], transform[1],
+                         transform[2], transform[3],
+                         transform[4], transform[5]);
 }
 
 static cairo_status_t

@@ -317,7 +317,7 @@ new_filter_blend_gaussian_blur (SPDocument *document, const char *blendmode, gdo
 SPFilter *
 new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mode, gdouble radius)
 {
-    Geom::OptRect const r = item->getBboxDesktop(SPItem::GEOMETRIC_BBOX);
+    Geom::OptRect const r = item->desktopGeometricBounds();
 
     double width;
     double height;
@@ -370,7 +370,7 @@ SPFilter *modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *it
         stdDeviation /= expansion;
 
     // Get the object size
-    Geom::OptRect const r = item->getBboxDesktop(SPItem::GEOMETRIC_BBOX);
+    Geom::OptRect const r = item->desktopGeometricBounds();
     double width;
     double height;
     if (r) {

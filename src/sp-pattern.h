@@ -27,7 +27,6 @@ GType sp_pattern_get_type (void);
 
 class SPPatternClass;
 
-#include <libnr/nr-rect.h>
 #include "svg/svg-length.h"
 #include "sp-paint-server.h"
 #include "uri-references.h"
@@ -72,7 +71,7 @@ struct SPPattern : public SPPaintServer {
     SVGLength width;
     SVGLength height;
     /* VieBox */
-    NRRect viewBox;
+    Geom::Rect viewBox;
     guint viewBox_set : 1;
 
     sigc::connection modified_connection;
@@ -98,7 +97,7 @@ gdouble pattern_x (SPPattern *pat);
 gdouble pattern_y (SPPattern *pat);
 gdouble pattern_width (SPPattern *pat);
 gdouble pattern_height (SPPattern *pat);
-NRRect *pattern_viewBox (SPPattern *pat);
+Geom::OptRect pattern_viewBox (SPPattern *pat);
 
 #endif // SEEN_SP_PATTERN_H
 

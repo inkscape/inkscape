@@ -81,11 +81,6 @@ void FilterFlood::set_opacity(double o) {
 void FilterFlood::set_icc(SVGICCColor *icc_color) {
     icc = icc_color;
 }
-
-void FilterFlood::area_enlarge(NRRectL &/*area*/, Geom::Affine const &/*trans*/)
-{
-}
-
 double FilterFlood::complexity(Geom::Affine const &)
 {
     // flood is actually less expensive than normal rendering,

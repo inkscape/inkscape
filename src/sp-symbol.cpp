@@ -39,7 +39,7 @@ static Inkscape::XML::Node *sp_symbol_write (SPObject *object, Inkscape::XML::Do
 
 static Inkscape::DrawingItem *sp_symbol_show (SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 static void sp_symbol_hide (SPItem *item, unsigned int key);
-static void sp_symbol_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
+static Geom::OptRect sp_symbol_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
 static void sp_symbol_print (SPItem *item, SPPrintContext *ctx);
 
 static SPGroupClass *parent_class;
@@ -131,10 +131,7 @@ static void sp_symbol_set(SPObject *object, unsigned int key, const gchar *value
             while (*eptr && ((*eptr == ',') || (*eptr == ' '))) eptr++;
             if ((width > 0) && (height > 0)) {
                 /* Set viewbox */
-                symbol->viewBox.x0 = x;
-                symbol->viewBox.y0 = y;
-                symbol->viewBox.x1 = x + width;
-                symbol->viewBox.y1 = y + height;
+                symbol->viewBox = Geom::Rect::from_xywh(x, y, width, height);
                 symbol->viewBox_set = TRUE;
             } else {
                 symbol->viewBox_set = FALSE;
@@ -234,7 +231,7 @@ static void sp_symbol_update(SPObject *object, SPCtx *ctx, guint flags)
 
         /* Calculate child to parent transformation */
         /* Apply parent <use> translation (set up as vewport) */
-        symbol->c2p = Geom::Affine(Geom::Translate(rctx.vp.x0, rctx.vp.y0));
+        symbol->c2p = Geom::Translate(rctx.viewport.min());
 
         if (symbol->viewBox_set) {
             double x, y, width, height;
@@ -242,16 +239,16 @@ static void sp_symbol_update(SPObject *object, SPCtx *ctx, guint flags)
             if (symbol->aspect_align == SP_ASPECT_NONE) {
                 x = 0.0;
                 y = 0.0;
-                width = rctx.vp.x1 - rctx.vp.x0;
-                height = rctx.vp.y1 - rctx.vp.y0;
+                width = rctx.viewport.width();
+                height = rctx.viewport.height();
             } else {
                 double scalex, scaley, scale;
                 /* Things are getting interesting */
-                scalex = (rctx.vp.x1 - rctx.vp.x0) / (symbol->viewBox.x1 - symbol->viewBox.x0);
-                scaley = (rctx.vp.y1 - rctx.vp.y0) / (symbol->viewBox.y1 - symbol->viewBox.y0);
+                scalex = rctx.viewport.width() / symbol->viewBox.width();
+                scaley = rctx.viewport.height() / symbol->viewBox.height();
                 scale = (symbol->aspect_clip == SP_ASPECT_MEET) ? MIN (scalex, scaley) : MAX (scalex, scaley);
-                width = (symbol->viewBox.x1 - symbol->viewBox.x0) * scale;
-                height = (symbol->viewBox.y1 - symbol->viewBox.y0) * scale;
+                width = symbol->viewBox.width() * scale;
+                height = symbol->viewBox.height() * scale;
                 /* Now place viewbox to requested position */
                 switch (symbol->aspect_align) {
                 case SP_ASPECT_XMIN_YMIN:
@@ -259,36 +256,36 @@ static void sp_symbol_update(SPObject *object, SPCtx *ctx, guint flags)
                     y = 0.0;
                     break;
                 case SP_ASPECT_XMID_YMIN:
-                    x = 0.5 * ((rctx.vp.x1 - rctx.vp.x0) - width);
+                    x = 0.5 * (rctx.viewport.width() - width);
                     y = 0.0;
                     break;
                 case SP_ASPECT_XMAX_YMIN:
-                    x = 1.0 * ((rctx.vp.x1 - rctx.vp.x0) - width);
+                    x = 1.0 * (rctx.viewport.width() - width);
                     y = 0.0;
                     break;
                 case SP_ASPECT_XMIN_YMID:
                     x = 0.0;
-                    y = 0.5 * ((rctx.vp.y1 - rctx.vp.y0) - height);
+                    y = 0.5 * (rctx.viewport.height() - height);
                     break;
                 case SP_ASPECT_XMID_YMID:
-                    x = 0.5 * ((rctx.vp.x1 - rctx.vp.x0) - width);
-                    y = 0.5 * ((rctx.vp.y1 - rctx.vp.y0) - height);
+                    x = 0.5 * (rctx.viewport.width() - width);
+                    y = 0.5 * (rctx.viewport.height() - height);
                     break;
                 case SP_ASPECT_XMAX_YMID:
-                    x = 1.0 * ((rctx.vp.x1 - rctx.vp.x0) - width);
-                    y = 0.5 * ((rctx.vp.y1 - rctx.vp.y0) - height);
+                    x = 1.0 * (rctx.viewport.width() - width);
+                    y = 0.5 * (rctx.viewport.height() - height);
                     break;
                 case SP_ASPECT_XMIN_YMAX:
                     x = 0.0;
-                    y = 1.0 * ((rctx.vp.y1 - rctx.vp.y0) - height);
+                    y = 1.0 * (rctx.viewport.height() - height);
                     break;
                 case SP_ASPECT_XMID_YMAX:
-                    x = 0.5 * ((rctx.vp.x1 - rctx.vp.x0) - width);
-                    y = 1.0 * ((rctx.vp.y1 - rctx.vp.y0) - height);
+                    x = 0.5 * (rctx.viewport.width() - width);
+                    y = 1.0 * (rctx.viewport.height() - height);
                     break;
                 case SP_ASPECT_XMAX_YMAX:
-                    x = 1.0 * ((rctx.vp.x1 - rctx.vp.x0) - width);
-                    y = 1.0 * ((rctx.vp.y1 - rctx.vp.y0) - height);
+                    x = 1.0 * (rctx.viewport.width() - width);
+                    y = 1.0 * (rctx.viewport.height() - height);
                     break;
                 default:
                     x = 0.0;
@@ -298,12 +295,12 @@ static void sp_symbol_update(SPObject *object, SPCtx *ctx, guint flags)
             }
             /* Compose additional transformation from scale and position */
             Geom::Affine q;
-            q[0] = width / (symbol->viewBox.x1 - symbol->viewBox.x0);
+            q[0] = width / symbol->viewBox.width();
             q[1] = 0.0;
             q[2] = 0.0;
-            q[3] = height / (symbol->viewBox.y1 - symbol->viewBox.y0);
-            q[4] = -symbol->viewBox.x0 * q[0] + x;
-            q[5] = -symbol->viewBox.y0 * q[3] + y;
+            q[3] = height / symbol->viewBox.height();
+            q[4] = -symbol->viewBox.left() * q[0] + x;
+            q[5] = -symbol->viewBox.top() * q[3] + y;
             /* Append viewbox transformation */
             symbol->c2p = q * symbol->c2p;
         }
@@ -313,10 +310,7 @@ static void sp_symbol_update(SPObject *object, SPCtx *ctx, guint flags)
         /* If viewBox is set initialize child viewport */
         /* Otherwise <use> has set it up already */
         if (symbol->viewBox_set) {
-            rctx.vp.x0 = symbol->viewBox.x0;
-            rctx.vp.y0 = symbol->viewBox.y0;
-            rctx.vp.x1 = symbol->viewBox.x1;
-            rctx.vp.y1 = symbol->viewBox.y1;
+            rctx.viewport = symbol->viewBox;
             rctx.i2vp = Geom::identity();
         }
 
@@ -399,18 +393,20 @@ static void sp_symbol_hide(SPItem *item, unsigned int key)
     }
 }
 
-static void sp_symbol_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags)
+static Geom::OptRect sp_symbol_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type)
 {
     SPSymbol const *symbol = SP_SYMBOL(item);
+    Geom::OptRect bbox;
 
     if (symbol->cloned) {
         // Cloned <symbol> is actually renderable
 
         if (((SPItemClass *) (parent_class))->bbox) {
             Geom::Affine const a( symbol->c2p * transform );
-            ((SPItemClass *) (parent_class))->bbox(item, bbox, a, flags);
+            bbox = ((SPItemClass *) (parent_class))->bbox(item, a, type);
         }
     }
+    return bbox;
 }
 
 static void sp_symbol_print(SPItem *item, SPPrintContext *ctx)
@@ -419,7 +415,7 @@ static void sp_symbol_print(SPItem *item, SPPrintContext *ctx)
     if (symbol->cloned) {
         // Cloned <symbol> is actually renderable
 
-        sp_print_bind(ctx, &symbol->c2p, 1.0);
+        sp_print_bind(ctx, symbol->c2p, 1.0);
 
         if (((SPItemClass *) (parent_class))->print) {
             ((SPItemClass *) (parent_class))->print (item, ctx);

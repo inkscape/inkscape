@@ -202,14 +202,15 @@ void FilterConvolveMatrix::set_preserveAlpha(bool pa){
     preserveAlpha = pa;
 }
 
-void FilterConvolveMatrix::area_enlarge(NRRectL &area, Geom::Affine const &/*trans*/)
+void FilterConvolveMatrix::area_enlarge(Geom::IntRect &area, Geom::Affine const &/*trans*/)
 {
     //Seems to me that since this filter's operation is resolution dependent,
     // some spurious pixels may still appear at the borders when low zooming or rotating. Needs a better fix.
-    area.x0 -= targetX;
-    area.y0 -= targetY;
-    area.x1 += orderX - targetX - 1; // This makes sure the last row/column in the original image corresponds to the last row/column in the new image that can be convolved without adjusting the boundary conditions).
-    area.y1 += orderY - targetY - 1;
+    area.setMin(area.min() - Geom::IntPoint(targetX, targetY));
+    // This makes sure the last row/column in the original image corresponds
+    // to the last row/column in the new image that can be convolved without
+    // adjusting the boundary conditions).
+    area.setMax(area.max() + Geom::IntPoint(orderX - targetX - 1, orderY - targetY -1));
 }
 
 double FilterConvolveMatrix::complexity(Geom::Affine const &)

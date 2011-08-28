@@ -120,7 +120,6 @@ include helper/Makefile_insert
 include io/Makefile_insert
 include libcroco/Makefile_insert
 include libgdl/Makefile_insert
-include libnr/Makefile_insert
 include libnrtype/Makefile_insert
 include libavoid/Makefile_insert
 include livarot/Makefile_insert

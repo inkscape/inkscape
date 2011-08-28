@@ -50,7 +50,7 @@ void removeoverlap(GSList const *const items, double const xGap, double const yG
 		++it)
 	{
 		using Geom::X; using Geom::Y;
-		Geom::OptRect item_box((*it)->getBboxDesktop());
+		Geom::OptRect item_box((*it)->desktopVisualBounds());
 		if (item_box) {
 			Geom::Point min(item_box->min() - .5*gap);
 			Geom::Point max(item_box->max() + .5*gap);

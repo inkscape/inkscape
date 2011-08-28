@@ -34,7 +34,7 @@ unclump_center (SPItem *item)
         return i->second;
     }
 
-    Geom::OptRect r = item->getBounds(item->i2dt_affine());
+    Geom::OptRect r = item->desktopVisualBounds();
     if (r) {
         Geom::Point const c = r->midpoint();
         c_cache[item->getId()] = c;
@@ -53,7 +53,7 @@ unclump_wh (SPItem *item)
     if ( i != wh_cache.end() ) {
         wh = i->second;
     } else {
-        Geom::OptRect r = item->getBounds(item->i2dt_affine());
+        Geom::OptRect r = item->desktopVisualBounds();
         if (r) {
             wh = r->dimensions();
             wh_cache[item->getId()] = wh;

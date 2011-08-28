@@ -125,24 +125,11 @@ static void sp_ui_drag_leave( GtkWidget *widget,
                               GdkDragContext *drag_context,
                               guint event_time,
                               gpointer user_data );
-static void sp_ui_menu_item_set_sensitive(SPAction *action,
-                                          unsigned int sensitive,
-                                          void *data);
-static void sp_ui_menu_item_set_name(SPAction *action,
-                                     Glib::ustring name,
-                                     void *data);
+static void sp_ui_menu_item_set_name(GtkWidget *data,
+                                     Glib::ustring const &name);
 static void sp_recent_open(GtkRecentChooser *, gpointer);
 
 static void injectRenamedIcons();
-
-SPActionEventVector menu_item_event_vector = {
-    {NULL},
-    NULL,
-    NULL, /* set_active */
-    sp_ui_menu_item_set_sensitive, /* set_sensitive */
-    NULL, /* set_shortcut */
-    sp_ui_menu_item_set_name /* set_name */
-};
 
 static const int MIN_ONSCREEN_DISTANCE = 50;
 
@@ -508,7 +495,6 @@ sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::
         unsigned int shortcut;
 
         action = verb->get_action(view);
-
         if (!action) return NULL;
 
         shortcut = sp_shortcut_get_primary(verb);
@@ -542,7 +528,15 @@ sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::
             gtk_container_add((GtkContainer *) item, name_lbl);
         }
 
-        nr_active_object_add_listener((NRActiveObject *)action, (NRObjectEventVector *)&menu_item_event_vector, sizeof(SPActionEventVector), item);
+        action->signal_set_sensitive.connect(
+            sigc::bind<0>(
+                sigc::ptr_fun(&gtk_widget_set_sensitive),
+                item));
+        action->signal_set_name.connect(
+            sigc::bind<0>(
+                sigc::ptr_fun(&sp_ui_menu_item_set_name),
+                item));
+
         if (!action->sensitive) {
             gtk_widget_set_sensitive(item, FALSE);
         }
@@ -716,7 +710,6 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
         gtk_container_add((GtkContainer *) item, l);
     }
 #if 0
-    nr_active_object_add_listener((NRActiveObject *)action, (NRObjectEventVector *)&menu_item_event_vector, sizeof(SPActionEventVector), item);
     if (!action->sensitive) {
         gtk_widget_set_sensitive(item, FALSE);
     }
@@ -1425,7 +1418,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
             // move to mouse pointer
             {
                 sp_desktop_document(desktop)->ensureUpToDate();
-                Geom::OptRect sel_bbox = selection->bounds();
+                Geom::OptRect sel_bbox = selection->visualBounds();
                 if (sel_bbox) {
                     Geom::Point m( desktop->point() - sel_bbox->midpoint() );
                     sp_selection_move_relative(selection, m, false);
@@ -1587,13 +1580,7 @@ sp_ui_overwrite_file(gchar const *filename)
 }
 
 static void
-sp_ui_menu_item_set_sensitive(SPAction */*action*/, unsigned int sensitive, void *data)
-{
-    return gtk_widget_set_sensitive(GTK_WIDGET(data), sensitive);
-}
-
-static void
-sp_ui_menu_item_set_name(SPAction */*action*/, Glib::ustring name, void *data)
+sp_ui_menu_item_set_name(GtkWidget *data, Glib::ustring const &name)
 {
     void *child = GTK_BIN (data)->child;
     //child is either

@@ -1,6 +1,3 @@
-#ifndef SP_ROOT_H_SEEN
-#define SP_ROOT_H_SEEN
-
 /** \file
  * SPRoot: SVG \<svg\> implementation.
  */
@@ -14,16 +11,19 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#define SP_TYPE_ROOT (sp_root_get_type())
-#define SP_ROOT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_ROOT, SPRoot))
-#define SP_ROOT_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), SP_TYPE_ROOT, SPRootClass))
-#define SP_IS_ROOT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_ROOT))
-#define SP_IS_ROOT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_ROOT))
+#ifndef SP_ROOT_H_SEEN
+#define SP_ROOT_H_SEEN
 
 #include "version.h"
 #include "svg/svg-length.h"
 #include "enums.h"
 #include "sp-item-group.h"
+
+#define SP_TYPE_ROOT (sp_root_get_type())
+#define SP_ROOT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_ROOT, SPRoot))
+#define SP_ROOT_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), SP_TYPE_ROOT, SPRootClass))
+#define SP_IS_ROOT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_ROOT))
+#define SP_IS_ROOT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_ROOT))
 
 class SPDefs;
 
@@ -41,7 +41,7 @@ struct SPRoot : public SPGroup {
 
     /* viewBox; */
     unsigned int viewBox_set : 1;
-    NRRect viewBox;
+    Geom::Rect viewBox;
 
     /* preserveAspectRatio */
     unsigned int aspect_set : 1;

@@ -116,8 +116,8 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
         return;
 
     Geom::Point s = cl->s * cl->affine;
-    double offsetx = s[Geom::X] - buf->rect.x0;
-    double offsety = s[Geom::Y] - buf->rect.y0;
+    double offsetx = s[Geom::X] - buf->rect.left();
+    double offsety = s[Geom::Y] - buf->rect.top();
     offsetx -= anchor_offset_x;
     offsety -= anchor_offset_y;
 

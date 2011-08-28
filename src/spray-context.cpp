@@ -444,7 +444,7 @@ bool sp_spray_recursive(SPDesktop *desktop,
     dr=dr*radius;
 
     if (mode == SPRAY_MODE_COPY) {
-        Geom::OptRect a = item->getBounds(item->i2doc_affine());
+        Geom::OptRect a = item->documentVisualBounds();
         if (a) {
             SPItem *item_copied;
             if(_fid <= population)
@@ -496,7 +496,7 @@ bool sp_spray_recursive(SPDesktop *desktop,
         Inkscape::XML::Node *old_repr = father->getRepr();
         Inkscape::XML::Node *parent = old_repr->parent();
 
-        Geom::OptRect a = father->getBounds(father->i2doc_affine());
+        Geom::OptRect a = father->documentVisualBounds();
         if (a) {
             if (i == 2) {
                 Inkscape::XML::Node *copy1 = old_repr->duplicate(xml_doc);
@@ -534,7 +534,7 @@ bool sp_spray_recursive(SPDesktop *desktop,
             }
         }
     } else if (mode == SPRAY_MODE_CLONE) {
-        Geom::OptRect a = item->getBounds(item->i2doc_affine());
+        Geom::OptRect a = item->documentVisualBounds();
         if (a) {
             if(_fid <= population) {
                 SPItem *item_copied;

@@ -25,7 +25,6 @@ class SPSymbol;
 class SPSymbolClass;
 
 #include <2geom/affine.h>
-#include <libnr/nr-rect.h>
 #include "svg/svg-length.h"
 #include "enums.h"
 #include "sp-item-group.h"
@@ -33,7 +32,7 @@ class SPSymbolClass;
 struct SPSymbol : public SPGroup {
 	/* viewBox; */
 	unsigned int viewBox_set : 1;
-	NRRect viewBox;
+	Geom::Rect viewBox;
 
 	/* preserveAspectRatio */
 	unsigned int aspect_set : 1;

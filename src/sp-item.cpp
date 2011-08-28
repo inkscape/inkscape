@@ -25,7 +25,6 @@
 # include "config.h"
 #endif
 
-
 #include "sp-item.h"
 #include "svg/svg.h"
 #include "print.h"
@@ -60,7 +59,6 @@
 #include "sp-title.h"
 #include "sp-desc.h"
 
-#include "libnr/nr-convert2geom.h"
 #include "util/find-last-if.h"
 #include "util/reverse-list.h"
 #include <2geom/rect.h>
@@ -253,7 +251,7 @@ bool SPItem::isExplicitlyHidden() const
  * Sets the display CSS property to `hidden' if \a val is true,
  * otherwise makes it unset
  */
-void SPItem::setExplicitlyHidden(bool const val) {
+void SPItem::setExplicitlyHidden(bool val) {
     style->display.set = val;
     style->display.value = ( val ? SP_CSS_DISPLAY_NONE : SP_CSS_DISPLAY_INLINE );
     style->display.computed = style->display.value;
@@ -263,17 +261,17 @@ void SPItem::setExplicitlyHidden(bool const val) {
 /**
  * Sets the transform_center_x and transform_center_y properties to retain the rotation centre
  */
-void SPItem::setCenter(Geom::Point object_centre) {
-    // for getBounds() to work
+void SPItem::setCenter(Geom::Point const &object_centre) {
     document->ensureUpToDate();
 
-    Geom::OptRect bbox = getBounds(i2dt_affine());
+    // FIXME this is seriously wrong
+    Geom::OptRect bbox = desktopGeometricBounds();
     if (bbox) {
         transform_center_x = object_centre[Geom::X] - bbox->midpoint()[Geom::X];
-        if (fabs(transform_center_x) < 1e-5) // rounding error
+        if (Geom::are_near(transform_center_x, 0)) // rounding error
             transform_center_x = 0;
         transform_center_y = object_centre[Geom::Y] - bbox->midpoint()[Geom::Y];
-        if (fabs(transform_center_y) < 1e-5) // rounding error
+        if (Geom::are_near(transform_center_y, 0)) // rounding error
             transform_center_y = 0;
     }
 }
@@ -289,10 +287,10 @@ bool SPItem::isCenterSet() {
 }
 
 Geom::Point SPItem::getCenter() const {
-    // for getBounds() to work
     document->ensureUpToDate();
 
-    Geom::OptRect bbox = getBounds(i2dt_affine());
+    // FIXME this is seriously wrong
+    Geom::OptRect bbox = desktopGeometricBounds();
     if (bbox) {
         return bbox->midpoint() + Geom::Point (transform_center_x, transform_center_y);
     } else {
@@ -515,8 +513,7 @@ void SPItem::clip_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item)
         }
     }
     if (SP_IS_CLIPPATH(clip)) {
-        NRRect bbox;
-        item->invoke_bbox( &bbox, Geom::identity(), TRUE);
+        Geom::OptRect bbox = item->geometricBounds();
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
             if (!v->arenaitem->key()) {
                 v->arenaitem->setKey(SPItem::display_key_new(3));
@@ -525,7 +522,7 @@ void SPItem::clip_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item)
                                                v->arenaitem->drawing(),
                                                v->arenaitem->key());
             v->arenaitem->setClip(ai);
-            SP_CLIPPATH(clip)->setBBox(v->arenaitem->key(), &bbox);
+            SP_CLIPPATH(clip)->setBBox(v->arenaitem->key(), bbox);
             clip->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
     }
@@ -540,8 +537,7 @@ void SPItem::mask_ref_changed(SPObject *old_mask, SPObject *mask, SPItem *item)
         }
     }
     if (SP_IS_MASK(mask)) {
-        NRRect bbox;
-        item->invoke_bbox( &bbox, Geom::identity(), TRUE);
+        Geom::OptRect bbox = item->geometricBounds();
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
             if (!v->arenaitem->key()) {
                 v->arenaitem->setKey(SPItem::display_key_new(3));
@@ -550,7 +546,7 @@ void SPItem::mask_ref_changed(SPObject *old_mask, SPObject *mask, SPItem *item)
                                            v->arenaitem->drawing(),
                                            v->arenaitem->key());
             v->arenaitem->setMask(ai);
-            sp_mask_set_bbox(SP_MASK(mask), v->arenaitem->key(), &bbox);
+            sp_mask_set_bbox(SP_MASK(mask), v->arenaitem->key(), bbox);
             mask->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
     }
@@ -575,16 +571,15 @@ void SPItem::sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
         SPMask *mask = item->mask_ref ? item->mask_ref->getObject() : NULL;
 
         if ( clip_path || mask ) {
-            NRRect bbox;
-            item->invoke_bbox( &bbox, Geom::identity(), TRUE);
+            Geom::OptRect bbox = item->geometricBounds();
             if (clip_path) {
                 for (SPItemView *v = item->display; v != NULL; v = v->next) {
-                    clip_path->setBBox(v->arenaitem->key(), &bbox);
+                    clip_path->setBBox(v->arenaitem->key(), bbox);
                 }
             }
             if (mask) {
                 for (SPItemView *v = item->display; v != NULL; v = v->next) {
-                    sp_mask_set_bbox(mask, v->arenaitem->key(), &bbox);
+                    sp_mask_set_bbox(mask, v->arenaitem->key(), bbox);
                 }
             }
         }
@@ -599,8 +594,7 @@ void SPItem::sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
 
     /* Update bounding box data used by filters */
     if (item->style->filter.set && item->display) {
-        Geom::OptRect item_bbox;
-        item->invoke_bbox( item_bbox, Geom::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
+        Geom::OptRect item_bbox = item->geometricBounds();
 
         SPItemView *itemview = item->display;
         do {
@@ -677,169 +671,132 @@ Inkscape::XML::Node *SPItem::sp_item_write(SPObject *const object, Inkscape::XML
     return repr;
 }
 
-/**
- * \return  There is no guarantee that the return value will contain a rectangle.
-            If this item does not have a boundingbox, it might well be empty.
- */
-Geom::OptRect SPItem::getBounds(Geom::Affine const &transform,
-                                      SPItem::BBoxType type,
-                                      unsigned int /*dkey*/) const
+/** @brief Get item's geometric bounding box in this item's coordinate system.
+ * The geometric bounding box includes only the path, disregarding all style attributes. */
+Geom::OptRect SPItem::geometricBounds(Geom::Affine const &transform) const
 {
-    Geom::OptRect r;
-    invoke_bbox_full( r, transform, type, TRUE);
-    return r;
-}
-
-void SPItem::invoke_bbox( Geom::OptRect &bbox, Geom::Affine const &transform, unsigned const clear, SPItem::BBoxType type)
-{
-    invoke_bbox_full( bbox, transform, type, clear);
-}
-
-// DEPRECATED to phase out the use of NRRect in favor of Geom::OptRect
-void SPItem::invoke_bbox( NRRect *bbox, Geom::Affine const &transform, unsigned const clear, SPItem::BBoxType type)
-{
-    invoke_bbox_full( bbox, transform, type, clear);
-}
-
-/** Calls \a item's subclass' bounding box method; clips it by the bbox of clippath, if any; and
- * unions the resulting bbox with \a bbox. If \a clear is true, empties \a bbox first. Passes the
- * transform and the flags to the actual bbox methods. Note that many of subclasses (e.g. groups,
- * clones), in turn, call this function in their bbox methods.
- * \retval bbox  Note that there is no guarantee that bbox will contain a rectangle when the
- *               function returns. If this item does not have a boundingbox, this might well be empty.
- */
-void SPItem::invoke_bbox_full( Geom::OptRect &bbox, Geom::Affine const &transform, unsigned const flags, unsigned const clear) const
-{
-    if (clear) {
-        bbox = Geom::OptRect();
-    }
-
-    // TODO: replace NRRect by Geom::Rect, for all SPItemClasses, and for SP_CLIPPATH
-
-    NRRect temp_bbox;
-    temp_bbox.x0 = temp_bbox.y0 = Geom::infinity();
-    temp_bbox.x1 = temp_bbox.y1 = -Geom::infinity();
-
+    Geom::OptRect bbox;
     // call the subclass method
     if (((SPItemClass *) G_OBJECT_GET_CLASS(this))->bbox) {
-        ((SPItemClass *) G_OBJECT_GET_CLASS(this))->bbox(this, &temp_bbox, transform, flags);
+        bbox = ((SPItemClass *) G_OBJECT_GET_CLASS(this))->bbox(this, transform, SPItem::GEOMETRIC_BBOX);
     }
-
-    // unless this is geometric bbox, extend by filter area and crop the bbox by clip path, if any
-    if ((SPItem::BBoxType) flags != SPItem::GEOMETRIC_BBOX) {
-        if ( style && style->filter.href) {
-            SPObject *filter = style->getFilter();
-            if (filter && SP_IS_FILTER(filter)) {
-                // default filer area per the SVG spec:
-                double x = -0.1;
-                double y = -0.1;
-                double w = 1.2;
-                double h = 1.2;
-
-                // if area is explicitly set, override:
-                if (SP_FILTER(filter)->x._set)
-                    x = SP_FILTER(filter)->x.computed;
-                if (SP_FILTER(filter)->y._set)
-                    y = SP_FILTER(filter)->y.computed;
-                if (SP_FILTER(filter)->width._set)
-                    w = SP_FILTER(filter)->width.computed;
-                if (SP_FILTER(filter)->height._set)
-                    h = SP_FILTER(filter)->height.computed;
-
-                double dx0 = 0;
-                double dx1 = 0;
-                double dy0 = 0;
-                double dy1 = 0;
-                if (filter_is_single_gaussian_blur(SP_FILTER(filter))) {
-                    // if this is a single blur, use 2.4*radius
-                    // which may be smaller than the default area;
-                    // see set_filter_area for why it's 2.4
-                    double r = get_single_gaussian_blur_radius (SP_FILTER(filter));
-                    dx0 = -2.4 * r;
-                    dx1 = 2.4 * r;
-                    dy0 = -2.4 * r;
-                    dy1 = 2.4 * r;
-                } else {
-                    // otherwise, calculate expansion from relative to absolute units:
-                    dx0 = x * (temp_bbox.x1 - temp_bbox.x0);
-                    dx1 = (w + x - 1) * (temp_bbox.x1 - temp_bbox.x0);
-                    dy0 = y * (temp_bbox.y1 - temp_bbox.y0);
-                    dy1 = (h + y - 1) * (temp_bbox.y1 - temp_bbox.y0);
-                }
-
-                // transform the expansions by the item's transform:
-                Geom::Affine i2dt(i2dt_affine ());
-                dx0 *= i2dt.expansionX();
-                dx1 *= i2dt.expansionX();
-                dy0 *= i2dt.expansionY();
-                dy1 *= i2dt.expansionY();
-
-                // expand the bbox
-                temp_bbox.x0 += dx0;
-                temp_bbox.x1 += dx1;
-                temp_bbox.y0 += dy0;
-                temp_bbox.y1 += dy1;
-            }
-        }
-        if (clip_ref->getObject()) {
-            NRRect b;
-            SP_CLIPPATH(clip_ref->getObject())->getBBox(&b, transform, flags);
-            nr_rect_d_intersect (&temp_bbox, &temp_bbox, &b);
-        }
-    }
-
-    if (temp_bbox.x0 > temp_bbox.x1 || temp_bbox.y0 > temp_bbox.y1) {
-        // Either the bbox hasn't been touched by the SPItemClass' bbox method
-        // (it still has its initial values, see above: x0 = y0 = Geom::infinity() and x1 = y1 = -Geom::infinity())
-        // or it has explicitely been set to be like this (e.g. in sp_shape_bbox)
-
-        // When x0 > x1 or y0 > y1, the bbox is considered to be "nothing", although it has not been
-        // explicitely defined this way for NRRects (as opposed to Geom::OptRect)
-        // So union bbox with nothing = do nothing, just return
-        return;
-    }
-
-    // Do not use temp_bbox.upgrade() here, because it uses a test that returns an empty Geom::OptRect()
-    // for any rectangle with zero area. The geometrical bbox of for example a vertical line
-    // would therefore be translated into empty Geom::OptRect() (see bug https://bugs.launchpad.net/inkscape/+bug/168684)
-    Geom::OptRect temp_bbox_new = Geom::Rect(Geom::Point(temp_bbox.x0, temp_bbox.y0), Geom::Point(temp_bbox.x1, temp_bbox.y1));
-
-    bbox.unionWith(temp_bbox_new);
+    return bbox;
 }
 
-// DEPRECATED to phase out the use of NRRect in favor of Geom::OptRect
-/** Calls \a item's subclass' bounding box method; clips it by the bbox of clippath, if any; and
- * unions the resulting bbox with \a bbox. If \a clear is true, empties \a bbox first. Passes the
- * transform and the flags to the actual bbox methods. Note that many of subclasses (e.g. groups,
- * clones), in turn, call this function in their bbox methods. */
-void SPItem::invoke_bbox_full( NRRect *bbox, Geom::Affine const &transform, unsigned const flags, unsigned const clear)
+/** @brief Get item's visual bounding box in this item's coordinate system.
+ * The visual bounding box includes the stroke and the filter region. */
+Geom::OptRect SPItem::visualBounds(Geom::Affine const &transform) const
 {
-    g_assert(bbox != NULL);
+    using Geom::X;
+    using Geom::Y;
 
-    if (clear) {
-        bbox->x0 = bbox->y0 = 1e18;
-        bbox->x1 = bbox->y1 = -1e18;
+    Geom::OptRect bbox;
+
+    if ( style && style->filter.href && style->getFilter() && SP_IS_FILTER(style->getFilter())) {
+         // call the subclass method
+        if (((SPItemClass *) G_OBJECT_GET_CLASS(this))->bbox) {
+            bbox = ((SPItemClass *) G_OBJECT_GET_CLASS(this))->bbox(this, Geom::identity(), SPItem::VISUAL_BBOX);
+        }
+
+        SPFilter *filter = SP_FILTER(style->getFilter());
+        // default filer area per the SVG spec:
+        SVGLength x, y, w, h;
+        Geom::Point minp, maxp;
+        x.set(SVGLength::PERCENT, -0.10, 0);
+        y.set(SVGLength::PERCENT, -0.10, 0);
+        w.set(SVGLength::PERCENT, 1.20, 0);
+        h.set(SVGLength::PERCENT, 1.20, 0);
+
+        // if area is explicitly set, override:
+        if (filter->x._set)
+            x = filter->x;
+        if (filter->y._set)
+            y = filter->y;
+        if (filter->width._set)
+            w = filter->width;
+        if (filter->height._set)
+            h = filter->height;
+
+        double len_x = bbox ? bbox->width() : 0;
+        double len_y = bbox ? bbox->height() : 0;
+        
+        x.update(12, 6, len_x);
+        y.update(12, 6, len_y);
+        w.update(12, 6, len_x);
+        h.update(12, 6, len_y);
+
+        if (filter->filterUnits == SP_FILTER_UNITS_OBJECTBOUNDINGBOX && bbox) {
+            minp[X] = bbox->left() + x.computed * (x.unit == SVGLength::PERCENT ? 1.0 : len_x);
+            maxp[X] = minp[X] + w.computed * (w.unit == SVGLength::PERCENT ? 1.0 : len_x);
+            minp[Y] = bbox->top() + y.computed * (y.unit == SVGLength::PERCENT ? 1.0 : len_y);
+            maxp[Y] = minp[Y] + h.computed * (h.unit == SVGLength::PERCENT ? 1.0 : len_y);
+        } else if (filter->filterUnits == SP_FILTER_UNITS_USERSPACEONUSE) {
+            minp[X] = x.computed;
+            maxp[X] = minp[X] + w.computed;
+            minp[Y] = y.computed;
+            maxp[Y] = minp[Y] + h.computed;
+        }
+        bbox = Geom::OptRect(minp, maxp);
+        *bbox *= transform;
+    } else {
+         // call the subclass method
+        if (((SPItemClass *) G_OBJECT_GET_CLASS(this))->bbox) {
+            bbox = ((SPItemClass *) G_OBJECT_GET_CLASS(this))->bbox(this, transform, SPItem::VISUAL_BBOX);
+        }
+    }
+    if (clip_ref->getObject()) {
+        bbox.intersectWith(SP_CLIPPATH(clip_ref->getObject())->geometricBounds(transform));
     }
 
-    NRRect this_bbox;
-    this_bbox.x0 = this_bbox.y0 = 1e18;
-    this_bbox.x1 = this_bbox.y1 = -1e18;
-
-    // call the subclass method
-    if (((SPItemClass *) G_OBJECT_GET_CLASS(this))->bbox) {
-        ((SPItemClass *) G_OBJECT_GET_CLASS(this))->bbox(this, &this_bbox, transform, flags);
+    return bbox;
+}
+Geom::OptRect SPItem::bounds(BBoxType type, Geom::Affine const &transform) const
+{
+    if (type == GEOMETRIC_BBOX) {
+        return geometricBounds(transform);
+    } else {
+        return visualBounds(transform);
     }
+}
 
-    // unless this is geometric bbox, crop the bbox by clip path, if any
-    if ((SPItem::BBoxType) flags != SPItem::GEOMETRIC_BBOX && clip_ref->getObject()) {
-        NRRect b;
-        SP_CLIPPATH(clip_ref->getObject())->getBBox(&b, transform, flags);
-        nr_rect_d_intersect (&this_bbox, &this_bbox, &b);
+/** Get item's geometric bbox in document coordinate system.
+ * Document coordinates are the default coordinates of the root element:
+ * the origin is at the top left, X grows to the right and Y grows downwards. */
+Geom::OptRect SPItem::documentGeometricBounds() const
+{
+    return geometricBounds(i2doc_affine());
+}
+/// Get item's visual bbox in document coordinate system.
+Geom::OptRect SPItem::documentVisualBounds() const
+{
+    return visualBounds(i2doc_affine());
+}
+Geom::OptRect SPItem::documentBounds(BBoxType type) const
+{
+    if (type == GEOMETRIC_BBOX) {
+        return documentGeometricBounds();
+    } else {
+        return documentVisualBounds();
     }
-
-    // if non-empty (with some tolerance - ?) union this_bbox with the bbox we've got passed
-    if ( fabs(this_bbox.x1-this_bbox.x0) > -0.00001 && fabs(this_bbox.y1-this_bbox.y0) > -0.00001 ) {
-        nr_rect_d_union (bbox, bbox, &this_bbox);
+}
+/** Get item's geometric bbox in desktop coordinate system.
+ * Desktop coordinates should be user defined. Currently they are hardcoded:
+ * origin is at bottom left, X grows to the right and Y grows upwards. */
+Geom::OptRect SPItem::desktopGeometricBounds() const
+{
+    return geometricBounds(i2dt_affine());
+}
+/// Get item's visual bbox in desktop coordinate system.
+Geom::OptRect SPItem::desktopVisualBounds() const
+{
+    return visualBounds(i2dt_affine());
+}
+Geom::OptRect SPItem::desktopBounds(BBoxType type) const
+{
+    if (type == GEOMETRIC_BBOX) {
+        return desktopGeometricBounds();
+    } else {
+        return desktopVisualBounds();
     }
 }
 
@@ -862,20 +819,6 @@ unsigned SPItem::pos_in_parent()
 
     g_assert_not_reached();
     return 0;
-}
-
-void SPItem::getBboxDesktop(NRRect *bbox, SPItem::BBoxType type)
-{
-    g_assert(bbox != NULL);
-
-    invoke_bbox( bbox, i2dt_affine(), TRUE, type);
-}
-
-Geom::OptRect SPItem::getBboxDesktop(SPItem::BBoxType type)
-{
-    Geom::OptRect rect = Geom::OptRect();
-    invoke_bbox( rect, i2dt_affine(), TRUE, type);
-    return rect;
 }
 
 void SPItem::sp_item_private_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
@@ -1011,6 +954,8 @@ Inkscape::DrawingItem *SPItem::invoke_show(Inkscape::Drawing &drawing, unsigned 
     }
 
     if (ai != NULL) {
+        Geom::OptRect item_bbox = geometricBounds();
+
         display = sp_item_view_new_prepend(display, this, flags, key, ai);
         ai->setTransform(transform);
         ai->setOpacity(SP_SCALE24_TO_FLOAT(style->opacity.value));
@@ -1029,9 +974,7 @@ Inkscape::DrawingItem *SPItem::invoke_show(Inkscape::Drawing &drawing, unsigned 
             ai->setClip(ac);
 
             // Update bbox, in case the clip uses bbox units
-            NRRect bbox;
-            invoke_bbox( &bbox, Geom::identity(), TRUE);
-            SP_CLIPPATH(cp)->setBBox(clip_key, &bbox);
+            SP_CLIPPATH(cp)->setBBox(clip_key, item_bbox);
             cp->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
         if (mask_ref->getObject()) {
@@ -1047,14 +990,10 @@ Inkscape::DrawingItem *SPItem::invoke_show(Inkscape::Drawing &drawing, unsigned 
             ai->setMask(ac);
 
             // Update bbox, in case the mask uses bbox units
-            NRRect bbox;
-            invoke_bbox( &bbox, Geom::identity(), TRUE);
-            sp_mask_set_bbox(SP_MASK(mask), mask_key, &bbox);
+            sp_mask_set_bbox(SP_MASK(mask), mask_key, item_bbox);
             mask->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
         ai->setData(this);
-        Geom::OptRect item_bbox;
-        invoke_bbox( item_bbox, Geom::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
         ai->setItemBounds(item_bbox);
     }
 
@@ -1361,7 +1300,7 @@ gint SPItem::emitEvent(SPEvent &event)
  */
 void SPItem::set_item_transform(Geom::Affine const &transform_matrix)
 {
-    if (!matrix_equalp(transform_matrix, transform, NR_EPSILON)) {
+    if (!Geom::are_near(transform_matrix, transform, 1e-18)) {
         transform = transform_matrix;
         /* The SP_OBJECT_USER_MODIFIED_FLAG_B is used to mark the fact that it's only a
            transformation.  It's apparently not used anywhere else. */
@@ -1544,10 +1483,8 @@ SPItem *sp_item_first_item_child(SPObject *obj)
 void SPItem::convert_to_guides() {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int prefs_bbox = prefs->getInt("/tools/bounding_box", 0);
-    SPItem::BBoxType bbox_type = (prefs_bbox ==0)?
-        SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
 
-    Geom::OptRect bbox = getBboxDesktop(bbox_type);
+    Geom::OptRect bbox = (prefs_bbox == 0) ? desktopVisualBounds() : desktopGeometricBounds();
     if (!bbox) {
         g_warning ("Cannot determine item's bounding box during conversion to guides.\n");
         return;

@@ -1056,7 +1056,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
             // move to mouse pointer
             {
                 sp_desktop_document(desktop)->ensureUpToDate();
-                Geom::OptRect sel_bbox = selection->bounds();
+                Geom::OptRect sel_bbox = selection->visualBounds();
                 if (sel_bbox) {
                     Geom::Point m( desktop->point() - sel_bbox->midpoint() );
                     sp_selection_move_relative(selection, m, false);

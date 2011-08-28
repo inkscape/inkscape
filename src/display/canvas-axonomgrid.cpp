@@ -99,7 +99,7 @@ sp_caxonomgrid_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, g
 static void
 sp_grid_vline (SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba)
 {
-    if ((x < buf->rect.x0) || (x >= buf->rect.x1))
+    if ((x < buf->rect.left()) || (x >= buf->rect.right()))
         return;
 
     cairo_move_to(buf->ct, 0.5 + x, 0.5 + ys);
@@ -526,21 +526,21 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     }
 
     cairo_save(buf->ct);
-    cairo_translate(buf->ct, -buf->rect.x0, -buf->rect.y0);
+    cairo_translate(buf->ct, -buf->rect.left(), -buf->rect.top());
     cairo_set_line_width(buf->ct, 1.0);
     cairo_set_line_cap(buf->ct, CAIRO_LINE_CAP_SQUARE);
 
     // gc = gridcoordinates (the coordinates calculated from the grids origin 'grid->ow'.
-    // sc = screencoordinates ( for example "buf->rect.x0" is in screencoordinates )
+    // sc = screencoordinates ( for example "buf->rect.left()" is in screencoordinates )
     // bc = buffer patch coordinates
 
     // tl = topleft ; br = bottomright
     Geom::Point buf_tl_gc;
     Geom::Point buf_br_gc;
-    buf_tl_gc[Geom::X] = buf->rect.x0 - ow[Geom::X];
-    buf_tl_gc[Geom::Y] = buf->rect.y0 - ow[Geom::Y];
-    buf_br_gc[Geom::X] = buf->rect.x1 - ow[Geom::X];
-    buf_br_gc[Geom::Y] = buf->rect.y1 - ow[Geom::Y];
+    buf_tl_gc[Geom::X] = buf->rect.left()   - ow[Geom::X];
+    buf_tl_gc[Geom::Y] = buf->rect.top()    - ow[Geom::Y];
+    buf_br_gc[Geom::X] = buf->rect.right()  - ow[Geom::X];
+    buf_br_gc[Geom::Y] = buf->rect.bottom() - ow[Geom::Y];
 
     gdouble x;
     gdouble y;
@@ -549,15 +549,15 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
 
     // x-axis always goes from topleft to bottomright. (0,0) - (1,1)
     gdouble const xintercept_y_bc = (buf_tl_gc[Geom::X] * tan_angle[X]) - buf_tl_gc[Geom::Y] ;
-    gdouble const xstart_y_sc = ( xintercept_y_bc - floor(xintercept_y_bc/lyw)*lyw ) + buf->rect.y0;
-    gint const xlinestart = round( (xstart_y_sc - buf->rect.x0*tan_angle[X] -ow[Geom::Y]) / lyw );
+    gdouble const xstart_y_sc = ( xintercept_y_bc - floor(xintercept_y_bc/lyw)*lyw ) + buf->rect.top();
+    gint const xlinestart = round( (xstart_y_sc - buf->rect.left()*tan_angle[X] -ow[Geom::Y]) / lyw );
     gint xlinenum = xlinestart;
     // lines starting on left side.
-    for (y = xstart_y_sc; y < buf->rect.y1; y += lyw, xlinenum++) {
-        gint const x0 = buf->rect.x0;
+    for (y = xstart_y_sc; y < buf->rect.bottom(); y += lyw, xlinenum++) {
+        gint const x0 = buf->rect.left();
         gint const y0 = round(y);
-        gint const x1 = x0 + round( (buf->rect.y1 - y) / tan_angle[X] );
-        gint const y1 = buf->rect.y1;
+        gint const x1 = x0 + round( (buf->rect.bottom() - y) / tan_angle[X] );
+        gint const y1 = buf->rect.bottom();
 
         if (!scaled && (xlinenum % empspacing) != 0) {
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
@@ -566,11 +566,11 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
         }
     }
     // lines starting from top side
-    gdouble const xstart_x_sc = buf->rect.x0 + (lxw_x - (xstart_y_sc - buf->rect.y0) / tan_angle[X]) ;
+    gdouble const xstart_x_sc = buf->rect.left() + (lxw_x - (xstart_y_sc - buf->rect.top()) / tan_angle[X]) ;
     xlinenum = xlinestart-1;
-    for (x = xstart_x_sc; x < buf->rect.x1; x += lxw_x, xlinenum--) {
-        gint const y0 = buf->rect.y0;
-        gint const y1 = buf->rect.y1;
+    for (x = xstart_x_sc; x < buf->rect.right(); x += lxw_x, xlinenum--) {
+        gint const y0 = buf->rect.top();
+        gint const y1 = buf->rect.bottom();
         gint const x0 = round(x);
         gint const x1 = x0 + round( (y1 - y0) / tan_angle[X] );
 
@@ -585,27 +585,27 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     gdouble const ystart_x_sc = floor (buf_tl_gc[Geom::X] / spacing_ylines) * spacing_ylines + ow[Geom::X];
     gint const  ylinestart = round((ystart_x_sc - ow[Geom::X]) / spacing_ylines);
     gint ylinenum = ylinestart;
-    for (x = ystart_x_sc; x < buf->rect.x1; x += spacing_ylines, ylinenum++) {
+    for (x = ystart_x_sc; x < buf->rect.right(); x += spacing_ylines, ylinenum++) {
         gint const x0 = round(x);
 
         if (!scaled && (ylinenum % empspacing) != 0) {
-            sp_grid_vline (buf, x0, buf->rect.y0, buf->rect.y1 - 1, color);
+            sp_grid_vline (buf, x0, buf->rect.top(), buf->rect.bottom() - 1, color);
         } else {
-            sp_grid_vline (buf, x0, buf->rect.y0, buf->rect.y1 - 1, _empcolor);
+            sp_grid_vline (buf, x0, buf->rect.top(), buf->rect.bottom() - 1, _empcolor);
         }
     }
 
     // z-axis always goes from bottomleft to topright. (0,1) - (1,0)
     gdouble const zintercept_y_bc = (buf_tl_gc[Geom::X] * -tan_angle[Z]) - buf_tl_gc[Geom::Y] ;
-    gdouble const zstart_y_sc = ( zintercept_y_bc - floor(zintercept_y_bc/lyw)*lyw ) + buf->rect.y0;
-    gint const  zlinestart = round( (zstart_y_sc + buf->rect.x0*tan_angle[Z] - ow[Geom::Y]) / lyw );
+    gdouble const zstart_y_sc = ( zintercept_y_bc - floor(zintercept_y_bc/lyw)*lyw ) + buf->rect.top();
+    gint const  zlinestart = round( (zstart_y_sc + buf->rect.left()*tan_angle[Z] - ow[Geom::Y]) / lyw );
     gint zlinenum = zlinestart;
     // lines starting from left side
-    for (y = zstart_y_sc; y < buf->rect.y1; y += lyw, zlinenum++) {
-        gint const x0 = buf->rect.x0;
+    for (y = zstart_y_sc; y < buf->rect.bottom(); y += lyw, zlinenum++) {
+        gint const x0 = buf->rect.left();
         gint const y0 = round(y);
-        gint const x1 = x0 + round( (y - buf->rect.y0 ) / tan_angle[Z] );
-        gint const y1 = buf->rect.y0;
+        gint const x1 = x0 + round( (y - buf->rect.top() ) / tan_angle[Z] );
+        gint const y1 = buf->rect.top();
 
         if (!scaled && (zlinenum % empspacing) != 0) {
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
@@ -614,12 +614,12 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
         }
     }
     // draw lines from bottom-up
-    gdouble const zstart_x_sc = buf->rect.x0 + (y - buf->rect.y1) / tan_angle[Z] ;
-    for (x = zstart_x_sc; x < buf->rect.x1; x += lxw_z, zlinenum++) {
-        gint const y0 = buf->rect.y1;
-        gint const y1 = buf->rect.y0;
+    gdouble const zstart_x_sc = buf->rect.left() + (y - buf->rect.bottom()) / tan_angle[Z] ;
+    for (x = zstart_x_sc; x < buf->rect.right(); x += lxw_z, zlinenum++) {
+        gint const y0 = buf->rect.bottom();
+        gint const y1 = buf->rect.top();
         gint const x0 = round(x);
-        gint const x1 = x0 + round( (buf->rect.y1 - buf->rect.y0) / tan_angle[Z] );
+        gint const x1 = x0 + round(buf->rect.height() / tan_angle[Z] );
 
         if (!scaled && (zlinenum % empspacing) != 0) {
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
@@ -744,13 +744,13 @@ CanvasAxonomGridSnapper::_getSnapLines(Geom::Point const &p) const
     if (use_left_half) {
         s.push_back(std::make_pair(norm_z, Geom::Point(grid->origin[Geom::X], y_proj_along_z_max)));
         s.push_back(std::make_pair(norm_x, Geom::Point(grid->origin[Geom::X], y_proj_along_x_min)));
-        s.push_back(std::make_pair(component_vectors[Geom::X], Geom::Point(x_max, 0)));
+        s.push_back(std::make_pair(Geom::Point(1, 0), Geom::Point(x_max, 0)));
     }
 
     if (use_right_half) {
         s.push_back(std::make_pair(norm_z, Geom::Point(grid->origin[Geom::X], y_proj_along_z_min)));
         s.push_back(std::make_pair(norm_x, Geom::Point(grid->origin[Geom::X], y_proj_along_x_max)));
-        s.push_back(std::make_pair(component_vectors[Geom::X], Geom::Point(x_min, 0)));
+        s.push_back(std::make_pair(Geom::Point(1, 0), Geom::Point(x_min, 0)));
     }
 
     return s;

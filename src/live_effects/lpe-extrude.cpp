@@ -174,10 +174,10 @@ LPEExtrude::resetDefaults(SPItem * item)
 
     using namespace Geom;
 
-    Geom::OptRect bbox = item->getBounds(Geom::identity(), SPItem::GEOMETRIC_BBOX);
+    Geom::OptRect bbox = item->geometricBounds();
     if (bbox) {
-        Interval boundingbox_X = (*bbox)[Geom::X];
-        Interval boundingbox_Y = (*bbox)[Geom::Y];
+        Interval const &boundingbox_X = (*bbox)[Geom::X];
+        Interval const &boundingbox_Y = (*bbox)[Geom::Y];
         extrude_vector.set_and_write_new_values( Geom::Point(boundingbox_X.middle(), boundingbox_Y.middle()), 
                                                  (boundingbox_X.extent() + boundingbox_Y.extent())*Geom::Point(-0.05,0.2) );
     }

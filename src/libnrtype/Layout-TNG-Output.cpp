@@ -81,7 +81,7 @@ void Layout::_getGlyphTransformMatrix(int glyph_index, Geom::Affine *matrix) con
     }
 }
 
-void Layout::show(DrawingGroup *in_arena, NRRect const *paintbox) const
+void Layout::show(DrawingGroup *in_arena, Geom::OptRect const &paintbox) const
 {
     int glyph_index = 0;
     for (unsigned span_index = 0 ; span_index < _spans.size() ; span_index++) {
@@ -99,13 +99,14 @@ void Layout::show(DrawingGroup *in_arena, NRRect const *paintbox) const
             }
             glyph_index++;
         }
-        nr_text->setPaintBox(paintbox ? paintbox->upgrade_2geom() : Geom::OptRect());
+        nr_text->setPaintBox(paintbox);
         in_arena->prependChild(nr_text);
     }
 }
 
-void Layout::getBoundingBox(NRRect *bounding_box, Geom::Affine const &transform, int start, int length) const
+Geom::OptRect Layout::bounds(Geom::Affine const &transform, int start, int length) const
 {
+    Geom::OptRect bbox;
     for (unsigned glyph_index = 0 ; glyph_index < _glyphs.size() ; glyph_index++) {
         if (_characters[_glyphs[glyph_index].in_character].in_glyph == -1) continue;
         if (start != -1 && (int) _glyphs[glyph_index].in_character < start) continue;
@@ -122,31 +123,19 @@ void Layout::getBoundingBox(NRRect *bounding_box, Geom::Affine const &transform,
         if(_glyphs[glyph_index].span(this).font) {
             Geom::OptRect glyph_rect = _glyphs[glyph_index].span(this).font->BBox(_glyphs[glyph_index].glyph);
             if (glyph_rect) {
-                Geom::Point bmi = glyph_rect->min(), bma = glyph_rect->max();
-                Geom::Point tlp(bmi[0],bmi[1]), trp(bma[0],bmi[1]), blp(bmi[0],bma[1]), brp(bma[0],bma[1]);
-                tlp *= total_transform;
-                trp *= total_transform;
-                blp *= total_transform;
-                brp *= total_transform;
-                *glyph_rect = Geom::Rect(tlp,trp);
-                glyph_rect->expandTo(blp);
-                glyph_rect->expandTo(brp);
-                if ( (glyph_rect->min())[0] < bounding_box->x0 ) bounding_box->x0=(glyph_rect->min())[0];
-                if ( (glyph_rect->max())[0] > bounding_box->x1 ) bounding_box->x1=(glyph_rect->max())[0];
-                if ( (glyph_rect->min())[1] < bounding_box->y0 ) bounding_box->y0=(glyph_rect->min())[1];
-                if ( (glyph_rect->max())[1] > bounding_box->y1 ) bounding_box->y1=(glyph_rect->max())[1];
+                bbox.unionWith(*glyph_rect * total_transform);
             }
         }
     }
+    return bbox;
 }
 
 void Layout::print(SPPrintContext *ctx,
-                   NRRect const *pbox, NRRect const *dbox, NRRect const *bbox,
+                   Geom::OptRect const &pbox, Geom::OptRect const &dbox, Geom::OptRect const &bbox,
                    Geom::Affine const &ctm) const
 {
     if (_input_stream.empty()) return;
 
-    Geom::Affine ctm_2geom(ctm);
     Direction block_progression = _blockProgression();
     bool text_to_path = ctx->module->textToPath();
     for (unsigned glyph_index = 0 ; glyph_index < _glyphs.size() ; ) {
@@ -166,9 +155,9 @@ void Layout::print(SPPrintContext *ctx,
                 _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
                 Geom::PathVector temp_pv = (*pv) * glyph_matrix;
                 if (!text_source->style->fill.isNone())
-                    sp_print_fill(ctx, temp_pv, &ctm_2geom, text_source->style, pbox, dbox, bbox);
+                    sp_print_fill(ctx, temp_pv, ctm, text_source->style, pbox, dbox, bbox);
                 if (!text_source->style->stroke.isNone())
-                    sp_print_stroke(ctx, temp_pv, &ctm_2geom, text_source->style, pbox, dbox, bbox);
+                    sp_print_stroke(ctx, temp_pv, ctm, text_source->style, pbox, dbox, bbox);
             }
             glyph_index++;
         } else {
@@ -240,7 +229,7 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
             if (pathv) {
                 Geom::PathVector pathv_trans = (*pathv) * glyph_matrix;
                 SPStyle const *style = text_source->style;
-                ctx->renderPathVector(pathv_trans, style, NULL);
+                ctx->renderPathVector(pathv_trans, style, Geom::OptRect());
             }
             glyph_index++;
             continue;
@@ -302,7 +291,7 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
             ctx->pushLayer();
         }
         if (glyph_index - first_index > 0)
-            ctx->renderGlyphtext(span.font->pFont, &font_matrix, glyphtext, style);
+            ctx->renderGlyphtext(span.font->pFont, font_matrix, glyphtext, style);
         if (opacity != 1.0) {
             ctx->popLayer();
             ctx->popState();
@@ -388,9 +377,9 @@ Glib::ustring Layout::dumpAsText() const
         for (unsigned char_index = 0 ; char_index < _characters.size() ; char_index++) {
             if (_characters[char_index].in_span != span_index) continue;
             if (_input_stream[_spans[span_index].in_input_stream_item]->Type() != TEXT_SOURCE) {
-                snprintf(line, sizeof(line), "      %d: control x=%f flags=%03x glyph=%d\n", char_index, _characters[char_index].x, *(unsigned*)&_characters[char_index].char_attributes, _characters[char_index].in_glyph);
+                snprintf(line, sizeof(line), "      %d: control x=%f flags=%03x glyph=%d\n", char_index, _characters[char_index].x, *(unsigned*) &_characters[char_index].char_attributes, _characters[char_index].in_glyph);
             } else {
-                snprintf(line, sizeof(line), "      %d: '%c' x=%f flags=%03x glyph=%d\n", char_index, *iter_char, _characters[char_index].x, *(unsigned*)&_characters[char_index].char_attributes, _characters[char_index].in_glyph);
+                snprintf(line, sizeof(line), "      %d: '%c' x=%f flags=%03x glyph=%d\n", char_index, *iter_char, _characters[char_index].x, *(unsigned*) &_characters[char_index].char_attributes, _characters[char_index].in_glyph);
                 iter_char++;
             }
             result += line;

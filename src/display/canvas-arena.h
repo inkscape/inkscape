@@ -61,7 +61,7 @@ GType sp_canvas_arena_get_type (void);
 void sp_canvas_arena_set_pick_delta (SPCanvasArena *ca, gdouble delta);
 void sp_canvas_arena_set_sticky (SPCanvasArena *ca, gboolean sticky);
 
-void sp_canvas_arena_render_surface (SPCanvasArena *ca, cairo_surface_t *surface, NRRectL const &area);
+void sp_canvas_arena_render_surface (SPCanvasArena *ca, cairo_surface_t *surface, Geom::IntRect const &area);
 
 G_END_DECLS
 

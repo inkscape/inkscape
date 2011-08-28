@@ -834,94 +834,45 @@ CanvasXYGrid::Update (Geom::Affine const &affine, unsigned int /*flags*/)
 static void
 grid_hline (SPCanvasBuf *buf, gint y, gint xs, gint xe, guint32 rgba)
 {
-    if ((y < buf->rect.y0) || (y >= buf->rect.y1))
+    if ((y < buf->rect.top()) || (y >= buf->rect.bottom()))
         return;
 
     cairo_move_to(buf->ct, 0.5 + xs, 0.5 + y);
     cairo_line_to(buf->ct, 0.5 + xe, 0.5 + y);
     ink_cairo_set_source_rgba32(buf->ct, rgba);
     cairo_stroke(buf->ct);
-#if 0
-    guint r, g, b, a;
-    gint x0, x1, x;
-    guchar *p;
-    r = NR_RGBA32_R (rgba);
-    g = NR_RGBA32_G (rgba);
-    b = NR_RGBA32_B (rgba);
-    a = NR_RGBA32_A (rgba);
-    x0 = MAX (buf->rect.x0, xs);
-    x1 = MIN (buf->rect.x1, xe + 1);
-    p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 4;
-    for (x = x0; x < x1; x++) {
-        p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
-        p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
-        p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
-        p += 4;
-    }
-#endif
 }
 
 static void
 grid_vline (SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba)
 {
-    if ((x < buf->rect.x0) || (x >= buf->rect.x1))
+    if ((x < buf->rect.left()) || (x >= buf->rect.right()))
         return;
 
     cairo_move_to(buf->ct, 0.5 + x, 0.5 + ys);
     cairo_line_to(buf->ct, 0.5 + x, 0.5 + ye);
     ink_cairo_set_source_rgba32(buf->ct, rgba);
     cairo_stroke(buf->ct);
-    #if 0
-    guint r, g, b, a;
-    gint y0, y1, y;
-    guchar *p;
-    r = NR_RGBA32_R(rgba);
-    g = NR_RGBA32_G (rgba);
-    b = NR_RGBA32_B (rgba);
-    a = NR_RGBA32_A (rgba);
-    y0 = MAX (buf->rect.y0, ys);
-    y1 = MIN (buf->rect.y1, ye + 1);
-    p = buf->buf + (y0 - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 4;
-    for (y = y0; y < y1; y++) {
-        p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
-        p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
-        p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
-        p += buf->buf_rowstride;
-    }
-    #endif
 }
 
 static void
 grid_dot (SPCanvasBuf *buf, gint x, gint y, guint32 rgba)
 {
-    if ( (y < buf->rect.y0) || (y >= buf->rect.y1)
-         || (x < buf->rect.x0) || (x >= buf->rect.x1) )
+    if ( (y < buf->rect.top()) || (y >= buf->rect.bottom())
+         || (x < buf->rect.left()) || (x >= buf->rect.right()) )
         return;
 
     cairo_rectangle(buf->ct, x, y, 1, 1);
     ink_cairo_set_source_rgba32(buf->ct, rgba);
     cairo_fill(buf->ct);
-
-#if 0
-    guint r, g, b, a;
-    guchar *p;
-    r = NR_RGBA32_R (rgba);
-    g = NR_RGBA32_G (rgba);
-    b = NR_RGBA32_B (rgba);
-    a = NR_RGBA32_A (rgba);
-    p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 4;
-    p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
-    p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
-    p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
-#endif
 }
 
 void
 CanvasXYGrid::Render (SPCanvasBuf *buf)
 {
-    gdouble const sxg = floor ((buf->rect.x0 - ow[Geom::X]) / sw[Geom::X]) * sw[Geom::X] + ow[Geom::X];
+    gdouble const sxg = floor ((buf->rect.left() - ow[Geom::X]) / sw[Geom::X]) * sw[Geom::X] + ow[Geom::X];
     gint const  xlinestart = round((sxg - ow[Geom::X]) / sw[Geom::X]);
-    gdouble const syg = floor ((buf->rect.y0 - ow[Geom::Y]) / sw[Geom::Y]) * sw[Geom::Y] + ow[Geom::Y];
+    gdouble const syg = floor ((buf->rect.top() - ow[Geom::Y]) / sw[Geom::Y]) * sw[Geom::Y] + ow[Geom::Y];
     gint const  ylinestart = round((syg - ow[Geom::Y]) / sw[Geom::Y]);
 
     //set correct coloring, depending preference (when zoomed out, always major coloring or minor coloring)
@@ -935,41 +886,41 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     }
 
     cairo_save(buf->ct);
-    cairo_translate(buf->ct, -buf->rect.x0, -buf->rect.y0);
+    cairo_translate(buf->ct, -buf->rect.left(), -buf->rect.top());
     cairo_set_line_width(buf->ct, 1.0);
     cairo_set_line_cap(buf->ct, CAIRO_LINE_CAP_SQUARE);
 
     if (!render_dotted) {
         gint ylinenum;
         gdouble y;
-        for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[Geom::Y], ylinenum++) {
+        for (y = syg, ylinenum = ylinestart; y < buf->rect.bottom(); y += sw[Geom::Y], ylinenum++) {
             gint const y0 = round(y);
             if (!scaled[Geom::Y] && (ylinenum % empspacing) != 0) {
-                grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, color);
+                grid_hline (buf, y0, buf->rect.left(), buf->rect.right() - 1, color);
             } else {
-                grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, _empcolor);
+                grid_hline (buf, y0, buf->rect.left(), buf->rect.right() - 1, _empcolor);
             }
         }
 
         gint xlinenum;
         gdouble x;
-        for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[Geom::X], xlinenum++) {
+        for (x = sxg, xlinenum = xlinestart; x < buf->rect.right(); x += sw[Geom::X], xlinenum++) {
             gint const ix = round(x);
             if (!scaled[Geom::X] && (xlinenum % empspacing) != 0) {
-                grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, color);
+                grid_vline (buf, ix, buf->rect.top(), buf->rect.bottom(), color);
             } else {
-                grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, _empcolor);
+                grid_vline (buf, ix, buf->rect.top(), buf->rect.bottom(), _empcolor);
             }
         }
     } else {
         gint ylinenum;
         gdouble y;
-        for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[Geom::Y], ylinenum++) {
+        for (y = syg, ylinenum = ylinestart; y < buf->rect.bottom(); y += sw[Geom::Y], ylinenum++) {
             gint const iy = round(y);
 
             gint xlinenum;
             gdouble x;
-            for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[Geom::X], xlinenum++) {
+            for (x = sxg, xlinenum = xlinestart; x < buf->rect.right(); x += sw[Geom::X], xlinenum++) {
                 gint const ix = round(x);
                 if ( (!scaled[Geom::X] && (xlinenum % empspacing) != 0)
                      || (!scaled[Geom::Y] && (ylinenum % empspacing) != 0)
@@ -1042,14 +993,16 @@ CanvasXYGridSnapper::_getSnapLines(Geom::Point const &p) const
 
         Geom::Coord rounded;
         Geom::Point point_on_line;
+        Geom::Point cvec(0.,0.);
+        cvec[i] = 1.;
 
         rounded = Inkscape::Util::round_to_upper_multiple_plus(p[i], spacing, grid->origin[i]);
         point_on_line = i ? Geom::Point(0, rounded) : Geom::Point(rounded, 0);
-        s.push_back(std::make_pair(component_vectors[i], point_on_line));
+        s.push_back(std::make_pair(cvec, point_on_line));
 
         rounded = Inkscape::Util::round_to_lower_multiple_plus(p[i], spacing, grid->origin[i]);
         point_on_line = i ? Geom::Point(0, rounded) : Geom::Point(rounded, 0);
-        s.push_back(std::make_pair(component_vectors[i], point_on_line));
+        s.push_back(std::make_pair(cvec, point_on_line));
     }
 
     return s;

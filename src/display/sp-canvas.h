@@ -30,12 +30,8 @@
 #include <glib/gtypes.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
-
 #include <glibmm/ustring.h>
-
 #include <2geom/affine.h>
-#include <libnr/nr-rect-l.h>
-
 #include <2geom/rect.h>
 
 G_BEGIN_DECLS
@@ -60,8 +56,8 @@ enum {
  */
 struct SPCanvasBuf {
     cairo_t *ct;
-    NRRectL rect;
-    NRRectL visible_rect;
+    Geom::IntRect rect;
+    Geom::IntRect visible_rect;
 
     unsigned char *buf;
     int buf_rowstride;

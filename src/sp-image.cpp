@@ -80,7 +80,7 @@ static void sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags);
 static void sp_image_modified (SPObject *object, unsigned int flags);
 static Inkscape::XML::Node *sp_image_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static void sp_image_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
+static Geom::OptRect sp_image_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
 static void sp_image_print (SPItem * item, SPPrintContext *ctx);
 static gchar * sp_image_description (SPItem * item);
 static void sp_image_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
@@ -1062,21 +1062,16 @@ static Inkscape::XML::Node *sp_image_write( SPObject *object, Inkscape::XML::Doc
     return repr;
 }
 
-static void sp_image_bbox( SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const /*flags*/ )
+static Geom::OptRect sp_image_bbox( SPItem const *item,Geom::Affine const &transform, SPItem::BBoxType type )
 {
     SPImage const &image = *SP_IMAGE(item);
+    Geom::OptRect bbox;
 
     if ((image.width.computed > 0.0) && (image.height.computed > 0.0)) {
-        double const x0 = image.x.computed;
-        double const y0 = image.y.computed;
-        double const x1 = x0 + image.width.computed;
-        double const y1 = y0 + image.height.computed;
-
-        nr_rect_union_pt(bbox, Geom::Point(x0, y0) * transform);
-        nr_rect_union_pt(bbox, Geom::Point(x1, y0) * transform);
-        nr_rect_union_pt(bbox, Geom::Point(x1, y1) * transform);
-        nr_rect_union_pt(bbox, Geom::Point(x0, y1) * transform);
+        bbox = Geom::Rect::from_xywh(image.x.computed, image.y.computed, image.width.computed, image.height.computed);
+        *bbox *= transform;
     }
+    return bbox;
 }
 
 static void sp_image_print( SPItem *item, SPPrintContext *ctx )
@@ -1100,7 +1095,7 @@ static void sp_image_print( SPItem *item, SPPrintContext *ctx )
             Geom::Translate ti(0.0, -1.0);
             t = s * tp;
             t = ti * t;
-            sp_print_image_R8G8B8A8_N(ctx, px, w, h, rs, &t, item->style);
+            sp_print_image_R8G8B8A8_N(ctx, px, w, h, rs, t, item->style);
         } else { // preserveAspectRatio
             double vw = image->width.computed / image->sx;
             double vh = image->height.computed / image->sy;
@@ -1121,7 +1116,7 @@ static void sp_image_print( SPItem *item, SPPrintContext *ctx )
             Geom::Translate ti(0.0, -1.0);
             t = s * tp;
             t = ti * t;
-            sp_print_image_R8G8B8A8_N(ctx, px + trimx*pixskip + trimy*rs, trimwidth, trimheight, rs, &t, item->style);
+            sp_print_image_R8G8B8A8_N(ctx, px + trimx*pixskip + trimy*rs, trimwidth, trimheight, rs, t, item->style);
         }
     }
 }
@@ -1499,10 +1494,8 @@ static void sp_image_set_curve( SPImage *image )
             image->curve = image->curve->unref();
         }
     } else {
-        NRRect rect;
-        sp_image_bbox(image, &rect, Geom::identity(), 0);
-        Geom::Rect rect2 = *to_2geom(&rect);
-        SPCurve *c = SPCurve::new_from_rect(rect2, true);
+        Geom::OptRect rect = sp_image_bbox(image, Geom::identity(), SPItem::VISUAL_BBOX);
+        SPCurve *c = SPCurve::new_from_rect(*rect, true);
 
         if (image->curve) {
             image->curve = image->curve->unref();

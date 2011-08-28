@@ -144,6 +144,7 @@ bool Affine::isNonzeroTranslation(Coord eps) const {
            0 & b & 0 \\
            0 & 0 & 1 \end{array}\right]\f$. */
 bool Affine::isScale(Coord eps) const {
+    if (isSingular(eps)) return false;
     return are_near(_c[1], 0.0, eps) && are_near(_c[2], 0.0, eps) && 
            are_near(_c[4], 0.0, eps) && are_near(_c[5], 0.0, eps);
 }
@@ -156,6 +157,7 @@ bool Affine::isScale(Coord eps) const {
            0 & b & 0 \\
            0 & 0 & 1 \end{array}\right]\f$ and \f$a, b \neq 1\f$. */
 bool Affine::isNonzeroScale(Coord eps) const {
+    if (isSingular(eps)) return false;
     return (!are_near(_c[0], 1.0, eps) || !are_near(_c[3], 1.0, eps)) &&  //NOTE: these are the diags, and the next line opposite diags
            are_near(_c[1], 0.0, eps) && are_near(_c[2], 0.0, eps) && 
            are_near(_c[4], 0.0, eps) && are_near(_c[5], 0.0, eps);
@@ -165,11 +167,12 @@ bool Affine::isNonzeroScale(Coord eps) const {
  * @param eps Numerical tolerance
  * @return True iff the matrix is of the form
  *         \f$\left[\begin{array}{ccc}
-           a & 0 & 0 \\
-           0 & a & 0 \\
-           0 & 0 & 1 \end{array}\right]\f$. */
+           a_1 & 0 & 0 \\
+           0 & a_2 & 0 \\
+           0 & 0 & 1 \end{array}\right]\f$ where \f$|a_1| = |a_2|\f$. */
 bool Affine::isUniformScale(Coord eps) const {
-    return are_near(_c[0], _c[3], eps) &&
+    if (isSingular(eps)) return false;
+    return are_near(fabs(_c[0]), fabs(_c[3]), eps) &&
            are_near(_c[1], 0.0, eps) && are_near(_c[2], 0.0, eps) &&  
            are_near(_c[4], 0.0, eps) && are_near(_c[5], 0.0, eps);
 }
@@ -178,11 +181,16 @@ bool Affine::isUniformScale(Coord eps) const {
  * @param eps Numerical tolerance
  * @return True iff the matrix is of the form
  *         \f$\left[\begin{array}{ccc}
-           a & 0 & 0 \\
-           0 & a & 0 \\
-           0 & 0 & 1 \end{array}\right]\f$ and \f$a \neq 1\f$. */
+           a_1 & 0 & 0 \\
+           0 & a_2 & 0 \\
+           0 & 0 & 1 \end{array}\right]\f$ where \f$|a_1| = |a_2|\f$
+ * and \f$a_1, a_2 \neq 1\f$. */
 bool Affine::isNonzeroUniformScale(Coord eps) const {
-    return !are_near(_c[0], 1.0, eps) && are_near(_c[0], _c[3], eps) &&
+    if (isSingular(eps)) return false;
+    // we need to test both c0 and c3 to handle the case of flips,
+    // which should be treated as nonzero uniform scales
+    return !(are_near(_c[0], 1.0, eps) && are_near(_c[3], 1.0, eps)) &&
+           are_near(fabs(_c[0]), fabs(_c[3]), eps) &&
            are_near(_c[1], 0.0, eps) && are_near(_c[2], 0.0, eps) &&  
            are_near(_c[4], 0.0, eps) && are_near(_c[5], 0.0, eps);
 }
@@ -266,15 +274,17 @@ bool Affine::isNonzeroVShear(Coord eps) const {
 }
 
 /** @brief Check whether this matrix represents zooming.
- * Zooming is any combination of translation and uniform scaling. It preserves angles, ratios
- * of distances between arbitrary points and unit vectors of line segments.
+ * Zooming is any combination of translation and uniform non-flipping scaling.
+ * It preserves angles, ratios of distances between arbitrary points
+ * and unit vectors of line segments.
  * @param eps Numerical tolerance
- * @return True iff the matrix is of the form
+ * @return True iff the matrix is invertible and of the form
  *         \f$\left[\begin{array}{ccc}
            a & 0 & 0 \\
            0 & a & 0 \\
            b & c & 1 \end{array}\right]\f$. */
 bool Affine::isZoom(Coord eps) const {
+    if (isSingular(eps)) return false;
     return are_near(_c[0], _c[3], eps) && are_near(_c[1], 0, eps) && are_near(_c[2], 0, eps);
 }
 
@@ -290,30 +300,42 @@ bool Affine::preservesArea(Coord eps) const
 }
 
 /** @brief Check whether the transformation preserves angles between lines.
- * This means that the transformation can be any combination of translation, uniform scaling
- * and rotation.
+ * This means that the transformation can be any combination of translation, uniform scaling,
+ * rotation and flipping.
  * @param eps Numerical tolerance
  * @return True iff the matrix is of the form
  *         \f$\left[\begin{array}{ccc}
-           a & b & 0 \\
-           -b & a & 0 \\
-           c & d & 1 \end{array}\right]\f$. */
+             a & b & 0 \\
+             -b & a & 0 \\
+             c & d & 1 \end{array}\right]\f$ or
+           \f$\left[\begin{array}{ccc}
+             -a & b & 0 \\
+             b & a & 0 \\
+             c & d & 1 \end{array}\right]\f$. */
 bool Affine::preservesAngles(Coord eps) const
 {
-    return are_near(_c[0], _c[3], eps) && are_near(_c[1], -_c[2], eps);
+    if (isSingular(eps)) return false;
+    return (are_near(_c[0], _c[3], eps) && are_near(_c[1], -_c[2], eps)) ||
+           (are_near(_c[0], -_c[3], eps) && are_near(_c[1], _c[2], eps));
 }
 
 /** @brief Check whether the transformation preserves distances between points.
- * This means that the transformation can be any combination of translation and rotation.
+ * This means that the transformation can be any combination of translation,
+ * rotation and flipping.
  * @param eps Numerical tolerance
  * @return True iff the matrix is of the form
  *         \f$\left[\begin{array}{ccc}
            a & b & 0 \\
            -b & a & 0 \\
+           c & d & 1 \end{array}\right]\f$ or
+           \f$\left[\begin{array}{ccc}
+           -a & b & 0 \\
+           b & a & 0 \\
            c & d & 1 \end{array}\right]\f$ and \f$a^2 + b^2 = 1\f$. */
 bool Affine::preservesDistances(Coord eps) const
 {
-    return are_near(_c[0], _c[3], eps) && are_near(_c[1], -_c[2], eps) &&
+    return ((are_near(_c[0], _c[3], eps) && are_near(_c[1], -_c[2], eps)) ||
+            (are_near(_c[0], -_c[3], eps) && are_near(_c[1], _c[2], eps))) &&
            are_near(_c[0] * _c[0] + _c[1] * _c[1], 1.0, eps);
 }
 

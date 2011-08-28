@@ -14,8 +14,11 @@
  */
 
 #include <glib.h>
+#include <gtk/gtk.h>
 
+#include "color.h"
 #include "fill-or-stroke.h"
+#include "forward.h"
 #include "sp-gradient-spread.h"
 #include "sp-gradient-units.h"
 
@@ -26,13 +29,6 @@ class SPGradient;
 #define SP_PAINT_SELECTOR_CLASS(k) (G_TYPE_CHECK_CLASS_CAST ((k), SP_TYPE_PAINT_SELECTOR, SPPaintSelectorClass))
 #define SP_IS_PAINT_SELECTOR(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_PAINT_SELECTOR))
 #define SP_IS_PAINT_SELECTOR_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE ((k), SP_TYPE_PAINT_SELECTOR))
-
-#include <gtk/gtk.h>
-
-#include "../forward.h"
-#include <color.h>
-#include <libnr/nr-forward.h>
-
 
 /// Generic paint selector widget
 struct SPPaintSelector {

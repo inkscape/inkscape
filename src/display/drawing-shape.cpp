@@ -25,7 +25,6 @@
 #include "display/drawing-shape.h"
 #include "helper/geom-curves.h"
 #include "helper/geom.h"
-#include "libnr/nr-convert2geom.h"
 #include "preferences.h"
 #include "style.h"
 #include "svg/svg.h"

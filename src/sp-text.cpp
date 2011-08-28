@@ -71,7 +71,7 @@ static void sp_text_update (SPObject *object, SPCtx *ctx, guint flags);
 static void sp_text_modified (SPObject *object, guint flags);
 static Inkscape::XML::Node *sp_text_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static void sp_text_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const flags);
+static Geom::OptRect sp_text_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
 static Inkscape::DrawingItem *sp_text_show (SPItem *item, Inkscape::Drawing &drawing, unsigned key, unsigned flags);
 static void sp_text_hide (SPItem *item, unsigned key);
 static char *sp_text_description (SPItem *item);
@@ -248,14 +248,13 @@ static void sp_text_update(SPObject *object, SPCtx *ctx, guint flags)
         /* fixme: So check modification flag everywhere immediate state is used */
         text->rebuildLayout();
 
-        NRRect paintbox;
-        text->invoke_bbox( &paintbox, Geom::identity(), TRUE);
+        Geom::OptRect paintbox = text->geometricBounds();
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
             Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
             text->_clearFlow(g);
             g->setStyle(object->style);
             // pass the bbox of the text object as paintbox (used for paintserver fills)
-            text->layout.show(g, &paintbox);
+            text->layout.show(g, paintbox);
         }
     }
 }
@@ -277,13 +276,12 @@ static void sp_text_modified(SPObject *object, guint flags)
     // and create new ones. This is probably quite wasteful.
     if (flags & ( SP_OBJECT_STYLE_MODIFIED_FLAG )) {
         SPText *text = SP_TEXT (object);
-        NRRect paintbox;
-        text->invoke_bbox( &paintbox, Geom::identity(), TRUE);
+        Geom::OptRect paintbox = text->geometricBounds();
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
             Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
             text->_clearFlow(g);
             g->setStyle(object->style);
-            text->layout.show(g, &paintbox);
+            text->layout.show(g, paintbox);
         }
     }
 
@@ -363,25 +361,17 @@ static Inkscape::XML::Node *sp_text_write(SPObject *object, Inkscape::XML::Docum
     return repr;
 }
 
-static void
-sp_text_bbox(SPItem const *item, NRRect *bbox, Geom::Affine const &transform, unsigned const /*flags*/)
+static Geom::OptRect
+sp_text_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type)
 {
-    SP_TEXT(item)->layout.getBoundingBox(bbox, transform);
+    Geom::OptRect bbox = SP_TEXT(item)->layout.bounds(transform);
 
-    // Add stroke width
-    SPStyle* style = item->style;
-    if (!style->stroke.isNone()) {
-        double const scale = transform.descrim();
-        if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
-            double const width = MAX(0.125, style->stroke_width.computed * scale);
-            if ( fabs(bbox->x1 - bbox->x0) > -0.00001 && fabs(bbox->y1 - bbox->y0) > -0.00001 ) {
-                bbox->x0-=0.5*width;
-                bbox->x1+=0.5*width;
-                bbox->y0-=0.5*width;
-                bbox->y1+=0.5*width;
-            }
-        }
+    // FIXME this code is incorrect
+    if (type == SPItem::VISUAL_BBOX && !item->style->stroke.isNone()) {
+        double scale = transform.descrim();
+        bbox->expandBy(0.5 * item->style->stroke_width.computed * scale);
     }
+    return bbox;
 }
 
 
@@ -395,9 +385,7 @@ sp_text_show(SPItem *item, Inkscape::Drawing &drawing, unsigned /* key*/, unsign
     flowed->setStyle(group->style);
 
     // pass the bbox of the text object as paintbox (used for paintserver fills)
-    NRRect paintbox;
-    item->invoke_bbox( &paintbox, Geom::identity(), TRUE);
-    group->layout.show(flowed, &paintbox);
+    group->layout.show(flowed, group->geometricBounds());
 
     return flowed;
 }
@@ -509,18 +497,15 @@ sp_text_set_transform (SPItem *item, Geom::Affine const &xform)
 static void
 sp_text_print (SPItem *item, SPPrintContext *ctx)
 {
-    NRRect     pbox, dbox, bbox;
     SPText *group = SP_TEXT (item);
+    Geom::OptRect pbox, bbox, dbox;
 
-    item->invoke_bbox( &pbox, Geom::identity(), TRUE);
-    item->getBboxDesktop (&bbox);
-    dbox.x0 = 0.0;
-    dbox.y0 = 0.0;
-    dbox.x1 = item->document->getWidth();
-    dbox.y1 = item->document->getHeight();
+    pbox = item->geometricBounds();
+    bbox = item->desktopVisualBounds();
+    dbox = Geom::Rect::from_xywh(Geom::Point(0,0), item->document->getDimensions());
     Geom::Affine const ctm (item->i2dt_affine());
 
-    group->layout.print(ctx,&pbox,&dbox,&bbox,ctm);
+    group->layout.print(ctx,pbox,dbox,bbox,ctm);
 }
 
 /*

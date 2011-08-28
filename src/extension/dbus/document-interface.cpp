@@ -157,16 +157,14 @@ desktop_ensure_active (SPDesktop* desk) {
 
 gdouble
 selection_get_center_x (Inkscape::Selection *sel){
-    NRRect *box = g_new(NRRect, 1);;
-    box = sel->boundsInDocument(box);
-    return box->x0 + ((box->x1 - box->x0)/2);
+    Geom::OptRect box = sel->documentBounds(SPItem::GEOMETRIC_BBOX);
+    return box ? box->midpoint()[Geom::X] : 0;
 }
 
 gdouble
 selection_get_center_y (Inkscape::Selection *sel){
-    NRRect *box = g_new(NRRect, 1);;
-    box = sel->boundsInDocument(box);
-    return box->y0 + ((box->y1 - box->y0)/2);
+    Geom::OptRect box = sel->documentBounds(SPItem::GEOMETRIC_BBOX);
+    return box ? box->midpoint()[Geom::X] : 0;
 }
 
 /* 

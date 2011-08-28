@@ -75,18 +75,18 @@ struct CoordTraits<IntCoord> {
     typedef OptIntRect OptRectType;
 
     typedef
-      boost::equality_comparable< IntervalType
-    , boost::additive< IntervalType
-    , boost::additive< IntervalType, IntCoord
-    , boost::orable< IntervalType
+      boost::equality_comparable< IntInterval
+    , boost::additive< IntInterval
+    , boost::additive< IntInterval, IntCoord
+    , boost::orable< IntInterval
       > > > >
         IntervalOps;
 
     typedef
-      boost::equality_comparable< RectType
-    , boost::orable< RectType
-    , boost::orable< RectType, OptRectType
-    , boost::additive< RectType, PointType 
+      boost::equality_comparable< IntRect
+    , boost::orable< IntRect
+    , boost::orable< IntRect, OptIntRect
+    , boost::additive< IntRect, IntPoint
       > > > >
         RectOps;
 };
@@ -100,21 +100,23 @@ struct CoordTraits<Coord> {
     typedef OptRect OptRectType;
 
     typedef
-      boost::equality_comparable< IntervalType
-    , boost::additive< IntervalType
-    , boost::multipliable< IntervalType
-    , boost::orable< IntervalType
-    , boost::arithmetic< IntervalType, Coord
-      > > > > >
+      boost::equality_comparable< Interval
+    , boost::equality_comparable< Interval, IntInterval
+    , boost::additive< Interval
+    , boost::multipliable< Interval
+    , boost::orable< Interval
+    , boost::arithmetic< Interval, Coord
+      > > > > > >
         IntervalOps;
 
     typedef
-      boost::equality_comparable< RectType
-    , boost::orable< RectType
-    , boost::orable< RectType, OptRectType
-    , boost::additive< RectType, PointType
-    , boost::multipliable< RectType, Affine
-      > > > > >
+      boost::equality_comparable< Rect
+    , boost::equality_comparable< Rect, IntRect
+    , boost::orable< Rect
+    , boost::orable< Rect, OptRect
+    , boost::additive< Rect, Point
+    , boost::multipliable< Rect, Affine
+      > > > > > >
         RectOps;
 };
 

@@ -177,11 +177,9 @@ void Filter::set_primitive_units(SPFilterUnits unit) {
 }
 
 void Filter::area_enlarge(Geom::IntRect &bbox, Inkscape::DrawingItem const *item) const {
-    NRRectL b(bbox);
     for (unsigned i = 0 ; i < _primitive.size() ; i++) {
-        if (_primitive[i]) _primitive[i]->area_enlarge(b, item->ctm());
+        if (_primitive[i]) _primitive[i]->area_enlarge(bbox, item->ctm());
     }
-    bbox = *b.upgrade_2geom();
 
 /*
   TODO: something. See images at the bottom of filters.svg with medium-low

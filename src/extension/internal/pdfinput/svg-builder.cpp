@@ -37,7 +37,6 @@
 #include "io/stringstream.h"
 #include "io/base64stream.h"
 #include "display/nr-filter-utils.h"
-#include "libnr/nr-macros.h"
 #include "libnrtype/font-instance.h"
 
 #include "Function.h"
