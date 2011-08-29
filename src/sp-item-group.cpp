@@ -706,7 +706,7 @@ Geom::OptRect CGroup::bounds(SPItem::BBoxType type, Geom::Affine const &transfor
         if (SP_IS_ITEM(o) && !SP_ITEM(o)->isHidden()) {
             SPItem *child = SP_ITEM(o);
             Geom::Affine const ct(child->transform * transform);
-            bbox |= child->bounds(type, transform);
+            bbox |= child->bounds(type, ct);
         }
         l = g_slist_remove (l, o);
     }
