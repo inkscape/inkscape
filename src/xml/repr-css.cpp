@@ -1,6 +1,21 @@
 /*
  *   bulia byak <buliabyak@users.sf.net>
-*/
+ *   Tavmjong Bah <tavmjong@free.fr>  (Documentation)
+ *
+ * Functions to manipulate SPCSSAttr which is a class derived from Inkscape::XML::Node See
+ * sp-css-attr.h and node.h
+ *
+ * SPCSSAttr is a special node type where the "attributes" are the properties in an element's style
+ * attribute. For example, style="fill:blue;stroke:none" is stored in a List (Inkscape::Util:List)
+ * where the key is the property (e.g. "fill" or "stroke") and the value is the property's value
+ * (e.g. "blue" or "none"). An element's properties are manipulated by adding, removing, or
+ * changing an item in the List. Utility functions are provided to go back and forth between the
+ * two ways of representing properties (by a string or by a list).
+ *
+ * Use sp_repr_write_string to go from a property list to a style string.
+ *
+ * Use sp_repr_css_add_component to parse a property string and add the properties to the List.
+ */
 
 #define SP_REPR_CSS_C
 
@@ -35,7 +50,9 @@ protected:
 
 static void sp_repr_css_add_components(SPCSSAttr *css, Node *repr, gchar const *attr);
 
-
+/**
+ * Creates an empty SPCSSAttr (a class for manipulating CSS style properties).
+ */
 SPCSSAttr *
 sp_repr_css_attr_new()
 {
@@ -46,6 +63,9 @@ sp_repr_css_attr_new()
     return new SPCSSAttrImpl(attr_doc);
 }
 
+/**
+ * Unreferences an SPCSSAttr (will be garbage collected if no references remain).
+ */
 void
 sp_repr_css_attr_unref(SPCSSAttr *css)
 {
@@ -53,6 +73,12 @@ sp_repr_css_attr_unref(SPCSSAttr *css)
     Inkscape::GC::release((Node *) css);
 }
 
+/**
+ * Creates a new SPCSSAttr with one attribute (i.e. style) copied from an existing repr (node). The
+ * repr attribute data is in the form of a char const * string (e.g. fill:#00ff00;stroke:none). The
+ * string is parsed by libcroco which returns a CRDeclaration list (a typical C linked list) of
+ * properties and values. This list is then used to fill the attributes of the new SPCSSAttr.
+ */
 SPCSSAttr *sp_repr_css_attr(Node *repr, gchar const *attr)
 {
     g_assert(repr != NULL);
@@ -63,6 +89,9 @@ SPCSSAttr *sp_repr_css_attr(Node *repr, gchar const *attr)
     return css;
 }
 
+/**
+ * Adds an attribute to an existing SPCSAttr with the cascaded value including all parents.
+ */ 
 static void
 sp_repr_css_attr_inherited_recursive(SPCSSAttr *css, Node *repr, gchar const *attr)
 {
@@ -72,11 +101,12 @@ sp_repr_css_attr_inherited_recursive(SPCSSAttr *css, Node *repr, gchar const *at
     if (parent) {
         sp_repr_css_attr_inherited_recursive(css, parent, attr);
     }
-
     sp_repr_css_add_components(css, repr, attr);
 }
 
-
+/**
+ * Creates a new SPCSSAttr with one attribute whose value is determined by cascading.
+ */
 SPCSSAttr *sp_repr_css_attr_inherited(Node *repr, gchar const *attr)
 {
     g_assert(repr != NULL);
@@ -89,6 +119,9 @@ SPCSSAttr *sp_repr_css_attr_inherited(Node *repr, gchar const *attr)
     return css;
 }
 
+/**
+ * Adds components (style properties) to an existing SPCSAttr from a character string.
+ */
 static void
 sp_repr_css_add_components(SPCSSAttr *css, Node *repr, gchar const *attr)
 {
@@ -100,6 +133,10 @@ sp_repr_css_add_components(SPCSSAttr *css, Node *repr, gchar const *attr)
     sp_repr_css_attr_add_from_string(css, data);
 }
 
+/**
+ * Returns a character string of the value of a given style property or a default value if the
+ * attribute is not found.
+ */
 char const *
 sp_repr_css_property(SPCSSAttr *css, gchar const *name, gchar const *defval)
 {
@@ -112,6 +149,9 @@ sp_repr_css_property(SPCSSAttr *css, gchar const *name, gchar const *defval)
              : attr );
 }
 
+/**
+ * Returns true if a style property is present and its value is unset.
+ */
 bool
 sp_repr_css_property_is_unset(SPCSSAttr *css, gchar const *name)
 {
@@ -123,6 +163,9 @@ sp_repr_css_property_is_unset(SPCSSAttr *css, gchar const *name)
 }
 
 
+/**
+ * Set a style property to a new value (e.g. fill to #ffff00).
+ */
 void
 sp_repr_css_set_property(SPCSSAttr *css, gchar const *name, gchar const *value)
 {
@@ -132,6 +175,9 @@ sp_repr_css_set_property(SPCSSAttr *css, gchar const *name, gchar const *value)
     ((Node *) css)->setAttribute(name, value, false);
 }
 
+/**
+ * Set a style property to "inkscape:unset".
+ */
 void
 sp_repr_css_unset_property(SPCSSAttr *css, gchar const *name)
 {
@@ -141,6 +187,9 @@ sp_repr_css_unset_property(SPCSSAttr *css, gchar const *name)
     ((Node *) css)->setAttribute(name, "inkscape:unset", false);
 }
 
+/**
+ * Return the value of a style property if property define, or a default value if not.
+ */
 double
 sp_repr_css_double_property(SPCSSAttr *css, gchar const *name, double defval)
 {
@@ -150,6 +199,9 @@ sp_repr_css_double_property(SPCSSAttr *css, gchar const *name, double defval)
     return sp_repr_get_double_attribute((Node *) css, name, defval);
 }
 
+/**
+ * Write a style attribute string from a list of properties stored in an SPCSAttr object.
+ */
 gchar *
 sp_repr_css_write_string(SPCSSAttr *css)
 {
@@ -186,6 +238,9 @@ sp_repr_css_write_string(SPCSSAttr *css)
     return (buffer.empty() ? NULL : g_strdup (buffer.c_str()));
 }
 
+/**
+ * Sets an attribute (e.g. style) to a string created from a list of style properties.
+ */
 void
 sp_repr_css_set(Node *repr, SPCSSAttr *css, gchar const *attr)
 {
@@ -200,6 +255,9 @@ sp_repr_css_set(Node *repr, SPCSSAttr *css, gchar const *attr)
     if (value) g_free (value);
 }
 
+/**
+ * Loops through a List of style properties, printing key/value pairs.
+ */
 void
 sp_repr_css_print(SPCSSAttr *css)
 {
@@ -212,6 +270,9 @@ sp_repr_css_print(SPCSSAttr *css)
     }
 }
 
+/**
+ * Merges two SPCSSAttr's. Properties in src overwrite properties in dst if present in both.
+ */
 void
 sp_repr_css_merge(SPCSSAttr *dst, SPCSSAttr *src)
 {
@@ -219,9 +280,12 @@ sp_repr_css_merge(SPCSSAttr *dst, SPCSSAttr *src)
     g_assert(src != NULL);
 
     dst->mergeFrom(src, "");
+    sp_repr_css_print( dst );
 }
 
-
+/**
+ * Merges style properties as parsed by libcroco into an existing SPCSSAttr.
+ */
 static void
 sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *const decl)
 {
@@ -234,6 +298,8 @@ sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *const decl)
 }
 
 /**
+ * Merges style properties as parsed by libcroco into an existing SPCSSAttr.
+ *
  * \pre decl_list != NULL
  */
 static void
@@ -248,6 +314,10 @@ sp_repr_css_merge_from_decl_list(SPCSSAttr *css, CRDeclaration const *const decl
     }
 }
 
+/**
+ * Use libcroco to parse a string for CSS properties and then merge
+ * them into an existing SPCSSAttr.
+ */
 void
 sp_repr_css_attr_add_from_string(SPCSSAttr *css, gchar const *p)
 {
@@ -261,6 +331,10 @@ sp_repr_css_attr_add_from_string(SPCSSAttr *css, gchar const *p)
     }
 }
 
+/**
+ * Creates a new SPCSAttr with the values filled from a repr, merges in properties from the given
+ * SPCSAttr, and then replaces the that SPCSAttr with the new one.
+ */
 void
 sp_repr_css_change(Node *repr, SPCSSAttr *css, gchar const *attr)
 {
