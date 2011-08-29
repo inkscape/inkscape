@@ -147,7 +147,7 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
         if (bbox) d = *bbox;
     }
 
-    d *= IN_PER_PX;
+    d *= Geom::Scale(IN_PER_PX);
 
     float dwInchesX = d.width();
     float dwInchesY = d.height();

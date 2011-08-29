@@ -242,20 +242,6 @@
         </fileset>
     </cxxtestpart>
     <cxxtestpart command="${python} ${cxxtest}/cxxtestgen.py --have-eh"
-                 out="${src}/libnr/test-nr.cpp">
-        <fileset dir="${src}/libnr">
-            <include name="nr-compose-test.h"/>
-            <include name="nr-types-test.h"/>
-            <include name="nr-translate-test.h"/>
-            <include name="nr-rotate-test.h"/>
-            <include name="nr-scale-test.h"/>
-            <include name="nr-point-fns-test.h"/>
-            <include name="nr-rotate-fns-test.h"/>
-            <include name="in-svg-plane-test.h"/>
-            <include name="nr-matrix-test.h"/>
-        </fileset>
-    </cxxtestpart>
-    <cxxtestpart command="${python} ${cxxtest}/cxxtestgen.py --have-eh"
                  out="${src}/svg/test-svg.cpp">
         <fileset dir="${src}/svg">
             <include name="css-ostringstream-test.h"/>
@@ -326,17 +312,6 @@
             <exclude name="extract-uri-test.cpp"/>
             <exclude name="helper/units-test.cpp"/>
             <!-- exclude name="inkview.cpp"/-->
-            <!--<exclude name="libnr/test-nr.cpp"/>-->
-            <exclude name="libnr/test-nr-main.cpp"/>
-            <exclude name="libnr/testnr.cpp"/>
-            <exclude name="libnr/in-svg-plane-test.cpp"/>
-            <exclude name="libnr/nr-matrix-test.cpp"/>
-            <exclude name="libnr/nr-point-fns-test.cpp"/>
-            <exclude name="libnr/nr-rotate-fns-test.cpp"/>
-            <exclude name="libnr/nr-rotate-test.cpp"/>
-            <exclude name="libnr/nr-scale-test.cpp"/>
-            <exclude name="libnr/nr-translate-test.cpp"/>
-            <exclude name="libnr/nr-types-test.cpp"/>
             <exclude name="livarot/Path-test.cpp"/>
             <exclude name="mod360-test.cpp"/>
             <exclude name="trace/potrace/potest.cpp"/>
@@ -419,8 +394,6 @@
            <exclude name="test-src.o"/>
            <exclude name="display/test-display.o"/>
            <exclude name="helper/test-helper.o"/>
-           <exclude name="libnr/nr-compose-reference.o"/>
-           <exclude name="libnr/test-nr.o"/>
            <exclude name="svg/test-svg.o"/>
            <exclude name="util/test-util.o"/>
            <exclude name="xml/test-xml.o"/>
@@ -594,8 +567,6 @@
            <include name="obj/test-src.o"/>
            <include name="obj/display/test-display.o"/>
            <include name="obj/helper/test-helper.o"/>
-           <include name="obj/libnr/nr-compose-reference.o"/>
-           <include name="obj/libnr/test-nr.o"/>
            <include name="obj/svg/test-svg.o"/>
            <include name="obj/util/test-util.o"/>
            <include name="obj/xml/test-xml.o"/>
@@ -926,7 +897,6 @@
     <delete file="${src}/test-src.cpp"/>
     <delete file="${src}/display/test-display.cpp"/>
     <delete file="${src}/helper/test-helper.cpp"/>
-    <delete file="${src}/libnr/test-nr.cpp"/>
     <delete file="${src}/svg/test-svg.cpp"/>
     <delete file="${src}/util/test-util.cpp"/>
     <delete file="${src}/xml/test-xml.cpp"/>
