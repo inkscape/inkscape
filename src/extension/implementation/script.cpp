@@ -855,7 +855,6 @@ void Script::checkStderr (const Glib::ustring &data,
 
     vbox->pack_start(*scrollwindow, true, true, 5 /* fix these */);
 
-    warning.maximize();
     warning.run();
 
     return;
