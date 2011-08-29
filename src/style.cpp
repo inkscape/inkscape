@@ -342,6 +342,13 @@ static SPStyleEnum const enum_clip_rule[] = {
     {NULL, -1}
 };
 
+static SPStyleEnum const enum_color_interpolation[] = {
+    {"auto", SP_CSS_COLOR_INTERPOLATION_AUTO},
+    {"sRGB", SP_CSS_COLOR_INTERPOLATION_SRGB},
+    {"linearRGB", SP_CSS_COLOR_INTERPOLATION_LINEARRGB},
+    {NULL, -1}
+};
+
 /**
  * Release callback.
  */
@@ -662,6 +669,10 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
                                                               : NULL ));
         }
     }
+    /* color interpolation */
+    SPS_READ_PENUM_IF_UNSET(&style->color_interpolation, repr, "color_interpolation", enum_color_interpolation, true);
+    /* color interpolation filters*/
+    SPS_READ_PENUM_IF_UNSET(&style->color_interpolation_filters, repr, "color_interpolation_filters", enum_color_interpolation, true);
     /* fill */
     if (!style->fill.set) {
         val = repr->attribute("fill");
@@ -1209,10 +1220,18 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             break;
             /* Paint */
         case SP_PROP_COLOR_INTERPOLATION:
-            g_warning("Unimplemented style property SP_PROP_COLOR_INTERPOLATION: value: %s", val);
+            // We read it but issue warning
+            SPS_READ_IENUM_IF_UNSET(&style->color_interpolation, val, enum_color_interpolation, true);
+            if( style->color_interpolation.value != SP_CSS_COLOR_INTERPOLATION_SRGB ) {
+                g_warning("Inkscape currently only supports color-interpolation = sRGB");
+            }
             break;
         case SP_PROP_COLOR_INTERPOLATION_FILTERS:
-            g_warning("Unimplemented style property SP_PROP_INTERPOLATION_FILTERS: value: %s", val);
+            // We read it but issue warning
+            SPS_READ_IENUM_IF_UNSET(&style->color_interpolation_filters, val, enum_color_interpolation, true);
+            if( style->color_interpolation_filters.value != SP_CSS_COLOR_INTERPOLATION_SRGB ) {
+                g_warning("Inkscape currently only supports color-interpolation-filters = sRGB");
+            }
             break;
         case SP_PROP_COLOR_PROFILE:
             g_warning("Unimplemented style property SP_PROP_COLOR_PROFILE: value: %s", val);
@@ -1710,6 +1729,13 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
     if (!style->color.set || style->color.inherit) {
         sp_style_merge_ipaint(style, &style->color, &parent->color);
     }
+    if (!style->color_interpolation.set || style->color_interpolation.inherit) {
+        style->color_interpolation.computed = parent->color_interpolation.computed;
+    }
+    if (!style->color_interpolation_filters.set || style->color_interpolation_filters.inherit) {
+        style->color_interpolation_filters.computed = parent->color_interpolation_filters.computed;
+    }
+
 
     /* Fill */
     if (!style->fill.set || style->fill.inherit || style->fill.currentcolor) {
@@ -2095,8 +2121,8 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
     {
         SPIEnum SPStyle::*const fields[] = {
             &SPStyle::clip_rule,
-            //nyi: SPStyle::color_interpolation,
-            //nyi: SPStyle::color_interpolation_filters,
+            &SPStyle::color_interpolation,
+            &SPStyle::color_interpolation_filters,
             //nyi: SPStyle::color_rendering,
             &SPStyle::direction,
             &SPStyle::fill_rule,
@@ -2533,6 +2559,9 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
     if (!style->color.noneSet) { // CSS does not permit "none" for color
         p += sp_style_write_ipaint(p, c + BMAX - p, "color", &style->color, NULL, flags);
     }
+    p += sp_style_write_ienum(p, c + BMAX - p, "color-interpolation", enum_color_interpolation, &style->color_interpolation, NULL, flags);
+    p += sp_style_write_ienum(p, c + BMAX - p, "color-interpolation-filters", enum_color_interpolation, &style->color_interpolation_filters, NULL, flags);
+
 
     p += sp_style_write_ipaint(p, c + BMAX - p, "fill", &style->fill, NULL, flags);
     // if fill:none, skip writing fill properties
@@ -2700,6 +2729,8 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
     if (!from->color.noneSet) { // CSS does not permit "none" for color
         p += sp_style_write_ipaint(p, c + BMAX - p, "color", &from->color, &to->color, SP_STYLE_FLAG_IFSET);
     }
+    p += sp_style_write_ienum(p, c + BMAX - p, "color-interpolation", enum_color_interpolation, &from->color_interpolation, &to->color_interpolation, SP_STYLE_FLAG_IFDIFF);
+    p += sp_style_write_ienum(p, c + BMAX - p, "color-interpolation-filters", enum_color_interpolation, &from->color_interpolation_filters, &to->color_interpolation_filters, SP_STYLE_FLAG_IFDIFF);
 
     p += sp_style_write_ipaint(p, c + BMAX - p, "fill", &from->fill, &to->fill, SP_STYLE_FLAG_IFDIFF);
     // if fill:none, skip writing fill properties
@@ -2943,6 +2974,8 @@ sp_style_clear(SPStyle *style)
 
     style->color.clear();
     style->color.setColor(0.0, 0.0, 0.0);
+    style->color_interpolation.value = style->color_interpolation.computed = SP_CSS_COLOR_INTERPOLATION_SRGB;
+    style->color_interpolation_filters.value = style->color_interpolation_filters.computed = SP_CSS_COLOR_INTERPOLATION_LINEARRGB;
 
     style->fill.clear();
     style->fill.setColor(0.0, 0.0, 0.0);
@@ -4289,6 +4322,12 @@ sp_style_unset_property_attrs(SPObject *o)
     }
     if (style->color.set) {
         repr->setAttribute("color", NULL);
+    }
+    if (style->color_interpolation.set) {
+        repr->setAttribute("color-interpolation", NULL);
+    }
+    if (style->color_interpolation_filters.set) {
+        repr->setAttribute("color-interpolation-filters", NULL);
     }
     if (style->fill.set) {
         repr->setAttribute("fill", NULL);

@@ -349,6 +349,10 @@ struct SPStyle {
 
     /** color */
     SPIPaint color;
+    /** color-interpolation */
+    SPIEnum color_interpolation;
+    /** color-interpolation-filters */
+    SPIEnum color_interpolation_filters;
 
     /** fill */
     SPIPaint fill;
@@ -577,6 +581,12 @@ enum SPCSSDisplay {
 enum SPEnableBackground {
     SP_CSS_BACKGROUND_ACCUMULATE,
     SP_CSS_BACKGROUND_NEW
+};
+
+enum SPColorInterpolation {
+    SP_CSS_COLOR_INTERPOLATION_AUTO,
+    SP_CSS_COLOR_INTERPOLATION_SRGB,
+    SP_CSS_COLOR_INTERPOLATION_LINEARRGB
 };
 
 /// An SPTextStyle has a refcount, a font family, and a font name.

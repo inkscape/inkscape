@@ -97,6 +97,12 @@ SPFilter *new_filter(SPDocument *document)
     Inkscape::XML::Node *repr;
     repr = xml_doc->createElement("svg:filter");
 
+    // Inkscape only supports sRGB. See note in sp-filter.cpp.
+    SPCSSAttr *css = sp_repr_css_attr_new();
+    sp_repr_css_set_property(css, "color-interpolation-filters", "sRGB");
+    sp_repr_css_change(repr, css, "style");
+    sp_repr_css_attr_unref(css);
+
     // Append the new filter node to defs
     defs->appendChild(repr);
     Inkscape::GC::release(repr);
