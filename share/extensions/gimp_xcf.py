@@ -1,7 +1,7 @@
 #!/usr/bin/env python 
 '''
 Copyright (C) 2006 Aaron Spike, aaron@ekips.org
-Copyright (C) 2010 Nicolas Dufour, nicoduf@yahoo.fr (Windows support and various fixes)
+Copyright (C) 2010-2011 Nicolas Dufour, nicoduf@yahoo.fr (Windows support and various fixes)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -132,7 +132,7 @@ class MyEffect(inkex.Effect):
                 else:
                     name = id
                 filename = os.path.join(self.tmp_dir, "%s.png" % id)
-                command = "inkscape -i %s -j %s %s -e %s %s " % (id, area, opacity, filename, svg_file)
+                command = "inkscape -i \"%s\" -j %s %s -e \"%s\" %s " % (id, area, opacity, filename, svg_file)
                 if bsubprocess:
                     p = Popen(command, shell=True, stdout=PIPE, stderr=PIPE)
                     return_code = p.wait()
