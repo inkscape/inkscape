@@ -280,7 +280,6 @@ sp_repr_css_merge(SPCSSAttr *dst, SPCSSAttr *src)
     g_assert(src != NULL);
 
     dst->mergeFrom(src, "");
-    sp_repr_css_print( dst );
 }
 
 /**
