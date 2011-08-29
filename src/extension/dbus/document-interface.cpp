@@ -1269,7 +1269,7 @@ gboolean document_interface_selection_move_to(DocumentInterface *object, gdouble
 {
     Inkscape::Selection * sel = sp_desktop_selection(object->desk);
 
-    Geom::OptRect sel_bbox = sel->bounds();
+    Geom::OptRect sel_bbox = sel->visualBounds();
     if (sel_bbox) {
         Geom::Point m( x - selection_get_center_x(sel) , 0 - (y - selection_get_center_y(sel)) );
         sp_selection_move_relative(sel, m, true);
