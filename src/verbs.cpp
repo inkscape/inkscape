@@ -2592,7 +2592,7 @@ Verb *Verb::_base_verbs[] = {
     new HelpVerb(SP_VERB_HELP_MEMORY, "HelpAboutMemory", N_("About _Memory"),
                  N_("Memory usage information"), INKSCAPE_ICON("dialog-memory")),
     new HelpVerb(SP_VERB_HELP_ABOUT, "HelpAbout", N_("_About Inkscape"),
-                 N_("Inkscape version, authors, license"), INKSCAPE_ICON("inkscape")),
+                 N_("Inkscape version, authors, license"), INKSCAPE_ICON("inkscape-logo")),
     //new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
     //           N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
 
