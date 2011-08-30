@@ -63,7 +63,7 @@ extensions = \
 	fractalize.py \
 	funcplot.py \
 	gears.py\
-    gcodetools.py\
+	gcodetools.py\
 	generate_voronoi.py \
 	gimp_xcf.py \
 	grid_cartesian.py \
@@ -74,7 +74,7 @@ extensions = \
 	handles.py \
 	hpgl_output.py \
 	ill2svg.pl \
-  ink2canvas.py \
+	ink2canvas.py \
 	inkex.py \
 	Inkscape.pm \
 	inkwebeffect.py \
@@ -95,6 +95,8 @@ extensions = \
 	launch_webbrowser.py \
 	layers2svgfont.py \
 	svgfont2layers.py \
+	layout_nup.py \
+	layout_nup_pageframe.py \
 	lindenmayer.py \
 	lorem_ipsum.py \
 	markers_strokepaint.py \
@@ -145,8 +147,8 @@ extensions = \
 	svgcalendar.py \
 	svg_regex.py \
 	svg_and_media_zip_output.py \
-    text_extract.py \
-    svg_transform.py \
+	text_extract.py \
+	svg_transform.py \
 	text_uppercase.py \
 	text_lowercase.py \
 	text_sentencecase.py \
@@ -180,7 +182,7 @@ otherstuff = \
 	aisvg.xslt \
 	colors.xml \
 	jessyInk_video.svg \
-    svg2fxg.xsl \
+	svg2fxg.xsl \
 	svg2xaml.xsl \
 	xaml2svg.xsl
 
@@ -233,17 +235,17 @@ modules = \
 	fractalize.inx \
 	funcplot.inx \
 	gears.inx\
-    gcodetools_about.inx\
-    gcodetools_area.inx\
-    gcodetools_check_for_updates.inx\
-    gcodetools_dxf_points.inx\
-    gcodetools_engraving.inx\
-    gcodetools_graffiti.inx\
-    gcodetools_lathe.inx\
-    gcodetools_orientation_points.inx\
-    gcodetools_path_to_gcode.inx\
-    gcodetools_prepare_path_for_plasma.inx\
-    gcodetools_tools_library.inx\
+	gcodetools_about.inx\
+	gcodetools_area.inx\
+	gcodetools_check_for_updates.inx\
+	gcodetools_dxf_points.inx\
+	gcodetools_engraving.inx\
+	gcodetools_graffiti.inx\
+	gcodetools_lathe.inx\
+	gcodetools_orientation_points.inx\
+	gcodetools_path_to_gcode.inx\
+	gcodetools_prepare_path_for_plasma.inx\
+	gcodetools_tools_library.inx\
 	generate_voronoi.inx \
 	gimp_xcf.inx \
 	grid_cartesian.inx \
@@ -253,7 +255,7 @@ modules = \
 	guillotine.inx \
 	handles.inx \
 	hpgl_output.inx \
-    ink2canvas.inx \
+	ink2canvas.inx \
 	inkscape_help_askaquestion.inx \
 	inkscape_help_commandline.inx \
 	inkscape_help_faq.inx\
@@ -278,6 +280,7 @@ modules = \
 	jessyInk_view.inx \
 	layers2svgfont.inx \
 	svgfont2layers.inx \
+	layout_nup.inx \
 	lindenmayer.inx \
 	lorem_ipsum.inx \
 	markers_strokepaint.inx \
@@ -316,11 +319,11 @@ modules = \
 	split.inx \
 	straightseg.inx \
 	summersnight.inx \
-    svg2fxg.inx \
+	svg2fxg.inx \
 	svg2xaml.inx \
 	svg_and_media_zip_output.inx \
 	svgcalendar.inx \
-    text_extract.inx \
+	text_extract.inx \
 	text_uppercase.inx\
 	text_lowercase.inx \
 	text_sentencecase.inx \
