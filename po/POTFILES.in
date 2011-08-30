@@ -27,6 +27,7 @@ share/extensions/svg_and_media_zip_output.py
 share/extensions/uniconv_output.py
 share/extensions/web-set-att.py
 share/extensions/web-transmit-att.py
+share/extensions/webslicer_export.py
 share/filters/i18n.py
 share/filters/filters.svg.h
 share/palettes/palettes.h
@@ -432,6 +433,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/jessyInk_uninstall.inx
 [type: gettext/xml] share/extensions/jessyInk_video.inx
 [type: gettext/xml] share/extensions/jessyInk_view.inx
+[type: gettext/xml] share/extensions/layout_nup.inx
 [type: gettext/xml] share/extensions/lindenmayer.inx
 [type: gettext/xml] share/extensions/lorem_ipsum.inx
 [type: gettext/xml] share/extensions/markers_strokepaint.inx
