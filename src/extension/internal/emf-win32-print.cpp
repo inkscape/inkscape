@@ -917,12 +917,12 @@ PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char const *text, Geom
     // Transparent text background
     SetBkMode(hdc, TRANSPARENT);
 
-    p = p * tf;
-    p[Geom::X] = (p[Geom::X] * IN_PER_PX * dwDPI);
-    p[Geom::Y] = (p[Geom::Y] * IN_PER_PX * dwDPI);
+    Geom::Point p2 = p * tf;
+    p2[Geom::X] = (p2[Geom::X] * IN_PER_PX * dwDPI);
+    p2[Geom::Y] = (p2[Geom::Y] * IN_PER_PX * dwDPI);
 
-    LONG const xpos = (LONG) round(p[Geom::X]);
-    LONG const ypos = (LONG) round(rc.bottom-p[Geom::Y]);
+    LONG const xpos = (LONG) round(p2[Geom::X]);
+    LONG const ypos = (LONG) round(rc.bottom - p2[Geom::Y]);
 
     {
         gunichar2 *unicode_text = g_utf8_to_utf16( text, -1, NULL, NULL, NULL );
