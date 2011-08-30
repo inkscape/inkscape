@@ -1,4 +1,4 @@
-/* Copyright (C) 2001-2010 Peter Selinger.
+/* Copyright (C) 2001-2011 Peter Selinger.
    This file is part of Potrace. It is free software and it is covered
    by the GNU General Public License. See the file COPYING for details. */
 
@@ -35,14 +35,14 @@ static const potrace_param_t param_default = {
 /* Return a fresh copy of the set of default parameters, or NULL on
    failure with errno set. */
 potrace_param_t *potrace_param_default(void) {
-    potrace_param_t *p;
+  potrace_param_t *p;
 
-    p = (potrace_param_t *) malloc(sizeof(potrace_param_t));
-    if (!p) {
-        return NULL;
-    }
-    memcpy(p, &param_default, sizeof(potrace_param_t));
-    return p;
+  p = (potrace_param_t *) malloc(sizeof(potrace_param_t));
+  if (!p) {
+    return NULL;
+  }
+  memcpy(p, &param_default, sizeof(potrace_param_t));
+  return p;
 }
 
 /* On success, returns a Potrace state st with st->status ==
@@ -52,63 +52,63 @@ potrace_param_t *potrace_param_default(void) {
    set). Complete or incomplete Potrace state can be freed with
    potrace_state_free(). */
 potrace_state_t *potrace_trace(const potrace_param_t *param, const potrace_bitmap_t *bm) {
-    int r;
-    path_t *plist = NULL;
-    potrace_state_t *st;
-    progress_t prog;
-    progress_t subprog;
-    
-    /* prepare private progress bar state */
-    prog.callback = param->progress.callback;
-    prog.data = param->progress.data;
-    prog.min = param->progress.min;
-    prog.max = param->progress.max;
-    prog.epsilon = param->progress.epsilon;
-    prog.d_prev = param->progress.min;
+  int r;
+  path_t *plist = NULL;
+  potrace_state_t *st;
+  progress_t prog;
+  progress_t subprog;
+  
+  /* prepare private progress bar state */
+  prog.callback = param->progress.callback;
+  prog.data = param->progress.data;
+  prog.min = param->progress.min;
+  prog.max = param->progress.max;
+  prog.epsilon = param->progress.epsilon;
+  prog.d_prev = param->progress.min;
 
-    /* allocate state object */
-    st = (potrace_state_t *)malloc(sizeof(potrace_state_t));
-    if (!st) {
-        return NULL;
-    }
+  /* allocate state object */
+  st = (potrace_state_t *)malloc(sizeof(potrace_state_t));
+  if (!st) {
+    return NULL;
+  }
 
-    progress_subrange_start(0.0, 0.1, &prog, &subprog);
+  progress_subrange_start(0.0, 0.1, &prog, &subprog);
 
-    /* process the image */
-    r = bm_to_pathlist(bm, &plist, param, &subprog);
-    if (r) {
-        free(st);
-        return NULL;
-    }
+  /* process the image */
+  r = bm_to_pathlist(bm, &plist, param, &subprog);
+  if (r) {
+    free(st);
+    return NULL;
+  }
 
-    st->status = POTRACE_STATUS_OK;
-    st->plist = plist;
-    st->priv = NULL;  /* private state currently unused */
+  st->status = POTRACE_STATUS_OK;
+  st->plist = plist;
+  st->priv = NULL;  /* private state currently unused */
 
-    progress_subrange_end(&prog, &subprog);
+  progress_subrange_end(&prog, &subprog);
 
-    progress_subrange_start(0.1, 1.0, &prog, &subprog);
+  progress_subrange_start(0.1, 1.0, &prog, &subprog);
 
-    /* partial success. */
-    r = process_path(plist, param, &subprog);
-    if (r) {
-        st->status = POTRACE_STATUS_INCOMPLETE;
-    }
+  /* partial success. */
+  r = process_path(plist, param, &subprog);
+  if (r) {
+    st->status = POTRACE_STATUS_INCOMPLETE;
+  }
 
-    progress_subrange_end(&prog, &subprog);
+  progress_subrange_end(&prog, &subprog);
 
-    return st;
+  return st;
 }
 
 /* free a Potrace state, without disturbing errno. */
 void potrace_state_free(potrace_state_t *st) {
-    pathlist_free(st->plist);
-    free(st);
+  pathlist_free(st->plist);
+  free(st);
 }
 
 /* free a parameter list, without disturbing errno. */
 void potrace_param_free(potrace_param_t *p) {
-    free(p);
+  free(p);
 }
 
 char *potrace_version(void) {
