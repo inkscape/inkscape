@@ -13,7 +13,7 @@
         <_option value="in">in</_option>
         <_option value="mm">mm</_option>
     </param>
-    <param name="unit_text" type="description">Unit of measure for both circular pitch and center diameter.</param>
+    <_param name="unit_text" type="description">Unit of measure for both circular pitch and center diameter.</_param>
     <effect>
 	<object-type>all</object-type>
         <effects-menu>

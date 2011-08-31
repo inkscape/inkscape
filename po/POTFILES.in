@@ -77,6 +77,7 @@ src/extension/internal/bitmap/channel.cpp
 src/extension/internal/bitmap/charcoal.cpp
 src/extension/internal/bitmap/colorize.cpp
 src/extension/internal/bitmap/contrast.cpp
+src/extension/internal/bitmap/crop.cpp
 src/extension/internal/bitmap/cycleColormap.cpp
 src/extension/internal/bitmap/despeckle.cpp
 src/extension/internal/bitmap/edge.cpp
@@ -433,12 +434,15 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/jessyInk_uninstall.inx
 [type: gettext/xml] share/extensions/jessyInk_video.inx
 [type: gettext/xml] share/extensions/jessyInk_view.inx
+[type: gettext/xml] share/extensions/layers2svgfont.inx
 [type: gettext/xml] share/extensions/layout_nup.inx
 [type: gettext/xml] share/extensions/lindenmayer.inx
 [type: gettext/xml] share/extensions/lorem_ipsum.inx
 [type: gettext/xml] share/extensions/markers_strokepaint.inx
 [type: gettext/xml] share/extensions/measure.inx
 [type: gettext/xml] share/extensions/motion.inx
+[type: gettext/xml] share/extensions/new_glyph_layer.inx
+[type: gettext/xml] share/extensions/next_glyph_layer.inx
 [type: gettext/xml] share/extensions/outline2svg.inx
 [type: gettext/xml] share/extensions/param_curves.inx
 [type: gettext/xml] share/extensions/pathalongpath.inx
@@ -449,6 +453,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/plt_input.inx
 [type: gettext/xml] share/extensions/plt_output.inx
 [type: gettext/xml] share/extensions/polyhedron_3d.inx
+[type: gettext/xml] share/extensions/previous_glyph_layer.inx
 [type: gettext/xml] share/extensions/printing-marks.inx
 [type: gettext/xml] share/extensions/ps_input.inx
 [type: gettext/xml] share/extensions/radiusrand.inx
@@ -461,6 +466,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/rtree.inx
 [type: gettext/xml] share/extensions/rubberstretch.inx
 [type: gettext/xml] share/extensions/scour.inx
+[type: gettext/xml] share/extensions/setup_typography_canvas.inx
 [type: gettext/xml] share/extensions/sk1_input.inx
 [type: gettext/xml] share/extensions/sk1_output.inx
 [type: gettext/xml] share/extensions/sk_input.inx
@@ -472,6 +478,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/svg2xaml.inx
 [type: gettext/xml] share/extensions/svg_and_media_zip_output.inx
 [type: gettext/xml] share/extensions/svgcalendar.inx
+[type: gettext/xml] share/extensions/svgfont2layers.inx
 [type: gettext/xml] share/extensions/text_braille.inx
 [type: gettext/xml] share/extensions/text_extract.inx
 [type: gettext/xml] share/extensions/text_flipcase.inx

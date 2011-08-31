@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-08-30 22:06+0200\n"
-"PO-Revision-Date: 2011-08-30 22:10+0100\n"
+"POT-Creation-Date: 2011-08-31 21:37+0200\n"
+"PO-Revision-Date: 2011-08-31 21:46+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "Language: \n"
@@ -476,9 +476,9 @@ msgid "Can't create \"%s\"."
 msgstr ""
 
 #: ../share/extensions/webslicer_export.py:70
-#, fuzzy, python-format
+#, python-format
 msgid "Error: %s"
-msgstr "Erreurs"
+msgstr "Erreur : %s"
 
 #: ../share/extensions/webslicer_export.py:73
 #, fuzzy, python-format
@@ -4451,7 +4451,7 @@ msgstr "<big><b>Zone à exporter</b></big>"
 #: ../src/dialogs/export.cpp:290
 #: ../src/widgets/toolbox.cpp:1668
 #: ../src/widgets/toolbox.cpp:1676
-#: ../share/extensions/gears.inx.h:7
+#: ../share/extensions/gears.inx.h:8
 msgid "Units:"
 msgstr "Unités :"
 
@@ -5913,7 +5913,7 @@ msgstr "Désactivée"
 msgid "Currently there is no help available for this Extension.  Please look on the Inkscape website or ask on the mailing lists if you have questions regarding this extension."
 msgstr "Aucune aide n’est actuellement disponible pour cette extension. Veuillez vous référer au site internet d’Inkscape ou aux listes de diffusion pour toute question relative à celle-ci."
 
-#: ../src/extension/implementation/script.cpp:989
+#: ../src/extension/implementation/script.cpp:1007
 msgid "Inkscape has received additional data from the script executed.  The script did not return an error, but this may indicate the results will not be as expected."
 msgstr "Inkscape a reçu des données additionnelles du script exécuté. Le script n’a pas retourné d’erreur, mais ceci peut indiquer que les résultats ne sont pas ceux attendus."
 
@@ -5947,6 +5947,7 @@ msgstr "Décalage :"
 #: ../src/extension/internal/bitmap/charcoal.cpp:44
 #: ../src/extension/internal/bitmap/colorize.cpp:55
 #: ../src/extension/internal/bitmap/contrast.cpp:45
+#: ../src/extension/internal/bitmap/crop.cpp:74
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:42
 #: ../src/extension/internal/bitmap/despeckle.cpp:40
 #: ../src/extension/internal/bitmap/edge.cpp:42
@@ -6128,6 +6129,35 @@ msgstr "Ajuster :"
 #: ../src/extension/internal/bitmap/contrast.cpp:47
 msgid "Increase or decrease contrast in bitmap(s)"
 msgstr "Augmente ou diminue le contraste des images"
+
+#: ../src/extension/internal/bitmap/crop.cpp:65
+#, fuzzy
+msgid "Crop"
+msgstr "Découpage :"
+
+#: ../src/extension/internal/bitmap/crop.cpp:67
+msgid "Top (px):"
+msgstr ""
+
+#: ../src/extension/internal/bitmap/crop.cpp:68
+#, fuzzy
+msgid "Bottom (px):"
+msgstr "Bas :"
+
+#: ../src/extension/internal/bitmap/crop.cpp:69
+#, fuzzy
+msgid "Left (px):"
+msgstr "Décalage (px) :"
+
+#: ../src/extension/internal/bitmap/crop.cpp:70
+#, fuzzy
+msgid "Right (px):"
+msgstr "Droite :"
+
+#: ../src/extension/internal/bitmap/crop.cpp:76
+#, fuzzy
+msgid "Crop selected bitmap(s)."
+msgstr "Rendre flous les bitmaps sélectionnés"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:36
 msgid "Cycle Colormap"
@@ -7835,7 +7865,7 @@ msgstr "Remplissage turbulent"
 #: ../share/extensions/color_randomize.inx.h:6
 #: ../share/extensions/dots.inx.h:5
 #: ../share/extensions/dxf_input.inx.h:15
-#: ../share/extensions/dxf_outlines.inx.h:13
+#: ../share/extensions/dxf_outlines.inx.h:17
 #: ../share/extensions/gcodetools_area.inx.h:34
 #: ../share/extensions/gcodetools_engraving.inx.h:21
 #: ../share/extensions/gcodetools_graffiti.inx.h:24
@@ -9225,7 +9255,7 @@ msgstr "Unités"
 
 #: ../src/helper/units.cpp:38
 #: ../src/ui/widget/selected-style.cpp:294
-#: ../share/extensions/dxf_outlines.inx.h:20
+#: ../share/extensions/dxf_outlines.inx.h:25
 msgid "pt"
 msgstr "pt"
 
@@ -9243,7 +9273,7 @@ msgid "Pica"
 msgstr "Pica"
 
 #: ../src/helper/units.cpp:39
-#: ../share/extensions/dxf_outlines.inx.h:19
+#: ../share/extensions/dxf_outlines.inx.h:24
 msgid "pc"
 msgstr "pc"
 
@@ -9261,8 +9291,8 @@ msgstr "Pixel"
 
 #: ../src/helper/units.cpp:40
 #: ../src/ui/widget/selected-style.cpp:290
-#: ../share/extensions/dxf_outlines.inx.h:21
-#: ../share/extensions/gears.inx.h:10
+#: ../share/extensions/dxf_outlines.inx.h:26
+#: ../share/extensions/gears.inx.h:11
 msgid "px"
 msgstr "px"
 
@@ -9294,8 +9324,8 @@ msgstr "Millimètre"
 
 #: ../src/helper/units.cpp:43
 #: ../src/ui/widget/selected-style.cpp:298
-#: ../share/extensions/dxf_outlines.inx.h:18
-#: ../share/extensions/gears.inx.h:9
+#: ../share/extensions/dxf_outlines.inx.h:23
+#: ../share/extensions/gears.inx.h:10
 #: ../share/extensions/gcodetools_area.inx.h:55
 #: ../share/extensions/gcodetools_dxf_points.inx.h:24
 #: ../share/extensions/gcodetools_engraving.inx.h:33
@@ -9315,7 +9345,7 @@ msgid "Centimeter"
 msgstr "Centimètre"
 
 #: ../src/helper/units.cpp:44
-#: ../share/extensions/dxf_outlines.inx.h:14
+#: ../share/extensions/dxf_outlines.inx.h:19
 msgid "cm"
 msgstr "cm"
 
@@ -9328,7 +9358,7 @@ msgid "Meter"
 msgstr "Mètre"
 
 #: ../src/helper/units.cpp:45
-#: ../share/extensions/dxf_outlines.inx.h:17
+#: ../share/extensions/dxf_outlines.inx.h:22
 msgid "m"
 msgstr "m"
 
@@ -9342,8 +9372,8 @@ msgid "Inch"
 msgstr "Pouce"
 
 #: ../src/helper/units.cpp:46
-#: ../share/extensions/dxf_outlines.inx.h:16
-#: ../share/extensions/gears.inx.h:8
+#: ../share/extensions/dxf_outlines.inx.h:21
+#: ../share/extensions/gears.inx.h:9
 #: ../share/extensions/gcodetools_area.inx.h:52
 #: ../share/extensions/gcodetools_dxf_points.inx.h:23
 #: ../share/extensions/gcodetools_engraving.inx.h:32
@@ -9363,7 +9393,7 @@ msgid "Foot"
 msgstr "Pied"
 
 #: ../src/helper/units.cpp:47
-#: ../share/extensions/dxf_outlines.inx.h:15
+#: ../share/extensions/dxf_outlines.inx.h:20
 msgid "ft"
 msgstr "ft"
 
@@ -14186,7 +14216,7 @@ msgstr "Information"
 #: ../share/extensions/dots.inx.h:3
 #: ../share/extensions/draw_from_triangle.inx.h:20
 #: ../share/extensions/dxf_input.inx.h:11
-#: ../share/extensions/dxf_outlines.inx.h:12
+#: ../share/extensions/dxf_outlines.inx.h:15
 #: ../share/extensions/gcodetools_about.inx.h:5
 #: ../share/extensions/gcodetools_area.inx.h:28
 #: ../share/extensions/gcodetools_check_for_updates.inx.h:5
@@ -24927,18 +24957,39 @@ msgid "Base unit"
 msgstr ""
 
 #: ../share/extensions/dxf_outlines.inx.h:10
+msgid "CP 1250"
+msgstr ""
+
+#: ../share/extensions/dxf_outlines.inx.h:11
+msgid "CP 1252"
+msgstr ""
+
+#: ../share/extensions/dxf_outlines.inx.h:12
+#, fuzzy
+msgid "Character Encoding"
+msgstr "Encodage de caractère :"
+
+#: ../share/extensions/dxf_outlines.inx.h:13
 msgid "Desktop Cutting Plotter"
 msgstr "Table traçante/coupante"
 
-#: ../share/extensions/dxf_outlines.inx.h:11
+#: ../share/extensions/dxf_outlines.inx.h:14
 msgid "Desktop Cutting Plotter (AutoCAD DXF R14) (*.dxf)"
 msgstr "Table traçante ou coupante (AutoCAD DXF R14) (*.dxf)"
 
-#: ../share/extensions/dxf_outlines.inx.h:22
+#: ../share/extensions/dxf_outlines.inx.h:16
+msgid "Latin 1"
+msgstr "Latin 1"
+
+#: ../share/extensions/dxf_outlines.inx.h:18
+msgid "UTF 8"
+msgstr ""
+
+#: ../share/extensions/dxf_outlines.inx.h:27
 msgid "use LWPOLYLINE type of line output"
 msgstr "utiliser une type de ligne LWPOLYLINE en sortie"
 
-#: ../share/extensions/dxf_outlines.inx.h:23
+#: ../share/extensions/dxf_outlines.inx.h:28
 msgid "use ROBO-Master type of spline output"
 msgstr "utilise un type de spline ROBO-Master en sortie"
 
@@ -25242,6 +25293,10 @@ msgstr "Nombre de dents :"
 #: ../share/extensions/gears.inx.h:5
 msgid "Pressure angle (degrees):"
 msgstr "Angle de pression (°) :"
+
+#: ../share/extensions/gears.inx.h:7
+msgid "Unit of measure for both circular pitch and center diameter."
+msgstr ""
 
 #: ../share/extensions/gcodetools_about.inx.h:1
 msgid "About"
@@ -26841,6 +26896,19 @@ msgstr "Cette extension vous permet de définir, mettre à jour ou supprimer des
 msgid "View"
 msgstr "Vue"
 
+#: ../share/extensions/layers2svgfont.inx.h:1
+msgid "3 - Convert Glyph Layers to SVG Font"
+msgstr "3 - Convertir les calques de glyphe en police SVG"
+
+#: ../share/extensions/layers2svgfont.inx.h:2
+#: ../share/extensions/new_glyph_layer.inx.h:2
+#: ../share/extensions/next_glyph_layer.inx.h:1
+#: ../share/extensions/previous_glyph_layer.inx.h:1
+#: ../share/extensions/setup_typography_canvas.inx.h:6
+#: ../share/extensions/svgfont2layers.inx.h:3
+msgid "Typography"
+msgstr "Typographie"
+
 #: ../share/extensions/layout_nup.inx.h:1
 msgid ""
 "\n"
@@ -27137,6 +27205,19 @@ msgstr "Amplitude :"
 #: ../share/extensions/motion.inx.h:4
 msgid "Motion"
 msgstr "Mouvement"
+
+#: ../share/extensions/new_glyph_layer.inx.h:1
+msgid "2 - Add Glyph Layer"
+msgstr "2 - Ajouter un calque de glyphe"
+
+#: ../share/extensions/new_glyph_layer.inx.h:3
+#, fuzzy
+msgid "Unicode character:"
+msgstr "Insérer un caractère Unicode"
+
+#: ../share/extensions/next_glyph_layer.inx.h:2
+msgid "View Next Glyph"
+msgstr "Visualiser la glyphe suivante"
 
 #: ../share/extensions/outline2svg.inx.h:1
 msgid "ASCII Text with outline markup"
@@ -27605,6 +27686,11 @@ msgstr "Axe Z"
 msgid "Z-sort faces by:"
 msgstr "Ordonner les côtés sur l’axe Z par :"
 
+#: ../share/extensions/previous_glyph_layer.inx.h:2
+#, fuzzy
+msgid "View Previous Glyph"
+msgstr "Page précédente :"
+
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
 msgstr "Marges du fond perdu"
@@ -28037,6 +28123,35 @@ msgstr "Contourner les défauts de rendu"
 msgid "XML indentation (pretty-printing):"
 msgstr ""
 
+#: ../share/extensions/setup_typography_canvas.inx.h:1
+msgid "1 - Setup Typography Canvas"
+msgstr ""
+
+#: ../share/extensions/setup_typography_canvas.inx.h:2
+#, fuzzy
+msgid "Ascender:"
+msgstr "Rendu"
+
+#: ../share/extensions/setup_typography_canvas.inx.h:3
+#, fuzzy
+msgid "Caps Height:"
+msgstr "Hauteur des barres :"
+
+#: ../share/extensions/setup_typography_canvas.inx.h:4
+#, fuzzy
+msgid "Descender:"
+msgstr "Dépendance :"
+
+#: ../share/extensions/setup_typography_canvas.inx.h:5
+#, fuzzy
+msgid "Em-size:"
+msgstr "Taille :"
+
+#: ../share/extensions/setup_typography_canvas.inx.h:7
+#, fuzzy
+msgid "X-Height:"
+msgstr "Hauteur :"
+
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
 msgstr "Ouvrir des fichiers enregistrés avec l’éditeur de graphismes vectoriels sK1"
@@ -28318,6 +28433,15 @@ msgstr "Couleur de l’année :"
 #: ../share/extensions/svgcalendar.inx.h:34
 msgid "You may change the names for other languages:"
 msgstr "Ajuster les noms en fonction de votre langue :"
+
+#: ../share/extensions/svgfont2layers.inx.h:1
+#, fuzzy
+msgid "Convert SVG Font to Glyph Layers"
+msgstr "Inverser dans tous les calques"
+
+#: ../share/extensions/svgfont2layers.inx.h:2
+msgid "Load only the first 30 glyphs (Recommended)"
+msgstr ""
 
 #: ../share/extensions/text_braille.inx.h:1
 msgid "Convert to Braille"

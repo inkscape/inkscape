@@ -6,8 +6,7 @@
   <dependency type="executable" location="extensions">jessyInk_summary.py</dependency>
   <param name="tab" type="notebook">
     <page name="help" _gui-text="Help">
-			<_param name="help_text" type="description">This extension allows you to obtain information about the JessyInk script, effects and transitions contained in this SVG file. Please see code.google.com/p/jessyink for more details.
-			</_param>
+			<_param name="help_text" type="description">This extension allows you to obtain information about the JessyInk script, effects and transitions contained in this SVG file. Please see code.google.com/p/jessyink for more details.</_param>
     </page>
 	</param>
   <effect>
