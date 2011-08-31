@@ -63,6 +63,7 @@ class MyEffect(inkex.Effect):
         self.OptionParser.add_option("-R", "--ROBO", action="store", type="string", dest="ROBO")
         self.OptionParser.add_option("-P", "--POLY", action="store", type="string", dest="POLY")
         self.OptionParser.add_option("--units", action="store", type="string", dest="units")
+        self.OptionParser.add_option("--encoding", action="store", type="string", dest="char_encode", default="latin_1")
         self.OptionParser.add_option("--tab", action="store", type="string", dest="tab")
         self.OptionParser.add_option("--inputhelp", action="store", type="string", dest="inputhelp")
         self.dxf = []
@@ -75,7 +76,7 @@ class MyEffect(inkex.Effect):
     def output(self):
         print ''.join(self.dxf)
     def dxf_add(self, str):
-        self.dxf.append(str)
+        self.dxf.append(str.encode(self.options.char_encode))
     def dxf_line(self,csp):
         self.handle += 1
         self.dxf_add("  0\nLINE\n  5\n%x\n100\nAcDbEntity\n  8\n%s\n 62\n%d\n100\nAcDbLine\n" % (self.handle, self.layer, self.color))
