@@ -176,10 +176,12 @@ def parseStyle(s):
     if s is None:
       return {}
     else:
-      return dict([i.split(":") for i in s.split(";") if len(i)])
+      return dict([[x.strip() for x in i.split(":")] for i in s.split(";") if len(i)])
+
 def formatStyle(a):
     """Format an inline style attribute from a dictionary"""
     return ";".join([att+":"+str(val) for att,val in a.iteritems()])
+
 def isColor(c):
     """Determine if its a color we can use. If not, leave it unchanged."""
     if c.startswith('#') and (len(c)==4 or len(c)==7):
@@ -205,27 +207,35 @@ def parseColor(c):
         if len(numbers) == 3:
             for num in numbers:
                 if num.endswith(r'%'):
-                    converted_numbers.append( int(int(num[0:-1])*255/100))
+                    converted_numbers.append(int(float(num[0:-1])*255/100))
                 else:
                     converted_numbers.append(int(num))
             return tuple(converted_numbers)
         else:    
             return (0,0,0)
-        
-    r=int(c[1:3],16)
-    g=int(c[3:5],16)
-    b=int(c[5:],16)
+    try:
+        r=int(c[1:3],16)
+        g=int(c[3:5],16)
+        b=int(c[5:],16)
+    except:
+        # unknown color ...
+        # Return a default color. Maybe not the best thing to do but probably
+        # better than raising an exception. 
+       return(0,0,0)
     return (r,g,b)
 
 def formatColoria(a):
     """int array to #rrggbb"""
     return '#%02x%02x%02x' % (a[0],a[1],a[2])
+
 def formatColorfa(a):
     """float array to #rrggbb"""
     return '#%02x%02x%02x' % (int(round(a[0]*255)),int(round(a[1]*255)),int(round(a[2]*255)))
+
 def formatColor3i(r,g,b):
     """3 ints to #rrggbb"""
     return '#%02x%02x%02x' % (r,g,b)
+
 def formatColor3f(r,g,b):
     """3 floats to #rrggbb"""
     return '#%02x%02x%02x' % (int(round(r*255)),int(round(g*255)),int(round(b*255)))
