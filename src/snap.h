@@ -199,7 +199,7 @@ public:
 
     bool getSnapIndicator() const {return _snapindicator;}
 
-    Inkscape::SnappedPoint findBestSnap(Inkscape::SnapCandidatePoint const &p, SnappedConstraints const &sc, bool constrained, bool allowOffScreen = false) const;
+    Inkscape::SnappedPoint findBestSnap(Inkscape::SnapCandidatePoint const &p, IntermSnapResults const &isr, bool constrained, bool allowOffScreen = false) const;
     void keepClosestPointOnly(std::vector<Inkscape::SnapCandidatePoint> &points, const Geom::Point &reference) const;
 
 protected:

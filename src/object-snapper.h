@@ -38,13 +38,13 @@ public:
     Geom::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
     bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
 
-    void freeSnap(SnappedConstraints &sc,
+    void freeSnap(IntermSnapResults &isr,
                   Inkscape::SnapCandidatePoint const &p,
                   Geom::OptRect const &bbox_to_snap,
                   std::vector<SPItem const *> const *it,
                   std::vector<SnapCandidatePoint> *unselected_nodes) const;
 
-    void constrainedSnap(SnappedConstraints &sc,
+    void constrainedSnap(IntermSnapResults &isr,
                   Inkscape::SnapCandidatePoint const &p,
                   Geom::OptRect const &bbox_to_snap,
                   SnapConstraint const &c,
@@ -64,25 +64,25 @@ private:
                        bool const _clip_or_mask,
                        Geom::Affine const additional_affine) const;
 
-    void _snapNodes(SnappedConstraints &sc,
+    void _snapNodes(IntermSnapResults &isr,
                       Inkscape::SnapCandidatePoint const &p, // in desktop coordinates
                       std::vector<SnapCandidatePoint> *unselected_nodes,
                       SnapConstraint const &c = SnapConstraint(),
                       Geom::Point const &p_proj_on_constraint = Geom::Point()) const;
 
-    void _snapTranslatingGuide(SnappedConstraints &sc,
+    void _snapTranslatingGuide(IntermSnapResults &isr,
                      Geom::Point const &p,
                      Geom::Point const &guide_normal) const;
 
     void _collectNodes(Inkscape::SnapSourceType const &t,
                   bool const &first_point) const;
 
-    void _snapPaths(SnappedConstraints &sc,
+    void _snapPaths(IntermSnapResults &isr,
                       Inkscape::SnapCandidatePoint const &p, // in desktop coordinates
                       std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes, // in desktop coordinates
                       SPPath const *selected_path) const;
 
-    void _snapPathsConstrained(SnappedConstraints &sc,
+    void _snapPathsConstrained(IntermSnapResults &isr,
                  Inkscape::SnapCandidatePoint const &p, // in desktop coordinates
                  SnapConstraint const &c,
                  Geom::Point const &p_proj_on_constraint) const;

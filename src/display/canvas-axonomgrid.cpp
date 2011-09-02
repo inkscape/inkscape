@@ -756,16 +756,16 @@ CanvasAxonomGridSnapper::_getSnapLines(Geom::Point const &p) const
     return s;
 }
 
-void CanvasAxonomGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num, Geom::Point const normal_to_line, Geom::Point const point_on_line) const
+void CanvasAxonomGridSnapper::_addSnappedLine(IntermSnapResults &isr, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num, Geom::Point const normal_to_line, Geom::Point const point_on_line) const
 {
     SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, source, source_num, Inkscape::SNAPTARGET_GRID, getSnapperTolerance(), getSnapperAlwaysSnap(), normal_to_line, point_on_line);
-    sc.grid_lines.push_back(dummy);
+    isr.grid_lines.push_back(dummy);
 }
 
-void CanvasAxonomGridSnapper::_addSnappedPoint(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num, bool constrained_snap) const
+void CanvasAxonomGridSnapper::_addSnappedPoint(IntermSnapResults &isr, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num, bool constrained_snap) const
 {
     SnappedPoint dummy = SnappedPoint(snapped_point, source, source_num, Inkscape::SNAPTARGET_GRID, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), constrained_snap, true);
-    sc.points.push_back(dummy);
+    isr.points.push_back(dummy);
 }
 
 bool CanvasAxonomGridSnapper::ThisSnapperMightSnap() const

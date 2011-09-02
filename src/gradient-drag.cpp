@@ -645,7 +645,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
             sp_knot_moveto (knot, p);
         }
     } else if (state & GDK_CONTROL_MASK) {
-        SnappedConstraints sc;
+        IntermSnapResults isr;
         Inkscape::SnapCandidatePoint scp = Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         unsigned snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
@@ -704,24 +704,24 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
                     sp = m.constrainedAngularSnap(scp, boost::optional<Geom::Point>(), dr_snap, snaps);
                 }
                 m.unSetup();
-                sc.points.push_back(sp);
+                isr.points.push_back(sp);
             }
         }
 
         m.setup(desktop, false); // turn of the snap indicator temporarily
-        Inkscape::SnappedPoint bsp = m.findBestSnap(scp, sc, true);
+        Inkscape::SnappedPoint bsp = m.findBestSnap(scp, isr, true);
         m.unSetup();
         if (!bsp.getSnapped()) {
             // If we didn't truly snap to an object or to a grid, then we will still have to look for the
             // closest projection onto one of the constraints. findBestSnap() will not do this for us
-            for (std::list<Inkscape::SnappedPoint>::const_iterator i = sc.points.begin(); i != sc.points.end(); i++) {
-                if (i == sc.points.begin() || (Geom::L2((*i).getPoint() - p) < Geom::L2(bsp.getPoint() - p))) {
+            for (std::list<Inkscape::SnappedPoint>::const_iterator i = isr.points.begin(); i != isr.points.end(); i++) {
+                if (i == isr.points.begin() || (Geom::L2((*i).getPoint() - p) < Geom::L2(bsp.getPoint() - p))) {
                     bsp.setPoint((*i).getPoint());
                     bsp.setTarget(Inkscape::SNAPTARGET_CONSTRAINED_ANGLE);
                 }
             }
         }
-        //p = sc.points.front().getPoint();
+        //p = isr.points.front().getPoint();
         p = bsp.getPoint();
         sp_knot_moveto (knot, p);
     }

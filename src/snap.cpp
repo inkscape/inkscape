@@ -210,14 +210,14 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapCandidatePoint const 
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, Geom::infinity(), 0, false, false, false);
     }
 
-    SnappedConstraints sc;
+    IntermSnapResults isr;
     SnapperList const snappers = getSnappers();
 
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->freeSnap(sc, p, bbox_to_snap, &_items_to_ignore, _unselected_nodes);
+        (*i)->freeSnap(isr, p, bbox_to_snap, &_items_to_ignore, _unselected_nodes);
     }
 
-    return findBestSnap(p, sc, false);
+    return findBestSnap(p, isr, false);
 }
 
 void SnapManager::preSnap(Inkscape::SnapCandidatePoint const &p)
@@ -282,13 +282,13 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t, Geom::Point c
                 // only if the origin of the grid is at (0,0). If it's not then compensate for this
                 // in the translation t
                 Geom::Point const t_offset = t + grid->origin;
-                SnappedConstraints sc;
+                IntermSnapResults isr;
                 // Only the first three parameters are being used for grid snappers
-                snapper->freeSnap(sc, Inkscape::SnapCandidatePoint(t_offset, Inkscape::SNAPSOURCE_GRID_PITCH),Geom::OptRect(), NULL, NULL);
+                snapper->freeSnap(isr, Inkscape::SnapCandidatePoint(t_offset, Inkscape::SNAPSOURCE_GRID_PITCH),Geom::OptRect(), NULL, NULL);
                 // Find the best snap for this grid, including intersections of the grid-lines
                 bool old_val = _snapindicator;
                 _snapindicator = false;
-                Inkscape::SnappedPoint s = findBestSnap(Inkscape::SnapCandidatePoint(t_offset, Inkscape::SNAPSOURCE_GRID_PITCH), sc, false, true);
+                Inkscape::SnappedPoint s = findBestSnap(Inkscape::SnapCandidatePoint(t_offset, Inkscape::SNAPSOURCE_GRID_PITCH), isr, false, true);
                 _snapindicator = old_val;
                 if (s.getSnapped() && (s.getSnapDistance() < nearest_distance)) {
                     // use getSnapDistance() instead of getWeightedDistance() here because the pointer's position
@@ -403,13 +403,13 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
         return no_snap;
     }
 
-    SnappedConstraints sc;
+    IntermSnapResults isr;
     SnapperList const snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->constrainedSnap(sc, p, bbox_to_snap, constraint, &_items_to_ignore, _unselected_nodes);
+        (*i)->constrainedSnap(isr, p, bbox_to_snap, constraint, &_items_to_ignore, _unselected_nodes);
     }
 
-    result = findBestSnap(p, sc, true);
+    result = findBestSnap(p, isr, true);
 
     if (result.getSnapped()) {
         // only change the snap indicator if we really snapped to something
@@ -442,7 +442,7 @@ Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandi
         return no_snap;
     }
 
-    SnappedConstraints sc;
+    IntermSnapResults isr;
     SnapperList const snappers = getSnappers();
     std::vector<Geom::Point> projections;
     bool snapping_is_futile = !someSnapperMightSnap() || dont_snap;
@@ -471,11 +471,11 @@ Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandi
             // Try to snap to the constraint
             if (!snapping_is_futile) {
                 for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-                    (*i)->constrainedSnap(sc, p, bbox_to_snap, *c, &_items_to_ignore,_unselected_nodes);
+                    (*i)->constrainedSnap(isr, p, bbox_to_snap, *c, &_items_to_ignore,_unselected_nodes);
                 }
             }
         }
-        result = findBestSnap(p, sc, true);
+        result = findBestSnap(p, isr, true);
     }
 
     if (result.getSnapped()) {
@@ -578,13 +578,13 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal,
         candidate = Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_GUIDE);
     }
 
-    SnappedConstraints sc;
+    IntermSnapResults isr;
     SnapperList snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->freeSnap(sc, candidate, Geom::OptRect(), NULL, NULL);
+        (*i)->freeSnap(isr, candidate, Geom::OptRect(), NULL, NULL);
     }
 
-    Inkscape::SnappedPoint const s = findBestSnap(candidate, sc, false);
+    Inkscape::SnappedPoint const s = findBestSnap(candidate, isr, false);
 
     s.getPointIfSnapped(p);
 }
@@ -606,15 +606,15 @@ void SnapManager::guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline)
 
     Inkscape::SnapCandidatePoint candidate(p, Inkscape::SNAPSOURCE_GUIDE_ORIGIN, Inkscape::SNAPTARGET_UNDEFINED);
 
-    SnappedConstraints sc;
+    IntermSnapResults isr;
     Inkscape::Snapper::SnapConstraint cl(guideline.point_on_line, Geom::rot90(guideline.normal_to_line));
 
     SnapperList snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->constrainedSnap(sc, candidate, Geom::OptRect(), cl, NULL, NULL);
+        (*i)->constrainedSnap(isr, candidate, Geom::OptRect(), cl, NULL, NULL);
     }
 
-    Inkscape::SnappedPoint const s = findBestSnap(candidate, sc, false);
+    Inkscape::SnappedPoint const s = findBestSnap(candidate, isr, false);
     s.getPointIfSnapped(p);
 }
 
@@ -1135,14 +1135,14 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapRotate(std::vector<Inkscape::
  * also the nearest target), and show the snap indicator if requested
  *
  * \param p Source point to be snapped
- * \param sc A structure holding all snap targets that have been found so far
+ * \param isr A structure holding all snap targets that have been found so far
  * \param constrained True if the snap is constrained, e.g. for stretching or for purely horizontal translation.
  * \param allowOffScreen If true, then snapping to points which are off the screen is allowed (needed for example when pasting to the grid)
  * \return An instance of the SnappedPoint class, which holds data on the snap source, snap target, and various metrics
  */
 
 Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint const &p,
-                                                 SnappedConstraints const &sc,
+                                                 IntermSnapResults const &isr,
                                                  bool constrained,
                                                  bool allowOffScreen) const
 {
@@ -1150,10 +1150,10 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
 
     /*
     std::cout << "Type and number of snapped constraints: " << std::endl;
-    std::cout << "  Points      : " << sc.points.size() << std::endl;
-    std::cout << "  Grid lines  : " << sc.grid_lines.size()<< std::endl;
-    std::cout << "  Guide lines : " << sc.guide_lines.size()<< std::endl;
-    std::cout << "  Curves      : " << sc.curves.size()<< std::endl;
+    std::cout << "  Points      : " << isr.points.size() << std::endl;
+    std::cout << "  Grid lines  : " << isr.grid_lines.size()<< std::endl;
+    std::cout << "  Guide lines : " << isr.guide_lines.size()<< std::endl;
+    std::cout << "  Curves      : " << isr.curves.size()<< std::endl;
     */
 
     // Store all snappoints
@@ -1161,14 +1161,14 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
 
     // search for the closest snapped point
     Inkscape::SnappedPoint closestPoint;
-    if (getClosestSP(sc.points, closestPoint)) {
+    if (getClosestSP(isr.points, closestPoint)) {
         sp_list.push_back(closestPoint);
     }
 
     // search for the closest snapped curve
     if (snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_PATH)) { // We might have been looking for path intersections only, and not for the paths themselves
         Inkscape::SnappedCurve closestCurve;
-        if (getClosestCurve(sc.curves, closestCurve)) {
+        if (getClosestCurve(isr.curves, closestCurve)) {
             sp_list.push_back(Inkscape::SnappedPoint(closestCurve));
         }
     }
@@ -1176,7 +1176,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
     if (snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_PATH_INTERSECTION)) {
         // search for the closest snapped intersection of curves
         Inkscape::SnappedPoint closestCurvesIntersection;
-        if (getClosestIntersectionCS(sc.curves, p.getPoint(), closestCurvesIntersection, _desktop->dt2doc())) {
+        if (getClosestIntersectionCS(isr.curves, p.getPoint(), closestCurvesIntersection, _desktop->dt2doc())) {
             closestCurvesIntersection.setSource(p.getSourceType());
             sp_list.push_back(closestCurvesIntersection);
         }
@@ -1184,13 +1184,13 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
 
     // search for the closest snapped grid line
     Inkscape::SnappedLine closestGridLine;
-    if (getClosestSL(sc.grid_lines, closestGridLine)) {
+    if (getClosestSL(isr.grid_lines, closestGridLine)) {
         sp_list.push_back(Inkscape::SnappedPoint(closestGridLine));
     }
 
     // search for the closest snapped guide line
     Inkscape::SnappedLine closestGuideLine;
-    if (getClosestSL(sc.guide_lines, closestGuideLine)) {
+    if (getClosestSL(isr.guide_lines, closestGuideLine)) {
         sp_list.push_back(Inkscape::SnappedPoint(closestGuideLine));
     }
 
@@ -1203,7 +1203,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
     if (!constrained) {
         // search for the closest snapped intersection of grid lines
         Inkscape::SnappedPoint closestGridPoint;
-        if (getClosestIntersectionSL(sc.grid_lines, closestGridPoint)) {
+        if (getClosestIntersectionSL(isr.grid_lines, closestGridPoint)) {
             closestGridPoint.setSource(p.getSourceType());
             closestGridPoint.setTarget(Inkscape::SNAPTARGET_GRID_INTERSECTION);
             sp_list.push_back(closestGridPoint);
@@ -1211,7 +1211,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
 
         // search for the closest snapped intersection of guide lines
         Inkscape::SnappedPoint closestGuidePoint;
-        if (getClosestIntersectionSL(sc.guide_lines, closestGuidePoint)) {
+        if (getClosestIntersectionSL(isr.guide_lines, closestGuidePoint)) {
             closestGuidePoint.setSource(p.getSourceType());
             closestGuidePoint.setTarget(Inkscape::SNAPTARGET_GUIDE_INTERSECTION);
             sp_list.push_back(closestGuidePoint);
@@ -1220,7 +1220,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
         // search for the closest snapped intersection of grid with guide lines
         if (snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GRID_GUIDE_INTERSECTION)) {
             Inkscape::SnappedPoint closestGridGuidePoint;
-            if (getClosestIntersectionSL(sc.grid_lines, sc.guide_lines, closestGridGuidePoint)) {
+            if (getClosestIntersectionSL(isr.grid_lines, isr.guide_lines, closestGridGuidePoint)) {
                 closestGridGuidePoint.setSource(p.getSourceType());
                 closestGridGuidePoint.setTarget(Inkscape::SNAPTARGET_GRID_GUIDE_INTERSECTION);
                 sp_list.push_back(closestGridGuidePoint);

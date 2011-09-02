@@ -268,7 +268,7 @@ void Inkscape::ObjectSnapper::_collectNodes(SnapSourceType const &t,
     }
 }
 
-void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
+void Inkscape::ObjectSnapper::_snapNodes(IntermSnapResults &isr,
                                          SnapCandidatePoint const &p,
                                          std::vector<SnapCandidatePoint> *unselected_nodes,
                                          SnapConstraint const &c,
@@ -313,11 +313,11 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
     }
 
     if (success) {
-        sc.points.push_back(s);
+        isr.points.push_back(s);
     }
 }
 
-void Inkscape::ObjectSnapper::_snapTranslatingGuide(SnappedConstraints &sc,
+void Inkscape::ObjectSnapper::_snapTranslatingGuide(IntermSnapResults &isr,
                                          Geom::Point const &p,
                                          Geom::Point const &guide_normal) const
 {
@@ -326,7 +326,7 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuide(SnappedConstraints &sc,
 
     if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION, SNAPTARGET_BBOX_EDGE, SNAPTARGET_PAGE_BORDER)) {
         _collectPaths(p, SNAPSOURCE_GUIDE, true);
-        _snapPaths(sc, SnapCandidatePoint(p, SNAPSOURCE_GUIDE), NULL, NULL);
+        _snapPaths(isr, SnapCandidatePoint(p, SNAPSOURCE_GUIDE), NULL, NULL);
     }
 
     SnappedPoint s;
@@ -341,7 +341,7 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuide(SnappedConstraints &sc,
         Geom::Coord dist2 = Geom::L2(p - p_proj); // distance from projection of node on the guide, to the mouse location
         if ((dist < tol && dist2 < tol) || getSnapperAlwaysSnap()) {
             s = SnappedPoint(target_pt, SNAPSOURCE_GUIDE, 0, (*k).getTargetType(), dist, tol, getSnapperAlwaysSnap(), false, true, (*k).getTargetBBox());
-            sc.points.push_back(s);
+            isr.points.push_back(s);
         }
     }
 }
@@ -464,7 +464,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
     }
 }
 
-void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
+void Inkscape::ObjectSnapper::_snapPaths(IntermSnapResults &isr,
                                      SnapCandidatePoint const &p,
                                      std::vector<SnapCandidatePoint> *unselected_nodes,
                                      SPPath const *selected_path) const
@@ -548,7 +548,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                     if (!being_edited || (c1 && c2)) {
                         Geom::Coord const dist = Geom::distance(sp_doc, p_doc);
                         if (dist < getSnapperTolerance()) {
-                            sc.curves.push_back(SnappedCurve(sp_dt, num_path, index, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve, p.getSourceType(), p.getSourceNum(), it_p->target_type, it_p->target_bbox));
+                            isr.curves.push_back(SnappedCurve(sp_dt, num_path, index, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve, p.getSourceType(), p.getSourceNum(), it_p->target_type, it_p->target_bbox));
                         }
                     }
                 }
@@ -578,7 +578,7 @@ bool Inkscape::ObjectSnapper::isUnselectedNode(Geom::Point const &point, std::ve
     return false;
 }
 
-void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
+void Inkscape::ObjectSnapper::_snapPathsConstrained(IntermSnapResults &isr,
                                      SnapCandidatePoint const &p,
                                      SnapConstraint const &c,
                                      Geom::Point const &p_proj_on_constraint) const
@@ -664,7 +664,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                 SnappedPoint s = SnappedPoint(*p_inters, p.getSourceType(), p.getSourceNum(), k->target_type, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true, k->target_bbox);;
                 // Store the snapped point
                 if (dist <= tolerance) { // If the intersection is within snapping range, then we might snap to it
-                    sc.points.push_back(s);
+                    isr.points.push_back(s);
                 }
             }
         }
@@ -672,7 +672,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
 }
 
 
-void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
+void Inkscape::ObjectSnapper::freeSnap(IntermSnapResults &isr,
                                             SnapCandidatePoint const &p,
                                             Geom::OptRect const &bbox_to_snap,
                                             std::vector<SPItem const *> const *it,
@@ -688,7 +688,7 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
         _findCandidates(_snapmanager->getDocument()->getRoot(), it, p.getSourceNum() <= 0, local_bbox_to_snap, false, Geom::identity());
     }
 
-    _snapNodes(sc, p, unselected_nodes);
+    _snapNodes(isr, p, unselected_nodes);
 
     if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION, SNAPTARGET_BBOX_EDGE, SNAPTARGET_PAGE_BORDER, SNAPTARGET_TEXT_BASELINE)) {
         unsigned n = (unselected_nodes == NULL) ? 0 : unselected_nodes->size();
@@ -705,14 +705,14 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
                 } // else: *it->begin() might be a SPGroup, e.g. when editing a LPE of text that has been converted to a group of paths
                 // as reported in bug #356743. In that case we can just ignore it, i.e. not snap to this item
             }
-            _snapPaths(sc, p, unselected_nodes, path);
+            _snapPaths(isr, p, unselected_nodes, path);
         } else {
-            _snapPaths(sc, p, NULL, NULL);
+            _snapPaths(isr, p, NULL, NULL);
         }
     }
 }
 
-void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
+void Inkscape::ObjectSnapper::constrainedSnap( IntermSnapResults &isr,
                                                   SnapCandidatePoint const &p,
                                                   Geom::OptRect const &bbox_to_snap,
                                                   SnapConstraint const &c,
@@ -736,10 +736,10 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
     // This is useful for example when scaling an object while maintaining a fixed aspect ratio. It's
     // nodes are only allowed to move in one direction (i.e. in one degree of freedom).
 
-    _snapNodes(sc, p, unselected_nodes, c, pp);
+    _snapNodes(isr, p, unselected_nodes, c, pp);
 
     if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION, SNAPTARGET_BBOX_EDGE, SNAPTARGET_PAGE_BORDER, SNAPTARGET_TEXT_BASELINE)) {
-        _snapPathsConstrained(sc, p, c, pp);
+        _snapPathsConstrained(isr, p, c, pp);
     }
 }
 

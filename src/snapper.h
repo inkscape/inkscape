@@ -23,7 +23,7 @@
 #include "snap-preferences.h"
 #include "snap-candidate.h"
 
-struct SnappedConstraints {
+struct IntermSnapResults {
     std::list<Inkscape::SnappedPoint> points;
     std::list<Inkscape::SnappedLine> grid_lines;
     std::list<Inkscape::SnappedLine> guide_lines;
@@ -57,7 +57,7 @@ public:
     bool getEnabled() const {return _snap_enabled;}
     bool getSnapVisibleOnly() const {return _snap_visible_only;}
 
-    virtual void freeSnap(SnappedConstraints &/*sc*/,
+    virtual void freeSnap(IntermSnapResults &/*isr*/,
                           Inkscape::SnapCandidatePoint const &/*p*/,
                           Geom::OptRect const &/*bbox_to_snap*/,
                           std::vector<SPItem const *> const */*it*/,
@@ -134,7 +134,7 @@ public:
         SnapConstraintType _type;
     };
 
-    virtual void constrainedSnap(SnappedConstraints &/*sc*/,
+    virtual void constrainedSnap(IntermSnapResults &/*isr*/,
                                  Inkscape::SnapCandidatePoint const &/*p*/,
                                  Geom::OptRect const &/*bbox_to_snap*/,
                                  SnapConstraint const &/*c*/,
