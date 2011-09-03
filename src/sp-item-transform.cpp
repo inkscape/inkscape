@@ -76,7 +76,7 @@ void sp_item_move_rel(SPItem *item, Geom::Translate const &tr)
 /**
  * \brief Calculate the affine transformation required to transform one visual bounding box into another, accounting for a uniform strokewidth
  *
- * PS: This function will only return accurate results for the visual bounding box of a selection of one of more objects, all having
+ * PS: This function will only return accurate results for the visual bounding box of a selection of one or more objects, all having
  * the same strokewidth. If the stroke width varies from object to object in this selection, then the function
  * get_scale_transform_with_unequal_stroke() should be called instead
  *
@@ -120,23 +120,6 @@ get_scale_transform_with_uniform_stroke (Geom::Rect const &bbox_visual, gdouble 
     gdouble h1 = y1 - y0;
     // The new visual bounding box will have a stroke r1
 
-    // We will now try to calculate the affine transformation required to transform the first visual bounding box into
-    // the second one, while accounting for strokewidth
-
-    if (bbox_visual.hasZeroArea()) { // Obviously we cannot scale from empty visual bounding boxes at all, so we will only translate in such a case
-        Geom::Affine move = Geom::Translate(x0 - bbox_visual.min()[Geom::X], y0 - bbox_visual.min()[Geom::Y]);
-        return (move);
-    }
-
-    Geom::Affine direct = Geom::Scale(w1 / w0,   h1 / h0); // Scaling of the visual bounding box
-
-    // Although the area of the visual bounding box is not zero, we can still have a geometric
-    // bounding box with one or both sides having zero length. We can't handle this and will therefore
-    // simply return the scaling of the visual bounding box, without accounting for any stroke scaling
-    if (fabs(w0 - r0) < 1e-6 || fabs(h0 - r0) < 1e-6 || (!transform_stroke && (fabs(w1 - r0) < 1e-6 || fabs(h1 - r0) < 1e-6))) {
-        return (p2o * direct * o2n);
-    }
-
     // Here starts the calculation you've been waiting for; first do some preparation
     int flip_x = (w1 > 0) ? 1 : -1;
     int flip_y = (h1 > 0) ? 1 : -1;
@@ -148,14 +131,38 @@ get_scale_transform_with_uniform_stroke (Geom::Rect const &bbox_visual, gdouble 
     r0 = fabs(r0);
     // w0 and h0 will always be positive due to the definition of the width() and height() methods.
 
-    gdouble ratio_x = (w1 - r0) / (w0 - r0); // Only valid when the stroke is kept constant, in which case r1 = r0
-    gdouble ratio_y = (h1 - r0) / (h0 - r0);
+    // We will now try to calculate the affine transformation required to transform the first visual bounding box into
+    // the second one, while accounting for strokewidth
 
-    // Calculating the scaling of the geometric bounding box if the stroke is kept constant
-    Geom::Affine direct_constant_r = Geom::Scale(flip_x * ratio_x, flip_y * ratio_y);
+    if ((fabs(w0 - r0) < 1e-6) && (fabs(h0 - r0) < 1e-6)) {
+        return Geom::Affine();
+    }
 
-    // If the stroke is not kept constant however, the scaling of the geometric bbox is more difficult to find
-    if (transform_stroke && r0 != 0 && r0 != Geom::infinity()) { // Check if there's stroke, and we need to scale it
+    Geom::Affine direct;
+    gdouble ratio_x = 1;
+    gdouble ratio_y = 1;
+    gdouble scale_x = 1;
+    gdouble scale_y = 1;
+    gdouble r1 = r0;
+
+    if (fabs(w0 - r0) < 1e-6) { // We have a vertical line at hand
+        direct = Geom::Scale(flip_x, flip_y * h1 / h0);
+        ratio_x = 1;
+        ratio_y = (h1 - r0) / (h0 - r0);
+        r1 = transform_stroke ? r0 * sqrt(h1/h0) : r0;
+        scale_x = 1;
+        scale_y = (h1 - r1)/(h0 - r0);
+    } else if (fabs(h0 - r0) < 1e-6) { // We have a horizontal line at hand
+        direct = Geom::Scale(flip_x * w1 / w0, flip_y);
+        ratio_x = (w1 - r0) / (w0 - r0);
+        ratio_y = 1;
+        r1 = transform_stroke ? r0 * sqrt(w1/w0) : r0;
+        scale_x = (w1 - r1)/(w0 - r0);
+        scale_y = 1;
+    } else { // We have a true 2D object at hand
+        direct = Geom::Scale(flip_x * w1 / w0, flip_y* h1 / h0); // Scaling of the visual bounding box
+        ratio_x = (w1 - r0) / (w0 - r0); // Only valid when the stroke is kept constant, in which case r1 = r0
+        ratio_y = (h1 - r0) / (h0 - r0);
         /* Initial area of the geometric bounding box: A0 = (w0-r0)*(h0-r0)
          * Desired area of the geometric bounding box: A1 = (w1-r1)*(h1-r1)
          * This is how the stroke should scale: r1^2 / A1 = r0^2 / A0
@@ -170,23 +177,29 @@ get_scale_transform_with_uniform_stroke (Geom::Rect const &bbox_visual, gdouble 
         gdouble C = w1 * h1 * r0*r0;
         if (B*B - 4*A*C > 0) {
             // Of the two roots, I verified experimentally that this is the one we need
-            gdouble r1 = fabs((-B - sqrt(B*B - 4*A*C))/(2*A));
+            r1 = fabs((-B - sqrt(B*B - 4*A*C))/(2*A));
             // If w1 < 0 then the scale will be wrong if we just assume that scale_x = (w1 - r1)/(w0 - r0);
             // Therefore we here need the absolute values of w0, w1, h0, h1, and r0, as taken care of earlier
-            gdouble scale_x = (w1 - r1)/(w0 - r0);
-            gdouble scale_y = (h1 - r1)/(h0 - r0);
-            // Now we account for mirroring by flipping if needed
-            scale *= Geom::Scale(flip_x * scale_x, flip_y * scale_y);
-            // Make sure that the lower-left corner of the visual bounding box stays where it is, even though the stroke width has changed
-            unbudge *= Geom::Translate (-flip_x * 0.5 * (r0 * scale_x - r1), -flip_y * 0.5 * (r0 * scale_y - r1));
+            scale_x = (w1 - r1)/(w0 - r0);
+            scale_y = (h1 - r1)/(h0 - r0);
         } else { // Can't find the roots of the quadratic equation. Likely the input parameters are invalid?
-            scale *= direct;
+            r1 = r0;
+            scale_x = w1 / w0;
+            scale_y = h1 / h0;
         }
+    }
+
+    // If the stroke is not kept constant however, the scaling of the geometric bbox is more difficult to find
+    if (transform_stroke && r0 != 0 && r0 != Geom::infinity()) { // Check if there's stroke, and we need to scale it
+        // Now we account for mirroring by flipping if needed
+        scale *= Geom::Scale(flip_x * scale_x, flip_y * scale_y);
+        // Make sure that the lower-left corner of the visual bounding box stays where it is, even though the stroke width has changed
+        unbudge *= Geom::Translate (-flip_x * 0.5 * (r0 * scale_x - r1), -flip_y * 0.5 * (r0 * scale_y - r1));
     } else { // The stroke should not be scaled, or is zero
         if (r0 == 0 || r0 == Geom::infinity() ) { // Strokewidth is zero or infinite
             scale *= direct;
         } else { // Nonscaling strokewidth
-            scale *= direct_constant_r;
+            scale *= Geom::Scale(flip_x * ratio_x, flip_y * ratio_y); // Scaling of the geometric bounding box for constant stroke width
             unbudge *= Geom::Translate (flip_x * 0.5 * r0 * (1 - ratio_x), flip_y * 0.5 * r0 * (1 - ratio_y));
         }
     }
@@ -248,29 +261,6 @@ get_scale_transform_with_unequal_stroke (Geom::Rect const &bbox_visual, Geom::Re
     gdouble r0w = w0 - bbox_geom.width(); // r0w is the average strokewidth of the left and right edges, i.e. 0.5*(r0l + r0r)
     gdouble r0h = h0 - bbox_geom.height(); // r0h is the average strokewidth of the top and bottom edges, i.e. 0.5*(r0t + r0b)
 
-    if (bbox_visual.hasZeroArea()) { // Obviously we cannot scale from empty visual bounding boxes at all, so we will only translate in such a case
-        Geom::Affine move = Geom::Translate(x0 - bbox_visual.min()[Geom::X], y0 - bbox_visual.min()[Geom::Y]);
-        return (move);
-    }
-
-    Geom::Affine direct = Geom::Scale(w1 / w0,   h1 / h0);
-
-    // Although the area of the visual bounding box is not zero, we can still have a geometric
-    // bounding box with one or both sides having zero length. We can't handle this and will therefore
-    // simply return the scaling of the visual bounding box, without accounting for any stroke scaling
-    if (fabs(w0 - r0w) < 1e-6 || fabs(h0 - r0h) < 1e-6 || (!transform_stroke && (fabs(w1 - r0w) < 1e-6 || fabs(h1 - r0h) < 1e-6))) {
-        return (p2o * direct * o2n);
-    }
-
-    // Check whether the stroke is negative; i.e. the geometric bounding box is larger than the visual bounding box, which
-    // occurs for example for clipped objects (see launchpad bug #811819)
-    if (r0w < 0 || r0w < 0) {
-        // How should we handle the stroke width scaling of clipped object? I don't know if we can/should handle this,
-        // so for now we simply return the direct scaling
-        return (p2o * direct * o2n);
-    }
-
-    // Here starts the calculation you've been waiting for; first do some preparation
     int flip_x = (w1 > 0) ? 1 : -1;
     int flip_y = (h1 > 0) ? 1 : -1;
 
@@ -280,20 +270,36 @@ get_scale_transform_with_unequal_stroke (Geom::Rect const &bbox_visual, Geom::Re
     h1 = fabs(h1);
     // w0 and h0 will always be positive due to the definition of the width() and height() methods.
 
-    gdouble ratio_x = (w1 - r0w) / (w0 - r0w); // Only valid when the stroke is kept constant, in which case r1 = r0
-    gdouble ratio_y = (h1 - r0h) / (h0 - r0h);
+    if ((fabs(w0 - r0w) < 1e-6) && (fabs(h0 - r0h) < 1e-6)) {
+        return Geom::Affine();
+    }
 
-    // Calculating the scaling of the geometric bounding box if the stroke is kept constant
-    Geom::Affine direct_constant_r = Geom::Scale(flip_x * ratio_x, flip_y * ratio_y);
+    Geom::Affine direct;
+    gdouble ratio_x = 1;
+    gdouble ratio_y = 1;
+    gdouble scale_x = 1;
+    gdouble scale_y = 1;
+    gdouble r1h = r0h;
+    gdouble r1w = r0w;
 
-    // The calculation of the new strokewidth will only use the average stroke for each of the dimensions; To find the new stroke for each
-    // of the edges individually though, we will use the boundary condition that the ratio of the left/right strokewidth will not change due to the
-    // scaling. The same holds for the ratio of the top/bottom strokewidth.
-    gdouble stroke_ratio_w = fabs(r0w) < 1e-6 ? 1 : (bbox_geom[Geom::X].min() - bbox_visual[Geom::X].min())/r0w;
-    gdouble stroke_ratio_h = fabs(r0h) < 1e-6 ? 1 : (bbox_geom[Geom::Y].min() - bbox_visual[Geom::Y].min())/r0h;
-
-    // If the stroke is not kept constant however, the scaling of the geometric bbox is more difficult to find
-    if (transform_stroke && r0w != 0 && r0w != Geom::infinity() && r0h != 0 && r0h != Geom::infinity()) {  // Check if there's stroke, and we need to scale it
+    if (fabs(w0 - r0w) < 1e-6) { // We have a vertical line at hand
+        direct = Geom::Scale(flip_x, flip_y * h1 / h0);
+        ratio_x = 1;
+        ratio_y = (h1 - r0h) / (h0 - r0h);
+        r1h = transform_stroke ? r0h * sqrt(h1/h0) : r0h;
+        scale_x = 1;
+        scale_y = (h1 - r1h)/(h0 - r0h);
+    } else if (fabs(h0 - r0h) < 1e-6) { // We have a horizontal line at hand
+        direct = Geom::Scale(flip_x * w1 / w0, flip_y);
+        ratio_x = (w1 - r0w) / (w0 - r0w);
+        ratio_y = 1;
+        r1w = transform_stroke ? r0w * sqrt(w1/w0) : r0w;
+        scale_x = (w1 - r1w)/(w0 - r0w);
+        scale_y = 1;
+    } else { // We have a true 2D object at hand
+        direct = Geom::Scale(flip_x * w1 / w0, flip_y* h1 / h0); // Scaling of the visual bounding box
+        ratio_x = (w1 - r0w) / (w0 - r0w); // Only valid when the stroke is kept constant, in which case r1 = r0
+        ratio_y = (h1 - r0h) / (h0 - r0h);
         /* Initial area of the geometric bounding box: A0 = (w0-r0w)*(h0-r0h)
          * Desired area of the geometric bounding box: A1 = (w1-r1w)*(h1-r1h)
          * This is how the stroke should scale:     r1w^2 = A1/A0 * r0w^2, AND
@@ -326,24 +332,43 @@ get_scale_transform_with_unequal_stroke (Geom::Rect const &bbox_visual, Geom::Re
         gdouble operant = 4*h1*w1*A0+r0h2*w12-2*h1*r0h*r0w*w1+h12*r0w2;
         if (operant >= 0) {
             // Of the eight roots, I verified experimentally that these are the two we need
-            gdouble r1h= fabs((r0h*sqrt(operant)-r0h2*w1-h1*r0h*r0w)/(2*A0-2*r0h*r0w));
-            gdouble r1w= fabs(-((h1*r0w*A0+r0h2*r0w*w1)*sqrt(operant)+(-3*h1*r0h*r0w*w1-h12*r0w2)*A0-r0h3*r0w*w12+h1*r0h2*r0w2*w1)/((r0h*A0-r0h2*r0w)*sqrt(operant)-2*h1*A02+(3*h1*r0h*r0w-r0h2*w1)*A0+r0h3*r0w*w1-h1*r0h2*r0w2));
+            r1h = fabs((r0h*sqrt(operant)-r0h2*w1-h1*r0h*r0w)/(2*A0-2*r0h*r0w));
+            r1w = fabs(-((h1*r0w*A0+r0h2*r0w*w1)*sqrt(operant)+(-3*h1*r0h*r0w*w1-h12*r0w2)*A0-r0h3*r0w*w12+h1*r0h2*r0w2*w1)/((r0h*A0-r0h2*r0w)*sqrt(operant)-2*h1*A02+(3*h1*r0h*r0w-r0h2*w1)*A0+r0h3*r0w*w1-h1*r0h2*r0w2));
             // If w1 < 0 then the scale will be wrong if we just assume that scale_x = (w1 - r1)/(w0 - r0);
             // Therefore we here need the absolute values of w0, w1, h0, h1, and r0, as taken care of earlier
-            gdouble scale_x = (w1 - r1w)/(w0 - r0w);
-            gdouble scale_y = (h1 - r1h)/(h0 - r0h);
-            // Now we account for mirroring by flipping if needed
-            scale *= Geom::Scale(flip_x * scale_x, flip_y * scale_y);
-            // Make sure that the lower-left corner of the visual bounding box stays where it is, even though the stroke width has changed
-            unbudge *= Geom::Translate (-flip_x * stroke_ratio_w * (r0w * scale_x - r1w), -flip_y * stroke_ratio_h * (r0h * scale_y - r1h));
+            scale_x = (w1 - r1w)/(w0 - r0w);
+            scale_y = (h1 - r1h)/(h0 - r0h);
         } else { // Can't find the roots of the quadratic equation. Likely the input parameters are invalid?
-            scale *= direct;
+            scale_x = w1 / w0;
+            scale_y = h1 / h0;
         }
+    }
+
+    // Check whether the stroke is negative; i.e. the geometric bounding box is larger than the visual bounding box, which
+    // occurs for example for clipped objects (see launchpad bug #811819)
+    if (r0w < 0 || r0h < 0) {
+        // How should we handle the stroke width scaling of clipped object? I don't know if we can/should handle this,
+        // so for now we simply return the direct scaling
+        return (p2o * direct * o2n);
+    }
+
+    // The calculation of the new strokewidth will only use the average stroke for each of the dimensions; To find the new stroke for each
+    // of the edges individually though, we will use the boundary condition that the ratio of the left/right strokewidth will not change due to the
+    // scaling. The same holds for the ratio of the top/bottom strokewidth.
+    gdouble stroke_ratio_w = fabs(r0w) < 1e-6 ? 1 : (bbox_geom[Geom::X].min() - bbox_visual[Geom::X].min())/r0w;
+    gdouble stroke_ratio_h = fabs(r0h) < 1e-6 ? 1 : (bbox_geom[Geom::Y].min() - bbox_visual[Geom::Y].min())/r0h;
+
+    // If the stroke is not kept constant however, the scaling of the geometric bbox is more difficult to find
+    if (transform_stroke && r0w != 0 && r0w != Geom::infinity() && r0h != 0 && r0h != Geom::infinity()) {  // Check if there's stroke, and we need to scale it
+        // Now we account for mirroring by flipping if needed
+        scale *= Geom::Scale(flip_x * scale_x, flip_y * scale_y);
+        // Make sure that the lower-left corner of the visual bounding box stays where it is, even though the stroke width has changed
+        unbudge *= Geom::Translate (-flip_x * stroke_ratio_w * (r0w * scale_x - r1w), -flip_y * stroke_ratio_h * (r0h * scale_y - r1h));
     } else { // The stroke should not be scaled, or is zero (or infinite)
         if (r0w == 0 || r0w == Geom::infinity() || r0h == 0 || r0h == Geom::infinity()) { // can't calculate, because apparently strokewidth is zero or infinite
             scale *= direct;
         } else {
-            scale *= direct_constant_r;
+            scale *= Geom::Scale(flip_x * ratio_x, flip_y * ratio_y); // Scaling of the geometric bounding box for constant stroke width
             unbudge *= Geom::Translate (flip_x * stroke_ratio_w * r0w * (1 - ratio_x), flip_y * stroke_ratio_h * r0h * (1 - ratio_y));
         }
     }
