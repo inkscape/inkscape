@@ -116,10 +116,12 @@ public:
 
     unsigned int sensitive : 1;
     unsigned int stop_paint: 1;
+    mutable unsigned bbox_valid : 1;
     double transform_center_x;
     double transform_center_y;
 
     Geom::Affine transform;
+    mutable Geom::OptRect doc_bbox;
 
     SPClipPathReference *clip_ref;
     SPMaskReference *mask_ref;

@@ -130,6 +130,7 @@ void SPItem::sp_item_init(SPItem *item)
 
 void SPItem::init() {
     sensitive = TRUE;
+    bbox_valid = FALSE;
 
     transform_center_x = 0;
     transform_center_y = 0;
@@ -138,6 +139,7 @@ void SPItem::init() {
     _evaluated_status = StatusUnknown;
 
     transform = Geom::identity();
+    doc_bbox = Geom::OptRect();
 
     display = NULL;
 
@@ -561,6 +563,8 @@ void SPItem::sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
     }
 
     if (flags & (SP_OBJECT_CHILD_MODIFIED_FLAG | SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG)) {
+        item->bbox_valid = FALSE;
+
         if (flags & SP_OBJECT_MODIFIED_FLAG) {
             for (SPItemView *v = item->display; v != NULL; v = v->next) {
                 v->arenaitem->setTransform(item->transform);
@@ -769,7 +773,11 @@ Geom::OptRect SPItem::documentGeometricBounds() const
 /// Get item's visual bbox in document coordinate system.
 Geom::OptRect SPItem::documentVisualBounds() const
 {
-    return visualBounds(i2doc_affine());
+    if (!bbox_valid) {
+        doc_bbox = visualBounds(i2doc_affine());
+        bbox_valid = true;
+    }
+    return doc_bbox;
 }
 Geom::OptRect SPItem::documentBounds(BBoxType type) const
 {
@@ -789,7 +797,11 @@ Geom::OptRect SPItem::desktopGeometricBounds() const
 /// Get item's visual bbox in desktop coordinate system.
 Geom::OptRect SPItem::desktopVisualBounds() const
 {
-    return visualBounds(i2dt_affine());
+    /// @fixme hardcoded desktop transform
+    Geom::Affine m = Geom::Scale(1, -1) * Geom::Translate(0, document->getHeight());
+    Geom::OptRect ret = documentVisualBounds();
+    if (ret) *ret *= m;
+    return ret;
 }
 
 Geom::OptRect SPItem::desktopPreferredBounds() const
