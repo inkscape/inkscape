@@ -336,7 +336,7 @@ sp_tref_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType
 
     // Add stroke width
     // FIXME this code is incorrect
-    if (type == SPItem::VISUAL_BBOX && !item->style->stroke.isNone()) {
+    if (bbox && type == SPItem::VISUAL_BBOX && !item->style->stroke.isNone()) {
         double scale = transform.descrim();
         bbox->expandBy(0.5 * item->style->stroke_width.computed * scale);
     }
