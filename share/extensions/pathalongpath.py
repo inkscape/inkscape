@@ -266,6 +266,8 @@ class PathAlongPath(pathmodifier.Diffeo):
                             offset(sub,xoffset,yoffset)
 
                         if self.options.stretch:
+                            if not width:
+                                exit(_("The 'stretch' option requires that the pattern must have non-zero width :\nPlease edit the pattern width."))
                             for sub in p:
                                 stretch(sub,length/width,1,self.skelcomp[0])
 
