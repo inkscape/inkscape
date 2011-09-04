@@ -247,6 +247,9 @@ public:
     Geom::OptRect bounds(SPItem::BBoxType type) const;
     Geom::OptRect visualBounds() const;
     Geom::OptRect geometricBounds() const;
+    /** @brief Returns either the visual or geometric bounding rectangle of the selection, based on the
+     * preferences specified for the selector tool */
+    Geom::OptRect preferredBounds() const;
 
     /// Returns the bounding rectangle of the selectionin document coordinates.
     Geom::OptRect documentBounds(SPItem::BBoxType type) const;

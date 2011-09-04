@@ -248,11 +248,13 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
 
         Geom::Affine scaler;
         if (bbox_type == SPItem::VISUAL_BBOX) {
-            scaler = get_scale_transform_with_unequal_stroke (*bbox_vis, *bbox_geom, transform_stroke, x0, y0, x1, y1);
+            scaler = get_scale_transform_for_variable_stroke (*bbox_vis, *bbox_geom, transform_stroke, x0, y0, x1, y1);
         } else {
-            // get_scale_transform_with_stroke() is intended for visual bounding boxes, not geometrical ones!
+            // 1) We could have use the newer get_scale_transform_for_variable_stroke() here, but to avoid regressions
+            // we'll just use the old get_scale_transform_for_uniform_stroke() for now.
+            // 2) get_scale_transform_for_uniform_stroke() is intended for visual bounding boxes, not geometrical ones!
             // we'll trick it into using a geometric bounding box though, by setting the stroke width to zero
-            scaler = get_scale_transform_with_uniform_stroke (*bbox_geom, 0, false, x0, y0, x1, y1);
+            scaler = get_scale_transform_for_uniform_stroke (*bbox_geom, 0, false, x0, y0, x1, y1);
         }
 
         sp_selection_apply_affine(selection, scaler);

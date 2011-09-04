@@ -78,7 +78,7 @@ void sp_item_move_rel(SPItem *item, Geom::Translate const &tr)
  *
  * PS: This function will only return accurate results for the visual bounding box of a selection of one or more objects, all having
  * the same strokewidth. If the stroke width varies from object to object in this selection, then the function
- * get_scale_transform_with_unequal_stroke() should be called instead
+ * get_scale_transform_for_variable_stroke() should be called instead
  *
  * When scaling or stretching an object using the selector, e.g. by dragging the handles or by entering a value, we will
  * need to calculate the affine transformation for the old dimensions to the new dimensions. When using a geometric bounding
@@ -98,7 +98,7 @@ void sp_item_move_rel(SPItem *item, Geom::Translate const &tr)
 */
 
 Geom::Affine
-get_scale_transform_with_uniform_stroke (Geom::Rect const &bbox_visual, gdouble strokewidth, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
+get_scale_transform_for_uniform_stroke (Geom::Rect const &bbox_visual, gdouble strokewidth, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
 {
     Geom::Affine p2o = Geom::Translate (-bbox_visual.min());
     Geom::Affine o2n = Geom::Translate (x0, y0);
@@ -210,10 +210,10 @@ get_scale_transform_with_uniform_stroke (Geom::Rect const &bbox_visual, gdouble 
 /**
  * \brief Calculate the affine transformation required to transform one visual bounding box into another, accounting for a VARIABLE strokewidth
  *
- * Note: Please try to understand get_scale_transform_with_uniform_stroke() first, and read all it's comments carefully. This function
- * (get_scale_transform_with_unequal_stroke) is a bit different because it will allow for a strokewidth that's different for each
+ * Note: Please try to understand get_scale_transform_for_uniform_stroke() first, and read all it's comments carefully. This function
+ * (get_scale_transform_for_variable_stroke) is a bit different because it will allow for a strokewidth that's different for each
  * side of the visual bounding box. Such a situation will arise when transforming the visual bounding box of a selection of objects,
- * each having a different stroke width. In fact this function is a generalized version of get_scale_transform_with_uniform_stroke(), but
+ * each having a different stroke width. In fact this function is a generalized version of get_scale_transform_for_uniform_stroke(), but
  * will not (yet) replace it because it has not been tested as carefully, and because the old function is can serve as an introduction to
  * understand the new one.
  *
@@ -236,7 +236,7 @@ get_scale_transform_with_uniform_stroke (Geom::Rect const &bbox_visual, gdouble 
 */
 
 Geom::Affine
-get_scale_transform_with_unequal_stroke (Geom::Rect const &bbox_visual, Geom::Rect const &bbox_geom, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
+get_scale_transform_for_variable_stroke (Geom::Rect const &bbox_visual, Geom::Rect const &bbox_geom, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
 {
     Geom::Affine p2o = Geom::Translate (-bbox_visual.min());
     Geom::Affine o2n = Geom::Translate (x0, y0);
@@ -393,7 +393,7 @@ get_visual_bbox (Geom::OptRect const &initial_geom_bbox, Geom::Affine const &abs
     Geom::Rect new_visual_bbox = new_geom_bbox; 
     if (initial_strokewidth > 0 && initial_strokewidth < Geom::infinity()) {
         if (transform_stroke) {
-            // scale stroke by: sqrt (((w1-r0)/(w0-r0))*((h1-r0)/(h0-r0))) (for visual bboxes, see get_scale_transform_with_stroke)
+            // scale stroke by: sqrt (((w1-r0)/(w0-r0))*((h1-r0)/(h0-r0))) (for visual bboxes, see get_scale_transform_for_stroke)
             // equals scaling by: sqrt ((w1/w0)*(h1/h0)) for geometrical bboxes            
             // equals scaling by: sqrt (area1/area0) for geometrical bboxes
             gdouble const new_strokewidth = initial_strokewidth * sqrt (new_geom_bbox.area() / initial_geom_bbox->area());

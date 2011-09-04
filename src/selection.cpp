@@ -27,6 +27,7 @@
 #include "selection.h"
 #include "helper/recthull.h"
 #include "xml/repr.h"
+#include "preferences.h"
 
 #include "sp-shape.h"
 #include "sp-path.h"
@@ -388,6 +389,15 @@ Geom::OptRect Selection::visualBounds() const
         bbox.unionWith(SP_ITEM(i->data)->desktopVisualBounds());
     }
     return bbox;
+}
+
+Geom::OptRect Selection::preferredBounds() const
+{
+    if (Inkscape::Preferences::get()->getInt("/tools/bounding_box") == 0) {
+        return bounds(SPItem::VISUAL_BBOX);
+    } else {
+        return bounds(SPItem::GEOMETRIC_BBOX);
+    }
 }
 
 Geom::OptRect Selection::documentBounds(SPItem::BBoxType type) const

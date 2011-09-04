@@ -329,7 +329,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
         bool emp = m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_EDGE_MIDPOINT);
         // Preferably we'd use the bbox of each selected item, instead of the bbox of the selection as a whole; for translations
         // this is easy to do, but when snapping the visual bbox while scaling we will have to compensate for the scaling of the
-        // stroke width. (see get_scale_transform_with_stroke()). This however is currently only implemented for a single bbox.
+        // stroke width. (see get_scale_transform_for_stroke()). This however is currently only implemented for a single bbox.
         // That's why we have both _bbox_points_for_translating and _bbox_points.
         getBBoxPoints(selection->bounds(_snap_bbox_type), &_bbox_points, false, c, emp, mp);
         if (((_items.size() > 0) && (_items.size() < 50)) || prefs->getBool("/options/snapclosestonly/value", false)) {
@@ -1560,7 +1560,7 @@ Geom::Point Inkscape::SelTrans::_getGeomHandlePos(Geom::Point const &visual_hand
     }
 
     // Using the Geom::Rect constructor below ensures that "min() < max()", which is important
-    // because this will also hold for _bbox, and which is required for get_scale_transform_with_stroke()
+    // because this will also hold for _bbox, and which is required for get_scale_transform_for_stroke()
     Geom::Rect new_bbox = Geom::Rect(_origin_for_bboxpoints, visual_handle_pos); // new visual bounding box
     // Please note that the new_bbox might in fact be just a single line, for example when stretching (in
     // which case the handle and origin will be aligned vertically or horizontally)
@@ -1569,7 +1569,7 @@ Geom::Point Inkscape::SelTrans::_getGeomHandlePos(Geom::Point const &visual_hand
     // Calculate the absolute affine while taking into account the scaling of the stroke width
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool transform_stroke = prefs->getBool("/options/transform/stroke", true);
-    Geom::Affine abs_affine = get_scale_transform_with_uniform_stroke (*_bbox, _strokewidth, transform_stroke,
+    Geom::Affine abs_affine = get_scale_transform_for_uniform_stroke (*_bbox, _strokewidth, transform_stroke,
                     new_bbox.min()[Geom::X], new_bbox.min()[Geom::Y], new_bbox.max()[Geom::X], new_bbox.max()[Geom::Y]);
 
     // Calculate the scaled geometrical bbox
@@ -1616,7 +1616,7 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineDefault(Geom::Scale const default_
         strokewidth = _strokewidth;
     }
 
-    _absolute_affine = get_scale_transform_with_uniform_stroke (*_visual_bbox, strokewidth, transform_stroke,
+    _absolute_affine = get_scale_transform_for_uniform_stroke (*_visual_bbox, strokewidth, transform_stroke,
                     new_bbox_min[Geom::X], new_bbox_min[Geom::Y], new_bbox_max[Geom::X], new_bbox_max[Geom::Y]);
 
     // return the new handle position

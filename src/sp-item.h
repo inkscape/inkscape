@@ -178,6 +178,7 @@ public:
     Geom::OptRect documentBounds(BBoxType type) const;
     Geom::OptRect desktopGeometricBounds() const;
     Geom::OptRect desktopVisualBounds() const;
+    Geom::OptRect desktopPreferredBounds() const;
     Geom::OptRect desktopBounds(BBoxType type) const;
 
     unsigned pos_in_parent();

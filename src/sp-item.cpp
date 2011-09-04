@@ -791,6 +791,16 @@ Geom::OptRect SPItem::desktopVisualBounds() const
 {
     return visualBounds(i2dt_affine());
 }
+
+Geom::OptRect SPItem::desktopPreferredBounds() const
+{
+    if (Inkscape::Preferences::get()->getInt("/tools/bounding_box") == 0) {
+        return desktopBounds(SPItem::VISUAL_BBOX);
+    } else {
+        return desktopBounds(SPItem::GEOMETRIC_BBOX);
+    }
+}
+
 Geom::OptRect SPItem::desktopBounds(BBoxType type) const
 {
     if (type == GEOMETRIC_BBOX) {

@@ -467,7 +467,7 @@ Transformation::updatePageMove(Inkscape::Selection *selection)
 {
     if (selection && !selection->isEmpty()) {
         if (!_check_move_relative.get_active()) {
-            Geom::OptRect bbox = selection->visualBounds();
+            Geom::OptRect bbox = selection->preferredBounds();
             if (bbox) {
                 double x = bbox->min()[Geom::X];
                 double y = bbox->min()[Geom::Y];
@@ -489,7 +489,7 @@ void
 Transformation::updatePageScale(Inkscape::Selection *selection)
 {
     if (selection && !selection->isEmpty()) {
-        Geom::OptRect bbox = selection->visualBounds();
+        Geom::OptRect bbox = selection->preferredBounds();
         if (bbox) {
             double w = bbox->dimensions()[Geom::X];
             double h = bbox->dimensions()[Geom::Y];
@@ -519,7 +519,7 @@ void
 Transformation::updatePageSkew(Inkscape::Selection *selection)
 {
     if (selection && !selection->isEmpty()) {
-        Geom::OptRect bbox = selection->visualBounds();
+        Geom::OptRect bbox = selection->preferredBounds();
         if (bbox) {
             double w = bbox->dimensions()[Geom::X];
             double h = bbox->dimensions()[Geom::Y];
@@ -616,7 +616,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
         if (_check_move_relative.get_active()) {
             sp_selection_move_relative(selection, x, y);
         } else {
-            Geom::OptRect bbox = selection->visualBounds();
+            Geom::OptRect bbox = selection->preferredBounds();
             if (bbox) {
                 sp_selection_move_relative(selection,
                                            x - bbox->min()[Geom::X], y - bbox->min()[Geom::Y]);
@@ -637,7 +637,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
                      it != selected.end();
                      ++it)
                 {
-                    Geom::OptRect bbox = (*it)->desktopVisualBounds();
+                    Geom::OptRect bbox = (*it)->desktopPreferredBounds();
                     if (bbox) {
                         sorted.push_back(BBoxSort(*it, *bbox, Geom::X, x > 0? 1. : 0., x > 0? 0. : 1.));
                     }
@@ -661,7 +661,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
                      it != selected.end();
                      ++it)
                 {
-                    Geom::OptRect bbox = (*it)->desktopVisualBounds();
+                    Geom::OptRect bbox = (*it)->desktopPreferredBounds();
                     if (bbox) {
                         sorted.push_back(BBoxSort(*it, *bbox, Geom::Y, y > 0? 1. : 0., y > 0? 0. : 1.));
                     }
@@ -680,7 +680,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
                 }
             }
         } else {
-            Geom::OptRect bbox = selection->visualBounds();
+            Geom::OptRect bbox = selection->preferredBounds();
             if (bbox) {
                 sp_selection_move_relative(selection,
                                            x - bbox->min()[Geom::X], y - bbox->min()[Geom::Y]);
@@ -699,49 +699,54 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
     double scaleY = _scalar_scale_vertical.getValue("px");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int transform_stroke = prefs->getBool("/options/transform/stroke", true) ? 1 : 0;
     if (prefs->getBool("/dialogs/transformation/applyseparately")) {
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
             SPItem *item = SP_ITEM(l->data);
-            Geom::Scale scale (0,0);
-            // the values are increments!
-            if (_units_scale.isAbsolute()) {
-                Geom::OptRect bbox = item->desktopVisualBounds();
-                if (bbox) {
-                    double new_width = scaleX;
-                    if (fabs(new_width) < 1e-6) new_width = 1e-6; // not 0, as this would result in a nasty no-bbox object
-                    double new_height = scaleY;
-                    if (fabs(new_height) < 1e-6) new_height = 1e-6;
-                    scale = Geom::Scale(new_width / bbox->dimensions()[Geom::X], new_height / bbox->dimensions()[Geom::Y]);
-                }
-            } else {
+            Geom::OptRect bbox_pref = item->desktopPreferredBounds();
+            Geom::OptRect bbox_geom = item->desktopGeometricBounds();
+            if (bbox_pref && bbox_geom) {
                 double new_width = scaleX;
-                if (fabs(new_width) < 1e-6) new_width = 1e-6;
                 double new_height = scaleY;
+                // the values are increments!
+                if (!_units_scale.isAbsolute()) { // Relative scaling, i.e in percent
+                    new_width = scaleX/100 * bbox_pref->width();
+                    new_height = scaleY/100  * bbox_pref->height();
+                }
+                if (fabs(new_width) < 1e-6) new_width = 1e-6; // not 0, as this would result in a nasty no-bbox object
                 if (fabs(new_height) < 1e-6) new_height = 1e-6;
-                scale = Geom::Scale(new_width / 100.0, new_height / 100.0);
+
+                double x0 = bbox_pref->midpoint()[Geom::X] - new_width/2;
+                double y0 = bbox_pref->midpoint()[Geom::Y] - new_height/2;
+                double x1 = bbox_pref->midpoint()[Geom::X] + new_width/2;
+                double y1 = bbox_pref->midpoint()[Geom::Y] + new_height/2;
+
+                Geom::Affine scaler = get_scale_transform_for_variable_stroke (*bbox_pref, *bbox_geom, transform_stroke, x0, y0, x1, y1);
+                item->set_i2d_affine(item->i2dt_affine() * scaler);
+                item->doWriteTransform(item->getRepr(), item->transform);
             }
-            sp_item_scale_rel (item, scale);
         }
     } else {
-        Geom::OptRect bbox = selection->visualBounds();
-        if (bbox) {
-            Geom::Point center(bbox->midpoint()); // use rotation center?
-            Geom::Scale scale (0,0);
+        Geom::OptRect bbox_pref = selection->preferredBounds();
+        Geom::OptRect bbox_geom = selection->geometricBounds();
+        if (bbox_pref && bbox_geom) {
             // the values are increments!
-            if (_units_scale.isAbsolute()) {
-                double new_width = scaleX;
-                if (fabs(new_width) < 1e-6) new_width = 1e-6;
-                double new_height = scaleY;
-                if (fabs(new_height) < 1e-6) new_height = 1e-6;
-                scale = Geom::Scale(new_width / bbox->dimensions()[Geom::X], new_height / bbox->dimensions()[Geom::Y]);
-            } else {
-                double new_width = scaleX;
-                if (fabs(new_width) < 1e-6) new_width = 1e-6;
-                double new_height = scaleY;
-                if (fabs(new_height) < 1e-6) new_height = 1e-6;
-                scale = Geom::Scale(new_width / 100.0, new_height / 100.0);
+            double new_width = scaleX;
+            double new_height = scaleY;
+            if (!_units_scale.isAbsolute()) { // Relative scaling, i.e in percent
+                new_width = scaleX/100 * bbox_pref->width();
+                new_height = scaleY/100 * bbox_pref->height();
             }
-            sp_selection_scale_relative(selection, center, scale);
+            if (fabs(new_width) < 1e-6) new_width = 1e-6;
+            if (fabs(new_height) < 1e-6) new_height = 1e-6;
+
+            double x0 = bbox_pref->midpoint()[Geom::X] - new_width/2;
+            double y0 = bbox_pref->midpoint()[Geom::Y] - new_height/2;
+            double x1 = bbox_pref->midpoint()[Geom::X] + new_width/2;
+            double y1 = bbox_pref->midpoint()[Geom::Y] + new_height/2;
+            Geom::Affine scaler = get_scale_transform_for_variable_stroke (*bbox_pref, *bbox_geom, transform_stroke, x0, y0, x1, y1);
+
+            sp_selection_apply_affine(selection, scaler);
         }
     }
 
@@ -792,7 +797,7 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
             } else { // absolute displacement
                 double skewX = _scalar_skew_horizontal.getValue("px");
                 double skewY = _scalar_skew_vertical.getValue("px");
-                Geom::OptRect bbox = item->desktopVisualBounds();
+                Geom::OptRect bbox = item->desktopPreferredBounds();
                 if (bbox) {
                     double width = bbox->dimensions()[Geom::X];
                     double height = bbox->dimensions()[Geom::Y];
@@ -801,7 +806,7 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
             }
         }
     } else { // transform whole selection
-        Geom::OptRect bbox = selection->visualBounds();
+        Geom::OptRect bbox = selection->preferredBounds();
         boost::optional<Geom::Point> center = selection->center();
 
         if ( bbox && center ) {
@@ -886,7 +891,7 @@ Transformation::onMoveRelativeToggled()
 
     //g_message("onMoveRelativeToggled: %f, %f px\n", x, y);
 
-    Geom::OptRect bbox = selection->visualBounds();
+    Geom::OptRect bbox = selection->preferredBounds();
 
     if (bbox) {
         if (_check_move_relative.get_active()) {
@@ -1026,7 +1031,7 @@ Transformation::onClear()
             _scalar_move_horizontal.setValue(0);
             _scalar_move_vertical.setValue(0);
         } else {
-            Geom::OptRect bbox = selection->visualBounds();
+            Geom::OptRect bbox = selection->preferredBounds();
             if (bbox) {
                 _scalar_move_horizontal.setValue(bbox->min()[Geom::X], "px");
                 _scalar_move_vertical.setValue(bbox->min()[Geom::Y], "px");
