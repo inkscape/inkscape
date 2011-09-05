@@ -562,9 +562,11 @@ void SPItem::sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
         (* ((SPObjectClass *) (SPItemClass::static_parent_class))->update)(object, ctx, flags);
     }
 
-    if (flags & (SP_OBJECT_CHILD_MODIFIED_FLAG | SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG)) {
-        item->bbox_valid = FALSE;
+    // any of the modifications defined in sp-object.h might change bbox,
+    // so we invalidate it unconditionally
+    item->bbox_valid = FALSE;
 
+    if (flags & (SP_OBJECT_CHILD_MODIFIED_FLAG | SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG)) {
         if (flags & SP_OBJECT_MODIFIED_FLAG) {
             for (SPItemView *v = item->display; v != NULL; v = v->next) {
                 v->arenaitem->setTransform(item->transform);
