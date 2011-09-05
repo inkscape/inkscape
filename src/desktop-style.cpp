@@ -424,14 +424,16 @@ stroke_average_width (GSList const *objects)
 
         SPObject *object = SP_OBJECT(l->data);
 
-        if ( object->style->stroke.isNone() ) {
+        double width = object->style->stroke_width.computed * i2dt.descrim();
+
+        if ( object->style->stroke.isNone() || isnan(width)) {
             ++n_notstroked;   // do not count nonstroked objects
             continue;
         } else {
             notstroked = false;
         }
 
-        avgwidth += object->style->stroke_width.computed * i2dt.descrim();
+        avgwidth += width;
     }
 
     if (notstroked)
@@ -721,18 +723,19 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
             continue;
         }
 
-        n_stroked ++;
-
         noneSet &= style->stroke.isNone();
 
         Geom::Affine i2d = SP_ITEM(obj)->i2dt_affine();
         double sw = style->stroke_width.computed * i2d.descrim();
 
-        if (prev_sw != -1 && fabs(sw - prev_sw) > 1e-3)
-            same_sw = false;
-        prev_sw = sw;
+        if (!isnan(sw)) {
+            if (prev_sw != -1 && fabs(sw - prev_sw) > 1e-3)
+                same_sw = false;
+            prev_sw = sw;
 
-        avgwidth += sw;
+            avgwidth += sw;
+            n_stroked ++;
+        }
     }
 
     if (n_stroked > 1)
@@ -945,6 +948,7 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
     double linespacing_prev = 0;
 
     int texts = 0;
+    int no_size = 0;
 
     for (GSList const *i = objects; i != NULL; i = i->next) {
         SPObject *obj = SP_OBJECT (i->data);
@@ -961,7 +965,12 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
         }
 
         texts ++;
-        size += style->font_size.computed * Geom::Affine(SP_ITEM(obj)->i2dt_affine()).descrim(); /// \todo FIXME: we assume non-% units here
+        double dummy = style->font_size.computed * Geom::Affine(SP_ITEM(obj)->i2dt_affine()).descrim();
+        if (!isnan(dummy)) {
+            size += dummy; /// \todo FIXME: we assume non-% units here
+        } else {
+            no_size++;
+        }
 
         if (style->letter_spacing.normal) {
             if (!different && (letterspacing_prev == 0 || letterspacing_prev == letterspacing)) {
@@ -1016,7 +1025,9 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
         return QUERY_STYLE_NOTHING;
 
     if (texts > 1) {
-        size /= texts;
+        if (texts - no_size > 0) {
+            size /= (texts - no_size);
+        }
         letterspacing /= texts;
         wordspacing /= texts;
         linespacing /= texts;
@@ -1444,12 +1455,15 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
                     if(SP_IS_GAUSSIANBLUR(primitive)) {
                         SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
                         float num = spblur->stdDeviation.getNumber();
-                        blur_sum += num * i2d.descrim();
-                        if (blur_prev != -1 && fabs (num - blur_prev) > 1e-2) // rather low tolerance because difference in blur radii is much harder to notice than e.g. difference in sizes
-                            same_blur = false;
-                        blur_prev = num;
-                        //TODO: deal with opt number, for the moment it's not necessary to the ui.
-                        blur_items ++;
+                        float dummy = num * i2d.descrim();
+                        if (!isnan(dummy)) {
+                            blur_sum += dummy;
+                            if (blur_prev != -1 && fabs (num - blur_prev) > 1e-2) // rather low tolerance because difference in blur radii is much harder to notice than e.g. difference in sizes
+                                same_blur = false;
+                            blur_prev = num;
+                            //TODO: deal with opt number, for the moment it's not necessary to the ui.
+                            blur_items ++;
+                        }
                     }
                 }
                 primitive_obj = primitive_obj->next;
