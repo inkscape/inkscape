@@ -99,7 +99,7 @@ void Layout::show(DrawingGroup *in_arena, Geom::OptRect const &paintbox) const
             }
             glyph_index++;
         }
-        nr_text->setPaintBox(paintbox);
+        nr_text->setItemBounds(paintbox);
         in_arena->prependChild(nr_text);
     }
 }

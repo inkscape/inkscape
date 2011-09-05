@@ -36,6 +36,7 @@ protected:
 
     font_instance *_font;
     int _glyph;
+    Geom::IntRect _pick_bbox;
 
     friend class DrawingText;
 };
@@ -50,7 +51,6 @@ public:
     void clear();
     void addComponent(font_instance *font, int glyph, Geom::Affine const &trans);
     void setStyle(SPStyle *style);
-    void setPaintBox(Geom::OptRect const &box);
 
 protected:
     virtual unsigned _updateItem(Geom::IntRect const &area, UpdateContext const &ctx,
@@ -61,7 +61,6 @@ protected:
     virtual DrawingItem *_pickItem(Geom::Point const &p, double delta, unsigned flags);
     virtual bool _canClip();
 
-    Geom::OptRect _paintbox;
     NRStyle _nrstyle;
 
     friend class DrawingGlyphs;

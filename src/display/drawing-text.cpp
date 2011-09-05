@@ -63,14 +63,20 @@ DrawingGlyphs::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, 
         return STATE_ALL;
     }
 
+    _pick_bbox = Geom::IntRect();
+    _bbox = Geom::IntRect();
+
     Geom::OptRect b = bounds_exact_transformed(*_font->PathVector(_glyph), ctx.ctm);
     if (b && ggroup->_nrstyle.stroke.type != NRStyle::PAINT_NONE) {
         float width, scale;
         scale = ctx.ctm.descrim();
+        if (_transform) scale /= _transform->descrim(); // FIXME temporary hack
         width = MAX(0.125, ggroup->_nrstyle.stroke_width * scale);
         if ( fabs(ggroup->_nrstyle.stroke_width * scale) > 0.01 ) { // FIXME: this is always true
             b->expandBy(width);
         }
+        // save no-miter bbox for picking
+        _pick_bbox = b->roundOutwards();
         // those pesky miters, now
         float miterMax = width * ggroup->_nrstyle.miter_limit;
         if ( miterMax > 0.01 ) {
@@ -78,12 +84,7 @@ DrawingGlyphs::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, 
             // (one for each point on the curve)
             b->expandBy(miterMax);
         }
-    }    
-
-    if (b) {
         _bbox = b->roundOutwards();
-    } else {
-        _bbox = Geom::OptIntRect();
     }
 
     return STATE_ALL;
@@ -95,7 +96,7 @@ DrawingGlyphs::_pickItem(Geom::Point const &p, double delta, unsigned /*flags*/)
     if (!_font || !_bbox) return NULL;
 
     // With text we take a simple approach: pick if the point is in a characher bbox
-    Geom::Rect expanded(*_bbox);
+    Geom::Rect expanded(_pick_bbox);
     expanded.expandBy(delta);
     if (expanded.contains(p)) return this;
     return NULL;
@@ -135,13 +136,6 @@ DrawingText::setStyle(SPStyle *style)
     DrawingGroup::setStyle(style);
 }
 
-void
-DrawingText::setPaintBox(Geom::OptRect const &box)
-{
-    _paintbox = box;
-    _markForUpdate(STATE_ALL, false);
-}
-
 unsigned
 DrawingText::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, unsigned flags, unsigned reset)
 {
@@ -175,8 +169,8 @@ DrawingText::_renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigned
     // NOTE: this is very similar to drawing-shape.cpp; the only difference is in path feeding
     bool has_stroke, has_fill;
 
-    has_fill   = _nrstyle.prepareFill(ct, _paintbox);
-    has_stroke = _nrstyle.prepareStroke(ct, _paintbox);
+    has_fill   = _nrstyle.prepareFill(ct, _item_bbox);
+    has_stroke = _nrstyle.prepareStroke(ct, _item_bbox);
 
     if (has_fill || has_stroke) {
         for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
@@ -189,6 +183,8 @@ DrawingText::_renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigned
             ct.path(*g->_font->PathVector(g->_glyph));
         }
 
+        Inkscape::DrawingContext::Save save(ct);
+        ct.transform(_ctm);
         if (has_fill) {
             _nrstyle.applyFill(ct);
             ct.fillPreserve();
