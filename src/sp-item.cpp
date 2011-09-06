@@ -140,6 +140,7 @@ void SPItem::init() {
 
     transform = Geom::identity();
     doc_bbox = Geom::OptRect();
+    freeze_stroke_width = false;
 
     display = NULL;
 
@@ -1110,6 +1111,10 @@ void SPItem::adjust_gradient( Geom::Affine const &postmul, bool set )
 
 void SPItem::adjust_stroke( gdouble ex )
 {
+    if (freeze_stroke_width) {
+        return;
+    }
+
     SPStyle *style = this->style;
 
     if (style && !style->stroke.isNone() && !Geom::are_near(ex, 1.0, Geom::EPSILON)) {
@@ -1157,6 +1162,20 @@ void SPItem::adjust_stroke_width_recursive(double expansion)
         for ( SPObject *o = children; o; o = o->getNext() ) {
             if (SP_IS_ITEM(o)) {
                 SP_ITEM(o)->adjust_stroke_width_recursive(expansion);
+            }
+        }
+    }
+}
+
+void SPItem::freeze_stroke_width_recursive(bool freeze)
+{
+    freeze_stroke_width = freeze;
+
+// A clone's child is the ghost of its original - we must not touch it, skip recursion
+    if ( !SP_IS_USE(this) ) {
+        for ( SPObject *o = children; o; o = o->getNext() ) {
+            if (SP_IS_ITEM(o)) {
+                SP_ITEM(o)->freeze_stroke_width_recursive(freeze);
             }
         }
     }
@@ -1258,10 +1277,12 @@ void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &tra
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (compensate) {
 
-         // recursively compensate for stroke scaling, depending on user preference
+        // recursively compensating for stroke scaling will not work, because it can be scaled to zero or infinite
+        // from which we cannot ever recover by applying an inverse scale; therefore we temporarily block any changes
+        // to the strokewidth instead, and unblock these after the transformation
+        // (as reported in https://bugs.launchpad.net/inkscape/+bug/825840/comments/4)
         if (!prefs->getBool("/options/transform/stroke", true)) {
-            double const expansion = 1. / advertized_transform.descrim();
-            adjust_stroke_width_recursive(expansion);
+            freeze_stroke_width_recursive(true);
         }
 
         // recursively compensate rx/ry of a rect if requested
@@ -1298,6 +1319,12 @@ void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &tra
         transform_attr = ((SPItemClass *) G_OBJECT_GET_CLASS(this))->set_transform(this, transform);
     }
     set_item_transform(transform_attr);
+
+    if (compensate) {
+        if (!prefs->getBool("/options/transform/stroke", true)) {
+            freeze_stroke_width_recursive(false);
+        }
+    }
 
     // Note: updateRepr comes before emitting the transformed signal since
     // it causes clone SPUse's copy of the original object to brought up to

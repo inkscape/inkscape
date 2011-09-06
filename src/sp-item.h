@@ -119,6 +119,7 @@ public:
     mutable unsigned bbox_valid : 1;
     double transform_center_x;
     double transform_center_y;
+    bool freeze_stroke_width;
 
     Geom::Affine transform;
     mutable Geom::OptRect doc_bbox;
@@ -194,6 +195,7 @@ public:
     void adjust_gradient(/* Geom::Affine const &premul, */ Geom::Affine const &postmul, bool set = false);
     void adjust_stroke(gdouble ex);
     void adjust_stroke_width_recursive(gdouble ex);
+    void freeze_stroke_width_recursive(bool freeze);
     void adjust_paint_recursive(Geom::Affine advertized_transform, Geom::Affine t_ancestors, bool is_pattern);
     void adjust_livepatheffect(Geom::Affine const &postmul, bool set = false);
     void doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &transform, Geom::Affine const *adv = NULL, bool compensate = true);
