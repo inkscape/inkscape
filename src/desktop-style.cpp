@@ -46,6 +46,7 @@
 #include "desktop-style.h"
 #include "svg/svg-icc-color.h"
 #include "box3d-side.h"
+#include <2geom/math-utils.h>
 
 /**
  * Set color on selection on desktop.
@@ -426,7 +427,7 @@ stroke_average_width (GSList const *objects)
 
         double width = object->style->stroke_width.computed * i2dt.descrim();
 
-        if ( object->style->stroke.isNone() || isnan(width)) {
+        if ( object->style->stroke.isNone() || IS_NAN(width)) {
             ++n_notstroked;   // do not count nonstroked objects
             continue;
         } else {
@@ -728,7 +729,7 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
         Geom::Affine i2d = SP_ITEM(obj)->i2dt_affine();
         double sw = style->stroke_width.computed * i2d.descrim();
 
-        if (!isnan(sw)) {
+        if (!IS_NAN(sw)) {
             if (prev_sw != -1 && fabs(sw - prev_sw) > 1e-3)
                 same_sw = false;
             prev_sw = sw;
@@ -966,7 +967,7 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
 
         texts ++;
         double dummy = style->font_size.computed * Geom::Affine(SP_ITEM(obj)->i2dt_affine()).descrim();
-        if (!isnan(dummy)) {
+        if (!IS_NAN(dummy)) {
             size += dummy; /// \todo FIXME: we assume non-% units here
         } else {
             no_size++;
@@ -1456,7 +1457,7 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
                         SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
                         float num = spblur->stdDeviation.getNumber();
                         float dummy = num * i2d.descrim();
-                        if (!isnan(dummy)) {
+                        if (!IS_NAN(dummy)) {
                             blur_sum += dummy;
                             if (blur_prev != -1 && fabs (num - blur_prev) > 1e-2) // rather low tolerance because difference in blur radii is much harder to notice than e.g. difference in sizes
                                 same_blur = false;
