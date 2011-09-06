@@ -73,11 +73,11 @@ DrawingGlyphs::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, 
         if (_transform) scale /= _transform->descrim(); // FIXME temporary hack
         width = MAX(0.125, ggroup->_nrstyle.stroke_width * scale);
         if ( fabs(ggroup->_nrstyle.stroke_width * scale) > 0.01 ) { // FIXME: this is always true
-            b->expandBy(width);
+            b->expandBy(0.5 * width);
         }
-        // save no-miter bbox for picking
+        // save bbox without miters for picking
         _pick_bbox = b->roundOutwards();
-        // those pesky miters, now
+
         float miterMax = width * ggroup->_nrstyle.miter_limit;
         if ( miterMax > 0.01 ) {
             // grunt mode. we should compute the various miters instead
@@ -85,6 +85,9 @@ DrawingGlyphs::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, 
             b->expandBy(miterMax);
         }
         _bbox = b->roundOutwards();
+    } else if (b) {
+        _bbox = b->roundOutwards();
+        _pick_bbox = *_bbox;
     }
 
     return STATE_ALL;
