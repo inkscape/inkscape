@@ -30,14 +30,25 @@ struct TextNode : public SimpleNode {
     : SimpleNode(g_quark_from_static_string("string"), doc)
     {
         setContent(content);
+        _is_CData = false;
+    }
+    TextNode(Util::ptr_shared<char> content, Document *doc, bool is_CData)
+    : SimpleNode(g_quark_from_static_string("string"), doc)
+    {
+        setContent(content);
+        _is_CData = is_CData;
     }
     TextNode(TextNode const &other, Document *doc)
-    : SimpleNode(other, doc) {}
+    : SimpleNode(other, doc) {
+      _is_CData = other._is_CData;
+    }
 
     Inkscape::XML::NodeType type() const { return Inkscape::XML::TEXT_NODE; }
+    bool is_CData() const { return _is_CData; }
 
 protected:
     SimpleNode *_duplicate(Document* doc) const { return new TextNode(*this, doc); }
+    bool _is_CData;
 };
 
 }

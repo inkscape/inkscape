@@ -31,7 +31,7 @@ class SimpleDocument : public SimpleNode,
 public:
     explicit SimpleDocument()
     : SimpleNode(g_quark_from_static_string("xml"), this),
-      _in_transaction(false) {}
+      _in_transaction(false), _is_CData(false) {}
 
     NodeType type() const { return Inkscape::XML::DOCUMENT_NODE; }
 
@@ -44,6 +44,7 @@ public:
 
     Node *createElement(char const *name);
     Node *createTextNode(char const *content);
+    Node *createTextNode(char const *content, bool const is_CData);
     Node *createComment(char const *content);
     Node *createPI(char const *target, char const *content);
 
@@ -76,6 +77,7 @@ protected:
 private:
     bool _in_transaction;
     LogBuilder _log_builder;
+    bool _is_CData;
 };
 
 }

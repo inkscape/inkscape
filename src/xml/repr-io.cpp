@@ -24,6 +24,7 @@
 #include "xml/attribute-record.h"
 #include "xml/rebase-hrefs.h"
 #include "xml/simple-document.h"
+#include "xml/text-node.h"
 
 #include "io/sys.h"
 #include "io/uristream.h"
@@ -497,7 +498,9 @@ sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_
             return NULL; // we do not preserve all-whitespace nodes unless we are asked to
         }
 
-        return xml_doc->createTextNode(reinterpret_cast<gchar *>(node->content));
+        // We keep track of original node type so that CDATA sections are preserved on output.
+        return xml_doc->createTextNode(reinterpret_cast<gchar *>(node->content),
+                                       node->type == XML_CDATA_SECTION_NODE );
     }
 
     if (node->type == XML_COMMENT_NODE) {
@@ -849,7 +852,12 @@ void sp_repr_write_stream( Node *repr, Writer &out, gint indent_level,
 {
     switch (repr->type()) {
         case Inkscape::XML::TEXT_NODE: {
-            repr_quote_write( out, repr->content() );
+            if( dynamic_cast<const Inkscape::XML::TextNode *>(repr)->is_CData() ) {
+                // Preserve CDATA sections, not converting '&' to &amp;, etc.
+                out.printf( "<![CDATA[%s]]>", repr->content() );
+            } else {
+                repr_quote_write( out, repr->content() );
+            }
             break;
         }
         case Inkscape::XML::COMMENT_NODE: {
