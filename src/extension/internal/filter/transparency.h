@@ -185,8 +185,8 @@ ChannelTransparency::get_filter_text (Inkscape::Extension::Extension * ext)
     Make the lightest parts of the object progressively transparent.
 
     Filter's parameters:
-    * Expansion (1.->1000., default 100) -> colormatrix (first 3 values, multiplicator)
-    * Erosion (0.->1000., default 50) -> colormatrix (4th value, multiplicator)
+    * Expansion (0.->1000., default 50) -> colormatrix (4th value, multiplicator)
+    * Erosion (1.->1000., default 100) -> colormatrix (first 3 values, multiplicator)
     * Global opacity (0.->1., default 1.) -> composite (k2)
     * Inverted (boolean, default false) -> colormatrix (values, true: first 3 values positive, 4th negative)
     
@@ -204,8 +204,8 @@ public:
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
               "<name>" N_("Light Eraser") "</name>\n"
               "<id>org.inkscape.effect.filter.LightEraser</id>\n"
-              "<param name=\"expand\" gui-text=\"" N_("Expansion:") "\" type=\"float\" appearance=\"full\"  min=\"1\" max=\"1000\">100</param>\n"
-              "<param name=\"erode\" gui-text=\"" N_("Erosion:") "\" type=\"float\" appearance=\"full\" min=\"0\" max=\"1000\">50</param>\n"
+              "<param name=\"expand\" gui-text=\"" N_("Expansion:") "\" type=\"float\" appearance=\"full\"  min=\"0\" max=\"1000\">50</param>\n"
+              "<param name=\"erode\" gui-text=\"" N_("Erosion:") "\" type=\"float\" appearance=\"full\" min=\"1\" max=\"1000\">100</param>\n"
               "<param name=\"opacity\" gui-text=\"" N_("Global opacity:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.\" max=\"1.\">1</param>\n"
               "<param name=\"invert\" gui-text=\"" N_("Inverted") "\" type=\"boolean\">false</param>\n"
               "<effect>\n"
@@ -233,15 +233,15 @@ LightEraser::get_filter_text (Inkscape::Extension::Extension * ext)
     opacity << ext->get_param_float("opacity");
 
     if (ext->get_param_bool("invert")) {
-        expand << (ext->get_param_float("expand") * 0.2125) << " "
-               << (ext->get_param_float("expand") * 0.7154) << " "
-               << (ext->get_param_float("expand") * 0.0721);
-        erode << (-ext->get_param_float("erode"));
+        expand << (ext->get_param_float("erode") * 0.2125) << " "
+               << (ext->get_param_float("erode") * 0.7154) << " "
+               << (ext->get_param_float("erode") * 0.0721);
+        erode << (-ext->get_param_float("expand"));
     } else {
-        expand << (-ext->get_param_float("expand") * 0.2125) << " "
-               << (-ext->get_param_float("expand") * 0.7154) << " "
-               << (-ext->get_param_float("expand") * 0.0721);
-        erode << ext->get_param_float("erode");
+        expand << (-ext->get_param_float("erode") * 0.2125) << " "
+               << (-ext->get_param_float("erode") * 0.7154) << " "
+               << (-ext->get_param_float("erode") * 0.0721);
+        erode << ext->get_param_float("expand");
     }
 
     _filter = g_strdup_printf(
