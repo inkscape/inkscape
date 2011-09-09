@@ -1601,9 +1601,8 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
     sp_repr_set_svg_double(image_node, "width", 1);
     sp_repr_set_svg_double(image_node, "height", 1);
     // Set transformation
-    if (_is_top_level) {
+
         svgSetTransform(image_node, 1.0, 0.0, 0.0, -1.0, 0.0, 1.0);
-    }
 
     // Create href
     if (embed_image) {
