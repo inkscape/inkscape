@@ -1701,7 +1701,7 @@ static void sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect const 
             int stride = cairo_image_surface_get_stride(imgs);
             for (int i=0; i<paint_rect.height(); ++i) {
                 unsigned char *row = px + i*stride;
-                Inkscape::CMSSystem::doTransform(transf, row, row, paint_rect.height());
+                Inkscape::CMSSystem::doTransform(transf, row, row, paint_rect.width());
             }
             cairo_surface_mark_dirty(imgs);
         }
