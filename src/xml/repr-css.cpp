@@ -14,13 +14,15 @@
  *
  * Use sp_repr_write_string to go from a property list to a style string.
  *
- * Use sp_repr_css_add_component to parse a property string and add the properties to the List.
  */
 
 #define SP_REPR_CSS_C
 
 #include <cstring>
+#include <string>
+#include <sstream>
 #include <glibmm/ustring.h>
+#include "svg/css-ostringstream.h"
 
 #include "xml/repr.h"
 #include "xml/simple-document.h"
@@ -120,7 +122,9 @@ SPCSSAttr *sp_repr_css_attr_inherited(Node *repr, gchar const *attr)
 }
 
 /**
- * Adds components (style properties) to an existing SPCSAttr from a character string.
+ * Adds components (style properties) to an existing SPCSAttr from the specified attribute's data
+ * (nominally a style attribute).
+ * 
  */
 static void
 sp_repr_css_add_components(SPCSSAttr *css, Node *repr, gchar const *attr)
@@ -228,6 +232,7 @@ sp_repr_css_write_string(SPCSSAttr *css)
             }
         } else {
             buffer.append(iter->value); // unquoted
+            g_warning("sp_repr_css_write_string: %s %s", g_quark_to_string(iter->key), iter->value );
         }
 
         if (rest(iter)) {
@@ -250,6 +255,12 @@ sp_repr_css_set(Node *repr, SPCSSAttr *css, gchar const *attr)
 
     gchar *value = sp_repr_css_write_string(css);
 
+    /*
+     * If the new value is different from the old value, this will sometimes send a signal via
+     * CompositeNodeObserver::notiftyAttributeChanged() which results in calling
+     * SPObject::sp_object_repr_attr_changed and thus updates the object's SPStyle. This update
+     * results in another call to repr->setAttribute().
+     */
     repr->setAttribute(attr, value);
 
     if (value) g_free (value);
@@ -291,7 +302,22 @@ sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *const decl)
     guchar *const str_value_unsigned = cr_term_to_string(decl->value);
     gchar *const str_value = reinterpret_cast<gchar *>(str_value_unsigned);
     gchar *value_unquoted = attribute_unquote (str_value); // libcroco returns strings quoted in ""
-    ((Node *) css)->setAttribute(decl->property->stryng->str, value_unquoted, false);
+
+    // libcroco uses %.17f for formatting... leading to trailing zeros or small rounding errors.
+    // CSSOStringStream is used here to write valid CSS (as in sp_style_write_string). This has
+    // the additional benefit of respecting the numerical precission set in the SVG Output
+    // preferences. We assume any numerical part comes first (if not, the whole string is copied).
+    std::stringstream ss( value_unquoted );
+    double number;
+    std::string characters;
+    bool number_valid = !(ss >> number).fail();
+    if( !number_valid ) ss.clear();
+    bool character_valid = !(ss >> characters).fail();
+    Inkscape::CSSOStringStream os;
+    if( number_valid ) os << number;
+    if( character_valid ) os << characters;
+ 
+    ((Node *) css)->setAttribute(decl->property->stryng->str, os.str().c_str(), false);
     g_free(value_unquoted);
     g_free(str_value);
 }
@@ -332,7 +358,8 @@ sp_repr_css_attr_add_from_string(SPCSSAttr *css, gchar const *p)
 
 /**
  * Creates a new SPCSAttr with the values filled from a repr, merges in properties from the given
- * SPCSAttr, and then replaces the that SPCSAttr with the new one.
+ * SPCSAttr, and then replaces that SPCSAttr with the new one. This is called, for example, for
+ * each object in turn when a selection's style is updated via sp_desktop_set_style().
  */
 void
 sp_repr_css_change(Node *repr, SPCSSAttr *css, gchar const *attr)
