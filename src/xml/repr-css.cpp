@@ -232,7 +232,6 @@ sp_repr_css_write_string(SPCSSAttr *css)
             }
         } else {
             buffer.append(iter->value); // unquoted
-            g_warning("sp_repr_css_write_string: %s %s", g_quark_to_string(iter->key), iter->value.pointer() );
         }
 
         if (rest(iter)) {
@@ -316,7 +315,7 @@ sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *const decl)
     Inkscape::CSSOStringStream os;
     if( number_valid ) os << number;
     if( character_valid ) os << characters;
- 
+
     ((Node *) css)->setAttribute(decl->property->stryng->str, os.str().c_str(), false);
     g_free(value_unquoted);
     g_free(str_value);
