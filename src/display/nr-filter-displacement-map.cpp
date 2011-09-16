@@ -43,15 +43,16 @@ struct Displace {
         guint32 a = (mappx & 0xff000000) >> 24;
         guint32 xpx = 0, ypx = 0;
         double xtex = x, ytex = y;
+        
+        guint32 xshift = _xch * 8, yshift = _ych * 8;
+        xpx = (mappx & (0xff << xshift)) >> xshift;
+        ypx = (mappx & (0xff << yshift)) >> yshift;
         if (a) {
-            guint32 xshift = _xch * 8, yshift = _ych * 8;
-            xpx = (mappx & (0xff << xshift)) >> xshift;
-            ypx = (mappx & (0xff << yshift)) >> yshift;
             if (_xch != 3) xpx = unpremul_alpha(xpx, a);
             if (_ych != 3) ypx = unpremul_alpha(ypx, a);
-            xtex += _scalex * (xpx - 127.5);
-            ytex += _scaley * (ypx - 127.5);
         }
+        xtex += _scalex * (xpx - 127.5);
+        ytex += _scaley * (ypx - 127.5);
 
         if (xtex >= 0 && xtex < (_texture._w - 1) &&
             ytex >= 0 && ytex < (_texture._h - 1))
