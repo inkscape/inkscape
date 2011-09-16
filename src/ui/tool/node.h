@@ -151,6 +151,7 @@ public:
     static char const *node_type_to_localized_string(NodeType type);
     // temporarily public
     virtual bool _eventHandler(GdkEvent *event);
+    Inkscape::SnapCandidatePoint snapCandidatePoint();
 protected:
     virtual void dragged(Geom::Point &, GdkEventMotion *);
     virtual bool grabbed(GdkEventMotion *);

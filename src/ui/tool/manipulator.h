@@ -40,7 +40,6 @@ public:
     
     /// Handle input event. Returns true if handled.
     virtual bool event(GdkEvent *)=0;
-protected:
     SPDesktop *const _desktop;
 };
 

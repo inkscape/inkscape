@@ -16,6 +16,7 @@
 #include "ui/tool/event-utils.h"
 #include "ui/tool/selectable-control-point.h"
 #include "ui/tool/transform-handle-set.h"
+#include "ui/tool/node.h"
 
 namespace Inkscape {
 namespace UI {
@@ -642,13 +643,24 @@ bool ControlPointSelection::event(GdkEvent *event)
     return false;
 }
 
-std::vector<Inkscape::SnapCandidatePoint> ControlPointSelection::getOriginalPoints()
+void ControlPointSelection::getOriginalPoints(std::vector<Inkscape::SnapCandidatePoint> &pts)
 {
-    std::vector<Inkscape::SnapCandidatePoint> points;
+    pts.clear();
     for (iterator i = _points.begin(); i != _points.end(); ++i) {
-        points.push_back(Inkscape::SnapCandidatePoint(_original_positions[*i], SNAPSOURCE_NODE_HANDLE));
+        pts.push_back(Inkscape::SnapCandidatePoint(_original_positions[*i], SNAPSOURCE_NODE_HANDLE));
     }
-    return points;
+}
+
+void ControlPointSelection::getUnselectedPoints(std::vector<Inkscape::SnapCandidatePoint> &pts)
+{
+    pts.clear();
+    ControlPointSelection::Set &nodes = this->allPoints();
+    for (ControlPointSelection::Set::iterator i = nodes.begin(); i != nodes.end(); ++i) {
+        if (!(*i)->selected()) {
+            Node *n = static_cast<Node*>(*i);
+            pts.push_back(n->snapCandidatePoint());
+        }
+    }
 }
 
 void ControlPointSelection::setOriginalPoints()

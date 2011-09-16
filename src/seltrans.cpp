@@ -1221,9 +1221,8 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, Geom::P
 
         if (sn.getSnapped()) {
             // We snapped something, so change the skew to reflect it
-            Geom::Coord const sd = sn.getSnapped() ? sn.getTransformation()[0] : Geom::infinity();
+            skew[dim_a] = sn.getTransformation()[0];
              _desktop->snapindicator->set_new_snaptarget(sn);
-            skew[dim_a] = sd;
         } else {
             _desktop->snapindicator->remove_snaptarget();
         }

@@ -411,6 +411,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
 
     result = findBestSnap(p, isr, true);
 
+
     if (result.getSnapped()) {
         // only change the snap indicator if we really snapped to something
         if (_snapindicator && _desktop) {

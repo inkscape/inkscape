@@ -307,12 +307,10 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 
     std::vector<Inkscape::SnapCandidatePoint> unselected;
     if (snap) {
-        typedef ControlPointSelection::Set Set;
-        Set &nodes = _parent->_selection.allPoints();
-        for (Set::iterator i = nodes.begin(); i != nodes.end(); ++i) {
+        ControlPointSelection::Set &nodes = _parent->_selection.allPoints();
+        for (ControlPointSelection::Set::iterator i = nodes.begin(); i != nodes.end(); ++i) {
             Node *n = static_cast<Node*>(*i);
-            Inkscape::SnapCandidatePoint p(n->position(), n->_snapSourceType(), n->_snapTargetType());
-            unselected.push_back(p);
+            unselected.push_back(n->snapCandidatePoint());
         }
         sm.setupIgnoreSelection(_desktop, true, &unselected);
 
@@ -326,7 +324,7 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
         } else if (ctrl_constraint) {
             // NOTE: this is subtly wrong.
             // We should get all possible constraints and snap along them using
-            // multipleConstrainedSnaps, instead of first snapping to angle and the to objects
+            // multipleConstrainedSnaps, instead of first snapping to angle and then to objects
             Inkscape::SnappedPoint p;
             p = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos, SNAPSOURCE_NODE_HANDLE), *ctrl_constraint);
             new_pos = p.getPoint();
@@ -1116,6 +1114,11 @@ Inkscape::SnapTargetType Node::_snapTargetType()
     if (_type == NODE_SMOOTH || _type == NODE_AUTO)
         return SNAPTARGET_NODE_SMOOTH;
     return SNAPTARGET_NODE_CUSP;
+}
+
+Inkscape::SnapCandidatePoint Node::snapCandidatePoint()
+{
+    return SnapCandidatePoint(position(), _snapSourceType(), _snapTargetType());
 }
 
 /** @brief Gets the handle that faces the given adjacent node.

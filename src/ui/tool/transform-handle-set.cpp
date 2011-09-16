@@ -28,6 +28,8 @@
 #include "ui/tool/event-utils.h"
 #include "ui/tool/transform-handle-set.h"
 #include "ui/tool/node-tool.h"
+#include "ui/tool/node.h"
+#include "seltrans.h"
 
 // FIXME BRAIN DAMAGE WARNING: this is a global variable in select-context.cpp
 // It should be moved to a header
@@ -101,6 +103,7 @@ protected:
     Geom::Point _origin;
     TransformHandleSet &_th;
     std::vector<Inkscape::SnapCandidatePoint> _snap_points;
+    std::vector<Inkscape::SnapCandidatePoint> _unselected_points;
 
 private:
     virtual bool grabbed(GdkEventMotion *) {
@@ -113,12 +116,13 @@ private:
         _setState(_state);
 
         // Collect the snap-candidates, one for each selected node. These will be stored in the _snap_points vector.
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-        SnapManager &m = desktop->namedview->snap_manager;
-        InkNodeTool *nt = INK_NODE_TOOL(_desktop->event_context);
+        SnapManager &m = _th._desktop->namedview->snap_manager;
+        InkNodeTool *nt = INK_NODE_TOOL(_th._desktop->event_context);
         ControlPointSelection *selection = nt->_selected_nodes.get();
 
-        _snap_points = selection->getOriginalPoints();
+        selection->setOriginalPoints();
+        selection->getOriginalPoints(_snap_points);
+        selection->getUnselectedPoints(_unselected_points);
 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         if (prefs->getBool("/options/snapclosestonly/value", false)) {
@@ -198,9 +202,6 @@ protected:
         _sc_center = _th.rotationCenter();
         _sc_opposite = _th.bounds().corner(_corner + 2);
         _last_scale_x = _last_scale_y = 1.0;
-        InkNodeTool *nt = INK_NODE_TOOL(_desktop->event_context);
-        ControlPointSelection *selection = nt->_selected_nodes.get();
-        selection->setOriginalPoints();
     }
     virtual Geom::Affine computeTransform(Geom::Point const &new_pos, GdkEventMotion *event) {
         Geom::Point scc = held_shift(*event) ? _sc_center : _sc_opposite;
@@ -214,30 +215,15 @@ protected:
 
         if (held_alt(*event)) {
             for (unsigned i = 0; i < 2; ++i) {
-                if (scale[i] >= 1.0) scale[i] = round(scale[i]);
-                else scale[i] = 1.0 / round(1.0 / scale[i]);
+                if (fabs(scale[i]) >= 1.0) {
+                    scale[i] = round(scale[i]);
+                } else {
+                    scale[i] = 1.0 / round(1.0 / MIN(scale[i],10));
+                }
             }
         } else {
-            //SPDesktop *desktop = _th._desktop; // Won't work as _desktop is protected
-            SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-            SnapManager &m = desktop->namedview->snap_manager;
-
-            // The lines below have been copied from Handle::dragged() in node.cpp, and need to be
-            // activated if we want to snap to unselected (i.e. stationary) nodes and stationary pieces of paths of the
-            // path that's currently being edited
-            /*
-            std::vector<Inkscape::SnapCandidatePoint> unselected;
-            typedef ControlPointSelection::Set Set;
-            Set &nodes = _parent->_selection.allPoints();
-            for (Set::iterator i = nodes.begin(); i != nodes.end(); ++i) {
-                Node *n = static_cast<Node*>(*i);
-                Inkscape::SnapCandidatePoint p(n->position(), n->_snapSourceType(), n->_snapTargetType());
-                unselected.push_back(p);
-            }
-            m.setupIgnoreSelection(_desktop, true, &unselected);
-            */
-
-            m.setupIgnoreSelection(_desktop);
+            SnapManager &m = _th._desktop->namedview->snap_manager;
+            m.setupIgnoreSelection(_th._desktop, true, &_unselected_points);
 
             Inkscape::SnappedPoint sp;
             if (held_control(*event)) {
@@ -306,10 +292,30 @@ protected:
 
         vs[d1] = (new_pos - scc)[d1] / (_origin - scc)[d1];
         if (held_alt(*event)) {
-            if (vs[d1] >= 1.0) vs[d1] = round(vs[d1]);
-            else vs[d1] = 1.0 / round(1.0 / vs[d1]);
+            if (fabs(vs[d1]) >= 1.0) {
+                vs[d1] = round(vs[d1]);
+            } else {
+                vs[d1] = 1.0 / round(1.0 / MIN(vs[d1],10));
+            }
+            vs[d2] = 1.0;
+        } else {
+            SnapManager &m = _th._desktop->namedview->snap_manager;
+            m.setupIgnoreSelection(_th._desktop, true, &_unselected_points);
+
+            bool uniform = held_control(*event);
+            Inkscape::SnappedPoint sp = m.constrainedSnapStretch(_snap_points, _origin, vs[d1], scc, d1, uniform);
+            m.unSetup();
+
+            if (sp.getSnapped()) {
+                Geom::Point result = sp.getTransformation();
+                vs[d1] = result[d1];
+                vs[d2] = result[d2];
+            } else {
+                // on ctrl, apply uniform scaling instead of stretching
+                // Preserve aspect ratio, but never flip in the dimension not being edited (by using fabs())
+                vs[d2] = uniform ? fabs(vs[d1]) : 1.0;
+            }
         }
-        vs[d2] = held_control(*event) ? vs[d1] : 1.0;
 
         _last_scale_x = vs[Geom::X];
         _last_scale_y = vs[Geom::Y];
@@ -357,7 +363,17 @@ protected:
         double angle = Geom::angle_between(_origin - rotc, new_pos - rotc);
         if (held_control(*event)) {
             angle = snap_angle(angle);
+        } else {
+            SnapManager &m = _th._desktop->namedview->snap_manager;
+            m.setupIgnoreSelection(_th._desktop, true, &_unselected_points);
+            Inkscape::SnappedPoint sp = m.constrainedSnapRotate(_snap_points, _origin, angle, rotc);
+            m.unSetup();
+
+            if (sp.getSnapped()) {
+                angle = sp.getTransformation()[0];
+            }
         }
+
         _last_angle = angle;
         Geom::Affine t = Geom::Translate(-rotc)
             * Geom::Rotate(angle)
@@ -428,44 +444,76 @@ protected:
     virtual Geom::Affine computeTransform(Geom::Point const &new_pos, GdkEventMotion *event)
     {
         Geom::Point scc = held_shift(*event) ? _skew_center : _skew_opposite;
-        // d1 and d2 are reversed with respect to ScaleSideHandle
-        Geom::Dim2 d1 = static_cast<Geom::Dim2>(_side % 2);
-        Geom::Dim2 d2 = static_cast<Geom::Dim2>((_side + 1) % 2);
-        Geom::Point proj, scale(1.0, 1.0);
+        Geom::Dim2 d1 = static_cast<Geom::Dim2>((_side + 1) % 2);
+        Geom::Dim2 d2 = static_cast<Geom::Dim2>(_side % 2);
+
+        Geom::Point const initial_delta = _origin - scc;
+
+        if (fabs(initial_delta[d1]) < 1e-15) {
+            return Geom::Affine();
+        }
+
+        // Calculate the scale factors, which can be either visual or geometric
+        // depending on which type of bbox is currently being used (see preferences -> selector tool)
+        Geom::Scale scale = calcScaleFactors(_origin, new_pos, scc, false);
+        Geom::Scale skew = calcScaleFactors(_origin, new_pos, scc, true);
+        scale[d2] = 1;
+        skew[d2] = 1;
 
         // Skew handles allow scaling up to integer multiples of the original size
         // in the second direction; prevent explosions
-        // TODO should the scaling part be only active with Alt?
-        if (!Geom::are_near(_origin[d2], scc[d2])) {
-            scale[d2] = (new_pos - scc)[d2] / (_origin - scc)[d2];
-        }
 
-        if (scale[d2] < 1.0) {
-            scale[d2] = copysign(1.0, scale[d2]);
+        if (fabs(scale[d1]) < 1) {
+            // Prevent shrinking of the selected object, while allowing mirroring
+            scale[d1] = copysign(1.0, scale[d1]);
         } else {
-            scale[d2] = floor(scale[d2]);
+            // Allow expanding of the selected object by integer multiples
+            scale[d1] = floor(scale[d1] + 0.5);
         }
 
-        // Calculate skew angle. The angle is calculated with regards to the point obtained
-        // by projecting the handle position on the relevant side of the bounding box.
-        // This avoids degeneracies when moving the skew angle over the rotation center
-        proj[d1] = new_pos[d1];
-        proj[d2] = scc[d2] + (_origin[d2] - scc[d2]) * scale[d2];
-        double angle = 0;
-        if (!Geom::are_near(proj[d2], scc[d2]))
-            angle = Geom::angle_between(_origin - scc, proj - scc);
-        if (held_control(*event)) angle = snap_angle(angle);
+        double angle = atan(skew[d1] / scale[d1]);
 
-        // skew matrix has the from [[1, k],[0, 1]] for horizontal skew
-        // and [[1,0],[k,1]] for vertical skew.
-        Geom::Affine skew = Geom::identity();
-        // correct the sign of the tangent
-        skew[d2 + 1] = (d1 == Geom::X ? -1.0 : 1.0) * tan(angle);
+        if (held_control(*event)) {
+            angle = snap_angle(angle);
+            skew[d1] = tan(angle) * scale[d1];
+        } else {
+            SnapManager &m = _th._desktop->namedview->snap_manager;
+            m.setupIgnoreSelection(_th._desktop, true, &_unselected_points);
+
+            Geom::Point cvec; cvec[d2] = 1.0;
+            Inkscape::Snapper::SnapConstraint const constraint(cvec);
+            Inkscape::SnappedPoint sp = m.constrainedSnapSkew(_snap_points, _origin, constraint, Geom::Point(skew[d1], scale[d1]), scc, d2);
+            m.unSetup();
+
+            if (sp.getSnapped()) {
+                skew[d1] =  sp.getTransformation()[0];
+            }
+        }
 
         _last_angle = angle;
+
+        // Update the handle position
+        Geom::Point new_new_pos;
+        new_new_pos[d2] = initial_delta[d1] * skew[d1] + _origin[d2];
+        new_new_pos[d1] = initial_delta[d1] * scale[d1] + scc[d1];
+
+        // Calculate the relative affine
+        Geom::Affine relative_affine = Geom::identity();
+        relative_affine[2*d1 + d1] = (new_new_pos[d1] - scc[d1]) / initial_delta[d1];
+        relative_affine[2*d1 + (d2)] = (new_new_pos[d2] - _origin[d2]) / initial_delta[d1];
+        relative_affine[2*(d2) + (d1)] = 0;
+        relative_affine[2*(d2) + (d2)] = 1;
+
+        for (int i = 0; i < 2; i++) {
+            if (fabs(relative_affine[3*i]) < 1e-15) {
+                relative_affine[3*i] = 1e-15;
+            }
+        }
+
         Geom::Affine t = Geom::Translate(-scc)
-            * Geom::Scale(scale) * skew
+            * relative_affine
             * Geom::Translate(scc);
+
         return t;
     }
 
@@ -537,8 +585,8 @@ public:
 
 protected:
     virtual void dragged(Geom::Point &new_pos, GdkEventMotion *event) {
-        SnapManager &sm = _desktop->namedview->snap_manager;
-        sm.setup(_desktop);
+        SnapManager &sm = _th._desktop->namedview->snap_manager;
+        sm.setup(_th._desktop);
         bool snap = !held_shift(*event) && sm.someSnapperMightSnap();
         if (held_control(*event)) {
             // constrain to axes

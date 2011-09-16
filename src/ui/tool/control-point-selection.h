@@ -111,7 +111,8 @@ public:
     sigc::signal<void, SelectableControlPoint *, bool> signal_point_changed;
     sigc::signal<void, CommitEvent> signal_commit;
 
-    std::vector<Inkscape::SnapCandidatePoint> getOriginalPoints();
+    void getOriginalPoints(std::vector<Inkscape::SnapCandidatePoint> &pts);
+    void getUnselectedPoints(std::vector<Inkscape::SnapCandidatePoint> &pts);
     void setOriginalPoints();
 
 private:
