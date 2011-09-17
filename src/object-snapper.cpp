@@ -324,7 +324,7 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuide(IntermSnapResults &isr,
     // Iterate through all nodes, find out which one is the closest to this guide, and snap to it!
     _collectNodes(SNAPSOURCE_GUIDE, true);
 
-    if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION, SNAPTARGET_BBOX_EDGE, SNAPTARGET_PAGE_BORDER)) {
+    if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION, SNAPTARGET_BBOX_EDGE, SNAPTARGET_PAGE_BORDER, SNAPTARGET_TEXT_BASELINE)) {
         _collectPaths(p, SNAPSOURCE_GUIDE, true);
         _snapPaths(isr, SnapCandidatePoint(p, SNAPSOURCE_GUIDE), NULL, NULL);
     }

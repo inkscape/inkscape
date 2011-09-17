@@ -1167,11 +1167,9 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
     }
 
     // search for the closest snapped curve
-    if (snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_PATH)) { // We might have been looking for path intersections only, and not for the paths themselves
-        Inkscape::SnappedCurve closestCurve;
-        if (getClosestCurve(isr.curves, closestCurve)) {
-            sp_list.push_back(Inkscape::SnappedPoint(closestCurve));
-        }
+    Inkscape::SnappedCurve closestCurve;
+    if (getClosestCurve(isr.curves, closestCurve)) {
+        sp_list.push_back(Inkscape::SnappedPoint(closestCurve));
     }
 
     if (snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_PATH_INTERSECTION)) {
