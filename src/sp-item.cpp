@@ -1283,6 +1283,9 @@ void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &tra
         // (as reported in https://bugs.launchpad.net/inkscape/+bug/825840/comments/4)
         if (!prefs->getBool("/options/transform/stroke", true)) {
             freeze_stroke_width_recursive(true);
+            // This will only work if the item has a set_transform method (in this method adjust_stroke() will be called)
+            // We will still have to apply the inverse scaling to other items, not having a set_transform method
+            // such as ellipses and stars
         }
 
         // recursively compensate rx/ry of a rect if requested
@@ -1313,18 +1316,24 @@ void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &tra
              !preserve && // user did not chose to preserve all transforms
              !clip_ref->getObject() && // the object does not have a clippath
              !mask_ref->getObject() && // the object does not have a mask
-         !(!transform.isTranslation() && style && style->getFilter())
-             // the object does not have a filter, or the transform is translation (which is supposed to not affect filters)
+             !(!transform.isTranslation() && style && style->getFilter()) // the object does not have a filter, or the transform is translation (which is supposed to not affect filters)
         ) {
         transform_attr = ((SPItemClass *) G_OBJECT_GET_CLASS(this))->set_transform(this, transform);
+        freeze_stroke_width_recursive(false);
+    } else {
+        freeze_stroke_width_recursive(false);
+        if (compensate) {
+            if (!prefs->getBool("/options/transform/stroke", true)) {
+                // Recursively compensate for stroke scaling, depending on user preference
+                // (As to why we need to do this, see the comment a few lines above near the freeze_stroke_width_recursive(true) call)
+                double const expansion = 1. / advertized_transform.descrim();
+                adjust_stroke_width_recursive(expansion);
+            }
+        }
     }
     set_item_transform(transform_attr);
 
-    if (compensate) {
-        if (!prefs->getBool("/options/transform/stroke", true)) {
-            freeze_stroke_width_recursive(false);
-        }
-    }
+
 
     // Note: updateRepr comes before emitting the transformed signal since
     // it causes clone SPUse's copy of the original object to brought up to
