@@ -551,11 +551,11 @@ void FilterGaussian::render_cairo(FilterSlot &slot)
     cairo_surface_t *in = slot.getcairo(_input);
     if (!in) return;
 
-    // zero deviation = transparent black as output
-    if (_deviation_x <= 0 || _deviation_y <= 0) {
-        cairo_surface_t *blank = ink_cairo_surface_create_identical(in);
-        slot.set(_output, blank);
-        cairo_surface_destroy(blank);
+    // zero deviation = no change in output
+    if (_deviation_x <= 0 && _deviation_y <= 0) {
+        cairo_surface_t *cp = ink_cairo_surface_copy(in);
+        slot.set(_output, cp);
+        cairo_surface_destroy(cp);
         return;
     }
 
