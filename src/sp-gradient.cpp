@@ -1522,7 +1522,7 @@ sp_gradient_pattern_common_setup(cairo_pattern_t *cp,
 
     // set pattern matrix
     Geom::Affine gs2user = gr->gradientTransform;
-    if (gr->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
+    if (gr->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX && bbox) {
         Geom::Affine bbox2user(bbox->width(), 0, 0, bbox->height(), bbox->left(), bbox->top());
         gs2user *= bbox2user;
     }
