@@ -1168,17 +1168,11 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
 
     // search for the closest snapped curve
     Inkscape::SnappedCurve closestCurve;
-    if (getClosestCurve(isr.curves, closestCurve)) {
+    // We might have collected the paths only to snap to their intersection, without the intention to snap to the paths themselves
+    // Therefore we explicitly check whether the paths should be considered as snap targets themselves
+    bool exclude_paths = !snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_PATH);
+    if (getClosestCurve(isr.curves, closestCurve, exclude_paths)) {
         sp_list.push_back(Inkscape::SnappedPoint(closestCurve));
-    }
-
-    if (snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_PATH_INTERSECTION)) {
-        // search for the closest snapped intersection of curves
-        Inkscape::SnappedPoint closestCurvesIntersection;
-        if (getClosestIntersectionCS(isr.curves, p.getPoint(), closestCurvesIntersection, _desktop->dt2doc())) {
-            closestCurvesIntersection.setSource(p.getSourceType());
-            sp_list.push_back(closestCurvesIntersection);
-        }
     }
 
     // search for the closest snapped grid line
@@ -1200,6 +1194,24 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
     // the grid/guide/path we're snapping to. This snappoint is therefore fully constrained, so there's
     // no need to look for additional intersections
     if (!constrained) {
+        if (snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_PATH_INTERSECTION)) {
+            // search for the closest snapped intersection of curves
+            Inkscape::SnappedPoint closestCurvesIntersection;
+            if (getClosestIntersectionCS(isr.curves, p.getPoint(), closestCurvesIntersection, _desktop->dt2doc())) {
+                closestCurvesIntersection.setSource(p.getSourceType());
+                sp_list.push_back(closestCurvesIntersection);
+            }
+        }
+
+        if (snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_PATH_GUIDE_INTERSECTION)) {
+            // search for the closest snapped intersection of a guide with a curve
+            Inkscape::SnappedPoint closestCurveGuideIntersection;
+            if (getClosestIntersectionCL(isr.curves, isr.guide_lines, p.getPoint(), closestCurveGuideIntersection, _desktop->dt2doc())) {
+                closestCurveGuideIntersection.setSource(p.getSourceType());
+                sp_list.push_back(closestCurveGuideIntersection);
+            }
+        }
+
         // search for the closest snapped intersection of grid lines
         Inkscape::SnappedPoint closestGridPoint;
         if (getClosestIntersectionSL(isr.grid_lines, closestGridPoint)) {

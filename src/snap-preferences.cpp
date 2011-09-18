@@ -147,6 +147,8 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
             target = SNAPTARGET_NODE_CUSP;
         } else if (target == SNAPTARGET_ELLIPSE_QUADRANT_POINT) {
             target = SNAPTARGET_NODE_SMOOTH;
+        } else if (target == SNAPTARGET_PATH_GUIDE_INTERSECTION) {
+            target = SNAPTARGET_PATH_INTERSECTION;
         }
 
 

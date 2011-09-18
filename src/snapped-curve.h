@@ -14,6 +14,7 @@
 #include <vector>
 #include <list>
 #include "snapped-point.h"
+#include "snapped-line.h"
 #include <2geom/forward.h>
 
 namespace Inkscape
@@ -27,6 +28,7 @@ public:
     SnappedCurve(Geom::Point const &snapped_point, int num_path, int num_segm, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve, SnapSourceType source, long source_num, SnapTargetType target, Geom::OptRect target_bbox);
     ~SnappedCurve();
     Inkscape::SnappedPoint intersect(SnappedCurve const &curve, Geom::Point const &p, Geom::Affine dt2doc) const; //intersect with another SnappedCurve
+    Inkscape::SnappedPoint intersect(SnappedLine const &line, Geom::Point const &p, Geom::Affine dt2doc) const; //intersect with a SnappedLine
 
 private:
     Geom::Curve const *_curve;
@@ -36,8 +38,9 @@ private:
 
 }
 
-bool getClosestCurve(std::list<Inkscape::SnappedCurve> const &list, Inkscape::SnappedCurve &result);
+bool getClosestCurve(std::list<Inkscape::SnappedCurve> const &list, Inkscape::SnappedCurve &result, bool exclude_paths = false);
 bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, Geom::Point const &p, Inkscape::SnappedPoint &result, Geom::Affine dt2doc);
+bool getClosestIntersectionCL(std::list<Inkscape::SnappedCurve> const &list1, std::list<Inkscape::SnappedLine> const &list2, Geom::Point const &p, Inkscape::SnappedPoint &result, Geom::Affine dt2doc);
 
 
 #endif /* !SEEN_SNAPPEDCURVE_H */

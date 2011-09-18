@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-08-31 21:37+0200\n"
-"PO-Revision-Date: 2011-09-03 18:18+0100\n"
+"PO-Revision-Date: 2011-09-18 09:20+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -343,6 +343,8 @@ msgid ""
 "The total length of the pattern is too small :\n"
 "Please choose a larger object or set 'Space between copies' > 0"
 msgstr ""
+"Die absolute Länge des Musters ist zu klein :\n"
+"Bitte wählen Sie ein größeres Objekt oder setzen den Wert 'Abstand zwischen Kopien' > 0"
 
 #: ../share/extensions/pathmodifier.py:229
 #, python-format
@@ -466,14 +468,12 @@ msgstr "Sie müssen zwei Elemente auswählen."
 
 #: ../share/extensions/webslicer_export.py:57
 msgid "You must give a directory to export the slices."
-msgstr ""
+msgstr "ZUum Export der Teile müssen Sie ein Verzeichnis angeben."
 
 #: ../share/extensions/webslicer_export.py:69
-#, fuzzy, python-format
+#, python-format
 msgid "Can't create \"%s\"."
-msgstr ""
-"Kann Datei %s nicht anlegen.\n"
-"%s"
+msgstr "Kann \"%s\" nicht anlegen."
 
 #: ../share/extensions/webslicer_export.py:70
 #, python-format
@@ -488,11 +488,11 @@ msgstr "Das Verzeichnis \"%s\" existiert nicht."
 #: ../share/extensions/webslicer_export.py:102
 #, python-format
 msgid "You have more than one element with \"%s\" html-id."
-msgstr ""
+msgstr "Sie haben mehr als ein Element mit \"%s\" html-id."
 
 #: ../share/extensions/webslicer_export.py:332
 msgid "You must install the ImageMagick to get JPG and GIF."
-msgstr ""
+msgstr "Für JPG und GIF muss ImageMagic installiert sein."
 
 #: ../share/filters/filters.svg.h:1
 msgid "Smart Jelly"
@@ -545,7 +545,7 @@ msgstr "Übersteigerte Schattierungen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Chrome effect with deep shades"
-msgstr ""
+msgstr "Chromeffekt mit tiefen Schatten"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Jigsaw Piece"
@@ -1335,7 +1335,6 @@ msgid "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "Filzartige Textur mit verwirbelten Farben, an den Kanten leicht dunkler"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Ink Paint"
 msgstr "Wasserfarbe"
 
@@ -1830,9 +1829,7 @@ msgstr "Alufolie"
 msgid "Metallic foil effect combining two lighting types and variable crumple"
 msgstr "Alufolieneffekt mit zwei Beleuchtungsarten und einstellbarer Knittrigkeit"
 
-# !!! correct?
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Soft Colors"
 msgstr "Weiche Farben"
 
@@ -1850,7 +1847,6 @@ msgid "Bumps effect with a bevel, color flood and complex lighting"
 msgstr "Oberflächenstruktur mit Wölbung, Farbfüllung und komplexer Beleuchtung "
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Growing Cells"
 msgstr "Wachsende Zellen"
 
@@ -2027,7 +2023,6 @@ msgid "Adds a white opaque background"
 msgstr "Standard-Hintergrund"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Fill Area"
 msgstr "Füllbereich"
 
@@ -6180,34 +6175,28 @@ msgid "Increase or decrease contrast in bitmap(s)"
 msgstr "Erhöhe oder erniedrige Kontrast in Bitmap(s)"
 
 #: ../src/extension/internal/bitmap/crop.cpp:65
-#, fuzzy
 msgid "Crop"
-msgstr "Linienende:"
+msgstr "Schneiden"
 
 #: ../src/extension/internal/bitmap/crop.cpp:67
-#, fuzzy
 msgid "Top (px):"
-msgstr "Oben:"
+msgstr "Oben (px):"
 
 #: ../src/extension/internal/bitmap/crop.cpp:68
-#, fuzzy
 msgid "Bottom (px):"
-msgstr "Unten:"
+msgstr "Unten (PX):"
 
 #: ../src/extension/internal/bitmap/crop.cpp:69
-#, fuzzy
 msgid "Left (px):"
-msgstr "Versatz (px):"
+msgstr "Links (px):"
 
 #: ../src/extension/internal/bitmap/crop.cpp:70
-#, fuzzy
 msgid "Right (px):"
-msgstr "Rechts:"
+msgstr "Rechts (px):"
 
 #: ../src/extension/internal/bitmap/crop.cpp:76
-#, fuzzy
 msgid "Crop selected bitmap(s)."
-msgstr "Gewählte Bitmaps verunschärfen"
+msgstr "Gewählte Bitmaps schneiden"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:36
 msgid "Cycle Colormap"
@@ -6693,7 +6682,6 @@ msgid "Enhanced Metafile"
 msgstr "Enhanced Metafile"
 
 #: ../src/extension/internal/filter/bevels.h:53
-#, fuzzy
 msgid "Diffuse Light"
 msgstr "Diffuses Licht"
 
@@ -6720,7 +6708,6 @@ msgstr "Azimut (°):"
 #: ../src/extension/internal/filter/bevels.h:58
 #: ../src/extension/internal/filter/bevels.h:139
 #: ../src/extension/internal/filter/bevels.h:223
-#, fuzzy
 msgid "Lighting color"
 msgstr "Hervorhebungsfarbe:"
 
@@ -6782,7 +6769,6 @@ msgid "Basic diffuse bevel to use for building textures"
 msgstr "Einfache stumpfe Wölbung um Texturen zu entwickeln"
 
 #: ../src/extension/internal/filter/bevels.h:133
-#, fuzzy
 msgid "Matte Jelly"
 msgstr "Mattes Gelee"
 
@@ -7021,9 +7007,8 @@ msgstr "Schwellwert für Vereinfachungen:"
 
 #: ../src/extension/internal/filter/bumps.h:86
 #: ../src/extension/internal/filter/bumps.h:318
-#, fuzzy
 msgid "Crop:"
-msgstr "Linienende:"
+msgstr "Schneiden:"
 
 #: ../src/extension/internal/filter/bumps.h:87
 #: ../src/extension/internal/filter/bumps.h:319
@@ -7112,9 +7097,8 @@ msgid "Point"
 msgstr "Punkt"
 
 #: ../src/extension/internal/filter/bumps.h:107
-#, fuzzy
 msgid "Spot"
-msgstr "pt"
+msgstr "Spot"
 
 #: ../src/extension/internal/filter/bumps.h:109
 #, fuzzy
@@ -7937,24 +7921,20 @@ msgid "Position:"
 msgstr "Position:"
 
 #: ../src/extension/internal/filter/morphology.h:180
-#, fuzzy
 msgid "Inside"
-msgstr "Einlage"
+msgstr "Innen"
 
 #: ../src/extension/internal/filter/morphology.h:181
-#, fuzzy
 msgid "Outside"
-msgstr "Kalte Außenseite"
+msgstr "Außen"
 
 #: ../src/extension/internal/filter/morphology.h:182
-#, fuzzy
 msgid "Overlayed"
-msgstr "Deckschichten"
+msgstr "Überlagert"
 
 #: ../src/extension/internal/filter/morphology.h:184
-#, fuzzy
 msgid "Width 1:"
-msgstr "Breite:"
+msgstr "Breite 1:"
 
 #: ../src/extension/internal/filter/morphology.h:185
 #, fuzzy
@@ -7967,9 +7947,8 @@ msgid "Erosion 1:"
 msgstr "Position:"
 
 #: ../src/extension/internal/filter/morphology.h:187
-#, fuzzy
 msgid "Width 2:"
-msgstr "Breite:"
+msgstr "Breite 2:"
 
 #: ../src/extension/internal/filter/morphology.h:188
 #, fuzzy
@@ -7987,9 +7966,8 @@ msgid "Smooth"
 msgstr "Glätten"
 
 #: ../src/extension/internal/filter/morphology.h:195
-#, fuzzy
 msgid "Fill opacity:"
-msgstr "Deckkraft, %"
+msgstr "Deckkraft:"
 
 #: ../src/extension/internal/filter/morphology.h:196
 #, fuzzy
@@ -25256,11 +25234,11 @@ msgstr "Baskisch (eu)"
 
 #: ../share/extensions/dxf_outlines.inx.h:10
 msgid "CP 1250"
-msgstr ""
+msgstr "CP 1250"
 
 #: ../share/extensions/dxf_outlines.inx.h:11
 msgid "CP 1252"
-msgstr ""
+msgstr "CP 1252"
 
 #: ../share/extensions/dxf_outlines.inx.h:12
 #, fuzzy
@@ -25283,7 +25261,7 @@ msgstr "Latein"
 
 #: ../share/extensions/dxf_outlines.inx.h:18
 msgid "UTF 8"
-msgstr ""
+msgstr "UTF 8"
 
 #: ../share/extensions/dxf_outlines.inx.h:27
 msgid "use LWPOLYLINE type of line output"

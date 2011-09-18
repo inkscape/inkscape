@@ -102,6 +102,9 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
             case SNAPTARGET_PATH_INTERSECTION:
                 target_name = _("path intersection");
                 break;
+            case SNAPTARGET_PATH_GUIDE_INTERSECTION:
+                target_name = _("guide-path intersection");
+                break;
             case SNAPTARGET_BBOX_CORNER:
                 target_name = _("bounding box corner");
                 break;
