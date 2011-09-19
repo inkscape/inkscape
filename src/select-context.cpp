@@ -627,7 +627,6 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         seltrans->ungrab();
                         sc->moved = FALSE;
 #ifdef WITH_DBUS
-                        g_print("moved!\n");//JAVE
                         dbus_send_ping(desktop, sc->item);
 #endif
                     } else if (sc->item && !drag_escaped) {

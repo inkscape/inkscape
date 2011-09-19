@@ -1444,7 +1444,6 @@ gboolean dbus_send_ping (SPDesktop* desk,     SPItem *item)
 {
   //DocumentInterface *obj;
   g_signal_emit (desk->dbus_document_interface, signals[OBJECT_MOVED_SIGNAL], 0, item->getId());
-  g_print("Ping!\n");
   return TRUE;
 }
 
