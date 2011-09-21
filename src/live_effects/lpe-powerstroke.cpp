@@ -278,22 +278,38 @@ static const Util::EnumDataConverter<unsigned> InterpolatorTypeConverter(Interpo
 
 enum LineCapType {
   LINECAP_BUTT,
+  LINECAP_SQUARE,
   LINECAP_ROUND,
-  LINECAP_SHARP
+  LINECAP_PEAK
 };
 static const Util::EnumData<unsigned> LineCapTypeData[] = {
-    {LINECAP_BUTT  ,  N_("Butt"),  "Butt"},
-    {LINECAP_ROUND ,  N_("Round"), "Round"},
-    {LINECAP_SHARP  , N_("Sharp"), "Sharp"}
+    {LINECAP_BUTT   ,  N_("Butt"),  "butt"},
+    {LINECAP_SQUARE,  N_("Square"),  "square"},
+    {LINECAP_ROUND  ,  N_("Round"), "round"},
+    {LINECAP_PEAK  , N_("Peak"), "peak"}
 };
 static const Util::EnumDataConverter<unsigned> LineCapTypeConverter(LineCapTypeData, sizeof(LineCapTypeData)/sizeof(*LineCapTypeData));
+
+enum LineCuspType {
+  LINECUSP_BEVEL,
+  LINECUSP_ROUND,
+  LINECUSP_SHARP
+};
+static const Util::EnumData<unsigned> LineCuspTypeData[] = {
+    {LINECUSP_BEVEL ,  N_("Beveled"),  "bevel"},
+    {LINECUSP_ROUND ,  N_("Rounded"), "round"},
+    {LINECUSP_SHARP  , N_("Sharp"), "sharp"}
+};
+static const Util::EnumDataConverter<unsigned> LineCuspTypeConverter(LineCuspTypeData, sizeof(LineCuspTypeData)/sizeof(*LineCuspTypeData));
 
 LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     offset_points(_("Offset points"), _("Offset points"), "offset_points", &wr, this),
     sort_points(_("Sort points"), _("Sort offset points according to their time value along the curve."), "sort_points", &wr, this, true),
     interpolator_type(_("Interpolator type"), _("Determines which kind of interpolator will be used to interpolate between stroke width along the path."), "interpolator_type", InterpolatorTypeConverter, &wr, this, Geom::Interpolate::INTERP_CUBICBEZIER_JOHAN),
-    linecap_type(_("Line cap type"), _("Determines the shape of the path ends."), "linecap_type", LineCapTypeConverter, &wr, this, LINECAP_ROUND)
+    start_linecap_type(_("Start line cap type"), _("Determines the shape of the path's start."), "start_linecap_type", LineCapTypeConverter, &wr, this, LINECAP_ROUND),
+    cusp_linecap_type(_("Cusp line cap type"), _("Determines the shape of the cusps along the path."), "cusp_linecap_type", LineCuspTypeConverter, &wr, this, LINECUSP_ROUND),
+    end_linecap_type(_("End line cap type"), _("Determines the shape of the path's end."), "end_linecap_type", LineCapTypeConverter, &wr, this, LINECAP_ROUND)
 {
     show_orig_path = true;
 
@@ -302,7 +318,9 @@ LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&offset_points) );
     registerParameter( dynamic_cast<Parameter *>(&sort_points) );
     registerParameter( dynamic_cast<Parameter *>(&interpolator_type) );
-    registerParameter( dynamic_cast<Parameter *>(&linecap_type) );
+    registerParameter( dynamic_cast<Parameter *>(&start_linecap_type) );
+    //registerParameter( dynamic_cast<Parameter *>(&cusp_linecap_type) );
+    registerParameter( dynamic_cast<Parameter *>(&end_linecap_type) );
 }
 
 LPEPowerStroke::~LPEPowerStroke()
@@ -347,7 +365,8 @@ LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & 
 
     Piecewise<D2<SBasis> > output;
     if (!closed_path) {
-        LineCapType linecap = static_cast<LineCapType>(linecap_type.get_value());
+        LineCapType start_linecap = static_cast<LineCapType>(start_linecap_type.get_value());
+        LineCapType end_linecap = static_cast<LineCapType>(end_linecap_type.get_value());
 
         // perhaps use std::list instead of std::vector?
         std::vector<Geom::Point> ts(offset_points.data().size() + 2);
@@ -357,17 +376,34 @@ LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & 
         if (sort_points) {
             sort(ts.begin()+1, ts.end()-1, compare_offsets);
         }
-        switch (linecap) {
+
+        switch (start_linecap) {
+        /*
             case LINECAP_SHARP:
                 // first and last point coincide with input path to make sharp points on ends
                 ts.front() = Point(pwd2_in.domain().min(),0);
-                ts.back()  = Point(pwd2_in.domain().max(),0);
                 break;
+        */
+            case LINECAP_PEAK:
+            case LINECAP_SQUARE:
             case LINECAP_BUTT:
             case LINECAP_ROUND:
             default:
                 // first and last point have same distance from path as second and second to last points, respectively.
                 ts.front() = Point(pwd2_in.domain().min(), (*(ts.begin()+1))[Geom::Y] );
+                break;
+        }
+        switch (end_linecap) {
+        /*
+            case LINECAP_SHARP:
+                ts.back()  = Point(pwd2_in.domain().max(),0);
+                break;
+        */
+            case LINECAP_PEAK:
+            case LINECAP_SQUARE:
+            case LINECAP_BUTT:
+            case LINECAP_ROUND:
+            default:
                 ts.back()  = Point(pwd2_in.domain().max(), (*(ts.end()-2))[Geom::Y] );
                 break;
         }
@@ -377,55 +413,106 @@ LPEPowerStroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & 
         Geom::Path strokepath = interpolator->interpolateToPath(ts);
         delete interpolator;
 
-        switch (linecap) {
-            case LINECAP_SHARP:
+        D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(strokepath.toPwSb());
+        Piecewise<SBasis> x = Piecewise<SBasis>(patternd2[0]);
+        Piecewise<SBasis> y = Piecewise<SBasis>(patternd2[1]);
+
+        // find time values for which x lies outside path domain
+        // and only take portion of x and y that lies within those time values
+        std::vector< double > rtsmin = roots (x - pwd2_in.domain().min());
+        std::vector< double > rtsmax = roots (x - pwd2_in.domain().max());
+        if ( !rtsmin.empty() && !rtsmax.empty() ) {
+            x = portion(x, rtsmin.at(0), rtsmax.at(0));
+            y = portion(y, rtsmin.at(0), rtsmax.at(0));
+        }
+
+        output = compose(pwd2_in,x) + y*compose(n,x);
+        x = reverse(x);
+        y = reverse(y);
+        Piecewise<D2<SBasis> > mirrorpath = compose(pwd2_in,x) - y*compose(n,x);
+
+        switch (end_linecap) {
+            case LINECAP_PEAK:
+            {
+                Geom::Point end_deriv = der.lastValue();
+                double radius = 0.5 * distance(output.lastValue(), mirrorpath.firstValue());
+                Geom::Point midpoint = 0.5*(output.lastValue() + mirrorpath.firstValue()) + radius*end_deriv;
+                Geom::LineSegment cap11(output.lastValue(), midpoint);
+                Geom::LineSegment cap12(midpoint, mirrorpath.firstValue());
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap11.toSBasis()));
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap12.toSBasis()));
+                break;
+            }
+            case LINECAP_SQUARE:
+            {
+                Geom::Point end_deriv = der.lastValue();
+                double radius = 0.5 * distance(output.lastValue(), mirrorpath.firstValue());
+                Geom::LineSegment cap11(output.lastValue(), output.lastValue() + radius*end_deriv);
+                Geom::LineSegment cap12(output.lastValue() + radius*end_deriv, mirrorpath.firstValue() + radius*end_deriv);
+                Geom::LineSegment cap13(mirrorpath.firstValue() + radius*end_deriv, mirrorpath.firstValue());
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap11.toSBasis()));
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap12.toSBasis()));
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap13.toSBasis()));
+                break;
+            }
             case LINECAP_BUTT:
             {
-                Geom::Path mirroredpath = strokepath.reverse() * Geom::Scale(1,-1);
-                strokepath.append(mirroredpath, Geom::Path::STITCH_DISCONTINUOUS);
-                strokepath.close();
-
-                D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(strokepath.toPwSb());
-                Piecewise<SBasis> x = Piecewise<SBasis>(patternd2[0]);
-                Piecewise<SBasis> y = Piecewise<SBasis>(patternd2[1]);
-
-                output = compose(pwd2_in,x) + y*compose(n,x);
+                Geom::LineSegment cap1(output.lastValue(), mirrorpath.firstValue());
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap1.toSBasis()));
                 break;
             }
             case LINECAP_ROUND:
             default:
             {
-                D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(strokepath.toPwSb());
-                Piecewise<SBasis> x = Piecewise<SBasis>(patternd2[0]);
-                Piecewise<SBasis> y = Piecewise<SBasis>(patternd2[1]);
-
-                // find time values for which x lies outside path domain
-                // and only take portion of x and y that lies within those time values
-                std::vector< double > rtsmin = roots (x - pwd2_in.domain().min());
-                std::vector< double > rtsmax = roots (x - pwd2_in.domain().max());
-                if ( !rtsmin.empty() && !rtsmax.empty() ) {
-                    x = portion(x, rtsmin.at(0), rtsmax.at(0));
-                    y = portion(y, rtsmin.at(0), rtsmax.at(0));
-                }
-
-                output = compose(pwd2_in,x) + y*compose(n,x);
-                x = reverse(x);
-                y = reverse(y);
-                Piecewise<D2<SBasis> > mirrorpath = compose(pwd2_in,x) - y*compose(n,x);
-
                 double radius1 = 0.5 * distance(output.lastValue(), mirrorpath.firstValue());
-                Geom::SVGEllipticalArc cap1(output.lastValue(), radius1, radius1, M_PI/2., false, false, mirrorpath.firstValue());
+                Geom::SVGEllipticalArc cap1(output.lastValue(), radius1, radius1, M_PI/2., false, y.firstValue() < 0, mirrorpath.firstValue()); // note that y is reversed above!
                 output.continuousConcat(Piecewise<D2<SBasis> >(cap1.toSBasis()));
-
-                output.continuousConcat(mirrorpath);
-
-                double radius2 = 0.5 * distance(output.firstValue(), output.lastValue());
-                Geom::SVGEllipticalArc cap2(output.lastValue(), radius2, radius2, M_PI/2., false, false, output.firstValue());
-                output.continuousConcat(Piecewise<D2<SBasis> >(cap2.toSBasis()));
-
                 break;
             }
         }
+
+        output.continuousConcat(mirrorpath);
+
+        switch (start_linecap) {
+            case LINECAP_PEAK:
+            {
+                Geom::Point start_deriv = der.firstValue();
+                double radius = 0.5 * distance(output.firstValue(), output.lastValue());
+                Geom::Point midpoint = 0.5*(output.lastValue() + output.firstValue()) - radius*start_deriv;
+                Geom::LineSegment cap21(output.lastValue(), midpoint);
+                Geom::LineSegment cap22(midpoint, output.firstValue());
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap21.toSBasis()));
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap22.toSBasis()));
+                break;
+            }
+            case LINECAP_SQUARE:
+            {
+                Geom::Point start_deriv = der.firstValue();
+                double radius = 0.5 * distance(output.firstValue(), output.lastValue());
+                Geom::LineSegment cap21(output.lastValue(), output.lastValue() - radius*start_deriv);
+                Geom::LineSegment cap22(output.lastValue() - radius*start_deriv, output.firstValue() - radius*start_deriv);
+                Geom::LineSegment cap23(output.firstValue() - radius*start_deriv, output.firstValue());
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap21.toSBasis()));
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap22.toSBasis()));
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap23.toSBasis()));
+                break;
+            }
+            case LINECAP_BUTT:
+            {
+                Geom::LineSegment cap2(output.lastValue(), output.firstValue());
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap2.toSBasis()));
+                break;
+            }
+            case LINECAP_ROUND:
+            default:
+            {
+                double radius2 = 0.5 * distance(output.firstValue(), output.lastValue());
+                Geom::SVGEllipticalArc cap2(output.lastValue(), radius2, radius2, M_PI/2., false, y.lastValue() < 0, output.firstValue()); // note that y is reversed above!
+                output.continuousConcat(Piecewise<D2<SBasis> >(cap2.toSBasis()));
+                break;
+            }
+        }
+
     } else {
         // path is closed
         // linecap parameter can be ignored

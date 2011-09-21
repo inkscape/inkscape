@@ -33,7 +33,9 @@ private:
     PowerStrokePointArrayParam offset_points;
     BoolParam sort_points;
     EnumParam<unsigned> interpolator_type;
-    EnumParam<unsigned> linecap_type;
+    EnumParam<unsigned> start_linecap_type;
+    EnumParam<unsigned> cusp_linecap_type;
+    EnumParam<unsigned> end_linecap_type;
 
     LPEPowerStroke(const LPEPowerStroke&);
     LPEPowerStroke& operator=(const LPEPowerStroke&);
