@@ -9,16 +9,18 @@ set(display_SRC
 	canvas-temporary-item.cpp
 	canvas-text.cpp
 	curve.cpp
+	drawing-context.cpp
+    drawing-group.cpp
+    drawing-image.cpp
+    drawing-item.cpp
+    drawing-shape.cpp
+    drawing-surface.cpp
+    drawing-text.cpp
+    drawing.cpp
 	gnome-canvas-acetate.cpp
 	grayscale.cpp
 	guideline.cpp
 	nr-3dutils.cpp
-	nr-arena-glyphs.cpp
-	nr-arena-group.cpp
-	nr-arena-image.cpp
-	nr-arena-item.cpp
-	nr-arena-shape.cpp
-	nr-arena.cpp
 	nr-filter-blend.cpp
 	nr-filter-colormatrix.cpp
 	nr-filter-component-transfer.cpp
@@ -69,17 +71,18 @@ set(display_SRC
 	curve-test.h
 	curve.h
 	display-forward.h
+   drawing-context.h
+   drawing-group.h
+   drawing-image.h
+   drawing-item.h
+   drawing-shape.h
+   drawing-surface.h
+   drawing-text.h
+   drawing.h
 	gnome-canvas-acetate.h
 	grayscale.h
 	guideline.h
 	nr-3dutils.h
-	nr-arena-forward.h
-	nr-arena-glyphs.h
-	nr-arena-group.h
-	nr-arena-image.h
-	nr-arena-item.h
-	nr-arena-shape.h
-	nr-arena.h
 	nr-filter-blend.h
 	nr-filter-colormatrix.h
 	nr-filter-component-transfer.h
