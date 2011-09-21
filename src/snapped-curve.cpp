@@ -123,7 +123,7 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedLine const &line
     //      (for this we will create a 2e6 pixels long linesegment, with t running from -1e6 to 1e6; this should be long
     //      enough for any practical purpose)
     Geom::LineSegment line_segm = line.getLine().transformed(dt2doc).segment(-1e6, 1e6); //
-    Geom::Curve *line_as_curve = dynamic_cast<Geom::Curve const*>(&line_segm);
+    const Geom::Curve *line_as_curve = dynamic_cast<Geom::Curve const*>(&line_segm);
     Geom::Crossings cs = crossings(*(this->_curve), *line_as_curve);
 
     if (cs.size() > 0) {
