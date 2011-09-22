@@ -42,11 +42,13 @@
 
 namespace Geom {
 
+class PathBuilder;
+
 void sbasis_to_bezier (Bezier & bz, SBasis const& sb, size_t sz = 0);
 void sbasis_to_bezier (std::vector<Point> & bz, D2<SBasis> const& sb, size_t sz = 0);
 void bezier_to_sbasis (SBasis & sb, Bezier const& bz);
 void bezier_to_sbasis (D2<SBasis> & sb, std::vector<Point> const& bz);
-
+void build_from_sbasis(PathBuilder &pb, D2<SBasis> const &B, double tol, bool only_cubicbeziers);
 
 #if 0
 // this produces a degree k bezier from a degree k sbasis
