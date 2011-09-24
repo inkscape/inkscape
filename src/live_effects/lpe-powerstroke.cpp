@@ -579,35 +579,28 @@ LPEPowerStroke::path_from_piecewise_fix_cusps(Geom::Piecewise<Geom::D2<Geom::SBa
 /* per definition, the input piecewise should be closed. each discontinuity should be fixed with a cusp-ending,
    as defined by cusp_linecap_type
 */
+    LineCuspType cusp_linecap = static_cast<LineCuspType>(cusp_linecap_type.get_value());
+
     Geom::PathBuilder pb;
     if(B.size() == 0) return pb.peek();
     Geom::Point start = B[0].at0();
     pb.moveTo(start);
-    for(unsigned i = 0; ; i++) {
-        if ( (i+1 == B.size()) 
-             || !are_near(B[i+1].at0(), B[i].at1(), tol) )
-        {
-            //start of a new path
-            if (are_near(start, B[i].at1()) && sbasis_size(B[i]) <= 1) {
-                pb.closePath();
-                //last line seg already there (because of .closePath())
-                goto no_add;
-            }
-            build_from_sbasis(pb, B[i], tol, false);
-            if (are_near(start, B[i].at1())) {
-                //it's closed, the last closing segment was not a straight line so it needed to be added, but still make it closed here with degenerate straight line.
-                pb.closePath();
-            }
-          no_add:
-            if (i+1 >= B.size()) {
+    build_from_sbasis(pb, B[0], tol, false);
+    for (unsigned i=1; i < B.size(); i++) {
+        if (!are_near(B[i-1].at1(), B[i].at0(), tol) )
+        { // discontinuity found, so fix it :-)
+            switch (cusp_linecap) {
+            LINECUSP_ROUND:
+            LINECUSP_SHARP:
+            LINECUSP_BEVEL:
+            default:
+                pb.lineTo(B[i].at0());
                 break;
             }
-            start = B[i+1].at0();
-            pb.moveTo(start);
-        } else {
-            build_from_sbasis(pb, B[i], tol, false);
         }
+        build_from_sbasis(pb, B[i], tol, false);
     }
+    pb.closePath();
     pb.finish();
     return pb.peek();
 }
