@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-03-25 19:30+0100\n"
-"PO-Revision-Date: 2011-06-17 10:19+0100\n"
+"PO-Revision-Date: 2011-09-26 14:08+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "Language: sk\n"
@@ -15238,7 +15238,7 @@ msgstr "bodov"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:179
 msgid "How close on the screen you need to be to an object to be able to grab it with mouse (in screen pixels)"
-msgstr "Ako blízko na obrazovke musíte byť, aby ste boli schopný zachytiť objekt myšou (v pixeloch)"
+msgstr "Ako blízko na obrazovke musíte byť, aby ste boli schopný zachytiť objekt myšou (v pixloch)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:181
 msgid "Click/drag threshold:"
@@ -19545,7 +19545,7 @@ msgstr "_Vložiť"
 
 #: ../src/verbs.cpp:2280
 msgid "Paste objects from clipboard to mouse point, or paste text"
-msgstr "Vloží objekty zo schránky na miesto pod myšou alebo vloží text"
+msgstr "Vloží objekty zo schránky na miesto pod kurzorom myši alebo vloží text"
 
 #: ../src/verbs.cpp:2281
 msgid "Paste _Style"
