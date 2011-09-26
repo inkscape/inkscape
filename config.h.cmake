@@ -113,6 +113,9 @@
 /* Define to 1 if you have the `mkdir' function. */
 #cmakedefine HAVE_MKDIR 1
 
+/* Use aspell for built-in spellchecker */
+#cmakedefine HAVE_ASPELL 1
+
 /* Use libpoppler for direct PDF import */
 #cmakedefine HAVE_POPPLER 1
 
@@ -121,6 +124,15 @@
 
 /* Use libpoppler-glib and Cairo-SVG for PDF import */
 #cmakedefine HAVE_POPPLER_GLIB 1
+
+/* Use GfxFont from Poppler >= 0.8.3 */
+#cmakedefine POPPLER_NEW_GFXFONT 1
+
+/* Use color space API from Poppler >= 0.12.2 */
+#cmakedefine POPPLER_NEW_COLOR_SPACE_API 1
+
+/* GfxPatch no longer uses GfxColor in >= 0.15.1 */
+#cmakedefine POPPLER_NEW_GFXPATCH, 1
 
 /* Define to 1 if you have the `pow' function. */
 #cmakedefine HAVE_POW 1
@@ -273,6 +285,12 @@
 
 /* Build in libwpg */
 #cmakedefine WITH_LIBWPG 1
+
+/* Build in libwpg-0.1 */
+#cmakedefine WITH_LIBWPG01 1
+
+/* Build in libwpg-0.2 */
+#cmakedefine WITH_LIBWPG02 1
 
 /* Use MMX optimizations, if CPU supports it */
 #cmakedefine WITH_MMX 1

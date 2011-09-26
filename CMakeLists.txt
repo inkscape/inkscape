@@ -45,6 +45,10 @@ option(WITH_GNOME_VFS "Compile with support for Gnome VFS" OFF)
 
 option(WITH_PROFILING "Turn on profiling" OFF) # Set to true if compiler/linker should enable profiling
 
+option(WITH_GTKSPELL "Compile with support for GTK spelling widget" ON)
+option(WITH_LIBWPG "Compile with support of libpoppler-cairo for WordPrefect Graphics" ON)
+option(ENABLE_POPPLER_CAIRO "Compile with support of libpoppler-cairo for rendering PDF preview" ON)
+
 include(CMakeScripts/ConfigPaths.cmake) # Installation Paths
 include(CMakeScripts/DefineDependsandFlags.cmake) # Includes, Compiler Flags, and Link Libraries
 include(CMakeScripts/HelperMacros.cmake) # Misc Utility Macros
