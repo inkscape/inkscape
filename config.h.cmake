@@ -132,7 +132,7 @@
 #cmakedefine POPPLER_NEW_COLOR_SPACE_API 1
 
 /* GfxPatch no longer uses GfxColor in >= 0.15.1 */
-#cmakedefine POPPLER_NEW_GFXPATCH, 1
+#cmakedefine POPPLER_NEW_GFXPATCH 1
 
 /* Define to 1 if you have the `pow' function. */
 #cmakedefine HAVE_POW 1
