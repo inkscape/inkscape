@@ -151,7 +151,7 @@ if(WIN32)
 	)
 endif()
 
-if(LIBWPG_FOUND)
+if(WITH_LIBWPG)
 	list(APPEND extension_SRC
 		internal/wpg-input.cpp
 		internal/wpg-input.h
