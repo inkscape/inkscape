@@ -30,16 +30,6 @@ public:
     virtual void doOnApply(SPLPEItem *lpeitem);
 
 private:
-    Geom::Piecewise<Geom::D2<Geom::SBasis> >
-    doEffect_pwd2_open ( Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in,
-                         Geom::Piecewise<Geom::D2<Geom::SBasis> > const & der,
-                         Geom::Piecewise<Geom::D2<Geom::SBasis> > const & n );
-    Geom::Piecewise<Geom::D2<Geom::SBasis> >
-    doEffect_pwd2_closed ( Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in,
-                           Geom::Piecewise<Geom::D2<Geom::SBasis> > const & der,
-                           Geom::Piecewise<Geom::D2<Geom::SBasis> > const & n );
-    std::vector<Geom::Path> path_from_piecewise_fix_cusps(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &B, double tol);
-
     PowerStrokePointArrayParam offset_points;
     BoolParam sort_points;
     EnumParam<unsigned> interpolator_type;
