@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Cairo software blending templates
+ * Cairo software blending templates.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -31,11 +31,12 @@ static const int OPENMP_THRESHOLD = 2048;
 #include "display/cairo-utils.h"
 
 /**
- * @brief Blend two surfaces using the supplied functor.
+ * Blend two surfaces using the supplied functor.
  * This template blends two Cairo image surfaces using a blending functor that takes
  * two 32-bit ARGB pixel values and returns a modified 32-bit pixel value.
  * Differences in input surface formats are handled transparently. In future, this template
- * will also handle software fallback for GL surfaces. */
+ * will also handle software fallback for GL surfaces.
+ */
 template <typename Blend>
 void ink_cairo_surface_blend(cairo_surface_t *in1, cairo_surface_t *in2, cairo_surface_t *out, Blend blend)
 {
@@ -303,12 +304,13 @@ void ink_cairo_surface_filter(cairo_surface_t *in, cairo_surface_t *out, Filter 
 
 
 /**
- * @brief Synthesize surface pixels based on their position.
+ * Synthesize surface pixels based on their position.
  * This template accepts a functor that gets called with the x and y coordinates of the pixels,
  * given as integers.
  * @param out       Output surface
  * @param out_area  The region of the output surface that should be synthesized
- * @param synth     Synthesis functor */
+ * @param synth     Synthesis functor
+ */
 template <typename Synth>
 void ink_cairo_surface_synthesize(cairo_surface_t *out, cairo_rectangle_t const &out_area, Synth synth)
 {

@@ -97,7 +97,8 @@ public:
      */
     Geom::Rect filter_primitive_area(FilterUnits const &units);
 
-    /** @brief Indicate whether the filter primitive can handle the given affine.
+    /**
+     *Indicate whether the filter primitive can handle the given affine.
      *
      * Results of some filter primitives depend on the coordinate system used when rendering.
      * A gaussian blur with equal x and y deviation will remain unchanged by rotations.
@@ -108,7 +109,8 @@ public:
      * with edges parallel to the axes of the user coordinate system. This means
      * the matrices from FilterUnits will contain at most a (possibly non-uniform) scale
      * and a translation. When all primitives of the filter return true, the rendering is
-     * performed in display coordinate space and no intermediate surface is used. */
+     * performed in display coordinate space and no intermediate surface is used.
+     */
     virtual bool can_handle_affine(Geom::Affine const &) { return false; }
 
 protected:

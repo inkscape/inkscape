@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Group belonging to an SVG drawing element
+ * Group belonging to an SVG drawing element.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>

@@ -3,7 +3,7 @@
 
 /**
  * \file sodipodi-ctrlrect.h
- * \brief Simple non-transformed rectangle, usable for rubberband
+ * Simple non-transformed rectangle, usable for rubberband.
  *
  * Authors:
  *   Lauris Kaplinski <lauris@ximian.com>

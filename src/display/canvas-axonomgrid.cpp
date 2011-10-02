@@ -46,11 +46,11 @@ enum Dim3 { X=0, Y, Z };
 static double deg_to_rad(double deg) { return deg*M_PI/180.0;}
 
 /**
-    \brief  This function renders a line on a particular canvas buffer,
-            using Bresenham's line drawing function.
-            http://www.cs.unc.edu/~mcmillan/comp136/Lecture6/Lines.html
-            Coordinates are interpreted as SCREENcoordinates
-*/
+ * This function renders a line on a particular canvas buffer,
+ * using Bresenham's line drawing function.
+ * http://www.cs.unc.edu/~mcmillan/comp136/Lecture6/Lines.html
+ * Coordinates are interpreted as SCREENcoordinates
+ */
 static void
 sp_caxonomgrid_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, guint32 rgba)
 {

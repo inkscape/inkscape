@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Cairo integration helpers
+ * Cairo integration helpers.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -21,9 +21,11 @@ struct SPColor;
 
 namespace Inkscape {
 
-/** @brief RAII idiom for Cairo groups.
+/**
+ * RAII idiom for Cairo groups.
  * Groups are temporary surfaces used when rendering e.g. masks and opacity.
- * Use this class to ensure that each group push is matched with a pop. */
+ * Use this class to ensure that each group push is matched with a pop.
+ */
 class CairoGroup {
 public:
     CairoGroup(cairo_t *_ct);
@@ -38,7 +40,7 @@ private:
     bool pushed;
 };
 
-/** @brief RAII idiom for Cairo state saving */
+/** RAII idiom for Cairo state saving. */
 class CairoSave {
 public:
     CairoSave(cairo_t *_ct, bool save=false)
@@ -64,7 +66,7 @@ private:
     bool saved;
 };
 
-/** @brief Cairo context with Inkscape-specific operations */
+/** Cairo context with Inkscape-specific operations. */
 class CairoContext : public Cairo::Context {
 public:
     CairoContext(cairo_t *obj, bool ref = false);

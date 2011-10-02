@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Style information for rendering
+ * Style information for rendering.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>

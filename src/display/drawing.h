@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief SVG drawing for display
+ * SVG drawing for display.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>

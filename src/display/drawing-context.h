@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Cairo drawing context with Inkscape extensions
+ * Cairo drawing context with Inkscape extensions.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>

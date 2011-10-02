@@ -1,5 +1,5 @@
 /** @file
- * @brief Cartesian grid item for the Inkscape canvas
+ * Cartesian grid item for the Inkscape canvas.
  */
 /* Copyright (C) Johan Engelen 2006-2007 <johan@shouraizou.nl>
  * Copyright (C) Lauris Kaplinski 2000
@@ -46,8 +46,7 @@ enum GridType {
 
 class CanvasGrid;
 
-/** \brief  All the variables that are tracked for a grid specific
-            canvas item. */
+/** All the variables that are tracked for a grid specific canvas item. */
 struct GridCanvasItem : public SPCanvasItem{
     CanvasGrid *grid; // the owning grid object
 };

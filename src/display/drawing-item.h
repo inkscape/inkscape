@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Canvas item belonging to an SVG drawing element
+ * Canvas item belonging to an SVG drawing element.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>

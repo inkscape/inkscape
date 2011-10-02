@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Cairo surface that remembers its origin
+ * Cairo surface that remembers its origin.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
