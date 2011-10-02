@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Canvas item belonging to an SVG drawing element
+ * Canvas item belonging to an SVG drawing element.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -23,8 +23,9 @@
 
 namespace Inkscape {
 
-/** @class DrawingItem
- * @brief SVG drawing item for display.
+/**
+ * @class DrawingItem
+ * SVG drawing item for display.
  *
  * This was previously known as NRArenaItem. It represents the renderable
  * portion of the SVG document. Typically this is created by the SP tree,
@@ -210,7 +211,8 @@ DrawingItem::setSensitive(bool s)
     _sensitive = s;
 }
 
-/** @brief Enable / disable storing the rendering in memory.
+/**
+ * Enable / disable storing the rendering in memory.
  * Calling setCached(false, true) will also remove the persistent status
  */
 void
@@ -283,7 +285,8 @@ DrawingItem::setItemBounds(Geom::OptRect const &bounds)
     _item_bbox = bounds;
 }
 
-/** @brief Update derived data before operations.
+/**
+ * Update derived data before operations.
  * The purpose of this call is to recompute internal data which depends
  * on the attributes of the object, but is not directly settable by the user.
  * Precomputing this data speeds up later rendering, because some items
@@ -435,7 +438,8 @@ struct MaskLuminanceToAlpha {
     }
 };
 
-/** @brief Rasterize items.
+/**
+ * Rasterize items.
  * This method submits the drawing opeartions required to draw this item
  * to the supplied DrawingContext, restricting drawing the the specified area.
  *
@@ -644,7 +648,8 @@ DrawingItem::_renderOutline(DrawingContext &ct, Geom::IntRect const &area, unsig
     _drawing.outlinecolor = saved_rgba; // restore outline color
 }
 
-/** @brief Rasterize the clipping path.
+/**
+ * Rasterize the clipping path.
  * This method submits drawing operations required to draw a basic filled shape
  * of the item to the supplied drawing context. Rendering is limited to the
  * given area. The rendering of the clipped object is composited into
@@ -684,7 +689,8 @@ DrawingItem::clip(Inkscape::DrawingContext &ct, Geom::IntRect const &area)
     }
 }
 
-/** @brief Get the item under the specified point.
+/**
+ * Get the item under the specified point.
  * Searches the tree for the first item in the Z-order which is closer than
  * @a delta to the given point. The pick should be visual - for example
  * an object with a thick stroke should pick on the entire area of the stroke.
@@ -732,7 +738,8 @@ DrawingItem::pick(Geom::Point const &p, double delta, unsigned flags)
     return NULL;
 }
 
-/** Marks the current visual bounding box of the item for redrawing.
+/**
+ * Marks the current visual bounding box of the item for redrawing.
  * This is called whenever the object changes its visible appearance.
  * For some cases (such as setting opacity) this is enough, but for others
  * _markForUpdate() also needs to be called.
@@ -779,7 +786,8 @@ DrawingItem::_invalidateFilterBackground(Geom::IntRect const &area)
     }
 }
 
-/** @brief Marks the item as needing a recomputation of internal data.
+/**
+ * Marks the item as needing a recomputation of internal data.
  *
  * This mechanism avoids traversing the entire rendering tree (which could be vast)
  * on every trivial state changed in any item. Only items marked as needing
@@ -843,10 +851,12 @@ DrawingItem::_setStyleCommon(SPStyle *&_style, SPStyle *style)
     _markForUpdate(STATE_ALL, false);
 }
 
-/** @brief Compute the caching score.
+/**
+ * Compute the caching score.
  *
  * Higher scores mean the item is more aggresively prioritized for automatic
- * caching by Inkscape::Drawing. */
+ * caching by Inkscape::Drawing.
+ */
 double
 DrawingItem::_cacheScore()
 {

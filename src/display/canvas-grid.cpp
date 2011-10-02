@@ -1,5 +1,5 @@
 /** @file
- * @brief Cartesian grid implementation
+ * Cartesian grid implementation.
  */
 /* Copyright (C) Johan Engelen 2006-2007 <johan@shouraizou.nl>
  * Copyright (C) Lauris Kaplinski 2000

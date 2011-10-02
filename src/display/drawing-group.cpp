@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Group belonging to an SVG drawing element
+ * Group belonging to an SVG drawing element.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -30,7 +30,8 @@ DrawingGroup::~DrawingGroup()
         sp_style_unref(_style);
 }
 
-/** @brief Set whether the group returns children from pick calls.
+/**
+ * Set whether the group returns children from pick calls.
  * Previously this feature was called "transparent groups".
  */
 void
@@ -45,7 +46,8 @@ DrawingGroup::setStyle(SPStyle *style)
     _setStyleCommon(_style, style);
 }
 
-/** @brief Set additional transform for the group.
+/**
+ * Set additional transform for the group.
  * This is applied after the normal transform and mainly useful for
  * markers, clipping paths, etc.
  */

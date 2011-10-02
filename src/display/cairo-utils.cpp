@@ -345,7 +345,8 @@ ink_cairo_surface_create_for_argb32_pixbuf(GdkPixbuf *pb)
     return pbs;
 }
 
-/** @brief Cleanup function for GdkPixbuf.
+/**
+ * Cleanup function for GdkPixbuf.
  * This function should be passed as the GdkPixbufDestroyNotify parameter
  * to gdk_pixbuf_new_from_data when creating a GdkPixbuf backed by
  * a Cairo surface.
@@ -356,9 +357,11 @@ void ink_cairo_pixbuf_cleanup(guchar * /*pixels*/, void *data)
     cairo_surface_destroy(surface);
 }
 
-/** @brief Create an exact copy of a surface.
+/**
+ * Create an exact copy of a surface.
  * Creates a surface that has the same type, content type, dimensions and contents
- * as the specified surface. */
+ * as the specified surface.
+ */
 cairo_surface_t *
 ink_cairo_surface_copy(cairo_surface_t *s)
 {
@@ -383,9 +386,11 @@ ink_cairo_surface_copy(cairo_surface_t *s)
     return ns;
 }
 
-/** @brief Create a surface that differs only in pixel content.
+/**
+ * Create a surface that differs only in pixel content.
  * Creates a surface that has the same type, content type and dimensions
- * as the specified surface. Pixel contents are not copied. */
+ * as the specified surface. Pixel contents are not copied.
+ */
 cairo_surface_t *
 ink_cairo_surface_create_identical(cairo_surface_t *s)
 {
@@ -401,9 +406,11 @@ ink_cairo_surface_create_same_size(cairo_surface_t *s, cairo_content_t c)
     return ns;
 }
 
-/** @brief Extract the alpha channel into a new surface.
+/**
+ * Extract the alpha channel into a new surface.
  * Creates a surface with a content type of CAIRO_CONTENT_ALPHA that contains
- * the alpha values of pixels from @a s. */
+ * the alpha values of pixels from @a s.
+ */
 cairo_surface_t *
 ink_cairo_extract_alpha(cairo_surface_t *s)
 {
@@ -623,7 +630,7 @@ guint32 pixbuf_from_argb32(guint32 c)
 }
 
 /**
- * @brief Convert pixel data from GdkPixbuf format to ARGB.
+ * Convert pixel data from GdkPixbuf format to ARGB.
  * This will convert pixel data from GdkPixbuf format to Cairo's native pixel format.
  * This involves premultiplying alpha and shuffling around the channels.
  * Pixbuf data must have an alpha channel, otherwise the results are undefined
@@ -642,7 +649,7 @@ convert_pixels_pixbuf_to_argb32(guchar *data, int w, int h, int stride)
 }
 
 /**
- * @brief Convert pixel data from ARGB to GdkPixbuf format.
+ * Convert pixel data from ARGB to GdkPixbuf format.
  * This will convert pixel data from GdkPixbuf format to Cairo's native pixel format.
  * This involves premultiplying alpha and shuffling around the channels.
  */
@@ -659,7 +666,7 @@ convert_pixels_argb32_to_pixbuf(guchar *data, int w, int h, int stride)
 }
 
 /**
- * @brief Converts GdkPixbuf's data to premultiplied ARGB.
+ * Converts GdkPixbuf's data to premultiplied ARGB.
  * This function will convert a GdkPixbuf in place into Cairo's native pixel format.
  * Note that this is a hack intended to save memory. When the pixbuf is in Cairo's format,
  * using it with GTK will result in corrupted drawings.
@@ -675,7 +682,7 @@ convert_pixbuf_normal_to_argb32(GdkPixbuf *pb)
 }
 
 /**
- * @brief Converts GdkPixbuf's data back to its native format.
+ * Converts GdkPixbuf's data back to its native format.
  * Once this is done, the pixbuf can be used with GTK again.
  */
 void

@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Cairo surface that remembers its origin
+ * Cairo surface that remembers its origin.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -20,8 +20,9 @@ using Geom::X;
 using Geom::Y;
 
 
-/** @class DrawingSurface
- * @brief Drawing surface that remembers its origin.
+/**
+ * @class DrawingSurface
+ * Drawing surface that remembers its origin.
  *
  * This is a very minimalistic wrapper over cairo_surface_t. The main
  * extra functionality provided by this class is that it automates
@@ -35,9 +36,11 @@ using Geom::Y;
  * of when a DrawingContext is constructed.
  */
 
-/** @brief Creates a surface with the given physical extents.
+/**
+ * Creates a surface with the given physical extents.
  * When a drawing context is created for this surface, its pixels
- * will cover the area under the given rectangle. */
+ * will cover the area under the given rectangle.
+ */
 DrawingSurface::DrawingSurface(Geom::IntRect const &area)
     : _surface(NULL)
     , _origin(area.min())
@@ -45,12 +48,14 @@ DrawingSurface::DrawingSurface(Geom::IntRect const &area)
     , _pixels(area.dimensions())
 {}
 
-/** @brief Creates a surface with the given logical and physical extents.
+/**
+ * Creates a surface with the given logical and physical extents.
  * When a drawing context is created for this surface, its pixels
  * will cover the area under the given rectangle. IT will contain
  * the number of pixels specified by the second argument.
  * @param logbox Logical extents of the surface
- * @param pixdims Pixel dimensions of the surface. */
+ * @param pixdims Pixel dimensions of the surface.
+ */
 DrawingSurface::DrawingSurface(Geom::Rect const &logbox, Geom::IntPoint const &pixdims)
     : _surface(NULL)
     , _origin(logbox.min())
@@ -58,9 +63,11 @@ DrawingSurface::DrawingSurface(Geom::Rect const &logbox, Geom::IntPoint const &p
     , _pixels(pixdims)
 {}
 
-/** @brief Wrap a cairo_surface_t.
+/** 
+ * Wrap a cairo_surface_t.
  * This constructor will take an extra reference on @a surface, which will
- * be released on destruction. */
+ * be released on destruction.
+ */
 DrawingSurface::DrawingSurface(cairo_surface_t *surface, Geom::Point const &origin)
     : _surface(surface)
     , _origin(origin)
@@ -137,8 +144,10 @@ DrawingSurface::dropContents()
     }
 }
 
-/** @brief Create a drawing context for this surface.
- * It's better to use the surface constructor of DrawingContext. */
+/**
+ * Create a drawing context for this surface.
+ * It's better to use the surface constructor of DrawingContext.
+ */
 cairo_t *
 DrawingSurface::createRawContext()
 {
@@ -253,8 +262,10 @@ DrawingCache::prepare()
     _pending_transform.setIdentity();
 }
 
-/** @brief Paints the clean area from cache and modifies the @a area
- * parameter to the bounds of the region that must be repainted. */
+/**
+ * Paints the clean area from cache and modifies the @a area
+ * parameter to the bounds of the region that must be repainted.
+ */
 void
 DrawingCache::paintFromCache(DrawingContext &ct, Geom::OptIntRect &area)
 {

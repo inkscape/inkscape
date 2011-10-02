@@ -73,7 +73,8 @@ guchar luminance(guchar r, guchar g, guchar b) {
     return luminance & 0xff;
 }
 
-/** @brief  Use this method if there is no other way to find out if grayscale view or not
+/**
+ * Use this method if there is no other way to find out if grayscale view or not.
  *
  *  In some cases, the choice between normal or grayscale is so deep in the code hierarchy,
  *  that it is not possible to determine whether grayscale is desired or not, without using

@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Cairo drawing context with Inkscape extensions
+ * Cairo drawing context with Inkscape extensions.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -19,8 +19,10 @@ namespace Inkscape {
 using Geom::X;
 using Geom::Y;
 
-/** @class DrawingContext::Save
- * @brief RAII idiom for saving the state of DrawingContext. */
+/**
+ * @class DrawingContext::Save
+ * RAII idiom for saving the state of DrawingContext.
+ */
 
 DrawingContext::Save::Save()
     : _ct(NULL)
@@ -46,8 +48,9 @@ void DrawingContext::Save::save(DrawingContext &ct)
     _ct->save();
 }
 
-/** @class DrawingContext
- * @brief Minimal wrapper over Cairo.
+/**
+ * @class DrawingContext
+ * Minimal wrapper over Cairo.
  *
  * This is a wrapper over cairo_t, extended with operations that work
  * with 2Geom geometrical primitives. Some of this is probably duplicated

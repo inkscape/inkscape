@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Bitmap image belonging to an SVG drawing
+ * Bitmap image belonging to an SVG drawing.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>

@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Shape (styled path) belonging to an SVG drawing
+ * Shape (styled path) belonging to an SVG drawing.
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
