@@ -50,8 +50,7 @@ DrawingGlyphs::setGlyph(font_instance *font, int glyph, Geom::Affine const &tran
     _markForUpdate(STATE_ALL, false);
 }
 
-unsigned
-DrawingGlyphs::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, unsigned flags, unsigned reset)
+unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext const &ctx, unsigned /*flags*/, unsigned /*reset*/)
 {
     DrawingText *ggroup = dynamic_cast<DrawingText *>(_parent);
     if (!ggroup) throw InvalidItemException();
@@ -146,8 +145,7 @@ DrawingText::_updateItem(Geom::IntRect const &area, UpdateContext const &ctx, un
     return DrawingGroup::_updateItem(area, ctx, flags, reset);
 }
 
-unsigned
-DrawingText::_renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigned flags, DrawingItem *stop_at)
+unsigned DrawingText::_renderItem(DrawingContext &ct, Geom::IntRect const &/*area*/, unsigned /*flags*/, DrawingItem * /*stop_at*/)
 {
     if (_drawing.outline()) {
         guint32 rgba = _drawing.outlinecolor;
@@ -201,8 +199,7 @@ DrawingText::_renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigned
     return RENDER_OK;
 }
 
-void
-DrawingText::_clipItem(DrawingContext &ct, Geom::IntRect const &area)
+void DrawingText::_clipItem(DrawingContext &ct, Geom::IntRect const &/*area*/)
 {
     Inkscape::DrawingContext::Save save(ct);
 

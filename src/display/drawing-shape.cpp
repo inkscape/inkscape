@@ -205,8 +205,7 @@ DrawingShape::_renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigne
     return RENDER_OK;
 }
 
-void
-DrawingShape::_clipItem(DrawingContext &ct, Geom::IntRect const &area)
+void DrawingShape::_clipItem(DrawingContext &ct, Geom::IntRect const & /*area*/)
 {
     if (!_curve) return;
 

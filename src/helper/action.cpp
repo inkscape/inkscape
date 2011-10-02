@@ -157,7 +157,7 @@ public:
 	\param    data     ignored
 */
 void
-sp_action_perform (SPAction *action, void * data)
+sp_action_perform (SPAction *action, void * /*data*/)
 {
 	g_return_if_fail (action != NULL);
 	g_return_if_fail (SP_IS_ACTION (action));

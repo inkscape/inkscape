@@ -112,8 +112,7 @@ DrawingImage::_updateItem(Geom::IntRect const &, UpdateContext const &, unsigned
     return STATE_ALL;
 }
 
-unsigned
-DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigned flags, DrawingItem *stop_at)
+unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*area*/, unsigned /*flags*/, DrawingItem * /*stop_at*/)
 {
     bool outline = _drawing.outline();
 

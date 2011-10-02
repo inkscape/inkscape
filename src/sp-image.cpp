@@ -1062,7 +1062,7 @@ static Inkscape::XML::Node *sp_image_write( SPObject *object, Inkscape::XML::Doc
     return repr;
 }
 
-static Geom::OptRect sp_image_bbox( SPItem const *item,Geom::Affine const &transform, SPItem::BBoxType type )
+static Geom::OptRect sp_image_bbox( SPItem const *item,Geom::Affine const &transform, SPItem::BBoxType /*type*/ )
 {
     SPImage const &image = *SP_IMAGE(item);
     Geom::OptRect bbox;

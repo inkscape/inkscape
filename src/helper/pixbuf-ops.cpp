@@ -64,28 +64,23 @@ static void hide_other_items_recursively(SPObject *o, GSList *list, unsigned dke
 // The dpi settings dont do anything yet, but I want them to, and was wanting to keep reasonably close
 // to the call for the interface to the png writing.
 
-bool
-sp_export_jpg_file(SPDocument *doc, gchar const *filename,
-                   double x0, double y0, double x1, double y1,
-                   unsigned width, unsigned height, double xdpi, double ydpi,
-                   unsigned long bgcolor, double quality,GSList *items)
-
+bool sp_export_jpg_file(SPDocument *doc, gchar const *filename,
+                        double x0, double y0, double x1, double y1,
+                        unsigned width, unsigned height, double xdpi, double ydpi,
+                        unsigned long bgcolor, double quality,GSList *items)
 {
-
-
-      GdkPixbuf* pixbuf;
-      pixbuf = sp_generate_internal_bitmap(doc, filename, x0, y0, x1, y1,
+    GdkPixbuf* pixbuf = 0;
+    pixbuf = sp_generate_internal_bitmap(doc, filename, x0, y0, x1, y1,
                                          width, height, xdpi, ydpi,
                                          bgcolor, items );
 
+    gchar c[32];
+    g_snprintf(c, 32, "%f", quality);
+    gboolean saved = gdk_pixbuf_save (pixbuf, filename, "jpeg", NULL, "quality", c, NULL);
+    g_free(c);
+    gdk_pixbuf_unref (pixbuf);
 
-     gchar c[32];
-     g_snprintf(c, 32, "%f", quality);
-     gboolean saved = gdk_pixbuf_save (pixbuf, filename, "jpeg", NULL, "quality", c, NULL);
-     g_free(c);
-     gdk_pixbuf_unref (pixbuf);
-     if (saved) return true;
-     else return false;
+    return saved;
 }
 
 /**
@@ -101,12 +96,11 @@ sp_export_jpg_file(SPDocument *doc, gchar const *filename,
     @param ydpi
     @return the created GdkPixbuf structure or NULL if no memory is allocable
 */
-GdkPixbuf*
-sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
-                            double x0, double y0, double x1, double y1,
-                            unsigned width, unsigned height, double xdpi, double ydpi,
-                            unsigned long bgcolor,
-                            GSList *items_only)
+GdkPixbuf *sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
+                                       double x0, double y0, double x1, double y1,
+                                       unsigned width, unsigned height, double xdpi, double ydpi,
+                                       unsigned long /*bgcolor*/,
+                                       GSList *items_only)
 
 {
     if (width == 0 || height == 0) return NULL;

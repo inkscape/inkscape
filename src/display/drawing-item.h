@@ -133,12 +133,12 @@ protected:
     void _setStyleCommon(SPStyle *&_style, SPStyle *style);
     double _cacheScore();
     Geom::OptIntRect _cacheRect();
-    virtual unsigned _updateItem(Geom::IntRect const &area, UpdateContext const &ctx,
-                                 unsigned flags, unsigned reset) { return 0; }
-    virtual unsigned _renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigned flags,
-                                 DrawingItem *stop_at) { return RENDER_OK; }
-    virtual void _clipItem(DrawingContext &ct, Geom::IntRect const &area) {}
-    virtual DrawingItem *_pickItem(Geom::Point const &p, double delta, unsigned flags) { return NULL; }
+    virtual unsigned _updateItem(Geom::IntRect const &/*area*/, UpdateContext const &/*ctx*/,
+                                 unsigned /*flags*/, unsigned /*reset*/) { return 0; }
+    virtual unsigned _renderItem(DrawingContext &/*ct*/, Geom::IntRect const &/*area*/, unsigned /*flags*/,
+                                 DrawingItem * /*stop_at*/) { return RENDER_OK; }
+    virtual void _clipItem(DrawingContext &/*ct*/, Geom::IntRect const &/*area*/) {}
+    virtual DrawingItem *_pickItem(Geom::Point const &/*p*/, double /*delta*/, unsigned /*flags*/) { return NULL; }
     virtual bool _canClip() { return false; }
 
     // member variables start here

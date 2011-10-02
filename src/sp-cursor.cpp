@@ -91,7 +91,7 @@ void sp_cursor_bitmap_and_mask_from_xpm(GdkBitmap **bitmap, GdkBitmap **mask, gc
     *mask   = gdk_bitmap_create_from_data(NULL, mask_buffer, 32, 32);
 }
 
-static void free_cursor_data(guchar *pixels, gpointer data) {
+static void free_cursor_data(guchar *pixels, gpointer /*data*/) {
     delete [] reinterpret_cast<guint32*>(pixels);
 }
 

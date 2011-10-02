@@ -568,7 +568,7 @@ Inkscape::SnappedPoint SnapManager::constrainedAngularSnap(Inkscape::SnapCandida
  *  \param p Current position of the point on the guide that is to be snapped; will be overwritten by the position of the snap target if snapping has occurred
  *  \param guide_normal Vector normal to the guide line
  */
-void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal, SPGuideDragType drag_type) const
+void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &/*guide_normal*/, SPGuideDragType drag_type) const
 {
     if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally() || !snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GUIDE)) {
         return;
