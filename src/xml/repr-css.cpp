@@ -232,7 +232,6 @@ sp_repr_css_write_string(SPCSSAttr *css)
             }
         } else {
             buffer.append(iter->value); // unquoted
-            g_warning("sp_repr_css_write_string: %s %s", g_quark_to_string(iter->key), iter->value.pointer() );
         }
 
         if (rest(iter)) {
