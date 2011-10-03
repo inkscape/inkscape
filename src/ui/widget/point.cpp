@@ -1,5 +1,5 @@
 /**
- * \brief Point Widget - A labelled text box, with spin buttons and optional
+ * Point Widget - A labelled text box, with spin buttons and optional
  *        icon or suffix, for entering arbitrary coordinate values.
  *
  * Authors:

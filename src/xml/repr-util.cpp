@@ -1,4 +1,5 @@
-/** \file
+/**
+ * @file
  * Miscellaneous helpers for reprs.
  */
 
@@ -404,7 +405,7 @@ int sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::No
 }
 
 /**
- * @brief Find an element node using an unique attribute
+ * Find an element node using an unique attribute.
  *
  * This function returns the first child of the specified node that has the attribute
  * @c key equal to @c value. Note that this function does not recurse.
@@ -414,10 +415,9 @@ int sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::No
  * @param value The value of the attribute to look for
  * @relatesalso Inkscape::XML::Node
  */
-Inkscape::XML::Node *
-sp_repr_lookup_child(Inkscape::XML::Node *repr,
-                     gchar const *key,
-                     gchar const *value)
+Inkscape::XML::Node *sp_repr_lookup_child(Inkscape::XML::Node *repr,
+                                          gchar const *key,
+                                          gchar const *value)
 {
     g_return_val_if_fail(repr != NULL, NULL);
     for ( Inkscape::XML::Node *child = repr->firstChild() ; child ; child = child->next() ) {

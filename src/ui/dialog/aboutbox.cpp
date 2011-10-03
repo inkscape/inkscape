@@ -1,5 +1,6 @@
-/** @file
- * @brief Inkscape About box - implementation
+/**
+ * @file
+ * Inkscape About box - implementation.
  */
 /* Authors:
  *   Derek P. Moore <derekm@hackunix.org>

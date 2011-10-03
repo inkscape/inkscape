@@ -1,5 +1,5 @@
 /**
- * \brief A custom Inkscape wrapper around gdl_dock_item
+ * A custom Inkscape wrapper around gdl_dock_item.
  *
  * Author:
  *   Gustav Broberg <broberg@kth.se>

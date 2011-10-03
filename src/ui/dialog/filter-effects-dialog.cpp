@@ -1,5 +1,6 @@
-/** @file
- * @brief Filter Effects dialog
+/**
+ * @file
+ * Filter Effects dialog.
  */
 /* Authors:
  *   Nicholas Bishop <nicholasbishop@gmail.org>

@@ -1,5 +1,6 @@
-/** @file
- * @brief  Spellcheck dialog
+/**
+ * @file
+ * Spellcheck dialog.
  */
 /* Authors:
  *   bulia byak <bulia@users.sf.net>

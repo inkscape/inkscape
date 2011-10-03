@@ -1,5 +1,6 @@
-/** @file
- * @brief Implementation of the file dialog interfaces defined in filedialogimpl.h
+/**
+ * @file
+ * Implementation of the file dialog interfaces defined in filedialogimpl.h.
  */
 /* Authors:
  *   Bob Jamison

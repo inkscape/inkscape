@@ -1,5 +1,6 @@
-/** @file
- * @brief Inkscape Preferences dialog - implementation
+/**
+ * @file
+ * Inkscape Preferences dialog - implementation.
  */
 /* Authors:
  *   Carl Hetherington

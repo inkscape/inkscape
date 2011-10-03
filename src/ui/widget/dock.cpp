@@ -1,5 +1,6 @@
-/** @file
- * @brief A desktop dock pane to dock dialogs.
+/**
+ * @file
+ * A desktop dock pane to dock dialogs.
  */
 /* Author:
  *   Gustav Broberg <broberg@kth.se>

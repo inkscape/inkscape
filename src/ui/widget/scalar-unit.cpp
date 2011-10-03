@@ -1,5 +1,5 @@
 /**
- * \brief Scalar Unit Widget - A labelled text box, with spin buttons and
+ * Scalar Unit Widget - A labelled text box, with spin buttons and
  *        optional icon or suffix, for entering the values of various unit
  *        types.
  *

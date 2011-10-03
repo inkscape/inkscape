@@ -1,5 +1,6 @@
-/** @file
- * @brief Object properties dialog
+/**
+ * @file
+ * Object properties dialog.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -79,11 +80,9 @@ sp_item_dialog_delete( GtkObject */*object*/, GdkEvent */*event*/, gpointer /*da
 }
 
 /**
- * \brief  Creates new instance of item properties widget
- *
+ * Creates new instance of item properties widget.
  */
-GtkWidget *
-sp_item_widget_new (void)
+GtkWidget *sp_item_widget_new(void)
 {
 
     GtkWidget *spw, *vb, *t, *cb, *l, *f, *tf, *pb, *int_expander, *int_label;
@@ -268,10 +267,9 @@ sp_item_widget_change_selection ( SPWidget *spw,
 
 
 /**
-*  \param selection Selection to use; should not be NULL.
-*/
-static void
-sp_item_widget_setup ( SPWidget *spw, Inkscape::Selection *selection )
+ * @param selection Selection to use; should not be NULL.
+ */
+static void sp_item_widget_setup( SPWidget *spw, Inkscape::Selection *selection )
 {
     g_assert (selection != NULL);
 
@@ -483,11 +481,9 @@ sp_item_widget_label_changed( GtkWidget */*widget*/, SPWidget *spw )
 
 
 /**
- * \brief  Dialog
- *
+ * Dialog.
  */
-void
-sp_item_dialog (void)
+void sp_item_dialog(void)
 {
     if (dlg == NULL) {
 

@@ -1,5 +1,6 @@
-/** @file
- * @brief Fill and Stroke dialog - implementation
+/**
+ * @file
+ * Fill and Stroke dialog - implementation.
  *
  * Based on the old sp_object_properties_dialog.
  */

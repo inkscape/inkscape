@@ -1,5 +1,6 @@
-/** @file
- * @brief Dialog for naming calligraphic profiles
+/**
+ * @file
+ * Dialog for naming calligraphic profiles.
  *
  * @note This file is in the wrong directory because of link order issues - 
  * it is required by widgets/toolbox.cpp, and libspwidgets.a comes after

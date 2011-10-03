@@ -1,5 +1,6 @@
-/** @file
- * @brief  Stroke style dialog
+/**
+ * @file
+ * Stroke style dialog.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -291,14 +292,10 @@ sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, SPDocument *source, SPD
 }
 
 /**
- * sp_marker_list_from_doc()
- *
- * \brief Pick up all markers from source, except those that are in
- * current_doc (if non-NULL), and add items to the m menu
- *
+ * Pick up all markers from source, except those that are in
+ * current_doc (if non-NULL), and add items to the m menu.
  */
-static void
-sp_marker_list_from_doc (Gtk::Menu *m, SPDocument * /*current_doc*/, SPDocument *source, SPDocument * /*markers_doc*/, SPDocument *sandbox, gchar const *menu_id)
+static void sp_marker_list_from_doc(Gtk::Menu *m, SPDocument * /*current_doc*/, SPDocument *source, SPDocument * /*markers_doc*/, SPDocument *sandbox, gchar const *menu_id)
 {
     GSList *ml = ink_marker_list_get(source);
     GSList *clean_ml = NULL;
@@ -644,11 +641,9 @@ static gboolean stroke_width_set_unit(SPUnitSelector *,
 
 
 /**
- * \brief  Creates a new widget for the line stroke style.
- *
+ * Creates a new widget for the line stroke style.
  */
-Gtk::Container *
-sp_stroke_style_line_widget_new(void)
+Gtk::Container *sp_stroke_style_line_widget_new(void)
 {
     Gtk::Widget *us;
     SPDashSelector *ds;
@@ -1267,14 +1262,13 @@ sp_stroke_style_line_dash_changed(Gtk::Container *spw)
 }
 
 /**
- * \brief  This routine handles toggle events for buttons in the stroke style
- *         dialog.
+ * This routine handles toggle events for buttons in the stroke style dialog.
+ *
  * When activated, this routine gets the data for the various widgets, and then
  * calls the respective routines to update css properties, etc.
  *
  */
-static void
-sp_stroke_style_any_toggled(Gtk::ToggleButton *tb, Gtk::Container *spw)
+static void sp_stroke_style_any_toggled(Gtk::ToggleButton *tb, Gtk::Container *spw)
 {
     if (spw->get_data("update")) {
         return;

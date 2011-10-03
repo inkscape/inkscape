@@ -1,5 +1,6 @@
-/** @file
- * @brief A dockable dialog implementation.
+/**
+ * @file
+ * A dockable dialog implementation.
  */
 /* Author:
  *   Gustav Broberg <broberg@kth.se>

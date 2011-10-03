@@ -1,5 +1,5 @@
 /**
- * \brief Scalar Widget - A labelled text box, with spin buttons and optional
+ * Scalar Widget - A labelled text box, with spin buttons and optional
  *        icon or suffix, for entering arbitrary number values. It adds an extra
  *       number called "startseed", that is not UI edittable, but should be put in SVG.
  *      This does NOT generate a random number, but provides merely the saving of 

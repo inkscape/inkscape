@@ -1,5 +1,6 @@
-/** @file
- * @brief Implementation of native file dialogs for Win32
+/**
+ * @file
+ * Implementation of native file dialogs for Win32.
  */
 /* Authors:
  *   Joel Holdsworth

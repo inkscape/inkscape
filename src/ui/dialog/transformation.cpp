@@ -1,5 +1,6 @@
-/** @file
- * \brief Transform dialog - implementation
+/**
+ * @file
+ * Transform dialog - implementation.
  */
 /* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>

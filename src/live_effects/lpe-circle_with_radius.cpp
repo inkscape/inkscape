@@ -1,5 +1,6 @@
-/** @file
- * @brief LPE effect that draws a circle based on two points and a radius
+/**
+ * @file
+ * LPE effect that draws a circle based on two points and a radius.
  * - implementation
  */
 /* Authors:

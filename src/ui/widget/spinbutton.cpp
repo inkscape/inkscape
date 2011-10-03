@@ -1,5 +1,5 @@
 /**
- * \brief SpinButton widget, that allows entry of both '.' and ',' for the decimal, even when in numeric mode.
+ * SpinButton widget, that allows entry of both '.' and ',' for the decimal, even when in numeric mode.
  */
 /*
  * Author:

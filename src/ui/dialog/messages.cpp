@@ -1,5 +1,6 @@
-/** @file
- * @brief Messages dialog - implementation
+/**
+ * @file
+ * Messages dialog - implementation.
  */
 /* Authors:
  *   Bob Jamison

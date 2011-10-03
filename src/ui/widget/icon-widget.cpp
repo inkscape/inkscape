@@ -1,5 +1,5 @@
 /**
- * \brief Icon Widget
+ * Icon Widget.
  *
  * Author:
  *   Bryce Harrington <bryce@bryceharrington.org>

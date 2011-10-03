@@ -1,5 +1,6 @@
-/** @file
- * @brief Memory statistics dialog
+/**
+ * @file
+ * Memory statistics dialog.
  */
 /* Authors:
  *   MenTaLguY <mental@rydia.net>

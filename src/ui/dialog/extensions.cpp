@@ -1,5 +1,6 @@
-/** @file
- * @brief A simple dialog with information about extensions
+/**
+ * @file
+ * A simple dialog with information about extensions.
  */
 /* Authors:
  *   Jon A. Cruz

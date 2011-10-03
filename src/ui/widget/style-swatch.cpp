@@ -1,5 +1,6 @@
-/** @file
- * @brief Static style swatch (fill, stroke, opacity)
+/**
+ * @file
+ * Static style swatch (fill, stroke, opacity).
  */
 /* Authors:
  *   buliabyak@gmail.com
@@ -43,7 +44,7 @@ namespace UI {
 namespace Widget {
 
 /**
- * @brief Watches whether the tool uses the current style
+ * Watches whether the tool uses the current style.
  */
 class StyleSwatch::ToolObserver : public Inkscape::Preferences::Observer {
 public:
@@ -57,7 +58,7 @@ private:
 };
 
 /**
- * @brief Watches for changes in the observed style pref
+ * Watches for changes in the observed style pref.
  */
 class StyleSwatch::StyleObserver : public Inkscape::Preferences::Observer {
 public:

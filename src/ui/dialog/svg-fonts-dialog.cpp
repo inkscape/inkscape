@@ -1,5 +1,6 @@
-/** @file
- * @brief SVG Fonts dialog - implementation
+/**
+ * @file
+ * SVG Fonts dialog - implementation.
  */
 /* Authors:
  *   Felipe C. da S. Sanches <juca@members.fsf.org>

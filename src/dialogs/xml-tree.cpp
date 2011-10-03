@@ -1,5 +1,6 @@
-/** @file
- * @brief XML editor
+/**
+ * @file
+ * XML editor.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -148,8 +149,8 @@ static gboolean sp_xml_tree_key_press(GtkWidget *widget, GdkEventKey *event);
 
 static bool in_dt_coordsys(SPObject const &item);
 
-/*
- * \brief Sets the XML status bar when the tree is selected.
+/**
+ * Sets the XML status bar when the tree is selected.
  */
 void tree_reset_context()
 {
@@ -158,8 +159,8 @@ void tree_reset_context()
 }
 
 
-/*
- * \brief Sets the XML status bar, depending on which attr is selected.
+/**
+ * Sets the XML status bar, depending on which attr is selected.
  */
 void attr_reset_context(gint attr)
 {

@@ -1,5 +1,6 @@
-/** @file
- * Node selection - implementation
+/**
+ * @file
+ * Node selection - implementation.
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -23,7 +24,7 @@ namespace UI {
 
 /**
  * @class ControlPointSelection
- * @brief Group of selected control points.
+ * Group of selected control points.
  *
  * Some operations can be performed on all selected points regardless of their type, therefore
  * this class is also a Manipulator. It handles the transformations of points using
@@ -446,8 +447,10 @@ bool ControlPointSelection::_keyboardMove(GdkEventKey const &event, Geom::Point 
     return true;
 }
 
-/** @brief Computes the distance to the farthest corner of the bounding box.
- * Used to determine what it means to "rotate by one pixel". */
+/**
+ * Computes the distance to the farthest corner of the bounding box.
+ * Used to determine what it means to "rotate by one pixel".
+ */
 double ControlPointSelection::_rotationRadius(Geom::Point const &rc)
 {
     if (empty()) return 1.0; // some safe value
@@ -460,7 +463,8 @@ double ControlPointSelection::_rotationRadius(Geom::Point const &rc)
     return maxlen;
 }
 
-/** Rotates the selected points in the given direction according to the modifier state
+/**
+ * Rotates the selected points in the given direction according to the modifier state
  * from the supplied event.
  * @param event Key event to take modifier state from
  * @param dir   Direction of rotation (math convention: 1 = counterclockwise, -1 = clockwise)

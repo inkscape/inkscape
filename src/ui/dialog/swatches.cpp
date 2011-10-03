@@ -1,6 +1,6 @@
-
-/** @file
- * @brief Color swatches dialog
+/**
+ * @file
+ * Color swatches dialog.
  */
 /* Authors:
  *   Jon A. Cruz

@@ -1,5 +1,6 @@
-/** @file
- * @brief Dialog for renaming layers
+/**
+ * @file
+ * Dialog for renaming layers.
  */
 /* Author:
  *   Bryce W. Harrington <bryce@bryceharrington.com>

@@ -1,5 +1,6 @@
-/** @file
- * @brief  PNG export dialog
+/**
+ * @file
+ * PNG export dialog.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -189,32 +190,30 @@ sp_export_dialog_delete ( GtkObject */*object*/, GdkEvent */*event*/, gpointer /
 } // end of sp_export_dialog_delete()
 
 /**
-    \brief  Creates a new spin button for the export dialog
-    \param  key  The name of the spin button
-    \param  val  A default value for the spin button
-    \param  min  Minimum value for the spin button
-    \param  max  Maximum value for the spin button
-    \param  step The step size for the spin button
-    \param  page Size of the page increment
-    \param  us   Unit selector that effects this spin button
-    \param  t    Table to put the spin button in
-    \param  x    X location in the table \c t to start with
-    \param  y    Y location in the table \c t to start with
-    \param  ll   Text to put on the left side of the spin button (optional)
-    \param  lr   Text to put on the right side of the spin button (optional)
-    \param  digits  Number of digits to display after the decimal
-    \param  sensitive  Whether the spin button is sensitive or not
-    \param  cb   Callback for when this spin button is changed (optional)
-    \param  dlg  Export dialog the spin button is being placed in
-
-*/
-static void
-sp_export_spinbutton_new ( gchar const *key, float val, float min, float max,
-                           float step, float page, GtkWidget *us,
-                           GtkWidget *t, int x, int y,
-                           const gchar *ll, const gchar *lr,
-                           int digits, unsigned int sensitive,
-                           GCallback cb, GtkWidget *dlg )
+ * Creates a new spin button for the export dialog.
+ * @param  key  The name of the spin button
+ * @param  val  A default value for the spin button
+ * @param  min  Minimum value for the spin button
+ * @param  max  Maximum value for the spin button
+ * @param  step The step size for the spin button
+ * @param  page Size of the page increment
+ * @param  us   Unit selector that effects this spin button
+ * @param  t    Table to put the spin button in
+ * @param  x    X location in the table \c t to start with
+ * @param  y    Y location in the table \c t to start with
+ * @param  ll   Text to put on the left side of the spin button (optional)
+ * @param  lr   Text to put on the right side of the spin button (optional)
+ * @param  digits  Number of digits to display after the decimal
+ * @param  sensitive  Whether the spin button is sensitive or not
+ * @param  cb   Callback for when this spin button is changed (optional)
+ * @param  dlg  Export dialog the spin button is being placed in
+ */
+static void sp_export_spinbutton_new( gchar const *key, float val, float min, float max,
+                                      float step, float page, GtkWidget *us,
+                                      GtkWidget *t, int x, int y,
+                                      const gchar *ll, const gchar *lr,
+                                      int digits, unsigned int sensitive,
+                                      GCallback cb, GtkWidget *dlg )
 {
     GtkObject *adj = gtk_adjustment_new( val, min, max, step, page, 0 );
     g_object_set_data( G_OBJECT (adj), "key", const_cast<gchar *>(key) );
@@ -734,14 +733,12 @@ sp_export_find_default_selection(GtkWidget * dlg)
 
 
 /**
- * \brief  If selection changed or a different document activated, we must
- * recalculate any chosen areas
- *
+ * If selection changed or a different document activated, we must
+ * recalculate any chosen areas.
  */
-static void
-sp_export_selection_changed ( Inkscape::Application *inkscape,
-                              Inkscape::Selection *selection,
-                              GtkObject *base )
+static void sp_export_selection_changed( Inkscape::Application *inkscape,
+                                         Inkscape::Selection *selection,
+                                         GtkObject *base )
 {
     selection_type current_key;
     current_key = (selection_type)(GPOINTER_TO_INT(g_object_get_data(G_OBJECT(base), "selection-type")));
@@ -1445,34 +1442,34 @@ sp_export_bbox_equal(Geom::Rect const &one, Geom::Rect const &two)
 }
 
 /**
-    \brief  This function is used to detect the current selection setting
-            based on the values in the x0, y0, x1 and y0 fields.
-    \param  base  The export dialog itself
-
-    One of the most confusing parts of this function is why the array
-    is built at the beginning.  What needs to happen here is that we
-    should always check the current selection to see if it is the valid
-    one.  While this is a performance improvement it is also a usability
-    one during the cases where things like selections and drawings match
-    size.  This way buttons change less 'randomly' (atleast in the eyes
-    of the user).  To do this an array is built where the current selection
-    type is placed first, and then the others in an order from smallest
-    to largest (this can be configured by reshuffling \c test_order).
-
-    All of the values in this function are rounded to two decimal places
-    because that is what is shown to the user.  While everything is kept
-    more accurate than that, the user can't control more acurrate than
-    that, so for this to work for them - it needs to check on that level
-    of accuracy.
-
-    \todo finish writing this up
-*/
-static void
-sp_export_detect_size(GtkObject * base) {
+ *This function is used to detect the current selection setting
+ * based on the values in the x0, y0, x1 and y0 fields.
+ *
+ * One of the most confusing parts of this function is why the array
+ * is built at the beginning.  What needs to happen here is that we
+ * should always check the current selection to see if it is the valid
+ * one.  While this is a performance improvement it is also a usability
+ * one during the cases where things like selections and drawings match
+ * size.  This way buttons change less 'randomly' (atleast in the eyes
+ * of the user).  To do this an array is built where the current selection
+ * type is placed first, and then the others in an order from smallest
+ * to largest (this can be configured by reshuffling \c test_order).
+ *
+ * All of the values in this function are rounded to two decimal places
+ * because that is what is shown to the user.  While everything is kept
+ * more accurate than that, the user can't control more acurrate than
+ * that, so for this to work for them - it needs to check on that level
+ * of accuracy.
+ *
+ * @param  base  The export dialog itself.
+ *
+ * @todo finish writing this up.
+ */
+static void sp_export_detect_size(GtkObject * base) {
     static const selection_type test_order[SELECTION_NUMBER_OF] = {SELECTION_SELECTION, SELECTION_DRAWING, SELECTION_PAGE, SELECTION_CUSTOM};
     selection_type this_test[SELECTION_NUMBER_OF + 1];
     selection_type key = SELECTION_NUMBER_OF;
-
+    
     Geom::Point x(sp_export_value_get_px (base, "x0"),
                   sp_export_value_get_px (base, "y0"));
     Geom::Point y(sp_export_value_get_px (base, "x1"),
@@ -1719,15 +1716,14 @@ sp_export_area_height_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
 } // end of sp_export_area_height_value_changed()
 
 /**
-    \brief  A function to set the ydpi
-    \param  base  The export dialog
-
-    This function grabs all of the y values and then figures out the
-    new bitmap size based on the changing dpi value.  The dpi value is
-    gotten from the xdpi setting as these can not currently be independent.
-*/
-static void
-sp_export_set_image_y (GtkObject *base)
+ * A function to set the ydpi.
+ * @param base The export dialog.
+ *
+ * This function grabs all of the y values and then figures out the
+ * new bitmap size based on the changing dpi value.  The dpi value is
+ * gotten from the xdpi setting as these can not currently be independent.
+ */
+static void sp_export_set_image_y(GtkObject *base)
 {
     float y0, y1, xdpi;
 
@@ -1742,15 +1738,15 @@ sp_export_set_image_y (GtkObject *base)
 } // end of sp_export_set_image_y()
 
 /**
-    \brief  A function to set the xdpi
-    \param  base  The export dialog
-
-    This function grabs all of the x values and then figures out the
-    new bitmap size based on the changing dpi value.  The dpi value is
-    gotten from the xdpi setting as these can not currently be independent.
-*/
-static void
-sp_export_set_image_x (GtkObject *base)
+ * A function to set the xdpi.
+ *
+ * This function grabs all of the x values and then figures out the
+ * new bitmap size based on the changing dpi value.  The dpi value is
+ * gotten from the xdpi setting as these can not currently be independent.
+ *
+ * @param  base  The export dialog.
+ */
+static void sp_export_set_image_x(GtkObject *base)
 {
     float x0, x1, xdpi;
 
@@ -1835,35 +1831,35 @@ sp_export_bitmap_height_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
 } // end of sp_export_bitmap_width_value_changed()
 
 /**
-    \brief  A function to adjust the bitmap width when the xdpi value changes
-    \param  adj  The adjustment that was changed
-    \param  base The export dialog itself
-
-    The first thing this function checks is to see if we are doing an
-    update.  If we are, this function just returns because there is another
-    instance of it that will handle everything for us.  If there is a
-    units change, we also assume that everyone is being updated appropriately
-    and there is nothing for us to do.
-
-    If we're the highest level function, we set the update flag, and
-    continue on our way.
-
-    All of the values are grabbed using the \c sp_export_value_get functions
-    (call to the _pt ones for x0 and x1 but just standard for xdpi).  The
-    xdpi value is saved in the preferences for the next time the dialog
-    is opened.  (does the selection dpi need to be set here?)
-
-    A check is done to to ensure that we aren't outputing an invalid width,
-    this is set by SP_EXPORT_MIN_SIZE.  If that is the case the dpi is
-    changed to make it valid.
-
-    After all of this the bitmap width is changed.
-
-    We also change the ydpi.  This is a temporary hack as these can not
-    currently be independent.  This is likely to change in the future.
-*/
-void
-sp_export_xdpi_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
+ * A function to adjust the bitmap width when the xdpi value changes.
+ *
+ * The first thing this function checks is to see if we are doing an
+ * update.  If we are, this function just returns because there is another
+ * instance of it that will handle everything for us.  If there is a
+ * units change, we also assume that everyone is being updated appropriately
+ * and there is nothing for us to do.
+ *
+ * If we're the highest level function, we set the update flag, and
+ * continue on our way.
+ *
+ * All of the values are grabbed using the \c sp_export_value_get functions
+ * (call to the _pt ones for x0 and x1 but just standard for xdpi).  The
+ * xdpi value is saved in the preferences for the next time the dialog
+ * is opened.  (does the selection dpi need to be set here?)
+ *
+ * A check is done to to ensure that we aren't outputing an invalid width,
+ * this is set by SP_EXPORT_MIN_SIZE.  If that is the case the dpi is
+ * changed to make it valid.
+ *
+ * After all of this the bitmap width is changed.
+ *
+ * We also change the ydpi.  This is a temporary hack as these can not
+ * currently be independent.  This is likely to change in the future.
+ *
+ * @param  adj  The adjustment that was changed.
+ * @param  base The export dialog itself.
+ */
+void sp_export_xdpi_value_changed(GtkAdjustment */*adj*/, GtkObject *base)
 {
     float x0, x1, xdpi, bmwidth;
 
@@ -1907,26 +1903,26 @@ sp_export_xdpi_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
 
 
 /**
-    \brief  A function to change the area that is used for the exported
-            bitmap.
-    \param  base  This is the export dialog
-    \param  x0    Horizontal upper left hand corner of the picture in points
-    \param  y0    Vertical upper left hand corner of the picture in points
-    \param  x1    Horizontal lower right hand corner of the picture in points
-    \param  y1    Vertical lower right hand corner of the picture in points
-
-    This function just calls \c sp_export_value_set_px for each of the
-    parameters that is passed in.  This allows for setting them all in
-    one convient area.
-
-    Update is set to suspend all of the other test running while all the
-    values are being set up.  This allows for a performance increase, but
-    it also means that the wrong type won't be detected with only some of
-    the values set.  After all the values are set everyone is told that
-    there has been an update.
-*/
-static void
-sp_export_set_area ( GtkObject *base, double x0, double y0, double x1, double y1 )
+ * A function to change the area that is used for the exported.
+ * bitmap.
+ *
+ * This function just calls \c sp_export_value_set_px for each of the
+ * parameters that is passed in.  This allows for setting them all in
+ * one convient area.
+ *
+ * Update is set to suspend all of the other test running while all the
+ * values are being set up.  This allows for a performance increase, but
+ * it also means that the wrong type won't be detected with only some of
+ * the values set.  After all the values are set everyone is told that
+ * there has been an update.
+ *
+ * @param  base  This is the export dialog.
+ * @param  x0    Horizontal upper left hand corner of the picture in points.
+ * @param  y0    Vertical upper left hand corner of the picture in points.
+ * @param  x1    Horizontal lower right hand corner of the picture in points.
+ * @param  y1    Vertical lower right hand corner of the picture in points.
+ */
+static void sp_export_set_area( GtkObject *base, double x0, double y0, double x1, double y1 )
 {
     g_object_set_data (G_OBJECT (base), "update", GUINT_TO_POINTER (TRUE) );
     sp_export_value_set_px (base, "x1", x1);
@@ -1942,38 +1938,36 @@ sp_export_set_area ( GtkObject *base, double x0, double y0, double x1, double y1
 }
 
 /**
-    \brief  Sets the value of an adjustment
-    \param  base  The export dialog
-    \param  key   Which adjustment to set
-    \param  val   What value to set it to
-
-    This function finds the adjustment using the data stored in the
-    export dialog.  After finding the adjustment it then sets
-    the value of it.
-*/
-static void
-sp_export_value_set ( GtkObject *base, const gchar *key, double val )
+ * Sets the value of an adjustment.
+ *
+ * This function finds the adjustment using the data stored in the
+ * export dialog.  After finding the adjustment it then sets
+ * the value of it.
+ *
+ * @param  base  The export dialog.
+ * @param  key   Which adjustment to set.
+ * @param  val   What value to set it to.
+ */
+static void sp_export_value_set( GtkObject *base, const gchar *key, double val )
 {
-    GtkAdjustment *adj;
-
-    adj = (GtkAdjustment *)g_object_get_data (G_OBJECT(base), key);
+    GtkAdjustment *adj = (GtkAdjustment *)g_object_get_data (G_OBJECT(base), key);
 
     gtk_adjustment_set_value (adj, val);
 }
 
 /**
-    \brief  A function to set a value using the units points
-    \param  base  The export dialog
-    \param  key   Which value should be set
-    \param  val   What the value should be in points
-
-    This function first gets the adjustment for the key that is passed
-    in.  It then figures out what units are currently being used in the
-    dialog.  After doing all of that, it then converts the incoming
-    value and sets the adjustment.
-*/
-static void
-sp_export_value_set_px (GtkObject *base, const gchar *key, double val)
+ * A function to set a value using the units points.
+ *
+ * This function first gets the adjustment for the key that is passed
+ * in.  It then figures out what units are currently being used in the
+ * dialog.  After doing all of that, it then converts the incoming
+ *value and sets the adjustment.
+ *
+ * @param  base  The export dialog.
+ * @param  key   Which value should be set.
+ * @param  val   What the value should be in points.
+ */
+static void sp_export_value_set_px(GtkObject *base, const gchar *key, double val)
 {
     const SPUnit *unit = sp_unit_selector_get_unit ((SPUnitSelector *)g_object_get_data (G_OBJECT(base), "units") );
 
@@ -1983,16 +1977,16 @@ sp_export_value_set_px (GtkObject *base, const gchar *key, double val)
 }
 
 /**
-    \brief  Get the value of an adjustment in the export dialog
-    \param  base  The export dialog
-    \param  key   Which adjustment is being looked for
-    \return The value in the specified adjustment
-
-    This function gets the adjustment from the data field in the export
-    dialog.  It then grabs the value from the adjustment.
-*/
-static float
-sp_export_value_get ( GtkObject *base, const gchar *key )
+ * Get the value of an adjustment in the export dialog.
+ *
+ * This function gets the adjustment from the data field in the export
+ * dialog.  It then grabs the value from the adjustment.
+ *
+ * @param  base  The export dialog.
+ * @param  key   Which adjustment is being looked for.
+ * @return The value in the specified adjustment.
+ */
+static float sp_export_value_get( GtkObject *base, const gchar *key )
 {
     GtkAdjustment *adj;
 
@@ -2002,19 +1996,19 @@ sp_export_value_get ( GtkObject *base, const gchar *key )
 }
 
 /**
-    \brief  Grabs a value in the export dialog and converts the unit
-            to points
-    \param  base  The export dialog
-    \param  key   Which value should be returned
-    \return The value in the adjustment in points
-
-    This function, at its most basic, is a call to \c sp_export_value_get
-    to get the value of the adjustment.  It then finds the units that
-    are being used by looking at the "units" attribute of the export
-    dialog.  Using that it converts the returned value into points.
-*/
-static float
-sp_export_value_get_px ( GtkObject *base, const gchar *key )
+ * Grabs a value in the export dialog and converts the unit
+ * to points.
+ *
+ * This function, at its most basic, is a call to \c sp_export_value_get
+ * to get the value of the adjustment.  It then finds the units that
+ * are being used by looking at the "units" attribute of the export
+ * dialog.  Using that it converts the returned value into points.
+ *
+ * @param  base  The export dialog.
+ * @param  key   Which value should be returned.
+ * @return The value in the adjustment in points.
+ */
+static float sp_export_value_get_px( GtkObject *base, const gchar *key )
 {
     float value = sp_export_value_get(base, key);
     const SPUnit *unit = sp_unit_selector_get_unit ((SPUnitSelector *)g_object_get_data (G_OBJECT(base), "units"));
@@ -2023,20 +2017,19 @@ sp_export_value_get_px ( GtkObject *base, const gchar *key )
 } // end of sp_export_value_get_px()
 
 /**
-    \brief  This function is called when the filename is changed by
-            anyone.  It resets the virgin bit.
-    \param  object  Text entry box
-    \param  data    The export dialog
-    \return None
-
-    This function gets called when the text area is modified.  It is
-    looking for the case where the text area is modified from its
-    original value.  In that case it sets the "filename-modified" bit
-    to TRUE.  If the text dialog returns back to the original text, the
-    bit gets reset.  This should stop simple mistakes.
-*/
-static void
-sp_export_filename_modified (GtkObject * object, gpointer data)
+ * This function is called when the filename is changed by
+ * anyone.  It resets the virgin bit.
+ *
+ * This function gets called when the text area is modified.  It is
+ * looking for the case where the text area is modified from its
+ * original value.  In that case it sets the "filename-modified" bit
+ * to TRUE.  If the text dialog returns back to the original text, the
+ * bit gets reset.  This should stop simple mistakes.
+ *
+ * @param  object  Text entry box.
+ * @param  data    The export dialog.
+ */
+static void sp_export_filename_modified(GtkObject * object, gpointer data)
 {
     GtkWidget * text_entry = (GtkWidget *)object;
     GtkWidget * export_dialog = (GtkWidget *)data;

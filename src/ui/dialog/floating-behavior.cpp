@@ -1,5 +1,6 @@
-/** @file
- * @brief Floating dialog implementation.
+/**
+ * @file
+ * Floating dialog implementation.
  */
 /* Author:
  *   Gustav Broberg <broberg@kth.se>
@@ -54,15 +55,16 @@ FloatingBehavior::FloatingBehavior(Dialog &dialog) :
 }
 
 #if GTK_VERSION_GE(2, 12)
-/** \brief  A function called when the window gets focus
-
-    This function gets called on a focus event.  It figures out how much
-    time is required for a transition, and the number of steps that'll take,
-    and sets up the _trans_timer function to do the work.  If the transition
-    time is set to 0 ms it just calls _trans_timer once with _steps equal to
-    zero so that the transition happens instantaneously.  This occurs on
-    windows as opacity changes cause flicker there.
-*/
+/**
+ * A function called when the window gets focus.
+ *
+ * This function gets called on a focus event.  It figures out how much
+ * time is required for a transition, and the number of steps that'll take,
+ * and sets up the _trans_timer function to do the work.  If the transition
+ * time is set to 0 ms it just calls _trans_timer once with _steps equal to
+ * zero so that the transition happens instantaneously.  This occurs on
+ * windows as opacity changes cause flicker there.
+ */
 void FloatingBehavior::_focus_event (void)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -89,13 +91,14 @@ void FloatingBehavior::_focus_event (void)
     return;
 }
 
-/** \brief  Move the opacity of a window towards our goal
-
-    This is a timer function that is set up by _focus_event to slightly
-    move the opacity of the window along in an animated fashion.  It moves
-    the opacity half way to the goal until it runs out of steps, and then
-    it just forces the goal.
-*/
+/**
+ * Move the opacity of a window towards our goal.
+ *
+ * This is a timer function that is set up by _focus_event to slightly
+ * move the opacity of the window along in an animated fashion.  It moves
+ * the opacity half way to the goal until it runs out of steps, and then
+ * it just forces the goal.
+ */
 bool FloatingBehavior::_trans_timer (void) {
     // printf("Go go gadget timer: %d\n", _steps);
     if (_steps == 0) {

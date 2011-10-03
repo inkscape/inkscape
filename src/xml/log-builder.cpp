@@ -1,5 +1,6 @@
-/** @file
- * @brief Object building an event log
+/**
+ * @file
+ * Object building an event log.
  */
 /* Copyright 2005 MenTaLguY <mental@rydia.net>
  *

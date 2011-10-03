@@ -13,17 +13,16 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 /**
- * \brief  Updates the \c boundingbox_X and \c boundingbox_Y values from the geometric bounding box of \c lpeitem.
+ * Updates the \c boundingbox_X and \c boundingbox_Y values from the geometric bounding box of \c lpeitem.
  *
- * \pre   lpeitem must have an existing geometric boundingbox (usually this is guaranteed when: \code SP_SHAPE(lpeitem)->curve != NULL \endcode )
-          It's not possible to run LPEs on items without their original-d having a bbox.
- * \param lpeitem   This is not allowed to be NULL.
- * \param absolute  Determines whether the bbox should be calculated of the untransformed lpeitem (\c absolute = \c false)
+ * @pre   lpeitem must have an existing geometric boundingbox (usually this is guaranteed when: \code SP_SHAPE(lpeitem)->curve != NULL \endcode )
+ *        It's not possible to run LPEs on items without their original-d having a bbox.
+ * @param lpeitem   This is not allowed to be NULL.
+ * @param absolute  Determines whether the bbox should be calculated of the untransformed lpeitem (\c absolute = \c false)
  *                  or of the transformed lpeitem (\c absolute = \c true) using sp_item_i2doc_affine.
- * \post Updated values of boundingbox_X and boundingbox_Y. These intervals are set to empty intervals when the precondition is not met.
+ * @post Updated values of boundingbox_X and boundingbox_Y. These intervals are set to empty intervals when the precondition is not met.
  */
-void
-GroupBBoxEffect::original_bbox(SPLPEItem *lpeitem, bool absolute)
+void GroupBBoxEffect::original_bbox(SPLPEItem *lpeitem, bool absolute)
 {
     // Get item bounding box
     Geom::Affine transform;

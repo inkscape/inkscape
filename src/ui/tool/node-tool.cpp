@@ -1,5 +1,6 @@
-/** @file
- * @brief New node tool - implementation
+/**
+ * @file
+ * New node tool - implementation.
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk@gmail.com>

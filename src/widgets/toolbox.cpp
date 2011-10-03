@@ -1,6 +1,7 @@
-/** @file
- * @brief Controls bars for some of Inkscape's tools (for some tools,
- * they are in their own files)
+/**
+ * @file
+ * Controls bars for some of Inkscape's tools (for some tools,
+ * they are in their own files).
  */
 /* Authors:
  *   MenTaLguY <mental@rydia.net>
@@ -4133,7 +4134,7 @@ static void freehand_change_shape(EgeSelectOneAction* act, GObject *dataKludge) 
 }
 
 /**
- * \brief Generate the list of freehand advanced shape option entries.
+ * Generate the list of freehand advanced shape option entries.
  */
 static GList * freehand_shape_dropdown_items_list() {
     GList *glist = NULL;

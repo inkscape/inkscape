@@ -1,5 +1,6 @@
-/** @file
- * @brief LPE knot effect implementation
+/**
+ * @file
+ * LPE knot effect implementation.
  */
 /* Authors:
  *   Jean-Francois Barraud <jf.barraud@gmail.com>

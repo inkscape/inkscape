@@ -1,5 +1,6 @@
-/** @file
- * @brief Dialog for executing and monitoring script execution
+/**
+ * @file
+ * Dialog for executing and monitoring script execution.
  */
 /* Author:  
  *   Bob Jamison

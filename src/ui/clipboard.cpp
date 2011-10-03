@@ -1,5 +1,6 @@
-/** @file
- * @brief System-wide clipboard management - implementation
+/**
+ * @file
+ * System-wide clipboard management - implementation.
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk@o2.pl>
@@ -82,7 +83,7 @@
 #include "snap.h"
 #include "persp3d.h"
 
-/// @brief Made up mimetype to represent Gdk::Pixbuf clipboard contents
+/// Made up mimetype to represent Gdk::Pixbuf clipboard contents.
 #define CLIPBOARD_GDK_PIXBUF_TARGET "image/x-gdk-pixbuf"
 
 #define CLIPBOARD_TEXT_TARGET "text/plain"
@@ -102,7 +103,7 @@ namespace UI {
 
 
 /**
- * @brief Default implementation of the clipboard manager
+ * Default implementation of the clipboard manager.
  */
 class ClipboardManagerImpl : public ClipboardManager {
 public:
@@ -192,7 +193,7 @@ ClipboardManagerImpl::~ClipboardManagerImpl() {}
 
 
 /**
- * @brief Copy selection contents to the clipboard
+ * Copy selection contents to the clipboard.
  */
 void ClipboardManagerImpl::copy(SPDesktop *desktop)
 {
@@ -272,8 +273,8 @@ void ClipboardManagerImpl::copy(SPDesktop *desktop)
 
 
 /**
- * @brief Copy a Live Path Effect path parameter to the clipboard
- * @param pp The path parameter to store in the clipboard
+ * Copy a Live Path Effect path parameter to the clipboard.
+ * @param pp The path parameter to store in the clipboard.
  */
 void ClipboardManagerImpl::copyPathParameter(Inkscape::LivePathEffect::PathParam *pp)
 {
@@ -299,8 +300,8 @@ void ClipboardManagerImpl::copyPathParameter(Inkscape::LivePathEffect::PathParam
 }
 
 /**
- * @brief Paste from the system clipboard into the active desktop
- * @param in_place Whether to put the contents where they were when copied
+ * Paste from the system clipboard into the active desktop.
+ * @param in_place Whether to put the contents where they were when copied.
  */
 bool ClipboardManagerImpl::paste(SPDesktop *desktop, bool in_place)
 {
@@ -341,7 +342,7 @@ bool ClipboardManagerImpl::paste(SPDesktop *desktop, bool in_place)
 }
 
 /**
- * @brief Returns the id of the first visible copied object
+ * Returns the id of the first visible copied object.
  */
 const gchar *ClipboardManagerImpl::getFirstObjectID()
 {
@@ -377,7 +378,7 @@ const gchar *ClipboardManagerImpl::getFirstObjectID()
 
 
 /**
- * @brief Implements the Paste Style action
+ * Implements the Paste Style action.
  */
 bool ClipboardManagerImpl::pasteStyle(SPDesktop *desktop)
 {
@@ -425,7 +426,7 @@ bool ClipboardManagerImpl::pasteStyle(SPDesktop *desktop)
 
 
 /**
- * @brief Resize the selection or each object in the selection to match the clipboard's size
+ * Resize the selection or each object in the selection to match the clipboard's size.
  * @param separately Whether to scale each object in the selection separately
  * @param apply_x Whether to scale the width of objects / selection
  * @param apply_y Whether to scale the height of objects / selection
@@ -488,7 +489,7 @@ bool ClipboardManagerImpl::pasteSize(SPDesktop *desktop, bool separately, bool a
 
 
 /**
- * @brief Applies a path effect from the clipboard to the selected path
+ * Applies a path effect from the clipboard to the selected path.
  */
 bool ClipboardManagerImpl::pastePathEffect(SPDesktop *desktop)
 {
@@ -532,7 +533,7 @@ bool ClipboardManagerImpl::pastePathEffect(SPDesktop *desktop)
 
 
 /**
- * @brief Get LPE path data from the clipboard
+ * Get LPE path data from the clipboard.
  * @return The retrieved path data (contents of the d attribute), or "" if no path was found
  */
 Glib::ustring ClipboardManagerImpl::getPathParameter(SPDesktop* desktop)
@@ -555,8 +556,8 @@ Glib::ustring ClipboardManagerImpl::getPathParameter(SPDesktop* desktop)
 
 
 /**
- * @brief Get object id of a shape or text item from the clipboard
- * @return The retrieved id string (contents of the id attribute), or "" if no shape or text item was found
+ * Get object id of a shape or text item from the clipboard.
+ * @return The retrieved id string (contents of the id attribute), or "" if no shape or text item was found.
  */
 Glib::ustring ClipboardManagerImpl::getShapeOrTextObjectId(SPDesktop *desktop)
 {
@@ -583,7 +584,7 @@ Glib::ustring ClipboardManagerImpl::getShapeOrTextObjectId(SPDesktop *desktop)
 
 
 /**
- * @brief Iterate over a list of items and copy them to the clipboard.
+ * Iterate over a list of items and copy them to the clipboard.
  */
 void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
 {
@@ -645,7 +646,7 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
 
 
 /**
- * @brief Recursively copy all the definitions used by a given item to the clipboard defs
+ * Recursively copy all the definitions used by a given item to the clipboard defs.
  */
 void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
 {
@@ -734,7 +735,7 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
 
 
 /**
- * @brief Copy a single gradient to the clipboard's defs element
+ * Copy a single gradient to the clipboard's defs element.
  */
 void ClipboardManagerImpl::_copyGradient(SPGradient *gradient)
 {
@@ -747,7 +748,7 @@ void ClipboardManagerImpl::_copyGradient(SPGradient *gradient)
 
 
 /**
- * @brief Copy a single pattern to the clipboard document's defs element
+ * Copy a single pattern to the clipboard document's defs element.
  */
 void ClipboardManagerImpl::_copyPattern(SPPattern *pattern)
 {
@@ -768,7 +769,7 @@ void ClipboardManagerImpl::_copyPattern(SPPattern *pattern)
 
 
 /**
- * @brief Copy a text path to the clipboard's defs element
+ * Copy a text path to the clipboard's defs element.
  */
 void ClipboardManagerImpl::_copyTextPath(SPTextPath *tp)
 {
@@ -787,7 +788,7 @@ void ClipboardManagerImpl::_copyTextPath(SPTextPath *tp)
 
 
 /**
- * @brief Copy a single XML node from one document to another
+ * Copy a single XML node from one document to another.
  * @param node The node to be copied
  * @param target_doc The document to which the node is to be copied
  * @param parent The node in the target document which will become the parent of the copied node
@@ -803,7 +804,7 @@ Inkscape::XML::Node *ClipboardManagerImpl::_copyNode(Inkscape::XML::Node *node, 
 
 
 /**
- * @brief Paste the contents of a document into the active desktop
+ * Paste the contents of a document into the active desktop.
  * @param clipdoc The document to paste
  * @param in_place Whether to paste the selection where it was when copied
  * @pre @c clipdoc is not empty and items can be added to the current layer
@@ -882,9 +883,9 @@ void ClipboardManagerImpl::_pasteDocument(SPDesktop *desktop, SPDocument *clipdo
 
 
 /**
- * @brief Paste SVG defs from the document retrieved from the clipboard into the active document
- * @param clipdoc The document to paste
- * @pre @c clipdoc != NULL and pasting into the active document is possible
+ * Paste SVG defs from the document retrieved from the clipboard into the active document.
+ * @param clipdoc The document to paste.
+ * @pre @c clipdoc != NULL and pasting into the active document is possible.
  */
 void ClipboardManagerImpl::_pasteDefs(SPDesktop *desktop, SPDocument *clipdoc)
 {
@@ -904,7 +905,7 @@ void ClipboardManagerImpl::_pasteDefs(SPDesktop *desktop, SPDocument *clipdoc)
 
 
 /**
- * @brief Retrieve a bitmap image from the clipboard and paste it into the active document
+ * Retrieve a bitmap image from the clipboard and paste it into the active document.
  */
 bool ClipboardManagerImpl::_pasteImage(SPDocument *doc)
 {
@@ -943,7 +944,7 @@ bool ClipboardManagerImpl::_pasteImage(SPDocument *doc)
 }
 
 /**
- * @brief Paste text into the selected text object or create a new one to hold it
+ * Paste text into the selected text object or create a new one to hold it.
  */
 bool ClipboardManagerImpl::_pasteText(SPDesktop *desktop)
 {
@@ -968,7 +969,7 @@ bool ClipboardManagerImpl::_pasteText(SPDesktop *desktop)
 
 
 /**
- * @brief Attempt to parse the passed string as a hexadecimal RGB or RGBA color
+ * Attempt to parse the passed string as a hexadecimal RGB or RGBA color.
  * @param text The Glib::ustring to parse
  * @return New CSS style representation if the parsing was successful, NULL otherwise
  */
@@ -1038,7 +1039,7 @@ SPCSSAttr *ClipboardManagerImpl::_parseColor(const Glib::ustring &text)
 
 
 /**
- * @brief Applies a pasted path effect to a given item
+ * Applies a pasted path effect to a given item.
  */
 void ClipboardManagerImpl::_applyPathEffect(SPItem *item, gchar const *effectstack)
 {
@@ -1071,7 +1072,7 @@ void ClipboardManagerImpl::_applyPathEffect(SPItem *item, gchar const *effectsta
 
 
 /**
- * @brief Retrieve the clipboard contents as a document
+ * Retrieve the clipboard contents as a document.
  * @return Clipboard contents converted to SPDocument, or NULL if no suitable content was present
  */
 SPDocument *ClipboardManagerImpl::_retrieveClipboard(Glib::ustring required_target)
@@ -1157,7 +1158,7 @@ SPDocument *ClipboardManagerImpl::_retrieveClipboard(Glib::ustring required_targ
 
 
 /**
- * @brief Callback called when some other application requests data from Inkscape
+ * Callback called when some other application requests data from Inkscape.
  *
  * Finds a suitable output extension to save the internal clipboard document,
  * then saves it to memory and sets the clipboard contents.
@@ -1232,7 +1233,7 @@ void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint /*info*/)
 
 
 /**
- * @brief Callback when someone else takes the clipboard
+ * Callback when someone else takes the clipboard.
  *
  * When the clipboard owner changes, this callback clears the internal clipboard document
  * to reduce memory usage.
@@ -1245,7 +1246,7 @@ void ClipboardManagerImpl::_onClear()
 
 
 /**
- * @brief Creates an internal clipboard document from scratch
+ * Creates an internal clipboard document from scratch.
  */
 void ClipboardManagerImpl::_createInternalClipboard()
 {
@@ -1270,7 +1271,7 @@ void ClipboardManagerImpl::_createInternalClipboard()
 
 
 /**
- * @brief Deletes the internal clipboard document
+ * Deletes the internal clipboard document.
  */
 void ClipboardManagerImpl::_discardInternalClipboard()
 {
@@ -1286,7 +1287,7 @@ void ClipboardManagerImpl::_discardInternalClipboard()
 
 
 /**
- * @brief Get the scale to resize an item, based on the command and desktop state
+ * Get the scale to resize an item, based on the command and desktop state.
  */
 Geom::Scale ClipboardManagerImpl::_getScale(SPDesktop *desktop, Geom::Point const &min, Geom::Point const &max, Geom::Rect const &obj_rect, bool apply_x, bool apply_y)
 {
@@ -1315,7 +1316,7 @@ Geom::Scale ClipboardManagerImpl::_getScale(SPDesktop *desktop, Geom::Point cons
 
 
 /**
- * @brief Find the most suitable clipboard target
+ * Find the most suitable clipboard target.
  */
 Glib::ustring ClipboardManagerImpl::_getBestTarget()
 {
@@ -1374,7 +1375,7 @@ Glib::ustring ClipboardManagerImpl::_getBestTarget()
 
 
 /**
- * @brief Set the clipboard targets to reflect the mimetypes Inkscape can output
+ * Set the clipboard targets to reflect the mimetypes Inkscape can output.
  */
 void ClipboardManagerImpl::_setClipboardTargets()
 {
@@ -1449,7 +1450,7 @@ void ClipboardManagerImpl::_setClipboardTargets()
 
 
 /**
- * @brief Set the string representation of a 32-bit RGBA color as the clipboard contents
+ * Set the string representation of a 32-bit RGBA color as the clipboard contents.
  */
 void ClipboardManagerImpl::_setClipboardColor(guint32 color)
 {
@@ -1460,7 +1461,7 @@ void ClipboardManagerImpl::_setClipboardColor(guint32 color)
 
 
 /**
- * @brief Put a notification on the mesage stack
+ * Put a notification on the mesage stack.
  */
 void ClipboardManagerImpl::_userWarn(SPDesktop *desktop, char const *msg)
 {

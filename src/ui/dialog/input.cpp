@@ -1,5 +1,6 @@
-/** @file
- * @brief Input devices dialog (new) - implementation
+/**
+ * @file
+ * Input devices dialog (new) - implementation.
  */
 /* Author:
  *   Jon A. Cruz

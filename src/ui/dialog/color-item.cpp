@@ -1,5 +1,6 @@
-/** @file
- * @brief Inkscape color swatch UI item.
+/**
+ * @file
+ * Inkscape color swatch UI item.
  */
 /* Authors:
  *   Jon A. Cruz

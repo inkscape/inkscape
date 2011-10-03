@@ -1,5 +1,5 @@
 /**
- * \brief Notebook page widget
+ * Notebook page widget.
  *
  * Author:
  *   Bryce Harrington <bryce@bryceharrington.org>

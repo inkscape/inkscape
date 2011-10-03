@@ -1,5 +1,6 @@
-/** @file
- * Path manipulator - implementation
+/**
+ * @file
+ * Path manipulator - implementation.
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -534,13 +535,15 @@ void PathManipulator::deleteNodes(bool keep_shape)
     }
 }
 
-/** @brief Delete nodes between the two iterators.
+/**
+ * Delete nodes between the two iterators.
  * The given range can cross the beginning of the subpath in closed subpaths.
  * @param start      Beginning of the range to delete
  * @param end        End of the range
  * @param keep_shape Whether to fit the handles at surrounding nodes to approximate
  *                   the shape before deletion
- * @return Number of deleted nodes */
+ * @return Number of deleted nodes
+ */
 unsigned PathManipulator::_deleteStretch(NodeList::iterator start, NodeList::iterator end, bool keep_shape)
 {
     unsigned const samples_per_segment = 10;

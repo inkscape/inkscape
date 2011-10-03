@@ -1,5 +1,6 @@
-/** @file
- * @brief Simple guideline dialog
+/**
+ * @file
+ * Simple guideline dialog.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>

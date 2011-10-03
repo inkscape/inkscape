@@ -1,5 +1,5 @@
 /**
- * \brief Button and CheckButton widgets
+ * Button and CheckButton widgets.
  *
  * Author:
  *   buliabyak@gmail.com

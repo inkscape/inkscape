@@ -1,5 +1,5 @@
 /**
- * \brief Groups an HScale and a SpinButton together using the same Adjustment
+ * Groups an HScale and a SpinButton together using the same Adjustment.
  *
  * Author:
  *   Nicholas Bishop <nicholasbishop@gmail.com>

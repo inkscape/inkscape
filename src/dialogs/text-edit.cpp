@@ -1,5 +1,6 @@
-/** @file
- * @brief Text editing dialog
+/**
+ * @file
+ * Text editing dialog.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@ximian.com>

@@ -1,6 +1,6 @@
-#define INKSCAPE_LPE_POWERSTROKE_CPP
-/** \file
- * @brief  PowerStroke LPE implementation. Creates curves with modifiable stroke width.
+/**
+ * @file
+ * PowerStroke LPE implementation. Creates curves with modifiable stroke width.
  */
 /* Authors:
  *   Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>

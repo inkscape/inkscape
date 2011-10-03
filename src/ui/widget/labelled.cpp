@@ -1,5 +1,5 @@
 /**
- * \brief Labelled Widget - Adds a label with optional icon or suffix to
+ * Labelled Widget - Adds a label with optional icon or suffix to
  *        another widget.
  *
  * Authors:

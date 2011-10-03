@@ -1,5 +1,5 @@
 /**
- * \brief Selected style indicator (fill, stroke, opacity)
+ * Selected style indicator (fill, stroke, opacity).
  *
  * Author:
  *   buliabyak@gmail.com

@@ -1,5 +1,6 @@
-/** @file
- * @brief Undo History dialog - implementation
+/**
+ * @file
+ * Undo History dialog - implementation.
  */
 /* Author:
  *   Gustav Broberg <broberg@kth.se>

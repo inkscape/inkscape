@@ -1,5 +1,6 @@
-/** @file
- * @brief  Event handler for dialog windows
+/**
+ * @file
+ * Event handler for dialog windows.
  */
 /* Authors:
  *   bulia byak <bulia@dr.com>
@@ -30,15 +31,12 @@
 
 
 /**
- * \brief  Remove focus from window to whoever it is transient for...
- *
+ * Remove focus from window to whoever it is transient for.
  */
-void
-sp_dialog_defocus_cpp (Gtk::Window *win)
+void sp_dialog_defocus_cpp(Gtk::Window *win)
 {
-    Gtk::Window *w;
     //find out the document window we're transient for
-    w = win->get_transient_for();
+    Gtk::Window *w = win->get_transient_for();
 
     //switch to it
     if (w) {
@@ -61,11 +59,9 @@ sp_dialog_defocus (GtkWindow *win)
 
 
 /**
- * \brief Callback to defocus a widget's parent dialog.
- *
+ * Callback to defocus a widget's parent dialog.
  */
-void
-sp_dialog_defocus_callback_cpp (Gtk::Entry *e)
+void sp_dialog_defocus_callback_cpp(Gtk::Entry *e)
 {
     sp_dialog_defocus_cpp(dynamic_cast<Gtk::Window *>(e->get_toplevel()));
 }
@@ -152,11 +148,10 @@ sp_dialog_event_handler (GtkWindow *win, GdkEvent *event, gpointer data)
 
 
 /**
- * \brief  Make the argument dialog transient to the currently active document
-           window.
+ * Make the argument dialog transient to the currently active document
+ * window.
  */
-void
-sp_transientize (GtkWidget *dialog)
+void sp_transientize(GtkWidget *dialog)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 #ifndef WIN32  // FIXME: Temporary Win32 special code to enable transient dialogs

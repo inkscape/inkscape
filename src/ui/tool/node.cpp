@@ -1,5 +1,6 @@
-/** @file
- * Editable node - implementation
+/**
+ * @file
+ * Editable node - implementation.
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -70,13 +71,11 @@ static Geom::Point direction(Geom::Point const &first, Geom::Point const &second
 }
 
 /**
- * @class Handle
- * @brief Control point of a cubic Bezier curve in a path.
+ * Control point of a cubic Bezier curve in a path.
  *
  * Handle keeps the node type invariant only for the opposite handle of the same node.
  * Keeping the invariant on node moves is left to the %Node class.
  */
-
 Geom::Point Handle::_saved_other_pos(0, 0);
 double Handle::_saved_length = 0.0;
 bool Handle::_drag_out = false;
@@ -467,12 +466,10 @@ Glib::ustring Handle::_getDragTip(GdkEventMotion */*event*/)
 }
 
 /**
- * @class Node
- * @brief Curve endpoint in an editable path.
+ * Curve endpoint in an editable path.
  *
  * The method move() keeps node type invariants during translations.
  */
-
 Node::Node(NodeSharedData const &data, Geom::Point const &initial_pos)
     : SelectableControlPoint(data.desktop, initial_pos, Gtk::ANCHOR_CENTER,
         SP_CTRL_SHAPE_DIAMOND, 9.0, *data.selection, &node_colors, data.node_group)
@@ -1121,8 +1118,10 @@ Inkscape::SnapCandidatePoint Node::snapCandidatePoint()
     return SnapCandidatePoint(position(), _snapSourceType(), _snapTargetType());
 }
 
-/** @brief Gets the handle that faces the given adjacent node.
- * Will abort with error if the given node is not adjacent. */
+/**
+ * Gets the handle that faces the given adjacent node.
+ * Will abort with error if the given node is not adjacent.
+ */
 Handle *Node::handleToward(Node *to)
 {
     if (_next() == to) {
@@ -1134,8 +1133,10 @@ Handle *Node::handleToward(Node *to)
     g_error("Node::handleToward(): second node is not adjacent!");
 }
 
-/** @brief Gets the node in the direction of the given handle.
- * Will abort with error if the handle doesn't belong to this node. */
+/**
+ * Gets the node in the direction of the given handle.
+ * Will abort with error if the handle doesn't belong to this node.
+ */
 Node *Node::nodeToward(Handle *dir)
 {
     if (front() == dir) {
@@ -1147,8 +1148,10 @@ Node *Node::nodeToward(Handle *dir)
     g_error("Node::nodeToward(): handle is not a child of this node!");
 }
 
-/** @brief Gets the handle that goes in the direction opposite to the given adjacent node.
- * Will abort with error if the given node is not adjacent. */
+/**
+ * Gets the handle that goes in the direction opposite to the given adjacent node.
+ * Will abort with error if the given node is not adjacent.
+ */
 Handle *Node::handleAwayFrom(Node *to)
 {
     if (_next() == to) {
@@ -1160,8 +1163,10 @@ Handle *Node::handleAwayFrom(Node *to)
     g_error("Node::handleAwayFrom(): second node is not adjacent!");
 }
 
-/** @brief Gets the node in the direction opposite to the given handle.
- * Will abort with error if the handle doesn't belong to this node. */
+/**
+ * Gets the node in the direction opposite to the given handle.
+ * Will abort with error if the handle doesn't belong to this node.
+ */
 Node *Node::nodeAwayFrom(Handle *h)
 {
     if (front() == h) {
@@ -1262,14 +1267,12 @@ SPCtrlShapeType Node::_node_type_to_shape(NodeType type)
 
 
 /**
- * @class NodeList
- * @brief An editable list of nodes representing a subpath.
+ * An editable list of nodes representing a subpath.
  *
  * It can optionally be cyclic to represent a closed path.
  * The list has iterators that act like plain node iterators, but can also be used
  * to obtain shared pointers to nodes.
  */
-
 NodeList::NodeList(SubpathList &splist)
     : _list(splist)
     , _closed(false)
@@ -1430,7 +1433,7 @@ NodeList &NodeList::get(iterator const &i) {
 
 /**
  * @class SubpathList
- * @brief Editable path composed of one or more subpaths
+ * Editable path composed of one or more subpaths.
  */
 
 } // namespace UI

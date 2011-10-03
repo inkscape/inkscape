@@ -1,5 +1,5 @@
 /**
- * \brief Unit Menu Widget - A drop down menu for choosing unit types.
+ * Unit Menu Widget - A drop down menu for choosing unit types.
  *
  * Author:
  *   Bryce Harrington <bryce@bryceharrington.org>

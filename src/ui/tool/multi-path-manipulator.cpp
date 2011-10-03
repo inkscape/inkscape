@@ -1,5 +1,6 @@
-/** @file
- * Multi path manipulator - implementation
+/**
+ * @file
+ * Multi path manipulator - implementation.
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -149,9 +150,11 @@ void MultiPathManipulator::cleanup()
     }
 }
 
-/** @brief Change the set of items to edit.
+/**
+ * Change the set of items to edit.
  *
- * This method attempts to preserve as much of the state as possible. */
+ * This method attempts to preserve as much of the state as possible.
+ */
 void MultiPathManipulator::setItems(std::set<ShapeRecord> const &s)
 {
     std::set<ShapeRecord> shapes(s);
@@ -507,20 +510,24 @@ void MultiPathManipulator::showPathDirection(bool show)
     _show_path_direction = show;
 }
 
-/** @brief Set live outline update status
+/**
+ * Set live outline update status.
  * When set to true, outline will be updated continuously when dragging
  * or transforming nodes. Otherwise it will only update when changes are committed
- * to XML. */
+ * to XML.
+ */
 void MultiPathManipulator::setLiveOutline(bool set)
 {
     invokeForAll(&PathManipulator::setLiveOutline, set);
     _live_outline = set;
 }
 
-/** @brief Set live object update status
+/**
+ * Set live object update status.
  * When set to true, objects will be updated continuously when dragging
  * or transforming nodes. Otherwise they will only update when changes are committed
- * to XML. */
+ * to XML.
+ */
 void MultiPathManipulator::setLiveObjects(bool set)
 {
     invokeForAll(&PathManipulator::setLiveObjects, set);

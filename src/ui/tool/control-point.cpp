@@ -1,5 +1,6 @@
-/** @file
- * Desktop-bound visual control object - implementation
+/**
+ * @file
+ * Desktop-bound visual control object - implementation.
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -29,7 +30,7 @@ namespace UI {
 
 /**
  * @class ControlPoint
- * @brief Draggable point, the workhorse of on-canvas editing.
+ * Draggable point, the workhorse of on-canvas editing.
  *
  * Control points (formerly known as knots) are graphical representations of some significant
  * point in the drawing. The drawing can be changed by dragging the point and the things that are
@@ -537,7 +538,7 @@ void ControlPoint::transferGrab(ControlPoint *prev_point, GdkEventMotion *event)
 }
 
 /**
- * @brief Change the state of the knot
+ * Change the state of the knot.
  * Alters the appearance of the knot to match one of the states: normal, mouseover
  * or clicked.
  */

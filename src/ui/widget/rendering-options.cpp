@@ -1,5 +1,5 @@
 /**
- * \brief Rendering options widget
+ * Rendering options widget.
  *
  * Author:
  *   Kees Cook <kees@outflux.net>

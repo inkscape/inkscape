@@ -1,5 +1,6 @@
-/** @file
- * @brief Object for managing a set of dialogs, including their signals and
+/**
+ * @file
+ * Object for managing a set of dialogs, including their signals and
  *        construction/caching/destruction of them.
  */
 /* Authors:

@@ -1,5 +1,6 @@
-/** @file
- * @brief Document metadata dialog, Gtkmm-style
+/**
+ * @file
+ * Document metadata dialog, Gtkmm-style.
  */
 /* Authors:
  *   bulia byak <buliabyak@users.sf.net>
@@ -108,9 +109,8 @@ DocumentMetadata::~DocumentMetadata()
  * possible cases: (0,0) means insert space in first column; (0, non-0) means
  * widget in columns 2-3; (non-0, 0) means label in columns 1-3; and
  * (non-0, non-0) means two widgets in columns 2 and 3.
-**/
-inline void
-attach_all (Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int start = 0)
+ */
+inline void attach_all(Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int start = 0)
 {
     for (unsigned i=0, r=start; i<size/sizeof(Gtk::Widget*); i+=2)
     {
@@ -190,8 +190,7 @@ DocumentMetadata::build_metadata()
 /**
  * Update dialog widgets from desktop.
  */
-void
-DocumentMetadata::update()
+void DocumentMetadata::update()
 {
     if (_wr.isUpdating()) return;
 
@@ -236,8 +235,7 @@ DocumentMetadata::_handleDeactivateDesktop(Inkscape::Application *, SPDesktop *d
 /**
  * Called when XML node attribute changed; updates dialog widgets.
  */
-static void
-on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar const *, bool, gpointer data)
+static void on_repr_attr_changed(Inkscape::XML::Node *, gchar const *, gchar const *, gchar const *, bool, gpointer data)
 {
     if (DocumentMetadata *dialog = static_cast<DocumentMetadata *>(data))
 	dialog->update();

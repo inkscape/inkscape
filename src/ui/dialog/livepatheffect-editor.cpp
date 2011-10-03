@@ -1,5 +1,6 @@
-/** @file
- * @brief Live Path Effect editing dialog - implementation
+/**
+ * @file
+ * Live Path Effect editing dialog - implementation.
  */
 /* Authors:
  *   Johan Engelen <j.b.c.engelen@utwente.nl>

@@ -1,5 +1,6 @@
-/** @file
- * @brief  Find dialog
+/**
+ * @file
+ * Find dialog.
  */
 /* Authors:
  *   bulia byak <bulia@users.sf.net>

@@ -1,4 +1,5 @@
-/** \file
+/**
+ * @file
  * SPPaintSelector: Generic paint selector widget.
  */
 
@@ -831,13 +832,10 @@ sp_pattern_menu_build (GtkWidget *m, GSList *pattern_list, SPDocument */*source*
         }
 
 /**
- * sp_pattern_list_from_doc()
- *
- * \brief Pick up all patterns from source, except those that are in
- * current_doc (if non-NULL), and add items to the pattern menu
- *
+ * Pick up all patterns from source, except those that are in
+ * current_doc (if non-NULL), and add items to the pattern menu.
  */
-static void sp_pattern_list_from_doc (GtkWidget *m, SPDocument * /*current_doc*/, SPDocument *source, SPDocument * /*pattern_doc*/)
+static void sp_pattern_list_from_doc(GtkWidget *m, SPDocument * /*current_doc*/, SPDocument *source, SPDocument * /*pattern_doc*/)
 {
     GSList *pl = ink_pattern_list_get(source);
     GSList *clean_pl = NULL;

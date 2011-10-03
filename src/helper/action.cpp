@@ -1,5 +1,6 @@
-/** \file
- * SPAction implementation
+/**
+ * @file
+ * SPAction implementation.
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -151,13 +152,11 @@ public:
 }
 
 /**
-	\return   None
-	\brief    Executes an action
-	\param    action   The action to be executed
-	\param    data     ignored
-*/
-void
-sp_action_perform (SPAction *action, void * /*data*/)
+ * Executes an action.
+ * @param action   The action to be executed.
+ * @param data     ignored.
+ */
+void sp_action_perform(SPAction *action, void * /*data*/)
 {
 	g_return_if_fail (action != NULL);
 	g_return_if_fail (SP_IS_ACTION (action));

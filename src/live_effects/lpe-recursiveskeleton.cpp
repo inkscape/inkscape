@@ -1,7 +1,5 @@
-#define INKSCAPE_LPE_RECURSIVESKELETON_CPP
-/** \file
- * @brief
- *
+/**
+ * @file
  * Inspired by Hofstadter's 'Goedel Escher Bach', chapter V.
  */
 /* Authors:

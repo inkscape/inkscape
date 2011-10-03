@@ -1,5 +1,6 @@
-/** @file
- * @brief Align and Distribute dialog - implementation
+/**
+ * @file
+ * Align and Distribute dialog - implementation.
  */
 /* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>

@@ -1,7 +1,6 @@
-#define __SP_DASH_SELECTOR_NEW_C__
-
-/** @file
- * @brief Option menu for selecting dash patterns - implementation
+/**
+ * @file
+ * Option menu for selecting dash patterns - implementation.
  */
 /* Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>

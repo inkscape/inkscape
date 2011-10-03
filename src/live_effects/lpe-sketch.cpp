@@ -1,5 +1,6 @@
-/** @file
- * @brief LPE sketch effect implementation
+/**
+ * @file
+ * LPE sketch effect implementation.
  */
 /* Authors:
  *   Jean-Francois Barraud <jf.barraud@gmail.com>

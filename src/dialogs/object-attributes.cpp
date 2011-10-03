@@ -1,5 +1,6 @@
-/** @file
- * @brief  Generic properties editor
+/**
+ * @file
+ * Generic properties editor.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>

@@ -1,6 +1,7 @@
-/** \file
+/**
+ * @file
  *
- * \brief Helperclass for Gtk::Entry widgets
+ * Helperclass for Gtk::Entry widgets.
  *
  * Authors:
  *   Johan Engelen <goejendaagh@zonnet.nl>

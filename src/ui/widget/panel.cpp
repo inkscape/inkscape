@@ -1,5 +1,5 @@
 /**
- * \brief Panel widget
+ * Panel widget.
  *
  * Authors:
  *   Bryce Harrington <bryce@bryceharrington.org>

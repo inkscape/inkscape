@@ -1,5 +1,6 @@
-/** \file
- * \brief  Color picker button & window
+/**
+ * @file
+ * Color picker button & window.
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>

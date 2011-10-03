@@ -1,5 +1,3 @@
-#define __SPW_UTILITIES_C__
-
 /*
  * Inkscape Widget Utilities
  *
@@ -227,10 +225,9 @@ sp_set_font_size_smaller (GtkWidget *w)
 }
 
 /**
-\brief  Finds the descendant of w which has the data with the given key and returns the data, or NULL if there's none
-*/
-gpointer
-sp_search_by_data_recursive (GtkWidget *w, gpointer key)
+ * Finds the descendant of w which has the data with the given key and returns the data, or NULL if there's none.
+ */
+gpointer sp_search_by_data_recursive(GtkWidget *w, gpointer key)
 {
 	gpointer r = NULL;
 
@@ -251,10 +248,9 @@ sp_search_by_data_recursive (GtkWidget *w, gpointer key)
 }
 
 /**
-\brief  Returns the descendant of w which has the given key and value pair, or NULL if there's none
-*/
-GtkWidget *
-sp_search_by_value_recursive (GtkWidget *w, gchar *key, gchar *value)
+ * Returns the descendant of w which has the given key and value pair, or NULL if there's none.
+ */
+GtkWidget *sp_search_by_value_recursive(GtkWidget *w, gchar *key, gchar *value)
 {
 	gchar *r = NULL;
 	GtkWidget *child;

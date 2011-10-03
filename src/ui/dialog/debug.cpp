@@ -1,5 +1,6 @@
-/** @file
- * @brief A dialog that displays log messages
+/**
+ * @file
+ * A dialog that displays log messages.
  */
 /* Authors:
  *   Bob Jamison
@@ -27,7 +28,7 @@ namespace UI {
 namespace Dialog {
 
 /**
- * @brief A very simple dialog for displaying Inkscape messages - implementation
+ * A very simple dialog for displaying Inkscape messages - implementation.
  */
 class DebugDialogImpl : public DebugDialog, public Gtk::Dialog
 {

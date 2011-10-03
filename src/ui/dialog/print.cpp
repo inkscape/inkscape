@@ -1,5 +1,6 @@
-/** @file
- * @brief Print dialog
+/**
+ * @file
+ * Print dialog.
  */
 /* Authors:
  *   Kees Cook <kees@outflux.net>

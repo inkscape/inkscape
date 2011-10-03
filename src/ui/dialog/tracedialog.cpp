@@ -1,5 +1,6 @@
-/** @file
- * @brief Bitmap tracing settings dialog - implementation
+/**
+ * @file
+ * Bitmap tracing settings dialog - implementation.
  */
 /* Authors:
  *   Bob Jamison <rjamison@titan.com>

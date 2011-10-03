@@ -1,5 +1,6 @@
-/** @file
- * @brief Document properties dialog, Gtkmm-style
+/**
+ * @file
+ * Document properties dialog, Gtkmm-style.
  */
 /* Authors:
  *   bulia byak <buliabyak@users.sf.net>
@@ -165,9 +166,8 @@ DocumentProperties::~DocumentProperties()
  * possible cases: (0,0) means insert space in first column; (0, non-0) means
  * widget in columns 2-3; (non-0, 0) means label in columns 1-3; and
  * (non-0, non-0) means two widgets in columns 2 and 3.
-**/
-inline void
-attach_all(Gtk::Table &table, Gtk::Widget *const arr[], unsigned const n, int start = 0)
+ */
+inline void attach_all(Gtk::Table &table, Gtk::Widget *const arr[], unsigned const n, int start = 0)
 {
     for (unsigned i = 0, r = start; i < n; i += 2)
     {
@@ -904,8 +904,7 @@ void DocumentProperties::populate_script_lists(){
 /**
 * Called for _updating_ the dialog (e.g. when a new grid was manually added in XML)
 */
-void
-DocumentProperties::update_gridspage()
+void DocumentProperties::update_gridspage()
 {
     SPDesktop *dt = getDesktop();
     SPNamedView *nv = sp_desktop_namedview(dt);
@@ -946,8 +945,7 @@ DocumentProperties::update_gridspage()
 /**
  * Build grid page of dialog.
  */
-void
-DocumentProperties::build_gridspage()
+void DocumentProperties::build_gridspage()
 {
     /// \todo FIXME: gray out snapping when grid is off.
     /// Dissenting view: you want snapping without grid.
@@ -984,8 +982,7 @@ DocumentProperties::build_gridspage()
 /**
  * Update dialog widgets from desktop. Also call updateWidget routines of the grids.
  */
-void
-DocumentProperties::update()
+void DocumentProperties::update()
 {
     if (_wr.isUpdating()) return;
 
@@ -1118,8 +1115,7 @@ on_child_removed(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node */*child*/, 
 /**
  * Called when XML node attribute changed; updates dialog widgets.
  */
-static void
-on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar const *, bool, gpointer data)
+static void on_repr_attr_changed(Inkscape::XML::Node *, gchar const *, gchar const *, gchar const *, bool, gpointer data)
 {
     if (DocumentProperties *dialog = static_cast<DocumentProperties *>(data))
         dialog->update();

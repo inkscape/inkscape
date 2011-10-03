@@ -1,5 +1,6 @@
-/** @file
- * @brief Base class for dialogs in Inkscape - implementation
+/**
+ * @file
+ * Base class for dialogs in Inkscape - implementation.
  */
 /* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>

@@ -1,5 +1,6 @@
-/** @file
- * @brief Garbage collected XML node implementation
+/**
+ * @file
+ * Garbage collected XML node implementation.
  */
 /* Copyright 2003-2005 MenTaLguY <mental@rydia.net>
  * Copyright 2003 Nathan Hurst

@@ -1,5 +1,5 @@
 /**
- * \brief Find dialog
+ * Find dialog.
  *
  * Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>

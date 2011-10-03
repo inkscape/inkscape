@@ -1,5 +1,5 @@
 /**
- * \brief Text Widget - A labelled text box, with spin buttons and optional
+ * Text Widget - A labelled text box, with spin buttons and optional
  *        icon or suffix, for entering arbitrary number values.
  *
  * Authors:

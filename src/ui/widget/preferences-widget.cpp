@@ -1,5 +1,5 @@
 /**
- * \brief Inkscape Preferences dialog
+ * Inkscape Preferences dialog.
  *
  * Authors:
  *   Marco Scholten

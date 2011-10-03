@@ -1,6 +1,6 @@
-#define INKSCAPE_LPE_EXTRUDE_CPP
-/** \file
- * @brief LPE effect for extruding paths (making them "3D").
+/**
+ * @file
+ * LPE effect for extruding paths (making them "3D").
  *
  */
 /* Authors:

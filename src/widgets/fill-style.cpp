@@ -1,5 +1,6 @@
-/** @file
- * @brief  Fill style widget
+/**
+ * @file
+ * Fill style widget.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>

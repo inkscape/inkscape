@@ -1,5 +1,6 @@
-/** @file
- * @brief Open Clip Art Library integration dialogs - implementation
+/**
+ * @file
+ * Open Clip Art Library integration dialogs - implementation.
  */
 /* Authors:
  *   Bruno Dilly

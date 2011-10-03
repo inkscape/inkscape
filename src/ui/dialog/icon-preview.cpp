@@ -1,5 +1,6 @@
-/** @file
- * @brief A simple dialog for previewing icon representation.
+/**
+ * @file
+ * A simple dialog for previewing icon representation.
  */
 /* Authors:
  *   Jon A. Cruz

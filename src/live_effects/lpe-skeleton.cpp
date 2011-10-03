@@ -1,6 +1,6 @@
-#define INKSCAPE_LPE_SKELETON_CPP
-/** \file
- * @brief Minimal dummy LPE effect implementation, used as an example for a base
+/**
+ * @file
+ * Minimal dummy LPE effect implementation, used as an example for a base
  * starting class when implementing new LivePathEffects.
  *
  * In vi, three global search-and-replaces will let you rename everything

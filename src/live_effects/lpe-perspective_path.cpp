@@ -1,5 +1,6 @@
-/** @file
- * @brief LPE perspective path effect implementation.
+/**
+ * @file
+ * LPE perspective path effect implementation.
  */
 /* Authors:
  *   Maximilian Albert <maximilian.albert@gmail.com>
