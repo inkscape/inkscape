@@ -1,5 +1,5 @@
 /** @file
- * @brief Helper object for transforming selected items
+ * Helper object for transforming selected items.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>

@@ -1,7 +1,7 @@
 /**
  * \file verbs.cpp
  *
- * \brief Actions for inkscape
+ * Actions for inkscape.
  *
  * This file implements routines necessary to deal with verbs.  A verb
  * is a numeric identifier used to retrieve standard SPActions for particular
@@ -89,11 +89,10 @@ using Inkscape::DocumentUndo;
 //#endif
 
 /**
- * \brief Return the name without underscores and ellipsis, for use in dialog
+ * Return the name without underscores and ellipsis, for use in dialog
  * titles, etc. Allocated memory must be freed by caller.
  */
-gchar *
-sp_action_get_title(SPAction const *action)
+gchar *sp_action_get_title(SPAction const *action)
 {
     char const *src = action->name;
     gchar *ret = g_new(gchar, strlen(src) + 1);
@@ -114,15 +113,16 @@ sp_action_get_title(SPAction const *action)
 
 namespace Inkscape {
 
-/** \brief A class to encompass all of the verbs which deal with
-           file operations. */
+/**
+ * A class to encompass all of the verbs which deal with file operations.
+ */
 class FileVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     FileVerb(unsigned int const code,
              gchar const *id,
              gchar const *name,
@@ -130,17 +130,18 @@ public:
              gchar const *image) :
         Verb(code, id, name, tip, image)
     { }
-}; /* FileVerb class */
+}; // FileVerb class
 
-/** \brief A class to encompass all of the verbs which deal with
-           edit operations. */
+/**
+ * A class to encompass all of the verbs which deal with edit operations.
+ */
 class EditVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     EditVerb(unsigned int const code,
              gchar const *id,
              gchar const *name,
@@ -148,17 +149,18 @@ public:
              gchar const *image) :
         Verb(code, id, name, tip, image)
     { }
-}; /* EditVerb class */
+}; // EditVerb class
 
-/** \brief A class to encompass all of the verbs which deal with
-           selection operations. */
+/**
+ * A class to encompass all of the verbs which deal with selection operations.
+ */
 class SelectionVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     SelectionVerb(unsigned int const code,
                   gchar const *id,
                   gchar const *name,
@@ -166,17 +168,18 @@ public:
                   gchar const *image) :
         Verb(code, id, name, tip, image)
     { }
-}; /* SelectionVerb class */
+}; // SelectionVerb class
 
-/** \brief A class to encompass all of the verbs which deal with
-           layer operations. */
+/**
+ * A class to encompass all of the verbs which deal with layer operations.
+ */
 class LayerVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     LayerVerb(unsigned int const code,
               gchar const *id,
               gchar const *name,
@@ -184,17 +187,18 @@ public:
               gchar const *image) :
         Verb(code, id, name, tip, image)
     { }
-}; /* LayerVerb class */
+}; // LayerVerb class
 
-/** \brief A class to encompass all of the verbs which deal with
-           operations related to objects. */
+/**
+ * A class to encompass all of the verbs which deal with operations related to objects.
+ */
 class ObjectVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     ObjectVerb(unsigned int const code,
                gchar const *id,
                gchar const *name,
@@ -202,17 +206,18 @@ public:
                gchar const *image) :
         Verb(code, id, name, tip, image)
     { }
-}; /* ObjectVerb class */
+}; // ObjectVerb class
 
-/** \brief A class to encompass all of the verbs which deal with
-           operations relative to context. */
+/**
+ * A class to encompass all of the verbs which deal with operations relative to context.
+ */
 class ContextVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     ContextVerb(unsigned int const code,
                 gchar const *id,
                 gchar const *name,
@@ -220,17 +225,18 @@ public:
                 gchar const *image) :
         Verb(code, id, name, tip, image)
     { }
-}; /* ContextVerb class */
+}; // ContextVerb class
 
-/** \brief A class to encompass all of the verbs which deal with
-           zoom operations. */
+/**
+ * A class to encompass all of the verbs which deal with zoom operations.
+ */
 class ZoomVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     ZoomVerb(unsigned int const code,
              gchar const *id,
              gchar const *name,
@@ -238,18 +244,19 @@ public:
              gchar const *image) :
         Verb(code, id, name, tip, image)
     { }
-}; /* ZoomVerb class */
+}; // ZoomVerb class
 
 
-/** \brief A class to encompass all of the verbs which deal with
-           dialog operations. */
+/**
+ * A class to encompass all of the verbs which deal with dialog operations.
+ */
 class DialogVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     DialogVerb(unsigned int const code,
                gchar const *id,
                gchar const *name,
@@ -257,17 +264,18 @@ public:
                gchar const *image) :
         Verb(code, id, name, tip, image)
     { }
-}; /* DialogVerb class */
+}; // DialogVerb class
 
-/** \brief A class to encompass all of the verbs which deal with
-           help operations. */
+/**
+ * A class to encompass all of the verbs which deal with help operations.
+ */
 class HelpVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     HelpVerb(unsigned int const code,
              gchar const *id,
              gchar const *name,
@@ -275,17 +283,18 @@ public:
              gchar const *image) :
         Verb(code, id, name, tip, image)
     { }
-}; /* HelpVerb class */
+}; // HelpVerb class
 
-/** \brief A class to encompass all of the verbs which deal with
-           tutorial operations. */
+/**
+ * A class to encompass all of the verbs which deal with tutorial operations.
+ */
 class TutorialVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     TutorialVerb(unsigned int const code,
                  gchar const *id,
                  gchar const *name,
@@ -293,17 +302,18 @@ public:
                  gchar const *image) :
         Verb(code, id, name, tip, image)
     { }
-}; /* TutorialVerb class */
+}; // TutorialVerb class
 
-/** \brief A class to encompass all of the verbs which deal with
-           text operations. */
+/**
+ * A class to encompass all of the verbs which deal with text operations.
+ */
 class TextVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     TextVerb(unsigned int const code,
               gchar const *id,
               gchar const *name,
@@ -316,15 +326,16 @@ public:
 Verb::VerbTable Verb::_verbs;
 Verb::VerbIDTable Verb::_verb_ids;
 
-/** \brief  Create a verb without a code.
-
-    This function calls the other constructor for all of the parameters,
-    but generates the code.  It is important to READ THE OTHER DOCUMENTATION
-    it has important details in it.  To generate the code a static is
-    used which starts at the last static value: \c SP_VERB_LAST.  For
-    each call it is incremented.  The list of allocated verbs is kept
-    in the \c _verbs hashtable which is indexed by the \c code.
-*/
+/**
+ * Create a verb without a code.
+ *
+ * This function calls the other constructor for all of the parameters,
+ * but generates the code.  It is important to READ THE OTHER DOCUMENTATION
+ * it has important details in it.  To generate the code a static is
+ * used which starts at the last static value: \c SP_VERB_LAST.  For
+ * each call it is incremented.  The list of allocated verbs is kept
+ * in the \c _verbs hashtable which is indexed by the \c code.
+ */
 Verb::Verb(gchar const *id, gchar const *name, gchar const *tip, gchar const *image) :
     _actions(0),
     _id(id),
@@ -344,11 +355,12 @@ Verb::Verb(gchar const *id, gchar const *name, gchar const *tip, gchar const *im
     _verb_ids.insert(VerbIDTable::value_type(_id, this));
 }
 
-/** \brief  Destroy a verb.
-
-      The only allocated variable is the _actions variable.  If it has
-    been allocated it is deleted.
-*/
+/**
+ * Destroy a verb.
+ *
+ * The only allocated variable is the _actions variable.  If it has
+ * been allocated it is deleted.
+ */
 Verb::~Verb(void)
 {
     /// \todo all the actions need to be cleaned up first.
@@ -360,168 +372,180 @@ Verb::~Verb(void)
     }
 }
 
-/** \brief  Verbs are no good without actions.  This is a place holder
-            for a function that every subclass should write.  Most
-            can be written using \c make_action_helper.
-    \param  view  Which view the action should be created for.
-    \return NULL to represent error (this function shouldn't ever be called)
-*/
-SPAction *
-Verb::make_action(Inkscape::UI::View::View */*view*/)
+/**
+ * Verbs are no good without actions.  This is a place holder
+ * for a function that every subclass should write.  Most
+ * can be written using \c make_action_helper.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return NULL to represent error (this function shouldn't ever be called)
+ */
+SPAction *Verb::make_action(Inkscape::UI::View::View */*view*/)
 {
     //std::cout << "make_action" << std::endl;
     return NULL;
 }
 
-/** \brief  Create an action for a \c FileVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-FileVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c FileVerb.
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *FileVerb::make_action(Inkscape::UI::View::View *view)
 {
     //std::cout << "fileverb: make_action: " << &perform << std::endl;
     return make_action_helper(view, &perform);
 }
 
-/** \brief  Create an action for a \c EditVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-EditVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c EditVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *EditVerb::make_action(Inkscape::UI::View::View *view)
 {
     //std::cout << "editverb: make_action: " << &perform << std::endl;
     return make_action_helper(view, &perform);
 }
 
-/** \brief  Create an action for a \c SelectionVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-SelectionVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c SelectionVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *SelectionVerb::make_action(Inkscape::UI::View::View *view)
 {
     return make_action_helper(view, &perform);
 }
 
-/** \brief  Create an action for a \c LayerVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-LayerVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c LayerVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *LayerVerb::make_action(Inkscape::UI::View::View *view)
 {
     return make_action_helper(view, &perform);
 }
 
-/** \brief  Create an action for a \c ObjectVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-ObjectVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c ObjectVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *ObjectVerb::make_action(Inkscape::UI::View::View *view)
 {
     return make_action_helper(view, &perform);
 }
 
-/** \brief  Create an action for a \c ContextVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-ContextVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c ContextVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *ContextVerb::make_action(Inkscape::UI::View::View *view)
 {
     return make_action_helper(view, &perform);
 }
 
-/** \brief  Create an action for a \c ZoomVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-ZoomVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c ZoomVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *ZoomVerb::make_action(Inkscape::UI::View::View *view)
 {
     return make_action_helper(view, &perform);
 }
 
-/** \brief  Create an action for a \c DialogVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-DialogVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c DialogVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *DialogVerb::make_action(Inkscape::UI::View::View *view)
 {
     return make_action_helper(view, &perform);
 }
 
-/** \brief  Create an action for a \c HelpVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-HelpVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c HelpVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *HelpVerb::make_action(Inkscape::UI::View::View *view)
 {
     return make_action_helper(view, &perform);
 }
 
-/** \brief  Create an action for a \c TutorialVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-TutorialVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c TutorialVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *TutorialVerb::make_action(Inkscape::UI::View::View *view)
 {
     return make_action_helper(view, &perform);
 }
 
-/** \brief  Create an action for a \c TextVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-TextVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c TextVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *TextVerb::make_action(Inkscape::UI::View::View *view)
 {
     return make_action_helper(view, &perform);
 }
 
-/** \brief A quick little convience function to make building actions
-           a little bit easier.
-    \param  view    Which view the action should be created for.
-    \param  vector  The function vector for the verb.
-    \return The created action.
-
-    This function does a couple of things.  The most obvious is that
-    it allocates and creates the action.  When it does this it
-    translates the \c _name and \c _tip variables.  This allows them
-    to be staticly allocated easily, and get translated in the end.  Then,
-    if the action gets crated, a listener is added to the action with
-    the vector that is passed in.
-*/
-SPAction *
-Verb::make_action_helper(Inkscape::UI::View::View *view, void (*perform_fun)(SPAction *, void *), void *in_pntr)
+/**
+ * A quick little convience function to make building actions
+ * a little bit easier.
+ *
+ * This function does a couple of things.  The most obvious is that
+ * it allocates and creates the action.  When it does this it
+ * translates the \c _name and \c _tip variables.  This allows them
+ * to be staticly allocated easily, and get translated in the end.  Then,
+ * if the action gets crated, a listener is added to the action with
+ * the vector that is passed in.
+ *
+ * @param  view    Which view the action should be created for.
+ * @param  vector  The function vector for the verb.
+ * @return The created action.
+ */
+SPAction *Verb::make_action_helper(Inkscape::UI::View::View *view, void (*perform_fun)(SPAction *, void *), void *in_pntr)
 {
     SPAction *action;
 
@@ -541,27 +565,27 @@ Verb::make_action_helper(Inkscape::UI::View::View *view, void (*perform_fun)(SPA
     return action;
 }
 
-/** \brief  A function to get an action if it exists, or otherwise to
-            build it.
-    \param  view  The view which this action would relate to
-    \return The action, or NULL if there is an error.
-
-    This function will get the action for a given view for this verb.  It
-    will create the verb if it can't be found in the ActionTable.  Also,
-    if the \c ActionTable has not been created, it gets created by this
-    function.
-
-    If the action is created, it's sensitivity must be determined.  The
-    default for a new action is that it is sensitive.  If the value in
-    \c _default_sensitive is \c false, then the sensitivity must be
-    removed.  Also, if the view being created is based on the same
-    document as a view already created, the sensitivity should be the
-    same as views on that document.  A view with the same document is
-    looked for, and the sensitivity is matched.  Unfortunately, this is
-    currently a linear search.
-*/
-SPAction *
-Verb::get_action(Inkscape::UI::View::View *view)
+/**
+ * A function to get an action if it exists, or otherwise to build it.
+ *
+ * This function will get the action for a given view for this verb.  It
+ * will create the verb if it can't be found in the ActionTable.  Also,
+ * if the \c ActionTable has not been created, it gets created by this
+ * function.
+ *
+ * If the action is created, it's sensitivity must be determined.  The
+ * default for a new action is that it is sensitive.  If the value in
+ * \c _default_sensitive is \c false, then the sensitivity must be
+ * removed.  Also, if the view being created is based on the same
+ * document as a view already created, the sensitivity should be the
+ * same as views on that document.  A view with the same document is
+ * looked for, and the sensitivity is matched.  Unfortunately, this is
+ * currently a linear search.
+ *
+ * @param  view  The view which this action would relate to.
+ * @return The action, or NULL if there is an error.
+ */
+SPAction *Verb::get_action(Inkscape::UI::View::View *view)
 {
     SPAction *action = NULL;
 
@@ -617,7 +641,9 @@ Verb::sensitive(SPDocument *in_doc, bool in_sensitive)
     return;
 }
 
-/** \brief Accessor to get the tooltip for verb as localised string */
+/**
+ * Accessor to get the tooltip for verb as localised string.
+ */
 gchar const *Verb::get_tip(void)
 {
     gchar const *result = 0;
@@ -658,16 +684,17 @@ Verb::name(SPDocument *in_doc, Glib::ustring in_name)
     }
 }
 
-/** \brief  A function to remove the action associated with a view.
-    \param  view  Which view's actions should be removed.
-    \return None
-
-    This function looks for the action in \c _actions.  If it is
-    found then it is unreferenced and the entry in the action
-    table is erased.
-*/
-void
-Verb::delete_view(Inkscape::UI::View::View *view)
+/**
+ * A function to remove the action associated with a view.
+ *
+ * This function looks for the action in \c _actions.  If it is
+ * found then it is unreferenced and the entry in the action
+ * table is erased.
+ *
+ * @param  view  Which view's actions should be removed.
+ * @return None
+ */
+void Verb::delete_view(Inkscape::UI::View::View *view)
 {
     if (_actions == NULL) return;
     if (_actions->empty()) return;
@@ -688,17 +715,18 @@ Verb::delete_view(Inkscape::UI::View::View *view)
     return;
 }
 
-/** \brief  A function to delete a view from all verbs
-    \param  view  Which view's actions should be removed.
-    \return None
-
-    This function first looks through _base_verbs and deteles
-    the view from all of those views.  If \c _verbs is not empty
-    then all of the entries in that table have all of the views
-    deleted also.
-*/
-void
-Verb::delete_all_view(Inkscape::UI::View::View *view)
+/**
+ * A function to delete a view from all verbs.
+ *
+ * This function first looks through _base_verbs and deteles
+ * the view from all of those views.  If \c _verbs is not empty
+ * then all of the entries in that table have all of the views
+ * deleted also.
+ *
+ * @param  view  Which view's actions should be removed.
+ * @return None
+ */
+void Verb::delete_all_view(Inkscape::UI::View::View *view)
 {
     for (int i = 0; i <= SP_VERB_LAST; i++) {
         if (_base_verbs[i])
@@ -717,16 +745,16 @@ Verb::delete_all_view(Inkscape::UI::View::View *view)
     return;
 }
 
-/** \brief  A function to turn a \c code into a Verb for dynamically
-            created Verbs.
-    \param  code  What code is being looked for
-    \return The found Verb of NULL if none is found.
-
-    This function basically just looks through the \c _verbs hash
-    table.  STL does all the work.
-*/
-Verb *
-Verb::get_search(unsigned int code)
+/**
+ * A function to turn a \c code into a Verb for dynamically created Verbs.
+ *
+ * This function basically just looks through the \c _verbs hash
+ * table.  STL does all the work.
+ *
+ * @param  code  What code is being looked for.
+ * @return The found Verb of NULL if none is found.
+ */
+Verb *Verb::get_search(unsigned int code)
 {
     Verb *verb = NULL;
     VerbTable::iterator verb_found = _verbs.find(code);
@@ -738,15 +766,16 @@ Verb::get_search(unsigned int code)
     return verb;
 }
 
-/** \brief  Find a Verb using it's ID
-    \param  id  Which id to search for
-
-    This function uses the \c _verb_ids has table to find the
-    verb by it's id.  Should be much faster than previous
-    implementations.
-*/
-Verb *
-Verb::getbyid(gchar const *id)
+/**
+ * Find a Verb using it's ID.
+ *
+ * This function uses the \c _verb_ids has table to find the
+ * verb by it's id.  Should be much faster than previous
+ * implementations.
+ *
+ * @param  id  Which id to search for.
+ */
+Verb *Verb::getbyid(gchar const *id)
 {
     Verb *verb = NULL;
     VerbIDTable::iterator verb_found = _verb_ids.find(id);
@@ -761,13 +790,14 @@ Verb::getbyid(gchar const *id)
     return verb;
 }
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-FileVerb::perform(SPAction *action, void *data)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void FileVerb::perform(SPAction *action, void *data)
 {
 #if 0
-    /* These aren't used, but are here to remind people not to use
-       the CURRENT_DOCUMENT macros unless they really have to. */
+    // These aren't used, but are here to remind people not to use
+    // the CURRENT_DOCUMENT macros unless they really have to.
     Inkscape::UI::View::View *current_view = sp_action_get_view(action);
     SPDocument *current_document = current_view->doc();
 #endif
@@ -833,9 +863,10 @@ FileVerb::perform(SPAction *action, void *data)
 
 } // end of sp_verb_action_file_perform()
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-EditVerb::perform(SPAction *action, void *data)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void EditVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
@@ -964,9 +995,10 @@ EditVerb::perform(SPAction *action, void *data)
 
 } // end of sp_verb_action_edit_perform()
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-SelectionVerb::perform(SPAction *action, void *data)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void SelectionVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
 
@@ -1084,9 +1116,10 @@ SelectionVerb::perform(SPAction *action, void *data)
 
 } // end of sp_verb_action_selection_perform()
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-LayerVerb::perform(SPAction *action, void *data)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void LayerVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     size_t verb = reinterpret_cast<std::size_t>(data);
@@ -1253,11 +1286,11 @@ LayerVerb::perform(SPAction *action, void *data)
                     survivor = Inkscape::previous_layer(dt->currentRoot(), old_layer);
                 }
 
-                /* Deleting the old layer before switching layers is a hack to trigger the
-                 * listeners of the deletion event (as happens when old_layer is deleted using the
-                 * xml editor).  See
-                 * http://sourceforge.net/tracker/index.php?func=detail&aid=1339397&group_id=93438&atid=604306
-                 */
+                // Deleting the old layer before switching layers is a hack to trigger the
+                // listeners of the deletion event (as happens when old_layer is deleted using the
+                // xml editor).  See
+                // http://sourceforge.net/tracker/index.php?func=detail&aid=1339397&group_id=93438&atid=604306
+                //
                 old_layer->deleteObject();
                 sp_object_unref(old_layer, NULL);
                 if (survivor) {
@@ -1288,9 +1321,10 @@ LayerVerb::perform(SPAction *action, void *data)
     return;
 } // end of sp_verb_action_layer_perform()
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-ObjectVerb::perform( SPAction *action, void *data)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void ObjectVerb::perform( SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
@@ -1371,9 +1405,10 @@ ObjectVerb::perform( SPAction *action, void *data)
 
 } // end of sp_verb_action_object_perform()
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-ContextVerb::perform(SPAction *action, void *data)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void ContextVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt;
     sp_verb_t verb;
@@ -1555,9 +1590,10 @@ ContextVerb::perform(SPAction *action, void *data)
 
 } // end of sp_verb_action_ctx_perform()
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-TextVerb::perform(SPAction *action, void */*data*/)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void TextVerb::perform(SPAction *action, void */*data*/)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
@@ -1569,9 +1605,10 @@ TextVerb::perform(SPAction *action, void */*data*/)
     (void)repr;
 }
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-ZoomVerb::perform(SPAction *action, void *data)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void ZoomVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
@@ -1681,7 +1718,7 @@ ZoomVerb::perform(SPAction *action, void *data)
         case SP_VERB_FULLSCREEN:
             dt->fullscreen();
             break;
-#endif /* HAVE_GTK_WINDOW_FULLSCREEN */
+#endif // HAVE_GTK_WINDOW_FULLSCREEN
         case SP_VERB_FOCUSTOGGLE:
             dt->focusMode(!dt->is_focusMode());
             break;
@@ -1730,9 +1767,10 @@ ZoomVerb::perform(SPAction *action, void *data)
 
 } // end of sp_verb_action_zoom_perform()
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-DialogVerb::perform(SPAction *action, void *data)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void DialogVerb::perform(SPAction *action, void *data)
 {
     if (reinterpret_cast<std::size_t>(data) != SP_VERB_DIALOG_TOGGLE) {
         // unhide all when opening a new dialog
@@ -1842,9 +1880,10 @@ DialogVerb::perform(SPAction *action, void *data)
     }
 } // end of sp_verb_action_dialog_perform()
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-HelpVerb::perform(SPAction *action, void *data)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void HelpVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     g_assert(dt->_dlg_mgr != NULL);
@@ -1876,15 +1915,16 @@ HelpVerb::perform(SPAction *action, void *data)
     }
 } // end of sp_verb_action_help_perform()
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-TutorialVerb::perform(SPAction */*action*/, void *data)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void TutorialVerb::perform(SPAction */*action*/, void *data)
 {
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_TUTORIAL_BASIC:
-            /* TRANSLATORS: If you have translated the tutorial-basic.en.svgz file to your language,
-               then translate this string as "tutorial-basic.LANG.svgz" (where LANG is your language
-               code); otherwise leave as "tutorial-basic.svg". */
+            // TRANSLATORS: If you have translated the tutorial-basic.en.svgz file to your language,
+            // then translate this string as "tutorial-basic.LANG.svgz" (where LANG is your language
+            // code); otherwise leave as "tutorial-basic.svg".
             sp_help_open_tutorial(NULL, (gpointer)_("tutorial-basic.svg"));
             break;
         case SP_VERB_TUTORIAL_SHAPES:
@@ -1920,16 +1960,18 @@ TutorialVerb::perform(SPAction */*action*/, void *data)
     }
 } // end of sp_verb_action_tutorial_perform()
 
-/* *********** Effect Last ********** */
+// *********** Effect Last **********
 
-/** \brief A class to represent the last effect issued */
+/**
+ * A class to represent the last effect issued.
+ */
 class EffectLastVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     EffectLastVerb(unsigned int const code,
                    gchar const *id,
                    gchar const *name,
@@ -1939,26 +1981,28 @@ public:
     {
         set_default_sensitive(false);
     }
-}; /* EffectLastVerb class */
+}; // EffectLastVerb class
 
-/** \brief  Create an action for a \c EffectLastVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-EffectLastVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c EffectLastVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *EffectLastVerb::make_action(Inkscape::UI::View::View *view)
 {
     return make_action_helper(view, &perform);
 }
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-EffectLastVerb::perform(SPAction *action, void *data)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void EffectLastVerb::perform(SPAction *action, void *data)
 {
-    /* These aren't used, but are here to remind people not to use
-       the CURRENT_DOCUMENT macros unless they really have to. */
+    // These aren't used, but are here to remind people not to use
+    // the CURRENT_DOCUMENT macros unless they really have to. 
     Inkscape::UI::View::View *current_view = sp_action_get_view(action);
     // SPDocument *current_document = SP_VIEW_DOCUMENT(current_view);
     Inkscape::Extension::Effect *effect = Inkscape::Extension::Effect::get_last_effect();
@@ -1979,18 +2023,20 @@ EffectLastVerb::perform(SPAction *action, void *data)
 
     return;
 }
-/* *********** End Effect Last ********** */
+// *********** End Effect Last **********
 
-/* *********** Fit Canvas ********** */
+// *********** Fit Canvas **********
 
-/** \brief A class to represent the canvas fitting verbs */
+/**
+ * A class to represent the canvas fitting verbs.
+ */
 class FitCanvasVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     FitCanvasVerb(unsigned int const code,
                    gchar const *id,
                    gchar const *name,
@@ -2000,24 +2046,26 @@ public:
     {
         set_default_sensitive(false);
     }
-}; /* FitCanvasVerb class */
+}; // FitCanvasVerb class
 
-/** \brief  Create an action for a \c FitCanvasVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-FitCanvasVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c FitCanvasVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *FitCanvasVerb::make_action(Inkscape::UI::View::View *view)
 {
     SPAction *action = make_action_helper(view, &perform);
     return action;
 }
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-FitCanvasVerb::perform(SPAction *action, void *data)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void FitCanvasVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt) return;
@@ -2040,19 +2088,21 @@ FitCanvasVerb::perform(SPAction *action, void *data)
 
     return;
 }
-/* *********** End Fit Canvas ********** */
+// *********** End Fit Canvas **********
 
 
-/* *********** Lock'N'Hide ********** */
+// *********** Lock'N'Hide **********
 
-/** \brief A class to represent the object unlocking and unhiding verbs */
+/**
+ * A class to represent the object unlocking and unhiding verbs.
+ */
 class LockAndHideVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
     virtual SPAction *make_action(Inkscape::UI::View::View *view);
 public:
-    /** \brief Use the Verb initializer with the same parameters. */
+    /** Use the Verb initializer with the same parameters. */
     LockAndHideVerb(unsigned int const code,
                    gchar const *id,
                    gchar const *name,
@@ -2062,24 +2112,26 @@ public:
     {
         set_default_sensitive(true);
     }
-}; /* LockAndHideVerb class */
+}; // LockAndHideVerb class
 
-/** \brief  Create an action for a \c LockAndHideVerb
-    \param  view  Which view the action should be created for
-    \return The built action.
-
-    Calls \c make_action_helper with the \c vector.
-*/
-SPAction *
-LockAndHideVerb::make_action(Inkscape::UI::View::View *view)
+/**
+ * Create an action for a \c LockAndHideVerb.
+ *
+ * Calls \c make_action_helper with the \c vector.
+ *
+ * @param  view  Which view the action should be created for.
+ * @return The built action.
+ */
+SPAction *LockAndHideVerb::make_action(Inkscape::UI::View::View *view)
 {
     SPAction *action = make_action_helper(view, &perform);
     return action;
 }
 
-/** \brief  Decode the verb code and take appropriate action */
-void
-LockAndHideVerb::perform(SPAction *action, void *data)
+/**
+ * Decode the verb code and take appropriate action.
+ */
+void LockAndHideVerb::perform(SPAction *action, void *data)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt) return;
@@ -2109,16 +2161,16 @@ LockAndHideVerb::perform(SPAction *action, void *data)
 
     return;
 }
-/* *********** End Lock'N'Hide ********** */
+// *********** End Lock'N'Hide **********
 
 
-/* these must be in the same order as the SP_VERB_* enum in "verbs.h" */
+// these must be in the same order as the SP_VERB_* enum in "verbs.h"
 Verb *Verb::_base_verbs[] = {
-    /* Header */
+    // Header
     new Verb(SP_VERB_INVALID, NULL, NULL, NULL, NULL),
     new Verb(SP_VERB_NONE, "None", N_("None"), N_("Does nothing"), NULL),
 
-    /* File */
+    // File
     new FileVerb(SP_VERB_FILE_NEW, "FileNew", N_("Default"), N_("Create new document from the default template"),
                  GTK_STOCK_NEW ),
     new FileVerb(SP_VERB_FILE_OPEN, "FileOpen", N_("_Open..."),
@@ -2150,7 +2202,7 @@ Verb *Verb::_base_verbs[] = {
                  N_("Close this document window"), GTK_STOCK_CLOSE),
     new FileVerb(SP_VERB_FILE_QUIT, "FileQuit", N_("_Quit"), N_("Quit Inkscape"), GTK_STOCK_QUIT),
 
-    /* Edit */
+    // Edit
     new EditVerb(SP_VERB_EDIT_UNDO, "EditUndo", N_("_Undo"), N_("Undo last action"),
                  GTK_STOCK_UNDO),
     new EditVerb(SP_VERB_EDIT_REDO, "EditRedo", N_("_Redo"),
@@ -2226,7 +2278,7 @@ Verb *Verb::_base_verbs[] = {
     new EditVerb(SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER, "EditNextPathEffectParameter", N_("Next path effect parameter"),
                  N_("Show next editable path effect parameter"), INKSCAPE_ICON("path-effect-parameter-next")),
 
-    /* Selection */
+    // Selection
     new SelectionVerb(SP_VERB_SELECTION_TO_FRONT, "SelectionToFront", N_("Raise to _Top"),
                       N_("Raise selection to top"), INKSCAPE_ICON("selection-top")),
     new SelectionVerb(SP_VERB_SELECTION_TO_BACK, "SelectionToBack", N_("Lower to _Bottom"),
@@ -2310,7 +2362,7 @@ Verb *Verb::_base_verbs[] = {
                       N_("Break selected paths into subpaths"), INKSCAPE_ICON("path-break-apart")),
     new SelectionVerb(SP_VERB_SELECTION_GRIDTILE, "DialogGridArrange", N_("Ro_ws and Columns..."),
                       N_("Arrange selected objects in a table"), INKSCAPE_ICON("dialog-rows-and-columns")),
-    /* Layer */
+    // Layer
     new LayerVerb(SP_VERB_LAYER_NEW, "LayerNew", N_("_Add Layer..."),
                   N_("Create a new layer"), INKSCAPE_ICON("layer-new")),
     new LayerVerb(SP_VERB_LAYER_RENAME, "LayerRename", N_("Re_name Layer..."),
@@ -2338,7 +2390,7 @@ Verb *Verb::_base_verbs[] = {
     new LayerVerb(SP_VERB_LAYER_SOLO, "LayerSolo", N_("_Show/hide other layers"),
                   N_("Solo the current layer"), NULL),
 
-    /* Object */
+    // Object
     new ObjectVerb(SP_VERB_OBJECT_ROTATE_90_CW, "ObjectRotate90", N_("Rotate _90&#176; CW"),
                    // This is shared between tooltips and statusbar, so they
                    // must use UTF-8, not HTML entities for special characters.
@@ -2376,7 +2428,7 @@ Verb *Verb::_base_verbs[] = {
     new ObjectVerb(SP_VERB_OBJECT_UNSET_CLIPPATH, "ObjectUnSetClipPath", N_("_Release"),
                  N_("Remove clipping path from selection"), NULL),
 
-    /* Tools */
+    // Tools
     new ContextVerb(SP_VERB_CONTEXT_SELECT, "ToolSelector", N_("Select"),
                     N_("Select and transform objects"), INKSCAPE_ICON("tool-pointer")),
     new ContextVerb(SP_VERB_CONTEXT_NODE, "ToolNode", N_("Node Edit"),
@@ -2421,7 +2473,7 @@ Verb *Verb::_base_verbs[] = {
                     N_("Erase existing paths"), INKSCAPE_ICON("draw-eraser")),
     new ContextVerb(SP_VERB_CONTEXT_LPETOOL, "ToolLPETool", N_("LPE Tool"),
                     N_("Do geometric constructions"), "draw-geometry"),
-    /* Tool prefs */
+    // Tool prefs
     new ContextVerb(SP_VERB_CONTEXT_SELECT_PREFS, "SelectPrefs", N_("Selector Preferences"),
                     N_("Open Preferences for the Selector tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_NODE_PREFS, "NodePrefs", N_("Node Tool Preferences"),
@@ -2465,7 +2517,7 @@ Verb *Verb::_base_verbs[] = {
     new ContextVerb(SP_VERB_CONTEXT_LPETOOL_PREFS, "LPEToolPrefs", N_("LPE Tool Preferences"),
                     N_("Open Preferences for the LPETool tool"), NULL),
 
-    /* Zoom/View */
+    // Zoom/View
     new ZoomVerb(SP_VERB_ZOOM_IN, "ZoomIn", N_("Zoom In"), N_("Zoom in"), INKSCAPE_ICON("zoom-in")),
     new ZoomVerb(SP_VERB_ZOOM_OUT, "ZoomOut", N_("Zoom Out"), N_("Zoom out"), INKSCAPE_ICON("zoom-out")),
     new ZoomVerb(SP_VERB_TOGGLE_RULERS, "ToggleRulers", N_("_Rulers"), N_("Show or hide the canvas rulers"), NULL),
@@ -2486,7 +2538,7 @@ Verb *Verb::_base_verbs[] = {
 #ifdef HAVE_GTK_WINDOW_FULLSCREEN
     new ZoomVerb(SP_VERB_FULLSCREEN, "FullScreen", N_("_Fullscreen"), N_("Stretch this document window to full screen"),
                  INKSCAPE_ICON("view-fullscreen")),
-#endif /* HAVE_GTK_WINDOW_FULLSCREEN */
+#endif // HAVE_GTK_WINDOW_FULLSCREEN
     new ZoomVerb(SP_VERB_FOCUSTOGGLE, "FocusToggle", N_("Toggle _Focus Mode"), N_("Remove excess toolbars to focus on drawing"),
                  NULL),
     new ZoomVerb(SP_VERB_VIEW_NEW, "ViewNew", N_("Duplic_ate Window"), N_("Open a new window with the same document"),
@@ -2525,7 +2577,7 @@ Verb *Verb::_base_verbs[] = {
     new ZoomVerb(SP_VERB_ZOOM_SELECTION, "ZoomSelection", N_("_Selection"),
                  N_("Zoom to fit selection in window"), INKSCAPE_ICON("zoom-fit-selection")),
 
-    /* Dialogs */
+    // Dialogs
     new DialogVerb(SP_VERB_DIALOG_DISPLAY, "DialogPreferences", N_("In_kscape Preferences..."),
                    N_("Edit global Inkscape preferences"), GTK_STOCK_PREFERENCES ),
     new DialogVerb(SP_VERB_DIALOG_NAMEDVIEW, "DialogDocumentProperties", N_("_Document Properties..."),
@@ -2586,7 +2638,7 @@ Verb *Verb::_base_verbs[] = {
     new DialogVerb(SP_VERB_DIALOG_PRINT_COLORS_PREVIEW, "DialogPrintColorsPreview", N_("Print Colors..."),
                    N_("Select which color separations to render in Print Colors Preview rendermode"), NULL),
 
-    /* Help */
+    // Help
     new HelpVerb(SP_VERB_HELP_ABOUT_EXTENSIONS, "HelpAboutExtensions", N_("About E_xtensions"),
                  N_("Information on Inkscape extensions"), NULL),
     new HelpVerb(SP_VERB_HELP_MEMORY, "HelpAboutMemory", N_("About _Memory"),
@@ -2596,7 +2648,7 @@ Verb *Verb::_base_verbs[] = {
     //new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
     //           N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
 
-    /* Tutorials */
+    // Tutorials
     new TutorialVerb(SP_VERB_TUTORIAL_BASIC, "TutorialsBasic", N_("Inkscape: _Basic"),
                      N_("Getting started with Inkscape"), NULL/*"tutorial_basic"*/),
     new TutorialVerb(SP_VERB_TUTORIAL_SHAPES, "TutorialsShapes", N_("Inkscape: _Shapes"),
@@ -2615,20 +2667,20 @@ Verb *Verb::_base_verbs[] = {
     new TutorialVerb(SP_VERB_TUTORIAL_TIPS, "TutorialsTips", N_("_Tips and Tricks"),
                      N_("Miscellaneous tips and tricks"), NULL/*"tutorial_tips"*/),
 
-    /* Effect -- renamed Extension */
+    // Effect -- renamed Extension
     new EffectLastVerb(SP_VERB_EFFECT_LAST, "EffectLast", N_("Previous Exte_nsion"),
                        N_("Repeat the last extension with the same settings"), NULL),
     new EffectLastVerb(SP_VERB_EFFECT_LAST_PREF, "EffectLastPref", N_("_Previous Extension Settings..."),
                        N_("Repeat the last extension with new settings"), NULL),
 
-    /* Fit Page */
+    // Fit Page
     new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION, "FitCanvasToSelection", N_("Fit Page to Selection"),
                        N_("Fit the page to the current selection"), NULL),
     new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_DRAWING, "FitCanvasToDrawing", N_("Fit Page to Drawing"),
                        N_("Fit the page to the drawing"), NULL),
     new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING, "FitCanvasToSelectionOrDrawing", N_("Fit Page to Selection or Drawing"),
                        N_("Fit the page to the current selection or the drawing if there is no selection"), NULL),
-    /* LockAndHide */
+    // LockAndHide
     new LockAndHideVerb(SP_VERB_UNLOCK_ALL, "UnlockAll", N_("Unlock All"),
                        N_("Unlock all objects in the current layer"), NULL),
     new LockAndHideVerb(SP_VERB_UNLOCK_ALL_IN_ALL_LAYERS, "UnlockAllInAllLayers", N_("Unlock All in All Layers"),
@@ -2637,12 +2689,12 @@ Verb *Verb::_base_verbs[] = {
                        N_("Unhide all objects in the current layer"), NULL),
     new LockAndHideVerb(SP_VERB_UNHIDE_ALL_IN_ALL_LAYERS, "UnhideAllInAllLayers", N_("Unhide All in All Layers"),
                        N_("Unhide all objects in all layers"), NULL),
-    /*Color Management*/
+    // Color Management
     new EditVerb(SP_VERB_EDIT_LINK_COLOR_PROFILE, "LinkColorProfile", N_("Link Color Profile"),
                  N_("Link an ICC color profile"), NULL),
     new EditVerb(SP_VERB_EDIT_REMOVE_COLOR_PROFILE, "RemoveColorProfile", N_("Remove Color Profile"),
                  N_("Remove a linked ICC color profile"), NULL),
-    /* Footer */
+    // Footer
     new Verb(SP_VERB_LAST, " '\"invalid id", NULL, NULL, NULL)
 };
 
@@ -2664,7 +2716,7 @@ Verb::list (void) {
     return;
 };
 
-}  /* namespace Inkscape */
+}  // namespace Inkscape
 
 /*
   Local Variables:

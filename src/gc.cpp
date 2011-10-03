@@ -1,5 +1,5 @@
 /** @file
- * @brief Wrapper for Boehm GC
+ * Wrapper for Boehm GC.
  */
 /* Authors:
  *   MenTaLguY <mental@rydia.net>

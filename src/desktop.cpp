@@ -736,11 +736,10 @@ SPItem *SPDesktop::getGroupAtPoint(Geom::Point const p) const
 }
 
 /**
- * \brief  Returns the mouse point in document coordinates; if mouse is
- * outside the canvas, returns the center of canvas viewpoint
+ * Returns the mouse point in document coordinates; if mouse is
+ * outside the canvas, returns the center of canvas viewpoint.
  */
-Geom::Point
-SPDesktop::point() const
+Geom::Point SPDesktop::point() const
 {
     Geom::Point p = _widget->getPointer();
     Geom::Point pw = sp_canvas_window_to_world (canvas, p);
@@ -882,8 +881,7 @@ SPDesktop::prev_zoom()
 /**
  * Set zoom to next in list.
  */
-void
-SPDesktop::next_zoom()
+void SPDesktop::next_zoom()
 {
     if (zooms_future.empty()) {
         this->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("No next zoom."));
@@ -901,12 +899,12 @@ SPDesktop::next_zoom()
     zooms_future.pop_front();
 }
 
-/** \brief  Performs a quick zoom into what the user is working on
-    \param  enable  Whether we're going in or out of quick zoom
-
-*/
-void
-SPDesktop::zoom_quick (bool enable)
+/**
+ * Performs a quick zoom into what the user is working on.
+ *
+ * @param  enable  Whether we're going in or out of quick zoom.
+ */
+void SPDesktop::zoom_quick(bool enable)
 {
     if (enable == _quick_zoom_enabled) {
         return;
@@ -1241,22 +1239,22 @@ SPDesktop::fullscreen()
     _widget->setFullscreen();
 }
 
-/** \brief  Checks to see if the user is working in focused mode
-
-    Returns the value of \c _focusMode
-*/
-bool
-SPDesktop::is_focusMode()
+/**
+ * Checks to see if the user is working in focused mode.
+ *
+ * @return  the value of \c _focusMode.
+ */
+bool SPDesktop::is_focusMode()
 {
     return _focusMode;
 }
 
-/** \brief  Changes whether the user is in focus mode or not
-    \param  mode  Which mode the view should be in
-
-*/
-void
-SPDesktop::focusMode (bool mode)
+/**
+ * Changes whether the user is in focus mode or not.
+ *
+ * @param  mode  Which mode the view should be in.
+ */
+void SPDesktop::focusMode(bool mode)
 {
     if (mode == _focusMode) { return; }
 

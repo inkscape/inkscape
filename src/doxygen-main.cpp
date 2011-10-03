@@ -1,5 +1,6 @@
-/** @file
- * @brief Doxygen documentation - main page and namespace documentation.
+/**
+ * @file
+ * Doxygen documentation - main page and namespace documentation.
  */
 /* Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
@@ -13,14 +14,14 @@
 // Note: % before a word prevents that word from being linkified
 
 /**
- * @brief Main %Inkscape namespace
+ * Main %Inkscape namespace.
  *
  * This namespace contains all code internal to %Inkscape.
  */
 namespace Inkscape {
 
 /**
- * @brief Some STL-style algorithms
+ * Some STL-style algorithms.
  *
  * This namespace contains a few generic algorithms used with the %XML tree.
  */
@@ -28,7 +29,7 @@ namespace Algorithms {}
 
 
 /**
- * @brief Debugging utilities
+ * Debugging utilities.
  *
  * This namespace contains various debugging code which can help developers
  * to pinpoint problems with their (or others') code.
@@ -36,14 +37,14 @@ namespace Algorithms {}
 namespace Debug {}
 
 /**
- * @brief Rendering-related code
+ * Rendering-related code.
  *
  * This namespace contains code related to the renderer.
  */
 namespace Display {}
 
 /**
- * @brief Extension support
+ * Extension support.
  *
  * This namespace contains the extension subsystem and implementations
  * of the internal extensions. This includes input and output filters, bitmap
@@ -52,7 +53,7 @@ namespace Display {}
 namespace Extension {}
 
 /**
- * @brief Boehm-GC based garbage collector
+ * Boehm-GC based garbage collector.
  *
  * This namespace contains code related to the garbage collector and base
  * classes for %GC-managed objects.
@@ -60,7 +61,7 @@ namespace Extension {}
 namespace GC {}
 
 /**
- * @brief Low-level IO code
+ * Low-level IO code.
  *
  * This namespace contains low level IO-related code, including a homegrown
  * streams implementation, routines for formatting SVG output, and some
@@ -69,7 +70,7 @@ namespace GC {}
 namespace IO {}
 
 /**
- * @brief Live Path Effects code
+ * Live Path Effects code.
  *
  * This namespace contains classes and functions related to the implementation
  * of Live Path Effects, which apply arbitrary transformation to a path and
@@ -78,7 +79,7 @@ namespace IO {}
 namespace LivePathEffect {}
 
 /**
- * @brief Tracing backend
+ * Tracing backend.
  *
  * This namespace contains the integrated potrace-based tracing backend, used
  * in the Trace Bitmap and Paint Bucket features.
@@ -86,21 +87,21 @@ namespace LivePathEffect {}
 namespace Trace {}
 
 /**
- * @brief User interface code
+ * User interface code.
  *
  * This namespace contains everything related to the user interface of Inkscape.
  */
 namespace UI {
 
 /**
- * @brief Dialog code
+ * Dialog code.
  *
  * This namespace contains all code related to dialogs.
  */
 namespace Dialog {}
 
 /**
- * @brief Custom widgets
+ * Custom widgets.
  *
  * This namespace contains custom user interface widgets used thorought
  * Inkscape.
@@ -110,7 +111,7 @@ namespace Widget {}
 } // namespace UI
 
 /**
- * @brief Miscellaneous supporting code
+ * Miscellaneous supporting code.
  *
  * This namespace contains miscellaneous low-level code: an implementation of
  * garbage-collected lists, tuples, generic pointer iterators and length unit
@@ -119,7 +120,7 @@ namespace Widget {}
 namespace Util {}
 
 /**
- * @brief %Inkscape %XML tree
+ * @Inkscape %XML tree.
  *
  * This namespace contains classes and functions that comprise the XML tree
  * of Inkscape documents.

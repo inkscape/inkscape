@@ -17,8 +17,7 @@
 #include <2geom/transforms.h>
 #include "sp-item.h"
 
-void
-sp_item_rotate_rel(SPItem *item, Geom::Rotate const &rotation)
+void sp_item_rotate_rel(SPItem *item, Geom::Rotate const &rotation)
 {
     Geom::Point center = item->getCenter();
     Geom::Translate const s(item->getCenter());
@@ -36,8 +35,7 @@ sp_item_rotate_rel(SPItem *item, Geom::Rotate const &rotation)
     }
 }
 
-void
-sp_item_scale_rel (SPItem *item, Geom::Scale const &scale)
+void sp_item_scale_rel(SPItem *item, Geom::Scale const &scale)
 {
     Geom::OptRect bbox = item->desktopVisualBounds();
     if (bbox) {
@@ -47,8 +45,7 @@ sp_item_scale_rel (SPItem *item, Geom::Scale const &scale)
     }
 }
 
-void
-sp_item_skew_rel (SPItem *item, double skewX, double skewY)
+void sp_item_skew_rel(SPItem *item, double skewX, double skewY)
 {
     Geom::Point center = item->getCenter();
     Geom::Translate const s(item->getCenter());
@@ -74,7 +71,7 @@ void sp_item_move_rel(SPItem *item, Geom::Translate const &tr)
 }
 
 /**
- * \brief Calculate the affine transformation required to transform one visual bounding box into another, accounting for a uniform strokewidth
+ * Calculate the affine transformation required to transform one visual bounding box into another, accounting for a uniform strokewidth.
  *
  * PS: This function will only return accurate results for the visual bounding box of a selection of one or more objects, all having
  * the same strokewidth. If the stroke width varies from object to object in this selection, then the function
@@ -85,20 +82,18 @@ void sp_item_move_rel(SPItem *item, Geom::Translate const &tr)
  * box this is very straightforward, but when using a visual bounding box this become more tricky as we need to account for
  * the strokewidth, which is either constant or scales width the area of the object. This function takes care of the calculation
  * of the affine transformation:
- * \param bbox_visual Current visual bounding box
- * \param strokewidth Strokewidth
- * \param transform_stroke If true then the stroke will be scaled proportional to the square root of the area of the geometric bounding box
- * \param x0 Coordinate of the target visual bounding box
- * \param y0 Coordinate of the target visual bounding box
- * \param x1 Coordinate of the target visual bounding box
- * \param y1 Coordinate of the target visual bounding box
+ * @param bbox_visual Current visual bounding box
+ * @param strokewidth Strokewidth
+ * @param transform_stroke If true then the stroke will be scaled proportional to the square root of the area of the geometric bounding box
+ * @param x0 Coordinate of the target visual bounding box
+ * @param y0 Coordinate of the target visual bounding box
+ * @param x1 Coordinate of the target visual bounding box
+ * @param y1 Coordinate of the target visual bounding box
  *   PS: we have to pass each coordinate individually, to find out if we are mirroring the object; Using a Geom::Rect() instead is
-     not possible here because it will only allow for a positive width and height, and therefore cannot mirror
- * \return
-*/
-
-Geom::Affine
-get_scale_transform_for_uniform_stroke (Geom::Rect const &bbox_visual, gdouble strokewidth, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
+ *   not possible here because it will only allow for a positive width and height, and therefore cannot mirror
+ * @return
+ */
+Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visual, gdouble strokewidth, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
 {
     Geom::Affine p2o = Geom::Translate (-bbox_visual.min());
     Geom::Affine o2n = Geom::Translate (x0, y0);
@@ -208,7 +203,7 @@ get_scale_transform_for_uniform_stroke (Geom::Rect const &bbox_visual, gdouble s
 }
 
 /**
- * \brief Calculate the affine transformation required to transform one visual bounding box into another, accounting for a VARIABLE strokewidth
+ * Calculate the affine transformation required to transform one visual bounding box into another, accounting for a VARIABLE strokewidth.
  *
  * Note: Please try to understand get_scale_transform_for_uniform_stroke() first, and read all it's comments carefully. This function
  * (get_scale_transform_for_variable_stroke) is a bit different because it will allow for a strokewidth that's different for each
@@ -223,20 +218,18 @@ get_scale_transform_for_uniform_stroke (Geom::Rect const &bbox_visual, gdouble s
  * the strokewidth, which is either constant or scales width the area of the object. This function takes care of the calculation
  * of the affine transformation:
  *
- * \param bbox_visual Current visual bounding box
- * \param bbox_geometric Current geometric bounding box (allows for calculating the strokewidth of each edge)
- * \param transform_stroke If true then the stroke will be scaled proportional to the square root of the area of the geometric bounding box
- * \param x0 Coordinate of the target visual bounding box
- * \param y0 Coordinate of the target visual bounding box
- * \param x1 Coordinate of the target visual bounding box
- * \param y1 Coordinate of the target visual bounding box
-     PS: we have to pass each coordinate individually, to find out if we are mirroring the object; Using a Geom::Rect() instead is
-     not possible here because it will only allow for a positive width and height, and therefore cannot mirror
- * \return
-*/
-
-Geom::Affine
-get_scale_transform_for_variable_stroke (Geom::Rect const &bbox_visual, Geom::Rect const &bbox_geom, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
+ * @param bbox_visual Current visual bounding box
+ * @param bbox_geometric Current geometric bounding box (allows for calculating the strokewidth of each edge)
+ * @param transform_stroke If true then the stroke will be scaled proportional to the square root of the area of the geometric bounding box
+ * @param x0 Coordinate of the target visual bounding box
+ * @param y0 Coordinate of the target visual bounding box
+ * @param x1 Coordinate of the target visual bounding box
+ * @param y1 Coordinate of the target visual bounding box
+ *    PS: we have to pass each coordinate individually, to find out if we are mirroring the object; Using a Geom::Rect() instead is
+ *    not possible here because it will only allow for a positive width and height, and therefore cannot mirror
+ * @return
+ */
+Geom::Affine get_scale_transform_for_variable_stroke(Geom::Rect const &bbox_visual, Geom::Rect const &bbox_geom, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
 {
     Geom::Affine p2o = Geom::Translate (-bbox_visual.min());
     Geom::Affine o2n = Geom::Translate (x0, y0);
@@ -376,8 +369,7 @@ get_scale_transform_for_variable_stroke (Geom::Rect const &bbox_visual, Geom::Re
     return (p2o * scale * unbudge * o2n);
 }
 
-Geom::Rect
-get_visual_bbox (Geom::OptRect const &initial_geom_bbox, Geom::Affine const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke)
+Geom::Rect get_visual_bbox(Geom::OptRect const &initial_geom_bbox, Geom::Affine const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke)
 {
     g_assert(initial_geom_bbox);
     

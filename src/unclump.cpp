@@ -1,5 +1,6 @@
-/** @file
- * @brief Unclumping objects
+/**
+ * @file
+ * Unclumping objects.
  */
 /* Authors:
  *   bulia byak

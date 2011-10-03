@@ -1,5 +1,6 @@
-/** \file
- * @brief Command-line wrapper for Windows.
+/**
+ * \file
+ * Command-line wrapper for Windows.
  *
  * Windows has two types of executables: GUI and console.
  * The GUI executables detach immediately when run from the command

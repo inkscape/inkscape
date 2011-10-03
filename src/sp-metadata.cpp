@@ -1,5 +1,3 @@
-#define __SP_METADATA_C__
-
 /*
  * SVG <metadata> implementation
  *
@@ -103,14 +101,14 @@ void strip_ids_recursively(Inkscape::XML::Node *node) {
 
 }
 
-/*
- * \brief Reads the Inkscape::XML::Node, and initializes SPMetadata variables.
- *        For this to get called, our name must be associated with
- *        a repr via "sp_object_type_register".  Best done through
- *        sp-object-repr.cpp's repr_name_entries array.
+/**
+ * Reads the Inkscape::XML::Node, and initializes SPMetadata variables.
+ *
+ * For this to get called, our name must be associated with
+ * a repr via "sp_object_type_register".  Best done through
+ * sp-object-repr.cpp's repr_name_entries array.
  */
-static void
-sp_metadata_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void sp_metadata_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     using Inkscape::XML::NodeSiblingIterator;
 
@@ -129,25 +127,23 @@ sp_metadata_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *
         ((SPObjectClass *) metadata_parent_class)->build (object, document, repr);
 }
 
-/*
- * \brief Drops any allocated memory
+/**
+ * Drops any allocated memory.
  */
-static void
-sp_metadata_release (SPObject *object)
+static void sp_metadata_release(SPObject *object)
 {
     debug("0x%08x",(unsigned int)object);
 
-    /* handle ourself */
+    // handle ourself
 
     if (((SPObjectClass *) metadata_parent_class)->release)
         ((SPObjectClass *) metadata_parent_class)->release (object);
 }
 
-/*
- * \brief Sets a specific value in the SPMetadata
+/**
+ * Sets a specific value in the SPMetadata.
  */
-static void
-sp_metadata_set (SPObject *object, unsigned int key, const gchar *value)
+static void sp_metadata_set(SPObject *object, unsigned int key, const gchar *value)
 {
     debug("0x%08x %s(%u): '%s'",(unsigned int)object,
             sp_attribute_name(key),key,value);
@@ -160,11 +156,10 @@ sp_metadata_set (SPObject *object, unsigned int key, const gchar *value)
         ((SPObjectClass *) metadata_parent_class)->set (object, key, value);
 }
 
-/*
- * \brief Receives update notifications
+/**
+ * Receives update notifications.
  */
-static void
-sp_metadata_update(SPObject *object, SPCtx *ctx, guint flags)
+static void sp_metadata_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     debug("0x%08x",(unsigned int)object);
     //SPMetadata *metadata = SP_METADATA(object);
@@ -180,11 +175,10 @@ sp_metadata_update(SPObject *object, SPCtx *ctx, guint flags)
         ((SPObjectClass *) metadata_parent_class)->update(object, ctx, flags);
 }
 
-/*
- * \brief Writes it's settings to an incoming repr object, if any
+/**
+ * Writes it's settings to an incoming repr object, if any.
  */
-static Inkscape::XML::Node *
-sp_metadata_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *sp_metadata_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     debug("0x%08x",(unsigned int)object);
     //SPMetadata *metadata = SP_METADATA(object);
@@ -204,11 +198,10 @@ sp_metadata_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML:
     return repr;
 }
 
-/*
- * \brief Retrieves the metadata object associated with a document
+/**
+ * Retrieves the metadata object associated with a document.
  */
-SPMetadata *
-sp_document_metadata (SPDocument *document)
+SPMetadata *sp_document_metadata(SPDocument *document)
 {
     SPObject *nv;
 

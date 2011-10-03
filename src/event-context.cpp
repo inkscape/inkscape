@@ -1,4 +1,5 @@
-/** \file
+/**
+ * @file
  * Main event handling, and related helper functions.
  *
  * Authors:
@@ -233,7 +234,7 @@ static void sp_event_context_private_setup(SPEventContext *ec) {
 }
 
 /**
- * \brief   Gobbles next key events on the queue with the same keyval and mask. Returns the number of events consumed.
+ * Gobbles next key events on the queue with the same keyval and mask. Returns the number of events consumed.
  */
 gint gobble_key_events(guint keyval, gint mask) {
     GdkEvent *event_next;
@@ -259,7 +260,7 @@ gint gobble_key_events(guint keyval, gint mask) {
 }
 
 /**
- * \brief   Gobbles next motion notify events on the queue with the same mask. Returns the number of events consumed.
+ * Gobbles next motion notify events on the queue with the same mask. Returns the number of events consumed.
  */
 gint gobble_motion_events(gint mask) {
     GdkEvent *event_next;
@@ -771,9 +772,8 @@ gint sp_event_context_private_item_handler(SPEventContext *ec, SPItem *item,
 }
 
 /**
- * @brief: Returns true if we're hovering above a knot (needed because we don't want to pre-snap in that case)
+ * Returns true if we're hovering above a knot (needed because we don't want to pre-snap in that case).
  */
-
 bool sp_event_context_knot_mouseover(SPEventContext *ec)
 {
     if (ec->shape_editor) {
@@ -784,7 +784,7 @@ bool sp_event_context_knot_mouseover(SPEventContext *ec)
 }
 
 /**
- * @brief An observer that relays pref changes to the derived classes
+ * An observer that relays pref changes to the derived classes.
  */
 class ToolPrefObserver: public Inkscape::Preferences::Observer {
 public:
@@ -1184,15 +1184,15 @@ void event_context_print_event_info(GdkEvent *event, bool print_return) {
 }
 
 /**
- * \brief Analyses the current event, calculates the mouse speed, turns snapping off (temporarily) if the
+ * Analyses the current event, calculates the mouse speed, turns snapping off (temporarily) if the
  * mouse speed is above a threshold, and stores the current event such that it can be re-triggered when needed
- * (re-triggering is controlled by a watchdog timer)
+ * (re-triggering is controlled by a watchdog timer).
  *
- * \param ec Pointer to the event context
- * \param dse_item Pointer that store a reference to a canvas or to an item
- * \param dse_item2 Another pointer, storing a reference to a knot or controlpoint
- * \param event Pointer to the motion event
- * \param origin Identifier (enum) specifying where the delay (and the call to this method) were initiated
+ * @param ec Pointer to the event context.
+ * @param dse_item Pointer that store a reference to a canvas or to an item.
+ * @param dse_item2 Another pointer, storing a reference to a knot or controlpoint.
+ * @param event Pointer to the motion event.
+ * @param origin Identifier (enum) specifying where the delay (and the call to this method) were initiated.
  */
 void sp_event_context_snap_delay_handler(SPEventContext *ec,
         gpointer const dse_item, gpointer const dse_item2, GdkEventMotion *event,
@@ -1270,8 +1270,8 @@ void sp_event_context_snap_delay_handler(SPEventContext *ec,
 }
 
 /**
- * \brief When the snap delay watchdog timer barks, this method will be called and will re-inject the last motion
- * event in an appropriate place, with snapping being turned on again
+ * When the snap delay watchdog timer barks, this method will be called and will re-inject the last motion
+ * event in an appropriate place, with snapping being turned on again.
  */
 gboolean sp_event_context_snap_watchdog_callback(gpointer data) {
     // Snap NOW! For this the "postponed" flag will be reset and the last motion event will be repeated

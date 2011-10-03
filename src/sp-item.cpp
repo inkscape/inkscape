@@ -678,8 +678,11 @@ Inkscape::XML::Node *SPItem::sp_item_write(SPObject *const object, Inkscape::XML
     return repr;
 }
 
-/** @brief Get item's geometric bounding box in this item's coordinate system.
- * The geometric bounding box includes only the path, disregarding all style attributes. */
+/**
+ * Get item's geometric bounding box in this item's coordinate system.
+ *
+ * The geometric bounding box includes only the path, disregarding all style attributes.
+ */
 Geom::OptRect SPItem::geometricBounds(Geom::Affine const &transform) const
 {
     Geom::OptRect bbox;
@@ -690,8 +693,11 @@ Geom::OptRect SPItem::geometricBounds(Geom::Affine const &transform) const
     return bbox;
 }
 
-/** @brief Get item's visual bounding box in this item's coordinate system.
- * The visual bounding box includes the stroke and the filter region. */
+/**
+ * Get item's visual bounding box in this item's coordinate system.
+ *
+ * The visual bounding box includes the stroke and the filter region.
+ */
 Geom::OptRect SPItem::visualBounds(Geom::Affine const &transform) const
 {
     using Geom::X;

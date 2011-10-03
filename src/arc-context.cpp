@@ -1,5 +1,6 @@
-/** @file
- * @brief Ellipse drawing context
+/**
+ * @file
+ * Ellipse drawing context.
  */
 /* Authors:
  *   Mitsuru Oka
@@ -153,9 +154,9 @@ static void sp_arc_context_dispose(GObject *object)
 }
 
 /**
-\brief  Callback that processes the "changed" signal on the selection;
-destroys old and creates new knotholder.
-*/
+ * Callback that processes the "changed" signal on the selection;
+ * destroys old and creates new knotholder.
+ */
 void sp_arc_context_selection_changed(Inkscape::Selection * selection, gpointer data)
 {
     SPArcContext *ac = SP_ARC_CONTEXT(data);

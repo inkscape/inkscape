@@ -1,6 +1,6 @@
 /**
  *    \file src/snapped-curve.cpp
- *    \brief SnappedCurve class.
+ *    SnappedCurve class.
  *
  *    Authors:
  *      Diederik van Lierop <mail@diedenrezi.nl>

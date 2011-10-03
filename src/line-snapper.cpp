@@ -1,6 +1,6 @@
 /**
  * \file line-snapper.cpp
- * \brief LineSnapper class.
+ * LineSnapper class.
  *
  * Authors:
  *   Diederik van Lierop <mail@diedenrezi.nl>

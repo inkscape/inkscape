@@ -1,5 +1,5 @@
 /** @file
- * @brief Miscellanous operations on selected items
+ * Miscellanous operations on selected items.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -1554,7 +1554,7 @@ void sp_selection_move_relative(Inkscape::Selection *selection, double dx, doubl
 }
 
 /**
- * @brief Rotates selected objects 90 degrees, either clock-wise or counter-clockwise, depending on the value of ccw
+ * Rotates selected objects 90 degrees, either clock-wise or counter-clockwise, depending on the value of ccw.
  */
 void sp_selection_rotate_90(SPDesktop *desktop, bool ccw)
 {
@@ -2841,7 +2841,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
 }
 
 /**
- * \brief Creates a mask or clipPath from selection
+ * Creates a mask or clipPath from selection.
  * Two different modes:
  *  if applyToLayer, all selection is moved to DEFS as mask/clippath
  *       and is applied to current layer

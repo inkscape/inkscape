@@ -163,9 +163,9 @@ static void sp_rect_context_dispose(GObject *object)
 }
 
 /**
-\brief  Callback that processes the "changed" signal on the selection;
-destroys old and creates new knotholder
-*/
+ * Callback that processes the "changed" signal on the selection;
+ * destroys old and creates new knotholder.
+ */
 void sp_rect_context_selection_changed(Inkscape::Selection *selection, gpointer data)
 {
     SPRectContext *rc = SP_RECT_CONTEXT(data);

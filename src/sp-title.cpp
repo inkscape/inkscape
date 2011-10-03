@@ -1,5 +1,3 @@
-#define __SP_TITLE_C__
-
 /*
  * SVG <title> implementation
  *
@@ -59,11 +57,10 @@ sp_title_init(SPTitle */*desc*/)
 {
 }
 
-/*
- * \brief Writes it's settings to an incoming repr object, if any
+/**
+ * Writes it's settings to an incoming repr object, if any.
  */
-static Inkscape::XML::Node *
-sp_title_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *sp_title_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     if (!repr) {
         repr = object->getRepr()->duplicate(doc);

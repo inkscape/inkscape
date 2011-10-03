@@ -1,6 +1,6 @@
 /**
  * \file src/rubberband.cpp
- * \brief Rubberbanding selector
+ * Rubberbanding selector.
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>

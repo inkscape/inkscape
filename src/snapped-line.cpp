@@ -1,6 +1,6 @@
 /**
  *    \file src/snapped-line.cpp
- *    \brief SnappedLine class.
+ *    SnappedLine class.
  *
  *    Authors:
  *      Diederik van Lierop <mail@diedenrezi.nl>

@@ -1,5 +1,6 @@
-/** @file
- * @brief SVG stylesheets implementation.
+/**
+ * @file
+ * SVG stylesheets implementation.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>

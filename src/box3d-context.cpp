@@ -168,9 +168,9 @@ static void sp_box3d_context_dispose(GObject *object)
 }
 
 /**
-\brief  Callback that processes the "changed" signal on the selection;
-destroys old and creates new knotholder
-*/
+ * Callback that processes the "changed" signal on the selection;
+ * destroys old and creates new knotholder.
+ */
 static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, gpointer data)
 {
     Box3DContext *bc = SP_BOX3D_CONTEXT(data);

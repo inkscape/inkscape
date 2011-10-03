@@ -1,6 +1,6 @@
 /**
- *  \file guide-snapper.cpp
- *  \brief Snapping things to guides.
+ *  @file guide-snapper.cpp
+ *  Snapping things to guides.
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>

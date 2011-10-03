@@ -1,6 +1,6 @@
 /**
  *  \file snap-preferences.cpp
- *  \brief Storing of snapping preferences
+ *  Storing of snapping preferences.
  *
  * Authors:
  *   Diederik van Lierop <mail@diedenrezi.nl>
@@ -120,7 +120,7 @@ bool Inkscape::SnapPreferences::getSnapFrom(Inkscape::SnapSourceType t) const
     return (_snap_from & t);
 }
 /**
- *  \brief Map snap target to array index.
+ *  Map snap target to array index.
  *
  *  The status of each snap toggle (in the snap toolbar) is stored as a boolean value in an array. This method returns the position
  *  of relevant boolean in that array, for any given type of snap target. For most snap targets, the enumerated value of that targets
@@ -131,9 +131,9 @@ bool Inkscape::SnapPreferences::getSnapFrom(Inkscape::SnapSourceType t) const
  *  - For snap sources, just pass the corresponding snap target instead (each snap source should have a twin snap target, but not vice versa)
  *  - All parameters are passed by reference, and will be overwritten
  *
- *  \param target Stores the enumerated snap target,  which can be modified to correspond to the array index of this snap target
- *  \param always_on If true, then this snap target is always active and cannot be toggled
- *  \param group_on If true, then this snap target is in a snap group that has been enabled (e.g. bbox group, nodes/paths group, or "others" group
+ *  @param target Stores the enumerated snap target,  which can be modified to correspond to the array index of this snap target
+ *  @param always_on If true, then this snap target is always active and cannot be toggled
+ *  @param group_on If true, then this snap target is in a snap group that has been enabled (e.g. bbox group, nodes/paths group, or "others" group
  */
 void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType &target, bool &always_on, bool &group_on) const
 {

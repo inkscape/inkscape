@@ -1,5 +1,6 @@
-/** @file
- * @brief Legacy interface to main application
+/**
+ * @file
+ * Legacy interface to main application.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>

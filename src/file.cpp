@@ -1,5 +1,6 @@
-/** @file
- * @brief File/Print operations
+/**
+ * @file
+ * File/Print operations.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>

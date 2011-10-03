@@ -1,5 +1,6 @@
-/** @file
- * @brief Event handlers for SPDesktop
+/**
+ * @file
+ * Event handlers for SPDesktop.
  */
 /* Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>

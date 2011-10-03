@@ -1,6 +1,6 @@
 /**
- *  \file src/snapper.cpp
- *  \brief Snapper class.
+ *  @file src/snapper.cpp
+ *  Snapper class.
  *
  *  Authors:
  *    Carl Hetherington <inkscape@carlh.net>
@@ -15,8 +15,8 @@
 
 /**
  *  Construct new Snapper for named view.
- *  \param nv Named view.
- *  \param d Snap tolerance.
+ *  @param nv Named view.
+ *  @param d Snap tolerance.
  */
 Inkscape::Snapper::Snapper(SnapManager *sm, Geom::Coord const /*t*/) :
     _snapmanager(sm),
@@ -27,7 +27,7 @@ Inkscape::Snapper::Snapper(SnapManager *sm, Geom::Coord const /*t*/) :
 }
 
 /**
- *  \param s true to enable this snapper, otherwise false.
+ *  @param s true to enable this snapper, otherwise false.
  */
 
 void Inkscape::Snapper::setEnabled(bool s)

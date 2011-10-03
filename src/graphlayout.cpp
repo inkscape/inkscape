@@ -1,5 +1,6 @@
-/** @file
- * @brief Interface between Inkscape code (SPItem) and graphlayout functions.
+/**
+ * @file
+ * Interface between Inkscape code (SPItem) and graphlayout functions.
  */
 /*
  * Authors:

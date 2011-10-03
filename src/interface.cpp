@@ -1,5 +1,6 @@
-/** @file
- * @brief Main UI stuff
+/**
+ * @file
+ * Main UI stuff.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -628,11 +629,9 @@ static void taskToggled(GtkCheckMenuItem *menuitem, gpointer userData)
 
 
 /**
- *  \brief Callback function to update the status of the radio buttons in the View -> Display mode menu (Normal, No Filters, Outline) and Color display mode
+ * Callback function to update the status of the radio buttons in the View -> Display mode menu (Normal, No Filters, Outline) and Color display mode.
  */
-
-static gboolean
-update_view_menu(GtkWidget *widget, GdkEventExpose */*event*/, gpointer user_data)
+static gboolean update_view_menu(GtkWidget *widget, GdkEventExpose */*event*/, gpointer user_data)
 {
     SPAction *action = (SPAction *) user_data;
     g_assert(action->id != NULL);
@@ -867,7 +866,9 @@ void addTaskMenuItems(GtkMenu *menu, Inkscape::UI::View::View *view)
 }
 
 
-/** @brief Observer that updates the recent list's max document count */
+/**
+ * Observer that updates the recent list's max document count.
+ */
 class MaxRecentObserver : public Inkscape::Preferences::Observer {
 public:
     MaxRecentObserver(GtkWidget *recent_menu) :
@@ -883,23 +884,24 @@ private:
     GtkWidget *_rm;
 };
 
-/** \brief  This function turns XML into a menu
-    \param  menus  This is the XML that defines the menu
-    \param  menu   Menu to be added to
-    \param  view   The View that this menu is being built for
-
-    This function is realitively simple as it just goes through the XML
-    and parses the individual elements.  In the case of a submenu, it
-    just calls itself recursively.  Because it is only reasonable to have
-    a couple of submenus, it is unlikely this will go more than two or
-    three times.
-
-    In the case of an unrecognized verb, a menu item is made to identify
-    the verb that is missing, and display that.  The menu item is also made
-    insensitive.
-*/
-void
-sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI::View::View *view)
+/**
+ * This function turns XML into a menu.
+ *
+ *  This function is realitively simple as it just goes through the XML
+ *  and parses the individual elements.  In the case of a submenu, it
+ *  just calls itself recursively.  Because it is only reasonable to have
+ *  a couple of submenus, it is unlikely this will go more than two or
+ *  three times.
+ *
+ *  In the case of an unrecognized verb, a menu item is made to identify
+ *  the verb that is missing, and display that.  The menu item is also made
+ *  insensitive.
+ *
+ * @param  menus  This is the XML that defines the menu
+ * @param  menu   Menu to be added to
+ * @param  view   The View that this menu is being built for
+ */
+void sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI::View::View *view)
 {
     if (menus == NULL) return;
     if (menu == NULL)  return;
@@ -999,15 +1001,16 @@ sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI:
     }
 }
 
-/** \brief  Build the main tool bar
-    \param  view  View to build the bar for
-
-    Currently the main tool bar is built as a dynamic XML menu using
-    \c sp_ui_build_dyn_menus.  This function builds the bar, and then
-    pass it to get items attached to it.
-*/
-GtkWidget *
-sp_ui_main_menubar(Inkscape::UI::View::View *view)
+/**
+ * Build the main tool bar.
+ *
+ * Currently the main tool bar is built as a dynamic XML menu using
+ * \c sp_ui_build_dyn_menus.  This function builds the bar, and then
+ * pass it to get items attached to it.
+ *
+ * @param  view  View to build the bar for
+ */
+GtkWidget *sp_ui_main_menubar(Inkscape::UI::View::View *view)
 {
     GtkWidget *mbar = gtk_menu_bar_new();
 

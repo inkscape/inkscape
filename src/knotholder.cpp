@@ -1,5 +1,5 @@
 /*
- * Container for SPKnot visual handles
+ * Container for SPKnot visual handles.
  *
  * Authors:
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
@@ -92,7 +92,7 @@ KnotHolder::update_knots()
 }
 
 /**
- * \brief Returns true if at least one of the KnotHolderEntities has the mouse hovering above it
+ * Returns true if at least one of the KnotHolderEntities has the mouse hovering above it.
  */
 bool KnotHolder::knot_mouseover()
 {

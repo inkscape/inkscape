@@ -1,5 +1,6 @@
-/** @file
- * @brief Bucket fill drawing context, works by bitmap filling an area on a rendered version
+/**
+ * @file
+ * Bucket fill drawing context, works by bitmap filling an area on a rendered version
  * of the current display and then tracing the result using potrace.
  */
 /* Author:
@@ -158,9 +159,9 @@ static void sp_flood_context_dispose(GObject *object)
 }
 
 /**
-\brief  Callback that processes the "changed" signal on the selection;
-destroys old and creates new knotholder
-*/
+ * Callback that processes the "changed" signal on the selection;
+ * destroys old and creates new knotholder.
+ */
 void sp_flood_context_selection_changed(Inkscape::Selection *selection, gpointer data)
 {
     SPFloodContext *rc = SP_FLOOD_CONTEXT(data);
@@ -216,11 +217,11 @@ compose_onto (guint32 px, guint32 bg)
 }
 
 /**
- * \brief Get the pointer to a pixel in a pixel buffer.
- * \param px The pixel buffer.
- * \param x The X coordinate.
- * \param y The Y coordinate.
- * \param stride The rowstride of the pixel buffer.
+ * Get the pointer to a pixel in a pixel buffer.
+ * @param px The pixel buffer.
+ * @param x The X coordinate.
+ * @param y The Y coordinate.
+ * @param stride The rowstride of the pixel buffer.
  */
 inline guint32 get_pixel(guchar *px, int x, int y, int stride) {
     return *reinterpret_cast<guint32*>(px + y * stride + x * 4);
@@ -231,7 +232,7 @@ inline unsigned char * get_trace_pixel(guchar *trace_px, int x, int y, int width
 }
 
 /**
- * \brief Generate the list of trace channel selection entries.
+ * Generate the list of trace channel selection entries.
  */
 GList * flood_channels_dropdown_items_list() {
     GList *glist = NULL;
@@ -249,7 +250,7 @@ GList * flood_channels_dropdown_items_list() {
 }
 
 /**
- * \brief Generate the list of autogap selection entries.
+ * Generate the list of autogap selection entries.
  */
 GList * flood_autogap_dropdown_items_list() {
     GList *glist = NULL;
@@ -263,13 +264,13 @@ GList * flood_autogap_dropdown_items_list() {
 }
 
 /**
- * \brief Compare a pixel in a pixel buffer with another pixel to determine if a point should be included in the fill operation.
- * \param check The pixel in the pixel buffer to check.
- * \param orig The original selected pixel to use as the fill target color.
- * \param merged_orig_pixel The original pixel merged with the background.
- * \param dtc The desktop background color.
- * \param threshold The fill threshold.
- * \param method The fill method to use as defined in PaintBucketChannels.
+ * Compare a pixel in a pixel buffer with another pixel to determine if a point should be included in the fill operation.
+ * @param check The pixel in the pixel buffer to check.
+ * @param orig The original selected pixel to use as the fill target color.
+ * @param merged_orig_pixel The original pixel merged with the background.
+ * @param dtc The desktop background color.
+ * @param threshold The fill threshold.
+ * @param method The fill method to use as defined in PaintBucketChannels.
  */
 static bool compare_pixels(guint32 check, guint32 orig, guint32 merged_orig_pixel, guint32 dtc, int threshold, PaintBucketChannels method)
 {
@@ -367,13 +368,13 @@ struct bitmap_coords_info {
 };
 
 /**
- * \brief Check if a pixel can be included in the fill.
- * \param px The rendered pixel buffer to check.
- * \param trace_t The pixel in the trace pixel buffer to check or mark.
- * \param x The X coordinate.
- * \param y The y coordinate.
- * \param orig_color The original selected pixel to use as the fill target color.
- * \param bci The bitmap_coords_info structure.
+ * Check if a pixel can be included in the fill.
+ * @param px The rendered pixel buffer to check.
+ * @param trace_t The pixel in the trace pixel buffer to check or mark.
+ * @param x The X coordinate.
+ * @param y The y coordinate.
+ * @param orig_color The original selected pixel to use as the fill target color.
+ * @param bci The bitmap_coords_info structure.
  */
 inline static bool check_if_pixel_is_paintable(guchar *px, unsigned char *trace_t, int x, int y, guint32 orig_color, bitmap_coords_info bci) {
     if (is_pixel_paintability_checked(trace_t)) {
@@ -391,11 +392,11 @@ inline static bool check_if_pixel_is_paintable(guchar *px, unsigned char *trace_
 }
 
 /**
- * \brief Perform the bitmap-to-vector tracing and place the traced path onto the document.
- * \param px The trace pixel buffer to trace to SVG.
- * \param desktop The desktop on which to place the final SVG path.
- * \param transform The transform to apply to the final SVG path.
- * \param union_with_selection If true, merge the final SVG path with the current selection.
+ * Perform the bitmap-to-vector tracing and place the traced path onto the document.
+ * @param px The trace pixel buffer to trace to SVG.
+ * @param desktop The desktop on which to place the final SVG path.
+ * @param transform The transform to apply to the final SVG path.
+ * @param union_with_selection If true, merge the final SVG path with the current selection.
  */
 static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *desktop, Geom::Affine transform, unsigned int min_x, unsigned int max_x, unsigned int min_y, unsigned int max_y, bool union_with_selection) {
     SPDocument *document = sp_desktop_document(desktop);
@@ -526,7 +527,7 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
 }
 
 /**
- * \brief The possible return states of perform_bitmap_scanline_check()
+ * The possible return states of perform_bitmap_scanline_check().
  */
 enum ScanlineCheckResult {
     SCANLINE_CHECK_OK,
@@ -535,10 +536,10 @@ enum ScanlineCheckResult {
 };
 
 /**
- * \brief Determine if the provided coordinates are within the pixel buffer limits.
- * \param x The X coordinate.
- * \param y The Y coordinate.
- * \param bci The bitmap_coords_info structure.
+ * Determine if the provided coordinates are within the pixel buffer limits.
+ * @param x The X coordinate.
+ * @param y The Y coordinate.
+ * @param bci The bitmap_coords_info structure.
  */
 inline static bool coords_in_range(unsigned int x, unsigned int y, bitmap_coords_info bci) {
     return (x < bci.width) &&
@@ -552,12 +553,12 @@ inline static bool coords_in_range(unsigned int x, unsigned int y, bitmap_coords
 #define PAINT_DIRECTION_ALL 15
 
 /**
- * \brief Paint a pixel or a square (if autogap is enabled) on the trace pixel buffer
- * \param px The rendered pixel buffer to check.
- * \param trace_px The trace pixel buffer.
- * \param orig_color The original selected pixel to use as the fill target color.
- * \param bci The bitmap_coords_info structure.
- * \param original_point_trace_t The original pixel in the trace pixel buffer to check.
+ * Paint a pixel or a square (if autogap is enabled) on the trace pixel buffer.
+ * @param px The rendered pixel buffer to check.
+ * @param trace_px The trace pixel buffer.
+ * @param orig_color The original selected pixel to use as the fill target color.
+ * @param bci The bitmap_coords_info structure.
+ * @param original_point_trace_t The original pixel in the trace pixel buffer to check.
  */
 inline static unsigned int paint_pixel(guchar *px, guchar *trace_px, guint32 orig_color, bitmap_coords_info bci, unsigned char *original_point_trace_t) {
     if (bci.radius == 0) {
@@ -600,12 +601,12 @@ inline static unsigned int paint_pixel(guchar *px, guchar *trace_px, guint32 ori
 }
 
 /**
- * \brief Push a point to be checked onto the bottom of the rendered pixel buffer check queue.
- * \param fill_queue The fill queue to add the point to.
- * \param max_queue_size The maximum size of the fill queue.
- * \param trace_t The trace pixel buffer pixel.
- * \param x The X coordinate.
- * \param y The Y coordinate.
+ * Push a point to be checked onto the bottom of the rendered pixel buffer check queue.
+ * @param fill_queue The fill queue to add the point to.
+ * @param max_queue_size The maximum size of the fill queue.
+ * @param trace_t The trace pixel buffer pixel.
+ * @param x The X coordinate.
+ * @param y The Y coordinate.
  */
 static void push_point_onto_queue(std::deque<Geom::Point> *fill_queue, unsigned int max_queue_size, unsigned char *trace_t, unsigned int x, unsigned int y) {
     if (!is_pixel_queued(trace_t)) {
@@ -617,12 +618,12 @@ static void push_point_onto_queue(std::deque<Geom::Point> *fill_queue, unsigned 
 }
 
 /**
- * \brief Shift a point to be checked onto the top of the rendered pixel buffer check queue.
- * \param fill_queue The fill queue to add the point to.
- * \param max_queue_size The maximum size of the fill queue.
- * \param trace_t The trace pixel buffer pixel.
- * \param x The X coordinate.
- * \param y The Y coordinate.
+ * Shift a point to be checked onto the top of the rendered pixel buffer check queue.
+ * @param fill_queue The fill queue to add the point to.
+ * @param max_queue_size The maximum size of the fill queue.
+ * @param trace_t The trace pixel buffer pixel.
+ * @param x The X coordinate.
+ * @param y The Y coordinate.
  */
 static void shift_point_onto_queue(std::deque<Geom::Point> *fill_queue, unsigned int max_queue_size, unsigned char *trace_t, unsigned int x, unsigned int y) {
     if (!is_pixel_queued(trace_t)) {
@@ -634,12 +635,12 @@ static void shift_point_onto_queue(std::deque<Geom::Point> *fill_queue, unsigned
 }
 
 /**
- * \brief Scan a row in the rendered pixel buffer and add points to the fill queue as necessary.
- * \param fill_queue The fill queue to add the point to.
- * \param px The rendered pixel buffer.
- * \param trace_px The trace pixel buffer.
- * \param orig_color The original selected pixel to use as the fill target color.
- * \param bci The bitmap_coords_info structure.
+ * Scan a row in the rendered pixel buffer and add points to the fill queue as necessary.
+ * @param fill_queue The fill queue to add the point to.
+ * @param px The rendered pixel buffer.
+ * @param trace_px The trace pixel buffer.
+ * @param orig_color The original selected pixel to use as the fill target color.
+ * @param bci The bitmap_coords_info structure.
  */
 static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<Geom::Point> *fill_queue, guchar *px, guchar *trace_px, guint32 orig_color, bitmap_coords_info bci, unsigned int *min_x, unsigned int *max_x) {
     bool aborted = false;
@@ -751,26 +752,26 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<Geom::Point>
 }
 
 /**
- * \brief Sort the rendered pixel buffer check queue vertically.
+ * Sort the rendered pixel buffer check queue vertically.
  */
 static bool sort_fill_queue_vertical(Geom::Point a, Geom::Point b) {
     return a[Geom::Y] > b[Geom::Y];
 }
 
 /**
- * \brief Sort the rendered pixel buffer check queue horizontally.
+ * Sort the rendered pixel buffer check queue horizontally.
  */
 static bool sort_fill_queue_horizontal(Geom::Point a, Geom::Point b) {
     return a[Geom::X] > b[Geom::X];
 }
 
 /**
- * \brief Perform a flood fill operation.
- * \param event_context The event context for this tool.
- * \param event The details of this event.
- * \param union_with_selection If true, union the new fill with the current selection.
- * \param is_point_fill If false, use the Rubberband "touch selection" to get the initial points for the fill.
- * \param is_touch_fill If true, use only the initial contact point in the Rubberband "touch selection" as the fill target color.
+ * Perform a flood fill operation.
+ * @param event_context The event context for this tool.
+ * @param event The details of this event.
+ * @param union_with_selection If true, union the new fill with the current selection.
+ * @param is_point_fill If false, use the Rubberband "touch selection" to get the initial points for the fill.
+ * @param is_touch_fill If true, use only the initial contact point in the Rubberband "touch selection" as the fill target color.
  */
 static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event, bool union_with_selection, bool is_point_fill, bool is_touch_fill) {
     SPDesktop *desktop = event_context->desktop;

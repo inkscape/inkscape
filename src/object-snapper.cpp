@@ -1,6 +1,6 @@
 /**
  *  \file object-snapper.cpp
- *  \brief Snapping things to objects.
+ *  Snapping things to objects.
  *
  * Authors:
  *   Carl Hetherington <inkscape@carlh.net>

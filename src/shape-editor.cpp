@@ -227,7 +227,7 @@ bool ShapeEditor::has_selection() {
 }
 
 /**
- * \brief Returns true if this ShapeEditor has a knot above which the mouse currently hovers
+ * Returns true if this ShapeEditor has a knot above which the mouse currently hovers.
  */
 bool ShapeEditor::knot_mouseover()
 {

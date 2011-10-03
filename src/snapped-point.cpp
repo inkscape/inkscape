@@ -1,6 +1,6 @@
 /**
  *  \file src/snapped-point.cpp
- *  \brief SnappedPoint class.
+ *  SnappedPoint class.
  *
  *  Authors:
  *    Mathieu Dimanche <mdimanche@free.fr>

@@ -163,12 +163,12 @@ sp_star_context_dispose (GObject *object)
 }
 
 /**
-\brief  Callback that processes the "changed" signal on the selection;
-destroys old and creates new knotholder
-\param  selection Should not be NULL.
-*/
-void
-sp_star_context_selection_changed (Inkscape::Selection * selection, gpointer data)
+ * Callback that processes the "changed" signal on the selection;
+ * destroys old and creates new knotholder.
+ *
+ * @param  selection Should not be NULL.
+ */
+void sp_star_context_selection_changed (Inkscape::Selection * selection, gpointer data)
 {
     g_assert (selection != NULL);
 
