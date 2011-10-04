@@ -17,6 +17,7 @@
 #include "path-prefix.h"
 #include "dependency.h"
 #include "db.h"
+#include "extension.h"
 
 namespace Inkscape {
 namespace Extension {

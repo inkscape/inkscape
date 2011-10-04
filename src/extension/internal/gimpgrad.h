@@ -13,10 +13,12 @@
 #include <glibmm/ustring.h>
 
 #include "extension/implementation/implementation.h"
-#include "extension/extension-forward.h"
 
 namespace Inkscape {
 namespace Extension {
+
+class Extension;
+
 namespace Internal {
 
 /** \brief  Implementation class of the GIMP gradient plugin.  This mostly

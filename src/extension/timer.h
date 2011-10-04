@@ -16,10 +16,11 @@
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <glibmm/timeval.h>
-#include "extension-forward.h"
 
 namespace Inkscape {
 namespace Extension {
+
+class Extension;
 
 class ExpirationTimer {
     /** \brief Circularly linked list of all timers */

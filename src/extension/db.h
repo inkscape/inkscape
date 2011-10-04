@@ -12,17 +12,23 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifndef __MODULES_DB_H__
-#define __MODULES_DB_H__
+#ifndef SEEN_MODULES_DB_H
+#define SEEN_MODULES_DB_H
 
 #include <map>
 #include <list>
 #include <cstring>
 
-#include "extension/extension.h"
+#include <glib.h>
+
 
 namespace Inkscape {
 namespace Extension {
+
+class Input;
+class Output;
+class Effect;
+class Extension;
 
 class DB {
 private:
@@ -74,7 +80,7 @@ extern DB db;
 
 } } /* namespace Extension, Inkscape */
 
-#endif /* __MODULES_DB_H__ */
+#endif // SEEN_MODULES_DB_H
 
 /*
   Local Variables:

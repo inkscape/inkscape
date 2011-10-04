@@ -17,13 +17,19 @@
 #include <gtkmm/widget.h>
 
 #include "forward.h"
-#include "extension/extension-forward.h"
 #include "xml/node.h"
 #include <2geom/forward.h>
 #include <2geom/point.h>
 
 namespace Inkscape {
 namespace Extension {
+
+class Effect;
+class Extension;
+class Input;
+class Output;
+class Print;
+
 namespace Implementation {
 
 /** \brief  A cache for the document and this implementation */

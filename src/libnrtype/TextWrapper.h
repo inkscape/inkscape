@@ -13,7 +13,6 @@
 
 #include <pango/pango.h>
 
-#include <libnrtype/nrtype-forward.h>
 #include "libnrtype/boundary-type.h"
 
 // miscanellous but useful data for a given text: chunking into logical pieces
@@ -24,6 +23,7 @@ struct text_boundary;
 struct one_glyph;
 struct one_box;
 struct one_para;
+class font_instance;
 
 class text_wrapper {
 public:

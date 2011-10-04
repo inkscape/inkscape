@@ -18,11 +18,13 @@
 #include "xml/document.h"
 #include "xml/node.h"
 #include "document.h"
-#include "extension/extension-forward.h"
 #include <color.h>
 
 namespace Inkscape {
 namespace Extension {
+
+class Extension;
+
 
 /**
  * @brief The root directory in the preferences database for extension-related parameters

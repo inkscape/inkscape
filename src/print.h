@@ -15,7 +15,15 @@
 //#include <libnr/nr-path.h>
 #include <2geom/forward.h>
 #include "forward.h"
-#include "extension/extension-forward.h"
+
+
+namespace Inkscape {
+namespace Extension {
+
+class Print;
+
+} // namespace Extension
+} // namespace Inkscape
 
 struct SPPrintContext {
     Inkscape::Extension::Print *module;

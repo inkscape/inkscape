@@ -1,5 +1,5 @@
-#ifndef __INK_EXTENSION_H__
-#define __INK_EXTENSION_H__
+#ifndef INK_EXTENSION_H
+#define INK_EXTENSION_H
 
 /** \file
  * Frontend to certain, possibly pluggable, actions.
@@ -22,7 +22,6 @@
 #include <gtkmm/table.h>
 #include <glibmm/ustring.h>
 #include "xml/repr.h"
-#include "extension/extension-forward.h"
 
 /** The key that is used to identify that the I/O should be autodetected */
 #define SP_MODULE_KEY_AUTODETECT "autodetect"
@@ -67,6 +66,17 @@ struct SPDocument;
 
 namespace Inkscape {
 namespace Extension {
+
+class Dependency;
+class ExpirationTimer;
+class ExpirationTimer;
+class Parameter;
+
+namespace Implementation
+{
+class Implementation;
+}
+
 
 /** The object that is the basis for the Extension system.  This object
     contains all of the information that all Extension have.  The
@@ -163,7 +173,7 @@ public:
 private:
     void             make_param       (Inkscape::XML::Node * paramrepr);
     
-    Parameter *      get_param        (const gchar * name);
+     Parameter *      get_param        (const gchar * name);
 
 public:
     bool             get_param_bool   (const gchar * name,
@@ -269,7 +279,7 @@ public:
 }  /* namespace Extension */
 }  /* namespace Inkscape */
 
-#endif /* __INK_EXTENSION_H__ */
+#endif // INK_EXTENSION_H
 
 /*
   Local Variables:

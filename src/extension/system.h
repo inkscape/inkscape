@@ -21,6 +21,8 @@
 namespace Inkscape {
 namespace Extension {
 
+class Print;
+
 /**
  * Used to distinguish between the various invocations of the save dialogs (and thus to determine
  * the file type and save path offered in the dialog)

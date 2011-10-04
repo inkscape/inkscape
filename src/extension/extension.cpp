@@ -1,4 +1,3 @@
-#define __SP_MODULE_C__
 /** \file
  *
  * Inkscape::Extension::Extension: 
@@ -30,6 +29,7 @@
 
 #include "inkscape.h"
 #include "extension/implementation/implementation.h"
+#include "extension.h"
 
 #include "db.h"
 #include "dependency.h"

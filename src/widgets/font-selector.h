@@ -1,5 +1,5 @@
-#ifndef __SP_FONT_SELECTOR_H__
-#define __SP_FONT_SELECTOR_H__
+#ifndef SP_FONT_SELECTOR_H
+#define SP_FONT_SELECTOR_H
 
 /*
  * Font selection widgets
@@ -22,8 +22,9 @@ struct SPFontSelector;
 #define SP_FONT_SELECTOR(o) (GTK_CHECK_CAST ((o), SP_TYPE_FONT_SELECTOR, SPFontSelector))
 #define SP_IS_FONT_SELECTOR(o) (GTK_CHECK_TYPE ((o), SP_TYPE_FONT_SELECTOR))
 
-#include <libnrtype/nrtype-forward.h>
 #include <gtk/gtkwidget.h>
+
+class font_instance;
 
 /* SPFontSelector */
 
@@ -38,7 +39,7 @@ double  sp_font_selector_get_size (SPFontSelector *fsel);
 
 
 
-#endif
+#endif // SP_FONT_SELECTOR_H
 
 /*
   Local Variables:

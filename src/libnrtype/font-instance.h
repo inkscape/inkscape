@@ -7,9 +7,11 @@
 #include <require-config.h>
 #include "FontFactory.h"
 
-#include <libnrtype/nrtype-forward.h>
 #include <libnrtype/font-style.h>
 #include <2geom/d2.h>
+
+class font_factory;
+struct font_glyph;
 
 // the font_instance are the template of several raster_font; they provide metrics and outlines
 // that are drawn by the raster_font, so the raster_font needs info relative to the way the

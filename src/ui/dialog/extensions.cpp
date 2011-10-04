@@ -15,6 +15,7 @@
 
 #include "extension/db.h"
 #include "extensions.h"
+#include "extension/extension.h"
 
 
 namespace Inkscape {

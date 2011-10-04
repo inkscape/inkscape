@@ -1,7 +1,6 @@
 #ifndef SEEN_LIBNRTYPE_FONT_GLYPH_H
 #define SEEN_LIBNRTYPE_FONT_GLYPH_H
 
-#include <libnrtype/nrtype-forward.h>
 #include <2geom/forward.h>
 
 // the info for a glyph in a font. it's totally resolution- and fontsize-independent

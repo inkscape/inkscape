@@ -1,5 +1,5 @@
-#ifndef __INKSCAPE_EXTENSION_INTERNAL_FILTER_FILTER_H__
-#define __INKSCAPE_EXTENSION_INTERNAL_FILTER_FILTER_H__
+#ifndef INKSCAPE_EXTENSION_INTERNAL_FILTER_FILTER_H
+#define INKSCAPE_EXTENSION_INTERNAL_FILTER_FILTER_H
 
 /*
  * Copyright (C) 2008 Authors:
@@ -11,10 +11,13 @@
 #include <glibmm/i18n.h>
 
 #include "extension/implementation/implementation.h"
-#include "extension/extension-forward.h"
 
 namespace Inkscape {
 namespace Extension {
+
+class Effect;
+class Extension;
+
 namespace Internal {
 namespace Filter {
 
@@ -52,4 +55,4 @@ public:
 }; /* namespace Extension */
 }; /* namespace Inkscape */
 
-#endif /* __INKSCAPE_EXTENSION_INTERNAL_FILTER_FILTER_H__ */
+#endif // INKSCAPE_EXTENSION_INTERNAL_FILTER_FILTER_H

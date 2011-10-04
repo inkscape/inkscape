@@ -23,7 +23,6 @@
 #include "nr-type-primitives.h"
 #include "nr-type-pos-def.h"
 #include "font-style-to-pos.h"
-#include <libnrtype/nrtype-forward.h>
 #include "../style.h"
 
 /* Freetype */
@@ -33,6 +32,9 @@
 #include <pango/pangoft2.h>
 #include <freetype/freetype.h>
 #endif
+
+
+class font_instance;
 
 namespace Glib
 {

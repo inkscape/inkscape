@@ -17,13 +17,13 @@
 #include <gtkmm/widget.h>
 
 #include "xml/document.h"
-#include <extension/extension-forward.h>
 
 #include "parameter.h"
 
 namespace Inkscape {
 namespace Extension {
 
+class Extension;
 
 
 // \brief  A class to represent a notebookparameter of an extension
