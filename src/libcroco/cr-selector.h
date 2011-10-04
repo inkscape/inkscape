@@ -41,7 +41,7 @@ typedef struct _CRSelector CRSelector ;
 
 /**
  *Abstracts a CSS2 selector as defined in the right part
- *of the 'ruleset" production in the appendix D.1 of the
+ *of the 'ruleset' production in the appendix D.1 of the
  *css2 spec.
  *It is actually the abstraction of a comma separated list
  *of simple selectors list.
