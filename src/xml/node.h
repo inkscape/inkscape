@@ -21,10 +21,15 @@
 #include <glib/gtypes.h>
 #include "gc-anchored.h"
 #include "util/list.h"
-#include "xml/xml-forward.h"
 
 namespace Inkscape {
 namespace XML {
+
+struct AttributeRecord;
+struct Document;
+class  Event;
+class  NodeObserver;
+struct NodeEventVector;
 
 /**
  * @brief Enumeration containing all supported node types.

@@ -14,8 +14,10 @@
 
 #include <sigc++/sigc++.h>
 #include <glibmm/ustring.h>
-#include "helper/helper-forward.h"
 #include "forward.h"
+
+struct SPAction;
+struct SPActionClass;
 
 #define SP_TYPE_ACTION (sp_action_get_type())
 #define SP_ACTION(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_ACTION, SPAction))

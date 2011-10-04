@@ -3,9 +3,11 @@
 
 #include <2geom/affine.h>
 #include <livarot/LivarotDefs.h>
-#include <livarot/livarot-forward.h>
 
 // structure that holds data describing how to render glyphs of a font
+
+class Path;
+class Shape;
 
 // Different raster styles.
 struct font_style {

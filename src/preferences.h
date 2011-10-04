@@ -19,7 +19,6 @@
 #include <climits>
 #include <cfloat>
 #include <glibmm/ustring.h>
-#include "xml/xml-forward.h"
 #include "xml/repr.h"
 
 class SPCSSAttr;

@@ -20,7 +20,6 @@
 
 #include <glib/gquark.h>
 #include "util/share.h"
-#include "xml/xml-forward.h"
 
 #ifndef INK_UNUSED
 #define INK_UNUSED(x) ((void)(x))
@@ -28,6 +27,8 @@
 
 namespace Inkscape {
 namespace XML {
+
+class Node;
 
 /**
  * @brief Interface for XML node observers

@@ -43,6 +43,7 @@ struct SPItem;
 struct SPObject;
 struct SPGroup;
 struct SPRoot;
+struct SPUnit;
 
 namespace Inkscape {
     struct Application;

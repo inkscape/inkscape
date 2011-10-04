@@ -21,9 +21,10 @@
 #include <string.h>
 #include "config.h"
 #include "require-config.h"   /* HAVE_GTK_WINDOW_FULLSCREEN */
-#include "helper/helper-forward.h"
 #include "forward.h"
 #include <glibmm/ustring.h>
+
+struct SPAction;
 
 /** \brief This anonymous enum is used to provide a list of the Verbs
            which are defined staticly in the verb files.  There may be

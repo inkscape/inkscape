@@ -16,8 +16,10 @@
 #include <vector>
 #include <2geom/point.h>
 
-#include "livarot/livarot-forward.h"
 #include "livarot/LivarotDefs.h"
+
+class Path;
+class FloatLigne;
 
 struct SweepTree;
 struct SweepTreeList;

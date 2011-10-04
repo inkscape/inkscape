@@ -1,5 +1,5 @@
-#ifndef __SP_UNIT_MENU_H__
-#define __SP_UNIT_MENU_H__
+#ifndef SP_UNIT_MENU_H
+#define SP_UNIT_MENU_H
 
 /*
  * SPUnitMenu
@@ -13,8 +13,9 @@
 #include <glib/gtypes.h>
 #include <gtk/gtk.h>
 
-#include <helper/helper-forward.h>
-
+struct SPUnit;
+struct SPUnitSelector;
+struct SPUnitSelectorClass;
 
 /* Unit selector Widget */
 
@@ -45,7 +46,7 @@ void sp_unit_selector_set_value_in_pixels(SPUnitSelector *selector, GtkAdjustmen
 
 
 
-#endif
+#endif // SP_UNIT_MENU_H
 
 /*
   Local Variables:

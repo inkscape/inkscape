@@ -15,11 +15,13 @@
 #define SEEN_INKSCAPE_XML_LOG_BUILDER_H
 
 #include "gc-managed.h"
-#include "xml/xml-forward.h"
 #include "xml/node-observer.h"
 
 namespace Inkscape {
 namespace XML {
+
+class Event;
+class Node;
 
 /**
  * @brief Event log builder

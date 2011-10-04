@@ -7,7 +7,14 @@
 #ifndef SEEN_XML_REPR_SORTING_H
 #define SEEN_XML_REPR_SORTING_H
 
-#include "xml/xml-forward.h"
+namespace Inkscape {
+namespace XML {
+
+class Node;
+
+} // namespace XML
+} // namespace Inkscape
+
 
 Inkscape::XML::Node *LCA(Inkscape::XML::Node *a, Inkscape::XML::Node *b);
 Inkscape::XML::Node const *LCA(Inkscape::XML::Node const *a, Inkscape::XML::Node const *b);

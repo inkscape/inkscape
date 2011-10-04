@@ -11,8 +11,14 @@
 
 #include <vector>
 #include "LivarotDefs.h"
-#include "livarot/livarot-forward.h"
 #include <2geom/point.h>
+
+struct PathDescr;
+class PathDescrLineTo;
+class PathDescrArcTo;
+class PathDescrCubicTo;
+class PathDescrBezierTo;
+class PathDescrIntermBezierTo;
 
 struct SPStyle;
 

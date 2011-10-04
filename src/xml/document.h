@@ -15,7 +15,6 @@
 #ifndef SEEN_INKSCAPE_XML_SP_REPR_DOC_H
 #define SEEN_INKSCAPE_XML_SP_REPR_DOC_H
 
-#include "xml/xml-forward.h"
 #include "xml/node.h"
 
 namespace Inkscape {

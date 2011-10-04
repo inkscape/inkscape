@@ -26,7 +26,6 @@
 #include "util/share.h"
 #include "util/forward-pointer-iterator.h"
 #include "gc-managed.h"
-#include "xml/xml-forward.h"
 #include "xml/node.h"
 
 namespace Inkscape {

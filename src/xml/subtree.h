@@ -16,7 +16,6 @@
 #define SEEN_INKSCAPE_XML_SUBTREE_H
 
 #include "gc-managed.h"
-#include "xml/xml-forward.h"
 #include "xml/composite-node-observer.h"
 
 namespace Inkscape {

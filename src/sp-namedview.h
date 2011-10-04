@@ -20,12 +20,13 @@
 #define SP_IS_NAMEDVIEW(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_NAMEDVIEW))
 #define SP_IS_NAMEDVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_NAMEDVIEW))
 
-#include "helper/helper-forward.h"
 #include "sp-object-group.h"
 #include "sp-metric.h"
 #include "snap.h"
 #include "display/canvas-grid.h"
 #include "document.h"
+
+struct SPUnit;
 
 namespace Inkscape {
 class CanvasGrid;
