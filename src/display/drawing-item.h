@@ -19,11 +19,23 @@
 #include <boost/intrusive/list.hpp>
 #include <2geom/rect.h>
 #include <2geom/affine.h>
-#include "display/display-forward.h"
 
 class SPStyle;
 
 namespace Inkscape {
+
+class Drawing;
+class DrawingCache;
+class DrawingContext;
+class DrawingItem;
+
+namespace Filters {
+
+class Filter;
+
+} // namespace Filters
+
+
 
 struct UpdateContext {
     Geom::Affine ctm;

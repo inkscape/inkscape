@@ -24,7 +24,6 @@
 #endif
 
 #include "display/sp-ctrlline.h"
-#include "display/display-forward.h"
 #include "display/sp-canvas-util.h"
 #include "display/cairo-utils.h"
 #include "color.h"

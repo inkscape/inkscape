@@ -22,7 +22,6 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "macros.h"
-#include "forward.h"
 #include "pixmaps/cursor-crosshairs.xpm"
 #include <gtk/gtk.h>
 #include "desktop.h"

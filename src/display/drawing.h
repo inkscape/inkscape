@@ -13,15 +13,21 @@
 #define SEEN_INKSCAPE_DISPLAY_DRAWING_H
 
 #include <set>
+#include <glib.h>
 #include <boost/operators.hpp>
 #include <boost/utility.hpp>
 #include <sigc++/sigc++.h>
 #include <2geom/rect.h>
-#include "display/display-forward.h"
 #include "display/drawing-item.h"
 #include "display/rendermode.h"
 
+
+typedef struct _SPCanvasArena SPCanvasArena;
+
+
 namespace Inkscape {
+
+class DrawingItem;
 
 class Drawing
     : boost::noncopyable

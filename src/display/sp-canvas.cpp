@@ -23,7 +23,6 @@
 
 #include "helper/sp-marshal.h"
 #include <helper/recthull.h>
-#include "display-forward.h"
 #include <2geom/affine.h>
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-group.h"

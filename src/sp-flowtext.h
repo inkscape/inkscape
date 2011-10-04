@@ -1,12 +1,11 @@
-#ifndef __SP_ITEM_FLOWTEXT_H__
-#define __SP_ITEM_FLOWTEXT_H__
+#ifndef SEEN_SP_ITEM_FLOWTEXT_H
+#define SEEN_SP_ITEM_FLOWTEXT_H
 
 /*
  */
 
 #include "sp-item.h"
 
-#include "display/display-forward.h"
 #include <2geom/forward.h>
 #include "libnrtype/Layout-TNG.h"
 
@@ -15,6 +14,14 @@
 #define SP_FLOWTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_FLOWTEXT, SPFlowtextClass))
 #define SP_IS_FLOWTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_FLOWTEXT))
 #define SP_IS_FLOWTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_FLOWTEXT))
+
+
+namespace Inkscape {
+
+class DrawingGroup;
+
+} // namespace Inkscape
+
 
 struct SPFlowtext : public SPItem {
     /** Completely recalculates the layout. */
@@ -54,7 +61,7 @@ GType sp_flowtext_get_type (void);
 
 SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, Geom::Point p1, Geom::Point p2);
 
-#endif
+#endif // SEEN_SP_ITEM_FLOWTEXT_H
 
 /*
   Local Variables:

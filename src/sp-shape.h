@@ -33,6 +33,12 @@
 
 struct SPDesktop;
 
+namespace Inkscape {
+
+class DrawingItem;
+
+} // namespace Inkscape
+
 class SPShape : public SPLPEItem {
 public:
     SPCurve *curve;

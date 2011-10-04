@@ -23,10 +23,17 @@
 
 class SPClipPathView;
 
-#include "display/display-forward.h"
 #include "sp-object-group.h"
 #include "uri-references.h"
 #include "xml/node.h"
+
+
+namespace Inkscape {
+
+class Drawing;
+class DrawingItem;
+
+} // namespace Inkscape
 
 class SPClipPath : public SPObjectGroup {
 public:

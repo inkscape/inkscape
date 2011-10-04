@@ -5,7 +5,6 @@
 
 #include "config.h"
 
-#include "forward.h"
 #include "message-context.h"
 #include "streq.h"
 #include "preferences.h"

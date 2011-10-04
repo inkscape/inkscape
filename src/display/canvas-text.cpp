@@ -20,7 +20,6 @@
 #include <sstream>
 #include <string.h>
 
-#include "display-forward.h"
 #include "sp-canvas-util.h"
 #include "canvas-text.h"
 #include "display/cairo-utils.h"

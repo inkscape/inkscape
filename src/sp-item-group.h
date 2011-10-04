@@ -26,6 +26,13 @@
 
 class CGroup;
 
+namespace Inkscape {
+
+class Drawing;
+class DrawingItem;
+
+} // namespace Inkscape
+
 struct SPGroup : public SPLPEItem {
     enum LayerMode { GROUP, LAYER, MASK_HELPER };
 

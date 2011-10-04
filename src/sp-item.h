@@ -23,7 +23,6 @@
 #include <2geom/affine.h>
 #include <2geom/rect.h>
 
-#include "display/display-forward.h"
 #include "sp-object.h"
 #include "snap-preferences.h"
 #include "snap-candidate.h"
@@ -33,7 +32,14 @@ struct SPClipPathReference;
 struct SPMaskReference;
 struct SPAvoidRef;
 struct SPPrintContext;
-namespace Inkscape { class URIReference;}
+
+namespace Inkscape {
+
+class Drawing;
+class DrawingItem;
+class URIReference;
+
+}
 
 enum {
     SP_EVENT_INVALID,

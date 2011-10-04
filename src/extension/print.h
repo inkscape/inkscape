@@ -13,10 +13,14 @@
 
 #include "extension.h"
 
-#include "display/display-forward.h"
 #include "forward.h"
 #include "sp-item.h"
+
 namespace Inkscape {
+
+class Drawing;
+class DrawingItem;
+
 namespace Extension {
 
 class Print : public Extension {

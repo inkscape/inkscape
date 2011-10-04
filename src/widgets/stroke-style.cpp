@@ -29,7 +29,6 @@
 #include "desktop-style.h"
 #include "dialogs/dialog-events.h"
 #include "display/canvas-bpath.h" // for SP_STROKE_LINEJOIN_*
-#include "display/display-forward.h"
 #include "display/drawing.h"
 #include "document-private.h"
 #include "gradient-chemistry.h"

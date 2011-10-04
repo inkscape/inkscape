@@ -13,7 +13,6 @@
 # include "config.h"
 #endif
 
-#include "display-forward.h"
 #include "sp-canvas-item.h"
 #include "sp-canvas.h"
 #include "sp-canvas-util.h"

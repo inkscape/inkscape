@@ -14,7 +14,13 @@
 #include <glibmm/ustring.h>
 #include <2geom/rect.h>
 
-#include "display/display-forward.h"
+namespace Inkscape {
+
+class Drawing;
+class DrawingItem;
+
+} // namespace Inkscape
+
 
 GdkPixbuf* render_pixbuf(Inkscape::Drawing &drawing, double scale_factor, const Geom::Rect& dbox, unsigned psize);
 
@@ -42,7 +48,7 @@ class SvgPreview {
 
 
 
-#endif // __SVG_PREVIEW_CACHE_H__
+#endif // SEEN_INKSCAPE_UI_SVG_PREVIEW_CACHE_H
 /*
   Local Variables:
   mode:c++

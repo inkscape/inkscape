@@ -35,7 +35,6 @@
 #include <glib/gmem.h>
 
 #include <glibmm/i18n.h>
-#include "display/display-forward.h"
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
 #include "display/cairo-utils.h"

@@ -18,7 +18,6 @@
 #include "extension/system.h"
 #include "extension/print.h"
 #include "extension/db.h"
-#include "display/display-forward.h"
 #include "display/drawing.h"
 #include "sp-root.h"
 

@@ -15,7 +15,6 @@
 
 #include <cairo.h>
 #include <2geom/rect.h>
-#include "display/display-forward.h"
 #include "display/drawing.h"
 #include "display/drawing-item.h"
 #include "display/sp-canvas.h"
@@ -32,6 +31,14 @@ G_BEGIN_DECLS
 typedef struct _SPCanvasArena      SPCanvasArena;
 typedef struct _SPCanvasArenaClass SPCanvasArenaClass;
 struct CachePrefObserver;
+
+namespace Inkscape {
+
+class Drawing;
+class DrawingItem;
+
+} // namespace Inkscape
+
 
 struct _SPCanvasArena {
     SPCanvasItem item;

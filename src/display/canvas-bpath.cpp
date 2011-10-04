@@ -21,7 +21,6 @@
 #include "display/sp-canvas-group.h"
 #include "display/sp-canvas-util.h"
 #include "display/canvas-bpath.h"
-#include "display/display-forward.h"
 #include "display/curve.h"
 #include "display/cairo-utils.h"
 #include "helper/geom.h"

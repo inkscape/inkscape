@@ -22,7 +22,6 @@
 #include "display/cairo-utils.h"
 #include "display/canvas-axonomgrid.h"
 #include "display/canvas-grid.h"
-#include "display/display-forward.h"
 #include "display/sp-canvas-util.h"
 #include "document.h"
 #include "helper/units.h"
