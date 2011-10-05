@@ -15,7 +15,6 @@
 
 #include <gtk/gtk.h>
 
-#include "forward.h"
 #include "sp-item.h"
 #define SP_TYPE_PATTERN (sp_pattern_get_type ())
 #define SP_PATTERN(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_PATTERN, SPPattern))
@@ -25,6 +24,7 @@
 
 GType sp_pattern_get_type (void);
 
+class SPPattern;
 class SPPatternClass;
 
 #include "svg/svg-length.h"
@@ -33,6 +33,7 @@ class SPPatternClass;
 
 #include <stddef.h>
 #include <sigc++/connection.h>
+
 
 class SPPatternReference : public Inkscape::URIReference {
 public:

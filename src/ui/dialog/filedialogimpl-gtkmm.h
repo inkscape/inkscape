@@ -49,6 +49,9 @@
 
 namespace Inkscape
 {
+
+class URI;
+
 namespace UI
 {
 namespace Dialog

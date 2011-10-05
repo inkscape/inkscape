@@ -2,6 +2,8 @@
 #define SEEN_SP_GRADIENT_REFERENCE_H
 
 #include "uri-references.h"
+
+class SPGradient;
 class SPObject;
 
 class SPGradientReference : public Inkscape::URIReference {

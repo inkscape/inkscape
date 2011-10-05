@@ -1,12 +1,13 @@
-#ifndef __FONT_STYLE_TO_POS_H__
-#define __FONT_STYLE_TO_POS_H__
+#ifndef SEEN_FONT_STYLE_TO_POS_H
+#define SEEN_FONT_STYLE_TO_POS_H
 
-#include <forward.h> /* SPStyle */
 #include <libnrtype/nr-type-pos-def.h>
 
-NRTypePosDef font_style_to_pos (SPStyle const &style);
+class SPStyle;
 
-#endif /* __FONT_STYLE_TO_POS_H__ */
+NRTypePosDef font_style_to_pos(SPStyle const &style);
+
+#endif // SEEN_FONT_STYLE_TO_POS_H
 
 /*
   Local Variables:

@@ -18,11 +18,13 @@
 
 #include "color.h"
 #include "fill-or-stroke.h"
-#include "forward.h"
 #include "sp-gradient-spread.h"
 #include "sp-gradient-units.h"
 
 class SPGradient;
+class SPDesktop;
+class SPPattern;
+class SPStyle;
 
 #define SP_TYPE_PAINT_SELECTOR (sp_paint_selector_get_type ())
 #define SP_PAINT_SELECTOR(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_PAINT_SELECTOR, SPPaintSelector))

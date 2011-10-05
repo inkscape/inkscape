@@ -16,7 +16,6 @@
 #include <sigc++/sigc++.h>
 #include <sigc++/connection.h>
 #include "event-context.h"
-#include <forward.h>
 #include <2geom/point.h>
 #include "libavoid/connector.h"
 #include "connection-points.h"

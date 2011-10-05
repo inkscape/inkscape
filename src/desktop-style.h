@@ -1,5 +1,5 @@
-#ifndef __SP_DESKTOP_STYLE_H__
-#define __SP_DESKTOP_STYLE_H__
+#ifndef SEEN_SP_DESKTOP_STYLE_H
+#define SEEN_SP_DESKTOP_STYLE_H
 
 /*
  * Desktop style management
@@ -13,7 +13,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 
 class ColorRGBA;
 struct SPCSSAttr;
@@ -83,7 +83,7 @@ int sp_desktop_query_style_from_list (GSList *list, SPStyle *style, int property
 int sp_desktop_query_style(SPDesktop *desktop, SPStyle *style, int property);
 bool sp_desktop_query_style_all (SPDesktop *desktop, SPStyle *query);
 
-#endif
+#endif // SEEN_SP_DESKTOP_STYLE_H
 
 
 /*

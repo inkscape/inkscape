@@ -22,7 +22,6 @@
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 
-#include "forward.h"
 #include "gc-managed.h"
 #include "gc-finalized.h"
 #include "gc-anchored.h"

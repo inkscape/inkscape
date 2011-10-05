@@ -1,5 +1,5 @@
-#ifndef __SP_DRAW_CONTEXT_H__
-#define __SP_DRAW_CONTEXT_H__
+#ifndef SEEN_SP_DRAW_CONTEXT_H
+#define SEEN_SP_DRAW_CONTEXT_H
 
 /*
  * Generic drawing context
@@ -18,7 +18,6 @@
 #include <sigc++/sigc++.h>
 #include <2geom/point.h>
 #include "event-context.h"
-#include <forward.h>
 #include "live_effects/effect.h"
 
 /* Freehand context */
@@ -90,7 +89,7 @@ void spdc_endpoint_snap_free(SPEventContext const *ec, Geom::Point &p, guint sta
 void spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item);
 void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char const *tool, guint event_state);
 
-#endif
+#endif // SEEN_SP_DRAW_CONTEXT_H
 
 /*
   Local Variables:

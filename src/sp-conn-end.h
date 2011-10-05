@@ -9,6 +9,7 @@
 #include "connection-points.h"
 #include "conn-avoid-ref.h"
 
+class SPPath;
 
 class SPConnEnd {
 public:

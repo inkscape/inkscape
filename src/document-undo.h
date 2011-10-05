@@ -3,7 +3,11 @@
 
 typedef struct _GtkObject GtkObject;
 
+class SPDesktop;
+
 namespace Inkscape {
+
+class Application;
 
 class DocumentUndo
 {

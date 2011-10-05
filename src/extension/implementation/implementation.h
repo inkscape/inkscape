@@ -16,12 +16,21 @@
 #include <gdkmm/types.h>
 #include <gtkmm/widget.h>
 
-#include "forward.h"
 #include "xml/node.h"
 #include <2geom/forward.h>
 #include <2geom/point.h>
 
+class SPDocument;
+class SPStyle;
+
 namespace Inkscape {
+
+namespace UI {
+namespace View {
+class View;
+} // namespace View
+} // namespace UI
+
 namespace Extension {
 
 class Effect;

@@ -606,7 +606,8 @@ cmsHTRANSFORM ColorProfile::getTransfGamutCheck()
     return impl->_gamutTransf;
 }
 
-bool ColorProfile::GamutCheck(SPColor color){
+bool ColorProfile::GamutCheck(SPColor color)
+{
     BYTE outofgamut = 0;
 
     guint32 val = color.toRGBA32(0);

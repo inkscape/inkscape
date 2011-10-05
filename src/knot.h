@@ -1,5 +1,5 @@
-#ifndef __SP_KNOT_H__
-#define __SP_KNOT_H__
+#ifndef SEEN_SP_KNOT_H
+#define SEEN_SP_KNOT_H
 
 /** \file
  * Declarations for SPKnot: Desktop-bound visual control object.
@@ -16,12 +16,12 @@
 
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
-#include "forward.h"
 #include <2geom/point.h>
 #include "knot-enums.h"
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 
+class SPDesktop;
 class SPKnot;
 class SPKnotClass;
 struct SPCanvasItem;
@@ -179,7 +179,7 @@ void sp_knot_handler_request_position(GdkEvent *event, SPKnot *knot);
 Geom::Point sp_knot_position(SPKnot const *knot);
 
 
-#endif /* !__SP_KNOT_H__ */
+#endif // SEEN_SP_KNOT_H
 
 /*
   Local Variables:

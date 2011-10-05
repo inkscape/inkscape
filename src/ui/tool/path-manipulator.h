@@ -17,12 +17,12 @@
 #include <2geom/affine.h>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
-#include "forward.h"
 #include "ui/tool/node.h"
 #include "ui/tool/manipulator.h"
 
 struct SPCanvasItem;
 struct SPCurve;
+struct SPPath;
 
 namespace Inkscape {
 namespace XML { class Node; }

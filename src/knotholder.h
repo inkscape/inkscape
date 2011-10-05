@@ -1,5 +1,5 @@
-#ifndef __SP_KNOTHOLDER_H__
-#define __SP_KNOTHOLDER_H__
+#ifndef SEEN_SP_KNOTHOLDER_H
+#define SEEN_SP_KNOTHOLDER_H
 
 /*
  * KnotHolder - Hold SPKnot list and manage signals
@@ -19,7 +19,6 @@
 
 #include <glib/gtypes.h>
 #include "knot-enums.h"
-#include "forward.h"
 #include <2geom/forward.h>
 #include "knot-holder-entity.h"
 #include <list>
@@ -71,7 +70,7 @@ void knot_moved_handler(SPKnot *knot, Geom::Point const *p, guint state, gpointe
 void knot_ungrabbed_handler(SPKnot *knot, unsigned int state, KnotHolder *kh);
 **/
 
-#endif /* !__SP_KNOTHOLDER_H__ */
+#endif // SEEN_SP_KNOTHOLDER_H
 
 /*
   Local Variables:

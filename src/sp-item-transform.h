@@ -1,8 +1,10 @@
-#ifndef SP_ITEM_TRANSFORM_H
-#define SP_ITEM_TRANSFORM_H
+#ifndef SEEN_SP_ITEM_TRANSFORM_H
+#define SEEN_SP_ITEM_TRANSFORM_H
 
-#include "forward.h"
+#include <glib.h>
+
 #include <2geom/forward.h>
+class SPItem;
 
 void sp_item_rotate_rel(SPItem *item, Geom::Rotate const &rotation);
 void sp_item_scale_rel (SPItem *item, Geom::Scale const &scale);
@@ -14,7 +16,7 @@ Geom::Affine get_scale_transform_for_variable_stroke (Geom::Rect const &bbox_vis
 Geom::Rect get_visual_bbox (Geom::OptRect const &initial_geom_bbox, Geom::Affine const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke);
 
 
-#endif /* !SP_ITEM_TRANSFORM_H */
+#endif // SEEN_SP_ITEM_TRANSFORM_H
 
 /*
   Local Variables:

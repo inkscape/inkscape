@@ -1,5 +1,5 @@
-#ifndef __SHAPE_EDITOR_H__
-#define __SHAPE_EDITOR_H__
+#ifndef SEEN_SHAPE_EDITOR_H
+#define SEEN_SHAPE_EDITOR_H
 
 /*
  * Inkscape::ShapeEditor
@@ -12,17 +12,20 @@
  *
  */
 
-#include <forward.h>
+#include <glib.h>
+
 #include <2geom/forward.h>
+
 
 namespace Inkscape { namespace NodePath { class Path; } }
 namespace Inkscape { namespace XML { class Node; } }
 
 class KnotHolder;
+class LivePathEffectObject;
 class SPDesktop;
+class SPItem;
 class SPNodeContext;
 class ShapeEditorsCollective;
-class LivePathEffectObject;
 
 #include <2geom/point.h>
 #include <boost/optional.hpp>
@@ -73,7 +76,7 @@ private:
     Inkscape::XML::Node *knotholder_listener_attached_for;
 };
 
-#endif
+#endif // SEEN_SHAPE_EDITOR_H
 
 
 /*

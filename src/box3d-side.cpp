@@ -24,6 +24,8 @@
 #include "desktop-style.h"
 #include "box3d.h"
 
+struct SPPathClass;
+
 static void box3d_side_class_init (Box3DSideClass *klass);
 static void box3d_side_init (Box3DSide *side);
 

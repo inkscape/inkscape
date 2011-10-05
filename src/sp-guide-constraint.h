@@ -1,7 +1,7 @@
-#ifndef __SP_GUIDE_CONSTRAINT_H__
-#define __SP_GUIDE_CONSTRAINT_H__
+#ifndef SEEN_SP_GUIDE_CONSTRAINT_H
+#define SEEN_SP_GUIDE_CONSTRAINT_H
 
-#include <forward.h>
+class SPGuide;
 
 class SPGuideConstraint {
 public:
@@ -29,7 +29,7 @@ public:
 };
 
 
-#endif /* !__SP_GUIDE_CONSTRAINT_H__ */
+#endif // SEEN_SP_GUIDE_CONSTRAINT_H
 
 
 /*

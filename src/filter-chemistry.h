@@ -14,11 +14,16 @@
 #ifndef SEEN_SP_FILTER_CHEMISTRY_H
 #define SEEN_SP_FILTER_CHEMISTRY_H
 
-#include "forward.h"
+#include <glib.h>
+
 #include "display/nr-filter-types.h"
 
+class SPDocument;
 class SPFilter;
 class SPFilterPrimitive;
+class SPItem;
+class SPObject;
+
 
 SPFilterPrimitive *filter_add_primitive(SPFilter *filter, Inkscape::Filters::FilterPrimitiveType);
 SPFilter *new_filter (SPDocument *document);

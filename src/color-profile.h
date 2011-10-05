@@ -11,6 +11,8 @@
 #include <glibmm/ustring.h>
 #include "cms-color-types.h"
 
+struct SPColor;
+
 namespace Inkscape {
 
 enum {

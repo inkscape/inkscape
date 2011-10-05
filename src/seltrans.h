@@ -1,5 +1,5 @@
-#ifndef __SELTRANS_H__
-#define __SELTRANS_H__
+#ifndef SEEN_SELTRANS_H
+#define SEEN_SELTRANS_H
 
 /*
  * Helper object for transforming selected items
@@ -21,7 +21,6 @@
 #include <2geom/affine.h>
 #include <2geom/rect.h>
 #include "knot.h"
-#include "forward.h"
 #include "selcue.h"
 #include "message-context.h"
 #include <vector>
@@ -181,7 +180,7 @@ private:
 
 }
 
-#endif
+#endif // SEEN_SELTRANS_H
 
 
 /*

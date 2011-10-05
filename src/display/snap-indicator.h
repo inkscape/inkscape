@@ -14,8 +14,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "forward.h"
 #include "snapped-point.h"
+
+class SPDesktop;
 
 namespace Inkscape {
 namespace Display {

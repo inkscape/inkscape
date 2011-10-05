@@ -57,7 +57,6 @@ class SPObjectClass;
 #include <sigc++/functors/slot.h>
 #include <sigc++/signal.h>
 
-#include "forward.h"
 #include "version.h"
 #include "util/forward-pointer-iterator.h"
 #include "desktop-style.h"
@@ -111,7 +110,9 @@ enum {
     SP_XML_SPACE_PRESERVE
 };
 
+class SPDocument;
 class SPIXmlSpace;
+class SPObject;
 
 /// Internal class consisting of two bits.
 struct SPIXmlSpace {
@@ -119,7 +120,6 @@ struct SPIXmlSpace {
     guint value : 1;
 };
 
-class SPObject;
 
 /*
  * Refcounting

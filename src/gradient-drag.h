@@ -1,5 +1,5 @@
-#ifndef __GRADIENT_DRAG_H__
-#define __GRADIENT_DRAG_H__
+#ifndef SEEN_GRADIENT_DRAG_H
+#define SEEN_GRADIENT_DRAG_H
 
 /*
  * On-canvas gradient dragging
@@ -18,13 +18,26 @@
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <vector>
+#include <glib.h>
+#include <glibmm/ustring.h>
 
-#include <forward.h>
 #include <2geom/point.h>
-#include <knot-enums.h>
+
+#include "knot-enums.h"
 
 struct SPItem;
 struct SPKnot;
+
+class SPDesktop;
+class SPCSSAttr;
+class SPLinearGradient;
+class SPObject;
+class SPRadialGradient;
+class SPStop;
+
+namespace Inkscape {
+class Selection;
+} // namespace Inkscape
 
 /**
 This class represents a single draggable point of a gradient. It remembers the item
@@ -187,4 +200,4 @@ private:
     sigc::connection style_query_connection;
 };
 
-#endif
+#endif // SEEN_GRADIENT_DRAG_H

@@ -14,7 +14,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "forward.h"
 #include <boost/optional.hpp>
 #include <vector>
 #include <2geom/point.h>
@@ -25,6 +24,7 @@
 class CtrlRect;
 class SPCanvasItem;
 class SPCurve;
+class SPDesktop;
 
 enum {
     RUBBERBAND_MODE_RECT,

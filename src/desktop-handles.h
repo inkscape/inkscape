@@ -1,5 +1,5 @@
-#ifndef __SP_DESKTOP_HANDLES_H__
-#define __SP_DESKTOP_HANDLES_H__
+#ifndef SEEN_SP_DESKTOP_HANDLES_H
+#define SEEN_SP_DESKTOP_HANDLES_H
 
 /*
  * Frontends
@@ -13,11 +13,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "forward.h"
 
+class SPDesktop;
+class SPDocument;
+class SPEventContext;
+class SPNamedView;
 struct SPCanvas;
-struct SPCanvasItem;
 struct SPCanvasGroup;
+struct SPCanvasItem;
 
 namespace Inkscape { 
     class MessageStack;
@@ -46,7 +49,7 @@ SPCanvasGroup * sp_desktop_tempgroup (SPDesktop const * desktop);
 Inkscape::MessageStack * sp_desktop_message_stack (SPDesktop const * desktop);
 SPNamedView * sp_desktop_namedview (SPDesktop const * desktop);
 
-#endif
+#endif // SEEN_SP_DESKTOP_HANDLES_H
 
 /*
   Local Variables:

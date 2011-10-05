@@ -13,7 +13,6 @@
 
 #include <stddef.h>
 #include <sigc++/connection.h>
-#include "forward.h"
 #include "ui/tool/commit-events.h"
 #include "ui/tool/manipulator.h"
 #include "ui/tool/modifier-tracker.h"

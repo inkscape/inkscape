@@ -42,9 +42,9 @@ struct SPAttributeWidgetClass;
 struct SPAttributeTable;
 struct SPAttributeTableClass;
 
-#include <gtk/gtk.h>
+class SPObject;
 
-#include <forward.h>
+#include <gtk/gtk.h>
 
 struct SPAttributeWidget {
     GtkEntry entry;

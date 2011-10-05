@@ -17,7 +17,6 @@
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 #include "event-context.h"
-#include "forward.h"
 #include "ui/tool/node-types.h"
 
 #define INK_TYPE_NODE_TOOL               (ink_node_tool_get_type ())

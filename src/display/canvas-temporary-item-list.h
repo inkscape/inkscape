@@ -12,10 +12,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "forward.h"
 #include <list>
+#include <glib.h>
 
 struct SPCanvasItem;
+class SPDesktop;
 
 namespace Inkscape {
 namespace Display {

@@ -1,5 +1,5 @@
-#ifndef __SP_COLOR_H__
-#define __SP_COLOR_H__
+#ifndef SEEN_SP_COLOR_H
+#define SEEN_SP_COLOR_H
 
 /** \file
  * Colors.
@@ -82,5 +82,4 @@ void sp_color_rgb_to_cmyk_floatv (float *cmyk, float r, float g, float b);
 void sp_color_cmyk_to_rgb_floatv (float *rgb, float c, float m, float y, float k);
 
 
-#endif
-
+#endif // SEEN_SP_COLOR_H

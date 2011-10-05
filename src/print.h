@@ -14,8 +14,10 @@
 #include <gtkmm.h>
 //#include <libnr/nr-path.h>
 #include <2geom/forward.h>
-#include "forward.h"
 
+
+class SPDocument;
+class SPStyle;
 
 namespace Inkscape {
 namespace Extension {

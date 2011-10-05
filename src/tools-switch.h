@@ -12,7 +12,11 @@
 #ifndef SEEN_TOOLS_SWITCH_H
 #define SEEN_TOOLS_SWITCH_H
 
-#include <forward.h>
+class SPDesktop;
+class SPItem;
+namespace Geom {
+class Point;
+}
 
 enum {
   TOOLS_INVALID,
@@ -44,7 +48,7 @@ int tools_active(SPDesktop *dt);
 void tools_switch(SPDesktop *dt, int num);
 void tools_switch_by_item (SPDesktop *dt, SPItem *item, Geom::Point const p);
 
-#endif /* !SEEN_TOOLS_SWITCH_H */
+#endif // !SEEN_TOOLS_SWITCH_H
 
 /*
   Local Variables:

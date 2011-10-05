@@ -1,5 +1,5 @@
-#ifndef __SP_EVENT_CONTEXT_H__
-#define __SP_EVENT_CONTEXT_H__
+#ifndef SEEN_SP_EVENT_CONTEXT_H
+#define SEEN_SP_EVENT_CONTEXT_H
 
 /** \file
  * SPEventContext: base class for event processors
@@ -37,6 +37,13 @@ namespace Inkscape {
         class Node;
     }
 }
+
+
+#define SP_TYPE_EVENT_CONTEXT (sp_event_context_get_type())
+#define SP_EVENT_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_EVENT_CONTEXT, SPEventContext))
+#define SP_IS_EVENT_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_EVENT_CONTEXT))
+
+GType sp_event_context_get_type();
 
 gboolean sp_event_context_snap_watchdog_callback(gpointer data);
 void sp_event_context_discard_delayed_snap_event(SPEventContext *ec);
@@ -184,7 +191,7 @@ void ec_shape_event_attr_changed(Inkscape::XML::Node *shape_repr,
 
 void event_context_print_event_info(GdkEvent *event, bool print_return = true);
 
-#endif
+#endif // SEEN_SP_EVENT_CONTEXT_H
 
 
 /*

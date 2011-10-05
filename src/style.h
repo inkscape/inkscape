@@ -16,7 +16,6 @@
  */
 
 #include "color.h"
-#include "forward.h"
 #include "sp-marker-loc.h"
 #include "sp-filter.h"
 #include "sp-filter-reference.h"

@@ -18,8 +18,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "forward.h"
 #include "sp-gradient.h"
+
+class SPItem;
 
 /*
  * Either normalizes given gradient to vector, or returns fresh normalized

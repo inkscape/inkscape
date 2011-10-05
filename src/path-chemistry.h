@@ -1,5 +1,5 @@
-#ifndef __PATH_CHEMISTRY_H__
-#define __PATH_CHEMISTRY_H__
+#ifndef SEEN_PATH_CHEMISTRY_H
+#define SEEN_PATH_CHEMISTRY_H
 
 /*
  * Here are handlers for modifying selections, specific to paths
@@ -13,7 +13,16 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "forward.h"
+#include <glib.h>
+
+class SPDesktop;
+class SPItem;
+
+namespace Inkscape {
+namespace XML {
+class Node;
+} // namespace XML
+} // namespace Inkscape
 
 void sp_selected_path_combine (SPDesktop *desktop);
 void sp_selected_path_break_apart (SPDesktop *desktop);
@@ -23,7 +32,7 @@ Inkscape::XML::Node *sp_selected_item_to_curved_repr(SPItem *item, guint32 text_
 void sp_selected_path_reverse (SPDesktop *desktop);
 bool sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_select, bool skip_all_lpeitems = false);
 
-#endif
+#endif // SEEN_PATH_CHEMISTRY_H
 
 /*
   Local Variables:

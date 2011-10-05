@@ -1,11 +1,12 @@
-#ifndef __SP_ITEM_RM_UNSATISFIED_CNS_H__
-#define __SP_ITEM_RM_UNSATISFIED_CNS_H__
-#include <forward.h>
+#ifndef SEEN_SP_ITEM_RM_UNSATISFIED_CNS_H
+#define SEEN_SP_ITEM_RM_UNSATISFIED_CNS_H
+
+class SPItem;
 
 void sp_item_rm_unsatisfied_cns(SPItem &item);
 
 
-#endif /* !__SP_ITEM_RM_UNSATISFIED_CNS_H__ */
+#endif // SEEN_SP_ITEM_RM_UNSATISFIED_CNS_H
 
 /*
   Local Variables:

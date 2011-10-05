@@ -13,7 +13,6 @@
 
 #include "extension.h"
 
-#include "forward.h"
 #include "sp-item.h"
 
 namespace Inkscape {

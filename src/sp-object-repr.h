@@ -12,7 +12,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "forward.h"
 #include "sp-object.h"
 namespace Inkscape {
 namespace XML {

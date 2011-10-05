@@ -1,7 +1,6 @@
 #ifndef SEEN_SP_GUIDE_ATTACHMENT_H
 #define SEEN_SP_GUIDE_ATTACHMENT_H
 
-#include <forward.h>
 #include "sp-item.h"
 
 class SPGuideAttachment {

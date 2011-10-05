@@ -14,7 +14,7 @@
 
 #include <sigc++/sigc++.h>
 #include <glibmm/ustring.h>
-#include "forward.h"
+#include <glib-object.h>
 
 struct SPAction;
 struct SPActionClass;
@@ -26,6 +26,11 @@ struct SPActionClass;
 
 namespace Inkscape {
 class Verb;
+namespace UI {
+namespace View {
+class View;
+} // namespace View
+} // namespace UI
 }
 
 /** All the data that is required to be an action.  This

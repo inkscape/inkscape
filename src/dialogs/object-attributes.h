@@ -13,8 +13,8 @@
 #define SEEN_DIALOGS_OBJECT_ATTRIBUTES_H
 
 #include <glib.h>
-#include <gtk/gtk.h>
-#include "../forward.h"
+
+class SPObject;
 
 void sp_object_attributes_dialog (SPObject *object, const gchar *tag);
 

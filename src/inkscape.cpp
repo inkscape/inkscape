@@ -88,6 +88,10 @@ enum {
 # FORWARD DECLARATIONS
 ################################*/
 
+namespace Inkscape {
+class ApplicationClass;
+}
+
 static void inkscape_class_init (Inkscape::ApplicationClass *klass);
 static void inkscape_init (SPObject *object);
 static void inkscape_dispose (GObject *object);

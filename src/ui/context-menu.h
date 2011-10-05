@@ -13,10 +13,13 @@
 
 #include <gtk/gtk.h>
 
-#include "forward.h"
 #include "sp-object.h"
-/* Append object-specific part to context menu */
 
+class SPDesktop;
+
+/**
+ * Append object-specific part to context menu.
+ */
 void sp_object_menu (SPObject *object, SPDesktop *desktop, GtkMenu *menu);
 
 #endif

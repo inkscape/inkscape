@@ -18,9 +18,10 @@
 #include <gtkmm.h>
 #include <2geom/point.h>
 
-#include "forward.h"
 #include "util/accumulators.h"
 #include "display/sodipodi-ctrl.h"
+
+class SPDesktop;
 
 namespace Inkscape {
 namespace UI {

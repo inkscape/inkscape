@@ -21,10 +21,18 @@
 #include <string.h>
 #include "config.h"
 #include "require-config.h"   /* HAVE_GTK_WINDOW_FULLSCREEN */
-#include "forward.h"
 #include <glibmm/ustring.h>
 
 struct SPAction;
+class SPDocument;
+
+namespace Inkscape {
+namespace UI {
+namespace View {
+class View;
+} // namespace View
+} // namespace UI
+} // namespace Inkscape
 
 /** \brief This anonymous enum is used to provide a list of the Verbs
            which are defined staticly in the verb files.  There may be

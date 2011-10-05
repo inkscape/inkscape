@@ -1,4 +1,5 @@
-#define __INK_STOCK_ITEMS__
+#ifndef SEEN_INK_STOCK_ITEMS_H
+#define SEEN_INK_STOCK_ITEMS_H
 
 /*
  * Stock-items
@@ -14,7 +15,8 @@
 
 #include <glib/gtypes.h>
 
-#include <forward.h>
+class SPObject;
 
 SPObject *get_stock_item(gchar const *urn);
 
+#endif // SEEN_INK_STOCK_ITEMS_H

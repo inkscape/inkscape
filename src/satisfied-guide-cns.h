@@ -1,7 +1,6 @@
-#ifndef __SATISFIED_GUIDE_CNS_H__
-#define __SATISFIED_GUIDE_CNS_H__
+#ifndef SEEN_SATISFIED_GUIDE_CNS_H
+#define SEEN_SATISFIED_GUIDE_CNS_H
 
-#include <forward.h>
 #include <2geom/forward.h>
 #include <vector>
 #include <sp-item.h>
@@ -13,7 +12,7 @@ void satisfied_guide_cns(SPDesktop const &desktop,
                          std::vector<SPGuideConstraint> &cns);
 
 
-#endif /* !__SATISFIED_GUIDE_CNS_H__ */
+#endif // SEEN_SATISFIED_GUIDE_CNS_H
 
 /*
   Local Variables:

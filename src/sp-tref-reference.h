@@ -12,7 +12,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information.
  */
 
-#include <forward.h>
 #include "sp-item.h"
 #include <uri-references.h>
 #include <stddef.h>

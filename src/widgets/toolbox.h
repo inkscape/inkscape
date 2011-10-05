@@ -18,8 +18,10 @@
 #include <gtk/gtk.h>
 #include <glibmm/ustring.h>
 
-#include "forward.h"
 #include "icon-size.h"
+
+class SPDesktop;
+class SPEventContext;
 
 namespace Inkscape {
 namespace UI {
