@@ -32,7 +32,7 @@ namespace Filter {
 /**
     \brief    Custom predefined Blend filter.
     
-    Blend objecs with background images or with themselves
+    Blend objects with background images or with themselves
 
     Filter's parameters:
     * Source (enum [SourceGraphic,BackgroundImage], default BackgroundImage) -> blend (in2)
@@ -70,7 +70,7 @@ public:
                     "<submenu name=\"" N_("Fill and Transparency") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
-                "<menu-tip>" N_("Blend objecs with background images or with themselves") "</menu-tip>\n"
+                "<menu-tip>" N_("Blend objects with background images or with themselves") "</menu-tip>\n"
               "</effect>\n"
             "</inkscape-extension>\n", new Blend());
     };

@@ -905,7 +905,7 @@ public:
               "<name>" N_("Invert") "</name>\n"
               "<id>org.inkscape.effect.filter.Invert</id>\n"
               "<param name=\"channels\" gui-text=\"" N_("Invert channels:") "\" type=\"enum\">\n"
-                "<_item value=\"0\">" N_("No invertion") "</_item>\n"
+                "<_item value=\"0\">" N_("No inversion") "</_item>\n"
                 "<_item value=\"1\">" N_("Red and blue") "</_item>\n"
                 "<_item value=\"2\">" N_("Red and green") "</_item>\n"
                 "<_item value=\"3\">" N_("Green and blue") "</_item>\n"
