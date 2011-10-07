@@ -736,7 +736,7 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             lpEMFR->iType!=EMR_POLYLINETO && lpEMFR->iType!=EMR_POLYLINETO16 &&
             lpEMFR->iType!=EMR_LINETO && lpEMFR->iType!=EMR_ARCTO &&
             lpEMFR->iType!=EMR_SETBKCOLOR && lpEMFR->iType!=EMR_SETROP2 &&
-            lpEMFR->iType!=EMR_SETBKMODE)
+            lpEMFR->iType!=EMR_SETBKMODE && lpEMFR->iType!=EMR_BEGINPATH)
         {
             *(d->outsvg) += "    <path ";
             output_style(d, EMR_STROKEPATH);
@@ -1665,8 +1665,11 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
         {
             dbg_str << "<!-- EMR_BEGINPATH -->\n";
 
-            tmp_path << "d=\"";
-            *(d->path) = "";
+            if (!d->pathless_stroke) {
+                tmp_path << "d=\"";
+                *(d->path) = "";
+            }
+            d->pathless_stroke = false;
             d->inpath = true;
             break;
         }
