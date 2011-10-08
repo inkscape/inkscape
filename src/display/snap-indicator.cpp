@@ -105,6 +105,12 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
             case SNAPTARGET_PATH_GUIDE_INTERSECTION:
                 target_name = _("guide-path intersection");
                 break;
+            case SNAPTARGET_PATH_CLIP:
+                target_name = _("clip-path");
+                break;
+            case SNAPTARGET_PATH_MASK:
+                target_name = _("mask-path");
+                break;
             case SNAPTARGET_BBOX_CORNER:
                 target_name = _("bounding box corner");
                 break;
@@ -326,6 +332,25 @@ SnapIndicator::set_new_snapsource(Inkscape::SnapCandidatePoint const &p)
 }
 
 void
+SnapIndicator::set_new_debugging_point(Geom::Point const &p)
+{
+    g_assert(_desktop != NULL);
+    SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (_desktop),
+                                                    SP_TYPE_CTRL,
+                                                    "anchor", GTK_ANCHOR_CENTER,
+                                                    "size", 10.0,
+                                                    "fill_color", 0x00ff00ff,
+                                                    "stroked", FALSE,
+                                                    "mode", SP_KNOT_MODE_XOR,
+                                                    "shape", SP_KNOT_SHAPE_DIAMOND,
+                                                    NULL );
+
+    SP_CTRL(canvasitem)->moveto(p);
+    _debugging_points.push_back(_desktop->add_temporary_canvasitem(canvasitem, 5000));
+
+}
+
+void
 SnapIndicator::remove_snapsource()
 {
     if (_snapsource) {
@@ -333,6 +358,16 @@ SnapIndicator::remove_snapsource()
         _snapsource = NULL;
     }
 }
+
+void
+SnapIndicator::remove_debugging_points()
+{
+    for (std::list<TemporaryItem *>::const_iterator i = _debugging_points.begin(); i != _debugging_points.end(); i++) {
+        _desktop->remove_temporary_canvasitem(*i);
+    }
+    _debugging_points.clear();
+}
+
 
 } //namespace Display
 } /* namespace Inkscape */

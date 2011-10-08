@@ -166,12 +166,15 @@ static void
 spdc_endpoint_snap(SPPencilContext const *pc, Geom::Point &p, guint const state)
 {
     if ((state & GDK_CONTROL_MASK)) { //CTRL enables constrained snapping
-        spdc_endpoint_snap_rotation(pc, p, pc->p[0], state);
+        if (pc->npoints > 0) {
+            spdc_endpoint_snap_rotation(pc, p, pc->p[0], state);
+        }
     } else {
         if (!(state & GDK_SHIFT_MASK)) { //SHIFT disables all snapping, except the angular snapping above
                                          //After all, the user explicitely asked for angular snapping by
                                          //pressing CTRL
-            spdc_endpoint_snap_free(pc, p, state);
+            boost::optional<Geom::Point> origin = pc->npoints > 0 ? pc->p[0] : boost::optional<Geom::Point>();
+            spdc_endpoint_snap_free(pc, p, origin, state);
         }
     }
 }

@@ -70,6 +70,8 @@ enum SnapTargetType {
     SNAPTARGET_PATH,
     SNAPTARGET_PATH_INTERSECTION,
     SNAPTARGET_PATH_GUIDE_INTERSECTION,
+    SNAPTARGET_PATH_CLIP,
+    SNAPTARGET_PATH_MASK,
     SNAPTARGET_ELLIPSE_QUADRANT_POINT, // this corner is at the center of the stroke
     SNAPTARGET_RECT_CORNER, // of a rectangle, so this corner is at the center of the stroke
     //-------------------------------------------------------------------

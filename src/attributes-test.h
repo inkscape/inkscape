@@ -342,6 +342,8 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"sodipodi:version", false},
     {"inkscape:version", true},
     {"inkscape:object-paths", true},
+    {"inkscape:snap-path-clip", true},
+    {"inkscape:snap-path-mask", true},
     {"inkscape:object-nodes", true},
     {"inkscape:bbox-paths", true},
     {"inkscape:bbox-nodes", true},

@@ -265,6 +265,8 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     object->readAttr( "inkscape:snap-grids" );
     object->readAttr( "inkscape:snap-intersection-paths" );
     object->readAttr( "inkscape:object-paths" );
+    object->readAttr( "inkscape:snap-path-clip" );
+    object->readAttr( "inkscape:snap-path-mask" );
     object->readAttr( "inkscape:object-nodes" );
     object->readAttr( "inkscape:bbox-paths" );
     object->readAttr( "inkscape:bbox-nodes" );
@@ -513,6 +515,14 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
     case SP_ATTR_INKSCAPE_SNAP_PATH:
             nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PATH, value ? sp_str_to_bool(value) : FALSE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+    case SP_ATTR_INKSCAPE_SNAP_PATH_CLIP:
+            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PATH_CLIP, value ? sp_str_to_bool(value) : FALSE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+    case SP_ATTR_INKSCAPE_SNAP_PATH_MASK:
+            nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PATH_MASK, value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_NODE_CUSP:

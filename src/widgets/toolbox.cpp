@@ -2153,6 +2153,14 @@ static void toggle_snap_callback(GtkToggleAction *act, gpointer data) //data poi
             v = nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_PATH);
             sp_repr_set_boolean(repr, "inkscape:object-paths", !v);
             break;
+        case SP_ATTR_INKSCAPE_SNAP_PATH_CLIP:
+            v = nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_PATH_CLIP);
+            sp_repr_set_boolean(repr, "inkscape:snap-path-clip", !v);
+            break;
+        case SP_ATTR_INKSCAPE_SNAP_PATH_MASK:
+            v = nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_PATH_MASK);
+            sp_repr_set_boolean(repr, "inkscape:snap-path-mask", !v);
+            break;
         case SP_ATTR_INKSCAPE_SNAP_NODE_CUSP:
             v = nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_NODE_CUSP);
             sp_repr_set_boolean(repr, "inkscape:object-nodes", !v);

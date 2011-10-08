@@ -114,8 +114,12 @@ public:
     // freeSnapReturnByRef() is preferred over freeSnap(), because it only returns a
     // point if snapping has occurred (by overwriting p); otherwise p is untouched
     void freeSnapReturnByRef(Geom::Point &p,
-                                Inkscape::SnapSourceType const source_type,
-                                Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
+                             Inkscape::SnapSourceType const source_type,
+                             Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
+
+    void freeSnapReturnByRef(Geom::Point &p,
+                             Inkscape::SnapSourceType const source_type,
+                             boost::optional<Geom::Point> &starting_point) const;
 
     Inkscape::SnappedPoint freeSnap(Inkscape::SnapCandidatePoint const &p,
                                     Geom::OptRect const &bbox_to_snap = Geom::OptRect() ) const;

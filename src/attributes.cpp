@@ -106,6 +106,8 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INKSCAPE_SNAP_BBOX_MIDPOINT, "inkscape:snap-bbox-midpoints"},
     {SP_ATTR_INKSCAPE_SNAP_PATH_INTERSECTION, "inkscape:snap-intersection-paths"},
     {SP_ATTR_INKSCAPE_SNAP_PATH, "inkscape:object-paths"},
+    {SP_ATTR_INKSCAPE_SNAP_PATH_CLIP, "inkscape:snap-path-clip"},
+    {SP_ATTR_INKSCAPE_SNAP_PATH_MASK, "inkscape:snap-path-mask"},
     {SP_ATTR_INKSCAPE_SNAP_NODE_CUSP, "inkscape:object-nodes"},
     {SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE, "inkscape:bbox-paths"},
     {SP_ATTR_INKSCAPE_SNAP_BBOX_CORNER, "inkscape:bbox-nodes"},

@@ -311,7 +311,8 @@ spdc_endpoint_snap(SPPenContext const *const pc, Geom::Point &p, guint const sta
             pen_set_to_nearest_horiz_vert(pc, p, state, true);
         } else {
             // snap freely
-            spdc_endpoint_snap_free(pc, p, state);
+            boost::optional<Geom::Point> origin = pc->npoints > 0 ? pc->p[0] : boost::optional<Geom::Point>();
+            spdc_endpoint_snap_free(pc, p, origin, state); // pass the origin, to allow for perpendicular / tangential snapping
         }
     }
 }
@@ -329,7 +330,8 @@ spdc_endpoint_snap_handle(SPPenContext const *const pc, Geom::Point &p, guint co
         spdc_endpoint_snap_rotation(pc, p, pc->p[pc->npoints - 2], state);
     } else {
         if (!(state & GDK_SHIFT_MASK)) { //SHIFT disables all snapping, except the angular snapping above
-            spdc_endpoint_snap_free(pc, p, state);
+            boost::optional<Geom::Point> origin = pc->p[pc->npoints - 2];
+            spdc_endpoint_snap_free(pc, p, origin, state);
         }
     }
 }

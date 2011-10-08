@@ -31,6 +31,7 @@ public:
         _source_num(source_num),
         _target_bbox(bbox)
     {
+        _line_starting_point = boost::optional<Geom::Point>();
     };
 
     SnapCandidatePoint(Geom::Point const &point, Inkscape::SnapSourceType const source, Inkscape::SnapTargetType const target)
@@ -40,6 +41,7 @@ public:
     {
         _source_num = -1;
         _target_bbox = Geom::OptRect();
+        _line_starting_point = boost::optional<Geom::Point>();
     }
 
     SnapCandidatePoint(Geom::Point const &point, Inkscape::SnapSourceType const source)
@@ -49,6 +51,17 @@ public:
         _source_num(-1)
     {
         _target_bbox = Geom::OptRect();
+        _line_starting_point = boost::optional<Geom::Point>();
+    }
+
+    SnapCandidatePoint(Geom::Point const &point, Inkscape::SnapSourceType const source, boost::optional<Geom::Point> starting_point)
+        : _point(point),
+        _source_type(source),
+        _target_type(Inkscape::SNAPTARGET_UNDEFINED),
+        _source_num(-1)
+    {
+        _target_bbox = Geom::OptRect();
+        _line_starting_point = starting_point;
     }
 
     inline Geom::Point const & getPoint() const {return _point;}
@@ -58,10 +71,12 @@ public:
     inline long getSourceNum() const {return _source_num;}
     void setSourceNum(long num) {_source_num = num;}
     inline Geom::OptRect const getTargetBBox() const {return _target_bbox;}
+    boost::optional<Geom::Point> const & getStartingPoint() const {return _line_starting_point;}
 
 private:
     // Coordinates of the point
     Geom::Point _point;
+    boost::optional<Geom::Point> _line_starting_point; // For perpendicular or tangential snapping we need to know the starting point of a line
 
     // If this SnapCandidatePoint is a snap source, then _source_type must be defined. If it
     // is a snap target, then _target_type must be defined. If it's yet unknown whether it will

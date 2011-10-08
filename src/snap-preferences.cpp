@@ -151,7 +151,6 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
             target = SNAPTARGET_PATH_INTERSECTION;
         }
 
-
     } else if (target & SNAPTARGET_DATUMS_CATEGORY) {
         group_on = true; // These snap targets cannot be disabled as part of a disabled group;
         switch (target) {
@@ -257,6 +256,8 @@ bool Inkscape::SnapPreferences::isTargetSnappable(Inkscape::SnapTargetType const
             if (_active_snap_targets[index] == -1) {
                 // Catch coding errors
                 g_warning("Snap-preferences warning: Using an uninitialized snap target setting (#%i)", index);
+                // This happens if setTargetSnappable() has not been called for this parameter, e.g. from within sp_namedview_set,
+                // or if this target index doesn't exist at all
             }
             return _active_snap_targets[index];
         }
@@ -292,6 +293,8 @@ bool Inkscape::SnapPreferences::isSnapButtonEnabled(Inkscape::SnapTargetType con
     if (_active_snap_targets[index] == -1) {
         // Catch coding errors
         g_warning("Snap-preferences warning: Using an uninitialized snap target setting (#%i)", index);
+        // This happens if setTargetSnappable() has not been called for this parameter, e.g. from within sp_namedview_set,
+        // or if this target index doesn't exist at all
     } else {
         if (index == target) { // I.e. if it has not been re-mapped, then we have a primary target at hand, which does have its own toggle button
             return _active_snap_targets[index];

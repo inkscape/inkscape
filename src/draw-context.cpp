@@ -501,7 +501,7 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p,
 }
 
 
-void spdc_endpoint_snap_free(SPEventContext const * const ec, Geom::Point& p, guint const /*state*/)
+void spdc_endpoint_snap_free(SPEventContext const * const ec, Geom::Point& p, boost::optional<Geom::Point> &start_point, guint const /*state*/)
 {
     SPDesktop *dt = SP_EVENT_CONTEXT_DESKTOP(ec);
     SnapManager &m = dt->namedview->snap_manager;
@@ -511,7 +511,7 @@ void spdc_endpoint_snap_free(SPEventContext const * const ec, Geom::Point& p, gu
     // TODO: Allow snapping to the stationary parts of the item, and only ignore the last segment
 
     m.setup(dt, true, selection->singleItem());
-    m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE);
+    m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE, start_point);
     m.unSetup();
 }
 

@@ -105,8 +105,10 @@ DocumentProperties::DocumentProperties()
       _grids_label_crea("", Gtk::ALIGN_LEFT),
       _grids_button_new(C_("Grid", "_New"), _("Create new grid.")),
       _grids_button_remove(C_("Grid", "_Remove"), _("Remove selected grid.")),
-      _grids_label_def("", Gtk::ALIGN_LEFT)
+      _grids_label_def("", Gtk::ALIGN_LEFT),
     //---------------------------------------------------------------
+      _rcb_snclp(_("Snap to clip paths"), _("When snapping to paths, then also try snapping to clip paths"), "inkscape:snap-path-clip", _wr),
+      _rcb_snmsk(_("Snap to mask paths"), _("When snapping to paths, then also try snapping to mask paths"), "inkscape:snap-path-mask", _wr)
 {
     _tt.enable();
     _getContents()->set_spacing (4);
@@ -292,6 +294,8 @@ DocumentProperties::build_snap()
     {
         label_o,            0,
         0,                  _rsu_sno._vbox,
+        0,                  &_rcb_snclp,
+        0,                  &_rcb_snmsk,
         0,                  0,
         label_gr,           0,
         0,                  _rsu_sn._vbox,
@@ -1018,7 +1022,8 @@ void DocumentProperties::update()
     _rsu_sno.setValue (nv->snap_manager.snapprefs.getObjectTolerance());
     _rsu_sn.setValue (nv->snap_manager.snapprefs.getGridTolerance());
     _rsu_gusn.setValue (nv->snap_manager.snapprefs.getGuideTolerance());
-
+    _rcb_snclp.setActive (nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_PATH_CLIP));
+    _rcb_snmsk.setActive (nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_PATH_MASK));
 
     //-----------------------------------------------------------grids page
 

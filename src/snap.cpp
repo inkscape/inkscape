@@ -180,6 +180,13 @@ void SnapManager::freeSnapReturnByRef(Geom::Point &p,
     s.getPointIfSnapped(p);
 }
 
+void SnapManager::freeSnapReturnByRef(Geom::Point &p,
+                                      Inkscape::SnapSourceType const source_type,
+                                      boost::optional<Geom::Point> &starting_point) const
+{
+    Inkscape::SnappedPoint const s = freeSnap(Inkscape::SnapCandidatePoint(p, source_type, starting_point), Geom::OptRect());
+    s.getPointIfSnapped(p);
+}
 
 /**
  *  Try to snap a point to grids, guides or objects.
@@ -1134,6 +1141,23 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
     std::cout << "  Grid lines  : " << isr.grid_lines.size()<< std::endl;
     std::cout << "  Guide lines : " << isr.guide_lines.size()<< std::endl;
     std::cout << "  Curves      : " << isr.curves.size()<< std::endl;
+    */
+
+    /*
+    // Display all snap candidates on the canvas
+    _desktop->snapindicator->remove_debugging_points();
+    for (std::list<Inkscape::SnappedPoint>::const_iterator i = isr.points.begin(); i != isr.points.end(); i++) {
+        _desktop->snapindicator->set_new_debugging_point((*i).getPoint());
+    }
+    for (std::list<Inkscape::SnappedCurve>::const_iterator i = isr.curves.begin(); i != isr.curves.end(); i++) {
+        _desktop->snapindicator->set_new_debugging_point((*i).getPoint());
+    }
+    for (std::list<Inkscape::SnappedLine>::const_iterator i = isr.grid_lines.begin(); i != isr.grid_lines.end(); i++) {
+        _desktop->snapindicator->set_new_debugging_point((*i).getPoint());
+    }
+    for (std::list<Inkscape::SnappedLine>::const_iterator i = isr.guide_lines.begin(); i != isr.guide_lines.end(); i++) {
+        _desktop->snapindicator->set_new_debugging_point((*i).getPoint());
+    }
     */
 
     // Store all snappoints

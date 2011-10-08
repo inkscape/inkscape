@@ -34,11 +34,15 @@ public:
     void set_new_snapsource(Inkscape::SnapCandidatePoint const &p);
     void remove_snapsource();
 
+    void set_new_debugging_point(Geom::Point const &p);
+    void remove_debugging_points();
+
 protected:
     TemporaryItem *_snaptarget;
     TemporaryItem *_snaptarget_tooltip;
     TemporaryItem *_snaptarget_bbox;
     TemporaryItem *_snapsource;
+    std::list<TemporaryItem *> _debugging_points;
     bool _snaptarget_is_presnap;
     SPDesktop *_desktop;
 
