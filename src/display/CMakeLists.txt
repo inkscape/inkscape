@@ -10,13 +10,13 @@ set(display_SRC
 	canvas-text.cpp
 	curve.cpp
 	drawing-context.cpp
-    drawing-group.cpp
-    drawing-image.cpp
-    drawing-item.cpp
-    drawing-shape.cpp
-    drawing-surface.cpp
-    drawing-text.cpp
-    drawing.cpp
+	drawing-group.cpp
+	drawing-image.cpp
+	drawing-item.cpp
+	drawing-shape.cpp
+	drawing-surface.cpp
+	drawing-text.cpp
+	drawing.cpp
 	gnome-canvas-acetate.cpp
 	grayscale.cpp
 	guideline.cpp
@@ -70,15 +70,14 @@ set(display_SRC
 	canvas-text.h
 	curve-test.h
 	curve.h
-	display-forward.h
-   drawing-context.h
-   drawing-group.h
-   drawing-image.h
-   drawing-item.h
-   drawing-shape.h
-   drawing-surface.h
-   drawing-text.h
-   drawing.h
+	drawing-context.h
+	drawing-group.h
+	drawing-image.h
+	drawing-item.h
+	drawing-shape.h
+	drawing-surface.h
+	drawing-text.h
+	drawing.h
 	gnome-canvas-acetate.h
 	grayscale.h
 	guideline.h

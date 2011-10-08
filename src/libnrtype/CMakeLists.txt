@@ -29,7 +29,6 @@ set(nrtype_SRC
 	font-style.h
 	nr-type-pos-def.h
 	nr-type-primitives.h
-	nrtype-forward.h
 	one-box.h
 	one-glyph.h
 	one-para.h

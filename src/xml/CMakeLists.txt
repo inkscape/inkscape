@@ -49,7 +49,6 @@ set(xml_SRC
 	sp-css-attr.h
 	subtree.h
 	text-node.h
-	xml-forward.h
 )
 
 # add_inkscape_lib(xml_LIB "${xml_SRC}")

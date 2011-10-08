@@ -33,7 +33,6 @@ set(helper_SRC
 	geom-nodetype.h
 	geom.h
 	gnome-utils.h
-	helper-forward.h
 	pixbuf-ops.h
 	png-write.h
 	recthull.h

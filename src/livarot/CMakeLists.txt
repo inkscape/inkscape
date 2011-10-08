@@ -33,7 +33,6 @@ set(livarot_SRC
 	Shape.h
 	float-line.h
 	int-line.h
-	livarot-forward.h
 	path-description.h
 	sweep-event-queue.h
 	sweep-event.h

@@ -354,7 +354,6 @@ set(inkscape_SRC
 	filter-chemistry.h
 	filter-enums.h
 	flood-context.h
-	forward.h
 	gc-alloc.h
 	gc-allocator.h
 	gc-anchored.h

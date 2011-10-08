@@ -79,7 +79,6 @@ set(extension_SRC
 	effect.h
 	error-file.h
 	execution-env.h
-	extension-forward.h
 	extension.h
 	init.h
 	input.h
