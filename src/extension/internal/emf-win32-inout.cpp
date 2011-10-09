@@ -1837,16 +1837,16 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
                 y1 = d->dc[d->level].cur.y;
             }
 
-            if (!(d->dc[d->level].textAlign & TA_BOTTOM))
-                if (d->dc[d->level].style.baseline_shift.value) {
-                    x1 += std::sin(d->dc[d->level].style.baseline_shift.value*M_PI/180.0)*fabs(d->dc[d->level].style.font_size.computed);
-                    y1 += std::cos(d->dc[d->level].style.baseline_shift.value*M_PI/180.0)*fabs(d->dc[d->level].style.font_size.computed);
-                }
-                else
-                    y1 += fabs(d->dc[d->level].style.font_size.computed);
-
             double x = pix_to_x_point(d, x1, y1);
             double y = pix_to_y_point(d, x1, y1);
+
+            if (!(d->dc[d->level].textAlign & TA_BOTTOM))
+                if (d->dc[d->level].style.baseline_shift.value) {
+                    x += std::sin(d->dc[d->level].style.baseline_shift.value*M_PI/180.0)*fabs(d->dc[d->level].style.font_size.computed);
+                    y += std::cos(d->dc[d->level].style.baseline_shift.value*M_PI/180.0)*fabs(d->dc[d->level].style.font_size.computed);
+                }
+                else
+                    y += fabs(d->dc[d->level].style.font_size.computed);
 
             wchar_t *wide_text = (wchar_t *) ((char *) pEmr + pEmr->emrtext.offString);
 
