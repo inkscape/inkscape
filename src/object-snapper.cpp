@@ -137,13 +137,19 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                     _findCandidates(o, it, false, bbox_to_snap, clip_or_mask, additional_affine);
                 } else {
                     Geom::OptRect bbox_of_item;
+                    Preferences *prefs = Preferences::get();
+                    int prefs_bbox = prefs->getBool("/tools/bounding_box", 0);
+                    // We'll only need to obtain the visual bounding box if the user preferences tell
+                    // us to, AND if we are snapping to the bounding box itself. If we're snapping to
+                    // paths only, then we can just as well use the geometric bounding box (which is faster)
+                    SPItem::BBoxType bbox_type = (!prefs_bbox && _snapmanager->snapprefs.getSnapModeBBox()) ?
+                        SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX;
                     if (clip_or_mask) {
                         // Oh oh, this will get ugly. We cannot use sp_item_i2d_affine directly because we need to
                         // insert an additional transformation in document coordinates (code copied from sp_item_i2d_affine)
-                        bbox_of_item = item->visualBounds(item->i2doc_affine() * additional_affine *
-                            _snapmanager->getDesktop()->doc2dt());
+                        bbox_of_item = item->bounds(bbox_type, item->i2doc_affine() * additional_affine * _snapmanager->getDesktop()->doc2dt());
                     } else {
-                        bbox_of_item = item->desktopVisualBounds();
+                        bbox_of_item = item->bounds(bbox_type);
                     }
                     if (bbox_of_item) {
                         // See if the item is within range
