@@ -53,7 +53,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-10-06 20:04+0200\n"
-"PO-Revision-Date: 2011-10-06 21:47+0100\n"
+"PO-Revision-Date: 2011-10-14 23:13+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -908,7 +908,7 @@ msgstr "Neon"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Neon light effect"
-msgstr "Neonlicht-effect"
+msgstr "Neonlichteffect"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Molten Metal"
@@ -1905,7 +1905,7 @@ msgstr "Pixelgereedschappen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Reduce or remove antialiasing around shapes"
-msgstr "Antialiasing rond vormen reduceren of verwijderen"
+msgstr "Anti-aliasing rond vormen reduceren of verwijderen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Set Resolution"
@@ -1977,11 +1977,11 @@ msgstr "Afbeelding in dikke gel plaatsen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Blend Opposites"
-msgstr ""
+msgstr "Tegengestelden mengen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Blend an image with its hue opposite"
-msgstr ""
+msgstr "Een afbeelding mengen met tegengestelde tint"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Hue to White"
@@ -1997,7 +1997,6 @@ msgid "Swirl"
 msgstr "Kolken"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Paint objects with a transparent turbulence which wraps around color edges"
 msgstr "Objecten tekenen met een transparante turbulentie die rond de kleurranden draait"
 
@@ -2006,13 +2005,12 @@ msgid "Pointillism"
 msgstr "Pointillisme"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Gives a turbulent pointillist HSL sensitive transparency"
 msgstr "Geeft een gepointilliseerde TVL-gevoelige transparantie"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Silhouette Marbled"
-msgstr ""
+msgstr "Gemarmerde contour"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic noise transparency texture"
@@ -2260,7 +2258,6 @@ msgid "Aluminium effect with sharp brushed reflexions"
 msgstr "Aluminiumeffect met scherpe reflecties"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Comics Fluid"
 msgstr "Cartoon vochtig"
 
@@ -5575,12 +5572,11 @@ msgstr "pad"
 
 #: ../src/display/snap-indicator.cpp:103
 msgid "path intersection"
-msgstr "kruispunt met pad"
+msgstr "kruising met pad"
 
 #: ../src/display/snap-indicator.cpp:106
-#, fuzzy
 msgid "guide-path intersection"
-msgstr "kruising met hulplijn"
+msgstr "kruising hulplijn-pad"
 
 #: ../src/display/snap-indicator.cpp:109
 msgid "bounding box corner"
@@ -5674,7 +5670,7 @@ msgstr "Middelpunt object"
 
 #: ../src/display/snap-indicator.cpp:186
 msgid "Object rotation center"
-msgstr "_Rotatiemiddelpunt"
+msgstr "Rotatiemiddelpunt"
 
 #: ../src/display/snap-indicator.cpp:190
 msgid "Handle"
@@ -6822,13 +6818,12 @@ msgstr "Kruisvervaging"
 
 #: ../src/extension/internal/filter/blurs.h:188
 msgid "Fading:"
-msgstr "Vervaging:"
+msgstr "Vervagen:"
 
 #: ../src/extension/internal/filter/blurs.h:191
 #: ../src/extension/internal/filter/textures.h:74
-#, fuzzy
 msgid "Blend:"
-msgstr "Mengen"
+msgstr "Mengen:"
 
 #: ../src/extension/internal/filter/blurs.h:192
 #: ../src/extension/internal/filter/blurs.h:339
@@ -6949,9 +6944,8 @@ msgstr "Achtergrondkleur"
 #: ../src/extension/internal/filter/blurs.h:337
 #: ../src/extension/internal/filter/bumps.h:129
 #: ../src/extension/internal/filter/color.h:1212
-#, fuzzy
 msgid "Blend type:"
-msgstr "Type vervaging:"
+msgstr "Mengtype:"
 
 #: ../src/extension/internal/filter/blurs.h:338
 #: ../src/extension/internal/filter/bumps.h:130
@@ -6985,34 +6979,29 @@ msgstr ""
 
 # het blijkt hier ook om embossering te gaan: in Inkscape consistent als reliëf aangeduid
 #: ../src/extension/internal/filter/bumps.h:80
-#, fuzzy
 msgid "Bump"
 msgstr "Reliëf"
 
 #: ../src/extension/internal/filter/bumps.h:84
 #: ../src/extension/internal/filter/bumps.h:316
-#, fuzzy
 msgid "Image simplification:"
-msgstr "Vereenvoudiging:"
+msgstr "Vereenvoudigen afbeelding:"
 
 #: ../src/extension/internal/filter/bumps.h:85
 #: ../src/extension/internal/filter/bumps.h:317
-#, fuzzy
 msgid "Bump simplification:"
-msgstr "Vereenvoudiging:"
+msgstr "Vereenvoudigen reliëf:"
 
 #: ../src/extension/internal/filter/bumps.h:86
 #: ../src/extension/internal/filter/bumps.h:318
-#, fuzzy
 msgid "Crop:"
-msgstr "Uiteinde:"
+msgstr "Afsnijden:"
 
 # het blijkt hier ook om embossering te gaan: in Inkscape consistent als reliëf aangeduid
 #: ../src/extension/internal/filter/bumps.h:87
 #: ../src/extension/internal/filter/bumps.h:319
-#, fuzzy
 msgid "Bump source"
-msgstr "Reliëf"
+msgstr "Bron reliëf"
 
 #: ../src/extension/internal/filter/bumps.h:88
 #: ../src/extension/internal/filter/bumps.h:320
@@ -7039,24 +7028,20 @@ msgid "Blue:"
 msgstr "Blauw:"
 
 #: ../src/extension/internal/filter/bumps.h:91
-#, fuzzy
 msgid "Bump from background"
-msgstr "Tint naar achtergrond"
+msgstr "Reliëf van achtergrond"
 
 #: ../src/extension/internal/filter/bumps.h:94
-#, fuzzy
 msgid "Lighting type:"
-msgstr "Lijntype:"
+msgstr "Belichtingstype:"
 
 #: ../src/extension/internal/filter/bumps.h:95
-#, fuzzy
 msgid "Specular"
-msgstr "Spiegelende belichting"
+msgstr "Spiegelend"
 
 #: ../src/extension/internal/filter/bumps.h:96
-#, fuzzy
 msgid "Diffuse"
-msgstr "Diffuse belichting"
+msgstr "Diffuus"
 
 #: ../src/extension/internal/filter/bumps.h:99
 #: ../src/extension/internal/filter/bumps.h:333
@@ -7084,9 +7069,8 @@ msgid "Light source:"
 msgstr "Lichtbron:"
 
 #: ../src/extension/internal/filter/bumps.h:105
-#, fuzzy
 msgid "Distant"
-msgstr "Vervormen"
+msgstr "Veraf"
 
 #: ../src/extension/internal/filter/bumps.h:106
 #: ../src/helper/units.cpp:38
@@ -7095,17 +7079,15 @@ msgstr "Punt"
 
 #: ../src/extension/internal/filter/bumps.h:107
 msgid "Spot"
-msgstr ""
+msgstr "Spot"
 
 #: ../src/extension/internal/filter/bumps.h:109
-#, fuzzy
 msgid "Distant light options"
-msgstr "Ver licht"
+msgstr "Opties ver licht"
 
 #: ../src/extension/internal/filter/bumps.h:112
-#, fuzzy
 msgid "Point light options"
-msgstr "Puntlicht"
+msgstr "Opties puntlicht"
 
 #: ../src/extension/internal/filter/bumps.h:113
 #: ../src/extension/internal/filter/bumps.h:117
@@ -7123,9 +7105,8 @@ msgid "Z location:"
 msgstr "Z-locatie:"
 
 #: ../src/extension/internal/filter/bumps.h:116
-#, fuzzy
 msgid "Spot light options"
-msgstr "Spotlicht"
+msgstr "Opties spotlicht"
 
 #: ../src/extension/internal/filter/bumps.h:120
 msgid "X target:"
@@ -7140,9 +7121,8 @@ msgid "Z target:"
 msgstr "Z-doel:"
 
 #: ../src/extension/internal/filter/bumps.h:123
-#, fuzzy
 msgid "Specular exponent:"
-msgstr "Reflectiefactor"
+msgstr "Spiegelfactor:"
 
 #: ../src/extension/internal/filter/bumps.h:124
 msgid "Cone angle:"
@@ -7153,19 +7133,17 @@ msgid "Image color"
 msgstr "Kleur afbeelding"
 
 #: ../src/extension/internal/filter/bumps.h:128
-#, fuzzy
 msgid "Color bump"
-msgstr "Kleur 1"
+msgstr "Kleur reliëf"
 
 #: ../src/extension/internal/filter/bumps.h:145
 msgid "All purposes bump filter"
-msgstr ""
+msgstr "Algemeen reliëffilter"
 
 # het blijkt hier ook om embossering te gaan: in Inkscape consistent als reliëf aangeduid
 #: ../src/extension/internal/filter/bumps.h:312
-#, fuzzy
 msgid "Wax Bump"
-msgstr "Reliëf"
+msgstr "Wasachtig reliëf"
 
 #: ../src/extension/internal/filter/bumps.h:323
 msgid "Background:"
@@ -7185,33 +7163,28 @@ msgstr ""
 
 #: ../src/extension/internal/filter/bumps.h:328
 msgid "Background opacity:"
-msgstr "Achtergrondondoorzichtigheid:"
+msgstr "Ondoorzichtigheid achtergrond:"
 
 #: ../src/extension/internal/filter/bumps.h:330
 #: ../src/extension/internal/filter/color.h:1040
-#, fuzzy
 msgid "Lighting"
-msgstr "Lichter"
+msgstr "Belichting"
 
 #: ../src/extension/internal/filter/bumps.h:337
-#, fuzzy
 msgid "Lighting blend:"
-msgstr "Mengen afbeelding:"
+msgstr "Mengen licht:"
 
 #: ../src/extension/internal/filter/bumps.h:344
-#, fuzzy
 msgid "Highlight blend:"
-msgstr "_Oplichtende kleur:"
+msgstr "Mengen hoogtepunten:"
 
 #: ../src/extension/internal/filter/bumps.h:353
-#, fuzzy
 msgid "Bump color"
-msgstr "Kleur vervagen"
+msgstr "Kleur reliëf"
 
 #: ../src/extension/internal/filter/bumps.h:354
-#, fuzzy
 msgid "Revert bump"
-msgstr "Fluwelen reliëf"
+msgstr "Reliëf omkeren"
 
 #: ../src/extension/internal/filter/bumps.h:355
 msgid "Transparency type:"
@@ -7432,9 +7405,8 @@ msgid "Extract color channel as a transparent image"
 msgstr "Kleurkanaal extraheren als transparante afbeelding"
 
 #: ../src/extension/internal/filter/color.h:740
-#, fuzzy
 msgid "Fade to Black or White"
-msgstr "Zwart en wit"
+msgstr "Varvagen naar zwart of wit"
 
 #: ../src/extension/internal/filter/color.h:742
 #: ../src/extension/internal/filter/image.h:56
@@ -7444,9 +7416,8 @@ msgid "Level:"
 msgstr "Niveau:"
 
 #: ../src/extension/internal/filter/color.h:743
-#, fuzzy
 msgid "Fade to:"
-msgstr "Verdwijnen"
+msgstr "Vervagen naar:"
 
 #: ../src/extension/internal/filter/color.h:744
 #: ../src/ui/widget/selected-style.cpp:237
@@ -7462,9 +7433,8 @@ msgid "White"
 msgstr "Wit"
 
 #: ../src/extension/internal/filter/color.h:754
-#, fuzzy
 msgid "Fade to black or white"
-msgstr "Alleen zwart en wit:"
+msgstr "vervagen naar zwart of wit"
 
 #: ../src/extension/internal/filter/color.h:819
 msgid "Greyscale"
@@ -7490,9 +7460,8 @@ msgid "Invert channels:"
 msgstr "Kanalen inverteren:"
 
 #: ../src/extension/internal/filter/color.h:908
-#, fuzzy
 msgid "No inversion"
-msgstr "Niet inverteren"
+msgstr "Geen inversie"
 
 #: ../src/extension/internal/filter/color.h:909
 msgid "Red and blue"
@@ -7507,9 +7476,8 @@ msgid "Green and blue"
 msgstr "Groen en blauw"
 
 #: ../src/extension/internal/filter/color.h:913
-#, fuzzy
 msgid "Light transparency:"
-msgstr "Ruwe transparantie"
+msgstr "Transparantie licht:"
 
 #: ../src/extension/internal/filter/color.h:914
 msgid "Invert hue"
@@ -7553,27 +7521,23 @@ msgstr "Helderheid en contrast afzonderlijk aanpassen"
 
 #: ../src/extension/internal/filter/color.h:1196
 msgid "Nudge"
-msgstr ""
+msgstr "Kanalen verplaatsen"
 
 #: ../src/extension/internal/filter/color.h:1200
-#, fuzzy
 msgid "Red offset"
-msgstr "Beginwaarde"
+msgstr "Verplaatsing rood"
 
 #: ../src/extension/internal/filter/color.h:1203
-#, fuzzy
 msgid "Green offset"
-msgstr "Patroonverplaatsing"
+msgstr "Verplaatsing groen"
 
 #: ../src/extension/internal/filter/color.h:1206
-#, fuzzy
 msgid "Blue offset"
-msgstr "In te stellen waarde:"
+msgstr "Verplaatsing blauw"
 
 #: ../src/extension/internal/filter/color.h:1217
-#, fuzzy
 msgid "Blend source:"
-msgstr "Mengmodus:"
+msgstr "Mengbron:"
 
 #: ../src/extension/internal/filter/color.h:1220
 #: ../src/extension/internal/filter/transparency.h:56
@@ -7593,7 +7557,7 @@ msgstr "Erover"
 
 #: ../src/extension/internal/filter/color.h:1235
 msgid "Nudge separately RGB channels and blend them to different types of backgrounds"
-msgstr ""
+msgstr "RGB-kanalen afzonderlijk verplaatsen en mengen met verschillende types achtergronden"
 
 #: ../src/extension/internal/filter/color.h:1326
 msgid "Quadritone fantasy"
@@ -7843,7 +7807,7 @@ msgstr "Open"
 #: ../src/extension/internal/filter/morphology.h:69
 #: ../src/extension/internal/filter/morphology.h:190
 msgid "Antialiasing:"
-msgstr "Antialiasing:"
+msgstr "Anti-aliasing:"
 
 #: ../src/extension/internal/filter/morphology.h:70
 msgid "Blur content"
@@ -8070,7 +8034,7 @@ msgstr "Vulkleur"
 #: ../src/extension/internal/filter/paint.h:352
 #: ../src/extension/internal/filter/paint.h:724
 msgid "Image on fill"
-msgstr "Afbeelding op de vulling"
+msgstr "Afbeelding op vulling"
 
 #: ../src/extension/internal/filter/paint.h:355
 msgid "Stroke color"
@@ -8078,7 +8042,7 @@ msgstr "Lijnkleur"
 
 #: ../src/extension/internal/filter/paint.h:356
 msgid "Image on stroke"
-msgstr "Afbeelding op de lijn"
+msgstr "Afbeelding op lijn"
 
 #: ../src/extension/internal/filter/paint.h:367
 msgid "Convert images to duochrome drawings"
@@ -8086,7 +8050,7 @@ msgstr "Afbeelding in tweekleurentekening omzetten"
 
 #: ../src/extension/internal/filter/paint.h:495
 msgid "Electrize"
-msgstr ""
+msgstr "Elektrificeren"
 
 #: ../src/extension/internal/filter/paint.h:497
 #: ../src/extension/internal/filter/paint.h:591
@@ -8145,19 +8109,16 @@ msgid "Posterize and draw smooth lines around color shapes"
 msgstr "Posteriseren en afgeronde lijnen rond vormen tekenen"
 
 #: ../src/extension/internal/filter/paint.h:697
-#, fuzzy
 msgid "Point Engraving"
-msgstr "Gravering"
+msgstr "Puntgravering"
 
 #: ../src/extension/internal/filter/paint.h:710
-#, fuzzy
 msgid "Noise blend:"
-msgstr "Mengen gloed:"
+msgstr "Mengen ruis:"
 
 #: ../src/extension/internal/filter/paint.h:718
-#, fuzzy
 msgid "Grain lightness:"
-msgstr "Helderheid:"
+msgstr "Helderheid korrel:"
 
 #: ../src/extension/internal/filter/paint.h:720
 #: ../src/extension/internal/filter/transparency.h:343
@@ -8169,19 +8130,16 @@ msgid "Points color"
 msgstr "Kleur punten"
 
 #: ../src/extension/internal/filter/paint.h:728
-#, fuzzy
 msgid "Image on points"
-msgstr "Afbeelding op de vulling"
+msgstr "Afbeelding op punten"
 
 #: ../src/extension/internal/filter/paint.h:738
-#, fuzzy
 msgid "Convert image to a transparent point engraving"
-msgstr "Omzetten naar een verkleurbaar transparant positief of negatief"
+msgstr "Afbeelding omzetten naar een transparante puntgravure"
 
 #: ../src/extension/internal/filter/paint.h:860
-#, fuzzy
 msgid "Poster Paint"
-msgstr "beperkt"
+msgstr "Schilderij en poster"
 
 #: ../src/extension/internal/filter/paint.h:866
 msgid "Transfer type:"
@@ -8288,18 +8246,16 @@ msgid "Frequency:"
 msgstr "Frequentie:"
 
 #: ../src/extension/internal/filter/textures.h:71
-#, fuzzy
 msgid "Horizontal inlay:"
-msgstr "Horizontaal punt:"
+msgstr "Horizontale inwerking:"
 
 #: ../src/extension/internal/filter/textures.h:72
-#, fuzzy
 msgid "Vertical inlay:"
-msgstr "Verticaal punt:"
+msgstr "Verticale inwerking:"
 
 #: ../src/extension/internal/filter/textures.h:73
 msgid "Displacement:"
-msgstr "Verplaatsing:"
+msgstr "Extractie:"
 
 #: ../src/extension/internal/filter/textures.h:79
 msgid "Overlapping"
@@ -8318,9 +8274,8 @@ msgid "Custom"
 msgstr "Aangepast"
 
 #: ../src/extension/internal/filter/textures.h:83
-#, fuzzy
 msgid "Custom stroke options"
-msgstr "Aangepaste punten en opties"
+msgstr "Aangepast lijnopties"
 
 #: ../src/extension/internal/filter/textures.h:84
 msgid "k1:"
@@ -8360,7 +8315,6 @@ msgid "Mode:"
 msgstr "Modus:"
 
 #: ../src/extension/internal/filter/transparency.h:73
-#, fuzzy
 msgid "Blend objects with background images or with themselves"
 msgstr "Objecten met achtergrondafbeeldingen of zichzelf vermengen"
 
@@ -10218,9 +10172,8 @@ msgstr "Liniaal"
 
 #. 0.49 ?
 #: ../src/live_effects/effect.cpp:124
-#, fuzzy
 msgid "[Unstable!] Power stroke"
-msgstr "Omlijning uitzetten"
+msgstr ""
 
 #: ../src/live_effects/effect.cpp:282
 msgid "Is visible?"
@@ -18482,7 +18435,7 @@ msgstr "Het gewenste aantal niveaus"
 
 #: ../src/ui/dialog/tracedialog.cpp:529
 msgid "Co_lors"
-msgstr "Kleu_r"
+msgstr "Kle_ur"
 
 #: ../src/ui/dialog/tracedialog.cpp:534
 msgid "Trace the given number of reduced colors"
@@ -18490,7 +18443,7 @@ msgstr "Overtrekken in het opgegeven aantal kleuren"
 
 #: ../src/ui/dialog/tracedialog.cpp:538
 msgid "_Grays"
-msgstr "_Grijswaarden"
+msgstr "Grijs_waarden"
 
 #: ../src/ui/dialog/tracedialog.cpp:543
 msgid "Same as Colors, but the result is converted to grayscale"
@@ -18552,7 +18505,7 @@ msgstr "G_rootte:"
 
 #: ../src/ui/dialog/tracedialog.cpp:606
 msgid "Smooth _corners"
-msgstr "H_oeken afronden"
+msgstr "_Hoeken afronden"
 
 #: ../src/ui/dialog/tracedialog.cpp:609
 msgid "Smooth out sharp corners of the trace"
@@ -18564,7 +18517,7 @@ msgstr "Verhoog dit om hoeken meer af te ronden"
 
 #: ../src/ui/dialog/tracedialog.cpp:624
 msgid "Optimize p_aths"
-msgstr "_Paden optimaliseren"
+msgstr "P_aden optimaliseren"
 
 #: ../src/ui/dialog/tracedialog.cpp:628
 msgid "Try to optimize paths by joining adjacent Bezier curve segments"
@@ -21255,11 +21208,11 @@ msgstr "Naar normale weergavemodus zonder filters overschakelen"
 
 #: ../src/verbs.cpp:2553
 msgid "_Outline"
-msgstr "_Silhouet"
+msgstr "_Contour"
 
 #: ../src/verbs.cpp:2554
 msgid "Switch to outline (wireframe) display mode"
-msgstr "Naar silhouetmodus voor weergave (draadmodel) overschakelen"
+msgstr "Naar contourmodus voor weergave (draadmodel) overschakelen"
 
 #. new ZoomVerb(SP_VERB_VIEW_COLOR_MODE_PRINT_COLORS_PREVIEW, "ViewColorModePrintColorsPreview", N_("_Print Colors Preview"),
 #. N_("Switch to print colors preview mode"), NULL),
@@ -21270,7 +21223,7 @@ msgstr "_Schakelen"
 
 #: ../src/verbs.cpp:2556
 msgid "Toggle between normal and outline display modes"
-msgstr "Tussen normale en silhouetweergavemodus schakelen"
+msgstr "Tussen normale en contourweergavemodus schakelen"
 
 #: ../src/verbs.cpp:2558
 msgid "Switch to normal color display mode"
@@ -21715,12 +21668,12 @@ msgstr "<b>Welkom bij Inkscape!</b> Gebruik vorm- of tekengereedschappen om obje
 #: ../src/widgets/desktop-widget.cpp:653
 #, c-format
 msgid "%s: %d (outline%s) - Inkscape"
-msgstr "%s: %d (silhouet%s) - Inkscape"
+msgstr "%s: %d (contour%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:655
 #, c-format
 msgid "%s: %d (no filters%s) - Inkscape"
-msgstr "%s: %d (geen  filters%s) - Inkscape"
+msgstr "%s: %d (geen filters%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:657
 #, c-format
@@ -21730,7 +21683,7 @@ msgstr "%s: %d %s- Inkscape"
 #: ../src/widgets/desktop-widget.cpp:661
 #, c-format
 msgid "%s (outline%s) - Inkscape"
-msgstr "%s (silhouet%s) - Inkscape"
+msgstr "%s (contour%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:663
 #, c-format
@@ -22597,7 +22550,7 @@ msgstr "Bezierhandvatten van geselecteerde knooppunten tonen"
 
 #: ../src/widgets/toolbox.cpp:1505
 msgid "Show Outline"
-msgstr "Silhouet tonen"
+msgstr "Contour tonen"
 
 #: ../src/widgets/toolbox.cpp:1506
 msgid "Show path outline (without path effects)"
@@ -23599,7 +23552,6 @@ msgid "(high scale variation)"
 msgstr "(grote variatie schaal)"
 
 #: ../src/widgets/toolbox.cpp:4820
-#, fuzzy
 msgctxt "Spray tool"
 msgid "Scale"
 msgstr "Schaal"
@@ -25021,7 +24973,6 @@ msgid "Use automatic scaling to size A4"
 msgstr "Automatisch schalen tot A4-grootte"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
-#, fuzzy
 msgid ""
 "- AutoCAD Release 14 DXF format.\n"
 "- The base unit parameter specifies in what unit the coordinates are output (90 px = 1 in).\n"
@@ -25032,9 +24983,12 @@ msgid ""
 "- ROBO-Master spline output is a specialized spline readable only by ROBO-Master and AutoDesk viewers, not Inkscape.\n"
 "- LWPOLYLINE output is a multiply-connected polyline, disable it to use a legacy version of the LINE output."
 msgstr ""
-"- AutoCAD versie 13 formaat.\n"
-"- svg tekening moet in pixels zijn, bij 90 ppi.\n"
-"- alleen lijnstukken en splines worden ondersteund.\n"
+"- AutoCAD versie 14 DXF-formaat.\n"
+"- De parameter basiseenheid specifiëert in welke eenheid de coördinaten weggeschreven worden (90 px = 1 in).\n"
+"- Ondersteunde elementen\n"
+"    - paden (lijnstukken en splines)\n"
+"    - rechthoeken\n"
+"    - klonen (de link met het origineel gaat verloren)\n"
 "- ROBO-Master spline uitvoer is een gespecialiseerde spline die alleen leesbaar is door ROBO-Master en Autodesk viewers, niet door Inkscape.\n"
 "- LWPOLYLINE uitvoer is een meervoudig verbonden veellijn, schakel dit uit voor verouderde lijnuitvoer."
 
@@ -26966,7 +26920,7 @@ msgstr "Zicht"
 
 #: ../share/extensions/layers2svgfont.inx.h:1
 msgid "3 - Convert Glyph Layers to SVG Font"
-msgstr ""
+msgstr "3 - Karakterlagen in SVG-lettertype omzetten"
 
 #: ../share/extensions/layers2svgfont.inx.h:2
 #: ../share/extensions/new_glyph_layer.inx.h:2
@@ -27180,7 +27134,7 @@ msgstr "Lorem ipsum"
 
 #: ../share/extensions/lorem_ipsum.inx.h:3
 msgid "Number of paragraphs:"
-msgstr "Aantal alinea's::"
+msgstr "Aantal alinea's:"
 
 #: ../share/extensions/lorem_ipsum.inx.h:5
 msgid "Paragraph length fluctuation (sentences):"
@@ -27294,9 +27248,8 @@ msgid "Motion"
 msgstr "Beweging"
 
 #: ../share/extensions/new_glyph_layer.inx.h:1
-#, fuzzy
 msgid "2 - Add Glyph Layer"
-msgstr "Laag toevoegen"
+msgstr "2 - Een karakterlaag toevoegen"
 
 #: ../share/extensions/new_glyph_layer.inx.h:3
 msgid "Unicode character:"
@@ -27304,7 +27257,7 @@ msgstr "Unicode-teken:"
 
 #: ../share/extensions/next_glyph_layer.inx.h:2
 msgid "View Next Glyph"
-msgstr ""
+msgstr "Volgend karakter bekijken"
 
 #: ../share/extensions/outline2svg.inx.h:1
 msgid "ASCII Text with outline markup"
@@ -27774,9 +27727,8 @@ msgid "Z-sort faces by:"
 msgstr "Sorteer zijden volgens Z-as via:"
 
 #: ../share/extensions/previous_glyph_layer.inx.h:2
-#, fuzzy
 msgid "View Previous Glyph"
-msgstr "Vorige pagina:"
+msgstr "Vorig karakter bekijken"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -27796,7 +27748,7 @@ msgstr "Kleurbalken"
 
 #: ../share/extensions/printing-marks.inx.h:6
 msgid "Crop Marks"
-msgstr "Afsnijdingsmarkeringen"
+msgstr "Afsnijmarkeringen"
 
 #: ../share/extensions/printing-marks.inx.h:11
 msgid "Page Information"
@@ -28125,9 +28077,8 @@ msgid "Keep editor data"
 msgstr "Programmadata behouden"
 
 #: ../share/extensions/scour.inx.h:17
-#, fuzzy
 msgid "Number of significant digits for coords:"
-msgstr "Aantal beduidende cijfers voor coördinaten"
+msgstr "Aantal beduidende cijfers voor coördinaten:"
 
 #: ../share/extensions/scour.inx.h:18
 msgid "Optimized SVG (*.svg)"
@@ -28226,32 +28177,27 @@ msgstr "XML inspringen (mooie afdruk):"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:1
 msgid "1 - Setup Typography Canvas"
-msgstr ""
+msgstr "1 - Typografiecanvas instellen"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:2
-#, fuzzy
 msgid "Ascender:"
-msgstr "Render"
+msgstr "Stokhoogte:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:3
-#, fuzzy
 msgid "Caps Height:"
-msgstr "Hoogte van streepjes:"
+msgstr "Hoofdlettergrootte:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:4
-#, fuzzy
 msgid "Descender:"
-msgstr "Afhankelijkheid:"
+msgstr "Staarthoogte:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:5
-#, fuzzy
 msgid "Em-size:"
-msgstr "Grootte:"
+msgstr "Em-grootte:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:7
-#, fuzzy
 msgid "X-Height:"
-msgstr "Hoogte:"
+msgstr "X-hoogte:"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
@@ -28541,7 +28487,7 @@ msgstr "SVG-lettertype in karakterlagen omzetten"
 
 #: ../share/extensions/svgfont2layers.inx.h:2
 msgid "Load only the first 30 glyphs (Recommended)"
-msgstr ""
+msgstr "Slechts eerste 30 karakters laden (aanbevolen)"
 
 #: ../share/extensions/text_braille.inx.h:1
 msgid "Convert to Braille"
