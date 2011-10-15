@@ -149,7 +149,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                         // insert an additional transformation in document coordinates (code copied from sp_item_i2d_affine)
                         bbox_of_item = item->bounds(bbox_type, item->i2doc_affine() * additional_affine * _snapmanager->getDesktop()->doc2dt());
                     } else {
-                        bbox_of_item = item->bounds(bbox_type);
+                        bbox_of_item = item->desktopBounds(bbox_type);
                     }
                     if (bbox_of_item) {
                         // See if the item is within range
@@ -183,7 +183,7 @@ void Inkscape::ObjectSnapper::_collectNodes(SnapSourceType const &t,
 
         bool p_is_a_node = t & SNAPSOURCE_NODE_CATEGORY;
         bool p_is_a_bbox = t & SNAPSOURCE_BBOX_CATEGORY;
-        bool p_is_other = t & SNAPSOURCE_OTHERS_CATEGORY || t & SNAPSOURCE_DATUMS_CATEGORY;
+        bool p_is_other = (t & SNAPSOURCE_OTHERS_CATEGORY) || (t & SNAPSOURCE_DATUMS_CATEGORY);
 
         // A point considered for snapping should be either a node, a bbox corner or a guide/other. Pick only ONE!
         if (((p_is_a_node && p_is_a_bbox) || (p_is_a_bbox && p_is_other) || (p_is_a_node && p_is_other))) {
@@ -373,7 +373,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
 
         bool p_is_a_node = source_type & SNAPSOURCE_NODE_CATEGORY;
         bool p_is_a_bbox = source_type & SNAPSOURCE_BBOX_CATEGORY;
-        bool p_is_other = source_type & SNAPSOURCE_OTHERS_CATEGORY || source_type & SNAPSOURCE_DATUMS_CATEGORY;
+        bool p_is_other = (source_type & SNAPSOURCE_OTHERS_CATEGORY) || (source_type & SNAPSOURCE_DATUMS_CATEGORY);
 
         if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_BBOX_EDGE)) {
             Preferences *prefs = Preferences::get();
