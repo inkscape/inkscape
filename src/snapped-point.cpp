@@ -114,7 +114,7 @@ bool getClosestSP(std::list<Inkscape::SnappedPoint> const &list, Inkscape::Snapp
 {
     bool success = false;
 
-    for (std::list<Inkscape::SnappedPoint>::const_iterator i = list.begin(); i != list.end(); i++) {
+    for (std::list<Inkscape::SnappedPoint>::const_iterator i = list.begin(); i != list.end(); ++i) {
         if ((i == list.begin()) || (*i).getSnapDistance() < result.getSnapDistance()) {
             result = *i;
             success = true;

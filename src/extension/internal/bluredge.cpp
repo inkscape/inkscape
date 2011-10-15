@@ -68,7 +68,7 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
     selection->clear();
 
     for(std::list<SPItem *>::iterator item = items.begin();
-            item != items.end(); item++) {
+            item != items.end(); ++item) {
         SPItem * spitem = *item;
 
         std::vector<Inkscape::XML::Node *> new_items(steps);

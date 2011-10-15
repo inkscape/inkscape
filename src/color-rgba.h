@@ -111,7 +111,7 @@ public:
         Check each value to see if they are equal.  If they all are,
         return TRUE.
     */
-    bool operator== (const ColorRGBA other) const {
+    bool operator== (const ColorRGBA &other) const {
         for (int i = 0; i < 4; i++) {
             if (_c[i] != other[i])
                 return false;
@@ -135,7 +135,7 @@ public:
         value are multiplied by 1.0 - weight and the second object by weight.
         This means that they should always be balanced by the parameter.
     */
-    ColorRGBA average (const ColorRGBA second, const float weight = 0.5) const {
+    ColorRGBA average (const ColorRGBA &second, const float weight = 0.5) const {
         float returnval[4];
 
         for (int i = 0; i < 4; i++) {

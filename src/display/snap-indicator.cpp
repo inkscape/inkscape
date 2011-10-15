@@ -362,7 +362,7 @@ SnapIndicator::remove_snapsource()
 void
 SnapIndicator::remove_debugging_points()
 {
-    for (std::list<TemporaryItem *>::const_iterator i = _debugging_points.begin(); i != _debugging_points.end(); i++) {
+    for (std::list<TemporaryItem *>::const_iterator i = _debugging_points.begin(); i != _debugging_points.end(); ++i) {
         _desktop->remove_temporary_canvasitem(*i);
     }
     _debugging_points.clear();

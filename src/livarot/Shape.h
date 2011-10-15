@@ -317,7 +317,7 @@ public:
     void QuickScan(float &pos, int &curP, float to, AlphaLigne* line, float step);
 
     void Transform(Geom::Affine const &tr)
-        {for(std::vector<dg_point>::iterator it=_pts.begin();it!=_pts.end();it++) it->x*=tr;}
+        {for(std::vector<dg_point>::iterator it=_pts.begin();it!=_pts.end();++it) it->x*=tr;}
 
     std::vector<back_data> ebData;
     std::vector<voronoi_point> vorpData;

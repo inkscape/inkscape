@@ -1161,7 +1161,7 @@ bool OdfOutput::writeManifest(ZipFile &zf)
     outs.printf("    <manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"meta.xml\"/>\n");
     outs.printf("    <!--List our images here-->\n");
     std::map<Glib::ustring, Glib::ustring>::iterator iter;
-    for (iter = imageTable.begin() ; iter!=imageTable.end() ; iter++)
+    for (iter = imageTable.begin() ; iter!=imageTable.end() ; ++iter)
         {
         Glib::ustring oldName = iter->first;
         Glib::ustring newName = iter->second;
@@ -1241,7 +1241,7 @@ bool OdfOutput::writeMeta(ZipFile &zf)
     outs.printf("    <meta:initial-creator>%#s</meta:initial-creator>\n",
                                   creator.c_str());
     outs.printf("    <meta:creation-date>%#s</meta:creation-date>\n", date.c_str());
-    for (iter = metadata.begin() ; iter != metadata.end() ; iter++)
+    for (iter = metadata.begin() ; iter != metadata.end() ; ++iter)
         {
         Glib::ustring name  = iter->first;
         Glib::ustring value = iter->second;
@@ -1303,7 +1303,7 @@ bool OdfOutput::writeStyle(ZipFile &zf)
     */
     outs.printf("<!-- ####### Styles from Inkscape document ####### -->\n");
     std::vector<StyleInfo>::iterator iter;
-    for (iter = styleTable.begin() ; iter != styleTable.end() ; iter++)
+    for (iter = styleTable.begin() ; iter != styleTable.end() ; ++iter)
         {
         outs.printf("<style:style style:name=\"%s\"", iter->name.c_str());
         StyleInfo s(*iter);
@@ -1331,7 +1331,7 @@ bool OdfOutput::writeStyle(ZipFile &zf)
     outs.printf("\n");
     outs.printf("<!-- ####### Gradients from Inkscape document ####### -->\n");
     std::vector<GradientInfo>::iterator giter;
-    for (giter = gradientTable.begin() ; giter != gradientTable.end() ; giter++)
+    for (giter = gradientTable.begin() ; giter != gradientTable.end() ; ++giter)
         {
         GradientInfo gi(*giter);
         if (gi.style == "linear")
@@ -1583,7 +1583,7 @@ bool OdfOutput::processStyle(Writer &outs, SPItem *item,
     //Look for existing identical style;
     bool styleMatch = false;
     std::vector<StyleInfo>::iterator iter;
-    for (iter=styleTable.begin() ; iter!=styleTable.end() ; iter++)
+    for (iter=styleTable.begin() ; iter!=styleTable.end() ; ++iter)
         {
         if (si.equals(*iter))
             {
@@ -1701,7 +1701,7 @@ bool OdfOutput::processGradient(Writer &outs, SPItem *item,
     //Look for existing identical style;
     bool gradientMatch = false;
     std::vector<GradientInfo>::iterator iter;
-    for (iter=gradientTable.begin() ; iter!=gradientTable.end() ; iter++)
+    for (iter=gradientTable.begin() ; iter!=gradientTable.end() ; ++iter)
         {
         if (gi.equals(*iter))
             {

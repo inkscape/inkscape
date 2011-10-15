@@ -69,7 +69,7 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
         // There might be multiple intersections: find the closest
         Geom::Coord best_dist = Geom::infinity();
         Geom::Point best_p = Geom::Point(Geom::infinity(), Geom::infinity());
-        for (Geom::Crossings::const_iterator i = cs.begin(); i != cs.end(); i++) {
+        for (Geom::Crossings::const_iterator i = cs.begin(); i != cs.end(); ++i) {
             Geom::Point p_ix = this->_curve->pointAt((*i).ta);
             Geom::Coord dist = Geom::distance(p_ix, p);
 
@@ -130,7 +130,7 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedLine const &line
         // There might be multiple intersections: find the closest
         Geom::Coord best_dist = Geom::infinity();
         Geom::Point best_p = Geom::Point(Geom::infinity(), Geom::infinity());
-        for (Geom::Crossings::const_iterator i = cs.begin(); i != cs.end(); i++) {
+        for (Geom::Crossings::const_iterator i = cs.begin(); i != cs.end(); ++i) {
             Geom::Point p_ix = this->_curve->pointAt((*i).ta);
             Geom::Coord dist = Geom::distance(p_ix, p);
 
@@ -166,7 +166,7 @@ bool getClosestCurve(std::list<Inkscape::SnappedCurve> const &list, Inkscape::Sn
 {
     bool success = false;
 
-    for (std::list<Inkscape::SnappedCurve>::const_iterator i = list.begin(); i != list.end(); i++) {
+    for (std::list<Inkscape::SnappedCurve>::const_iterator i = list.begin(); i != list.end(); ++i) {
         if (exclude_paths && ((*i).getTarget() == Inkscape::SNAPTARGET_PATH)) {
             continue;
         }
@@ -184,12 +184,12 @@ bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, Geo
 {
     bool success = false;
 
-    for (std::list<Inkscape::SnappedCurve>::const_iterator i = list.begin(); i != list.end(); i++) {
+    for (std::list<Inkscape::SnappedCurve>::const_iterator i = list.begin(); i != list.end(); ++i) {
         if ((*i).getTarget() != Inkscape::SNAPTARGET_BBOX_EDGE) { // We don't support snapping to intersections of bboxes,
             // as this would require two bboxes two be flashed in the snap indicator
             std::list<Inkscape::SnappedCurve>::const_iterator j = i;
-            j++;
-            for (; j != list.end(); j++) {
+            ++j;
+            for (; j != list.end(); ++j) {
                 if ((*j).getTarget() != Inkscape::SNAPTARGET_BBOX_EDGE) { // We don't support snapping to intersections of bboxes
                     Inkscape::SnappedPoint sp = (*i).intersect(*j, p, dt2doc);
                     if (sp.getAtIntersection()) {
@@ -219,10 +219,10 @@ bool getClosestIntersectionCL(std::list<Inkscape::SnappedCurve> const &curve_lis
 {
     bool success = false;
 
-    for (std::list<Inkscape::SnappedCurve>::const_iterator i = curve_list.begin(); i != curve_list.end(); i++) {
+    for (std::list<Inkscape::SnappedCurve>::const_iterator i = curve_list.begin(); i != curve_list.end(); ++i) {
         if ((*i).getTarget() != Inkscape::SNAPTARGET_BBOX_EDGE) { // We don't support snapping to intersections of bboxes,
             // as this would require two bboxes two be flashed in the snap indicator
-            for (std::list<Inkscape::SnappedLine>::const_iterator j = line_list.begin(); j != line_list.end(); j++) {
+            for (std::list<Inkscape::SnappedLine>::const_iterator j = line_list.begin(); j != line_list.end(); ++j) {
                 if ((*j).getTarget() != Inkscape::SNAPTARGET_BBOX_EDGE) { // We don't support snapping to intersections of bboxes
                     Inkscape::SnappedPoint sp = (*i).intersect(*j, p, dt2doc);
                     if (sp.getAtIntersection()) {

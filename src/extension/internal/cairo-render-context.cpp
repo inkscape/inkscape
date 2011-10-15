@@ -1473,7 +1473,7 @@ unsigned int CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont * /*font*/, 
 
     unsigned int num_invalid_glyphs = 0;
     unsigned int i = 0; // is a counter for indexing the glyphs array, only counts the valid glyphs
-    for (std::vector<CairoGlyphInfo>::const_iterator it_info = glyphtext.begin() ; it_info != glyphtext.end() ; it_info++) {
+    for (std::vector<CairoGlyphInfo>::const_iterator it_info = glyphtext.begin() ; it_info != glyphtext.end() ; ++it_info) {
         // skip glyphs which are PANGO_GLYPH_EMPTY (0x0FFFFFFF)
         // or have the PANGO_GLYPH_UNKNOWN_FLAG (0x10000000) set
         if (it_info->index == 0x0FFFFFFF || it_info->index & 0x10000000) {

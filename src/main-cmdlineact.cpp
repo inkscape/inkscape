@@ -71,7 +71,7 @@ CmdLineAction::doIt (Inkscape::UI::View::View * view) {
 void
 CmdLineAction::doList (Inkscape::UI::View::View * view) {
 	for (std::list<CmdLineAction *>::iterator i = _list.begin();
-			i != _list.end(); i++) {
+			i != _list.end(); ++i) {
 		CmdLineAction * entry = *i;
 		entry->doIt(view);
 	}
@@ -85,7 +85,7 @@ CmdLineAction::idle (void) {
 	// We're going to assume one desktop per document, because no one
 	// should have had time to make more at this point.
 	for (std::list<SPDesktop *>::iterator i = desktops.begin();
-			i != desktops.end(); i++) {
+			i != desktops.end(); ++i) {
 		SPDesktop * desktop = *i;
 		//Inkscape::UI::View::View * view = dynamic_cast<Inkscape::UI::View::View *>(desktop);
 		doList(desktop);

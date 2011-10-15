@@ -821,7 +821,7 @@ void Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newr
         }
 
         // Delete the attributes of the old root nodes.
-        for (std::vector<gchar const *>::const_iterator it = attribs.begin(); it != attribs.end(); it++) {
+        for (std::vector<gchar const *>::const_iterator it = attribs.begin(); it != attribs.end(); ++it) {
             oldroot->setAttribute(*it, NULL);
         }
 

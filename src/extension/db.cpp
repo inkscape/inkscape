@@ -109,7 +109,7 @@ DB::foreach (void (*in_func)(Extension * in_plug, gpointer in_data), gpointer in
 {
 	std::list <Extension *>::iterator cur;
 
-	for (cur = modulelist.begin(); cur != modulelist.end(); cur++) {
+	for (cur = modulelist.begin(); cur != modulelist.end(); ++cur) {
 		// printf("foreach: %s\n", (*cur)->get_id());
 		in_func((*cur), in_data);
 	}

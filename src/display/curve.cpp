@@ -322,7 +322,7 @@ SPCurve::is_closed() const
         return false;
     } else {
         bool closed = true;
-        for (Geom::PathVector::const_iterator it = _pathv.begin(); it != _pathv.end(); it++) {
+        for (Geom::PathVector::const_iterator it = _pathv.begin(); it != _pathv.end(); ++it) {
              if ( ! it->closed() ) {
                 closed = false;
                 break;
@@ -506,11 +506,11 @@ SPCurve::append(SPCurve const *curve2,
             _pathv.push_back( (*it) );
         }
 
-        for (it++; it != curve2->_pathv.end(); it++) {
+        for (it++; it != curve2->_pathv.end(); ++it) {
             _pathv.push_back( (*it) );
         }
     } else {
-        for (Geom::PathVector::const_iterator it = curve2->_pathv.begin(); it != curve2->_pathv.end(); it++) {
+        for (Geom::PathVector::const_iterator it = curve2->_pathv.begin(); it != curve2->_pathv.end(); ++it) {
             _pathv.push_back( (*it) );
         }
     }
@@ -553,7 +553,7 @@ SPCurve::append_continuous(SPCurve const *c1, gdouble tolerance)
         newfirstpath.setInitial(lastpath.finalPoint());
         lastpath.append( newfirstpath );
 
-        for (path_it++; path_it != c1->_pathv.end(); path_it++) {
+        for (++path_it; path_it != c1->_pathv.end(); ++path_it) {
             _pathv.push_back( (*path_it) );
         }
 
