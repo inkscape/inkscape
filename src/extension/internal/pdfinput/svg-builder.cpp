@@ -56,6 +56,7 @@ namespace Internal {
 
 #define TRACE(_args) IFTRACE(g_print _args)
 
+static double ttm[6] = {1, 0, 0, 1, 0, 0};	// temporary transform matrix
 
 /**
  * \struct SvgTransparencyGroup
@@ -561,6 +562,19 @@ bool SvgBuilder::getTransform(double *transform) {
  */
 void SvgBuilder::setTransform(double c0, double c1, double c2, double c3,
                               double c4, double c5) {
+    // do not remember the group which is a layer
+    if (_container->attribute("inkscape:groupmode") != NULL) {
+        ttm[0] = ttm[3] = 1.0;
+        ttm[1] = ttm[2] = ttm[4] = ttm[5] = 0.0;
+    }
+    else {
+        ttm[0] = c0;
+        ttm[1] = c1;
+        ttm[2] = c2;
+        ttm[3] = c3;
+        ttm[4] = c4;
+        ttm[5] = c5;
+    }
 
     // Avoid transforming a group with an already set clip-path
     if ( _container->attribute("clip-path") != NULL ) {
@@ -608,8 +622,31 @@ gchar *SvgBuilder::_createPattern(GfxPattern *pattern, GfxState *state, bool is_
     if ( pattern != NULL ) {
         if ( pattern->getType() == 2 ) {  // Shading pattern
             GfxShadingPattern *shading_pattern = (GfxShadingPattern*)pattern;
+            double *ptm;
+            double ittm[6];	// invert ttm
+            double m[6] = {1, 0, 0, 1, 0, 0};
+            double det;
+
+            // construct a (pattern space) -> (current space) transform matrix
+
+            ptm = shading_pattern->getMatrix();
+            det = ttm[0] * ttm[3] - ttm[1] * ttm[2];
+            if (det) {
+                ittm[0] =  ttm[3] / det;
+                ittm[1] = -ttm[1] / det;
+                ittm[2] = -ttm[2] / det;
+                ittm[3] =  ttm[0] / det;
+                ittm[4] = (ttm[2] * ttm[5] - ttm[3] * ttm[4]) / det;
+                ittm[5] = (ttm[1] * ttm[4] - ttm[0] * ttm[5]) / det;
+                m[0] = ptm[0] * ittm[0] + ptm[1] * ittm[2];
+                m[1] = ptm[0] * ittm[1] + ptm[1] * ittm[3];
+                m[2] = ptm[2] * ittm[0] + ptm[3] * ittm[2];
+                m[3] = ptm[2] * ittm[1] + ptm[3] * ittm[3];
+                m[4] = ptm[4] * ittm[0] + ptm[5] * ittm[2] + ittm[4];
+                m[5] = ptm[4] * ittm[1] + ptm[5] * ittm[3] + ittm[5];
+            }
             id = _createGradient(shading_pattern->getShading(),
-                                 shading_pattern->getMatrix(),
+                                 m,
                                  !is_stroke);
         } else if ( pattern->getType() == 1 ) {   // Tiling pattern
             id = _createTilingPattern((GfxTilingPattern*)pattern, state, is_stroke);
