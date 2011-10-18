@@ -138,7 +138,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         } else {
             char const *layer_label;
             bool is_label = false;
-            if (layer && layer->label()) {
+            if (layer->label()) {
                 layer_label = layer->label();
                 is_label = true;
             } else {
